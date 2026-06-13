@@ -11,7 +11,7 @@ struct ImportResult {
   size_t freq_count = 0;
   size_t pitch_count = 0;
   size_t media_count = 0;
-  std::vector<std::string> errors;
+  std::string error;
 };
 
 namespace dictionary_importer {

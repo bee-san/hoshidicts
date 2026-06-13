@@ -38,10 +38,7 @@ void cmd_import(const std::string& path) {
     std::cout << std::format("pitch_count: {}\n", result.pitch_count);
     std::cout << std::format("media_count: {}\n", result.media_count);
   } else {
-    std::cout << std::format("could not import dictionary:\n");
-    for (const auto& error : result.errors) {
-      std::cout << std::format(" {}\n", error);
-    }
+    std::cout << std::format("could not import dictionary: {}\n", result.error);
   }
 }
 

@@ -36,11 +36,7 @@ uint64_t hd_import_result_pitch_count(const hd_import_result* r) { return r->res
 
 uint64_t hd_import_result_media_count(const hd_import_result* r) { return r->result.media_count; }
 
-size_t hd_import_result_error_count(const hd_import_result* r) { return r->result.errors.size(); }
-
-const char* hd_import_result_error(const hd_import_result* r, size_t index) {
-  return index < r->result.errors.size() ? r->result.errors[index].c_str() : nullptr;
-}
+const char* hd_import_result_error(const hd_import_result* r) { return r->result.error.c_str(); }
 
 // deinflector
 struct hd_deinflector {
