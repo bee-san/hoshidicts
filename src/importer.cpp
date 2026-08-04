@@ -38,6 +38,7 @@ struct ProcessedFile {
   std::vector<std::pair<uint64_t, uint64_t>> offsets;
   ankerl::unordered_dense::map<uint64_t, std::vector<char>> glossaries;
   std::vector<std::pair<uint64_t, uint64_t>> glossary_offsets;
+  std::string probe;
   size_t count = 0;
 };
 
@@ -176,6 +177,9 @@ ProcessedFile process_term_bank(const std::string& content) {
   if (!yomitan_parser::parse_term_bank(content, out)) {
     return processed;
   }
+  if (!out.empty()) {
+    processed.probe = out.front().expression;
+  }
 
   std::vector<char> compressed;
   ZSTD_CCtx* cctx = ZSTD_createCCtx();
@@ -277,6 +281,9 @@ ProcessedFile process_kanji_bank(const std::string& content) {
   if (!yomitan_parser::parse_kanji_bank(content, out)) {
     return processed;
   }
+  if (!out.empty()) {
+    processed.probe = out.front().character;
+  }
 
   for (auto& kanji : out) {
     uint64_t offset = processed.data.size();
@@ -330,6 +337,9 @@ void write_terms(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>
   auto write_processed = [&](ProcessedFile&& processed) {
     if (processed.data.empty()) {
       return;
+    }
+    if (result.probe_term.empty()) {
+      result.probe_term = processed.probe;
     }
 
     std::vector<char> glossary_buf;
@@ -427,6 +437,9 @@ void write_kanji(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>
     if (processed.data.empty()) {
       return;
     }
+    if (result.probe_kanji.empty()) {
+      result.probe_kanji = processed.probe;
+    }
     file.write(processed.data.data(), static_cast<std::streamsize>(processed.data.size()));
 
     for (auto& [hash, offset] : processed.offsets) {
@@ -522,8 +535,15 @@ size_t write_media(const std::string& path, const Zip& zip, const std::vector<in
 }
 }
 
-ImportResult dictionary_importer::import(const std::string& zip_path, const std::string& output_dir, bool low_ram) {
+namespace {
+ImportResult import_impl(
+    const std::string& zip_path,
+    const std::string& output_path,
+    bool append_title,
+    bool low_ram) {
   ImportResult result;
+  std::filesystem::path dict_path;
+  bool output_created = false;
   try {
     Zip zip;
     if (!zip.open(zip_path)) {
@@ -545,10 +565,20 @@ ImportResult dictionary_importer::import(const std::string& zip_path, const std:
     }
 
     result.title = index.title;
+    result.format_revision = index.format;
 
-    std::filesystem::path dict_path = std::filesystem::path(output_dir) / result.title;
+    dict_path = append_title
+                    ? std::filesystem::path(output_path) / result.title
+                    : std::filesystem::path(output_path);
+    if (std::filesystem::exists(dict_path)) {
+      throw std::runtime_error("dictionary output path already exists");
+    }
     std::string path = dict_path.string();
-    std::filesystem::create_directories(dict_path);
+    output_created = std::filesystem::create_directories(dict_path);
+    if (!output_created) {
+      throw std::runtime_error("failed to create dictionary output path");
+    }
+    result.output_path = path;
 
     if (glz::write_file_json(index, path + "/index.json", std::string{})) {
       throw std::runtime_error("failed to write index.json");
@@ -565,6 +595,16 @@ ImportResult dictionary_importer::import(const std::string& zip_path, const std:
     }
 
     const Files files = get_files(zip);
+    if (!files.term_banks.empty()) {
+      result.types.emplace_back("term");
+    }
+    if (!files.meta_banks.empty()) {
+      result.types.emplace_back("frequency");
+      result.types.emplace_back("pitch");
+    }
+    if (!files.kanji_banks.empty()) {
+      result.types.emplace_back("kanji");
+    }
     std::future<size_t> media_thread =
         std::async(std::launch::async, [&path, &zip, &files]() { return write_media(path, zip, files.media_files); });
 
@@ -600,9 +640,20 @@ ImportResult dictionary_importer::import(const std::string& zip_path, const std:
     result.errors.emplace_back(e.what());
   }
 
-  if (!result.success && !result.title.empty()) {
-    std::filesystem::remove_all(std::filesystem::path(output_dir) / result.title);
+  if (!result.success && output_created) {
+    std::filesystem::remove_all(dict_path);
   }
 
   return result;
+}
+}
+
+ImportResult dictionary_importer::import(
+    const std::string& zip_path, const std::string& output_dir, bool low_ram) {
+  return import_impl(zip_path, output_dir, true, low_ram);
+}
+
+ImportResult dictionary_importer::import_to_path(
+    const std::string& zip_path, const std::string& dictionary_path, bool low_ram) {
+  return import_impl(zip_path, dictionary_path, false, low_ram);
 }
