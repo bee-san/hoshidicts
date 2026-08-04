@@ -22,7 +22,7 @@ class linear {
 
   struct table {
     uint32_t capacity = 0;
-    slot* table;
+    uint8_t* table = nullptr;
   };
   std::unique_ptr<table> ptr_;
 };

@@ -4,10 +4,23 @@
 
 #include <cstdint>
 #include <cstring>
+#include <memory>
 
 #include "../memory/memory.hpp"
 
 namespace {
+struct decompressor_deleter {
+  void operator()(libdeflate_decompressor* decompressor) const {
+    libdeflate_free_decompressor(decompressor);
+  }
+};
+
+libdeflate_decompressor* get_decompressor() {
+  thread_local std::unique_ptr<libdeflate_decompressor, decompressor_deleter> decompressor{
+      libdeflate_alloc_decompressor()};
+  return decompressor.get();
+}
+
 template <typename T>
 T read_at(const uint8_t* base, size_t offset) {
   T val;
@@ -51,7 +64,10 @@ std::string Zip::read(int index) const {
   if (e.compression_method == 0) {
     std::memcpy(result.data(), src, e.uncompressed_size);
   } else if (e.compression_method == 8) {
-    thread_local auto* d = libdeflate_alloc_decompressor();
+    auto* d = get_decompressor();
+    if (d == nullptr) {
+      return "";
+    }
     if (libdeflate_deflate_decompress(d, src, e.compressed_size, result.data(), e.uncompressed_size, nullptr) !=
         LIBDEFLATE_SUCCESS) {
       return "";
@@ -75,7 +91,10 @@ std::optional<Zip::MediaResult> Zip::read_media(int index) const {
   if (e.compression_method == 0) {
     std::memcpy(out.blob.data(), src, e.uncompressed_size);
   } else if (e.compression_method == 8) {
-    thread_local auto* d = libdeflate_alloc_decompressor();
+    auto* d = get_decompressor();
+    if (d == nullptr) {
+      return std::nullopt;
+    }
     if (libdeflate_deflate_decompress(d, src, e.compressed_size, out.blob.data(), e.uncompressed_size, nullptr) !=
         LIBDEFLATE_SUCCESS) {
       return std::nullopt;
