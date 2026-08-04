@@ -22,11 +22,13 @@ uint64_t linear::operator()(std::string_view key) const {
   }
   uint64_t pos = h % ptr_->capacity;
   while (true) {
-    if (ptr_->table[pos].hash == 0) {
+    slot current{};
+    std::memcpy(&current, ptr_->table + pos * sizeof(slot), sizeof(current));
+    if (current.hash == 0) {
       return 0;
     }
-    if (ptr_->table[pos].hash == h) {
-      return ptr_->table[pos].offset;
+    if (current.hash == h) {
+      return current.offset;
     }
     pos = (pos + 1) % ptr_->capacity;
   }
@@ -43,14 +45,17 @@ void linear::build_to_file(const std::vector<std::pair<uint64_t, uint64_t>>& has
   }
 
   std::memcpy(out.data, &ptr_->capacity, sizeof(uint32_t));
-  ptr_->table = reinterpret_cast<slot*>(out.data + sizeof(uint32_t));
+  ptr_->table = out.data + sizeof(uint32_t);
   std::memset(ptr_->table, 0, ptr_->capacity * sizeof(slot));
   for (const auto& he : hash_entries) {
     uint64_t h = he.first;
     uint64_t pos = h % ptr_->capacity;
     while (true) {
-      if (ptr_->table[pos].hash == 0) {
-        ptr_->table[pos] = {.hash = h, .offset = he.second};
+      slot current{};
+      std::memcpy(&current, ptr_->table + pos * sizeof(slot), sizeof(current));
+      if (current.hash == 0) {
+        const slot entry{.hash = h, .offset = he.second};
+        std::memcpy(ptr_->table + pos * sizeof(slot), &entry, sizeof(entry));
         break;
       }
       pos = (pos + 1) % ptr_->capacity;
@@ -62,12 +67,13 @@ void linear::build_to_file(const std::vector<std::pair<uint64_t, uint64_t>>& has
 }
 
 bool linear::load(uint8_t* ptr, size_t size) {
-  uint32_t capacity = *reinterpret_cast<uint32_t*>(ptr);
+  uint32_t capacity = 0;
+  std::memcpy(&capacity, ptr, sizeof(capacity));
   if (size != sizeof(uint32_t) + static_cast<size_t>(capacity) * sizeof(slot)) {
     return false;
   }
   ptr_->capacity = capacity;
-  ptr_->table = reinterpret_cast<slot*>(ptr + sizeof(uint32_t));
+  ptr_->table = ptr + sizeof(uint32_t);
   return true;
 }
 }
