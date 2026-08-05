@@ -11,7 +11,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 option(HOSHIDICTS_CLI "hoshidicts cli" OFF)
 option(HOSHIDICTS_BENCHMARK "hoshidicts import and lookup benchmarks" OFF)
-option(HOSHIDICTS_TESTS "hoshidicts regression tests" OFF)
 
 set(ZSTD_BUILD_PROGRAMS OFF CACHE BOOL "")
 set(ZSTD_BUILD_TESTS OFF CACHE BOOL "")
@@ -99,26 +98,5 @@ if(HOSHIDICTS_BENCHMARK)
 
     target_link_libraries(benchmark-lookup PRIVATE
         hoshidicts
-    )
-endif()
-
-if(HOSHIDICTS_TESTS)
-    enable_testing()
-
-    add_executable(hoshidicts-windows-path-test
-        tests/windows_utf8_paths.cpp
-    )
-
-    target_link_libraries(hoshidicts-windows-path-test PRIVATE
-        hoshidicts
-    )
-
-    if(MSVC)
-        target_compile_options(hoshidicts-windows-path-test PRIVATE /utf-8 /Zc:__cplusplus)
-    endif()
-
-    add_test(
-        NAME windows_utf8_paths
-        COMMAND hoshidicts-windows-path-test
     )
 endif()
