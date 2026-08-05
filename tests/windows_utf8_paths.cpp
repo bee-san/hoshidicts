@@ -1,5 +1,3 @@
-#include "hoshidicts_c.h"
-
 #include <chrono>
 #include <cstdint>
 #include <filesystem>
@@ -8,6 +6,8 @@
 #include <string>
 #include <string_view>
 #include <vector>
+
+#include "hoshidicts_c.h"
 
 namespace {
 namespace fs = std::filesystem;
@@ -37,24 +37,19 @@ uint32_t crc32(std::string_view value) {
   return ~crc;
 }
 
-std::string utf8_bytes(std::u8string_view value) {
-  return {reinterpret_cast<const char*>(value.data()), value.size()};
-}
+std::string utf8_bytes(std::u8string_view value) { return {reinterpret_cast<const char*>(value.data()), value.size()}; }
 
 std::string path_utf8(const fs::path& value) {
   const std::u8string encoded = value.u8string();
   return {reinterpret_cast<const char*>(encoded.data()), encoded.size()};
 }
 
-fs::path native(std::u8string_view value) {
-  return fs::path(value);
-}
+fs::path native(std::u8string_view value) { return fs::path(value); }
 
 bool write_fixture(const fs::path& path) {
   std::vector<ZipEntry> entries{
       {"index.json",
-       utf8_bytes(
-           u8R"({"title":"日本語辞書","format":3,"revision":"1","sequenced":false,"sourceLanguage":"ja"})")},
+       utf8_bytes(u8R"({"title":"日本語辞書","format":3,"revision":"1","sequenced":false,"sourceLanguage":"ja"})")},
       {"term_bank_1.json", utf8_bytes(u8R"([["食べる","たべる","","v1",0,["to eat"],1,""]])")},
   };
 
@@ -115,15 +110,12 @@ bool write_fixture(const fs::path& path) {
   return out.good();
 }
 
-bool same(hd_str value, std::string_view expected) {
-  return std::string_view(value.ptr, value.len) == expected;
-}
+bool same(hd_str value, std::string_view expected) { return std::string_view(value.ptr, value.len) == expected; }
 }
 
 int main() {
   const auto nonce = std::chrono::steady_clock::now().time_since_epoch().count();
-  const fs::path root =
-      fs::temp_directory_path() / native(u8"利用者_山田") / ("hoshidicts-" + std::to_string(nonce));
+  const fs::path root = fs::temp_directory_path() / native(u8"利用者_山田") / ("hoshidicts-" + std::to_string(nonce));
   const fs::path zip_path = root / native(u8"入力_日本語辞書.zip");
   const fs::path output_path = root / native(u8"出力_日本語");
   const fs::path dictionary_path = output_path / native(u8"日本語辞書");
@@ -139,8 +131,8 @@ int main() {
   const std::string output_utf8 = path_utf8(output_path);
   hd_import_result* import_result = hd_import(zip_utf8.c_str(), output_utf8.c_str(), 1);
   if (import_result == nullptr || hd_import_result_success(import_result) == 0) {
-    std::cerr << "import failed: "
-              << (import_result == nullptr ? "null result" : hd_import_result_error(import_result)) << '\n';
+    std::cerr << "import failed: " << (import_result == nullptr ? "null result" : hd_import_result_error(import_result))
+              << '\n';
     hd_import_result_free(import_result);
     fs::remove_all(root, error);
     return 1;
