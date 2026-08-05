@@ -1,0 +1,25 @@
+name: Windows UTF-8 Paths
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  msvc:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Configure
+        run: cmake -S . -B build -A x64 -DHOSHIDICTS_TESTS=ON
+
+      - name: Build
+        run: cmake --build build --config Release --target hoshidicts-windows-path-test
+
+      - name: Test
+        run: ctest --test-dir build -C Release --output-on-failure
