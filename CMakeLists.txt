@@ -117,5 +117,9 @@ if(HOSHIDICTS_TESTS)
         hoshidicts
     )
 
+    if(MSVC)
+        target_compile_options(hoshidicts-frequency-tests PRIVATE /utf-8 /Zc:__cplusplus)
+    endif()
+
     add_test(NAME hoshidicts-frequency COMMAND hoshidicts-frequency-tests)
 endif()

@@ -19,6 +19,7 @@
 #include "hoshidicts/query.hpp"
 #include "hoshidicts_c.h"
 #include "json/yomitan_parser.hpp"
+#include "path_utils.hpp"
 
 namespace {
 int failures = 0;
@@ -127,7 +128,7 @@ std::filesystem::path import_dictionary(const TempDirectory& temp, const std::st
   const auto zip_path = temp.path / (title + ".zip");
   const auto output_path = temp.path / "imported";
   write_stored_zip(zip_path, std::move(files));
-  const auto result = dictionary_importer::import(zip_path.string(), output_path.string());
+  const auto result = dictionary_importer::import(path_utils::to_utf8(zip_path), path_utils::to_utf8(output_path));
   if (!result.success) {
     throw std::runtime_error("dictionary import failed: " + result.error);
   }
@@ -185,8 +186,10 @@ void test_query_shapes_and_c_v2(const TempDirectory& temp, const std::filesystem
       R"([["語","freq",{"reading":"ご一","frequency":1.25}],["語","freq",{"reading":"ご一","frequency":1.25}],["語","freq",{"reading":"ご一","frequency":{"value":1.25,"displayValue":""}}],["語","freq",{"reading":"ご一","frequency":{"value":1.25,"displayValue":"1.25"}}],["語","freq",{"reading":"ご一","frequency":"rank 1.25"}],["語","freq",{"reading":"ご二","frequency":9.5}],["語","freq",{"reading":"other","frequency":100}],["語","freq",{"reading":"","frequency":200}]])");
 
   DictionaryQuery query;
-  query.add_term_dict(terms_path.string());
-  query.add_freq_dict(frequency_path.string());
+  const std::string terms_path_utf8 = path_utils::to_utf8(terms_path);
+  const std::string frequency_path_utf8 = path_utils::to_utf8(frequency_path);
+  query.add_term_dict(terms_path_utf8);
+  query.add_freq_dict(frequency_path_utf8);
   const auto terms = query.query("語");
   const auto* first = find_reading(terms, "ご一");
   const auto* second = find_reading(terms, "ご二");
@@ -222,8 +225,8 @@ void test_query_shapes_and_c_v2(const TempDirectory& temp, const std::filesystem
   if (c_query == nullptr) {
     return;
   }
-  check(hd_query_add_term_dict(c_query, terms_path.string().c_str()) == 0, "C term dictionary added");
-  check(hd_query_add_freq_dict(c_query, frequency_path.string().c_str()) == 0, "C frequency dictionary added");
+  check(hd_query_add_term_dict(c_query, terms_path_utf8.c_str()) == 0, "C term dictionary added");
+  check(hd_query_add_freq_dict(c_query, frequency_path_utf8.c_str()) == 0, "C frequency dictionary added");
 
   const hd_term_result_v2* v2_terms = nullptr;
   size_t v2_count = 0;
@@ -306,9 +309,9 @@ void test_sorting(const TempDirectory& temp, const std::filesystem::path& terms_
       R"([["語","freq",{"reading":"ご一","frequency":100}],["語","freq",{"reading":"ご二","frequency":1}],["語","freq",{"reading":"ご三","frequency":0}]])");
 
   DictionaryQuery priority_query;
-  priority_query.add_term_dict(terms_path.string());
-  priority_query.add_freq_dict(primary_rank.string());
-  priority_query.add_freq_dict(secondary_conflict.string());
+  priority_query.add_term_dict(path_utils::to_utf8(terms_path));
+  priority_query.add_freq_dict(path_utils::to_utf8(primary_rank));
+  priority_query.add_freq_dict(path_utils::to_utf8(secondary_conflict));
   check_reading_order(lookup_readings(priority_query), {"ご一", "ご二", "ご三"},
                       "only primary rank dictionary sorts and missing is last");
   check_reading_order(lookup_readings(priority_query, 1), {"ご一"}, "sorting happens before truncation");
@@ -317,8 +320,8 @@ void test_sorting(const TempDirectory& temp, const std::filesystem::path& terms_
       temp, "PrimaryOccurrence", "occurrence-based", "ja", std::nullopt,
       R"([["語","freq",{"reading":"ご一","frequency":10}],["語","freq",{"reading":"ご一","frequency":30}],["語","freq",{"reading":"ご二","frequency":20}]])");
   DictionaryQuery occurrence_query;
-  occurrence_query.add_term_dict(terms_path.string());
-  occurrence_query.add_freq_dict(primary_occurrence.string());
+  occurrence_query.add_term_dict(path_utils::to_utf8(terms_path));
+  occurrence_query.add_freq_dict(path_utils::to_utf8(primary_occurrence));
   check_reading_order(lookup_readings(occurrence_query), {"ご一", "ご二", "ご三"},
                       "occurrence mode uses maximum descending and missing last");
 }
@@ -328,8 +331,8 @@ void test_inference(const TempDirectory& temp, const std::filesystem::path& term
       temp, "InferredOccurrence", std::nullopt, "JA", std::nullopt,
       R"([["来る","freq",100],["猫","freq",1],["語","freq",{"reading":"ご一","frequency":10}],["語","freq",{"reading":"ご二","frequency":20}]])");
   DictionaryQuery occurrence_query;
-  occurrence_query.add_term_dict(terms_path.string());
-  occurrence_query.add_freq_dict(occurrence.string());
+  occurrence_query.add_term_dict(path_utils::to_utf8(terms_path));
+  occurrence_query.add_freq_dict(path_utils::to_utf8(occurrence));
   check_reading_order(lookup_readings(occurrence_query), {"ご二", "ご一", "ご三"},
                       "case-insensitive Japanese heuristic infers occurrence sorting");
 
@@ -337,8 +340,8 @@ void test_inference(const TempDirectory& temp, const std::filesystem::path& term
       temp, "InferredRank", "invalid-mode", "ja", std::nullopt,
       R"([["来る","freq",1],["猫","freq",100],["語","freq",{"reading":"ご一","frequency":10}],["語","freq",{"reading":"ご二","frequency":20}]])");
   DictionaryQuery rank_query;
-  rank_query.add_term_dict(terms_path.string());
-  rank_query.add_freq_dict(rank.string());
+  rank_query.add_term_dict(path_utils::to_utf8(terms_path));
+  rank_query.add_freq_dict(path_utils::to_utf8(rank));
   check_reading_order(lookup_readings(rank_query), {"ご一", "ご二", "ご三"},
                       "invalid explicit mode uses Japanese heuristic for rank sorting");
 
@@ -346,8 +349,8 @@ void test_inference(const TempDirectory& temp, const std::filesystem::path& term
       temp, "FallbackRank", std::nullopt, "en", std::nullopt,
       R"([["語","freq",{"reading":"ご一","frequency":10}],["語","freq",{"reading":"ご二","frequency":20}]])");
   DictionaryQuery fallback_query;
-  fallback_query.add_term_dict(terms_path.string());
-  fallback_query.add_freq_dict(fallback.string());
+  fallback_query.add_term_dict(path_utils::to_utf8(terms_path));
+  fallback_query.add_freq_dict(path_utils::to_utf8(fallback));
   check_reading_order(lookup_readings(fallback_query), {"ご一", "ご二", "ご三"},
                       "non-Japanese or inconclusive mode falls back to rank sorting");
 }
