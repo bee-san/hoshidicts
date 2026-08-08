@@ -11,6 +11,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 option(HOSHIDICTS_CLI "hoshidicts cli" OFF)
 option(HOSHIDICTS_BENCHMARK "hoshidicts import and lookup benchmarks" OFF)
+option(HOSHIDICTS_TESTS "hoshidicts tests" OFF)
 
 set(ZSTD_BUILD_PROGRAMS OFF CACHE BOOL "")
 set(ZSTD_BUILD_TESTS OFF CACHE BOOL "")
@@ -99,4 +100,22 @@ if(HOSHIDICTS_BENCHMARK)
     target_link_libraries(benchmark-lookup PRIVATE
         hoshidicts
     )
+endif()
+
+if(HOSHIDICTS_TESTS)
+    enable_testing()
+
+    add_executable(hoshidicts-frequency-tests
+        tests/frequency.cpp
+    )
+
+    target_include_directories(hoshidicts-frequency-tests PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+    )
+
+    target_link_libraries(hoshidicts-frequency-tests PRIVATE
+        hoshidicts
+    )
+
+    add_test(NAME hoshidicts-frequency COMMAND hoshidicts-frequency-tests)
 endif()

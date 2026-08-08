@@ -3,8 +3,8 @@
 #include <utf8.h>
 
 #include <algorithm>
-#include <climits>
 #include <map>
+#include <optional>
 #include <ranges>
 #include <sstream>
 
@@ -21,22 +21,21 @@ std::vector<std::string> split_whitespace(const std::string& str) {
   return result;
 }
 
-int get_freq_value_for_dict(const TermResult& term, const std::string& dict_name) {
+std::optional<double> get_freq_value_for_dict(const TermResult& term, const std::string& dictionary_name,
+                                              bool occurrence_based) {
   for (const auto& frequency_entry : term.frequencies) {
-    if (frequency_entry.dict_name != dict_name) {
+    if (frequency_entry.dict_name != dictionary_name || frequency_entry.frequencies.empty()) {
       continue;
     }
 
-    int min_frequency = INT_MAX;
-    for (const auto& frequency : frequency_entry.frequencies) {
-      if (frequency.value >= 0) {
-        min_frequency = std::min(min_frequency, frequency.value);
-      }
+    double frequency = frequency_entry.frequencies.front().value;
+    for (const auto& candidate : frequency_entry.frequencies | std::views::drop(1)) {
+      frequency = occurrence_based ? std::max(frequency, candidate.value) : std::min(frequency, candidate.value);
     }
-    return min_frequency;
+    return frequency;
   }
 
-  return INT_MAX;
+  return std::nullopt;
 }
 }
 
@@ -87,9 +86,11 @@ std::vector<LookupResult> Lookup::lookup(const std::string& lookup_string, int m
   }
 
   auto results = result_map | std::views::values | std::views::as_rvalue | std::ranges::to<std::vector>();
-  const auto freq_dict_order = query_.get_freq_dict_order();
+  const auto* primary_freq_dict = query_.freq_dicts_.empty() ? nullptr : &query_.freq_dicts_.front();
+  const bool occurrence_based =
+      primary_freq_dict != nullptr && query_.primary_frequency_mode_ == DictionaryQuery::FrequencyMode::Occurrence;
   auto middle_iter = std::ranges::next(results.begin(), max_results, results.end());
-  std::ranges::partial_sort(results, middle_iter, [&freq_dict_order](const auto& a, const auto& b) {
+  std::ranges::partial_sort(results, middle_iter, [primary_freq_dict, occurrence_based](const auto& a, const auto& b) {
     auto len_a = utf8::distance(a.matched.begin(), a.matched.end());
     auto len_b = utf8::distance(b.matched.begin(), b.matched.end());
     if (len_a != len_b) {
@@ -114,11 +115,14 @@ std::vector<LookupResult> Lookup::lookup(const std::string& lookup_string, int m
       return match_a > match_b;
     }
 
-    for (const auto& dict_name : freq_dict_order) {
-      const int freq_a = get_freq_value_for_dict(a.term, dict_name);
-      const int freq_b = get_freq_value_for_dict(b.term, dict_name);
-      if (freq_a != freq_b) {
-        return freq_a < freq_b;
+    if (primary_freq_dict != nullptr) {
+      const auto freq_a = get_freq_value_for_dict(a.term, primary_freq_dict->name, occurrence_based);
+      const auto freq_b = get_freq_value_for_dict(b.term, primary_freq_dict->name, occurrence_based);
+      if (freq_a.has_value() != freq_b.has_value()) {
+        return freq_a.has_value();
+      }
+      if (freq_a.has_value() && *freq_a != *freq_b) {
+        return occurrence_based ? *freq_a > *freq_b : *freq_a < *freq_b;
       }
     }
 

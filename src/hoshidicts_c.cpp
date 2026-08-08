@@ -1,7 +1,11 @@
 #include "hoshidicts_c.h"
 
+#include <array>
+#include <charconv>
 #include <cstdint>
+#include <limits>
 #include <memory>
+#include <string>
 
 #include "hoshidicts/deinflector.hpp"
 #include "hoshidicts/importer.hpp"
@@ -72,15 +76,22 @@ struct hd_query {
   DictionaryQuery query;
 };
 
-struct hd_results {
-  std::vector<TermResult> res;
-  std::vector<hd_term_result> term_results;
+struct TermMarshallingBuffers {
   std::vector<hd_glossary_entry> glossary_entries;
   std::vector<hd_frequency_entry> frequency_entries;
+  std::vector<hd_frequency_entry_v2> frequency_entries_v2;
   std::vector<hd_pitch_entry> pitch_entries;
   std::vector<hd_frequency> frequencies;
+  std::vector<hd_frequency_v2> frequencies_v2;
+  std::vector<std::string> legacy_frequency_displays;
   std::vector<hd_pitch> pitches;
   std::vector<hd_str> transcriptions;
+};
+
+struct hd_results : TermMarshallingBuffers {
+  std::vector<TermResult> res;
+  std::vector<hd_term_result> term_results;
+  std::vector<hd_term_result_v2> term_results_v2;
 };
 
 struct hd_kanji_results {
@@ -141,8 +152,8 @@ int hd_query_add_kanji_dict(hd_query* q, const char* path) {
   }
 }
 
-static void build_glossaries(std::vector<hd_glossary_entry>& entries, const TermResult& term_result,
-                             hd_term_result& tr) {
+template <typename TermResultC>
+static void build_glossaries(std::vector<hd_glossary_entry>& entries, const TermResult& term_result, TermResultC& tr) {
   size_t glossaries_start = entries.size();
   for (const auto& gloss_entry : term_result.glossaries) {
     hd_glossary_entry gls;
@@ -156,8 +167,26 @@ static void build_glossaries(std::vector<hd_glossary_entry>& entries, const Term
   tr.glossaries_count = term_result.glossaries.size();
 }
 
-static void build_frequencies(std::vector<hd_frequency_entry>& entries, std::vector<hd_frequency>& frequencies,
-                              const TermResult& term_result, hd_term_result& tr) {
+static int32_t legacy_frequency_value(double value) {
+  if (value >= static_cast<double>(std::numeric_limits<int32_t>::max())) {
+    return std::numeric_limits<int32_t>::max();
+  }
+  if (value <= static_cast<double>(std::numeric_limits<int32_t>::min())) {
+    return std::numeric_limits<int32_t>::min();
+  }
+  return static_cast<int32_t>(value);
+}
+
+static std::string frequency_value_to_string(double value) {
+  std::array<char, 64> buffer{};
+  auto result = std::to_chars(buffer.data(), buffer.data() + buffer.size(), value, std::chars_format::general);
+  return result.ec == std::errc{} ? std::string(buffer.data(), result.ptr) : std::string("0");
+}
+
+template <typename TermResultC>
+static void build_frequencies_v1(std::vector<hd_frequency_entry>& entries, std::vector<hd_frequency>& frequencies,
+                                 std::vector<std::string>& legacy_displays, const TermResult& term_result,
+                                 TermResultC& tr) {
   size_t frequency_entry_start = entries.size();
   for (const auto& freq_entry : term_result.frequencies) {
     hd_frequency_entry frq;
@@ -165,7 +194,15 @@ static void build_frequencies(std::vector<hd_frequency_entry>& entries, std::vec
 
     size_t frequencies_start = frequencies.size();
     for (const auto& freq : freq_entry.frequencies) {
-      frequencies.push_back(hd_frequency{freq.value, hd_str{freq.display_value.c_str(), freq.display_value.size()}});
+      const std::string* display = nullptr;
+      if (freq.display_value.has_value()) {
+        display = &*freq.display_value;
+      } else {
+        legacy_displays.push_back(frequency_value_to_string(freq.value));
+        display = &legacy_displays.back();
+      }
+      frequencies.push_back(
+          hd_frequency{legacy_frequency_value(freq.value), hd_str{display->c_str(), display->size()}});
     }
     frq.frequencies = frequencies.data() + frequencies_start;
     frq.frequencies_count = freq_entry.frequencies.size();
@@ -176,8 +213,33 @@ static void build_frequencies(std::vector<hd_frequency_entry>& entries, std::vec
   tr.frequencies_count = term_result.frequencies.size();
 }
 
+template <typename TermResultC>
+static void build_frequencies_v2(std::vector<hd_frequency_entry_v2>& entries, std::vector<hd_frequency_v2>& frequencies,
+                                 const TermResult& term_result, TermResultC& tr) {
+  size_t frequency_entry_start = entries.size();
+  for (const auto& freq_entry : term_result.frequencies) {
+    hd_frequency_entry_v2 frq;
+    frq.dict_name = hd_str{freq_entry.dict_name.c_str(), freq_entry.dict_name.size()};
+
+    size_t frequencies_start = frequencies.size();
+    for (const auto& freq : freq_entry.frequencies) {
+      const bool is_null = !freq.display_value.has_value();
+      const hd_str display =
+          is_null ? hd_str{nullptr, 0} : hd_str{freq.display_value->c_str(), freq.display_value->size()};
+      frequencies.push_back(hd_frequency_v2{freq.value, display, static_cast<int>(is_null)});
+    }
+    frq.frequencies = frequencies.data() + frequencies_start;
+    frq.frequencies_count = freq_entry.frequencies.size();
+
+    entries.push_back(frq);
+  }
+  tr.frequencies = entries.data() + frequency_entry_start;
+  tr.frequencies_count = term_result.frequencies.size();
+}
+
+template <typename TermResultC>
 static void build_pitches(std::vector<hd_pitch_entry>& entries, std::vector<hd_pitch>& pitches,
-                          std::vector<hd_str>& transcriptions, const TermResult& term_result, hd_term_result& tr) {
+                          std::vector<hd_str>& transcriptions, const TermResult& term_result, TermResultC& tr) {
   size_t pitch_entry_start = entries.size();
   for (const auto& pitch_entry : term_result.pitches) {
     hd_pitch_entry p;
@@ -204,53 +266,109 @@ static void build_pitches(std::vector<hd_pitch_entry>& entries, std::vector<hd_p
   tr.pitches_count = term_result.pitches.size();
 }
 
+struct TermMarshallingCounts {
+  size_t glossaries = 0;
+  size_t frequency_entries = 0;
+  size_t frequencies = 0;
+  size_t pitch_entries = 0;
+  size_t pitches = 0;
+  size_t transcriptions = 0;
+
+  void add(const TermResult& term) {
+    glossaries += term.glossaries.size();
+    frequency_entries += term.frequencies.size();
+    pitch_entries += term.pitches.size();
+    for (const auto& entry : term.frequencies) {
+      frequencies += entry.frequencies.size();
+    }
+    for (const auto& entry : term.pitches) {
+      pitches += entry.pitches.size();
+      transcriptions += entry.transcriptions.size();
+    }
+  }
+};
+
+static void reserve_common_buffers(TermMarshallingBuffers& buffers, const TermMarshallingCounts& counts) {
+  buffers.glossary_entries.reserve(counts.glossaries);
+  buffers.pitch_entries.reserve(counts.pitch_entries);
+  buffers.pitches.reserve(counts.pitches);
+  buffers.transcriptions.reserve(counts.transcriptions);
+}
+
+static void reserve_frequency_buffers(TermMarshallingBuffers& buffers, const TermMarshallingCounts& counts,
+                                      const hd_term_result&) {
+  buffers.frequency_entries.reserve(counts.frequency_entries);
+  buffers.frequencies.reserve(counts.frequencies);
+  buffers.legacy_frequency_displays.reserve(counts.frequencies);
+}
+
+static void reserve_frequency_buffers(TermMarshallingBuffers& buffers, const TermMarshallingCounts& counts,
+                                      const hd_term_result_v2&) {
+  buffers.frequency_entries_v2.reserve(counts.frequency_entries);
+  buffers.frequencies_v2.reserve(counts.frequencies);
+}
+
+static void build_frequencies(TermMarshallingBuffers& buffers, const TermResult& term, hd_term_result& result) {
+  build_frequencies_v1(buffers.frequency_entries, buffers.frequencies, buffers.legacy_frequency_displays, term, result);
+}
+
+static void build_frequencies(TermMarshallingBuffers& buffers, const TermResult& term, hd_term_result_v2& result) {
+  build_frequencies_v2(buffers.frequency_entries_v2, buffers.frequencies_v2, term, result);
+}
+
+template <typename TermResultC>
+static void marshal_term(TermMarshallingBuffers& buffers, const TermResult& term, TermResultC& result) {
+  result.expression = hd_str{term.expression.c_str(), term.expression.size()};
+  result.reading = hd_str{term.reading.c_str(), term.reading.size()};
+  result.rules = hd_str{term.rules.c_str(), term.rules.size()};
+  result.score = term.score;
+  build_glossaries(buffers.glossary_entries, term, result);
+  build_frequencies(buffers, term, result);
+  build_pitches(buffers.pitch_entries, buffers.pitches, buffers.transcriptions, term, result);
+}
+
+template <typename TermResultC>
+static void marshal_terms(TermMarshallingBuffers& buffers, const std::vector<TermResult>& terms,
+                          std::vector<TermResultC>& results) {
+  TermMarshallingCounts counts;
+  for (const auto& term : terms) {
+    counts.add(term);
+  }
+  reserve_common_buffers(buffers, counts);
+  reserve_frequency_buffers(buffers, counts, TermResultC{});
+  results.reserve(terms.size());
+
+  for (const auto& term : terms) {
+    TermResultC result{};
+    marshal_term(buffers, term, result);
+    results.push_back(result);
+  }
+}
+
 hd_results* hd_query_run(const hd_query* q, const char* expression, const hd_term_result** out_terms,
                          size_t* out_count) {
   try {
     auto r = std::make_unique<hd_results>();
     r->res = q->query.query(expression);
-
-    size_t glossaries_count = 0;
-    size_t freq_entry_count = 0;
-    size_t freq_count = 0;
-    size_t pitch_entry_count = 0;
-    size_t pitch_count = 0;
-    size_t transcription_count = 0;
-    for (const auto& term_result : r->res) {
-      glossaries_count += term_result.glossaries.size();
-      freq_entry_count += term_result.frequencies.size();
-      pitch_entry_count += term_result.pitches.size();
-      for (const auto& freq_entry : term_result.frequencies) {
-        freq_count += freq_entry.frequencies.size();
-      }
-      for (const auto& pitch_entry : term_result.pitches) {
-        pitch_count += pitch_entry.pitches.size();
-        transcription_count += pitch_entry.transcriptions.size();
-      }
-    }
-    r->glossary_entries.reserve(glossaries_count);
-    r->frequency_entries.reserve(freq_entry_count);
-    r->frequencies.reserve(freq_count);
-    r->pitch_entries.reserve(pitch_entry_count);
-    r->pitches.reserve(pitch_count);
-    r->transcriptions.reserve(transcription_count);
-
-    for (const auto& term_result : r->res) {
-      hd_term_result tr;
-      tr.expression = hd_str{term_result.expression.c_str(), term_result.expression.size()};
-      tr.reading = hd_str{term_result.reading.c_str(), term_result.reading.size()};
-      tr.rules = hd_str{term_result.rules.c_str(), term_result.rules.size()};
-      tr.score = term_result.score;
-
-      build_glossaries(r->glossary_entries, term_result, tr);
-      build_frequencies(r->frequency_entries, r->frequencies, term_result, tr);
-      build_pitches(r->pitch_entries, r->pitches, r->transcriptions, term_result, tr);
-
-      r->term_results.push_back(tr);
-    }
+    marshal_terms(*r, r->res, r->term_results);
 
     *out_terms = r->term_results.data();
     *out_count = r->term_results.size();
+    return r.release();
+  } catch (...) {
+    return nullptr;
+  }
+}
+
+hd_results* hd_query_run_v2(const hd_query* q, const char* expression, const hd_term_result_v2** out_terms,
+                            size_t* out_count) {
+  try {
+    auto r = std::make_unique<hd_results>();
+    r->res = q->query.query(expression);
+    marshal_terms(*r, r->res, r->term_results_v2);
+
+    *out_terms = r->term_results_v2.data();
+    *out_count = r->term_results_v2.size();
     return r.release();
   } catch (...) {
     return nullptr;
@@ -343,16 +461,11 @@ struct hd_lookup {
   Lookup lookup;
 };
 
-struct hd_lookup_results {
+struct hd_lookup_results : TermMarshallingBuffers {
   std::vector<LookupResult> res;
   std::vector<hd_lookup_result> results;
+  std::vector<hd_lookup_result_v2> results_v2;
   std::vector<hd_transform_group> trace;
-  std::vector<hd_glossary_entry> glossary_entries;
-  std::vector<hd_frequency_entry> frequency_entries;
-  std::vector<hd_pitch_entry> pitch_entries;
-  std::vector<hd_frequency> frequencies;
-  std::vector<hd_pitch> pitches;
-  std::vector<hd_str> transcriptions;
 };
 
 hd_lookup* hd_lookup_new(hd_query* q, hd_deinflector* d) {
@@ -365,69 +478,68 @@ hd_lookup* hd_lookup_new(hd_query* q, hd_deinflector* d) {
 
 void hd_lookup_free(hd_lookup* l) { delete l; }
 
+template <typename LookupResultC>
+static void marshal_lookup_header(std::vector<hd_transform_group>& traces, const LookupResult& lookup,
+                                  LookupResultC& result) {
+  result.matched = hd_str{lookup.matched.c_str(), lookup.matched.size()};
+  result.deinflected = hd_str{lookup.deinflected.c_str(), lookup.deinflected.size()};
+  result.preprocessor_steps = lookup.preprocessor_steps;
+
+  const size_t trace_start = traces.size();
+  for (const auto& group : lookup.trace) {
+    traces.push_back(hd_transform_group{hd_str{group.name.c_str(), group.name.size()},
+                                        hd_str{group.description.c_str(), group.description.size()}});
+  }
+  result.trace = traces.data() + trace_start;
+  result.trace_count = lookup.trace.size();
+}
+
+template <typename LookupResultC>
+static void marshal_lookup_results(TermMarshallingBuffers& buffers, std::vector<hd_transform_group>& traces,
+                                   const std::vector<LookupResult>& lookups, std::vector<LookupResultC>& results) {
+  TermMarshallingCounts counts;
+  size_t trace_count = 0;
+  for (const auto& lookup : lookups) {
+    counts.add(lookup.term);
+    trace_count += lookup.trace.size();
+  }
+  reserve_common_buffers(buffers, counts);
+  reserve_frequency_buffers(buffers, counts, LookupResultC{}.term);
+  traces.reserve(trace_count);
+  results.reserve(lookups.size());
+
+  for (const auto& lookup : lookups) {
+    LookupResultC result{};
+    marshal_lookup_header(traces, lookup, result);
+    marshal_term(buffers, lookup.term, result.term);
+    results.push_back(result);
+  }
+}
+
 hd_lookup_results* hd_lookup_run(const hd_lookup* l, const char* lookup_string, int max_results, size_t scan_length,
                                  const hd_lookup_result** out_results, size_t* out_count) {
   try {
     auto r = std::make_unique<hd_lookup_results>();
     r->res = l->lookup.lookup(lookup_string, max_results, scan_length);
-
-    size_t trace_count = 0;
-    size_t glossaries_count = 0;
-    size_t freq_entry_count = 0;
-    size_t freq_count = 0;
-    size_t pitch_entry_count = 0;
-    size_t pitch_count = 0;
-    size_t transcription_count = 0;
-    for (const auto& lookup_result : r->res) {
-      trace_count += lookup_result.trace.size();
-      glossaries_count += lookup_result.term.glossaries.size();
-      freq_entry_count += lookup_result.term.frequencies.size();
-      pitch_entry_count += lookup_result.term.pitches.size();
-      for (const auto& freq_entry : lookup_result.term.frequencies) {
-        freq_count += freq_entry.frequencies.size();
-      }
-      for (const auto& pitch_entry : lookup_result.term.pitches) {
-        pitch_count += pitch_entry.pitches.size();
-        transcription_count += pitch_entry.transcriptions.size();
-      }
-    }
-    r->trace.reserve(trace_count);
-    r->glossary_entries.reserve(glossaries_count);
-    r->frequency_entries.reserve(freq_entry_count);
-    r->frequencies.reserve(freq_count);
-    r->pitch_entries.reserve(pitch_entry_count);
-    r->pitches.reserve(pitch_count);
-    r->transcriptions.reserve(transcription_count);
-
-    for (const auto& lookup_result : r->res) {
-      const auto& term_result = lookup_result.term;
-      hd_lookup_result lr;
-      lr.matched = hd_str{lookup_result.matched.c_str(), lookup_result.matched.size()};
-      lr.deinflected = hd_str{lookup_result.deinflected.c_str(), lookup_result.deinflected.size()};
-      lr.preprocessor_steps = lookup_result.preprocessor_steps;
-
-      size_t trace_start = r->trace.size();
-      for (const auto& group : lookup_result.trace) {
-        r->trace.push_back(hd_transform_group{hd_str{group.name.c_str(), group.name.size()},
-                                              hd_str{group.description.c_str(), group.description.size()}});
-      }
-      lr.trace = r->trace.data() + trace_start;
-      lr.trace_count = lookup_result.trace.size();
-
-      lr.term.expression = hd_str{term_result.expression.c_str(), term_result.expression.size()};
-      lr.term.reading = hd_str{term_result.reading.c_str(), term_result.reading.size()};
-      lr.term.rules = hd_str{term_result.rules.c_str(), term_result.rules.size()};
-      lr.term.score = term_result.score;
-
-      build_glossaries(r->glossary_entries, term_result, lr.term);
-      build_frequencies(r->frequency_entries, r->frequencies, term_result, lr.term);
-      build_pitches(r->pitch_entries, r->pitches, r->transcriptions, term_result, lr.term);
-
-      r->results.push_back(lr);
-    }
+    marshal_lookup_results(*r, r->trace, r->res, r->results);
 
     *out_results = r->results.data();
     *out_count = r->results.size();
+    return r.release();
+  } catch (...) {
+    return nullptr;
+  }
+}
+
+hd_lookup_results* hd_lookup_run_v2(const hd_lookup* l, const char* lookup_string, int max_results, size_t scan_length,
+                                    const hd_lookup_result_v2** out_results, size_t* out_count) {
+  try {
+    auto r = std::make_unique<hd_lookup_results>();
+    r->res = l->lookup.lookup(lookup_string, max_results, scan_length);
+    marshal_lookup_results(*r, r->trace, r->res, r->results_v2);
+
+    *out_results = r->results_v2.data();
+    *out_count = r->results_v2.size();
     return r.release();
   } catch (...) {
     return nullptr;

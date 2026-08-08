@@ -47,6 +47,12 @@ typedef struct hd_frequency {
   hd_str display_value;
 } hd_frequency;
 
+typedef struct hd_frequency_v2 {
+  double value;
+  hd_str display_value;
+  int display_value_is_null;
+} hd_frequency_v2;
+
 typedef struct hd_dictionary_style {
   hd_str dict_name;
   hd_str styles;
@@ -69,6 +75,12 @@ typedef struct hd_frequency_entry {
   const hd_frequency* frequencies;
   size_t frequencies_count;
 } hd_frequency_entry;
+
+typedef struct hd_frequency_entry_v2 {
+  hd_str dict_name;
+  const hd_frequency_v2* frequencies;
+  size_t frequencies_count;
+} hd_frequency_entry_v2;
 
 typedef struct hd_pitch {
   int32_t position;
@@ -100,6 +112,19 @@ typedef struct hd_term_result {
   size_t pitches_count;
 } hd_term_result;
 
+typedef struct hd_term_result_v2 {
+  hd_str expression;
+  hd_str reading;
+  hd_str rules;
+  int32_t score;
+  const hd_glossary_entry* glossaries;
+  size_t glossaries_count;
+  const hd_frequency_entry_v2* frequencies;
+  size_t frequencies_count;
+  const hd_pitch_entry* pitches;
+  size_t pitches_count;
+} hd_term_result_v2;
+
 typedef struct hd_kanji_stat {
   hd_str key;
   hd_str value;
@@ -126,6 +151,8 @@ int hd_query_add_kanji_dict(hd_query* q, const char* path);
 
 hd_results* hd_query_run(const hd_query* q, const char* expression, const hd_term_result** out_terms,
                          size_t* out_count);
+hd_results* hd_query_run_v2(const hd_query* q, const char* expression, const hd_term_result_v2** out_terms,
+                            size_t* out_count);
 void hd_results_free(hd_results* r);
 
 hd_kanji_results* hd_query_run_kanji(const hd_query* q, const char* kanji, const hd_kanji_entry** out_entries,
@@ -155,11 +182,22 @@ typedef struct hd_lookup_result {
   int32_t preprocessor_steps;
 } hd_lookup_result;
 
+typedef struct hd_lookup_result_v2 {
+  hd_str matched;
+  hd_str deinflected;
+  const hd_transform_group* trace;
+  size_t trace_count;
+  hd_term_result_v2 term;
+  int32_t preprocessor_steps;
+} hd_lookup_result_v2;
+
 hd_lookup* hd_lookup_new(hd_query* q, hd_deinflector* d);
 void hd_lookup_free(hd_lookup* l);
 
 hd_lookup_results* hd_lookup_run(const hd_lookup* l, const char* lookup_string, int max_results, size_t scan_length,
                                  const hd_lookup_result** out_results, size_t* out_count);
+hd_lookup_results* hd_lookup_run_v2(const hd_lookup* l, const char* lookup_string, int max_results, size_t scan_length,
+                                    const hd_lookup_result_v2** out_results, size_t* out_count);
 void hd_lookup_results_free(hd_lookup_results* r);
 
 #ifdef __cplusplus
