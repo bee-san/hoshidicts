@@ -354,6 +354,28 @@ void test_inference(const TempDirectory& temp, const std::filesystem::path& term
   check_reading_order(lookup_readings(fallback_query), {"ご一", "ご二", "ご三"},
                       "non-Japanese or inconclusive mode falls back to rank sorting");
 }
+
+void test_katakana_reading_lookup(const TempDirectory& temp) {
+  const auto terms_path = import_dictionary(
+      temp, "KanaLookup", std::nullopt, "ja",
+      R"([["我輩","わがはい","","",0,["I; me; myself"],1606640,""]])", std::nullopt);
+
+  DictionaryQuery query;
+  query.add_term_dict(path_utils::to_utf8(terms_path));
+  Deinflector deinflector;
+  Lookup lookup(query, deinflector);
+
+  for (const std::string_view source : {"ワガハイ", "ﾜｶﾞﾊｲ", "ワガハイ", "わがはい", "我輩"}) {
+    const auto results = lookup.lookup(std::string(source), 8, 16);
+    const auto result = std::ranges::find_if(results, [](const LookupResult& candidate) {
+      return candidate.term.expression == "我輩" && candidate.term.reading == "わがはい";
+    });
+    check(result != results.end(), "kana width, composition, script, and kanji forms find a hiragana reading");
+    if (result != results.end()) {
+      check(result->matched == source, "normalized lookup preserves the original matched text");
+    }
+  }
+}
 }
 
 int main() {
@@ -364,6 +386,7 @@ int main() {
     test_query_shapes_and_c_v2(temp, terms_path);
     test_sorting(temp, terms_path);
     test_inference(temp, terms_path);
+    test_katakana_reading_lookup(temp);
   } catch (const std::exception& error) {
     std::cerr << "FAIL: unexpected exception: " << error.what() << '\n';
     failures++;
