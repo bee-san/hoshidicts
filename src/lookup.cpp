@@ -21,26 +21,64 @@ std::vector<std::string> split_whitespace(const std::string& str) {
   return result;
 }
 
-std::optional<double> get_freq_value_for_dict(const TermResult& term, const std::string& dictionary_name,
-                                              bool occurrence_based) {
+std::optional<double> get_freq_value_for_dict(const TermResult& term, std::string_view dictionary_name,
+                                              bool descending) {
+  std::optional<double> frequency;
   for (const auto& frequency_entry : term.frequencies) {
     if (frequency_entry.dict_name != dictionary_name || frequency_entry.frequencies.empty()) {
       continue;
     }
 
-    double frequency = frequency_entry.frequencies.front().value;
-    for (const auto& candidate : frequency_entry.frequencies | std::views::drop(1)) {
-      frequency = occurrence_based ? std::max(frequency, candidate.value) : std::min(frequency, candidate.value);
+    for (const auto& candidate : frequency_entry.frequencies) {
+      frequency = frequency.has_value() ? std::optional<double>(descending ? std::max(*frequency, candidate.value)
+                                                                           : std::min(*frequency, candidate.value))
+                                        : std::optional<double>(candidate.value);
     }
-    return frequency;
   }
 
-  return std::nullopt;
+  return frequency;
 }
 }
 
 std::vector<LookupResult> Lookup::lookup(const std::string& lookup_string, int max_results, size_t scan_length) const {
+  return lookup(lookup_string, max_results, scan_length, LookupOptions{});
+}
+
+std::vector<LookupResult> Lookup::lookup(const std::string& lookup_string, int max_results, size_t scan_length,
+                                         const LookupOptions& options) const {
+  if (max_results <= 0 || scan_length == 0) {
+    return {};
+  }
   std::map<std::pair<std::string, std::string>, LookupResult> result_map;
+
+  auto add_result = [&](TermResult term, const std::string& matched, const std::string& deinflected,
+                        std::vector<TransformGroup> trace, int preprocessor_steps) {
+    DictionaryQuery::prune_empty_glossaries(term);
+    if (term.glossaries.empty()) {
+      return;
+    }
+
+    auto key = std::make_pair(term.expression, term.reading);
+    auto it = result_map.find(key);
+    if (it != result_map.end()) {
+      // Keep the result associated with the longest source match.
+      if (utf8::distance(matched.begin(), matched.end()) <=
+          utf8::distance(it->second.matched.begin(), it->second.matched.end())) {
+        return;
+      }
+      it->second = LookupResult{.matched = matched,
+                                .deinflected = deinflected,
+                                .trace = std::move(trace),
+                                .term = std::move(term),
+                                .preprocessor_steps = preprocessor_steps};
+      return;
+    }
+    result_map.emplace(std::move(key), LookupResult{.matched = matched,
+                                                    .deinflected = deinflected,
+                                                    .trace = std::move(trace),
+                                                    .term = std::move(term),
+                                                    .preprocessor_steps = preprocessor_steps});
+  };
 
   size_t text_len = utf8::distance(lookup_string.begin(), lookup_string.end());
   size_t start = std::min(scan_length, text_len);
@@ -57,25 +95,33 @@ std::vector<LookupResult> Lookup::lookup(const std::string& lookup_string, int m
         filter_by_pos(terms, deinflection);
 
         for (auto& term : terms) {
-          // deduplicate glossaries
-          auto key = std::make_pair(term.expression, term.reading);
-          auto it = result_map.find(key);
-          if (it != result_map.end()) {
-            // we only need the longest matched form
-            if (utf8::distance(search_str.begin(), search_str.end()) >
-                utf8::distance(it->second.matched.begin(), it->second.matched.end())) {
-              it->second = LookupResult{.matched = search_str,
-                                        .deinflected = deinflection.text,
-                                        .trace = deinflection.trace,
-                                        .term = std::move(term),
-                                        .preprocessor_steps = variant.steps};
+          std::vector<DictionaryRedirect> redirects;
+          for (const auto& glossary : term.glossaries) {
+            for (const auto& redirect : glossary.redirects) {
+              const bool duplicate = std::ranges::any_of(redirects, [&](const DictionaryRedirect& existing) {
+                return existing.form_of == redirect.form_of && existing.inflection_rules == redirect.inflection_rules;
+              });
+              if (!duplicate) {
+                redirects.push_back(redirect);
+              }
             }
-          } else {
-            result_map.emplace(key, LookupResult{.matched = search_str,
-                                                 .deinflected = deinflection.text,
-                                                 .trace = deinflection.trace,
-                                                 .term = std::move(term),
-                                                 .preprocessor_steps = variant.steps});
+          }
+
+          add_result(std::move(term), search_str, deinflection.text, deinflection.trace, variant.steps);
+
+          // Match Yomitan's dictionary deinflection pass exactly: follow each
+          // source redirect once, query all enabled term dictionaries, do not
+          // apply the source POS condition to targets, and never recurse into
+          // redirects carried by those target entries.
+          for (const auto& redirect : redirects) {
+            auto target_terms = query_.query_raw(redirect.form_of);
+            auto redirect_trace = deinflection.trace;
+            for (const auto& rule : redirect.inflection_rules) {
+              redirect_trace.push_back(TransformGroup{.name = rule, .description = ""});
+            }
+            for (auto& target_term : target_terms) {
+              add_result(std::move(target_term), search_str, redirect.form_of, redirect_trace, variant.steps);
+            }
           }
         }
       }
@@ -86,57 +132,94 @@ std::vector<LookupResult> Lookup::lookup(const std::string& lookup_string, int m
   }
 
   auto results = result_map | std::views::values | std::views::as_rvalue | std::ranges::to<std::vector>();
-  const auto* primary_freq_dict = query_.freq_dicts_.empty() ? nullptr : &query_.freq_dicts_.front();
-  const bool occurrence_based =
-      primary_freq_dict != nullptr && query_.primary_frequency_mode_ == DictionaryQuery::FrequencyMode::Occurrence;
-  auto middle_iter = std::ranges::next(results.begin(), max_results, results.end());
-  std::ranges::partial_sort(results, middle_iter, [primary_freq_dict, occurrence_based](const auto& a, const auto& b) {
-    auto len_a = utf8::distance(a.matched.begin(), a.matched.end());
-    auto len_b = utf8::distance(b.matched.begin(), b.matched.end());
-    if (len_a != len_b) {
-      return len_a > len_b;
-    }
-
-    auto steps_a = a.preprocessor_steps;
-    auto steps_b = b.preprocessor_steps;
-    if (steps_a != steps_b) {
-      return steps_a < steps_b;
-    }
-
-    auto trace_len_a = a.trace.size();
-    auto trace_len_b = b.trace.size();
-    if (trace_len_a != trace_len_b) {
-      return trace_len_a < trace_len_b;
-    }
-
-    auto match_a = a.term.expression == a.deinflected;
-    auto match_b = b.term.expression == b.deinflected;
-    if (match_a != match_b) {
-      return match_a > match_b;
-    }
-
-    if (primary_freq_dict != nullptr) {
-      const auto freq_a = get_freq_value_for_dict(a.term, primary_freq_dict->name, occurrence_based);
-      const auto freq_b = get_freq_value_for_dict(b.term, primary_freq_dict->name, occurrence_based);
-      if (freq_a.has_value() != freq_b.has_value()) {
-        return freq_a.has_value();
+  std::optional<std::string_view> frequency_dictionary;
+  bool frequency_descending = false;
+  switch (options.frequency_order) {
+    case LookupFrequencyOrder::Auto:
+      if (!query_.freq_dicts_.empty()) {
+        frequency_dictionary = query_.freq_dicts_.front().name;
+        frequency_descending = query_.primary_frequency_mode_ == DictionaryQuery::FrequencyMode::Occurrence;
       }
-      if (freq_a.has_value() && *freq_a != *freq_b) {
-        return occurrence_based ? *freq_a > *freq_b : *freq_a < *freq_b;
+      break;
+    case LookupFrequencyOrder::Ascending:
+    case LookupFrequencyOrder::Descending:
+      if (options.frequency_dictionary.has_value()) {
+        const auto selected =
+            std::ranges::find(query_.freq_dicts_, *options.frequency_dictionary, &DictionaryQuery::Dictionary::name);
+        if (selected != query_.freq_dicts_.end()) {
+          frequency_dictionary = selected->name;
+          frequency_descending = options.frequency_order == LookupFrequencyOrder::Descending;
+        }
       }
-    }
+      break;
+    case LookupFrequencyOrder::Disabled:
+      break;
+  }
+  const std::optional<std::string_view> primary_reading =
+      options.primary_reading.has_value() && !options.primary_reading->empty() ? options.primary_reading : std::nullopt;
+  const size_t retained_count = std::min(results.size(), static_cast<size_t>(max_results));
+  auto middle_iter = std::ranges::next(results.begin(), static_cast<std::ptrdiff_t>(retained_count));
+  std::ranges::partial_sort(
+      results, middle_iter,
+      [primary_reading, frequency_dictionary, frequency_descending](const auto& a, const auto& b) {
+        if (primary_reading.has_value()) {
+          const std::string_view reading_a =
+              a.term.reading.empty() ? std::string_view(a.term.expression) : a.term.reading;
+          const std::string_view reading_b =
+              b.term.reading.empty() ? std::string_view(b.term.expression) : b.term.reading;
+          const bool primary_a = reading_a == *primary_reading;
+          const bool primary_b = reading_b == *primary_reading;
+          if (primary_a != primary_b) {
+            return primary_a;
+          }
+        }
 
-    if (a.term.score != b.term.score) {
-      return a.term.score > b.term.score;
-    }
+        auto len_a = utf8::distance(a.matched.begin(), a.matched.end());
+        auto len_b = utf8::distance(b.matched.begin(), b.matched.end());
+        if (len_a != len_b) {
+          return len_a > len_b;
+        }
 
-    auto a_reading_expr_match = a.term.expression == a.term.reading;
-    auto b_reading_expr_match = b.term.expression == b.term.reading;
-    return a_reading_expr_match > b_reading_expr_match;
-  });
+        auto steps_a = a.preprocessor_steps;
+        auto steps_b = b.preprocessor_steps;
+        if (steps_a != steps_b) {
+          return steps_a < steps_b;
+        }
 
-  if (results.size() > static_cast<size_t>(max_results)) {
-    results.resize(max_results);
+        auto trace_len_a = a.trace.size();
+        auto trace_len_b = b.trace.size();
+        if (trace_len_a != trace_len_b) {
+          return trace_len_a < trace_len_b;
+        }
+
+        auto match_a = a.term.expression == a.deinflected;
+        auto match_b = b.term.expression == b.deinflected;
+        if (match_a != match_b) {
+          return match_a > match_b;
+        }
+
+        if (frequency_dictionary.has_value()) {
+          const auto freq_a = get_freq_value_for_dict(a.term, *frequency_dictionary, frequency_descending);
+          const auto freq_b = get_freq_value_for_dict(b.term, *frequency_dictionary, frequency_descending);
+          if (freq_a.has_value() != freq_b.has_value()) {
+            return freq_a.has_value();
+          }
+          if (freq_a.has_value() && *freq_a != *freq_b) {
+            return frequency_descending ? *freq_a > *freq_b : *freq_a < *freq_b;
+          }
+        }
+
+        if (a.term.score != b.term.score) {
+          return a.term.score > b.term.score;
+        }
+
+        auto a_reading_expr_match = a.term.expression == a.term.reading;
+        auto b_reading_expr_match = b.term.expression == b.term.reading;
+        return a_reading_expr_match > b_reading_expr_match;
+      });
+
+  if (results.size() > retained_count) {
+    results.resize(retained_count);
   }
 
   for (auto& r : results) {

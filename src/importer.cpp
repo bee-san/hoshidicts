@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <array>
 #include <chrono>
+#include <cmath>
 #include <cstddef>
 #include <cstdint>
 #include <cstring>
@@ -14,6 +15,7 @@
 #include <filesystem>
 #include <fstream>
 #include <future>
+#include <limits>
 #include <memory>
 #include <stdexcept>
 #include <string>
@@ -78,6 +80,14 @@ void write_val(std::vector<char>& out, T value) {
   const size_t old_size = out.size();
   out.resize(old_size + sizeof(T));
   std::memcpy(out.data() + old_size, &value, sizeof(T));
+}
+
+template <typename T>
+T checked_size(size_t size, std::string_view label) {
+  if (size > static_cast<size_t>(std::numeric_limits<T>::max())) {
+    throw std::length_error(std::string(label) + " exceeds the native dictionary format");
+  }
+  return static_cast<T>(size);
 }
 
 void write_str(std::vector<char>& out, std::string_view value) {
@@ -185,22 +195,25 @@ ProcessedFile process_term_bank(const std::string& content) {
   }
 
   std::vector<char> compressed;
-  ZSTD_CCtx* cctx = ZSTD_createCCtx();
+  std::unique_ptr<ZSTD_CCtx, decltype(&ZSTD_freeCCtx)> cctx(ZSTD_createCCtx(), ZSTD_freeCCtx);
   if (!cctx) {
     return processed;
   }
 
   for (auto& term : out) {
-    const std::string_view glossary = term.glossary.str;
+    ParsedGlossary parsed_glossary;
+    if (!yomitan_parser::parse_glossary(term.glossary.str, parsed_glossary)) {
+      throw std::runtime_error("failed to parse term glossary");
+    }
+    const std::string_view glossary = parsed_glossary.display_json;
     uint64_t glossary_hash = XXH3_64bits(glossary.data(), glossary.size());
     auto it = processed.glossaries.find(glossary_hash);
     if (it == processed.glossaries.end()) {
       const size_t bound = ZSTD_compressBound(glossary.size());
       compressed.resize(bound);
       const size_t compressed_size =
-          ZSTD_compressCCtx(cctx, compressed.data(), bound, glossary.data(), glossary.size(), 0);
+          ZSTD_compressCCtx(cctx.get(), compressed.data(), bound, glossary.data(), glossary.size(), 0);
       if (ZSTD_isError(compressed_size)) {
-        ZSTD_freeCCtx(cctx);
         throw std::runtime_error("failed to compress glossary");
       }
       compressed.resize(compressed_size);
@@ -208,15 +221,15 @@ ProcessedFile process_term_bank(const std::string& content) {
     }
 
     uint64_t offset = processed.data.size();
-    uint32_t blob_size = processed.glossaries[glossary_hash].size();
+    const auto blob_size = checked_size<uint32_t>(processed.glossaries[glossary_hash].size(), "compressed glossary");
     std::string_view expr = term.expression;
     std::string_view reading = term.reading.empty() ? expr : term.reading;
     std::string_view definition_tags = term.definition_tags.value_or("");
 
     write_val<uint8_t>(processed.data, 0);
-    write_val<uint16_t>(processed.data, expr.size());
+    write_val<uint16_t>(processed.data, checked_size<uint16_t>(expr.size(), "term expression"));
     write_str(processed.data, expr);
-    write_val<uint16_t>(processed.data, reading.size());
+    write_val<uint16_t>(processed.data, checked_size<uint16_t>(reading.size(), "term reading"));
     write_str(processed.data, reading);
 
     uint64_t glossary_offset = processed.data.size();
@@ -224,14 +237,30 @@ ProcessedFile process_term_bank(const std::string& content) {
     write_val<uint32_t>(processed.data, blob_size);
     processed.glossary_offsets.emplace_back(glossary_hash, glossary_offset);
 
-    write_val<uint8_t>(processed.data, definition_tags.size());
+    write_val<uint8_t>(processed.data, checked_size<uint8_t>(definition_tags.size(), "definition tags"));
     write_str(processed.data, definition_tags);
-    write_val<uint8_t>(processed.data, term.rules.size());
+    write_val<uint8_t>(processed.data, checked_size<uint8_t>(term.rules.size(), "term rules"));
     write_str(processed.data, term.rules);
-    write_val<uint8_t>(processed.data, term.term_tags.size());
+    write_val<uint8_t>(processed.data, checked_size<uint8_t>(term.term_tags.size(), "term tags"));
     write_str(processed.data, term.term_tags);
-    write_val<uint32_t>(processed.data, 0);
+    write_val<uint32_t>(processed.data,
+                        checked_size<uint32_t>(parsed_glossary.redirects.size(), "dictionary redirect count"));
+    for (const auto& redirect : parsed_glossary.redirects) {
+      write_val<uint32_t>(processed.data, checked_size<uint32_t>(redirect.form_of.size(), "redirect target"));
+      write_str(processed.data, redirect.form_of);
+      write_val<uint32_t>(processed.data,
+                          checked_size<uint32_t>(redirect.inflection_rules.size(), "redirect rule count"));
+      for (const auto& rule : redirect.inflection_rules) {
+        write_val<uint32_t>(processed.data, checked_size<uint32_t>(rule.size(), "redirect rule"));
+        write_str(processed.data, rule);
+      }
+    }
+    if (!std::isfinite(term.score) || term.score < std::numeric_limits<int32_t>::min() ||
+        term.score > std::numeric_limits<int32_t>::max()) {
+      throw std::out_of_range("term score exceeds the native dictionary format");
+    }
     write_val<int32_t>(processed.data, static_cast<int32_t>(term.score));
+    write_val<uint8_t>(processed.data, parsed_glossary.has_display_definitions ? 1 : 0);
 
     processed.offsets.emplace_back(XXH3_64bits(expr.data(), expr.size()), offset);
     if (reading != expr) {
@@ -239,8 +268,6 @@ ProcessedFile process_term_bank(const std::string& content) {
     }
     processed.count++;
   }
-  ZSTD_freeCCtx(cctx);
-
   return processed;
 }
 
@@ -694,7 +721,7 @@ ImportResult dictionary_importer::import(const std::string& zip_path, const std:
     setup_stream_exceptions(index_file);
     index_file.write(summary_json.data(), static_cast<std::streamsize>(summary_json.size()));
 
-    std::ofstream sui(dict_path / ".hoshidicts_3", std::ios::binary);
+    std::ofstream sui(dict_path / ".hoshidicts_4", std::ios::binary);
     result.success = true;
   } catch (const std::exception& e) {
     result.success = false;

@@ -5,7 +5,10 @@
 #include <cstdint>
 #include <limits>
 #include <memory>
+#include <optional>
+#include <stdexcept>
 #include <string>
+#include <string_view>
 
 #include "hoshidicts/deinflector.hpp"
 #include "hoshidicts/importer.hpp"
@@ -536,6 +539,61 @@ hd_lookup_results* hd_lookup_run_v2(const hd_lookup* l, const char* lookup_strin
   try {
     auto r = std::make_unique<hd_lookup_results>();
     r->res = l->lookup.lookup(lookup_string, max_results, scan_length);
+    marshal_lookup_results(*r, r->trace, r->res, r->results_v2);
+
+    *out_results = r->results_v2.data();
+    *out_count = r->results_v2.size();
+    return r.release();
+  } catch (...) {
+    return nullptr;
+  }
+}
+
+static std::optional<std::string_view> optional_string_view(hd_str value) {
+  if (value.len == 0) {
+    return std::nullopt;
+  }
+  if (value.ptr == nullptr) {
+    throw std::invalid_argument("non-empty lookup option has a null pointer");
+  }
+  return std::string_view(value.ptr, value.len);
+}
+
+hd_lookup_results* hd_lookup_run_v3(const hd_lookup* l, const char* lookup_string, int max_results, size_t scan_length,
+                                    const hd_lookup_options_v3* options, const hd_lookup_result_v2** out_results,
+                                    size_t* out_count) {
+  if (l == nullptr || lookup_string == nullptr || out_results == nullptr || out_count == nullptr || max_results <= 0 ||
+      scan_length == 0) {
+    return nullptr;
+  }
+  *out_results = nullptr;
+  *out_count = 0;
+
+  try {
+    LookupOptions native_options;
+    if (options != nullptr) {
+      native_options.primary_reading = optional_string_view(options->primary_reading);
+      native_options.frequency_dictionary = optional_string_view(options->frequency_dictionary);
+      switch (options->frequency_order) {
+        case HD_LOOKUP_FREQUENCY_ORDER_AUTO:
+          native_options.frequency_order = LookupFrequencyOrder::Auto;
+          break;
+        case HD_LOOKUP_FREQUENCY_ORDER_ASCENDING:
+          native_options.frequency_order = LookupFrequencyOrder::Ascending;
+          break;
+        case HD_LOOKUP_FREQUENCY_ORDER_DESCENDING:
+          native_options.frequency_order = LookupFrequencyOrder::Descending;
+          break;
+        case HD_LOOKUP_FREQUENCY_ORDER_DISABLED:
+          native_options.frequency_order = LookupFrequencyOrder::Disabled;
+          break;
+        default:
+          return nullptr;
+      }
+    }
+
+    auto r = std::make_unique<hd_lookup_results>();
+    r->res = l->lookup.lookup(lookup_string, max_results, scan_length, native_options);
     marshal_lookup_results(*r, r->trace, r->res, r->results_v2);
 
     *out_results = r->results_v2.data();

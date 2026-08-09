@@ -1,3 +1,6 @@
+#include <xxh3.h>
+#include <zstd.h>
+
 #include <algorithm>
 #include <chrono>
 #include <cmath>
@@ -6,13 +9,16 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include <map>
 #include <optional>
+#include <ranges>
 #include <stdexcept>
 #include <string>
 #include <string_view>
 #include <utility>
 #include <vector>
 
+#include "hash/hash.hpp"
 #include "hoshidicts/deinflector.hpp"
 #include "hoshidicts/importer.hpp"
 #include "hoshidicts/lookup.hpp"
@@ -135,6 +141,101 @@ std::filesystem::path import_dictionary(const TempDirectory& temp, const std::st
   return output_path / title;
 }
 
+struct LegacyTerm {
+  std::string expression;
+  std::string reading;
+  std::string rules;
+  int32_t score;
+  std::string glossary;
+};
+
+std::vector<char> compress_glossary(std::string_view glossary) {
+  std::vector<char> compressed(ZSTD_compressBound(glossary.size()));
+  const size_t size = ZSTD_compress(compressed.data(), compressed.size(), glossary.data(), glossary.size(), 0);
+  if (ZSTD_isError(size)) {
+    throw std::runtime_error("failed to compress legacy glossary fixture");
+  }
+  compressed.resize(size);
+  return compressed;
+}
+
+std::filesystem::path write_legacy_v3_dictionary(const TempDirectory& temp, const std::string& title,
+                                                 const std::vector<LegacyTerm>& terms) {
+  const auto dictionary_path = temp.path / "legacy" / title;
+  std::filesystem::create_directories(dictionary_path);
+
+  std::vector<char> blobs;
+  struct CompressedGlossary {
+    uint64_t offset;
+    uint32_t size;
+  };
+  std::vector<CompressedGlossary> glossaries;
+  glossaries.reserve(terms.size());
+  for (const auto& term : terms) {
+    auto compressed = compress_glossary(term.glossary);
+    glossaries.push_back(
+        {.offset = static_cast<uint64_t>(blobs.size()), .size = static_cast<uint32_t>(compressed.size())});
+    blobs.insert(blobs.end(), compressed.begin(), compressed.end());
+  }
+
+  std::map<uint64_t, std::vector<uint64_t>> offsets;
+  for (size_t i = 0; i < terms.size(); i++) {
+    const auto& term = terms[i];
+    const std::string_view reading = term.reading.empty() ? std::string_view(term.expression) : term.reading;
+    const uint64_t record_offset = blobs.size();
+    append<uint8_t>(blobs, 0);
+    append<uint16_t>(blobs, term.expression.size());
+    append_bytes(blobs, term.expression);
+    append<uint16_t>(blobs, reading.size());
+    append_bytes(blobs, reading);
+    append<uint64_t>(blobs, glossaries[i].offset);
+    append<uint32_t>(blobs, glossaries[i].size);
+    append<uint8_t>(blobs, 0);
+    append<uint8_t>(blobs, term.rules.size());
+    append_bytes(blobs, term.rules);
+    append<uint8_t>(blobs, 0);
+    append<uint32_t>(blobs, 0);  // Old importers discarded dictionary redirects here.
+    append<int32_t>(blobs, term.score);
+
+    offsets[XXH3_64bits(term.expression.data(), term.expression.size())].push_back(record_offset);
+    if (reading != term.expression) {
+      offsets[XXH3_64bits(reading.data(), reading.size())].push_back(record_offset);
+    }
+  }
+
+  std::vector<std::pair<uint64_t, uint64_t>> hash_entries;
+  for (const auto& [hash, record_offsets] : offsets) {
+    const uint64_t offset = blobs.size();
+    append<uint32_t>(blobs, record_offsets.size());
+    for (uint64_t record_offset : record_offsets) {
+      append<uint64_t>(blobs, record_offset);
+    }
+    hash_entries.emplace_back(hash, offset);
+  }
+
+  std::ofstream blob_stream(dictionary_path / "blobs.bin", std::ios::binary);
+  blob_stream.write(blobs.data(), static_cast<std::streamsize>(blobs.size()));
+  if (!blob_stream) {
+    throw std::runtime_error("failed to write legacy blobs fixture");
+  }
+  blob_stream.close();
+
+  hash::linear table;
+  table.build_to_file(hash_entries, dictionary_path / "hash.table");
+  auto hashes = hash_entries | std::views::keys | std::ranges::to<std::vector>();
+  hash::bloom::build_to_file(hashes, dictionary_path / "bloom.filter");
+
+  std::ofstream index_stream(dictionary_path / "index.json", std::ios::binary);
+  index_stream << "{\"title\":\"" << title
+               << "\",\"revision\":\"legacy\",\"version\":3,\"sourceLanguage\":\"ja\",\"counts\":{\"terms\":{\"total\":"
+               << terms.size() << "}}}";
+  std::ofstream marker_stream(dictionary_path / ".hoshidicts_3", std::ios::binary);
+  if (!index_stream || !marker_stream) {
+    throw std::runtime_error("failed to write legacy dictionary metadata");
+  }
+  return dictionary_path;
+}
+
 void expect_frequency(std::string_view json, double value, std::optional<std::string_view> display,
                       std::optional<std::string_view> reading = std::nullopt) {
   ParsedFrequency parsed;
@@ -169,6 +270,18 @@ void test_parser() {
     ParsedFrequency parsed;
     check(!yomitan_parser::parse_frequency(invalid, parsed), "invalid frequency rejected");
   }
+
+  ParsedGlossary glossary;
+  check(
+      yomitan_parser::parse_glossary(
+          R"(["plain",{"number":9007199254740993},["base",["redirected from alias"]],["bad",["rule"],"extra"],["",["empty target"]]])",
+          glossary),
+      "mixed glossary parses");
+  check(glossary.display_json == R"(["plain",{"number":9007199254740993}])",
+        "glossary filtering preserves non-array JSON without numeric coercion");
+  check(glossary.has_display_definitions && glossary.redirects.size() == 1 && glossary.redirects[0].form_of == "base" &&
+            glossary.redirects[0].inflection_rules == std::vector<std::string>{"redirected from alias"},
+        "only schema-valid non-empty redirect tuples are extracted");
 }
 
 const TermResult* find_reading(const std::vector<TermResult>& terms, std::string_view reading) {
@@ -326,6 +439,258 @@ void test_sorting(const TempDirectory& temp, const std::filesystem::path& terms_
                       "occurrence mode uses maximum descending and missing last");
 }
 
+hd_str borrowed_string(std::string_view value) { return hd_str{value.data(), value.size()}; }
+
+std::vector<std::string> run_c_lookup_v3(const hd_lookup* lookup, const hd_lookup_options_v3* options,
+                                         int max_results = 8) {
+  const hd_lookup_result_v2* results = nullptr;
+  size_t count = 0;
+  hd_lookup_results* owner = hd_lookup_run_v3(lookup, "順位", max_results, 2, options, &results, &count);
+  if (owner == nullptr) {
+    throw std::runtime_error("v3 lookup unexpectedly failed");
+  }
+  std::vector<std::string> readings;
+  readings.reserve(count);
+  for (size_t i = 0; i < count; i++) {
+    readings.emplace_back(results[i].term.reading.ptr, results[i].term.reading.len);
+  }
+  hd_lookup_results_free(owner);
+  return readings;
+}
+
+void test_lookup_v3_options(const TempDirectory& temp) {
+  const auto terms_path = import_dictionary(
+      temp, "RankedTerms", std::nullopt, "ja",
+      R"([["順位","じゅんいち","","",30,["alpha"],1,""],["順位","じゅんに","","",20,["beta"],2,""],["順位","じゅんさん","","",10,["preferred"],3,""],["順位","","","",5,["expression reading"],4,""]])",
+      std::nullopt);
+  const auto legacy_frequency = import_dictionary(
+      temp, "LegacyFrequency", "rank-based", "ja", std::nullopt,
+      R"([["順位","freq",{"reading":"じゅんいち","frequency":100}],["順位","freq",{"reading":"じゅんに","frequency":2}],["順位","freq",{"reading":"じゅんさん","frequency":50}]])");
+  const auto selected_frequency = import_dictionary(
+      temp, "選択頻度", "rank-based", "ja", std::nullopt,
+      R"([["順位","freq",{"reading":"じゅんいち","frequency":3}],["順位","freq",{"reading":"じゅんいち","frequency":4}],["順位","freq",{"reading":"じゅんに","frequency":30}],["順位","freq",{"reading":"じゅんに","frequency":40}],["順位","freq",{"reading":"じゅんさん","frequency":20}],["順位","freq",{"reading":"じゅんさん","frequency":25}]])");
+
+  hd_query* query = hd_query_new();
+  hd_deinflector* deinflector = hd_deinflector_new();
+  check(query != nullptr && deinflector != nullptr, "v3 option test allocates query and deinflector");
+  if (query == nullptr || deinflector == nullptr) {
+    hd_query_free(query);
+    hd_deinflector_free(deinflector);
+    return;
+  }
+  const std::string terms_path_utf8 = path_utils::to_utf8(terms_path);
+  const std::string legacy_path_utf8 = path_utils::to_utf8(legacy_frequency);
+  const std::string selected_path_utf8 = path_utils::to_utf8(selected_frequency);
+  check(hd_query_add_term_dict(query, terms_path_utf8.c_str()) == 0, "v3 terms dictionary loads");
+  check(hd_query_add_freq_dict(query, legacy_path_utf8.c_str()) == 0, "v3 legacy frequency dictionary loads");
+  check(hd_query_add_freq_dict(query, selected_path_utf8.c_str()) == 0, "v3 selected frequency dictionary loads");
+  hd_lookup* lookup = hd_lookup_new(query, deinflector);
+  check(lookup != nullptr, "v3 lookup allocates");
+  if (lookup == nullptr) {
+    hd_query_free(query);
+    hd_deinflector_free(deinflector);
+    return;
+  }
+
+  const hd_lookup_result_v2* legacy_v2_results = nullptr;
+  size_t legacy_v2_count = 0;
+  hd_lookup_results* legacy_v2_owner = hd_lookup_run_v2(lookup, "順位", 8, 2, &legacy_v2_results, &legacy_v2_count);
+  std::vector<std::string> legacy_v2_readings;
+  if (legacy_v2_owner != nullptr) {
+    for (size_t i = 0; i < legacy_v2_count; i++) {
+      legacy_v2_readings.emplace_back(legacy_v2_results[i].term.reading.ptr, legacy_v2_results[i].term.reading.len);
+    }
+  }
+  check_reading_order(legacy_v2_readings, {"じゅんに", "じゅんさん", "じゅんいち", "順位"},
+                      "v2 retains legacy first-frequency sorting");
+  hd_lookup_results_free(legacy_v2_owner);
+
+  const hd_lookup_result* legacy_v1_results = nullptr;
+  size_t legacy_v1_count = 0;
+  hd_lookup_results* legacy_v1_owner = hd_lookup_run(lookup, "順位", 8, 2, &legacy_v1_results, &legacy_v1_count);
+  std::vector<std::string> legacy_v1_readings;
+  if (legacy_v1_owner != nullptr) {
+    for (size_t i = 0; i < legacy_v1_count; i++) {
+      legacy_v1_readings.emplace_back(legacy_v1_results[i].term.reading.ptr, legacy_v1_results[i].term.reading.len);
+    }
+  }
+  check_reading_order(legacy_v1_readings, {"じゅんに", "じゅんさん", "じゅんいち", "順位"},
+                      "v1 retains legacy first-frequency sorting");
+  hd_lookup_results_free(legacy_v1_owner);
+
+  check_reading_order(run_c_lookup_v3(lookup, nullptr), {"じゅんに", "じゅんさん", "じゅんいち", "順位"},
+                      "null v3 options retain legacy first-frequency sorting");
+
+  hd_lookup_options_v3 options{};
+  options.frequency_order = HD_LOOKUP_FREQUENCY_ORDER_AUTO;
+  check_reading_order(run_c_lookup_v3(lookup, &options), {"じゅんに", "じゅんさん", "じゅんいち", "順位"},
+                      "explicit v3 auto retains legacy first-frequency sorting");
+
+  options.frequency_order = HD_LOOKUP_FREQUENCY_ORDER_DISABLED;
+  check_reading_order(run_c_lookup_v3(lookup, &options), {"じゅんいち", "じゅんに", "じゅんさん", "順位"},
+                      "disabled v3 frequency sorting falls through to term score");
+
+  const std::string selected_title = "選択頻度";
+  options.frequency_dictionary = borrowed_string(selected_title);
+  options.frequency_order = HD_LOOKUP_FREQUENCY_ORDER_ASCENDING;
+  check_reading_order(run_c_lookup_v3(lookup, &options), {"じゅんいち", "じゅんさん", "じゅんに", "順位"},
+                      "explicit ascending frequency uses the selected UTF-8 dictionary and minimum value");
+  options.frequency_order = HD_LOOKUP_FREQUENCY_ORDER_DESCENDING;
+  check_reading_order(run_c_lookup_v3(lookup, &options), {"じゅんに", "じゅんさん", "じゅんいち", "順位"},
+                      "explicit descending frequency uses maximum value and keeps missing readings last");
+
+  const std::string unknown_title = "選択頻度x";
+  options.frequency_dictionary = borrowed_string(unknown_title);
+  options.frequency_order = HD_LOOKUP_FREQUENCY_ORDER_ASCENDING;
+  check_reading_order(run_c_lookup_v3(lookup, &options), {"じゅんいち", "じゅんに", "じゅんさん", "順位"},
+                      "unknown selected frequency dictionary does not fall back to the first dictionary");
+
+  const std::string preferred = "じゅんさん";
+  options = {};
+  options.primary_reading = borrowed_string(preferred);
+  options.frequency_order = HD_LOOKUP_FREQUENCY_ORDER_DISABLED;
+  check_reading_order(run_c_lookup_v3(lookup, &options, 1), {"じゅんさん"},
+                      "primary reading wins before result truncation");
+  check_reading_order(run_c_lookup_v3(lookup, &options), {"じゅんさん", "じゅんいち", "じゅんに", "順位"},
+                      "primary reading boosts one result without filtering alternatives");
+
+  const std::string expression_reading = "順位";
+  options.primary_reading = borrowed_string(expression_reading);
+  check_reading_order(run_c_lookup_v3(lookup, &options, 1), {"順位"},
+                      "primary reading matches an imported empty reading through its expression fallback");
+
+  options.primary_reading = hd_str{nullptr, 1};
+  const hd_lookup_result_v2* invalid_results = nullptr;
+  size_t invalid_count = 0;
+  check(hd_lookup_run_v3(lookup, "順位", 4, 2, &options, &invalid_results, &invalid_count) == nullptr,
+        "v3 rejects a malformed primary-reading slice");
+  options = {};
+  options.frequency_dictionary = hd_str{nullptr, 1};
+  options.frequency_order = HD_LOOKUP_FREQUENCY_ORDER_ASCENDING;
+  check(hd_lookup_run_v3(lookup, "順位", 4, 2, &options, &invalid_results, &invalid_count) == nullptr,
+        "v3 rejects a malformed frequency-dictionary slice");
+  options = {};
+  options.frequency_order = 99;
+  check(hd_lookup_run_v3(lookup, "順位", 4, 2, &options, &invalid_results, &invalid_count) == nullptr,
+        "v3 rejects an unknown frequency order");
+  options.frequency_order = HD_LOOKUP_FREQUENCY_ORDER_DISABLED;
+  check(hd_lookup_run_v3(lookup, "順位", 0, 2, &options, &invalid_results, &invalid_count) == nullptr,
+        "v3 rejects a non-positive result limit");
+  check(hd_lookup_run_v3(lookup, "順位", 4, 0, &options, &invalid_results, &invalid_count) == nullptr,
+        "v3 rejects an empty scan length");
+
+  check_reading_order(run_c_lookup_v3(lookup, nullptr), {"じゅんに", "じゅんさん", "じゅんいち", "順位"},
+                      "per-call v3 options do not mutate legacy lookup state");
+
+  hd_lookup_free(lookup);
+  hd_deinflector_free(deinflector);
+  hd_query_free(query);
+}
+
+const LookupResult* find_expression(const std::vector<LookupResult>& results, std::string_view expression) {
+  const auto result = std::ranges::find_if(
+      results, [expression](const LookupResult& candidate) { return candidate.term.expression == expression; });
+  return result == results.end() ? nullptr : &*result;
+}
+
+bool glossaries_contain(const TermResult& term, std::string_view text) {
+  return std::ranges::any_of(term.glossaries,
+                             [text](const GlossaryEntry& glossary) { return glossary.glossary.contains(text); });
+}
+
+void test_dictionary_redirects_v4(const TempDirectory& temp) {
+  const auto dictionary_path = import_dictionary(
+      temp, "RedirectsV4", std::nullopt, "ja",
+      R"([["へそ曲げる","","","v1",10,[{"type":"structured-content","content":{"tag":"a","href":"?query=へそを曲げる","content":"へそを曲げる"}},["へそを曲げる",["redirected from へそ曲げる"]]],1,""],["へそを曲げる","へそをまげる","","v1",9,["target definition"],2,""],["甲","","","",8,["source",["乙",["redirected from 甲"]]],3,""],["乙","","","",7,["middle",["丙",["redirected from 乙"]]],4,""],["丙","","","",6,["final"],5,""],["サイクル一","","","",5,["cycle one",["サイクル二",["redirected from サイクル一"]]],6,""],["サイクル二","","","",4,["cycle two",["サイクル一",["redirected from サイクル二"]]],7,""],["別表記","","","",3,[["本体",["redirected from 別表記"]]],8,""],["本体","ほんたい","","",2,["redirect-only target"],9,""],["壊れ","","","",1,[["ghost",["bad"],"extra"]],10,""],["ghost","","","",1,["must not be followed"],11,""],["食べる","たべる","","v1",1,["source verb",["喰う",["redirected from 食べる"]]],12,""],["喰う","くう","","v5",1,["target with a different POS"],13,""]])",
+      std::nullopt);
+
+  check(std::filesystem::is_regular_file(dictionary_path / ".hoshidicts_4"), "new imports use the v4 native marker");
+  check(!std::filesystem::exists(dictionary_path / ".hoshidicts_3"), "new imports do not masquerade as v3");
+
+  DictionaryQuery query;
+  query.add_term_dict(path_utils::to_utf8(dictionary_path));
+  Deinflector deinflector;
+  Lookup lookup(query, deinflector);
+
+  const auto alias_results = lookup.lookup("へそ曲げる", 16, 16);
+  const auto* source = find_expression(alias_results, "へそ曲げる");
+  const auto* target = find_expression(alias_results, "へそを曲げる");
+  check(source != nullptr && target != nullptr, "mixed redirect lookup keeps source content and follows target");
+  if (source != nullptr) {
+    check(glossaries_contain(source->term, "structured-content"), "structured source definition is preserved");
+    check(!glossaries_contain(source->term, "redirected from"), "redirect tuple is absent from source glossary JSON");
+  }
+  if (target != nullptr) {
+    check(target->matched == "へそ曲げる" && target->deinflected == "へそを曲げる",
+          "redirect target retains original match and target deinflection");
+    check(!target->trace.empty() && target->trace.back().name == "redirected from へそ曲げる",
+          "redirect rule is appended to the lookup trace");
+    check(glossaries_contain(target->term, "target definition"), "redirect target definition is materialized");
+  }
+
+  const auto chain_results = lookup.lookup("甲", 16, 16);
+  check(find_expression(chain_results, "甲") != nullptr && find_expression(chain_results, "乙") != nullptr,
+        "one-hop redirect returns source and immediate target");
+  check(find_expression(chain_results, "丙") == nullptr, "dictionary redirects are not recursively followed");
+
+  const auto cycle_results = lookup.lookup("サイクル一", 16, 16);
+  check(find_expression(cycle_results, "サイクル一") != nullptr &&
+            find_expression(cycle_results, "サイクル二") != nullptr && cycle_results.size() == 2,
+        "one-hop lookup terminates on redirect cycles");
+
+  const auto redirect_only_results = lookup.lookup("別表記", 16, 16);
+  check(find_expression(redirect_only_results, "別表記") == nullptr,
+        "redirect-only source is omitted after its tuple is stripped");
+  check(find_expression(redirect_only_results, "本体") != nullptr, "redirect-only source still follows its target");
+
+  const auto malformed_results = lookup.lookup("壊れ", 16, 16);
+  check(find_expression(malformed_results, "壊れ") == nullptr && find_expression(malformed_results, "ghost") == nullptr,
+        "malformed top-level arrays are stripped but never followed");
+
+  const auto inflected_results = lookup.lookup("食べた", 16, 16);
+  const auto* different_pos_target = find_expression(inflected_results, "喰う");
+  check(different_pos_target != nullptr, "redirect target is not filtered by the source deinflection POS");
+  if (different_pos_target != nullptr) {
+    check(different_pos_target->matched == "食べた" && different_pos_target->deinflected == "喰う",
+          "inflected redirect preserves source match and target deinflection");
+    check(
+        different_pos_target->trace.size() >= 2 && different_pos_target->trace.back().name == "redirected from 食べる",
+        "dictionary redirect follows the algorithmic inflection trace");
+  }
+}
+
+void test_legacy_v3_redirect_fallback(const TempDirectory& temp) {
+  const auto dictionary_path = write_legacy_v3_dictionary(
+      temp, "LegacyRedirects",
+      {{.expression = "旧表記",
+        .reading = "",
+        .rules = "",
+        .score = 2,
+        .glossary = R"([{"type":"structured-content","content":"legacy source"},["本体",["redirected from 旧表記"]]])"},
+       {.expression = "本体", .reading = "ほんたい", .rules = "", .score = 1, .glossary = R"(["legacy target"])"}});
+
+  DictionaryQuery query;
+  query.add_term_dict(path_utils::to_utf8(dictionary_path));
+  const auto direct = query.query("旧表記");
+  check(direct.size() == 1 && glossaries_contain(direct.front(), "legacy source"),
+        "legacy direct query preserves non-array definitions");
+  if (!direct.empty()) {
+    check(!glossaries_contain(direct.front(), "redirected from"),
+          "legacy direct query filters raw redirect tuples from its glossary");
+  }
+
+  Deinflector deinflector;
+  Lookup lookup(query, deinflector);
+  const auto results = lookup.lookup("旧表記", 8, 8);
+  const auto* target = find_expression(results, "本体");
+  check(target != nullptr, "legacy v3 raw glossary fallback follows an existing indexed redirect");
+  if (target != nullptr) {
+    check(target->deinflected == "本体" && !target->trace.empty() &&
+              target->trace.back().name == "redirected from 旧表記",
+          "legacy fallback carries redirect target and rule into lookup metadata");
+  }
+}
+
 void test_inference(const TempDirectory& temp, const std::filesystem::path& terms_path) {
   const auto occurrence = import_dictionary(
       temp, "InferredOccurrence", std::nullopt, "JA", std::nullopt,
@@ -356,9 +721,9 @@ void test_inference(const TempDirectory& temp, const std::filesystem::path& term
 }
 
 void test_katakana_reading_lookup(const TempDirectory& temp) {
-  const auto terms_path = import_dictionary(
-      temp, "KanaLookup", std::nullopt, "ja",
-      R"([["我輩","わがはい","","",0,["I; me; myself"],1606640,""]])", std::nullopt);
+  const auto terms_path =
+      import_dictionary(temp, "KanaLookup", std::nullopt, "ja",
+                        R"([["我輩","わがはい","","",0,["I; me; myself"],1606640,""]])", std::nullopt);
 
   DictionaryQuery query;
   query.add_term_dict(path_utils::to_utf8(terms_path));
@@ -385,8 +750,11 @@ int main() {
     const auto terms_path = import_dictionary(temp, "Terms", std::nullopt, "ja", term_bank(), std::nullopt);
     test_query_shapes_and_c_v2(temp, terms_path);
     test_sorting(temp, terms_path);
+    test_lookup_v3_options(temp);
     test_inference(temp, terms_path);
     test_katakana_reading_lookup(temp);
+    test_dictionary_redirects_v4(temp);
+    test_legacy_v3_redirect_fallback(temp);
   } catch (const std::exception& error) {
     std::cerr << "FAIL: unexpected exception: " << error.what() << '\n';
     failures++;
