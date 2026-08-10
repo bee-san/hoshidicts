@@ -1,5 +1,4 @@
 #include "hoshidicts/query.hpp"
-#include "hoshidicts/importer.hpp"
 
 #include <ankerl/unordered_dense.h>
 #include <zstd.h>
@@ -16,6 +15,7 @@
 #include <vector>
 
 #include "hash/hash.hpp"
+#include "hoshidicts/importer.hpp"
 #include "json/yomitan_parser.hpp"
 #include "memory/memory.hpp"
 
@@ -32,6 +32,15 @@ std::string_view read_str(const uint8_t*& addr, uint32_t len) {
   std::string_view result(reinterpret_cast<const char*>(addr), len);
   addr += len;
   return result;
+}
+
+struct ZstdContextDeleter {
+  void operator()(ZSTD_DCtx* context) const { ZSTD_freeDCtx(context); }
+};
+
+ZSTD_DCtx* decompression_context() {
+  thread_local std::unique_ptr<ZSTD_DCtx, ZstdContextDeleter> context(ZSTD_createDCtx());
+  return context.get();
 }
 }
 
@@ -451,7 +460,12 @@ std::string DictionaryQuery::decompress_glossary(const void* data, size_t size) 
   std::string result;
   result.resize(decompressed_size);
 
-  size_t actual_size = ZSTD_decompress(result.data(), result.size(), data, size);
+  ZSTD_DCtx* context = decompression_context();
+  if (!context) {
+    return "";
+  }
+
+  size_t actual_size = ZSTD_decompressDCtx(context, result.data(), result.size(), data, size);
   if (ZSTD_isError(actual_size)) {
     return "";
   }

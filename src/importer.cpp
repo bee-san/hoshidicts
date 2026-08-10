@@ -27,6 +27,8 @@
 #include "zip/zip.hpp"
 
 namespace {
+constexpr int glossary_compression_level = 1;
+
 struct Files {
   std::vector<int> term_banks;
   std::vector<int> meta_banks;
@@ -196,8 +198,8 @@ ProcessedFile process_term_bank(const std::string& content) {
     if (it == processed.glossaries.end()) {
       const size_t bound = ZSTD_compressBound(glossary.size());
       compressed.resize(bound);
-      const size_t compressed_size =
-          ZSTD_compressCCtx(cctx, compressed.data(), bound, glossary.data(), glossary.size(), 0);
+      const size_t compressed_size = ZSTD_compressCCtx(cctx, compressed.data(), bound, glossary.data(), glossary.size(),
+                                                       glossary_compression_level);
       if (ZSTD_isError(compressed_size)) {
         ZSTD_freeCCtx(cctx);
         throw std::runtime_error("failed to compress glossary");
