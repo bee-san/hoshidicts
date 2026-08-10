@@ -417,8 +417,7 @@ void write_terms(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>
     return;
   }
 
-  size_t max_threads =
-      low_ram ? 2 : std::max<size_t>(4, static_cast<const unsigned long>(std::thread::hardware_concurrency()) + 4);
+  size_t max_threads = low_ram ? 2 : std::max<size_t>(4, std::thread::hardware_concurrency());
   std::deque<std::future<ProcessedFile>> threads;
 
   ankerl::unordered_dense::map<uint64_t, uint64_t> glossaries;
@@ -476,8 +475,7 @@ void write_meta(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>&
     return;
   }
 
-  size_t max_threads =
-      low_ram ? 2 : std::max<size_t>(4, static_cast<const unsigned long>(std::thread::hardware_concurrency()) + 4);
+  size_t max_threads = low_ram ? 2 : std::max<size_t>(4, std::thread::hardware_concurrency());
   std::deque<std::future<ProcessedFile>> threads;
   auto write_processed = [&](ProcessedFile&& processed) {
     if (processed.data.empty()) {
@@ -517,8 +515,7 @@ void write_kanji(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>
     return;
   }
 
-  size_t max_threads =
-      low_ram ? 2 : std::max<size_t>(4, static_cast<const unsigned long>(std::thread::hardware_concurrency()) + 4);
+  size_t max_threads = low_ram ? 2 : std::max<size_t>(4, std::thread::hardware_concurrency());
   std::deque<std::future<ProcessedFile>> threads;
   auto write_processed = [&](ProcessedFile&& processed) {
     if (processed.data.empty()) {
