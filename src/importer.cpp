@@ -27,7 +27,8 @@
 #include "zip/zip.hpp"
 
 namespace {
-constexpr int glossary_compression_level = 1;
+// Negative levels select Zstd's fast mode; -1 is the measured speed/size knee for per-glossary frames.
+constexpr int glossary_compression_level = -1;
 
 struct Files {
   std::vector<int> term_banks;
