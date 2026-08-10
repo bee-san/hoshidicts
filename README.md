@@ -67,6 +67,14 @@ Follows a parsing strategy similar to Yomitan. Substrings of `lookup_string` are
 
 Results are filtered by part-of-speech tags defined in dictionaries, or added directly if none are present. The results are sorted by matched length first, then by preprocessing steps, then deinflection trace length and finally by frequency.
 
+## Benchmarks
+
+Build the import and lookup benchmark suite with `HOSHIDICTS_BENCHMARK=ON`. It reports warmup-aware latency
+distributions, throughput, hit rates, dictionary scaling, import modes, output size, and optional memory use. Reports can
+also be written as versioned JSON for regression comparisons.
+
+See [benchmark/README.md](benchmark/README.md) for build commands, workloads, and measurement guidance.
+
 ## Acknowledgements
 
 - [Yomitan](https://github.com/yomidevs/yomitan): Dictionary format, Japanese deinflection rules and descriptions, Japanese preprocessor | GPL-3.0

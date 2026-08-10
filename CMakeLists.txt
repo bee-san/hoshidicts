@@ -76,12 +76,56 @@ if(HOSHIDICTS_CLI)
 endif()
 
 if(HOSHIDICTS_BENCHMARK)
+    find_package(Threads REQUIRED)
+    find_package(Git QUIET)
+    set(HOSHIDICTS_BENCHMARK_GENERATED_DIR
+        ${CMAKE_CURRENT_BINARY_DIR}/generated
+    )
+    set(HOSHIDICTS_BENCHMARK_VERSION_HEADER
+        ${HOSHIDICTS_BENCHMARK_GENERATED_DIR}/benchmark_version.hpp
+    )
+
+    add_custom_target(hoshidicts-benchmark-version
+        COMMAND ${CMAKE_COMMAND}
+            "-DGIT_EXECUTABLE=${GIT_EXECUTABLE}"
+            "-DSOURCE_DIR=${CMAKE_CURRENT_SOURCE_DIR}"
+            "-DOUTPUT_FILE=${HOSHIDICTS_BENCHMARK_VERSION_HEADER}"
+            -P ${CMAKE_CURRENT_SOURCE_DIR}/benchmark/write_version.cmake
+        BYPRODUCTS ${HOSHIDICTS_BENCHMARK_VERSION_HEADER}
+        VERBATIM
+    )
+
+    add_library(hoshidicts-benchmark-common STATIC
+        benchmark/common.cpp
+        ${HOSHIDICTS_BENCHMARK_VERSION_HEADER}
+    )
+    add_dependencies(hoshidicts-benchmark-common
+        hoshidicts-benchmark-version
+    )
+
+    target_include_directories(hoshidicts-benchmark-common PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/benchmark
+    )
+    target_include_directories(hoshidicts-benchmark-common PRIVATE
+        ${HOSHIDICTS_BENCHMARK_GENERATED_DIR}
+    )
+
+    target_link_libraries(hoshidicts-benchmark-common PUBLIC
+        glaze::glaze
+        Threads::Threads
+    )
+
+    if(WIN32)
+        target_link_libraries(hoshidicts-benchmark-common PRIVATE psapi)
+    endif()
+
     add_executable(benchmark-import
         benchmark/import.cpp
     )
 
     target_link_libraries(benchmark-import PRIVATE
         hoshidicts
+        hoshidicts-benchmark-common
     )
 
     add_executable(benchmark-lookup
@@ -90,5 +134,6 @@ if(HOSHIDICTS_BENCHMARK)
 
     target_link_libraries(benchmark-lookup PRIVATE
         hoshidicts
+        hoshidicts-benchmark-common
     )
 endif()
