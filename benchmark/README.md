@@ -113,3 +113,7 @@ jq '.cases[] | {archive, mode, mean: .duration_ms.mean, peak_rss: .peak_rss_byte
   result. The suite does not evict the operating system page cache.
 - Compare distributions and mechanism, not a single minimum. Import benchmarks are especially sensitive to filesystem
   cache, CPU frequency, and background I/O.
+
+## Recorded experiments
+
+- [2026-08-10 performance experiments](results/2026-08-10-performance.md)
