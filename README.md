@@ -54,6 +54,8 @@ static uint32_t Deinflector::pos_to_conditions(const std::vector<std::string>& p
 ```
 Converts a vector of part-of-speech tags into a bitmask used for deinflection filtering.
 
+`Deinflector` also normalizes NekoPara-style `にゃ` substitutions, allowing forms such as `できにゃい` to resolve to `できる` while preserving exact matches such as `こんにゃく`.
+
 ### lookup
 ```cpp
 Lookup::Lookup(DictionaryQuery& query, Deinflector& deinflector)
@@ -78,6 +80,7 @@ Results are filtered by part-of-speech tags defined in dictionaries, or added di
 - [unordered_dense](https://github.com/martinus/unordered_dense.git): MIT
 - [utf8proc](https://github.com/JuliaStrings/utf8proc): MIT
 - [kanji-processor](https://github.com/yomidevs/kanji-processor): MIT
+- [Nekopara-Speech](https://huggingface.co/datasets/OpenSpeechHub/Nekopara-Speech): NekoPara speech corpus used for cat-speech normalization
 
 ## License
 hoshidicts (main) is licensed under the GNU General Public License v3.0. See [LICENSE](LICENSE) for details.
