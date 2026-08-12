@@ -1268,6 +1268,24 @@ std::vector<DeinflectionResult> Deinflector::deinflect(const std::string& text) 
     result.emplace_back(text, NONE, trace);
   }
 
+  constexpr std::string_view neko = "にゃ";
+  constexpr std::array<std::string_view, 5> replacements = {"な", "だ", "ら", "ま", "じゃ"};
+  const TransformGroup neko_group = {.name = "neko speech", .description = "NekoPara-style にゃ substitution."};
+  for (size_t pos = text.find(neko); pos != std::string::npos; pos = text.find(neko, pos + neko.size())) {
+    for (const auto replacement : replacements) {
+      std::string normalized = text;
+      normalized.replace(pos, neko.size(), replacement);
+
+      trace = {neko_group};
+      size_t normalized_len = utf8::distance(normalized.begin(), normalized.end());
+      if (normalized_len > 1) {
+        deinflect_recursive(normalized, NONE, trace, result);
+      } else {
+        result.emplace_back(normalized, NONE, trace);
+      }
+    }
+  }
+
   return result;
 }
 
