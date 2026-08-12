@@ -71,9 +71,9 @@ struct Tag {
 };
 
 struct ParsedFrequency {
-  std::optional<std::string_view> reading;
-  double value = 0;
-  std::optional<std::string> display_value;
+  std::string_view reading;
+  int value = 0;
+  std::string display_value;
 };
 
 struct ParsedAccent {

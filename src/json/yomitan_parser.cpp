@@ -52,19 +52,19 @@ struct glz::meta<Tag> {
 
 namespace internal {
 struct FrequencyValue {
-  double value;
+  int value;
   std::optional<std::string> display_value;
 };
 
 struct RawFrequencyFlat {
   std::optional<std::string_view> reading;
-  double value;
+  int value;
   std::optional<std::string> display_value;
 };
 
 struct RawFrequency {
   std::optional<std::string_view> reading;
-  std::variant<double, std::string, FrequencyValue> frequency;
+  std::variant<int, FrequencyValue> frequency;
 };
 
 struct PitchesArray {
@@ -193,87 +193,42 @@ bool yomitan_parser::parse_tag_bank(std::string_view content, std::vector<Tag>& 
 }
 
 bool yomitan_parser::parse_frequency(std::string_view content, ParsedFrequency& out) {
-  auto parse_string_number = [](const std::string& value) {
-    // Keep this in sync with Yomitan's Translator._numberRegex.
-    static const std::regex number_regex(R"([+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?)");
-    std::smatch match;
-    if (!std::regex_search(value, match, number_regex)) {
-      return 0.0;
-    }
-
-    double parsed = 0;
-    const std::string matched = match.str();
-    const char* begin = matched.data();
-    const char* end = begin + matched.size();
-    if (begin != end && *begin == '+') {
-      begin++;
-    }
-    const auto result = std::from_chars(begin, end, parsed);
-    return result.ec == std::errc{} && result.ptr == end && std::isfinite(parsed) ? parsed : 0.0;
-  };
-
-  auto assign_value = [&](const auto& value) {
-    using T = std::decay_t<decltype(value)>;
-    if constexpr (std::is_same_v<T, double>) {
-      if (!std::isfinite(value)) {
-        return false;
-      }
-      out.value = value;
-      out.display_value = std::nullopt;
-    } else if constexpr (std::is_same_v<T, std::string>) {
-      out.value = parse_string_number(value);
-      out.display_value = value;
-    } else {
-      if (!std::isfinite(value.value)) {
-        return false;
-      }
-      out.value = value.value;
-      out.display_value = value.display_value;
-    }
-    return true;
-  };
-
-  internal::RawFrequency parsed;
-  auto error = glz::read<glz::opts{.error_on_unknown_keys = false, .error_on_missing_keys = true}>(parsed, content);
-  if (!error) {
-    out.reading = parsed.reading;
-    return std::visit(assign_value, parsed.frequency);
-  }
-
   internal::RawFrequencyFlat parsed_flat;
-  error = glz::read<glz::opts{.error_on_unknown_keys = false, .error_on_missing_keys = true}>(parsed_flat, content);
+  auto error =
+      glz::read<glz::opts{.error_on_unknown_keys = false, .error_on_missing_keys = true}>(parsed_flat, content);
   if (!error) {
-    if (!std::isfinite(parsed_flat.value)) {
-      return false;
-    }
-    out.reading = parsed_flat.reading;
+    out.reading = parsed_flat.reading.value_or("");
     out.value = parsed_flat.value;
-    out.display_value = parsed_flat.display_value;
+    out.display_value = parsed_flat.display_value.value_or(std::to_string(parsed_flat.value));
     return true;
   }
 
-  double val;
+  int val;
   error = glz::read_json(val, content);
   if (!error) {
-    if (!std::isfinite(val)) {
-      return false;
-    }
     out.value = val;
-    out.display_value = std::nullopt;
-    out.reading = std::nullopt;
+    out.display_value = std::to_string(val);
+    out.reading = "";
     return true;
   }
 
-  std::string string_value;
-  error = glz::read_json(string_value, content);
-  if (!error) {
-    out.reading = std::nullopt;
-    out.value = parse_string_number(string_value);
-    out.display_value = std::move(string_value);
-    return true;
+  internal::RawFrequency parsed;
+  error = glz::read<glz::opts{.error_on_unknown_keys = false, .error_on_missing_keys = true}>(parsed, content);
+  if (error) {
+    return false;
   }
 
-  return false;
+  out.reading = parsed.reading.value_or("");
+  if (std::holds_alternative<int>(parsed.frequency)) {
+    int freq = std::get<int>(parsed.frequency);
+    out.value = freq;
+    out.display_value = std::to_string(freq);
+  } else {
+    auto& freq = std::get<internal::FrequencyValue>(parsed.frequency);
+    out.value = freq.value;
+    out.display_value = freq.display_value.value_or(std::to_string(freq.value));
+  }
+  return true;
 }
 
 bool yomitan_parser::parse_pitch(std::string_view content, ParsedPitch& out) {

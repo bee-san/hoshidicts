@@ -115,6 +115,8 @@ if(HOSHIDICTS_TESTS)
 
     target_link_libraries(hoshidicts-frequency-tests PRIVATE
         hoshidicts
+        glaze::glaze
+        unordered_dense
     )
 
     if(MSVC)

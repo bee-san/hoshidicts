@@ -14,8 +14,8 @@
 #endif
 
 struct Frequency {
-  double value;
-  std::optional<std::string> display_value;
+  int value;
+  std::string display_value;
 };
 
 struct DictionaryStyle {

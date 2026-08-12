@@ -236,37 +236,28 @@ std::filesystem::path write_legacy_v3_dictionary(const TempDirectory& temp, cons
   return dictionary_path;
 }
 
-void expect_frequency(std::string_view json, double value, std::optional<std::string_view> display,
-                      std::optional<std::string_view> reading = std::nullopt) {
+void expect_frequency(std::string_view json, int value, std::string_view display, std::string_view reading = "") {
   ParsedFrequency parsed;
   check(yomitan_parser::parse_frequency(json, parsed), "frequency shape parses");
-  check_close(parsed.value, value, "frequency numeric value");
-  check(parsed.reading == reading, "frequency reading presence and value");
-  check(parsed.display_value.has_value() == display.has_value(), "frequency display nullability");
-  if (parsed.display_value.has_value() && display.has_value()) {
-    check(*parsed.display_value == *display, "frequency display exact value");
-  }
+  check(parsed.value == value, "frequency numeric value");
+  check(parsed.reading == reading, "frequency reading");
+  check(parsed.display_value == display, "frequency display value");
 }
 
 void test_parser() {
-  expect_frequency("12.5", 12.5, std::nullopt);
-  expect_frequency("-1.25e2", -125, std::nullopt);
-  expect_frequency(R"("rank: .5E+2 / 100")", 50, "rank: .5E+2 / 100");
-  expect_frequency(R"("rank: +1.25e+2")", 125, "rank: +1.25e+2");
-  expect_frequency(R"("rank: +1.")", 1, "rank: +1.");
-  expect_frequency(R"("rank: -.5")", -0.5, "rank: -.5");
-  expect_frequency(R"("not ranked")", 0, "not ranked");
-  expect_frequency(R"("1e")", 1, "1e");
-  expect_frequency(R"({"value":2.75})", 2.75, std::nullopt);
-  expect_frequency(R"({"value":2.75,"displayValue":""})", 2.75, "");
-  expect_frequency(R"({"value":2.75,"displayValue":"top 3"})", 2.75, "top 3");
-  expect_frequency(R"({"reading":"よみ","frequency":3.5})", 3.5, std::nullopt, "よみ");
-  expect_frequency(R"({"reading":"よみ","frequency":"#4.5"})", 4.5, "#4.5", "よみ");
-  expect_frequency(R"({"reading":"よみ","frequency":{"value":5.5,"displayValue":"five"}})", 5.5, "five", "よみ");
-  expect_frequency(R"({"reading":"","frequency":5.75})", 5.75, std::nullopt, "");
-  expect_frequency(R"({"reading":"よみ","value":6.5,"displayValue":"legacy"})", 6.5, "legacy", "よみ");
+  // The four shapes the dictionaries in circulation actually emit. A display
+  // value is synthesised from the numeric value when the archive omits one.
+  expect_frequency("12", 12, "12");
+  expect_frequency(R"({"value":3,"displayValue":"3㋕"})", 3, "3㋕");
+  expect_frequency(R"({"value":3})", 3, "3");
+  expect_frequency(R"({"reading":"よみ","frequency":4})", 4, "4", "よみ");
+  expect_frequency(R"({"reading":"よみ","frequency":{"value":5,"displayValue":"five"}})", 5, "five", "よみ");
+  expect_frequency(R"({"reading":"よみ","frequency":{"value":5}})", 5, "5", "よみ");
+  expect_frequency(R"({"reading":"よみ","value":6,"displayValue":"legacy"})", 6, "legacy", "よみ");
+  expect_frequency(R"({"value":7,"displayValue":""})", 7, "");
+  expect_frequency(R"({"reading":"","frequency":8})", 8, "8", "");
 
-  for (const std::string_view invalid : {"true", "null", "[]", R"({"frequency":true})", R"({"value":"12"})", "1e999"}) {
+  for (const std::string_view invalid : {"true", "null", "[]", R"({"frequency":true})", R"({"value":"12"})"}) {
     ParsedFrequency parsed;
     check(!yomitan_parser::parse_frequency(invalid, parsed), "invalid frequency rejected");
   }
@@ -293,10 +284,10 @@ std::string term_bank() {
   return R"([["語","ご一","","",0,["one"],1,""],["語","ご二","","",0,["two"],2,""],["語","ご三","","",0,["three"],3,""]])";
 }
 
-void test_query_shapes_and_c_v2(const TempDirectory& temp, const std::filesystem::path& terms_path) {
+void test_query_shapes(const TempDirectory& temp, const std::filesystem::path& terms_path) {
   const auto frequency_path = import_dictionary(
       temp, "Shapes", "rank-based", "ja", std::nullopt,
-      R"([["語","freq",{"reading":"ご一","frequency":1.25}],["語","freq",{"reading":"ご一","frequency":1.25}],["語","freq",{"reading":"ご一","frequency":{"value":1.25,"displayValue":""}}],["語","freq",{"reading":"ご一","frequency":{"value":1.25,"displayValue":"1.25"}}],["語","freq",{"reading":"ご一","frequency":"rank 1.25"}],["語","freq",{"reading":"ご二","frequency":9.5}],["語","freq",{"reading":"other","frequency":100}],["語","freq",{"reading":"","frequency":200}]])");
+      R"([["語","freq",{"reading":"ご一","frequency":1}],["語","freq",{"reading":"ご一","frequency":1}],["語","freq",{"reading":"ご一","frequency":{"value":1,"displayValue":""}}],["語","freq",{"reading":"ご一","frequency":{"value":1,"displayValue":"1㋕"}}],["語","freq",{"reading":"ご二","frequency":9}],["語","freq",{"reading":"other","frequency":100}],["語","freq",{"reading":"","frequency":200}]])");
 
   DictionaryQuery query;
   const std::string terms_path_utf8 = path_utils::to_utf8(terms_path);
@@ -308,29 +299,37 @@ void test_query_shapes_and_c_v2(const TempDirectory& temp, const std::filesystem
   const auto* second = find_reading(terms, "ご二");
   const auto* third = find_reading(terms, "ご三");
   check(first != nullptr && second != nullptr && third != nullptr, "all reading variants returned");
+  // An entry whose reading is absent or empty applies to every reading of the
+  // expression, so the 200 below lands on all three. No frequency dictionary in
+  // circulation emits one, but the semantics are worth pinning down.
   if (first != nullptr) {
     check(first->frequencies.size() == 1, "one frequency dictionary on first reading");
     if (!first->frequencies.empty()) {
-      check(first->frequencies[0].frequencies.size() == 4, "exact value/display pairs deduplicated");
       const auto& values = first->frequencies[0].frequencies;
-      check(std::ranges::count_if(values, [](const Frequency& item) { return !item.display_value.has_value(); }) == 1,
-            "null display preserved and deduplicated");
-      check(std::ranges::count_if(values,
-                                  [](const Frequency& item) {
-                                    return item.display_value.has_value() && item.display_value->empty();
-                                  }) == 1,
-            "empty display remains distinct from null");
+      // "1" twice collapses; the synthesised "1", the empty display and "1㋕"
+      // are three distinct value/display pairs, plus the unscoped 200.
+      check(values.size() == 4, "exact value/display pairs deduplicated");
+      check(std::ranges::count_if(values, [](const Frequency& item) { return item.display_value == "1"; }) == 1,
+            "display synthesised from the numeric value when absent");
+      check(std::ranges::count_if(values, [](const Frequency& item) { return item.display_value.empty(); }) == 1,
+            "empty display remains distinct");
+      check(std::ranges::count_if(values, [](const Frequency& item) { return item.display_value == "1㋕"; }) == 1,
+            "marked display value retained verbatim");
     }
   }
   if (second != nullptr) {
-    check(second->frequencies.size() == 1 && second->frequencies[0].frequencies.size() == 1,
-          "reading-specific frequency retained");
-    if (!second->frequencies.empty() && !second->frequencies[0].frequencies.empty()) {
-      check_close(second->frequencies[0].frequencies[0].value, 9.5, "reading-specific decimal retained");
+    check(second->frequencies.size() == 1 && second->frequencies[0].frequencies.size() == 2,
+          "reading-specific frequency retained alongside the unscoped one");
+    if (!second->frequencies.empty() && second->frequencies[0].frequencies.size() == 2) {
+      check(second->frequencies[0].frequencies[0].value == 9, "reading-specific value retained");
     }
   }
   if (third != nullptr) {
-    check(third->frequencies.empty(), "mismatched readings filtered");
+    check(third->frequencies.size() == 1 && third->frequencies[0].frequencies.size() == 1,
+          "a reading with no specific entry keeps only the unscoped one");
+    if (!third->frequencies.empty() && !third->frequencies[0].frequencies.empty()) {
+      check(third->frequencies[0].frequencies[0].value == 200, "mismatched reading-specific entries filtered");
+    }
   }
 
   hd_query* c_query = hd_query_new();
@@ -341,48 +340,40 @@ void test_query_shapes_and_c_v2(const TempDirectory& temp, const std::filesystem
   check(hd_query_add_term_dict(c_query, terms_path_utf8.c_str()) == 0, "C term dictionary added");
   check(hd_query_add_freq_dict(c_query, frequency_path_utf8.c_str()) == 0, "C frequency dictionary added");
 
-  const hd_term_result_v2* v2_terms = nullptr;
-  size_t v2_count = 0;
-  hd_results* v2_owner = hd_query_run_v2(c_query, "語", &v2_terms, &v2_count);
-  check(v2_owner != nullptr && v2_count == 3, "v2 C query returns terms");
-  if (v2_owner != nullptr) {
-    bool saw_null = false;
+  const hd_term_result* c_terms = nullptr;
+  size_t c_count = 0;
+  hd_results* c_owner = hd_query_run(c_query, "語", &c_terms, &c_count);
+  check(c_owner != nullptr && c_count == 3, "C query returns terms");
+  if (c_owner != nullptr) {
+    bool saw_synthesised = false;
     bool saw_empty = false;
-    bool saw_decimal = false;
-    for (size_t i = 0; i < v2_count; i++) {
-      for (size_t j = 0; j < v2_terms[i].frequencies_count; j++) {
-        const auto& entry = v2_terms[i].frequencies[j];
+    bool saw_marked = false;
+    for (size_t i = 0; i < c_count; i++) {
+      for (size_t j = 0; j < c_terms[i].frequencies_count; j++) {
+        const auto& entry = c_terms[i].frequencies[j];
         for (size_t k = 0; k < entry.frequencies_count; k++) {
           const auto& value = entry.frequencies[k];
-          saw_decimal = saw_decimal || value.value == 1.25 || value.value == 9.5;
-          saw_null = saw_null || (value.display_value_is_null != 0 && value.display_value.ptr == nullptr);
-          saw_empty = saw_empty || (value.display_value_is_null == 0 && value.display_value.ptr != nullptr &&
-                                    value.display_value.len == 0);
+          const std::string_view display(value.display_value.ptr, value.display_value.len);
+          saw_synthesised = saw_synthesised || (value.value == 1 && display == "1");
+          saw_empty = saw_empty || (value.display_value.ptr != nullptr && value.display_value.len == 0);
+          saw_marked = saw_marked || display == "1㋕";
         }
       }
     }
-    check(saw_decimal, "v2 C query preserves doubles");
-    check(saw_null, "v2 C query exposes null display");
-    check(saw_empty, "v2 C query distinguishes empty display");
-    hd_results_free(v2_owner);
-  }
-
-  const hd_term_result* v1_terms = nullptr;
-  size_t v1_count = 0;
-  hd_results* v1_owner = hd_query_run(c_query, "語", &v1_terms, &v1_count);
-  check(v1_owner != nullptr && v1_count == 3, "v1 C query remains callable");
-  if (v1_owner != nullptr) {
-    hd_results_free(v1_owner);
+    check(saw_synthesised, "C query exposes the synthesised display value");
+    check(saw_empty, "C query distinguishes an empty display value");
+    check(saw_marked, "C query exposes a marked display value");
+    hd_results_free(c_owner);
   }
 
   hd_deinflector* c_deinflector = hd_deinflector_new();
   hd_lookup* c_lookup = c_deinflector == nullptr ? nullptr : hd_lookup_new(c_query, c_deinflector);
-  check(c_deinflector != nullptr && c_lookup != nullptr, "v2 C lookup allocated");
+  check(c_deinflector != nullptr && c_lookup != nullptr, "C lookup allocated");
   if (c_lookup != nullptr) {
-    const hd_lookup_result_v2* lookup_results = nullptr;
+    const hd_lookup_result* lookup_results = nullptr;
     size_t lookup_count = 0;
-    hd_lookup_results* lookup_owner = hd_lookup_run_v2(c_lookup, "語", 1, 1, &lookup_results, &lookup_count);
-    check(lookup_owner != nullptr && lookup_count == 1, "v2 C lookup returns sorted result");
+    hd_lookup_results* lookup_owner = hd_lookup_run(c_lookup, "語", 1, 1, &lookup_results, &lookup_count);
+    check(lookup_owner != nullptr && lookup_count == 1, "C lookup returns sorted result");
     if (lookup_owner != nullptr) {
       hd_lookup_results_free(lookup_owner);
     }
@@ -441,11 +432,11 @@ void test_sorting(const TempDirectory& temp, const std::filesystem::path& terms_
 
 hd_str borrowed_string(std::string_view value) { return hd_str{value.data(), value.size()}; }
 
-std::vector<std::string> run_c_lookup_v3(const hd_lookup* lookup, const hd_lookup_options_v3* options,
+std::vector<std::string> run_c_lookup_with_options(const hd_lookup* lookup, const hd_lookup_options* options,
                                          int max_results = 8) {
-  const hd_lookup_result_v2* results = nullptr;
+  const hd_lookup_result* results = nullptr;
   size_t count = 0;
-  hd_lookup_results* owner = hd_lookup_run_v3(lookup, "順位", max_results, 2, options, &results, &count);
+  hd_lookup_results* owner = hd_lookup_run_with_options(lookup, "順位", max_results, 2, options, &results, &count);
   if (owner == nullptr) {
     throw std::runtime_error("v3 lookup unexpectedly failed");
   }
@@ -458,7 +449,7 @@ std::vector<std::string> run_c_lookup_v3(const hd_lookup* lookup, const hd_looku
   return readings;
 }
 
-void test_lookup_v3_options(const TempDirectory& temp) {
+void test_lookup_options(const TempDirectory& temp) {
   const auto terms_path = import_dictionary(
       temp, "RankedTerms", std::nullopt, "ja",
       R"([["順位","じゅんいち","","",30,["alpha"],1,""],["順位","じゅんに","","",20,["beta"],2,""],["順位","じゅんさん","","",10,["preferred"],3,""],["順位","","","",5,["expression reading"],4,""]])",
@@ -492,94 +483,81 @@ void test_lookup_v3_options(const TempDirectory& temp) {
     return;
   }
 
-  const hd_lookup_result_v2* legacy_v2_results = nullptr;
-  size_t legacy_v2_count = 0;
-  hd_lookup_results* legacy_v2_owner = hd_lookup_run_v2(lookup, "順位", 8, 2, &legacy_v2_results, &legacy_v2_count);
-  std::vector<std::string> legacy_v2_readings;
-  if (legacy_v2_owner != nullptr) {
-    for (size_t i = 0; i < legacy_v2_count; i++) {
-      legacy_v2_readings.emplace_back(legacy_v2_results[i].term.reading.ptr, legacy_v2_results[i].term.reading.len);
+  const hd_lookup_result* plain_results = nullptr;
+  size_t plain_count = 0;
+  hd_lookup_results* plain_owner = hd_lookup_run(lookup, "順位", 8, 2, &plain_results, &plain_count);
+  std::vector<std::string> plain_readings;
+  if (plain_owner != nullptr) {
+    for (size_t i = 0; i < plain_count; i++) {
+      plain_readings.emplace_back(plain_results[i].term.reading.ptr, plain_results[i].term.reading.len);
     }
   }
-  check_reading_order(legacy_v2_readings, {"じゅんに", "じゅんさん", "じゅんいち", "順位"},
-                      "v2 retains legacy first-frequency sorting");
-  hd_lookup_results_free(legacy_v2_owner);
+  check_reading_order(plain_readings, {"じゅんに", "じゅんさん", "じゅんいち", "順位"},
+                      "hd_lookup_run retains first-frequency sorting");
+  hd_lookup_results_free(plain_owner);
 
-  const hd_lookup_result* legacy_v1_results = nullptr;
-  size_t legacy_v1_count = 0;
-  hd_lookup_results* legacy_v1_owner = hd_lookup_run(lookup, "順位", 8, 2, &legacy_v1_results, &legacy_v1_count);
-  std::vector<std::string> legacy_v1_readings;
-  if (legacy_v1_owner != nullptr) {
-    for (size_t i = 0; i < legacy_v1_count; i++) {
-      legacy_v1_readings.emplace_back(legacy_v1_results[i].term.reading.ptr, legacy_v1_results[i].term.reading.len);
-    }
-  }
-  check_reading_order(legacy_v1_readings, {"じゅんに", "じゅんさん", "じゅんいち", "順位"},
-                      "v1 retains legacy first-frequency sorting");
-  hd_lookup_results_free(legacy_v1_owner);
-
-  check_reading_order(run_c_lookup_v3(lookup, nullptr), {"じゅんに", "じゅんさん", "じゅんいち", "順位"},
+  check_reading_order(run_c_lookup_with_options(lookup, nullptr), {"じゅんに", "じゅんさん", "じゅんいち", "順位"},
                       "null v3 options retain legacy first-frequency sorting");
 
-  hd_lookup_options_v3 options{};
+  hd_lookup_options options{};
   options.frequency_order = HD_LOOKUP_FREQUENCY_ORDER_AUTO;
-  check_reading_order(run_c_lookup_v3(lookup, &options), {"じゅんに", "じゅんさん", "じゅんいち", "順位"},
+  check_reading_order(run_c_lookup_with_options(lookup, &options), {"じゅんに", "じゅんさん", "じゅんいち", "順位"},
                       "explicit v3 auto retains legacy first-frequency sorting");
 
   options.frequency_order = HD_LOOKUP_FREQUENCY_ORDER_DISABLED;
-  check_reading_order(run_c_lookup_v3(lookup, &options), {"じゅんいち", "じゅんに", "じゅんさん", "順位"},
+  check_reading_order(run_c_lookup_with_options(lookup, &options), {"じゅんいち", "じゅんに", "じゅんさん", "順位"},
                       "disabled v3 frequency sorting falls through to term score");
 
   const std::string selected_title = "選択頻度";
   options.frequency_dictionary = borrowed_string(selected_title);
   options.frequency_order = HD_LOOKUP_FREQUENCY_ORDER_ASCENDING;
-  check_reading_order(run_c_lookup_v3(lookup, &options), {"じゅんいち", "じゅんさん", "じゅんに", "順位"},
+  check_reading_order(run_c_lookup_with_options(lookup, &options), {"じゅんいち", "じゅんさん", "じゅんに", "順位"},
                       "explicit ascending frequency uses the selected UTF-8 dictionary and minimum value");
   options.frequency_order = HD_LOOKUP_FREQUENCY_ORDER_DESCENDING;
-  check_reading_order(run_c_lookup_v3(lookup, &options), {"じゅんに", "じゅんさん", "じゅんいち", "順位"},
+  check_reading_order(run_c_lookup_with_options(lookup, &options), {"じゅんに", "じゅんさん", "じゅんいち", "順位"},
                       "explicit descending frequency uses maximum value and keeps missing readings last");
 
   const std::string unknown_title = "選択頻度x";
   options.frequency_dictionary = borrowed_string(unknown_title);
   options.frequency_order = HD_LOOKUP_FREQUENCY_ORDER_ASCENDING;
-  check_reading_order(run_c_lookup_v3(lookup, &options), {"じゅんいち", "じゅんに", "じゅんさん", "順位"},
+  check_reading_order(run_c_lookup_with_options(lookup, &options), {"じゅんいち", "じゅんに", "じゅんさん", "順位"},
                       "unknown selected frequency dictionary does not fall back to the first dictionary");
 
   const std::string preferred = "じゅんさん";
   options = {};
   options.primary_reading = borrowed_string(preferred);
   options.frequency_order = HD_LOOKUP_FREQUENCY_ORDER_DISABLED;
-  check_reading_order(run_c_lookup_v3(lookup, &options, 1), {"じゅんさん"},
+  check_reading_order(run_c_lookup_with_options(lookup, &options, 1), {"じゅんさん"},
                       "primary reading wins before result truncation");
-  check_reading_order(run_c_lookup_v3(lookup, &options), {"じゅんさん", "じゅんいち", "じゅんに", "順位"},
+  check_reading_order(run_c_lookup_with_options(lookup, &options), {"じゅんさん", "じゅんいち", "じゅんに", "順位"},
                       "primary reading boosts one result without filtering alternatives");
 
   const std::string expression_reading = "順位";
   options.primary_reading = borrowed_string(expression_reading);
-  check_reading_order(run_c_lookup_v3(lookup, &options, 1), {"順位"},
+  check_reading_order(run_c_lookup_with_options(lookup, &options, 1), {"順位"},
                       "primary reading matches an imported empty reading through its expression fallback");
 
   options.primary_reading = hd_str{nullptr, 1};
-  const hd_lookup_result_v2* invalid_results = nullptr;
+  const hd_lookup_result* invalid_results = nullptr;
   size_t invalid_count = 0;
-  check(hd_lookup_run_v3(lookup, "順位", 4, 2, &options, &invalid_results, &invalid_count) == nullptr,
+  check(hd_lookup_run_with_options(lookup, "順位", 4, 2, &options, &invalid_results, &invalid_count) == nullptr,
         "v3 rejects a malformed primary-reading slice");
   options = {};
   options.frequency_dictionary = hd_str{nullptr, 1};
   options.frequency_order = HD_LOOKUP_FREQUENCY_ORDER_ASCENDING;
-  check(hd_lookup_run_v3(lookup, "順位", 4, 2, &options, &invalid_results, &invalid_count) == nullptr,
+  check(hd_lookup_run_with_options(lookup, "順位", 4, 2, &options, &invalid_results, &invalid_count) == nullptr,
         "v3 rejects a malformed frequency-dictionary slice");
   options = {};
   options.frequency_order = 99;
-  check(hd_lookup_run_v3(lookup, "順位", 4, 2, &options, &invalid_results, &invalid_count) == nullptr,
+  check(hd_lookup_run_with_options(lookup, "順位", 4, 2, &options, &invalid_results, &invalid_count) == nullptr,
         "v3 rejects an unknown frequency order");
   options.frequency_order = HD_LOOKUP_FREQUENCY_ORDER_DISABLED;
-  check(hd_lookup_run_v3(lookup, "順位", 0, 2, &options, &invalid_results, &invalid_count) == nullptr,
+  check(hd_lookup_run_with_options(lookup, "順位", 0, 2, &options, &invalid_results, &invalid_count) == nullptr,
         "v3 rejects a non-positive result limit");
-  check(hd_lookup_run_v3(lookup, "順位", 4, 0, &options, &invalid_results, &invalid_count) == nullptr,
+  check(hd_lookup_run_with_options(lookup, "順位", 4, 0, &options, &invalid_results, &invalid_count) == nullptr,
         "v3 rejects an empty scan length");
 
-  check_reading_order(run_c_lookup_v3(lookup, nullptr), {"じゅんに", "じゅんさん", "じゅんいち", "順位"},
+  check_reading_order(run_c_lookup_with_options(lookup, nullptr), {"じゅんに", "じゅんさん", "じゅんいち", "順位"},
                       "per-call v3 options do not mutate legacy lookup state");
 
   hd_lookup_free(lookup);
@@ -748,9 +726,9 @@ int main() {
     test_parser();
     TempDirectory temp;
     const auto terms_path = import_dictionary(temp, "Terms", std::nullopt, "ja", term_bank(), std::nullopt);
-    test_query_shapes_and_c_v2(temp, terms_path);
+    test_query_shapes(temp, terms_path);
     test_sorting(temp, terms_path);
-    test_lookup_v3_options(temp);
+    test_lookup_options(temp);
     test_inference(temp, terms_path);
     test_katakana_reading_lookup(temp);
     test_dictionary_redirects_v4(temp);

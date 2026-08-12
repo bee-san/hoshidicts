@@ -391,7 +391,7 @@ std::vector<Frequency> DictionaryQuery::query_frequencies(const DictionaryData& 
     if (!yomitan_parser::parse_frequency(freq_data, parsed)) {
       continue;
     }
-    if (reading.has_value() && parsed.reading.has_value() && *parsed.reading != *reading) {
+    if (reading.has_value() && !parsed.reading.empty() && parsed.reading != *reading) {
       continue;
     }
 
@@ -426,8 +426,8 @@ DictionaryQuery::FrequencyMode DictionaryQuery::infer_frequency_mode(
 
   struct Details {
     bool has_value = false;
-    double min_value = std::numeric_limits<double>::max();
-    double max_value = std::numeric_limits<double>::lowest();
+    int min_value = std::numeric_limits<int>::max();
+    int max_value = std::numeric_limits<int>::min();
   };
 
   auto get_details = [&](std::string_view term) {
@@ -446,7 +446,8 @@ DictionaryQuery::FrequencyMode DictionaryQuery::infer_frequency_mode(
   std::ranges::transform(less_common_terms, rare_details.begin(), get_details);
 
   int result = 0;
-  auto sign = [](double value) { return (value > 0) - (value < 0); };
+  // Widened so the differences below cannot overflow at the int extremes.
+  auto sign = [](long long value) { return (value > 0) - (value < 0); };
   for (const auto& common : common_details) {
     if (!common.has_value) {
       continue;
@@ -455,7 +456,8 @@ DictionaryQuery::FrequencyMode DictionaryQuery::infer_frequency_mode(
       if (!rare.has_value) {
         continue;
       }
-      result += sign(common.max_value - rare.min_value) + sign(common.min_value - rare.max_value);
+      result += sign(static_cast<long long>(common.max_value) - rare.min_value) +
+                sign(static_cast<long long>(common.min_value) - rare.max_value);
     }
   }
 
