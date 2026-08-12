@@ -326,7 +326,7 @@ void validate_dictionary(const std::string& path) {
   }
 
   bool supported_marker = false;
-  for (int version = 1; version <= 3; ++version) {
+  for (int version = 1; version <= 4; ++version) {
     supported_marker |= std::filesystem::is_regular_file(dictionary / (".hoshidicts_" + std::to_string(version)));
   }
   if (!supported_marker) {

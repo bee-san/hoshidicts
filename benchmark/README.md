@@ -117,3 +117,4 @@ jq '.cases[] | {archive, mode, mean: .duration_ms.mean, peak_rss: .peak_rss_byte
 ## Recorded experiments
 
 - [2026-08-10 performance experiments](results/2026-08-10-performance.md)
+- [2026-08-12 deep lookup experiments](results/2026-08-12-deep-lookup.md)
