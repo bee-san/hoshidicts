@@ -163,10 +163,14 @@ typedef enum hd_lookup_frequency_order {
 } hd_lookup_frequency_order;
 
 // A null hd_str leaves the corresponding preference unset.
+//
+// Field order is part of the published C ABI: the Rust bindings in
+// hoshidicts-rs (src/ffi.rs) mirror this layout by position, so keep
+// frequency_dictionary, frequency_order, primary_reading in this order.
 typedef struct hd_lookup_options {
-  hd_str primary_reading;
   hd_str frequency_dictionary;
   int32_t frequency_order;
+  hd_str primary_reading;
 } hd_lookup_options;
 
 hd_lookup* hd_lookup_new(hd_query* q, hd_deinflector* d);
