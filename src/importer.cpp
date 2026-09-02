@@ -28,6 +28,16 @@
 #include "zip/zip.hpp"
 
 namespace {
+#ifdef __EMSCRIPTEN__
+// Emscripten builds without -pthread have no thread pool: pthread_create's stub
+// returns EAGAIN and std::async(std::launch::async) throws std::system_error.
+// Every future below is waited on before its result is read, so running the work
+// inline on future::get() is equivalent, just serialised.
+constexpr std::launch async_policy = std::launch::deferred;
+#else
+constexpr std::launch async_policy = std::launch::async;
+#endif
+
 struct Files {
   std::vector<int> term_banks;
   std::vector<int> meta_banks;
@@ -121,7 +131,7 @@ void radix_sort(std::vector<std::pair<uint64_t, uint64_t>>& offsets) {
       }
 
       local_counts[t].fill(0);
-      futures.push_back(std::async(std::launch::async, [src, shift, begin, end, &local_counts, t]() {
+      futures.push_back(std::async(async_policy, [src, shift, begin, end, &local_counts, t]() {
         for (size_t i = begin; i < end; i++) {
           local_counts[t][((*src)[i].first >> shift) & 0xffff]++;
         }
@@ -158,7 +168,7 @@ void radix_sort(std::vector<std::pair<uint64_t, uint64_t>>& offsets) {
     for (size_t t = 0; t < futures.size(); t++) {
       const size_t begin = t * chunk;
       const size_t end = std::min(begin + chunk, n);
-      scatter_futures.push_back(std::async(std::launch::async, [src, dst, shift, begin, end, &thread_pos, t]() {
+      scatter_futures.push_back(std::async(async_policy, [src, dst, shift, begin, end, &thread_pos, t]() {
         for (size_t i = begin; i < end; i++) {
           const size_t bucket = ((*src)[i].first >> shift) & 0xffff;
           (*dst)[thread_pos[t][bucket]++] = (*src)[i];
@@ -454,7 +464,7 @@ void write_terms(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>
 
   for (int file_index : files) {
     threads.push_back(
-        std::async(std::launch::async, [&zip, file_index]() { return process_term_bank(zip.read(file_index)); }));
+        std::async(async_policy, [&zip, file_index]() { return process_term_bank(zip.read(file_index)); }));
 
     if (threads.size() == max_threads) {
       write_processed(threads.front().get());
@@ -495,7 +505,7 @@ void write_meta(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>&
 
   for (int file_index : files) {
     threads.push_back(
-        std::async(std::launch::async, [&zip, file_index]() { return process_meta_bank(zip.read(file_index)); }));
+        std::async(async_policy, [&zip, file_index]() { return process_meta_bank(zip.read(file_index)); }));
 
     if (threads.size() == max_threads) {
       write_processed(threads.front().get());
@@ -534,7 +544,7 @@ void write_kanji(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>
 
   for (int file_index : files) {
     threads.push_back(
-        std::async(std::launch::async, [&zip, file_index]() { return process_kanji_bank(zip.read(file_index)); }));
+        std::async(async_policy, [&zip, file_index]() { return process_kanji_bank(zip.read(file_index)); }));
 
     if (threads.size() == max_threads) {
       write_processed(threads.front().get());
@@ -656,7 +666,7 @@ ImportResult dictionary_importer::import(const std::string& zip_path, const std:
     result.summary = create_summary(index, styles);
     const Files files = get_files(zip);
     std::future<size_t> media_thread = std::async(
-        std::launch::async, [&dict_path, &zip, &files]() { return write_media(dict_path, zip, files.media_files); });
+        async_policy, [&dict_path, &zip, &files]() { return write_media(dict_path, zip, files.media_files); });
 
     std::ofstream blobs(dict_path / "blobs.bin", std::ios::binary);
     setup_stream_exceptions(blobs);
@@ -674,7 +684,7 @@ ImportResult dictionary_importer::import(const std::string& zip_path, const std:
     auto offset_buf = build_offset_index(offsets, write_offset, hash_entries);
     std::vector<std::pair<uint64_t, uint64_t>>().swap(offsets);
 
-    auto hash_thread = std::async(std::launch::async, [&hash_entries, &dict_path]() {
+    auto hash_thread = std::async(async_policy, [&hash_entries, &dict_path]() {
       hash::linear table;
       table.build_to_file(hash_entries, dict_path / "hash.table");
       auto hashes = hash_entries | std::views::keys | std::ranges::to<std::vector>();

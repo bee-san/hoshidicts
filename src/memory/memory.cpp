@@ -50,12 +50,18 @@ mapped_file map_rd(const std::filesystem::path& path) {
   }
 
   auto* data = static_cast<uint8_t*>(mmap(nullptr, st.st_size, PROT_READ, MAP_SHARED, fd, 0));
+#ifndef __EMSCRIPTEN__
   close(fd);
+  fd = -1;
+#endif
   if (data == reinterpret_cast<uint8_t*>(MAP_FAILED)) {
+    if (fd >= 0) {
+      close(fd);
+    }
     return {};
   }
 
-  return {.data = data, .size = static_cast<size_t>(st.st_size)};
+  return {.data = data, .size = static_cast<size_t>(st.st_size), .fd = fd};
 #endif
 }
 
@@ -103,12 +109,18 @@ mapped_file map_rw(const std::filesystem::path& path, size_t file_size) {
   }
 
   auto* data = static_cast<uint8_t*>(mmap(nullptr, file_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0));
+#ifndef __EMSCRIPTEN__
   close(fd);
+  fd = -1;
+#endif
   if (data == reinterpret_cast<uint8_t*>(MAP_FAILED)) {
+    if (fd >= 0) {
+      close(fd);
+    }
     return {};
   }
 
-  return {.data = data, .size = file_size};
+  return {.data = data, .size = file_size, .fd = fd};
 #endif
 }
 
@@ -123,6 +135,9 @@ void unmap(mapped_file mapping) {
 #else
   msync(mapping.data, mapping.size, MS_SYNC);
   munmap(mapping.data, mapping.size);
+  if (mapping.fd >= 0) {
+    close(mapping.fd);
+  }
 #endif
 }
 }

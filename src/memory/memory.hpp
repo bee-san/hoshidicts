@@ -8,6 +8,10 @@ namespace memory {
 struct mapped_file {
   uint8_t* data = nullptr;
   size_t size = 0;
+  // Emscripten's mmap emulation flushes MAP_SHARED writes through the file
+  // descriptor when msync/munmap runs, so the descriptor has to outlive the
+  // mapping there. Left at -1 on platforms that close it eagerly.
+  int fd = -1;
 
   explicit operator bool() const { return data != nullptr; }
 };
