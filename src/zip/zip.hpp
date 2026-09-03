@@ -19,6 +19,7 @@ struct ZipEntry {
 struct Zip {
   memory::mapped_file file;
   std::vector<ZipEntry> entries;
+  std::string error;
 
   ~Zip();
   bool open(const std::filesystem::path& path);

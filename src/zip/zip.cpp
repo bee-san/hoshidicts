@@ -2,6 +2,7 @@
 
 #include <libdeflate.h>
 
+#include <cstddef>
 #include <cstdint>
 #include <cstring>
 
@@ -14,6 +15,12 @@ T read_at(const uint8_t* base, size_t offset) {
   std::memcpy(&val, base + offset, sizeof(T));
   return val;
 }
+
+constexpr size_t MAX_ARCHIVE_BYTES = 536870912;
+constexpr uint64_t MAX_ENTRIES = 4096;
+constexpr uint64_t MAX_ENTRY_UNCOMPRESSED = 268435456;
+constexpr uint64_t MAX_TOTAL_UNCOMPRESSED = 1610612736;
+constexpr uint64_t MAX_EXPANSION_RATIO = 512;
 }
 
 Zip::~Zip() { memory::unmap(file); }
@@ -21,6 +28,11 @@ Zip::~Zip() { memory::unmap(file); }
 bool Zip::open(const std::filesystem::path& path) {
   file = memory::map_rd(path);
   if (!file) {
+    return false;
+  }
+
+  if (file.size > MAX_ARCHIVE_BYTES) {
+    error = "archive is too large";
     return false;
   }
 
@@ -95,23 +107,33 @@ bool Zip::parse_central_directory() {
   while (eocd > 0 && read_at<uint32_t>(base, eocd) != 0x06054b50) {
     eocd--;
   }
+  if (read_at<uint32_t>(base, eocd) != 0x06054b50) {
+    return false;
+  }
 
   uint64_t total_entries = read_at<uint16_t>(base, eocd + 10);
   uint64_t cd_offset = read_at<uint32_t>(base, eocd + 16);
 
   if (eocd >= 20 && read_at<uint32_t>(base, eocd - 20) == 0x07064b50) {
     auto eocd64_offset = read_at<uint64_t>(base, eocd - 12);
-    if (eocd64_offset + 56 <= file.size && read_at<uint32_t>(base, eocd64_offset) == 0x06064b50) {
+    if (eocd64_offset <= file.size && file.size - eocd64_offset >= 56 &&
+        read_at<uint32_t>(base, eocd64_offset) == 0x06064b50) {
       total_entries = read_at<uint64_t>(base, eocd64_offset + 32);
       cd_offset = read_at<uint64_t>(base, eocd64_offset + 48);
     }
   }
 
+  if (total_entries > MAX_ENTRIES) {
+    error = "archive declares too many entries";
+    return false;
+  }
+
   entries.reserve(total_entries);
   size_t pos = cd_offset;
+  uint64_t total_uncompressed = 0;
 
   for (uint64_t i = 0; i < total_entries; ++i) {
-    if (pos + 46 > file.size) {
+    if (pos > file.size || file.size - pos < 46) {
       return false;
     }
     if (read_at<uint32_t>(base, pos) != 0x02014b50) {
@@ -133,17 +155,43 @@ bool Zip::parse_central_directory() {
     if (lfh_offset > file.size || file.size - lfh_offset < 30) {
       return false;
     }
+    if (read_at<uint32_t>(base, lfh_offset + 18) != e.compressed_size ||
+        read_at<uint32_t>(base, lfh_offset + 22) != e.uncompressed_size) {
+      error = "archive entry sizes disagree between headers";
+      return false;
+    }
     auto lfh_name_len = read_at<uint16_t>(base, lfh_offset + 26);
     auto lfh_extra_len = read_at<uint16_t>(base, lfh_offset + 28);
-    e.data_offset = lfh_offset + 30 + lfh_name_len + lfh_extra_len;
+    e.data_offset = static_cast<size_t>(lfh_offset) + 30 + lfh_name_len + lfh_extra_len;
 
     const uint32_t data_size = e.compression_method == 0 ? e.uncompressed_size : e.compressed_size;
     if (e.data_offset > file.size || file.size - e.data_offset < data_size) {
       return false;
     }
 
+    if (e.uncompressed_size > MAX_ENTRY_UNCOMPRESSED) {
+      error = "archive entry expands beyond the per-entry limit";
+      return false;
+    }
+    if (e.uncompressed_size > MAX_TOTAL_UNCOMPRESSED - total_uncompressed) {
+      error = "archive expands beyond the aggregate limit";
+      return false;
+    }
+    total_uncompressed += e.uncompressed_size;
+
+    if (e.compression_method != 0 && e.uncompressed_size > 0) {
+      if (e.compressed_size == 0) {
+        error = "archive entry has no compressed data for its declared size";
+        return false;
+      }
+      if (e.uncompressed_size / e.compressed_size > MAX_EXPANSION_RATIO) {
+        error = "archive entry compression ratio exceeds the limit";
+        return false;
+      }
+    }
+
     entries.push_back(std::move(e));
-    pos += 46 + name_len + extra_len + comment_len;
+    pos += static_cast<size_t>(46) + name_len + extra_len + comment_len;
   }
 
   return true;

@@ -824,7 +824,7 @@ ImportResult dictionary_importer::import(const std::string& zip_path, const std:
     const std::filesystem::path native_output_dir = path_utils::from_utf8(output_dir);
     Zip zip;
     if (!zip.open(native_zip_path)) {
-      throw std::runtime_error("failed to open zip");
+      throw std::runtime_error(zip.error.empty() ? "failed to open zip" : zip.error);
     }
 
     int index_idx = zip.find("index.json");
