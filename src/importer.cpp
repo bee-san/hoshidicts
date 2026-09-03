@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <array>
 #include <chrono>
+#include <condition_variable>
 #include <cstddef>
 #include <cstdint>
 #include <cstring>
@@ -17,6 +18,7 @@
 #include <fstream>
 #include <future>
 #include <memory>
+#include <mutex>
 #include <stdexcept>
 #include <string>
 #include <string_view>
@@ -30,15 +32,32 @@
 #include "zip/zip.hpp"
 
 namespace {
-#ifdef __EMSCRIPTEN__
-// Emscripten builds without -pthread have no thread pool: pthread_create's stub
-// returns EAGAIN and std::async(std::launch::async) throws std::system_error.
-// Every future below is waited on before its result is read, so running the work
-// inline on future::get() is equivalent, just serialised.
+#if defined(__EMSCRIPTEN__) && !defined(__EMSCRIPTEN_PTHREADS__)
 constexpr std::launch async_policy = std::launch::deferred;
 #else
 constexpr std::launch async_policy = std::launch::async;
 #endif
+
+#ifdef __EMSCRIPTEN__
+constexpr std::launch filesystem_async_policy = std::launch::deferred;
+constexpr std::launch radix_async_policy = std::launch::deferred;
+#else
+constexpr std::launch filesystem_async_policy = std::launch::async;
+constexpr std::launch radix_async_policy = std::launch::async;
+#endif
+
+size_t max_import_threads(bool low_ram) {
+#if defined(__EMSCRIPTEN__) && !defined(__EMSCRIPTEN_PTHREADS__)
+  static_cast<void>(low_ram);
+  return 1;
+#else
+  if (low_ram) {
+    return 1;
+  }
+  const size_t detected = std::thread::hardware_concurrency();
+  return std::max<size_t>(1, std::min<size_t>(detected == 0 ? 1 : detected, 8));
+#endif
+}
 
 struct Files {
   std::vector<int> term_banks;
@@ -107,13 +126,13 @@ void write_bytes(std::vector<char>& out, const void* data, size_t n) {
   std::memcpy(out.data() + old_size, data, n);
 }
 
-void radix_sort(std::vector<std::pair<uint64_t, uint64_t>>& offsets) {
+void radix_sort(std::vector<std::pair<uint64_t, uint64_t>>& offsets, size_t max_threads) {
   if (offsets.size() < 2) {
     return;
   }
 
   const size_t n = offsets.size();
-  const size_t num_threads = std::max<size_t>(1, std::thread::hardware_concurrency());
+  const size_t num_threads = std::max<size_t>(1, std::min({max_threads, offsets.size(), static_cast<size_t>(8)}));
   std::vector<std::pair<uint64_t, uint64_t>> temp(n);
   auto* src = &offsets;
   auto* dst = &temp;
@@ -133,7 +152,7 @@ void radix_sort(std::vector<std::pair<uint64_t, uint64_t>>& offsets) {
       }
 
       local_counts[t].fill(0);
-      futures.push_back(std::async(async_policy, [src, shift, begin, end, &local_counts, t]() {
+      futures.push_back(std::async(radix_async_policy, [src, shift, begin, end, &local_counts, t]() {
         for (size_t i = begin; i < end; i++) {
           local_counts[t][((*src)[i].first >> shift) & 0xffff]++;
         }
@@ -170,7 +189,7 @@ void radix_sort(std::vector<std::pair<uint64_t, uint64_t>>& offsets) {
     for (size_t t = 0; t < futures.size(); t++) {
       const size_t begin = t * chunk;
       const size_t end = std::min(begin + chunk, n);
-      scatter_futures.push_back(std::async(async_policy, [src, dst, shift, begin, end, &thread_pos, t]() {
+      scatter_futures.push_back(std::async(radix_async_policy, [src, dst, shift, begin, end, &thread_pos, t]() {
         for (size_t i = begin; i < end; i++) {
           const size_t bucket = ((*src)[i].first >> shift) & 0xffff;
           (*dst)[thread_pos[t][bucket]++] = (*src)[i];
@@ -218,7 +237,7 @@ std::vector<char> train_zstd_dict(const Zip& zip, const Files& files, bool low_r
   params.d = 8;
   params.steps = 4;
   params.splitPoint = 1.0;
-  params.nbThreads = low_ram ? 1 : std::max<unsigned int>(1, std::thread::hardware_concurrency());
+  params.nbThreads = static_cast<unsigned>(max_import_threads(low_ram));
 
   std::vector<char> dict(static_cast<size_t>(110 * 1024));
   const size_t dict_size = ZDICT_optimizeTrainFromBuffer_fastCover(
@@ -436,6 +455,11 @@ std::optional<std::string> copy_optional_string(T value) {
   return std::string(*value);
 }
 
+bool usable_dictionary_title(std::string_view title) {
+  return !title.empty() && title != "." && title != ".." && title.find('/') == std::string_view::npos &&
+         title.find('\\') == std::string_view::npos && title.find('\0') == std::string_view::npos;
+}
+
 uint64_t unix_time_ms() {
   const auto now = std::chrono::system_clock::now().time_since_epoch();
   return std::chrono::duration_cast<std::chrono::milliseconds>(now).count();
@@ -474,8 +498,7 @@ void write_terms(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>
     return;
   }
 
-  size_t max_threads =
-      low_ram ? 2 : std::max<size_t>(4, static_cast<const unsigned long>(std::thread::hardware_concurrency()) + 4);
+  const size_t max_threads = max_import_threads(low_ram);
   std::deque<std::future<ProcessedFile>> threads;
 
   ankerl::unordered_dense::map<uint64_t, uint64_t> glossaries;
@@ -511,6 +534,120 @@ void write_terms(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>
     result.summary.counts.terms.total += processed.count;
   };
 
+#ifdef __EMSCRIPTEN_PTHREADS__
+  const size_t worker_count = std::min(max_threads, files.size());
+  const size_t max_tasks_ahead = low_ram ? worker_count : std::min(files.size(), worker_count * 2);
+  const size_t max_bytes_ahead = (low_ram ? 64ULL : 256ULL) * 1024 * 1024;
+  std::vector<size_t> task_bytes;
+  task_bytes.reserve(files.size());
+  for (int file : files) {
+    task_bytes.push_back(zip.entries[static_cast<size_t>(file)].uncompressed_size);
+  }
+  std::vector<std::optional<ProcessedFile>> processed(files.size());
+  size_t next_task = 0;
+  size_t next_to_write = 0;
+  size_t bytes_ahead = 0;
+  bool failed = false;
+  std::mutex mutex;
+  std::condition_variable ready;
+  std::exception_ptr worker_error;
+  auto can_claim_task = [&]() {
+    if (next_task >= files.size() || next_task >= next_to_write + max_tasks_ahead) {
+      return false;
+    }
+    const size_t bytes = task_bytes[next_task];
+    return bytes_ahead == 0 || bytes <= max_bytes_ahead - std::min(bytes_ahead, max_bytes_ahead);
+  };
+  auto worker = [&]() {
+    while (true) {
+      size_t index = 0;
+      {
+        std::unique_lock lock(mutex);
+        ready.wait(lock, [&]() { return failed || next_task >= files.size() || can_claim_task(); });
+        if (failed || next_task >= files.size()) {
+          return;
+        }
+        index = next_task++;
+        bytes_ahead += task_bytes[index];
+      }
+      try {
+        auto value = process_term_bank(zip.read(files[index]), cdict);
+        {
+          std::lock_guard lock(mutex);
+          processed[index].emplace(std::move(value));
+        }
+        ready.notify_all();
+      } catch (...) {
+        {
+          std::lock_guard lock(mutex);
+          if (!worker_error) {
+            worker_error = std::current_exception();
+          }
+          failed = true;
+        }
+        ready.notify_all();
+        return;
+      }
+    }
+  };
+  std::vector<std::future<void>> workers;
+  workers.reserve(worker_count);
+  try {
+    for (size_t index = 0; index < worker_count; ++index) {
+      workers.push_back(std::async(std::launch::async, worker));
+    }
+  } catch (...) {
+    {
+      std::lock_guard lock(mutex);
+      failed = true;
+    }
+    ready.notify_all();
+    for (auto& future : workers) {
+      try {
+        future.get();
+      } catch (...) {
+      }
+    }
+    throw;
+  }
+  try {
+    for (size_t index = 0; index < files.size(); ++index) {
+      std::unique_lock lock(mutex);
+      ready.wait(lock, [&]() { return processed[index].has_value() || worker_error; });
+      if (worker_error) {
+        auto error = worker_error;
+        lock.unlock();
+        std::rethrow_exception(error);
+      }
+      auto value = std::move(*processed[index]);
+      processed[index].reset();
+      lock.unlock();
+      write_processed(std::move(value));
+      {
+        std::lock_guard progress_lock(mutex);
+        next_to_write = index + 1;
+        bytes_ahead -= task_bytes[index];
+      }
+      ready.notify_all();
+    }
+  } catch (...) {
+    {
+      std::lock_guard lock(mutex);
+      failed = true;
+    }
+    ready.notify_all();
+    for (auto& future : workers) {
+      try {
+        future.get();
+      } catch (...) {
+      }
+    }
+    throw;
+  }
+  for (auto& future : workers) {
+    future.get();
+  }
+#else
   for (int file_index : files) {
     threads.push_back(std::async(
         async_policy, [&zip, file_index, cdict]() { return process_term_bank(zip.read(file_index), cdict); }));
@@ -525,6 +662,7 @@ void write_terms(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>
     write_processed(threads.front().get());
     threads.pop_front();
   }
+#endif
 }
 
 void write_meta(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>& offsets, const Zip& zip,
@@ -533,8 +671,7 @@ void write_meta(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>&
     return;
   }
 
-  size_t max_threads =
-      low_ram ? 2 : std::max<size_t>(4, static_cast<const unsigned long>(std::thread::hardware_concurrency()) + 4);
+  const size_t max_threads = max_import_threads(low_ram);
   std::deque<std::future<ProcessedFile>> threads;
   auto write_processed = [&](ProcessedFile&& processed) {
     if (processed.data.empty()) {
@@ -554,7 +691,7 @@ void write_meta(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>&
 
   for (int file_index : files) {
     threads.push_back(
-        std::async(async_policy, [&zip, file_index]() { return process_meta_bank(zip.read(file_index)); }));
+        std::async(filesystem_async_policy, [&zip, file_index]() { return process_meta_bank(zip.read(file_index)); }));
 
     if (threads.size() == max_threads) {
       write_processed(threads.front().get());
@@ -574,8 +711,7 @@ void write_kanji(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>
     return;
   }
 
-  size_t max_threads =
-      low_ram ? 2 : std::max<size_t>(4, static_cast<const unsigned long>(std::thread::hardware_concurrency()) + 4);
+  const size_t max_threads = max_import_threads(low_ram);
   std::deque<std::future<ProcessedFile>> threads;
   auto write_processed = [&](ProcessedFile&& processed) {
     if (processed.data.empty()) {
@@ -593,7 +729,7 @@ void write_kanji(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>
 
   for (int file_index : files) {
     threads.push_back(
-        std::async(async_policy, [&zip, file_index]() { return process_kanji_bank(zip.read(file_index)); }));
+        std::async(filesystem_async_policy, [&zip, file_index]() { return process_kanji_bank(zip.read(file_index)); }));
 
     if (threads.size() == max_threads) {
       write_processed(threads.front().get());
@@ -608,9 +744,13 @@ void write_kanji(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>
 }
 
 std::vector<char> build_offset_index(std::vector<std::pair<uint64_t, uint64_t>>& offsets, uint64_t& write_offset,
-                                     std::vector<std::pair<uint64_t, uint64_t>>& hash_entries) {
+                                     std::vector<std::pair<uint64_t, uint64_t>>& hash_entries, bool low_ram) {
   std::vector<char> offset_buf;
-  radix_sort(offsets);
+  if (low_ram) {
+    std::ranges::sort(offsets);
+  } else {
+    radix_sort(offsets, max_import_threads(false));
+  }
   for (size_t i = 0; i < offsets.size();) {
     size_t j = i + 1;
     while (j < offsets.size() && offsets[j].first == offsets[i].first) {
@@ -703,7 +843,12 @@ ImportResult dictionary_importer::import(const std::string& zip_path, const std:
 
     result.title = index.title;
 
-    dict_path = native_output_dir / path_utils::from_utf8(result.title);
+    const std::filesystem::path native_title = path_utils::from_utf8(result.title);
+    if (!usable_dictionary_title(result.title) || native_title.has_root_path() || !native_title.parent_path().empty() ||
+        native_title != native_title.filename()) {
+      throw std::runtime_error("dictionary title cannot be used as an output directory");
+    }
+    dict_path = native_output_dir / native_title;
     std::filesystem::create_directories(dict_path);
 
     std::string styles;
@@ -715,7 +860,7 @@ ImportResult dictionary_importer::import(const std::string& zip_path, const std:
     result.summary = create_summary(index, styles);
     const Files files = get_files(zip);
     std::future<size_t> media_thread = std::async(
-        async_policy, [&dict_path, &zip, &files]() { return write_media(dict_path, zip, files.media_files); });
+        filesystem_async_policy, [&dict_path, &zip, &files]() { return write_media(dict_path, zip, files.media_files); });
 
     const std::vector<char> zstd_dict = train_zstd_dict(zip, files, low_ram);
     std::unique_ptr<ZSTD_CDict, decltype(&ZSTD_freeCDict)> cdict(nullptr, ZSTD_freeCDict);
@@ -740,10 +885,10 @@ ImportResult dictionary_importer::import(const std::string& zip_path, const std:
     }
 
     std::vector<std::pair<uint64_t, uint64_t>> hash_entries;
-    auto offset_buf = build_offset_index(offsets, write_offset, hash_entries);
+    auto offset_buf = build_offset_index(offsets, write_offset, hash_entries, low_ram);
     std::vector<std::pair<uint64_t, uint64_t>>().swap(offsets);
 
-    auto hash_thread = std::async(async_policy, [&hash_entries, &dict_path]() {
+    auto hash_thread = std::async(filesystem_async_policy, [&hash_entries, &dict_path]() {
       hash::linear table;
       table.build_to_file(hash_entries, dict_path / "hash.table");
       auto hashes = hash_entries | std::views::keys | std::ranges::to<std::vector>();
