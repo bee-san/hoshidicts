@@ -1,6 +1,7 @@
 #include "hoshidicts/query.hpp"
 
 #include <ankerl/unordered_dense.h>
+#define ZSTD_STATIC_LINKING_ONLY
 #include <zstd.h>
 
 #include <algorithm>
@@ -148,7 +149,8 @@ bool DictionaryQuery::add_dict_(const std::string& path_utf8, DictionaryType typ
   if (version >= 4) {
     std::ifstream f(path / "dict.zstd", std::ios::binary);
     const std::string blob(std::istreambuf_iterator<char>(f), {});
-    dict.data->zstd_dict = ZSTD_createDDict(blob.data(), blob.size());
+    dict.data->zstd_dict =
+        ZSTD_createDDict_advanced(blob.data(), blob.size(), ZSTD_dlm_byCopy, ZSTD_dct_fullDict, ZSTD_defaultCMem);
     if (dict.data->zstd_dict == nullptr) {
       return false;
     }
