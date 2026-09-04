@@ -1,10 +1,10 @@
 #pragma once
 
+#include <cstdint>
 #include <memory>
 #include <string>
 #include <unordered_map>
 #include <vector>
-#include <unordered_map>
 
 #if defined(__clang__) && defined(__APPLE__)
 #define SWIFT_IMPORT_UNSAFE __attribute__((swift_attr("import_unsafe")))
@@ -92,10 +92,10 @@ class DictionaryQuery {
   DictionaryQuery(DictionaryQuery&&) noexcept;
   DictionaryQuery& operator=(DictionaryQuery&&) noexcept;
 
-  void add_term_dict(const std::string& path);
-  void add_freq_dict(const std::string& path);
-  void add_pitch_dict(const std::string& path);
-  void add_kanji_dict(const std::string& path);
+  bool add_term_dict(const std::string& path);
+  bool add_freq_dict(const std::string& path);
+  bool add_pitch_dict(const std::string& path);
+  bool add_kanji_dict(const std::string& path);
 
   void query_freq(std::vector<TermResult>& terms) const;
   void query_pitch(std::vector<TermResult>& terms) const;
@@ -131,8 +131,8 @@ class DictionaryQuery {
   };
   enum DictionaryType : uint8_t { TERM, FREQ, PITCH, KANJI };
 
-  void add_dict(const std::string& path, DictionaryType);
-  void add_dict_(const std::string& path, DictionaryType);
+  bool add_dict(const std::string& path, DictionaryType);
+  bool add_dict_(const std::string& path, DictionaryType);
 
   static std::string decompress_glossary(const void* data, size_t size, const ZSTD_DDict_s* dict);
   std::vector<Dictionary> term_dicts_;

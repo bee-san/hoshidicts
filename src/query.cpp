@@ -1,6 +1,7 @@
 #include "hoshidicts/query.hpp"
 
 #include <ankerl/unordered_dense.h>
+#define ZSTD_STATIC_LINKING_ONLY
 #include <zstd.h>
 
 #include <algorithm>
@@ -74,14 +75,15 @@ DictionaryQuery::Dictionary::~Dictionary() = default;
 DictionaryQuery::Dictionary::Dictionary(Dictionary&&) noexcept = default;
 DictionaryQuery::Dictionary& DictionaryQuery::Dictionary::operator=(Dictionary&&) noexcept = default;
 
-void DictionaryQuery::add_dict(const std::string& path_utf8, DictionaryType type) {
+bool DictionaryQuery::add_dict(const std::string& path_utf8, DictionaryType type) {
   try {
-    add_dict_(path_utf8, type);
+    return add_dict_(path_utf8, type);
   } catch (const std::exception&) {
+    return false;
   }
 }
 
-void DictionaryQuery::add_dict_(const std::string& path_utf8, DictionaryType type) {
+bool DictionaryQuery::add_dict_(const std::string& path_utf8, DictionaryType type) {
   const std::filesystem::path path = path_utils::from_utf8(path_utf8);
   int version = 0;
   if (std::filesystem::is_regular_file(path / ".hoshidicts_4")) {
@@ -93,18 +95,18 @@ void DictionaryQuery::add_dict_(const std::string& path_utf8, DictionaryType typ
   } else if (std::filesystem::is_regular_file(path / ".hoshidicts_1")) {
     version = 1;
   } else {
-    return;
+    return false;
   }
 
   Dictionary dict;
   Summary summary;
   std::ifstream index_file(path / "index.json", std::ios::binary);
   if (!index_file) {
-    return;
+    return false;
   }
   std::string buf(std::istreambuf_iterator<char>(index_file), {});
   if (glz::read<glz::opts{.error_on_unknown_keys = false}>(summary, buf)) {
-    return;
+    return false;
   }
 
   dict.name = summary.title.empty() ? path_utils::to_utf8(path.stem()) : summary.title;
@@ -119,24 +121,24 @@ void DictionaryQuery::add_dict_(const std::string& path_utf8, DictionaryType typ
 
   dict.data->hash_table = memory::map_rd(path / "hash.table");
   if (!dict.data->hash_table) {
-    return;
+    return false;
   }
   if (!dict.data->table.load(dict.data->hash_table.data, dict.data->hash_table.size)) {
-    return;
+    return false;
   }
 
   dict.data->bloom_filter = memory::map_rd(path / "bloom.filter");
   if (!dict.data->bloom_filter) {
-    return;
+    return false;
   }
   if (!dict.data->bloom.load(dict.data->bloom_filter.data, dict.data->bloom_filter.size)) {
-    return;
+    return false;
   }
   dict.data->table.set_bloom(&dict.data->bloom);
 
   dict.data->blobs = memory::map_rd(path / "blobs.bin");
   if (!dict.data->blobs) {
-    return;
+    return false;
   }
 
   dict.data->media = memory::map_rd(path / "media.bin");
@@ -147,7 +149,11 @@ void DictionaryQuery::add_dict_(const std::string& path_utf8, DictionaryType typ
   if (version >= 4) {
     std::ifstream f(path / "dict.zstd", std::ios::binary);
     const std::string blob(std::istreambuf_iterator<char>(f), {});
-    dict.data->zstd_dict = ZSTD_createDDict(blob.data(), blob.size());
+    dict.data->zstd_dict =
+        ZSTD_createDDict_advanced(blob.data(), blob.size(), ZSTD_dlm_byCopy, ZSTD_dct_fullDict, ZSTD_defaultCMem);
+    if (dict.data->zstd_dict == nullptr) {
+      return false;
+    }
   }
 
   switch (type) {
@@ -164,18 +170,23 @@ void DictionaryQuery::add_dict_(const std::string& path_utf8, DictionaryType typ
       kanji_dicts_.push_back(std::move(dict));
       break;
   }
+  return true;
 }
 
-void DictionaryQuery::add_term_dict(const std::string& path) { add_dict(path, DictionaryQuery::DictionaryType::TERM); }
-
-void DictionaryQuery::add_freq_dict(const std::string& path) { add_dict(path, DictionaryQuery::DictionaryType::FREQ); }
-
-void DictionaryQuery::add_pitch_dict(const std::string& path) {
-  add_dict(path, DictionaryQuery::DictionaryType::PITCH);
+bool DictionaryQuery::add_term_dict(const std::string& path) {
+  return add_dict(path, DictionaryQuery::DictionaryType::TERM);
 }
 
-void DictionaryQuery::add_kanji_dict(const std::string& path) {
-  add_dict(path, DictionaryQuery::DictionaryType::KANJI);
+bool DictionaryQuery::add_freq_dict(const std::string& path) {
+  return add_dict(path, DictionaryQuery::DictionaryType::FREQ);
+}
+
+bool DictionaryQuery::add_pitch_dict(const std::string& path) {
+  return add_dict(path, DictionaryQuery::DictionaryType::PITCH);
+}
+
+bool DictionaryQuery::add_kanji_dict(const std::string& path) {
+  return add_dict(path, DictionaryQuery::DictionaryType::KANJI);
 }
 
 std::vector<TermResult> DictionaryQuery::query(const std::string& expression) const {
