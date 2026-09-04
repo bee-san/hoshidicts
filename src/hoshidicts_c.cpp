@@ -110,8 +110,7 @@ void hd_query_free(hd_query* q) { delete q; }
 
 int hd_query_add_term_dict(hd_query* q, const char* path) {
   try {
-    q->query.add_term_dict(path);
-    return 0;
+    return q->query.add_term_dict(path) ? 0 : 1;
   } catch (...) {
     return 1;
   }
@@ -119,8 +118,7 @@ int hd_query_add_term_dict(hd_query* q, const char* path) {
 
 int hd_query_add_freq_dict(hd_query* q, const char* path) {
   try {
-    q->query.add_freq_dict(path);
-    return 0;
+    return q->query.add_freq_dict(path) ? 0 : 1;
   } catch (...) {
     return 1;
   }
@@ -128,8 +126,7 @@ int hd_query_add_freq_dict(hd_query* q, const char* path) {
 
 int hd_query_add_pitch_dict(hd_query* q, const char* path) {
   try {
-    q->query.add_pitch_dict(path);
-    return 0;
+    return q->query.add_pitch_dict(path) ? 0 : 1;
   } catch (...) {
     return 1;
   }
@@ -137,8 +134,7 @@ int hd_query_add_pitch_dict(hd_query* q, const char* path) {
 
 int hd_query_add_kanji_dict(hd_query* q, const char* path) {
   try {
-    q->query.add_kanji_dict(path);
-    return 0;
+    return q->query.add_kanji_dict(path) ? 0 : 1;
   } catch (...) {
     return 1;
   }
