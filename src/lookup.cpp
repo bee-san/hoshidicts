@@ -49,6 +49,18 @@ bool matches_primary_reading(const TermResult& term, std::string_view primary_re
 
 std::vector<LookupResult> Lookup::lookup(const std::string& lookup_string, int max_results, size_t scan_length,
                                          const LookupOptions& options) const {
+  return lookup_impl(lookup_string, nullptr, max_results, scan_length, options);
+}
+
+std::vector<LookupResult> Lookup::lookup_dictionary(const std::string& lookup_string,
+                                                    const std::string& dictionary_path, int max_results,
+                                                    size_t scan_length, const LookupOptions& options) const {
+  return lookup_impl(lookup_string, &dictionary_path, max_results, scan_length, options);
+}
+
+std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, const std::string* dictionary_path,
+                                              int max_results, size_t scan_length,
+                                              const LookupOptions& options) const {
   std::map<std::pair<std::string, std::string>, LookupResult> result_map;
 
   size_t text_len = utf8::distance(lookup_string.begin(), lookup_string.end());
@@ -62,7 +74,7 @@ std::vector<LookupResult> Lookup::lookup(const std::string& lookup_string, int m
     for (auto& variant : processor_results) {
       auto deinflection_results = deinflector_.deinflect(variant.text);
       for (auto& deinflection : deinflection_results) {
-        auto terms = query_.query_raw(deinflection.text);
+        auto terms = query_.query_raw(deinflection.text, dictionary_path);
         filter_by_pos(terms, deinflection);
 
         for (auto& term : terms) {
