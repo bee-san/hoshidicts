@@ -28,8 +28,13 @@ class Lookup {
   Lookup(DictionaryQuery& query, Deinflector& deinflector) : query_(query), deinflector_(deinflector) {};
   std::vector<LookupResult> lookup(const std::string& lookup_string, int max_results = 16, size_t scan_length = 16,
                                    const LookupOptions& options = {}) const;
+  std::vector<LookupResult> lookup_dictionary(const std::string& lookup_string, const std::string& dictionary_path,
+                                              int max_results = 16, size_t scan_length = 16,
+                                              const LookupOptions& options = {}) const;
 
  private:
+  std::vector<LookupResult> lookup_impl(const std::string& lookup_string, const std::string* dictionary_path,
+                                        int max_results, size_t scan_length, const LookupOptions& options) const;
   static void filter_by_pos(std::vector<TermResult>& terms, const DeinflectionResult& d);
 
   DictionaryQuery& query_;

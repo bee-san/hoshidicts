@@ -67,6 +67,16 @@ Follows a parsing strategy similar to Yomitan. Substrings of `lookup_string` are
 
 Results are filtered by part-of-speech tags defined in dictionaries, or added directly if none are present. The results are sorted by matched length first, then by preprocessing steps, then deinflection trace length and finally by frequency.
 
+```cpp
+std::vector<LookupResult> Lookup::lookup_dictionary(const std::string& lookup_string,
+                                                    const std::string& dictionary_path,
+                                                    int max_results = 16,
+                                                    size_t scan_length = 16) const
+```
+Runs the same lookup and ranking pipeline while restricting term matches to one
+already-added dictionary. Frequency and pitch metadata still come from every
+added metadata dictionary.
+
 ## Acknowledgements
 
 - [Yomitan](https://github.com/yomidevs/yomitan): Dictionary format, Japanese deinflection rules and descriptions, Japanese preprocessor | GPL-3.0

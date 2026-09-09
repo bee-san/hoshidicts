@@ -111,7 +111,8 @@ class DictionaryQuery {
 
  private:
   friend class Lookup;
-  std::vector<TermResult> query_raw(const std::string& expression) const;
+  std::vector<TermResult> query_raw(const std::string& expression,
+                                    const std::string* term_dictionary_path = nullptr) const;
   void materialize(TermResult& term) const;
 
   struct DictionaryData;
@@ -125,6 +126,7 @@ class DictionaryQuery {
     Dictionary(Dictionary&&) noexcept;
     Dictionary& operator=(Dictionary&&) noexcept;
 
+    std::string path;
     std::string name;
     std::string styles;
     std::unique_ptr<DictionaryData> data;
