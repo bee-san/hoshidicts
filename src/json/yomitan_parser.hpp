@@ -32,7 +32,7 @@ struct Term {
   std::optional<std::string_view> definition_tags;
   std::string_view rules;
   double score = 0;
-  hoshidicts::raw_array_view glossary;
+  hoshidicts::raw_value_view glossary;
   int64_t sequence = 0;
   std::string_view term_tags;
 };
@@ -40,7 +40,7 @@ struct Term {
 struct Meta {
   std::string_view expression;
   std::string_view mode;
-  glz::raw_json_view data;
+  hoshidicts::raw_value_view data;
 };
 
 struct Kanji {

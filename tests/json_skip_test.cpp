@@ -1,4 +1,4 @@
-// Differential test: skip_json_array must stop exactly where glaze's raw_json_view
+// Differential test: skip_json_container must stop exactly where glaze's raw_json_view
 // skip stops (or fail exactly when it fails) on generated arrays with nested
 // values, strings full of quotes, brackets and backslash runs straddling the
 // 64-byte blocks, multibyte text, and truncated input.
@@ -51,6 +51,10 @@ int main() {
   long cases = 0, mismatches = 0;
   for (int iter = 0; iter < 200000; ++iter) {
     std::string doc = gen(rng, 0);
+    if (iter % 3 == 1) {
+      // Object at the top level: wrap the array's items as values.
+      doc = "{\"a\":" + doc + ",\"b\":{\"c\":\"}}]\",\"d\":[" + gen(rng, 3) + "]},\"e\":" + gen(rng, 2) + "}";
+    }
     // pad with a tail so the value is followed by more input, like in a bank
     std::string buf = doc + ",\"tail\",[1,2]]";
     // sometimes truncate to test the unexpected-end path
@@ -58,7 +62,7 @@ int main() {
     if (truncated) buf = doc.substr(0, std::uniform_int_distribution<size_t>(0, doc.size() - 1)(rng));
     const char* begin = buf.data();
     const char* end = buf.data() + buf.size();
-    const char* mine = hoshidicts::skip_json_array(begin, end);
+    const char* mine = hoshidicts::skip_json_container(begin, end);
     glz::raw_json_view ref;
     glz::context ctx{};
     const char* it = begin;

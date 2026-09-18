@@ -25,17 +25,15 @@ struct Masks {
 };
 
 #if defined(HOSHIDICTS_JSON_SKIP_USE_SCALAR)
-inline Masks classify64(const char* p) noexcept {
+inline Masks classify64(const char* p, char open, char close) noexcept {
   Masks m{};
   for (int i = 0; i < 64; ++i) {
     const uint64_t bit = uint64_t{1} << i;
-    switch (p[i]) {
-      case '"': m.quote |= bit; break;
-      case '\\': m.backslash |= bit; break;
-      case '[': m.open |= bit; break;
-      case ']': m.close |= bit; break;
-      default: break;
-    }
+    const char c = p[i];
+    if (c == '"') m.quote |= bit;
+    else if (c == '\\') m.backslash |= bit;
+    else if (c == open) m.open |= bit;
+    else if (c == close) m.close |= bit;
   }
   return m;
 }
@@ -43,15 +41,15 @@ inline Masks classify64(const char* p) noexcept {
 inline uint64_t eq_bits16(v128_t v, char c) noexcept {
   return static_cast<uint64_t>(static_cast<uint16_t>(wasm_i8x16_bitmask(wasm_i8x16_eq(v, wasm_i8x16_splat(c)))));
 }
-inline Masks classify64(const char* p) noexcept {
+inline Masks classify64(const char* p, char open, char close) noexcept {
   Masks m{};
   for (int i = 0; i < 4; ++i) {
     const v128_t v = wasm_v128_load(p + 16 * i);
     const int shift = 16 * i;
     m.quote |= eq_bits16(v, '"') << shift;
     m.backslash |= eq_bits16(v, '\\') << shift;
-    m.open |= eq_bits16(v, '[') << shift;
-    m.close |= eq_bits16(v, ']') << shift;
+    m.open |= eq_bits16(v, open) << shift;
+    m.close |= eq_bits16(v, close) << shift;
   }
   return m;
 }
@@ -59,15 +57,15 @@ inline Masks classify64(const char* p) noexcept {
 inline uint64_t eq_bits16(__m128i v, char c) noexcept {
   return static_cast<uint64_t>(static_cast<uint16_t>(_mm_movemask_epi8(_mm_cmpeq_epi8(v, _mm_set1_epi8(c)))));
 }
-inline Masks classify64(const char* p) noexcept {
+inline Masks classify64(const char* p, char open, char close) noexcept {
   Masks m{};
   for (int i = 0; i < 4; ++i) {
     const __m128i v = _mm_loadu_si128(reinterpret_cast<const __m128i*>(p + 16 * i));
     const int shift = 16 * i;
     m.quote |= eq_bits16(v, '"') << shift;
     m.backslash |= eq_bits16(v, '\\') << shift;
-    m.open |= eq_bits16(v, '[') << shift;
-    m.close |= eq_bits16(v, ']') << shift;
+    m.open |= eq_bits16(v, open) << shift;
+    m.close |= eq_bits16(v, close) << shift;
   }
   return m;
 }
@@ -104,14 +102,16 @@ inline uint64_t prefix_xor(uint64_t x) noexcept {
 
 }  // namespace
 
-const char* skip_json_array(const char* begin, const char* end) noexcept {
+const char* skip_json_container(const char* begin, const char* end) noexcept {
+  const char open = *begin;
+  const char close = open == '[' ? ']' : '}';
   const char* p = begin + 1;
   int64_t depth = 1;
   uint64_t next_escaped = 0;
   uint64_t in_string = 0;  // all ones while inside a string at a block boundary
 
   while (end - p >= 64) {
-    const Masks m = classify64(p);
+    const Masks m = classify64(p, open, close);
     const uint64_t escaped = find_escaped(m.backslash, next_escaped);
     const uint64_t quotes = m.quote & ~escaped;
     // Bits set from each opening quote (inclusive) to its closing quote (exclusive).
@@ -151,9 +151,9 @@ const char* skip_json_array(const char* begin, const char* end) noexcept {
       }
     } else if (c == '"') {
       in_str = true;
-    } else if (c == '[') {
+    } else if (c == open) {
       ++depth;
-    } else if (c == ']') {
+    } else if (c == close) {
       if (--depth == 0) {
         return p + 1;
       }
