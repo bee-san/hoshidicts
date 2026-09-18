@@ -129,23 +129,35 @@ bool yomitan_parser::parse_index(std::string_view content, Index& out) {
   return !error;
 }
 
+namespace {
+// Bank strings are captured raw (raw_string / raw_json_view) and copied through
+// unchanged, so glaze's UTF-8 validation of every skipped string bought
+// nothing but time: it was ~12-14% of a Jitendex or Pixiv Light import. A bank
+// with malformed UTF-8 now imports with the bytes as they are (a renderer
+// shows U+FFFD, as Yomitan does) instead of being dropped whole.
+struct BankOpts : glz::opts {
+  bool validate_utf8 = false;
+};
+constexpr BankOpts bank_opts{{.error_on_unknown_keys = false, .error_on_missing_keys = false}};
+}  // namespace
+
 bool yomitan_parser::parse_term_bank(std::string_view content, std::vector<Term>& out) {
-  auto error = glz::read<glz::opts{.error_on_unknown_keys = false, .error_on_missing_keys = false}>(out, content);
+  auto error = glz::read<bank_opts>(out, content);
   return !error;
 }
 
 bool yomitan_parser::parse_meta_bank(std::string_view content, std::vector<Meta>& out) {
-  auto error = glz::read<glz::opts{.error_on_unknown_keys = false, .error_on_missing_keys = false}>(out, content);
+  auto error = glz::read<bank_opts>(out, content);
   return !error;
 }
 
 bool yomitan_parser::parse_kanji_bank(std::string_view content, std::vector<Kanji>& out) {
-  auto error = glz::read<glz::opts{.error_on_unknown_keys = false, .error_on_missing_keys = false}>(out, content);
+  auto error = glz::read<bank_opts>(out, content);
   return !error;
 }
 
 bool yomitan_parser::parse_tag_bank(std::string_view content, std::vector<Tag>& out) {
-  auto error = glz::read<glz::opts{.error_on_unknown_keys = false, .error_on_missing_keys = false}>(out, content);
+  auto error = glz::read<bank_opts>(out, content);
   return !error;
 }
 
