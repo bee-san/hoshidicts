@@ -1,6 +1,8 @@
 #pragma once
 #include <cstdint>
 #include <glaze/glaze.hpp>
+
+#include "json_skip.hpp"
 #include <optional>
 #include <string_view>
 #include <vector>
@@ -30,7 +32,7 @@ struct Term {
   std::optional<std::string_view> definition_tags;
   std::string_view rules;
   double score = 0;
-  glz::raw_json_view glossary;
+  hoshidicts::raw_array_view glossary;
   int64_t sequence = 0;
   std::string_view term_tags;
 };
