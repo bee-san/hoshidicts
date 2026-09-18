@@ -35,7 +35,7 @@ class Lookup {
  private:
   std::vector<LookupResult> lookup_impl(const std::string& lookup_string, const std::string* dictionary_path,
                                         int max_results, size_t scan_length, const LookupOptions& options) const;
-  static void filter_by_pos(std::vector<TermResult>& terms, const DeinflectionResult& d);
+  static void filter_by_pos(RawTerms& terms, const DeinflectionResult& d);
 
   DictionaryQuery& query_;
   Deinflector& deinflector_;

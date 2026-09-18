@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <memory>
 #include <string>
+#include <string_view>
 #include <unordered_map>
 #include <vector>
 
@@ -81,6 +82,9 @@ struct KanjiResult {
   std::vector<KanjiEntry> entries;
 };
 
+struct RawTerm;
+struct RawTerms;
+
 class DictionaryQuery {
  public:
   DictionaryQuery();
@@ -122,8 +126,12 @@ class DictionaryQuery {
 
  private:
   friend class Lookup;
-  std::vector<TermResult> query_raw(const std::string& expression,
-                                    const std::string* term_dictionary_path = nullptr) const;
+  RawTerms query_raw(const std::string& expression,
+                     const std::string* term_dictionary_path = nullptr) const;
+  TermResult build_term(const RawTerms& raw, RawTerm& term) const;
+  void collect_frequencies(std::string_view expression, std::string_view reading,
+                           std::vector<FrequencyEntry>& out) const;
+  void collect_pitches(std::string_view expression, std::string_view reading, std::vector<PitchEntry>& out) const;
   void materialize(TermResult& term) const;
 
   struct DictionaryData;
