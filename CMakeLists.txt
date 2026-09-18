@@ -11,6 +11,10 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 option(HOSHIDICTS_CLI "hoshidicts cli" OFF)
 option(HOSHIDICTS_BENCHMARK "hoshidicts import and lookup benchmarks" OFF)
+# Emscripten hosts that link with -sWASMFS: read-only descriptors are served
+# from a Blob there, so dictionary files are opened read-write for the copy
+# (see src/memory/memory.cpp).
+option(HOSHIDICTS_WASMFS "The Emscripten build links against WasmFS" OFF)
 
 set(ZSTD_BUILD_PROGRAMS OFF CACHE BOOL "")
 set(ZSTD_BUILD_TESTS OFF CACHE BOOL "")
@@ -51,6 +55,10 @@ add_library(hoshidicts
     src/lookup.cpp
     src/hoshidicts_c.cpp
 )
+
+if(HOSHIDICTS_WASMFS)
+  target_compile_definitions(hoshidicts PRIVATE HOSHIDICTS_WASMFS=1)
+endif()
 
 target_include_directories(hoshidicts PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include

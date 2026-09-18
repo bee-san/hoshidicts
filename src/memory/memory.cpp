@@ -38,7 +38,28 @@ mapped_file map_rd(const std::filesystem::path& path) {
 
   return {.data = data, .size = static_cast<size_t>(file_size.QuadPart)};
 #else
+#if defined(__EMSCRIPTEN__) && HOSHIDICTS_WASMFS
+  // WasmFS's OPFS backend serves a read-only descriptor from a Blob: the whole
+  // file is copied into a JavaScript ArrayBuffer and then into the heap, with
+  // an async round trip in between. A read-write descriptor uses a sync access
+  // handle that reads straight into the heap, about twice as fast. WasmFS's
+  // mmap copies the file either way and its munmap never touches a read-only
+  // mapping's descriptor, so the handle (and its lock on the file) is released
+  // as soon as the copy is done. The classic Emscripten FS is different on
+  // both counts, hence the gate.
+  int fd = open(path.c_str(), O_RDWR);
+  if (fd < 0) {
+    fd = open(path.c_str(), O_RDONLY);
+  }
+  constexpr bool keep_fd = false;
+#else
   int fd = open(path.c_str(), O_RDONLY);
+#ifdef __EMSCRIPTEN__
+  constexpr bool keep_fd = true;
+#else
+  constexpr bool keep_fd = false;
+#endif
+#endif
   if (fd < 0) {
     return {};
   }
@@ -50,10 +71,10 @@ mapped_file map_rd(const std::filesystem::path& path) {
   }
 
   auto* data = static_cast<uint8_t*>(mmap(nullptr, st.st_size, PROT_READ, MAP_SHARED, fd, 0));
-#ifndef __EMSCRIPTEN__
-  close(fd);
-  fd = -1;
-#endif
+  if (!keep_fd) {
+    close(fd);
+    fd = -1;
+  }
   if (data == reinterpret_cast<uint8_t*>(MAP_FAILED)) {
     if (fd >= 0) {
       close(fd);
