@@ -248,7 +248,13 @@ std::vector<char> train_zstd_dict(const Zip& zip, const Files& files, bool low_r
   params.d = 8;
   params.steps = 4;
   params.splitPoint = 1.0;
-  params.nbThreads = static_cast<unsigned>(max_import_threads(low_ram));
+  // steps=4 makes the optimiser try five values of k, each a trial that walks a
+  // 2^f-entry frequency table (4 MiB at f=20) over the 2 MiB sample. The trials
+  // are memory-bound: running five at once was slower than three in two rounds
+  // (Jitendex, 16 cores: 8 threads 133 ms, 5 threads 133 ms, 3 threads 96 ms,
+  // 2 threads 99 ms, 1 thread 210 ms), so cap the trainer at three threads. The
+  // result does not depend on the thread count.
+  params.nbThreads = static_cast<unsigned>(std::min<size_t>(3, max_import_threads(low_ram)));
 
   std::vector<char> dict(static_cast<size_t>(110 * 1024));
   const size_t dict_size = ZDICT_optimizeTrainFromBuffer_fastCover(
