@@ -360,6 +360,9 @@ ProcessedFile process_term_bank(const std::string& content, const ZSTD_CDict* cd
   processed.glossaries.reserve(out.size());
   processed.glossary_offsets.reserve(out.size());
   processed.glossary_blob.reserve(content.size() / 4);
+  // Records hold the bank's non-glossary strings plus fixed headers.
+  processed.data.reserve(content.size() / 4);
+  processed.offsets.reserve(out.size() * 2);
   for (auto& term : out) {
     const std::string_view glossary = term.glossary.str;
     uint64_t glossary_hash = XXH3_64bits(glossary.data(), glossary.size());
@@ -426,6 +429,10 @@ ProcessedFile process_meta_bank(const std::string& content) {
     return processed;
   }
 
+  // The records repeat the bank's strings with fixed headers, so the bank's
+  // size bounds them; growing by a few bytes per field reallocated repeatedly.
+  processed.data.reserve(content.size());
+  processed.offsets.reserve(out.size());
   for (auto& meta : out) {
     uint64_t offset = processed.data.size();
     std::string_view expr = meta.expression;
@@ -460,6 +467,8 @@ ProcessedFile process_kanji_bank(const std::string& content) {
     return processed;
   }
 
+  processed.data.reserve(content.size());
+  processed.offsets.reserve(out.size());
   for (auto& kanji : out) {
     uint64_t offset = processed.data.size();
     std::string_view character = kanji.character;
