@@ -1,7 +1,6 @@
 #include "bloom.hpp"
 
 #include <algorithm>
-#include <atomic>
 #include <bit>
 #include <cstdint>
 #include <cstring>
@@ -42,40 +41,48 @@ void bloom::build_to_file(const std::vector<uint64_t>& hashes, const std::filesy
   auto* bits = reinterpret_cast<uint64_t*>(out.data + 2 * sizeof(uint64_t));
   std::memset(bits, 0, bits_size);
 
-  const auto set_bits = [bits, mask](const uint64_t* begin, const uint64_t* end, bool shared) {
-    for (const uint64_t* it = begin; it != end; ++it) {
-      const uint64_t h = *it;
+  // Each thread owns a range of words and scans every hash, setting only the
+  // bits that fall into its range: no atomics, no per-thread copies, and each
+  // thread's writes stay within a slice small enough to sit in its cache. The
+  // position arithmetic is repeated per thread, but it is a few ALU operations
+  // against a random write that would otherwise miss the cache.
+  const uint64_t words = bits_size / sizeof(uint64_t);
+  const auto set_range = [bits, mask, &hashes](uint64_t word_begin, uint64_t word_end) {
+    for (uint64_t h : hashes) {
       auto h1 = static_cast<uint32_t>(h);
       auto h2 = static_cast<uint32_t>(h >> 32);
       for (uint64_t k = 0; k < num_hashes; k++) {
         uint64_t bit = (h1 + k * h2) & mask;
-        if (shared) {
-          // Setting bits is order-independent, so threads share the array;
-          // the atomic OR only keeps concurrent writers from losing bits.
-          std::atomic_ref<uint64_t>(bits[bit >> 6]).fetch_or(1ULL << (bit & 63), std::memory_order_relaxed);
-        } else {
-          bits[bit >> 6] |= 1ULL << (bit & 63);
+        uint64_t word = bit >> 6;
+        if (word >= word_begin && word < word_end) {
+          bits[word] |= 1ULL << (bit & 63);
         }
       }
     }
   };
 
-  // Chunks of at least 64K hashes; the caller's thread takes the first one.
-  const size_t chunks = spawn ? std::max<size_t>(1, std::min(threads, hashes.size() / 65536 + 1)) : 1;
-  if (chunks == 1) {
-    set_bits(hashes.data(), hashes.data() + hashes.size(), false);
-  } else {
-    const size_t chunk = (hashes.size() + chunks - 1) / chunks;
-    std::vector<std::future<void>> futures;
-    for (size_t t = 1; t < chunks; t++) {
-      const size_t begin = std::min(t * chunk, hashes.size());
-      const size_t end = std::min(begin + chunk, hashes.size());
-      if (begin >= end) break;
-      futures.push_back(spawn([&set_bits, &hashes, begin, end]() {
-        set_bits(hashes.data() + begin, hashes.data() + end, true);
-      }));
+  // Splitting only pays for large filters; below that the scan repeats cost
+  // more than the cache misses they avoid.
+  const size_t ranges = (spawn && hashes.size() >= 262144) ? std::max<size_t>(1, std::min<uint64_t>(threads, words / 4096)) : 1;
+  if (ranges == 1) {
+    for (uint64_t h : hashes) {
+      auto h1 = static_cast<uint32_t>(h);
+      auto h2 = static_cast<uint32_t>(h >> 32);
+      for (uint64_t k = 0; k < num_hashes; k++) {
+        uint64_t bit = (h1 + k * h2) & mask;
+        bits[bit >> 6] |= 1ULL << (bit & 63);
+      }
     }
-    set_bits(hashes.data(), hashes.data() + std::min(chunk, hashes.size()), true);
+  } else {
+    const uint64_t per_range = (words + ranges - 1) / ranges;
+    std::vector<std::future<void>> futures;
+    for (size_t r = 1; r < ranges; r++) {
+      const uint64_t begin = std::min<uint64_t>(r * per_range, words);
+      const uint64_t end = std::min<uint64_t>(begin + per_range, words);
+      if (begin >= end) break;
+      futures.push_back(spawn([&set_range, begin, end]() { set_range(begin, end); }));
+    }
+    set_range(0, std::min<uint64_t>(per_range, words));
     for (auto& future : futures) future.get();
   }
 
