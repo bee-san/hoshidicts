@@ -24,6 +24,15 @@ set(UTF8PROC_INSTALL OFF CACHE BOOL "")
 
 add_subdirectory(external/glaze)
 add_subdirectory(external/zstd)
+
+# Override one zstd translation unit: src/zstd/zstd_compress_sequences.c is the
+# pinned upstream file plus a cache for the default FSE table (see its header
+# comment). Re-copy it when the zstd submodule moves.
+get_target_property(HOSHIDICTS_ZSTD_SOURCES libzstd_static SOURCES)
+list(FILTER HOSHIDICTS_ZSTD_SOURCES EXCLUDE REGEX "compress/zstd_compress_sequences\\.c$")
+set_property(TARGET libzstd_static PROPERTY SOURCES ${HOSHIDICTS_ZSTD_SOURCES})
+target_sources(libzstd_static PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/zstd/zstd_compress_sequences.c)
+target_include_directories(libzstd_static PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/external/zstd/lib/compress)
 add_subdirectory(external/unordered_dense)
 add_subdirectory(external/libdeflate)
 add_subdirectory(external/utf8proc)
