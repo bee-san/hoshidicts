@@ -190,6 +190,35 @@ bool DictionaryQuery::add_kanji_dict(const std::string& path) {
   return add_dict(path, DictionaryQuery::DictionaryType::KANJI);
 }
 
+size_t DictionaryQuery::remove_dict(const std::string& path) {
+  size_t removed = 0;
+  for (auto* dicts : {&term_dicts_, &freq_dicts_, &pitch_dicts_, &kanji_dicts_}) {
+    removed += std::erase_if(*dicts, [&path](const Dictionary& d) { return d.path == path; });
+  }
+  return removed;
+}
+
+bool DictionaryQuery::set_dict_order(const std::vector<std::string>& paths) {
+  // A listed path is rejected unless some kind of it is loaded; otherwise the
+  // caller's view of the loaded set has drifted and it should rebuild instead.
+  for (const auto& path : paths) {
+    const auto loaded = [&path](const std::vector<Dictionary>& dicts) {
+      return std::ranges::any_of(dicts, [&path](const Dictionary& d) { return d.path == path; });
+    };
+    if (!loaded(term_dicts_) && !loaded(freq_dicts_) && !loaded(pitch_dicts_) && !loaded(kanji_dicts_)) {
+      return false;
+    }
+  }
+  const auto rank = [&paths](const Dictionary& d) {
+    const auto it = std::ranges::find(paths, d.path);
+    return it == paths.end() ? paths.size() : static_cast<size_t>(it - paths.begin());
+  };
+  for (auto* dicts : {&term_dicts_, &freq_dicts_, &pitch_dicts_, &kanji_dicts_}) {
+    std::ranges::stable_sort(*dicts, {}, rank);
+  }
+  return true;
+}
+
 std::vector<TermResult> DictionaryQuery::query(const std::string& expression) const {
   auto results = query_raw(expression);
   for (auto& term : results) {
