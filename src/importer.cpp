@@ -68,10 +68,21 @@ struct Files {
   std::vector<int> media_files;
 };
 
+// A compressed glossary inside ProcessedFile::glossary_blob.
+struct GlossarySpan {
+  uint64_t offset = 0;
+  uint32_t size = 0;
+};
+
 struct ProcessedFile {
   std::vector<char> data;
   std::vector<std::pair<uint64_t, uint64_t>> offsets;
-  ankerl::unordered_dense::map<uint64_t, std::vector<char>> glossaries;
+  // Every distinct glossary of the bank, compressed back to back in first-use
+  // order. One buffer instead of one heap vector per glossary keeps the
+  // parse/compress workers out of the allocator and lets the writer emit the
+  // whole blob with one write when the bank repeats nothing seen before.
+  std::vector<char> glossary_blob;
+  ankerl::unordered_dense::map<uint64_t, GlossarySpan> glossaries;
   std::vector<std::pair<uint64_t, uint64_t>> glossary_offsets;
   SummaryMetaCount meta_counts;
   size_t count = 0;
@@ -261,31 +272,35 @@ ProcessedFile process_term_bank(const std::string& content, const ZSTD_CDict* cd
     return processed;
   }
 
-  std::vector<char> compressed;
   ZSTD_CCtx* cctx = ZSTD_createCCtx();
   if (!cctx) {
     return processed;
   }
   ZSTD_CCtx_refCDict(cctx, cdict);
 
+  processed.glossaries.reserve(out.size());
+  processed.glossary_offsets.reserve(out.size());
+  processed.glossary_blob.reserve(content.size() / 4);
   for (auto& term : out) {
     const std::string_view glossary = term.glossary.str;
     uint64_t glossary_hash = XXH3_64bits(glossary.data(), glossary.size());
-    auto it = processed.glossaries.find(glossary_hash);
-    if (it == processed.glossaries.end()) {
+    auto [it, inserted] = processed.glossaries.try_emplace(glossary_hash);
+    if (inserted) {
+      const size_t start = processed.glossary_blob.size();
       const size_t bound = ZSTD_compressBound(glossary.size());
-      compressed.resize(bound);
-      const size_t compressed_size = ZSTD_compress2(cctx, compressed.data(), bound, glossary.data(), glossary.size());
+      processed.glossary_blob.resize(start + bound);
+      const size_t compressed_size =
+          ZSTD_compress2(cctx, processed.glossary_blob.data() + start, bound, glossary.data(), glossary.size());
       if (ZSTD_isError(compressed_size)) {
         ZSTD_freeCCtx(cctx);
         throw std::runtime_error("failed to compress glossary");
       }
-      compressed.resize(compressed_size);
-      processed.glossaries.emplace(glossary_hash, compressed);
+      processed.glossary_blob.resize(start + compressed_size);
+      it->second = GlossarySpan{start, static_cast<uint32_t>(compressed_size)};
     }
 
     uint64_t offset = processed.data.size();
-    uint32_t blob_size = processed.glossaries[glossary_hash].size();
+    uint32_t blob_size = it->second.size;
     std::string_view expr = term.expression;
     std::string_view reading = term.reading.empty() ? expr : term.reading;
     std::string_view definition_tags = term.definition_tags.value_or("");
@@ -507,17 +522,26 @@ void write_terms(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>
       return;
     }
 
-    std::vector<char> glossary_buf;
-    for (auto& [hash, compressed] : processed.glossaries) {
-      auto [it, inserted] = glossaries.try_emplace(hash, write_offset);
+    // The blob is written in place, skipping only glossaries an earlier bank
+    // already wrote (the map iterates in insertion, hence blob, order).
+    const char* blob = processed.glossary_blob.data();
+    size_t run_start = 0;
+    uint64_t skipped = 0;
+    for (auto& [hash, span] : processed.glossaries) {
+      auto [it, inserted] = glossaries.try_emplace(hash, write_offset + span.offset - skipped);
       if (inserted) {
-        write_bytes(glossary_buf, compressed.data(), compressed.size());
-        write_offset += compressed.size();
+        continue;
       }
+      if (span.offset > run_start) {
+        file.write(blob + run_start, static_cast<std::streamsize>(span.offset - run_start));
+      }
+      run_start = span.offset + span.size;
+      skipped += span.size;
     }
-    if (!glossary_buf.empty()) {
-      file.write(glossary_buf.data(), static_cast<std::streamsize>(glossary_buf.size()));
+    if (processed.glossary_blob.size() > run_start) {
+      file.write(blob + run_start, static_cast<std::streamsize>(processed.glossary_blob.size() - run_start));
     }
+    write_offset += processed.glossary_blob.size() - skipped;
 
     for (auto& [hash, pos] : processed.glossary_offsets) {
       uint64_t glossary_offset = glossaries[hash];
