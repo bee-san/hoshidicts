@@ -97,6 +97,17 @@ class DictionaryQuery {
   bool add_pitch_dict(const std::string& path);
   bool add_kanji_dict(const std::string& path);
 
+  // Drops every loaded kind of the dictionary at `path` and returns how many
+  // entries were removed (0 when the path is not loaded). The other
+  // dictionaries keep their relative order, so a caller can reshape the loaded
+  // set without rebuilding it.
+  size_t remove_dict(const std::string& path);
+
+  // Reorders every kind so the dictionaries appear in the order of `paths`.
+  // Dictionaries not listed keep their relative order after the listed ones.
+  // Returns false, changing nothing, when a listed path is not loaded.
+  bool set_dict_order(const std::vector<std::string>& paths);
+
   void query_freq(std::vector<TermResult>& terms) const;
   void query_pitch(std::vector<TermResult>& terms) const;
   KanjiResult query_kanji(const std::string& kanji) const;
