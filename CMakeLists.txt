@@ -11,6 +11,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 option(HOSHIDICTS_CLI "hoshidicts cli" OFF)
 option(HOSHIDICTS_BENCHMARK "hoshidicts import and lookup benchmarks" OFF)
+option(HOSHIDICTS_TESTS "hoshidicts unit tests (ctest)" OFF)
 # Emscripten hosts that link with -sWASMFS: read-only descriptors are served
 # from a Blob there, so dictionary files are opened read-write for the copy
 # (see src/memory/memory.cpp).
@@ -48,6 +49,7 @@ add_library(hoshidicts
     src/memory/memory.cpp
     src/zip/zip.cpp
     src/json/yomitan_parser.cpp
+    src/json/json_skip.cpp
     src/text_processor/text_processor.cpp
     src/text_processor/kanji_variants.cpp
     src/deinflector.cpp
@@ -112,4 +114,14 @@ if(HOSHIDICTS_BENCHMARK)
     target_link_libraries(benchmark-lookup PRIVATE
         hoshidicts
     )
+endif()
+if(HOSHIDICTS_TESTS)
+    enable_testing()
+    foreach(variant simd scalar)
+        add_executable(json-skip-test-${variant} tests/json_skip_test.cpp src/json/json_skip.cpp)
+        target_include_directories(json-skip-test-${variant} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+        target_link_libraries(json-skip-test-${variant} PRIVATE glaze::glaze)
+        add_test(NAME json-skip-${variant} COMMAND json-skip-test-${variant})
+    endforeach()
+    target_compile_definitions(json-skip-test-scalar PRIVATE HOSHIDICTS_JSON_SKIP_SCALAR=1)
 endif()
