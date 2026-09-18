@@ -16,6 +16,7 @@
 #include <deque>
 #include <filesystem>
 #include <fstream>
+#include <functional>
 #include <future>
 #include <memory>
 #include <mutex>
@@ -38,13 +39,80 @@ constexpr std::launch async_policy = std::launch::deferred;
 constexpr std::launch async_policy = std::launch::async;
 #endif
 
-#ifdef __EMSCRIPTEN__
-constexpr std::launch filesystem_async_policy = std::launch::deferred;
-constexpr std::launch radix_async_policy = std::launch::deferred;
+// One group of threads serves the whole import: the term-bank workers first,
+// then the meta and kanji banks, the offset sort, the hash table, the Bloom
+// filter and the media. Spawning fresh threads for those later phases is not an
+// option on Emscripten: a finished pthread returns its Web Worker to the pool
+// asynchronously, so a burst of new threads right after the bank workers exit
+// finds the (strictly sized) pool empty and fails. Without pthreads the pool
+// has no threads and runs every task inline when it is submitted.
+class WorkerPool {
+ public:
+  explicit WorkerPool(size_t threads) {
+#if !defined(__EMSCRIPTEN__) || defined(__EMSCRIPTEN_PTHREADS__)
+    threads_.reserve(threads);
+    for (size_t i = 0; i < threads; ++i) {
+      threads_.emplace_back([this]() { run(); });
+    }
 #else
-constexpr std::launch filesystem_async_policy = std::launch::async;
-constexpr std::launch radix_async_policy = std::launch::async;
+    static_cast<void>(threads);
 #endif
+  }
+  WorkerPool(const WorkerPool&) = delete;
+  WorkerPool& operator=(const WorkerPool&) = delete;
+  ~WorkerPool() {
+    {
+      std::lock_guard lock(mutex_);
+      stop_ = true;
+    }
+    ready_.notify_all();
+    for (auto& thread : threads_) {
+      thread.join();
+    }
+  }
+
+  size_t size() const { return threads_.size(); }
+
+  template <class F>
+  std::future<std::invoke_result_t<F&>> submit(F&& task) {
+    using R = std::invoke_result_t<F&>;
+    auto packaged = std::make_shared<std::packaged_task<R()>>(std::forward<F>(task));
+    std::future<R> future = packaged->get_future();
+    if (threads_.empty()) {
+      (*packaged)();
+      return future;
+    }
+    {
+      std::lock_guard lock(mutex_);
+      tasks_.emplace_back([packaged]() { (*packaged)(); });
+    }
+    ready_.notify_one();
+    return future;
+  }
+
+ private:
+  void run() {
+    while (true) {
+      std::function<void()> task;
+      {
+        std::unique_lock lock(mutex_);
+        ready_.wait(lock, [&]() { return stop_ || !tasks_.empty(); });
+        if (tasks_.empty()) {
+          return;
+        }
+        task = std::move(tasks_.front());
+        tasks_.pop_front();
+      }
+      task();
+    }
+  }
+
+  std::vector<std::thread> threads_;
+  std::deque<std::function<void()>> tasks_;
+  std::mutex mutex_;
+  std::condition_variable ready_;
+  bool stop_ = false;
+};
 
 size_t max_import_threads(bool low_ram) {
 #if defined(__EMSCRIPTEN__) && !defined(__EMSCRIPTEN_PTHREADS__)
@@ -137,7 +205,7 @@ void write_bytes(std::vector<char>& out, const void* data, size_t n) {
   std::memcpy(out.data() + old_size, data, n);
 }
 
-void radix_sort(std::vector<std::pair<uint64_t, uint64_t>>& offsets, size_t max_threads) {
+void radix_sort(std::vector<std::pair<uint64_t, uint64_t>>& offsets, WorkerPool& pool, size_t max_threads) {
   if (offsets.size() < 2) {
     return;
   }
@@ -163,7 +231,7 @@ void radix_sort(std::vector<std::pair<uint64_t, uint64_t>>& offsets, size_t max_
       }
 
       local_counts[t].fill(0);
-      futures.push_back(std::async(radix_async_policy, [src, shift, begin, end, &local_counts, t]() {
+      futures.push_back(pool.submit([src, shift, begin, end, &local_counts, t]() {
         for (size_t i = begin; i < end; i++) {
           local_counts[t][((*src)[i].first >> shift) & 0xffff]++;
         }
@@ -200,7 +268,7 @@ void radix_sort(std::vector<std::pair<uint64_t, uint64_t>>& offsets, size_t max_
     for (size_t t = 0; t < futures.size(); t++) {
       const size_t begin = t * chunk;
       const size_t end = std::min(begin + chunk, n);
-      scatter_futures.push_back(std::async(radix_async_policy, [src, dst, shift, begin, end, &thread_pos, t]() {
+      scatter_futures.push_back(pool.submit([src, dst, shift, begin, end, &thread_pos, t]() {
         for (size_t i = begin; i < end; i++) {
           const size_t bucket = ((*src)[i].first >> shift) & 0xffff;
           (*dst)[thread_pos[t][bucket]++] = (*src)[i];
@@ -514,7 +582,7 @@ Summary create_summary(const Index& index, std::string styles) {
 
 void write_terms(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>& offsets, const Zip& zip,
                  const std::vector<int>& files, uint64_t& write_offset, ImportResult& result, bool low_ram,
-                 const ZSTD_CDict* cdict) {
+                 const ZSTD_CDict* cdict, WorkerPool& pool) {
   if (files.empty()) {
     return;
   }
@@ -624,7 +692,7 @@ void write_terms(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>
   workers.reserve(worker_count);
   try {
     for (size_t index = 0; index < worker_count; ++index) {
-      workers.push_back(std::async(std::launch::async, worker));
+      workers.push_back(pool.submit(worker));
     }
   } catch (...) {
     {
@@ -696,7 +764,8 @@ void write_terms(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>
 }
 
 void write_meta(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>& offsets, const Zip& zip,
-                const std::vector<int>& files, uint64_t& write_offset, ImportResult& result, bool low_ram) {
+                const std::vector<int>& files, uint64_t& write_offset, ImportResult& result, bool low_ram,
+                WorkerPool& pool) {
   if (files.empty()) {
     return;
   }
@@ -721,7 +790,7 @@ void write_meta(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>&
 
   for (int file_index : files) {
     threads.push_back(
-        std::async(filesystem_async_policy, [&zip, file_index]() { return process_meta_bank(zip.read(file_index)); }));
+        pool.submit([&zip, file_index]() { return process_meta_bank(zip.read(file_index)); }));
 
     if (threads.size() == max_threads) {
       write_processed(threads.front().get());
@@ -736,7 +805,8 @@ void write_meta(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>&
 }
 
 void write_kanji(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>& offsets, const Zip& zip,
-                 const std::vector<int>& files, uint64_t& write_offset, ImportResult& result, bool low_ram) {
+                 const std::vector<int>& files, uint64_t& write_offset, ImportResult& result, bool low_ram,
+                 WorkerPool& pool) {
   if (files.empty()) {
     return;
   }
@@ -759,7 +829,7 @@ void write_kanji(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>
 
   for (int file_index : files) {
     threads.push_back(
-        std::async(filesystem_async_policy, [&zip, file_index]() { return process_kanji_bank(zip.read(file_index)); }));
+        pool.submit([&zip, file_index]() { return process_kanji_bank(zip.read(file_index)); }));
 
     if (threads.size() == max_threads) {
       write_processed(threads.front().get());
@@ -774,13 +844,23 @@ void write_kanji(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>
 }
 
 std::vector<char> build_offset_index(std::vector<std::pair<uint64_t, uint64_t>>& offsets, uint64_t& write_offset,
-                                     std::vector<std::pair<uint64_t, uint64_t>>& hash_entries, bool low_ram) {
+                                     std::vector<std::pair<uint64_t, uint64_t>>& hash_entries, bool low_ram,
+                                     WorkerPool& pool, size_t sort_threads) {
   std::vector<char> offset_buf;
   if (low_ram) {
     std::ranges::sort(offsets);
   } else {
-    radix_sort(offsets, max_import_threads(false));
+    radix_sort(offsets, pool, sort_threads);
   }
+  // Every entry contributes its offset and at most one group header, so the
+  // buffer is sized once and filled through a raw cursor instead of growing
+  // (and zero-filling) a few bytes at a time, 6.6M times for VNDB.
+  offset_buf.resize(offsets.size() * (sizeof(uint32_t) + sizeof(uint64_t)));
+  char* cursor = offset_buf.data();
+  const auto put = [&cursor](auto value) {
+    std::memcpy(cursor, &value, sizeof(value));
+    cursor += sizeof(value);
+  };
   for (size_t i = 0; i < offsets.size();) {
     size_t j = i + 1;
     while (j < offsets.size() && offsets[j].first == offsets[i].first) {
@@ -790,14 +870,15 @@ std::vector<char> build_offset_index(std::vector<std::pair<uint64_t, uint64_t>>&
     hash_entries.emplace_back(offsets[i].first, write_offset);
 
     auto count = static_cast<uint32_t>(j - i);
-    write_val<uint32_t>(offset_buf, count);
+    put(count);
     for (size_t k = i; k < j; ++k) {
-      write_val<uint64_t>(offset_buf, offsets[k].second);
+      put(offsets[k].second);
     }
 
     write_offset += sizeof(uint32_t) + count * sizeof(uint64_t);
     i = j;
   }
+  offset_buf.resize(static_cast<size_t>(cursor - offset_buf.data()));
   return offset_buf;
 }
 
@@ -889,8 +970,6 @@ ImportResult dictionary_importer::import(const std::string& zip_path, const std:
 
     result.summary = create_summary(index, styles);
     const Files files = get_files(zip);
-    std::future<size_t> media_thread = std::async(
-        filesystem_async_policy, [&dict_path, &zip, &files]() { return write_media(dict_path, zip, files.media_files); });
 
     const std::vector<char> zstd_dict = train_zstd_dict(zip, files, low_ram);
     std::unique_ptr<ZSTD_CDict, decltype(&ZSTD_freeCDict)> cdict(nullptr, ZSTD_freeCDict);
@@ -902,30 +981,48 @@ ImportResult dictionary_importer::import(const std::string& zip_path, const std:
       dict_file.write(zstd_dict.data(), static_cast<std::streamsize>(zstd_dict.size()));
     }
 
+    // The trainer has joined its own threads by now, so the pool plus this
+    // thread is the whole budget.
+    const size_t pool_threads = max_import_threads(low_ram);
+    WorkerPool pool(pool_threads);
+
     std::ofstream blobs(dict_path / "blobs.bin", std::ios::binary);
     setup_stream_exceptions(blobs);
     std::vector<std::pair<uint64_t, uint64_t>> offsets;
     uint64_t write_offset = 0;
-    write_terms(blobs, offsets, zip, files.term_banks, write_offset, result, low_ram, cdict.get());
-    write_meta(blobs, offsets, zip, files.meta_banks, write_offset, result, low_ram);
-    write_kanji(blobs, offsets, zip, files.kanji_banks, write_offset, result, low_ram);
+    write_terms(blobs, offsets, zip, files.term_banks, write_offset, result, low_ram, cdict.get(), pool);
+    write_meta(blobs, offsets, zip, files.meta_banks, write_offset, result, low_ram, pool);
+    write_kanji(blobs, offsets, zip, files.kanji_banks, write_offset, result, low_ram, pool);
     count_unprocessed_banks(zip, files, result);
     if (offsets.empty()) {
       throw std::runtime_error("empty dictionary");
     }
 
+    // Media extraction runs beside the sort; the sort keeps one thread short
+    // of the pool so that it never waits behind it.
+    const bool media_on_pool = pool.size() > 1 && !files.media_files.empty();
+    std::future<size_t> media_thread = pool.submit(
+        [&dict_path, &zip, &files]() { return write_media(dict_path, zip, files.media_files); });
+
     std::vector<std::pair<uint64_t, uint64_t>> hash_entries;
-    auto offset_buf = build_offset_index(offsets, write_offset, hash_entries, low_ram);
+    auto offset_buf = build_offset_index(offsets, write_offset, hash_entries, low_ram, pool,
+                                         media_on_pool ? pool.size() - 1 : std::max<size_t>(1, pool.size()));
     std::vector<std::pair<uint64_t, uint64_t>>().swap(offsets);
 
-    auto hash_thread = std::async(filesystem_async_policy, [&hash_entries, &dict_path]() {
+    // The hash table and the Bloom filter only read hash_entries. The table
+    // builds on a pool thread; the filter builds here and on the remaining
+    // pool threads while this thread would otherwise only wait.
+    auto hash_thread = pool.submit([&hash_entries, &dict_path]() {
       hash::linear table;
       table.build_to_file(hash_entries, dict_path / "hash.table");
-      auto hashes = hash_entries | std::views::keys | std::ranges::to<std::vector>();
-      hash::bloom::build_to_file(hashes, dict_path / "bloom.filter");
     });
 
     blobs.write(offset_buf.data(), static_cast<std::streamsize>(offset_buf.size()));
+    {
+      auto hashes = hash_entries | std::views::keys | std::ranges::to<std::vector>();
+      hash::bloom::build_to_file(hashes, dict_path / "bloom.filter", pool.size(),
+                                 [&pool](std::function<void()> task) { return pool.submit(std::move(task)); });
+    }
     hash_thread.get();
 
     result.summary.counts.media.total = media_thread.get();
