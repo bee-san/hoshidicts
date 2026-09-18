@@ -1,12 +1,20 @@
 #pragma once
 #include <cstdint>
 #include <filesystem>
+#include <functional>
+#include <future>
 #include <vector>
 
 namespace hash {
 class bloom {
  public:
-  static void build_to_file(const std::vector<uint64_t>& hashes, const std::filesystem::path& path);
+  // Runs a task on another thread and returns its future; when absent, the
+  // filter is built on the calling thread alone.
+  using spawn_fn = std::function<std::future<void>(std::function<void()>)>;
+  // Setting bits is order-independent, so up to `threads` chunks of hashes
+  // are set concurrently (with atomic ORs); the result is the same bits.
+  static void build_to_file(const std::vector<uint64_t>& hashes, const std::filesystem::path& path,
+                            size_t threads = 1, const spawn_fn& spawn = nullptr);
   bool load(const uint8_t* ptr, size_t size);
 
   bool contains(uint64_t h) const {
