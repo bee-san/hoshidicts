@@ -322,7 +322,12 @@ std::vector<char> train_zstd_dict(const Zip& zip, const Files& files, bool low_r
   // (Jitendex, 16 cores: 8 threads 133 ms, 5 threads 133 ms, 3 threads 96 ms,
   // 2 threads 99 ms, 1 thread 210 ms), so cap the trainer at three threads. The
   // result does not depend on the thread count.
-  params.nbThreads = static_cast<unsigned>(std::min<size_t>(3, max_import_threads(low_ram)));
+  // Five trials, so five threads finish in one round. That only pays when the
+  // sample is small (short glossaries, e.g. a names dictionary): each trial then
+  // spends its time on per-sample compressor setup, not on the frequency table,
+  // and the three-thread cap above is about the latter.
+  const size_t trial_threads = samples.size() < 512 * 1024 ? 5 : 3;
+  params.nbThreads = static_cast<unsigned>(std::min<size_t>(trial_threads, max_import_threads(low_ram)));
 
   std::vector<char> dict(static_cast<size_t>(110 * 1024));
   const size_t dict_size = ZDICT_optimizeTrainFromBuffer_fastCover(
