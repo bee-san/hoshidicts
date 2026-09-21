@@ -110,6 +110,8 @@ hd_query* hd_query_new(void) {
 
 void hd_query_free(hd_query* q) { delete q; }
 
+size_t hd_query_max_long_key_length(const hd_query* q) { return q->query.max_long_key_length(); }
+
 int hd_query_add_term_dict(hd_query* q, const char* path) {
   try {
     return q->query.add_term_dict(path) ? 0 : 1;

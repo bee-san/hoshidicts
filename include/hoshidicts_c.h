@@ -129,6 +129,12 @@ size_t hd_query_remove_dict(hd_query* q, const char* path);
 // Returns 0 on success, 1 when a listed path is not loaded.
 int hd_query_set_dict_order(hd_query* q, const char* const* paths, size_t count);
 
+// Longest term-dictionary key, in code points, recorded in the loaded
+// dictionaries' long-key scan indexes (keys longer than 16 code points; 0 when
+// none is loaded). A host should hand hd_lookup_run at least this many code
+// points plus eight so that an extended scan can reach such a key.
+size_t hd_query_max_long_key_length(const hd_query* q);
+
 hd_results* hd_query_run(const hd_query* q, const char* expression, const hd_term_result** out_terms,
                          size_t* out_count);
 void hd_results_free(hd_results* r);

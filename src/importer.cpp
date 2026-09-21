@@ -30,6 +30,7 @@
 #include "hash/hash.hpp"
 #include "json/yomitan_parser.hpp"
 #include "path_utils.hpp"
+#include "scan_index.hpp"
 #include "zip/zip.hpp"
 
 namespace {
@@ -154,7 +155,22 @@ struct ProcessedFile {
   std::vector<std::pair<uint64_t, uint64_t>> glossary_offsets;
   SummaryMetaCount meta_counts;
   size_t count = 0;
+  // (prefix hash, code point length) of every expression or reading longer
+  // than scan_index::long_key_min_codepoints; see scan_index.hpp.
+  std::vector<std::pair<uint64_t, uint16_t>> long_keys;
 };
+
+void note_long_key(std::vector<std::pair<uint64_t, uint16_t>>& long_keys, std::string_view key) {
+  // Keys are bounded by the uint16_t length prefix of the record, so the code
+  // point count fits a uint16_t as well.
+  const size_t length = scan_index::codepoint_length(key);
+  if (length <= scan_index::long_key_min_codepoints) {
+    return;
+  }
+  if (const auto hash = scan_index::prefix_hash(key)) {
+    long_keys.emplace_back(*hash, static_cast<uint16_t>(length));
+  }
+}
 
 void setup_stream_exceptions(std::ofstream& stream) { stream.exceptions(std::ios::failbit | std::ios::badbit); }
 
@@ -392,6 +408,10 @@ ProcessedFile process_term_bank(const std::string& content, const ZSTD_CDict* cd
     write_str(processed.data, expr);
     write_val<uint16_t>(processed.data, reading.size());
     write_str(processed.data, reading);
+    note_long_key(processed.long_keys, expr);
+    if (reading != expr) {
+      note_long_key(processed.long_keys, reading);
+    }
 
     uint64_t glossary_offset = processed.data.size();
     write_val<uint64_t>(processed.data, 0);
@@ -598,9 +618,11 @@ Summary create_summary(const Index& index, std::string styles) {
   return summary;
 }
 
+using LongKeyIndex = ankerl::unordered_dense::map<uint64_t, uint16_t>;
+
 void write_terms(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>& offsets, const Zip& zip,
                  const std::vector<int>& files, uint64_t& write_offset, ImportResult& result, bool low_ram,
-                 const ZSTD_CDict* cdict, WorkerPool& pool) {
+                 const ZSTD_CDict* cdict, WorkerPool& pool, LongKeyIndex& long_keys) {
   if (files.empty()) {
     return;
   }
@@ -648,6 +670,12 @@ void write_terms(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>
 
     write_offset += processed.data.size();
     result.summary.counts.terms.total += processed.count;
+    for (const auto& [hash, length] : processed.long_keys) {
+      auto [it, inserted] = long_keys.try_emplace(hash, length);
+      if (!inserted && it->second < length) {
+        it->second = length;
+      }
+    }
   };
 
 #ifdef __EMSCRIPTEN_PTHREADS__
@@ -779,6 +807,37 @@ void write_terms(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>
     threads.pop_front();
   }
 #endif
+}
+
+// Sorted so the query can binary-search the mapping without loading it.
+void write_scan_index(const std::filesystem::path& dict_path, const LongKeyIndex& long_keys) {
+  if (long_keys.empty()) {
+    return;
+  }
+  std::vector<std::pair<uint64_t, uint16_t>> entries(long_keys.begin(), long_keys.end());
+  std::ranges::sort(entries);
+  uint16_t max_length = 0;
+  for (const auto& [hash, length] : entries) {
+    max_length = std::max(max_length, length);
+  }
+
+  std::vector<char> out;
+  out.reserve(scan_index::header_bytes + entries.size() * (sizeof(uint64_t) + sizeof(uint16_t)));
+  write_val<uint32_t>(out, scan_index::magic);
+  write_val<uint32_t>(out, scan_index::version);
+  write_val<uint32_t>(out, static_cast<uint32_t>(entries.size()));
+  write_val<uint16_t>(out, max_length);
+  write_val<uint16_t>(out, 0);
+  for (const auto& [hash, length] : entries) {
+    write_val<uint64_t>(out, hash);
+  }
+  for (const auto& [hash, length] : entries) {
+    write_val<uint16_t>(out, length);
+  }
+
+  std::ofstream file(dict_path / scan_index::file_name, std::ios::binary);
+  setup_stream_exceptions(file);
+  file.write(out.data(), static_cast<std::streamsize>(out.size()));
 }
 
 void write_meta(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>& offsets, const Zip& zip,
@@ -1008,7 +1067,9 @@ ImportResult dictionary_importer::import(const std::string& zip_path, const std:
     setup_stream_exceptions(blobs);
     std::vector<std::pair<uint64_t, uint64_t>> offsets;
     uint64_t write_offset = 0;
-    write_terms(blobs, offsets, zip, files.term_banks, write_offset, result, low_ram, cdict.get(), pool);
+    LongKeyIndex long_keys;
+    write_terms(blobs, offsets, zip, files.term_banks, write_offset, result, low_ram, cdict.get(), pool, long_keys);
+    write_scan_index(dict_path, long_keys);
     write_meta(blobs, offsets, zip, files.meta_banks, write_offset, result, low_ram, pool);
     write_kanji(blobs, offsets, zip, files.kanji_banks, write_offset, result, low_ram, pool);
     count_unprocessed_banks(zip, files, result);

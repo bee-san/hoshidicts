@@ -112,6 +112,16 @@ class DictionaryQuery {
   // Returns false, changing nothing, when a listed path is not loaded.
   bool set_dict_order(const std::vector<std::string>& paths);
 
+  // Long-key scan index (see src/scan_index.hpp). `long_key_length` returns
+  // the longest term-dictionary key, in code points, that begins with the
+  // first eight code points of `text` and is longer than 16, or 0 when there
+  // is none or `text` is shorter than eight code points. `max_long_key_length`
+  // is the longest such key any loaded term dictionary records, so a host can
+  // size the text it hands to Lookup; 0 when no dictionary has an index.
+  // Both accept a term dictionary path to consult that dictionary alone.
+  size_t long_key_length(std::string_view text, const std::string* term_dictionary_path = nullptr) const;
+  size_t max_long_key_length(const std::string* term_dictionary_path = nullptr) const;
+
   void query_freq(std::vector<TermResult>& terms) const;
   void query_pitch(std::vector<TermResult>& terms) const;
   KanjiResult query_kanji(const std::string& kanji) const;

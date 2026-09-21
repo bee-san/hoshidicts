@@ -21,6 +21,7 @@
 #include "memory/memory.hpp"
 #include "path_utils.hpp"
 #include "query_internal.hpp"
+#include "scan_index.hpp"
 
 namespace {
 template <typename T>
@@ -52,6 +53,9 @@ struct DictionaryQuery::DictionaryData {
   memory::mapped_file bloom_filter;
   memory::mapped_file media;
   memory::mapped_file media_index;
+  // Optional long-key scan index (see src/scan_index.hpp); absent for
+  // dictionaries imported before it existed and for ones without long keys.
+  memory::mapped_file scan_index;
   ZSTD_DDict* zstd_dict = nullptr;
 
   ~DictionaryData() {
@@ -60,7 +64,61 @@ struct DictionaryQuery::DictionaryData {
     memory::unmap(bloom_filter);
     memory::unmap(media);
     memory::unmap(media_index);
+    memory::unmap(scan_index);
     ZSTD_freeDDict(zstd_dict);
+  }
+
+  struct ScanIndexView {
+    uint32_t count = 0;
+    uint16_t max_key_length = 0;
+    const uint8_t* hashes = nullptr;
+    const uint8_t* lengths = nullptr;
+  };
+
+  // A view over the mapped file, or an empty one when the file is missing,
+  // has an unknown version, or is not the size its header claims.
+  ScanIndexView scan_index_view() const {
+    ScanIndexView view;
+    if (!scan_index || scan_index.size < scan_index::header_bytes) {
+      return view;
+    }
+    const uint8_t* addr = scan_index.data;
+    if (read_val<uint32_t>(addr) != scan_index::magic || read_val<uint32_t>(addr) != scan_index::version) {
+      return view;
+    }
+    const auto count = read_val<uint32_t>(addr);
+    const auto max_key_length = read_val<uint16_t>(addr);
+    const size_t expected = scan_index::header_bytes + static_cast<size_t>(count) * (sizeof(uint64_t) + sizeof(uint16_t));
+    if (scan_index.size != expected) {
+      return view;
+    }
+    view.count = count;
+    view.max_key_length = max_key_length;
+    view.hashes = scan_index.data + scan_index::header_bytes;
+    view.lengths = view.hashes + static_cast<size_t>(count) * sizeof(uint64_t);
+    return view;
+  }
+
+  // Longest key sharing the hashed prefix, or 0.
+  size_t long_key_length(uint64_t prefix_hash) const {
+    const ScanIndexView view = scan_index_view();
+    size_t lo = 0;
+    size_t hi = view.count;
+    while (lo < hi) {
+      const size_t mid = lo + (hi - lo) / 2;
+      uint64_t hash;
+      std::memcpy(&hash, view.hashes + mid * sizeof(uint64_t), sizeof(hash));
+      if (hash < prefix_hash) {
+        lo = mid + 1;
+      } else if (hash > prefix_hash) {
+        hi = mid;
+      } else {
+        uint16_t length;
+        std::memcpy(&length, view.lengths + mid * sizeof(uint16_t), sizeof(length));
+        return length;
+      }
+    }
+    return 0;
   }
 };
 
@@ -155,6 +213,9 @@ bool DictionaryQuery::add_dict_(const std::string& path_utf8, DictionaryType typ
   if (dict.data->media) {
     dict.data->media_index = memory::map_rd(path / "media.idx");
   }
+  if (type == TERM && std::filesystem::is_regular_file(path / scan_index::file_name)) {
+    dict.data->scan_index = memory::map_rd(path / scan_index::file_name);
+  }
 
   if (version == 4 || version == 6) {
     std::ifstream f(path / "dict.zstd", std::ios::binary);
@@ -226,6 +287,32 @@ bool DictionaryQuery::set_dict_order(const std::vector<std::string>& paths) {
     std::ranges::stable_sort(*dicts, {}, rank);
   }
   return true;
+}
+
+size_t DictionaryQuery::long_key_length(std::string_view text, const std::string* term_dictionary_path) const {
+  const auto hash = scan_index::prefix_hash(text);
+  if (!hash) {
+    return 0;
+  }
+  size_t longest = 0;
+  for (const auto& dict : term_dicts_) {
+    if (term_dictionary_path != nullptr && dict.path != *term_dictionary_path) {
+      continue;
+    }
+    longest = std::max(longest, dict.data->long_key_length(*hash));
+  }
+  return longest;
+}
+
+size_t DictionaryQuery::max_long_key_length(const std::string* term_dictionary_path) const {
+  size_t longest = 0;
+  for (const auto& dict : term_dicts_) {
+    if (term_dictionary_path != nullptr && dict.path != *term_dictionary_path) {
+      continue;
+    }
+    longest = std::max<size_t>(longest, dict.data->scan_index_view().max_key_length);
+  }
+  return longest;
 }
 
 std::vector<TermResult> DictionaryQuery::query(const std::string& expression) const {

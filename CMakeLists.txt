@@ -128,4 +128,8 @@ if(HOSHIDICTS_TESTS)
     add_executable(score-roundtrip-test tests/score_roundtrip_test.cpp)
     target_link_libraries(score-roundtrip-test PRIVATE hoshidicts)
     add_test(NAME score-roundtrip COMMAND score-roundtrip-test)
+
+    add_executable(long-key-scan-test tests/long_key_scan_test.cpp)
+    target_link_libraries(long-key-scan-test PRIVATE hoshidicts)
+    add_test(NAME long-key-scan COMMAND long-key-scan-test)
 endif()
