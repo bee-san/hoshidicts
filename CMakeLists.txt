@@ -81,6 +81,8 @@ add_library(hoshidicts
     src/memory/memory.cpp
     src/zip/zip.cpp
     src/source/zip_source.cpp
+    src/mdict/ripemd128.cpp
+    src/mdict/mdict_reader.cpp
     src/json/yomitan_parser.cpp
     src/json/json_skip.cpp
     src/text_processor/text_processor.cpp
@@ -171,6 +173,11 @@ if(HOSHIDICTS_TESTS)
     add_executable(deps-smoke-test tests/deps_smoke_test.cpp)
     target_link_libraries(deps-smoke-test PRIVATE lzokay gumbo)
     add_test(NAME deps-smoke COMMAND deps-smoke-test)
+
+    add_executable(mdict-reader-test tests/mdict_reader_test.cpp)
+    target_include_directories(mdict-reader-test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_link_libraries(mdict-reader-test PRIVATE hoshidicts)
+    add_test(NAME mdict-reader COMMAND mdict-reader-test ${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/mdict)
 
     add_executable(import-equivalence-test tests/import_equivalence_test.cpp)
     target_link_libraries(import-equivalence-test PRIVATE hoshidicts)
