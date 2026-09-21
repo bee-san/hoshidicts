@@ -90,6 +90,8 @@ added metadata dictionary.
 - [unordered_dense](https://github.com/martinus/unordered_dense.git): MIT
 - [utf8proc](https://github.com/JuliaStrings/utf8proc): MIT
 - [kanji-processor](https://github.com/yomidevs/kanji-processor): MIT
+- [lzokay](https://github.com/AxioDL/lzokay): MIT (vendored in `external/lzokay`)
+- [gumbo-parser](https://github.com/sparklemotion/nokogiri/tree/main/gumbo-parser) (Nokogiri's fork of Google's gumbo): Apache-2.0, `hashmap.c` MIT (vendored in `external/gumbo-parser`)
 
 ## License
 hoshidicts (main) is licensed under the GNU General Public License v3.0. See [LICENSE](LICENSE) for details.
