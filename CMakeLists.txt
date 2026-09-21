@@ -124,4 +124,8 @@ if(HOSHIDICTS_TESTS)
         add_test(NAME json-skip-${variant} COMMAND json-skip-test-${variant})
     endforeach()
     target_compile_definitions(json-skip-test-scalar PRIVATE HOSHIDICTS_JSON_SKIP_SCALAR=1)
+
+    add_executable(score-roundtrip-test tests/score_roundtrip_test.cpp)
+    target_link_libraries(score-roundtrip-test PRIVATE hoshidicts)
+    add_test(NAME score-roundtrip COMMAND score-roundtrip-test)
 endif()
