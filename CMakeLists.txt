@@ -48,6 +48,7 @@ add_library(hoshidicts
     src/importer.cpp
     src/memory/memory.cpp
     src/zip/zip.cpp
+    src/source/zip_source.cpp
     src/json/yomitan_parser.cpp
     src/json/json_skip.cpp
     src/text_processor/text_processor.cpp
@@ -132,4 +133,11 @@ if(HOSHIDICTS_TESTS)
     add_executable(long-key-scan-test tests/long_key_scan_test.cpp)
     target_link_libraries(long-key-scan-test PRIVATE hoshidicts)
     add_test(NAME long-key-scan COMMAND long-key-scan-test)
+
+    add_executable(import-equivalence-test tests/import_equivalence_test.cpp)
+    target_link_libraries(import-equivalence-test PRIVATE hoshidicts)
+    add_test(NAME import-equivalence
+             COMMAND import-equivalence-test
+                     ${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/yomitan/small_dict.zip
+                     ${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/yomitan/golden.sha256)
 endif()

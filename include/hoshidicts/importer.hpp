@@ -52,5 +52,5 @@ struct ImportResult {
 };
 
 namespace dictionary_importer {
-ImportResult import(const std::string& zip_path, const std::string& output_dir, bool low_ram = false);
+ImportResult import(const std::string& source_path, const std::string& output_dir, bool low_ram = false);
 };
