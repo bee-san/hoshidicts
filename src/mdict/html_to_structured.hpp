@@ -70,4 +70,7 @@ std::string normalize_asset_path(std::string_view path, std::string_view source_
 
 // encodeURIComponent.
 std::string encode_uri_component(std::string_view value);
+
+// `value` as a quoted JSON string literal.
+std::string json_quote(std::string_view value);
 }

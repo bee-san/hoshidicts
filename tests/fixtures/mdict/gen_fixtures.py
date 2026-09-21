@@ -268,7 +268,8 @@ HTML_ENTRIES = [
     ("alias", "@@@LINK=@@@LINK_target\r\n"),
     ("dup", '<p class="a">first dup</p>'),
     ("dup", '<p class="a">second dup</p>'),
-    ("entry", '<b>bold</b> <i>italic</i> <a href="entry://alias">alias</a> <a href="sound://a.spx">snd</a>'),
+    ("entry", '<b>bold</b> <i>italic</i> <a href="entry://alias">alias</a> <a href="sound://a.spx">snd</a>'
+              '<img src="../evil.png"><style>.inline-x { color: blue; }</style>'),
     ("missing-alias", "@@@LINK=nowhere"),
     ("ruby", '<table><tr><td><ruby>漢<rt>かん</rt></ruby></td></tr></table><img src="img/pic.png">'),
     ("食べる", "`1`to eat`2` (ichidan)"),

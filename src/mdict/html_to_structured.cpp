@@ -833,6 +833,12 @@ void append_children(Context& ctx, const GumboNode& parent, ContentBuilder& cont
 }
 }
 
+std::string json_quote(std::string_view value) {
+  std::string out;
+  json_string(out, value);
+  return out;
+}
+
 std::string encode_uri_component(std::string_view value) {
   static const char hex[] = "0123456789ABCDEF";
   std::string out;

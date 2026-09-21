@@ -40,4 +40,11 @@ class DictionarySource {
   // The contents of a media entry together with the path it is stored under,
   // or nullopt when it cannot be read.
   virtual std::optional<SourceMediaFile> read_media(int index) const = 0;
+
+  // Called once, after every bank has been read and before styles.css is read
+  // and media is enumerated. A source that only learns what media and styles
+  // it has while producing banks (MdictSource) appends those entries here;
+  // the importer re-scans entries() for media afterwards. ZipSource has
+  // nothing to do.
+  virtual void finish_banks() {}
 };

@@ -18,9 +18,9 @@ struct hd_import_result {
   ImportResult result;
 };
 
-hd_import_result* hd_import(const char* zip_path, const char* output_dir, int low_ram) {
+hd_import_result* hd_import(const char* source_path, const char* output_dir, int low_ram) {
   try {
-    return new hd_import_result{dictionary_importer::import(zip_path, output_dir, low_ram != 0)};
+    return new hd_import_result{dictionary_importer::import(source_path, output_dir, low_ram != 0)};
   } catch (...) {
     return nullptr;
   }

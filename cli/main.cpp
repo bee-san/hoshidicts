@@ -15,7 +15,7 @@
 
 void print_usage(const char* program) {
   std::cout << std::format("Usage:\n");
-  std::cout << std::format("{} import <path/to/dictionary.zip>\n", program);
+  std::cout << std::format("{} import <path/to/dictionary.zip|dictionary.mdx>\n", program);
   std::cout << std::format("{} deinflect <word>\n", program);
   std::cout << std::format("{} preprocess <word>\n", program);
   std::cout << std::format("{} query <path/to/dictionary> <word>\n", program);
@@ -25,8 +25,8 @@ void print_usage(const char* program) {
 }
 
 void cmd_import(const std::string& path) {
-  std::filesystem::path zip_path = path_utils::from_utf8(path);
-  std::string output_dir = path_utils::to_utf8(zip_path.parent_path());
+  std::filesystem::path source_path = path_utils::from_utf8(path);
+  std::string output_dir = path_utils::to_utf8(source_path.parent_path());
   if (output_dir.empty()) {
     output_dir = ".";
   }
