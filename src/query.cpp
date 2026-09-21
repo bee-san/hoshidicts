@@ -86,8 +86,16 @@ bool DictionaryQuery::add_dict(const std::string& path_utf8, DictionaryType type
 
 bool DictionaryQuery::add_dict_(const std::string& path_utf8, DictionaryType type) {
   const std::filesystem::path path = path_utils::from_utf8(path_utf8);
+  // Marker layout: _1/_2 are legacy; _3 and _4 store the term score as an int32
+  // and differ only in whether dict.zstd was trained (_4); _5 and _6 are the
+  // same pair with the score stored as a double, which is what the Yomitan
+  // schema's JSON number can hold (fractions, and magnitudes beyond int32).
   int version = 0;
-  if (std::filesystem::is_regular_file(path / ".hoshidicts_4")) {
+  if (std::filesystem::is_regular_file(path / ".hoshidicts_6")) {
+    version = 6;
+  } else if (std::filesystem::is_regular_file(path / ".hoshidicts_5")) {
+    version = 5;
+  } else if (std::filesystem::is_regular_file(path / ".hoshidicts_4")) {
     version = 4;
   } else if (std::filesystem::is_regular_file(path / ".hoshidicts_3")) {
     version = 3;
@@ -148,7 +156,7 @@ bool DictionaryQuery::add_dict_(const std::string& path_utf8, DictionaryType typ
     dict.data->media_index = memory::map_rd(path / "media.idx");
   }
 
-  if (version >= 4) {
+  if (version == 4 || version == 6) {
     std::ifstream f(path / "dict.zstd", std::ios::binary);
     const std::string blob(std::istreambuf_iterator<char>(f), {});
     dict.data->zstd_dict =
@@ -305,8 +313,10 @@ RawTerms DictionaryQuery::query_raw(const std::string& expression,
         }
       }
 
-      int score = 0;
-      if (data->version >= 3) {
+      double score = 0;
+      if (data->version >= 5) {
+        score = read_val<double>(blob_addr);
+      } else if (data->version >= 3) {
         score = read_val<int32_t>(blob_addr);
       }
 

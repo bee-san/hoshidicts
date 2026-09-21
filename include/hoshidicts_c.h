@@ -91,7 +91,7 @@ typedef struct hd_term_result {
   hd_str expression;
   hd_str reading;
   hd_str rules;
-  int32_t score;
+  double score;
   const hd_glossary_entry* glossaries;
   size_t glossaries_count;
   const hd_frequency_entry* frequencies;

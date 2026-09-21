@@ -62,7 +62,7 @@ struct TermResult {
   std::string expression;
   std::string reading;
   std::string rules;
-  int score = 0;
+  double score = 0;
   std::vector<GlossaryEntry> glossaries;
   std::vector<FrequencyEntry> frequencies;
   std::vector<PitchEntry> pitches;

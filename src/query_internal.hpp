@@ -21,7 +21,7 @@ struct RawGlossary {
 struct RawTerm {
   std::string_view expression;
   std::string_view reading;
-  int score;
+  double score;
   uint32_t first_glossary;
   uint32_t last_glossary;
   std::vector<FrequencyEntry> frequencies;

@@ -405,7 +405,11 @@ ProcessedFile process_term_bank(const std::string& content, const ZSTD_CDict* cd
     write_val<uint8_t>(processed.data, term.term_tags.size());
     write_str(processed.data, term.term_tags);
     write_val<uint32_t>(processed.data, 0);
-    write_val<int32_t>(processed.data, static_cast<int32_t>(term.score));
+    // The Yomitan schema types score as a JSON number; keep the parsed double
+    // rather than truncating to int32 (fractions were collapsing, and magnitudes
+    // beyond int32 were undefined behaviour in the cast). Readers select on the
+    // .hoshidicts_5/_6 marker.
+    write_val<double>(processed.data, term.score);
 
     processed.offsets.emplace_back(XXH3_64bits(expr.data(), expr.size()), offset);
     if (reading != expr) {
@@ -1049,7 +1053,7 @@ ImportResult dictionary_importer::import(const std::string& zip_path, const std:
     setup_stream_exceptions(index_file);
     index_file.write(summary_json.data(), static_cast<std::streamsize>(summary_json.size()));
 
-    std::ofstream sui(dict_path / (zstd_dict.empty() ? ".hoshidicts_3" : ".hoshidicts_4"), std::ios::binary);
+    std::ofstream sui(dict_path / (zstd_dict.empty() ? ".hoshidicts_5" : ".hoshidicts_6"), std::ios::binary);
     result.success = true;
   } catch (const std::exception& e) {
     result.success = false;
