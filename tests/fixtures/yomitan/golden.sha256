@@ -1,0 +1,11 @@
+# SHA-256 of every file the pre-DictionarySource importer (bee-san/hoshidicts main @ fa833f9) wrote for small_dict.zip.
+# index.json is hashed with "importDate":<n> replaced by "importDate":0. Regenerate only when the output format changes on purpose.
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  .hoshidicts_6
+552b6e672c3b8e64d12e7eb43182c23234eaaea506bbd1c19b7d447e523840ad  blobs.bin
+4bb3bf0755e28ae676f98c575174a62054651cc0004173bb03bf0d8b5a875c5c  bloom.filter
+91de707c8eb26bff94240513c03a41b7f9995c67f5392a621fb3151aae429ef3  dict.zstd
+517a21ea1d33fa05bdc9e4655c3c8d171ded15002f297843cb17f1e9db3f045a  hash.table
+b27413b159ab02a83b2f820087db41ffaf81ec2f7fb97c20493b41a1fcba3f5f  media.bin
+56879507ea4d0e870990d88b906e754eaa34f47b4e634842a6f4499290f3fd2c  media.idx
+91b1a6c60e52df5da7db5a1ff10a2d7d2b7d25a282b2142206f45e3cc63bb376  index.json
+4f6e1b0bf6ed1f02d3eb24617e9693284ea0607f30e92cab693e0583675bb9ca  scan.idx

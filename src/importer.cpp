@@ -31,7 +31,8 @@
 #include "json/yomitan_parser.hpp"
 #include "path_utils.hpp"
 #include "scan_index.hpp"
-#include "zip/zip.hpp"
+#include "source/dictionary_source.hpp"
+#include "source/zip_source.hpp"
 
 namespace {
 #if defined(__EMSCRIPTEN__) && !defined(__EMSCRIPTEN_PTHREADS__)
@@ -174,10 +175,10 @@ void note_long_key(std::vector<std::pair<uint64_t, uint16_t>>& long_keys, std::s
 
 void setup_stream_exceptions(std::ofstream& stream) { stream.exceptions(std::ios::failbit | std::ios::badbit); }
 
-Files get_files(const Zip& zip) {
+Files get_files(const DictionarySource& source) {
   Files files;
-  for (int i = 0; i < static_cast<int>(zip.entries.size()); i++) {
-    const auto& name = zip.entries[i].name;
+  for (int i = 0; i < static_cast<int>(source.entries().size()); i++) {
+    const auto& name = source.entries()[static_cast<size_t>(i)].name;
     if (name.empty() || name.back() == '/') {
       continue;
     }
@@ -299,12 +300,12 @@ void radix_sort(std::vector<std::pair<uint64_t, uint64_t>>& offsets, WorkerPool&
   }
 }
 
-std::vector<char> train_zstd_dict(const Zip& zip, const Files& files, bool low_ram) {
+std::vector<char> train_zstd_dict(const DictionarySource& source, const Files& files, bool low_ram) {
   if (files.term_banks.empty()) {
     return {};
   }
 
-  const std::string content = zip.read(files.term_banks[0]);
+  const std::string content = source.read(files.term_banks[0]);
   std::vector<Term> terms;
   if (!yomitan_parser::parse_term_bank(content, terms)) {
     return {};
@@ -561,16 +562,16 @@ SummaryMetaCount count_meta_modes(const std::string& content) {
   return counts;
 }
 
-void count_unprocessed_banks(const Zip& zip, const Files& files, ImportResult& result) {
+void count_unprocessed_banks(const DictionarySource& source, const Files& files, ImportResult& result) {
   for (int file_index : files.kanji_meta_banks) {
-    SummaryMetaCount modes = count_meta_modes(zip.read(file_index));
+    SummaryMetaCount modes = count_meta_modes(source.read(file_index));
     for (const auto& [name, count] : modes) {
       result.summary.counts.kanjiMeta[name] += count;
     }
   }
 
   for (int file_index : files.tag_banks) {
-    result.summary.counts.tagMeta.total += count_json_array(zip.read(file_index));
+    result.summary.counts.tagMeta.total += count_json_array(source.read(file_index));
   }
 }
 
@@ -620,9 +621,10 @@ Summary create_summary(const Index& index, std::string styles) {
 
 using LongKeyIndex = ankerl::unordered_dense::map<uint64_t, uint16_t>;
 
-void write_terms(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>& offsets, const Zip& zip,
-                 const std::vector<int>& files, uint64_t& write_offset, ImportResult& result, bool low_ram,
-                 const ZSTD_CDict* cdict, WorkerPool& pool, LongKeyIndex& long_keys) {
+void write_terms(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>& offsets,
+                 const DictionarySource& source, const std::vector<int>& files, uint64_t& write_offset,
+                 ImportResult& result, bool low_ram, const ZSTD_CDict* cdict, WorkerPool& pool,
+                 LongKeyIndex& long_keys) {
   if (files.empty()) {
     return;
   }
@@ -685,7 +687,7 @@ void write_terms(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>
   std::vector<size_t> task_bytes;
   task_bytes.reserve(files.size());
   for (int file : files) {
-    task_bytes.push_back(zip.entries[static_cast<size_t>(file)].uncompressed_size);
+    task_bytes.push_back(source.entries()[static_cast<size_t>(file)].uncompressed_size);
   }
   std::vector<std::optional<ProcessedFile>> processed(files.size());
   size_t next_task = 0;
@@ -715,7 +717,7 @@ void write_terms(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>
         bytes_ahead += task_bytes[index];
       }
       try {
-        auto value = process_term_bank(zip.read(files[index]), cdict);
+        auto value = process_term_bank(source.read(files[index]), cdict);
         {
           std::lock_guard lock(mutex);
           processed[index].emplace(std::move(value));
@@ -794,7 +796,7 @@ void write_terms(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>
 #else
   for (int file_index : files) {
     threads.push_back(std::async(
-        async_policy, [&zip, file_index, cdict]() { return process_term_bank(zip.read(file_index), cdict); }));
+        async_policy, [&source, file_index, cdict]() { return process_term_bank(source.read(file_index), cdict); }));
 
     if (threads.size() == max_threads) {
       write_processed(threads.front().get());
@@ -840,9 +842,9 @@ void write_scan_index(const std::filesystem::path& dict_path, const LongKeyIndex
   file.write(out.data(), static_cast<std::streamsize>(out.size()));
 }
 
-void write_meta(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>& offsets, const Zip& zip,
-                const std::vector<int>& files, uint64_t& write_offset, ImportResult& result, bool low_ram,
-                WorkerPool& pool) {
+void write_meta(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>& offsets,
+                const DictionarySource& source, const std::vector<int>& files, uint64_t& write_offset,
+                ImportResult& result, bool low_ram, WorkerPool& pool) {
   if (files.empty()) {
     return;
   }
@@ -867,7 +869,7 @@ void write_meta(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>&
 
   for (int file_index : files) {
     threads.push_back(
-        pool.submit([&zip, file_index]() { return process_meta_bank(zip.read(file_index)); }));
+        pool.submit([&source, file_index]() { return process_meta_bank(source.read(file_index)); }));
 
     if (threads.size() == max_threads) {
       write_processed(threads.front().get());
@@ -881,9 +883,9 @@ void write_meta(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>&
   }
 }
 
-void write_kanji(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>& offsets, const Zip& zip,
-                 const std::vector<int>& files, uint64_t& write_offset, ImportResult& result, bool low_ram,
-                 WorkerPool& pool) {
+void write_kanji(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>& offsets,
+                 const DictionarySource& source, const std::vector<int>& files, uint64_t& write_offset,
+                 ImportResult& result, bool low_ram, WorkerPool& pool) {
   if (files.empty()) {
     return;
   }
@@ -906,7 +908,7 @@ void write_kanji(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>
 
   for (int file_index : files) {
     threads.push_back(
-        pool.submit([&zip, file_index]() { return process_kanji_bank(zip.read(file_index)); }));
+        pool.submit([&source, file_index]() { return process_kanji_bank(source.read(file_index)); }));
 
     if (threads.size() == max_threads) {
       write_processed(threads.front().get());
@@ -959,7 +961,7 @@ std::vector<char> build_offset_index(std::vector<std::pair<uint64_t, uint64_t>>&
   return offset_buf;
 }
 
-size_t write_media(const std::filesystem::path& path, const Zip& zip, const std::vector<int>& files) {
+size_t write_media(const std::filesystem::path& path, const DictionarySource& source, const std::vector<int>& files) {
   if (files.empty()) {
     return 0;
   }
@@ -974,7 +976,7 @@ size_t write_media(const std::filesystem::path& path, const Zip& zip, const std:
   std::vector<char> buf;
   std::vector<std::pair<std::string, uint32_t>> index_entries;
   for (int file_index : files) {
-    auto media_file = zip.read_media(file_index);
+    auto media_file = source.read_media(file_index);
     if (!media_file.has_value()) {
       continue;
     }
@@ -1004,22 +1006,22 @@ size_t write_media(const std::filesystem::path& path, const Zip& zip, const std:
 }
 }
 
-ImportResult dictionary_importer::import(const std::string& zip_path, const std::string& output_dir, bool low_ram) {
+ImportResult dictionary_importer::import(const std::string& source_path, const std::string& output_dir, bool low_ram) {
   ImportResult result;
   std::filesystem::path dict_path;
   try {
-    const std::filesystem::path native_zip_path = path_utils::from_utf8(zip_path);
+    const std::filesystem::path native_source_path = path_utils::from_utf8(source_path);
     const std::filesystem::path native_output_dir = path_utils::from_utf8(output_dir);
-    Zip zip;
-    if (!zip.open(native_zip_path)) {
-      throw std::runtime_error(zip.error.empty() ? "failed to open zip" : zip.error);
+    ZipSource source;
+    if (!source.open(native_source_path)) {
+      throw std::runtime_error(source.error().empty() ? "failed to open zip" : source.error());
     }
 
-    int index_idx = zip.find("index.json");
+    int index_idx = source.find("index.json");
     if (index_idx < 0) {
       throw std::runtime_error("could not find index.json");
     }
-    std::string index_content = zip.read(index_idx);
+    std::string index_content = source.read(index_idx);
     if (index_content.empty()) {
       throw std::runtime_error("could not read index.json");
     }
@@ -1040,15 +1042,15 @@ ImportResult dictionary_importer::import(const std::string& zip_path, const std:
     std::filesystem::create_directories(dict_path);
 
     std::string styles;
-    int styles_idx = zip.find("styles.css");
+    int styles_idx = source.find("styles.css");
     if (styles_idx >= 0) {
-      styles = zip.read(styles_idx);
+      styles = source.read(styles_idx);
     }
 
     result.summary = create_summary(index, styles);
-    const Files files = get_files(zip);
+    const Files files = get_files(source);
 
-    const std::vector<char> zstd_dict = train_zstd_dict(zip, files, low_ram);
+    const std::vector<char> zstd_dict = train_zstd_dict(source, files, low_ram);
     std::unique_ptr<ZSTD_CDict, decltype(&ZSTD_freeCDict)> cdict(nullptr, ZSTD_freeCDict);
     if (!zstd_dict.empty()) {
       cdict.reset(ZSTD_createCDict(zstd_dict.data(), zstd_dict.size(), 0));
@@ -1068,11 +1070,12 @@ ImportResult dictionary_importer::import(const std::string& zip_path, const std:
     std::vector<std::pair<uint64_t, uint64_t>> offsets;
     uint64_t write_offset = 0;
     LongKeyIndex long_keys;
-    write_terms(blobs, offsets, zip, files.term_banks, write_offset, result, low_ram, cdict.get(), pool, long_keys);
+    write_terms(blobs, offsets, source, files.term_banks, write_offset, result, low_ram, cdict.get(), pool,
+                long_keys);
     write_scan_index(dict_path, long_keys);
-    write_meta(blobs, offsets, zip, files.meta_banks, write_offset, result, low_ram, pool);
-    write_kanji(blobs, offsets, zip, files.kanji_banks, write_offset, result, low_ram, pool);
-    count_unprocessed_banks(zip, files, result);
+    write_meta(blobs, offsets, source, files.meta_banks, write_offset, result, low_ram, pool);
+    write_kanji(blobs, offsets, source, files.kanji_banks, write_offset, result, low_ram, pool);
+    count_unprocessed_banks(source, files, result);
     if (offsets.empty()) {
       throw std::runtime_error("empty dictionary");
     }
@@ -1081,7 +1084,7 @@ ImportResult dictionary_importer::import(const std::string& zip_path, const std:
     // of the pool so that it never waits behind it.
     const bool media_on_pool = pool.size() > 1 && !files.media_files.empty();
     std::future<size_t> media_thread = pool.submit(
-        [&dict_path, &zip, &files]() { return write_media(dict_path, zip, files.media_files); });
+        [&dict_path, &source, &files]() { return write_media(dict_path, source, files.media_files); });
 
     std::vector<std::pair<uint64_t, uint64_t>> hash_entries;
     auto offset_buf = build_offset_index(offsets, write_offset, hash_entries, low_ram, pool,
