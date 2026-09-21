@@ -22,6 +22,8 @@ let package = Package(
                 "src",
                 "external/libdeflate/lib",
                 "external/utf8proc/utf8proc.c",
+                "external/lzokay/lzokay.cpp",
+                "external/gumbo-parser/src",
             ],
             publicHeadersPath: "include",
             cxxSettings: [
@@ -33,6 +35,8 @@ let package = Package(
                 .headerSearchPath("external/xxHash"),
                 .headerSearchPath("external/unordered_dense/include"),
                 .headerSearchPath("external/utf8proc"),
+                .headerSearchPath("external/lzokay"),
+                .headerSearchPath("external/gumbo-parser/src"),
                 .unsafeFlags(["-Wno-missing-braces"]),
             ],
             swiftSettings: [

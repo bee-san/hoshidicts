@@ -42,6 +42,38 @@ add_subdirectory(external/unordered_dense)
 add_subdirectory(external/libdeflate)
 add_subdirectory(external/utf8proc)
 
+# Vendored (not submodules): external/lzokay and external/gumbo-parser carry
+# their own LICENSE and README with the upstream commit they were copied from.
+add_library(lzokay STATIC external/lzokay/lzokay.cpp)
+target_include_directories(lzokay PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/external/lzokay)
+
+set(GUMBO_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/gumbo-parser/src)
+add_library(gumbo STATIC
+    ${GUMBO_DIR}/ascii.c
+    ${GUMBO_DIR}/attribute.c
+    ${GUMBO_DIR}/char_ref.c
+    ${GUMBO_DIR}/error.c
+    ${GUMBO_DIR}/foreign_attrs.c
+    ${GUMBO_DIR}/hashmap.c
+    ${GUMBO_DIR}/parser.c
+    ${GUMBO_DIR}/string_buffer.c
+    ${GUMBO_DIR}/string_piece.c
+    ${GUMBO_DIR}/string_set.c
+    ${GUMBO_DIR}/svg_attrs.c
+    ${GUMBO_DIR}/svg_tags.c
+    ${GUMBO_DIR}/tag.c
+    ${GUMBO_DIR}/tag_lookup.c
+    ${GUMBO_DIR}/token_buffer.c
+    ${GUMBO_DIR}/tokenizer.c
+    ${GUMBO_DIR}/utf8.c
+    ${GUMBO_DIR}/util.c
+    ${GUMBO_DIR}/vector.c
+)
+target_include_directories(gumbo PUBLIC ${GUMBO_DIR})
+if(MSVC)
+    target_compile_definitions(gumbo PRIVATE _CRT_SECURE_NO_WARNINGS)
+endif()
+
 add_library(hoshidicts
     src/hash/hash.cpp
     src/hash/bloom.cpp
@@ -75,6 +107,8 @@ target_link_libraries(hoshidicts PRIVATE
     libdeflate_static
     unordered_dense
     utf8proc::utf8proc
+    lzokay
+    gumbo
 )
 
 if(MSVC)
@@ -133,6 +167,10 @@ if(HOSHIDICTS_TESTS)
     add_executable(long-key-scan-test tests/long_key_scan_test.cpp)
     target_link_libraries(long-key-scan-test PRIVATE hoshidicts)
     add_test(NAME long-key-scan COMMAND long-key-scan-test)
+
+    add_executable(deps-smoke-test tests/deps_smoke_test.cpp)
+    target_link_libraries(deps-smoke-test PRIVATE lzokay gumbo)
+    add_test(NAME deps-smoke COMMAND deps-smoke-test)
 
     add_executable(import-equivalence-test tests/import_equivalence_test.cpp)
     target_link_libraries(import-equivalence-test PRIVATE hoshidicts)
