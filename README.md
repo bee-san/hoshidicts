@@ -8,9 +8,28 @@ A MIT version of the library is available on the [main-mit](https://github.com/M
 
 ### importer
 ```cpp
-ImportResult dictionary_importer::import(const std::string& zip_path, const std::string& output_dir, bool low_ram = false)
+ImportResult dictionary_importer::import(const std::string& source_path, const std::string& output_dir, bool low_ram = false)
 ```
-Imports a Yomitan `.zip` dictionary file into a custom format. The resulting folder is stored in `output_dir/<dict_title>`. Glossaries are compressed using zstd. Term, frequency and pitch dictionaries are generally supported, but only a small part of the pitch accent spec was implemented. Setting `low_ram` to `true` can reduce memory usage significantly at the cost of slightly lower import speed.
+Imports a Yomitan `.zip` dictionary file or an MDict `.mdx` dictionary into a custom format. The resulting folder is stored in `output_dir/<dict_title>`. Glossaries are compressed using zstd. Term, frequency and pitch dictionaries are generally supported, but only a small part of the pitch accent spec was implemented. Setting `low_ram` to `true` can reduce memory usage significantly at the cost of slightly lower import speed.
+
+The format is detected from the file contents, not the extension.
+
+#### MDX / MDD import
+
+An `.mdx` file is imported directly, without an intermediate Yomitan archive: its entries are converted to Yomitan term banks of 10,000 rows as they are read, so memory use is bounded by the bank size, not the dictionary. The conversion follows [manabitan](https://github.com/ManabiIO/manabitan)'s MDX importer so the result renders the same way.
+
+- Container: MDict engine versions 1.x and 2.0 (`GeneratedByEngineVersion`). Version 3 files are rejected with a clear error.
+- Encodings: UTF-8 and UTF-16. `GBK`, `GB18030` and `Big5` dictionaries are rejected (`unsupported MDX encoding: <name>`).
+- Compression: none, LZO1X and zlib, per block, with every block's Adler-32 verified.
+- Encryption: `Encrypted="2"` (ciphered key index) is supported. `Encrypted="1"` (registration-protected record blocks) needs a user key and is rejected.
+- Resource files: `X.mdd`, `X.1.mdd`, `X.2.mdd`, ... next to `X.mdx` are read automatically (file name case does not matter); a missing MDD is not an error. Only assets the glossaries or stylesheets refer to are imported, under `mdict-media/<path>`; every `*.css` in the MDD plus inline `<style>` blocks become the dictionary's stylesheet. Keys containing `..`, a drive letter or NUL are dropped.
+- Entries: `@@@LINK=target` redirects become extra headwords of the target (one hop; a redirect to a missing target is dropped). Duplicate headwords stay separate entries. `Format="Text"` definitions become plain string glossaries; HTML definitions become structured content.
+- HTML fidelity: the MDX `StyleSheet` backtick markup is expanded; `b/i/em/strong/u/s/sub/sup/h1-6/p/pre/font/...` map to styled `span`/`div`; inline `style` keeps the properties Yomitan's structured content supports; `entry://`, `bword://`, `d:`, `x:` links search the term; `sound://` links are disabled (rendered as `#`); `javascript:` and friends are neutralised; `<script>` is dropped; unsupported elements keep their text; nesting deeper than 20 is flattened. CSS from the MDD is passed through as the dictionary stylesheet, so selectors that depend on tags Yomitan does not render (`<b>`, `<p>`, ...) will not match.
+- The key index of the MDX (and of each MDD) is held in memory during the import; records are streamed block by block.
+
+```
+hoshidicts-cli import path/to/dictionary.mdx
+```
 
 ### query
 ```cpp

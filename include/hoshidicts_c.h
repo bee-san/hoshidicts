@@ -16,7 +16,7 @@ typedef struct hd_str {
 // importer
 typedef struct hd_import_result hd_import_result;
 
-hd_import_result* hd_import(const char* zip_path, const char* output_dir, int low_ram);
+hd_import_result* hd_import(const char* source_path, const char* output_dir, int low_ram);
 void hd_import_result_free(hd_import_result* r);
 
 int hd_import_result_success(const hd_import_result* r);

@@ -30,6 +30,8 @@
 #include "hash/hash.hpp"
 #include "json/yomitan_parser.hpp"
 #include "path_utils.hpp"
+#include "mdict/mdict_reader.hpp"
+#include "mdict/mdict_source.hpp"
 #include "scan_index.hpp"
 #include "source/dictionary_source.hpp"
 #include "source/zip_source.hpp"
@@ -175,6 +177,14 @@ void note_long_key(std::vector<std::pair<uint64_t, uint16_t>>& long_keys, std::s
 
 void setup_stream_exceptions(std::ofstream& stream) { stream.exceptions(std::ios::failbit | std::ios::badbit); }
 
+bool is_bank_or_meta(const std::string& name) {
+  return name.starts_with("term_bank_") || name.starts_with("term_meta_bank_") || name.starts_with("kanji_bank_") ||
+         name.starts_with("kanji_meta_bank_") || name.starts_with("tag_bank_") || name == "styles.css" ||
+         name == "index.json";
+}
+
+// The banks. Media is listed separately by collect_media_files() once the
+// banks are done, because an MDX source only knows its media by then.
 Files get_files(const DictionarySource& source) {
   Files files;
   for (int i = 0; i < static_cast<int>(source.entries().size()); i++) {
@@ -193,11 +203,43 @@ Files get_files(const DictionarySource& source) {
       files.kanji_meta_banks.push_back(i);
     } else if (name.starts_with("tag_bank_")) {
       files.tag_banks.push_back(i);
-    } else if (!(name == "styles.css" || name == "index.json")) {
-      files.media_files.push_back(i);
     }
   }
   return files;
+}
+
+std::vector<int> collect_media_files(const DictionarySource& source) {
+  std::vector<int> media;
+  for (int i = 0; i < static_cast<int>(source.entries().size()); i++) {
+    const auto& name = source.entries()[static_cast<size_t>(i)].name;
+    if (name.empty() || name.back() == '/' || is_bank_or_meta(name)) {
+      continue;
+    }
+    media.push_back(i);
+  }
+  return media;
+}
+
+// Content, not extension, decides the format: an MDict header (big-endian
+// length then UTF-16LE "<Dictionary") or anything else, which Zip parses.
+std::unique_ptr<DictionarySource> open_source(const std::filesystem::path& path) {
+  std::array<uint8_t, 64> head{};
+  size_t head_size = 0;
+  {
+    std::ifstream in(path, std::ios::binary);
+    in.read(reinterpret_cast<char*>(head.data()), static_cast<std::streamsize>(head.size()));
+    head_size = static_cast<size_t>(std::max<std::streamsize>(0, in.gcount()));
+  }
+  if (mdict::looks_like_mdict(head.data(), head_size)) {
+    auto source = std::make_unique<mdict::MdictSource>();
+    source->open(path, path_utils::to_utf8(path.stem()));
+    return source;
+  }
+  auto source = std::make_unique<ZipSource>();
+  if (!source->open(path)) {
+    throw std::runtime_error(source->error().empty() ? "failed to open zip" : source->error());
+  }
+  return source;
 }
 
 template <typename T>
@@ -1012,10 +1054,8 @@ ImportResult dictionary_importer::import(const std::string& source_path, const s
   try {
     const std::filesystem::path native_source_path = path_utils::from_utf8(source_path);
     const std::filesystem::path native_output_dir = path_utils::from_utf8(output_dir);
-    ZipSource source;
-    if (!source.open(native_source_path)) {
-      throw std::runtime_error(source.error().empty() ? "failed to open zip" : source.error());
-    }
+    std::unique_ptr<DictionarySource> source_ptr = open_source(native_source_path);
+    DictionarySource& source = *source_ptr;
 
     int index_idx = source.find("index.json");
     if (index_idx < 0) {
@@ -1041,14 +1081,8 @@ ImportResult dictionary_importer::import(const std::string& source_path, const s
     dict_path = native_output_dir / native_title;
     std::filesystem::create_directories(dict_path);
 
-    std::string styles;
-    int styles_idx = source.find("styles.css");
-    if (styles_idx >= 0) {
-      styles = source.read(styles_idx);
-    }
-
-    result.summary = create_summary(index, styles);
-    const Files files = get_files(source);
+    result.summary = create_summary(index, "");
+    Files files = get_files(source);
 
     const std::vector<char> zstd_dict = train_zstd_dict(source, files, low_ram);
     std::unique_ptr<ZSTD_CDict, decltype(&ZSTD_freeCDict)> cdict(nullptr, ZSTD_freeCDict);
@@ -1079,6 +1113,16 @@ ImportResult dictionary_importer::import(const std::string& source_path, const s
     if (offsets.empty()) {
       throw std::runtime_error("empty dictionary");
     }
+
+    // Styles and media come after the banks: an MDX source assembles its
+    // stylesheet from the <style> blocks it met while converting and lists
+    // only the media the glossaries refer to.
+    source.finish_banks();
+    int styles_idx = source.find("styles.css");
+    if (styles_idx >= 0) {
+      result.summary.styles = source.read(styles_idx);
+    }
+    files.media_files = collect_media_files(source);
 
     // Media extraction runs beside the sort; the sort keeps one thread short
     // of the pool so that it never waits behind it.

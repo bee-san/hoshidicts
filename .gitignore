@@ -51,3 +51,6 @@ build/
 # Swift 
 Package.resolved
 .swiftpm/
+
+# python fixture generators
+__pycache__/

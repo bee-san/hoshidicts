@@ -84,6 +84,7 @@ add_library(hoshidicts
     src/mdict/ripemd128.cpp
     src/mdict/mdict_reader.cpp
     src/mdict/html_to_structured.cpp
+    src/mdict/mdict_source.cpp
     src/json/yomitan_parser.cpp
     src/json/json_skip.cpp
     src/text_processor/text_processor.cpp
@@ -184,6 +185,10 @@ if(HOSHIDICTS_TESTS)
     target_include_directories(html-to-structured-test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
     target_link_libraries(html-to-structured-test PRIVATE hoshidicts glaze::glaze)
     add_test(NAME html-to-structured COMMAND html-to-structured-test)
+
+    add_executable(mdict-test tests/mdict_test.cpp)
+    target_link_libraries(mdict-test PRIVATE hoshidicts)
+    add_test(NAME mdict-import COMMAND mdict-test ${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/mdict)
 
     add_executable(import-equivalence-test tests/import_equivalence_test.cpp)
     target_link_libraries(import-equivalence-test PRIVATE hoshidicts)

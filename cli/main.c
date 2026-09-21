@@ -7,7 +7,7 @@
 
 static void print_usage(const char* program) {
   printf("Usage:\n");
-  printf("%s import <path/to/dictionary.zip>\n", program);
+  printf("%s import <path/to/dictionary.zip|dictionary.mdx>\n", program);
   printf("%s query <path/to/dictionary> <word>\n", program);
   printf("%s lookup <path/to/dictionary> <lookup_string>\n", program);
   printf("%s kanji <path/to/dictionary> <kanji>\n", program);
