@@ -13,6 +13,7 @@
 #include <vector>
 
 #include "query_internal.hpp"
+#include "scan_index.hpp"
 #include "text_processor/text_processor.hpp"
 
 namespace {
@@ -119,9 +120,20 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     return nullptr;
   };
 
-  for (size_t i = start; i > 0; i--) {
-    const std::string_view search_str(lookup_string.begin(), search_str_it);
+  // The processed variants of the input's first eight code points, kept from
+  // the ordinary scan for the long-key check below.
+  std::vector<std::string> prefix_variants;
+
+  // Scans one prefix of the input: every processed variant, deinflected, looked
+  // up, and merged into the candidates keeping the longest matched form.
+  auto scan_prefix = [&](std::string_view search_str, size_t codepoints) {
     auto processor_results = text_processor::process(search_str);
+    if (codepoints == scan_index::long_key_prefix_codepoints) {
+      prefix_variants.reserve(processor_results.size());
+      for (const auto& variant : processor_results) {
+        prefix_variants.push_back(variant.text);
+      }
+    }
     for (auto& variant : processor_results) {
       auto deinflection_results = deinflector_.deinflect(variant.text);
       for (auto& deinflection : deinflection_results) {
@@ -153,8 +165,33 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
       }
       deinflection_store.push_back(std::move(deinflection_results));
     }
+  };
+
+  for (size_t i = start; i > 0; i--) {
+    scan_prefix(std::string_view(lookup_string.begin(), search_str_it), i);
     if (i > 1) {
       utf8::prior(search_str_it, lookup_string.begin());
+    }
+  }
+
+  // Long keys (see src/scan_index.hpp): when the input begins like a key that
+  // is longer than the scan just done, scan the longer prefixes too, up to that
+  // key's length plus room for an inflected ending. A scan shorter than eight
+  // code points never produced the variants, so it never extends -- a caller
+  // asking for one character wants one character.
+  if (!prefix_variants.empty() && text_len > scan_length) {
+    size_t long_key = 0;
+    for (const auto& variant : prefix_variants) {
+      long_key = std::max(long_key, query_.long_key_length(variant, dictionary_path));
+    }
+    if (long_key > scan_length) {
+      const size_t extended = std::min(long_key + scan_index::inflection_slack_codepoints, text_len);
+      auto extended_it = lookup_string.begin();
+      utf8::advance(extended_it, extended, lookup_string.end());
+      for (size_t i = extended; i > scan_length; i--) {
+        scan_prefix(std::string_view(lookup_string.begin(), extended_it), i);
+        utf8::prior(extended_it, lookup_string.begin());
+      }
     }
   }
 
