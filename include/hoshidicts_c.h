@@ -143,6 +143,9 @@ hd_kanji_results* hd_query_run_kanji(const hd_query* q, const char* kanji, const
                                      size_t* out_count);
 void hd_kanji_results_free(hd_kanji_results* r);
 
+// A view into the dictionary's mapped media.bin, valid while the query holds
+// the dictionary. Empty where media is read on demand (Emscripten builds; see
+// DictionaryStorage in hoshidicts/query.hpp).
 hd_media_file hd_query_get_media_file(const hd_query* q, const char* dict_name, const char* media_path);
 
 hd_styles* hd_query_get_styles(const hd_query* q, const hd_dictionary_style** out_styles, size_t* out_count);

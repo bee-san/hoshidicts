@@ -93,6 +93,9 @@ std::vector<LookupResult> Lookup::lookup_dictionary(const std::string& lookup_st
 std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, const std::string* dictionary_path,
                                               int max_results, size_t scan_length,
                                               const LookupOptions& options) const {
+  // Holds what the raw terms below read of paged dictionaries until the kept
+  // results are materialized, so it outlives term_store.
+  BlobPins pins;
   std::vector<Candidate> candidates;
   ankerl::unordered_dense::map<uint64_t, uint32_t> index;
   std::vector<std::vector<DeinflectionResult>> deinflection_store;
@@ -137,7 +140,7 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     for (auto& variant : processor_results) {
       auto deinflection_results = deinflector_.deinflect(variant.text);
       for (auto& deinflection : deinflection_results) {
-        auto terms = query_.query_raw(deinflection.text, dictionary_path);
+        auto terms = query_.query_raw(deinflection.text, pins, dictionary_path);
         filter_by_pos(terms, deinflection);
 
         const auto store_index = static_cast<uint32_t>(term_store.size());
@@ -296,7 +299,7 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     retained.push_back(LookupResult{.matched = lookup_string.substr(0, c.matched_len),
                                     .deinflected = c.deinflection->text,
                                     .trace = c.deinflection->trace,
-                                    .term = query_.build_term(term_store[c.store_index], *c.term),
+                                    .term = query_.build_term(term_store[c.store_index], *c.term, pins),
                                     .preprocessor_steps = c.steps});
   }
 
