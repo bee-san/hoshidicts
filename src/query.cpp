@@ -5,6 +5,7 @@
 #include <zstd.h>
 
 #include <algorithm>
+#include <array>
 #include <cstddef>
 #include <cstdint>
 #include <cstring>
@@ -12,13 +13,16 @@
 #include <fstream>
 #include <memory>
 #include <ranges>
+#include <stdexcept>
 #include <string_view>
 #include <vector>
 
+#include "blob_file.hpp"
 #include "hash/hash.hpp"
 #include "hoshidicts/importer.hpp"
 #include "json/yomitan_parser.hpp"
 #include "memory/memory.hpp"
+#include "memory/page_cache.hpp"
 #include "path_utils.hpp"
 #include "query_internal.hpp"
 #include "scan_index.hpp"
@@ -42,16 +46,32 @@ ZSTD_DCtx* thread_dctx() {
   static thread_local std::unique_ptr<ZSTD_DCtx, decltype(&ZSTD_freeDCtx)> ctx(ZSTD_createDCtx(), ZSTD_freeDCtx);
   return ctx.get();
 }
+
+// Emscripten's mmap copies the whole file into linear memory, so media.bin,
+// which is read only when a media file is asked for, is read on demand there
+// whatever the storage. Natively a mapping costs nothing until it is read.
+#ifdef __EMSCRIPTEN__
+constexpr bool media_always_on_demand = true;
+#else
+constexpr bool media_always_on_demand = false;
+#endif
+
+// A media.bin record is [u16 path length][path][u32 size][bytes]. One read of
+// this many bytes covers the header of a record whose path is 256 bytes or
+// shorter, which is nearly every one.
+constexpr size_t media_probe_bytes = sizeof(uint16_t) + 256 + sizeof(uint32_t);
 }
 
 struct DictionaryQuery::DictionaryData {
   int version;
   hash::linear table;
   hash::bloom bloom;
-  memory::mapped_file blobs;
+  BlobFile blobs;
   memory::mapped_file hash_table;
   memory::mapped_file bloom_filter;
+  // media.bin is either mapped or read on demand (see media_always_on_demand).
   memory::mapped_file media;
+  memory::file_reader media_reader;
   memory::mapped_file media_index;
   // Optional long-key scan index (see src/scan_index.hpp); absent for
   // dictionaries imported before it existed and for ones without long keys.
@@ -59,13 +79,87 @@ struct DictionaryQuery::DictionaryData {
   ZSTD_DDict* zstd_dict = nullptr;
 
   ~DictionaryData() {
-    memory::unmap(blobs);
     memory::unmap(hash_table);
     memory::unmap(bloom_filter);
     memory::unmap(media);
     memory::unmap(media_index);
     memory::unmap(scan_index);
     ZSTD_freeDDict(zstd_dict);
+  }
+
+  struct MediaRecord {
+    bool found = false;
+    // Where the file's bytes start in media.bin.
+    uint64_t offset = 0;
+    uint32_t size = 0;
+  };
+
+  // Binary search over media.idx, which lists the records' offsets sorted by
+  // path. Each probe compares the record's path, from the mapping or with one
+  // read of its header.
+  MediaRecord find_media(std::string_view media_path) const {
+    MediaRecord result;
+    if ((!media && !media_reader) || !media_index) {
+      return result;
+    }
+    const uint8_t* ptr = media_index.data;
+    auto count = read_val<uint32_t>(ptr);
+
+    std::array<uint8_t, media_probe_bytes> probe;
+    std::string long_header;
+    size_t left = 0;
+    size_t right = count;
+    while (left < right) {
+      const size_t mid = left + (right - left) / 2;
+      uint64_t record_offset;
+      std::memcpy(&record_offset, media_index.data + sizeof(uint32_t) + mid * sizeof(uint64_t), sizeof(uint64_t));
+
+      const uint8_t* record;
+      if (media) {
+        record = media.data + record_offset;
+      } else {
+        if (record_offset >= media_reader.size()) {
+          throw std::runtime_error("media.idx points past the end of media.bin");
+        }
+        const auto head = static_cast<size_t>(std::min<uint64_t>(probe.size(), media_reader.size() - record_offset));
+        if (head < sizeof(uint16_t) || !media_reader.read(probe.data(), head, record_offset)) {
+          throw std::runtime_error("could not read media.bin");
+        }
+        uint16_t path_size;
+        std::memcpy(&path_size, probe.data(), sizeof(path_size));
+        record = probe.data();
+        if (sizeof(uint16_t) + path_size + sizeof(uint32_t) > head) {
+          long_header.resize(sizeof(uint16_t) + path_size + sizeof(uint32_t));
+          if (!media_reader.read(long_header.data(), long_header.size(), record_offset)) {
+            throw std::runtime_error("could not read media.bin");
+          }
+          record = reinterpret_cast<const uint8_t*>(long_header.data());
+        }
+      }
+
+      const uint8_t* cursor = record;
+      auto path_size = read_val<uint16_t>(cursor);
+      std::string_view indexed_path = read_str(cursor, path_size);
+      if (indexed_path < media_path) {
+        left = mid + 1;
+      } else if (indexed_path > media_path) {
+        right = mid;
+      } else {
+        result.found = true;
+        result.size = read_val<uint32_t>(cursor);
+        result.offset = record_offset + static_cast<uint64_t>(cursor - record);
+        return result;
+      }
+    }
+    return result;
+  }
+
+  bool read_media(uint8_t* out, size_t size, uint64_t offset) const {
+    if (media) {
+      std::memcpy(out, media.data + offset, size);
+      return true;
+    }
+    return media_reader.read(out, size, offset);
   }
 
   struct ScanIndexView {
@@ -123,6 +217,7 @@ struct DictionaryQuery::DictionaryData {
 };
 
 DictionaryQuery::DictionaryQuery() = default;
+DictionaryQuery::DictionaryQuery(const PageCacheOptions& page_cache) : page_cache_options_(page_cache) {}
 DictionaryQuery::~DictionaryQuery() = default;
 
 DictionaryQuery::DictionaryQuery(DictionaryQuery&&) noexcept = default;
@@ -134,15 +229,63 @@ DictionaryQuery::Dictionary::~Dictionary() = default;
 DictionaryQuery::Dictionary::Dictionary(Dictionary&&) noexcept = default;
 DictionaryQuery::Dictionary& DictionaryQuery::Dictionary::operator=(Dictionary&&) noexcept = default;
 
-bool DictionaryQuery::add_dict(const std::string& path_utf8, DictionaryType type) {
+bool DictionaryQuery::add_dict(const std::string& path_utf8, DictionaryType type, DictionaryStorage storage) {
   try {
-    return add_dict_(path_utf8, type);
+    return add_dict_(path_utf8, type, storage);
   } catch (const std::exception&) {
     return false;
   }
 }
 
-bool DictionaryQuery::add_dict_(const std::string& path_utf8, DictionaryType type) {
+const DictionaryQuery::Dictionary* DictionaryQuery::find_loaded(const std::string& path) const {
+  for (const auto* dicts : {&term_dicts_, &freq_dicts_, &pitch_dicts_, &kanji_dicts_}) {
+    for (const auto& dict : *dicts) {
+      if (dict.path == path) {
+        return &dict;
+      }
+    }
+  }
+  return nullptr;
+}
+
+bool DictionaryQuery::add_dict_(const std::string& path_utf8, DictionaryType type, DictionaryStorage storage) {
+  const std::filesystem::path path = path_utils::from_utf8(path_utf8);
+  Dictionary dict;
+  dict.path = path_utf8;
+  if (const Dictionary* other = find_loaded(path_utf8)) {
+    // Another kind of this dictionary is loaded: the kinds read the same files,
+    // so they share one copy of them (and one set of descriptors).
+    dict.name = other->name;
+    dict.styles = other->styles;
+    dict.data = other->data;
+  } else if (!open_dict_(path_utf8, dict, storage)) {
+    return false;
+  }
+
+  // Only term lookups read the scan index, so a dictionary first loaded as
+  // another kind maps it when it is added as a term dictionary.
+  if (type == TERM && !dict.data->scan_index && std::filesystem::is_regular_file(path / scan_index::file_name)) {
+    dict.data->scan_index = memory::map_rd(path / scan_index::file_name);
+  }
+
+  switch (type) {
+    case TERM:
+      term_dicts_.push_back(std::move(dict));
+      break;
+    case FREQ:
+      freq_dicts_.push_back(std::move(dict));
+      break;
+    case PITCH:
+      pitch_dicts_.push_back(std::move(dict));
+      break;
+    case KANJI:
+      kanji_dicts_.push_back(std::move(dict));
+      break;
+  }
+  return true;
+}
+
+bool DictionaryQuery::open_dict_(const std::string& path_utf8, Dictionary& dict, DictionaryStorage storage) {
   const std::filesystem::path path = path_utils::from_utf8(path_utf8);
   // Marker layout: _1/_2 are legacy; _3 and _4 store the term score as an int32
   // and differ only in whether dict.zstd was trained (_4); _5 and _6 are the
@@ -165,8 +308,6 @@ bool DictionaryQuery::add_dict_(const std::string& path_utf8, DictionaryType typ
     return false;
   }
 
-  Dictionary dict;
-  dict.path = path_utf8;
   Summary summary;
   std::ifstream index_file(path / "index.json", std::ios::binary);
   if (!index_file) {
@@ -184,7 +325,7 @@ bool DictionaryQuery::add_dict_(const std::string& path_utf8, DictionaryType typ
     dict.styles = std::string(std::istreambuf_iterator<char>(f), {});
   }
 
-  dict.data = std::make_unique<DictionaryData>();
+  dict.data = std::make_shared<DictionaryData>();
   dict.data->version = version;
 
   dict.data->hash_table = memory::map_rd(path / "hash.table");
@@ -204,17 +345,27 @@ bool DictionaryQuery::add_dict_(const std::string& path_utf8, DictionaryType typ
   }
   dict.data->table.set_bloom(&dict.data->bloom);
 
-  dict.data->blobs = memory::map_rd(path / "blobs.bin");
+  const bool paged = storage == DictionaryStorage::Paged;
+  if (paged) {
+    if (!page_cache_) {
+      page_cache_ =
+          std::make_shared<memory::page_cache>(page_cache_options_.page_bytes, page_cache_options_.budget_bytes);
+    }
+    dict.data->blobs = BlobFile::open(path / "blobs.bin", page_cache_);
+  } else {
+    dict.data->blobs = BlobFile::map(path / "blobs.bin");
+  }
   if (!dict.data->blobs) {
     return false;
   }
 
-  dict.data->media = memory::map_rd(path / "media.bin");
-  if (dict.data->media) {
-    dict.data->media_index = memory::map_rd(path / "media.idx");
+  if (paged || media_always_on_demand) {
+    dict.data->media_reader = memory::file_reader::open(path / "media.bin");
+  } else {
+    dict.data->media = memory::map_rd(path / "media.bin");
   }
-  if (type == TERM && std::filesystem::is_regular_file(path / scan_index::file_name)) {
-    dict.data->scan_index = memory::map_rd(path / scan_index::file_name);
+  if (dict.data->media || dict.data->media_reader) {
+    dict.data->media_index = memory::map_rd(path / "media.idx");
   }
 
   if (version == 4 || version == 6) {
@@ -226,38 +377,23 @@ bool DictionaryQuery::add_dict_(const std::string& path_utf8, DictionaryType typ
       return false;
     }
   }
-
-  switch (type) {
-    case TERM:
-      term_dicts_.push_back(std::move(dict));
-      break;
-    case FREQ:
-      freq_dicts_.push_back(std::move(dict));
-      break;
-    case PITCH:
-      pitch_dicts_.push_back(std::move(dict));
-      break;
-    case KANJI:
-      kanji_dicts_.push_back(std::move(dict));
-      break;
-  }
   return true;
 }
 
-bool DictionaryQuery::add_term_dict(const std::string& path) {
-  return add_dict(path, DictionaryQuery::DictionaryType::TERM);
+bool DictionaryQuery::add_term_dict(const std::string& path, DictionaryStorage storage) {
+  return add_dict(path, DictionaryQuery::DictionaryType::TERM, storage);
 }
 
-bool DictionaryQuery::add_freq_dict(const std::string& path) {
-  return add_dict(path, DictionaryQuery::DictionaryType::FREQ);
+bool DictionaryQuery::add_freq_dict(const std::string& path, DictionaryStorage storage) {
+  return add_dict(path, DictionaryQuery::DictionaryType::FREQ, storage);
 }
 
-bool DictionaryQuery::add_pitch_dict(const std::string& path) {
-  return add_dict(path, DictionaryQuery::DictionaryType::PITCH);
+bool DictionaryQuery::add_pitch_dict(const std::string& path, DictionaryStorage storage) {
+  return add_dict(path, DictionaryQuery::DictionaryType::PITCH, storage);
 }
 
-bool DictionaryQuery::add_kanji_dict(const std::string& path) {
-  return add_dict(path, DictionaryQuery::DictionaryType::KANJI);
+bool DictionaryQuery::add_kanji_dict(const std::string& path, DictionaryStorage storage) {
+  return add_dict(path, DictionaryQuery::DictionaryType::KANJI, storage);
 }
 
 size_t DictionaryQuery::remove_dict(const std::string& path) {
@@ -316,11 +452,12 @@ size_t DictionaryQuery::max_long_key_length(const std::string* term_dictionary_p
 }
 
 std::vector<TermResult> DictionaryQuery::query(const std::string& expression) const {
-  RawTerms raw = query_raw(expression);
+  BlobPins pins;
+  RawTerms raw = query_raw(expression, pins);
   std::vector<TermResult> results;
   results.reserve(raw.terms.size());
   for (auto& term : raw.terms) {
-    results.push_back(build_term(raw, term));
+    results.push_back(build_term(raw, term, pins));
   }
   std::ranges::sort(results, [](const TermResult& a, const TermResult& b) {
     return a.expression != b.expression ? a.expression < b.expression : a.reading < b.reading;
@@ -331,7 +468,7 @@ std::vector<TermResult> DictionaryQuery::query(const std::string& expression) co
   return results;
 }
 
-RawTerms DictionaryQuery::query_raw(const std::string& expression,
+RawTerms DictionaryQuery::query_raw(const std::string& expression, BlobPins& pins,
                                     const std::string* term_dictionary_path) const {
   RawTerms raw;
   auto find_term = [&raw](std::string_view expr, std::string_view reading) -> RawTerm* {
@@ -350,99 +487,102 @@ RawTerms DictionaryQuery::query_raw(const std::string& expression,
     if (offset_addr == 0) {
       continue;
     }
-    const uint8_t* index_addr = data->blobs.data + offset_addr;
+    visit_blobs(data->blobs, pins, [&](auto open) {
+      auto index = open(offset_addr);
 
-    auto count = read_val<uint32_t>(index_addr);
-    raw.terms.reserve(raw.terms.size() + count);
-    raw.glossaries.reserve(raw.glossaries.size() + count);
-    for (uint32_t i = 0; i < count; i++) {
-      auto offset = read_val<uint64_t>(index_addr);
-      const uint8_t* blob_addr = data->blobs.data + offset;
+      auto count = read_value<uint32_t>(index);
+      raw.terms.reserve(raw.terms.size() + count);
+      raw.glossaries.reserve(raw.glossaries.size() + count);
+      for (uint32_t i = 0; i < count; i++) {
+        auto offset = read_value<uint64_t>(index);
+        auto blob = open(offset);
 
-      // first byte encodes term (0) or meta (1) entry
-      auto type = read_val<uint8_t>(blob_addr);
-      if (type != 0) {
-        continue;
-      }
+        // first byte encodes term (0) or meta (1) entry
+        auto type = read_value<uint8_t>(blob);
+        if (type != 0) {
+          continue;
+        }
 
-      auto expr_len = read_val<uint16_t>(blob_addr);
-      std::string_view expr = read_str(blob_addr, expr_len);
+        auto expr_len = read_value<uint16_t>(blob);
+        std::string_view expr = blob.str(expr_len);
 
-      auto reading_len = read_val<uint16_t>(blob_addr);
-      std::string_view reading = read_str(blob_addr, reading_len);
+        auto reading_len = read_value<uint16_t>(blob);
+        std::string_view reading = blob.str(reading_len);
 
-      if (expr != expression && reading != expression) {
-        continue;
-      }
+        if (expr != expression && reading != expression) {
+          continue;
+        }
 
-      auto glossary_offset = read_val<uint64_t>(blob_addr);
-      auto glossary_size = read_val<uint32_t>(blob_addr);
+        auto glossary_offset = read_value<uint64_t>(blob);
+        auto glossary_size = read_value<uint32_t>(blob);
 
-      auto def_tags_size = read_val<uint8_t>(blob_addr);
-      std::string_view definition_tags = read_str(blob_addr, def_tags_size);
+        auto def_tags_size = read_value<uint8_t>(blob);
+        std::string_view definition_tags = blob.str(def_tags_size);
 
-      auto rules_size = read_val<uint8_t>(blob_addr);
-      std::string_view rules = read_str(blob_addr, rules_size);
+        auto rules_size = read_value<uint8_t>(blob);
+        std::string_view rules = blob.str(rules_size);
 
-      auto term_tag_size = read_val<uint8_t>(blob_addr);
-      std::string_view term_tags = read_str(blob_addr, term_tag_size);
+        auto term_tag_size = read_value<uint8_t>(blob);
+        std::string_view term_tags = blob.str(term_tag_size);
 
-      if (data->version >= 2) {
-        auto redirect_count = read_val<uint32_t>(blob_addr);
-        for (uint32_t r = 0; r < redirect_count; r++) {
-          auto form_of_len = read_val<uint32_t>(blob_addr);
-          read_str(blob_addr, form_of_len);
-          auto rule_count = read_val<uint32_t>(blob_addr);
-          for (uint32_t j = 0; j < rule_count; j++) {
-            auto rule_len = read_val<uint32_t>(blob_addr);
-            read_str(blob_addr, rule_len);
+        if (data->version >= 2) {
+          auto redirect_count = read_value<uint32_t>(blob);
+          for (uint32_t r = 0; r < redirect_count; r++) {
+            auto form_of_len = read_value<uint32_t>(blob);
+            blob.skip(form_of_len);
+            auto rule_count = read_value<uint32_t>(blob);
+            for (uint32_t j = 0; j < rule_count; j++) {
+              auto rule_len = read_value<uint32_t>(blob);
+              blob.skip(rule_len);
+            }
           }
         }
-      }
 
-      double score = 0;
-      if (data->version >= 5) {
-        score = read_val<double>(blob_addr);
-      } else if (data->version >= 3) {
-        score = read_val<int32_t>(blob_addr);
-      }
+        double score = 0;
+        if (data->version >= 5) {
+          score = read_value<double>(blob);
+        } else if (data->version >= 3) {
+          score = read_value<int32_t>(blob);
+        }
 
-      const auto glossary_index = static_cast<uint32_t>(raw.glossaries.size());
-      raw.glossaries.push_back(RawGlossary{.dict_name = &name,
-                                           .definition_tags = definition_tags,
-                                           .term_tags = term_tags,
-                                           .rules = rules,
-                                           .compressed_data = data->blobs.data + glossary_offset,
-                                           .compressed_size = glossary_size,
-                                           .zstd_dict = data->zstd_dict,
-                                           .next = UINT32_MAX});
+        const auto glossary_index = static_cast<uint32_t>(raw.glossaries.size());
+        raw.glossaries.push_back(RawGlossary{.dict_name = &name,
+                                             .definition_tags = definition_tags,
+                                             .term_tags = term_tags,
+                                             .rules = rules,
+                                             .blobs = &data->blobs,
+                                             .compressed_offset = glossary_offset,
+                                             .compressed_size = glossary_size,
+                                             .zstd_dict = data->zstd_dict,
+                                             .next = UINT32_MAX});
 
-      RawTerm* term = find_term(expr, reading);
-      if (term == nullptr) {
-        raw.terms.push_back(RawTerm{.expression = expr,
-                                    .reading = reading,
-                                    .score = score,
-                                    .first_glossary = glossary_index,
-                                    .last_glossary = glossary_index,
-                                    .frequencies = {},
-                                    .pitches = {}});
-      } else {
-        raw.glossaries[term->last_glossary].next = glossary_index;
-        term->last_glossary = glossary_index;
-        term->score = std::max(term->score, score);
+        RawTerm* term = find_term(expr, reading);
+        if (term == nullptr) {
+          raw.terms.push_back(RawTerm{.expression = expr,
+                                      .reading = reading,
+                                      .score = score,
+                                      .first_glossary = glossary_index,
+                                      .last_glossary = glossary_index,
+                                      .frequencies = {},
+                                      .pitches = {}});
+        } else {
+          raw.glossaries[term->last_glossary].next = glossary_index;
+          term->last_glossary = glossary_index;
+          term->score = std::max(term->score, score);
+        }
       }
-    }
+    });
   }
 
   for (auto& term : raw.terms) {
-    collect_frequencies(term.expression, term.reading, term.frequencies);
-    collect_pitches(term.expression, term.reading, term.pitches);
+    collect_frequencies(term.expression, term.reading, term.frequencies, pins);
+    collect_pitches(term.expression, term.reading, term.pitches, pins);
   }
 
   return raw;
 }
 
-TermResult DictionaryQuery::build_term(const RawTerms& raw, RawTerm& term) const {
+TermResult DictionaryQuery::build_term(const RawTerms& raw, RawTerm& term, BlobPins& pins) const {
   TermResult result{.expression = std::string(term.expression),
                     .reading = std::string(term.reading),
                     .rules = {},
@@ -467,7 +607,7 @@ TermResult DictionaryQuery::build_term(const RawTerms& raw, RawTerm& term) const
     entry.dict_name = *g.dict_name;
     entry.definition_tags = g.definition_tags;
     entry.term_tags = g.term_tags;
-    entry.compressed_data = g.compressed_data;
+    entry.compressed_data = g.blobs->range(g.compressed_offset, g.compressed_size, pins);
     entry.compressed_size = g.compressed_size;
     entry.zstd_dict = g.zstd_dict;
   }
@@ -475,132 +615,138 @@ TermResult DictionaryQuery::build_term(const RawTerms& raw, RawTerm& term) const
 }
 
 void DictionaryQuery::query_freq(std::vector<TermResult>& terms) const {
+  BlobPins pins;
   for (auto& term : terms) {
-    collect_frequencies(term.expression, term.reading, term.frequencies);
+    collect_frequencies(term.expression, term.reading, term.frequencies, pins);
   }
 }
 
 void DictionaryQuery::collect_frequencies(std::string_view expression, std::string_view reading,
-                                        std::vector<FrequencyEntry>& out) const {
+                                        std::vector<FrequencyEntry>& out, BlobPins& pins) const {
   for (const auto& [path, name, styles, data] : freq_dicts_) {
     uint64_t offset_addr = data->table(expression);
     if (offset_addr == 0) {
       continue;
     }
-    const uint8_t* index_addr = data->blobs.data + offset_addr;
-    auto count = read_val<uint32_t>(index_addr);
+    visit_blobs(data->blobs, pins, [&](auto open) {
+      auto index = open(offset_addr);
+      auto count = read_value<uint32_t>(index);
 
-    std::vector<Frequency> frequencies;
-    for (uint32_t i = 0; i < count; i++) {
-      auto offset = read_val<uint64_t>(index_addr);
-      const uint8_t* blob_addr = data->blobs.data + offset;
+      std::vector<Frequency> frequencies;
+      for (uint32_t i = 0; i < count; i++) {
+        auto offset = read_value<uint64_t>(index);
+        auto blob = open(offset);
 
-      auto type = read_val<uint8_t>(blob_addr);
-      if (type != 1) {
-        continue;
-      }
-
-      auto expr_len = read_val<uint16_t>(blob_addr);
-      std::string_view expr = read_str(blob_addr, expr_len);
-      if (expr != expression) {
-        continue;
-      }
-
-      auto mode_len = read_val<uint8_t>(blob_addr);
-      std::string_view mode = read_str(blob_addr, mode_len);
-      if (mode != "freq") {
-        continue;
-      }
-
-      auto freq_data_size = read_val<uint32_t>(blob_addr);
-      std::string_view freq_data = read_str(blob_addr, freq_data_size);
-
-      ParsedFrequency parsed;
-      if (yomitan_parser::parse_frequency(freq_data, parsed)) {
-        if (!parsed.reading.empty() && parsed.reading != reading) {
+        auto type = read_value<uint8_t>(blob);
+        if (type != 1) {
           continue;
         }
-        frequencies.emplace_back(
-            Frequency{.value = parsed.value, .display_value = std::string(parsed.display_value)});
+
+        auto expr_len = read_value<uint16_t>(blob);
+        std::string_view expr = blob.str(expr_len);
+        if (expr != expression) {
+          continue;
+        }
+
+        auto mode_len = read_value<uint8_t>(blob);
+        std::string_view mode = blob.str(mode_len);
+        if (mode != "freq") {
+          continue;
+        }
+
+        auto freq_data_size = read_value<uint32_t>(blob);
+        std::string_view freq_data = blob.str(freq_data_size);
+
+        ParsedFrequency parsed;
+        if (yomitan_parser::parse_frequency(freq_data, parsed)) {
+          if (!parsed.reading.empty() && parsed.reading != reading) {
+            continue;
+          }
+          frequencies.emplace_back(
+              Frequency{.value = parsed.value, .display_value = std::string(parsed.display_value)});
+        }
       }
-    }
-    if (!frequencies.empty()) {
-      out.emplace_back(FrequencyEntry{.dict_name = name, .frequencies = std::move(frequencies)});
-    }
+      if (!frequencies.empty()) {
+        out.emplace_back(FrequencyEntry{.dict_name = name, .frequencies = std::move(frequencies)});
+      }
+    });
   }
 }
 
 void DictionaryQuery::query_pitch(std::vector<TermResult>& terms) const {
+  BlobPins pins;
   for (auto& term : terms) {
-    collect_pitches(term.expression, term.reading, term.pitches);
+    collect_pitches(term.expression, term.reading, term.pitches, pins);
   }
 }
 
 void DictionaryQuery::collect_pitches(std::string_view expression, std::string_view reading,
-                                    std::vector<PitchEntry>& out) const {
+                                    std::vector<PitchEntry>& out, BlobPins& pins) const {
   for (const auto& [path, name, styles, data] : pitch_dicts_) {
     uint64_t offset_addr = data->table(expression);
     if (offset_addr == 0) {
       continue;
     }
-    const uint8_t* index_addr = data->blobs.data + offset_addr;
-    auto count = read_val<uint32_t>(index_addr);
+    visit_blobs(data->blobs, pins, [&](auto open) {
+      auto index = open(offset_addr);
+      auto count = read_value<uint32_t>(index);
 
-    std::vector<Pitch> pitches;
-    std::vector<std::string> transcriptions;
-    for (uint32_t i = 0; i < count; i++) {
-      auto offset = read_val<uint64_t>(index_addr);
-      const uint8_t* blob_addr = data->blobs.data + offset;
+      std::vector<Pitch> pitches;
+      std::vector<std::string> transcriptions;
+      for (uint32_t i = 0; i < count; i++) {
+        auto offset = read_value<uint64_t>(index);
+        auto blob = open(offset);
 
-      auto type = read_val<uint8_t>(blob_addr);
-      if (type != 1) {
-        continue;
-      }
+        auto type = read_value<uint8_t>(blob);
+        if (type != 1) {
+          continue;
+        }
 
-      auto expr_len = read_val<uint16_t>(blob_addr);
-      std::string_view expr = read_str(blob_addr, expr_len);
-      if (expr != expression) {
-        continue;
-      }
+        auto expr_len = read_value<uint16_t>(blob);
+        std::string_view expr = blob.str(expr_len);
+        if (expr != expression) {
+          continue;
+        }
 
-      auto mode_len = read_val<uint8_t>(blob_addr);
-      std::string_view mode = read_str(blob_addr, mode_len);
-      ParsedPitch parsed;
-      if (mode == "pitch") {
-        auto pitch_data_size = read_val<uint32_t>(blob_addr);
-        std::string_view pitch_data = read_str(blob_addr, pitch_data_size);
+        auto mode_len = read_value<uint8_t>(blob);
+        std::string_view mode = blob.str(mode_len);
+        ParsedPitch parsed;
+        if (mode == "pitch") {
+          auto pitch_data_size = read_value<uint32_t>(blob);
+          std::string_view pitch_data = blob.str(pitch_data_size);
 
-        if (yomitan_parser::parse_pitch(pitch_data, parsed)) {
-          if (!parsed.reading.empty() && parsed.reading != reading) {
-            continue;
+          if (yomitan_parser::parse_pitch(pitch_data, parsed)) {
+            if (!parsed.reading.empty() && parsed.reading != reading) {
+              continue;
+            }
+            for (auto& accent : parsed.pitches) {
+              pitches.emplace_back(Pitch{.position = accent.position,
+                                         .pattern = std::move(accent.pattern),
+                                         .nasal = std::move(accent.nasal),
+                                         .devoice = std::move(accent.devoice)});
+            }
           }
-          for (auto& accent : parsed.pitches) {
-            pitches.emplace_back(Pitch{.position = accent.position,
-                                       .pattern = std::move(accent.pattern),
-                                       .nasal = std::move(accent.nasal),
-                                       .devoice = std::move(accent.devoice)});
+        } else if (mode == "ipa") {
+          auto transcriptions_data_size = read_value<uint32_t>(blob);
+          std::string_view transcriptions_data = blob.str(transcriptions_data_size);
+          if (yomitan_parser::parse_ipa(transcriptions_data, parsed)) {
+            if (!parsed.reading.empty() && parsed.reading != reading) {
+              continue;
+            }
+            for (std::string_view transcription : parsed.transcriptions) {
+              transcriptions.emplace_back(transcription);
+            }
           }
         }
-      } else if (mode == "ipa") {
-        auto transcriptions_data_size = read_val<uint32_t>(blob_addr);
-        std::string_view transcriptions_data = read_str(blob_addr, transcriptions_data_size);
-        if (yomitan_parser::parse_ipa(transcriptions_data, parsed)) {
-          if (!parsed.reading.empty() && parsed.reading != reading) {
-            continue;
-          }
-          for (std::string_view transcription : parsed.transcriptions) {
-            transcriptions.emplace_back(transcription);
-          }
-        }
       }
-    }
-    if (!pitches.empty() || !transcriptions.empty()) {
-      out.emplace_back(PitchEntry{
-          .dict_name = name,
-          .pitches = std::move(pitches),
-          .transcriptions = std::move(transcriptions),
-      });
-    }
+      if (!pitches.empty() || !transcriptions.empty()) {
+        out.emplace_back(PitchEntry{
+            .dict_name = name,
+            .pitches = std::move(pitches),
+            .transcriptions = std::move(transcriptions),
+        });
+      }
+    });
   }
 }
 
@@ -608,62 +754,66 @@ KanjiResult DictionaryQuery::query_kanji(const std::string& kanji) const {
   KanjiResult result;
   result.character = kanji;
 
+  // Everything taken from a record is copied out before the pins go.
+  BlobPins pins;
   for (const auto& [path, name, styles, data] : kanji_dicts_) {
     uint64_t offset_addr = data->table(kanji);
     if (offset_addr == 0) {
       continue;
     }
-    const uint8_t* index_addr = data->blobs.data + offset_addr;
-    auto count = read_val<uint32_t>(index_addr);
+    visit_blobs(data->blobs, pins, [&](auto open) {
+      auto index = open(offset_addr);
+      auto count = read_value<uint32_t>(index);
 
-    for (uint32_t i = 0; i < count; i++) {
-      auto offset = read_val<uint64_t>(index_addr);
-      const uint8_t* blob_addr = data->blobs.data + offset;
+      for (uint32_t i = 0; i < count; i++) {
+        auto offset = read_value<uint64_t>(index);
+        auto blob = open(offset);
 
-      auto type = read_val<uint8_t>(blob_addr);
-      if (type != 2) {
-        continue;
+        auto type = read_value<uint8_t>(blob);
+        if (type != 2) {
+          continue;
+        }
+
+        auto char_len = read_value<uint8_t>(blob);
+        std::string_view char_sv = blob.str(char_len);
+        if (char_sv != kanji) {
+          continue;
+        }
+
+        auto onyomi_len = read_value<uint16_t>(blob);
+        std::string_view onyomi = blob.str(onyomi_len);
+
+        auto kunyomi_len = read_value<uint16_t>(blob);
+        std::string_view kunyomi = blob.str(kunyomi_len);
+
+        auto tags_len = read_value<uint16_t>(blob);
+        std::string_view tags = blob.str(tags_len);
+
+        KanjiEntry entry;
+        entry.dict_name = name;
+        entry.onyomi = onyomi;
+        entry.kunyomi = kunyomi;
+        entry.tags = tags;
+
+        auto def_count = read_value<uint16_t>(blob);
+        for (uint16_t j = 0; j < def_count; j++) {
+          auto def_len = read_value<uint16_t>(blob);
+          std::string_view def = blob.str(def_len);
+          entry.definitions.emplace_back(def);
+        }
+
+        auto stat_count = read_value<uint16_t>(blob);
+        for (uint16_t j = 0; j < stat_count; j++) {
+          auto key_len = read_value<uint16_t>(blob);
+          std::string_view key = blob.str(key_len);
+          auto val_len = read_value<uint16_t>(blob);
+          std::string_view val = blob.str(val_len);
+          entry.stats.emplace(key, val);
+        }
+
+        result.entries.push_back(std::move(entry));
       }
-
-      auto char_len = read_val<uint8_t>(blob_addr);
-      std::string_view char_sv = read_str(blob_addr, char_len);
-      if (char_sv != kanji) {
-        continue;
-      }
-
-      auto onyomi_len = read_val<uint16_t>(blob_addr);
-      std::string_view onyomi = read_str(blob_addr, onyomi_len);
-
-      auto kunyomi_len = read_val<uint16_t>(blob_addr);
-      std::string_view kunyomi = read_str(blob_addr, kunyomi_len);
-
-      auto tags_len = read_val<uint16_t>(blob_addr);
-      std::string_view tags = read_str(blob_addr, tags_len);
-
-      KanjiEntry entry;
-      entry.dict_name = name;
-      entry.onyomi = onyomi;
-      entry.kunyomi = kunyomi;
-      entry.tags = tags;
-
-      auto def_count = read_val<uint16_t>(blob_addr);
-      for (uint16_t j = 0; j < def_count; j++) {
-        auto def_len = read_val<uint16_t>(blob_addr);
-        std::string_view def = read_str(blob_addr, def_len);
-        entry.definitions.emplace_back(def);
-      }
-
-      auto stat_count = read_val<uint16_t>(blob_addr);
-      for (uint16_t j = 0; j < stat_count; j++) {
-        auto key_len = read_val<uint16_t>(blob_addr);
-        std::string_view key = read_str(blob_addr, key_len);
-        auto val_len = read_val<uint16_t>(blob_addr);
-        std::string_view val = read_str(blob_addr, val_len);
-        entry.stats.emplace(key, val);
-      }
-
-      result.entries.push_back(std::move(entry));
-    }
+    });
   }
 
   return result;
@@ -698,8 +848,9 @@ void DictionaryQuery::materialize(TermResult& term) const {
 }
 
 std::vector<char> DictionaryQuery::get_media_file(const std::string& dict_name, const std::string& media_path) const {
-  auto view = get_media_file_view(dict_name, media_path);
-  return {view.data, view.data + view.size};
+  std::vector<uint8_t> bytes;
+  read_media_file(dict_name, media_path, bytes);
+  return {bytes.begin(), bytes.end()};
 }
 
 MediaFileView DictionaryQuery::get_media_file_view(const std::string& dict_name, const std::string& media_path) const {
@@ -707,38 +858,40 @@ MediaFileView DictionaryQuery::get_media_file_view(const std::string& dict_name,
     if (name != dict_name) {
       continue;
     }
-
-    if (!data->media || !data->media_index) {
+    if (!data->media) {
       return {};
     }
-
-    const uint8_t* ptr = data->media_index.data;
-    auto count = read_val<uint32_t>(ptr);
-
-    size_t left = 0;
-    size_t right = count;
-    while (left < right) {
-      const size_t mid = left + (right - left) / 2;
-      uint64_t record_offset;
-      std::memcpy(&record_offset, data->media_index.data + sizeof(uint32_t) + mid * sizeof(uint64_t), sizeof(uint64_t));
-
-      const uint8_t* record = data->media.data + record_offset;
-      auto path_size = read_val<uint16_t>(record);
-      std::string_view indexed_path = read_str(record, path_size);
-      if (indexed_path < media_path) {
-        left = mid + 1;
-      } else if (indexed_path > media_path) {
-        right = mid;
-      } else {
-        auto blob_size = read_val<uint32_t>(record);
-        const char* blob_data = reinterpret_cast<const char*>(record);
-        return {.data = blob_data, .size = blob_size};
-      }
+    const auto record = data->find_media(media_path);
+    if (!record.found) {
+      return {};
     }
-    return {};
+    return {.data = reinterpret_cast<const char*>(data->media.data + record.offset), .size = record.size};
   }
   return {};
 }
+
+size_t DictionaryQuery::read_media_file(const std::string& dict_name, const std::string& media_path,
+                                        std::vector<uint8_t>& out, size_t max_bytes) const {
+  out.clear();
+  for (const auto& [path, name, styles, data] : term_dicts_) {
+    if (name != dict_name) {
+      continue;
+    }
+    const auto record = data->find_media(media_path);
+    if (!record.found || record.size > max_bytes) {
+      return record.size;
+    }
+    out.resize(record.size);
+    if (!data->read_media(out.data(), record.size, record.offset)) {
+      out.clear();
+      throw std::runtime_error("could not read media.bin");
+    }
+    return record.size;
+  }
+  return 0;
+}
+
+size_t DictionaryQuery::page_cache_bytes() const { return page_cache_ ? page_cache_->resident_bytes() : 0; }
 
 std::vector<DictionaryStyle> DictionaryQuery::get_styles() const {
   return term_dicts_ | std::views::filter([](const auto& d) { return !d.styles.empty(); }) |

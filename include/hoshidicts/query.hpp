@@ -84,10 +84,39 @@ struct KanjiResult {
 
 struct RawTerm;
 struct RawTerms;
+struct BlobPins;
+
+namespace memory {
+class page_cache;
+}
+
+// How DictionaryQuery holds a dictionary's generated files. The index files
+// (hash.table, bloom.filter, media.idx, scan.idx and the zstd dictionary) are
+// mapped either way; they are what every probe reads.
+//  Mapped: blobs.bin, which holds the entries, is mapped too, and so is
+//          media.bin except under Emscripten, whose mmap copies a whole file
+//          into linear memory: there media is read from the file only when a
+//          media file is asked for.
+//  Paged:  blobs.bin is read on demand through a page cache the query's paged
+//          dictionaries share, and media.bin is read on demand. Results are
+//          the same; a lookup that reads pages the cache does not hold costs
+//          a read per page.
+enum class DictionaryStorage : uint8_t { Mapped, Paged };
+
+struct PageCacheOptions {
+  // A dictionary's records are small and scattered (a key's entries sit in
+  // different banks), so small pages waste the least of each read and keep the
+  // most distinct records within the budget.
+  size_t page_bytes = 4 * 1024;
+  // Pages beyond this are dropped, least recently used first, once no query
+  // holds them; a single query may hold more until it returns.
+  size_t budget_bytes = 32 * 1024 * 1024;
+};
 
 class DictionaryQuery {
  public:
   DictionaryQuery();
+  explicit DictionaryQuery(const PageCacheOptions& page_cache);
   ~DictionaryQuery();
 
   DictionaryQuery(const DictionaryQuery&) = delete;
@@ -96,10 +125,13 @@ class DictionaryQuery {
   DictionaryQuery(DictionaryQuery&&) noexcept;
   DictionaryQuery& operator=(DictionaryQuery&&) noexcept;
 
-  bool add_term_dict(const std::string& path);
-  bool add_freq_dict(const std::string& path);
-  bool add_pitch_dict(const std::string& path);
-  bool add_kanji_dict(const std::string& path);
+  // A dictionary added as several kinds is loaded once: the later kinds share
+  // the files the first one opened, whatever `storage` they ask for, so a
+  // path's files must not change while any kind of it is loaded.
+  bool add_term_dict(const std::string& path, DictionaryStorage storage = DictionaryStorage::Mapped);
+  bool add_freq_dict(const std::string& path, DictionaryStorage storage = DictionaryStorage::Mapped);
+  bool add_pitch_dict(const std::string& path, DictionaryStorage storage = DictionaryStorage::Mapped);
+  bool add_kanji_dict(const std::string& path, DictionaryStorage storage = DictionaryStorage::Mapped);
 
   // Drops every loaded kind of the dictionary at `path` and returns how many
   // entries were removed (0 when the path is not loaded). The other
@@ -129,19 +161,36 @@ class DictionaryQuery {
   std::vector<TermResult> query(const std::string& expression) const;
 
   std::vector<char> get_media_file(const std::string& dict_name, const std::string& media_path) const;
+  // A view into the mapped media.bin; empty when the file is missing and when
+  // media is read on demand (see DictionaryStorage), where read_media_file
+  // still finds it.
   SWIFT_IMPORT_UNSAFE
   MediaFileView get_media_file_view(const std::string& dict_name, const std::string& media_path) const;
+  // Finds `media_path` in the term dictionary named `dict_name` and returns its
+  // stored size, 0 when there is no such file. The bytes are copied into `out`
+  // only when they are at most `max_bytes` long; otherwise `out` is left empty
+  // and nothing more is read. Throws std::runtime_error when the file cannot
+  // be read.
+  size_t read_media_file(const std::string& dict_name, const std::string& media_path, std::vector<uint8_t>& out,
+                         size_t max_bytes = SIZE_MAX) const;
   std::vector<DictionaryStyle> get_styles() const;
   std::vector<std::string> get_freq_dict_order() const;
 
+  // Bytes of blobs.bin pages the page cache of the paged dictionaries holds.
+  size_t page_cache_bytes() const;
+
  private:
   friend class Lookup;
-  RawTerms query_raw(const std::string& expression,
+  // The raw terms, and the compressed glossaries build_term points its result
+  // at, are views into the dictionaries' files: they stay valid while `pins`,
+  // which holds what they read of paged files, lives.
+  RawTerms query_raw(const std::string& expression, BlobPins& pins,
                      const std::string* term_dictionary_path = nullptr) const;
-  TermResult build_term(const RawTerms& raw, RawTerm& term) const;
+  TermResult build_term(const RawTerms& raw, RawTerm& term, BlobPins& pins) const;
   void collect_frequencies(std::string_view expression, std::string_view reading,
-                           std::vector<FrequencyEntry>& out) const;
-  void collect_pitches(std::string_view expression, std::string_view reading, std::vector<PitchEntry>& out) const;
+                           std::vector<FrequencyEntry>& out, BlobPins& pins) const;
+  void collect_pitches(std::string_view expression, std::string_view reading, std::vector<PitchEntry>& out,
+                       BlobPins& pins) const;
   void materialize(TermResult& term) const;
 
   struct DictionaryData;
@@ -158,14 +207,20 @@ class DictionaryQuery {
     std::string path;
     std::string name;
     std::string styles;
-    std::unique_ptr<DictionaryData> data;
+    // Shared by every kind the path is loaded as.
+    std::shared_ptr<DictionaryData> data;
   };
   enum DictionaryType : uint8_t { TERM, FREQ, PITCH, KANJI };
 
-  bool add_dict(const std::string& path, DictionaryType);
-  bool add_dict_(const std::string& path, DictionaryType);
+  bool add_dict(const std::string& path, DictionaryType, DictionaryStorage);
+  bool add_dict_(const std::string& path, DictionaryType, DictionaryStorage);
+  bool open_dict_(const std::string& path, Dictionary& dict, DictionaryStorage storage);
+  const Dictionary* find_loaded(const std::string& path) const;
 
   static std::string decompress_glossary(const void* data, size_t size, const ZSTD_DDict_s* dict);
+  PageCacheOptions page_cache_options_;
+  // Created by the first paged add.
+  std::shared_ptr<memory::page_cache> page_cache_;
   std::vector<Dictionary> term_dicts_;
   std::vector<Dictionary> freq_dicts_;
   std::vector<Dictionary> pitch_dicts_;

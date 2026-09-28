@@ -79,6 +79,8 @@ add_library(hoshidicts
     src/hash/bloom.cpp
     src/importer.cpp
     src/memory/memory.cpp
+    src/memory/page_cache.cpp
+    src/blob_file.cpp
     src/zip/zip.cpp
     src/source/zip_source.cpp
     src/mdict/ripemd128.cpp
@@ -171,6 +173,10 @@ if(HOSHIDICTS_TESTS)
     add_executable(long-key-scan-test tests/long_key_scan_test.cpp)
     target_link_libraries(long-key-scan-test PRIVATE hoshidicts)
     add_test(NAME long-key-scan COMMAND long-key-scan-test)
+
+    add_executable(dictionary-storage-test tests/dictionary_storage_test.cpp)
+    target_link_libraries(dictionary-storage-test PRIVATE hoshidicts)
+    add_test(NAME dictionary-storage COMMAND dictionary-storage-test)
 
     add_executable(deps-smoke-test tests/deps_smoke_test.cpp)
     target_link_libraries(deps-smoke-test PRIVATE lzokay gumbo)

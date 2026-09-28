@@ -33,19 +33,26 @@ hoshidicts-cli import path/to/dictionary.mdx
 
 ### query
 ```cpp
-void DictionaryQuery::add_term_dict(const std::string& path)
+bool DictionaryQuery::add_term_dict(const std::string& path, DictionaryStorage storage = DictionaryStorage::Mapped)
 ```
 Adds an imported term dictionary to the query.
 
 ```cpp
-void DictionaryQuery::add_freq_dict(const std::string& path)
+bool DictionaryQuery::add_freq_dict(const std::string& path, DictionaryStorage storage = DictionaryStorage::Mapped)
 ```
 Adds an imported frequency dictionary to the query.
 
 ```cpp
-void DictionaryQuery::add_pitch_dict(const std::string& path)
+bool DictionaryQuery::add_pitch_dict(const std::string& path, DictionaryStorage storage = DictionaryStorage::Mapped)
 ```
 Adds an imported pitch dictionary to the query.
+
+A dictionary added as several kinds (term, frequency, pitch, kanji) is opened once: the later kinds share the files the first one opened, whatever `storage` they ask for, and `remove_dict` releases them with the last kind. A path's files must not change while any kind of it is loaded.
+
+`storage` decides how the dictionary's entries are held. The index files (`hash.table`, `bloom.filter`, `media.idx`, `scan.idx` and the trained zstd dictionary) are memory-mapped either way; every probe reads them.
+
+- `DictionaryStorage::Mapped` maps `blobs.bin`, which holds the entries, and `media.bin`. Natively a mapping costs nothing until it is read. Under Emscripten `mmap` copies the whole file into linear memory, so there `media.bin` is not mapped but read from the file when a media file is asked for.
+- `DictionaryStorage::Paged` reads `blobs.bin` on demand through a page cache that the query's paged dictionaries share, and reads `media.bin` on demand. Lookups return the same results; one that needs pages the cache does not hold costs a read per page. `DictionaryQuery(PageCacheOptions{...})` sets the page size (default 4 KiB) and the cache budget (default 32 MiB); pages a running query holds stay valid until it returns, so the cache can exceed its budget until then. `page_cache_bytes()` returns what it holds.
 
 ```cpp
 std::vector<TermResult> DictionaryQuery::query(const std::string& expression) const
@@ -61,6 +68,12 @@ Returns CSS styles for all dictionaries, if present.
 std::vector<char> DictionaryQuery::get_media_file(const std::string& dict_name, const std::string& media_path) const
 ```
 Returns raw bytes for file originally stored at `media_path` in term dictionary `dict_name` or an empty vector if the file does not exist.
+
+```cpp
+size_t DictionaryQuery::read_media_file(const std::string& dict_name, const std::string& media_path,
+                                        std::vector<uint8_t>& out, size_t max_bytes = SIZE_MAX) const
+```
+Returns the stored size of the media file (0 when there is none) and copies it into `out` when it is at most `max_bytes` long, so a caller can refuse a large file without reading it. `get_media_file_view` returns a view into the mapping instead, and an empty one where media is read on demand.
 
 ### deinflector
 ```cpp

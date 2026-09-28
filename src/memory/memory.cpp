@@ -1,8 +1,12 @@
 #include "memory.hpp"
 
+#include <algorithm>
+#include <utility>
+
 #ifdef _WIN32
 #include <windows.h>
 #else
+#include <cerrno>
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
@@ -160,5 +164,120 @@ void unmap(mapped_file mapping) {
     close(mapping.fd);
   }
 #endif
+}
+
+file_reader::~file_reader() { close(); }
+
+file_reader::file_reader(file_reader&& other) noexcept
+#ifdef _WIN32
+    : handle_(std::exchange(other.handle_, nullptr)),
+#else
+    : fd_(std::exchange(other.fd_, -1)),
+#endif
+      size_(std::exchange(other.size_, 0)) {
+}
+
+file_reader& file_reader::operator=(file_reader&& other) noexcept {
+  if (this != &other) {
+    close();
+#ifdef _WIN32
+    handle_ = std::exchange(other.handle_, nullptr);
+#else
+    fd_ = std::exchange(other.fd_, -1);
+#endif
+    size_ = std::exchange(other.size_, 0);
+  }
+  return *this;
+}
+
+file_reader file_reader::open(const std::filesystem::path& path) {
+  file_reader reader;
+#ifdef _WIN32
+  HANDLE file = CreateFileW(path.c_str(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING,
+                            FILE_ATTRIBUTE_NORMAL | FILE_FLAG_RANDOM_ACCESS, nullptr);
+  if (file == INVALID_HANDLE_VALUE) {
+    return reader;
+  }
+  LARGE_INTEGER file_size;
+  if (!GetFileSizeEx(file, &file_size) || file_size.QuadPart <= 0) {
+    CloseHandle(file);
+    return reader;
+  }
+  reader.handle_ = file;
+  reader.size_ = static_cast<uint64_t>(file_size.QuadPart);
+#else
+#if defined(__EMSCRIPTEN__) && HOSHIDICTS_WASMFS
+  // As in map_rd: a read-write descriptor reads through a sync access handle
+  // straight into the heap, a read-only one through a Blob with an async round
+  // trip per read. Here the descriptor stays open, so the handle's lock on the
+  // file lasts as long as the reader. When another context still holds the
+  // lock the read-only descriptor is slower but reads the same bytes.
+  int fd = ::open(path.c_str(), O_RDWR);
+  if (fd < 0) {
+    fd = ::open(path.c_str(), O_RDONLY);
+  }
+#elif defined(__EMSCRIPTEN__)
+  int fd = ::open(path.c_str(), O_RDONLY);
+#else
+  int fd = ::open(path.c_str(), O_RDONLY | O_CLOEXEC);
+#endif
+  if (fd < 0) {
+    return reader;
+  }
+  struct stat st{};
+  if (fstat(fd, &st) != 0 || st.st_size <= 0) {
+    ::close(fd);
+    return reader;
+  }
+  reader.fd_ = fd;
+  reader.size_ = static_cast<uint64_t>(st.st_size);
+#endif
+  return reader;
+}
+
+bool file_reader::read(void* out, size_t len, uint64_t offset) const {
+  if (offset > size_ || len > size_ - offset) {
+    return false;
+  }
+  auto* dst = static_cast<uint8_t*>(out);
+  while (len > 0) {
+#ifdef _WIN32
+    OVERLAPPED at{};
+    at.Offset = static_cast<DWORD>(offset);
+    at.OffsetHigh = static_cast<DWORD>(offset >> 32);
+    const auto chunk = static_cast<DWORD>(std::min<size_t>(len, 1u << 30));
+    DWORD n = 0;
+    if (!ReadFile(handle_, dst, chunk, &n, &at) || n == 0) {
+      return false;
+    }
+#else
+    const ssize_t n = pread(fd_, dst, len, static_cast<off_t>(offset));
+    if (n < 0 && errno == EINTR) {
+      continue;
+    }
+    if (n <= 0) {
+      return false;
+    }
+#endif
+    dst += n;
+    len -= static_cast<size_t>(n);
+    offset += static_cast<uint64_t>(n);
+  }
+  return true;
+}
+
+void file_reader::close() {
+#ifdef _WIN32
+  if (handle_ != nullptr) {
+    CloseHandle(handle_);
+    handle_ = nullptr;
+  }
+#else
+  if (fd_ >= 0) {
+    ::close(fd_);
+    fd_ = -1;
+  }
+#endif
+  size_ = 0;
 }
 }
