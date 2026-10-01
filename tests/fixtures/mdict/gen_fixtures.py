@@ -389,7 +389,8 @@ KEY_RULE_ENTRIES = [
 SJIS_NIHON = b"\x93\xfa\x96\x7b"
 CHARSET_MDD_ENTRIES = [
     ("\\a_sjis_charset.css", b'@charset "Shift_JIS";\n.' + SJIS_NIHON + b" { color: red; }\n"),
-    # Neither BOM nor @charset, and not UTF-8: skipped.
+    # Neither BOM nor @charset, and not UTF-8 or UTF-16: read as Shift_JIS
+    # (hachidori#437's acceptance criteria).
     ("\\b_sjis_plain.css", b"." + SJIS_NIHON + b" { color: green; }\n"),
     ("\\c_cp1252_charset.css", b'@charset "windows-1252";\n.caf\xe9 { color: red; }\n'),
     ("\\d_utf8_charset.css", b'@charset "UTF-8";\n' + ".日本 { color: blue; }\n".encode("utf-8")),
@@ -403,6 +404,8 @@ CHARSET_MDD_ENTRIES = [
     ("\\h_sjis_invalid.css", b'@charset "Shift_JIS";\n.bad::after { content: "\xff\xff"; }\n'),
     # A DOS end-of-file marker (Ctrl-Z): JSON must escape it in index.json.
     ("\\i_control.css", b".ctl { color: red; }\n\x1a"),
+    # Undeclared, and not UTF-8, UTF-16 or Shift_JIS (0xFF leads nothing): skipped.
+    ("\\j_undecodable.css", b'.bad::after { content: "\xff\xfe"; }\n'),
 ]
 
 # hachidori#437's <font> reproduction: a size keyword with a color, a size
