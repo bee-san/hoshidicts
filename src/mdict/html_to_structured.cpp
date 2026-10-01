@@ -528,6 +528,33 @@ void set_style(Style& style, std::string_view name, StyleValue value) {
   style.emplace_back(std::string(name), std::move(value));
 }
 
+// https://html.spec.whatwg.org/multipage/rendering.html#rules-for-parsing-a-legacy-font-size
+// (manabitan's convertLegacyFontSize): after ASCII whitespace, an optional +
+// or - relative to 3 and digits, clamped to 1-7 and named by a CSS keyword.
+std::optional<std::string_view> legacy_font_size(std::string_view value) {
+  static constexpr std::array<std::string_view, 7> keywords = {"x-small", "small",    "medium",   "large",
+                                                               "x-large", "xx-large", "xxx-large"};
+  size_t i = value.find_first_not_of(" \t\n\f\r");
+  if (i == std::string_view::npos) {
+    return std::nullopt;
+  }
+  const char sign = value[i] == '+' || value[i] == '-' ? value[i++] : '\0';
+  const size_t digits = i;
+  int size = 0;
+  for (; i < value.size() && value[i] >= '0' && value[i] <= '9'; ++i) {
+    size = std::min(size * 10 + (value[i] - '0'), 1000);  // anything past 10 clamps the same
+  }
+  if (i == digits) {
+    return std::nullopt;
+  }
+  if (sign == '+') {
+    size = 3 + size;
+  } else if (sign == '-') {
+    size = 3 - size;
+  }
+  return keywords[static_cast<size_t>(std::clamp(size, 1, 7) - 1)];
+}
+
 void convert_inline_style(Context& ctx, std::string_view style_text, Style& style) {
   for (std::string_view declaration : split(style_text, ';')) {
     const size_t colon = declaration.find(':');
@@ -749,19 +776,22 @@ void convert_element(Context& ctx, const GumboNode& node, ContentBuilder& conten
   if (auto it = tag_default_styles.find(tag); it != tag_default_styles.end()) {
     style = it->second;
   }
-  if (const std::string* inline_style = attr(attrs, "style")) {
-    convert_inline_style(ctx, *inline_style, style);
-  }
+  // The author's inline style wins over <font>'s presentational hints.
   if (tag == "font") {
     if (const std::string* color = attr(attrs, "color"); color && !color->empty()) {
       set_style(style, "color", {*color});
     }
-    if (const std::string* size = attr(attrs, "size"); size && !size->empty()) {
-      set_style(style, "fontSize", {*size});
+    if (const std::string* size = attr(attrs, "size")) {
+      if (const auto keyword = legacy_font_size(*size)) {
+        set_style(style, "fontSize", {std::string(*keyword)});
+      }
     }
     if (const std::string* face = attr(attrs, "face"); face && !face->empty()) {
       set_style(style, "fontFamily", {*face});
     }
+  }
+  if (const std::string* inline_style = attr(attrs, "style")) {
+    convert_inline_style(ctx, *inline_style, style);
   }
   if (!style.empty() && styleable_tags.contains(mapped)) {
     out += ",\"style\":";
