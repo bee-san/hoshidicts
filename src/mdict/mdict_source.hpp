@@ -1,5 +1,7 @@
 #pragma once
 
+#include <ankerl/unordered_dense.h>
+
 #include <cstdint>
 #include <filesystem>
 #include <map>
@@ -21,12 +23,19 @@
 // produced from the MDX record blocks when the importer asks for it.
 //
 // Opening reads the key index and makes one pass over the record blocks to
-// find @@@LINK= redirects (an alias is emitted as an extra headword of its
-// target, one hop, missing targets dropped). Banks are then materialised per
-// read(): bank N holds terms [N*10000, (N+1)*10000) of the non-redirect
-// entries in file order, each as [expression, "", "", "", 0, [glossary],
-// sequence, ""], glossary being structured content converted from the HTML
-// (or a plain string for Format=Text).
+// find @@@LINK= redirects. Every alias that reaches an entry, directly or
+// through other aliases, becomes an extra headword of that entry with its own
+// spelling. A target names the key spelled exactly; only a target that no key
+// spells exactly also matches the keys it equals under the header's
+// KeyCaseSensitive and StripKey rules (manabitan's redirect resolution). An
+// alias whose target is missing, or that only reaches other aliases, is
+// dropped.
+//
+// Banks are then materialised per read(): bank N holds terms
+// [N*10000, (N+1)*10000) of the non-redirect entries in file order, each as
+// [expression, "", "", "", 0, [glossary], sequence, ""], glossary being
+// structured content converted from the HTML (or a plain string for
+// Format=Text).
 //
 // Media is discovered while the banks convert (which MDD assets the glossaries
 // reference, plus data: URLs), so the media entries and the final styles.css
@@ -73,6 +82,7 @@ class MdictSource final : public DictionarySource {
 
   void discover_mdds(const std::filesystem::path& mdx_path);
   void index_redirects();
+  std::vector<std::string_view> expressions_of(std::string_view key) const;
   std::string build_index_json() const;
   std::string build_bank(size_t bank) const;
   std::string build_styles() const;
@@ -90,7 +100,23 @@ class MdictSource final : public DictionarySource {
   std::vector<KeyEntry> keys_;
   // Indices into keys_ of the entries that become terms, in file order.
   std::vector<uint32_t> terms_;
-  std::map<std::string, std::vector<std::string>> redirects_;
+  struct Redirect {
+    std::vector<std::string> aliases;  // the keys that redirect to the target
+    bool exact = false;                // some key is spelled like the target
+  };
+  struct StringHash {
+    using is_transparent = void;
+    using is_avalanching = void;
+    uint64_t operator()(std::string_view s) const noexcept {
+      return ankerl::unordered_dense::hash<std::string_view>{}(s);
+    }
+  };
+  // Redirect target as written -> its aliases, in file order.
+  ankerl::unordered_dense::map<std::string, Redirect, StringHash, std::equal_to<>> redirects_;
+  // Key-rule spelling of each target that no key spells exactly -> the keys
+  // that redirect to those targets. Empty when every target exists as written.
+  ankerl::unordered_dense::map<std::string, std::vector<std::string_view>, StringHash, std::equal_to<>>
+      fallback_redirects_;
   size_t redirect_count_ = 0;
 
   std::vector<SourceEntry> entries_;

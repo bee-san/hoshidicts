@@ -53,6 +53,11 @@ struct Header {
   int encrypted = 0;
   std::string format;  // "Html" or "Text" for MDX
   bool compact = false;
+  // KeyCaseSensitive and StripKey, true for "Yes" or "true" in any letter
+  // case. An absent attribute means MDict's default: KeyCaseSensitive="No",
+  // StripKey="Yes".
+  bool key_case_sensitive = false;
+  bool strip_key = true;
   std::string stylesheet;  // raw StyleSheet attribute (backtick substitution table)
   std::string title;
   std::string description;
