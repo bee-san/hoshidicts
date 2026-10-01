@@ -382,6 +382,27 @@ KEY_RULE_ENTRIES = [
     ("Target", "<div>definition</div>"),
 ]
 
+# MDD stylesheets in other encodings (manabitan's test/mdx-converter.test.js
+# at e433f8c, "honors and removes an MDD stylesheet @charset declaration" and
+# its neighbours). The Shift_JIS bytes of 日本 are written out so that the
+# fixture does not depend on a Shift_JIS encoder.
+SJIS_NIHON = b"\x93\xfa\x96\x7b"
+CHARSET_MDD_ENTRIES = [
+    ("\\a_sjis_charset.css", b'@charset "Shift_JIS";\n.' + SJIS_NIHON + b" { color: red; }\n"),
+    # Neither BOM nor @charset, and not UTF-8: skipped.
+    ("\\b_sjis_plain.css", b"." + SJIS_NIHON + b" { color: green; }\n"),
+    ("\\c_cp1252_charset.css", b'@charset "windows-1252";\n.caf\xe9 { color: red; }\n'),
+    ("\\d_utf8_charset.css", b'@charset "UTF-8";\n' + ".日本 { color: blue; }\n".encode("utf-8")),
+    # A label the decoder does not know: skipped.
+    ("\\e_unsupported.css", b'@charset "x-mdict-unsupported";\n.jp { color: red; }\n'),
+    # Big-endian UTF-16 without a BOM.
+    ("\\f_utf16be.css", ".be::after { content: \"\u2192\"; }\n".encode("utf-16-be")),
+    # A UTF-8 BOM before the @charset rule.
+    ("\\g_utf8_bom.css", b'\xef\xbb\xbf@charset "utf-8";\n.bom { color: red; }\n'),
+    # Bytes Shift_JIS does not define: skipped rather than decoded lossily.
+    ("\\h_sjis_invalid.css", b'@charset "Shift_JIS";\n.bad::after { content: "\xff\xff"; }\n'),
+]
+
 
 def main():
     out = lambda name: os.path.join(HERE, name)  # noqa: E731
@@ -410,6 +431,10 @@ def main():
     sizes["key_rules_exact.mdx"] = write_mdict(
         out("key_rules_exact.mdx"), KEY_RULE_ENTRIES, title="Exact keys",
         extra_attrs={"KeyCaseSensitive": "Yes", "StripKey": "No"})
+    sizes["css_charsets.mdx"] = write_mdict(
+        out("css_charsets.mdx"), [("日本", '<div class="日本">日本</div>')], title="CSS charsets")
+    sizes["css_charsets.mdd"] = write_mdict(
+        out("css_charsets.mdd"), CHARSET_MDD_ENTRIES, kind="mdd", title="CSS charsets media")
     # Malformed inputs. Each must fail with a specific message.
     sizes["bad_truncated.mdx"] = write_mdict(
         out("bad_truncated.mdx"), TEXT_ENTRIES, fmt="Text", corrupt="truncate")
