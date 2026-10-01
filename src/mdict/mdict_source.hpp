@@ -2,6 +2,7 @@
 
 #include <ankerl/unordered_dense.h>
 
+#include <compare>
 #include <cstdint>
 #include <filesystem>
 #include <map>
@@ -23,13 +24,14 @@
 // produced from the MDX record blocks when the importer asks for it.
 //
 // Opening reads the key index and makes one pass over the record blocks to
-// find @@@LINK= redirects. Every alias that reaches an entry, directly or
-// through other aliases, becomes an extra headword of that entry with its own
-// spelling. A target names the key spelled exactly; only a target that no key
-// spells exactly also matches the keys it equals under the header's
-// KeyCaseSensitive and StripKey rules (manabitan's redirect resolution). An
-// alias whose target is missing, or that only reaches other aliases, is
-// dropped.
+// find @@@LINK= redirects. A record whose block cannot be read is skipped;
+// opening fails only when no entry is left. Every alias that reaches an entry,
+// directly or through other aliases, becomes an extra headword of that entry
+// with its own spelling. A target names the key spelled exactly; only a target
+// that no key spells exactly also matches the keys it equals under the
+// header's KeyCaseSensitive and StripKey rules (manabitan's redirect
+// resolution). An alias whose target is missing, or that only reaches other
+// aliases, is dropped.
 //
 // Banks are then materialised per read(): bank N holds terms
 // [N*10000, (N+1)*10000) of the non-redirect entries in file order, each as
@@ -39,7 +41,12 @@
 //
 // Media is discovered while the banks convert (which MDD assets the glossaries
 // reference, plus data: URLs), so the media entries and the final styles.css
-// (MDD *.css plus inline <style> blocks) exist only after finish_banks().
+// (MDD *.css plus inline <style> blocks) exist only after finish_banks(). A
+// referenced path that no MDD provides is left out, and so is an MDD
+// stylesheet or asset whose block cannot be read.
+//
+// warnings() counts each of those losses (manabitan's MDict conversion
+// notes): skipped records, dropped aliases, missing and unreadable resources.
 //
 // Errors are mdict::Error with a specific message; a file whose header parses
 // as an MDD is rejected with a hint to import the .mdx instead.
@@ -58,6 +65,7 @@ class MdictSource final : public DictionarySource {
   std::string read(int index) const override;
   std::optional<SourceMediaFile> read_media(int index) const override;
   void finish_banks() override;
+  ImportWarnings warnings() const override;
 
   const Header& header() const { return mdx_.header(); }
   const std::string& title() const { return title_; }
@@ -69,6 +77,7 @@ class MdictSource final : public DictionarySource {
   struct MddAsset {
     size_t mdd = 0;
     size_t key = 0;
+    auto operator<=>(const MddAsset&) const = default;
   };
   struct Mdd {
     std::unique_ptr<Reader> reader;
@@ -79,10 +88,15 @@ class MdictSource final : public DictionarySource {
     std::optional<MddAsset> asset;
     std::optional<size_t> embedded;
   };
+  // Positions in redirects_ and fallback_redirects_ whose aliases a bank emitted.
+  struct ReachedRedirects {
+    std::vector<size_t> targets;
+    std::vector<size_t> fallbacks;
+  };
 
   void discover_mdds(const std::filesystem::path& mdx_path);
   void index_redirects();
-  std::vector<std::string_view> expressions_of(std::string_view key) const;
+  std::vector<std::string_view> expressions_of(std::string_view key, ReachedRedirects& reached) const;
   std::string build_index_json() const;
   std::string build_bank(size_t bank) const;
   std::string build_styles() const;
@@ -118,6 +132,11 @@ class MdictSource final : public DictionarySource {
   ankerl::unordered_dense::map<std::string, std::vector<std::string_view>, StringHash, std::equal_to<>>
       fallback_redirects_;
   size_t redirect_count_ = 0;
+  // Records whose block could not be read, and the first such error.
+  size_t skipped_record_count_ = 0;
+  std::string first_record_error_;
+  size_t unresolved_redirect_count_ = 0;
+  size_t missing_resource_count_ = 0;
 
   std::vector<SourceEntry> entries_;
   size_t bank_count_ = 0;
@@ -133,6 +152,11 @@ class MdictSource final : public DictionarySource {
   mutable std::vector<EmbeddedAsset> embedded_assets_;
   mutable std::set<std::string> embedded_asset_paths_;
   mutable std::set<std::string> asset_references_;
+  // Per position in redirects_ and fallback_redirects_: a bank emitted its aliases.
+  mutable std::vector<bool> reached_targets_;
+  mutable std::vector<bool> reached_fallbacks_;
+  // MDD resources whose block could not be read: stylesheets, then media.
+  mutable std::set<MddAsset> unreadable_assets_;
   mutable std::optional<std::pair<size_t, std::string>> bank_cache_;
 };
 }
