@@ -152,8 +152,10 @@ std::string fold_key(std::string_view key, const Header& header) {
         continue;
       }
     }
-    if (header.key_case_sensitive) {
-      out += key[i++];
+    const auto c = static_cast<unsigned char>(key[i]);
+    if (header.key_case_sensitive || c < 0x80) {
+      out += static_cast<char>(!header.key_case_sensitive && c >= 'A' && c <= 'Z' ? c + ('a' - 'A') : c);
+      i++;
       continue;
     }
     utf8proc_int32_t cp = 0;
@@ -267,7 +269,7 @@ void MdictSource::index_redirects() {
     if (target.empty() || target == entry.key) {
       continue;
     }
-    auto& aliases = redirects_[target];
+    auto& aliases = redirects_[target].aliases;
     if (std::find(aliases.begin(), aliases.end(), entry.key) == aliases.end()) {
       aliases.push_back(entry.key);
       redirect_count_++;
@@ -280,16 +282,15 @@ void MdictSource::index_redirects() {
   // A target spelled exactly like a key names that key alone, even when
   // other keys fold to the same spelling; only the remaining targets match
   // under the key rules (manabitan's getFallbackRedirectTargets).
-  std::set<std::string_view> exact;
   for (const KeyEntry& entry : keys_) {
     if (auto it = redirects_.find(entry.key); it != redirects_.end()) {
-      exact.insert(it->first);
+      it->second.exact = true;
     }
   }
-  for (const auto& [target, aliases] : redirects_) {
-    if (!exact.contains(target)) {
+  for (const auto& [target, redirect] : redirects_) {
+    if (!redirect.exact) {
       auto& fallback = fallback_redirects_[fold_key(target, mdx_.header())];
-      fallback.insert(fallback.end(), aliases.begin(), aliases.end());
+      fallback.insert(fallback.end(), redirect.aliases.begin(), redirect.aliases.end());
     }
   }
 }
@@ -308,7 +309,7 @@ std::vector<std::string_view> MdictSource::expressions_of(std::string_view key) 
   };
   for (size_t i = 0; i < expressions.size(); ++i) {
     if (auto it = redirects_.find(expressions[i]); it != redirects_.end()) {
-      add(it->second);
+      add(it->second.aliases);
     }
     if (!fallback_redirects_.empty()) {
       if (auto it = fallback_redirects_.find(fold_key(expressions[i], mdx_.header()));

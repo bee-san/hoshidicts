@@ -1,5 +1,7 @@
 #pragma once
 
+#include <ankerl/unordered_dense.h>
+
 #include <cstdint>
 #include <filesystem>
 #include <map>
@@ -98,11 +100,23 @@ class MdictSource final : public DictionarySource {
   std::vector<KeyEntry> keys_;
   // Indices into keys_ of the entries that become terms, in file order.
   std::vector<uint32_t> terms_;
-  // Redirect target as written -> the keys that redirect to it.
-  std::map<std::string, std::vector<std::string>, std::less<>> redirects_;
+  struct Redirect {
+    std::vector<std::string> aliases;  // the keys that redirect to the target
+    bool exact = false;                // some key is spelled like the target
+  };
+  struct StringHash {
+    using is_transparent = void;
+    using is_avalanching = void;
+    uint64_t operator()(std::string_view s) const noexcept {
+      return ankerl::unordered_dense::hash<std::string_view>{}(s);
+    }
+  };
+  // Redirect target as written -> its aliases, in file order.
+  ankerl::unordered_dense::map<std::string, Redirect, StringHash, std::equal_to<>> redirects_;
   // Key-rule spelling of each target that no key spells exactly -> the keys
   // that redirect to those targets. Empty when every target exists as written.
-  std::map<std::string, std::vector<std::string_view>, std::less<>> fallback_redirects_;
+  ankerl::unordered_dense::map<std::string, std::vector<std::string_view>, StringHash, std::equal_to<>>
+      fallback_redirects_;
   size_t redirect_count_ = 0;
 
   std::vector<SourceEntry> entries_;
