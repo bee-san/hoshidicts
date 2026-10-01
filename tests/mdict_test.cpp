@@ -354,6 +354,20 @@ void test_stylesheet_charsets() {
         "charsets: a skipped sheet is still a media file");
   std::filesystem::remove_all(dir);
 }
+
+// <font> attributes reach the stored glossary as valid CSS, and the inline
+// style wins over size (html_to_structured_test has the full size table).
+void test_legacy_font_import() {
+  with_dictionary("legacy_font.mdx", 1, [](const DictionaryQuery& query) {
+    const std::string glossary = glossary_of(query.query("font"));
+    check_contains(glossary, R"({"tag":"span","style":{"color":"red","fontSize":"medium"},"content":["three"]})",
+                   "font: size 3 with a color");
+    check_contains(glossary, R"({"tag":"span","style":{"fontSize":"x-large"},"content":["plus two"]})",
+                   "font: size +2");
+    check_contains(glossary, R"({"tag":"span","style":{"fontSize":"20px"},"content":["inline wins"]})",
+                   "font: inline style over size 5");
+  });
+}
 }
 
 int main(int argc, char** argv) {
@@ -372,6 +386,7 @@ int main(int argc, char** argv) {
   test_redirect_key_rules();
   test_redirect_identity();
   test_stylesheet_charsets();
+  test_legacy_font_import();
   if (failures == 0) {
     std::printf("ok\n");
   }
