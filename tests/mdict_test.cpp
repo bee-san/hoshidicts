@@ -268,7 +268,8 @@ void test_redirect_key_rules() {
       {"redirect_strip_case_sensitive.mdx", 2, {"Alias", "Foo-Bar"}, {"WrongCase", "Cycle-One", "Cycle-Two"}},
       {"redirect_exact_cycle.mdx", 1, {"Read"}, {"read", "Loop", "Alias"}},
       {"key_rules.mdx", 7, {"Tシャツ", "ティーシャツ", "Wi-Fi", "ワイファイ", "Target", "AliasTwo", "AliasOne"}, {}},
-      {"key_rules_exact.mdx", 5, {"Tシャツ", "Wi-Fi", "Target", "AliasTwo", "AliasOne"}, {"ティーシャツ", "ワイファイ"}},
+      {"key_rules_exact.mdx", 5, {"Tシャツ", "Wi-Fi", "Target", "AliasTwo", "AliasOne"},
+       {"ティーシャツ", "ワイファイ"}},
   };
   for (const Case& c : cases) {
     with_dictionary(c.fixture, c.rows, [&](const DictionaryQuery& query) {
@@ -301,7 +302,8 @@ void test_redirect_identity() {
     });
   }
   with_dictionary("redirect_exact_chains.mdx", 6, [](const DictionaryQuery& query) {
-    for (const auto& [alias, meaning] : {std::pair{"ViaUpper", "top meaning"}, std::pair{"ViaLower", "bottom meaning"}}) {
+    for (const auto& [alias, meaning] :
+         {std::pair{"ViaUpper", "top meaning"}, std::pair{"ViaLower", "bottom meaning"}}) {
       const auto [count, joined] = senses_of(query, alias);
       check(count == 1, std::string("exact chains: ") + alias + " has one sense, got " + std::to_string(count));
       check_contains(joined, meaning, std::string("exact chains: ") + alias);

@@ -164,6 +164,31 @@ void test_v1() {
   expect_text_fixture(reader, "v1");
 }
 
+// KeyCaseSensitive and StripKey are true for "Yes" or "true" in any letter
+// case; an absent attribute is MDict's default (KeyCaseSensitive="No",
+// StripKey="Yes").
+void test_key_rules() {
+  struct Expected {
+    const char* file;
+    bool case_sensitive;
+    bool strip_key;
+  };
+  const Expected files[] = {
+      {"v2_utf8_zlib_text.mdx", false, true},             // "No", "Yes"
+      {"key_rules.mdx", false, true},                     // neither attribute
+      {"key_rules_exact.mdx", true, false},               // "Yes", "No"
+      {"redirect_case_sensitive.mdx", true, false},       // "True", "No"
+      {"redirect_strip_case_sensitive.mdx", true, true},  // "Yes", "Yes"
+  };
+  for (const Expected& expected : files) {
+    mdict::Reader reader;
+    reader.open(fixtures / expected.file);
+    check(reader.header().key_case_sensitive == expected.case_sensitive,
+          std::string(expected.file) + ": KeyCaseSensitive");
+    check(reader.header().strip_key == expected.strip_key, std::string(expected.file) + ": StripKey");
+  }
+}
+
 void test_mdd() {
   mdict::Reader reader;
   reader.open(fixtures / "v2_utf8_lzo_html.mdd");
@@ -289,6 +314,7 @@ int main(int argc, char** argv) {
   test_v2_lzo_html();
   test_v2_utf16_encrypted();
   test_v1();
+  test_key_rules();
   test_mdd();
   test_malformed();
   test_sniff();

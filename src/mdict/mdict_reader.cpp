@@ -386,6 +386,14 @@ void Reader::parse_header() {
 
   header_.format = attr("Format");
   header_.compact = lower(attr("Compact")) == "yes" || lower(attr("Compat")) == "yes";
+  // js-mdict's truth test (utils.js isTrue) and defaults (mdict-base.js).
+  auto yes = [](const std::string& value) {
+    const std::string v = lower(value);
+    return v == "yes" || v == "true";
+  };
+  header_.key_case_sensitive = yes(attr("KeyCaseSensitive"));
+  const std::string strip_key = attr("StripKey");
+  header_.strip_key = strip_key.empty() || yes(strip_key);
   header_.stylesheet = attr("StyleSheet");
   header_.title = attr("Title");
   header_.description = attr("Description");

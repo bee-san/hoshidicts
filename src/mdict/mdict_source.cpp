@@ -1,5 +1,7 @@
 #include "mdict_source.hpp"
 
+#include <utf8proc.h>
+
 #include <algorithm>
 #include <cctype>
 #include <format>
@@ -128,6 +130,47 @@ std::optional<std::string> decode_stylesheet(const std::vector<char>& bytes) {
   return text;
 }
 
+// The characters MDict's StripKey removes from an MDX key (js-mdict
+// REGEXP_STRIPKEY.mdx): ( ) . , - & 、 space ' / \ @ _ $ !
+constexpr std::string_view strip_key_ascii = "().,-& '/\\@_$!";
+constexpr std::string_view ideographic_comma = "\xe3\x80\x81";
+
+// `key` as the header's key rules compare it: without the StripKey characters
+// when StripKey is on, and lowercased (Unicode simple case mapping) unless
+// KeyCaseSensitive is on. Bytes that are not UTF-8 are kept as they are.
+std::string fold_key(std::string_view key, const Header& header) {
+  std::string out;
+  out.reserve(key.size());
+  for (size_t i = 0; i < key.size();) {
+    if (header.strip_key) {
+      if (strip_key_ascii.find(key[i]) != std::string_view::npos) {
+        i++;
+        continue;
+      }
+      if (key.substr(i).starts_with(ideographic_comma)) {
+        i += ideographic_comma.size();
+        continue;
+      }
+    }
+    if (header.key_case_sensitive) {
+      out += key[i++];
+      continue;
+    }
+    utf8proc_int32_t cp = 0;
+    const utf8proc_ssize_t length = utf8proc_iterate(reinterpret_cast<const utf8proc_uint8_t*>(key.data() + i),
+                                                     static_cast<utf8proc_ssize_t>(key.size() - i), &cp);
+    if (length <= 0) {
+      out += key[i++];
+      continue;
+    }
+    utf8proc_uint8_t lowered[4];
+    out.append(reinterpret_cast<const char*>(lowered),
+               static_cast<size_t>(utf8proc_encode_char(utf8proc_tolower(cp), lowered)));
+    i += static_cast<size_t>(length);
+  }
+  return out;
+}
+
 bool starts_with_link(std::string_view record, Encoding encoding) {
   if (encoding == Encoding::Utf8) {
     return record.starts_with(link_prefix);
@@ -230,6 +273,51 @@ void MdictSource::index_redirects() {
       redirect_count_++;
     }
   }
+  if (redirects_.empty()) {
+    return;
+  }
+
+  // A target spelled exactly like a key names that key alone, even when
+  // other keys fold to the same spelling; only the remaining targets match
+  // under the key rules (manabitan's getFallbackRedirectTargets).
+  std::set<std::string_view> exact;
+  for (const KeyEntry& entry : keys_) {
+    if (auto it = redirects_.find(entry.key); it != redirects_.end()) {
+      exact.insert(it->first);
+    }
+  }
+  for (const auto& [target, aliases] : redirects_) {
+    if (!exact.contains(target)) {
+      auto& fallback = fallback_redirects_[fold_key(target, mdx_.header())];
+      fallback.insert(fallback.end(), aliases.begin(), aliases.end());
+    }
+  }
+}
+
+// `key` followed by every alias that reaches it, directly or through other
+// aliases, each spelling once so that a cycle ends (manabitan's
+// getRedirectExpressions).
+std::vector<std::string_view> MdictSource::expressions_of(std::string_view key) const {
+  std::vector<std::string_view> expressions{key};
+  auto add = [&expressions](const auto& aliases) {
+    for (std::string_view alias : aliases) {
+      if (std::find(expressions.begin(), expressions.end(), alias) == expressions.end()) {
+        expressions.push_back(alias);
+      }
+    }
+  };
+  for (size_t i = 0; i < expressions.size(); ++i) {
+    if (auto it = redirects_.find(expressions[i]); it != redirects_.end()) {
+      add(it->second);
+    }
+    if (!fallback_redirects_.empty()) {
+      if (auto it = fallback_redirects_.find(fold_key(expressions[i], mdx_.header()));
+          it != fallback_redirects_.end()) {
+        add(it->second);
+      }
+    }
+  }
+  return expressions;
 }
 
 // `base` + `suffix`, matched exactly first and then ignoring case, so
@@ -384,15 +472,7 @@ std::string MdictSource::build_bank(size_t bank) const {
       }
     }
 
-    std::vector<std::string_view> expressions{entry.key};
-    if (auto aliases = redirects_.find(entry.key); aliases != redirects_.end()) {
-      for (const std::string& alias : aliases->second) {
-        if (std::find(expressions.begin(), expressions.end(), alias) == expressions.end()) {
-          expressions.push_back(alias);
-        }
-      }
-    }
-    for (std::string_view expression : expressions) {
+    for (std::string_view expression : expressions_of(entry.key)) {
       if (json.size() > 1) {
         json += ',';
       }
