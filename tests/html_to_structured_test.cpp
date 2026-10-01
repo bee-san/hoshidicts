@@ -87,7 +87,8 @@ void test_styles() {
   check_eq(body(R"(<b style="font-weight: normal">s</b>)"),
            R"({"tag":"span","style":{"fontWeight":"normal"},"content":["s"]})", "inline style overrides default");
   check_eq(body(R"(<font color="red" size="3" face="Arial">f</font>)"),
-           R"({"tag":"span","style":{"color":"red","fontSize":"3","fontFamily":"Arial"},"content":["f"]})", "font");
+           R"({"tag":"span","style":{"color":"red","fontSize":"medium","fontFamily":"Arial"},"content":["f"]})",
+           "font");
   check_eq(body(R"(<table style="color:red"><tr><td>c</td></tr></table>)"),
            R"({"tag":"table","content":[{"tag":"tbody","content":[{"tag":"tr","content":[{"tag":"td","content":["c"]}]}]}]})",
            "style dropped on tags whose schema has none");
@@ -102,6 +103,41 @@ void test_styles() {
   check(result.asset_references == std::vector<std::string>{"img/bg.png"}, "url() in inline style referenced");
   check(result.glossary_json.find(R"("background":"url(\"mdict-media/img/bg.png\") no-repeat")") != std::string::npos,
         "url() in inline style rewritten");
+}
+
+// <font size> follows the HTML rules for parsing a legacy font size, and the
+// inline style wins over size, color and face (manabitan's
+// test/util/mdict-font-cases.js at e433f8c).
+void test_legacy_font() {
+  auto font = [](const std::string& attributes) { return body("<font " + attributes + ">sample</font>"); };
+  auto sized = [](const std::string& keyword) {
+    return R"({"tag":"span","style":{"fontSize":")" + keyword + R"("},"content":["sample"]})";
+  };
+  const std::string keywords[] = {"x-small", "small", "medium", "large", "x-large", "xx-large", "xxx-large"};
+  for (int size = 1; size <= 7; ++size) {
+    check_eq(font("size=\"" + std::to_string(size) + "\""), sized(keywords[size - 1]),
+             "font size " + std::to_string(size));
+  }
+  const std::pair<std::string, std::string> parsed[] = {
+      {"0", "x-small"},     {"8", "xxx-large"},   {"+0", "medium"},  {"-0", "medium"},
+      {"+1", "large"},      {"+4", "xxx-large"},  {"-1", "small"},   {"-2", "x-small"},
+      {"-999", "x-small"},  {"999", "xxx-large"}, {"0004", "large"}, {"  \t\n\f\r+2trailing", "x-large"},
+      {"3.5", "medium"},    {"0x7", "x-small"},   {std::string(400, '9'), "xxx-large"},
+      {"-" + std::string(400, '9'), "x-small"}};
+  for (const auto& [size, keyword] : parsed) {
+    check_eq(font("size=\"" + size + "\""), sized(keyword), "font size " + size.substr(0, 30));
+  }
+  // Not ASCII whitespace: U+00A0 and U+2003.
+  for (const char* size : {"", " ", "+", "-", "+ 2", "large", ".5", "\xc2\xa0" "3", "\xe2\x80\x83" "3"}) {
+    check_eq(font(std::string("size=\"") + size + "\""), R"({"tag":"span","content":["sample"]})",
+             std::string("invalid font size \"") + size + "\" is omitted");
+  }
+  check_eq(font(R"(size="3" color="red" face="serif" style="font-size: 24px; color: blue; font-family: monospace")"),
+           R"({"tag":"span","style":{"color":"blue","fontSize":"24px","fontFamily":"monospace"},"content":["sample"]})",
+           "inline style overrides the font attributes");
+  check_eq(font(R"(size="+2" color="red" face="serif" style="color: blue")"),
+           R"({"tag":"span","style":{"color":"blue","fontSize":"x-large","fontFamily":"serif"},"content":["sample"]})",
+           "font attributes the inline style leaves alone survive");
 }
 
 void test_links() {
@@ -217,6 +253,7 @@ int main() {
   test_basic_formatting();
   test_data_and_attributes();
   test_styles();
+  test_legacy_font();
   test_links();
   test_images();
   test_depth_limit();
