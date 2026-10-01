@@ -41,6 +41,10 @@ void cmd_import(const std::string& path) {
                              result.summary.counts.termMeta["pitch"] + result.summary.counts.termMeta["ipa"]);
     std::cout << std::format("kanji_count: {}\n", result.summary.counts.kanji.total);
     std::cout << std::format("media_count: {}\n", result.summary.counts.media.total);
+    std::cout << std::format("skipped_records: {}\n", result.warnings.skippedRecords);
+    std::cout << std::format("unresolved_redirects: {}\n", result.warnings.unresolvedRedirects);
+    std::cout << std::format("missing_resources: {}\n", result.warnings.missingResources);
+    std::cout << std::format("unreadable_resources: {}\n", result.warnings.unreadableResources);
   } else {
     std::cout << std::format("could not import dictionary: {}\n", result.error);
   }

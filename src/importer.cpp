@@ -1152,6 +1152,7 @@ ImportResult dictionary_importer::import(const std::string& source_path, const s
     hash_thread.get();
 
     result.summary.counts.media.total = media_thread.get();
+    result.warnings = source.warnings();
 
     std::string summary_json;
     // A stylesheet or description can hold control characters (a DOS Ctrl-Z

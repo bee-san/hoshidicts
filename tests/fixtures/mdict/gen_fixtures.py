@@ -368,6 +368,10 @@ REDIRECT_CASES = [
     ("redirect_fallback", [("Read", "first meaning"), ("Read", "second meaning"), ("Fallback", "@@@LINK=rE-aD"),
                            ("Chain", "@@@LINK=fALLBACK")],
      {"KeyCaseSensitive": "No", "StripKey": "Yes"}, {}),
+    # A self redirect is unresolved unless its key also has an entry ("a self
+    # redirect without a readable homograph is counted as unresolved").
+    ("redirect_self", [("Root", "root definition"), ("Root", "@@@LINK=Root"), ("Self", "@@@LINK=Self")],
+     {"KeyCaseSensitive": "No", "StripKey": "No"}, {}),
 ]
 
 # hachidori#437's reproduction, with MDict's default key rules (neither
@@ -445,6 +449,25 @@ def main():
     sizes["css_charsets.mdd"] = write_mdict(
         out("css_charsets.mdd"), CHARSET_MDD_ENTRIES, kind="mdd", title="CSS charsets media")
     sizes["legacy_font.mdx"] = write_mdict(out("legacy_font.mdx"), LEGACY_FONT_ENTRIES, title="Legacy font")
+    # Partly unreadable inputs. Each imports what it can and counts the rest.
+    # One record per block; block 0 ("alpha") fails its Adler-32 check: 3 of 4 terms import.
+    sizes["partial_bad_block.mdx"] = write_mdict(
+        out("partial_bad_block.mdx"), TEXT_ENTRIES, fmt="Text", title="Partial Fixture",
+        record_block_bytes=1, corrupt="record_adler")
+    # The image is the corrupt first MDD block; the stylesheet is readable.
+    sizes["bad_media.mdx"] = write_mdict(
+        out("bad_media.mdx"), [("pic", '<img src="img/pic.png">'), ("styled", '<div class="mdx-red">red</div>')],
+        title="Bad Media Fixture")
+    sizes["bad_media.mdd"] = write_mdict(
+        out("bad_media.mdd"), [("\\img\\pic.png", PNG), ("\\style.css", b".mdx-red { color: red; }\n")],
+        kind="mdd", record_block_bytes=1, corrupt="record_adler", title="Bad Media Fixture Media")
+    # The stylesheet is the corrupt first MDD block; the image is readable.
+    sizes["bad_css.mdx"] = write_mdict(
+        out("bad_css.mdx"), [("styled", '<div class="x">x</div><img src="img/pic.png">')],
+        title="Bad CSS Fixture")
+    sizes["bad_css.mdd"] = write_mdict(
+        out("bad_css.mdd"), [("\\a.css", b".x { color: red; }\n"), ("\\img\\pic.png", PNG)],
+        kind="mdd", record_block_bytes=1, corrupt="record_adler", title="Bad CSS Fixture Media")
     # Malformed inputs. Each must fail with a specific message.
     sizes["bad_truncated.mdx"] = write_mdict(
         out("bad_truncated.mdx"), TEXT_ENTRIES, fmt="Text", corrupt="truncate")

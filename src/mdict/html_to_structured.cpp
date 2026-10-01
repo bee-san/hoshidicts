@@ -426,12 +426,14 @@ std::string convert_link_href(Context& ctx, std::string_view href) {
     return search_href(value.substr(2));
   }
   if (starts_with_ci(value, "sound://")) {
+    // A disabled sound link points nowhere, so its file is not a reference
+    // (manabitan returns # before recording it).
+    if (!ctx.options.enable_audio) {
+      return "#";
+    }
     const std::string key = referenced_asset_key(value.substr(8), prefix, {});
     add_reference(ctx.result.asset_references, key);
-    if (ctx.options.enable_audio && !key.empty()) {
-      return "media:" + encode_media_path(std::string(prefix) + key);
-    }
-    return "#";
+    return key.empty() ? "#" : "media:" + encode_media_path(std::string(prefix) + key);
   }
   if (starts_with_ci(value, "http://") || starts_with_ci(value, "https://") || starts_with_ci(value, "mailto:") ||
       starts_with_ci(value, "tel:")) {

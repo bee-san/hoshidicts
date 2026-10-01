@@ -160,7 +160,8 @@ void test_links() {
   check_eq(body(R"(<a href="sound://a.spx">e</a>)", audio),
            R"({"tag":"a","href":"media:mdict-media/a.spx","content":["e"]})", "sound:// with audio enabled");
   mdict::ConvertResult result = mdict::convert_html(R"(<a href="sound://a.spx">e</a><a href="img/p.png">f</a>)", {});
-  check(result.asset_references == std::vector<std::string>{"a.spx", "img/p.png"}, "link asset references collected");
+  check(result.asset_references == std::vector<std::string>{"img/p.png"},
+        "link asset references collected; a disabled sound:// link is not one");
   check_eq(body(R"(<audio src="snd/a.mp3"></audio><video src="v.mp4">cap</video>)"),
            R"({"tag":"a","href":"media:mdict-media/snd/a.mp3","content":["audio"]},)"
            R"({"tag":"a","href":"media:mdict-media/v.mp4","content":["cap"]})",
