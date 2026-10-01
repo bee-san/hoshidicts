@@ -346,6 +346,7 @@ void test_stylesheet_charsets() {
                    "charsets: BOM-less UTF-16BE");
     check_contains(css, "/* Source: g_utf8_bom.css */\n.bom { color: red; }", "charsets: UTF-8 BOM and @charset");
     check(css.find("h_sjis_invalid.css") == std::string::npos, "charsets: undecodable Shift_JIS is skipped");
+    check_contains(css, "/* Source: i_control.css */\n.ctl { color: red; }\n\x1a", "charsets: control character kept");
     check(css.find("@charset") == std::string::npos, "charsets: no @charset left, got " + css);
     check(css.find("\xef\xbf\xbd") == std::string::npos, "charsets: no U+FFFD");
   }

@@ -401,6 +401,8 @@ CHARSET_MDD_ENTRIES = [
     ("\\g_utf8_bom.css", b'\xef\xbb\xbf@charset "utf-8";\n.bom { color: red; }\n'),
     # Bytes Shift_JIS does not define: skipped rather than decoded lossily.
     ("\\h_sjis_invalid.css", b'@charset "Shift_JIS";\n.bad::after { content: "\xff\xff"; }\n'),
+    # A DOS end-of-file marker (Ctrl-Z): JSON must escape it in index.json.
+    ("\\i_control.css", b".ctl { color: red; }\n\x1a"),
 ]
 
 
