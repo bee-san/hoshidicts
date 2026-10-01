@@ -178,6 +178,12 @@ int check_import(const std::string& fixture, const std::map<std::string, std::st
     return 1;
   }
   const auto dict_dir = out_dir / result.title;
+  const ImportWarnings& warnings = result.warnings;
+  if (warnings.skippedRecords || warnings.unresolvedRedirects || warnings.missingResources ||
+      warnings.unreadableResources) {
+    std::printf("FAIL low_ram=%d a Yomitan archive reports import warnings\n", low_ram);
+    failures++;
+  }
 
   std::map<std::string, std::string> actual;
   for (const auto& entry : std::filesystem::directory_iterator(dict_dir)) {

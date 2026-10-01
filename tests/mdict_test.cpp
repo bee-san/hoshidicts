@@ -78,9 +78,16 @@ void test_html_import() {
   check(result.summary.sequenced, "html: sequenced");
   check(result.summary.revision == "mdx import", "html: revision");
   check(result.summary.description == "HTML fixture with links, duplicates and a stylesheet", "html: description");
-  // style.css, utf16.css, a.spx (sound://), img/pic.png; ../evil.png is rejected.
-  check(result.summary.counts.media.total == 4,
-        "html: 4 media files, got " + std::to_string(result.summary.counts.media.total));
+  // style.css, utf16.css, img/pic.png; ../evil.png is rejected and a disabled
+  // sound:// link refers to nothing.
+  check(result.summary.counts.media.total == 3,
+        "html: 3 media files, got " + std::to_string(result.summary.counts.media.total));
+  check(result.warnings.skippedRecords == 0, "html: no skipped records");
+  check(result.warnings.unresolvedRedirects == 1,
+        "html: missing-alias is unresolved, got " + std::to_string(result.warnings.unresolvedRedirects));
+  check(result.warnings.missingResources == 1,
+        "html: evil.png is missing, got " + std::to_string(result.warnings.missingResources));
+  check(result.warnings.unreadableResources == 0, "html: no unreadable resources");
 
   const std::string dict = (dir / result.title).string();
   DictionaryQuery query;
@@ -119,7 +126,7 @@ void test_html_import() {
   const auto png = query.get_media_file(result.title, "mdict-media/img/pic.png");
   check(png.size() == 69 && png.size() > 4 && png[1] == 'P' && png[2] == 'N' && png[3] == 'G',
         "html: PNG from the MDD, got " + std::to_string(png.size()) + " bytes");
-  check(!query.get_media_file(result.title, "mdict-media/a.spx").empty(), "html: sound asset extracted");
+  check(query.get_media_file(result.title, "mdict-media/a.spx").empty(), "html: unplayable sound asset not imported");
   check(query.get_media_file(result.title, "mdict-media/evil.png").empty(), "html: traversal key not imported");
   check(query.get_media_file(result.title, "mdict-media/../evil.png").empty(), "html: traversal path not imported");
 
@@ -163,7 +170,8 @@ void expect_import_fails(const char* name, const std::string& needle) {
 
 void test_malformed() {
   expect_import_fails("bad_truncated.mdx", "truncated file");
-  expect_import_fails("bad_adler.mdx", "Adler-32");
+  expect_import_fails("bad_adler.mdx",
+                      "MDX has no usable entries: 4 records could not be read (record block: Adler-32 checksum mismatch)");
   expect_import_fails("bad_huge_block.mdx", "impossible size");
   expect_import_fails("bad_encrypted1.mdx", "registration-protected");
   expect_import_fails("bad_gbk.mdx", "unsupported MDX encoding: GBK");
@@ -193,7 +201,57 @@ void test_mdd_discovery() {
   std::filesystem::copy_file(fixtures / "v2_utf8_lzo_html.mdx", dir / "Alone.mdx");
   const ImportResult result = dictionary_importer::import((dir / "Alone.mdx").string(), dir.string(), false);
   check(result.success && result.summary.counts.media.total == 0, "no mdd: import succeeds without media");
+  check(result.warnings.missingResources == 2,
+        "no mdd: img/pic.png and evil.png are missing, got " + std::to_string(result.warnings.missingResources));
+  check(result.warnings.unresolvedRedirects == 1, "no mdd: missing-alias is unresolved");
   std::filesystem::remove_all(dir);
+}
+
+// One corrupt record block loses its entries, not the dictionary; one corrupt
+// MDD block loses its image or stylesheet. Each loss is counted.
+void test_partial_corruption() {
+  {
+    const auto dir = fresh_dir("partial");
+    const ImportResult result = import_fixture(dir, "partial_bad_block.mdx", false);
+    check(result.success, "partial: import succeeded: " + result.error);
+    check(result.summary.counts.terms.total == 3,
+          "partial: 3 of 4 terms, got " + std::to_string(result.summary.counts.terms.total));
+    check(result.warnings.skippedRecords == 1,
+          "partial: 1 skipped record, got " + std::to_string(result.warnings.skippedRecords));
+    if (result.success) {
+      DictionaryQuery query;
+      query.add_term_dict((dir / result.title).string());
+      check(query.query("alpha").empty(), "partial: the unreadable entry is skipped");
+      check(glossary_of(query.query("beta")) == R"(["second\ndefinition with newline"])",
+            "partial: the readable entries import");
+    }
+    std::filesystem::remove_all(dir);
+  }
+  {
+    const auto dir = fresh_dir("badmedia");
+    const ImportResult result = import_fixture(dir, "bad_media.mdx", false);
+    check(result.success, "bad media: import succeeded: " + result.error);
+    check(result.warnings.unreadableResources == 1,
+          "bad media: 1 unreadable resource, got " + std::to_string(result.warnings.unreadableResources));
+    check(result.warnings.missingResources == 0,
+          "bad media: nothing missing, got " + std::to_string(result.warnings.missingResources));
+    check(result.summary.counts.media.total == 1,
+          "bad media: only style.css, got " + std::to_string(result.summary.counts.media.total));
+    std::filesystem::remove_all(dir);
+  }
+  {
+    // A corrupt stylesheet block used to fail the whole import.
+    const auto dir = fresh_dir("badcss");
+    const ImportResult result = import_fixture(dir, "bad_css.mdx", false);
+    check(result.success, "bad css: import succeeded: " + result.error);
+    check(result.warnings.unreadableResources == 1,
+          "bad css: 1 unreadable resource, got " + std::to_string(result.warnings.unreadableResources));
+    check(result.warnings.missingResources == 0,
+          "bad css: nothing missing, got " + std::to_string(result.warnings.missingResources));
+    check(result.summary.counts.media.total == 1,
+          "bad css: only img/pic.png, got " + std::to_string(result.summary.counts.media.total));
+    std::filesystem::remove_all(dir);
+  }
 }
 
 // low_ram must not change a single output byte.
@@ -216,9 +274,10 @@ void test_low_ram_identical() {
   std::filesystem::remove_all(low);
 }
 
-// Imports `fixture` and hands its loaded dictionary to `inspect`.
+// Imports `fixture`, checks its term rows and unresolved aliases, and hands its
+// loaded dictionary to `inspect`.
 template <class Inspect>
-void with_dictionary(const char* fixture, size_t expected_rows, Inspect inspect) {
+void with_dictionary(const char* fixture, size_t expected_rows, size_t expected_unresolved, Inspect inspect) {
   const auto dir = fresh_dir("redirect");
   const ImportResult result = import_fixture(dir, fixture, false);
   check(result.success, std::string(fixture) + ": import succeeded: " + result.error);
@@ -226,6 +285,9 @@ void with_dictionary(const char* fixture, size_t expected_rows, Inspect inspect)
     check(result.summary.counts.terms.total == expected_rows,
           std::string(fixture) + ": " + std::to_string(expected_rows) + " term rows, got " +
               std::to_string(result.summary.counts.terms.total));
+    check(result.warnings.unresolvedRedirects == expected_unresolved,
+          std::string(fixture) + ": " + std::to_string(expected_unresolved) + " unresolved aliases, got " +
+              std::to_string(result.warnings.unresolvedRedirects));
     DictionaryQuery query;
     check(query.add_term_dict((dir / result.title).string()), std::string(fixture) + ": dictionary loads");
     inspect(query);
@@ -249,30 +311,33 @@ std::pair<size_t, std::string> senses_of(const DictionaryQuery& query, const std
 // @@@LINK= targets match keys under the header's KeyCaseSensitive and StripKey
 // rules (absent: "No" and "Yes"), and chains resolve to any depth. The cases
 // are manabitan's (REDIRECT_CASES in gen_fixtures.py) plus hachidori#437's
-// reproduction: `present` keys become headwords, `absent` ones do not.
+// reproduction: `present` keys become headwords, `absent` ones do not, and
+// `unresolved` is manabitan's unresolvedRedirectCount where it has the case.
 void test_redirect_key_rules() {
   struct Case {
     const char* fixture;
     size_t rows;
+    size_t unresolved;
     std::vector<std::string> present;
     std::vector<std::string> absent;
   };
   const std::vector<Case> cases = {
-      {"redirect_case_target.mdx", 2, {"Alias", "Target"}, {}},
-      {"redirect_case_alias.mdx", 2, {"Read", "read"}, {}},
-      {"redirect_case_sensitive.mdx", 1, {"Target"}, {"Alias"}},
-      {"redirect_case_chain.mdx", 3, {"AliasOne", "AliasTwo", "Target"}, {}},
-      {"redirect_strip_yes.mdx", 2, {"Alias", "foo-bar"}, {}},
-      {"redirect_strip_no.mdx", 1, {"foo-bar"}, {"Alias"}},
-      {"redirect_strip_chain.mdx", 4, {"Alias-One", "Middle", "foo-bar", "foobar"}, {}},
-      {"redirect_strip_case_sensitive.mdx", 2, {"Alias", "Foo-Bar"}, {"WrongCase", "Cycle-One", "Cycle-Two"}},
-      {"redirect_exact_cycle.mdx", 1, {"Read"}, {"read", "Loop", "Alias"}},
-      {"key_rules.mdx", 7, {"Tシャツ", "ティーシャツ", "Wi-Fi", "ワイファイ", "Target", "AliasTwo", "AliasOne"}, {}},
-      {"key_rules_exact.mdx", 5, {"Tシャツ", "Wi-Fi", "Target", "AliasTwo", "AliasOne"},
+      {"redirect_case_target.mdx", 2, 0, {"Alias", "Target"}, {}},
+      {"redirect_case_alias.mdx", 2, 0, {"Read", "read"}, {}},
+      {"redirect_case_sensitive.mdx", 1, 1, {"Target"}, {"Alias"}},
+      {"redirect_case_chain.mdx", 3, 0, {"AliasOne", "AliasTwo", "Target"}, {}},
+      {"redirect_strip_yes.mdx", 2, 0, {"Alias", "foo-bar"}, {}},
+      {"redirect_strip_no.mdx", 1, 1, {"foo-bar"}, {"Alias"}},
+      {"redirect_strip_chain.mdx", 4, 0, {"Alias-One", "Middle", "foo-bar", "foobar"}, {}},
+      {"redirect_strip_case_sensitive.mdx", 2, 3, {"Alias", "Foo-Bar"}, {"WrongCase", "Cycle-One", "Cycle-Two"}},
+      {"redirect_exact_cycle.mdx", 1, 3, {"Read"}, {"read", "Loop", "Alias"}},
+      {"redirect_self.mdx", 1, 1, {"Root"}, {"Self"}},
+      {"key_rules.mdx", 7, 0, {"Tシャツ", "ティーシャツ", "Wi-Fi", "ワイファイ", "Target", "AliasTwo", "AliasOne"}, {}},
+      {"key_rules_exact.mdx", 5, 2, {"Tシャツ", "Wi-Fi", "Target", "AliasTwo", "AliasOne"},
        {"ティーシャツ", "ワイファイ"}},
   };
   for (const Case& c : cases) {
-    with_dictionary(c.fixture, c.rows, [&](const DictionaryQuery& query) {
+    with_dictionary(c.fixture, c.rows, c.unresolved, [&](const DictionaryQuery& query) {
       for (const std::string& key : c.present) {
         check(!query.query(key).empty(), std::string(c.fixture) + ": " + key + " is a headword");
       }
@@ -287,7 +352,7 @@ void test_redirect_key_rules() {
 // no key spells exactly falls back to the keys it folds to, with every sense.
 void test_redirect_identity() {
   for (const char* fixture : {"redirect_exact_case.mdx", "redirect_exact_punctuation.mdx"}) {
-    with_dictionary(fixture, 8, [&](const DictionaryQuery& query) {
+    with_dictionary(fixture, 8, 0, [&](const DictionaryQuery& query) {
       for (const char* alias : {"FirstAlias", "FirstChain"}) {
         const auto [count, joined] = senses_of(query, alias);
         const std::string what = std::string(fixture) + ": " + alias;
@@ -301,7 +366,7 @@ void test_redirect_identity() {
       check_contains(joined, "other spelling meaning", std::string(fixture) + ": SecondAlias sense");
     });
   }
-  with_dictionary("redirect_exact_chains.mdx", 6, [](const DictionaryQuery& query) {
+  with_dictionary("redirect_exact_chains.mdx", 6, 0, [](const DictionaryQuery& query) {
     for (const auto& [alias, meaning] :
          {std::pair{"ViaUpper", "top meaning"}, std::pair{"ViaLower", "bottom meaning"}}) {
       const auto [count, joined] = senses_of(query, alias);
@@ -309,7 +374,7 @@ void test_redirect_identity() {
       check_contains(joined, meaning, std::string("exact chains: ") + alias);
     }
   });
-  with_dictionary("redirect_fallback.mdx", 6, [](const DictionaryQuery& query) {
+  with_dictionary("redirect_fallback.mdx", 6, 0, [](const DictionaryQuery& query) {
     for (const char* alias : {"Fallback", "Chain"}) {
       const auto [count, joined] = senses_of(query, alias);
       check(count == 2, std::string("fallback: ") + alias + " has both senses, got " + std::to_string(count));
@@ -358,7 +423,7 @@ void test_stylesheet_charsets() {
 // <font> attributes reach the stored glossary as valid CSS, and the inline
 // style wins over size (html_to_structured_test has the full size table).
 void test_legacy_font_import() {
-  with_dictionary("legacy_font.mdx", 1, [](const DictionaryQuery& query) {
+  with_dictionary("legacy_font.mdx", 1, 0, [](const DictionaryQuery& query) {
     const std::string glossary = glossary_of(query.query("font"));
     check_contains(glossary, R"({"tag":"span","style":{"color":"red","fontSize":"medium"},"content":["three"]})",
                    "font: size 3 with a color");
@@ -382,6 +447,7 @@ int main(int argc, char** argv) {
   expect_text_dictionary("v1_utf8_stored.mdx");
   test_malformed();
   test_mdd_discovery();
+  test_partial_corruption();
   test_low_ram_identical();
   test_redirect_key_rules();
   test_redirect_identity();
