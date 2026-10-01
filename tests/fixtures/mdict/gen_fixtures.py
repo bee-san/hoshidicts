@@ -137,6 +137,9 @@ def write_mdict(path, entries, *, version="2.0", encoding="UTF-8", compression=2
                 block_entries=3, record_block_bytes=200, extra_attrs=None, corrupt=None):
     """entries: list of (key, value) with value str for mdx, bytes for mdd.
 
+    extra_attrs: header attributes to add or replace; a value of None removes
+    the attribute.
+
     corrupt: None or one of 'truncate', 'record_adler', 'huge_block' to produce a
     malformed file for the negative tests.
     """
@@ -248,6 +251,7 @@ def write_mdict(path, entries, *, version="2.0", encoding="UTF-8", compression=2
         attrs["Encoding"] = ""
     if extra_attrs:
         attrs.update(extra_attrs)
+    attrs = {k: v for k, v in attrs.items() if v is not None}
     root = "Library_Data" if kind == "mdd" else "Dictionary"
     header_text = "<%s %s/>\r\n" % (root, " ".join('%s="%s"' % (k, xml_escape(v)) for k, v in attrs.items()))
     header_bytes = header_text.encode("utf-16-le") + b"\x00\x00"
@@ -297,6 +301,87 @@ MDD_ENTRIES = [
     ("\\utf16.css", ".u16::before { content: \"\u2192\"; }\n".encode("utf-16-le")),
 ]
 
+# @@@LINK= resolution under the header's KeyCaseSensitive and StripKey rules.
+# The cases of manabitan's test/util/mdict-native-cases.js at e433f8c
+# (ManabiIO/manabitan, GPL-3.0): "MDict redirect key matching", "MDict
+# redirect StripKey matching" and "MDict redirects preserve exact target
+# identity before normalization". manabitan's fixture writer defaults to
+# KeyCaseSensitive="No" StripKey="No", so every case names both.
+# Each entry: (file stem, entries, header attributes, write_mdict options).
+
+
+def _exact_identity(first, second):
+    return [
+        (first, "first meaning"),
+        (first, "second sense of first"),
+        (second, "other spelling meaning"),
+        ("FirstAlias", "@@@LINK=" + first),
+        ("SecondAlias", "@@@LINK=" + second),
+        ("FirstChain", "@@@LINK=FirstAlias"),
+    ]
+
+
+REDIRECT_CASES = [
+    # A target that differs from a key only by case resolves.
+    ("redirect_case_target", [("Alias", "@@@LINK=target"), ("Target", "<div>definition</div>")],
+     {"KeyCaseSensitive": "No", "StripKey": "No"}, {}),
+    # An alias that differs from its target only by case keeps its spelling.
+    ("redirect_case_alias", [("Read", "<div>definition</div>"), ("read", "@@@LINK=Read")],
+     {"KeyCaseSensitive": "No", "StripKey": "No"}, {}),
+    # Case-sensitive control. "True" rather than "Yes": js-mdict accepts
+    # either, in any letter case.
+    ("redirect_case_sensitive", [("Alias", "@@@LINK=target"), ("Target", "<div>definition</div>")],
+     {"KeyCaseSensitive": "True", "StripKey": "No"}, {}),
+    # A mixed-case two-hop chain keeps every alias spelling.
+    ("redirect_case_chain", [("AliasOne", "@@@LINK=ALIAStwo"), ("AliasTwo", "@@@LINK=tArGeT"),
+                             ("Target", "<div>definition</div>")],
+     {"KeyCaseSensitive": "No", "StripKey": "No"}, {}),
+    ("redirect_strip_yes", [("Alias", "@@@LINK=foobar"), ("foo-bar", "definition")],
+     {"KeyCaseSensitive": "No", "StripKey": "Yes"}, {}),
+    ("redirect_strip_no", [("Alias", "@@@LINK=foobar"), ("foo-bar", "definition")],
+     {"KeyCaseSensitive": "No", "StripKey": "No"}, {}),
+    # A chain through punctuation- and case-normalised targets.
+    ("redirect_strip_chain", [("Alias-One", "@@@LINK=mid_dle"), ("Middle", "@@@LINK=FOOBAR"),
+                              ("foo-bar", "definition"), ("foobar", "@@@LINK=foo-bar")],
+     {"KeyCaseSensitive": "No", "StripKey": "Yes"}, {}),
+    # StripKey does not disable case-sensitive matching or resolve a cycle.
+    ("redirect_strip_case_sensitive", [("Alias", "@@@LINK=FooBar"), ("WrongCase", "@@@LINK=foobar"),
+                                       ("Foo-Bar", "definition"), ("Cycle-One", "@@@LINK=CycleTwo"),
+                                       ("Cycle-Two", "@@@LINK=CycleOne")],
+     {"KeyCaseSensitive": "Yes", "StripKey": "Yes"}, {}),
+    # Exact aliases, and chains through them, keep the exactly spelled
+    # target's senses: a case variant and a punctuation variant.
+    ("redirect_exact_case", _exact_identity("Read", "read"),
+     {"KeyCaseSensitive": "No", "StripKey": "No"}, {"block_entries": 1, "record_block_bytes": 7}),
+    ("redirect_exact_punctuation", _exact_identity("co-op", "coop"),
+     {"KeyCaseSensitive": "No", "StripKey": "Yes"}, {"block_entries": 1, "record_block_bytes": 7}),
+    # Chains through exact case-variant aliases stay apart.
+    ("redirect_exact_chains", [("Top", "top meaning"), ("Bottom", "bottom meaning"), ("Read", "@@@LINK=Top"),
+                               ("read", "@@@LINK=Bottom"), ("ViaUpper", "@@@LINK=Read"),
+                               ("ViaLower", "@@@LINK=read")],
+     {"KeyCaseSensitive": "No", "StripKey": "No"}, {"block_entries": 1}),
+    # An exactly spelled target in a cycle is not rescued by a case variant.
+    ("redirect_exact_cycle", [("Read", "real meaning"), ("read", "@@@LINK=Loop"), ("Loop", "@@@LINK=read"),
+                              ("Alias", "@@@LINK=read")],
+     {"KeyCaseSensitive": "No", "StripKey": "No"}, {}),
+    # A target no key spells exactly falls back to every key it folds to.
+    ("redirect_fallback", [("Read", "first meaning"), ("Read", "second meaning"), ("Fallback", "@@@LINK=rE-aD"),
+                           ("Chain", "@@@LINK=fALLBACK")],
+     {"KeyCaseSensitive": "No", "StripKey": "Yes"}, {}),
+]
+
+# hachidori#437's reproduction, with MDict's default key rules (neither
+# attribute: KeyCaseSensitive="No", StripKey="Yes") and with exact keys.
+KEY_RULE_ENTRIES = [
+    ("Tシャツ", "<div>T-shirt</div>"),
+    ("ティーシャツ", "@@@LINK=tシャツ"),
+    ("Wi-Fi", "<div>wireless LAN</div>"),
+    ("ワイファイ", "@@@LINK=WiFi"),
+    ("AliasOne", "@@@LINK=AliasTwo"),
+    ("AliasTwo", "@@@LINK=Target"),
+    ("Target", "<div>definition</div>"),
+]
+
 
 def main():
     out = lambda name: os.path.join(HERE, name)  # noqa: E731
@@ -317,6 +402,14 @@ def main():
     sizes["v2_utf8_lzo_html.mdd"] = write_mdict(
         out("v2_utf8_lzo_html.mdd"), MDD_ENTRIES, version="2.0", compression=2, kind="mdd",
         title="HTML Fixture Media")
+    for stem, entries, attrs, options in REDIRECT_CASES:
+        sizes[stem + ".mdx"] = write_mdict(out(stem + ".mdx"), entries, title=stem, extra_attrs=attrs, **options)
+    sizes["key_rules.mdx"] = write_mdict(
+        out("key_rules.mdx"), KEY_RULE_ENTRIES, title="Key rules",
+        extra_attrs={"KeyCaseSensitive": None, "StripKey": None})
+    sizes["key_rules_exact.mdx"] = write_mdict(
+        out("key_rules_exact.mdx"), KEY_RULE_ENTRIES, title="Exact keys",
+        extra_attrs={"KeyCaseSensitive": "Yes", "StripKey": "No"})
     # Malformed inputs. Each must fail with a specific message.
     sizes["bad_truncated.mdx"] = write_mdict(
         out("bad_truncated.mdx"), TEXT_ENTRIES, fmt="Text", corrupt="truncate")

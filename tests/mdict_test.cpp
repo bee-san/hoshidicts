@@ -215,6 +215,107 @@ void test_low_ram_identical() {
   std::filesystem::remove_all(normal);
   std::filesystem::remove_all(low);
 }
+
+// Imports `fixture` and hands its loaded dictionary to `inspect`.
+template <class Inspect>
+void with_dictionary(const char* fixture, size_t expected_rows, Inspect inspect) {
+  const auto dir = fresh_dir("redirect");
+  const ImportResult result = import_fixture(dir, fixture, false);
+  check(result.success, std::string(fixture) + ": import succeeded: " + result.error);
+  if (result.success) {
+    check(result.summary.counts.terms.total == expected_rows,
+          std::string(fixture) + ": " + std::to_string(expected_rows) + " term rows, got " +
+              std::to_string(result.summary.counts.terms.total));
+    DictionaryQuery query;
+    check(query.add_term_dict((dir / result.title).string()), std::string(fixture) + ": dictionary loads");
+    inspect(query);
+  }
+  std::filesystem::remove_all(dir);
+}
+
+// Every glossary listed under `expression`, joined, and how many there are.
+std::pair<size_t, std::string> senses_of(const DictionaryQuery& query, const std::string& expression) {
+  size_t count = 0;
+  std::string joined;
+  for (const TermResult& term : query.query(expression)) {
+    for (const GlossaryEntry& entry : term.glossaries) {
+      count++;
+      joined += entry.glossary;
+    }
+  }
+  return {count, joined};
+}
+
+// @@@LINK= targets match keys under the header's KeyCaseSensitive and StripKey
+// rules (absent: "No" and "Yes"), and chains resolve to any depth. The cases
+// are manabitan's (REDIRECT_CASES in gen_fixtures.py) plus hachidori#437's
+// reproduction: `present` keys become headwords, `absent` ones do not.
+void test_redirect_key_rules() {
+  struct Case {
+    const char* fixture;
+    size_t rows;
+    std::vector<std::string> present;
+    std::vector<std::string> absent;
+  };
+  const std::vector<Case> cases = {
+      {"redirect_case_target.mdx", 2, {"Alias", "Target"}, {}},
+      {"redirect_case_alias.mdx", 2, {"Read", "read"}, {}},
+      {"redirect_case_sensitive.mdx", 1, {"Target"}, {"Alias"}},
+      {"redirect_case_chain.mdx", 3, {"AliasOne", "AliasTwo", "Target"}, {}},
+      {"redirect_strip_yes.mdx", 2, {"Alias", "foo-bar"}, {}},
+      {"redirect_strip_no.mdx", 1, {"foo-bar"}, {"Alias"}},
+      {"redirect_strip_chain.mdx", 4, {"Alias-One", "Middle", "foo-bar", "foobar"}, {}},
+      {"redirect_strip_case_sensitive.mdx", 2, {"Alias", "Foo-Bar"}, {"WrongCase", "Cycle-One", "Cycle-Two"}},
+      {"redirect_exact_cycle.mdx", 1, {"Read"}, {"read", "Loop", "Alias"}},
+      {"key_rules.mdx", 7, {"Tシャツ", "ティーシャツ", "Wi-Fi", "ワイファイ", "Target", "AliasTwo", "AliasOne"}, {}},
+      {"key_rules_exact.mdx", 5, {"Tシャツ", "Wi-Fi", "Target", "AliasTwo", "AliasOne"}, {"ティーシャツ", "ワイファイ"}},
+  };
+  for (const Case& c : cases) {
+    with_dictionary(c.fixture, c.rows, [&](const DictionaryQuery& query) {
+      for (const std::string& key : c.present) {
+        check(!query.query(key).empty(), std::string(c.fixture) + ": " + key + " is a headword");
+      }
+      for (const std::string& key : c.absent) {
+        check(query.query(key).empty(), std::string(c.fixture) + ": " + key + " is not a headword");
+      }
+    });
+  }
+}
+
+// An alias carries the senses of the key it names exactly; only a target that
+// no key spells exactly falls back to the keys it folds to, with every sense.
+void test_redirect_identity() {
+  for (const char* fixture : {"redirect_exact_case.mdx", "redirect_exact_punctuation.mdx"}) {
+    with_dictionary(fixture, 8, [&](const DictionaryQuery& query) {
+      for (const char* alias : {"FirstAlias", "FirstChain"}) {
+        const auto [count, joined] = senses_of(query, alias);
+        const std::string what = std::string(fixture) + ": " + alias;
+        check(count == 2, what + " has the two senses of its target, got " + std::to_string(count));
+        check_contains(joined, "first meaning", what + " first sense");
+        check_contains(joined, "second sense of first", what + " second sense");
+        check(joined.find("other spelling meaning") == std::string::npos, what + " not the other spelling");
+      }
+      const auto [count, joined] = senses_of(query, "SecondAlias");
+      check(count == 1, std::string(fixture) + ": SecondAlias has one sense");
+      check_contains(joined, "other spelling meaning", std::string(fixture) + ": SecondAlias sense");
+    });
+  }
+  with_dictionary("redirect_exact_chains.mdx", 6, [](const DictionaryQuery& query) {
+    for (const auto& [alias, meaning] : {std::pair{"ViaUpper", "top meaning"}, std::pair{"ViaLower", "bottom meaning"}}) {
+      const auto [count, joined] = senses_of(query, alias);
+      check(count == 1, std::string("exact chains: ") + alias + " has one sense, got " + std::to_string(count));
+      check_contains(joined, meaning, std::string("exact chains: ") + alias);
+    }
+  });
+  with_dictionary("redirect_fallback.mdx", 6, [](const DictionaryQuery& query) {
+    for (const char* alias : {"Fallback", "Chain"}) {
+      const auto [count, joined] = senses_of(query, alias);
+      check(count == 2, std::string("fallback: ") + alias + " has both senses, got " + std::to_string(count));
+      check_contains(joined, "first meaning", std::string("fallback: ") + alias + " first sense");
+      check_contains(joined, "second meaning", std::string("fallback: ") + alias + " second sense");
+    }
+  });
+}
 }
 
 int main(int argc, char** argv) {
@@ -230,6 +331,8 @@ int main(int argc, char** argv) {
   test_malformed();
   test_mdd_discovery();
   test_low_ram_identical();
+  test_redirect_key_rules();
+  test_redirect_identity();
   if (failures == 0) {
     std::printf("ok\n");
   }
