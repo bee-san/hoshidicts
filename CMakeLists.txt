@@ -101,6 +101,15 @@ if(HOSHIDICTS_WASMFS)
   target_compile_definitions(hoshidicts PRIVATE HOSHIDICTS_WASMFS=1)
 endif()
 
+# MDD stylesheets that declare a legacy @charset (Shift_JIS, GBK, ...) are
+# decoded with iconv(3), part of glibc and musl (so Emscripten) and Apple's
+# libiconv. Without it such a sheet is left out of the dictionary's styles.
+find_package(Iconv)
+if(Iconv_FOUND)
+  target_compile_definitions(hoshidicts PRIVATE HOSHIDICTS_ICONV=1)
+  target_link_libraries(hoshidicts PRIVATE Iconv::Iconv)
+endif()
+
 target_include_directories(hoshidicts PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${CMAKE_CURRENT_SOURCE_DIR}/external/utfcpp/source
