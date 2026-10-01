@@ -318,6 +318,42 @@ void test_redirect_identity() {
     }
   });
 }
+
+// MDD stylesheets decode by BOM, then a leading @charset, then as UTF-8, then
+// as BOM-less UTF-16, and lose their @charset rule. A sheet in no recognisable
+// encoding, or one that names an unknown charset, is left out of styles.css
+// without failing the import.
+void test_stylesheet_charsets() {
+  const auto dir = fresh_dir("charsets");
+  const ImportResult result = import_fixture(dir, "css_charsets.mdx", false);
+  check(result.success, "charsets: import succeeded: " + result.error);
+  if (!result.success) {
+    std::filesystem::remove_all(dir);
+    return;
+  }
+  DictionaryQuery query;
+  check(query.add_term_dict((dir / result.title).string()), "charsets: dictionary loads");
+  const auto styles = query.get_styles();
+  check(styles.size() == 1, "charsets: one stylesheet");
+  if (styles.size() == 1) {
+    const std::string& css = styles[0].styles;
+    check_contains(css, "/* Source: a_sjis_charset.css */\n.日本 { color: red; }", "charsets: Shift_JIS by @charset");
+    check(css.find("b_sjis_plain.css") == std::string::npos, "charsets: undeclared Shift_JIS is skipped");
+    check_contains(css, "/* Source: c_cp1252_charset.css */\n.café { color: red; }", "charsets: windows-1252");
+    check_contains(css, "/* Source: d_utf8_charset.css */\n.日本 { color: blue; }", "charsets: UTF-8 by @charset");
+    check(css.find("e_unsupported.css") == std::string::npos, "charsets: unknown charset is skipped");
+    check_contains(css, "/* Source: f_utf16be.css */\n.be::after { content: \"\xe2\x86\x92\"; }",
+                   "charsets: BOM-less UTF-16BE");
+    check_contains(css, "/* Source: g_utf8_bom.css */\n.bom { color: red; }", "charsets: UTF-8 BOM and @charset");
+    check(css.find("h_sjis_invalid.css") == std::string::npos, "charsets: undecodable Shift_JIS is skipped");
+    check_contains(css, "/* Source: i_control.css */\n.ctl { color: red; }\n\x1a", "charsets: control character kept");
+    check(css.find("@charset") == std::string::npos, "charsets: no @charset left, got " + css);
+    check(css.find("\xef\xbf\xbd") == std::string::npos, "charsets: no U+FFFD");
+  }
+  check(!query.get_media_file(result.title, "mdict-media/e_unsupported.css").empty(),
+        "charsets: a skipped sheet is still a media file");
+  std::filesystem::remove_all(dir);
+}
 }
 
 int main(int argc, char** argv) {
@@ -335,6 +371,7 @@ int main(int argc, char** argv) {
   test_low_ram_identical();
   test_redirect_key_rules();
   test_redirect_identity();
+  test_stylesheet_charsets();
   if (failures == 0) {
     std::printf("ok\n");
   }

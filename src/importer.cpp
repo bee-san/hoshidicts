@@ -1154,7 +1154,12 @@ ImportResult dictionary_importer::import(const std::string& source_path, const s
     result.summary.counts.media.total = media_thread.get();
 
     std::string summary_json;
-    if (glz::write_json(result.summary, summary_json)) {
+    // A stylesheet or description can hold control characters (a DOS Ctrl-Z
+    // ending a sheet); JSON needs them escaped or index.json does not parse.
+    struct SummaryOpts : glz::opts {
+      bool escape_control_characters = true;
+    };
+    if (glz::write<SummaryOpts{}>(result.summary, summary_json)) {
       throw std::runtime_error("failed to write index.json");
     }
     std::ofstream index_file(dict_path / "index.json", std::ios::binary);

@@ -1,8 +1,16 @@
 #include "mdict_source.hpp"
 
+#include <utf8.h>
 #include <utf8proc.h>
 
+#if HOSHIDICTS_ICONV
+#include <iconv.h>
+
+#include <cerrno>
+#endif
+
 #include <algorithm>
+#include <array>
 #include <cctype>
 #include <format>
 #include <utility>
@@ -102,32 +110,211 @@ std::optional<std::string> normalize_mdd_key(std::string_view raw) {
   return key;
 }
 
-// Stylesheet bytes from an MDD are UTF-8 or UTF-16 with or without a BOM.
-std::optional<std::string> decode_stylesheet(const std::vector<char>& bytes) {
-  const auto* data = reinterpret_cast<const uint8_t*>(bytes.data());
-  const size_t size = bytes.size();
-  std::string text;
-  if (size >= 2 && data[0] == 0xff && data[1] == 0xfe) {
-    text = utf16le_to_utf8(data + 2, size - 2);
-  } else if (size >= 2 && data[0] == 0xfe && data[1] == 0xff) {
-    std::vector<uint8_t> swapped(data + 2, data + size);
-    for (size_t i = 0; i + 1 < swapped.size(); i += 2) {
-      std::swap(swapped[i], swapped[i + 1]);
-    }
-    text = utf16le_to_utf8(swapped.data(), swapped.size());
-  } else if (size >= 3 && data[0] == 0xef && data[1] == 0xbb && data[2] == 0xbf) {
-    text.assign(bytes.begin() + 3, bytes.end());
-  } else if (std::find(bytes.begin(), bytes.end(), '\0') != bytes.end()) {
-    // No BOM: a stylesheet never contains NUL, so any NUL means UTF-16LE.
-    text = utf16le_to_utf8(data, size);
-  } else {
-    text.assign(bytes.begin(), bytes.end());
+// ------------------------------------------------------------ stylesheets
+// An MDD stylesheet is decoded as manabitan's decodeStylesheetAsset does
+// (mdx-converter.js at e433f8c): by its BOM, else by a leading ASCII
+// `@charset "label";`, else as UTF-8, else as BOM-less UTF-16. styles.css is
+// one UTF-8 sheet, so the source's @charset rule is removed. A sheet that
+// does not decode cleanly, or names a charset not listed here, is skipped.
+
+bool is_css_space(char c) { return c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f'; }
+
+// The length of a `@charset "label";` rule at the start of `text` (manabitan:
+// /^@charset[\t\n\f\r ]+"([^"\r\n]+)"[\t\n\f\r ]*;/i), or 0. Sets `label`.
+size_t charset_rule(std::string_view text, std::string_view& label) {
+  constexpr std::string_view keyword = "@charset";
+  if (text.size() <= keyword.size() || lower(text.substr(0, keyword.size())) != keyword ||
+      !is_css_space(text[keyword.size()])) {
+    return 0;
   }
-  text = std::string(trim_nul_and_space(text));
-  if (text.empty() || text.find('\0') != std::string::npos) {
+  size_t i = keyword.size();
+  while (i < text.size() && is_css_space(text[i])) {
+    i++;
+  }
+  if (i == text.size() || text[i] != '"') {
+    return 0;
+  }
+  const size_t start = ++i;
+  while (i < text.size() && text[i] != '"' && text[i] != '\r' && text[i] != '\n') {
+    i++;
+  }
+  if (i == start || i == text.size() || text[i] != '"') {
+    return 0;
+  }
+  label = text.substr(start, i - start);
+  i++;
+  while (i < text.size() && is_css_space(text[i])) {
+    i++;
+  }
+  return i < text.size() && text[i] == ';' ? i + 1 : 0;
+}
+
+// The label of a `@charset` rule in the ASCII bytes the sheet starts with, up
+// to the first `;` and at most 128 bytes.
+std::optional<std::string_view> declared_charset(std::string_view bytes) {
+  size_t end = 0;
+  while (end < std::min<size_t>(bytes.size(), 128) && static_cast<unsigned char>(bytes[end]) < 0x80) {
+    if (bytes[end++] == ';') {
+      break;
+    }
+  }
+  std::string_view label;
+  if (charset_rule(bytes.substr(0, end), label) == 0) {
     return std::nullopt;
   }
-  return text;
+  return label;
+}
+
+// The WHATWG labels (https://encoding.spec.whatwg.org/#names-and-labels) of
+// the encodings a sheet may declare, each with the iconv names that decode
+// it, tried in order. No iconv name: UTF-8.
+struct Charset {
+  const char* name = nullptr;
+  const char* fallback = nullptr;
+};
+const std::map<std::string_view, Charset> charset_labels = [] {
+  std::map<std::string_view, Charset> labels;
+  auto add = [&labels](Charset charset, std::initializer_list<std::string_view> names) {
+    for (std::string_view name : names) {
+      labels.emplace(name, charset);
+    }
+  };
+  add({}, {"unicode-1-1-utf-8", "unicode11utf8", "unicode20utf8", "utf-8", "utf8", "x-unicode20utf8"});
+  // A UTF-16 label in an ASCII @charset rule means UTF-8 (CSS Syntax,
+  // "determine the fallback encoding").
+  add({}, {"unicodefffe", "utf-16be", "csunicode", "iso-10646-ucs-2", "ucs-2", "unicode", "unicodefeff", "utf-16",
+           "utf-16le"});
+  // WHATWG's Shift_JIS is Microsoft's windows-31j. iconv's CP932 reads 0x5C
+  // as the backslash CSS escapes need; glibc's SHIFT_JIS reads a yen sign.
+  add({"CP932", "SHIFT_JIS"},
+      {"csshiftjis", "ms932", "ms_kanji", "shift-jis", "shift_jis", "sjis", "windows-31j", "x-sjis"});
+  add({"EUC-JP"}, {"cseucpkdfmtjapanese", "euc-jp", "x-euc-jp"});
+  // WHATWG decodes gbk with the gb18030 decoder.
+  add({"GB18030"}, {"chinese", "csgb2312", "csiso58gb231280", "gb2312", "gb_2312", "gb_2312-80", "gbk", "iso-ir-58",
+                    "x-gbk", "gb18030"});
+  add({"BIG5-HKSCS", "BIG5"}, {"big5", "big5-hkscs", "cn-big5", "csbig5", "x-x-big5"});
+  // WHATWG's euc-kr is windows-949 (Unified Hangul Code).
+  add({"CP949", "EUC-KR"}, {"cseuckr", "csksc56011987", "euc-kr", "iso-ir-149", "korean", "ks_c_5601-1987",
+                            "ks_c_5601-1989", "ksc5601", "ksc_5601", "windows-949"});
+  // WHATWG decodes ascii, latin1 and iso-8859-1 as windows-1252.
+  add({"WINDOWS-1252", "CP1252"},
+      {"ansi_x3.4-1968", "ascii", "cp1252", "cp819", "csisolatin1", "ibm819", "iso-8859-1", "iso-ir-100", "iso8859-1",
+       "iso88591", "iso_8859-1", "iso_8859-1:1987", "l1", "latin1", "us-ascii", "windows-1252", "x-cp1252"});
+  return labels;
+}();
+
+std::optional<std::string> utf8_text(std::string_view bytes) {
+  if (!utf8::is_valid(bytes.begin(), bytes.end())) {
+    return std::nullopt;
+  }
+  return std::string(bytes);
+}
+
+std::string utf16_text(std::string_view bytes, bool big_endian) {
+  if (!big_endian) {
+    return utf16le_to_utf8(reinterpret_cast<const uint8_t*>(bytes.data()), bytes.size());
+  }
+  std::string swapped(bytes);
+  for (size_t i = 0; i + 1 < swapped.size(); i += 2) {
+    std::swap(swapped[i], swapped[i + 1]);
+  }
+  return utf16le_to_utf8(reinterpret_cast<const uint8_t*>(swapped.data()), swapped.size());
+}
+
+// Strict conversion: any byte sequence the charset does not define fails it.
+std::optional<std::string> iconv_text(std::string_view bytes, const Charset& charset) {
+#if HOSHIDICTS_ICONV
+  const auto failed = reinterpret_cast<iconv_t>(-1);
+  iconv_t cd = iconv_open("UTF-8", charset.name);
+  if (cd == failed && charset.fallback) {
+    cd = iconv_open("UTF-8", charset.fallback);
+  }
+  if (cd == failed) {
+    return std::nullopt;
+  }
+  std::string out;
+  char* in = const_cast<char*>(bytes.data());
+  size_t in_left = bytes.size();
+  bool ok = true;
+  while (ok && in_left > 0) {
+    std::array<char, 4096> buffer;
+    char* next = buffer.data();
+    size_t out_left = buffer.size();
+    ok = iconv(cd, &in, &in_left, &next, &out_left) != static_cast<size_t>(-1) || errno == E2BIG;
+    out.append(buffer.data(), buffer.size() - out_left);
+  }
+  iconv_close(cd);
+  if (!ok) {
+    return std::nullopt;
+  }
+  return out;
+#else
+  // Built without iconv(3): a legacy charset cannot be read.
+  (void)bytes;
+  (void)charset;
+  return std::nullopt;
+#endif
+}
+
+std::optional<std::string> declared_text(std::string_view bytes, std::string_view label) {
+  while (!label.empty() && is_css_space(label.front())) {
+    label.remove_prefix(1);
+  }
+  while (!label.empty() && is_css_space(label.back())) {
+    label.remove_suffix(1);
+  }
+  const auto it = charset_labels.find(lower(label));
+  if (it == charset_labels.end()) {
+    return std::nullopt;
+  }
+  return it->second.name ? iconv_text(bytes, it->second) : utf8_text(bytes);
+}
+
+// BOM-less UTF-16: in the first 32 code units, at least a third (and two) have
+// a NUL high byte and none a NUL low byte, or the reverse for big-endian
+// (manabitan's getLikelyUtf16StylesheetEncoding).
+std::optional<bool> utf16_big_endian(std::string_view bytes) {
+  const size_t units = std::min<size_t>(bytes.size() / 2, 32);
+  size_t even = 0;
+  size_t odd = 0;
+  for (size_t i = 0; i < units; ++i) {
+    even += bytes[2 * i] == '\0' ? 1 : 0;
+    odd += bytes[2 * i + 1] == '\0' ? 1 : 0;
+  }
+  const size_t threshold = std::max<size_t>(2, (units + 2) / 3);
+  if (units >= 2 && odd >= threshold && even == 0) {
+    return false;
+  }
+  if (units >= 2 && even >= threshold && odd == 0) {
+    return true;
+  }
+  return std::nullopt;
+}
+
+std::optional<std::string> decode_stylesheet(const std::vector<char>& raw) {
+  const std::string_view bytes(raw.data(), raw.size());
+  std::optional<std::string> text;
+  if (bytes.starts_with("\xef\xbb\xbf")) {
+    text = utf8_text(bytes.substr(3));
+  } else if (bytes.starts_with("\xff\xfe") || bytes.starts_with("\xfe\xff")) {
+    text = utf16_text(bytes.substr(2), bytes[0] == '\xfe');
+  } else if (const auto label = declared_charset(bytes)) {
+    text = declared_text(bytes, *label);
+  } else if (auto utf8 = utf8_text(bytes); utf8 && utf8->find('\0') == std::string::npos) {
+    text = std::move(utf8);
+  } else if (const auto big_endian = utf16_big_endian(bytes)) {
+    text = utf16_text(bytes, *big_endian);
+  }
+  if (!text) {
+    return std::nullopt;
+  }
+  std::string_view css = trim_nul_and_space(*text);
+  std::string_view label;
+  css = trim_nul_and_space(css.substr(charset_rule(css, label)));
+  if (css.empty() || css.find('\0') != std::string_view::npos) {
+    return std::nullopt;
+  }
+  return std::string(css);
 }
 
 // The characters MDict's StripKey removes from an MDX key (js-mdict
