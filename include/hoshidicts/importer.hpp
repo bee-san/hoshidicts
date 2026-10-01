@@ -44,11 +44,26 @@ struct Summary {
   std::optional<bool> importSuccess;
 };
 
+// What a successful import left out. Only an MDX source reports any; a
+// Yomitan archive's counts stay zero. Not part of Summary, which is the
+// package's index.json: these describe this import run.
+struct ImportWarnings {
+  // Definition records whose record block could not be read.
+  size_t skippedRecords = 0;
+  // @@@LINK= aliases that reach no entry of the dictionary.
+  size_t unresolvedRedirects = 0;
+  // Distinct resource paths the glossaries or stylesheets refer to that no MDD provides.
+  size_t missingResources = 0;
+  // Distinct MDD resources that exist but could not be read.
+  size_t unreadableResources = 0;
+};
+
 struct ImportResult {
   bool success = false;
   std::string title;
   Summary summary;
   std::string error;
+  ImportWarnings warnings;
 };
 
 namespace dictionary_importer {

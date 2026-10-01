@@ -6,6 +6,8 @@
 #include <string_view>
 #include <vector>
 
+#include "hoshidicts/importer.hpp"
+
 // One file of a dictionary source as the importer sees it: a name in the
 // Yomitan layout (index.json, styles.css, term_bank_N.json, media paths) and
 // the size of its contents, which the importer uses to schedule work.
@@ -47,4 +49,8 @@ class DictionarySource {
   // the importer re-scans entries() for media afterwards. ZipSource has
   // nothing to do.
   virtual void finish_banks() {}
+
+  // What the import left out, read once media extraction has finished.
+  // ZipSource leaves nothing out.
+  virtual ImportWarnings warnings() const { return {}; }
 };
