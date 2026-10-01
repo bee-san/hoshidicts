@@ -21,6 +21,15 @@ struct SummaryCounts {
   SummaryItemCount media;
 };
 
+// One tag_bank_*.json row: a tag's category, sort order, notes and score.
+struct SummaryTag {
+  std::string name;
+  std::string category;
+  double order = 0;
+  std::string notes;
+  double score = 0;
+};
+
 struct Summary {
   std::string title;
   std::string revision;
@@ -31,6 +40,9 @@ struct Summary {
   bool prefixWildcardsSupported = false;
   SummaryCounts counts;
   std::string styles;
+  // Every tag-bank row, in bank order. Like the styles, they travel in the
+  // imported index.json.
+  std::vector<SummaryTag> tags;
   std::optional<bool> isUpdatable;
   std::optional<std::string> indexUrl;
   std::optional<std::string> downloadUrl;

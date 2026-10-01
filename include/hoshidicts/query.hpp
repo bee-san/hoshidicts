@@ -7,6 +7,8 @@
 #include <unordered_map>
 #include <vector>
 
+#include "importer.hpp"
+
 #if defined(__clang__) && defined(__APPLE__)
 #define SWIFT_IMPORT_UNSAFE __attribute__((swift_attr("import_unsafe")))
 #else
@@ -21,6 +23,11 @@ struct Frequency {
 struct DictionaryStyle {
   std::string dict_name;
   std::string styles;
+};
+
+struct DictionaryTags {
+  std::string dict_name;
+  std::vector<SummaryTag> tags;
 };
 
 struct MediaFileView {
@@ -174,6 +181,8 @@ class DictionaryQuery {
   size_t read_media_file(const std::string& dict_name, const std::string& media_path, std::vector<uint8_t>& out,
                          size_t max_bytes = SIZE_MAX) const;
   std::vector<DictionaryStyle> get_styles() const;
+  // Each term dictionary's tag-bank rows, for those that have any.
+  std::vector<DictionaryTags> get_tags() const;
   std::vector<std::string> get_freq_dict_order() const;
 
   // Bytes of blobs.bin pages the page cache of the paged dictionaries holds.

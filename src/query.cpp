@@ -64,6 +64,8 @@ constexpr size_t media_probe_bytes = sizeof(uint16_t) + 256 + sizeof(uint32_t);
 
 struct DictionaryQuery::DictionaryData {
   int version;
+  // The imported summary's tag-bank rows (empty before they were stored).
+  std::vector<SummaryTag> tags;
   hash::linear table;
   hash::bloom bloom;
   BlobFile blobs;
@@ -327,6 +329,7 @@ bool DictionaryQuery::open_dict_(const std::string& path_utf8, Dictionary& dict,
 
   dict.data = std::make_shared<DictionaryData>();
   dict.data->version = version;
+  dict.data->tags = std::move(summary.tags);
 
   dict.data->hash_table = memory::map_rd(path / "hash.table");
   if (!dict.data->hash_table) {
@@ -896,6 +899,12 @@ size_t DictionaryQuery::page_cache_bytes() const { return page_cache_ ? page_cac
 std::vector<DictionaryStyle> DictionaryQuery::get_styles() const {
   return term_dicts_ | std::views::filter([](const auto& d) { return !d.styles.empty(); }) |
          std::views::transform([](const auto& d) { return DictionaryStyle{d.name, d.styles}; }) |
+         std::ranges::to<std::vector>();
+}
+
+std::vector<DictionaryTags> DictionaryQuery::get_tags() const {
+  return term_dicts_ | std::views::filter([](const auto& d) { return !d.data->tags.empty(); }) |
+         std::views::transform([](const auto& d) { return DictionaryTags{d.name, d.data->tags}; }) |
          std::ranges::to<std::vector>();
 }
 

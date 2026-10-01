@@ -52,12 +52,13 @@ struct Kanji {
   std::unordered_map<std::string, std::string> stats;
 };
 
+// A tag-bank row. Yomitan's schema makes order and score any JSON number.
 struct Tag {
-  std::string_view name;
-  std::string_view category;
-  int order = 0;
-  std::string_view notes;
-  int score = 0;
+  std::string name;
+  std::string category;
+  double order = 0;
+  std::string notes;
+  double score = 0;
 };
 
 struct ParsedFrequency {
