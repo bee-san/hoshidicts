@@ -375,15 +375,24 @@ bool starts_with_link(std::string_view record, Encoding encoding) {
   return true;
 }
 
-// Reads consecutive records with one decompressed block in hand.
+// Reads consecutive records with one decompressed block in hand. A block that
+// cannot be read fails each of its records without being decompressed again.
 class RecordCursor {
  public:
   explicit RecordCursor(const Reader& reader) : reader_(reader) {}
 
   std::string_view record(uint64_t offset, uint64_t next_offset) {
     const size_t block = reader_.record_block_for(offset);
+    if (failed_ == block) {
+      throw Error(std::format("record block {} could not be read", block));
+    }
     if (!have_ || block != block_index_) {
-      block_ = reader_.read_record_block(block);
+      try {
+        block_ = reader_.read_record_block(block);
+      } catch (const Error&) {
+        failed_ = block;
+        throw;
+      }
       block_index_ = block;
       have_ = true;
     }
@@ -395,6 +404,7 @@ class RecordCursor {
   std::vector<uint8_t> block_;
   size_t block_index_ = 0;
   bool have_ = false;
+  std::optional<size_t> failed_;
 };
 }
 
@@ -411,6 +421,10 @@ void MdictSource::open(const std::filesystem::path& mdx_path, std::string fallba
   }
   index_redirects();
   if (terms_.empty()) {
+    if (skipped_record_count_ > 0) {
+      throw Error(std::format("MDX has no usable entries: {} record{} could not be read ({})", skipped_record_count_,
+                              skipped_record_count_ == 1 ? "" : "s", first_record_error_));
+    }
     if (redirect_count_ > 0) {
       throw Error("MDX has no usable entries: every entry is a redirect whose target is missing");
     }
@@ -446,14 +460,24 @@ void MdictSource::index_redirects() {
       continue;
     }
     const uint64_t next = i + 1 < keys_.size() ? keys_[i + 1].record_offset : mdx_.record_space_size();
-    const std::string_view record = cursor.record(entry.record_offset, next);
+    std::string_view record;
+    try {
+      record = cursor.record(entry.record_offset, next);
+    } catch (const Error& e) {
+      // A corrupt record block loses its entries, not the whole dictionary.
+      if (skipped_record_count_++ == 0) {
+        first_record_error_ = e.what();
+      }
+      continue;
+    }
     if (!starts_with_link(record, encoding)) {
       terms_.push_back(static_cast<uint32_t>(i));
       continue;
     }
     const std::string text = mdx_.record_text(record);
     const std::string target(trim_nul_and_space(std::string_view(text).substr(link_prefix.size())));
-    if (target.empty() || target == entry.key) {
+    // A self redirect is kept: it resolves only when its key also has an entry.
+    if (target.empty()) {
       continue;
     }
     auto& aliases = redirects_[target].aliases;
@@ -480,12 +504,15 @@ void MdictSource::index_redirects() {
       fallback.insert(fallback.end(), redirect.aliases.begin(), redirect.aliases.end());
     }
   }
+  reached_targets_.assign(redirects_.size(), false);
+  reached_fallbacks_.assign(fallback_redirects_.size(), false);
 }
 
 // `key` followed by every alias that reaches it, directly or through other
 // aliases, each spelling once so that a cycle ends (manabitan's
-// getRedirectExpressions).
-std::vector<std::string_view> MdictSource::expressions_of(std::string_view key) const {
+// getRedirectExpressions). Appends the positions of the redirects_ and
+// fallback_redirects_ entries it expanded to `reached`.
+std::vector<std::string_view> MdictSource::expressions_of(std::string_view key, ReachedRedirects& reached) const {
   std::vector<std::string_view> expressions{key};
   auto add = [&expressions](const auto& aliases) {
     for (std::string_view alias : aliases) {
@@ -496,11 +523,13 @@ std::vector<std::string_view> MdictSource::expressions_of(std::string_view key) 
   };
   for (size_t i = 0; i < expressions.size(); ++i) {
     if (auto it = redirects_.find(expressions[i]); it != redirects_.end()) {
+      reached.targets.push_back(static_cast<size_t>(it - redirects_.begin()));
       add(it->second.aliases);
     }
     if (!fallback_redirects_.empty()) {
       if (auto it = fallback_redirects_.find(fold_key(expressions[i], mdx_.header()));
           it != fallback_redirects_.end()) {
+        reached.fallbacks.push_back(static_cast<size_t>(it - fallback_redirects_.begin()));
         add(it->second);
       }
     }
@@ -635,6 +664,7 @@ std::string MdictSource::build_bank(size_t bank) const {
   std::vector<std::pair<std::string, std::string>> stylesheets;
   std::vector<EmbeddedAsset> embedded;
   std::vector<std::string> references;
+  ReachedRedirects reached;
   for (size_t i = begin; i < end; ++i) {
     const uint32_t key = terms_[i];
     const KeyEntry& entry = keys_[key];
@@ -660,7 +690,7 @@ std::string MdictSource::build_bank(size_t bank) const {
       }
     }
 
-    for (std::string_view expression : expressions_of(entry.key)) {
+    for (std::string_view expression : expressions_of(entry.key, reached)) {
       if (json.size() > 1) {
         json += ',';
       }
@@ -675,8 +705,15 @@ std::string MdictSource::build_bank(size_t bank) const {
   }
   json += ']';
 
-  if (!stylesheets.empty() || !embedded.empty() || !references.empty()) {
+  if (!stylesheets.empty() || !embedded.empty() || !references.empty() || !reached.targets.empty() ||
+      !reached.fallbacks.empty()) {
     std::lock_guard lock(mutex_);
+    for (size_t target : reached.targets) {
+      reached_targets_[target] = true;
+    }
+    for (size_t fallback : reached.fallbacks) {
+      reached_fallbacks_[fallback] = true;
+    }
     for (auto& [name, css] : stylesheets) {
       if (inline_stylesheet_names_.insert(name).second) {
         inline_stylesheets_.emplace_back(std::move(name), std::move(css));
@@ -723,7 +760,16 @@ std::string MdictSource::build_styles() const {
     if (!asset) {
       continue;
     }
-    auto css = decode_stylesheet(asset_bytes(*asset));
+    std::vector<char> bytes;
+    try {
+      bytes = asset_bytes(*asset);
+    } catch (const Error&) {
+      // A corrupt block loses this stylesheet, not the whole dictionary.
+      std::lock_guard lock(mutex_);
+      unreadable_assets_.insert(*asset);
+      continue;
+    }
+    auto css = decode_stylesheet(bytes);
     if (!css) {
       continue;
     }
@@ -788,18 +834,40 @@ void MdictSource::finish_banks() {
     media_.push_back(MediaEntry{*asset, std::nullopt});
     entries_.push_back(SourceEntry{std::string(asset_prefix) + key, next - entry.record_offset});
   };
-  // Every stylesheet asset, then whatever the glossaries and stylesheets refer to.
-  for (const std::string& key : css_keys_) {
-    add_asset(key);
-  }
+  // Every readable stylesheet asset, then whatever the glossaries and
+  // stylesheets refer to.
   std::set<std::string> references;
+  std::set<MddAsset> unreadable;
   std::vector<EmbeddedAsset> embedded;
   {
     std::lock_guard lock(mutex_);
     references = asset_references_;
+    unreadable = unreadable_assets_;
     embedded = embedded_assets_;
+    // An alias is unresolved when no bank emitted it under its target
+    // (manabitan's resolvedRedirectTargets).
+    size_t resolved = 0;
+    const auto& targets = redirects_.values();
+    for (size_t i = 0; i < reached_targets_.size(); ++i) {
+      resolved += reached_targets_[i] ? targets[i].second.aliases.size() : 0;
+    }
+    const auto& fallbacks = fallback_redirects_.values();
+    for (size_t i = 0; i < reached_fallbacks_.size(); ++i) {
+      resolved += reached_fallbacks_[i] ? fallbacks[i].second.size() : 0;
+    }
+    unresolved_redirect_count_ = redirect_count_ - resolved;
+  }
+  for (const std::string& key : css_keys_) {
+    if (const MddAsset* asset = find_asset(key); asset && !unreadable.contains(*asset)) {
+      add_asset(key);
+    }
   }
   for (const std::string& key : references) {
+    // A path no MDD has, or one media.bin cannot store, is left out.
+    if (!find_asset(key) || asset_prefix.size() + key.size() > 0xffff) {
+      missing_resource_count_++;
+      continue;
+    }
     if (lower(key).ends_with(".css")) {
       continue;
     }
@@ -833,6 +901,8 @@ std::optional<SourceMediaFile> MdictSource::read_media(int index) const {
       out.blob = asset_bytes(*media.asset);
     } catch (const Error&) {
       // A corrupt block loses this asset, not the whole dictionary.
+      std::lock_guard lock(mutex_);
+      unreadable_assets_.insert(*media.asset);
       return std::nullopt;
     }
   } else {
@@ -841,5 +911,11 @@ std::optional<SourceMediaFile> MdictSource::read_media(int index) const {
     out.blob.assign(data.begin(), data.end());
   }
   return out;
+}
+
+ImportWarnings MdictSource::warnings() const {
+  std::lock_guard lock(mutex_);
+  return ImportWarnings{skipped_record_count_, unresolved_redirect_count_, missing_resource_count_,
+                        unreadable_assets_.size()};
 }
 }
