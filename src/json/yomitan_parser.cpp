@@ -41,11 +41,13 @@ struct glz::meta<Kanji> {
                                       glz::raw_string<&T::kunyomi>, glz::raw_string<&T::tags>, &T::definitions, &T::stats);
 };
 
+// The name is kept as the bank spells it, escapes included, because that is
+// how a term bank's definitionTags are read (raw_string above), so a tag still
+// matches the names that refer to it. The category and notes are decoded.
 template <>
 struct glz::meta<Tag> {
   using T = Tag;
-  static constexpr auto value =
-      array(glz::raw_string<&T::name>, glz::raw_string<&T::category>, &T::order, glz::raw_string<&T::notes>, &T::score);
+  static constexpr auto value = array(glz::raw_string<&T::name>, &T::category, &T::order, &T::notes, &T::score);
 };
 
 namespace internal {

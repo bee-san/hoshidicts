@@ -612,8 +612,19 @@ void count_unprocessed_banks(const DictionarySource& source, const Files& files,
     }
   }
 
+  // A tag bank that does not parse adds no tags; the import goes on, as it did
+  // when tag banks were only counted.
   for (int file_index : files.tag_banks) {
-    result.summary.counts.tagMeta.total += count_json_array(source.read(file_index));
+    const std::string content = source.read(file_index);
+    result.summary.counts.tagMeta.total += count_json_array(content);
+    std::vector<Tag> tags;
+    if (!yomitan_parser::parse_tag_bank(content, tags)) {
+      continue;
+    }
+    for (auto& tag : tags) {
+      result.summary.tags.push_back(
+          {std::move(tag.name), std::move(tag.category), tag.order, std::move(tag.notes), tag.score});
+    }
   }
 }
 

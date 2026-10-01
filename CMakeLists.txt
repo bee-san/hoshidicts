@@ -179,6 +179,10 @@ if(HOSHIDICTS_TESTS)
     target_link_libraries(score-roundtrip-test PRIVATE hoshidicts)
     add_test(NAME score-roundtrip COMMAND score-roundtrip-test)
 
+    add_executable(tag-bank-test tests/tag_bank_test.cpp)
+    target_link_libraries(tag-bank-test PRIVATE hoshidicts)
+    add_test(NAME tag-bank COMMAND tag-bank-test)
+
     add_executable(long-key-scan-test tests/long_key_scan_test.cpp)
     target_link_libraries(long-key-scan-test PRIVATE hoshidicts)
     add_test(NAME long-key-scan COMMAND long-key-scan-test)

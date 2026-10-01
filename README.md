@@ -67,6 +67,11 @@ std::vector<DictionaryStyle> DictionaryQuery::get_styles() const
 Returns CSS styles for all dictionaries, if present.
 
 ```cpp
+std::vector<DictionaryTags> DictionaryQuery::get_tags() const
+```
+Returns the tag-bank rows (`name`, `category`, `order`, `notes`, `score`) of each term dictionary that has any, in bank order. A name is kept as the bank spells it, as a glossary's `definition_tags` is, so it matches the names a glossary uses. Dictionaries imported before tag banks were stored have none until they are imported again.
+
+```cpp
 std::vector<char> DictionaryQuery::get_media_file(const std::string& dict_name, const std::string& media_path) const
 ```
 Returns raw bytes for file originally stored at `media_path` in term dictionary `dict_name` or an empty vector if the file does not exist.
