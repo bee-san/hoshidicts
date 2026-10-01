@@ -405,6 +405,13 @@ CHARSET_MDD_ENTRIES = [
     ("\\i_control.css", b".ctl { color: red; }\n\x1a"),
 ]
 
+# hachidori#437's <font> reproduction: a size keyword with a color, a size
+# relative to 3, and an inline style that wins over the size attribute.
+LEGACY_FONT_ENTRIES = [
+    ("font", '<font size="3" color="red">three</font><font size="+2">plus two</font>'
+             '<font size="5" style="font-size:20px">inline wins</font>'),
+]
+
 
 def main():
     out = lambda name: os.path.join(HERE, name)  # noqa: E731
@@ -437,6 +444,7 @@ def main():
         out("css_charsets.mdx"), [("日本", '<div class="日本">日本</div>')], title="CSS charsets")
     sizes["css_charsets.mdd"] = write_mdict(
         out("css_charsets.mdd"), CHARSET_MDD_ENTRIES, kind="mdd", title="CSS charsets media")
+    sizes["legacy_font.mdx"] = write_mdict(out("legacy_font.mdx"), LEGACY_FONT_ENTRIES, title="Legacy font")
     # Malformed inputs. Each must fail with a specific message.
     sizes["bad_truncated.mdx"] = write_mdict(
         out("bad_truncated.mdx"), TEXT_ENTRIES, fmt="Text", corrupt="truncate")
