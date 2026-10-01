@@ -385,9 +385,9 @@ void test_redirect_identity() {
 }
 
 // MDD stylesheets decode by BOM, then a leading @charset, then as UTF-8, then
-// as BOM-less UTF-16, and lose their @charset rule. A sheet in no recognisable
-// encoding, or one that names an unknown charset, is left out of styles.css
-// without failing the import.
+// as BOM-less UTF-16, then as Shift_JIS, and lose their @charset rule. A sheet
+// in none of these, or one that names an unknown charset, is left out of
+// styles.css without failing the import.
 void test_stylesheet_charsets() {
   const auto dir = fresh_dir("charsets");
   const ImportResult result = import_fixture(dir, "css_charsets.mdx", false);
@@ -403,7 +403,7 @@ void test_stylesheet_charsets() {
   if (styles.size() == 1) {
     const std::string& css = styles[0].styles;
     check_contains(css, "/* Source: a_sjis_charset.css */\n.日本 { color: red; }", "charsets: Shift_JIS by @charset");
-    check(css.find("b_sjis_plain.css") == std::string::npos, "charsets: undeclared Shift_JIS is skipped");
+    check_contains(css, "/* Source: b_sjis_plain.css */\n.日本 { color: green; }", "charsets: undeclared Shift_JIS");
     check_contains(css, "/* Source: c_cp1252_charset.css */\n.café { color: red; }", "charsets: windows-1252");
     check_contains(css, "/* Source: d_utf8_charset.css */\n.日本 { color: blue; }", "charsets: UTF-8 by @charset");
     check(css.find("e_unsupported.css") == std::string::npos, "charsets: unknown charset is skipped");
@@ -412,6 +412,7 @@ void test_stylesheet_charsets() {
     check_contains(css, "/* Source: g_utf8_bom.css */\n.bom { color: red; }", "charsets: UTF-8 BOM and @charset");
     check(css.find("h_sjis_invalid.css") == std::string::npos, "charsets: undecodable Shift_JIS is skipped");
     check_contains(css, "/* Source: i_control.css */\n.ctl { color: red; }\n\x1a", "charsets: control character kept");
+    check(css.find("j_undecodable.css") == std::string::npos, "charsets: an undeclared sheet in no known encoding");
     check(css.find("@charset") == std::string::npos, "charsets: no @charset left, got " + css);
     check(css.find("\xef\xbf\xbd") == std::string::npos, "charsets: no U+FFFD");
   }
