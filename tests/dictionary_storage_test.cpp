@@ -254,6 +254,10 @@ int main() {
       R"([["食べる","freq",{"reading":"たべる","frequency":{"value":142,"displayValue":"142位"}}],)"
       R"(["読む","freq",{"value":88,"displayValue":"88"}],)"
       R"(["書く","freq",{"reading":"かく","frequency":500}],)"
+      // Text frequencies, bare and under a reading, as Yomitan's schema allows.
+      R"(["漢字","freq","324/37459"],)"
+      R"j(["ありがとう","freq",{"reading":"ありがとう","frequency":"five (5)"}],)j"
+      R"(["角","freq","four"],)"
       R"(["食べる","pitch",{"reading":"たべる","pitches":[{"position":2},{"position":0,"nasal":1,"devoice":[1,2]}]}],)"
       R"(["食べる","ipa",{"reading":"たべる","transcriptions":[{"ipa":"tabeɾɯ"}]}])" +
       // Bare numbers: glaze reads the byte after one, which a page carries too.
@@ -369,6 +373,13 @@ int main() {
         "a shared reading finds every headword");
   check(describe(mapped_lookup.lookup(fillers[7], 16, 16)).find("Fstorage-test:260=260,") != std::string::npos,
         "a bare-number frequency is read");
+  // Yomitan's _getFrequencyInfo: the text is displayed and its first number is the value, 0 without one.
+  check(describe(mapped_lookup.lookup("漢字", 16, 16)).find("Fstorage-test:324=324/37459,") != std::string::npos,
+        "a bare text frequency is read");
+  check(describe(mapped_lookup.lookup("ありがとう", 16, 16)).find("Fstorage-test:5=five (5),") != std::string::npos,
+        "a text frequency under a reading is read");
+  check(describe(mapped_lookup.lookup("角", 16, 16)).find("Fstorage-test:0=four,") != std::string::npos,
+        "a text frequency without a number is read as 0");
   for (const std::string character : {"食", "書", "無"}) {
     const std::string expected = describe(mapped.query_kanji(character));
     check(describe(small_pages.query_kanji(character)) == expected, "small-page kanji matches for " + character);
