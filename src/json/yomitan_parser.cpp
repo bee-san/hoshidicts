@@ -1,5 +1,9 @@
 #include "yomitan_parser.hpp"
 
+#include <algorithm>
+#include <charconv>
+#include <limits>
+#include <string>
 #include <string_view>
 #include <variant>
 
@@ -58,7 +62,7 @@ struct RawFrequencyFlat {
 
 struct RawFrequency {
   std::optional<std::string_view> reading;
-  std::variant<int, FrequencyValue> frequency;
+  std::variant<int, std::string, FrequencyValue> frequency;
 };
 
 struct PitchesArray {
@@ -161,7 +165,47 @@ bool yomitan_parser::parse_tag_bank(std::string_view content, std::vector<Tag>& 
   return !error;
 }
 
+namespace {
+// Yomitan's Translator._convertStringToNumber: parseFloat of the first match of
+// /[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?/, or 0 when there is none or it is out
+// of range. "324/37459" is 324, "five (5)" is 5 and "four" is 0.
+double first_number(std::string_view text) {
+  const auto digit = [text](size_t i) { return i < text.size() && text[i] >= '0' && text[i] <= '9'; };
+  for (size_t start = 0; start < text.size(); ++start) {
+    const size_t i = start + (text[start] == '+' || text[start] == '-' ? 1 : 0);
+    if (digit(i) || (i < text.size() && text[i] == '.' && digit(i + 1))) {
+      // from_chars reads the rest of the match, but unlike parseFloat it refuses a leading '+'.
+      double value = 0;
+      const auto result =
+          std::from_chars(text.data() + start + (text[start] == '+' ? 1 : 0), text.data() + text.size(), value);
+      return result.ec == std::errc{} ? value : 0;
+    }
+  }
+  return 0;
+}
+
+// Yomitan's _getFrequencyInfo for a string: the text is the display value and its
+// first number the value, which Frequency::value truncates and saturates to an int.
+void read_text_frequency(std::string text, ParsedFrequency& out) {
+  constexpr double min = std::numeric_limits<int>::min();
+  constexpr double max = std::numeric_limits<int>::max();
+  out.value = static_cast<int>(std::clamp(first_number(text), min, max));
+  out.display_value = std::move(text);
+}
+}  // namespace
+
 bool yomitan_parser::parse_frequency(std::string_view content, ParsedFrequency& out) {
+  // The stored value is the row's exact JSON token, so only a string starts with a quote.
+  if (content.starts_with('"')) {
+    std::string text;
+    if (glz::read_json(text, content)) {
+      return false;
+    }
+    out.reading = "";
+    read_text_frequency(std::move(text), out);
+    return true;
+  }
+
   internal::RawFrequencyFlat parsed_flat;
   auto error =
       glz::read<glz::opts{.error_on_unknown_keys = false, .error_on_missing_keys = true}>(parsed_flat, content);
@@ -192,6 +236,8 @@ bool yomitan_parser::parse_frequency(std::string_view content, ParsedFrequency& 
     int freq = std::get<int>(parsed.frequency);
     out.value = freq;
     out.display_value = std::to_string(freq);
+  } else if (auto* text = std::get_if<std::string>(&parsed.frequency)) {
+    read_text_frequency(std::move(*text), out);
   } else {
     auto& freq = std::get<internal::FrequencyValue>(parsed.frequency);
     out.value = freq.value;
