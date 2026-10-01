@@ -195,17 +195,6 @@ void read_text_frequency(std::string text, ParsedFrequency& out) {
 }  // namespace
 
 bool yomitan_parser::parse_frequency(std::string_view content, ParsedFrequency& out) {
-  // The stored value is the row's exact JSON token, so only a string starts with a quote.
-  if (content.starts_with('"')) {
-    std::string text;
-    if (glz::read_json(text, content)) {
-      return false;
-    }
-    out.reading = "";
-    read_text_frequency(std::move(text), out);
-    return true;
-  }
-
   internal::RawFrequencyFlat parsed_flat;
   auto error =
       glz::read<glz::opts{.error_on_unknown_keys = false, .error_on_missing_keys = true}>(parsed_flat, content);
@@ -222,6 +211,13 @@ bool yomitan_parser::parse_frequency(std::string_view content, ParsedFrequency& 
     out.value = val;
     out.display_value = std::to_string(val);
     out.reading = "";
+    return true;
+  }
+
+  // The stored value is the row's exact JSON token, so only a string pays for this read.
+  if (std::string text; content.starts_with('"') && !glz::read_json(text, content)) {
+    out.reading = "";
+    read_text_frequency(std::move(text), out);
     return true;
   }
 
