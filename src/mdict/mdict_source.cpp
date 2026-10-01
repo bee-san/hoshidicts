@@ -113,9 +113,10 @@ std::optional<std::string> normalize_mdd_key(std::string_view raw) {
 // ------------------------------------------------------------ stylesheets
 // An MDD stylesheet is decoded as manabitan's decodeStylesheetAsset does
 // (mdx-converter.js at e433f8c): by its BOM, else by a leading ASCII
-// `@charset "label";`, else as UTF-8, else as BOM-less UTF-16. styles.css is
-// one UTF-8 sheet, so the source's @charset rule is removed. A sheet that
-// does not decode cleanly, or names a charset not listed here, is skipped.
+// `@charset "label";`, else as UTF-8, else as BOM-less UTF-16; and then,
+// unlike manabitan, as Shift_JIS. styles.css is one UTF-8 sheet, so the
+// source's @charset rule is removed. A sheet that does not decode cleanly, or
+// names a charset not listed here, is skipped.
 
 bool is_css_space(char c) { return c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f'; }
 
@@ -304,6 +305,12 @@ std::optional<std::string> decode_stylesheet(const std::vector<char>& raw) {
     text = std::move(utf8);
   } else if (const auto big_endian = utf16_big_endian(bytes)) {
     text = utf16_text(bytes, *big_endian);
+  } else {
+    // Nothing names the encoding and it is not Unicode. Legacy Japanese
+    // dictionaries save their sheets in Shift_JIS (hachidori#437), so read it
+    // as that; strictly, so a sheet with bytes Shift_JIS does not define is
+    // still skipped. manabitan skips every such sheet.
+    text = declared_text(bytes, "shift_jis");
   }
   if (!text) {
     return std::nullopt;
