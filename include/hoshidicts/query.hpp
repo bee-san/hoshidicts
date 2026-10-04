@@ -45,6 +45,7 @@ struct GlossaryEntry {
   const uint8_t* compressed_data = nullptr;
   uint32_t compressed_size = 0;
   const ZSTD_DDict_s* zstd_dict = nullptr;
+  double score = 0;
 };
 
 struct FrequencyEntry {

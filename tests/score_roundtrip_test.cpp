@@ -188,6 +188,10 @@ int main() {
     if (!terms.empty()) {
       check(terms[0].score == 2.75, "merged score is max(2.25, 2.75)=2.75, got " + std::to_string(terms[0].score));
       check(terms[0].glossaries.size() == 2, "merged term keeps both glossaries");
+      if (terms[0].glossaries.size() == 2) {
+        check(terms[0].glossaries[0].glossary == R"(["high"])", "higher-scored definition comes first");
+        check(terms[0].glossaries[1].glossary == R"(["low"])", "lower-scored definition comes second");
+      }
     }
   }
 
