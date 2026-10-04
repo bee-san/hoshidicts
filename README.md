@@ -59,7 +59,7 @@ A dictionary added as several kinds (term, frequency, pitch, kanji) is opened on
 ```cpp
 std::vector<TermResult> DictionaryQuery::query(const std::string& expression) const
 ```
-Queries all added dictionaries for the given expression. TermResult includes glossary, frequency and pitch data in the order dictionaries were added. Glossaries are decompressed.
+Queries all added dictionaries for the given expression. TermResult includes glossary, frequency and pitch data in the order dictionaries were added. Within each dictionary, glossaries are ordered by their term-bank score, highest first, with original order kept for equal scores. Glossaries are decompressed.
 
 ```cpp
 std::vector<DictionaryStyle> DictionaryQuery::get_styles() const

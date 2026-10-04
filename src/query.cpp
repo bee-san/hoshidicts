@@ -553,6 +553,7 @@ RawTerms DictionaryQuery::query_raw(const std::string& expression, BlobPins& pin
                                              .definition_tags = definition_tags,
                                              .term_tags = term_tags,
                                              .rules = rules,
+                                             .score = score,
                                              .blobs = &data->blobs,
                                              .compressed_offset = glossary_offset,
                                              .compressed_size = glossary_size,
@@ -613,6 +614,18 @@ TermResult DictionaryQuery::build_term(const RawTerms& raw, RawTerm& term, BlobP
     entry.compressed_data = g.blobs->range(g.compressed_offset, g.compressed_size, pins);
     entry.compressed_size = g.compressed_size;
     entry.zstd_dict = g.zstd_dict;
+    entry.score = g.score;
+  }
+  // Dictionary order takes precedence over score. Within each dictionary,
+  // higher-scored definitions come first, with original order kept for ties.
+  for (auto first = result.glossaries.begin(); first != result.glossaries.end();) {
+    const auto last = std::find_if(first, result.glossaries.end(), [&](const auto& entry) {
+      return entry.dict_name != first->dict_name;
+    });
+    if (last - first > 1) {
+      std::stable_sort(first, last, [](const auto& left, const auto& right) { return left.score > right.score; });
+    }
+    first = last;
   }
   return result;
 }

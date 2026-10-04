@@ -15,6 +15,7 @@ struct RawGlossary {
   std::string_view definition_tags;
   std::string_view term_tags;
   std::string_view rules;
+  double score;
   // Where the compressed glossary is: read by build_term, so only the terms a
   // lookup keeps read it from a paged file.
   const BlobFile* blobs;
