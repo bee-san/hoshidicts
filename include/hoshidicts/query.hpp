@@ -98,9 +98,8 @@ namespace memory {
 class page_cache;
 }
 
-// How DictionaryQuery holds a dictionary's generated files. The index files
-// (hash.table, bloom.filter, media.idx, scan.idx and the zstd dictionary) are
-// mapped either way; they are what every probe reads.
+// Entry storage is independent of hash-index storage. Small Bloom filters,
+// media/scan indexes and trained zstd data remain resident in either mode.
 //  Mapped: blobs.bin, which holds the entries, is mapped too, and so is
 //          media.bin except under Emscripten, whose mmap copies a whole file
 //          into linear memory: there media is read from the file only when a
@@ -110,6 +109,18 @@ class page_cache;
 //          the same; a lookup that reads pages the cache does not hold costs
 //          a read per page.
 enum class DictionaryStorage : uint8_t { Mapped, Paged };
+enum class DictionaryIndexStorage : uint8_t { Mapped, Paged };
+
+struct PageCacheActivity {
+  size_t bytes = 0;
+  uint64_t hits = 0;
+  uint64_t reads = 0;
+  uint64_t read_bytes = 0;
+};
+struct PageCacheStatistics {
+  PageCacheActivity entries;
+  PageCacheActivity indexes;
+};
 
 struct PageCacheOptions {
   // A dictionary's records are small and scattered (a key's entries sit in
@@ -136,10 +147,14 @@ class DictionaryQuery {
   // A dictionary added as several kinds is loaded once: the later kinds share
   // the files the first one opened, whatever `storage` they ask for, so a
   // path's files must not change while any kind of it is loaded.
-  bool add_term_dict(const std::string& path, DictionaryStorage storage = DictionaryStorage::Mapped);
-  bool add_freq_dict(const std::string& path, DictionaryStorage storage = DictionaryStorage::Mapped);
-  bool add_pitch_dict(const std::string& path, DictionaryStorage storage = DictionaryStorage::Mapped);
-  bool add_kanji_dict(const std::string& path, DictionaryStorage storage = DictionaryStorage::Mapped);
+  bool add_term_dict(const std::string& path, DictionaryStorage storage = DictionaryStorage::Mapped,
+                     DictionaryIndexStorage index_storage = DictionaryIndexStorage::Mapped);
+  bool add_freq_dict(const std::string& path, DictionaryStorage storage = DictionaryStorage::Mapped,
+                     DictionaryIndexStorage index_storage = DictionaryIndexStorage::Mapped);
+  bool add_pitch_dict(const std::string& path, DictionaryStorage storage = DictionaryStorage::Mapped,
+                     DictionaryIndexStorage index_storage = DictionaryIndexStorage::Mapped);
+  bool add_kanji_dict(const std::string& path, DictionaryStorage storage = DictionaryStorage::Mapped,
+                     DictionaryIndexStorage index_storage = DictionaryIndexStorage::Mapped);
 
   // Drops every loaded kind of the dictionary at `path` and returns how many
   // entries were removed (0 when the path is not loaded). The other
@@ -186,11 +201,15 @@ class DictionaryQuery {
   std::vector<DictionaryTags> get_tags() const;
   std::vector<std::string> get_freq_dict_order() const;
 
-  // Bytes of blobs.bin pages the page cache of the paged dictionaries holds.
+  // Combined payload of entry and hash-index pages in the shared cache.
   size_t page_cache_bytes() const;
+  PageCacheStatistics page_cache_statistics() const;
+  bool hash_index_paged(const std::string& path) const;
+  const std::string& last_error() const { return last_error_; }
 
  private:
   friend class Lookup;
+  std::string last_error_;
   // The raw terms, and the compressed glossaries build_term points its result
   // at, are views into the dictionaries' files: they stay valid while `pins`,
   // which holds what they read of paged files, lives.
@@ -222,9 +241,9 @@ class DictionaryQuery {
   };
   enum DictionaryType : uint8_t { TERM, FREQ, PITCH, KANJI };
 
-  bool add_dict(const std::string& path, DictionaryType, DictionaryStorage);
-  bool add_dict_(const std::string& path, DictionaryType, DictionaryStorage);
-  bool open_dict_(const std::string& path, Dictionary& dict, DictionaryStorage storage);
+  bool add_dict(const std::string& path, DictionaryType, DictionaryStorage, DictionaryIndexStorage);
+  bool add_dict_(const std::string& path, DictionaryType, DictionaryStorage, DictionaryIndexStorage);
+  bool open_dict_(const std::string& path, Dictionary& dict, DictionaryStorage storage, DictionaryIndexStorage index_storage);
   const Dictionary* find_loaded(const std::string& path) const;
 
   static std::string decompress_glossary(const void* data, size_t size, const ZSTD_DDict_s* dict);

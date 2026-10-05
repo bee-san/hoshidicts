@@ -69,7 +69,6 @@ struct DictionaryQuery::DictionaryData {
   hash::linear table;
   hash::bloom bloom;
   BlobFile blobs;
-  memory::mapped_file hash_table;
   memory::mapped_file bloom_filter;
   // media.bin is either mapped or read on demand (see media_always_on_demand).
   memory::mapped_file media;
@@ -81,7 +80,6 @@ struct DictionaryQuery::DictionaryData {
   ZSTD_DDict* zstd_dict = nullptr;
 
   ~DictionaryData() {
-    memory::unmap(hash_table);
     memory::unmap(bloom_filter);
     memory::unmap(media);
     memory::unmap(media_index);
@@ -231,10 +229,12 @@ DictionaryQuery::Dictionary::~Dictionary() = default;
 DictionaryQuery::Dictionary::Dictionary(Dictionary&&) noexcept = default;
 DictionaryQuery::Dictionary& DictionaryQuery::Dictionary::operator=(Dictionary&&) noexcept = default;
 
-bool DictionaryQuery::add_dict(const std::string& path_utf8, DictionaryType type, DictionaryStorage storage) {
+bool DictionaryQuery::add_dict(const std::string& path_utf8, DictionaryType type, DictionaryStorage storage, DictionaryIndexStorage index_storage) {
+  last_error_.clear();
   try {
-    return add_dict_(path_utf8, type, storage);
-  } catch (const std::exception&) {
+    return add_dict_(path_utf8, type, storage, index_storage);
+  } catch (const std::exception& error) {
+    last_error_ = error.what();
     return false;
   }
 }
@@ -250,7 +250,7 @@ const DictionaryQuery::Dictionary* DictionaryQuery::find_loaded(const std::strin
   return nullptr;
 }
 
-bool DictionaryQuery::add_dict_(const std::string& path_utf8, DictionaryType type, DictionaryStorage storage) {
+bool DictionaryQuery::add_dict_(const std::string& path_utf8, DictionaryType type, DictionaryStorage storage, DictionaryIndexStorage index_storage) {
   const std::filesystem::path path = path_utils::from_utf8(path_utf8);
   Dictionary dict;
   dict.path = path_utf8;
@@ -260,7 +260,7 @@ bool DictionaryQuery::add_dict_(const std::string& path_utf8, DictionaryType typ
     dict.name = other->name;
     dict.styles = other->styles;
     dict.data = other->data;
-  } else if (!open_dict_(path_utf8, dict, storage)) {
+  } else if (!open_dict_(path_utf8, dict, storage, index_storage)) {
     return false;
   }
 
@@ -287,7 +287,7 @@ bool DictionaryQuery::add_dict_(const std::string& path_utf8, DictionaryType typ
   return true;
 }
 
-bool DictionaryQuery::open_dict_(const std::string& path_utf8, Dictionary& dict, DictionaryStorage storage) {
+bool DictionaryQuery::open_dict_(const std::string& path_utf8, Dictionary& dict, DictionaryStorage storage, DictionaryIndexStorage index_storage) {
   const std::filesystem::path path = path_utils::from_utf8(path_utf8);
   // Marker layout: _1/_2 are legacy; _3 and _4 store the term score as an int32
   // and differ only in whether dict.zstd was trained (_4); _5 and _6 are the
@@ -331,12 +331,15 @@ bool DictionaryQuery::open_dict_(const std::string& path_utf8, Dictionary& dict,
   dict.data->version = version;
   dict.data->tags = std::move(summary.tags);
 
-  dict.data->hash_table = memory::map_rd(path / "hash.table");
-  if (!dict.data->hash_table) {
-    return false;
+  const bool index_paged = index_storage == DictionaryIndexStorage::Paged;
+  const bool paged = storage == DictionaryStorage::Paged;
+  if ((paged || index_paged) && !page_cache_) {
+    page_cache_ = std::make_shared<memory::page_cache>(page_cache_options_.page_bytes, page_cache_options_.budget_bytes);
   }
-  if (!dict.data->table.load(dict.data->hash_table.data, dict.data->hash_table.size)) {
-    return false;
+  auto hash_file = index_paged ? BlobFile::open(path / "hash.table", page_cache_, memory::page_kind::index)
+                              : BlobFile::map(path / "hash.table");
+  if (!dict.data->table.load(std::move(hash_file))) {
+    throw std::runtime_error(path_utf8 + "/hash.table: invalid capacity, length or inaccessible file");
   }
 
   dict.data->bloom_filter = memory::map_rd(path / "bloom.filter");
@@ -348,12 +351,7 @@ bool DictionaryQuery::open_dict_(const std::string& path_utf8, Dictionary& dict,
   }
   dict.data->table.set_bloom(&dict.data->bloom);
 
-  const bool paged = storage == DictionaryStorage::Paged;
   if (paged) {
-    if (!page_cache_) {
-      page_cache_ =
-          std::make_shared<memory::page_cache>(page_cache_options_.page_bytes, page_cache_options_.budget_bytes);
-    }
     dict.data->blobs = BlobFile::open(path / "blobs.bin", page_cache_);
   } else {
     dict.data->blobs = BlobFile::map(path / "blobs.bin");
@@ -383,20 +381,20 @@ bool DictionaryQuery::open_dict_(const std::string& path_utf8, Dictionary& dict,
   return true;
 }
 
-bool DictionaryQuery::add_term_dict(const std::string& path, DictionaryStorage storage) {
-  return add_dict(path, DictionaryQuery::DictionaryType::TERM, storage);
+bool DictionaryQuery::add_term_dict(const std::string& path, DictionaryStorage storage, DictionaryIndexStorage index_storage) {
+  return add_dict(path, DictionaryQuery::DictionaryType::TERM, storage, index_storage);
 }
 
-bool DictionaryQuery::add_freq_dict(const std::string& path, DictionaryStorage storage) {
-  return add_dict(path, DictionaryQuery::DictionaryType::FREQ, storage);
+bool DictionaryQuery::add_freq_dict(const std::string& path, DictionaryStorage storage, DictionaryIndexStorage index_storage) {
+  return add_dict(path, DictionaryQuery::DictionaryType::FREQ, storage, index_storage);
 }
 
-bool DictionaryQuery::add_pitch_dict(const std::string& path, DictionaryStorage storage) {
-  return add_dict(path, DictionaryQuery::DictionaryType::PITCH, storage);
+bool DictionaryQuery::add_pitch_dict(const std::string& path, DictionaryStorage storage, DictionaryIndexStorage index_storage) {
+  return add_dict(path, DictionaryQuery::DictionaryType::PITCH, storage, index_storage);
 }
 
-bool DictionaryQuery::add_kanji_dict(const std::string& path, DictionaryStorage storage) {
-  return add_dict(path, DictionaryQuery::DictionaryType::KANJI, storage);
+bool DictionaryQuery::add_kanji_dict(const std::string& path, DictionaryStorage storage, DictionaryIndexStorage index_storage) {
+  return add_dict(path, DictionaryQuery::DictionaryType::KANJI, storage, index_storage);
 }
 
 size_t DictionaryQuery::remove_dict(const std::string& path) {
@@ -923,4 +921,17 @@ std::vector<DictionaryTags> DictionaryQuery::get_tags() const {
 
 std::vector<std::string> DictionaryQuery::get_freq_dict_order() const {
   return freq_dicts_ | std::views::transform([](const auto& d) { return d.name; }) | std::ranges::to<std::vector>();
+}
+
+PageCacheStatistics DictionaryQuery::page_cache_statistics() const {
+  if (!page_cache_) return {};
+  const auto entries = page_cache_->stats(memory::page_kind::entries);
+  const auto indexes = page_cache_->stats(memory::page_kind::index);
+  return {{entries.bytes, entries.hits, entries.reads, entries.read_bytes},
+          {indexes.bytes, indexes.hits, indexes.reads, indexes.read_bytes}};
+}
+
+bool DictionaryQuery::hash_index_paged(const std::string& path) const {
+  const auto* dict = find_loaded(path);
+  return dict && dict->data->table.paged();
 }

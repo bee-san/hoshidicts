@@ -13,7 +13,7 @@
 
 struct BlobPins;
 
-// A dictionary's blobs.bin: mapped, or read on demand through a page cache.
+// A dictionary file: mapped, or read on demand through a shared page cache.
 class BlobFile {
  public:
   BlobFile() = default;
@@ -25,10 +25,12 @@ class BlobFile {
   BlobFile& operator=(BlobFile&& other) noexcept;
 
   static BlobFile map(const std::filesystem::path& path);
-  static BlobFile open(const std::filesystem::path& path, std::shared_ptr<memory::page_cache> cache);
+  static BlobFile open(const std::filesystem::path& path, std::shared_ptr<memory::page_cache> cache,
+                       memory::page_kind kind = memory::page_kind::entries);
 
   explicit operator bool() const { return size_ != 0; }
   bool paged() const { return cache_ != nullptr; }
+  uint64_t size() const { return size_; }
   // The mapping of a file that is not paged.
   const uint8_t* mapped_data() const { return mapping_.data; }
 
@@ -36,6 +38,9 @@ class BlobFile {
   const uint8_t* range(uint64_t offset, size_t length, BlobPins& pins) const {
     return paged() ? paged_range(offset, length, pins) : mapping_.data + offset;
   }
+  // Scalar index probes copy their slot and release each page immediately;
+  // they need neither the query's pins nor a spill allocation at a boundary.
+  void copy(uint64_t offset, size_t length, void* out) const;
 
  private:
   friend class BlobCursor;
@@ -47,6 +52,7 @@ class BlobFile {
   std::shared_ptr<memory::page_cache> cache_;
   uint64_t file_id_ = 0;
   uint64_t size_ = 0;
+  memory::page_kind kind_ = memory::page_kind::entries;
 };
 
 // Keeps every byte range a query read out of paged blob files valid until the

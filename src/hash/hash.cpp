@@ -21,17 +21,24 @@ uint64_t linear::operator()(std::string_view key) const {
     return 0;
   }
   uint64_t pos = h % ptr_->capacity;
-  while (true) {
-    if (ptr_->table[pos].hash == 0) {
+  for (uint64_t probes = 0; probes < ptr_->capacity; ++probes) {
+    slot value;
+    if (file_.paged()) {
+      file_.copy(sizeof(uint32_t) + pos * sizeof(slot), sizeof(value), &value);
+    } else {
+      std::memcpy(&value, ptr_->table + pos, sizeof(value));
+    }
+    if (value.hash == 0) {
       return 0;
     }
-    if (ptr_->table[pos].hash == h) {
-      return ptr_->table[pos].offset;
+    if (value.hash == h) {
+      return value.offset;
     }
     if (++pos == ptr_->capacity) {
       pos = 0;
     }
   }
+  throw std::runtime_error("hash.table has no empty slot in its probe chain");
 }
 
 void linear::build_to_file(const std::vector<std::pair<uint64_t, uint64_t>>& hash_entries,
@@ -64,12 +71,25 @@ void linear::build_to_file(const std::vector<std::pair<uint64_t, uint64_t>>& has
 }
 
 bool linear::load(uint8_t* ptr, size_t size) {
-  uint32_t capacity = *reinterpret_cast<uint32_t*>(ptr);
-  if (size != sizeof(uint32_t) + static_cast<size_t>(capacity) * sizeof(slot)) {
+  if (size < sizeof(uint32_t)) return false;
+  uint32_t capacity;
+  std::memcpy(&capacity, ptr, sizeof(capacity));
+  if (capacity == 0 || static_cast<uint64_t>(size) != sizeof(uint32_t) + uint64_t{capacity} * sizeof(slot)) {
     return false;
   }
   ptr_->capacity = capacity;
   ptr_->table = reinterpret_cast<slot*>(ptr + sizeof(uint32_t));
+  return true;
+}
+
+bool linear::load(BlobFile file) {
+  if (file.size() < sizeof(uint32_t)) return false;
+  uint32_t capacity;
+  file.copy(0, sizeof(capacity), &capacity);
+  if (capacity == 0 || file.size() != sizeof(uint32_t) + uint64_t{capacity} * sizeof(slot)) return false;
+  ptr_->capacity = capacity;
+  ptr_->table = file.paged() ? nullptr : reinterpret_cast<slot*>(const_cast<uint8_t*>(file.mapped_data()) + sizeof(uint32_t));
+  file_ = std::move(file);
   return true;
 }
 }

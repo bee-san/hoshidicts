@@ -10,6 +10,13 @@
 #include "memory.hpp"
 
 namespace memory {
+enum class page_kind { entries, index };
+struct cache_stats {
+  size_t bytes = 0;
+  uint64_t hits = 0;
+  uint64_t reads = 0;
+  uint64_t read_bytes = 0;
+};
 struct page {
   // `size` bytes of the file, followed by page_cache::lookahead_bytes more:
   // the bytes that follow the page in the file, zeros past its end.
@@ -45,7 +52,8 @@ class page_cache {
 
   // Page `index` of `file`, read on a miss. Throws std::runtime_error when the
   // read fails.
-  std::shared_ptr<const page> get(uint64_t file_id, const file_reader& file, uint64_t index);
+  std::shared_ptr<const page> get(uint64_t file_id, const file_reader& file, uint64_t index,
+                                page_kind kind = page_kind::entries);
 
   // Drops the pages of a file that is going away.
   void forget(uint64_t file_id);
@@ -55,6 +63,7 @@ class page_cache {
 
   // Bytes of the pages the cache holds.
   size_t resident_bytes() const;
+  cache_stats stats(page_kind kind) const;
 
  private:
   struct key {
@@ -68,6 +77,7 @@ class page_cache {
   struct entry {
     key id;
     std::shared_ptr<const page> held;
+    page_kind kind;
   };
 
   void trim_locked();
@@ -79,5 +89,6 @@ class page_cache {
   std::list<entry> lru_;
   std::unordered_map<key, std::list<entry>::iterator, key_hash> index_;
   size_t resident_ = 0;
+  cache_stats stats_[2];
 };
 }
