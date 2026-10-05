@@ -135,5 +135,24 @@ added metadata dictionary.
 - [lzokay](https://github.com/AxioDL/lzokay): MIT (vendored in `external/lzokay`)
 - [gumbo-parser](https://github.com/sparklemotion/nokogiri/tree/main/gumbo-parser) (Nokogiri's fork of Google's gumbo): Apache-2.0, `hashmap.c` MIT (vendored in `external/gumbo-parser`)
 
+## Lookup benchmark
+
+Build with `-DHOSHIDICTS_BENCHMARK=ON`. `benchmark-lookup` accepts a word list
+(one UTF-8 word per line, or a CSV whose first column is the word), an iteration
+count and `--term`, `--freq`, `--pitch` or `--kanji` package paths. Defaults keep
+entries and hashes mapped. Add `--paged-entries` and independently
+`--paged-index` to compare the readers. `--json` emits per-lookup milliseconds
+for each pass, result/glossary counts and the shared cache's activity.
+
+```sh
+./build/benchmark-lookup words.txt 2 --paged-entries --paged-index --json \
+  --term imported/dictionary --freq imported/dictionary --pitch imported/dictionary
+```
+
+Timing covers `Lookup::lookup`, including decompression and ranking, and excludes
+result counting, serialization and result destruction. Full result parity is
+covered by the dictionary-storage tests; Chrome/WASM memory and transport costs
+belong to the host application's benchmark.
+
 ## License
 hoshidicts (main) is licensed under the GNU General Public License v3.0. See [LICENSE](LICENSE) for details.
