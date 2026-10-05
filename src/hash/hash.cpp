@@ -26,7 +26,7 @@ uint64_t linear::operator()(std::string_view key) const {
     if (file_.paged()) {
       file_.copy(sizeof(uint32_t) + pos * sizeof(slot), sizeof(value), &value);
     } else {
-      std::memcpy(&value, ptr_->table + pos, sizeof(value));
+      std::memcpy(&value, ptr_->data + pos * sizeof(slot), sizeof(value));
     }
     if (value.hash == 0) {
       return 0;
@@ -52,21 +52,20 @@ void linear::build_to_file(const std::vector<std::pair<uint64_t, uint64_t>>& has
   }
 
   std::memcpy(out.data, &ptr_->capacity, sizeof(uint32_t));
-  ptr_->table = reinterpret_cast<slot*>(out.data + sizeof(uint32_t));
-  std::memset(ptr_->table, 0, ptr_->capacity * sizeof(slot));
+  auto* table = reinterpret_cast<slot*>(out.data + sizeof(uint32_t));
+  std::memset(table, 0, ptr_->capacity * sizeof(slot));
   for (const auto& he : hash_entries) {
     uint64_t h = he.first;
     uint64_t pos = h % ptr_->capacity;
     while (true) {
-      if (ptr_->table[pos].hash == 0) {
-        ptr_->table[pos] = {.hash = h, .offset = he.second};
+      if (table[pos].hash == 0) {
+        table[pos] = {.hash = h, .offset = he.second};
         break;
       }
       pos = (pos + 1) % ptr_->capacity;
     }
   }
   memory::unmap(out);
-  ptr_->table = nullptr;
   ptr_->capacity = 0;
 }
 
@@ -78,7 +77,7 @@ bool linear::load(uint8_t* ptr, size_t size) {
     return false;
   }
   ptr_->capacity = capacity;
-  ptr_->table = reinterpret_cast<slot*>(ptr + sizeof(uint32_t));
+  ptr_->data = ptr + sizeof(uint32_t);
   return true;
 }
 
@@ -88,7 +87,7 @@ bool linear::load(BlobFile file) {
   file.copy(0, sizeof(capacity), &capacity);
   if (capacity == 0 || file.size() != sizeof(uint32_t) + uint64_t{capacity} * sizeof(slot)) return false;
   ptr_->capacity = capacity;
-  ptr_->table = file.paged() ? nullptr : reinterpret_cast<slot*>(const_cast<uint8_t*>(file.mapped_data()) + sizeof(uint32_t));
+  ptr_->data = file.paged() ? nullptr : file.mapped_data() + sizeof(uint32_t);
   file_ = std::move(file);
   return true;
 }
