@@ -69,18 +69,6 @@ void linear::build_to_file(const std::vector<std::pair<uint64_t, uint64_t>>& has
   ptr_->capacity = 0;
 }
 
-bool linear::load(uint8_t* ptr, size_t size) {
-  if (size < sizeof(uint32_t)) return false;
-  uint32_t capacity;
-  std::memcpy(&capacity, ptr, sizeof(capacity));
-  if (capacity == 0 || static_cast<uint64_t>(size) != sizeof(uint32_t) + uint64_t{capacity} * sizeof(slot)) {
-    return false;
-  }
-  ptr_->capacity = capacity;
-  ptr_->data = ptr + sizeof(uint32_t);
-  return true;
-}
-
 bool linear::load(BlobFile file) {
   if (file.size() < sizeof(uint32_t)) return false;
   uint32_t capacity;
