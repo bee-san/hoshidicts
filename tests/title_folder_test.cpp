@@ -155,6 +155,27 @@ int main() {
     std::filesystem::remove_all(root / "out");
   }
   {
+    // Python's json.dump escapes every non-ASCII character by default, and
+    // descriptions carry "\n": index.json's strings are decoded.
+    const auto result = import_archive(root, "escaped", {
+        {"index.json", R"json({"title":"\u9752\u7a7a\/\"q\"","format":3,"revision":"r\u00e9v",)json"
+                       R"json("description":"line 1\nline 2","attribution":"caf\u00e9"})json"},
+        {"term_bank_1.json", R"([["辞書","じしょ","","",0,["dictionary"],1,""]])"},
+    });
+    const std::string title = "青空/\"q\"";
+    check(result.success && result.title == title, "an escaped title is decoded: " + result.title + " " + result.error);
+    check(result.summary.revision == "rév", "an escaped revision is decoded: " + result.summary.revision);
+    check(result.summary.description == "line 1\nline 2", "an escaped description is decoded");
+    check(result.summary.attribution == "café", "an escaped attribution is decoded");
+    if (result.success) {
+      DictionaryQuery query;
+      check(query.add_term_dict((root / "out" / folder_name(title)).string()), "add_term_dict for the escaped title");
+      const auto terms = query.query("辞書");
+      check(terms.size() == 1 && terms[0].glossaries[0].dict_name == title, "the reloaded index keeps the decoded title");
+    }
+    std::filesystem::remove_all(root / "out");
+  }
+  {
     const auto result = import_archive(root, "untitled", {
         {"index.json", R"({"title":"","format":3,"revision":"1"})"},
         {"term_bank_1.json", R"([["辞書","じしょ","","",0,["dictionary"],1,""]])"},

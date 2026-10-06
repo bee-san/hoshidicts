@@ -191,6 +191,10 @@ if(HOSHIDICTS_TESTS)
     target_link_libraries(zip64-test PRIVATE hoshidicts)
     add_test(NAME zip64 COMMAND zip64-test)
 
+    add_executable(escaped-strings-test tests/escaped_strings_test.cpp)
+    target_link_libraries(escaped-strings-test PRIVATE hoshidicts)
+    add_test(NAME escaped-strings COMMAND escaped-strings-test)
+
     add_executable(title-folder-test tests/title_folder_test.cpp)
     target_link_libraries(title-folder-test PRIVATE hoshidicts)
     add_test(NAME title-folder COMMAND title-folder-test)
