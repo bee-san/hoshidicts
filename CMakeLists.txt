@@ -184,6 +184,10 @@ if(HOSHIDICTS_TESTS)
     target_link_libraries(tag-bank-test PRIVATE hoshidicts)
     add_test(NAME tag-bank COMMAND tag-bank-test)
 
+    add_executable(kanji-meta-test tests/kanji_meta_test.cpp)
+    target_link_libraries(kanji-meta-test PRIVATE hoshidicts)
+    add_test(NAME kanji-meta COMMAND kanji-meta-test)
+
     add_executable(data-descriptor-test tests/data_descriptor_test.cpp)
     target_link_libraries(data-descriptor-test PRIVATE hoshidicts)
     add_test(NAME data-descriptor COMMAND data-descriptor-test)

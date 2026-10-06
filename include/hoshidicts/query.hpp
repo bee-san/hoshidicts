@@ -88,6 +88,8 @@ struct KanjiEntry {
 struct KanjiResult {
   std::string character;
   std::vector<KanjiEntry> entries;
+  // From the kanji_meta_bank rows of the frequency dictionaries, in their order.
+  std::vector<FrequencyEntry> frequencies;
 };
 
 struct RawTerm;

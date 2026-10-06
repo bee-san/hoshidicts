@@ -485,7 +485,9 @@ ProcessedFile process_term_bank(const std::string& content, const ZSTD_CDict* cd
   return processed;
 }
 
-ProcessedFile process_meta_bank(const std::string& content) {
+// Term and kanji meta rows share one layout; `record_type` (1 for a term, 3 for
+// a kanji) keeps a kanji's frequency from answering a term with the same text.
+ProcessedFile process_meta_bank(const std::string& content, uint8_t record_type) {
   ProcessedFile processed;
   if (content.empty()) {
     return processed;
@@ -506,7 +508,7 @@ ProcessedFile process_meta_bank(const std::string& content) {
     std::string_view mode = meta.mode;
     std::string_view data = meta.data.str;
 
-    write_val<uint8_t>(processed.data, 1);
+    write_val<uint8_t>(processed.data, record_type);
     write_val<uint16_t>(processed.data, expr.size());
     write_str(processed.data, expr);
     write_val<uint8_t>(processed.data, mode.size());
@@ -586,32 +588,7 @@ size_t count_json_array(const std::string& content) {
   return entries.size();
 }
 
-SummaryMetaCount count_meta_modes(const std::string& content) {
-  SummaryMetaCount counts{{"total", 0}};
-  if (content.empty()) {
-    return counts;
-  }
-
-  std::vector<Meta> entries;
-  if (!yomitan_parser::parse_meta_bank(content, entries)) {
-    return counts;
-  }
-
-  for (const auto& entry : entries) {
-    counts[std::string(entry.mode)]++;
-    counts["total"]++;
-  }
-  return counts;
-}
-
 void count_unprocessed_banks(const DictionarySource& source, const Files& files, ImportResult& result) {
-  for (int file_index : files.kanji_meta_banks) {
-    SummaryMetaCount modes = count_meta_modes(source.read(file_index));
-    for (const auto& [name, count] : modes) {
-      result.summary.counts.kanjiMeta[name] += count;
-    }
-  }
-
   // A tag bank that does not parse adds no tags; the import goes on, as it did
   // when tag banks were only counted.
   for (int file_index : files.tag_banks) {
@@ -896,8 +873,8 @@ void write_scan_index(const std::filesystem::path& dict_path, const LongKeyIndex
 }
 
 void write_meta(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>& offsets,
-                const DictionarySource& source, const std::vector<int>& files, uint64_t& write_offset,
-                ImportResult& result, bool low_ram, WorkerPool& pool) {
+                const DictionarySource& source, const std::vector<int>& files, uint8_t record_type,
+                uint64_t& write_offset, SummaryMetaCount& counts, bool low_ram, WorkerPool& pool) {
   if (files.empty()) {
     return;
   }
@@ -916,13 +893,15 @@ void write_meta(std::ofstream& file, std::vector<std::pair<uint64_t, uint64_t>>&
 
     write_offset += processed.data.size();
     for (const auto& [mode, count] : processed.meta_counts) {
-      result.summary.counts.termMeta[mode] += count;
+      counts[mode] += count;
     }
   };
 
   for (int file_index : files) {
     threads.push_back(
-        pool.submit([&source, file_index]() { return process_meta_bank(source.read(file_index)); }));
+        pool.submit([&source, file_index, record_type]() {
+          return process_meta_bank(source.read(file_index), record_type);
+        }));
 
     if (threads.size() == max_threads) {
       write_processed(threads.front().get());
@@ -1118,8 +1097,11 @@ ImportResult dictionary_importer::import(const std::string& source_path, const s
     write_terms(blobs, offsets, source, files.term_banks, write_offset, result, low_ram, cdict.get(), pool,
                 long_keys);
     write_scan_index(dict_path, long_keys);
-    write_meta(blobs, offsets, source, files.meta_banks, write_offset, result, low_ram, pool);
+    write_meta(blobs, offsets, source, files.meta_banks, 1, write_offset, result.summary.counts.termMeta, low_ram,
+               pool);
     write_kanji(blobs, offsets, source, files.kanji_banks, write_offset, result, low_ram, pool);
+    write_meta(blobs, offsets, source, files.kanji_meta_banks, 3, write_offset, result.summary.counts.kanjiMeta,
+               low_ram, pool);
     count_unprocessed_banks(source, files, result);
     if (offsets.empty()) {
       throw std::runtime_error("empty dictionary");
