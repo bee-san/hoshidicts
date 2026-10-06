@@ -131,7 +131,8 @@ int main() {
        R"([["\u98df\u3079\u308b","freq",{"reading":"\u305f\u3079\u308b","frequency":7}],)"
        R"(["\u98df\u3079\u308b","pitch",{"reading":"\u305f\u3079\u308b","pitches":[{"position":2}]}],)"
        R"(["\u98df\u3079\u308b","ipa",{"reading":"\u305f\u3079\u308b","transcriptions":[{"ipa":"tabe\u027e\u026f"}]}]])"},
-      {"kanji_bank_1.json", R"([["\u98df","\u30b7\u30e7\u30af","\u304f.\u3046","",["eat"],{}]])"},
+      {"kanji_bank_1.json",
+       R"([["\u98df","\u30b7\u30e7\u30af","\u304f.\u3046","",["eat","\u98df \ud865 \ude7f \ud865\ude7f"],{}]])"},
       {"kanji_meta_bank_1.json", R"([["\u98df","freq",3]])"},
       {"tag_bank_1.json", R"([["\u52d5\u8a5e","partOfSpeech",0,"verb",0]])"},
   });
@@ -161,6 +162,12 @@ int main() {
   const KanjiResult kanji = query.query_kanji("食");
   check(kanji.entries.size() == 1 && kanji.entries[0].onyomi == "ショク" && kanji.entries[0].kunyomi == "く.う",
         "the kanji entry is decoded");
+  // TheKanjiMap's definitions hold lone surrogates beside a valid pair; the
+  // pair decodes and each lone half becomes U+FFFD instead of the whole
+  // string staying escaped.
+  check(kanji.entries.size() == 1 && kanji.entries[0].definitions.size() == 2 &&
+            kanji.entries[0].definitions[1] == "食 \xEF\xBF\xBD \xEF\xBF\xBD \xF0\xA9\x99\xBF",
+        "lone surrogates become U+FFFD and a pair its character");
   check(kanji.frequencies.size() == 1, "the kanji frequency is keyed by the decoded character");
   check(result.summary.tags.size() == 1 && result.summary.tags[0].name == "動詞", "the tag name is decoded");
 
