@@ -11,6 +11,7 @@
 #include <chrono>
 #include <condition_variable>
 #include <cstddef>
+#include <cstdio>
 #include <cstdint>
 #include <cstring>
 #include <deque>
@@ -613,9 +614,14 @@ std::optional<std::string> copy_optional_string(T value) {
   return std::string(*value);
 }
 
-bool usable_dictionary_title(std::string_view title) {
-  return !title.empty() && title != "." && title != ".." && title.find('/') == std::string_view::npos &&
-         title.find('\\') == std::string_view::npos && title.find('\0') == std::string_view::npos;
+// Whether a title is already a single, plain path component here.
+bool usable_folder_name(std::string_view title) {
+  if (title.empty() || title == "." || title == ".." ||
+      title.find_first_of(std::string_view("/\\\0", 3)) != std::string_view::npos) {
+    return false;
+  }
+  const std::filesystem::path native = path_utils::from_utf8(std::string(title));
+  return !native.has_root_path() && native.parent_path().empty() && native == native.filename();
 }
 
 uint64_t unix_time_ms() {
@@ -1038,6 +1044,25 @@ size_t write_media(const std::filesystem::path& path, const DictionarySource& so
 }
 }
 
+std::string dictionary_importer::folder_name(std::string_view title) {
+  if (usable_folder_name(title)) {
+    return std::string(title);
+  }
+  std::string folder(title);
+  for (char& c : folder) {
+    if (c == '/' || c == '\\' || c == ':' || c == '\0') {
+      c = '_';
+    }
+  }
+  uint32_t hash = 2166136261u;
+  for (unsigned char c : title) {
+    hash = (hash ^ c) * 16777619u;
+  }
+  char suffix[12];
+  std::snprintf(suffix, sizeof(suffix), " #%08x", hash);
+  return folder + suffix;
+}
+
 ImportResult dictionary_importer::import(const std::string& source_path, const std::string& output_dir, bool low_ram) {
   ImportResult result;
   std::filesystem::path dict_path;
@@ -1063,12 +1088,10 @@ ImportResult dictionary_importer::import(const std::string& source_path, const s
 
     result.title = index.title;
 
-    const std::filesystem::path native_title = path_utils::from_utf8(result.title);
-    if (!usable_dictionary_title(result.title) || native_title.has_root_path() || !native_title.parent_path().empty() ||
-        native_title != native_title.filename()) {
-      throw std::runtime_error("dictionary title cannot be used as an output directory");
+    if (result.title.empty()) {
+      throw std::runtime_error("index.json declares no dictionary title");
     }
-    dict_path = native_output_dir / native_title;
+    dict_path = native_output_dir / path_utils::from_utf8(dictionary_importer::folder_name(result.title));
     std::filesystem::create_directories(dict_path);
 
     result.summary = create_summary(index, "");

@@ -4,6 +4,7 @@
 #include <map>
 #include <optional>
 #include <string>
+#include <string_view>
 #include <vector>
 
 struct SummaryItemCount {
@@ -79,5 +80,16 @@ struct ImportResult {
 };
 
 namespace dictionary_importer {
+// Imports into output_dir / folder_name(title).
 ImportResult import(const std::string& source_path, const std::string& output_dir, bool low_ram = false);
+
+// The directory an imported dictionary is written to. A Yomitan title is any
+// string ("Nico/Pixiv", "TheKanjiMap Kanji Radicals/Composition"), while a
+// directory name is one path component. A title that already is one is used
+// unchanged. Any other title has each '/', '\\', ':' and NUL replaced by '_'
+// and " #" plus the 8 lowercase hex digits of the FNV-1a 32-bit hash of the
+// title's UTF-8 bytes appended, so two such titles that differ only in those
+// characters still get different directories. The title itself is kept in
+// the dictionary's index.json, and that is the name a query reports.
+std::string folder_name(std::string_view title);
 };
