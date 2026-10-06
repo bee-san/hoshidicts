@@ -163,6 +163,7 @@ if(HOSHIDICTS_BENCHMARK)
 
     target_link_libraries(benchmark-lookup PRIVATE
         hoshidicts
+        glaze::glaze
     )
 endif()
 if(HOSHIDICTS_TESTS)
