@@ -348,7 +348,7 @@ std::vector<char> train_zstd_dict(const DictionarySource& source, const Files& f
     return {};
   }
 
-  const std::string content = source.read(files.term_banks[0]);
+  std::string content = source.read(files.term_banks[0]);
   std::vector<Term> terms;
   if (!yomitan_parser::parse_term_bank(content, terms)) {
     return {};
@@ -400,7 +400,7 @@ std::vector<char> train_zstd_dict(const DictionarySource& source, const Files& f
   return dict;
 }
 
-ProcessedFile process_term_bank(const std::string& content, const ZSTD_CDict* cdict) {
+ProcessedFile process_term_bank(std::string content, const ZSTD_CDict* cdict) {
   ProcessedFile processed;
   if (content.empty()) {
     return processed;
@@ -488,7 +488,7 @@ ProcessedFile process_term_bank(const std::string& content, const ZSTD_CDict* cd
 
 // Term and kanji meta rows share one layout; `record_type` (1 for a term, 3 for
 // a kanji) keeps a kanji's frequency from answering a term with the same text.
-ProcessedFile process_meta_bank(const std::string& content, uint8_t record_type) {
+ProcessedFile process_meta_bank(std::string content, uint8_t record_type) {
   ProcessedFile processed;
   if (content.empty()) {
     return processed;
@@ -526,7 +526,7 @@ ProcessedFile process_meta_bank(const std::string& content, uint8_t record_type)
   return processed;
 }
 
-ProcessedFile process_kanji_bank(const std::string& content) {
+ProcessedFile process_kanji_bank(std::string content) {
   ProcessedFile processed;
   if (content.empty()) {
     return processed;
