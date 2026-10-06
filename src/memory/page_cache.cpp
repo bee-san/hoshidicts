@@ -26,10 +26,12 @@ size_t page_cache::key_hash::operator()(const key& k) const noexcept {
   return static_cast<size_t>(x);
 }
 
-std::shared_ptr<const page> page_cache::get(uint64_t file_id, const file_reader& file, uint64_t index) {
+std::shared_ptr<const page> page_cache::get(uint64_t file_id, const file_reader& file, uint64_t index, page_kind kind) {
   const key id{.file = file_id, .index = index};
   std::lock_guard lock(mutex_);
+  auto& activity = stats_[static_cast<size_t>(kind)];
   if (const auto it = index_.find(id); it != index_.end()) {
+    ++activity.hits;
     lru_.splice(lru_.begin(), lru_, it->second);
     return it->second->held;
   }
@@ -46,11 +48,14 @@ std::shared_ptr<const page> page_cache::get(uint64_t file_id, const file_reader&
   if (!file.read(fresh->data.get(), readable, offset)) {
     throw std::runtime_error("could not read a dictionary page");
   }
+  ++activity.reads;
+  activity.read_bytes += readable;
   std::memset(fresh->data.get() + readable, 0, fresh->size + lookahead_bytes - readable);
 
-  lru_.push_front(entry{.id = id, .held = fresh});
+  lru_.push_front(entry{.id = id, .held = fresh, .kind = kind});
   index_.emplace(id, lru_.begin());
   resident_ += fresh->size;
+  activity.bytes += fresh->size;
   trim_locked();
   return fresh;
 }
@@ -60,6 +65,7 @@ void page_cache::forget(uint64_t file_id) {
   for (auto it = lru_.begin(); it != lru_.end();) {
     if (it->id.file == file_id) {
       resident_ -= it->held->size;
+      stats_[static_cast<size_t>(it->kind)].bytes -= it->held->size;
       index_.erase(it->id);
       it = lru_.erase(it);
     } else {
@@ -82,6 +88,7 @@ void page_cache::trim_locked() {
       continue;
     }
     resident_ -= it->held->size;
+    stats_[static_cast<size_t>(it->kind)].bytes -= it->held->size;
     index_.erase(it->id);
     it = lru_.erase(it);
   }
@@ -90,5 +97,10 @@ void page_cache::trim_locked() {
 size_t page_cache::resident_bytes() const {
   std::lock_guard lock(mutex_);
   return resident_;
+}
+
+cache_stats page_cache::stats(page_kind kind) const {
+  std::lock_guard lock(mutex_);
+  return stats_[static_cast<size_t>(kind)];
 }
 }

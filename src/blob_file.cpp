@@ -11,7 +11,7 @@ BlobFile::BlobFile(BlobFile&& other) noexcept
       reader_(std::move(other.reader_)),
       cache_(std::move(other.cache_)),
       file_id_(std::exchange(other.file_id_, 0)),
-      size_(std::exchange(other.size_, 0)) {}
+      size_(std::exchange(other.size_, 0)), kind_(other.kind_) {}
 
 BlobFile& BlobFile::operator=(BlobFile&& other) noexcept {
   if (this != &other) {
@@ -21,6 +21,7 @@ BlobFile& BlobFile::operator=(BlobFile&& other) noexcept {
     cache_ = std::move(other.cache_);
     file_id_ = std::exchange(other.file_id_, 0);
     size_ = std::exchange(other.size_, 0);
+    kind_ = other.kind_;
   }
   return *this;
 }
@@ -32,15 +33,39 @@ BlobFile BlobFile::map(const std::filesystem::path& path) {
   return file;
 }
 
-BlobFile BlobFile::open(const std::filesystem::path& path, std::shared_ptr<memory::page_cache> cache) {
+BlobFile BlobFile::open(const std::filesystem::path& path, std::shared_ptr<memory::page_cache> cache,
+                        memory::page_kind kind) {
   BlobFile file;
   file.reader_ = memory::file_reader::open(path);
   if (file.reader_) {
     file.cache_ = std::move(cache);
     file.file_id_ = memory::page_cache::new_file_id();
     file.size_ = file.reader_.size();
+    file.kind_ = kind;
   }
   return file;
+}
+
+void BlobFile::copy(uint64_t offset, size_t length, void* out) const {
+  if (offset > size_ || length > size_ - offset) {
+    throw std::out_of_range("a dictionary file range runs past its end");
+  }
+  if (!paged()) {
+    std::memcpy(out, mapping_.data + offset, length);
+    return;
+  }
+  auto* dst = static_cast<uint8_t*>(out);
+  const size_t page_bytes = cache_->page_bytes();
+  while (length > 0) {
+    const auto page = cache_->get(file_id_, reader_, offset / page_bytes, kind_);
+    const size_t in_page = offset % page_bytes;
+    const size_t n = std::min(length, page->size - in_page);
+    std::memcpy(dst, page->data.get() + in_page, n);
+    offset += n;
+    dst += n;
+    length -= n;
+  }
+  cache_->trim();
 }
 
 const uint8_t* BlobFile::paged_range(uint64_t offset, size_t length, BlobPins& pins) const {
@@ -76,7 +101,7 @@ void BlobCursor::require(uint64_t offset, size_t length) const {
 const memory::page& BlobCursor::pin(uint64_t index) {
   auto& held = pins_.get();
   held.cache = file_.cache_.get();
-  held.pages.push_back(file_.cache_->get(file_.file_id_, file_.reader_, index));
+  held.pages.push_back(file_.cache_->get(file_.file_id_, file_.reader_, index, file_.kind_));
   return *held.pages.back();
 }
 

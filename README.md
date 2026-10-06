@@ -35,26 +35,29 @@ hoshidicts-cli import path/to/dictionary.mdx
 
 ### query
 ```cpp
-bool DictionaryQuery::add_term_dict(const std::string& path, DictionaryStorage storage = DictionaryStorage::Mapped)
+bool DictionaryQuery::add_term_dict(const std::string& path, DictionaryStorage storage = DictionaryStorage::Mapped, DictionaryIndexStorage index_storage = DictionaryIndexStorage::Mapped)
 ```
 Adds an imported term dictionary to the query.
 
 ```cpp
-bool DictionaryQuery::add_freq_dict(const std::string& path, DictionaryStorage storage = DictionaryStorage::Mapped)
+bool DictionaryQuery::add_freq_dict(const std::string& path, DictionaryStorage storage = DictionaryStorage::Mapped, DictionaryIndexStorage index_storage = DictionaryIndexStorage::Mapped)
 ```
 Adds an imported frequency dictionary to the query.
 
 ```cpp
-bool DictionaryQuery::add_pitch_dict(const std::string& path, DictionaryStorage storage = DictionaryStorage::Mapped)
+bool DictionaryQuery::add_pitch_dict(const std::string& path, DictionaryStorage storage = DictionaryStorage::Mapped, DictionaryIndexStorage index_storage = DictionaryIndexStorage::Mapped)
 ```
 Adds an imported pitch dictionary to the query.
 
-A dictionary added as several kinds (term, frequency, pitch, kanji) is opened once: the later kinds share the files the first one opened, whatever `storage` they ask for, and `remove_dict` releases them with the last kind. A path's files must not change while any kind of it is loaded.
+A dictionary added as several kinds (term, frequency, pitch, kanji) is opened once: the later kinds share the files the first one opened, whatever storage modes they ask for, and `remove_dict` releases them with the last kind. A path's files must not change while any kind of it is loaded. Remove all its kinds before changing either mode. `hash_index_paged(path)` reports its actual hash mode; `last_error()` describes a failed add.
 
-`storage` decides how the dictionary's entries are held. The index files (`hash.table`, `bloom.filter`, `media.idx`, `scan.idx` and the trained zstd dictionary) are memory-mapped either way; every probe reads them.
+`storage` decides how the dictionary's entries are held. `index_storage` independently decides how `hash.table` is held. Bloom filters, media offsets, scan metadata and the trained zstd dictionary remain memory-mapped.
 
 - `DictionaryStorage::Mapped` maps `blobs.bin`, which holds the entries, and `media.bin`. Natively a mapping costs nothing until it is read. Under Emscripten `mmap` copies the whole file into linear memory, so there `media.bin` is not mapped but read from the file when a media file is asked for.
 - `DictionaryStorage::Paged` reads `blobs.bin` on demand through a page cache that the query's paged dictionaries share, and reads `media.bin` on demand. Lookups return the same results; one that needs pages the cache does not hold costs a read per page. `DictionaryQuery(PageCacheOptions{...})` sets the page size (default 4 KiB) and the cache budget (default 32 MiB); pages a running query holds stay valid until it returns, so the cache can exceed its budget until then. `page_cache_bytes()` returns what it holds.
+
+- `DictionaryIndexStorage::Mapped` keeps the complete hash table mapped, preserving the default for existing callers.
+- `DictionaryIndexStorage::Paged` reads hash slots through that same cache, after the resident Bloom filter has accepted the key. Slots are copied safely across page boundaries and pages are released after each probe. The existing file format is unchanged; entries and hashes compete for one cache budget. `page_cache_statistics()` splits cache bytes, hits, page reads and bytes read into `entries` and `indexes`.
 
 ```cpp
 std::vector<TermResult> DictionaryQuery::query(const std::string& expression) const
@@ -131,6 +134,25 @@ added metadata dictionary.
 - [kanji-processor](https://github.com/yomidevs/kanji-processor): MIT
 - [lzokay](https://github.com/AxioDL/lzokay): MIT (vendored in `external/lzokay`)
 - [gumbo-parser](https://github.com/sparklemotion/nokogiri/tree/main/gumbo-parser) (Nokogiri's fork of Google's gumbo): Apache-2.0, `hashmap.c` MIT (vendored in `external/gumbo-parser`)
+
+## Lookup benchmark
+
+Build with `-DHOSHIDICTS_BENCHMARK=ON`. `benchmark-lookup` accepts a word list
+(one UTF-8 word per line, or a CSV whose first column is the word), an iteration
+count and `--term`, `--freq`, `--pitch` or `--kanji` package paths. Defaults keep
+entries and hashes mapped. Add `--paged-entries` and independently
+`--paged-index` to compare the readers. `--json` emits per-lookup milliseconds
+for each pass, result/glossary counts and the shared cache's activity.
+
+```sh
+./build/benchmark-lookup words.txt 2 --paged-entries --paged-index --json \
+  --term imported/dictionary --freq imported/dictionary --pitch imported/dictionary
+```
+
+Timing covers `Lookup::lookup`, including decompression and ranking, and excludes
+result counting, serialization and result destruction. Full result parity is
+covered by the dictionary-storage tests; Chrome/WASM memory and transport costs
+belong to the host application's benchmark.
 
 ## License
 hoshidicts (main) is licensed under the GNU General Public License v3.0. See [LICENSE](LICENSE) for details.

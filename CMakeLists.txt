@@ -163,6 +163,7 @@ if(HOSHIDICTS_BENCHMARK)
 
     target_link_libraries(benchmark-lookup PRIVATE
         hoshidicts
+        glaze::glaze
     )
 endif()
 if(HOSHIDICTS_TESTS)
@@ -210,6 +211,10 @@ if(HOSHIDICTS_TESTS)
     add_executable(dictionary-storage-test tests/dictionary_storage_test.cpp)
     target_link_libraries(dictionary-storage-test PRIVATE hoshidicts)
     add_test(NAME dictionary-storage COMMAND dictionary-storage-test)
+
+    add_executable(paged-hash-test tests/paged_hash_test.cpp)
+    target_link_libraries(paged-hash-test PRIVATE hoshidicts)
+    add_test(NAME paged-hash COMMAND paged-hash-test)
 
     add_executable(deps-smoke-test tests/deps_smoke_test.cpp)
     target_link_libraries(deps-smoke-test PRIVATE lzokay gumbo)

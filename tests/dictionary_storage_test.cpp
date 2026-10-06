@@ -210,9 +210,10 @@ long open_descriptors() {
   return -1;
 }
 
-bool add_all(DictionaryQuery& query, const std::string& path, DictionaryStorage storage) {
-  return query.add_term_dict(path, storage) && query.add_freq_dict(path, storage) &&
-         query.add_pitch_dict(path, storage) && query.add_kanji_dict(path, storage);
+bool add_all(DictionaryQuery& query, const std::string& path, DictionaryStorage storage,
+             DictionaryIndexStorage index_storage = DictionaryIndexStorage::Mapped) {
+  return query.add_term_dict(path, storage, index_storage) && query.add_freq_dict(path, storage, index_storage) &&
+         query.add_pitch_dict(path, storage, index_storage) && query.add_kanji_dict(path, storage, index_storage);
 }
 
 }  // namespace
@@ -308,14 +309,14 @@ int main() {
   {
     const long before = open_descriptors();
     DictionaryQuery query(PageCacheOptions{.page_bytes = 1 << 20, .budget_bytes = 64 << 20});
-    check(query.add_term_dict(dir, DictionaryStorage::Paged), "paged add_term_dict");
+    check(query.add_term_dict(dir, DictionaryStorage::Paged, DictionaryIndexStorage::Paged), "paged add_term_dict");
     const long after_one = open_descriptors();
-    check(query.add_freq_dict(dir, DictionaryStorage::Paged) && query.add_pitch_dict(dir, DictionaryStorage::Paged) &&
-              query.add_kanji_dict(dir, DictionaryStorage::Paged),
+    check(query.add_freq_dict(dir, DictionaryStorage::Paged, DictionaryIndexStorage::Paged) && query.add_pitch_dict(dir, DictionaryStorage::Paged, DictionaryIndexStorage::Paged) &&
+              query.add_kanji_dict(dir, DictionaryStorage::Paged, DictionaryIndexStorage::Paged),
           "paged add of the other kinds");
     const long after_all = open_descriptors();
     if (before >= 0) {
-      check(after_one == before + 2, "a paged package keeps blobs.bin and media.bin open: " +
+      check(after_one == before + 3, "a paged package keeps hash.table, blobs.bin and media.bin open: " +
                                          std::to_string(before) + " -> " + std::to_string(after_one));
       check(after_all == after_one, "the other kinds open no descriptor of their own: " + std::to_string(after_one) +
                                         " -> " + std::to_string(after_all));
@@ -327,8 +328,8 @@ int main() {
     check(!results.empty() && !results[0].term.frequencies.empty() && !results[0].term.pitches.empty(),
           "the lookup read term, frequency and pitch records");
     check(!query.query_kanji("食").entries.empty(), "the kanji lookup read a kanji record");
-    check(query.page_cache_bytes() == blobs_size,
-          "the four kinds read one copy of blobs.bin: cached " + std::to_string(query.page_cache_bytes()) + " of " +
+    check(query.page_cache_bytes() == blobs_size + std::filesystem::file_size(out_dir / result.summary.title / "hash.table"),
+          "the four kinds read one copy of hash.table and blobs.bin: cached " + std::to_string(query.page_cache_bytes()) + " of " +
               std::to_string(blobs_size));
 
     check(query.remove_dict(dir) == 4, "remove_dict drops the four kinds");
@@ -340,10 +341,13 @@ int main() {
 
   DictionaryQuery mapped;
   check(add_all(mapped, dir, DictionaryStorage::Mapped), "mapped add of every kind");
-  // Pages of 64 bytes: most records and several index lists cross a boundary.
+  // Pages of 64 bytes: most records, hash slots and several index lists cross a
+  // boundary.
   constexpr size_t small_budget = 512;
   DictionaryQuery small_pages(PageCacheOptions{.page_bytes = 64, .budget_bytes = small_budget});
-  check(add_all(small_pages, dir, DictionaryStorage::Paged), "paged add with small pages");
+  check(add_all(small_pages, dir, DictionaryStorage::Paged, DictionaryIndexStorage::Paged), "paged add with small pages");
+  // Paged entries beside a mapped hash table: the two storage choices are
+  // independent, and this pairing is the common one.
   DictionaryQuery default_pages;
   check(add_all(default_pages, dir, DictionaryStorage::Paged), "paged add with the default pages");
 
