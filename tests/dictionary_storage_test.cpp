@@ -341,12 +341,15 @@ int main() {
 
   DictionaryQuery mapped;
   check(add_all(mapped, dir, DictionaryStorage::Mapped), "mapped add of every kind");
-  // Pages of 64 bytes: most records and several index lists cross a boundary.
+  // Pages of 64 bytes: most records, hash slots and several index lists cross a
+  // boundary.
   constexpr size_t small_budget = 512;
   DictionaryQuery small_pages(PageCacheOptions{.page_bytes = 64, .budget_bytes = small_budget});
   check(add_all(small_pages, dir, DictionaryStorage::Paged, DictionaryIndexStorage::Paged), "paged add with small pages");
+  // Paged entries beside a mapped hash table: the two storage choices are
+  // independent, and this pairing is the common one.
   DictionaryQuery default_pages;
-  check(add_all(default_pages, dir, DictionaryStorage::Paged, DictionaryIndexStorage::Paged), "paged add with the default pages");
+  check(add_all(default_pages, dir, DictionaryStorage::Paged), "paged add with the default pages");
 
   Deinflector deinflector;
   Lookup mapped_lookup(mapped, deinflector);
