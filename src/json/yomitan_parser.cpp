@@ -148,25 +148,91 @@ constexpr BankOpts bank_opts{{.error_on_unknown_keys = false, .error_on_missing_
 
 namespace {
 // Decodes a raw JSON string's escapes over its own bytes in `content` and
-// narrows the view to the result. Decoding never lengthens a string (an escape
-// is at least as long as what it stands for), and a string whose escapes do
-// not decode keeps its bytes.
+// narrows the view to the result. Decoding never lengthens a string: every
+// escape is at least as long as the UTF-8 it stands for, a surrogate pair's
+// twelve bytes become four, and a lone surrogate's six become U+FFFD's three,
+// which is how a renderer shows the unpaired UTF-16 JSON.parse would keep. An
+// unknown escape keeps its character.
 void decode_in_place(std::string& content, std::string_view& view) {
   if (view.find('\\') == std::string_view::npos) {
     return;
   }
-  std::string quoted;
-  quoted.reserve(view.size() + 2);
-  quoted += '"';
-  quoted += view;
-  quoted += '"';
-  std::string decoded;
-  if (glz::read_json(decoded, quoted) || decoded.size() > view.size()) {
-    return;
-  }
   const size_t offset = static_cast<size_t>(view.data() - content.data());
-  std::memcpy(content.data() + offset, decoded.data(), decoded.size());
-  view = std::string_view(content.data() + offset, decoded.size());
+  char* out = content.data() + offset;
+  const char* in = out;
+  const char* const end = in + view.size();
+  char* write = out;
+  const auto hex4 = [&](const char* at, uint32_t& value) {
+    if (end - at < 4) {
+      return false;
+    }
+    value = 0;
+    for (int i = 0; i < 4; ++i) {
+      const char c = at[i];
+      const int digit = c >= '0' && c <= '9' ? c - '0' : c >= 'a' && c <= 'f' ? c - 'a' + 10
+                                                       : c >= 'A' && c <= 'F' ? c - 'A' + 10 : -1;
+      if (digit < 0) {
+        return false;
+      }
+      value = value * 16 + static_cast<uint32_t>(digit);
+    }
+    return true;
+  };
+  const auto put_utf8 = [&](uint32_t cp) {
+    if (cp < 0x80) {
+      *write++ = static_cast<char>(cp);
+    } else if (cp < 0x800) {
+      *write++ = static_cast<char>(0xC0 | (cp >> 6));
+      *write++ = static_cast<char>(0x80 | (cp & 0x3F));
+    } else if (cp < 0x10000) {
+      *write++ = static_cast<char>(0xE0 | (cp >> 12));
+      *write++ = static_cast<char>(0x80 | ((cp >> 6) & 0x3F));
+      *write++ = static_cast<char>(0x80 | (cp & 0x3F));
+    } else {
+      *write++ = static_cast<char>(0xF0 | (cp >> 18));
+      *write++ = static_cast<char>(0x80 | ((cp >> 12) & 0x3F));
+      *write++ = static_cast<char>(0x80 | ((cp >> 6) & 0x3F));
+      *write++ = static_cast<char>(0x80 | (cp & 0x3F));
+    }
+  };
+  while (in < end) {
+    if (*in != '\\' || end - in < 2) {
+      *write++ = *in++;
+      continue;
+    }
+    const char kind = in[1];
+    in += 2;
+    switch (kind) {
+      case 'b': *write++ = '\b'; break;
+      case 'f': *write++ = '\f'; break;
+      case 'n': *write++ = '\n'; break;
+      case 'r': *write++ = '\r'; break;
+      case 't': *write++ = '\t'; break;
+      case 'u': {
+        uint32_t cp = 0;
+        if (!hex4(in, cp)) {
+          *write++ = 'u';
+          break;
+        }
+        in += 4;
+        if (cp >= 0xD800 && cp <= 0xDBFF) {
+          uint32_t low = 0;
+          if (end - in >= 6 && in[0] == '\\' && in[1] == 'u' && hex4(in + 2, low) && low >= 0xDC00 && low <= 0xDFFF) {
+            in += 6;
+            cp = 0x10000 + ((cp - 0xD800) << 10) + (low - 0xDC00);
+          } else {
+            cp = 0xFFFD;
+          }
+        } else if (cp >= 0xDC00 && cp <= 0xDFFF) {
+          cp = 0xFFFD;
+        }
+        put_utf8(cp);
+        break;
+      }
+      default: *write++ = kind; break;  // \" \\ \/ and anything unknown
+    }
+  }
+  view = std::string_view(out, static_cast<size_t>(write - out));
 }
 
 void decode_in_place(std::string& content, std::optional<std::string_view>& view) {
