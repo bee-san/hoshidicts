@@ -2,12 +2,13 @@
 # index.json is hashed with "importDate":<n> replaced by "importDate":0. Regenerate only when the output format changes on purpose.
 # index.json: regenerated when the summary began storing the tag banks ("tags"); every other file is unchanged.
 # blobs.bin, hash.table: regenerated when kanji_meta_bank rows began to be stored (record type 3); every other file is unchanged.
+# blobs.bin, bloom.filter, hash.table, scan.idx: regenerated when bank strings began to be JSON-decoded, so the term spelled "quoted" [brackets] \backslash in term_bank_2 is keyed by its text; every other file is unchanged.
 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  .hoshidicts_6
-afa434c032c3a59a916c717a1b9f55de3978ed9e812d47d8660519a74a418e29  blobs.bin
-4bb3bf0755e28ae676f98c575174a62054651cc0004173bb03bf0d8b5a875c5c  bloom.filter
+d71465ed33944f74caab8b9cf819975bbf1e0b666b9ae6ef32fae2fe08b23b62  blobs.bin
+98b09f39f5738f68ddb25f393789d421fffa171a08083636b65dd3506e587318  bloom.filter
 91de707c8eb26bff94240513c03a41b7f9995c67f5392a621fb3151aae429ef3  dict.zstd
-f95bbcacd378b46dc59b35b5274fb8264f03622ba34ac4bd2d14131c594dceb1  hash.table
+c41d569c94f15fc380656bb89190c85600f04fef10e91b1daeaabb543c112cdc  hash.table
 b27413b159ab02a83b2f820087db41ffaf81ec2f7fb97c20493b41a1fcba3f5f  media.bin
 56879507ea4d0e870990d88b906e754eaa34f47b4e634842a6f4499290f3fd2c  media.idx
 880f22f75eed25a31b6522255fb7f0d8a7aaa12938536a8edddc120b290a19ac  index.json
-4f6e1b0bf6ed1f02d3eb24617e9693284ea0607f30e92cab693e0583675bb9ca  scan.idx
+226228796241967fb9b2ba8a7feeb7cd5a236fb370b23a38f670f4ec57c4831e  scan.idx

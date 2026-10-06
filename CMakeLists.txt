@@ -187,6 +187,18 @@ if(HOSHIDICTS_TESTS)
     target_link_libraries(kanji-meta-test PRIVATE hoshidicts)
     add_test(NAME kanji-meta COMMAND kanji-meta-test)
 
+    add_executable(zip64-test tests/zip64_test.cpp)
+    target_link_libraries(zip64-test PRIVATE hoshidicts)
+    add_test(NAME zip64 COMMAND zip64-test)
+
+    add_executable(escaped-strings-test tests/escaped_strings_test.cpp)
+    target_link_libraries(escaped-strings-test PRIVATE hoshidicts)
+    add_test(NAME escaped-strings COMMAND escaped-strings-test)
+
+    add_executable(title-folder-test tests/title_folder_test.cpp)
+    target_link_libraries(title-folder-test PRIVATE hoshidicts)
+    add_test(NAME title-folder COMMAND title-folder-test)
+
     add_executable(data-descriptor-test tests/data_descriptor_test.cpp)
     target_link_libraries(data-descriptor-test PRIVATE hoshidicts)
     add_test(NAME data-descriptor COMMAND data-descriptor-test)
