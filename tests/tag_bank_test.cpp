@@ -1,8 +1,8 @@
 // Tag banks travel in the imported index.json and come back from get_tags.
 // Imports a dictionary with two tag banks, then requires every row back in
 // bank order from the summary and, after a reload, from get_tags: names as the
-// term bank's definitionTags spell them (U+00A0 and escapes included), decoded
-// notes, and fractional order and score. A dictionary first loaded as kanji
+// term bank's definitionTags read them (U+00A0 kept, escapes decoded on both sides),
+// decoded notes, and fractional order and score. A dictionary first loaded as kanji
 // shares its tags with the term kind, and a tag bank that does not parse
 // leaves the import, and its count, as they were before tags were stored.
 #include "hoshidicts/importer.hpp"
@@ -122,7 +122,7 @@ std::vector<SummaryTag> expected_tags() {
       {"★", "popular", 2, "high priority entry", 2},
       {"special" + kNbsp + "reading", "expression", 1, "jukujikun \"idiomatic\" reading", 0},
       {"frequent", "frequent", 1.5, "café & bar", -0.5},
-      {R"(esc\u00e9)", "name", 0, "", 0},
+      {"escé", "name", 0, "", 0},
       {"second", "archaism", -1, "from a second bank", 0},
   };
 }

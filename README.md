@@ -10,7 +10,7 @@ A MIT version of the library is available on the [main-mit](https://github.com/M
 ```cpp
 ImportResult dictionary_importer::import(const std::string& source_path, const std::string& output_dir, bool low_ram = false)
 ```
-Imports a Yomitan `.zip` dictionary file or an MDict `.mdx` dictionary into a custom format. The resulting folder is stored in `output_dir/<dict_title>`. Glossaries are compressed using zstd. Term, frequency and pitch dictionaries are generally supported, but only a small part of the pitch accent spec was implemented. Setting `low_ram` to `true` can reduce memory usage significantly at the cost of slightly lower import speed.
+Imports a Yomitan `.zip` dictionary file or an MDict `.mdx` dictionary into a custom format. The resulting folder is stored in `output_dir/<folder_name(dict_title)>`: the title itself when it is a single path component, otherwise the title with `/`, `\`, `:` and NUL replaced by `_` plus ` #` and the title's FNV-1a 32-bit hash in hex (`Nico/Pixiv` → `Nico_Pixiv #c747f3db`). `dictionary_importer::folder_name` returns it. Glossaries are compressed using zstd. Term, frequency and pitch dictionaries are generally supported, but only a small part of the pitch accent spec was implemented. Setting `low_ram` to `true` can reduce memory usage significantly at the cost of slightly lower import speed.
 
 The format is detected from the file contents, not the extension.
 
