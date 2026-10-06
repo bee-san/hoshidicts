@@ -2,8 +2,9 @@
 // in each local header, and writes them in a data descriptor after the data
 // (APPNOTE 4.3.9, 4.4.4). Readers take the sizes from the central directory, as
 // Yomitan's zip.js does (bee-san/hachidori#491). Requires that such an archive
-// imports and answers a lookup, and that a local header which records a size
-// still has to agree with the central directory, with or without bit 3.
+// imports and answers a lookup, also when its local headers zero only the
+// compressed size, and that a local header which records a size still has to
+// agree with the central directory, with or without bit 3.
 #include "hoshidicts/importer.hpp"
 #include "hoshidicts/query.hpp"
 
@@ -40,6 +41,7 @@ void put(std::string& out, T value) {
 struct Layout {
   bool descriptor = true;           // set bit 3 and write a signed data descriptor
   uint32_t forged_local_size = 0;   // when nonzero, record this local size for the term bank
+  bool local_uncompressed = false;  // with bit 3, record only the uncompressed size locally
 };
 
 // A stored (method 0) ZIP: local headers, then the central directory, then EOCD.
@@ -61,7 +63,7 @@ std::string build_zip(const std::vector<std::pair<std::string, std::string>>& fi
     put<uint16_t>(out, 0);
     put<uint32_t>(out, layout.descriptor ? 0 : crc);
     put<uint32_t>(out, local_size);
-    put<uint32_t>(out, local_size);
+    put<uint32_t>(out, layout.local_uncompressed ? size : local_size);
     put<uint16_t>(out, static_cast<uint16_t>(name.size()));
     put<uint16_t>(out, 0);
     out += name;
@@ -152,6 +154,13 @@ int main() {
       check(!terms.empty() && terms[0].glossaries.size() == 1 && terms[0].glossaries[0].glossary == R"(["dictionary"])",
             "the glossary reads back from the central directory's sizes");
     }
+  }
+
+  {
+    // The NHK日本語発音アクセント新辞典 archive (bee-san/hachidori#512) sets bit 3
+    // and zeroes only the compressed size.
+    const ImportResult result = import_archive(root, "uncompressed-known", {.local_uncompressed = true});
+    check(result.success, "a bit-3 local header that records only the uncompressed size imports: " + result.error);
   }
 
   {

@@ -1,11 +1,12 @@
 # SHA-256 of every file the pre-DictionarySource importer (bee-san/hoshidicts main @ fa833f9) wrote for small_dict.zip.
 # index.json is hashed with "importDate":<n> replaced by "importDate":0. Regenerate only when the output format changes on purpose.
 # index.json: regenerated when the summary began storing the tag banks ("tags"); every other file is unchanged.
+# blobs.bin, hash.table: regenerated when kanji_meta_bank rows began to be stored (record type 3); every other file is unchanged.
 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  .hoshidicts_6
-552b6e672c3b8e64d12e7eb43182c23234eaaea506bbd1c19b7d447e523840ad  blobs.bin
+afa434c032c3a59a916c717a1b9f55de3978ed9e812d47d8660519a74a418e29  blobs.bin
 4bb3bf0755e28ae676f98c575174a62054651cc0004173bb03bf0d8b5a875c5c  bloom.filter
 91de707c8eb26bff94240513c03a41b7f9995c67f5392a621fb3151aae429ef3  dict.zstd
-517a21ea1d33fa05bdc9e4655c3c8d171ded15002f297843cb17f1e9db3f045a  hash.table
+f95bbcacd378b46dc59b35b5274fb8264f03622ba34ac4bd2d14131c594dceb1  hash.table
 b27413b159ab02a83b2f820087db41ffaf81ec2f7fb97c20493b41a1fcba3f5f  media.bin
 56879507ea4d0e870990d88b906e754eaa34f47b4e634842a6f4499290f3fd2c  media.idx
 880f22f75eed25a31b6522255fb7f0d8a7aaa12938536a8edddc120b290a19ac  index.json

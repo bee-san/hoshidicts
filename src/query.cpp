@@ -832,6 +832,49 @@ KanjiResult DictionaryQuery::query_kanji(const std::string& kanji) const {
     });
   }
 
+  for (const auto& [path, name, styles, data] : freq_dicts_) {
+    uint64_t offset_addr = data->table(kanji);
+    if (offset_addr == 0) {
+      continue;
+    }
+    visit_blobs(data->blobs, pins, [&](auto open) {
+      auto index = open(offset_addr);
+      auto count = read_value<uint32_t>(index);
+
+      std::vector<Frequency> frequencies;
+      for (uint32_t i = 0; i < count; i++) {
+        auto offset = read_value<uint64_t>(index);
+        auto blob = open(offset);
+
+        // Type 3 is a kanji_meta_bank row, laid out like a term meta row.
+        auto type = read_value<uint8_t>(blob);
+        if (type != 3) {
+          continue;
+        }
+
+        auto char_len = read_value<uint16_t>(blob);
+        if (blob.str(char_len) != kanji) {
+          continue;
+        }
+
+        auto mode_len = read_value<uint8_t>(blob);
+        if (blob.str(mode_len) != "freq") {
+          continue;
+        }
+
+        auto freq_data_size = read_value<uint32_t>(blob);
+        ParsedFrequency parsed;
+        if (yomitan_parser::parse_frequency(blob.str(freq_data_size), parsed)) {
+          frequencies.emplace_back(
+              Frequency{.value = parsed.value, .display_value = std::string(parsed.display_value)});
+        }
+      }
+      if (!frequencies.empty()) {
+        result.frequencies.emplace_back(FrequencyEntry{.dict_name = name, .frequencies = std::move(frequencies)});
+      }
+    });
+  }
+
   return result;
 }
 

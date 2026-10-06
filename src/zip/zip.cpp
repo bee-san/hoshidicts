@@ -140,13 +140,17 @@ bool Zip::parse_central_directory() {
     }
     // General-purpose bit 3 lets a local header leave its sizes zero and put
     // them in a data descriptor after the data (APPNOTE 4.4.4, 4.4.8, 4.4.9).
-    // Reads use the central directory's sizes either way, so sizes the local
-    // header does record must agree with them.
+    // Some writers zero only one of the two (the compressed size, while the
+    // uncompressed size is known up front). Reads use the central directory's
+    // sizes either way, so each size the local header does record must agree.
     const bool sizes_deferred = (read_at<uint16_t>(base, lfh_offset + 6) & 0x0008) != 0;
     const auto lfh_compressed = read_at<uint32_t>(base, lfh_offset + 18);
     const auto lfh_uncompressed = read_at<uint32_t>(base, lfh_offset + 22);
-    if (!(sizes_deferred && lfh_compressed == 0 && lfh_uncompressed == 0) &&
-        (lfh_compressed != e.compressed_size || lfh_uncompressed != e.uncompressed_size)) {
+    const auto local_size_agrees = [sizes_deferred](uint32_t local, uint32_t central) {
+      return local == central || (sizes_deferred && local == 0);
+    };
+    if (!local_size_agrees(lfh_compressed, e.compressed_size) ||
+        !local_size_agrees(lfh_uncompressed, e.uncompressed_size)) {
       error = "archive entry sizes disagree between headers";
       return false;
     }
