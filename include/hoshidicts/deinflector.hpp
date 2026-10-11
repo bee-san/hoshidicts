@@ -31,6 +31,7 @@ class Deinflector {
     uint32_t conditions_in;
     uint32_t conditions_out;
     int group_id;
+    bool whole_word = false;
   };
 
   enum Conditions : uint32_t {

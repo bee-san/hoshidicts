@@ -1,0 +1,23 @@
+name: Japanese conjugation parity
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  deinflector:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Build the native deinflector test
+        run: |
+          g++ -std=c++23 -Wall -Wextra -O2 -Iinclude -Iexternal/utfcpp/source \
+            tests/deinflector_test.cpp src/deinflector.cpp -o /tmp/deinflector-test
+      - name: Check the pinned Yomitan conjugation corpus
+        run: /tmp/deinflector-test tests/fixtures/yomitan-deinflections.tsv
