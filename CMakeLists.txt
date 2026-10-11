@@ -11,6 +11,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 option(HOSHIDICTS_CLI "hoshidicts cli" OFF)
 option(HOSHIDICTS_BENCHMARK "hoshidicts import and lookup benchmarks" OFF)
+option(HOSHIDICTS_DEINFLECTOR_TESTS "Japanese conjugation parity tests" OFF)
 
 set(ZSTD_BUILD_PROGRAMS OFF CACHE BOOL "")
 set(ZSTD_BUILD_TESTS OFF CACHE BOOL "")
@@ -59,6 +60,20 @@ target_link_libraries(hoshidicts PRIVATE
 
 if(MSVC)
     target_compile_options(hoshidicts PRIVATE /utf-8)
+endif()
+
+if(HOSHIDICTS_DEINFLECTOR_TESTS)
+    enable_testing()
+    add_executable(deinflector-test tests/deinflector_test.cpp src/deinflector.cpp)
+    target_include_directories(deinflector-test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/external/utfcpp/source
+    )
+    if(MSVC)
+        target_compile_options(deinflector-test PRIVATE /utf-8)
+    endif()
+    add_test(NAME deinflector
+             COMMAND deinflector-test ${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/yomitan-deinflections.tsv)
 endif()
 
 if(HOSHIDICTS_CLI)
