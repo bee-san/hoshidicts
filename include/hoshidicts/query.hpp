@@ -215,8 +215,10 @@ class DictionaryQuery {
   // The raw terms, and the compressed glossaries build_term points its result
   // at, are views into the dictionaries' files: they stay valid while `pins`,
   // which holds what they read of paged files, lives.
+  // Without `with_metadata`, the caller collects the frequencies and pitches
+  // of only the terms it keeps.
   RawTerms query_raw(const std::string& expression, BlobPins& pins,
-                     const std::string* term_dictionary_path = nullptr) const;
+                     const std::string* term_dictionary_path = nullptr, bool with_metadata = true) const;
   TermResult build_term(const RawTerms& raw, RawTerm& term, BlobPins& pins) const;
   void collect_frequencies(std::string_view expression, std::string_view reading,
                            std::vector<FrequencyEntry>& out, BlobPins& pins) const;
