@@ -140,8 +140,14 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     for (auto& variant : processor_results) {
       auto deinflection_results = deinflector_.deinflect(variant.text);
       for (auto& deinflection : deinflection_results) {
-        auto terms = query_.query_raw(deinflection.text, pins, dictionary_path);
+        // Most deinflected forms name no entry of their part of speech; read
+        // the frequencies and pitches of only the terms the filter keeps.
+        auto terms = query_.query_raw(deinflection.text, pins, dictionary_path, false);
         filter_by_pos(terms, deinflection);
+        for (auto& term : terms.terms) {
+          query_.collect_frequencies(term.expression, term.reading, term.frequencies, pins);
+          query_.collect_pitches(term.expression, term.reading, term.pitches, pins);
+        }
 
         const auto store_index = static_cast<uint32_t>(term_store.size());
         for (auto& term : terms.terms) {

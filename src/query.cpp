@@ -470,7 +470,7 @@ std::vector<TermResult> DictionaryQuery::query(const std::string& expression) co
 }
 
 RawTerms DictionaryQuery::query_raw(const std::string& expression, BlobPins& pins,
-                                    const std::string* term_dictionary_path) const {
+                                    const std::string* term_dictionary_path, bool with_metadata) const {
   RawTerms raw;
   auto find_term = [&raw](std::string_view expr, std::string_view reading) -> RawTerm* {
     for (auto& term : raw.terms) {
@@ -576,9 +576,11 @@ RawTerms DictionaryQuery::query_raw(const std::string& expression, BlobPins& pin
     });
   }
 
-  for (auto& term : raw.terms) {
-    collect_frequencies(term.expression, term.reading, term.frequencies, pins);
-    collect_pitches(term.expression, term.reading, term.pitches, pins);
+  if (with_metadata) {
+    for (auto& term : raw.terms) {
+      collect_frequencies(term.expression, term.reading, term.frequencies, pins);
+      collect_pitches(term.expression, term.reading, term.pitches, pins);
+    }
   }
 
   return raw;
