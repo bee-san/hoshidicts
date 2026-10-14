@@ -209,12 +209,18 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     }
   }
 
-  std::vector<std::string> auto_frequency_dictionaries;
   std::optional<std::string_view> frequency_dictionary;
   bool frequency_descending = false;
   switch (options.frequency_order) {
     case LookupFrequencyOrder::Auto:
-      auto_frequency_dictionaries = query_.get_freq_dict_order();
+      // No single sort dictionary is chosen, so no frequency separates the
+      // candidates: go straight to the caller's dictionary order below, as
+      // Yomitan does when its sort frequency dictionary is unset. Its
+      // _sortTermDictionaryEntries then leaves frequencyOrder tied for every
+      // entry and dictionaryIndex (the enabled-dictionary order) decides
+      // (yomidevs/yomitan@67db60d). Consulting every frequency dictionary here
+      // instead let a surface-form corpus value a name shares across its
+      // readings mask that order; see bee-san/hachidori#575.
       break;
     case LookupFrequencyOrder::Ascending:
     case LookupFrequencyOrder::Descending:
@@ -254,8 +260,8 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   }
 
   const size_t retained_count = std::min(candidates.size(), static_cast<size_t>(max_results));
-  auto less = [&auto_frequency_dictionaries, frequency_dictionary, frequency_descending, primary_reading](
-                  const Candidate& a, const Candidate& b) {
+  auto less = [frequency_dictionary, frequency_descending, primary_reading](const Candidate& a,
+                                                                            const Candidate& b) {
         if (!primary_reading.empty()) {
           const bool primary_a = matches_primary_reading(*a.term, primary_reading);
           const bool primary_b = matches_primary_reading(*b.term, primary_reading);
@@ -284,14 +290,6 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
         auto match_b = b.term->expression == b.deinflection->text;
         if (match_a != match_b) {
           return match_a > match_b;
-        }
-
-        for (const auto& dictionary_name : auto_frequency_dictionaries) {
-          const int freq_a = get_freq_value_for_dict(*a.term, dictionary_name, false).value_or(INT_MAX);
-          const int freq_b = get_freq_value_for_dict(*b.term, dictionary_name, false).value_or(INT_MAX);
-          if (freq_a != freq_b) {
-            return freq_a < freq_b;
-          }
         }
 
         if (frequency_dictionary.has_value()) {
