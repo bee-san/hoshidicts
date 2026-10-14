@@ -195,6 +195,10 @@ if(HOSHIDICTS_TESTS)
     target_link_libraries(score-roundtrip-test PRIVATE hoshidicts)
     add_test(NAME score-roundtrip COMMAND score-roundtrip-test)
 
+    add_executable(lookup-order-test tests/lookup_order_test.cpp)
+    target_link_libraries(lookup-order-test PRIVATE hoshidicts)
+    add_test(NAME lookup-order COMMAND lookup-order-test)
+
     add_executable(tag-bank-test tests/tag_bank_test.cpp)
     target_link_libraries(tag-bank-test PRIVATE hoshidicts)
     add_test(NAME tag-bank COMMAND tag-bank-test)

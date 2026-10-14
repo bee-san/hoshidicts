@@ -43,6 +43,11 @@ struct Candidate {
   RawTerm* term;
   uint32_t store_index;
   int steps;
+  // The best (smallest) rank, in the caller's dictionary order, of the term
+  // dictionaries this candidate's glossaries come from. SIZE_MAX until it is
+  // computed from the glossary chain just before sorting. It breaks ties the
+  // frequency comparison leaves, so the reading the user ranked highest wins.
+  size_t dict_rank = SIZE_MAX;
 };
 
 uint64_t key_hash(std::string_view expression, std::string_view reading) {
@@ -204,12 +209,18 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     }
   }
 
-  std::vector<std::string> auto_frequency_dictionaries;
   std::optional<std::string_view> frequency_dictionary;
   bool frequency_descending = false;
   switch (options.frequency_order) {
     case LookupFrequencyOrder::Auto:
-      auto_frequency_dictionaries = query_.get_freq_dict_order();
+      // No single sort dictionary is chosen, so no frequency separates the
+      // candidates: go straight to the caller's dictionary order below, as
+      // Yomitan does when its sort frequency dictionary is unset. Its
+      // _sortTermDictionaryEntries then leaves frequencyOrder tied for every
+      // entry and dictionaryIndex (the enabled-dictionary order) decides
+      // (yomidevs/yomitan@67db60d). Consulting every frequency dictionary here
+      // instead let a surface-form corpus value a name shares across its
+      // readings mask that order; see bee-san/hachidori#575.
       break;
     case LookupFrequencyOrder::Ascending:
     case LookupFrequencyOrder::Descending:
@@ -229,9 +240,28 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   if (options.primary_reading.has_value()) {
     primary_reading = *options.primary_reading;
   }
+  // Each term dictionary's rank in the caller's order, keyed by the address of
+  // its name (RawGlossary::dict_name points at the Dictionary::name the term
+  // was read from). term_dicts_ is already in the order set_dict_order last
+  // applied, so its index is the caller's priority.
+  ankerl::unordered_dense::map<const std::string*, size_t> dict_rank_by_name;
+  dict_rank_by_name.reserve(query_.term_dicts_.size());
+  for (size_t rank = 0; rank < query_.term_dicts_.size(); ++rank) {
+    dict_rank_by_name.try_emplace(&query_.term_dicts_[rank].name, rank);
+  }
+  for (auto& candidate : candidates) {
+    const RawTerms& terms = term_store[candidate.store_index];
+    for (uint32_t i = candidate.term->first_glossary; i != UINT32_MAX; i = terms.glossaries[i].next) {
+      const auto it = dict_rank_by_name.find(terms.glossaries[i].dict_name);
+      if (it != dict_rank_by_name.end()) {
+        candidate.dict_rank = std::min(candidate.dict_rank, it->second);
+      }
+    }
+  }
+
   const size_t retained_count = std::min(candidates.size(), static_cast<size_t>(max_results));
-  auto less = [&auto_frequency_dictionaries, frequency_dictionary, frequency_descending, primary_reading](
-                  const Candidate& a, const Candidate& b) {
+  auto less = [frequency_dictionary, frequency_descending, primary_reading](const Candidate& a,
+                                                                            const Candidate& b) {
         if (!primary_reading.empty()) {
           const bool primary_a = matches_primary_reading(*a.term, primary_reading);
           const bool primary_b = matches_primary_reading(*b.term, primary_reading);
@@ -262,14 +292,6 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
           return match_a > match_b;
         }
 
-        for (const auto& dictionary_name : auto_frequency_dictionaries) {
-          const int freq_a = get_freq_value_for_dict(*a.term, dictionary_name, false).value_or(INT_MAX);
-          const int freq_b = get_freq_value_for_dict(*b.term, dictionary_name, false).value_or(INT_MAX);
-          if (freq_a != freq_b) {
-            return freq_a < freq_b;
-          }
-        }
-
         if (frequency_dictionary.has_value()) {
           const auto freq_a = get_freq_value_for_dict(*a.term, *frequency_dictionary, frequency_descending);
           const auto freq_b = get_freq_value_for_dict(*b.term, *frequency_dictionary, frequency_descending);
@@ -279,6 +301,16 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
           if (freq_a.has_value() && *freq_a != *freq_b) {
             return frequency_descending ? *freq_a > *freq_b : *freq_a < *freq_b;
           }
+        }
+
+        // The caller's dictionary order breaks a tie the frequencies left, as
+        // Yomitan ranks dictionaryIndex after frequencyOrder and before score.
+        // When the active frequency ranking does not separate two readings (it
+        // is equal, or neither reading is in it, as a surface frequency leaves
+        // the readings of a name), the reading from the dictionary the user
+        // ranked highest comes first instead of an arbitrary one.
+        if (a.dict_rank != b.dict_rank) {
+          return a.dict_rank < b.dict_rank;
         }
 
         if (a.term->score != b.term->score) {
