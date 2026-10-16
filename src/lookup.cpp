@@ -146,7 +146,7 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
         prefix_variants.push_back(variant.text);
       }
     }
-    auto merge = [&](const DeinflectionResult& deinflection, int steps) {
+    auto merge = [&](const DeinflectionResult& deinflection, int steps, bool ordinary) {
       // Most deinflected forms name no entry of their part of speech; read
       // the frequencies and pitches of only the terms the filter keeps.
       auto terms = query_.query_raw(deinflection.text, pins, dictionary_path, false);
@@ -155,7 +155,7 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
         query_.collect_frequencies(term.expression, term.reading, term.frequencies, pins);
         query_.collect_pitches(term.expression, term.reading, term.pitches, pins);
       }
-      if (!terms.terms.empty() && !Deinflector::is_neko_speech(deinflection)) {
+      if (ordinary && !terms.terms.empty()) {
         plain_len = std::max(plain_len, search_str.size());
       }
 
@@ -183,13 +183,10 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
       term_store.push_back(std::move(terms));
     };
 
-    const size_t first_variant = deinflection_store.size();
     for (auto& variant : processor_results) {
-      auto deinflection_results = deinflector_.deinflect(variant.text);
+      auto deinflection_results = deinflector_.deinflect_ordinary(variant.text);
       for (auto& deinflection : deinflection_results) {
-        if (!Deinflector::is_neko_speech(deinflection)) {
-          merge(deinflection, variant.steps);
-        }
+        merge(deinflection, variant.steps, true);
       }
       deinflection_store.push_back(std::move(deinflection_results));
     }
@@ -198,12 +195,15 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     // (こんにゃく, にゃあ) keeps exactly its ordinary results. The prefixes are
     // scanned longest first (the long-key scan below is checked after it).
     if (search_str.size() > plain_len) {
-      for (size_t v = 0; v < processor_results.size(); ++v) {
-        for (auto& deinflection : deinflection_store[first_variant + v]) {
-          if (Deinflector::is_neko_speech(deinflection)) {
-            merge(deinflection, processor_results[v].steps);
-          }
+      for (auto& variant : processor_results) {
+        auto deinflection_results = deinflector_.deinflect_neko_speech(variant.text);
+        if (deinflection_results.empty()) {
+          continue;
         }
+        for (auto& deinflection : deinflection_results) {
+          merge(deinflection, variant.steps, false);
+        }
+        deinflection_store.push_back(std::move(deinflection_results));
       }
     }
   };

@@ -275,7 +275,10 @@ int main() {
         R"(["出来る","できる","","v1",0,["to be able"],8,""],)"
         R"(["出来","でき","","",0,["workmanship"],9,""],)"
         R"(["そんな","そんな","","",0,["such"],10,""],)"
-        R"(["損","そん","","",0,["loss"],11,""]])";
+        R"(["損","そん","","",0,["loss"],11,""],)"
+        R"(["なんで","なんで","","",0,["why"],12,""],)"
+        // 19 code points: a long key, found only by the scan past scan_length.
+        R"(["にゃんであいうえおかきくけこさしすせそ","にゃんであいうえおかきくけこさしすせそ","","",0,["long"],13,""]])";
     const std::string dict = import_dict(
         root, out3, "neko",
         {{"index.json", R"({"title":"neko","format":3,"revision":"1"})"}, {"term_bank_1.json", bank}});
@@ -304,6 +307,13 @@ int main() {
           "できにゃい: expected 出来る over the whole input by neko speech -> negative");
     const auto sonnya = expressions("そんにゃ");
     check(same(sonnya, {"そんな", "損"}), "そんにゃ: expected [そんな, 損], got " + join(sonnya));
+
+    // Within scan_length only にゃんで -> なんで matches, by neko speech; the
+    // long-key scan then finds the whole input as an ordinary key, which reads
+    // further, so なんで goes.
+    const std::string long_key = "にゃんであいうえおかきくけこさしすせそ";
+    const auto long_result = expressions(long_key);
+    check(same(long_result, {long_key}), "long key: expected [" + long_key + "], got " + join(long_result));
   }
 
   std::filesystem::remove_all(root);

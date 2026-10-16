@@ -7,9 +7,10 @@ types, and conjugation chains. It includes historical kana (PRs #2474 and
 #2501), honorific forms, emphatic negatives, and invalid causative/passive chains.
 Four additional checks cover whole-word honorifics and their inflected forms.
 Twelve more cover NekoPara's cat speech (`neko speech`, not part of Yomitan): six
-forms covering the five substitutions of `にゃ`, four checks that those results
-come after the ordinary ones, Yomitan's own `-ゃ` reading of `にゃ` beside them,
-and an input without `にゃ`.
+forms covering the five substitutions of `にゃ`; four checks that those results
+come after the ordinary ones and that `deinflect` is `deinflect_ordinary`
+followed by `deinflect_neko_speech`; Yomitan's own `-ゃ` reading of `にゃ` beside
+them; and an input without `にゃ`.
 The fixture retains Yomitan's GPL-3.0-or-later attribution.
 
 Run the standalone test without building importer dependencies:

@@ -91,7 +91,7 @@ std::vector<DeinflectionResult> Deinflector::deinflect(const std::string& text) 
 ```
 Deinflects a given Japanese string using rules from the Yomitan deinflector. As this doesn't use any dictionary data, the result may include invalid deinflections.
 
-It also reads NekoPara's cat speech, which says `にゃ` for `な` and sometimes for `だ`, `ら`, `ま` or `じゃ`: each `にゃ` is replaced by each of them, one at a time, and deinflected as usual, so `できにゃい` resolves to `できる` and `いにゃっしゃいます` to `いらっしゃる`. Those results come after every ordinary one, with `neko speech` (`Deinflector::neko_speech`) as their trace's first step; `Deinflector::is_neko_speech` tells them apart. `Lookup` uses one only where it reads more of the text than every ordinary result.
+It also reads NekoPara's cat speech, which says `にゃ` for `な` and sometimes for `だ`, `ら`, `ま` or `じゃ`: each `にゃ` is replaced by each of them, one at a time, and deinflected as usual, so `できにゃい` resolves to `できる` and `いにゃっしゃいます` to `いらっしゃる`. Those results come after every ordinary one, with `neko speech` (`Deinflector::neko_speech`) as their trace's first step; `Deinflector::is_neko_speech` tells them apart. `deinflect_ordinary` and `deinflect_neko_speech` return the two parts separately. `Lookup` uses a neko speech result only where it reads more of the text than every ordinary result.
 
 ```cpp
 static uint32_t Deinflector::pos_to_conditions(const std::vector<std::string>& part_of_speech)

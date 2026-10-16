@@ -126,16 +126,27 @@ int main(int argc, char** argv) {
   }
   // The input stays the first result, and every neko result comes after every
   // ordinary one, so an exact match (こんにゃく) or an ordinary reading of にゃ
-  // (食べにゃ, Yomitan's -ゃ for -ねば) keeps its place.
+  // (食べにゃ, Yomitan's -ゃ for -ねば) keeps its place. deinflect() is exactly
+  // deinflect_ordinary() followed by deinflect_neko_speech().
   for (const auto* source : {"こんにゃく", "食べにゃ", "できにゃい", "わかりにゃした"}) {
     ++cases;
     const auto results = deinflector.deinflect(source);
     bool ordered = !results.empty() && results[0].text == source && results[0].trace.empty();
     bool seen_neko = false;
     for (const auto& result : results) {
-      const bool neko = !result.trace.empty() && result.trace[0].name == "neko speech";
+      const bool neko = Deinflector::is_neko_speech(result);
       if (seen_neko && !neko) ordered = false;
       seen_neko = seen_neko || neko;
+    }
+    const auto ordinary = deinflector.deinflect_ordinary(source);
+    const auto neko = deinflector.deinflect_neko_speech(source);
+    if (results.size() != ordinary.size() + neko.size()) ordered = false;
+    for (size_t i = 0; ordered && i < results.size(); ++i) {
+      const auto& part = i < ordinary.size() ? ordinary[i] : neko[i - ordinary.size()];
+      if (results[i].text != part.text || results[i].conditions != part.conditions ||
+          results[i].trace.size() != part.trace.size() || Deinflector::is_neko_speech(part) != (i >= ordinary.size())) {
+        ordered = false;
+      }
     }
     if (!ordered || !seen_neko) {
       ++failures;
