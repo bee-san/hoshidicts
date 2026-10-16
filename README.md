@@ -8,30 +8,61 @@ A MIT version of the library is available on the [main-mit](https://github.com/M
 
 ### importer
 ```cpp
-ImportResult dictionary_importer::import(const std::string& zip_path, const std::string& output_dir, bool low_ram = false)
+ImportResult dictionary_importer::import(const std::string& source_path, const std::string& output_dir, bool low_ram = false)
 ```
-Imports a Yomitan `.zip` dictionary file into a custom format. The resulting folder is stored in `output_dir/<dict_title>`. Glossaries are compressed using zstd. Term, frequency and pitch dictionaries are generally supported, but only a small part of the pitch accent spec was implemented. Setting `low_ram` to `true` can reduce memory usage significantly at the cost of slightly lower import speed.
+Imports a Yomitan `.zip` dictionary file or an MDict `.mdx` dictionary into a custom format. The resulting folder is stored in `output_dir/<folder_name(dict_title)>`: the title itself when it is a single path component, otherwise the title with `/`, `\`, `:` and NUL replaced by `_` plus ` #` and the title's FNV-1a 32-bit hash in hex (`Nico/Pixiv` → `Nico_Pixiv #c747f3db`). `dictionary_importer::folder_name` returns it. Glossaries are compressed using zstd. Term, frequency and pitch dictionaries are generally supported, but only a small part of the pitch accent spec was implemented. Setting `low_ram` to `true` can reduce memory usage significantly at the cost of slightly lower import speed.
+
+The format is detected from the file contents, not the extension.
+
+#### MDX / MDD import
+
+An `.mdx` file is imported directly, without an intermediate Yomitan archive: its entries are converted to Yomitan term banks of 10,000 rows as they are read, so memory use is bounded by the bank size, not the dictionary. The conversion follows [manabitan](https://github.com/ManabiIO/manabitan)'s MDX importer so the result renders the same way.
+
+- Container: MDict engine versions 1.x and 2.0 (`GeneratedByEngineVersion`). Version 3 files are rejected with a clear error.
+- Encodings: UTF-8 and UTF-16. `GBK`, `GB18030` and `Big5` dictionaries are rejected (`unsupported MDX encoding: <name>`).
+- Compression: none, LZO1X and zlib, per block, with every block's Adler-32 verified. A record block that fails to decode loses its entries, not the dictionary; the import fails only when no entry is left (`MDX has no usable entries: N records could not be read (…)`).
+- Encryption: `Encrypted="2"` (ciphered key index) is supported. `Encrypted="1"` (registration-protected record blocks) needs a user key and is rejected.
+- Resource files: `X.mdd`, `X.1.mdd`, `X.2.mdd`, ... next to `X.mdx` are read automatically (file name case does not matter); a missing MDD is not an error. Only assets the glossaries or stylesheets refer to are imported, under `mdict-media/<path>`; every `*.css` in the MDD plus inline `<style>` blocks become the dictionary's stylesheet. Keys containing `..`, a drive letter or NUL are dropped. An asset or stylesheet in a block that fails to decode is left out without failing the import.
+- MDD stylesheets: decoded by their BOM, else by a leading `@charset "…";`, else as UTF-8, else as UTF-16 without a BOM, else as Shift_JIS, and their `@charset` rule is removed. A declared charset may be UTF-8, Shift_JIS, EUC-JP, GBK/GB18030, Big5, EUC-KR or windows-1252 under any of its [WHATWG labels](https://encoding.spec.whatwg.org/#names-and-labels); the legacy ones are decoded with `iconv(3)`, which the CMake build uses when `find_package(Iconv)` finds it. A sheet that does not decode cleanly, or declares any other charset, is left out of the stylesheet; it never fails the import.
+- Entries: `@@@LINK=target` redirects become extra headwords of the entry they reach, through chains of redirects of any length; every alias keeps its own spelling. A target matches the key spelled exactly. A target that no key spells exactly matches the keys that equal it under the header's `KeyCaseSensitive` and `StripKey` rules (absent, `No` and `Yes` as in MDict): letter case is ignored, and StripKey removes `( ) . , - & 、 ' / \ @ _ $ !` and spaces. A redirect whose target is missing, or that only reaches other redirects, is dropped. Duplicate headwords stay separate entries. `Format="Text"` definitions become plain string glossaries; HTML definitions become structured content.
+- HTML fidelity: the MDX `StyleSheet` backtick markup is expanded; `b/i/em/strong/u/s/sub/sup/h1-6/p/pre/font/...` map to styled `span`/`div`; `<font size>` becomes a CSS keyword (`x-small` … `xxx-large`) by the HTML legacy font-size rules, and an inline `style` wins over `size`, `color` and `face`; inline `style` keeps the properties Yomitan's structured content supports; `entry://`, `bword://`, `d:`, `x:` links search the term; `sound://` links are disabled (rendered as `#`) and their files are not imported; `javascript:` and friends are neutralised; `<script>` is dropped; unsupported elements keep their text; nesting deeper than 20 is flattened. CSS from the MDD is passed through as the dictionary stylesheet, so selectors that depend on tags Yomitan does not render (`<b>`, `<p>`, ...) will not match.
+- What an import left out is counted on `ImportResult::warnings`, as manabitan's MDict conversion notes count it: `skippedRecords` (records in blocks that failed to decode), `unresolvedRedirects` (aliases that reach no entry), `missingResources` (distinct referenced paths no MDD provides) and `unreadableResources` (distinct MDD resources in blocks that failed to decode). A Yomitan archive's counts are zero. They describe the import run and are not written to `index.json`.
+- The key index of the MDX (and of each MDD) is held in memory during the import; records are streamed block by block.
+
+```
+hoshidicts-cli import path/to/dictionary.mdx
+```
 
 ### query
 ```cpp
-void DictionaryQuery::add_term_dict(const std::string& path)
+bool DictionaryQuery::add_term_dict(const std::string& path, DictionaryStorage storage = DictionaryStorage::Mapped, DictionaryIndexStorage index_storage = DictionaryIndexStorage::Mapped)
 ```
 Adds an imported term dictionary to the query.
 
 ```cpp
-void DictionaryQuery::add_freq_dict(const std::string& path)
+bool DictionaryQuery::add_freq_dict(const std::string& path, DictionaryStorage storage = DictionaryStorage::Mapped, DictionaryIndexStorage index_storage = DictionaryIndexStorage::Mapped)
 ```
 Adds an imported frequency dictionary to the query.
 
 ```cpp
-void DictionaryQuery::add_pitch_dict(const std::string& path)
+bool DictionaryQuery::add_pitch_dict(const std::string& path, DictionaryStorage storage = DictionaryStorage::Mapped, DictionaryIndexStorage index_storage = DictionaryIndexStorage::Mapped)
 ```
 Adds an imported pitch dictionary to the query.
+
+A dictionary added as several kinds (term, frequency, pitch, kanji) is opened once: the later kinds share the files the first one opened, whatever storage modes they ask for, and `remove_dict` releases them with the last kind. A path's files must not change while any kind of it is loaded. Remove all its kinds before changing either mode. `hash_index_paged(path)` reports its actual hash mode; `last_error()` describes a failed add.
+
+`storage` decides how the dictionary's entries are held. `index_storage` independently decides how `hash.table` is held. Bloom filters, media offsets, scan metadata and the trained zstd dictionary remain memory-mapped.
+
+- `DictionaryStorage::Mapped` maps `blobs.bin`, which holds the entries, and `media.bin`. Natively a mapping costs nothing until it is read. Under Emscripten `mmap` copies the whole file into linear memory, so there `media.bin` is not mapped but read from the file when a media file is asked for.
+- `DictionaryStorage::Paged` reads `blobs.bin` on demand through a page cache that the query's paged dictionaries share, and reads `media.bin` on demand. Lookups return the same results; one that needs pages the cache does not hold costs a read per page. `DictionaryQuery(PageCacheOptions{...})` sets the page size (default 4 KiB) and the cache budget (default 32 MiB); pages a running query holds stay valid until it returns, so the cache can exceed its budget until then. `page_cache_bytes()` returns what it holds.
+
+- `DictionaryIndexStorage::Mapped` keeps the complete hash table mapped, preserving the default for existing callers.
+- `DictionaryIndexStorage::Paged` reads hash slots through that same cache, after the resident Bloom filter has accepted the key. Slots are copied safely across page boundaries and pages are released after each probe. The existing file format is unchanged; entries and hashes compete for one cache budget. `page_cache_statistics()` splits cache bytes, hits, page reads and bytes read into `entries` and `indexes`.
 
 ```cpp
 std::vector<TermResult> DictionaryQuery::query(const std::string& expression) const
 ```
-Queries all added dictionaries for the given expression. TermResult includes glossary, frequency and pitch data in the order dictionaries were added. Glossaries are decompressed.
+Queries all added dictionaries for the given expression. TermResult includes glossary, frequency and pitch data in the order dictionaries were added. Within each dictionary, glossaries are ordered by their term-bank score, highest first, with original order kept for equal scores. Glossaries are decompressed.
 
 ```cpp
 std::vector<DictionaryStyle> DictionaryQuery::get_styles() const
@@ -39,9 +70,20 @@ std::vector<DictionaryStyle> DictionaryQuery::get_styles() const
 Returns CSS styles for all dictionaries, if present.
 
 ```cpp
+std::vector<DictionaryTags> DictionaryQuery::get_tags() const
+```
+Returns the tag-bank rows (`name`, `category`, `order`, `notes`, `score`) of each term dictionary that has any, in bank order. A name is kept as the bank spells it, as a glossary's `definition_tags` is, so it matches the names a glossary uses. Dictionaries imported before tag banks were stored have none until they are imported again.
+
+```cpp
 std::vector<char> DictionaryQuery::get_media_file(const std::string& dict_name, const std::string& media_path) const
 ```
 Returns raw bytes for file originally stored at `media_path` in term dictionary `dict_name` or an empty vector if the file does not exist.
+
+```cpp
+size_t DictionaryQuery::read_media_file(const std::string& dict_name, const std::string& media_path,
+                                        std::vector<uint8_t>& out, size_t max_bytes = SIZE_MAX) const
+```
+Returns the stored size of the media file (0 when there is none) and copies it into `out` when it is at most `max_bytes` long, so a caller can refuse a large file without reading it. `get_media_file_view` returns a view into the mapping instead, and an empty one where media is read on demand.
 
 ### deinflector
 ```cpp
@@ -54,8 +96,6 @@ static uint32_t Deinflector::pos_to_conditions(const std::vector<std::string>& p
 ```
 Converts a vector of part-of-speech tags into a bitmask used for deinflection filtering.
 
-`Deinflector` also normalizes NekoPara-style `にゃ` substitutions, allowing forms such as `できにゃい` to resolve to `できる` while preserving exact matches such as `こんにゃく`.
-
 ### lookup
 ```cpp
 Lookup::Lookup(DictionaryQuery& query, Deinflector& deinflector)
@@ -67,7 +107,19 @@ std::vector<LookupResult> Lookup::lookup(const std::string& lookup_string, int m
 ```
 Follows a parsing strategy similar to Yomitan. Substrings of `lookup_string` are tested from length `scan_length` down to 1. Each substring is preprocessed, deinflected then queried using the query object.
 
+Keys longer than `scan_length` are still found when `scan_length` is at least 8 and `lookup_string` is long enough to contain them: the importer records every key longer than 16 code points by its first eight code points in `scan.idx`, and when the input begins like such a key the scan extends to that key's length plus eight code points for an inflected ending. Inputs that do not begin like a long key keep the cost of `scan_length`. `DictionaryQuery::max_long_key_length()` returns the longest such key across the loaded term dictionaries so a caller can size `lookup_string`. Dictionaries imported before `scan.idx` existed simply never extend.
+
 Results are filtered by part-of-speech tags defined in dictionaries, or added directly if none are present. The results are sorted by matched length first, then by preprocessing steps, then deinflection trace length and finally by frequency.
+
+```cpp
+std::vector<LookupResult> Lookup::lookup_dictionary(const std::string& lookup_string,
+                                                    const std::string& dictionary_path,
+                                                    int max_results = 16,
+                                                    size_t scan_length = 16) const
+```
+Runs the same lookup and ranking pipeline while restricting term matches to one
+already-added dictionary. Frequency and pitch metadata still come from every
+added metadata dictionary.
 
 ## Acknowledgements
 
@@ -80,7 +132,27 @@ Results are filtered by part-of-speech tags defined in dictionaries, or added di
 - [unordered_dense](https://github.com/martinus/unordered_dense.git): MIT
 - [utf8proc](https://github.com/JuliaStrings/utf8proc): MIT
 - [kanji-processor](https://github.com/yomidevs/kanji-processor): MIT
-- [Nekopara-Speech](https://huggingface.co/datasets/OpenSpeechHub/Nekopara-Speech): NekoPara speech corpus used for cat-speech normalization
+- [lzokay](https://github.com/AxioDL/lzokay): MIT (vendored in `external/lzokay`)
+- [gumbo-parser](https://github.com/sparklemotion/nokogiri/tree/main/gumbo-parser) (Nokogiri's fork of Google's gumbo): Apache-2.0, `hashmap.c` MIT (vendored in `external/gumbo-parser`)
+
+## Lookup benchmark
+
+Build with `-DHOSHIDICTS_BENCHMARK=ON`. `benchmark-lookup` accepts a word list
+(one UTF-8 word per line, or a CSV whose first column is the word), an iteration
+count and `--term`, `--freq`, `--pitch` or `--kanji` package paths. Defaults keep
+entries and hashes mapped. Add `--paged-entries` and independently
+`--paged-index` to compare the readers. `--json` emits per-lookup milliseconds
+for each pass, result/glossary counts and the shared cache's activity.
+
+```sh
+./build/benchmark-lookup words.txt 2 --paged-entries --paged-index --json \
+  --term imported/dictionary --freq imported/dictionary --pitch imported/dictionary
+```
+
+Timing covers `Lookup::lookup`, including decompression and ranking, and excludes
+result counting, serialization and result destruction. Full result parity is
+covered by the dictionary-storage tests; Chrome/WASM memory and transport costs
+belong to the host application's benchmark.
 
 ## License
 hoshidicts (main) is licensed under the GNU General Public License v3.0. See [LICENSE](LICENSE) for details.

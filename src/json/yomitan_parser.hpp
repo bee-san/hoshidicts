@@ -1,27 +1,34 @@
 #pragma once
 #include <cstdint>
 #include <glaze/glaze.hpp>
+
+#include "json_skip.hpp"
 #include <optional>
+#include <string>
 #include <string_view>
 #include <vector>
 
+// index.json's strings are read decoded, unlike the banks' raw views: a
+// writer may escape any character ("\\n" in a description, "\\u9752" for
+// every non-ASCII character from Python's json.dump), and the title names the
+// dictionary everywhere.
 struct Index {
-  std::string_view title;
+  std::string title;
   std::optional<int> format;
   std::optional<int> version;
-  std::string_view revision;
-  std::optional<std::string_view> minimumYomitanVersion;
+  std::string revision;
+  std::optional<std::string> minimumYomitanVersion;
   bool sequenced = false;
   std::optional<bool> isUpdatable;
-  std::optional<std::string_view> indexUrl;
-  std::optional<std::string_view> downloadUrl;
-  std::optional<std::string_view> author;
-  std::optional<std::string_view> url;
-  std::optional<std::string_view> description;
-  std::optional<std::string_view> attribution;
-  std::optional<std::string_view> sourceLanguage;
-  std::optional<std::string_view> targetLanguage;
-  std::optional<std::string_view> frequencyMode;
+  std::optional<std::string> indexUrl;
+  std::optional<std::string> downloadUrl;
+  std::optional<std::string> author;
+  std::optional<std::string> url;
+  std::optional<std::string> description;
+  std::optional<std::string> attribution;
+  std::optional<std::string> sourceLanguage;
+  std::optional<std::string> targetLanguage;
+  std::optional<std::string> frequencyMode;
 };
 
 struct Term {
@@ -30,7 +37,7 @@ struct Term {
   std::optional<std::string_view> definition_tags;
   std::string_view rules;
   double score = 0;
-  glz::raw_json_view glossary;
+  hoshidicts::raw_value_view glossary;
   int64_t sequence = 0;
   std::string_view term_tags;
 };
@@ -38,7 +45,7 @@ struct Term {
 struct Meta {
   std::string_view expression;
   std::string_view mode;
-  glz::raw_json_view data;
+  hoshidicts::raw_value_view data;
 };
 
 struct Kanji {
@@ -50,16 +57,17 @@ struct Kanji {
   std::unordered_map<std::string, std::string> stats;
 };
 
+// A tag-bank row. Yomitan's schema makes order and score any JSON number.
 struct Tag {
-  std::string_view name;
-  std::string_view category;
-  int order = 0;
-  std::string_view notes;
-  int score = 0;
+  std::string name;
+  std::string category;
+  double order = 0;
+  std::string notes;
+  double score = 0;
 };
 
 struct ParsedFrequency {
-  std::string_view reading;
+  std::string reading;
   int value;
   std::string display_value;
 };
@@ -72,16 +80,21 @@ struct ParsedAccent {
 };
 
 struct ParsedPitch {
-  std::string_view reading;
+  std::string reading;
   std::vector<ParsedAccent> pitches;
-  std::vector<std::string_view> transcriptions;
+  std::vector<std::string> transcriptions;
 };
 
 namespace yomitan_parser {
 bool parse_index(std::string_view content, Index& out);
-bool parse_term_bank(std::string_view content, std::vector<Term>& out);
-bool parse_meta_bank(std::string_view content, std::vector<Meta>& out);
-bool parse_kanji_bank(std::string_view content, std::vector<Kanji>& out);
+// The bank parsers keep each string as a view into `content`. A string the
+// bank spells with JSON escapes ("\\u98df" for 食, as Python's json.dump
+// writes every non-ASCII character by default) is decoded in place, which a
+// decoded string always fits, so the views stay valid while `content` lives.
+// Glossaries and meta data stay raw JSON.
+bool parse_term_bank(std::string& content, std::vector<Term>& out);
+bool parse_meta_bank(std::string& content, std::vector<Meta>& out);
+bool parse_kanji_bank(std::string& content, std::vector<Kanji>& out);
 bool parse_tag_bank(std::string_view content, std::vector<Tag>& out);
 bool parse_frequency(std::string_view content, ParsedFrequency& out);
 bool parse_pitch(std::string_view content, ParsedPitch& out);

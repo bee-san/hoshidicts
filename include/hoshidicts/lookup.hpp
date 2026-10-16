@@ -1,5 +1,6 @@
 #pragma once
 
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -14,14 +15,27 @@ struct LookupResult {
   int preprocessor_steps;
 };
 
+enum class LookupFrequencyOrder { Auto, Ascending, Descending, Disabled };
+
+struct LookupOptions {
+  std::optional<std::string> frequency_dictionary;
+  LookupFrequencyOrder frequency_order = LookupFrequencyOrder::Auto;
+  std::optional<std::string> primary_reading;
+};
+
 class Lookup {
  public:
   Lookup(DictionaryQuery& query, Deinflector& deinflector) : query_(query), deinflector_(deinflector) {};
-  std::vector<LookupResult> lookup(const std::string& lookup_string, int max_results = 16,
-                                   size_t scan_length = 16) const;
+  std::vector<LookupResult> lookup(const std::string& lookup_string, int max_results = 16, size_t scan_length = 16,
+                                   const LookupOptions& options = {}) const;
+  std::vector<LookupResult> lookup_dictionary(const std::string& lookup_string, const std::string& dictionary_path,
+                                              int max_results = 16, size_t scan_length = 16,
+                                              const LookupOptions& options = {}) const;
 
  private:
-  static void filter_by_pos(std::vector<TermResult>& terms, const DeinflectionResult& d);
+  std::vector<LookupResult> lookup_impl(const std::string& lookup_string, const std::string* dictionary_path,
+                                        int max_results, size_t scan_length, const LookupOptions& options) const;
+  static void filter_by_pos(RawTerms& terms, const DeinflectionResult& d);
 
   DictionaryQuery& query_;
   Deinflector& deinflector_;

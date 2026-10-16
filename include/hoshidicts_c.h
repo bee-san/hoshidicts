@@ -16,7 +16,7 @@ typedef struct hd_str {
 // importer
 typedef struct hd_import_result hd_import_result;
 
-hd_import_result* hd_import(const char* zip_path, const char* output_dir, int low_ram);
+hd_import_result* hd_import(const char* source_path, const char* output_dir, int low_ram);
 void hd_import_result_free(hd_import_result* r);
 
 int hd_import_result_success(const hd_import_result* r);
@@ -91,7 +91,7 @@ typedef struct hd_term_result {
   hd_str expression;
   hd_str reading;
   hd_str rules;
-  int32_t score;
+  double score;
   const hd_glossary_entry* glossaries;
   size_t glossaries_count;
   const hd_frequency_entry* frequencies;
@@ -123,6 +123,17 @@ int hd_query_add_term_dict(hd_query* q, const char* path);
 int hd_query_add_freq_dict(hd_query* q, const char* path);
 int hd_query_add_pitch_dict(hd_query* q, const char* path);
 int hd_query_add_kanji_dict(hd_query* q, const char* path);
+// Removes every loaded kind of the dictionary at path; returns the number removed.
+size_t hd_query_remove_dict(hd_query* q, const char* path);
+// Reorders the loaded dictionaries to follow paths (see DictionaryQuery::set_dict_order).
+// Returns 0 on success, 1 when a listed path is not loaded.
+int hd_query_set_dict_order(hd_query* q, const char* const* paths, size_t count);
+
+// Longest term-dictionary key, in code points, recorded in the loaded
+// dictionaries' long-key scan indexes (keys longer than 16 code points; 0 when
+// none is loaded). A host should hand hd_lookup_run at least this many code
+// points plus eight so that an extended scan can reach such a key.
+size_t hd_query_max_long_key_length(const hd_query* q);
 
 hd_results* hd_query_run(const hd_query* q, const char* expression, const hd_term_result** out_terms,
                          size_t* out_count);
@@ -132,6 +143,9 @@ hd_kanji_results* hd_query_run_kanji(const hd_query* q, const char* kanji, const
                                      size_t* out_count);
 void hd_kanji_results_free(hd_kanji_results* r);
 
+// A view into the dictionary's mapped media.bin, valid while the query holds
+// the dictionary. Empty where media is read on demand (Emscripten builds; see
+// DictionaryStorage in hoshidicts/query.hpp).
 hd_media_file hd_query_get_media_file(const hd_query* q, const char* dict_name, const char* media_path);
 
 hd_styles* hd_query_get_styles(const hd_query* q, const hd_dictionary_style** out_styles, size_t* out_count);
@@ -155,11 +169,27 @@ typedef struct hd_lookup_result {
   int32_t preprocessor_steps;
 } hd_lookup_result;
 
+typedef enum hd_lookup_frequency_order {
+  HD_LOOKUP_FREQUENCY_ORDER_AUTO = 0,
+  HD_LOOKUP_FREQUENCY_ORDER_ASCENDING = 1,
+  HD_LOOKUP_FREQUENCY_ORDER_DESCENDING = 2,
+  HD_LOOKUP_FREQUENCY_ORDER_DISABLED = 3,
+} hd_lookup_frequency_order;
+
+typedef struct hd_lookup_options {
+  hd_str frequency_dictionary;
+  int32_t frequency_order;
+  hd_str primary_reading;
+} hd_lookup_options;
+
 hd_lookup* hd_lookup_new(hd_query* q, hd_deinflector* d);
 void hd_lookup_free(hd_lookup* l);
 
 hd_lookup_results* hd_lookup_run(const hd_lookup* l, const char* lookup_string, int max_results, size_t scan_length,
                                  const hd_lookup_result** out_results, size_t* out_count);
+hd_lookup_results* hd_lookup_run_with_options(const hd_lookup* l, const char* lookup_string, int max_results,
+                                              size_t scan_length, const hd_lookup_options* options,
+                                              const hd_lookup_result** out_results, size_t* out_count);
 void hd_lookup_results_free(hd_lookup_results* r);
 
 #ifdef __cplusplus

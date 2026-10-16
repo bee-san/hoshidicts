@@ -1,153 +1,364 @@
 #include "hoshidicts/lookup.hpp"
 
+#include <ankerl/unordered_dense.h>
 #include <utf8.h>
+#include <xxh3.h>
 
 #include <algorithm>
 #include <climits>
-#include <map>
+#include <numeric>
+#include <optional>
 #include <ranges>
-#include <sstream>
+#include <string_view>
+#include <vector>
 
+#include "query_internal.hpp"
+#include "scan_index.hpp"
 #include "text_processor/text_processor.hpp"
 
 namespace {
-std::vector<std::string> split_whitespace(const std::string& str) {
-  std::vector<std::string> result;
-  std::istringstream iss(str);
-  std::string token;
-  while (iss >> token) {
-    result.push_back(std::move(token));
+bool is_space(char c) { return c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r'; }
+
+void split_whitespace(std::string_view str, std::vector<std::string>& result) {
+  result.clear();
+  size_t i = 0;
+  const size_t n = str.size();
+  while (i < n) {
+    while (i < n && is_space(str[i])) {
+      ++i;
+    }
+    const size_t begin = i;
+    while (i < n && !is_space(str[i])) {
+      ++i;
+    }
+    if (i > begin) {
+      result.emplace_back(str, begin, i - begin);
+    }
   }
-  return result;
 }
 
-int get_freq_value_for_dict(const TermResult& term, const std::string& dict_name) {
+struct Candidate {
+  size_t matched_len;
+  const DeinflectionResult* deinflection;
+  RawTerm* term;
+  uint32_t store_index;
+  int steps;
+  // The best (smallest) rank, in the caller's dictionary order, of the term
+  // dictionaries this candidate's glossaries come from. SIZE_MAX until it is
+  // computed from the glossary chain just before sorting. It breaks ties the
+  // frequency comparison leaves, so the reading the user ranked highest wins.
+  size_t dict_rank = SIZE_MAX;
+};
+
+uint64_t key_hash(std::string_view expression, std::string_view reading) {
+  return XXH3_64bits_withSeed(reading.data(), reading.size(), XXH3_64bits(expression.data(), expression.size()));
+}
+
+bool key_less(const RawTerm& a, const RawTerm& b) {
+  const int c = a.expression.compare(b.expression);
+  return c != 0 ? c < 0 : a.reading < b.reading;
+}
+
+std::optional<int> get_freq_value_for_dict(const RawTerm& term, std::string_view dictionary_name, bool descending) {
+  std::optional<int> frequency;
   for (const auto& frequency_entry : term.frequencies) {
-    if (frequency_entry.dict_name != dict_name) {
+    if (frequency_entry.dict_name != dictionary_name || frequency_entry.frequencies.empty()) {
       continue;
     }
 
-    int min_frequency = INT_MAX;
-    for (const auto& frequency : frequency_entry.frequencies) {
-      if (frequency.value >= 0) {
-        min_frequency = std::min(min_frequency, frequency.value);
+    for (const auto& candidate : frequency_entry.frequencies) {
+      if (candidate.value < 0) {
+        continue;
       }
+      frequency = frequency.has_value() ? std::optional<int>(descending ? std::max(*frequency, candidate.value)
+                                                                        : std::min(*frequency, candidate.value))
+                                        : std::optional<int>(candidate.value);
     }
-    return min_frequency;
   }
 
-  return INT_MAX;
+  return frequency;
+}
+
+bool matches_primary_reading(const RawTerm& term, std::string_view primary_reading) {
+  return term.reading == primary_reading;
 }
 }
 
-std::vector<LookupResult> Lookup::lookup(const std::string& lookup_string, int max_results, size_t scan_length) const {
-  std::map<std::pair<std::string, std::string>, LookupResult> result_map;
+std::vector<LookupResult> Lookup::lookup(const std::string& lookup_string, int max_results, size_t scan_length,
+                                         const LookupOptions& options) const {
+  return lookup_impl(lookup_string, nullptr, max_results, scan_length, options);
+}
+
+std::vector<LookupResult> Lookup::lookup_dictionary(const std::string& lookup_string,
+                                                    const std::string& dictionary_path, int max_results,
+                                                    size_t scan_length, const LookupOptions& options) const {
+  return lookup_impl(lookup_string, &dictionary_path, max_results, scan_length, options);
+}
+
+std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, const std::string* dictionary_path,
+                                              int max_results, size_t scan_length,
+                                              const LookupOptions& options) const {
+  // Holds what the raw terms below read of paged dictionaries until the kept
+  // results are materialized, so it outlives term_store.
+  BlobPins pins;
+  std::vector<Candidate> candidates;
+  ankerl::unordered_dense::map<uint64_t, uint32_t> index;
+  std::vector<std::vector<DeinflectionResult>> deinflection_store;
+  std::vector<RawTerms> term_store;
 
   size_t text_len = utf8::distance(lookup_string.begin(), lookup_string.end());
   size_t start = std::min(scan_length, text_len);
   auto search_str_it = lookup_string.begin();
   utf8::advance(search_str_it, start, lookup_string.end());
 
-  for (size_t i = std::min(scan_length, text_len); i > 0; i--) {
-    std::string search_str(lookup_string.begin(), search_str_it);
+  auto find_candidate = [&](uint64_t h, const RawTerm& term) -> Candidate* {
+    auto it = index.find(h);
+    if (it == index.end()) {
+      return nullptr;
+    }
+    Candidate& hit = candidates[it->second];
+    if (hit.term->expression == term.expression && hit.term->reading == term.reading) {
+      return &hit;
+    }
+    for (auto& c : candidates) {
+      if (c.term->expression == term.expression && c.term->reading == term.reading) {
+        return &c;
+      }
+    }
+    return nullptr;
+  };
+
+  // The processed variants of the input's first eight code points, kept from
+  // the ordinary scan for the long-key check below.
+  std::vector<std::string> prefix_variants;
+
+  // Scans one prefix of the input: every processed variant, deinflected, looked
+  // up, and merged into the candidates keeping the longest matched form.
+  auto scan_prefix = [&](std::string_view search_str, size_t codepoints) {
     auto processor_results = text_processor::process(search_str);
+    if (codepoints == scan_index::long_key_prefix_codepoints) {
+      prefix_variants.reserve(processor_results.size());
+      for (const auto& variant : processor_results) {
+        prefix_variants.push_back(variant.text);
+      }
+    }
     for (auto& variant : processor_results) {
       auto deinflection_results = deinflector_.deinflect(variant.text);
       for (auto& deinflection : deinflection_results) {
-        auto terms = query_.query_raw(deinflection.text);
+        // Most deinflected forms name no entry of their part of speech; read
+        // the frequencies and pitches of only the terms the filter keeps.
+        auto terms = query_.query_raw(deinflection.text, pins, dictionary_path, false);
         filter_by_pos(terms, deinflection);
+        for (auto& term : terms.terms) {
+          query_.collect_frequencies(term.expression, term.reading, term.frequencies, pins);
+          query_.collect_pitches(term.expression, term.reading, term.pitches, pins);
+        }
 
-        for (auto& term : terms) {
-          // deduplicate glossaries
-          auto key = std::make_pair(term.expression, term.reading);
-          auto it = result_map.find(key);
-          if (it != result_map.end()) {
-            // we only need the longest matched form
-            if (utf8::distance(search_str.begin(), search_str.end()) >
-                utf8::distance(it->second.matched.begin(), it->second.matched.end())) {
-              it->second = LookupResult{.matched = search_str,
-                                        .deinflected = deinflection.text,
-                                        .trace = deinflection.trace,
-                                        .term = std::move(term),
-                                        .preprocessor_steps = variant.steps};
+        const auto store_index = static_cast<uint32_t>(term_store.size());
+        for (auto& term : terms.terms) {
+          const uint64_t h = key_hash(term.expression, term.reading);
+          Candidate* existing = find_candidate(h, term);
+          if (existing != nullptr) {
+            if (search_str.size() > existing->matched_len) {
+              existing->matched_len = search_str.size();
+              existing->deinflection = &deinflection;
+              existing->term = &term;
+              existing->store_index = store_index;
+              existing->steps = variant.steps;
             }
           } else {
-            result_map.emplace(key, LookupResult{.matched = search_str,
-                                                 .deinflected = deinflection.text,
-                                                 .trace = deinflection.trace,
-                                                 .term = std::move(term),
-                                                 .preprocessor_steps = variant.steps});
+            index.try_emplace(h, static_cast<uint32_t>(candidates.size()));
+            candidates.push_back(Candidate{.matched_len = search_str.size(),
+                                           .deinflection = &deinflection,
+                                           .term = &term,
+                                           .store_index = store_index,
+                                           .steps = variant.steps});
           }
         }
+        term_store.push_back(std::move(terms));
       }
+      deinflection_store.push_back(std::move(deinflection_results));
     }
+  };
+
+  for (size_t i = start; i > 0; i--) {
+    scan_prefix(std::string_view(lookup_string.begin(), search_str_it), i);
     if (i > 1) {
       utf8::prior(search_str_it, lookup_string.begin());
     }
   }
 
-  auto results = result_map | std::views::values | std::views::as_rvalue | std::ranges::to<std::vector>();
-  const auto freq_dict_order = query_.get_freq_dict_order();
-  auto middle_iter = std::ranges::next(results.begin(), max_results, results.end());
-  std::ranges::partial_sort(results, middle_iter, [&freq_dict_order](const auto& a, const auto& b) {
-    auto len_a = utf8::distance(a.matched.begin(), a.matched.end());
-    auto len_b = utf8::distance(b.matched.begin(), b.matched.end());
-    if (len_a != len_b) {
-      return len_a > len_b;
+  // Long keys (see src/scan_index.hpp): when the input begins like a key that
+  // is longer than the scan just done, scan the longer prefixes too, up to that
+  // key's length plus room for an inflected ending. A scan shorter than eight
+  // code points never produced the variants, so it never extends -- a caller
+  // asking for one character wants one character.
+  if (!prefix_variants.empty() && text_len > scan_length) {
+    size_t long_key = 0;
+    for (const auto& variant : prefix_variants) {
+      long_key = std::max(long_key, query_.long_key_length(variant, dictionary_path));
     }
-
-    auto steps_a = a.preprocessor_steps;
-    auto steps_b = b.preprocessor_steps;
-    if (steps_a != steps_b) {
-      return steps_a < steps_b;
-    }
-
-    auto trace_len_a = a.trace.size();
-    auto trace_len_b = b.trace.size();
-    if (trace_len_a != trace_len_b) {
-      return trace_len_a < trace_len_b;
-    }
-
-    auto match_a = a.term.expression == a.deinflected;
-    auto match_b = b.term.expression == b.deinflected;
-    if (match_a != match_b) {
-      return match_a > match_b;
-    }
-
-    for (const auto& dict_name : freq_dict_order) {
-      const int freq_a = get_freq_value_for_dict(a.term, dict_name);
-      const int freq_b = get_freq_value_for_dict(b.term, dict_name);
-      if (freq_a != freq_b) {
-        return freq_a < freq_b;
+    if (long_key > scan_length) {
+      const size_t extended = std::min(long_key + scan_index::inflection_slack_codepoints, text_len);
+      auto extended_it = lookup_string.begin();
+      utf8::advance(extended_it, extended, lookup_string.end());
+      for (size_t i = extended; i > scan_length; i--) {
+        scan_prefix(std::string_view(lookup_string.begin(), extended_it), i);
+        utf8::prior(extended_it, lookup_string.begin());
       }
     }
-
-    if (a.term.score != b.term.score) {
-      return a.term.score > b.term.score;
-    }
-
-    auto a_reading_expr_match = a.term.expression == a.term.reading;
-    auto b_reading_expr_match = b.term.expression == b.term.reading;
-    return a_reading_expr_match > b_reading_expr_match;
-  });
-
-  if (results.size() > static_cast<size_t>(max_results)) {
-    results.resize(max_results);
   }
 
-  for (auto& r : results) {
+  std::optional<std::string_view> frequency_dictionary;
+  bool frequency_descending = false;
+  switch (options.frequency_order) {
+    case LookupFrequencyOrder::Auto:
+      // No single sort dictionary is chosen, so no frequency separates the
+      // candidates: go straight to the caller's dictionary order below, as
+      // Yomitan does when its sort frequency dictionary is unset. Its
+      // _sortTermDictionaryEntries then leaves frequencyOrder tied for every
+      // entry and dictionaryIndex (the enabled-dictionary order) decides
+      // (yomidevs/yomitan@67db60d). Consulting every frequency dictionary here
+      // instead let a surface-form corpus value a name shares across its
+      // readings mask that order; see bee-san/hachidori#575.
+      break;
+    case LookupFrequencyOrder::Ascending:
+    case LookupFrequencyOrder::Descending:
+      if (options.frequency_dictionary.has_value()) {
+        const auto selected =
+            std::ranges::find(query_.freq_dicts_, *options.frequency_dictionary, &DictionaryQuery::Dictionary::name);
+        if (selected != query_.freq_dicts_.end()) {
+          frequency_dictionary = selected->name;
+          frequency_descending = options.frequency_order == LookupFrequencyOrder::Descending;
+        }
+      }
+      break;
+    case LookupFrequencyOrder::Disabled:
+      break;
+  }
+  std::string_view primary_reading;
+  if (options.primary_reading.has_value()) {
+    primary_reading = *options.primary_reading;
+  }
+  // Each term dictionary's rank in the caller's order, keyed by the address of
+  // its name (RawGlossary::dict_name points at the Dictionary::name the term
+  // was read from). term_dicts_ is already in the order set_dict_order last
+  // applied, so its index is the caller's priority.
+  ankerl::unordered_dense::map<const std::string*, size_t> dict_rank_by_name;
+  dict_rank_by_name.reserve(query_.term_dicts_.size());
+  for (size_t rank = 0; rank < query_.term_dicts_.size(); ++rank) {
+    dict_rank_by_name.try_emplace(&query_.term_dicts_[rank].name, rank);
+  }
+  for (auto& candidate : candidates) {
+    const RawTerms& terms = term_store[candidate.store_index];
+    for (uint32_t i = candidate.term->first_glossary; i != UINT32_MAX; i = terms.glossaries[i].next) {
+      const auto it = dict_rank_by_name.find(terms.glossaries[i].dict_name);
+      if (it != dict_rank_by_name.end()) {
+        candidate.dict_rank = std::min(candidate.dict_rank, it->second);
+      }
+    }
+  }
+
+  const size_t retained_count = std::min(candidates.size(), static_cast<size_t>(max_results));
+  auto less = [frequency_dictionary, frequency_descending, primary_reading](const Candidate& a,
+                                                                            const Candidate& b) {
+        if (!primary_reading.empty()) {
+          const bool primary_a = matches_primary_reading(*a.term, primary_reading);
+          const bool primary_b = matches_primary_reading(*b.term, primary_reading);
+          if (primary_a != primary_b) {
+            return primary_a;
+          }
+        }
+
+        if (a.matched_len != b.matched_len) {
+          return a.matched_len > b.matched_len;
+        }
+
+        auto steps_a = a.steps;
+        auto steps_b = b.steps;
+        if (steps_a != steps_b) {
+          return steps_a < steps_b;
+        }
+
+        auto trace_len_a = a.deinflection->trace.size();
+        auto trace_len_b = b.deinflection->trace.size();
+        if (trace_len_a != trace_len_b) {
+          return trace_len_a < trace_len_b;
+        }
+
+        auto match_a = a.term->expression == a.deinflection->text;
+        auto match_b = b.term->expression == b.deinflection->text;
+        if (match_a != match_b) {
+          return match_a > match_b;
+        }
+
+        if (frequency_dictionary.has_value()) {
+          const auto freq_a = get_freq_value_for_dict(*a.term, *frequency_dictionary, frequency_descending);
+          const auto freq_b = get_freq_value_for_dict(*b.term, *frequency_dictionary, frequency_descending);
+          if (freq_a.has_value() != freq_b.has_value()) {
+            return freq_a.has_value();
+          }
+          if (freq_a.has_value() && *freq_a != *freq_b) {
+            return frequency_descending ? *freq_a > *freq_b : *freq_a < *freq_b;
+          }
+        }
+
+        // The caller's dictionary order breaks a tie the frequencies left, as
+        // Yomitan ranks dictionaryIndex after frequencyOrder and before score.
+        // When the active frequency ranking does not separate two readings (it
+        // is equal, or neither reading is in it, as a surface frequency leaves
+        // the readings of a name), the reading from the dictionary the user
+        // ranked highest comes first instead of an arbitrary one.
+        if (a.dict_rank != b.dict_rank) {
+          return a.dict_rank < b.dict_rank;
+        }
+
+        if (a.term->score != b.term->score) {
+          return a.term->score > b.term->score;
+        }
+
+        auto a_reading_expr_match = a.term->expression == a.term->reading;
+        auto b_reading_expr_match = b.term->expression == b.term->reading;
+        return a_reading_expr_match > b_reading_expr_match;
+      };
+
+  std::vector<uint32_t> order(candidates.size());
+  std::iota(order.begin(), order.end(), uint32_t{0});
+  std::ranges::sort(order,
+                    [&](uint32_t ia, uint32_t ib) { return key_less(*candidates[ia].term, *candidates[ib].term); });
+  auto order_middle = std::ranges::next(order.begin(), static_cast<std::ptrdiff_t>(retained_count));
+  std::ranges::partial_sort(order, order_middle,
+                            [&](uint32_t ia, uint32_t ib) { return less(candidates[ia], candidates[ib]); });
+
+  std::vector<LookupResult> retained;
+  retained.reserve(retained_count);
+  for (auto it = order.begin(); it != order_middle; ++it) {
+    Candidate& c = candidates[*it];
+    retained.push_back(LookupResult{.matched = lookup_string.substr(0, c.matched_len),
+                                    .deinflected = c.deinflection->text,
+                                    .trace = c.deinflection->trace,
+                                    .term = query_.build_term(term_store[c.store_index], *c.term, pins),
+                                    .preprocessor_steps = c.steps});
+  }
+
+  for (auto& r : retained) {
     query_.materialize(r.term);
   }
 
-  return results;
+  return retained;
 }
 
-void Lookup::filter_by_pos(std::vector<TermResult>& terms, const DeinflectionResult& d) {
+void Lookup::filter_by_pos(RawTerms& terms, const DeinflectionResult& d) {
   if (d.conditions == 0) {
     return;
   }
-  std::erase_if(terms, [&](const TermResult& term) {
-    auto dict_conditions = Deinflector::pos_to_conditions(split_whitespace(term.rules));
+  std::vector<std::string> tokens;
+  std::erase_if(terms.terms, [&](const RawTerm& term) {
+    uint32_t dict_conditions = 0;
+    for (uint32_t i = term.first_glossary; i != UINT32_MAX; i = terms.glossaries[i].next) {
+      split_whitespace(terms.glossaries[i].rules, tokens);
+      dict_conditions |= Deinflector::pos_to_conditions(tokens);
+    }
     return (dict_conditions & d.conditions) == 0;
   });
 }

@@ -11,6 +11,12 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 option(HOSHIDICTS_CLI "hoshidicts cli" OFF)
 option(HOSHIDICTS_BENCHMARK "hoshidicts import and lookup benchmarks" OFF)
+option(HOSHIDICTS_TESTS "hoshidicts unit tests (ctest)" OFF)
+# Emscripten hosts that link with -sWASMFS: read-only descriptors are served
+# from a Blob there, so dictionary files are opened read-write for the copy
+# (see src/memory/memory.cpp).
+option(HOSHIDICTS_WASMFS "The Emscripten build links against WasmFS" OFF)
+option(HOSHIDICTS_DEINFLECTOR_TESTS "Japanese conjugation parity tests" OFF)
 
 set(ZSTD_BUILD_PROGRAMS OFF CACHE BOOL "")
 set(ZSTD_BUILD_TESTS OFF CACHE BOOL "")
@@ -24,17 +30,66 @@ set(UTF8PROC_INSTALL OFF CACHE BOOL "")
 
 add_subdirectory(external/glaze)
 add_subdirectory(external/zstd)
+
+# Override one zstd translation unit: src/zstd/zstd_compress_sequences.c is the
+# pinned upstream file plus a cache for the default FSE table (see its header
+# comment). Re-copy it when the zstd submodule moves.
+get_target_property(HOSHIDICTS_ZSTD_SOURCES libzstd_static SOURCES)
+list(FILTER HOSHIDICTS_ZSTD_SOURCES EXCLUDE REGEX "compress/zstd_compress_sequences\\.c$")
+set_property(TARGET libzstd_static PROPERTY SOURCES ${HOSHIDICTS_ZSTD_SOURCES})
+target_sources(libzstd_static PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/zstd/zstd_compress_sequences.c)
+target_include_directories(libzstd_static PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/external/zstd/lib/compress)
 add_subdirectory(external/unordered_dense)
 add_subdirectory(external/libdeflate)
 add_subdirectory(external/utf8proc)
+
+# Vendored (not submodules): external/lzokay and external/gumbo-parser carry
+# their own LICENSE and README with the upstream commit they were copied from.
+add_library(lzokay STATIC external/lzokay/lzokay.cpp)
+target_include_directories(lzokay PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/external/lzokay)
+
+set(GUMBO_DIR ${CMAKE_CURRENT_SOURCE_DIR}/external/gumbo-parser/src)
+add_library(gumbo STATIC
+    ${GUMBO_DIR}/ascii.c
+    ${GUMBO_DIR}/attribute.c
+    ${GUMBO_DIR}/char_ref.c
+    ${GUMBO_DIR}/error.c
+    ${GUMBO_DIR}/foreign_attrs.c
+    ${GUMBO_DIR}/hashmap.c
+    ${GUMBO_DIR}/parser.c
+    ${GUMBO_DIR}/string_buffer.c
+    ${GUMBO_DIR}/string_piece.c
+    ${GUMBO_DIR}/string_set.c
+    ${GUMBO_DIR}/svg_attrs.c
+    ${GUMBO_DIR}/svg_tags.c
+    ${GUMBO_DIR}/tag.c
+    ${GUMBO_DIR}/tag_lookup.c
+    ${GUMBO_DIR}/token_buffer.c
+    ${GUMBO_DIR}/tokenizer.c
+    ${GUMBO_DIR}/utf8.c
+    ${GUMBO_DIR}/util.c
+    ${GUMBO_DIR}/vector.c
+)
+target_include_directories(gumbo PUBLIC ${GUMBO_DIR})
+if(MSVC)
+    target_compile_definitions(gumbo PRIVATE _CRT_SECURE_NO_WARNINGS)
+endif()
 
 add_library(hoshidicts
     src/hash/hash.cpp
     src/hash/bloom.cpp
     src/importer.cpp
     src/memory/memory.cpp
+    src/memory/page_cache.cpp
+    src/blob_file.cpp
     src/zip/zip.cpp
+    src/source/zip_source.cpp
+    src/mdict/ripemd128.cpp
+    src/mdict/mdict_reader.cpp
+    src/mdict/html_to_structured.cpp
+    src/mdict/mdict_source.cpp
     src/json/yomitan_parser.cpp
+    src/json/json_skip.cpp
     src/text_processor/text_processor.cpp
     src/text_processor/kanji_variants.cpp
     src/deinflector.cpp
@@ -42,6 +97,19 @@ add_library(hoshidicts
     src/lookup.cpp
     src/hoshidicts_c.cpp
 )
+
+if(HOSHIDICTS_WASMFS)
+  target_compile_definitions(hoshidicts PRIVATE HOSHIDICTS_WASMFS=1)
+endif()
+
+# MDD stylesheets that declare a legacy @charset (Shift_JIS, GBK, ...) are
+# decoded with iconv(3), part of glibc and musl (so Emscripten) and Apple's
+# libiconv. Without it such a sheet is left out of the dictionary's styles.
+find_package(Iconv)
+if(Iconv_FOUND)
+  target_compile_definitions(hoshidicts PRIVATE HOSHIDICTS_ICONV=1)
+  target_link_libraries(hoshidicts PRIVATE Iconv::Iconv)
+endif()
 
 target_include_directories(hoshidicts PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
@@ -55,7 +123,27 @@ target_link_libraries(hoshidicts PRIVATE
     libdeflate_static
     unordered_dense
     utf8proc::utf8proc
+    lzokay
+    gumbo
 )
+
+if(MSVC)
+    target_compile_options(hoshidicts PRIVATE /utf-8)
+endif()
+
+if(HOSHIDICTS_DEINFLECTOR_TESTS)
+    enable_testing()
+    add_executable(deinflector-test tests/deinflector_test.cpp src/deinflector.cpp)
+    target_include_directories(deinflector-test PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/external/utfcpp/source
+    )
+    if(MSVC)
+        target_compile_options(deinflector-test PRIVATE /utf-8)
+    endif()
+    add_test(NAME deinflector
+             COMMAND deinflector-test ${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/yomitan-deinflections.tsv)
+endif()
 
 if(HOSHIDICTS_CLI)
     add_executable(hoshidicts-cli
@@ -90,5 +178,85 @@ if(HOSHIDICTS_BENCHMARK)
 
     target_link_libraries(benchmark-lookup PRIVATE
         hoshidicts
+        glaze::glaze
     )
+endif()
+if(HOSHIDICTS_TESTS)
+    enable_testing()
+    foreach(variant simd scalar)
+        add_executable(json-skip-test-${variant} tests/json_skip_test.cpp src/json/json_skip.cpp)
+        target_include_directories(json-skip-test-${variant} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+        target_link_libraries(json-skip-test-${variant} PRIVATE glaze::glaze)
+        add_test(NAME json-skip-${variant} COMMAND json-skip-test-${variant})
+    endforeach()
+    target_compile_definitions(json-skip-test-scalar PRIVATE HOSHIDICTS_JSON_SKIP_SCALAR=1)
+
+    add_executable(score-roundtrip-test tests/score_roundtrip_test.cpp)
+    target_link_libraries(score-roundtrip-test PRIVATE hoshidicts)
+    add_test(NAME score-roundtrip COMMAND score-roundtrip-test)
+
+    add_executable(lookup-order-test tests/lookup_order_test.cpp)
+    target_link_libraries(lookup-order-test PRIVATE hoshidicts)
+    add_test(NAME lookup-order COMMAND lookup-order-test)
+
+    add_executable(tag-bank-test tests/tag_bank_test.cpp)
+    target_link_libraries(tag-bank-test PRIVATE hoshidicts)
+    add_test(NAME tag-bank COMMAND tag-bank-test)
+
+    add_executable(kanji-meta-test tests/kanji_meta_test.cpp)
+    target_link_libraries(kanji-meta-test PRIVATE hoshidicts)
+    add_test(NAME kanji-meta COMMAND kanji-meta-test)
+
+    add_executable(zip64-test tests/zip64_test.cpp)
+    target_link_libraries(zip64-test PRIVATE hoshidicts)
+    add_test(NAME zip64 COMMAND zip64-test)
+
+    add_executable(escaped-strings-test tests/escaped_strings_test.cpp)
+    target_link_libraries(escaped-strings-test PRIVATE hoshidicts)
+    add_test(NAME escaped-strings COMMAND escaped-strings-test)
+
+    add_executable(title-folder-test tests/title_folder_test.cpp)
+    target_link_libraries(title-folder-test PRIVATE hoshidicts)
+    add_test(NAME title-folder COMMAND title-folder-test)
+
+    add_executable(data-descriptor-test tests/data_descriptor_test.cpp)
+    target_link_libraries(data-descriptor-test PRIVATE hoshidicts)
+    add_test(NAME data-descriptor COMMAND data-descriptor-test)
+
+    add_executable(long-key-scan-test tests/long_key_scan_test.cpp)
+    target_link_libraries(long-key-scan-test PRIVATE hoshidicts)
+    add_test(NAME long-key-scan COMMAND long-key-scan-test)
+
+    add_executable(dictionary-storage-test tests/dictionary_storage_test.cpp)
+    target_link_libraries(dictionary-storage-test PRIVATE hoshidicts)
+    add_test(NAME dictionary-storage COMMAND dictionary-storage-test)
+
+    add_executable(paged-hash-test tests/paged_hash_test.cpp)
+    target_link_libraries(paged-hash-test PRIVATE hoshidicts)
+    add_test(NAME paged-hash COMMAND paged-hash-test)
+
+    add_executable(deps-smoke-test tests/deps_smoke_test.cpp)
+    target_link_libraries(deps-smoke-test PRIVATE lzokay gumbo)
+    add_test(NAME deps-smoke COMMAND deps-smoke-test)
+
+    add_executable(mdict-reader-test tests/mdict_reader_test.cpp)
+    target_include_directories(mdict-reader-test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_link_libraries(mdict-reader-test PRIVATE hoshidicts)
+    add_test(NAME mdict-reader COMMAND mdict-reader-test ${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/mdict)
+
+    add_executable(html-to-structured-test tests/html_to_structured_test.cpp)
+    target_include_directories(html-to-structured-test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_link_libraries(html-to-structured-test PRIVATE hoshidicts glaze::glaze)
+    add_test(NAME html-to-structured COMMAND html-to-structured-test)
+
+    add_executable(mdict-test tests/mdict_test.cpp)
+    target_link_libraries(mdict-test PRIVATE hoshidicts)
+    add_test(NAME mdict-import COMMAND mdict-test ${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/mdict)
+
+    add_executable(import-equivalence-test tests/import_equivalence_test.cpp)
+    target_link_libraries(import-equivalence-test PRIVATE hoshidicts)
+    add_test(NAME import-equivalence
+             COMMAND import-equivalence-test
+                     ${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/yomitan/small_dict.zip
+                     ${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/yomitan/golden.sha256)
 endif()

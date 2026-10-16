@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <filesystem>
 #include <optional>
 #include <string>
 #include <vector>
@@ -10,17 +11,18 @@
 struct ZipEntry {
   std::string name;
   uint16_t compression_method;
-  uint32_t compressed_size;
-  uint32_t uncompressed_size;
+  uint64_t compressed_size;
+  uint64_t uncompressed_size;
   size_t data_offset;
 };
 
 struct Zip {
   memory::mapped_file file;
   std::vector<ZipEntry> entries;
+  std::string error;
 
   ~Zip();
-  bool open(const std::string& path);
+  bool open(const std::filesystem::path& path);
   int find(const std::string& name) const;
   std::string read(int index) const;
 

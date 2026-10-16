@@ -9,11 +9,11 @@
 
 int main(int argc, char** argv) {
   if (argc < 3) {
-    std::cout << std::format("{} <zip_path> <iterations>\n", argv[0]);
+    std::cout << std::format("{} <dictionary.zip|dictionary.mdx> <iterations>\n", argv[0]);
     return 1;
   }
 
-  const std::string zip_path = argv[1];
+  const std::string source_path = argv[1];
   const int iterations = std::stoi(argv[2]);
   std::vector<double> durations;
   std::string dict_title;
@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
 
   for (int i = 0; i < iterations; ++i) {
     const auto start = std::chrono::high_resolution_clock::now();
-    const auto result = dictionary_importer::import(zip_path, ".");
+    const auto result = dictionary_importer::import(source_path, ".");
     const auto end = std::chrono::high_resolution_clock::now();
 
     if (result.success) {

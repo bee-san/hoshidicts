@@ -6,6 +6,7 @@
 #include <ranges>
 #include <string>
 
+#include "../src/path_utils.hpp"
 #include "../src/text_processor/text_processor.hpp"
 #include "hoshidicts/deinflector.hpp"
 #include "hoshidicts/importer.hpp"
@@ -14,7 +15,7 @@
 
 void print_usage(const char* program) {
   std::cout << std::format("Usage:\n");
-  std::cout << std::format("{} import <path/to/dictionary.zip>\n", program);
+  std::cout << std::format("{} import <path/to/dictionary.zip|dictionary.mdx>\n", program);
   std::cout << std::format("{} deinflect <word>\n", program);
   std::cout << std::format("{} preprocess <word>\n", program);
   std::cout << std::format("{} query <path/to/dictionary> <word>\n", program);
@@ -24,8 +25,8 @@ void print_usage(const char* program) {
 }
 
 void cmd_import(const std::string& path) {
-  std::filesystem::path zip_path(path);
-  std::string output_dir = zip_path.parent_path().string();
+  std::filesystem::path source_path = path_utils::from_utf8(path);
+  std::string output_dir = path_utils::to_utf8(source_path.parent_path());
   if (output_dir.empty()) {
     output_dir = ".";
   }
@@ -36,9 +37,14 @@ void cmd_import(const std::string& path) {
     std::cout << std::format("term_count: {}\n", result.summary.counts.terms.total);
     std::cout << std::format("meta_count: {}\n", result.summary.counts.termMeta["total"]);
     std::cout << std::format("freq_count: {}\n", result.summary.counts.termMeta["freq"]);
-    std::cout << std::format("pitch_count: {}\n", result.summary.counts.termMeta["pitch"] + result.summary.counts.termMeta["ipa"]);
+    std::cout << std::format("pitch_count: {}\n",
+                             result.summary.counts.termMeta["pitch"] + result.summary.counts.termMeta["ipa"]);
     std::cout << std::format("kanji_count: {}\n", result.summary.counts.kanji.total);
     std::cout << std::format("media_count: {}\n", result.summary.counts.media.total);
+    std::cout << std::format("skipped_records: {}\n", result.warnings.skippedRecords);
+    std::cout << std::format("unresolved_redirects: {}\n", result.warnings.unresolvedRedirects);
+    std::cout << std::format("missing_resources: {}\n", result.warnings.missingResources);
+    std::cout << std::format("unreadable_resources: {}\n", result.warnings.unreadableResources);
   } else {
     std::cout << std::format("could not import dictionary: {}\n", result.error);
   }
