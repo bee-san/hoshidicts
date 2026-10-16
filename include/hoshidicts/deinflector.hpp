@@ -24,6 +24,12 @@ class Deinflector {
   std::vector<DeinflectionResult> deinflect(const std::string& text) const;
   static uint32_t pos_to_conditions(const std::vector<std::string>& part_of_speech);
 
+  // The first trace step of a result that reads NekoPara's cat speech; see deinflect().
+  static constexpr std::string_view neko_speech = "neko speech";
+  static bool is_neko_speech(const DeinflectionResult& result) {
+    return !result.trace.empty() && result.trace.front().name == neko_speech;
+  }
+
  private:
   struct Rule {
     std::string from;

@@ -91,7 +91,7 @@ std::vector<DeinflectionResult> Deinflector::deinflect(const std::string& text) 
 ```
 Deinflects a given Japanese string using rules from the Yomitan deinflector. As this doesn't use any dictionary data, the result may include invalid deinflections.
 
-It also reads NekoPara's cat speech, which says `にゃ` for `な` and sometimes for `だ`, `ら`, `ま` or `じゃ`: each `にゃ` is replaced by each of them, one at a time, and deinflected as usual, so `できにゃい` resolves to `できる` and `いにゃっしゃいます` to `いらっしゃる`. Those results come after every ordinary one, with `neko speech` as their trace's first step, so the input itself stays the first result and an exact match such as `こんにゃく` keeps its place.
+It also reads NekoPara's cat speech, which says `にゃ` for `な` and sometimes for `だ`, `ら`, `ま` or `じゃ`: each `にゃ` is replaced by each of them, one at a time, and deinflected as usual, so `できにゃい` resolves to `できる` and `いにゃっしゃいます` to `いらっしゃる`. Those results come after every ordinary one, with `neko speech` (`Deinflector::neko_speech`) as their trace's first step; `Deinflector::is_neko_speech` tells them apart. `Lookup` uses one only where it reads more of the text than every ordinary result.
 
 ```cpp
 static uint32_t Deinflector::pos_to_conditions(const std::vector<std::string>& part_of_speech)
@@ -112,6 +112,8 @@ Follows a parsing strategy similar to Yomitan. Substrings of `lookup_string` are
 Keys longer than `scan_length` are still found when `scan_length` is at least 8 and `lookup_string` is long enough to contain them: the importer records every key longer than 16 code points by its first eight code points in `scan.idx`, and when the input begins like such a key the scan extends to that key's length plus eight code points for an inflected ending. Inputs that do not begin like a long key keep the cost of `scan_length`. `DictionaryQuery::max_long_key_length()` returns the longest such key across the loaded term dictionaries so a caller can size `lookup_string`. Dictionaries imported before `scan.idx` existed simply never extend.
 
 Results are filtered by part-of-speech tags defined in dictionaries, or added directly if none are present. The results are sorted by matched length first, then by preprocessing steps, then deinflection trace length and finally by frequency.
+
+A `neko speech` deinflection (NekoPara's cat speech, see the deinflector) is used only where it matches a longer part of `lookup_string` than every ordinary deinflection, so `できにゃい` finds `できる` over the whole word, while an ordinary word with `にゃ` (`こんにゃく`, `にゃあ`) keeps exactly its ordinary results.
 
 ```cpp
 std::vector<LookupResult> Lookup::lookup_dictionary(const std::string& lookup_string,

@@ -12,7 +12,9 @@
 // checks that order under the user's explicit ascending surface-frequency sort,
 // under Auto (no sort dictionary, which goes straight to dictionary order), and
 // reversed; and that a per-reading frequency that genuinely separates the
-// readings still outranks dictionary order.
+// readings still outranks dictionary order. Last, it checks that NekoPara's cat
+// speech (the deinflector's "neko speech" results) is used only where it reads
+// further than every ordinary reading.
 #include "hoshidicts/deinflector.hpp"
 #include "hoshidicts/importer.hpp"
 #include "hoshidicts/lookup.hpp"
@@ -253,6 +255,55 @@ int main() {
           "a per-reading frequency keeps the more common reading first across dictionary order: "
           "expected [かみはら, かんばら], got " +
               join(got));
+  }
+
+  // --- NekoPara cat speech: read only where it explains more than any ordinary
+  // reading (Deinflector's "neko speech" results). --------------------------
+  {
+    const std::filesystem::path out3 = root / "out3";
+    std::filesystem::create_directories(out3);
+    // こんじゃく, こんだく, なあ and まあ are what にゃ -> じゃ/だ/な/ま would make of
+    // the ordinary words こんにゃく and にゃあ.
+    const std::string bank =
+        R"([["蒟蒻","こんにゃく","","",0,["konnyaku"],1,""],)"
+        R"(["コンニャク","コンニャク","","",0,["konnyaku, in katakana"],2,""],)"
+        R"(["今昔","こんじゃく","","",0,["past and present"],3,""],)"
+        R"(["混濁","こんだく","","",0,["turbidity"],4,""],)"
+        R"(["にゃあ","にゃあ","","",0,["meow"],5,""],)"
+        R"(["なあ","なあ","","",0,["hey"],6,""],)"
+        R"(["まあ","まあ","","",0,["well"],7,""],)"
+        R"(["出来る","できる","","v1",0,["to be able"],8,""],)"
+        R"(["出来","でき","","",0,["workmanship"],9,""],)"
+        R"(["そんな","そんな","","",0,["such"],10,""],)"
+        R"(["損","そん","","",0,["loss"],11,""]])";
+    const std::string dict = import_dict(
+        root, out3, "neko",
+        {{"index.json", R"({"title":"neko","format":3,"revision":"1"})"}, {"term_bank_1.json", bank}});
+    DictionaryQuery query;
+    check(query.add_term_dict(dict), "add neko dictionary");
+    Lookup lookup(query, deinflector);
+    const auto expressions = [&](const std::string& text) {
+      std::vector<std::string> out;
+      for (const auto& result : lookup.lookup(text, 32, 16)) {
+        out.push_back(result.term.expression);
+      }
+      return out;
+    };
+
+    // Ordinary words with にゃ keep exactly their ordinary results.
+    const auto konnyaku = expressions("こんにゃく");
+    check(same(konnyaku, {"蒟蒻", "コンニャク"}), "こんにゃく: expected [蒟蒻, コンニャク], got " + join(konnyaku));
+    const auto meow = expressions("にゃあ");
+    check(same(meow, {"にゃあ"}), "にゃあ: expected [にゃあ], got " + join(meow));
+
+    // Cat speech reads further than any ordinary reading, so it comes first.
+    const auto dekinyai = lookup.lookup("できにゃい", 32, 16);
+    check(!dekinyai.empty() && dekinyai[0].term.expression == "出来る" && dekinyai[0].matched == "できにゃい" &&
+              dekinyai[0].trace.size() == 2 && dekinyai[0].trace[0].name == Deinflector::neko_speech &&
+              dekinyai[0].trace[1].name == "negative",
+          "できにゃい: expected 出来る over the whole input by neko speech -> negative");
+    const auto sonnya = expressions("そんにゃ");
+    check(same(sonnya, {"そんな", "損"}), "そんにゃ: expected [そんな, 損], got " + join(sonnya));
   }
 
   std::filesystem::remove_all(root);

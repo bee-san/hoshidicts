@@ -1352,7 +1352,7 @@ void Deinflector::init_transforms() {
   add_rule({.from = "來やしません", .to = "來る", .conditions_in = MASEN, .conditions_out = VK, .group_id = id});
 
   // Not a Yomitan transform and not a rule: deinflect() applies it, see there.
-  neko_group_ = add_group({.name = "neko speech", .description = "NekoPara-style にゃ substitution."});
+  neko_group_ = add_group({.name = std::string(neko_speech), .description = "NekoPara-style にゃ substitution."});
 }
 
 int Deinflector::add_group(const TransformGroup& group) {
