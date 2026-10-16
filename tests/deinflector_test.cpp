@@ -85,6 +85,76 @@ int main(int argc, char** argv) {
     ++failures;
     std::fprintf(stderr, "FAIL exact/chained honorific\n");
   }
+
+  // NekoPara's cat speech (not Yomitan): each にゃ is also read as な, だ, ら, ま or
+  // じゃ. Such a result's trace starts with "neko speech", then the ordinary steps
+  // in application order.
+  const auto has_neko_candidate = [&](const std::string& source, const std::string& term, const std::string& pos,
+                                      const std::vector<std::string>& steps) {
+    const auto flags = Deinflector::pos_to_conditions({pos});
+    for (const auto& result : deinflector.deinflect(source)) {
+      if (result.text != term || (result.conditions != 0 && !(result.conditions & flags))) continue;
+      if (result.trace.size() != steps.size() + 1 || result.trace[0].name != "neko speech") continue;
+      bool matches = true;
+      for (size_t i = 0; i < steps.size(); ++i) {
+        if (result.trace[i + 1].name != steps[i]) matches = false;
+      }
+      if (matches) return true;
+    }
+    return false;
+  };
+  struct NekoCase {
+    const char* source;
+    const char* term;
+    const char* pos;
+    std::vector<std::string> steps;
+  };
+  const std::vector<NekoCase> neko_cases = {
+      {"できにゃい", "できる", "v1", {"negative"}},                 // な
+      {"わかんにゃい", "わかる", "v5", {"n-slang", "negative"}},    // な
+      {"読んにゃ", "読む", "v5", {"-た"}},                          // だ
+      {"いにゃっしゃいます", "いらっしゃる", "v5", {"-ます"}},      // ら
+      {"わかりにゃした", "わかる", "v5", {"-た", "-ます"}},         // ま
+      {"飲んにゃう", "飲む", "v5", {"-ちゃう"}},                    // じゃ
+  };
+  for (const auto& neko_case : neko_cases) {
+    ++cases;
+    if (!has_neko_candidate(neko_case.source, neko_case.term, neko_case.pos, neko_case.steps)) {
+      ++failures;
+      std::fprintf(stderr, "FAIL neko speech: %s -> %s\n", neko_case.source, neko_case.term);
+    }
+  }
+  // The input stays the first result, and every neko result comes after every
+  // ordinary one, so an exact match (こんにゃく) or an ordinary reading of にゃ
+  // (食べにゃ, Yomitan's -ゃ for -ねば) keeps its place.
+  for (const auto* source : {"こんにゃく", "食べにゃ", "できにゃい", "わかりにゃした"}) {
+    ++cases;
+    const auto results = deinflector.deinflect(source);
+    bool ordered = !results.empty() && results[0].text == source && results[0].trace.empty();
+    bool seen_neko = false;
+    for (const auto& result : results) {
+      const bool neko = !result.trace.empty() && result.trace[0].name == "neko speech";
+      if (seen_neko && !neko) ordered = false;
+      seen_neko = seen_neko || neko;
+    }
+    if (!ordered || !seen_neko) {
+      ++failures;
+      std::fprintf(stderr, "FAIL neko speech order: %s\n", source);
+    }
+  }
+  ++cases;
+  if (!has_candidate(deinflector, "食べにゃ", "食べる", "v1", "-ねば|-ゃ")) {
+    ++failures;
+    std::fprintf(stderr, "FAIL ordinary -ゃ beside neko speech: 食べにゃ -> 食べる\n");
+  }
+  ++cases;
+  for (const auto& result : deinflector.deinflect("できない")) {
+    if (!result.trace.empty() && result.trace[0].name == "neko speech") {
+      ++failures;
+      std::fprintf(stderr, "FAIL neko speech without にゃ: できない -> %s\n", result.text.c_str());
+      break;
+    }
+  }
   std::printf("%zu cases, %zu failures\n", cases, failures);
   return cases > 4 && failures == 0 ? 0 : 1;
 }

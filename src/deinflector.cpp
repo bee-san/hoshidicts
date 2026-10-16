@@ -1350,6 +1350,9 @@ void Deinflector::init_transforms() {
   add_rule({.from = "きやしません", .to = "くる", .conditions_in = MASEN, .conditions_out = VK, .group_id = id});
   add_rule({.from = "来やしません", .to = "来る", .conditions_in = MASEN, .conditions_out = VK, .group_id = id});
   add_rule({.from = "來やしません", .to = "來る", .conditions_in = MASEN, .conditions_out = VK, .group_id = id});
+
+  // Not a Yomitan transform and not a rule: deinflect() applies it, see there.
+  neko_group_ = add_group({.name = "neko speech", .description = "NekoPara-style にゃ substitution."});
 }
 
 int Deinflector::add_group(const TransformGroup& group) {
@@ -1390,6 +1393,25 @@ std::vector<DeinflectionResult> Deinflector::deinflect(const std::string& text) 
     deinflect_recursive(text, NONE, trace, result);
   } else {
     result.emplace_back(text, NONE, std::vector<TransformGroup>{});
+  }
+
+  // NekoPara's cat speech says にゃ for な (できにゃい), and also for だ, ら, ま and
+  // じゃ (ダメにゃって, いにゃっしゃい, わかりにゃした, いいにゃない). Each にゃ is
+  // replaced, one at a time, and deinflected as usual, with "neko speech" as the
+  // trace's first step. These results come after every ordinary one, so the
+  // input itself stays the first result and an exact match such as こんにゃく
+  // keeps its place.
+  constexpr std::string_view neko = "にゃ";
+  constexpr std::array<std::string_view, 5> neko_replacements = {"な", "だ", "ら", "ま", "じゃ"};
+  for (size_t pos = text.find(neko); pos != std::string::npos; pos = text.find(neko, pos + neko.size())) {
+    for (const auto replacement : neko_replacements) {
+      std::string normalized;
+      normalized.reserve(text.size() - neko.size() + replacement.size());
+      normalized.append(text, 0, pos).append(replacement).append(text, pos + neko.size());
+      trace.push_back(neko_group_);
+      deinflect_recursive(normalized, NONE, trace, result);
+      trace.pop_back();
+    }
   }
 
   return result;

@@ -78,4 +78,5 @@ class Deinflector {
   std::vector<std::vector<Rule>> rule_lists_;
   std::vector<TransformGroup> groups_;
   size_t max_length_;
+  int neko_group_ = -1;
 };

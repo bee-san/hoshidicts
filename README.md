@@ -91,6 +91,8 @@ std::vector<DeinflectionResult> Deinflector::deinflect(const std::string& text) 
 ```
 Deinflects a given Japanese string using rules from the Yomitan deinflector. As this doesn't use any dictionary data, the result may include invalid deinflections.
 
+It also reads NekoPara's cat speech, which says `にゃ` for `な` and sometimes for `だ`, `ら`, `ま` or `じゃ`: each `にゃ` is replaced by each of them, one at a time, and deinflected as usual, so `できにゃい` resolves to `できる` and `いにゃっしゃいます` to `いらっしゃる`. Those results come after every ordinary one, with `neko speech` as their trace's first step, so the input itself stays the first result and an exact match such as `こんにゃく` keeps its place.
+
 ```cpp
 static uint32_t Deinflector::pos_to_conditions(const std::vector<std::string>& part_of_speech)
 ```
@@ -134,6 +136,7 @@ added metadata dictionary.
 - [kanji-processor](https://github.com/yomidevs/kanji-processor): MIT
 - [lzokay](https://github.com/AxioDL/lzokay): MIT (vendored in `external/lzokay`)
 - [gumbo-parser](https://github.com/sparklemotion/nokogiri/tree/main/gumbo-parser) (Nokogiri's fork of Google's gumbo): Apache-2.0, `hashmap.c` MIT (vendored in `external/gumbo-parser`)
+- [Nekopara-Speech](https://huggingface.co/datasets/OpenSpeechHub/Nekopara-Speech): the transcripts the `neko speech` substitutions were taken from (no data from it is included)
 
 ## Lookup benchmark
 
