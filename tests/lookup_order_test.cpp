@@ -20,6 +20,7 @@
 #include "hoshidicts/lookup.hpp"
 #include "hoshidicts/query.hpp"
 
+#include <algorithm>
 #include <cstdint>
 #include <cstdio>
 #include <cstring>
@@ -266,6 +267,9 @@ int main() {
     // the ordinary words こんにゃく and にゃあ.
     const std::string long_nande = "にゃんであいうえおかきくけこさしすせそ";  // 19 code points
     const std::string long_dekinyai = "できにゃいあいうえおかきくけこさし";    // 17 code points
+    // A long key that only cat speech reaches: its な is にゃ in the input, past scan_length.
+    const std::string long_na = "あいうえおかきくなあいうえおかきく";          // 17 code points
+    const std::string long_na_input = "あいうえおかきくにゃあいうえおかきく";  // 18 code points
     const std::string bank =
         R"([["蒟蒻","こんにゃく","","",0,["konnyaku"],1,""],)"
         R"(["コンニャク","コンニャク","","",0,["konnyaku, in katakana"],2,""],)"
@@ -279,9 +283,12 @@ int main() {
         R"(["そんな","そんな","","",0,["such"],10,""],)"
         R"(["損","そん","","",0,["loss"],11,""],)"
         R"(["なんで","なんで","","",0,["why"],12,""],)"
+        R"(["そんなに","そんなに","","",0,["so much"],15,""],)"
+        R"(["凝る","こる","","v5",0,["to be absorbed in"],16,""],)"
         // Long keys, found only by the scan past scan_length.
         R"([")" + long_nande + R"(",")" + long_nande + R"(","","",0,["long"],13,""],)"
-        R"([")" + long_dekinyai + R"(",")" + long_dekinyai + R"(","","",0,["long"],14,""]])";
+        R"([")" + long_dekinyai + R"(",")" + long_dekinyai + R"(","","",0,["long"],14,""],)"
+        R"([")" + long_na + R"(",")" + long_na + R"(","","",0,["long"],17,""]])";
     const std::string dict = import_dict(
         root, out3, "neko",
         {{"index.json", R"({"title":"neko","format":3,"revision":"1"})"}, {"term_bank_1.json", bank}});
@@ -324,6 +331,22 @@ int main() {
           "できにゃい, on: expected 出来る over the whole input by neko speech -> negative");
     const auto sonnya = expressions("そんにゃ", neko_on);
     check(same(sonnya, {"そんな*", "損"}), "そんにゃ, on: expected [そんな*, 損], got " + join(sonnya));
+    // Every prefix longer than the ordinary matches counts, not only the longest
+    // cat-speech one: そんにゃに gives そんなに and そんな.
+    const auto sonnyani = expressions("そんにゃに", neko_on);
+    check(same(sonnyani, {"そんなに*", "そんな*", "損"}),
+          "そんにゃに, on: expected [そんなに*, そんな*, 損], got " + join(sonnyani));
+    // Every processed variant is read: こんにゃくって gives 凝る through the variant
+    // with っ removed (こんにゃくて), a documented limit on ordinary text.
+    const auto konnyakutte = expressions("こんにゃくって", neko_on);
+    check(std::ranges::find(konnyakutte, std::string("凝る*")) != konnyakutte.end(),
+          "こんにゃくって, on: expected 凝る* among " + join(konnyakutte));
+    // Katakana is read through its hiragana variant, whose preprocessing step the
+    // result keeps.
+    const auto katakana = lookup.lookup("デキニャイ", 32, 16, neko_on);
+    check(!katakana.empty() && katakana[0].term.expression == "出来る" && katakana[0].trace.size() == 2 &&
+              katakana[0].trace[0].name == Deinflector::neko_speech && katakana[0].preprocessor_steps > 0,
+          "デキニャイ, on: expected 出来る by neko speech through a preprocessed variant first");
 
     // On, long keys: the long-key scan's ordinary match reads the whole input, so
     // no cat speech counts, and the shorter ordinary readings stay as they are
@@ -338,6 +361,10 @@ int main() {
           "long key " + long_dekinyai + ": expected [" + long_dekinyai + ", 出来る, 出来], got " + join(long_off));
     const auto nande = expressions(long_nande, neko_on);
     check(same(nande, {long_nande}), "long key " + long_nande + ": expected [" + long_nande + "], got " + join(nande));
+    // Cat speech reads the long-key scan's prefixes too.
+    const auto long_na_on = expressions(long_na_input, neko_on);
+    check(same(long_na_on, {long_na + "*"}), "long key by cat speech: expected [" + long_na + "*], got " + join(long_na_on));
+    check(expressions(long_na_input, {}).empty(), "long key by cat speech, off: expected no result");
   }
 
   std::filesystem::remove_all(root);

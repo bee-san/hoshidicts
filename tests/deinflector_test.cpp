@@ -152,9 +152,10 @@ int main(int argc, char** argv) {
       std::fprintf(stderr, "FAIL neko speech reads one にゃ at a time: にゃにゃ\n");
     }
   }
-  // Only a hiragana にゃ: カゃ (E3 82 AB E3 82 83) shares にゃ's last four bytes.
+  // Only a hiragana にゃ: カゃ (E3 82 AB E3 82 83) shares にゃ's last four bytes, and
+  // in «ゃ (C2 AB E3 82 83) they start at byte 1, before any にゃ could.
   ++cases;
-  for (const auto* source : {"できない", "カゃ", "ニャ", ""}) {
+  for (const auto* source : {"できない", "カゃ", "\u00abゃ", "ニャ", ""}) {
     if (!deinflector.deinflect_neko_speech(source).empty()) {
       ++failures;
       std::fprintf(stderr, "FAIL neko speech without にゃ: [%s]\n", source);

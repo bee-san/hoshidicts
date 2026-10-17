@@ -116,14 +116,14 @@ Keys longer than `scan_length` are still found when `scan_length` is at least 8 
 
 Results are filtered by part-of-speech tags defined in dictionaries, or added directly if none are present. The results are sorted by matched length first, then by preprocessing steps, then deinflection trace length and finally by frequency.
 
-`LookupOptions::neko_speech` (off by default) also reads NekoPara's cat speech (`deinflect_neko_speech`). A cat-speech reading counts only where it matches a longer part of `lookup_string` than every ordinary one, long keys included, and then comes first: `できにゃい` finds `出来る` over the whole word, and `そんにゃ` finds `そんな`. Every ordinary result is kept, but a term found both ways is listed once, under the longer match. `lookup_dictionary` judges this within its one dictionary. Off, the results are exactly those without the option. The option is meant for NekoPara-style text; on other text with `にゃ` or `ニャ` it also reads, wherever that reaches further than the dictionary's own words:
+`LookupOptions::neko_speech` (off by default) also reads NekoPara's cat speech (`deinflect_neko_speech`). A cat-speech reading counts only where it matches a longer part of `lookup_string` than every ordinary one, long keys included, and then comes first (after any `primary_reading` results, which sort before matched length): `できにゃい` finds `出来る` over the whole word, and `そんにゃ` finds `そんな`. A term found both ways is listed once, under the longer match. Every other ordinary result is kept, but since cat speech takes the first places, a list capped by `max_results` can lose the last of them. `lookup_dictionary` judges this within its one dictionary. Off, the results are exactly those without the option. The option is meant for NekoPara-style text; on other text with `にゃ` or `ニャ` it also reads, wherever that reaches further than the dictionary's own words:
 
 - a word followed by more text: `こんにゃくって` gives `凝る`; a word alone, such as `こんにゃく` or `にゃあ`, keeps exactly its ordinary results;
 - dialect `にゃ` for `には` or `ねば`: `俺にゃ` gives `俺ら`, `たまにゃ` gives `球菜`;
 - names and loanwords with `ニャ`, through the katakana-to-hiragana variant: `ソーニャ` gives `そうだ`, `おニャン子` gives `おじゃん`;
 - meows and the sentence-final `にゃ`: `にゃぁ` gives `なぁ` and `まぁ`, `ですにゃ` gives `ですら`, and `来ましたにゃ` is read as `-たら`.
 
-Among themselves the five readings rank like any others: `しにゃい` lists `竹刀` and `市内` first, as `しない` does, and `わかりにゃした` puts `分かり出す` (`だ`) before `分かる` (`ま`), whose chain is longer. A word with two `にゃ` is read with one replaced at a time.
+Among themselves the five readings rank like any others, so they can tie: `しにゃい` gives `竹刀` and `市内` (`な`), `私大` and `次第` (`だ`) and `姉妹` (`ま`) as equals, in no fixed order, while `わかりにゃした` puts `分かり出す` (`だ`) before `分かる` (`ま`), whose chain is longer. A word with two `にゃ` is read with one replaced at a time.
 
 ```cpp
 std::vector<LookupResult> Lookup::lookup_dictionary(const std::string& lookup_string,
