@@ -132,6 +132,50 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   // the ordinary scan for the long-key check below.
   std::vector<std::string> prefix_variants;
 
+  // Every scanned prefix's byte length and processed variants, kept only for
+  // the neko speech pass below.
+  struct ScannedPrefix {
+    size_t length;
+    std::vector<TextVariant> variants;
+  };
+  std::vector<ScannedPrefix> scanned;
+
+  // Looks up one deinflection of a prefix's variant and merges its terms into
+  // the candidates, keeping each term's longest matched form.
+  auto merge = [&](size_t matched_len, const DeinflectionResult& deinflection, int steps) {
+    // Most deinflected forms name no entry of their part of speech; read
+    // the frequencies and pitches of only the terms the filter keeps.
+    auto terms = query_.query_raw(deinflection.text, pins, dictionary_path, false);
+    filter_by_pos(terms, deinflection);
+    for (auto& term : terms.terms) {
+      query_.collect_frequencies(term.expression, term.reading, term.frequencies, pins);
+      query_.collect_pitches(term.expression, term.reading, term.pitches, pins);
+    }
+
+    const auto store_index = static_cast<uint32_t>(term_store.size());
+    for (auto& term : terms.terms) {
+      const uint64_t h = key_hash(term.expression, term.reading);
+      Candidate* existing = find_candidate(h, term);
+      if (existing != nullptr) {
+        if (matched_len > existing->matched_len) {
+          existing->matched_len = matched_len;
+          existing->deinflection = &deinflection;
+          existing->term = &term;
+          existing->store_index = store_index;
+          existing->steps = steps;
+        }
+      } else {
+        index.try_emplace(h, static_cast<uint32_t>(candidates.size()));
+        candidates.push_back(Candidate{.matched_len = matched_len,
+                                       .deinflection = &deinflection,
+                                       .term = &term,
+                                       .store_index = store_index,
+                                       .steps = steps});
+      }
+    }
+    term_store.push_back(std::move(terms));
+  };
+
   // Scans one prefix of the input: every processed variant, deinflected, looked
   // up, and merged into the candidates keeping the longest matched form.
   auto scan_prefix = [&](std::string_view search_str, size_t codepoints) {
@@ -145,39 +189,12 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     for (auto& variant : processor_results) {
       auto deinflection_results = deinflector_.deinflect(variant.text);
       for (auto& deinflection : deinflection_results) {
-        // Most deinflected forms name no entry of their part of speech; read
-        // the frequencies and pitches of only the terms the filter keeps.
-        auto terms = query_.query_raw(deinflection.text, pins, dictionary_path, false);
-        filter_by_pos(terms, deinflection);
-        for (auto& term : terms.terms) {
-          query_.collect_frequencies(term.expression, term.reading, term.frequencies, pins);
-          query_.collect_pitches(term.expression, term.reading, term.pitches, pins);
-        }
-
-        const auto store_index = static_cast<uint32_t>(term_store.size());
-        for (auto& term : terms.terms) {
-          const uint64_t h = key_hash(term.expression, term.reading);
-          Candidate* existing = find_candidate(h, term);
-          if (existing != nullptr) {
-            if (search_str.size() > existing->matched_len) {
-              existing->matched_len = search_str.size();
-              existing->deinflection = &deinflection;
-              existing->term = &term;
-              existing->store_index = store_index;
-              existing->steps = variant.steps;
-            }
-          } else {
-            index.try_emplace(h, static_cast<uint32_t>(candidates.size()));
-            candidates.push_back(Candidate{.matched_len = search_str.size(),
-                                           .deinflection = &deinflection,
-                                           .term = &term,
-                                           .store_index = store_index,
-                                           .steps = variant.steps});
-          }
-        }
-        term_store.push_back(std::move(terms));
+        merge(search_str.size(), deinflection, variant.steps);
       }
       deinflection_store.push_back(std::move(deinflection_results));
+    }
+    if (options.neko_speech) {
+      scanned.push_back({.length = search_str.size(), .variants = std::move(processor_results)});
     }
   };
 
@@ -205,6 +222,32 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
       for (size_t i = extended; i > scan_length; i--) {
         scan_prefix(std::string_view(lookup_string.begin(), extended_it), i);
         utf8::prior(extended_it, lookup_string.begin());
+      }
+    }
+  }
+
+  // NekoPara's cat speech (LookupOptions::neko_speech): a neko speech reading
+  // counts only for a prefix longer than every ordinary match, long keys
+  // included, so it can only add a term or lengthen one; every ordinary result
+  // above is otherwise kept as it is.
+  if (options.neko_speech) {
+    size_t ordinary_len = 0;
+    for (const auto& candidate : candidates) {
+      ordinary_len = std::max(ordinary_len, candidate.matched_len);
+    }
+    for (auto& prefix : scanned) {
+      if (prefix.length <= ordinary_len) {
+        continue;
+      }
+      for (const auto& variant : prefix.variants) {
+        auto deinflection_results = deinflector_.deinflect_neko_speech(variant.text);
+        if (deinflection_results.empty()) {
+          continue;
+        }
+        for (auto& deinflection : deinflection_results) {
+          merge(prefix.length, deinflection, variant.steps);
+        }
+        deinflection_store.push_back(std::move(deinflection_results));
       }
     }
   }

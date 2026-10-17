@@ -6,6 +6,11 @@ The fixture is the complete Japanese conjugation test corpus from
 types, and conjugation chains. It includes historical kana (PRs #2474 and
 #2501), honorific forms, emphatic negatives, and invalid causative/passive chains.
 Four additional checks cover whole-word honorifics and their inflected forms.
+Twelve more cover NekoPara's cat speech (`deinflect_neko_speech`, not part of
+Yomitan): six forms covering its five readings of `にゃ`; four checks that every
+such result is marked `neko speech` and that `deinflect` returns none; one that
+each `にゃ` is read on its own (`にゃにゃ`); and one that text without a hiragana
+`にゃ` (`カゃ` shares its last four bytes) gets none.
 The fixture retains Yomitan's GPL-3.0-or-later attribution.
 
 Run the standalone test without building importer dependencies:

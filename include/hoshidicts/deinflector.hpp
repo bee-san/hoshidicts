@@ -22,7 +22,17 @@ class Deinflector {
  public:
   Deinflector();
   std::vector<DeinflectionResult> deinflect(const std::string& text) const;
+  // Readings of NekoPara's cat speech: each にゃ in text, one at a time, read as
+  // な, だ, ら, ま or じゃ and deinflected, with neko_speech as the trace's first
+  // step. Empty when text has no にゃ. deinflect() never returns these.
+  std::vector<DeinflectionResult> deinflect_neko_speech(const std::string& text) const;
   static uint32_t pos_to_conditions(const std::vector<std::string>& part_of_speech);
+
+  // The first trace step of a deinflect_neko_speech() result.
+  static constexpr std::string_view neko_speech = "neko speech";
+  static bool is_neko_speech(const DeinflectionResult& result) {
+    return !result.trace.empty() && result.trace.front().name == neko_speech;
+  }
 
  private:
   struct Rule {
@@ -78,4 +88,5 @@ class Deinflector {
   std::vector<std::vector<Rule>> rule_lists_;
   std::vector<TransformGroup> groups_;
   size_t max_length_;
+  int neko_group_ = -1;
 };

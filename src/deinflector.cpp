@@ -39,6 +39,19 @@ constexpr std::array<std::pair<std::string_view, std::string_view>, 3> fu_verb_t
     {"たまう", "たもう"},
     {"たゆたう", "たゆとう"},
 }};
+
+// The byte offset of the first にゃ (E3 81 AB E3 82 83) at or after pos, or npos.
+// It searches from the third byte on: 0xE3 and 0x81 begin most hiragana, so a
+// search keyed on them stops at almost every character, while 0xAB is rare.
+size_t find_neko(const std::string& text, size_t pos) {
+  constexpr std::string_view tail = "\xAB\xE3\x82\x83";
+  for (size_t at = text.find(tail, pos + 2); at != std::string::npos; at = text.find(tail, at + 1)) {
+    if (text[at - 2] == '\xE3' && text[at - 1] == '\x81') {
+      return at - 2;
+    }
+  }
+  return std::string::npos;
+}
 }
 
 void Deinflector::add_irregular(std::string_view suffix, uint32_t conditions_in, uint32_t conditions_out,
@@ -1350,6 +1363,9 @@ void Deinflector::init_transforms() {
   add_rule({.from = "きやしません", .to = "くる", .conditions_in = MASEN, .conditions_out = VK, .group_id = id});
   add_rule({.from = "来やしません", .to = "来る", .conditions_in = MASEN, .conditions_out = VK, .group_id = id});
   add_rule({.from = "來やしません", .to = "來る", .conditions_in = MASEN, .conditions_out = VK, .group_id = id});
+
+  // Not a Yomitan transform and not a rule: deinflect_neko_speech() applies it.
+  neko_group_ = add_group({.name = std::string(neko_speech), .description = "NekoPara-style にゃ substitution."});
 }
 
 int Deinflector::add_group(const TransformGroup& group) {
@@ -1392,6 +1408,32 @@ std::vector<DeinflectionResult> Deinflector::deinflect(const std::string& text) 
     result.emplace_back(text, NONE, std::vector<TransformGroup>{});
   }
 
+  return result;
+}
+
+// NekoPara's cat speech says にゃ for な (できにゃい), and also for だ, ら, ま and
+// じゃ (ダメにゃって, いにゃっしゃい, わかりにゃした, いいにゃない). Each にゃ is
+// replaced, one at a time, and deinflected as usual, with "neko speech" as the
+// trace's first step. deinflect() never returns these; Lookup asks for them only
+// with LookupOptions::neko_speech, where they read more of the text than every
+// ordinary result.
+std::vector<DeinflectionResult> Deinflector::deinflect_neko_speech(const std::string& text) const {
+  std::vector<DeinflectionResult> result{};
+  size_t pos = find_neko(text, 0);
+  if (pos == std::string::npos) {
+    return result;
+  }
+  std::vector<int> trace{neko_group_};
+  constexpr std::string_view neko = "にゃ";
+  constexpr std::array<std::string_view, 5> neko_replacements = {"な", "だ", "ら", "ま", "じゃ"};
+  for (; pos != std::string::npos; pos = find_neko(text, pos + neko.size())) {
+    for (const auto replacement : neko_replacements) {
+      std::string normalized;
+      normalized.reserve(text.size() - neko.size() + replacement.size());
+      normalized.append(text, 0, pos).append(replacement).append(text, pos + neko.size());
+      deinflect_recursive(normalized, NONE, trace, result);
+    }
+  }
   return result;
 }
 
