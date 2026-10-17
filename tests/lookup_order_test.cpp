@@ -12,9 +12,9 @@
 // checks that order under the user's explicit ascending surface-frequency sort,
 // under Auto (no sort dictionary, which goes straight to dictionary order), and
 // reversed; and that a per-reading frequency that genuinely separates the
-// readings still outranks dictionary order. Last, it checks that NekoPara's cat
-// speech (the deinflector's "neko speech" results) is used only where it reads
-// further than every ordinary reading.
+// readings still outranks dictionary order. Last, it checks NekoPara's cat speech
+// (LookupOptions::neko_speech): off by default, and when on, used only where it
+// reads further than every ordinary reading.
 #include "hoshidicts/deinflector.hpp"
 #include "hoshidicts/importer.hpp"
 #include "hoshidicts/lookup.hpp"
@@ -257,13 +257,15 @@ int main() {
               join(got));
   }
 
-  // --- NekoPara cat speech: read only where it explains more than any ordinary
-  // reading (Deinflector's "neko speech" results). --------------------------
+  // --- NekoPara cat speech (LookupOptions::neko_speech, off by default): when on,
+  // read only where it reads further than every ordinary reading. ---------------
   {
     const std::filesystem::path out3 = root / "out3";
     std::filesystem::create_directories(out3);
     // こんじゃく, こんだく, なあ and まあ are what にゃ -> じゃ/だ/な/ま would make of
     // the ordinary words こんにゃく and にゃあ.
+    const std::string long_nande = "にゃんであいうえおかきくけこさしすせそ";  // 19 code points
+    const std::string long_dekinyai = "できにゃいあいうえおかきくけこさし";    // 17 code points
     const std::string bank =
         R"([["蒟蒻","こんにゃく","","",0,["konnyaku"],1,""],)"
         R"(["コンニャク","コンニャク","","",0,["konnyaku, in katakana"],2,""],)"
@@ -277,43 +279,65 @@ int main() {
         R"(["そんな","そんな","","",0,["such"],10,""],)"
         R"(["損","そん","","",0,["loss"],11,""],)"
         R"(["なんで","なんで","","",0,["why"],12,""],)"
-        // 19 code points: a long key, found only by the scan past scan_length.
-        R"(["にゃんであいうえおかきくけこさしすせそ","にゃんであいうえおかきくけこさしすせそ","","",0,["long"],13,""]])";
+        // Long keys, found only by the scan past scan_length.
+        R"([")" + long_nande + R"(",")" + long_nande + R"(","","",0,["long"],13,""],)"
+        R"([")" + long_dekinyai + R"(",")" + long_dekinyai + R"(","","",0,["long"],14,""]])";
     const std::string dict = import_dict(
         root, out3, "neko",
         {{"index.json", R"({"title":"neko","format":3,"revision":"1"})"}, {"term_bank_1.json", bank}});
     DictionaryQuery query;
     check(query.add_term_dict(dict), "add neko dictionary");
     Lookup lookup(query, deinflector);
-    const auto expressions = [&](const std::string& text) {
+    LookupOptions neko_on;
+    neko_on.neko_speech = true;
+    const auto expressions = [&](const std::string& text, const LookupOptions& options) {
       std::vector<std::string> out;
-      for (const auto& result : lookup.lookup(text, 32, 16)) {
-        out.push_back(result.term.expression);
+      for (const auto& result : lookup.lookup(text, 32, 16, options)) {
+        out.push_back(result.term.expression + (result.trace.empty() || result.trace[0].name != Deinflector::neko_speech
+                                                    ? ""
+                                                    : "*"));
       }
       return out;
     };
 
-    // Ordinary words with にゃ keep exactly their ordinary results.
-    const auto konnyaku = expressions("こんにゃく");
+    // Off (the default): no cat speech, whatever the text.
+    for (const auto* text : {"できにゃい", "そんにゃ", "こんにゃく", "こんにゃくって", "にゃあ", "にゃあって"}) {
+      for (const auto& expression : expressions(text, {})) {
+        check(expression.back() != '*', std::string(text) + ": neko speech result with the option off: " + expression);
+      }
+    }
+    const auto dekinyai_off = lookup.lookup("できにゃい", 32, 16);
+    check(!dekinyai_off.empty() && dekinyai_off[0].term.expression == "出来る" && dekinyai_off[0].matched == "できにゃ",
+          "できにゃい, off: expected 出来る over できにゃ (-ゃ -ねば) first");
+
+    // On: ordinary words with にゃ keep exactly their ordinary results.
+    const auto konnyaku = expressions("こんにゃく", neko_on);
     check(same(konnyaku, {"蒟蒻", "コンニャク"}), "こんにゃく: expected [蒟蒻, コンニャク], got " + join(konnyaku));
-    const auto meow = expressions("にゃあ");
+    const auto meow = expressions("にゃあ", neko_on);
     check(same(meow, {"にゃあ"}), "にゃあ: expected [にゃあ], got " + join(meow));
 
-    // Cat speech reads further than any ordinary reading, so it comes first.
-    const auto dekinyai = lookup.lookup("できにゃい", 32, 16);
+    // On: cat speech reads further than any ordinary reading, so it comes first.
+    const auto dekinyai = lookup.lookup("できにゃい", 32, 16, neko_on);
     check(!dekinyai.empty() && dekinyai[0].term.expression == "出来る" && dekinyai[0].matched == "できにゃい" &&
               dekinyai[0].trace.size() == 2 && dekinyai[0].trace[0].name == Deinflector::neko_speech &&
               dekinyai[0].trace[1].name == "negative",
-          "できにゃい: expected 出来る over the whole input by neko speech -> negative");
-    const auto sonnya = expressions("そんにゃ");
-    check(same(sonnya, {"そんな", "損"}), "そんにゃ: expected [そんな, 損], got " + join(sonnya));
+          "できにゃい, on: expected 出来る over the whole input by neko speech -> negative");
+    const auto sonnya = expressions("そんにゃ", neko_on);
+    check(same(sonnya, {"そんな*", "損"}), "そんにゃ, on: expected [そんな*, 損], got " + join(sonnya));
 
-    // Within scan_length only にゃんで -> なんで matches, by neko speech; the
-    // long-key scan then finds the whole input as an ordinary key, which reads
-    // further, so なんで goes.
-    const std::string long_key = "にゃんであいうえおかきくけこさしすせそ";
-    const auto long_result = expressions(long_key);
-    check(same(long_result, {long_key}), "long key: expected [" + long_key + "], got " + join(long_result));
+    // On, long keys: the long-key scan's ordinary match reads the whole input, so
+    // no cat speech counts, and the shorter ordinary readings stay as they are
+    // (出来る over できにゃ by -ゃ). Both lists equal the option-off ones.
+    for (const auto& text : {long_nande, long_dekinyai}) {
+      const auto on = expressions(text, neko_on);
+      const auto off = expressions(text, {});
+      check(same(on, off), "long key " + text + ": on " + join(on) + " differs from off " + join(off));
+    }
+    const auto long_off = expressions(long_dekinyai, {});
+    check(same(long_off, {long_dekinyai, "出来る", "出来"}),
+          "long key " + long_dekinyai + ": expected [" + long_dekinyai + ", 出来る, 出来], got " + join(long_off));
+    const auto nande = expressions(long_nande, neko_on);
+    check(same(nande, {long_nande}), "long key " + long_nande + ": expected [" + long_nande + "], got " + join(nande));
   }
 
   std::filesystem::remove_all(root);

@@ -21,6 +21,10 @@ struct LookupOptions {
   std::optional<std::string> frequency_dictionary;
   LookupFrequencyOrder frequency_order = LookupFrequencyOrder::Auto;
   std::optional<std::string> primary_reading;
+  // Also read NekoPara's cat speech (Deinflector::deinflect_neko_speech), only
+  // where it reads more of the text than every ordinary reading. Off, the
+  // results are exactly those without it.
+  bool neko_speech = false;
 };
 
 class Lookup {

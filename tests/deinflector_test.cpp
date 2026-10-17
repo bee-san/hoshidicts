@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "hoshidicts/deinflector.hpp"
 
+#include <algorithm>
 #include <cstdio>
 #include <fstream>
 #include <string>
@@ -86,15 +87,15 @@ int main(int argc, char** argv) {
     std::fprintf(stderr, "FAIL exact/chained honorific\n");
   }
 
-  // NekoPara's cat speech (not Yomitan): each にゃ is also read as な, だ, ら, ま or
-  // じゃ. Such a result's trace starts with "neko speech", then the ordinary steps
-  // in application order.
+  // NekoPara's cat speech (not Yomitan): deinflect_neko_speech() reads each にゃ,
+  // one at a time, as な, だ, ら, ま or じゃ. Such a result's trace starts with
+  // "neko speech", then the ordinary steps in application order.
   const auto has_neko_candidate = [&](const std::string& source, const std::string& term, const std::string& pos,
                                       const std::vector<std::string>& steps) {
     const auto flags = Deinflector::pos_to_conditions({pos});
-    for (const auto& result : deinflector.deinflect(source)) {
+    for (const auto& result : deinflector.deinflect_neko_speech(source)) {
       if (result.text != term || (result.conditions != 0 && !(result.conditions & flags))) continue;
-      if (result.trace.size() != steps.size() + 1 || result.trace[0].name != "neko speech") continue;
+      if (result.trace.size() != steps.size() + 1 || result.trace[0].name != Deinflector::neko_speech) continue;
       bool matches = true;
       for (size_t i = 0; i < steps.size(); ++i) {
         if (result.trace[i + 1].name != steps[i]) matches = false;
@@ -124,45 +125,39 @@ int main(int argc, char** argv) {
       std::fprintf(stderr, "FAIL neko speech: %s -> %s\n", neko_case.source, neko_case.term);
     }
   }
-  // The input stays the first result, and every neko result comes after every
-  // ordinary one, so an exact match (こんにゃく) or an ordinary reading of にゃ
-  // (食べにゃ, Yomitan's -ゃ for -ねば) keeps its place. deinflect() is exactly
-  // deinflect_ordinary() followed by deinflect_neko_speech().
+  // Every deinflect_neko_speech() result is marked, and deinflect() has none:
+  // it stays Yomitan's alone (the corpus above).
   for (const auto* source : {"こんにゃく", "食べにゃ", "できにゃい", "わかりにゃした"}) {
     ++cases;
-    const auto results = deinflector.deinflect(source);
-    bool ordered = !results.empty() && results[0].text == source && results[0].trace.empty();
-    bool seen_neko = false;
-    for (const auto& result : results) {
-      const bool neko = Deinflector::is_neko_speech(result);
-      if (seen_neko && !neko) ordered = false;
-      seen_neko = seen_neko || neko;
-    }
-    const auto ordinary = deinflector.deinflect_ordinary(source);
     const auto neko = deinflector.deinflect_neko_speech(source);
-    if (results.size() != ordinary.size() + neko.size()) ordered = false;
-    for (size_t i = 0; ordered && i < results.size(); ++i) {
-      const auto& part = i < ordinary.size() ? ordinary[i] : neko[i - ordinary.size()];
-      if (results[i].text != part.text || results[i].conditions != part.conditions ||
-          results[i].trace.size() != part.trace.size() || Deinflector::is_neko_speech(part) != (i >= ordinary.size())) {
-        ordered = false;
-      }
-    }
-    if (!ordered || !seen_neko) {
+    bool apart = !neko.empty();
+    for (const auto& result : neko) apart = apart && Deinflector::is_neko_speech(result);
+    for (const auto& result : deinflector.deinflect(source)) apart = apart && !Deinflector::is_neko_speech(result);
+    if (!apart) {
       ++failures;
-      std::fprintf(stderr, "FAIL neko speech order: %s\n", source);
+      std::fprintf(stderr, "FAIL neko speech kept apart from deinflect(): %s\n", source);
     }
   }
+  // Each にゃ is read on its own: にゃにゃ gives なにゃ and にゃな (and じゃにゃ,
+  // にゃじゃ), never なな.
   ++cases;
-  if (!has_candidate(deinflector, "食べにゃ", "食べる", "v1", "-ねば|-ゃ")) {
-    ++failures;
-    std::fprintf(stderr, "FAIL ordinary -ゃ beside neko speech: 食べにゃ -> 食べる\n");
-  }
-  ++cases;
-  for (const auto& result : deinflector.deinflect("できない")) {
-    if (!result.trace.empty() && result.trace[0].name == "neko speech") {
+  {
+    std::vector<std::string> read;
+    for (const auto& result : deinflector.deinflect_neko_speech("にゃにゃ")) {
+      if (result.trace.size() == 1) read.push_back(result.text);
+    }
+    const auto has = [&](const char* text) { return std::ranges::find(read, std::string(text)) != read.end(); };
+    if (!has("なにゃ") || !has("にゃな") || !has("じゃにゃ") || !has("にゃじゃ") || has("なな")) {
       ++failures;
-      std::fprintf(stderr, "FAIL neko speech without にゃ: できない -> %s\n", result.text.c_str());
+      std::fprintf(stderr, "FAIL neko speech reads one にゃ at a time: にゃにゃ\n");
+    }
+  }
+  // Only a hiragana にゃ: カゃ (E3 82 AB E3 82 83) shares にゃ's last four bytes.
+  ++cases;
+  for (const auto* source : {"できない", "カゃ", "ニャ", ""}) {
+    if (!deinflector.deinflect_neko_speech(source).empty()) {
+      ++failures;
+      std::fprintf(stderr, "FAIL neko speech without にゃ: [%s]\n", source);
       break;
     }
   }

@@ -8,7 +8,6 @@
 #include <algorithm>
 #include <array>
 #include <cstddef>
-#include <iterator>
 #include <ranges>
 
 Deinflector::Deinflector() : trie_(1), max_length_(0) { init_transforms(); }
@@ -1365,7 +1364,7 @@ void Deinflector::init_transforms() {
   add_rule({.from = "来やしません", .to = "来る", .conditions_in = MASEN, .conditions_out = VK, .group_id = id});
   add_rule({.from = "來やしません", .to = "來る", .conditions_in = MASEN, .conditions_out = VK, .group_id = id});
 
-  // Not a Yomitan transform and not a rule: deinflect() applies it, see there.
+  // Not a Yomitan transform and not a rule: deinflect_neko_speech() applies it.
   neko_group_ = add_group({.name = std::string(neko_speech), .description = "NekoPara-style にゃ substitution."});
 }
 
@@ -1400,13 +1399,6 @@ void Deinflector::add_rule(const Rule& rule) {
 }
 
 std::vector<DeinflectionResult> Deinflector::deinflect(const std::string& text) const {
-  auto result = deinflect_ordinary(text);
-  auto neko = deinflect_neko_speech(text);
-  result.insert(result.end(), std::make_move_iterator(neko.begin()), std::make_move_iterator(neko.end()));
-  return result;
-}
-
-std::vector<DeinflectionResult> Deinflector::deinflect_ordinary(const std::string& text) const {
   std::vector<DeinflectionResult> result{};
   std::vector<int> trace{};
   size_t text_len = utf8::distance(text.begin(), text.end());
@@ -1415,15 +1407,16 @@ std::vector<DeinflectionResult> Deinflector::deinflect_ordinary(const std::strin
   } else {
     result.emplace_back(text, NONE, std::vector<TransformGroup>{});
   }
+
   return result;
 }
 
 // NekoPara's cat speech says にゃ for な (できにゃい), and also for だ, ら, ま and
 // じゃ (ダメにゃって, いにゃっしゃい, わかりにゃした, いいにゃない). Each にゃ is
 // replaced, one at a time, and deinflected as usual, with "neko speech" as the
-// trace's first step. deinflect() puts these results after every ordinary one, so
-// the input itself stays the first result; Lookup uses them only where they read
-// more of the text than every ordinary result.
+// trace's first step. deinflect() never returns these; Lookup asks for them only
+// with LookupOptions::neko_speech, where they read more of the text than every
+// ordinary result.
 std::vector<DeinflectionResult> Deinflector::deinflect_neko_speech(const std::string& text) const {
   std::vector<DeinflectionResult> result{};
   size_t pos = find_neko(text, 0);

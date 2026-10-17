@@ -21,15 +21,14 @@ struct DeinflectionResult {
 class Deinflector {
  public:
   Deinflector();
-  // The ordinary (Yomitan) deinflections, then the neko speech ones.
   std::vector<DeinflectionResult> deinflect(const std::string& text) const;
-  // The two parts of deinflect(), for a caller that needs the second only
-  // sometimes (Lookup tries neko speech only where ordinary text matched less).
-  std::vector<DeinflectionResult> deinflect_ordinary(const std::string& text) const;
+  // Readings of NekoPara's cat speech: each にゃ in text, one at a time, read as
+  // な, だ, ら, ま or じゃ and deinflected, with neko_speech as the trace's first
+  // step. Empty when text has no にゃ. deinflect() never returns these.
   std::vector<DeinflectionResult> deinflect_neko_speech(const std::string& text) const;
   static uint32_t pos_to_conditions(const std::vector<std::string>& part_of_speech);
 
-  // The first trace step of a result that reads NekoPara's cat speech; see deinflect().
+  // The first trace step of a deinflect_neko_speech() result.
   static constexpr std::string_view neko_speech = "neko speech";
   static bool is_neko_speech(const DeinflectionResult& result) {
     return !result.trace.empty() && result.trace.front().name == neko_speech;

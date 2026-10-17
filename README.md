@@ -91,7 +91,10 @@ std::vector<DeinflectionResult> Deinflector::deinflect(const std::string& text) 
 ```
 Deinflects a given Japanese string using rules from the Yomitan deinflector. As this doesn't use any dictionary data, the result may include invalid deinflections.
 
-It also reads NekoPara's cat speech, which says `にゃ` for `な` and sometimes for `だ`, `ら`, `ま` or `じゃ`: each `にゃ` is replaced by each of them, one at a time, and deinflected as usual, so `できにゃい` resolves to `できる` and `いにゃっしゃいます` to `いらっしゃる`. Those results come after every ordinary one, with `neko speech` (`Deinflector::neko_speech`) as their trace's first step; `Deinflector::is_neko_speech` tells them apart. `deinflect_ordinary` and `deinflect_neko_speech` return the two parts separately. `Lookup` uses a neko speech result only where it reads more of the text than every ordinary result.
+```cpp
+std::vector<DeinflectionResult> Deinflector::deinflect_neko_speech(const std::string& text) const
+```
+Reads NekoPara's cat speech, which says `にゃ` for `な` and sometimes for `だ`, `ら`, `ま` or `じゃ`: each `にゃ` in `text` is replaced by each of them, one at a time, and deinflected as usual, so `できにゃい` gives `できる` and `いにゃっしゃいます` gives `いらっしゃる`. Every result's trace starts with `neko speech` (`Deinflector::neko_speech`; `Deinflector::is_neko_speech` checks it). Empty when `text` has no `にゃ`. `deinflect` never returns these; `Lookup` uses them only with `LookupOptions::neko_speech`.
 
 ```cpp
 static uint32_t Deinflector::pos_to_conditions(const std::vector<std::string>& part_of_speech)
@@ -113,7 +116,14 @@ Keys longer than `scan_length` are still found when `scan_length` is at least 8 
 
 Results are filtered by part-of-speech tags defined in dictionaries, or added directly if none are present. The results are sorted by matched length first, then by preprocessing steps, then deinflection trace length and finally by frequency.
 
-A `neko speech` deinflection (NekoPara's cat speech, see the deinflector) is used only where it matches a longer part of `lookup_string` than every ordinary deinflection, so `できにゃい` finds `できる` over the whole word, while an ordinary word with `にゃ` (`こんにゃく`, `にゃあ`) keeps exactly its ordinary results.
+`LookupOptions::neko_speech` (off by default) also reads NekoPara's cat speech (`deinflect_neko_speech`). A cat-speech reading counts only where it matches a longer part of `lookup_string` than every ordinary one, long keys included, and then comes first: `できにゃい` finds `出来る` over the whole word, and `そんにゃ` finds `そんな`. Every ordinary result is kept, but a term found both ways is listed once, under the longer match. `lookup_dictionary` judges this within its one dictionary. Off, the results are exactly those without the option. The option is meant for NekoPara-style text; on other text with `にゃ` or `ニャ` it also reads, wherever that reaches further than the dictionary's own words:
+
+- a word followed by more text: `こんにゃくって` gives `凝る`; a word alone, such as `こんにゃく` or `にゃあ`, keeps exactly its ordinary results;
+- dialect `にゃ` for `には` or `ねば`: `俺にゃ` gives `俺ら`, `たまにゃ` gives `球菜`;
+- names and loanwords with `ニャ`, through the katakana-to-hiragana variant: `ソーニャ` gives `そうだ`, `おニャン子` gives `おじゃん`;
+- meows and the sentence-final `にゃ`: `にゃぁ` gives `なぁ` and `まぁ`, `ですにゃ` gives `ですら`, and `来ましたにゃ` is read as `-たら`.
+
+Among themselves the five readings rank like any others: `しにゃい` lists `竹刀` and `市内` first, as `しない` does, and `わかりにゃした` puts `分かり出す` (`だ`) before `分かる` (`ま`), whose chain is longer. A word with two `にゃ` is read with one replaced at a time.
 
 ```cpp
 std::vector<LookupResult> Lookup::lookup_dictionary(const std::string& lookup_string,
