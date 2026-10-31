@@ -381,7 +381,11 @@ int main() {
          {"term_bank_1.json",
           R"([["東京","とうきょう","","",0,["Tokyo"],1,""],)"
           R"(["事","こと","","",0,["thing"],2,""],)"
-          R"(["食べる","たべる","","v1",0,["to eat"],3,""]])"}});
+          R"(["食べる","たべる","","v1",0,["to eat"],3,""],)"
+          // Six terms read た that tie on every key.
+          R"(["田","た","","",0,["rice field"],4,""],["他","た","","",0,["other"],5,""],)"
+          R"(["多","た","","",0,["many"],6,""],["太","た","","",0,["fat"],7,""],)"
+          R"(["汰","た","","",0,["select"],8,""],["打","た","","",0,["hit"],9,""]])"}});
     // 重複語's two readings are listed against both their lexical order and
     // their ranks, so each order a test expects is the one it names.
     const std::string frequency = import_dict(
@@ -395,6 +399,7 @@ int main() {
           R"(["ぴえんぱおん","freq",{"value":90000,"displayValue":"90000"}],)"
           R"(["ググる","freq",{"value":20000,"displayValue":"20000"}],)"
           R"(["トウキョウ","freq",{"value":70000,"displayValue":"70000"}],)"
+          R"(["たかだ","freq",{"value":147490,"displayValue":"147490"}],)"
           R"(["重複語","freq",{"reading":"ちょうふくご","frequency":{"value":60000,"displayValue":"60000"}}],)"
           R"(["重複語","freq",{"reading":"じゅうふくご","frequency":{"value":40000,"displayValue":"40000"}}]])"},
          // A kanji frequency is not a term frequency.
@@ -455,6 +460,16 @@ int main() {
       check(tower[1].term.frequencies.size() == 1 && tower[1].term.frequencies[0].frequencies[0].value == 100,
             "東京タワー, on: expected 東京 to keep its own frequency");
     }
+
+    // On: the terms with glossaries keep exactly their order without the
+    // option, ties included (the six た terms tie on every key).
+    const auto takada_off = find("たかだ", {});
+    auto takada_on = find("たかだ", on);
+    check(takada_off.size() == 6 && !takada_on.empty() && takada_on.front() == "たかだ/たかだ*",
+          "たかだ, on: expected たかだ/たかだ* before the six た terms, got " + join(takada_on));
+    if (!takada_on.empty()) takada_on.erase(takada_on.begin());
+    check(same(takada_on, takada_off),
+          "たかだ: the た terms on " + join(takada_on) + " are not in their order off " + join(takada_off));
 
     // On: every prefix longer than the defined matches counts, not only the
     // longest one, and a reading-less row reads its own text.

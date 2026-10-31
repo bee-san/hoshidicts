@@ -224,6 +224,12 @@ class DictionaryQuery {
                            std::vector<FrequencyEntry>& out, BlobPins& pins) const;
   void collect_pitches(std::string_view expression, std::string_view reading, std::vector<PitchEntry>& out,
                        BlobPins& pins) const;
+  // The readings of the frequency and pitch rows keyed by `expression`, for a
+  // term only those dictionaries have (LookupOptions::metadata_only_terms):
+  // each reading a row names, once, in the order the frequency dictionaries and
+  // then the pitch dictionaries list them; `expression` itself when only rows
+  // without a reading have it; none when no row has it.
+  std::vector<std::string> metadata_readings(std::string_view expression, BlobPins& pins) const;
   void materialize(TermResult& term) const;
 
   struct DictionaryData;
