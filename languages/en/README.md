@@ -57,22 +57,38 @@ own language agent.
 
 ## Measurements
 
-Provisional, until the engine's `hoshidicts-cli` is built: measured with
-the JavaScript model of the pack deinflector in `tools/test/stub/`.
+`hoshidicts-cli eval-language` from feat/multi-language at 1faeed5 (GCC
+14.3, Release), with `--dictionary` Wiktionary English-English
+(wiktionary-to-yomitan 2026.10.22, `wty-en-en.zip`, sha256
+`0e62d0d3…436f`, CC BY-SA 4.0). The sample is the 2,000 UniMorph rows of
+`corpus.tsv` and `gaps.tsv` together.
 
-| Rule set | UniMorph sample (2,000 rows) | cases.tsv positives | cases.tsv negatives | yomitan.tsv |
-| --- | ---: | ---: | ---: | ---: |
-| Yomitan only (`sources/yomitan.json`) | 1,963 / 2,000 (98.2%) | 9 / 30 | 9 / 9 | 107 / 107 |
-| Final (`transforms.json`) | 1,970 / 2,000 (98.5%) | 30 / 30 | 9 / 9 | 107 / 107 |
+| Rule set | Sample recall | False candidates per row | First rank | cases.tsv positives | cases.tsv negatives | yomitan.tsv |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Own (`sources/own.json`) | 0.35% (7) | 0.046 | 0.05% | 19 / 29 | 10 / 10 | 0 / 105, negatives 2 / 2 |
+| Yomitan (`sources/yomitan.json`) | 98.15% (1,963) | 0.286 | 0.30% | 8 / 29 | 10 / 10 | 105 / 105, negatives 2 / 2 |
+| Final (`transforms.json`) | 98.5% (1,970) | 0.312 | 0.35% | 29 / 29 | 10 / 10 | 105 / 105, negatives 2 / 2 |
 
-The UniMorph sample is mostly regular forms, so the own rules add 7 rows
-there; `cases.tsv` shows what they add for common words (irregular verbs
-and plurals, the typographic apostrophe).
-
-`tools/check-yomitan.mjs`: 4,352 inputs, 17,490 Yomitan results; every
-difference is the one listed in `sources/yomitan-differences.tsv`
-(Yomitan matches a particle as a prefix of the next word), and the two
-processors agree on 140 inputs each.
+- The sample is mostly regular forms, so the own rules add 7 rows there;
+  `cases.tsv` shows what they add for common words.
+- First rank is low because the dictionary lists inflected forms as
+  headwords of their own (`went`, `children`, `running`, with "form of"
+  glosses), so a lookup of the form ranks that entry, found without
+  deinflection, before the lemma.
+- `--per-rule` on the final set: 43 of the 406 rules recover sampled rows;
+  9 recover none and add false candidates (330 in all; `-y`, `un-`, one
+  plural rule and five irregular forms); no rule breaks a negative. All
+  are kept: the prototype keeps Yomitan's rules as they are, and the own
+  irregular forms are exercised by `cases.tsv`.
+- `tools/check-yomitan.mjs` against the same CLI: 8,568 inputs, 30,909
+  Yomitan results, 1,090 differences, every one explained by
+  `sources/yomitan-differences.tsv` (Yomitan's particle-prefix matches and
+  its empty texts); the two processors agree with Yomitan's on 2,184 inputs
+  each.
+- `tests/lookup.tsv` (13 rows) passes against `tests/dictionary/` imported
+  by `hoshidicts-cli import` and looked up with `hoshidicts-cli lookup`.
+- Lookup speed is not measured: `benchmark-lookup` has no language option
+  at 1faeed5.
 
 ## Known gaps
 
