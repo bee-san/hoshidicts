@@ -64,7 +64,7 @@ describe('rule types', () => {
         assert.deepEqual(texts(rule({stemStartsWith: '{vowel}'}), 'bed').length, 0);
         assert.deepEqual(texts(rule({stemEndsWith: '{vowel}'}), 'ired').length, 0);
         assert.deepEqual(texts(rule({stemNotEndsWith: '[n]'}), 'ned').length, 0);
-        assert.deepEqual(texts(rule({stemNotEndsWith: '[n]'}), 'ed').length, 1);
+        assert.deepEqual(texts(rule({stemNotEndsWith: '[n]'}), 'aed').length, 1);
         assert.deepEqual(texts(rule({stemNotStartsWith: '[n]'}), 'nod').length, 0);
         assert.deepEqual(texts(rule({stemStartsWithText: 'ju'}), 'juged').length, 1);
         assert.deepEqual(texts(rule({stemNotStartsWithText: 'ju'}), 'juged').length, 0);
@@ -146,7 +146,7 @@ describe('search', () => {
             {id: 'es', rule: {type: 'suffix', inflected: 'es', deinflected: '', conditionsIn: [], conditionsOut: []}},
             {id: 'p', rule: {type: 'prefix', inflected: 'x', deinflected: '', conditionsIn: [], conditionsOut: []}},
         ]);
-        assert.deepEqual(m.deinflect('xes').map((r) => r.text), ['xes', 'x', '', 'xe', 'e', 'es', '', 'e']);
+        assert.deepEqual(m.deinflect('xes').map((r) => r.text), ['xes', 'x', 'xe', 'e', 'es', 'e']);
     });
 
     test('a rule is not applied twice to the same text in one trace', () => {

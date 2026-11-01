@@ -351,6 +351,8 @@ export class ModelDeinflector {
     deinflect(text) {
         const results = [];
         const visit = (current, conditions, trace, frames) => {
+            // As the engine (and 35e2dab's deinflect_recursive): an empty text is no result.
+            if (current === '') { return; }
             results.push({text: current, conditions, trace});
             for (const rule of this.candidates(current)) {
                 if (conditions !== 0 && (conditions & rule.in) === 0) { continue; }
