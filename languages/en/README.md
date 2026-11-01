@@ -80,10 +80,10 @@ own language agent.
   plural rule and five irregular forms); no rule breaks a negative. All
   are kept: the prototype keeps Yomitan's rules as they are, and the own
   irregular forms are exercised by `cases.tsv`.
-- `tools/check-yomitan.mjs` against the same CLI: 8,568 inputs, 30,909
-  Yomitan results, 1,090 differences, every one explained by
-  `sources/yomitan-differences.tsv` (Yomitan's particle-prefix matches and
-  its empty texts); the two processors agree with Yomitan's on 2,184 inputs
+- `tools/check-yomitan.mjs` against the same CLI: 8,568 inputs, 30,872
+  Yomitan results, 1,053 differences, every one explained by
+  `sources/yomitan-differences.tsv` (Yomitan matches phrasal and
+  interposed-object particles as prefixes of the next word); the two processors agree with Yomitan's on 2,184 inputs
   each.
 - `tests/lookup.tsv` (13 rows) passes against `tests/dictionary/` imported
   by `hoshidicts-cli import` and looked up with `hoshidicts-cli lookup`.

@@ -83,9 +83,9 @@ pack is written later, from scratch, by its own language agent.
   rows; 45 recover none and add 227 false candidates in all (mostly
   imperfect-prefix, imperative and 4 `VDoubled` rules); no rule breaks a
   negative. All are kept for the prototype.
-- `tools/check-yomitan.mjs` against the same CLI: 10,585 inputs, 150,347
-  Yomitan results, 692 differences, every one an empty text the engine does
-  not return (listed in `sources/yomitan-differences.tsv`); the six
+- `tools/check-yomitan.mjs` against the same CLI: 10,585 inputs, 149,655
+  Yomitan results, no difference (`sources/yomitan-differences.tsv` lists
+  none); the six
   processors agree with Yomitan's on 2,412 to 3,206 inputs each.
 - `tests/lookup.tsv` (11 rows) passes against `tests/dictionary/` imported
   by `hoshidicts-cli import` and looked up with `hoshidicts-cli lookup`.
