@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "code": "xx",
+  "iso639_3": "xxx",
+  "name": "Language name in English",
+  "nativeName": "Language name in the language",
+  "bcp47": "xx",
+  "scripts": ["Latn"],
+  "direction": "ltr",
+  "classes": {
+    "letter": "[A-Za-z]",
+    "word": "[{letter}\\p{M}\\p{Nd}]",
+    "wordJoiner": "['\\u2019\\-]"
+  },
+  "text": {
+    "pattern": "[{letter}]",
+    "segmentation": "spaces",
+    "wordCharacters": "{word}",
+    "wordInternal": "{wordJoiner}",
+    "sentence": {
+      "terminators": [".", "!", "?", "\u2026"],
+      "quotePairs": [["\"", "\""], ["(", ")"]]
+    },
+    "lineJoiner": " "
+  },
+  "lookup": {
+    "scanResolution": "word",
+    "preprocessors": [
+      {"id": "decapitalize", "name": "Decapitalize text", "variants": [[{"case": "lower"}]]},
+      {"id": "capitalizeFirstLetter", "name": "Capitalize first letter", "variants": [[{"case": "upperFirst"}]]}
+    ],
+    "postprocessors": [],
+    "readingNormalizer": null,
+    "transforms": "transforms.json",
+    "functionWords": [],
+    "variantPasses": []
+  },
+  "capabilities": {
+    "readings": "none",
+    "ruby": null,
+    "pitchAccent": false,
+    "characterView": null,
+    "wordHighlighting": true
+  },
+  "presentation": {
+    "typography": {"fontFamily": null, "wordBreak": "normal", "lineBreak": "auto"},
+    "labels": {},
+    "displayTransforms": {}
+  },
+  "settings": [],
+  "host": {
+    "ttsLanguage": "xx",
+    "audioLanguage": "xx",
+    "anki": {"noteTypeFamilies": [], "fieldAliases": {}, "partOfSpeechLabels": {}},
+    "frequencySamples": null,
+    "recommendedDictionaries": [
+      {"name": "Dictionary name", "url": "https://example.org/download-page", "description": "What it covers.", "licence": "Licence name"}
+    ],
+    "sample": {
+      "warmup": "word",
+      "practice": {"text": "A short sentence in the language with an inflected word.", "lookup": "inflected"},
+      "entry": {"expression": "lemma", "reading": "", "glossary": ["a definition"], "definitionTags": "v", "matched": "inflected", "trace": ["rule name"]},
+      "character": null
+    }
+  }
+}
