@@ -234,6 +234,8 @@ if(HOSHIDICTS_BENCHMARK)
         hoshidicts
         glaze::glaze
     )
+    target_compile_definitions(benchmark-lookup PRIVATE
+        HOSHIDICTS_LANGUAGES_DIR="${CMAKE_CURRENT_SOURCE_DIR}/languages")
 endif()
 if(HOSHIDICTS_TESTS)
     enable_testing()

@@ -56,49 +56,56 @@ constexpr std::array<std::pair<std::string_view, int>, 30> two_letter_categories
     {"Cf", UTF8PROC_CATEGORY_CF}, {"Cs", UTF8PROC_CATEGORY_CS}, {"Co", UTF8PROC_CATEGORY_CO},
 }};
 
+// The members of each category, built on first use of that category (a scan
+// of every code point costs about 1 ms per category natively). Packs that use
+// no \p{...} (Japanese) never build them.
 struct CategoryTables {
   std::array<CharClass, 30> two_letter;
   std::array<CharClass, 7> one_letter;  // C L M N P S Z
+  std::array<std::once_flag, 30> two_letter_once;
+  std::array<std::once_flag, 7> one_letter_once;
 };
 
-const CategoryTables& category_tables() {
-  static const CategoryTables tables = [] {
-    CategoryTables t;
-    std::array<std::vector<CodePointRange>, 30> ranges;
-    std::array<int, 32> slot{};
-    slot.fill(-1);
-    for (size_t i = 0; i < two_letter_categories.size(); ++i) {
-      slot[two_letter_categories[i].second] = static_cast<int>(i);
-    }
+CategoryTables& category_tables() {
+  static CategoryTables tables;
+  return tables;
+}
+
+const CharClass& two_letter_category(size_t i) {
+  auto& t = category_tables();
+  std::call_once(t.two_letter_once[i], [&] {
+    const int wanted = two_letter_categories[i].second;
+    std::vector<CodePointRange> list;
     for (char32_t c = 0; c <= max_code_point; ++c) {
       if (c == surrogate_first) {
         c = surrogate_last;
         continue;
       }
-      const int s = slot[utf8proc_category(static_cast<utf8proc_int32_t>(c))];
-      auto& list = ranges[s];
+      if (utf8proc_category(static_cast<utf8proc_int32_t>(c)) != wanted) continue;
       if (!list.empty() && list.back().last + 1 == c) {
         list.back().last = c;
       } else {
         list.push_back({c, c});
       }
     }
-    for (size_t i = 0; i < ranges.size(); ++i) {
-      t.two_letter[i] = CharClass(std::move(ranges[i]));
-    }
+    t.two_letter[i] = CharClass(std::move(list));
+  });
+  return t.two_letter[i];
+}
+
+const CharClass& one_letter_category(size_t m) {
+  auto& t = category_tables();
+  std::call_once(t.one_letter_once[m], [&] {
     constexpr std::string_view majors = "CLMNPSZ";
-    for (size_t m = 0; m < majors.size(); ++m) {
-      std::vector<const CharClass*> parts;
-      for (size_t i = 0; i < two_letter_categories.size(); ++i) {
-        if (two_letter_categories[i].first[0] == majors[m]) {
-          parts.push_back(&t.two_letter[i]);
-        }
+    std::vector<const CharClass*> parts;
+    for (size_t i = 0; i < two_letter_categories.size(); ++i) {
+      if (two_letter_categories[i].first[0] == majors[m]) {
+        parts.push_back(&two_letter_category(i));
       }
-      t.one_letter[m] = CharClass::unite(parts);
     }
-    return t;
-  }();
-  return tables;
+    t.one_letter[m] = CharClass::unite(parts);
+  });
+  return t.one_letter[m];
 }
 
 std::string quote_source(std::u32string_view source) {
@@ -413,15 +420,14 @@ CharClass CharClass::unite(const std::vector<const CharClass*>& classes) {
 }
 
 const CharClass* general_category(std::string_view name) {
-  const auto& tables = category_tables();
   if (name.size() == 1) {
     constexpr std::string_view majors = "CLMNPSZ";
     const size_t at = majors.find(name[0]);
-    return at == std::string_view::npos ? nullptr : &tables.one_letter[at];
+    return at == std::string_view::npos ? nullptr : &one_letter_category(at);
   }
   for (size_t i = 0; i < two_letter_categories.size(); ++i) {
     if (two_letter_categories[i].first == name) {
-      return &tables.two_letter[i];
+      return &two_letter_category(i);
     }
   }
   return nullptr;
