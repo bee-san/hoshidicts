@@ -17,6 +17,7 @@ option(HOSHIDICTS_TESTS "hoshidicts unit tests (ctest)" OFF)
 # (see src/memory/memory.cpp).
 option(HOSHIDICTS_WASMFS "The Emscripten build links against WasmFS" OFF)
 option(HOSHIDICTS_DEINFLECTOR_TESTS "Japanese conjugation parity tests" OFF)
+option(HOSHIDICTS_LANGUAGE_TESTS "language pack conformance tests (docs/languages.md 12.1)" OFF)
 
 set(ZSTD_BUILD_PROGRAMS OFF CACHE BOOL "")
 set(ZSTD_BUILD_TESTS OFF CACHE BOOL "")
@@ -158,6 +159,27 @@ if(HOSHIDICTS_DEINFLECTOR_TESTS)
              COMMAND deinflector-test ${CMAKE_CURRENT_SOURCE_DIR}/languages/ja/tests/yomitan.tsv)
 endif()
 
+if(HOSHIDICTS_LANGUAGE_TESTS)
+    enable_testing()
+    add_executable(language-conformance-test tests/language_conformance_test.cpp)
+    target_include_directories(language-conformance-test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_link_libraries(language-conformance-test PRIVATE hoshidicts glaze::glaze unordered_dense utf8proc::utf8proc)
+    if(MSVC)
+        target_compile_options(language-conformance-test PRIVATE /utf-8)
+    endif()
+    # One test per pack directory; adding a pack adds its test, also in an
+    # existing build directory.
+    file(GLOB HOSHIDICTS_PACK_DESCRIPTORS CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/languages/*/language.json)
+    foreach(descriptor ${HOSHIDICTS_PACK_DESCRIPTORS})
+        get_filename_component(pack_dir ${descriptor} DIRECTORY)
+        get_filename_component(pack_code ${pack_dir} NAME)
+        if(NOT pack_code MATCHES "^_")
+            add_test(NAME language-${pack_code}
+                     COMMAND language-conformance-test ${pack_dir} ${CMAKE_CURRENT_BINARY_DIR})
+        endif()
+    endforeach()
+endif()
+
 if(HOSHIDICTS_CLI)
     add_executable(hoshidicts-cli
         cli/main.cpp
@@ -234,6 +256,26 @@ if(HOSHIDICTS_TESTS)
                      -DOUT=${CMAKE_CURRENT_BINARY_DIR}/ja-transforms.json
                      -DEXPECTED=${CMAKE_CURRENT_SOURCE_DIR}/languages/ja/transforms.json
                      -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/export_legacy_japanese.cmake)
+
+    # The Japanese parity tests (docs/languages.md 11.3): the framework against
+    # the oracle.
+    add_executable(ja-parity-test tests/ja_parity_test.cpp)
+    target_include_directories(ja-parity-test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src ${CMAKE_CURRENT_SOURCE_DIR}/tests)
+    target_link_libraries(ja-parity-test PRIVATE hoshidicts-legacy hoshidicts unordered_dense)
+    if(MSVC)
+        target_compile_options(ja-parity-test PRIVATE /utf-8)
+    endif()
+    add_test(NAME ja-deinflect-parity COMMAND ja-parity-test deinflect ${CMAKE_CURRENT_SOURCE_DIR})
+    add_test(NAME ja-process-parity COMMAND ja-parity-test process ${CMAKE_CURRENT_SOURCE_DIR})
+    add_test(NAME ja-lookup-parity COMMAND ja-parity-test lookup ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
+
+    # The C API with a language request, compiled as C (docs/languages.md 11.3).
+    add_executable(c-smoke-test tests/c_smoke_test.c)
+    target_link_libraries(c-smoke-test PRIVATE hoshidicts)
+    file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/c-smoke)
+    add_test(NAME c-smoke
+             COMMAND c-smoke-test ${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/yomitan/small_dict.zip
+                     ${CMAKE_CURRENT_BINARY_DIR}/c-smoke)
 
     foreach(variant simd scalar)
         add_executable(json-skip-test-${variant} tests/json_skip_test.cpp src/json/json_skip.cpp)
