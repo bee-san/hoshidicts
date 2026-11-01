@@ -20,7 +20,7 @@
     "wordInternal": null,
     "sentence": {
       "terminators": [".", "!", "\u061F", "\u2026"],
-      "quotePairs": [["\u00AB", "\u00BB"], ["\u201D", "\u201C"], ["(", ")"]]
+      "quotePairs": [["\u00AB", "\u00BB"], ["(", ")"]]
     },
     "highlightBreaks": null,
     "lineJoiner": " "
