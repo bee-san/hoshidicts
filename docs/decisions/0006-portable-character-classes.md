@@ -1,6 +1,6 @@
 # 0006: Character classes use one syntax for C++ and JavaScript, without script properties
 
-Status: proposed (multi-language design, Phase 1, revision 8)
+Status: accepted (multi-language design, Phase 1, revision 9)
 
 ## Context
 

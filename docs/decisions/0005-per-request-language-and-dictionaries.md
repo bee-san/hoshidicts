@@ -1,6 +1,6 @@
 # 0005: The language and the dictionaries are chosen per request
 
-Status: proposed (multi-language design, Phase 1, revision 8)
+Status: accepted (multi-language design, Phase 1, revision 9)
 
 ## Context
 

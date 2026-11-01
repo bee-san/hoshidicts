@@ -1,10 +1,10 @@
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 # Languages in hoshidicts
 
-Status: design for review (Phase 1, revision 8). Nothing described here is
-implemented yet. Once the framework lands, this file is the contract for
-language packs and wins over any prompt, issue or comment that disagrees with
-it.
+Status: approved design (Phase 1, revision 9; reviewed by three independent
+reviewers). Nothing described here is implemented yet. Once the framework
+lands, this file is the contract for language packs and wins over any prompt,
+issue or comment that disagrees with it.
 
 hoshidicts looks words up in Yomitan-format dictionaries. Until now every
 lookup ran the Japanese pipeline compiled into `src/deinflector.cpp` and
