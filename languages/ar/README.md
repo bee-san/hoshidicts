@@ -62,13 +62,13 @@ pack is written later, from scratch, by its own language agent.
 ## Measurements
 
 `ctest -R language` (hachi-lang-engine's `language-conformance-test`,
-feat/multi-language 250675e before it was pushed): conforms. corpus.tsv
+feat/multi-language 3c9bf85): conforms. corpus.tsv
 1,631 / 1,631, cases.tsv 18 / 18, yomitan.tsv 382 / 382, text.tsv 13 / 13,
 lookup.tsv 11 / 11, gaps.tsv 0 / 369 (reported); classes.json agrees with the
 engine (3 classes, 78 fields); 259 of the 7,187 rules (the cross-product rows
 expanded) are exercised by a passing row.
 
-`hoshidicts-cli eval-language` from feat/multi-language at 1faeed5 (GCC
+`hoshidicts-cli eval-language` from feat/multi-language at 3c9bf85 (GCC
 14.3, Release), with `--dictionary` Wiktionary Arabic-English
 (wiktionary-to-yomitan 2026.10.22, `wty-ar-en.zip`, sha256
 `cf45a3a3…fd47`, CC BY-SA 4.0). The sample is the 2,000 UniMorph rows of
@@ -97,7 +97,7 @@ expanded) are exercised by a passing row.
 - `tests/lookup.tsv` (11 rows) passes against `tests/dictionary/` imported
   by `hoshidicts-cli import` and looked up with `hoshidicts-cli lookup`.
 - Lookup speed is not measured: `benchmark-lookup` has no language option
-  at 1faeed5.
+  at 3c9bf85.
 
 ## Known gaps
 
