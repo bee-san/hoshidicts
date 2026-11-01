@@ -38,9 +38,9 @@ describe('a real Yomitan checkout', {skip}, () => {
         assert.deepEqual([literal, other], [10946, 7415]);
     });
 
-    test('the Japanese tests convert to the rows of tests/fixtures/yomitan-deinflections.tsv', async () => {
+    test('the Japanese tests convert to the rows of languages/ja/tests/yomitan.tsv (moved from tests/fixtures/)', async () => {
         const {text} = await portTests(root, 'ja');
-        const fixture = readFileSync(fileURLToPath(new URL('../../tests/fixtures/yomitan-deinflections.tsv', import.meta.url)), 'utf8');
+        const fixture = readFileSync(fileURLToPath(new URL('../../languages/ja/tests/yomitan.tsv', import.meta.url)), 'utf8');
         assert.deepEqual(text.split('\n').slice(2), fixture.split('\n').slice(2));
     });
 });
