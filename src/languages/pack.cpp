@@ -80,6 +80,16 @@ const std::string& as_string(const Json& v, const std::string& path) {
   return v.get_string();
 }
 
+std::string member(const std::string& path, std::string_view key);
+
+// The string `key` of `o`, with its JSON path built only when it is missing
+// or not a string (the rule parser reads thousands of them).
+const std::string& string_field(const Json* v, std::string_view key, const std::string& path) {
+  if (v == nullptr) fail(path, "missing required key \"" + std::string(key) + "\"");
+  if (!v->is_string()) fail(member(path, key), std::string("must be a string, not ") + type_name(*v));
+  return v->get_string();
+}
+
 bool as_bool(const Json& v, const std::string& path) {
   if (!v.is_boolean()) fail(path, std::string("must be a boolean, not ") + type_name(v));
   return v.get_boolean();
@@ -508,22 +518,22 @@ struct TransformsParser {
   std::vector<std::pair<std::string, CharClass>>& fields;
   std::vector<NamedSteps> then_steps;  // filled after rules are final
 
-  uint32_t conditions_of(const Json& v, const std::string& path) {
+  uint32_t conditions_of(const Json* v, std::string_view key, const std::string& rule_path) {
+    if (v == nullptr) fail(rule_path, "missing required key \"" + std::string(key) + "\"");
+    if (!v->is_array()) fail(member(rule_path, key), std::string("must be an array, not ") + type_name(*v));
     uint32_t bits = 0;
-    const auto names = string_array(v, path);
+    const Array& names = v->get_array();
     for (size_t i = 0; i < names.size(); ++i) {
-      bool found = false;
-      for (const auto& condition : set.conditions) {
-        if (condition.key == names[i]) {
-          bits |= condition.bits;
-          found = true;
-          break;
-        }
-      }
-      if (!found) fail(item(path, i), "names no condition " + json_quote(names[i]));
+      if (!names[i].is_string()) fail(item(member(rule_path, key), i), std::string("must be a string, not ") + type_name(names[i]));
+      const std::string& name = names[i].get_string();
+      const auto it = condition_index.find(name);
+      if (it == condition_index.end()) fail(item(member(rule_path, key), i), "names no condition " + json_quote(name));
+      bits |= it->second;
     }
     return bits;
   }
+
+  std::map<std::string, uint32_t, std::less<>> condition_index;
 
   void parse_conditions(const Object& root) {
     const std::string path = "conditions";
@@ -582,6 +592,7 @@ struct TransformsParser {
       return bits;
     };
     for (const auto& condition : std::vector<Condition>(set.conditions)) resolve(condition.key);
+    for (const auto& condition : set.conditions) condition_index.emplace(condition.key, condition.bits);
   }
 
   void parse_word_lists(const Object& root) {
@@ -611,7 +622,14 @@ struct TransformsParser {
   }
 
   void affix(const std::string& s, const std::string& path) {
-    if (code_point_count(s) > max_affix_code_points) fail(path, "an affix is longer than 64 code points");
+    if (s.size() > max_affix_code_points && code_point_count(s) > max_affix_code_points) {
+      fail(path, "an affix is longer than 64 code points");
+    }
+  }
+  void affix(const std::string& s, const std::string& rule_path, std::string_view key) {
+    if (s.size() > max_affix_code_points && code_point_count(s) > max_affix_code_points) {
+      fail(member(rule_path, key), "an affix is longer than 64 code points");
+    }
   }
 
   // Stem constraints; returns whether there is one.
@@ -679,6 +697,14 @@ struct TransformsParser {
     rule.has_then = true;
   }
 
+  static const std::vector<std::string_view>& cached_keys_for(RuleType type) {
+    static const std::array<std::vector<std::string_view>, 8> keys = {
+        keys_for("suffix"),  keys_for("prefix"),  keys_for("wholeWord"),        keys_for("circumfix"),
+        keys_for("replace"), keys_for("phrasal"), keys_for("interposedObject"), keys_for("pattern"),
+    };
+    return keys[static_cast<size_t>(type)];
+  }
+
   static std::vector<std::string_view> keys_for(std::string_view type) {
     std::vector<std::string_view> keys = {"type", "conditionsIn", "conditionsOut", "source", "then"};
     const std::vector<std::string_view> stem = {"stemMinLength",     "stemCharacters",    "stemContains",
@@ -724,29 +750,36 @@ struct TransformsParser {
   void parse_rule(const Json& v, const std::string& path, uint16_t transform_index, uint32_t rule_index,
                   const std::string& transform_source) {
     const Object& o = as_object(v, path);
-    const std::string& type = as_string(require(o, "type", path), member(path, "type"));
+    const std::string& type = string_field(get(o, "type"), "type", path);
     if (type == "todo") fail(path, "a todo rule remains; map it by hand (section 8.3)");
-    static const std::set<std::string_view> types = {"suffix", "prefix", "wholeWord", "circumfix", "replace",
-                                                     "phrasal", "interposedObject", "pattern"};
-    if (!types.contains(type)) fail(member(path, "type"), "unknown rule type " + json_quote(type));
-    check_keys(o, path, keys_for(type));
+    static constexpr std::array<std::pair<std::string_view, RuleType>, 8> types = {{
+        {"suffix", RuleType::Suffix},
+        {"prefix", RuleType::Prefix},
+        {"wholeWord", RuleType::WholeWord},
+        {"circumfix", RuleType::Circumfix},
+        {"replace", RuleType::Replace},
+        {"phrasal", RuleType::Phrasal},
+        {"interposedObject", RuleType::InterposedObject},
+        {"pattern", RuleType::Pattern},
+    }};
+    const auto known = std::ranges::find(types, std::string_view(type), &std::pair<std::string_view, RuleType>::first);
+    if (known == types.end()) fail(member(path, "type"), "unknown rule type " + json_quote(type));
+    check_keys(o, path, cached_keys_for(known->second));
 
     Rule rule;
     rule.transform = transform_index;
     rule.index_in_transform = rule_index;
-    rule.conditions_in = conditions_of(require(o, "conditionsIn", path), member(path, "conditionsIn"));
-    rule.conditions_out = conditions_of(require(o, "conditionsOut", path), member(path, "conditionsOut"));
+    rule.conditions_in = conditions_of(get(o, "conditionsIn"), "conditionsIn", path);
+    rule.conditions_out = conditions_of(get(o, "conditionsOut"), "conditionsOut", path);
     (void)transform_source;
     if (const Json* source = get(o, "source")) one_of(*source, member(path, "source"), {"own", "yomitan", "both"});
 
-    const auto literal = [&](const char* key) -> std::string {
-      return as_string(require(o, key, path), member(path, key));
-    };
+    const auto literal = [&](const char* key) -> const std::string& { return string_field(get(o, key), key, path); };
     if (type == "suffix" || type == "prefix") {
       rule.type = type == "suffix" ? RuleType::Suffix : RuleType::Prefix;
       rule.a = literal("inflected");
       rule.b = literal("deinflected");
-      affix(rule.a, member(path, "inflected"));
+      affix(rule.a, path, "inflected");
       const bool constrained = stem_constraints(o, path, rule);
       if (rule.a.empty() && !constrained) fail(member(path, "inflected"), "may be empty only with a stem constraint");
       if (type == "suffix") stem_change(o, path, rule);
@@ -755,7 +788,7 @@ struct TransformsParser {
       rule.a = literal("inflected");
       rule.b = literal("deinflected");
       if (rule.a.empty()) fail(member(path, "inflected"), "may not be empty");
-      affix(rule.a, member(path, "inflected"));
+      affix(rule.a, path, "inflected");
     } else if (type == "circumfix") {
       rule.type = RuleType::Circumfix;
       stem_constraints(o, path, rule);
@@ -785,8 +818,8 @@ struct TransformsParser {
       rule.b = literal("deinflectedPrefix");
       rule.c = literal("inflectedSuffix");
       rule.d = literal("deinflectedSuffix");
-      affix(rule.a, member(path, "inflectedPrefix"));
-      affix(rule.c, member(path, "inflectedSuffix"));
+      affix(rule.a, path, "inflectedPrefix");
+      affix(rule.c, path, "inflectedSuffix");
       set.rules.push_back(std::move(rule));
       return;
     } else if (type == "replace") {
@@ -795,7 +828,7 @@ struct TransformsParser {
       rule.a = literal("inflected");
       rule.b = literal("deinflected");
       if (rule.a.empty()) fail(member(path, "inflected"), "may not be empty");
-      affix(rule.a, member(path, "inflected"));
+      affix(rule.a, path, "inflected");
       if (const Json* occurrence = get(o, "occurrence")) {
         const std::string& which = one_of(*occurrence, member(path, "occurrence"), {"all", "first", "last"});
         rule.more().occurrence = which == "all" ? Occurrence::All : which == "first" ? Occurrence::First : Occurrence::Last;
@@ -805,7 +838,7 @@ struct TransformsParser {
       rule.type = RuleType::Phrasal;
       rule.a = literal("inflected");
       rule.b = literal("deinflected");
-      affix(rule.a, member(path, "inflected"));
+      affix(rule.a, path, "inflected");
       rule.more().followed_by = word_list(require(o, "followedBy", path), member(path, "followedBy"));
     } else if (type == "interposedObject") {
       rule.type = RuleType::InterposedObject;
@@ -820,7 +853,7 @@ struct TransformsParser {
       const std::string anchor_key = rule.anchor_prefix ? "anchorPrefix" : "anchorSuffix";
       rule.a = as_string(rule.anchor_prefix ? *prefix : *suffix, member(path, anchor_key));
       if (rule.a.empty()) fail(member(path, anchor_key), "may not be empty");
-      affix(rule.a, member(path, anchor_key));
+      affix(rule.a, path, anchor_key);
       rule.more().pattern = parser.pattern(literal("pattern"), literal("replacement"), false, path);
     }
     parse_then(o, path, rule);
