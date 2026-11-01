@@ -1,3 +1,3 @@
 # Deliberate differences from Yomitan d3c54c1, read by tools/check-yomitan.mjs.
+# None: the port gives Yomitan's results (the check drops Yomitan's empty texts, contract 7.4).
 # kind	id	side	input	text	conditions	reason
-rule	*	yomitan	*		*	The engine never returns an empty text (35e2dab's deinflect_recursive stops at one, and no dictionary has an empty headword); Yomitan returns it when a rule consumes the whole text (s -> "" via plural).
