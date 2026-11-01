@@ -1,7 +1,7 @@
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 # Languages in hoshidicts
 
-Status: design for review (Phase 1, revision 5). Nothing described here is
+Status: design for review (Phase 1, revision 6). Nothing described here is
 implemented yet. Once the framework lands, this file is the contract for
 language packs and wins over any prompt, issue or comment that disagrees with
 it.
@@ -638,7 +638,7 @@ parts.
 | `stemContains` | At least one stem code point is in this class. |
 | `stemStartsWith`, `stemEndsWith` | The stem's first (last) code point is in this class. |
 | `stemNotStartsWith`, `stemNotEndsWith` | The stem's first (last) code point is not in this class, or the stem is empty. |
-| `stemStartsWithText`, `stemNotStartsWithText` | The stem does (does not) begin with this literal string; Spanish *ju* + *ue* uses it. |
+| `stemStartsWithText`, `stemNotStartsWithText` | The stem does (does not) begin with this literal string; Spanish *jue* and *hue* use it. |
 
 `stemChange` changes the stem while the affix is replaced:
 
@@ -788,9 +788,12 @@ The same tool compares processors. For each Yomitan pre- and postprocessor of
 the language it takes the pack processor with the same `id` and runs both on
 the corpus sources, the `host.sample` texts and inputs built from the
 characters the processor names, and requires the same set of outputs,
-including whether the input is kept. Builtins (Korean, Vietnamese) are
-compared with Yomitan's processors through Yomitan's built `ext/lib`. Deliberate
-differences are listed in `sources/yomitan-differences.tsv`. Ports that look
+including whether the input is kept. Korean's builtins are compared with
+Yomitan's processors through Yomitan's built `ext/lib` (hangul-js),
+Vietnamese's directly. A Yomitan processor that no pack processor pairs with
+by id fails the check unless `sources/yomitan-differences.tsv` lists it; that
+file lists every deliberate difference. The Japanese pack is exempt: its
+processors are proved against today's code (section 11.3). Ports that look
 plausible can differ: Yiddish `combineYiddishLigatures` replaces the first
 occurrence of each ligature in list order, which takes seven `map` steps with
 `at: "first"`, not one `map` with `at: "all"`.
@@ -920,7 +923,12 @@ frequency-sort dictionary and the rank of metadata-only terms then use only
 those dictionaries, ranked in that order. A path that is not loaded is
 ignored, and an empty list selects nothing, so a new profile without
 dictionaries finds nothing rather than another profile's words. When absent,
-every loaded dictionary is used in load order, as today.
+every loaded dictionary is used in load order, as today. In
+`lookup_dictionary()` the path restricts term matches and the long-key length
+within the selection (nothing when the path is not selected), and frequencies,
+pitches and rank come from the selection. In C, `select_dictionaries` makes the
+choice explicit, so a zero-initialised request keeps today's behaviour and an
+empty array (whose `data()` may be NULL) with the flag set selects nothing.
 One engine can hold every dictionary of every language a host uses and answer
 each request from the right ones without reloading.
 
@@ -940,8 +948,13 @@ hosts on top of `lookup`; Hachidori's segmenter lives in its
 
 ### 9.9 Kanji and character lookups
 
-`query_kanji` takes the dictionary selection. Which characters are offered for
-lookup is the host's decision, made with the pack's `characterView.pattern`.
+`query_kanji` takes the dictionary selection:
+`DictionaryQuery::query_kanji(const std::string& kanji, std::span<const std::string> dictionaries)`
+beside today's overload, which uses every loaded dictionary;
+`hd_kanji_results* hd_query_run_kanji_with_request(const hd_query* q, const char* kanji, const hd_language_request* request, const hd_kanji_entry** out_entries, size_t* out_count)`
+in C, which reads the request's selection fields; `hdw_kanji_with_options` in
+WebAssembly. Which characters are offered for lookup is the host's decision,
+made with the pack's `characterView.pattern`.
 
 ## 10. Engine API
 
@@ -1042,7 +1055,8 @@ const char* hd_languages_last_error(const hd_languages* languages);
 typedef struct hd_language_request {
   size_t struct_size;                   // sizeof(hd_language_request), so fields can be added
   const char* language;                 // NULL means "ja"
-  const char* const* dictionaries;      // NULL: every loaded dictionary; non-NULL with count 0: none
+  int select_dictionaries;              // 0: every loaded dictionary; 1: exactly the dictionary_count entries
+  const char* const* dictionaries;      // may be NULL when dictionary_count is 0
   size_t dictionary_count;
   const char* const* language_options;
   size_t language_option_count;
@@ -1151,9 +1165,12 @@ Today's code is kept, unmodified apart from being placed in
 `legacy_deinflector.cpp`, `legacy_text_processor.cpp` (with the kanji-variant
 table), `legacy_query.cpp` and `legacy_lookup.cpp` (the `Lookup` of 35e2dab),
 with copies of the internal headers they use (`query_internal.hpp`,
-`text_processor.hpp`, `query.hpp`, `lookup.hpp`, `deinflector.hpp`). The
-oracle shares only the storage readers (`blob_file`, the page cache,
-`scan_index`, the glossary parser), which the framework does not change.
+`text_processor.hpp`, `query.hpp`, `lookup.hpp`, `deinflector.hpp`).
+Forward declarations of types that shared code defines (`BlobPins`,
+`memory::page_cache`, zstd's `ZSTD_DDict_s`) stay outside the namespace. The
+oracle shares only code the framework pull request leaves unchanged:
+`blob_file`, `hash/`, `memory/` (mapping and the page cache), `scan_index`,
+`path_utils`, the glossary parser and the importer's types.
 Three tests compare the new code with it and require identical output, every
 field in the same order, traces compared by name and description, with each
 Japanese transform id equal to its name:
@@ -1178,8 +1195,10 @@ Japanese transform id equal to its name:
   test dictionary, a second Japanese dictionary and an English one; for each
   selection S (one dictionary, two in both orders) the new lookup with
   `dictionaries = S` must equal the legacy lookup with only S loaded, in S's
-  order, with every option on and off, and `query_kanji` with and without a
-  selection must equal the legacy query's.
+  order, with every option on and off, for `lookup()` and for
+  `lookup_dictionary()`, and `query_kanji` with and without a selection must
+  equal the legacy query's. A C smoke case passes an empty vector's `data()`
+  with `select_dictionaries` set and finds nothing.
 
 ### 11.4 NekoPara cat speech
 

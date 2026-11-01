@@ -1,6 +1,6 @@
 # 0001: A language is one data directory in the engine repository
 
-Status: proposed (multi-language design, Phase 1, revision 5)
+Status: proposed (multi-language design, Phase 1, revision 6)
 
 ## Context
 
