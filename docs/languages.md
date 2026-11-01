@@ -1091,6 +1091,19 @@ hoshidicts-cli lookup --language <code> <dict>... <text>
 hoshidicts-cli eval-language <code> <file.tsv> [--transforms <file>] [--dictionary <imported dir>] [--per-rule]
 ```
 
+`deinflect` and `preprocess` print one JSON object per line, so tools can
+read them as a stream; with `--stdin` instead of `<text>` they read one input
+per line (UTF-8, LF) and answer each in order with one process:
+
+```text
+{"input":"walked","results":[{"text":"walked","conditions":[],"trace":[]},{"text":"walk","conditions":["v"],"trace":["past"]}]}
+{"input":"Walked","variants":[{"text":"Walked","steps":0},{"text":"walked","steps":1}]}
+```
+
+`conditions` are the names of the set condition bits in declaration order,
+and `trace` holds transform ids in the order of the corpus `reasons` column
+(section 12.2). `results` is in the deinflector's output order.
+
 `eval-language` reads a corpus (section 12.2) and prints JSON. Only
 deinflections of the whole source text count, never of shorter prefixes:
 
@@ -1230,8 +1243,27 @@ For every pack it checks:
    at most 64 code points.
 2. Every class parses and means the same in the engine and in JavaScript, and
    every pattern and `case` step gives the same output in both on the pack's
-   corpus strings (expectation tables generated with Node by
-   `tools/check-classes.mjs`).
+   corpus strings. The expectations are `tests/classes.json`, written with
+   Node by `node tools/check-classes.mjs <code> --write` and committed; CI runs
+   `node tools/check-classes.mjs <code>`, which fails when the file is not what
+   Node computes now:
+
+   ```text
+   {
+     "generator": "tools/check-classes.mjs",
+     "unicode": "<process.versions.unicode>",
+     "classes": {"<name>": [[first, last], ...]},
+     "fields": {"text.pattern": [[first, last], ...], "text.wordCharacters": [[first, last], ...]},
+     "steps": [{"processor": "<id>", "step": 0, "cases": [["<input>", "<output>"], ...]}]
+   }
+   ```
+
+   `classes` has every entry of the pack's `classes`, `fields` every other
+   field that holds a class (by its JSON path), each as sorted, merged code
+   point ranges over all of Unicode without surrogates. `steps` has, for
+   every `pattern` and `case` step, its output on each corpus source and
+   `host.sample` text. The conformance test computes the same with the
+   engine and requires equality.
 3. Every `pattern` is in the dialect of section 7.6 and compiles; no `todo`
    rules remain.
 4. Every TSV in `tests/` except `gaps.tsv` passes; `gaps.tsv` is run and its
