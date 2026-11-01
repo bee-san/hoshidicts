@@ -117,6 +117,18 @@ if(HOSHIDICTS_WASMFS)
   target_compile_definitions(hoshidicts PRIVATE HOSHIDICTS_WASMFS=1)
 endif()
 
+# Language packs are parsed once per pack (docs/languages.md 13), so the
+# WebAssembly build optimises the load-time sources, and the code they
+# instantiate, for size: they are most of what the framework adds to a bundle.
+if(EMSCRIPTEN)
+  set_source_files_properties(
+      src/languages/pack.cpp
+      src/languages/classes.cpp
+      src/languages/registry.cpp
+      src/languages/corpus.cpp
+      PROPERTIES COMPILE_OPTIONS "-Oz")
+endif()
+
 # MDD stylesheets that declare a legacy @charset (Shift_JIS, GBK, ...) are
 # decoded with iconv(3), part of glibc and musl (so Emscripten) and Apple's
 # libiconv. Without it such a sheet is left out of the dictionary's styles.

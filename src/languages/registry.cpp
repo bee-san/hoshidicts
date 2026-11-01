@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+#include <libdeflate.h>
+
 #include <algorithm>
 #include <filesystem>
 #include <fstream>
@@ -9,8 +11,11 @@
 #include "builtin_packs.hpp"
 #include "hoshidicts/languages.hpp"
 #include "pack.hpp"
+#include "size.hpp"
 
 namespace hoshidicts {
+
+HOSHIDICTS_LOAD_TIME_BEGIN
 
 LanguagePack::LanguagePack(std::unique_ptr<lang::PackData> data) : data_(std::move(data)) {}
 LanguagePack::~LanguagePack() = default;
@@ -27,6 +32,25 @@ std::shared_ptr<const LanguagePack> parse_language_pack(std::string_view languag
   return std::make_shared<const LanguagePack>(std::move(data));
 }
 
+namespace lang {
+std::string unpack(const PackedFile& file) {
+  std::string out;
+  if (file.packed_size == 0) return out;
+  out.resize(file.size);
+  struct Free {
+    void operator()(libdeflate_decompressor* d) const { libdeflate_free_decompressor(d); }
+  };
+  std::unique_ptr<libdeflate_decompressor, Free> inflater(libdeflate_alloc_decompressor());
+  size_t actual = 0;
+  if (!inflater || libdeflate_deflate_decompress(inflater.get(), file.data, file.packed_size, out.data(), out.size(),
+                                                 &actual) != LIBDEFLATE_SUCCESS ||
+      actual != file.size) {
+    throw std::logic_error("the built-in language pack data is corrupt");
+  }
+  return out;
+}
+}  // namespace lang
+
 std::shared_ptr<const LanguagePack> builtin_language_pack(std::string_view code) {
   struct Parsed {
     std::once_flag once;
@@ -38,7 +62,7 @@ std::shared_ptr<const LanguagePack> builtin_language_pack(std::string_view code)
     if (builtin.code != code) continue;
     std::call_once(parsed[i].once, [&] {
       std::string error;
-      parsed[i].pack = parse_language_pack(builtin.language_json, builtin.transforms_json, &error);
+      parsed[i].pack = parse_language_pack(lang::unpack(builtin.language_json), lang::unpack(builtin.transforms_json), &error);
       if (!parsed[i].pack) {
         throw std::logic_error("the built-in language pack does not load: " + error);
       }
@@ -151,5 +175,7 @@ std::vector<std::string> LanguageRegistry::codes() const {
   std::ranges::sort(out);
   return out;
 }
+
+HOSHIDICTS_LOAD_TIME_END
 
 }  // namespace hoshidicts

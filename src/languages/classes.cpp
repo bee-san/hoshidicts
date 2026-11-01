@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "classes.hpp"
 
+#include "size.hpp"
+
 #include <utf8proc.h>
 
 #include <algorithm>
@@ -8,6 +10,8 @@
 #include <mutex>
 
 namespace hoshidicts::lang {
+
+HOSHIDICTS_LOAD_TIME_BEGIN
 
 namespace {
 constexpr char32_t max_code_point = 0x10FFFF;
@@ -453,6 +457,8 @@ bool is_class_name(std::string_view name) {
   }
   return std::ranges::all_of(name, [](char c) { return is_name_char(static_cast<unsigned char>(c)); });
 }
+
+HOSHIDICTS_LOAD_TIME_END
 
 bool decode_utf8(std::string_view text, std::u32string& out) {
   out.clear();

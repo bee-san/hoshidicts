@@ -81,7 +81,7 @@ void TransformSet::finish(Trie& trie, std::vector<std::pair<uint32_t, uint32_t>>
     for (; i < pending.size() && pending[i].first == node; ++i) {
       const Rule& rule = rules[pending[i].second];
       unsigned char kind = 2;
-      if (rule.type == RuleType::Suffix && !rule.stem_checks && !rule.stem_change && !rule.has_then) {
+      if (rule.type == RuleType::Suffix && !rule.stem_checks && !rule.has_stem_change && !rule.has_then) {
         kind = 0;
       } else if (rule.type == RuleType::WholeWord && !rule.has_then) {
         kind = 1;
@@ -157,28 +157,28 @@ void TransformSet::index() {
 }
 
 bool TransformSet::stem_ok(const Rule& rule, std::string_view stem) const {
-  if (rule.stem_min_length > 0 && code_points(stem) < rule.stem_min_length) return false;
-  if (rule.stem_characters != nullptr && !all_in(stem, *rule.stem_characters)) return false;
-  if (rule.stem_contains != nullptr && !any_in(stem, *rule.stem_contains)) return false;
-  if (rule.stem_starts_with != nullptr && (stem.empty() || !rule.stem_starts_with->contains(first_code_point(stem)))) {
+  if (rule.extra->stem_min_length > 0 && code_points(stem) < rule.extra->stem_min_length) return false;
+  if (rule.extra->stem_characters != nullptr && !all_in(stem, *rule.extra->stem_characters)) return false;
+  if (rule.extra->stem_contains != nullptr && !any_in(stem, *rule.extra->stem_contains)) return false;
+  if (rule.extra->stem_starts_with != nullptr && (stem.empty() || !rule.extra->stem_starts_with->contains(first_code_point(stem)))) {
     return false;
   }
-  if (rule.stem_ends_with != nullptr && (stem.empty() || !rule.stem_ends_with->contains(last_code_point(stem)))) {
+  if (rule.extra->stem_ends_with != nullptr && (stem.empty() || !rule.extra->stem_ends_with->contains(last_code_point(stem)))) {
     return false;
   }
-  if (rule.stem_not_starts_with != nullptr && !stem.empty() && rule.stem_not_starts_with->contains(first_code_point(stem))) {
+  if (rule.extra->stem_not_starts_with != nullptr && !stem.empty() && rule.extra->stem_not_starts_with->contains(first_code_point(stem))) {
     return false;
   }
-  if (rule.stem_not_ends_with != nullptr && !stem.empty() && rule.stem_not_ends_with->contains(last_code_point(stem))) {
+  if (rule.extra->stem_not_ends_with != nullptr && !stem.empty() && rule.extra->stem_not_ends_with->contains(last_code_point(stem))) {
     return false;
   }
-  if (rule.stem_starts_with_text && !stem.starts_with(*rule.stem_starts_with_text)) return false;
-  if (rule.stem_not_starts_with_text && stem.starts_with(*rule.stem_not_starts_with_text)) return false;
+  if (rule.extra->stem_starts_with_text && !stem.starts_with(*rule.extra->stem_starts_with_text)) return false;
+  if (rule.extra->stem_not_starts_with_text && stem.starts_with(*rule.extra->stem_not_starts_with_text)) return false;
   return true;
 }
 
 bool TransformSet::change_stem(const Rule& rule, std::string_view stem, std::string& out) const {
-  const StemChange& change = *rule.stem_change;
+  const StemChange& change = *rule.extra->stem_change;
   size_t chosen_at = std::string_view::npos;
   size_t chosen_length = 0;
   for (size_t i = 0; i < stem.size(); ++i) {
@@ -214,7 +214,7 @@ bool TransformSet::finish_then(const Rule& rule, std::string& text) const {
   std::u32string in;
   if (!decode_utf8(text, in)) return false;
   std::u32string result;
-  apply_single(rule.then, in, result);
+  apply_single(rule.extra->then, in, result);
   text = to_utf8(result);
   return true;
 }
@@ -228,7 +228,7 @@ bool TransformSet::apply(const Rule& rule, const std::string& text, size_t match
     case RuleType::Suffix: {
       std::string_view stem(text.data(), matched);
       if (rule.stem_checks && !stem_ok(rule, stem)) return false;
-      if (rule.stem_change) {
+      if (rule.has_stem_change) {
         if (!change_stem(rule, stem, changed)) return false;
         stem = changed;
       }
@@ -245,7 +245,7 @@ bool TransformSet::apply(const Rule& rule, const std::string& text, size_t match
       if (rule.a.size() > matched || !std::string_view(text).starts_with(rule.a)) return false;
       std::string_view stem(text.data() + rule.a.size(), matched - rule.a.size());
       if (rule.stem_checks && !stem_ok(rule, stem)) return false;
-      if (rule.stem_change) {
+      if (rule.has_stem_change) {
         if (!change_stem(rule, stem, changed)) return false;
         stem = changed;
       }
@@ -264,17 +264,17 @@ bool TransformSet::apply(const Rule& rule, const std::string& text, size_t match
       return finish_then(rule, out);
     }
     case RuleType::Pattern:
-      if (!rule.pattern->replace(text, out)) return false;
+      if (!rule.extra->pattern->replace(text, out)) return false;
       return finish_then(rule, out);
     case RuleType::Replace: {
       std::vector<size_t> found;
       for (size_t i = text.find(rule.a); i != std::string::npos; i = text.find(rule.a, i + rule.a.size())) {
-        if (!(rule.not_at_start && i == 0)) found.push_back(i);
+        if (!(rule.extra->not_at_start && i == 0)) found.push_back(i);
       }
       if (found.empty()) return false;
-      if (rule.occurrence == Occurrence::First) {
+      if (rule.extra->occurrence == Occurrence::First) {
         found.resize(1);
-      } else if (rule.occurrence == Occurrence::Last) {
+      } else if (rule.extra->occurrence == Occurrence::Last) {
         found.erase(found.begin(), found.end() - 1);
       }
       out.clear();
@@ -304,7 +304,7 @@ bool TransformSet::apply(const Rule& rule, const std::string& text, size_t match
       if (!all_words(pieces[0], word_characters)) return false;
       for (size_t k = 1; k < pieces.size(); ++k) {
         const std::string_view piece = pieces[k];
-        if (k >= 2 && all_words(piece, word_characters) && rule.particles->contains(piece)) {
+        if (k >= 2 && all_words(piece, word_characters) && rule.extra->particles->contains(piece)) {
           out.assign(pieces[0]);
           out.append(text, static_cast<size_t>(piece.data() - text.data()) - 1);
           return finish_then(rule, out);
@@ -323,7 +323,7 @@ bool TransformSet::apply(const Rule& rule, const std::string& text, size_t match
           }
           offset = static_cast<size_t>(before - piece.begin());
           if (at_end || !word) {
-            if (offset > part_start && rule.guard_words->contains(piece.substr(part_start, offset - part_start))) {
+            if (offset > part_start && rule.extra->guard_words->contains(piece.substr(part_start, offset - part_start))) {
               return false;
             }
             if (at_end) break;
@@ -482,7 +482,7 @@ void TransformSet::visit(Run& run, uint32_t index) const {
         const size_t next = text.find(' ', space + 1);
         const std::string_view second =
             std::string_view(text).substr(space + 1, (next == std::string::npos ? text.size() : next) - space - 1);
-        if (!rule.followed_by->contains(second)) continue;
+        if (!rule.extra->followed_by->contains(second)) continue;
         std::string output;
         output.reserve(text.size() + rule.b.size());
         output.append(text, 0, matched);

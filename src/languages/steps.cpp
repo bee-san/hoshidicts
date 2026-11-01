@@ -277,6 +277,11 @@ void apply_single(const StepList& steps, const std::u32string& in, std::u32strin
 namespace {
 using Variant = std::pair<std::u32string, int>;
 
+// Orders variants by code points (one comparator, so one sort instantiation).
+struct ByText {
+  bool operator()(const Variant& a, const Variant& b) const { return a.first < b.first; }
+};
+
 // The variants a processor has produced so far, with their positions in a
 // hash map once there are many (alternatives can make thousands).
 struct NextVariants {
@@ -386,7 +391,7 @@ void run_processors(std::span<const Processor> processors, const EnabledOptions&
         }
       }
       std::sort(next_items.begin(), next_items.begin() + static_cast<std::ptrdiff_t>(next_count),
-                [](const Variant& a, const Variant& b) { return a.first < b.first; });
+                ByText{});
       std::swap(variants, next_items);
       count = next_count;
       continue;
@@ -408,7 +413,7 @@ void run_processors(std::span<const Processor> processors, const EnabledOptions&
         }
       }
       std::sort(next_items.begin(), next_items.begin() + static_cast<std::ptrdiff_t>(next.count),
-                [](const Variant& a, const Variant& b) { return a.first < b.first; });
+                ByText{});
       std::swap(variants, next_items);
       count = next.count;
       continue;
@@ -441,7 +446,7 @@ void run_processors(std::span<const Processor> processors, const EnabledOptions&
       }
     }
     std::sort(next_items.begin(), next_items.begin() + static_cast<std::ptrdiff_t>(next.count),
-              [](const Variant& a, const Variant& b) { return a.first < b.first; });
+              ByText{});
     std::swap(variants, next_items);
     count = next.count;
   }

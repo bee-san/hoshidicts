@@ -1,12 +1,16 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "regex.hpp"
 
+#include "size.hpp"
+
 #include <cstdio>
 #include <locale>
 #include <optional>
 #include <stdexcept>
 
 namespace hoshidicts::lang {
+
+HOSHIDICTS_LOAD_TIME_BEGIN
 
 namespace {
 
@@ -495,6 +499,8 @@ void append_hex4(std::u16string& out, unsigned value) {
 
 }  // namespace
 
+HOSHIDICTS_LOAD_TIME_END
+
 std::wstring to_utf16_units(std::string_view utf8) {
   std::wstring out;
   out.reserve(utf8.size());
@@ -546,6 +552,7 @@ std::string from_utf16_units(std::wstring_view units) {
   return out;
 }
 
+HOSHIDICTS_LOAD_TIME_BEGIN
 std::unique_ptr<Pattern> Pattern::compile(std::string_view pattern, std::string_view replacement, bool global,
                                           const PatternClassLookup& classes, std::string* error) {
   bool ok = true;
@@ -674,6 +681,8 @@ std::unique_ptr<Pattern> Pattern::compile(std::string_view pattern, std::string_
   result->replacement_.assign(r.begin(), r.end());
   return result;
 }
+
+HOSHIDICTS_LOAD_TIME_END
 
 bool Pattern::search(std::string_view text) const {
   const std::wstring units = to_utf16_units(text);

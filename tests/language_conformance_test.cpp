@@ -436,7 +436,7 @@ int main(int argc, char** argv) {
   for (size_t i = 0; i < lang::builtin_pack_count; ++i) {
     const auto& builtin = lang::builtin_packs[i];
     if (builtin.code != code) continue;
-    if (builtin.language_json != language || builtin.transforms_json != transforms) {
+    if (lang::unpack(builtin.language_json) != language || lang::unpack(builtin.transforms_json) != transforms) {
       fail("src/languages/builtin_packs.cpp differs from languages/" + code + "; run python3 tools/embed-packs.py");
     } else {
       note("the embedded copy matches the pack");

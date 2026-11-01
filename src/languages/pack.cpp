@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "pack.hpp"
 
+#include "size.hpp"
+
 #include <glaze/glaze.hpp>
 
 #include <algorithm>
@@ -11,6 +13,8 @@
 #include <stdexcept>
 
 namespace hoshidicts::lang {
+
+HOSHIDICTS_LOAD_TIME_BEGIN
 
 namespace {
 
@@ -614,27 +618,30 @@ struct TransformsParser {
   bool stem_constraints(const Object& o, const std::string& path, Rule& rule) {
     bool any = false;
     if (const Json* v = get(o, "stemMinLength")) {
-      rule.stem_min_length = as_count(*v, member(path, "stemMinLength"), 0);
-      any = any || rule.stem_min_length > 0;
+      const size_t minimum = as_count(*v, member(path, "stemMinLength"), 0);
+      if (minimum > 0) {
+        rule.more().stem_min_length = minimum;
+        any = true;
+      }
     }
     // Same order as tools/check-classes.mjs RULE_CLASS_KEYS.
-    const std::pair<const char*, const CharClass**> classes[] = {
-        {"stemCharacters", &rule.stem_characters},       {"stemContains", &rule.stem_contains},
-        {"stemStartsWith", &rule.stem_starts_with},       {"stemEndsWith", &rule.stem_ends_with},
-        {"stemNotStartsWith", &rule.stem_not_starts_with}, {"stemNotEndsWith", &rule.stem_not_ends_with},
+    const std::pair<const char*, const CharClass* RuleExtra::*> classes[] = {
+        {"stemCharacters", &RuleExtra::stem_characters},       {"stemContains", &RuleExtra::stem_contains},
+        {"stemStartsWith", &RuleExtra::stem_starts_with},       {"stemEndsWith", &RuleExtra::stem_ends_with},
+        {"stemNotStartsWith", &RuleExtra::stem_not_starts_with}, {"stemNotEndsWith", &RuleExtra::stem_not_ends_with},
     };
     for (const auto& [key, slot] : classes) {
       if (const Json* v = get(o, key)) {
-        *slot = owned_class(*v, member(path, key));
+        rule.more().*slot = owned_class(*v, member(path, key));
         any = true;
       }
     }
     if (const Json* v = get(o, "stemStartsWithText")) {
-      rule.stem_starts_with_text = as_string(*v, member(path, "stemStartsWithText"));
+      rule.more().stem_starts_with_text = as_string(*v, member(path, "stemStartsWithText"));
       any = true;
     }
     if (const Json* v = get(o, "stemNotStartsWithText")) {
-      rule.stem_not_starts_with_text = as_string(*v, member(path, "stemNotStartsWithText"));
+      rule.more().stem_not_starts_with_text = as_string(*v, member(path, "stemNotStartsWithText"));
       any = true;
     }
     rule.stem_checks = any;
@@ -661,13 +668,14 @@ struct TransformsParser {
     if (const Json* minimum = get(c, "betweenMinLength")) {
       change->between_min_length = as_count(*minimum, member(cpath, "betweenMinLength"), 0);
     }
-    rule.stem_change = std::move(change);
+    rule.more().stem_change = std::move(change);
+    rule.has_stem_change = true;
   }
 
   void parse_then(const Object& o, const std::string& path, Rule& rule) {
     const Json* v = get(o, "then");
     if (v == nullptr) return;
-    rule.then = parser.step_list(*v, member(path, "then"), false, false, &fields);
+    rule.more().then = parser.step_list(*v, member(path, "then"), false, false, &fields);
     rule.has_then = true;
   }
 
@@ -728,8 +736,8 @@ struct TransformsParser {
     rule.index_in_transform = rule_index;
     rule.conditions_in = conditions_of(require(o, "conditionsIn", path), member(path, "conditionsIn"));
     rule.conditions_out = conditions_of(require(o, "conditionsOut", path), member(path, "conditionsOut"));
-    rule.source = transform_source;
-    if (const Json* source = get(o, "source")) rule.source = one_of(*source, member(path, "source"), {"own", "yomitan", "both"});
+    (void)transform_source;
+    if (const Json* source = get(o, "source")) one_of(*source, member(path, "source"), {"own", "yomitan", "both"});
 
     const auto literal = [&](const char* key) -> std::string {
       return as_string(require(o, key, path), member(path, key));
@@ -783,25 +791,26 @@ struct TransformsParser {
       return;
     } else if (type == "replace") {
       rule.type = RuleType::Replace;
+      rule.more();  // apply() reads occurrence and notAtStart
       rule.a = literal("inflected");
       rule.b = literal("deinflected");
       if (rule.a.empty()) fail(member(path, "inflected"), "may not be empty");
       affix(rule.a, member(path, "inflected"));
       if (const Json* occurrence = get(o, "occurrence")) {
         const std::string& which = one_of(*occurrence, member(path, "occurrence"), {"all", "first", "last"});
-        rule.occurrence = which == "all" ? Occurrence::All : which == "first" ? Occurrence::First : Occurrence::Last;
+        rule.more().occurrence = which == "all" ? Occurrence::All : which == "first" ? Occurrence::First : Occurrence::Last;
       }
-      if (const Json* not_at_start = get(o, "notAtStart")) rule.not_at_start = as_bool(*not_at_start, member(path, "notAtStart"));
+      if (const Json* not_at_start = get(o, "notAtStart")) rule.more().not_at_start = as_bool(*not_at_start, member(path, "notAtStart"));
     } else if (type == "phrasal") {
       rule.type = RuleType::Phrasal;
       rule.a = literal("inflected");
       rule.b = literal("deinflected");
       affix(rule.a, member(path, "inflected"));
-      rule.followed_by = word_list(require(o, "followedBy", path), member(path, "followedBy"));
+      rule.more().followed_by = word_list(require(o, "followedBy", path), member(path, "followedBy"));
     } else if (type == "interposedObject") {
       rule.type = RuleType::InterposedObject;
-      rule.particles = word_list(require(o, "particles", path), member(path, "particles"));
-      rule.guard_words = word_list(require(o, "guardWords", path), member(path, "guardWords"));
+      rule.more().particles = word_list(require(o, "particles", path), member(path, "particles"));
+      rule.more().guard_words = word_list(require(o, "guardWords", path), member(path, "guardWords"));
     } else {
       rule.type = RuleType::Pattern;
       const Json* suffix = get(o, "anchorSuffix");
@@ -812,32 +821,37 @@ struct TransformsParser {
       rule.a = as_string(rule.anchor_prefix ? *prefix : *suffix, member(path, anchor_key));
       if (rule.a.empty()) fail(member(path, anchor_key), "may not be empty");
       affix(rule.a, member(path, anchor_key));
-      rule.pattern = parser.pattern(literal("pattern"), literal("replacement"), false, path);
+      rule.more().pattern = parser.pattern(literal("pattern"), literal("replacement"), false, path);
     }
     parse_then(o, path, rule);
     set.rules.push_back(std::move(rule));
   }
 
+  // A cross product's rules share everything but their affixes.
   static void copy_rule(const Rule& from, Rule& to) {
     to.type = from.type;
+    to.stem_checks = from.stem_checks;
+    to.has_stem_change = from.has_stem_change;
+    to.has_then = from.has_then;
     to.transform = from.transform;
     to.conditions_in = from.conditions_in;
     to.conditions_out = from.conditions_out;
-    to.stem_min_length = from.stem_min_length;
-    to.stem_characters = from.stem_characters;
-    to.stem_contains = from.stem_contains;
-    to.stem_starts_with = from.stem_starts_with;
-    to.stem_ends_with = from.stem_ends_with;
-    to.stem_not_starts_with = from.stem_not_starts_with;
-    to.stem_not_ends_with = from.stem_not_ends_with;
-    to.stem_starts_with_text = from.stem_starts_with_text;
-    to.stem_not_starts_with_text = from.stem_not_starts_with_text;
-    to.stem_checks = from.stem_checks;
-    if (from.stem_change) to.stem_change = std::make_unique<StemChange>(*from.stem_change);
-    to.then = from.then;
-    to.has_then = from.has_then;
     to.index_in_transform = from.index_in_transform;
-    to.source = from.source;
+    if (from.extra) {
+      RuleExtra& extra = to.more();
+      const RuleExtra& source = *from.extra;
+      extra.stem_min_length = source.stem_min_length;
+      extra.stem_characters = source.stem_characters;
+      extra.stem_contains = source.stem_contains;
+      extra.stem_starts_with = source.stem_starts_with;
+      extra.stem_ends_with = source.stem_ends_with;
+      extra.stem_not_starts_with = source.stem_not_starts_with;
+      extra.stem_not_ends_with = source.stem_not_ends_with;
+      extra.stem_starts_with_text = source.stem_starts_with_text;
+      extra.stem_not_starts_with_text = source.stem_not_starts_with_text;
+      if (source.stem_change) extra.stem_change = std::make_unique<StemChange>(*source.stem_change);
+      extra.then = source.then;
+    }
   }
 
   void parse(const Object& root) {
@@ -1204,11 +1218,13 @@ std::unique_ptr<PackData> parse_pack(std::string_view language_json, std::string
     for (const auto& rule : pack->transforms->rules) {
       if (!rule.has_then || !seen.insert({rule.transform, rule.index_in_transform}).second) continue;
       NamedSteps named{"transforms[" + std::to_string(rule.transform) + "].rules[" + std::to_string(rule.index_in_transform) + "].then", {}};
-      for (const auto& step : rule.then) named.steps.push_back(&step);
+      for (const auto& step : rule.extra->then) named.steps.push_back(&step);
       pack->named_steps.push_back(std::move(named));
     }
   }
   return pack;
 }
+
+HOSHIDICTS_LOAD_TIME_END
 
 }  // namespace hoshidicts::lang

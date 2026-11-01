@@ -2,7 +2,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Writes src/languages/builtin_packs.cpp: the packs built into the library
 (docs/languages.md, section 10.1) as byte arrays, so Swift Package builds,
-which do not run CMake, have them too.
+which do not run CMake, have them too. Each file is stored as raw DEFLATE
+(level 9) with its exact size; the library inflates it with libdeflate when
+the pack is first used, giving back the file byte for byte. A 152 KB
+transforms.json costs about 12 KB of every WebAssembly bundle this way.
 
     python3 tools/embed-packs.py            # writes the file
     python3 tools/embed-packs.py --check    # fails when the file is stale
@@ -14,11 +17,17 @@ languages/<code>/. Only Japanese is built in; other packs load at run time
 
 import json
 import sys
+import zlib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 OUTPUT = ROOT / "src" / "languages" / "builtin_packs.cpp"
 BUILTIN = ["ja"]
+
+
+def deflate(data):
+    compressor = zlib.compressobj(9, zlib.DEFLATED, -15, 9)
+    return compressor.compress(data) + compressor.flush()
 
 
 def byte_array(name, data):
@@ -44,11 +53,13 @@ def render():
         transforms_name = json.loads(language.decode("utf-8"))["lookup"].get("transforms")
         transforms = (pack / transforms_name).read_bytes() if transforms_name else b""
         ident = code.replace("-", "_")
-        parts.append(byte_array(f"{ident}_language", language))
-        parts.append(byte_array(f"{ident}_transforms", transforms) if transforms else f"const unsigned char {ident}_transforms[] = {{0}};\n")
+        packed_language = deflate(language)
+        packed_transforms = deflate(transforms) if transforms else b"\0"
+        parts.append(byte_array(f"{ident}_language", packed_language))
+        parts.append(byte_array(f"{ident}_transforms", packed_transforms))
         entries.append(
-            f'    {{"{code}", {{reinterpret_cast<const char*>({ident}_language), {len(language)}}}, '
-            f'{{reinterpret_cast<const char*>({ident}_transforms), {len(transforms)}}}, '
+            f'    {{"{code}", {{{ident}_language, {len(packed_language)}, {len(language)}}}, '
+            f'{{{ident}_transforms, {len(packed_transforms) if transforms else 0}, {len(transforms)}}}, '
             f'"{transforms_name or ""}"}},\n'
         )
     parts.append("}  // namespace\n\n")

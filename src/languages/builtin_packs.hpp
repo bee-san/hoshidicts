@@ -4,18 +4,29 @@
 #pragma once
 
 #include <cstddef>
+#include <string>
 #include <string_view>
 
 namespace hoshidicts::lang {
 
+// A file as raw DEFLATE and its size.
+struct PackedFile {
+  const unsigned char* data;
+  size_t packed_size;
+  size_t size;
+};
+
 struct BuiltinPack {
   std::string_view code;
-  std::string_view language_json;
-  std::string_view transforms_json;
+  PackedFile language_json;
+  PackedFile transforms_json;
   std::string_view transforms_file;
 };
 
 extern const BuiltinPack builtin_packs[];
 extern const size_t builtin_pack_count;
+
+// The file, inflated (empty for a packed size of 0). Throws on corrupt data.
+std::string unpack(const PackedFile& file);
 
 }  // namespace hoshidicts::lang

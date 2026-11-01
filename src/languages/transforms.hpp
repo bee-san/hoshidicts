@@ -46,18 +46,11 @@ struct StemChange {
   size_t between_min_length = 1;
 };
 
-struct Rule {
-  RuleType type = RuleType::Suffix;
-  uint16_t transform = 0;
-  uint32_t conditions_in = 0;
-  uint32_t conditions_out = 0;
-  // suffix, prefix, wholeWord, replace, phrasal: `inflected` in a and
-  // `deinflected` in b. circumfix: the prefix pair in a and b, the suffix
-  // pair in c and d. pattern: the anchor in a.
-  std::string a;
-  std::string b;
-  std::string c;
-  std::string d;
+// What a rule needs beyond its type, affixes and conditions: stem
+// constraints, stem changes, word lists, a pattern and `then` steps. Plain
+// suffix and whole-word rules, all of Japanese, have none, so a rule holds
+// it by pointer.
+struct RuleExtra {
   // Stem constraints (section 7.3).
   size_t stem_min_length = 0;
   const CharClass* stem_characters = nullptr;
@@ -68,7 +61,6 @@ struct Rule {
   const CharClass* stem_not_ends_with = nullptr;
   std::optional<std::string> stem_starts_with_text;
   std::optional<std::string> stem_not_starts_with_text;
-  bool stem_checks = false;
   std::unique_ptr<StemChange> stem_change;
   Occurrence occurrence = Occurrence::All;
   bool not_at_start = false;
@@ -76,12 +68,33 @@ struct Rule {
   const WordList* particles = nullptr;
   const WordList* guard_words = nullptr;
   std::unique_ptr<Pattern> pattern;
-  bool anchor_prefix = false;
   StepList then;
+};
+
+struct Rule {
+  RuleType type = RuleType::Suffix;
+  bool stem_checks = false;    // extra holds a stem constraint
+  bool has_stem_change = false;
   bool has_then = false;
+  bool anchor_prefix = false;  // a pattern anchored at the start
+  uint16_t transform = 0;
+  uint32_t conditions_in = 0;
+  uint32_t conditions_out = 0;
   // Index of the rule in its transform (for error messages and per-rule reports).
   uint32_t index_in_transform = 0;
-  std::string source;  // own, yomitan or both
+  // suffix, prefix, wholeWord, replace, phrasal: `inflected` in a and
+  // `deinflected` in b. circumfix: the prefix pair in a and b, the suffix
+  // pair in c and d. pattern: the anchor in a.
+  std::string a;
+  std::string b;
+  std::string c;
+  std::string d;
+  std::unique_ptr<RuleExtra> extra;  // null when the rule needs none of it
+
+  RuleExtra& more() {
+    if (!extra) extra = std::make_unique<RuleExtra>();
+    return *extra;
+  }
 };
 
 struct Transform {
