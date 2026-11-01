@@ -61,6 +61,13 @@ pack is written later, from scratch, by its own language agent.
 
 ## Measurements
 
+`ctest -R language` (hachi-lang-engine's `language-conformance-test`,
+feat/multi-language 250675e before it was pushed): conforms. corpus.tsv
+1,631 / 1,631, cases.tsv 18 / 18, yomitan.tsv 382 / 382, text.tsv 13 / 13,
+lookup.tsv 11 / 11, gaps.tsv 0 / 369 (reported); classes.json agrees with the
+engine (3 classes, 78 fields); 259 of the 7,187 rules (the cross-product rows
+expanded) are exercised by a passing row.
+
 `hoshidicts-cli eval-language` from feat/multi-language at 1faeed5 (GCC
 14.3, Release), with `--dictionary` Wiktionary Arabic-English
 (wiktionary-to-yomitan 2026.10.22, `wty-ar-en.zip`, sha256
