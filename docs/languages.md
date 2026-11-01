@@ -149,15 +149,14 @@ An abridged English example (section 4.8 has Arabic and Japanese excerpts):
   "direction": "ltr",
   "classes": {
     "letter": "[A-Za-z\\u00C0-\\u024F]",
-    "word": "[{letter}\\p{M}\\p{Nd}]",
-    "wordJoiner": "['\\u2019\\-]"
+    "word": "[{letter}\\p{M}\\p{Nd}]"
   },
   "text": {
     "pattern": "{letter}",
     "scanStart": "word",
     "segmentation": "spaces",
     "wordCharacters": "{word}",
-    "wordInternal": "{wordJoiner}",
+    "wordInternal": null,
     "sentence": {
       "terminators": [".", "!", "?", "\u2026"],
       "quotePairs": [["\u201C", "\u201D"], ["\"", "\""], ["(", ")"]]
@@ -166,7 +165,7 @@ An abridged English example (section 4.8 has Arabic and Japanese excerpts):
     "lineJoiner": " "
   },
   "lookup": {
-    "scanResolution": "word",
+    "searchResolution": "word",
     "preprocessors": [
       {"id": "decapitalize", "name": "Decapitalize text", "variants": [[{"case": "lower"}]]},
       {"id": "capitalizeFirstLetter", "name": "Capitalize first letter", "variants": [[{"case": "upperFirst"}]]}
@@ -219,7 +218,7 @@ An abridged English example (section 4.8 has Arabic and Japanese excerpts):
 | `name` | string | English name, shown in English user interfaces. |
 | `nativeName` | string | The language's own name for itself. |
 | `bcp47` | string | The tag hosts put in `lang` attributes for text in this language, for example `ja`, `zh-Hans`, `ar`. |
-| `scripts` | array of ISO 15924 codes | Scripts the language is written in (`Jpan`, `Latn`, `Arab`, `Hang`, `Hani`, ...). Hosts use it to decide how to label untagged Han text (Hachidori section 10.1). |
+| `scripts` | array of ISO 15924 codes | Scripts the language is written in: `Jpan` (ja), `Latn` (en, es), `Arab` (ar), `Kore` (ko), `Hans` and `Hant` (zh). Hosts use it to decide how to label untagged Han text (Hachidori section 10.3); there, `Hani` matches every code that includes Han (`Hani`, `Hans`, `Hant`, `Hanb`, `Jpan`, `Kore`). |
 | `direction` | `"ltr"` or `"rtl"` | Direction of running text in this language. |
 
 ### 4.2 `classes`
@@ -235,10 +234,10 @@ How text in this language looks on a page. The engine uses
 | Field | Type | Meaning |
 | --- | --- | --- |
 | `pattern` | class | Code points that are text in this language. Hosts use it for the "only scan text in this language" gate, debug-log redaction, and to find the runs of text to split into words (section 9.8). |
-| `scanStart` | `"cursor"` or `"word"` | Where a host starts a scan. `cursor`: at the hovered character, as Hachidori does for Japanese. `word`: at the start of the hovered word (Yomitan's `scanResolution: 'word'`). Section 14 recommends a value per language. |
+| `scanStart` | `"cursor"` or `"word"` | Where a host starts a scan. `cursor`: at the hovered character, as Hachidori does for Japanese. `word`: at the start of the hovered word (Yomitan's `scanning.scanResolution: 'word'`). Section 14 recommends a value per language. |
 | `segmentation` | `"scan"` or `"spaces"` | How running text divides into words, for word highlighting and line joining. `scan`: words are not separated by spaces (Japanese, Chinese). `spaces`: spaces and punctuation separate words (English, Arabic, Korean). |
-| `wordCharacters` | class | The characters a word is made of, for `scanStart: "word"`, `scanResolution: "word"` and `spaces` segmentation. |
-| `wordInternal` | class or null | Characters that belong to a word only between two word characters, such as the apostrophe in *don't* or the hyphen in *mother-in-law*. |
+| `wordCharacters` | class | The characters a word is made of, for `scanStart: "word"`, `searchResolution: "word"` and `spaces` segmentation. Every other character separates words. |
+| `wordInternal` | class or null | Characters that are part of a word's spelling between two word characters and where a lookup never splits a word, such as the Ukrainian apostrophe (м’ясо) or the Catalan middle dot (col·lecció). Hyphens and the English and French apostrophes are not: they separate words, so *minute* in *five-minute*, *mother* in *mother’s* and *homme* in *l’homme* can be looked up. |
 | `sentence.terminators` | array of strings | Characters that end a sentence. |
 | `sentence.quotePairs` | array of `[open, close]` | Brackets and quotes that a sentence keeps whole. |
 | `highlightBreaks` | object or null | `{"sentenceEnd": [...], "clauseEnd": [...]}`: where a host may cut running text into chunks for word highlighting. Null means `sentence.terminators` and no clause breaks. Japanese lists today's Hachidori tables. |
@@ -250,7 +249,7 @@ The engine-facing block.
 
 | Field | Type | Meaning |
 | --- | --- | --- |
-| `scanResolution` | `"character"` or `"word"` | Which prefixes of the scanned text are looked up (section 9.2). |
+| `searchResolution` | `"character"` or `"word"` | Which prefixes of the scanned text are looked up (section 9.2). This is Yomitan's `translation.searchResolution` (`letter` or `word`); `text.scanStart` is Yomitan's `scanning.scanResolution`. |
 | `preprocessors` | array of processors | Text variants tried before deinflection (section 6). |
 | `postprocessors` | array of processors | Variants of each deinflected form tried before the dictionary query (section 6). Korean needs them: rules run on jamo, dictionaries are written in syllables. |
 | `readingNormalizer` | array of steps or null | Applied to readings when the engine groups results (section 9.6). Chinese pinyin uses it. |
@@ -398,7 +397,7 @@ Arabic excerpt:
            "wordCharacters": "[{letter}{harakat}\\u0640]", "wordInternal": null,
            "sentence": {"terminators": [".", "!", "\u061F", "\u2026"], "quotePairs": [["\u00AB", "\u00BB"], ["(", ")"]]},
            "highlightBreaks": null, "lineJoiner": " "},
-  "lookup": {"scanResolution": "word", "preprocessors": [
+  "lookup": {"searchResolution": "word", "preprocessors": [
     {"id": "removeArabicScriptDiacritics", "name": "Remove diacritics", "variants": [[{"strip": "{harakat}"}]]},
     {"id": "removeTatweel", "name": "Remove tatweel", "variants": [[{"strip": "[\\u0640]"}]]},
     {"id": "normalizeUnicode", "name": "Normalize Unicode", "variants": [[{"normalize": "NFKC"}]]},
@@ -418,7 +417,7 @@ Japanese excerpt (section 11 has the rest):
            "scanStart": "cursor", "segmentation": "scan", "lineJoiner": "",
            "highlightBreaks": {"sentenceEnd": ["\u3002", "\uFF0E", "\uFF01", "\uFF1F", "!", "?", "\u2026", "\u2025"],
                                "clauseEnd": ["\u3001", "\uFF0C", ",", " ", "\u3000"]}},
-  "lookup": {"scanResolution": "character", "traceSelection": "first", "preprocessors": [
+  "lookup": {"searchResolution": "character", "traceSelection": "first", "preprocessors": [
     {"id": "nfkc", "variants": [[{"builtin": "ja.nfkc"}]]},
     {"id": "kana", "variants": [[{"builtin": "ja.katakanaToHiragana"}], [{"builtin": "ja.hiraganaToKatakana"}]]}
   ]},
@@ -465,8 +464,10 @@ processors in order, each to every variant the previous ones produced, as
 2. For each processor, for each current variant, for each of the processor's
    `variants`: apply its steps; if the output differs from the variant, keep
    it with `steps + 1`. Unless the processor sets `"keepInput": false`, also
-   keep the variant itself with its own steps. A text seen twice keeps its
-   smallest `steps`.
+   keep the variant itself with its own steps. With `"keepInput": false`, an
+   output equal to its input is kept with its own steps, so a text the
+   processor does not change (Yiddish without diacritics, text without Hangul)
+   is still looked up. A text seen twice keeps its smallest `steps`.
 3. After each processor, sort the variants by code points.
 4. Stop adding variants for one input after 4,096; the conformance test fails
    a pack whose corpus reaches that limit.
@@ -497,7 +498,7 @@ list; anything else needs a builtin.
 | `strip` | `{"strip": "[\\u0300-\\u036F]"}` | Removes every code point in the class. |
 | `map` | `{"map": {"\u00E6": "ae", "\u0153": "oe"}, "at": "all"}` | Literal replacement, longest key first, scanning left to right. `at` is `all` (default), `first`, `last`, `start` (the text must begin with the key) or `end`. |
 | `pattern` | `{"pattern": "(l\|dell\|all)['\u2019]", "replace": "", "global": true}` | A regular expression replacement in the dialect of section 7.6. With `"repeat": true` it is applied again until the text stops changing, at most 16 times. |
-| `alternatives` | `{"alternatives": {"dj": ["\u0111"], "c": ["\u010D", "\u0107"]}, "limit": 4096}` | Produces every combination of the listed alternatives, in the order of the text's matches and of each list, up to `limit` variants. Keys may be several characters; at each position the longest key wins. The text is NFC-normalised first. Only allowed as the only step of its variant. |
+| `alternatives` | `{"alternatives": {"dj": ["\u0111"], "c": ["\u010D", "\u0107"]}, "limit": 4096}` | Produces every combination of the listed alternatives, up to `limit` variants. At each match the key itself is the first choice and the listed alternatives follow in order (c → c, č, ć), and combinations are generated in that order, so the limit keeps the variants nearest the original. Keys may be several characters; at each position the longest key wins. The text is NFC-normalised first. Only allowed as the only step of its variant. |
 | `builtin` | `{"builtin": "hangul.disassemble"}` | A named routine compiled into the engine (section 6.3). |
 
 Greek's `removeDoubleAcuteAccents`, which keeps only the first acute accent,
@@ -616,7 +617,11 @@ rules by their literal parts, so lookups never scan the whole rule list.
 | `pattern` | `pattern`, `replacement`, `anchorSuffix` or `anchorPrefix` | the text ends (or starts) with the anchor and matches `pattern` | `pattern` replaced by `replacement` |
 
 Words are runs of the pack's `text.wordCharacters` separated by single spaces.
-In `phrasal` and `interposedObject` a word matches a list entry exactly.
+In `phrasal` and `interposedObject` a word matches a list entry exactly, and
+both keep every word after the particle (*put it on the table* → *put on the
+table*). Yomitan matches a particle as a prefix of the next word (*looked
+uptown* → *look uptown*); the pack does not, and lists that as a Yomitan defect
+(section 8.2).
 
 Stem constraints apply to the stem: the text that remains between the matched
 parts.
@@ -628,6 +633,7 @@ parts.
 | `stemContains` | At least one stem code point is in this class. |
 | `stemStartsWith`, `stemEndsWith` | The stem's first (last) code point is in this class. |
 | `stemNotStartsWith`, `stemNotEndsWith` | The stem's first (last) code point is not in this class, or the stem is empty. |
+| `stemStartsWithText`, `stemNotStartsWithText` | The stem does (does not) begin with this literal string; Spanish *ju* + *ue* uses it. |
 
 `stemChange` changes the stem while the affix is replaced:
 
@@ -703,7 +709,10 @@ classic locale) and JavaScript give the same results:
 - The engine converts text to UTF-16 and gives `std::wregex` one code unit
   per `wchar_t`, so `.` and negated classes match one UTF-16 unit on every
   platform, as in JavaScript without the `u` flag. Classes in a pattern may
-  therefore contain only code points up to U+FFFF.
+  therefore contain only code points up to U+FFFF. A `{name}` reference
+  expands to explicit ranges computed from the same Unicode tables on both
+  sides (general categories included); referencing a class with members above
+  U+FFFF is an error.
 - A `pattern` rule names an anchor literal that every text it matches ends
   with (`anchorSuffix`) or starts with (`anchorPrefix`). The engine tries the
   pattern only on texts with that anchor.
@@ -736,7 +745,7 @@ before every call because 28 rules carry the `g` flag:
 
 | Source shape | Check | Pack rule |
 | --- | --- | --- |
-| `L$` or `.{n}L$`, `L` free of metacharacters | `deinflect(s + L) == s + D` for every probe stem `s` | `suffix` with `inflected: L`, `deinflected: D`, `stemMinLength: n` |
+| `L$` preceded by nothing, by `n` dots or by `.{n}`, `L` free of metacharacters | `deinflect(s + L) == s + D` for every probe stem `s` of at least `n` code points | `suffix` with `inflected: L`, `deinflected: D`, `stemMinLength: n` |
 | `^L` | `deinflect(L + s) == D + s` for every probe stem | `prefix` |
 | `^L$` | `deinflect` returns one constant | `wholeWord` |
 | anything else, or an empty affix | | `{"type": "todo", "isInflected": "<source>", "conditionsIn": [...], "conditionsOut": [...]}` |
@@ -763,8 +772,12 @@ every prefix of them, runs Yomitan's transformer at d3c54c1 and
 and requires the same set of (text, conditions). Yomitan defects the pack does
 not reproduce are listed with a reason in `sources/yomitan-differences.tsv`,
 for example Korean's `suffixInflection('', '다', [], ['ida'])`, which turns
-every text into 다 because `slice(0, -0)` is empty, and Yiddish rules that
-return `''`.
+every text into 다 because `slice(0, -0)` is empty, Yiddish rules that return
+`''`, and English particles matched as word prefixes. Inputs for rules without
+literal affixes come from the mapped pack rule (circumfix parts,
+`stemChange.from`, pattern anchors, word lists) and from the pack's corpus
+words. The check resets `lastIndex` before every call to a rule with the `g`
+flag, so Yomitan's output does not depend on the order of the inputs.
 
 ### 8.3 Constructs that are not literal
 
@@ -782,7 +795,7 @@ From a census of every Yomitan file at d3c54c1 (18,361 rules: 10,946 literal,
 | en | phrasal verbs `^\w*ed (?:about\|…)` (from `createPhrasalVerbInflection`) | 38 | `phrasal`, one per suffix rule, `followedBy` the 78-word list |
 | en | interposed object | 1 | `interposedObject` with Yomitan's particle and preposition lists |
 | es | stem changes `ie→e`, `ue→o`, `i→e`, `u→o` with endings | 26 | `suffix` with `stemChange` |
-| es | `ue→u` after `ju` (`term.startsWith('jue')`) | 3 | `circumfix` `jue` → `ju` with the suffix |
+| es | `ue→u` after `ju` (`term.startsWith('jue')`), otherwise `ue→o` | 3 | a `suffix` with `stemChange` ue → u and `stemStartsWithText: "ju"`, beside the `ue→o` rule with `stemNotStartsWithText: "ju"` |
 | es | reflexive `(me\|te\|se\|nos\|os) (\w+)(ar\|er\|ir)` → `$2$3se` | 1 | `pattern` with `anchorPrefix` per pronoun |
 | ko | `suffixInflection('', '다', [], ['ida'])` | 1 | not ported (a Yomitan defect; section 8.2) |
 | sga | global replacement, optionally not at the start (`tryAlternateOrthography`) | 27 | `replace` with `occurrence: "all"` and `notAtStart` |
@@ -793,7 +806,7 @@ From a census of every Yomitan file at d3c54c1 (18,361 rules: 10,946 literal,
 | tl | reduplication `^(P)(C*V)(\2)` | 15 | `pattern` with `anchorPrefix` and a back-reference |
 | tl | hyphen removal | 1 | `replace` |
 | uk | `[ое]([C]+)E$` → `і$1D` | 29 | `suffix` with `stemChange` and `between` |
-| uk | fleeting vowel `([C])([C])і$` → `$1е$2ь` | 26 | `pattern` with `anchorSuffix: "і"` |
+| uk | fleeting vowel `([C])([C])E$` → `$1е$2ь` and `$1о$2ь` (`fleetingVowelInflection`, 13 endings × 2 vowels) | 26 | one `pattern` per ending and vowel, anchored on that ending |
 | uk | `.[ое]Xі$` | 6 | `suffix` with `stemChange` |
 | uk | zero ending after a closed syllable `[V].*[C]$` → text + ending | 3 | `suffix` with empty `inflected`, `stemContains` the vowels and `stemEndsWith` the consonants |
 | uk | minimum stems (`requireStem`) | 333 | literal `suffix` with `stemMinLength` |
@@ -815,8 +828,9 @@ says otherwise.
 The host passes text that starts where the pack's `scanStart` says and a
 `scan_length` in code points. The long-key extension for keys longer than 16
 code points (`scan.idx`) works for every language: the engine computes the
-processed variants of the first eight code points explicitly, whatever the
-resolution.
+variants of the first eight code points explicitly, whatever the resolution,
+through the pack's pre- and postprocessors without deinflection, so they are
+written as dictionaries write keys (for Korean, in syllables again).
 
 ### 9.2 Prefixes
 
@@ -828,7 +842,9 @@ characters between two of them) followed by a character that is not one.
 *reading a book* gives *reading a book*, *reading a* and *reading*, never
 *rea*. When `scan_length` ends inside a word, the window grows to that word's
 end (up to the text the host passed), so a word longer than the scan length
-("Geschwindigkeitsbegrenzung") is still looked up.
+(*desafortunadamente*, 18 code points) is still looked up. Packs with
+character resolution, such as German, reach long keys through the long-key
+index instead.
 
 ### 9.3 Processing and deinflection
 
@@ -847,15 +863,16 @@ lists dictionaries whose terms skip the filter, for dictionaries without
 `rules` such as MDX imports; it is empty by default, which is today's
 behaviour.
 
-### 9.5 Repeated forms
+### 9.5 Repeated texts
 
-A prefix and variant can produce the same deinflected text with the same
-conditions more than once (2,015 of the 22,393 deinflections of the Japanese
-corpus prefixes are such repeats). The engine
-queries such a form once. It merges a repeat into the candidates only when
-`traceSelection: "shortest"` and the repeat's trace is shorter; with `first`,
-the merge would change nothing, so results are identical to querying every
-repeat.
+A prefix and variant can produce the same deinflected text more than once:
+2,015 of the 22,393 deinflections of the Japanese corpus prefixes repeat a
+text, 520 of them with the same conditions. The dictionary query depends only
+on the text; conditions only filter its result. The engine therefore queries
+each text once per prefix and variant and applies the part-of-speech filter
+per deinflection. With `traceSelection: "first"` this gives exactly today's
+results; the framework keeps it only if the Japanese benchmark shows it is not
+slower than querying every repeat.
 
 ### 9.6 Order and grouping
 
@@ -869,10 +886,12 @@ without readings, the reading terms compare equal strings and have no effect.
 Candidates are grouped by `(expression, reading)` as today. With
 `traceSelection: "first"` a term keeps the first deinflection that reached it
 at its longest matched length (today's behaviour); with `shortest` it keeps
-the one with the shortest trace, then the first. When the pack has a
+the one with the fewest processor steps, then the shortest trace, then the
+first, which is how the comparator ranks them. When the pack has a
 `readingNormalizer`, readings are compared after normalising (in the
 candidate key and in `query_raw`'s merge); a merged result shows the reading
-of the first term found, and `primary_reading` is compared normalised.
+of the first term found, collects frequencies and pitches for every reading
+it merged, and `primary_reading` is compared normalised.
 
 ### 9.7 Dictionary selection
 
@@ -921,9 +940,10 @@ class LanguageRegistry {
   // A registry holding the packs built into the library (Japanese).
   static LanguageRegistry with_builtin();
   // Parses one pack. transforms_json may be empty when the pack has none.
-  // A pack with the same code replaces the previous one; lookups that already
-  // hold the old pack keep it until they finish. Returns false and sets
-  // `error` (pack code, file, JSON path and reason) on any problem.
+  // A pack with the same code replaces the previous one. add() must not run
+  // while lookups use the registry; a host that adds packs while it serves
+  // lookups serialises them (Hachidori does). Returns false and sets `error`
+  // (pack code, file, JSON path and reason) on any problem.
   bool add(std::string_view language_json, std::string_view transforms_json, std::string* error);
   // Loads every `<dir>/<code>/language.json` whose directory name does not
   // start with '_'.
@@ -963,8 +983,12 @@ class Deinflector {
   std::vector<DeinflectionResult> deinflect(const std::string& text) const;
   uint32_t conditions_for_parts_of_speech(std::span<const std::string> tags) const;
   uint32_t conditions_for_types(std::span<const std::string> names) const;
-  // Kept for existing callers: Japanese part-of-speech conditions.
+  // Kept for existing callers: Japanese part-of-speech conditions, and
+  // NekoPara cat speech (now the Japanese pack's variant pass).
   static uint32_t pos_to_conditions(const std::vector<std::string>& part_of_speech);
+  std::vector<DeinflectionResult> deinflect_neko_speech(const std::string& text) const;
+  static constexpr std::string_view neko_speech = "neko speech";
+  static bool is_neko_speech(const DeinflectionResult& result);
 };
 ```
 
@@ -978,7 +1002,8 @@ conformance test fails when the embedded copy differs from the pack.
 `LanguageRegistry::with_builtin()` starts with it, so Japanese lookups need no
 files and a host that never loads a pack behaves as today. Other packs load
 at run time (decision record 0002). A registry may be shared by several
-`Lookup` objects; packs are immutable once added.
+`Lookup` objects; packs are immutable once added and held by `shared_ptr`, so
+replacing one never frees a pack another `Lookup` still holds.
 
 ### 10.2 C
 
@@ -995,21 +1020,25 @@ int hd_languages_add_directory(hd_languages* languages, const char* path);
 const char* hd_languages_last_error(const hd_languages* languages);
 
 typedef struct hd_language_request {
+  size_t struct_size;                   // sizeof(hd_language_request), so fields can be added
   const char* language;                 // NULL means "ja"
   const char* const* dictionaries;      // NULL or dictionary_count == 0: every loaded dictionary
   size_t dictionary_count;
   const char* const* language_options;
   size_t language_option_count;
+  const char* const* pos_filter_exempt;
+  size_t pos_filter_exempt_count;
 } hd_language_request;
 
 hd_lookup* hd_lookup_new_with_languages(hd_query* q, const hd_languages* languages);
 // Like hd_lookup_run_with_options, for one language and dictionary selection.
-// Returns NULL and sets hd_lookup_last_error on an unknown language.
+// Returns NULL and points *out_error at a message (valid until the next call
+// on this thread) on an unknown language.
 hd_lookup_results* hd_lookup_run_with_language(const hd_lookup* l, const char* lookup_string, int max_results,
                                                size_t scan_length, const hd_lookup_options* options,
                                                const hd_language_request* request,
-                                               const hd_lookup_result** out_results, size_t* out_count);
-const char* hd_lookup_last_error(const hd_lookup* l);
+                                               const hd_lookup_result** out_results, size_t* out_count,
+                                               const char** out_error);
 ```
 
 ### 10.3 Command line
@@ -1095,9 +1124,12 @@ alphanumerics; kanji variants; iteration marks; kanji numbers; middle dots.
 ### 11.3 Proof of identical results
 
 Today's code is kept, unmodified apart from renamed classes, as a reference in
-`tests/reference/`: `legacy_deinflector.cpp`, `legacy_text_processor.cpp` and
-`legacy_lookup.cpp` (the `Lookup` of 35e2dab). Three tests compare the new
-code with it and require identical output, every field in the same order:
+`tests/reference/`: `legacy_deinflector.cpp`, `legacy_text_processor.cpp`,
+`legacy_query.cpp` (a `LegacyDictionaryQuery`) and `legacy_lookup.cpp` (the
+`Lookup` of 35e2dab, befriended by the legacy query). The oracle therefore
+shares no code with the new pipeline below the importer. Three tests compare
+the new code with it and require identical output, every field in the same
+order:
 
 - `ja-deinflect-parity`: deinflections (texts, conditions, traces) for every
   row of `languages/ja/tests/yomitan.tsv` (Yomitan's complete Japanese
@@ -1109,10 +1141,15 @@ code with it and require identical output, every field in the same order:
 - `ja-process-parity`: processor variants and steps for the same inputs.
 - `ja-lookup-parity`: `lookup()` and `lookup_dictionary()` results (matched,
   deinflected, trace, term, frequencies, pitches, preprocessor steps) on a
-  committed test dictionary with term, frequency, pitch and kanji banks, for
-  the corpus sources and their prefixes, the four benchmark words and the
-  generated strings, with `neko_speech`, `metadata_only_terms`, each frequency
-  order and `primary_reading` on and off.
+  committed test dictionary with term, frequency, pitch and kanji banks and a
+  key longer than 16 code points, for the corpus sources and their prefixes,
+  the four benchmark words and the generated strings, at scan lengths below
+  and above the long key, with `neko_speech`, `metadata_only_terms`, each
+  frequency order and `primary_reading` on and off. A selection case loads the
+  test dictionary, a second Japanese dictionary and an English one; for each
+  selection S (one dictionary, two in both orders) the new lookup with
+  `dictionaries = S` must equal the legacy lookup with only S loaded, in S's
+  order, with every option on and off.
 
 ### 11.4 NekoPara cat speech
 
@@ -1268,20 +1305,20 @@ within budget.
 
 What Yomitan has for each language at d3c54c1, what the pack needs beyond
 literal rules, and the recommended text settings (`scanStart`,
-`scanResolution`, `segmentation`). These are starting points; a pack author
+`searchResolution`, `segmentation`). These are starting points; a pack author
 who measures better values uses them and says why.
 
 | Code | Yomitan rules | Yomitan processors | Beyond literal rules | Start / resolution / segmentation | Notes |
 | --- | --- | --- | --- | --- | --- |
-| en | 137 (98 literal) | capitalisation | `phrasal`, `interposedObject` | word / word / spaces | |
+| en | 137 (98 literal) | capitalisation | `phrasal`, `interposedObject` | word / word / spaces | Hyphens and apostrophes separate words: `lookup.tsv` cases *minute walk* → minute (from *five-minute*), *mother’s house* → mother. |
 | es | 545 (518 literal) | capitalisation | `stemChange`, `circumfix` (jue), `pattern` (reflexive) | word / word / spaces | |
 | ko | 2,682 (one Yomitan defect) | Hangul disassemble/assemble (`keepInput: false`) | builtins | cursor / character / spaces | No particle rules: nouns are reached by shortening, so character resolution is needed. Add a `lookup.tsv` case 학교에서 → 학교. |
-| fr | 2,672 literal | capitalisation, apostrophe variants | none | word / word / spaces | Elided articles (l', d') are not in Yomitan. |
+| fr | 2,672 literal | capitalisation, apostrophe variants | none | word / word / spaces | The apostrophe separates words (l’homme → homme); elided articles and pronouns (l’, d’, qu’) need own rules. |
 | de | 144 (74 literal) | capitalisation, ß | `circumfix`, `pattern` (separated prefixes) | cursor / character / spaces | Character resolution finds parts of compounds. |
 | it | none | capitalisation, accents, apostrophed words | own rules only | word / word / spaces | |
 | pt | none | capitalisation (descriptor only) | own rules only | word / word / spaces | Nothing in Yomitan. |
 | ru | none | capitalisation, ё → е, stress marks | own rules only | word / word / spaces | |
-| uk | 3,023 (2,959 literal) | capitalisation, stress marks, apostrophe variants | `stemChange`, `pattern` (fleeting vowel), `stemContains` | word / word / spaces | |
+| uk | 3,023 (2,959 literal) | capitalisation, stress marks, apostrophe variants | `stemChange`, `pattern` (fleeting vowel), `stemContains` | word / word / spaces | `wordInternal`: the apostrophes (м’ясо). |
 | zh | none | radical normalisation; pinyin reading normaliser | `readingNormalizer` | cursor / character / scan | Hanzi character view; ruby `syllable`. |
 | ar | 7,157 (537 literal) | diacritics, tatweel, NFKC, hamza, alif maqsura | `circumfix` cross-product, stem constraints | word / word / spaces | Right to left; `joinedScript`. |
 | el | 6 (5 literal) | capitalisation, double acute accents (`pattern` with `repeat`) | `prefix` with `then` | word / word / spaces | Final sigma needs the full case mapping. |
@@ -1291,7 +1328,7 @@ who measures better values uses them and says why.
 | eu | 75 literal | capitalisation | none | word / word / spaces | Agglutinative: long traces. |
 | ga | 7 literal (eclipsis) | capitalisation | none | word / word / spaces | Lenition is not in Yomitan. |
 | sga | 70 (43 literal) | capitalisation, diacritics | `replace` | word / word / spaces | Orthographic replacements repeat texts; section 9.5 bounds the queries. |
-| ka | 17 literal | none | none | word / word / spaces | Yomitan never applies them (`kat` key). |
+| ka | 16 literal | none | none | word / word / spaces | Yomitan never applies them (`kat` key). |
 | sq | 94 (88 literal) | capitalisation | stem constraints | word / word / spaces | |
 | tl | 635 (135 literal) | capitalisation, diacritics | `circumfix`, `stemChange`, `pattern` (reduplication), `replace` | word / word / spaces | |
 | sh | none | capitalisation, accent marks, diacritic alternatives | own rules only | word / word / spaces | `alternatives` multiplies variants. |

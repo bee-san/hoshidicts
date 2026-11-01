@@ -9,15 +9,14 @@
   "direction": "ltr",
   "classes": {
     "letter": "[A-Za-z]",
-    "word": "[{letter}\\p{M}\\p{Nd}]",
-    "wordJoiner": "['\\u2019\\-]"
+    "word": "[{letter}\\p{M}\\p{Nd}]"
   },
   "text": {
     "pattern": "{letter}",
     "scanStart": "word",
     "segmentation": "spaces",
     "wordCharacters": "{word}",
-    "wordInternal": "{wordJoiner}",
+    "wordInternal": null,
     "sentence": {
       "terminators": [".", "!", "?", "…"],
       "quotePairs": [["\"", "\""], ["(", ")"]]
@@ -26,7 +25,7 @@
     "lineJoiner": " "
   },
   "lookup": {
-    "scanResolution": "word",
+    "searchResolution": "word",
     "preprocessors": [
       {
         "id": "decapitalize",

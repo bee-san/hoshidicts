@@ -14,8 +14,8 @@ compounds missing from a dictionary are found the same way.
 
 ## Decision
 
-Packs set `text.scanStart` (`cursor` or `word`), `lookup.scanResolution`
-(`character` or `word`) and `text.segmentation` (`scan` or `spaces`, for
+Packs set `text.scanStart` (`cursor` or `word`, Yomitan's `scanning.scanResolution`), `lookup.searchResolution`
+(`character` or `word`, Yomitan's `translation.searchResolution`) and `text.segmentation` (`scan` or `spaces`, for
 highlighting and line joining only) independently. Section 14.1 of
 `languages.md` recommends values per language: Korean and German use
 `cursor` and `character` with `spaces`; English, Spanish and Arabic use `word`,
