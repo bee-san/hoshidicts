@@ -20,4 +20,4 @@ jobs:
           g++ -std=c++23 -Wall -Wextra -O2 -Iinclude -Iexternal/utfcpp/source \
             tests/deinflector_test.cpp src/deinflector.cpp -o /tmp/deinflector-test
       - name: Check the pinned Yomitan conjugation corpus
-        run: /tmp/deinflector-test tests/fixtures/yomitan-deinflections.tsv
+        run: /tmp/deinflector-test languages/ja/tests/yomitan.tsv

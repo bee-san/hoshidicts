@@ -1,6 +1,8 @@
 # Japanese conjugation parity
 
-The fixture is the complete Japanese conjugation test corpus from
+The fixture, `languages/ja/tests/yomitan.tsv` (moved there from
+`tests/fixtures/` with the Japanese language pack), is the complete Japanese
+conjugation test corpus from
 [Yomitan e7334a9](https://github.com/yomidevs/yomitan/blob/e7334a96106a6c74e6fa75bd33a5ea1219d92712/test/language/japanese-transforms.test.js):
 1,446 positive and negative cases with expected dictionary forms, condition
 types, and conjugation chains. It includes historical kana (PRs #2474 and
@@ -19,7 +21,7 @@ Run the standalone test without building importer dependencies:
 git submodule update --init external/utfcpp
 g++ -std=c++23 -Wall -Wextra -O2 -Iinclude -Iexternal/utfcpp/source \
   tests/deinflector_test.cpp src/deinflector.cpp -o /tmp/deinflector-test
-/tmp/deinflector-test tests/fixtures/yomitan-deinflections.tsv
+/tmp/deinflector-test languages/ja/tests/yomitan.tsv
 ```
 
 With all submodules initialized, the same test is available through CMake:

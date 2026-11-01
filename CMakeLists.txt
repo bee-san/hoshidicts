@@ -142,7 +142,7 @@ if(HOSHIDICTS_DEINFLECTOR_TESTS)
         target_compile_options(deinflector-test PRIVATE /utf-8)
     endif()
     add_test(NAME deinflector
-             COMMAND deinflector-test ${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/yomitan-deinflections.tsv)
+             COMMAND deinflector-test ${CMAKE_CURRENT_SOURCE_DIR}/languages/ja/tests/yomitan.tsv)
 endif()
 
 if(HOSHIDICTS_CLI)
@@ -200,6 +200,20 @@ if(HOSHIDICTS_TESTS)
     if(MSVC)
         target_compile_options(hoshidicts-legacy PRIVATE /utf-8)
     endif()
+
+    # languages/ja/transforms.json is what tools/export-legacy-japanese.cpp
+    # writes from the oracle's deinflector (docs/languages.md 11.1).
+    add_executable(export-legacy-japanese tools/export-legacy-japanese.cpp)
+    target_include_directories(export-legacy-japanese PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/external/utfcpp/source)
+    if(MSVC)
+        target_compile_options(export-legacy-japanese PRIVATE /utf-8)
+    endif()
+    add_test(NAME ja-export-legacy
+             COMMAND ${CMAKE_COMMAND}
+                     -DEXPORT=$<TARGET_FILE:export-legacy-japanese>
+                     -DOUT=${CMAKE_CURRENT_BINARY_DIR}/ja-transforms.json
+                     -DEXPECTED=${CMAKE_CURRENT_SOURCE_DIR}/languages/ja/transforms.json
+                     -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/export_legacy_japanese.cmake)
 
     foreach(variant simd scalar)
         add_executable(json-skip-test-${variant} tests/json_skip_test.cpp src/json/json_skip.cpp)
