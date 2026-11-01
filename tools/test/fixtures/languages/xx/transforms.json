@@ -1,0 +1,147 @@
+{
+  "schema": 1,
+  "conditions": {
+    "v": {
+      "name": "Verb",
+      "isDictionaryForm": true,
+      "subConditions": ["v_phr"]
+    },
+    "v_phr": {
+      "name": "Phrasal verb",
+      "isDictionaryForm": true
+    },
+    "n": {
+      "name": "Noun",
+      "isDictionaryForm": true,
+      "subConditions": ["np", "ns"]
+    },
+    "np": {
+      "name": "Noun plural",
+      "isDictionaryForm": true
+    },
+    "ns": {
+      "name": "Noun singular",
+      "isDictionaryForm": true,
+      "i18n": [
+        {
+          "language": "xx",
+          "name": "Singular"
+        }
+      ]
+    },
+    "adj": {
+      "name": "Adjective",
+      "isDictionaryForm": true
+    }
+  },
+  "wordLists": {
+    "particles": ["up", "on", "off"]
+  },
+  "transforms": [
+    {
+      "id": "plural",
+      "name": "plural",
+      "description": "Plural form of a noun",
+      "i18n": [
+        {
+          "language": "xx",
+          "name": "pl."
+        }
+      ],
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "s", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"]},
+        {"type": "suffix", "inflected": "ies", "deinflected": "y", "conditionsIn": ["np"], "conditionsOut": ["ns"]}
+      ]
+    },
+    {
+      "id": "past",
+      "name": "past",
+      "description": "Past tense",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ed", "deinflected": "", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "ing", "deinflected": "", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "d", "deinflected": "", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "phrasal", "inflected": "ed", "deinflected": "", "followedBy": "particles", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]}
+      ]
+    },
+    {
+      "id": "comparative",
+      "name": "comparative",
+      "description": "Comparative",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "est", "deinflected": "", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 3}
+      ]
+    },
+    {
+      "id": "un-",
+      "name": "un-",
+      "description": "Negative",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "un", "deinflected": "", "conditionsIn": ["adj", "v"], "conditionsOut": ["adj", "v"]}
+      ]
+    },
+    {
+      "id": "irregular",
+      "name": "irregular",
+      "description": "Irregular past",
+      "source": "yomitan",
+      "rules": [
+        {"type": "wholeWord", "inflected": "went", "deinflected": "go", "conditionsIn": ["v"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "ge-t",
+      "name": "ge-t",
+      "description": "Participle",
+      "source": "yomitan",
+      "rules": [
+        {"type": "circumfix", "inflectedPrefix": "ge", "deinflectedPrefix": "", "inflectedSuffix": "t", "deinflectedSuffix": "en", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[a-z]", "stemMinLength": 1}
+      ]
+    },
+    {
+      "id": "not-n",
+      "name": "not-n",
+      "description": "Suffix after anything but n",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "na", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemNotEndsWith": "[n]"}
+      ]
+    },
+    {
+      "id": "umlaut",
+      "name": "umlaut",
+      "description": "Plural with an umlaut",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ä"], "to": "a", "occurrence": "last"}}
+      ]
+    },
+    {
+      "id": "shout",
+      "name": "shout",
+      "description": "Case-insensitive",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "suffix", "inflected": "Er", "deinflected": "", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "suffix", "inflected": "eR", "deinflected": "", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "suffix", "inflected": "ER", "deinflected": "", "conditionsIn": ["adj"], "conditionsOut": ["adj"]}
+      ]
+    },
+    {
+      "id": "possessive",
+      "name": "possessive",
+      "description": "Possessive",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "’s", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemEndsWith": "{letter}", "then": [{"case": "lower"}, {"strip": "{marks}"}]},
+        {"type": "pattern", "pattern": "^({letter}+)’$", "replacement": "$1", "anchorSuffix": "’", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    }
+  ]
+}

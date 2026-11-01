@@ -1,0 +1,7 @@
+# Deliberate differences from Yomitan (tools/check-yomitan.mjs).
+# kind	id	side	input	text	conditions	reason
+rule	empty	yomitan	*	x	adj	Yomitan's suffixInflection('', 'x') turns every text into x because slice(0, -0) is empty; not ported.
+rule	umlaut	yomitan	*		*	The umlaut rule returns an empty text when the stem has no ä; the pack's stemChange does not apply then.
+rule	past	yomitan	/^\S*ed (?:up|on|off)\S/	*	v_phr	Yomitan matches a particle as a prefix of the next word; the pack matches whole words.
+processor	onlyYomitan	yomitan	*	*	*	The pack has no such processor.
+rule	shout	pack	*	*	adj	Yomitan builds its per-transform heuristic from the sources without the i flag, so only ER reaches the rule; the pack matches every case.
