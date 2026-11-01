@@ -693,7 +693,10 @@ order exactly (section 11). There is no depth limit, as today and as in
 Yomitan. An output equal to one already produced by the same rule from the
 same text earlier in the same trace is skipped, as Yomitan's `isCycle` skips
 it; this can only happen with rules that do not shorten the text, so it never
-happens in Japanese.
+happens in Japanese. An output that is the empty text is neither recorded nor
+expanded, as today (れば → "" from "れば"); an empty text is never a headword.
+Yomitan records such outputs, so the differential check drops them on
+Yomitan's side.
 
 The trace of a result lists the transforms applied, in application order, as
 `{id, name, description}`. Yomitan lists them newest first; converters and
@@ -1118,8 +1121,10 @@ hoshidicts-cli lookup --language <code> <dict>... <text>
 hoshidicts-cli eval-language <code> <file.tsv> [--transforms <file>] [--dictionary <imported dir>] [--per-rule]
 ```
 
-`deinflect` and `preprocess` print one JSON object per line, so tools can
-read them as a stream; with `--stdin` instead of `<text>` they read one input
+`deinflect <word>` and `preprocess <word>` with one argument and no options
+keep today's human-readable Japanese output. With a code and a text,
+`--stdin` or `--transforms`, `deinflect` and `preprocess` print one JSON
+object per line, so tools can read them as a stream; with `--stdin` instead of `<text>` they read one input
 per line (UTF-8, LF) and answer each in order with one process:
 
 ```text
@@ -1148,6 +1153,17 @@ deinflections of the whole source text count, never of shorter prefixes:
   ranks the expected lemma first;
 - with `--per-rule`: for each rule, the rows only it recovers, the false
   candidates only it adds, and the negatives it breaks.
+
+`falseCandidates` and `firstRank` average over the `valid = 1` rows;
+`firstRank` looks the source up whole (scan length max(16, its length)) with
+every optional processor, transform and variant pass on. `--per-rule` gives
+one entry per rule in the JSON (a cross product's rules summed): `recovers`
+counts rows every matching path of which uses the rule, `falseCandidates`
+the false-candidate texts every passing path to which uses it, `breaks` the
+negatives every matching path of which uses it.
+
+`benchmark-lookup` takes `--languages <dir>` and `--language <code>`
+(default `ja`), so every pack's pull request can time its own lookups.
 
 Language pull requests report these numbers for their own rules, Yomitan's
 rules and the final set.
@@ -1182,9 +1198,11 @@ the group names, which are unique. The group descriptions keep their Yomitan
 attribution in the pack README, as the header of `deinflector.cpp` does today.
 The pack is embedded in the library (section 10.1).
 
-The conditions are today's `Conditions` enum in its bit order: the 18 flags
-`v1d … ya` as conditions without `subConditions`, and `v1`, `v5s`, `v5`, `v`
-as conditions with `subConditions`. `isDictionaryForm` is true exactly for the
+The conditions are today's `Conditions` enum in its bit order, under
+Yomitan's keys, names and Japanese `i18n` (which the corpus `rule` column and
+the port use): the 18 flags `v1d v1p v5d v5ss v5sp vk vs vz adj-i -ます -ません
+-て -ば -く -た -ん -なさい -ゃ` as conditions without `subConditions`, then
+`v1`, `v5s`, `v5`, `v` with `subConditions`. `isDictionaryForm` is true exactly for the
 six tags `pos_to_conditions` maps today: `v1`, `v5`, `vk`, `vs`, `vz`,
 `adj-i`. `traceSelection` is `first`.
 
@@ -1247,7 +1265,9 @@ Japanese transform id equal to its name:
 `deinflect_neko_speech` becomes the variant pass `nekoSpeech` of the Japanese
 pack (`ja.nekoSpeech`). `LookupOptions::neko_speech = true` keeps working and
 means `language_options = {"nekoSpeech"}`; the pass applies only where it
-reads more of the text than every ordinary result, as today.
+reads more of the text than every ordinary result, as today. Its trace step
+has no rule: id `nekoSpeech` (the pass id), name `neko speech` and today's
+description, from the builtin; `cases.tsv` names it `nekoSpeech`.
 
 ## 12. Tests and the conformance check
 
@@ -1263,7 +1283,12 @@ every existing test (`HOSHIDICTS_TESTS`), the three Japanese parity tests,
 For every pack it checks:
 
 1. `language.json` and `transforms.json` against the schemas in this file:
-   required fields, no unknown keys, `code` equal to the directory name,
+   required fields (every key of section 4's English example except
+   `lookup.postprocessors`, `readingNormalizer`, `traceSelection`,
+   `functionWords`, `variantPasses`, a processor's `name`, `keepInput` and
+   `optional`, and the `labels` entries), no unknown keys (per rule type, so
+   `stemChange` on a `prefix` rule is an error), `host.frequencySamples`
+   lists of exactly 10 words, `code` equal to the directory name,
    condition and word-list references defined, at most 32 condition bits, no
    cycles in `subConditions` or class references, unique ids, builtins known,
    `then` and display transforms free of `builtin` and `alternatives`,
@@ -1314,7 +1339,11 @@ For every pack it checks:
 3. Every `pattern` is in the dialect of section 7.6 and compiles; no `todo`
    rules remain.
 4. Every TSV in `tests/` except `gaps.tsv` passes; `gaps.tsv` is run and its
-   pass count printed. No corpus input reaches the 4,096-variant limit.
+   pass count printed. A TSV the contract does not name fails the check, so a
+   misspelt file never goes unrun. A pack with transforms needs
+   `tests/corpus.tsv`; the Japanese pack's corpus is `tests/yomitan.tsv`,
+   Yomitan's complete conjugation corpus. No corpus input reaches the
+   4,096-variant limit.
 5. Coverage: every `own` and `both` transform has at least one passing
    `valid = 1` row, and the rules no row exercises are printed.
 6. `README.md` exists and has the sections of the template.
@@ -1342,13 +1371,15 @@ negatives	0	bus	bu	*	*
   (newest first), or `*` for any trace, or empty for no transform. For
   Japanese the ids are the names, so today's fixture is unchanged.
 - The source text goes through the pack's preprocessors first, as in a lookup.
+- Every test file runs with every optional processor, transform and variant
+  pass on (the Japanese cat-speech rows need `nekoSpeech`), as
+  `eval-language` does.
 
 `text.tsv` checks processors: `category valid input variant` (the variant is,
 or is not, among the processed variants). `lookup.tsv` checks the whole
 pipeline against `tests/dictionary/`: `category valid text expression matched`
-(the first result has this expression and matched text), looked up with
-`Lookup::lookup`'s defaults (16 results, a scan of 16 code points), so each
-expected match fits in 16 code points. The test writes the tiny dictionary
+(the first result has this expression and matched text), each text looked up
+whole (scan length max(16, its length), 16 results). The test writes the tiny dictionary
 into a stored ZIP and imports it at run time.
 
 ### 12.3 Hachidori's checks
