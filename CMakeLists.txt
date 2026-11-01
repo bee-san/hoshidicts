@@ -183,6 +183,24 @@ if(HOSHIDICTS_BENCHMARK)
 endif()
 if(HOSHIDICTS_TESTS)
     enable_testing()
+
+    # The oracle: the Japanese pipeline at 35e2dab in namespace hoshidicts_legacy
+    # (docs/languages.md 11.3, tests/reference/README.md). Linked only into tests.
+    add_library(hoshidicts-legacy STATIC
+        tests/reference/legacy_deinflector.cpp
+        tests/reference/legacy_text_processor.cpp
+        tests/reference/legacy_kanji_variants.cpp
+        tests/reference/legacy_query.cpp
+        tests/reference/legacy_lookup.cpp
+    )
+    target_include_directories(hoshidicts-legacy PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_link_libraries(hoshidicts-legacy
+        PUBLIC hoshidicts
+        PRIVATE glaze::glaze libzstd_static unordered_dense utf8proc::utf8proc)
+    if(MSVC)
+        target_compile_options(hoshidicts-legacy PRIVATE /utf-8)
+    endif()
+
     foreach(variant simd scalar)
         add_executable(json-skip-test-${variant} tests/json_skip_test.cpp src/json/json_skip.cpp)
         target_include_directories(json-skip-test-${variant} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
