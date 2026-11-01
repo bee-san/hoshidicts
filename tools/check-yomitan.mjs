@@ -13,7 +13,9 @@
 // Yomitan's LanguageTransformer (resetting lastIndex before every test of a
 // rule with the g flag) and
 // `hoshidicts-cli --languages <dir> deinflect <code> --stdin --transforms <pack>/sources/yomitan.json`,
-// and requires the same set of (text, conditions) for every input.
+// and requires the same set of (text, conditions) for every input. Yomitan's
+// results that are the empty text, or derived from one, are dropped: the
+// engine neither records nor expands an empty text (section 7.4).
 //
 // Processors: every Yomitan pre- and postprocessor of the language is paired
 // with the pack processor of the same id and both run, alone, on the corpus
@@ -325,7 +327,9 @@ function yomitanTransformer(LanguageTransformer, descriptor) {
     return {
         reset,
         transform(text) {
-            return transformer.transform(text).map(({text: t, conditions, trace}) => ({
+            // The engine neither records nor expands an empty text (section
+            // 7.4); Yomitan does both, so such results are dropped here.
+            return transformer.transform(text).filter(({text: t, trace}) => t !== '' && trace.every((frame) => frame.text !== '')).map(({text: t, conditions, trace}) => ({
                 text: t,
                 conditions: leaves.filter(([, flag]) => (conditions & flag) !== 0).map(([name]) => name),
                 trace: trace.map((frame) => frame.transform),
