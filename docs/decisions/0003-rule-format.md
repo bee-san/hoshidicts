@@ -1,6 +1,6 @@
 # 0003: Yomitan's descriptor as JSON, with closed rule types and a small pattern dialect
 
-Status: proposed (multi-language design, Phase 1, revision 7)
+Status: proposed (multi-language design, Phase 1, revision 8)
 
 ## Context
 

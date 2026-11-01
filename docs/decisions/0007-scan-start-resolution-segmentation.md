@@ -1,6 +1,6 @@
 # 0007: Scan start, lookup resolution and segmentation are three settings
 
-Status: proposed (multi-language design, Phase 1, revision 7)
+Status: proposed (multi-language design, Phase 1, revision 8)
 
 ## Context
 

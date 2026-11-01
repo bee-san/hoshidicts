@@ -1,6 +1,6 @@
 # 0004: One data-driven deinflector, Japanese included, proved against today's code
 
-Status: proposed (multi-language design, Phase 1, revision 7)
+Status: proposed (multi-language design, Phase 1, revision 8)
 
 ## Context
 
