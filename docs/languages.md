@@ -1,7 +1,7 @@
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 # Languages in hoshidicts
 
-Status: design for review (Phase 1, revision 4). Nothing described here is
+Status: design for review (Phase 1, revision 5). Nothing described here is
 implemented yet. Once the framework lands, this file is the contract for
 language packs and wins over any prompt, issue or comment that disagrees with
 it.
@@ -444,6 +444,10 @@ flag:
   two-letter categories, answered from utf8proc in the engine;
 - `{name}` inside a bracket expression stands for another class's members;
   references may not form cycles.
+
+The JavaScript expansion of references is `tools/lib/classes.mjs`, which
+`tools/check-classes.mjs` uses and hosts import to expand the patterns they
+copy (Hachidori's `sync-languages.mjs`).
 
 Script properties (`\p{Script=Latin}`, `\p{scx=Han}`) are not accepted: the
 engine has no script table. Write the ranges instead. The conformance test
