@@ -1346,8 +1346,10 @@ negatives	0	bus	bu	*	*
 `text.tsv` checks processors: `category valid input variant` (the variant is,
 or is not, among the processed variants). `lookup.tsv` checks the whole
 pipeline against `tests/dictionary/`: `category valid text expression matched`
-(the first result has this expression and matched text). The test writes the
-tiny dictionary into a stored ZIP and imports it at run time.
+(the first result has this expression and matched text), looked up with
+`Lookup::lookup`'s defaults (16 results, a scan of 16 code points), so each
+expected match fits in 16 code points. The test writes the tiny dictionary
+into a stored ZIP and imports it at run time.
 
 ### 12.3 Hachidori's checks
 
