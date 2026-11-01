@@ -449,6 +449,17 @@ The JavaScript expansion of references is `tools/lib/classes.mjs`, which
 `tools/check-classes.mjs` uses and hosts import to expand the patterns they
 copy (Hachidori's `sync-languages.mjs`).
 
+Exact rules both implementations follow: an unescaped `^` other than the
+negation, an unescaped `-` that is not between two characters, and any `}`
+outside a reference are errors (write `\^`, `\-`, `\u007D`); a `{` always
+starts a reference; the only escapes are `\\`, `\]`, `\^`, `\-`, `\uXXXX`,
+`\u{X…}` (1-6 hex digits) and `\p{…}`; surrogate escapes `\uD800`-`\uDFFF`
+and `\P{…}` are rejected (negate with `[^…]`); `\p{…}` takes the 7
+one-letter and 30 two-letter general categories, not `LC`; class names match
+`[A-Za-z_][A-Za-z0-9_]*`; a range needs characters at both ends, in order;
+`[]` and `[^]` are accepted. A reference to a negated class inside a bracket
+expression is allowed; the JavaScript expansion lists its members as ranges.
+
 Script properties (`\p{Script=Latin}`, `\p{scx=Han}`) are not accepted: the
 engine has no script table. Write the ranges instead. The conformance test
 checks that every class parses in both implementations and that both accept
@@ -500,7 +511,7 @@ list; anything else needs a builtin.
 | `case` | `{"case": "lower"}` | `lower`, `upper`, `upperFirst` (first code point) or `lowerFirst`, with the results JavaScript's `toLowerCase` and `toUpperCase` give: full case mappings including Final_Sigma (ΟΔΟΣ → οδος), U+0130 (İ → i + U+0307) and expansions (ß → SS). The engine adds these SpecialCasing entries to utf8proc's simple mappings. |
 | `normalize` | `{"normalize": "NFD"}`, `{"normalize": "NFKD", "within": "[\\u3300-\\u33FF]"}` | Unicode normalisation `NFC`, `NFD`, `NFKC` or `NFKD`, of the whole text or only of the runs of code points in `within`. |
 | `strip` | `{"strip": "[\\u0300-\\u036F]"}` | Removes every code point in the class. |
-| `map` | `{"map": {"\u00E6": "ae", "\u0153": "oe"}, "at": "all"}` | Literal replacement, longest key first, scanning left to right. `at` is `all` (default), `first`, `last`, `start` (the text must begin with the key) or `end`. |
+| `map` | `{"map": {"\u00E6": "ae", "\u0153": "oe"}, "at": "all"}` | Literal replacement, longest key first, scanning left to right. `at` is `all` (default), `first`, `last` (the last of the left-to-right non-overlapping matches: `aaa` with key `aa` changes the first two letters), `start` (the text must begin with the key) or `end`. |
 | `pattern` | `{"pattern": "(l\|dell\|all)['\u2019]", "replace": "", "global": true}` (abridged; Italian's real list has 12 words) | A regular expression replacement in the dialect of section 7.6. With `"repeat": true` it is applied again until the text stops changing, at most 16 times. |
 | `alternatives` | `{"alternatives": {"dj": ["\u0111"], "c": ["\u010D", "\u0107"]}, "limit": 4096}` | Produces every combination of the listed alternatives, up to `limit` variants. At each match the key itself is the first choice and the listed alternatives follow in order (c → c, č, ć). As in Yomitan's generator, the first match varies slowest, and the limit keeps the first `limit` variants in that order. Keys may be several characters; at each position the longest key wins. The text is NFC-normalised first. Only allowed as the only step of its variant. |
 | `builtin` | `{"builtin": "hangul.disassemble"}` | A named routine compiled into the engine (section 6.3). |
@@ -648,11 +659,12 @@ parts.
 ```
 
 `from` lists strings to look for in the stem; `occurrence` picks the `first`
-or `last` match of any of them. Optional `between` is a class that every code
-point between the change and the end of the stem must belong to, with
+or `last` match of any of them that satisfies `between`, and at one position
+the longest `from` wins. Optional `between` is a class that every code point
+between the change and the end of the stem must belong to, with
 `betweenMinLength` (default 1) of them (Ukrainian `[ое]` → `і` before final
 consonants, Tagalog u → o). The rule does not apply when the stem has no
-match.
+such match.
 
 **Cross-product form.** A `circumfix` may give `prefixes` and `suffixes`
 instead of the four single fields: `{"type": "circumfix", "prefixes": [["و",
@@ -711,6 +723,15 @@ classic locale) and JavaScript give the same results:
   classes `\s \S \w \W \b \B \d \D` (their meaning differs between the two
   implementations), POSIX brackets such as `[[:alpha:]]`, and any other flag.
   Write the characters as a class, both cases included.
+- Exact rules: quantifiers `{m}`, `{m,}` and `{m,n}` with m ≤ n; a
+  back-reference `\N` only after group N has closed and never followed by a
+  digit; outside classes the escapes `\` + one of `^$\.*+?()[]{}|/` and
+  `\uXXXX`; inside classes `\\ \] \^ \- \[` and `\uXXXX`, with an
+  unescaped `[` rejected (std::regex reads `[:`, `[.`, `[=` as POSIX
+  brackets) and `[]`/`[^]` rejected; no quantifier on `^`, `$` or a
+  lookahead; no quantifier directly after a literal above U+FFFF (it would
+  repeat half a surrogate pair); in replacements only `$1`-`$9` (at most the
+  number of groups, not followed by a digit) and `$&`, so `$$` is rejected.
 - The engine converts text to UTF-16 and gives `std::wregex` one code unit
   per `wchar_t`, so `.` and negated classes match one UTF-16 unit on every
   platform, as in JavaScript without the `u` flag. Classes in a pattern may
@@ -775,7 +796,13 @@ affixes on stems from the pack's letter class, adds Yomitan's test sources and
 every prefix of them, runs Yomitan's transformer at d3c54c1 and
 `hoshidicts-cli deinflect --transforms <code>/sources/yomitan.json` on each,
 and requires the same set of (text, conditions). Yomitan defects the pack does
-not reproduce are listed with a reason in `sources/yomitan-differences.tsv`,
+not reproduce are listed with a reason in `sources/yomitan-differences.tsv`
+(columns `kind id side input text conditions reason`: `kind` is `rule` or
+`processor`; `id` a transform id in the result's trace or a Yomitan processor
+id, or `*`; `side` is `yomitan`, `pack` or `*`; `input`, `text` and
+`conditions` are exact, `*` or `/regex/` (u flag), conditions as names in
+declaration order joined by `|`; `reason` is required; an unpaired Yomitan
+processor is `processor <id> yomitan * * *`),
 for example Korean's `suffixInflection('', '다', [], ['ida'])`, which turns
 every text into 다 because `slice(0, -0)` is empty, Yiddish rules that return
 `''`, and English particles matched as word prefixes. Inputs for rules without
@@ -1081,7 +1108,7 @@ hd_str hd_lookup_results_trace_id(const hd_lookup_results* r, size_t i, size_t j
 ### 10.3 Command line
 
 `hoshidicts-cli` gains `--languages <dir>` (default: the build's
-`languages/`) and:
+`languages/`), given before the subcommand, and:
 
 ```text
 hoshidicts-cli languages                                   list loaded packs
@@ -1102,7 +1129,9 @@ per line (UTF-8, LF) and answer each in order with one process:
 
 `conditions` are the names of the set condition bits in declaration order,
 and `trace` holds transform ids in the order of the corpus `reasons` column
-(section 12.2). `results` is in the deinflector's output order.
+(section 12.2). `results` is in the deinflector's output order. A pack whose
+`lookup.transforms` is `null` loads (it has processors only), as the
+differential check's one-processor copies need.
 
 `eval-language` reads a corpus (section 12.2) and prints JSON. Only
 deinflections of the whole source text count, never of shorter prefixes:
@@ -1260,9 +1289,27 @@ For every pack it checks:
 
    `classes` has every entry of the pack's `classes`, `fields` every other
    field that holds a class (by its JSON path), each as sorted, merged code
-   point ranges over all of Unicode without surrogates. `steps` has, for
-   every `pattern` and `case` step, its output on each corpus source and
-   `host.sample` text. The conformance test computes the same with the
+   point ranges over all of Unicode without surrogates. The fields are, in
+   this order: from `language.json`, `text.pattern`, `text.wordCharacters`,
+   `text.wordInternal` (when not null), `capabilities.characterView.pattern`,
+   and every step's `strip` and `normalize.within` (paths such as
+   `lookup.preprocessors[0].variants[0][1].strip`); then from the transforms
+   file, every `stemCharacters`, `stemContains`, `stemStartsWith`,
+   `stemEndsWith`, `stemNotStartsWith`, `stemNotEndsWith`,
+   `stemChange.between` and `then[k].strip`/`.within`, with paths starting
+   `transforms[i].rules[j]`. `steps` has, for every `pattern` and `case`
+   step, its output on each input, the step applied alone. `processor` is the
+   processor id for `lookup.preprocessors` and `lookup.postprocessors` (ids
+   are unique across both) and the JSON path of the list for the others
+   (`lookup.readingNormalizer`, `presentation.displayTransforms.<name>`,
+   `transforms[i].rules[j].then`); `step` counts a processor's steps across
+   its variants in order, and is the list index for the others. The inputs
+   are the sources of every deinflection TSV in `tests/`, `text.tsv` inputs,
+   `lookup.tsv` texts, then the `host.sample` strings, first occurrence kept.
+   `steps` lists preprocessors, postprocessors, `readingNormalizer`, display
+   transforms in key order, then `then` lists. The file is compared byte for
+   byte (two-space JSON, scalar arrays and range pairs on one line, written by
+   `tools/lib/json.mjs`). The conformance test computes the same with the
    engine and requires equality.
 3. Every `pattern` is in the dialect of section 7.6 and compiles; no `todo`
    rules remain.
@@ -1287,6 +1334,9 @@ negatives	0	bus	bu	*	*
 
 - `valid`: `1` means `term` must be among the deinflections of `source`;
   `0` means it must not be.
+- `corpus.tsv` must pass completely, so sampled rows the final rules do not
+  reach move to `gaps.tsv`; recall is reported over `corpus.tsv` and
+  `gaps.tsv` together, which is the whole sample.
 - `rule`: a condition name the term must be compatible with, or `*` for any.
 - `reasons`: transform ids separated by `|`, in Yomitan's forward order
   (newest first), or `*` for any trace, or empty for no transform. For
