@@ -1,6 +1,6 @@
 # 0004: One data-driven deinflector, Japanese included, proved against today's code
 
-Status: proposed (multi-language design, Phase 1, revision 2)
+Status: proposed (multi-language design, Phase 1, revision 4)
 
 ## Context
 
@@ -13,11 +13,14 @@ literal rules with condition flags and a whole-word flag: exactly the
 
 Japanese becomes the `ja` pack, generated from today's rules in insertion
 order, and runs on the same generic engine as every other language. Today's
-deinflector, text processor and `Lookup` are kept, unmodified apart from
-renamed classes, in `tests/reference/` as oracles: the new code must give
-identical deinflections, processor variants and whole lookup results on
-Yomitan's 1,446-case corpus, every prefix of it, deep chains and 100,000
-generated strings, with every lookup option on and off.
+deinflector, text processor, dictionary query and `Lookup` are kept,
+unmodified apart from being placed in their own namespace, in
+`tests/reference/` as oracles: the new code must give identical
+deinflections, processor variants, whole lookup results and kanji results on
+Yomitan's 1,446-case corpus, every prefix of it, long keys, deep chains and
+100,000 generated strings, with every lookup option on and off. A selection
+case requires a lookup that names its dictionaries to equal today's lookup
+with only those dictionaries loaded.
 
 Where Japanese behaviour differs from Yomitan's for every language, the
 difference becomes a pack field with Japanese keeping today's value:
