@@ -345,6 +345,52 @@ void run_processors(std::span<const Processor> processors, const EnabledOptions&
       continue;
     }
     NextVariants next{next_items};
+    if (!processor.builtins.empty() && count * (processor.builtins.size() + 1) <= index_from) {
+      // At most index_from variants can come out: no hash index and no
+      // limit to check, as text_processor::process did for Japanese.
+      size_t next_count = 0;
+      const auto find = [&](const std::u32string& text) -> Variant* {
+        for (size_t k = 0; k < next_count; ++k) {
+          if (next_items[k].first == text) return &next_items[k];
+        }
+        return nullptr;
+      };
+      for (size_t vi = 0; vi < count; ++vi) {
+        std::u32string& variant = variants[vi].first;
+        const int steps = variants[vi].second;
+        for (const TextFunction builtin : processor.builtins) {
+          builtin(variant, scratch);
+          const bool same = scratch == variant;
+          if (same && processor.keep_input) continue;
+          const int new_steps = same ? steps : steps + 1;
+          if (Variant* existing = find(scratch)) {
+            if (new_steps < existing->second) existing->second = new_steps;
+          } else if (next_count < next_items.size()) {
+            next_items[next_count].first.assign(scratch);
+            next_items[next_count++].second = new_steps;
+          } else {
+            next_items.emplace_back(scratch, new_steps);
+            ++next_count;
+          }
+        }
+        if (processor.keep_input) {
+          if (Variant* existing = find(variant)) {
+            if (steps < existing->second) existing->second = steps;
+          } else if (next_count < next_items.size()) {
+            std::swap(next_items[next_count].first, variant);
+            next_items[next_count++].second = steps;
+          } else {
+            next_items.emplace_back(std::move(variant), steps);
+            ++next_count;
+          }
+        }
+      }
+      std::sort(next_items.begin(), next_items.begin() + static_cast<std::ptrdiff_t>(next_count),
+                [](const Variant& a, const Variant& b) { return a.first < b.first; });
+      std::swap(variants, next_items);
+      count = next_count;
+      continue;
+    }
     if (!processor.builtins.empty()) {
       for (size_t vi = 0; vi < count; ++vi) {
         std::u32string& variant = variants[vi].first;
