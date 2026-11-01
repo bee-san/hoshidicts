@@ -1,6 +1,6 @@
 # 0002: Packs load at run time from JSON
 
-Status: proposed (multi-language design, Phase 1, revision 6)
+Status: proposed (multi-language design, Phase 1, revision 7)
 
 ## Context
 

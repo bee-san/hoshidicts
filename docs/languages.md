@@ -1,7 +1,7 @@
 <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
 # Languages in hoshidicts
 
-Status: design for review (Phase 1, revision 6). Nothing described here is
+Status: design for review (Phase 1, revision 7). Nothing described here is
 implemented yet. Once the framework lands, this file is the contract for
 language packs and wins over any prompt, issue or comment that disagrees with
 it.
