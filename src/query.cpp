@@ -216,6 +216,30 @@ struct DictionaryQuery::DictionaryData {
   }
 };
 
+template <typename F>
+void DictionaryQuery::each_term(const Selection& selection, F&& f) const {
+  const auto visit = [&](const Dictionary& dict) {
+    if (selection.term_path == nullptr || dict.path == *selection.term_path) {
+      f(dict);
+    }
+  };
+  if (selection.all) {
+    for (const auto& dict : term_dicts_) visit(dict);
+  } else {
+    for (const Dictionary* dict : selection.term) visit(*dict);
+  }
+}
+
+template <typename F>
+void DictionaryQuery::each_of(const std::vector<Dictionary>& all, const std::vector<const Dictionary*>& chosen,
+                              const Selection& selection, F&& f) {
+  if (selection.all) {
+    for (const auto& dict : all) f(dict);
+  } else {
+    for (const Dictionary* dict : chosen) f(*dict);
+  }
+}
+
 DictionaryQuery::DictionaryQuery() = default;
 DictionaryQuery::DictionaryQuery(const PageCacheOptions& page_cache) : page_cache_options_(page_cache) {}
 DictionaryQuery::~DictionaryQuery() = default;
@@ -427,18 +451,51 @@ bool DictionaryQuery::set_dict_order(const std::vector<std::string>& paths) {
 }
 
 size_t DictionaryQuery::long_key_length(std::string_view text, const std::string* term_dictionary_path) const {
+  Selection selection;
+  selection.term_path = term_dictionary_path;
+  return long_key_length(text, selection);
+}
+
+size_t DictionaryQuery::long_key_length(std::string_view text, const Selection& selection) const {
   const auto hash = scan_index::prefix_hash(text);
   if (!hash) {
     return 0;
   }
   size_t longest = 0;
-  for (const auto& dict : term_dicts_) {
-    if (term_dictionary_path != nullptr && dict.path != *term_dictionary_path) {
-      continue;
-    }
-    longest = std::max(longest, dict.data->long_key_length(*hash));
-  }
+  each_term(selection, [&](const Dictionary& dict) { longest = std::max(longest, dict.data->long_key_length(*hash)); });
   return longest;
+}
+
+DictionaryQuery::Selection DictionaryQuery::select(const std::optional<std::vector<std::string>>& paths,
+                                                   const std::string* term_path) const {
+  if (!paths.has_value()) {
+    Selection selection;
+    selection.term_path = term_path;
+    return selection;
+  }
+  return select(std::span<const std::string>(*paths), term_path);
+}
+
+DictionaryQuery::Selection DictionaryQuery::select(std::span<const std::string> paths,
+                                                   const std::string* term_path) const {
+  Selection selection;
+  selection.all = false;
+  selection.term_path = term_path;
+  const auto pick = [&paths](const std::vector<Dictionary>& dicts, std::vector<const Dictionary*>& out) {
+    for (const auto& path : paths) {
+      for (const auto& dict : dicts) {
+        if (dict.path == path) {
+          if (std::ranges::find(out, &dict) == out.end()) out.push_back(&dict);
+          break;
+        }
+      }
+    }
+  };
+  pick(term_dicts_, selection.term);
+  pick(freq_dicts_, selection.freq);
+  pick(pitch_dicts_, selection.pitch);
+  pick(kanji_dicts_, selection.kanji);
+  return selection;
 }
 
 size_t DictionaryQuery::max_long_key_length(const std::string* term_dictionary_path) const {
@@ -471,8 +528,28 @@ std::vector<TermResult> DictionaryQuery::query(const std::string& expression) co
 
 RawTerms DictionaryQuery::query_raw(const std::string& expression, BlobPins& pins,
                                     const std::string* term_dictionary_path, bool with_metadata) const {
+  Selection selection;
+  selection.term_path = term_dictionary_path;
+  return query_raw(expression, pins, selection, with_metadata);
+}
+
+RawTerms DictionaryQuery::query_raw(const std::string& expression, BlobPins& pins, const Selection& selection,
+                                    bool with_metadata, const ReadingNormalizer* normalizer) const {
   RawTerms raw;
-  auto find_term = [&raw](std::string_view expr, std::string_view reading) -> RawTerm* {
+  if (normalizer != nullptr) {
+    raw.normalized = std::make_unique<NormalizedReadings>();
+  }
+  std::string normalized_reading;
+  auto find_term = [&raw, normalizer, &normalized_reading](std::string_view expr, std::string_view reading) -> RawTerm* {
+    if (normalizer != nullptr) {
+      normalized_reading = normalizer->normalize(reading);
+      for (auto& term : raw.terms) {
+        if (term.expression == expr && raw.normalized->normalized[term.merged] == normalized_reading) {
+          return &term;
+        }
+      }
+      return nullptr;
+    }
     for (auto& term : raw.terms) {
       if (term.expression == expr && term.reading == reading) {
         return &term;
@@ -480,13 +557,12 @@ RawTerms DictionaryQuery::query_raw(const std::string& expression, BlobPins& pin
     }
     return nullptr;
   };
-  for (const auto& [path, name, styles, data] : term_dicts_) {
-    if (term_dictionary_path != nullptr && path != *term_dictionary_path) {
-      continue;
-    }
+  each_term(selection, [&](const Dictionary& dict) {
+    const auto& name = dict.name;
+    const auto& data = dict.data;
     uint64_t offset_addr = data->table(expression);
     if (offset_addr == 0) {
-      continue;
+      return;
     }
     visit_blobs(data->blobs, pins, [&](auto open) {
       auto index = open(offset_addr);
@@ -567,19 +643,38 @@ RawTerms DictionaryQuery::query_raw(const std::string& expression, BlobPins& pin
                                       .last_glossary = glossary_index,
                                       .frequencies = {},
                                       .pitches = {}});
+          if (normalizer != nullptr) {
+            raw.terms.back().merged = static_cast<uint32_t>(raw.normalized->normalized.size());
+            raw.normalized->normalized.push_back(normalized_reading);
+            raw.normalized->merged_readings.push_back({reading});
+          }
         } else {
           raw.glossaries[term->last_glossary].next = glossary_index;
           term->last_glossary = glossary_index;
           term->score = std::max(term->score, score);
+          if (normalizer != nullptr) {
+            auto& readings = raw.normalized->merged_readings[term->merged];
+            if (std::ranges::find(readings, reading) == readings.end()) readings.push_back(reading);
+          }
         }
       }
     });
-  }
+  });
 
   if (with_metadata) {
     for (auto& term : raw.terms) {
-      collect_frequencies(term.expression, term.reading, term.frequencies, pins);
-      collect_pitches(term.expression, term.reading, term.pitches, pins);
+      if (term.merged != UINT32_MAX) {
+        collect_frequencies(term.expression, raw.normalized->merged_readings[term.merged], term.frequencies, pins,
+                            selection);
+        collect_pitches(term.expression, raw.normalized->merged_readings[term.merged], term.pitches, pins, selection);
+      } else if (selection.all) {
+        collect_frequencies(term.expression, term.reading, term.frequencies, pins);
+        collect_pitches(term.expression, term.reading, term.pitches, pins);
+      } else {
+        const std::string_view reading = term.reading;
+        collect_frequencies(term.expression, std::span(&reading, 1), term.frequencies, pins, selection);
+        collect_pitches(term.expression, std::span(&reading, 1), term.pitches, pins, selection);
+      }
     }
   }
 
@@ -637,12 +732,17 @@ void DictionaryQuery::query_freq(std::vector<TermResult>& terms) const {
   }
 }
 
-void DictionaryQuery::collect_frequencies(std::string_view expression, std::string_view reading,
-                                        std::vector<FrequencyEntry>& out, BlobPins& pins) const {
-  for (const auto& [path, name, styles, data] : freq_dicts_) {
+namespace {
+// The frequency rows of one dictionary for `expression` whose reading
+// `matches` accepts.
+template <typename Dict, typename Matches>
+void frequencies_from(const Dict& dict, std::string_view expression, Matches&& matches, std::vector<FrequencyEntry>& out,
+                      BlobPins& pins) {
+  const auto& [path, name, styles, data] = dict;
+  {
     uint64_t offset_addr = data->table(expression);
     if (offset_addr == 0) {
-      continue;
+      return;
     }
     visit_blobs(data->blobs, pins, [&](auto open) {
       auto index = open(offset_addr);
@@ -675,7 +775,7 @@ void DictionaryQuery::collect_frequencies(std::string_view expression, std::stri
 
         ParsedFrequency parsed;
         if (yomitan_parser::parse_frequency(freq_data, parsed)) {
-          if (!parsed.reading.empty() && parsed.reading != reading) {
+          if (!matches(parsed.reading)) {
             continue;
           }
           frequencies.emplace_back(
@@ -688,6 +788,26 @@ void DictionaryQuery::collect_frequencies(std::string_view expression, std::stri
     });
   }
 }
+}  // namespace
+
+void DictionaryQuery::collect_frequencies(std::string_view expression, std::string_view reading,
+                                        std::vector<FrequencyEntry>& out, BlobPins& pins) const {
+  for (const auto& dict : freq_dicts_) {
+    frequencies_from(dict, expression, [reading](std::string_view row) { return row.empty() || row == reading; }, out,
+                     pins);
+  }
+}
+
+void DictionaryQuery::collect_frequencies(std::string_view expression, std::span<const std::string_view> readings,
+                                          std::vector<FrequencyEntry>& out, BlobPins& pins,
+                                          const Selection& selection) const {
+  each_of(freq_dicts_, selection.freq, selection, [&](const Dictionary& dict) {
+    frequencies_from(
+        dict, expression,
+        [readings](std::string_view row) { return row.empty() || std::ranges::find(readings, row) != readings.end(); },
+        out, pins);
+  });
+}
 
 void DictionaryQuery::query_pitch(std::vector<TermResult>& terms) const {
   BlobPins pins;
@@ -696,12 +816,15 @@ void DictionaryQuery::query_pitch(std::vector<TermResult>& terms) const {
   }
 }
 
-void DictionaryQuery::collect_pitches(std::string_view expression, std::string_view reading,
-                                    std::vector<PitchEntry>& out, BlobPins& pins) const {
-  for (const auto& [path, name, styles, data] : pitch_dicts_) {
+namespace {
+template <typename Dict, typename Matches>
+void pitches_from(const Dict& dict, std::string_view expression, Matches&& matches, std::vector<PitchEntry>& out,
+                  BlobPins& pins) {
+  const auto& [path, name, styles, data] = dict;
+  {
     uint64_t offset_addr = data->table(expression);
     if (offset_addr == 0) {
-      continue;
+      return;
     }
     visit_blobs(data->blobs, pins, [&](auto open) {
       auto index = open(offset_addr);
@@ -732,7 +855,7 @@ void DictionaryQuery::collect_pitches(std::string_view expression, std::string_v
           std::string_view pitch_data = blob.str(pitch_data_size);
 
           if (yomitan_parser::parse_pitch(pitch_data, parsed)) {
-            if (!parsed.reading.empty() && parsed.reading != reading) {
+            if (!matches(parsed.reading)) {
               continue;
             }
             for (auto& accent : parsed.pitches) {
@@ -746,7 +869,7 @@ void DictionaryQuery::collect_pitches(std::string_view expression, std::string_v
           auto transcriptions_data_size = read_value<uint32_t>(blob);
           std::string_view transcriptions_data = blob.str(transcriptions_data_size);
           if (yomitan_parser::parse_ipa(transcriptions_data, parsed)) {
-            if (!parsed.reading.empty() && parsed.reading != reading) {
+            if (!matches(parsed.reading)) {
               continue;
             }
             for (std::string_view transcription : parsed.transcriptions) {
@@ -765,8 +888,27 @@ void DictionaryQuery::collect_pitches(std::string_view expression, std::string_v
     });
   }
 }
+}  // namespace
 
-std::vector<std::string> DictionaryQuery::metadata_readings(std::string_view expression, BlobPins& pins) const {
+void DictionaryQuery::collect_pitches(std::string_view expression, std::string_view reading,
+                                    std::vector<PitchEntry>& out, BlobPins& pins) const {
+  for (const auto& dict : pitch_dicts_) {
+    pitches_from(dict, expression, [reading](std::string_view row) { return row.empty() || row == reading; }, out, pins);
+  }
+}
+
+void DictionaryQuery::collect_pitches(std::string_view expression, std::span<const std::string_view> readings,
+                                      std::vector<PitchEntry>& out, BlobPins& pins, const Selection& selection) const {
+  each_of(pitch_dicts_, selection.pitch, selection, [&](const Dictionary& dict) {
+    pitches_from(
+        dict, expression,
+        [readings](std::string_view row) { return row.empty() || std::ranges::find(readings, row) != readings.end(); },
+        out, pins);
+  });
+}
+
+std::vector<std::string> DictionaryQuery::metadata_readings(std::string_view expression, BlobPins& pins,
+                                                            const Selection& selection) const {
   std::vector<std::string> readings;
   bool reading_less = false;
   const auto add = [&](std::string& reading) {
@@ -778,11 +920,13 @@ std::vector<std::string> DictionaryQuery::metadata_readings(std::string_view exp
   };
   // The mode and data of every term meta row keyed by `expression`, laid out
   // as collect_frequencies and collect_pitches read them.
-  const auto visit_rows = [&](const std::vector<Dictionary>& dicts, auto&& row) {
-    for (const auto& [path, name, styles, data] : dicts) {
+  const auto visit_rows = [&](const std::vector<Dictionary>& dicts, const std::vector<const Dictionary*>& chosen,
+                              auto&& row) {
+    each_of(dicts, chosen, selection, [&](const Dictionary& dict) {
+      const auto& data = dict.data;
       uint64_t offset_addr = data->table(expression);
       if (offset_addr == 0) {
-        continue;
+        return;
       }
       visit_blobs(data->blobs, pins, [&](auto open) {
         auto index = open(offset_addr);
@@ -807,15 +951,15 @@ std::vector<std::string> DictionaryQuery::metadata_readings(std::string_view exp
           row(mode, blob.str(data_size));
         }
       });
-    }
+    });
   };
-  visit_rows(freq_dicts_, [&](std::string_view mode, std::string_view row_data) {
+  visit_rows(freq_dicts_, selection.freq, [&](std::string_view mode, std::string_view row_data) {
     ParsedFrequency parsed;
     if (mode == "freq" && yomitan_parser::parse_frequency(row_data, parsed)) {
       add(parsed.reading);
     }
   });
-  visit_rows(pitch_dicts_, [&](std::string_view mode, std::string_view row_data) {
+  visit_rows(pitch_dicts_, selection.pitch, [&](std::string_view mode, std::string_view row_data) {
     ParsedPitch parsed;
     if ((mode == "pitch" && yomitan_parser::parse_pitch(row_data, parsed)) ||
         (mode == "ipa" && yomitan_parser::parse_ipa(row_data, parsed))) {
@@ -828,16 +972,24 @@ std::vector<std::string> DictionaryQuery::metadata_readings(std::string_view exp
   return readings;
 }
 
-KanjiResult DictionaryQuery::query_kanji(const std::string& kanji) const {
+KanjiResult DictionaryQuery::query_kanji(const std::string& kanji) const { return query_kanji(kanji, Selection{}); }
+
+KanjiResult DictionaryQuery::query_kanji(const std::string& kanji, std::span<const std::string> dictionaries) const {
+  return query_kanji(kanji, select(dictionaries, nullptr));
+}
+
+KanjiResult DictionaryQuery::query_kanji(const std::string& kanji, const Selection& selection) const {
   KanjiResult result;
   result.character = kanji;
 
   // Everything taken from a record is copied out before the pins go.
   BlobPins pins;
-  for (const auto& [path, name, styles, data] : kanji_dicts_) {
+  each_of(kanji_dicts_, selection.kanji, selection, [&](const Dictionary& dict) {
+    const auto& name = dict.name;
+    const auto& data = dict.data;
     uint64_t offset_addr = data->table(kanji);
     if (offset_addr == 0) {
-      continue;
+      return;
     }
     visit_blobs(data->blobs, pins, [&](auto open) {
       auto index = open(offset_addr);
@@ -892,12 +1044,14 @@ KanjiResult DictionaryQuery::query_kanji(const std::string& kanji) const {
         result.entries.push_back(std::move(entry));
       }
     });
-  }
+  });
 
-  for (const auto& [path, name, styles, data] : freq_dicts_) {
+  each_of(freq_dicts_, selection.freq, selection, [&](const Dictionary& dict) {
+    const auto& name = dict.name;
+    const auto& data = dict.data;
     uint64_t offset_addr = data->table(kanji);
     if (offset_addr == 0) {
-      continue;
+      return;
     }
     visit_blobs(data->blobs, pins, [&](auto open) {
       auto index = open(offset_addr);
@@ -935,7 +1089,7 @@ KanjiResult DictionaryQuery::query_kanji(const std::string& kanji) const {
         result.frequencies.emplace_back(FrequencyEntry{.dict_name = name, .frequencies = std::move(frequencies)});
       }
     });
-  }
+  });
 
   return result;
 }

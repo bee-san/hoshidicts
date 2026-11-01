@@ -18,6 +18,9 @@ let package = Package(
                 .product(name: "libzstd", package: "zstd"),
             ],
             path: ".",
+            exclude: [
+                "src/languages/generate_case_tables.mjs",
+            ],
             sources: [
                 "src",
                 "external/libdeflate/lib",
@@ -28,6 +31,7 @@ let package = Package(
             publicHeadersPath: "include",
             cxxSettings: [
                 .headerSearchPath("include"),
+                .headerSearchPath("src"),
                 .headerSearchPath("external/libdeflate"),
                 .headerSearchPath("external/libdeflate/lib"),
                 .headerSearchPath("external/utfcpp/source"),
@@ -50,7 +54,9 @@ let package = Package(
             sources: ["cli/main.cpp"],
             cxxSettings: [
                 .headerSearchPath("include"),
+                .headerSearchPath("src"),
                 .headerSearchPath("external/utfcpp/source"),
+                .headerSearchPath("external/unordered_dense/include"),
             ]
         ),
     ],

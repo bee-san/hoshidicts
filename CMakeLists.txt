@@ -90,8 +90,22 @@ add_library(hoshidicts
     src/mdict/mdict_source.cpp
     src/json/yomitan_parser.cpp
     src/json/json_skip.cpp
-    src/text_processor/text_processor.cpp
-    src/text_processor/kanji_variants.cpp
+    src/languages/builtins/builtins.cpp
+    src/languages/builtins/hangul.cpp
+    src/languages/builtins/japanese.cpp
+    src/languages/builtins/kanji_variants.cpp
+    src/languages/builtins/vietnamese.cpp
+    src/languages/builtin_packs.cpp
+    src/languages/case_mapping.cpp
+    src/languages/case_tables.cpp
+    src/languages/classes.cpp
+    src/languages/corpus.cpp
+    src/languages/pack.cpp
+    src/languages/regex.cpp
+    src/languages/registry.cpp
+    src/languages/steps.cpp
+    src/languages/transforms.cpp
+    src/languages/unicode.cpp
     src/deinflector.cpp
     src/query.cpp
     src/lookup.cpp
@@ -111,6 +125,7 @@ if(Iconv_FOUND)
   target_link_libraries(hoshidicts PRIVATE Iconv::Iconv)
 endif()
 
+target_include_directories(hoshidicts PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_include_directories(hoshidicts PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${CMAKE_CURRENT_SOURCE_DIR}/external/utfcpp/source
@@ -133,11 +148,9 @@ endif()
 
 if(HOSHIDICTS_DEINFLECTOR_TESTS)
     enable_testing()
-    add_executable(deinflector-test tests/deinflector_test.cpp src/deinflector.cpp)
-    target_include_directories(deinflector-test PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
-        ${CMAKE_CURRENT_SOURCE_DIR}/external/utfcpp/source
-    )
+    # The deinflector reads the Japanese pack, so the test links the library.
+    add_executable(deinflector-test tests/deinflector_test.cpp)
+    target_link_libraries(deinflector-test PRIVATE hoshidicts)
     if(MSVC)
         target_compile_options(deinflector-test PRIVATE /utf-8)
     endif()
@@ -156,7 +169,14 @@ if(HOSHIDICTS_CLI)
 
     target_link_libraries(hoshidicts-cli PRIVATE
         hoshidicts
+        unordered_dense
     )
+    # `--languages` defaults to this checkout's packs.
+    target_compile_definitions(hoshidicts-cli PRIVATE
+        HOSHIDICTS_LANGUAGES_DIR="${CMAKE_CURRENT_SOURCE_DIR}/languages")
+    if(MSVC)
+        target_compile_options(hoshidicts-cli PRIVATE /utf-8)
+    endif()
 
     target_link_libraries(hoshidicts-cli-c PRIVATE
         hoshidicts
@@ -222,6 +242,22 @@ if(HOSHIDICTS_TESTS)
         add_test(NAME json-skip-${variant} COMMAND json-skip-test-${variant})
     endforeach()
     target_compile_definitions(json-skip-test-scalar PRIVATE HOSHIDICTS_JSON_SKIP_SCALAR=1)
+
+    add_executable(builtins-test tests/builtins_test.cpp)
+    target_include_directories(builtins-test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_link_libraries(builtins-test PRIVATE hoshidicts)
+    if(MSVC)
+        target_compile_options(builtins-test PRIVATE /utf-8)
+    endif()
+    add_test(NAME builtins COMMAND builtins-test)
+
+    add_executable(languages-test tests/languages_test.cpp)
+    target_include_directories(languages-test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_link_libraries(languages-test PRIVATE hoshidicts unordered_dense)
+    if(MSVC)
+        target_compile_options(languages-test PRIVATE /utf-8)
+    endif()
+    add_test(NAME languages COMMAND languages-test)
 
     add_executable(score-roundtrip-test tests/score_roundtrip_test.cpp)
     target_link_libraries(score-roundtrip-test PRIVATE hoshidicts)

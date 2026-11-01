@@ -6,23 +6,29 @@
 
 #include <algorithm>
 #include <climits>
+#include <deque>
 #include <iterator>
 #include <numeric>
 #include <optional>
 #include <ranges>
 #include <span>
+#include <stdexcept>
 #include <string_view>
 #include <vector>
 
+#include "languages/pack.hpp"
 #include "query_internal.hpp"
 #include "scan_index.hpp"
-#include "text_processor/text_processor.hpp"
 
 namespace {
+using hoshidicts::lang::Deinflection;
+using hoshidicts::lang::Deinflections;
+
 bool is_space(char c) { return c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r'; }
 
-void split_whitespace(std::string_view str, std::vector<std::string>& result) {
-  result.clear();
+// Calls f with each whitespace-separated token of str.
+template <typename F>
+void each_token(std::string_view str, F&& f) {
   size_t i = 0;
   const size_t n = str.size();
   while (i < n) {
@@ -34,14 +40,19 @@ void split_whitespace(std::string_view str, std::vector<std::string>& result) {
       ++i;
     }
     if (i > begin) {
-      result.emplace_back(str, begin, i - begin);
+      f(str.substr(begin, i - begin));
     }
   }
 }
 
 struct Candidate {
   size_t matched_len;
-  const DeinflectionResult* deinflection;
+  // The deinflection: element `index` of the list whose data is `base`
+  // (parents are elements of the same list).
+  const Deinflection* base;
+  uint32_t index;
+  // The text looked up: the deinflection's text, or a postprocessed form of it.
+  const std::string* form;
   RawTerm* term;
   uint32_t store_index;
   int steps;
@@ -53,6 +64,8 @@ struct Candidate {
   // chain and starts after every term dictionary, in the order its reading was
   // found (DictionaryQuery::metadata_readings).
   size_t dict_rank = SIZE_MAX;
+
+  const Deinflection& deinflection() const { return base[index]; }
 };
 
 uint64_t key_hash(std::string_view expression, std::string_view reading) {
@@ -83,10 +96,22 @@ std::optional<int> get_freq_value_for_dict(const RawTerm& term, std::string_view
 
   return frequency;
 }
+}  // namespace
 
-bool matches_primary_reading(const RawTerm& term, std::string_view primary_reading) {
-  return term.reading == primary_reading;
-}
+std::shared_ptr<const hoshidicts::LanguagePack> Lookup::pack_for(const std::string& code) const {
+  if (languages_ != nullptr) {
+    auto pack = languages_->find(code);
+    if (!pack) {
+      throw std::invalid_argument("no language pack \"" + code + "\" is loaded");
+    }
+    return pack;
+  }
+  const auto& pack = deinflector_->pack();
+  if (pack->code() != code) {
+    throw std::invalid_argument("no language pack \"" + code + "\" is loaded (this Lookup has only \"" + pack->code() +
+                                "\")");
+  }
+  return pack;
 }
 
 std::vector<LookupResult> Lookup::lookup(const std::string& lookup_string, int max_results, size_t scan_length,
@@ -103,45 +128,122 @@ std::vector<LookupResult> Lookup::lookup_dictionary(const std::string& lookup_st
 std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, const std::string* dictionary_path,
                                               int max_results, size_t scan_length,
                                               const LookupOptions& options) const {
+  namespace lang = hoshidicts::lang;
+  // Held for the whole lookup, so replacing the pack in the registry never
+  // frees it under us.
+  const std::shared_ptr<const hoshidicts::LanguagePack> pack_holder = pack_for(options.language);
+  const lang::PackData& pack = pack_holder->data();
+  const lang::TransformSet* transforms = pack.transforms.get();
+
+  // The request's language options (section 4.7); neko_speech means the
+  // Japanese pack's nekoSpeech pass.
+  std::vector<std::string> option_storage;
+  std::span<const std::string> option_ids = options.language_options;
+  if (options.neko_speech) {
+    option_storage = options.language_options;
+    option_storage.emplace_back("nekoSpeech");
+    option_ids = option_storage;
+  }
+  const lang::EnabledOptions enabled{option_ids};
+  std::vector<bool> enabled_transforms;
+  const std::vector<bool>* enabled_transforms_ptr = nullptr;
+  if (transforms != nullptr && transforms->has_optional_transforms) {
+    enabled_transforms.resize(transforms->transforms.size());
+    for (size_t i = 0; i < transforms->transforms.size(); ++i) {
+      enabled_transforms[i] = transforms->transforms[i].optional && enabled.contains(transforms->transforms[i].id);
+    }
+    enabled_transforms_ptr = &enabled_transforms;
+  }
+  std::vector<const lang::VariantPass*> passes;
+  for (const auto& pass : pack.variant_passes) {
+    if (enabled.contains(pass.id)) {
+      passes.push_back(&pass);
+    }
+  }
+
+  // The dictionaries this request uses (section 9.7), resolved once.
+  const DictionaryQuery::Selection selection = query_.select(options.dictionaries, dictionary_path);
+  const std::span<const DictionaryQuery::Dictionary* const> selected_terms = selection.term;
+  const size_t term_dictionary_count = selection.all ? query_.term_dicts_.size() : selection.term.size();
+  std::vector<const std::string*> exempt;
+  for (const auto& path : options.pos_filter_exempt) {
+    for (const auto& dict : query_.term_dicts_) {
+      if (dict.path == path) {
+        exempt.push_back(&dict.name);
+      }
+    }
+  }
+
+  // The pack's readingNormalizer (section 9.6).
+  struct Normalizer : DictionaryQuery::ReadingNormalizer {
+    const lang::StepList* steps = nullptr;
+    std::string normalize(std::string_view reading) const override {
+      std::u32string in;
+      if (!lang::decode_utf8(reading, in)) {
+        return std::string(reading);
+      }
+      std::u32string out;
+      std::vector<std::u32string> outputs;
+      lang::apply_steps(*steps, in, outputs);
+      return outputs.empty() ? std::string(reading) : lang::to_utf8(outputs.front());
+    }
+  };
+  std::optional<Normalizer> normalizer_storage;
+  if (pack.reading_normalizer) {
+    normalizer_storage.emplace();
+    normalizer_storage->steps = &*pack.reading_normalizer;
+  }
+  const DictionaryQuery::ReadingNormalizer* normalizer = normalizer_storage ? &*normalizer_storage : nullptr;
+  const bool shortest = pack.trace_selection == lang::TraceSelection::Shortest;
+
   // Holds what the raw terms below read of paged dictionaries until the kept
   // results are materialized, so it outlives term_store.
   BlobPins pins;
   std::vector<Candidate> candidates;
   ankerl::unordered_dense::map<uint64_t, uint32_t> index;
-  std::vector<std::vector<DeinflectionResult>> deinflection_store;
+  std::vector<Deinflections> deinflection_store;
   std::vector<RawTerms> term_store;
+  // Postprocessed forms the candidates look at (only with postprocessors).
+  std::deque<std::string> forms;
 
   size_t text_len = utf8::distance(lookup_string.begin(), lookup_string.end());
-  size_t start = std::min(scan_length, text_len);
-  auto search_str_it = lookup_string.begin();
-  utf8::advance(search_str_it, start, lookup_string.end());
 
-  auto find_candidate = [&](uint64_t h, const RawTerm& term) -> Candidate* {
+  // The reading a candidate is keyed by: the normalized one with a normalizer.
+  const auto reading_key = [](const RawTerms& terms, const RawTerm& term) -> std::string_view {
+    return term.merged == UINT32_MAX ? term.reading : std::string_view(terms.normalized->normalized[term.merged]);
+  };
+
+  auto find_candidate = [&](uint64_t h, const RawTerm& term, std::string_view key) -> Candidate* {
     auto it = index.find(h);
     if (it == index.end()) {
       return nullptr;
     }
+    const auto same = [&](const Candidate& c) {
+      if (c.term->expression != term.expression) return false;
+      if (normalizer == nullptr) return c.term->reading == term.reading;
+      return reading_key(term_store[c.store_index], *c.term) == key;
+    };
     Candidate& hit = candidates[it->second];
-    if (hit.term->expression == term.expression && hit.term->reading == term.reading) {
+    if (same(hit)) {
       return &hit;
     }
     for (auto& c : candidates) {
-      if (c.term->expression == term.expression && c.term->reading == term.reading) {
+      if (same(c)) {
         return &c;
       }
     }
     return nullptr;
   };
 
-  // The processed variants of the input's first eight code points, kept from
-  // the ordinary scan for the long-key check below.
+  // The processed variants of the input's first eight code points, through
+  // the pre- and postprocessors, for the long-key check below.
   std::vector<std::string> prefix_variants;
 
   // Every scanned prefix's byte length and processed variants, kept only for
-  // the neko speech pass below.
+  // the variant passes below.
   struct ScannedPrefix {
     size_t length;
-    std::vector<TextVariant> variants;
+    std::vector<lang::TextVariant> variants;
   };
   std::vector<ScannedPrefix> scanned;
 
@@ -150,7 +252,9 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   // pass adds.
   struct MetadataProbe {
     size_t length;
-    const DeinflectionResult* deinflection;
+    const Deinflection* base;
+    uint32_t index;
+    const std::string* form;
     int steps;
   };
   const bool metadata_only = options.metadata_only_terms && dictionary_path == nullptr;
@@ -159,18 +263,28 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   bool metadata_added = false;
 
   // Merges the terms of one deinflection of a prefix's variant into the
-  // candidates, keeping each term's longest matched form. A new candidate's
-  // dict_rank starts at `rank`.
-  auto add_terms = [&](size_t matched_len, const DeinflectionResult& deinflection, int steps, RawTerms&& terms,
-                       size_t rank) {
+  // candidates, keeping each term's longest matched form (and, with the
+  // `shortest` trace selection, its fewest steps and shortest trace there).
+  // A new candidate's dict_rank starts at `rank`.
+  auto add_terms = [&](size_t matched_len, const Deinflection* base, uint32_t di, const std::string* form, int steps,
+                       RawTerms&& terms, size_t rank) {
     const auto store_index = static_cast<uint32_t>(term_store.size());
     for (auto& term : terms.terms) {
-      const uint64_t h = key_hash(term.expression, term.reading);
-      Candidate* existing = find_candidate(h, term);
+      const std::string_view key = reading_key(terms, term);
+      const uint64_t h = key_hash(term.expression, key);
+      Candidate* existing = find_candidate(h, term, key);
       if (existing != nullptr) {
-        if (matched_len > existing->matched_len) {
+        bool better = matched_len > existing->matched_len;
+        if (!better && shortest && matched_len == existing->matched_len) {
+          const uint32_t depth = base[di].depth;
+          const uint32_t existing_depth = existing->deinflection().depth;
+          better = steps < existing->steps || (steps == existing->steps && depth < existing_depth);
+        }
+        if (better) {
           existing->matched_len = matched_len;
-          existing->deinflection = &deinflection;
+          existing->base = base;
+          existing->index = di;
+          existing->form = form;
           existing->term = &term;
           existing->store_index = store_index;
           existing->steps = steps;
@@ -178,7 +292,9 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
       } else {
         index.try_emplace(h, static_cast<uint32_t>(candidates.size()));
         candidates.push_back(Candidate{.matched_len = matched_len,
-                                       .deinflection = &deinflection,
+                                       .base = base,
+                                       .index = di,
+                                       .form = form,
                                        .term = &term,
                                        .store_index = store_index,
                                        .steps = steps,
@@ -188,79 +304,208 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     term_store.push_back(std::move(terms));
   };
 
-  // Looks up one deinflection of a prefix's variant and merges its terms into
-  // the candidates.
-  auto merge = [&](size_t matched_len, const DeinflectionResult& deinflection, int steps) {
+  // A term is kept when the form's conditions are 0 or overlap the conditions
+  // of its `rules` tags under this pack's conditions (section 9.4), or when it
+  // comes from a dictionary in pos_filter_exempt.
+  const auto filter_by_pos = [&](RawTerms& terms, uint32_t conditions) {
+    if (conditions == 0 || transforms == nullptr) {
+      return;
+    }
+    std::erase_if(terms.terms, [&](const RawTerm& term) {
+      uint32_t dict_conditions = 0;
+      for (uint32_t i = term.first_glossary; i != UINT32_MAX; i = terms.glossaries[i].next) {
+        if (!exempt.empty() && std::ranges::find(exempt, terms.glossaries[i].dict_name) != exempt.end()) {
+          return false;
+        }
+        each_token(terms.glossaries[i].rules,
+                   [&](std::string_view tag) { dict_conditions |= transforms->dictionary_form_bits(tag); });
+      }
+      return (dict_conditions & conditions) == 0;
+    });
+  };
+
+  const auto collect_metadata = [&](RawTerms& terms) {
+    for (auto& term : terms.terms) {
+      if (term.merged != UINT32_MAX) {
+        query_.collect_frequencies(term.expression, terms.normalized->merged_readings[term.merged], term.frequencies, pins,
+                                   selection);
+        query_.collect_pitches(term.expression, terms.normalized->merged_readings[term.merged], term.pitches, pins,
+                               selection);
+      } else if (selection.all) {
+        query_.collect_frequencies(term.expression, term.reading, term.frequencies, pins);
+        query_.collect_pitches(term.expression, term.reading, term.pitches, pins);
+      } else {
+        const std::string_view reading = term.reading;
+        query_.collect_frequencies(term.expression, std::span(&reading, 1), term.frequencies, pins, selection);
+        query_.collect_pitches(term.expression, std::span(&reading, 1), term.pitches, pins, selection);
+      }
+    }
+  };
+
+  // Looks up one form of a deinflection of a prefix's variant and merges its
+  // terms into the candidates.
+  auto merge = [&](size_t matched_len, const Deinflection* base, uint32_t di, const std::string& form, int steps) {
     // Most deinflected forms name no entry of their part of speech; read
     // the frequencies and pitches of only the terms the filter keeps.
-    auto terms = query_.query_raw(deinflection.text, pins, dictionary_path, false);
-    filter_by_pos(terms, deinflection);
-    for (auto& term : terms.terms) {
-      query_.collect_frequencies(term.expression, term.reading, term.frequencies, pins);
-      query_.collect_pitches(term.expression, term.reading, term.pitches, pins);
-    }
-    add_terms(matched_len, deinflection, steps, std::move(terms), SIZE_MAX);
+    auto terms = query_.query_raw(form, pins, selection, false, normalizer);
+    filter_by_pos(terms, base[di].conditions);
+    collect_metadata(terms);
+    add_terms(matched_len, base, di, &form, steps, std::move(terms), SIZE_MAX);
   };
+
+  // Merges a deinflection, through the pack's postprocessors when it has any
+  // (section 9.3), and records the forms that need no part of speech for the
+  // metadata-only pass.
+  auto merge_deinflection = [&](size_t matched_len, const Deinflection* base, uint32_t di, int steps, bool probe) {
+    if (pack.postprocessors.empty()) {
+      merge(matched_len, base, di, base[di].text, steps);
+      if (probe && metadata_only && base[di].conditions == 0) {
+        metadata_probes.push_back(
+            {.length = matched_len, .base = base, .index = di, .form = &base[di].text, .steps = steps});
+      }
+      return;
+    }
+    for (auto& variant : lang::process_text(pack.postprocessors, base[di].text, enabled)) {
+      forms.push_back(std::move(variant.text));
+      const std::string& form = forms.back();
+      merge(matched_len, base, di, form, steps + variant.steps);
+      if (probe && metadata_only && base[di].conditions == 0) {
+        metadata_probes.push_back(
+            {.length = matched_len, .base = base, .index = di, .form = &form, .steps = steps + variant.steps});
+      }
+    }
+  };
+
+  // The texts long keys are recognised by: processed variants of the first
+  // eight code points, written as dictionaries write keys (section 9.1).
+  const auto add_prefix_variants = [&](const std::vector<lang::TextVariant>& variants) {
+    prefix_variants.reserve(variants.size());
+    for (const auto& variant : variants) {
+      if (pack.postprocessors.empty()) {
+        prefix_variants.push_back(variant.text);
+      } else {
+        for (auto& post : lang::process_text(pack.postprocessors, variant.text, enabled)) {
+          prefix_variants.push_back(std::move(post.text));
+        }
+      }
+    }
+  };
+
+  const bool word_resolution = pack.resolution == lang::Resolution::Word;
 
   // Scans one prefix of the input: every processed variant, deinflected, looked
   // up, and merged into the candidates keeping the longest matched form.
   auto scan_prefix = [&](std::string_view search_str, size_t codepoints) {
-    auto processor_results = text_processor::process(search_str);
-    if (codepoints == scan_index::long_key_prefix_codepoints) {
-      prefix_variants.reserve(processor_results.size());
-      for (const auto& variant : processor_results) {
-        prefix_variants.push_back(variant.text);
-      }
+    auto processor_results = lang::process_text(pack.preprocessors, search_str, enabled);
+    if (!word_resolution && codepoints == scan_index::long_key_prefix_codepoints) {
+      add_prefix_variants(processor_results);
     }
     for (auto& variant : processor_results) {
-      auto deinflection_results = deinflector_.deinflect(variant.text);
-      for (auto& deinflection : deinflection_results) {
-        merge(search_str.size(), deinflection, variant.steps);
-        if (metadata_only && deinflection.conditions == 0) {
-          metadata_probes.push_back(
-              {.length = search_str.size(), .deinflection = &deinflection, .steps = variant.steps});
-        }
+      Deinflections deinflection_results;
+      if (transforms != nullptr) {
+        transforms->deinflect(variant.text, deinflection_results, enabled_transforms_ptr);
+      } else {
+        deinflection_results.push_back(Deinflection{variant.text, 0, Deinflection::npos, Deinflection::none, 0});
+      }
+      const Deinflection* base = deinflection_results.data();
+      for (uint32_t di = 0; di < deinflection_results.size(); ++di) {
+        merge_deinflection(search_str.size(), base, di, variant.steps, true);
       }
       deinflection_store.push_back(std::move(deinflection_results));
     }
-    if (options.neko_speech) {
+    if (!passes.empty()) {
       scanned.push_back({.length = search_str.size(), .variants = std::move(processor_results)});
     }
   };
 
-  for (size_t i = start; i > 0; i--) {
-    scan_prefix(std::string_view(lookup_string.begin(), search_str_it), i);
-    if (i > 1) {
-      utf8::prior(search_str_it, lookup_string.begin());
+  if (!word_resolution) {
+    size_t start = std::min(scan_length, text_len);
+    auto search_str_it = lookup_string.begin();
+    utf8::advance(search_str_it, start, lookup_string.end());
+    for (size_t i = start; i > 0; i--) {
+      scan_prefix(std::string_view(lookup_string.begin(), search_str_it), i);
+      if (i > 1) {
+        utf8::prior(search_str_it, lookup_string.begin());
+      }
     }
-  }
 
-  // Long keys (see src/scan_index.hpp): when the input begins like a key that
-  // is longer than the scan just done, scan the longer prefixes too, up to that
-  // key's length plus room for an inflected ending. A scan shorter than eight
-  // code points never produced the variants, so it never extends -- a caller
-  // asking for one character wants one character.
-  if (!prefix_variants.empty() && text_len > scan_length) {
-    size_t long_key = 0;
-    for (const auto& variant : prefix_variants) {
-      long_key = std::max(long_key, query_.long_key_length(variant, dictionary_path));
+    // Long keys (see src/scan_index.hpp): when the input begins like a key that
+    // is longer than the scan just done, scan the longer prefixes too, up to that
+    // key's length plus room for an inflected ending. A scan shorter than eight
+    // code points never produced the variants, so it never extends -- a caller
+    // asking for one character wants one character.
+    if (!prefix_variants.empty() && text_len > scan_length) {
+      size_t long_key = 0;
+      for (const auto& variant : prefix_variants) {
+        long_key = std::max(long_key, query_.long_key_length(variant, selection));
+      }
+      if (long_key > scan_length) {
+        const size_t extended = std::min(long_key + scan_index::inflection_slack_codepoints, text_len);
+        auto extended_it = lookup_string.begin();
+        utf8::advance(extended_it, extended, lookup_string.end());
+        for (size_t i = extended; i > scan_length; i--) {
+          scan_prefix(std::string_view(lookup_string.begin(), extended_it), i);
+          utf8::prior(extended_it, lookup_string.begin());
+        }
+      }
     }
-    if (long_key > scan_length) {
-      const size_t extended = std::min(long_key + scan_index::inflection_slack_codepoints, text_len);
-      auto extended_it = lookup_string.begin();
-      utf8::advance(extended_it, extended, lookup_string.end());
-      for (size_t i = extended; i > scan_length; i--) {
-        scan_prefix(std::string_view(lookup_string.begin(), extended_it), i);
-        utf8::prior(extended_it, lookup_string.begin());
+  } else {
+    // Word resolution (section 9.2): only prefixes that end at a word
+    // boundary, and a window that grows to the end of the word scan_length
+    // ends in.
+    std::vector<char32_t> cps;
+    std::vector<size_t> offsets;
+    cps.reserve(text_len);
+    offsets.reserve(text_len + 1);
+    for (auto it = lookup_string.begin(); it != lookup_string.end();) {
+      offsets.push_back(static_cast<size_t>(it - lookup_string.begin()));
+      cps.push_back(utf8::next(it, lookup_string.end()));
+    }
+    offsets.push_back(lookup_string.size());
+    const auto word_char = [&](size_t k) { return pack.word_characters.contains(cps[k]); };
+    const auto is_word = [&](size_t k) {
+      if (word_char(k)) return true;
+      return pack.word_internal && pack.word_internal->contains(cps[k]) && k > 0 && k + 1 < cps.size() &&
+             word_char(k - 1) && word_char(k + 1);
+    };
+    const auto boundary = [&](size_t p) { return p == text_len || (p > 0 && is_word(p - 1) && !is_word(p)); };
+    size_t window = std::min(scan_length, text_len);
+    if (window > 0 && window < text_len && is_word(window - 1) && is_word(window)) {
+      while (window < text_len && is_word(window)) {
+        ++window;
+      }
+    }
+    if (window >= scan_index::long_key_prefix_codepoints) {
+      add_prefix_variants(lang::process_text(
+          pack.preprocessors, std::string_view(lookup_string.data(), offsets[scan_index::long_key_prefix_codepoints]),
+          enabled));
+    }
+    for (size_t p = window; p > 0; --p) {
+      if (boundary(p)) {
+        scan_prefix(std::string_view(lookup_string.data(), offsets[p]), p);
+      }
+    }
+    if (!prefix_variants.empty() && text_len > scan_length) {
+      size_t long_key = 0;
+      for (const auto& variant : prefix_variants) {
+        long_key = std::max(long_key, query_.long_key_length(variant, selection));
+      }
+      if (long_key > scan_length) {
+        const size_t extended = std::min(long_key + scan_index::inflection_slack_codepoints, text_len);
+        for (size_t p = extended; p > window; --p) {
+          if (boundary(p)) {
+            scan_prefix(std::string_view(lookup_string.data(), offsets[p]), p);
+          }
+        }
       }
     }
   }
 
-  // NekoPara's cat speech (LookupOptions::neko_speech): a neko speech reading
-  // counts only for a prefix longer than every ordinary match, long keys
-  // included, so it can only add a term or lengthen one; every ordinary result
-  // above is otherwise kept as it is.
-  if (options.neko_speech) {
+  // Variant passes (NekoPara's cat speech, LookupOptions::neko_speech): a
+  // pass's reading counts only for a prefix longer than every ordinary match,
+  // long keys included, so it can only add a term or lengthen one; every
+  // ordinary result above is otherwise kept as it is.
+  if (!passes.empty()) {
     size_t ordinary_len = 0;
     for (const auto& candidate : candidates) {
       ordinary_len = std::max(ordinary_len, candidate.matched_len);
@@ -270,14 +515,31 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
         continue;
       }
       for (const auto& variant : prefix.variants) {
-        auto deinflection_results = deinflector_.deinflect_neko_speech(variant.text);
-        if (deinflection_results.empty()) {
-          continue;
+        for (const lang::VariantPass* pass : passes) {
+          std::vector<std::string> readings;
+          pass->builtin->variants(variant.text, readings);
+          if (readings.empty()) {
+            continue;
+          }
+          Deinflections deinflection_results;
+          for (auto& reading : readings) {
+            if (transforms != nullptr) {
+              transforms->deinflect_from_step(std::move(reading), pass->step, deinflection_results,
+                                              enabled_transforms_ptr);
+            } else if (!reading.empty()) {
+              deinflection_results.push_back(Deinflection{std::move(reading), 0, Deinflection::npos,
+                                                          Deinflection::step_base + pass->step, 1});
+            }
+          }
+          if (deinflection_results.empty()) {
+            continue;
+          }
+          const Deinflection* base = deinflection_results.data();
+          for (uint32_t di = 0; di < deinflection_results.size(); ++di) {
+            merge_deinflection(prefix.length, base, di, variant.steps, false);
+          }
+          deinflection_store.push_back(std::move(deinflection_results));
         }
-        for (auto& deinflection : deinflection_results) {
-          merge(prefix.length, deinflection, variant.steps);
-        }
-        deinflection_store.push_back(std::move(deinflection_results));
       }
     }
   }
@@ -299,10 +561,10 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
       if (probe.length <= defined_len) {
         continue;
       }
-      const std::string& text = probe.deinflection->text;
+      const std::string& text = *probe.form;
       // The terms view these strings, which stay where they are when the
       // store grows.
-      const auto& readings = metadata_reading_store.emplace_back(query_.metadata_readings(text, pins));
+      const auto& readings = metadata_reading_store.emplace_back(query_.metadata_readings(text, pins, selection));
       for (size_t i = 0; i < readings.size(); ++i) {
         RawTerm term{.expression = text,
                      .reading = readings[i],
@@ -311,14 +573,20 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
                      .last_glossary = UINT32_MAX,
                      .frequencies = {},
                      .pitches = {}};
-        query_.collect_frequencies(term.expression, term.reading, term.frequencies, pins);
-        query_.collect_pitches(term.expression, term.reading, term.pitches, pins);
-        if (term.frequencies.empty() && term.pitches.empty()) {
+        RawTerms terms;
+        if (normalizer != nullptr) {
+          term.merged = 0;
+          terms.normalized = std::make_unique<NormalizedReadings>();
+          terms.normalized->normalized.push_back(normalizer->normalize(readings[i]));
+          terms.normalized->merged_readings.push_back({term.reading});
+        }
+        terms.terms.push_back(std::move(term));
+        collect_metadata(terms);
+        if (terms.terms.front().frequencies.empty() && terms.terms.front().pitches.empty()) {
           continue;
         }
-        RawTerms terms;
-        terms.terms.push_back(std::move(term));
-        add_terms(probe.length, *probe.deinflection, probe.steps, std::move(terms), query_.term_dicts_.size() + i);
+        add_terms(probe.length, probe.base, probe.index, probe.form, probe.steps, std::move(terms),
+                  term_dictionary_count + i);
         metadata_added = true;
       }
     }
@@ -340,9 +608,20 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     case LookupFrequencyOrder::Ascending:
     case LookupFrequencyOrder::Descending:
       if (options.frequency_dictionary.has_value()) {
-        const auto selected =
-            std::ranges::find(query_.freq_dicts_, *options.frequency_dictionary, &DictionaryQuery::Dictionary::name);
-        if (selected != query_.freq_dicts_.end()) {
+        const DictionaryQuery::Dictionary* selected = nullptr;
+        if (selection.all) {
+          const auto it = std::ranges::find(query_.freq_dicts_, *options.frequency_dictionary,
+                                            &DictionaryQuery::Dictionary::name);
+          selected = it == query_.freq_dicts_.end() ? nullptr : &*it;
+        } else {
+          for (const auto* dict : selection.freq) {
+            if (dict->name == *options.frequency_dictionary) {
+              selected = dict;
+              break;
+            }
+          }
+        }
+        if (selected != nullptr) {
           frequency_dictionary = selected->name;
           frequency_descending = options.frequency_order == LookupFrequencyOrder::Descending;
         }
@@ -352,17 +631,29 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
       break;
   }
   std::string_view primary_reading;
+  std::string primary_key;
   if (options.primary_reading.has_value()) {
     primary_reading = *options.primary_reading;
+    if (normalizer != nullptr) {
+      primary_key = normalizer->normalize(primary_reading);
+      primary_reading = primary_key;
+    }
   }
   // Each term dictionary's rank in the caller's order, keyed by the address of
   // its name (RawGlossary::dict_name points at the Dictionary::name the term
   // was read from). term_dicts_ is already in the order set_dict_order last
-  // applied, so its index is the caller's priority.
+  // applied, and a selection lists its dictionaries in the request's order,
+  // so the index is the caller's priority.
   ankerl::unordered_dense::map<const std::string*, size_t> dict_rank_by_name;
-  dict_rank_by_name.reserve(query_.term_dicts_.size());
-  for (size_t rank = 0; rank < query_.term_dicts_.size(); ++rank) {
-    dict_rank_by_name.try_emplace(&query_.term_dicts_[rank].name, rank);
+  dict_rank_by_name.reserve(term_dictionary_count);
+  if (selection.all) {
+    for (size_t rank = 0; rank < query_.term_dicts_.size(); ++rank) {
+      dict_rank_by_name.try_emplace(&query_.term_dicts_[rank].name, rank);
+    }
+  } else {
+    for (size_t rank = 0; rank < selected_terms.size(); ++rank) {
+      dict_rank_by_name.try_emplace(&selected_terms[rank]->name, rank);
+    }
   }
   for (auto& candidate : candidates) {
     const RawTerms& terms = term_store[candidate.store_index];
@@ -374,68 +665,75 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     }
   }
 
+  const auto matches_primary_reading = [&](const Candidate& c) {
+    if (normalizer == nullptr) {
+      return c.term->reading == primary_reading;
+    }
+    return reading_key(term_store[c.store_index], *c.term) == primary_reading;
+  };
+
   const size_t retained_count = std::min(candidates.size(), static_cast<size_t>(max_results));
-  auto less = [frequency_dictionary, frequency_descending, primary_reading](const Candidate& a,
-                                                                            const Candidate& b) {
-        if (!primary_reading.empty()) {
-          const bool primary_a = matches_primary_reading(*a.term, primary_reading);
-          const bool primary_b = matches_primary_reading(*b.term, primary_reading);
-          if (primary_a != primary_b) {
-            return primary_a;
-          }
-        }
+  auto less = [frequency_dictionary, frequency_descending, primary_reading, &matches_primary_reading](
+                  const Candidate& a, const Candidate& b) {
+    if (!primary_reading.empty()) {
+      const bool primary_a = matches_primary_reading(a);
+      const bool primary_b = matches_primary_reading(b);
+      if (primary_a != primary_b) {
+        return primary_a;
+      }
+    }
 
-        if (a.matched_len != b.matched_len) {
-          return a.matched_len > b.matched_len;
-        }
+    if (a.matched_len != b.matched_len) {
+      return a.matched_len > b.matched_len;
+    }
 
-        auto steps_a = a.steps;
-        auto steps_b = b.steps;
-        if (steps_a != steps_b) {
-          return steps_a < steps_b;
-        }
+    auto steps_a = a.steps;
+    auto steps_b = b.steps;
+    if (steps_a != steps_b) {
+      return steps_a < steps_b;
+    }
 
-        auto trace_len_a = a.deinflection->trace.size();
-        auto trace_len_b = b.deinflection->trace.size();
-        if (trace_len_a != trace_len_b) {
-          return trace_len_a < trace_len_b;
-        }
+    auto trace_len_a = a.deinflection().depth;
+    auto trace_len_b = b.deinflection().depth;
+    if (trace_len_a != trace_len_b) {
+      return trace_len_a < trace_len_b;
+    }
 
-        auto match_a = a.term->expression == a.deinflection->text;
-        auto match_b = b.term->expression == b.deinflection->text;
-        if (match_a != match_b) {
-          return match_a > match_b;
-        }
+    auto match_a = a.term->expression == *a.form;
+    auto match_b = b.term->expression == *b.form;
+    if (match_a != match_b) {
+      return match_a > match_b;
+    }
 
-        if (frequency_dictionary.has_value()) {
-          const auto freq_a = get_freq_value_for_dict(*a.term, *frequency_dictionary, frequency_descending);
-          const auto freq_b = get_freq_value_for_dict(*b.term, *frequency_dictionary, frequency_descending);
-          if (freq_a.has_value() != freq_b.has_value()) {
-            return freq_a.has_value();
-          }
-          if (freq_a.has_value() && *freq_a != *freq_b) {
-            return frequency_descending ? *freq_a > *freq_b : *freq_a < *freq_b;
-          }
-        }
+    if (frequency_dictionary.has_value()) {
+      const auto freq_a = get_freq_value_for_dict(*a.term, *frequency_dictionary, frequency_descending);
+      const auto freq_b = get_freq_value_for_dict(*b.term, *frequency_dictionary, frequency_descending);
+      if (freq_a.has_value() != freq_b.has_value()) {
+        return freq_a.has_value();
+      }
+      if (freq_a.has_value() && *freq_a != *freq_b) {
+        return frequency_descending ? *freq_a > *freq_b : *freq_a < *freq_b;
+      }
+    }
 
-        // The caller's dictionary order breaks a tie the frequencies left, as
-        // Yomitan ranks dictionaryIndex after frequencyOrder and before score.
-        // When the active frequency ranking does not separate two readings (it
-        // is equal, or neither reading is in it, as a surface frequency leaves
-        // the readings of a name), the reading from the dictionary the user
-        // ranked highest comes first instead of an arbitrary one.
-        if (a.dict_rank != b.dict_rank) {
-          return a.dict_rank < b.dict_rank;
-        }
+    // The caller's dictionary order breaks a tie the frequencies left, as
+    // Yomitan ranks dictionaryIndex after frequencyOrder and before score.
+    // When the active frequency ranking does not separate two readings (it
+    // is equal, or neither reading is in it, as a surface frequency leaves
+    // the readings of a name), the reading from the dictionary the user
+    // ranked highest comes first instead of an arbitrary one.
+    if (a.dict_rank != b.dict_rank) {
+      return a.dict_rank < b.dict_rank;
+    }
 
-        if (a.term->score != b.term->score) {
-          return a.term->score > b.term->score;
-        }
+    if (a.term->score != b.term->score) {
+      return a.term->score > b.term->score;
+    }
 
-        auto a_reading_expr_match = a.term->expression == a.term->reading;
-        auto b_reading_expr_match = b.term->expression == b.term->reading;
-        return a_reading_expr_match > b_reading_expr_match;
-      };
+    auto a_reading_expr_match = a.term->expression == a.term->reading;
+    auto b_reading_expr_match = b.term->expression == b.term->reading;
+    return a_reading_expr_match > b_reading_expr_match;
+  };
 
   const auto by_key = [&](uint32_t ia, uint32_t ib) { return key_less(*candidates[ia].term, *candidates[ib].term); };
   const auto by_rank = [&](uint32_t ia, uint32_t ib) { return less(candidates[ia], candidates[ib]); };
@@ -465,13 +763,35 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     kept = merged;
   }
 
+  // The trace of a kept result, in application order, with its pack's ids,
+  // names and descriptions.
+  std::vector<uint32_t> steps;
+  const auto trace_of = [&](const Candidate& c) {
+    steps.clear();
+    for (const Deinflection* n = &c.deinflection();; n = &c.base[n->parent]) {
+      if (n->via != Deinflection::none) {
+        steps.push_back(transforms != nullptr ? transforms->step_of(n->via) : n->via - Deinflection::step_base);
+      }
+      if (n->parent == Deinflection::npos) {
+        break;
+      }
+    }
+    std::vector<TransformGroup> trace;
+    trace.reserve(steps.size());
+    for (auto it = steps.rbegin(); it != steps.rend(); ++it) {
+      const auto& step = pack.trace_steps[*it];
+      trace.push_back(TransformGroup{.name = step.name, .description = step.description, .id = step.id});
+    }
+    return trace;
+  };
+
   std::vector<LookupResult> retained;
   retained.reserve(kept.size());
   for (const uint32_t i : kept) {
     Candidate& c = candidates[i];
     retained.push_back(LookupResult{.matched = lookup_string.substr(0, c.matched_len),
-                                    .deinflected = c.deinflection->text,
-                                    .trace = c.deinflection->trace,
+                                    .deinflected = *c.form,
+                                    .trace = trace_of(c),
                                     .term = query_.build_term(term_store[c.store_index], *c.term, pins),
                                     .preprocessor_steps = c.steps});
   }
@@ -481,19 +801,4 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   }
 
   return retained;
-}
-
-void Lookup::filter_by_pos(RawTerms& terms, const DeinflectionResult& d) {
-  if (d.conditions == 0) {
-    return;
-  }
-  std::vector<std::string> tokens;
-  std::erase_if(terms.terms, [&](const RawTerm& term) {
-    uint32_t dict_conditions = 0;
-    for (uint32_t i = term.first_glossary; i != UINT32_MAX; i = terms.glossaries[i].next) {
-      split_whitespace(terms.glossaries[i].rules, tokens);
-      dict_conditions |= Deinflector::pos_to_conditions(tokens);
-    }
-    return (dict_conditions & d.conditions) == 0;
-  });
 }

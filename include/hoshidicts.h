@@ -2,5 +2,6 @@
 
 #include "hoshidicts/deinflector.hpp"
 #include "hoshidicts/importer.hpp"
+#include "hoshidicts/languages.hpp"
 #include "hoshidicts/lookup.hpp"
 #include "hoshidicts/query.hpp"

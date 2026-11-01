@@ -1,30 +1,176 @@
 #include <utf8.h>
 
+#include <algorithm>
 #include <chrono>
+#include <cstdio>
 #include <filesystem>
+#include <format>
+#include <fstream>
 #include <iostream>
+#include <map>
+#include <optional>
 #include <ranges>
+#include <set>
 #include <string>
+#include <vector>
 
+#include "../src/languages/corpus.hpp"
+#include "../src/languages/pack.hpp"
+#include "../src/languages/steps.hpp"
 #include "../src/path_utils.hpp"
-#include "../src/text_processor/text_processor.hpp"
 #include "hoshidicts/deinflector.hpp"
 #include "hoshidicts/importer.hpp"
+#include "hoshidicts/languages.hpp"
 #include "hoshidicts/lookup.hpp"
 #include "hoshidicts/query.hpp"
 
+#ifndef HOSHIDICTS_LANGUAGES_DIR
+#define HOSHIDICTS_LANGUAGES_DIR "languages"
+#endif
+
+namespace {
+
 void print_usage(const char* program) {
-  std::cout << std::format("Usage:\n");
+  std::cout << std::format("Usage: {} [--languages <dir>] <command> ...\n", program);
   std::cout << std::format("{} import <path/to/dictionary.zip|dictionary.mdx>\n", program);
-  std::cout << std::format("{} deinflect <word>\n", program);
-  std::cout << std::format("{} preprocess <word>\n", program);
+  std::cout << std::format("{} languages\n", program);
+  std::cout << std::format("{} deinflect <code> (<text> | --stdin) [--transforms <file>]\n", program);
+  std::cout << std::format("{} preprocess <code> (<text> | --stdin)\n", program);
+  std::cout << std::format("{} deinflect <word>              (Japanese, human-readable)\n", program);
+  std::cout << std::format("{} preprocess <word>             (Japanese, human-readable)\n", program);
   std::cout << std::format("{} query <path/to/dictionary> <word>\n", program);
-  std::cout << std::format("{} lookup <path/to/dictionary> <lookup_string>\n", program);
-  std::cout << std::format("{} freq <path/to/dictionary> <word>\n", program);
+  std::cout << std::format("{} lookup [--language <code>] <path/to/dictionary>... <lookup_string>\n", program);
+  std::cout << std::format("{} freq <path/to/dictionary> <word> <reading>\n", program);
   std::cout << std::format("{} kanji <path/to/dictionary> <kanji>\n", program);
+  std::cout << std::format(
+      "{} eval-language <code> <file.tsv> [--transforms <file>] [--dictionary <imported dir>] [--per-rule]\n", program);
+  std::cout << std::format("--languages defaults to {}\n", HOSHIDICTS_LANGUAGES_DIR);
 }
 
-void cmd_import(const std::string& path) {
+// A JSON string, as JSON.parse reads it.
+std::string json_string(std::string_view s) {
+  std::string out = "\"";
+  for (unsigned char c : s) {
+    switch (c) {
+      case '"':
+        out += "\\\"";
+        break;
+      case '\\':
+        out += "\\\\";
+        break;
+      case '\n':
+        out += "\\n";
+        break;
+      case '\r':
+        out += "\\r";
+        break;
+      case '\t':
+        out += "\\t";
+        break;
+      case '\b':
+        out += "\\b";
+        break;
+      case '\f':
+        out += "\\f";
+        break;
+      default:
+        if (c < 0x20) {
+          out += std::format("\\u{:04x}", c);
+        } else {
+          out += static_cast<char>(c);
+        }
+    }
+  }
+  return out + "\"";
+}
+
+std::string json_number(std::optional<double> value) { return value ? std::format("{}", *value) : "null"; }
+
+bool read_file(const std::string& path, std::string& out) {
+  std::ifstream file(path_utils::from_utf8(path), std::ios::binary);
+  if (!file) return false;
+  out.assign(std::istreambuf_iterator<char>(file), {});
+  return true;
+}
+
+struct Context {
+  std::string languages_dir = HOSHIDICTS_LANGUAGES_DIR;
+  bool languages_given = false;
+  std::optional<hoshidicts::LanguageRegistry> registry;
+
+  hoshidicts::LanguageRegistry& languages() {
+    if (!registry) {
+      registry = hoshidicts::LanguageRegistry::with_builtin();
+      std::error_code ec;
+      if (std::filesystem::is_directory(path_utils::from_utf8(languages_dir), ec)) {
+        std::string error;
+        if (!registry->add_directory(languages_dir, &error)) {
+          std::cerr << "hoshidicts-cli: " << error << "\n";
+        }
+      } else if (languages_given) {
+        std::cerr << "hoshidicts-cli: " << languages_dir << " is not a directory\n";
+      }
+    }
+    return *registry;
+  }
+
+  // A pack, with its transforms replaced by `transforms_file` when given.
+  std::shared_ptr<const hoshidicts::LanguagePack> pack(const std::string& code, const std::string* transforms_file) {
+    if (transforms_file == nullptr) {
+      auto pack = languages().find(code);
+      if (!pack) std::cerr << "hoshidicts-cli: no language pack " << code << "\n";
+      return pack;
+    }
+    std::string language;
+    const auto dir = std::filesystem::path(path_utils::from_utf8(languages_dir)) / path_utils::from_utf8(code);
+    if (!read_file(path_utils::to_utf8(dir / "language.json"), language)) {
+      std::cerr << "hoshidicts-cli: cannot read " << path_utils::to_utf8(dir / "language.json") << "\n";
+      return nullptr;
+    }
+    std::string transforms;
+    if (!read_file(*transforms_file, transforms)) {
+      std::cerr << "hoshidicts-cli: cannot read " << *transforms_file << "\n";
+      return nullptr;
+    }
+    std::string error;
+    auto pack = hoshidicts::parse_language_pack(language, transforms, &error);
+    if (!pack) std::cerr << "hoshidicts-cli: " << error << "\n";
+    return pack;
+  }
+};
+
+// Positional arguments and --name value options.
+struct Arguments {
+  std::vector<std::string> positional;
+  std::map<std::string, std::string> values;
+  std::set<std::string> flags;
+};
+
+Arguments parse_arguments(int argc, char** argv, int first, const std::set<std::string>& with_value,
+                          const std::set<std::string>& flags) {
+  Arguments a;
+  for (int i = first; i < argc; ++i) {
+    const std::string arg = argv[i];
+    if (with_value.contains(arg) && i + 1 < argc) {
+      a.values[arg] = argv[++i];
+    } else if (flags.contains(arg)) {
+      a.flags.insert(arg);
+    } else {
+      a.positional.push_back(arg);
+    }
+  }
+  return a;
+}
+
+std::vector<std::string> input_lines(bool from_stdin, const std::vector<std::string>& rest) {
+  if (!from_stdin) return rest;
+  std::vector<std::string> lines;
+  std::string line;
+  while (std::getline(std::cin, line)) lines.push_back(line);
+  return lines;
+}
+
+int cmd_import(const std::string& path) {
   std::filesystem::path source_path = path_utils::from_utf8(path);
   std::string output_dir = path_utils::to_utf8(source_path.parent_path());
   if (output_dir.empty()) {
@@ -48,9 +194,11 @@ void cmd_import(const std::string& path) {
   } else {
     std::cout << std::format("could not import dictionary: {}\n", result.error);
   }
+  return 0;
 }
 
-void cmd_deinflect(const std::string& inflected) {
+// The human-readable Japanese forms of earlier versions.
+int cmd_deinflect_legacy(const std::string& inflected) {
   Deinflector deinflector;
   auto results = deinflector.deinflect(inflected);
 
@@ -68,10 +216,12 @@ void cmd_deinflect(const std::string& inflected) {
       std::cout << std::format("\n");
     }
   }
+  return 0;
 }
 
-void cmd_preprocess(const std::string& text) {
-  auto results = text_processor::process(text);
+int cmd_preprocess_legacy(const std::string& text) {
+  auto pack = hoshidicts::builtin_language_pack("ja");
+  auto results = hoshidicts::lang::process_text(pack->data().preprocessors, text, {});
 
   std::cout << std::format("preproccesing for: {} length: {}\n", text, utf8::distance(text.begin(), text.end()));
   std::cout << std::format("found {} variants\n", results.size());
@@ -79,6 +229,105 @@ void cmd_preprocess(const std::string& text) {
   for (const auto& r : results) {
     std::cout << std::format("{}\n", r.text);
   }
+  return 0;
+}
+
+// `deinflect <code>`: one JSON object per input (section 10.3).
+int cmd_deinflect(Context& context, const Arguments& args) {
+  const std::string* transforms = args.values.contains("--transforms") ? &args.values.at("--transforms") : nullptr;
+  const auto pack_holder = context.pack(args.positional[0], transforms);
+  if (!pack_holder) return 1;
+  const auto& pack = pack_holder->data();
+  const bool from_stdin = args.flags.contains("--stdin");
+  const std::vector<std::string> rest(args.positional.begin() + 1, args.positional.end());
+  if (!from_stdin && rest.size() != 1) {
+    std::cerr << "hoshidicts-cli: deinflect needs one text or --stdin\n";
+    return 1;
+  }
+  std::string out;
+  for (const auto& input : input_lines(from_stdin, rest)) {
+    out += "{\"input\":" + json_string(input) + ",\"results\":[";
+    std::u32string check;
+    if (!hoshidicts::lang::decode_utf8(input, check)) {
+      out += "],\"error\":\"not valid UTF-8\"}\n";
+      continue;
+    }
+    hoshidicts::lang::Deinflections list;
+    if (pack.transforms) {
+      pack.transforms->deinflect(input, list);
+    } else {
+      list.push_back(hoshidicts::lang::Deinflection{input, 0, hoshidicts::lang::Deinflection::npos,
+                                                    hoshidicts::lang::Deinflection::none, 0});
+    }
+    for (size_t i = 0; i < list.size(); ++i) {
+      const auto& d = list[i];
+      out += i ? ",{" : "{";
+      out += "\"text\":" + json_string(d.text) + ",\"conditions\":[";
+      if (pack.transforms) {
+        const auto names = pack.transforms->condition_names(d.conditions);
+        for (size_t k = 0; k < names.size(); ++k) out += (k ? "," : "") + json_string(names[k]);
+      }
+      out += "],\"trace\":[";
+      // Newest first, as the corpus `reasons` column (section 12.2).
+      bool first = true;
+      for (const auto* n = &d;; n = &list[n->parent]) {
+        if (n->via != hoshidicts::lang::Deinflection::none) {
+          out += (first ? "" : ",") + json_string(pack.trace_steps[pack.transforms->step_of(n->via)].id);
+          first = false;
+        }
+        if (n->parent == hoshidicts::lang::Deinflection::npos) break;
+      }
+      out += "]}";
+    }
+    out += "]}\n";
+    if (out.size() > (1 << 20)) {
+      std::cout << out;
+      out.clear();
+    }
+  }
+  std::cout << out;
+  return 0;
+}
+
+// `preprocess <code>`: the preprocessor variants, one JSON object per input.
+int cmd_preprocess(Context& context, const Arguments& args) {
+  const auto pack_holder = context.pack(args.positional[0], nullptr);
+  if (!pack_holder) return 1;
+  const auto& pack = pack_holder->data();
+  const bool from_stdin = args.flags.contains("--stdin");
+  const std::vector<std::string> rest(args.positional.begin() + 1, args.positional.end());
+  if (!from_stdin && rest.size() != 1) {
+    std::cerr << "hoshidicts-cli: preprocess needs one text or --stdin\n";
+    return 1;
+  }
+  std::string out;
+  for (const auto& input : input_lines(from_stdin, rest)) {
+    out += "{\"input\":" + json_string(input) + ",\"variants\":[";
+    std::u32string check;
+    if (!hoshidicts::lang::decode_utf8(input, check)) {
+      out += "],\"error\":\"not valid UTF-8\"}\n";
+      continue;
+    }
+    const auto variants = hoshidicts::lang::process_text(pack.preprocessors, input, {});
+    for (size_t i = 0; i < variants.size(); ++i) {
+      out += std::format("{}{{\"text\":{},\"steps\":{}}}", i ? "," : "", json_string(variants[i].text), variants[i].steps);
+    }
+    out += "]}\n";
+    if (out.size() > (1 << 20)) {
+      std::cout << out;
+      out.clear();
+    }
+  }
+  std::cout << out;
+  return 0;
+}
+
+int cmd_languages(Context& context) {
+  for (const auto& code : context.languages().codes()) {
+    const auto pack = context.languages().find(code);
+    std::cout << code << "\t" << pack->name() << "\n";
+  }
+  return 0;
 }
 
 void cmd_query(const std::string& db_path, const std::string& expression) {
@@ -147,15 +396,29 @@ void cmd_kanji(const std::string& path, const std::string& kanji) {
   }
 }
 
-void cmd_lookup(const std::vector<std::string>& db_paths, const std::string& lookup_string, int max_results = 8,
-                int scan_length = 16) {
+int cmd_lookup(Context& context, const Arguments& args, int max_results = 8, int scan_length = 16) {
+  if (args.positional.size() < 2) {
+    std::cerr << "hoshidicts-cli: lookup needs a dictionary and a text\n";
+    return 1;
+  }
+  const std::vector<std::string> db_paths(args.positional.begin(), args.positional.end() - 1);
+  const std::string& lookup_string = args.positional.back();
   DictionaryQuery dict_query;
   for (const auto& path : db_paths) {
     dict_query.add_term_dict(path);
   }
-  Deinflector deinflect;
-  Lookup lookup(dict_query, deinflect);
-  auto result = lookup.lookup(lookup_string, max_results, scan_length);
+  LookupOptions options;
+  if (args.values.contains("--language")) {
+    options.language = args.values.at("--language");
+  }
+  Lookup lookup(dict_query, context.languages());
+  std::vector<LookupResult> result;
+  try {
+    result = lookup.lookup(lookup_string, max_results, scan_length, options);
+  } catch (const std::invalid_argument& error) {
+    std::cerr << "hoshidicts-cli: " << error.what() << "\n";
+    return 1;
+  }
 
   std::cout << std::format("lookup results for: {} max_results: {} scan_length: {}\n", lookup_string, max_results,
                            scan_length);
@@ -184,43 +447,227 @@ void cmd_lookup(const std::vector<std::string>& db_paths, const std::string& loo
     std::cout << std::format("{}\n", s.dict_name);
     std::cout << std::format("{}\n", s.styles);
   }
+  return 0;
 }
 
+// `eval-language` (section 10.3): recall and negatives over the whole source
+// of each row, and with a dictionary the false candidates and first ranks.
+int cmd_eval_language(Context& context, const Arguments& args) {
+  namespace lang = hoshidicts::lang;
+  if (args.positional.size() != 2) {
+    std::cerr << "hoshidicts-cli: eval-language needs a code and a corpus file\n";
+    return 1;
+  }
+  const std::string* transforms = args.values.contains("--transforms") ? &args.values.at("--transforms") : nullptr;
+  const auto pack_holder = context.pack(args.positional[0], transforms);
+  if (!pack_holder) return 1;
+  const auto& pack = pack_holder->data();
+  std::vector<lang::CorpusRow> rows;
+  std::string error;
+  if (!lang::read_corpus(args.positional[1], rows, &error)) {
+    std::cerr << "hoshidicts-cli: " << error << "\n";
+    return 1;
+  }
+  const bool per_rule = args.flags.contains("--per-rule");
+  const std::string* dictionary = args.values.contains("--dictionary") ? &args.values.at("--dictionary") : nullptr;
+
+  std::optional<DictionaryQuery> query;
+  hoshidicts::LanguageRegistry registry;
+  std::optional<Lookup> lookup;
+  LookupOptions options;
+  if (dictionary != nullptr) {
+    query.emplace();
+    if (!query->add_term_dict(*dictionary)) {
+      std::cerr << "hoshidicts-cli: cannot load " << *dictionary << ": " << query->last_error() << "\n";
+      return 1;
+    }
+    registry.add(pack_holder);
+    lookup.emplace(*query, registry);
+    options.language = pack.code;
+    for (const auto* list : {&pack.preprocessors, &pack.postprocessors}) {
+      for (const auto& p : *list) options.language_options.push_back(p.id);
+    }
+    for (const auto& pass : pack.variant_passes) options.language_options.push_back(pass.id);
+    if (pack.transforms) {
+      for (const auto& t : pack.transforms->transforms) options.language_options.push_back(t.id);
+    }
+  }
+
+  // Per JSON rule: (transform, index in transform) of each rule.
+  const size_t rule_count = pack.transforms ? pack.transforms->rules.size() : 0;
+  std::vector<size_t> recovers(rule_count, 0);
+  std::vector<size_t> adds(rule_count, 0);
+  std::vector<size_t> breaks(rule_count, 0);
+  const auto intersect = [](const std::vector<lang::SourceDeinflection>& list, const std::vector<size_t>& which) {
+    std::vector<uint32_t> common = list[which.front()].rules;
+    for (size_t k = 1; k < which.size(); ++k) {
+      std::vector<uint32_t> next;
+      std::ranges::set_intersection(common, list[which[k]].rules, std::back_inserter(next));
+      common.swap(next);
+    }
+    return common;
+  };
+
+  size_t positives = 0;
+  size_t found = 0;
+  size_t negatives = 0;
+  size_t passed = 0;
+  size_t false_candidates = 0;
+  size_t first_ranked = 0;
+  for (const auto& row : rows) {
+    bool limit = false;
+    const auto list = lang::deinflect_source(pack, row.source, &limit);
+    std::vector<size_t> matching;
+    error.clear();
+    const bool has = lang::row_matches(pack, row, list, &matching, &error);
+    if (!error.empty()) {
+      std::cerr << "hoshidicts-cli: " << args.positional[1] << ": " << error << "\n";
+      return 1;
+    }
+    if (row.valid) {
+      ++positives;
+      if (has) {
+        ++found;
+        for (uint32_t r : intersect(list, matching)) ++recovers[r];
+      }
+    } else {
+      ++negatives;
+      if (!has) {
+        ++passed;
+      } else {
+        for (uint32_t r : intersect(list, matching)) ++breaks[r];
+      }
+    }
+    if (query && row.valid) {
+      // Distinct deinflected texts that are headwords passing the filter, other
+      // than the source and the lemma.
+      std::map<std::string, std::vector<size_t>> by_text;
+      for (size_t i = 0; i < list.size(); ++i) {
+        if (list[i].text != row.source && list[i].text != row.term) by_text[list[i].text].push_back(i);
+      }
+      for (const auto& [text, which] : by_text) {
+        const auto terms = query->query(text);
+        std::vector<size_t> passing;
+        for (size_t i : which) {
+          const uint32_t conditions = list[i].conditions;
+          const bool ok = std::ranges::any_of(terms, [&](const TermResult& term) {
+            if (conditions == 0 || !pack.transforms) return true;
+            uint32_t bits = 0;
+            for (auto token : term.rules | std::views::split(' ')) {
+              bits |= pack.transforms->dictionary_form_bits(std::string_view(token.begin(), token.end()));
+            }
+            return (bits & conditions) != 0;
+          });
+          if (ok) passing.push_back(i);
+        }
+        if (passing.empty()) continue;
+        ++false_candidates;
+        for (uint32_t r : intersect(list, passing)) ++adds[r];
+      }
+      const size_t length = utf8::distance(row.source.begin(), row.source.end());
+      const auto results = lookup->lookup(row.source, 16, std::max<size_t>(16, length), options);
+      if (!results.empty() && results.front().term.expression == row.term) ++first_ranked;
+    }
+  }
+
+  std::string out = std::format("{{\"rows\":{},\"positives\":{},\"negatives\":{},\"recall\":{},\"negativesPassed\":{}", rows.size(),
+                                positives, negatives,
+                                json_number(positives ? std::optional<double>(static_cast<double>(found) / positives) : std::nullopt),
+                                json_number(negatives ? std::optional<double>(static_cast<double>(passed) / negatives) : std::nullopt));
+  if (query) {
+    out += std::format(",\"falseCandidates\":{},\"firstRank\":{}",
+                       json_number(positives ? std::optional<double>(static_cast<double>(false_candidates) / positives) : std::nullopt),
+                       json_number(positives ? std::optional<double>(static_cast<double>(first_ranked) / positives) : std::nullopt));
+  }
+  if (per_rule && pack.transforms) {
+    // One entry per JSON rule (a cross product's rules are summed).
+    std::map<std::pair<uint32_t, uint32_t>, std::array<size_t, 3>> by_rule;
+    for (size_t r = 0; r < rule_count; ++r) {
+      const auto& rule = pack.transforms->rules[r];
+      auto& counts = by_rule[{rule.transform, rule.index_in_transform}];
+      counts[0] += recovers[r];
+      counts[1] += adds[r];
+      counts[2] += breaks[r];
+    }
+    out += ",\"perRule\":[";
+    bool first = true;
+    for (const auto& [key, counts] : by_rule) {
+      out += std::format("{}{{\"transform\":{},\"rule\":{},\"recovers\":{}", first ? "" : ",",
+                         json_string(pack.transforms->transforms[key.first].id), key.second, counts[0]);
+      if (query) out += std::format(",\"falseCandidates\":{}", counts[1]);
+      out += std::format(",\"breaks\":{}}}", counts[2]);
+      first = false;
+    }
+    out += "]";
+  }
+  out += "}\n";
+  std::cout << out;
+  return 0;
+}
+
+}  // namespace
+
 int main(int argc, char* argv[]) {
-  if (argc < 2) {
+  Context context;
+  int first = 1;
+  while (first + 1 < argc && std::string_view(argv[first]) == "--languages") {
+    context.languages_dir = argv[first + 1];
+    context.languages_given = true;
+    first += 2;
+  }
+  if (first >= argc) {
     print_usage(argv[0]);
     return 1;
   }
 
   const auto begin = std::chrono::steady_clock::now();
-  std::string_view command = argv[1];
+  std::string_view command = argv[first];
+  const int argn = argc - first;  // arguments from the command on
+  bool timed = true;
+  int status = 0;
 
-  if (command == "import" && argc >= 3) {
-    cmd_import(argv[2]);
-  } else if (command == "deinflect" && argc >= 3) {
-    cmd_deinflect(argv[2]);
-  } else if (command == "preprocess" && argc >= 3) {
-    cmd_preprocess(argv[2]);
-  } else if (command == "query" && argc >= 4) {
-    cmd_query(argv[2], argv[3]);
-  } else if (command == "lookup" && argc >= 4) {
-    auto db_paths = std::views::counted(argv + 2, argc - 3) |
-                    std::views::transform([](const char* arg) { return std::string(arg); }) |
-                    std::ranges::to<std::vector>();
-    std::string term = argv[argc - 1];
-    cmd_lookup(db_paths, term);
-  } else if (command == "freq" && argc >= 5) {
-    cmd_freq(argv[2], argv[3], argv[4]);
-  } else if (command == "kanji" && argc >= 4) {
-    cmd_kanji(argv[2], argv[3]);
-  } else {
-    print_usage(argv[0]);
+  try {
+    if (command == "import" && argn >= 2) {
+      status = cmd_import(argv[first + 1]);
+    } else if (command == "languages") {
+      timed = false;
+      status = cmd_languages(context);
+    } else if (command == "deinflect" || command == "preprocess") {
+      const auto args = parse_arguments(argc, argv, first + 1, {"--transforms"}, {"--stdin"});
+      if (args.positional.size() == 1 && !args.flags.contains("--stdin") && !args.values.contains("--transforms")) {
+        status = command == "deinflect" ? cmd_deinflect_legacy(args.positional[0]) : cmd_preprocess_legacy(args.positional[0]);
+      } else if (args.positional.empty()) {
+        print_usage(argv[0]);
+        return 1;
+      } else {
+        timed = false;
+        status = command == "deinflect" ? cmd_deinflect(context, args) : cmd_preprocess(context, args);
+      }
+    } else if (command == "query" && argn >= 3) {
+      cmd_query(argv[first + 1], argv[first + 2]);
+    } else if (command == "lookup" && argn >= 3) {
+      status = cmd_lookup(context, parse_arguments(argc, argv, first + 1, {"--language"}, {}));
+    } else if (command == "freq" && argn >= 4) {
+      cmd_freq(argv[first + 1], argv[first + 2], argv[first + 3]);
+    } else if (command == "kanji" && argn >= 3) {
+      cmd_kanji(argv[first + 1], argv[first + 2]);
+    } else if (command == "eval-language") {
+      timed = false;
+      status = cmd_eval_language(context, parse_arguments(argc, argv, first + 1, {"--transforms", "--dictionary"}, {"--per-rule"}));
+    } else {
+      print_usage(argv[0]);
+      return 1;
+    }
+  } catch (const std::exception& error) {
+    std::cerr << "hoshidicts-cli: " << error.what() << "\n";
     return 1;
   }
 
-  const auto end = std::chrono::steady_clock::now();
-  std::chrono::duration<double, std::milli> duration = end - begin;
-  std::cout << std::format("runtime: {}ms\n", duration.count());
+  if (timed) {
+    const auto end = std::chrono::steady_clock::now();
+    std::chrono::duration<double, std::milli> duration = end - begin;
+    std::cout << std::format("runtime: {}ms\n", duration.count());
+  }
 
-  return 0;
+  return status;
 }
