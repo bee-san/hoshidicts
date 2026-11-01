@@ -1,0 +1,20 @@
+# Source: written for this pack (prototype), no third-party data.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+diacritics	1	كَتَبَ	كتب	v	
+diacritics	1	وَالْكِتَابُ	كتاب	n	NPref-Al
+tatweel	1	كـتـاب	كتاب	n	
+hamza	1	اكبر	أكبر	*	
+hamza	1	اسلام	إسلام	*	
+alif maqsura	1	فى	في	*	
+prefix and suffix	1	والكتابات	كتاب	n	NPref-Al|NSuff-At
+prefix and suffix	1	بمدرستها	مدرسة	n	NPref-Bi|NSuff-ath
+imperfect	1	يكتبون	كتب	v	IVPref-hm
+imperfect	1	سيكتبونها	كتب	v	IVPref-hm
+doubled verbs	1	مددت	مد	v	VDoubled|PVSuff-t
+doubled verbs	1	استحققن	استحق	v	VDoubled|CVSuff
+final-weak verbs	1	رميت	رمى	v	VFinalWeak|PVSuff-t
+final-weak verbs	1	دعوت	دعا	v	VFinalWeak|PVSuff-t
+negatives	0	ادرسك	درس	cv	*
+negatives	0	كتاب	كتب	v	*
+negatives	0	والكتاب	كتاب	v	*
+negatives	0	مدرسة	مدرس	v	*

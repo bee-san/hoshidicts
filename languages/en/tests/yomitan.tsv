@@ -1,0 +1,110 @@
+# GPL-3.0-or-later; Copyright (C) 2023-2026 Yomitan Authors; 2020-2022 Yomichan Authors
+# https://github.com/yomidevs/yomitan/blob/d3c54c10264673eca0d66b970ef74cd5c8b048e3/test/language/english-transforms.test.js
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+nouns	1	cats	cat	ns	plural
+nouns	1	cat's	cat	ns	possessive
+nouns	1	cats'	cat	ns	plural|possessive
+nouns	1	cats'	cats	ns	possessive
+nouns	1	dirty	dirt	ns	-y
+nouns	1	hazy	haze	ns	-y
+nouns	1	baggy	bag	ns	-y
+nouns	1	scummy	scum	ns	-y
+nouns	1	runny	run	ns	-y
+nouns	1	slippy	slip	ns	-y
+nouns	1	starry	star	ns	-y
+nouns	1	gassy	gas	ns	-y
+nouns	1	witty	wit	ns	-y
+verbs	1	walked	walk	v	past
+verbs	1	going to walk	walk	v	going-to future
+verbs	1	will walk	walk	v	will future
+verbs	1	don't walk	walk	v	imperative negative
+verbs	1	do not walk	walk	v	imperative negative
+verbs	1	hoped	hope	v	past
+verbs	1	tried	try	v	past
+verbs	1	frolicked	frolic	v	past
+verbs	1	rubbed	rub	v	past
+verbs	1	bidded	bid	v	past
+verbs	1	rigged	rig	v	past
+verbs	1	yakked	yak	v	past
+verbs	1	dialled	dial	v	past
+verbs	1	skimmed	skim	v	past
+verbs	1	binned	bin	v	past
+verbs	1	ripped	rip	v	past
+verbs	1	starred	star	v	past
+verbs	1	bussed	bus	v	past
+verbs	1	pitted	pit	v	past
+verbs	1	quizzed	quiz	v	past
+verbs	1	laid	lay	v	past
+verbs	1	paid	pay	v	past
+verbs	1	said	say	v	past
+verbs	1	adorn'd	adorn	v	past|archaic
+verbs	1	walking	walk	v	ing
+verbs	1	driving	drive	v	ing
+verbs	1	lying	lie	v	ing
+verbs	1	panicking	panic	v	ing
+verbs	1	rubbing	rub	v	ing
+verbs	1	bidding	bid	v	ing
+verbs	1	rigging	rig	v	ing
+verbs	1	yakking	yak	v	ing
+verbs	1	dialling	dial	v	ing
+verbs	1	skimming	skim	v	ing
+verbs	1	binning	bin	v	ing
+verbs	1	ripping	rip	v	ing
+verbs	1	starring	star	v	ing
+verbs	1	bussing	bus	v	ing
+verbs	1	pitting	pit	v	ing
+verbs	1	quizzing	quiz	v	ing
+verbs	1	runnin'	run	v	ing|dropped g
+verbs	1	walks	walk	v	3rd pers. sing. pres
+verbs	1	teaches	teach	v	3rd pers. sing. pres
+verbs	1	tries	try	v	3rd pers. sing. pres
+verbs	1	pushy	push	v	-y
+verbs	1	groovy	groove	v	-y
+verbs	1	saggy	sag	v	-y
+verbs	1	swimmy	swim	v	-y
+verbs	1	slippy	slip	v	-y
+verbs	1	blurry	blur	v	-y
+verbs	1	chatty	chat	v	-y
+verbs	1	unlearn	learn	v	un-
+verbs	1	admirably	admire	v	-able|adverb
+phrasal verbs	1	look something up	look up	v_phr	interposed object
+phrasal verbs	1	look it up	look up	v_phr	interposed object
+phrasal verbs	1	look one up	look up	v_phr	interposed object
+phrasal verbs	1	looking up	look up	v_phr	ing
+phrasal verbs	1	looked up	look up	v_phr	past
+phrasal verbs	1	looks up	look up	v_phr	3rd pers. sing. pres
+phrasal verbs	1	looked something up	look up	v_phr	past|interposed object
+adverbs	1	uninterestingly	interestingly	adj	un-
+adjectives	1	unfunny	funny	adj	un-
+adjectives	1	cooler	cool	adj	comparative
+adjectives	1	subtler	subtle	adj	comparative
+adjectives	1	funnier	funny	adj	comparative
+adjectives	1	drabber	drab	adj	comparative
+adjectives	1	madder	mad	adj	comparative
+adjectives	1	bigger	big	adj	comparative
+adjectives	1	dimmer	dim	adj	comparative
+adjectives	1	tanner	tan	adj	comparative
+adjectives	1	hotter	hot	adj	comparative
+adjectives	1	coolest	cool	adj	superlative
+adjectives	1	subtlest	subtle	adj	superlative
+adjectives	1	funniest	funny	adj	superlative
+adjectives	1	drabbest	drab	adj	superlative
+adjectives	1	maddest	mad	adj	superlative
+adjectives	1	biggest	big	adj	superlative
+adjectives	1	dimmest	dim	adj	superlative
+adjectives	1	tannest	tan	adj	superlative
+adjectives	1	hottest	hot	adj	superlative
+adjectives	1	quickly	quick	adj	adverb
+adjectives	1	happily	happy	adj	adverb
+adjectives	1	humbly	humble	adj	adverb
+invalid deinflections	0	bo	boss	ns	plural|plural
+invalid deinflections	0	stable	sta	adj	-able
+-able	1	unforgettable	forget	v	un-|-able
+-able	1	forgettable	forget	v	-able
+-able	1	likeable	like	v	-able
+-able	1	doable	do	v	-able
+-able	1	desirable	desire	v	-able
+-able	1	reliable	rely	v	-able
+-able	1	movable	move	v	-able
+-able	1	adorable	adore	v	-able
+-able	1	carriable	carry	v	-able

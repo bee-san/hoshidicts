@@ -1,0 +1,15 @@
+# Source: written for this pack (prototype), no third-party data.
+# category	valid	input	variant
+diacritics	1	وَلَدَ	ولد
+diacritics	1	وَلَدَ	وَلَدَ
+diacritics	1	قُرْآن	قرآن
+tatweel	1	لـكن	لكن
+unicode	1	ﻴ	ي
+unicode	1	ﻻ	لا
+hamza top	1	اكبر	أكبر
+hamza bottom	1	اسلام	إسلام
+hamza first alef only	1	ابا	أبا
+alif maqsura	1	فى	في
+negatives	0	ابا	أبأ
+negatives	0	ىف	يف
+negatives	0	ولد	وَلَدَ

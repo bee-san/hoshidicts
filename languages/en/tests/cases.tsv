@@ -1,0 +1,41 @@
+# Source: written for this pack (prototype), no third-party data.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+phrasal verbs	1	put Mary’s coat on	put on	v_phr	interposed object
+phrasal verbs	1	put the long-sleeved shirt on	put on	v_phr	interposed object
+phrasal verbs	1	put it on the table	put on the table	v_phr	interposed object
+phrasal verbs	1	looked it up	look up	v_phr	past|interposed object
+phrasal verbs	1	running away	run away	v_phr	ing
+phrasal verbs	1	tries out	try out	v_phr	3rd pers. sing. pres
+irregular verbs	1	went	go	v	irregular past
+irregular verbs	1	gone	go	v	irregular past participle
+irregular verbs	1	were	be	v	irregular past
+irregular verbs	1	is	be	v	irregular present
+irregular verbs	1	written	write	v	irregular past participle
+irregular verbs	1	bought	buy	v	irregular past
+irregular nouns	1	children	child	ns	irregular plural
+irregular nouns	1	grandchildren	grandchild	ns	irregular plural
+irregular nouns	1	firemen	fireman	ns	irregular plural
+irregular nouns	1	mice	mouse	ns	irregular plural
+irregular nouns	1	cacti	cactus	ns	irregular plural
+irregular nouns	1	analyses	analysis	ns	irregular plural
+irregular nouns	1	indices	index	ns	irregular plural
+irregular nouns	1	people	person	ns	irregular plural
+comparison	1	better	good	adj	irregular comparative
+comparison	1	worst	bad	adj	irregular superlative
+apostrophes	1	mother’s	mother	n	possessive typographic
+apostrophes	1	runnin’	run	v	ing|dropped g typographic
+apostrophes	1	adorn’d	adorn	v	past|archaic typographic
+capitals	1	Walked	walk	v	past
+capitals	1	WALKED	walk	v	past
+negatives	0	bo	boss	ns	*
+negatives	0	running	runn	adj	*
+negatives	0	looked uptown	look uptown	*	*
+negatives	0	put up on	put on	*	*
+negatives	0	put it upon	put on	*	*
+negatives	0	stable	sta	adj	*
+negatives	0	went	wend	*	*
+negatives	0	unkind	kind	n	*
+negatives	0	happily	happy	v	*
+negatives	0	walks	walk	adj	*
+comparison	1	grapier	grapey	adj	comparative -ey
+comparison	1	pukiest	pukey	adj	superlative -ey

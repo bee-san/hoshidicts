@@ -1,0 +1,2 @@
+# Deliberate differences from Yomitan d3c54c1, read by tools/check-yomitan.mjs. None: the port gives the same results as Yomitan.
+# kind	id	side	input	text	conditions	reason

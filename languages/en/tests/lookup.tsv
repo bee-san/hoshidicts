@@ -1,0 +1,14 @@
+# Source: written for this pack (prototype), against tests/dictionary/.
+# category	valid	text	expression	matched
+separated words	1	minute walk	minute	minute
+separated words	1	mother’s house	mother	mother’s
+inflection	1	running late	run	running
+inflection	1	Walked home	walk	Walked
+inflection	1	children playing	child	children
+inflection	1	went home	go	went
+phrasal verbs	1	looked it up yesterday	look up	looked it up
+phrasal verbs	1	put Mary’s coat on the hook	put on	put Mary’s coat on
+word resolution	1	cats	cat	cats
+negatives	0	looked uptown	look up	looked up
+negatives	0	running late	run	runn
+negatives	0	minute walk	minute walk	minute walk

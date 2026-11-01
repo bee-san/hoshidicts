@@ -1,0 +1,202 @@
+[
+  [
+    "minute",
+    "",
+    "n",
+    "n",
+    0,
+    ["a sixtieth of an hour"],
+    1,
+    ""
+  ],
+  [
+    "walk",
+    "",
+    "v",
+    "v",
+    0,
+    ["to move on foot"],
+    2,
+    ""
+  ],
+  [
+    "walk",
+    "",
+    "n",
+    "n",
+    0,
+    ["a trip on foot"],
+    3,
+    ""
+  ],
+  [
+    "mother",
+    "",
+    "n",
+    "n",
+    0,
+    ["a female parent"],
+    4,
+    ""
+  ],
+  [
+    "house",
+    "",
+    "n",
+    "n",
+    0,
+    ["a building to live in"],
+    5,
+    ""
+  ],
+  [
+    "run",
+    "",
+    "v",
+    "v",
+    0,
+    ["to move swiftly on foot"],
+    6,
+    ""
+  ],
+  [
+    "run",
+    "",
+    "n",
+    "n",
+    0,
+    ["an act of running"],
+    7,
+    ""
+  ],
+  [
+    "look",
+    "",
+    "v",
+    "v",
+    0,
+    ["to use one's eyes"],
+    8,
+    ""
+  ],
+  [
+    "look up",
+    "",
+    "v",
+    "v",
+    0,
+    ["to search for in a reference"],
+    9,
+    ""
+  ],
+  [
+    "put",
+    "",
+    "v",
+    "v",
+    0,
+    ["to place"],
+    10,
+    ""
+  ],
+  [
+    "put on",
+    "",
+    "v",
+    "v",
+    0,
+    ["to dress oneself in"],
+    11,
+    ""
+  ],
+  [
+    "coat",
+    "",
+    "n",
+    "n",
+    0,
+    ["an outer garment"],
+    12,
+    ""
+  ],
+  [
+    "child",
+    "",
+    "n",
+    "n",
+    0,
+    ["a young person"],
+    13,
+    ""
+  ],
+  [
+    "go",
+    "",
+    "v",
+    "v",
+    0,
+    ["to move from one place to another"],
+    14,
+    ""
+  ],
+  [
+    "good",
+    "",
+    "adj",
+    "adj",
+    0,
+    ["of high quality"],
+    15,
+    ""
+  ],
+  [
+    "late",
+    "",
+    "adj",
+    "adj",
+    0,
+    ["after the expected time"],
+    16,
+    ""
+  ],
+  [
+    "cat",
+    "",
+    "n",
+    "n",
+    0,
+    ["a small domesticated feline"],
+    17,
+    ""
+  ],
+  [
+    "hook",
+    "",
+    "n",
+    "n",
+    0,
+    ["a curved piece for hanging things"],
+    18,
+    ""
+  ],
+  [
+    "play",
+    "",
+    "v",
+    "v",
+    0,
+    ["to act for fun"],
+    19,
+    ""
+  ],
+  [
+    "home",
+    "",
+    "n",
+    "n",
+    0,
+    ["the place where one lives"],
+    20,
+    ""
+  ]
+]

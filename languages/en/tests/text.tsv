@@ -1,0 +1,13 @@
+# Source: written for this pack (prototype), no third-party data.
+# category	valid	input	variant
+decapitalize	1	Walked	walked
+decapitalize	1	WALKED	walked
+decapitalize	1	WALKED	Walked
+decapitalize	1	walked	walked
+capitalize	1	london	London
+capitalize	1	éclair	Éclair
+full case mapping	1	STRASSE	strasse
+full case mapping	1	ßtraße	SStraße
+keep input	1	Walked	Walked
+negatives	0	walked	WALKED
+negatives	0	Walked	wALKED
