@@ -2950,6 +2950,8 @@
         ["went home", "went home"],
         ["looked it up yesterday", "looked it up yesterday"],
         ["put Mary’s coat on the hook", "put mary’s coat on the hook"],
+        ["catsup", "catsup"],
+        ["goods", "goods"],
         ["She was running late, so she took the earlier train.", "she was running late, so she took the earlier train."],
         ["run", "run"]
       ]
@@ -5106,6 +5108,8 @@
         ["went home", "Went home"],
         ["looked it up yesterday", "Looked it up yesterday"],
         ["put Mary’s coat on the hook", "Put Mary’s coat on the hook"],
+        ["catsup", "Catsup"],
+        ["goods", "Goods"],
         ["She was running late, so she took the earlier train.", "She was running late, so she took the earlier train."],
         ["run", "Run"]
       ]

@@ -19,7 +19,7 @@
     "wordInternal": null,
     "sentence": {
       "terminators": [".", "!", "?", "\u2026"],
-      "quotePairs": [["\u201C", "\u201D"], ["\u2018", "\u2019"], ["\"", "\""], ["(", ")"]]
+      "quotePairs": [["\u201C", "\u201D"], ["\"", "\""], ["(", ")"]]
     },
     "highlightBreaks": null,
     "lineJoiner": " "
