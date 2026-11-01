@@ -53,6 +53,21 @@ struct Processor {
   bool keep_input = true;
   bool optional = false;
   std::vector<StepList> variants;
+  // When every variant is one builtin step (the Japanese processors), those
+  // builtins, so process_text calls them directly; empty otherwise. Set by
+  // finish().
+  std::vector<TextFunction> builtins;
+
+  void finish() {
+    builtins.clear();
+    for (const auto& steps : variants) {
+      if (steps.size() != 1 || steps[0].kind != StepKind::Builtin) {
+        builtins.clear();
+        return;
+      }
+      builtins.push_back(steps[0].builtin);
+    }
+  }
 };
 
 // A processed text and the number of processors that changed it.

@@ -300,7 +300,8 @@ constexpr size_t index_from = 32;
 
 // Adds a text (moved from `text` when `move`) unless it is there, keeping the
 // smallest steps.
-void add_variant(NextVariants& next, std::u32string& text, bool move, int steps, bool* limit_reached) {
+[[gnu::always_inline]] inline void add_variant(NextVariants& next, std::u32string& text, bool move, int steps,
+                                               bool* limit_reached) {
   if (Variant* existing = next.find(text)) {
     if (steps < existing->second) existing->second = steps;
     return;
@@ -344,6 +345,28 @@ void run_processors(std::span<const Processor> processors, const EnabledOptions&
       continue;
     }
     NextVariants next{next_items};
+    if (!processor.builtins.empty()) {
+      for (size_t vi = 0; vi < count; ++vi) {
+        std::u32string& variant = variants[vi].first;
+        const int steps = variants[vi].second;
+        for (const TextFunction builtin : processor.builtins) {
+          builtin(variant, scratch);
+          if (scratch == variant) {
+            if (!processor.keep_input) add_variant(next, variant, false, steps, limit_reached);
+          } else {
+            add_variant(next, scratch, false, steps + 1, limit_reached);
+          }
+        }
+        if (processor.keep_input) {
+          add_variant(next, variant, true, steps, limit_reached);
+        }
+      }
+      std::sort(next_items.begin(), next_items.begin() + static_cast<std::ptrdiff_t>(next.count),
+                [](const Variant& a, const Variant& b) { return a.first < b.first; });
+      std::swap(variants, next_items);
+      count = next.count;
+      continue;
+    }
     for (size_t vi = 0; vi < count; ++vi) {
       std::u32string& variant = variants[vi].first;
       const int steps = variants[vi].second;

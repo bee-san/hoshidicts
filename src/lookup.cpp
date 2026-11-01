@@ -203,8 +203,9 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   ankerl::unordered_dense::map<uint64_t, uint32_t> index;
   std::vector<Deinflections> deinflection_store;
   std::vector<RawTerms> term_store;
-  // Postprocessed forms the candidates look at (only with postprocessors).
-  std::deque<std::string> forms;
+  // Postprocessed forms the candidates look at (only with postprocessors;
+  // a deque allocates even when empty, so it is made on first use).
+  std::unique_ptr<std::deque<std::string>> forms;
 
   size_t text_len = utf8::distance(lookup_string.begin(), lookup_string.end());
 
@@ -365,9 +366,12 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
       }
       return;
     }
+    if (!forms) {
+      forms = std::make_unique<std::deque<std::string>>();
+    }
     for (auto& variant : lang::process_text(pack.postprocessors, base[di].text, enabled)) {
-      forms.push_back(std::move(variant.text));
-      const std::string& form = forms.back();
+      forms->push_back(std::move(variant.text));
+      const std::string& form = forms->back();
       merge(matched_len, base, di, form, steps + variant.steps);
       if (probe && metadata_only && base[di].conditions == 0) {
         metadata_probes.push_back(

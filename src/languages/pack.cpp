@@ -345,6 +345,7 @@ struct PackParser {
       for (size_t j = 0; j < variants.size(); ++j) {
         p.variants.push_back(step_list(variants[j], item(vpath, j), true, true, &fields));
       }
+      p.finish();
       out.push_back(std::move(p));
     }
     return out;
