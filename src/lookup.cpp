@@ -286,7 +286,8 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   // (LookupOptions::metadata_only_terms). A frequency or pitch row has no part
   // of speech, so it answers only the deinflections filter_by_pos keeps a term
   // without one for, those that need none: the text as it is written, after
-  // preprocessing. It counts only for a prefix longer than every match with
+  // preprocessing, and the few rules that carry none, such as kansai-ben -うたら
+  // for -ったら. It counts only for a prefix longer than every match with
   // glossaries, cat speech included, so it can only add terms in front of them.
   // Each reading the rows name is one term, with the rows for that reading.
   if (metadata_only) {
