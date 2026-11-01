@@ -25,6 +25,11 @@ struct LookupOptions {
   // where it reads more of the text than every ordinary reading. Off, the
   // results are exactly those without it.
   bool neko_speech = false;
+  // Also return terms that only frequency and pitch dictionaries have, with no
+  // glossaries, where they read more of the text than every term with
+  // glossaries. lookup_dictionary never returns them. Off, the results are
+  // exactly those without it.
+  bool metadata_only_terms = false;
 };
 
 class Lookup {

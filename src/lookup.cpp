@@ -6,9 +6,11 @@
 
 #include <algorithm>
 #include <climits>
+#include <iterator>
 #include <numeric>
 #include <optional>
 #include <ranges>
+#include <span>
 #include <string_view>
 #include <vector>
 
@@ -47,6 +49,9 @@ struct Candidate {
   // dictionaries this candidate's glossaries come from. SIZE_MAX until it is
   // computed from the glossary chain just before sorting. It breaks ties the
   // frequency comparison leaves, so the reading the user ranked highest wins.
+  // A metadata-only term (LookupOptions::metadata_only_terms) has no glossary
+  // chain and starts after every term dictionary, in the order its reading was
+  // found (DictionaryQuery::metadata_readings).
   size_t dict_rank = SIZE_MAX;
 };
 
@@ -140,18 +145,24 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   };
   std::vector<ScannedPrefix> scanned;
 
-  // Looks up one deinflection of a prefix's variant and merges its terms into
-  // the candidates, keeping each term's longest matched form.
-  auto merge = [&](size_t matched_len, const DeinflectionResult& deinflection, int steps) {
-    // Most deinflected forms name no entry of their part of speech; read
-    // the frequencies and pitches of only the terms the filter keeps.
-    auto terms = query_.query_raw(deinflection.text, pins, dictionary_path, false);
-    filter_by_pos(terms, deinflection);
-    for (auto& term : terms.terms) {
-      query_.collect_frequencies(term.expression, term.reading, term.frequencies, pins);
-      query_.collect_pitches(term.expression, term.reading, term.pitches, pins);
-    }
+  // Every scanned prefix's deinflections that need no part of speech, kept
+  // only for the metadata-only pass below, and the readings of the terms that
+  // pass adds.
+  struct MetadataProbe {
+    size_t length;
+    const DeinflectionResult* deinflection;
+    int steps;
+  };
+  const bool metadata_only = options.metadata_only_terms && dictionary_path == nullptr;
+  std::vector<MetadataProbe> metadata_probes;
+  std::vector<std::vector<std::string>> metadata_reading_store;
+  bool metadata_added = false;
 
+  // Merges the terms of one deinflection of a prefix's variant into the
+  // candidates, keeping each term's longest matched form. A new candidate's
+  // dict_rank starts at `rank`.
+  auto add_terms = [&](size_t matched_len, const DeinflectionResult& deinflection, int steps, RawTerms&& terms,
+                       size_t rank) {
     const auto store_index = static_cast<uint32_t>(term_store.size());
     for (auto& term : terms.terms) {
       const uint64_t h = key_hash(term.expression, term.reading);
@@ -170,10 +181,25 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
                                        .deinflection = &deinflection,
                                        .term = &term,
                                        .store_index = store_index,
-                                       .steps = steps});
+                                       .steps = steps,
+                                       .dict_rank = rank});
       }
     }
     term_store.push_back(std::move(terms));
+  };
+
+  // Looks up one deinflection of a prefix's variant and merges its terms into
+  // the candidates.
+  auto merge = [&](size_t matched_len, const DeinflectionResult& deinflection, int steps) {
+    // Most deinflected forms name no entry of their part of speech; read
+    // the frequencies and pitches of only the terms the filter keeps.
+    auto terms = query_.query_raw(deinflection.text, pins, dictionary_path, false);
+    filter_by_pos(terms, deinflection);
+    for (auto& term : terms.terms) {
+      query_.collect_frequencies(term.expression, term.reading, term.frequencies, pins);
+      query_.collect_pitches(term.expression, term.reading, term.pitches, pins);
+    }
+    add_terms(matched_len, deinflection, steps, std::move(terms), SIZE_MAX);
   };
 
   // Scans one prefix of the input: every processed variant, deinflected, looked
@@ -190,6 +216,10 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
       auto deinflection_results = deinflector_.deinflect(variant.text);
       for (auto& deinflection : deinflection_results) {
         merge(search_str.size(), deinflection, variant.steps);
+        if (metadata_only && deinflection.conditions == 0) {
+          metadata_probes.push_back(
+              {.length = search_str.size(), .deinflection = &deinflection, .steps = variant.steps});
+        }
       }
       deinflection_store.push_back(std::move(deinflection_results));
     }
@@ -248,6 +278,48 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
           merge(prefix.length, deinflection, variant.steps);
         }
         deinflection_store.push_back(std::move(deinflection_results));
+      }
+    }
+  }
+
+  // Terms only frequency and pitch dictionaries have
+  // (LookupOptions::metadata_only_terms). A frequency or pitch row has no part
+  // of speech, so it answers only the deinflections filter_by_pos keeps a term
+  // without one for, those that need none: the text as it is written, after
+  // preprocessing, and the few rules that carry none, such as kansai-ben -うたら
+  // for -ったら. It counts only for a prefix longer than every match with
+  // glossaries, cat speech included, so it can only add terms in front of them.
+  // Each reading the rows name is one term, with the rows for that reading.
+  if (metadata_only) {
+    size_t defined_len = 0;
+    for (const auto& candidate : candidates) {
+      defined_len = std::max(defined_len, candidate.matched_len);
+    }
+    for (const auto& probe : metadata_probes) {
+      if (probe.length <= defined_len) {
+        continue;
+      }
+      const std::string& text = probe.deinflection->text;
+      // The terms view these strings, which stay where they are when the
+      // store grows.
+      const auto& readings = metadata_reading_store.emplace_back(query_.metadata_readings(text, pins));
+      for (size_t i = 0; i < readings.size(); ++i) {
+        RawTerm term{.expression = text,
+                     .reading = readings[i],
+                     .score = 0,
+                     .first_glossary = UINT32_MAX,
+                     .last_glossary = UINT32_MAX,
+                     .frequencies = {},
+                     .pitches = {}};
+        query_.collect_frequencies(term.expression, term.reading, term.frequencies, pins);
+        query_.collect_pitches(term.expression, term.reading, term.pitches, pins);
+        if (term.frequencies.empty() && term.pitches.empty()) {
+          continue;
+        }
+        RawTerms terms;
+        terms.terms.push_back(std::move(term));
+        add_terms(probe.length, *probe.deinflection, probe.steps, std::move(terms), query_.term_dicts_.size() + i);
+        metadata_added = true;
       }
     }
   }
@@ -365,18 +437,38 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
         return a_reading_expr_match > b_reading_expr_match;
       };
 
+  const auto by_key = [&](uint32_t ia, uint32_t ib) { return key_less(*candidates[ia].term, *candidates[ib].term); };
+  const auto by_rank = [&](uint32_t ia, uint32_t ib) { return less(candidates[ia], candidates[ib]); };
   std::vector<uint32_t> order(candidates.size());
   std::iota(order.begin(), order.end(), uint32_t{0});
-  std::ranges::sort(order,
-                    [&](uint32_t ia, uint32_t ib) { return key_less(*candidates[ia].term, *candidates[ib].term); });
-  auto order_middle = std::ranges::next(order.begin(), static_cast<std::ptrdiff_t>(retained_count));
-  std::ranges::partial_sort(order, order_middle,
-                            [&](uint32_t ia, uint32_t ib) { return less(candidates[ia], candidates[ib]); });
+  // Metadata-only terms are ranked apart and merged in, so the terms with
+  // glossaries keep exactly the order they have without them.
+  auto metadata = std::ranges::subrange(order.end(), order.end());
+  if (metadata_added) {
+    metadata = std::ranges::stable_partition(
+        order, [&](uint32_t i) { return candidates[i].term->first_glossary != UINT32_MAX; });
+  }
+  const auto ordinary_end = metadata.begin();
+  std::ranges::sort(order.begin(), ordinary_end, by_key);
+  const auto ordinary_middle = std::ranges::next(
+      order.begin(),
+      static_cast<std::ptrdiff_t>(std::min(retained_count, static_cast<size_t>(ordinary_end - order.begin()))));
+  std::ranges::partial_sort(order.begin(), ordinary_middle, ordinary_end, by_rank);
+  std::span<const uint32_t> kept(order.begin(), ordinary_middle);
+  std::vector<uint32_t> merged;
+  if (!metadata.empty()) {
+    std::ranges::sort(metadata, by_key);
+    std::ranges::stable_sort(metadata, by_rank);
+    merged.reserve(metadata.size() + kept.size());
+    std::ranges::merge(metadata, kept, std::back_inserter(merged), by_rank);
+    merged.resize(std::min(merged.size(), retained_count));
+    kept = merged;
+  }
 
   std::vector<LookupResult> retained;
-  retained.reserve(retained_count);
-  for (auto it = order.begin(); it != order_middle; ++it) {
-    Candidate& c = candidates[*it];
+  retained.reserve(kept.size());
+  for (const uint32_t i : kept) {
+    Candidate& c = candidates[i];
     retained.push_back(LookupResult{.matched = lookup_string.substr(0, c.matched_len),
                                     .deinflected = c.deinflection->text,
                                     .trace = c.deinflection->trace,

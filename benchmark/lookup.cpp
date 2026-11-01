@@ -43,7 +43,7 @@ std::vector<std::string> read_word_list(const std::string& path) {
 int main(int argc, char** argv) {
   if (argc < 5) {
     std::cout << std::format(
-        "{} <csv_path> <iterations> --term <dict_path>... [--freq <dict_path>...] [--pitch <dict_path>...] [--kanji <dict_path>...] [--paged-entries] [--paged-index] [--json]\n", argv[0]);
+        "{} <csv_path> <iterations> --term <dict_path>... [--freq <dict_path>...] [--pitch <dict_path>...] [--kanji <dict_path>...] [--paged-entries] [--paged-index] [--metadata-only-terms] [--json]\n", argv[0]);
     return 1;
   }
 
@@ -58,6 +58,7 @@ int main(int argc, char** argv) {
   DictionaryStorage storage = DictionaryStorage::Mapped;
   DictionaryIndexStorage index_storage = DictionaryIndexStorage::Mapped;
   bool json = false;
+  LookupOptions options;
   std::vector<std::string>* current = &term_paths;
   for (int i = 3; i < argc; ++i) {
     const std::string_view arg = argv[i];
@@ -73,6 +74,8 @@ int main(int argc, char** argv) {
       storage = DictionaryStorage::Paged;
     } else if (arg == "--paged-index") {
       index_storage = DictionaryIndexStorage::Paged;
+    } else if (arg == "--metadata-only-terms") {
+      options.metadata_only_terms = true;
     } else if (arg == "--json") {
       json = true;
     } else {
@@ -104,7 +107,7 @@ int main(int argc, char** argv) {
     auto& pass = report.passes.emplace_back();
     for (const auto& word : words) {
       const auto start = std::chrono::steady_clock::now();
-      const auto results = lookup.lookup(word);
+      const auto results = lookup.lookup(word, 16, 16, options);
       const auto end = std::chrono::steady_clock::now();
 
       const std::chrono::duration<double, std::milli> elapsed = end - start;

@@ -367,6 +367,170 @@ int main() {
     check(expressions(long_na_input, {}).empty(), "long key by cat speech, off: expected no result");
   }
 
+  // --- Terms only frequency and pitch dictionaries have
+  // (LookupOptions::metadata_only_terms, off by default, bee-san/hachidori#620).
+  // When on, a frequency or pitch row keyed by text that needs no deinflection
+  // is a term without glossaries, where it reads further than every term with
+  // glossaries. -----------------------------------------------------------------
+  {
+    const std::filesystem::path out4 = root / "out4";
+    std::filesystem::create_directories(out4);
+    const std::string defined = import_dict(
+        root, out4, "defined",
+        {{"index.json", R"({"title":"defined","format":3,"revision":"1"})"},
+         {"term_bank_1.json",
+          R"([["東京","とうきょう","","",0,["Tokyo"],1,""],)"
+          R"(["事","こと","","",0,["thing"],2,""],)"
+          R"(["食べる","たべる","","v1",0,["to eat"],3,""],)"
+          // Six terms read た that tie on every key.
+          R"(["田","た","","",0,["rice field"],4,""],["他","た","","",0,["other"],5,""],)"
+          R"(["多","た","","",0,["many"],6,""],["太","た","","",0,["fat"],7,""],)"
+          R"(["汰","た","","",0,["select"],8,""],["打","た","","",0,["hit"],9,""]])"}});
+    // 重複語's two readings are listed against both their lexical order and
+    // their ranks, so each order a test expects is the one it names.
+    const std::string frequency = import_dict(
+        root, out4, "meta-frequency",
+        {{"index.json", R"({"title":"meta-frequency","format":3,"revision":"1","frequencyMode":"rank-based"})"},
+         {"term_meta_bank_1.json",
+          R"([["東京タワー","freq",{"reading":"とうきょうタワー","frequency":{"value":5000,"displayValue":"5000"}}],)"
+          R"(["東京","freq",{"reading":"とうきょう","frequency":{"value":100,"displayValue":"100"}}],)"
+          R"(["こと","freq",{"value":15,"displayValue":"15㋕"}],)"
+          R"(["ぴえん","freq",{"value":30000,"displayValue":"30000"}],)"
+          R"(["ぴえんぱおん","freq",{"value":90000,"displayValue":"90000"}],)"
+          R"(["ググる","freq",{"value":20000,"displayValue":"20000"}],)"
+          R"(["トウキョウ","freq",{"value":70000,"displayValue":"70000"}],)"
+          R"(["たかだ","freq",{"value":147490,"displayValue":"147490"}],)"
+          R"(["重複語","freq",{"reading":"ちょうふくご","frequency":{"value":60000,"displayValue":"60000"}}],)"
+          R"(["重複語","freq",{"reading":"じゅうふくご","frequency":{"value":40000,"displayValue":"40000"}}]])"},
+         // A kanji frequency is not a term frequency.
+         {"kanji_meta_bank_1.json", R"([["鰯","freq",{"value":2000,"displayValue":"2000"}]])"}});
+    const std::string pitch = import_dict(
+        root, out4, "meta-pitch",
+        {{"index.json", R"({"title":"meta-pitch","format":3,"revision":"1"})"},
+         {"term_meta_bank_1.json",
+          R"([["東京タワー","pitch",{"reading":"とうきょうタワー","pitches":[{"position":5}]}],)"
+          R"(["重複語","pitch",{"reading":"じゅうふくご","pitches":[{"position":0}]}],)"
+          R"(["寿限無","ipa",{"reading":"じゅげむ","transcriptions":[{"ipa":"dʑɯɡemɯ"}]}]])"}});
+    DictionaryQuery query;
+    check(query.add_term_dict(defined), "add defined");
+    check(query.add_freq_dict(frequency), "add meta-frequency");
+    check(query.add_pitch_dict(pitch), "add meta-pitch");
+    Lookup lookup(query, deinflector);
+    LookupOptions on;
+    on.metadata_only_terms = true;
+    // Each result as expression/reading, with * when it has no glossaries.
+    const auto terms = [](const std::vector<LookupResult>& results) {
+      std::vector<std::string> out;
+      for (const auto& result : results) {
+        out.push_back(result.term.expression + "/" + result.term.reading + (result.term.glossaries.empty() ? "*" : ""));
+      }
+      return out;
+    };
+    const auto find = [&](const std::string& text, const LookupOptions& options) {
+      return terms(lookup.lookup(text, 32, 16, options));
+    };
+
+    // Off (the default): only terms with glossaries, whatever the metadata.
+    const std::vector<std::pair<std::string, std::vector<std::string>>> off_cases = {
+        {"東京タワー", {"東京/とうきょう"}}, {"ぴえん", {}}, {"ぴえんぱおん", {}}, {"ググる", {}},
+        {"重複語", {}}, {"寿限無", {}}, {"こと", {"事/こと"}}, {"トウキョウ", {"東京/とうきょう"}}};
+    for (const auto& [text, want] : off_cases) {
+      const auto got = find(text, {});
+      check(same(got, want), text + ", off: expected " + join(want) + ", got " + join(got));
+    }
+
+    // On: a metadata-only term that reads further than every defined one comes
+    // first, with both dictionaries' rows for its reading; the defined term
+    // keeps its own.
+    const auto tower = lookup.lookup("東京タワー", 32, 16, on);
+    check(same(terms(tower), {"東京タワー/とうきょうタワー*", "東京/とうきょう"}),
+          "東京タワー, on: expected [東京タワー/とうきょうタワー*, 東京/とうきょう], got " + join(terms(tower)));
+    if (tower.size() == 2) {
+      const auto& term = tower[0].term;
+      check(tower[0].matched == "東京タワー" && tower[0].deinflected == "東京タワー" && tower[0].trace.empty() &&
+                tower[0].preprocessor_steps == 0,
+            "東京タワー, on: expected an undeinflected match of the whole text");
+      check(term.rules.empty() && term.score == 0, "東京タワー, on: expected no rules and a zero score");
+      check(term.frequencies.size() == 1 && term.frequencies[0].dict_name == "meta-frequency" &&
+                term.frequencies[0].frequencies.size() == 1 && term.frequencies[0].frequencies[0].value == 5000,
+            "東京タワー, on: expected meta-frequency's 5000");
+      check(term.pitches.size() == 1 && term.pitches[0].dict_name == "meta-pitch" &&
+                term.pitches[0].pitches.size() == 1 && term.pitches[0].pitches[0].position == 5,
+            "東京タワー, on: expected meta-pitch's [5]");
+      check(tower[1].term.frequencies.size() == 1 && tower[1].term.frequencies[0].frequencies[0].value == 100,
+            "東京タワー, on: expected 東京 to keep its own frequency");
+    }
+
+    // On: the terms with glossaries keep exactly their order without the
+    // option, ties included (the six た terms tie on every key).
+    const auto takada_off = find("たかだ", {});
+    auto takada_on = find("たかだ", on);
+    check(takada_off.size() == 6 && !takada_on.empty() && takada_on.front() == "たかだ/たかだ*",
+          "たかだ, on: expected たかだ/たかだ* before the six た terms, got " + join(takada_on));
+    if (!takada_on.empty()) takada_on.erase(takada_on.begin());
+    check(same(takada_on, takada_off),
+          "たかだ: the た terms on " + join(takada_on) + " are not in their order off " + join(takada_off));
+
+    // On: every prefix longer than the defined matches counts, not only the
+    // longest one, and a reading-less row reads its own text.
+    const auto paon = find("ぴえんぱおん", on);
+    check(same(paon, {"ぴえんぱおん/ぴえんぱおん*", "ぴえん/ぴえん*"}),
+          "ぴえんぱおん, on: expected [ぴえんぱおん/ぴえんぱおん*, ぴえん/ぴえん*], got " + join(paon));
+    // A processed variant is read, keeping its preprocessing step.
+    const auto katakana = lookup.lookup("ピエン", 32, 16, on);
+    check(same(terms(katakana), {"ぴえん/ぴえん*"}) && katakana[0].matched == "ピエン" &&
+              katakana[0].preprocessor_steps > 0,
+          "ピエン, on: expected ぴえん* through a preprocessed variant, got " + join(terms(katakana)));
+
+    // On: text a defined term matches as far keeps exactly its ordinary results:
+    // こと is 事's reading, and トウキョウ reads as 東京 through its hiragana
+    // variant, though both have rows of their own.
+    for (const auto* text : {"こと", "トウキョウ", "食べた"}) {
+      const auto got = find(text, on);
+      const auto want = find(text, {});
+      check(same(got, want), std::string(text) + ": on " + join(got) + " differs from off " + join(want));
+    }
+
+    // On: a row has no part of speech, so like a term without one it matches
+    // only text that needs no deinflection (ググった is not read as ググる).
+    check(find("ググった", on).empty(), "ググった, on: expected no result");
+    const auto gugu = find("ググる", on);
+    check(same(gugu, {"ググる/ググる*"}), "ググる, on: expected [ググる/ググる*], got " + join(gugu));
+
+    // On: a kanji frequency is not a term.
+    check(find("鰯", on).empty(), "鰯, on: expected no result from a kanji_meta_bank row");
+
+    // On: a pitch dictionary's phonetic transcription is a row too.
+    const auto jugemu = lookup.lookup("寿限無", 32, 16, on);
+    check(same(terms(jugemu), {"寿限無/じゅげむ*"}) && jugemu[0].term.frequencies.empty() &&
+              jugemu[0].term.pitches.size() == 1 && jugemu[0].term.pitches[0].transcriptions.size() == 1 &&
+              jugemu[0].term.pitches[0].transcriptions[0] == "dʑɯɡemɯ",
+          "寿限無, on: expected [寿限無/じゅげむ*] with its IPA, got " + join(terms(jugemu)));
+
+    // On: the readings rows name are each a term, in the order the frequency and
+    // then the pitch dictionaries list them; an explicit frequency sort reorders
+    // them like any other terms.
+    const auto auto_readings = find("重複語", on);
+    check(same(auto_readings, {"重複語/ちょうふくご*", "重複語/じゅうふくご*"}),
+          "重複語, on, auto: expected [重複語/ちょうふくご*, 重複語/じゅうふくご*], got " + join(auto_readings));
+    LookupOptions sorted = on;
+    sorted.frequency_order = LookupFrequencyOrder::Ascending;
+    sorted.frequency_dictionary = "meta-frequency";
+    const auto sorted_readings = find("重複語", sorted);
+    check(same(sorted_readings, {"重複語/じゅうふくご*", "重複語/ちょうふくご*"}),
+          "重複語, on, ascending: expected [重複語/じゅうふくご*, 重複語/ちょうふくご*], got " + join(sorted_readings));
+
+    // On: the metadata-only terms come first, so a capped list can lose the
+    // last defined ones.
+    const auto capped = terms(lookup.lookup("東京タワー", 1, 16, on));
+    check(same(capped, {"東京タワー/とうきょうタワー*"}),
+          "東京タワー, on, max_results 1: expected [東京タワー/とうきょうタワー*], got " + join(capped));
+
+    // On: lookup_dictionary answers one term dictionary only.
+    const auto scoped = terms(lookup.lookup_dictionary("東京タワー", defined, 32, 16, on));
+    check(same(scoped, {"東京/とうきょう"}), "lookup_dictionary, on: expected [東京/とうきょう], got " + join(scoped));
+  }
+
   std::filesystem::remove_all(root);
   if (failures) {
     std::fprintf(stderr, "%d failure(s)\n", failures);

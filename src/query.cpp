@@ -766,6 +766,68 @@ void DictionaryQuery::collect_pitches(std::string_view expression, std::string_v
   }
 }
 
+std::vector<std::string> DictionaryQuery::metadata_readings(std::string_view expression, BlobPins& pins) const {
+  std::vector<std::string> readings;
+  bool reading_less = false;
+  const auto add = [&](std::string& reading) {
+    if (reading.empty()) {
+      reading_less = true;
+    } else if (std::ranges::find(readings, reading) == readings.end()) {
+      readings.push_back(std::move(reading));
+    }
+  };
+  // The mode and data of every term meta row keyed by `expression`, laid out
+  // as collect_frequencies and collect_pitches read them.
+  const auto visit_rows = [&](const std::vector<Dictionary>& dicts, auto&& row) {
+    for (const auto& [path, name, styles, data] : dicts) {
+      uint64_t offset_addr = data->table(expression);
+      if (offset_addr == 0) {
+        continue;
+      }
+      visit_blobs(data->blobs, pins, [&](auto open) {
+        auto index = open(offset_addr);
+        auto count = read_value<uint32_t>(index);
+        for (uint32_t i = 0; i < count; i++) {
+          auto offset = read_value<uint64_t>(index);
+          auto blob = open(offset);
+
+          auto type = read_value<uint8_t>(blob);
+          if (type != 1) {
+            continue;
+          }
+
+          auto expr_len = read_value<uint16_t>(blob);
+          if (blob.str(expr_len) != expression) {
+            continue;
+          }
+
+          auto mode_len = read_value<uint8_t>(blob);
+          std::string_view mode = blob.str(mode_len);
+          auto data_size = read_value<uint32_t>(blob);
+          row(mode, blob.str(data_size));
+        }
+      });
+    }
+  };
+  visit_rows(freq_dicts_, [&](std::string_view mode, std::string_view row_data) {
+    ParsedFrequency parsed;
+    if (mode == "freq" && yomitan_parser::parse_frequency(row_data, parsed)) {
+      add(parsed.reading);
+    }
+  });
+  visit_rows(pitch_dicts_, [&](std::string_view mode, std::string_view row_data) {
+    ParsedPitch parsed;
+    if ((mode == "pitch" && yomitan_parser::parse_pitch(row_data, parsed)) ||
+        (mode == "ipa" && yomitan_parser::parse_ipa(row_data, parsed))) {
+      add(parsed.reading);
+    }
+  });
+  if (readings.empty() && reading_less) {
+    readings.emplace_back(expression);
+  }
+  return readings;
+}
+
 KanjiResult DictionaryQuery::query_kanji(const std::string& kanji) const {
   KanjiResult result;
   result.character = kanji;

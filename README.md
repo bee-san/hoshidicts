@@ -125,6 +125,8 @@ Results are filtered by part-of-speech tags defined in dictionaries, or added di
 
 Among themselves the five readings rank like any others, so they can tie: `しにゃい` gives `竹刀` and `市内` (`な`), `私大` and `次第` (`だ`) and `姉妹` (`ま`) as equals, in no fixed order, while `わかりにゃした` puts `分かり出す` (`だ`) before `分かる` (`ま`), whose chain is longer. A word with two `にゃ` is read with one replaced at a time.
 
+`LookupOptions::metadata_only_terms` (off by default) also returns terms that only frequency and pitch dictionaries have. Yomitan has no such option: it builds results from term banks alone and attaches frequencies and pitches to them (`_getDeinflections` and `_addTermMeta` in `ext/js/language/translator.js` at yomidevs/yomitan@d3c54c1). A frequency or pitch row has no part of speech, so, like a term without one, it answers only the deinflections that need none: the text as written, after preprocessing, and the few rules that carry no part of speech, such as kansai-ben `-うたら` for `-ったら`. A row for `ググる` is found for `ググる` but not for `ググった`. It counts only for a prefix longer than every match with glossaries, long keys and cat speech included, and then comes first (after any `primary_reading` results): with `東京` in a term dictionary and `東京タワー` only in a frequency and a pitch dictionary, `東京タワー` gives `東京タワー`, with the rows of both, before `東京`. Each reading the rows name is one term, with the rows for that reading and those without one; the readings rank in the order the frequency dictionaries and then the pitch dictionaries list them, unless a frequency sort separates them. A word that only rows without a reading have reads as itself. Such a term has no glossaries, no rules and a zero score. The terms with glossaries keep exactly their order without the option, but since the metadata-only terms take the first places, a list capped by `max_results` can lose the last of them. `lookup_dictionary` never returns them. Off, the results are exactly those without the option. A frequency list counted from text, such as Jiten's, also lists kana fragments and the kana of names (`こで`, `とで`), which then come first wherever they read further than the words around them.
+
 ```cpp
 std::vector<LookupResult> Lookup::lookup_dictionary(const std::string& lookup_string,
                                                     const std::string& dictionary_path,
@@ -156,7 +158,8 @@ Build with `-DHOSHIDICTS_BENCHMARK=ON`. `benchmark-lookup` accepts a word list
 (one UTF-8 word per line, or a CSV whose first column is the word), an iteration
 count and `--term`, `--freq`, `--pitch` or `--kanji` package paths. Defaults keep
 entries and hashes mapped. Add `--paged-entries` and independently
-`--paged-index` to compare the readers. `--json` emits per-lookup milliseconds
+`--paged-index` to compare the readers. `--metadata-only-terms` turns
+`LookupOptions::metadata_only_terms` on. `--json` emits per-lookup milliseconds
 for each pass, result/glossary counts and the shared cache's activity.
 
 ```sh
