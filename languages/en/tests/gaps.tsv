@@ -1,0 +1,37 @@
+# Known gaps: run by the conformance test and counted, not enforced.
+# Hand-written rows: written for this pack, no third-party data.
+# Source: UniMorph eng (https://github.com/unimorph/eng/blob/66e0e9e8e2dcd196da081a25a48e5c1fe3d8b49b/eng, sha256 20a191cefdc7cad6), CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/), by the UniMorph contributors.
+# 2000 rows sampled with seed 1 by sources/build-corpus.mjs (500 N;PL, 300 V;PST, 300 V;V.PTCP;PST, 300 V;V.PTCP;PRS, 300 V;PRS;3;SG, 150 ADJ;CMPR, 150 ADJ;SPRL); those the final rules reach are in corpus.tsv, the others in gaps.tsv.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+phrasal verbs	1	gave up	give up	v	*
+phrasal verbs	1	took it off	take off	v	*
+V;PST	1	forthspoke	forthspeak	v	*
+V;PST	1	dogfought	dogfight	v	*
+V;PST	1	abore	abear	v	*
+V;PST	1	overheld	overhold	v	*
+V;PST	1	dyun	dee	v	*
+V;PST	1	oversped	overspeed	v	*
+V;PST	1	mispled	misplead	v	*
+V;PST	1	inbuilt	inbuild	v	*
+V;PST	1	resold	resell	v	*
+V;PST	1	unstole	unsteal	v	*
+V;PST	1	ungot	unget	v	*
+V;PST	1	outspun	outspin	v	*
+V;V.PTCP;PST	1	upstood	upstand	v	*
+V;V.PTCP;PST	1	forlain	forlie	v	*
+V;V.PTCP;PST	1	enfrozen	enfreeze	v	*
+V;V.PTCP;PST	1	formade	formake	v	*
+V;V.PTCP;PST	1	tobeaten	tobeat	v	*
+V;V.PTCP;PST	1	shrunke	shrinke	v	*
+V;V.PTCP;PST	1	infallen	infall	v	*
+V;V.PTCP;PST	1	oversewn	oversew	v	*
+V;V.PTCP;PST	1	chestfed	chestfeed	v	*
+V;V.PTCP;PRS	1	platitudinising	platitudise	v	*
+V;V.PTCP;PRS	1	ennuying	ennui	v	*
+V;V.PTCP;PRS	1	got	git	v	*
+V;PRS;3;SG	1	rezzes	rez	v	*
+ADJ;CMPR	1	better	matching	adj	*
+ADJ;CMPR	1	flipper	flip	adj	*
+ADJ;CMPR	1	further	uphill	adj	*
+ADJ;SPRL	1	informal	cocky	adj	*
+ADJ;SPRL	1	gassed	gas	adj	*

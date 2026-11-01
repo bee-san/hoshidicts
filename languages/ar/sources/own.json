@@ -1,0 +1,163 @@
+{
+  "schema": 1,
+  "conditions": {
+    "n": {
+      "name": "Noun",
+      "isDictionaryForm": true
+    },
+    "n_p": {
+      "name": "Noun with Prefix only",
+      "isDictionaryForm": false,
+      "subConditions": ["n_wa", "n_bi", "n_ka", "n_li", "n_al", "n_bi_al", "n_ka_al", "n_lil", "n_li_al"]
+    },
+    "n_def": {
+      "name": "Noun with Definite Prefix",
+      "isDictionaryForm": false,
+      "subConditions": ["n_al", "n_bi_al", "n_ka_al", "n_lil", "n_li_al"]
+    },
+    "n_indef": {
+      "name": "Noun with Indefinite Prefix",
+      "isDictionaryForm": false,
+      "subConditions": ["n_wa", "n_bi", "n_ka", "n_li"]
+    },
+    "n_nom": {
+      "name": "Nominative Noun with Prefix",
+      "isDictionaryForm": false,
+      "subConditions": ["n_wa", "n_li", "n_al"]
+    },
+    "n_nom_indef": {
+      "name": "Nominative Noun with Indefinite Prefix",
+      "isDictionaryForm": false,
+      "subConditions": ["n_wa", "n_li"]
+    },
+    "n_wa": {
+      "name": "Noun with و Prefix",
+      "isDictionaryForm": false
+    },
+    "n_bi": {
+      "name": "Noun with ب Prefix",
+      "isDictionaryForm": false
+    },
+    "n_ka": {
+      "name": "Noun with ك Prefix",
+      "isDictionaryForm": false
+    },
+    "n_li": {
+      "name": "Noun with ل Prefix",
+      "isDictionaryForm": false
+    },
+    "n_al": {
+      "name": "Noun with ال Prefix",
+      "isDictionaryForm": false
+    },
+    "n_bi_al": {
+      "name": "Noun with بال Prefix",
+      "isDictionaryForm": false
+    },
+    "n_ka_al": {
+      "name": "Noun with كال Prefix",
+      "isDictionaryForm": false
+    },
+    "n_lil": {
+      "name": "Noun with لل Prefix",
+      "isDictionaryForm": false
+    },
+    "n_li_al": {
+      "name": "Noun with Assimilated لل Prefix",
+      "isDictionaryForm": false
+    },
+    "n_s": {
+      "name": "Noun with Suffix",
+      "isDictionaryForm": false
+    },
+    "v": {
+      "name": "Verb",
+      "isDictionaryForm": true,
+      "subConditions": ["pv", "iv", "cv"]
+    },
+    "pv": {
+      "name": "Perfect Verb (no affixes)",
+      "isDictionaryForm": true
+    },
+    "pv_p": {
+      "name": "Perfect Verb with Prefix",
+      "isDictionaryForm": false
+    },
+    "pv_s": {
+      "name": "Perfect Verb with Suffix only",
+      "isDictionaryForm": false
+    },
+    "iv": {
+      "name": "Imperfect Verb (no affixes)",
+      "isDictionaryForm": true
+    },
+    "iv_p": {
+      "name": "Imperfect Verb with Prefix",
+      "isDictionaryForm": false
+    },
+    "iv_s": {
+      "name": "Imperfect Verb with Suffix only",
+      "isDictionaryForm": false
+    },
+    "cv": {
+      "name": "Command Verb (no affixes)",
+      "isDictionaryForm": true
+    },
+    "cv_p": {
+      "name": "Command Verb with Prefix",
+      "isDictionaryForm": false
+    },
+    "cv_s": {
+      "name": "Command Verb with Suffix only",
+      "isDictionaryForm": false
+    }
+  },
+  "transforms": [
+    {
+      "id": "VDoubled",
+      "name": "doubled verb",
+      "description": "Doubled (geminate) verb whose last radical is written twice before a consonant-initial ending",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "ءء", "deinflected": "ء", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "بب", "deinflected": "ب", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "تت", "deinflected": "ت", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "ثث", "deinflected": "ث", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "جج", "deinflected": "ج", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "حح", "deinflected": "ح", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "خخ", "deinflected": "خ", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "دد", "deinflected": "د", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "ذذ", "deinflected": "ذ", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "رر", "deinflected": "ر", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "زز", "deinflected": "ز", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "سس", "deinflected": "س", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "شش", "deinflected": "ش", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "صص", "deinflected": "ص", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "ضض", "deinflected": "ض", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "طط", "deinflected": "ط", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "ظظ", "deinflected": "ظ", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "عع", "deinflected": "ع", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "غغ", "deinflected": "غ", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "فف", "deinflected": "ف", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "قق", "deinflected": "ق", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "كك", "deinflected": "ك", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "لل", "deinflected": "ل", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "مم", "deinflected": "م", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "نن", "deinflected": "ن", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "هه", "deinflected": "ه", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "وو", "deinflected": "و", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "يي", "deinflected": "ي", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 1}
+      ]
+    },
+    {
+      "id": "VFinalWeak",
+      "name": "final-weak verb",
+      "description": "Final-weak verb whose stem ends in ي or و where the dictionary form ends in ى or ا",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "ي", "deinflected": "ى", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "و", "deinflected": "ا", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 2}
+      ]
+    }
+  ]
+}

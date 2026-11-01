@@ -1,0 +1,10 @@
+{
+  "title": "hoshidicts ar prototype test dictionary",
+  "format": 3,
+  "revision": "1",
+  "sequenced": false,
+  "author": "hoshidicts",
+  "description": "A tiny Arabic dictionary for languages/ar/tests/lookup.tsv, written for the pack.",
+  "sourceLanguage": "ar",
+  "targetLanguage": "en"
+}

@@ -1,0 +1,43 @@
+# Other own English rules: transform id, rule type, inflected, deinflected, conditionsIn, conditionsOut (| separated).
+# transform	type	inflected	deinflected	conditionsIn	conditionsOut
+irregular plural	suffix	men	man	np	ns
+irregular plural	suffix	children	child	np	ns
+irregular plural	suffix	feet	foot	np	ns
+irregular plural	suffix	teeth	tooth	np	ns
+irregular plural	suffix	geese	goose	np	ns
+irregular plural	suffix	mice	mouse	np	ns
+irregular plural	suffix	lice	louse	np	ns
+irregular plural	wholeWord	oxen	ox	np	ns
+irregular plural	wholeWord	people	person	np	ns
+irregular plural	suffix	zzes	z	np	ns
+irregular plural	suffix	ae	a	np	ns
+irregular plural	suffix	i	us	np	ns
+irregular plural	suffix	ia	ium	np	ns
+irregular plural	suffix	ices	ex	np	ns
+irregular plural	suffix	ices	ix	np	ns
+irregular plural	suffix	ses	sis	np	ns
+irregular plural	suffix	eaux	eau	np	ns
+irregular comparative	wholeWord	better	good	adj	adj
+irregular comparative	wholeWord	worse	bad	adj	adj
+irregular comparative	wholeWord	further	far	adj	adj
+irregular comparative	wholeWord	farther	far	adj	adj
+irregular comparative	wholeWord	less	little	adj	adj
+irregular comparative	wholeWord	more	much	adj	adj
+irregular comparative	wholeWord	more	many	adj	adj
+irregular superlative	wholeWord	best	good	adj	adj
+irregular superlative	wholeWord	worst	bad	adj	adj
+irregular superlative	wholeWord	furthest	far	adj	adj
+irregular superlative	wholeWord	farthest	far	adj	adj
+irregular superlative	wholeWord	least	little	adj	adj
+irregular superlative	wholeWord	most	much	adj	adj
+irregular superlative	wholeWord	most	many	adj	adj
+irregular present	wholeWord	am	be	v	v
+irregular present	wholeWord	are	be	v	v
+irregular present	wholeWord	is	be	v	v
+irregular present	wholeWord	has	have	v	v
+possessive typographic	suffix	’s		n	n
+possessive typographic	suffix	s’	s	n	n
+archaic typographic	suffix	’d	ed	v	v
+dropped g typographic	suffix	in’	ing	v	v
+comparative -ey	suffix	ier	ey	adj	adj
+superlative -ey	suffix	iest	ey	adj	adj

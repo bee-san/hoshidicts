@@ -1,0 +1,314 @@
+{
+  "schema": 1,
+  "conditions": {
+    "v": {
+      "name": "Verb",
+      "isDictionaryForm": true,
+      "subConditions": ["v_phr"]
+    },
+    "v_phr": {
+      "name": "Phrasal verb",
+      "isDictionaryForm": true
+    },
+    "n": {
+      "name": "Noun",
+      "isDictionaryForm": true,
+      "subConditions": ["np", "ns"]
+    },
+    "np": {
+      "name": "Noun plural",
+      "isDictionaryForm": true
+    },
+    "ns": {
+      "name": "Noun singular",
+      "isDictionaryForm": true
+    },
+    "adj": {
+      "name": "Adjective",
+      "isDictionaryForm": true
+    },
+    "adv": {
+      "name": "Adverb",
+      "isDictionaryForm": true
+    }
+  },
+  "wordLists": {
+    "particles": ["aboard", "about", "above", "across", "ahead", "alongside", "apart", "around", "aside", "astray", "away", "back", "before", "behind", "below", "beneath", "besides", "between", "beyond", "by", "close", "down", "east", "west", "north", "south", "eastward", "westward", "northward", "southward", "forward", "backward", "backwards", "forwards", "home", "in", "inside", "instead", "near", "off", "on", "opposite", "out", "outside", "over", "overhead", "past", "round", "since", "through", "throughout", "together", "under", "underneath", "up", "within", "without"],
+    "phrasalWords": ["aboard", "about", "above", "across", "ahead", "alongside", "apart", "around", "aside", "astray", "away", "back", "before", "behind", "below", "beneath", "besides", "between", "beyond", "by", "close", "down", "east", "west", "north", "south", "eastward", "westward", "northward", "southward", "forward", "backward", "backwards", "forwards", "home", "in", "inside", "instead", "near", "off", "on", "opposite", "out", "outside", "over", "overhead", "past", "round", "since", "through", "throughout", "together", "under", "underneath", "up", "within", "without", "aback", "after", "against", "along", "among", "as", "at", "even", "for", "forth", "from", "into", "of", "onto", "open", "to", "toward", "towards", "upon", "way", "with"]
+  },
+  "transforms": [
+    {
+      "id": "plural",
+      "name": "plural",
+      "description": "Plural form of a noun",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "s", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"]},
+        {"type": "suffix", "inflected": "es", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"]},
+        {"type": "suffix", "inflected": "ies", "deinflected": "y", "conditionsIn": ["np"], "conditionsOut": ["ns"]},
+        {"type": "suffix", "inflected": "ves", "deinflected": "fe", "conditionsIn": ["np"], "conditionsOut": ["ns"]},
+        {"type": "suffix", "inflected": "ves", "deinflected": "f", "conditionsIn": ["np"], "conditionsOut": ["ns"]}
+      ]
+    },
+    {
+      "id": "possessive",
+      "name": "possessive",
+      "description": "Possessive form of a noun",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "'s", "deinflected": "", "conditionsIn": ["n"], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "s'", "deinflected": "s", "conditionsIn": ["n"], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "past",
+      "name": "past",
+      "description": "Simple past tense of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ed", "deinflected": "", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "ed", "deinflected": "e", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "ied", "deinflected": "y", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "cked", "deinflected": "c", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "bbed", "deinflected": "b", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "dded", "deinflected": "d", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "gged", "deinflected": "g", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "kked", "deinflected": "k", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "lled", "deinflected": "l", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "mmed", "deinflected": "m", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "nned", "deinflected": "n", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "pped", "deinflected": "p", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "rred", "deinflected": "r", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "ssed", "deinflected": "s", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "tted", "deinflected": "t", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "zzed", "deinflected": "z", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "laid", "deinflected": "lay", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "paid", "deinflected": "pay", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "said", "deinflected": "say", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "phrasal", "inflected": "ed", "deinflected": "", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "ed", "deinflected": "e", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "ied", "deinflected": "y", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "cked", "deinflected": "c", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "bbed", "deinflected": "b", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "dded", "deinflected": "d", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "gged", "deinflected": "g", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "kked", "deinflected": "k", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "lled", "deinflected": "l", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "mmed", "deinflected": "m", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "nned", "deinflected": "n", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "pped", "deinflected": "p", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "rred", "deinflected": "r", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "ssed", "deinflected": "s", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "tted", "deinflected": "t", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "zzed", "deinflected": "z", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "laid", "deinflected": "lay", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "paid", "deinflected": "pay", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "said", "deinflected": "say", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]}
+      ]
+    },
+    {
+      "id": "ing",
+      "name": "ing",
+      "description": "Present participle of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ing", "deinflected": "", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "ing", "deinflected": "e", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "ying", "deinflected": "ie", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "cking", "deinflected": "c", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "bbing", "deinflected": "b", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "dding", "deinflected": "d", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "gging", "deinflected": "g", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "kking", "deinflected": "k", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "lling", "deinflected": "l", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "mming", "deinflected": "m", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "nning", "deinflected": "n", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "pping", "deinflected": "p", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "rring", "deinflected": "r", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "ssing", "deinflected": "s", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "tting", "deinflected": "t", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "zzing", "deinflected": "z", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "phrasal", "inflected": "ing", "deinflected": "", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "ing", "deinflected": "e", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "ying", "deinflected": "ie", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "cking", "deinflected": "c", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "bbing", "deinflected": "b", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "dding", "deinflected": "d", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "gging", "deinflected": "g", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "kking", "deinflected": "k", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "lling", "deinflected": "l", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "mming", "deinflected": "m", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "nning", "deinflected": "n", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "pping", "deinflected": "p", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "rring", "deinflected": "r", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "ssing", "deinflected": "s", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "tting", "deinflected": "t", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "zzing", "deinflected": "z", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]}
+      ]
+    },
+    {
+      "id": "3rd pers. sing. pres",
+      "name": "3rd pers. sing. pres",
+      "description": "Third person singular present tense of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "s", "deinflected": "", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "es", "deinflected": "", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "ies", "deinflected": "y", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "phrasal", "inflected": "s", "deinflected": "", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "es", "deinflected": "", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "ies", "deinflected": "y", "followedBy": "phrasalWords", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]}
+      ]
+    },
+    {
+      "id": "interposed object",
+      "name": "interposed object",
+      "description": "Phrasal verb with interposed object",
+      "source": "yomitan",
+      "rules": [
+        {"type": "interposedObject", "particles": "particles", "guardWords": "phrasalWords", "conditionsIn": [], "conditionsOut": ["v_phr"]}
+      ]
+    },
+    {
+      "id": "archaic",
+      "name": "archaic",
+      "description": "Archaic form of a word",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "'d", "deinflected": "ed", "conditionsIn": ["v"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "adverb",
+      "name": "adverb",
+      "description": "Adverb form of an adjective",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ly", "deinflected": "", "conditionsIn": ["adv"], "conditionsOut": ["adj"]},
+        {"type": "suffix", "inflected": "ily", "deinflected": "y", "conditionsIn": ["adv"], "conditionsOut": ["adj"]},
+        {"type": "suffix", "inflected": "ly", "deinflected": "le", "conditionsIn": ["adv"], "conditionsOut": ["adj"]}
+      ]
+    },
+    {
+      "id": "comparative",
+      "name": "comparative",
+      "description": "Comparative form of an adjective",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "suffix", "inflected": "er", "deinflected": "e", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "suffix", "inflected": "ier", "deinflected": "y", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "suffix", "inflected": "bber", "deinflected": "b", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "suffix", "inflected": "dder", "deinflected": "d", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "suffix", "inflected": "gger", "deinflected": "g", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "suffix", "inflected": "mmer", "deinflected": "m", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "suffix", "inflected": "nner", "deinflected": "n", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "suffix", "inflected": "tter", "deinflected": "t", "conditionsIn": ["adj"], "conditionsOut": ["adj"]}
+      ]
+    },
+    {
+      "id": "superlative",
+      "name": "superlative",
+      "description": "Superlative form of an adjective",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "est", "deinflected": "", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "suffix", "inflected": "est", "deinflected": "e", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "suffix", "inflected": "iest", "deinflected": "y", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "suffix", "inflected": "bbest", "deinflected": "b", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "suffix", "inflected": "ddest", "deinflected": "d", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "suffix", "inflected": "ggest", "deinflected": "g", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "suffix", "inflected": "mmest", "deinflected": "m", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "suffix", "inflected": "nnest", "deinflected": "n", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "suffix", "inflected": "ttest", "deinflected": "t", "conditionsIn": ["adj"], "conditionsOut": ["adj"]}
+      ]
+    },
+    {
+      "id": "dropped g",
+      "name": "dropped g",
+      "description": "Dropped g in -ing form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "in'", "deinflected": "ing", "conditionsIn": ["v"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "-y",
+      "name": "-y",
+      "description": "Adjective formed from a verb or noun",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "y", "deinflected": "", "conditionsIn": ["adj"], "conditionsOut": ["n", "v"]},
+        {"type": "suffix", "inflected": "y", "deinflected": "e", "conditionsIn": ["adj"], "conditionsOut": ["n", "v"]},
+        {"type": "suffix", "inflected": "ggy", "deinflected": "g", "conditionsIn": [], "conditionsOut": ["n", "v"]},
+        {"type": "suffix", "inflected": "lly", "deinflected": "l", "conditionsIn": [], "conditionsOut": ["n", "v"]},
+        {"type": "suffix", "inflected": "mmy", "deinflected": "m", "conditionsIn": [], "conditionsOut": ["n", "v"]},
+        {"type": "suffix", "inflected": "nny", "deinflected": "n", "conditionsIn": [], "conditionsOut": ["n", "v"]},
+        {"type": "suffix", "inflected": "ppy", "deinflected": "p", "conditionsIn": [], "conditionsOut": ["n", "v"]},
+        {"type": "suffix", "inflected": "rry", "deinflected": "r", "conditionsIn": [], "conditionsOut": ["n", "v"]},
+        {"type": "suffix", "inflected": "ssy", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["n", "v"]},
+        {"type": "suffix", "inflected": "tty", "deinflected": "t", "conditionsIn": [], "conditionsOut": ["n", "v"]}
+      ]
+    },
+    {
+      "id": "un-",
+      "name": "un-",
+      "description": "Negative form of an adjective, adverb, or verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "un", "deinflected": "", "conditionsIn": ["adj", "adv", "v"], "conditionsOut": ["adj", "adv", "v"]}
+      ]
+    },
+    {
+      "id": "going-to future",
+      "name": "going-to future",
+      "description": "Going-to future tense of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "going to ", "deinflected": "", "conditionsIn": ["v"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "will future",
+      "name": "will future",
+      "description": "Will-future tense of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "will ", "deinflected": "", "conditionsIn": ["v"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "imperative negative",
+      "name": "imperative negative",
+      "description": "Negative imperative form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "don't ", "deinflected": "", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "do not ", "deinflected": "", "conditionsIn": ["v"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "-able",
+      "name": "-able",
+      "description": "Adjective formed from a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "able", "deinflected": "", "conditionsIn": ["adj"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "able", "deinflected": "e", "conditionsIn": ["adj"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "iable", "deinflected": "y", "conditionsIn": ["adj"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "bbable", "deinflected": "b", "conditionsIn": ["adj"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "ddable", "deinflected": "d", "conditionsIn": ["adj"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "ggable", "deinflected": "g", "conditionsIn": ["adj"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "kkable", "deinflected": "k", "conditionsIn": ["adj"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "llable", "deinflected": "l", "conditionsIn": ["adj"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "mmable", "deinflected": "m", "conditionsIn": ["adj"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "nnable", "deinflected": "n", "conditionsIn": ["adj"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "ppable", "deinflected": "p", "conditionsIn": ["adj"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "rrable", "deinflected": "r", "conditionsIn": ["adj"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "ssable", "deinflected": "s", "conditionsIn": ["adj"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "ttable", "deinflected": "t", "conditionsIn": ["adj"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "zzable", "deinflected": "z", "conditionsIn": ["adj"], "conditionsOut": ["v"]}
+      ]
+    }
+  ]
+}
