@@ -44,6 +44,9 @@ stem changes	1	pruebo	probar	v	present-yo
 stem changes	1	renueva	renovar	v	present-el
 stem changes	1	vierte	verter	v	present-el
 stem changes	1	estallan	estallar	v	present-ellos
+collisions kept	1	estalla	estallar	v	present-el
+collisions kept	1	estacionas	estacionar	v	present-tu
+collisions kept	1	solapas	solapar	v	present-tu
 stem changes	1	enciende	encender	v	present-el
 spelling	1	busqué	buscar	v	preterite-yo
 spelling	1	pagué	pagar	v	preterite-yo
@@ -171,7 +174,7 @@ old spellings	1	dió	dar	v	preterite-el
 old spellings	1	vió	ver	v	preterite-el
 old spellings	1	vé	ir	v	imperative-tu
 old spellings	1	ví	ver	v	preterite-yo
-old spellings	1	hui	huir	v	preterite-yo
+2010 spellings	1	hui	huir	v	preterite-yo
 missing accents	1	estan	estar	v	present-ellos
 missing accents	1	estes	estar	v	subjunctive-tu
 irregular verbs	1	ve	ver	v	present-el
@@ -290,8 +293,10 @@ pronominal verbs	1	se apodera	apoderarse	v	pronominal|present-el
 pronominal verbs	1	se porta	portarse	v	pronominal|present-el
 pronominal verbs	1	se fué	irse	v	pronominal|preterite-el
 pronominal verbs	1	se funde	fundirse	v	pronominal|present-el
-irregular verbs	1	fundimos	fundir	v	present-nosotros
-irregular verbs	1	fungiste	fungir	v	preterite-tu
+collisions kept	1	fundimos	fundir	v	present-nosotros
+collisions kept	1	fungiste	fungir	v	preterite-tu
+stem changes	1	pida	pedir	v	subjunctive-yo-el
+stem changes	1	sienta	sentir	v	subjunctive-yo-el
 pronominal agreement	0	me dijo	decirse	v	*
 pronominal agreement	0	nos dijo	decirse	v	*
 pronominal agreement	0	te digo	decirse	v	*
@@ -370,7 +375,6 @@ capitals	1	Dámelo	dar	v	imperative-tu|clitic-melo
 normalization	1	está	estar	v	present-el
 normalization	1	ﬁjamos	fijar	v	present-nosotros
 missing accents	1	cancion	canción	n	
-missing accents	1	estan	estar	v	present-ellos
 missing accents	1	nino	niño	n	
 negatives	0	es	ir	v	*
 negatives	0	en	ir	v	*
@@ -396,7 +400,6 @@ reflexive agreement	0	cómprame	comprarse	v	*
 reflexive agreement	0	dáselo	darse	v	*
 reflexive agreement	0	dinos	decirse	v	*
 reflexive agreement	0	dígame	decirse	v	*
-reflexive agreement	1	dése	darse	v	pronominal|imperative-usted|clitic-se
 negatives	0	exactamente	exacta	*	*
 yomitan differences	0	juegen	jugen	*	*
 yomitan differences	0	ya me levantar	ya levantarse	*	*
@@ -442,3 +445,9 @@ collisions	0	fue	fuer	v	*
 collisions	0	fuimos	fuir	v	*
 collisions	0	fuiste	fuer	v	*
 collisions	0	se fue	fuirse	v	*
+collisions	0	fuisteis	fuer	v	*
+collisions	0	fuerte	fuer	v	*
+collisions	0	fueros	fuer	v	*
+collisions	0	fueres	fuer	n	*
+collisions	0	ellos	ello	n	*
+collisions	0	medios	medir	v	imperative-vos|clitic-os

@@ -45,5 +45,9 @@
   ["podarse", "", "v", "v", 0, ["(reflexive of podar)"], 44, ""],
   ["poder", "", "v", "v", 0, ["can, to be able to"], 45, ""],
   ["así", "", "adv", "", 0, ["so, thus"], 46, ""],
-  ["asir", "", "v", "v", 0, ["to grasp"], 47, ""]
+  ["asir", "", "v", "v", 0, ["to grasp"], 47, ""],
+  ["vario", "", "adj", "adj", 0, ["varied, various"], 48, ""],
+  ["variar", "", "v", "v", 0, ["to vary"], 49, ""],
+  ["solo", "", "adj", "adj", 0, ["alone"], 50, ""],
+  ["solar", "", "v", "v", 0, ["to pave"], 51, ""]
 ]

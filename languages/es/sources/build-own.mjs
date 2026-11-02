@@ -322,6 +322,15 @@ const SPLITS = {
 // huir), so the regular endings that spell these forms leave that stem out;
 // longer stems stay (fundir, fungir).
 const FU_FORMS = new Set(['fue', 'fuí', 'fué', 'fuimos', 'fuiste', 'fuisteis']);
+// varias and solas are vario and solo, whose reading takes two steps (plural,
+// feminine) where the -ar tú form takes one; variar writes varías and solar
+// suelas, so the tú ending leaves out the stems vari and sol, and est as the
+// other stressed endings do. Longer sol- and est- stems stay (solapas,
+// estacionas); wty-es-en has no other -ar verb in vari-.
+const AS_SPLIT = [{stemNotStartsWith: '[esv]'},
+    {stemStartsWith: '[e]', stemNotStartsWithText: 'est'}, {stemStartsWithText: 'est', stemMinLength: 4},
+    {stemStartsWith: '[s]', stemNotStartsWithText: 'sol'}, {stemStartsWithText: 'sol', stemMinLength: 4},
+    {stemStartsWith: '[v]', stemNotStartsWithText: 'vari'}];
 const FU_SPLIT = [{stemNotStartsWithText: 'fu'}, {stemStartsWithText: 'fu', stemMinLength: 3}];
 
 /**
@@ -351,7 +360,9 @@ function stemVariants(conj, slot, ending, spelling, change) {
     // esta, estas, esto and este are words of their own; estan, estes and
     // esten are estar written without the accent.
     const key = `${conj}:${change === null ? 'plain' : CHANGE_NAMES.get(change)}`;
-    const split = plain && STRESSED.has(slot) && (key !== 'ar:plain' || ['a', 'as', 'e', 'o'].includes(ending)) ? SPLITS[key] : undefined;
+    const split = !(plain && STRESSED.has(slot)) ? undefined
+        : key === 'ar:plain' && ending === 'as' ? AS_SPLIT
+        : key !== 'ar:plain' || ['a', 'e', 'o'].includes(ending) ? SPLITS[key] : undefined;
     if (conj !== 'ar' && plain && change === null && FU_FORMS.has('fu' + ending)) {
         if (split !== undefined || base.stemNotStartsWithText !== undefined) { throw new Error(`fu split on ${slot} ${ending}`); }
         return FU_SPLIT.map((variant) => ({...base, ...variant}));
@@ -681,9 +692,12 @@ for (const pronouns of CLUSTERS) {
     // Infinitive: no accent with one pronoun (hacerlo, oírte), an accent on
     // the ending with two (hacérselo, decírmelo).
     const infinitives = two ? [['ár', 'ar'], ['ér', 'er'], ['ír', 'ir'], ['ír', 'ír']] : [['ar', 'ar'], ['er', 'er'], ['ir', 'ir'], ['ír', 'ír']];
+    // No -er verb but the obsolete fuer has the stem fu: fuerte and fueros
+    // are not fuer + te and fuer + os.
     for (const [ending, lemma] of infinitives) {
-        suffix(id, ending + cluster, lemma, [], [verbClass(lemma)]);
-        if (reflexive && (two || first !== 'se')) { suffix(id, ending + cluster, lemma + 'se', [], [verbClass(lemma)]); }
+        const stem = lemma === 'er' ? {stemNotStartsWithText: 'fu'} : {};
+        suffix(id, ending + cluster, lemma, [], [verbClass(lemma)], stem);
+        if (reflexive && (two || first !== 'se')) { suffix(id, ending + cluster, lemma + 'se', [], [verbClass(lemma)], stem); }
     }
     // Gerund: always accented with a pronoun (haciéndolo, yéndose, riñéndole).
     for (const [ending, bare] of [['ándo', 'ando'], ['éndo', 'endo']]) {
@@ -747,10 +761,11 @@ const VERB_STEM = {stemCharacters: '[a-z\\u00E0-\\u00FF]', stemMinLength: MIN_ST
 // out: the ue → o rules leave out pued- and muer- only when the stem starts
 // with them, and before a pronoun the pronoun starts it (se pueden, me puede
 // and se muere are poderse, me + poder and morirse, not podarse or morarse).
-// Longer stems that start with pod or mor stay (mortificarse, moralizarse).
+// Longer stems that start with mor stay (mortificarse, moralizarse); those
+// that start with pod go too (wty-es-en's only one is podemizarse).
 // The -er and -ir verbs leave out fu for the same reason (se fue is irse,
 // not fuirse).
-const PRONOMINAL_SPLIT = {v_ar: [{stemNotStartsWith: '[mp]'}, {stemStartsWith: '[p]', stemNotStartsWithText: 'pod'}, {stemStartsWithText: 'pod', stemMinLength: 4},
+const PRONOMINAL_SPLIT = {v_ar: [{stemNotStartsWith: '[mp]'}, {stemStartsWith: '[p]', stemNotStartsWithText: 'pod'},
     {stemStartsWith: '[m]', stemNotStartsWithText: 'mor'}, {stemStartsWithText: 'mor', stemMinLength: 4}], v_er: FU_SPLIT, v_ir: FU_SPLIT};
 for (const pronoun of REFLEXIVE) {
     for (const [condition, suffixes] of CLASSES) {
@@ -787,8 +802,12 @@ const VOWEL = '[aeiouáéíóú]';
 transform('plural', 'plural', 'Plural of a noun or adjective: casas, árboles, luces, canciones, jóvenes.');
 const NOMINAL = ['ns', 'adj'];
 // At least two letters (mis → mi, tés → té, not os → o).
-suffix('plural', 's', '', [], NOMINAL, {stemEndsWith: VOWEL, stemMinLength: 2});
-suffix('plural', 'es', '', [], NOMINAL, {stemEndsWith: '[bdfghjklmnñpqrstvwxy]'});
+// ellos is the plural of él, not of ello (it), which has no plural; wty-es-en
+// also lists ello as a noun (the id), so the rule would show it first.
+suffix('plural', 's', '', [], NOMINAL, {stemEndsWith: VOWEL, stemMinLength: 2, stemNotStartsWithText: 'ello'});
+// fueres is ser and ir (future subjunctive); wty-es-en's noun fuer is an
+// obsolete form of fuero.
+suffix('plural', 'es', '', [], NOMINAL, {stemEndsWith: '[bdfghjklmnñpqrstvwxy]', stemNotStartsWithText: 'fuer'});
 // Loanwords that add s after a consonant (clubs, récords, cómics, emails,
 // cowboys); Spanish words take -es there.
 suffix('plural', 's', '', [], NOMINAL, {stemEndsWith: '[bcdfgklmnprtvwxyz]', stemMinLength: 2});

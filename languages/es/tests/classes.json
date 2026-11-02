@@ -215,37 +215,44 @@
       [97, 122],
       [224, 255]
     ],
-    "transforms[1].rules[2].stemNotStartsWith": [
+    "transforms[1].rules[0].stemNotStartsWith": [
+      [101, 101],
+      [115, 115],
       [118, 118]
     ],
-    "transforms[1].rules[2].stemChange.between": [
+    "transforms[1].rules[1].stemStartsWith": [
+      [101, 101]
+    ],
+    "transforms[1].rules[3].stemStartsWith": [
+      [115, 115]
+    ],
+    "transforms[1].rules[5].stemStartsWith": [
+      [118, 118]
+    ],
+    "transforms[1].rules[6].stemNotStartsWith": [
+      [118, 118]
+    ],
+    "transforms[1].rules[6].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[1].rules[3].stemNotStartsWith": [
+    "transforms[1].rules[7].stemNotStartsWith": [
       [102, 102],
       [109, 109],
       [112, 112]
     ],
-    "transforms[1].rules[3].stemChange.between": [
+    "transforms[1].rules[7].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[1].rules[4].stemStartsWith": [
+    "transforms[1].rules[8].stemStartsWith": [
       [109, 109]
-    ],
-    "transforms[1].rules[4].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 122],
-      [241, 241]
     ],
     "transforms[1].rules[8].stemChange.between": [
       [98, 100],
@@ -254,28 +261,12 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[1].rules[9].stemChange.between": [
+    "transforms[1].rules[12].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
-    ],
-    "transforms[1].rules[11].stemNotStartsWith": [
-      [118, 118]
-    ],
-    "transforms[1].rules[11].stemNotEndsWith": [
-      [99, 99]
-    ],
-    "transforms[1].rules[11].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 122],
-      [241, 241]
-    ],
-    "transforms[1].rules[12].stemNotEndsWith": [
-      [99, 99]
     ],
     "transforms[1].rules[13].stemChange.between": [
       [98, 100],
@@ -284,14 +275,23 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[1].rules[16].stemChange.between": [
+    "transforms[1].rules[15].stemNotStartsWith": [
+      [118, 118]
+    ],
+    "transforms[1].rules[15].stemNotEndsWith": [
+      [99, 99]
+    ],
+    "transforms[1].rules[15].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[1].rules[19].stemChange.between": [
+    "transforms[1].rules[16].stemNotEndsWith": [
+      [99, 99]
+    ],
+    "transforms[1].rules[17].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
@@ -305,26 +305,40 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[1].rules[22].stemEndsWith": [
+    "transforms[1].rules[23].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[1].rules[24].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[1].rules[26].stemEndsWith": [
       [103, 103]
     ],
-    "transforms[1].rules[24].stemEndsWith": [
+    "transforms[1].rules[28].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
-    "transforms[1].rules[27].stemNotEndsWith": [
-      [97, 122],
-      [224, 255]
-    ],
-    "transforms[1].rules[28].stemNotEndsWith": [
-      [97, 122],
-      [224, 255]
-    ],
-    "transforms[1].rules[30].stemNotEndsWith": [
-      [97, 122],
-      [224, 255]
-    ],
     "transforms[1].rules[31].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[1].rules[32].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[1].rules[34].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[1].rules[35].stemNotEndsWith": [
       [97, 122],
       [224, 255]
     ],
@@ -4286,12 +4300,12 @@
       [97, 122],
       [224, 255]
     ],
+    "transforms[95].rules[2].stemStartsWith": [
+      [109, 109]
+    ],
     "transforms[95].rules[3].stemCharacters": [
       [97, 122],
       [224, 255]
-    ],
-    "transforms[95].rules[3].stemStartsWith": [
-      [109, 109]
     ],
     "transforms[95].rules[4].stemCharacters": [
       [97, 122],
@@ -4313,12 +4327,15 @@
       [97, 122],
       [224, 255]
     ],
+    "transforms[95].rules[8].stemNotStartsWith": [
+      [109, 109],
+      [112, 112]
+    ],
     "transforms[95].rules[9].stemCharacters": [
       [97, 122],
       [224, 255]
     ],
-    "transforms[95].rules[9].stemNotStartsWith": [
-      [109, 109],
+    "transforms[95].rules[9].stemStartsWith": [
       [112, 112]
     ],
     "transforms[95].rules[10].stemCharacters": [
@@ -4326,7 +4343,7 @@
       [224, 255]
     ],
     "transforms[95].rules[10].stemStartsWith": [
-      [112, 112]
+      [109, 109]
     ],
     "transforms[95].rules[11].stemCharacters": [
       [97, 122],
@@ -4335,9 +4352,6 @@
     "transforms[95].rules[12].stemCharacters": [
       [97, 122],
       [224, 255]
-    ],
-    "transforms[95].rules[12].stemStartsWith": [
-      [109, 109]
     ],
     "transforms[95].rules[13].stemCharacters": [
       [97, 122],
@@ -4355,24 +4369,27 @@
       [97, 122],
       [224, 255]
     ],
+    "transforms[95].rules[16].stemNotStartsWith": [
+      [109, 109],
+      [112, 112]
+    ],
     "transforms[95].rules[17].stemCharacters": [
       [97, 122],
       [224, 255]
+    ],
+    "transforms[95].rules[17].stemStartsWith": [
+      [112, 112]
     ],
     "transforms[95].rules[18].stemCharacters": [
       [97, 122],
       [224, 255]
     ],
-    "transforms[95].rules[18].stemNotStartsWith": [
-      [109, 109],
-      [112, 112]
+    "transforms[95].rules[18].stemStartsWith": [
+      [109, 109]
     ],
     "transforms[95].rules[19].stemCharacters": [
       [97, 122],
       [224, 255]
-    ],
-    "transforms[95].rules[19].stemStartsWith": [
-      [112, 112]
     ],
     "transforms[95].rules[20].stemCharacters": [
       [97, 122],
@@ -4381,9 +4398,6 @@
     "transforms[95].rules[21].stemCharacters": [
       [97, 122],
       [224, 255]
-    ],
-    "transforms[95].rules[21].stemStartsWith": [
-      [109, 109]
     ],
     "transforms[95].rules[22].stemCharacters": [
       [97, 122],
@@ -4397,28 +4411,31 @@
       [97, 122],
       [224, 255]
     ],
+    "transforms[95].rules[24].stemNotStartsWith": [
+      [109, 109],
+      [112, 112]
+    ],
     "transforms[95].rules[25].stemCharacters": [
       [97, 122],
       [224, 255]
+    ],
+    "transforms[95].rules[25].stemStartsWith": [
+      [112, 112]
     ],
     "transforms[95].rules[26].stemCharacters": [
       [97, 122],
       [224, 255]
     ],
+    "transforms[95].rules[26].stemStartsWith": [
+      [109, 109]
+    ],
     "transforms[95].rules[27].stemCharacters": [
       [97, 122],
       [224, 255]
     ],
-    "transforms[95].rules[27].stemNotStartsWith": [
-      [109, 109],
-      [112, 112]
-    ],
     "transforms[95].rules[28].stemCharacters": [
       [97, 122],
       [224, 255]
-    ],
-    "transforms[95].rules[28].stemStartsWith": [
-      [112, 112]
     ],
     "transforms[95].rules[29].stemCharacters": [
       [97, 122],
@@ -4428,9 +4445,6 @@
       [97, 122],
       [224, 255]
     ],
-    "transforms[95].rules[30].stemStartsWith": [
-      [109, 109]
-    ],
     "transforms[95].rules[31].stemCharacters": [
       [97, 122],
       [224, 255]
@@ -4439,13 +4453,23 @@
       [97, 122],
       [224, 255]
     ],
+    "transforms[95].rules[32].stemNotStartsWith": [
+      [109, 109],
+      [112, 112]
+    ],
     "transforms[95].rules[33].stemCharacters": [
       [97, 122],
       [224, 255]
     ],
+    "transforms[95].rules[33].stemStartsWith": [
+      [112, 112]
+    ],
     "transforms[95].rules[34].stemCharacters": [
       [97, 122],
       [224, 255]
+    ],
+    "transforms[95].rules[34].stemStartsWith": [
+      [109, 109]
     ],
     "transforms[95].rules[35].stemCharacters": [
       [97, 122],
@@ -4455,16 +4479,9 @@
       [97, 122],
       [224, 255]
     ],
-    "transforms[95].rules[36].stemNotStartsWith": [
-      [109, 109],
-      [112, 112]
-    ],
     "transforms[95].rules[37].stemCharacters": [
       [97, 122],
       [224, 255]
-    ],
-    "transforms[95].rules[37].stemStartsWith": [
-      [112, 112]
     ],
     "transforms[95].rules[38].stemCharacters": [
       [97, 122],
@@ -4473,9 +4490,6 @@
     "transforms[95].rules[39].stemCharacters": [
       [97, 122],
       [224, 255]
-    ],
-    "transforms[95].rules[39].stemStartsWith": [
-      [109, 109]
     ],
     "transforms[95].rules[40].stemCharacters": [
       [97, 122],
@@ -4494,26 +4508,6 @@
       [224, 255]
     ],
     "transforms[95].rules[44].stemCharacters": [
-      [97, 122],
-      [224, 255]
-    ],
-    "transforms[95].rules[45].stemCharacters": [
-      [97, 122],
-      [224, 255]
-    ],
-    "transforms[95].rules[46].stemCharacters": [
-      [97, 122],
-      [224, 255]
-    ],
-    "transforms[95].rules[47].stemCharacters": [
-      [97, 122],
-      [224, 255]
-    ],
-    "transforms[95].rules[48].stemCharacters": [
-      [97, 122],
-      [224, 255]
-    ],
-    "transforms[95].rules[49].stemCharacters": [
       [97, 122],
       [224, 255]
     ],
@@ -6041,6 +6035,9 @@
         ["renueva", "renueva"],
         ["vierte", "vierte"],
         ["estallan", "estallan"],
+        ["estalla", "estalla"],
+        ["estacionas", "estacionas"],
+        ["solapas", "solapas"],
         ["enciende", "enciende"],
         ["busqué", "busqué"],
         ["pagué", "pagué"],
@@ -6250,6 +6247,8 @@
         ["se funde", "se funde"],
         ["fundimos", "fundimos"],
         ["fungiste", "fungiste"],
+        ["pida", "pida"],
+        ["sienta", "sienta"],
         ["me dijo", "me dijo"],
         ["nos dijo", "nos dijo"],
         ["te digo", "te digo"],
@@ -6381,6 +6380,12 @@
         ["te mueras", "te mueras"],
         ["fue", "fue"],
         ["fuiste", "fuiste"],
+        ["fuisteis", "fuisteis"],
+        ["fuerte", "fuerte"],
+        ["fueros", "fueros"],
+        ["fueres", "fueres"],
+        ["ellos", "ellos"],
+        ["medios", "medios"],
         ["corróyanse", "corróyanse"],
         ["vicerrectores", "vicerrectores"],
         ["manitobanos", "manitobanos"],
@@ -6461,6 +6466,8 @@
         ["casaca roja", "casaca roja"],
         ["me puede ayudar", "me puede ayudar"],
         ["asi", "asi"],
+        ["varias", "varias"],
+        ["solas", "solas"],
         ["Ayer comimos en un restaurante pequeño cerca del puerto.", "ayer comimos en un restaurante pequeño cerca del puerto."],
         ["comer", "comer"]
       ]
@@ -7693,6 +7700,9 @@
         ["renueva", "Renueva"],
         ["vierte", "Vierte"],
         ["estallan", "Estallan"],
+        ["estalla", "Estalla"],
+        ["estacionas", "Estacionas"],
+        ["solapas", "Solapas"],
         ["enciende", "Enciende"],
         ["busqué", "Busqué"],
         ["pagué", "Pagué"],
@@ -7902,6 +7912,8 @@
         ["se funde", "Se funde"],
         ["fundimos", "Fundimos"],
         ["fungiste", "Fungiste"],
+        ["pida", "Pida"],
+        ["sienta", "Sienta"],
         ["me dijo", "Me dijo"],
         ["nos dijo", "Nos dijo"],
         ["te digo", "Te digo"],
@@ -8033,6 +8045,12 @@
         ["te mueras", "Te mueras"],
         ["fue", "Fue"],
         ["fuiste", "Fuiste"],
+        ["fuisteis", "Fuisteis"],
+        ["fuerte", "Fuerte"],
+        ["fueros", "Fueros"],
+        ["fueres", "Fueres"],
+        ["ellos", "Ellos"],
+        ["medios", "Medios"],
         ["corróyanse", "Corróyanse"],
         ["vicerrectores", "Vicerrectores"],
         ["manitobanos", "Manitobanos"],
@@ -8113,6 +8131,8 @@
         ["casaca roja", "Casaca roja"],
         ["me puede ayudar", "Me puede ayudar"],
         ["asi", "Asi"],
+        ["varias", "Varias"],
+        ["solas", "Solas"],
         ["Ayer comimos en un restaurante pequeño cerca del puerto.", "Ayer comimos en un restaurante pequeño cerca del puerto."],
         ["comer", "Comer"]
       ]
