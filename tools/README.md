@@ -11,6 +11,7 @@ nothing is written into it.
 | `node tools/port-yomitan-transforms.mjs <yomitan> <code>` | 8.1 | Writes `languages/<code>/sources/yomitan.json` from Yomitan's rules: literal suffix, prefix and whole-word rules are ported, every other rule becomes a `todo` to map by hand. An existing file is kept unless `--force`. |
 | `node tools/port-yomitan-tests.mjs <yomitan> <code>` | 8.1, 12.2 | Writes `languages/<code>/tests/yomitan.tsv` from Yomitan's transform test. |
 | `node tools/check-yomitan.mjs <yomitan> <code>...` | 8.2 | Compares `hoshidicts-cli` (default `build/hoshidicts-cli`; `--cli` or `HOSHIDICTS_CLI` to change it) with Yomitan's transformer and processors; `sources/yomitan-differences.tsv` lists the deliberate differences. `--all` runs every pack. |
+| `node tools/merge-transforms.mjs <code>` | 14 step 5 | Writes the union of `languages/<code>/sources/own.json` and `sources/yomitan.json` to `transforms.json`, each rule marked `own`, `yomitan` or `both`. A `transforms.json` other than the template's is kept unless `--force`; `--out <file>` writes elsewhere. |
 
 `tools/lib/classes.mjs` is the JavaScript side of the class syntax and the
 pattern dialect; hosts import it to expand the patterns they copy:
