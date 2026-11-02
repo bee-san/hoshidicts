@@ -4,7 +4,7 @@
 // (docs/languages.md, section 14 step 5) and writes sources/removed-rules.tsv,
 // which sources/final-rules.mjs applies:
 //
-//   node languages/ko/sources/select-rules.mjs --unimorph <unimorph kor file> --terms <extracted kty-ko-en.zip> --sentences <Tatoeba kor_sentences.tsv> [--cli build/hoshidicts-cli]
+//   node languages/ko/sources/select-rules.mjs --unimorph <unimorph kor file> --terms <directory of the extracted kty-ko-en.zip> --sentences <Tatoeba kor_sentences.tsv> [--cli build/hoshidicts-cli]
 //
 // Measurement sets (written to a temporary directory, never committed):
 //   - every V/ADJ form -> lemma pair of UniMorph Korean that is plain Hangul
@@ -24,9 +24,10 @@
 //     lemma in UniMorph, or a noun + particle (12,852 words of 20,469 in the
 //     2026-11-02 export). Like the nouns, these rows count only false
 //     candidates.
-// The dictionary is kty-ko-en without its form-of rows (rows whose glossary
-// is only [lemma, [inflection]] references): they match inflected words
-// exactly and say nothing about the rules.
+// The dictionary is kty-ko-en as published: its term banks are packed into a
+// stored ZIP unchanged and imported. Its form-of rows (a glossary of only
+// [lemma, [inflection]] references) are imported as terms without a part of
+// speech, as hoshidicts does today; they never label a word in the sets.
 //
 // Each round runs `hoshidicts-cli eval-language --per-rule --dictionary` on
 // the sets with the union of sources/own.json and sources/yomitan.json minus
@@ -113,29 +114,27 @@ function isFormOf(row) {
     return Array.isArray(glossary) && glossary.length > 0 && glossary.every((g) => Array.isArray(g));
 }
 
-/** Imports kty-ko-en without its form-of rows; returns the imported directory and the headwords' tags. */
-function lemmaDictionary(termsDir, work, cli) {
+/**
+ * Imports the dictionary's term banks unchanged; returns the imported
+ * directory and the tags of each headword that has a row other than a
+ * form-of row (a form-of row is never a lemma).
+ */
+function publishedDictionary(termsDir, work, cli) {
     const files = [];
     const tags = new Map();
     for (const name of readdirSync(termsDir).sort()) {
         const data = readFileSync(join(termsDir, name));
         if (/^term_bank_\d+\.json$/.test(name)) {
-            const rows = JSON.parse(data.toString('utf8')).filter((r) => !isFormOf(r));
-            for (const r of rows) {
+            for (const r of JSON.parse(data.toString('utf8'))) {
+                if (isFormOf(r)) { continue; }
                 const set = tags.get(r[0]) ?? new Set();
                 for (const t of (r[3] || '').split(' ').filter(Boolean)) { set.add(t); }
                 tags.set(r[0], set);
             }
-            files.push([name, Buffer.from(JSON.stringify(rows))]);
-        } else if (name === 'index.json') {
-            const index = JSON.parse(data.toString('utf8'));
-            index.title = `${index.title} lemmas`;
-            files.push([name, Buffer.from(JSON.stringify(index))]);
-        } else {
-            files.push([name, data]);
         }
+        files.push([name, data]);
     }
-    const zip = join(work, 'lemmas.zip');
+    const zip = join(work, 'dictionary.zip');
     writeFileSync(zip, storedZip(files));
     const run = spawnSync(cli, ['import', zip], {encoding: 'utf8'});
     if (run.status !== 0) { throw new Error(`import failed: ${run.stderr}`); }
@@ -449,7 +448,7 @@ function main() {
     const options = args(process.argv.slice(2));
     const work = mkdtempSync(join(tmpdir(), 'ko-select-'));
     try {
-        const {dir: dictionary, tags} = lemmaDictionary(resolve(options.terms), work, options.cli);
+        const {dir: dictionary, tags} = publishedDictionary(resolve(options.terms), work, options.cli);
         const files = measurementSets(options, work, tags);
         const removed = [];
         let current = measure(options, work, files, dictionary, removed);
