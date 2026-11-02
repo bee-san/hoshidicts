@@ -70,12 +70,14 @@ rules that Yomitan also has marked `both`.
   `ir`, `a` → `ir`, `va` → `ver`, `vamos` → `ver`, `teníamos` → `ten`. Of the
   other 74, applied one at a time to 106,068 words (the subtitle list, a
   60,000-form UniMorph sample and Yomitan's test sources), 72 give no reading
-  the own rules miss, and two add 5 readings and 49 false candidates:
-  `feminine adjective` `a` → `` (`colegiala` → `colegial`, `cachemira` →
-  `cachemir`; `para` → `par`, `buena` → `buen`, `chica` → `chic`, `mala` →
-  `mal`) and `imperative` `as` → `er` (`has` → `her`; `vas` → `ver`). The
-  own rules cover the useful part of the first with `ñola` → `ñol` and `uza`
-  → `uz` (`española`, `andaluza`).
+  the own rules miss (12 of them add one false candidate each, such as
+  `abuelo` → `abolir` and `imita` → `emitir`), and two add 5 readings and 49
+  false candidates: `feminine adjective` `a` → `` (`colegiala` →
+  `colegial`, `cachemira` → `cachemir`; `para` → `par`, `buena` → `buen`,
+  `chica` → `chic`, `mala` → `mal`) and `imperative` `as` → `er` (`has` →
+  `her`; `vas` → `ver`). The own rules make the common readings of the first
+  with their feminine endings (`española` → `español`, `andaluza` →
+  `andaluz`, `trabajadora` → `trabajador`).
 - **Own rules**: tenses and persons are separate transforms, so a trace names
   both (`preterite (nosotros)`, `imperative (tú)`, `+me +lo`): the regular
   endings of the three conjugations in every simple tense, with voseo; stem
@@ -170,6 +172,13 @@ own set's.
   the pronoun anywhere in the text (`ya me levantar` → `ya levantarse`). The
   last two come from inputs in `cases.tsv`. The two processors agree with
   Yomitan's on 2,456 inputs each.
+- **Hachidori** (feat/multi-language 1bd53232 with this branch in
+  `third_party/hoshidicts`, `test/chrome-language-pack.mjs`, Chrome 152,
+  wty-es-en): 14 / 14 checks pass. Settings adds Spanish beside Japanese and
+  imports the dictionary (1,483,499 terms, 1.8 s); ten hovered words find
+  their lemma first (`Me levanto` → `levantarse`, `se rieron` → `reírse`,
+  `Tráemelos` → `traer`, `Digámoselo` → `decir`, with their traces); the
+  Anki note and the switch to Japanese and back work.
 - **Conformance**: `language-conformance-test`: corpus.tsv 1,855 / 1,855,
   cases.tsv 318 / 318, yomitan.tsv 252 / 252, text.tsv 24 / 24, lookup.tsv
   22 / 22, gaps.tsv 0 / 45 (reported); classes.json agrees with the engine (5
@@ -211,6 +220,9 @@ own set's.
   defines many -se verbs only as "infinitive of X combined with se".
 - -illo and -illa diminutives are not deinflected, and nor are other
   derivations (-ón, -azo, -ucho).
+- Feminine forms in -ala of nouns in -al (`colegiala` → `colegial`,
+  `chavala` → `chaval`): a rule would also read `señala` as `señal` and
+  `sala` as `sal`.
 - The optional `addMissingAccents` processor (the `missingAccents` setting)
   adds one accent, ñ or ü per variant, so a word missing two of them
   (`canon` for `cañón`) is not corrected, and with it on, `de` and `se` also
