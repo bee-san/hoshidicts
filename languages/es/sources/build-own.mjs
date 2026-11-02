@@ -85,7 +85,6 @@ function verbClass(infinitive) {
     return {ar: 'v_ar', er: 'v_er', ir: 'v_ir', 'ír': 'v_ir'}[match[1]];
 }
 
-const LETTER = '{letter}';
 // Classes of language.json: consonant (with the u of gu and qu) and the last
 // letter of an imperative that takes a pronoun.
 const CONSONANT_OR_U = '{stemConsonant}';
@@ -170,8 +169,8 @@ ENDINGS.ir = {
     'present-nosotros': 'imos', 'present-vosotros': 'ís', 'present-vos': 'ís',
     'future-yo': 'iré', 'future-tu': 'irás', 'future-el': 'irá', 'future-nosotros': 'iremos', 'future-vosotros': 'iréis', 'future-ellos': 'irán',
     'conditional-yo-el': 'iría', 'conditional-tu': 'irías', 'conditional-nosotros': 'iríamos', 'conditional-vosotros': 'iríais', 'conditional-ellos': 'irían',
-    // decí, and deci after a pronoun took its accent away (decime, escribile).
-    'imperative-vos': ['í', 'i'], 'imperative-vosotros': 'id',
+    // decí; the pronoun rules give it back its accent (decime, decímelo).
+    'imperative-vos': 'í', 'imperative-vosotros': 'id',
 };
 
 const TENSES = [
@@ -318,6 +317,13 @@ const SPLITS = {
     'er:IE': [{stemNotStartsWith: '[v]'}, {stemStartsWithText: 'viert', stemChange: only(['ie'], 'e')}],
 };
 
+// fue, fuimos and fuiste are ir and ser. No other -er or -ir verb has the
+// stem fu (wty-es-en's fuer and fuir are obsolete spellings of fuera and
+// huir), so the regular endings that spell these forms leave that stem out;
+// longer stems stay (fundir, fungir).
+const FU_FORMS = new Set(['fue', 'fuí', 'fué', 'fuimos', 'fuiste', 'fuisteis']);
+const FU_SPLIT = [{stemNotStartsWithText: 'fu'}, {stemStartsWithText: 'fu', stemMinLength: 3}];
+
 /**
  * The stem constraints of a regular ending, one object per rule.
  * @param {string} conj ar, er or ir
@@ -342,7 +348,14 @@ function stemVariants(conj, slot, ending, spelling, change) {
     if (conj === 'er' && spelling === 'z' && change === null) { base.stemNotStartsWithText = 'empe'; }
     if (conj === 'er' && plain && change === null && STRESSED.has(slot) && /^[aoá]/u.test(ending)) { base.stemNotStartsWithText = 'sol'; }
     if (conj === 'ir' && plain && change === null && /^[aoá]/u.test(ending)) { base.stemNotStartsWithText = 'sal'; }
-    const split = plain && STRESSED.has(slot) ? SPLITS[`${conj}:${change === null ? 'plain' : CHANGE_NAMES.get(change)}`] : undefined;
+    // esta, estas, esto and este are words of their own; estan, estes and
+    // esten are estar written without the accent.
+    const key = `${conj}:${change === null ? 'plain' : CHANGE_NAMES.get(change)}`;
+    const split = plain && STRESSED.has(slot) && (key !== 'ar:plain' || ['a', 'as', 'e', 'o'].includes(ending)) ? SPLITS[key] : undefined;
+    if (conj !== 'ar' && plain && change === null && FU_FORMS.has('fu' + ending)) {
+        if (split !== undefined || base.stemNotStartsWithText !== undefined) { throw new Error(`fu split on ${slot} ${ending}`); }
+        return FU_SPLIT.map((variant) => ({...base, ...variant}));
+    }
     return split === undefined ? [base] : split.map((variant) => ({...base, ...variant}));
 }
 
@@ -422,6 +435,8 @@ const UY = {
     'gerund': 'uyendo',
 };
 paradigm(UY, 'uir', {stemMinLength: 1});
+// hui: the 2010 spelling of huí, a monosyllable without an accent (like rio and fie).
+wholeParadigm({'preterite-yo': 'hui'}, 'huir');
 // argüir, redargüir: arguyo, arguyó.
 paradigm(UY, 'üir', {stemMinLength: 1, stemEndsWith: '[g]'});
 
@@ -553,8 +568,10 @@ paradigm({'gerund': 'pudiendo'}, 'poder');
 // {letter} would for Spanish (caída, quédese), at a third of its size in
 // tests/classes.json.
 const WHOLE = {stemNotEndsWith: '[a-z\\u00E0-\\u00FF]'};
+// fué, fuí, dió, dío, vió and ví: the accents that monosyllables had before
+// the 1959 spelling rules, common in older printed text.
 const fuiSeries = {
-    'preterite-yo': 'fui', 'preterite-tu': 'fuiste', 'preterite-el': 'fue', 'preterite-nosotros': 'fuimos', 'preterite-vosotros': 'fuisteis', 'preterite-ellos': 'fueron',
+    'preterite-yo': ['fui', 'fuí'], 'preterite-tu': 'fuiste', 'preterite-el': ['fue', 'fué'], 'preterite-nosotros': 'fuimos', 'preterite-vosotros': 'fuisteis', 'preterite-ellos': 'fueron',
     ...pastSubjunctive('fu', ''),
 };
 wholeParadigm({
@@ -572,7 +589,8 @@ paradigm({
     'future-yo': 'iré', 'future-tu': 'irás', 'future-el': 'irá', 'future-nosotros': 'iremos', 'future-vosotros': 'iréis', 'future-ellos': 'irán',
     'conditional-yo-el': 'iría', 'conditional-tu': 'irías', 'conditional-nosotros': 'iríamos', 'conditional-vosotros': 'iríais', 'conditional-ellos': 'irían',
     'subjunctive-yo-el': 'vaya', 'subjunctive-tu': 'vayas', 'subjunctive-nosotros': 'vayamos', 'subjunctive-vosotros': 'vayáis', 'subjunctive-ellos': 'vayan', 'subjunctive-vos': 'vayás',
-    'imperative-tu': 've', 'imperative-vosotros': 'id', 'imperative-usted': 'vaya', 'imperative-ustedes': 'vayan', 'imperative-nosotros': ['vamos', 'vayamos'],
+    // vé: the old spelling of ve (go), as fué and dió.
+    'imperative-tu': ['ve', 'vé'], 'imperative-vosotros': 'id', 'imperative-usted': 'vaya', 'imperative-ustedes': 'vayan', 'imperative-nosotros': ['vamos', 'vayamos'],
     'gerund': 'yendo',
     'participle': ['ido', 'ida', 'idos', 'idas'],
 }, 'ir', WHOLE, true);
@@ -595,7 +613,7 @@ function futureOf(infinitive) {
 }
 paradigm({
     'present-yo': 'doy', 'present-tu': 'das', 'present-el': 'da', 'present-nosotros': 'damos', 'present-vosotros': 'dais', 'present-ellos': 'dan', 'present-vos': 'das',
-    'preterite-yo': 'di', 'preterite-tu': 'diste', 'preterite-el': 'dio', 'preterite-nosotros': 'dimos', 'preterite-vosotros': 'disteis', 'preterite-ellos': 'dieron',
+    'preterite-yo': 'di', 'preterite-tu': 'diste', 'preterite-el': ['dio', 'dió'], 'preterite-nosotros': 'dimos', 'preterite-vosotros': 'disteis', 'preterite-ellos': 'dieron',
     'imperfect-yo-el': 'daba', 'imperfect-tu': 'dabas', 'imperfect-nosotros': 'dábamos', 'imperfect-vosotros': 'dabais', 'imperfect-ellos': 'daban',
     ...futureOf('dar'),
     'subjunctive-yo-el': 'dé', 'subjunctive-tu': 'des', 'subjunctive-nosotros': 'demos', 'subjunctive-vosotros': 'deis', 'subjunctive-ellos': 'den', 'subjunctive-vos': 'des',
@@ -605,7 +623,7 @@ paradigm({
 }, 'dar', WHOLE, true);
 paradigm({
     'present-tu': 'ves', 'present-el': 've', 'present-nosotros': 'vemos', 'present-vosotros': 'veis', 'present-ellos': 'ven', 'present-vos': 'ves',
-    'preterite-yo': 'vi', 'preterite-tu': 'viste', 'preterite-el': 'vio', 'preterite-nosotros': 'vimos', 'preterite-vosotros': 'visteis', 'preterite-ellos': 'vieron',
+    'preterite-yo': ['vi', 'ví'], 'preterite-tu': 'viste', 'preterite-el': ['vio', 'vió'], 'preterite-nosotros': 'vimos', 'preterite-vosotros': 'visteis', 'preterite-ellos': 'vieron',
     ...futureOf('ver'),
     ...pastSubjunctive('v', 'i'),
     'imperative-tu': 've', 'imperative-vosotros': 'ved',
@@ -693,6 +711,19 @@ for (const pronouns of CLUSTERS) {
                 conditionsIn: [], conditionsOut: [person], ...constraint, then: STRIP_ACUTE});
         }
     }
+    // The vos imperative of an -ir verb loses its accent before one pronoun
+    // and keeps it before two (decime, decímelo); these rules give back decí.
+    // Only after a pronoun: a bare word ending in i is not a vos imperative
+    // (asi is así, not asir). Vos takes te, not se or os.
+    const vosCluster = !['se', 'os'].includes(first) || (first === 'se' && two && DIRECT.includes(pronouns[1]));
+    if (vosCluster) {
+        const vos = (two ? 'í' : 'i') + cluster;
+        suffix(id, vos, 'í', [], ['imp'], {stemMinLength: MIN_STEM});
+        if (first === 'te') {
+            add(id, {type: 'circumfix', inflectedPrefix: '', deinflectedPrefix: 'te+', inflectedSuffix: vos, deinflectedSuffix: 'í',
+                conditionsIn: [], conditionsOut: ['imp_tu'], stemMinLength: MIN_STEM});
+        }
+    }
     // dé (dar, usted) keeps its accent with two pronouns (démelo) and in the
     // traditional spelling of one (deme, dese or dése).
     for (const de of (two ? ['dé'] : ['de', 'dé']).map((d) => d + cluster)) {
@@ -707,24 +738,38 @@ for (const pronouns of CLUSTERS) {
 transform('pronominal', '-se verb', 'A verb with a reflexive pronoun before it or attached to it, looked up in its -se form: me levanto → levantarse, te acuerdas → acordarse, siéntate → sentarse.');
 const CLASSES = [['v_ar', [['ar', 'arse']]], ['v_er', [['er', 'erse']]], ['v_ir', [['ir', 'irse'], ['ír', 'írse']]]];
 const PERSON = {me: 'p1s', te: 'p2s', se: 'p3', nos: 'p1p', os: 'p2p'};
+// The verb's stem is lowercase letters (the decapitalize variant), two or more.
+const VERB_STEM = {stemCharacters: '[a-z\\u00E0-\\u00FF]', stemMinLength: MIN_STEM};
 // A pronoun written before the verb: it must agree with the verb's person,
 // and the verb's stem has two letters or more, so that a pronoun before a
 // short word gives no -se verb through a regular ending (me va is not verse,
-// te es not irse, me ha not herse).
+// te es not irse, me ha not herse). The -ar verbs podar and morar are left
+// out: the ue → o rules leave out pued- and muer- only when the stem starts
+// with them, and before a pronoun the pronoun starts it (se pueden, me puede
+// and se muere are poderse, me + poder and morirse, not podarse or morarse).
+// Longer stems that start with pod or mor stay (mortificarse, moralizarse).
+// The -er and -ir verbs leave out fu for the same reason (se fue is irse,
+// not fuirse).
+const PRONOMINAL_SPLIT = {v_ar: [{stemNotStartsWith: '[mp]'}, {stemStartsWith: '[p]', stemNotStartsWithText: 'pod'}, {stemStartsWithText: 'pod', stemMinLength: 4},
+    {stemStartsWith: '[m]', stemNotStartsWithText: 'mor'}, {stemStartsWithText: 'mor', stemMinLength: 4}], v_er: FU_SPLIT, v_ir: FU_SPLIT};
 for (const pronoun of REFLEXIVE) {
     for (const [condition, suffixes] of CLASSES) {
-        add('pronominal', {
-            type: 'circumfix', prefixes: [[pronoun + ' ', '']], suffixes,
-            conditionsIn: [PERSON[pronoun]], conditionsOut: [condition], stemCharacters: LETTER, stemMinLength: MIN_STEM,
-        });
+        for (const split of PRONOMINAL_SPLIT[condition] ?? [{}]) {
+            add('pronominal', {
+                type: 'circumfix', prefixes: [[pronoun + ' ', '']], suffixes,
+                conditionsIn: [PERSON[pronoun]], conditionsOut: [condition], ...VERB_STEM, ...split,
+            });
+        }
     }
 }
 // A pronoun the clitic rules moved from after an imperative or a gerund.
 for (const [condition, suffixes] of CLASSES) {
-    add('pronominal', {
-        type: 'circumfix', prefixes: REFLEXIVE.map((p) => [p + '+', '']), suffixes,
-        conditionsIn: [condition], conditionsOut: [condition], stemCharacters: LETTER, stemMinLength: MIN_STEM,
-    });
+    for (const split of condition === 'v_ar' ? [{}] : FU_SPLIT) {
+        add('pronominal', {
+            type: 'circumfix', prefixes: REFLEXIVE.map((p) => [p + '+', '']), suffixes,
+            conditionsIn: [condition], conditionsOut: [condition], ...VERB_STEM, ...split,
+        });
+    }
 }
 // The written-out forms of ir, dar, ver and oír: me voy, se dio, nos vemos,
 // te oyes (irse, darse, verse, oírse), and vete, dese, yéndose.

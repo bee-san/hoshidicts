@@ -40,5 +40,10 @@
   ["verse", "", "v", "v", 0, ["to see oneself"], 39, ""],
   ["darse", "", "v", "v", 0, ["to give oneself"], 40, ""],
   ["cancion", "", "n", "n", 0, ["(decoy: canción without its accent)"], 41, ""],
-  ["rapido", "", "adj", "adj", 0, ["(decoy: rápido without its accent)"], 42, ""]
+  ["rapido", "", "adj", "adj", 0, ["(decoy: rápido without its accent)"], 42, ""],
+  ["podar", "", "v", "v", 0, ["to prune"], 43, ""],
+  ["podarse", "", "v", "v", 0, ["(reflexive of podar)"], 44, ""],
+  ["poder", "", "v", "v", 0, ["can, to be able to"], 45, ""],
+  ["así", "", "adv", "", 0, ["so, thus"], 46, ""],
+  ["asir", "", "v", "v", 0, ["to grasp"], 47, ""]
 ]

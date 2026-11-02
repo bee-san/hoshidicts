@@ -18,6 +18,8 @@ voseo	1	decime	decir	v	imperative-vos|clitic-me
 voseo	1	escribile	escribir	v	imperative-vos|clitic-le
 voseo	1	abrilo	abrir	v	imperative-vos|clitic-lo
 voseo	1	vestite	vestirse	v	pronominal|imperative-vos|clitic-te
+voseo	1	decímelo	decir	v	imperative-vos|clitic-melo
+voseo	1	vestítelo	vestirse	v	pronominal|imperative-vos|clitic-telo
 stem changes	1	pienso	pensar	v	present-yo
 stem changes	1	cuento	contar	v	present-yo
 stem changes	1	pide	pedir	v	present-el
@@ -163,6 +165,15 @@ irregular verbs	1	viera	ver	v	subjunctive-ra-yo-el
 irregular verbs	1	viendo	ver	v	gerund
 irregular verbs	1	sido	ser	v	participle
 irregular verbs	1	siendo	ser	v	gerund
+old spellings	1	fué	ser	v	preterite-el
+old spellings	1	fuí	ir	v	preterite-yo
+old spellings	1	dió	dar	v	preterite-el
+old spellings	1	vió	ver	v	preterite-el
+old spellings	1	vé	ir	v	imperative-tu
+old spellings	1	ví	ver	v	preterite-yo
+old spellings	1	hui	huir	v	preterite-yo
+missing accents	1	estan	estar	v	present-ellos
+missing accents	1	estes	estar	v	subjunctive-tu
 irregular verbs	1	ve	ver	v	present-el
 irregular verbs	1	ve	ir	v	imperative-tu
 irregular verbs	1	caigo	caer	v	present-yo
@@ -273,6 +284,14 @@ pronominal verbs	1	te oyes	oírse	v	pronominal|present-tu
 pronominal verbs	1	me encuentro	encontrarse	v	pronominal|present-yo
 pronominal verbs	1	dése	darse	v	pronominal|imperative-usted|clitic-se
 pronominal verbs	1	viéndose	verse	v	pronominal|gerund|clitic-se
+pronominal verbs	1	se muere	morirse	v	pronominal|present-el
+pronominal verbs	1	te mortificas	mortificarse	v	pronominal|present-tu
+pronominal verbs	1	se apodera	apoderarse	v	pronominal|present-el
+pronominal verbs	1	se porta	portarse	v	pronominal|present-el
+pronominal verbs	1	se fué	irse	v	pronominal|preterite-el
+pronominal verbs	1	se funde	fundirse	v	pronominal|present-el
+irregular verbs	1	fundimos	fundir	v	present-nosotros
+irregular verbs	1	fungiste	fungir	v	preterite-tu
 pronominal agreement	0	me dijo	decirse	v	*
 pronominal agreement	0	nos dijo	decirse	v	*
 pronominal agreement	0	te digo	decirse	v	*
@@ -412,3 +431,14 @@ one-letter stems	0	me	mar	v	*
 one-letter stems	0	le	lar	v	*
 one-letter stems	0	do	dar	v	*
 one-letter stems	0	lo	lar	v	*
+collisions	0	se pueden	podarse	v	*
+collisions	0	me puede	podarse	v	*
+collisions	0	te puedes	podarse	v	*
+collisions	0	se pueda	podarse	v	*
+collisions	0	se muere	morarse	v	*
+collisions	0	me muero	morarse	v	*
+collisions	0	te mueras	morarse	v	*
+collisions	0	fue	fuer	v	*
+collisions	0	fuimos	fuir	v	*
+collisions	0	fuiste	fuer	v	*
+collisions	0	se fue	fuirse	v	*
