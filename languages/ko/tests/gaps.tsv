@@ -1,0 +1,6 @@
+# Known differences, run and reported but not enforced (docs/languages.md 12.1).
+# Rows from Yomitan's Korean transform test (GPL-3.0-or-later; Copyright (C) 2023-2026 Yomitan Authors; 2020-2022 Yomichan Authors),
+# https://github.com/yomidevs/yomitan/blob/d3c54c10264673eca0d66b970ef74cd5c8b048e3/test/language/korean-transforms.test.js,
+# that the final rules do not pass; README.md, Known gaps, says why.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+invalid deinflections	0	보십시다	보다	v	-(으)시|-(으)ㅂ시다

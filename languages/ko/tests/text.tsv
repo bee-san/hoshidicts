@@ -1,0 +1,18 @@
+# Text-processor cases (written for hoshidicts, GPL-3.0-or-later): NFC, then Hangul syllables to jamo, as
+# hangul-js's disassemble writes them (compound vowels and final clusters split; ㄲ ㅆ kept).
+# category	valid	input	variant
+syllables	1	먹었어요	ㅁㅓㄱㅇㅓㅆㅇㅓㅇㅛ
+syllables	0	먹었어요	먹었어요
+compound vowels	1	왜	ㅇㅗㅐ
+compound vowels	1	의사	ㅇㅡㅣㅅㅏ
+final clusters	1	앉아	ㅇㅏㄴㅈㅇㅏ
+final clusters	1	없어	ㅇㅓㅂㅅㅇㅓ
+final clusters	1	닭	ㄷㅏㄹㄱ
+tense consonants	1	있어요	ㅇㅣㅆㅇㅓㅇㅛ
+tense consonants	1	까	ㄲㅏ
+conjoining jamo	1	먹	ㅁㅓㄱ
+compatibility jamo	1	ㅘ	ㅗㅏ
+compatibility jamo	1	ㄳ	ㄱㅅ
+compatibility jamo	1	ㅋㅋ	ㅋㅋ
+other scripts	1	學校	學校
+other scripts	1	K팝	Kㅍㅏㅂ

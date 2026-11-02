@@ -1,0 +1,28 @@
+# Whole-pipeline cases against tests/dictionary/ (written for hoshidicts, GPL-3.0-or-later): scanning by
+# character prefixes, Hangul to jamo, deinflection, jamo back to syllables, the part-of-speech filter, ranking.
+# category	valid	text	expression	matched
+nouns	1	학교에서	학교	학교
+nouns	1	학교에서 공부했어요	학교	학교
+nouns	1	친구랑 같이	친구	친구
+nouns	1	학생이에요	학생	학생
+pronouns	1	난 학생이야	나	난
+pronouns	1	이건 뭐예요?	이것	이건
+predicates	1	공부했어요	공부하다	공부했어요
+predicates	1	먹었어요.	먹다	먹었어요
+predicates	1	갔습니다	가다	갔습니다
+predicates	1	들으면 좋아요	듣다	들으면
+predicates	1	추워서 집에 있었어요	춥다	추워서
+predicates	1	몰라요	모르다	몰라요
+predicates	1	사는 곳	살다	사는
+predicates	1	예뻐졌어요	예쁘다	예뻐졌어요
+predicates	1	빨간 사과	빨갛다	빨간
+predicates	1	지었다	짓다	지었다
+predicates	1	나아서 다행이에요	낫다	나아서
+predicates	1	도와주셨어요	돕다	도와
+predicates	1	그래요	그렇다	그래요
+predicates	1	아니에요	아니다	아니에요
+future	1	갈 거예요	가다	갈 거예요
+future	1	먹을 거야	먹다	먹을 거야
+negatives	0	들은 이야기	들다	들은
+negatives	0	나아요	나다	나아요
+negatives	0	학교에서	학교	학교에서
