@@ -30,12 +30,18 @@ export function ruleKey(rule) {
     return canonical(rest);
 }
 
-/** The rules of sources/removed-rules.tsv: [{transform, rule}]. */
+/**
+ * The rules of sources/removed-rules.tsv: [{transform, rule}]. Each row names a
+ * suffix rule of sources/yomitan.json (every ported Korean rule is one) by
+ * transform id, inflected, deinflected, conditionsIn and conditionsOut, the
+ * conditions joined with commas in the file's order.
+ */
 export function readRemoved(file = join(here, 'removed-rules.tsv')) {
     if (!existsSync(file)) { return []; }
+    const list = (cell) => (cell === '' ? [] : cell.split(','));
     return readFileSync(file, 'utf8').split('\n').filter((line) => line !== '' && !line.startsWith('#')).map((line) => {
-        const [transform, rule] = line.split('\t');
-        return {transform, rule: JSON.parse(rule)};
+        const [transform, inflected, deinflected, conditionsIn, conditionsOut] = line.split('\t');
+        return {transform, rule: {type: 'suffix', inflected, deinflected, conditionsIn: list(conditionsIn), conditionsOut: list(conditionsOut)}};
     });
 }
 

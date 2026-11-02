@@ -76,6 +76,13 @@ const CONDITIONS = {
     // commit, so that a dictionary tagging 이다 `ida` matches; kty-ko-en
     // does not use the tag).
     ida: {name: 'Postpositional particle ida', isDictionaryForm: true},
+    // Yomitan's conditions for a bare stem that one of its endings leaves
+    // behind (먹었으나 -> 먹었 marked p): the own pre-final rules below take
+    // these stems too, under their own stem constraints, so Yomitan's endings
+    // combine with -았/었-, -겠- and -(으)시- (added after the own-rules commit).
+    p: {name: 'Intermediate past tense ending', isDictionaryForm: false},
+    f: {name: 'Intermediate future tense ending', isDictionaryForm: false},
+    eusi: {name: 'Intermediate formal ending', isDictionaryForm: false},
     '-시': {name: 'Stem with the honorific -(으)시-', isDictionaryForm: false},
     '-었': {name: 'Stem with the past -었-', isDictionaryForm: false},
     '-겠': {name: 'Stem with -겠-', isDictionaryForm: false},
@@ -180,8 +187,17 @@ const A_FORMS = [
     // 되 + 어 → 돼.
     ['ㅐ', 'ㅣ', {stemMinLength: 2, stemEndsWith: '[ㅗ]'}],
     // ㅡ drops: 쓰 + 어 → 써, 바쁘 + 아 → 바빠.
-    ['ㅓ', 'ㅡ', {stemMinLength: 1, stemEndsWith: CONSONANT}],
-    ['ㅏ', 'ㅡ', {stemMinLength: 1, stemEndsWith: CONSONANT}],
+    // Not after ㄹ: 르 stems are 르- or 러-irregular (자르다 -> 잘라, 이르다 ->
+    // 이르러), so 사러 is never 사르다; the few that drop ㅡ follow.
+    ['ㅓ', 'ㅡ', {stemMinLength: 1, stemEndsWith: CONSONANT_NOT_LIEUL}],
+    ['ㅏ', 'ㅡ', {stemMinLength: 1, stemEndsWith: CONSONANT_NOT_LIEUL}],
+    // 르 stems that drop ㅡ: 따르다 (뒤따르다, 잇따르다) -> 따라, 치르다 -> 치러,
+    // 들르다 -> 들러, 우러르다 -> 우러러, 다다르다 -> 다다라.
+    ['ㄸㅏㄹㅏ', 'ㄸㅏㄹㅡ', {}],
+    ['ㅊㅣㄹㅓ', 'ㅊㅣㄹㅡ', {}],
+    ['ㄷㅡㄹㄹㅓ', 'ㄷㅡㄹㄹㅡ', {}],
+    ['ㅇㅜㄹㅓㄹㅓ', 'ㅇㅜㄹㅓㄹㅡ', {}],
+    ['ㄷㅏㄷㅏㄹㅏ', 'ㄷㅏㄷㅏㄹㅡ', {}],
     // 르: 모르 + 아 → 몰라, 부르 + 어 → 불러.
     ['ㄹㄹㅏ', 'ㄹㅡ', {stemMinLength: 2, stemEndsWith: VOWEL}],
     ['ㄹㄹㅓ', 'ㄹㅡ', {stemMinLength: 2, stemEndsWith: VOWEL}],
@@ -235,8 +251,10 @@ function transform(id, name, description, rules, extra = {}) {
 }
 
 // Informal polite (해요체) and informal plain (해체).
-transform('-아/어요', '-아/어요', 'Informal polite ending (해요체): statement, question, request or suggestion.', [ah('요', ALL)]);
-transform('-아/어', '-아/어', 'Informal plain ending (해체): statement, question, command or suggestion.', [ah('', ALL)]);
+// 말다 (don't) contracts 말아 to 마 after -지: 하지 마, 하지 마요, 하지 마라.
+const MALDA = (inflected) => ({type: 'wholeWord', inflected: jamo(inflected), deinflected: jamo('말다'), conditionsIn: [], conditionsOut: ['v']});
+transform('-아/어요', '-아/어요', 'Informal polite ending (해요체): statement, question, request or suggestion.', [ah('요', ALL), MALDA('마요')]);
+transform('-아/어', '-아/어', 'Informal plain ending (해체): statement, question, command or suggestion.', [ah('', ALL), MALDA('마')]);
 // Formal polite (하십시오체).
 transform('-(스)ㅂ니다', '-(스)ㅂ니다', 'Formal polite statement (하십시오체).', [
     suffix(jamo('습니다'), jamo('다'), [], ALL, {stemMinLength: 2, stemEndsWith: CONSONANT}),
@@ -281,13 +299,23 @@ transform('-(으)ㅂ시다', '-(으)ㅂ시다', 'Formal polite suggestion: let u
 // Pre-final endings, removed after the final ending.
 transform('-겠', '-겠-', 'Pre-final ending -겠-: future, intention, conjecture or politeness.', [
     direct('겠다', ['v', 'adj', '-었', '-시'], {conditionsIn: ['-겠']}),
+    direct('겠', ['v', 'adj', '-었', '-시'], {conditionsIn: ['f'], deinflected: '다'}),
 ]);
 transform('-아/어야겠', '-아/어야겠-', '-아/어야 하겠-: must, will have to.', [
     ah('야겠다', HON, {conditionsIn: ['-겠']}),
 ]);
-transform('-았/었', 'past', 'Past tense -았/었/였-.', [ah('ㅆ다', HON, {conditionsIn: ['-었']})]);
-transform('-았/었었', 'past perfect', 'Past perfect -았었/었었-: had done, used to.', [ah('ㅆ었다', HON, {conditionsIn: ['-었']})]);
-transform('-(으)시', 'honorific', 'Honorific -(으)시-: respect for the subject.', [eu('시다', PRED, {conditionsIn: ['-시']})]);
+transform('-았/었', 'past', 'Past tense -았/었/였-.', [
+    ah('ㅆ다', HON, {conditionsIn: ['-었']}),
+    ah('ㅆ', HON, {conditionsIn: ['p'], deinflected: '다'}),
+]);
+transform('-았/었었', 'past perfect', 'Past perfect -았었/었었-: had done, used to.', [
+    ah('ㅆ었다', HON, {conditionsIn: ['-었']}),
+    ah('ㅆ었', HON, {conditionsIn: ['p'], deinflected: '다'}),
+]);
+transform('-(으)시', 'honorific', 'Honorific -(으)시-: respect for the subject.', [
+    eu('시다', PRED, {conditionsIn: ['-시']}),
+    eu('시', PRED, {conditionsIn: ['eusi'], deinflected: '다'}),
+]);
 
 // Plain (해라체) statements, questions, commands and suggestions.
 transform('-(느)ㄴ다', '-ㄴ/는다', 'Plain present statement of a verb (해라체).', [
@@ -298,7 +326,7 @@ transform('-(느)ㄴ다', '-ㄴ/는다', 'Plain present statement of a verb (해
 transform('-느냐', '-느냐', 'Plain question (해라체).', [neun('느냐', ALL)]);
 transform('-(으)냐', '-(으)냐', 'Plain question, colloquial (해체/해라체).', [direct('냐', ALL), eu('냐', HON, {vowelStem: false})]);
 transform('-(으)니', '-(으)니', 'Plain question -니 (해체/해라체); connective -(으)니: because, when.', [direct('니', ALL), eu('니', ALL, {vowelStem: false})]);
-transform('-아/어라', '-아/어라', 'Plain command (해라체), or an exclamation.', [ah('라', PRED)]);
+transform('-아/어라', '-아/어라', 'Plain command (해라체), or an exclamation.', [ah('라', PRED), MALDA('마라')]);
 // Not for ㄹ stems (살라), which would read 몰라 (모르다) as 몰다.
 transform('-(으)라', '-(으)라', 'Written-style command (해라체), as in instructions and headlines.', [eu('라', VERB_HON, {lieulKeeps: false})]);
 transform('-거라', '-거라/-너라', 'Plain command of 가다 and 오다 (old-fashioned).', [
@@ -339,6 +367,10 @@ transform('-지만', '-지만', 'Connective -지만: but.', [direct('지만', AL
 transform('-아/어서', '-아/어서', 'Connective -아/어서: and then, because.', [ah('서', HON)]);
 transform('-아/어도', '-아/어도', 'Connective -아/어도: even if.', [ah('도', PAST)]);
 transform('-아/어야', '-아/어야', 'Connective -아/어야: only if; before 하다 and 되다: must.', [ah('야', PAST), ah('야지', PAST), ah('야지요', PAST), ah('야죠', PAST)]);
+// Two of Yomitan's endings the first own rules lacked, written here with the
+// own stem alternations (added after the own-rules commit).
+transform('-아/어야만', '-아/어야만', 'Connective -아/어야만: only if.', [ah('야만', PAST)]);
+transform('-아/어다가', '-아/어다가', 'Connective -아/어다가: do and then (take it somewhere): 가져다가.', [ah('다가', PAST)]);
 transform('-(으)면', '-(으)면', 'Connective -(으)면: if, when.', [eu('면', PAST)]);
 transform('-(으)니까', '-(으)니까', 'Connective -(으)니까: because, when.', [eu('니까', ALL)]);
 transform('-(으)면서', '-(으)면서', 'Connective -(으)면서: while.', [eu('면서', HON)]);
@@ -415,18 +447,34 @@ const NOUN = ['n', 'pron'];
 const whole = (pairs) => pairs.map(([inflected, lemma]) => ({type: 'wholeWord', inflected: jamo(inflected), deinflected: jamo(lemma), conditionsIn: [], conditionsOut: NOUN}));
 transform('topic', 'topic -ㄴ', 'Topic particle 는 contracted with a pronoun: 난 = 나는.', [whole([
     ['난', '나'], ['넌', '너'], ['전', '저'], ['우린', '우리'], ['저흰', '저희'], ['너흰', '너희'], ['이건', '이것'], ['그건', '그것'], ['저건', '저것'],
-    ['여긴', '여기'], ['거긴', '거기'], ['저긴', '저기'], ['얜', '얘'], ['걘', '걔'], ['쟨', '쟤'],
+    ['여긴', '여기'], ['거긴', '거기'], ['저긴', '저기'], ['얜', '얘'], ['걘', '걔'], ['쟨', '쟤'], ['건', '것'],
 ])]);
 transform('object', 'object -ㄹ', 'Object particle 를 contracted with a pronoun: 날 = 나를.', [whole([
     ['날', '나'], ['널', '너'], ['절', '저'], ['우릴', '우리'], ['이걸', '이것'], ['그걸', '그것'], ['저걸', '저것'], ['뭘', '무엇'], ['뭘', '뭐'],
-    ['여길', '여기'], ['거길', '거기'], ['저길', '저기'], ['얠', '얘'], ['걜', '걔'], ['쟬', '쟤'],
+    ['여길', '여기'], ['거길', '거기'], ['저길', '저기'], ['얠', '얘'], ['걜', '걔'], ['쟬', '쟤'], ['걸', '것'],
 ])]);
 transform('subject', 'subject 가', 'Subject particle 가 with a pronoun: 내가 = 나 + 가, 이게 = 이것이.', [whole([
     ['내가', '나'], ['네가', '너'], ['니가', '너'], ['제가', '저'], ['누가', '누구'], ['이게', '이것'], ['그게', '그것'], ['저게', '저것'], ['뭐가', '무엇'],
+    ['게', '것'],
 ])]);
 transform('possessive', 'possessive', 'Possessive of a pronoun: 내 = 나의, 제 = 저의.', [whole([
     ['내', '나'], ['네', '너'], ['제', '저'],
 ])]);
+// The commonest personal pronouns with a particle written onto them (the
+// most frequent such words in Tatoeba's Korean sentences). Shortening the scan
+// reaches the pronoun too, but only for its own length, after the readings
+// that cover the whole word (그는 -> 글다); these give the pronoun the whole
+// word. Other nouns keep no particle rules (section 14.1).
+const PRONOUNS = ['나', '너', '저', '우리', '저희', '너희', '그', '그녀', '당신', '이것', '그것', '저것', '무엇', '누구'];
+const PARTICLES = [['는', '은'], ['가', '이'], ['를', '을'], ['의', '의'], ['도', '도'], ['에게', '에게'], ['한테', '한테'], ['랑', '이랑'], ['와', '과'], ['만', '만']];
+function hasFinal(word) {
+    return (word.codePointAt(word.length - 1) - 0xAC00) % 28 !== 0;
+}
+const CONTRACTED = new Set(['나가', '너가', '저가', '무엇가', '누구가']);
+transform('particle', 'particle', 'A personal pronoun with a particle written onto it: 나는 = 나 + 는, 그의 = 그 + 의.', [whole(
+    PRONOUNS.flatMap((pronoun) => PARTICLES.map(([afterVowel, afterConsonant]) => [pronoun + (hasFinal(pronoun) ? afterConsonant : afterVowel), pronoun]))
+        .filter(([word]) => !CONTRACTED.has(word)),
+)]);
 
 const out = {schema: 1, conditions: CONDITIONS, transforms};
 const file = join(dirname(fileURLToPath(import.meta.url)), 'own.json');

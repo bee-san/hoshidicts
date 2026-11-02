@@ -4,7 +4,11 @@
 // (docs/languages.md, section 14 step 5) and writes sources/removed-rules.tsv,
 // which sources/final-rules.mjs applies:
 //
-//   node languages/ko/sources/select-rules.mjs --unimorph <unimorph kor file> --terms <directory of the extracted kty-ko-en.zip> --sentences <Tatoeba kor_sentences.tsv> [--cli build/hoshidicts-cli]
+//   node languages/ko/sources/select-rules.mjs --unimorph <unimorph kor file> --terms <directory of the extracted kty-ko-en.zip> --sentences <Tatoeba kor_sentences.tsv> [--cli build/hoshidicts-cli] [--write-sets <dir>]
+//
+// --write-sets also writes the measurement sets into <dir> (unimorph.tsv,
+// cases.tsv, yomitan.tsv, nouns.tsv, chains.tsv, sentences.tsv and
+// tokens.tsv), for measuring the rule sets on exactly these rows.
 //
 // Measurement sets (written to a temporary directory, never committed):
 //   - every V/ADJ form -> lemma pair of UniMorph Korean that is plain Hangul
@@ -19,6 +23,14 @@
 //     tries: any other headword a rule reaches from them is a false candidate.
 //     Nouns are reached by shortening, not by rules, so these rows count only
 //     false candidates, never recoveries or recall;
+//   - Yomitan's endings after the pre-final endings they combine with: for
+//     every Yomitan rule that removes an ending and leaves a bare stem marked
+//     p (after -았/었-), f (-겠-), eusi (-(으)시-) or do (-더-), the stems of a
+//     few verbs and adjectives in that form (먹었, 됐, 그랬, 가셨; 먹겠; 받으시;
+//     먹더, written for this script) followed by the ending, where the result
+//     is whole syllables (먹었 + 으나 = 먹었으나 -> 먹다, 됐 + 건만 = 됐건만 -> 되다).
+//     Yomitan reaches these through a chain of two or three of its rules; the
+//     own rules know only some of the endings, so these rows keep the chains;
 //   - every Korean word of Tatoeba's Korean sentences (CC BY 2.0 FR) whose
 //     lemma is unambiguous: a headword of the dictionary, a form with one
 //     lemma in UniMorph, or a noun + particle (12,852 words of 20,469 in the
@@ -43,11 +55,18 @@
 // ties with it. For each valid row of the UniMorph, cases and Yomitan sets
 // where that happens with the candidate set but not with sources/own.json
 // alone, the Yomitan rules on the short paths to the false candidate that
-// recover no row are removed (Yomitan's one-step -(으)셔요 ties 마셔요 -> 마다
-// with 마셔요 -> 마시다, where own rules take two steps to 마다).
+// recover no row are candidates (Yomitan's one-step -(으)셔요 ties 마셔요 -> 마다
+// with 마셔요 -> 마시다, where own rules take two steps to 마다). Removing one can
+// also make another word's lemma lose the first place (마세요 -> 말다 when
+// -(으)세요's ㅅㅔㅇㅛ -> ㄹ다 goes), so each candidate is removed only when the
+// number of valid rows whose lemma a lookup ranks first goes up and no recall
+// drops. That count uses a copy of the dictionary without its form-of rows
+// (which come first today whatever the rules), over UniMorph, the cases,
+// Yomitan's test, the chain set and the Tatoeba words counted once per
+// occurrence (tokens.tsv).
 
 import {spawnSync} from 'node:child_process';
-import {mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync} from 'node:fs';
+import {mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {dirname, join, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -119,22 +138,29 @@ function isFormOf(row) {
  * directory and the tags of each headword that has a row other than a
  * form-of row (a form-of row is never a lemma).
  */
-function publishedDictionary(termsDir, work, cli) {
+function publishedDictionary(termsDir, work, cli, {entriesOnly = false} = {}) {
     const files = [];
     const tags = new Map();
     for (const name of readdirSync(termsDir).sort()) {
         const data = readFileSync(join(termsDir, name));
         if (/^term_bank_\d+\.json$/.test(name)) {
-            for (const r of JSON.parse(data.toString('utf8'))) {
+            const rows = JSON.parse(data.toString('utf8'));
+            for (const r of rows) {
                 if (isFormOf(r)) { continue; }
                 const set = tags.get(r[0]) ?? new Set();
                 for (const t of (r[3] || '').split(' ').filter(Boolean)) { set.add(t); }
                 tags.set(r[0], set);
             }
+            files.push([name, entriesOnly ? Buffer.from(JSON.stringify(rows.filter((r) => !isFormOf(r)))) : data]);
+        } else if (name === 'index.json' && entriesOnly) {
+            const index = JSON.parse(data.toString('utf8'));
+            index.title = `${index.title} entries`;
+            files.push([name, Buffer.from(JSON.stringify(index))]);
+        } else {
+            files.push([name, data]);
         }
-        files.push([name, data]);
     }
-    const zip = join(work, 'dictionary.zip');
+    const zip = join(work, entriesOnly ? 'entries.zip' : 'dictionary.zip');
     writeFileSync(zip, storedZip(files));
     const run = spawnSync(cli, ['import', zip], {encoding: 'utf8'});
     if (run.status !== 0) { throw new Error(`import failed: ${run.stderr}`); }
@@ -208,7 +234,10 @@ function measurementSets(options, work, tags) {
         }
     }
     sets.nouns.push(...prefixes);
-    sets.sentences = silverWords(options.sentences, options.unimorph, tags);
+    sets.chains = chainRows();
+    const silver = silverWords(options.sentences, options.unimorph, tags);
+    sets.sentences = silver.lines;
+    sets.tokens = silver.weighted;
     const files = {};
     for (const [name, lines] of Object.entries(sets)) {
         files[name] = join(work, `${name}.tsv`);
@@ -217,6 +246,67 @@ function measurementSets(options, work, tags) {
     return files;
 }
 
+
+// Stems before an ending, by the condition Yomitan's ending rules mark them
+// with: [stem, lemma].
+const CHAIN_STEMS = {
+    p: [['먹었', '먹다'], ['받았', '받다'], ['읽었', '읽다'], ['앉았', '앉다'], ['있었', '있다'], ['없었', '없다'], ['좋았', '좋다'], ['많았', '많다'],
+        ['입었', '입다'], ['찾았', '찾다'], ['갔', '가다'], ['봤', '보다'], ['왔', '오다'], ['줬', '주다'], ['했', '하다'], ['하였', '하다'],
+        ['됐', '되다'], ['되었', '되다'], ['마셨', '마시다'], ['썼', '쓰다'], ['몰랐', '모르다'], ['추웠', '춥다'], ['도왔', '돕다'], ['들었', '듣다'],
+        ['지었', '짓다'], ['나았', '낫다'], ['그랬', '그렇다'], ['살았', '살다'], ['섰', '서다'], ['폈', '펴다'], ['보냈', '보내다'], ['가셨', '가다'],
+        ['받으셨', '받다']],
+    f: [['먹겠', '먹다'], ['받겠', '받다'], ['가겠', '가다'], ['하겠', '하다'], ['있겠', '있다'], ['좋겠', '좋다'], ['춥겠', '춥다'], ['모르겠', '모르다'],
+        ['살겠', '살다'], ['먹었겠', '먹다'], ['가셨겠', '가다'], ['가시겠', '가다'], ['받으시겠', '받다']],
+    eusi: [['가시', '가다'], ['보시', '보다'], ['하시', '하다'], ['받으시', '받다'], ['읽으시', '읽다'], ['들으시', '듣다'], ['도우시', '돕다'],
+        ['사시', '살다'], ['지으시', '짓다'], ['모르시', '모르다'], ['좋으시', '좋다']],
+    do: [['먹더', '먹다'], ['가더', '가다'], ['좋더', '좋다'], ['하더', '하다'], ['먹었더', '먹다']],
+};
+
+const JAMO_VOWEL = /[\u314F-\u3163]/u;
+/** Jamo as hangul.assemble joins them: an initial, a vowel (or two) and a final, greedily. */
+function assemble(text) {
+    const cs = [...text];
+    let out = '';
+    for (let i = 0; i < cs.length;) {
+        const initial = CHO.indexOf(cs[i]);
+        if (initial < 0 || i + 1 >= cs.length || !JAMO_VOWEL.test(cs[i + 1])) { out += cs[i++]; continue; }
+        let vowel = cs[i + 1];
+        let k = i + 2;
+        if (k < cs.length && JAMO_VOWEL.test(cs[k]) && JUNG.includes(vowel + cs[k])) { vowel += cs[k++]; }
+        let final = '';
+        for (const n of [2, 1]) {
+            const part = cs.slice(k, k + n);
+            const candidate = part.join('');
+            if (part.length === n && JONG.indexOf(candidate) > 0 && !(k + n < cs.length && JAMO_VOWEL.test(cs[k + n]))) { final = candidate; break; }
+        }
+        out += String.fromCodePoint(0xAC00 + initial * 588 + JUNG.indexOf(vowel) * 28 + JONG.indexOf(final));
+        i = k + [...final].length;
+    }
+    return out;
+}
+
+/** Yomitan's endings after the stems of CHAIN_STEMS, as whole syllables. */
+function chainRows() {
+    const yomitan = JSON.parse(readFileSync(join(here, 'yomitan.json'), 'utf8'));
+    const lines = ['# Yomitan endings after -았/었-, -겠-, -(으)시- and -더- (measurement only)'];
+    const seen = new Set();
+    for (const t of yomitan.transforms) {
+        for (const rule of t.rules) {
+            if (rule.type !== 'suffix' || rule.deinflected !== '') { continue; }
+            for (const condition of rule.conditionsOut.filter((c) => c in CHAIN_STEMS)) {
+                // After a final consonant (ㅆ) an ending must start a syllable.
+                if (condition !== 'eusi' && condition !== 'do' && JAMO_VOWEL.test([...rule.inflected][0])) { continue; }
+                for (const [stem, lemma] of CHAIN_STEMS[condition]) {
+                    const word = assemble(jamo(stem) + rule.inflected);
+                    if (!/^[\uAC00-\uD7A3]+( [\uAC00-\uD7A3]+)*$/u.test(word) || seen.has(`${word}\t${lemma}`)) { continue; }
+                    seen.add(`${word}\t${lemma}`);
+                    lines.push([`${t.id} after ${condition}`, 1, word, lemma, '*', '*'].join('\t'));
+                }
+            }
+        }
+    }
+    return lines;
+}
 
 const SILVER_PARTICLES = ['이', '가', '을', '를', '은', '는', '의', '에', '에서', '에게', '께', '께서', '도', '만', '으로', '로', '과', '와', '이나', '나',
     '이야', '야', '처럼', '마다', '까지', '부터', '한테', '랑', '이랑', '서', '보다', '밖에', '조차', '마저', '만큼', '대로', '라도', '이라도', '요', '이요',
@@ -242,12 +332,17 @@ function silverWords(sentencesFile, unimorphFile, tags) {
         return null;
     };
     const lines = ['# Tatoeba words with one lemma (measurement only)'];
-    const seen = new Set();
+    const weighted = ['# Tatoeba words with one lemma, once per occurrence (measurement only)'];
+    const seen = new Map();
     for (const line of readFileSync(sentencesFile, 'utf8').split('\n')) {
         const text = (line.split('\t')[2] ?? '').normalize('NFC');
         for (const [word] of text.matchAll(/[\uAC00-\uD7A3]+/g)) {
-            if (seen.has(word)) { continue; }
-            seen.add(word);
+            if (seen.has(word)) {
+                const row = seen.get(word);
+                if (row !== null) { weighted.push(row); }
+                continue;
+            }
+            seen.set(word, null);
             const labels = new Set();
             if (tags.has(word)) { labels.add(word); }
             for (const lemma of forms.get(word) ?? []) { labels.add(lemma); }
@@ -255,10 +350,15 @@ function silverWords(sentencesFile, unimorphFile, tags) {
                 const noun = split(word);
                 if (noun !== null) { labels.add(noun); }
             }
-            if (labels.size === 1) { lines.push(['tatoeba', 1, word, [...labels][0], '*', '*'].join('\t')); }
+            if (labels.size === 1) {
+                const row = ['tatoeba', 1, word, [...labels][0], '*', '*'].join('\t');
+                seen.set(word, row);
+                lines.push(row);
+                weighted.push(row);
+            }
         }
     }
-    return lines;
+    return {lines, weighted};
 }
 
 function evaluate(cli, transformsFile, setFile, dictionary) {
@@ -280,6 +380,7 @@ function measure(options, work, files, dictionary, removed) {
     }
     const recall = {};
     for (const [name, setFile] of Object.entries(files)) {
+        if (name === 'tokens') { continue; }
         const result = evaluate(options.cli, file, setFile, dictionary);
         recall[name] = {recall: result.recall, negativesPassed: result.negativesPassed, falseCandidates: result.falseCandidates, firstRank: result.firstRank};
         for (const p of result.perRule) {
@@ -409,6 +510,8 @@ function rankingBlame(options, work, files, tags, current) {
     const dictForm = new Set(Object.entries(transforms.conditions).filter(([, c]) => c.isDictionaryForm).map(([k]) => k));
     const recovering = new Set(current.rules.filter((r) => r.recovers > 0).map((r) => `${r.transform}#${ruleKey(r.rule)}`));
     const blamed = new Map();
+    // Not the chain set: the own rules reach few of its rows, so there is
+    // nothing to compare a tie with.
     for (const name of ['unimorph', 'cases', 'yomitan']) {
         const rows = readFileSync(files[name], 'utf8').split('\n').filter((l) => l !== '' && !l.startsWith('#')).map((l) => l.split('\t'))
             .filter((c) => c[1] === '1').map((c) => ({source: c[2], term: c[3]}));
@@ -435,6 +538,25 @@ function rankingBlame(options, work, files, tags, current) {
     return [...blamed.values()];
 }
 
+
+/** The number of valid rows whose lemma a lookup ranks first, with the entries-only dictionary. */
+function rankScore(options, work, files, entries, removed) {
+    const own = JSON.parse(readFileSync(join(here, 'own.json'), 'utf8'));
+    const yomitan = removeRules(JSON.parse(readFileSync(join(here, 'yomitan.json'), 'utf8')), removed);
+    const file = join(work, 'candidate-rank.json');
+    writeFileSync(file, formatTransforms(mergeTransforms(own, yomitan).transforms));
+    let score = 0;
+    const recall = {};
+    for (const name of ['unimorph', 'cases', 'yomitan', 'chains', 'tokens']) {
+        const run = spawnSync(options.cli, ['eval-language', 'ko', files[name], '--transforms', file, '--dictionary', entries], {encoding: 'utf8', maxBuffer: 1 << 30});
+        if (run.status !== 0) { throw new Error(`eval-language failed on ${files[name]}: ${run.stderr}`); }
+        const result = JSON.parse(run.stdout);
+        score += Math.round(result.firstRank * result.positives);
+        recall[name] = result.recall;
+    }
+    return {score, recall};
+}
+
 function withoutSource(rule) {
     const {source: _source, ...rest} = rule;
     return rest;
@@ -450,6 +572,10 @@ function main() {
     try {
         const {dir: dictionary, tags} = publishedDictionary(resolve(options.terms), work, options.cli);
         const files = measurementSets(options, work, tags);
+        if (options['write-sets']) {
+            mkdirSync(resolve(options['write-sets']), {recursive: true});
+            for (const [name, file] of Object.entries(files)) { writeFileSync(join(resolve(options['write-sets']), `${name}.tsv`), readFileSync(file)); }
+        }
         const removed = [];
         let current = measure(options, work, files, dictionary, removed);
         const start = current.recall;
@@ -498,30 +624,40 @@ function main() {
         }
         removed.push(...accepted);
         console.log(`negatives: removed ${accepted.length} Yomitan rules on the paths of broken negatives (${removed.length} in all)`);
-        // Ranking: rules that tie a false candidate with the lemma.
+        // Ranking: rules that tie a false candidate with the lemma, removed one
+        // at a time while the first-rank count goes up and no recall drops.
+        const entries = publishedDictionary(resolve(options.terms), work, options.cli, {entriesOnly: true}).dir;
+        console.log(`first-rank count of the union: ${rankScore(options, work, files, entries, []).score}`);
+        let rank = rankScore(options, work, files, entries, removed);
+        console.log(`first-rank count before the ranking phase: ${rank.score}`);
         for (let round = 1; round <= 3; ++round) {
             current = measure(options, work, files, dictionary, removed);
             const blamed = rankingBlame(options, work, files, tags, current);
-            if (blamed.length === 0) { break; }
-            let trial = measure(options, work, files, dictionary, [...removed, ...blamed]);
-            let taken = blamed;
-            if (lowered(current.recall, trial.recall).length > 0) {
-                taken = [];
-                for (const c of blamed) {
-                    const one = measure(options, work, files, dictionary, [...removed, ...taken, c]);
-                    if (lowered(current.recall, one.recall).length === 0) { taken.push(c); trial = one; }
+            const taken = [];
+            for (const c of blamed) {
+                const trial = rankScore(options, work, files, entries, [...removed, ...taken, c]);
+                const lost = Object.keys(trial.recall).filter((name) => name !== 'tokens' && trial.recall[name] < rank.recall[name]);
+                if (lost.length === 0 && trial.score > rank.score) {
+                    taken.push(c);
+                    rank = trial;
                 }
             }
             if (taken.length === 0) { break; }
             removed.push(...taken);
-            current = trial;
-            console.log(`ranking ${round}: removed ${taken.length} Yomitan rules that tie a false candidate with the lemma (${removed.length} in all)`);
+            console.log(`ranking ${round}: removed ${taken.length} of ${blamed.length} Yomitan rules that tie a false candidate with the lemma (${removed.length} in all); first-rank count ${rank.score}`);
+        }
+        current = measure(options, work, files, dictionary, removed);
+        for (const r of removed) {
+            if (r.rule.type !== 'suffix' || Object.keys(withoutSource(r.rule)).sort().join(',') !== 'conditionsIn,conditionsOut,deinflected,inflected,type') {
+                throw new Error(`removed-rules.tsv holds plain suffix rules only: ${JSON.stringify(r.rule)}`);
+            }
         }
         const lines = [
             '# Yomitan rules the final rule set leaves out, written by sources/select-rules.mjs; sources/final-rules.mjs applies them.',
-            '# Each recovers no row of the measurement sets but adds false candidates or breaks negatives (README.md, Measurements).',
-            '# transform\trule\trecovers\tfalseCandidates\tbreaks\tnote',
-            ...removed.map((r) => [r.transform, JSON.stringify(withoutSource(r.rule)), r.recovers, r.falseCandidates, r.breaks, r.negative ? `breaks ${r.negative} with other paths` : r.ties ? `ties a false candidate with the lemma on ${r.ties} paths, as in ${r.example}` : ''].join('\t')),
+            '# Each recovers no row of the measurement sets and adds false candidates, breaks a negative, or ties a false candidate with the lemma (README.md, Rule provenance).',
+            '# transform\tinflected\tdeinflected\tconditionsIn\tconditionsOut\trecovers\tfalseCandidates\tbreaks\tnote',
+            ...removed.map((r) => [r.transform, r.rule.inflected, r.rule.deinflected, r.rule.conditionsIn.join(','), r.rule.conditionsOut.join(','),
+                r.recovers, r.falseCandidates, r.breaks, r.negative ? `breaks ${r.negative} with other paths` : r.ties ? `ties a false candidate with the lemma on ${r.ties} paths, as in ${r.example}` : ''].join('\t')),
         ];
         writeFileSync(join(here, 'removed-rules.tsv'), `${lines.join('\n')}\n`);
         console.log(JSON.stringify({before: start, after: current.recall}, null, 1));
@@ -532,4 +668,4 @@ function main() {
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) { main(); }
-export {ruleKey};
+export {chainRows, ruleKey};

@@ -99,7 +99,7 @@ regular	1	놨어요	놓다	v	-았/었|-아/어요
 honorific verbs	1	계세요	계시다	v	-(으)세요
 honorific verbs	1	주무세요	주무시다	v	-(으)세요
 honorific verbs	1	드세요	드시다	v	-(으)세요
-copula	1	이에요	이다	*	-이에요
+copula	1	이에요	이다	particle	-이에요
 copula	1	예요	이다	*	-이에요
 copula	1	이야	이다	*	-야
 copula	1	입니다	이다	*	-(스)ㅂ니다
@@ -190,6 +190,35 @@ endings	1	아파서요	아프다	adj	-어서요
 future	1	갈 거예요	가다	v	-(으)ㄹ 거예요
 future	1	먹을 거야	먹다	v	-(으)ㄹ 거야
 future	1	할 것이다	하다	v	-(으)ㄹ 것이다
+copula	1	예요	이다	ida	-이에요
+르	1	치러	치르다	v	-아/어
+르	1	들러요	들르다	v	-아/어요
+르	1	우러러	우러르다	v	-아/어
+르	1	다다랐다	다다르다	v	-았/었
+르	1	뒤따라	뒤따르다	v	-아/어
+ㅎ	1	이랬어요	이러다	v	-았/었|-아/어요
+ㅎ	1	어째서	어쩌다	v	-아/어서
+말다	1	마	말다	v	-아/어
+말다	1	마요	말다	v	-아/어요
+말다	1	마라	말다	v	-아/어라
+pronouns	1	건	것	*	topic
+pronouns	1	걸	것	*	object
+pronouns	1	게	것	*	subject
+pronouns	1	나는	나	*	particle
+pronouns	1	그는	그	*	particle
+pronouns	1	우리를	우리	*	particle
+pronouns	1	그녀의	그녀	*	particle
+pronouns	1	이것을	이것	*	particle
+yomitan endings	1	먹었으나	먹다	v	*
+yomitan endings	1	하였으나	하다	v	*
+yomitan endings	1	됐건만	되다	v	*
+yomitan endings	1	가셨으나	가다	v	*
+yomitan endings	1	받았더라도	받다	v	*
+yomitan endings	1	되었으리라	되다	v	*
+yomitan endings	1	먹겠거니	먹다	v	*
+yomitan endings	1	읽으시건만	읽다	v	*
+connectives	1	가져다가	가지다	v	-아/어다가
+connectives	1	먹어야만	먹다	v	-아/어야만
 negatives	0	몰라요	몰다	*	*
 negatives	0	몰라	몰다	*	*
 negatives	0	불러요	불다	*	*
@@ -224,3 +253,24 @@ negatives	0	추워서	추다	*	*
 negatives	0	들으니까	들다	*	*
 negatives	0	우리도	우리다	*	*
 negatives	0	여기서	여기다	*	*
+negatives	0	사러	사르다	*	*
+negatives	0	자러	자르다	*	*
+negatives	0	나라도	나르다	*	*
+negatives	0	이라서	이르다	*	*
+negatives	0	바라요	바르다	*	*
+negatives	0	이러한	이르다	*	*
+negatives	0	마라	마르다	*	*
+negatives	0	거라	거르다	*	*
+negatives	0	떨어졌다	떨다	v	*
+negatives	0	예쁘는	예쁘다	adj	*
+negatives	0	그랬구나	그리다	*	*
+negatives	0	있지	이다	*	*
+negatives	0	저러다가	절다	*	*
+negatives	0	그러다가	그르다	*	*
+negatives	0	그러다가	글다	*	*
+negatives	0	이러다가	이르다	*	*
+negatives	0	나라다	나르다	*	*
+negatives	0	그러다	그르다	*	*
+negatives	0	이러다	이르다	*	*
+negatives	0	그러라	그르다	*	*
+negatives	0	이러라	이르다	*	*

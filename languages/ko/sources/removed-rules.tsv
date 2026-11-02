@@ -1,298 +1,534 @@
 # Yomitan rules the final rule set leaves out, written by sources/select-rules.mjs; sources/final-rules.mjs applies them.
-# Each recovers no row of the measurement sets but adds false candidates or breaks negatives (README.md, Measurements).
-# transform	rule	recovers	falseCandidates	breaks	note
-어간	{"type":"suffix","inflected":"ㅂ","deinflected":"ㅂㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	4	0	
-어간	{"type":"suffix","inflected":"ㄷ","deinflected":"ㄷㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
-어간	{"type":"suffix","inflected":"ㄱ","deinflected":"ㄱㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	6	0	
-어간	{"type":"suffix","inflected":"ㅅ","deinflected":"ㅅㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
-어간	{"type":"suffix","inflected":"ㅁ","deinflected":"ㅁㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	12	0	
-어간	{"type":"suffix","inflected":"ㄴ","deinflected":"ㄴㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	2	0	
-어간	{"type":"suffix","inflected":"ㅌ","deinflected":"ㅌㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
-어간	{"type":"suffix","inflected":"ㅖ","deinflected":"ㅖㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
-어간	{"type":"suffix","inflected":"ㅗ","deinflected":"ㅗㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	4	0	
-어간	{"type":"suffix","inflected":"ㅣ","deinflected":"ㅣㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	53	0	
-어간	{"type":"suffix","inflected":"ㅜ","deinflected":"ㅜㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	3	0	
--건	{"type":"suffix","inflected":"ㄱㅓㄴ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	4	0	
--건만	{"type":"suffix","inflected":"ㄱㅓㄴㅁㅏㄴ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	1	0	
--게나	{"type":"suffix","inflected":"ㄱㅔㄴㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	2	0	
--겠	{"type":"suffix","inflected":"ㄱㅔㅆ","deinflected":"","conditionsIn":["f"],"conditionsOut":["p","eusi"]}	0	34	0	
--고	{"type":"suffix","inflected":"ㄱㅗ","deinflected":"","conditionsIn":[],"conditionsOut":["p","f","eusi","saob","euob","euo","sab","jaob","jab"]}	0	17	0	
--고는	{"type":"suffix","inflected":"ㄱㅗㄴㅡㄴ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	5	0	
--고도	{"type":"suffix","inflected":"ㄱㅗㄷㅗ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	2	0	
--고야	{"type":"suffix","inflected":"ㄱㅗㅇㅑ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	2	0	
--구려	{"type":"suffix","inflected":"ㄱㅜㄹㅕ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	1	0	
--구만	{"type":"suffix","inflected":"ㄱㅜㅁㅏㄴ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	5	0	
--구면	{"type":"suffix","inflected":"ㄱㅜㅁㅕㄴ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	1	0	
--기	{"type":"suffix","inflected":"ㄱㅣ","deinflected":"","conditionsIn":[],"conditionsOut":["p","f","eusi"]}	0	33	0	
--기로	{"type":"suffix","inflected":"ㄱㅣㄹㅗ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	15	0	
--(으)ㄹ	{"type":"suffix","inflected":"ㅇㅡㄹ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	35	0	
--(으)ㄹ	{"type":"suffix","inflected":"ㅇㅡㄹ","deinflected":"ㅅㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	2	0	
--(으)ㄹ	{"type":"suffix","inflected":"ㄹ","deinflected":"ㅎㄷㅏ","conditionsIn":[],"conditionsOut":["adj"]}	0	1	0	
--(으)ㄹ	{"type":"suffix","inflected":"ㄹ","deinflected":"","conditionsIn":[],"conditionsOut":["eusi"]}	0	7	0	
--(으)ㄹ	{"type":"suffix","inflected":"ㅇㅡㄹ","deinflected":"","conditionsIn":[],"conditionsOut":["p"]}	0	2	0	
--(으)ㄹ 거예요	{"type":"suffix","inflected":"ㄹ ㄱㅓㅇㅖㅇㅛ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--(으)나	{"type":"suffix","inflected":"ㄴㅏ","deinflected":"ㅎㄷㅏ","conditionsIn":[],"conditionsOut":["adj"]}	0	4	0	
--(으)나	{"type":"suffix","inflected":"ㄴㅏ","deinflected":"","conditionsIn":[],"conditionsOut":["p","f","eusi","sao"]}	0	4	0	
--나니	{"type":"suffix","inflected":"ㄴㅏㄴㅣ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	2	0	
--(으)나마	{"type":"suffix","inflected":"ㄴㅏㅁㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	1	0	
--(으)나마	{"type":"suffix","inflected":"ㄴㅏㅁㅏ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--나이까	{"type":"suffix","inflected":"ㄴㅏㅇㅣㄲㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--나이다	{"type":"suffix","inflected":"ㄴㅏㅇㅣㄷㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	3	0	
--남	{"type":"suffix","inflected":"ㄴㅏㅁ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	2	0	
--(으)냐	{"type":"suffix","inflected":"ㄴㅑ","deinflected":"","conditionsIn":[],"conditionsOut":["p","f","eusi"]}	0	5	0	
--(으)뇨	{"type":"suffix","inflected":"ㄴㅛ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--느냐	{"type":"suffix","inflected":"ㄴㅡㄴㅑ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--느냐	{"type":"suffix","inflected":"ㄴㅡㄴㅑ","deinflected":"","conditionsIn":[],"conditionsOut":["p","f","eusi"]}	0	28	0	
--느니	{"type":"suffix","inflected":"ㄴㅡㄴㅣ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--는	{"type":"suffix","inflected":"ㄴㅡㄴ","deinflected":"","conditionsIn":[],"conditionsOut":["eusi","f"]}	0	12	0	
--(으)ㄴ	{"type":"suffix","inflected":"ㅇㅡㄴ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	29	3	
--(으)ㄴ	{"type":"suffix","inflected":"ㅇㅡㄴ","deinflected":"ㅅㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	2	0	
--(으)ㄴ	{"type":"suffix","inflected":"ㄴ","deinflected":"ㅎㄷㅏ","conditionsIn":[],"conditionsOut":["adj"]}	0	1	0	
--(으)ㄴ	{"type":"suffix","inflected":"ㄴ","deinflected":"","conditionsIn":[],"conditionsOut":["eusi","f"]}	0	7	0	
--(으/느)ㄴ가	{"type":"suffix","inflected":"ㄴㄱㅏ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["adj"]}	0	1	0	
--(으/느)ㄴ감	{"type":"suffix","inflected":"ㄴㄱㅏㅁ","deinflected":"","conditionsIn":[],"conditionsOut":["eusi"]}	0	2	0	
--(으/느)ㄴ고	{"type":"suffix","inflected":"ㄴㄱㅗ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["adj","ida"]}	0	1	0	
--(으/느)ㄴ고	{"type":"suffix","inflected":"ㄴㄱㅗ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["adj"]}	0	1	0	
--(느)ㄴ다	{"type":"suffix","inflected":"ㄴㄷㅏ","deinflected":"","conditionsIn":[],"conditionsOut":["eusi"]}	0	7	0	
--((느)ㄴ)다니까	{"type":"suffix","inflected":"ㄴㄷㅏㄴㅣㄲㅏ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	1	0	
--((느)ㄴ)답니까	{"type":"suffix","inflected":"ㄴㄷㅏㅂㄴㅣㄲㅏ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	1	0	
--((느)ㄴ)답니까	{"type":"suffix","inflected":"ㄷㅏㅂㄴㅣㄲㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--((느)ㄴ)답니다	{"type":"suffix","inflected":"ㄴㄷㅏㅂㄴㅣㄷㅏ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	1	0	
--((느)ㄴ)답니다	{"type":"suffix","inflected":"ㄷㅏㅂㄴㅣㄷㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--((느)ㄴ)댄다	{"type":"suffix","inflected":"ㄷㅐㄴㄷㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	2	0	
--(으/느)ㄴ데	{"type":"suffix","inflected":"ㄴㅡㄴㄷㅔ","deinflected":"","conditionsIn":[],"conditionsOut":["p","f","eusi"]}	0	9	0	
--(으/느)ㄴ지고	{"type":"suffix","inflected":"ㄴㅈㅣㄱㅗ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	1	0	
--(으/느)ㄴ지고	{"type":"suffix","inflected":"ㄴㅈㅣㄱㅗ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	4	0	
--(으/느)ㄴ지라	{"type":"suffix","inflected":"ㄴㅈㅣㄹㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	3	0	
--(으/느)ㄴ지라	{"type":"suffix","inflected":"ㄴㅈㅣㄹㅏ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	3	0	
--(으)니	{"type":"suffix","inflected":"ㅇㅡㄴㅣ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	8	0	
--(으)니	{"type":"suffix","inflected":"ㅇㅡㄴㅣ","deinflected":"ㅅㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--(으)니	{"type":"suffix","inflected":"ㄴㅣ","deinflected":"ㅎㄷㅏ","conditionsIn":[],"conditionsOut":["adj"]}	0	1	0	
--(으)니	{"type":"suffix","inflected":"ㅇㅡㄴㅣ","deinflected":"","conditionsIn":[],"conditionsOut":["p","f","eusi","euo","sao","jao"]}	0	2	0	
--(으)니까	{"type":"suffix","inflected":"ㄴㅣㄲㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	26	0	
--(으)니까	{"type":"suffix","inflected":"ㅇㅡㄴㅣㄲㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	5	1	
--(으)니까	{"type":"suffix","inflected":"ㅇㅡㄴㅣㄲㅏ","deinflected":"ㅅㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--(으)니까	{"type":"suffix","inflected":"ㄴㅣㄲㅏ","deinflected":"ㅎㄷㅏ","conditionsIn":[],"conditionsOut":["adj"]}	0	1	0	
--(으)니까	{"type":"suffix","inflected":"ㄴㅣㄲㅏ","deinflected":"","conditionsIn":[],"conditionsOut":["eusi"]}	0	7	0	
--(으)니까	{"type":"suffix","inflected":"ㅇㅡㄴㅣㄲㅏ","deinflected":"","conditionsIn":[],"conditionsOut":["p","f"]}	0	2	0	
--다	{"type":"suffix","inflected":"ㄷㅏ","deinflected":"","conditionsIn":[],"conditionsOut":["p","f","eusi","ida"]}	0	73	1	
--단	{"type":"suffix","inflected":"ㄷㅏㄴ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	1	0	
--더	{"type":"suffix","inflected":"ㄷㅓ","deinflected":"ㄷㅏ","conditionsIn":["do"],"conditionsOut":["v","adj","ida"]}	0	2	0	
--더니	{"type":"suffix","inflected":"ㄷㅓㄴㅣ","deinflected":"","conditionsIn":[],"conditionsOut":["p","f","eusi","euob","euo","sab"]}	0	12	0	
--더라도	{"type":"suffix","inflected":"ㄷㅓㄹㅏㄷㅗ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	1	0	
--데	{"type":"suffix","inflected":"ㄷㅔ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	1	0	
--도다	{"type":"suffix","inflected":"ㄷㅗㄷㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	5	0	
--드니	{"type":"suffix","inflected":"ㄷㅡㄴㅣ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	4	0	
--드라	{"type":"suffix","inflected":"ㄷㅡㄹㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	3	0	
--디	{"type":"suffix","inflected":"ㄷㅣ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	1	0	
--(으)라	{"type":"suffix","inflected":"ㄹㅏ","deinflected":"","conditionsIn":[],"conditionsOut":["eusi","do"]}	0	11	0	
--(으)라고	{"type":"suffix","inflected":"ㄹㅏㄱㅗ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	14	0	
--(으)라고	{"type":"suffix","inflected":"ㄹㅏㄱㅗ","deinflected":"","conditionsIn":[],"conditionsOut":["eusi","do"]}	0	4	0	
--(으)라나	{"type":"suffix","inflected":"ㄹㅏㄴㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","ida"]}	0	2	0	
--(으)라나	{"type":"suffix","inflected":"ㄹㅏㄴㅏ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	2	0	
--(으)라나	{"type":"suffix","inflected":"ㄹㅏㄴㅏ","deinflected":"","conditionsIn":[],"conditionsOut":["eusi","do"]}	0	1	0	
--(으)라니	{"type":"suffix","inflected":"ㄹㅏㄴㅣ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","ida"]}	0	3	0	
--(으)라니	{"type":"suffix","inflected":"ㄹㅏㄴㅣ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	2	0	
--(으)라니까	{"type":"suffix","inflected":"ㄹㅏㄴㅣㄲㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","ida"]}	0	3	0	
--(으)라니까	{"type":"suffix","inflected":"ㄹㅏㄴㅣㄲㅏ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	2	0	
--(으)라면	{"type":"suffix","inflected":"ㄹㅏㅁㅕㄴ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","ida"]}	0	31	0	
--(으)라면	{"type":"suffix","inflected":"ㄹㅏㅁㅕㄴ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	14	0	
--(으)라면	{"type":"suffix","inflected":"ㄹㅏㅁㅕㄴ","deinflected":"","conditionsIn":[],"conditionsOut":["eusi","do"]}	0	14	0	
--라서	{"type":"suffix","inflected":"ㄹㅏㅅㅓ","deinflected":"다","conditionsIn":[],"conditionsOut":["ida"]}	0	0	2	
--(으)락	{"type":"suffix","inflected":"ㄹㅏㄱ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--(으)락	{"type":"suffix","inflected":"ㄹㅏㄱ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--(으)란	{"type":"suffix","inflected":"ㄹㅏㄴ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","ida"]}	0	6	0	
--(으)란	{"type":"suffix","inflected":"ㄹㅏㄴ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	5	0	
--(으)란다	{"type":"suffix","inflected":"ㄹㅏㄴㄷㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","ida"]}	0	4	0	
--(으)람	{"type":"suffix","inflected":"ㄹㅏㅁ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","ida"]}	0	4	0	
--(으)람	{"type":"suffix","inflected":"ㄹㅏㅁ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	3	0	
--(으)랍니까	{"type":"suffix","inflected":"ㄹㅏㅂㄴㅣㄲㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","ida"]}	0	2	0	
--(으)랍니다	{"type":"suffix","inflected":"ㄹㅏㅂㄴㅣㄷㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","ida"]}	0	3	0	
--(으)래	{"type":"suffix","inflected":"ㄹㅐ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	7	0	
--(으)래요	{"type":"suffix","inflected":"ㄹㅐㅇㅛ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	8	0	
--(으)려	{"type":"suffix","inflected":"ㄹㅕ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	56	0	
--(으)려	{"type":"suffix","inflected":"ㄹㅕ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	17	0	
--(으)려고	{"type":"suffix","inflected":"ㄹㅕㄱㅗ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	21	0	
--(으)려고	{"type":"suffix","inflected":"ㅇㅡㄹㅕㄱㅗ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	7	0	
--(으)려고	{"type":"suffix","inflected":"ㅇㅡㄹㅕㄱㅗ","deinflected":"ㅅㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--(으)려고	{"type":"suffix","inflected":"ㄹㅕㄱㅗ","deinflected":"","conditionsIn":[],"conditionsOut":["eusi"]}	0	7	0	
--(으)련	{"type":"suffix","inflected":"ㄹㅕㄴ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	1	0	
--(으)리	{"type":"suffix","inflected":"ㄹㅣ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	12	0	
--(으)리	{"type":"suffix","inflected":"ㄹㅣ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	11	0	
--(으)리까	{"type":"suffix","inflected":"ㄹㅣㄲㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	4	0	
--(으)리까	{"type":"suffix","inflected":"ㄹㅣㄲㅏ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--(으)리까	{"type":"suffix","inflected":"ㄹㅣㄲㅏ","deinflected":"","conditionsIn":[],"conditionsOut":["eusi","euo"]}	0	1	0	
--(으)리니	{"type":"suffix","inflected":"ㄹㅣㄴㅣ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	43	0	
--(으)리니	{"type":"suffix","inflected":"ㄹㅣㄴㅣ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	13	0	
--(으)리니	{"type":"suffix","inflected":"ㄹㅣㄴㅣ","deinflected":"ㅎㄷㅏ","conditionsIn":[],"conditionsOut":["adj"]}	0	3	0	
--(으)리다	{"type":"suffix","inflected":"ㄹㅣㄷㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	7	0	
--(으)리다	{"type":"suffix","inflected":"ㄹㅣㄷㅏ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	6	0	
--(으)리다	{"type":"suffix","inflected":"ㄹㅣㄷㅏ","deinflected":"","conditionsIn":[],"conditionsOut":["eusi","euo"]}	0	1	0	
--(으)리라	{"type":"suffix","inflected":"ㄹㅣㄹㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	4	0	
--(으)리라	{"type":"suffix","inflected":"ㄹㅣㄹㅏ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--(으)마	{"type":"suffix","inflected":"ㅁㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	36	0	
--(으)마	{"type":"suffix","inflected":"ㅁㅏ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	11	0	
--(으)매	{"type":"suffix","inflected":"ㅁㅐ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	4	0	
--(으)매	{"type":"suffix","inflected":"ㅁㅐ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	2	0	
--(으)며	{"type":"suffix","inflected":"ㄹㅇㅡ","deinflected":"ㄷㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	4	0	
--(으)면	{"type":"suffix","inflected":"ㅁㅕㄴ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	27	0	
--(으)면	{"type":"suffix","inflected":"ㅇㅡㅁㅕㄴ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	10	1	
--(으)면	{"type":"suffix","inflected":"ㅇㅡㅁㅕㄴ","deinflected":"ㅅㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--(으)면	{"type":"suffix","inflected":"ㅁㅕㄴ","deinflected":"","conditionsIn":[],"conditionsOut":["eusi","euo","jao"]}	0	13	0	
--(으)면	{"type":"suffix","inflected":"ㅇㅡㅁㅕㄴ","deinflected":"","conditionsIn":[],"conditionsOut":["p","f"]}	0	2	0	
--(으)사	{"type":"suffix","inflected":"ㅅㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	6	0	
--(으)사	{"type":"suffix","inflected":"ㅅㅏ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	2	0	
--사와	{"type":"suffix","inflected":"ㅅㅏㅇㅗㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	7	0	
--(으)사이다	{"type":"suffix","inflected":"ㅅㅏㅇㅣㄷㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--(으)사이다	{"type":"suffix","inflected":"ㅅㅏㅇㅣㄷㅏ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--(으)세	{"type":"suffix","inflected":"ㅅㅔ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	1	0	
--(으)세	{"type":"suffix","inflected":"ㅅㅔ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	1	0	
--세나	{"type":"suffix","inflected":"ㅅㅔㄴㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	1	0	
--(으)세요	{"type":"suffix","inflected":"ㅇㅡㅅㅔㅇㅛ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	9	0	
--(으)세요	{"type":"suffix","inflected":"ㅇㅡㅅㅔㅇㅛ","deinflected":"ㅅㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--(으)세요	{"type":"suffix","inflected":"ㅅㅔㅇㅛ","deinflected":"ㅎㄷㅏ","conditionsIn":[],"conditionsOut":["adj"]}	0	1	0	
--(으)셔요	{"type":"suffix","inflected":"ㅇㅡㅅㅕㅇㅛ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	5	0	
--(으)셔요	{"type":"suffix","inflected":"ㅇㅡㅅㅕㅇㅛ","deinflected":"ㅅㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--(으)셔요	{"type":"suffix","inflected":"ㅅㅕㅇㅛ","deinflected":"ㅎㄷㅏ","conditionsIn":[],"conditionsOut":["adj"]}	0	1	0	
--소	{"type":"suffix","inflected":"ㅅㅗ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	2	0	
--소다	{"type":"suffix","inflected":"ㅅㅗㄷㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	4	0	
--(스)ㅂ네	{"type":"suffix","inflected":"ㅂㄴㅔ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	1	0	
--(스)ㅂ네	{"type":"suffix","inflected":"ㅂㄴㅔ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--(스)ㅂ니까	{"type":"suffix","inflected":"ㅅㅡㅂㄴㅣㄲㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--(스)ㅂ니까	{"type":"suffix","inflected":"ㅅㅡㅂㄴㅣㄲㅏ","deinflected":"","conditionsIn":[],"conditionsOut":["p","f"]}	0	27	0	
--(스)ㅂ니까	{"type":"suffix","inflected":"ㅂㄴㅣㄲㅏ","deinflected":"","conditionsIn":[],"conditionsOut":["eusi"]}	0	7	0	
--(스)ㅂ니다	{"type":"suffix","inflected":"ㅅㅡㅂㄴㅣㄷㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--(스)ㅂ니다	{"type":"suffix","inflected":"ㅅㅡㅂㄴㅣㄷㅏ","deinflected":"","conditionsIn":[],"conditionsOut":["p","f"]}	0	36	0	
--(스)ㅂ니다	{"type":"suffix","inflected":"ㅂㄴㅣㄷㅏ","deinflected":"","conditionsIn":[],"conditionsOut":["eusi"]}	0	7	0	
--(으)시	{"type":"suffix","inflected":"ㅅㅣ","deinflected":"ㄷㅏ","conditionsIn":["eusi"],"conditionsOut":["v","adj","ida"]}	0	94	0	
--(으)시	{"type":"suffix","inflected":"ㅇㅡㅅㅣ","deinflected":"ㄷㅏ","conditionsIn":["eusi"],"conditionsOut":["v","adj"]}	0	140	0	
--(으)시	{"type":"suffix","inflected":"ㅇㅡㅅㅣ","deinflected":"ㅅㄷㅏ","conditionsIn":["eusi"],"conditionsOut":["v","adj"]}	0	28	0	
--(으)시	{"type":"suffix","inflected":"ㅅㅣ","deinflected":"ㅎㄷㅏ","conditionsIn":["eusi"],"conditionsOut":["adj"]}	0	29	0	
--(으)시	{"type":"suffix","inflected":"ㅅㅣ","deinflected":"ㄹㄷㅏ","conditionsIn":["eusi"],"conditionsOut":["v","adj"]}	0	14	0	
--(으)시	{"type":"suffix","inflected":"ㅅㅣ","deinflected":"","conditionsIn":["eusi"],"conditionsOut":["saob","euob","jaob"]}	0	8	0	
--(으)십시오	{"type":"suffix","inflected":"ㅇㅡㅅㅣㅂㅅㅣㅇㅗ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	7	0	
--(으)십시오	{"type":"suffix","inflected":"ㅇㅡㅅㅣㅂㅅㅣㅇㅗ","deinflected":"ㅅㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	1	0	
--아/어	{"type":"suffix","inflected":"ㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	37	0	
--아/어	{"type":"suffix","inflected":"ㅓ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	10	0	
--아/어	{"type":"suffix","inflected":"ㅇㅓ","deinflected":"ㅅㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--아/어	{"type":"suffix","inflected":"ㅐ","deinflected":"ㅣㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	21	0	
--아/어	{"type":"suffix","inflected":"ㅇㅓ","deinflected":"","conditionsIn":[],"conditionsOut":["p","f"]}	0	39	0	
--아/어다	{"type":"suffix","inflected":"ㅏㄷㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	15	0	
--아/어다	{"type":"suffix","inflected":"ㅓㄷㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	2	0	
--아/어다	{"type":"suffix","inflected":"ㅇㅏㄷㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--아/어다	{"type":"suffix","inflected":"ㅕㄷㅏ","deinflected":"ㅣㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--아/어다	{"type":"suffix","inflected":"ㅎㅐㄷㅏ","deinflected":"ㅎㅏㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	2	0	
--아/어다	{"type":"suffix","inflected":"ㅇㅗㅏㄷㅏ","deinflected":"ㅂㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--아/어다	{"type":"suffix","inflected":"ㅇㅏㄷㅏ","deinflected":"ㅅㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--아/어다	{"type":"suffix","inflected":"ㅇㅓㄷㅏ","deinflected":"ㅅㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--아/어다	{"type":"suffix","inflected":"ㅐㄷㅏ","deinflected":"ㅣㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	8	0	
--아/어다가	{"type":"suffix","inflected":"ㅇㅓㄷㅏㄱㅏ","deinflected":"ㅅㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--아/어도	{"type":"suffix","inflected":"ㅏㄷㅗ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	7	0	
--아/어도	{"type":"suffix","inflected":"ㅓㄷㅗ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	2	0	
--아/어도	{"type":"suffix","inflected":"ㅇㅏㄷㅗ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	0	1	
--아/어도	{"type":"suffix","inflected":"ㄷㅗ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	35	1	
--아/어도	{"type":"suffix","inflected":"ㅐㄷㅗ","deinflected":"ㅣㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	9	0	
--아/어라	{"type":"suffix","inflected":"ㅏㄹㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	8	0	
--아/어라	{"type":"suffix","inflected":"ㅓㄹㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	2	0	
--아/어라	{"type":"suffix","inflected":"ㅇㅓㄹㅏ","deinflected":"ㅅㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--아/어라	{"type":"suffix","inflected":"ㅐㄹㅏ","deinflected":"ㅣㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	15	0	
--아/어서	{"type":"suffix","inflected":"ㅏㅅㅓ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	2	0	
--아/어서	{"type":"suffix","inflected":"ㅇㅏㅅㅓ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	0	1	
--아/어서	{"type":"suffix","inflected":"ㅅㅓ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	4	1	
--아/어서	{"type":"suffix","inflected":"ㅇㅓㅅㅓ","deinflected":"ㅅㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--아/어서	{"type":"suffix","inflected":"ㅐㅅㅓ","deinflected":"ㅣㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	13	0	
--아/어서	{"type":"suffix","inflected":"ㅇㅓㅅㅓ","deinflected":"","conditionsIn":[],"conditionsOut":["p","f"]}	0	2	0	
--아/어야	{"type":"suffix","inflected":"ㅏㅇㅑ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	9	0	
--아/어야	{"type":"suffix","inflected":"ㅓㅇㅑ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	3	0	
--아/어야	{"type":"suffix","inflected":"ㅇㅑ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	20	0	
--아/어야	{"type":"suffix","inflected":"ㅇㅓㅇㅑ","deinflected":"ㅅㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--아/어야	{"type":"suffix","inflected":"ㅐㅇㅑ","deinflected":"ㅣㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	26	0	
--아/어야	{"type":"suffix","inflected":"ㅇㅓㅇㅑ","deinflected":"","conditionsIn":[],"conditionsOut":["p","f"]}	0	2	0	
--아/어야겠	{"type":"suffix","inflected":"ㅇㅓㅇㅑㄱㅔㅆ","deinflected":"ㅅㄷㅏ","conditionsIn":["f"],"conditionsOut":["v","adj"]}	0	1	0	
--아/어야만	{"type":"suffix","inflected":"ㅇㅓㅇㅑㅁㅏㄴ","deinflected":"ㅅㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--아/어요	{"type":"suffix","inflected":"ㅏㅇㅛ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	2	0	
--아/어요	{"type":"suffix","inflected":"ㅇㅏㅇㅛ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	0	1	
--아/어요	{"type":"suffix","inflected":"ㅇㅛ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	8	0	
--아/어요	{"type":"suffix","inflected":"ㅇㅓㅇㅛ","deinflected":"ㅅㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--아/어요	{"type":"suffix","inflected":"ㅐㅇㅛ","deinflected":"ㅣㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	18	0	
--아/어요	{"type":"suffix","inflected":"ㅇㅓㅇㅛ","deinflected":"","conditionsIn":[],"conditionsOut":["p","f"]}	0	41	0	
--아/어지이다	{"type":"suffix","inflected":"ㅇㅓㅈㅣㅇㅣㄷㅏ","deinflected":"ㅅㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--아/어지다	{"type":"suffix","inflected":"ㅓㅈㅣㄷㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--았/었	{"type":"suffix","inflected":"ㅆ","deinflected":"ㄷㅏ","conditionsIn":["p"],"conditionsOut":["v","adj"]}	0	39	0	
--았/었	{"type":"suffix","inflected":"ㅏㅆ","deinflected":"ㄷㅏ","conditionsIn":["p"],"conditionsOut":["v","adj"]}	0	20	0	
--았/었	{"type":"suffix","inflected":"ㅇㅏㅆ","deinflected":"ㄷㅏ","conditionsIn":["p"],"conditionsOut":["v","adj"]}	0	1	1	
--았/었	{"type":"suffix","inflected":"ㅇㅓㅆ","deinflected":"ㄷㅏ","conditionsIn":["p"],"conditionsOut":["v","adj","ida"]}	0	2	0	
--았/었	{"type":"suffix","inflected":"ㅎㅏㅇㅕㅆ","deinflected":"ㅎㅏㄷㅏ","conditionsIn":["p"],"conditionsOut":["v","adj"]}	0	2	0	
--았/었	{"type":"suffix","inflected":"ㅇㅓㅆ","deinflected":"ㅅㄷㅏ","conditionsIn":["p"],"conditionsOut":["v","adj"]}	0	9	0	
--았/었	{"type":"suffix","inflected":"ㅐㅆ","deinflected":"ㅣㄷㅏ","conditionsIn":["p"],"conditionsOut":["v","adj"]}	0	114	0	
--았/었	{"type":"suffix","inflected":"ㅅㅕㅆ","deinflected":"ㅅㅣ","conditionsIn":["p"],"conditionsOut":["eusi"]}	0	56	0	
--았/었었	{"type":"suffix","inflected":"ㅆㅇㅓㅆ","deinflected":"ㄷㅏ","conditionsIn":["p"],"conditionsOut":["v","adj"]}	0	14	0	
--았/었었	{"type":"suffix","inflected":"ㅇㅓㅆㅇㅓㅆ","deinflected":"ㅅㄷㅏ","conditionsIn":["p"],"conditionsOut":["v","adj"]}	0	1	0	
--았/었자	{"type":"suffix","inflected":"ㅇㅓㅆㅈㅏ","deinflected":"ㅅㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--(으)오	{"type":"suffix","inflected":"ㅇㅗ","deinflected":"ㄷㅏ","conditionsIn":["euo"],"conditionsOut":["v","adj"]}	0	16	0	
--(으)오	{"type":"suffix","inflected":"ㅇㅗ","deinflected":"ㄹㄷㅏ","conditionsIn":["euo"],"conditionsOut":["v","adj"]}	0	6	0	
--(으)오	{"type":"suffix","inflected":"ㅇㅗ","deinflected":"","conditionsIn":["euo"],"conditionsOut":["eusi"]}	0	26	0	
--(으)오니까	{"type":"suffix","inflected":"ㅇㅗㄴㅣㄲㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	3	0	
--(으)오니까	{"type":"suffix","inflected":"ㅇㅗㄴㅣㄲㅏ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--(으)옵	{"type":"suffix","inflected":"ㅇㅗㅂ","deinflected":"ㄷㅏ","conditionsIn":["euob"],"conditionsOut":["v","adj","ida"]}	0	6	0	
--(으)옵	{"type":"suffix","inflected":"ㅇㅗㅂ","deinflected":"ㄹㄷㅏ","conditionsIn":["euob"],"conditionsOut":["v","adj"]}	0	2	0	
--(으)옵니까	{"type":"suffix","inflected":"ㅇㅗㅂㄴㅣㄲㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	4	0	
--(으)옵니까	{"type":"suffix","inflected":"ㅇㅗㅂㄴㅣㄲㅏ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	2	0	
--(으)옵니다	{"type":"suffix","inflected":"ㅇㅗㅂㄴㅣㄷㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	3	0	
--(으)옵니다	{"type":"suffix","inflected":"ㅇㅗㅂㄴㅣㄷㅏ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--(으)와	{"type":"suffix","inflected":"ㅇㅗㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	45	0	
--(으)와	{"type":"suffix","inflected":"ㅇㅗㅏ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	22	0	
--(으)와	{"type":"suffix","inflected":"ㅇㅗㅏ","deinflected":"","conditionsIn":[],"conditionsOut":["eusi","euo","jao"]}	0	14	0	
--(으)외다	{"type":"suffix","inflected":"ㅇㅗㅣㄷㅏ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--(으)우	{"type":"suffix","inflected":"ㅇㅜ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	1	0	
--(으)우	{"type":"suffix","inflected":"ㅇㅜ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--(으)이	{"type":"suffix","inflected":"ㅇㅣ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["adj"]}	0	15	0	
--(으)이	{"type":"suffix","inflected":"ㅇㅣ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["adj"]}	0	1	0	
--(으)이	{"type":"suffix","inflected":"ㅇㅡㅣ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["adj"]}	0	8	0	
--(으)ㄴ들	{"type":"suffix","inflected":"ㄴㄷㅡㄹ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	3	0	
--(으)ㄴ들	{"type":"suffix","inflected":"ㄴㄷㅡㄹ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	2	0	
--(으)ㄹ라	{"type":"suffix","inflected":"ㄹㄹㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	10	0	
--(으)ㄹ라	{"type":"suffix","inflected":"ㄹㄹㅏ","deinflected":"ㅎㄷㅏ","conditionsIn":[],"conditionsOut":["adj"]}	0	1	0	
--(으)ㄹ라고	{"type":"suffix","inflected":"ㄹㄹㅏㄱㅗ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	2	0	
--(으)ㄹ러라	{"type":"suffix","inflected":"ㄹㄹㅓㄹㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	5	0	
--(으)ㄹ러라	{"type":"suffix","inflected":"ㄹㄹㅓㄹㅏ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	6	0	
--(으)ㄹ레	{"type":"suffix","inflected":"ㄹㄹㅔ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	1	0	
--(으)ㄹ레	{"type":"suffix","inflected":"ㄹㄹㅔ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--(으)ㄹ레라	{"type":"suffix","inflected":"ㄹㄹㅔㄹㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	1	0	
--(으)ㄹ레라	{"type":"suffix","inflected":"ㄹㄹㅔㄹㅏ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	2	0	
--(으)ㄹ려고	{"type":"suffix","inflected":"ㄹㄹㅕㄱㅗ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	17	0	
--(으)ㄹ려고	{"type":"suffix","inflected":"ㅇㅜㄹㄹㅕㄱㅗ","deinflected":"ㅂㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	2	0	
--(으)ㄹ려고	{"type":"suffix","inflected":"ㅇㅡㄹㄹㅕㄱㅗ","deinflected":"ㅅㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	1	0	
--(으)ㅁ	{"type":"suffix","inflected":"ㅇㅡㅁ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	10	0	
--(으)ㅁ	{"type":"suffix","inflected":"ㅇㅡㅁ","deinflected":"ㅅㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--(으)ㅁ	{"type":"suffix","inflected":"ㅁ","deinflected":"ㅎㄷㅏ","conditionsIn":[],"conditionsOut":["adj"]}	0	1	0	
--(으)ㅁ	{"type":"suffix","inflected":"ㅁ","deinflected":"","conditionsIn":[],"conditionsOut":["eusi"]}	0	9	0	
--(으)ㅁ	{"type":"suffix","inflected":"ㅇㅡㅁ","deinflected":"","conditionsIn":[],"conditionsOut":["p","f"]}	0	25	0	
--(으)ㅁ도	{"type":"suffix","inflected":"ㅁㄷㅗ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	23	0	
--(으)ㅁ도	{"type":"suffix","inflected":"ㅇㅡㅁㄷㅗ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	4	0	
--(으)ㅁ도	{"type":"suffix","inflected":"ㅇㅜㅁㄷㅗ","deinflected":"ㅂㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	3	0	
--(으)ㅁ도	{"type":"suffix","inflected":"ㅇㅡㅁㄷㅗ","deinflected":"ㅅㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--(으)ㅁ도	{"type":"suffix","inflected":"ㄹㅇㅡㅁㄷㅗ","deinflected":"ㄷㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	1	0	
--(으)ㅁ도	{"type":"suffix","inflected":"ㅁㄷㅗ","deinflected":"","conditionsIn":[],"conditionsOut":["eusi"]}	0	4	0	
--(으)ㅂ시다	{"type":"suffix","inflected":"ㅇㅡㅂㅅㅣㄷㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	7	0	
--(으)ㅂ시다	{"type":"suffix","inflected":"ㅇㅡㅂㅅㅣㄷㅏ","deinflected":"ㅅㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	1	0	
--(으)ㅂ시오	{"type":"suffix","inflected":"ㅇㅡㅂㅅㅣㅇㅗ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	5	0	
--(으)ㅂ시오	{"type":"suffix","inflected":"ㅇㅡㅂㅅㅣㅇㅗ","deinflected":"ㅅㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	1	0	
--잡	{"type":"suffix","inflected":"ㅈㅏㅂ","deinflected":"ㄷㅏ","conditionsIn":["jab"],"conditionsOut":["v"]}	0	2	0	
--지만	{"type":"suffix","inflected":"ㅈㅣㅁㅏㄴ","deinflected":"","conditionsIn":[],"conditionsOut":["p","f","euo","euob"]}	0	6	0	
--(으)라	{"type":"suffix","inflected":"ㄹㅏ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	20	0	
--(으)러	{"type":"suffix","inflected":"ㄹㅓ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	1	0	
--(으)라	{"type":"suffix","inflected":"ㄹㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","ida"]}	0	0	1	breaks 몰라 -> 몰다 with other paths
--아/어라	{"type":"suffix","inflected":"ㄹㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	0	1	breaks 몰라 -> 몰다 with other paths
--(으)ㄹ라	{"type":"suffix","inflected":"ㄹㄹㅏ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	0	1	breaks 몰라 -> 몰다 with other paths
--(으)셔요	{"type":"suffix","inflected":"ㅅㅕㅇㅛ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	0	0	ties a false candidate with the lemma on 8 paths, as in 시장하셔요 -> 시장하시다
--(으)시어요	{"type":"suffix","inflected":"ㅅㅣㅇㅓㅇㅛ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj","ida"]}	0	0	0	ties a false candidate with the lemma on 4 paths, as in 쑤시어요 -> 쑤시다
--(으)십시다	{"type":"suffix","inflected":"ㅅㅣㅂㅅㅣㄷㅏ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	0	0	ties a false candidate with the lemma on 3 paths, as in 쑤십시다 -> 쑤시다
--(으)십시오	{"type":"suffix","inflected":"ㅅㅣㅂㅅㅣㅇㅗ","deinflected":"ㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	0	0	ties a false candidate with the lemma on 6 paths, as in 쑤십시오 -> 쑤시다
--(으)셔요	{"type":"suffix","inflected":"ㅅㅕㅇㅛ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	0	0	ties a false candidate with the lemma on 7 paths, as in 자셔요 -> 자시다
--(으)시어요	{"type":"suffix","inflected":"ㅅㅣㅇㅓㅇㅛ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	0	0	ties a false candidate with the lemma on 4 paths, as in 모시어요 -> 모시다
--(으)십시다	{"type":"suffix","inflected":"ㅅㅣㅂㅅㅣㄷㅏ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	0	0	ties a false candidate with the lemma on 2 paths, as in 모십시다 -> 모시다
--(으)십시오	{"type":"suffix","inflected":"ㅅㅣㅂㅅㅣㅇㅗ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	0	0	ties a false candidate with the lemma on 4 paths, as in 모십시오 -> 모시다
--(으)세요	{"type":"suffix","inflected":"ㅅㅔㅇㅛ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v","adj"]}	0	0	0	ties a false candidate with the lemma on 1 paths, as in 거세요 -> 거세다
--((느)ㄴ)단다	{"type":"suffix","inflected":"ㄴㄷㅏㄴㄷㅏ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	0	0	ties a false candidate with the lemma on 1 paths, as in 연단다 -> 연달다
--((느)ㄴ)다니	{"type":"suffix","inflected":"ㄴㄷㅏㄴㅣ","deinflected":"ㄹㄷㅏ","conditionsIn":[],"conditionsOut":["v"]}	0	0	0	ties a false candidate with the lemma on 1 paths, as in 연다니 -> 연달다
+# Each recovers no row of the measurement sets and adds false candidates, breaks a negative, or ties a false candidate with the lemma (README.md, Rule provenance).
+# transform	inflected	deinflected	conditionsIn	conditionsOut	recovers	falseCandidates	breaks	note
+어간	ㅂ	ㅂㄷㅏ		v,adj	0	4	0	
+어간	ㄷ	ㄷㄷㅏ		v,adj	0	1	0	
+어간	ㄱ	ㄱㄷㅏ		v,adj	0	6	0	
+어간	ㅅ	ㅅㄷㅏ		v,adj	0	1	0	
+어간	ㅁ	ㅁㄷㅏ		v,adj	0	12	0	
+어간	ㄴ	ㄴㄷㅏ		v,adj	0	2	0	
+어간	ㅌ	ㅌㄷㅏ		v,adj	0	1	0	
+어간	ㅖ	ㅖㄷㅏ		v,adj	0	1	0	
+어간	ㅗ	ㅗㄷㅏ		v,adj	0	4	0	
+어간	ㅣ	ㅣㄷㅏ		v,adj	0	53	0	
+어간	ㅜ	ㅜㄷㅏ		v,adj	0	3	0	
+-거늘	ㄱㅓㄴㅡㄹ	ㄷㅏ		v,adj,ida	0	1	0	
+-거니	ㄱㅓㄴㅣ	ㄷㅏ		v,adj,ida	0	1	0	
+-거니와	ㄱㅓㄴㅣㅇㅗㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-거던	ㄱㅓㄷㅓㄴ	ㄷㅏ		v,adj,ida	0	1	0	
+-거드면	ㄱㅓㄷㅡㅁㅕㄴ	ㄷㅏ		v,adj,ida	0	1	0	
+-거든	ㄱㅓㄷㅡㄴ			p,f,eusi	0	6	0	
+-거들랑	ㄱㅓㄷㅡㄹㄹㅏㅇ	ㄷㅏ		v,adj,ida	0	1	0	
+-건	ㄱㅓㄴ	ㄷㅏ		v,adj,ida	0	5	0	
+-건대	ㄱㅓㄴㄷㅐ	ㄷㅏ		v	0	1	0	
+-건마는	ㄱㅓㄴㅁㅏㄴㅡㄴ	ㄷㅏ		v,adj,ida	0	1	0	
+-건만	ㄱㅓㄴㅁㅏㄴ	ㄷㅏ		v,adj,ida	0	2	0	
+-걸랑	ㄱㅓㄹㄹㅏㅇ	ㄷㅏ		v,adj,ida	0	1	0	
+-것다	ㄱㅓㅅㄷㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-것마는	ㄱㅓㅅㅁㅏㄴㅡㄴ	ㄷㅏ		v,adj,ida	0	1	0	
+-게끔	ㄱㅔㄲㅡㅁ	ㄷㅏ		v,adj	0	1	0	
+-게나	ㄱㅔㄴㅏ	ㄷㅏ		v	0	3	0	
+-게시리	ㄱㅔㅅㅣㄹㅣ	ㄷㅏ		v,adj	0	1	0	
+-겠	ㄱㅔㅆ		f	p,eusi	0	246	0	
+-고	ㄱㅗ			p,f,eusi,saob,euob,euo,sab,jaob,jab	0	23	0	
+-고는 하다	ㄱㅗㄴㅡㄴ ㅎㅏㄷㅏ	ㄷㅏ	v	v	0	1	0	
+-곤 하다	ㄱㅗㄴ ㅎㅏㄷㅏ	ㄷㅏ	v	v	0	1	0	
+-고는	ㄱㅗㄴㅡㄴ	ㄷㅏ		v,adj	0	6	0	
+-곤	ㄱㅗㄴ	ㄷㅏ		v,adj	0	1	0	
+-고도	ㄱㅗㄷㅗ	ㄷㅏ		v,adj,ida	0	3	0	
+-고말고	ㄱㅗㅁㅏㄹㄱㅗ	ㄷㅏ		v,adj,ida	0	1	0	
+-고서	ㄱㅗㅅㅓ			eusi	0	2	0	
+-고야	ㄱㅗㅇㅑ	ㄷㅏ		v	0	3	0	
+-고자	ㄱㅗㅈㅏ	ㄷㅏ		v	0	1	0	
+-고저	ㄱㅗㅈㅓ	ㄷㅏ		v	0	1	0	
+-관데	ㄱㅗㅏㄴㄷㅔ	ㄷㅏ		v,adj,ida	0	1	0	
+-구나	ㄱㅜㄴㅏ			p,f,eusi	0	6	1	
+-구려	ㄱㅜㄹㅕ	ㄷㅏ		v,adj,ida	0	2	0	
+-구료	ㄱㅜㄹㅛ	ㄷㅏ		v,adj,ida	0	1	0	
+-구만	ㄱㅜㅁㅏㄴ	ㄷㅏ		v,adj,ida	0	6	0	
+-구먼	ㄱㅜㅁㅓㄴ	ㄷㅏ		v,adj,ida	0	1	0	
+-구면	ㄱㅜㅁㅕㄴ	ㄷㅏ		v,adj,ida	0	2	0	
+-군	ㄱㅜㄴ			p,f,eusi	0	6	0	
+-기로	ㄱㅣㄹㅗ	ㄷㅏ		v,adj,ida	0	15	0	
+-길래	ㄱㅣㄹㄹㅐ			p,eusi	0	5	0	
+-(으)ㄹ	ㅇㅡㄹ	ㄷㅏ		v,adj	0	35	0	
+-(으)ㄹ	ㅇㅡㄹ	ㅅㄷㅏ		v,adj	0	2	0	
+-(으)ㄹ	ㄹ	ㅎㄷㅏ		adj	0	1	0	
+-(으)ㄹ	ㄹ			eusi	0	9	0	
+-(으)ㄹ	ㅇㅡㄹ			p	0	5	0	
+-(으)ㄹ걸	ㄹㄱㅓㄹ			eusi	0	2	0	
+-(으)ㄹ걸	ㅇㅡㄹㄱㅓㄹ			p	0	3	0	
+-(으)ㄹ 거예요	ㄹ ㄱㅓㅇㅖㅇㅛ	ㄹㄷㅏ		v,adj	0	1	0	
+-(으)나	ㄴㅏ	ㅎㄷㅏ		adj	0	4	0	
+-(으)나	ㄴㅏ			p,f,eusi,sao	0	10	0	
+-나니	ㄴㅏㄴㅣ	ㄷㅏ		v	0	3	0	
+-(으)나마	ㄴㅏㅁㅏ	ㄷㅏ		v,adj,ida	0	2	0	
+-(으)나마	ㄴㅏㅁㅏ	ㄹㄷㅏ		v,adj	0	1	0	
+-나이까	ㄴㅏㅇㅣㄲㅏ	ㄷㅏ		v,adj	0	2	0	
+-나이다	ㄴㅏㅇㅣㄷㅏ	ㄷㅏ		v,adj	0	4	0	
+-남	ㄴㅏㅁ	ㄷㅏ		v	0	3	0	
+-(으)냐	ㅇㅡㄴㅑ	ㄷㅏ		v,adj	0	1	0	
+-(으)냐	ㄴㅑ			p,f,eusi	0	11	0	
+-(으)냐고	ㅇㅡㄴㅑㄱㅗ	ㄷㅏ		v,adj	0	1	0	
+-(으)냐고	ㄴㅑㄱㅗ			p,f,eusi	0	6	0	
+-네	ㄴㅔ			p,f,eusi	0	6	0	
+-노니	ㄴㅗㄴㅣ	ㄷㅏ		v	0	1	0	
+-노라면	ㄴㅗㄹㅏㅁㅕㄴ	ㄷㅏ		v	0	1	0	
+-(으)뇨	ㄴㅛ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)뇨	ㄴㅛ	ㄹㄷㅏ		v,adj	0	1	0	
+-누나	ㄴㅜㄴㅏ	ㄷㅏ		v	0	1	0	
+-누만	ㄴㅜㅁㅏㄴ	ㄷㅏ		v	0	1	0	
+-누먼	ㄴㅜㅁㅓㄴ	ㄷㅏ		v	0	1	0	
+-느냐	ㄴㅡㄴㅑ	ㄷㅏ		v,adj	0	1	0	
+-느냐	ㄴㅡㄴㅑ			p,f,eusi	0	36	0	
+-느냐고	ㄴㅡㄴㅑㄱㅗ			p,f,eusi	0	6	0	
+-느뇨	ㄴㅡㄴㅛ	ㄷㅏ		v,adj	0	1	0	
+-느니	ㄴㅡㄴㅣ	ㄷㅏ		v,adj	0	2	0	
+-느라	ㄴㅡㄹㅏ			eusi	0	2	0	
+-느라고	ㄴㅡㄹㅏㄱㅗ			eusi	0	2	0	
+-(으)ㄴ	ㅇㅡㄴ	ㄷㅏ		v,adj	0	29	3	
+-(으)ㄴ	ㅇㅡㄴ	ㅅㄷㅏ		v,adj	0	2	0	
+-(으)ㄴ	ㄴ	ㅎㄷㅏ		adj	0	1	0	
+-(으)ㄴ	ㄴ			eusi,f	0	9	0	
+-(으/느)ㄴ가	ㄴㄱㅏ	ㄹㄷㅏ		adj	0	1	0	
+-(으/느)ㄴ가	ㄴㅡㄴㄱㅏ	ㄷㅏ		v	0	1	0	
+-(으/느)ㄴ감	ㄴㅡㄴㄱㅏㅁ	ㄷㅏ		v	0	1	0	
+-(으/느)ㄴ걸	ㄴㄱㅓㄹ			eusi	0	2	0	
+-(으/느)ㄴ걸	ㄴㅡㄴㄱㅓㄹ			p,f,eusi	0	6	0	
+-(으/느)ㄴ고	ㄴㄱㅗ	ㄷㅏ		adj,ida	0	1	0	
+-(으/느)ㄴ고	ㄴㄱㅗ	ㄹㄷㅏ		adj	0	1	0	
+-(으/느)ㄴ고	ㄴㅡㄴㄱㅗ	ㄷㅏ		v	0	1	0	
+-는구나	ㄴㅡㄴㄱㅜㄴㅏ			eusi	0	2	0	
+-는구려	ㄴㅡㄴㄱㅜㄹㅕ	ㄷㅏ		v	0	1	0	
+-는구료	ㄴㅡㄴㄱㅜㄹㅛ	ㄷㅏ		v	0	1	0	
+-는구만	ㄴㅡㄴㄱㅜㅁㅏㄴ	ㄷㅏ		v	0	1	0	
+-는구먼	ㄴㅡㄴㄱㅜㅁㅓㄴ	ㄷㅏ		v	0	1	0	
+-는구면	ㄴㅡㄴㄱㅜㅁㅕㄴ	ㄷㅏ		v	0	1	0	
+-는군	ㄴㅡㄴㄱㅜㄴ			eusi	0	2	0	
+-는궈니	ㄴㅡㄴㄱㅜㅓㄴㅣ	ㄷㅏ		v	0	1	0	
+-는과니	ㄴㅡㄴㄱㅗㅏㄴㅣ	ㄷㅏ		v	0	1	0	
+-(느)ㄴ다	ㄴㄷㅏ			eusi	0	9	0	
+-((느)ㄴ)다고	ㄴㄷㅏㄱㅗ			eusi	0	2	0	
+-((느)ㄴ)다고	ㄷㅏㄱㅗ			p,f,eusi	0	6	0	
+-((느)ㄴ)다나	ㄴㄷㅏㄴㅏ	ㄷㅏ		v	0	1	0	
+-((느)ㄴ)다네	ㄴㄷㅏㄴㅔ	ㄷㅏ		v	0	1	0	
+-((느)ㄴ)다느니	ㄴㄷㅏㄴㅡㄴㅣ	ㄷㅏ		v	0	1	0	
+-((느)ㄴ)다니	ㄴㄷㅏㄴㅣ			eusi	0	2	0	
+-((느)ㄴ)다니	ㄷㅏㄴㅣ			p,f,eusi	0	6	0	
+-((느)ㄴ)다니까	ㄴㄷㅏㄴㅣㄲㅏ	ㄷㅏ		v	0	1	0	
+-((느)ㄴ)다니까	ㄴㄷㅏㄴㅣㄲㅏ	ㄹㄷㅏ		v	0	1	0	
+-((느)ㄴ)다더라	ㄴㄷㅏㄷㅓㄹㅏ	ㄷㅏ		v	0	1	0	
+-((느)ㄴ)다마는	ㄴㄷㅏㅁㅏㄴㅡㄴ	ㄷㅏ		v,ida	0	1	0	
+-((느)ㄴ)다만	ㄴㄷㅏㅁㅏㄴ	ㄷㅏ		v,ida	0	1	0	
+-((느)ㄴ)다며	ㄴㄷㅏㅁㅕ			eusi	0	2	0	
+-((느)ㄴ)다며	ㄷㅏㅁㅕ			p,f,eusi	0	6	0	
+-((느)ㄴ)다면	ㄴㄷㅏㅁㅕㄴ			eusi	0	2	0	
+-((느)ㄴ)다면	ㄷㅏㅁㅕㄴ			p,f,eusi	0	6	0	
+-((느)ㄴ)다면서	ㄴㄷㅏㅁㅕㄴㅅㅓ			eusi	0	2	0	
+-((느)ㄴ)다면서	ㄷㅏㅁㅕㄴㅅㅓ			p,f,eusi	0	6	0	
+-((느)ㄴ)다손	ㄴㄷㅏㅅㅗㄴ	ㄷㅏ		v	0	1	0	
+-((느)ㄴ)다오	ㄴㄷㅏㅇㅗ	ㄷㅏ		v	0	1	0	
+-((느)ㄴ)다오	ㄷㅏㅇㅗ	ㄷㅏ		v,adj	0	1	0	
+-((느)ㄴ)다지	ㄴㄷㅏㅈㅣ	ㄷㅏ		v	0	1	0	
+-((느)ㄴ)단다	ㄴㄷㅏㄴㄷㅏ			eusi	0	2	0	
+-((느)ㄴ)단다	ㄷㅏㄴㄷㅏ			p,f,eusi	0	6	0	
+-((느)ㄴ)담	ㄴㄷㅏㅁ	ㄷㅏ		v	0	1	0	
+-((느)ㄴ)답니까	ㄴㄷㅏㅂㄴㅣㄲㅏ	ㄷㅏ		v	0	1	0	
+-((느)ㄴ)답니까	ㄴㄷㅏㅂㄴㅣㄲㅏ	ㄹㄷㅏ		v	0	1	0	
+-((느)ㄴ)답니까	ㄷㅏㅂㄴㅣㄲㅏ	ㄷㅏ		v,adj	0	2	0	
+-((느)ㄴ)답니다	ㄴㄷㅏㅂㄴㅣㄷㅏ	ㄷㅏ		v	0	1	0	
+-((느)ㄴ)답니다	ㄴㄷㅏㅂㄴㅣㄷㅏ	ㄹㄷㅏ		v	0	1	0	
+-((느)ㄴ)답니다	ㄷㅏㅂㄴㅣㄷㅏ	ㄷㅏ		v,adj	0	2	0	
+-((느)ㄴ)답시고	ㄴㅡㄴㄷㅏㅂㅅㅣㄱㅗ	ㄷㅏ		v	0	1	0	
+-((느)ㄴ)답시고	ㄷㅏㅂㅅㅣㄱㅗ	ㄷㅏ		v,adj	0	1	0	
+-((느)ㄴ)대	ㄴㄷㅐ			eusi	0	2	0	
+-((느)ㄴ)대	ㄷㅐ			p,f,eusi	0	6	0	
+-((느)ㄴ)대요	ㄴㄷㅐㅇㅛ			eusi	0	2	0	
+-((느)ㄴ)대요	ㄷㅐㅇㅛ			p,f,eusi	0	6	0	
+-((느)ㄴ)댄다	ㄴㄷㅐㄴㄷㅏ	ㄷㅏ		v	0	1	0	
+-((느)ㄴ)댄다	ㄷㅐㄴㄷㅏ	ㄷㅏ		v,adj	0	3	0	
+-(으/느)ㄴ데	ㄴㄷㅔ			eusi,sao	0	2	0	
+-(으/느)ㄴ데	ㄴㅡㄴㄷㅔ			p,f,eusi	0	15	0	
+-(으/느)ㄴ뎁쇼	ㄴㅡㄴㄷㅔㅂㅅㅛ	ㄷㅏ		v	0	1	0	
+-(으/느)ㄴ바	ㄴㅂㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으/느)ㄴ바	ㄴㅡㄴㅂㅏ	ㄷㅏ		v	0	1	0	
+-(으/느)ㄴ바	ㅇㅡㄴㅂㅏ	ㄷㅏ		v,adj	0	1	0	
+-(으/느)ㄴ지	ㄴㅈㅣ			eusi	0	2	0	
+-(으/느)ㄴ지	ㄴㅡㄴㅈㅣ			p,f,eusi	0	6	0	
+-(으/느)ㄴ지고	ㄴㅈㅣㄱㅗ	ㄷㅏ		v,adj,ida	0	2	0	
+-(으/느)ㄴ지고	ㄴㅈㅣㄱㅗ	ㄹㄷㅏ		v,adj	0	4	0	
+-(으/느)ㄴ지고	ㄴㅡㄴㅈㅣㄱㅗ	ㄷㅏ		v	0	1	0	
+-(으/느)ㄴ지라	ㄴㅈㅣㄹㅏ	ㄷㅏ		v,adj,ida	0	4	0	
+-(으/느)ㄴ지라	ㄴㅈㅣㄹㅏ	ㄹㄷㅏ		v,adj	0	3	0	
+-(으/느)ㄴ지라	ㄴㅡㄴㅈㅣㄹㅏ	ㄷㅏ		v	0	1	0	
+-(으)니	ㅇㅡㄴㅣ	ㄷㅏ		v,adj	0	9	0	
+-(으)니	ㅇㅡㄴㅣ	ㅅㄷㅏ		v,adj	0	1	0	
+-(으)니	ㄴㅣ	ㅎㄷㅏ		adj	0	1	0	
+-(으)니까	ㄴㅣㄲㅏ	ㄷㅏ		v,adj,ida	0	26	0	
+-(으)니까	ㅇㅡㄴㅣㄲㅏ	ㄷㅏ		v,adj	0	5	1	
+-(으)니까	ㅇㅡㄴㅣㄲㅏ	ㅅㄷㅏ		v,adj	0	1	0	
+-(으)니까	ㄴㅣㄲㅏ	ㅎㄷㅏ		adj	0	1	0	
+-(으)니까	ㄴㅣㄲㅏ			eusi	0	9	0	
+-(으)니까	ㅇㅡㄴㅣㄲㅏ			p,f	0	6	0	
+-(으)니까느루	ㄴㅣㄲㅏㄴㅡㄹㅜ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)니까는	ㄴㅣㄲㅏㄴㅡㄴ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)니깐	ㄴㅣㄲㅏㄴ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으/느)니만치	ㄴㅣㅁㅏㄴㅊㅣ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으/느)니만치	ㄴㅡㄴㅣㅁㅏㄴㅊㅣ	ㄷㅏ		v,adj	0	1	0	
+-(으/느)니만큼	ㄴㅣㅁㅏㄴㅋㅡㅁ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으/느)니만큼	ㄴㅡㄴㅣㅁㅏㄴㅋㅡㅁ	ㄷㅏ		v,adj	0	1	0	
+-다	ㄷㅏ			p,f,eusi,ida	0	83	1	
+-다가	ㄷㅏㄱㅏ			p,eusi	0	5	0	
+-다가는	ㄷㅏㄱㅏㄴㅡㄴ	ㄷㅏ		v,adj,ida	0	1	0	
+-다간	ㄷㅏㄱㅏㄴ	ㄷㅏ		v,adj	0	1	0	
+-다마다	ㄷㅏㅁㅏㄷㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-단	ㄷㅏㄴ	ㄷㅏ		v,adj,ida	0	2	0	
+-더구나	ㄷㅓㄱㅜㄴㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-더구려	ㄷㅓㄱㅜㄹㅕ	ㄷㅏ		v,adj,ida	0	1	0	
+-더구료	ㄷㅓㄱㅜㄹㅛ	ㄷㅏ		v,adj,ida	0	1	0	
+-더구만	ㄷㅓㄱㅜㅁㅏㄴ	ㄷㅏ		v,adj,ida	0	1	0	
+-더구먼	ㄷㅓㄱㅜㅁㅓㄴ	ㄷㅏ		v,adj,ida	0	1	0	
+-더구면	ㄷㅓㄱㅜㅁㅕㄴ	ㄷㅏ		v,adj,ida	0	1	0	
+-더군	ㄷㅓㄱㅜㄴ	ㄷㅏ		v,adj,ida	0	1	0	
+-더냐	ㄷㅓㄴㅑ	ㄷㅏ		v,adj,ida	0	1	0	
+-더뇨	ㄷㅓㄴㅛ	ㄷㅏ		v,adj,ida	0	1	0	
+-더니라	ㄷㅓㄴㅣㄹㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-더니마는	ㄷㅓㄴㅣㅁㅏㄴㅡㄴ	ㄷㅏ		v,adj,ida	0	1	0	
+-더니만	ㄷㅓㄴㅣㅁㅏㄴ	ㄷㅏ		v,adj,ida	0	1	0	
+-더니이까	ㄷㅓㄴㅣㅇㅣㄲㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-더니이다	ㄷㅓㄴㅣㅇㅣㄷㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-더라도	ㄷㅓㄹㅏㄷㅗ	ㄷㅏ		v,adj,ida	0	2	0	
+-더이까	ㄷㅓㅇㅣㄲㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-더이다	ㄷㅓㅇㅣㄷㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-던가	ㄷㅓㄴㄱㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-던감	ㄷㅓㄴㄱㅏㅁ	ㄷㅏ		v,adj,ida	0	1	0	
+-던걸	ㄷㅓㄴㄱㅓㄹ	ㄷㅏ		v,adj,ida	0	1	0	
+-던고	ㄷㅓㄴㄱㅗ	ㄷㅏ		v,adj,ida	0	1	0	
+-던데	ㄷㅓㄴㄷㅔ			p,f,eusi	0	6	0	
+-던바	ㄷㅓㄴㅂㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-던지	ㄷㅓㄴㅈㅣ	ㄷㅏ		v,adj,ida	0	1	0	
+-데	ㄷㅔ	ㄷㅏ		v,adj,ida	0	2	0	
+-데요	ㄷㅔㅇㅛ	ㄷㅏ		v,adj,ida	0	1	0	
+-도다	ㄷㅗㄷㅏ	ㄷㅏ		v,adj,ida	0	6	0	
+-도록	ㄷㅗㄹㅗㄱ			eusi	0	2	0	
+-(으)되	ㄷㅗㅣ	ㄷㅏ		v,adj,ida	0	1	0	
+-드구나	ㄷㅡㄱㅜㄴㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-드구료	ㄷㅡㄱㅜㄹㅛ	ㄷㅏ		v,adj,ida	0	1	0	
+-드구면	ㄷㅡㄱㅜㅁㅕㄴ	ㄷㅏ		v,adj,ida	0	1	0	
+-드군	ㄷㅡㄱㅜㄴ	ㄷㅏ		v,adj,ida	0	1	0	
+-드냐	ㄷㅡㄴㅑ	ㄷㅏ		v,adj,ida	0	1	0	
+-드니	ㄷㅡㄴㅣ	ㄷㅏ		v,adj,ida	0	5	0	
+-드니라	ㄷㅡㄴㅣㄹㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-드라	ㄷㅡㄹㅏ	ㄷㅏ		v,adj,ida	0	4	0	
+-드라도	ㄷㅡㄹㅏㄷㅗ	ㄷㅏ		v,adj,ida	0	1	0	
+-드래도	ㄷㅡㄹㅐㄷㅗ	ㄷㅏ		v,adj,ida	0	1	0	
+-든	ㄷㅡㄴ			p,eusi	0	5	0	
+-든가	ㄷㅡㄴㄱㅏ			p,eusi	0	5	0	
+-든걸	ㄷㅡㄴㄱㅓㄹ	ㄷㅏ		v,adj,ida	0	1	0	
+-든고	ㄷㅡㄴㄱㅗ	ㄷㅏ		v,adj,ida	0	1	0	
+-든데	ㄷㅡㄴㄷㅔ	ㄷㅏ		v,adj,ida	0	1	0	
+-든지	ㄷㅡㄴㅈㅣ			p,eusi	0	5	0	
+-듯	ㄷㅡㅅ	ㄷㅏ		v,adj,ida	0	1	0	
+-듯이	ㄷㅡㅅㅇㅣ	ㄷㅏ		v,adj,ida	0	1	0	
+-디	ㄷㅣ	ㄷㅏ		v,adj,ida	0	2	0	
+-(으)라	ㄹㅏ			eusi,do	0	13	0	
+-(으)라고	ㄹㅏㄱㅗ	ㄹㄷㅏ		v	0	14	0	
+-(으)라고	ㄹㅏㄱㅗ			eusi,do	0	6	0	
+-(으)라구	ㄹㅏㄱㅜ	ㄷㅏ		v,ida	0	1	0	
+-(으)라나	ㄹㅏㄴㅏ	ㄷㅏ		v,ida	0	3	0	
+-(으)라나	ㄹㅏㄴㅏ	ㄹㄷㅏ		v	0	2	0	
+-(으)라네	ㄹㅏㄴㅔ	ㄷㅏ		v,ida	0	1	0	
+-(으)라느니	ㄹㅏㄴㅡㄴㅣ	ㄷㅏ		v,ida	0	1	0	
+-(으)라니	ㄹㅏㄴㅣ	ㄷㅏ		v,ida	0	4	0	
+-(으)라니	ㄹㅏㄴㅣ	ㄹㄷㅏ		v	0	2	0	
+-(으)라니까	ㄹㅏㄴㅣㄲㅏ	ㄷㅏ		v,ida	0	4	0	
+-(으)라니까	ㄹㅏㄴㅣㄲㅏ	ㄹㄷㅏ		v	0	2	0	
+-(으)라며	ㄹㅏㅁㅕ	ㄷㅏ		v,ida	0	1	0	
+-(으)라면	ㄹㅏㅁㅕㄴ	ㄷㅏ		v,ida	0	32	0	
+-(으)라면	ㄹㅏㅁㅕㄴ	ㄹㄷㅏ		v	0	14	0	
+-(으)라면서	ㄹㅏㅁㅕㄴㅅㅓ	ㄷㅏ		v,ida	0	1	0	
+-라서	ㄹㅏㅅㅓ	다		ida	0	0	2	
+-(으)라손	ㄹㅏㅅㅗㄴ	ㄷㅏ		v,ida	0	1	0	
+-(으)라오	ㄹㅏㅇㅗ	ㄷㅏ		v,ida	0	1	0	
+-(으)라지	ㄹㅏㅈㅣ	ㄷㅏ		v,ida	0	1	0	
+-(으)락	ㄹㅏㄱ	ㄷㅏ		v,adj	0	1	0	
+-(으)락	ㄹㅏㄱ	ㄹㄷㅏ		v,adj	0	1	0	
+-(으)란	ㄹㅏㄴ	ㄷㅏ		v,ida	0	7	0	
+-(으)란	ㄹㅏㄴ	ㄹㄷㅏ		v	0	5	0	
+-(으)란다	ㄹㅏㄴㄷㅏ	ㄷㅏ		v,ida	0	5	0	
+-(으)람	ㄹㅏㅁ	ㄷㅏ		v,ida	0	5	0	
+-(으)람	ㄹㅏㅁ	ㄹㄷㅏ		v	0	3	0	
+-(으)랍니까	ㄹㅏㅂㄴㅣㄲㅏ	ㄷㅏ		v,ida	0	3	0	
+-(으)랍니다	ㄹㅏㅂㄴㅣㄷㅏ	ㄷㅏ		v,ida	0	4	0	
+-(으)래	ㄹㅐ	ㄹㄷㅏ		v	0	7	0	
+-(으)래	ㄹㅐ			eusi	0	2	0	
+-(으)래요	ㄹㅐㅇㅛ	ㄹㄷㅏ		v	0	8	0	
+-(으)래요	ㄹㅐㅇㅛ			eusi	0	2	0	
+-(으)랴	ㄹㅑ	ㄷㅏ		v,ida	0	1	0	
+-(으)러	ㄹㅓ			eusi	0	2	0	
+-(으)려	ㄹㅕ	ㄷㅏ		v	0	57	0	
+-(으)려	ㄹㅕ	ㄹㄷㅏ		v	0	17	0	
+-(으)려거든	ㄹㅕㄱㅓㄷㅡㄴ	ㄷㅏ		v	0	1	0	
+-(으)려고	ㄹㅕㄱㅗ	ㄹㄷㅏ		v,adj	0	21	0	
+-(으)려고	ㅇㅡㄹㅕㄱㅗ	ㄷㅏ		v,adj	0	7	0	
+-(으)려고	ㅇㅡㄹㅕㄱㅗ	ㅅㄷㅏ		v,adj	0	1	0	
+-(으)려고	ㄹㅕㄱㅗ			eusi	0	9	0	
+-(으)려나	ㄹㅕㄴㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)려니	ㄹㅕㄴㅣ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)려니와	ㄹㅕㄴㅣㅇㅗㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)려든	ㄹㅕㄷㅡㄴ	ㄷㅏ		v	0	1	0	
+-(으)려마	ㄹㅕㅁㅏ	ㄷㅏ		v	0	1	0	
+-(으)려면	ㄹㅕㅁㅕㄴ			eusi	0	2	0	
+-(으)려무나	ㄹㅕㅁㅜㄴㅏ	ㄷㅏ		v	0	1	0	
+-(으)련	ㄹㅕㄴ	ㄷㅏ		v	0	1	0	
+-(으)련	ㄹㅕㄴ	ㄹㄷㅏ		v	0	1	0	
+-(으)련마는	ㄹㅕㄴㅁㅏㄴㅡㄴ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)련만	ㄹㅕㄴㅁㅏㄴ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)렴	ㄹㅕㅁ	ㄷㅏ		v	0	1	0	
+-(으)렵니까	ㄹㅕㅂㄴㅣㄲㅏ	ㄷㅏ		v	0	1	0	
+-(으)렵니다	ㄹㅕㅂㄴㅣㄷㅏ	ㄷㅏ		v	0	1	0	
+-(으)렷다	ㄹㅕㅅㄷㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)리	ㄹㅣ	ㄷㅏ		v,adj,ida	0	13	0	
+-(으)리	ㄹㅣ	ㄹㄷㅏ		v,adj	0	11	0	
+-(으)리까	ㄹㅣㄲㅏ	ㄷㅏ		v,adj,ida	0	5	0	
+-(으)리까	ㄹㅣㄲㅏ	ㄹㄷㅏ		v,adj	0	1	0	
+-(으)리니	ㄹㅣㄴㅣ	ㄷㅏ		v,adj,ida	0	44	0	
+-(으)리니	ㄹㅣㄴㅣ	ㄹㄷㅏ		v,adj	0	13	0	
+-(으)리니	ㄹㅣㄴㅣ	ㅎㄷㅏ		adj	0	3	0	
+-(으)리니라	ㄹㅣㄴㅣㄹㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)리다	ㄹㅣㄷㅏ	ㄷㅏ		v,adj,ida	0	8	0	
+-(으)리다	ㄹㅣㄷㅏ	ㄹㄷㅏ		v,adj	0	6	0	
+-(으)리라	ㄹㅣㄹㅏ	ㄷㅏ		v,adj,ida	0	5	0	
+-(으)리라	ㄹㅣㄹㅏ	ㄹㄷㅏ		v,adj	0	1	0	
+-(으)리로다	ㄹㅣㄹㅗㄷㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)리만치	ㄹㅣㅁㅏㄴㅊㅣ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)리만큼	ㄹㅣㅁㅏㄴㅋㅡㅁ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)리오	ㄹㅣㅇㅗ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)마	ㅁㅏ	ㄷㅏ		v	0	36	0	
+-(으)마	ㅁㅏ	ㄹㄷㅏ		v	0	11	0	
+-(으)매	ㅁㅐ	ㄷㅏ		v,adj,ida	0	5	0	
+-(으)매	ㅁㅐ	ㄹㄷㅏ		v,adj	0	2	0	
+-(으)며	ㄹㅇㅡ	ㄷㄷㅏ		v,adj	0	4	0	
+-(으)며	ㅁㅕ			eusi	0	2	0	
+-(으)면	ㅁㅕㄴ	ㄹㄷㅏ		v,adj	0	27	0	
+-(으)면	ㅇㅡㅁㅕㄴ	ㄷㅏ		v,adj	0	10	1	
+-(으)면	ㅇㅡㅁㅕㄴ	ㅅㄷㅏ		v,adj	0	1	0	
+-(으)면	ㅁㅕㄴ			eusi,euo,jao	0	15	0	
+-(으)면서	ㅁㅕㄴㅅㅓ			eusi	0	2	0	
+-(으)므로	ㅁㅡㄹㅗ			eusi	0	2	0	
+-(으)사	ㅅㅏ	ㄷㅏ		v,adj	0	6	0	
+-(으)사	ㅅㅏ	ㄹㄷㅏ		v,adj	0	2	0	
+-사와	ㅅㅏㅇㅗㅏ	ㄷㅏ		v,adj	0	7	0	
+-(으)사이다	ㅅㅏㅇㅣㄷㅏ	ㄷㅏ		v,adj	0	1	0	
+-(으)사이다	ㅅㅏㅇㅣㄷㅏ	ㄹㄷㅏ		v,adj	0	1	0	
+-(으)세	ㅅㅔ	ㄷㅏ		v	0	1	0	
+-(으)세	ㅅㅔ	ㄹㄷㅏ		v	0	1	0	
+-세나	ㅅㅔㄴㅏ	ㄷㅏ		v	0	1	0	
+-(으)세요	ㅇㅡㅅㅔㅇㅛ	ㄷㅏ		v,adj	0	9	0	
+-(으)세요	ㅇㅡㅅㅔㅇㅛ	ㅅㄷㅏ		v,adj	0	1	0	
+-(으)세요	ㅅㅔㅇㅛ	ㅎㄷㅏ		adj	0	1	0	
+-(으)셔요	ㅇㅡㅅㅕㅇㅛ	ㄷㅏ		v,adj	0	5	0	
+-(으)셔요	ㅇㅡㅅㅕㅇㅛ	ㅅㄷㅏ		v,adj	0	1	0	
+-(으)셔요	ㅅㅕㅇㅛ	ㅎㄷㅏ		adj	0	1	0	
+-소	ㅅㅗ	ㄷㅏ		v,adj	0	2	0	
+-소다	ㅅㅗㄷㅏ	ㄷㅏ		v,adj	0	4	0	
+-(스)ㅂ네	ㅂㄴㅔ	ㄷㅏ		v,adj,ida	0	2	0	
+-(스)ㅂ네	ㅂㄴㅔ	ㄹㄷㅏ		v,adj	0	1	0	
+-(스)ㅂ늰다	ㅂㄴㅡㅣㄴㄷㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-(스)ㅂ니까	ㅅㅡㅂㄴㅣㄲㅏ	ㄷㅏ		v,adj	0	1	0	
+-(스)ㅂ니까	ㅅㅡㅂㄴㅣㄲㅏ			p,f	0	33	0	
+-(스)ㅂ니까	ㅂㄴㅣㄲㅏ			eusi	0	9	0	
+-(스)ㅂ니다	ㅅㅡㅂㄴㅣㄷㅏ	ㄷㅏ		v,adj	0	1	0	
+-(스)ㅂ니다	ㅅㅡㅂㄴㅣㄷㅏ			p,f	0	43	0	
+-(스)ㅂ니다	ㅂㄴㅣㄷㅏ			eusi	0	9	0	
+-(스)ㅂ디까	ㅂㄷㅣㄲㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-(스)ㅂ디다	ㅂㄷㅣㄷㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-(스)ㅂ딘다	ㅂㄷㅣㄴㄷㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-(스)ㅂ죠	ㅂㅈㅛ	ㄷㅏ		v,adj,ida	0	1	0	
+-(스)ㅂ지요	ㅂㅈㅣㅇㅛ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)시	ㅅㅣ	ㄷㅏ	eusi	v,adj,ida	0	77	0	
+-(으)시	ㅇㅡㅅㅣ	ㄷㅏ	eusi	v,adj	0	902	0	
+-(으)시	ㅇㅡㅅㅣ	ㅅㄷㅏ	eusi	v,adj	0	28	0	
+-(으)시	ㅅㅣ	ㅎㄷㅏ	eusi	adj	0	29	0	
+-(으)시	ㅅㅣ		eusi	saob,euob,jaob	0	8	0	
+-(으)십시오	ㅇㅡㅅㅣㅂㅅㅣㅇㅗ	ㄷㅏ		v	0	7	0	
+-(으)십시오	ㅇㅡㅅㅣㅂㅅㅣㅇㅗ	ㅅㄷㅏ		v	0	1	0	
+-아/어	ㅏ	ㄷㅏ		v,adj	0	37	0	
+-아/어	ㅓ	ㄷㅏ		v,adj	0	10	0	
+-아/어	ㅇㅓ	ㅅㄷㅏ		v,adj	0	1	0	
+-아/어	ㅐ	ㅣㄷㅏ		v,adj	0	21	0	
+-아/어	ㅇㅓ			p,f	0	46	0	
+-아/어다	ㅏㄷㅏ	ㄷㅏ		v,adj	0	15	0	
+-아/어다	ㅓㄷㅏ	ㄷㅏ		v,adj	0	2	0	
+-아/어다	ㅇㅏㄷㅏ	ㄷㅏ		v,adj	0	1	0	
+-아/어다	ㅕㄷㅏ	ㅣㄷㅏ		v,adj	0	1	0	
+-아/어다	ㅎㅐㄷㅏ	ㅎㅏㄷㅏ		v,adj	0	2	0	
+-아/어다	ㅇㅗㅏㄷㅏ	ㅂㄷㅏ		v,adj	0	1	0	
+-아/어다	ㅇㅏㄷㅏ	ㅅㄷㅏ		v,adj	0	1	0	
+-아/어다	ㅇㅓㄷㅏ	ㅅㄷㅏ		v,adj	0	1	0	
+-아/어다	ㅐㄷㅏ	ㅣㄷㅏ		v,adj	0	8	0	
+-아/어다가	ㅓㄷㅏㄱㅏ	ㄷㅏ		v,adj	0	0	2	
+-아/어도	ㅏㄷㅗ	ㄷㅏ		v,adj	0	7	0	
+-아/어도	ㅓㄷㅗ	ㄷㅏ		v,adj	0	2	0	
+-아/어도	ㅇㅏㄷㅗ	ㄷㅏ		v,adj	0	0	1	
+-아/어도	ㄷㅗ	ㄷㅏ		v,adj	0	35	1	
+-아/어도	ㅐㄷㅗ	ㅣㄷㅏ		v,adj	0	9	0	
+-아/어라	ㅏㄹㅏ	ㄷㅏ		v,adj	0	8	0	
+-아/어라	ㅓㄹㅏ	ㄷㅏ		v,adj	0	2	0	
+-아/어라	ㅇㅓㄹㅏ	ㅅㄷㅏ		v,adj	0	1	0	
+-아/어라	ㅐㄹㅏ	ㅣㄷㅏ		v,adj	0	15	0	
+-아/어서	ㅏㅅㅓ	ㄷㅏ		v,adj	0	2	0	
+-아/어서	ㅇㅏㅅㅓ	ㄷㅏ		v,adj	0	0	1	
+-아/어서	ㅅㅓ	ㄷㅏ		v,adj	0	4	1	
+-아/어서	ㅇㅓㅅㅓ	ㅅㄷㅏ		v,adj	0	1	0	
+-아/어서	ㅐㅅㅓ	ㅣㄷㅏ		v,adj	0	13	0	
+-아/어야	ㅏㅇㅑ	ㄷㅏ		v,adj	0	9	0	
+-아/어야	ㅓㅇㅑ	ㄷㅏ		v,adj	0	3	0	
+-아/어야	ㅇㅑ	ㄷㅏ		v,adj	0	20	0	
+-아/어야	ㅇㅓㅇㅑ	ㅅㄷㅏ		v,adj	0	1	0	
+-아/어야	ㅐㅇㅑ	ㅣㄷㅏ		v,adj	0	26	0	
+-아/어야겠	ㅇㅓㅇㅑㄱㅔㅆ	ㅅㄷㅏ	f	v,adj	0	1	0	
+-아/어요	ㅏㅇㅛ	ㄷㅏ		v,adj	0	2	0	
+-아/어요	ㅇㅏㅇㅛ	ㄷㅏ		v,adj	0	0	1	
+-아/어요	ㅇㅛ	ㄷㅏ		v,adj	0	9	0	
+-아/어요	ㅇㅓㅇㅛ	ㅅㄷㅏ		v,adj	0	1	0	
+-아/어요	ㅐㅇㅛ	ㅣㄷㅏ		v,adj	0	18	0	
+-아/어요	ㅇㅓㅇㅛ			p,f	0	48	0	
+-아/어지이다	ㅇㅓㅈㅣㅇㅣㄷㅏ	ㅅㄷㅏ		v,adj	0	1	0	
+-아/어지다	ㅓㅈㅣㄷㅏ	ㄷㅏ		v,adj	0	1	0	
+-았/었	ㅆ	ㄷㅏ	p	v,adj	0	246	1	
+-았/었	ㅏㅆ	ㄷㅏ	p	v,adj	0	20	0	
+-았/었	ㅇㅏㅆ	ㄷㅏ	p	v,adj	0	300	1	
+-았/었	ㅇㅓㅆ	ㅅㄷㅏ	p	v,adj	0	8	0	
+-았/었	ㅐㅆ	ㅣㄷㅏ	p	v,adj	0	413	1	
+-았/었	ㅅㅕㅆ	ㅅㅣ	p	eusi	0	56	0	
+-았/었었	ㅆㅇㅓㅆ	ㄷㅏ	p	v,adj	0	313	0	
+-았/었자	ㅇㅓㅆㅈㅏ	ㅅㄷㅏ		v,adj	0	1	0	
+-언만	ㅇㅓㄴㅁㅏㄴ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)오	ㅇㅗ	ㄷㅏ	euo	v,adj	0	17	0	
+-(으)오	ㅇㅗ	ㄹㄷㅏ	euo	v,adj	0	6	0	
+-(으)오니까	ㅇㅗㄴㅣㄲㅏ	ㄷㅏ		v,adj	0	4	0	
+-(으)오니까	ㅇㅗㄴㅣㄲㅏ	ㄹㄷㅏ		v,adj	0	1	0	
+-(으)오리이까	ㅇㅗㄹㅣㅇㅣㄲㅏ	ㄷㅏ		v,adj	0	1	0	
+-(으)오리이다	ㅇㅗㄹㅣㅇㅣㄷㅏ	ㄷㅏ		v,adj	0	1	0	
+-오이까	ㅇㅗㅇㅣㄲㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)오이다	ㅇㅗㅇㅣㄷㅏ	ㄷㅏ		v,adj	0	1	0	
+-(으)옵	ㅇㅗㅂ	ㄷㅏ	euob	v,adj,ida	0	7	0	
+-(으)옵	ㅇㅗㅂ	ㄹㄷㅏ	euob	v,adj	0	2	0	
+-(으)옵니까	ㅇㅗㅂㄴㅣㄲㅏ	ㄷㅏ		v,adj,ida	0	5	0	
+-(으)옵니까	ㅇㅗㅂㄴㅣㄲㅏ	ㄹㄷㅏ		v,adj	0	2	0	
+-(으)옵니다	ㅇㅗㅂㄴㅣㄷㅏ	ㄷㅏ		v,adj,ida	0	4	0	
+-(으)옵니다	ㅇㅗㅂㄴㅣㄷㅏ	ㄹㄷㅏ		v,adj	0	1	0	
+-(으)옵디까	ㅇㅗㅂㄷㅣㄲㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)옵디다	ㅇㅗㅂㄷㅣㄷㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)옵소서	ㅇㅗㅂㅅㅗㅅㅓ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)와	ㅇㅗㅏ	ㄷㅏ		v,adj,ida	0	46	0	
+-(으)와	ㅇㅗㅏ	ㄹㄷㅏ		v,adj	0	22	0	
+-(으)외다	ㅇㅗㅣㄷㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)외다	ㅇㅗㅣㄷㅏ	ㄹㄷㅏ		v,adj	0	1	0	
+-(으)우	ㅇㅜ	ㄷㅏ		v,adj,ida	0	2	0	
+-(으)우	ㅇㅜ	ㄹㄷㅏ		v,adj	0	1	0	
+-(으)이	ㅇㅣ	ㄷㅏ		adj	0	15	0	
+-(으)이	ㅇㅣ	ㄹㄷㅏ		adj	0	1	0	
+-(으)이	ㅇㅡㅣ	ㄷㅏ		adj	0	8	0	
+-(으)ㄴ들	ㄴㄷㅡㄹ	ㄷㅏ		v,adj,ida	0	4	0	
+-(으)ㄴ들	ㄴㄷㅡㄹ	ㄹㄷㅏ		v,adj	0	2	0	
+-(으)ㄴ즉	ㄴㅈㅡㄱ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄴ즉슨	ㄴㅈㅡㄱㅅㅡㄴ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ까	ㄹㄲㅏ			eusi	0	2	0	
+-(으)ㄹ까	ㅇㅡㄹㄲㅏ			p	0	3	0	
+-(으)ㄹ깝쇼	ㄹㄲㅏㅂㅅㅛ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ꼬	ㄹㄲㅗ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ는지	ㄹㄴㅡㄴㅈㅣ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ라	ㄹㄹㅏ	ㄷㅏ		v,adj,ida	0	11	0	
+-(으)ㄹ라	ㄹㄹㅏ	ㅎㄷㅏ		adj	0	1	0	
+-(으)ㄹ라고	ㄹㄹㅏㄱㅗ	ㄷㅏ		v,adj,ida	0	3	0	
+-(으)ㄹ라치면	ㄹㄹㅏㅊㅣㅁㅕㄴ	ㄷㅏ		v	0	1	0	
+-(으)ㄹ락	ㄹㄹㅏㄱ ㅁㅏㄹㄹㅏㄱ	ㄷㅏ		v	0	1	0	
+-(으)ㄹ래	ㄹㄹㅐ			eusi	0	2	0	
+-(으)ㄹ러니	ㄹㄹㅓㄴㅣ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ러라	ㄹㄹㅓㄹㅏ	ㄷㅏ		v,adj,ida	0	6	0	
+-(으)ㄹ러라	ㄹㄹㅓㄹㅏ	ㄹㄷㅏ		v,adj	0	6	0	
+-(으)ㄹ런가	ㄹㄹㅓㄴㄱㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ런고	ㄹㄹㅓㄴㄱㅗ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ런지	ㄹㄹㅓㄴㅈㅣ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ레	ㄹㄹㅔ	ㄷㅏ		v,adj,ida	0	2	0	
+-(으)ㄹ레	ㄹㄹㅔ	ㄹㄷㅏ		v,adj	0	1	0	
+-(으)ㄹ레라	ㄹㄹㅔㄹㅏ	ㄷㅏ		v,adj,ida	0	2	0	
+-(으)ㄹ레라	ㄹㄹㅔㄹㅏ	ㄹㄷㅏ		v,adj	0	2	0	
+-(으)ㄹ려고	ㄹㄹㅕㄱㅗ	ㄷㅏ		v	0	18	0	
+-(으)ㄹ려고	ㅇㅜㄹㄹㅕㄱㅗ	ㅂㄷㅏ		v	0	2	0	
+-(으)ㄹ려고	ㅇㅡㄹㄹㅕㄱㅗ	ㅅㄷㅏ		v	0	1	0	
+-(으)ㄹ망정	ㄹㅁㅏㅇㅈㅓㅇ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ밖에	ㄹㅂㅏㄲㅇㅔ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ뿐더러	ㄹㅃㅜㄴㄷㅓㄹㅓ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ새	ㄹㅅㅐ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ세	ㄹㅅㅔ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ세라	ㄹㅅㅔㄹㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ세말이지	ㄹㅅㅔㅁㅏㄹㅇㅣㅈㅣ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ소냐	ㄹㅅㅗㄴㅑ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ손가	ㄹㅅㅗㄴㄱㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ수록	ㄹㅅㅜㄹㅗㄱ			eusi	0	2	0	
+-(으)ㄹ시	ㄹㅅㅣ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ싸록	ㄹㅆㅏㄹㅗㄱ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ쏘냐	ㄹㅆㅗㄴㅑ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ쏜가	ㄹㅆㅗㄴㄱㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ이만큼	ㄹㅇㅣㅁㅏㄴㅋㅡㅁ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ작시면	ㄹㅈㅏㄱㅅㅣㅁㅕㄴ	ㄷㅏ		v	0	1	0	
+-(으)ㄹ지	ㄹㅈㅣ			eusi	0	2	0	
+-(으)ㄹ지	ㅇㅡㄹㅈㅣ			p	0	3	0	
+-(으)ㄹ지나	ㄹㅈㅣㄴㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ지니	ㄹㅈㅣㄴㅣ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ지니라	ㄹㅈㅣㄴㅣㄹㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ지라	ㄹㅈㅣㄹㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ지라도	ㄹㅈㅣㄹㅏㄷㅗ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ지로다	ㄹㅈㅣㄹㅗㄷㅏ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ지며	ㄹㅈㅣㅁㅕ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ지어다	ㄹㅈㅣㅇㅓㄷㅏ	ㄷㅏ		v	0	1	0	
+-(으)ㄹ지언정	ㄹㅈㅣㅇㅓㄴㅈㅓㅇ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ진대	ㄹㅈㅣㄴㄷㅐ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ진대는	ㄹㅈㅣㄴㄷㅐㄴㅡㄴ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ진댄	ㄹㅈㅣㄴㄷㅐㄴ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㄹ진저	ㄹㅈㅣㄴㅈㅓ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㅁ	ㅇㅡㅁ	ㄷㅏ		v,adj	0	10	0	
+-(으)ㅁ	ㅇㅡㅁ	ㅅㄷㅏ		v,adj	0	1	0	
+-(으)ㅁ	ㅁ	ㅎㄷㅏ		adj	0	1	0	
+-(으)ㅁ	ㅁ			eusi	0	11	0	
+-(으)ㅁ도	ㅁㄷㅗ	ㄷㅏ		v,adj,ida	0	24	0	
+-(으)ㅁ도	ㅇㅡㅁㄷㅗ	ㄷㅏ		v,adj	0	4	0	
+-(으)ㅁ도	ㅇㅜㅁㄷㅗ	ㅂㄷㅏ		v,adj	0	3	0	
+-(으)ㅁ도	ㅇㅡㅁㄷㅗ	ㅅㄷㅏ		v,adj	0	1	0	
+-(으)ㅁ도	ㄹㅇㅡㅁㄷㅗ	ㄷㄷㅏ		v,adj	0	1	0	
+-(으)ㅁ에랴	ㅁㅇㅔㄹㅑ	ㄷㅏ		v,adj,ida	0	1	0	
+-(으)ㅂ시다	ㅇㅡㅂㅅㅣㄷㅏ	ㄷㅏ		v	0	7	0	
+-(으)ㅂ시다	ㅇㅡㅂㅅㅣㄷㅏ	ㅅㄷㅏ		v	0	1	0	
+-(으)ㅂ시오	ㅇㅡㅂㅅㅣㅇㅗ	ㄷㅏ		v	0	5	0	
+-(으)ㅂ시오	ㅇㅡㅂㅅㅣㅇㅗ	ㅅㄷㅏ		v	0	1	0	
+-자마자	ㅈㅏㅁㅏㅈㅏ			eusi	0	2	0	
+-잡	ㅈㅏㅂ	ㄷㅏ	jab	v	0	2	0	
+-죠	ㅈㅛ			p,f,eusi	0	6	0	
+-지	ㅈㅣ			p,f,eusi	0	6	1	
+-지만	ㅈㅣㅁㅏㄴ			p,f,euo,euob	0	10	0	
+-지요	ㅈㅣㅇㅛ			p,f,eusi	0	6	0	
+-(으)라	ㄹㅏ	ㄹㄷㅏ		v	0	20	0	
+-(으)러	ㄹㅓ	ㄹㄷㅏ		v	0	1	0	
+-(으)라	ㄹㅏ	ㄷㅏ		v,ida	0	0	1	breaks 몰라 -> 몰다 with other paths
+-아/어라	ㄹㅏ	ㄷㅏ		v,adj	0	0	1	breaks 몰라 -> 몰다 with other paths
+-(으)ㄹ라	ㄹㄹㅏ	ㄹㄷㅏ		v,adj	0	0	1	breaks 몰라 -> 몰다 with other paths
+-아/어	ㅓ	ㅡㄷㅏ		v,adj	0	0	1	breaks 자러 -> 자르다 with other paths
+-아/어도	ㅏㄷㅗ	ㅡㄷㅏ		v,adj	0	0	1	breaks 나라도 -> 나르다 with other paths
+-아/어서	ㅏㅅㅓ	ㅡㄷㅏ		v,adj	0	0	1	breaks 이라서 -> 이르다 with other paths
+-아/어요	ㅏㅇㅛ	ㅡㄷㅏ		v,adj	0	0	1	breaks 바라요 -> 바르다 with other paths
+-아/어	ㅏ	ㅡㄷㅏ		v,adj	0	0	1	breaks 거라 -> 거르다 with other paths
+-아/어다가	ㅓㄷㅏㄱㅏ	ㅡㄷㅏ		v,adj	0	0	1	breaks 이러다가 -> 이르다 with other paths
+-아/어다	ㅏㄷㅏ	ㅡㄷㅏ		v,adj	0	0	1	breaks 나라다 -> 나르다 with other paths
+-아/어다	ㅓㄷㅏ	ㅡㄷㅏ		v,adj	0	0	1	breaks 이러다 -> 이르다 with other paths
+-아/어라	ㅓㄹㅏ	ㅡㄷㅏ		v,adj	0	0	1	breaks 이러라 -> 이르다 with other paths
+-(으)셔요	ㅅㅕㅇㅛ	ㄷㅏ		v,adj,ida	0	0	0	ties a false candidate with the lemma on 8 paths, as in 시장하셔요 -> 시장하시다
+-(으)시어요	ㅅㅣㅇㅓㅇㅛ	ㄷㅏ		v,adj,ida	0	0	0	ties a false candidate with the lemma on 4 paths, as in 쑤시어요 -> 쑤시다
+-(으)십시다	ㅅㅣㅂㅅㅣㄷㅏ	ㄷㅏ		v	0	0	0	ties a false candidate with the lemma on 3 paths, as in 쑤십시다 -> 쑤시다
+-아/어라	ㅏㄹㅏ	ㅡㄷㅏ		v,adj	0	0	0	ties a false candidate with the lemma on 4 paths, as in 바라라 -> 바라다
+-아/어야	ㅏㅇㅑ	ㅡㄷㅏ		v,adj	0	0	0	ties a false candidate with the lemma on 4 paths, as in 바라야 -> 바라다
+-았/었	ㅏㅆ	ㅡㄷㅏ	p	v,adj	0	0	0	ties a false candidate with the lemma on 8 paths, as in 바랐음 -> 바라다
+-(으)시어요	ㅅㅣㅇㅓㅇㅛ	ㄹㄷㅏ		v,adj	0	0	0	ties a false candidate with the lemma on 4 paths, as in 모시어요 -> 모시다
+-((느)ㄴ)다니	ㄴㄷㅏㄴㅣ	ㄹㄷㅏ		v	0	0	0	ties a false candidate with the lemma on 1 paths, as in 연다니 -> 연달다

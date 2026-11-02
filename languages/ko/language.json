@@ -98,7 +98,17 @@
         "prefix": "Prefix",
         "suffix": "Suffix",
         "phrase": "Phrase",
-        "proverb": "Proverb"
+        "proverb": "Proverb",
+        "character": "Character",
+        "syllable": "Syllable",
+        "root": "Root",
+        "affix": "Affix",
+        "interfix": "Interfix",
+        "contraction": "Contraction",
+        "conj": "Conjunction",
+        "postp": "Postposition",
+        "symbol": "Symbol",
+        "punct": "Punctuation"
       }
     },
     "frequencySamples": null,

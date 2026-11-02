@@ -1,7 +1,7 @@
 # GPL-3.0-or-later; Copyright (C) 2023-2026 Yomitan Authors; 2020-2022 Yomichan Authors
 # https://github.com/yomidevs/yomitan/blob/d3c54c10264673eca0d66b970ef74cd5c8b048e3/test/language/korean-transforms.test.js
 # Yomitan's test passes source and term through a preprocess function; the pack's processors take its place.
-# 53 valid rows marked "(any trace)" have reasons * here: the final rules reach their lemma with another trace (sources/relax-yomitan-tests.mjs); 1 rows the final rules fail are in gaps.tsv.
+# 42 valid rows marked "(any trace)" have reasons * here: the final rules reach their lemma with another trace (sources/relax-yomitan-tests.mjs); 1 rows the final rules fail are in gaps.tsv.
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
 ㅏ다	1	가다	가다	v	
 ㅏ다	1	갑니다	가다	v	-(스)ㅂ니다
@@ -30,7 +30,7 @@
 ㅏ다	1	가고	가다	v	-고
 ㅏ다	1	가면	가다	v	-(으)면
 ㅏ다	1	가니	가다	v	-(으)니
-ㅏ다 (any trace)	1	가십시오	가다	v	*
+ㅏ다	1	가십시오	가다	v	-(으)십시오
 ㅏ다	1	가세요	가다	v	-(으)세요
 ㅏ다	1	가라	가다	v	-아/어라
 ㅏ다	1	갑시다	가다	v	-(으)ㅂ시다
@@ -63,7 +63,7 @@
 ㅓ다	1	서고	서다	v	-고
 ㅓ다	1	서니	서다	v	-(으)니
 ㅓ다	1	서세요	서다	v	-(으)세요
-ㅓ다 (any trace)	1	서십시오	서다	v	*
+ㅓ다	1	서십시오	서다	v	-(으)십시오
 ㅓ다	1	서라	서다	v	-아/어라
 ㅓ다	1	서자	서다	v	-자
 ㅓ다	1	섭시다	서다	v	-(으)ㅂ시다
@@ -94,7 +94,7 @@
 ㅗ다	1	오고	오다	v	-고
 ㅗ다	1	오면	오다	v	-(으)면
 ㅗ다	1	오니	오다	v	-(으)니
-ㅗ다 (any trace)	1	오십시오	오다	v	*
+ㅗ다	1	오십시오	오다	v	-(으)십시오
 ㅗ다	1	오세요	오다	v	-(으)세요
 ㅗ다	1	와라	오다	v	-아/어라
 ㅗ다	1	옵시다	오다	v	-(으)ㅂ시다
@@ -128,7 +128,7 @@
 ㅜ다	1	나누고	나누다	v	-고
 ㅜ다	1	나누세요	나누다	v	-(으)세요
 ㅜ다	1	나눠라	나누다	v	-아/어라
-ㅜ다 (any trace)	1	나누십시오	나누다	v	*
+ㅜ다	1	나누십시오	나누다	v	-(으)십시오
 ㅜ다	1	나누자	나누다	v	-자
 ㅜ다	1	나눕시다	나누다	v	-(으)ㅂ시다
 ㅡ다	1	쓰다	쓰다	v	
@@ -162,7 +162,7 @@
 ㅡ다	1	쓰니	쓰다	v	-(으)니
 ㅡ다	1	쓰세요	쓰다	v	-(으)세요
 ㅡ다	1	써라	쓰다	v	-아/어라
-ㅡ다 (any trace)	1	쓰십시오	쓰다	v	*
+ㅡ다	1	쓰십시오	쓰다	v	-(으)십시오
 ㅡ다	1	쓰자	쓰다	v	-자
 ㅡ다	1	씁시다	쓰다	v	-(으)ㅂ시다
 ㅣ다	1	기다리다	기다리다	v	
@@ -192,7 +192,7 @@
 ㅣ다	1	기다리고	기다리다	v	-고
 ㅣ다	1	기다리면	기다리다	v	-(으)면
 ㅣ다	1	기다리니	기다리다	v	-(으)니
-ㅣ다 (any trace)	1	기다리십시오	기다리다	v	*
+ㅣ다	1	기다리십시오	기다리다	v	-(으)십시오
 ㅣ다	1	기다리세요	기다리다	v	-(으)세요
 ㅣ다	1	기다려라	기다리다	v	-아/어라
 ㅣ다	1	기다립시다	기다리다	v	-(으)ㅂ시다
@@ -224,7 +224,7 @@
 ㅚ다	1	되고	되다	v	-고
 ㅚ다	1	되면	되다	v	-(으)면
 ㅚ다	1	되니	되다	v	-(으)니
-ㅚ다 (any trace)	1	되십시오	되다	v	*
+ㅚ다	1	되십시오	되다	v	-(으)십시오
 ㅚ다	1	되세요	되다	v	-(으)세요
 ㅚ다	1	돼라	되다	v	-아/어라
 ㅚ다	1	됩시다	되다	v	-(으)ㅂ시다
@@ -256,7 +256,7 @@
 ㅐ다	1	보내고	보내다	v	-고
 ㅐ다	1	보내면	보내다	v	-(으)면
 ㅐ다	1	보내니	보내다	v	-(으)니
-ㅐ다 (any trace)	1	보내십시오	보내다	v	*
+ㅐ다	1	보내십시오	보내다	v	-(으)십시오
 ㅐ다	1	보내세요	보내다	v	-(으)세요
 ㅐ다	1	보내라	보내다	v	-아/어라
 ㅐ다	1	보냅시다	보내다	v	-(으)ㅂ시다
@@ -288,7 +288,7 @@
 ㅕ다	1	펴고	펴다	v	-고
 ㅕ다	1	펴면	펴다	v	-(으)면
 ㅕ다	1	펴니	펴다	v	-(으)니
-ㅕ다 (any trace)	1	펴십시오	펴다	v	*
+ㅕ다	1	펴십시오	펴다	v	-(으)십시오
 ㅕ다	1	펴세요	펴다	v	-(으)세요
 ㅕ다	1	펴라	펴다	v	-아/어라
 ㅕ다	1	폅시다	펴다	v	-(으)ㅂ시다
@@ -411,7 +411,7 @@ other vowel + consonant + 다	1	먹자	먹다	v	-자
 하다	1	하고	하다	v	-고
 하다	1	하면	하다	v	-(으)면
 하다	1	하니	하다	v	-(으)니
-하다 (any trace)	1	하십시오	하다	v	*
+하다	1	하십시오	하다	v	-(으)십시오
 하다	1	하세요	하다	v	-(으)세요
 하다	1	해라	하다	v	-아/어라
 하다	1	합시다	하다	v	-(으)ㅂ시다
@@ -443,7 +443,7 @@ other vowel + consonant + 다	1	먹자	먹다	v	-자
 하다	1	공부하고	공부하다	v	-고
 하다	1	공부하면	공부하다	v	-(으)면
 하다	1	공부하니	공부하다	v	-(으)니
-하다 (any trace)	1	공부하십시오	공부하다	v	*
+하다	1	공부하십시오	공부하다	v	-(으)십시오
 하다	1	공부하세요	공부하다	v	-(으)세요
 하다	1	공부해라	공부하다	v	-아/어라
 하다	1	공부합시다	공부하다	v	-(으)ㅂ시다
