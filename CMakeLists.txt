@@ -315,7 +315,7 @@ if(HOSHIDICTS_TESTS)
     if(MSVC)
         target_compile_options(languages-test PRIVATE /utf-8)
     endif()
-    add_test(NAME languages COMMAND languages-test)
+    add_test(NAME languages COMMAND languages-test ${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/languages)
 
     add_executable(score-roundtrip-test tests/score_roundtrip_test.cpp)
     target_link_libraries(score-roundtrip-test PRIVATE hoshidicts)
@@ -385,4 +385,22 @@ if(HOSHIDICTS_TESTS)
              COMMAND import-equivalence-test
                      ${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/yomitan/small_dict.zip
                      ${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/yomitan/golden.sha256)
+endif()
+
+if(HOSHIDICTS_TESTS AND HOSHIDICTS_CLI)
+    # The real CLI's language commands on the probe packs (docs/languages.md 10.3).
+    add_test(NAME cli-languages
+             COMMAND ${CMAKE_COMMAND} -DCLI=$<TARGET_FILE:hoshidicts-cli>
+                     -DFIXTURES=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures
+                     -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/cli_languages_test.cmake)
+endif()
+
+if(HOSHIDICTS_LANGUAGE_TESTS)
+    # Only the Japanese pack may use tests/yomitan.tsv as its corpus (12.1 step 4).
+    add_test(NAME language-needs-corpus
+             COMMAND ${CMAKE_COMMAND} -DTEST=$<TARGET_FILE:language-conformance-test>
+                     -DPACK=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/conformance/yt
+                     -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}
+                     "-DREASON=a pack with transforms needs tests/corpus.tsv"
+                     -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/conformance_refuses_test.cmake)
 endif()

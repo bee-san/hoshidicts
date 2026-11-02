@@ -142,6 +142,82 @@ void test_patterns() {
   for (const char* bad : {"$$", "$2", "$10", "$`", "$'", "$a", "$"}) {
     check(pattern("(a)", bad) == nullptr, std::string("replacement rejects ") + bad);
   }
+  {
+    // Constructs std::wregex and JavaScript read differently (section 7.6):
+    // an empty match in a global replacement, a back-reference to a group
+    // that may not take part, a capture inside a repeated group, and a
+    // quantifier on a group that can match the empty text (exponential in
+    // std::regex). The first cases are the audit's (JavaScript / engine):
+    // a*? on baaa gives -b-a-a-a- / -b-------; (a)|b\1 on b gives X / no
+    // match; (?:(x)|y)*z with [$1] on xyz gives [] / [x]; the last pattern
+    // hung std::regex for minutes on a six-character text.
+    const struct {
+      const char* source;
+      bool global;
+    } different[] = {
+        {"a*?", true},
+        {"a{0,2}?", true},
+        {"(a)|b\\1", false},
+        {"(a)|b\\1", true},
+        {"(?:(a)|b)+\\1", false},
+        {"(?:(x)|y)*z", false},
+        {"(a*)*b", false},
+        {"(?:a|())*b", false},
+        {"\xE3\x81\x84\\.*|.(((?=c{2}?a\xE3\x81\x84*?|\xE3\x81\x84" "a{0,2})|(\xE3\x81\x84{0,2}|c*a{0,2}){0,2}?)*?"
+         "[\\u0061-\\u0062]\\)|\\.)",
+         false},
+        // The same reasons, more forms.
+        {"a?|b", true},
+        {"|a", true},
+        {"x*", true},
+        {"$", true},
+        {"(?=a)", true},
+        // libstdc++ reads ^ in a lookahead as the start of the lookahead:
+        // [ab]+(?!^|^) on abbいいc (global, Z) gives Zいいc in JavaScript and
+        // aZいいc in the engine.
+        {"[ab]+(?!^|^)", true},
+        {"(?=^a)a", false},
+        {"\xE3\x81\x84{0,2}?", true},
+        // The other differing patterns of the audit's random test.
+        {R"p(((?=(a{2}c|aaい)|(?=c{0,2}a{2}?|aa*c)(ac*|c{0,2}a))|.{2}c*?((?=a{2}い*a*?|[^a]+)(?=.*.{2}.{0,2})|.*){1,3})a{0,2}(\()*?|.\.+?((?=cc|(?!c{2}い*|いac))|い{0,2}\.)\1)p",
+         false},
+        {R"p(.{0,2}?い(((?=[^a]{1,3}c*)c{0,2}.|\.)*?a*.*|(?=c*?a|c)(?:(a?a*い|[ab]{2}.{2}.)|a{2}い\({2}?){2})*?|.\1)p", false},
+        {R"p(\.{2}(い{0,2}|.*(?=(い{0,2}?い{0,2}a{2}|い{0,2}c{0,2}))(?=\.{1,3}?(?:c{2}い{0,2}|a{0,2}?x){0,2}?|a*))|c.{2}?.{0,2}\1)p", true},
+        {R"p(((?=.{0,2}?[a-c](c*|い)|(?=c{0,2}[a-c].{0,2}|.x?))(?=.{2}|x??(?=c*?))|((a)\.{2})*い{2}(?=.{1,3}\.{2})){0,2}\1)p", true},
+        {"(a)?\\1", false},
+        {"(a)*\\1", false},
+        {"(?!(a))\\1", false},
+        {"(?:(a)|c)\\1", false},
+        {"((a)|b)\\2", false},
+        {"((a)|b)*", false},
+        {"(?:a?)+", false},
+        {"(?:a|)*", false},
+        {"(?:(?=a))+", false},
+        {"()\\1*", false},
+        {"a{70000}", false},
+    };
+    for (const auto& d : different) {
+      std::string error;
+      check(pattern(d.source, "", d.global, &error) == nullptr,
+            std::string("pattern rejects ") + d.source + (d.global ? " (global)" : ""));
+    }
+    const struct {
+      const char* source;
+      bool global;
+    } same[] = {
+        {"(a|b)*c", false},     {"(a)\\1", false},       {"(?:(a)\\1|b)", false}, {"(?=(a))\\1", false},
+        {"(a)+\\1", false},     {"((a)|b)\\1", false},   {"(a)\\1|b", false},     {"(a)(?:b\\1)*", false},
+        {"(a)(\\1)+", false},   {"(a)\\1*", false},      {"(?:ab?)?", false},     {"a*?", false},
+        {"x*", false},          {"$", false},            {"a", true},             {"a*b", true},
+        {"^a", true},           {"a(?=b$)", true},
+        {"(l|dell|all)['\xE2\x80\x99]", true},
+    };
+    for (const auto& s : same) {
+      std::string error;
+      check(pattern(s.source, "", s.global, &error) != nullptr,
+            std::string("pattern accepts ") + s.source + (s.global ? " (global)" : "") + ": " + error);
+    }
+  }
   std::string out;
   {
     auto p = pattern("a", "b");
@@ -592,6 +668,51 @@ void test_schema() {
     check(pack == nullptr && e.find(c.expect) != std::string::npos, "schema " + c.name + ": " + e);
   }
   {
+    // Required keys (section 4 and 12.1 step 1), each refused by name when it
+    // is left out; frequencySamples lists 10 words each (4.8).
+    const auto without = [](std::string json, const std::string& part) {
+      const auto at = json.find(part);
+      if (at == std::string::npos) return std::string("(the test's descriptor has no ") + part + ")";
+      return json.erase(at, part.size());
+    };
+    const auto with = [](std::string json, const std::string& part, const std::string& replacement) {
+      const auto at = json.find(part);
+      if (at == std::string::npos) return std::string("(the test's descriptor has no ") + part + ")";
+      return json.replace(at, part.size(), replacement);
+    };
+    const std::string sample =
+        R"(,"sample":{"warmup":"walked","practice":{"text":"a","lookup":"a"},
+"entry":{"expression":"a","reading":"a","glossary":["a"],"definitionTags":"","matched":"a","trace":[]},"character":null})";
+    const std::string ten = R"(["a","b","c","d","e","f","g","h","i","j"])";
+    const std::string nine = R"(["a","b","c","d","e","f","g","h","i"])";
+    const struct {
+      std::string name;
+      std::string language;
+      std::string expect;
+    } required[] = {
+        {"text.wordInternal", without(language_json(), R"("wordInternal":null,)"), R"(text: missing required key "wordInternal")"},
+        {"text.highlightBreaks", without(language_json(), R"("highlightBreaks":null,)"), R"(text: missing required key "highlightBreaks")"},
+        {"lookup.transforms", without(language_json(), R"(,"transforms":"transforms.json")"), R"(lookup: missing required key "transforms")"},
+        {"host.sample", without(language_json(), sample), R"(host: missing required key "sample")"},
+        {"9 common words", with(language_json(), R"("frequencySamples":null)", R"("frequencySamples":{"common":)" + nine + R"(,"rare":)" + ten + "}"),
+         "host.frequencySamples.common: must list 10 words"},
+        {"11 rare words", with(language_json(), R"("frequencySamples":null)", R"("frequencySamples":{"common":)" + ten + R"(,"rare":["k",)" + ten.substr(1) + "}"),
+         "host.frequencySamples.rare: must list 10 words"},
+    };
+    for (const auto& c : required) {
+      std::string e;
+      auto pack = hoshidicts::parse_language_pack(c.language, good, &e);
+      check(pack == nullptr && e.find(c.expect) != std::string::npos, "schema refuses a pack without " + c.name + ": " + e);
+    }
+    std::string e;
+    const std::string samples = with(language_json(), R"("frequencySamples":null)", R"("frequencySamples":{"common":)" + ten + R"(,"rare":)" + ten + "}");
+    check(hoshidicts::parse_language_pack(samples, good, &e) != nullptr, "frequencySamples of 10 and 10 words: " + e);
+    // The keys may be null, and a pack whose lookup.transforms is null has no rules.
+    const std::string no_rules = with(language_json(), R"("transforms":"transforms.json")", R"("transforms":null)");
+    auto pack = hoshidicts::parse_language_pack(no_rules, "", &e);
+    check(pack != nullptr && pack->data().transforms == nullptr, "lookup.transforms may be null: " + e);
+  }
+  {
     // More than 32 condition bits.
     std::string conditions;
     for (int i = 0; i < 33; ++i) conditions += (i ? "," : "") + std::string(R"("c)") + std::to_string(i) + R"(":{"name":"c","isDictionaryForm":true})";
@@ -794,6 +915,186 @@ void test_word_lookup() {
   std::filesystem::remove_all(root);
 }
 
+// --- the probe packs of tests/fixtures/languages/ ------------------------------------
+
+std::string trace_ids(const LookupResult& r) {
+  std::string out;
+  for (const auto& t : r.trace) out += (out.empty() ? "" : ">") + t.id;
+  return out;
+}
+
+const LookupResult* find_term(const std::vector<LookupResult>& results, const std::string& expression) {
+  for (const auto& r : results) {
+    if (r.term.expression == expression) return &r;
+  }
+  return nullptr;
+}
+
+std::string describe(const std::vector<LookupResult>& results) {
+  std::string out;
+  for (const auto& r : results) {
+    out += r.term.expression + "/" + r.term.reading + "(" + r.matched + ", steps " + std::to_string(r.preprocessor_steps) +
+           ", " + trace_ids(r) + ") ";
+  }
+  return out.empty() ? "(none)" : out;
+}
+
+// Pipeline features the Japanese pack does not use, so the parity tests do
+// not pin them (sections 6.1, 7.3, 7.4, 9.1-9.3, 9.6).
+void test_probe_packs(const std::string& fixtures) {
+  hoshidicts::LanguageRegistry registry;
+  std::string error;
+  check(registry.add_directory(fixtures, &error), "the probe packs load: " + error);
+  check(registry.codes() == std::vector<std::string>{"opt", "pst", "rdn", "stm", "trf", "trs", "wdi", "wrd"},
+        "the probe packs");
+
+  const auto root = std::filesystem::temp_directory_path() / ("hoshidicts-probe-packs-" + std::to_string(std::random_device{}()));
+  std::filesystem::create_directories(root);
+  const std::string index = R"({"title":"probes","format":3,"revision":"1"})";
+  const std::string bank = R"([["a","","","",0,["a"],1,""],["z","","","",0,["z"],2,""],
+    ["x","AB","","n",0,["x upper"],3,""],["x","ab","","n",0,["x lower"],4,""],
+    ["y","q","","n",9,["y q"],5,""],["y","YY","","n",0,["y YY"],6,""],["CAT","","","n",0,["cat"],7,""],
+    ["ABCDEFGHIJKLMNOPQRS","","","",0,["nineteen"],8,""],["ABCDEFGHIJKLMNOP","","","",0,["sixteen"],9,""],
+    ["internationalize","","","v",0,["to internationalize"],10,""],["walke","","","v",0,["a probe verb"],11,""],
+    ["m","","","",0,["m"],12,""],["m'yaso","","","",0,["meat"],13,""]])";
+  const std::string meta = R"([["x","freq",{"reading":"AB","frequency":{"value":1,"displayValue":"upper"}}],
+    ["x","freq",{"reading":"ab","frequency":{"value":2,"displayValue":"lower"}}]])";
+  {
+    std::ofstream(root / "probes.zip", std::ios::binary)
+        << build_zip({{"index.json", index}, {"term_bank_1.json", bank}, {"term_meta_bank_1.json", meta}});
+  }
+  const auto imported = dictionary_importer::import((root / "probes.zip").string(), root.string());
+  check(imported.success, "import the probe dictionary: " + imported.error);
+  DictionaryQuery query;
+  check(query.add_term_dict((root / "probes").string()) && query.add_freq_dict((root / "probes").string()),
+        "load the probe dictionary");
+  const Lookup lookup(query, registry);
+  const auto run = [&](const std::string& code, const std::string& text, LookupOptions options = {}, size_t scan = 16) {
+    options.language = code;
+    return lookup.lookup(text, 16, scan, options);
+  };
+
+  // traceSelection (9.6). The variants of "zb" are "ab" (1 step) and "zb"
+  // (0 steps). Term a is reached through R from "ab" first, then through W
+  // from "zb"; term z through P and Q from "zb" first, then through R.
+  {
+    const auto first = run("trf", "zb");
+    const auto shortest = run("trs", "zb");
+    const auto* fa = find_term(first, "a");
+    const auto* sa = find_term(shortest, "a");
+    const auto* fz = find_term(first, "z");
+    const auto* sz = find_term(shortest, "z");
+    check(fa && fa->preprocessor_steps == 1 && trace_ids(*fa) == "R", "first keeps a's first deinflection: " + describe(first));
+    check(sa && sa->preprocessor_steps == 0 && trace_ids(*sa) == "W", "shortest keeps a's fewest steps: " + describe(shortest));
+    check(fz && trace_ids(*fz) == "P>Q", "first keeps z's first trace: " + describe(first));
+    check(sz && trace_ids(*sz) == "R", "shortest keeps z's shortest trace: " + describe(shortest));
+  }
+
+  // readingNormalizer (9.6): x/AB and x/ab are one result with both
+  // glossaries and both readings' frequencies; primary_reading is normalised.
+  {
+    const auto merged = run("rdn", "xs");
+    const auto plain = run("opt", "xs");
+    check(plain.size() == 2, "without a normalizer two readings are two results: " + describe(plain));
+    check(merged.size() == 1, "a reading normalizer merges them: " + describe(merged));
+    if (merged.size() == 1) {
+      const auto& term = merged[0].term;
+      check(term.reading == "AB", "the merged result shows the first term's reading: " + term.reading);
+      check(term.glossaries.size() == 2, "the merged result has both glossaries");
+      std::string frequencies;
+      for (const auto& entry : term.frequencies) {
+        for (const auto& f : entry.frequencies) frequencies += f.display_value + " ";
+      }
+      check(frequencies == "upper lower ", "the frequencies of both readings: " + frequencies);
+    }
+    LookupOptions primary;
+    primary.primary_reading = std::string("Yy");
+    const auto normalised = run("rdn", "ys", primary);
+    check(!normalised.empty() && normalised.front().term.reading == "YY",
+          "primary_reading Yy is compared normalised and puts YY first: " + describe(normalised));
+    const auto unnormalised = run("opt", "ys", primary);
+    check(!unnormalised.empty() && unnormalised.front().term.reading == "q",
+          "without a normalizer Yy matches no reading and the score decides: " + describe(unnormalised));
+  }
+
+  // Postprocessors (9.3): the rules run on lower case, the dictionary writes CAT.
+  {
+    const auto results = run("pst", "cats");
+    const auto* cat = find_term(results, "CAT");
+    check(cat && cat->preprocessor_steps == 1 && cat->deinflected == "CAT" && cat->matched == "cats" && trace_ids(*cat) == "s",
+          "a postprocessed form is looked up and adds a step: " + describe(results));
+  }
+  // Long keys through the postprocessors (9.1): the 19-code-point key is
+  // upper case, the text lower case, the scan 16 code points.
+  {
+    const auto results = run("pst", "abcdefghijklmnopqrs", {}, 16);
+    check(!results.empty() && results.front().term.expression == "ABCDEFGHIJKLMNOPQRS" &&
+              results.front().matched == "abcdefghijklmnopqrs",
+          "a long key is found through the postprocessor: " + describe(results));
+  }
+
+  // Optional processors and transforms, turned on by language_options (4.7).
+  {
+    check(find_term(run("opt", "cat"), "CAT") == nullptr, "an optional preprocessor is off by default");
+    LookupOptions up;
+    up.language_options = {"up"};
+    const auto upper = run("opt", "cat", up);
+    const auto* cat = find_term(upper, "CAT");
+    check(cat && cat->preprocessor_steps == 1, "language_options turns an optional preprocessor on: " + describe(upper));
+    const auto off = run("opt", "xq");
+    check(!off.empty() && off.front().matched == "x", "an optional transform is off by default: " + describe(off));
+    LookupOptions on;
+    on.language_options = {"opt"};
+    const auto enabled = run("opt", "xq", on);
+    check(!enabled.empty() && enabled.front().matched == "xq" && trace_ids(enabled.front()) == "opt",
+          "language_options turns an optional transform on: " + describe(enabled));
+  }
+
+  // Word resolution (9.2): the window grows to the end of the word the scan
+  // length ends in, below the long-key length (internationalize has 16 code
+  // points, so scan.idx does not list it).
+  {
+    const auto grown = run("wrd", "internationalizing now", {}, 16);
+    check(!grown.empty() && grown.front().term.expression == "internationalize" && grown.front().matched == "internationalizing",
+          "an 18-code-point word at scan 16: " + describe(grown));
+    const auto short_scan = run("wrd", "walking fast", {}, 4);
+    check(!short_scan.empty() && short_scan.front().term.expression == "walke" && short_scan.front().matched == "walking",
+          "a scan of 4 grows to walking: " + describe(short_scan));
+  }
+  // wordInternal (9.2): m'yaso is one word, so m is never one of its prefixes.
+  {
+    const auto with = run("wdi", "m'yaso tasty");
+    const auto without = run("wrd", "m'yaso tasty");
+    check(find_term(with, "m'yaso") != nullptr && find_term(with, "m") == nullptr,
+          "with wordInternal, m is not looked up inside m'yaso: " + describe(with));
+    check(find_term(without, "m'yaso") != nullptr && find_term(without, "m") != nullptr,
+          "without it the apostrophe ends the word m: " + describe(without));
+  }
+  std::filesystem::remove_all(root);
+
+  // Rules (7.3, 7.4).
+  const auto stm = registry.find("stm");
+  if (stm) {
+    check(has(deinflect(*stm, "kokox"), "koku:v:last") && !has(deinflect(*stm, "kokox"), "kuko:v:last"),
+          "stemChange occurrence last changes the last of two matches: " + join(deinflect(*stm, "kokox")));
+    check(has(deinflect(*stm, "kokoy"), "kuko:v:first"), "stemChange occurrence first: " + join(deinflect(*stm, "kokoy")));
+    check(!has(deinflect(*stm, "juego"), "jogar:v:notjue"),
+          "stemNotStartsWithText refuses a stem that starts with jue: " + join(deinflect(*stm, "juego")));
+    check(has(deinflect(*stm, "puedo"), "podar:v:notjue"), "stemNotStartsWithText: " + join(deinflect(*stm, "puedo")));
+    check(deinflect(*stm, "qaq") == std::vector<std::string>{"qaq::", "qa:v:suf", "aq:v:pre"},
+          "suffix-indexed rules come before prefix-indexed ones: " + join(deinflect(*stm, "qaq")));
+    check(deinflect(*stm, "cats") == std::vector<std::string>{"cats::", "cat:np,ns:plural"},
+          "a union condition is its leaves: " + join(deinflect(*stm, "cats")));
+    // Variants are sorted after every processor (6.1): the two map variants
+    // come out as bb, aa, zz.
+    std::string variants;
+    for (const auto& v : lang::process_text(stm->data().preprocessors, "zz", {})) {
+      variants += v.text + ":" + std::to_string(v.steps) + " ";
+    }
+    check(variants == "aa:1 bb:1 zz:0 ", "a processor's variants are sorted by code points: " + variants);
+  }
+}
+
 // --- the JSON reader of packs ----------------------------------------------------
 
 void test_json() {
@@ -838,7 +1139,11 @@ void test_json() {
 
 }  // namespace
 
-int main() {
+int main(int argc, char** argv) {
+  if (argc < 2) {
+    std::fprintf(stderr, "usage: languages-test <tests/fixtures/languages>\n");
+    return 2;
+  }
   test_json();
   test_classes();
   test_patterns();
@@ -847,6 +1152,7 @@ int main() {
   test_schema();
   test_registry();
   test_word_lookup();
+  test_probe_packs(argv[1]);
   std::printf("%zu cases, %d failures\n", cases, failures);
   return failures == 0 ? 0 : 1;
 }

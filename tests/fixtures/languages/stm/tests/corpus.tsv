@@ -1,0 +1,7 @@
+# Hand-written probe rows (tests/cli_languages_test.cmake): 4 positives, 3 found; 1 negative, passed.
+# category	valid	source	term	rule	reasons
+stem	1	kokox	koku	v	last
+stem	1	kokoy	kuko	v	first
+stem	1	puedo	podar	v	notjue
+stem	1	juego	jugar	v	*
+negatives	0	juego	jogar	*	*

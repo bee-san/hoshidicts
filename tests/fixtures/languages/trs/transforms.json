@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "conditions": {
+    "n": {
+      "name": "Noun",
+      "isDictionaryForm": true
+    }
+  },
+  "transforms": [
+    {
+      "id": "P",
+      "name": "P",
+      "description": "the P probe rule",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "zb", "deinflected": "zc", "conditionsIn": [], "conditionsOut": []}
+      ]
+    },
+    {
+      "id": "Q",
+      "name": "Q",
+      "description": "the Q probe rule",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "c", "deinflected": "", "conditionsIn": [], "conditionsOut": []}
+      ]
+    },
+    {
+      "id": "R",
+      "name": "R",
+      "description": "the R probe rule",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "b", "deinflected": "", "conditionsIn": [], "conditionsOut": []}
+      ]
+    },
+    {
+      "id": "W",
+      "name": "W",
+      "description": "the W probe rule",
+      "source": "own",
+      "rules": [
+        {"type": "wholeWord", "inflected": "zb", "deinflected": "a", "conditionsIn": [], "conditionsOut": []}
+      ]
+    }
+  ]
+}
