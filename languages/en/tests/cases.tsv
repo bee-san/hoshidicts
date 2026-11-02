@@ -1,0 +1,489 @@
+# Written for this pack (GPL-3.0-or-later): irregular and spelling-changed forms, plurals, comparison,
+# possessives, contractions, multiword verbs, archaic forms, processor inputs, and negatives (valid = 0).
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+irregular verb	1	went	go	v	*
+irregular verb	1	gone	go	v	*
+irregular verb	1	was	be	v	*
+irregular verb	1	were	be	v	*
+irregular verb	1	been	be	v	*
+irregular verb	1	am	be	v	*
+irregular verb	1	is	be	v	*
+irregular verb	1	are	be	v	*
+irregular verb	1	has	have	v	*
+irregular verb	1	had	have	v	*
+irregular verb	1	did	do	v	*
+irregular verb	1	done	do	v	*
+irregular verb	1	does	do	v	*
+irregular verb	1	saw	see	v	*
+irregular verb	1	seen	see	v	*
+irregular verb	1	took	take	v	*
+irregular verb	1	taken	take	v	*
+irregular verb	1	came	come	v	*
+irregular verb	1	became	become	v	*
+irregular verb	1	overcame	overcome	v	*
+irregular verb	1	gave	give	v	*
+irregular verb	1	given	give	v	*
+irregular verb	1	forgave	forgive	v	*
+irregular verb	1	knew	know	v	*
+irregular verb	1	known	know	v	*
+irregular verb	1	thought	think	v	*
+irregular verb	1	brought	bring	v	*
+irregular verb	1	bought	buy	v	*
+irregular verb	1	caught	catch	v	*
+irregular verb	1	taught	teach	v	*
+irregular verb	1	fought	fight	v	*
+irregular verb	1	sought	seek	v	*
+irregular verb	1	understood	understand	v	*
+irregular verb	1	withdrew	withdraw	v	*
+irregular verb	1	withheld	withhold	v	*
+irregular verb	1	upheld	uphold	v	*
+irregular verb	1	mistook	mistake	v	*
+irregular verb	1	undertook	undertake	v	*
+irregular verb	1	foresaw	foresee	v	*
+irregular verb	1	undergone	undergo	v	*
+irregular verb	1	underwent	undergo	v	*
+irregular verb	1	sprang	spring	v	*
+irregular verb	1	sprung	spring	v	*
+irregular verb	1	swore	swear	v	*
+irregular verb	1	sworn	swear	v	*
+irregular verb	1	arose	arise	v	*
+irregular verb	1	arisen	arise	v	*
+irregular verb	1	awoke	awake	v	*
+irregular verb	1	ate	eat	v	*
+irregular verb	1	eaten	eat	v	*
+irregular verb	1	overate	overeat	v	*
+irregular verb	1	lay	lie	v	*
+irregular verb	1	lain	lie	v	*
+irregular verb	1	laid	lay	v	*
+irregular verb	1	lit	light	v	*
+irregular verb	1	floodlit	floodlight	v	*
+irregular verb	1	hid	hide	v	*
+irregular verb	1	hidden	hide	v	*
+irregular verb	1	won	win	v	*
+irregular verb	1	bit	bite	v	*
+irregular verb	1	bitten	bite	v	*
+irregular verb	1	could	can	v	*
+irregular verb	1	would	will	v	*
+irregular verb	1	might	may	v	*
+irregular verb	1	should	shall	v	*
+irregular verb	1	clad	clothe	v	*
+irregular verb	1	left	leave	v	*
+irregular verb	1	felt	feel	v	*
+irregular verb	1	kept	keep	v	*
+irregular verb	1	slept	sleep	v	*
+irregular verb	1	meant	mean	v	*
+irregular verb	1	met	meet	v	*
+irregular verb	1	ran	run	v	*
+irregular verb	1	outran	outrun	v	*
+irregular verb	1	sat	sit	v	*
+irregular verb	1	stood	stand	v	*
+irregular verb	1	told	tell	v	*
+irregular verb	1	sold	sell	v	*
+irregular verb	1	held	hold	v	*
+irregular verb	1	heard	hear	v	*
+irregular verb	1	paid	pay	v	*
+irregular verb	1	said	say	v	*
+irregular verb	1	made	make	v	*
+irregular verb	1	wrote	write	v	*
+irregular verb	1	written	write	v	*
+irregular verb	1	rode	ride	v	*
+irregular verb	1	ridden	ride	v	*
+irregular verb	1	drove	drive	v	*
+irregular verb	1	driven	drive	v	*
+irregular verb	1	rose	rise	v	*
+irregular verb	1	risen	rise	v	*
+irregular verb	1	broke	break	v	*
+irregular verb	1	broken	break	v	*
+irregular verb	1	spoke	speak	v	*
+irregular verb	1	spoken	speak	v	*
+irregular verb	1	chose	choose	v	*
+irregular verb	1	chosen	choose	v	*
+irregular verb	1	froze	freeze	v	*
+irregular verb	1	frozen	freeze	v	*
+irregular verb	1	stole	steal	v	*
+irregular verb	1	stolen	steal	v	*
+irregular verb	1	woke	wake	v	*
+irregular verb	1	woken	wake	v	*
+irregular verb	1	began	begin	v	*
+irregular verb	1	begun	begin	v	*
+irregular verb	1	sang	sing	v	*
+irregular verb	1	sung	sing	v	*
+irregular verb	1	rang	ring	v	*
+irregular verb	1	rung	ring	v	*
+irregular verb	1	drank	drink	v	*
+irregular verb	1	drunk	drink	v	*
+irregular verb	1	sank	sink	v	*
+irregular verb	1	sunk	sink	v	*
+irregular verb	1	swam	swim	v	*
+irregular verb	1	swum	swim	v	*
+irregular verb	1	flew	fly	v	*
+irregular verb	1	flown	fly	v	*
+irregular verb	1	threw	throw	v	*
+irregular verb	1	thrown	throw	v	*
+irregular verb	1	drew	draw	v	*
+irregular verb	1	drawn	draw	v	*
+irregular verb	1	grew	grow	v	*
+irregular verb	1	grown	grow	v	*
+irregular verb	1	blew	blow	v	*
+irregular verb	1	blown	blow	v	*
+irregular verb	1	tore	tear	v	*
+irregular verb	1	torn	tear	v	*
+irregular verb	1	wore	wear	v	*
+irregular verb	1	worn	wear	v	*
+irregular verb	1	bore	bear	v	*
+irregular verb	1	borne	bear	v	*
+irregular verb	1	born	bear	v	*
+irregular verb	1	fell	fall	v	*
+irregular verb	1	fallen	fall	v	*
+irregular verb	1	forgot	forget	v	*
+irregular verb	1	forgotten	forget	v	*
+irregular verb	1	got	get	v	*
+irregular verb	1	gotten	get	v	*
+irregular verb	1	struck	strike	v	*
+irregular verb	1	stricken	strike	v	*
+irregular verb	1	stuck	stick	v	*
+irregular verb	1	hung	hang	v	*
+irregular verb	1	dug	dig	v	*
+irregular verb	1	fed	feed	v	*
+irregular verb	1	led	lead	v	*
+irregular verb	1	misled	mislead	v	*
+irregular verb	1	fled	flee	v	*
+irregular verb	1	bled	bleed	v	*
+irregular verb	1	bred	breed	v	*
+irregular verb	1	built	build	v	*
+irregular verb	1	sent	send	v	*
+irregular verb	1	spent	spend	v	*
+irregular verb	1	lent	lend	v	*
+irregular verb	1	bent	bend	v	*
+irregular verb	1	lost	lose	v	*
+irregular verb	1	found	find	v	*
+irregular verb	1	bound	bind	v	*
+irregular verb	1	ground	grind	v	*
+irregular verb	1	wound	wind	v	*
+irregular verb	1	shot	shoot	v	*
+irregular verb	1	shone	shine	v	*
+irregular verb	1	slid	slide	v	*
+irregular verb	1	spun	spin	v	*
+irregular verb	1	spat	spit	v	*
+irregular verb	1	sped	speed	v	*
+irregular verb	1	swept	sweep	v	*
+irregular verb	1	wept	weep	v	*
+irregular verb	1	crept	creep	v	*
+irregular verb	1	knelt	kneel	v	*
+irregular verb	1	dealt	deal	v	*
+irregular verb	1	dreamt	dream	v	*
+irregular verb	1	learnt	learn	v	*
+irregular verb	1	burnt	burn	v	*
+irregular verb	1	smelt	smell	v	*
+irregular verb	1	spelt	spell	v	*
+irregular verb	1	spilt	spill	v	*
+irregular verb	1	leapt	leap	v	*
+irregular verb	1	dwelt	dwell	v	*
+irregular verb	1	wrought	work	v	*
+irregular verb	1	forbade	forbid	v	*
+irregular verb	1	forbidden	forbid	v	*
+irregular verb	1	forsook	forsake	v	*
+irregular verb	1	forsaken	forsake	v	*
+irregular verb	1	trod	tread	v	*
+irregular verb	1	trodden	tread	v	*
+irregular verb	1	woven	weave	v	*
+irregular verb	1	swollen	swell	v	*
+irregular verb	1	shaken	shake	v	*
+irregular verb	1	shook	shake	v	*
+irregular verb	1	slain	slay	v	*
+irregular verb	1	smitten	smite	v	*
+irregular verb	1	striven	strive	v	*
+irregular verb	1	laden	lade	v	*
+verb spelling	1	stopped	stop	v	*
+verb spelling	1	stopping	stop	v	*
+verb spelling	1	planned	plan	v	*
+verb spelling	1	planning	plan	v	*
+verb spelling	1	preferred	prefer	v	*
+verb spelling	1	admitted	admit	v	*
+verb spelling	1	travelled	travel	v	*
+verb spelling	1	traveling	travel	v	*
+verb spelling	1	cancelled	cancel	v	*
+verb spelling	1	running	run	v	*
+verb spelling	1	beginning	begin	v	*
+verb spelling	1	getting	get	v	*
+verb spelling	1	swimming	swim	v	*
+verb spelling	1	panicked	panic	v	*
+verb spelling	1	panicking	panic	v	*
+verb spelling	1	picnicked	picnic	v	*
+verb spelling	1	trafficking	traffic	v	*
+verb spelling	1	lying	lie	v	*
+verb spelling	1	dying	die	v	*
+verb spelling	1	tying	tie	v	*
+verb spelling	1	vying	vie	v	*
+verb spelling	1	tried	try	v	*
+verb spelling	1	tries	try	v	*
+verb spelling	1	flies	fly	v	*
+verb spelling	1	cried	cry	v	*
+verb spelling	1	carries	carry	v	*
+verb spelling	1	watches	watch	v	*
+verb spelling	1	wishes	wish	v	*
+verb spelling	1	fixes	fix	v	*
+verb spelling	1	buzzes	buzz	v	*
+verb spelling	1	quizzes	quiz	v	*
+verb spelling	1	passes	pass	v	*
+verb spelling	1	goes	go	v	*
+verb spelling	1	echoes	echo	v	*
+verb spelling	1	making	make	v	*
+verb spelling	1	hoping	hope	v	*
+verb spelling	1	arguing	argue	v	*
+verb spelling	1	continuing	continue	v	*
+verb spelling	1	seeing	see	v	*
+verb spelling	1	agreeing	agree	v	*
+verb spelling	1	fleeing	flee	v	*
+verb spelling	1	being	be	v	*
+verb spelling	1	dyeing	dye	v	*
+verb spelling	1	eyeing	eye	v	*
+verb spelling	1	eying	eye	v	*
+verb spelling	1	hoeing	hoe	v	*
+verb spelling	1	liked	like	v	*
+verb spelling	1	agreed	agree	v	*
+verb spelling	1	freed	free	v	*
+verb spelling	1	played	play	v	*
+verb spelling	1	stayed	stay	v	*
+verb spelling	1	obeyed	obey	v	*
+verb spelling	1	focussed	focus	v	*
+verb spelling	1	busses	bus	v	*
+verb spelling	1	coiffed	coif	v	*
+verb spelling	1	reffing	ref	v	*
+verb spelling	1	singeing	singe	v	*
+plural	1	books	book	n	plural
+plural	1	boxes	box	n	plural
+plural	1	buses	bus	n	plural
+plural	1	classes	class	n	plural
+plural	1	churches	church	n	plural
+plural	1	dishes	dish	n	plural
+plural	1	potatoes	potato	n	plural
+plural	1	heroes	hero	n	plural
+plural	1	photos	photo	n	plural
+plural	1	cities	city	n	plural
+plural	1	days	day	n	plural
+plural	1	monies	money	n	plural
+plural	1	wolves	wolf	n	plural
+plural	1	halves	half	n	plural
+plural	1	shelves	shelf	n	plural
+plural	1	selves	self	n	plural
+plural	1	knives	knife	n	plural
+plural	1	wives	wife	n	plural
+plural	1	housewives	housewife	n	plural
+plural	1	lives	life	n	plural
+plural	1	leaves	leaf	n	plural
+plural	1	loaves	loaf	n	plural
+plural	1	thieves	thief	n	plural
+plural	1	scarves	scarf	n	plural
+plural	1	dwarves	dwarf	n	plural
+plural	1	hooves	hoof	n	plural
+plural	1	children	child	n	plural
+plural	1	grandchildren	grandchild	n	plural
+plural	1	women	woman	n	plural
+plural	1	firemen	fireman	n	plural
+plural	1	feet	foot	n	plural
+plural	1	teeth	tooth	n	plural
+plural	1	geese	goose	n	plural
+plural	1	mice	mouse	n	plural
+plural	1	lice	louse	n	plural
+plural	1	people	person	n	plural
+plural	1	salespeople	salesperson	n	plural
+plural	1	oxen	ox	n	plural
+plural	1	dice	die	n	plural
+plural	1	pence	penny	n	plural
+plural	1	data	datum	n	plural
+plural	1	media	medium	n	plural
+plural	1	bacteria	bacterium	n	plural
+plural	1	criteria	criterion	n	plural
+plural	1	phenomena	phenomenon	n	plural
+plural	1	cacti	cactus	n	plural
+plural	1	fungi	fungus	n	plural
+plural	1	nuclei	nucleus	n	plural
+plural	1	stimuli	stimulus	n	plural
+plural	1	larvae	larva	n	plural
+plural	1	formulae	formula	n	plural
+plural	1	antennae	antenna	n	plural
+plural	1	indices	index	n	plural
+plural	1	vertices	vertex	n	plural
+plural	1	matrices	matrix	n	plural
+plural	1	appendices	appendix	n	plural
+plural	1	analyses	analysis	n	plural
+plural	1	crises	crisis	n	plural
+plural	1	theses	thesis	n	plural
+plural	1	hypotheses	hypothesis	n	plural
+plural	1	axes	axis	n	plural
+plural	1	bureaux	bureau	n	plural
+plural	1	schemata	schema	n	plural
+plural	1	paparazzi	paparazzo	n	plural
+plural	1	libretti	libretto	n	plural
+plural	1	mothers-in-law	mother-in-law	n	plural
+plural	1	passers-by	passer-by	n	plural
+plural	1	runners-up	runner-up	n	plural
+plural	1	courts-martial	court-martial	n	plural
+plural	1	bus stops	bus stop	n	plural
+plural	1	cherubim	cherub	n	plural
+comparison	1	taller	tall	adj	*
+comparison	1	tallest	tall	adj	*
+comparison	1	bigger	big	adj	*
+comparison	1	biggest	big	adj	*
+comparison	1	hotter	hot	adj	*
+comparison	1	hottest	hot	adj	*
+comparison	1	thinner	thin	adj	*
+comparison	1	sadder	sad	adj	*
+comparison	1	nicer	nice	adj	*
+comparison	1	nicest	nice	adj	*
+comparison	1	freer	free	adj	*
+comparison	1	freest	free	adj	*
+comparison	1	happier	happy	adj	*
+comparison	1	happiest	happy	adj	*
+comparison	1	earlier	early	adj	*
+comparison	1	cagier	cagey	adj	*
+comparison	1	priciest	pricey	adj	*
+comparison	1	better	good	adj	*
+comparison	1	best	good	adj	*
+comparison	1	worse	bad	adj	*
+comparison	1	worst	bad	adj	*
+comparison	1	further	far	adj	*
+comparison	1	farthest	far	adj	*
+comparison	1	more	much	adj	*
+comparison	1	most	many	adj	*
+comparison	1	less	little	adj	*
+comparison	1	least	little	adj	*
+comparison	1	elder	old	adj	*
+comparison	1	eldest	old	adj	*
+comparison	1	uppermost	upper	adj	*
+comparison	1	southernmost	southern	adj	*
+comparison	1	better	well	adv	*
+comparison	1	sooner	soon	adv	*
+comparison	1	harder	hard	adv	*
+comparison	1	faster	fast	adv	*
+possessive	1	teacher's	teacher	n	possessive
+possessive	1	children's	child	n	plural|possessive
+possessive	1	dogs'	dog	n	plural|possessive
+possessive	1	James'	James	name	possessive
+possessive	1	Mary's	Mary	name	possessive
+possessive	1	everyone's	everyone	*	possessive
+possessive	1	mother’s	mother	n	possessive
+possessive	1	mothers-in-law's	mother-in-law	n	plural|possessive
+contraction	1	it's	it	*	contraction
+contraction	1	that's	that	*	contraction
+contraction	1	there's	there	*	contraction
+contraction	1	what's	what	*	contraction
+contraction	1	let's	let	*	contraction
+contraction	1	he's	he	*	contraction
+contraction	1	I'm	I	*	contraction
+contraction	1	you're	you	*	contraction
+contraction	1	we've	we	*	contraction
+contraction	1	they'll	they	*	contraction
+contraction	1	she'd	she	*	contraction
+contraction	1	should've	should	*	contraction
+contraction	1	could've	could	*	contraction
+contraction	1	John'll	John	*	contraction
+contraction	1	it’s	it	*	contraction
+contraction	1	I’ll	I	*	contraction
+negative	1	don't	do	v	negative
+negative	1	doesn't	do	v	negative
+negative	1	didn't	do	v	negative
+negative	1	isn't	be	v	negative
+negative	1	aren't	be	v	negative
+negative	1	wasn't	be	v	negative
+negative	1	weren't	be	v	negative
+negative	1	haven't	have	v	negative
+negative	1	hasn't	have	v	negative
+negative	1	hadn't	have	v	negative
+negative	1	can't	can	v	negative
+negative	1	cannot	can	v	negative
+negative	1	won't	will	v	negative
+negative	1	shan't	shall	v	negative
+negative	1	couldn't	could	v	negative
+negative	1	wouldn't	would	v	negative
+negative	1	shouldn't	should	v	negative
+negative	1	mustn't	must	v	negative
+negative	1	needn't	need	v	negative
+negative	1	ain't	be	v	negative
+negative	1	don’t	do	v	negative
+negative	1	won’t	will	v	negative
+dropped g	1	goin'	go	*	*
+dropped g	1	nothin'	nothing	*	*
+dropped g	1	somethin'	something	*	*
+dropped g	1	lovin'	love	*	*
+dropped g	1	runnin'	run	*	*
+multiword verb	1	looked up	look up	*	past
+multiword verb	1	gave up	give up	*	past
+multiword verb	1	took off	take off	*	past
+multiword verb	1	came up with	come up with	*	past
+multiword verb	1	ran into	run into	*	past
+multiword verb	1	broke down	break down	*	past
+multiword verb	1	picking up	pick up	*	ing
+multiword verb	1	puts on	put on	*	thirdPerson
+multiword verb	1	getting along	get along	*	ing
+multiword verb	1	kicked the bucket	kick the bucket	*	past
+multiword verb	1	made it	make it	*	past
+multiword verb	1	looks after	look after	*	thirdPerson
+multiword verb	1	turned it off	turn off	*	past|interposedObject
+multiword verb	1	picked her up	pick up	*	past|interposedObject
+multiword verb	1	put Mary's coat on	put on	*	interposedObject
+multiword verb	1	put Mary’s coat on	put on	*	interposedObject
+multiword verb	1	gave them back	give back	*	past|interposedObject
+multiword verb	1	threw it away	throw away	*	past|interposedObject
+multiword verb	1	turn that off	turn off	*	interposedObject
+multiword verb	1	lost his temper	lose one's temper	*	placeholder|past
+multiword verb	1	made up her mind	make up one's mind	*	placeholder|past
+multiword verb	1	let him down	let someone down	*	placeholder
+multiword verb	1	enjoyed himself	enjoy oneself	*	placeholder|past
+multiword verb	1	on his own	on one's own	*	placeholder
+archaic	1	walketh	walk	v	*
+archaic	1	maketh	make	v	*
+archaic	1	giveth	give	v	*
+archaic	1	crieth	cry	v	*
+archaic	1	hath	have	v	*
+archaic	1	doth	do	v	*
+archaic	1	saith	say	v	*
+archaic	1	walkest	walk	v	*
+archaic	1	makest	make	v	*
+archaic	1	art	be	v	*
+archaic	1	hast	have	v	*
+archaic	1	dost	do	v	*
+archaic	1	wilt	will	v	*
+archaic	1	shalt	shall	v	*
+archaic	1	canst	can	v	*
+processors	1	Running	run	v	*
+processors	1	WALKED	walk	v	*
+processors	1	Children’s	child	n	*
+processors	1	naïve	naive	*	
+processors	1	encyclopædia	encyclopaedia	*	
+processors	1	ﬁnding	find	v	*
+processors	1	beau­tiful	beautiful	*	
+processors	1	mother‑in‑law	mother-in-law	*	
+processors	1	london	London	*	
+negatives	0	serves	serf	*	*
+negatives	0	believes	belief	*	*
+negatives	0	grieves	grief	*	*
+negatives	0	relieves	relief	*	*
+negatives	0	strives	strife	*	*
+negatives	0	fives	fife	*	*
+negatives	0	proves	proof	*	*
+negatives	0	taxes	taxis	*	*
+negatives	0	hate	heat	*	*
+negatives	0	plate	pleat	*	*
+negatives	0	sate	seat	*	*
+negatives	0	slit	slight	*	*
+negatives	0	play	plie	*	*
+negatives	0	bed	be	*	*
+negatives	0	is	i	*	*
+negatives	0	as	a	*	*
+negatives	0	us	u	*	*
+negatives	0	princess	princes	*	*
+negatives	0	glass	glas	*	*
+negatives	0	boss	bos	*	*
+negatives	0	being	bee	*	*
+negatives	0	dying	dye	*	*
+negatives	0	lying	lye	*	*
+negatives	0	wont	will	*	*
+negatives	0	cant	can	*	*
+negatives	0	looked uptown	look uptown	*	*
+negatives	0	put the book on	put on	*	*
+negatives	0	saw the man in	see in	*	*
+negatives	0	look up the word in	look in	*	*
+negatives	0	looked at the man in	look in	*	*
+negatives	0	went to the store in	go in	*	*
