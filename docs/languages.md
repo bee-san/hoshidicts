@@ -894,11 +894,12 @@ so CI first builds `ext/lib/hangul-js.js` into its own Yomitan checkout with
 with the versions, URLs and hashes of Yomitan's lockfile at d3c54c1 (which
 records hangul-js by version only; ours has the registry's hash), and
 `build.mjs` bundles Yomitan's `dev/lib/hangul-js.js` with the options of
-Yomitan's `dev/build-libs.js`, so the file equals the one Yomitan's own build
-writes. `build.mjs` refuses any directory that is not the top of a git work
-tree at d3c54c1. A local run builds the bundle in a copy of the checkout,
-never in a shared one (`--ignore-scripts=false` because esbuild's install
-script checks its platform binary):
+Yomitan's `dev/build-libs.js`. It writes the result only when it has the
+sha256 of the file Yomitan's own build writes. `build.mjs` refuses any
+directory that is not the top of a git work tree at d3c54c1, and writes only
+inside it. A local run builds the bundle in a copy of the checkout, never in
+a shared one (`--ignore-scripts=false` because esbuild's install script
+checks its platform binary):
 
 ```sh
 cp -a /path/to/yomitan /tmp/yomitan-built
