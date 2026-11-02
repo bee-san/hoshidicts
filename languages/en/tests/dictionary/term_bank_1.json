@@ -1,0 +1,866 @@
+[
+  [
+    "run",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to move swiftly on foot"
+    ],
+    1,
+    ""
+  ],
+  [
+    "run late",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to be behind schedule"
+    ],
+    2,
+    ""
+  ],
+  [
+    "late",
+    "",
+    "adj",
+    "adj",
+    0,
+    [
+      "after the expected time"
+    ],
+    3,
+    ""
+  ],
+  [
+    "walk",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to move on foot at a normal pace"
+    ],
+    4,
+    ""
+  ],
+  [
+    "home",
+    "",
+    "n",
+    "n",
+    0,
+    [
+      "the place where one lives"
+    ],
+    5,
+    ""
+  ],
+  [
+    "child",
+    "",
+    "n",
+    "n",
+    0,
+    [
+      "a young person"
+    ],
+    6,
+    ""
+  ],
+  [
+    "toy",
+    "",
+    "n",
+    "n",
+    0,
+    [
+      "something to play with"
+    ],
+    7,
+    ""
+  ],
+  [
+    "mother",
+    "",
+    "n",
+    "n",
+    0,
+    [
+      "a female parent"
+    ],
+    8,
+    ""
+  ],
+  [
+    "mother-in-law",
+    "",
+    "n",
+    "n",
+    0,
+    [
+      "the mother of one's spouse"
+    ],
+    9,
+    ""
+  ],
+  [
+    "house",
+    "",
+    "n",
+    "n",
+    0,
+    [
+      "a building to live in"
+    ],
+    10,
+    ""
+  ],
+  [
+    "five",
+    "",
+    "num",
+    "num",
+    0,
+    [
+      "the number 5"
+    ],
+    11,
+    ""
+  ],
+  [
+    "minute",
+    "",
+    "n",
+    "n",
+    0,
+    [
+      "one sixtieth of an hour"
+    ],
+    12,
+    ""
+  ],
+  [
+    "station",
+    "",
+    "n",
+    "n",
+    0,
+    [
+      "a place where trains stop"
+    ],
+    13,
+    ""
+  ],
+  [
+    "look",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to direct one's eyes"
+    ],
+    14,
+    ""
+  ],
+  [
+    "look up",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to search for in a reference book"
+    ],
+    15,
+    ""
+  ],
+  [
+    "word",
+    "",
+    "n",
+    "n",
+    0,
+    [
+      "a unit of language"
+    ],
+    16,
+    ""
+  ],
+  [
+    "dictionary",
+    "",
+    "n",
+    "n",
+    0,
+    [
+      "a book of words and their meanings"
+    ],
+    17,
+    ""
+  ],
+  [
+    "turn",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to rotate"
+    ],
+    18,
+    ""
+  ],
+  [
+    "turn off",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to stop a device"
+    ],
+    19,
+    ""
+  ],
+  [
+    "put",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to place"
+    ],
+    20,
+    ""
+  ],
+  [
+    "put on",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to dress oneself in"
+    ],
+    21,
+    ""
+  ],
+  [
+    "put away",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to return to its place"
+    ],
+    22,
+    ""
+  ],
+  [
+    "foot",
+    "",
+    "n",
+    "n",
+    0,
+    [
+      "the part of the leg below the ankle"
+    ],
+    23,
+    ""
+  ],
+  [
+    "table",
+    "",
+    "n",
+    "n",
+    0,
+    [
+      "a piece of furniture with a flat top"
+    ],
+    24,
+    ""
+  ],
+  [
+    "coat",
+    "",
+    "n",
+    "n",
+    0,
+    [
+      "an outer garment"
+    ],
+    25,
+    ""
+  ],
+  [
+    "do",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to perform"
+    ],
+    26,
+    ""
+  ],
+  [
+    "matter",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to be important"
+    ],
+    27,
+    ""
+  ],
+  [
+    "wolf",
+    "",
+    "n",
+    "n",
+    0,
+    [
+      "a wild animal of the dog family"
+    ],
+    28,
+    ""
+  ],
+  [
+    "howl",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to cry like a wolf"
+    ],
+    29,
+    ""
+  ],
+  [
+    "happy",
+    "",
+    "adj",
+    "adj",
+    0,
+    [
+      "feeling joy"
+    ],
+    30,
+    ""
+  ],
+  [
+    "day",
+    "",
+    "n",
+    "n",
+    0,
+    [
+      "a period of 24 hours"
+    ],
+    31,
+    ""
+  ],
+  [
+    "good",
+    "",
+    "adj",
+    "adj",
+    0,
+    [
+      "of high quality"
+    ],
+    32,
+    ""
+  ],
+  [
+    "well",
+    "",
+    "adv",
+    "adv",
+    0,
+    [
+      "in a good way"
+    ],
+    33,
+    ""
+  ],
+  [
+    "be",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to exist"
+    ],
+    34,
+    ""
+  ],
+  [
+    "it",
+    "",
+    "",
+    "",
+    0,
+    [
+      "the thing mentioned"
+    ],
+    35,
+    ""
+  ],
+  [
+    "I",
+    "",
+    "",
+    "",
+    0,
+    [
+      "the speaker"
+    ],
+    36,
+    ""
+  ],
+  [
+    "he",
+    "",
+    "",
+    "",
+    0,
+    [
+      "the male person mentioned"
+    ],
+    37,
+    ""
+  ],
+  [
+    "heed",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to pay attention to"
+    ],
+    38,
+    ""
+  ],
+  [
+    "go",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to move from one place to another"
+    ],
+    39,
+    ""
+  ],
+  [
+    "Mary",
+    "",
+    "",
+    "",
+    0,
+    [
+      "a female given name"
+    ],
+    40,
+    ""
+  ],
+  [
+    "love",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to feel deep affection for"
+    ],
+    41,
+    ""
+  ],
+  [
+    "bed",
+    "",
+    "n",
+    "n",
+    0,
+    [
+      "a piece of furniture to sleep on"
+    ],
+    42,
+    ""
+  ],
+  [
+    "b",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "a test entry that a wrong rule would reach"
+    ],
+    43,
+    ""
+  ],
+  [
+    "knife",
+    "",
+    "n",
+    "n",
+    0,
+    [
+      "a blade with a handle"
+    ],
+    44,
+    ""
+  ],
+  [
+    "city",
+    "",
+    "n",
+    "n",
+    0,
+    [
+      "a large town"
+    ],
+    45,
+    ""
+  ],
+  [
+    "stop",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to cease moving"
+    ],
+    46,
+    ""
+  ],
+  [
+    "take",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to get hold of"
+    ],
+    47,
+    ""
+  ],
+  [
+    "take off",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to leave the ground"
+    ],
+    48,
+    ""
+  ],
+  [
+    "give up",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to stop trying"
+    ],
+    49,
+    ""
+  ],
+  [
+    "lose one's temper",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to become angry"
+    ],
+    50,
+    ""
+  ],
+  [
+    "temper",
+    "",
+    "n",
+    "n",
+    0,
+    [
+      "a state of mind"
+    ],
+    51,
+    ""
+  ],
+  [
+    "lose",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to fail to keep"
+    ],
+    52,
+    ""
+  ],
+  [
+    "teacher",
+    "",
+    "n",
+    "n",
+    0,
+    [
+      "a person who teaches"
+    ],
+    53,
+    ""
+  ],
+  [
+    "naive",
+    "",
+    "adj",
+    "adj",
+    0,
+    [
+      "lacking experience"
+    ],
+    54,
+    ""
+  ],
+  [
+    "find",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to discover"
+    ],
+    55,
+    ""
+  ],
+  [
+    "beautiful",
+    "",
+    "adj",
+    "adj",
+    0,
+    [
+      "pleasing to look at"
+    ],
+    56,
+    ""
+  ],
+  [
+    "nothing",
+    "",
+    "",
+    "",
+    0,
+    [
+      "not anything"
+    ],
+    57,
+    ""
+  ],
+  [
+    "serve",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to work for"
+    ],
+    58,
+    ""
+  ],
+  [
+    "serf",
+    "",
+    "n",
+    "n",
+    0,
+    [
+      "a labourer bound to the land"
+    ],
+    59,
+    ""
+  ],
+  [
+    "run away",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to leave quickly"
+    ],
+    60,
+    ""
+  ],
+  [
+    "pick",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to choose"
+    ],
+    61,
+    ""
+  ],
+  [
+    "pick up",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to collect someone"
+    ],
+    62,
+    ""
+  ],
+  [
+    "school",
+    "",
+    "n",
+    "n",
+    0,
+    [
+      "a place of learning"
+    ],
+    63,
+    ""
+  ],
+  [
+    "have",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to own"
+    ],
+    64,
+    ""
+  ],
+  [
+    "have out",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to settle by argument"
+    ],
+    65,
+    ""
+  ],
+  [
+    "gone",
+    "",
+    "adj",
+    "adj",
+    0,
+    [
+      "away"
+    ],
+    66,
+    ""
+  ],
+  [
+    "all out",
+    "",
+    "adj",
+    "adj",
+    0,
+    [
+      "with full effort"
+    ],
+    67,
+    ""
+  ],
+  [
+    "come",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to move towards"
+    ],
+    68,
+    ""
+  ],
+  [
+    "long",
+    "",
+    "adj",
+    "adj",
+    0,
+    [
+      "of great length"
+    ],
+    69,
+    ""
+  ],
+  [
+    "long a",
+    "",
+    "n",
+    "n",
+    0,
+    [
+      "the vowel sound in game"
+    ],
+    70,
+    ""
+  ],
+  [
+    "found on",
+    "",
+    "n",
+    "n",
+    0,
+    [
+      "a test entry that a wrong rule would reach"
+    ],
+    71,
+    ""
+  ],
+  [
+    "door",
+    "",
+    "n",
+    "n",
+    0,
+    [
+      "a movable barrier at an entrance"
+    ],
+    72,
+    ""
+  ]
+]

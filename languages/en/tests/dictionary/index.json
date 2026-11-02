@@ -1,0 +1,10 @@
+{
+  "title": "hoshidicts English pack test",
+  "revision": "1",
+  "format": 3,
+  "sequenced": true,
+  "author": "hoshidicts",
+  "description": "A tiny English dictionary for languages/en/tests/lookup.tsv, written for the pack (GPL-3.0-or-later).",
+  "sourceLanguage": "en",
+  "targetLanguage": "en"
+}

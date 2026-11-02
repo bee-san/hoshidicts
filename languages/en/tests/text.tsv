@@ -1,0 +1,30 @@
+# Written for this pack (GPL-3.0-or-later): what the text processors of language.json make of an input.
+# category	valid	input	variant (valid = 1: among the variants; 0: not among them)
+case	1	Running	running
+case	1	Running	Running
+case	1	london	London
+case	1	WALKED	walked
+case	1	WALKED	Walked
+case	0	running	RUNNING
+apostrophe	1	teacher’s	teacher's
+apostrophe	1	teacher’s	teacher’s
+apostrophe	1	‘tis	'tis
+apostrophe	1	donʼt	don't
+apostrophe	0	teacher's	teacher’s
+hyphen	1	mother‑in‑law	mother-in-law
+hyphen	1	well‐known	well-known
+hyphen	0	well—known	well-known
+soft hyphen	1	beau­tiful	beautiful
+soft hyphen	0	beau­tiful	beau­tiful
+diacritics	1	naïve	naive
+diacritics	1	naïve	naïve
+diacritics	1	café	cafe
+diacritics	1	résumé	resume
+diacritics	1	Zoë	Zoe
+diacritics	1	coöperate	cooperate
+ligatures	1	encyclopædia	encyclopaedia
+ligatures	1	Æsop	Aesop
+ligatures	1	manœuvre	manoeuvre
+ligatures	1	ﬁnding	finding
+ligatures	1	oﬃce	office
+ligatures	0	encyclopaedia	encyclopædia
