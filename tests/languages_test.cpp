@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // The language pack model (docs/languages.md, sections 4-7 and 9): character
 // classes, the pattern dialect, text steps and processors, every rule type,
-// conditions, cycles, schema checks, the registry, and word resolution in a
-// lookup.
+// conditions, cycles, schema checks, rules that replace a pack's own (10.3),
+// the registry, and word resolution in a lookup.
 #include <algorithm>
 #include <cstdint>
 #include <cstdio>
@@ -731,6 +731,77 @@ void test_schema() {
   }
 }
 
+// Rules that replace a pack's own for one run (`hoshidicts-cli --transforms`,
+// section 10.3): a setting may name an optional transform they lack. Hosts
+// and lookups check settings against the rules they load, as before.
+void test_replaced_rules() {
+  const std::string plural = R"({"type":"suffix","inflected":"s","deinflected":"","conditionsIn":[],"conditionsOut":["n"]})";
+  const std::string own = transforms_json(
+      transform("t", plural) + "," +
+      transform("archaic", R"({"type":"suffix","inflected":"eth","deinflected":"","conditionsIn":[],"conditionsOut":["v"]})",
+                R"(,"optional":true)"));
+  const std::string rules = transforms_json(
+      transform("t", plural) + "," +
+      transform("z", R"({"type":"suffix","inflected":"z","deinflected":"","conditionsIn":[],"conditionsOut":["n"]})",
+                R"(,"optional":true)"));
+  const std::string setting =
+      R"([{"id":"archaicForms","type":"boolean","default":false,"label":"A","group":"lookup","effect":{"transforms":["archaic"]}}])";
+  const std::string language = language_json("", "xx", setting);
+  std::string e;
+  check(hoshidicts::parse_language_pack(language, own, &e) != nullptr, "a setting names an optional transform of the pack: " + e);
+  const std::string refused = R"(xx: language.json: settings[0].effect.transforms[0]: names no optional transform "archaic")";
+  check(hoshidicts::parse_language_pack(language, rules, &e) == nullptr && e == refused, "parse_language_pack still refuses: " + e);
+  hoshidicts::LanguageRegistry registry;
+  check(!registry.add(language, rules, &e) && e == refused && registry.codes().empty(), "LanguageRegistry::add still refuses: " + e);
+
+  auto data = lang::parse_pack_with_rules(language, rules, "sources/yomitan.json", &e);
+  check(data != nullptr, "replacement rules without the setting's transform: " + e);
+  if (data) {
+    std::vector<std::string> ids;
+    for (const auto& t : data->transforms->transforms) ids.push_back(t.id);
+    check(ids == std::vector<std::string>{"t", "z"}, "the pack has the replacement's transforms only: " + join(ids));
+    const hoshidicts::LanguagePack pack(std::move(data));
+    const std::vector<bool> on{false, true};
+    check(deinflect(pack, "walketh", &on) == std::vector<std::string>{"walketh::"}, "the pack's own rules are not used");
+    check(deinflect(pack, "xz") == std::vector<std::string>{"xz::"} &&
+              deinflect(pack, "xz", &on) == std::vector<std::string>{"xz::", "x:n:z"},
+          "the replacement's optional transform is off unless enabled");
+  }
+
+  // Errors in the rules name their file.
+  check(lang::parse_pack_with_rules(language, "", "sources/yomitan.json", &e) == nullptr &&
+            e.starts_with("xx: sources/yomitan.json: not valid JSON"),
+        "empty rules: " + e);
+  const std::string todo = transforms_json(transform("t", R"({"type":"todo","isInflected":"x$","conditionsIn":[],"conditionsOut":[]})"));
+  check(lang::parse_pack_with_rules(language, todo, "sources/yomitan.json", &e) == nullptr &&
+            e.starts_with("xx: sources/yomitan.json: transforms[0].rules[0]: a todo rule remains"),
+        "a todo rule in the replacement: " + e);
+
+  // The rest of language.json is checked as parse_pack checks it.
+  const auto refuses = [&](const std::string& settings, const std::string& expect) {
+    std::string error;
+    const bool refused_here = lang::parse_pack_with_rules(language_json("", "xx", settings), rules, "r.json", &error) == nullptr;
+    check(refused_here && error == expect, "replacement rules, settings " + settings + ": " + error);
+  };
+  refuses(R"([{"id":"a","type":"boolean","default":false,"label":"A","group":"lookup","effect":{"transforms":[]}}])",
+          "xx: language.json: settings[0].effect.transforms: names no transform");
+  refuses(R"([{"id":"a","type":"enum","default":"x","values":[{"id":"x","label":"X"}],"label":"A","group":"lookup","effect":{"transforms":["z"]}}])",
+          "xx: language.json: settings[0].effect: a transforms effect needs a boolean setting");
+  refuses(R"([{"id":"a","type":"boolean","default":false,"label":"A","group":"lookup","effect":{"preprocessor":"decapitalize"}}])",
+          R"(xx: language.json: settings[0].effect.preprocessor: names no optional processor "decapitalize")");
+
+  // A pack whose lookup.transforms is null takes the replacement too, and an
+  // empty replacement is an error there as well.
+  std::string no_rules = language;
+  const std::string named = R"("transforms":"transforms.json")";
+  no_rules.replace(no_rules.find(named), named.size(), R"("transforms":null)");
+  const auto replaced = lang::parse_pack_with_rules(no_rules, rules, "r.json", &e);
+  check(replaced != nullptr && replaced->transforms && replaced->transforms->transforms.size() == 2,
+        "lookup.transforms null with replacement rules: " + e);
+  check(lang::parse_pack_with_rules(no_rules, "", "r.json", &e) == nullptr && e.starts_with("xx: r.json: not valid JSON"),
+        "lookup.transforms null with empty replacement rules: " + e);
+}
+
 void test_registry() {
   auto registry = hoshidicts::LanguageRegistry::with_builtin();
   check(registry.codes() == std::vector<std::string>{"ja"}, "with_builtin has ja");
@@ -1150,6 +1221,7 @@ int main(int argc, char** argv) {
   test_steps();
   test_rules();
   test_schema();
+  test_replaced_rules();
   test_registry();
   test_word_lookup();
   test_probe_packs(argv[1]);

@@ -835,7 +835,12 @@ engine with Yomitan's own `LanguageTransformer` for every pack that has
 affixes on stems from the pack's letter class, adds Yomitan's test sources and
 every prefix of them, runs Yomitan's transformer at d3c54c1 and
 `hoshidicts-cli deinflect --transforms <code>/sources/yomitan.json` on each,
-and requires the same set of (text, conditions). Yomitan defects the pack does
+and requires the same set of (text, conditions). The CLI checks the pack with
+its own `lookup.transforms` file and then deinflects with the rules of
+`sources/yomitan.json` alone, every optional transform of that file on and
+none of the pack's own (section 10.3), so a pack setting that turns on one of
+the pack's own optional transforms neither stops nor changes the comparison.
+Yomitan defects the pack does
 not reproduce are listed with a reason in `sources/yomitan-differences.tsv`
 (columns `kind id side input text conditions reason`: `kind` is `rule` or
 `processor`; `id` a transform id in the result's trace or a Yomitan processor
@@ -1191,6 +1196,22 @@ the output: its line is
 `{"input":null,"results":[],"error":"line 2 of the input is not valid UTF-8"}`
 (`"variants"` for `preprocess`), the message also goes to standard error,
 and the command exits with status 1 after answering every line.
+
+`--transforms <file>` measures another rule file with the pack:
+`sources/own.json` or `sources/yomitan.json` with `eval-language`
+(section 14 step 5), or Yomitan's rules in the differential check
+(section 8.2). The pack is first checked with its own `lookup.transforms`
+file, as `LanguageRegistry::add` and hosts load it; an error there stops the
+command. `<file>` (a path relative to the working directory) then replaces
+only the rules used for deinflection: its conditions, word lists and
+transforms. Processors, variant passes and the rest of the descriptor stay
+the pack's, and an error in `<file>` names it. `--all-options`, like
+`eval-language`, turns on every optional transform of `<file>` and none of
+the pack's own file. A setting's `transforms` effect that names an id
+`<file>` lacks has no effect in that run, and neither has `--options` naming
+a transform that only the pack's own file has (`deinflect` says so on
+standard error). Settings are checked against the pack's own file only, here
+as in the conformance test (section 12.1).
 
 `eval-language` reads a corpus (section 12.2) and prints JSON. Only
 deinflections of the whole source text count, never of shorter prefixes:

@@ -115,8 +115,11 @@ struct Context {
     return *registry;
   }
 
-  // A pack, with its transforms replaced by `transforms_file` when given.
-  std::shared_ptr<const hoshidicts::LanguagePack> pack(const std::string& code, const std::string* transforms_file) {
+  // A pack, with its rules replaced by those of `transforms_file` when given
+  // (section 10.3). The pack is first checked with its own lookup.transforms
+  // file, as hosts load it; `own_ids` then receives that file's transform ids.
+  std::shared_ptr<const hoshidicts::LanguagePack> pack(const std::string& code, const std::string* transforms_file,
+                                                       std::vector<std::string>* own_ids = nullptr) {
     if (transforms_file == nullptr) {
       auto pack = languages().find(code);
       if (!pack) std::cerr << "hoshidicts-cli: no language pack " << code << "\n";
@@ -128,15 +131,35 @@ struct Context {
       std::cerr << "hoshidicts-cli: cannot read " << path_utils::to_utf8(dir / "language.json") << "\n";
       return nullptr;
     }
-    std::string transforms;
-    if (!read_file(*transforms_file, transforms)) {
-      std::cerr << "hoshidicts-cli: cannot read " << *transforms_file << "\n";
+    // As LanguageRegistry::add_directory reads it; a name with a separator
+    // is refused by the parse.
+    const std::string own_file = hoshidicts::lang::transforms_file_name(language);
+    std::string own_rules;
+    if (!own_file.empty() && own_file.find_first_of("/\\") == std::string::npos &&
+        !read_file(path_utils::to_utf8(dir / path_utils::from_utf8(own_file)), own_rules)) {
+      std::cerr << "hoshidicts-cli: cannot read " << path_utils::to_utf8(dir / path_utils::from_utf8(own_file)) << "\n";
       return nullptr;
     }
     std::string error;
-    auto pack = hoshidicts::parse_language_pack(language, transforms, &error);
-    if (!pack) std::cerr << "hoshidicts-cli: " << error << "\n";
-    return pack;
+    const auto own = hoshidicts::parse_language_pack(language, own_rules, &error);
+    if (!own) {
+      std::cerr << "hoshidicts-cli: " << error << "\n";
+      return nullptr;
+    }
+    std::string rules;
+    if (!read_file(*transforms_file, rules)) {
+      std::cerr << "hoshidicts-cli: cannot read " << *transforms_file << "\n";
+      return nullptr;
+    }
+    auto data = hoshidicts::lang::parse_pack_with_rules(language, rules, *transforms_file, &error);
+    if (!data) {
+      std::cerr << "hoshidicts-cli: " << error << "\n";
+      return nullptr;
+    }
+    if (own_ids != nullptr && own->data().transforms) {
+      for (const auto& t : own->data().transforms->transforms) own_ids->push_back(t.id);
+    }
+    return std::make_shared<const hoshidicts::LanguagePack>(std::move(data));
   }
 };
 
@@ -274,7 +297,8 @@ int cmd_preprocess_legacy(const std::string& text) {
 int cmd_deinflect(Context& context, const Arguments& args) {
   namespace lang = hoshidicts::lang;
   const std::string* transforms = args.values.contains("--transforms") ? &args.values.at("--transforms") : nullptr;
-  const auto pack_holder = context.pack(args.positional[0], transforms);
+  std::vector<std::string> own_ids;
+  const auto pack_holder = context.pack(args.positional[0], transforms, &own_ids);
   if (!pack_holder) return 1;
   const auto& pack = pack_holder->data();
   const bool from_stdin = args.flags.contains("--stdin");
@@ -283,14 +307,26 @@ int cmd_deinflect(Context& context, const Arguments& args) {
     std::cerr << "hoshidicts-cli: deinflect needs one text or --stdin\n";
     return 1;
   }
-  // --options names transforms and variant passes.
+  // --options names transforms and variant passes. With --transforms it may
+  // also name, as a setting may, a transform of the pack's own rules file
+  // that <file> lacks: that one has no effect in this run.
   std::vector<std::string> known;
   if (pack.transforms) {
     for (const auto& t : pack.transforms->transforms) known.push_back(t.id);
   }
   for (const auto& pass : pack.variant_passes) known.push_back(pass.id);
-  const auto options = option_set(args, known, pack.code, "transform or variant pass");
+  std::vector<std::string> accepted = known;
+  for (const auto& id : own_ids) {
+    if (std::ranges::find(accepted, id) == accepted.end()) accepted.push_back(id);
+  }
+  const auto options = option_set(args, accepted, pack.code, "transform or variant pass");
   if (!options) return 1;
+  for (const auto& id : options->ids) {
+    if (transforms != nullptr && std::ranges::find(known, id) == known.end()) {
+      std::cerr << "hoshidicts-cli: --options: " << *transforms << " has no transform " << id
+                << "; it has no effect in this run\n";
+    }
+  }
   std::vector<bool> enabled_transforms;
   if (pack.transforms) {
     for (const auto& t : pack.transforms->transforms) enabled_transforms.push_back(t.optional && options->contains(t.id));

@@ -2,11 +2,14 @@
 # The language commands of the real hoshidicts-cli (docs/languages.md,
 # section 10.3) on the probe packs of tests/fixtures/languages/:
 #
-#   cmake -DCLI=<hoshidicts-cli> -DFIXTURES=<tests/fixtures> -P tests/cli_languages_test.cmake
+#   cmake -DCLI=<hoshidicts-cli> -DFIXTURES=<tests/fixtures> -DTOOLS_FIXTURES=<tools/test/fixtures>
+#         -DSCRATCH=<dir> -P tests/cli_languages_test.cmake
 #
 # Checks the JSON lines of deinflect and preprocess (trace order, condition
 # names, --options and --all-options, an input line that is not UTF-8),
-# eval-language's recall, and that a failed lookup prints no runtime line.
+# eval-language's recall, --transforms (the pack checked with its own rules,
+# which another file replaces), and that a failed lookup prints no runtime
+# line.
 
 set(LANGUAGES ${FIXTURES}/languages)
 
@@ -28,6 +31,19 @@ function(expect_line name line)
   string(FIND "${out}" "${line}" at)
   if(NOT rc EQUAL 0 OR at EQUAL -1)
     message(SEND_ERROR "${name}: exit ${rc}; no such line in the output\n  wanted: ${line}\n  stdout: ${out}\n  stderr: ${err}")
+  else()
+    message(STATUS "ok: ${name}")
+  endif()
+endfunction()
+
+# expect_message(<name> <languages dir> <exit status> <stdout> <a part of stderr, or ""> <arguments>...):
+# exact output, and the message on standard error.
+function(expect_message name languages expected_rc expected_out message)
+  execute_process(COMMAND ${CLI} --languages ${languages} ${ARGN}
+                  OUTPUT_VARIABLE out ERROR_VARIABLE err RESULT_VARIABLE rc)
+  string(FIND "${err}" "${message}" at)
+  if(NOT "${rc}" STREQUAL "${expected_rc}" OR NOT out STREQUAL expected_out OR at EQUAL -1)
+    message(SEND_ERROR "${name}: exit ${rc}, expected ${expected_rc}\n  stdout:   ${out}\n  expected: ${expected_out}\n  stderr: ${err}\n  wanted in stderr: ${message}")
   else()
     message(STATUS "ok: ${name}")
   endif()
@@ -102,6 +118,92 @@ expect("eval-language: recall and negatives" 0
   [=[{"rows":5,"positives":4,"negatives":1,"recall":0.75,"negativesPassed":1}
 ]=]
   eval-language stm ${LANGUAGES}/stm/tests/corpus.tsv)
+
+# --transforms <file>: the pack is checked with its own rules file, and <file>
+# replaces only the rules used for deinflection. The opt probe pack has a
+# setting that names its own optional transform opt; opt-rules.json lacks opt
+# and has an optional transform z of its own.
+set(RULES ${FIXTURES}/languages-cli/opt-rules.json)
+set(CORPUS ${FIXTURES}/languages-cli/opt-corpus.tsv)
+expect("deinflect --transforms: a file without the setting's transform" 0
+  [=[{"input":"xz","results":[{"text":"xz","conditions":[],"trace":[]}]}
+]=]
+  deinflect opt xz --transforms ${RULES})
+foreach(options "--options;z" "--all-options")
+  expect("deinflect --transforms ${options}: the file's optional transform" 0
+    [=[{"input":"xz","results":[{"text":"xz","conditions":[],"trace":[]},{"text":"x","conditions":["n"],"trace":["z"]}]}
+]=]
+    deinflect opt xz --transforms ${RULES} ${options})
+endforeach()
+expect("deinflect --transforms --all-options: not the pack's own optional transform" 0
+  [=[{"input":"xq","results":[{"text":"xq","conditions":[],"trace":[]}]}
+]=]
+  deinflect opt xq --transforms ${RULES} --all-options)
+expect_message("deinflect --transforms --options: a transform only the pack's own rules have" ${LANGUAGES} 0
+  [=[{"input":"xq","results":[{"text":"xq","conditions":[],"trace":[]}]}
+]=]
+  "opt-rules.json has no transform opt; it has no effect in this run"
+  deinflect opt xq --transforms ${RULES} --options opt)
+expect_message("deinflect --transforms --options: an id neither file has" ${LANGUAGES} 1 ""
+  "the pack opt has no transform or variant pass nope"
+  deinflect opt xq --transforms ${RULES} --options nope)
+expect_message("deinflect --transforms: an error in the file names it" ${LANGUAGES} 1 ""
+  "opt: ${CORPUS}: not valid JSON"
+  deinflect opt xq --transforms ${CORPUS})
+
+# eval-language measures the file's rules, with every optional transform the
+# file has on: the pack's own rules reach xq (opt), opt-rules.json xz and yz (z).
+expect("eval-language: the pack's own rules" 0
+  [=[{"rows":5,"positives":4,"negatives":1,"recall":0.5,"negativesPassed":1}
+]=]
+  eval-language opt ${CORPUS})
+expect("eval-language --transforms" 0
+  [=[{"rows":5,"positives":4,"negatives":1,"recall":0.75,"negativesPassed":1,"perRule":[{"transform":"s","rule":0,"recovers":1,"breaks":0},{"transform":"z","rule":0,"recovers":2,"breaks":0}]}
+]=]
+  eval-language opt ${CORPUS} --transforms ${RULES} --per-rule)
+
+# The pack is checked with its own rules file, not with <file>: a setting that
+# names z, which only opt-rules.json has, is an error, and so is an own rules
+# file that cannot be read.
+file(READ ${LANGUAGES}/opt/language.json language)
+string(REPLACE [=["transforms": ["opt"]]=] [=["transforms": ["z"]]=] names_z "${language}")
+if(names_z STREQUAL language)
+  message(SEND_ERROR "the opt probe pack has no setting that names opt")
+endif()
+set(OWN ${SCRATCH}/cli-languages-own)
+file(REMOVE_RECURSE ${OWN})
+file(WRITE ${OWN}/opt/language.json "${names_z}")
+file(COPY ${LANGUAGES}/opt/transforms.json DESTINATION ${OWN}/opt)
+foreach(command "deinflect;opt;xz" "eval-language;opt;${CORPUS}")
+  list(GET command 0 name)
+  expect_message("${name} --transforms: the pack is checked with its own rules" ${OWN} 1 ""
+    [=[opt: language.json: settings[0].effect.transforms[0]: names no optional transform "z"]=]
+    ${command} --transforms ${RULES})
+endforeach()
+file(REMOVE ${OWN}/opt/transforms.json)
+file(WRITE ${OWN}/opt/language.json "${language}")
+expect_message("deinflect --transforms: the pack's own rules file must be readable" ${OWN} 1 ""
+  "cannot read ${OWN}/opt/transforms.json"
+  deinflect opt xz --transforms ${RULES})
+file(REMOVE_RECURSE ${OWN})
+
+# The tool tests' fixture pack xx has a setting that names its own optional
+# transform archaic, which its sources/yomitan.json (the rules
+# tools/check-yomitan.mjs compares with Yomitan) lacks.
+set(XX ${TOOLS_FIXTURES}/languages)
+set(XX_YOMITAN ${XX}/xx/sources/yomitan.json)
+expect_message("deinflect xx --all-options: its own rules" ${XX} 0
+  [=[{"input":"walketh","results":[{"text":"walketh","conditions":[],"trace":[]},{"text":"walk","conditions":["v_phr"],"trace":["archaic"]}]}
+]=]
+  "" deinflect xx walketh --all-options)
+expect_message("deinflect xx --all-options --transforms sources/yomitan.json" ${XX} 0
+  [=[{"input":"walketh","results":[{"text":"walketh","conditions":[],"trace":[]}]}
+]=]
+  "" deinflect xx walketh --all-options --transforms ${XX_YOMITAN})
+expect_message("eval-language xx --transforms sources/yomitan.json" ${XX} 0
+  [=[{"rows":7,"positives":6,"negatives":1,"recall":0.8333333333333334,"negativesPassed":1}
+]=]
+  "" eval-language xx ${XX}/xx/tests/corpus.tsv --transforms ${XX_YOMITAN})
 
 # An unknown language: the error, and no runtime line after it.
 execute_process(COMMAND ${CLI} --languages ${LANGUAGES} lookup --language qq ${FIXTURES}/no-such-dictionary text

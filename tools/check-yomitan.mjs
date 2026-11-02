@@ -384,7 +384,9 @@ export async function compareRules({root, pack, cli, languagesDir, differences})
     const inputs = ruleInputs(pack, ported, testSources, corpusWords);
     const LanguageTransformer = await loadLanguageTransformer(root);
     const yomitan = yomitanTransformer(LanguageTransformer, found.descriptor);
-    // Yomitan applies every transform, so the engine runs with every optional one on.
+    // Yomitan applies every transform, so the engine runs with every optional
+    // one of sources/yomitan.json on. The CLI checks the pack with its own
+    // rules file and then uses these rules only (section 10.3).
     const answers = runCli(cli, ['--languages', languagesDir, 'deinflect', pack.code, '--stdin', '--all-options', '--transforms', portedFile], inputs);
     const unexplained = [];
     let explained = 0;

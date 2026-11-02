@@ -392,7 +392,22 @@ if(HOSHIDICTS_TESTS AND HOSHIDICTS_CLI)
     add_test(NAME cli-languages
              COMMAND ${CMAKE_COMMAND} -DCLI=$<TARGET_FILE:hoshidicts-cli>
                      -DFIXTURES=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures
+                     -DTOOLS_FIXTURES=${CMAKE_CURRENT_SOURCE_DIR}/tools/test/fixtures
+                     -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}
                      -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/cli_languages_test.cmake)
+    # tools/check-yomitan.mjs with the real CLI (the tool tests use a stand-in)
+    # on the tool tests' fixture pack, whose setting names an optional
+    # transform that its sources/yomitan.json lacks (docs/languages.md 8.2).
+    find_program(HOSHIDICTS_NODE node)
+    if(HOSHIDICTS_NODE)
+        add_test(NAME check-yomitan-cli
+                 COMMAND ${HOSHIDICTS_NODE} ${CMAKE_CURRENT_SOURCE_DIR}/tools/check-yomitan.mjs
+                         ${CMAKE_CURRENT_SOURCE_DIR}/tools/test/fixtures/yomitan xx
+                         --languages ${CMAKE_CURRENT_SOURCE_DIR}/tools/test/fixtures/languages
+                         --cli $<TARGET_FILE:hoshidicts-cli>)
+    else()
+        message(STATUS "node not found: the check-yomitan-cli test is not added")
+    endif()
 endif()
 
 if(HOSHIDICTS_LANGUAGE_TESTS)
@@ -402,5 +417,13 @@ if(HOSHIDICTS_LANGUAGE_TESTS)
                      -DPACK=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/conformance/yt
                      -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}
                      "-DREASON=a pack with transforms needs tests/corpus.tsv"
+                     -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/conformance_refuses_test.cmake)
+    # Settings name optional transforms of the pack's own lookup.transforms
+    # file, whatever other rule files the pack has (4.7, 12.1 step 1).
+    add_test(NAME language-settings-own-rules
+             COMMAND ${CMAKE_COMMAND} -DTEST=$<TARGET_FILE:language-conformance-test>
+                     -DPACK=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/conformance/st
+                     -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}
+                     "-DREASON=st: language.json: settings[0].effect.transforms[0]: names no optional transform \"archaic\""
                      -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/conformance_refuses_test.cmake)
 endif()

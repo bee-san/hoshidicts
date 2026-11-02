@@ -1040,7 +1040,11 @@ struct TransformsParser {
   }
 };
 
-[[gnu::noinline]] void parse_settings(const Json& v, const PackData& pack, const Declared& declared) {
+// `transform_ids`: whether a `transforms` effect must name optional transforms
+// of `pack`. False only for rules that replace the pack's own for one run
+// (parse_pack_with_rules), whose caller checks the effects against the pack's
+// own rules.
+[[gnu::noinline]] void parse_settings(const Json& v, const PackData& pack, const Declared& declared, bool transform_ids) {
   const std::string path = "settings";
   const Array& settings = as_array(v, path);
   std::set<std::string, std::less<>> ids;
@@ -1112,7 +1116,7 @@ struct TransformsParser {
     } else if (kind == "transforms") {
       const auto names = string_array(target, tpath);
       if (names.empty()) fail(tpath, "names no transform");
-      for (size_t k = 0; k < names.size(); ++k) {
+      for (size_t k = 0; transform_ids && k < names.size(); ++k) {
         if (!optional_transforms.contains(names[k])) fail(item(tpath, k), "names no optional transform " + json_quote(names[k]));
       }
     } else if (kind == "variantPass") {
@@ -1211,10 +1215,13 @@ namespace {
 
 }
 void build_named_steps(PackData& pack);
-}  // namespace
 
-std::unique_ptr<PackData> parse_pack(std::string_view language_json, std::string_view transforms_json,
-                                     std::string* error, bool trusted) {
+// parse_pack, and parse_pack_with_rules when `rules_name` is set: then
+// `transforms_json` holds rules that replace the file lookup.transforms names,
+// errors in them name `rules_name`, and settings' `transforms` effects are not
+// looked up in them.
+std::unique_ptr<PackData> parse(std::string_view language_json, std::string_view transforms_json, std::string* error,
+                                bool trusted, std::optional<std::string_view> rules_name) {
   auto pack = std::make_unique<PackData>();
   PackParser parser{*pack};
   std::string file = "language.json";
@@ -1327,13 +1334,15 @@ std::unique_ptr<PackData> parse_pack(std::string_view language_json, std::string
       pack->sample_texts = sample_texts(host);
     }
 
-    // transforms.json
+    // transforms.json, or the rules that replace it
     if (pack->transforms_file.empty() && !transforms_json.empty()) {
       pack->transforms_file = "transforms.json";
     }
-    if (!pack->transforms_file.empty()) {
-      file = pack->transforms_file;
-      if (transforms_json.empty()) fail("", "lookup.transforms names " + pack->transforms_file + " but no transforms were given");
+    if (!pack->transforms_file.empty() || rules_name) {
+      file = rules_name ? std::string(*rules_name) : pack->transforms_file;
+      if (transforms_json.empty() && !rules_name) {
+        fail("", "lookup.transforms names " + pack->transforms_file + " but no transforms were given");
+      }
       json::Document transforms_document;
       parse_json(transforms_json, transforms_document);
       pack->transforms = std::make_unique<TransformSet>();
@@ -1344,7 +1353,7 @@ std::unique_ptr<PackData> parse_pack(std::string_view language_json, std::string
     }
 
     // settings (after the transforms, whose optional ids they may name)
-    if (!trusted) parse_settings(require(root, "settings", ""), *pack, declared);
+    if (!trusted) parse_settings(require(root, "settings", ""), *pack, declared, /*transform_ids=*/!rules_name);
 
     // Trace steps: the transforms, then the variant passes.
     if (pack->transforms) {
@@ -1365,6 +1374,17 @@ std::unique_ptr<PackData> parse_pack(std::string_view language_json, std::string
   // conformance test reads.
   if (!trusted) build_named_steps(*pack);
   return pack;
+}
+}  // namespace
+
+std::unique_ptr<PackData> parse_pack(std::string_view language_json, std::string_view transforms_json,
+                                     std::string* error, bool trusted) {
+  return parse(language_json, transforms_json, error, trusted, std::nullopt);
+}
+
+std::unique_ptr<PackData> parse_pack_with_rules(std::string_view language_json, std::string_view rules_json,
+                                                std::string_view rules_name, std::string* error) {
+  return parse(language_json, rules_json, error, /*trusted=*/false, rules_name);
 }
 
 namespace {
