@@ -44,6 +44,7 @@
 build/
 .build/
 .cache/
+node_modules/
 
 # macos ds_store
 .DS_Store

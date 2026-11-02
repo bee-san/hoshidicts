@@ -3,7 +3,8 @@ name: CI
 # Every test: the existing ctest suite, the Japanese conjugation corpus, the
 # Japanese parity tests against the 35e2dab oracle (docs/languages.md 11.3),
 # the language conformance test once per pack (12.1), and the Node tools
-# (tools/check-classes.mjs, tools/check-yomitan.mjs, node --test).
+# (tools/check-classes.mjs, tools/check-yomitan.mjs, node --test) against
+# Yomitan d3c54c1 with its hangul-js bundle built by tools/yomitan-libs/ (8.2).
 on:
   pull_request:
   push:
@@ -35,6 +36,13 @@ jobs:
           repository: yomidevs/yomitan
           ref: d3c54c10264673eca0d66b970ef74cd5c8b048e3
           path: yomitan
+      # esbuild 0.25.1 and hangul-js 0.2.6 from tools/yomitan-libs/package-lock.json
+      # (Yomitan's d3c54c1 versions and recorded hashes); esbuild's install script
+      # checks its platform binary.
+      - name: Yomitan's hangul-js bundle (Korean processors, docs/languages.md 8.2)
+        run: |
+          npm ci --prefix tools/yomitan-libs --ignore-scripts=false
+          node tools/yomitan-libs/build.mjs yomitan
       - name: Configure
         run: >
           cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
@@ -52,3 +60,5 @@ jobs:
         run: node tools/check-yomitan.mjs yomitan --all --cli build/hoshidicts-cli
       - name: Tool tests (node --test)
         run: node --test tools/test/
+        env:
+          YOMITAN_DIR: ${{ github.workspace }}/yomitan

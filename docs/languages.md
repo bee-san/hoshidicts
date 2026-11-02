@@ -886,14 +886,34 @@ the language it takes the pack processor with the same `id` and runs both on
 the corpus sources, the `host.sample` texts and inputs built from the
 characters the processor names, and requires the same set of outputs,
 including whether the input is kept. Korean's builtins are compared with
-Yomitan's processors through Yomitan's built `ext/lib` (hangul-js),
-Vietnamese's directly. A Yomitan processor that no pack processor pairs with
-by id fails the check unless `sources/yomitan-differences.tsv` lists it; that
-file lists every deliberate difference. The Japanese pack is exempt: its
-processors are proved against today's code (section 11.3). Ports that look
-plausible can differ: Yiddish `combineYiddishLigatures` replaces the first
-occurrence of each ligature in list order, which takes seven `map` steps with
-`at: "first"`, not one `map` with `at: "all"`.
+Yomitan's processors through Yomitan's hangul-js bundle, Vietnamese's
+directly. A plain checkout has no `ext/lib/`, and `tools/lib/yomitan.mjs`
+replaces a missing bundle with a stub that throws when a processor uses it,
+so CI first builds `ext/lib/hangul-js.js` into its own Yomitan checkout with
+`tools/yomitan-libs/`. Its lockfile pins esbuild 0.25.1 and hangul-js 0.2.6
+with the versions, URLs and hashes of Yomitan's lockfile at d3c54c1 (which
+records hangul-js by version only; ours has the registry's hash), and
+`build.mjs` bundles Yomitan's `dev/lib/hangul-js.js` with the options of
+Yomitan's `dev/build-libs.js`, so the file equals the one Yomitan's own build
+writes. `build.mjs` refuses any directory that is not the top of a git work
+tree at d3c54c1. A local run builds the bundle in a copy of the checkout,
+never in a shared one (`--ignore-scripts=false` because esbuild's install
+script checks its platform binary):
+
+```sh
+cp -a /path/to/yomitan /tmp/yomitan-built
+npm ci --prefix tools/yomitan-libs --ignore-scripts=false
+node tools/yomitan-libs/build.mjs /tmp/yomitan-built
+node tools/check-yomitan.mjs /tmp/yomitan-built ko
+```
+
+A Yomitan processor that no pack processor pairs with by id fails the check
+unless `sources/yomitan-differences.tsv` lists it; that file lists every
+deliberate difference. The Japanese pack is exempt: its processors are proved
+against today's code (section 11.3). Ports that look plausible can differ:
+Yiddish `combineYiddishLigatures` replaces the first occurrence of each
+ligature in list order, which takes seven `map` steps with `at: "first"`, not
+one `map` with `at: "all"`.
 
 ### 8.3 Constructs that are not literal
 

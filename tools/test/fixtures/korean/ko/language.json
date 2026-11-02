@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "code": "ko",
+  "iso639_3": "kor",
+  "name": "Korean",
+  "nativeName": "한국어",
+  "bcp47": "ko",
+  "scripts": ["Kore"],
+  "direction": "ltr",
+  "classes": {
+    "syllable": "[\\uAC00-\\uD7A3]",
+    "jamo": "[\\u1100-\\u11FF\\u3131-\\u318E\\uA960-\\uA97F\\uD7B0-\\uD7FF]",
+    "letter": "[{syllable}{jamo}]",
+    "word": "[{letter}\\p{Nd}]"
+  },
+  "text": {
+    "pattern": "{letter}",
+    "scanStart": "cursor",
+    "segmentation": "spaces",
+    "wordCharacters": "{word}",
+    "wordInternal": null,
+    "sentence": {
+      "terminators": [".", "!", "?"],
+      "quotePairs": [["\"", "\""], ["(", ")"]]
+    },
+    "highlightBreaks": null,
+    "lineJoiner": " "
+  },
+  "lookup": {
+    "searchResolution": "word",
+    "preprocessors": [
+      {"id": "disassembleHangul", "name": "Disassemble Hangul", "keepInput": false, "variants": [[{"builtin": "hangul.disassemble"}]]}
+    ],
+    "postprocessors": [
+      {"id": "reassembleHangul", "name": "Reassemble Hangul", "keepInput": false, "variants": [[{"builtin": "hangul.assemble"}]]}
+    ],
+    "readingNormalizer": null,
+    "transforms": null,
+    "traceSelection": "shortest",
+    "functionWords": [],
+    "variantPasses": []
+  },
+  "capabilities": {
+    "readings": "none",
+    "ruby": null,
+    "pitchAccent": false,
+    "characterView": null,
+    "wordHighlighting": true
+  },
+  "presentation": {
+    "typography": {"fontFamily": null, "wordBreak": "keep-all", "lineBreak": null, "joinedScript": false},
+    "labels": {},
+    "displayTransforms": {}
+  },
+  "settings": [],
+  "host": {
+    "ttsLanguage": "ko-KR",
+    "audioLanguage": "ko",
+    "anki": {"noteTypeFamilies": [], "fieldAliases": {}, "partOfSpeechLabels": {}},
+    "frequencySamples": null,
+    "recommendedDictionaries": [],
+    "sample": {
+      "warmup": "한국어",
+      "practice": {"text": "한국어를 배워요.", "lookup": "배워요"},
+      "entry": {"expression": "배우다", "reading": "배우다", "glossary": ["to learn"], "definitionTags": "v", "matched": "배워요", "trace": []},
+      "character": null
+    }
+  }
+}
