@@ -284,7 +284,8 @@ describe('pattern dialect', () => {
         // baaa (global, -) -b-a-a-a- and -b-------; (a)|b\1 on b X and no
         // match; (?:(x)|y)*z with [$1] on xyz [] and [x]; (a*)*b and the last
         // pattern take exponential time in std::regex. Then the other cases
-        // of the random test, and more forms of each rule.
+        // of the random test (three of them now fail first at a capturing
+        // group inside a lookahead), and more forms of each rule.
         const cases = [
             ['a*?', true, /global pattern may not match the empty text/],
             ['a{0,2}?', true, /global pattern may not match the empty text/],
@@ -295,11 +296,11 @@ describe('pattern dialect', () => {
             ['(a*)*b', false, /may not repeat a group that can match the empty text/],
             ['(?:a|())*b', false, /may not repeat a group that can match the empty text/],
             ['い\\.*|.(((?=c{2}?aい*?|いa{0,2})|(い{0,2}|c*a{0,2}){0,2}?)*?[\\u0061-\\u0062]\\)|\\.)', false, /may not repeat a group/],
-            ['((?=(a{2}c|aaい)|(?=c{0,2}a{2}?|aa*c)(ac*|c{0,2}a))|.{2}c*?((?=a{2}い*a*?|[^a]+)(?=.*.{2}.{0,2})|.*){1,3})a{0,2}(\\()*?|.\\.+?((?=cc|(?!c{2}い*|いac))|い{0,2}\\.)\\1', false, /may not repeat a group/],
+            ['((?=(a{2}c|aaい)|(?=c{0,2}a{2}?|aa*c)(ac*|c{0,2}a))|.{2}c*?((?=a{2}い*a*?|[^a]+)(?=.*.{2}.{0,2})|.*){1,3})a{0,2}(\\()*?|.\\.+?((?=cc|(?!c{2}い*|いac))|い{0,2}\\.)\\1', false, /capturing group inside a lookahead/],
             ['.{0,2}?い(((?=[^a]{1,3}c*)c{0,2}.|\\.)*?a*.*|(?=c*?a|c)(?:(a?a*い|[ab]{2}.{2}.)|a{2}い\\({2}?){2})*?|.\\1', false, /inside a repeated group/],
             ['い{0,2}?', true, /global pattern may not match the empty text/],
-            ['\\.{2}(い{0,2}|.*(?=(い{0,2}?い{0,2}a{2}|い{0,2}c{0,2}))(?=\\.{1,3}?(?:c{2}い{0,2}|a{0,2}?x){0,2}?|a*))|c.{2}?.{0,2}\\1', true, /may not take part/],
-            ['((?=.{0,2}?[a-c](c*|い)|(?=c{0,2}[a-c].{0,2}|.x?))(?=.{2}|x??(?=c*?))|((a)\\.{2})*い{2}(?=.{1,3}\\.{2})){0,2}\\1', true, /inside a repeated group/],
+            ['\\.{2}(い{0,2}|.*(?=(い{0,2}?い{0,2}a{2}|い{0,2}c{0,2}))(?=\\.{1,3}?(?:c{2}い{0,2}|a{0,2}?x){0,2}?|a*))|c.{2}?.{0,2}\\1', true, /capturing group inside a lookahead/],
+            ['((?=.{0,2}?[a-c](c*|い)|(?=c{0,2}[a-c].{0,2}|.x?))(?=.{2}|x??(?=c*?))|((a)\\.{2})*い{2}(?=.{1,3}\\.{2})){0,2}\\1', true, /capturing group inside a lookahead/],
             // libstdc++ reads ^ in a lookahead as the start of the lookahead:
             // [ab]+(?!^|^) on abbいいc (global, Z) gives Zいいc in JavaScript, aZいいc in the engine.
             ['[ab]+(?!^|^)', true, /\^ inside a lookahead/],
@@ -312,7 +313,7 @@ describe('pattern dialect', () => {
             ['(?=a)', true, /global pattern may not match the empty text/],
             ['(a)?\\1', false, /may not take part/],
             ['(a)*\\1', false, /may not take part/],
-            ['(?!(a))\\1', false, /may not take part/],
+            ['(?!(a))\\1', false, /capturing group inside a lookahead/],
             ['(?:(a)|c)\\1', false, /may not take part/],
             ['((a)|b)\\2', false, /may not take part/],
             ['((a)|b)*', false, /inside a repeated group/],
@@ -327,7 +328,7 @@ describe('pattern dialect', () => {
         }
         // What the rules leave in the dialect.
         for (const [pattern, global] of [
-            ['(a|b)*c', false], ['(a)\\1', false], ['(?:(a)\\1|b)', false], ['(?=(a))\\1', false], ['(a)+\\1', false],
+            ['(a|b)*c', false], ['(a)\\1', false], ['(?:(a)\\1|b)', false], ['(a)(?=b)\\1', false], ['(a)+\\1', false],
             ['((a)|b)\\1', false], ['(a)\\1|b', false], ['(a)(?:b\\1)*', false], ['(a)(\\1)+', false], ['(a)\\1*', false],
             ['(?:ab?)?', false], ['a*?', false], ['x*', false], ['$', false], ['^a', true], ['a(?=b$)', true], ['a', true], ['a*b', true],
             ['(l|dell|all)[\'\u2019]', true], ['^ge([a-z]+)t$', false], ['^(ma)([b-df-hj-np-tv-z]*[aeiou])(\\2)', false],
@@ -340,6 +341,122 @@ describe('pattern dialect', () => {
         assert.throws(() => checkStep({pattern: 'a*', replace: '-', global: true}, classes), /global pattern/);
         assert.doesNotThrow(() => checkStep({pattern: 'a*', replace: '-'}, classes));
         assert.throws(() => classes.patternRegExp('a*', {global: true}), /global pattern/);
+    });
+
+    test('rejects a capturing group or a back-reference inside a lookahead (section 7.6)', () => {
+        const capture = /a capturing group inside a lookahead is not in the pattern dialect/;
+        const backref = /a back-reference inside a lookahead is not in the pattern dialect/;
+        // The re-audit's cases. libstdc++ keeps a capture made inside a
+        // lookahead on a path that then fails, where JavaScript and libc++
+        // clear it: (?=(a))ac|ab with [$1] on ab gives [] in JavaScript and
+        // [a] in the engine. The last six differ in no library today.
+        const cases = [
+            ['(?=(a))ac|ab', false, capture],
+            ['(?=(a))ac|ab', true, capture],
+            ['(?!(a)b)a|ab', false, capture],
+            ['(?:(?=(a))b|a)', false, capture],
+            ['(?=(ab))a(?=c)|a', false, capture],
+            ['(?=(a))a+c|a', false, capture],
+            ['x(?=(a))ac|xa', false, capture],
+            ['(?=(a)b)ab|a', true, capture],
+            ['(?=(.))..x|.', true, capture],
+            ['(?!(a))b|a', false, capture],
+            ['(?=(a))\\1', false, capture],
+            ['(?=(a))\\1c|ab', false, capture],
+            ['a(?=(b))c|ab', false, capture],
+            ['(a)(?=(b))c|ab', false, capture],
+            ['c|(?=(a))ab|a', true, capture],
+            ['(b)(?=(a))', false, capture],
+            ['(b)(?=(a)(x))', false, capture],
+            ['(b)(?=(a))(a)', false, capture],
+            ['(?=(a))(a)\\2', false, capture],
+            ['(b)(?=(a))\\2', false, capture],
+            ['(b)(?!(x))a', false, capture],
+            ['(?!(a))\\1', false, capture],
+            ['(?=(?=(a)))a', false, capture],
+            ['(?=(?:(a)))a', false, capture],
+            // The ones of its random test that differ in libstdc++.
+            ['[あx]*(?=(a{1,2})??a?b+|(?=[a-c]{2}|(b){0,2}(a))(x){0,2}あ{2}|ab{0,2}?)|x{0,2}?bx(c)+?', false, capture],
+            ['(?=(x)|(あx?){0,2}?b)[^a]cあ{0,2}?|(?!a{2}?(あ){2}b{0,2})', false, capture],
+            ['(?=a(あ+)+?)b|a', true, capture],
+            ['(?!bあ|[ab](b*?(?:[^a])))[a-c]|(?!a)', false, capture],
+            // libc++ numbers the groups of a lookahead from 1: (a)(?=\1) does
+            // not compile there, and (a)(?=(b)\1) matches abb where JavaScript
+            // and libstdc++ match aba.
+            ['(a)(?=\\1)', false, backref],
+            ['(a)(?!\\1)', false, backref],
+            ['(a)(?=(b)\\1)', false, capture],
+            ['(?=(a)\\1)', false, capture],
+            ['(b)xx(?=(?:\\1+))', false, backref],
+            ['(.)(?=.\\1)', true, backref],
+            ['(a)(?!(?=\\1))', false, backref],
+            // The ones of its random test that libc++ alone refuses.
+            ['(a){2}(あ*|あ{0,2}(x)|(.)?ba{2}?)(?=\\2)', true, backref],
+            ['(a){2}?(?!\\1{0,2})|b|a$', true, backref],
+            ['([ab]??(b))(?:(あ+?){0,2}$|\\2+x{0,2}?[^a]*|(a)?|(?!(b){1,2}?(?:あ{2}.b|a{1,2}a|\\2{1,2}\\2*){0,2}(?:あ{2}?\\2[ab]{0,2})|(b)??.)^)', false, capture],
+            ['(あ)+?(あ){1,2}?(?=(?=b)\\1{1,2}?)', false, backref],
+        ];
+        for (const [pattern, global, message] of cases) {
+            assert.throws(() => parsePattern(pattern, {global}), (error) => error instanceof ClassError && message.test(error.message), `${pattern}${global ? ' (global)' : ''}`);
+        }
+        // Lookaheads without a capturing group or a back-reference inside, as
+        // Yomitan's ar (?!ل) and yi (?!.*[...]) rules, stay in the dialect.
+        for (const pattern of ['(?=(?:ab))a', '(?!(?:a|b)c)x', '(?=a)(a)\\1', '(a)(?=b)\\1', '(?!ل)', '(?!.*[ab])x', '(?=[(])\\(']) {
+            assert.doesNotThrow(() => parsePattern(pattern), pattern);
+        }
+        assert.throws(() => checkStep({pattern: '(?=(a))a', replace: 'b'}, classes), capture);
+        assert.throws(() => checkStep({pattern: '(a)(?=\\1)', replace: 'b'}, classes), backref);
+    });
+
+    test('knows which patterns can match the empty text (section 7.6)', () => {
+        // A group in the last alternative may not take part, and a class, `.`,
+        // a reference, a back-reference to a group that can match the empty
+        // text, or a group, with a quantifier whose minimum is 0, can match the
+        // empty text. Each shape with a regex the engine and JavaScript read
+        // differently: (?:b|(a))\1 with - on b gives - in JavaScript and b in
+        // the engine; [a]*?, .*?, {letter}*? and (a*?)\1 (global, -) on baaa
+        // give -b-a-a-a- in JavaScript and -b------- or ---------, -b---a- in
+        // the engine.
+        const notTakingPart = /may not take part in the match/;
+        const globalEmpty = /a global pattern may not match the empty text/;
+        const repeatEmpty = /a quantifier may not repeat a group that can match the empty text/;
+        for (const [pattern, global, message] of [
+            ['(?:b|(a))\\1', false, notTakingPart],
+            ['(?:b|c|(a))\\1', false, notTakingPart],
+            ['(?:b|(a)c)\\1', false, notTakingPart],
+            ['[a]*?', true, globalEmpty],
+            ['[^a]*', true, globalEmpty],
+            ['[a]{0,3}', true, globalEmpty],
+            ['.*?', true, globalEmpty],
+            ['.?', true, globalEmpty],
+            ['{letter}*?', true, globalEmpty],
+            ['{letter}{0,2}', true, globalEmpty],
+            ['(a*?)\\1', true, globalEmpty],
+            ['(?:ab)??', true, globalEmpty],
+            ['(?:ab)*', true, globalEmpty],
+            ['(?:ab){0,2}', true, globalEmpty],
+            ['(?:(?:ab)?)*', false, repeatEmpty],
+            ['(?:[a]*)+', false, repeatEmpty],
+            ['(?:.?)+', false, repeatEmpty],
+            ['(?:{letter}*)+', false, repeatEmpty],
+            ['(a)(?:\\1*)+', false, repeatEmpty],
+            ['(a*)(?:\\1)+', false, repeatEmpty],
+        ]) {
+            assert.throws(() => parsePattern(pattern, {global}), (error) => error instanceof ClassError && message.test(error.message), `${pattern}${global ? ' (global)' : ''}`);
+        }
+        // What it must not refuse: a {m,n} minimum above 0 is not empty, and
+        // neither is a back-reference to a group that is not.
+        for (const pattern of ['a{2}', 'a{2,}', '[a]{1,3}', '.{2}', '{letter}{2}', '(?:ab){2}', '(a{2})\\1', '(a)\\1']) {
+            assert.doesNotThrow(() => parsePattern(pattern, {global: true}), `${pattern} (global)`);
+        }
+        assert.doesNotThrow(() => parsePattern('(?:b|(a))c'));
+        for (const [pattern, nullable] of [
+            ['[a]*', true], ['[a]+', false], ['[^a]?', true], ['.*?', true], ['.', false], ['{letter}{0,2}', true], ['{letter}', false],
+            ['(a*?)\\1', true], ['(a)\\1', false], ['(?:ab)??', true], ['(?:ab){0,2}', true], ['(?:ab){2}', false], ['a{2}', false],
+            ['a{2,}', false], ['a{0}', true], ['(?:b|(a))', false], ['(?:b|)', true], ['b|', true], ['(?=a)', true], ['^$', true],
+        ]) {
+            assert.equal(parsePattern(pattern).nullable, nullable, pattern);
+        }
     });
 
     test('expands references to explicit BMP ranges', () => {

@@ -754,7 +754,20 @@ classic locale) and JavaScript give the same results:
     on six characters, and libc++ gives up with `error_complexity`, so the
     step or rule silently does nothing;
   - `^` inside a lookahead (`[ab]+(?!^)`): libstdc++ runs a lookahead as a
-    search of its own and takes its start for the start of the text.
+    search of its own and takes its start for the start of the text;
+  - a capturing group inside a lookahead (`(?=(a))ac|ab`, `(?!(a)b)a|ab`):
+    libstdc++ copies the captures of a lookahead into the match and keeps
+    them when the match then fails on that path, so `(?=(a))ac|ab` with
+    `[$1]` on `ab` gives `[a]` in the engine and `[]` in JavaScript and
+    libc++; write `(?:...)` inside a lookahead;
+  - a back-reference inside a lookahead (`(a)(?=\1)`): libc++ compiles a
+    lookahead as a regex of its own and numbers its groups from 1, so a
+    back-reference there names the lookahead's own group, or none:
+    `(a)(?=\1)` does not compile, and `(a)(?=(b)\1)` matches `abb` where
+    JavaScript and libstdc++ match `aba`. libc++ is the C++ library of
+    Hachidori's WebAssembly build and of Apple platforms, and CI builds with
+    libstdc++, so a pack with such a pattern would pass CI and then fail to
+    load, or use the wrong group, there.
 
   A group can match the empty text when one of its alternatives can: an
   alternative can when every one of its terms can, and anchors, lookaheads,
