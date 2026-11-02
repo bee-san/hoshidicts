@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "conditions": {
+    "v": {
+      "name": "Verb",
+      "isDictionaryForm": true
+    },
+    "n": {
+      "name": "Noun",
+      "isDictionaryForm": true
+    }
+  },
+  "transforms": [
+    {
+      "id": "past",
+      "name": "past",
+      "description": "the past probe rule",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "ed", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "neg",
+      "name": "neg",
+      "description": "the negative probe rule",
+      "source": "own",
+      "rules": [
+        {"type": "prefix", "inflected": "un", "deinflected": "", "conditionsIn": ["v"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "present-yo",
+      "name": "present (yo)",
+      "description": "the stem-changing probe rule: ue to o, then -ar or -er",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "o", "deinflected": "ar", "conditionsIn": [], "conditionsOut": ["v"], "stemChange": {"from": ["ue"], "to": "o"}},
+        {"type": "suffix", "inflected": "o", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["v"], "stemChange": {"from": ["ue"], "to": "o"}}
+      ]
+    },
+    {
+      "id": "plural",
+      "name": "plural",
+      "description": "the plural probe rule",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "s", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    }
+  ]
+}

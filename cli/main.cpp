@@ -18,6 +18,7 @@
 #include "../src/languages/pack.hpp"
 #include "../src/languages/steps.hpp"
 #include "../src/path_utils.hpp"
+#include "../src/query_internal.hpp"
 #include "hoshidicts/deinflector.hpp"
 #include "hoshidicts/importer.hpp"
 #include "hoshidicts/languages.hpp"
@@ -575,6 +576,63 @@ int cmd_lookup(Context& context, const Arguments& args, int max_results = 8, int
   return 0;
 }
 
+// eval-language's false candidates of one row when the pack follows form-of
+// references (docs/languages.md, sections 9.10 and 10.3): the distinct texts,
+// other than the source and the lemma, a lookup of the whole source shows a
+// term for. A deinflected text counts when a row with definitions passes the
+// filter for one of the deinflections that reach it, and the text a form-of
+// reference names counts when the row naming it passes the filter for the
+// deinflection that found it and the text has a row with definitions. For
+// --per-rule, a text's rules are those every path to it uses; the path to a
+// reference's text is the path of the deinflection that found its row.
+template <typename Intersect>
+void count_followed_false_candidates(const DictionaryQuery& query, const hoshidicts::lang::PackData& pack,
+                                     const hoshidicts::lang::CorpusRow& row,
+                                     const std::vector<hoshidicts::lang::SourceDeinflection>& list,
+                                     size_t& false_candidates, std::vector<size_t>& adds, Intersect&& intersect) {
+  const auto bits_of = [&](std::string_view rules) {
+    uint32_t bits = 0;
+    for (auto token : rules | std::views::split(' ')) {
+      bits |= pack.transforms->dictionary_form_bits(std::string_view(token.begin(), token.end()));
+    }
+    return bits;
+  };
+  std::map<std::string, std::vector<size_t>> by_text;
+  for (size_t i = 0; i < list.size(); ++i) by_text[list[i].text].push_back(i);
+  // Each candidate text, and the deinflections whose paths reach it.
+  std::map<std::string, std::vector<size_t>> candidates;
+  std::map<std::string, std::vector<size_t>> referenced;
+  BlobPins pins;
+  for (const auto& [text, which] : by_text) {
+    const RawTerms raw = QueryAccess::query_raw(query, text, pins, true);
+    for (size_t i : which) {
+      const uint32_t conditions = list[i].conditions;
+      const bool any = conditions == 0 || !pack.transforms;
+      const bool shown = std::ranges::any_of(raw.terms, [&](const RawTerm& term) {
+        uint32_t bits = 0;
+        for (uint32_t g = term.first_glossary; g != UINT32_MAX; g = raw.glossaries[g].next) bits |= bits_of(raw.glossaries[g].rules);
+        return any || (bits & conditions) != 0;
+      });
+      if (shown) candidates[text].push_back(i);
+      for (const RawReference& reference : raw.references) {
+        if (any || (bits_of(reference.row_rules) & conditions) != 0) referenced[std::string(reference.form_of)].push_back(i);
+      }
+    }
+  }
+  for (const auto& [text, which] : referenced) {
+    if (QueryAccess::query_raw(query, text, pins, true).terms.empty()) continue;
+    auto& paths = candidates[text];
+    paths.insert(paths.end(), which.begin(), which.end());
+  }
+  for (auto& [text, which] : candidates) {
+    if (text == row.source || text == row.term) continue;
+    std::ranges::sort(which);
+    which.erase(std::unique(which.begin(), which.end()), which.end());
+    ++false_candidates;
+    for (uint32_t r : intersect(list, which)) ++adds[r];
+  }
+}
+
 // `eval-language` (section 10.3): recall and negatives over the whole source
 // of each row, and with a dictionary the false candidates and first ranks,
 // with every optional feature on, or with the pack's defaults for a file whose
@@ -672,28 +730,32 @@ int cmd_eval_language(Context& context, const Arguments& args) {
     if (query && row.valid) {
       // Distinct deinflected texts that are headwords passing the filter, other
       // than the source and the lemma.
-      std::map<std::string, std::vector<size_t>> by_text;
-      for (size_t i = 0; i < list.size(); ++i) {
-        if (list[i].text != row.source && list[i].text != row.term) by_text[list[i].text].push_back(i);
-      }
-      for (const auto& [text, which] : by_text) {
-        const auto terms = query->query(text);
-        std::vector<size_t> passing;
-        for (size_t i : which) {
-          const uint32_t conditions = list[i].conditions;
-          const bool ok = std::ranges::any_of(terms, [&](const TermResult& term) {
-            if (conditions == 0 || !pack.transforms) return true;
-            uint32_t bits = 0;
-            for (auto token : term.rules | std::views::split(' ')) {
-              bits |= pack.transforms->dictionary_form_bits(std::string_view(token.begin(), token.end()));
-            }
-            return (bits & conditions) != 0;
-          });
-          if (ok) passing.push_back(i);
+      if (pack.form_of == lang::FormOf::Follow) {
+        count_followed_false_candidates(*query, pack, row, list, false_candidates, adds, intersect);
+      } else {
+        std::map<std::string, std::vector<size_t>> by_text;
+        for (size_t i = 0; i < list.size(); ++i) {
+          if (list[i].text != row.source && list[i].text != row.term) by_text[list[i].text].push_back(i);
         }
-        if (passing.empty()) continue;
-        ++false_candidates;
-        for (uint32_t r : intersect(list, passing)) ++adds[r];
+        for (const auto& [text, which] : by_text) {
+          const auto terms = query->query(text);
+          std::vector<size_t> passing;
+          for (size_t i : which) {
+            const uint32_t conditions = list[i].conditions;
+            const bool ok = std::ranges::any_of(terms, [&](const TermResult& term) {
+              if (conditions == 0 || !pack.transforms) return true;
+              uint32_t bits = 0;
+              for (auto token : term.rules | std::views::split(' ')) {
+                bits |= pack.transforms->dictionary_form_bits(std::string_view(token.begin(), token.end()));
+              }
+              return (bits & conditions) != 0;
+            });
+            if (ok) passing.push_back(i);
+          }
+          if (passing.empty()) continue;
+          ++false_candidates;
+          for (uint32_t r : intersect(list, passing)) ++adds[r];
+        }
       }
       const size_t length = utf8::distance(row.source.begin(), row.source.end());
       const auto results = lookup->lookup(row.source, 16, std::max<size_t>(16, length), options);

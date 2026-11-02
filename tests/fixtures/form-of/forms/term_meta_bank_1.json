@@ -1,0 +1,7 @@
+[
+  ["walk", "freq", 10],
+  ["walked", "freq", 99],
+  ["strode", "freq", 5],
+  ["walk", "ipa", {"reading": "walk", "transcriptions": [{"ipa": "/wɔːk/"}]}],
+  ["walked", "ipa", {"reading": "walked", "transcriptions": [{"ipa": "/wɔːkt/"}]}]
+]

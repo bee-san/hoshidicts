@@ -534,7 +534,7 @@ RawTerms DictionaryQuery::query_raw(const std::string& expression, BlobPins& pin
 }
 
 RawTerms DictionaryQuery::query_raw(const std::string& expression, BlobPins& pins, const Selection& selection,
-                                    bool with_metadata, const ReadingNormalizer* normalizer) const {
+                                    bool with_metadata, const ReadingNormalizer* normalizer, bool follow_form_of) const {
   RawTerms raw;
   if (normalizer != nullptr) {
     raw.normalized = std::make_unique<NormalizedReadings>();
@@ -602,17 +602,52 @@ RawTerms DictionaryQuery::query_raw(const std::string& expression, BlobPins& pin
         auto term_tag_size = read_value<uint8_t>(blob);
         std::string_view term_tags = blob.str(term_tag_size);
 
+        // The form-of references (written by importers since .hoshidicts_3;
+        // see write_form_of in importer.cpp). A row with references but no
+        // entry with an empty formOf has no other definition.
+        bool drop_form_of = false;
+        bool only_references = false;
         if (data->version >= 2) {
           auto redirect_count = read_value<uint32_t>(blob);
-          for (uint32_t r = 0; r < redirect_count; r++) {
-            auto form_of_len = read_value<uint32_t>(blob);
-            blob.skip(form_of_len);
-            auto rule_count = read_value<uint32_t>(blob);
-            for (uint32_t j = 0; j < rule_count; j++) {
-              auto rule_len = read_value<uint32_t>(blob);
-              blob.skip(rule_len);
+          if (follow_form_of && data->version >= 3 && redirect_count != 0) {
+            bool other_definitions = false;
+            for (uint32_t r = 0; r < redirect_count; r++) {
+              auto form_of_len = read_value<uint32_t>(blob);
+              std::string_view form_of = blob.str(form_of_len);
+              auto rule_count = read_value<uint32_t>(blob);
+              if (form_of.empty()) {
+                other_definitions = true;
+              } else {
+                raw.references.push_back(RawReference{.form_of = form_of,
+                                                      .first_rule = static_cast<uint32_t>(raw.reference_rules.size()),
+                                                      .rule_count = rule_count,
+                                                      .dict_name = &name,
+                                                      .row_rules = rules});
+              }
+              for (uint32_t j = 0; j < rule_count; j++) {
+                auto rule_len = read_value<uint32_t>(blob);
+                std::string_view rule = blob.str(rule_len);
+                if (!form_of.empty()) {
+                  raw.reference_rules.push_back(rule);
+                }
+              }
+            }
+            drop_form_of = true;
+            only_references = !other_definitions;
+          } else {
+            for (uint32_t r = 0; r < redirect_count; r++) {
+              auto form_of_len = read_value<uint32_t>(blob);
+              blob.skip(form_of_len);
+              auto rule_count = read_value<uint32_t>(blob);
+              for (uint32_t j = 0; j < rule_count; j++) {
+                auto rule_len = read_value<uint32_t>(blob);
+                blob.skip(rule_len);
+              }
             }
           }
+        }
+        if (only_references) {
+          continue;
         }
 
         double score = 0;
@@ -632,7 +667,8 @@ RawTerms DictionaryQuery::query_raw(const std::string& expression, BlobPins& pin
                                              .compressed_offset = glossary_offset,
                                              .compressed_size = glossary_size,
                                              .zstd_dict = data->zstd_dict,
-                                             .next = UINT32_MAX});
+                                             .next = UINT32_MAX,
+                                             .drop_form_of = drop_form_of});
 
         RawTerm* term = find_term(expr, reading);
         if (term == nullptr) {
@@ -710,6 +746,7 @@ TermResult DictionaryQuery::build_term(const RawTerms& raw, RawTerm& term, BlobP
     entry.compressed_size = g.compressed_size;
     entry.zstd_dict = g.zstd_dict;
     entry.score = g.score;
+    entry.drop_form_of = g.drop_form_of;
   }
   // Dictionary order takes precedence over score. Within each dictionary,
   // higher-scored definitions come first, with original order kept for ties.
@@ -1119,6 +1156,9 @@ std::string DictionaryQuery::decompress_glossary(const void* data, size_t size, 
 void DictionaryQuery::materialize(TermResult& term) const {
   for (auto& g : term.glossaries) {
     g.glossary = decompress_glossary(g.compressed_data, g.compressed_size, g.zstd_dict);
+    if (g.drop_form_of) {
+      g.glossary = yomitan_parser::without_form_of(g.glossary);
+    }
   }
 }
 

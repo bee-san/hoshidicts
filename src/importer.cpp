@@ -400,6 +400,33 @@ std::vector<char> train_zstd_dict(const DictionarySource& source, const Files& f
   return dict;
 }
 
+// A term record's form-of references (docs/languages.md, section 9.10), in
+// the slot every reader since .hoshidicts_2 skips: a count, then per reference
+// [u32 length][formOf][u32 rule count] and per rule [u32 length][rule]. When
+// the row also has definitions that are not references, one more entry with
+// an empty formOf and no rules follows them; a row that is only references has
+// none. A row without references has count 0, as every importer wrote before.
+void write_form_of(std::vector<char>& out, const std::vector<FormOfReference>& references, bool other_definitions) {
+  if (references.empty()) {
+    write_val<uint32_t>(out, 0);
+    return;
+  }
+  write_val<uint32_t>(out, static_cast<uint32_t>(references.size() + (other_definitions ? 1 : 0)));
+  for (const auto& reference : references) {
+    write_val<uint32_t>(out, static_cast<uint32_t>(reference.form_of.size()));
+    write_str(out, reference.form_of);
+    write_val<uint32_t>(out, static_cast<uint32_t>(reference.rules.size()));
+    for (const auto& rule : reference.rules) {
+      write_val<uint32_t>(out, static_cast<uint32_t>(rule.size()));
+      write_str(out, rule);
+    }
+  }
+  if (other_definitions) {
+    write_val<uint32_t>(out, 0);
+    write_val<uint32_t>(out, 0);
+  }
+}
+
 ProcessedFile process_term_bank(std::string content, const ZSTD_CDict* cdict) {
   ProcessedFile processed;
   if (content.empty()) {
@@ -423,6 +450,7 @@ ProcessedFile process_term_bank(std::string content, const ZSTD_CDict* cdict) {
   // Records hold the bank's non-glossary strings plus fixed headers.
   processed.data.reserve(content.size() / 4);
   processed.offsets.reserve(out.size() * 2);
+  std::vector<FormOfReference> references;
   for (auto& term : out) {
     const std::string_view glossary = term.glossary.str;
     uint64_t glossary_hash = XXH3_64bits(glossary.data(), glossary.size());
@@ -468,7 +496,9 @@ ProcessedFile process_term_bank(std::string content, const ZSTD_CDict* cdict) {
     write_str(processed.data, term.rules);
     write_val<uint8_t>(processed.data, term.term_tags.size());
     write_str(processed.data, term.term_tags);
-    write_val<uint32_t>(processed.data, 0);
+    references.clear();
+    const bool other_definitions = yomitan_parser::read_form_of(glossary, references);
+    write_form_of(processed.data, references, other_definitions);
     // The Yomitan schema types score as a JSON number; keep the parsed double
     // rather than truncating to int32 (fractions were collapsing, and magnitudes
     // beyond int32 were undefined behaviour in the cast). Readers select on the
