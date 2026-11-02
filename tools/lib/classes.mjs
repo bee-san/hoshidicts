@@ -485,10 +485,11 @@ export class ClassSet {
      * Checks a pattern of the dialect of section 7.6 and expands its `{name}`
      * references to explicit ranges.
      * @param {string} pattern
+     * @param {{global?: boolean}} [options] global: the pattern replaces every match
      * @returns {string} a RegExp source for a RegExp without the `u` flag
      */
-    patternSource(pattern) {
-        const {references} = parsePattern(pattern);
+    patternSource(pattern, {global = false} = {}) {
+        const {references} = parsePattern(pattern, {global});
         let result = '';
         let last = 0;
         for (const {name, start, end, inClass} of references) {
@@ -511,7 +512,7 @@ export class ClassSet {
      * @returns {RegExp}
      */
     patternRegExp(pattern, {global = false} = {}) {
-        return new RegExp(this.patternSource(pattern), global ? 'g' : '');
+        return new RegExp(this.patternSource(pattern, {global}), global ? 'g' : '');
     }
 
     /**
@@ -537,12 +538,18 @@ const PATTERN_SYNTAX = '^$\\.*+?()[]{}|/';
 
 /**
  * Parses a pattern of the dialect of section 7.6 and throws a ClassError for
- * anything outside it. Returns the number of capturing groups and the
- * positions of the `{name}` references.
+ * anything outside it, including the constructs std::regex and JavaScript
+ * read differently: a global pattern that can match the empty text, a
+ * back-reference to a group that may not take part in the match, a
+ * capturing group inside a repeated group, and a quantifier on a group that
+ * can match the empty text. Returns the number of capturing groups, the
+ * positions of the `{name}` references and whether the pattern can match the
+ * empty text.
  * @param {string} pattern
- * @returns {{groups: number, references: {name: string, start: number, end: number, inClass: boolean}[]}}
+ * @param {{global?: boolean}} [options] global: the pattern replaces every match
+ * @returns {{groups: number, references: {name: string, start: number, end: number, inClass: boolean}[], nullable: boolean}}
  */
-export function parsePattern(pattern) {
+export function parsePattern(pattern, {global = false} = {}) {
     if (typeof pattern !== 'string') { throw new ClassError('a pattern must be a string'); }
     let i = 0;
     let groups = 0;
@@ -550,6 +557,22 @@ export function parsePattern(pattern) {
     const closedGroups = new Set();
     /** @type {{name: string, start: number, end: number, inClass: boolean}[]} */
     const references = [];
+    // Frames are the alternatives and the groups and lookaheads that enclose
+    // a position. A frame that has closed is optional when what it holds may
+    // not take part in a match that goes on past it: an alternative of a
+    // disjunction with more than one, a group repeated at least zero times,
+    // a negative lookahead.
+    let nextFrame = 0;
+    /** @type {number[]} the open frames, outermost first */
+    const frames = [];
+    /** @type {boolean[]} by frame */
+    const optionalFrame = [];
+    /** @type {number[][]} by group: the frames that held it when it opened, then its own */
+    const groupFrames = [];
+    /** @type {boolean[]} by group: whether it can match the empty text */
+    const groupNullable = [];
+    /** How many lookaheads enclose the position. */
+    let lookaheads = 0;
     const fail = (message, offset = i) => {
         throw new ClassError(message, {source: pattern, offset});
     };
@@ -565,20 +588,25 @@ export function parsePattern(pattern) {
         return 0;
     };
 
+    /** @returns {{min: number} | null} the quantifier at i, or null when there is none */
     const parseQuantifier = (canRepeat) => {
         const length = quantifierAt(i);
-        if (length === 0) { return; }
+        if (length === 0) { return null; }
         if (!canRepeat) { fail('nothing to repeat: assertions and lookaheads take no quantifier'); }
+        let min = pattern[i] === '+' ? 1 : 0;
         if (pattern[i] === '{') {
             const match = /^\{(\d+)(,(\d*))?\}/.exec(pattern.slice(i));
-            const min = Number(match[1]);
+            min = Number(match[1]);
             const max = match[3] === undefined || match[3] === '' ? Infinity : Number(match[3]);
+            if (min > 65535 || (max !== Infinity && max > 65535)) { fail('a quantifier above 65535 is not in the pattern dialect'); }
             if (match[2] !== undefined && match[3] !== '' && max < min) { fail('the quantifier {m,n} needs m <= n'); }
         }
         i += length;
         if (pattern[i] === '?') { ++i; }
         if (quantifierAt(i) !== 0) { fail('nothing to repeat'); }
+        return {min};
     };
+    const repeatsZero = (quantifier) => quantifier !== null && quantifier.min === 0;
 
     const parseClassInPattern = () => {
         const start = i;
@@ -653,6 +681,15 @@ export function parsePattern(pattern) {
             if (pattern[i + 2] >= '0' && pattern[i + 2] <= '9') { fail('only back-references \\1 to \\9 are in the dialect'); }
             const group = Number(e);
             if (!closedGroups.has(group)) { fail(`the back-reference \\${e} must follow the end of group ${e}`); }
+            // The frames that hold the group but not this position have
+            // closed; if one is optional the group may not take part, and
+            // JavaScript matches the empty text where std::regex fails.
+            const holding = groupFrames[group];
+            let shared = 0;
+            while (shared < frames.length && shared < holding.length && frames[shared] === holding[shared]) { ++shared; }
+            if (holding.slice(shared).some((frame) => optionalFrame[frame])) {
+                fail(`the back-reference \\${e} names group ${e}, which may not take part in the match (an optional group, another alternative or a negative lookahead)`);
+            }
             i += 2;
             return;
         }
@@ -673,79 +710,106 @@ export function parsePattern(pattern) {
         fail(`\\${e} is not in the pattern dialect`);
     };
 
-    /** @returns {void} */
+    /** @returns {boolean} whether the disjunction can match the empty text */
     const parseDisjunction = () => {
-        parseAlternative();
-        while (pattern[i] === '|') {
+        let nullable = false;
+        for (let index = 0; ; ++index) {
+            const frame = nextFrame++;
+            frames.push(frame);
+            nullable = parseAlternative() || nullable;
+            frames.pop();
+            const more = pattern[i] === '|';
+            optionalFrame[frame] = more || index > 0;
+            if (!more) { return nullable; }
             ++i;
-            parseAlternative();
         }
     };
 
+    /** @returns {boolean} whether the alternative can match the empty text */
     const parseAlternative = () => {
+        let nullable = true;
         while (i < pattern.length && pattern[i] !== '|' && pattern[i] !== ')') {
-            parseTerm();
+            nullable = parseTerm() && nullable;
         }
+        return nullable;
     };
 
+    /** @returns {boolean} whether the term can match the empty text */
     const parseTerm = () => {
         const c = pattern[i];
         if (c === '^' || c === '$') {
+            // libstdc++ runs a lookahead as a search of its own, whose start
+            // `^` takes for the start of the text.
+            if (c === '^' && lookaheads > 0) { fail('a ^ inside a lookahead is not in the pattern dialect: std::regex in libstdc++ reads it as the start of the lookahead'); }
             ++i;
             parseQuantifier(false);
-            return;
+            return true;
         }
         if (c === '(') {
             if (startsWith('(?=') || startsWith('(?!')) {
+                const frame = nextFrame++;
+                optionalFrame[frame] = startsWith('(?!');
                 i += 3;
+                frames.push(frame);
+                ++lookaheads;
                 parseDisjunction();
+                --lookaheads;
+                frames.pop();
                 if (pattern[i] !== ')') { fail('the lookahead is not closed with )'); }
                 ++i;
                 parseQuantifier(false);
-                return;
+                return true;
             }
             if (startsWith('(?<=') || startsWith('(?<!')) { fail('lookbehind is not in the pattern dialect; use a stem constraint'); }
             if (startsWith('(?<')) { fail('named groups are not in the pattern dialect'); }
-            if (startsWith('(?:')) {
-                i += 3;
-                parseDisjunction();
-                if (pattern[i] !== ')') { fail('the group is not closed with )'); }
-                ++i;
-                parseQuantifier(true);
-                return;
-            }
-            if (startsWith('(?')) { fail('only (?:...), (?=...) and (?!...) groups are in the pattern dialect'); }
-            ++i;
-            const group = ++groups;
-            parseDisjunction();
+            if (startsWith('(?') && !startsWith('(?:')) { fail('only (?:...), (?=...) and (?!...) groups are in the pattern dialect'); }
+            const capturing = !startsWith('(?:');
+            i += capturing ? 1 : 3;
+            const frame = nextFrame++;
+            const group = capturing ? ++groups : 0;
+            if (capturing) { groupFrames[group] = [...frames, frame]; }
+            const before = groups;
+            frames.push(frame);
+            const nullable = parseDisjunction();
+            frames.pop();
             if (pattern[i] !== ')') { fail('the group is not closed with )'); }
             ++i;
-            closedGroups.add(group);
-            parseQuantifier(true);
-            return;
+            if (capturing) {
+                closedGroups.add(group);
+                groupNullable[group] = nullable;
+            }
+            const at = i;
+            const quantifier = parseQuantifier(true);
+            optionalFrame[frame] = repeatsZero(quantifier);
+            if (quantifier !== null && nullable) { fail('a quantifier may not repeat a group that can match the empty text', at); }
+            if (quantifier !== null && groups > before) {
+                fail('a capturing group may not be inside a repeated group: JavaScript clears its capture on every repetition, std::regex keeps it', at);
+            }
+            return nullable || repeatsZero(quantifier);
         }
         if (c === '[') {
             parseClassInPattern();
-            parseQuantifier(true);
-            return;
+            return repeatsZero(parseQuantifier(true));
         }
         if (c === '.') {
             ++i;
-            parseQuantifier(true);
-            return;
+            return repeatsZero(parseQuantifier(true));
         }
         if (c === '\\') {
+            const group = pattern[i + 1] >= '1' && pattern[i + 1] <= '9' ? Number(pattern[i + 1]) : 0;
             parseEscape();
-            parseQuantifier(true);
-            return;
+            const at = i;
+            const quantifier = parseQuantifier(true);
+            const nullable = group > 0 && groupNullable[group];
+            if (quantifier !== null && nullable) { fail('a quantifier may not repeat a back-reference to a group that can match the empty text', at); }
+            return nullable || repeatsZero(quantifier);
         }
         if (c === '{') {
             const match = REFERENCE.exec(pattern.slice(i));
             if (match !== null) {
                 references.push({name: match[1], start: i, end: i + match[0].length, inClass: false});
                 i += match[0].length;
-                parseQuantifier(true);
-                return;
+                return repeatsZero(parseQuantifier(true));
             }
             if (quantifierAt(i) !== 0) { fail('nothing to repeat'); }
             fail('a { starts a reference {name} or a quantifier; write a literal { as \\{');
@@ -757,12 +821,15 @@ export function parsePattern(pattern) {
         i += cp > 0xFFFF ? 2 : 1;
         // An astral literal is two UTF-16 units: a quantifier would repeat only the second.
         if (cp > 0xFFFF && quantifierAt(i) !== 0) { fail('a quantifier after a character above U+FFFF repeats only half of it; use (?:...)'); }
-        parseQuantifier(true);
+        return repeatsZero(parseQuantifier(true));
     };
 
-    parseDisjunction();
+    const nullable = parseDisjunction();
     if (i < pattern.length) {
         fail(pattern[i] === ')' ? 'unmatched )' : 'unexpected character');
+    }
+    if (global && nullable) {
+        fail('a global pattern may not match the empty text: std::regex and JavaScript go on differently after an empty match', 0);
     }
     // JavaScript must accept the pattern too (references stand in as one letter).
     let probe = pattern;
@@ -774,7 +841,7 @@ export function parsePattern(pattern) {
     } catch (error) {
         fail(`JavaScript rejects the pattern: ${error.message}`, 0);
     }
-    return {groups, references};
+    return {groups, references, nullable};
 }
 
 /**

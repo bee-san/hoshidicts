@@ -124,12 +124,31 @@ struct Reference {
 struct DialectParser {
   std::u16string_view p;
   std::string* error;
+  bool global = false;
   size_t i = 0;
   int groups = 0;
   std::vector<bool> closed = std::vector<bool>(10, false);
   std::vector<Reference> references;
   std::vector<size_t> dots;  // positions of `.` outside classes
   bool failed = false;
+  // Frames are the alternatives and the groups and lookaheads that enclose a
+  // position. A frame that has closed is optional when what it holds may not
+  // take part in a match that goes on past it: an alternative of a
+  // disjunction with more than one, a group repeated at least zero times, a
+  // negative lookahead.
+  size_t next_frame = 0;
+  std::vector<size_t> frames;  // the open frames, outermost first
+  std::vector<bool> optional_frame;
+  // By group (1-9, the ones a back-reference can name): the frames that held
+  // it when it opened, then its own, and whether it can match the empty text.
+  std::vector<std::vector<size_t>> group_frames = std::vector<std::vector<size_t>>(10);
+  std::vector<bool> group_nullable = std::vector<bool>(10, false);
+  int lookaheads = 0;  // how many lookaheads enclose the position
+
+  size_t new_frame(bool optional = false) {
+    optional_frame.push_back(optional);
+    return next_frame++;
+  }
 
   void fail(std::string_view message, std::optional<size_t> offset = std::nullopt) {
     if (failed) return;
@@ -151,27 +170,31 @@ struct DialectParser {
     return 0;
   }
 
-  void parse_quantifier(bool can_repeat) {
+  // Returns the quantifier's minimum, or -1 when there is none (or on failure).
+  long parse_quantifier(bool can_repeat) {
     const size_t length = quantifier_at(i);
-    if (length == 0) return;
+    if (length == 0) return -1;
     if (!can_repeat) {
       fail("nothing to repeat: assertions and lookaheads take no quantifier");
-      return;
+      return -1;
     }
+    long min = p[i] == '+' ? 1 : 0;
     if (p[i] == '{') {
       const Braces b = braces_at(p, i);
       if (*b.min > 65535 || (b.max && *b.max > 65535)) {
         fail("a quantifier above 65535 is not in the pattern dialect");
-        return;
+        return -1;
       }
       if (b.comma && b.max && *b.max < *b.min) {
         fail("the quantifier {m,n} needs m <= n");
-        return;
+        return -1;
       }
+      min = static_cast<long>(*b.min);
     }
     i += length;
     if (at(i) == '?' && has(i)) ++i;
     if (quantifier_at(i) != 0) fail("nothing to repeat");
+    return min;
   }
 
   // Returns the atom's code point, or -1 at the closing bracket, or -2 on failure.
@@ -322,6 +345,21 @@ struct DialectParser {
         fail("a back-reference must follow the end of its group");
         return;
       }
+      // The frames that hold the group but not this position have closed; if
+      // one is optional the group may not take part, and JavaScript matches
+      // the empty text where std::regex fails.
+      const auto& holding = group_frames[group];
+      size_t shared = 0;
+      while (shared < frames.size() && shared < holding.size() && frames[shared] == holding[shared]) ++shared;
+      for (size_t k = shared; k < holding.size(); ++k) {
+        if (optional_frame[holding[k]]) {
+          fail("the back-reference \\" + std::string(1, static_cast<char>(e)) + " names group " +
+               std::string(1, static_cast<char>(e)) +
+               ", which may not take part in the match (an optional group, another alternative or a negative "
+               "lookahead)");
+          return;
+        }
+      }
       i += 2;
       return;
     }
@@ -357,135 +395,180 @@ struct DialectParser {
     fail("this escape is not in the pattern dialect");
   }
 
-  void parse_disjunction() {
-    parse_alternative();
-    while (!failed && has(i) && p[i] == '|') {
+  // Returns whether the disjunction can match the empty text.
+  bool parse_disjunction() {
+    bool nullable = false;
+    for (size_t index = 0;; ++index) {
+      const size_t frame = new_frame();
+      frames.push_back(frame);
+      nullable = parse_alternative() || nullable;
+      frames.pop_back();
+      const bool more = !failed && has(i) && p[i] == '|';
+      optional_frame[frame] = more || index > 0;
+      if (!more) return nullable;
       ++i;
-      parse_alternative();
     }
   }
 
-  void parse_alternative() {
+  // Returns whether the alternative can match the empty text.
+  bool parse_alternative() {
+    bool nullable = true;
     while (!failed && has(i) && p[i] != '|' && p[i] != ')') {
-      parse_term();
+      nullable = parse_term() && nullable;
     }
+    return nullable;
   }
 
-  void parse_term() {
+  // Returns whether the term can match the empty text.
+  bool parse_term() {
     const char16_t c = p[i];
     if (c == '^' || c == '$') {
+      // libstdc++ runs a lookahead as a search of its own, whose start `^`
+      // takes for the start of the text.
+      if (c == '^' && lookaheads > 0) {
+        fail("a ^ inside a lookahead is not in the pattern dialect: std::regex in libstdc++ reads it as the start of the "
+             "lookahead");
+        return false;
+      }
       ++i;
       parse_quantifier(false);
-      return;
+      return true;
     }
     if (c == '(') {
       if (starts_with(u"(?=") || starts_with(u"(?!")) {
+        const size_t frame = new_frame(starts_with(u"(?!"));
         i += 3;
+        frames.push_back(frame);
+        ++lookaheads;
         parse_disjunction();
-        if (failed) return;
+        --lookaheads;
+        frames.pop_back();
+        if (failed) return false;
         if (!has(i) || p[i] != ')') {
           fail("the lookahead is not closed with )");
-          return;
+          return false;
         }
         ++i;
         parse_quantifier(false);
-        return;
+        return true;
       }
       if (starts_with(u"(?<=") || starts_with(u"(?<!")) {
         fail("lookbehind is not in the pattern dialect; use a stem constraint");
-        return;
+        return false;
       }
       if (starts_with(u"(?<")) {
         fail("named groups are not in the pattern dialect");
-        return;
+        return false;
       }
-      if (starts_with(u"(?:")) {
-        i += 3;
-        parse_disjunction();
-        if (failed) return;
-        if (!has(i) || p[i] != ')') {
-          fail("the group is not closed with )");
-          return;
-        }
-        ++i;
-        parse_quantifier(true);
-        return;
-      }
-      if (starts_with(u"(?")) {
+      if (starts_with(u"(?") && !starts_with(u"(?:")) {
         fail("only (?:...), (?=...) and (?!...) groups are in the pattern dialect");
-        return;
+        return false;
       }
-      ++i;
-      const int group = ++groups;
-      parse_disjunction();
-      if (failed) return;
+      const bool capturing = !starts_with(u"(?:");
+      i += capturing ? 1 : 3;
+      const size_t frame = new_frame();
+      const int group = capturing ? ++groups : 0;
+      if (capturing && group < 10) {
+        group_frames[group] = frames;
+        group_frames[group].push_back(frame);
+      }
+      const int before = groups;
+      frames.push_back(frame);
+      const bool nullable = parse_disjunction();
+      frames.pop_back();
+      if (failed) return false;
       if (!has(i) || p[i] != ')') {
         fail("the group is not closed with )");
-        return;
+        return false;
       }
       ++i;
-      if (group < 10) closed[group] = true;
-      parse_quantifier(true);
-      return;
+      if (capturing && group < 10) {
+        closed[group] = true;
+        group_nullable[group] = nullable;
+      }
+      const size_t quantifier_offset = i;
+      const long min = parse_quantifier(true);
+      if (failed) return false;
+      optional_frame[frame] = min == 0;
+      if (min >= 0 && nullable) {
+        fail("a quantifier may not repeat a group that can match the empty text", quantifier_offset);
+        return false;
+      }
+      if (min >= 0 && groups > before) {
+        fail("a capturing group may not be inside a repeated group: JavaScript clears its capture on every repetition, "
+             "std::regex keeps it",
+             quantifier_offset);
+        return false;
+      }
+      return nullable || min == 0;
     }
     if (c == '[') {
       parse_class();
-      if (failed) return;
-      parse_quantifier(true);
-      return;
+      if (failed) return false;
+      return parse_quantifier(true) == 0;
     }
     if (c == '.') {
       dots.push_back(i);
       ++i;
-      parse_quantifier(true);
-      return;
+      return parse_quantifier(true) == 0;
     }
     if (c == '\\') {
+      const int group = has(i + 1) && p[i + 1] >= '1' && p[i + 1] <= '9' ? p[i + 1] - '0' : 0;
       parse_escape();
-      if (failed) return;
-      parse_quantifier(true);
-      return;
+      if (failed) return false;
+      const size_t quantifier_offset = i;
+      const long min = parse_quantifier(true);
+      const bool nullable = group > 0 && group_nullable[group];
+      if (!failed && min >= 0 && nullable) {
+        fail("a quantifier may not repeat a back-reference to a group that can match the empty text", quantifier_offset);
+        return false;
+      }
+      return nullable || min == 0;
     }
     if (c == '{') {
       const size_t length = reference_length(p, i);
       if (length != 0) {
         references.push_back({u16_to_utf8(p.substr(i + 1, length - 2)), i, i + length, false});
         i += length;
-        parse_quantifier(true);
-        return;
+        return parse_quantifier(true) == 0;
       }
       if (quantifier_at(i) != 0) {
         fail("nothing to repeat");
-        return;
+        return false;
       }
       fail("a { starts a reference {name} or a quantifier; write a literal { as \\{");
-      return;
+      return false;
     }
     if (c == '*' || c == '+' || c == '?') {
       fail("nothing to repeat");
-      return;
+      return false;
     }
     if (c == ']' || c == '}') {
       fail(c == ']' ? "a literal ] must be written \\]" : "a literal } must be written \\}");
-      return;
+      return false;
     }
     const char32_t cp = code_point_at(p, i);
     if (cp <= 0xFFFF && is_surrogate_unit(static_cast<char16_t>(cp))) {
       fail("a lone surrogate is not a character");
-      return;
+      return false;
     }
     i += cp > 0xFFFF ? 2 : 1;
     if (cp > 0xFFFF && quantifier_at(i) != 0) {
       fail("a quantifier after a character above U+FFFF repeats only half of it; use (?:...)");
-      return;
+      return false;
     }
-    parse_quantifier(true);
+    return parse_quantifier(true) == 0;
   }
 
   bool parse() {
-    parse_disjunction();
+    const bool nullable = parse_disjunction();
     if (!failed && i < p.size()) {
       fail(p[i] == ')' ? "unmatched )" : "unexpected character");
+    }
+    if (!failed && global && nullable) {
+      fail("a global pattern may not match the empty text: std::regex and JavaScript go on differently after an empty "
+           "match",
+           0);
     }
     return !failed;
   }
@@ -561,7 +644,7 @@ std::unique_ptr<Pattern> Pattern::compile(std::string_view pattern, std::string_
     if (error != nullptr) *error = "the pattern is not valid UTF-8";
     return nullptr;
   }
-  DialectParser parser{p, error};
+  DialectParser parser{p, error, global};
   if (!parser.parse()) {
     return nullptr;
   }

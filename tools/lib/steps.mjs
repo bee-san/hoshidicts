@@ -79,12 +79,12 @@ export function checkStep(step, classes, {allowBuiltin = true, allowAlternatives
             if (step.at !== undefined && !MAP_AT.has(step.at)) { throw new ClassError(`at is one of ${[...MAP_AT].join(', ')}`); }
             break;
         case 'pattern': {
-            const {groups} = parsePattern(step.pattern);
-            classes.patternSource(step.pattern);
-            checkReplacement(step.replace, groups);
             for (const key of ['global', 'repeat']) {
                 if (step[key] !== undefined && typeof step[key] !== 'boolean') { throw new ClassError(`${key} is a boolean`); }
             }
+            const {groups} = parsePattern(step.pattern, {global: step.global === true});
+            classes.patternSource(step.pattern, {global: step.global === true});
+            checkReplacement(step.replace, groups);
             break;
         }
         case 'alternatives':

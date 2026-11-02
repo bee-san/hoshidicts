@@ -13,6 +13,7 @@ import {
     rangesOfSource,
     rangesToItems,
 } from '../lib/classes.mjs';
+import {checkStep} from '../lib/steps.mjs';
 
 /** Ranges by testing every code point with JavaScript itself. */
 function bruteForce(source) {
@@ -276,6 +277,69 @@ describe('pattern dialect', () => {
         for (const [pattern, message] of Object.entries(cases)) {
             assert.throws(() => parsePattern(pattern), (error) => error instanceof ClassError && message.test(error.message), pattern);
         }
+    });
+
+    test('rejects what std::regex and JavaScript read differently (section 7.6)', () => {
+        // The audit's cases, with what JavaScript and the engine gave: a*? on
+        // baaa (global, -) -b-a-a-a- and -b-------; (a)|b\1 on b X and no
+        // match; (?:(x)|y)*z with [$1] on xyz [] and [x]; (a*)*b and the last
+        // pattern take exponential time in std::regex. Then the other cases
+        // of the random test, and more forms of each rule.
+        const cases = [
+            ['a*?', true, /global pattern may not match the empty text/],
+            ['a{0,2}?', true, /global pattern may not match the empty text/],
+            ['(a)|b\\1', false, /may not take part/],
+            ['(a)|b\\1', true, /may not take part/],
+            ['(?:(a)|b)+\\1', false, /inside a repeated group/],
+            ['(?:(x)|y)*z', false, /inside a repeated group/],
+            ['(a*)*b', false, /may not repeat a group that can match the empty text/],
+            ['(?:a|())*b', false, /may not repeat a group that can match the empty text/],
+            ['い\\.*|.(((?=c{2}?aい*?|いa{0,2})|(い{0,2}|c*a{0,2}){0,2}?)*?[\\u0061-\\u0062]\\)|\\.)', false, /may not repeat a group/],
+            ['((?=(a{2}c|aaい)|(?=c{0,2}a{2}?|aa*c)(ac*|c{0,2}a))|.{2}c*?((?=a{2}い*a*?|[^a]+)(?=.*.{2}.{0,2})|.*){1,3})a{0,2}(\\()*?|.\\.+?((?=cc|(?!c{2}い*|いac))|い{0,2}\\.)\\1', false, /may not repeat a group/],
+            ['.{0,2}?い(((?=[^a]{1,3}c*)c{0,2}.|\\.)*?a*.*|(?=c*?a|c)(?:(a?a*い|[ab]{2}.{2}.)|a{2}い\\({2}?){2})*?|.\\1', false, /inside a repeated group/],
+            ['い{0,2}?', true, /global pattern may not match the empty text/],
+            ['\\.{2}(い{0,2}|.*(?=(い{0,2}?い{0,2}a{2}|い{0,2}c{0,2}))(?=\\.{1,3}?(?:c{2}い{0,2}|a{0,2}?x){0,2}?|a*))|c.{2}?.{0,2}\\1', true, /may not take part/],
+            ['((?=.{0,2}?[a-c](c*|い)|(?=c{0,2}[a-c].{0,2}|.x?))(?=.{2}|x??(?=c*?))|((a)\\.{2})*い{2}(?=.{1,3}\\.{2})){0,2}\\1', true, /inside a repeated group/],
+            // libstdc++ reads ^ in a lookahead as the start of the lookahead:
+            // [ab]+(?!^|^) on abbいいc (global, Z) gives Zいいc in JavaScript, aZいいc in the engine.
+            ['[ab]+(?!^|^)', true, /\^ inside a lookahead/],
+            ['あb?(?=[あい]??^)b', true, /\^ inside a lookahead/],
+            ['(?=^a)a', false, /\^ inside a lookahead/],
+            ['a?|b', true, /global pattern may not match the empty text/],
+            ['|a', true, /global pattern may not match the empty text/],
+            ['x*', true, /global pattern may not match the empty text/],
+            ['$', true, /global pattern may not match the empty text/],
+            ['(?=a)', true, /global pattern may not match the empty text/],
+            ['(a)?\\1', false, /may not take part/],
+            ['(a)*\\1', false, /may not take part/],
+            ['(?!(a))\\1', false, /may not take part/],
+            ['(?:(a)|c)\\1', false, /may not take part/],
+            ['((a)|b)\\2', false, /may not take part/],
+            ['((a)|b)*', false, /inside a repeated group/],
+            ['(?:a?)+', false, /may not repeat a group/],
+            ['(?:a|)*', false, /may not repeat a group/],
+            ['(?:(?=a))+', false, /may not repeat a group/],
+            ['()\\1*', false, /may not repeat a back-reference/],
+            ['a{70000}', false, /above 65535/],
+        ];
+        for (const [pattern, global, message] of cases) {
+            assert.throws(() => parsePattern(pattern, {global}), (error) => error instanceof ClassError && message.test(error.message), `${pattern}${global ? ' (global)' : ''}`);
+        }
+        // What the rules leave in the dialect.
+        for (const [pattern, global] of [
+            ['(a|b)*c', false], ['(a)\\1', false], ['(?:(a)\\1|b)', false], ['(?=(a))\\1', false], ['(a)+\\1', false],
+            ['((a)|b)\\1', false], ['(a)\\1|b', false], ['(a)(?:b\\1)*', false], ['(a)(\\1)+', false], ['(a)\\1*', false],
+            ['(?:ab?)?', false], ['a*?', false], ['x*', false], ['$', false], ['^a', true], ['a(?=b$)', true], ['a', true], ['a*b', true],
+            ['(l|dell|all)[\'\u2019]', true], ['^ge([a-z]+)t$', false], ['^(ma)([b-df-hj-np-tv-z]*[aeiou])(\\2)', false],
+        ]) {
+            assert.doesNotThrow(() => parsePattern(pattern, {global}), `${pattern}${global ? ' (global)' : ''}`);
+        }
+        assert.equal(parsePattern('a*').nullable, true);
+        assert.equal(parsePattern('a+').nullable, false);
+        // The global flag of a step reaches the check.
+        assert.throws(() => checkStep({pattern: 'a*', replace: '-', global: true}, classes), /global pattern/);
+        assert.doesNotThrow(() => checkStep({pattern: 'a*', replace: '-'}, classes));
+        assert.throws(() => classes.patternRegExp('a*', {global: true}), /global pattern/);
     });
 
     test('expands references to explicit BMP ranges', () => {
