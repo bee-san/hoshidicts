@@ -57,7 +57,9 @@
       "shout": [{"case": "upper"}]
     }
   },
-  "settings": [],
+  "settings": [
+    {"id": "archaicForms", "type": "boolean", "default": false, "label": "Early Modern English forms", "description": "Also look up -eth forms such as walketh.", "group": "lookup", "effect": {"transforms": ["archaic"]}}
+  ],
   "host": {
     "ttsLanguage": "xx",
     "audioLanguage": "xx",

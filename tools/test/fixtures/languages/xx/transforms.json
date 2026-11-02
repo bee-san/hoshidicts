@@ -142,6 +142,16 @@
         {"type": "suffix", "inflected": "’s", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemEndsWith": "{letter}", "then": [{"case": "lower"}, {"strip": "{marks}"}]},
         {"type": "pattern", "pattern": "^({letter}+)’$", "replacement": "$1", "anchorSuffix": "’", "conditionsIn": [], "conditionsOut": ["n"]}
       ]
+    },
+    {
+      "id": "archaic",
+      "name": "-eth",
+      "description": "Early Modern English third person singular",
+      "source": "own",
+      "optional": true,
+      "rules": [
+        {"type": "suffix", "inflected": "eth", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
     }
   ]
 }

@@ -1,0 +1,7 @@
+# Hand-written for tests/cli_languages_test.cmake: the opt probe pack's own rules reach xq (opt), opt-rules.json reaches xz and yz (z).
+# category	valid	source	term	rule	reasons
+nouns	1	cats	cat	n	s
+own	1	xq	x	n	opt
+rules	1	xz	x	n	z
+rules	1	yz	y	n	z
+negatives	0	cat	ca	*	*

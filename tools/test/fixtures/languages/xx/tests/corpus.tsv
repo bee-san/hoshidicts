@@ -4,5 +4,6 @@ nouns	1	cats	cat	ns	plural
 nouns	1	Cities	city	ns	plural
 verbs	1	walked	walk	v	past
 verbs	1	looked up	look up	v_phr	past
+verbs	1	walketh	walk	v	archaic
 adjectives	1	tallér	tall	adj	comparative
 negatives	0	bus	b	*	*

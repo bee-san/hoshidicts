@@ -59,6 +59,12 @@ void fail(const std::string& what) {
 
 void note(const std::string& what) { std::printf("%s: %s\n", code.c_str(), what.c_str()); }
 
+// The last line, also when a pack stops the test early, and the exit status.
+int finish() {
+  std::printf("%s: %s\n", code.c_str(), failures == 0 ? "conforms" : (std::to_string(failures) + " failures").c_str());
+  return failures == 0 ? 0 : 1;
+}
+
 bool read_file(const fs::path& path, std::string& out) {
   std::ifstream file(path, std::ios::binary);
   if (!file) return false;
@@ -418,19 +424,19 @@ int main(int argc, char** argv) {
   std::string language;
   if (!read_file(dir / "language.json", language)) {
     fail("language.json is missing");
-    return 1;
+    return finish();
   }
   const std::string transforms_name = lang::transforms_file_name(language);
   std::string transforms;
   if (!transforms_name.empty() && !read_file(dir / transforms_name, transforms)) {
     fail(transforms_name + " is missing");
-    return 1;
+    return finish();
   }
   std::string error;
   const auto pack = hoshidicts::parse_language_pack(language, transforms, &error);
   if (!pack) {
     fail(error);
-    return 1;
+    return finish();
   }
   const auto& data = pack->data();
   if (data.code != code) fail("language.json: code is " + data.code + ", not the directory name " + code);
@@ -582,6 +588,5 @@ int main(int argc, char** argv) {
     }
   }
 
-  std::printf("%s: %s\n", code.c_str(), failures == 0 ? "conforms" : (std::to_string(failures) + " failures").c_str());
-  return failures == 0 ? 0 : 1;
+  return finish();
 }

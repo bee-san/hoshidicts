@@ -30,7 +30,9 @@ They run against a miniature Yomitan tree in `tools/test/fixtures/yomitan/`
 and a stand-in for `hoshidicts-cli` in `tools/test/stub/`, so they need
 neither a Yomitan checkout nor a build. With `YOMITAN_DIR` set to a checkout
 at d3c54c1 they also check the port against the contract's census of every
-Yomitan language.
+Yomitan language. `ctest -R check-yomitan-cli` (a build with
+`HOSHIDICTS_TESTS` and `HOSHIDICTS_CLI`, and Node on the `PATH`) runs
+`check-yomitan.mjs` on the same fixtures with the real `hoshidicts-cli`.
 
 `sources/yomitan-differences.tsv` has seven columns:
 

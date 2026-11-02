@@ -80,8 +80,7 @@ struct PackData {
 };
 
 // Parses and checks a pack. `transforms_json` is the file lookup.transforms
-// names; it may be empty only when that is null, and may replace the named
-// file (`hoshidicts-cli deinflect --transforms`). On a problem returns null
+// names; it may be empty only when that is null. On a problem returns null
 // and sets `error` to "<code>: <file>: <JSON path>: <reason>".
 // `trusted` is for the packs built into the library, whose bytes the
 // language conformance test checks against the full schema (they must equal
@@ -93,6 +92,15 @@ struct PackData {
 // checked as always.
 std::unique_ptr<PackData> parse_pack(std::string_view language_json, std::string_view transforms_json,
                                      std::string* error, bool trusted = false);
+
+// A pack whose deinflection rules are replaced by another rule file for one
+// run (`hoshidicts-cli --transforms`, section 10.3): parse_pack with
+// `rules_json` in place of the file lookup.transforms names (also when that
+// is null), except that a setting's `transforms` effect may name ids the
+// rules lack, and errors in the rules name `rules_name`. The caller first
+// checks the pack with its own rules file, as hosts load it (parse_pack).
+std::unique_ptr<PackData> parse_pack_with_rules(std::string_view language_json, std::string_view rules_json,
+                                                std::string_view rules_name, std::string* error);
 
 // lookup.transforms of a descriptor, or empty when it is null, missing or the
 // descriptor does not parse (parse_pack reports what is wrong with it).

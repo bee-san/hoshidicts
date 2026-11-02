@@ -57,7 +57,16 @@
     "labels": {},
     "displayTransforms": {}
   },
-  "settings": [],
+  "settings": [
+    {
+      "id": "optRule",
+      "type": "boolean",
+      "default": false,
+      "label": "The opt rule",
+      "group": "lookup",
+      "effect": {"transforms": ["opt"]}
+    }
+  ],
   "host": {
     "ttsLanguage": "zz",
     "audioLanguage": "zz",

@@ -62,7 +62,7 @@ describe('check-classes', () => {
         assert.deepEqual(decapitalize.cases.find(([input]) => input === 'Cities'), ['Cities', 'cities']);
         // Inputs: TSV sources, text.tsv inputs, then the host.sample texts.
         const inputs = decapitalize.cases.map(([input]) => input);
-        assert.deepEqual(inputs, ['cats', 'Cities', 'walked', 'looked up', 'tallér', 'bus', 'Walked', 'café', 'banana', 'walking', 'She walked home.', 'walk']);
+        assert.deepEqual(inputs, ['cats', 'Cities', 'walked', 'looked up', 'walketh', 'tallér', 'bus', 'Walked', 'café', 'banana', 'walking', 'She walked home.', 'walk']);
         const apostrophe = expectations.steps[2];
         assert.ok(apostrophe.cases.every(([input, output]) => output === input));
     });
