@@ -24,4 +24,11 @@ struct FormOfReference {
 namespace form_of_slot {
 constexpr uint32_t only_references = 0;  // the flag entry's rule count
 constexpr uint32_t with_definitions = 1;
+
+// A lookup follows the references of a target whose rows are all references
+// themselves onward, in all at most this many hops from the row the
+// deinflection found (docs/languages.md, section 9.10): wiktionary-to-yomitan
+// writes spelling variants as references to forms that are themselves
+// references (fué → fue → ser).
+constexpr uint32_t max_hops = 3;
 }  // namespace form_of_slot

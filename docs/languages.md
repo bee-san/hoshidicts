@@ -1039,7 +1039,8 @@ and have no effect.
 
 A term is **dictionary-confirmed** when a form-of reference of a row of the
 matched text itself (after processors, before any rule) reached it (section
-9.10): the dictionary says the matched text is a form of that term. It ranks
+9.10), by a path no longer than the trace the result keeps: the dictionary
+says the matched text is a form of that term. It ranks
 before a term that is not with the same matched length, steps and trace
 length: for Spanish *puedo*, the rules propose *podar* and *poder* with one
 step each, the row *puedo* names *poder*, so *poder* comes first. A reference
@@ -1055,7 +1056,7 @@ when the lookup first found their terms: the scan's prefixes from the longest
 down (the long-key extension of 9.1 after them), each through its processor
 variants, deinflections (section 7.4), postprocessed forms and the rows of the
 selected dictionaries in order; then the terms the scan's form-of references
-reach (9.10); then variant passes and their references. The order is the same
+reach (9.10), hop by hop; then variant passes and their references. The order is the same
 on every platform. With `asTerm` (Japanese) such ties keep the order
 hoshidicts always gave them, which the standard library's `partial_sort`
 decides; the Japanese parity tests pin it (section 11.3).
@@ -1142,7 +1143,15 @@ as Yomitan's translator does (`_getDeinflections` and
    terms it finds join grouping, ordering and `traceSelection` like any other
    (9.6), with their own frequencies and pitches; when the row naming them is
    the matched text's own (no rule applied), they are dictionary-confirmed.
-   One hop: the references of the rows found for `formOf` are not followed.
+   When every row found for `formOf` is itself only references, those
+   references are followed in turn, up to three hops from the row the
+   deinflection found, each hop adding its rules to the trace: wiktionary-to-
+   yomitan writes spelling variants as references to forms that are
+   themselves references (*fué* → *fue* → *ser*), so one hop loses the lemma.
+   A target with any row that has a definition ends the chain there, and a
+   text already on the chain, or the text whose row started it, ends that
+   branch. A chain that starts at the matched text's own row confirms its
+   terms. Yomitan follows one hop only.
 4. The references of the scan's deinflections are followed after the whole
    scan, as Yomitan adds its dictionary deinflections after the algorithm's,
    so where a reference and a rule reach a term with equal steps and trace
@@ -1169,6 +1178,8 @@ Where hoshidicts differs from Yomitan:
 
 - A result keeps one trace (9.6); Yomitan lists every chain that reached the
   entry, marked `algorithm`, `dictionary` or `both`.
+- hoshidicts follows chains of reference-only rows (point 3); Yomitan
+  follows one hop.
 - Yomitan's per-dictionary `useDeinflections` option, which turns following
   off for one dictionary, has no counterpart; the pack decides for every
   dictionary.

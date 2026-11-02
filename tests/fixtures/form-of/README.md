@@ -9,7 +9,8 @@ dictionary directory and import it at run time.
 
 `languages/fo` is a word-resolution pack with `formOf: "follow"` and rules
 `past` (ed), `neg` (un-), `present-yo` (o → ar and o → er with ue → o), `dim`
-(ts), `tie` (q → d, c, b, a), `tie2` (qv → b, a) and `plural` (s). The tests
+(ts), `tie` (q → d, c, b, a), `tie2` (qv → b, a), `plural` (s) and `voseo`
+(é → er). The tests
 add copies with `formOf: "asTerm"`, with `traceSelection: "first"` and with
 character resolution.
 
@@ -24,7 +25,7 @@ character resolution.
 | `left` (a definition and → leave [past, participle]) | A row with references and a definition stays, without the references; two rules are two steps |
 | `leaves` → leave, leaf | Two references to two lemmas |
 | `gone` → go | A reference to a missing lemma: nothing |
-| `went` → wend → wander | One hop |
+| `went` → wend → wander | A chain: `wend`'s rows are all references, so its reference is followed too |
 | `book` (a lemma row and → bake) | A reference is followed only where its row passes the part-of-speech filter (`booked`), or its dictionary is in `pos_filter_exempt` |
 | `strode` → stride | The lemma is only in `lemmas`: a selection without it finds nothing |
 | `caféd` | A reference with JSON escapes |
@@ -36,6 +37,10 @@ character resolution.
 | `zo` → zip (missing), zap | A false candidate a deinflected text's row names (`eval-language`) |
 | `zd`, `zc`, `zb`, `za` | Four terms that tie on every key: discovery order (the rule order), not term order |
 | `yq` → ya, `yb`, `ya` | With character resolution, a confirmation at a shorter match (`yq`) does not count where `yqv` reaches the term |
+| `fué` → fue → ser, ir; `fuer` → fuera | wty-es-en's chain: the second hop's lemmas, confirmed, come before `fuera`, which `voseo` and `fuer`'s reference reach |
+| `cyca` ↔ `cycb` | A cycle of reference-only rows ends without a result |
+| `ga` → gb → gc → gd, `ha` → … → he | Three hops reach `gd`; the fourth hop to `he` is not taken |
+| `sa` (a definition, → sc, → sb), `sb` → sa | A chain that returns to the text it started from ends there (`sa` is not confirmed) |
 
 `lemmas` holds `stride`, `walk`, `podar` and `poder`. `japanese` holds
 Japanese form-of rows (`食べた` → 食べる, `行った` → 行く and 言う, `食べ物` with a
@@ -44,4 +49,6 @@ definition and a reference, `見た` → 見る without 見る, `そんな` → 
 `tests/reference/` does, and a copy that follows them shows where references
 of the scan and of the cat-speech pass are followed.
 
-`corpus.tsv` is the `eval-language` corpus for the pack and `forms`.
+`corpus.tsv` is the `eval-language` corpus for the pack and `forms`. Its `fué` →
+ser row is found only through references, so it lowers recall (which counts
+rules) and raises `firstRank`.

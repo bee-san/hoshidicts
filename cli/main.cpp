@@ -6,6 +6,7 @@
 #include <filesystem>
 #include <format>
 #include <fstream>
+#include <functional>
 #include <iostream>
 #include <map>
 #include <optional>
@@ -581,7 +582,8 @@ int cmd_lookup(Context& context, const Arguments& args, int max_results = 8, int
 // term for. A deinflected text counts when a row with definitions passes the
 // filter for one of the deinflections that reach it, and the text a form-of
 // reference names counts when the row naming it passes the filter for the
-// deinflection that found it and the text has a row with definitions. For
+// deinflection that found it and the text has a row with definitions; a text
+// whose rows are all references continues the chain as a lookup does. For
 // --per-rule, a text's rules are those every path to it uses; the path to a
 // reference's text is the path of the deinflection that found its row.
 template <typename Intersect>
@@ -600,7 +602,8 @@ void count_followed_false_candidates(const DictionaryQuery& query, const hoshidi
   for (size_t i = 0; i < list.size(); ++i) by_text[list[i].text].push_back(i);
   // Each candidate text, and the deinflections whose paths reach it.
   std::map<std::string, std::vector<size_t>> candidates;
-  std::map<std::string, std::vector<size_t>> referenced;
+  // (a reference's text, the text whose row names it) -> deinflections
+  std::map<std::pair<std::string, std::string>, std::vector<size_t>> referenced;
   BlobPins pins;
   std::vector<FormOfReference> references;
   for (const auto& [text, which] : by_text) {
@@ -618,14 +621,37 @@ void count_followed_false_candidates(const DictionaryQuery& query, const hoshidi
         if (!any && (bits_of(row.rules) & conditions) == 0) continue;
         references.clear();
         QueryAccess::read_form_of(row, pins, references);
-        for (const auto& reference : references) referenced[reference.form_of].push_back(i);
+        for (const auto& reference : references) referenced[{reference.form_of, text}].push_back(i);
       }
     }
   }
-  for (const auto& [text, which] : referenced) {
-    if (QueryAccess::query_raw(query, text, pins, true).terms.empty()) continue;
-    auto& paths = candidates[text];
-    paths.insert(paths.end(), which.begin(), which.end());
+  // A reference's text counts when it has a row with definitions; one whose
+  // rows are all references passes the chain on (section 9.10). `chain`
+  // holds the texts on it, which end a cycle.
+  std::vector<std::string> chain;
+  const std::function<void(const std::string&, uint32_t, const std::vector<size_t>&)> reach =
+      [&](const std::string& text, uint32_t hops, const std::vector<size_t>& which) {
+        const RawTerms raw = QueryAccess::query_raw(query, text, pins, true);
+        if (!raw.terms.empty()) {
+          auto& paths = candidates[text];
+          paths.insert(paths.end(), which.begin(), which.end());
+          return;
+        }
+        if (hops >= form_of_slot::max_hops) return;
+        for (const RawFormOfRow& next_row : raw.form_of_rows) {
+          std::vector<FormOfReference> next;
+          QueryAccess::read_form_of(next_row, pins, next);
+          for (const auto& reference : next) {
+            if (std::ranges::find(chain, reference.form_of) != chain.end()) continue;
+            chain.push_back(reference.form_of);
+            reach(reference.form_of, hops + 1, which);
+            chain.pop_back();
+          }
+        }
+      };
+  for (const auto& [key, which] : referenced) {
+    chain = {key.second, key.first};
+    reach(key.first, 1, which);
   }
   for (auto& [text, which] : candidates) {
     if (text == row.source || text == row.term) continue;

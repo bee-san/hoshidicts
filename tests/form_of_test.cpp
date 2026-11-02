@@ -369,9 +369,25 @@ void test_follow(const fs::path& repo, const Dictionaries& d, DictionaryStorage 
   // replaces it.
   check(run("gone").empty(), "gone has no lemma: " + brief(run("gone")));
   check(brief(run("gone", "fa")) == "gone(gone;gone;)", "asTerm finds gone: " + brief(run("gone", "fa")));
-  // One hop: went names wend, which is only a reference to wander.
-  check(run("went").empty(), "went: one hop, " + brief(run("went")));
+  // A chain: went names wend, whose rows are all references (to wander).
+  check(brief(run("went")) == "wander(went;wander;past*>archaic*)", "went: a chain of two hops, " + brief(run("went")));
   check(brief(run("wend")) == "wander(wend;wander;archaic*)", "wend: " + brief(run("wend")));
+  // wty-es-en's fué names fue, whose row names ser and ir: the second hop's
+  // lemmas, confirmed, come before fuera, which the voseo rule and fuer's
+  // reference reach in as many steps.
+  check(brief(run("fué")) ==
+            "ser(fué;ser;alt-of*>third-person singular preterite*) ir(fué;ir;alt-of*>third-person singular preterite*) "
+            "fuera(fué;fuera;voseo>alt-of*)",
+        "fué: " + brief(run("fué")));
+  // A cycle of reference-only rows ends without a result; three hops reach
+  // gd, and a fourth (to he) is not taken.
+  check(run("cyca").empty() && run("cycb").empty(), "a cycle ends: " + brief(run("cyca")));
+  check(brief(run("ga")) == "gd(ga;gd;r1*>r2*>r3*)", "three hops: " + brief(run("ga")));
+  check(run("ha").empty(), "a fourth hop is not taken: " + brief(run("ha")));
+  // A chain that returns to the text whose row started it ends there: sa's
+  // row names sc and sb without rules, and sb only names sa again, so sa is
+  // not confirmed and sc, which is, comes first.
+  check(brief(run("sa")) == "sc(sa;sc;) sa(sa;sa;)", "a chain back to its start: " + brief(run("sa")));
   // The filter applies to the row naming the reference: under booked's verb
   // reading, the reference-only row book (no part of speech) is not followed.
   check(brief(run("booked")) == "book(booked;book;past)", "booked does not follow book's reference: " + brief(run("booked")));

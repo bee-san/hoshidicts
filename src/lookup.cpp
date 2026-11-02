@@ -48,19 +48,29 @@ void each_token(std::string_view str, F&& f) {
 // A form-of reference of a row a deinflection found, followed as a
 // deinflection of its own (docs/languages.md, section 9.10): the
 // deinflection's matched text, processor steps and trace, then one step per
-// rule of the reference, reaching the term `text`.
+// rule of the reference, reaching the term `text`. A reference whose target
+// has only reference rows is followed onward: a chain of up to
+// form_of_slot::max_hops references, whose rules are all in the trace.
 struct Followed {
   size_t matched_len;
   const Deinflection* base;
   uint32_t index;
   int steps;
   std::string text;
-  // The reference's rules: the lookup's followed_rules[first_rule, first_rule + rule_count).
+  // The rules of the chain up to this reference: the lookup's
+  // followed_rules[first_rule, first_rule + rule_count).
   uint32_t first_rule;
   uint32_t rule_count;
-  // A row of the matched text itself names the term (the deinflection has no
-  // trace), so it is dictionary-confirmed (section 9.6).
+  // A row of the matched text itself names the chain's first target (the
+  // deinflection has no trace), so its terms are dictionary-confirmed
+  // (section 9.6).
   bool confirms;
+  // The chain: this reference's hop (1 for a reference of the row the
+  // deinflection found), the reference before it, and the text whose row
+  // started the chain, which with the earlier targets ends a cycle.
+  uint32_t hops = 1;
+  const Followed* previous = nullptr;
+  const std::string* origin = nullptr;
 };
 
 struct Candidate {
@@ -86,16 +96,28 @@ struct Candidate {
   // `form` is its text), or null.
   const Followed* reference = nullptr;
   // The longest matched length at which a form-of reference of a row of the
-  // matched text itself reached the term, whichever trace the candidate
-  // keeps, or 0.
+  // matched text itself reached the term, or 0, and the shortest trace
+  // length of such a path at that length.
   size_t confirmed_len = 0;
+  uint32_t confirmed_depth = UINT32_MAX;
 
   const Deinflection& deinflection() const { return base[index]; }
   // The trace length: the deinflection's, plus the reference's rules.
   uint32_t depth() const { return deinflection().depth + (reference != nullptr ? reference->rule_count : 0); }
   // Dictionary-confirmed (section 9.6): a form-of reference of a row of the
-  // matched text reached the term.
-  bool confirmed() const { return confirmed_len == matched_len; }
+  // matched text reached the term at its matched length, by a path no longer
+  // than the trace it keeps (a chain that reaches it in more hops than a rule
+  // does confirms nothing).
+  bool confirmed() const { return confirmed_len == matched_len && confirmed_depth <= depth(); }
+  // Records a confirming path of `depth` at `length`.
+  void confirm(size_t length, uint32_t depth) {
+    if (length > confirmed_len) {
+      confirmed_len = length;
+      confirmed_depth = depth;
+    } else if (length == confirmed_len) {
+      confirmed_depth = std::min(confirmed_depth, depth);
+    }
+  }
 };
 
 uint64_t key_hash(std::string_view expression, std::string_view reading) {
@@ -314,14 +336,14 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
       const std::string_view key = reading_key(terms, term);
       const uint64_t h = key_hash(term.expression, key);
       Candidate* existing = find_candidate(h, term, key);
+      const uint32_t depth = base[di].depth + (reference != nullptr ? reference->rule_count : 0);
       if (existing != nullptr) {
         bool better = matched_len > existing->matched_len;
         if (!better && shortest && matched_len == existing->matched_len) {
-          const uint32_t depth = base[di].depth + (reference != nullptr ? reference->rule_count : 0);
           better = steps < existing->steps || (steps == existing->steps && depth < existing->depth());
         }
         if (reference != nullptr && reference->confirms) {
-          existing->confirmed_len = std::max(existing->confirmed_len, matched_len);
+          existing->confirm(matched_len, depth);
         }
         if (better) {
           existing->matched_len = matched_len;
@@ -343,8 +365,10 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
                                        .store_index = store_index,
                                        .steps = steps,
                                        .dict_rank = rank,
-                                       .reference = reference,
-                                       .confirmed_len = reference != nullptr && reference->confirms ? matched_len : 0});
+                                       .reference = reference});
+        if (reference != nullptr && reference->confirms) {
+          candidates.back().confirm(matched_len, depth);
+        }
       }
     }
     term_store.push_back(std::move(terms));
@@ -386,7 +410,7 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   };
 
   const auto note_references = [&](size_t matched_len, const Deinflection* base, uint32_t di, int steps,
-                                   const RawTerms& terms) {
+                                   const std::string& form, const RawTerms& terms) {
     for (const RawFormOfRow& row : terms.form_of_rows) {
       if (!row_passes(base[di].conditions, row.dict_name, row.rules)) {
         continue;
@@ -404,7 +428,8 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
                                      .text = std::move(reference.form_of),
                                      .first_rule = static_cast<uint32_t>(followed_rules.size()),
                                      .rule_count = static_cast<uint32_t>(reference.rules.size()),
-                                     .confirms = base[di].depth == 0});
+                                     .confirms = base[di].depth == 0,
+                                     .origin = &form});
         std::ranges::move(reference.rules, std::back_inserter(followed_rules));
       }
     }
@@ -435,7 +460,7 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     // the frequencies and pitches of only the terms the filter keeps.
     auto terms = query_.query_raw(form, pins, selection, false, normalizer, follow);
     if (!terms.form_of_rows.empty()) {
-      note_references(matched_len, base, di, steps, terms);
+      note_references(matched_len, base, di, steps, form, terms);
     }
     filter_by_pos(terms, base[di].conditions);
     collect_metadata(terms);
@@ -444,8 +469,12 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
 
   // Follows the form-of references noted since the last call, each as a
   // deinflection to its text with no conditions (Yomitan's
-  // _getDictionaryDeinflections). One hop: the references of the rows they
-  // reach are not followed.
+  // _getDictionaryDeinflections). A target whose rows are all references
+  // themselves continues the chain with their references, up to
+  // form_of_slot::max_hops in all; a text already on the chain ends that
+  // branch. A target with any row that has a definition ends the chain there.
+  // The queue grows while it is walked, so later hops are followed after the
+  // earlier ones.
   const auto follow_noted = [&]() {
     if (!followed) {
       return;
@@ -453,6 +482,44 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     for (; followed_done < followed->size(); ++followed_done) {
       const Followed& reference = (*followed)[followed_done];
       auto terms = query_.query_raw(reference.text, pins, selection, false, normalizer, true);
+      if (terms.terms.empty()) {
+        if (reference.hops < form_of_slot::max_hops) {
+          const auto on_chain = [&](std::string_view text) {
+            if (text == *reference.origin) return true;
+            for (const Followed* f = &reference; f != nullptr; f = f->previous) {
+              if (f->text == text) return true;
+            }
+            return false;
+          };
+          for (const RawFormOfRow& row : terms.form_of_rows) {
+            references.clear();
+            DictionaryQuery::read_form_of(row, pins, references);
+            for (auto& next : references) {
+              if (on_chain(next.form_of)) {
+                continue;
+              }
+              const auto first_rule = static_cast<uint32_t>(followed_rules.size());
+              for (uint32_t k = 0; k < reference.rule_count; ++k) {
+                std::string rule = followed_rules[reference.first_rule + k];
+                followed_rules.push_back(std::move(rule));
+              }
+              std::ranges::move(next.rules, std::back_inserter(followed_rules));
+              followed->push_back(Followed{.matched_len = reference.matched_len,
+                                           .base = reference.base,
+                                           .index = reference.index,
+                                           .steps = reference.steps,
+                                           .text = std::move(next.form_of),
+                                           .first_rule = first_rule,
+                                           .rule_count = static_cast<uint32_t>(followed_rules.size()) - first_rule,
+                                           .confirms = reference.confirms,
+                                           .hops = reference.hops + 1,
+                                           .previous = &reference,
+                                           .origin = reference.origin});
+            }
+          }
+        }
+        continue;
+      }
       collect_metadata(terms);
       add_terms(reference.matched_len, reference.base, reference.index, &reference.text, reference.steps,
                 std::move(terms), SIZE_MAX, &reference);

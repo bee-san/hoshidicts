@@ -78,6 +78,15 @@
       "rules": [
         {"type": "suffix", "inflected": "s", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]}
       ]
+    },
+    {
+      "id": "voseo",
+      "name": "voseo",
+      "description": "the probe rule é to er (Spanish imperative-vos)",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "é", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
     }
   ]
 }
