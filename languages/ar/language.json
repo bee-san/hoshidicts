@@ -84,7 +84,7 @@
     "audioLanguage": "ar",
     "anki": {
       "noteTypeFamilies": [],
-      "fieldAliases": {"pronunciation": ["IPA"]},
+      "fieldAliases": {"phonetic-transcriptions": ["IPA"]},
       "partOfSpeechLabels": {"n": "Noun", "v": "Verb", "adj": "Adjective", "adv": "Adverb", "prep": "Preposition", "pron": "Pronoun", "ptcl": "Particle"}
     },
     "frequencySamples": null,

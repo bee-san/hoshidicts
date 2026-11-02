@@ -66,7 +66,7 @@
     "audioLanguage": "en",
     "anki": {
       "noteTypeFamilies": [],
-      "fieldAliases": {"pronunciation": ["IPA"]},
+      "fieldAliases": {"phonetic-transcriptions": ["IPA"]},
       "partOfSpeechLabels": {"v": "Verb", "n": "Noun", "adj": "Adjective", "adv": "Adverb"}
     },
     "frequencySamples": {
