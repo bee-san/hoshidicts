@@ -1038,11 +1038,15 @@ as for languages without readings, the reading terms compare equal strings
 and have no effect.
 
 A term is **dictionary-confirmed** when a form-of reference of a row of the
-matched text reached it (section 9.10), alone or after rules, whichever trace
-the result keeps. It ranks before a term that only rules reached with the same
-matched length, steps and trace length: for Spanish *puedo*, the rules propose
-*podar* and *poder* with one step each, the row *puedo* names *poder*, so
-*poder* comes first. It never outranks a longer match, fewer steps or a
+matched text itself (after processors, before any rule) reached it (section
+9.10): the dictionary says the matched text is a form of that term. It ranks
+before a term that is not with the same matched length, steps and trace
+length: for Spanish *puedo*, the rules propose *podar* and *poder* with one
+step each, the row *puedo* names *poder*, so *poder* comes first. A reference
+in the row of a deinflected form confirms nothing: in wty-es-en *jovencita*
+is a form of *jovencito*, and *jovencito*, which the diminutive rule also
+reaches from *jovencita*, is a form of *joven*; *joven* is not confirmed for
+*jovencita*. A confirmed term never outranks a longer match, fewer steps or a
 shorter trace. A pack with `formOf: "asTerm"` follows no reference, so no term
 is confirmed.
 
@@ -1134,7 +1138,8 @@ as Yomitan's translator does (`_getDeinflections` and
 3. `formOf` is looked up in the request's dictionary selection (9.7), within
    `lookup_dictionary()`'s dictionary, without the part-of-speech filter. The
    terms it finds join grouping, ordering and `traceSelection` like any other
-   (9.6), with their own frequencies and pitches, and are dictionary-confirmed.
+   (9.6), with their own frequencies and pitches; when the row naming them is
+   the matched text's own (no rule applied), they are dictionary-confirmed.
    One hop: the references of the rows found for `formOf` are not followed.
 4. The references of the scan's deinflections are followed after the whole
    scan, as Yomitan adds its dictionary deinflections after the algorithm's,
@@ -1168,6 +1173,12 @@ Where hoshidicts differs from Yomitan:
 - hoshidicts applies the part-of-speech filter to the rows of a term together
   (9.4), Yomitan to each row. A reference is followed only when its own row
   passes, as in Yomitan.
+- hoshidicts ranks a dictionary-confirmed term first on a tie (9.6). Yomitan
+  has no such key: its `_sortTermDictionaryEntries` orders a tie of length,
+  processor chain, inflection chain, exact matches, frequency, dictionary and
+  score by headword length and then string comparison, so for *puedo* it
+  lists *podar* before *poder*. hoshidicts breaks the remaining ties by
+  discovery order instead (9.6).
 
 ## 10. Engine API
 
