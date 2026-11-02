@@ -34,8 +34,9 @@ void print_usage(const char* program) {
   std::cout << std::format("Usage: {} [--languages <dir>] <command> ...\n", program);
   std::cout << std::format("{} import <path/to/dictionary.zip|dictionary.mdx>\n", program);
   std::cout << std::format("{} languages\n", program);
-  std::cout << std::format("{} deinflect <code> (<text> | --stdin) [--transforms <file>]\n", program);
-  std::cout << std::format("{} preprocess <code> (<text> | --stdin)\n", program);
+  std::cout << std::format("{} deinflect <code> (<text> | --stdin) [--transforms <file>] [--options <id,...> | --all-options]\n",
+                           program);
+  std::cout << std::format("{} preprocess <code> (<text> | --stdin) [--options <id,...> | --all-options]\n", program);
   std::cout << std::format("{} deinflect <word>              (Japanese, human-readable)\n", program);
   std::cout << std::format("{} preprocess <word>             (Japanese, human-readable)\n", program);
   std::cout << std::format("{} query <path/to/dictionary> <word>\n", program);
@@ -170,6 +171,43 @@ std::vector<std::string> input_lines(bool from_stdin, const std::vector<std::str
   return lines;
 }
 
+// The optional processors, transforms and variant passes `--options <id,...>`
+// and `--all-options` turn on; without them none is on, as in a lookup
+// without language options (section 10.3).
+struct OptionSet {
+  bool all = false;
+  std::vector<std::string> ids;
+  bool contains(std::string_view id) const { return all || std::ranges::find(ids, id) != ids.end(); }
+};
+
+// Reads the two options; `known` are the ids they may name (`what` describes
+// them). Null after an error message.
+std::optional<OptionSet> option_set(const Arguments& args, const std::vector<std::string>& known, const std::string& code,
+                                    const char* what) {
+  OptionSet set;
+  set.all = args.flags.contains("--all-options");
+  if (const auto it = args.values.find("--options"); it != args.values.end()) {
+    for (const auto part : it->second | std::views::split(',')) {
+      std::string id(part.begin(), part.end());
+      if (id.empty()) continue;
+      if (std::ranges::find(known, id) == known.end()) {
+        std::cerr << "hoshidicts-cli: --options: the pack " << code << " has no " << what << " " << id << "\n";
+        return std::nullopt;
+      }
+      set.ids.push_back(std::move(id));
+    }
+  }
+  return set;
+}
+
+// The JSON line for an input that is not valid UTF-8: the bytes are not
+// copied, so the output stays valid UTF-8.
+std::string invalid_input(bool from_stdin, size_t line, const char* results) {
+  const std::string where = from_stdin ? std::format("line {} of the input", line) : std::string("the text");
+  std::cerr << "hoshidicts-cli: " << where << " is not valid UTF-8\n";
+  return std::format("{{\"input\":null,\"{}\":[],\"error\":{}}}\n", results, json_string(where + " is not valid UTF-8"));
+}
+
 int cmd_import(const std::string& path) {
   std::filesystem::path source_path = path_utils::from_utf8(path);
   std::string output_dir = path_utils::to_utf8(source_path.parent_path());
@@ -234,6 +272,7 @@ int cmd_preprocess_legacy(const std::string& text) {
 
 // `deinflect <code>`: one JSON object per input (section 10.3).
 int cmd_deinflect(Context& context, const Arguments& args) {
+  namespace lang = hoshidicts::lang;
   const std::string* transforms = args.values.contains("--transforms") ? &args.values.at("--transforms") : nullptr;
   const auto pack_holder = context.pack(args.positional[0], transforms);
   if (!pack_holder) return 1;
@@ -244,20 +283,55 @@ int cmd_deinflect(Context& context, const Arguments& args) {
     std::cerr << "hoshidicts-cli: deinflect needs one text or --stdin\n";
     return 1;
   }
+  // --options names transforms and variant passes.
+  std::vector<std::string> known;
+  if (pack.transforms) {
+    for (const auto& t : pack.transforms->transforms) known.push_back(t.id);
+  }
+  for (const auto& pass : pack.variant_passes) known.push_back(pass.id);
+  const auto options = option_set(args, known, pack.code, "transform or variant pass");
+  if (!options) return 1;
+  std::vector<bool> enabled_transforms;
+  if (pack.transforms) {
+    for (const auto& t : pack.transforms->transforms) enabled_transforms.push_back(t.optional && options->contains(t.id));
+  }
+  std::vector<const lang::VariantPass*> passes;
+  for (const auto& pass : pack.variant_passes) {
+    if (options->contains(pass.id)) passes.push_back(&pass);
+  }
+  const auto step_of = [&](uint32_t via) {
+    return pack.transforms ? pack.transforms->step_of(via) : via - lang::Deinflection::step_base;
+  };
   std::string out;
+  size_t line = 0;
+  bool invalid = false;
   for (const auto& input : input_lines(from_stdin, rest)) {
-    out += "{\"input\":" + json_string(input) + ",\"results\":[";
+    ++line;
     std::u32string check;
-    if (!hoshidicts::lang::decode_utf8(input, check)) {
-      out += "],\"error\":\"not valid UTF-8\"}\n";
+    if (!lang::decode_utf8(input, check)) {
+      out += invalid_input(from_stdin, line, "results");
+      invalid = true;
       continue;
     }
-    hoshidicts::lang::Deinflections list;
+    out += "{\"input\":" + json_string(input) + ",\"results\":[";
+    lang::Deinflections list;
     if (pack.transforms) {
-      pack.transforms->deinflect(input, list);
+      pack.transforms->deinflect(input, list, &enabled_transforms);
     } else {
-      list.push_back(hoshidicts::lang::Deinflection{input, 0, hoshidicts::lang::Deinflection::npos,
-                                                    hoshidicts::lang::Deinflection::none, 0});
+      list.push_back(lang::Deinflection{input, 0, lang::Deinflection::npos, lang::Deinflection::none, 0});
+    }
+    // An enabled variant pass's readings follow, as a corpus row sees them.
+    for (const auto* pass : passes) {
+      std::vector<std::string> readings;
+      pass->builtin->variants(input, readings);
+      for (auto& reading : readings) {
+        if (pack.transforms) {
+          pack.transforms->deinflect_from_step(std::move(reading), pass->step, list, &enabled_transforms);
+        } else if (!reading.empty()) {
+          list.push_back(lang::Deinflection{std::move(reading), 0, lang::Deinflection::npos,
+                                            lang::Deinflection::step_base + pass->step, 1});
+        }
+      }
     }
     for (size_t i = 0; i < list.size(); ++i) {
       const auto& d = list[i];
@@ -271,11 +345,11 @@ int cmd_deinflect(Context& context, const Arguments& args) {
       // Newest first, as the corpus `reasons` column (section 12.2).
       bool first = true;
       for (const auto* n = &d;; n = &list[n->parent]) {
-        if (n->via != hoshidicts::lang::Deinflection::none) {
-          out += (first ? "" : ",") + json_string(pack.trace_steps[pack.transforms->step_of(n->via)].id);
+        if (n->via != lang::Deinflection::none) {
+          out += (first ? "" : ",") + json_string(pack.trace_steps[step_of(n->via)].id);
           first = false;
         }
-        if (n->parent == hoshidicts::lang::Deinflection::npos) break;
+        if (n->parent == lang::Deinflection::npos) break;
       }
       out += "]}";
     }
@@ -286,7 +360,7 @@ int cmd_deinflect(Context& context, const Arguments& args) {
     }
   }
   std::cout << out;
-  return 0;
+  return invalid ? 1 : 0;
 }
 
 // `preprocess <code>`: the preprocessor variants, one JSON object per input.
@@ -300,15 +374,29 @@ int cmd_preprocess(Context& context, const Arguments& args) {
     std::cerr << "hoshidicts-cli: preprocess needs one text or --stdin\n";
     return 1;
   }
+  // --options names preprocessors.
+  std::vector<std::string> known;
+  for (const auto& p : pack.preprocessors) known.push_back(p.id);
+  const auto options = option_set(args, known, pack.code, "preprocessor");
+  if (!options) return 1;
+  std::vector<std::string> enabled_ids;
+  for (const auto& p : pack.preprocessors) {
+    if (options->contains(p.id)) enabled_ids.push_back(p.id);
+  }
+  const hoshidicts::lang::EnabledOptions enabled{enabled_ids};
   std::string out;
+  size_t line = 0;
+  bool invalid = false;
   for (const auto& input : input_lines(from_stdin, rest)) {
-    out += "{\"input\":" + json_string(input) + ",\"variants\":[";
+    ++line;
     std::u32string check;
     if (!hoshidicts::lang::decode_utf8(input, check)) {
-      out += "],\"error\":\"not valid UTF-8\"}\n";
+      out += invalid_input(from_stdin, line, "variants");
+      invalid = true;
       continue;
     }
-    const auto variants = hoshidicts::lang::process_text(pack.preprocessors, input, {});
+    out += "{\"input\":" + json_string(input) + ",\"variants\":[";
+    const auto variants = hoshidicts::lang::process_text(pack.preprocessors, input, enabled);
     for (size_t i = 0; i < variants.size(); ++i) {
       out += std::format("{}{{\"text\":{},\"steps\":{}}}", i ? "," : "", json_string(variants[i].text), variants[i].steps);
     }
@@ -319,7 +407,7 @@ int cmd_preprocess(Context& context, const Arguments& args) {
     }
   }
   std::cout << out;
-  return 0;
+  return invalid ? 1 : 0;
 }
 
 int cmd_languages(Context& context) {
@@ -633,8 +721,9 @@ int main(int argc, char* argv[]) {
       timed = false;
       status = cmd_languages(context);
     } else if (command == "deinflect" || command == "preprocess") {
-      const auto args = parse_arguments(argc, argv, first + 1, {"--transforms"}, {"--stdin"});
-      if (args.positional.size() == 1 && !args.flags.contains("--stdin") && !args.values.contains("--transforms")) {
+      const auto args =
+          parse_arguments(argc, argv, first + 1, {"--transforms", "--options"}, {"--stdin", "--all-options"});
+      if (args.positional.size() == 1 && args.flags.empty() && args.values.empty()) {
         status = command == "deinflect" ? cmd_deinflect_legacy(args.positional[0]) : cmd_preprocess_legacy(args.positional[0]);
       } else if (args.positional.empty()) {
         print_usage(argv[0]);
@@ -663,7 +752,9 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  if (timed) {
+  // The runtime of a command that succeeded (an error message is the last line
+  // of one that failed).
+  if (timed && status == 0) {
     const auto end = std::chrono::steady_clock::now();
     std::chrono::duration<double, std::milli> duration = end - begin;
     std::cout << std::format("runtime: {}ms\n", duration.count());

@@ -1165,9 +1165,9 @@ namespace {
       }
     }
   }
-  if (const Json* breaks = get(text, "highlightBreaks"); breaks != nullptr && !breaks->is_null()) {
+  if (const Json& breaks = require(text, "highlightBreaks", tpath); !breaks.is_null()) {
     const std::string bpath = "text.highlightBreaks";
-    const Object& b = as_object(*breaks, bpath);
+    const Object& b = as_object(breaks, bpath);
     check_keys(b, bpath, {"sentenceEnd", "clauseEnd"});
     string_array(require(b, "sentenceEnd", bpath), "text.highlightBreaks.sentenceEnd");
     string_array(require(b, "clauseEnd", bpath), "text.highlightBreaks.clauseEnd");
@@ -1248,8 +1248,8 @@ std::unique_ptr<PackData> parse_pack(std::string_view language_json, std::string
     one_of(require(text, "segmentation", tpath), "text.segmentation", {"scan", "spaces"});
     pack->word_characters = parser.class_field(require(text, "wordCharacters", tpath), "text.wordCharacters");
     pack->class_fields.emplace_back("text.wordCharacters", pack->word_characters);
-    if (const Json* internal = get(text, "wordInternal"); internal != nullptr && !internal->is_null()) {
-      pack->word_internal = parser.class_field(*internal, "text.wordInternal");
+    if (const Json& internal = require(text, "wordInternal", tpath); !internal.is_null()) {
+      pack->word_internal = parser.class_field(internal, "text.wordInternal");
       pack->class_fields.emplace_back("text.wordInternal", *pack->word_internal);
     }
     if (!trusted) check_text_shape(text);
@@ -1282,8 +1282,8 @@ std::unique_ptr<PackData> parse_pack(std::string_view language_json, std::string
     if (const Json* normalizer = get(lookup, "readingNormalizer"); normalizer != nullptr && !normalizer->is_null()) {
       pack->reading_normalizer = parser.step_list(*normalizer, "lookup.readingNormalizer", true, true, &pack->class_fields);
     }
-    if (const Json* transforms = get(lookup, "transforms"); transforms != nullptr && !transforms->is_null()) {
-      pack->transforms_file = as_string(*transforms, "lookup.transforms");
+    if (const Json& transforms = require(lookup, "transforms", lpath); !transforms.is_null()) {
+      pack->transforms_file = as_string(transforms, "lookup.transforms");
       if (pack->transforms_file.empty() || pack->transforms_file.find_first_of("/\\") != std::string::npos ||
           pack->transforms_file.starts_with(".")) {
         fail("lookup.transforms", "must name a file in the pack's directory");

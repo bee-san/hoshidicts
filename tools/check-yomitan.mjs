@@ -12,7 +12,7 @@
 // Yomitan's test sources with every prefix and the pack's corpus words, runs
 // Yomitan's LanguageTransformer (resetting lastIndex before every test of a
 // rule with the g flag) and
-// `hoshidicts-cli --languages <dir> deinflect <code> --stdin --transforms <pack>/sources/yomitan.json`,
+// `hoshidicts-cli --languages <dir> deinflect <code> --stdin --all-options --transforms <pack>/sources/yomitan.json`,
 // and requires the same set of (text, conditions) for every input. Yomitan's
 // results that are the empty text, or derived from one, are dropped: the
 // engine neither records nor expands an empty text (section 7.4).
@@ -384,7 +384,8 @@ export async function compareRules({root, pack, cli, languagesDir, differences})
     const inputs = ruleInputs(pack, ported, testSources, corpusWords);
     const LanguageTransformer = await loadLanguageTransformer(root);
     const yomitan = yomitanTransformer(LanguageTransformer, found.descriptor);
-    const answers = runCli(cli, ['--languages', languagesDir, 'deinflect', pack.code, '--stdin', '--transforms', portedFile], inputs);
+    // Yomitan applies every transform, so the engine runs with every optional one on.
+    const answers = runCli(cli, ['--languages', languagesDir, 'deinflect', pack.code, '--stdin', '--all-options', '--transforms', portedFile], inputs);
     const unexplained = [];
     let explained = 0;
     let results = 0;

@@ -14,7 +14,8 @@
 // 3. Every pattern is in the dialect and compiles; no `todo` rules (the parser
 //    refuses both).
 // 4. Every TSV in tests/ except gaps.tsv passes; gaps.tsv is run and its pass
-//    count printed; no corpus input reaches the 4,096-variant limit.
+//    count printed; no corpus input reaches the 4,096-variant limit; a pack
+//    with transforms has tests/corpus.tsv (Japanese: tests/yomitan.tsv).
 // 5. Every `own` and `both` transform has a passing `valid = 1` row; the
 //    rules no row exercises are printed.
 // 6. README.md has the sections of languages/_template/README.md.
@@ -459,8 +460,11 @@ int main(int argc, char** argv) {
       if (entry.path().extension() == ".tsv" && !known.contains(name)) fail("tests/" + name + " is not a test file the contract names");
     }
   }
-  if (data.transforms && !fs::exists(tests / "corpus.tsv") && !fs::exists(tests / "yomitan.tsv")) {
-    fail("a pack with transforms needs tests/corpus.tsv");
+  // Section 12.1 step 4: a pack with transforms needs tests/corpus.tsv, from a
+  // licensed source. Only the Japanese pack's corpus is tests/yomitan.tsv,
+  // Yomitan's complete conjugation corpus.
+  if (data.transforms && !fs::exists(tests / "corpus.tsv") && !(code == "ja" && fs::exists(tests / "yomitan.tsv"))) {
+    fail("a pack with transforms needs tests/corpus.tsv (only the Japanese pack's corpus is tests/yomitan.tsv)");
   }
   std::set<size_t> exercised_rules;
   std::set<uint16_t> exercised_transforms;
