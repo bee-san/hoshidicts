@@ -18,8 +18,9 @@ Headwords are not split across lines (`wordBreak: "keep-all"`).
 ## Sources and licences
 
 - `sources/own.json`, written by `sources/own-rules.mjs`: the rules written
-  for hoshidicts (GPL-3.0-or-later). The first version was committed
-  (b45929a, "own rules") before Yomitan's Korean rules were read. Later
+  for hoshidicts (GPL-3.0-or-later). The first version was committed on its
+  own (the branch's first commit, "ko: own rules") before Yomitan's Korean
+  rules were read. Later
   changes, all from the measurements below: transform ids renamed to
   Yomitan's where the ending is the same, so `tools/merge-transforms.mjs`
   pairs them; the alternations 그러다/이러다/저러다/어쩌다 (그래) and ㅓ ㅎ-irregular
@@ -236,8 +237,9 @@ candidates per valid row, first rank of a whole-source lookup:
   접다 + -어도.
 - **Honorific headwords.** UniMorph lists 가세요, 자세요 and 돌아가세요 under the
   honorific headwords 가시다, 자시다 and 돌아가시다; the rules give 가다 and 자다
-  (-(으)세요, honorific -(으)시-), so these 7 UniMorph rows (with 시장하세요,
-  편찮으세요, 있으세요, and 이에, which is not a form of 이다) are not reached. The
+  (-(으)세요, honorific -(으)시-), so these UniMorph rows are not reached, with
+  시장하세요, 편찮으세요 and 있으세요 (6 rows); the seventh is 이에, which UniMorph
+  lists as a connective of 이다 and the rules do not give (they give 이어). The
   honorific verbs 계시다, 주무시다, 드시다 and 잡수시다 have rules.
 - **보십시다** (`tests/gaps.tsv`): Yomitan's test says -(으)시- + -(으)ㅂ시다 is
   not an analysis of 보십시다; the own rules give it, because the honorific

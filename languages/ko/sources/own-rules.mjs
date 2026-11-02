@@ -21,7 +21,7 @@
 // the ㄹ-dropping of `dropsLieul`.
 //
 // Transform ids follow Yomitan's Korean ids where the ending is the same
-// (aligned after the own-rules commit b45929a, rules unchanged), so
+// (aligned after the "ko: own rules" commit, rules unchanged), so
 // tools/merge-transforms.mjs pairs them; the names and descriptions are ours.
 //
 // Nouns are not deinflected: particles are written together with the noun
