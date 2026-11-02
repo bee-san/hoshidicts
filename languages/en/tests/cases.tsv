@@ -332,6 +332,12 @@ verb spelling	1	used	use	v	*
 verb spelling	1	shed	shed	v	*
 verb spelling	1	does	do	v	*
 verb spelling	1	degassed	degas	v	*
+verb spelling	1	died	die	v	*
+verb spelling	1	lied	lie	v	*
+verb spelling	1	tied	tie	v	*
+verb spelling	1	vied	vie	v	*
+verb spelling	1	untied	untie	v	*
+verb spelling	1	hogtied	hogtie	v	*
 plural	1	books	book	n	plural
 plural	1	boxes	box	n	plural
 plural	1	buses	bus	n	plural
@@ -416,6 +422,14 @@ plural	1	atlases	atlas	n	plural
 plural	1	kisses	kiss	n	plural
 plural	1	cookies	cookie	n	plural
 plural	1	pies	pie	n	plural
+plural	1	sofas	sofa	n	plural
+plural	1	UFOs	UFO	n	plural
+plural	1	cats	cat	n	plural
+plural	1	edits	edit	n	plural
+plural	1	bits	bit	n	plural
+plural	1	suits	suit	n	plural
+plural	1	tea trees	tea tree	n	plural
+plural	1	safety pins	safety pin	n	plural
 comparison	1	taller	tall	adj	*
 comparison	1	tallest	tall	adj	*
 comparison	1	bigger	big	adj	*
@@ -468,6 +482,7 @@ possessive	1	Mary's	Mary	*	possessive
 possessive	1	everyone's	everyone	*	possessive
 possessive	1	mother’s	mother	n	possessive
 possessive	1	mothers-in-law's	mother-in-law	n	plural|possessive
+possessive	1	old man's	old man	*	possessive
 contraction	1	it's	it	*	contraction
 contraction	1	that's	that	*	contraction
 contraction	1	there's	there	*	contraction
@@ -681,3 +696,20 @@ negatives	0	let me go up	let up	*	*
 negatives	0	let us sit down	let down	*	*
 negatives	0	time she fell off	time off	*	*
 negatives	0	went up the road away	go away	*	*
+negatives	0	saw he walked out	see out	*	*
+negatives	0	tree fell down	tree down	*	*
+negatives	0	long as	long a	*	*
+negatives	0	long is	long i	*	*
+negatives	0	found a	found on	*	*
+negatives	0	cast a	cast on	*	*
+negatives	0	had its	had it	*	*
+negatives	0	the men	the man	*	*
+negatives	0	the things	the thing	*	*
+negatives	0	ten feet	ten foot	*	*
+negatives	0	had formed	had form	*	*
+negatives	0	see you're	see you	*	*
+negatives	0	little older	little old	*	*
+negatives	0	its	it	*	*
+negatives	0	Its	It	*	*
+negatives	0	all dressed out	all out	adj	*
+negatives	0	say the words	say the word	v	*

@@ -43,8 +43,10 @@ multiword transforms made optional.
   category's pool). No wordfreq or kty-en-en data is committed.
 - `tests/cases.tsv`, `tests/text.tsv`, `tests/lookup.tsv`, `tests/dictionary/`
   and `sources/sentences.tsv`: written for this pack (GPL-3.0-or-later).
-- `sources/measure-inputs.py` and `sources/measure-frequent-words.mjs`: the
-  frequent-word measurement of Measurements, written for this pack.
+- `sources/measure-inputs.py`, `sources/measure-frequent-words.mjs`,
+  `sources/lookup-batch.cpp`, `sources/make-hovers.py` and
+  `sources/measure-lookups.mjs`: the measurements of Measurements, written
+  for this pack.
 - `host.recommendedDictionaries`: wty-en-en from
   [wiktionary-to-yomitan](https://github.com/yomidevs/wiktionary-to-yomitan)
   (formerly kaikki-to-yomitan), Wiktionary content through kaikki.org, CC
@@ -67,7 +69,8 @@ multiword transforms made optional.
   Project Gutenberg: 20 for the particle counts and the guard words (ebooks
   11, 74, 76, 84, 98, 145, 174, 219, 345, 1260, 1342, 1400, 1661, 1952, 2591,
   2701, 4300, 16328, 25344, 64317) and *Treasure Island* (ebook 120) as a
-  held-out check. No text is committed.
+  held-out check; `sources/make-hovers.py` turns them into hover texts. No
+  text is committed.
 
 ## Text and scanning
 
@@ -107,13 +110,13 @@ and without word lists no rule names.
   (`present`, `pastParticiple`, `contraction`, `negative`, `placeholder`,
   `archaicSecondPerson`, `archaicThirdPerson`) and 7 Yomitan (`adverb`, `-y`,
   `un-`, `going-to future`, `will future`, `imperative negative`, `-able`).
-- 1,375 rules: 1,266 own, 109 Yomitan, 0 both. No own rule is identical to a
+- 1,401 rules: 1,292 own, 109 Yomitan, 0 both. No own rule is identical to a
   Yomitan rule, which is what `both` means for a rule: the own rules carry
   stem constraints and take only the text as written (`conditionsIn: []`),
   so an English word gets one inflectional ending and clitics stack on top
   (*children's*, *doesn't*), where Yomitan's rules take a verb or adjective
   in and so also apply to each other's output (*settings* → *setting* →
-  *set*). By type: 831 `suffix`, 289 `phrasal`, 159 `wholeWord`, 67
+  *set*). By type: 857 `suffix`, 289 `phrasal`, 159 `wholeWord`, 67
   `prefix`, 28 `replace`, 1 `interposedObject`; no `pattern` rule.
 - Own rules:
   - Regular endings with English spelling. -ed, -ing, -er and -est are added
@@ -128,8 +131,10 @@ and without word lists no rule names.
     -ies after two letters (*tried*, *cities*; not *died* → *dy*), the -ie
     verbs as a list (*tied*, *lying*, *boogied*: Wiktionary has *trie* and
     *marrie* as obsolete spellings, so an -ied → -ie rule would offer
-    them), -s after a consonant or, with three letters before it, after a
-    vowel (*ads*, *shoes*; not *has* → *ha*), -es after s only in -sses,
+    them), -s after a consonant other than t or, with two letters before it
+    in the same word, after a vowel (*ads*, *shoes*; not *has* → *ha* or *as*
+    → *a*), -ts and -its (*cats*, *bits*; never *its* → *it*), -es after s
+    only in -sses,
     -uses, -ases and -ises (*kisses*, *buses*, *atlases*; not *uses* →
     *us*, *cases* → *cas*), -cked and -cking after an earlier vowel
     (*panicked*; not *locked* → *loc*).
@@ -157,6 +162,20 @@ and without word lists no rule names.
     down*, *enjoyed himself* → *enjoy oneself*).
   - Optional: Early Modern English *-est*, *-eth*, *art*, *hast*, *hath*,
     *doth*.
+  - Multiword prefixes. A word lookup tries every prefix that ends at a word
+    boundary (*long as I live*, *long as I*, *long as*, *long*; section 9.2),
+    and a suffix rule sees the whole prefix. So the endings of verbs,
+    adjectives and clitic hosts are read from one word only (`stemCharacters:
+    "[^ ]"`; the first word of a multiword verb has the phrasal and prefix
+    copies): *had formed* is not *had form*, *see you're* not *see you*. The
+    plural endings that are a whole short word never follow a space
+    (`stemNotEndsWith: "[ ]"`): *long as* is not *long a*, *found a* not
+    *found on*, *had its* not *had it*, *the men* not *the man*, *ten feet*
+    not *ten foot*. And no plural is read after *the* (`stemNotStartsWithText:
+    "the "`): *the things* and *the days* are not the idioms *the thing* and
+    *the day*. A noun phrase keeps its plural on the last word (*bus stops*
+    → *bus stop*, *tea trees* → *tea tree*) and its possessive (*old man's*
+    → *old man*).
 - Changes to the own rules after the port (the diff of
   `sources/own-rules.mjs` from the "own rules" commit):
   - conditions and ids aligned with Yomitan's: `v` covers `v_phr`; `np` and
@@ -165,7 +184,7 @@ and without word lists no rule names.
     transforms `thirdPerson`, `droppedG` and `interposedObject` took
     Yomitan's ids `3rd pers. sing. pres`, `dropped g`, `interposed object`;
   - possessive and contraction outputs carry no conditions;
-  - the separable particles went from 25 to 12 (*across*, *along*,
+  - the separable particles went from 23 to 12 (*across*, *along*,
     *behind*, *by*, *in*, *on*, *over*, *round*, *through*, *about*,
     *around* removed: Interposed object below) and the determiners left the
     guard words;
@@ -182,7 +201,11 @@ and without word lists no rule names.
     stems, -s after a vowel, -es after s, -ies/-ied minimums, the -ie verbs,
     -cked, a doubled s not after e, -ices, -oes and -ses → -sis minimums,
     -i → -o only after t or z), negative contractions as whole words, and
-    the interposed object's description.
+    the interposed object's description;
+  - after the second audit (reports/audit-hachi-lang-en-b.md, b772253): the
+    multiword-prefix constraints above (one-word verb, adjective and clitic
+    endings; plural endings not a whole last word; no plural after *the*),
+    the -s after a vowel split into one rule per vowel, and -ts and -its.
 - Yomitan rules removed (28 of 137). Measured in the union, with wty-en-en:
   rows only the rule recovers in the dev pool, the sample, `cases.tsv` and
   `yomitan.tsv`; false candidates only it adds on the sample and
@@ -191,14 +214,14 @@ and without word lists no rule names.
 
   | Rule | dev | sample | cases | yomitan.tsv | false candidates | negatives broken | frequent words | Example |
   | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
-  | plural `s` → | 30 | 1 | 0 | 0 | 9 | 0 | 29 | *was* → *wa*, *class* → *clas* |
+  | plural `s` → | 31 | 1 | 0 | 0 | 9 | 0 | 29 | *was* → *wa*, *class* → *clas* |
   | plural `es` → | 114 | 0 | 0 | 0 | 35 | 0 | 124 | *cares* → *car*, *rates* → *rat* |
   | plural `ves` → `fe` | 0 | 0 | 0 | 0 | 5 | 2 | 3 | *serves* → *serfe* |
   | plural `ves` → `f` | 0 | 0 | 0 | 0 | 0 | 4 | 5 | *serves* → *serf*, *proves* → *prof* |
   | plural `ies` → `y` | 0 | 0 | 0 | 0 | 1 | 0 | 1 | *pies* → *py*, *dies* → *dy* |
   | past `ed` → `e` | 72 | 2 | 0 | 0 | 9 | 4 | 14 | *bed* → *be*, *red* → *re* |
-  | past `ed` → | 66 | 0 | 0 | 0 | 10 | 8 | 40 | *bed* → *b*, *hoped* → *hop* |
-  | past `ied` → `y` | 0 | 0 | 0 | 0 | 0 | 1 | 2 | *died* → *dy* |
+  | past `ed` → | 66 | 0 | 0 | 0 | 10 | 9 | 40 | *bed* → *b*, *hoped* → *hop* |
+  | past `ied` → `y` | 0 | 0 | 0 | 0 | 3 | 1 | 2 | *died* → *dy* |
   | past `cked` → `c` | 4 | 0 | 0 | 0 | 1 | 1 | 1 | *locked* → *loc* |
   | past `ssed` → `s` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | *pressed* → *pres* (ranked above *press*) |
   | ing `ing` → `e` | 14 | 0 | 0 | 0 | 11 | 3 | 14 | *being* → *bee*, *dying* → *dye* |
@@ -207,16 +230,16 @@ and without word lists no rule names.
   | ing `cking` → `c` | 2 | 0 | 0 | 0 | 1 | 2 | 3 | *locking* → *loc*, *ticking* → *tic* |
   | ing `ssing` → `s` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | *pressing* → *pres* (ranked above *press*) |
   | ing `dding`, `gging`, `nning`, `tting`, `rring` | 0 | 0 | 0 | 0 | 2 | 2 | 5 | *weddings* → *wed*, *settings* → *set* |
-  | 3rd pers. `s` → | 0 | 0 | 0 | 0 | 14 | 1 | 29 | *has* → *ha* |
+  | 3rd pers. `s` → | 0 | 0 | 0 | 0 | 14 | 2 | 29 | *has* → *ha* |
   | 3rd pers. `es` → | 38 | 0 | 0 | 0 | 8 | 0 | 39 | *makes* → *mak*, *rates* → *rat* |
   | 3rd pers. `ies` → `y` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | *dies* → *dy*, *lies* → *ly* (texts the part-of-speech filter drops) |
-  | comparative `er` → | 3 | 0 | 0 | 0 | 5 | 7 | 21 | *her* → *h*, *trader* → *trad* |
+  | comparative `er` → | 3 | 0 | 0 | 0 | 5 | 8 | 21 | *her* → *h*, *trader* → *trad* |
   | superlative `est` → | 3 | 0 | 0 | 0 | 4 | 2 | 5 | *west* → *w*, *best* → *b* |
   | superlative `est` → `e` | 0 | 0 | 0 | 0 | 0 | 0 | 1 | *semester* → *semest* (own -er) → *seme* |
   | archaic `'d` → `ed` | 0 | 0 | 0 | 0 | 0 | 2 | 0 | *he'd* → *heed*, *we'd* → *weed* |
-  | interposed object | 0 | 0 | 0 | 0 | 0 | 10 | 0 | *put her foot on* → *put on* |
+  | interposed object | 0 | 0 | 0 | 0 | 0 | 11 | 0 | *put her foot on* → *put on* |
 
-  The 426 dev rows the union reaches and the final set does not are mostly obsolete or dialect spellings
+  The 427 dev rows the union reaches and the final set does not are mostly obsolete or dialect spellings
   (*envied* → *envie*, *doing* → *doe*, *playing* → *playe*, *judges* →
   *judg*), two-letter stems (*pas* → *pa*), -ses after a consonant and s
   (*ballockses*), and rare -ie and -u verbs (*sortied*, *snafued*). The
@@ -254,13 +277,14 @@ and without word lists no rule names.
   up*), after a noun the predicate (*the cook came up* is not *cook up*),
   and after *let me* or *let us* the verb (*let me go up* is not *let up*).
   Hovering every word of a novel (the text from the word to the end of its
-  sentence), the first result is an interposed-object reading for 4,288 of
-  the 1,032,441 hovers of the 20 novels that have a particle after the
-  second word (5,646 before these changes; 288 of them at an auxiliary,
-  830 before; 5 at a word with no verb entry, 142 before), and for 157 of
-  the 68,817 hovers of *Treasure Island* (228 before; 13 at an auxiliary,
-  47 before; 1 at a word with no verb entry, 12 before). Of 50 readings the
-  changes removed, drawn at random from the 20 novels, all 50 were wrong
+  sentence; `sources/make-hovers.py`, `sources/measure-lookups.mjs hovers`),
+  the first result is an interposed-object reading for 4,325 of the
+  2,379,450 hovers of the 20 novels (5,689 before these changes; 291 of them
+  at an auxiliary, 833 before; 5 at a word with no verb entry, 144 before),
+  and for 158 of the 68,272 hovers of *Treasure Island* (229 before; 14 at an
+  auxiliary, 48 before; 1 at a word with no verb entry, 12 before). Of 50
+  readings the changes removed, drawn at random from the 20 novels, all 50
+  were wrong
   (*had come up* → *have up*, *let us sit down* → *let down*, *fire broke
   out* → *fire out*); of 50 that remain, 37 were right (*give it back*,
   *drew Shylock out*, *put the weapons aside*) and 13 wrong, most with a
@@ -281,8 +305,8 @@ and without word lists no rule names.
 
 ## Measurements
 
-`hoshidicts-cli eval-language` (Release, GCC 14.3) on `main` 7dba902 plus
-this pack (e5751e8 gave the same numbers), `--dictionary` wty-en-en. The rule sets are `sources/own.json`,
+`hoshidicts-cli eval-language` (Release, GCC 14.3) on `main` 931886f plus
+this pack (7e04ed5, e5751e8 and 7dba902 gave the same numbers), `--dictionary` wty-en-en. The rule sets are `sources/own.json`,
 `sources/yomitan.json`, their union (`tools/merge-transforms.mjs --out`) and
 the final `transforms.json`; "final, options off" leaves out the optional
 transforms, as a default lookup does. `eval-language` runs every option on.
@@ -290,10 +314,10 @@ transforms, as a default lookup does. `eval-language` runs every option on.
 | | Own | Yomitan | Union | Final | Final, options off |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Sample recall (corpus.tsv + gaps.tsv, 1,600 rows) | 99.63% (1,594) | 97.81% (1,565) | 99.81% (1,597) | **99.63% (1,594)** | 99.63% (1,594) |
-| Dev pool recall (216,933 rows) | 99.657% | 98.875% | 99.853% | 99.657% | 99.656% |
+| Dev pool recall (216,933 rows) | 99.656% | 98.875% | 99.853% | 99.656% | 99.655% |
 | False candidates per sample row | 0.206 | 0.335 | 0.356 | 0.296 | 0.203 |
-| cases.tsv positives (572) | 572 | 187 | 572 | 572 | 557 |
-| cases.tsv negatives (108) | 108 | 32 | 31 | 108 | 108 |
+| cases.tsv positives (587) | 587 | 202 | 587 | 587 | 572 |
+| cases.tsv negatives (125) | 125 | 39 | 38 | 125 | 125 |
 | yomitan.tsv positives (105), negatives (2) | 69, 2 | 105, 2 | 105, 2 | 105, 2 | 69, 2 |
 | Frequent words with a wrong candidate, default lookup | 428 | 2,156 | 2,274 | 428 | 428 |
 | The same with every option on | 446 | 2,156 | 2,287 | 1,735 | 428 |
@@ -305,12 +329,27 @@ transforms, as a default lookup does. `eval-language` runs every option on.
 | Sentences: lemma first among entries with definitions (114 words) | 60 | 39 | 58 | 60 | |
 | Sentences: lemma in the first three entries with definitions | 112 | 72 | 111 | 112 | |
 
-- The spelling constraints of the audit round cost 0.18 points of dev-pool
-  recall (99.840% before) and three sample rows (*eas* → *ea*, *envied* →
-  *envie*, *shied* → *shie*, now in `gaps.tsv`); they cut the frequent words
-  with a wrong candidate from 609 to 428 in a default lookup, the frequent
-  words whose first entry with definitions is a wrong deinflection from 29
-  to 5, and those with a wrong deinflection above the lemma from 116 to 15.
+- The spelling constraints of the audit rounds cost 0.18 points of dev-pool
+  recall (99.840% before: 398 rows) and three sample rows (*eas* → *ea*,
+  *envied* → *envie*, *shied* → *shie*, now in `gaps.tsv`); they cut the
+  frequent words with a wrong candidate from 609 to 428 in a default lookup,
+  the frequent words whose first entry with definitions is a wrong
+  deinflection from 29 to 5, and those with a wrong deinflection above the
+  lemma from 116 to 15.
+- Real text, `sources/measure-lookups.mjs hovers` (definitions in its
+  header): every word of the 20 novels and of *Treasure Island* hovered, the
+  first result counted, for the final rules of the first audited head
+  (8482024), the second (b772253) and this one:
+
+  | | 8482024 | b772253 | Final |
+  | --- | ---: | ---: | ---: |
+  | 20 novels (2,379,450 hovers): interposed-object first results | 5,689 | 4,325 | 4,325 |
+  | of them at an auxiliary | 833 | 291 | 291 |
+  | of them at a word with no verb entry | 144 | 5 | 5 |
+  | 20 novels: a single-word ending read on the last word of a multiword prefix | 1,110 | 1,107 | 102 |
+  | *Treasure Island* (68,272 hovers): interposed-object first results | 229 | 158 | 158 |
+  | of them at an auxiliary | 48 | 14 | 14 |
+  | *Treasure Island*: last-word readings | 55 | 55 | 1 |
 - False candidates (`eval-language`): distinct deinflected texts per row that
   are wty-en-en headwords passing the part-of-speech filter, other than the
   source and the lemma. Many are obsolete spellings with their own entries
@@ -332,7 +371,8 @@ transforms, as a default lookup does. `eval-language` runs every option on.
   (`Lookup::lookup`, 16 results, scan length 16, no options) and compare the
   first entry with definitions, and the entries above the lemma, with the
   same right lemmas; a wrong deinflection is a result with a trace whose
-  expression is not a right lemma. The pack cannot order results of the same
+  expression is not a right lemma; letter case is ignored throughout
+  (`sources/measure-lookups.mjs first`). The pack cannot order results of the same
   matched length, trace length and dictionary, so a wrong deinflection and
   the lemma can come in either order (Known gaps).
 - Trace: a deinflection reaching the lemma with exactly the transform the
@@ -347,13 +387,13 @@ transforms, as a default lookup does. `eval-language` runs every option on.
   held out. The interposed-object guards were chosen on the 20 novels and
   checked on *Treasure Island*.
 - `language-conformance-test`: conforms; corpus.tsv 1,594/1,594,
-  cases.tsv 680/680, yomitan.tsv 107/107, text.tsv 28/28, lookup.tsv
-  37/37, gaps.tsv 0/6 (reported); 590 of the 1,375 rules are exercised by
-  a passing row. `tools/check-yomitan.mjs`: 8,740 inputs, 34,578 Yomitan
+  cases.tsv 712/712, yomitan.tsv 107/107, text.tsv 28/28, lookup.tsv
+  37/37, gaps.tsv 0/6 (reported); 607 of the 1,401 rules are exercised by
+  a passing row. `tools/check-yomitan.mjs`: 8,794 inputs, 34,701 Yomitan
   results, 1,214 listed differences (the two rows of
   `sources/yomitan-differences.tsv`: Yomitan matches a particle as a prefix
   of the next word), 0 unexplained; processors `decapitalize` and
-  `capitalizeFirstLetter` agree on 2,386 inputs.
+  `capitalizeFirstLetter` agree on 2,418 inputs.
 
 Real use with wty-en-en through `hoshidicts-cli lookup --language en`: *looked
 the word up in her dictionary* → 1. *looked up* (form-of row), 2. *look up*
@@ -410,11 +450,16 @@ Performance (host load 28-32 on 64 cores, so these are upper bounds):
   *breath*), which no spelling rule tells from *visited* → *visit*.
 - **Auxiliary + regular participle + particle** is read as a phrasal verb of
   *have*, *do* or *be* (*had pointed out* → *have out*, *had picked up* →
-  *have up*): 13 first results in *Treasure Island*, 288 in the 20 novels.
+  *have up*): 14 first results in *Treasure Island*, 291 in the 20 novels.
   The guard words stop the irregular participles; regular ones are an open
   class. A `verbGuardWords` field for `interposedObject` is accepted for the
   framework (hachi-lang-engine-g); the pack lists the auxiliaries there
   when it lands.
+- **Noun phrases in running text** can match a multiword entry through the
+  plural of their last word, which the rules keep for entries such as *bus
+  stops*: 102 first results in the 20 novels, 1 in *Treasure Island* (*last
+  moments* → *last moment*, *wax candles* → *wax candle*, *what times* →
+  *what time*).
 - **A trailing apostrophe never ends a scanned prefix.** Apostrophes separate
   words, and word resolution tries prefixes that end after a word
   character, so *goin'* and *dogs'* are looked up only where the apostrophe
@@ -439,8 +484,9 @@ Performance (host load 28-32 on 64 cores, so these are upper bounds):
   stems ending in a vowel (*pas*, *mas*, *eas*), obsolete -ie spellings of
   -y verbs (*envied* → *envie*), -ie and -u verbs outside the list
   (*sortied*, *snafued*), and -ses after a consonant and s (*ballockses*,
-  *summonses* is a whole word): 397 of the 216,933 dev-pool rows, all of
-  which the rules reached before the audit round.
+  *summonses* is a whole word), and *its* as an inflection of *it*: 398 of
+  the 216,933 dev-pool rows, all of which the rules reached before the audit
+  rounds.
 - **gaps.tsv**: *red* → *rede* (archaic; *-d* after a two-letter stem would
   make *bed* and *wed* into *be* and *we*), *stolen* → *steale* (obsolete
   spelling; *steal* is found), *former* → *fore*, *eas* → *ea*, *envied* →

@@ -246,12 +246,12 @@ const phrasal = (inflected, deinflected) => {
     return {type: 'phrasal', inflected, deinflected, followedBy: 'phrasalFollowers', conditionsIn: ['v_io'], conditionsOut: ['v', 'v_fw']};
 };
 
-// Rules that get no phrasal copy: the stem constraints of the spelling rules
-// below have no phrasal counterpart, and one plain copy of the ending
-// (`phrasalEnding`) stands for all of them.
-const noPhrasal = new Set();
-const plain = (rule) => {
-    noPhrasal.add(rule);
+// Spelling rules that share one phrasal copy: their stem constraints have
+// no phrasal counterpart, so one plain copy of their ending (-ed, -ing, -er,
+// -est, -s) stands for all of them.
+const sharedEnding = new Map();
+const plain = (rule, ending) => {
+    sharedEnding.set(rule, ending);
     return rule;
 };
 
@@ -279,12 +279,12 @@ const SHORT_VOWELS = 'a e i o u y'.split(' ');
  */
 function plainEnding(ending, conditionsIn, conditionsOut, {vowelFinal, doubling = ''}) {
     // (stemMinLength 2 for two consonants: sped and bring are not sp, br + an ending.)
-    const rules = vowelFinal.map(([cls, min]) => plain(suffix(ending, '', conditionsIn, conditionsOut, {stemMinLength: min, stemEndsWith: cls})));
+    const rules = vowelFinal.map(([cls, min]) => plain(suffix(ending, '', conditionsIn, conditionsOut, {stemMinLength: min, stemEndsWith: cls}), ending));
     for (const c of FINAL_CONSONANTS) {
         const before = doubling.includes(c) ? STEM_CONSONANTS.replace(c, '') : STEM_CONSONANTS;
-        rules.push(plain(suffix(`${c}${ending}`, c, conditionsIn, conditionsOut, {stemMinLength: 2, stemEndsWith: letters(before)})));
+        rules.push(plain(suffix(`${c}${ending}`, c, conditionsIn, conditionsOut, {stemMinLength: 2, stemEndsWith: letters(before)}), ending));
         for (const v of SHORT_VOWELS) {
-            rules.push(plain(suffix(`${v}${c}${ending}`, `${v}${c}`, conditionsIn, conditionsOut, {stemContains: VOWEL})));
+            rules.push(plain(suffix(`${v}${c}${ending}`, `${v}${c}`, conditionsIn, conditionsOut, {stemContains: VOWEL}), ending));
         }
     }
     return rules;
@@ -351,11 +351,21 @@ const pastPairs = verbTable.flatMap(({base, past}) => past.map((form) => [form, 
 const participlePairs = verbTable.flatMap(({base, past, participle}) => participle.filter((form) => !past.includes(form)).map((form) => [form, base]));
 
 const V = ['v'];
+// The rules below also read the last word of a multiword prefix (a word
+// lookup tries *bus stops*, docs/languages.md 9.2), where the stem holds the
+// earlier words. NOT_WHOLE (the ending does not follow a space) keeps a short
+// word from being read as an ending: *long as* is not *long a*, *found a* not
+// *found on*, *the men* not *the man*.
+const NOT_WHOLE = '[ ]';
 const sEndings = (conditionsIn, conditionsOut) => [
-    // -s after a consonant (books, ads, TVs), and after a vowel with three
-    // letters before it (shoes, days), so has, was and his are not ha, wa, hi.
-    suffix('s', '', conditionsIn, conditionsOut, {stemMinLength: 2, stemNotEndsWith: "[aeiouyAEIOUYsS']"}),
-    suffix('s', '', conditionsIn, conditionsOut, {stemMinLength: 3, stemEndsWith: VOWEL}),
+    // -s after a consonant (books, ads, TVs) other than t, and after a vowel
+    // with two letters before it in the same word (shoes, days, UFOs), so
+    // has, was, his and as are not ha, wa, hi and a.
+    plain(suffix('s', '', conditionsIn, conditionsOut, {stemMinLength: 2, stemNotEndsWith: "[aeiouyAEIOUYsStT' ]"}), 's'),
+    ...[...'aeiouyAEIOUY'].map((v) => plain(suffix(`${v}s`, v, conditionsIn, conditionsOut, {stemMinLength: 2, stemNotEndsWith: NOT_WHOLE}), 's')),
+    // -ts (cats, edits, bits), but not its, which is never it + s.
+    plain(suffix('ts', 't', conditionsIn, conditionsOut, {stemMinLength: 1, stemNotEndsWith: "[iI ]"}), 's'),
+    plain(suffix('its', 'it', conditionsIn, conditionsOut, {stemMinLength: 1, stemNotEndsWith: NOT_WHOLE}), 's'),
     // -es after s only where the base ends in s: kisses, buses, focuses,
     // atlases, irises; not uses, cases, causes or pleases (use, case, ... + s).
     suffix('sses', 'ss', conditionsIn, conditionsOut, {stemMinLength: 1}),
@@ -392,28 +402,29 @@ const pluralRules = [
     suffix('lives', 'life', ['np'], ['ns']),
     suffix('thieves', 'thief', ['np'], ['ns']),
     suffix('turves', 'turf', ['np'], ['ns']),
-    // Irregular plurals, with their compounds (women, grandchildren, salespeople, woodlice).
-    suffix('men', 'man', ['np'], ['ns']),
-    suffix('children', 'child', ['np'], ['ns']),
-    suffix('feet', 'foot', ['np'], ['ns']),
-    suffix('teeth', 'tooth', ['np'], ['ns']),
-    suffix('geese', 'goose', ['np'], ['ns']),
-    suffix('mice', 'mouse', ['np'], ['ns']),
-    suffix('lice', 'louse', ['np'], ['ns']),
-    suffix('oxen', 'ox', ['np'], ['ns']),
-    suffix('people', 'person', ['np'], ['ns']),
+    // Irregular plurals, with their compounds (women, grandchildren, salespeople,
+    // woodlice), but not as a whole last word (the men is not the man).
+    suffix('men', 'man', ['np'], ['ns'], {stemNotEndsWith: NOT_WHOLE}),
+    suffix('children', 'child', ['np'], ['ns'], {stemNotEndsWith: NOT_WHOLE}),
+    suffix('feet', 'foot', ['np'], ['ns'], {stemNotEndsWith: NOT_WHOLE}),
+    suffix('teeth', 'tooth', ['np'], ['ns'], {stemNotEndsWith: NOT_WHOLE}),
+    suffix('geese', 'goose', ['np'], ['ns'], {stemNotEndsWith: NOT_WHOLE}),
+    suffix('mice', 'mouse', ['np'], ['ns'], {stemNotEndsWith: NOT_WHOLE}),
+    suffix('lice', 'louse', ['np'], ['ns'], {stemNotEndsWith: NOT_WHOLE}),
+    suffix('oxen', 'ox', ['np'], ['ns'], {stemNotEndsWith: NOT_WHOLE}),
+    suffix('people', 'person', ['np'], ['ns'], {stemNotEndsWith: NOT_WHOLE}),
     wholeWord('dice', 'die', ['np'], ['ns']),
     wholeWord('monies', 'money', ['np'], ['ns']),
     wholeWord('trollies', 'trolley', ['np'], ['ns']),
     wholeWord('pence', 'penny', ['np'], ['ns']),
     wholeWord('brethren', 'brother', ['np'], ['ns']),
     // Latin and Greek plurals.
-    suffix('i', 'us', ['np'], ['ns'], {stemMinLength: 2}),
+    suffix('i', 'us', ['np'], ['ns'], {stemMinLength: 2, stemNotEndsWith: NOT_WHOLE}),
     // paparazzi, libretti, concerti; not radii (radius) or fungi (fungus).
     suffix('i', 'o', ['np'], ['ns'], {stemMinLength: 3, stemEndsWith: '[tzTZ]'}),
-    suffix('a', 'um', ['np'], ['ns'], {stemMinLength: 2}),
-    suffix('a', 'on', ['np'], ['ns'], {stemMinLength: 3}),
-    suffix('ae', 'a', ['np'], ['ns'], {stemMinLength: 2}),
+    suffix('a', 'um', ['np'], ['ns'], {stemMinLength: 2, stemNotEndsWith: NOT_WHOLE}),
+    suffix('a', 'on', ['np'], ['ns'], {stemMinLength: 3, stemNotEndsWith: NOT_WHOLE}),
+    suffix('ae', 'a', ['np'], ['ns'], {stemMinLength: 2, stemNotEndsWith: NOT_WHOLE}),
     suffix('mata', 'ma', ['np'], ['ns']),
     // indices, vertices, matrices; not prices, vices or slices.
     suffix('ices', 'ex', ['np'], ['ns'], {stemMinLength: 3}),
@@ -661,8 +672,8 @@ function withPhrasal(rules) {
     const seen = new Set();
     const out = [...rules];
     for (const rule of rules) {
-        // The spelling rules of plainEnding share one copy of their ending.
-        const [inflected, deinflected] = noPhrasal.has(rule) ? [rule.inflected.slice(rule.inflected.length - rule.inflected.replace(/^[a-z]*?(ed|ing|er|est)$/, '$1').length), ''] : [rule.inflected, rule.deinflected];
+        // The spelling rules share one copy of their ending.
+        const [inflected, deinflected] = sharedEnding.has(rule) ? [sharedEnding.get(rule), ''] : [rule.inflected, rule.deinflected];
         const key = `${rule.type}\u0000${inflected}\u0000${deinflected}`;
         if (seen.has(key)) { continue; }
         seen.add(key);
@@ -671,29 +682,42 @@ function withPhrasal(rules) {
     return out;
 }
 
+// The endings of verbs, adjectives and clitic hosts are read from one word:
+// a multiword verb inflects its first word (the phrasal and prefix copies),
+// and in a multiword prefix (docs/languages.md 9.2) the last word mostly
+// starts the next phrase (*had formed* is not *had form*, *say the words*
+// not *say the word*, *see you're right* not *see you*). Nouns keep their
+// multiword plurals and possessives (*bus stops*, *old man's*).
+const ONE_WORD = '[^ ]';
+const oneWord = (rules) => rules.map((rule) => (rule.type === 'suffix' ? {...rule, stemCharacters: ONE_WORD} : rule));
+// A plural after *the* is not read: *the things*, *the days* and *the ones*
+// would reach the idioms *the thing*, *the day* and *the one* when *the* is
+// hovered.
+const notAfterThe = (rules) => rules.map((rule) => (rule.type === 'suffix' ? {...rule, stemNotStartsWithText: 'the '} : rule));
+
 // Transforms that mean what one of Yomitan's English transforms means use its
 // id (3rd pers. sing. pres, dropped g, interposed object), so the two files
 // merge transform by transform; names and descriptions are this pack's.
 const transform = (id, name, description, rules, extra = {}) => ({id, name, description, source: 'own', ...extra, rules});
 
 const transforms = [
-    transform('plural', 'plural', 'Plural form of a noun (books, boxes, cities, wolves, children, data).', pluralRules),
-    transform('3rd pers. sing. pres', 'third-person singular', 'Third-person singular present of a verb (walks, watches, tries, is, has).', withPhrasal(thirdPersonRules)),
+    transform('plural', 'plural', 'Plural form of a noun (books, boxes, cities, wolves, children, data).', notAfterThe(pluralRules)),
+    transform('3rd pers. sing. pres', 'third-person singular', 'Third-person singular present of a verb (walks, watches, tries, is, has).', oneWord(withPhrasal(thirdPersonRules))),
     transform('present', 'present', 'Present tense of be other than the third-person singular (am, are).', withPhrasal(presentRules)),
-    transform('past', 'past', 'Past tense of a verb, and the past participle of a regular verb (walked, stopped, tried, went, could).', [...withPhrasal(pastRules), ...pastCompoundRules]),
-    transform('pastParticiple', 'past participle', 'Past participle of an irregular verb (taken, written, gone, been).', withPhrasal(pastParticipleRules)),
-    transform('ing', '-ing', 'Present participle or gerund of a verb (walking, making, running, lying).', withPhrasal(ingRules)),
-    transform('comparative', 'comparative', 'Comparative of an adjective or adverb (taller, nicer, happier, bigger, better).', comparativeRules),
-    transform('superlative', 'superlative', 'Superlative of an adjective or adverb (tallest, nicest, happiest, biggest, best).', superlativeRules),
+    transform('past', 'past', 'Past tense of a verb, and the past participle of a regular verb (walked, stopped, tried, went, could).', oneWord([...withPhrasal(pastRules), ...pastCompoundRules])),
+    transform('pastParticiple', 'past participle', 'Past participle of an irregular verb (taken, written, gone, been).', oneWord(withPhrasal(pastParticipleRules))),
+    transform('ing', '-ing', 'Present participle or gerund of a verb (walking, making, running, lying).', oneWord(withPhrasal(ingRules))),
+    transform('comparative', 'comparative', 'Comparative of an adjective or adverb (taller, nicer, happier, bigger, better).', oneWord(comparativeRules)),
+    transform('superlative', 'superlative', 'Superlative of an adjective or adverb (tallest, nicest, happiest, biggest, best).', oneWord(superlativeRules)),
     transform('possessive', 'possessive', "Possessive of a noun or name (teacher's, James', dogs').", possessiveRules),
-    transform('contraction', 'contraction', "A word with a contracted is, has, are, have, will, would, had or am ('s, 're, 've, 'll, 'd, 'm).", contractionRules),
+    transform('contraction', 'contraction', "A word with a contracted is, has, are, have, will, would, had or am ('s, 're, 've, 'll, 'd, 'm).", oneWord(contractionRules)),
     transform('negative', 'negative', "Negative contraction of an auxiliary (don't, isn't, can't, won't).", negativeRules),
-    transform('dropped g', 'dropped g', "Informal -in' for -ing (goin', nothin').", droppedGRules),
-    transform('archaic', 'archaic', "-'d for -ed in older verse (adorn'd, lov'd).", elidedEdRules),
+    transform('dropped g', 'dropped g', "Informal -in' for -ing (goin', nothin').", oneWord(droppedGRules)),
+    transform('archaic', 'archaic', "-'d for -ed in older verse (adorn'd, lov'd).", oneWord(elidedEdRules)),
     transform('interposed object', 'interposed object', 'An object between a verb and its particle (turn it off, put Mary\'s coat away).', interposedObjectRules),
     transform('placeholder', 'placeholder', "A pronoun written as the placeholder of a dictionary entry (his temper -> one's temper, let him down -> let someone down, enjoy himself -> enjoy oneself).", placeholderRules),
-    transform('archaicSecondPerson', 'archaic second person', 'Early Modern English second-person singular (thou walkest, thou art, thou hast).', archaicSecondPersonRules, {optional: true}),
-    transform('archaicThirdPerson', 'archaic third person', 'Early Modern English third-person singular (he walketh, he hath, he doth).', archaicThirdPersonRules, {optional: true}),
+    transform('archaicSecondPerson', 'archaic second person', 'Early Modern English second-person singular (thou walkest, thou art, thou hast).', oneWord(archaicSecondPersonRules), {optional: true}),
+    transform('archaicThirdPerson', 'archaic third person', 'Early Modern English third-person singular (he walketh, he hath, he doth).', oneWord(archaicThirdPersonRules), {optional: true}),
 ];
 
 const out = {schema: 1, conditions, wordLists, transforms};

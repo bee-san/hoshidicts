@@ -37,3 +37,7 @@ negatives	0	he'd go	heed	he'd
 negatives	0	bed time	b	bed
 negatives	0	serves the king	serf	serves
 negatives	0	looked uptown	look up	looked up
+multiword prefixes	1	long as I live	long	long
+multiword prefixes	0	long as I live	long a	long as
+multiword prefixes	1	found a little door	find	found
+multiword prefixes	0	found a little door	found on	found a
