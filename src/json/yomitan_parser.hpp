@@ -85,6 +85,14 @@ struct ParsedPitch {
   std::vector<std::string> transcriptions;
 };
 
+// A form-of reference of a term bank row: a definition [formOf, [rules...]]
+// (Yomitan's deinflection tuple), which Yomitan's translator follows to the
+// term formOf and never displays (docs/languages.md, section 9.10).
+struct FormOfReference {
+  std::string form_of;
+  std::vector<std::string> rules;
+};
+
 namespace yomitan_parser {
 bool parse_index(std::string_view content, Index& out);
 // The bank parsers keep each string as a view into `content`. A string the
@@ -99,4 +107,13 @@ bool parse_tag_bank(std::string_view content, std::vector<Tag>& out);
 bool parse_frequency(std::string_view content, ParsedFrequency& out);
 bool parse_pitch(std::string_view content, ParsedPitch& out);
 bool parse_ipa(std::string_view content, ParsedPitch& out);
+// The form-of references of a row's definitions (its raw JSON array), in
+// order, appended to `out`: every item that is an array whose first element
+// is a non-empty string, with the strings of its second element, when that
+// is an array, as its rules. Other array items are neither references nor
+// definitions. Returns whether the row has a definition that is not an array.
+bool read_form_of(std::string_view definitions, std::vector<FormOfReference>& out);
+// `definitions` without its top-level array items, which are form-of data;
+// unchanged when it is not a well-formed array.
+std::string without_form_of(std::string_view definitions);
 };

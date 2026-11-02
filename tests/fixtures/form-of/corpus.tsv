@@ -1,0 +1,7 @@
+# Hand-written for the form-of probe pack and the forms dictionary (README.md).
+# category	valid	source	term	rule	reasons
+verbs	1	walked	walk	v	past
+verbs	1	unwalked	walk	v	*
+verbs	1	booked	book	*	past
+nouns	1	leaves	leave	*	*
+verbs	1	puedo	poder	v	present-yo

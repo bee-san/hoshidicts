@@ -285,6 +285,16 @@ if(HOSHIDICTS_TESTS)
     add_test(NAME ja-process-parity COMMAND ja-parity-test process ${CMAKE_CURRENT_SOURCE_DIR})
     add_test(NAME ja-lookup-parity COMMAND ja-parity-test lookup ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
+    # Form-of references (docs/languages.md 9.10): followed by a pack that says
+    # "follow", and read as terms by Japanese exactly as the oracle reads them.
+    add_executable(form-of-test tests/form_of_test.cpp)
+    target_include_directories(form-of-test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src ${CMAKE_CURRENT_SOURCE_DIR}/tests)
+    target_link_libraries(form-of-test PRIVATE hoshidicts-legacy hoshidicts glaze::glaze unordered_dense)
+    if(MSVC)
+        target_compile_options(form-of-test PRIVATE /utf-8)
+    endif()
+    add_test(NAME form-of COMMAND form-of-test ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
+
     # The C API with a language request, compiled as C (docs/languages.md 11.3).
     add_executable(c-smoke-test tests/c_smoke_test.c)
     target_link_libraries(c-smoke-test PRIVATE hoshidicts)
@@ -395,6 +405,12 @@ if(HOSHIDICTS_TESTS AND HOSHIDICTS_CLI)
                      -DTOOLS_FIXTURES=${CMAKE_CURRENT_SOURCE_DIR}/tools/test/fixtures
                      -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}
                      -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/cli_languages_test.cmake)
+    # eval-language and lookup with form-of references (docs/languages.md 9.10, 10.3).
+    add_test(NAME cli-form-of
+             COMMAND ${CMAKE_COMMAND} -DCLI=$<TARGET_FILE:hoshidicts-cli>
+                     -DFIXTURES=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/form-of
+                     -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}
+                     -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/cli_form_of_test.cmake)
     # tools/check-yomitan.mjs with the real CLI (the tool tests use a stand-in)
     # on the tool tests' fixture pack, whose setting names an optional
     # transform that its sources/yomitan.json lacks (docs/languages.md 8.2).
@@ -425,5 +441,12 @@ if(HOSHIDICTS_LANGUAGE_TESTS)
                      -DPACK=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/conformance/st
                      -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}
                      "-DREASON=st: language.json: settings[0].effect.transforms[0]: names no optional transform \"archaic\""
+                     -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/conformance_refuses_test.cmake)
+    # lookup.formOf is "follow" or "asTerm" (4.4, 9.10).
+    add_test(NAME language-form-of-value
+             COMMAND ${CMAKE_COMMAND} -DTEST=$<TARGET_FILE:language-conformance-test>
+                     -DPACK=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/conformance/fv
+                     -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}
+                     "-DREASON=fv: language.json: lookup.formOf: must be one of follow, asTerm, not \"maybe\""
                      -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/conformance_refuses_test.cmake)
 endif()

@@ -235,6 +235,9 @@ hd_lookup_results* hd_lookup_run_with_language(const hd_lookup* l, const char* l
 // keeps its layout for callers built against the existing header. An empty
 // string out of range.
 hd_str hd_lookup_results_trace_id(const hd_lookup_results* r, size_t i, size_t j);
+// 1 when trace step j of result i is a rule a dictionary's form-of reference
+// names (docs/languages.md, section 9.10), 0 otherwise and out of range.
+int hd_lookup_results_trace_from_dictionary(const hd_lookup_results* r, size_t i, size_t j);
 // hd_query_run_kanji with the request's dictionary selection (its
 // select_dictionaries, dictionaries and dictionary_count; a NULL request
 // selects every loaded dictionary).

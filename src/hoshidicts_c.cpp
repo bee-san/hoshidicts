@@ -686,6 +686,13 @@ hd_str hd_lookup_results_trace_id(const hd_lookup_results* r, size_t i, size_t j
   return hd_str{id.c_str(), id.size()};
 }
 
+int hd_lookup_results_trace_from_dictionary(const hd_lookup_results* r, size_t i, size_t j) {
+  if (r == nullptr || i >= r->res.size() || j >= r->res[i].trace.size()) {
+    return 0;
+  }
+  return r->res[i].trace[j].from_dictionary ? 1 : 0;
+}
+
 hd_kanji_results* hd_query_run_kanji_with_request(const hd_query* q, const char* kanji,
                                                   const hd_language_request* request,
                                                   const hd_kanji_entry** out_entries, size_t* out_count) {
