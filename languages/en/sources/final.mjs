@@ -94,7 +94,7 @@ export function finalTransforms({defaultOnly = false} = {}) {
     // A transform left without rules is dropped, and a word list no rule names
     // (Yomitan's particles, which only its removed interposed-object rule used).
     transforms.transforms = transforms.transforms.filter((t) => t.rules.length > 0);
-    const named = new Set(transforms.transforms.flatMap((t) => t.rules.flatMap((r) => [r.followedBy, r.particles, r.guardWords])));
+    const named = new Set(transforms.transforms.flatMap((t) => t.rules.flatMap((r) => [r.followedBy, r.particles, r.guardWords, r.verbGuardWords])));
     transforms.wordLists = Object.fromEntries(Object.entries(transforms.wordLists ?? {}).filter(([key]) => named.has(key)));
     return transforms;
 }

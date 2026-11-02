@@ -205,7 +205,8 @@ and without word lists no rule names.
   - after the second audit (reports/audit-hachi-lang-en-b.md, b772253): the
     multiword-prefix constraints above (one-word verb, adjective and clitic
     endings; plural endings not a whole last word; no plural after *the*),
-    the -s after a vowel split into one rule per vowel, and -ts and -its.
+    the -s after a vowel split into one rule per vowel, -ts and -its, and
+    `verbGuardWords` on the interposed object once #52 added it.
 - Yomitan rules removed (28 of 137). Measured in the union, with wty-en-en:
   rows only the rule recovers in the dev pool, the sample, `cases.tsv` and
   `yomitan.tsv`; false candidates only it adds on the sample and
@@ -276,15 +277,20 @@ and without word lists no rule names.
   main verb (*had gone out* is not *have out*, *did not give up* not *do
   up*), after a noun the predicate (*the cook came up* is not *cook up*),
   and after *let me* or *let us* the verb (*let me go up* is not *let up*).
+  The rule never reads an auxiliary or a modal as the verb (`verbGuardWords`,
+  #52: *am is are was were be been being have has had having do does did done
+  doing can could will would shall should may might must*), since after them
+  the next word is a participle or an infinitive, an open class (*had pointed
+  out* is not *have out*, *will pull it out* not *will out*).
   Hovering every word of a novel (the text from the word to the end of its
   sentence; `sources/make-hovers.py`, `sources/measure-lookups.mjs hovers`),
-  the first result is an interposed-object reading for 4,325 of the
-  2,379,450 hovers of the 20 novels (5,689 before these changes; 291 of them
-  at an auxiliary, 833 before; 5 at a word with no verb entry, 144 before),
-  and for 158 of the 68,272 hovers of *Treasure Island* (229 before; 14 at an
+  the first result is an interposed-object reading for 4,029 of the
+  2,379,450 hovers of the 20 novels (5,689 before these changes; none at an
+  auxiliary, 833 before; 5 at a word with no verb entry, 144 before), and for
+  144 of the 68,272 hovers of *Treasure Island* (229 before; none at an
   auxiliary, 48 before; 1 at a word with no verb entry, 12 before). Of 50
-  readings the changes removed, drawn at random from the 20 novels, all 50
-  were wrong
+  readings the guard words removed, drawn at random from the 20 novels, all
+  50 were wrong
   (*had come up* → *have up*, *let us sit down* → *let down*, *fire broke
   out* → *fire out*); of 50 that remain, 37 were right (*give it back*,
   *drew Shylock out*, *put the weapons aside*) and 13 wrong, most with a
@@ -316,8 +322,8 @@ transforms, as a default lookup does. `eval-language` runs every option on.
 | Sample recall (corpus.tsv + gaps.tsv, 1,600 rows) | 99.63% (1,594) | 97.81% (1,565) | 99.81% (1,597) | **99.63% (1,594)** | 99.63% (1,594) |
 | Dev pool recall (216,933 rows) | 99.656% | 98.875% | 99.853% | 99.656% | 99.655% |
 | False candidates per sample row | 0.206 | 0.335 | 0.356 | 0.296 | 0.203 |
-| cases.tsv positives (587) | 587 | 202 | 587 | 587 | 572 |
-| cases.tsv negatives (125) | 125 | 39 | 38 | 125 | 125 |
+| cases.tsv positives (588) | 588 | 203 | 588 | 588 | 573 |
+| cases.tsv negatives (130) | 130 | 42 | 41 | 130 | 130 |
 | yomitan.tsv positives (105), negatives (2) | 69, 2 | 105, 2 | 105, 2 | 105, 2 | 69, 2 |
 | Frequent words with a wrong candidate, default lookup | 428 | 2,156 | 2,274 | 428 | 428 |
 | The same with every option on | 446 | 2,156 | 2,287 | 1,735 | 428 |
@@ -343,12 +349,12 @@ transforms, as a default lookup does. `eval-language` runs every option on.
 
   | | 8482024 | b772253 | Final |
   | --- | ---: | ---: | ---: |
-  | 20 novels (2,379,450 hovers): interposed-object first results | 5,689 | 4,325 | 4,325 |
-  | of them at an auxiliary | 833 | 291 | 291 |
+  | 20 novels (2,379,450 hovers): interposed-object first results | 5,689 | 4,325 | 4,029 |
+  | of them at an auxiliary or modal | 833 | 291 | 0 |
   | of them at a word with no verb entry | 144 | 5 | 5 |
   | 20 novels: a single-word ending read on the last word of a multiword prefix | 1,110 | 1,107 | 102 |
-  | *Treasure Island* (68,272 hovers): interposed-object first results | 229 | 158 | 158 |
-  | of them at an auxiliary | 48 | 14 | 14 |
+  | *Treasure Island* (68,272 hovers): interposed-object first results | 229 | 158 | 144 |
+  | of them at an auxiliary or modal | 48 | 14 | 0 |
   | *Treasure Island*: last-word readings | 55 | 55 | 1 |
 - False candidates (`eval-language`): distinct deinflected texts per row that
   are wty-en-en headwords passing the part-of-speech filter, other than the
@@ -387,7 +393,7 @@ transforms, as a default lookup does. `eval-language` runs every option on.
   held out. The interposed-object guards were chosen on the 20 novels and
   checked on *Treasure Island*.
 - `language-conformance-test`: conforms; corpus.tsv 1,594/1,594,
-  cases.tsv 712/712, yomitan.tsv 107/107, text.tsv 28/28, lookup.tsv
+  cases.tsv 718/718, yomitan.tsv 107/107, text.tsv 28/28, lookup.tsv
   37/37, gaps.tsv 0/6 (reported); 607 of the 1,401 rules are exercised by
   a passing row. `tools/check-yomitan.mjs`: 8,794 inputs, 34,701 Yomitan
   results, 1,214 listed differences (the two rows of
@@ -404,29 +410,31 @@ temper*; *mothers-in-law live in Leeds* → *mother-in-law* (plural) after the
 form-of row.
 
 Hachidori: `test/chrome-language-pack.mjs` on bee-san/hachidori
-feat/multi-language 1bd53232 with this pack synced in, Chrome 152, wty-en-en:
-15 passed, 0 failed (adding the profile, the import, 11 cases, the Anki
-note and the switch to Japanese and back), dictionary imported in 3.1 s.
+feat/multi-language 1bd53232 with this pack synced in and its three
+WebAssembly runtimes rebuilt from this hoshidicts (`verbGuardWords`, #52, is
+newer than the vendored runtimes, which refuse it; a submodule bump past
+b1be401 needs the same rebuild), Chrome 152, wty-en-en: 15 passed, 0 failed
+(adding the profile, the import, 11 cases, the Anki note and the switch to
+Japanese and back), dictionary imported in 3.1 s.
 The cases are words of `sources/sentences.tsv` whose first
 result is the expected headword (form-of rows come first for the others).
 
-Performance (host load 28-32 on 64 cores, so these are upper bounds):
+Performance (host load 36-42 on 64 cores, so these are upper bounds):
 
 - Native `benchmark-lookup --languages languages --language en` with
   wty-en-en on the 114 sentence texts of `sources/sentences.tsv` (each cut at
   its first comma, as the tool reads CSV), 21 passes, the first dropped,
-  three runs: p50 60.0-80.2 µs, p95 182.0-242.4 µs (budget 1 ms p50). Before
-  the audit round's spelling rules: 65.7 µs and 200.2 µs at load 29.
-- Hachidori's WebAssembly (feat/multi-language 1bd53232) in Node 22
-  (`hdw_lookup`, the same texts, 10 passes after one): single-thread p50
-  233 µs, p95 847 µs; threaded p50 246 µs, p95 851 µs.
-- Pack load: natively `LanguageRegistry::add` takes 2.1-2.4 ms (median of
-  50) and the registry holds 742,864 bytes of heap; in WebAssembly the first
-  `hdw_language_load` takes 16.1 ms (single-thread) and 18.7 ms (threaded),
-  later ones 4.5-5.8 ms, and the allocator's live bytes grow by 488,264 and
-  487,472 bytes. Budgets 50 ms and 20 MB. The spelling rules of the audit
-  round doubled these (0.96 ms, 322,240 bytes and 13.3 ms before): each of
-  their ~430 rules has a stem class.
+  three runs: p50 64.3-70.8 µs, p95 195.3-219.8 µs (budget 1 ms p50).
+- Hachidori's WebAssembly (feat/multi-language 1bd53232, runtimes rebuilt as
+  above) in Node 22 (`hdw_lookup`, the same texts, 10 passes after one):
+  single-thread p50 230 µs, p95 854 µs; threaded p50 238 µs, p95 846 µs.
+- Pack load: natively `LanguageRegistry::add` takes 2.7-3.1 ms (median of
+  50) and the registry holds 1,061,696 bytes of heap; in WebAssembly the
+  first `hdw_language_load` takes 17.6 ms (single-thread) and 22.2 ms
+  (threaded), later ones about 7 ms, and the allocator's live bytes grow by
+  719,664 and 719,128 bytes. Budgets 50 ms and 20 MB. The spelling and
+  multiword-prefix rules of the audit rounds tripled these (0.96 ms, 322,240
+  bytes and 13.3 ms at 8482024): each of their ~760 rules has a stem class.
 - No `pattern` rules, so no pattern heap.
 
 ## Known gaps
@@ -448,13 +456,9 @@ Performance (host load 28-32 on 64 cores, so these are upper bounds):
   e-final verbs of more than one syllable whose e-less stem is an obsolete
   or rare headword (*defined* → *defin*, *wasted* → *wast*, *breathing* →
   *breath*), which no spelling rule tells from *visited* → *visit*.
-- **Auxiliary + regular participle + particle** is read as a phrasal verb of
-  *have*, *do* or *be* (*had pointed out* → *have out*, *had picked up* →
-  *have up*): 14 first results in *Treasure Island*, 291 in the 20 novels.
-  The guard words stop the irregular participles; regular ones are an open
-  class. A `verbGuardWords` field for `interposedObject` is accepted for the
-  framework (hachi-lang-engine-g); the pack lists the auxiliaries there
-  when it lands.
+- **Phrasal verbs of an auxiliary with an object** are not read: *had it
+  out* and *did his coat up* give *had* and *did*, the price of
+  `verbGuardWords` (Rule provenance).
 - **Noun phrases in running text** can match a multiword entry through the
   plural of their last word, which the rules keep for entries such as *bus
   stops*: 102 first results in the 20 novels, 1 in *Treasure Island* (*last

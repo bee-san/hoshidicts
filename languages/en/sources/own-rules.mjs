@@ -345,7 +345,14 @@ const objectGuards = [...new Set([...particles, ...words(`
     come run become overcome put set cut let hit shut hurt cast burst spread split thrust quit bid read fit
     go get sit stand`), ...verbTable.flatMap(({past, participle}) => [...past, ...participle])])];
 
-const wordLists = {phrasalFollowers, separableParticles, objectGuards};
+// Verbs the interposed-object rule never reads as the phrasal verb
+// (verbGuardWords, docs/languages.md 7.3): the auxiliaries and modals. After
+// them the next word is a participle or an infinitive, an open class the
+// guard words cannot list (*had pointed out* is not *have out*, *will pull it
+// out* not *will out*).
+const auxiliaries = words('am is are was were be been being have has had having do does did done doing can could will would shall should may might must');
+
+const wordLists = {phrasalFollowers, separableParticles, objectGuards, auxiliaries};
 const pastPairs = verbTable.flatMap(({base, past}) => past.map((form) => [form, base]));
 // Participles that are not also the verb's past form.
 const participlePairs = verbTable.flatMap(({base, past, participle}) => participle.filter((form) => !past.includes(form)).map((form) => [form, base]));
@@ -604,7 +611,7 @@ const elidedEdRules = [suffix("'d", 'ed', [], [], {stemMinLength: 3})];
 // The text as written or after a first-word rule (*turned it off* -> *turn it
 // off* -> *turn off*); the output is a verb (*all came out* is not *all out*).
 const interposedObjectRules = [
-    {type: 'interposedObject', particles: 'separableParticles', guardWords: 'objectGuards', conditionsIn: ['v_fw'], conditionsOut: ['v', 'v_io']},
+    {type: 'interposedObject', particles: 'separableParticles', guardWords: 'objectGuards', verbGuardWords: 'auxiliaries', conditionsIn: ['v_fw'], conditionsOut: ['v', 'v_io']},
 ];
 ruleCount += interposedObjectRules.length;
 

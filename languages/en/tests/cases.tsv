@@ -559,6 +559,7 @@ multiword verb	1	was about to	be about to	*	past
 multiword verb	1	gave them back	give back	*	past|interposed object
 multiword verb	1	threw it away	throw away	*	past|interposed object
 multiword verb	1	turn that off	turn off	*	interposed object
+multiword verb	1	pointed it out	point out	*	past|interposed object
 multiword verb	1	lost his temper	lose one's temper	*	placeholder|past
 multiword verb	1	made up her mind	make up one's mind	*	placeholder|past
 multiword verb	1	let him down	let someone down	*	placeholder
@@ -698,6 +699,11 @@ negatives	0	time she fell off	time off	*	*
 negatives	0	went up the road away	go away	*	*
 negatives	0	saw he walked out	see out	*	*
 negatives	0	tree fell down	tree down	*	*
+negatives	0	had pointed out	have out	*	*
+negatives	0	have turned out	have out	*	*
+negatives	0	had picked up	have up	*	*
+negatives	0	did the sun go down	do down	*	*
+negatives	0	will pull it out	will out	*	*
 negatives	0	long as	long a	*	*
 negatives	0	long is	long i	*	*
 negatives	0	found a	found on	*	*
