@@ -541,8 +541,9 @@ const PATTERN_SYNTAX = '^$\\.*+?()[]{}|/';
  * anything outside it, including the constructs std::regex and JavaScript
  * read differently: a global pattern that can match the empty text, a
  * back-reference to a group that may not take part in the match, a
- * capturing group inside a repeated group, and a quantifier on a group that
- * can match the empty text. Returns the number of capturing groups, the
+ * capturing group inside a repeated group, a quantifier on a group that
+ * can match the empty text, and `^`, a capturing group or a back-reference
+ * inside a lookahead. Returns the number of capturing groups, the
  * positions of the `{name}` references and whether the pattern can match the
  * empty text.
  * @param {string} pattern
@@ -561,7 +562,9 @@ export function parsePattern(pattern, {global = false} = {}) {
     // a position. A frame that has closed is optional when what it holds may
     // not take part in a match that goes on past it: an alternative of a
     // disjunction with more than one, a group repeated at least zero times,
-    // a negative lookahead.
+    // a negative lookahead. (A lookahead may hold no capturing group or
+    // back-reference, so its frame decides nothing today; it stays so that
+    // this analysis does not depend on that rule.)
     let nextFrame = 0;
     /** @type {number[]} the open frames, outermost first */
     const frames = [];
@@ -681,6 +684,9 @@ export function parsePattern(pattern, {global = false} = {}) {
             if (pattern[i + 2] >= '0' && pattern[i + 2] <= '9') { fail('only back-references \\1 to \\9 are in the dialect'); }
             const group = Number(e);
             if (!closedGroups.has(group)) { fail(`the back-reference \\${e} must follow the end of group ${e}`); }
+            // libc++ compiles a lookahead as a regex of its own, whose groups
+            // it numbers from 1: \N there names another group, or none.
+            if (lookaheads > 0) { fail('a back-reference inside a lookahead is not in the pattern dialect: std::regex in libc++ numbers the groups of a lookahead on their own'); }
             // The frames that hold the group but not this position have
             // closed; if one is optional the group may not take part, and
             // JavaScript matches the empty text where std::regex fails.
@@ -764,6 +770,10 @@ export function parsePattern(pattern, {global = false} = {}) {
             if (startsWith('(?<')) { fail('named groups are not in the pattern dialect'); }
             if (startsWith('(?') && !startsWith('(?:')) { fail('only (?:...), (?=...) and (?!...) groups are in the pattern dialect'); }
             const capturing = !startsWith('(?:');
+            // libstdc++ copies the captures of a lookahead into the match and
+            // keeps them when the match then fails on that path; JavaScript
+            // clears them.
+            if (capturing && lookaheads > 0) { fail('a capturing group inside a lookahead is not in the pattern dialect: std::regex in libstdc++ keeps captures made inside a lookahead where JavaScript clears them; write (?:...)'); }
             i += capturing ? 1 : 3;
             const frame = nextFrame++;
             const group = capturing ? ++groups : 0;

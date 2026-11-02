@@ -205,17 +205,154 @@ void test_patterns() {
       const char* source;
       bool global;
     } same[] = {
-        {"(a|b)*c", false},     {"(a)\\1", false},       {"(?:(a)\\1|b)", false}, {"(?=(a))\\1", false},
+        {"(a|b)*c", false},     {"(a)\\1", false},       {"(?:(a)\\1|b)", false}, {"(a)(?=b)\\1", false},
         {"(a)+\\1", false},     {"((a)|b)\\1", false},   {"(a)\\1|b", false},     {"(a)(?:b\\1)*", false},
         {"(a)(\\1)+", false},   {"(a)\\1*", false},      {"(?:ab?)?", false},     {"a*?", false},
         {"x*", false},          {"$", false},            {"a", true},             {"a*b", true},
         {"^a", true},           {"a(?=b$)", true},
         {"(l|dell|all)['\xE2\x80\x99]", true},
+        // Lookaheads without a capturing group or a back-reference inside,
+        // as Yomitan's ar (?!ل) and yi (?!.*[...]) rules.
+        {"(?=(?:ab))a", false}, {"(?!(?:a|b)c)x", false}, {"(?=a)(a)\\1", false}, {"(?!\xD9\x84)", false},
+        {"(?!.*[ab])x", false}, {"(?=[(])\\(", false},
+        // What the nullable analysis must not refuse: a {m,n} minimum above 0
+        // is not empty, and neither is a back-reference to a group that is not.
+        {"a{2}", true},         {"a{2,}", true},         {"[a]{1,3}", true},      {".{2}", true},
+        {"{letter}{2}", true},  {"(?:ab){2}", true},     {"(a{2})\\1", true},     {"(a)\\1", true},
+        {"(?:b|(a))c", false},
     };
     for (const auto& s : same) {
       std::string error;
       check(pattern(s.source, "", s.global, &error) != nullptr,
             std::string("pattern accepts ") + s.source + (s.global ? " (global)" : "") + ": " + error);
+    }
+  }
+  {
+    // Refusals with the rule that must give them.
+    constexpr const char* capture = "a capturing group inside a lookahead";
+    constexpr const char* backref = "a back-reference inside a lookahead";
+    constexpr const char* global_empty = "a global pattern may not match the empty text";
+    constexpr const char* not_taking_part = "may not take part in the match";
+    constexpr const char* repeat_empty = "a quantifier may not repeat a group that can match the empty text";
+    const struct {
+      const char* source;
+      bool global;
+      const char* reason;
+    } refused[] = {
+        // The re-audit's cases, then more forms. libstdc++ keeps a capture
+        // made inside a lookahead on a path that then fails, where JavaScript
+        // and libc++ clear it: (?=(a))ac|ab with [$1] on ab gives [] in
+        // JavaScript and [a] in the engine. Some differ in no library today,
+        // such as (?=(a)b)ab|a, (?=(a))\1 and the six from (b)(?=(a)) on; the
+        // rule refuses every capture inside a lookahead.
+        {"(?=(a))ac|ab", false, capture},
+        {"(?=(a))ac|ab", true, capture},
+        {"(?!(a)b)a|ab", false, capture},
+        {"(?:(?=(a))b|a)", false, capture},
+        {"(?=(ab))a(?=c)|a", false, capture},
+        {"(?=(a))a+c|a", false, capture},
+        {"x(?=(a))ac|xa", false, capture},
+        {"(?=(a)b)ab|a", true, capture},
+        {"(?=(.))..x|.", true, capture},
+        {"(?!(a))b|a", false, capture},
+        {"(?=(a))\\1", false, capture},
+        {"(?=(a))\\1c|ab", false, capture},
+        {"a(?=(b))c|ab", false, capture},
+        {"(a)(?=(b))c|ab", false, capture},
+        {"c|(?=(a))ab|a", true, capture},
+        {"(b)(?=(a))", false, capture},
+        {"(b)(?=(a)(x))", false, capture},
+        {"(b)(?=(a))(a)", false, capture},
+        {"(?=(a))(a)\\2", false, capture},
+        {"(b)(?=(a))\\2", false, capture},
+        {"(b)(?!(x))a", false, capture},
+        {"(?!(a))\\1", false, capture},
+        {"(?=(?=(a)))a", false, capture},
+        {"(?=(?:(a)))a", false, capture},
+        // A capture after a nested lookahead has closed, still inside the
+        // outer one: on main (?=(?=a)(a))ac|ab with [$1] on ab gives [] in
+        // JavaScript and libc++ and [a] in libstdc++.
+        {"(?=(?=a)(a))ac|ab", false, capture},
+        {"(?!(?=x)|(a)b)a|ab", false, capture},
+        {"(?=(?!b)(a))a+c|a", false, capture},
+        {"x(?=(?=a)(a))ac|xa", false, capture},
+        // The ones of its random test that differ in libstdc++.
+        {"[\xE3\x81\x82x]*(?=(a{1,2})?\?a?b+|(?=[a-c]{2}|(b){0,2}(a))(x){0,2}\xE3\x81\x82{2}|ab{0,2}?)|x{0,2}?bx(c)+?",
+         false, capture},
+        {"(?=(x)|(\xE3\x81\x82x?){0,2}?b)[^a]c\xE3\x81\x82{0,2}?|(?!a{2}?(\xE3\x81\x82){2}b{0,2})", false, capture},
+        {"(?=a(\xE3\x81\x82+)+?)b|a", true, capture},
+        {"(?!b\xE3\x81\x82|[ab](b*?(?:[^a])))[a-c]|(?!a)", false, capture},
+        // libc++ numbers the groups of a lookahead from 1: (a)(?=\1) does not
+        // compile there, and (a)(?=(b)\1) matches abb where JavaScript and
+        // libstdc++ match aba.
+        {"(a)(?=\\1)", false, backref},
+        {"(a)(?!\\1)", false, backref},
+        {"(a)(?=(b)\\1)", false, capture},
+        {"(?=(a)\\1)", false, capture},
+        {"(b)xx(?=(?:\\1+))", false, backref},
+        {"(.)(?=.\\1)", true, backref},
+        {"(a)(?!(?=\\1))", false, backref},
+        {"(a)(?=(?=b)\\1)", false, backref},
+        // The ones of its random test that libc++ alone refuses.
+        {"(a){2}(\xE3\x81\x82*|\xE3\x81\x82{0,2}(x)|(.)?ba{2}?)(?=\\2)", true, backref},
+        {"(a){2}?(?!\\1{0,2})|b|a$", true, backref},
+        {"([ab]?\?(b))(?:(\xE3\x81\x82+?){0,2}$|\\2+x{0,2}?[^a]*|(a)?|(?!(b){1,2}?(?:\xE3\x81\x82{2}.b|a{1,2}a|\\2{1,2}\\2*)"
+         "{0,2}(?:\xE3\x81\x82{2}?\\2[ab]{0,2})|(b)?\?.)^)",
+         false, capture},
+        {"(\xE3\x81\x82)+?(\xE3\x81\x82){1,2}?(?=(?=b)\\1{1,2}?)", false, backref},
+        // The nullable analysis (section 7.6): a group in the last alternative
+        // may not take part, and a class, `.`, a reference, a back-reference
+        // to a group that can match the empty text, or a group, with a
+        // quantifier whose minimum is 0, can match the empty text. Each shape
+        // with a regex the engine and JavaScript read differently: (?:b|(a))\1
+        // with - on b gives - in JavaScript and b in the engine; [a]*?, .*?,
+        // {letter}*? and (a*?)\1 (global, -) on baaa give -b-a-a-a- in
+        // JavaScript and -b------- or ---------, -b---a- in the engine.
+        {"(?:b|(a))\\1", false, not_taking_part},
+        {"(?:b|c|(a))\\1", false, not_taking_part},
+        {"(?:b|(a)c)\\1", false, not_taking_part},
+        {"[a]*?", true, global_empty},
+        {"[^a]*", true, global_empty},
+        {"[a]{0,3}", true, global_empty},
+        {".*?", true, global_empty},
+        {".?", true, global_empty},
+        {"{letter}*?", true, global_empty},
+        {"{letter}{0,2}", true, global_empty},
+        {"(a*?)\\1", true, global_empty},
+        {"(?:ab)?\?", true, global_empty},
+        {"(?:ab)*", true, global_empty},
+        {"(?:ab){0,2}", true, global_empty},
+        {"(?:(?:ab)?)*", false, repeat_empty},
+        {"(?:[a]*)+", false, repeat_empty},
+        {"(?:.?)+", false, repeat_empty},
+        {"(?:{letter}*)+", false, repeat_empty},
+        {"(a)(?:\\1*)+", false, repeat_empty},
+        {"(a*)(?:\\1)+", false, repeat_empty},
+    };
+    for (const auto& r : refused) {
+      std::string error;
+      check(pattern(r.source, "", r.global, &error) == nullptr && error.find(r.reason) != std::string::npos,
+            std::string("pattern rejects ") + r.source + (r.global ? " (global)" : "") + " with \"" + r.reason +
+                "\": " + error);
+    }
+    // Where the two rules point: the group's `(`, or the back-reference's `\`
+    // (UTF-16 units, as JavaScript counts them).
+    const struct {
+      const char* source;
+      size_t offset;
+      const char* reason;
+    } located[] = {
+        {"(?=(a))ac|ab", 3, capture},       {"(?=(?=a)(a))ac|ab", 8, capture},
+        {"x(?=(?=a)(a))ac|xa", 9, capture}, {"(?!(?=x)|(a)b)a|ab", 9, capture},
+        {"(?=(?:b|(a)))a", 8, capture},     {"(a)(?=\\1)", 6, backref},
+        {"(a)(?!(?=\\1))", 9, backref},     {"(a)(?=(?=b)\\1)", 11, backref},
+        {"(\xE3\x81\x82)+?(\xE3\x81\x82){1,2}?(?=(?=b)\\1{1,2}?)", 22, backref},
+    };
+    for (const auto& l : located) {
+      std::string error;
+      const std::string at = " at offset " + std::to_string(l.offset);
+      check(pattern(l.source, "", false, &error) == nullptr && error.find(l.reason) == 0 && error.ends_with(at),
+            std::string("pattern rejects ") + l.source + " with \"" + l.reason + "\"" + at + ": " + error);
     }
   }
   std::string out;

@@ -742,9 +742,9 @@ classic locale) and JavaScript give the same results:
     place and JavaScript moves one unit on, so `a*?` with `-` on `baaa` gives
     `-b-------` in the engine and `-b-a-a-a-` in JavaScript;
   - a back-reference to a group that may not take part in the match because
-    it is in another alternative (`(a)|b\1`), repeated at least zero times
-    (`(a)?\1`, `(a)*\1`) or in a negative lookahead (`(?!(a))\1`):
-    JavaScript matches the empty text there and std::regex fails;
+    it is in another alternative (`(a)|b\1`) or repeated at least zero times
+    (`(a)?\1`, `(a)*\1`): JavaScript matches the empty text there and
+    std::regex fails;
   - a capturing group inside a repeated group (`(?:(x)|y)*z`, `((a)|b)*`):
     JavaScript clears it on every repetition and std::regex keeps the last
     value, so `[$1]` on `xyz` gives `[]` and `[x]`;
@@ -754,7 +754,22 @@ classic locale) and JavaScript give the same results:
     on six characters, and libc++ gives up with `error_complexity`, so the
     step or rule silently does nothing;
   - `^` inside a lookahead (`[ab]+(?!^)`): libstdc++ runs a lookahead as a
-    search of its own and takes its start for the start of the text.
+    search of its own and takes its start for the start of the text;
+  - a capturing group inside a lookahead (`(?=(a))ac|ab`, `(?!(a)b)a|ab`):
+    libstdc++ copies the captures of a lookahead into the match and keeps
+    them when the match then fails on that path, so `(?=(a))ac|ab` with
+    `[$1]` on `ab` gives `[a]` in the engine and `[]` in JavaScript and
+    libc++. Write `(?:...)` inside a lookahead. This rule also refuses a
+    back-reference to a group in a negative lookahead (`(?!(a))\1`), where
+    JavaScript matches the empty text and std::regex fails;
+  - a back-reference inside a lookahead (`(a)(?=\1)`): libc++ compiles a
+    lookahead as a regex of its own and numbers its groups from 1, so a
+    back-reference there names the lookahead's own group, or none:
+    `(a)(?=\1)` does not compile, and `(a)(?=(b)\1)` matches `abb` where
+    JavaScript and libstdc++ match `aba`. libc++ is the C++ library of
+    Hachidori's WebAssembly build and of Apple platforms, and CI builds with
+    libstdc++, so a pack with such a pattern would pass CI and then fail to
+    load, or use the wrong group, there.
 
   A group can match the empty text when one of its alternatives can: an
   alternative can when every one of its terms can, and anchors, lookaheads,
@@ -762,7 +777,17 @@ classic locale) and JavaScript give the same results:
   to groups that can match the empty text can. The checks are the same in
   `tools/lib/classes.mjs` and the engine. A pattern can still take
   exponential time in both implementations, as `(a+)+b` does in JavaScript;
-  keep repeated groups unnested.
+  keep repeated groups unnested. Such a pattern also differs in libc++: it
+  gives up a match attempt after 4,096 steps per code unit of the remaining
+  text and throws `error_complexity`, and the engine then treats the text as
+  not matching, so the step or rule does nothing where JavaScript and
+  libstdc++ replace. Overlapping alternatives under a quantifier cause this
+  as much as nested quantifiers: `(?:a|aa)+b|c` with `Z` on 18 `a`s and a
+  `c` gives the 18 `a`s and `Z` in JavaScript and libstdc++ and the text
+  unchanged in libc++, and `(?:a+)+b|c` differs from 13 `a`s on. Lookups
+  try texts as long as the scan length (16 code points by default), so
+  write each repeated part so that only one way of repeating it can match a
+  given text.
 - Exact rules: quantifiers `{m}`, `{m,}` and `{m,n}` with m ≤ n ≤ 65535; a
   back-reference `\N` only after group N has closed and never followed by a
   digit; outside classes the escapes `\` + one of `^$\.*+?()[]{}|/` and

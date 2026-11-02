@@ -135,7 +135,9 @@ struct DialectParser {
   // position. A frame that has closed is optional when what it holds may not
   // take part in a match that goes on past it: an alternative of a
   // disjunction with more than one, a group repeated at least zero times, a
-  // negative lookahead.
+  // negative lookahead. (A lookahead may hold no capturing group or
+  // back-reference, so its frame decides nothing today; it stays so that this
+  // analysis does not depend on that rule.)
   size_t next_frame = 0;
   std::vector<size_t> frames;  // the open frames, outermost first
   std::vector<bool> optional_frame;
@@ -345,6 +347,13 @@ struct DialectParser {
         fail("a back-reference must follow the end of its group");
         return;
       }
+      // libc++ compiles a lookahead as a regex of its own, whose groups it
+      // numbers from 1: \N there names another group, or none.
+      if (lookaheads > 0) {
+        fail("a back-reference inside a lookahead is not in the pattern dialect: std::regex in libc++ numbers the groups "
+             "of a lookahead on their own");
+        return;
+      }
       // The frames that hold the group but not this position have closed; if
       // one is optional the group may not take part, and JavaScript matches
       // the empty text where std::regex fails.
@@ -465,6 +474,13 @@ struct DialectParser {
         return false;
       }
       const bool capturing = !starts_with(u"(?:");
+      // libstdc++ copies the captures of a lookahead into the match and keeps
+      // them when the match then fails on that path; JavaScript clears them.
+      if (capturing && lookaheads > 0) {
+        fail("a capturing group inside a lookahead is not in the pattern dialect: std::regex in libstdc++ keeps captures "
+             "made inside a lookahead where JavaScript clears them; write (?:...)");
+        return false;
+      }
       i += capturing ? 1 : 3;
       const size_t frame = new_frame();
       const int group = capturing ? ++groups : 0;
