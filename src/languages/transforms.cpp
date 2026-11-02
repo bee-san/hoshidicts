@@ -311,8 +311,9 @@ bool TransformSet::apply(const Rule& rule, const std::string& text, size_t match
       return finish_then(rule, out);
     }
     case RuleType::InterposedObject: {
-      // A verb, then runs of anything but a space whose pieces are not guard
-      // words, then a particle; the runs are removed.
+      // A verb that is not a verb guard word, then runs of anything but a
+      // space whose pieces are not guard words, then a particle; the runs
+      // are removed.
       std::vector<std::string_view> pieces;
       for (size_t start = 0;;) {
         const size_t space = text.find(' ', start);
@@ -325,6 +326,8 @@ bool TransformSet::apply(const Rule& rule, const std::string& text, size_t match
         if (piece.empty()) return false;
       }
       if (!all_words(pieces[0], word_characters)) return false;
+      // The verb is one word, so it is compared whole, as a guard word is.
+      if (rule.extra->verb_guard_words != nullptr && rule.extra->verb_guard_words->contains(pieces[0])) return false;
       for (size_t k = 1; k < pieces.size(); ++k) {
         const std::string_view piece = pieces[k];
         if (k >= 2 && all_words(piece, word_characters) && rule.extra->particles->contains(piece)) {

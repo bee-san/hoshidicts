@@ -398,6 +398,8 @@ if(HOSHIDICTS_TESTS AND HOSHIDICTS_CLI)
     # tools/check-yomitan.mjs with the real CLI (the tool tests use a stand-in)
     # on the tool tests' fixture pack, whose setting names an optional
     # transform that its sources/yomitan.json lacks (docs/languages.md 8.2).
+    # Without Node the test is still added, and fails saying why, so a build
+    # that cannot run it is never green by leaving it out.
     find_program(HOSHIDICTS_NODE node)
     if(HOSHIDICTS_NODE)
         add_test(NAME check-yomitan-cli
@@ -406,7 +408,10 @@ if(HOSHIDICTS_TESTS AND HOSHIDICTS_CLI)
                          --languages ${CMAKE_CURRENT_SOURCE_DIR}/tools/test/fixtures/languages
                          --cli $<TARGET_FILE:hoshidicts-cli>)
     else()
-        message(STATUS "node not found: the check-yomitan-cli test is not added")
+        set(HOSHIDICTS_NO_NODE "node not found: check-yomitan-cli fails until Node is on the PATH (or HOSHIDICTS_NODE names it) and CMake configures this build again")
+        message(WARNING "${HOSHIDICTS_NO_NODE}")
+        add_test(NAME check-yomitan-cli COMMAND ${CMAKE_COMMAND} -E echo "${HOSHIDICTS_NO_NODE}")
+        set_tests_properties(check-yomitan-cli PROPERTIES WILL_FAIL TRUE)
     endif()
 endif()
 
@@ -425,5 +430,17 @@ if(HOSHIDICTS_LANGUAGE_TESTS)
                      -DPACK=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/conformance/st
                      -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}
                      "-DREASON=st: language.json: settings[0].effect.transforms[0]: names no optional transform \"archaic\""
+                     -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/conformance_refuses_test.cmake)
+    # An interposedObject rule with verbGuardWords conforms (7.3), and the list
+    # it names must be defined (12.1 step 1).
+    add_test(NAME language-verb-guards
+             COMMAND language-conformance-test ${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/conformance/vg
+                     ${CMAKE_CURRENT_BINARY_DIR})
+    add_test(NAME language-verb-guards-undefined
+             COMMAND ${CMAKE_COMMAND} -DTEST=$<TARGET_FILE:language-conformance-test>
+                     -DPACK=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/conformance/vg
+                     -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}
+                     -DEDIT=transforms.json "-DFROM=\"auxiliaries\": [" "-DTO=\"verbs\": ["
+                     "-DREASON=vg: transforms.json: transforms[1].rules[0].verbGuardWords: names no word list \"auxiliaries\""
                      -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/conformance_refuses_test.cmake)
 endif()

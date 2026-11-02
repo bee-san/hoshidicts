@@ -143,6 +143,8 @@ export class ModelDeinflector {
             compiled.particleList = this.wordLists.get(rule.particles);
             compiled.guardList = this.wordLists.get(rule.guardWords);
             if (compiled.particleList === undefined || compiled.guardList === undefined) { throw new Error(`${transform.id}: a word list is missing`); }
+            compiled.verbGuardList = rule.verbGuardWords === undefined ? null : this.wordLists.get(rule.verbGuardWords);
+            if (compiled.verbGuardList === undefined) { throw new Error(`${transform.id}: no word list ${rule.verbGuardWords}`); }
         }
         if (!['suffix', 'prefix', 'wholeWord', 'circumfix', 'replace', 'phrasal', 'interposedObject', 'pattern'].includes(rule.type)) {
             throw new Error(`${transform.id}: unknown rule type ${rule.type}`);
@@ -273,6 +275,7 @@ export class ModelDeinflector {
             case 'interposedObject': {
                 const pieces = this.#words(text);
                 if (pieces === null || pieces.length < 3 || !this.#allWord(pieces[0])) { return null; }
+                if (rule.verbGuardList !== null && rule.verbGuardList.has(pieces[0])) { return null; }
                 for (let k = 1; k < pieces.length; ++k) {
                     const piece = pieces[k];
                     if (k >= 2 && this.#allWord(piece) && rule.particleList.has(piece)) {

@@ -747,7 +747,7 @@ struct TransformsParser {
     } else if (type == "phrasal") {
       add({"inflected", "deinflected", "followedBy"});
     } else if (type == "interposedObject") {
-      add({"particles", "guardWords"});
+      add({"particles", "guardWords", "verbGuardWords"});
     } else if (type == "pattern") {
       add({"pattern", "replacement", "anchorSuffix", "anchorPrefix"});
     }
@@ -952,6 +952,9 @@ struct TransformsParser {
       rule.type = RuleType::InterposedObject;
       rule.more().particles = word_list(require(o, "particles", path), member(path, "particles"));
       rule.more().guard_words = word_list(require(o, "guardWords", path), member(path, "guardWords"));
+      if (const Json* verbs = get(o, "verbGuardWords")) {
+        rule.more().verb_guard_words = word_list(*verbs, member(path, "verbGuardWords"));
+      }
     } else {
       rule.type = RuleType::Pattern;
       const Json* suffix = get(o, "anchorSuffix");

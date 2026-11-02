@@ -686,6 +686,61 @@ void test_rules() {
     }
   }
   {
+    // verbGuardWords (7.3): the rule does not read a first word in the list,
+    // English's auxiliaries, as the verb. The same rules with and without it;
+    // `had` -> `have` stands for English's irregular past.
+    const auto rules = [](const std::string& verb_guards) {
+      return transforms_json(
+          transform("past", R"({"type":"suffix","inflected":"ed","deinflected":"","conditionsIn":["v"],"conditionsOut":["v"]},
+                               {"type":"phrasal","inflected":"ed","deinflected":"","followedBy":"particles","conditionsIn":["v"],"conditionsOut":["v_phr"]},
+                               {"type":"phrasal","inflected":"had","deinflected":"have","followedBy":"particles","conditionsIn":["v"],"conditionsOut":["v_phr"]})") +
+              "," +
+              transform("interposed", R"({"type":"interposedObject","particles":"particles","guardWords":"guard",)" + verb_guards +
+                                          R"("conditionsIn":[],"conditionsOut":["v_phr"]})"),
+          R"({"particles":["up","on","out"],"guard":["the","to"],
+              "auxiliaries":["am","is","are","was","were","be","been","being","have","has","had","having","do","does","did","done","doing"]})");
+    };
+    const auto plain = load(rules(""), &error);
+    check(plain != nullptr, "interposed pack without verbGuardWords loads: " + error);
+    const auto guarded = load(rules(R"("verbGuardWords":"auxiliaries",)"), &error);
+    check(guarded != nullptr, "interposed pack with verbGuardWords loads: " + error);
+    if (plain && guarded) {
+      using List = std::vector<std::string>;
+      // Without the field an auxiliary is read as the verb, as before.
+      auto r = deinflect(*plain, "had pointed out");
+      check(r == List{"had pointed out::", "had out:v_phr:interposed", "have out:v_phr:interposed>past"},
+            "without verbGuardWords: had pointed out -> have out: " + join(r));
+      r = deinflect(*plain, "have turned out");
+      check(r == List{"have turned out::", "have out:v_phr:interposed"},
+            "without verbGuardWords: have turned out -> have out: " + join(r));
+      // With it, not.
+      r = deinflect(*guarded, "had pointed out");
+      check(r == List{"had pointed out::"}, "verbGuardWords: had pointed out does not become have out: " + join(r));
+      r = deinflect(*guarded, "have turned out");
+      check(r == List{"have turned out::"}, "verbGuardWords: have turned out does not become have out: " + join(r));
+      r = deinflect(*guarded, "did his coat up");
+      check(r == List{"did his coat up::"}, "verbGuardWords: the reading it loses: " + join(r));
+      // Any other verb is read as without the field.
+      r = deinflect(*guarded, "pointed it out");
+      check(r == List{"pointed it out::", "pointed out:v_phr:interposed", "point out:v_phr:interposed>past"},
+            "verbGuardWords: pointed it out -> point out: " + join(r));
+      for (const char* text :
+           {"pointed it out", "put Mary's coat on", "put it on the table", "put the coat on", "turned the long one out"}) {
+        check(deinflect(*guarded, text) == deinflect(*plain, text),
+              std::string("verbGuardWords: other verbs unchanged: ") + text);
+      }
+      // A verb is compared whole and exactly, as guardWords compares a piece:
+      // only a preprocessor's lower-case variant matches `had`.
+      check(has(deinflect(*guarded, "Had pointed out"), "Had out:v_phr:interposed"), "verbGuardWords compares exactly");
+      check(has(deinflect(*guarded, "haddock it out"), "haddock out:v_phr:interposed"),
+            "verbGuardWords compares the whole verb");
+      // Only the first word is the verb: an auxiliary later in the object is
+      // a guard word only when guardWords lists it.
+      check(has(deinflect(*guarded, "turned had out"), "turned out:v_phr:interposed"),
+            "verbGuardWords checks the first word only");
+    }
+  }
+  {
     const auto pack = load(transforms_json(transform(
         "p", R"({"type":"pattern","pattern":"^([a-z]+) .+ ab$","replacement":"$1 ab","anchorSuffix":" ab","conditionsIn":[],"conditionsOut":["v_phr"]},
                 {"type":"pattern","pattern":"^(ba)\\1","replacement":"$1","anchorPrefix":"ba","conditionsIn":[],"conditionsOut":["v"]})")),
@@ -787,6 +842,18 @@ void test_schema() {
       {"pattern without anchor", language_json(), transforms_json(transform("t", R"({"type":"pattern","pattern":"a","replacement":"b","conditionsIn":[],"conditionsOut":["n"]})")), "exactly one of anchorSuffix"},
       {"lookbehind", language_json(), transforms_json(transform("t", R"({"type":"pattern","pattern":"(?<=a)b","replacement":"c","anchorSuffix":"b","conditionsIn":[],"conditionsOut":["n"]})")), "lookbehind"},
       {"word list", language_json(), transforms_json(transform("t", R"({"type":"phrasal","inflected":"s","deinflected":"","followedBy":"nope","conditionsIn":[],"conditionsOut":["n"]})")), "names no word list"},
+      {"verbGuardWords names no word list", language_json(),
+       transforms_json(transform("t", R"({"type":"interposedObject","particles":"p","guardWords":"p","verbGuardWords":"auxiliaries","conditionsIn":[],"conditionsOut":["v"]})"),
+                       R"({"p":["up"]})"),
+       R"(xx: transforms.json: transforms[0].rules[0].verbGuardWords: names no word list "auxiliaries")"},
+      {"verbGuardWords names a list", language_json(),
+       transforms_json(transform("t", R"({"type":"interposedObject","particles":"p","guardWords":"p","verbGuardWords":["had"],"conditionsIn":[],"conditionsOut":["v"]})"),
+                       R"({"p":["up"]})"),
+       "transforms[0].rules[0].verbGuardWords: must be a string, not an array"},
+      {"verbGuardWords on a phrasal rule", language_json(),
+       transforms_json(transform("t", R"({"type":"phrasal","inflected":"ed","deinflected":"","followedBy":"p","verbGuardWords":"p","conditionsIn":[],"conditionsOut":["v"]})"),
+                       R"({"p":["up"]})"),
+       "transforms[0].rules[0].verbGuardWords: unknown key"},
       {"unknown builtin", language_json(R"(,"variantPasses":[{"id":"p","builtin":"xx.nope","optional":true}])"), good, "unknown variant pass builtin"},
       {"setting effect", language_json("", "xx", R"([{"id":"s","type":"boolean","default":false,"label":"S","group":"lookup","effect":{"preprocessor":"decapitalize"}}])"), good, "names no optional processor"},
       {"setting display", language_json("", "xx", R"([{"id":"s","type":"enum","default":"a","values":[{"id":"a","label":"A"}],"label":"S","group":"display","effect":{"display":{"fields":["expression"],"when":"b","transform":"up"}}}])"), good, "when: is not one of"},
@@ -890,6 +957,30 @@ void test_replaced_rules() {
   check(hoshidicts::parse_language_pack(language, rules, &e) == nullptr && e == refused, "parse_language_pack still refuses: " + e);
   hoshidicts::LanguageRegistry registry;
   check(!registry.add(language, rules, &e) && e == refused && registry.codes().empty(), "LanguageRegistry::add still refuses: " + e);
+  {
+    // So does LanguageRegistry::add_directory (the CLI's registry,
+    // benchmark-lookup, hd_languages_add_directory): it reads the pack's own
+    // lookup.transforms file, whatever other rule files the pack has.
+    const auto root =
+        std::filesystem::temp_directory_path() / ("hoshidicts-replaced-rules-" + std::to_string(std::random_device{}()));
+    std::filesystem::create_directories(root / "xx" / "sources");
+    const auto write = [](const std::filesystem::path& path, const std::string& text) {
+      std::ofstream(path, std::ios::binary) << text;
+    };
+    write(root / "xx" / "language.json", language);
+    write(root / "xx" / "transforms.json", own);
+    write(root / "xx" / "sources" / "yomitan.json", rules);
+    hoshidicts::LanguageRegistry accepting;
+    e.clear();
+    check(accepting.add_directory(root.string(), &e) && accepting.codes() == std::vector<std::string>{"xx"},
+          "add_directory: the setting names an optional transform of transforms.json: " + e);
+    write(root / "xx" / "transforms.json", rules);
+    write(root / "xx" / "sources" / "own.json", own);
+    hoshidicts::LanguageRegistry refusing;
+    check(!refusing.add_directory(root.string(), &e) && e == refused && refusing.codes().empty(),
+          "LanguageRegistry::add_directory still refuses: " + e);
+    std::filesystem::remove_all(root);
+  }
 
   auto data = lang::parse_pack_with_rules(language, rules, "sources/yomitan.json", &e);
   check(data != nullptr, "replacement rules without the setting's transform: " + e);

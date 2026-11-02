@@ -22,8 +22,8 @@ const conditions = {
     adj: {name: 'Adjective', isDictionaryForm: true},
 };
 
-function model(rules, extra = {}) {
-    return new ModelDeinflector({schema: 1, conditions, wordLists: {particles: ['up', 'on'], guards: ['up', 'on', 'the', 'to']}, transforms: rules.map((r, i) => ({id: r.id ?? `t${i}`, name: r.id ?? `t${i}`, rules: [r.rule], ...(r.optional ? {optional: true} : {})}))}, classes, {wordCharacters: '{word}', ...extra});
+function model(rules, extra = {}, lists = {}) {
+    return new ModelDeinflector({schema: 1, conditions, wordLists: {particles: ['up', 'on'], guards: ['up', 'on', 'the', 'to'], ...lists}, transforms: rules.map((r, i) => ({id: r.id ?? `t${i}`, name: r.id ?? `t${i}`, rules: [r.rule], ...(r.optional ? {optional: true} : {})}))}, classes, {wordCharacters: '{word}', ...extra});
 }
 
 function texts(m, input) {
@@ -130,6 +130,25 @@ describe('rule types', () => {
         assert.deepEqual(texts(m, 'put it on the table'), ['put on the table:v_phr:io']);
         assert.deepEqual(texts(m, 'put on'), []);
         assert.deepEqual(texts(m, 'put it upon'), []);
+    });
+
+    test('interposedObject with verbGuardWords reads no word of the list as the verb', () => {
+        const lists = {
+            particles: ['up', 'on', 'out'],
+            auxiliaries: ['am', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does', 'did', 'done', 'doing'],
+        };
+        const io = (extra) => model([{id: 'io', rule: {type: 'interposedObject', particles: 'particles', guardWords: 'guards', conditionsIn: [], conditionsOut: ['v_phr'], ...extra}}], {}, lists);
+        const plain = io({});
+        const guarded = io({verbGuardWords: 'auxiliaries'});
+        assert.deepEqual(texts(plain, 'had pointed out'), ['had out:v_phr:io']);
+        assert.deepEqual(texts(plain, 'have turned out'), ['have out:v_phr:io']);
+        assert.deepEqual(texts(guarded, 'had pointed out'), []);
+        assert.deepEqual(texts(guarded, 'have turned out'), []);
+        assert.deepEqual(texts(guarded, 'pointed it out'), ['pointed out:v_phr:io']);
+        for (const text of ['pointed it out', 'put mary’s coat on', 'put it on the table', 'put the coat on', 'haddock it out', 'turned had out']) {
+            assert.deepEqual(texts(guarded, text), texts(plain, text), text);
+        }
+        assert.throws(() => io({verbGuardWords: 'nope'}), /no word list nope/);
     });
 
     test('pattern rules need their anchor', () => {
