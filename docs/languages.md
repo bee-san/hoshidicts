@@ -176,6 +176,7 @@ An abridged English example (section 4.8 has Arabic and Japanese excerpts):
     "readingNormalizer": null,
     "transforms": "transforms.json",
     "traceSelection": "shortest",
+    "formOf": "follow",
     "functionWords": [],
     "variantPasses": []
   },
@@ -257,6 +258,7 @@ The engine-facing block.
 | `readingNormalizer` | array of steps or null | Applied to readings when the engine groups results (section 9.6). Chinese pinyin uses it. |
 | `transforms` | string or null | File name of the deinflection rules in this directory. |
 | `traceSelection` | `"shortest"` or `"first"` | When several deinflections reach one term at the same matched length, which trace the result keeps (section 9.6). `shortest` is Yomitan's choice and the default. Japanese uses `first`, today's behaviour. |
+| `formOf` | `"follow"` or `"asTerm"` | How a lookup reads a term bank row's form-of references, the `[term, [rules]]` definitions of wiktionary-to-yomitan (kaikki) dictionaries (section 9.10). `follow` is Yomitan's behaviour and the default: the referenced term is looked up, with the rules as trace steps, a row that is only references never appears, and a term the dictionary names ranks first on ties (9.6). `asTerm` reads such a row as an ordinary term, as hoshidicts did before. The template and every new pack say `follow`; Japanese says `asTerm` (section 11). |
 | `functionWords` | array of strings | Words a host's segmenter may split around (section 9.8; Japanese particles today). |
 | `variantPasses` | array | Opt-in extra passes, each `{"id", "builtin", "optional": true}`, that a request enables by id. Japanese declares `nekoSpeech` (section 11.4). |
 
@@ -1058,11 +1060,31 @@ so the engine does not do it.
 ### 9.6 Order and grouping
 
 Results are ordered by the comparator hoshidicts uses today: primary reading,
-matched length, processor steps, trace length, written form equals the form
-looked up, the chosen frequency, dictionary rank, score, written form equals
-reading. Dictionary rank is the position in the request's dictionary selection
-(section 9.7). Where the reading equals the expression, as for languages
-without readings, the reading terms compare equal strings and have no effect.
+matched length, processor steps, trace length, dictionary-confirmed, written
+form equals the form looked up, the chosen frequency, dictionary rank, score,
+written form equals reading. Dictionary rank is the position in the request's
+dictionary selection (section 9.7). Where the reading equals the expression,
+as for languages without readings, the reading terms compare equal strings
+and have no effect.
+
+A term is **dictionary-confirmed** when a form-of reference of a row of the
+matched text reached it (section 9.10), alone or after rules, whichever trace
+the result keeps. It ranks before a term that only rules reached with the same
+matched length, steps and trace length: for Spanish *puedo*, the rules propose
+*podar* and *poder* with one step each, the row *puedo* names *poder*, so
+*poder* comes first. It never outranks a longer match, fewer steps or a
+shorter trace. A pack with `formOf: "asTerm"` follows no reference, so no term
+is confirmed.
+
+With `formOf: "follow"`, two candidates that every key ties are ordered by
+when the lookup first found their terms: the scan's prefixes from the longest
+down (the long-key extension of 9.1 after them), each through its processor
+variants, deinflections (section 7.4), postprocessed forms and the rows of the
+selected dictionaries in order; then the terms the scan's form-of references
+reach (9.10); then variant passes and their references. The order is the same
+on every platform. With `asTerm` (Japanese) such ties keep the order
+hoshidicts always gave them, which the standard library's `partial_sort`
+decides; the Japanese parity tests pin it (section 11.3).
 
 Candidates are grouped by `(expression, reading)` as today. With
 `traceSelection: "first"` a term keeps the first deinflection that reached it
@@ -1115,6 +1137,67 @@ beside today's overload, which uses every loaded dictionary;
 in C, which reads the request's selection fields; `hdw_kanji_with_options` in
 WebAssembly. Which characters are offered for lookup is the host's decision,
 made with the pack's `characterView.pattern`.
+
+### 9.10 Form-of references
+
+Yomitan term banks allow a definition that is not shown but points to another
+term: `[term, [rules...]]`. wiktionary-to-yomitan (kaikki) dictionaries hold
+hundreds of thousands of rows whose definitions are only such references
+(`walked` → `[["walk", ["simple past"]]]`; kty-ko-en has 336,337 beside 36,031
+lemma rows). With `lookup.formOf: "follow"` (section 4.4) a lookup reads them
+as Yomitan's translator does (`_getDeinflections` and
+`_getDictionaryDeinflections` in `ext/js/language/translator.js` at d3c54c1):
+
+1. A definition is a reference when it is an array whose first element is a
+   non-empty string, `formOf`; the strings of its second element, when that is
+   an array, are its rules. Other arrays are neither references nor
+   definitions.
+2. For every deinflection whose form found rows (sections 9.3 and 9.4), each
+   reference of each row that passes the part-of-speech filter for that
+   deinflection becomes a deinflection of its own: the same matched text and
+   processor steps, the text `formOf` (not postprocessed), no conditions, and
+   the deinflection's trace followed by one step per rule, in the
+   dictionary's order. Such a step has the rule as its id and name, no
+   description, and `TransformGroup::from_dictionary` set. A row without a
+   part of speech, such as a kaikki form-of row, is followed only from a
+   deinflection without conditions, such as the text as written.
+3. `formOf` is looked up in the request's dictionary selection (9.7), within
+   `lookup_dictionary()`'s dictionary, without the part-of-speech filter. The
+   terms it finds join grouping, ordering and `traceSelection` like any other
+   (9.6), with their own frequencies and pitches, and are dictionary-confirmed.
+   One hop: the references of the rows found for `formOf` are not followed.
+4. The references of the scan's deinflections are followed after the whole
+   scan, as Yomitan adds its dictionary deinflections after the algorithm's,
+   so where a reference and a rule reach a term with equal steps and trace
+   length, the rule's trace is the one found first. The references of variant
+   passes (11.4) are followed after the passes, before the terms only
+   frequency and pitch dictionaries have (`LookupOptions::metadata_only_terms`).
+   Both count the references' terms as ordinary matches: a pass reads only
+   prefixes longer than every one of them.
+5. A row that is only references, wherever it is found, is never a term; a
+   term left without rows is dropped. A row that also has other definitions
+   keeps them, and its glossary is returned without the references
+   (`GlossaryEntry::drop_form_of`). A row whose arrays are all something
+   other than references is an ordinary row, its glossary unchanged.
+
+The importer flags each record whose row holds a reference, in the record
+slot every reader since `.hoshidicts_2` skips (`src/json/form_of.hpp`); the
+references stay in the glossary as the bank wrote them, and a lookup reads
+them from the glossary of a row it follows them from. Dictionaries imported
+before this change have no flag: their form-of rows stay ordinary terms until
+they are imported again. With `asTerm` the flag is never read, so a lookup
+gives the results it gave before, whichever importer wrote the dictionary.
+
+Where hoshidicts differs from Yomitan:
+
+- A result keeps one trace (9.6); Yomitan lists every chain that reached the
+  entry, marked `algorithm`, `dictionary` or `both`.
+- Yomitan's per-dictionary `useDeinflections` option, which turns following
+  off for one dictionary, has no counterpart; the pack decides for every
+  dictionary.
+- hoshidicts applies the part-of-speech filter to the rows of a term together
+  (9.4), Yomitan to each row. A reference is followed only when its own row
+  passes, as in Yomitan.
 
 ## 10. Engine API
 
@@ -1185,7 +1268,11 @@ class Deinflector {
 };
 ```
 
-`TransformGroup` gains an `id` field beside `name` and `description`.
+`TransformGroup` gains an `id` field beside `name` and `description`, and
+`from_dictionary`, set for a step a dictionary's form-of reference names
+(section 9.10). `GlossaryEntry::drop_form_of` marks a glossary whose row's
+references a lookup followed; `glossary` is then the row's definitions
+without them.
 
 **Built-in packs.** The Japanese pack is also compiled into the library:
 `src/languages/builtin_packs.cpp` holds `languages/ja/language.json` and
@@ -1236,6 +1323,9 @@ hd_lookup_results* hd_lookup_run_with_language(const hd_lookup* l, const char* l
 // The transform id of each trace step of result i, step j; hd_transform_group
 // keeps its layout for callers built against the existing header.
 hd_str hd_lookup_results_trace_id(const hd_lookup_results* r, size_t i, size_t j);
+// 1 when trace step j of result i is a rule a dictionary's form-of reference
+// names (section 9.10), 0 otherwise and out of range.
+int hd_lookup_results_trace_from_dictionary(const hd_lookup_results* r, size_t i, size_t j);
 ```
 
 ### 10.3 Command line
@@ -1318,11 +1408,18 @@ deinflections of the whole source text count, never of shorter prefixes:
 
 `falseCandidates` and `firstRank` average over the `valid = 1` rows;
 `firstRank` looks the source up whole (scan length max(16, its length)) with
-every optional processor, transform and variant pass on. `--per-rule` gives
+every optional processor, transform and variant pass on. For a pack whose
+`formOf` is `follow`, both see the dictionary as a lookup does (section 9.10):
+a deinflected text counts as a false candidate only when a row of it with
+definitions passes the filter, and so does the text a form-of reference
+names, when the row naming it passes the filter for the deinflection that
+found it (that row may be the source's own) and the text has a row with
+definitions. `--per-rule` gives
 one entry per rule in the JSON (a cross product's rules summed): `recovers`
 counts rows every matching path of which uses the rule, `falseCandidates`
-the false-candidate texts every passing path to which uses it, `breaks` the
-negatives every matching path of which uses it.
+the false-candidate texts every passing path to which uses it (the path to a
+reference's text is the path of the deinflection that found its row), `breaks`
+the negatives every matching path of which uses it.
 
 A corpus whose first line is `# options: default` (section 12.2) is read
 with the pack's defaults instead, for its deinflections and for `firstRank`'s
@@ -1372,7 +1469,11 @@ the port use): the 18 flags `v1d v1p v5d v5ss v5sp vk vs vz adj-i -ます -ま�
 -て -ば -く -た -ん -なさい -ゃ` as conditions without `subConditions`, then
 `v1`, `v5s`, `v5`, `v` with `subConditions`. `isDictionaryForm` is true exactly for the
 six tags `pos_to_conditions` maps today: `v1`, `v5`, `vk`, `vs`, `vz`,
-`adj-i`. `traceSelection` is `first`.
+`adj-i`. `traceSelection` is `first`. `formOf` is `asTerm`: a row whose
+definitions are form-of references stays an ordinary term (Jitendex has
+138,071, each a visible "⟶" redirect glossary beside one reference), and ties
+every ranking key leaves keep today's order (9.6). Switching Japanese to
+`follow` changes results and is the owner's decision.
 
 The preprocessors are today's eight, in today's order, as builtins: `ja.nfkc`;
 kana (two variants); emphatic sequences (two variants); full-width
@@ -1428,6 +1529,12 @@ Japanese transform id equal to its name:
   equal the legacy query's. A C smoke case passes an empty vector's `data()`
   with `select_dictionaries` set and finds nothing.
 
+`form-of` (`tests/form_of_test.cpp`) compares the Japanese pack's `lookup()`
+and `lookup_dictionary()` with the oracle's on a dictionary of form-of rows
+(`tests/fixtures/form-of/japanese/`), with and without cat speech, so `asTerm`
+is proved on rows the parity fixture does not have; the importer now flags
+those rows and the oracle reads the same files.
+
 ### 11.4 NekoPara cat speech
 
 `deinflect_neko_speech` becomes the variant pass `nekoSpeech` of the Japanese
@@ -1452,7 +1559,7 @@ For every pack it checks:
 
 1. `language.json` and `transforms.json` against the schemas in this file:
    required fields (every key of section 4's English example except
-   `lookup.postprocessors`, `readingNormalizer`, `traceSelection`,
+   `lookup.postprocessors`, `readingNormalizer`, `traceSelection`, `formOf`,
    `functionWords`, `variantPasses`, a processor's `name`, `keepInput` and
    `optional`, and the `labels` entries), no unknown keys (per rule type, so
    `stemChange` on a `prefix` rule is an error), `host.frequencySamples`
@@ -1926,5 +2033,7 @@ who measures better values uses them and says why.
   JavaScript; Yomitan rules that use them are rewritten with stem constraints
   or dedicated types.
 - **Character classes have no script property**; packs list ranges.
-- **Dictionary-form redirects** (Yomitan's `[term, [rules]]` glossaries) are
-  still skipped by the importer, as today.
+- **Form-of references** (Yomitan's `[term, [rules]]` definitions) are
+  followed only by packs whose `formOf` is `follow`, and only in dictionaries
+  imported since the importer flags them (section 9.10). A result shows one
+  trace where Yomitan lists every chain.

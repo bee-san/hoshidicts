@@ -40,6 +40,15 @@
       ]
     },
     {
+      "id": "dim",
+      "name": "dim",
+      "description": "the probe rule that reaches ki from kits",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "ts", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
       "id": "plural",
       "name": "plural",
       "description": "the plural probe rule",
