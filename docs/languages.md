@@ -1122,10 +1122,11 @@ lemma rows). With `lookup.formOf: "follow"` (section 4.4) a lookup reads them
 as Yomitan's translator does (`_getDeinflections` and
 `_getDictionaryDeinflections` in `ext/js/language/translator.js` at d3c54c1):
 
-1. A definition is a reference when it is an array whose first element is a
-   non-empty string, `formOf`; the strings of its second element, when that is
-   an array, are its rules. Other arrays are neither references nor
-   definitions.
+1. A definition is a reference when it is an array of two elements, a
+   non-empty string `formOf` and an array whose strings are its rules: the
+   deinflection of Yomitan's term bank schema
+   (`dictionary-term-bank-v3-schema.json`), which Yomitan's importer
+   enforces. Other arrays are neither references nor definitions.
 2. For every deinflection whose form found rows (sections 9.3 and 9.4), each
    reference of each row that passes the part-of-speech filter for that
    deinflection becomes a deinflection of its own: the same matched text and
