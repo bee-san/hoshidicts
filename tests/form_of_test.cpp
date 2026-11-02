@@ -366,6 +366,14 @@ void test_follow(const fs::path& repo, const Dictionaries& d, DictionaryStorage 
   // reading, the reference-only row book (no part of speech) is not followed.
   check(brief(run("booked")) == "book(booked;book;past)", "booked does not follow book's reference: " + brief(run("booked")));
   {
+    // A dictionary in pos_filter_exempt: its rows pass the filter, so the
+    // row book's reference is followed under the verb reading too.
+    LookupOptions exempt;
+    exempt.pos_filter_exempt = {d.forms};
+    check(brief(run("booked", "fo", exempt)) == "book(booked;book;past) bake(booked;bake;past>dialectal past*)",
+          "pos_filter_exempt follows the reference: " + brief(run("booked", "fo", exempt)));
+  }
+  {
     const auto r = run("book");
     check(brief(r) == "book(book;book;) bake(book;bake;dialectal past*)", "book: " + brief(r));
     if (!r.empty()) {
