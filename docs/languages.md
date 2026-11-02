@@ -742,9 +742,9 @@ classic locale) and JavaScript give the same results:
     place and JavaScript moves one unit on, so `a*?` with `-` on `baaa` gives
     `-b-------` in the engine and `-b-a-a-a-` in JavaScript;
   - a back-reference to a group that may not take part in the match because
-    it is in another alternative (`(a)|b\1`), repeated at least zero times
-    (`(a)?\1`, `(a)*\1`) or in a negative lookahead (`(?!(a))\1`):
-    JavaScript matches the empty text there and std::regex fails;
+    it is in another alternative (`(a)|b\1`) or repeated at least zero times
+    (`(a)?\1`, `(a)*\1`): JavaScript matches the empty text there and
+    std::regex fails;
   - a capturing group inside a repeated group (`(?:(x)|y)*z`, `((a)|b)*`):
     JavaScript clears it on every repetition and std::regex keeps the last
     value, so `[$1]` on `xyz` gives `[]` and `[x]`;
@@ -759,7 +759,9 @@ classic locale) and JavaScript give the same results:
     libstdc++ copies the captures of a lookahead into the match and keeps
     them when the match then fails on that path, so `(?=(a))ac|ab` with
     `[$1]` on `ab` gives `[a]` in the engine and `[]` in JavaScript and
-    libc++; write `(?:...)` inside a lookahead;
+    libc++. Write `(?:...)` inside a lookahead. This rule also refuses a
+    back-reference to a group in a negative lookahead (`(?!(a))\1`), where
+    JavaScript matches the empty text and std::regex fails;
   - a back-reference inside a lookahead (`(a)(?=\1)`): libc++ compiles a
     lookahead as a regex of its own and numbers its groups from 1, so a
     back-reference there names the lookahead's own group, or none:
