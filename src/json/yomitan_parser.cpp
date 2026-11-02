@@ -507,13 +507,9 @@ RawReference raw_reference(std::string_view definition) {
 bool non_empty_string(std::string_view raw) { return raw.size() > 2; }
 }  // namespace
 
-bool yomitan_parser::read_form_of(std::string_view definitions, std::vector<FormOfReference>& out) {
-  bool other = false;
+void yomitan_parser::read_form_of(std::string_view definitions, std::vector<FormOfReference>& out) {
   each_element(definitions, [&](std::string_view definition) {
-    if (definition.front() != '[') {
-      other = true;
-      return;
-    }
+    if (definition.front() != '[') return;
     const RawReference raw = raw_reference(definition);
     if (!non_empty_string(raw.form_of)) return;  // not a string, or ""
     FormOfReference reference{.form_of = decode_string(raw.form_of), .rules = {}};
@@ -524,7 +520,6 @@ bool yomitan_parser::read_form_of(std::string_view definitions, std::vector<Form
     }
     out.push_back(std::move(reference));
   });
-  return other;
 }
 
 yomitan_parser::FormOfKind yomitan_parser::form_of_kind(std::string_view definitions) {
