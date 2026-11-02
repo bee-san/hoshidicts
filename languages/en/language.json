@@ -123,9 +123,9 @@
     },
     "recommendedDictionaries": [
       {
-        "name": "kty-en-en (Kaikki-to-Yomitan English-English)",
-        "url": "https://github.com/yomidevs/kaikki-to-yomitan",
-        "description": "English Wiktionary definitions of English words, with parts of speech for the inflection rules.",
+        "name": "wty-en-en (Wiktionary English-English, wiktionary-to-yomitan)",
+        "url": "https://yomidevs.github.io/wiktionary-to-yomitan/download/",
+        "description": "English Wiktionary definitions of English words, with the parts of speech the inflection rules filter on.",
         "licence": "CC BY-SA 4.0 (Wiktionary content)"
       }
     ],
