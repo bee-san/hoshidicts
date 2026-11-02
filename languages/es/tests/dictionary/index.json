@@ -1,0 +1,10 @@
+{
+  "title": "hoshidicts es test dictionary",
+  "format": 3,
+  "revision": "1",
+  "sequenced": false,
+  "author": "hoshidicts",
+  "description": "A tiny Spanish dictionary for languages/es/tests/lookup.tsv, written for the pack.",
+  "sourceLanguage": "es",
+  "targetLanguage": "en"
+}

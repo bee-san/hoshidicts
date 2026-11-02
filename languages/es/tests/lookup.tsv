@@ -1,0 +1,24 @@
+# Source: written for this pack (GPL-3.0-or-later), against tests/dictionary/. Every optional processor is on.
+# category	valid	text	expression	matched
+inflection	1	comimos en un restaurante	comer	comimos
+inflection	1	Hablamos mañana	hablar	Hablamos
+inflection	1	canciones bonitas	canción	canciones
+inflection	1	árboles altos	árbol	árboles
+inflection	1	luces encendidas	luz	luces
+inflection	1	huele a pan	oler	huele
+inflection	1	juego al fútbol	jugar	juego
+inflection	1	sueña despierta	soñar	sueña
+pronouns	1	dámelo ahora	dar	dámelo
+pronouns	1	dímelo ya	decir	dímelo
+pronominal verbs	1	me levanto temprano	levantarse	me levanto
+pronominal verbs	1	se fue a casa	irse	se fue
+pronominal verbs	1	acuérdate de mí	acordarse	acuérdate
+word resolution	1	desafortunadamente llovió	desafortunado	desafortunadamente
+word resolution	1	Ayer comimos	ayer	Ayer
+word resolution	1	franco-alemana	franco	franco
+missing accents	1	cancion bonita	canción	cancion
+negatives	0	de la casa	dar	de
+negatives	0	para mí	paro	para
+negatives	0	casa grande	caso	casa
+negatives	0	me levanto temprano	me	me
+negatives	0	comimos en	comer	comimos en

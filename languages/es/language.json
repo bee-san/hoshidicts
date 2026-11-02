@@ -9,10 +9,13 @@
   "direction": "ltr",
   "classes": {
     "letter": "[A-Za-z\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u024F\\uFB00-\\uFB06]",
-    "word": "[{letter}\\p{M}\\p{Nd}]"
+    "word": "[{letter}\\u0300-\\u036F0-9]",
+    "stemConsonant": "[bcdfghjklmnñpqrstvwxyzu]",
+    "imperativeEnd": "[aeiouáéíóúdnszl]",
+    "imperativeEndOs": "[aeiouáéíóúnszl]"
   },
   "text": {
-    "pattern": "[{letter}\\p{M}]",
+    "pattern": "[{letter}\\u0300-\\u036F]",
     "scanStart": "word",
     "segmentation": "spaces",
     "wordCharacters": "{word}",

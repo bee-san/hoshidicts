@@ -1,255 +1,257 @@
 # GPL-3.0-or-later; Copyright (C) 2024-2026 Yomitan Authors
 # https://github.com/yomidevs/yomitan/blob/d3c54c10264673eca0d66b970ef74cd5c8b048e3/test/language/spanish-transforms.test.js
+# Converted by tools/port-yomitan-tests.mjs; the reasons column is then set to * (any trace) by sources/build-final.mjs: the final rules reach
+# these lemmas through this pack's own transforms, whose ids are not Yomitan's. With Yomitan's traces the rows pass against sources/yomitan.json (README.md).
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
-nouns	1	gatos	gato	ns	plural
-nouns	1	sofás	sofá	ns	plural
-nouns	1	tisús	tisú	ns	plural
-nouns	1	tisúes	tisú	ns	plural
-nouns	1	autobuses	autobús	ns	plural
-nouns	1	ciudades	ciudad	ns	plural
-nouns	1	clics	clic	ns	plural
-nouns	1	síes	sí	ns	plural
-nouns	1	zigzags	zigzag	ns	plural
-nouns	1	luces	luz	ns	plural
-nouns	1	canciones	canción	ns	plural
-feminine adjectives	1	roja	rojo	adj	feminine adjective
-present indicative verbs	1	hablo	hablar	v	present indicative
-present indicative verbs	1	hablas	hablar	v	present indicative
-present indicative verbs	1	habla	hablar	v	present indicative
-present indicative verbs	1	hablamos	hablar	v	present indicative
-present indicative verbs	1	habláis	hablar	v	present indicative
-present indicative verbs	1	hablan	hablar	v	present indicative
-present indicative verbs	1	como	comer	v	present indicative
-present indicative verbs	1	comes	comer	v	present indicative
-present indicative verbs	1	come	comer	v	present indicative
-present indicative verbs	1	comemos	comer	v	present indicative
-present indicative verbs	1	coméis	comer	v	present indicative
-present indicative verbs	1	comen	comer	v	present indicative
-present indicative verbs	1	vivo	vivir	v	present indicative
-present indicative verbs	1	vives	vivir	v	present indicative
-present indicative verbs	1	vive	vivir	v	present indicative
-present indicative verbs	1	vivimos	vivir	v	present indicative
-present indicative verbs	1	vivís	vivir	v	present indicative
-present indicative verbs	1	viven	vivir	v	present indicative
-present indicative verbs	1	tengo	tener	v	present indicative
-present indicative verbs	1	tienes	tener	v	present indicative
-present indicative verbs	1	tiene	tener	v	present indicative
-present indicative verbs	1	tenemos	tener	v	present indicative
-present indicative verbs	1	tenéis	tener	v	present indicative
-present indicative verbs	1	tienen	tener	v	present indicative
-present indicative verbs	1	exijo	exigir	v	present indicative
-present indicative verbs	1	extingo	extinguir	v	present indicative
-present indicative verbs	1	escojo	escoger	v	present indicative
-present indicative verbs	1	quepo	caber	v	present indicative
-present indicative verbs	1	caigo	caer	v	present indicative
-present indicative verbs	1	conozco	conocer	v	present indicative
-present indicative verbs	1	doy	dar	v	present indicative
-present indicative verbs	1	hago	hacer	v	present indicative
-present indicative verbs	1	pongo	poner	v	present indicative
-present indicative verbs	1	sé	saber	v	present indicative
-present indicative verbs	1	salgo	salir	v	present indicative
-present indicative verbs	1	traduzco	traducir	v	present indicative
-present indicative verbs	1	traigo	traer	v	present indicative
-present indicative verbs	1	valgo	valer	v	present indicative
-present indicative verbs	1	veo	ver	v	present indicative
-present indicative verbs	1	soy	ser	v	present indicative
-present indicative verbs	1	estoy	estar	v	present indicative
-present indicative verbs	1	voy	ir	v	present indicative
-present indicative verbs	1	he	haber	v	present indicative
-present indicative verbs	1	pienso	pensar	v	present indicative
-present indicative verbs	1	piensas	pensar	v	present indicative
-present indicative verbs	1	piensa	pensar	v	present indicative
-present indicative verbs	1	pensamos	pensar	v	present indicative
-present indicative verbs	1	pensáis	pensar	v	present indicative
-present indicative verbs	1	piensan	pensar	v	present indicative
-present indicative verbs	1	asciendo	ascender	v	present indicative
-present indicative verbs	1	asciendes	ascender	v	present indicative
-present indicative verbs	1	asciende	ascender	v	present indicative
-present indicative verbs	1	ascendemos	ascender	v	present indicative
-present indicative verbs	1	ascendéis	ascender	v	present indicative
-present indicative verbs	1	ascienden	ascender	v	present indicative
-present indicative verbs	1	miento	mentir	v	present indicative
-present indicative verbs	1	mientes	mentir	v	present indicative
-present indicative verbs	1	miente	mentir	v	present indicative
-present indicative verbs	1	mentimos	mentir	v	present indicative
-present indicative verbs	1	mentís	mentir	v	present indicative
-present indicative verbs	1	mienten	mentir	v	present indicative
-present indicative verbs	1	cuesto	costar	v	present indicative
-present indicative verbs	1	cuestas	costar	v	present indicative
-present indicative verbs	1	cuesta	costar	v	present indicative
-present indicative verbs	1	costamos	costar	v	present indicative
-present indicative verbs	1	costáis	costar	v	present indicative
-present indicative verbs	1	cuestan	costar	v	present indicative
-present indicative verbs	1	juego	jugar	v	present indicative
-present indicative verbs	1	juegas	jugar	v	present indicative
-present indicative verbs	1	juega	jugar	v	present indicative
-present indicative verbs	1	jugamos	jugar	v	present indicative
-present indicative verbs	1	jugáis	jugar	v	present indicative
-present indicative verbs	1	juegan	jugar	v	present indicative
-present indicative verbs	1	huelo	oler	v	present indicative
-present indicative verbs	1	hueles	oler	v	present indicative
-present indicative verbs	1	huele	oler	v	present indicative
-present indicative verbs	1	olemos	oler	v	present indicative
-present indicative verbs	1	oléis	oler	v	present indicative
-present indicative verbs	1	huelen	oler	v	present indicative
-present indicative verbs	1	suelo	soler	v	present indicative
-present indicative verbs	1	sueles	soler	v	present indicative
-present indicative verbs	1	suele	soler	v	present indicative
-present indicative verbs	1	solemos	soler	v	present indicative
-present indicative verbs	1	soléis	soler	v	present indicative
-present indicative verbs	1	suelen	soler	v	present indicative
-present indicative verbs	1	muero	morir	v	present indicative
-present indicative verbs	1	mueres	morir	v	present indicative
-present indicative verbs	1	muere	morir	v	present indicative
-present indicative verbs	1	morimos	morir	v	present indicative
-present indicative verbs	1	morís	morir	v	present indicative
-present indicative verbs	1	mueren	morir	v	present indicative
-present indicative verbs	1	mido	medir	v	present indicative
-present indicative verbs	1	mides	medir	v	present indicative
-present indicative verbs	1	mide	medir	v	present indicative
-present indicative verbs	1	medimos	medir	v	present indicative
-present indicative verbs	1	medís	medir	v	present indicative
-present indicative verbs	1	miden	medir	v	present indicative
-preterite	1	hablé	hablar	v	preterite
-preterite	1	hablaste	hablar	v	preterite
-preterite	1	habló	hablar	v	preterite
-preterite	1	hablamos	hablar	v	preterite
-preterite	1	hablasteis	hablar	v	preterite
-preterite	1	hablaron	hablar	v	preterite
-preterite	1	comí	comer	v	preterite
-preterite	1	comiste	comer	v	preterite
-preterite	1	comió	comer	v	preterite
-preterite	1	comimos	comer	v	preterite
-preterite	1	comisteis	comer	v	preterite
-preterite	1	comieron	comer	v	preterite
-preterite	1	viví	vivir	v	preterite
-preterite	1	viviste	vivir	v	preterite
-preterite	1	vivió	vivir	v	preterite
-preterite	1	vivimos	vivir	v	preterite
-preterite	1	vivisteis	vivir	v	preterite
-preterite	1	vivieron	vivir	v	preterite
-preterite	1	tuve	tener	v	preterite
-preterite	1	mintió	mentir	v	preterite
-preterite	1	mintieron	mentir	v	preterite
-preterite	1	durmió	dormir	v	preterite
-preterite	1	durmieron	dormir	v	preterite
-imperfect	1	hablaba	hablar	v	imperfect
-imperfect	1	hablabas	hablar	v	imperfect
-imperfect	1	hablaba	hablar	v	imperfect
-imperfect	1	hablábamos	hablar	v	imperfect
-imperfect	1	hablabais	hablar	v	imperfect
-imperfect	1	hablaban	hablar	v	imperfect
-imperfect	1	comía	comer	v	imperfect
-imperfect	1	comías	comer	v	imperfect
-imperfect	1	comía	comer	v	imperfect
-imperfect	1	comíamos	comer	v	imperfect
-imperfect	1	comíais	comer	v	imperfect
-imperfect	1	comían	comer	v	imperfect
-imperfect	1	vivía	vivir	v	imperfect
-imperfect	1	vivías	vivir	v	imperfect
-imperfect	1	vivía	vivir	v	imperfect
-imperfect	1	vivíamos	vivir	v	imperfect
-imperfect	1	vivíais	vivir	v	imperfect
-imperfect	1	vivían	vivir	v	imperfect
-progressive	1	hablando	hablar	v	progressive
-progressive	1	comiendo	comer	v	progressive
-progressive	1	viviendo	vivir	v	progressive
-progressive	1	sirviendo	servir	v	progressive
-progressive	1	durmiendo	dormir	v	progressive
-progressive	1	pudiendo	poder	v	progressive
-imperative	1	habla	hablar	v	imperative
-imperative	1	hablad	hablar	v	imperative
-imperative	1	come	comer	v	imperative
-imperative	1	comed	comer	v	imperative
-imperative	1	vive	vivir	v	imperative
-imperative	1	vivid	vivir	v	imperative
-imperative	1	piensa	pensar	v	imperative
-imperative	1	pensad	pensar	v	imperative
-imperative	1	suele	soler	v	imperative
-imperative	1	soled	soler	v	imperative
-imperative	1	mide	medir	v	imperative
-imperative	1	medid	medir	v	imperative
-imperative	1	juega	jugar	v	imperative
-imperative	1	juegue	jugar	v	imperative
-imperative	1	jugad	jugar	v	imperative
-imperative	1	jueguen	jugar	v	imperative
-imperative	1	huele	oler	v	imperative
-imperative	1	huela	oler	v	imperative
-imperative	1	oled	oler	v	imperative
-imperative	1	huelan	oler	v	imperative
-conditional	1	hablaría	hablar	v	conditional
-conditional	1	hablarías	hablar	v	conditional
-conditional	1	hablaría	hablar	v	conditional
-conditional	1	hablaríamos	hablar	v	conditional
-conditional	1	hablaríais	hablar	v	conditional
-conditional	1	hablarían	hablar	v	conditional
-conditional	1	comería	comer	v	conditional
-conditional	1	comerías	comer	v	conditional
-conditional	1	comería	comer	v	conditional
-conditional	1	comeríamos	comer	v	conditional
-conditional	1	comeríais	comer	v	conditional
-conditional	1	comerían	comer	v	conditional
-conditional	1	viviría	vivir	v	conditional
-conditional	1	vivirías	vivir	v	conditional
-conditional	1	viviría	vivir	v	conditional
-conditional	1	viviríamos	vivir	v	conditional
-conditional	1	viviríais	vivir	v	conditional
-conditional	1	vivirían	vivir	v	conditional
-future	1	hablaré	hablar	v	future
-future	1	hablarás	hablar	v	future
-future	1	hablará	hablar	v	future
-future	1	hablaremos	hablar	v	future
-future	1	hablaréis	hablar	v	future
-future	1	hablarán	hablar	v	future
-future	1	comeré	comer	v	future
-future	1	comerás	comer	v	future
-future	1	comerá	comer	v	future
-future	1	comeremos	comer	v	future
-future	1	comeréis	comer	v	future
-future	1	comerán	comer	v	future
-future	1	viviré	vivir	v	future
-future	1	vivirás	vivir	v	future
-future	1	vivirá	vivir	v	future
-future	1	viviremos	vivir	v	future
-future	1	viviréis	vivir	v	future
-future	1	vivirán	vivir	v	future
-present subjunctive	1	hable	hablar	v	present subjunctive
-present subjunctive	1	hables	hablar	v	present subjunctive
-present subjunctive	1	hable	hablar	v	present subjunctive
-present subjunctive	1	hablemos	hablar	v	present subjunctive
-present subjunctive	1	habléis	hablar	v	present subjunctive
-present subjunctive	1	hablen	hablar	v	present subjunctive
-present subjunctive	1	coma	comer	v	present subjunctive
-present subjunctive	1	comas	comer	v	present subjunctive
-present subjunctive	1	coma	comer	v	present subjunctive
-present subjunctive	1	comamos	comer	v	present subjunctive
-present subjunctive	1	comáis	comer	v	present subjunctive
-present subjunctive	1	coman	comer	v	present subjunctive
-present subjunctive	1	viva	vivir	v	present subjunctive
-present subjunctive	1	vivas	vivir	v	present subjunctive
-present subjunctive	1	viva	vivir	v	present subjunctive
-present subjunctive	1	vivamos	vivir	v	present subjunctive
-present subjunctive	1	viváis	vivir	v	present subjunctive
-present subjunctive	1	vivan	vivir	v	present subjunctive
-present subjunctive	1	piense	pensar	v	present subjunctive
-present subjunctive	1	pienses	pensar	v	present subjunctive
-present subjunctive	1	piense	pensar	v	present subjunctive
-present subjunctive	1	pensemos	pensar	v	present subjunctive
-present subjunctive	1	penséis	pensar	v	present subjunctive
-present subjunctive	1	piensen	pensar	v	present subjunctive
-present subjunctive	1	suela	soler	v	present subjunctive
-present subjunctive	1	suelas	soler	v	present subjunctive
-present subjunctive	1	suela	soler	v	present subjunctive
-present subjunctive	1	solamos	soler	v	present subjunctive
-present subjunctive	1	soláis	soler	v	present subjunctive
-present subjunctive	1	suelan	soler	v	present subjunctive
-present subjunctive	1	mida	medir	v	present subjunctive
-present subjunctive	1	midas	medir	v	present subjunctive
-present subjunctive	1	mida	medir	v	present subjunctive
-present subjunctive	1	medamos	medir	v	present subjunctive
-present subjunctive	1	medáis	medir	v	present subjunctive
-present subjunctive	1	midan	medir	v	present subjunctive
-participle	1	escuchado	escuchar	v	participle
-reflexive	1	lavarse	lavar	v	reflexive
-reflexive	1	lavarte	lavarse	v	pronoun substitution
-reflexive	1	me lavar	lavarse	v	pronominal
+nouns	1	gatos	gato	ns	*
+nouns	1	sofás	sofá	ns	*
+nouns	1	tisús	tisú	ns	*
+nouns	1	tisúes	tisú	ns	*
+nouns	1	autobuses	autobús	ns	*
+nouns	1	ciudades	ciudad	ns	*
+nouns	1	clics	clic	ns	*
+nouns	1	síes	sí	ns	*
+nouns	1	zigzags	zigzag	ns	*
+nouns	1	luces	luz	ns	*
+nouns	1	canciones	canción	ns	*
+feminine adjectives	1	roja	rojo	adj	*
+present indicative verbs	1	hablo	hablar	v	*
+present indicative verbs	1	hablas	hablar	v	*
+present indicative verbs	1	habla	hablar	v	*
+present indicative verbs	1	hablamos	hablar	v	*
+present indicative verbs	1	habláis	hablar	v	*
+present indicative verbs	1	hablan	hablar	v	*
+present indicative verbs	1	como	comer	v	*
+present indicative verbs	1	comes	comer	v	*
+present indicative verbs	1	come	comer	v	*
+present indicative verbs	1	comemos	comer	v	*
+present indicative verbs	1	coméis	comer	v	*
+present indicative verbs	1	comen	comer	v	*
+present indicative verbs	1	vivo	vivir	v	*
+present indicative verbs	1	vives	vivir	v	*
+present indicative verbs	1	vive	vivir	v	*
+present indicative verbs	1	vivimos	vivir	v	*
+present indicative verbs	1	vivís	vivir	v	*
+present indicative verbs	1	viven	vivir	v	*
+present indicative verbs	1	tengo	tener	v	*
+present indicative verbs	1	tienes	tener	v	*
+present indicative verbs	1	tiene	tener	v	*
+present indicative verbs	1	tenemos	tener	v	*
+present indicative verbs	1	tenéis	tener	v	*
+present indicative verbs	1	tienen	tener	v	*
+present indicative verbs	1	exijo	exigir	v	*
+present indicative verbs	1	extingo	extinguir	v	*
+present indicative verbs	1	escojo	escoger	v	*
+present indicative verbs	1	quepo	caber	v	*
+present indicative verbs	1	caigo	caer	v	*
+present indicative verbs	1	conozco	conocer	v	*
+present indicative verbs	1	doy	dar	v	*
+present indicative verbs	1	hago	hacer	v	*
+present indicative verbs	1	pongo	poner	v	*
+present indicative verbs	1	sé	saber	v	*
+present indicative verbs	1	salgo	salir	v	*
+present indicative verbs	1	traduzco	traducir	v	*
+present indicative verbs	1	traigo	traer	v	*
+present indicative verbs	1	valgo	valer	v	*
+present indicative verbs	1	veo	ver	v	*
+present indicative verbs	1	soy	ser	v	*
+present indicative verbs	1	estoy	estar	v	*
+present indicative verbs	1	voy	ir	v	*
+present indicative verbs	1	he	haber	v	*
+present indicative verbs	1	pienso	pensar	v	*
+present indicative verbs	1	piensas	pensar	v	*
+present indicative verbs	1	piensa	pensar	v	*
+present indicative verbs	1	pensamos	pensar	v	*
+present indicative verbs	1	pensáis	pensar	v	*
+present indicative verbs	1	piensan	pensar	v	*
+present indicative verbs	1	asciendo	ascender	v	*
+present indicative verbs	1	asciendes	ascender	v	*
+present indicative verbs	1	asciende	ascender	v	*
+present indicative verbs	1	ascendemos	ascender	v	*
+present indicative verbs	1	ascendéis	ascender	v	*
+present indicative verbs	1	ascienden	ascender	v	*
+present indicative verbs	1	miento	mentir	v	*
+present indicative verbs	1	mientes	mentir	v	*
+present indicative verbs	1	miente	mentir	v	*
+present indicative verbs	1	mentimos	mentir	v	*
+present indicative verbs	1	mentís	mentir	v	*
+present indicative verbs	1	mienten	mentir	v	*
+present indicative verbs	1	cuesto	costar	v	*
+present indicative verbs	1	cuestas	costar	v	*
+present indicative verbs	1	cuesta	costar	v	*
+present indicative verbs	1	costamos	costar	v	*
+present indicative verbs	1	costáis	costar	v	*
+present indicative verbs	1	cuestan	costar	v	*
+present indicative verbs	1	juego	jugar	v	*
+present indicative verbs	1	juegas	jugar	v	*
+present indicative verbs	1	juega	jugar	v	*
+present indicative verbs	1	jugamos	jugar	v	*
+present indicative verbs	1	jugáis	jugar	v	*
+present indicative verbs	1	juegan	jugar	v	*
+present indicative verbs	1	huelo	oler	v	*
+present indicative verbs	1	hueles	oler	v	*
+present indicative verbs	1	huele	oler	v	*
+present indicative verbs	1	olemos	oler	v	*
+present indicative verbs	1	oléis	oler	v	*
+present indicative verbs	1	huelen	oler	v	*
+present indicative verbs	1	suelo	soler	v	*
+present indicative verbs	1	sueles	soler	v	*
+present indicative verbs	1	suele	soler	v	*
+present indicative verbs	1	solemos	soler	v	*
+present indicative verbs	1	soléis	soler	v	*
+present indicative verbs	1	suelen	soler	v	*
+present indicative verbs	1	muero	morir	v	*
+present indicative verbs	1	mueres	morir	v	*
+present indicative verbs	1	muere	morir	v	*
+present indicative verbs	1	morimos	morir	v	*
+present indicative verbs	1	morís	morir	v	*
+present indicative verbs	1	mueren	morir	v	*
+present indicative verbs	1	mido	medir	v	*
+present indicative verbs	1	mides	medir	v	*
+present indicative verbs	1	mide	medir	v	*
+present indicative verbs	1	medimos	medir	v	*
+present indicative verbs	1	medís	medir	v	*
+present indicative verbs	1	miden	medir	v	*
+preterite	1	hablé	hablar	v	*
+preterite	1	hablaste	hablar	v	*
+preterite	1	habló	hablar	v	*
+preterite	1	hablamos	hablar	v	*
+preterite	1	hablasteis	hablar	v	*
+preterite	1	hablaron	hablar	v	*
+preterite	1	comí	comer	v	*
+preterite	1	comiste	comer	v	*
+preterite	1	comió	comer	v	*
+preterite	1	comimos	comer	v	*
+preterite	1	comisteis	comer	v	*
+preterite	1	comieron	comer	v	*
+preterite	1	viví	vivir	v	*
+preterite	1	viviste	vivir	v	*
+preterite	1	vivió	vivir	v	*
+preterite	1	vivimos	vivir	v	*
+preterite	1	vivisteis	vivir	v	*
+preterite	1	vivieron	vivir	v	*
+preterite	1	tuve	tener	v	*
+preterite	1	mintió	mentir	v	*
+preterite	1	mintieron	mentir	v	*
+preterite	1	durmió	dormir	v	*
+preterite	1	durmieron	dormir	v	*
+imperfect	1	hablaba	hablar	v	*
+imperfect	1	hablabas	hablar	v	*
+imperfect	1	hablaba	hablar	v	*
+imperfect	1	hablábamos	hablar	v	*
+imperfect	1	hablabais	hablar	v	*
+imperfect	1	hablaban	hablar	v	*
+imperfect	1	comía	comer	v	*
+imperfect	1	comías	comer	v	*
+imperfect	1	comía	comer	v	*
+imperfect	1	comíamos	comer	v	*
+imperfect	1	comíais	comer	v	*
+imperfect	1	comían	comer	v	*
+imperfect	1	vivía	vivir	v	*
+imperfect	1	vivías	vivir	v	*
+imperfect	1	vivía	vivir	v	*
+imperfect	1	vivíamos	vivir	v	*
+imperfect	1	vivíais	vivir	v	*
+imperfect	1	vivían	vivir	v	*
+progressive	1	hablando	hablar	v	*
+progressive	1	comiendo	comer	v	*
+progressive	1	viviendo	vivir	v	*
+progressive	1	sirviendo	servir	v	*
+progressive	1	durmiendo	dormir	v	*
+progressive	1	pudiendo	poder	v	*
+imperative	1	habla	hablar	v	*
+imperative	1	hablad	hablar	v	*
+imperative	1	come	comer	v	*
+imperative	1	comed	comer	v	*
+imperative	1	vive	vivir	v	*
+imperative	1	vivid	vivir	v	*
+imperative	1	piensa	pensar	v	*
+imperative	1	pensad	pensar	v	*
+imperative	1	suele	soler	v	*
+imperative	1	soled	soler	v	*
+imperative	1	mide	medir	v	*
+imperative	1	medid	medir	v	*
+imperative	1	juega	jugar	v	*
+imperative	1	juegue	jugar	v	*
+imperative	1	jugad	jugar	v	*
+imperative	1	jueguen	jugar	v	*
+imperative	1	huele	oler	v	*
+imperative	1	huela	oler	v	*
+imperative	1	oled	oler	v	*
+imperative	1	huelan	oler	v	*
+conditional	1	hablaría	hablar	v	*
+conditional	1	hablarías	hablar	v	*
+conditional	1	hablaría	hablar	v	*
+conditional	1	hablaríamos	hablar	v	*
+conditional	1	hablaríais	hablar	v	*
+conditional	1	hablarían	hablar	v	*
+conditional	1	comería	comer	v	*
+conditional	1	comerías	comer	v	*
+conditional	1	comería	comer	v	*
+conditional	1	comeríamos	comer	v	*
+conditional	1	comeríais	comer	v	*
+conditional	1	comerían	comer	v	*
+conditional	1	viviría	vivir	v	*
+conditional	1	vivirías	vivir	v	*
+conditional	1	viviría	vivir	v	*
+conditional	1	viviríamos	vivir	v	*
+conditional	1	viviríais	vivir	v	*
+conditional	1	vivirían	vivir	v	*
+future	1	hablaré	hablar	v	*
+future	1	hablarás	hablar	v	*
+future	1	hablará	hablar	v	*
+future	1	hablaremos	hablar	v	*
+future	1	hablaréis	hablar	v	*
+future	1	hablarán	hablar	v	*
+future	1	comeré	comer	v	*
+future	1	comerás	comer	v	*
+future	1	comerá	comer	v	*
+future	1	comeremos	comer	v	*
+future	1	comeréis	comer	v	*
+future	1	comerán	comer	v	*
+future	1	viviré	vivir	v	*
+future	1	vivirás	vivir	v	*
+future	1	vivirá	vivir	v	*
+future	1	viviremos	vivir	v	*
+future	1	viviréis	vivir	v	*
+future	1	vivirán	vivir	v	*
+present subjunctive	1	hable	hablar	v	*
+present subjunctive	1	hables	hablar	v	*
+present subjunctive	1	hable	hablar	v	*
+present subjunctive	1	hablemos	hablar	v	*
+present subjunctive	1	habléis	hablar	v	*
+present subjunctive	1	hablen	hablar	v	*
+present subjunctive	1	coma	comer	v	*
+present subjunctive	1	comas	comer	v	*
+present subjunctive	1	coma	comer	v	*
+present subjunctive	1	comamos	comer	v	*
+present subjunctive	1	comáis	comer	v	*
+present subjunctive	1	coman	comer	v	*
+present subjunctive	1	viva	vivir	v	*
+present subjunctive	1	vivas	vivir	v	*
+present subjunctive	1	viva	vivir	v	*
+present subjunctive	1	vivamos	vivir	v	*
+present subjunctive	1	viváis	vivir	v	*
+present subjunctive	1	vivan	vivir	v	*
+present subjunctive	1	piense	pensar	v	*
+present subjunctive	1	pienses	pensar	v	*
+present subjunctive	1	piense	pensar	v	*
+present subjunctive	1	pensemos	pensar	v	*
+present subjunctive	1	penséis	pensar	v	*
+present subjunctive	1	piensen	pensar	v	*
+present subjunctive	1	suela	soler	v	*
+present subjunctive	1	suelas	soler	v	*
+present subjunctive	1	suela	soler	v	*
+present subjunctive	1	solamos	soler	v	*
+present subjunctive	1	soláis	soler	v	*
+present subjunctive	1	suelan	soler	v	*
+present subjunctive	1	mida	medir	v	*
+present subjunctive	1	midas	medir	v	*
+present subjunctive	1	mida	medir	v	*
+present subjunctive	1	medamos	medir	v	*
+present subjunctive	1	medáis	medir	v	*
+present subjunctive	1	midan	medir	v	*
+participle	1	escuchado	escuchar	v	*
+reflexive	1	lavarse	lavar	v	*
+reflexive	1	lavarte	lavarse	v	*
+reflexive	1	me lavar	lavarse	v	*
