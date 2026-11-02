@@ -602,27 +602,28 @@ RawTerms DictionaryQuery::query_raw(const std::string& expression, BlobPins& pin
         auto term_tag_size = read_value<uint8_t>(blob);
         std::string_view term_tags = blob.str(term_tag_size);
 
-        // The form-of slot (src/json/form_of.hpp), which importers since
-        // .hoshidicts_3 wrote: no entry for a row without form-of
-        // references, otherwise one whose formOf says whether the row also
-        // has other definitions.
+        // The form-of slot (src/json/form_of.hpp): no entry for a row
+        // without form-of references, otherwise the flag, one entry with an
+        // empty formOf whose rule count says whether the row also has other
+        // definitions. Read only for a pack that follows references.
         bool form_of = false;
         bool only_references = false;
         if (data->version >= 2) {
-          const bool read_tags = follow_form_of && data->version >= 3;
           auto redirect_count = read_value<uint32_t>(blob);
+          const bool flag = redirect_count == 1 && follow_form_of && data->version >= 3;
           for (uint32_t r = 0; r < redirect_count; r++) {
             auto form_of_len = read_value<uint32_t>(blob);
-            if (read_tags) {
-              form_of = true;
-              only_references = blob.str(form_of_len) != form_of_slot::with_definitions;
-            } else {
-              blob.skip(form_of_len);
-            }
+            blob.skip(form_of_len);
             auto rule_count = read_value<uint32_t>(blob);
+            uint32_t rule_bytes = 0;
             for (uint32_t j = 0; j < rule_count; j++) {
               auto rule_len = read_value<uint32_t>(blob);
               blob.skip(rule_len);
+              rule_bytes += rule_len;
+            }
+            if (flag && form_of_len == 0 && rule_bytes == 0 && rule_count <= form_of_slot::with_definitions) {
+              form_of = true;
+              only_references = rule_count == form_of_slot::only_references;
             }
           }
         }

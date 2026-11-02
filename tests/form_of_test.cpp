@@ -420,11 +420,24 @@ void test_follow(const fs::path& repo, const Dictionaries& d, DictionaryStorage 
     // of ki, a deinflected text, so kitten comes first.
     check(brief(run("kits")) == "kitten(kits;kitten;plural*) kit(kits;kit;plural)",
           "a deinflected text's row confirms nothing: " + brief(run("kits")));
+    // ... nor a shorter trace: dogged names dog with two rules; the past rule
+    // reaches dogg with one.
+    check(brief(run("dogged")) == "dogg(dogged;dogg;past) dog(dogged;dog;past*>participle*)",
+          "a shorter trace first: " + brief(run("dogged")));
   }
+  // walkt's row has the same glossary as walked's, which the importer
+  // compresses once: both are flagged.
+  check(brief(run("walkt")) == "walk(walkt;walk;simple past*)", "a shared glossary is flagged for each row: " + brief(run("walkt")));
+  // A tie on every key: discovery order, the order of the tie rules (d, c, b,
+  // a), not the order of the terms.
+  check(brief(run("zq")) == "zd(zq;zd;tie) zc(zq;zc;tie) zb(zq;zb;tie) za(zq;za;tie)",
+        "a full tie keeps discovery order: " + brief(run("zq")));
 
   // The request's dictionary selection: the lemma is only in lemmas.
   {
     check(brief(run("strode")) == "stride(strode;stride;past*)", "strode finds stride in lemmas: " + brief(run("strode")));
+    check(!run("strode").empty() && frequencies(run("strode")[0].term) == "forms:7",
+          "the lemma's frequency through a reference: " + (run("strode").empty() ? "" : frequencies(run("strode")[0].term)));
     LookupOptions only_forms;
     only_forms.dictionaries = std::vector<std::string>{d.forms};
     check(run("strode", "fo", only_forms).empty(), "a selection without the lemma's dictionary: " + brief(run("strode", "fo", only_forms)));

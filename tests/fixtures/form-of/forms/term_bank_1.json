@@ -27,7 +27,15 @@
   ["kitten", "", "n", "n", 0, ["a young cat"], 26, ""],
   ["kit", "", "n", "n", 0, ["a set of tools"], 27, ""],
   ["ki", "", "non-lemma", "n", 0, [["kit", ["diminutive"]]], 28, ""],
-  ["zo", "", "non-lemma", "n", 0, [["zap", ["diminutive"]]], 29, ""],
+  ["zo", "", "non-lemma", "n", 0, [["zip", ["diminutive"]], ["zap", ["diminutive"]]], 29, ""],
   ["zap", "", "n", "n", 0, ["a quick strike"], 30, ""],
-  ["zot", "", "n", "n", 1, ["a probe noun"], 31, ""]
+  ["zot", "", "n", "n", 1, ["a probe noun"], 31, ""],
+  ["walkt", "", "non-lemma", "", 0, [["walk", ["simple past"]]], 32, ""],
+  ["dogged", "", "non-lemma", "", 0, [["dog", ["past", "participle"]]], 33, ""],
+  ["dog", "", "n v", "n v", 0, ["a canine"], 34, ""],
+  ["dogg", "", "v", "v", 0, ["a probe verb"], 35, ""],
+  ["zd", "", "n", "n", 0, ["probe d"], 36, ""],
+  ["zc", "", "n", "n", 0, ["probe c"], 37, ""],
+  ["zb", "", "n", "n", 0, ["probe b"], 38, ""],
+  ["za", "", "n", "n", 0, ["probe a"], 39, ""]
 ]

@@ -49,6 +49,18 @@
       ]
     },
     {
+      "id": "tie",
+      "name": "tie",
+      "description": "four probe rules that tie on every ranking key",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "q", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "q", "deinflected": "c", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "q", "deinflected": "b", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "q", "deinflected": "a", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
       "id": "plural",
       "name": "plural",
       "description": "the plural probe rule",
