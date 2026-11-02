@@ -61,6 +61,16 @@
       ]
     },
     {
+      "id": "tie2",
+      "name": "tie2",
+      "description": "two probe rules that tie on every ranking key",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "qv", "deinflected": "b", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "qv", "deinflected": "a", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
       "id": "plural",
       "name": "plural",
       "description": "the plural probe rule",

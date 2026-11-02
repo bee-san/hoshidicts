@@ -285,6 +285,11 @@ void test_follow(const fs::path& repo, const Dictionaries& d, DictionaryStorage 
                               R"("traceSelection": "first")"),
                      transforms, &error),
         "the traceSelection first copy loads: " + error);
+  // fc looks up every prefix (character resolution).
+  check(registry.add(replaced(replaced(language, R"("code": "fo")", R"("code": "fc")"), R"("searchResolution": "word")",
+                              R"("searchResolution": "character")"),
+                     transforms, &error),
+        "the character resolution copy loads: " + error);
   const Lookup lookup(query, registry);
   const auto run = [&](const std::string& text, const std::string& code = "fo", LookupOptions options = {}) {
     options.language = code;
@@ -441,6 +446,11 @@ void test_follow(const fs::path& repo, const Dictionaries& d, DictionaryStorage 
   // a), not the order of the terms.
   check(brief(run("zq")) == "zd(zq;zd;tie) zc(zq;zc;tie) zb(zq;zb;tie) za(zq;za;tie)",
         "a full tie keeps discovery order: " + brief(run("zq")));
+  // Confirmation counts at the term's matched length only. With character
+  // resolution, the row yq names ya at two code points; the tie2 rules reach
+  // yb and ya from yqv at three, where nothing confirms them.
+  check(brief(run("yqv", "fc")) == "yb(yqv;yb;tie2) ya(yqv;ya;tie2)",
+        "a confirmation at a shorter match does not count: " + brief(run("yqv", "fc")));
 
   // The request's dictionary selection: the lemma is only in lemmas.
   {
