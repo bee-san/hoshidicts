@@ -236,11 +236,11 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   // a deque allocates even when empty, so it is made on first use).
   std::unique_ptr<std::deque<std::string>> forms;
   // The form-of references to follow, in the order the rows naming them were
-  // found (made on first use, as `forms`), and their rules (views into the
-  // pinned dictionaries).
+  // found (made on first use, as `forms`), and their rules.
   std::unique_ptr<std::deque<Followed>> followed;
   size_t followed_done = 0;
-  std::vector<std::string_view> followed_rules;
+  std::vector<std::string> followed_rules;
+  std::vector<FormOfReference> references;
 
   size_t text_len = utf8::distance(lookup_string.begin(), lookup_string.end());
 
@@ -383,22 +383,25 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
 
   const auto note_references = [&](size_t matched_len, const Deinflection* base, uint32_t di, int steps,
                                    const RawTerms& terms) {
-    for (const RawReference& reference : terms.references) {
-      if (!row_passes(base[di].conditions, reference.dict_name, reference.row_rules)) {
+    for (const RawFormOfRow& row : terms.form_of_rows) {
+      if (!row_passes(base[di].conditions, row.dict_name, row.rules)) {
         continue;
       }
-      if (!followed) {
-        followed = std::make_unique<std::deque<Followed>>();
+      references.clear();
+      DictionaryQuery::read_form_of(row, pins, references);
+      for (auto& reference : references) {
+        if (!followed) {
+          followed = std::make_unique<std::deque<Followed>>();
+        }
+        followed->push_back(Followed{.matched_len = matched_len,
+                                     .base = base,
+                                     .index = di,
+                                     .steps = steps,
+                                     .text = std::move(reference.form_of),
+                                     .first_rule = static_cast<uint32_t>(followed_rules.size()),
+                                     .rule_count = static_cast<uint32_t>(reference.rules.size())});
+        std::ranges::move(reference.rules, std::back_inserter(followed_rules));
       }
-      followed->push_back(Followed{.matched_len = matched_len,
-                                   .base = base,
-                                   .index = di,
-                                   .steps = steps,
-                                   .text = std::string(reference.form_of),
-                                   .first_rule = static_cast<uint32_t>(followed_rules.size()),
-                                   .rule_count = reference.rule_count});
-      const auto rules = std::span(terms.reference_rules).subspan(reference.first_rule, reference.rule_count);
-      followed_rules.insert(followed_rules.end(), rules.begin(), rules.end());
     }
   };
 
@@ -426,7 +429,7 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     // Most deinflected forms name no entry of their part of speech; read
     // the frequencies and pitches of only the terms the filter keeps.
     auto terms = query_.query_raw(form, pins, selection, false, normalizer, follow);
-    if (!terms.references.empty()) {
+    if (!terms.form_of_rows.empty()) {
       note_references(matched_len, base, di, steps, terms);
     }
     filter_by_pos(terms, base[di].conditions);
@@ -908,7 +911,7 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     // A form-of reference's rules follow, as the dictionary names them.
     if (c.reference != nullptr) {
       for (uint32_t k = 0; k < c.reference->rule_count; ++k) {
-        const std::string rule(followed_rules[c.reference->first_rule + k]);
+        const std::string& rule = followed_rules[c.reference->first_rule + k];
         trace.push_back(TransformGroup{.name = rule, .description = {}, .id = rule, .from_dictionary = true});
       }
     }

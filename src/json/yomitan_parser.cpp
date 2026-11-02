@@ -485,6 +485,26 @@ std::string decode_string(std::string_view raw) {
   out.resize(static_cast<size_t>(write - out.data()));
   return out;
 }
+// The raw formOf string and rules list of a definition [formOf, [rules...]],
+// as Yomitan reads the first two elements; empty when absent.
+struct RawReference {
+  std::string_view form_of;
+  std::string_view rules;
+};
+RawReference raw_reference(std::string_view definition) {
+  RawReference out;
+  size_t index = 0;
+  each_element(definition, [&](std::string_view element) {
+    if (index == 0 && element.front() == '"') out.form_of = element;
+    if (index == 1 && element.front() == '[') out.rules = element;
+    ++index;
+  });
+  return out;
+}
+
+// A raw JSON string that decodes to text (more than its two quotes: an escape
+// never decodes to nothing).
+bool non_empty_string(std::string_view raw) { return raw.size() > 2; }
 }  // namespace
 
 bool yomitan_parser::read_form_of(std::string_view definitions, std::vector<FormOfReference>& out) {
@@ -494,26 +514,30 @@ bool yomitan_parser::read_form_of(std::string_view definitions, std::vector<Form
       other = true;
       return;
     }
-    // [formOf, [rules...], ...]: Yomitan reads the first two elements.
-    std::string_view form_of;
-    std::string_view rules;
-    size_t index = 0;
-    each_element(definition, [&](std::string_view element) {
-      if (index == 0 && element.front() == '"') form_of = element;
-      if (index == 1 && element.front() == '[') rules = element;
-      ++index;
-    });
-    if (form_of.empty()) return;  // not a string
-    FormOfReference reference{.form_of = decode_string(form_of), .rules = {}};
-    if (reference.form_of.empty()) return;
-    if (!rules.empty()) {
-      each_element(rules, [&](std::string_view rule) {
+    const RawReference raw = raw_reference(definition);
+    if (!non_empty_string(raw.form_of)) return;  // not a string, or ""
+    FormOfReference reference{.form_of = decode_string(raw.form_of), .rules = {}};
+    if (!raw.rules.empty()) {
+      each_element(raw.rules, [&](std::string_view rule) {
         if (rule.front() == '"') reference.rules.push_back(decode_string(rule));
       });
     }
     out.push_back(std::move(reference));
   });
   return other;
+}
+
+yomitan_parser::FormOfKind yomitan_parser::form_of_kind(std::string_view definitions) {
+  bool other = false;
+  bool reference = false;
+  each_element(definitions, [&](std::string_view definition) {
+    if (definition.front() != '[') {
+      other = true;
+    } else if (!reference) {
+      reference = non_empty_string(raw_reference(definition).form_of);
+    }
+  });
+  return !reference ? FormOfKind::None : other ? FormOfKind::WithOthers : FormOfKind::Only;
 }
 
 std::string yomitan_parser::without_form_of(std::string_view definitions) {

@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <glaze/glaze.hpp>
 
+#include "form_of.hpp"
 #include "json_skip.hpp"
 #include <optional>
 #include <string>
@@ -85,13 +86,6 @@ struct ParsedPitch {
   std::vector<std::string> transcriptions;
 };
 
-// A form-of reference of a term bank row: a definition [formOf, [rules...]]
-// (Yomitan's deinflection tuple), which Yomitan's translator follows to the
-// term formOf and never displays (docs/languages.md, section 9.10).
-struct FormOfReference {
-  std::string form_of;
-  std::vector<std::string> rules;
-};
 
 namespace yomitan_parser {
 bool parse_index(std::string_view content, Index& out);
@@ -113,6 +107,11 @@ bool parse_ipa(std::string_view content, ParsedPitch& out);
 // is an array, as its rules. Other array items are neither references nor
 // definitions. Returns whether the row has a definition that is not an array.
 bool read_form_of(std::string_view definitions, std::vector<FormOfReference>& out);
+// What read_form_of would find, without decoding anything: no reference, or
+// references beside other definitions, or only references (and arrays that
+// are not references).
+enum class FormOfKind : unsigned char { None, WithOthers, Only };
+FormOfKind form_of_kind(std::string_view definitions);
 // `definitions` without its top-level array items, which are form-of data;
 // unchanged when it is not a well-formed array.
 std::string without_form_of(std::string_view definitions);
