@@ -106,7 +106,7 @@
     "audioLanguage": "es",
     "anki": {
       "noteTypeFamilies": [],
-      "fieldAliases": {"pronunciation": ["IPA"]},
+      "fieldAliases": {"phonetic-transcriptions": ["IPA"]},
       "partOfSpeechLabels": {
         "v": "Verb",
         "vt": "Transitive verb",
