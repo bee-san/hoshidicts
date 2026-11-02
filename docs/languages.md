@@ -1164,7 +1164,8 @@ as Yomitan's translator does (`_getDeinflections` and
    dictionary's order. Such a step has the rule as its id and name, no
    description, and `TransformGroup::from_dictionary` set. A row without a
    part of speech, such as a kaikki form-of row, is followed only from a
-   deinflection without conditions, such as the text as written.
+   deinflection without conditions, such as the text as written, unless its
+   dictionary is in `pos_filter_exempt` (9.4).
 3. `formOf` is looked up in the request's dictionary selection (9.7), within
    `lookup_dictionary()`'s dictionary, without the part-of-speech filter. The
    terms it finds join grouping, ordering and `traceSelection` like any other
