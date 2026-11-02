@@ -22,5 +22,12 @@
   ["poder", "", "v", "v", 0, ["to be able to"], 21, ""],
   ["puedo", "", "non-lemma", "", 0, [["poder", ["first-person singular present"]]], 22, ""],
   ["puedo ver", "", "", "", 0, ["I can see"], 23, ""],
-  ["Podar", "", "v", "v", 0, ["a capitalised probe verb"], 24, ""]
+  ["Podar", "", "v", "v", 0, ["a capitalised probe verb"], 24, ""],
+  ["kits", "", "non-lemma", "", 0, [["kitten", ["plural"]]], 25, ""],
+  ["kitten", "", "n", "n", 0, ["a young cat"], 26, ""],
+  ["kit", "", "n", "n", 0, ["a set of tools"], 27, ""],
+  ["ki", "", "non-lemma", "n", 0, [["kit", ["diminutive"]]], 28, ""],
+  ["zo", "", "non-lemma", "n", 0, [["zap", ["diminutive"]]], 29, ""],
+  ["zap", "", "n", "n", 0, ["a quick strike"], 30, ""],
+  ["zot", "", "n", "n", 1, ["a probe noun"], 31, ""]
 ]

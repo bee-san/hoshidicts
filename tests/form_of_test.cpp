@@ -415,6 +415,11 @@ void test_follow(const fs::path& repo, const Dictionaries& d, DictionaryStorage 
           "fewer steps first: " + brief(run("Puedo")));
     // asTerm confirms nothing: the row is its first result.
     check(brief(run("puedo", "fa")).starts_with("puedo(puedo;puedo;) "), "asTerm: puedo: " + brief(run("puedo", "fa")));
+    // Only a row of the matched text confirms: kits names kitten; kit, which
+    // the plural rule reaches in as many steps, is also named, but by the row
+    // of ki, a deinflected text, so kitten comes first.
+    check(brief(run("kits")) == "kitten(kits;kitten;plural*) kit(kits;kit;plural)",
+          "a deinflected text's row confirms nothing: " + brief(run("kits")));
   }
 
   // The request's dictionary selection: the lemma is only in lemmas.

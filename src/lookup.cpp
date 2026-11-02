@@ -58,6 +58,9 @@ struct Followed {
   // The reference's rules: the lookup's followed_rules[first_rule, first_rule + rule_count).
   uint32_t first_rule;
   uint32_t rule_count;
+  // A row of the matched text itself names the term (the deinflection has no
+  // trace), so it is dictionary-confirmed (section 9.6).
+  bool confirms;
 };
 
 struct Candidate {
@@ -82,8 +85,9 @@ struct Candidate {
   // The form-of reference that reached the term after the deinflection (then
   // `form` is its text), or null.
   const Followed* reference = nullptr;
-  // The longest matched length at which a form-of reference reached the term,
-  // whichever trace the candidate keeps, or 0.
+  // The longest matched length at which a form-of reference of a row of the
+  // matched text itself reached the term, whichever trace the candidate
+  // keeps, or 0.
   size_t confirmed_len = 0;
 
   const Deinflection& deinflection() const { return base[index]; }
@@ -316,7 +320,7 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
           const uint32_t depth = base[di].depth + (reference != nullptr ? reference->rule_count : 0);
           better = steps < existing->steps || (steps == existing->steps && depth < existing->depth());
         }
-        if (reference != nullptr) {
+        if (reference != nullptr && reference->confirms) {
           existing->confirmed_len = std::max(existing->confirmed_len, matched_len);
         }
         if (better) {
@@ -340,7 +344,7 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
                                        .steps = steps,
                                        .dict_rank = rank,
                                        .reference = reference,
-                                       .confirmed_len = reference != nullptr ? matched_len : 0});
+                                       .confirmed_len = reference != nullptr && reference->confirms ? matched_len : 0});
       }
     }
     term_store.push_back(std::move(terms));
@@ -399,7 +403,8 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
                                      .steps = steps,
                                      .text = std::move(reference.form_of),
                                      .first_rule = static_cast<uint32_t>(followed_rules.size()),
-                                     .rule_count = static_cast<uint32_t>(reference.rules.size())});
+                                     .rule_count = static_cast<uint32_t>(reference.rules.size()),
+                                     .confirms = base[di].depth == 0});
         std::ranges::move(reference.rules, std::back_inserter(followed_rules));
       }
     }
