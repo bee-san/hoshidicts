@@ -211,10 +211,10 @@ std::string replaced(std::string text, const std::string& from, const std::strin
 
 // --- the parser -----------------------------------------------------------------------
 
-std::string references(std::string_view definitions, bool* other = nullptr) {
+// What read_form_of finds: "formOf[rule,rule] formOf[...]".
+std::string references(std::string_view definitions) {
   std::vector<FormOfReference> out;
-  const bool o = yomitan_parser::read_form_of(definitions, out);
-  if (other != nullptr) *other = o;
+  yomitan_parser::read_form_of(definitions, out);
   std::string text;
   for (const auto& r : out) {
     text += (text.empty() ? "" : " ") + r.form_of + "[";
@@ -225,28 +225,29 @@ std::string references(std::string_view definitions, bool* other = nullptr) {
 }
 
 void test_parser() {
-  bool other = true;
-  check(references(R"([["walk",["simple past"]]])", &other) == "walk[simple past]" && !other, "a reference-only row");
-  check(references(R"(["a",["b",["c","d"]],{"type":"text","text":"x"}])", &other) == "b[c,d]" && other,
-        "a reference beside definitions: " + references(R"(["a",["b",["c","d"]],{"type":"text","text":"x"}])"));
-  check(references(R"([["b",[]],["c",["r"]]])", &other) == "b[] c[r]" && !other, "two references, in order");
-  check(references(R"([["caf\u00e9",["\"q\"","a\\b"]]])") == "café[\"q\",a\\b]", "references are JSON-decoded");
-  check(references(R"( [ [ "w" , [ "r1" , 7, "r2" ] , "extra" ] , "d" ] )", &other) == "w[r1,r2]" && other,
-        "whitespace, a rule that is not a string, a third element: " + references(R"( [ [ "w" , [ "r1" , 7, "r2" ] , "extra" ] , "d" ] )"));
-  check(references(R"([[],[5,["x"]],["",["e"]]])", &other).empty() && !other,
-        "arrays that name no term are no references and no definitions");
-  check(references(R"([["x","notarray"],["y"]])") == "x[] y[]", "a reference without a rule list");
-  check(references(R"([{"content":[["x",["y"]]]}])", &other).empty() && other, "an array inside a definition is not a reference");
-  check(references(R"("not an array")", &other).empty() && !other, "a value that is not an array");
-  check(references(R"(["a]",["b\"]",["c"]]])") == "b\"][c]", "brackets and quotes inside strings");
-
   using Kind = yomitan_parser::FormOfKind;
-  check(yomitan_parser::form_of_kind(R"(["a",{"type":"text","text":"b"}])") == Kind::None, "kind: no reference");
-  check(yomitan_parser::form_of_kind(R"([["walk",["past"]],["walk",[]]])") == Kind::Only, "kind: only references");
-  check(yomitan_parser::form_of_kind(R"([["walk",["past"]],[],"d"])") == Kind::WithOthers, "kind: beside a definition");
-  check(yomitan_parser::form_of_kind(R"(["d",["walk",["past"]]])") == Kind::WithOthers, "kind: a definition first");
-  check(yomitan_parser::form_of_kind(R"([[],["",["x"]],"d"])") == Kind::None, "kind: arrays that name no term");
-  check(yomitan_parser::form_of_kind(R"([[],["walk"]])") == Kind::Only, "kind: a reference beside an array that is none");
+  const auto kind = [](std::string_view definitions) { return yomitan_parser::form_of_kind(definitions); };
+  const std::string_view only = R"([["walk",["simple past"]]])";
+  check(references(only) == "walk[simple past]" && kind(only) == Kind::Only, "a reference-only row");
+  const std::string_view beside = R"(["a",["b",["c","d"]],{"type":"text","text":"x"}])";
+  check(references(beside) == "b[c,d]" && kind(beside) == Kind::WithOthers, "a reference beside definitions: " + references(beside));
+  const std::string_view two = R"([["b",[]],["c",["r"]]])";
+  check(references(two) == "b[] c[r]" && kind(two) == Kind::Only, "two references, in order");
+  check(references(R"([["caf\u00e9",["\"q\"","a\\b"]]])") == "café[\"q\",a\\b]", "references are JSON-decoded");
+  const std::string_view spaced = R"( [ [ "w" , [ "r1" , 7, "r2" ] , "extra" ] , "d" ] )";
+  check(references(spaced) == "w[r1,r2]" && kind(spaced) == Kind::WithOthers,
+        "whitespace, a rule that is not a string, a third element: " + references(spaced));
+  const std::string_view none = R"([[],[5,["x"]],["",["e"]]])";
+  check(references(none).empty() && kind(none) == Kind::None, "arrays that name no term are no references");
+  check(references(R"([["x","notarray"],["y"]])") == "x[] y[]", "a reference without a rule list");
+  const std::string_view nested = R"([{"content":[["x",["y"]]]}])";
+  check(references(nested).empty() && kind(nested) == Kind::None, "an array inside a definition is not a reference");
+  check(references(R"("not an array")").empty() && kind(R"("not an array")") == Kind::None, "a value that is not an array");
+  check(references(R"(["a]",["b\"]",["c"]]])") == "b\"][c]", "brackets and quotes inside strings");
+  check(kind(R"(["a",{"type":"text","text":"b"}])") == Kind::None, "kind: no reference");
+  check(kind(R"([["walk",["past"]],[],"d"])") == Kind::WithOthers, "kind: beside a definition");
+  check(kind(R"(["d",["walk",["past"]]])") == Kind::WithOthers, "kind: a definition first");
+  check(kind(R"([[],["walk"]])") == Kind::Only, "kind: a reference beside an array that is none");
 
   check(yomitan_parser::without_form_of(R"(["a",["b",["c"]],"d"])") == R"(["a","d"])", "references are dropped");
   check(yomitan_parser::without_form_of(R"([["b",[]]])") == "[]", "only references leave an empty list");
