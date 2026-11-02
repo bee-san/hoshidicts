@@ -3,8 +3,10 @@
 // Writes languages/ko/transforms.json, the final Korean rule set
 // (docs/languages.md, section 14 step 5): the union of sources/own.json and
 // sources/yomitan.json as tools/merge-transforms.mjs makes it, without the
-// Yomitan rules listed in sources/removed-rules.tsv (chosen by
-// sources/select-rules.mjs; README.md gives the measurements).
+// Yomitan rules listed in sources/removed-rules.tsv and, when that file says
+// so, without the Yomitan rules that copy a stem-constrained own rule without
+// its constraint (both chosen by sources/select-rules.mjs; README.md gives the
+// measurements).
 //
 //   node languages/ko/sources/final-rules.mjs [--out <file>]
 
@@ -72,10 +74,40 @@ export function removeRules(file, removed) {
     return out;
 }
 
+/** A rule's type, affixes and input conditions. */
+function copyKey(rule) {
+    return [rule.type, rule.inflected, rule.deinflected, rule.conditionsIn.join(',')].join('\t');
+}
+
+/**
+ * A test for the rules that equal a rule of `own` (type, affixes and input
+ * conditions) except that the own rule constrains the stem (`stemEndsWith`)
+ * and they constrain nothing: all they add are readings at stems the own
+ * rules refuse (바라다가 -> 바르다 by Yomitan's ㅡ-dropping, 자라다가 -> 잘다 by its
+ * ㅗ contraction).
+ */
+export function copiesOf(own) {
+    const keys = new Set(own.transforms.flatMap((t) => t.rules).filter((r) => r.stemEndsWith !== undefined).map(copyKey));
+    return (rule) => rule.stemEndsWith === undefined && rule.stemNotEndsWith === undefined && rule.stemMinLength === undefined && keys.has(copyKey(rule));
+}
+
+/** The line of sources/removed-rules.tsv that leaves the copies out too. */
+export const COPIES_LINE = '# copies: left out too, by sources/final-rules.mjs: every Yomitan rule that equals a stem-constrained own rule but for the constraint';
+
+/** sources/yomitan.json without the removed rules and, if the file says so, the copies. */
+export function finalYomitan(own, yomitan, file = join(here, 'removed-rules.tsv')) {
+    const out = removeRules(yomitan, readRemoved(file));
+    if (existsSync(file) && readFileSync(file, 'utf8').split('\n').some((line) => line.startsWith(COPIES_LINE))) {
+        const isCopy = copiesOf(own);
+        for (const t of out.transforms) { t.rules = t.rules.filter((r) => !isCopy(r)); }
+        out.transforms = out.transforms.filter((t) => t.rules.length > 0);
+    }
+    return out;
+}
+
 export function finalTransforms() {
     const own = JSON.parse(readFileSync(join(here, 'own.json'), 'utf8'));
-    const yomitan = removeRules(JSON.parse(readFileSync(join(here, 'yomitan.json'), 'utf8')), readRemoved());
-    return mergeTransforms(own, yomitan);
+    return mergeTransforms(own, finalYomitan(own, JSON.parse(readFileSync(join(here, 'yomitan.json'), 'utf8'))));
 }
 
 function main(argv) {

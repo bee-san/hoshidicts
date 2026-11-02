@@ -50,6 +50,14 @@
 // A negative that several paths break gives no single rule the blame, so a
 // phase replays the deinflections of every negative still broken and
 // removes the Yomitan rules on those paths that recover no row.
+// Next, a Yomitan rule that equals an own rule (type, affixes and input
+// conditions) except that the own rule constrains the stem (`stemEndsWith`)
+// adds only readings at stems the own rules refuse: Yomitan's ㅡ-dropping
+// ㅏㄷㅏㄱㅏ -> ㅡㄷㅏ reads 바라다가 as 바르다, its ㅗ contraction ㅏㄷㅏㄱㅏ -> ㄷㅏ
+// reads 자라다가 as 잘다. These copies go together (sources/final-rules.mjs
+// finds them again, so removed-rules.tsv says so in one line); if that would
+// lower recall, the script stops and names the rows, for the own rules to be
+// fixed.
 // A last phase looks at ranking: a lookup ranks the readings of a word by
 // trace length, so a false candidate reached in as few steps as the lemma
 // ties with it. For each valid row of the UniMorph, cases and Yomitan sets
@@ -72,7 +80,7 @@ import {dirname, join, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {mergeTransforms} from '../../../tools/merge-transforms.mjs';
 import {formatTransforms} from '../../../tools/lib/json.mjs';
-import {removeRules, ruleKey} from './final-rules.mjs';
+import {COPIES_LINE, copiesOf, removeRules, ruleKey} from './final-rules.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const pack = resolve(here, '..');
@@ -557,6 +565,30 @@ function rankScore(options, work, files, entries, removed) {
     return {score, recall};
 }
 
+/** Yomitan rules equal to a stem-constrained own rule but for the constraint (final-rules.mjs's test). */
+function unconstrainedCopies(current) {
+    const isCopy = copiesOf(JSON.parse(readFileSync(join(here, 'own.json'), 'utf8')));
+    return current.rules.filter((r) => r.source === 'yomitan' && isCopy(r.rule)).map((r) => ({...r, copy: true}));
+}
+
+/** The valid rows of `names` that `after` loses and `before` reaches, with the transforms on their paths. */
+function lostRows(options, files, names, before, after) {
+    const lost = [];
+    for (const name of names) {
+        const rows = readFileSync(files[name], 'utf8').split('\n').filter((l) => l !== '' && !l.startsWith('#')).map((l) => l.split('\t'))
+            .filter((c) => c.length === 6 && c[1] === '1')
+            .map((c) => ({source: c[2], term: c[3], rule: c[4] === '*' ? null : c[4], reasons: c[5] === '*' ? null : c[5] === '' ? [] : c[5].split('|')}));
+        const sources = rows.map((r) => r.source);
+        const had = deinflectAll(options.cli, before, sources);
+        const has = deinflectAll(options.cli, after, sources);
+        rows.forEach((row, i) => {
+            if (has[i].some((r) => matchesRow(r, row))) { return; }
+            lost.push(`${row.source} -> ${row.term} (${had[i].filter((x) => matchesRow(x, row)).map((r) => r.trace.join(' ')).join('; ')})`);
+        });
+    }
+    return lost;
+}
+
 function withoutSource(rule) {
     const {source: _source, ...rest} = rule;
     return rest;
@@ -624,6 +656,20 @@ function main() {
         }
         removed.push(...accepted);
         console.log(`negatives: removed ${accepted.length} Yomitan rules on the paths of broken negatives (${removed.length} in all)`);
+        // Yomitan copies of stem-constrained own rules.
+        current = measure(options, work, files, dictionary, removed);
+        const beforeCopies = join(work, 'before-copies.json');
+        writeFileSync(beforeCopies, readFileSync(join(work, 'candidate.json')));
+        const copies = unconstrainedCopies(current);
+        const trial = measure(options, work, files, dictionary, [...removed, ...copies]);
+        const lost = lowered(current.recall, trial.recall);
+        if (lost.length > 0) {
+            const rows = lostRows(options, files, lost, beforeCopies, join(work, 'candidate.json'));
+            throw new Error(`leaving out the ${copies.length} Yomitan copies of stem-constrained own rules loses rows the own rules should reach:\n${rows.join('\n')}`);
+        }
+        removed.push(...copies);
+        current = trial;
+        console.log(`copies: removed ${copies.length} Yomitan rules that copy a stem-constrained own rule without its constraint (${removed.length} in all)`);
         // Ranking: rules that tie a false candidate with the lemma, removed one
         // at a time while the first-rank count goes up and no recall drops.
         const entries = publishedDictionary(resolve(options.terms), work, options.cli, {entriesOnly: true}).dir;
@@ -655,13 +701,15 @@ function main() {
         const lines = [
             '# Yomitan rules the final rule set leaves out, written by sources/select-rules.mjs; sources/final-rules.mjs applies them.',
             '# Each recovers no row of the measurement sets and adds false candidates, breaks a negative, or ties a false candidate with the lemma (README.md, Rule provenance).',
+            `${COPIES_LINE} (${removed.filter((r) => r.copy).length} rules at this run).`,
             '# transform\tinflected\tdeinflected\tconditionsIn\tconditionsOut\trecovers\tfalseCandidates\tbreaks\tnote',
-            ...removed.map((r) => [r.transform, r.rule.inflected, r.rule.deinflected, r.rule.conditionsIn.join(','), r.rule.conditionsOut.join(','),
-                r.recovers, r.falseCandidates, r.breaks, r.negative ? `breaks ${r.negative} with other paths` : r.ties ? `ties a false candidate with the lemma on ${r.ties} paths, as in ${r.example}` : ''].join('\t')),
+            ...removed.filter((r) => !r.copy).map((r) => [r.transform, r.rule.inflected, r.rule.deinflected, r.rule.conditionsIn.join(','), r.rule.conditionsOut.join(','),
+                r.recovers, r.falseCandidates, r.breaks, r.negative ? `breaks ${r.negative} with other paths` : r.ties ? `ties a false candidate with the lemma on ${r.ties} paths, as in ${r.example}`
+                    : ''].join('\t')),
         ];
         writeFileSync(join(here, 'removed-rules.tsv'), `${lines.join('\n')}\n`);
         console.log(JSON.stringify({before: start, after: current.recall}, null, 1));
-        console.log(`${removed.length} rules in ${join(here, 'removed-rules.tsv')}`);
+        console.log(`${removed.length} rules left out: ${removed.filter((r) => !r.copy).length} listed in ${join(here, 'removed-rules.tsv')} and ${removed.filter((r) => r.copy).length} copies; the final set has ${JSON.parse(readFileSync(join(work, 'candidate.json'), 'utf8')).transforms.reduce((n, t) => n + t.rules.length, 0)} rules`);
     } finally {
         rmSync(work, {recursive: true, force: true});
     }

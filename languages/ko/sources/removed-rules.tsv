@@ -1,5 +1,6 @@
 # Yomitan rules the final rule set leaves out, written by sources/select-rules.mjs; sources/final-rules.mjs applies them.
 # Each recovers no row of the measurement sets and adds false candidates, breaks a negative, or ties a false candidate with the lemma (README.md, Rule provenance).
+# copies: left out too, by sources/final-rules.mjs: every Yomitan rule that equals a stem-constrained own rule but for the constraint (324 rules at this run).
 # transform	inflected	deinflected	conditionsIn	conditionsOut	recovers	falseCandidates	breaks	note
 어간	ㅂ	ㅂㄷㅏ		v,adj	0	4	0	
 어간	ㄷ	ㄷㄷㅏ		v,adj	0	1	0	
@@ -177,7 +178,7 @@
 -(으/느)니만치	ㄴㅡㄴㅣㅁㅏㄴㅊㅣ	ㄷㅏ		v,adj	0	1	0	
 -(으/느)니만큼	ㄴㅣㅁㅏㄴㅋㅡㅁ	ㄷㅏ		v,adj,ida	0	1	0	
 -(으/느)니만큼	ㄴㅡㄴㅣㅁㅏㄴㅋㅡㅁ	ㄷㅏ		v,adj	0	1	0	
--다	ㄷㅏ			p,f,eusi,ida	0	83	1	
+-다	ㄷㅏ			p,f,eusi,ida	0	83	2	
 -다가	ㄷㅏㄱㅏ			p,eusi	0	5	0	
 -다가는	ㄷㅏㄱㅏㄴㅡㄴ	ㄷㅏ		v,adj,ida	0	1	0	
 -다간	ㄷㅏㄱㅏㄴ	ㄷㅏ		v,adj	0	1	0	
@@ -367,6 +368,7 @@
 -아/어다	ㅇㅏㄷㅏ	ㅅㄷㅏ		v,adj	0	1	0	
 -아/어다	ㅇㅓㄷㅏ	ㅅㄷㅏ		v,adj	0	1	0	
 -아/어다	ㅐㄷㅏ	ㅣㄷㅏ		v,adj	0	8	0	
+-아/어다가	ㅏㄷㅏㄱㅏ	ㄷㅏ		v,adj	0	0	1	
 -아/어다가	ㅓㄷㅏㄱㅏ	ㄷㅏ		v,adj	0	0	2	
 -아/어도	ㅏㄷㅗ	ㄷㅏ		v,adj	0	7	0	
 -아/어도	ㅓㄷㅗ	ㄷㅏ		v,adj	0	2	0	
@@ -387,13 +389,12 @@
 -아/어야	ㅇㅑ	ㄷㅏ		v,adj	0	20	0	
 -아/어야	ㅇㅓㅇㅑ	ㅅㄷㅏ		v,adj	0	1	0	
 -아/어야	ㅐㅇㅑ	ㅣㄷㅏ		v,adj	0	26	0	
--아/어야겠	ㅇㅓㅇㅑㄱㅔㅆ	ㅅㄷㅏ	f	v,adj	0	1	0	
 -아/어요	ㅏㅇㅛ	ㄷㅏ		v,adj	0	2	0	
 -아/어요	ㅇㅏㅇㅛ	ㄷㅏ		v,adj	0	0	1	
 -아/어요	ㅇㅛ	ㄷㅏ		v,adj	0	9	0	
 -아/어요	ㅇㅓㅇㅛ	ㅅㄷㅏ		v,adj	0	1	0	
 -아/어요	ㅐㅇㅛ	ㅣㄷㅏ		v,adj	0	18	0	
--아/어요	ㅇㅓㅇㅛ			p,f	0	48	0	
+-아/어요	ㅇㅓㅇㅛ			p,f	0	48	1	
 -아/어지이다	ㅇㅓㅈㅣㅇㅣㄷㅏ	ㅅㄷㅏ		v,adj	0	1	0	
 -아/어지다	ㅓㅈㅣㄷㅏ	ㄷㅏ		v,adj	0	1	0	
 -았/었	ㅆ	ㄷㅏ	p	v,adj	0	246	1	
@@ -403,7 +404,6 @@
 -았/었	ㅐㅆ	ㅣㄷㅏ	p	v,adj	0	413	1	
 -았/었	ㅅㅕㅆ	ㅅㅣ	p	eusi	0	56	0	
 -았/었었	ㅆㅇㅓㅆ	ㄷㅏ	p	v,adj	0	313	0	
--았/었자	ㅇㅓㅆㅈㅏ	ㅅㄷㅏ		v,adj	0	1	0	
 -언만	ㅇㅓㄴㅁㅏㄴ	ㄷㅏ		v,adj,ida	0	1	0	
 -(으)오	ㅇㅗ	ㄷㅏ	euo	v,adj	0	17	0	
 -(으)오	ㅇㅗ	ㄹㄷㅏ	euo	v,adj	0	6	0	
@@ -524,11 +524,12 @@
 -아/어다	ㅏㄷㅏ	ㅡㄷㅏ		v,adj	0	0	1	breaks 나라다 -> 나르다 with other paths
 -아/어다	ㅓㄷㅏ	ㅡㄷㅏ		v,adj	0	0	1	breaks 이러다 -> 이르다 with other paths
 -아/어라	ㅓㄹㅏ	ㅡㄷㅏ		v,adj	0	0	1	breaks 이러라 -> 이르다 with other paths
+-아/어다가	ㅏㄷㅏㄱㅏ	ㅡㄷㅏ		v,adj	0	0	1	breaks 자라다가 -> 자르다 with other paths
+-아/어야지	ㅏㅇㅑㅈㅣ	ㅡㄷㅏ		v,adj	0	0	1	breaks 바라야지 -> 바르다 with other paths
+-아/어야만	ㅏㅇㅑㅁㅏㄴ	ㅡㄷㅏ		v,adj	0	0	1	breaks 바라야만 -> 바르다 with other paths
+-았/었자	ㅏㅆㅈㅏ	ㅡㄷㅏ		v,adj	0	0	1	breaks 바랐자 -> 바르다 with other paths
 -(으)셔요	ㅅㅕㅇㅛ	ㄷㅏ		v,adj,ida	0	0	0	ties a false candidate with the lemma on 8 paths, as in 시장하셔요 -> 시장하시다
 -(으)시어요	ㅅㅣㅇㅓㅇㅛ	ㄷㅏ		v,adj,ida	0	0	0	ties a false candidate with the lemma on 4 paths, as in 쑤시어요 -> 쑤시다
 -(으)십시다	ㅅㅣㅂㅅㅣㄷㅏ	ㄷㅏ		v	0	0	0	ties a false candidate with the lemma on 3 paths, as in 쑤십시다 -> 쑤시다
--아/어라	ㅏㄹㅏ	ㅡㄷㅏ		v,adj	0	0	0	ties a false candidate with the lemma on 4 paths, as in 바라라 -> 바라다
--아/어야	ㅏㅇㅑ	ㅡㄷㅏ		v,adj	0	0	0	ties a false candidate with the lemma on 4 paths, as in 바라야 -> 바라다
--았/었	ㅏㅆ	ㅡㄷㅏ	p	v,adj	0	0	0	ties a false candidate with the lemma on 8 paths, as in 바랐음 -> 바라다
 -(으)시어요	ㅅㅣㅇㅓㅇㅛ	ㄹㄷㅏ		v,adj	0	0	0	ties a false candidate with the lemma on 4 paths, as in 모시어요 -> 모시다
 -((느)ㄴ)다니	ㄴㄷㅏㄴㅣ	ㄹㄷㅏ		v	0	0	0	ties a false candidate with the lemma on 1 paths, as in 연다니 -> 연달다

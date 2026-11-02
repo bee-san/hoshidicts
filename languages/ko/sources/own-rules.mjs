@@ -286,7 +286,8 @@ transform('-(으)십시오', '-(으)십시오', 'Formal honorific command (하�
 ]);
 transform('-(으)ㅂ시오', '-(으)ㅂ시오', 'Formal command without -(으)시- (하십시오체, old-fashioned).', [
     suffix(jamo('ㅂ시오'), jamo('다'), [], VERB_HON, {stemMinLength: 2, stemEndsWith: VOWEL, stemNotEndsWith: '[ㅣ]'}),
-    suffix(jamo('ㅣㅂ시오'), jamo('ㅣ다'), [], VERB_HON, {stemMinLength: 1, stemNotEndsWith: '[ㅅ]'}),
+    // 마시 + ㅂ시오 → 마십시오 too, beside honorific 가 + 십시오 → 가십시오.
+    suffix(jamo('ㅣㅂ시오'), jamo('ㅣ다'), [], VERB_HON, {stemMinLength: 1}),
     suffix(jamo('읍시오'), jamo('다'), [], VERB_HON, {stemMinLength: 2, stemEndsWith: CONSONANT_NOT_LIEUL}),
     suffix(jamo('ㅂ시오'), jamo('ㄹ다'), [], VERB_HON, {stemMinLength: 1, stemEndsWith: VOWEL}),
     // ㅂ, ㄷ and ㅅ irregular stems: 도웁시오, 들읍시오, 지읍시오.
@@ -303,6 +304,7 @@ transform('-겠', '-겠-', 'Pre-final ending -겠-: future, intention, conjectur
 ]);
 transform('-아/어야겠', '-아/어야겠-', '-아/어야 하겠-: must, will have to.', [
     ah('야겠다', HON, {conditionsIn: ['-겠']}),
+    ah('야겠', HON, {conditionsIn: ['f'], deinflected: '다'}),
 ]);
 transform('-았/었', 'past', 'Past tense -았/었/였-.', [
     ah('ㅆ다', HON, {conditionsIn: ['-었']}),
@@ -367,10 +369,11 @@ transform('-지만', '-지만', 'Connective -지만: but.', [direct('지만', AL
 transform('-아/어서', '-아/어서', 'Connective -아/어서: and then, because.', [ah('서', HON)]);
 transform('-아/어도', '-아/어도', 'Connective -아/어도: even if.', [ah('도', PAST)]);
 transform('-아/어야', '-아/어야', 'Connective -아/어야: only if; before 하다 and 되다: must.', [ah('야', PAST), ah('야지', PAST), ah('야지요', PAST), ah('야죠', PAST)]);
-// Two of Yomitan's endings the first own rules lacked, written here with the
+// Three of Yomitan's endings the first own rules lacked, written here with the
 // own stem alternations (added after the own-rules commit).
 transform('-아/어야만', '-아/어야만', 'Connective -아/어야만: only if.', [ah('야만', PAST)]);
 transform('-아/어다가', '-아/어다가', 'Connective -아/어다가: do and then (take it somewhere): 가져다가.', [ah('다가', PAST)]);
+transform('-았/었자', '-았/었자', 'Connective -았/었자: even if, however much (가 봤자).', [ah('ㅆ자', HON)]);
 transform('-(으)면', '-(으)면', 'Connective -(으)면: if, when.', [eu('면', PAST)]);
 transform('-(으)니까', '-(으)니까', 'Connective -(으)니까: because, when.', [eu('니까', ALL)]);
 transform('-(으)면서', '-(으)면서', 'Connective -(으)면서: while.', [eu('면서', HON)]);
@@ -460,8 +463,9 @@ transform('subject', 'subject 가', 'Subject particle 가 with a pronoun: 내가
 transform('possessive', 'possessive', 'Possessive of a pronoun: 내 = 나의, 제 = 저의.', [whole([
     ['내', '나'], ['네', '너'], ['제', '저'],
 ])]);
-// The commonest personal pronouns with a particle written onto them (the
-// most frequent such words in Tatoeba's Korean sentences). Shortening the scan
+// The commonest personal pronouns with a particle written onto them: of these
+// pronouns with these particles, the 47 words that occur at least ten times
+// in Tatoeba's Korean sentences (2026-11-02 export). Shortening the scan
 // reaches the pronoun too, but only for its own length, after the readings
 // that cover the whole word (그는 -> 글다); these give the pronoun the whole
 // word. Other nouns keep no particle rules (section 14.1).
@@ -470,11 +474,13 @@ const PARTICLES = [['는', '은'], ['가', '이'], ['를', '을'], ['의', '의'
 function hasFinal(word) {
     return (word.codePointAt(word.length - 1) - 0xAC00) % 28 !== 0;
 }
-const CONTRACTED = new Set(['나가', '너가', '저가', '무엇가', '누구가']);
-transform('particle', 'particle', 'A personal pronoun with a particle written onto it: 나는 = 나 + 는, 그의 = 그 + 의.', [whole(
-    PRONOUNS.flatMap((pronoun) => PARTICLES.map(([afterVowel, afterConsonant]) => [pronoun + (hasFinal(pronoun) ? afterConsonant : afterVowel), pronoun]))
-        .filter(([word]) => !CONTRACTED.has(word)),
-)]);
+const COMMON = new Set(`나는 나를 나의 나도 나에게 나한테 나랑 나와 너는 너를 너의 너에게 너한테 너랑 저는 저를 저도 저한테 우리는 우리가
+    우리를 우리의 우리에게 우리한테 그는 그가 그를 그의 그에게 그만 그녀는 그녀가 그녀를 그녀의 그녀에게 당신은 당신이 당신을 당신의
+    당신에게 이것은 이것을 그것은 그것을 무엇이 무엇을 누구도`.split(/\s+/));
+const withParticles = PRONOUNS.flatMap((pronoun) => PARTICLES.map(([afterVowel, afterConsonant]) => [pronoun + (hasFinal(pronoun) ? afterConsonant : afterVowel), pronoun]))
+    .filter(([word]) => COMMON.has(word));
+if (withParticles.length !== COMMON.size) { throw new Error('COMMON lists a word that is no pronoun with a particle'); }
+transform('particle', 'particle', 'A personal pronoun with a particle written onto it: 나는 = 나 + 는, 그의 = 그 + 의.', [whole(withParticles)]);
 
 const out = {schema: 1, conditions: CONDITIONS, transforms};
 const file = join(dirname(fileURLToPath(import.meta.url)), 'own.json');

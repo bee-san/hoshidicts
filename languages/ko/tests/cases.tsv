@@ -274,3 +274,16 @@ negatives	0	그러다	그르다	*	*
 negatives	0	이러다	이르다	*	*
 negatives	0	그러라	그르다	*	*
 negatives	0	이러라	이르다	*	*
+ㅡ	1	바빠야지	바쁘다	adj	-아/어야
+ㅡ	1	써야만	쓰다	v	-아/어야만
+ㅡ	1	담가다가	담그다	v	-아/어다가
+ㅡ	1	써야겠어요	쓰다	v	-아/어야겠|-아/어요
+connectives	1	봤자	보다	v	-았/었자
+negatives	0	바라다가	바르다	*	*
+negatives	0	자라다가	자르다	*	*
+negatives	0	자라다가	잘다	*	*
+negatives	0	바라야지	바르다	*	*
+negatives	0	바라야만	바르다	*	*
+negatives	0	바랐자	바르다	*	*
+negatives	0	자라야겠어요	자르다	*	*
+negatives	0	자랐었다	자르다	*	*
