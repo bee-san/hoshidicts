@@ -6,13 +6,19 @@
 #include <fstream>
 #include <iostream>
 #include <numeric>
+#include <optional>
 #include <stdexcept>
 #include <string_view>
 #include <vector>
 #include <glaze/glaze.hpp>
 
 #include "hoshidicts/deinflector.hpp"
+#include "hoshidicts/languages.hpp"
 #include "hoshidicts/query.hpp"
+
+#ifndef HOSHIDICTS_LANGUAGES_DIR
+#define HOSHIDICTS_LANGUAGES_DIR "languages"
+#endif
 
 struct LookupBenchmark {
   size_t words;
@@ -43,7 +49,9 @@ std::vector<std::string> read_word_list(const std::string& path) {
 int main(int argc, char** argv) {
   if (argc < 5) {
     std::cout << std::format(
-        "{} <csv_path> <iterations> --term <dict_path>... [--freq <dict_path>...] [--pitch <dict_path>...] [--kanji <dict_path>...] [--paged-entries] [--paged-index] [--metadata-only-terms] [--json]\n", argv[0]);
+        "{} <csv_path> <iterations> --term <dict_path>... [--freq <dict_path>...] [--pitch <dict_path>...] [--kanji <dict_path>...] [--paged-entries] [--paged-index] [--metadata-only-terms] [--language <code>] [--languages <dir>] [--json]\n"
+        "--language defaults to ja (the built-in pack); --languages defaults to {}\n",
+        argv[0], HOSHIDICTS_LANGUAGES_DIR);
     return 1;
   }
 
@@ -59,6 +67,11 @@ int main(int argc, char** argv) {
   DictionaryIndexStorage index_storage = DictionaryIndexStorage::Mapped;
   bool json = false;
   LookupOptions options;
+  // Without --language, Lookup(query, deinflector) on the built-in Japanese
+  // pack, the constructor existing callers use; with it, the pack of that
+  // code from a registry (docs/languages.md 10.3 and 13).
+  std::optional<std::string> language;
+  std::string languages_dir = HOSHIDICTS_LANGUAGES_DIR;
   std::vector<std::string>* current = &term_paths;
   for (int i = 3; i < argc; ++i) {
     const std::string_view arg = argv[i];
@@ -78,6 +91,10 @@ int main(int argc, char** argv) {
       options.metadata_only_terms = true;
     } else if (arg == "--json") {
       json = true;
+    } else if (arg == "--language" && i + 1 < argc) {
+      language = argv[++i];
+    } else if (arg == "--languages" && i + 1 < argc) {
+      languages_dir = argv[++i];
     } else {
       current->emplace_back(arg);
     }
@@ -98,7 +115,17 @@ int main(int argc, char** argv) {
   }
 
   Deinflector deinflector;
-  Lookup lookup(query, deinflector);
+  auto registry = hoshidicts::LanguageRegistry::with_builtin();
+  if (language && *language != "ja") {
+    std::string error;
+    registry.add_directory(languages_dir, &error);
+    if (!registry.find(*language)) {
+      std::cerr << std::format("no language pack {} in {}{}{}\n", *language, languages_dir, error.empty() ? "" : ": ", error);
+      return 1;
+    }
+    options.language = *language;
+  }
+  Lookup lookup = language ? Lookup(query, registry) : Lookup(query, deinflector);
 
   std::vector<double> durations;
   LookupBenchmark report{.words = words.size()};

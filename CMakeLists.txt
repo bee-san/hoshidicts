@@ -17,6 +17,7 @@ option(HOSHIDICTS_TESTS "hoshidicts unit tests (ctest)" OFF)
 # (see src/memory/memory.cpp).
 option(HOSHIDICTS_WASMFS "The Emscripten build links against WasmFS" OFF)
 option(HOSHIDICTS_DEINFLECTOR_TESTS "Japanese conjugation parity tests" OFF)
+option(HOSHIDICTS_LANGUAGE_TESTS "language pack conformance tests (docs/languages.md 12.1)" OFF)
 
 set(ZSTD_BUILD_PROGRAMS OFF CACHE BOOL "")
 set(ZSTD_BUILD_TESTS OFF CACHE BOOL "")
@@ -90,8 +91,23 @@ add_library(hoshidicts
     src/mdict/mdict_source.cpp
     src/json/yomitan_parser.cpp
     src/json/json_skip.cpp
-    src/text_processor/text_processor.cpp
-    src/text_processor/kanji_variants.cpp
+    src/languages/builtins/builtins.cpp
+    src/languages/builtins/hangul.cpp
+    src/languages/builtins/japanese.cpp
+    src/languages/builtins/kanji_variants.cpp
+    src/languages/builtins/vietnamese.cpp
+    src/languages/builtin_packs.cpp
+    src/languages/case_mapping.cpp
+    src/languages/case_tables.cpp
+    src/languages/classes.cpp
+    src/languages/corpus.cpp
+    src/languages/json.cpp
+    src/languages/pack.cpp
+    src/languages/regex.cpp
+    src/languages/registry.cpp
+    src/languages/steps.cpp
+    src/languages/transforms.cpp
+    src/languages/unicode.cpp
     src/deinflector.cpp
     src/query.cpp
     src/lookup.cpp
@@ -100,6 +116,19 @@ add_library(hoshidicts
 
 if(HOSHIDICTS_WASMFS)
   target_compile_definitions(hoshidicts PRIVATE HOSHIDICTS_WASMFS=1)
+endif()
+
+# Language packs are parsed once per pack (docs/languages.md 13), so the
+# WebAssembly build optimises the load-time sources, and the code they
+# instantiate, for size: they are most of what the framework adds to a bundle.
+if(EMSCRIPTEN)
+  set_source_files_properties(
+      src/languages/pack.cpp
+      src/languages/json.cpp
+      src/languages/classes.cpp
+      src/languages/registry.cpp
+      src/languages/corpus.cpp
+      PROPERTIES COMPILE_OPTIONS "-Oz")
 endif()
 
 # MDD stylesheets that declare a legacy @charset (Shift_JIS, GBK, ...) are
@@ -111,6 +140,7 @@ if(Iconv_FOUND)
   target_link_libraries(hoshidicts PRIVATE Iconv::Iconv)
 endif()
 
+target_include_directories(hoshidicts PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_include_directories(hoshidicts PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${CMAKE_CURRENT_SOURCE_DIR}/external/utfcpp/source
@@ -133,16 +163,35 @@ endif()
 
 if(HOSHIDICTS_DEINFLECTOR_TESTS)
     enable_testing()
-    add_executable(deinflector-test tests/deinflector_test.cpp src/deinflector.cpp)
-    target_include_directories(deinflector-test PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
-        ${CMAKE_CURRENT_SOURCE_DIR}/external/utfcpp/source
-    )
+    # The deinflector reads the Japanese pack, so the test links the library.
+    add_executable(deinflector-test tests/deinflector_test.cpp)
+    target_link_libraries(deinflector-test PRIVATE hoshidicts)
     if(MSVC)
         target_compile_options(deinflector-test PRIVATE /utf-8)
     endif()
     add_test(NAME deinflector
-             COMMAND deinflector-test ${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/yomitan-deinflections.tsv)
+             COMMAND deinflector-test ${CMAKE_CURRENT_SOURCE_DIR}/languages/ja/tests/yomitan.tsv)
+endif()
+
+if(HOSHIDICTS_LANGUAGE_TESTS)
+    enable_testing()
+    add_executable(language-conformance-test tests/language_conformance_test.cpp)
+    target_include_directories(language-conformance-test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_link_libraries(language-conformance-test PRIVATE hoshidicts glaze::glaze unordered_dense utf8proc::utf8proc)
+    if(MSVC)
+        target_compile_options(language-conformance-test PRIVATE /utf-8)
+    endif()
+    # One test per pack directory; adding a pack adds its test, also in an
+    # existing build directory.
+    file(GLOB HOSHIDICTS_PACK_DESCRIPTORS CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/languages/*/language.json)
+    foreach(descriptor ${HOSHIDICTS_PACK_DESCRIPTORS})
+        get_filename_component(pack_dir ${descriptor} DIRECTORY)
+        get_filename_component(pack_code ${pack_dir} NAME)
+        if(NOT pack_code MATCHES "^_")
+            add_test(NAME language-${pack_code}
+                     COMMAND language-conformance-test ${pack_dir} ${CMAKE_CURRENT_BINARY_DIR})
+        endif()
+    endforeach()
 endif()
 
 if(HOSHIDICTS_CLI)
@@ -156,7 +205,14 @@ if(HOSHIDICTS_CLI)
 
     target_link_libraries(hoshidicts-cli PRIVATE
         hoshidicts
+        unordered_dense
     )
+    # `--languages` defaults to this checkout's packs.
+    target_compile_definitions(hoshidicts-cli PRIVATE
+        HOSHIDICTS_LANGUAGES_DIR="${CMAKE_CURRENT_SOURCE_DIR}/languages")
+    if(MSVC)
+        target_compile_options(hoshidicts-cli PRIVATE /utf-8)
+    endif()
 
     target_link_libraries(hoshidicts-cli-c PRIVATE
         hoshidicts
@@ -180,9 +236,63 @@ if(HOSHIDICTS_BENCHMARK)
         hoshidicts
         glaze::glaze
     )
+    target_compile_definitions(benchmark-lookup PRIVATE
+        HOSHIDICTS_LANGUAGES_DIR="${CMAKE_CURRENT_SOURCE_DIR}/languages")
 endif()
 if(HOSHIDICTS_TESTS)
     enable_testing()
+
+    # The oracle: the Japanese pipeline at 35e2dab in namespace hoshidicts_legacy
+    # (docs/languages.md 11.3, tests/reference/README.md). Linked only into tests.
+    add_library(hoshidicts-legacy STATIC
+        tests/reference/legacy_deinflector.cpp
+        tests/reference/legacy_text_processor.cpp
+        tests/reference/legacy_kanji_variants.cpp
+        tests/reference/legacy_query.cpp
+        tests/reference/legacy_lookup.cpp
+    )
+    target_include_directories(hoshidicts-legacy PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_link_libraries(hoshidicts-legacy
+        PUBLIC hoshidicts
+        PRIVATE glaze::glaze libzstd_static unordered_dense utf8proc::utf8proc)
+    if(MSVC)
+        target_compile_options(hoshidicts-legacy PRIVATE /utf-8)
+    endif()
+
+    # languages/ja/transforms.json is what tools/export-legacy-japanese.cpp
+    # writes from the oracle's deinflector (docs/languages.md 11.1).
+    add_executable(export-legacy-japanese tools/export-legacy-japanese.cpp)
+    target_include_directories(export-legacy-japanese PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/external/utfcpp/source)
+    if(MSVC)
+        target_compile_options(export-legacy-japanese PRIVATE /utf-8)
+    endif()
+    add_test(NAME ja-export-legacy
+             COMMAND ${CMAKE_COMMAND}
+                     -DEXPORT=$<TARGET_FILE:export-legacy-japanese>
+                     -DOUT=${CMAKE_CURRENT_BINARY_DIR}/ja-transforms.json
+                     -DEXPECTED=${CMAKE_CURRENT_SOURCE_DIR}/languages/ja/transforms.json
+                     -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/export_legacy_japanese.cmake)
+
+    # The Japanese parity tests (docs/languages.md 11.3): the framework against
+    # the oracle.
+    add_executable(ja-parity-test tests/ja_parity_test.cpp)
+    target_include_directories(ja-parity-test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src ${CMAKE_CURRENT_SOURCE_DIR}/tests)
+    target_link_libraries(ja-parity-test PRIVATE hoshidicts-legacy hoshidicts unordered_dense)
+    if(MSVC)
+        target_compile_options(ja-parity-test PRIVATE /utf-8)
+    endif()
+    add_test(NAME ja-deinflect-parity COMMAND ja-parity-test deinflect ${CMAKE_CURRENT_SOURCE_DIR})
+    add_test(NAME ja-process-parity COMMAND ja-parity-test process ${CMAKE_CURRENT_SOURCE_DIR})
+    add_test(NAME ja-lookup-parity COMMAND ja-parity-test lookup ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
+
+    # The C API with a language request, compiled as C (docs/languages.md 11.3).
+    add_executable(c-smoke-test tests/c_smoke_test.c)
+    target_link_libraries(c-smoke-test PRIVATE hoshidicts)
+    file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/c-smoke)
+    add_test(NAME c-smoke
+             COMMAND c-smoke-test ${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/yomitan/small_dict.zip
+                     ${CMAKE_CURRENT_BINARY_DIR}/c-smoke)
+
     foreach(variant simd scalar)
         add_executable(json-skip-test-${variant} tests/json_skip_test.cpp src/json/json_skip.cpp)
         target_include_directories(json-skip-test-${variant} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
@@ -190,6 +300,22 @@ if(HOSHIDICTS_TESTS)
         add_test(NAME json-skip-${variant} COMMAND json-skip-test-${variant})
     endforeach()
     target_compile_definitions(json-skip-test-scalar PRIVATE HOSHIDICTS_JSON_SKIP_SCALAR=1)
+
+    add_executable(builtins-test tests/builtins_test.cpp)
+    target_include_directories(builtins-test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_link_libraries(builtins-test PRIVATE hoshidicts)
+    if(MSVC)
+        target_compile_options(builtins-test PRIVATE /utf-8)
+    endif()
+    add_test(NAME builtins COMMAND builtins-test)
+
+    add_executable(languages-test tests/languages_test.cpp)
+    target_include_directories(languages-test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_link_libraries(languages-test PRIVATE hoshidicts unordered_dense)
+    if(MSVC)
+        target_compile_options(languages-test PRIVATE /utf-8)
+    endif()
+    add_test(NAME languages COMMAND languages-test ${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/languages)
 
     add_executable(score-roundtrip-test tests/score_roundtrip_test.cpp)
     target_link_libraries(score-roundtrip-test PRIVATE hoshidicts)
@@ -259,4 +385,22 @@ if(HOSHIDICTS_TESTS)
              COMMAND import-equivalence-test
                      ${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/yomitan/small_dict.zip
                      ${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/yomitan/golden.sha256)
+endif()
+
+if(HOSHIDICTS_TESTS AND HOSHIDICTS_CLI)
+    # The real CLI's language commands on the probe packs (docs/languages.md 10.3).
+    add_test(NAME cli-languages
+             COMMAND ${CMAKE_COMMAND} -DCLI=$<TARGET_FILE:hoshidicts-cli>
+                     -DFIXTURES=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures
+                     -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/cli_languages_test.cmake)
+endif()
+
+if(HOSHIDICTS_LANGUAGE_TESTS)
+    # Only the Japanese pack may use tests/yomitan.tsv as its corpus (12.1 step 4).
+    add_test(NAME language-needs-corpus
+             COMMAND ${CMAKE_COMMAND} -DTEST=$<TARGET_FILE:language-conformance-test>
+                     -DPACK=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/conformance/yt
+                     -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}
+                     "-DREASON=a pack with transforms needs tests/corpus.tsv"
+                     -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/conformance_refuses_test.cmake)
 endif()

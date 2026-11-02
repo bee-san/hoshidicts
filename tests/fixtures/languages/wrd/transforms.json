@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "conditions": {
+    "v": {
+      "name": "Verb",
+      "isDictionaryForm": true
+    }
+  },
+  "transforms": [
+    {
+      "id": "ing",
+      "name": "ing",
+      "description": "the ing probe rule",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "ing", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    }
+  ]
+}

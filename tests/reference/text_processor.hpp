@@ -4,6 +4,8 @@
 #include <string_view>
 #include <vector>
 
+namespace hoshidicts_legacy {
+
 struct TextVariant {
   std::string text;
   int steps;
@@ -12,3 +14,4 @@ struct TextVariant {
 namespace text_processor {
 std::vector<TextVariant> process(std::string_view src);
 }
+}  // namespace hoshidicts_legacy

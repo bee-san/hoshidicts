@@ -1,6 +1,6 @@
 # hoshidicts
 
-This library implements a dictionary backend that works similarly to [Yomitan](https://github.com/yomidevs/yomitan). This was made for [Hoshi Reader](https://github.com/Manhhao/Hoshi-Reader) and was only tested with Japanese. Other languages might need their own deinflector or adjustments to the lookup strategy.
+This library implements a dictionary backend that works similarly to [Yomitan](https://github.com/yomidevs/yomitan). This was made for [Hoshi Reader](https://github.com/Manhhao/Hoshi-Reader). Each language is a data-only **language pack** in `languages/<code>/` (descriptor, deinflection rules, tests); Japanese is built in, and other packs load at run time. [`docs/languages.md`](docs/languages.md) is the contract for packs and the language API.
 
 A MIT version of the library is available on the [main-mit](https://github.com/Manhhao/hoshidicts/tree/main-mit) branch.
 
@@ -85,11 +85,19 @@ size_t DictionaryQuery::read_media_file(const std::string& dict_name, const std:
 ```
 Returns the stored size of the media file (0 when there is none) and copies it into `out` when it is at most `max_bytes` long, so a caller can refuse a large file without reading it. `get_media_file_view` returns a view into the mapping instead, and an empty one where media is read on demand.
 
+### languages
+```cpp
+hoshidicts::LanguageRegistry registry = hoshidicts::LanguageRegistry::with_builtin();  // Japanese
+bool LanguageRegistry::add(std::string_view language_json, std::string_view transforms_json, std::string* error)
+bool LanguageRegistry::add_directory(const std::string& languages_dir, std::string* error)
+```
+A registry holds the language packs a host has loaded. `with_builtin()` starts with the Japanese pack, which is compiled into the library (`src/languages/builtin_packs.cpp`, written by `tools/embed-packs.py` from `languages/ja/`). `add` parses one pack from its `language.json` and `transforms.json`, replacing a pack with the same code; `add_directory` loads every `<dir>/<code>/language.json` whose directory name does not start with `_`. Errors name the pack, the file, the JSON path and the reason. `find(code)` and `codes()` list what is loaded. A pack is the generic, data-driven pipeline of `docs/languages.md`: character classes, text processors, rule types from suffixes to anchored patterns, and the dictionary-form conditions its part-of-speech filter uses.
+
 ### deinflector
 ```cpp
 std::vector<DeinflectionResult> Deinflector::deinflect(const std::string& text) const
 ```
-Deinflects a given Japanese string using rules from the Yomitan deinflector. As this doesn't use any dictionary data, the result may include invalid deinflections.
+Deinflects a string with a pack's rules: `Deinflector()` uses the built-in Japanese pack (Yomitan's Japanese rules and hoshidicts' own auxiliaries, `languages/ja/transforms.json`), `Deinflector(pack)` any other. As this doesn't use any dictionary data, the result may include invalid deinflections. Each trace step has the transform's `id`, `name` and `description`.
 
 ```cpp
 std::vector<DeinflectionResult> Deinflector::deinflect_neko_speech(const std::string& text) const
@@ -99,13 +107,16 @@ Reads NekoPara's cat speech, which says `にゃ` for `な` and sometimes for `�
 ```cpp
 static uint32_t Deinflector::pos_to_conditions(const std::vector<std::string>& part_of_speech)
 ```
-Converts a vector of part-of-speech tags into a bitmask used for deinflection filtering.
+Converts a vector of Japanese part-of-speech tags into a bitmask used for deinflection filtering. `conditions_for_parts_of_speech` does the same for the deinflector's own pack.
 
 ### lookup
 ```cpp
+Lookup::Lookup(DictionaryQuery& query, const hoshidicts::LanguageRegistry& languages)
 Lookup::Lookup(DictionaryQuery& query, Deinflector& deinflector)
 ```
-Creates a Lookup object using a given query with dictionaries added and a deinflector.
+Creates a Lookup object using a given query with dictionaries added, and either a registry, whose every pack it can look up (`LookupOptions::language`, default `ja`; an unknown code throws `std::invalid_argument`), or a deinflector, whose pack is its only language.
+
+`LookupOptions::dictionaries` names the loaded dictionaries (paths) a request uses, in rank order: term, frequency, pitch and kanji queries and the long-key length use only those, an empty list selects nothing, and without it every loaded dictionary is used in load order, as before. `language_options` turns on a pack's optional processors, transforms and variant passes (`nekoSpeech` for Japanese, which `neko_speech` also enables). `pos_filter_exempt` lists dictionaries whose terms skip the part-of-speech filter. `DictionaryQuery::query_kanji(kanji, dictionaries)` takes the same selection.
 
 ```cpp
 std::vector<LookupResult> Lookup::lookup(const std::string& lookup_string, int max_results = 16, size_t scan_length = 16) const
@@ -151,6 +162,8 @@ added metadata dictionary.
 - [lzokay](https://github.com/AxioDL/lzokay): MIT (vendored in `external/lzokay`)
 - [gumbo-parser](https://github.com/sparklemotion/nokogiri/tree/main/gumbo-parser) (Nokogiri's fork of Google's gumbo): Apache-2.0, `hashmap.c` MIT (vendored in `external/gumbo-parser`)
 - [Nekopara-Speech](https://huggingface.co/datasets/OpenSpeechHub/Nekopara-Speech): the transcripts the `neko speech` substitutions were taken from (no data from it is included)
+- [Hangul.js](https://github.com/e-/Hangul.js) 0.2.6: MIT, Copyright 2017 Jaemin Jo (ported in `src/languages/builtins/hangul.cpp`)
+- Language packs carry their own sources and licences in `languages/<code>/README.md`
 
 ## Lookup benchmark
 
@@ -159,8 +172,13 @@ Build with `-DHOSHIDICTS_BENCHMARK=ON`. `benchmark-lookup` accepts a word list
 count and `--term`, `--freq`, `--pitch` or `--kanji` package paths. Defaults keep
 entries and hashes mapped. Add `--paged-entries` and independently
 `--paged-index` to compare the readers. `--metadata-only-terms` turns
-`LookupOptions::metadata_only_terms` on. `--json` emits per-lookup milliseconds
+`LookupOptions::metadata_only_terms` on. `--language <code>` looks words up with
+that pack, loaded from `--languages <dir>` (default: this checkout's
+`languages/`); without it the built-in Japanese pack is used through
+`Lookup(query, deinflector)`. `--json` emits per-lookup milliseconds
 for each pass, result/glossary counts and the shared cache's activity.
+[`docs/benchmarks-languages.md`](docs/benchmarks-languages.md) has the
+measurements of the language framework against 35e2dab.
 
 ```sh
 ./build/benchmark-lookup words.txt 2 --paged-entries --paged-index --json \

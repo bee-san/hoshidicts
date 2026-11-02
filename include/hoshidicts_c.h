@@ -192,6 +192,56 @@ hd_lookup_results* hd_lookup_run_with_options(const hd_lookup* l, const char* lo
                                               const hd_lookup_result** out_results, size_t* out_count);
 void hd_lookup_results_free(hd_lookup_results* r);
 
+// languages (docs/languages.md, sections 9 and 10.2)
+typedef struct hd_languages hd_languages;
+
+// A registry that starts with the built-in packs (Japanese).
+hd_languages* hd_languages_new(void);
+void hd_languages_free(hd_languages* languages);
+// Parses a pack and adds it, replacing one with the same code; transforms_json
+// may be NULL or "" for a pack without transforms. Returns 0 on success, 1 on
+// failure (see hd_languages_last_error).
+int hd_languages_add(hd_languages* languages, const char* language_json, const char* transforms_json);
+// Loads every <path>/<code>/language.json whose directory name does not start
+// with '_'. Returns 0 when every pack loaded, 1 otherwise (the others still
+// load; see hd_languages_last_error).
+int hd_languages_add_directory(hd_languages* languages, const char* path);
+// The last add's error ("" after a success), valid until the next add.
+const char* hd_languages_last_error(const hd_languages* languages);
+
+typedef struct hd_language_request {
+  size_t struct_size;                   // sizeof(hd_language_request), so fields can be added
+  const char* language;                 // NULL means "ja"
+  int select_dictionaries;              // 0: every loaded dictionary; 1: exactly the dictionary_count entries
+  const char* const* dictionaries;      // may be NULL when dictionary_count is 0
+  size_t dictionary_count;
+  const char* const* language_options;
+  size_t language_option_count;
+  const char* const* pos_filter_exempt;
+  size_t pos_filter_exempt_count;
+} hd_language_request;
+
+// A lookup over every pack `languages` holds; `languages` must outlive it.
+hd_lookup* hd_lookup_new_with_languages(hd_query* q, const hd_languages* languages);
+// Like hd_lookup_run_with_options, for one language and dictionary selection.
+// Returns NULL and points *out_error at a message (valid until the next call
+// on this thread) on an unknown language.
+hd_lookup_results* hd_lookup_run_with_language(const hd_lookup* l, const char* lookup_string, int max_results,
+                                               size_t scan_length, const hd_lookup_options* options,
+                                               const hd_language_request* request,
+                                               const hd_lookup_result** out_results, size_t* out_count,
+                                               const char** out_error);
+// The transform id of each trace step of result i, step j; hd_transform_group
+// keeps its layout for callers built against the existing header. An empty
+// string out of range.
+hd_str hd_lookup_results_trace_id(const hd_lookup_results* r, size_t i, size_t j);
+// hd_query_run_kanji with the request's dictionary selection (its
+// select_dictionaries, dictionaries and dictionary_count; a NULL request
+// selects every loaded dictionary).
+hd_kanji_results* hd_query_run_kanji_with_request(const hd_query* q, const char* kanji,
+                                                  const hd_language_request* request,
+                                                  const hd_kanji_entry** out_entries, size_t* out_count);
+
 #ifdef __cplusplus
 }
 #endif

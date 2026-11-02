@@ -1,10 +1,16 @@
-#include "text_processor.hpp"
+// SPDX-License-Identifier: GPL-3.0-or-later
+// The Japanese builtins (docs/languages.md, section 6.3): hoshidicts' text
+// processors and NekoPara cat speech, as src/text_processor/text_processor.cpp
+// and src/deinflector.cpp had them at 35e2dab. They follow Yomitan's
+// japanese.js and japanese-text-preprocessors.js (GPL-3.0-or-later).
+#include "builtins.hpp"
 
 #include <ankerl/unordered_dense.h>
 #include <utf8.h>
 #include <utf8proc.h>
 
 #include <algorithm>
+#include <array>
 #include <cstdint>
 #include <ranges>
 #include <string>
@@ -17,11 +23,6 @@ extern const char32_t kanji_variants[][2];
 extern const unsigned kanji_variants_count;
 
 namespace {
-struct TextProcessor {
-  std::vector<int> options;
-  void (*process)(const std::u32string&, int, std::u32string&);
-};
-
 // https://github.com/yomidevs/yomitan/blob/81d17d877fb18c62ba826210bf6db2b7f4d4deed/ext/js/language/ja/japanese.js#L21
 constexpr uint32_t KATAKANA_SMALL_KA = 0x30f5;
 constexpr uint32_t KATAKANA_SMALL_KE = 0x30f6;
@@ -338,125 +339,48 @@ void strip_middle_dots(const std::u32string& text, std::u32string& result) {
   }
 }
 
-const std::vector<TextProcessor>& get_japanese_processors() {
-  static const std::vector<TextProcessor> processors = {
-      {.options = {0, 1},
-       .process = [](const std::u32string& text, int opt, std::u32string& out) { nfkc(text, out); }},
-      // https://github.com/yomidevs/yomitan/blob/81d17d877fb18c62ba826210bf6db2b7f4d4deed/ext/js/language/ja/japanese-text-preprocessors.js#L66
-      {.options = {0, 1, 2},
-       .process =
-           [](const std::u32string& text, int opt, std::u32string& out) {
-             if (opt == 1) {
-               katakana_to_hiragana(text, out);
-             } else {
-               hiragana_to_katakana(text, out);
-             }
-           }},
-      {.options = {0, 1, 2},
-       .process =
-           [](const std::u32string& text, int opt, std::u32string& out) {
-             collapse_emphatic_sequences(text, opt == 2, out);
-           }},
-      {.options = {0, 1},
-       .process = [](const std::u32string& text, int opt, std::u32string& out) { alphanumeric_to_fullwidth(text, out); }},
-      {.options = {0, 1},
-       .process = [](const std::u32string& text, int opt, std::u32string& out) { standardize_kanji(text, out); }},
-      {.options = {0, 1},
-       .process = [](const std::u32string& text, int opt, std::u32string& out) { expand_iteration_marks(text, out); }},
-      {.options = {0, 1},
-       .process = [](const std::u32string& text, int opt, std::u32string& out) { numbers_to_kanji(text, out); }},
-      {.options = {0, 1}, .process = [](const std::u32string& text, int opt, std::u32string& out) {
-         strip_middle_dots(text, out);
-       }}};
-  return processors;
-}
-}
-
-// https://github.com/yomidevs/yomitan/blob/81d17d877fb18c62ba826210bf6db2b7f4d4deed/ext/js/language/translator.js#L564
-std::vector<TextVariant> text_processor::process(std::string_view src) {
-  using Variant = std::pair<std::u32string, int>;
-  static thread_local std::vector<Variant> variants_pool;
-  static thread_local std::vector<Variant> next_pool;
-  static thread_local std::u32string scratch;
-
-  std::vector<Variant>& variants = variants_pool;
-  std::vector<Variant>& next = next_pool;
-  if (variants.empty()) {
-    variants.emplace_back();
-  }
-  variants[0].first.clear();
-  utf8::utf8to32(src.begin(), src.end(), std::back_inserter(variants[0].first));
-  variants[0].second = 0;
-  size_t variant_count = 1;
-
-  for (const auto& processor : get_japanese_processors()) {
-    size_t next_count = 0;
-    auto find_next = [&](const std::u32string& text) {
-      return std::find_if(next.begin(), next.begin() + static_cast<std::ptrdiff_t>(next_count),
-                          [&](const Variant& entry) { return entry.first == text; });
-    };
-    auto next_end = [&] { return next.begin() + static_cast<std::ptrdiff_t>(next_count); };
-
-    for (size_t vi = 0; vi < variant_count; ++vi) {
-      std::u32string& variant = variants[vi].first;
-      const int steps = variants[vi].second;
-      for (int option : processor.options) {
-        if (option == 0) {
-          continue;
-        }
-        processor.process(variant, option, scratch);
-        if (scratch == variant) {
-          continue;
-        }
-        int new_steps = steps + 1;
-
-        auto it = find_next(scratch);
-        if (it == next_end()) {
-          if (next_count < next.size()) {
-            next[next_count].first.assign(scratch);
-            next[next_count].second = new_steps;
-          } else {
-            next.emplace_back(scratch, new_steps);
-          }
-          ++next_count;
-        } else if (new_steps < it->second) {
-          it->second = new_steps;
-        }
-      }
-
-      auto it = find_next(variant);
-      if (it == next_end()) {
-        if (next_count < next.size()) {
-          std::swap(next[next_count].first, variant);
-          next[next_count].second = steps;
-        } else {
-          next.emplace_back(std::move(variant), steps);
-        }
-        ++next_count;
-      } else if (steps < it->second) {
-        it->second = steps;
-      }
+// The byte offset of the first にゃ (E3 81 AB E3 82 83) at or after pos, or npos.
+// It searches from the third byte on: 0xE3 and 0x81 begin most hiragana, so a
+// search keyed on them stops at almost every character, while 0xAB is rare.
+size_t find_neko(const std::string& text, size_t pos) {
+  constexpr std::string_view tail = "\xAB\xE3\x82\x83";
+  for (size_t at = text.find(tail, pos + 2); at != std::string::npos; at = text.find(tail, at + 1)) {
+    if (text[at - 2] == '\xE3' && text[at - 1] == '\x81') {
+      return at - 2;
     }
-    std::sort(next.begin(), next_end(), [](const Variant& a, const Variant& b) { return a.first < b.first; });
-    std::swap(variants, next);
-    variant_count = next_count;
   }
-
-  std::vector<TextVariant> result;
-  result.reserve(variant_count);
-  for (size_t vi = 0; vi < variant_count; ++vi) {
-    const std::u32string& variant = variants[vi].first;
-    const int steps = variants[vi].second;
-    size_t bytes = 0;
-    for (char32_t c : variant) {
-      bytes += c < 0x80 ? 1 : c < 0x800 ? 2 : c < 0x10000 ? 3 : 4;
-    }
-    std::string utf8;
-    utf8.resize_and_overwrite(bytes, [&](char* out, size_t) {
-      char* end = utf8::utf32to8(variant.begin(), variant.end(), out);
-      return static_cast<size_t>(end - out);
-    });
-    result.emplace_back(std::move(utf8), steps);
-  }
-  return result;
+  return std::string::npos;
 }
+}  // namespace
+
+namespace hoshidicts::lang::builtins {
+
+void ja_nfkc(const std::u32string& in, std::u32string& out) { nfkc(in, out); }
+void ja_katakana_to_hiragana(const std::u32string& in, std::u32string& out) { katakana_to_hiragana(in, out); }
+void ja_hiragana_to_katakana(const std::u32string& in, std::u32string& out) { hiragana_to_katakana(in, out); }
+void ja_collapse_emphatic(const std::u32string& in, std::u32string& out) { collapse_emphatic_sequences(in, false, out); }
+void ja_collapse_emphatic_full(const std::u32string& in, std::u32string& out) { collapse_emphatic_sequences(in, true, out); }
+void ja_fullwidth_alphanumeric(const std::u32string& in, std::u32string& out) { alphanumeric_to_fullwidth(in, out); }
+void ja_standardize_kanji(const std::u32string& in, std::u32string& out) { standardize_kanji(in, out); }
+void ja_expand_iteration_marks(const std::u32string& in, std::u32string& out) { expand_iteration_marks(in, out); }
+void ja_kanji_numbers(const std::u32string& in, std::u32string& out) { numbers_to_kanji(in, out); }
+void ja_strip_middle_dots(const std::u32string& in, std::u32string& out) { strip_middle_dots(in, out); }
+
+// NekoPara's cat speech says にゃ for な (できにゃい), and also for だ, ら, ま and
+// じゃ (ダメにゃって, いにゃっしゃい, わかりにゃした, いいにゃない). Each にゃ is
+// replaced, one at a time, by each of them, in that order, as
+// Deinflector::deinflect_neko_speech did at 35e2dab.
+void ja_neko_speech(const std::string& text, std::vector<std::string>& out) {
+  constexpr std::string_view neko = "にゃ";
+  constexpr std::array<std::string_view, 5> neko_replacements = {"な", "だ", "ら", "ま", "じゃ"};
+  for (size_t pos = find_neko(text, 0); pos != std::string::npos; pos = find_neko(text, pos + neko.size())) {
+    for (const auto replacement : neko_replacements) {
+      std::string normalized;
+      normalized.reserve(text.size() - neko.size() + replacement.size());
+      normalized.append(text, 0, pos).append(replacement).append(text, pos + neko.size());
+      out.push_back(std::move(normalized));
+    }
+  }
+}
+
+}  // namespace hoshidicts::lang::builtins

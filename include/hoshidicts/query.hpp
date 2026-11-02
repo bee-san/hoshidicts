@@ -2,6 +2,8 @@
 
 #include <cstdint>
 #include <memory>
+#include <optional>
+#include <span>
 #include <string>
 #include <string_view>
 #include <unordered_map>
@@ -182,6 +184,10 @@ class DictionaryQuery {
   void query_freq(std::vector<TermResult>& terms) const;
   void query_pitch(std::vector<TermResult>& terms) const;
   KanjiResult query_kanji(const std::string& kanji) const;
+  // The same with only the loaded dictionaries `dictionaries` names (paths),
+  // in that order (docs/languages.md, section 9.9): an empty list selects
+  // nothing, and a path that is not loaded is ignored.
+  KanjiResult query_kanji(const std::string& kanji, std::span<const std::string> dictionaries) const;
 
   std::vector<TermResult> query(const std::string& expression) const;
 
@@ -212,6 +218,36 @@ class DictionaryQuery {
  private:
   friend class Lookup;
   std::string last_error_;
+  struct DictionaryData;
+  struct Dictionary;
+
+  // The dictionaries a request uses (docs/languages.md, section 9.7): every
+  // loaded one in load order, or exactly those a request's list names, in
+  // its order. `term_path` (lookup_dictionary) further restricts term
+  // matches and the long-key length to one dictionary.
+  struct Selection {
+    bool all = true;
+    const std::string* term_path = nullptr;
+    std::vector<const Dictionary*> term;
+    std::vector<const Dictionary*> freq;
+    std::vector<const Dictionary*> pitch;
+    std::vector<const Dictionary*> kanji;
+  };
+  Selection select(const std::optional<std::vector<std::string>>& paths, const std::string* term_path) const;
+  Selection select(std::span<const std::string> paths, const std::string* term_path) const;
+  template <typename F>
+  void each_term(const Selection& selection, F&& f) const;
+  template <typename F>
+  static void each_of(const std::vector<Dictionary>& all, const std::vector<const Dictionary*>& chosen,
+                      const Selection& selection, F&& f);
+
+  // A pack's readingNormalizer (docs/languages.md, section 9.6): readings
+  // are compared after it.
+  struct ReadingNormalizer {
+    virtual ~ReadingNormalizer() = default;
+    virtual std::string normalize(std::string_view reading) const = 0;
+  };
+
   // The raw terms, and the compressed glossaries build_term points its result
   // at, are views into the dictionaries' files: they stay valid while `pins`,
   // which holds what they read of paged files, lives.
@@ -219,20 +255,30 @@ class DictionaryQuery {
   // of only the terms it keeps.
   RawTerms query_raw(const std::string& expression, BlobPins& pins,
                      const std::string* term_dictionary_path = nullptr, bool with_metadata = true) const;
+  RawTerms query_raw(const std::string& expression, BlobPins& pins, const Selection& selection, bool with_metadata,
+                     const ReadingNormalizer* normalizer = nullptr) const;
   TermResult build_term(const RawTerms& raw, RawTerm& term, BlobPins& pins) const;
   void collect_frequencies(std::string_view expression, std::string_view reading,
                            std::vector<FrequencyEntry>& out, BlobPins& pins) const;
   void collect_pitches(std::string_view expression, std::string_view reading, std::vector<PitchEntry>& out,
                        BlobPins& pins) const;
+  // The rows of the selected dictionaries for `expression` whose reading is
+  // empty or one of `readings`.
+  void collect_frequencies(std::string_view expression, std::span<const std::string_view> readings,
+                           std::vector<FrequencyEntry>& out, BlobPins& pins, const Selection& selection) const;
+  void collect_pitches(std::string_view expression, std::span<const std::string_view> readings,
+                       std::vector<PitchEntry>& out, BlobPins& pins, const Selection& selection) const;
   // The readings of the frequency and pitch rows keyed by `expression`, for a
   // term only those dictionaries have (LookupOptions::metadata_only_terms):
   // each reading a row names, once, in the order the frequency dictionaries and
   // then the pitch dictionaries list them; `expression` itself when only rows
   // without a reading have it; none when no row has it.
-  std::vector<std::string> metadata_readings(std::string_view expression, BlobPins& pins) const;
+  std::vector<std::string> metadata_readings(std::string_view expression, BlobPins& pins,
+                                             const Selection& selection) const;
+  size_t long_key_length(std::string_view text, const Selection& selection) const;
+  KanjiResult query_kanji(const std::string& kanji, const Selection& selection) const;
   void materialize(TermResult& term) const;
 
-  struct DictionaryData;
   struct Dictionary {
     Dictionary();
     ~Dictionary();

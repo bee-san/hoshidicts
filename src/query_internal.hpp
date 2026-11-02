@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <memory>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -33,9 +34,20 @@ struct RawTerm {
   uint32_t last_glossary;
   std::vector<FrequencyEntry> frequencies;
   std::vector<PitchEntry> pitches;
+  // With a pack's readingNormalizer (docs/languages.md, section 9.6): the
+  // index of this term's normalized reading and merged readings in RawTerms.
+  uint32_t merged = UINT32_MAX;
+};
+
+// With a reading normalizer: per merged term, its normalized reading and
+// every distinct reading it merged, first found first.
+struct NormalizedReadings {
+  std::vector<std::string> normalized;
+  std::vector<std::vector<std::string_view>> merged_readings;
 };
 
 struct RawTerms {
   std::vector<RawTerm> terms;
   std::vector<RawGlossary> glossaries;
+  std::unique_ptr<NormalizedReadings> normalized;  // only with a reading normalizer
 };
