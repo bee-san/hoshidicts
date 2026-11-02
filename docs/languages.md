@@ -629,7 +629,7 @@ rules by their literal parts, so lookups never scan the whole rule list.
 | `circumfix` | `inflectedPrefix`, `deinflectedPrefix`, `inflectedSuffix`, `deinflectedSuffix`, stem constraints, `stemChange`; or the cross-product form below | the text starts and ends with the two parts, which do not overlap | both parts replaced |
 | `replace` | `inflected`, `deinflected`, `occurrence` (`all`, `first`, `last`), `notAtStart` | the text contains `inflected` | each chosen occurrence replaced |
 | `phrasal` | `inflected`, `deinflected`, `followedBy` (a word list) | the text has at least two words, the first ends with `inflected`, and the second is in the list | the first word's ending replaced; every other word kept (*looked up to* → *look up to*) |
-| `interposedObject` | `particles` (a word list), `guardWords` (a word list) | the text is a verb, then one or more space-separated runs of any characters other than a space, none of whose pieces (the parts between non-word characters) is in `guardWords`, then a word in `particles` | the runs between the verb and the particle removed (*put it on*, *put Mary’s coat on*, *put the long-sleeved shirt on* → *put on*) |
+| `interposedObject` | `particles` (a word list), `guardWords` (a word list), optional `verbGuardWords` (a word list) | the text is a verb that is not in `verbGuardWords`, then one or more space-separated runs of any characters other than a space, none of whose pieces (the parts between non-word characters) is in `guardWords`, then a word in `particles` | the runs between the verb and the particle removed (*put it on*, *put Mary’s coat on*, *put the long-sleeved shirt on* → *put on*) |
 | `pattern` | `pattern`, `replacement`, `anchorSuffix` or `anchorPrefix` | the text ends (or starts) with the anchor and matches `pattern` | `pattern` replaced by `replacement` |
 
 In `phrasal` rules, and for the verb and the particle of `interposedObject`,
@@ -639,6 +639,30 @@ both keep every word after the particle (*put it on the table* → *put on the
 table*). Yomitan matches a particle as a prefix of the next word (*looked
 uptown* → *look uptown*); the pack does not, and lists that as a Yomitan defect
 (section 8.2).
+
+`verbGuardWords` keeps `interposedObject` from reading an auxiliary as the
+verb: the rule does not apply when its first word is in the list. The verb is
+one word, so it is compared whole, as `guardWords` compares a piece's parts.
+`guardWords` cannot stop these readings, because the word after an auxiliary
+is usually a participle, an open class (*had pointed out*, *had picked up*),
+and such a reading matches more of the text than the word itself, so it comes
+first (section 9.6). English lists its auxiliaries:
+
+```json
+"wordLists": {
+  "auxiliaries": ["am", "is", "are", "was", "were", "be", "been", "being", "have", "has", "had", "having", "do", "does", "did", "done", "doing"]
+}
+```
+
+```json
+{"type": "interposedObject", "particles": "particles", "guardWords": "objectGuards", "verbGuardWords": "auxiliaries",
+ "conditionsIn": [], "conditionsOut": ["v"]}
+```
+
+With the list, *had pointed out* and *have turned out* do not give *have out*,
+while *pointed it out* still gives *point out*. The readings it loses are those
+whose verb is an auxiliary, such as *had it out* and *did his coat up*.
+Without `verbGuardWords` the first word may be any word.
 
 Stem constraints apply to the stem: the text that remains between the matched
 parts.

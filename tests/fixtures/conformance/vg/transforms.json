@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "conditions": {
+    "v": {
+      "name": "Verb",
+      "isDictionaryForm": true,
+      "subConditions": ["v_phr", "v_plain"]
+    },
+    "v_phr": {
+      "name": "Phrasal verb",
+      "isDictionaryForm": true
+    },
+    "v_plain": {
+      "name": "Plain verb",
+      "isDictionaryForm": true
+    }
+  },
+  "wordLists": {
+    "particles": ["out", "up"],
+    "objectGuards": ["the", "to"],
+    "auxiliaries": ["am", "is", "are", "was", "were", "be", "been", "being", "have", "has", "had", "having", "do", "does", "did", "done", "doing"]
+  },
+  "transforms": [
+    {
+      "id": "past",
+      "name": "past",
+      "description": "the past probe rules; had -> have stands for the irregular ones",
+      "source": "own",
+      "rules": [
+        {"type": "phrasal", "inflected": "ed", "deinflected": "", "followedBy": "particles", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]},
+        {"type": "phrasal", "inflected": "had", "deinflected": "have", "followedBy": "particles", "conditionsIn": ["v"], "conditionsOut": ["v_phr"]}
+      ]
+    },
+    {
+      "id": "interposed",
+      "name": "interposed object",
+      "description": "the interposed object probe rule, which reads no auxiliary as the verb",
+      "source": "own",
+      "rules": [
+        {"type": "interposedObject", "particles": "particles", "guardWords": "objectGuards", "verbGuardWords": "auxiliaries", "conditionsIn": [], "conditionsOut": ["v_phr"]}
+      ]
+    }
+  ]
+}

@@ -43,6 +43,7 @@ checkout and `HOSHIDICTS_REQUIRE_HANGUL_BUNDLE=1`, which fails the tests
 instead of skipping that comparison when the bundle or the CLI is missing. `ctest -R check-yomitan-cli` (a build with `HOSHIDICTS_TESTS` and
 `HOSHIDICTS_CLI`, and Node on the `PATH`) runs `check-yomitan.mjs` on the same
 fixtures with the real `hoshidicts-cli`.
+When CMake finds no Node it warns, and the test fails, saying so.
 
 `sources/yomitan-differences.tsv` has seven columns:
 

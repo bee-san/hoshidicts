@@ -67,6 +67,7 @@ struct RuleExtra {
   const WordList* followed_by = nullptr;
   const WordList* particles = nullptr;
   const WordList* guard_words = nullptr;
+  const WordList* verb_guard_words = nullptr;  // interposedObject's optional verbGuardWords
   std::unique_ptr<Pattern> pattern;
   StepList then;
 };

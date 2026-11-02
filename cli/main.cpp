@@ -308,8 +308,9 @@ int cmd_deinflect(Context& context, const Arguments& args) {
     return 1;
   }
   // --options names transforms and variant passes. With --transforms it may
-  // also name, as a setting may, a transform of the pack's own rules file
-  // that <file> lacks: that one has no effect in this run.
+  // also name any transform of the pack's own rules file that <file> lacks,
+  // optional or not (a setting can name only the optional ones): that one has
+  // no effect in this run.
   std::vector<std::string> known;
   if (pack.transforms) {
     for (const auto& t : pack.transforms->transforms) known.push_back(t.id);

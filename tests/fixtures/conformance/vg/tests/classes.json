@@ -1,0 +1,21 @@
+{
+  "generator": "tools/check-classes.mjs",
+  "unicode": "17.0",
+  "classes": {
+    "letter": [
+      [65, 90],
+      [97, 122]
+    ]
+  },
+  "fields": {
+    "text.pattern": [
+      [65, 90],
+      [97, 122]
+    ],
+    "text.wordCharacters": [
+      [65, 90],
+      [97, 122]
+    ]
+  },
+  "steps": []
+}
