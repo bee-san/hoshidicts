@@ -25,19 +25,20 @@ word longer than the scan length is still looked up whole.
   [Spanish transform test](https://github.com/yomidevs/yomitan/blob/d3c54c10264673eca0d66b970ef74cd5c8b048e3/test/language/spanish-transforms.test.js),
   converted by `tools/port-yomitan-tests.mjs`, reasons then set to `*` by
   `sources/build-final.mjs` (see Measurements). GPL-3.0-or-later, Copyright (C)
-  2023-2026 Yomitan Authors, 2020-2022 Yomichan Authors.
+  2024-2026 Yomitan Authors.
 - `tests/corpus.tsv` and the rows of `tests/gaps.tsv` whose category is a
-  UniMorph tag: 1,700 pairs sampled with seed 1 by `sources/build-corpus.mjs`
+  UniMorph tag: 1,200 pairs sampled with seed 1 by `sources/build-corpus.mjs`
   from [UniMorph spa](https://github.com/unimorph/spa/blob/b9655efb0e5ce0f99809badaa7f4e93017ab8430/spa)
   at b9655ef (file `spa`, sha256 `7a165d4b…8771`), CC BY-SA 3.0, by the
-  UniMorph contributors (data from English Wiktionary): 800 finite verb
-  forms, 150 gerunds and participles, 250 verbs with attached pronouns, 250
-  plural nouns, 50 singular nouns (gender pairs) and 200 adjective forms,
-  single words of Spanish letters that differ from their lemma. Rows the final
-  rules reach are in `corpus.tsv` (1,657), the others in `gaps.tsv` (43).
+  UniMorph contributors (data from English Wiktionary): 550 finite verb
+  forms, 100 gerunds and participles, 175 verbs with attached pronouns, 175
+  plural nouns, 40 singular nouns (gender pairs) and 160 adjective forms,
+  single words of Spanish letters that differ from their lemma, one row per
+  form, lemma and part of speech. Rows the final rules reach are in
+  `corpus.tsv` (1,165), the others in `gaps.tsv` (35).
 - `tests/cases.tsv`, `tests/text.tsv`, `tests/lookup.tsv`,
-  `tests/dictionary/`, `sources/benchmark-words.txt` and the rest of
-  `language.json`: written for this pack (GPL-3.0-or-later).
+  `tests/dictionary/`, `sources/benchmark-words.txt`, `sources/measure.py`
+  and the rest of `language.json`: written for this pack (GPL-3.0-or-later).
 - Not committed, used for the measurements below: the dictionary
   [wty-es-en](https://huggingface.co/datasets/daxida/wty-release/resolve/main/latest/dict/es/en/wty-es-en.zip)
   from [wiktionary-to-yomitan](https://github.com/yomidevs/wiktionary-to-yomitan),
@@ -49,7 +50,7 @@ word longer than the scan length is still looked up whole.
 
 ## Rule provenance
 
-`transforms.json` has 102 transforms and 2,401 rules: 1,809 `own`, 592
+`transforms.json` has 102 transforms and 2,561 rules: 1,898 `own`, 663
 `both` and no `yomitan` rule. `sources/build-final.mjs` writes it: the union
 of `sources/own.json` and `sources/yomitan.json` (`tools/merge-transforms.mjs`)
 with every Yomitan rule removed, so it is `sources/own.json` with the own
@@ -63,178 +64,303 @@ rules that Yomitan also has marked `both`.
   (future `é` → ``) is made by the own rules of the three conjugations
   (`aré` → `ar`, `eré` → `er`, `iré` → `ir`); Yomitan's reflexive pattern for
   a pronoun is the own pronominal rule for that pronoun written before the
-  verb. 546 of Yomitan's 620 rules have such an own rule;
+  verb. 551 of Yomitan's 620 rules have such an own rule;
   `sources/yomitan-provenance.tsv` lists, for each Yomitan rule, the own
   transforms that make its deinflection.
-- **Yomitan rules left out**: all 620. The 546 above only repeat an own
+- **Yomitan rules left out**: all 620. The 551 above only repeat an own
   deinflection under a coarser trace name (`present indicative` where the own
   rule says `present (yo)`), and in the union they also give the false
   candidates of their missing minimum stem: `de` → `dar`, `es` → `ir`, `en` →
-  `ir`, `a` → `ir`, `va` → `ver`, `vamos` → `ver`, `teníamos` → `ten`. Of the
-  other 74, applied one at a time to 106,068 words (the subtitle list, a
-  60,000-form UniMorph sample and Yomitan's test sources), 72 give no reading
-  the own rules miss (12 of them add one false candidate each, such as
-  `abuelo` → `abolir` and `imita` → `emitir`), and two add 5 readings and 49
-  false candidates: `feminine adjective` `a` → `` (`colegiala` →
-  `colegial`, `cachemira` → `cachemir`; `para` → `par`, `buena` → `buen`,
-  `chica` → `chic`, `mala` → `mal`) and `imperative` `as` → `er` (`has` →
-  `her`; `vas` → `ver`). The own rules make the common readings of the first
-  with their feminine endings (`española` → `español`, `andaluza` →
-  `andaluz`, `trabajadora` → `trabajador`).
+  `ir`, `a` → `ir`, `va` → `ver`, `vamos` → `ver`, `teníamos` → `ten`. The
+  other 69 were applied one at a time to 106,069 words (the subtitle list, a
+  60,000-form UniMorph sample and Yomitan's test sources;
+  `sources/measure.py yomitan`). 50 of them give no output the final rules
+  lack and 17 give only false candidates (31 in all, such as `abuelo` →
+  `abolir` and `imita` → `emitir`). The other two give 5 readings and 52
+  false candidates:
+  - `feminine adjective` `a` → ``: readings `colegiala` → `colegial` and
+    `cachemira` → `cachemir`; false candidates `para` → `par`, `buena` →
+    `buen`, `chica` → `chic`.
+  - `imperative` `as` → `er`: reading `has` → `her`; false candidates `vas` →
+    `ver`, `solas` → `soler`.
+
+  The own rules make the common readings of the first with their feminine
+  endings (`española` → `español`, `andaluza` → `andaluz`, `trabajadora` →
+  `trabajador`).
 - **Own rules**: tenses and persons are separate transforms, so a trace names
-  both (`preterite (nosotros)`, `imperative (tú)`, `+me +lo`): the regular
-  endings of the three conjugations in every simple tense, with voseo; stem
-  changes (ie, ue, i, jugar, oler, adquirir, í and ú stems such as enviar,
-  continuar, prohibir, reunir); spelling changes before e (busqué, pague,
-  empiece, averigüe) and before a and o (venzo, conozco, cojo, sigo,
-  delinco), with the stem changes verbs of that spelling have; -uir, -eer,
-  -aer, -oer, oír, -eír, -ñir and -llir verbs; irregular verbs (strong
-  preterites, which compounds share: mantuvo, propuso, deshice, condujo;
-  future stems; yo stems such as tengo, salgo, traigo; ser, ir, estar, haber,
-  dar, ver, saber, caber, errar); irregular participles; enclitic pronouns
-  after infinitives, gerunds and affirmative imperatives, with the written
-  accent they add removed (dámelo → da), one transform per pronoun or pair
-  (37); pronominal verbs; and plural, feminine, superlative (-ísimo),
-  diminutive (-ito, -cito) and -mente forms.
+  both (`preterite (nosotros)`, `imperative (tú)`, `+me +lo`):
+  - the regular endings of the three conjugations in every simple tense, with
+    voseo;
+  - stem changes: ie, ue and i; jugar, oler and adquirir; í and ú stems such
+    as enviar, continuar, prohibir and reunir;
+  - spelling changes before e (busqué, pague, empiece, averigüe) and before a
+    and o (venzo, conozco, cojo, sigo, delinco), with the stem changes verbs
+    of that spelling have;
+  - -uir, -eer, -aer, -oer, oír, -eír, -ñir and -llir verbs;
+  - irregular verbs: strong preterites, which compounds share (mantuvo,
+    propuso, deshice, condujo); future stems; yo stems such as tengo, salgo
+    and traigo; ser, ir, estar, haber, dar, ver, saber, caber and errar;
+  - irregular participles;
+  - enclitic pronouns after infinitives, gerunds and affirmative imperatives,
+    one transform per pronoun or pair (37), with the written accent they add
+    removed (`dámelo` → `da`);
+  - pronominal verbs;
+  - plural, feminine, superlative (-ísimo), diminutive (-ito, -cito, -ecito)
+    and -mente forms.
+- **Stem constraints.** Every regular ending needs a stem of two letters, so
+  `de`, `ten`, `vías` and `sido` are not read as `dar`, `tar`, `ver` and
+  `ser`. The verbs whose stem has one letter or none (ir, dar, ver, ser,
+  oír) are written out.
+  - Regular readings that would rank above the lemma of a frequent word are
+    left out by the stem they start with.
+    - `-ar` ue → o leaves out `pued-`, `puert-`, `muer-`, `nuev-` and `fues-`:
+      `puedo`, `puertas`, `muere`, `nueva` and `fuese` are not read as podar,
+      portar, morar, novar and fosar. These regular verbs keep their o.
+    - `-ar` and `-er` ie → e leave out stems that start with v, except
+      verter: `viendo` and `vieja` are not vendar, vender and vejar.
+    - `esta`, `estas` and `esto` are not read as estar, whose forms are
+      `está`, `estás` and `estoy`.
+    - `sola`, `sala` and `empezamos` are not soler, salir and empecer.
+  - A literal stem constraint takes one string, so a rule with several
+    exclusions is split by the first letter of its stem. One rule takes the
+    stems that start with another letter, and the others take the stems kept
+    among those that start with it: `muestro`, `fuerza` and `pruebo`, and a
+    pronoun before the verb (`me encuentro`).
+  - Spelling decides some readings. An `-ar` verb writes qu, gu and c before
+    e, so `peces` is not read as pecar. The `-egir` verbs change their e, so
+    `rejas` is not regir. No `-er` verb with ie ends its stem in c, so
+    `empiece` is not empecer.
+  - Feminine nouns in `-era`, `-ina`, `-ora` and `-uza` need a stem of three
+    letters: `fuera`, `reina`, `adora` and `cruza` are not fuero, reino, ador
+    and cruz.
+  - Feminine adjectives in `-ora` must come from `-dor`, `-tor` or `-sor`, so
+    `mejora` is not read as mejor.
 - **Pronominal verbs agree in person.** A reflexive pronoun written before a
   conjugated verb gives the -se verb only when it agrees with the verb's
   person: `me levanto`, `te levantas`, `se levanta`, `nos levantamos` and `os
-  levantáis` give `levantarse`, while `me dijo`, `te digo`, `me dio` and `te
+  levantáis` give `levantarse`. `me dijo`, `te digo`, `me dio` and `te
   llamo`, where the pronoun is an object, do not give `decirse`, `darse` or
-  `llamarse`. A reflexive pronoun attached to an imperative must agree with
-  its person too (siéntate, siéntese, sentémonos and sentaos give
-  `sentarse`; cómprame and dáselo give no `comprarse` or `darse`). The clitic
-  rules move such a pronoun before the verb with a `+` (siéntate → `te+sienta`
-  → `te+sentar` → `sentarse`), so a pronoun written before a word that looks
-  like an imperative (`te sienta bien`, it suits you) is not read as one.
+  `llamarse`.
+  - The verb's stem must have two letters, so a pronoun before a short word
+    gives no -se verb through a regular ending: `me va`, `te es` and `me ha`
+    are not `verse`, `irse` and `herse`.
+  - The written-out forms of ir, dar, ver and oír carry `short_*` conditions
+    that their own pronominal rules take: `me voy`, `se dio`, `nos vemos` and
+    `te oyes` give `irse`, `darse`, `verse` and `oírse`.
+  - A reflexive pronoun attached to an imperative must agree with its person
+    too. `siéntate`, `siéntese`, `sentémonos` and `sentaos` give `sentarse`;
+    `cómprame` and `dáselo` give no `comprarse` or `darse`.
+  - The clitic rules move such a pronoun before the verb with a `+`
+    (siéntate → `te+sienta` → `te+sentar` → `sentarse`). A pronoun written
+    before a word that looks like an imperative (`te sienta bien`, it suits
+    you) is therefore not read as one.
 - **History**: the first commit of this pack, `es: own rules`, has the own
   rules as written before Yomitan's file was read (114 transforms, 2,887
-  rules). Later commits changed them after measuring, as listed here: the
-  conditions both files have were given Yomitan's definitions (`v` with
-  subconditions `v_ar`, `v_er`, `v_ir`; `ns` and `np` not dictionary forms),
-  which the merge tool requires; minimum stems that keep short words from
-  reading as verbs (`se`, `va`, `vamos`, `do`); feminine nouns limited to the
-  endings of nouns for people (`a` → `o` read `casa` as `caso` and `para` as
-  `paro`); -illo and -illa diminutives removed (`anillo` → `ano`, `pasillo`
-  → `paso`); two-pronoun clusters limited to the standard ones; spelling
-  changes combined only with the stem changes that occur with them;
-  loanword and acronym plurals (`emails`, `cowboys`, `ONGs`); person
-  agreement of reflexive imperatives and pronominal verbs; `estás`;
-  superlatives and diminutives of adverbs and determiners (`muchísimo`,
-  `ahorita`); and the accented `-ístamente`.
+  rules). Later commits changed them after measuring:
+  - the conditions both files have were given Yomitan's definitions (`v` with
+    subconditions `v_ar`, `v_er`, `v_ir`; `ns` and `np` not dictionary forms),
+    which the merge tool requires;
+  - feminine nouns were limited to the endings of nouns for people (`a` → `o`
+    read `casa` as `caso` and `para` as `paro`);
+  - -illo and -illa diminutives were removed (`anillo` → `ano`, `pasillo` →
+    `paso`);
+  - two-pronoun clusters were limited to the standard ones;
+  - spelling changes were combined only with the stem changes that occur with
+    them;
+  - loanword and acronym plurals were added (`emails`, `cowboys`, `ONGs`);
+  - person agreement was added for reflexive imperatives and pronominal
+    verbs;
+  - `estás`, the superlatives and diminutives of adverbs and determiners
+    (`muchísimo`, `ahorita`) and the accented `-ístamente` were added.
+
+  After the first audit (audit-hachi-lang-es, MAJOR 1 and 2):
+  - the stem constraints above, the two-letter verb stem of the pronominal
+    rule, and the `short_*` conditions;
+  - descriptions with each person's examples, and Anki part-of-speech labels
+    as wty-es-en tags them (`artic`, `vdt`, `ptcpl`, …);
+  - `hablamos` and `vivimos` are also traced as preterite;
+  - the vos imperative of -ir verbs before a pronoun (`decime` → `decir`);
+  - `-ecito` after a consonant (`florecita` → `flor`).
 
 ## Measurements
 
-`hoshidicts-cli eval-language` at hoshidicts 7e04ed5 (GCC 14.3, Release) with
+`hoshidicts-cli eval-language` at hoshidicts 7dba902 (GCC 14.3, Release) with
 `--transforms` for each rule set and `--dictionary` wty-es-en imported by
-`hoshidicts-cli import`. The sample is the 1,700 UniMorph rows of `corpus.tsv`
-and `gaps.tsv` together. eval-language turns every optional processor on, as
-the contract asks; the optional `addMissingAccents` processor adds readings
-with an accent, ñ or ü (cancion → canción), so the second false-candidate
-column repeats the measurement without it, which is what a lookup does by
-default.
+`hoshidicts-cli import`. The sample is the 1,200 UniMorph rows of
+`corpus.tsv` and `gaps.tsv` together.
+
+eval-language turns every optional processor on, as the contract asks. The
+optional `addMissingAccents` processor adds readings with an accent, ñ or ü
+(cancion → canción), so the second false-candidate column repeats the
+measurement without it, which is what a lookup does by default.
 
 | Rule set | Sample recall | False candidates per row (all options / default) | First rank | cases.tsv positives | cases.tsv negatives | yomitan.tsv, Yomitan's traces | yomitan.tsv, any trace |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Own (`sources/own.json`) | 97.47% (1,657) | 0.256 / 0.141 | 0.06% | 295 / 295 | 37 / 37 | 13 / 252 | 252 / 252 |
-| Yomitan (`sources/yomitan.json`) | 64.65% (1,099) | 0.238 / 0.056 | 0% | 22 / 295 | 18 / 37 | 252 / 252 | 252 / 252 |
-| Union (merge tool) | 97.47% (1,657) | 0.332 / 0.150 | 0.06% | 295 / 295 | 16 / 37 | 252 / 252 | 252 / 252 |
-| Final (`transforms.json`) | 97.47% (1,657) | 0.256 / 0.141 | 0.06% | 295 / 295 | 37 / 37 | 13 / 252 | 252 / 252 |
+| Own (`sources/own.json`) | 97.08% (1,165) | 0.268 / 0.149 | 0% | 336 / 336 | 75 / 75 | 13 / 252 | 252 / 252 |
+| Yomitan (`sources/yomitan.json`) | 63.67% (764) | 0.253 / 0.063 | 0% | 28 / 336 | 27 / 75 | 252 / 252 | 252 / 252 |
+| Union (merge tool) | 97.08% (1,165) | 0.348 / 0.158 | 0% | 336 / 336 | 24 / 75 | 252 / 252 | 252 / 252 |
+| Final (`transforms.json`) | 97.08% (1,165) | 0.268 / 0.149 | 0% | 336 / 336 | 75 / 75 | 13 / 252 | 252 / 252 |
 
 The final set is the own set with provenance marks, so its numbers are the
 own set's.
 
-- **Real text.** On the 10,000 most frequent words of the subtitle list
-  (default options), 6,026 have a form-of entry in wty-es-en that names their
-  lemma. The final rules reach such a lemma for 95.0% of those words (Yomitan
-  83.2%, union 95.0%), 64.4% of their tokens: the most frequent misses are
-  articles and pronouns whose entries name another word (`la` → `el`, `te` →
-  `tú`), which no rule should produce. Headwords that are neither the word,
-  nor a lemma its entries name, nor such a lemma with or without -se, count
-  as false candidates: 0.046 per word and 0.060 per token for the final set,
-  0.025 and 0.187 for Yomitan's rules (`de` → `dar`, `es` → `ir` and `en` →
-  `ir` on the most frequent words), 0.055 and 0.198 for the union.
-- **Pronoun before a verb.** wty-es-en's Spanish example sentences have
-  2,188 places where a reflexive pronoun is followed by a word. Looked up
-  from the pronoun, the first result was a -se verb through the pronominal
-  rule for 1,320 of them before the person check and is for 648 after it.
-  The readings it removes are such as `me queda` → `quedarse`, `me dio` →
-  `darse`, `te pasa` → `pasarse`, `nos encanta` → `encantarse`, where the
-  pronoun is an object; the kept ones are mostly right (`se acerca` →
-  `acercarse`, `me muero` → `morirse`, `nos salvamos` → `salvarse`).
-- **Trace quality.** For the 1,198 verb rows of the sample the final rules
-  reach, the trace a lookup shows (`traceSelection: "shortest"`) names the
-  tense or mood of the row's UniMorph features in 100% of rows and the person
-  too in 99.9%. Yomitan's traces name the tense in 94.7% of the 751 verb rows
-  it reaches (40 present subjunctives show as `imperative`) and never the
-  person. In the union, Yomitan's transforms come first and win ties, so
-  57.3% of its traces name the person.
-- **First rank** is about 0 for every set: wty-es-en has a form-of entry for
-  almost every inflected form (`comimos`: "first-person plural preterite of
-  comer"), found without deinflection, so it comes before the lemma, which is
-  second.
-- **Per rule** (`--per-rule` on the final set, sample and `cases.tsv`): 413
-  rules recover rows no other rule reaches, no rule breaks a negative, and 44
-  rules add false candidates (69 in all) without recovering a row, mostly
-  reflexive readings of infinitives and imperatives (`comprarme` →
-  `comprarse`, where `levantarme` → `levantarse` is right). They are kept:
-  pronominal verbs need them.
+Real text and lookup order, with the default options:
+
+- **Real text** (`sources/measure.py real`). Of the 10,000 most frequent
+  words of the subtitle list, 6,026 have a form-of entry in wty-es-en that
+  names their lemma.
+  - The final rules give such a lemma, as a headword the part-of-speech filter
+    keeps, for 94.9% of those words and 64.4% of their tokens (Yomitan 83.2%
+    and 60.1%, union 95.0% and 64.4%).
+  - The most frequent misses are articles and pronouns whose entries name
+    another word (`la` → `el`, `te` → `tú`), which no rule should produce.
+  - Any other headword is a false candidate: 0.040 per word and 0.031 per
+    token for the final set, 0.025 and 0.187 for Yomitan's rules (`de` →
+    `dar` and `es` → `ir` on the most frequent words), and 0.054 and 0.197 for
+    the union.
+- **Wrong lemma first** (the auditor's measurement on the same 10,000 words,
+  full lookups with wty-es-en). "Above" counts words where another headword,
+  reached by deinflection, ranks above the right deinflected lemma.
+  - Final set: 14 words, 0.02% of tokens, against 48 (0.82%) at the audited
+    head. The first entry with definitions is a wrong lemma for 27 words
+    (0.05%), against 55 (0.87%).
+  - Yomitan's rules: 49 words above (0.89%), 53 first (0.87%). Union: 57
+    above (0.91%), 62 first (0.89%).
+  - What remains are homographs and ties between readings of equal trace
+    length (Known gaps), such as `visita` → `visa`, `mías` → `miar` and
+    `riendo` → `rendir`.
+- **Pronoun before a verb** (`sources/measure.py pronouns`). wty-es-en's
+  Spanish example sentences have 2,188 places where a reflexive pronoun is
+  followed by a word. Looked up from the pronoun, the first result is a -se
+  verb through the pronominal rule:
+  - for 1,320 places before the person check (the pack at 6a165de, run with
+    `--languages` on a copy of it);
+  - for 648 with it (the audited head, 6a0c181);
+  - for 632 now. The 16 removed are `me ha` → `herse` (12), `me va` →
+    `verse` (3) and `me de` → `darse` (1); none is added.
+
+  On *Marianela* (Project Gutenberg 17340, 50,991 positions, the auditor's
+  text) no such reading of a short verb (`herse`, `verse` for `me va`, `irse`
+  for `te es`) is among the results; the auditor found 78 at the audited head.
+  The kept readings are mostly right (`se acerca` → `acercarse`, `me muero` →
+  `morirse`, `nos salvamos` → `salvarse`).
+- **Trace quality** (`sources/measure.py traces`). The final rules reach 824
+  verb rows of the sample. The trace a lookup shows (`traceSelection:
+  "shortest"`) names the tense or mood of the row's UniMorph features in 100%
+  of them, and the person in 99.8% of the 660 finite rows.
+  - Yomitan's traces name the tense in 93.1% of the 524 rows they reach, and
+    never the person.
+  - In the union, Yomitan's transforms come first and win ties: the tense is
+    named in 95.6%, the person only in the 335 rows where an own transform
+    wins.
+  - The sample keeps one row per form, lemma and part of speech, so a form of
+    two tenses (`hablamos`: present and preterite) appears once, under the
+    first tag. The lookup shows the present reading, and `cases.tsv` tests
+    the preterite one.
+- **First rank** is 0 for every set. wty-es-en has a form-of entry for almost
+  every inflected form (`comimos`: "first-person plural preterite of comer"),
+  found without deinflection, so it comes first.
+- **Per rule** (`--per-rule` on the final set, sample and `cases.tsv`):
+  - 426 rules recover rows no other rule reaches, and no rule breaks a
+    negative.
+  - 45 rules add false candidates (64 in all) without recovering a row,
+    mostly reflexive readings of infinitives and imperatives (`comprarme` →
+    `comprarse`, where `levantarme` → `levantarse` is right). They are kept
+    because pronominal verbs need them.
 - **Yomitan's test**: `tests/yomitan.tsv` passes 252 / 252 with Yomitan's
-  traces against `sources/yomitan.json`; the final rules reach all 252 lemmas
+  traces against `sources/yomitan.json`. The final rules reach all 252 lemmas
   through their own transforms, so the file's reasons are `*`.
-- **Differential check**: `tools/check-yomitan.mjs` with `build/hoshidicts-cli`:
-  6,011 inputs, 27,360 Yomitan results, 82 differences, all explained by the
-  three rows of `sources/yomitan-differences.tsv`: Yomitan's stem-change
-  rules change the first i, ie, u or ue of the text even where a letter
-  outside `[a-z]` comes after it (`británico` → `bretánicir` in Yomitan,
-  `británecir` in the port, neither a word); its jugar branch leaves endings
-  it does not test (`juegen` → `jugen` → `jugar`); its reflexive rule matches
-  the pronoun anywhere in the text (`ya me levantar` → `ya levantarse`). The
-  last two come from inputs in `cases.tsv`. The two processors agree with
-  Yomitan's on 2,272 inputs each.
+- **Differential check** (`tools/check-yomitan.mjs` with
+  `build/hoshidicts-cli`): 5,174 inputs, 24,674 Yomitan results and 74
+  differences, all explained by the three rows of
+  `sources/yomitan-differences.tsv`.
+  - Yomitan's stem-change rules change the first i, ie, u or ue of the text
+    even where a letter outside `[a-z]` comes after it (`británico` →
+    `bretánicir` in Yomitan, `británecir` in the port, neither a word).
+  - Its jugar branch leaves endings it does not test (`juegen` → `jugen` →
+    `jugar`).
+  - Its reflexive rule matches the pronoun anywhere in the text (`ya me
+    levantar` → `ya levantarse`).
+
+  The last two come from inputs in `cases.tsv`. The two processors agree with
+  Yomitan's on 1,846 inputs each.
 - **Hachidori** (feat/multi-language 1bd53232 with this branch in
   `third_party/hoshidicts`, `test/chrome-language-pack.mjs`, Chrome 152,
-  wty-es-en): 14 / 14 checks pass. Settings adds Spanish beside Japanese and
-  imports the dictionary (1,483,499 terms, 1.8 s); ten hovered words find
-  their lemma first (`Me levanto` → `levantarse`, `se rieron` → `reírse`,
-  `Tráemelos` → `traer`, `Digámoselo` → `decir`, with their traces); the
-  Anki note and the switch to Japanese and back work.
-- **Conformance**: `language-conformance-test`: corpus.tsv 1,657 / 1,657,
-  cases.tsv 332 / 332, yomitan.tsv 252 / 252, text.tsv 24 / 24, lookup.tsv
-  25 / 25, gaps.tsv 0 / 43 (reported); classes.json agrees with the engine (5
-  classes, 607 fields, 2 steps, 4,484 outputs); 649 of the 2,423 rules (the
-  pronominal cross products expanded) are exercised by a passing row.
-  `tests/` and `sources/` hold 974,392 bytes.
+  wty-es-en): 14 / 14 checks pass.
+  - Settings adds Spanish beside Japanese and imports the dictionary
+    (1,483,499 terms, 1.8 s).
+  - Ten hovered words find their lemma first, with their traces (`Me
+    levanto` → `levantarse`, `se rieron` → `reírse`, `Tráemelos` → `traer`,
+    `Digámoselo` → `decir`).
+  - The Anki note and the switch to Japanese and back work.
+- **Conformance** (`language-conformance-test`):
+  - corpus.tsv 1,165 / 1,165, cases.tsv 411 / 411, yomitan.tsv 252 / 252,
+    text.tsv 24 / 24, lookup.tsv 31 / 31; gaps.tsv 0 / 35 (reported);
+  - classes.json agrees with the engine (5 classes, 786 fields, 2 steps,
+    3,632 outputs);
+  - 659 of the 2,605 rules (cross products expanded) are exercised by a
+    passing row;
+  - `tests/` and `sources/` hold 986,673 bytes.
+
+  Each stem constraint above has a test that fails without it, except the
+  `esta` one. Every test runs with the accent processor on, and that
+  processor turns `esta` into `está`.
 - **Lookup speed** (`benchmark-lookup --languages languages --language es`,
-  wty-es-en mapped, 82 texts from `sources/benchmark-words.txt`, each the
-  rest of a sentence from an inflected word, 6 passes with the first
-  dropped, three runs, machine load about 40): final p50 32-34 µs, p95
-  51-56 µs; union p50 46-55 µs, p95 83-95 µs; Yomitan's rules p50 21-22 µs,
-  p95 44-48 µs. Budget 1 ms p50.
+  wty-es-en mapped). The input is the 82 texts of
+  `sources/benchmark-words.txt`, each the rest of a sentence from an
+  inflected word, in 6 passes with the first dropped, three runs at machine
+  load about 28. The budget is 1 ms p50.
+
+  | Rule set | p50 | p95 |
+  | --- | ---: | ---: |
+  | Final | 28-32 µs | 46-53 µs |
+  | Union | 42-45 µs | 76-81 µs |
+  | Yomitan's rules | 20-23 µs | 39-49 µs |
 - **WebAssembly** (Hachidori feat/multi-language 1bd53232 prebuilt engines,
-  Node 22, the same texts, dictionary paged): `hdw_lookup` p50 0.112 ms, p95
-  0.28 ms (single-thread); p50 0.108 ms, p95 0.27 ms (threaded).
-  `hdw_language_load` of this pack: median 10.5 ms (single-thread) and 10.1 ms
-  (threaded) over 10 fresh engines; live heap +889,776 bytes after the load
-  (mallinfo, `hdw_memory_stats`). Budgets 50 ms and 20 MB. The pack has no
-  `pattern` rule.
+  Node 22, the same texts, dictionary paged). The budgets are 50 ms and
+  20 MB, and the pack has no `pattern` rule.
+  - `hdw_lookup`: p50 0.105 ms and p95 0.26 ms single-thread; p50 0.120 ms
+    and p95 0.33 ms threaded.
+  - `hdw_language_load` of this pack: median 10.6 ms single-thread and
+    11.3 ms threaded, over 10 fresh engines.
+  - Live heap: +950,672 bytes after the load (mallinfo, `hdw_memory_stats`).
 
 ## Known gaps
 
 - Gender pairs whose UniMorph lemma is the other gender (`gata` → `gato`,
   `exnovia` → `exnovio`, `amigovio` → `amigovia`, `vicerrectores` →
-  `vicerrectora`): 40 of the 43 rows of `gaps.tsv`. Feminine nouns become
+  `vicerrectora`) make up most of `gaps.tsv`. Feminine nouns become
   masculine only by the endings of nouns for people (`-ora`, `-ona`, `-esa`,
   `-enta`, `-ana`, `-era`, `-aria`, `-eña`, `-ina`, `-óloga`, `-grafa`,
   `-eca`); dictionaries list the common ones (`gata`, `niña`) as headwords.
-  The others: `esa` → `ese` (demonstratives), `corróyanse` → `corroer` (the
-  y forms of -oer verbs outside the preterite), and `invingás` → `invenir`.
-- Deinflection proposes forms it cannot rule out: `puedo` → `podar`, `nuevo`
-  → `novar`, `persona` → `personar`, `esta` → `estar`. The part-of-speech
+  The others are `esa` → `ese` (demonstratives) and `corróyanse` → `corroer`
+  (the y forms of -oer verbs outside the preterite).
+- Ties between readings of equal trace length are left in the engine's order:
+  - homographs: `mías` (mía, miar), `mentes` (mente, mentar), `aires` (aire,
+    airar), `chispa` (chispa, chispar);
+  - diminutive and other readings: `visita` → `visa` before `visitar`,
+    `favorita` → `favor`, `pieles` → `pelar`, `riendo` → `rendir` before
+    `reír`, `encubierto` → `encubertar` before `encubrir`;
+  - unaccented forms: `continua` → `continuar` (whose form is `continúa`) and
+    `ordenes` → `orden` (whose plural is `órdenes`).
+
+  A framework change in progress (hachi-lang-engine-f) ranks first, on such
+  ties, the lemma a dictionary's form-of entries name.
+- The stems left out lose rare readings with them: `pueblo` is not read as
+  poblar, `viento` as ventar, `fase` and `fan` as far. Among the 10,000
+  frequent words these are the only lemmas lost.
+- A noun can also give another noun after its own entry, such as `manzana` →
+  `manzano`, `flora` → `flor`, `madera` → `madero` and `carrera` →
+  `carrero`.
+- Deinflection proposes forms it cannot rule out: `puedo` → `podar` is gone,
+  but `nuevo` → `novar` and `persona` → `personar` remain. The part-of-speech
   filter removes those that are not verbs in the dictionary.
 - Imperfect, conditional and subjunctive forms are the same for yo and él,
   so a pronoun before them agrees with one of the two and `me gustaría` (it
   would please me) still reads as `gustarse`.
+- The vos imperative of -ar and -er verbs before a pronoun has the spelling
+  of the tú imperative (`sentate`, `comete`), so it is reached and traced as
+  `imperative (tú)`.
 - Words a dictionary lists without a part of speech (adverbs, determiners,
   pronouns) are not reached through rules that give one, apart from the
   superlatives and diminutives the rules list by name (`muchísimo`,
@@ -248,8 +374,11 @@ own set's.
   `chavala` → `chaval`): a rule would also read `señala` as `señal` and
   `sala` as `sal`.
 - The optional `addMissingAccents` processor (the `missingAccents` setting)
-  adds one accent, ñ or ü per variant, so a word missing two of them
-  (`canon` for `cañón`) is not corrected, and with it on, `de` and `se` also
-  read as `dé` and `sé`.
+  adds one accent, ñ or ü per variant. A word missing two of them (`canon`
+  for `cañón`) is not corrected, and with it on, `de` and `se` also read as
+  `dé` and `sé`.
+- No test can observe `traceSelection` (`lookup.tsv` checks a result's
+  expression and matched text, not its trace), so it is set as the contract
+  recommends.
 - Two-letter plurals Wiktionary lists (`nos` as the plural of `no`, `dos` of
   `do`) are offered after the word itself.
