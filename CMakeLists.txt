@@ -367,6 +367,15 @@ if(HOSHIDICTS_TESTS)
     target_link_libraries(dictionary-storage-test PRIVATE hoshidicts)
     add_test(NAME dictionary-storage COMMAND dictionary-storage-test)
 
+    # index.json, dict.zstd and styles.css in every state, against the oracle.
+    add_executable(open-dict-files-test tests/open_dict_files_test.cpp)
+    target_include_directories(open-dict-files-test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/tests)
+    target_link_libraries(open-dict-files-test PRIVATE hoshidicts-legacy hoshidicts)
+    if(MSVC)
+        target_compile_options(open-dict-files-test PRIVATE /utf-8)
+    endif()
+    add_test(NAME open-dict-files COMMAND open-dict-files-test)
+
     add_executable(paged-hash-test tests/paged_hash_test.cpp)
     target_link_libraries(paged-hash-test PRIVATE hoshidicts)
     add_test(NAME paged-hash COMMAND paged-hash-test)

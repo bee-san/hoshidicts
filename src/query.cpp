@@ -60,6 +60,30 @@ constexpr bool media_always_on_demand = false;
 // this many bytes covers the header of a record whose path is 256 bytes or
 // shorter, which is nearly every one.
 constexpr size_t media_probe_bytes = sizeof(uint16_t) + 256 + sizeof(uint32_t);
+
+// Reads a whole file as std::ifstream(path, mode) and an istreambuf_iterator
+// would, but a non-empty regular file with one read (memory::read_file)
+// instead of one per stream buffer: through WasmFS's OPFS backend each is an
+// asynchronous round trip. Every other path, and a read that fails, is left to
+// the stream, so what it gives is unchanged, down to libstdc++'s exception for
+// a directory; so is a Windows text-mode read, which turns CRLF into LF. False
+// when the stream cannot open the file, with `out` empty.
+bool read_whole(const std::filesystem::path& path, std::string& out, std::ios::openmode mode) {
+#ifdef _WIN32
+  const bool raw = (mode & std::ios::binary) != 0;
+#else
+  constexpr bool raw = true;
+#endif
+  if (raw && memory::read_file(path, out)) {
+    return true;
+  }
+  std::ifstream file(path, mode);
+  if (!file) {
+    return false;
+  }
+  out.assign(std::istreambuf_iterator<char>(file), {});
+  return true;
+}
 }
 
 struct DictionaryQuery::DictionaryData {
@@ -335,11 +359,10 @@ bool DictionaryQuery::open_dict_(const std::string& path_utf8, Dictionary& dict,
   }
 
   Summary summary;
-  std::ifstream index_file(path / "index.json", std::ios::binary);
-  if (!index_file) {
+  std::string buf;
+  if (!read_whole(path / "index.json", buf, std::ios::binary)) {
     return false;
   }
-  std::string buf(std::istreambuf_iterator<char>(index_file), {});
   if (glz::read<glz::opts{.error_on_unknown_keys = false}>(summary, buf)) {
     return false;
   }
@@ -347,8 +370,7 @@ bool DictionaryQuery::open_dict_(const std::string& path_utf8, Dictionary& dict,
   dict.name = summary.title.empty() ? path_utils::to_utf8(path.stem()) : summary.title;
   dict.styles = summary.styles;
   if (dict.styles.empty() && std::filesystem::exists(path / "styles.css")) {
-    std::ifstream f(path / "styles.css");
-    dict.styles = std::string(std::istreambuf_iterator<char>(f), {});
+    read_whole(path / "styles.css", dict.styles, std::ios::in);
   }
 
   dict.data = std::make_shared<DictionaryData>();
@@ -394,8 +416,8 @@ bool DictionaryQuery::open_dict_(const std::string& path_utf8, Dictionary& dict,
   }
 
   if (version == 4 || version == 6) {
-    std::ifstream f(path / "dict.zstd", std::ios::binary);
-    const std::string blob(std::istreambuf_iterator<char>(f), {});
+    std::string blob;
+    read_whole(path / "dict.zstd", blob, std::ios::binary);
     dict.data->zstd_dict =
         ZSTD_createDDict_advanced(blob.data(), blob.size(), ZSTD_dlm_byCopy, ZSTD_dct_fullDict, ZSTD_defaultCMem);
     if (dict.data->zstd_dict == nullptr) {

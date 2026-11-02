@@ -166,6 +166,77 @@ void unmap(mapped_file mapping) {
 #endif
 }
 
+bool read_file(const std::filesystem::path& path, std::string& out) {
+  out.clear();
+  bool ok = false;
+#ifdef _WIN32
+  // The sharing of the std::ifstream it replaces (_SH_DENYNO): a writer may
+  // hold the file open, and may open it while it is read.
+  HANDLE file = CreateFileW(path.c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, nullptr, OPEN_EXISTING,
+                            FILE_ATTRIBUTE_NORMAL, nullptr);
+  if (file == INVALID_HANDLE_VALUE) {
+    return false;
+  }
+  LARGE_INTEGER file_size;
+  if (GetFileType(file) == FILE_TYPE_DISK && GetFileSizeEx(file, &file_size) && file_size.QuadPart > 0 &&
+      static_cast<uint64_t>(file_size.QuadPart) <= out.max_size()) {
+    out.resize(static_cast<size_t>(file_size.QuadPart));
+    size_t done = 0;
+    ok = true;
+    while (done < out.size()) {
+      const auto chunk = static_cast<DWORD>(std::min<size_t>(out.size() - done, 1u << 30));
+      DWORD n = 0;
+      if (!ReadFile(file, out.data() + done, chunk, &n, nullptr)) {
+        ok = false;
+        break;
+      }
+      if (n == 0) {
+        break;
+      }
+      done += n;
+    }
+    out.resize(done);
+  }
+  CloseHandle(file);
+#else
+#ifdef __EMSCRIPTEN__
+  const int fd = ::open(path.c_str(), O_RDONLY);
+#else
+  const int fd = ::open(path.c_str(), O_RDONLY | O_CLOEXEC);
+#endif
+  if (fd < 0) {
+    return false;
+  }
+  struct stat st{};
+  if (fstat(fd, &st) == 0 && S_ISREG(st.st_mode) && st.st_size > 0 &&
+      static_cast<uint64_t>(st.st_size) <= out.max_size()) {
+    out.resize(static_cast<size_t>(st.st_size));
+    size_t done = 0;
+    ok = true;
+    while (done < out.size()) {
+      const ssize_t n = ::read(fd, out.data() + done, out.size() - done);
+      if (n < 0 && errno == EINTR) {
+        continue;
+      }
+      if (n < 0) {
+        ok = false;
+        break;
+      }
+      if (n == 0) {
+        break;
+      }
+      done += static_cast<size_t>(n);
+    }
+    out.resize(done);
+  }
+  ::close(fd);
+#endif
+  if (!ok) {
+    out.clear();
+  }
+  return ok;
+}
+
 file_reader::~file_reader() { close(); }
 
 file_reader::file_reader(file_reader&& other) noexcept
