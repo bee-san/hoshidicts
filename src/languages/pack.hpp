@@ -83,8 +83,16 @@ struct PackData {
 // names; it may be empty only when that is null, and may replace the named
 // file (`hoshidicts-cli deinflect --transforms`). On a problem returns null
 // and sets `error` to "<code>: <file>: <JSON path>: <reason>".
+// `trusted` is for the packs built into the library, whose bytes the
+// language conformance test checks against the full schema (they must equal
+// languages/<code>/): it skips the shape checks of the host-only blocks
+// (text's sentence, highlight and line-joining members, capabilities,
+// presentation, settings and host) and leaves PackData's fields that only
+// tests/classes.json reads (display transforms, sample texts, the
+// characterView class field) empty. Everything a lookup uses is parsed and
+// checked as always.
 std::unique_ptr<PackData> parse_pack(std::string_view language_json, std::string_view transforms_json,
-                                     std::string* error);
+                                     std::string* error, bool trusted = false);
 
 // lookup.transforms of a descriptor, or empty when it is null, missing or the
 // descriptor does not parse (parse_pack reports what is wrong with it).

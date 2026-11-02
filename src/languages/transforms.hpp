@@ -166,10 +166,16 @@ class TransformSet {
   std::vector<std::string_view> condition_names(uint32_t bits) const;
 
  private:
+  // A node's children are edges[child_begin, child_end), in insertion order.
   struct TrieNode {
-    std::vector<std::pair<char32_t, uint32_t>> children;
+    uint32_t child_begin = 0;
+    uint32_t child_end = 0;
     uint32_t rules_begin = 0;
     uint32_t rules_end = 0;
+  };
+  struct Edge {
+    char32_t c;
+    uint32_t child;
   };
   // A rule at a trie node: what the fast path of a plain suffix needs.
   struct NodeRule {
@@ -184,12 +190,31 @@ class TransformSet {
   };
   struct Trie {
     std::vector<TrieNode> nodes{1};
+    std::vector<Edge> edges;
     std::vector<NodeRule> node_rules;
     bool empty() const { return node_rules.empty(); }
+    // The child of `node` on `c`, or UINT32_MAX.
+    uint32_t child(uint32_t node, char32_t c) const {
+      const TrieNode& n = nodes[node];
+      for (uint32_t e = n.child_begin; e < n.child_end; ++e) {
+        if (edges[e].c == c) return edges[e].child;
+      }
+      return UINT32_MAX;
+    }
   };
-  static void insert(Trie& trie, std::u32string_view key, std::vector<std::pair<uint32_t, uint32_t>>& pending,
-                     uint32_t rule);
-  void finish(Trie& trie, std::vector<std::pair<uint32_t, uint32_t>>& pending);
+  // A trie while it is built: each node's edges as a list through `next`.
+  struct TrieBuilder {
+    struct BuildEdge {
+      char32_t c;
+      uint32_t child;
+      uint32_t next;
+    };
+    std::vector<uint32_t> first_edge{UINT32_MAX};  // per node
+    std::vector<BuildEdge> edges;
+    std::vector<std::pair<uint32_t, uint32_t>> pending;  // (node, rule)
+  };
+  static void insert(TrieBuilder& builder, std::u32string_view key, uint32_t rule);
+  void finish(Trie& trie, TrieBuilder& builder);
 
   struct Run;
   void visit(Run& run, uint32_t index) const;
@@ -203,7 +228,6 @@ class TransformSet {
   Trie phrasal_;
   std::vector<uint32_t> unindexed_;  // replace and interposedObject rules, in file order
   std::vector<std::pair<std::string, uint32_t>> dictionary_forms_;
-  ankerl::unordered_dense::map<std::string, uint32_t, StringHash, std::equal_to<>> condition_bits_;
 };
 
 }  // namespace hoshidicts::lang

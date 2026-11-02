@@ -101,6 +101,7 @@ add_library(hoshidicts
     src/languages/case_tables.cpp
     src/languages/classes.cpp
     src/languages/corpus.cpp
+    src/languages/json.cpp
     src/languages/pack.cpp
     src/languages/regex.cpp
     src/languages/registry.cpp
@@ -123,6 +124,7 @@ endif()
 if(EMSCRIPTEN)
   set_source_files_properties(
       src/languages/pack.cpp
+      src/languages/json.cpp
       src/languages/classes.cpp
       src/languages/registry.cpp
       src/languages/corpus.cpp

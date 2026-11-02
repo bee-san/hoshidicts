@@ -366,9 +366,21 @@ struct ClassParser {
 }  // namespace
 
 CharClass::CharClass(std::vector<CodePointRange> ranges) {
-  std::ranges::sort(ranges, [](const CodePointRange& a, const CodePointRange& b) {
+  const auto less = [](const CodePointRange& a, const CodePointRange& b) {
     return a.first != b.first ? a.first < b.first : a.last < b.last;
-  });
+  };
+  if (ranges.size() <= 32) {
+    // Pack classes are a few ranges: an insertion sort, which a WebAssembly
+    // engine compiles in a fraction of the time of std::sort.
+    for (size_t i = 1; i < ranges.size(); ++i) {
+      const CodePointRange r = ranges[i];
+      size_t k = i;
+      for (; k > 0 && less(r, ranges[k - 1]); --k) ranges[k] = ranges[k - 1];
+      ranges[k] = r;
+    }
+  } else {
+    std::ranges::sort(ranges, less);
+  }
   for (const auto& r : ranges) {
     // Without surrogates: split a range around them.
     std::array<CodePointRange, 2> pieces{};

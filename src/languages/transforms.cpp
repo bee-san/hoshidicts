@@ -53,54 +53,79 @@ struct TransformSet::Run {
   const std::vector<bool>* enabled;
 };
 
-void TransformSet::insert(Trie& trie, std::u32string_view key, std::vector<std::pair<uint32_t, uint32_t>>& pending,
-                          uint32_t rule) {
+void TransformSet::insert(TrieBuilder& builder, std::u32string_view key, uint32_t rule) {
   uint32_t node = 0;
   for (char32_t c : key) {
-    auto& children = trie.nodes[node].children;
-    auto child = std::ranges::find(children, c, &std::pair<char32_t, uint32_t>::first);
-    if (child == children.end()) {
-      const auto next = static_cast<uint32_t>(trie.nodes.size());
-      trie.nodes.emplace_back();
-      trie.nodes[node].children.emplace_back(c, next);
-      node = next;
+    uint32_t e = builder.first_edge[node];
+    while (e != UINT32_MAX && builder.edges[e].c != c) e = builder.edges[e].next;
+    if (e == UINT32_MAX) {
+      const auto child = static_cast<uint32_t>(builder.first_edge.size());
+      builder.first_edge.push_back(UINT32_MAX);
+      builder.edges.push_back({c, child, builder.first_edge[node]});
+      builder.first_edge[node] = static_cast<uint32_t>(builder.edges.size() - 1);
+      node = child;
     } else {
-      node = child->second;
+      node = builder.edges[e].child;
     }
   }
-  pending.emplace_back(node, rule);
+  builder.pending.emplace_back(node, rule);
 }
 
-void TransformSet::finish(Trie& trie, std::vector<std::pair<uint32_t, uint32_t>>& pending) {
-  // Rules that match at one node apply in file order.
-  std::ranges::stable_sort(pending, {}, &std::pair<uint32_t, uint32_t>::first);
-  trie.node_rules.reserve(pending.size());
-  for (size_t i = 0; i < pending.size();) {
-    const uint32_t node = pending[i].first;
-    trie.nodes[node].rules_begin = static_cast<uint32_t>(trie.node_rules.size());
-    for (; i < pending.size() && pending[i].first == node; ++i) {
-      const Rule& rule = rules[pending[i].second];
-      unsigned char kind = 2;
-      if (rule.type == RuleType::Suffix && !rule.stem_checks && !rule.has_stem_change && !rule.has_then) {
-        kind = 0;
-      } else if (rule.type == RuleType::WholeWord && !rule.has_then) {
-        kind = 1;
-      }
-      trie.node_rules.push_back(NodeRule{.rule = pending[i].second,
-                                         .conditions_in = rule.conditions_in,
-                                         .conditions_out = rule.conditions_out,
-                                         .transform = rule.transform,
-                                         .kind = kind,
-                                         .to = rule.b});
+void TransformSet::finish(Trie& trie, TrieBuilder& builder) {
+  const size_t node_count = builder.first_edge.size();
+  trie.nodes.assign(node_count, TrieNode{});
+  // Each node's edges, contiguous and in insertion order (its list holds them
+  // newest first).
+  trie.edges.resize(builder.edges.size());
+  uint32_t at = 0;
+  for (size_t n = 0; n < node_count; ++n) {
+    uint32_t count = 0;
+    for (uint32_t e = builder.first_edge[n]; e != UINT32_MAX; e = builder.edges[e].next) ++count;
+    trie.nodes[n].child_begin = at;
+    trie.nodes[n].child_end = at + count;
+    uint32_t slot = at + count;
+    for (uint32_t e = builder.first_edge[n]; e != UINT32_MAX; e = builder.edges[e].next) {
+      trie.edges[--slot] = Edge{builder.edges[e].c, builder.edges[e].child};
     }
-    trie.nodes[node].rules_end = static_cast<uint32_t>(trie.node_rules.size());
+    at += count;
+  }
+  // Each node's rules, in file order (pending is in rule order), placed by a
+  // counting pass: node n's rules are node_rules[rules_begin, rules_end).
+  std::vector<uint32_t> start(node_count + 1, 0);
+  for (const auto& [node, rule] : builder.pending) ++start[node + 1];
+  for (size_t n = 0; n < node_count; ++n) {
+    start[n + 1] += start[n];
+    trie.nodes[n].rules_begin = start[n];
+    trie.nodes[n].rules_end = start[n];
+  }
+  trie.node_rules.resize(builder.pending.size());
+  for (const auto& [node, index] : builder.pending) {
+    const Rule& rule = rules[index];
+    unsigned char kind = 2;
+    if (rule.type == RuleType::Suffix && !rule.stem_checks && !rule.has_stem_change && !rule.has_then) {
+      kind = 0;
+    } else if (rule.type == RuleType::WholeWord && !rule.has_then) {
+      kind = 1;
+    }
+    trie.node_rules[trie.nodes[node].rules_end++] = NodeRule{.rule = index,
+                                                              .conditions_in = rule.conditions_in,
+                                                              .conditions_out = rule.conditions_out,
+                                                              .transform = rule.transform,
+                                                              .kind = kind,
+                                                              .to = rule.b};
   }
 }
 
 void TransformSet::index() {
-  std::vector<std::pair<uint32_t, uint32_t>> suffix_pending;
-  std::vector<std::pair<uint32_t, uint32_t>> prefix_pending;
-  std::vector<std::pair<uint32_t, uint32_t>> phrasal_pending;
+  TrieBuilder suffix_builder;
+  TrieBuilder prefix_builder;
+  TrieBuilder phrasal_builder;
+  // At most one node per affix code point.
+  size_t affix_bytes = 1;
+  for (const Rule& rule : rules) affix_bytes += rule.a.size() + rule.c.size();
+  suffix_builder.first_edge.reserve(affix_bytes);
+  suffix_builder.edges.reserve(affix_bytes);
+  suffix_builder.pending.reserve(rules.size());
   std::u32string key;
   const auto reversed = [&key](std::string_view s) -> std::u32string_view {
     key.clear();
@@ -118,23 +143,23 @@ void TransformSet::index() {
     switch (rule.type) {
       case RuleType::Suffix:
       case RuleType::WholeWord:
-        insert(suffixes_, reversed(rule.a), suffix_pending, i);
+        insert(suffix_builder, reversed(rule.a), i);
         break;
       case RuleType::Circumfix:
-        insert(suffixes_, reversed(rule.c), suffix_pending, i);
+        insert(suffix_builder, reversed(rule.c), i);
         break;
       case RuleType::Pattern:
         if (rule.anchor_prefix) {
-          insert(prefixes_, forward(rule.a), prefix_pending, i);
+          insert(prefix_builder, forward(rule.a), i);
         } else {
-          insert(suffixes_, reversed(rule.a), suffix_pending, i);
+          insert(suffix_builder, reversed(rule.a), i);
         }
         break;
       case RuleType::Prefix:
-        insert(prefixes_, forward(rule.a), prefix_pending, i);
+        insert(prefix_builder, forward(rule.a), i);
         break;
       case RuleType::Phrasal:
-        insert(phrasal_, reversed(rule.a), phrasal_pending, i);
+        insert(phrasal_builder, reversed(rule.a), i);
         break;
       case RuleType::Replace:
       case RuleType::InterposedObject:
@@ -142,14 +167,12 @@ void TransformSet::index() {
         break;
     }
   }
-  finish(suffixes_, suffix_pending);
-  finish(prefixes_, prefix_pending);
-  finish(phrasal_, phrasal_pending);
+  finish(suffixes_, suffix_builder);
+  finish(prefixes_, prefix_builder);
+  finish(phrasal_, phrasal_builder);
 
-  condition_bits_.clear();
   dictionary_forms_.clear();
   for (const auto& condition : conditions) {
-    condition_bits_.emplace(condition.key, condition.bits);
     if (condition.dictionary_form) {
       dictionary_forms_.emplace_back(condition.key, condition.bits);
     }
@@ -355,12 +378,11 @@ void TransformSet::visit(Run& run, uint32_t index) const {
     auto it = text.end();
     while (it != text.begin() && suffix_count < max_matches) {
       const char32_t c = utf8::prior(it, text.begin());
-      const auto& children = suffixes_.nodes[node].children;
-      auto child = std::ranges::find(children, c, &std::pair<char32_t, uint32_t>::first);
-      if (child == children.end()) {
+      const uint32_t child = suffixes_.child(node, c);
+      if (child == UINT32_MAX) {
         break;
       }
-      node = child->second;
+      node = child;
       if (suffixes_.nodes[node].rules_begin != suffixes_.nodes[node].rules_end) {
         suffix_matches[suffix_count++] = {node, static_cast<uint32_t>(it - text.begin())};
       }
@@ -370,10 +392,9 @@ void TransformSet::visit(Run& run, uint32_t index) const {
       auto p = text.begin();
       while (p != text.end() && prefix_count < max_matches) {
         const char32_t c = utf8::next(p, text.end());
-        const auto& children = prefixes_.nodes[node].children;
-        auto child = std::ranges::find(children, c, &std::pair<char32_t, uint32_t>::first);
-        if (child == children.end()) break;
-        node = child->second;
+        const uint32_t child = prefixes_.child(node, c);
+        if (child == UINT32_MAX) break;
+        node = child;
         if (prefixes_.nodes[node].rules_begin != prefixes_.nodes[node].rules_end) {
           prefix_matches[prefix_count++] = {node, static_cast<uint32_t>(p - text.begin())};
         }
@@ -392,10 +413,9 @@ void TransformSet::visit(Run& run, uint32_t index) const {
           }
           while (q != text.begin() && phrasal_count < max_matches) {
             const char32_t c = utf8::prior(q, text.begin());
-            const auto& children = phrasal_.nodes[node].children;
-            auto child = std::ranges::find(children, c, &std::pair<char32_t, uint32_t>::first);
-            if (child == children.end()) break;
-            node = child->second;
+            const uint32_t child = phrasal_.child(node, c);
+            if (child == UINT32_MAX) break;
+            node = child;
             if (phrasal_.nodes[node].rules_begin != phrasal_.nodes[node].rules_end) {
               phrasal_matches[phrasal_count++] = {node, static_cast<uint32_t>(q - text.begin())};
             }
@@ -555,8 +575,10 @@ uint32_t TransformSet::conditions_for_types(std::span<const std::string> names) 
 }
 
 uint32_t TransformSet::condition_bits(std::string_view name) const {
-  const auto it = condition_bits_.find(name);
-  return it == condition_bits_.end() ? 0 : it->second;
+  for (const auto& condition : conditions) {
+    if (condition.key == name) return condition.bits;
+  }
+  return 0;
 }
 
 std::vector<std::string_view> TransformSet::condition_names(uint32_t bits) const {

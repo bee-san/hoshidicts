@@ -62,7 +62,11 @@ std::shared_ptr<const LanguagePack> builtin_language_pack(std::string_view code)
     if (builtin.code != code) continue;
     std::call_once(parsed[i].once, [&] {
       std::string error;
-      parsed[i].pack = parse_language_pack(lang::unpack(builtin.language_json), lang::unpack(builtin.transforms_json), &error);
+      // Trusted: language-conformance-test checks these bytes, which must
+      // equal languages/<code>/, against the full schema.
+      auto data = lang::parse_pack(lang::unpack(builtin.language_json), lang::unpack(builtin.transforms_json), &error,
+                                   /*trusted=*/true);
+      if (data) parsed[i].pack = std::make_shared<const LanguagePack>(std::move(data));
       if (!parsed[i].pack) {
         throw std::logic_error("the built-in language pack does not load: " + error);
       }

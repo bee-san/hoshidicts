@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "pack.hpp"
 
+#include "json.hpp"
 #include "size.hpp"
-
-#include <glaze/glaze.hpp>
 
 #include <algorithm>
 #include <cmath>
@@ -18,9 +17,9 @@ HOSHIDICTS_LOAD_TIME_BEGIN
 
 namespace {
 
-using Json = glz::generic;
-using Object = Json::object_t;
-using Array = Json::array_t;
+using Json = json::Value;
+using Object = json::Object;
+using Array = json::Array;
 
 constexpr size_t max_affix_code_points = 64;
 constexpr size_t max_condition_bits = 32;
@@ -65,17 +64,17 @@ const char* type_name(const Json& v) {
   return "an object";
 }
 
-const Object& as_object(const Json& v, const std::string& path) {
+Object as_object(const Json& v, const std::string& path) {
   if (!v.is_object()) fail(path, std::string("must be an object, not ") + type_name(v));
   return v.get_object();
 }
 
-const Array& as_array(const Json& v, const std::string& path) {
+Array as_array(const Json& v, const std::string& path) {
   if (!v.is_array()) fail(path, std::string("must be an array, not ") + type_name(v));
   return v.get_array();
 }
 
-const std::string& as_string(const Json& v, const std::string& path) {
+std::string_view as_string(const Json& v, const std::string& path) {
   if (!v.is_string()) fail(path, std::string("must be a string, not ") + type_name(v));
   return v.get_string();
 }
@@ -84,7 +83,7 @@ std::string member(const std::string& path, std::string_view key);
 
 // The string `key` of `o`, with its JSON path built only when it is missing
 // or not a string (the rule parser reads thousands of them).
-const std::string& string_field(const Json* v, std::string_view key, const std::string& path) {
+std::string_view string_field(const Json* v, std::string_view key, const std::string& path) {
   if (v == nullptr) fail(path, "missing required key \"" + std::string(key) + "\"");
   if (!v->is_string()) fail(member(path, key), std::string("must be a string, not ") + type_name(*v));
   return v->get_string();
@@ -108,12 +107,7 @@ size_t as_count(const Json& v, const std::string& path, size_t minimum) {
   return static_cast<size_t>(d);
 }
 
-const Json* get(const Object& o, std::string_view key) {
-  for (const auto& [k, v] : o) {
-    if (k == key) return &v;
-  }
-  return nullptr;
-}
+const Json* get(const Object& o, std::string_view key) { return o.find(key); }
 
 const Json& require(const Object& o, std::string_view key, const std::string& path) {
   const Json* v = get(o, key);
@@ -139,13 +133,17 @@ void check_keys(const Object& o, const std::string& path, const std::vector<std:
 
 std::vector<std::string> string_array(const Json& v, const std::string& path) {
   std::vector<std::string> out;
-  const Array& a = as_array(v, path);
-  for (size_t i = 0; i < a.size(); ++i) out.push_back(as_string(a[i], item(path, i)));
+  const Array a = as_array(v, path);
+  out.reserve(a.size());
+  for (size_t i = 0; i < a.size(); ++i) {
+    if (!a[i].is_string()) fail(item(path, i), std::string("must be a string, not ") + type_name(a[i]));
+    out.emplace_back(a[i].get_string());
+  }
   return out;
 }
 
-const std::string& one_of(const Json& v, const std::string& path, std::initializer_list<std::string_view> values) {
-  const std::string& s = as_string(v, path);
+std::string_view one_of(const Json& v, const std::string& path, std::initializer_list<std::string_view> values) {
+  const std::string_view s = as_string(v, path);
   if (std::ranges::find(values, std::string_view(s)) == values.end()) {
     std::string list;
     for (auto value : values) list += (list.empty() ? "" : ", ") + std::string(value);
@@ -160,21 +158,16 @@ size_t code_point_count(std::string_view s) {
   return n;
 }
 
-std::u32string decode(const std::string& s, const std::string& path) {
+std::u32string decode(std::string_view s, const std::string& path) {
   std::u32string out;
   if (!decode_utf8(s, out)) fail(path, "is not valid UTF-8");
   return out;
 }
 
-Json parse_json(std::string_view text, const std::string& file) {
+void parse_json(std::string_view text, json::Document& document) {
   if (text.starts_with("\xEF\xBB\xBF")) fail("", "pack files are UTF-8 without a byte-order mark");
-  Json value;
-  const std::string buffer(text);
-  if (auto ec = glz::read_json(value, buffer)) {
-    fail("", "not valid JSON: " + glz::format_error(ec, buffer));
-  }
-  (void)file;
-  return value;
+  std::string error;
+  if (!document.parse(text, &error)) fail("", "not valid JSON: " + error);
 }
 
 struct PackParser {
@@ -182,13 +175,13 @@ struct PackParser {
   std::string file = "language.json";
 
   // Named classes: parsed on first use, so references may point forward.
-  const Object* class_definitions = nullptr;
+  Object class_definitions;
   std::map<std::string, std::unique_ptr<CharClass>, std::less<>> named;
   std::vector<std::string> resolving;
 
   const CharClass* resolve(std::string_view name, std::string* error) {
     if (auto it = named.find(name); it != named.end()) return it->second.get();
-    const Json* definition = class_definitions == nullptr ? nullptr : get(*class_definitions, name);
+    const Json* definition = class_definitions.find(name);
     if (definition == nullptr) {
       *error = "{" + std::string(name) + "} names no class of this pack";
       return nullptr;
@@ -221,7 +214,7 @@ struct PackParser {
   }
 
   CharClass class_field(const Json& v, const std::string& path) {
-    const std::string& source = as_string(v, path);
+    const std::string_view source = as_string(v, path);
     std::string error;
     auto parsed = parse_class(source, resolver(), &error);
     if (!parsed) fail(path, error);
@@ -235,7 +228,7 @@ struct PackParser {
     };
   }
 
-  std::unique_ptr<Pattern> pattern(const std::string& source, const std::string& replacement, bool global,
+  std::unique_ptr<Pattern> pattern(std::string_view source, std::string_view replacement, bool global,
                                    const std::string& path) {
     std::string error;
     auto compiled = Pattern::compile(source, replacement, global, pattern_classes(), &error);
@@ -244,8 +237,8 @@ struct PackParser {
   }
 
   // Steps (section 6.2). `classes_path` receives the step's class fields.
-  Step step(const Json& v, const std::string& path, bool allow_builtin, bool allow_alternatives, bool only_step,
-            std::vector<std::pair<std::string, CharClass>>* fields) {
+  [[gnu::noinline]] Step step(const Json& v, const std::string& path, bool allow_builtin, bool allow_alternatives,
+                              bool only_step, std::vector<std::pair<std::string, CharClass>>* fields) {
     const Object& o = as_object(v, path);
     static constexpr std::array<std::string_view, 7> kinds = {"case", "normalize", "strip", "map", "pattern",
                                                              "alternatives", "builtin"};
@@ -260,12 +253,12 @@ struct PackParser {
     const std::string_view kind = present[0];
     if (kind == "case") {
       check_keys(o, path, {"case"});
-      const std::string& mode = one_of(require(o, "case", path), member(path, "case"), {"lower", "upper", "upperFirst", "lowerFirst"});
+      const std::string_view mode = one_of(require(o, "case", path), member(path, "case"), {"lower", "upper", "upperFirst", "lowerFirst"});
       s.kind = StepKind::Case;
       s.case_mode = mode == "lower" ? CaseMode::Lower : mode == "upper" ? CaseMode::Upper : mode == "upperFirst" ? CaseMode::UpperFirst : CaseMode::LowerFirst;
     } else if (kind == "normalize") {
       check_keys(o, path, {"normalize", "within"});
-      const std::string& form = one_of(require(o, "normalize", path), member(path, "normalize"), {"NFC", "NFD", "NFKC", "NFKD"});
+      const std::string_view form = one_of(require(o, "normalize", path), member(path, "normalize"), {"NFC", "NFD", "NFKC", "NFKD"});
       s.kind = StepKind::Normalize;
       s.form = form == "NFC" ? NormalForm::NFC : form == "NFD" ? NormalForm::NFD : form == "NFKC" ? NormalForm::NFKC : NormalForm::NFKD;
       if (const Json* within = get(o, "within")) {
@@ -290,7 +283,7 @@ struct PackParser {
         return a.first.size() != b.first.size() ? a.first.size() > b.first.size() : a.first < b.first;
       });
       if (const Json* at = get(o, "at")) {
-        const std::string& a = one_of(*at, member(path, "at"), {"all", "first", "last", "start", "end"});
+        const std::string_view a = one_of(*at, member(path, "at"), {"all", "first", "last", "start", "end"});
         s.at = a == "all" ? MapAt::All : a == "first" ? MapAt::First : a == "last" ? MapAt::Last : a == "start" ? MapAt::Start : MapAt::End;
       }
     } else if (kind == "pattern") {
@@ -319,7 +312,7 @@ struct PackParser {
     } else {
       if (!allow_builtin) fail(path, "builtins are not allowed here");
       check_keys(o, path, {"builtin"});
-      const std::string& name = as_string(require(o, "builtin", path), member(path, "builtin"));
+      const std::string_view name = as_string(require(o, "builtin", path), member(path, "builtin"));
       const TextBuiltin* builtin = find_text_builtin(name);
       if (builtin == nullptr) fail(member(path, "builtin"), "unknown builtin " + json_quote(name));
       s.kind = StepKind::Builtin;
@@ -332,13 +325,29 @@ struct PackParser {
                      std::vector<std::pair<std::string, CharClass>>* fields) {
     StepList steps;
     const Array& a = as_array(v, path);
+    steps.reserve(a.size());
     for (size_t k = 0; k < a.size(); ++k) {
+      // A known builtin step, {"builtin": "<name>"} (every Japanese step), is
+      // read here; any other step, and any problem, goes through step().
+      if (allow_builtin && a[k].is_object()) {
+        const Object o = a[k].get_object();
+        if (o.size() == 1) {
+          if (const Json* name = o.find("builtin"); name != nullptr && name->is_string()) {
+            if (const TextBuiltin* builtin = find_text_builtin(name->get_string())) {
+              Step& s = steps.emplace_back();
+              s.kind = StepKind::Builtin;
+              s.builtin = builtin->apply;
+              continue;
+            }
+          }
+        }
+      }
       steps.push_back(step(a[k], item(path, k), allow_builtin, allow_alternatives, a.size() == 1, fields));
     }
     return steps;
   }
 
-  std::vector<Processor> processors(const Json& v, const std::string& path, std::set<std::string>& ids,
+  std::vector<Processor> processors(const Json& v, const std::string& path, std::set<std::string, std::less<>>& ids,
                                     std::vector<std::pair<std::string, CharClass>>& fields) {
     std::vector<Processor> out;
     const Array& a = as_array(v, path);
@@ -372,13 +381,13 @@ struct Capability {
 
 // The pieces of language.json the settings check needs.
 struct Declared {
-  std::set<std::string> optional_processors;
-  std::set<std::string> passes;
-  std::set<std::string> display_transforms;
-  std::set<std::string> optional_capabilities;
+  std::set<std::string, std::less<>> optional_processors;
+  std::set<std::string, std::less<>> passes;
+  std::set<std::string, std::less<>> display_transforms;
+  std::set<std::string, std::less<>> optional_capabilities;
 };
 
-void check_identity(const Object& o, PackData& pack) {
+[[gnu::noinline]] void check_identity(const Object& o, PackData& pack) {
   const Json& schema = require(o, "schema", "");
   if (!schema.is_number() || schema.get_number() != 1) fail("schema", "must be 1");
   pack.code = as_string(require(o, "code", ""), "code");
@@ -386,7 +395,7 @@ void check_identity(const Object& o, PackData& pack) {
       !std::ranges::all_of(pack.code, [](char c) { return c >= 'a' && c <= 'z'; })) {
     fail("code", "must be 2-3 lowercase ASCII letters");
   }
-  const std::string& iso = as_string(require(o, "iso639_3", ""), "iso639_3");
+  const std::string_view iso = as_string(require(o, "iso639_3", ""), "iso639_3");
   if (iso.size() != 3 || !std::ranges::all_of(iso, [](char c) { return c >= 'a' && c <= 'z'; })) {
     fail("iso639_3", "must be an ISO 639-3 code (3 lowercase letters)");
   }
@@ -410,7 +419,7 @@ void check_strings_object(const Json& v, const std::string& path) {
   for (const auto& [k, value] : as_object(v, path)) as_string(value, member(path, k));
 }
 
-void check_presentation(const Object& o, PackParser& parser, Declared& declared) {
+[[gnu::noinline]] void check_presentation(const Object& o, PackParser& parser, Declared& declared) {
   const std::string path = "presentation";
   check_keys(o, path, {"typography", "labels", "displayTransforms"});
   const std::string tpath = "presentation.typography";
@@ -436,11 +445,11 @@ void check_presentation(const Object& o, PackParser& parser, Declared& declared)
   for (const auto& [name, steps] : as_object(require(o, "displayTransforms", path), dpath)) {
     const std::string spath = member(dpath, name);
     parser.pack.display_transforms.emplace_back(name, parser.step_list(steps, spath, false, false, &parser.pack.class_fields));
-    declared.display_transforms.insert(name);
+    declared.display_transforms.emplace(name);
   }
 }
 
-void check_host(const Object& o) {
+[[gnu::noinline]] void check_host(const Object& o) {
   const std::string path = "host";
   check_keys(o, path, {"ttsLanguage", "audioLanguage", "anki", "frequencySamples", "recommendedDictionaries", "sample"});
   as_string(require(o, "ttsLanguage", path), "host.ttsLanguage");
@@ -489,13 +498,13 @@ void check_host(const Object& o) {
 }
 
 // host.sample's strings in the order of tools/lib/pack.mjs sampleTexts().
-std::vector<std::string> sample_texts(const Object& host) {
+[[gnu::noinline]] std::vector<std::string> sample_texts(const Object& host) {
   std::vector<std::string> texts;
   const Json* sample = get(host, "sample");
   if (sample == nullptr || !sample->is_object()) return texts;
   const Object& s = sample->get_object();
   const auto add = [&](const Json* v) {
-    if (v != nullptr && v->is_string() && !v->get_string().empty()) texts.push_back(v->get_string());
+    if (v != nullptr && v->is_string() && !v->get_string().empty()) texts.emplace_back(v->get_string());
   };
   add(get(s, "warmup"));
   const Json* practice = get(s, "practice");
@@ -525,15 +534,25 @@ struct TransformsParser {
     const Array& names = v->get_array();
     for (size_t i = 0; i < names.size(); ++i) {
       if (!names[i].is_string()) fail(item(member(rule_path, key), i), std::string("must be a string, not ") + type_name(names[i]));
-      const std::string& name = names[i].get_string();
-      const auto it = condition_index.find(name);
-      if (it == condition_index.end()) fail(item(member(rule_path, key), i), "names no condition " + json_quote(name));
-      bits |= it->second;
+      const std::string_view name = names[i].get_string();
+      const uint32_t* found = find_condition(name);
+      if (found == nullptr) fail(item(member(rule_path, key), i), "names no condition " + json_quote(name));
+      bits |= *found;
     }
     return bits;
   }
 
-  std::map<std::string, uint32_t, std::less<>> condition_index;
+  // Condition keys and bits, for the rules' condition names (at most 32
+  // leaves and their unions, so a scan is as fast as a tree and adds no code).
+  std::vector<std::pair<std::string_view, uint32_t>> condition_index;  // keys are never empty
+  const uint32_t* find_condition(std::string_view name) const {
+    if (name.empty()) return nullptr;
+    for (const auto& [key, bits] : condition_index) {
+      // Size and first byte reject almost every other key without a compare.
+      if (key.size() == name.size() && key[0] == name[0] && key == name) return &bits;
+    }
+    return nullptr;
+  }
 
   void parse_conditions(const Object& root) {
     const std::string path = "conditions";
@@ -548,7 +567,7 @@ struct TransformsParser {
       condition.name = as_string(require(c, "name", cpath), member(cpath, "name"));
       condition.dictionary_form = as_bool(require(c, "isDictionaryForm", cpath), member(cpath, "isDictionaryForm"));
       if (const Json* sub = get(c, "subConditions")) {
-        subs[key] = string_array(*sub, member(cpath, "subConditions"));
+        subs[std::string(key)] = string_array(*sub, member(cpath, "subConditions"));
       } else {
         condition.leaf = true;
       }
@@ -592,7 +611,8 @@ struct TransformsParser {
       return bits;
     };
     for (const auto& condition : std::vector<Condition>(set.conditions)) resolve(condition.key);
-    for (const auto& condition : set.conditions) condition_index.emplace(condition.key, condition.bits);
+    condition_index.reserve(set.conditions.size());
+    for (const auto& condition : set.conditions) condition_index.emplace_back(condition.key, condition.bits);
   }
 
   void parse_word_lists(const Object& root) {
@@ -609,7 +629,7 @@ struct TransformsParser {
   }
 
   const WordList* word_list(const Json& v, const std::string& path) {
-    const std::string& name = as_string(v, path);
+    const std::string_view name = as_string(v, path);
     const auto it = set.word_lists.find(name);
     if (it == set.word_lists.end()) fail(path, "names no word list " + json_quote(name));
     return it->second.get();
@@ -747,10 +767,98 @@ struct TransformsParser {
     return out;
   }
 
-  void parse_rule(const Json& v, const std::string& path, uint16_t transform_index, uint32_t rule_index,
-                  const std::string& transform_source) {
+  // Plain suffix and whole-word rules (every Japanese rule) in one pass over
+  // their members. Anything else, and any problem, returns false and goes
+  // through parse_rule, which reports errors with their JSON paths; both
+  // build the same Rule.
+  bool parse_plain_rule(const Json& v, uint16_t transform_index, uint32_t rule_index) {
+    if (!v.is_object()) return false;
+    const Object o = v.get_object();
+    if (o.size() > 6) return false;
+    std::string_view type;
+    std::string_view inflected;
+    std::string_view deinflected;
+    const Json* in = nullptr;
+    const Json* out = nullptr;
+    unsigned seen = 0;
+    // The six keys have six lengths, so the length picks the key.
+    for (const auto& [key, value] : o) {
+      switch (key.size()) {
+        case 4:
+          if (key != "type" || !value.is_string()) return false;
+          type = value.get_string();
+          seen |= 1;
+          break;
+        case 9:
+          if (key != "inflected" || !value.is_string()) return false;
+          inflected = value.get_string();
+          seen |= 2;
+          break;
+        case 11:
+          if (key != "deinflected" || !value.is_string()) return false;
+          deinflected = value.get_string();
+          seen |= 4;
+          break;
+        case 6: {
+          if (key != "source" || !value.is_string()) return false;
+          const std::string_view text = value.get_string();
+          if (text != "own" && text != "yomitan" && text != "both") return false;
+          break;
+        }
+        case 12:
+          if (key != "conditionsIn") return false;
+          in = &value;
+          break;
+        case 13:
+          if (key != "conditionsOut") return false;
+          out = &value;
+          break;
+        default:
+          return false;
+      }
+    }
+    if (seen != 7 || in == nullptr || out == nullptr) return false;
+    RuleType rule_type;
+    if (type == "suffix") {
+      rule_type = RuleType::Suffix;
+    } else if (type == "wholeWord") {
+      rule_type = RuleType::WholeWord;
+    } else {
+      return false;
+    }
+    // An empty or possibly over-long affix is decided by parse_rule.
+    if (inflected.empty() || inflected.size() > max_affix_code_points) return false;
+    uint32_t bits_in = 0;
+    uint32_t bits_out = 0;
+    if (!plain_conditions(*in, bits_in) || !plain_conditions(*out, bits_out)) return false;
+    Rule& rule = set.rules.emplace_back();
+    rule.type = rule_type;
+    rule.transform = transform_index;
+    rule.index_in_transform = rule_index;
+    rule.conditions_in = bits_in;
+    rule.conditions_out = bits_out;
+    rule.a.assign(inflected);
+    rule.b.assign(deinflected);
+    return true;
+  }
+
+  bool plain_conditions(const Json& v, uint32_t& bits) {
+    if (!v.is_array()) return false;
+    for (const auto& name : v.get_array()) {
+      if (!name.is_string()) return false;
+      const uint32_t* found = find_condition(name.get_string());
+      if (found == nullptr) return false;
+      bits |= *found;
+    }
+    return true;
+  }
+
+  // Out of line: the plain path above handles every rule of the built-in
+  // pack, so a WebAssembly engine compiles this only for packs that need it.
+  [[gnu::noinline]] void parse_rule(const Json& v, const std::string& path, uint16_t transform_index,
+                                    uint32_t rule_index, const std::string& transform_source) {
     const Object& o = as_object(v, path);
-    const std::string& type = string_field(get(o, "type"), "type", path);
+    const std::string_view type = string_field(get(o, "type"), "type", path);
     if (type == "todo") fail(path, "a todo rule remains; map it by hand (section 8.3)");
     static constexpr std::array<std::pair<std::string_view, RuleType>, 8> types = {{
         {"suffix", RuleType::Suffix},
@@ -774,7 +882,7 @@ struct TransformsParser {
     (void)transform_source;
     if (const Json* source = get(o, "source")) one_of(*source, member(path, "source"), {"own", "yomitan", "both"});
 
-    const auto literal = [&](const char* key) -> const std::string& { return string_field(get(o, key), key, path); };
+    const auto literal = [&](const char* key) -> std::string_view { return string_field(get(o, key), key, path); };
     if (type == "suffix" || type == "prefix") {
       rule.type = type == "suffix" ? RuleType::Suffix : RuleType::Prefix;
       rule.a = literal("inflected");
@@ -830,7 +938,7 @@ struct TransformsParser {
       if (rule.a.empty()) fail(member(path, "inflected"), "may not be empty");
       affix(rule.a, path, "inflected");
       if (const Json* occurrence = get(o, "occurrence")) {
-        const std::string& which = one_of(*occurrence, member(path, "occurrence"), {"all", "first", "last"});
+        const std::string_view which = one_of(*occurrence, member(path, "occurrence"), {"all", "first", "last"});
         rule.more().occurrence = which == "all" ? Occurrence::All : which == "first" ? Occurrence::First : Occurrence::Last;
       }
       if (const Json* not_at_start = get(o, "notAtStart")) rule.more().not_at_start = as_bool(*not_at_start, member(path, "notAtStart"));
@@ -894,7 +1002,15 @@ struct TransformsParser {
     parse_conditions(root);
     parse_word_lists(root);
     const Array& transforms = as_array(require(root, "transforms", ""), "transforms");
-    std::set<std::string> ids;
+    std::set<std::string, std::less<>> ids;
+    // Storage for every rule up front: a cross product may add more.
+    size_t rule_total = 0;
+    for (const auto& t : transforms) {
+      if (!t.is_object()) continue;
+      if (const Json* r = t.get_object().find("rules"); r != nullptr && r->is_array()) rule_total += r->get_array().size();
+    }
+    set.rules.reserve(rule_total);
+    set.transforms.reserve(transforms.size());
     for (size_t i = 0; i < transforms.size(); ++i) {
       const std::string tpath = item("transforms", i);
       const Object& t = as_object(transforms[i], tpath);
@@ -916,6 +1032,7 @@ struct TransformsParser {
       const std::string source = transform.source;
       set.transforms.push_back(std::move(transform));
       for (size_t j = 0; j < rules.size(); ++j) {
+        if (parse_plain_rule(rules[j], index, static_cast<uint32_t>(j))) continue;
         parse_rule(rules[j], item(rpath, j), index, static_cast<uint32_t>(j), source);
       }
     }
@@ -923,11 +1040,11 @@ struct TransformsParser {
   }
 };
 
-void parse_settings(const Json& v, const PackData& pack, const Declared& declared) {
+[[gnu::noinline]] void parse_settings(const Json& v, const PackData& pack, const Declared& declared) {
   const std::string path = "settings";
   const Array& settings = as_array(v, path);
-  std::set<std::string> ids;
-  std::set<std::string> optional_transforms;
+  std::set<std::string, std::less<>> ids;
+  std::set<std::string, std::less<>> optional_transforms;
   if (pack.transforms) {
     for (const auto& t : pack.transforms->transforms) {
       if (t.optional) optional_transforms.insert(t.id);
@@ -937,13 +1054,13 @@ void parse_settings(const Json& v, const PackData& pack, const Declared& declare
     const std::string spath = item(path, i);
     const Object& s = as_object(settings[i], spath);
     check_keys(s, spath, {"id", "type", "default", "values", "min", "max", "step", "label", "description", "group", "effect"});
-    const std::string& id = as_string(require(s, "id", spath), member(spath, "id"));
-    if (!ids.insert(id).second) fail(member(spath, "id"), "the setting id " + json_quote(id) + " is used twice");
-    const std::string& type = one_of(require(s, "type", spath), member(spath, "type"), {"boolean", "enum", "number"});
+    const std::string_view id = as_string(require(s, "id", spath), member(spath, "id"));
+    if (!ids.emplace(id).second) fail(member(spath, "id"), "the setting id " + json_quote(id) + " is used twice");
+    const std::string_view type = one_of(require(s, "type", spath), member(spath, "type"), {"boolean", "enum", "number"});
     as_string(require(s, "label", spath), member(spath, "label"));
     if (const Json* d = get(s, "description")) as_string(*d, member(spath, "description"));
     one_of(require(s, "group", spath), member(spath, "group"), {"lookup", "display"});
-    std::set<std::string> values;
+    std::set<std::string, std::less<>> values;
     double min = 0;
     double max = 0;
     if (type == "enum") {
@@ -953,7 +1070,7 @@ void parse_settings(const Json& v, const PackData& pack, const Declared& declare
       for (size_t k = 0; k < list.size(); ++k) {
         const Object& value = as_object(list[k], item(vpath, k));
         check_keys(value, item(vpath, k), {"id", "label"});
-        if (!values.insert(as_string(require(value, "id", item(vpath, k)), item(vpath, k) + ".id")).second) {
+        if (!values.emplace(as_string(require(value, "id", item(vpath, k)), item(vpath, k) + ".id")).second) {
           fail(item(vpath, k), "a value id is used twice");
         }
         as_string(require(value, "label", item(vpath, k)), item(vpath, k) + ".label");
@@ -988,9 +1105,9 @@ void parse_settings(const Json& v, const PackData& pack, const Declared& declare
     const auto& [kind, target] = *effect.begin();
     const std::string tpath = member(epath, kind);
     const bool engine = kind == "preprocessor" || kind == "transforms" || kind == "variantPass" || kind == "capability";
-    if (engine && type != "boolean") fail(epath, "a " + kind + " effect needs a boolean setting");
+    if (engine && type != "boolean") fail(epath, "a " + std::string(kind) + " effect needs a boolean setting");
     if (kind == "preprocessor") {
-      const std::string& name = as_string(target, tpath);
+      const std::string_view name = as_string(target, tpath);
       if (!declared.optional_processors.contains(name)) fail(tpath, "names no optional processor " + json_quote(name));
     } else if (kind == "transforms") {
       const auto names = string_array(target, tpath);
@@ -999,10 +1116,10 @@ void parse_settings(const Json& v, const PackData& pack, const Declared& declare
         if (!optional_transforms.contains(names[k])) fail(item(tpath, k), "names no optional transform " + json_quote(names[k]));
       }
     } else if (kind == "variantPass") {
-      const std::string& name = as_string(target, tpath);
+      const std::string_view name = as_string(target, tpath);
       if (!declared.passes.contains(name)) fail(tpath, "names no variant pass " + json_quote(name));
     } else if (kind == "capability") {
-      const std::string& name = as_string(target, tpath);
+      const std::string_view name = as_string(target, tpath);
       if (!declared.optional_capabilities.contains(name)) fail(tpath, "names no optional capability " + json_quote(name));
     } else if (kind == "display") {
       const Object& display = as_object(target, tpath);
@@ -1013,7 +1130,7 @@ void parse_settings(const Json& v, const PackData& pack, const Declared& declare
         if (fields[k] != "expression" && fields[k] != "reading") fail(item(member(tpath, "fields"), k), "must be expression or reading");
       }
       check_value(require(display, "when", tpath), member(tpath, "when"));
-      const std::string& transform = as_string(require(display, "transform", tpath), member(tpath, "transform"));
+      const std::string_view transform = as_string(require(display, "transform", tpath), member(tpath, "transform"));
       if (!declared.display_transforms.contains(transform)) fail(member(tpath, "transform"), "names no display transform " + json_quote(transform));
     } else {
       fail(tpath, "unknown effect");
@@ -1024,78 +1141,45 @@ void parse_settings(const Json& v, const PackData& pack, const Declared& declare
 }  // namespace
 
 std::string transforms_file_name(std::string_view language_json) {
-  Json value;
-  const std::string buffer(language_json);
-  if (glz::read_json(value, buffer) || !value.is_object()) return {};
-  const Json* lookup = get(value.get_object(), "lookup");
+  json::Document document;
+  if (!document.parse(language_json, nullptr) || !document.root().is_object()) return {};
+  const Json* lookup = document.root().get_object().find("lookup");
   if (lookup == nullptr || !lookup->is_object()) return {};
-  const Json* transforms = get(lookup->get_object(), "transforms");
-  return transforms != nullptr && transforms->is_string() ? transforms->get_string() : std::string{};
+  const Json* transforms = lookup->get_object().find("transforms");
+  return transforms != nullptr && transforms->is_string() ? std::string(transforms->get_string()) : std::string{};
 }
 
-std::unique_ptr<PackData> parse_pack(std::string_view language_json, std::string_view transforms_json,
-                                     std::string* error) {
-  auto pack = std::make_unique<PackData>();
-  PackParser parser{*pack};
-  std::string file = "language.json";
-  try {
-    const Json root_value = parse_json(language_json, file);
-    const Object& root = as_object(root_value, "");
-    check_keys(root, "", {"schema", "code", "iso639_3", "name", "nativeName", "bcp47", "scripts", "direction", "classes",
-                          "text", "lookup", "capabilities", "presentation", "settings", "host"});
-    check_identity(root, *pack);
-
-    // classes
-    const Object& classes = as_object(require(root, "classes", ""), "classes");
-    parser.class_definitions = &classes;
-    for (const auto& [name, source] : classes) {
-      if (!is_class_name(name)) fail(member("classes", name), "a class name is letters, digits and _, starting with a letter or _");
-      std::string inner;
-      const CharClass* parsed = parser.resolve(name, &inner);
-      if (parsed == nullptr) fail("", inner);
-      pack->classes.emplace_back(name, *parsed);
-    }
-
-    // text
-    const std::string tpath = "text";
-    const Object& text = as_object(require(root, "text", ""), tpath);
-    check_keys(text, tpath, {"pattern", "scanStart", "segmentation", "wordCharacters", "wordInternal", "sentence",
-                             "highlightBreaks", "lineJoiner"});
-    pack->text_pattern = parser.class_field(require(text, "pattern", tpath), "text.pattern");
-    pack->class_fields.emplace_back("text.pattern", pack->text_pattern);
-    one_of(require(text, "scanStart", tpath), "text.scanStart", {"cursor", "word"});
-    one_of(require(text, "segmentation", tpath), "text.segmentation", {"scan", "spaces"});
-    pack->word_characters = parser.class_field(require(text, "wordCharacters", tpath), "text.wordCharacters");
-    pack->class_fields.emplace_back("text.wordCharacters", pack->word_characters);
-    if (const Json* internal = get(text, "wordInternal"); internal != nullptr && !internal->is_null()) {
-      pack->word_internal = parser.class_field(*internal, "text.wordInternal");
-      pack->class_fields.emplace_back("text.wordInternal", *pack->word_internal);
-    }
-    {
-      const std::string spath = "text.sentence";
-      const Object& sentence = as_object(require(text, "sentence", tpath), spath);
-      check_keys(sentence, spath, {"terminators", "quotePairs"});
-      string_array(require(sentence, "terminators", spath), "text.sentence.terminators");
-      const Array& pairs = as_array(require(sentence, "quotePairs", spath), "text.sentence.quotePairs");
-      for (size_t i = 0; i < pairs.size(); ++i) {
-        if (string_array(pairs[i], item("text.sentence.quotePairs", i)).size() != 2) {
-          fail(item("text.sentence.quotePairs", i), "must be [open, close]");
-        }
+namespace {
+// The shape of text's host-only members (section 4.3).
+[[gnu::noinline]] void check_text_shape(const Object& text) {
+  const std::string tpath = "text";
+  {
+    const std::string spath = "text.sentence";
+    const Object& sentence = as_object(require(text, "sentence", tpath), spath);
+    check_keys(sentence, spath, {"terminators", "quotePairs"});
+    string_array(require(sentence, "terminators", spath), "text.sentence.terminators");
+    const Array& pairs = as_array(require(sentence, "quotePairs", spath), "text.sentence.quotePairs");
+    for (size_t i = 0; i < pairs.size(); ++i) {
+      if (string_array(pairs[i], item("text.sentence.quotePairs", i)).size() != 2) {
+        fail(item("text.sentence.quotePairs", i), "must be [open, close]");
       }
     }
-    if (const Json* breaks = get(text, "highlightBreaks"); breaks != nullptr && !breaks->is_null()) {
-      const std::string bpath = "text.highlightBreaks";
-      const Object& b = as_object(*breaks, bpath);
-      check_keys(b, bpath, {"sentenceEnd", "clauseEnd"});
-      string_array(require(b, "sentenceEnd", bpath), "text.highlightBreaks.sentenceEnd");
-      string_array(require(b, "clauseEnd", bpath), "text.highlightBreaks.clauseEnd");
-    }
-    as_string(require(text, "lineJoiner", tpath), "text.lineJoiner");
+  }
+  if (const Json* breaks = get(text, "highlightBreaks"); breaks != nullptr && !breaks->is_null()) {
+    const std::string bpath = "text.highlightBreaks";
+    const Object& b = as_object(*breaks, bpath);
+    check_keys(b, bpath, {"sentenceEnd", "clauseEnd"});
+    string_array(require(b, "sentenceEnd", bpath), "text.highlightBreaks.sentenceEnd");
+    string_array(require(b, "clauseEnd", bpath), "text.highlightBreaks.clauseEnd");
+  }
+  as_string(require(text, "lineJoiner", tpath), "text.lineJoiner");
+}
 
-    // capabilities (its characterView pattern is the next class field)
-    Declared declared;
-    const std::string cpath = "capabilities";
-    const Object& capabilities = as_object(require(root, "capabilities", ""), cpath);
+// capabilities (section 4.6); its characterView pattern is a class field.
+[[gnu::noinline]] void check_capabilities(const Object& root, PackParser& parser, Declared& declared) {
+  PackData* pack = &parser.pack;
+  const std::string cpath = "capabilities";
+  const Object& capabilities = as_object(require(root, "capabilities", ""), cpath);
     check_keys(capabilities, cpath, {"readings", "ruby", "pitchAccent", "characterView", "wordHighlighting"});
     one_of(require(capabilities, "readings", cpath), "capabilities.readings", {"required", "optional", "none"});
     if (const Json& ruby = require(capabilities, "ruby", cpath); !ruby.is_null()) {
@@ -1125,6 +1209,55 @@ std::unique_ptr<PackData> parse_pack(std::string_view language_json, std::string
     }
     as_bool(require(capabilities, "wordHighlighting", cpath), "capabilities.wordHighlighting");
 
+}
+void build_named_steps(PackData& pack);
+}  // namespace
+
+std::unique_ptr<PackData> parse_pack(std::string_view language_json, std::string_view transforms_json,
+                                     std::string* error, bool trusted) {
+  auto pack = std::make_unique<PackData>();
+  PackParser parser{*pack};
+  std::string file = "language.json";
+  try {
+    json::Document language_document;
+    parse_json(language_json, language_document);
+    const Object root = as_object(language_document.root(), "");
+    check_keys(root, "", {"schema", "code", "iso639_3", "name", "nativeName", "bcp47", "scripts", "direction", "classes",
+                          "text", "lookup", "capabilities", "presentation", "settings", "host"});
+    check_identity(root, *pack);
+
+    // classes
+    const Object& classes = as_object(require(root, "classes", ""), "classes");
+    parser.class_definitions = classes;
+    for (const auto& [name, source] : classes) {
+      if (!is_class_name(name)) fail(member("classes", name), "a class name is letters, digits and _, starting with a letter or _");
+      std::string inner;
+      const CharClass* parsed = parser.resolve(name, &inner);
+      if (parsed == nullptr) fail("", inner);
+      pack->classes.emplace_back(name, *parsed);
+    }
+
+    // text
+    const std::string tpath = "text";
+    const Object& text = as_object(require(root, "text", ""), tpath);
+    check_keys(text, tpath, {"pattern", "scanStart", "segmentation", "wordCharacters", "wordInternal", "sentence",
+                             "highlightBreaks", "lineJoiner"});
+    pack->text_pattern = parser.class_field(require(text, "pattern", tpath), "text.pattern");
+    pack->class_fields.emplace_back("text.pattern", pack->text_pattern);
+    one_of(require(text, "scanStart", tpath), "text.scanStart", {"cursor", "word"});
+    one_of(require(text, "segmentation", tpath), "text.segmentation", {"scan", "spaces"});
+    pack->word_characters = parser.class_field(require(text, "wordCharacters", tpath), "text.wordCharacters");
+    pack->class_fields.emplace_back("text.wordCharacters", pack->word_characters);
+    if (const Json* internal = get(text, "wordInternal"); internal != nullptr && !internal->is_null()) {
+      pack->word_internal = parser.class_field(*internal, "text.wordInternal");
+      pack->class_fields.emplace_back("text.wordInternal", *pack->word_internal);
+    }
+    if (!trusted) check_text_shape(text);
+
+    // capabilities (its characterView pattern is the next class field)
+    Declared declared;
+    if (!trusted) check_capabilities(root, parser, declared);
+
     // lookup
     const std::string lpath = "lookup";
     const Object& lookup = as_object(require(root, "lookup", ""), lpath);
@@ -1133,7 +1266,7 @@ std::unique_ptr<PackData> parse_pack(std::string_view language_json, std::string
     pack->resolution = one_of(require(lookup, "searchResolution", lpath), "lookup.searchResolution", {"character", "word"}) == "word"
                            ? Resolution::Word
                            : Resolution::Character;
-    std::set<std::string> processor_ids;
+    std::set<std::string, std::less<>> processor_ids;
     pack->preprocessors = parser.processors(require(lookup, "preprocessors", lpath), "lookup.preprocessors", processor_ids, pack->class_fields);
     if (const Json* post = get(lookup, "postprocessors")) {
       pack->postprocessors = parser.processors(*post, "lookup.postprocessors", processor_ids, pack->class_fields);
@@ -1175,7 +1308,7 @@ std::unique_ptr<PackData> parse_pack(std::string_view language_json, std::string
         if (!declared.passes.insert(pass.id).second || processor_ids.contains(pass.id)) {
           fail(member(vpath, "id"), "the id " + json_quote(pass.id) + " is used twice");
         }
-        const std::string& builtin = as_string(require(p, "builtin", vpath), member(vpath, "builtin"));
+        const std::string_view builtin = as_string(require(p, "builtin", vpath), member(vpath, "builtin"));
         pass.builtin = find_pass_builtin(builtin);
         if (pass.builtin == nullptr) fail(member(vpath, "builtin"), "unknown variant pass builtin " + json_quote(builtin));
         if (const Json* optional = get(p, "optional"); optional != nullptr && !as_bool(*optional, member(vpath, "optional"))) {
@@ -1186,11 +1319,13 @@ std::unique_ptr<PackData> parse_pack(std::string_view language_json, std::string
     }
 
     // presentation (display transforms add class fields after the processors')
-    check_presentation(as_object(require(root, "presentation", ""), "presentation"), parser, declared);
-
-    const Object& host = as_object(require(root, "host", ""), "host");
-    check_host(host);
-    pack->sample_texts = sample_texts(host);
+    // and host, which only hosts and tests/classes.json read.
+    if (!trusted) {
+      check_presentation(as_object(require(root, "presentation", ""), "presentation"), parser, declared);
+      const Object& host = as_object(require(root, "host", ""), "host");
+      check_host(host);
+      pack->sample_texts = sample_texts(host);
+    }
 
     // transforms.json
     if (pack->transforms_file.empty() && !transforms_json.empty()) {
@@ -1199,16 +1334,17 @@ std::unique_ptr<PackData> parse_pack(std::string_view language_json, std::string
     if (!pack->transforms_file.empty()) {
       file = pack->transforms_file;
       if (transforms_json.empty()) fail("", "lookup.transforms names " + pack->transforms_file + " but no transforms were given");
-      const Json transforms_value = parse_json(transforms_json, file);
+      json::Document transforms_document;
+      parse_json(transforms_json, transforms_document);
       pack->transforms = std::make_unique<TransformSet>();
       pack->transforms->word_characters = &pack->word_characters;
       TransformsParser tp{parser, *pack->transforms, pack->class_fields, {}};
-      tp.parse(as_object(transforms_value, ""));
+      tp.parse(as_object(transforms_document.root(), ""));
       file = "language.json";
     }
 
     // settings (after the transforms, whose optional ids they may name)
-    parse_settings(require(root, "settings", ""), *pack, declared);
+    if (!trusted) parse_settings(require(root, "settings", ""), *pack, declared);
 
     // Trace steps: the transforms, then the variant passes.
     if (pack->transforms) {
@@ -1225,7 +1361,15 @@ std::unique_ptr<PackData> parse_pack(std::string_view language_json, std::string
     return nullptr;
   }
 
-  // Named step lists for tests/classes.json (section 12.1).
+  // Named step lists for tests/classes.json (section 12.1), which only the
+  // conformance test reads.
+  if (!trusted) build_named_steps(*pack);
+  return pack;
+}
+
+namespace {
+[[gnu::noinline]] void build_named_steps(PackData& pack_data) {
+  PackData* pack = &pack_data;
   for (const auto* list : {&pack->preprocessors, &pack->postprocessors}) {
     for (const auto& p : *list) {
       NamedSteps named{p.id, {}};
@@ -1255,8 +1399,8 @@ std::unique_ptr<PackData> parse_pack(std::string_view language_json, std::string
       pack->named_steps.push_back(std::move(named));
     }
   }
-  return pack;
 }
+}  // namespace
 
 HOSHIDICTS_LOAD_TIME_END
 

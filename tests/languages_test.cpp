@@ -18,6 +18,7 @@
 #include "hoshidicts/languages.hpp"
 #include "hoshidicts/lookup.hpp"
 #include "languages/classes.hpp"
+#include "languages/json.hpp"
 #include "languages/pack.hpp"
 #include "languages/regex.hpp"
 #include "languages/steps.hpp"
@@ -793,9 +794,52 @@ void test_word_lookup() {
   std::filesystem::remove_all(root);
 }
 
+// --- the JSON reader of packs ----------------------------------------------------
+
+void test_json() {
+  namespace json = hoshidicts::lang::json;
+  {
+    json::Document d;
+    std::string error;
+    const bool ok = d.parse(R"( {"a": [1, -2.5e3, true, false, null, "x"], "b": {"c": "\u00e9\ud83d\ude00\n\"\\\/"}, "e": {}, "f": []} )", &error);
+    check(ok, "a document parses: " + error);
+    if (ok) {
+      const auto root = d.root().get_object();
+      check(root.size() == 4 && root.begin() != root.end() && (*root.begin()).first == "a", "members in file order");
+      const auto a = root.find("a")->get_array();
+      check(a.size() == 6 && a[0].get_number() == 1 && a[1].get_number() == -2500 && a[2].get_boolean() &&
+                !a[3].get_boolean() && a[4].is_null() && a[5].get_string() == "x",
+            "array values");
+      check(root.find("b")->get_object().find("c")->get_string() == "\xC3\xA9\xF0\x9F\x98\x80\n\"\\/", "escapes and a surrogate pair");
+      check(root.find("e")->get_object().empty() && root.find("f")->get_array().empty(), "empty containers");
+      check(root.find("zz") == nullptr, "a missing key");
+    }
+  }
+  for (const char* bad : {"", "{", "{\"a\":1,}", "[1,]", "{\"a\":1 \"b\":2}", "{\"a\":1,\"a\":2}", "01", "1.", "-", "\"\\ud800\"",
+                          "\"\\udc00\"", "\"\\x\"", "\"a\nb\"", "tru", "nul", "[1] 2", "\"\xC3\"", "\"\xED\xA0\x80\"", "{1:2}"}) {
+    json::Document d;
+    std::string error;
+    check(!d.parse(bad, &error) && !error.empty(), std::string("JSON rejects ") + bad);
+  }
+  {
+    std::string deep(200, '[');
+    deep += std::string(200, ']');
+    json::Document d;
+    std::string error;
+    check(!d.parse(deep, &error) && error.find("deeply") != std::string::npos, "nesting is limited");
+  }
+  {
+    std::string error;
+    check(hoshidicts::parse_language_pack("{\n  \"schema\": 1,\n  oops\n}", "", &error) == nullptr &&
+              error.find("language.json") != std::string::npos && error.find("line 3") != std::string::npos,
+          "a JSON error names the file and line: " + error);
+  }
+}
+
 }  // namespace
 
 int main() {
+  test_json();
   test_classes();
   test_patterns();
   test_steps();
