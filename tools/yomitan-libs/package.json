@@ -1,0 +1,11 @@
+{
+  "name": "hoshidicts-yomitan-libs",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Builds the hangul-js bundle of a Yomitan d3c54c1 checkout for tools/check-yomitan.mjs (docs/languages.md, section 8.2), with the versions Yomitan's package-lock.json pins.",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "esbuild": "0.25.1",
+    "hangul-js": "0.2.6"
+  }
+}

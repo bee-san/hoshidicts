@@ -886,14 +886,45 @@ the language it takes the pack processor with the same `id` and runs both on
 the corpus sources, the `host.sample` texts and inputs built from the
 characters the processor names, and requires the same set of outputs,
 including whether the input is kept. Korean's builtins are compared with
-Yomitan's processors through Yomitan's built `ext/lib` (hangul-js),
-Vietnamese's directly. A Yomitan processor that no pack processor pairs with
-by id fails the check unless `sources/yomitan-differences.tsv` lists it; that
-file lists every deliberate difference. The Japanese pack is exempt: its
-processors are proved against today's code (section 11.3). Ports that look
-plausible can differ: Yiddish `combineYiddishLigatures` replaces the first
-occurrence of each ligature in list order, which takes seven `map` steps with
-`at: "first"`, not one `map` with `at: "all"`.
+Yomitan's processors through Yomitan's hangul-js bundle, Vietnamese's
+directly. A plain checkout has no `ext/lib/`, and `tools/lib/yomitan.mjs`
+replaces a missing bundle with a stub that throws when a processor uses it,
+so CI first builds `ext/lib/hangul-js.js` into its own Yomitan checkout with
+`tools/yomitan-libs/`. Its lockfile pins exactly esbuild 0.25.1, its 25
+platform packages and hangul-js 0.2.6, as Yomitan's lockfile at d3c54c1 has
+them in every field; Yomitan's records hangul-js by version only, so its URL
+and hash are pinned in `build.mjs` (the registry's, which Yomitan's lockfile
+had until 96f81f1). `build.mjs --lockfile-only` checks this before `npm ci`
+reads the lockfile. `build.mjs` then bundles Yomitan's `dev/lib/hangul-js.js`
+with the options of Yomitan's `dev/build-libs.js`, and writes the result only
+when it has the sha256 of the file Yomitan's own build writes. It refuses any
+directory that is not the top of a git work tree at d3c54c1, and writes only
+inside it. A local run builds the bundle in a copy of the checkout, never in
+a shared one. `--ignore-scripts=false` runs esbuild's install script, which
+checks the platform binary's version (the build itself does not need it);
+`--include=optional` installs the platform package even where npm's
+configuration omits optional packages, so the script never fetches one
+outside the lockfile:
+
+```sh
+cp -a /path/to/yomitan /tmp/yomitan-built
+node tools/yomitan-libs/build.mjs --lockfile-only /tmp/yomitan-built
+npm ci --prefix tools/yomitan-libs --ignore-scripts=false --include=optional
+node tools/yomitan-libs/build.mjs /tmp/yomitan-built
+node tools/check-yomitan.mjs /tmp/yomitan-built --all --cli build/hoshidicts-cli
+YOMITAN_DIR=/tmp/yomitan-built node --test tools/test/
+```
+
+The last command also compares the Korean pack in
+`tools/test/fixtures/korean/` with Yomitan's processors through the bundle.
+
+A Yomitan processor that no pack processor pairs with by id fails the check
+unless `sources/yomitan-differences.tsv` lists it; that file lists every
+deliberate difference. The Japanese pack is exempt: its processors are proved
+against today's code (section 11.3). Ports that look plausible can differ:
+Yiddish `combineYiddishLigatures` replaces the first occurrence of each
+ligature in list order, which takes seven `map` steps with `at: "first"`, not
+one `map` with `at: "all"`.
 
 ### 8.3 Constructs that are not literal
 

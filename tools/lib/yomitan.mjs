@@ -6,8 +6,16 @@
 // Japanese, hangul-js for Korean). A plain checkout has none, so missing ones
 // are replaced by stubs that throw when used: every language except Japanese
 // and Korean imports without them. To compare Korean processors, build
-// `ext/lib` in a copy of the checkout (never in a shared one) and point the
-// tools at the copy.
+// `ext/lib/hangul-js.js` in a copy of the checkout (never in a shared one)
+// and point the tools at the copy:
+//
+//   cp -a <yomitan checkout> <copy>
+//   node tools/yomitan-libs/build.mjs --lockfile-only <copy>
+//   npm ci --prefix tools/yomitan-libs --ignore-scripts=false --include=optional
+//   node tools/yomitan-libs/build.mjs <copy>
+//
+// CI builds it the same way into its own checkout (section 8.2). Japanese
+// processors are not compared (section 11.3), so kanji-processor stays a stub.
 
 import {execFileSync} from 'node:child_process';
 import {existsSync, readFileSync, readdirSync} from 'node:fs';
@@ -18,13 +26,14 @@ import {pathToFileURL} from 'node:url';
 /** The Yomitan revision the contract pins (section 8). */
 export const PINNED_REVISION = 'd3c54c10264673eca0d66b970ef74cd5c8b048e3';
 
+// The bundles that are stubbed when missing: their exports, and how to build them.
 const STUBBED_LIBS = {
-    'kanji-processor.js': ['convertVariants'],
-    'hangul-js.js': ['Hangul'],
+    'kanji-processor.js': {names: ['convertVariants'], build: 'build ext/lib in a copy to use it'},
+    'hangul-js.js': {names: ['Hangul'], build: 'build it in a copy with tools/yomitan-libs/build.mjs (docs/languages.md 8.2)'},
 };
 
-function stubUrl(file, names) {
-    const message = `Yomitan's ext/lib/${file} is not built in this checkout; build ext/lib in a copy to use it`;
+function stubUrl(file, {names, build}) {
+    const message = `Yomitan's ext/lib/${file} is not built in this checkout; ${build}`;
     const body = names.map((name) => `export const ${name} = new Proxy(function () {}, {get(target, key) { if (key === Symbol.toPrimitive || key === 'then') { return undefined; } throw new Error(${JSON.stringify(message)}); }, apply() { throw new Error(${JSON.stringify(message)}); }});`).join('\n');
     return `data:text/javascript,${encodeURIComponent(body)}`;
 }
@@ -62,9 +71,9 @@ export function installYomitanHooks(root) {
             const libPrefix = `${root2}ext/lib/`;
             if (target.startsWith(libPrefix)) {
                 const file = target.slice(libPrefix.length);
-                const names = STUBBED_LIBS[file];
-                if (names !== undefined && !existsSync(new URL(target))) {
-                    return {url: stubUrl(file, names), shortCircuit: true};
+                const stub = Object.hasOwn(STUBBED_LIBS, file) ? STUBBED_LIBS[file] : undefined;
+                if (stub !== undefined && !existsSync(new URL(target))) {
+                    return {url: stubUrl(file, stub), shortCircuit: true};
                 }
             }
             return nextResolve(specifier, context);

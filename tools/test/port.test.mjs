@@ -193,7 +193,7 @@ describe('Yomitan loader', () => {
     test('stubs a missing ext/lib bundle and names it when used', async () => {
         const processors = await loadTextProcessors(yomitan, 'kx');
         assert.deepEqual(processors.preprocessors.map((p) => p.id), ['disassemble']);
-        assert.throws(() => processors.preprocessors[0].process('가'), /ext\/lib\/hangul-js\.js is not built/);
+        assert.throws(() => processors.preprocessors[0].process('가'), /ext\/lib\/hangul-js\.js is not built in this checkout; build it in a copy with tools\/yomitan-libs\/build\.mjs/);
         const xx = await loadTextProcessors(yomitan, 'xx');
         assert.deepEqual(xx.preprocessors.map((p) => p.id), ['decapitalize', 'capitalizeFirstLetter', 'removeMarks', 'firstA', 'onlyYomitan']);
         assert.deepEqual(xx.preprocessors[0].process('Ab'), ['Ab', 'ab']);

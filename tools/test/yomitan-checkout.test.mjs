@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Checks against a real Yomitan checkout at the pinned revision, when
-// YOMITAN_DIR names one (CI does not need it):
+// YOMITAN_DIR names one (CI sets it to its own checkout):
 //
 //   YOMITAN_DIR=/path/to/yomitan node --test tools/test/
 import assert from 'node:assert/strict';
