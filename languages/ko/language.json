@@ -47,7 +47,7 @@
     ],
     "postprocessors": [
       {
-        "id": "assembleHangul",
+        "id": "reassembleHangul",
         "name": "Reassemble Hangul",
         "keepInput": false,
         "variants": [[{"builtin": "hangul.assemble"}]]
