@@ -960,7 +960,7 @@ on the text; conditions only filter its result. The engine looks every
 deinflection up, repeats included, and applies the part-of-speech filter to
 each. Querying each text once per prefix and variant, and copying the result
 for its repeats, gives the same results, but it was slower on the Japanese
-benchmark (reference words p50 +2.7%, corpus sources p50 +4.3%, against the
+benchmark (reference words p50 +2.5%, corpus sources p50 +4.3%, against the
 same tree without it; [`benchmarks-languages.md`](benchmarks-languages.md)),
 so the engine does not do it.
 

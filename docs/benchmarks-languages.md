@@ -132,3 +132,87 @@ is 3.2 ms. In Node 22 the same load takes 5.9 ms (35e2dab 6.1 ms).
 | --- | ---: | ---: | ---: | ---: | ---: |
 | `tests/yomitan.tsv` | 1,446 | 1.000 | 1.000 | 0.354 | 0.787 |
 | `tests/cases.tsv` | 46 | 1.000 | 1.000 | 0.225 | 0.725 |
+
+## After the framework audit (2026-11-02)
+
+The fixes for the audit of the framework pull request (#45) changed the
+pattern dialect, the pack schema checks and the command line, not the lookup
+path. Measured on the same machine and setup as above, with 35e2dab, 5d1377d
+(the audited head) and this branch taking turns within each round, the
+order rotating; the machine's load average was about 32 to 46 throughout,
+from other work, so absolute times are higher than in the tables above.
+
+### Section 9.5: one query per repeated text
+
+Implemented and measured, then removed. The engine looked each text up once
+per deinflection list and copied the unfiltered result for the
+deinflections that repeat it, before each one's part-of-speech filter.
+Results were identical (`ja-lookup-parity` 0 differences, and the audit's
+whole-lookup dump of 783,087 results on five real dictionaries byte for
+byte), but lookups were slower. Against a control build, this tree with
+5d1377d's `src/lookup.cpp` (12 rounds; median of the rounds, range in
+brackets, and the median of the per-round ratios):
+
+| Words | Statistic | Every repeat queried | One query per text | Change | Paired |
+| --- | --- | ---: | ---: | ---: | ---: |
+| 4 reference words x 200 | p50 | 14.1 µs (14.0-14.3) | 14.5 µs (14.4-15.1) | +2.5% | +2.7% |
+| | p95 | 27.8 µs (27.6-28.4) | 28.4 µs (28.1-29.4) | +2.3% | +2.4% |
+| 1,382 corpus sources x 6 | p50 | 15.7 µs (15.6-16.2) | 16.4 µs (16.2-17.4) | +4.3% | +4.3% |
+| | p95 | 63.2 µs (61.4-65.5) | 65.2 µs (64.4-68.3) | +3.3% | +3.7% |
+
+A first version, which compared every pair of texts in a list, measured the
+same against 5d1377d (12 rounds: reference p50 +2.2%, corpus p50 +3.7%; 6
+rounds on 8,121 Aozora start positions of 24 code points: p50 +2.4%, paired
++1.1%). The likely reason: most deinflected texts are not in the
+dictionary, and such a query ends at the Bloom filter, so there is little
+for the copies to save. The contract (7.5, 9.5 and the sga row of 14.1) now
+says every repeat is looked up.
+
+### Native lookups
+
+`benchmark-lookup` as above, 12 rounds:
+
+| Words | Statistic | 35e2dab | 5d1377d | this branch | vs 5d1377d | vs 35e2dab |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| 4 reference words x 200 | p50 | 14.1 µs (14.0-14.2) | 14.1 µs (14.0-14.3) | 14.0 µs (13.9-14.3) | -0.7% | -0.8% |
+| | p95 | 30.1 µs (29.9-30.5) | 27.5 µs (27.3-27.9) | 27.5 µs (27.2-28.2) | 0.0% | -8.7% |
+| 1,382 corpus sources x 6 | p50 | 16.2 µs (15.9-16.5) | 15.8 µs (15.6-16.2) | 15.9 µs (15.5-16.0) | +0.3% | -2.1% |
+| | p95 | 64.4 µs (63.6-65.6) | 64.3 µs (63.0-65.2) | 64.3 µs (62.6-65.2) | 0.0% | -0.1% |
+
+Result counts are equal (4,000 and 44,232).
+
+### WebAssembly bundles
+
+Hachidori's bindings at 99960c7c, Emscripten 6.0.9, as above; the 5d1377d
+builds reproduce the earlier sizes to the byte:
+
+| Runtime | 35e2dab | 5d1377d | this branch | vs 35e2dab | gzip -9 (35e2dab → this branch) |
+| --- | ---: | ---: | ---: | ---: | --- |
+| single-thread | 2,862,825 B | 2,956,989 B | 2,960,385 B | +97,560 B (+3.41%) | 1,023,250 → 1,120,796 B |
+| threaded (WasmFS/OPFS) | 3,022,159 B | 3,111,011 B | 3,114,416 B | +92,257 B (+3.05%) | 1,064,719 → 1,161,959 B |
+| threaded IDBFS | 2,931,964 B | 3,020,677 B | 3,024,075 B | +92,111 B (+3.14%) | 1,036,666 → 1,133,956 B |
+
+The 3.4 KB over 5d1377d is the dialect checks, mostly in
+`src/languages/regex.cpp`. The one compiler warning these builds add to
+35e2dab's is utfcpp's: `unchecked.h:106` converts a `char8_t` to `char32_t`
+without a cast in `utf8::unchecked::next`, which any C++20 caller
+instantiates (here `src/languages/transforms.cpp:22`); utfcpp's master has
+the same line, so it is left alone.
+
+### Built-in pack load in Chrome
+
+The measurement above (headless Chrome 152, the first `Deinflector()`, a
+fresh profile per run), with the three engines taking turns, 16 rounds:
+
+| | 35e2dab | 5d1377d | this branch |
+| --- | ---: | ---: | ---: |
+| median | 7.6 ms | 11.1 ms | 10.9 ms |
+| range | 6.9-9.0 ms | 7.1-13.1 ms | 8.4-13.8 ms |
+
+Under this load all three are slower than in the table above (35e2dab
+6.50 ms there), and the built-in pack load is over section 13's 10 ms by
+the median. The fixes do not change it (the built-in pack has no patterns,
+and the three required keys are read where they were read before). Its
+ratio to 35e2dab, 1.43, is below the earlier 1.52. The follow-ups in the
+engine report (fewer functions compiled on first call, a binary form of the
+built-in pack) are not cheap, so none is done here.
