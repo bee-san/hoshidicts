@@ -100,6 +100,8 @@ struct KanjiResult {
 
 struct RawTerm;
 struct RawTerms;
+struct RawFormOfRow;
+struct FormOfReference;
 struct BlobPins;
 struct QueryAccess;
 
@@ -267,6 +269,9 @@ class DictionaryQuery {
                      const std::string* term_dictionary_path = nullptr, bool with_metadata = true) const;
   RawTerms query_raw(const std::string& expression, BlobPins& pins, const Selection& selection, bool with_metadata,
                      const ReadingNormalizer* normalizer = nullptr, bool follow_form_of = false) const;
+  // The form-of references of a row query_raw listed in form_of_rows, read
+  // from its glossary, appended to `out`.
+  static void read_form_of(const RawFormOfRow& row, BlobPins& pins, std::vector<FormOfReference>& out);
   TermResult build_term(const RawTerms& raw, RawTerm& term, BlobPins& pins) const;
   void collect_frequencies(std::string_view expression, std::string_view reading,
                            std::vector<FrequencyEntry>& out, BlobPins& pins) const;

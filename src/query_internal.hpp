@@ -8,6 +8,7 @@
 
 #include "blob_file.hpp"
 #include "hoshidicts/query.hpp"
+#include "json/form_of.hpp"
 
 // The views below point into the dictionaries' blob files, and stay valid
 // while the BlobPins their query read them with lives.
@@ -29,16 +30,17 @@ struct RawGlossary {
   bool drop_form_of = false;
 };
 
-// A form-of reference of a row the query found, read only for a pack that
-// follows them (docs/languages.md, section 9.10).
-struct RawReference {
-  std::string_view form_of;
-  // Its rules: RawTerms::reference_rules[first_rule, first_rule + rule_count).
-  uint32_t first_rule;
-  uint32_t rule_count;
-  // The row's dictionary and part-of-speech tags, for the filter (9.4).
+// A row the query found whose definitions hold form-of references, read
+// only for a pack that follows them (docs/languages.md, section 9.10). The
+// references stay in its glossary; DictionaryQuery::read_form_of reads them.
+struct RawFormOfRow {
   const std::string* dict_name;
-  std::string_view row_rules;
+  // The row's part-of-speech tags, for the filter (9.4).
+  std::string_view rules;
+  const BlobFile* blobs;
+  uint64_t compressed_offset;
+  uint32_t compressed_size;
+  const ZSTD_DDict_s* zstd_dict;
 };
 
 struct RawTerm {
@@ -65,17 +67,21 @@ struct RawTerms {
   std::vector<RawTerm> terms;
   std::vector<RawGlossary> glossaries;
   std::unique_ptr<NormalizedReadings> normalized;  // only with a reading normalizer
-  // The form-of references of every row found, in order, when the query
-  // follows them; a row that is only references is here and not in `terms`.
-  std::vector<RawReference> references;
-  std::vector<std::string_view> reference_rules;
+  // The rows found whose definitions hold form-of references, in order, when
+  // the query follows them; a row that is only references is here and not
+  // in `terms`.
+  std::vector<RawFormOfRow> form_of_rows;
 };
 
-// The raw terms of every loaded term dictionary for `expression`, for the
-// library's own tools (hoshidicts-cli eval-language), as a lookup reads them.
+// The raw terms of every loaded term dictionary for `expression`, and the
+// form-of references of a row, for the library's own tools (hoshidicts-cli
+// eval-language), as a lookup reads them.
 struct QueryAccess {
   static RawTerms query_raw(const DictionaryQuery& query, const std::string& expression, BlobPins& pins,
                             bool follow_form_of) {
     return query.query_raw(expression, pins, DictionaryQuery::Selection{}, false, nullptr, follow_form_of);
+  }
+  static void read_form_of(const RawFormOfRow& row, BlobPins& pins, std::vector<FormOfReference>& out) {
+    DictionaryQuery::read_form_of(row, pins, out);
   }
 };

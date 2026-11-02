@@ -240,6 +240,14 @@ void test_parser() {
   check(references(R"("not an array")", &other).empty() && !other, "a value that is not an array");
   check(references(R"(["a]",["b\"]",["c"]]])") == "b\"][c]", "brackets and quotes inside strings");
 
+  using Kind = yomitan_parser::FormOfKind;
+  check(yomitan_parser::form_of_kind(R"(["a",{"type":"text","text":"b"}])") == Kind::None, "kind: no reference");
+  check(yomitan_parser::form_of_kind(R"([["walk",["past"]],["walk",[]]])") == Kind::Only, "kind: only references");
+  check(yomitan_parser::form_of_kind(R"([["walk",["past"]],[],"d"])") == Kind::WithOthers, "kind: beside a definition");
+  check(yomitan_parser::form_of_kind(R"(["d",["walk",["past"]]])") == Kind::WithOthers, "kind: a definition first");
+  check(yomitan_parser::form_of_kind(R"([[],["",["x"]],"d"])") == Kind::None, "kind: arrays that name no term");
+  check(yomitan_parser::form_of_kind(R"([[],["walk"]])") == Kind::Only, "kind: a reference beside an array that is none");
+
   check(yomitan_parser::without_form_of(R"(["a",["b",["c"]],"d"])") == R"(["a","d"])", "references are dropped");
   check(yomitan_parser::without_form_of(R"([["b",[]]])") == "[]", "only references leave an empty list");
   check(yomitan_parser::without_form_of(R"([ "a" , {"k":[1,["x",["y"]]]} ])") == R"(["a",{"k":[1,["x",["y"]]]}])",

@@ -602,6 +602,7 @@ void count_followed_false_candidates(const DictionaryQuery& query, const hoshidi
   std::map<std::string, std::vector<size_t>> candidates;
   std::map<std::string, std::vector<size_t>> referenced;
   BlobPins pins;
+  std::vector<FormOfReference> references;
   for (const auto& [text, which] : by_text) {
     const RawTerms raw = QueryAccess::query_raw(query, text, pins, true);
     for (size_t i : which) {
@@ -613,8 +614,11 @@ void count_followed_false_candidates(const DictionaryQuery& query, const hoshidi
         return any || (bits & conditions) != 0;
       });
       if (shown) candidates[text].push_back(i);
-      for (const RawReference& reference : raw.references) {
-        if (any || (bits_of(reference.row_rules) & conditions) != 0) referenced[std::string(reference.form_of)].push_back(i);
+      for (const RawFormOfRow& row : raw.form_of_rows) {
+        if (!any && (bits_of(row.rules) & conditions) == 0) continue;
+        references.clear();
+        QueryAccess::read_form_of(row, pins, references);
+        for (const auto& reference : references) referenced[reference.form_of].push_back(i);
       }
     }
   }
