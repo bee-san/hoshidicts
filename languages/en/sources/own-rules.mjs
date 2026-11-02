@@ -7,29 +7,28 @@
 //   node languages/en/sources/own-rules.mjs
 //
 // Conditions follow the dictionary tags of Yomitan-format English
-// dictionaries (kaikki-to-yomitan writes `n`, `v`, `adj`, `adv`, `name`,
-// `pron`, `det`, `conj` in a term's rules). `ns` and `np` split nouns so a
-// plural rule never applies to its own output. Rules whose output may be any
-// word name every part of speech instead of none, so a form they make never
-// matches an entry without one (the non-lemma entries of kaikki-to-yomitan
-// dictionaries, which only point at their lemma).
+// dictionaries: wiktionary-to-yomitan writes `n`, `v`, `adj` and `adv` in a
+// term's rules and leaves them empty for pronouns, names, determiners and the
+// other closed classes. `ns` and `np` split nouns so a plural rule never
+// applies to its own output. Rules whose output may be a word of any class
+// (possessives and other clitics) give no conditions, so they reach entries
+// with empty rules (she's -> she, someone's -> someone, Mary's -> Mary).
 
 import {writeFileSync} from 'node:fs';
 import {dirname, join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {formatTransforms} from '../../../tools/lib/json.mjs';
 
+// The conditions Yomitan's English rules also define have Yomitan's names and
+// shapes (v covers v_phr), so the two files merge (section 14 step 5).
 const conditions = {
-    v: {name: 'Verb', isDictionaryForm: true},
-    n: {name: 'Noun', isDictionaryForm: true, subConditions: ['ns', 'np']},
-    ns: {name: 'Noun, singular', isDictionaryForm: true},
-    np: {name: 'Noun, plural', isDictionaryForm: true},
+    v: {name: 'Verb', isDictionaryForm: true, subConditions: ['v_phr']},
+    v_phr: {name: 'Phrasal verb', isDictionaryForm: true},
+    n: {name: 'Noun', isDictionaryForm: true, subConditions: ['np', 'ns']},
+    np: {name: 'Noun plural', isDictionaryForm: true},
+    ns: {name: 'Noun singular', isDictionaryForm: true},
     adj: {name: 'Adjective', isDictionaryForm: true},
     adv: {name: 'Adverb', isDictionaryForm: true},
-    name: {name: 'Proper noun', isDictionaryForm: true},
-    pron: {name: 'Pronoun', isDictionaryForm: true},
-    det: {name: 'Determiner', isDictionaryForm: true},
-    conj: {name: 'Conjunction', isDictionaryForm: true},
 };
 
 const words = (text) => text.trim().split(/\s+/);
@@ -48,16 +47,20 @@ const phrasalFollowers = [...new Set([...particles, ...words(`
     it me you him her us them one something someone somebody anything anyone everything nothing
     my your his its our their
     myself yourself himself herself itself ourselves yourselves themselves oneself`)])];
-// Particles that can follow the verb's object (*turn it off*, *put Mary's coat on*).
-const separableParticles = words(`
-    about across along apart around aside away back behind by down forth forward home in off on out over round
-    through together up`);
-// Words that end an object before a particle: prepositions, determiners (the
-// object of *put the book on the table* is a prepositional phrase more often
-// than *the book* is put on), conjunctions, auxiliaries and the particles
-// themselves (*look up the word in*).
+// Particles that follow the verb's object (*turn it off*, *looked the word up*).
+// In, on, over, through, by, round, around and about are left out: after an
+// object they mostly start a prepositional phrase (*put her foot on the table*,
+// *held him by the arm*), and a lookup cannot see the words after the
+// particle. Counted in 20 public-domain novels from Project Gutenberg: where
+// *verb + particle* is a dictionary entry, *verb the/his/... noun particle*
+// was followed by a determiner or a name 72% of the time for in, 81% for on,
+// 75% for over, and 0-10% for up, out, down, away, back, aside, home and
+// together (off 34%); with a pronoun object, 54% for in, 64% for on, 2-9% for
+// up, out, down, away and back, 13% for off (README.md).
+const separableParticles = words('up out down off away back aside apart home together forth forward');
+// Words that end an object before a particle: prepositions and particles
+// (*look up the word in*), conjunctions, auxiliaries and negation.
 const objectGuards = [...new Set([...particles, ...words(`
-    a an the my your his its our their these those every each no some any all both either neither another such
     during near since than till until via
     and or nor but so yet because if unless although though whether while when where why how what which who whom whose
     am is are was were be been being have has had do does did will would shall should can could may might must
@@ -358,6 +361,9 @@ const pastRules = [
     suffix('ied', 'y', [], V, {stemMinLength: 1}),
     ...doubled.map((c) => suffix(`${c}${c}ed`, c, [], V, {stemMinLength: 1})),
     suffix('cked', 'c', [], V, {stemMinLength: 1}),
+    // spec -> specced, sic -> sicced; an abbreviation verb with an apostrophe (cc'ed, OK'ed).
+    suffix('cced', 'c', [], V, {stemMinLength: 1}),
+    suffix("'ed", '', [], V, {stemMinLength: 1}),
     wholeWord('was', 'be', [], V),
     wholeWord('were', 'be', [], V),
     wholeWord('had', 'have', [], V),
@@ -366,8 +372,14 @@ const pastRules = [
     wholeWord('should', 'shall', [], V),
     wholeWord('might', 'may', [], V),
     ...irregularRules(pastPairs, [], V),
-    // Compounds of the whole-word forms.
-    ...words('floodlit spotlit backlit flashlit relit').map((w) => wholeWord(w, `${w.slice(0, -3)}light`, [], V)),
+];
+
+// Compounds of the whole-word forms: floodlit, moonlit, greenlit (a stem of
+// three letters keeps split and slit out), overate, underate. They get no
+// phrasal copy, which could not keep the stem minimum (split up).
+const pastCompoundRules = [
+    suffix('lit', 'light', [], V, {stemMinLength: 3}),
+    wholeWord('relit', 'relight', [], V),
     ...words('overate underate').map((w) => wholeWord(w, `${w.slice(0, -3)}eat`, [], V)),
 ];
 
@@ -384,15 +396,20 @@ const ingRules = [
     suffix('ying', 'ie', [], V, {stemMinLength: 1}),
     ...doubled.map((c) => suffix(`${c}${c}ing`, c, [], V, {stemMinLength: 1})),
     suffix('cking', 'c', [], V, {stemMinLength: 1}),
+    suffix('ccing', 'c', [], V, {stemMinLength: 1}),
+    suffix("'ing", '', [], V, {stemMinLength: 1}),
 ];
 
+// Plain -er and -est also make adverbs (sooner, soonest); the other endings
+// only adjectives, so butter, summer and upper do not reach but, sum and up.
 const AA = ['adj', 'adv'];
+const A = ['adj'];
 const comparativeRules = [
     suffix('er', '', [], AA, {stemMinLength: 2}),
-    suffix('r', '', [], AA, {stemMinLength: 2, stemEndsWith: '[e]'}),
-    suffix('ier', 'y', [], AA, {stemMinLength: 1}),
-    suffix('ier', 'ey', [], AA, {stemMinLength: 1}),
-    ...doubledComparative.map((c) => suffix(`${c}${c}er`, c, [], AA, {stemMinLength: 1})),
+    suffix('r', '', [], A, {stemMinLength: 2, stemEndsWith: '[e]'}),
+    suffix('ier', 'y', [], A, {stemMinLength: 1}),
+    suffix('ier', 'ey', [], A, {stemMinLength: 1}),
+    ...doubledComparative.map((c) => suffix(`${c}${c}er`, c, [], A, {stemMinLength: 1})),
     wholeWord('better', 'good', [], AA),
     wholeWord('better', 'well', [], AA),
     wholeWord('worse', 'bad', [], AA),
@@ -408,11 +425,11 @@ const comparativeRules = [
 
 const superlativeRules = [
     suffix('est', '', [], AA, {stemMinLength: 2}),
-    suffix('st', '', [], AA, {stemMinLength: 2, stemEndsWith: '[e]'}),
-    suffix('iest', 'y', [], AA, {stemMinLength: 1}),
-    suffix('iest', 'ey', [], AA, {stemMinLength: 1}),
-    suffix('most', '', [], AA, {stemMinLength: 3}),
-    ...doubledComparative.map((c) => suffix(`${c}${c}est`, c, [], AA, {stemMinLength: 1})),
+    suffix('st', '', [], A, {stemMinLength: 2, stemEndsWith: '[e]'}),
+    suffix('iest', 'y', [], A, {stemMinLength: 1}),
+    suffix('iest', 'ey', [], A, {stemMinLength: 1}),
+    suffix('most', '', [], A, {stemMinLength: 3}),
+    ...doubledComparative.map((c) => suffix(`${c}${c}est`, c, [], A, {stemMinLength: 1})),
     wholeWord('best', 'good', [], AA),
     wholeWord('best', 'well', [], AA),
     wholeWord('worst', 'bad', [], AA),
@@ -427,19 +444,18 @@ const superlativeRules = [
 ];
 
 // Apostrophes reach the rules as U+0027 (the normalizeApostrophes preprocessor).
-const possessor = ['n', 'name', 'pron'];
 const possessiveRules = [
-    suffix("'s", '', [], possessor, {stemMinLength: 1}),
-    suffix("'", '', [], possessor, {stemMinLength: 1, stemEndsWith: '[sSzZ]'}),
+    suffix("'s", '', [], [], {stemMinLength: 1}),
+    suffix("'", '', [], [], {stemMinLength: 1, stemEndsWith: '[sSzZ]'}),
 ];
 
-// Clitics: the host word keeps its own part of speech.
-const anyWord = ['n', 'name', 'pron', 'det', 'adj', 'adv', 'conj', 'v'];
+// Clitics: the host word keeps its own part of speech, so the outputs have no
+// conditions. 's is is, has or us after the words below (it's, let's); after
+// other words the possessive rule reads it. These whole words are longer
+// matches than the possessive's 's, so their trace is the one a lookup shows.
 const contractionRules = [
-    // 's for is, has or us after words that have no possessive (it's, let's);
-    // after a noun or name it is read as the possessive.
-    ...words("it that there here what where who how when why he she let").map((w) => wholeWord(`${w}'s`, w, [], anyWord)),
-    ...["'re", "'ve", "'ll", "'d", "'m"].map((clitic) => suffix(clitic, '', [], anyWord, {stemMinLength: 1})),
+    ...words('it that there here what where who how when why he she let').map((w) => wholeWord(`${w}'s`, w, [], [])),
+    ...["'re", "'ve", "'ll", "'d", "'m"].map((clitic) => suffix(clitic, '', [], [], {stemMinLength: 1})),
 ];
 
 const negativeRules = [
@@ -461,6 +477,11 @@ const negativeRules = [
 ];
 
 const droppedGRules = [suffix("in'", 'ing', [], [], {stemMinLength: 1})];
+
+// -'d for -ed in older verse (adorn'd, lov'd). The output has no conditions so
+// the past rules read it next; a stem of three letters keeps he'd and we'd
+// (would, had) from becoming heed and weed.
+const elidedEdRules = [suffix("'d", 'ed', [], [], {stemMinLength: 3})];
 
 const interposedObjectRules = [
     {type: 'interposedObject', particles: 'separableParticles', guardWords: 'objectGuards', conditionsIn: [], conditionsOut: []},
@@ -514,26 +535,39 @@ const archaicThirdPersonRules = [
     wholeWord('saith', 'say', [], V),
 ];
 
-/** The same endings on the first word of a multiword verb (*looked up*, *gave up on*). */
+const prefixWord = (inflected, deinflected) => {
+    ++ruleCount;
+    return {type: 'prefix', inflected: `${inflected} `, deinflected: `${deinflected} `, conditionsIn: [], conditionsOut: ['v']};
+};
+
+/**
+ * The same endings on the first word of a multiword verb (*looked up*, *gave
+ * up on*): a phrasal rule per suffix rule, and for a whole-word form (*was*,
+ * *ate*, *had*) a prefix rule on the word and a space (*had to* -> *have to*),
+ * so it never matches the end of a longer word.
+ */
 function withPhrasal(rules) {
     const seen = new Set();
     const out = [...rules];
     for (const rule of rules) {
-        const key = `${rule.inflected}\u0000${rule.deinflected}`;
+        const key = `${rule.type}\u0000${rule.inflected}\u0000${rule.deinflected}`;
         if (seen.has(key)) { continue; }
         seen.add(key);
-        out.push(phrasal(rule.inflected, rule.deinflected));
+        out.push(rule.type === 'wholeWord' ? prefixWord(rule.inflected, rule.deinflected) : phrasal(rule.inflected, rule.deinflected));
     }
     return out;
 }
 
+// Transforms that mean what one of Yomitan's English transforms means use its
+// id (3rd pers. sing. pres, dropped g, interposed object), so the two files
+// merge transform by transform; names and descriptions are this pack's.
 const transform = (id, name, description, rules, extra = {}) => ({id, name, description, source: 'own', ...extra, rules});
 
 const transforms = [
     transform('plural', 'plural', 'Plural form of a noun (books, boxes, cities, wolves, children, data).', pluralRules),
-    transform('thirdPerson', 'third-person singular', 'Third-person singular present of a verb (walks, watches, tries, is, has).', withPhrasal(thirdPersonRules)),
+    transform('3rd pers. sing. pres', 'third-person singular', 'Third-person singular present of a verb (walks, watches, tries, is, has).', withPhrasal(thirdPersonRules)),
     transform('present', 'present', 'Present tense of be other than the third-person singular (am, are).', withPhrasal(presentRules)),
-    transform('past', 'past', 'Past tense of a verb, and the past participle of a regular verb (walked, stopped, tried, went, could).', withPhrasal(pastRules)),
+    transform('past', 'past', 'Past tense of a verb, and the past participle of a regular verb (walked, stopped, tried, went, could).', [...withPhrasal(pastRules), ...pastCompoundRules]),
     transform('pastParticiple', 'past participle', 'Past participle of an irregular verb (taken, written, gone, been).', withPhrasal(pastParticipleRules)),
     transform('ing', '-ing', 'Present participle or gerund of a verb (walking, making, running, lying).', withPhrasal(ingRules)),
     transform('comparative', 'comparative', 'Comparative of an adjective or adverb (taller, nicer, happier, bigger, better).', comparativeRules),
@@ -541,8 +575,9 @@ const transforms = [
     transform('possessive', 'possessive', "Possessive of a noun or name (teacher's, James', dogs').", possessiveRules),
     transform('contraction', 'contraction', "A word with a contracted is, has, are, have, will, would, had or am ('s, 're, 've, 'll, 'd, 'm).", contractionRules),
     transform('negative', 'negative', "Negative contraction of an auxiliary (don't, isn't, can't, won't).", negativeRules),
-    transform('droppedG', 'dropped g', "Informal -in' for -ing (goin', nothin').", droppedGRules),
-    transform('interposedObject', 'interposed object', 'An object between a verb and its particle (turn it off, put Mary\'s coat on).', interposedObjectRules),
+    transform('dropped g', 'dropped g', "Informal -in' for -ing (goin', nothin').", droppedGRules),
+    transform('archaic', 'archaic', "-'d for -ed in older verse (adorn'd, lov'd).", elidedEdRules),
+    transform('interposed object', 'interposed object', 'An object between a verb and its particle (turn it off, put Mary\'s coat on).', interposedObjectRules),
     transform('placeholder', 'placeholder', "A pronoun written as the placeholder of a dictionary entry (his temper -> one's temper, let him down -> let someone down, enjoy himself -> enjoy oneself).", placeholderRules),
     transform('archaicSecondPerson', 'archaic second person', 'Early Modern English second-person singular (thou walkest, thou art, thou hast).', archaicSecondPersonRules, {optional: true}),
     transform('archaicThirdPerson', 'archaic third person', 'Early Modern English third-person singular (he walketh, he hath, he doth).', archaicThirdPersonRules, {optional: true}),

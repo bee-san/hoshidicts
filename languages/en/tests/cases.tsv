@@ -360,8 +360,8 @@ comparison	1	faster	fast	adv	*
 possessive	1	teacher's	teacher	n	possessive
 possessive	1	children's	child	n	plural|possessive
 possessive	1	dogs'	dog	n	plural|possessive
-possessive	1	James'	James	name	possessive
-possessive	1	Mary's	Mary	name	possessive
+possessive	1	James'	James	*	possessive
+possessive	1	Mary's	Mary	*	possessive
 possessive	1	everyone's	everyone	*	possessive
 possessive	1	mother’s	mother	n	possessive
 possessive	1	mothers-in-law's	mother-in-law	n	plural|possessive
@@ -408,6 +408,9 @@ dropped g	1	nothin'	nothing	*	*
 dropped g	1	somethin'	something	*	*
 dropped g	1	lovin'	love	*	*
 dropped g	1	runnin'	run	*	*
+archaic	1	adorn'd	adorn	v	past|archaic
+archaic	1	lov'd	love	v	past|archaic
+archaic	1	lov’d	love	v	past|archaic
 multiword verb	1	looked up	look up	*	past
 multiword verb	1	gave up	give up	*	past
 multiword verb	1	took off	take off	*	past
@@ -415,18 +418,25 @@ multiword verb	1	came up with	come up with	*	past
 multiword verb	1	ran into	run into	*	past
 multiword verb	1	broke down	break down	*	past
 multiword verb	1	picking up	pick up	*	ing
-multiword verb	1	puts on	put on	*	thirdPerson
+multiword verb	1	puts on	put on	*	3rd pers. sing. pres
 multiword verb	1	getting along	get along	*	ing
 multiword verb	1	kicked the bucket	kick the bucket	*	past
 multiword verb	1	made it	make it	*	past
-multiword verb	1	looks after	look after	*	thirdPerson
-multiword verb	1	turned it off	turn off	*	past|interposedObject
-multiword verb	1	picked her up	pick up	*	past|interposedObject
-multiword verb	1	put Mary's coat on	put on	*	interposedObject
-multiword verb	1	put Mary’s coat on	put on	*	interposedObject
-multiword verb	1	gave them back	give back	*	past|interposedObject
-multiword verb	1	threw it away	throw away	*	past|interposedObject
-multiword verb	1	turn that off	turn off	*	interposedObject
+multiword verb	1	looks after	look after	*	3rd pers. sing. pres
+multiword verb	1	turned it off	turn off	*	past|interposed object
+multiword verb	1	picked her up	pick up	*	past|interposed object
+multiword verb	1	put Mary's coat away	put away	*	interposed object
+multiword verb	1	turned Mary’s radio off	turn off	*	past|interposed object
+multiword verb	1	looked the word up	look up	*	past|interposed object
+multiword verb	1	turned the radio off	turn off	*	past|interposed object
+multiword verb	1	put the long-sleeved shirt away	put away	*	interposed object
+multiword verb	1	has to	have to	*	3rd pers. sing. pres
+multiword verb	1	had to	have to	*	past
+multiword verb	1	ate up	eat up	*	past
+multiword verb	1	was about to	be about to	*	past
+multiword verb	1	gave them back	give back	*	past|interposed object
+multiword verb	1	threw it away	throw away	*	past|interposed object
+multiword verb	1	turn that off	turn off	*	interposed object
 multiword verb	1	lost his temper	lose one's temper	*	placeholder|past
 multiword verb	1	made up her mind	make up one's mind	*	placeholder|past
 multiword verb	1	let him down	let someone down	*	placeholder
@@ -481,9 +491,24 @@ negatives	0	dying	dye	*	*
 negatives	0	lying	lye	*	*
 negatives	0	wont	will	*	*
 negatives	0	cant	can	*	*
+negatives	0	he'd	heed	*	*
+negatives	0	we'd	weed	*	*
+negatives	0	bed	b	*	*
+negatives	0	red	r	*	*
+negatives	0	west	w	*	*
+negatives	0	best	b	*	*
+negatives	0	her	h	*	*
+negatives	0	weddings	wed	*	*
+negatives	0	settings	set	*	*
 negatives	0	looked uptown	look uptown	*	*
 negatives	0	put the book on	put on	*	*
 negatives	0	saw the man in	see in	*	*
 negatives	0	look up the word in	look in	*	*
 negatives	0	looked at the man in	look in	*	*
 negatives	0	went to the store in	go in	*	*
+negatives	0	put her foot on	put on	*	*
+negatives	0	held him by	hold by	*	*
+negatives	0	turned their backs on	turn on	*	*
+negatives	0	create up	creeat up	*	*
+negatives	0	relay on	relie on	*	*
+negatives	0	split up	splight up	*	*

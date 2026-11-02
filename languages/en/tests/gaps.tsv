@@ -1,0 +1,9 @@
+# Known failures, reported and not enforced (docs/languages.md 12.1). The UniMorph rows are from the same
+# sample as corpus.tsv (UniMorph eng 66e0e9e, CC BY-SA 3.0, by the UniMorph contributors); README.md, Known gaps.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+# red -> rede: rede (to advise) is archaic; -d after a two-letter stem is not read, because bed and wed would become be and we
+verb past (frequent)	1	red	rede	v	*
+# stolen -> steale: steale is an obsolete spelling of steal; the rules give steal
+verb past participle (frequent)	1	stolen	steale	v	*
+# former -> fore: former is an adjective of its own; fore has no comparative in current English
+adjective comparative (frequent)	1	former	fore	adj	*

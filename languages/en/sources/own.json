@@ -3,19 +3,24 @@
   "conditions": {
     "v": {
       "name": "Verb",
+      "isDictionaryForm": true,
+      "subConditions": ["v_phr"]
+    },
+    "v_phr": {
+      "name": "Phrasal verb",
       "isDictionaryForm": true
     },
     "n": {
       "name": "Noun",
       "isDictionaryForm": true,
-      "subConditions": ["ns", "np"]
-    },
-    "ns": {
-      "name": "Noun, singular",
-      "isDictionaryForm": true
+      "subConditions": ["np", "ns"]
     },
     "np": {
-      "name": "Noun, plural",
+      "name": "Noun plural",
+      "isDictionaryForm": true
+    },
+    "ns": {
+      "name": "Noun singular",
       "isDictionaryForm": true
     },
     "adj": {
@@ -25,28 +30,12 @@
     "adv": {
       "name": "Adverb",
       "isDictionaryForm": true
-    },
-    "name": {
-      "name": "Proper noun",
-      "isDictionaryForm": true
-    },
-    "pron": {
-      "name": "Pronoun",
-      "isDictionaryForm": true
-    },
-    "det": {
-      "name": "Determiner",
-      "isDictionaryForm": true
-    },
-    "conj": {
-      "name": "Conjunction",
-      "isDictionaryForm": true
     }
   },
   "wordLists": {
     "phrasalFollowers": ["about", "above", "across", "after", "against", "ahead", "along", "alongside", "among", "apart", "around", "as", "aside", "at", "away", "back", "before", "behind", "below", "beneath", "beside", "between", "beyond", "by", "down", "for", "forth", "forward", "forwards", "from", "home", "in", "inside", "into", "like", "of", "off", "on", "onto", "out", "outside", "over", "past", "round", "through", "throughout", "to", "together", "toward", "towards", "under", "underneath", "up", "upon", "with", "within", "without", "a", "an", "the", "no", "some", "all", "any", "and", "it", "me", "you", "him", "her", "us", "them", "one", "something", "someone", "somebody", "anything", "anyone", "everything", "nothing", "my", "your", "his", "its", "our", "their", "myself", "yourself", "himself", "herself", "itself", "ourselves", "yourselves", "themselves", "oneself"],
-    "separableParticles": ["about", "across", "along", "apart", "around", "aside", "away", "back", "behind", "by", "down", "forth", "forward", "home", "in", "off", "on", "out", "over", "round", "through", "together", "up"],
-    "objectGuards": ["about", "above", "across", "after", "against", "ahead", "along", "alongside", "among", "apart", "around", "as", "aside", "at", "away", "back", "before", "behind", "below", "beneath", "beside", "between", "beyond", "by", "down", "for", "forth", "forward", "forwards", "from", "home", "in", "inside", "into", "like", "of", "off", "on", "onto", "out", "outside", "over", "past", "round", "through", "throughout", "to", "together", "toward", "towards", "under", "underneath", "up", "upon", "with", "within", "without", "a", "an", "the", "my", "your", "his", "its", "our", "their", "these", "those", "every", "each", "no", "some", "any", "all", "both", "either", "neither", "another", "such", "during", "near", "since", "than", "till", "until", "via", "and", "or", "nor", "but", "so", "yet", "because", "if", "unless", "although", "though", "whether", "while", "when", "where", "why", "how", "what", "which", "who", "whom", "whose", "am", "is", "are", "was", "were", "be", "been", "being", "have", "has", "had", "do", "does", "did", "will", "would", "shall", "should", "can", "could", "may", "might", "must", "not", "never"]
+    "separableParticles": ["up", "out", "down", "off", "away", "back", "aside", "apart", "home", "together", "forth", "forward"],
+    "objectGuards": ["about", "above", "across", "after", "against", "ahead", "along", "alongside", "among", "apart", "around", "as", "aside", "at", "away", "back", "before", "behind", "below", "beneath", "beside", "between", "beyond", "by", "down", "for", "forth", "forward", "forwards", "from", "home", "in", "inside", "into", "like", "of", "off", "on", "onto", "out", "outside", "over", "past", "round", "through", "throughout", "to", "together", "toward", "towards", "under", "underneath", "up", "upon", "with", "within", "without", "during", "near", "since", "than", "till", "until", "via", "and", "or", "nor", "but", "so", "yet", "because", "if", "unless", "although", "though", "whether", "while", "when", "where", "why", "how", "what", "which", "who", "whom", "whose", "am", "is", "are", "was", "were", "be", "been", "being", "have", "has", "had", "do", "does", "did", "will", "would", "shall", "should", "can", "could", "may", "might", "must", "not", "never"]
   },
   "transforms": [
     {
@@ -113,7 +102,7 @@
       ]
     },
     {
-      "id": "thirdPerson",
+      "id": "3rd pers. sing. pres",
       "name": "third-person singular",
       "description": "Third-person singular present of a verb (walks, watches, tries, is, has).",
       "source": "own",
@@ -142,8 +131,8 @@
         {"type": "phrasal", "inflected": "ies", "deinflected": "y", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "ies", "deinflected": "ey", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "sses", "deinflected": "s", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "phrasal", "inflected": "is", "deinflected": "be", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "phrasal", "inflected": "has", "deinflected": "have", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]}
+        {"type": "prefix", "inflected": "is ", "deinflected": "be ", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "has ", "deinflected": "have ", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -154,8 +143,8 @@
       "rules": [
         {"type": "wholeWord", "inflected": "am", "deinflected": "be", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "are", "deinflected": "be", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "phrasal", "inflected": "am", "deinflected": "be", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "phrasal", "inflected": "are", "deinflected": "be", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]}
+        {"type": "prefix", "inflected": "am ", "deinflected": "be ", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "are ", "deinflected": "be ", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -182,6 +171,8 @@
         {"type": "suffix", "inflected": "vved", "deinflected": "v", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "suffix", "inflected": "zzed", "deinflected": "z", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "suffix", "inflected": "cked", "deinflected": "c", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "cced", "deinflected": "c", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "'ed", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "wholeWord", "inflected": "was", "deinflected": "be", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "were", "deinflected": "be", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "had", "deinflected": "have", "conditionsIn": [], "conditionsOut": ["v"]},
@@ -323,13 +314,6 @@
         {"type": "suffix", "inflected": "thought", "deinflected": "think", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "wrought", "deinflected": "work", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "besought", "deinflected": "beseech", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "floodlit", "deinflected": "floodlight", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "spotlit", "deinflected": "spotlight", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "backlit", "deinflected": "backlight", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "flashlit", "deinflected": "flashlight", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "relit", "deinflected": "relight", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "overate", "deinflected": "overeat", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "underate", "deinflected": "undereat", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "ed", "deinflected": "", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "d", "deinflected": "", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "ied", "deinflected": "y", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
@@ -348,28 +332,30 @@
         {"type": "phrasal", "inflected": "vved", "deinflected": "v", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "zzed", "deinflected": "z", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "cked", "deinflected": "c", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "phrasal", "inflected": "was", "deinflected": "be", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "phrasal", "inflected": "were", "deinflected": "be", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "phrasal", "inflected": "had", "deinflected": "have", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "phrasal", "inflected": "could", "deinflected": "can", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "phrasal", "inflected": "would", "deinflected": "will", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "phrasal", "inflected": "should", "deinflected": "shall", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "phrasal", "inflected": "might", "deinflected": "may", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "phrasal", "inflected": "ate", "deinflected": "eat", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "phrasal", "inflected": "bit", "deinflected": "bite", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "phrasal", "inflected": "cced", "deinflected": "c", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "phrasal", "inflected": "'ed", "deinflected": "", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "was ", "deinflected": "be ", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "were ", "deinflected": "be ", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "had ", "deinflected": "have ", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "could ", "deinflected": "can ", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "would ", "deinflected": "will ", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "should ", "deinflected": "shall ", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "might ", "deinflected": "may ", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "ate ", "deinflected": "eat ", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "bit ", "deinflected": "bite ", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "did", "deinflected": "do", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "dug", "deinflected": "dig", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "fed", "deinflected": "feed", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "got", "deinflected": "get", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "phrasal", "inflected": "hid", "deinflected": "hide", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "phrasal", "inflected": "lay", "deinflected": "lie", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "hid ", "deinflected": "hide ", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "lay ", "deinflected": "lie ", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "led", "deinflected": "lead", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "phrasal", "inflected": "lit", "deinflected": "light", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "lit ", "deinflected": "light ", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "met", "deinflected": "meet", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "ran", "deinflected": "run", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "sat", "deinflected": "sit", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "saw", "deinflected": "see", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "phrasal", "inflected": "won", "deinflected": "win", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "won ", "deinflected": "win ", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "bade", "deinflected": "bid", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "bent", "deinflected": "bend", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "bled", "deinflected": "bleed", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
@@ -379,7 +365,7 @@
         {"type": "phrasal", "inflected": "came", "deinflected": "come", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "chid", "deinflected": "chide", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "clad", "deinflected": "clothe", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "phrasal", "inflected": "dove", "deinflected": "dive", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "dove ", "deinflected": "dive ", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "drew", "deinflected": "draw", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "fell", "deinflected": "fall", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "felt", "deinflected": "feel", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
@@ -489,13 +475,10 @@
         {"type": "phrasal", "inflected": "thought", "deinflected": "think", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "wrought", "deinflected": "work", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "besought", "deinflected": "beseech", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "phrasal", "inflected": "floodlit", "deinflected": "floodlight", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "phrasal", "inflected": "spotlit", "deinflected": "spotlight", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "phrasal", "inflected": "backlit", "deinflected": "backlight", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "phrasal", "inflected": "flashlit", "deinflected": "flashlight", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "phrasal", "inflected": "relit", "deinflected": "relight", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "phrasal", "inflected": "overate", "deinflected": "overeat", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "phrasal", "inflected": "underate", "deinflected": "undereat", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]}
+        {"type": "suffix", "inflected": "lit", "deinflected": "light", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 3},
+        {"type": "wholeWord", "inflected": "relit", "deinflected": "relight", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "overate", "deinflected": "overeat", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "underate", "deinflected": "undereat", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -567,7 +550,7 @@
         {"type": "suffix", "inflected": "written", "deinflected": "write", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "forsaken", "deinflected": "forsake", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "stricken", "deinflected": "strike", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "phrasal", "inflected": "been", "deinflected": "be", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "been ", "deinflected": "be ", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "born", "deinflected": "bear", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "done", "deinflected": "do", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "gone", "deinflected": "go", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
@@ -657,9 +640,11 @@
         {"type": "suffix", "inflected": "vving", "deinflected": "v", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "suffix", "inflected": "zzing", "deinflected": "z", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "suffix", "inflected": "cking", "deinflected": "c", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "ccing", "deinflected": "c", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "'ing", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "phrasal", "inflected": "ing", "deinflected": "", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "ing", "deinflected": "e", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "phrasal", "inflected": "eying", "deinflected": "eye", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "eying ", "deinflected": "eye ", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "ying", "deinflected": "ie", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "bbing", "deinflected": "b", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "dding", "deinflected": "d", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
@@ -675,7 +660,9 @@
         {"type": "phrasal", "inflected": "tting", "deinflected": "t", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "vving", "deinflected": "v", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "phrasal", "inflected": "zzing", "deinflected": "z", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "phrasal", "inflected": "cking", "deinflected": "c", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]}
+        {"type": "phrasal", "inflected": "cking", "deinflected": "c", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "phrasal", "inflected": "ccing", "deinflected": "c", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "phrasal", "inflected": "'ing", "deinflected": "", "followedBy": "phrasalFollowers", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -685,16 +672,16 @@
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj", "adv"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "r", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj", "adv"], "stemMinLength": 2, "stemEndsWith": "[e]"},
-        {"type": "suffix", "inflected": "ier", "deinflected": "y", "conditionsIn": [], "conditionsOut": ["adj", "adv"], "stemMinLength": 1},
-        {"type": "suffix", "inflected": "ier", "deinflected": "ey", "conditionsIn": [], "conditionsOut": ["adj", "adv"], "stemMinLength": 1},
-        {"type": "suffix", "inflected": "bber", "deinflected": "b", "conditionsIn": [], "conditionsOut": ["adj", "adv"], "stemMinLength": 1},
-        {"type": "suffix", "inflected": "dder", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["adj", "adv"], "stemMinLength": 1},
-        {"type": "suffix", "inflected": "gger", "deinflected": "g", "conditionsIn": [], "conditionsOut": ["adj", "adv"], "stemMinLength": 1},
-        {"type": "suffix", "inflected": "mmer", "deinflected": "m", "conditionsIn": [], "conditionsOut": ["adj", "adv"], "stemMinLength": 1},
-        {"type": "suffix", "inflected": "nner", "deinflected": "n", "conditionsIn": [], "conditionsOut": ["adj", "adv"], "stemMinLength": 1},
-        {"type": "suffix", "inflected": "pper", "deinflected": "p", "conditionsIn": [], "conditionsOut": ["adj", "adv"], "stemMinLength": 1},
-        {"type": "suffix", "inflected": "tter", "deinflected": "t", "conditionsIn": [], "conditionsOut": ["adj", "adv"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "r", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemEndsWith": "[e]"},
+        {"type": "suffix", "inflected": "ier", "deinflected": "y", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "ier", "deinflected": "ey", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "bber", "deinflected": "b", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "dder", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "gger", "deinflected": "g", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "mmer", "deinflected": "m", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "nner", "deinflected": "n", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "pper", "deinflected": "p", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "tter", "deinflected": "t", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 1},
         {"type": "wholeWord", "inflected": "better", "deinflected": "good", "conditionsIn": [], "conditionsOut": ["adj", "adv"]},
         {"type": "wholeWord", "inflected": "better", "deinflected": "well", "conditionsIn": [], "conditionsOut": ["adj", "adv"]},
         {"type": "wholeWord", "inflected": "worse", "deinflected": "bad", "conditionsIn": [], "conditionsOut": ["adj", "adv"]},
@@ -715,17 +702,17 @@
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "est", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj", "adv"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "st", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj", "adv"], "stemMinLength": 2, "stemEndsWith": "[e]"},
-        {"type": "suffix", "inflected": "iest", "deinflected": "y", "conditionsIn": [], "conditionsOut": ["adj", "adv"], "stemMinLength": 1},
-        {"type": "suffix", "inflected": "iest", "deinflected": "ey", "conditionsIn": [], "conditionsOut": ["adj", "adv"], "stemMinLength": 1},
-        {"type": "suffix", "inflected": "most", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj", "adv"], "stemMinLength": 3},
-        {"type": "suffix", "inflected": "bbest", "deinflected": "b", "conditionsIn": [], "conditionsOut": ["adj", "adv"], "stemMinLength": 1},
-        {"type": "suffix", "inflected": "ddest", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["adj", "adv"], "stemMinLength": 1},
-        {"type": "suffix", "inflected": "ggest", "deinflected": "g", "conditionsIn": [], "conditionsOut": ["adj", "adv"], "stemMinLength": 1},
-        {"type": "suffix", "inflected": "mmest", "deinflected": "m", "conditionsIn": [], "conditionsOut": ["adj", "adv"], "stemMinLength": 1},
-        {"type": "suffix", "inflected": "nnest", "deinflected": "n", "conditionsIn": [], "conditionsOut": ["adj", "adv"], "stemMinLength": 1},
-        {"type": "suffix", "inflected": "ppest", "deinflected": "p", "conditionsIn": [], "conditionsOut": ["adj", "adv"], "stemMinLength": 1},
-        {"type": "suffix", "inflected": "ttest", "deinflected": "t", "conditionsIn": [], "conditionsOut": ["adj", "adv"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "st", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemEndsWith": "[e]"},
+        {"type": "suffix", "inflected": "iest", "deinflected": "y", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "iest", "deinflected": "ey", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "most", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 3},
+        {"type": "suffix", "inflected": "bbest", "deinflected": "b", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "ddest", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "ggest", "deinflected": "g", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "mmest", "deinflected": "m", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "nnest", "deinflected": "n", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "ppest", "deinflected": "p", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "ttest", "deinflected": "t", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 1},
         {"type": "wholeWord", "inflected": "best", "deinflected": "good", "conditionsIn": [], "conditionsOut": ["adj", "adv"]},
         {"type": "wholeWord", "inflected": "best", "deinflected": "well", "conditionsIn": [], "conditionsOut": ["adj", "adv"]},
         {"type": "wholeWord", "inflected": "worst", "deinflected": "bad", "conditionsIn": [], "conditionsOut": ["adj", "adv"]},
@@ -745,8 +732,8 @@
       "description": "Possessive of a noun or name (teacher's, James', dogs').",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "'s", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "name", "pron"], "stemMinLength": 1},
-        {"type": "suffix", "inflected": "'", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "name", "pron"], "stemMinLength": 1, "stemEndsWith": "[sSzZ]"}
+        {"type": "suffix", "inflected": "'s", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "'", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 1, "stemEndsWith": "[sSzZ]"}
       ]
     },
     {
@@ -755,24 +742,24 @@
       "description": "A word with a contracted is, has, are, have, will, would, had or am ('s, 're, 've, 'll, 'd, 'm).",
       "source": "own",
       "rules": [
-        {"type": "wholeWord", "inflected": "it's", "deinflected": "it", "conditionsIn": [], "conditionsOut": ["n", "name", "pron", "det", "adj", "adv", "conj", "v"]},
-        {"type": "wholeWord", "inflected": "that's", "deinflected": "that", "conditionsIn": [], "conditionsOut": ["n", "name", "pron", "det", "adj", "adv", "conj", "v"]},
-        {"type": "wholeWord", "inflected": "there's", "deinflected": "there", "conditionsIn": [], "conditionsOut": ["n", "name", "pron", "det", "adj", "adv", "conj", "v"]},
-        {"type": "wholeWord", "inflected": "here's", "deinflected": "here", "conditionsIn": [], "conditionsOut": ["n", "name", "pron", "det", "adj", "adv", "conj", "v"]},
-        {"type": "wholeWord", "inflected": "what's", "deinflected": "what", "conditionsIn": [], "conditionsOut": ["n", "name", "pron", "det", "adj", "adv", "conj", "v"]},
-        {"type": "wholeWord", "inflected": "where's", "deinflected": "where", "conditionsIn": [], "conditionsOut": ["n", "name", "pron", "det", "adj", "adv", "conj", "v"]},
-        {"type": "wholeWord", "inflected": "who's", "deinflected": "who", "conditionsIn": [], "conditionsOut": ["n", "name", "pron", "det", "adj", "adv", "conj", "v"]},
-        {"type": "wholeWord", "inflected": "how's", "deinflected": "how", "conditionsIn": [], "conditionsOut": ["n", "name", "pron", "det", "adj", "adv", "conj", "v"]},
-        {"type": "wholeWord", "inflected": "when's", "deinflected": "when", "conditionsIn": [], "conditionsOut": ["n", "name", "pron", "det", "adj", "adv", "conj", "v"]},
-        {"type": "wholeWord", "inflected": "why's", "deinflected": "why", "conditionsIn": [], "conditionsOut": ["n", "name", "pron", "det", "adj", "adv", "conj", "v"]},
-        {"type": "wholeWord", "inflected": "he's", "deinflected": "he", "conditionsIn": [], "conditionsOut": ["n", "name", "pron", "det", "adj", "adv", "conj", "v"]},
-        {"type": "wholeWord", "inflected": "she's", "deinflected": "she", "conditionsIn": [], "conditionsOut": ["n", "name", "pron", "det", "adj", "adv", "conj", "v"]},
-        {"type": "wholeWord", "inflected": "let's", "deinflected": "let", "conditionsIn": [], "conditionsOut": ["n", "name", "pron", "det", "adj", "adv", "conj", "v"]},
-        {"type": "suffix", "inflected": "'re", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "name", "pron", "det", "adj", "adv", "conj", "v"], "stemMinLength": 1},
-        {"type": "suffix", "inflected": "'ve", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "name", "pron", "det", "adj", "adv", "conj", "v"], "stemMinLength": 1},
-        {"type": "suffix", "inflected": "'ll", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "name", "pron", "det", "adj", "adv", "conj", "v"], "stemMinLength": 1},
-        {"type": "suffix", "inflected": "'d", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "name", "pron", "det", "adj", "adv", "conj", "v"], "stemMinLength": 1},
-        {"type": "suffix", "inflected": "'m", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "name", "pron", "det", "adj", "adv", "conj", "v"], "stemMinLength": 1}
+        {"type": "wholeWord", "inflected": "it's", "deinflected": "it", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "that's", "deinflected": "that", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "there's", "deinflected": "there", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "here's", "deinflected": "here", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "what's", "deinflected": "what", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "where's", "deinflected": "where", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "who's", "deinflected": "who", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "how's", "deinflected": "how", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "when's", "deinflected": "when", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "why's", "deinflected": "why", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "he's", "deinflected": "he", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "she's", "deinflected": "she", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "let's", "deinflected": "let", "conditionsIn": [], "conditionsOut": []},
+        {"type": "suffix", "inflected": "'re", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "'ve", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "'ll", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "'d", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "'m", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 1}
       ]
     },
     {
@@ -799,7 +786,7 @@
       ]
     },
     {
-      "id": "droppedG",
+      "id": "dropped g",
       "name": "dropped g",
       "description": "Informal -in' for -ing (goin', nothin').",
       "source": "own",
@@ -808,7 +795,16 @@
       ]
     },
     {
-      "id": "interposedObject",
+      "id": "archaic",
+      "name": "archaic",
+      "description": "-'d for -ed in older verse (adorn'd, lov'd).",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "'d", "deinflected": "ed", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 3}
+      ]
+    },
+    {
+      "id": "interposed object",
       "name": "interposed object",
       "description": "An object between a verb and its particle (turn it off, put Mary's coat on).",
       "source": "own",
