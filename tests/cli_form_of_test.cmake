@@ -71,7 +71,7 @@ expect("eval-language: asTerm"
 ]=]
   eval-language fa ${CORPUS} --dictionary ${WORK}/forms)
 expect("eval-language --per-rule: follow"
-  [=[{"rows":6,"positives":6,"negatives":0,"recall":1,"negativesPassed":null,"falseCandidates":0.5,"firstRank":1,"perRule":[{"transform":"past","rule":0,"recovers":3,"falseCandidates":0,"breaks":0},{"transform":"neg","rule":0,"recovers":1,"falseCandidates":0,"breaks":0},{"transform":"present-yo","rule":0,"recovers":0,"falseCandidates":1,"breaks":0},{"transform":"present-yo","rule":1,"recovers":1,"falseCandidates":0,"breaks":0},{"transform":"dim","rule":0,"recovers":0,"falseCandidates":1,"breaks":0},{"transform":"plural","rule":0,"recovers":2,"falseCandidates":0,"breaks":0}]}
+  [=[{"rows":6,"positives":6,"negatives":0,"recall":1,"negativesPassed":null,"falseCandidates":0.5,"firstRank":1,"perRule":[{"transform":"past","rule":0,"recovers":3,"falseCandidates":0,"breaks":0},{"transform":"neg","rule":0,"recovers":1,"falseCandidates":0,"breaks":0},{"transform":"present-yo","rule":0,"recovers":0,"falseCandidates":1,"breaks":0},{"transform":"present-yo","rule":1,"recovers":1,"falseCandidates":0,"breaks":0},{"transform":"dim","rule":0,"recovers":0,"falseCandidates":1,"breaks":0},{"transform":"tie","rule":0,"recovers":0,"falseCandidates":0,"breaks":0},{"transform":"tie","rule":1,"recovers":0,"falseCandidates":0,"breaks":0},{"transform":"tie","rule":2,"recovers":0,"falseCandidates":0,"breaks":0},{"transform":"tie","rule":3,"recovers":0,"falseCandidates":0,"breaks":0},{"transform":"plural","rule":0,"recovers":2,"falseCandidates":0,"breaks":0}]}
 ]=]
   eval-language fo ${CORPUS} --dictionary ${WORK}/forms --per-rule)
 

@@ -404,18 +404,20 @@ std::vector<char> train_zstd_dict(const DictionarySource& source, const Files& f
 
 // A term record's form-of slot (src/json/form_of.hpp; docs/languages.md,
 // section 9.10): count 0 for a row without form-of references, as every
-// importer wrote before, otherwise one entry that says whether the row also
-// has other definitions.
+// importer wrote before, otherwise the flag entry.
 void write_form_of(std::vector<char>& out, yomitan_parser::FormOfKind kind) {
   if (kind == yomitan_parser::FormOfKind::None) {
     write_val<uint32_t>(out, 0);
     return;
   }
-  const std::string_view tag = kind == yomitan_parser::FormOfKind::WithOthers ? form_of_slot::with_definitions : "";
+  const uint32_t rules = kind == yomitan_parser::FormOfKind::WithOthers ? form_of_slot::with_definitions
+                                                                        : form_of_slot::only_references;
   write_val<uint32_t>(out, 1);
-  write_val<uint32_t>(out, static_cast<uint32_t>(tag.size()));
-  write_str(out, tag);
-  write_val<uint32_t>(out, 0);  // no rules
+  write_val<uint32_t>(out, 0);  // an empty formOf
+  write_val<uint32_t>(out, rules);
+  for (uint32_t i = 0; i < rules; ++i) {
+    write_val<uint32_t>(out, 0);  // an empty rule
+  }
 }
 
 ProcessedFile process_term_bank(std::string content, const ZSTD_CDict* cdict) {
