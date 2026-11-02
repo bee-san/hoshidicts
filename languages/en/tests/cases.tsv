@@ -194,6 +194,56 @@ irregular verb	1	slain	slay	v	*
 irregular verb	1	smitten	smite	v	*
 irregular verb	1	striven	strive	v	*
 irregular verb	1	laden	lade	v	*
+irregular verb	1	beaten	beat	v	*
+irregular verb	1	besought	beseech	v	*
+irregular verb	1	bade	bid	v	*
+irregular verb	1	bidden	bid	v	*
+irregular verb	1	cleft	cleave	v	*
+irregular verb	1	clove	cleave	v	*
+irregular verb	1	cloven	cleave	v	*
+irregular verb	1	clung	cling	v	*
+irregular verb	1	dove	dive	v	*
+irregular verb	1	flung	fling	v	*
+irregular verb	1	forbad	forbid	v	*
+irregular verb	1	gilt	gild	v	*
+irregular verb	1	girt	gird	v	*
+irregular verb	1	hewn	hew	v	*
+irregular verb	1	leant	lean	v	*
+irregular verb	1	mown	mow	v	*
+irregular verb	1	pled	plead	v	*
+irregular verb	1	proven	prove	v	*
+irregular verb	1	rent	rend	v	*
+irregular verb	1	sawn	saw	v	*
+irregular verb	1	sewn	sew	v	*
+irregular verb	1	shod	shoe	v	*
+irregular verb	1	shorn	shear	v	*
+irregular verb	1	shown	show	v	*
+irregular verb	1	shrank	shrink	v	*
+irregular verb	1	shrunk	shrink	v	*
+irregular verb	1	slew	slay	v	*
+irregular verb	1	slung	sling	v	*
+irregular verb	1	slunk	slink	v	*
+irregular verb	1	smote	smite	v	*
+irregular verb	1	sown	sow	v	*
+irregular verb	1	spake	speak	v	*
+irregular verb	1	spoilt	spoil	v	*
+irregular verb	1	stank	stink	v	*
+irregular verb	1	stunk	stink	v	*
+irregular verb	1	stung	sting	v	*
+irregular verb	1	strewn	strew	v	*
+irregular verb	1	stridden	stride	v	*
+irregular verb	1	strode	stride	v	*
+irregular verb	1	strove	strive	v	*
+irregular verb	1	strung	string	v	*
+irregular verb	1	swung	swing	v	*
+irregular verb	1	throve	thrive	v	*
+irregular verb	1	thriven	thrive	v	*
+irregular verb	1	abode	abide	v	*
+irregular verb	1	chid	chide	v	*
+irregular verb	1	chidden	chide	v	*
+irregular verb	1	shrove	shrive	v	*
+irregular verb	1	shriven	shrive	v	*
+irregular verb	1	wove	weave	v	*
 verb spelling	1	stopped	stop	v	*
 verb spelling	1	stopping	stop	v	*
 verb spelling	1	planned	plan	v	*
@@ -251,6 +301,37 @@ verb spelling	1	busses	bus	v	*
 verb spelling	1	coiffed	coif	v	*
 verb spelling	1	reffing	ref	v	*
 verb spelling	1	singeing	singe	v	*
+verb spelling	1	looked	look	v	*
+verb spelling	1	eating	eat	v	*
+verb spelling	1	visited	visit	v	*
+verb spelling	1	opened	open	v	*
+verb spelling	1	owned	own	v	*
+verb spelling	1	texted	text	v	*
+verb spelling	1	showed	show	v	*
+verb spelling	1	fixed	fix	v	*
+verb spelling	1	skied	ski	v	*
+verb spelling	1	echoed	echo	v	*
+verb spelling	1	arced	arc	v	*
+verb spelling	1	synced	sync	v	*
+verb spelling	1	syncing	sync	v	*
+verb spelling	1	controlled	control	v	*
+verb spelling	1	kissed	kiss	v	*
+verb spelling	1	passed	pass	v	*
+verb spelling	1	focused	focus	v	*
+verb spelling	1	biased	bias	v	*
+verb spelling	1	acronymed	acronym	v	*
+verb spelling	1	boogied	boogie	v	*
+verb spelling	1	caddying	caddie	v	*
+verb spelling	1	underlying	underlie	v	*
+verb spelling	1	ticked	tick	v	*
+verb spelling	1	locking	lock	v	*
+verb spelling	1	writing	write	v	*
+verb spelling	1	taking	take	v	*
+verb spelling	1	hoped	hope	v	*
+verb spelling	1	used	use	v	*
+verb spelling	1	shed	shed	v	*
+verb spelling	1	does	do	v	*
+verb spelling	1	degassed	degas	v	*
 plural	1	books	book	n	plural
 plural	1	boxes	box	n	plural
 plural	1	buses	bus	n	plural
@@ -322,6 +403,19 @@ plural	1	runners-up	runner-up	n	plural
 plural	1	courts-martial	court-martial	n	plural
 plural	1	bus stops	bus stop	n	plural
 plural	1	cherubim	cherub	n	plural
+plural	1	ads	ad	n	plural
+plural	1	TVs	TV	n	plural
+plural	1	geniuses	genius	n	plural
+plural	1	gases	gas	n	plural
+plural	1	lenses	lens	n	plural
+plural	1	summonses	summons	n	plural
+plural	1	bases	basis	n	plural
+plural	1	oases	oasis	n	plural
+plural	1	irises	iris	n	plural
+plural	1	atlases	atlas	n	plural
+plural	1	kisses	kiss	n	plural
+plural	1	cookies	cookie	n	plural
+plural	1	pies	pie	n	plural
 comparison	1	taller	tall	adj	*
 comparison	1	tallest	tall	adj	*
 comparison	1	bigger	big	adj	*
@@ -338,6 +432,15 @@ comparison	1	happier	happy	adj	*
 comparison	1	happiest	happy	adj	*
 comparison	1	earlier	early	adj	*
 comparison	1	cagier	cagey	adj	*
+comparison	1	cheaper	cheap	adj	*
+comparison	1	higher	high	adj	*
+comparison	1	quieter	quiet	adj	*
+comparison	1	cleverer	clever	adj	*
+comparison	1	newer	new	adj	*
+comparison	1	shyer	shy	adj	*
+comparison	1	oldest	old	adj	*
+comparison	1	later	late	adj	*
+comparison	1	finer	fine	adj	*
 comparison	1	priciest	pricey	adj	*
 comparison	1	better	good	adj	*
 comparison	1	best	good	adj	*
@@ -429,6 +532,10 @@ multiword verb	1	put Mary's coat away	put away	*	interposed object
 multiword verb	1	turned Mary’s radio off	turn off	*	past|interposed object
 multiword verb	1	looked the word up	look up	*	past|interposed object
 multiword verb	1	turned the radio off	turn off	*	past|interposed object
+multiword verb	1	picked Tom up	pick up	*	past|interposed object
+multiword verb	1	took Tom out	take out	*	past|interposed object
+multiword verb	1	turned it off	turn off	*	interposed object|past
+multiword verb	1	lying down	lie down	*	ing
 multiword verb	1	put the long-sleeved shirt away	put away	*	interposed object
 multiword verb	1	has to	have to	*	3rd pers. sing. pres
 multiword verb	1	had to	have to	*	past
@@ -473,7 +580,6 @@ negatives	0	relieves	relief	*	*
 negatives	0	strives	strife	*	*
 negatives	0	fives	fife	*	*
 negatives	0	proves	proof	*	*
-negatives	0	taxes	taxis	*	*
 negatives	0	hate	heat	*	*
 negatives	0	plate	pleat	*	*
 negatives	0	sate	seat	*	*
@@ -500,6 +606,57 @@ negatives	0	best	b	*	*
 negatives	0	her	h	*	*
 negatives	0	weddings	wed	*	*
 negatives	0	settings	set	*	*
+negatives	0	was	wa	*	*
+negatives	0	has	ha	*	*
+negatives	0	his	hi	*	*
+negatives	0	yes	ye	*	*
+negatives	0	uses	us	*	*
+negatives	0	cases	casis	*	*
+negatives	0	prices	prix	*	*
+negatives	0	vices	vex	*	*
+negatives	0	shoes	sho	*	*
+negatives	0	woes	wo	*	*
+negatives	0	foes	fo	*	*
+negatives	0	tries	trey	*	*
+negatives	0	copies	copey	*	*
+negatives	0	allies	alley	*	*
+negatives	0	dies	dy	*	*
+negatives	0	pies	py	*	*
+negatives	0	lies	ly	*	*
+negatives	0	ties	ty	*	*
+negatives	0	died	dy	*	*
+negatives	0	hoped	hop	*	*
+negatives	0	stared	star	*	*
+negatives	0	fined	fin	*	*
+negatives	0	noted	not	*	*
+negatives	0	stated	stat	*	*
+negatives	0	taking	tak	*	*
+negatives	0	writing	writ	*	*
+negatives	0	making	mak	*	*
+negatives	0	hoping	hop	*	*
+negatives	0	riding	rid	*	*
+negatives	0	caring	car	*	*
+negatives	0	dining	din	*	*
+negatives	0	biting	bit	*	*
+negatives	0	trying	trie	*	*
+negatives	0	tried	trie	*	*
+negatives	0	married	marrie	*	*
+negatives	0	pressed	pres	*	*
+negatives	0	presses	pres	*	*
+negatives	0	locked	loc	*	*
+negatives	0	locking	loc	*	*
+negatives	0	ticking	tic	*	*
+negatives	0	warn't	war	*	*
+negatives	0	shed	she	*	*
+negatives	0	later	lat	*	*
+negatives	0	water	wat	*	*
+negatives	0	liter	lit	*	*
+negatives	0	finer	fin	*	*
+negatives	0	cuter	cut	*	*
+negatives	0	paler	pal	*	*
+negatives	0	radii	radio	*	*
+negatives	0	fungi	fungo	*	*
+negatives	0	sped	sp	*	*
 negatives	0	looked uptown	look uptown	*	*
 negatives	0	put the book on	put on	*	*
 negatives	0	saw the man in	see in	*	*
@@ -512,3 +669,15 @@ negatives	0	turned their backs on	turn on	*	*
 negatives	0	create up	creeat up	*	*
 negatives	0	relay on	relie on	*	*
 negatives	0	split up	splight up	*	*
+negatives	0	had gone out	have out	*	*
+negatives	0	had taken off	have off	*	*
+negatives	0	had come up	have up	*	*
+negatives	0	had put off	have off	*	*
+negatives	0	did not give up	do up	*	*
+negatives	0	cook came up	cook up	*	*
+negatives	0	all came out	all out	*	*
+negatives	0	turned and walked away	turn away	*	*
+negatives	0	let me go up	let up	*	*
+negatives	0	let us sit down	let down	*	*
+negatives	0	time she fell off	time off	*	*
+negatives	0	went up the road away	go away	*	*

@@ -706,5 +706,113 @@
     ],
     59,
     ""
+  ],
+  [
+    "run away",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to leave quickly"
+    ],
+    60,
+    ""
+  ],
+  [
+    "pick",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to choose"
+    ],
+    61,
+    ""
+  ],
+  [
+    "pick up",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to collect someone"
+    ],
+    62,
+    ""
+  ],
+  [
+    "school",
+    "",
+    "n",
+    "n",
+    0,
+    [
+      "a place of learning"
+    ],
+    63,
+    ""
+  ],
+  [
+    "have",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to own"
+    ],
+    64,
+    ""
+  ],
+  [
+    "have out",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to settle by argument"
+    ],
+    65,
+    ""
+  ],
+  [
+    "gone",
+    "",
+    "adj",
+    "adj",
+    0,
+    [
+      "away"
+    ],
+    66,
+    ""
+  ],
+  [
+    "all out",
+    "",
+    "adj",
+    "adj",
+    0,
+    [
+      "with full effort"
+    ],
+    67,
+    ""
+  ],
+  [
+    "come",
+    "",
+    "v",
+    "v",
+    0,
+    [
+      "to move towards"
+    ],
+    68,
+    ""
   ]
 ]

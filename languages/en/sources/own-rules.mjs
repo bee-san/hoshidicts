@@ -29,6 +29,14 @@ const conditions = {
     ns: {name: 'Noun singular', isDictionaryForm: true},
     adj: {name: 'Adjective', isDictionaryForm: true},
     adv: {name: 'Adverb', isDictionaryForm: true},
+    // Two marks that order the multiword-verb rules, never a dictionary tag:
+    // v_fw is the output of a rule that read the first word's ending (*turned
+    // it off* -> *turn it off*), v_io the output of the interposed-object rule
+    // (*turned it off* -> *turned off*). Each lets the other rule run next, and
+    // an ending read from the last word (*turn their backs* -> *turn their
+    // back*) lets neither.
+    v_fw: {name: 'Verb, first word read', isDictionaryForm: false},
+    v_io: {name: 'Verb, interposed object removed', isDictionaryForm: false},
 };
 
 const words = (text) => text.trim().split(/\s+/);
@@ -58,18 +66,10 @@ const phrasalFollowers = [...new Set([...particles, ...words(`
 // together (off 34%); with a pronoun object, 54% for in, 64% for on, 2-9% for
 // up, out, down, away and back, 13% for off (README.md).
 const separableParticles = words('up out down off away back aside apart home together forth forward');
-// Words that end an object before a particle: prepositions and particles
-// (*look up the word in*), conjunctions, auxiliaries and negation.
-const objectGuards = [...new Set([...particles, ...words(`
-    during near since than till until via
-    and or nor but so yet because if unless although though whether while when where why how what which who whom whose
-    am is are was were be been being have has had do does did will would shall should can could may might must
-    not never`)])];
 
-const wordLists = {phrasalFollowers, separableParticles, objectGuards};
-
-// Spelling: a consonant doubled before -ed, -ing, -er and -est.
-const doubled = 'b d f g k l m n p r s t v z'.split(' ');
+// Spelling: a consonant doubled before -ed, -ing, -er and -est. A doubled s
+// does not follow e (pressed and dressed are not pres, dres + sed).
+const doubled = 'b d f g k l m n p r t v z'.split(' ');
 const doubledComparative = 'b d g m n p t'.split(' ');
 
 // Irregular verbs: base | past forms | past participles (forms equal to the
@@ -243,8 +243,62 @@ const wholeWord = (inflected, deinflected, conditionsIn, conditionsOut) => {
 };
 const phrasal = (inflected, deinflected) => {
     ++ruleCount;
-    return {type: 'phrasal', inflected, deinflected, followedBy: 'phrasalFollowers', conditionsIn: [], conditionsOut: ['v']};
+    return {type: 'phrasal', inflected, deinflected, followedBy: 'phrasalFollowers', conditionsIn: ['v_io'], conditionsOut: ['v', 'v_fw']};
 };
+
+// Rules that get no phrasal copy: the stem constraints of the spelling rules
+// below have no phrasal counterpart, and one plain copy of the ending
+// (`phrasalEnding`) stands for all of them.
+const noPhrasal = new Set();
+const plain = (rule) => {
+    noPhrasal.add(rule);
+    return rule;
+};
+
+// Letter classes of the spelling rules. y is a vowel here (play, try); w and x
+// end stems but are never doubled (owned, showed, fixed).
+const VOWEL = '[aeiouyAEIOUY]';
+const letters = (chars) => `[${chars}${chars.toUpperCase()}]`;
+const STEM_CONSONANTS = 'bcdfghjklmnpqrstvwxz';
+// The consonants a stem ends in before an ending (arc-ed, sync-ing); j, q and
+// v do not end English stems (love and solve end in e).
+const FINAL_CONSONANTS = 'b c d f g h k l m n p r s t z'.split(' ');
+const SHORT_VOWELS = 'a e i o u y'.split(' ');
+
+/**
+ * An ending added to a stem without a spelling change (walk-ed, look-ing,
+ * cheap-er). A one-syllable stem that ends in one vowel and one consonant
+ * doubles the consonant first (hop -> hopped, big -> bigger), so hoped,
+ * taking and later are never hop, tak and lat + an ending. The rules allow
+ * a stem that ends
+ * - in a vowel or w, x, y (`vowelFinal`: [class, stemMinLength] pairs);
+ * - in two consonants (walk-ed, help-ing, rich-er), except a consonant of
+ *   `doubling` twice (bigg-er is big + ger);
+ * - in a vowel and a consonant after an earlier vowel (look-ed, visit-ed,
+ *   open-ing, cheap-er).
+ */
+function plainEnding(ending, conditionsIn, conditionsOut, {vowelFinal, doubling = ''}) {
+    // (stemMinLength 2 for two consonants: sped and bring are not sp, br + an ending.)
+    const rules = vowelFinal.map(([cls, min]) => plain(suffix(ending, '', conditionsIn, conditionsOut, {stemMinLength: min, stemEndsWith: cls})));
+    for (const c of FINAL_CONSONANTS) {
+        const before = doubling.includes(c) ? STEM_CONSONANTS.replace(c, '') : STEM_CONSONANTS;
+        rules.push(plain(suffix(`${c}${ending}`, c, conditionsIn, conditionsOut, {stemMinLength: 2, stemEndsWith: letters(before)})));
+        for (const v of SHORT_VOWELS) {
+            rules.push(plain(suffix(`${v}${c}${ending}`, `${v}${c}`, conditionsIn, conditionsOut, {stemContains: VOWEL})));
+        }
+    }
+    return rules;
+}
+
+/** A consonant doubled before an ending: stopped, planned, travelled, bussed. */
+function doubledEnding(ending, conditionsIn, conditionsOut) {
+    return [
+        ...doubled.map((c) => suffix(`${c}${c}${ending}`, c, conditionsIn, conditionsOut, {stemMinLength: 1})),
+        suffix(`ss${ending}`, 's', conditionsIn, conditionsOut, {stemMinLength: 1, stemNotEndsWith: '[eE]'}),
+        // panicked, picnicking, trafficked; not locked or ticking.
+        ...SHORT_VOWELS.map((v) => suffix(`${v}ck${ending}`, `${v}c`, conditionsIn, conditionsOut, {stemContains: VOWEL})),
+    ];
+}
 
 /**
  * Suffix rules for irregular forms, skipping a form a shorter rule already
@@ -272,22 +326,57 @@ const verbTable = irregularVerbs.trim().split('\n').map((line) => {
     const [base, past, participle] = line.trim().split('|');
     return {base, past: past ? past.split(' ') : [], participle: participle ? participle.split(' ') : []};
 });
+
+// Words that end an object before a particle, so the interposed-object rule
+// does not read across them: prepositions and particles (*look up the word
+// in*), conjunctions, auxiliaries, negation, subject pronouns, the past forms
+// and participles of the irregular verbs below, the irregular verbs whose
+// participle is spelt like the base (*had come up*, *had put off*, *had set
+// out*), and the base forms that most often follow an object (*let me go up*,
+// *let us sit down*). After an auxiliary such a form is the main verb (*had
+// gone out* is not *have out*, *did not give up* not *do up*); after a noun
+// it is the predicate (*the cook came up* is not *cook up*).
+const objectGuards = [...new Set([...particles, ...words(`
+    during near since than till until via
+    and or nor but so yet because if unless although though whether while when where why how what which who whom whose
+    am is are was were be been being have has had do does did will would shall should can could may might must
+    not never
+    I i he she we they
+    come run become overcome put set cut let hit shut hurt cast burst spread split thrust quit bid read fit
+    go get sit stand`), ...verbTable.flatMap(({past, participle}) => [...past, ...participle])])];
+
+const wordLists = {phrasalFollowers, separableParticles, objectGuards};
 const pastPairs = verbTable.flatMap(({base, past}) => past.map((form) => [form, base]));
 // Participles that are not also the verb's past form.
 const participlePairs = verbTable.flatMap(({base, past, participle}) => participle.filter((form) => !past.includes(form)).map((form) => [form, base]));
 
 const V = ['v'];
 const sEndings = (conditionsIn, conditionsOut) => [
-    suffix('s', '', conditionsIn, conditionsOut, {stemMinLength: 2, stemNotEndsWith: "[sS']"}),
-    suffix('ses', 's', conditionsIn, conditionsOut),
+    // -s after a consonant (books, ads, TVs), and after a vowel with three
+    // letters before it (shoes, days), so has, was and his are not ha, wa, hi.
+    suffix('s', '', conditionsIn, conditionsOut, {stemMinLength: 2, stemNotEndsWith: "[aeiouyAEIOUYsS']"}),
+    suffix('s', '', conditionsIn, conditionsOut, {stemMinLength: 3, stemEndsWith: VOWEL}),
+    // -es after s only where the base ends in s: kisses, buses, focuses,
+    // atlases, irises; not uses, cases, causes or pleases (use, case, ... + s).
+    suffix('sses', 'ss', conditionsIn, conditionsOut, {stemMinLength: 1}),
+    suffix('uses', 'us', conditionsIn, conditionsOut, {stemMinLength: 1, stemNotEndsWith: '[aoAO]'}),
+    suffix('ases', 'as', conditionsIn, conditionsOut, {stemMinLength: 3, stemNotEndsWith: '[eE]'}),
+    suffix('ises', 'is', conditionsIn, conditionsOut, {stemMinLength: 2}),
+    wholeWord('gases', 'gas', conditionsIn, conditionsOut),
+    wholeWord('biases', 'bias', conditionsIn, conditionsOut),
+    wholeWord('lenses', 'lens', conditionsIn, conditionsOut),
+    wholeWord('summonses', 'summons', conditionsIn, conditionsOut),
     suffix('xes', 'x', conditionsIn, conditionsOut),
     suffix('zes', 'z', conditionsIn, conditionsOut),
     suffix('zzes', 'z', conditionsIn, conditionsOut),
     suffix('ches', 'ch', conditionsIn, conditionsOut),
     suffix('shes', 'sh', conditionsIn, conditionsOut),
-    suffix('oes', 'o', conditionsIn, conditionsOut),
-    suffix('ies', 'y', conditionsIn, conditionsOut, {stemMinLength: 1}),
-    suffix('ies', 'ey', conditionsIn, conditionsOut, {stemMinLength: 1}),
+    // heroes, echoes, potatoes; shoes, woes and foes are shoe, woe and foe + s.
+    suffix('oes', 'o', conditionsIn, conditionsOut, {stemMinLength: 3}),
+    wholeWord('goes', 'go', conditionsIn, conditionsOut),
+    // cities, tries; dies, lies, pies and ties are die, lie, pie and tie + s.
+    suffix('ies', 'y', conditionsIn, conditionsOut, {stemMinLength: 2}),
+    wholeWord('curtsies', 'curtsey', conditionsIn, conditionsOut),
 ];
 
 const pluralRules = [
@@ -314,18 +403,25 @@ const pluralRules = [
     suffix('oxen', 'ox', ['np'], ['ns']),
     suffix('people', 'person', ['np'], ['ns']),
     wholeWord('dice', 'die', ['np'], ['ns']),
+    wholeWord('monies', 'money', ['np'], ['ns']),
+    wholeWord('trollies', 'trolley', ['np'], ['ns']),
     wholeWord('pence', 'penny', ['np'], ['ns']),
     wholeWord('brethren', 'brother', ['np'], ['ns']),
     // Latin and Greek plurals.
     suffix('i', 'us', ['np'], ['ns'], {stemMinLength: 2}),
-    suffix('i', 'o', ['np'], ['ns'], {stemMinLength: 3}),
+    // paparazzi, libretti, concerti; not radii (radius) or fungi (fungus).
+    suffix('i', 'o', ['np'], ['ns'], {stemMinLength: 3, stemEndsWith: '[tzTZ]'}),
     suffix('a', 'um', ['np'], ['ns'], {stemMinLength: 2}),
     suffix('a', 'on', ['np'], ['ns'], {stemMinLength: 3}),
     suffix('ae', 'a', ['np'], ['ns'], {stemMinLength: 2}),
     suffix('mata', 'ma', ['np'], ['ns']),
-    suffix('ices', 'ex', ['np'], ['ns'], {stemMinLength: 1}),
-    suffix('ices', 'ix', ['np'], ['ns'], {stemMinLength: 1}),
-    suffix('ses', 'sis', ['np'], ['ns'], {stemMinLength: 1}),
+    // indices, vertices, matrices; not prices, vices or slices.
+    suffix('ices', 'ex', ['np'], ['ns'], {stemMinLength: 3}),
+    suffix('ices', 'ix', ['np'], ['ns'], {stemMinLength: 3}),
+    // crises, theses, analyses; not cases (casis).
+    suffix('ses', 'sis', ['np'], ['ns'], {stemMinLength: 3}),
+    wholeWord('bases', 'basis', ['np'], ['ns']),
+    wholeWord('oases', 'oasis', ['np'], ['ns']),
     wholeWord('axes', 'axis', ['np'], ['ns']),
     suffix('eaux', 'eau', ['np'], ['ns']),
     wholeWord('cherubim', 'cherub', ['np'], ['ns']),
@@ -345,7 +441,9 @@ const pluralRules = [
 
 const thirdPersonRules = [
     ...sEndings([], V),
-    suffix('sses', 's', [], V, {stemMinLength: 1}),
+    // busses, focusses, degasses (not presses -> pres).
+    suffix('sses', 's', [], V, {stemMinLength: 1, stemNotEndsWith: '[eE]'}),
+    wholeWord('does', 'do', [], V),
     wholeWord('is', 'be', [], V),
     wholeWord('has', 'have', [], V),
 ];
@@ -355,12 +453,20 @@ const presentRules = [
     wholeWord('are', 'be', [], V),
 ];
 
+// The verbs in -ie take -d and -s (tied, ties, boogied); other -ied words come
+// from -y (tried, married: Wiktionary has trie and marrie as obsolete
+// spellings, so an -ied -> -ie rule would offer them). Those in `ieYing`
+// spell -ing -ying (tying); the others -ieing (boogieing).
+const ieVerbs = words('die lie tie vie belie untie retie hie hogtie underlie overlie stymie caddie boogie birdie sortie goalie wheelie cookie ghillie gillie pie');
+const ieYing = words('die lie tie vie belie untie retie hie hogtie underlie overlie stymie caddie');
+
 const pastRules = [
-    suffix('ed', '', [], V, {stemMinLength: 2}),
-    suffix('d', '', [], V, {stemMinLength: 3, stemEndsWith: '[e]'}),
-    suffix('ied', 'y', [], V, {stemMinLength: 1}),
-    ...doubled.map((c) => suffix(`${c}${c}ed`, c, [], V, {stemMinLength: 1})),
-    suffix('cked', 'c', [], V, {stemMinLength: 1}),
+    ...plainEnding('ed', [], V, {vowelFinal: [['[xX]', 2], ['[aioAIOwyWY]', 3]], doubling: 'mnp'}),
+    // hoped, used, agreed, dyed; not tried (trie), shed (she).
+    suffix('ed', 'e', [], V, {stemMinLength: 2, stemNotEndsWith: '[iI]', stemContains: VOWEL}),
+    ...ieVerbs.map((w) => wholeWord(`${w}d`, w, [], V)),
+    suffix('ied', 'y', [], V, {stemMinLength: 2}),
+    ...doubledEnding('ed', [], V),
     // spec -> specced, sic -> sicced; an abbreviation verb with an apostrophe (cc'ed, OK'ed).
     suffix('cced', 'c', [], V, {stemMinLength: 1}),
     suffix("'ed", '', [], V, {stemMinLength: 1}),
@@ -389,13 +495,12 @@ const pastParticipleRules = [
 ];
 
 const ingRules = [
-    suffix('ing', '', [], V, {stemMinLength: 2}),
+    ...plainEnding('ing', [], V, {vowelFinal: [['[aeioAEIOwxWX]', 2], ['[yY]', 3]], doubling: 'mnp'}),
     // making -> make, arguing -> argue; not being -> bee, dying -> dye, seeing -> seee.
     suffix('ing', 'e', [], V, {stemMinLength: 2, stemNotEndsWith: '[aeioy]'}),
     wholeWord('eying', 'eye', [], V),
-    suffix('ying', 'ie', [], V, {stemMinLength: 1}),
-    ...doubled.map((c) => suffix(`${c}${c}ing`, c, [], V, {stemMinLength: 1})),
-    suffix('cking', 'c', [], V, {stemMinLength: 1}),
+    ...ieYing.map((w) => wholeWord(`${w.slice(0, -2)}ying`, w, [], V)),
+    ...doubledEnding('ing', [], V),
     suffix('ccing', 'c', [], V, {stemMinLength: 1}),
     suffix("'ing", '', [], V, {stemMinLength: 1}),
 ];
@@ -405,7 +510,7 @@ const ingRules = [
 const AA = ['adj', 'adv'];
 const A = ['adj'];
 const comparativeRules = [
-    suffix('er', '', [], AA, {stemMinLength: 2}),
+    ...plainEnding('er', [], AA, {vowelFinal: [['[wxyWXY]', 2]], doubling: 'bgmnpt'}),
     suffix('r', '', [], A, {stemMinLength: 2, stemEndsWith: '[e]'}),
     suffix('ier', 'y', [], A, {stemMinLength: 1}),
     suffix('ier', 'ey', [], A, {stemMinLength: 1}),
@@ -424,7 +529,7 @@ const comparativeRules = [
 ];
 
 const superlativeRules = [
-    suffix('est', '', [], AA, {stemMinLength: 2}),
+    ...plainEnding('est', [], AA, {vowelFinal: [['[wxyWXY]', 2]], doubling: 'bgmnpt'}),
     suffix('st', '', [], A, {stemMinLength: 2, stemEndsWith: '[e]'}),
     suffix('iest', 'y', [], A, {stemMinLength: 1}),
     suffix('iest', 'ey', [], A, {stemMinLength: 1}),
@@ -458,8 +563,10 @@ const contractionRules = [
     ...["'re", "'ve", "'ll", "'d", "'m"].map((clitic) => suffix(clitic, '', [], [], {stemMinLength: 1})),
 ];
 
+// The auxiliaries and modals that take n't, as whole words, so warn't (was,
+// were) is not war + n't.
 const negativeRules = [
-    suffix("n't", '', [], V, {stemMinLength: 2}),
+    ...words('do have could would should must need might ought dare may').map((w) => wholeWord(`${w}n't`, w, [], V)),
     wholeWord("doesn't", 'do', [], V),
     wholeWord("didn't", 'do', [], V),
     wholeWord("isn't", 'be', [], V),
@@ -483,8 +590,10 @@ const droppedGRules = [suffix("in'", 'ing', [], [], {stemMinLength: 1})];
 // (would, had) from becoming heed and weed.
 const elidedEdRules = [suffix("'d", 'ed', [], [], {stemMinLength: 3})];
 
+// The text as written or after a first-word rule (*turned it off* -> *turn it
+// off* -> *turn off*); the output is a verb (*all came out* is not *all out*).
 const interposedObjectRules = [
-    {type: 'interposedObject', particles: 'separableParticles', guardWords: 'objectGuards', conditionsIn: [], conditionsOut: []},
+    {type: 'interposedObject', particles: 'separableParticles', guardWords: 'objectGuards', conditionsIn: ['v_fw'], conditionsOut: ['v', 'v_io']},
 ];
 ruleCount += interposedObjectRules.length;
 
@@ -537,23 +646,27 @@ const archaicThirdPersonRules = [
 
 const prefixWord = (inflected, deinflected) => {
     ++ruleCount;
-    return {type: 'prefix', inflected: `${inflected} `, deinflected: `${deinflected} `, conditionsIn: [], conditionsOut: ['v']};
+    return {type: 'prefix', inflected: `${inflected} `, deinflected: `${deinflected} `, conditionsIn: ['v_io'], conditionsOut: ['v', 'v_fw']};
 };
 
 /**
  * The same endings on the first word of a multiword verb (*looked up*, *gave
  * up on*): a phrasal rule per suffix rule, and for a whole-word form (*was*,
  * *ate*, *had*) a prefix rule on the word and a space (*had to* -> *have to*),
- * so it never matches the end of a longer word.
+ * so it never matches the end of a longer word. They read the text as written
+ * and the output of the interposed-object rule (`v_io`: *picked Tom up* ->
+ * *picked up* -> *pick up*).
  */
 function withPhrasal(rules) {
     const seen = new Set();
     const out = [...rules];
     for (const rule of rules) {
-        const key = `${rule.type}\u0000${rule.inflected}\u0000${rule.deinflected}`;
+        // The spelling rules of plainEnding share one copy of their ending.
+        const [inflected, deinflected] = noPhrasal.has(rule) ? [rule.inflected.slice(rule.inflected.length - rule.inflected.replace(/^[a-z]*?(ed|ing|er|est)$/, '$1').length), ''] : [rule.inflected, rule.deinflected];
+        const key = `${rule.type}\u0000${inflected}\u0000${deinflected}`;
         if (seen.has(key)) { continue; }
         seen.add(key);
-        out.push(rule.type === 'wholeWord' ? prefixWord(rule.inflected, rule.deinflected) : phrasal(rule.inflected, rule.deinflected));
+        out.push(rule.type === 'wholeWord' ? prefixWord(inflected, deinflected) : phrasal(inflected, deinflected));
     }
     return out;
 }
@@ -577,7 +690,7 @@ const transforms = [
     transform('negative', 'negative', "Negative contraction of an auxiliary (don't, isn't, can't, won't).", negativeRules),
     transform('dropped g', 'dropped g', "Informal -in' for -ing (goin', nothin').", droppedGRules),
     transform('archaic', 'archaic', "-'d for -ed in older verse (adorn'd, lov'd).", elidedEdRules),
-    transform('interposed object', 'interposed object', 'An object between a verb and its particle (turn it off, put Mary\'s coat on).', interposedObjectRules),
+    transform('interposed object', 'interposed object', 'An object between a verb and its particle (turn it off, put Mary\'s coat away).', interposedObjectRules),
     transform('placeholder', 'placeholder', "A pronoun written as the placeholder of a dictionary entry (his temper -> one's temper, let him down -> let someone down, enjoy himself -> enjoy oneself).", placeholderRules),
     transform('archaicSecondPerson', 'archaic second person', 'Early Modern English second-person singular (thou walkest, thou art, thou hast).', archaicSecondPersonRules, {optional: true}),
     transform('archaicThirdPerson', 'archaic third person', 'Early Modern English third-person singular (he walketh, he hath, he doth).', archaicThirdPersonRules, {optional: true}),

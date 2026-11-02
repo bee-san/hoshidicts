@@ -20,8 +20,11 @@ pointing at it with a matching label). The check drops UniMorph rows such as
 gas -> uncountable (ADJ;CMPR). For each category, half the rows come from forms
 with a wordfreq Zipf frequency of at least 2.5 (about one in 3 million words:
 forms a reader meets) and half from the whole pool, with random.Random(1). A
-(form, lemma, part of speech) is drawn at most once. Writes <out>/sample.tsv;
-the rows the final rules miss were moved to gaps.tsv by hand.
+(form, lemma, part of speech) is drawn at most once. Writes <out>/sample.tsv
+(tests/corpus.tsv and tests/gaps.tsv: the rows the final rules miss were moved
+to gaps.tsv by hand) and <out>/dev.tsv, the "dev pool" of README.md: every
+other pool row, by category, leaving out a (form, lemma, part of speech) the
+sample has in any category.
 """
 import collections
 import json
@@ -97,4 +100,9 @@ for features, name, pos, _, quota in CATEGORIES:
 with open(f"{out_dir}/sample.tsv", "w", encoding="utf-8") as f:
     for category, form, lemma, pos in sample:
         f.write(f"{category}\t1\t{form}\t{lemma}\t{pos}\t*\n")
+with open(f"{out_dir}/dev.tsv", "w", encoding="utf-8") as f:
+    for features, name, pos, _, _ in CATEGORIES:
+        for form, lemma in sorted(pools[features]):
+            if (form, lemma, pos) not in taken:
+                f.write(f"{name}\t1\t{form}\t{lemma}\t{pos}\t*\n")
 print(f"{len(sample)} rows", file=sys.stderr)

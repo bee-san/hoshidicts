@@ -39,9 +39,17 @@ export const REMOVED = [
     ...['dd', 'gg', 'nn', 'tt', 'rr'].map((cc) => ['ing', 'yomitan', S(`${cc}ing`, cc[0], ['v'], ['v']), 'follows own third-person -s: weddings -> wed, winnings -> win, beginnings -> begin, settings -> set, fittings -> fit']),
     ['comparative', 'yomitan', S('er', '', ['adj'], ['adj']), "no stem minimum and follows own -er: her -> h, per -> p, der -> d, trader -> trad"],
     ['superlative', 'yomitan', S('est', '', ['adj'], ['adj']), 'no stem minimum: west -> w, nest -> n, pest -> p, best -> b'],
-    ['superlative', 'yomitan', S('est', 'e', ['adj'], ['adj']), 'follows own -er: semester -> semest -> seme'],
+    ['superlative', 'yomitan', S('est', 'e', ['adj'], ['adj']), 'after own -er makes semest of semester, it gives seme'],
     ['past', 'yomitan', S('ed', '', ['v'], ['v']), "no stem minimum: bed -> b, red -> r, med -> m; own -ed and own archaic -'d cover its rows"],
     ['archaic', 'yomitan', S("'d", 'ed', ['v'], ['v']), "no stem minimum: he'd -> heed, we'd -> weed; own archaic -'d needs a stem of three letters"],
+    ['plural', 'yomitan', S('ies', 'y', ['np'], ['ns']), 'no stem minimum: pies -> py, dies -> dy; own -ies needs two letters before it'],
+    ['past', 'yomitan', S('ied', 'y', ['v'], ['v']), 'no stem minimum: died -> dy, lied -> ly; own -ied needs two letters before it'],
+    ['3rd pers. sing. pres', 'yomitan', S('ies', 'y', ['v'], ['v']), 'no stem minimum: dies -> dy, lies -> ly; own -ies needs two letters before it'],
+    ['ing', 'yomitan', S('ying', 'ie', ['v'], ['v']), 'trying -> trie, crying -> crie (obsolete spellings Wiktionary lists); own rules list the -ie verbs (lying, dying, tying, vying)'],
+    ['past', 'yomitan', S('cked', 'c', ['v'], ['v']), 'locked -> loc, ticked -> tic; own -cked needs an earlier vowel (panicked, trafficked)'],
+    ['ing', 'yomitan', S('cking', 'c', ['v'], ['v']), 'locking -> loc, ticking -> tic, fracking -> frac'],
+    ['past', 'yomitan', S('ssed', 's', ['v'], ['v']), 'pressed -> pres; own doubled s does not follow e'],
+    ['ing', 'yomitan', S('ssing', 's', ['v'], ['v']), 'pressing -> pres'],
 ];
 
 // Transforms that only an enabled option turns on: [id, reason].
@@ -83,8 +91,11 @@ export function finalTransforms({defaultOnly = false} = {}) {
     // Keep key order: id, name, description, source, optional, rules.
     transforms.transforms = transforms.transforms.map(({id, name, description, source, optional, i18n, rules}) => ({id, name, description, source, optional, i18n, rules}));
     if (defaultOnly) { transforms.transforms = transforms.transforms.filter((t) => !t.optional); }
-    // A transform left without rules is dropped.
+    // A transform left without rules is dropped, and a word list no rule names
+    // (Yomitan's particles, which only its removed interposed-object rule used).
     transforms.transforms = transforms.transforms.filter((t) => t.rules.length > 0);
+    const named = new Set(transforms.transforms.flatMap((t) => t.rules.flatMap((r) => [r.followedBy, r.particles, r.guardWords])));
+    transforms.wordLists = Object.fromEntries(Object.entries(transforms.wordLists ?? {}).filter(([key]) => named.has(key)));
     return transforms;
 }
 
