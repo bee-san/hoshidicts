@@ -35,5 +35,6 @@
   ["a", "", "prep", "", 0, ["to"], 34, ""],
   ["me", "", "pron", "", 0, ["me, myself"], 35, ""],
   ["se", "", "pron", "", 0, ["himself, herself, itself"], 36, ""],
-  ["franco", "", "adj", "adj", 0, ["frank"], 37, ""]
+  ["franco", "", "adj", "adj", 0, ["frank"], 37, ""],
+  ["decirse", "", "v", "v", 0, ["to say to oneself"], 38, ""]
 ]

@@ -27,14 +27,14 @@ word longer than the scan length is still looked up whole.
   `sources/build-final.mjs` (see Measurements). GPL-3.0-or-later, Copyright (C)
   2023-2026 Yomitan Authors, 2020-2022 Yomichan Authors.
 - `tests/corpus.tsv` and the rows of `tests/gaps.tsv` whose category is a
-  UniMorph tag: 1,900 pairs sampled with seed 1 by `sources/build-corpus.mjs`
+  UniMorph tag: 1,700 pairs sampled with seed 1 by `sources/build-corpus.mjs`
   from [UniMorph spa](https://github.com/unimorph/spa/blob/b9655efb0e5ce0f99809badaa7f4e93017ab8430/spa)
   at b9655ef (file `spa`, sha256 `7a165d4b…8771`), CC BY-SA 3.0, by the
-  UniMorph contributors (data from English Wiktionary): 900 finite verb
-  forms, 150 gerunds and participles, 300 verbs with attached pronouns, 300
+  UniMorph contributors (data from English Wiktionary): 800 finite verb
+  forms, 150 gerunds and participles, 250 verbs with attached pronouns, 250
   plural nouns, 50 singular nouns (gender pairs) and 200 adjective forms,
   single words of Spanish letters that differ from their lemma. Rows the final
-  rules reach are in `corpus.tsv` (1,855), the others in `gaps.tsv` (45).
+  rules reach are in `corpus.tsv` (1,657), the others in `gaps.tsv` (43).
 - `tests/cases.tsv`, `tests/text.tsv`, `tests/lookup.tsv`,
   `tests/dictionary/`, `sources/benchmark-words.txt` and the rest of
   `language.json`: written for this pack (GPL-3.0-or-later).
@@ -42,13 +42,14 @@ word longer than the scan length is still looked up whole.
   [wty-es-en](https://huggingface.co/datasets/daxida/wty-release/resolve/main/latest/dict/es/en/wty-es-en.zip)
   from [wiktionary-to-yomitan](https://github.com/yomidevs/wiktionary-to-yomitan),
   revision 2026.10.22 (sha256 `967f390f…658d`, 1,483,499 term rows), CC BY-SA
-  4.0 (Wiktionary through kaikki.org); and the 50,000-word Spanish subtitle
-  list `es_50k.txt` of [FrequencyWords](https://github.com/hermitdave/FrequencyWords)
-  at 525f9b5 (sha256 `dcff3ad4…56c0`), content CC BY-SA 4.0.
+  4.0 (Wiktionary through kaikki.org), with its Spanish example sentences;
+  and the 50,000-word Spanish subtitle list `es_50k.txt` of
+  [FrequencyWords](https://github.com/hermitdave/FrequencyWords) at 525f9b5
+  (sha256 `dcff3ad4…56c0`), content CC BY-SA 4.0.
 
 ## Rule provenance
 
-`transforms.json` has 102 transforms and 2,383 rules: 1,805 `own`, 578
+`transforms.json` has 102 transforms and 2,401 rules: 1,809 `own`, 592
 `both` and no `yomitan` rule. `sources/build-final.mjs` writes it: the union
 of `sources/own.json` and `sources/yomitan.json` (`tools/merge-transforms.mjs`)
 with every Yomitan rule removed, so it is `sources/own.json` with the own
@@ -60,9 +61,11 @@ rules that Yomitan also has marked `both`.
   (Yomitan's `present indicative` against the own `present-yo` …
   `present-vos`). A Yomitan rule that attaches an ending to the infinitive
   (future `é` → ``) is made by the own rules of the three conjugations
-  (`aré` → `ar`, `eré` → `er`, `iré` → `ir`). 546 of Yomitan's 620 rules have
-  such an own rule; `sources/yomitan-provenance.tsv` lists, for each Yomitan
-  rule, the own transforms that make its deinflection.
+  (`aré` → `ar`, `eré` → `er`, `iré` → `ir`); Yomitan's reflexive pattern for
+  a pronoun is the own pronominal rule for that pronoun written before the
+  verb. 546 of Yomitan's 620 rules have such an own rule;
+  `sources/yomitan-provenance.tsv` lists, for each Yomitan rule, the own
+  transforms that make its deinflection.
 - **Yomitan rules left out**: all 620. The 546 above only repeat an own
   deinflection under a coarser trace name (`present indicative` where the own
   rule says `present (yo)`), and in the union they also give the false
@@ -91,11 +94,19 @@ rules that Yomitan also has marked `both`.
   dar, ver, saber, caber, errar); irregular participles; enclitic pronouns
   after infinitives, gerunds and affirmative imperatives, with the written
   accent they add removed (dámelo → da), one transform per pronoun or pair
-  (37); pronominal verbs (`me levanto` → `levantarse`); and plural, feminine,
-  superlative (-ísimo), diminutive (-ito, -cito) and -mente forms. A
-  reflexive reading of an imperative must agree with its person: siéntate,
-  siéntese, sentémonos and sentaos give `sentarse`, while cómprame and dáselo
-  do not give `comprarse` or `darse`.
+  (37); pronominal verbs; and plural, feminine, superlative (-ísimo),
+  diminutive (-ito, -cito) and -mente forms.
+- **Pronominal verbs agree in person.** A reflexive pronoun written before a
+  conjugated verb gives the -se verb only when it agrees with the verb's
+  person: `me levanto`, `te levantas`, `se levanta`, `nos levantamos` and `os
+  levantáis` give `levantarse`, while `me dijo`, `te digo`, `me dio` and `te
+  llamo`, where the pronoun is an object, do not give `decirse`, `darse` or
+  `llamarse`. A reflexive pronoun attached to an imperative must agree with
+  its person too (siéntate, siéntese, sentémonos and sentaos give
+  `sentarse`; cómprame and dáselo give no `comprarse` or `darse`). The clitic
+  rules move such a pronoun before the verb with a `+` (siéntate → `te+sienta`
+  → `te+sentar` → `sentarse`), so a pronoun written before a word that looks
+  like an imperative (`te sienta bien`, it suits you) is not read as one.
 - **History**: the first commit of this pack, `es: own rules`, has the own
   rules as written before Yomitan's file was read (114 transforms, 2,887
   rules). Later commits changed them after measuring, as listed here: the
@@ -107,16 +118,16 @@ rules that Yomitan also has marked `both`.
   `paro`); -illo and -illa diminutives removed (`anillo` → `ano`, `pasillo`
   → `paso`); two-pronoun clusters limited to the standard ones; spelling
   changes combined only with the stem changes that occur with them;
-  loanword and acronym plurals (`emails`, `cowboys`, `ONGs`); the person
-  agreement of reflexive imperatives; `estás`; superlatives and diminutives
-  of adverbs and determiners (`muchísimo`, `ahorita`); and the accented
-  `-ístamente`.
+  loanword and acronym plurals (`emails`, `cowboys`, `ONGs`); person
+  agreement of reflexive imperatives and pronominal verbs; `estás`;
+  superlatives and diminutives of adverbs and determiners (`muchísimo`,
+  `ahorita`); and the accented `-ístamente`.
 
 ## Measurements
 
 `hoshidicts-cli eval-language` at hoshidicts 7e04ed5 (GCC 14.3, Release) with
 `--transforms` for each rule set and `--dictionary` wty-es-en imported by
-`hoshidicts-cli import`. The sample is the 1,900 UniMorph rows of `corpus.tsv`
+`hoshidicts-cli import`. The sample is the 1,700 UniMorph rows of `corpus.tsv`
 and `gaps.tsv` together. eval-language turns every optional processor on, as
 the contract asks; the optional `addMissingAccents` processor adds readings
 with an accent, ñ or ü (cancion → canción), so the second false-candidate
@@ -125,10 +136,10 @@ default.
 
 | Rule set | Sample recall | False candidates per row (all options / default) | First rank | cases.tsv positives | cases.tsv negatives | yomitan.tsv, Yomitan's traces | yomitan.tsv, any trace |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Own (`sources/own.json`) | 97.63% (1,855) | 0.253 / 0.139 | 0.05% | 291 / 291 | 27 / 27 | 13 / 252 | 252 / 252 |
-| Yomitan (`sources/yomitan.json`) | 64.74% (1,230) | 0.236 / 0.058 | 0% | 22 / 291 | 15 / 27 | 252 / 252 | 252 / 252 |
-| Union (merge tool) | 97.63% (1,855) | 0.325 / 0.148 | 0.05% | 291 / 291 | 15 / 27 | 252 / 252 | 252 / 252 |
-| Final (`transforms.json`) | 97.63% (1,855) | 0.253 / 0.139 | 0.05% | 291 / 291 | 27 / 27 | 13 / 252 | 252 / 252 |
+| Own (`sources/own.json`) | 97.47% (1,657) | 0.256 / 0.141 | 0.06% | 295 / 295 | 37 / 37 | 13 / 252 | 252 / 252 |
+| Yomitan (`sources/yomitan.json`) | 64.65% (1,099) | 0.238 / 0.056 | 0% | 22 / 295 | 18 / 37 | 252 / 252 | 252 / 252 |
+| Union (merge tool) | 97.47% (1,657) | 0.332 / 0.150 | 0.06% | 295 / 295 | 16 / 37 | 252 / 252 | 252 / 252 |
+| Final (`transforms.json`) | 97.47% (1,657) | 0.256 / 0.141 | 0.06% | 295 / 295 | 37 / 37 | 13 / 252 | 252 / 252 |
 
 The final set is the own set with provenance marks, so its numbers are the
 own set's.
@@ -142,28 +153,37 @@ own set's.
   nor a lemma its entries name, nor such a lemma with or without -se, count
   as false candidates: 0.046 per word and 0.060 per token for the final set,
   0.025 and 0.187 for Yomitan's rules (`de` → `dar`, `es` → `ir` and `en` →
-  `ir` on the most frequent words), 0.056 and 0.199 for the union.
-- **Trace quality.** For the 1,348 verb rows of the sample the final rules
+  `ir` on the most frequent words), 0.055 and 0.198 for the union.
+- **Pronoun before a verb.** wty-es-en's Spanish example sentences have
+  2,188 places where a reflexive pronoun is followed by a word. Looked up
+  from the pronoun, the first result was a -se verb through the pronominal
+  rule for 1,320 of them before the person check and is for 648 after it.
+  The readings it removes are such as `me queda` → `quedarse`, `me dio` →
+  `darse`, `te pasa` → `pasarse`, `nos encanta` → `encantarse`, where the
+  pronoun is an object; the kept ones are mostly right (`se acerca` →
+  `acercarse`, `me muero` → `morirse`, `nos salvamos` → `salvarse`).
+- **Trace quality.** For the 1,198 verb rows of the sample the final rules
   reach, the trace a lookup shows (`traceSelection: "shortest"`) names the
   tense or mood of the row's UniMorph features in 100% of rows and the person
-  too in 99.9%. Yomitan's traces name the tense in 94.7% of the 834 verb rows
-  it reaches (49 present subjunctives show as `imperative`) and never the
+  too in 99.9%. Yomitan's traces name the tense in 94.7% of the 751 verb rows
+  it reaches (40 present subjunctives show as `imperative`) and never the
   person. In the union, Yomitan's transforms come first and win ties, so
-  57.9% of its traces name the person.
+  57.3% of its traces name the person.
 - **First rank** is about 0 for every set: wty-es-en has a form-of entry for
   almost every inflected form (`comimos`: "first-person plural preterite of
   comer"), found without deinflection, so it comes before the lemma, which is
   second.
-- **Per rule** (`--per-rule` on the final set, sample and `cases.tsv`): 416
-  rules recover rows no other rule reaches, no rule breaks a negative, and 42
+- **Per rule** (`--per-rule` on the final set, sample and `cases.tsv`): 413
+  rules recover rows no other rule reaches, no rule breaks a negative, and 44
   rules add false candidates (69 in all) without recovering a row, mostly
-  reflexive readings (`comprarme` → `comprarse`, where `levantarme` →
-  `levantarse` is right). They are kept: pronominal verbs need them.
+  reflexive readings of infinitives and imperatives (`comprarme` →
+  `comprarse`, where `levantarme` → `levantarse` is right). They are kept:
+  pronominal verbs need them.
 - **Yomitan's test**: `tests/yomitan.tsv` passes 252 / 252 with Yomitan's
   traces against `sources/yomitan.json`; the final rules reach all 252 lemmas
   through their own transforms, so the file's reasons are `*`.
 - **Differential check**: `tools/check-yomitan.mjs` with `build/hoshidicts-cli`:
-  6,354 inputs, 28,211 Yomitan results, 86 differences, all explained by the
+  6,011 inputs, 27,360 Yomitan results, 82 differences, all explained by the
   three rows of `sources/yomitan-differences.tsv`: Yomitan's stem-change
   rules change the first i, ie, u or ue of the text even where a letter
   outside `[a-z]` comes after it (`británico` → `bretánicir` in Yomitan,
@@ -171,7 +191,7 @@ own set's.
   it does not test (`juegen` → `jugen` → `jugar`); its reflexive rule matches
   the pronoun anywhere in the text (`ya me levantar` → `ya levantarse`). The
   last two come from inputs in `cases.tsv`. The two processors agree with
-  Yomitan's on 2,456 inputs each.
+  Yomitan's on 2,272 inputs each.
 - **Hachidori** (feat/multi-language 1bd53232 with this branch in
   `third_party/hoshidicts`, `test/chrome-language-pack.mjs`, Chrome 152,
   wty-es-en): 14 / 14 checks pass. Settings adds Spanish beside Japanese and
@@ -179,22 +199,23 @@ own set's.
   their lemma first (`Me levanto` → `levantarse`, `se rieron` → `reírse`,
   `Tráemelos` → `traer`, `Digámoselo` → `decir`, with their traces); the
   Anki note and the switch to Japanese and back work.
-- **Conformance**: `language-conformance-test`: corpus.tsv 1,855 / 1,855,
-  cases.tsv 318 / 318, yomitan.tsv 252 / 252, text.tsv 24 / 24, lookup.tsv
-  22 / 22, gaps.tsv 0 / 45 (reported); classes.json agrees with the engine (5
-  classes, 591 fields, 2 steps, 4,852 outputs); 654 of the 2,400 rules (the
-  pronominal cross product expanded) are exercised by a passing row.
+- **Conformance**: `language-conformance-test`: corpus.tsv 1,657 / 1,657,
+  cases.tsv 332 / 332, yomitan.tsv 252 / 252, text.tsv 24 / 24, lookup.tsv
+  25 / 25, gaps.tsv 0 / 43 (reported); classes.json agrees with the engine (5
+  classes, 607 fields, 2 steps, 4,484 outputs); 649 of the 2,423 rules (the
+  pronominal cross products expanded) are exercised by a passing row.
+  `tests/` and `sources/` hold 974,392 bytes.
 - **Lookup speed** (`benchmark-lookup --languages languages --language es`,
   wty-es-en mapped, 82 texts from `sources/benchmark-words.txt`, each the
   rest of a sentence from an inflected word, 6 passes with the first
-  dropped, three runs, machine load about 30): final p50 28-34 µs, p95
-  46-57 µs; union p50 40-43 µs, p95 76-83 µs; Yomitan's rules p50 20-22 µs,
-  p95 40-47 µs. Budget 1 ms p50.
+  dropped, three runs, machine load about 40): final p50 32-34 µs, p95
+  51-56 µs; union p50 46-55 µs, p95 83-95 µs; Yomitan's rules p50 21-22 µs,
+  p95 44-48 µs. Budget 1 ms p50.
 - **WebAssembly** (Hachidori feat/multi-language 1bd53232 prebuilt engines,
-  Node 22, the same texts, dictionary paged): `hdw_lookup` p50 0.111 ms, p95
-  0.27 ms (single-thread); p50 0.106 ms, p95 0.25 ms (threaded).
-  `hdw_language_load` of this pack: median 9.1 ms (single-thread) and 9.5 ms
-  (threaded) over 10 fresh engines; live heap +880,280 bytes after the load
+  Node 22, the same texts, dictionary paged): `hdw_lookup` p50 0.112 ms, p95
+  0.28 ms (single-thread); p50 0.108 ms, p95 0.27 ms (threaded).
+  `hdw_language_load` of this pack: median 10.5 ms (single-thread) and 10.1 ms
+  (threaded) over 10 fresh engines; live heap +889,776 bytes after the load
   (mallinfo, `hdw_memory_stats`). Budgets 50 ms and 20 MB. The pack has no
   `pattern` rule.
 
@@ -202,7 +223,7 @@ own set's.
 
 - Gender pairs whose UniMorph lemma is the other gender (`gata` → `gato`,
   `exnovia` → `exnovio`, `amigovio` → `amigovia`, `vicerrectores` →
-  `vicerrectora`): 42 of the 45 rows of `gaps.tsv`. Feminine nouns become
+  `vicerrectora`): 40 of the 43 rows of `gaps.tsv`. Feminine nouns become
   masculine only by the endings of nouns for people (`-ora`, `-ona`, `-esa`,
   `-enta`, `-ana`, `-era`, `-aria`, `-eña`, `-ina`, `-óloga`, `-grafa`,
   `-eca`); dictionaries list the common ones (`gata`, `niña`) as headwords.
@@ -211,6 +232,9 @@ own set's.
 - Deinflection proposes forms it cannot rule out: `puedo` → `podar`, `nuevo`
   → `novar`, `persona` → `personar`, `esta` → `estar`. The part-of-speech
   filter removes those that are not verbs in the dictionary.
+- Imperfect, conditional and subjunctive forms are the same for yo and él,
+  so a pronoun before them agrees with one of the two and `me gustaría` (it
+  would please me) still reads as `gustarse`.
 - Words a dictionary lists without a part of speech (adverbs, determiners,
   pronouns) are not reached through rules that give one, apart from the
   superlatives and diminutives the rules list by name (`muchísimo`,

@@ -234,6 +234,20 @@ pronominal verbs	1	os vestís	vestirse	v	pronominal|present-vosotros
 pronominal verbs	1	se ríen	reírse	v	pronominal|present-ellos
 pronominal verbs	1	me lavo	lavarse	v	pronominal|present-yo
 pronominal verbs	1	me levanto	levantarse	v	pronominal|present-yo
+pronominal verbs	1	me levantaba	levantarse	v	pronominal|imperfect-yo-el
+pronominal verbs	1	se levantaba	levantarse	v	pronominal|imperfect-yo-el
+pronominal verbs	1	te levantes	levantarse	v	pronominal|subjunctive-tu
+pronominal verbs	1	se ve	verse	v	pronominal|present-el
+pronominal agreement	0	me dijo	decirse	v	*
+pronominal agreement	0	nos dijo	decirse	v	*
+pronominal agreement	0	te digo	decirse	v	*
+pronominal agreement	0	me dio	darse	v	*
+pronominal agreement	0	te llamo	llamarse	v	*
+pronominal agreement	0	te quiero	quererse	v	*
+pronominal agreement	0	me gusta	gustarse	v	*
+pronominal agreement	0	se ve	irse	v	*
+pronominal agreement	0	te sienta	sentarse	v	*
+pronominal agreement	0	te sentando	sentarse	v	*
 plurals	1	casas	casa	n	plural
 plurals	1	árboles	árbol	n	plural
 plurals	1	luces	luz	n	plural

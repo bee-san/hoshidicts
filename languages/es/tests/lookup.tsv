@@ -13,6 +13,7 @@ pronouns	1	dímelo ya	decir	dímelo
 pronominal verbs	1	me levanto temprano	levantarse	me levanto
 pronominal verbs	1	se fue a casa	irse	se fue
 pronominal verbs	1	acuérdate de mí	acordarse	acuérdate
+pronominal verbs	1	te levantas tarde	levantarse	te levantas
 word resolution	1	desafortunadamente llovió	desafortunado	desafortunadamente
 word resolution	1	Ayer comimos	ayer	Ayer
 word resolution	1	franco-alemana	franco	franco
@@ -21,4 +22,6 @@ negatives	0	de la casa	dar	de
 negatives	0	para mí	paro	para
 negatives	0	casa grande	caso	casa
 negatives	0	me levanto temprano	me	me
+negatives	0	me dijo que sí	decirse	me dijo
+negatives	0	te digo la verdad	decirse	te digo
 negatives	0	comimos en	comer	comimos en

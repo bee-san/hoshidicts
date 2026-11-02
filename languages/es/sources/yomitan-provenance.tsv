@@ -77,7 +77,7 @@ present indicative	48	o → ir	present-yo
 present indicative	49	es → ir	present-tu
 present indicative	50	e → ir	present-el
 present indicative	51	imos → ir	present-nosotros
-present indicative	52	ís → ir	present-vosotros
+present indicative	52	ís → ir	present-vosotros present-vos
 present indicative	53	en → ir	present-ellos
 present indicative	54	uyo → uir	present-yo
 present indicative	55	uyes → uir	present-tu
@@ -93,7 +93,7 @@ present indicative	64	oigo → oír	present-yo
 present indicative	65	oyes → oír	present-tu
 present indicative	66	oye → oír	present-el
 present indicative	67	oímos → oír	present-nosotros
-present indicative	68	oís → oír	present-vosotros
+present indicative	68	oís → oír	present-vosotros present-vos
 present indicative	69	oyen → oír	present-ellos
 present indicative	70	vengo → venir	present-yo
 present indicative	71	vienes → venir	-

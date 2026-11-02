@@ -55,6 +55,15 @@ const conditions = {
     imp_ud: {name: 'Imperative (usted, ustedes) with se before it', isDictionaryForm: false},
     imp_nos: {name: 'Imperative (nosotros) with nos before it', isDictionaryForm: false},
     imp_vos: {name: 'Imperative (vosotros) with os before it', isDictionaryForm: false},
+    // The person of a conjugated form, which a reflexive pronoun before it
+    // must agree with to make a -se verb (me levanto, te levantas, se
+    // levanta, nos levantamos, os levantáis), so that me dijo, te digo and
+    // me dio (indirect objects) do not read as decirse and darse.
+    p1s: {name: 'First person singular (agrees with me)', isDictionaryForm: false},
+    p2s: {name: 'Second person singular (agrees with te)', isDictionaryForm: false},
+    p3: {name: 'Third person, usted, ustedes (agrees with se)', isDictionaryForm: false},
+    p1p: {name: 'First person plural (agrees with nos)', isDictionaryForm: false},
+    p2p: {name: 'Second person plural (agrees with os)', isDictionaryForm: false},
 };
 
 /** The condition of an infinitive (with or without -se). */
@@ -243,8 +252,19 @@ function inFor(slot) {
     return [];
 }
 
+// The person conditions of a slot's output. Imperatives, gerunds and
+// participles have none: a pronoun is attached after them, never written
+// before them (siéntate, not te sienta, which is te + sentar's él form).
+function personFor(slot) {
+    if (/^(imperative-|gerund$|participle$)/.test(slot)) { return []; }
+    const person = slot.replace(/^(present|preterite|imperfect|future|conditional|subjunctive(-ra|-se|-future)?)-/, '');
+    const map = {yo: ['p1s'], tu: ['p2s'], vos: ['p2s'], el: ['p3'], 'yo-el': ['p1s', 'p3'], nosotros: ['p1p'], vosotros: ['p2p'], ellos: ['p3']};
+    if (map[person] === undefined) { throw new Error(`no person for ${slot}`); }
+    return map[person];
+}
+
 function verbRule(slot, inflected, deinflected, extra = {}) {
-    suffix(slot, inflected, deinflected, inFor(slot), [verbClass(deinflected)], extra);
+    suffix(slot, inflected, deinflected, inFor(slot), [verbClass(deinflected), ...personFor(slot)], extra);
 }
 
 for (const conj of ['ar', 'er', 'ir']) {
@@ -313,7 +333,7 @@ function paradigm(table, deinflected, extra = {}) {
 function wholeParadigm(table, deinflected) {
     for (const [slot, value] of Object.entries(table)) {
         for (const inflected of Array.isArray(value) ? value : [value]) {
-            add(slot, {type: 'wholeWord', inflected, deinflected, conditionsIn: inFor(slot), conditionsOut: [verbClass(deinflected)]});
+            add(slot, {type: 'wholeWord', inflected, deinflected, conditionsIn: inFor(slot), conditionsOut: [verbClass(deinflected), ...personFor(slot)]});
         }
     }
 }
@@ -511,6 +531,11 @@ for (const [form, lemma] of PARTICIPLES) {
 }
 
 // --- Enclitic pronouns ---------------------------------------------------------------
+// A reflexive pronoun attached to an imperative or a gerund is moved in front
+// of it with a + (siéntate → te+sienta, sentándome → me+sentando), so the
+// conjugation rules can read the verb and the pronominal rule then gives the
+// -se verb. The + keeps these apart from a pronoun written before a word
+// (te sienta bien, it suits you), which agrees with the verb's person.
 // Pronouns written after an infinitive, a gerund or an affirmative
 // imperative (hacerlo, diciéndome, dámelo). One transform per cluster. The
 // written accent that the pronouns add is removed again (dámelo → da,
@@ -548,7 +573,7 @@ for (const pronouns of CLUSTERS) {
     for (const [ending, bare] of [['ándo', 'ando'], ['éndo', 'endo']]) {
         suffix(id, ending + cluster, bare, [], ['ger']);
         if (reflexive) {
-            add(id, {type: 'circumfix', inflectedPrefix: '', deinflectedPrefix: first + ' ', inflectedSuffix: ending + cluster, deinflectedSuffix: bare,
+            add(id, {type: 'circumfix', inflectedPrefix: '', deinflectedPrefix: first + '+', inflectedSuffix: ending + cluster, deinflectedSuffix: bare,
                 conditionsIn: [], conditionsOut: ['ger']});
         }
     }
@@ -566,7 +591,7 @@ for (const pronouns of CLUSTERS) {
         suffix(id, inflected, deinflected, [], ['imp'], {...constraint, then: STRIP_ACUTE});
         const person = REFLEXIVE_IMPERATIVE[first];
         if (person !== undefined) {
-            add(id, {type: 'circumfix', inflectedPrefix: '', deinflectedPrefix: first + ' ', inflectedSuffix: inflected, deinflectedSuffix: deinflected,
+            add(id, {type: 'circumfix', inflectedPrefix: '', deinflectedPrefix: first + '+', inflectedSuffix: inflected, deinflectedSuffix: deinflected,
                 conditionsIn: [], conditionsOut: [person], ...constraint, then: STRIP_ACUTE});
         }
     }
@@ -575,17 +600,27 @@ for (const pronouns of CLUSTERS) {
     const de = (two ? 'dé' : 'de') + cluster;
     suffix(id, de, 'dé', [], ['imp'], WHOLE);
     if (first === 'se') {
-        add(id, {type: 'circumfix', inflectedPrefix: '', deinflectedPrefix: 'se ', inflectedSuffix: de, deinflectedSuffix: 'dé', conditionsIn: [], conditionsOut: ['imp_ud'], ...WHOLE});
+        add(id, {type: 'circumfix', inflectedPrefix: '', deinflectedPrefix: 'se+', inflectedSuffix: de, deinflectedSuffix: 'dé', conditionsIn: [], conditionsOut: ['imp_ud'], ...WHOLE});
     }
 }
 
 // --- Pronominal verbs ----------------------------------------------------------------
-transform('pronominal', '-se verb', 'A verb with a reflexive pronoun before it, looked up in its -se form: me levanto → levantarse, te acuerdas → acordarse.');
-for (const [condition, suffixes] of [['v_ar', [['ar', 'arse']]], ['v_er', [['er', 'erse']]], ['v_ir', [['ir', 'irse'], ['ír', 'írse']]]]) {
+transform('pronominal', '-se verb', 'A verb with a reflexive pronoun before it or attached to it, looked up in its -se form: me levanto → levantarse, te acuerdas → acordarse, siéntate → sentarse.');
+const CLASSES = [['v_ar', [['ar', 'arse']]], ['v_er', [['er', 'erse']]], ['v_ir', [['ir', 'irse'], ['ír', 'írse']]]];
+const PERSON = {me: 'p1s', te: 'p2s', se: 'p3', nos: 'p1p', os: 'p2p'};
+// A pronoun written before the verb: it must agree with the verb's person.
+for (const pronoun of REFLEXIVE) {
+    for (const [condition, suffixes] of CLASSES) {
+        add('pronominal', {
+            type: 'circumfix', prefixes: [[pronoun + ' ', '']], suffixes,
+            conditionsIn: [PERSON[pronoun]], conditionsOut: [condition], stemCharacters: LETTER,
+        });
+    }
+}
+// A pronoun the clitic rules moved from after an imperative or a gerund.
+for (const [condition, suffixes] of CLASSES) {
     add('pronominal', {
-        type: 'circumfix',
-        prefixes: REFLEXIVE.map((p) => [p + ' ', '']),
-        suffixes,
+        type: 'circumfix', prefixes: REFLEXIVE.map((p) => [p + '+', '']), suffixes,
         conditionsIn: [condition], conditionsOut: [condition], stemCharacters: LETTER,
     });
 }

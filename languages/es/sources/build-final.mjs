@@ -20,7 +20,8 @@
 // (future `é` → ``) makes the deinflections of the own rules for the three
 // conjugations (`aré` → `ar`, `eré` → `er`, `iré` → `ir`). Yomitan's jugar
 // rules (ue → u where the text starts with jue) are the own jue → ju change;
-// its five pronominal patterns are the own pronominal rules.
+// its five pronominal patterns are the own pronominal rules for a pronoun
+// written before the verb.
 //
 // sources/yomitan-provenance.tsv lists every Yomitan rule with the own rules
 // that make its deinflection, or `-` when none does.
@@ -81,7 +82,11 @@ function change(rule) {
 
 function sameDeinflection(y, o) {
     if (!overlaps(y.conditionsOut, o.conditionsOut)) { return false; }
-    if (y.type === 'pattern') { return o.type === 'circumfix'; }
+    // Yomitan's reflexive pattern for one pronoun (anchored on "me ", ...) is
+    // the own pronominal rule for a pronoun written before the verb.
+    if (y.type === 'pattern') {
+        return o.type === 'circumfix' && (o.prefixes ?? [[o.inflectedPrefix, o.deinflectedPrefix]]).some(([p]) => p === y.anchorPrefix);
+    }
     if (!['suffix', 'wholeWord'].includes(y.type) || !['suffix', 'wholeWord'].includes(o.type)) { return false; }
     if (change(y) !== change(o)) { return false; }
     if (y.inflected === o.inflected && y.deinflected === o.deinflected) { return true; }
