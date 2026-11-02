@@ -88,7 +88,17 @@
     "labels": {},
     "displayTransforms": {}
   },
-  "settings": [],
+  "settings": [
+    {
+      "id": "archaicForms",
+      "type": "boolean",
+      "default": false,
+      "label": "Archaic verb forms",
+      "description": "Also read Early Modern English verb endings, as in thou walkest, he walketh, thou art and he hath (the King James Bible, Shakespeare). Off by default, because -est and -eth also end ordinary words.",
+      "group": "lookup",
+      "effect": {"transforms": ["archaicSecondPerson", "archaicThirdPerson"]}
+    }
+  ],
   "host": {
     "ttsLanguage": "en-US",
     "audioLanguage": "en",

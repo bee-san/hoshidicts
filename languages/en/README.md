@@ -82,13 +82,12 @@ multiword transforms made optional.
   *naive*, *résumé* → *resume*, the input kept); `expandLigatures` (*æ*, *œ*
   and the U+FB00-FB06 ligatures; *encyclopædia* → *encyclopaedia*,
   *ﬁnding* → *finding*). `tests/text.tsv` checks each.
-- No pack setting yet. The optional transforms (below) need a boolean
-  setting with a `transforms` effect, and a setting naming a transform that
-  `sources/yomitan.json` lacks makes `tools/check-yomitan.mjs` and
-  `eval-language --transforms` fail. The framework change for that
-  (framework/transforms-override) is planned; the setting follows it.
-  Until then lookups never use the optional transforms, and the test files
-  and `eval-language` run them (section 12.2).
+- One pack setting, `archaicForms` (boolean, off by default, group
+  `lookup`), turns the optional own transforms `archaicSecondPerson` and
+  `archaicThirdPerson` on (section 4.7, effect `transforms`). The optional
+  Yomitan transforms (Rule provenance) have no setting: a request can enable
+  them by id, and the test files and `eval-language` run every optional
+  transform (section 12.2).
 
 ## Rule provenance
 
@@ -197,8 +196,8 @@ default.
 
 ## Measurements
 
-`hoshidicts-cli eval-language` (Release, GCC 14.3) on `main` 7e04ed5 plus
-this pack, `--dictionary` wty-en-en. The rule sets are `sources/own.json`,
+`hoshidicts-cli eval-language` (Release, GCC 14.3) on `main` e5751e8 plus
+this pack (7e04ed5 gave the same numbers), `--dictionary` wty-en-en. The rule sets are `sources/own.json`,
 `sources/yomitan.json`, their union (`tools/merge-transforms.mjs --out`) and
 the final `transforms.json`; "final, options off" leaves out the optional
 transforms, as a default lookup does. `eval-language` runs every option on.
@@ -261,24 +260,24 @@ form-of row.
 
 Hachidori: `test/chrome-language-pack.mjs` on bee-san/hachidori
 feat/multi-language 1bd53232 with this pack synced in, Chrome 152, wty-en-en:
-15 passed, 0 failed (11 cases, the Anki note and the switch to Japanese and
-back), dictionary imported in 4.5 s. The cases are the words of
+15 passed, 0 failed (adding the profile, the import, 11 cases, the Anki
+note and the switch to Japanese and back), dictionary imported in 3.1 s. The cases are the words of
 `sources/sentences.tsv` whose first result is the expected headword (form-of
 rows come first for the others).
 
-Performance (host load 28-44 on 64 cores, so these are upper bounds):
+Performance (host load about 29 on 64 cores, so these are upper bounds):
 
 - Native `benchmark-lookup --languages languages --language en` with
   wty-en-en on the 114 sentence texts of `sources/sentences.tsv` (each cut at
   its first comma, as the tool reads CSV), 21 passes, the first dropped:
-  p50 68.6 µs, p95 212.1 µs (budget 1 ms p50).
-- Hachidori's WebAssembly in Node 22 (`hdw_lookup`, the same texts, 10
-  passes after one): single-thread p50 235 µs, p95 878 µs; threaded p50
-  293 µs, p95 1,043 µs.
-- Pack load: natively `LanguageRegistry::add` takes 1.10 ms (median of 50)
-  and the registry holds 322,320 bytes of heap. In WebAssembly the first
-  `hdw_language_load` takes 14.0 ms (single-thread) and 16.3 ms (threaded),
-  later ones 2.6-2.8 ms, and the allocator's live bytes grow by 206,840 and
+  p50 65.7 µs, p95 200.2 µs (budget 1 ms p50).
+- Hachidori's WebAssembly (feat/multi-language 1bd53232) in Node 22
+  (`hdw_lookup`, the same texts, 10 passes after one): single-thread p50
+  214 µs, p95 765 µs; threaded p50 230 µs, p95 828 µs.
+- Pack load: natively `LanguageRegistry::add` takes 0.96 ms (median of 50)
+  and the registry holds 322,240 bytes of heap. In WebAssembly the first
+  `hdw_language_load` takes 13.3 ms (single-thread and threaded), later
+  ones 2.4-2.5 ms, and the allocator's live bytes grow by 206,832 and
   206,784 bytes. Budgets 50 ms and 20 MB.
 - No `pattern` rules, so no pattern heap.
 
@@ -290,7 +289,9 @@ Performance (host load 28-44 on 64 cores, so these are upper bounds):
   form's own row matches with no transform and ranks before the lemma: of
   the 114 sentence words, the lemma is the first result for 17, the first
   entry with definitions for 60, and within the first three for 112. A pack
-  cannot change this order.
+  cannot change this order today. A framework change that follows the
+  references as Yomitan does, chosen by a pack field (`lookup.formOf`), is
+  planned (hachi-lang-engine-f); this pack takes `"follow"` when it lands.
 - **A trailing apostrophe never ends a scanned prefix.** Apostrophes separate
   words, and word resolution tries prefixes that end after a word
   character, so *goin'* and *dogs'* are looked up only where the apostrophe
@@ -314,4 +315,3 @@ Performance (host load 28-44 on 64 cores, so these are upper bounds):
 - **gaps.tsv**: *red* → *rede* (archaic; *-d* after a two-letter stem would
   make *bed* and *wed* into *be* and *we*), *stolen* → *steale* (obsolete
   spelling; *steal* is found), *former* → *fore*.
-- **No setting yet** for the optional transforms (Text and scanning).
