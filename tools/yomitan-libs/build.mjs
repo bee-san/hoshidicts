@@ -4,20 +4,31 @@
 // does, so that tools/check-yomitan.mjs compares Korean processors with
 // Yomitan's (docs/languages.md, section 8.2):
 //
-//   npm ci --prefix tools/yomitan-libs --ignore-scripts=false
+//   node tools/yomitan-libs/build.mjs --lockfile-only <yomitan checkout>
+//   npm ci --prefix tools/yomitan-libs --ignore-scripts=false --include=optional
 //   node tools/yomitan-libs/build.mjs <yomitan checkout>
 //
-// npm installs esbuild 0.25.1 and hangul-js 0.2.6, the versions Yomitan's
-// package-lock.json pins at d3c54c1; esbuild's install script checks its
-// platform binary. The bundle is made with the options of buildLib in
-// Yomitan's dev/build-libs.js, in a temporary directory laid out as Yomitan's
-// tree: package.json, jsconfig.json, dev/jsconfig.json and
-// dev/lib/hangul-js.js from the pinned commit (read with --no-replace-objects,
-// not from the work tree, so local edits change nothing) and
-// node_modules/hangul-js/ from this directory. esbuild writes the bundled
-// files' paths into module comments and the source map (real paths, so the
-// temporary directory's real path is used); Yomitan's package.json
-// ("type": "module") changes the import code it generates
+// `--lockfile-only` checks package-lock.json here against Yomitan's at the
+// pinned revision before npm reads it: exactly esbuild, the 25 platform
+// packages Yomitan's esbuild entry lists, and hangul-js, each equal to
+// Yomitan's entry in every field but `dev` (and `license`, which Yomitan's
+// lockfile omits for esbuild), and hangul-js with the URL and hash of
+// HANGUL_JS, because Yomitan's entry records its version only. npm ci then
+// installs esbuild 0.25.1, the platform package of the machine and hangul-js
+// 0.2.6 with those hashes. esbuild's install script, the only one, checks that
+// the platform binary is 0.25.1; the build does not need it (esbuild's
+// JavaScript API checks the binary's version itself).
+//
+// The build repeats both checks, and checks that the installed esbuild,
+// platform package and hangul-js have the lockfile's versions. It bundles
+// with the options of buildLib in Yomitan's dev/build-libs.js, in a temporary
+// directory laid out as Yomitan's tree: package.json, jsconfig.json,
+// dev/jsconfig.json and dev/lib/hangul-js.js from the pinned commit (read with
+// --no-replace-objects, not from the work tree or the index, so local edits
+// change nothing) and node_modules/hangul-js/ from this directory. esbuild
+// writes the bundled files' paths into module comments and the source map
+// (real paths, so the temporary directory's real path is used); Yomitan's
+// package.json ("type": "module") changes the import code it generates
 // (`__toESM(require_hangul(), 1)`); the two jsconfig.json files change
 // nothing here but keep esbuild from using a tsconfig.json or jsconfig.json
 // above the temporary directory. The result, ext/lib/hangul-js.js and its
@@ -31,11 +42,6 @@
 // checkout. Inside the checkout it refuses an ext or ext/lib that is a
 // symbolic link, and it writes each file under a new name and renames it into
 // place, so a link left in ext/lib is replaced rather than written through.
-// It also refuses packages other than Yomitan's: every package of
-// package-lock.json here must be esbuild, one of the platform packages
-// Yomitan's esbuild entry lists, or hangul-js, with the version, and where
-// Yomitan's lockfile records them the resolved URL and integrity, of Yomitan's
-// lockfile at the pinned revision.
 
 import {execFileSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
@@ -43,6 +49,7 @@ import {constants, copyFileSync, cpSync, existsSync, lstatSync, mkdirSync, mkdte
 import {tmpdir} from 'node:os';
 import {dirname, join, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {isDeepStrictEqual} from 'node:util';
 import {isMain} from '../lib/cli.mjs';
 import {PINNED_REVISION} from '../lib/yomitan.mjs';
 
@@ -65,7 +72,18 @@ export const EXPECTED_SHA256 = {
     'hangul-js.js.map': 'f09719ae49d30261d9f487ad18b64d8ec82d60f883b8209603b6dc47120e62f1',
 };
 const PACKAGES = ['esbuild', 'hangul-js'];
-const INSTALL = 'npm ci --prefix tools/yomitan-libs --ignore-scripts=false';
+/**
+ * hangul-js 0.2.6's tarball and its hash. Yomitan's lockfile at d3c54c1 records
+ * hangul-js by version only (npm dropped both fields in yomidevs/yomitan@96f81f1);
+ * from 82049f3 ("add korean") until then it recorded these two, which are also
+ * the registry's `dist.tarball` and `dist.integrity`.
+ */
+export const HANGUL_JS = {
+    version: '0.2.6',
+    resolved: 'https://registry.npmjs.org/hangul-js/-/hangul-js-0.2.6.tgz',
+    integrity: 'sha512-48axU8LgjCD30FEs66Xc04/8knxMwCMQw0f67l67rlttW7VXT3qRJgQeHmhiuGwWXGvSbk6YM0fhQlcjE1JFQA==',
+};
+const INSTALL = 'npm ci --prefix tools/yomitan-libs --ignore-scripts=false --include=optional';
 
 // Variables that point git at another repository than the directory named.
 const GIT_LOCATION = ['GIT_DIR', 'GIT_WORK_TREE', 'GIT_COMMON_DIR', 'GIT_INDEX_FILE', 'GIT_OBJECT_DIRECTORY', 'GIT_ALTERNATE_OBJECT_DIRECTORIES'];
@@ -107,9 +125,10 @@ export function checkCheckout(root) {
 
 /**
  * Why the packages of our lockfile are not Yomitan's: one message per
- * problem, none when every package is esbuild, one of the platform packages
- * Yomitan's esbuild entry lists, or hangul-js, with Yomitan's version and,
- * where Yomitan's lockfile records them, its resolved URL and integrity.
+ * problem, none when our lockfile has exactly esbuild, every platform package
+ * Yomitan's esbuild entry lists, and hangul-js, each equal to Yomitan's entry
+ * in every field but `dev` (and `license` where Yomitan records none), and
+ * hangul-js with HANGUL_JS's URL and hash, which Yomitan's entry lacks.
  * @param {any} ours our package-lock.json
  * @param {any} theirs Yomitan's package-lock.json
  * @returns {string[]}
@@ -120,8 +139,8 @@ export function lockfileProblems(ours, theirs) {
     const yomitan = theirs?.packages ?? {};
     const platforms = Object.keys(yomitan['node_modules/esbuild']?.optionalDependencies ?? {});
     const allowed = new Set([...PACKAGES, ...platforms].map((name) => `node_modules/${name}`));
-    for (const name of PACKAGES) {
-        if (packages[`node_modules/${name}`] === undefined) { problems.push(`node_modules/${name} is missing`); }
+    for (const key of allowed) {
+        if (packages[key] === undefined) { problems.push(`${key} is missing`); }
     }
     for (const [key, entry] of Object.entries(packages)) {
         if (key === '') { continue; }
@@ -134,29 +153,65 @@ export function lockfileProblems(ours, theirs) {
             problems.push(`${key} is not in Yomitan's package-lock.json`);
             continue;
         }
-        for (const field of ['version', 'resolved', 'integrity']) {
-            if (field !== 'version' && other[field] === undefined) { continue; }
-            if (entry[field] !== other[field]) { problems.push(`${key}: ${field} ${entry[field] ?? '(none)'}, Yomitan's is ${other[field] ?? '(none)'}`); }
+        const pinned = key === 'node_modules/hangul-js' && other.version === HANGUL_JS.version ? HANGUL_JS : {};
+        const expected = {...other};
+        for (const field of ['resolved', 'integrity']) {
+            if (expected[field] === undefined && pinned[field] !== undefined) { expected[field] = pinned[field]; }
+        }
+        for (const field of new Set([...Object.keys(expected), ...Object.keys(entry)])) {
+            if (field === 'dev' || (field === 'license' && other.license === undefined)) { continue; }
+            if (isDeepStrictEqual(entry[field], expected[field])) { continue; }
+            const whose = other[field] === undefined && pinned[field] !== undefined ? `hangul-js ${HANGUL_JS.version}'s` : 'Yomitan\'s';
+            problems.push(`${key}: ${field} ${show(entry[field])}, ${whose} is ${show(expected[field])}`);
         }
     }
     return problems;
 }
 
+function show(value) {
+    return value === undefined ? '(none)' : typeof value === 'string' ? value : JSON.stringify(value);
+}
+
 /**
- * Checks our lockfile against the checkout's and the installed packages
- * against our lockfile.
+ * Checks our lockfile against Yomitan's at the pinned revision in the checkout.
+ * Needs nothing installed, so CI runs it before `npm ci`.
  * @param {string} root an absolute checkout path that passed checkCheckout
+ * @returns {any} our lockfile
  */
-export function checkPackages(root) {
+export function checkLockfile(root) {
     const ours = JSON.parse(readFileSync(join(HERE, 'package-lock.json'), 'utf8'));
     const theirs = JSON.parse(git(root, ['cat-file', 'blob', `${PINNED_REVISION}:package-lock.json`]).toString());
     const problems = lockfileProblems(ours, theirs);
     if (problems.length > 0) { throw new Error(`tools/yomitan-libs/package-lock.json is not Yomitan's at ${PINNED_REVISION}:\n  ${problems.join('\n  ')}`); }
-    for (const name of PACKAGES) {
-        const file = join(HERE, 'node_modules', name, 'package.json');
+    return ours;
+}
+
+/**
+ * The lockfile entries npm installs on this machine: esbuild, hangul-js and
+ * the platform packages whose `os` and `cpu` name it.
+ * @param {any} lock
+ * @returns {string[]} keys such as node_modules/@esbuild/linux-x64
+ */
+export function installedKeys(lock) {
+    const platforms = Object.keys(lock.packages['node_modules/esbuild'].optionalDependencies ?? {}).map((name) => `node_modules/${name}`)
+        .filter((key) => (lock.packages[key]?.os ?? []).includes(process.platform) && (lock.packages[key]?.cpu ?? []).includes(process.arch));
+    if (platforms.length === 0) { throw new Error(`esbuild ${lock.packages['node_modules/esbuild'].version} has no platform package for ${process.platform} ${process.arch}`); }
+    return [...PACKAGES.map((name) => `node_modules/${name}`), ...platforms];
+}
+
+/**
+ * Checks the lockfile, then that npm installed this machine's packages at the
+ * lockfile's versions.
+ * @param {string} root an absolute checkout path that passed checkCheckout
+ */
+export function checkPackages(root) {
+    const ours = checkLockfile(root);
+    for (const key of installedKeys(ours)) {
+        const name = key.slice('node_modules/'.length);
+        const file = join(HERE, key, 'package.json');
         if (!existsSync(file)) { throw new Error(`${name} is not installed; run ${INSTALL}`); }
         const installed = JSON.parse(readFileSync(file, 'utf8')).version;
-        const locked = ours.packages[`node_modules/${name}`].version;
+        const locked = ours.packages[key].version;
         if (installed !== locked) { throw new Error(`${name} ${installed} is installed, the lockfile has ${locked}; run ${INSTALL}`); }
     }
 }
@@ -258,13 +313,23 @@ export async function buildHangul(root) {
     }
 }
 
+const USAGE = 'usage: node tools/yomitan-libs/build.mjs [--lockfile-only] <yomitan checkout at d3c54c1>';
+
 async function main(argv) {
-    if (argv.length !== 1 || argv[0].startsWith('-')) {
-        console.error('usage: node tools/yomitan-libs/build.mjs <yomitan checkout at d3c54c1>');
+    const lockfileOnly = argv[0] === '--lockfile-only';
+    const args = lockfileOnly ? argv.slice(1) : argv;
+    if (args.length !== 1 || args[0].startsWith('-')) {
+        console.error(USAGE);
         return 2;
     }
     try {
-        const {files, esbuild} = await buildHangul(argv[0]);
+        if (lockfileOnly) {
+            // Before `npm ci`: the lockfile is Yomitan's, so npm installs only its packages.
+            const lock = checkLockfile(checkCheckout(args[0]));
+            console.log(`tools/yomitan-libs/package-lock.json is Yomitan's at ${PINNED_REVISION} (${Object.keys(lock.packages).length - 1} packages)`);
+            return 0;
+        }
+        const {files, esbuild} = await buildHangul(args[0]);
         for (const {path, bytes, sha256: hash} of files) { console.log(`wrote ${path} (${bytes} bytes, sha256 ${hash})`); }
         console.log(`with esbuild ${esbuild} and hangul-js ${JSON.parse(readFileSync(join(HERE, 'node_modules', 'hangul-js', 'package.json'), 'utf8')).version}`);
         return 0;

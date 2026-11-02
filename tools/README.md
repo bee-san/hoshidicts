@@ -5,7 +5,8 @@ They have no npm dependencies, except `tools/yomitan-libs/`, which installs
 esbuild 0.25.1 (MIT) and hangul-js 0.2.6 (MIT) to build one Yomitan bundle;
 neither is part of the library. Yomitan is read from a checkout at
 [d3c54c1](https://github.com/yomidevs/yomitan/tree/d3c54c10264673eca0d66b970ef74cd5c8b048e3);
-only `tools/yomitan-libs/build.mjs` writes into one, and only into a copy.
+only `tools/yomitan-libs/build.mjs` writes into one: CI's own checkout, or a
+copy of a shared one.
 
 | Command | Contract | What it does |
 | --- | --- | --- |
@@ -13,7 +14,7 @@ only `tools/yomitan-libs/build.mjs` writes into one, and only into a copy.
 | `node tools/port-yomitan-transforms.mjs <yomitan> <code>` | 8.1 | Writes `languages/<code>/sources/yomitan.json` from Yomitan's rules: literal suffix, prefix and whole-word rules are ported, every other rule becomes a `todo` to map by hand. An existing file is kept unless `--force`. |
 | `node tools/port-yomitan-tests.mjs <yomitan> <code>` | 8.1, 12.2 | Writes `languages/<code>/tests/yomitan.tsv` from Yomitan's transform test. |
 | `node tools/check-yomitan.mjs <yomitan> <code>...` | 8.2 | Compares `hoshidicts-cli` (default `build/hoshidicts-cli`; `--cli` or `HOSHIDICTS_CLI` to change it) with Yomitan's transformer and processors; `sources/yomitan-differences.tsv` lists the deliberate differences. `--all` runs every pack. Korean processors need the checkout's `ext/lib/hangul-js.js` (next row). |
-| `npm ci --prefix tools/yomitan-libs --ignore-scripts=false`, then `node tools/yomitan-libs/build.mjs <yomitan copy>` | 8.2 | Writes `ext/lib/hangul-js.js` and its source map into a copy of a Yomitan checkout, byte for byte as Yomitan's `dev/build-libs.js` does (a result with other hashes is not written), with the esbuild and hangul-js of `tools/yomitan-libs/package-lock.json` (Yomitan's versions, and its hashes where it records them). It refuses any directory that is not the top of a git work tree at d3c54c1, an `ext` or `ext/lib` that is a symbolic link, and packages other than Yomitan's. CI runs it on its own checkout. |
+| `node tools/yomitan-libs/build.mjs --lockfile-only <yomitan copy>`, `npm ci --prefix tools/yomitan-libs --ignore-scripts=false --include=optional`, then `node tools/yomitan-libs/build.mjs <yomitan copy>` | 8.2 | `--lockfile-only` checks that `tools/yomitan-libs/package-lock.json` has exactly esbuild 0.25.1, its 25 platform packages and hangul-js 0.2.6 as Yomitan's d3c54c1 lockfile has them (every field but `dev`), with hangul-js's pinned URL and hash. The build checks that again and the installed versions, and writes `ext/lib/hangul-js.js` and its source map into a copy of a Yomitan checkout, byte for byte as Yomitan's `dev/build-libs.js` does (a result with other hashes is not written). It refuses any directory that is not the top of a git work tree at d3c54c1, and an `ext` or `ext/lib` that is a symbolic link. CI runs all three on its own checkout. |
 | `node tools/merge-transforms.mjs <code>` | 14 step 5 | Writes the union of `languages/<code>/sources/own.json` and `sources/yomitan.json` to `transforms.json`, each rule marked `own`, `yomitan` or `both`. A `transforms.json` other than the template's is kept unless `--force`; `--out <file>` writes elsewhere. |
 
 `tools/lib/classes.mjs` is the JavaScript side of the class syntax and the
@@ -38,7 +39,8 @@ lockfile. When that checkout's `ext/lib/hangul-js.js` is built and
 `hoshidicts-cli` is built, `yomitan-libs.test.mjs` also checks that the bundle
 is the one Yomitan's own build writes and runs `check-yomitan.mjs` on the
 Korean pack in `tools/test/fixtures/korean/`. CI sets `YOMITAN_DIR` to its
-checkout. `ctest -R check-yomitan-cli` (a build with `HOSHIDICTS_TESTS` and
+checkout and `HOSHIDICTS_REQUIRE_HANGUL_BUNDLE=1`, which fails the tests
+instead of skipping that comparison when the bundle or the CLI is missing. `ctest -R check-yomitan-cli` (a build with `HOSHIDICTS_TESTS` and
 `HOSHIDICTS_CLI`, and Node on the `PATH`) runs `check-yomitan.mjs` on the same
 fixtures with the real `hoshidicts-cli`.
 

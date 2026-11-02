@@ -10,7 +10,8 @@
 // and point the tools at the copy:
 //
 //   cp -a <yomitan checkout> <copy>
-//   npm ci --prefix tools/yomitan-libs --ignore-scripts=false
+//   node tools/yomitan-libs/build.mjs --lockfile-only <copy>
+//   npm ci --prefix tools/yomitan-libs --ignore-scripts=false --include=optional
 //   node tools/yomitan-libs/build.mjs <copy>
 //
 // CI builds it the same way into its own checkout (section 8.2). Japanese

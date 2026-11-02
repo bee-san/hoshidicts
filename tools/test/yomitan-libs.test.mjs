@@ -25,7 +25,7 @@ import {fileURLToPath, pathToFileURL} from 'node:url';
 import {DEFAULT_CLI} from '../check-yomitan.mjs';
 import {REPO_ROOT, corpusStrings, loadPack, readJson} from '../lib/pack.mjs';
 import {PINNED_REVISION, yomitanRevision} from '../lib/yomitan.mjs';
-import {EXPECTED_SHA256, checkLibDirectory, esbuildOptions, lockfileProblems} from '../yomitan-libs/build.mjs';
+import {EXPECTED_SHA256, HANGUL_JS, checkLibDirectory, esbuildOptions, installedKeys, lockfileProblems} from '../yomitan-libs/build.mjs';
 
 const tool = fileURLToPath(new URL('../yomitan-libs/build.mjs', import.meta.url));
 const checkTool = fileURLToPath(new URL('../check-yomitan.mjs', import.meta.url));
@@ -101,10 +101,10 @@ function assertRefused(result, dir, pattern) {
 
 describe('build.mjs refuses to write anywhere but a Yomitan checkout at the pinned revision', () => {
     test('without exactly one checkout argument it prints its usage', () => {
-        for (const args of [[], [temp, temp], ['--help']]) {
+        for (const args of [[], [temp, temp], ['--help'], ['--lockfile-only'], ['--lockfile-only', temp, temp], ['--lockfile-only', '--help'], [temp, '--lockfile-only']]) {
             const result = build(...args);
             assert.equal(result.status, 2, args.join(' '));
-            assert.match(result.stderr, /^usage: node tools\/yomitan-libs\/build\.mjs <yomitan checkout at d3c54c1>/);
+            assert.equal(result.stderr, 'usage: node tools/yomitan-libs/build.mjs [--lockfile-only] <yomitan checkout at d3c54c1>\n');
         }
     });
 
@@ -128,6 +128,9 @@ describe('build.mjs refuses to write anywhere but a Yomitan checkout at the pinn
         assertRefused(build(bare), bare, /is not a git work tree/);
         const gitDir = join(repository(), '.git');
         assertRefused(build(gitDir), gitDir, /is not a git work tree/);
+        assertRefused(build('--lockfile-only', plain), plain, /is not a git work tree/);
+        const other = repository();
+        assertRefused(build('--lockfile-only', other), other, /is at [0-9a-f]{40}, not Yomitan/);
     });
 
     test('a subdirectory of a work tree', () => {
@@ -202,6 +205,16 @@ describe('build.mjs writes only inside the checkout', () => {
         assertRefused(result, plain, /is not a git work tree/);
     });
 
+    test('a file that cannot be replaced fails the build and leaves no partial file', {skip: skipCheckout}, () => {
+        const copy = checkoutCopy();
+        mkdirSync(join(copy, 'ext', 'lib', 'hangul-js.js', 'inside'), {recursive: true});
+        const result = build(copy);
+        assert.equal(result.status, 1);
+        assert.match(result.stderr, /^build\.mjs: .*(EISDIR|ENOTEMPTY|EEXIST|EPERM)/);
+        assert.deepEqual(readdirSync(join(copy, 'ext', 'lib')), ['hangul-js.js']);
+        assert.deepEqual(readdirSync(join(copy, 'ext', 'lib', 'hangul-js.js')), ['inside']);
+    });
+
     test('the command refuses a checkout whose ext/lib is a symbolic link', {skip: skipCheckout}, () => {
         const copy = checkoutCopy();
         const outside = directory();
@@ -237,19 +250,43 @@ describe('build.mjs builds as Yomitan\'s dev/build-libs.js does', {skip: skipChe
         writeFileSync(join(copy, 'dev', 'lib', 'hangul-js.js'), 'export const Hangul = {disassemble: () => [\'edited\']};\n');
         writeFileSync(join(copy, 'package.json'), '{"name": "edited"}\n');
         writeFileSync(join(copy, 'jsconfig.json'), JSON.stringify({compilerOptions: {baseUrl: '.', paths: {'hangul-js': ['./dev/lib/hangul-js.js']}}}));
+        // Staged as well, so neither the work tree nor the index is read.
+        execFileSync('git', ['-C', copy, 'add', 'dev/lib/hangul-js.js', 'package.json', 'jsconfig.json'], {env, stdio: 'ignore'});
         const result = build(copy);
         assert.equal(result.status, 0, result.stderr);
         for (const [name, hash] of Object.entries(REFERENCE)) { assert.equal(sha256(join(copy, 'ext', 'lib', name)), hash, name); }
     });
 
-    test('a tsconfig.json above the temporary directory changes nothing', () => {
-        const hostile = directory();
-        writeFileSync(join(hostile, 'tsconfig.json'), JSON.stringify({compilerOptions: {baseUrl: '.', paths: {'hangul-js': ['./fake.js']}}}));
-        writeFileSync(join(hostile, 'fake.js'), 'export const disassemble = () => [\'fake\'];\n');
+    test('a tsconfig.json or jsconfig.json, package.json and hangul-js above the temporary directory change nothing', () => {
+        for (const config of ['tsconfig.json', 'jsconfig.json']) {
+            const hostile = directory();
+            writeFileSync(join(hostile, config), JSON.stringify({compilerOptions: {baseUrl: '.', paths: {'hangul-js': ['./fake.js'], '*': ['./fake.js']}, alwaysStrict: true, target: 'es5', jsx: 'preserve', useDefineForClassFields: false}}));
+            writeFileSync(join(hostile, 'fake.js'), 'export const Hangul = \'fake\';\n');
+            writeFileSync(join(hostile, 'package.json'), JSON.stringify({type: 'commonjs', sideEffects: false}));
+            mkdirSync(join(hostile, 'node_modules', 'hangul-js'), {recursive: true});
+            writeFileSync(join(hostile, 'node_modules', 'hangul-js', 'package.json'), JSON.stringify({name: 'hangul-js', version: '0.2.6', main: 'hangul.js'}));
+            writeFileSync(join(hostile, 'node_modules', 'hangul-js', 'hangul.js'), 'module.exports = {fake: true};\n');
+            mkdirSync(join(hostile, 'tmp'));
+            const copy = checkoutCopy();
+            const result = spawnSync(process.execPath, [tool, copy], {encoding: 'utf8', env: {...env, TMPDIR: join(hostile, 'tmp')}});
+            assert.equal(result.status, 0, `${config}: ${result.stderr}`);
+            for (const [name, hash] of Object.entries(REFERENCE)) { assert.equal(sha256(join(copy, 'ext', 'lib', name)), hash, `${config}: ${name}`); }
+        }
+    });
+
+    test('it writes the two files and nothing else, and removes its temporary tree', () => {
+        const tmp = directory();
         const copy = checkoutCopy();
-        const result = spawnSync(process.execPath, [tool, copy], {encoding: 'utf8', env: {...env, TMPDIR: hostile}});
+        const files = (dir, prefix = '') => readdirSync(dir, {withFileTypes: true}).flatMap((e) => (prefix === '' && e.name === '.git' ? [] : e.isDirectory() ? files(join(dir, e.name), `${prefix}${e.name}/`) : [`${prefix}${e.name}`])).sort();
+        assert.deepEqual(files(copy), []);
+        const result = spawnSync(process.execPath, [tool, copy], {encoding: 'utf8', env: {...env, TMPDIR: tmp}});
         assert.equal(result.status, 0, result.stderr);
-        for (const [name, hash] of Object.entries(REFERENCE)) { assert.equal(sha256(join(copy, 'ext', 'lib', name)), hash, name); }
+        assert.deepEqual(files(copy), ['ext/lib/hangul-js.js', 'ext/lib/hangul-js.js.map']);
+        assert.deepEqual(readdirSync(tmp), []);
+        // A second run replaces the two files and leaves nothing else either.
+        assert.equal(spawnSync(process.execPath, [tool, copy], {encoding: 'utf8', env: {...env, TMPDIR: tmp}}).status, 0);
+        assert.deepEqual(files(copy), ['ext/lib/hangul-js.js', 'ext/lib/hangul-js.js.map']);
+        assert.deepEqual(readdirSync(tmp), []);
     });
 
     test('a TMPDIR behind a symbolic link and a `git replace` of the entry change nothing', () => {
@@ -271,7 +308,6 @@ describe('build.mjs builds as Yomitan\'s dev/build-libs.js does', {skip: skipChe
 
     const esbuildInstalled = existsSync(fileURLToPath(new URL('../yomitan-libs/node_modules/esbuild/package.json', import.meta.url)));
     test('a build that is not Yomitan\'s writes nothing', {skip: esbuildInstalled ? false : 'esbuild is not installed in tools/yomitan-libs/node_modules'}, () => {
-        assert.deepEqual(EXPECTED_SHA256, REFERENCE);
         // build.mjs in a copy of tools/ with the installed esbuild and a
         // hangul-js 0.2.6 that is not the registry's.
         const tools = join(directory(), 'tools');
@@ -304,20 +340,27 @@ describe('build.mjs builds as Yomitan\'s dev/build-libs.js does', {skip: skipChe
             writeFileSync(join(modules, name, 'index.js'), main ?? 'module.exports = {};\n');
         };
         const copy = checkoutCopy();
-        const run = () => spawnSync(process.execPath, [join(tools, 'yomitan-libs', 'build.mjs'), copy], {encoding: 'utf8', env});
+        const run = (...args) => spawnSync(process.execPath, [join(tools, 'yomitan-libs', 'build.mjs'), ...args, copy], {encoding: 'utf8', env});
         const lockCopy = join(tools, 'yomitan-libs', 'package-lock.json');
         const lockText = readFileSync(lockCopy, 'utf8');
         const tampered = JSON.parse(lockText);
         tampered.packages['node_modules/hangul-js'].version = '0.2.5';
         tampered.packages['node_modules/left-pad'] = {version: '1.3.0'};
         writeFileSync(lockCopy, JSON.stringify(tampered));
-        let result = run();
-        assert.equal(result.status, 1);
-        assert.match(result.stderr, new RegExp(`tools/yomitan-libs/package-lock\\.json is not Yomitan's at ${PINNED_REVISION}:\\n  node_modules/hangul-js: version 0\\.2\\.5, Yomitan's is 0\\.2\\.6\\n  node_modules/left-pad is neither esbuild, one of its platform packages nor hangul-js`));
+        const refusal = new RegExp(`tools/yomitan-libs/package-lock\\.json is not Yomitan's at ${PINNED_REVISION}:\\n  node_modules/hangul-js: version 0\\.2\\.5, Yomitan's is 0\\.2\\.6\\n  node_modules/left-pad is neither esbuild, one of its platform packages nor hangul-js\\n$`);
+        for (const args of [[], ['--lockfile-only']]) {
+            const result = run(...args);
+            assert.equal(result.status, 1, args.join(' '));
+            assert.match(result.stderr, refusal, args.join(' '));
+        }
         writeFileSync(lockCopy, lockText);
+        // Before npm ci nothing is installed; the lockfile check needs nothing.
+        let result = run('--lockfile-only');
+        assert.equal(result.status, 0, result.stderr);
+        assert.equal(result.stdout, `tools/yomitan-libs/package-lock.json is Yomitan's at ${PINNED_REVISION} (27 packages)\n`);
         result = run();
         assert.equal(result.status, 1);
-        assert.match(result.stderr, /esbuild is not installed; run npm ci --prefix tools\/yomitan-libs --ignore-scripts=false/);
+        assert.match(result.stderr, /esbuild is not installed; run npm ci --prefix tools\/yomitan-libs --ignore-scripts=false --include=optional/);
         fake('esbuild', '0.25.1', 'module.exports = {version: \'0.25.0\', build() { throw new Error(\'not esbuild 0.25.1\'); }};\n');
         result = run();
         assert.equal(result.status, 1);
@@ -327,6 +370,16 @@ describe('build.mjs builds as Yomitan\'s dev/build-libs.js does', {skip: skipChe
         assert.equal(result.status, 1);
         assert.match(result.stderr, /hangul-js 0\.2\.5 is installed, the lockfile has 0\.2\.6/);
         fake('hangul-js', '0.2.6');
+        const [platform] = installedKeys(readJson(lockfile)).slice(2);
+        const platformName = platform.slice('node_modules/'.length);
+        result = run();
+        assert.equal(result.status, 1);
+        assert.equal(result.stderr, `build.mjs: ${platformName} is not installed; run npm ci --prefix tools/yomitan-libs --ignore-scripts=false --include=optional\n`);
+        fake(platformName, '0.25.2');
+        result = run();
+        assert.equal(result.status, 1);
+        assert.equal(result.stderr, `build.mjs: ${platformName} 0.25.2 is installed, the lockfile has 0.25.1; run npm ci --prefix tools/yomitan-libs --ignore-scripts=false --include=optional\n`);
+        fake(platformName, '0.25.1');
         result = run();
         assert.equal(result.status, 1);
         assert.match(result.stderr, /esbuild 0\.25\.0 was loaded, the lockfile has 0\.25\.1/);
@@ -362,28 +415,70 @@ describe('package-lock.json', () => {
         assert.deepEqual(keys.filter((key) => lock.packages[key].hasInstallScript), ['node_modules/esbuild']);
     });
 
-    test('lockfileProblems: Yomitan\'s versions, and its URLs and hashes where it records them; nothing else', () => {
-        // Stands in for Yomitan's lockfile, which records hangul-js without
-        // a URL or a hash at the pinned revision and has many more packages.
+    test('lockfileProblems: exactly Yomitan\'s entries in every field but dev, and hangul-js\'s pinned URL and hash', () => {
+        // Stands in for Yomitan's lockfile, which marks esbuild as a dev
+        // dependency without a licence, records hangul-js by version only at
+        // the pinned revision, and has many more packages.
         const yomitan = structuredClone(lock);
+        for (const [key, entry] of Object.entries(yomitan.packages)) {
+            if (key.includes('esbuild')) {
+                entry.dev = true;
+                delete entry.license;
+            }
+        }
         delete yomitan.packages['node_modules/hangul-js'].resolved;
         delete yomitan.packages['node_modules/hangul-js'].integrity;
         yomitan.packages['node_modules/ajv'] = {version: '8.17.1', resolved: 'https://registry.npmjs.org/ajv/-/ajv-8.17.1.tgz', integrity: 'sha512-x', dev: true};
         assert.deepEqual(lockfileProblems(lock, yomitan), []);
+        assert.deepEqual(HANGUL_JS, {version: '0.2.6', resolved: lock.packages['node_modules/hangul-js'].resolved, integrity: lock.packages['node_modules/hangul-js'].integrity});
         const changed = (edit) => {
             const ours = structuredClone(lock);
             edit(ours.packages);
             return lockfileProblems(ours, yomitan).join('\n');
         };
         assert.equal(changed((p) => { p['node_modules/esbuild'].version = '0.25.2'; }), "node_modules/esbuild: version 0.25.2, Yomitan's is 0.25.1");
-        assert.match(changed((p) => { p['node_modules/@esbuild/linux-x64'].integrity = 'sha512-y'; }), /^node_modules\/@esbuild\/linux-x64: integrity sha512-y, Yomitan's is sha512-xbfU/);
-        assert.match(changed((p) => { p['node_modules/esbuild'].resolved = 'https://example.org/esbuild-0.25.1.tgz'; }), /^node_modules\/esbuild: resolved https:\/\/example\.org/);
+        assert.match(changed((p) => { p['node_modules/@esbuild/linux-x64'].integrity = 'sha512-y'; }), /^node_modules\/@esbuild\/linux-x64: integrity sha512-y, Yomitan's is sha512-xbfU\S+$/);
+        assert.match(changed((p) => { p['node_modules/esbuild'].resolved = 'https://example.org/esbuild-0.25.1.tgz'; }), /^node_modules\/esbuild: resolved https:\/\/example\.org\/esbuild-0\.25\.1\.tgz, Yomitan's is https:\/\/registry\.npmjs\.org\/esbuild\/-\/esbuild-0\.25\.1\.tgz$/);
         assert.equal(changed((p) => { delete p['node_modules/esbuild'].integrity; }), `node_modules/esbuild: integrity (none), Yomitan's is ${lock.packages['node_modules/esbuild'].integrity}`);
+        // Every other field Yomitan records.
+        assert.equal(changed((p) => { p['node_modules/@esbuild/linux-x64'].cpu = ['arm64']; }), 'node_modules/@esbuild/linux-x64: cpu ["arm64"], Yomitan\'s is ["x64"]');
+        assert.equal(changed((p) => { p['node_modules/@esbuild/linux-x64'].os = ['darwin']; }), 'node_modules/@esbuild/linux-x64: os ["darwin"], Yomitan\'s is ["linux"]');
+        assert.equal(changed((p) => { delete p['node_modules/@esbuild/linux-x64'].optional; }), 'node_modules/@esbuild/linux-x64: optional (none), Yomitan\'s is true');
+        assert.equal(changed((p) => { p['node_modules/hangul-js'].hasInstallScript = true; }), "node_modules/hangul-js: hasInstallScript true, Yomitan's is (none)");
+        assert.equal(changed((p) => { p['node_modules/esbuild'].bin = {esbuild: 'evil.js'}; }), 'node_modules/esbuild: bin {"esbuild":"evil.js"}, Yomitan\'s is {"esbuild":"bin/esbuild"}');
+        assert.equal(changed((p) => { p['node_modules/hangul-js'].license = 'GPL'; }), "node_modules/hangul-js: license GPL, Yomitan's is MIT");
+        assert.equal(changed((p) => { p['node_modules/esbuild'].dev = true; }), '');
+        assert.equal(changed((p) => {
+            p['node_modules/esbuild'].optionalDependencies.ajv = '8.17.1';
+            p['node_modules/ajv'] = yomitan.packages['node_modules/ajv'];
+        }), [
+            `node_modules/esbuild: optionalDependencies ${JSON.stringify({...lock.packages['node_modules/esbuild'].optionalDependencies, ajv: '8.17.1'})}, Yomitan's is ${JSON.stringify(lock.packages['node_modules/esbuild'].optionalDependencies)}`,
+            'node_modules/ajv is neither esbuild, one of its platform packages nor hangul-js',
+        ].join('\n'));
+        // hangul-js: Yomitan's version, and the pinned URL and hash.
         assert.equal(changed((p) => { p['node_modules/hangul-js'].version = '0.2.5'; }), "node_modules/hangul-js: version 0.2.5, Yomitan's is 0.2.6");
+        assert.equal(changed((p) => { p['node_modules/hangul-js'].resolved = 'https://registry.npmjs.org/async/-/async-0.2.6.tgz'; }), `node_modules/hangul-js: resolved https://registry.npmjs.org/async/-/async-0.2.6.tgz, hangul-js 0.2.6's is ${HANGUL_JS.resolved}`);
+        assert.equal(changed((p) => { p['node_modules/hangul-js'].integrity = 'sha512-z'; }), `node_modules/hangul-js: integrity sha512-z, hangul-js 0.2.6's is ${HANGUL_JS.integrity}`);
+        assert.equal(changed((p) => { delete p['node_modules/hangul-js'].integrity; }), `node_modules/hangul-js: integrity (none), hangul-js 0.2.6's is ${HANGUL_JS.integrity}`);
+        // Exactly these packages.
         assert.equal(changed((p) => { p['node_modules/ajv'] = yomitan.packages['node_modules/ajv']; }), 'node_modules/ajv is neither esbuild, one of its platform packages nor hangul-js');
+        assert.equal(changed((p) => { p['node_modules/esbuild/node_modules/hangul-js'] = p['node_modules/hangul-js']; }), 'node_modules/esbuild/node_modules/hangul-js is neither esbuild, one of its platform packages nor hangul-js');
         assert.equal(changed((p) => { delete p['node_modules/hangul-js']; }), 'node_modules/hangul-js is missing');
+        assert.equal(changed((p) => { delete p['node_modules/@esbuild/aix-ppc64']; }), 'node_modules/@esbuild/aix-ppc64 is missing');
         delete yomitan.packages['node_modules/@esbuild/linux-x64'];
         assert.equal(lockfileProblems(lock, yomitan).join('\n'), "node_modules/@esbuild/linux-x64 is not in Yomitan's package-lock.json");
+    });
+
+    test('build.mjs expects the hashes of Yomitan\'s own build', () => {
+        assert.deepEqual(EXPECTED_SHA256, REFERENCE);
+    });
+
+    test('installedKeys: esbuild, hangul-js and the one platform package of this machine', () => {
+        const keys = installedKeys(lock);
+        assert.equal(keys.length, 3);
+        assert.deepEqual(keys.slice(0, 2), ['node_modules/esbuild', 'node_modules/hangul-js']);
+        const platform = lock.packages[keys[2]];
+        assert.ok(platform.os.includes(process.platform) && platform.cpu.includes(process.arch), keys[2]);
     });
 
     test('matches Yomitan\'s package-lock.json at the pinned revision', {skip: skipCheckout}, () => {
@@ -394,7 +489,7 @@ describe('package-lock.json', () => {
         }
         // At d3c54c1 Yomitan's lockfile records hangul-js 0.2.6 by version
         // only (npm dropped its URL and hash in 96f81f1); before that it had
-        // the URL and the registry's hash that ours has.
+        // HANGUL_JS's URL and hash, the registry's.
         assert.deepEqual(theirs.packages['node_modules/hangul-js'], {version: '0.2.6', license: 'MIT'});
     });
 });
@@ -415,6 +510,14 @@ function copyKorean({edit, rows} = {}) {
     }
     if (rows !== undefined) { writeFileSync(join(dir, 'ko', 'tests', 'text.tsv'), `# category\tvalid\tinput\tvariant\n${rows.join('\n')}\n`); }
     return dir;
+}
+
+// CI sets HOSHIDICTS_REQUIRE_HANGUL_BUNDLE=1, so a missing bundle or CLI fails
+// there instead of skipping the comparison.
+if (process.env.HOSHIDICTS_REQUIRE_HANGUL_BUNDLE === '1') {
+    test('the hangul-js bundle and hoshidicts-cli are there (HOSHIDICTS_REQUIRE_HANGUL_BUNDLE=1)', () => {
+        assert.equal(skipBundle, false, skipBundle || '');
+    });
 }
 
 describe('the Korean processors are compared with Yomitan\'s through its hangul-js bundle', {skip: skipBundle}, () => {

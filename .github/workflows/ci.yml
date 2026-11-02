@@ -36,12 +36,15 @@ jobs:
           repository: yomidevs/yomitan
           ref: d3c54c10264673eca0d66b970ef74cd5c8b048e3
           path: yomitan
-      # esbuild 0.25.1 and hangul-js 0.2.6 from tools/yomitan-libs/package-lock.json
-      # (Yomitan's d3c54c1 versions and recorded hashes); esbuild's install script
-      # checks its platform binary.
+      # tools/yomitan-libs/package-lock.json is checked against Yomitan's d3c54c1
+      # lockfile before npm reads it; npm ci then installs esbuild 0.25.1, this
+      # runner's platform package (--include=optional, whatever npm's config says)
+      # and hangul-js 0.2.6, and runs esbuild's install script, which checks the
+      # platform binary's version.
       - name: Yomitan's hangul-js bundle (Korean processors, docs/languages.md 8.2)
         run: |
-          npm ci --prefix tools/yomitan-libs --ignore-scripts=false
+          node tools/yomitan-libs/build.mjs --lockfile-only yomitan
+          npm ci --prefix tools/yomitan-libs --ignore-scripts=false --include=optional
           node tools/yomitan-libs/build.mjs yomitan
       - name: Configure
         run: >
@@ -62,3 +65,4 @@ jobs:
         run: node --test tools/test/
         env:
           YOMITAN_DIR: ${{ github.workspace }}/yomitan
+          HOSHIDICTS_REQUIRE_HANGUL_BUNDLE: '1'
