@@ -239,10 +239,12 @@ void test_patterns() {
       bool global;
       const char* reason;
     } refused[] = {
-        // The re-audit's cases. libstdc++ keeps a capture made inside a
-        // lookahead on a path that then fails, where JavaScript and libc++
-        // clear it: (?=(a))ac|ab with [$1] on ab gives [] in JavaScript and
-        // [a] in the engine. The last six differ in no library today.
+        // The re-audit's cases, then more forms. libstdc++ keeps a capture
+        // made inside a lookahead on a path that then fails, where JavaScript
+        // and libc++ clear it: (?=(a))ac|ab with [$1] on ab gives [] in
+        // JavaScript and [a] in the engine. Some differ in no library today,
+        // such as (?=(a)b)ab|a, (?=(a))\1 and the six from (b)(?=(a)) on; the
+        // rule refuses every capture inside a lookahead.
         {"(?=(a))ac|ab", false, capture},
         {"(?=(a))ac|ab", true, capture},
         {"(?!(a)b)a|ab", false, capture},
@@ -267,6 +269,13 @@ void test_patterns() {
         {"(?!(a))\\1", false, capture},
         {"(?=(?=(a)))a", false, capture},
         {"(?=(?:(a)))a", false, capture},
+        // A capture after a nested lookahead has closed, still inside the
+        // outer one: on main (?=(?=a)(a))ac|ab with [$1] on ab gives [] in
+        // JavaScript and libc++ and [a] in libstdc++.
+        {"(?=(?=a)(a))ac|ab", false, capture},
+        {"(?!(?=x)|(a)b)a|ab", false, capture},
+        {"(?=(?!b)(a))a+c|a", false, capture},
+        {"x(?=(?=a)(a))ac|xa", false, capture},
         // The ones of its random test that differ in libstdc++.
         {"[\xE3\x81\x82x]*(?=(a{1,2})?\?a?b+|(?=[a-c]{2}|(b){0,2}(a))(x){0,2}\xE3\x81\x82{2}|ab{0,2}?)|x{0,2}?bx(c)+?",
          false, capture},
@@ -283,6 +292,7 @@ void test_patterns() {
         {"(b)xx(?=(?:\\1+))", false, backref},
         {"(.)(?=.\\1)", true, backref},
         {"(a)(?!(?=\\1))", false, backref},
+        {"(a)(?=(?=b)\\1)", false, backref},
         // The ones of its random test that libc++ alone refuses.
         {"(a){2}(\xE3\x81\x82*|\xE3\x81\x82{0,2}(x)|(.)?ba{2}?)(?=\\2)", true, backref},
         {"(a){2}?(?!\\1{0,2})|b|a$", true, backref},
@@ -324,6 +334,25 @@ void test_patterns() {
       check(pattern(r.source, "", r.global, &error) == nullptr && error.find(r.reason) != std::string::npos,
             std::string("pattern rejects ") + r.source + (r.global ? " (global)" : "") + " with \"" + r.reason +
                 "\": " + error);
+    }
+    // Where the two rules point: the group's `(`, or the back-reference's `\`
+    // (UTF-16 units, as JavaScript counts them).
+    const struct {
+      const char* source;
+      size_t offset;
+      const char* reason;
+    } located[] = {
+        {"(?=(a))ac|ab", 3, capture},       {"(?=(?=a)(a))ac|ab", 8, capture},
+        {"x(?=(?=a)(a))ac|xa", 9, capture}, {"(?!(?=x)|(a)b)a|ab", 9, capture},
+        {"(?=(?:b|(a)))a", 8, capture},     {"(a)(?=\\1)", 6, backref},
+        {"(a)(?!(?=\\1))", 9, backref},     {"(a)(?=(?=b)\\1)", 11, backref},
+        {"(\xE3\x81\x82)+?(\xE3\x81\x82){1,2}?(?=(?=b)\\1{1,2}?)", 22, backref},
+    };
+    for (const auto& l : located) {
+      std::string error;
+      const std::string at = " at offset " + std::to_string(l.offset);
+      check(pattern(l.source, "", false, &error) == nullptr && error.find(l.reason) == 0 && error.ends_with(at),
+            std::string("pattern rejects ") + l.source + " with \"" + l.reason + "\"" + at + ": " + error);
     }
   }
   std::string out;

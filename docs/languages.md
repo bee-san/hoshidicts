@@ -777,7 +777,17 @@ classic locale) and JavaScript give the same results:
   to groups that can match the empty text can. The checks are the same in
   `tools/lib/classes.mjs` and the engine. A pattern can still take
   exponential time in both implementations, as `(a+)+b` does in JavaScript;
-  keep repeated groups unnested.
+  keep repeated groups unnested. Such a pattern also differs in libc++: it
+  gives up a match attempt after 4,096 steps per code unit of the remaining
+  text and throws `error_complexity`, and the engine then treats the text as
+  not matching, so the step or rule does nothing where JavaScript and
+  libstdc++ replace. Overlapping alternatives under a quantifier cause this
+  as much as nested quantifiers: `(?:a|aa)+b|c` with `Z` on 18 `a`s and a
+  `c` gives the 18 `a`s and `Z` in JavaScript and libstdc++ and the text
+  unchanged in libc++, and `(?:a+)+b|c` differs from 13 `a`s on. Lookups
+  try texts as long as the scan length (16 code points by default), so
+  write each repeated part so that only one way of repeating it can match a
+  given text.
 - Exact rules: quantifiers `{m}`, `{m,}` and `{m,n}` with m ≤ n ≤ 65535; a
   back-reference `\N` only after group N has closed and never followed by a
   digit; outside classes the escapes `\` + one of `^$\.*+?()[]{}|/` and
