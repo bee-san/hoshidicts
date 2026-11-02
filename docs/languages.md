@@ -2,9 +2,10 @@
 # Languages in hoshidicts
 
 Status: approved design (Phase 1, revision 9; reviewed by three independent
-reviewers). Nothing described here is implemented yet. Once the framework
-lands, this file is the contract for language packs and wins over any prompt,
-issue or comment that disagrees with it.
+reviewers), implemented by the language framework pull request
+([bee-san/hoshidicts#45](https://github.com/bee-san/hoshidicts/pull/45)).
+This file is the contract for language packs and wins over any prompt, issue
+or comment that disagrees with it.
 
 hoshidicts looks words up in Yomitan-format dictionaries. Until now every
 lookup ran the Japanese pipeline compiled into `src/deinflector.cpp` and
@@ -692,11 +693,18 @@ For Japanese, which has only suffix and whole-word rules, this is today's
 order exactly (section 11). There is no depth limit, as today and as in
 Yomitan. An output equal to one already produced by the same rule from the
 same text earlier in the same trace is skipped, as Yomitan's `isCycle` skips
-it; this can only happen with rules that do not shorten the text, so it never
-happens in Japanese. An output that is the empty text is neither recorded nor
-expanded, as today (れば → "" from "れば"); an empty text is never a headword.
-Yomitan records such outputs, so the differential check drops them on
-Yomitan's side.
+it, but the engine checks only outputs that are not shorter than their input
+(section 7.5), where Yomitan checks every one. A cycle that passes through a
+shortening rule is therefore cut one step later than in Yomitan: with `b` → ""
+and `a` → `ab`, the text `ab` gives `ab`, `a`, `ab` and `a` again, with a
+longer trace, where Yomitan stops after the second `ab`. The repeated result
+has the text and conditions of an earlier one, so the sets the differential
+check compares and the results of a lookup are the same. No Yomitan language
+at d3c54c1, Japanese included, reaches a cycle on its test sources, their
+prefixes or inputs built from its affixes. An output that is the empty text
+is neither recorded nor expanded, as today (れば → "" from "れば"); an empty
+text is never a headword. Yomitan records such outputs, so the differential
+check drops them on Yomitan's side.
 
 The trace of a result lists the transforms applied, in application order, as
 `{id, name, description}`. Yomitan lists them newest first; converters and
@@ -707,8 +715,8 @@ tests reverse it.
 The engine keeps the matches of one trie walk in a fixed array (64 entries,
 the affix limit), allocates nothing per rule application except the output
 string, and runs the cycle check only for rules whose output is not shorter
-than their input. Repeated outputs are not deduplicated during the search
-(section 9.5 skips their repeated queries).
+than their input. Repeated outputs are not deduplicated during the search,
+and each one is looked up (section 9.5).
 
 ### 7.6 The `pattern` dialect
 
@@ -726,7 +734,36 @@ classic locale) and JavaScript give the same results:
   classes `\s \S \w \W \b \B \d \D` (their meaning differs between the two
   implementations), POSIX brackets such as `[[:alpha:]]`, and any other flag.
   Write the characters as a class, both cases included.
-- Exact rules: quantifiers `{m}`, `{m,}` and `{m,n}` with m ≤ n; a
+- Rejected because std::regex and JavaScript read them differently (each one
+  found by a random test of dialect patterns against libstdc++ 14, Emscripten
+  6.0.9's libc++ and Node 22):
+  - a `global` pattern that can match the empty text (`a*?`, `x*`, `a?|b`,
+    `$`): after an empty match std::regex tries a non-empty match at the same
+    place and JavaScript moves one unit on, so `a*?` with `-` on `baaa` gives
+    `-b-------` in the engine and `-b-a-a-a-` in JavaScript;
+  - a back-reference to a group that may not take part in the match because
+    it is in another alternative (`(a)|b\1`), repeated at least zero times
+    (`(a)?\1`, `(a)*\1`) or in a negative lookahead (`(?!(a))\1`):
+    JavaScript matches the empty text there and std::regex fails;
+  - a capturing group inside a repeated group (`(?:(x)|y)*z`, `((a)|b)*`):
+    JavaScript clears it on every repetition and std::regex keeps the last
+    value, so `[$1]` on `xyz` gives `[]` and `[x]`;
+  - a quantifier on a group, or on a back-reference to a group, that can
+    match the empty text (`(a*)*`, `(?:a|())*`, `(?:a?)+`): std::regex takes
+    exponential time on them; libstdc++ ran one such pattern for over 120 s
+    on six characters, and libc++ gives up with `error_complexity`, so the
+    step or rule silently does nothing;
+  - `^` inside a lookahead (`[ab]+(?!^)`): libstdc++ runs a lookahead as a
+    search of its own and takes its start for the start of the text.
+
+  A group can match the empty text when one of its alternatives can: an
+  alternative can when every one of its terms can, and anchors, lookaheads,
+  terms with a quantifier whose minimum is 0, and groups and back-references
+  to groups that can match the empty text can. The checks are the same in
+  `tools/lib/classes.mjs` and the engine. A pattern can still take
+  exponential time in both implementations, as `(a+)+b` does in JavaScript;
+  keep repeated groups unnested.
+- Exact rules: quantifiers `{m}`, `{m,}` and `{m,n}` with m ≤ n ≤ 65535; a
   back-reference `\N` only after group N has closed and never followed by a
   digit; outside classes the escapes `\` + one of `^$\.*+?()[]{}|/` and
   `\uXXXX`; inside classes `\\ \] \^ \- \[` and `\uXXXX`, with an
@@ -919,11 +956,13 @@ behaviour.
 A prefix and variant can produce the same deinflected text more than once:
 2,015 of the 22,393 deinflections of the Japanese corpus prefixes repeat a
 text, 520 of them with the same conditions. The dictionary query depends only
-on the text; conditions only filter its result. The engine therefore queries
-each text once per prefix and variant and applies the part-of-speech filter
-per deinflection. With `traceSelection: "first"` this gives exactly today's
-results; the framework keeps it only if the Japanese benchmark shows it is not
-slower than querying every repeat.
+on the text; conditions only filter its result. The engine looks every
+deinflection up, repeats included, and applies the part-of-speech filter to
+each. Querying each text once per prefix and variant, and copying the result
+for its repeats, gives the same results, but it was slower on the Japanese
+benchmark (reference words p50 +2.7%, corpus sources p50 +4.3%, against the
+same tree without it; [`benchmarks-languages.md`](benchmarks-languages.md)),
+so the engine does not do it.
 
 ### 9.6 Order and grouping
 
@@ -1115,17 +1154,20 @@ hd_str hd_lookup_results_trace_id(const hd_lookup_results* r, size_t i, size_t j
 
 ```text
 hoshidicts-cli languages                                   list loaded packs
-hoshidicts-cli deinflect <code> <text> [--transforms <file>]   every deinflection, its conditions and trace
-hoshidicts-cli preprocess <code> <text>                    every processor variant with its steps
+hoshidicts-cli deinflect <code> <text> [--transforms <file>] [--options <id,...> | --all-options]
+                                                           every deinflection, its conditions and trace
+hoshidicts-cli preprocess <code> <text> [--options <id,...> | --all-options]
+                                                           every processor variant with its steps
 hoshidicts-cli lookup --language <code> <dict>... <text>
 hoshidicts-cli eval-language <code> <file.tsv> [--transforms <file>] [--dictionary <imported dir>] [--per-rule]
 ```
 
 `deinflect <word>` and `preprocess <word>` with one argument and no options
 keep today's human-readable Japanese output. With a code and a text,
-`--stdin` or `--transforms`, `deinflect` and `preprocess` print one JSON
-object per line, so tools can read them as a stream; with `--stdin` instead of `<text>` they read one input
-per line (UTF-8, LF) and answer each in order with one process:
+`--stdin`, `--transforms` or an option, `deinflect` and `preprocess` print
+one JSON object per line, so tools can read them as a stream; with `--stdin`
+instead of `<text>` they read one input per line (UTF-8, LF) and answer each
+in order with one process:
 
 ```text
 {"input":"walked","results":[{"text":"walked","conditions":[],"trace":[]},{"text":"walk","conditions":["v"],"trace":["past"]}]}
@@ -1137,6 +1179,18 @@ and `trace` holds transform ids in the order of the corpus `reasons` column
 (section 12.2). `results` is in the deinflector's output order. A pack whose
 `lookup.transforms` is `null` loads (it has processors only), as the
 differential check's one-processor copies need.
+
+Like a lookup without `language_options`, `deinflect` and `preprocess` turn
+on no optional transform, processor or variant pass. `--options <id,...>`
+turns on the ones named (for `deinflect` transforms and variant passes, for
+`preprocess` preprocessors; an id the pack does not have is an error), and
+`--all-options` every one, as the test files and `eval-language` run. The
+results of an enabled variant pass follow the ordinary ones, with the pass
+id last in their trace. An input that is not valid UTF-8 is not copied into
+the output: its line is
+`{"input":null,"results":[],"error":"line 2 of the input is not valid UTF-8"}`
+(`"variants"` for `preprocess`), the message also goes to standard error,
+and the command exits with status 1 after answering every line.
 
 `eval-language` reads a corpus (section 12.2) and prints JSON. Only
 deinflections of the whole source text count, never of shorter prefixes:
@@ -1341,8 +1395,9 @@ For every pack it checks:
 4. Every TSV in `tests/` except `gaps.tsv` passes; `gaps.tsv` is run and its
    pass count printed. A TSV the contract does not name fails the check, so a
    misspelt file never goes unrun. A pack with transforms needs
-   `tests/corpus.tsv`; the Japanese pack's corpus is `tests/yomitan.tsv`,
-   Yomitan's complete conjugation corpus. No corpus input reaches the
+   `tests/corpus.tsv`, from a licensed source; only the Japanese pack's corpus
+   is `tests/yomitan.tsv`, Yomitan's complete conjugation corpus, and every
+   other pack is refused without `corpus.tsv`. No corpus input reaches the
    4,096-variant limit.
 5. Coverage: every `own` and `both` transform has at least one passing
    `valid = 1` row, and the rules no row exercises are printed.
@@ -1420,10 +1475,17 @@ in review.
 
 ## 14. Adding a language
 
-1. **Start from the template.** `cp -r languages/_template languages/<code>`
-   with Yomitan's code for the language. Fill in identity, `classes`, `text`
-   and `capabilities` in `language.json`, starting from the language's row in
-   the table below.
+1. **Start from the template and build the tools.**
+   `cp -r languages/_template languages/<code>` with Yomitan's code for the
+   language. Fill in identity, `classes`, `text` and `capabilities` in
+   `language.json`, starting from the language's row in the table below.
+   Build `hoshidicts-cli`, which steps 3 to 7 run:
+
+   ```sh
+   cmake -S . -B build -DHOSHIDICTS_LANGUAGE_TESTS=ON -DHOSHIDICTS_CLI=ON -DHOSHIDICTS_BENCHMARK=ON
+   cmake --build build --parallel 8
+   ```
+
 2. **Write your own rules first.** From grammars, Wiktionary inflection tables
    and UniMorph, write the transforms a learner needs to reach a dictionary
    headword: conjugations, declensions, plurals, comparatives, clitics,
@@ -1433,23 +1495,33 @@ in review.
    every `todo` (section 8.3) in `sources/yomitan.json`. Port Yomitan's
    processors into `lookup.preprocessors` and `postprocessors`. Run
    `tools/port-yomitan-tests.mjs` if Yomitan has tests for the language, and
-   `tools/check-yomitan.mjs` until it passes.
+   `tools/check-yomitan.mjs <yomitan checkout> <code>`, which runs
+   `build/hoshidicts-cli`, until it passes.
 4. **Build a corpus.** Take 300-2,000 inflected form → lemma pairs from a
    licensed source (UniMorph, Wiktionary through kaikki.org), add hand-written
    tricky cases and negatives, and record source, licence and attribution in
    the README.
-5. **Measure and choose.** Run `hoshidicts-cli eval-language --per-rule` for
-   your rules, Yomitan's and their union, with a real dictionary imported by
-   `hoshidicts-cli import`. Keep the union minus rules that only add false
-   candidates or break negatives, and mark each rule's `source`. Write the
-   result to `transforms.json` and the numbers to the README.
+5. **Measure and choose.** `node tools/merge-transforms.mjs <code>` writes the
+   union of `sources/own.json` and `sources/yomitan.json` to
+   `transforms.json`, with each rule's `source`: `own`, `yomitan`, or `both`
+   for a rule both files have (`--out <file>` writes it elsewhere). Run
+   `hoshidicts-cli eval-language --per-rule` for your rules
+   (`--transforms sources/own.json`), Yomitan's
+   (`--transforms sources/yomitan.json`) and their union, with a real
+   dictionary imported by `hoshidicts-cli import`. Remove from
+   `transforms.json` the rules that only add false candidates or break
+   negatives (the tool then keeps your `transforms.json` unless `--force` is
+   given), and write the numbers to the README.
 6. **Fill in the host data.** `presentation`, `settings` (only if the language
    needs one), `host.recommendedDictionaries`, `host.sample`.
-7. **Run the checks.**
+7. **Run the checks.** Rebuild, write `tests/classes.json`, the expectations
+   the conformance test compares the engine with (again whenever a class, a
+   `pattern` or `case` step, or a corpus string changes; commit it), and run
+   the checks:
 
    ```sh
-   cmake -S . -B build -DHOSHIDICTS_LANGUAGE_TESTS=ON -DHOSHIDICTS_CLI=ON -DHOSHIDICTS_BENCHMARK=ON
    cmake --build build --parallel 8
+   node tools/check-classes.mjs <code> --write
    ctest --test-dir build -R language --output-on-failure
    node tools/check-classes.mjs <code> && node tools/check-yomitan.mjs <yomitan checkout> <code>
    ```
@@ -1491,7 +1563,7 @@ who measures better values uses them and says why.
 | eo | 24 literal | capitalisation | none | word / word / spaces | |
 | eu | 75 literal | capitalisation | none | word / word / spaces | Agglutinative: long traces. |
 | ga | 7 literal (eclipsis) | capitalisation | none | word / word / spaces | Lenition is not in Yomitan. |
-| sga | 70 (43 literal) | capitalisation, diacritics | `replace` | word / word / spaces | Orthographic replacements repeat texts; section 9.5 bounds the queries. |
+| sga | 70 (43 literal) | capitalisation, diacritics | `replace` | word / word / spaces | Orthographic replacements repeat texts, and each repeat is looked up (section 9.5): time the lookups. |
 | ka | 16 literal | none | none | word / word / spaces | Yomitan never applies them (`kat` key). |
 | sq | 94 (88 literal) | capitalisation | stem constraints | word / word / spaces | |
 | tl | 635 (135 literal) | capitalisation, diacritics | `circumfix`, `stemChange`, `pattern` (reduplication), `replace` | word / word / spaces | |
