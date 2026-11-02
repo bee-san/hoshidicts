@@ -1172,7 +1172,9 @@ as Yomitan's translator does (`_getDeinflections` and
    terms it finds join grouping, ordering and `traceSelection` like any other
    (9.6), with their own frequencies and pitches; when the row naming them is
    the matched text's own (no rule applied), they are dictionary-confirmed.
-   One hop: the references of the rows found for `formOf` are not followed.
+   One hop, as in Yomitan: the references of the rows found for `formOf` are
+   not followed, so a target whose rows are all references gives nothing
+   (section 16).
 4. The references of the scan's deinflections are followed after the whole
    scan, as Yomitan adds its dictionary deinflections after the algorithm's,
    so where a reference and a rule reach a term with equal steps and trace
@@ -2050,3 +2052,10 @@ who measures better values uses them and says why.
   followed only by packs whose `formOf` is `follow`, and only in dictionaries
   imported since the importer flags them (section 9.10). A result shows one
   trace where Yomitan lists every chain.
+- **One hop.** wiktionary-to-yomitan writes some spelling variants as
+  references to forms that are themselves only references (*fué* → *fue* →
+  *ser*); one hop, as in Yomitan, reaches nothing there. Following such
+  chains up to three hops (branch `framework/form-of-chains`) gives *fué* →
+  *ser* and resolves old spellings (*dió*, *vió*, *tí*), but on Spanish text
+  it also puts new wrong lemmas first (*las jugadas* → *jugársela*,
+  *gratísima* → *gratis*), so it is not enabled.

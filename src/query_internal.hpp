@@ -67,10 +67,6 @@ struct RawTerms {
   std::vector<RawTerm> terms;
   std::vector<RawGlossary> glossaries;
   std::unique_ptr<NormalizedReadings> normalized;  // only with a reading normalizer
-  // The rows found whose definitions hold form-of references, in order, when
-  // the query follows them; a row that is only references is here and not
-  // in `terms`.
-  std::vector<RawFormOfRow> form_of_rows;
 };
 
 // The raw terms of every loaded term dictionary for `expression`, and the
@@ -78,8 +74,8 @@ struct RawTerms {
 // eval-language), as a lookup reads them.
 struct QueryAccess {
   static RawTerms query_raw(const DictionaryQuery& query, const std::string& expression, BlobPins& pins,
-                            bool follow_form_of) {
-    return query.query_raw(expression, pins, DictionaryQuery::Selection{}, false, nullptr, follow_form_of);
+                            std::vector<RawFormOfRow>* form_of_rows) {
+    return query.query_raw(expression, pins, DictionaryQuery::Selection{}, false, nullptr, form_of_rows);
   }
   static void read_form_of(const RawFormOfRow& row, BlobPins& pins, std::vector<FormOfReference>& out) {
     DictionaryQuery::read_form_of(row, pins, out);

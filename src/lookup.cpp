@@ -245,6 +245,9 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   size_t followed_done = 0;
   std::vector<std::string> followed_rules;
   std::vector<FormOfReference> references;
+  // The form-of rows of the query running now (reused).
+  std::vector<RawFormOfRow> form_of_rows;
+  std::vector<RawFormOfRow>* const form_of_out = follow ? &form_of_rows : nullptr;
 
   size_t text_len = utf8::distance(lookup_string.begin(), lookup_string.end());
 
@@ -385,9 +388,8 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     return (dict_conditions & conditions) != 0;
   };
 
-  const auto note_references = [&](size_t matched_len, const Deinflection* base, uint32_t di, int steps,
-                                   const RawTerms& terms) {
-    for (const RawFormOfRow& row : terms.form_of_rows) {
+  const auto note_references = [&](size_t matched_len, const Deinflection* base, uint32_t di, int steps) {
+    for (const RawFormOfRow& row : form_of_rows) {
       if (!row_passes(base[di].conditions, row.dict_name, row.rules)) {
         continue;
       }
@@ -433,9 +435,10 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   auto merge = [&](size_t matched_len, const Deinflection* base, uint32_t di, const std::string& form, int steps) {
     // Most deinflected forms name no entry of their part of speech; read
     // the frequencies and pitches of only the terms the filter keeps.
-    auto terms = query_.query_raw(form, pins, selection, false, normalizer, follow);
-    if (!terms.form_of_rows.empty()) {
-      note_references(matched_len, base, di, steps, terms);
+    form_of_rows.clear();
+    auto terms = query_.query_raw(form, pins, selection, false, normalizer, form_of_out);
+    if (!form_of_rows.empty()) {
+      note_references(matched_len, base, di, steps);
     }
     filter_by_pos(terms, base[di].conditions);
     collect_metadata(terms);
@@ -452,7 +455,8 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     }
     for (; followed_done < followed->size(); ++followed_done) {
       const Followed& reference = (*followed)[followed_done];
-      auto terms = query_.query_raw(reference.text, pins, selection, false, normalizer, true);
+      form_of_rows.clear();
+      auto terms = query_.query_raw(reference.text, pins, selection, false, normalizer, &form_of_rows);
       collect_metadata(terms);
       add_terms(reference.matched_len, reference.base, reference.index, &reference.text, reference.steps,
                 std::move(terms), SIZE_MAX, &reference);

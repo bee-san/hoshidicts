@@ -534,7 +534,8 @@ RawTerms DictionaryQuery::query_raw(const std::string& expression, BlobPins& pin
 }
 
 RawTerms DictionaryQuery::query_raw(const std::string& expression, BlobPins& pins, const Selection& selection,
-                                    bool with_metadata, const ReadingNormalizer* normalizer, bool follow_form_of) const {
+                                    bool with_metadata, const ReadingNormalizer* normalizer,
+                                    std::vector<RawFormOfRow>* form_of_rows) const {
   RawTerms raw;
   if (normalizer != nullptr) {
     raw.normalized = std::make_unique<NormalizedReadings>();
@@ -610,7 +611,7 @@ RawTerms DictionaryQuery::query_raw(const std::string& expression, BlobPins& pin
         bool only_references = false;
         if (data->version >= 2) {
           auto redirect_count = read_value<uint32_t>(blob);
-          const bool flagged = follow_form_of && data->version >= 3;
+          const bool flagged = form_of_rows != nullptr && data->version >= 3;
           for (uint32_t r = 0; r < redirect_count; r++) {
             auto form_of_len = read_value<uint32_t>(blob);
             blob.skip(form_of_len);
@@ -626,7 +627,7 @@ RawTerms DictionaryQuery::query_raw(const std::string& expression, BlobPins& pin
           }
         }
         if (form_of) {
-          raw.form_of_rows.push_back(RawFormOfRow{.dict_name = &name,
+          form_of_rows->push_back(RawFormOfRow{.dict_name = &name,
                                                   .rules = rules,
                                                   .blobs = &data->blobs,
                                                   .compressed_offset = glossary_offset,

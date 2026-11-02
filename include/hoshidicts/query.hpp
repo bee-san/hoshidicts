@@ -261,14 +261,15 @@ class DictionaryQuery {
   // at, are views into the dictionaries' files: they stay valid while `pins`,
   // which holds what they read of paged files, lives.
   // Without `with_metadata`, the caller collects the frequencies and pitches
-  // of only the terms it keeps. With `follow_form_of` (a pack's formOf is
-  // "follow", docs/languages.md section 9.10), the rows' form-of references
-  // are returned in RawTerms::references and a row that is only references is
-  // not a term.
+  // of only the terms it keeps. With `form_of_rows` (a pack's formOf is
+  // "follow", docs/languages.md section 9.10), the rows whose definitions
+  // hold form-of references are appended to it, and a row that is only
+  // references is not a term.
   RawTerms query_raw(const std::string& expression, BlobPins& pins,
                      const std::string* term_dictionary_path = nullptr, bool with_metadata = true) const;
   RawTerms query_raw(const std::string& expression, BlobPins& pins, const Selection& selection, bool with_metadata,
-                     const ReadingNormalizer* normalizer = nullptr, bool follow_form_of = false) const;
+                     const ReadingNormalizer* normalizer = nullptr,
+                     std::vector<RawFormOfRow>* form_of_rows = nullptr) const;
   // The form-of references of a row query_raw listed in form_of_rows, read
   // from its glossary, appended to `out`.
   static void read_form_of(const RawFormOfRow& row, BlobPins& pins, std::vector<FormOfReference>& out);

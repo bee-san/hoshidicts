@@ -604,8 +604,10 @@ void count_followed_false_candidates(const DictionaryQuery& query, const hoshidi
   std::map<std::string, std::vector<size_t>> referenced;
   BlobPins pins;
   std::vector<FormOfReference> references;
+  std::vector<RawFormOfRow> rows;
   for (const auto& [text, which] : by_text) {
-    const RawTerms raw = QueryAccess::query_raw(query, text, pins, true);
+    rows.clear();
+    const RawTerms raw = QueryAccess::query_raw(query, text, pins, &rows);
     for (size_t i : which) {
       const uint32_t conditions = list[i].conditions;
       const bool any = conditions == 0 || !pack.transforms;
@@ -615,7 +617,7 @@ void count_followed_false_candidates(const DictionaryQuery& query, const hoshidi
         return any || (bits & conditions) != 0;
       });
       if (shown) candidates[text].push_back(i);
-      for (const RawFormOfRow& row : raw.form_of_rows) {
+      for (const RawFormOfRow& row : rows) {
         if (!any && (bits_of(row.rules) & conditions) == 0) continue;
         references.clear();
         QueryAccess::read_form_of(row, pins, references);
@@ -624,7 +626,9 @@ void count_followed_false_candidates(const DictionaryQuery& query, const hoshidi
     }
   }
   for (const auto& [text, which] : referenced) {
-    if (QueryAccess::query_raw(query, text, pins, true).terms.empty()) continue;
+    // Read with the form-of rows aside, so a row that is only references is no term.
+    std::vector<RawFormOfRow> target_rows;
+    if (QueryAccess::query_raw(query, text, pins, &target_rows).terms.empty()) continue;
     auto& paths = candidates[text];
     paths.insert(paths.end(), which.begin(), which.end());
   }
