@@ -2,7 +2,6 @@
 # category	valid	text	expression	matched
 inflection	1	comimos en un restaurante	comer	comimos
 inflection	1	Hablamos mañana	hablar	Hablamos
-inflection	1	canciones bonitas	canción	canciones
 inflection	1	árboles altos	árbol	árboles
 inflection	1	luces encendidas	luz	luces
 inflection	1	huele a pan	oler	huele
@@ -14,10 +13,14 @@ pronominal verbs	1	me levanto temprano	levantarse	me levanto
 pronominal verbs	1	se fue a casa	irse	se fue
 pronominal verbs	1	acuérdate de mí	acordarse	acuérdate
 pronominal verbs	1	te levantas tarde	levantarse	te levantas
+pronominal verbs	1	nos vemos mañana	verse	nos vemos
+pronominal verbs	1	se dio cuenta	darse	se dio
 word resolution	1	desafortunadamente llovió	desafortunado	desafortunadamente
 word resolution	1	Ayer comimos	ayer	Ayer
 word resolution	1	franco-alemana	franco	franco
-missing accents	1	cancion bonita	canción	cancion
+accent rules	1	canciones bonitas	canción	canciones
+accent rules	1	rapidísimo	rápido	rapidísimo
+missing accents	1	arbol alto	árbol	arbol
 negatives	0	de la casa	dar	de
 negatives	0	para mí	paro	para
 negatives	0	casa grande	caso	casa
@@ -25,3 +28,6 @@ negatives	0	me levanto temprano	me	me
 negatives	0	me dijo que sí	decirse	me dijo
 negatives	0	te digo la verdad	decirse	te digo
 negatives	0	comimos en	comer	comimos en
+negatives	0	me va bien	verse	me va
+negatives	0	nos vamos a casa	verse	nos vamos
+negatives	0	casaca roja	casa	casa

@@ -128,13 +128,13 @@ present indicative	99	estamos → estar	-
 present indicative	100	estáis → estar	-
 present indicative	101	están → estar	present-ellos
 present indicative	102	voy → ir	present-yo
-present indicative	103	vas → ir	present-tu
+present indicative	103	vas → ir	present-tu present-vos
 present indicative	104	va → ir	present-el
 present indicative	105	vamos → ir	present-nosotros
 present indicative	106	vais → ir	present-vosotros
 present indicative	107	van → ir	present-ellos
 present indicative	108	he → haber	present-yo
-present indicative	109	has → haber	present-tu
+present indicative	109	has → haber	present-tu present-vos
 present indicative	110	ha → haber	present-el
 present indicative	111	hemos → haber	present-nosotros
 present indicative	112	habéis → haber	-
@@ -146,7 +146,7 @@ preterite	3	ieron → ir (u → o)	preterite-ellos
 preterite	4	é → ar	preterite-yo
 preterite	5	aste → ar	preterite-tu
 preterite	6	ó → ar	preterite-el
-preterite	7	amos → ar	-
+preterite	7	amos → ar	preterite-nosotros
 preterite	8	asteis → ar	preterite-vosotros
 preterite	9	aron → ar	preterite-ellos
 preterite	10	í → er	preterite-yo
@@ -158,7 +158,7 @@ preterite	15	ieron → er	preterite-ellos
 preterite	16	í → ir	preterite-yo
 preterite	17	iste → ir	preterite-tu
 preterite	18	ió → ir	preterite-el
-preterite	19	imos → ir	-
+preterite	19	imos → ir	preterite-nosotros
 preterite	20	isteis → ir	preterite-vosotros
 preterite	21	ieron → ir	preterite-ellos
 preterite	22	qué → car	preterite-yo
@@ -498,11 +498,11 @@ present subjunctive	42	amos → ir	subjunctive-nosotros
 present subjunctive	43	áis → ir	subjunctive-vosotros
 present subjunctive	44	an → ir	subjunctive-ellos
 present subjunctive	45	dé → dar	subjunctive-yo-el
-present subjunctive	46	des → dar	-
+present subjunctive	46	des → dar	subjunctive-tu subjunctive-vos
 present subjunctive	47	dé → dar	subjunctive-yo-el
-present subjunctive	48	demos → dar	-
+present subjunctive	48	demos → dar	subjunctive-nosotros
 present subjunctive	49	deis → dar	subjunctive-vosotros
-present subjunctive	50	den → dar	-
+present subjunctive	50	den → dar	subjunctive-ellos
 present subjunctive	51	esté → estar	subjunctive-yo-el
 present subjunctive	52	estés → estar	subjunctive-tu
 present subjunctive	53	esté → estar	subjunctive-yo-el

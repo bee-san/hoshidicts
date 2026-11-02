@@ -64,6 +64,18 @@ const conditions = {
     p3: {name: 'Third person, usted, ustedes (agrees with se)', isDictionaryForm: false},
     p1p: {name: 'First person plural (agrees with nos)', isDictionaryForm: false},
     p2p: {name: 'Second person plural (agrees with os)', isDictionaryForm: false},
+    // The written-out forms of the verbs whose stem has one letter or none
+    // (ir, dar, ver, oír), by person, and their imperatives and gerunds. The
+    // pronominal rule needs a stem of two letters, so that a pronoun before a
+    // short word (me va, te es, me ha) gives no -se verb through a regular
+    // ending; these verbs reach irse, darse, verse and oírse through these
+    // conditions instead (me voy, se dio, nos vemos, vete).
+    short_p1s: {name: 'Verb with a one-letter stem, first person singular', isDictionaryForm: false},
+    short_p2s: {name: 'Verb with a one-letter stem, second person singular', isDictionaryForm: false},
+    short_p3: {name: 'Verb with a one-letter stem, third person', isDictionaryForm: false},
+    short_p1p: {name: 'Verb with a one-letter stem, first person plural', isDictionaryForm: false},
+    short_p2p: {name: 'Verb with a one-letter stem, second person plural', isDictionaryForm: false},
+    short_imp: {name: 'Verb with a one-letter stem, imperative or gerund', isDictionaryForm: false},
 };
 
 /** The condition of an infinitive (with or without -se). */
@@ -84,7 +96,7 @@ const STRIP_ACUTE = [{map: {'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u
 // --- Transforms -------------------------------------------------------------------
 const transforms = [];
 const byId = new Map();
-const seen = new Set();  // identical rules are written once, in the first transform that has them
+const seen = new Set();  // a transform has each rule once (hablamos is both present-nosotros and preterite-nosotros)
 
 function transform(id, name, description) {
     if (byId.has(id)) { return byId.get(id); }
@@ -97,7 +109,7 @@ function transform(id, name, description) {
 function add(id, rule) {
     const t = byId.get(id);
     if (t === undefined) { throw new Error(`no transform ${id}`); }
-    const key = JSON.stringify(rule);
+    const key = `${id}\u0000${JSON.stringify(rule)}`;
     if (seen.has(key)) { return; }
     seen.add(key);
     t.rules.push(rule);
@@ -122,38 +134,6 @@ const PERSON_TEXT = {
     vos: 'second person singular with voseo (vos)',
     yoel: 'first and third person singular (yo, él, ella, usted)',
 };
-const TENSES = [
-    ['present', 'present', 'Present indicative', ['yo', 'tu', 'el', 'nosotros', 'vosotros', 'ellos', 'vos'], 'hablo, comes, vive'],
-    ['preterite', 'preterite', 'Preterite (pretérito perfecto simple)', ['yo', 'tu', 'el', 'nosotros', 'vosotros', 'ellos'], 'hablé, comiste, vivió'],
-    ['imperfect', 'imperfect', 'Imperfect indicative (pretérito imperfecto)', ['yoel', 'tu', 'nosotros', 'vosotros', 'ellos'], 'hablaba, comías, vivíamos'],
-    ['future', 'future', 'Future indicative', ['yo', 'tu', 'el', 'nosotros', 'vosotros', 'ellos'], 'hablaré, comerás, vivirá'],
-    ['conditional', 'conditional', 'Conditional', ['yoel', 'tu', 'nosotros', 'vosotros', 'ellos'], 'hablaría, comerías, viviríamos'],
-    ['subjunctive', 'present subjunctive', 'Present subjunctive', ['yoel', 'tu', 'nosotros', 'vosotros', 'ellos', 'vos'], 'hable, comas, vivamos'],
-    ['subjunctive-ra', 'imperfect subjunctive', 'Imperfect subjunctive in -ra', ['yoel', 'tu', 'nosotros', 'vosotros', 'ellos'], 'hablara, comieras, viviéramos'],
-    ['subjunctive-se', 'imperfect subjunctive (-se)', 'Imperfect subjunctive in -se', ['yoel', 'tu', 'nosotros', 'vosotros', 'ellos'], 'hablase, comieses, viviésemos'],
-    ['subjunctive-future', 'future subjunctive', 'Future subjunctive (archaic and legal language)', ['yoel', 'tu', 'nosotros', 'vosotros', 'ellos'], 'hablare, comieres, viviéremos'],
-];
-const IMPERATIVES = [
-    ['tu', 'tú', 'Affirmative imperative, tú', 'habla, come, vive'],
-    ['vos', 'vos', 'Affirmative imperative, vos (voseo)', 'hablá, comé, viví'],
-    ['vosotros', 'vosotros', 'Affirmative imperative, vosotros', 'hablad, comed, vivid'],
-    ['usted', 'usted', 'Imperative, usted (the present subjunctive form)', 'hable, coma, viva'],
-    ['ustedes', 'ustedes', 'Imperative, ustedes (the present subjunctive form)', 'hablen, coman, vivan'],
-    ['nosotros', 'nosotros', 'Imperative, nosotros (the present subjunctive form)', 'hablemos, comamos, vivamos'],
-];
-
-for (const [id, name, text, persons, examples] of TENSES) {
-    for (const person of persons) {
-        const slot = person === 'yoel' ? `${id}-yo-el` : `${id}-${person}`;
-        transform(slot, `${name} (${P[person]})`, `${text}, ${PERSON_TEXT[person]}: ${examples}.`);
-    }
-}
-for (const [person, label, text, examples] of IMPERATIVES) {
-    transform(`imperative-${person}`, `imperative (${label})`, `${text}: ${examples}.`);
-}
-transform('gerund', 'gerund', 'Gerund: hablando, comiendo, viviendo.');
-transform('participle', 'past participle', 'Past participle, masculine or feminine, singular or plural: hablado, comida, vividos, abiertas.');
-
 // Regular endings of the three conjugations, by slot.
 const ENDINGS = {
     ar: {
@@ -190,8 +170,44 @@ ENDINGS.ir = {
     'present-nosotros': 'imos', 'present-vosotros': 'ís', 'present-vos': 'ís',
     'future-yo': 'iré', 'future-tu': 'irás', 'future-el': 'irá', 'future-nosotros': 'iremos', 'future-vosotros': 'iréis', 'future-ellos': 'irán',
     'conditional-yo-el': 'iría', 'conditional-tu': 'irías', 'conditional-nosotros': 'iríamos', 'conditional-vosotros': 'iríais', 'conditional-ellos': 'irían',
-    'imperative-vos': 'í', 'imperative-vosotros': 'id',
+    // decí, and deci after a pronoun took its accent away (decime, escribile).
+    'imperative-vos': ['í', 'i'], 'imperative-vosotros': 'id',
 };
+
+const TENSES = [
+    ['present', 'present', 'Present indicative', ['yo', 'tu', 'el', 'nosotros', 'vosotros', 'ellos', 'vos']],
+    ['preterite', 'preterite', 'Preterite (pretérito perfecto simple)', ['yo', 'tu', 'el', 'nosotros', 'vosotros', 'ellos']],
+    ['imperfect', 'imperfect', 'Imperfect indicative (pretérito imperfecto)', ['yoel', 'tu', 'nosotros', 'vosotros', 'ellos']],
+    ['future', 'future', 'Future indicative', ['yo', 'tu', 'el', 'nosotros', 'vosotros', 'ellos']],
+    ['conditional', 'conditional', 'Conditional', ['yoel', 'tu', 'nosotros', 'vosotros', 'ellos']],
+    ['subjunctive', 'present subjunctive', 'Present subjunctive', ['yoel', 'tu', 'nosotros', 'vosotros', 'ellos', 'vos']],
+    ['subjunctive-ra', 'imperfect subjunctive', 'Imperfect subjunctive in -ra', ['yoel', 'tu', 'nosotros', 'vosotros', 'ellos']],
+    ['subjunctive-se', 'imperfect subjunctive (-se)', 'Imperfect subjunctive in -se', ['yoel', 'tu', 'nosotros', 'vosotros', 'ellos']],
+    ['subjunctive-future', 'future subjunctive', 'Future subjunctive (archaic and legal language)', ['yoel', 'tu', 'nosotros', 'vosotros', 'ellos']],
+];
+const IMPERATIVES = [
+    ['tu', 'tú', 'Affirmative imperative, tú'],
+    ['vos', 'vos', 'Affirmative imperative, vos (voseo)'],
+    ['vosotros', 'vosotros', 'Affirmative imperative, vosotros'],
+    ['usted', 'usted', 'Imperative, usted (the present subjunctive form)'],
+    ['ustedes', 'ustedes', 'Imperative, ustedes (the present subjunctive form)'],
+    ['nosotros', 'nosotros', 'Imperative, nosotros (the present subjunctive form)'],
+];
+// The examples of a slot: hablar, comer and vivir with its regular endings.
+const examples = (slot) => [['habl', 'ar'], ['com', 'er'], ['viv', 'ir']]
+    .flatMap(([stem, conj]) => [ENDINGS[conj][slot]].flat().slice(0, 1).map((ending) => stem + ending)).join(', ');
+
+for (const [id, name, text, persons] of TENSES) {
+    for (const person of persons) {
+        const slot = person === 'yoel' ? `${id}-yo-el` : `${id}-${person}`;
+        transform(slot, `${name} (${P[person]})`, `${text}, ${PERSON_TEXT[person]}: ${examples(slot)}.`);
+    }
+}
+for (const [person, label, text] of IMPERATIVES) {
+    transform(`imperative-${person}`, `imperative (${label})`, `${text}: ${examples(`imperative-${person}`)}.`);
+}
+transform('gerund', 'gerund', `Gerund: ${examples('gerund')}.`);
+transform('participle', 'past participle', 'Past participle, masculine or feminine, singular or plural: hablado, comida, vividos, abiertas.');
 
 // Slots where the stem is stressed and takes its stem change (pienso,
 // cuento, pido), and -ir slots with the weak change e→i, o→u (sintió,
@@ -208,7 +224,10 @@ for (const tense of ['subjunctive-ra', 'subjunctive-se', 'subjunctive-future']) 
 // (pienso, cuentan, adquiero, envío; juegue, sigo, empiece). Changes with
 // one result share a rule; at one position the longest `from` wins (sient
 // → sent, pid → ped).
-const change = (from, to) => ({from, to, occurrence: 'last', between: CONSONANT_OR_U, betweenMinLength: 0});
+const change = (from, to) => ({from, to, occurrence: 'last', between: CONSONANT_OR_U});
+// Where the ending begins with the consonant after the vowel (juegue, sigo,
+// empiece) or the vowel ends the stem (envío), nothing comes between.
+const atEnd = (c) => ({...c, betweenMinLength: 0});
 // Changes of one word (jugar, oler) or a few (dormir, morir, adquirir) need no
 // such limit.
 const only = (from, to) => ({from, to, occurrence: 'last'});
@@ -216,8 +235,8 @@ const IE = change(['ie'], 'e');
 const UE = change(['ue', 'üe'], 'o');       // cuento, avergüenzo
 const JUE = only(['jue'], 'ju');            // juego (jugar)
 const HUE = only(['hue'], 'o');             // huele (oler)
-const ACCENT_I = change(['í'], 'i');        // envío, prohíbo
-const ACCENT_U = change(['ú'], 'u');        // continúa, reúno
+const ACCENT_I = atEnd(change(['í'], 'i'));  // envío, prohíbo
+const ACCENT_U = atEnd(change(['ú'], 'u'));  // continúa, reúno
 const IR_E = change(['ie', 'i'], 'e');      // siento, pido
 const IR_UE = only(['uer'], 'or');          // duermo, muere: only dormir and morir
 const IR_IE_I = only(['ie'], 'i');          // adquiero (adquirir, inquirir)
@@ -263,8 +282,68 @@ function personFor(slot) {
     return map[person];
 }
 
-function verbRule(slot, inflected, deinflected, extra = {}) {
-    suffix(slot, inflected, deinflected, inFor(slot), [verbClass(deinflected), ...personFor(slot)], extra);
+// The conditions the written-out forms of ir, dar, ver and oír add.
+const SHORT = {p1s: 'short_p1s', p2s: 'short_p2s', p3: 'short_p3', p1p: 'short_p1p', p2p: 'short_p2p'};
+function shortFor(slot) {
+    if (slot === 'participle') { return []; }
+    const persons = personFor(slot);
+    return persons.length === 0 ? ['short_imp'] : persons.map((p) => SHORT[p]);
+}
+
+function verbRule(slot, inflected, deinflected, extra = {}, short = false) {
+    suffix(slot, inflected, deinflected, inFor(slot), [verbClass(deinflected), ...personFor(slot), ...(short ? shortFor(slot) : [])], extra);
+}
+
+// Every regular ending needs a stem of two letters or more, so de, ten, tate,
+// vía and sido are not read as dar, tar, ver and ser. The verbs whose stem
+// has one letter or none (ir, dar, ver, ser, oír) are written out below.
+const MIN_STEM = 2;
+const CHANGE_NAMES = new Map([[IE, 'IE'], [UE, 'UE']]);
+// Regular readings that would come before a frequent word's own lemma are
+// left out by the stems they start with: puedo, muere, nueva, puertas and
+// fuese are not podar, morar, novar, portar and fosar (regular -ar verbs,
+// without the ue of poder, morir, nuevo, puerta and ir); viendo and vieja
+// not vendar, vender and vejar (no common -ar or -er verb with ie starts
+// with v, except verter); esta, esto and estas not estar (whose forms are
+// está, estoy, estás). A rule's
+// literal stem constraint takes one string, so such a rule is split by the
+// first letter of its stem: one rule for the stems that start with another
+// letter, and rules for the stems kept among those that start with it
+// (muestro, fuerza and pruebo, and a pronoun before the verb: me cuento).
+const SPLITS = {
+    'ar:plain': [{stemNotStartsWithText: 'est'}, {stemStartsWithText: 'est', stemMinLength: 4}],
+    'ar:UE': [{stemNotStartsWith: '[fmp]', stemNotStartsWithText: 'nuev'}, {stemStartsWith: '[m]', stemNotStartsWithText: 'muer'},
+        {stemStartsWithText: 'fuerz', stemChange: only(['ue'], 'o')}, {stemStartsWithText: 'prueb', stemChange: only(['ue'], 'o')}],
+    'ar:IE': [{stemNotStartsWith: '[v]'}],
+    'er:IE': [{stemNotStartsWith: '[v]'}, {stemStartsWithText: 'viert', stemChange: only(['ie'], 'e')}],
+};
+
+/**
+ * The stem constraints of a regular ending, one object per rule.
+ * @param {string} conj ar, er or ir
+ * @param {string} slot the transform id
+ * @param {string} ending the regular ending
+ * @param {string | null} spelling the spelling change's inflected consonant (qu, z, j, ...), or null
+ * @param {object | null} change the stem change, or null
+ */
+function stemVariants(conj, slot, ending, spelling, change) {
+    const base = {stemMinLength: MIN_STEM};
+    const plain = spelling === null;
+    // Spelling: before e an -ar verb writes qu, gu and c for c, g and z
+    // (pequé, pague, empiece), so peces is not pecar; -egir verbs change
+    // their e (rijo, elijo), so rejas is not regir; no -er verb with ie ends
+    // its stem in c (empiece is empezar, not empecer).
+    if (conj === 'ar' && plain && change === null && /^[eé]/u.test(ending)) { base.stemNotEndsWith = '[cgz]'; }
+    if (conj === 'er' && change === IE) { base.stemNotEndsWith = '[c]'; }
+    if (conj === 'ir' && spelling === 'j' && change === null) { base.stemNotEndsWith = '[e]'; }
+    // Single words of irregular verbs: soler and salir write suela and
+    // salga (sola, sala and salo are not theirs), and empezamos is empezar,
+    // not empecer.
+    if (conj === 'er' && spelling === 'z' && change === null) { base.stemNotStartsWithText = 'empe'; }
+    if (conj === 'er' && plain && change === null && STRESSED.has(slot) && /^[aoá]/u.test(ending)) { base.stemNotStartsWithText = 'sol'; }
+    if (conj === 'ir' && plain && change === null && /^[aoá]/u.test(ending)) { base.stemNotStartsWithText = 'sal'; }
+    const split = plain && STRESSED.has(slot) ? SPLITS[`${conj}:${change === null ? 'plain' : CHANGE_NAMES.get(change)}`] : undefined;
+    return split === undefined ? [base] : split.map((variant) => ({...base, ...variant}));
 }
 
 for (const conj of ['ar', 'er', 'ir']) {
@@ -275,26 +354,21 @@ for (const conj of ['ar', 'er', 'ir']) {
             ...(WEAK_IR.has(slot) ? CHANGES[conj].weak : []),
         ];
         for (const ending of endings) {
-            // A one-letter stem is enough except where it would read short
-            // words as verbs: -ar e (de, le, me, se, te), -er/-ir e, es, en
-            // and the subjunctive endings (se → ser, va → ver, vamos →
-            // ver), and o (do, lo, so). ver's ve, ves and ven are written
-            // out below.
-            const short = (conj === 'ar' && ending === 'e') || ending === 'o'
-                || (conj !== 'ar' && (['e', 'es', 'en'].includes(ending) || slot.startsWith('subjunctive-') && !slot.startsWith('subjunctive-ra')
-                    && !slot.startsWith('subjunctive-se') && !slot.startsWith('subjunctive-future') || ['imperative-usted', 'imperative-ustedes', 'imperative-nosotros'].includes(slot)));
-            const stemMinLength = short ? 2 : 1;
-            const forms = [[ending, conj, changes]];
+            const forms = [[ending, conj, changes, null]];
             if (before[conj].test(ending)) {
                 for (const [inflectedConsonant, lemmaConsonant, with_] of SPELLING[conj]) {
-                    forms.push([inflectedConsonant + ending, lemmaConsonant + conj, changes.filter((c) => with_.includes(c))]);
+                    forms.push([inflectedConsonant + ending, lemmaConsonant + conj, changes.filter((c) => with_.includes(c)), inflectedConsonant]);
                 }
             }
-            for (const [inflected, deinflected, combined] of forms) {
-                const stem = {stemMinLength};
-                verbRule(slot, inflected, deinflected, stem);
+            for (const [inflected, deinflected, combined, spelling] of forms) {
+                for (const stem of stemVariants(conj, slot, ending, spelling, null)) {
+                    verbRule(slot, inflected, deinflected, stem);
+                }
                 for (const stemChange of combined) {
-                    verbRule(slot, inflected, deinflected, {...stem, stemChange});
+                    const placed = spelling === null || stemChange.betweenMinLength !== undefined ? stemChange : atEnd(stemChange);
+                    for (const {stemChange: own, ...stem} of stemVariants(conj, slot, ending, spelling, stemChange)) {
+                        verbRule(slot, inflected, deinflected, {...stem, stemChange: own ?? placed});
+                    }
                 }
             }
         }
@@ -321,10 +395,10 @@ function pastSubjunctive(stem, i) {
     };
 }
 
-function paradigm(table, deinflected, extra = {}) {
+function paradigm(table, deinflected, extra = {}, short = false) {
     for (const [slot, value] of Object.entries(table)) {
         for (const inflected of Array.isArray(value) ? value : [value]) {
-            verbRule(slot, inflected, deinflected, extra);
+            verbRule(slot, inflected, deinflected, extra, short);
         }
     }
 }
@@ -373,7 +447,7 @@ paradigm({
     'imperative-tu': 'oye', 'imperative-vos': 'oí', 'imperative-vosotros': 'oíd', 'imperative-usted': 'oiga', 'imperative-ustedes': 'oigan', 'imperative-nosotros': 'oigamos',
     'gerund': 'oyendo',
     'participle': ['oído', 'oída', 'oídos', 'oídas'],
-}, 'oír');
+}, 'oír', {}, true);
 
 // reír, sonreír, freír, desleír: the stem before -eír is r, sonr, fr, desl.
 paradigm({
@@ -404,7 +478,7 @@ for (const [consonant, lemmas] of [['ñ', ['ñir', 'ñer']], ['ll', ['llir']]]) 
     };
     for (const lemma of lemmas) {
         paradigm(table, lemma, {stemMinLength: 1});
-        if (lemma === 'ñir') { paradigm(table, lemma, {stemMinLength: 1, stemChange: WEAK_E}); }
+        if (lemma === 'ñir') { paradigm(table, lemma, {stemMinLength: 1, stemChange: atEnd(WEAK_E)}); }
     }
 }
 
@@ -474,7 +548,11 @@ paradigm({'gerund': 'pudiendo'}, 'poder');
 // pronoun (se va, me di, me sé): the stem is empty or ends in a space, so
 // the pronominal rule can follow. Those of ser, haber and caber are whole
 // words.
-const WHOLE = {stemNotEndsWith: LETTER};
+// The stem is empty or does not end in a letter (a space or the + of a moved
+// pronoun). Two ranges, a-z and the lowercase Latin-1 letters, do what
+// {letter} would for Spanish (caída, quédese), at a third of its size in
+// tests/classes.json.
+const WHOLE = {stemNotEndsWith: '[a-z\\u00E0-\\u00FF]'};
 const fuiSeries = {
     'preterite-yo': 'fui', 'preterite-tu': 'fuiste', 'preterite-el': 'fue', 'preterite-nosotros': 'fuimos', 'preterite-vosotros': 'fuisteis', 'preterite-ellos': 'fueron',
     ...pastSubjunctive('fu', ''),
@@ -485,6 +563,7 @@ wholeParadigm({
     ...fuiSeries,
     'subjunctive-yo-el': 'sea', 'subjunctive-tu': 'seas', 'subjunctive-nosotros': 'seamos', 'subjunctive-vosotros': 'seáis', 'subjunctive-ellos': 'sean', 'subjunctive-vos': 'seás',
     'imperative-tu': 'sé', 'imperative-vosotros': 'sed', 'imperative-usted': 'sea', 'imperative-ustedes': 'sean', 'imperative-nosotros': 'seamos',
+    'gerund': 'siendo', 'participle': 'sido',
 }, 'ser');
 paradigm({
     'present-yo': 'voy', 'present-tu': 'vas', 'present-el': 'va', 'present-nosotros': 'vamos', 'present-vosotros': 'vais', 'present-ellos': 'van', 'present-vos': 'vas',
@@ -496,7 +575,7 @@ paradigm({
     'imperative-tu': 've', 'imperative-vosotros': 'id', 'imperative-usted': 'vaya', 'imperative-ustedes': 'vayan', 'imperative-nosotros': ['vamos', 'vayamos'],
     'gerund': 'yendo',
     'participle': ['ido', 'ida', 'idos', 'idas'],
-}, 'ir', WHOLE);
+}, 'ir', WHOLE, true);
 paradigm({
     'present-yo': 'estoy', 'present-tu': 'estás', 'present-el': 'está', 'present-ellos': 'están',
     'subjunctive-yo-el': 'esté', 'subjunctive-tu': 'estés', 'subjunctive-ellos': 'estén',
@@ -506,16 +585,35 @@ wholeParadigm({
     'present-yo': 'he', 'present-tu': 'has', 'present-el': ['ha', 'hay'], 'present-nosotros': 'hemos', 'present-ellos': 'han', 'present-vos': 'has',
     'subjunctive-yo-el': 'haya', 'subjunctive-tu': 'hayas', 'subjunctive-nosotros': 'hayamos', 'subjunctive-vosotros': 'hayáis', 'subjunctive-ellos': 'hayan', 'subjunctive-vos': 'hayás',
 }, 'haber');
+// The future and conditional of a verb, from its infinitive.
+function futureOf(infinitive) {
+    const out = {};
+    for (const [slot, ending] of Object.entries(ENDINGS.ar)) {
+        if (slot.startsWith('future-') || slot.startsWith('conditional-')) { out[slot] = infinitive + ending.slice(2); }
+    }
+    return out;
+}
 paradigm({
-    'present-yo': 'doy', 'present-vosotros': 'dais',
+    'present-yo': 'doy', 'present-tu': 'das', 'present-el': 'da', 'present-nosotros': 'damos', 'present-vosotros': 'dais', 'present-ellos': 'dan', 'present-vos': 'das',
     'preterite-yo': 'di', 'preterite-tu': 'diste', 'preterite-el': 'dio', 'preterite-nosotros': 'dimos', 'preterite-vosotros': 'disteis', 'preterite-ellos': 'dieron',
+    'imperfect-yo-el': 'daba', 'imperfect-tu': 'dabas', 'imperfect-nosotros': 'dábamos', 'imperfect-vosotros': 'dabais', 'imperfect-ellos': 'daban',
+    ...futureOf('dar'),
+    'subjunctive-yo-el': 'dé', 'subjunctive-tu': 'des', 'subjunctive-nosotros': 'demos', 'subjunctive-vosotros': 'deis', 'subjunctive-ellos': 'den', 'subjunctive-vos': 'des',
     ...pastSubjunctive('d', 'i'),
-    'subjunctive-yo-el': 'dé', 'subjunctive-vosotros': 'deis', 'imperative-usted': 'dé',
-}, 'dar', WHOLE);
-paradigm({'present-tu': 'ves', 'present-el': 've', 'present-vosotros': 'veis', 'present-ellos': 'ven', 'preterite-yo': 'vi', 'preterite-el': 'vio'}, 'ver', WHOLE);
+    'imperative-tu': 'da', 'imperative-vosotros': 'dad', 'imperative-usted': 'dé', 'imperative-ustedes': 'den', 'imperative-nosotros': 'demos',
+    'gerund': 'dando', 'participle': ['dado', 'dada', 'dados', 'dadas'],
+}, 'dar', WHOLE, true);
+paradigm({
+    'present-tu': 'ves', 'present-el': 've', 'present-nosotros': 'vemos', 'present-vosotros': 'veis', 'present-ellos': 'ven', 'present-vos': 'ves',
+    'preterite-yo': 'vi', 'preterite-tu': 'viste', 'preterite-el': 'vio', 'preterite-nosotros': 'vimos', 'preterite-vosotros': 'visteis', 'preterite-ellos': 'vieron',
+    ...futureOf('ver'),
+    ...pastSubjunctive('v', 'i'),
+    'imperative-tu': 've', 'imperative-vosotros': 'ved',
+    'gerund': 'viendo',
+}, 'ver', WHOLE, true);
 // ver and its compounds (prever, entrever): the e of the stem stays (veo, vea, veía).
 paradigm({'present-yo': 'veo', ...presentSubjunctive('ve'),
-    'imperfect-yo-el': 'veía', 'imperfect-tu': 'veías', 'imperfect-nosotros': 'veíamos', 'imperfect-vosotros': 'veíais', 'imperfect-ellos': 'veían'}, 'ver');
+    'imperfect-yo-el': 'veía', 'imperfect-tu': 'veías', 'imperfect-nosotros': 'veíamos', 'imperfect-vosotros': 'veíais', 'imperfect-ellos': 'veían'}, 'ver', {}, true);
 paradigm({'present-yo': 'sé', ...presentSubjunctive('sep')}, 'saber', WHOLE);
 wholeParadigm({'present-yo': 'quepo', ...presentSubjunctive('quep')}, 'caber');
 paradigm({'imperative-tu': 'di'}, 'decir', WHOLE);
@@ -595,12 +693,13 @@ for (const pronouns of CLUSTERS) {
                 conditionsIn: [], conditionsOut: [person], ...constraint, then: STRIP_ACUTE});
         }
     }
-    // dé (dar, usted) keeps its accent only with two pronouns: deme, démelo,
-    // dése.
-    const de = (two ? 'dé' : 'de') + cluster;
-    suffix(id, de, 'dé', [], ['imp'], WHOLE);
-    if (first === 'se') {
-        add(id, {type: 'circumfix', inflectedPrefix: '', deinflectedPrefix: 'se+', inflectedSuffix: de, deinflectedSuffix: 'dé', conditionsIn: [], conditionsOut: ['imp_ud'], ...WHOLE});
+    // dé (dar, usted) keeps its accent with two pronouns (démelo) and in the
+    // traditional spelling of one (deme, dese or dése).
+    for (const de of (two ? ['dé'] : ['de', 'dé']).map((d) => d + cluster)) {
+        suffix(id, de, 'dé', [], ['imp'], WHOLE);
+        if (first === 'se') {
+            add(id, {type: 'circumfix', inflectedPrefix: '', deinflectedPrefix: 'se+', inflectedSuffix: de, deinflectedSuffix: 'dé', conditionsIn: [], conditionsOut: ['imp_ud'], ...WHOLE});
+        }
     }
 }
 
@@ -608,12 +707,15 @@ for (const pronouns of CLUSTERS) {
 transform('pronominal', '-se verb', 'A verb with a reflexive pronoun before it or attached to it, looked up in its -se form: me levanto → levantarse, te acuerdas → acordarse, siéntate → sentarse.');
 const CLASSES = [['v_ar', [['ar', 'arse']]], ['v_er', [['er', 'erse']]], ['v_ir', [['ir', 'irse'], ['ír', 'írse']]]];
 const PERSON = {me: 'p1s', te: 'p2s', se: 'p3', nos: 'p1p', os: 'p2p'};
-// A pronoun written before the verb: it must agree with the verb's person.
+// A pronoun written before the verb: it must agree with the verb's person,
+// and the verb's stem has two letters or more, so that a pronoun before a
+// short word gives no -se verb through a regular ending (me va is not verse,
+// te es not irse, me ha not herse).
 for (const pronoun of REFLEXIVE) {
     for (const [condition, suffixes] of CLASSES) {
         add('pronominal', {
             type: 'circumfix', prefixes: [[pronoun + ' ', '']], suffixes,
-            conditionsIn: [PERSON[pronoun]], conditionsOut: [condition], stemCharacters: LETTER,
+            conditionsIn: [PERSON[pronoun]], conditionsOut: [condition], stemCharacters: LETTER, stemMinLength: MIN_STEM,
         });
     }
 }
@@ -621,8 +723,18 @@ for (const pronoun of REFLEXIVE) {
 for (const [condition, suffixes] of CLASSES) {
     add('pronominal', {
         type: 'circumfix', prefixes: REFLEXIVE.map((p) => [p + '+', '']), suffixes,
-        conditionsIn: [condition], conditionsOut: [condition], stemCharacters: LETTER,
+        conditionsIn: [condition], conditionsOut: [condition], stemCharacters: LETTER, stemMinLength: MIN_STEM,
     });
+}
+// The written-out forms of ir, dar, ver and oír: me voy, se dio, nos vemos,
+// te oyes (irse, darse, verse, oírse), and vete, dese, yéndose.
+for (const pronoun of REFLEXIVE) {
+    for (const [condition, suffixes] of CLASSES) {
+        add('pronominal', {type: 'circumfix', prefixes: [[pronoun + ' ', '']], suffixes, conditionsIn: [SHORT[PERSON[pronoun]]], conditionsOut: [condition]});
+    }
+}
+for (const [condition, suffixes] of CLASSES) {
+    add('pronominal', {type: 'circumfix', prefixes: REFLEXIVE.map((p) => [p + '+', '']), suffixes, conditionsIn: ['short_imp'], conditionsOut: [condition]});
 }
 
 // --- Nouns and adjectives ------------------------------------------------------------
@@ -653,15 +765,23 @@ for (const [plural, singular] of [['regímenes', 'régimen'], ['especímenes', '
 }
 
 transform('feminine', 'feminine', 'Feminine form of an adjective: bonita, trabajadora, inglesa, alemana, llorona, española, andaluza.');
-for (const [feminine, masculine] of [['a', 'o'], ['ora', 'or'], ['ona', 'ón'], ['esa', 'és'], ['ana', 'án'], ['ina', 'ín'], ['ota', 'ote'], ['eta', 'ete'], ['ñola', 'ñol'], ['uza', 'uz']]) {
+for (const [feminine, masculine] of [['a', 'o'], ['ona', 'ón'], ['esa', 'és'], ['ana', 'án'], ['ina', 'ín'], ['ota', 'ote'], ['eta', 'ete'], ['ñola', 'ñol'], ['uza', 'uz']]) {
     suffix('feminine', feminine, masculine, ['adj'], ['adj'], {stemMinLength: 1});
 }
+// Adjectives in -or with a feminine are those in -dor, -tor and -sor
+// (trabajadora, protectora); mejor, peor, mayor, menor and superior have
+// none, so mejora is not mejor.
+suffix('feminine', 'ora', 'or', ['adj'], ['adj'], {stemEndsWith: '[dts]'});
 // Only the endings of nouns for people: a plain a → o would read casa as
 // caso, cosa as coso and para as paro. Dictionaries list common feminine
 // nouns (niña, chica, hija) as headwords of their own.
 transform('feminine-noun', 'feminine noun', 'Feminine form of a noun for people: trabajadora, campeona, panadera, vecina, secretaria, bióloga, fotógrafa.');
-for (const [feminine, masculine] of [['ora', 'or'], ['ona', 'ón'], ['esa', 'és'], ['enta', 'ente'], ['ana', 'ano'], ['era', 'ero'], ['aria', 'ario'], ['eña', 'eño'], ['ina', 'ino'], ['óloga', 'ólogo'], ['grafa', 'grafo'], ['eca', 'eco'], ['ñola', 'ñol'], ['uza', 'uz']]) {
-    suffix('feminine-noun', feminine, masculine, ['ns'], ['ns'], {stemMinLength: 2});
+// -era, -ina, -ora and -uza need a stem of three letters (panadera, vecina,
+// señora, andaluza): fuera, reina, adora and cruza are not fuero, reino,
+// ador and cruz.
+for (const [feminine, masculine, stemMinLength] of [['ora', 'or', 3], ['ona', 'ón', 2], ['esa', 'és', 2], ['enta', 'ente', 2], ['ana', 'ano', 2], ['era', 'ero', 3],
+    ['aria', 'ario', 2], ['eña', 'eño', 2], ['ina', 'ino', 3], ['óloga', 'ólogo', 2], ['grafa', 'grafo', 2], ['eca', 'eco', 2], ['ñola', 'ñol', 2], ['uza', 'uz', 3]]) {
+    suffix('feminine-noun', feminine, masculine, ['ns'], ['ns'], {stemMinLength});
 }
 
 transform('superlative', 'superlative', 'Absolute superlative in -ísimo: buenísimo, facilísimo, riquísimo, amabilísimo.');
@@ -685,13 +805,13 @@ for (const [form, base] of [
 // -ito and -cito only: words in -illo and -illa are mostly words of their
 // own (anillo, cuchillo, pasillo, pesadilla, rodilla), so those endings
 // gave far more wrong bases than diminutives.
-transform('diminutive', 'diminutive', 'Diminutive in -ito, -cito: perrito, casita, cafecito, poquito, jovencito, pedacito.');
+transform('diminutive', 'diminutive', 'Diminutive in -ito, -cito, -ecito: perrito, casita, cafecito, poquito, jovencito, pedacito, florecita.');
 const DIMINUTIVE = ['ns', 'adj'];
 for (const [form, base, stemMinLength] of [
     ['ito', 'o', 2], ['ita', 'a', 2], ['ito', '', 2], ['ita', '', 2], ['cito', '', 3], ['cita', '', 3], ['ecito', 'e', 2], ['ecita', 'e', 2],
     ['quito', 'co', 2], ['quita', 'ca', 2], ['guito', 'go', 2], ['guita', 'ga', 2], ['güita', 'gua', 2], ['güito', 'guo', 2],
     ['cecito', 'z', 2], ['cecita', 'z', 2], ['cito', 'zo', 2], ['cita', 'za', 2], ['oncito', 'ón', 2], ['oncita', 'ona', 2],
-    ['ito', 'á', 2], ['ita', 'á', 2], ['ecito', 'é', 2],
+    ['ito', 'á', 2], ['ita', 'á', 2], ['ecito', 'é', 2], ['ecito', '', 3], ['ecita', '', 3],  // florecita, panecito, trenecito
 ]) {
     suffix('diminutive', form, base, DIMINUTIVE, DIMINUTIVE, {stemMinLength});
 }

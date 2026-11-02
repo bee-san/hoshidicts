@@ -24,12 +24,12 @@ const COMMIT = 'b9655efb0e5ce0f99809badaa7f4e93017ab8430';
 const SEED = 1;
 // Strata by kind of form; within each, rows are drawn uniformly.
 const STRATA = [
-    ['verb, finite', 800, (t) => t[0] === 'V' && !t.includes('PRO') && ['IND', 'SBJV', 'COND', 'IMP'].some((x) => t.includes(x))],
-    ['verb, gerund or participle', 150, (t) => t[0] === 'V' && !t.includes('PRO') && (t.includes('V.CVB') || t.includes('V.PTCP'))],
-    ['verb with pronouns', 250, (t) => t[0] === 'V' && t.includes('PRO')],
-    ['noun, plural', 250, (t) => t[0] === 'N' && t.includes('PL')],
-    ['noun, singular', 50, (t) => t[0] === 'N' && t.includes('SG')],
-    ['adjective', 200, (t) => t[0] === 'ADJ'],
+    ['verb, finite', 550, (t) => t[0] === 'V' && !t.includes('PRO') && ['IND', 'SBJV', 'COND', 'IMP'].some((x) => t.includes(x))],
+    ['verb, gerund or participle', 100, (t) => t[0] === 'V' && !t.includes('PRO') && (t.includes('V.CVB') || t.includes('V.PTCP'))],
+    ['verb with pronouns', 175, (t) => t[0] === 'V' && t.includes('PRO')],
+    ['noun, plural', 175, (t) => t[0] === 'N' && t.includes('PL')],
+    ['noun, singular', 40, (t) => t[0] === 'N' && t.includes('SG')],
+    ['adjective', 160, (t) => t[0] === 'ADJ'],
 ];
 const POS = {N: 'n', V: 'v', ADJ: 'adj'};
 const WORD = /^[a-zñáéíóúü]+$/u;

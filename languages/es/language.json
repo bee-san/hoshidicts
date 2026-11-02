@@ -112,6 +112,7 @@
         "vt": "Transitive verb",
         "vi": "Intransitive verb",
         "vr": "Reflexive verb",
+        "vdt": "Ditransitive verb",
         "n": "Noun",
         "adj": "Adjective",
         "adv": "Adverb",
@@ -119,14 +120,18 @@
         "prep": "Preposition",
         "conj": "Conjunction",
         "intj": "Interjection",
-        "art": "Article",
+        "artic": "Article",
         "det": "Determiner",
         "num": "Numeral",
         "name": "Proper noun",
         "phrase": "Phrase",
         "prov": "Proverb",
         "pref": "Prefix",
-        "suf": "Suffix"
+        "suf": "Suffix",
+        "ptcl": "Particle",
+        "ptcpl": "Participle",
+        "char": "Character",
+        "prep-phrase": "Prepositional phrase"
       }
     },
     "frequencySamples": {

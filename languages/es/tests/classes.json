@@ -78,12 +78,8 @@
       [768, 879],
       [64256, 64262]
     ],
-    "transforms[0].rules[1].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 122],
-      [241, 241]
+    "transforms[0].rules[2].stemNotStartsWith": [
+      [118, 118]
     ],
     "transforms[0].rules[2].stemChange.between": [
       [98, 100],
@@ -92,21 +88,22 @@
       [112, 122],
       [241, 241]
     ],
+    "transforms[0].rules[3].stemNotStartsWith": [
+      [102, 102],
+      [109, 109],
+      [112, 112]
+    ],
+    "transforms[0].rules[3].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[0].rules[4].stemStartsWith": [
+      [109, 109]
+    ],
     "transforms[0].rules[4].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 122],
-      [241, 241]
-    ],
-    "transforms[0].rules[5].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 122],
-      [241, 241]
-    ],
-    "transforms[0].rules[7].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
@@ -120,6 +117,19 @@
       [112, 122],
       [241, 241]
     ],
+    "transforms[0].rules[9].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[0].rules[11].stemNotStartsWith": [
+      [118, 118]
+    ],
+    "transforms[0].rules[11].stemNotEndsWith": [
+      [99, 99]
+    ],
     "transforms[0].rules[11].stemChange.between": [
       [98, 100],
       [102, 104],
@@ -127,21 +137,24 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[0].rules[15].stemChange.between": [
+    "transforms[0].rules[12].stemNotEndsWith": [
+      [99, 99]
+    ],
+    "transforms[0].rules[13].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[0].rules[18].stemChange.between": [
+    "transforms[0].rules[16].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[0].rules[19].stemChange.between": [
+    "transforms[0].rules[20].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
@@ -155,58 +168,55 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[0].rules[25].stemChange.between": [
+    "transforms[0].rules[24].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[0].rules[28].stemEndsWith": [
+    "transforms[0].rules[27].stemNotEndsWith": [
+      [101, 101]
+    ],
+    "transforms[0].rules[28].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[0].rules[30].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[0].rules[33].stemEndsWith": [
       [103, 103]
     ],
-    "transforms[0].rules[30].stemEndsWith": [
+    "transforms[0].rules[35].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
-    "transforms[0].rules[44].stemNotEndsWith": [
-      [65, 90],
-      [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
-    ],
-    "transforms[0].rules[45].stemNotEndsWith": [
-      [65, 90],
-      [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
-    ],
-    "transforms[0].rules[47].stemNotEndsWith": [
-      [65, 90],
-      [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
-    ],
     "transforms[0].rules[49].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[1].rules[1].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 122],
-      [241, 241]
+    "transforms[0].rules[50].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[0].rules[52].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[0].rules[54].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[1].rules[2].stemNotStartsWith": [
+      [118, 118]
     ],
     "transforms[1].rules[2].stemChange.between": [
       [98, 100],
@@ -215,21 +225,22 @@
       [112, 122],
       [241, 241]
     ],
+    "transforms[1].rules[3].stemNotStartsWith": [
+      [102, 102],
+      [109, 109],
+      [112, 112]
+    ],
+    "transforms[1].rules[3].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[1].rules[4].stemStartsWith": [
+      [109, 109]
+    ],
     "transforms[1].rules[4].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 122],
-      [241, 241]
-    ],
-    "transforms[1].rules[5].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 122],
-      [241, 241]
-    ],
-    "transforms[1].rules[7].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
@@ -243,6 +254,19 @@
       [112, 122],
       [241, 241]
     ],
+    "transforms[1].rules[9].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[1].rules[11].stemNotStartsWith": [
+      [118, 118]
+    ],
+    "transforms[1].rules[11].stemNotEndsWith": [
+      [99, 99]
+    ],
     "transforms[1].rules[11].stemChange.between": [
       [98, 100],
       [102, 104],
@@ -250,57 +274,62 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[1].rules[14].stemChange.between": [
+    "transforms[1].rules[12].stemNotEndsWith": [
+      [99, 99]
+    ],
+    "transforms[1].rules[13].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[1].rules[15].stemChange.between": [
+    "transforms[1].rules[16].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[1].rules[17].stemEndsWith": [
+    "transforms[1].rules[19].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[1].rules[20].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[1].rules[22].stemEndsWith": [
       [103, 103]
     ],
-    "transforms[1].rules[19].stemEndsWith": [
+    "transforms[1].rules[24].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
-    "transforms[1].rules[22].stemNotEndsWith": [
-      [65, 90],
+    "transforms[1].rules[27].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[1].rules[23].stemNotEndsWith": [
-      [65, 90],
+    "transforms[1].rules[28].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[1].rules[25].stemNotEndsWith": [
-      [65, 90],
+    "transforms[1].rules[30].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[2].rules[1].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 122],
-      [241, 241]
+    "transforms[1].rules[31].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[2].rules[2].stemNotStartsWith": [
+      [118, 118]
     ],
     "transforms[2].rules[2].stemChange.between": [
       [98, 100],
@@ -309,21 +338,22 @@
       [112, 122],
       [241, 241]
     ],
+    "transforms[2].rules[3].stemNotStartsWith": [
+      [102, 102],
+      [109, 109],
+      [112, 112]
+    ],
+    "transforms[2].rules[3].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[2].rules[4].stemStartsWith": [
+      [109, 109]
+    ],
     "transforms[2].rules[4].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 122],
-      [241, 241]
-    ],
-    "transforms[2].rules[5].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 122],
-      [241, 241]
-    ],
-    "transforms[2].rules[7].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
@@ -337,6 +367,19 @@
       [112, 122],
       [241, 241]
     ],
+    "transforms[2].rules[9].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[2].rules[11].stemNotStartsWith": [
+      [118, 118]
+    ],
+    "transforms[2].rules[11].stemNotEndsWith": [
+      [99, 99]
+    ],
     "transforms[2].rules[11].stemChange.between": [
       [98, 100],
       [102, 104],
@@ -344,97 +387,94 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[2].rules[14].stemChange.between": [
+    "transforms[2].rules[12].stemNotEndsWith": [
+      [99, 99]
+    ],
+    "transforms[2].rules[13].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[2].rules[15].stemChange.between": [
+    "transforms[2].rules[16].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[2].rules[17].stemEndsWith": [
+    "transforms[2].rules[19].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[2].rules[20].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[2].rules[22].stemEndsWith": [
       [103, 103]
     ],
-    "transforms[2].rules[19].stemEndsWith": [
+    "transforms[2].rules[24].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
-    "transforms[2].rules[22].stemNotEndsWith": [
-      [65, 90],
+    "transforms[2].rules[27].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[2].rules[23].stemNotEndsWith": [
-      [65, 90],
+    "transforms[2].rules[28].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[2].rules[26].stemNotEndsWith": [
-      [65, 90],
+    "transforms[2].rules[31].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[2].rules[32].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[3].rules[4].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
     "transforms[3].rules[6].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[3].rules[8].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[3].rules[9].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[4].rules[4].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
     "transforms[4].rules[6].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[4].rules[7].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[4].rules[8].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[5].rules[1].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 122],
-      [241, 241]
+    "transforms[5].rules[2].stemNotStartsWith": [
+      [118, 118]
     ],
     "transforms[5].rules[2].stemChange.between": [
       [98, 100],
@@ -443,21 +483,22 @@
       [112, 122],
       [241, 241]
     ],
+    "transforms[5].rules[3].stemNotStartsWith": [
+      [102, 102],
+      [109, 109],
+      [112, 112]
+    ],
+    "transforms[5].rules[3].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[5].rules[4].stemStartsWith": [
+      [109, 109]
+    ],
     "transforms[5].rules[4].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 122],
-      [241, 241]
-    ],
-    "transforms[5].rules[5].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 122],
-      [241, 241]
-    ],
-    "transforms[5].rules[7].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
@@ -471,6 +512,19 @@
       [112, 122],
       [241, 241]
     ],
+    "transforms[5].rules[9].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[5].rules[11].stemNotStartsWith": [
+      [118, 118]
+    ],
+    "transforms[5].rules[11].stemNotEndsWith": [
+      [99, 99]
+    ],
     "transforms[5].rules[11].stemChange.between": [
       [98, 100],
       [102, 104],
@@ -478,82 +532,96 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[5].rules[14].stemChange.between": [
+    "transforms[5].rules[12].stemNotEndsWith": [
+      [99, 99]
+    ],
+    "transforms[5].rules[13].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[5].rules[15].stemChange.between": [
+    "transforms[5].rules[16].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[5].rules[17].stemEndsWith": [
+    "transforms[5].rules[19].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[5].rules[20].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[5].rules[22].stemEndsWith": [
       [103, 103]
     ],
-    "transforms[5].rules[19].stemEndsWith": [
+    "transforms[5].rules[24].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
-    "transforms[5].rules[22].stemNotEndsWith": [
-      [65, 90],
+    "transforms[5].rules[27].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[5].rules[23].stemNotEndsWith": [
-      [65, 90],
+    "transforms[5].rules[28].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[5].rules[25].stemNotEndsWith": [
-      [65, 90],
+    "transforms[5].rules[30].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[5].rules[31].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[6].rules[4].stemEndsWith": [
       [108, 108],
       [114, 114]
+    ],
+    "transforms[6].rules[6].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[6].rules[8].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[6].rules[9].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[7].rules[0].stemNotEndsWith": [
+      [99, 99],
+      [103, 103],
+      [122, 122]
     ],
     "transforms[7].rules[8].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
     "transforms[7].rules[25].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[7].rules[26].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[7].rules[27].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[8].rules[3].stemEndsWith": [
       [97, 97],
@@ -565,20 +633,16 @@
       [114, 114]
     ],
     "transforms[8].rules[22].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[8].rules[23].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[8].rules[24].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[9].rules[3].stemChange.between": [
       [98, 100],
@@ -618,49 +682,37 @@
       [241, 241]
     ],
     "transforms[9].rules[31].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[9].rules[32].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[9].rules[33].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[10].rules[1].stemEndsWith": [
+    "transforms[10].rules[3].stemEndsWith": [
       [97, 97],
       [101, 101],
       [111, 111]
     ],
-    "transforms[10].rules[18].stemNotEndsWith": [
-      [65, 90],
-      [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+    "transforms[10].rules[5].stemEndsWith": [
+      [108, 108],
+      [114, 114]
     ],
-    "transforms[10].rules[19].stemNotEndsWith": [
-      [65, 90],
+    "transforms[10].rules[22].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[10].rules[23].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[10].rules[24].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[11].rules[3].stemEndsWith": [
       [97, 97],
@@ -672,20 +724,16 @@
       [114, 114]
     ],
     "transforms[11].rules[22].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[11].rules[23].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[11].rules[24].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[12].rules[3].stemChange.between": [
       [98, 100],
@@ -721,219 +769,265 @@
       [241, 241]
     ],
     "transforms[12].rules[30].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[12].rules[31].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[12].rules[32].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[13].rules[4].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
     "transforms[13].rules[6].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[13].rules[7].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[14].rules[4].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
     "transforms[14].rules[6].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[14].rules[7].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[15].rules[4].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
     "transforms[15].rules[6].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[15].rules[7].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[16].rules[4].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
     "transforms[16].rules[6].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[16].rules[7].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[17].rules[4].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
     "transforms[17].rules[6].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[17].rules[7].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[18].rules[7].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
     "transforms[18].rules[21].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[18].rules[22].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[18].rules[23].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[19].rules[7].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
     "transforms[19].rules[21].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[19].rules[22].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[19].rules[23].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[20].rules[7].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
     "transforms[20].rules[21].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[20].rules[22].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[20].rules[23].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[21].rules[7].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
     "transforms[21].rules[21].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[21].rules[22].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[21].rules[23].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[22].rules[7].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
     "transforms[22].rules[21].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[22].rules[22].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[22].rules[23].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[23].rules[7].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
     "transforms[23].rules[21].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[23].rules[22].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[23].rules[23].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[24].rules[7].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
     "transforms[24].rules[21].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[24].rules[22].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[24].rules[23].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[25].rules[7].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
     "transforms[25].rules[21].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[25].rules[22].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[25].rules[23].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[26].rules[7].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
     "transforms[26].rules[21].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[26].rules[22].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[26].rules[23].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[27].rules[7].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
     "transforms[27].rules[21].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[27].rules[22].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[27].rules[23].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[28].rules[7].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
     "transforms[28].rules[21].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[29].rules[1].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 122],
-      [241, 241]
+    "transforms[28].rules[22].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[28].rules[23].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[29].rules[0].stemNotEndsWith": [
+      [99, 99],
+      [103, 103],
+      [122, 122]
+    ],
+    "transforms[29].rules[1].stemNotEndsWith": [
+      [99, 99],
+      [103, 103],
+      [122, 122]
+    ],
+    "transforms[29].rules[2].stemNotStartsWith": [
+      [118, 118]
     ],
     "transforms[29].rules[2].stemChange.between": [
       [98, 100],
@@ -942,6 +1036,21 @@
       [112, 122],
       [241, 241]
     ],
+    "transforms[29].rules[3].stemNotStartsWith": [
+      [102, 102],
+      [109, 109],
+      [112, 112]
+    ],
+    "transforms[29].rules[3].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[29].rules[4].stemStartsWith": [
+      [109, 109]
+    ],
     "transforms[29].rules[4].stemChange.between": [
       [98, 100],
       [102, 104],
@@ -949,14 +1058,7 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[29].rules[5].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 122],
-      [241, 241]
-    ],
-    "transforms[29].rules[7].stemChange.between": [
+    "transforms[29].rules[8].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
@@ -970,7 +1072,7 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[29].rules[10].stemChange.between": [
+    "transforms[29].rules[11].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
@@ -1005,6 +1107,12 @@
       [112, 122],
       [241, 241]
     ],
+    "transforms[29].rules[21].stemNotStartsWith": [
+      [118, 118]
+    ],
+    "transforms[29].rules[21].stemNotEndsWith": [
+      [99, 99]
+    ],
     "transforms[29].rules[21].stemChange.between": [
       [98, 100],
       [102, 104],
@@ -1012,21 +1120,24 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[29].rules[25].stemChange.between": [
+    "transforms[29].rules[22].stemNotEndsWith": [
+      [99, 99]
+    ],
+    "transforms[29].rules[23].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[29].rules[28].stemChange.between": [
+    "transforms[29].rules[26].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[29].rules[29].stemChange.between": [
+    "transforms[29].rules[30].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
@@ -1040,58 +1151,65 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[29].rules[35].stemChange.between": [
+    "transforms[29].rules[34].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[29].rules[38].stemEndsWith": [
+    "transforms[29].rules[37].stemNotEndsWith": [
+      [101, 101]
+    ],
+    "transforms[29].rules[38].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[29].rules[40].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[29].rules[43].stemEndsWith": [
       [103, 103]
     ],
-    "transforms[29].rules[40].stemEndsWith": [
+    "transforms[29].rules[45].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
-    "transforms[29].rules[54].stemNotEndsWith": [
-      [65, 90],
-      [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
-    ],
-    "transforms[29].rules[55].stemNotEndsWith": [
-      [65, 90],
-      [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
-    ],
-    "transforms[29].rules[57].stemNotEndsWith": [
-      [65, 90],
-      [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
-    ],
     "transforms[29].rules[59].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[30].rules[1].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 122],
-      [241, 241]
+    "transforms[29].rules[60].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[29].rules[62].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[29].rules[64].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[30].rules[0].stemNotEndsWith": [
+      [99, 99],
+      [103, 103],
+      [122, 122]
+    ],
+    "transforms[30].rules[1].stemNotEndsWith": [
+      [99, 99],
+      [103, 103],
+      [122, 122]
+    ],
+    "transforms[30].rules[2].stemNotStartsWith": [
+      [118, 118]
     ],
     "transforms[30].rules[2].stemChange.between": [
       [98, 100],
@@ -1100,6 +1218,21 @@
       [112, 122],
       [241, 241]
     ],
+    "transforms[30].rules[3].stemNotStartsWith": [
+      [102, 102],
+      [109, 109],
+      [112, 112]
+    ],
+    "transforms[30].rules[3].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[30].rules[4].stemStartsWith": [
+      [109, 109]
+    ],
     "transforms[30].rules[4].stemChange.between": [
       [98, 100],
       [102, 104],
@@ -1107,14 +1240,7 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[30].rules[5].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 122],
-      [241, 241]
-    ],
-    "transforms[30].rules[7].stemChange.between": [
+    "transforms[30].rules[8].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
@@ -1128,7 +1254,7 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[30].rules[10].stemChange.between": [
+    "transforms[30].rules[11].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
@@ -1163,6 +1289,12 @@
       [112, 122],
       [241, 241]
     ],
+    "transforms[30].rules[21].stemNotStartsWith": [
+      [118, 118]
+    ],
+    "transforms[30].rules[21].stemNotEndsWith": [
+      [99, 99]
+    ],
     "transforms[30].rules[21].stemChange.between": [
       [98, 100],
       [102, 104],
@@ -1170,21 +1302,24 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[30].rules[25].stemChange.between": [
+    "transforms[30].rules[22].stemNotEndsWith": [
+      [99, 99]
+    ],
+    "transforms[30].rules[23].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[30].rules[28].stemChange.between": [
+    "transforms[30].rules[26].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[30].rules[29].stemChange.between": [
+    "transforms[30].rules[30].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
@@ -1198,43 +1333,57 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[30].rules[35].stemChange.between": [
+    "transforms[30].rules[34].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[30].rules[38].stemEndsWith": [
+    "transforms[30].rules[37].stemNotEndsWith": [
+      [101, 101]
+    ],
+    "transforms[30].rules[38].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[30].rules[40].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[30].rules[43].stemEndsWith": [
       [103, 103]
     ],
-    "transforms[30].rules[40].stemEndsWith": [
+    "transforms[30].rules[45].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
-    "transforms[30].rules[54].stemNotEndsWith": [
-      [65, 90],
+    "transforms[30].rules[59].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[30].rules[55].stemNotEndsWith": [
-      [65, 90],
+    "transforms[30].rules[60].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[30].rules[58].stemNotEndsWith": [
-      [65, 90],
+    "transforms[30].rules[62].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[30].rules[64].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[31].rules[0].stemNotEndsWith": [
+      [99, 99],
+      [103, 103],
+      [122, 122]
     ],
     "transforms[31].rules[10].stemChange.between": [
       [98, 100],
@@ -1249,6 +1398,9 @@
       [106, 110],
       [112, 122],
       [241, 241]
+    ],
+    "transforms[31].rules[14].stemNotEndsWith": [
+      [101, 101]
     ],
     "transforms[31].rules[15].stemChange.between": [
       [98, 100],
@@ -1272,20 +1424,21 @@
       [114, 114]
     ],
     "transforms[31].rules[35].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[31].rules[38].stemNotEndsWith": [
-      [65, 90],
+    "transforms[31].rules[37].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[31].rules[39].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[32].rules[0].stemNotEndsWith": [
+      [99, 99],
+      [103, 103],
+      [122, 122]
     ],
     "transforms[32].rules[10].stemChange.between": [
       [98, 100],
@@ -1300,6 +1453,9 @@
       [106, 110],
       [112, 122],
       [241, 241]
+    ],
+    "transforms[32].rules[14].stemNotEndsWith": [
+      [101, 101]
     ],
     "transforms[32].rules[15].stemChange.between": [
       [98, 100],
@@ -1323,35 +1479,29 @@
       [114, 114]
     ],
     "transforms[32].rules[35].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[32].rules[37].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[32].rules[39].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[33].rules[1].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 122],
-      [241, 241]
+    "transforms[33].rules[0].stemNotEndsWith": [
+      [99, 99],
+      [103, 103],
+      [122, 122]
+    ],
+    "transforms[33].rules[1].stemNotEndsWith": [
+      [99, 99],
+      [103, 103],
+      [122, 122]
+    ],
+    "transforms[33].rules[2].stemNotStartsWith": [
+      [118, 118]
     ],
     "transforms[33].rules[2].stemChange.between": [
       [98, 100],
@@ -1360,6 +1510,21 @@
       [112, 122],
       [241, 241]
     ],
+    "transforms[33].rules[3].stemNotStartsWith": [
+      [102, 102],
+      [109, 109],
+      [112, 112]
+    ],
+    "transforms[33].rules[3].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[33].rules[4].stemStartsWith": [
+      [109, 109]
+    ],
     "transforms[33].rules[4].stemChange.between": [
       [98, 100],
       [102, 104],
@@ -1367,14 +1532,7 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[33].rules[5].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 122],
-      [241, 241]
-    ],
-    "transforms[33].rules[7].stemChange.between": [
+    "transforms[33].rules[8].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
@@ -1388,7 +1546,7 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[33].rules[10].stemChange.between": [
+    "transforms[33].rules[11].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
@@ -1423,6 +1581,12 @@
       [112, 122],
       [241, 241]
     ],
+    "transforms[33].rules[21].stemNotStartsWith": [
+      [118, 118]
+    ],
+    "transforms[33].rules[21].stemNotEndsWith": [
+      [99, 99]
+    ],
     "transforms[33].rules[21].stemChange.between": [
       [98, 100],
       [102, 104],
@@ -1430,21 +1594,24 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[33].rules[25].stemChange.between": [
+    "transforms[33].rules[22].stemNotEndsWith": [
+      [99, 99]
+    ],
+    "transforms[33].rules[23].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[33].rules[28].stemChange.between": [
+    "transforms[33].rules[26].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[33].rules[29].stemChange.between": [
+    "transforms[33].rules[30].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
@@ -1458,43 +1625,57 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[33].rules[35].stemChange.between": [
+    "transforms[33].rules[34].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[33].rules[38].stemEndsWith": [
+    "transforms[33].rules[37].stemNotEndsWith": [
+      [101, 101]
+    ],
+    "transforms[33].rules[38].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[33].rules[40].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[33].rules[43].stemEndsWith": [
       [103, 103]
     ],
-    "transforms[33].rules[40].stemEndsWith": [
+    "transforms[33].rules[45].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
-    "transforms[33].rules[54].stemNotEndsWith": [
-      [65, 90],
+    "transforms[33].rules[59].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[33].rules[55].stemNotEndsWith": [
-      [65, 90],
+    "transforms[33].rules[60].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[33].rules[58].stemNotEndsWith": [
-      [65, 90],
+    "transforms[33].rules[62].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[33].rules[64].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[34].rules[0].stemNotEndsWith": [
+      [99, 99],
+      [103, 103],
+      [122, 122]
     ],
     "transforms[34].rules[10].stemChange.between": [
       [98, 100],
@@ -1509,6 +1690,9 @@
       [106, 110],
       [112, 122],
       [241, 241]
+    ],
+    "transforms[34].rules[14].stemNotEndsWith": [
+      [101, 101]
     ],
     "transforms[34].rules[15].stemChange.between": [
       [98, 100],
@@ -1532,20 +1716,16 @@
       [114, 114]
     ],
     "transforms[34].rules[35].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[34].rules[38].stemNotEndsWith": [
-      [65, 90],
+    "transforms[34].rules[37].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[34].rules[39].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[35].rules[3].stemChange.between": [
       [98, 100],
@@ -1581,20 +1761,16 @@
       [241, 241]
     ],
     "transforms[35].rules[30].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[35].rules[31].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[35].rules[32].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[36].rules[3].stemChange.between": [
       [98, 100],
@@ -1630,20 +1806,16 @@
       [241, 241]
     ],
     "transforms[36].rules[30].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[36].rules[31].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[36].rules[32].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[37].rules[3].stemChange.between": [
       [98, 100],
@@ -1679,20 +1851,16 @@
       [241, 241]
     ],
     "transforms[37].rules[30].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[37].rules[31].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[37].rules[32].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[38].rules[3].stemChange.between": [
       [98, 100],
@@ -1728,20 +1896,16 @@
       [241, 241]
     ],
     "transforms[38].rules[30].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[38].rules[31].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[38].rules[32].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[39].rules[3].stemChange.between": [
       [98, 100],
@@ -1777,20 +1941,16 @@
       [241, 241]
     ],
     "transforms[39].rules[30].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[39].rules[31].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[39].rules[32].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[40].rules[3].stemChange.between": [
       [98, 100],
@@ -1826,20 +1986,16 @@
       [241, 241]
     ],
     "transforms[40].rules[30].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[40].rules[31].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[40].rules[32].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[41].rules[3].stemChange.between": [
       [98, 100],
@@ -1875,20 +2031,16 @@
       [241, 241]
     ],
     "transforms[41].rules[30].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[41].rules[31].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[41].rules[32].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[42].rules[3].stemChange.between": [
       [98, 100],
@@ -1924,20 +2076,16 @@
       [241, 241]
     ],
     "transforms[42].rules[30].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[42].rules[31].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[42].rules[32].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[43].rules[3].stemChange.between": [
       [98, 100],
@@ -1973,20 +2121,16 @@
       [241, 241]
     ],
     "transforms[43].rules[30].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[43].rules[31].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[43].rules[32].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[44].rules[3].stemChange.between": [
       [98, 100],
@@ -2022,20 +2166,16 @@
       [241, 241]
     ],
     "transforms[44].rules[30].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[44].rules[31].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[44].rules[32].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[45].rules[3].stemChange.between": [
       [98, 100],
@@ -2071,20 +2211,16 @@
       [241, 241]
     ],
     "transforms[45].rules[30].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[45].rules[31].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[45].rules[32].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[46].rules[3].stemChange.between": [
       [98, 100],
@@ -2120,20 +2256,16 @@
       [241, 241]
     ],
     "transforms[46].rules[30].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[46].rules[31].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[46].rules[32].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[47].rules[3].stemChange.between": [
       [98, 100],
@@ -2169,20 +2301,16 @@
       [241, 241]
     ],
     "transforms[47].rules[30].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[47].rules[31].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[47].rules[32].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[48].rules[3].stemChange.between": [
       [98, 100],
@@ -2218,20 +2346,16 @@
       [241, 241]
     ],
     "transforms[48].rules[30].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[48].rules[31].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[48].rules[32].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[49].rules[3].stemChange.between": [
       [98, 100],
@@ -2267,27 +2391,19 @@
       [241, 241]
     ],
     "transforms[49].rules[30].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[49].rules[31].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[50].rules[1].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 122],
-      [241, 241]
+    "transforms[49].rules[32].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[50].rules[2].stemNotStartsWith": [
+      [118, 118]
     ],
     "transforms[50].rules[2].stemChange.between": [
       [98, 100],
@@ -2296,21 +2412,22 @@
       [112, 122],
       [241, 241]
     ],
+    "transforms[50].rules[3].stemNotStartsWith": [
+      [102, 102],
+      [109, 109],
+      [112, 112]
+    ],
+    "transforms[50].rules[3].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[50].rules[4].stemStartsWith": [
+      [109, 109]
+    ],
     "transforms[50].rules[4].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 122],
-      [241, 241]
-    ],
-    "transforms[50].rules[5].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 122],
-      [241, 241]
-    ],
-    "transforms[50].rules[7].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
@@ -2324,6 +2441,19 @@
       [112, 122],
       [241, 241]
     ],
+    "transforms[50].rules[9].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[50].rules[11].stemNotStartsWith": [
+      [118, 118]
+    ],
+    "transforms[50].rules[11].stemNotEndsWith": [
+      [99, 99]
+    ],
     "transforms[50].rules[11].stemChange.between": [
       [98, 100],
       [102, 104],
@@ -2331,60 +2461,73 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[50].rules[14].stemChange.between": [
+    "transforms[50].rules[12].stemNotEndsWith": [
+      [99, 99]
+    ],
+    "transforms[50].rules[13].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[50].rules[15].stemChange.between": [
+    "transforms[50].rules[16].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[50].rules[17].stemEndsWith": [
+    "transforms[50].rules[19].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[50].rules[20].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[50].rules[22].stemEndsWith": [
       [103, 103]
     ],
-    "transforms[50].rules[19].stemEndsWith": [
+    "transforms[50].rules[24].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
-    "transforms[50].rules[20].stemEndsWith": [
+    "transforms[50].rules[25].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
-    "transforms[50].rules[32].stemNotEndsWith": [
-      [65, 90],
+    "transforms[50].rules[37].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[50].rules[33].stemNotEndsWith": [
-      [65, 90],
+    "transforms[50].rules[38].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[50].rules[34].stemNotEndsWith": [
-      [65, 90],
+    "transforms[50].rules[39].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[51].rules[4].stemEndsWith": [
+    "transforms[50].rules[40].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[50].rules[41].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[51].rules[5].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
-    "transforms[51].rules[6].stemEndsWith": [
+    "transforms[51].rules[7].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
@@ -2397,19 +2540,29 @@
       [114, 114]
     ],
     "transforms[52].rules[8].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[53].rules[1].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 122],
-      [241, 241]
+    "transforms[52].rules[9].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[52].rules[10].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[53].rules[0].stemNotEndsWith": [
+      [99, 99],
+      [103, 103],
+      [122, 122]
+    ],
+    "transforms[53].rules[1].stemNotEndsWith": [
+      [99, 99],
+      [103, 103],
+      [122, 122]
+    ],
+    "transforms[53].rules[2].stemNotStartsWith": [
+      [118, 118]
     ],
     "transforms[53].rules[2].stemChange.between": [
       [98, 100],
@@ -2418,6 +2571,21 @@
       [112, 122],
       [241, 241]
     ],
+    "transforms[53].rules[3].stemNotStartsWith": [
+      [102, 102],
+      [109, 109],
+      [112, 112]
+    ],
+    "transforms[53].rules[3].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[53].rules[4].stemStartsWith": [
+      [109, 109]
+    ],
     "transforms[53].rules[4].stemChange.between": [
       [98, 100],
       [102, 104],
@@ -2425,14 +2593,7 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[53].rules[5].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 122],
-      [241, 241]
-    ],
-    "transforms[53].rules[7].stemChange.between": [
+    "transforms[53].rules[8].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
@@ -2446,7 +2607,7 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[53].rules[10].stemChange.between": [
+    "transforms[53].rules[11].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
@@ -2481,6 +2642,12 @@
       [112, 122],
       [241, 241]
     ],
+    "transforms[53].rules[21].stemNotStartsWith": [
+      [118, 118]
+    ],
+    "transforms[53].rules[21].stemNotEndsWith": [
+      [99, 99]
+    ],
     "transforms[53].rules[21].stemChange.between": [
       [98, 100],
       [102, 104],
@@ -2488,21 +2655,24 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[53].rules[25].stemChange.between": [
+    "transforms[53].rules[22].stemNotEndsWith": [
+      [99, 99]
+    ],
+    "transforms[53].rules[23].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[53].rules[28].stemChange.between": [
+    "transforms[53].rules[26].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[53].rules[29].stemChange.between": [
+    "transforms[53].rules[30].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
@@ -2516,62 +2686,69 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[53].rules[35].stemChange.between": [
+    "transforms[53].rules[34].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[53].rules[38].stemEndsWith": [
+    "transforms[53].rules[37].stemNotEndsWith": [
+      [101, 101]
+    ],
+    "transforms[53].rules[38].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[53].rules[40].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[53].rules[43].stemEndsWith": [
       [103, 103]
     ],
-    "transforms[53].rules[40].stemEndsWith": [
+    "transforms[53].rules[45].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
-    "transforms[53].rules[41].stemEndsWith": [
+    "transforms[53].rules[46].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
-    "transforms[53].rules[55].stemNotEndsWith": [
-      [65, 90],
+    "transforms[53].rules[60].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[53].rules[56].stemNotEndsWith": [
-      [65, 90],
+    "transforms[53].rules[61].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[53].rules[57].stemNotEndsWith": [
-      [65, 90],
+    "transforms[53].rules[62].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[53].rules[59].stemNotEndsWith": [
-      [65, 90],
+    "transforms[53].rules[64].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[54].rules[1].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 122],
-      [241, 241]
+    "transforms[54].rules[0].stemNotEndsWith": [
+      [99, 99],
+      [103, 103],
+      [122, 122]
+    ],
+    "transforms[54].rules[1].stemNotEndsWith": [
+      [99, 99],
+      [103, 103],
+      [122, 122]
+    ],
+    "transforms[54].rules[2].stemNotStartsWith": [
+      [118, 118]
     ],
     "transforms[54].rules[2].stemChange.between": [
       [98, 100],
@@ -2580,6 +2757,21 @@
       [112, 122],
       [241, 241]
     ],
+    "transforms[54].rules[3].stemNotStartsWith": [
+      [102, 102],
+      [109, 109],
+      [112, 112]
+    ],
+    "transforms[54].rules[3].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[54].rules[4].stemStartsWith": [
+      [109, 109]
+    ],
     "transforms[54].rules[4].stemChange.between": [
       [98, 100],
       [102, 104],
@@ -2587,14 +2779,7 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[54].rules[5].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 122],
-      [241, 241]
-    ],
-    "transforms[54].rules[7].stemChange.between": [
+    "transforms[54].rules[8].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
@@ -2608,7 +2793,7 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[54].rules[10].stemChange.between": [
+    "transforms[54].rules[11].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
@@ -2643,6 +2828,12 @@
       [112, 122],
       [241, 241]
     ],
+    "transforms[54].rules[21].stemNotStartsWith": [
+      [118, 118]
+    ],
+    "transforms[54].rules[21].stemNotEndsWith": [
+      [99, 99]
+    ],
     "transforms[54].rules[21].stemChange.between": [
       [98, 100],
       [102, 104],
@@ -2650,21 +2841,24 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[54].rules[25].stemChange.between": [
+    "transforms[54].rules[22].stemNotEndsWith": [
+      [99, 99]
+    ],
+    "transforms[54].rules[23].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[54].rules[28].stemChange.between": [
+    "transforms[54].rules[26].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[54].rules[29].stemChange.between": [
+    "transforms[54].rules[30].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
@@ -2678,47 +2872,61 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[54].rules[35].stemChange.between": [
+    "transforms[54].rules[34].stemChange.between": [
       [98, 100],
       [102, 104],
       [106, 110],
       [112, 122],
       [241, 241]
     ],
-    "transforms[54].rules[38].stemEndsWith": [
+    "transforms[54].rules[37].stemNotEndsWith": [
+      [101, 101]
+    ],
+    "transforms[54].rules[38].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[54].rules[40].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 122],
+      [241, 241]
+    ],
+    "transforms[54].rules[43].stemEndsWith": [
       [103, 103]
     ],
-    "transforms[54].rules[40].stemEndsWith": [
+    "transforms[54].rules[45].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
-    "transforms[54].rules[41].stemEndsWith": [
+    "transforms[54].rules[46].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
-    "transforms[54].rules[55].stemNotEndsWith": [
-      [65, 90],
+    "transforms[54].rules[60].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[54].rules[56].stemNotEndsWith": [
-      [65, 90],
+    "transforms[54].rules[61].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[54].rules[58].stemNotEndsWith": [
-      [65, 90],
+    "transforms[54].rules[62].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[54].rules[64].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[55].rules[0].stemNotEndsWith": [
+      [99, 99],
+      [103, 103],
+      [122, 122]
     ],
     "transforms[55].rules[10].stemChange.between": [
       [98, 100],
@@ -2733,6 +2941,9 @@
       [106, 110],
       [112, 122],
       [241, 241]
+    ],
+    "transforms[55].rules[14].stemNotEndsWith": [
+      [101, 101]
     ],
     "transforms[55].rules[15].stemChange.between": [
       [98, 100],
@@ -2756,28 +2967,20 @@
       [114, 114]
     ],
     "transforms[55].rules[35].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[55].rules[36].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
-    "transforms[55].rules[38].stemNotEndsWith": [
-      [65, 90],
+    "transforms[55].rules[37].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[55].rules[39].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[56].rules[3].stemChange.between": [
       [98, 100],
@@ -2812,13 +3015,17 @@
       [112, 122],
       [241, 241]
     ],
-    "transforms[56].rules[15].stemNotEndsWith": [
-      [65, 90],
+    "transforms[56].rules[16].stemNotEndsWith": [
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[56].rules[17].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[56].rules[18].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[57].rules[12].stemEndsWith": [
       [97, 97],
@@ -2856,37 +3063,37 @@
       [108, 108],
       [114, 114]
     ],
-    "transforms[57].rules[24].stemNotEndsWith": [
-      [65, 90],
-      [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
-    ],
     "transforms[57].rules[25].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[57].rules[26].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[57].rules[27].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[57].rules[28].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[57].rules[29].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[57].rules[30].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[57].rules[31].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[57].rules[32].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[58].rules[12].stemEndsWith": [
       [97, 97],
@@ -2904,12 +3111,12 @@
       [250, 250]
     ],
     "transforms[58].rules[13].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[58].rules[14].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[59].rules[12].stemEndsWith": [
       [97, 97],
@@ -2942,12 +3149,12 @@
       [250, 250]
     ],
     "transforms[59].rules[14].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[59].rules[15].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[60].rules[8].stemEndsWith": [
       [97, 97],
@@ -2980,20 +3187,20 @@
       [250, 250]
     ],
     "transforms[60].rules[10].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[60].rules[11].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[60].rules[12].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
+    ],
+    "transforms[60].rules[13].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[61].rules[12].stemEndsWith": [
       [97, 97],
@@ -3026,36 +3233,28 @@
       [250, 250]
     ],
     "transforms[61].rules[16].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[61].rules[17].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[62].rules[20].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[62].rules[21].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[62].rules[22].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[62].rules[23].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[63].rules[6].stemEndsWith": [
       [97, 97],
@@ -3073,12 +3272,12 @@
       [250, 250]
     ],
     "transforms[63].rules[7].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[63].rules[8].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[64].rules[6].stemEndsWith": [
       [97, 97],
@@ -3096,12 +3295,12 @@
       [250, 250]
     ],
     "transforms[64].rules[7].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[64].rules[8].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[65].rules[6].stemEndsWith": [
       [97, 97],
@@ -3119,12 +3318,12 @@
       [250, 250]
     ],
     "transforms[65].rules[7].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[65].rules[8].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[66].rules[6].stemEndsWith": [
       [97, 97],
@@ -3142,12 +3341,12 @@
       [250, 250]
     ],
     "transforms[66].rules[7].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[66].rules[8].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[67].rules[6].stemEndsWith": [
       [97, 97],
@@ -3165,12 +3364,12 @@
       [250, 250]
     ],
     "transforms[67].rules[7].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[67].rules[8].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[68].rules[6].stemEndsWith": [
       [97, 97],
@@ -3188,12 +3387,12 @@
       [250, 250]
     ],
     "transforms[68].rules[7].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
+    ],
+    "transforms[68].rules[8].stemNotEndsWith": [
+      [97, 122],
+      [224, 255]
     ],
     "transforms[69].rules[12].stemEndsWith": [
       [97, 97],
@@ -3211,12 +3410,8 @@
       [250, 250]
     ],
     "transforms[69].rules[13].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[70].rules[12].stemEndsWith": [
       [97, 97],
@@ -3234,12 +3429,8 @@
       [250, 250]
     ],
     "transforms[70].rules[13].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[71].rules[12].stemEndsWith": [
       [97, 97],
@@ -3257,12 +3448,8 @@
       [250, 250]
     ],
     "transforms[71].rules[13].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[72].rules[12].stemEndsWith": [
       [97, 97],
@@ -3280,12 +3467,8 @@
       [250, 250]
     ],
     "transforms[72].rules[13].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[73].rules[12].stemEndsWith": [
       [97, 97],
@@ -3318,12 +3501,8 @@
       [250, 250]
     ],
     "transforms[73].rules[14].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[74].rules[12].stemEndsWith": [
       [97, 97],
@@ -3356,12 +3535,8 @@
       [250, 250]
     ],
     "transforms[74].rules[14].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[75].rules[12].stemEndsWith": [
       [97, 97],
@@ -3394,12 +3569,8 @@
       [250, 250]
     ],
     "transforms[75].rules[14].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[76].rules[12].stemEndsWith": [
       [97, 97],
@@ -3432,12 +3603,8 @@
       [250, 250]
     ],
     "transforms[76].rules[14].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[77].rules[12].stemEndsWith": [
       [97, 97],
@@ -3470,20 +3637,12 @@
       [250, 250]
     ],
     "transforms[77].rules[16].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[77].rules[17].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[78].rules[12].stemEndsWith": [
       [97, 97],
@@ -3516,20 +3675,12 @@
       [250, 250]
     ],
     "transforms[78].rules[16].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[78].rules[17].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[79].rules[12].stemEndsWith": [
       [97, 97],
@@ -3562,20 +3713,12 @@
       [250, 250]
     ],
     "transforms[79].rules[16].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[79].rules[17].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[80].rules[12].stemEndsWith": [
       [97, 97],
@@ -3608,20 +3751,12 @@
       [250, 250]
     ],
     "transforms[80].rules[16].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[80].rules[17].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[81].rules[12].stemEndsWith": [
       [97, 97],
@@ -3654,12 +3789,8 @@
       [250, 250]
     ],
     "transforms[81].rules[16].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[82].rules[12].stemEndsWith": [
       [97, 97],
@@ -3692,12 +3823,8 @@
       [250, 250]
     ],
     "transforms[82].rules[16].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[83].rules[12].stemEndsWith": [
       [97, 97],
@@ -3730,12 +3857,8 @@
       [250, 250]
     ],
     "transforms[83].rules[16].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[84].rules[12].stemEndsWith": [
       [97, 97],
@@ -3768,12 +3891,8 @@
       [250, 250]
     ],
     "transforms[84].rules[16].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[85].rules[12].stemEndsWith": [
       [97, 97],
@@ -3806,12 +3925,8 @@
       [250, 250]
     ],
     "transforms[85].rules[14].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[86].rules[12].stemEndsWith": [
       [97, 97],
@@ -3844,12 +3959,8 @@
       [250, 250]
     ],
     "transforms[86].rules[14].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[87].rules[12].stemEndsWith": [
       [97, 97],
@@ -3882,12 +3993,8 @@
       [250, 250]
     ],
     "transforms[87].rules[14].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[88].rules[12].stemEndsWith": [
       [97, 97],
@@ -3920,12 +4027,8 @@
       [250, 250]
     ],
     "transforms[88].rules[14].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[89].rules[12].stemEndsWith": [
       [97, 97],
@@ -3958,20 +4061,12 @@
       [250, 250]
     ],
     "transforms[89].rules[16].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[89].rules[17].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[90].rules[12].stemEndsWith": [
       [97, 97],
@@ -4004,20 +4099,12 @@
       [250, 250]
     ],
     "transforms[90].rules[16].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[90].rules[17].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[91].rules[12].stemEndsWith": [
       [97, 97],
@@ -4050,20 +4137,12 @@
       [250, 250]
     ],
     "transforms[91].rules[16].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[91].rules[17].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[92].rules[12].stemEndsWith": [
       [97, 97],
@@ -4096,20 +4175,12 @@
       [250, 250]
     ],
     "transforms[92].rules[16].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[92].rules[17].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[93].rules[12].stemEndsWith": [
       [97, 97],
@@ -4142,20 +4213,12 @@
       [250, 250]
     ],
     "transforms[93].rules[16].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[93].rules[17].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[94].rules[12].stemEndsWith": [
       [97, 97],
@@ -4188,20 +4251,12 @@
       [250, 250]
     ],
     "transforms[94].rules[16].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[94].rules[17].stemNotEndsWith": [
-      [65, 90],
       [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
+      [224, 255]
     ],
     "transforms[95].rules[0].stemCharacters": [
       [65, 90],
@@ -4393,6 +4448,10 @@
       [237, 237],
       [243, 243],
       [250, 250]
+    ],
+    "transforms[97].rules[9].stemEndsWith": [
+      [100, 100],
+      [115, 116]
     ],
     "transforms[99].rules[9].stemChange.between": [
       [98, 100],
@@ -5422,255 +5481,6 @@
         ["desembarguéis", "desembarguéis"],
         ["trabucaremos", "trabucaremos"],
         ["postulemos", "postulemos"],
-        ["desafinaseis", "desafinaseis"],
-        ["congestionares", "congestionares"],
-        ["coreaba", "coreaba"],
-        ["gruñeren", "gruñeren"],
-        ["emperas", "emperas"],
-        ["mecanizabas", "mecanizabas"],
-        ["atañere", "atañere"],
-        ["asimilarán", "asimilarán"],
-        ["esterifiqué", "esterifiqué"],
-        ["itineraseis", "itineraseis"],
-        ["cimentarías", "cimentarías"],
-        ["reposáramos", "reposáramos"],
-        ["descapitaliza", "descapitaliza"],
-        ["certificarán", "certificarán"],
-        ["batieras", "batieras"],
-        ["contundió", "contundió"],
-        ["emocionarais", "emocionarais"],
-        ["recopilara", "recopilara"],
-        ["comiscasen", "comiscasen"],
-        ["sazonemos", "sazonemos"],
-        ["deferiré", "deferiré"],
-        ["rehogáis", "rehogáis"],
-        ["mercadeáramos", "mercadeáramos"],
-        ["atraillase", "atraillase"],
-        ["aterrabas", "aterrabas"],
-        ["dentarías", "dentarías"],
-        ["supierais", "supierais"],
-        ["glasearas", "glasearas"],
-        ["democratice", "democratice"],
-        ["emperejilarán", "emperejilarán"],
-        ["serpenteabais", "serpenteabais"],
-        ["festonaste", "festonaste"],
-        ["profetizaba", "profetizaba"],
-        ["adveraba", "adveraba"],
-        ["teñí", "teñí"],
-        ["entiesábamos", "entiesábamos"],
-        ["promiscuaseis", "promiscuaseis"],
-        ["corrugases", "corrugases"],
-        ["aplegaseis", "aplegaseis"],
-        ["pereceabais", "pereceabais"],
-        ["irrogaré", "irrogaré"],
-        ["regiréis", "regiréis"],
-        ["fortificá", "fortificá"],
-        ["abejorrearían", "abejorrearían"],
-        ["interaccionáremos", "interaccionáremos"],
-        ["pololeáis", "pololeáis"],
-        ["calma", "calma"],
-        ["circuyerais", "circuyerais"],
-        ["guindá", "guindá"],
-        ["retunde", "retunde"],
-        ["gotearan", "gotearan"],
-        ["dializaría", "dializaría"],
-        ["engrupiréis", "engrupiréis"],
-        ["inscribiereis", "inscribiereis"],
-        ["recuperen", "recuperen"],
-        ["desposasteis", "desposasteis"],
-        ["debelareis", "debelareis"],
-        ["trasmutarais", "trasmutarais"],
-        ["judaizó", "judaizó"],
-        ["twittearían", "twittearían"],
-        ["circundan", "circundan"],
-        ["cercháramos", "cercháramos"],
-        ["readmito", "readmito"],
-        ["sobregrabaríais", "sobregrabaríais"],
-        ["desanimamos", "desanimamos"],
-        ["pilaron", "pilaron"],
-        ["patullan", "patullan"],
-        ["jiñaréis", "jiñaréis"],
-        ["victorearemos", "victorearemos"],
-        ["abetunaste", "abetunaste"],
-        ["alivias", "alivias"],
-        ["compruebas", "compruebas"],
-        ["ajaríais", "ajaríais"],
-        ["carecíamos", "carecíamos"],
-        ["conmemoren", "conmemoren"],
-        ["camuflo", "camuflo"],
-        ["atornillarais", "atornillarais"],
-        ["climatizabas", "climatizabas"],
-        ["vacacionéis", "vacacionéis"],
-        ["diseccionemos", "diseccionemos"],
-        ["inicializáis", "inicializáis"],
-        ["previsionen", "previsionen"],
-        ["carnetizaren", "carnetizaren"],
-        ["desregularizás", "desregularizás"],
-        ["trabasen", "trabasen"],
-        ["maltratarías", "maltratarías"],
-        ["recostarías", "recostarías"],
-        ["atoraremos", "atoraremos"],
-        ["contuviéramos", "contuviéramos"],
-        ["aseguras", "aseguras"],
-        ["alquitranás", "alquitranás"],
-        ["entrecerraremos", "entrecerraremos"],
-        ["reeditaras", "reeditaras"],
-        ["horripiló", "horripiló"],
-        ["sicoanalizase", "sicoanalizase"],
-        ["pronominalizaras", "pronominalizaras"],
-        ["adoré", "adoré"],
-        ["cociéramos", "cociéramos"],
-        ["sajarais", "sajarais"],
-        ["acentuaron", "acentuaron"],
-        ["bisecasen", "bisecasen"],
-        ["certificábamos", "certificábamos"],
-        ["fisionaban", "fisionaban"],
-        ["encallemos", "encallemos"],
-        ["colecta", "colecta"],
-        ["solaras", "solaras"],
-        ["desposeíamos", "desposeíamos"],
-        ["lavaras", "lavaras"],
-        ["venciesen", "venciesen"],
-        ["lasqué", "lasqué"],
-        ["hormigonásemos", "hormigonásemos"],
-        ["zampares", "zampares"],
-        ["caratulás", "caratulás"],
-        ["surtiereis", "surtiereis"],
-        ["flirtearan", "flirtearan"],
-        ["electrizamos", "electrizamos"],
-        ["oreará", "oreará"],
-        ["esclarecerías", "esclarecerías"],
-        ["maquillarás", "maquillarás"],
-        ["placare", "placare"],
-        ["arramblaseis", "arramblaseis"],
-        ["reprenderá", "reprenderá"],
-        ["auditare", "auditare"],
-        ["secuenciaras", "secuenciaras"],
-        ["desmarque", "desmarque"],
-        ["sinceran", "sinceran"],
-        ["escogió", "escogió"],
-        ["imitáis", "imitáis"],
-        ["pesqué", "pesqué"],
-        ["quedé", "quedé"],
-        ["desecharas", "desecharas"],
-        ["amartizaron", "amartizaron"],
-        ["redescribieron", "redescribieron"],
-        ["releíamos", "releíamos"],
-        ["polimerizaremos", "polimerizaremos"],
-        ["deleznan", "deleznan"],
-        ["propalad", "propalad"],
-        ["reinventará", "reinventará"],
-        ["maridaría", "maridaría"],
-        ["tarifamos", "tarifamos"],
-        ["intersectaren", "intersectaren"],
-        ["rubriquen", "rubriquen"],
-        ["instalaríais", "instalaríais"],
-        ["congoje", "congoje"],
-        ["calcabas", "calcabas"],
-        ["desconvendrías", "desconvendrías"],
-        ["reabsorberás", "reabsorberás"],
-        ["aprobáremos", "aprobáremos"],
-        ["fufábamos", "fufábamos"],
-        ["instiguen", "instiguen"],
-        ["escoraron", "escoraron"],
-        ["coeditaríais", "coeditaríais"],
-        ["desmovilizaste", "desmovilizaste"],
-        ["afiligranarás", "afiligranarás"],
-        ["completaremos", "completaremos"],
-        ["sabríais", "sabríais"],
-        ["circuyere", "circuyere"],
-        ["desmadejases", "desmadejases"],
-        ["atrasarán", "atrasarán"],
-        ["personificaríais", "personificaríais"],
-        ["currarías", "currarías"],
-        ["estabularíais", "estabularíais"],
-        ["atontares", "atontares"],
-        ["parlamentara", "parlamentara"],
-        ["aludía", "aludía"],
-        ["amelcocháremos", "amelcocháremos"],
-        ["desenamoraríamos", "desenamoraríamos"],
-        ["rezagaron", "rezagaron"],
-        ["yermó", "yermó"],
-        ["cementarían", "cementarían"],
-        ["zumbés", "zumbés"],
-        ["crotoreamos", "crotoreamos"],
-        ["conceptuareis", "conceptuareis"],
-        ["tremolaban", "tremolaban"],
-        ["agarrotarán", "agarrotarán"],
-        ["conviniésemos", "conviniésemos"],
-        ["precautelés", "precautelés"],
-        ["amansábamos", "amansábamos"],
-        ["encaminaré", "encaminaré"],
-        ["turbinabais", "turbinabais"],
-        ["abrotoñaron", "abrotoñaron"],
-        ["referenciad", "referenciad"],
-        ["implorases", "implorases"],
-        ["sesgares", "sesgares"],
-        ["podemizá", "podemizá"],
-        ["vanagloriaste", "vanagloriaste"],
-        ["cachiporreáramos", "cachiporreáramos"],
-        ["oliesen", "oliesen"],
-        ["cencerreaste", "cencerreaste"],
-        ["guisaríais", "guisaríais"],
-        ["desobligaremos", "desobligaremos"],
-        ["derogaréis", "derogaréis"],
-        ["intimareis", "intimareis"],
-        ["enluto", "enluto"],
-        ["tongonearen", "tongonearen"],
-        ["castrad", "castrad"],
-        ["turbocargues", "turbocargues"],
-        ["intrusas", "intrusas"],
-        ["perecearemos", "perecearemos"],
-        ["noqueaseis", "noqueaseis"],
-        ["enjugué", "enjugué"],
-        ["entrenaría", "entrenaría"],
-        ["empenacharon", "empenacharon"],
-        ["morfá", "morfá"],
-        ["hacinamos", "hacinamos"],
-        ["saetasen", "saetasen"],
-        ["menstruasteis", "menstruasteis"],
-        ["sintetizaste", "sintetizaste"],
-        ["renacionalizaren", "renacionalizaren"],
-        ["tiznareis", "tiznareis"],
-        ["desliábamos", "desliábamos"],
-        ["saliésemos", "saliésemos"],
-        ["gasifiquen", "gasifiquen"],
-        ["aclamaron", "aclamaron"],
-        ["darlusarían", "darlusarían"],
-        ["acendras", "acendras"],
-        ["coactúes", "coactúes"],
-        ["hiedo", "hiedo"],
-        ["infestáramos", "infestáramos"],
-        ["mantuviereis", "mantuviereis"],
-        ["impermeabilizarais", "impermeabilizarais"],
-        ["desordene", "desordene"],
-        ["revolcarais", "revolcarais"],
-        ["translado", "translado"],
-        ["agrediría", "agrediría"],
-        ["empantanáis", "empantanáis"],
-        ["desagotases", "desagotases"],
-        ["tongoneareis", "tongoneareis"],
-        ["comunitarizases", "comunitarizases"],
-        ["apelotareis", "apelotareis"],
-        ["atiesaron", "atiesaron"],
-        ["intendieres", "intendieres"],
-        ["sopesaba", "sopesaba"],
-        ["musicarías", "musicarías"],
-        ["filmásemos", "filmásemos"],
-        ["erizasteis", "erizasteis"],
-        ["deducíais", "deducíais"],
-        ["ahorcáis", "ahorcáis"],
-        ["paciere", "paciere"],
-        ["embragáis", "embragáis"],
-        ["platicabais", "platicabais"],
-        ["asperjase", "asperjase"],
-        ["religaran", "religaran"],
-        ["debiliten", "debiliten"],
-        ["alejasteis", "alejasteis"],
-        ["escalofriase", "escalofriase"],
-        ["perlarías", "perlarías"],
-        ["apuntillaron", "apuntillaron"],
-        ["paceremos", "paceremos"],
         ["tallando", "tallando"],
         ["prorrogando", "prorrogando"],
         ["desembarazadas", "desembarazadas"],
@@ -5771,56 +5581,6 @@
         ["bramado", "bramado"],
         ["roturados", "roturados"],
         ["enmugrados", "enmugrados"],
-        ["acuchillado", "acuchillado"],
-        ["relegadas", "relegadas"],
-        ["embelecadas", "embelecadas"],
-        ["escachando", "escachando"],
-        ["augmentado", "augmentado"],
-        ["envasadas", "envasadas"],
-        ["ahuciadas", "ahuciadas"],
-        ["disfrutado", "disfrutado"],
-        ["desembrollado", "desembrollado"],
-        ["acuatizando", "acuatizando"],
-        ["comisada", "comisada"],
-        ["fusionada", "fusionada"],
-        ["matrimoniando", "matrimoniando"],
-        ["subscritos", "subscritos"],
-        ["antedatado", "antedatado"],
-        ["retornado", "retornado"],
-        ["asistida", "asistida"],
-        ["devengados", "devengados"],
-        ["trabucado", "trabucado"],
-        ["mancornando", "mancornando"],
-        ["suministrados", "suministrados"],
-        ["sospechando", "sospechando"],
-        ["demodulados", "demodulados"],
-        ["comisionado", "comisionado"],
-        ["insistidas", "insistidas"],
-        ["premuertas", "premuertas"],
-        ["pasados", "pasados"],
-        ["descontinuado", "descontinuado"],
-        ["desenojados", "desenojados"],
-        ["prenasalizadas", "prenasalizadas"],
-        ["resistido", "resistido"],
-        ["figuradas", "figuradas"],
-        ["cuchucheadas", "cuchucheadas"],
-        ["farreadas", "farreadas"],
-        ["dactilografiados", "dactilografiados"],
-        ["arenados", "arenados"],
-        ["apacentada", "apacentada"],
-        ["removidas", "removidas"],
-        ["lubricadas", "lubricadas"],
-        ["ajusticiadas", "ajusticiadas"],
-        ["elucidadas", "elucidadas"],
-        ["retrasmitidos", "retrasmitidos"],
-        ["encofrada", "encofrada"],
-        ["transcurriendo", "transcurriendo"],
-        ["calibrando", "calibrando"],
-        ["aplazado", "aplazado"],
-        ["prostituyendo", "prostituyendo"],
-        ["sacrificadas", "sacrificadas"],
-        ["afianzadas", "afianzadas"],
-        ["dogmatizando", "dogmatizando"],
         ["apílenlo", "apílenlo"],
         ["compenetradle", "compenetradle"],
         ["cañonéeme", "cañonéeme"],
@@ -5995,81 +5755,6 @@
         ["repagándonos", "repagándonos"],
         ["cuartéenme", "cuartéenme"],
         ["readiestrémoslas", "readiestrémoslas"],
-        ["trasmóntenles", "trasmóntenles"],
-        ["talémonos", "talémonos"],
-        ["bachaqueadles", "bachaqueadles"],
-        ["promoveros", "promoveros"],
-        ["adormilémosla", "adormilémosla"],
-        ["aceitándose", "aceitándose"],
-        ["acobardándoos", "acobardándoos"],
-        ["cuñarla", "cuñarla"],
-        ["comprobándome", "comprobándome"],
-        ["admítase", "admítase"],
-        ["mandrílelos", "mandrílelos"],
-        ["capuzándolo", "capuzándolo"],
-        ["estucarle", "estucarle"],
-        ["aherrójense", "aherrójense"],
-        ["empeórenlas", "empeórenlas"],
-        ["ametrallarle", "ametrallarle"],
-        ["estáquennos", "estáquennos"],
-        ["incúbenlo", "incúbenlo"],
-        ["fíala", "fíala"],
-        ["cizállame", "cizállame"],
-        ["enlaciándolos", "enlaciándolos"],
-        ["intimadlos", "intimadlos"],
-        ["recogiéndole", "recogiéndole"],
-        ["abónelas", "abónelas"],
-        ["embuchémoste", "embuchémoste"],
-        ["humedecedme", "humedecedme"],
-        ["malinterprételes", "malinterprételes"],
-        ["señalizarle", "señalizarle"],
-        ["ramonéalo", "ramonéalo"],
-        ["peléenlo", "peléenlo"],
-        ["plañéndoos", "plañéndoos"],
-        ["entrecortadlo", "entrecortadlo"],
-        ["llavéeles", "llavéeles"],
-        ["agitarle", "agitarle"],
-        ["abaldónennos", "abaldónennos"],
-        ["carrozándola", "carrozándola"],
-        ["debátalo", "debátalo"],
-        ["encomiadles", "encomiadles"],
-        ["ahuéquese", "ahuéquese"],
-        ["mancomúnenlos", "mancomúnenlos"],
-        ["encorajinándonos", "encorajinándonos"],
-        ["ladradme", "ladradme"],
-        ["trasudémoslo", "trasudémoslo"],
-        ["recamadnos", "recamadnos"],
-        ["acóplalas", "acóplalas"],
-        ["traicionadlos", "traicionadlos"],
-        ["escabullirle", "escabullirle"],
-        ["mordiéndote", "mordiéndote"],
-        ["atrévete", "atrévete"],
-        ["propúlsalo", "propúlsalo"],
-        ["motivarle", "motivarle"],
-        ["simultanéese", "simultanéese"],
-        ["afiliarlo", "afiliarlo"],
-        ["pedorreándolos", "pedorreándolos"],
-        ["galanteémoslos", "galanteémoslos"],
-        ["anestesiarse", "anestesiarse"],
-        ["exacérbese", "exacérbese"],
-        ["acetaos", "acetaos"],
-        ["fórjenos", "fórjenos"],
-        ["desaprovechadlos", "desaprovechadlos"],
-        ["ennoblecedla", "ennoblecedla"],
-        ["apláudanlos", "apláudanlos"],
-        ["rememorarlo", "rememorarlo"],
-        ["sobreexpresándoles", "sobreexpresándoles"],
-        ["democratizarlas", "democratizarlas"],
-        ["emborrachémosle", "emborrachémosle"],
-        ["enfríelos", "enfríelos"],
-        ["estilizándole", "estilizándole"],
-        ["socórrale", "socórrale"],
-        ["babéala", "babéala"],
-        ["múltelas", "múltelas"],
-        ["erradíquenles", "erradíquenles"],
-        ["mírenos", "mírenos"],
-        ["láudenlos", "láudenlos"],
-        ["afelpándoos", "afelpándoos"],
         ["guabineos", "guabineos"],
         ["shipibos", "shipibos"],
         ["decimoctavos", "decimoctavos"],
@@ -6236,79 +5921,6 @@
         ["minimizaciones", "minimizaciones"],
         ["salinas", "salinas"],
         ["buceadores", "buceadores"],
-        ["flows", "flows"],
-        ["salvajerías", "salvajerías"],
-        ["quintales", "quintales"],
-        ["traseritos", "traseritos"],
-        ["vides", "vides"],
-        ["accidentes", "accidentes"],
-        ["hileras", "hileras"],
-        ["micronesios", "micronesios"],
-        ["mirandinos", "mirandinos"],
-        ["dienos", "dienos"],
-        ["reválidas", "reválidas"],
-        ["menosprecios", "menosprecios"],
-        ["bernesas", "bernesas"],
-        ["microempresas", "microempresas"],
-        ["sesiones", "sesiones"],
-        ["barbetas", "barbetas"],
-        ["cortesanos", "cortesanos"],
-        ["salitres", "salitres"],
-        ["abangareños", "abangareños"],
-        ["neoimperialistas", "neoimperialistas"],
-        ["macros", "macros"],
-        ["frikismos", "frikismos"],
-        ["compueblanos", "compueblanos"],
-        ["traficantes", "traficantes"],
-        ["multitiendas", "multitiendas"],
-        ["chontaleños", "chontaleños"],
-        ["ignimbritas", "ignimbritas"],
-        ["mayoristas", "mayoristas"],
-        ["romboedros", "romboedros"],
-        ["gastadoras", "gastadoras"],
-        ["colectivismos", "colectivismos"],
-        ["eventualidades", "eventualidades"],
-        ["liderazgos", "liderazgos"],
-        ["vergaciones", "vergaciones"],
-        ["ególatras", "ególatras"],
-        ["misticismos", "misticismos"],
-        ["dacios", "dacios"],
-        ["taquipneas", "taquipneas"],
-        ["antistrofas", "antistrofas"],
-        ["enfriamientos", "enfriamientos"],
-        ["suplantadoras", "suplantadoras"],
-        ["pucherazos", "pucherazos"],
-        ["baltis", "baltis"],
-        ["zancadas", "zancadas"],
-        ["vulcanólogos", "vulcanólogos"],
-        ["fluidizaciones", "fluidizaciones"],
-        ["rockeras", "rockeras"],
-        ["prestidigitadoras", "prestidigitadoras"],
-        ["lebrastones", "lebrastones"],
-        ["metodistas", "metodistas"],
-        ["incordios", "incordios"],
-        ["milagreros", "milagreros"],
-        ["sobrenutriciones", "sobrenutriciones"],
-        ["lúmpenes", "lúmpenes"],
-        ["anticucheras", "anticucheras"],
-        ["salafismos", "salafismos"],
-        ["delegaciones", "delegaciones"],
-        ["protrusiones", "protrusiones"],
-        ["refinaciones", "refinaciones"],
-        ["forrajes", "forrajes"],
-        ["baguets", "baguets"],
-        ["yonques", "yonques"],
-        ["fogonaduras", "fogonaduras"],
-        ["almádanas", "almádanas"],
-        ["superamigas", "superamigas"],
-        ["guaymenses", "guaymenses"],
-        ["líricas", "líricas"],
-        ["embusteros", "embusteros"],
-        ["norosetios", "norosetios"],
-        ["trasplantaciones", "trasplantaciones"],
-        ["repóqueres", "repóqueres"],
-        ["leñadoras", "leñadoras"],
-        ["joyos", "joyos"],
         ["marteña", "marteña"],
         ["asentadora", "asentadora"],
         ["nepalesa", "nepalesa"],
@@ -6324,11 +5936,6 @@
         ["duraneña", "duraneña"],
         ["milonguera", "milonguera"],
         ["parapsicóloga", "parapsicóloga"],
-        ["istmeña", "istmeña"],
-        ["latinoamericana", "latinoamericana"],
-        ["margariteña", "margariteña"],
-        ["albanesa", "albanesa"],
-        ["avaladora", "avaladora"],
         ["calumniosas", "calumniosas"],
         ["incidentales", "incidentales"],
         ["contrasubversivas", "contrasubversivas"],
@@ -6488,46 +6095,6 @@
         ["neptunianas", "neptunianas"],
         ["pugilísticos", "pugilísticos"],
         ["febriles", "febriles"],
-        ["grosísima", "grosísima"],
-        ["absortos", "absortos"],
-        ["hipsterianas", "hipsterianas"],
-        ["subalpinas", "subalpinas"],
-        ["triclínica", "triclínica"],
-        ["woodyallenianas", "woodyallenianas"],
-        ["estacionaria", "estacionaria"],
-        ["participativos", "participativos"],
-        ["chiquitinas", "chiquitinas"],
-        ["indiciarias", "indiciarias"],
-        ["sidonias", "sidonias"],
-        ["batracios", "batracios"],
-        ["cuzqueñas", "cuzqueñas"],
-        ["neohampshireños", "neohampshireños"],
-        ["inexplorada", "inexplorada"],
-        ["fingidos", "fingidos"],
-        ["fraterna", "fraterna"],
-        ["omnímodas", "omnímodas"],
-        ["gachita", "gachita"],
-        ["grequiana", "grequiana"],
-        ["cremosa", "cremosa"],
-        ["retirados", "retirados"],
-        ["caseosos", "caseosos"],
-        ["hojosas", "hojosas"],
-        ["trivalentes", "trivalentes"],
-        ["valóricos", "valóricos"],
-        ["heptágona", "heptágona"],
-        ["aseguradas", "aseguradas"],
-        ["llaniscos", "llaniscos"],
-        ["atonales", "atonales"],
-        ["aguda", "aguda"],
-        ["socioafectiva", "socioafectiva"],
-        ["paulistana", "paulistana"],
-        ["canchera", "canchera"],
-        ["pirenaica", "pirenaica"],
-        ["multimediáticas", "multimediáticas"],
-        ["trocoidales", "trocoidales"],
-        ["ferromagnésicos", "ferromagnésicos"],
-        ["idos", "idos"],
-        ["calentadoras", "calentadoras"],
         ["hablás", "hablás"],
         ["comés", "comés"],
         ["tenés", "tenés"],
@@ -6535,6 +6102,10 @@
         ["hablés", "hablés"],
         ["hablá", "hablá"],
         ["tené", "tené"],
+        ["decime", "decime"],
+        ["escribile", "escribile"],
+        ["abrilo", "abrilo"],
+        ["vestite", "vestite"],
         ["cuento", "cuento"],
         ["pide", "pide"],
         ["duermen", "duermen"],
@@ -6546,6 +6117,13 @@
         ["vuelvan", "vuelvan"],
         ["durmamos", "durmamos"],
         ["sigas", "sigas"],
+        ["muestra", "muestra"],
+        ["fuerza", "fuerza"],
+        ["pruebo", "pruebo"],
+        ["renueva", "renueva"],
+        ["vierte", "vierte"],
+        ["estudia", "estudia"],
+        ["enciende", "enciende"],
         ["busqué", "busqué"],
         ["pagué", "pagué"],
         ["empecé", "empecé"],
@@ -6618,8 +6196,21 @@
         ["di", "di"],
         ["dio", "dio"],
         ["dé", "dé"],
+        ["das", "das"],
+        ["damos", "damos"],
+        ["daba", "daba"],
+        ["daremos", "daremos"],
+        ["den", "den"],
+        ["dando", "dando"],
+        ["dado", "dado"],
         ["vi", "vi"],
         ["veía", "veía"],
+        ["vemos", "vemos"],
+        ["viste", "viste"],
+        ["vieron", "vieron"],
+        ["viendo", "viendo"],
+        ["sido", "sido"],
+        ["siendo", "siendo"],
         ["ve", "ve"],
         ["valdrá", "valdrá"],
         ["asgo", "asgo"],
@@ -6670,6 +6261,7 @@
         ["ríete", "ríete"],
         ["sentaos", "sentaos"],
         ["vestíos", "vestíos"],
+        ["idos", "idos"],
         ["vámonos", "vámonos"],
         ["sentémonos", "sentémonos"],
         ["yéndose", "yéndose"],
@@ -6714,6 +6306,14 @@
         ["se levantaba", "se levantaba"],
         ["te levantes", "te levantes"],
         ["se ve", "se ve"],
+        ["me voy", "me voy"],
+        ["nos vamos", "nos vamos"],
+        ["nos vemos", "nos vemos"],
+        ["se dio", "se dio"],
+        ["te oyes", "te oyes"],
+        ["me encuentro", "me encuentro"],
+        ["dése", "dése"],
+        ["viéndose", "viéndose"],
         ["me dijo", "me dijo"],
         ["nos dijo", "nos dijo"],
         ["te digo", "te digo"],
@@ -6723,6 +6323,11 @@
         ["me gusta", "me gusta"],
         ["te sienta", "te sienta"],
         ["te sentando", "te sentando"],
+        ["me va", "me va"],
+        ["se va", "se va"],
+        ["te es", "te es"],
+        ["me ha", "me ha"],
+        ["se ha", "se ha"],
         ["casas", "casas"],
         ["árboles", "árboles"],
         ["jóvenes", "jóvenes"],
@@ -6731,6 +6336,10 @@
         ["caracteres", "caracteres"],
         ["rubíes", "rubíes"],
         ["tabúes", "tabúes"],
+        ["intereses", "intereses"],
+        ["rehenes", "rehenes"],
+        ["entremeses", "entremeses"],
+        ["terraplenes", "terraplenes"],
         ["leyes", "leyes"],
         ["clubs", "clubs"],
         ["emails", "emails"],
@@ -6763,6 +6372,8 @@
         ["pedacito", "pedacito"],
         ["jovencito", "jovencito"],
         ["perritos", "perritos"],
+        ["florecita", "florecita"],
+        ["panecito", "panecito"],
         ["ahorita", "ahorita"],
         ["rápidamente", "rápidamente"],
         ["fácilmente", "fácilmente"],
@@ -6799,11 +6410,34 @@
         ["cómprame", "cómprame"],
         ["dinos", "dinos"],
         ["dígame", "dígame"],
-        ["dése", "dése"],
         ["exactamente", "exactamente"],
         ["juegen", "juegen"],
         ["ya me levantar", "ya me levantar"],
-        ["invingás", "invingás"],
+        ["puedo", "puedo"],
+        ["puede", "puede"],
+        ["pueden", "pueden"],
+        ["nueva", "nueva"],
+        ["puertas", "puertas"],
+        ["fuese", "fuese"],
+        ["vieja", "vieja"],
+        ["sola", "sola"],
+        ["solo", "solo"],
+        ["sala", "sala"],
+        ["empezamos", "empezamos"],
+        ["peces", "peces"],
+        ["rejas", "rejas"],
+        ["fuera", "fuera"],
+        ["reina", "reina"],
+        ["adora", "adora"],
+        ["cruza", "cruza"],
+        ["mejora", "mejora"],
+        ["vidas", "vidas"],
+        ["vías", "vías"],
+        ["te", "te"],
+        ["me", "me"],
+        ["le", "le"],
+        ["do", "do"],
+        ["lo", "lo"],
         ["corróyanse", "corróyanse"],
         ["vicerrectores", "vicerrectores"],
         ["manitobanos", "manitobanos"],
@@ -6813,8 +6447,6 @@
         ["choznos", "choznos"],
         ["coacusados", "coacusados"],
         ["protesoreros", "protesoreros"],
-        ["tiradores", "tiradores"],
-        ["riojanos", "riojanos"],
         ["panfletario", "panfletario"],
         ["rugidor", "rugidor"],
         ["cuatrillizo", "cuatrillizo"],
@@ -6840,10 +6472,6 @@
         ["vampirita", "vampirita"],
         ["caledonia", "caledonia"],
         ["maragata", "maragata"],
-        ["extraña", "extraña"],
-        ["vampiresa", "vampiresa"],
-        ["chiroca", "chiroca"],
-        ["muchachuela", "muchachuela"],
         ["esa", "esa"],
         ["HABLO", "hablo"],
         ["ÁRBOL", "árbol"],
@@ -6861,7 +6489,6 @@
         ["canción", "canción"],
         ["comimos en un restaurante", "comimos en un restaurante"],
         ["Hablamos mañana", "hablamos mañana"],
-        ["canciones bonitas", "canciones bonitas"],
         ["árboles altos", "árboles altos"],
         ["luces encendidas", "luces encendidas"],
         ["huele a pan", "huele a pan"],
@@ -6873,16 +6500,22 @@
         ["se fue a casa", "se fue a casa"],
         ["acuérdate de mí", "acuérdate de mí"],
         ["te levantas tarde", "te levantas tarde"],
+        ["nos vemos mañana", "nos vemos mañana"],
+        ["se dio cuenta", "se dio cuenta"],
         ["desafortunadamente llovió", "desafortunadamente llovió"],
         ["Ayer comimos", "ayer comimos"],
         ["franco-alemana", "franco-alemana"],
-        ["cancion bonita", "cancion bonita"],
+        ["canciones bonitas", "canciones bonitas"],
+        ["arbol alto", "arbol alto"],
         ["de la casa", "de la casa"],
         ["para mí", "para mí"],
         ["casa grande", "casa grande"],
         ["me dijo que sí", "me dijo que sí"],
         ["te digo la verdad", "te digo la verdad"],
         ["comimos en", "comimos en"],
+        ["me va bien", "me va bien"],
+        ["nos vamos a casa", "nos vamos a casa"],
+        ["casaca roja", "casaca roja"],
         ["Ayer comimos en un restaurante pequeño cerca del puerto.", "ayer comimos en un restaurante pequeño cerca del puerto."],
         ["comer", "comer"]
       ]
@@ -7670,255 +7303,6 @@
         ["desembarguéis", "Desembarguéis"],
         ["trabucaremos", "Trabucaremos"],
         ["postulemos", "Postulemos"],
-        ["desafinaseis", "Desafinaseis"],
-        ["congestionares", "Congestionares"],
-        ["coreaba", "Coreaba"],
-        ["gruñeren", "Gruñeren"],
-        ["emperas", "Emperas"],
-        ["mecanizabas", "Mecanizabas"],
-        ["atañere", "Atañere"],
-        ["asimilarán", "Asimilarán"],
-        ["esterifiqué", "Esterifiqué"],
-        ["itineraseis", "Itineraseis"],
-        ["cimentarías", "Cimentarías"],
-        ["reposáramos", "Reposáramos"],
-        ["descapitaliza", "Descapitaliza"],
-        ["certificarán", "Certificarán"],
-        ["batieras", "Batieras"],
-        ["contundió", "Contundió"],
-        ["emocionarais", "Emocionarais"],
-        ["recopilara", "Recopilara"],
-        ["comiscasen", "Comiscasen"],
-        ["sazonemos", "Sazonemos"],
-        ["deferiré", "Deferiré"],
-        ["rehogáis", "Rehogáis"],
-        ["mercadeáramos", "Mercadeáramos"],
-        ["atraillase", "Atraillase"],
-        ["aterrabas", "Aterrabas"],
-        ["dentarías", "Dentarías"],
-        ["supierais", "Supierais"],
-        ["glasearas", "Glasearas"],
-        ["democratice", "Democratice"],
-        ["emperejilarán", "Emperejilarán"],
-        ["serpenteabais", "Serpenteabais"],
-        ["festonaste", "Festonaste"],
-        ["profetizaba", "Profetizaba"],
-        ["adveraba", "Adveraba"],
-        ["teñí", "Teñí"],
-        ["entiesábamos", "Entiesábamos"],
-        ["promiscuaseis", "Promiscuaseis"],
-        ["corrugases", "Corrugases"],
-        ["aplegaseis", "Aplegaseis"],
-        ["pereceabais", "Pereceabais"],
-        ["irrogaré", "Irrogaré"],
-        ["regiréis", "Regiréis"],
-        ["fortificá", "Fortificá"],
-        ["abejorrearían", "Abejorrearían"],
-        ["interaccionáremos", "Interaccionáremos"],
-        ["pololeáis", "Pololeáis"],
-        ["calma", "Calma"],
-        ["circuyerais", "Circuyerais"],
-        ["guindá", "Guindá"],
-        ["retunde", "Retunde"],
-        ["gotearan", "Gotearan"],
-        ["dializaría", "Dializaría"],
-        ["engrupiréis", "Engrupiréis"],
-        ["inscribiereis", "Inscribiereis"],
-        ["recuperen", "Recuperen"],
-        ["desposasteis", "Desposasteis"],
-        ["debelareis", "Debelareis"],
-        ["trasmutarais", "Trasmutarais"],
-        ["judaizó", "Judaizó"],
-        ["twittearían", "Twittearían"],
-        ["circundan", "Circundan"],
-        ["cercháramos", "Cercháramos"],
-        ["readmito", "Readmito"],
-        ["sobregrabaríais", "Sobregrabaríais"],
-        ["desanimamos", "Desanimamos"],
-        ["pilaron", "Pilaron"],
-        ["patullan", "Patullan"],
-        ["jiñaréis", "Jiñaréis"],
-        ["victorearemos", "Victorearemos"],
-        ["abetunaste", "Abetunaste"],
-        ["alivias", "Alivias"],
-        ["compruebas", "Compruebas"],
-        ["ajaríais", "Ajaríais"],
-        ["carecíamos", "Carecíamos"],
-        ["conmemoren", "Conmemoren"],
-        ["camuflo", "Camuflo"],
-        ["atornillarais", "Atornillarais"],
-        ["climatizabas", "Climatizabas"],
-        ["vacacionéis", "Vacacionéis"],
-        ["diseccionemos", "Diseccionemos"],
-        ["inicializáis", "Inicializáis"],
-        ["previsionen", "Previsionen"],
-        ["carnetizaren", "Carnetizaren"],
-        ["desregularizás", "Desregularizás"],
-        ["trabasen", "Trabasen"],
-        ["maltratarías", "Maltratarías"],
-        ["recostarías", "Recostarías"],
-        ["atoraremos", "Atoraremos"],
-        ["contuviéramos", "Contuviéramos"],
-        ["aseguras", "Aseguras"],
-        ["alquitranás", "Alquitranás"],
-        ["entrecerraremos", "Entrecerraremos"],
-        ["reeditaras", "Reeditaras"],
-        ["horripiló", "Horripiló"],
-        ["sicoanalizase", "Sicoanalizase"],
-        ["pronominalizaras", "Pronominalizaras"],
-        ["adoré", "Adoré"],
-        ["cociéramos", "Cociéramos"],
-        ["sajarais", "Sajarais"],
-        ["acentuaron", "Acentuaron"],
-        ["bisecasen", "Bisecasen"],
-        ["certificábamos", "Certificábamos"],
-        ["fisionaban", "Fisionaban"],
-        ["encallemos", "Encallemos"],
-        ["colecta", "Colecta"],
-        ["solaras", "Solaras"],
-        ["desposeíamos", "Desposeíamos"],
-        ["lavaras", "Lavaras"],
-        ["venciesen", "Venciesen"],
-        ["lasqué", "Lasqué"],
-        ["hormigonásemos", "Hormigonásemos"],
-        ["zampares", "Zampares"],
-        ["caratulás", "Caratulás"],
-        ["surtiereis", "Surtiereis"],
-        ["flirtearan", "Flirtearan"],
-        ["electrizamos", "Electrizamos"],
-        ["oreará", "Oreará"],
-        ["esclarecerías", "Esclarecerías"],
-        ["maquillarás", "Maquillarás"],
-        ["placare", "Placare"],
-        ["arramblaseis", "Arramblaseis"],
-        ["reprenderá", "Reprenderá"],
-        ["auditare", "Auditare"],
-        ["secuenciaras", "Secuenciaras"],
-        ["desmarque", "Desmarque"],
-        ["sinceran", "Sinceran"],
-        ["escogió", "Escogió"],
-        ["imitáis", "Imitáis"],
-        ["pesqué", "Pesqué"],
-        ["quedé", "Quedé"],
-        ["desecharas", "Desecharas"],
-        ["amartizaron", "Amartizaron"],
-        ["redescribieron", "Redescribieron"],
-        ["releíamos", "Releíamos"],
-        ["polimerizaremos", "Polimerizaremos"],
-        ["deleznan", "Deleznan"],
-        ["propalad", "Propalad"],
-        ["reinventará", "Reinventará"],
-        ["maridaría", "Maridaría"],
-        ["tarifamos", "Tarifamos"],
-        ["intersectaren", "Intersectaren"],
-        ["rubriquen", "Rubriquen"],
-        ["instalaríais", "Instalaríais"],
-        ["congoje", "Congoje"],
-        ["calcabas", "Calcabas"],
-        ["desconvendrías", "Desconvendrías"],
-        ["reabsorberás", "Reabsorberás"],
-        ["aprobáremos", "Aprobáremos"],
-        ["fufábamos", "Fufábamos"],
-        ["instiguen", "Instiguen"],
-        ["escoraron", "Escoraron"],
-        ["coeditaríais", "Coeditaríais"],
-        ["desmovilizaste", "Desmovilizaste"],
-        ["afiligranarás", "Afiligranarás"],
-        ["completaremos", "Completaremos"],
-        ["sabríais", "Sabríais"],
-        ["circuyere", "Circuyere"],
-        ["desmadejases", "Desmadejases"],
-        ["atrasarán", "Atrasarán"],
-        ["personificaríais", "Personificaríais"],
-        ["currarías", "Currarías"],
-        ["estabularíais", "Estabularíais"],
-        ["atontares", "Atontares"],
-        ["parlamentara", "Parlamentara"],
-        ["aludía", "Aludía"],
-        ["amelcocháremos", "Amelcocháremos"],
-        ["desenamoraríamos", "Desenamoraríamos"],
-        ["rezagaron", "Rezagaron"],
-        ["yermó", "Yermó"],
-        ["cementarían", "Cementarían"],
-        ["zumbés", "Zumbés"],
-        ["crotoreamos", "Crotoreamos"],
-        ["conceptuareis", "Conceptuareis"],
-        ["tremolaban", "Tremolaban"],
-        ["agarrotarán", "Agarrotarán"],
-        ["conviniésemos", "Conviniésemos"],
-        ["precautelés", "Precautelés"],
-        ["amansábamos", "Amansábamos"],
-        ["encaminaré", "Encaminaré"],
-        ["turbinabais", "Turbinabais"],
-        ["abrotoñaron", "Abrotoñaron"],
-        ["referenciad", "Referenciad"],
-        ["implorases", "Implorases"],
-        ["sesgares", "Sesgares"],
-        ["podemizá", "Podemizá"],
-        ["vanagloriaste", "Vanagloriaste"],
-        ["cachiporreáramos", "Cachiporreáramos"],
-        ["oliesen", "Oliesen"],
-        ["cencerreaste", "Cencerreaste"],
-        ["guisaríais", "Guisaríais"],
-        ["desobligaremos", "Desobligaremos"],
-        ["derogaréis", "Derogaréis"],
-        ["intimareis", "Intimareis"],
-        ["enluto", "Enluto"],
-        ["tongonearen", "Tongonearen"],
-        ["castrad", "Castrad"],
-        ["turbocargues", "Turbocargues"],
-        ["intrusas", "Intrusas"],
-        ["perecearemos", "Perecearemos"],
-        ["noqueaseis", "Noqueaseis"],
-        ["enjugué", "Enjugué"],
-        ["entrenaría", "Entrenaría"],
-        ["empenacharon", "Empenacharon"],
-        ["morfá", "Morfá"],
-        ["hacinamos", "Hacinamos"],
-        ["saetasen", "Saetasen"],
-        ["menstruasteis", "Menstruasteis"],
-        ["sintetizaste", "Sintetizaste"],
-        ["renacionalizaren", "Renacionalizaren"],
-        ["tiznareis", "Tiznareis"],
-        ["desliábamos", "Desliábamos"],
-        ["saliésemos", "Saliésemos"],
-        ["gasifiquen", "Gasifiquen"],
-        ["aclamaron", "Aclamaron"],
-        ["darlusarían", "Darlusarían"],
-        ["acendras", "Acendras"],
-        ["coactúes", "Coactúes"],
-        ["hiedo", "Hiedo"],
-        ["infestáramos", "Infestáramos"],
-        ["mantuviereis", "Mantuviereis"],
-        ["impermeabilizarais", "Impermeabilizarais"],
-        ["desordene", "Desordene"],
-        ["revolcarais", "Revolcarais"],
-        ["translado", "Translado"],
-        ["agrediría", "Agrediría"],
-        ["empantanáis", "Empantanáis"],
-        ["desagotases", "Desagotases"],
-        ["tongoneareis", "Tongoneareis"],
-        ["comunitarizases", "Comunitarizases"],
-        ["apelotareis", "Apelotareis"],
-        ["atiesaron", "Atiesaron"],
-        ["intendieres", "Intendieres"],
-        ["sopesaba", "Sopesaba"],
-        ["musicarías", "Musicarías"],
-        ["filmásemos", "Filmásemos"],
-        ["erizasteis", "Erizasteis"],
-        ["deducíais", "Deducíais"],
-        ["ahorcáis", "Ahorcáis"],
-        ["paciere", "Paciere"],
-        ["embragáis", "Embragáis"],
-        ["platicabais", "Platicabais"],
-        ["asperjase", "Asperjase"],
-        ["religaran", "Religaran"],
-        ["debiliten", "Debiliten"],
-        ["alejasteis", "Alejasteis"],
-        ["escalofriase", "Escalofriase"],
-        ["perlarías", "Perlarías"],
-        ["apuntillaron", "Apuntillaron"],
-        ["paceremos", "Paceremos"],
         ["tallando", "Tallando"],
         ["prorrogando", "Prorrogando"],
         ["desembarazadas", "Desembarazadas"],
@@ -8019,56 +7403,6 @@
         ["bramado", "Bramado"],
         ["roturados", "Roturados"],
         ["enmugrados", "Enmugrados"],
-        ["acuchillado", "Acuchillado"],
-        ["relegadas", "Relegadas"],
-        ["embelecadas", "Embelecadas"],
-        ["escachando", "Escachando"],
-        ["augmentado", "Augmentado"],
-        ["envasadas", "Envasadas"],
-        ["ahuciadas", "Ahuciadas"],
-        ["disfrutado", "Disfrutado"],
-        ["desembrollado", "Desembrollado"],
-        ["acuatizando", "Acuatizando"],
-        ["comisada", "Comisada"],
-        ["fusionada", "Fusionada"],
-        ["matrimoniando", "Matrimoniando"],
-        ["subscritos", "Subscritos"],
-        ["antedatado", "Antedatado"],
-        ["retornado", "Retornado"],
-        ["asistida", "Asistida"],
-        ["devengados", "Devengados"],
-        ["trabucado", "Trabucado"],
-        ["mancornando", "Mancornando"],
-        ["suministrados", "Suministrados"],
-        ["sospechando", "Sospechando"],
-        ["demodulados", "Demodulados"],
-        ["comisionado", "Comisionado"],
-        ["insistidas", "Insistidas"],
-        ["premuertas", "Premuertas"],
-        ["pasados", "Pasados"],
-        ["descontinuado", "Descontinuado"],
-        ["desenojados", "Desenojados"],
-        ["prenasalizadas", "Prenasalizadas"],
-        ["resistido", "Resistido"],
-        ["figuradas", "Figuradas"],
-        ["cuchucheadas", "Cuchucheadas"],
-        ["farreadas", "Farreadas"],
-        ["dactilografiados", "Dactilografiados"],
-        ["arenados", "Arenados"],
-        ["apacentada", "Apacentada"],
-        ["removidas", "Removidas"],
-        ["lubricadas", "Lubricadas"],
-        ["ajusticiadas", "Ajusticiadas"],
-        ["elucidadas", "Elucidadas"],
-        ["retrasmitidos", "Retrasmitidos"],
-        ["encofrada", "Encofrada"],
-        ["transcurriendo", "Transcurriendo"],
-        ["calibrando", "Calibrando"],
-        ["aplazado", "Aplazado"],
-        ["prostituyendo", "Prostituyendo"],
-        ["sacrificadas", "Sacrificadas"],
-        ["afianzadas", "Afianzadas"],
-        ["dogmatizando", "Dogmatizando"],
         ["apílenlo", "Apílenlo"],
         ["compenetradle", "Compenetradle"],
         ["cañonéeme", "Cañonéeme"],
@@ -8243,81 +7577,6 @@
         ["repagándonos", "Repagándonos"],
         ["cuartéenme", "Cuartéenme"],
         ["readiestrémoslas", "Readiestrémoslas"],
-        ["trasmóntenles", "Trasmóntenles"],
-        ["talémonos", "Talémonos"],
-        ["bachaqueadles", "Bachaqueadles"],
-        ["promoveros", "Promoveros"],
-        ["adormilémosla", "Adormilémosla"],
-        ["aceitándose", "Aceitándose"],
-        ["acobardándoos", "Acobardándoos"],
-        ["cuñarla", "Cuñarla"],
-        ["comprobándome", "Comprobándome"],
-        ["admítase", "Admítase"],
-        ["mandrílelos", "Mandrílelos"],
-        ["capuzándolo", "Capuzándolo"],
-        ["estucarle", "Estucarle"],
-        ["aherrójense", "Aherrójense"],
-        ["empeórenlas", "Empeórenlas"],
-        ["ametrallarle", "Ametrallarle"],
-        ["estáquennos", "Estáquennos"],
-        ["incúbenlo", "Incúbenlo"],
-        ["fíala", "Fíala"],
-        ["cizállame", "Cizállame"],
-        ["enlaciándolos", "Enlaciándolos"],
-        ["intimadlos", "Intimadlos"],
-        ["recogiéndole", "Recogiéndole"],
-        ["abónelas", "Abónelas"],
-        ["embuchémoste", "Embuchémoste"],
-        ["humedecedme", "Humedecedme"],
-        ["malinterprételes", "Malinterprételes"],
-        ["señalizarle", "Señalizarle"],
-        ["ramonéalo", "Ramonéalo"],
-        ["peléenlo", "Peléenlo"],
-        ["plañéndoos", "Plañéndoos"],
-        ["entrecortadlo", "Entrecortadlo"],
-        ["llavéeles", "Llavéeles"],
-        ["agitarle", "Agitarle"],
-        ["abaldónennos", "Abaldónennos"],
-        ["carrozándola", "Carrozándola"],
-        ["debátalo", "Debátalo"],
-        ["encomiadles", "Encomiadles"],
-        ["ahuéquese", "Ahuéquese"],
-        ["mancomúnenlos", "Mancomúnenlos"],
-        ["encorajinándonos", "Encorajinándonos"],
-        ["ladradme", "Ladradme"],
-        ["trasudémoslo", "Trasudémoslo"],
-        ["recamadnos", "Recamadnos"],
-        ["acóplalas", "Acóplalas"],
-        ["traicionadlos", "Traicionadlos"],
-        ["escabullirle", "Escabullirle"],
-        ["mordiéndote", "Mordiéndote"],
-        ["atrévete", "Atrévete"],
-        ["propúlsalo", "Propúlsalo"],
-        ["motivarle", "Motivarle"],
-        ["simultanéese", "Simultanéese"],
-        ["afiliarlo", "Afiliarlo"],
-        ["pedorreándolos", "Pedorreándolos"],
-        ["galanteémoslos", "Galanteémoslos"],
-        ["anestesiarse", "Anestesiarse"],
-        ["exacérbese", "Exacérbese"],
-        ["acetaos", "Acetaos"],
-        ["fórjenos", "Fórjenos"],
-        ["desaprovechadlos", "Desaprovechadlos"],
-        ["ennoblecedla", "Ennoblecedla"],
-        ["apláudanlos", "Apláudanlos"],
-        ["rememorarlo", "Rememorarlo"],
-        ["sobreexpresándoles", "Sobreexpresándoles"],
-        ["democratizarlas", "Democratizarlas"],
-        ["emborrachémosle", "Emborrachémosle"],
-        ["enfríelos", "Enfríelos"],
-        ["estilizándole", "Estilizándole"],
-        ["socórrale", "Socórrale"],
-        ["babéala", "Babéala"],
-        ["múltelas", "Múltelas"],
-        ["erradíquenles", "Erradíquenles"],
-        ["mírenos", "Mírenos"],
-        ["láudenlos", "Láudenlos"],
-        ["afelpándoos", "Afelpándoos"],
         ["guabineos", "Guabineos"],
         ["shipibos", "Shipibos"],
         ["decimoctavos", "Decimoctavos"],
@@ -8484,79 +7743,6 @@
         ["minimizaciones", "Minimizaciones"],
         ["salinas", "Salinas"],
         ["buceadores", "Buceadores"],
-        ["flows", "Flows"],
-        ["salvajerías", "Salvajerías"],
-        ["quintales", "Quintales"],
-        ["traseritos", "Traseritos"],
-        ["vides", "Vides"],
-        ["accidentes", "Accidentes"],
-        ["hileras", "Hileras"],
-        ["micronesios", "Micronesios"],
-        ["mirandinos", "Mirandinos"],
-        ["dienos", "Dienos"],
-        ["reválidas", "Reválidas"],
-        ["menosprecios", "Menosprecios"],
-        ["bernesas", "Bernesas"],
-        ["microempresas", "Microempresas"],
-        ["sesiones", "Sesiones"],
-        ["barbetas", "Barbetas"],
-        ["cortesanos", "Cortesanos"],
-        ["salitres", "Salitres"],
-        ["abangareños", "Abangareños"],
-        ["neoimperialistas", "Neoimperialistas"],
-        ["macros", "Macros"],
-        ["frikismos", "Frikismos"],
-        ["compueblanos", "Compueblanos"],
-        ["traficantes", "Traficantes"],
-        ["multitiendas", "Multitiendas"],
-        ["chontaleños", "Chontaleños"],
-        ["ignimbritas", "Ignimbritas"],
-        ["mayoristas", "Mayoristas"],
-        ["romboedros", "Romboedros"],
-        ["gastadoras", "Gastadoras"],
-        ["colectivismos", "Colectivismos"],
-        ["eventualidades", "Eventualidades"],
-        ["liderazgos", "Liderazgos"],
-        ["vergaciones", "Vergaciones"],
-        ["ególatras", "Ególatras"],
-        ["misticismos", "Misticismos"],
-        ["dacios", "Dacios"],
-        ["taquipneas", "Taquipneas"],
-        ["antistrofas", "Antistrofas"],
-        ["enfriamientos", "Enfriamientos"],
-        ["suplantadoras", "Suplantadoras"],
-        ["pucherazos", "Pucherazos"],
-        ["baltis", "Baltis"],
-        ["zancadas", "Zancadas"],
-        ["vulcanólogos", "Vulcanólogos"],
-        ["fluidizaciones", "Fluidizaciones"],
-        ["rockeras", "Rockeras"],
-        ["prestidigitadoras", "Prestidigitadoras"],
-        ["lebrastones", "Lebrastones"],
-        ["metodistas", "Metodistas"],
-        ["incordios", "Incordios"],
-        ["milagreros", "Milagreros"],
-        ["sobrenutriciones", "Sobrenutriciones"],
-        ["lúmpenes", "Lúmpenes"],
-        ["anticucheras", "Anticucheras"],
-        ["salafismos", "Salafismos"],
-        ["delegaciones", "Delegaciones"],
-        ["protrusiones", "Protrusiones"],
-        ["refinaciones", "Refinaciones"],
-        ["forrajes", "Forrajes"],
-        ["baguets", "Baguets"],
-        ["yonques", "Yonques"],
-        ["fogonaduras", "Fogonaduras"],
-        ["almádanas", "Almádanas"],
-        ["superamigas", "Superamigas"],
-        ["guaymenses", "Guaymenses"],
-        ["líricas", "Líricas"],
-        ["embusteros", "Embusteros"],
-        ["norosetios", "Norosetios"],
-        ["trasplantaciones", "Trasplantaciones"],
-        ["repóqueres", "Repóqueres"],
-        ["leñadoras", "Leñadoras"],
-        ["joyos", "Joyos"],
         ["marteña", "Marteña"],
         ["asentadora", "Asentadora"],
         ["nepalesa", "Nepalesa"],
@@ -8572,11 +7758,6 @@
         ["duraneña", "Duraneña"],
         ["milonguera", "Milonguera"],
         ["parapsicóloga", "Parapsicóloga"],
-        ["istmeña", "Istmeña"],
-        ["latinoamericana", "Latinoamericana"],
-        ["margariteña", "Margariteña"],
-        ["albanesa", "Albanesa"],
-        ["avaladora", "Avaladora"],
         ["calumniosas", "Calumniosas"],
         ["incidentales", "Incidentales"],
         ["contrasubversivas", "Contrasubversivas"],
@@ -8736,46 +7917,6 @@
         ["neptunianas", "Neptunianas"],
         ["pugilísticos", "Pugilísticos"],
         ["febriles", "Febriles"],
-        ["grosísima", "Grosísima"],
-        ["absortos", "Absortos"],
-        ["hipsterianas", "Hipsterianas"],
-        ["subalpinas", "Subalpinas"],
-        ["triclínica", "Triclínica"],
-        ["woodyallenianas", "Woodyallenianas"],
-        ["estacionaria", "Estacionaria"],
-        ["participativos", "Participativos"],
-        ["chiquitinas", "Chiquitinas"],
-        ["indiciarias", "Indiciarias"],
-        ["sidonias", "Sidonias"],
-        ["batracios", "Batracios"],
-        ["cuzqueñas", "Cuzqueñas"],
-        ["neohampshireños", "Neohampshireños"],
-        ["inexplorada", "Inexplorada"],
-        ["fingidos", "Fingidos"],
-        ["fraterna", "Fraterna"],
-        ["omnímodas", "Omnímodas"],
-        ["gachita", "Gachita"],
-        ["grequiana", "Grequiana"],
-        ["cremosa", "Cremosa"],
-        ["retirados", "Retirados"],
-        ["caseosos", "Caseosos"],
-        ["hojosas", "Hojosas"],
-        ["trivalentes", "Trivalentes"],
-        ["valóricos", "Valóricos"],
-        ["heptágona", "Heptágona"],
-        ["aseguradas", "Aseguradas"],
-        ["llaniscos", "Llaniscos"],
-        ["atonales", "Atonales"],
-        ["aguda", "Aguda"],
-        ["socioafectiva", "Socioafectiva"],
-        ["paulistana", "Paulistana"],
-        ["canchera", "Canchera"],
-        ["pirenaica", "Pirenaica"],
-        ["multimediáticas", "Multimediáticas"],
-        ["trocoidales", "Trocoidales"],
-        ["ferromagnésicos", "Ferromagnésicos"],
-        ["idos", "Idos"],
-        ["calentadoras", "Calentadoras"],
         ["hablás", "Hablás"],
         ["comés", "Comés"],
         ["tenés", "Tenés"],
@@ -8783,6 +7924,10 @@
         ["hablés", "Hablés"],
         ["hablá", "Hablá"],
         ["tené", "Tené"],
+        ["decime", "Decime"],
+        ["escribile", "Escribile"],
+        ["abrilo", "Abrilo"],
+        ["vestite", "Vestite"],
         ["cuento", "Cuento"],
         ["pide", "Pide"],
         ["duermen", "Duermen"],
@@ -8794,6 +7939,13 @@
         ["vuelvan", "Vuelvan"],
         ["durmamos", "Durmamos"],
         ["sigas", "Sigas"],
+        ["muestra", "Muestra"],
+        ["fuerza", "Fuerza"],
+        ["pruebo", "Pruebo"],
+        ["renueva", "Renueva"],
+        ["vierte", "Vierte"],
+        ["estudia", "Estudia"],
+        ["enciende", "Enciende"],
         ["busqué", "Busqué"],
         ["pagué", "Pagué"],
         ["empecé", "Empecé"],
@@ -8866,8 +8018,21 @@
         ["di", "Di"],
         ["dio", "Dio"],
         ["dé", "Dé"],
+        ["das", "Das"],
+        ["damos", "Damos"],
+        ["daba", "Daba"],
+        ["daremos", "Daremos"],
+        ["den", "Den"],
+        ["dando", "Dando"],
+        ["dado", "Dado"],
         ["vi", "Vi"],
         ["veía", "Veía"],
+        ["vemos", "Vemos"],
+        ["viste", "Viste"],
+        ["vieron", "Vieron"],
+        ["viendo", "Viendo"],
+        ["sido", "Sido"],
+        ["siendo", "Siendo"],
         ["ve", "Ve"],
         ["valdrá", "Valdrá"],
         ["asgo", "Asgo"],
@@ -8918,6 +8083,7 @@
         ["ríete", "Ríete"],
         ["sentaos", "Sentaos"],
         ["vestíos", "Vestíos"],
+        ["idos", "Idos"],
         ["vámonos", "Vámonos"],
         ["sentémonos", "Sentémonos"],
         ["yéndose", "Yéndose"],
@@ -8962,6 +8128,14 @@
         ["se levantaba", "Se levantaba"],
         ["te levantes", "Te levantes"],
         ["se ve", "Se ve"],
+        ["me voy", "Me voy"],
+        ["nos vamos", "Nos vamos"],
+        ["nos vemos", "Nos vemos"],
+        ["se dio", "Se dio"],
+        ["te oyes", "Te oyes"],
+        ["me encuentro", "Me encuentro"],
+        ["dése", "Dése"],
+        ["viéndose", "Viéndose"],
         ["me dijo", "Me dijo"],
         ["nos dijo", "Nos dijo"],
         ["te digo", "Te digo"],
@@ -8971,6 +8145,11 @@
         ["me gusta", "Me gusta"],
         ["te sienta", "Te sienta"],
         ["te sentando", "Te sentando"],
+        ["me va", "Me va"],
+        ["se va", "Se va"],
+        ["te es", "Te es"],
+        ["me ha", "Me ha"],
+        ["se ha", "Se ha"],
         ["casas", "Casas"],
         ["árboles", "Árboles"],
         ["jóvenes", "Jóvenes"],
@@ -8979,6 +8158,10 @@
         ["caracteres", "Caracteres"],
         ["rubíes", "Rubíes"],
         ["tabúes", "Tabúes"],
+        ["intereses", "Intereses"],
+        ["rehenes", "Rehenes"],
+        ["entremeses", "Entremeses"],
+        ["terraplenes", "Terraplenes"],
         ["leyes", "Leyes"],
         ["clubs", "Clubs"],
         ["emails", "Emails"],
@@ -9011,6 +8194,8 @@
         ["pedacito", "Pedacito"],
         ["jovencito", "Jovencito"],
         ["perritos", "Perritos"],
+        ["florecita", "Florecita"],
+        ["panecito", "Panecito"],
         ["ahorita", "Ahorita"],
         ["rápidamente", "Rápidamente"],
         ["fácilmente", "Fácilmente"],
@@ -9047,11 +8232,34 @@
         ["cómprame", "Cómprame"],
         ["dinos", "Dinos"],
         ["dígame", "Dígame"],
-        ["dése", "Dése"],
         ["exactamente", "Exactamente"],
         ["juegen", "Juegen"],
         ["ya me levantar", "Ya me levantar"],
-        ["invingás", "Invingás"],
+        ["puedo", "Puedo"],
+        ["puede", "Puede"],
+        ["pueden", "Pueden"],
+        ["nueva", "Nueva"],
+        ["puertas", "Puertas"],
+        ["fuese", "Fuese"],
+        ["vieja", "Vieja"],
+        ["sola", "Sola"],
+        ["solo", "Solo"],
+        ["sala", "Sala"],
+        ["empezamos", "Empezamos"],
+        ["peces", "Peces"],
+        ["rejas", "Rejas"],
+        ["fuera", "Fuera"],
+        ["reina", "Reina"],
+        ["adora", "Adora"],
+        ["cruza", "Cruza"],
+        ["mejora", "Mejora"],
+        ["vidas", "Vidas"],
+        ["vías", "Vías"],
+        ["te", "Te"],
+        ["me", "Me"],
+        ["le", "Le"],
+        ["do", "Do"],
+        ["lo", "Lo"],
         ["corróyanse", "Corróyanse"],
         ["vicerrectores", "Vicerrectores"],
         ["manitobanos", "Manitobanos"],
@@ -9061,8 +8269,6 @@
         ["choznos", "Choznos"],
         ["coacusados", "Coacusados"],
         ["protesoreros", "Protesoreros"],
-        ["tiradores", "Tiradores"],
-        ["riojanos", "Riojanos"],
         ["panfletario", "Panfletario"],
         ["rugidor", "Rugidor"],
         ["cuatrillizo", "Cuatrillizo"],
@@ -9088,10 +8294,6 @@
         ["vampirita", "Vampirita"],
         ["caledonia", "Caledonia"],
         ["maragata", "Maragata"],
-        ["extraña", "Extraña"],
-        ["vampiresa", "Vampiresa"],
-        ["chiroca", "Chiroca"],
-        ["muchachuela", "Muchachuela"],
         ["esa", "Esa"],
         ["HABLO", "HABLO"],
         ["ÁRBOL", "ÁRBOL"],
@@ -9109,7 +8311,6 @@
         ["canción", "Canción"],
         ["comimos en un restaurante", "Comimos en un restaurante"],
         ["Hablamos mañana", "Hablamos mañana"],
-        ["canciones bonitas", "Canciones bonitas"],
         ["árboles altos", "Árboles altos"],
         ["luces encendidas", "Luces encendidas"],
         ["huele a pan", "Huele a pan"],
@@ -9121,16 +8322,22 @@
         ["se fue a casa", "Se fue a casa"],
         ["acuérdate de mí", "Acuérdate de mí"],
         ["te levantas tarde", "Te levantas tarde"],
+        ["nos vemos mañana", "Nos vemos mañana"],
+        ["se dio cuenta", "Se dio cuenta"],
         ["desafortunadamente llovió", "Desafortunadamente llovió"],
         ["Ayer comimos", "Ayer comimos"],
         ["franco-alemana", "Franco-alemana"],
-        ["cancion bonita", "Cancion bonita"],
+        ["canciones bonitas", "Canciones bonitas"],
+        ["arbol alto", "Arbol alto"],
         ["de la casa", "De la casa"],
         ["para mí", "Para mí"],
         ["casa grande", "Casa grande"],
         ["me dijo que sí", "Me dijo que sí"],
         ["te digo la verdad", "Te digo la verdad"],
         ["comimos en", "Comimos en"],
+        ["me va bien", "Me va bien"],
+        ["nos vamos a casa", "Nos vamos a casa"],
+        ["casaca roja", "Casaca roja"],
         ["Ayer comimos en un restaurante pequeño cerca del puerto.", "Ayer comimos en un restaurante pequeño cerca del puerto."],
         ["comer", "Comer"]
       ]

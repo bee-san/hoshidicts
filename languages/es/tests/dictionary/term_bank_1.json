@@ -21,11 +21,11 @@
   ["caso", "", "n", "n", 0, ["case"], 20, ""],
   ["paro", "", "n", "n", 0, ["unemployment"], 21, ""],
   ["árbol", "", "n", "n", 0, ["tree"], 22, ""],
-  ["canción", "", "n", "n", 0, ["song"], 23, ""],
+  ["canción", "", "n", "n", 1, ["song"], 23, ""],
   ["luz", "", "n", "n", 0, ["light"], 24, ""],
   ["perro", "", "n", "n", 0, ["dog"], 25, ""],
   ["bonito", "", "adj", "adj", 0, ["pretty"], 26, ""],
-  ["rápido", "", "adj", "adj", 0, ["fast"], 27, ""],
+  ["rápido", "", "adj", "adj", 1, ["fast"], 27, ""],
   ["desafortunado", "", "adj", "adj", 0, ["unfortunate"], 28, ""],
   ["ayer", "", "adv", "", 0, ["yesterday"], 29, ""],
   ["mañana", "", "adv", "", 0, ["tomorrow"], 30, ""],
@@ -36,5 +36,9 @@
   ["me", "", "pron", "", 0, ["me, myself"], 35, ""],
   ["se", "", "pron", "", 0, ["himself, herself, itself"], 36, ""],
   ["franco", "", "adj", "adj", 0, ["frank"], 37, ""],
-  ["decirse", "", "v", "v", 0, ["to say to oneself"], 38, ""]
+  ["decirse", "", "v", "v", 0, ["to say to oneself"], 38, ""],
+  ["verse", "", "v", "v", 0, ["to see oneself"], 39, ""],
+  ["darse", "", "v", "v", 0, ["to give oneself"], 40, ""],
+  ["cancion", "", "n", "n", 0, ["(decoy: canción without its accent)"], 41, ""],
+  ["rapido", "", "adj", "adj", 0, ["(decoy: rápido without its accent)"], 42, ""]
 ]

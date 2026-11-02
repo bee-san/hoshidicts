@@ -14,6 +14,10 @@ voseo	1	sos	ser	v	present-vos
 voseo	1	hablés	hablar	v	subjunctive-vos
 voseo	1	hablá	hablar	v	imperative-vos
 voseo	1	tené	tener	v	imperative-vos
+voseo	1	decime	decir	v	imperative-vos|clitic-me
+voseo	1	escribile	escribir	v	imperative-vos|clitic-le
+voseo	1	abrilo	abrir	v	imperative-vos|clitic-lo
+voseo	1	vestite	vestirse	v	pronominal|imperative-vos|clitic-te
 stem changes	1	pienso	pensar	v	present-yo
 stem changes	1	cuento	contar	v	present-yo
 stem changes	1	pide	pedir	v	present-el
@@ -32,6 +36,13 @@ stem changes	1	vuelvan	volver	v	subjunctive-ellos
 stem changes	1	durmamos	dormir	v	subjunctive-nosotros
 stem changes	1	sigas	seguir	v	subjunctive-tu
 stem changes	1	pensamos	pensar	v	present-nosotros
+stem changes	1	muestra	mostrar	v	present-el
+stem changes	1	fuerza	forzar	v	present-el
+stem changes	1	pruebo	probar	v	present-yo
+stem changes	1	renueva	renovar	v	present-el
+stem changes	1	vierte	verter	v	present-el
+stem changes	1	estudia	estudiar	v	present-el
+stem changes	1	enciende	encender	v	present-el
 spelling	1	busqué	buscar	v	preterite-yo
 spelling	1	pagué	pagar	v	preterite-yo
 spelling	1	empecé	empezar	v	preterite-yo
@@ -66,6 +77,8 @@ vowel stems	1	yerro	errar	v	present-yo
 tenses	1	hablé	hablar	v	preterite-yo
 tenses	1	comiste	comer	v	preterite-tu
 tenses	1	vivisteis	vivir	v	preterite-vosotros
+tenses	1	hablamos	hablar	v	preterite-nosotros
+tenses	1	vivimos	vivir	v	preterite-nosotros
 tenses	1	hablaba	hablar	v	imperfect-yo-el
 tenses	1	comíamos	comer	v	imperfect-nosotros
 tenses	1	hablaré	hablar	v	future-yo
@@ -134,8 +147,22 @@ irregular verbs	1	anduvimos	andar	v	preterite-nosotros
 irregular verbs	1	di	dar	v	preterite-yo
 irregular verbs	1	dio	dar	v	preterite-el
 irregular verbs	1	dé	dar	v	subjunctive-yo-el
+irregular verbs	1	das	dar	v	present-tu
+irregular verbs	1	damos	dar	v	present-nosotros
+irregular verbs	1	daba	dar	v	imperfect-yo-el
+irregular verbs	1	daremos	dar	v	future-nosotros
+irregular verbs	1	den	dar	v	subjunctive-ellos
+irregular verbs	1	dando	dar	v	gerund
+irregular verbs	1	dado	dar	v	participle
 irregular verbs	1	vi	ver	v	preterite-yo
 irregular verbs	1	veía	ver	v	imperfect-yo-el
+irregular verbs	1	vemos	ver	v	present-nosotros
+irregular verbs	1	viste	ver	v	preterite-tu
+irregular verbs	1	vieron	ver	v	preterite-ellos
+irregular verbs	1	viera	ver	v	subjunctive-ra-yo-el
+irregular verbs	1	viendo	ver	v	gerund
+irregular verbs	1	sido	ser	v	participle
+irregular verbs	1	siendo	ser	v	gerund
 irregular verbs	1	ve	ver	v	present-el
 irregular verbs	1	ve	ir	v	imperative-tu
 irregular verbs	1	caigo	caer	v	present-yo
@@ -238,6 +265,14 @@ pronominal verbs	1	me levantaba	levantarse	v	pronominal|imperfect-yo-el
 pronominal verbs	1	se levantaba	levantarse	v	pronominal|imperfect-yo-el
 pronominal verbs	1	te levantes	levantarse	v	pronominal|subjunctive-tu
 pronominal verbs	1	se ve	verse	v	pronominal|present-el
+pronominal verbs	1	me voy	irse	v	pronominal|present-yo
+pronominal verbs	1	nos vamos	irse	v	pronominal|present-nosotros
+pronominal verbs	1	nos vemos	verse	v	pronominal|present-nosotros
+pronominal verbs	1	se dio	darse	v	pronominal|preterite-el
+pronominal verbs	1	te oyes	oírse	v	pronominal|present-tu
+pronominal verbs	1	me encuentro	encontrarse	v	pronominal|present-yo
+pronominal verbs	1	dése	darse	v	pronominal|imperative-usted|clitic-se
+pronominal verbs	1	viéndose	verse	v	pronominal|gerund|clitic-se
 pronominal agreement	0	me dijo	decirse	v	*
 pronominal agreement	0	nos dijo	decirse	v	*
 pronominal agreement	0	te digo	decirse	v	*
@@ -248,6 +283,13 @@ pronominal agreement	0	me gusta	gustarse	v	*
 pronominal agreement	0	se ve	irse	v	*
 pronominal agreement	0	te sienta	sentarse	v	*
 pronominal agreement	0	te sentando	sentarse	v	*
+pronominal agreement	0	me va	verse	v	*
+pronominal agreement	0	me va	irse	v	*
+pronominal agreement	0	se va	verse	v	*
+pronominal agreement	0	nos vamos	verse	v	*
+pronominal agreement	0	te es	irse	v	*
+pronominal agreement	0	me ha	herse	v	*
+pronominal agreement	0	se ha	herse	v	*
 plurals	1	casas	casa	n	plural
 plurals	1	árboles	árbol	n	plural
 plurals	1	luces	luz	n	plural
@@ -260,6 +302,10 @@ plurals	1	caracteres	carácter	n	plural
 plurals	1	rubíes	rubí	n	plural
 plurals	1	tabúes	tabú	n	plural
 plurals	1	sofás	sofá	n	plural
+plurals	1	intereses	interés	n	plural
+plurals	1	rehenes	rehén	n	plural
+plurals	1	entremeses	entremés	n	plural
+plurals	1	terraplenes	terraplén	n	plural
 plurals	1	leyes	ley	n	plural
 plurals	1	clubs	club	n	plural
 plurals	1	emails	email	n	plural
@@ -292,6 +338,8 @@ diminutives	1	poquito	poco	adj	diminutive
 diminutives	1	pedacito	pedazo	n	diminutive
 diminutives	1	jovencito	joven	n	diminutive
 diminutives	1	perritos	perro	n	diminutive|plural
+diminutives	1	florecita	flor	n	diminutive
+diminutives	1	panecito	pan	n	diminutive
 diminutives	1	ahorita	ahora	*	diminutive
 adverbs	1	rápidamente	rápido	adj	adverb
 adverbs	1	fácilmente	fácil	adj	adverb
@@ -333,3 +381,34 @@ reflexive agreement	1	dése	darse	v	pronominal|imperative-usted|clitic-se
 negatives	0	exactamente	exacta	*	*
 yomitan differences	0	juegen	jugen	*	*
 yomitan differences	0	ya me levantar	ya levantarse	*	*
+collisions	0	puedo	podar	v	*
+collisions	0	puede	podar	v	*
+collisions	0	pueden	podar	v	*
+collisions	0	muere	morar	v	*
+collisions	0	muero	morar	v	*
+collisions	0	nueva	novar	v	*
+collisions	0	puertas	portar	v	*
+collisions	0	fuese	fosar	v	*
+collisions	0	viendo	vender	v	*
+collisions	0	viendo	vendar	v	*
+collisions	0	vieja	vejar	v	*
+collisions	0	sola	soler	v	*
+collisions	0	solo	soler	v	*
+collisions	0	sala	salir	v	*
+collisions	0	empezamos	empecer	v	*
+collisions	0	empiece	empecer	v	*
+collisions	0	peces	pecar	v	*
+collisions	0	rejas	regir	v	*
+collisions	0	fuera	fuero	n	*
+collisions	0	reina	reino	n	*
+collisions	0	adora	ador	n	*
+collisions	0	cruza	cruz	n	*
+collisions	0	mejora	mejor	adj	*
+one-letter stems	0	ten	tar	v	*
+one-letter stems	0	vidas	ver	v	*
+one-letter stems	0	vías	ver	v	*
+one-letter stems	0	te	tar	v	*
+one-letter stems	0	me	mar	v	*
+one-letter stems	0	le	lar	v	*
+one-letter stems	0	do	dar	v	*
+one-letter stems	0	lo	lar	v	*

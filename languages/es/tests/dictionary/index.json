@@ -4,7 +4,7 @@
   "revision": "1",
   "sequenced": false,
   "author": "hoshidicts",
-  "description": "A tiny Spanish dictionary for languages/es/tests/lookup.tsv, written for the pack.",
+  "description": "A tiny Spanish dictionary for languages/es/tests/lookup.tsv, written for the pack. cancion and rapido stand for a dictionary that also lists a word without its accent.",
   "sourceLanguage": "es",
   "targetLanguage": "en"
 }
