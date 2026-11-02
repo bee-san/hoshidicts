@@ -234,12 +234,16 @@ void test_parser() {
   const std::string_view two = R"([["b",[]],["c",["r"]]])";
   check(references(two) == "b[] c[r]" && kind(two) == Kind::Only, "two references, in order");
   check(references(R"([["caf\u00e9",["\"q\"","a\\b"]]])") == "café[\"q\",a\\b]", "references are JSON-decoded");
-  const std::string_view spaced = R"( [ [ "w" , [ "r1" , 7, "r2" ] , "extra" ] , "d" ] )";
+  const std::string_view spaced = R"( [ [ "w" , [ "r1" , 7, "r2" ] ] , "d" ] )";
   check(references(spaced) == "w[r1,r2]" && kind(spaced) == Kind::WithOthers,
-        "whitespace, a rule that is not a string, a third element: " + references(spaced));
+        "whitespace, a rule that is not a string: " + references(spaced));
+  const std::string_view three = R"([["w",["r"],"extra"],["v",["s"]]])";
+  check(references(three) == "v[s]", "an array of three elements is no reference (the schema's deinflection has two): " +
+                                          references(three));
   const std::string_view none = R"([[],[5,["x"]],["",["e"]]])";
   check(references(none).empty() && kind(none) == Kind::None, "arrays that name no term are no references");
-  check(references(R"([["x","notarray"],["y"]])") == "x[] y[]", "a reference without a rule list");
+  const std::string_view no_rules = R"([["x","notarray"],["y"]])";
+  check(references(no_rules).empty() && kind(no_rules) == Kind::None, "a formOf without a rule list is no reference");
   const std::string_view nested = R"([{"content":[["x",["y"]]]}])";
   check(references(nested).empty() && kind(nested) == Kind::None, "an array inside a definition is not a reference");
   check(references(R"("not an array")").empty() && kind(R"("not an array")") == Kind::None, "a value that is not an array");
@@ -247,7 +251,8 @@ void test_parser() {
   check(kind(R"(["a",{"type":"text","text":"b"}])") == Kind::None, "kind: no reference");
   check(kind(R"([["walk",["past"]],[],"d"])") == Kind::WithOthers, "kind: beside a definition");
   check(kind(R"(["d",["walk",["past"]]])") == Kind::WithOthers, "kind: a definition first");
-  check(kind(R"([[],["walk"]])") == Kind::Only, "kind: a reference beside an array that is none");
+  check(kind(R"([[],["walk",[]]])") == Kind::Only, "kind: a reference beside an array that is none");
+  check(kind(R"(["a]]",{"b":"c"}])") == Kind::None, "kind: a closing pair inside a string is no reference");
 
   check(yomitan_parser::without_form_of(R"(["a",["b",["c"]],"d"])") == R"(["a","d"])", "references are dropped");
   check(yomitan_parser::without_form_of(R"([["b",[]]])") == "[]", "only references leave an empty list");

@@ -485,8 +485,9 @@ std::string decode_string(std::string_view raw) {
   out.resize(static_cast<size_t>(write - out.data()));
   return out;
 }
-// The raw formOf string and rules list of a definition [formOf, [rules...]],
-// as Yomitan reads the first two elements; empty when absent.
+// The raw formOf string and rules list of a definition that is a reference:
+// [formOf, [rules...]], exactly two elements, a non-empty string and an array,
+// as Yomitan's term bank schema defines a deinflection; empty otherwise.
 struct RawReference {
   std::string_view form_of;
   std::string_view rules;
@@ -499,37 +500,50 @@ RawReference raw_reference(std::string_view definition) {
     if (index == 1 && element.front() == '[') out.rules = element;
     ++index;
   });
+  // A raw JSON string of more than its two quotes decodes to text (an escape
+  // never decodes to nothing).
+  if (index != 2 || out.form_of.size() <= 2 || out.rules.empty()) return {};
   return out;
 }
 
-// A raw JSON string that decodes to text (more than its two quotes: an escape
-// never decodes to nothing).
-bool non_empty_string(std::string_view raw) { return raw.size() > 2; }
+// Whether a ']' is followed, after JSON whitespace, by another ']'. A
+// reference ends that way (its rules array closes, then it does), so a list
+// without such a pair holds none; inside strings the pair is a false alarm.
+bool has_closing_pair(std::string_view s) {
+  const char* p = s.data();
+  const char* const end = p + s.size();
+  while ((p = static_cast<const char*>(std::memchr(p, ']', static_cast<size_t>(end - p)))) != nullptr) {
+    p = skip_space(p + 1, end);
+    if (p < end && *p == ']') return true;
+  }
+  return false;
+}
 }  // namespace
 
 void yomitan_parser::read_form_of(std::string_view definitions, std::vector<FormOfReference>& out) {
   each_element(definitions, [&](std::string_view definition) {
     if (definition.front() != '[') return;
     const RawReference raw = raw_reference(definition);
-    if (!non_empty_string(raw.form_of)) return;  // not a string, or ""
+    if (raw.form_of.empty()) return;
     FormOfReference reference{.form_of = decode_string(raw.form_of), .rules = {}};
-    if (!raw.rules.empty()) {
-      each_element(raw.rules, [&](std::string_view rule) {
-        if (rule.front() == '"') reference.rules.push_back(decode_string(rule));
-      });
-    }
+    each_element(raw.rules, [&](std::string_view rule) {
+      if (rule.front() == '"') reference.rules.push_back(decode_string(rule));
+    });
     out.push_back(std::move(reference));
   });
 }
 
 yomitan_parser::FormOfKind yomitan_parser::form_of_kind(std::string_view definitions) {
+  // Most glossaries hold no reference; the pair check is about three times
+  // faster than walking their elements.
+  if (!has_closing_pair(definitions)) return FormOfKind::None;
   bool other = false;
   bool reference = false;
   each_element(definitions, [&](std::string_view definition) {
     if (definition.front() != '[') {
       other = true;
     } else if (!reference) {
-      reference = non_empty_string(raw_reference(definition).form_of);
+      reference = !raw_reference(definition).form_of.empty();
     }
   });
   return !reference ? FormOfKind::None : other ? FormOfKind::WithOthers : FormOfKind::Only;
