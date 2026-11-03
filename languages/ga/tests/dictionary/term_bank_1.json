@@ -45,5 +45,7 @@
   ["gealach", "", "n", "n", 0, ["moon"], 44, ""],
   ["gealaigh", "", "v", "v", 0, ["to brighten, to whiten"], 45, ""],
   ["clós", "", "n", "n", 0, ["yard, enclosure"], 46, ""],
-  ["clóigh", "", "v", "v", 0, ["to print, to subdue"], 47, ""]
+  ["clóigh", "", "v", "v", 0, ["to print, to subdue"], 47, ""],
+  ["baile", "", "n", "n", 0, ["home, town"], 48, ""],
+  ["bail", "", "n", "n", 0, ["prosperity, good condition"], 49, ""]
 ]

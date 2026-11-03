@@ -43,7 +43,7 @@ const transforms = own.transforms.map((t) => {
             both++;
             return {...rest, source: 'both'};
         }
-        ownCount += rule.suffixes ? rule.suffixes.length : 1;
+        ownCount += rule.suffixes ? rule.suffixes.length * rule.prefixes.length : 1;
         return rest;
     });
     const hasBoth = rules.some((r) => r.source === 'both');

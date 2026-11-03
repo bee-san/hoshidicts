@@ -734,7 +734,9 @@ transform('plural', 'plural', 'Strong plurals: -(e)anna (scoileanna, amanna), -�
     // of -(e)ach adjectives as nouns (réigiúnacha → réigiún, straitéiseacha
     // → straitéis, leictreonacha → leictreon), which adj-plural reads right.
     endings('plural', [['anna', ''], ['eanna', ''], ['í', ''], ['í', 'e'], ['aí', 'a'], ['acha', 'a'],
-        ['ithe', 'í'], ['aithe', 'aí'], ['te', ''], ['te', 'e'], ['rí', 'ir'],
+        // -te → -e before -te → '': wty-ga-en has 36 plurals of -e nouns in -te
+        // (bailte → baile) and 19 of nouns without it (coillte → coill).
+        ['ithe', 'í'], ['aithe', 'aí'], ['te', 'e'], ['te', ''], ['rí', 'ir'],
         ['taí', 'adh'], ['thaí', 'adh'], ['tí', 'eadh'], ['uithe', 'ú'], ['úlacha', 'úil'], ['álacha', 'áil'], ['ánacha', 'áin'], ['ónacha', 'óin']], N,
     {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
     endings('plural', [['the', ''], ['nna', ''], ['ite', ''], ['thaí', ''], ['anta', '']], N, {stemMinLength: 1, stemCharacters: NO_SPACE, stemEndsWith: VOWEL});
@@ -881,5 +883,5 @@ const ordered = transforms.map((t, i) => [t, i]).sort(([a, i], [b, j]) => group(
 const out = {schema: 1, conditions, transforms: ordered.filter((t) => t.rules.length > 0)};
 writeFileSync(OUT, formatTransforms(out));
 const rules = out.transforms.reduce((n, t) => n + t.rules.length, 0);
-const expanded = out.transforms.reduce((n, t) => n + t.rules.reduce((m, r) => m + (r.suffixes ? r.suffixes.length : 1), 0), 0);
+const expanded = out.transforms.reduce((n, t) => n + t.rules.reduce((m, r) => m + (r.suffixes ? r.suffixes.length * r.prefixes.length : 1), 0), 0);
 console.log(`ga: ${out.transforms.length} transforms, ${rules} rules (${expanded} with cross products expanded) in ${OUT}`);
