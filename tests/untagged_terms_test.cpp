@@ -193,33 +193,42 @@ void test_pack_field(const fs::path& repo) {
 
 // --- lookups ------------------------------------------------------------------------
 
-void test_lookups(const fs::path& repo, const std::string& dictionary, DictionaryStorage storage,
-                  DictionaryIndexStorage index) {
+void test_lookups(const fs::path& repo, const std::string& dictionary, const std::string& frequencies,
+                  DictionaryStorage storage, DictionaryIndexStorage index) {
   const std::string mode = storage == DictionaryStorage::Paged ? " (paged)" : "";
   DictionaryQuery query;
-  check(query.add_term_dict(dictionary, storage, index), "load the untagged dictionary" + mode);
+  check(query.add_term_dict(dictionary, storage, index) && query.add_freq_dict(frequencies, storage, index),
+        "load the untagged dictionaries" + mode);
   const fs::path packs = repo / "tests/fixtures/untagged-terms/languages";
   hoshidicts::LanguageRegistry registry;
   std::string error;
   check(registry.add_directory(packs.string(), &error), "the untagged-terms pack loads: " + error);
-  // up is the same pack with untaggedTerms "pass".
+  // up is the same pack with untaggedTerms "pass"; un says "pass" and has no
+  // transforms, so its D is 0.
   const std::string language = read_file(packs / "ut/language.json");
-  check(registry.add(replaced(replaced(language, R"("code": "ut")", R"("code": "up")"), R"("untaggedTerms": "filter")",
-                              R"("untaggedTerms": "pass")"),
-                     read_file(packs / "ut/transforms.json"), &error),
+  const std::string pass = replaced(language, R"("untaggedTerms": "filter")", R"("untaggedTerms": "pass")");
+  check(registry.add(replaced(pass, R"("code": "ut")", R"("code": "up")"), read_file(packs / "ut/transforms.json"), &error),
         "the pass copy loads: " + error);
+  check(registry.add(replaced(replaced(pass, R"("code": "ut")", R"("code": "un")"), R"("transforms": "transforms.json")",
+                              R"("transforms": null)"),
+                     "", &error),
+        "the pass copy without transforms loads: " + error);
   const Lookup lookup(query, registry);
-  const auto run = [&](const std::string& text, const std::string& code) {
-    LookupOptions options;
+  const auto run_with = [&](const std::string& text, const std::string& code, LookupOptions options) {
     options.language = code;
     return lookup.lookup(text, 16, 16, options);
   };
+  const auto run = [&](const std::string& text, const std::string& code) { return run_with(text, code, {}); };
   // filter, then pass, for each text.
   const auto expect = [&](const std::string& text, const std::string& filter, const std::string& pass) {
     const std::string f = brief(run(text, "ut"));
     const std::string p = brief(run(text, "up"));
     check(f == filter, text + " with filter" + mode + ": " + f);
     check(p == pass, text + " with pass" + mode + ": " + p);
+  };
+  const auto expect_in = [&](const std::string& code, const std::string& text, const std::string& expected) {
+    const std::string got = brief(run(text, code));
+    check(got == expected, text + " with " + code + mode + ": " + got);
   };
 
   // A tagged term of the rule's part of speech: as before in both modes.
@@ -254,6 +263,10 @@ void test_lookups(const fs::path& repo, const std::string& dictionary, Dictionar
   // The text as written has no conditions: an untagged term matches it in
   // both modes, and the infinitive rule's v_ar matches only with pass.
   expect("casa", "casa(casa;casa;)", "casa(casa;casa;) casar(casa;casar;infinitive)");
+  // Conditions that overlap D match, even with an intermediate one beside
+  // them: the progressive rule's output carries v and vf.
+  expect("talking", "(none)", "talk(talking;talk;progressive)");
+  expect("walking", "walk(walking;walk;progressive)", "walk(walking;walk;progressive)");
 
   // Form-of rows. Untagged: followed from the text as written in both modes,
   // from a conditioned form only with pass, and never from a form with only
@@ -276,6 +289,38 @@ void test_lookups(const fs::path& repo, const std::string& dictionary, Dictionar
   options.language = "ut";
   const std::string within_filter = brief(lookup.lookup_dictionary("talked", dictionary, 16, 16, options));
   check(within_filter == "(none)", "lookup_dictionary with filter" + mode + ": " + within_filter);
+
+  // pos_filter_exempt (9.4): an exempt dictionary skips the filter in both
+  // modes, for terms (booked: book is a noun) and for form-of rows (undice:
+  // the row dice is a noun's).
+  for (const char* code : {"ut", "up"}) {
+    LookupOptions exempt;
+    exempt.pos_filter_exempt = {dictionary};
+    const std::string booked = brief(run_with("booked", code, exempt));
+    const std::string undice = brief(run_with("undice", code, exempt));
+    check(booked == "book(booked;book;past)", std::string("booked with the dictionary exempt, ") + code + mode + ": " + booked);
+    check(undice == "die(undice;die;neg>plural*)",
+          std::string("undice with the dictionary exempt, ") + code + mode + ": " + undice);
+  }
+
+  // metadata_only_terms (9.4): frequency rows have no part of speech and
+  // answer only forms with conditions 0, whatever the pack's untaggedTerms.
+  for (const char* code : {"ut", "up"}) {
+    LookupOptions metadata;
+    metadata.metadata_only_terms = true;
+    const std::string jog = brief(run_with("jog", code, metadata));
+    const std::string jogs = brief(run_with("jogs", code, metadata));
+    const std::string zorked = brief(run_with("zorked", code, metadata));
+    check(jog == "jog(jog;jog;)", std::string("jog as written, ") + code + mode + ": " + jog);
+    check(jogs == "(none)", std::string("jogs (plural, n) finds no frequency row, ") + code + mode + ": " + jogs);
+    check(zorked == "(none)", std::string("zorked (past, v) finds no frequency row, ") + code + mode + ": " + zorked);
+  }
+
+  // A pack without transforms may say "pass": its D is 0 and every form has
+  // conditions 0, so it looks up as with "filter".
+  expect_in("un", "talk", "talk(talk;talk;)");
+  expect_in("un", "talked", "(none)");
+  expect_in("un", "spoke", "speak(spoke;speak;past*)");
 }
 
 }  // namespace
@@ -291,8 +336,9 @@ int main(int argc, char** argv) {
 
   test_pack_field(repo);
   const std::string dictionary = import_fixture(repo / "tests/fixtures/untagged-terms/dictionary", scratch);
-  test_lookups(repo, dictionary, DictionaryStorage::Mapped, DictionaryIndexStorage::Mapped);
-  test_lookups(repo, dictionary, DictionaryStorage::Paged, DictionaryIndexStorage::Paged);
+  const std::string frequencies = import_fixture(repo / "tests/fixtures/untagged-terms/frequencies", scratch);
+  test_lookups(repo, dictionary, frequencies, DictionaryStorage::Mapped, DictionaryIndexStorage::Mapped);
+  test_lookups(repo, dictionary, frequencies, DictionaryStorage::Paged, DictionaryIndexStorage::Paged);
 
   fs::remove_all(scratch);
   if (failures != 0) {

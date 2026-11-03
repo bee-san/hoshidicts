@@ -69,6 +69,15 @@
       "rules": [
         {"type": "suffix", "inflected": "a", "deinflected": "ar", "conditionsIn": ["vf"], "conditionsOut": ["v_ar"]}
       ]
+    },
+    {
+      "id": "progressive",
+      "name": "progressive",
+      "description": "a form that is a verb and can take a pronoun: its output overlaps D without being inside it",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "ing", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v", "vf"]}
+      ]
     }
   ]
 }

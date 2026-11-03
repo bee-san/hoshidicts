@@ -87,6 +87,19 @@ expect("eval-language: pass, asTerm"
 ]=]
   eval-language ua ${CORPUS} --dictionary ${WORK}/untagged)
 expect("eval-language --per-rule: pass"
-  [=[{"rows":7,"positives":7,"negatives":0,"recall":0.8571428571428571,"negativesPassed":null,"falseCandidates":0.2857142857142857,"firstRank":1,"perRule":[{"transform":"past","rule":0,"recovers":2,"falseCandidates":2,"breaks":0},{"transform":"past","rule":1,"recovers":2,"falseCandidates":0,"breaks":0},{"transform":"neg","rule":0,"recovers":0,"falseCandidates":0,"breaks":0},{"transform":"plural","rule":0,"recovers":1,"falseCandidates":0,"breaks":0},{"transform":"enclitic","rule":0,"recovers":1,"falseCandidates":0,"breaks":0},{"transform":"infinitive","rule":0,"recovers":1,"falseCandidates":0,"breaks":0}]}
+  [=[{"rows":7,"positives":7,"negatives":0,"recall":0.8571428571428571,"negativesPassed":null,"falseCandidates":0.2857142857142857,"firstRank":1,"perRule":[{"transform":"past","rule":0,"recovers":2,"falseCandidates":2,"breaks":0},{"transform":"past","rule":1,"recovers":2,"falseCandidates":0,"breaks":0},{"transform":"neg","rule":0,"recovers":0,"falseCandidates":0,"breaks":0},{"transform":"plural","rule":0,"recovers":1,"falseCandidates":0,"breaks":0},{"transform":"enclitic","rule":0,"recovers":1,"falseCandidates":0,"breaks":0},{"transform":"infinitive","rule":0,"recovers":1,"falseCandidates":0,"breaks":0},{"transform":"progressive","rule":0,"recovers":0,"falseCandidates":0,"breaks":0}]}
 ]=]
   eval-language up ${CORPUS} --dictionary ${WORK}/untagged --per-rule)
+
+# mixed.tsv: sail has a v row and an untagged row, and the row's lemma sailx
+# is in no dictionary, so sail (the plural rule's n) is a false candidate
+# exactly when its untagged row counts: with "pass", in both formOf branches.
+set(MIXED ${FIXTURES}/mixed.tsv)
+foreach(mode ut:0 up:1 uf:0 ua:1)
+  string(REPLACE ":" ";" parts "${mode}")
+  list(GET parts 0 code)
+  list(GET parts 1 false_candidates)
+  expect("eval-language: a term with a tagged and an untagged row, ${code}"
+    "{\"rows\":1,\"positives\":1,\"negatives\":0,\"recall\":0,\"negativesPassed\":null,\"falseCandidates\":${false_candidates},\"firstRank\":0}\n"
+    eval-language ${code} ${MIXED} --dictionary ${WORK}/untagged)
+endforeach()

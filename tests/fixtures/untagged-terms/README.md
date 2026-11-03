@@ -17,8 +17,10 @@ removed, no dictionary form), so D, the conditions an untagged row carries
 under `"pass"`, is `v_ar | v_other | n`. Its rules are `past` (`-ed`, and
 `-ed` → `-e`; out `v`), `neg` (`un-`; in and out `v`), `plural` (`-s`; out
 `n`), `enclitic` (`a-se` → `a`; out `vf`) and `infinitive` (`a` → `ar`; in
-`vf`, out `v_ar`), the last two after hachi-lang-pt's Portuguese case. The
-tests add copies with `"pass"`, with `formOf: "asTerm"`, and with both.
+`vf`, out `v_ar`), the last two after hachi-lang-pt's Portuguese case, and
+`progressive` (`-ing`; out `v` and `vf`, conditions that overlap D without
+being inside it). The tests add copies with `"pass"`, with `formOf: "asTerm"`,
+with both, and one with `"pass"` and `"transforms": null`, whose D is 0.
 
 `dictionary` (title `untagged`):
 
@@ -39,5 +41,18 @@ tests add copies with `"pass"`, with `formOf: "asTerm"`, and with both.
 | `ran` → run, `run` | `v` | A tagged form-of row: `unran` gives `run` in both modes |
 | `dice` → die, `die` | `n` | A tagged form-of row of another part of speech: `undice` gives nothing in both modes |
 
+The tests also look up:
+- `talking` and `walking` (`progressive`, out `v` and `vf`): `talk` only with `"pass"`, because the output overlaps D; `walk` in both modes.
+- `booked` and `undice` with the dictionary in `pos_filter_exempt`: `book` and `die` in both modes.
+- `talk`, `talked` and `spoke` with the pack that has no transforms: as with `"filter"`.
+
+`frequencies` (title `untagged-frequencies`) holds frequency rows for `jog`
+and `zork`, which no term bank has. With `metadata_only_terms`, `jog` is
+found as written in both modes, and `jogs` and `zorked` give nothing in both:
+frequency rows answer only forms with conditions 0.
+
 `corpus.tsv` is the `eval-language` corpus for the pack and the dictionary;
-`tests/cli_untagged_terms_test.cmake` explains its numbers.
+`tests/cli_untagged_terms_test.cmake` explains its numbers. `mixed.tsv` has
+one row, `sails` → `sailx` (no dictionary has `sailx`). There `sail`, with a
+`v` row and an untagged row, is a false candidate only with `"pass"`, in both
+`formOf` branches.
