@@ -54,5 +54,6 @@
   ["fri", "", "prep neol", "", 0, ["(test) a preposition without part of speech, which -onte must not reach"], 0, ""],
   ["fronta", "", "adj", "adj", 0, ["frontal, front"], 0, ""],
   ["frato", "", "n", "n", 0, ["brother"], 0, ""],
-  ["frata", "", "adj", "adj", 0, ["brotherly"], 0, ""]
+  ["frata", "", "adj", "adj", 0, ["brotherly"], 0, ""],
+  ["tra", "", "prep", "", 0, ["through"], 0, ""]
 ]

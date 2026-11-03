@@ -99,8 +99,11 @@ for (const t of final.transforms) {
         }
         const [from, to] = make(stemOf(Math.max(min, 3)));
         const out = rule.conditionsOut ?? [];
-        if (out.length > 0) {
-            const other = PARTS_OF_SPEECH.find((c) => !out.includes(c));
+        // A rule that gives every part of speech (Yomitan's prefixes) is
+        // tested by lookup.tsv instead: its condition keeps out headwords
+        // without one (distra is not the preposition tra).
+        const other = PARTS_OF_SPEECH.find((c) => !out.includes(c));
+        if (out.length > 0 && other !== undefined) {
             candidates.push([`guard: output is ${out.join(' ')}`, '0', from, to, other, '*']);
             // A verb prefix whose Yomitan twin gives the same text without a
             // condition (el- for el) is told apart after a verb ending: in
