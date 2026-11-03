@@ -1630,7 +1630,6 @@
         {"type": "prefix", "inflected": "'", "deinflected": "εί", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 1, "stemCharacters": "{greek}"},
         {"type": "prefix", "inflected": "'", "deinflected": "ή", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 1, "stemCharacters": "{greek}"},
         {"type": "prefix", "inflected": "'", "deinflected": "α", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 1, "stemCharacters": "{greek}"},
-        {"type": "prefix", "inflected": "'", "deinflected": "ά", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 1, "stemCharacters": "{greek}"},
         {"type": "prefix", "inflected": "'", "deinflected": "ό", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 1, "stemCharacters": "{greek}"}
       ]
     },

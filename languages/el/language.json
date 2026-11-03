@@ -9,7 +9,7 @@
   "direction": "ltr",
   "classes": {
     "letter": "[\\u0386\\u0388-\\u038A\\u038C\\u038E-\\u03A1\\u03A3-\\u03CE\\u1F00-\\u1FBC\\u1FBE\\u1FC2-\\u1FCC\\u1FD0-\\u1FDB\\u1FE0-\\u1FEC\\u1FF2-\\u1FFC]",
-    "apostrophe": "['\\u2019\\u02BC\\u1FBD]",
+    "apostrophe": "['\\u2019\\u02BC\\u1FBD\\u0384]",
     "word": "[{letter}{apostrophe}\\u0300-\\u036F0-9]",
     "greek": "[\\u0390\\u03AC-\\u03CE]",
     "unaccented": "[\\u03B1-\\u03CB]",
@@ -36,9 +36,14 @@
     "searchResolution": "word",
     "preprocessors": [
       {
+        "id": "legacyCapitalAccent",
+        "name": "Write \u0384\u039F as \u038C",
+        "variants": [[{"map": {"\u0384\u0391": "\u0386", "\u0384\u0395": "\u0388", "\u0384\u0397": "\u0389", "\u0384\u0399": "\u038A", "\u0384\u039F": "\u038C", "\u0384\u03A5": "\u038E", "\u0384\u03A9": "\u038F"}}]]
+      },
+      {
         "id": "normalizeApostrophes",
         "name": "Write apostrophes as '",
-        "variants": [[{"map": {"\u2019": "'", "\u02BC": "'", "\u1FBD": "'"}}]]
+        "variants": [[{"map": {"\u2019": "'", "\u02BC": "'", "\u1FBD": "'", "\u0384": "'"}}]]
       },
       {
         "id": "polytonicToMonotonic",

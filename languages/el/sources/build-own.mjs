@@ -1135,7 +1135,7 @@ for (const [form, lemma] of [['μένα', 'εμένα'], ['σένα', 'εσέν�
 // A word whose final vowel is elided before another vowel ends in an
 // apostrophe (απ' το, είν' αλήθεια, δώσ' το); a word whose first vowel is
 // dropped after another vowel starts with one (θα 'ρθει, να 'ναι, που 'χε).
-// The lookup normalises ’ and ʼ to '.
+// The lookup normalises ’, ʼ, ᾽ and the tonos ΄ to '.
 transform('elision', 'elision', 'An elided final vowel written as an apostrophe: απ\' (από), είν\' (είναι), δώσ\' (δώσε), αλλ\' (αλλά), κάτ\' (κάτι).');
 transform('aphaeresis', 'aphaeresis', 'A dropped first vowel written as an apostrophe: \'ρθει (έρθει), \'ναι (είναι), \'χε (είχε), \'θελα (ήθελα).');
 // The function words that are elided most, written out: they come before
@@ -1165,9 +1165,11 @@ suffix('closing-quote', '\'', '', {min: 1, stemEndsWith: '{vowel}'});
 whole('aphaeresis', '\'ς', 'εις');
 whole('aphaeresis', '\'σαν', 'σαν');
 whole('aphaeresis', '\'νε', 'είναι');
-// The dropped vowel: έ (έρθει), εί (είναι), ή (ήθελα), ό (όλα), ά (άλλο),
-// and unaccented ε (εγώ, εκεί, εδώ, εμένα) and α (αυτός).
-for (const v of ['έ', 'ε', 'εί', 'ή', 'α', 'ά', 'ό']) {
+// The dropped vowel: έ (έρθει), εί (είναι), ή (ήθελα), ό (όλα), and
+// unaccented ε (εγώ, εκεί, εδώ, εμένα) and α (αυτός). Not ά: 'θελα would read
+// as άθελα "unintentionally" before ήθελα (24 Tatoeba positions), and 'σα as
+// άσος before όσος; ά recovered no test row.
+for (const v of ['έ', 'ε', 'εί', 'ή', 'α', 'ό']) {
     prefix('aphaeresis', '\'', v, {min: 1});
 }
 // An elided word written together with the next one (σ'αγαπώ, απ'το,

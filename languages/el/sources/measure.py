@@ -72,8 +72,10 @@ import bz2, collections, glob, json, os, random, re, sys, unicodedata
 
 GREEK = r"[\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03CE\u1F00-\u1FFF]"
 # A word as a host's word scan finds it: letters and the apostrophes in and
-# around them (text.wordCharacters), so 'ρθει and απ' are words.
-WORD = re.compile(r"['’]?" + GREEK + r"(?:" + GREEK + r"|['’]" + GREEK + r")*['’]?")
+# around them (the pack's class `apostrophe`: ' ’ ʼ ᾽ and the tonos ΄), so
+# 'ρθει, απ' and σ΄αγαπώ are words.
+APOSTROPHE = "['\u2019\u02BC\u1FBD\u0384]"
+WORD = re.compile(APOSTROPHE + "?" + GREEK + "(?:" + GREEK + "|" + APOSTROPHE + GREEK + ")*" + APOSTROPHE + "?")
 TERMINATORS = re.compile(r"[.!;;…\n]")
 
 
@@ -95,17 +97,24 @@ def is_ref(d):
 # A word's own row with definitions counts as its lemma (ο → ο, καλά → καλά),
 # except for the homographs in HOMOGRAPH_WRONG, judged by hand: their own row
 # is a rarer word than the lemma they are a form of (παιδιά "childish play"
-# before the plural of παιδί, πας "every" before πάω).
+# before the plural of παιδί, πας "every" before πάω; the other eight were
+# found by audit-hachi-lang-el-b: ήλιο "helium" before ήλιος, θείο "sulphur",
+# νεκρό "neutral gear", πόση "drinking", μαλάκα "a cheese", κόκκινη
+# "quaffle", σκάφη "wash tub", γυναικών "ladies' toilet").
+# In the subtitle list (frequent, top) a bare consonant or απ is an elided word
+# whose apostrophe the list's tokenizer removed (μ' αρέσει, απ' το); its own
+# row (the letter, "metre", the interjection απ) is not its lemma there.
 LETTERS = set()
 ARTICLE = 'ο'
-HOMOGRAPH_WRONG = {'παιδιά', 'πας'}
+HOMOGRAPH_WRONG = {'παιδιά', 'πας', 'ήλιο', 'θείο', 'νεκρό', 'πόση', 'μαλάκα', 'κόκκινη', 'σκάφη', 'γυναικών'}
+ELIDED_BARE = set('βγδζθκλμνξπρσςτφχψ') | {'απ'}
 
 
 def bogus_reference(target, rule_names):
     names = [r for r in rule_names if isinstance(r, str)]
     if target == 'τα' and any('possessive' in r for r in names):
         return True
-    return target != ARTICLE and any('definite' in r for r in names)
+    return target != ARTICLE and any(re.search(r'\bdefinite\b', r) for r in names)
 
 
 def load_dictionary(banks):
@@ -208,6 +217,8 @@ def frequent(freq_file, banks, lookups, cli=None, languages=None):
             kind = verdict(word, first, refs, defined)
             if kind == 'unjudged':
                 kind = 'right' if first['expression'] == word else 'wrong'
+            if word in ELIDED_BARE and first['expression'] == word:
+                kind = 'wrong'
             if kind == 'wrong':
                 wrong_list.append((count, word, first['expression'], '/'.join(first['trace']), sorted(right)[:3]))
         counts[kind] += 1
@@ -242,6 +253,8 @@ def top(freq_file, banks, lookups, n):
             kind = verdict(word, first, refs, defined)
             if kind == 'unjudged' and first['expression'] == word:
                 kind = 'right'
+            if word in ELIDED_BARE and first['expression'] == word:
+                kind = 'wrong'
         counts[kind] += 1
         if kind != 'right':
             listed[kind + 'Words'].append(word if first is None else f"{word} → {first['expression']}")

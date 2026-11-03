@@ -66,5 +66,8 @@
   ["εμένα", "", "pron pers strong", "", 0, ["me"], 65, ""],
   ["αυτό", "", "non-lemma", "", 0, [["τα", ["accusative third-person singular masculine strong possessive"]], ["αυτός", ["accusative singular masculine"]]], 66, ""],
   ["οι", "", "non-lemma", "", 0, [["η", ["nominative plural definite masculine/feminine"]], ["ο", ["nominative plural definite masculine/feminine"]]], 67, ""],
-  ["μένα", "", "non-lemma", "", 0, [["τα", ["accusative first-person singular strong possessive"]], ["εμένα", ["alternative"]]], 68, ""]
+  ["μένα", "", "non-lemma", "", 0, [["τα", ["accusative first-person singular strong possessive"]], ["εμένα", ["alternative"]]], 68, ""],
+  ["άλλος", "", "adj", "", 0, ["other, another"], 69, ""],
+  ["άλλο", "", "adv", "", 0, ["else, any more"], 70, ""],
+  ["άθελα", "", "adv", "", 0, ["unintentionally"], 71, ""]
 ]

@@ -5,7 +5,8 @@
 # tests/classes.json again and run language-conformance-test on the copy. A
 # mutant that every test passes needs a row that fails without the
 # constraint. Not run by any test. The last mutations edit language.json (the
-# processors and the word characters).
+# processors, the word characters and untaggedTerms) and the order of two
+# transforms.
 #
 #   python3 languages/el/sources/mutate.py <build dir> <scratch dir>
 #
@@ -24,7 +25,16 @@ LANGUAGE_MUTATIONS = [
     ('polytonicToMonotonic without its second variant', lambda l: [p.update(variants=p['variants'][:1]) for p in l['lookup']['preprocessors'] if p['id'] == 'polytonicToMonotonic']),
     ('normalizeApostrophes removed (σ’αγαπώ)', lambda l: l['lookup'].update(preprocessors=[p for p in l['lookup']['preprocessors'] if p['id'] != 'normalizeApostrophes'])),
     ('the apostrophe not a word character', lambda l: l['classes'].update(word='[{letter}\\u0300-\\u036F0-9]')),
+    ('untaggedTerms "filter" (άλλον → nothing)', lambda l: l['lookup'].update(untaggedTerms='filter')),
+    ('legacyCapitalAccent removed (΄Ηταν)', lambda l: l['lookup'].update(preprocessors=[p for p in l['lookup']['preprocessors'] if p['id'] != 'legacyCapitalAccent'])),
+    ('the tonos not an apostrophe (σ΄αγαπώ)', lambda l: (l['classes'].update(apostrophe="['\\u2019\\u02BC\\u1FBD]"),
+                                                       [p['variants'][0][0]['map'].pop('\u0384', None) for p in l['lookup']['preprocessors'] if p['id'] == 'normalizeApostrophes'])),
     ]
+
+# transforms.json order edits: (name, function of the list of transforms).
+ORDER_MUTATIONS = [
+    ('older-ending before acc-sg (άλλον → άλλο first)', lambda ts: ts.insert([t['id'] for t in ts].index('acc-sg'), ts.pop([t['id'] for t in ts].index('older-ending')))),
+]
 
 
 def mutations():
@@ -100,6 +110,8 @@ def mutations():
         ('stemNotStartsWithText πάλ removed from the older -ιν (πάλιν → πάλη)', drop_key('stemNotStartsWithText', 'πάλ')),
         ('stemEndsWith [σξψλμτχ] removed from the older -ιν and -ις (ύστερις → ύστερη)', drop_key('stemEndsWith', '[σξψλμτχ]')),
         ('stemEndsWith [ρ] removed from the older feminine -άν (καλάν → καλός)', drop_key('stemEndsWith', '[ρ]')),
+        ('closing quote after any letter (β\' → β)', drop_key('stemEndsWith', '{vowel}', {'closing-quote'})),
+        ('aphaeresis \' → ό made \' → ά (\'θελα → άθελα)', lambda tid, rule: ({**rule, 'deinflected': 'ά'} if tid == 'aphaeresis' and rule.get('type') == 'prefix' and rule.get('deinflected') == 'ό' else rule)),
         ('stemNotStartsWithText αυτ removed from the colour adjectives (αυτιά → αυτής)', drop_key('stemNotStartsWithText', 'αυτ', {'acc-sg', 'feminine', 'feminine-gen-sg', 'feminine-pl', 'nom-pl', 'gen-sg', 'gen-pl', 'acc-pl'})),
     ]
 
@@ -109,8 +121,10 @@ def run(build, scratch):
     conformance = os.path.join(build, 'language-conformance-test')
     node = shutil.which('node')
     results = []
-    plan = [(name, edit, None) for name, edit in mutations()] + [(name, lambda tid, rule: rule, edit) for name, edit in LANGUAGE_MUTATIONS]
-    for name, edit, edit_language in plan:
+    keep = lambda tid, rule: rule
+    plan = ([(name, edit, None, None) for name, edit in mutations()] + [(name, keep, edit, None) for name, edit in LANGUAGE_MUTATIONS]
+            + [(name, keep, None, edit) for name, edit in ORDER_MUTATIONS])
+    for name, edit, edit_language, edit_order in plan:
         work = os.path.join(scratch, 'languages')
         shutil.rmtree(work, ignore_errors=True)
         shutil.copytree(PACK, os.path.join(work, 'el'))
@@ -126,6 +140,9 @@ def run(build, scratch):
                 if new is not None:
                     out.append(new)
             t['rules'] = out
+        if edit_order is not None:
+            edit_order(data['transforms'])
+            changed = len(data['transforms'])
         json.dump(data, open(path, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
         if edit_language is not None:
             lpath = os.path.join(work, 'el', 'language.json')
