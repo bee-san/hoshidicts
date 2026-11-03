@@ -1308,9 +1308,12 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ας", "α"], ["ης", "η"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{greekAll}", "stemContains": "{accented}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["άς", "ά"], ["ής", "ή"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{greekAll}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ίματος", "ιμο"]], "conditionsIn": [], "conditionsOut": ["n_ante"], "stemMinLength": 2, "stemCharacters": "{greek}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["όντος", "ών"], ["ιού", "ύς"], ["έος", "ύς"], ["ιού", "ής"], ["ούς", "ής"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["όντος", "ών"], ["ιού", "ύς"], ["έος", "ύς"], ["ούς", "ής"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}"},
         {"type": "suffix", "inflected": "οντος", "deinflected": "ων", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 2, "stemCharacters": "{greek}", "stemContains": "{accented}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ονος", "ων"], ["ους", "ης"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}", "stemContains": "{accented}"}
+        {"type": "suffix", "inflected": "ιού", "deinflected": "ής", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}", "stemNotStartsWithText": "αυτ"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ονος", "ων"], ["ους", "ης"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}", "stemContains": "{accented}"},
+        {"type": "wholeWord", "inflected": "αυτού", "deinflected": "αυτός", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "του", "deinflected": "ο", "conditionsIn": [], "conditionsOut": []}
       ]
     },
     {
@@ -1321,9 +1324,14 @@
       "rules": [
         {"type": "suffix", "inflected": "ο", "deinflected": "ος", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 2, "stemCharacters": "{greekAll}", "stemContains": "{accented}"},
         {"type": "suffix", "inflected": "ό", "deinflected": "ός", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 2, "stemCharacters": "{greekAll}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["όντα", "ών"], ["όν", "ών"], ["ύ", "ύς"], ["ί", "ής"], ["ές", "ής"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["όντα", "ών"], ["όν", "ών"], ["ύ", "ύς"], ["ές", "ής"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}"},
         {"type": "suffix", "inflected": "οντα", "deinflected": "ων", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 2, "stemCharacters": "{greek}", "stemContains": "{accented}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ικο", "ης"], ["ονα", "ων"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}", "stemContains": "{accented}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ικο", "ης"], ["ονα", "ων"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}", "stemContains": "{accented}"},
+        {"type": "suffix", "inflected": "ί", "deinflected": "ής", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}", "stemNotStartsWithText": "αυτ"},
+        {"type": "wholeWord", "inflected": "αυτό", "deinflected": "αυτός", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "αυτόν", "deinflected": "αυτός", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "τον", "deinflected": "ο", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "το", "deinflected": "ο", "conditionsIn": [], "conditionsOut": []}
       ]
     },
     {
@@ -1333,7 +1341,8 @@
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ε", "deinflected": "ος", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 2, "stemCharacters": "{greekAll}", "stemContains": "{accented}"},
-        {"type": "suffix", "inflected": "έ", "deinflected": "ός", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 2, "stemCharacters": "{greekAll}"}
+        {"type": "suffix", "inflected": "έ", "deinflected": "ός", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 2, "stemCharacters": "{greekAll}"},
+        {"type": "wholeWord", "inflected": "αυτέ", "deinflected": "αυτός", "conditionsIn": [], "conditionsOut": []}
       ]
     },
     {
@@ -1356,20 +1365,34 @@
       "rules": [
         {"type": "suffix", "inflected": "οι", "deinflected": "ος", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 2, "stemCharacters": "{greekAll}", "stemContains": "{accented}"},
         {"type": "suffix", "inflected": "οί", "deinflected": "ός", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 2, "stemCharacters": "{greekAll}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ιοί", "ύς"], ["ιοί", "ής"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}"}
+        {"type": "suffix", "inflected": "ιοί", "deinflected": "ύς", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}"},
+        {"type": "suffix", "inflected": "ιοί", "deinflected": "ής", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}", "stemNotStartsWithText": "αυτ"},
+        {"type": "wholeWord", "inflected": "αυτοί", "deinflected": "αυτός", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "οι", "deinflected": "ο", "conditionsIn": [], "conditionsOut": []}
       ]
     },
     {
       "id": "acc-pl",
       "name": "accusative plural",
-      "description": "Accusative plural of nouns and adjectives in -ος: δρόμους, ανθρώπους, καλούς; also the genitive singular of neuters in -ος (έθνους, μέρους).",
+      "description": "Accusative plural of nouns and adjectives: καλούς, βαθιούς, παππούδες.",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "ούς", "deinflected": "ός", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 2, "stemCharacters": "{greekAll}"},
+        {"type": "suffix", "inflected": "ιούς", "deinflected": "ύς", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}"},
+        {"type": "suffix", "inflected": "ιούς", "deinflected": "ής", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}", "stemNotStartsWithText": "αυτ"},
+        {"type": "wholeWord", "inflected": "αυτούς", "deinflected": "αυτός", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "τους", "deinflected": "ο", "conditionsIn": [], "conditionsOut": []}
+      ]
+    },
+    {
+      "id": "acc-pl-gen-sg",
+      "name": "accusative plural or genitive singular",
+      "description": "The ending -ους: accusative plural of nouns and adjectives in -ος (δρόμους, ανθρώπους, καλούς) and genitive singular of neuters in -ος (έθνους, μέρους, λάθους).",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ους", "deinflected": "ος", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 2, "stemCharacters": "{greekAll}", "stemContains": "{accented}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ους", "ος"]], "conditionsIn": [], "conditionsOut": ["n_ante"], "stemMinLength": 2, "stemCharacters": "{unaccented}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ους", "ός"]], "conditionsIn": [], "conditionsOut": ["n_ante"], "stemMinLength": 2, "stemCharacters": "{greekAll}", "stemContains": "{accented}"},
-        {"type": "suffix", "inflected": "ούς", "deinflected": "ός", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 2, "stemCharacters": "{greekAll}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ιούς", "ύς"], ["ιούς", "ής"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ους", "ός"]], "conditionsIn": [], "conditionsOut": ["n_ante"], "stemMinLength": 2, "stemCharacters": "{greekAll}", "stemContains": "{accented}"}
       ]
     },
     {
@@ -1391,8 +1414,11 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ων", "α"], ["ων", "η"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{greekAll}", "stemContains": "{accented}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ών", "ά"], ["ών", "ή"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{greekAll}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["μάτων", "μα"], ["ιμάτων", "ιμο"]], "conditionsIn": [], "conditionsOut": ["n_ante"], "stemMinLength": 2, "stemCharacters": "{greek}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ουσών", "ών"], ["όντων", "ών"], ["ιών", "ύς"], ["ειών", "ύς"], ["ιών", "ής"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}"},
-        {"type": "suffix", "inflected": "ων", "deinflected": "ης", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}", "stemContains": "{accented}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ουσών", "ών"], ["όντων", "ών"], ["ιών", "ύς"], ["ειών", "ύς"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}"},
+        {"type": "suffix", "inflected": "ιών", "deinflected": "ής", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}", "stemNotStartsWithText": "αυτ"},
+        {"type": "suffix", "inflected": "ων", "deinflected": "ης", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}", "stemContains": "{accented}"},
+        {"type": "wholeWord", "inflected": "αυτών", "deinflected": "αυτός", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "των", "deinflected": "ο", "conditionsIn": [], "conditionsOut": []}
       ]
     },
     {
@@ -1420,10 +1446,15 @@
       "description": "Feminine singular of an adjective, nominative, accusative and vocative: καλή, όμορφη, ωραία, γλυκιά, βαθιά.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ούσα", "ών"], ["ή", "ός"], ["ιά", "ύς"], ["εία", "ύς"], ["ιά", "ής"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ούσα", "ών"], ["ή", "ός"], ["ιά", "ύς"], ["εία", "ύς"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ουσα", "ων"], ["η", "ος"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}", "stemContains": "{accented}"},
         {"type": "suffix", "inflected": "α", "deinflected": "ος", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}", "stemContains": "{accented}", "stemEndsWith": "{vowel}"},
-        {"type": "suffix", "inflected": "ιά", "deinflected": "ός", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}", "stemNotStartsWithText": "αυτ"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ιά", "ός"], ["ιά", "ής"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}", "stemNotStartsWithText": "αυτ"},
+        {"type": "wholeWord", "inflected": "αυτή", "deinflected": "αυτός", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "αυτήν", "deinflected": "αυτός", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "η", "deinflected": "ο", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "τη", "deinflected": "ο", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "την", "deinflected": "ο", "conditionsIn": [], "conditionsOut": []}
       ]
     },
     {
@@ -1432,9 +1463,12 @@
       "description": "Feminine genitive singular of an adjective: καλής, όμορφης, ωραίας, βαθιάς.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ούσας", "ών"], ["ής", "ός"], ["ιάς", "ός"], ["ιάς", "ύς"], ["είας", "ύς"], ["ιάς", "ής"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ούσας", "ών"], ["ής", "ός"], ["ιάς", "ός"], ["ιάς", "ύς"], ["είας", "ύς"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ουσας", "ων"], ["ης", "ος"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}", "stemContains": "{accented}"},
-        {"type": "suffix", "inflected": "ας", "deinflected": "ος", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}", "stemContains": "{accented}", "stemEndsWith": "{vowel}"}
+        {"type": "suffix", "inflected": "ας", "deinflected": "ος", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}", "stemContains": "{accented}", "stemEndsWith": "{vowel}"},
+        {"type": "suffix", "inflected": "ιάς", "deinflected": "ής", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}", "stemNotStartsWithText": "αυτ"},
+        {"type": "wholeWord", "inflected": "αυτής", "deinflected": "αυτός", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "της", "deinflected": "ο", "conditionsIn": [], "conditionsOut": []}
       ]
     },
     {
@@ -1443,9 +1477,12 @@
       "description": "Feminine plural of an adjective, nominative, accusative and vocative: καλές, όμορφες, ωραίες, βαθιές.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ούσες", "ών"], ["ές", "ός"], ["ιές", "ός"], ["ιές", "ύς"], ["είες", "ύς"], ["ιές", "ής"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ούσες", "ών"], ["ές", "ός"], ["ιές", "ός"], ["ιές", "ύς"], ["είες", "ύς"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}"},
         {"type": "suffix", "inflected": "ουσες", "deinflected": "ων", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}", "stemContains": "{accented}"},
-        {"type": "suffix", "inflected": "ες", "deinflected": "ος", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}", "stemContains": "{accented}", "stemNotStartsWithText": "μέρ"}
+        {"type": "suffix", "inflected": "ες", "deinflected": "ος", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}", "stemContains": "{accented}", "stemNotStartsWithText": "μέρ"},
+        {"type": "suffix", "inflected": "ιές", "deinflected": "ής", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}", "stemNotStartsWithText": "αυτ"},
+        {"type": "wholeWord", "inflected": "αυτές", "deinflected": "αυτός", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "τις", "deinflected": "ο", "conditionsIn": [], "conditionsOut": []}
       ]
     },
     {
@@ -1455,7 +1492,9 @@
       "source": "own",
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["α", "ος"], ["ικα", "ης"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}", "stemContains": "{accented}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ά", "ός"], ["ιά", "ύς"], ["έα", "ύς"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ά", "ός"], ["ιά", "ύς"], ["έα", "ύς"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "{greek}"},
+        {"type": "wholeWord", "inflected": "αυτά", "deinflected": "αυτός", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "τα", "deinflected": "ο", "conditionsIn": [], "conditionsOut": []}
       ]
     },
     {
@@ -1502,6 +1541,20 @@
       ]
     },
     {
+      "id": "short-pronoun",
+      "name": "short form",
+      "description": "A strong personal pronoun without its first vowel, as speech and informal writing have it: μένα, σένα, μείς, σείς (εμένα, εσένα, εμείς, εσείς).",
+      "source": "own",
+      "rules": [
+        {"type": "wholeWord", "inflected": "μένα", "deinflected": "εμένα", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "σένα", "deinflected": "εσένα", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "μείς", "deinflected": "εμείς", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "σείς", "deinflected": "εσείς", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "γώ", "deinflected": "εγώ", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "σύ", "deinflected": "εσύ", "conditionsIn": [], "conditionsOut": []}
+      ]
+    },
+    {
       "id": "elision",
       "name": "elision",
       "description": "An elided final vowel written as an apostrophe: απ' (από), είν' (είναι), δώσ' (δώσε), αλλ' (αλλά), κάτ' (κάτι).",
@@ -1516,6 +1569,7 @@
         {"type": "wholeWord", "inflected": "ν'", "deinflected": "να", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "θ'", "deinflected": "θα", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "σ'", "deinflected": "σε", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "σ'", "deinflected": "σου", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "τ'", "deinflected": "το", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "τ'", "deinflected": "τα", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "μ'", "deinflected": "με", "conditionsIn": [], "conditionsOut": []},
@@ -1541,7 +1595,7 @@
         {"type": "wholeWord", "inflected": "μήτ'", "deinflected": "μήτε", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "γιατ'", "deinflected": "γιατί", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "ποτ'", "deinflected": "ποτέ", "conditionsIn": [], "conditionsOut": []},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["'", "ε"], ["'", "α"], ["'", "ο"], ["'", "ι"], ["'", "ά"], ["'", "ό"], ["'", "έ"], ["'", "ί"], ["'", "αι"], ["'", "ού"], ["'", "ου"]], "conditionsIn": [], "conditionsOut": [], "stemMinLength": 1, "stemCharacters": "{greek}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["'", "ε"], ["'", "α"], ["'", "ο"], ["'", "ι"], ["'", "ά"], ["'", "ό"], ["'", "έ"], ["'", "ί"], ["'", "αι"], ["'", "ού"], ["'", "ου"]], "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{greek}", "stemEndsWith": "{consonant}"}
       ]
     },
     {
@@ -1560,6 +1614,15 @@
         {"type": "prefix", "inflected": "'", "deinflected": "α", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 1, "stemCharacters": "{greek}"},
         {"type": "prefix", "inflected": "'", "deinflected": "ά", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 1, "stemCharacters": "{greek}"},
         {"type": "prefix", "inflected": "'", "deinflected": "ό", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 1, "stemCharacters": "{greek}"}
+      ]
+    },
+    {
+      "id": "closing-quote",
+      "name": "closing quote",
+      "description": "A closing single quote after the word, which the word scan takes into the word: καλά' → καλά.",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "'", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 1, "stemCharacters": "{greek}", "stemEndsWith": "{vowel}"}
       ]
     },
     {

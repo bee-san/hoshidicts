@@ -4,7 +4,8 @@
 # pack, remove one stem constraint, exclusion or rule group at a time, write
 # tests/classes.json again and run language-conformance-test on the copy. A
 # mutant that every test passes needs a row that fails without the
-# constraint. Not run by any test.
+# constraint. Not run by any test. The last mutations edit language.json (the
+# processors and the word characters).
 #
 #   python3 languages/el/sources/mutate.py <build dir> <scratch dir>
 #
@@ -15,6 +16,15 @@ import json, os, shutil, subprocess, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 PACK = os.path.join(ROOT, 'languages', 'el')
+
+
+# language.json edits: (name, function of the parsed descriptor).
+LANGUAGE_MUTATIONS = [
+    ('polytonicToMonotonic without its first variant (καλὸς → nothing)', lambda l: [p.update(variants=p['variants'][1:]) for p in l['lookup']['preprocessors'] if p['id'] == 'polytonicToMonotonic']),
+    ('polytonicToMonotonic without its second variant', lambda l: [p.update(variants=p['variants'][:1]) for p in l['lookup']['preprocessors'] if p['id'] == 'polytonicToMonotonic']),
+    ('normalizeApostrophes removed (σ’αγαπώ)', lambda l: l['lookup'].update(preprocessors=[p for p in l['lookup']['preprocessors'] if p['id'] != 'normalizeApostrophes'])),
+    ('the apostrophe not a word character', lambda l: l['classes'].update(word='[{letter}\\u0300-\\u036F0-9]')),
+    ]
 
 
 def mutations():
@@ -75,14 +85,29 @@ def mutations():
         ('own ξανα- rules removed', drop_rule(lambda tid, rule: tid == 'ξανα-' and rule.get('source') != 'yomitan')),
         ('the -μένος participle rules removed', drop_rule(lambda tid, rule: tid == 'passive-participle')),
         ('the bare augments removed (ΕΓΡΑΨΑ)', drop_rule(lambda tid, rule: rule.get('prefixes') in ([['ε', ''], ['η', '']],))),
+        ('pronoun and article forms written out removed (αυτό → τα, οι → η first)', drop_rule(lambda tid, rule: rule.get('type') == 'wholeWord' and rule.get('deinflected') in ('αυτός', 'ο'))),
+        ('short pronouns removed (μένα → τα first)', drop_rule(lambda tid, rule: tid == 'short-pronoun')),
+        ('elision after a vowel allowed (καλά\' → καλάι)', drop_key('stemEndsWith', '{consonant}', {'elision'})),
+        ('closing quote removed (καλά\')', drop_rule(lambda tid, rule: tid == 'closing-quote')),
+        ('elision stems take capitals (μ\' → Μάι)', set_key('stemCharacters', '{greek}', '{greekAll}', {'elision'})),
+        ('elision minimum 2 → 1 (κ\' → κα)', set_key('stemMinLength', 2, 1, {'elision'})),
+        ('movable-n without stemContains (ντεν → ντε)', drop_key('stemContains', None, {'movable-n'})),
+        ('v_acc accent rules: any letters between (κορώνα → κορώνω)', lambda tid, rule: ({**rule, 'stemChange': {**rule['stemChange'], 'between': '{greekAll}'}}
+                                                                           if tid == 'accent' and rule.get('conditionsIn') == ['v_acc'] and rule.get('stemChange', {}).get('between') == '{consonant}' else rule)),
+        ('n_ante/adj_ante minimum 2 → 1 (μαιών → Μάιος)', lambda tid, rule: ({**rule, 'stemChange': {**rule['stemChange'], 'betweenMinLength': 1}}
+                                                                  if tid == 'accent' and rule.get('conditionsIn', [''])[0].endswith('_ante') and rule.get('stemChange', {}).get('betweenMinLength') == 2 and rule.get('stemCharacters') == '{unaccentedAll}' else rule)),
+        ('gen-pl without stemContains (στων → στο)', drop_key('stemContains', None, {'gen-pl'})),
+        ('stemNotStartsWithText αυτ removed from the colour adjectives (αυτιά → αυτής)', drop_key('stemNotStartsWithText', 'αυτ', {'acc-sg', 'feminine', 'feminine-gen-sg', 'feminine-pl', 'nom-pl', 'gen-sg', 'gen-pl', 'acc-pl'})),
     ]
+
 
 
 def run(build, scratch):
     conformance = os.path.join(build, 'language-conformance-test')
     node = shutil.which('node')
     results = []
-    for name, edit in mutations():
+    plan = [(name, edit, None) for name, edit in mutations()] + [(name, lambda tid, rule: rule, edit) for name, edit in LANGUAGE_MUTATIONS]
+    for name, edit, edit_language in plan:
         work = os.path.join(scratch, 'languages')
         shutil.rmtree(work, ignore_errors=True)
         shutil.copytree(PACK, os.path.join(work, 'el'))
@@ -99,6 +124,11 @@ def run(build, scratch):
                     out.append(new)
             t['rules'] = out
         json.dump(data, open(path, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
+        if edit_language is not None:
+            lpath = os.path.join(work, 'el', 'language.json')
+            language = json.load(open(lpath, encoding='utf-8'))
+            edit_language(language)
+            json.dump(language, open(lpath, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
         subprocess.run([node, os.path.join(ROOT, 'tools', 'check-classes.mjs'), 'el', '--write', '--languages', work], capture_output=True, text=True)
         proc = subprocess.run([conformance, os.path.join(work, 'el'), scratch], capture_output=True, text=True)
         fails = [l for l in (proc.stdout + proc.stderr).splitlines() if l.startswith('FAIL')]

@@ -177,10 +177,10 @@ noun	1	δρόμο	δρόμος	n	acc-sg
 noun	1	δρόμε	δρόμος	n	voc-sg
 noun	1	δρόμοι	δρόμος	n	nom-pl
 noun	1	δρόμων	δρόμος	n	gen-pl
-noun	1	δρόμους	δρόμος	n	acc-pl
+noun	1	δρόμους	δρόμος	n	acc-pl-gen-sg
 noun	1	ανθρώπου	άνθρωπος	n	accent|gen-sg
 noun	1	ανθρώπων	άνθρωπος	n	accent|gen-pl
-noun	1	ανθρώπους	άνθρωπος	n	accent|acc-pl
+noun	1	ανθρώπους	άνθρωπος	n	accent|acc-pl-gen-sg
 noun	1	άνθρωποι	άνθρωπος	n	nom-pl
 noun	1	ουρανού	ουρανός	n	gen-sg
 noun	1	ουρανό	ουρανός	n	acc-sg
@@ -205,7 +205,7 @@ noun	1	γράμματα	γράμμα	n	plural
 noun	1	γραμμάτων	γράμμα	n	accent|gen-pl
 noun	1	προβλήματος	πρόβλημα	n	accent|gen-sg
 noun	1	προβλημάτων	πρόβλημα	n	accent|gen-pl
-noun	1	έθνους	έθνος	n	acc-pl
+noun	1	έθνους	έθνος	n	acc-pl-gen-sg
 noun	1	έθνη	έθνος	n	plural
 noun	1	εθνών	έθνος	n	accent|gen-pl
 noun	1	πατέρα	πατέρας	n	obl-sg
@@ -333,6 +333,18 @@ older	1	'νε	είναι	*	aphaeresis
 monosyllable	1	Ποιός	ποιος	*	monosyllable
 monosyllable	1	δυό	δυο	*	monosyllable
 monosyllable	1	μού	μου	*	monosyllable
+pronouns	1	αυτό	αυτός	*	acc-sg
+pronouns	1	αυτόν	αυτός	*	acc-sg
+pronouns	1	αυτές	αυτός	*	feminine-pl
+pronouns	1	αυτής	αυτός	*	feminine-gen-sg
+pronouns	1	μένα	εμένα	*	short-pronoun
+pronouns	1	σένα	εσένα	*	short-pronoun
+article	1	οι	ο	*	nom-pl
+article	1	των	ο	*	gen-pl
+article	1	τις	ο	*	feminine-pl
+closing quote	1	καλά'	καλά	*	closing-quote
+closing quote	1	δρόμο’	δρόμο	*	closing-quote
+elision	1	σ'	σου	*	elision
 negatives	0	για	γιος	*	*
 negatives	0	στα	στο	*	*
 negatives	0	στα	στης	*	*
@@ -381,3 +393,13 @@ negatives	0	μηδέν	μηδέ	*	*
 negatives	0	εκεί	κεί	v	*
 negatives	0	πού	που	*	*
 negatives	0	πώς	πως	*	*
+closing quote	0	καλά'	καλάι	*	*
+closing quote	0	να'	ναός	*	*
+negatives	0	κορώνα	κορώνω	v	*
+negatives	0	σπείρα	σπείρω	v	*
+negatives	0	στων	στο	n	*
+negatives	0	μαιών	Μάιος	n	*
+negatives	0	ντεν	ντε	*	*
+negatives	0	μ'	Μάι	*	*
+negatives	0	κ'	κα	*	*
+negatives	0	μ'	μα	*	*

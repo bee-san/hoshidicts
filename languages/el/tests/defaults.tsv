@@ -15,5 +15,7 @@ unaccented	0	ενα	ενώ	*	*
 unaccented	0	για	γιος	*	*
 negatives	0	κυρία	κύρια	*	*
 negatives	0	ποιά	ποιώ	*	*
+polytonic	1	καλὸς	καλός	adj	
+polytonic	1	ἀπὸ	από	*	
 unaccented	1	εχω	έχω	v	accent
 unaccented	1	θαλασσα	θάλασσα	n	accent

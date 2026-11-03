@@ -58,5 +58,13 @@
   ["ας", "", "ptcl", "", 0, ["let (hortative particle)"], 57, ""],
   ["ήσαν", "", "v", "v", 0, ["they were (older form)"], 58, ""],
   ["εις", "", "prep", "", 0, ["in, to (older form)"], 59, ""],
-  ["σαν", "", "conj prep", "", 0, ["like, as"], 60, ""]
+  ["σαν", "", "conj prep", "", 0, ["like, as"], 60, ""],
+  ["η", "", "char", "", 0, ["the letter eta"], 61, ""],
+  ["ο", "", "artic masc sg", "", 0, ["the (masculine)"], 62, ""],
+  ["τα", "", "pron pers weak", "", 0, ["them (neuter)"], 63, ""],
+  ["αυτός", "", "pron", "", 0, ["he; this"], 64, ""],
+  ["εμένα", "", "pron pers strong", "", 0, ["me"], 65, ""],
+  ["αυτό", "", "non-lemma", "", 0, [["τα", ["accusative third-person singular masculine strong possessive"]], ["αυτός", ["accusative singular masculine"]]], 66, ""],
+  ["οι", "", "non-lemma", "", 0, [["η", ["nominative plural definite masculine/feminine"]], ["ο", ["nominative plural definite masculine/feminine"]]], 67, ""],
+  ["μένα", "", "non-lemma", "", 0, [["τα", ["accusative first-person singular strong possessive"]], ["εμένα", ["alternative"]]], 68, ""]
 ]

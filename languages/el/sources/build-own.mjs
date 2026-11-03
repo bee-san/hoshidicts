@@ -821,9 +821,15 @@ transform('acc-sg', 'accusative singular', 'Accusative singular of masculine and
 transform('voc-sg', 'vocative singular', 'Vocative singular of nouns and adjectives in -ος: φίλε, δρόμε, καλέ.');
 transform('obl-sg', 'genitive/accusative/vocative singular', 'Genitive, accusative and vocative singular of masculine nouns in -ας, -ης, -ές, -ούς: πατέρα, ναύτη, μαθητή, καφέ, παππού.');
 transform('nom-pl', 'nominative plural', 'Nominative and vocative plural of nouns and adjectives in -ος: δρόμοι, άνθρωποι, καλοί.');
-transform('acc-pl', 'accusative plural', 'Accusative plural of nouns and adjectives in -ος: δρόμους, ανθρώπους, καλούς; also the genitive singular of neuters in -ος (έθνους, μέρους).');
+transform('acc-pl', 'accusative plural', 'Accusative plural of nouns and adjectives: καλούς, βαθιούς, παππούδες.');
+transform('acc-pl-gen-sg', 'accusative plural or genitive singular', 'The ending -ους: accusative plural of nouns and adjectives in -ος (δρόμους, ανθρώπους, καλούς) and genitive singular of neuters in -ος (έθνους, μέρους, λάθους).');
 transform('gen-pl', 'genitive plural', 'Genitive plural: δρόμων, ανθρώπων, ωρών, θαλασσών, τεχνών, πόλεων, ονομάτων, παιδιών.');
 transform('plural', 'plural', 'Nominative, accusative and vocative plural: πατέρες, ώρες, πόλεις, βουνά, σπίτια, ονόματα, έθνη, καφέδες, γιαγιάδες.');
+// The noun plural comes before the adjective forms: where a dictionary does
+// not tell nouns from adjectives, the first of two equal readings is shown,
+// and a neuter or feminine plural noun is the commoner reading of -α and -ες
+// (λεπτά → λεπτό, φίλες → φίλη; measured on 444,884 positions of four
+// texts, 24 more right first cards this way and 1 fewer).
 transform('feminine', 'feminine', 'Feminine singular of an adjective, nominative, accusative and vocative: καλή, όμορφη, ωραία, γλυκιά, βαθιά.');
 transform('feminine-gen-sg', 'feminine genitive singular', 'Feminine genitive singular of an adjective: καλής, όμορφης, ωραίας, βαθιάς.');
 transform('feminine-pl', 'feminine plural', 'Feminine plural of an adjective, nominative, accusative and vocative: καλές, όμορφες, ωραίες, βαθιές.');
@@ -851,8 +857,8 @@ suffix('nom-pl', 'οί', 'ός', NA);
 suffix('gen-pl', 'ων', 'ος', NA);
 shared('gen-pl', [['ων', 'ος']], LEFT, {...N, ...KEEPS});
 suffix('gen-pl', 'ών', 'ός', NA);
-suffix('acc-pl', 'ους', 'ος', NA);
-shared('acc-pl', [['ους', 'ος']], LEFT, {...N, ...KEEPS});
+suffix('acc-pl-gen-sg', 'ους', 'ος', NA);
+shared('acc-pl-gen-sg', [['ους', 'ος']], LEFT, {...N, ...KEEPS});
 suffix('acc-pl', 'ούς', 'ός', NA);
 
 // Neuter -ο: βιβλίο, βουνό, πρόσωπο.
@@ -958,7 +964,7 @@ suffix('plural', 'ατα', 'ας', N);
 shared('gen-pl', [['άτων', 'ας']], stemLast('ας'), N);
 
 // Neuter -ος: έθνος, μέρος, λάθος, έδαφος. The genitive singular -ους is the
-// masculine accusative plural rule.
+// rule of the masculine accusative plural, whose transform names both.
 suffix('plural', 'η', 'ος', N);
 shared('plural', [['η', 'ος']], LEFT, {...N, ...KEEPS});
 shared('gen-pl', [['ών', 'ος']], stemLast('ος'), N);
@@ -1024,9 +1030,10 @@ suffix('acc-pl', 'ιούς', 'ύς', A);
 for (const [id, e] of [['feminine', 'εία'], ['feminine-gen-sg', 'είας'], ['feminine-pl', 'είες'], ['gen-pl', 'ειών'], ['neuter-pl', 'έα'], ['gen-sg', 'έος'], ['plural', 'είς']]) {
     suffix(id, e, 'ύς', A);
 }
-// Colour adjectives -ής/-ιά/-ί: θαλασσής, θαλασσιά, θαλασσί, θαλασσιοί.
+// Colour adjectives -ής/-ιά/-ί: θαλασσής, θαλασσιά, θαλασσί, θαλασσιοί. αυτιά
+// is the plural of αυτί, not a form of αυτής.
 for (const [id, e] of [['acc-sg', 'ί'], ['feminine', 'ιά'], ['feminine-gen-sg', 'ιάς'], ['feminine-pl', 'ιές'], ['nom-pl', 'ιοί'], ['gen-sg', 'ιού'], ['gen-pl', 'ιών'], ['acc-pl', 'ιούς']]) {
-    suffix(id, e, 'ής', A);
+    suffix(id, e, 'ής', {...A, stemNotStartsWithText: 'αυτ'});
 }
 // -ων/-ονα (γενναιόφρων, γενναιόφρονα, γενναιόφρονος, γενναιόφρονες).
 for (const [id, e] of [['acc-sg', 'ονα'], ['gen-sg', 'ονος'], ['plural', 'ονες']]) {
@@ -1070,6 +1077,29 @@ for (const lemma of ['ι', 'ος', 'α', 'ο']) {
 shared('diminutive', DIM.map((e) => [e, 'ί']).concat(DIM.map((e) => [e, 'ό'])), null, N);
 shared('diminutive', ['ούλα', 'ούλας', 'ούλες', 'ίτσα', 'ίτσας', 'ίτσες'].map((e) => [e, 'α']), stemLast('α'), N);
 
+// --- Pronouns and the article --------------------------------------------------------
+// The strong pronoun αυτός and the article ο, written out in their case
+// transforms. wty-el-en's form-of rows of these forms also name τα (a
+// misread possessive table: `αυτό` → τα "accusative third-person singular
+// masculine strong possessive") and, for the plural article, η, whose only
+// row with definitions is the letter eta. A rule's reading is found before
+// the dictionary's references and ties with them, so these rules put the
+// right lemma first (`αυτό` → αυτός, `οι` → ο).
+for (const [id, form] of [['acc-sg', 'αυτό'], ['acc-sg', 'αυτόν'], ['voc-sg', 'αυτέ'], ['gen-sg', 'αυτού'], ['nom-pl', 'αυτοί'], ['gen-pl', 'αυτών'],
+    ['acc-pl', 'αυτούς'], ['feminine', 'αυτή'], ['feminine', 'αυτήν'], ['feminine-gen-sg', 'αυτής'], ['feminine-pl', 'αυτές'], ['neuter-pl', 'αυτά']]) {
+    whole(id, form, 'αυτός');
+}
+for (const [id, form] of [['acc-sg', 'τον'], ['acc-sg', 'το'], ['gen-sg', 'του'], ['nom-pl', 'οι'], ['gen-pl', 'των'], ['acc-pl', 'τους'],
+    ['feminine', 'η'], ['feminine', 'τη'], ['feminine', 'την'], ['feminine-gen-sg', 'της'], ['feminine-pl', 'τις'], ['neuter-pl', 'τα']]) {
+    whole(id, form, 'ο');
+}
+// The strong personal pronouns without their first vowel, as speech and
+// informal writing have them; wty-el-en's rows of these also name τα.
+transform('short-pronoun', 'short form', 'A strong personal pronoun without its first vowel, as speech and informal writing have it: μένα, σένα, μείς, σείς (εμένα, εσένα, εμείς, εσείς).');
+for (const [form, lemma] of [['μένα', 'εμένα'], ['σένα', 'εσένα'], ['μείς', 'εμείς'], ['σείς', 'εσείς'], ['γώ', 'εγώ'], ['σύ', 'εσύ']]) {
+    whole('short-pronoun', form, lemma);
+}
+
 // --- Elision and aphaeresis --------------------------------------------------------
 // A word whose final vowel is elided before another vowel ends in an
 // apostrophe (απ' το, είν' αλήθεια, δώσ' το); a word whose first vowel is
@@ -1081,7 +1111,7 @@ transform('aphaeresis', 'aphaeresis', 'A dropped first vowel written as an apost
 // the general rule below, which tries the vowels in a fixed order and read
 // κ' (και) as the abbreviation κα.
 const ELIDED = [
-    ['κ', 'και'], ['κι', 'και'], ['απ', 'από'], ['αφ', 'από'], ['αλλ', 'αλλά'], ['δ', 'δε'], ['ν', 'να'], ['θ', 'θα'], ['σ', 'σε'],
+    ['κ', 'και'], ['κι', 'και'], ['απ', 'από'], ['αφ', 'από'], ['αλλ', 'αλλά'], ['δ', 'δε'], ['ν', 'να'], ['θ', 'θα'], ['σ', 'σε'], ['σ', 'σου'],
     ['τ', 'το'], ['τ', 'τα'], ['μ', 'με'], ['μ', 'μου'], ['γι', 'για'], ['στ', 'στο'], ['στ', 'στα'], ['είν', 'είναι'], ['επ', 'επί'],
     ['εφ', 'επί'], ['κατ', 'κατά'], ['καθ', 'κατά'], ['μετ', 'μετά'], ['μεθ', 'μετά'], ['παρ', 'παρά'], ['δι', 'διά'], ['υπ', 'υπό'],
     ['υφ', 'υπό'], ['ίν', 'ίνα'], ['ουδ', 'ουδέ'], ['μηδ', 'μηδέ'], ['ουτ', 'ούτε'], ['μήτ', 'μήτε'], ['γιατ', 'γιατί'], ['ποτ', 'ποτέ'],
@@ -1089,9 +1119,16 @@ const ELIDED = [
 for (const [form, word] of ELIDED) {
     whole('elision', form + '\'', word);
 }
+// An elided word ends in a consonant before its apostrophe (απ', δώσ',
+// έρχετ', κόκκιν'); after a vowel the apostrophe is a closing quote (καλά’ is
+// not καλάι).
+// The one-letter elided words are written out above, so the general rule
+// takes stems of two letters or more (κ' is not κα, μ' not μα).
 for (const v of ['ε', 'α', 'ο', 'ι', 'ά', 'ό', 'έ', 'ί', 'αι', 'ού', 'ου']) {
-    suffix('elision', '\'', v, {min: 1});
+    suffix('elision', '\'', v, {min: 2, stemEndsWith: '{consonant}'});
 }
+transform('closing-quote', 'closing quote', 'A closing single quote after the word, which the word scan takes into the word: καλά\' → καλά.');
+suffix('closing-quote', '\'', '', {min: 1, stemEndsWith: '{vowel}'});
 // 'ς is εις (σε), and 'σαν is σαν (ωσάν); the general rule below would read
 // them as ας and ήσαν.
 whole('aphaeresis', '\'ς', 'εις');

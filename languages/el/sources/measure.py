@@ -9,16 +9,20 @@
 #   python3 languages/el/sources/measure.py traces <corpus.tsv> <deinflections.jsonl>
 #   python3 languages/el/sources/measure.py unimorph <unimorph ell file> <hoshidicts-cli> <languages dir>
 #   python3 languages/el/sources/measure.py falsecands <wty-el-en JSON banks dir> <corpus.tsv> <hoshidicts-cli> <languages dir> [--tagged]
+#   python3 languages/el/sources/measure.py firstrank <wty-el-en JSON banks dir> <corpus.tsv> <lookups.jsonl>
+#   python3 languages/el/sources/measure.py capital-words <el_50k.txt> > capitals.txt
+#   python3 languages/el/sources/measure.py capitals <el_50k.txt> <wty-el-en JSON banks dir> <lookups of the words> <lookups of capitals.txt>
+#   python3 languages/el/sources/measure.py capital-rows <el_50k.txt> <wty-el-en JSON banks dir> <lookups of the words> [--defaults] > capitals.tsv
+#   python3 languages/el/sources/measure.py yomitan-conditions <sources/yomitan.json> <sources/own.json> > yomitan-for-eval.json
 #
 # lookups.jsonl is the output of languages/en/sources/lookup-batch.cpp (built
 # against this checkout) on the words or hover texts, one line each:
 #   build/lookup-batch languages el <imported wty-el-en> < words.txt > lookups.jsonl
 #
-# frequent: for each of the 10,000 most frequent words whose lemma a rule
-# reaches (wty-el-en has a form-of row for the word that names it), the first
-# result with a definition is right when it is that lemma (or the word itself
-# when it has its own definitions). Prints the counts, the share of the list's
-# tokens, and the wrong words by frequency.
+# frequent: for each of the 10,000 most frequent words whose lemma wty-el-en
+# names (a form-of row of the word names it), the first result with a
+# definition is judged by verdict() below. Prints the counts, the share of the
+# list's tokens, and the wrong words by frequency.
 # hovers: every Greek word of a text, as a host hovers it: the text from the
 # word to the end of its sentence (one per line).
 # phrases: the hover positions at a clitic, pronoun, article, particle or
@@ -41,14 +45,25 @@
 # lemma. Every optional processor and transform is on. --tagged reads the
 # untagged rows as tagged "v n adj" (the wty-el-en-tagged copy). Prints the
 # mean, which must equal eval-language's falseCandidates, and the rows.
+# firstrank: why a corpus row's lemma is not the first result (lookups of
+# the sources, `lookup-batch ... 16 64`): the lemma has no row with
+# definitions, comes after another lemma the source's form-of rows name, or
+# after another reading.
+# capitals: of the 10,000 words, those whose first card is right in lowercase,
+# judged again written in capitals without accents (ΘΑΛΑΣΣΑ).
+# yomitan-conditions: Yomitan's rules declare only `v`, so eval-language
+# cannot read the files' `n` and `adj` rows with them; this writes a copy of
+# sources/yomitan.json with the pack's conditions added (the Yomitan row of
+# README, Measurements 1).
 # traces: for each verb row of the corpus, the trace a lookup keeps
 # (traceSelection "shortest": the fewest steps among the deinflections that
 # reach the lemma) and whether its first transform names the row's UniMorph
 # tense and aspect, and its person and number. deinflections.jsonl is
 # `hoshidicts-cli deinflect el --stdin --all-options` on the corpus sources.
 # judge: the first result with a definition at each hover position, judged by
-# script where the hovered word's form-of rows name its lemmas; the rest are
-# counted as unjudged and a random sample of them is printed for review.
+# verdict() where the dictionary names the hovered word's lemma; the rest are
+# counted as unjudged, and a random sample of them (seed 1) is printed for
+# review by hand.
 
 import bz2, collections, glob, json, random, re, sys, unicodedata
 
@@ -63,17 +78,79 @@ def is_ref(d):
     return isinstance(d, list) and len(d) == 2 and isinstance(d[0], str) and d[0] and isinstance(d[1], list)
 
 
+# The judge (section 14 step 5): a first card is right only when it is the
+# word's own lemma. Three kinds of wty-el-en data are not taken as naming one:
+# - the references to τα under rule names with "possessive" (a misread table
+#   of the possessive pronoun: αυτό → τα "accusative third-person singular
+#   masculine strong possessive"; 34 strong pronouns, and weak forms such as
+#   το and του);
+# - the references between the forms of the article, under rule names with
+#   "definite" (οι → η, το, τις … "nominative plural definite"), except to
+#   the article's headword ο;
+# - terms whose only rows with definitions are a letter (tag `char`: η, Ο),
+#   which no word of running text means; such a card is always wrong.
+# A word's own row with definitions counts as its lemma (ο → ο, καλά → καλά),
+# except for the homographs in HOMOGRAPH_WRONG, judged by hand: their own row
+# is a rarer word than the lemma they are a form of (παιδιά "childish play"
+# before the plural of παιδί, πας "every" before πάω).
+LETTERS = set()
+ARTICLE = 'ο'
+HOMOGRAPH_WRONG = {'παιδιά', 'πας'}
+
+
+def bogus_reference(target, rule_names):
+    names = [r for r in rule_names if isinstance(r, str)]
+    if target == 'τα' and any('possessive' in r for r in names):
+        return True
+    return target != ARTICLE and any('definite' in r for r in names)
+
+
 def load_dictionary(banks):
     """term -> set of rules tags of rows with definitions; term -> lemmas its form-of rows name."""
     defined, refs = collections.defaultdict(set), collections.defaultdict(set)
+    tags = collections.defaultdict(list)
     for f in sorted(glob.glob(banks.rstrip('/') + '/term_bank_*.json')):
         for row in json.load(open(f, encoding='utf-8')):
             if any(not is_ref(d) for d in row[5]):
                 defined[row[0]].add(row[3])
+                tags[row[0]].append(row[2].split()[:1])
             for d in row[5]:
-                if is_ref(d):
+                if is_ref(d) and not bogus_reference(d[0], d[1]):
                     refs[row[0]].add(d[0])
+    LETTERS.update(t for t, ts in tags.items() if all(x == ['char'] for x in ts))
     return defined, refs
+
+
+def named_lemmas(word, refs, defined):
+    """The lemmas a form-of row of the word names, and, for a named form that has
+    no definitions of its own (μιλά → μιλάει, μέρες → μέρα), the lemmas it names
+    in turn; letters left out."""
+    named = set(refs.get(word, set()))
+    for n in list(named):
+        if n not in defined:
+            named |= refs.get(n, set())
+    return {n for n in named if n not in LETTERS}
+
+
+def right_lemmas(word, refs, defined):
+    """The word's own lemmas: those its form-of rows name, and the word itself
+    when it has definitions (not a letter, not a hand-judged homograph)."""
+    right = named_lemmas(word, refs, defined)
+    if word in defined and word not in LETTERS and word.lower() not in HOMOGRAPH_WRONG:
+        right.add(word)
+    return right
+
+
+def verdict(word, first, refs, defined):
+    """right, wrong or unjudged (no lemma known) for the first card with a definition."""
+    if first['expression'] in LETTERS:
+        return 'wrong'
+    right = right_lemmas(word, refs, defined) | right_lemmas(word.lower(), refs, defined)
+    if not right:
+        return 'unjudged'
+    if first['expression'] in right or first['expression'].lower() in {r.lower() for r in right if r not in LETTERS}:
+        return 'right'
+    return 'wrong'
 
 
 def first_defined(results):
@@ -83,27 +160,6 @@ def first_defined(results):
     return None
 
 
-def lemmas_of(word, refs, defined):
-    """The lemmas a form-of row of the word (or its lowercase) names, one hop, and the word when it is defined."""
-    out = set()
-    for w in {word, word.lower(), unicodedata.normalize('NFC', word)}:
-        out |= refs.get(w, set())
-        if w in defined:
-            out.add(w)
-    return out
-
-
-def right_lemmas(word, refs, defined):
-    """The lemmas a form-of row of the word names, and, for a named form that has
-    no definitions of its own (μιλά → μιλάει, μέρες → μέρα), the lemmas it names
-    in turn; the word itself when it has definitions."""
-    named = set(refs.get(word, set()))
-    for n in list(named):
-        if n not in defined:
-            named |= refs.get(n, set())
-    if word in defined:
-        named.add(word)
-    return named
 
 
 def deinflect_variants(cli, languages, words, options=()):
@@ -130,27 +186,27 @@ def frequent(freq_file, banks, lookups, cli=None, languages=None):
     empty_list = []
     for (word, count), answer in zip(words, results):
         count = int(count)
-        if not refs.get(word):
+        if not named_lemmas(word, refs, defined):
             continue
         counts['reached'] += 1
         tokens['reached'] += count
         right = right_lemmas(word, refs, defined)
-        if reached_by_rule is not None and reached_by_rule[word] & right:
+        first = first_defined(answer['results'])
+        if reached_by_rule is not None and reached_by_rule[word] & named_lemmas(word, refs, defined):
             counts['ruleReached'] += 1
             tokens['ruleReached'] += count
-            first_r = first_defined(answer['results'])
-            if first_r is not None and first_r['expression'] not in right:
+            if first is not None and verdict(word, first, refs, defined) == 'wrong':
                 counts['ruleReachedWrong'] += 1
                 tokens['ruleReachedWrong'] += count
-        first = first_defined(answer['results'])
         if first is None:
             kind = 'empty'
             empty_list.append((count, word, sorted(right)[:3]))
-        elif first['expression'] in right:
-            kind = 'right'
         else:
-            kind = 'wrong'
-            wrong_list.append((count, word, first['expression'], '/'.join(first['trace']), sorted(right)[:3]))
+            kind = verdict(word, first, refs, defined)
+            if kind == 'unjudged':
+                kind = 'right' if first['expression'] == word else 'wrong'
+            if kind == 'wrong':
+                wrong_list.append((count, word, first['expression'], '/'.join(first['trace']), sorted(right)[:3]))
         counts[kind] += 1
         tokens[kind] += count
     print(json.dumps({'words': len(words), **counts, 'ruleReachedTokenShare': tokens['ruleReached'] / total,
@@ -196,19 +252,15 @@ def judge(banks, hover_file, lookups, sample=60):
         if first is None:
             counts['nothing'] += 1
             continue
-        lemmas = right_lemmas(word, refs, defined) | right_lemmas(word.lower(), refs, defined)
-        if not lemmas:
-            counts['unjudged'] += 1
-            unjudged.append((text[:40], first['expression'], first['matched'], '/'.join(first['trace'])))
-            continue
         matched_word = first['matched'] == word or first['matched'].lower() == word.lower()
         if not matched_word:
             counts['longer match'] += 1
             continue
-        if first['expression'] in lemmas or first['expression'].lower() in {l.lower() for l in lemmas}:
-            counts['right'] += 1
-        else:
-            counts['wrong'] += 1
+        kind = verdict(word, first, refs, defined)
+        counts[kind] += 1
+        if kind == 'unjudged':
+            unjudged.append((text[:40], first['expression'], first['matched'], '/'.join(first['trace'])))
+        elif kind == 'wrong':
             key = (word.lower(), first['expression'])
             wrong[key] += 1
             wrong_examples[key].append('/'.join(first['trace']))
@@ -247,20 +299,16 @@ def phrases(banks, hover_file, lookups):
         if prev.endswith(text) and prev != text:
             p0 = prev.split(' ')[0].lower()
             if p0 in FUNCTION:
-                word = WORD.match(text).group(0).rstrip("'’")
-                lemmas = right_lemmas(word, refs, defined) | right_lemmas(word.lower(), refs, defined)
+                word = WORD.match(text).group(0)
                 if first is None:
-                    verdict = 'nothing'
-                elif not lemmas:
-                    verdict = 'unjudged'
+                    kind = 'nothing'
                 elif first['matched'].lower() != word.lower():
-                    verdict = 'longer match'
-                elif first['expression'] in lemmas or first['expression'].lower() in {l.lower() for l in lemmas}:
-                    verdict = 'right'
+                    kind = 'longer match'
                 else:
-                    verdict = 'wrong'
-                    wrong_after[(p0, word.lower(), first['expression'], '/'.join(first['trace']))] += 1
-                after[p0][verdict] += 1
+                    kind = verdict(word, first, refs, defined)
+                    if kind == 'wrong':
+                        wrong_after[(p0, word.lower(), first['expression'], '/'.join(first['trace']))] += 1
+                after[p0][kind] += 1
     total_after = collections.Counter()
     for c in after.values():
         total_after.update(c)
@@ -311,9 +359,98 @@ def falsecands(banks, corpus, cli, languages, tagged=False):
         total += len(found)
         if found:
             listed.append((source, term, sorted(found)))
-    print(json.dumps({'rows': len(rows), 'falseCandidates': total / len(rows), 'rowsWithOne': len(listed)}, ensure_ascii=False))
+    def plain(w):
+        return ''.join(c for c in unicodedata.normalize('NFD', w) if unicodedata.category(c) != 'Mn')
+    def stem(w):
+        p = plain(w)
+        for e in ('ιεμαι', 'ουμαι', 'ωμαι', 'αμαι', 'ομαι', 'αω', 'ω'):
+            if p.endswith(e):
+                return p[:-len(e)]
+        return None
+    refs = {t: {x for _, _, rs in v for x in rs} for t, v in rows_of.items()}
+    kinds = collections.Counter()
+    for source, term, found in listed:
+        for f in found:
+            if stem(f) is not None and stem(f) == stem(term):
+                kinds['the same verb in the other voice or conjugation'] += 1
+            elif plain(f).lower() == plain(term).lower():
+                kinds['the same word with another accent or a capital'] += 1
+            elif term in refs.get(f, ()) or f in refs.get(term, ()):
+                kinds['a variant the dictionary links to the lemma'] += 1
+            elif refs.get(f):
+                kinds['a form of another headword'] += 1
+            else:
+                kinds['another word'] += 1
+    print(json.dumps({'rows': len(rows), 'falseCandidates': total / len(rows), 'rowsWithOne': len(listed), 'kinds': dict(kinds)}, ensure_ascii=False))
     for source, term, found in listed:
         print(f'{source}\t{term}\t{" ".join(found)}')
+
+
+def firstrank(banks, corpus, lookups):
+    defined, refs = load_dictionary(banks)
+    rows = [l.rstrip('\n').split('\t') for l in open(corpus, encoding='utf-8') if l.strip() and not l.startswith('#')]
+    answers = [json.loads(l) for l in open(lookups, encoding='utf-8')]
+    kinds = collections.Counter()
+    for (_, _, source, term, _, _), answer in zip(rows, answers):
+        expressions = [r['expression'] for r in answer['results']]
+        if expressions[:1] == [term]:
+            kinds['first'] += 1
+        elif term not in defined:
+            kinds['the lemma has no row with definitions'] += 1
+        elif not expressions:
+            kinds['nothing'] += 1
+        elif term not in expressions:
+            kinds['not among the results'] += 1
+        elif expressions[0] in refs.get(source, ()):
+            kinds['after another lemma the source names'] += 1
+        else:
+            kinds['after another reading'] += 1
+    print(json.dumps(dict(kinds), ensure_ascii=False))
+
+
+def capitals(freq_file, banks, lower_lookups, upper_lookups):
+    defined, refs = load_dictionary(banks)
+    words = [line.split()[0] for line in open(freq_file, encoding='utf-8')][:10000]
+    low = [json.loads(l) for l in open(lower_lookups, encoding='utf-8')]
+    up = [json.loads(l) for l in open(upper_lookups, encoding='utf-8')]
+    counts = collections.Counter()
+    for word, a, b in zip(words, low, up):
+        first = first_defined(a['results'])
+        if first is None or verdict(word, first, refs, defined) != 'right':
+            continue
+        counts['words'] += 1
+        upper = first_defined(b['results'])
+        counts['nothing' if upper is None else verdict(word, upper, refs, defined)] += 1
+    print(json.dumps(dict(counts), ensure_ascii=False))
+
+
+def capital_words(freq_file):
+    for line in open(freq_file, encoding='utf-8').readlines()[:10000]:
+        word = unicodedata.normalize('NFD', line.split()[0].upper())
+        print(unicodedata.normalize('NFC', ''.join(c for c in word if c != '\u0301')))
+
+
+def capital_rows(freq_file, banks, lower_lookups, defaults):
+    """A corpus file of the words whose lowercase first card is right, in capitals:
+    eval-language's firstRank then gives the share read right in capitals."""
+    defined, refs = load_dictionary(banks)
+    words = [line.split()[0] for line in open(freq_file, encoding='utf-8')][:10000]
+    low = [json.loads(l) for l in open(lower_lookups, encoding='utf-8')]
+    if defaults:
+        print('# options: default')
+    print('# category\tvalid\tsource\tterm\trule\treasons')
+    for word, a in zip(words, low):
+        first = first_defined(a['results'])
+        if first is not None and verdict(word, first, refs, defined) == 'right':
+            upper = unicodedata.normalize('NFC', ''.join(c for c in unicodedata.normalize('NFD', word.upper()) if c != '\u0301'))
+            print(f"capitals\t1\t{upper}\t{first['expression']}\t*\t*")
+
+
+def yomitan_conditions(yomitan, own):
+    data = json.load(open(yomitan, encoding='utf-8'))
+    for key, condition in json.load(open(own, encoding='utf-8'))['conditions'].items():
+        data['conditions'].setdefault(key, condition)
+    print(json.dumps(data, ensure_ascii=False, indent=2))
 
 
 def unimorph(file, cli, languages):
@@ -388,6 +525,16 @@ if __name__ == '__main__':
     if cmd == 'frequent':
         opt = lambda name: sys.argv[sys.argv.index(name) + 1] if name in sys.argv else None
         frequent(*sys.argv[2:5], cli=opt('--cli'), languages=opt('--languages'))
+    elif cmd == 'firstrank':
+        firstrank(*sys.argv[2:5])
+    elif cmd == 'capitals':
+        capitals(*sys.argv[2:6])
+    elif cmd == 'capital-rows':
+        capital_rows(*sys.argv[2:5], defaults='--defaults' in sys.argv)
+    elif cmd == 'capital-words':
+        capital_words(sys.argv[2])
+    elif cmd == 'yomitan-conditions':
+        yomitan_conditions(*sys.argv[2:4])
     elif cmd == 'falsecands':
         falsecands(*sys.argv[2:6], tagged='--tagged' in sys.argv)
     elif cmd == 'unimorph':
