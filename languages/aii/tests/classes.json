@@ -4895,16 +4895,6 @@
     "transforms[38].rules[21].stemStartsWith": [
       [1825, 1825]
     ],
-    "transforms[39].rules[0].stemCharacters": [
-      [1808, 1808],
-      [1810, 1839],
-      [1869, 1871]
-    ],
-    "transforms[39].rules[1].stemCharacters": [
-      [1808, 1808],
-      [1810, 1839],
-      [1869, 1871]
-    ],
     "transforms[40].rules[0].stemCharacters": [
       [1808, 1808],
       [1810, 1839],

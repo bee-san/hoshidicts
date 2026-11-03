@@ -71,6 +71,13 @@ def mutations(t):
                 if r['type'] == 'pattern' and '\\u0735' in r['pattern'] and r['pattern'].count('\\u0735') >= 1:
                     r['pattern'] = r['pattern'].replace('*\\u0735[', '*[\\u0730-\\u073F][', 1)
     out.append(('pointed:anyVowel', any_vowel))
+    # The Stem I gerund: a stem of any length.
+    def gerund_any(x):
+        for tt in x['transforms']:
+            if tt['id'] == 'gerund':
+                for r in tt['rules']:
+                    r['pattern'] = r['pattern'].replace('{3}', '{3,}').replace('{2}', '{2,}')
+    out.append(('gerund:anyLength', gerund_any))
     # The Stem III imperative: a stem of any length.
     def imp_any(x):
         for tt in x['transforms']:

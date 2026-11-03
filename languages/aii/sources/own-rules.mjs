@@ -379,8 +379,12 @@ suffix('infinitiveM', 'ܘܝܐ', 'ܐ', ANY, VERB, {minStem: 3, stemStartsWith: '[
 // progressive with the copula (ܝܠܹܗ ܒܸܦܬ݂ܵܚܵܐ, he is opening). Hollow verbs
 // have ܝ for their ܐ here too (ܒܸܨܝܵܡܵܐ), which the hollow rule reads.
 transform('gerund', 'gerund (ܒ- + infinitive)', 'The gerund, ܒ- with the infinitive (ܒܸܦܬ݂ܵܚܵܐ; ܒܸܕܪܵܝܵܐ from ܕܪܐ), which makes the progressive with the copula (ܝܠܹܗ ܒܸܦܬ݂ܵܚܵܐ, he is opening).');
-rule('gerund', {type: 'circumfix', inflectedPrefix: 'ܒ', deinflectedPrefix: '', inflectedSuffix: 'ܐ', deinflectedSuffix: '', conditionsIn: ANY, conditionsOut: VSTEM, stemMinLength: 3, stemCharacters: LETTER});
-rule('gerund', {type: 'circumfix', inflectedPrefix: 'ܒ', deinflectedPrefix: '', inflectedSuffix: 'ܝܐ', deinflectedSuffix: 'ܐ', conditionsIn: ANY, conditionsOut: VERB, stemMinLength: 2, stemCharacters: LETTER});
+// The root has three letters (two for a verb in -ē), so these are patterns
+// of that length: ܒ + a longer word in -ā is a noun after ܒ- (ܒܡܲܕܢܚܵܐ, in
+// the east), and Stems II and III make their gerund from the infinitive
+// (ܒܡܲܪܝܘܿܡܹܐ: ܒ- and infinitiveM).
+rule('gerund', {type: 'pattern', pattern: `^ܒ(${PL}{3})ܐ$`, replacement: '$1', anchorSuffix: 'ܐ', conditionsIn: ANY, conditionsOut: VSTEM});
+rule('gerund', {type: 'pattern', pattern: `^ܒ(${PL}{2})ܝܐ$`, replacement: '$1ܐ', anchorSuffix: 'ܝܐ', conditionsIn: ANY, conditionsOut: VERB});
 
 // --- Past particle -----------------------------------------------------------------
 // ܗ݇ܘܵܐ (wā) after a verb, a participle or the copula makes the past of the

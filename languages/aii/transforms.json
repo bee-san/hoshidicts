@@ -1120,8 +1120,8 @@
       "description": "The gerund, ܒ- with the infinitive (ܒܸܦܬ݂ܵܚܵܐ; ܒܸܕܪܵܝܵܐ from ܕܪܐ), which makes the progressive with the copula (ܝܠܹܗ ܒܸܦܬ݂ܵܚܵܐ, he is opening).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "inflectedPrefix": "ܒ", "deinflectedPrefix": "", "inflectedSuffix": "ܐ", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["v_s"], "stemMinLength": 3, "stemCharacters": "{letter}"},
-        {"type": "circumfix", "inflectedPrefix": "ܒ", "deinflectedPrefix": "", "inflectedSuffix": "ܝܐ", "deinflectedSuffix": "ܐ", "conditionsIn": [], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"}
+        {"type": "pattern", "pattern": "^ܒ([\\u0710-\\u072C]{3})ܐ$", "replacement": "$1", "anchorSuffix": "ܐ", "conditionsIn": [], "conditionsOut": ["v_s"]},
+        {"type": "pattern", "pattern": "^ܒ([\\u0710-\\u072C]{2})ܝܐ$", "replacement": "$1ܐ", "anchorSuffix": "ܝܐ", "conditionsIn": [], "conditionsOut": ["v_f"]}
       ]
     },
     {
