@@ -548,6 +548,7 @@ V;2;SG;IND;FUT	1	desmontarás	desmontar	v	*
 V;2;SG;IND;FUT	1	consagrarás	consagrar	v	*
 V;2;SG;IND;FUT	1	borrifarás	borrifar	v	*
 V;2;SG;IND;FUT	1	fluirás	fluir	v	*
+V;2;SG;IND;PRS	1	ceias	cear	v	*
 V;2;SG;IND;PRS	1	deliberas	deliberar	v	*
 V;2;SG;IND;PRS	1	capitalizas	capitalizar	v	*
 V;2;SG;IND;PRS	1	compulsas	compulsar	v	*
@@ -821,6 +822,7 @@ V;3;SG;IND;PST;PFV	1	acentuou	acentuar	v	*
 V;3;SG;IND;PST;PRF	1	geara	gear	v	*
 V;3;SG;IND;PST;PRF	1	nevara	nevar	v	*
 V;3;SG;SBJV;PRS	1	neve	nevar	v	*
+V;3;SG;SBJV;PRS	1	geie	gear	v	*
 V;3;SG;SBJV;PST;IPFV	1	geasse	gear	v	*
 V;3;SG;SBJV;PST;IPFV	1	nevasse	nevar	v	*
 wty plural	1	assiriologistas	assiriologista	n	*

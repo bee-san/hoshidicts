@@ -26,8 +26,10 @@ L1. Reports how many reached words show a wrong lemma first, and their share
 of the list's tokens. text: every word of the texts, each looked up with the
 rest of its sentence (Project Gutenberg texts between the START and END
 lines). phrases: Tatoeba sentences, every place where a proclitic pronoun,
-article or auxiliary is followed by a word, looked up from that word with the
-rest of the sentence, and every hyphenated verb form with a pronoun.
+article or auxiliary is followed by a word, looked up from the pronoun,
+article or auxiliary and from the word after it (each with the rest of the
+sentence), reported by kind of word before; and every hyphenated verb form
+with a pronoun.
 """
 import argparse
 import json
@@ -42,10 +44,16 @@ from pathlib import Path
 
 WORD = re.compile(r"[A-Za-zÀ-ÖØ-öø-ɏ][A-Za-zÀ-ÖØ-öø-ɏ'’-]*")
 END = re.compile(r'(?<=[.!?…])["”’»)]*\s+')
-PROCLITICS = {'me', 'te', 'se', 'lhe', 'lhes', 'nos', 'vos', 'o', 'a', 'os', 'as'}
-ARTICLES = {'o', 'a', 'os', 'as', 'um', 'uma', 'uns', 'umas'}
-AUXILIARIES = {'vou', 'vai', 'vamos', 'vão', 'tenho', 'tem', 'temos', 'têm', 'tinha', 'estou', 'está', 'estamos', 'estão', 'estava',
-               'foi', 'era', 'é', 'sou', 'ser', 'há', 'hei', 'havia', 'pode', 'posso', 'podemos', 'quero', 'quer', 'deve', 'devo'}
+# The words before a verb or noun that the phrase measurement looks at, by kind;
+# each word is in one kind (o, a, os and as are articles and object pronouns).
+KINDS = [
+    ('pronoun (me te se lhe lhes nos vos)', {'me', 'te', 'se', 'lhe', 'lhes', 'nos', 'vos'}),
+    ('article or pronoun (o a os as)', {'o', 'a', 'os', 'as'}),
+    ('article (um uma uns umas)', {'um', 'uma', 'uns', 'umas'}),
+    ('auxiliary (ir, ter, estar, ser, haver, poder, querer, dever)', {
+        'vou', 'vai', 'vamos', 'vão', 'tenho', 'tem', 'temos', 'têm', 'tinha', 'estou', 'está', 'estamos', 'estão', 'estava',
+        'foi', 'era', 'é', 'sou', 'ser', 'há', 'hei', 'havia', 'pode', 'posso', 'podemos', 'quero', 'quer', 'deve', 'devo'}),
+]
 ENCLITIC = re.compile(r'^[a-zà-öø-ÿ]+(-(me|te|se|lhe|lhes|nos|vos|o|a|os|as|lo|la|los|las|no|na|nas|mo|ma|to|ta|lho|lha))+(-[a-zàáâãéêíóôõúç]+)?$')
 
 
@@ -241,7 +249,8 @@ def text(args, judge):
 
 
 def phrases(args, judge):
-    after, enclitic = [], []
+    by_kind = {name: [] for name, _ in KINDS}
+    enclitic = []
     for line in open(args.inputs[0], encoding='utf-8'):
         sentence = line.rstrip('\n').split('\t')[-1]
         words = list(hovers_of(sentence))
@@ -249,11 +258,13 @@ def phrases(args, judge):
             lower = word.lower()
             if ENCLITIC.match(lower):
                 enclitic.append((word, hover))
-            if i + 1 < len(words) and lower in PROCLITICS | ARTICLES | AUXILIARIES:
-                after.append((word, hover))          # from the pronoun, article or auxiliary
-                after.append(words[i + 1])           # from the word after it
-    return [judge_hovers(args, judge, after, 'after a pronoun, article or auxiliary (both positions)'),
-            judge_hovers(args, judge, enclitic, 'verb forms with an attached pronoun')]
+            if i + 1 < len(words):
+                kind = next((name for name, members in KINDS if lower in members), None)
+                if kind is not None:
+                    by_kind[kind].append((word, hover))      # from the pronoun, article or auxiliary
+                    by_kind[kind].append(words[i + 1])       # from the word after it
+    return [judge_hovers(args, judge, items, f'{name} and the word after it') for name, items in by_kind.items()] + \
+        [judge_hovers(args, judge, enclitic, 'verb forms with an attached pronoun')]
 
 
 def main():

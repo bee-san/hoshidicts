@@ -680,6 +680,11 @@ irregular('rir', {
     s: ['ria', 'rias', 'riamos', 'riais', 'riam'],
     imp: ['ri', 'ride', 'ria', 'riamos', 'riam'],
 }, {fill: ['i', 'pp', 'f', 'c', 'is', 'pi', 'g', 'pa'], prefixes: ['sor']});
+// -ear verbs whose stem has one letter, which the -ear rules' minimum leaves
+// out: ceias, ceie (cear, to have supper), geia (gear, to frost). mear is not
+// written: meio and meia are far more often the words for half and sock.
+irregular('cear', {p: ['ceio', 'ceias', 'ceia', null, null, 'ceiam'], s: ['ceie', 'ceies', null, null, 'ceiem']});
+irregular('gear', {p: ['geio', 'geias', 'geia', null, null, 'geiam'], s: ['geie', 'geies', null, null, 'geiem']});
 irregular('parir', {p: ['pairo'], s: ['paira', 'pairas', 'pairamos', 'pairais', 'pairam'], imp: [null, null, 'paira', 'pairamos', 'pairam']});
 irregular('prazer', {
     p: [null, null, 'praz'],

@@ -605,3 +605,5 @@ exclusions keep	1	estudo	estudar	v	present-eu
 negatives	0	miss	mis	*	*
 negatives	0	pass	pas	*	*
 negatives	0	mass	mas	*	*
+stem changes	1	ceias	cear	v	present-tu
+stem changes	1	geie	gear	v	subjunctive-eu-ele
