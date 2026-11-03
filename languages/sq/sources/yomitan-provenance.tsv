@@ -1,0 +1,96 @@
+# Yomitan rule (transform, index, inflected → deinflected) and the own rules that make the same deinflection; written by sources/build-final.mjs
+# yomitan_transform	rule	inflected	deinflected	own_rules
+definite	0	ku	k	n-def-sg-m[5] u → 
+definite	1	gu	g	n-def-sg-m[5] u → 
+definite	2	hu	h	n-def-sg-m[5] u → 
+definite	3	au	a	n-def-sg-m[5] u → 
+definite	4	iu	i	n-def-sg-m[5] u → 
+definite	5	eu	e	n-def-sg-m[5] u → 
+definite	6	i	ë	n-def-sg-m[1] i → ë
+definite	7	i		n-def-sg-m[0] i → ; n-def-sg-m[4] i → 
+definite	8	ri		n-def-sg-m[6] ri → 
+definite	9	oi	ua	n-def-sg-m[7] oi → ua
+definite	10	a	ë	n-def-nom-f[0] a → ë
+definite	11	a		n-def-nom-f[4] a → ; n-def-nom-f[9] a → 
+definite	12	ja	e	n-def-nom-f[5] ja → e
+singular definite accusative	0	n		n-def-acc-f[0] n → 
+plural	0	e		n-pl[0] e → 
+plural	1	t		n-def-pl[0] t → 
+present indicative second-person singular	0	on	oj	pres-2sg[0] n → j
+present indicative second-person singular	1	uan	uaj	pres-2sg[0] n → j
+present indicative second-person singular	2	n	j	pres-2sg[0] n → j
+present indicative second-person singular	3	hesh	hem	np-pres-2sg[3] esh → em; np-pres-2sg[33] ngrihesh → ngrihem
+present indicative third-person singular	0	on	oj	pres-2sg[0] n → j
+present indicative third-person singular	1	uan	uaj	pres-2sg[0] n → j
+present indicative third-person singular	2	n	j	pres-2sg[0] n → j
+present indicative third-person singular	3	het	hem	np-pres-3sg[3] et → em; np-pres-3sg[45] ngrihet → ngrihem
+present indicative first-person plural	0	më		pres-1pl[0] jmë → j; pres-1pl[8] hamë → ha; pres-1pl[9] pimë → pi; pres-1pl[10] dimë → di; pres-1pl[11] rrimë → rri; pres-1pl[12] flemë → fle; pres-1pl[13] lëmë → lë; pres-1pl[14] vëmë → vë; pres-1pl[15] zëmë → zë; pres-1pl[20] ngremë → ngre
+present indicative first-person plural	1	im		pres-1pl[1] im → ; pres-1pl[5] japim → jap; pres-1pl[6] shohim → shoh
+present indicative first-person plural	2	hemi	hem	pres-1pl[4] themi → them; np-pres-1pl[3] emi → em; np-pres-1pl[32] ngrihemi → ngrihem
+present indicative second-person plural	0	ni	j	pres-2pl[0] ni → j
+present indicative second-person plural	1	ni		pres-2pl[1] ni → ; pres-2pl[11] hani → ha; pres-2pl[12] pini → pi; pres-2pl[13] dini → di; pres-2pl[14] rrini → rri; pres-2pl[17] lëni → lë; pres-2pl[19] vëni → vë; pres-2pl[21] zëni → zë
+present indicative second-person plural	2	heni	hem	np-pres-2pl[3] eni → em; np-pres-2pl[32] ngriheni → ngrihem
+present indicative third-person plural	0	në		pres-3pl[0] jnë → j; pres-3pl[10] hanë → ha; pres-3pl[11] pinë → pi; pres-3pl[12] dinë → di; pres-3pl[13] rrinë → rri; pres-3pl[14] flenë → fle; pres-3pl[15] lënë → lë; pres-3pl[16] vënë → vë; pres-3pl[17] zënë → zë; pres-3pl[22] ngrenë → ngre
+present indicative third-person plural	1	in		pres-3pl[1] in → ; pres-3pl[7] japin → jap; pres-3pl[8] shohin → shoh
+present indicative third-person plural	2	hen	hem	np-pres-3pl[3] en → em; np-pres-3pl[45] ngrihen → ngrihem; np-pres-3pl[47] duhen → duhem
+imperfect first-person singular indicative	0	ja	j	impf-1sg[0] ja → j
+imperfect first-person singular indicative	1	ja		impf-1sg[1] ja → ; impf-1sg[8] haja → ha; impf-1sg[9] pija → pi; impf-1sg[10] dija → di; impf-1sg[11] rrija → rri
+imperfect first-person singular indicative	2	hesha	hem	np-impf-1sg[3] esha → em
+imperfect second-person singular indicative	0	je	j	impf-2sg[0] je → j
+imperfect second-person singular indicative	1	je		impf-2sg[1] je → ; impf-2sg[8] haje → ha; impf-2sg[9] pije → pi; impf-2sg[10] dije → di; impf-2sg[11] rrije → rri
+imperfect second-person singular indicative	2	heshe	hem	np-impf-2sg[3] eshe → em
+imperfect third-person singular indicative	0	nte	j	impf-3sg[0] nte → j
+imperfect third-person singular indicative	1	te		impf-3sg[1] te → ; impf-3sg[24] pyeste → pyes; impf-3sg[52] stërviste → stërvis
+imperfect third-person singular indicative	2	hej	hem	np-impf-3sg[3] ej → em; np-impf-3sg[41] ngrihej → ngrihem; np-impf-3sg[43] duhej → duhem
+imperfect first-person plural indicative	0	nim	j	impf-1pl[0] nim → j
+imperfect first-person plural indicative	1	nim		impf-1pl[1] nim → ; impf-1pl[8] hanim → ha; impf-1pl[9] pinim → pi; impf-1pl[10] dinim → di; impf-1pl[11] rrinim → rri
+imperfect first-person plural indicative	2	heshim	hem	np-impf-1pl[3] eshim → em
+imperfect second-person plural indicative	0	nit	j	impf-2pl[0] nit → j
+imperfect second-person plural indicative	1	nit		impf-2pl[1] nit → ; impf-2pl[8] hanit → ha; impf-2pl[9] pinit → pi; impf-2pl[10] dinit → di; impf-2pl[11] rrinit → rri
+imperfect second-person plural indicative	2	heshit	hem	np-impf-2pl[3] eshit → em
+imperfect third-person plural indicative	0	nin	j	impf-3pl[0] nin → j
+imperfect third-person plural indicative	1	nin		impf-3pl[1] nin → ; impf-3pl[8] hanin → ha; impf-3pl[9] pinin → pi; impf-3pl[10] dinin → di; impf-3pl[11] rrinin → rri
+imperfect third-person plural indicative	2	heshin	hem	np-impf-3pl[3] eshin → em; np-impf-3pl[33] duheshin → duhem
+aorist first-person singular indicative	0	ova	uaj	aor-1sg[1] ova → uaj
+aorist first-person singular indicative	1	va	j	aor-1sg[0] ova → oj; aor-1sg[4] eva → ej; aor-1sg[6] iva → ij; aor-1sg[7] yva → yj; aor-1sg[9] ava → aj
+aorist first-person singular indicative	2	a		aor-1sg[10] a → 
+aorist second-person singular indicative	0	ove	uaj	aor-2sg[1] ove → uaj
+aorist second-person singular indicative	1	ve	j	aor-2sg[0] ove → oj; aor-2sg[4] eve → ej; aor-2sg[6] ive → ij; aor-2sg[7] yve → yj; aor-2sg[9] ave → aj
+aorist second-person singular indicative	2	e		aor-2sg[10] e → 
+aorist third-person singular indicative	0	oi	oj	aor-3sg[0] oi → oj
+aorist third-person singular indicative	1	oi	uaj	aor-3sg[1] oi → uaj
+aorist third-person singular indicative	2	u	j	aor-3sg[4] eu → ej; aor-3sg[6] iu → ij; aor-3sg[7] yu → yj; aor-3sg[9] au → aj
+aorist third-person singular indicative	3	i		aor-3sg[10] i → 
+aorist third-person singular indicative	4	ye	ej	np-aor-3sg[2] ye → ej
+aorist first-person plural indicative	0	uam	oj	aor-1pl[0] uam → oj
+aorist first-person plural indicative	1	uam	uaj	aor-1pl[1] uam → uaj
+aorist first-person plural indicative	2	më	j	aor-1pl[6] emë → ej; aor-1pl[7] imë → ij; aor-1pl[8] ymë → yj; aor-1pl[9] amë → aj; aor-1pl[28] bëmë → bëj
+aorist first-person plural indicative	3	ëm		aor-1pl[10] ëm → 
+aorist second-person plural indicative	0	uat	oj	aor-2pl[0] uat → oj
+aorist second-person plural indicative	1	uat	uaj	aor-2pl[1] uat → uaj
+aorist second-person plural indicative	2	të	j	aor-2pl[6] etë → ej; aor-2pl[7] itë → ij; aor-2pl[8] ytë → yj; aor-2pl[9] atë → aj; aor-2pl[28] bëtë → bëj
+aorist second-person plural indicative	3	ët		aor-2pl[10] ët → 
+aorist third-person plural indicative	0	uan	oj	aor-3pl[0] uan → oj
+aorist third-person plural indicative	1	uan	uaj	aor-3pl[1] uan → uaj
+aorist third-person plural indicative	2	në	j	aor-3pl[6] enë → ej; aor-3pl[7] inë → ij; aor-3pl[8] ynë → yj; aor-3pl[9] anë → aj; aor-3pl[28] bënë → bëj
+aorist third-person plural indicative	3	ën		aor-3pl[10] ën → 
+imperative second-person singular present	0	o	oj	imp-2sg[0]  → j
+imperative second-person singular present	1	hu	hem	np-imp-2sg[3] u → em; np-imp-2sg[6] ngrihu → ngrihem
+imperative second-person plural present	0	ni	j	pres-2pl[0] ni → j
+imperative second-person plural present	1	ni		pres-2pl[1] ni → ; pres-2pl[11] hani → ha; pres-2pl[12] pini → pi; pres-2pl[13] dini → di; pres-2pl[14] rrini → rri; pres-2pl[17] lëni → lë; pres-2pl[19] vëni → vë; pres-2pl[21] zëni → zë
+imperative second-person plural present	2	huni	hem	np-imp-2pl[2] uni → em; np-imp-2pl[4] ngrihuni → ngrihem
+participle	0	uar	oj	ptcp[0] uar → oj
+participle	1	ur		ptcp[12] ur → 
+participle	2	rë	j	ptcp[7] erë → ej; ptcp[8] irë → ij; ptcp[9] yrë → yj; ptcp[10] arë → aj; ptcp[11] ërë → ëj; ptcp[47] blerë → blej
+participle	3	yer	ej	ptcp[5] yer → ej
+mediopassive	0	hem	h	np-pres-1sg[2] em → 
+mediopassive	1	hem	j	np-pres-1sg[0] hem → j
+optative first-person singular present	0	fsha	j	opt-1sg[0] fsha → j
+optative second-person singular present	0	fsh	j	opt-2sg[0] fsh → j
+optative third-person singular present	0	ftë	j	opt-3sg[0] ftë → j
+optative first-person plural present	0	fshim	j	opt-1pl[0] fshim → j
+optative second-person plural present	0	fshi	j	opt-2pl[0] fshi → j
+optative third-person plural present	0	fshin	j	opt-3pl[0] fshin → j
+nominalization	0	im	oj	(none)
+nominalization	1	im	ej	(none)
+nominalization	2	je		(none)

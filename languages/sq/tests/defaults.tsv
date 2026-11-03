@@ -1,0 +1,361 @@
+# options: default
+# Hand-written for this pack (GPL-3.0-or-later): one or more rows for each transform, tricky forms, phrases with articles, auxiliaries, particles and pronouns, and negatives. Run with the pack's defaults, so the optional addMissingDiacritics processor cannot pass a row.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+contraction	1	s'kam	kam	v	neg
+contraction	1	s’kam	kam	v	neg
+contraction	1	s'di	di	v	neg
+contraction	1	s'ka	kam	v	pres-2sg|neg
+contraction	1	ç'bën	bëj	v	pres-2sg|what
+article	1	i mirë	mirë	adj	art
+article	1	e bukur	bukur	adj	art
+article	1	e madhe	madh	adj	adj-f|art
+article	1	e ndryshme	ndryshëm	adj	adj-f|art
+article	1	e zezë	zi	adj	adj-f|art
+article	1	e re	ri	adj	adj-f|art
+article	1	së madhe	madh	adj	adj-f|art
+article	1	të mira	mirë	adj	adj-pl-f|art
+article	1	të vogla	vogël	adj	adj-pl-f|art
+article	1	të vjetra	vjetër	adj	adj-pl-f|art
+article	1	të bukura	bukur	adj	adj-pl-f|art
+article	1	të mëdha	madh	adj	adj-pl-f|art
+article	1	të reja	ri	adj	adj-pl-f|art
+article	1	të këqija	keq	adj	adj-pl-f|art
+article	1	të zeza	zi	adj	adj-pl-f|art
+article	1	të mëdhenj	madh	adj	adj-pl-m|art
+article	1	të vegjël	vogël	adj	adj-pl-m|art
+article	1	të rinj	ri	adj	adj-pl-m|art
+article	1	të këqij	keq	adj	adj-pl-m|art
+article	1	të zinj	zi	adj	adj-pl-m|art
+adjective	1	shqiptare	shqiptar	adj	adj-f
+adjective	1	shqiptarë	shqiptar	adj	adj-pl-m
+adjective	1	ekonomike	ekonomik	adj	adj-f
+definite adjective	1	i miri	mirë	adj	adj-def-m|art
+definite adjective	1	i madhi	madh	adj	adj-def-m|art
+definite adjective	1	i riu	ri	adj	adj-def-m|art
+definite adjective	1	të mirin	mirë	adj	adj-def-m|art
+definite adjective	1	e mira	mirë	adj	adj-def-f|art
+definite adjective	1	e madhja	madh	adj	adj-f|adj-def-f|art
+definite adjective	1	të mirën	mirë	adj	adj-def-f|art
+definite adjective	1	të mirët	mirë	adj	adj-def-pl|art
+definite adjective	1	të mirat	mirë	adj	adj-pl-f|adj-def-pl|art
+comparative	1	më i mirë	mirë	adj	art|cmp
+comparative	1	më e madhe	madh	adj	adj-f|art|cmp
+comparative	1	më të mëdhenj	madh	adj	adj-pl-m|art|cmp
+comparative	1	më i miri	mirë	adj	adj-def-m|art|cmp
+noun syncope	1	librat	libër	n	n-pl|n-def-pl
+noun syncope	1	libri	libër	n	n-def-sg-m
+noun syncope	1	emrin	emër	n	n-def-acc-m
+noun syncope	1	motrës	motër	n	n-def-obl-f
+noun syncope	1	zemrën	zemër	n	n-def-acc-f
+noun syncope	1	ëndrrat	ëndërr	n	n-pl|n-def-pl
+noun syncope	1	vegla	vegël	n	n-def-nom-f
+noun syncope	1	organizmi	organizëm	n	n-def-sg-m
+noun plural	1	malet	mal	n	n-pl|n-def-pl
+noun plural	1	shokëve	shok	n	n-pl|n-obl-pl
+noun plural	1	vajzash	vajzë	n	n-pl|n-abl-pl
+noun plural	1	miqtë	mik	n	n-pl|n-def-pl
+noun plural	1	zogjtë	zog	n	n-pl|n-def-pl
+noun plural	1	pleqve	plak	n	n-pl|n-obl-pl
+noun plural	1	parqet	park	n	n-pl|n-def-pl
+noun plural	1	djemtë	djalë	n	n-pl|n-def-pl
+noun plural	1	kuajt	kalë	n	n-pl|n-def-pl
+noun plural	1	duart	dorë	n	n-pl|n-def-pl
+noun plural	1	dyert	derë	n	n-pl|n-def-pl
+noun plural	1	netët	natë	n	n-pl|n-def-pl
+noun plural	1	gratë	grua	n	n-pl|n-def-pl
+noun plural	1	njerëzit	njeri	n	n-pl|n-def-pl
+noun plural	1	vëllezërit	vëlla	n	n-pl|n-def-pl
+noun plural	1	baballarët	baba	n	n-pl|n-def-pl
+noun plural	1	shembujt	shembull	n	n-pl|n-def-pl
+noun plural	1	lumenjtë	lumë	n	n-pl|n-def-pl
+noun plural	1	fshatrat	fshat	n	n-pl|n-def-pl
+noun plural	1	mbretërit	mbret	n	n-pl|n-def-pl
+noun plural	1	nxënësish	nxënës	n	n-abl-pl
+noun plural	1	qentë	qen	n	n-def-pl
+noun plural	1	shtëpitë	shtëpi	n	n-def-pl
+noun plural	1	ujërat	ujë	n	n-pl|n-def-pl
+noun stressed vowel	1	shtëpisë	shtëpi	n	n-def-obl-f
+noun stressed vowel	1	shtëpinë	shtëpi	n	n-def-acc-f
+noun stressed vowel	1	shtëpie	shtëpi	n	n-indef-obl-f
+noun stressed vowel	1	kalaja	kala	n	n-def-nom-f
+noun stressed vowel	1	babai	baba	n	n-def-sg-m
+noun stressed vowel	1	vëllanë	vëlla	n	n-def-acc-m
+noun stressed vowel	1	vëllait	vëlla	n	n-def-obl-m
+noun stressed vowel	1	syri	sy	n	n-def-sg-m
+noun stressed vowel	1	njeriu	njeri	n	n-def-sg-m
+noun stressed vowel	1	dheu	dhe	n	n-def-sg-m
+noun stressed vowel	1	kaun	ka	n	n-def-acc-m
+noun stressed vowel	1	gjuri	gju	n	n-def-sg-m
+noun stressed vowel	1	dragoi	dragua	n	n-def-sg-m
+noun stressed vowel	1	zëri	zë	n	n-def-sg-m
+noun stressed vowel	1	gruas	grua	n	n-def-obl-f
+noun	1	djali	djalë	n	n-def-sg-m
+noun	1	mikut	mik	n	n-def-obl-m
+noun	1	vajzën	vajzë	n	n-def-acc-f
+noun	1	vajze	vajzë	n	n-indef-obl-f
+noun	1	lulja	lule	n	n-def-nom-f
+noun	1	lules	lule	n	n-def-obl-f
+noun	1	luleje	lule	n	n-indef-obl-f
+noun	1	pyetja	pyetje	n	n-def-nom-f
+noun	1	lëvizjeje	lëvizje	n	n-indef-obl-f
+noun	1	fluturën	flutur	n	n-def-acc-f
+present	1	punon	punoj	v	pres-2sg
+present	1	punojmë	punoj	v	pres-1pl
+present	1	punoni	punoj	v	pres-2pl
+present	1	punojnë	punoj	v	pres-3pl
+present	1	shkruan	shkruaj	v	pres-2sg
+present	1	kthen	kthej	v	pres-2sg
+present	1	hapim	hap	v	pres-1pl
+present	1	hapni	hap	v	pres-2pl
+present	1	hapin	hap	v	pres-3pl
+present	1	flet	flas	v	pres-2sg
+present	1	pret	pres	v	pres-2sg
+present	1	humbet	humbas	v	pres-2sg
+present	1	vjen	vij	v	pres-2sg
+present	1	jep	jap	v	pres-2sg
+present	1	merr	marr	v	pres-2sg
+present	1	del	dal	v	pres-2sg
+present	1	sheh	shoh	v	pres-2sg
+present	1	njeh	njoh	v	pres-2sg
+present	1	thotë	them	v	pres-2sg
+present	1	ikën	iki	v	pres-2sg
+present	1	është	jam	v	pres-2sg
+present	1	kanë	kam	v	pres-3pl
+present	1	flisni	flas	v	pres-2pl
+present	1	hiqni	heq	v	pres-2pl
+imperfect	1	punoja	punoj	v	impf-1sg
+imperfect	1	punonte	punoj	v	impf-3sg
+imperfect	1	hapte	hap	v	impf-3sg
+imperfect	1	fliste	flas	v	impf-3sg
+imperfect	1	jepte	jap	v	impf-3sg
+imperfect	1	donte	dua	v	impf-3sg
+imperfect	1	dinte	di	v	impf-3sg
+imperfect	1	thoshte	them	v	impf-3sg
+imperfect	1	ishte	jam	v	impf-3sg
+imperfect	1	kishin	kam	v	impf-3pl
+aorist	1	punova	punoj	v	aor-1sg
+aorist	1	punoi	punoj	v	aor-3sg
+aorist	1	punuan	punoj	v	aor-3pl
+aorist	1	shkrova	shkruaj	v	aor-1sg
+aorist	1	kthyem	kthej	v	aor-1pl
+aorist	1	theva	thyej	v	aor-1sg
+aorist	1	bleu	blej	v	aor-3sg
+aorist	1	fshiu	fshij	v	aor-3sg
+aorist	1	hyri	hyj	v	aor-3sg
+aorist	1	lau	laj	v	aor-3sg
+aorist	1	mbajti	mbaj	v	aor-3sg
+aorist	1	luajtën	luaj	v	aor-3pl
+aorist	1	hapën	hap	v	aor-3pl
+aorist	1	preku	prek	v	aor-3sg
+aorist	1	pyeti	pyes	v	aor-3sg
+aorist	1	fola	flas	v	aor-1sg
+aorist	1	dola	dal	v	aor-1sg
+aorist	1	mora	marr	v	aor-1sg
+aorist	1	dhashë	jap	v	aor-1sg
+aorist	1	pashë	shoh	v	aor-1sg
+aorist	1	erdhi	vij	v	aor-3sg
+aorist	1	desha	dua	v	aor-1sg
+aorist	1	hëngri	ha	v	aor-3sg
+aorist	1	piu	pi	v	aor-3sg
+aorist	1	fjeti	fle	v	aor-3sg
+aorist	1	lashë	lë	v	aor-1sg
+aorist	1	vuri	vë	v	aor-3sg
+aorist	1	zuri	zë	v	aor-3sg
+aorist	1	ra	bie	v	aor-3sg
+aorist	1	ndenja	rri	v	aor-1sg
+aorist	1	bëri	bëj	v	aor-3sg
+aorist	1	hodhi	hedh	v	aor-3sg
+aorist	1	solli	sjell	v	aor-3sg
+aorist	1	dogji	djeg	v	aor-3sg
+aorist	1	ndoqën	ndjek	v	aor-3pl
+aorist	1	nxori	nxjerr	v	aor-3sg
+aorist	1	zgjodhi	zgjedh	v	aor-3sg
+aorist	1	tërhoqi	tërheq	v	aor-3sg
+aorist	1	vdiq	vdes	v	aor-3sg
+aorist	1	vrau	vras	v	aor-3sg
+aorist	1	shiti	shes	v	aor-3sg
+aorist	1	gjeti	gjej	v	aor-3sg
+aorist	1	ngriti	ngre	v	aor-3sg
+aorist	1	goditi	godas	v	aor-3sg
+aorist	1	arriti	arrij	v	aor-3sg
+aorist	1	tha	them	v	aor-3sg
+aorist	1	qe	jam	v	aor-3sg
+aorist	1	pati	kam	v	aor-3sg
+subjunctive	1	të punosh	punoj	v	sbjv-2sg|sbjv
+subjunctive	1	të punojë	punoj	v	sbjv-3sg|sbjv
+subjunctive	1	të hapësh	hap	v	sbjv-2sg|sbjv
+subjunctive	1	të hapë	hap	v	sbjv-3sg|sbjv
+subjunctive	1	të jetë	jam	v	sbjv-3sg|sbjv
+subjunctive	1	të ketë	kam	v	sbjv-3sg|sbjv
+subjunctive	1	ta bëj	bëj	v	sbjv
+subjunctive	1	t'i them	them	v	sbjv
+subjunctive	1	të shkonte	shkoj	v	impf-3sg|sbjv
+future	1	do të shkoj	shkoj	v	fut
+future	1	do të shkosh	shkoj	v	sbjv-2sg|fut
+future	1	do ta bëj	bëj	v	fut
+future	1	do t'i them	them	v	fut
+conditional	1	do të shkonte	shkoj	v	impf-3sg|fut
+conditional	1	do të kisha bërë	bëj	v	ptcp|plup-1sg|fut
+optative	1	ndihmoftë	ndihmoj	v	opt-3sg
+optative	1	rroftë	rroj	v	opt-3sg
+optative	1	punofsha	punoj	v	opt-1sg
+optative	1	shkrofsh	shkruaj	v	opt-2sg
+optative	1	hapshin	hap	v	opt-3pl
+optative	1	qoftë	jam	v	opt-3sg
+optative	1	pastë	kam	v	opt-3sg
+admirative	1	punuakam	punoj	v	ptcp|adm-pres
+admirative	1	hapka	hap	v	ptcp|adm-pres
+admirative	1	bëka	bëj	v	ptcp|adm-pres
+admirative	1	qenka	jam	v	ptcp|adm-pres
+admirative	1	paska	kam	v	ptcp|adm-pres
+admirative	1	dalka	dal	v	ptcp|adm-pres
+admirative	1	punuakësh	punoj	v	ptcp|adm-impf
+participle	1	punuar	punoj	v	ptcp
+participle	1	shkruar	shkruaj	v	ptcp
+participle	1	kthyer	kthej	v	ptcp
+participle	1	fshirë	fshij	v	ptcp
+participle	1	larë	laj	v	ptcp
+participle	1	bërë	bëj	v	ptcp
+participle	1	hapur	hap	v	ptcp
+participle	1	dalë	dal	v	ptcp
+participle	1	mbajtur	mbaj	v	ptcp
+participle	1	pritur	pres	v	ptcp
+participle	1	parë	shoh	v	ptcp
+participle	1	thënë	them	v	ptcp
+participle	1	qenë	jam	v	ptcp
+perfect	1	kam punuar	punoj	v	ptcp|perf-1sg
+perfect	1	ke parë	shoh	v	ptcp|perf-2sg
+perfect	1	ka ardhur	vij	v	ptcp|perf-3sg
+perfect	1	kemi ngrënë	ha	v	ptcp|perf-1pl
+perfect	1	keni thënë	them	v	ptcp|perf-2pl
+perfect	1	kanë shkruar	shkruaj	v	ptcp|perf-3pl
+perfect	1	të kem punuar	punoj	v	ptcp|perf-sbjv-1sg|sbjv
+perfect	1	të kesh punuar	punoj	v	ptcp|perf-sbjv-2sg|sbjv
+perfect	1	të ketë punuar	punoj	v	ptcp|perf-sbjv-3sg|sbjv
+perfect	1	të kenë punuar	punoj	v	ptcp|perf-sbjv-3pl|sbjv
+pluperfect	1	kisha bërë	bëj	v	ptcp|plup-1sg
+pluperfect	1	kishte thënë	them	v	ptcp|plup-3sg
+pluperfect	1	kishin dalë	dal	v	ptcp|plup-3pl
+past anterior	1	pata punuar	punoj	v	ptcp|pant-1sg
+past anterior	1	pati punuar	punoj	v	ptcp|pant-3sg
+non-active perfect	1	jam larë	laj	v	ptcp|np-perf-1sg
+non-active perfect	1	je larë	laj	v	ptcp|np-perf-2sg
+non-active perfect	1	është bërë	bëj	v	ptcp|np-perf-3sg
+non-active perfect	1	jemi takuar	takoj	v	ptcp|np-perf-1pl
+non-active perfect	1	jeni martuar	martoj	v	ptcp|np-perf-2pl
+non-active perfect	1	janë shkruar	shkruaj	v	ptcp|np-perf-3pl
+non-active perfect	1	të jem larë	laj	v	ptcp|np-perf-sbjv-1sg|sbjv
+non-active perfect	1	të jesh larë	laj	v	ptcp|np-perf-sbjv-2sg|sbjv
+non-active perfect	1	të jetë bërë	bëj	v	ptcp|np-perf-sbjv-3sg|sbjv
+non-active perfect	1	të jenë shkruar	shkruaj	v	ptcp|np-perf-sbjv-3pl|sbjv
+non-active perfect	1	do të jetë bërë	bëj	v	ptcp|np-perf-sbjv-3sg|fut
+non-active perfect	1	është ulur	ulem	v	np-lemma
+non-active perfect	1	është larguar	largohem	v	np-lemma
+non-active pluperfect	1	isha larë	laj	v	ptcp|np-plup-1sg
+non-active pluperfect	1	ishe larë	laj	v	ptcp|np-plup-2sg
+non-active pluperfect	1	ishte bërë	bëj	v	ptcp|np-plup-3sg
+non-active pluperfect	1	ishim takuar	takoj	v	ptcp|np-plup-1pl
+non-active pluperfect	1	ishit martuar	martoj	v	ptcp|np-plup-2pl
+non-active pluperfect	1	ishin shkruar	shkruaj	v	ptcp|np-plup-3pl
+perfect optative	1	paça punuar	punoj	v	ptcp|opt-perf-1sg
+perfect optative	1	paç punuar	punoj	v	ptcp|opt-perf-2sg
+perfect optative	1	pastë punuar	punoj	v	ptcp|opt-perf-3sg
+non-active perfect optative	1	qofsha larë	laj	v	ptcp|np-opt-perf-1sg
+non-active perfect optative	1	qofsh larë	laj	v	ptcp|np-opt-perf-2sg
+non-active perfect optative	1	qoftë bërë	bëj	v	ptcp|np-opt-perf-3sg
+non-active perfect optative	1	qofshim larë	laj	v	ptcp|np-opt-perf-1pl
+non-active perfect optative	1	qofshi larë	laj	v	ptcp|np-opt-perf-2pl
+non-active perfect optative	1	qofshin larë	laj	v	ptcp|np-opt-perf-3pl
+perfect admirative	1	paskam punuar	punoj	v	ptcp|adm-perf-1sg
+perfect admirative	1	paske punuar	punoj	v	ptcp|adm-perf-2sg
+perfect admirative	1	paskësh punuar	punoj	v	ptcp|adm-plup-3sg
+perfect admirative	1	paskëshe punuar	punoj	v	ptcp|adm-plup-2sg
+non-active perfect admirative	1	qenkam larë	laj	v	ptcp|np-adm-perf-1sg
+non-active perfect admirative	1	qenke larë	laj	v	ptcp|np-adm-perf-2sg
+non-active perfect admirative	1	qenka bërë	bëj	v	ptcp|np-adm-perf-3sg
+non-active perfect admirative	1	qenkemi larë	laj	v	ptcp|np-adm-perf-1pl
+non-active perfect admirative	1	qenkeni larë	laj	v	ptcp|np-adm-perf-2pl
+non-active perfect admirative	1	qenkan larë	laj	v	ptcp|np-adm-perf-3pl
+non-active pluperfect admirative	1	qenkësha larë	laj	v	ptcp|np-adm-plup-1sg
+non-active pluperfect admirative	1	qenkëshe larë	laj	v	ptcp|np-adm-plup-2sg
+non-active pluperfect admirative	1	qenkësh bërë	bëj	v	ptcp|np-adm-plup-3sg
+non-active pluperfect admirative	1	qenkëshim larë	laj	v	ptcp|np-adm-plup-1pl
+non-active pluperfect admirative	1	qenkëshit larë	laj	v	ptcp|np-adm-plup-2pl
+non-active pluperfect admirative	1	qenkëshin larë	laj	v	ptcp|np-adm-plup-3pl
+gerund	1	duke punuar	punoj	v	ptcp|ger
+gerund	1	duke qenë	jam	v	ptcp|ger
+gerund	1	duke u larë	laj	v	ptcp|ger
+gerund	1	duke u larë	lahem	v	np-lemma
+infinitive	1	për të punuar	punoj	v	ptcp|inf
+infinitive	1	për t'u larë	lahem	v	np-lemma
+privative	1	pa folur	flas	v	ptcp|priv
+privative	1	pa u larë	laj	v	ptcp|priv
+non-active	1	lahem	laj	v	np-pres-1sg
+non-active	1	punohem	punoj	v	np-pres-1sg
+non-active	1	punohet	punoj	v	np-pres-3sg
+non-active	1	hapet	hap	v	np-pres-3sg
+non-active	1	shkruhet	shkruaj	v	np-pres-3sg
+non-active	1	kthehet	kthej	v	np-pres-3sg
+non-active	1	largohet	largohem	v	np-pres-3sg
+non-active	1	duket	dukem	v	np-pres-3sg
+non-active	1	dukej	dukem	v	np-impf-3sg
+non-active	1	lutej	lutem	v	np-impf-3sg
+non-active	1	bëhej	bëj	v	np-impf-3sg
+non-active	1	thuhet	them	v	np-pres-3sg
+non-active	1	jepet	jap	v	np-pres-3sg
+non-active	1	shihet	shoh	v	np-pres-3sg
+non-active	1	merret	marr	v	np-pres-3sg
+non-active	1	flitet	flas	v	np-pres-3sg
+non-active	1	hidhet	hedh	v	np-pres-3sg
+non-active	1	lahu	laj	v	np-imp-2sg
+non-active	1	largohu	largohem	v	np-imp-2sg
+non-active	1	ulu	ulem	v	np-imp-2sg
+non-active	1	uluni	ulem	v	np-imp-2pl
+non-active	1	u bë	bëj	v	np-aor-3sg
+non-active	1	u largua	largoj	v	np-aor-3sg|np-u
+non-active	1	u largua	largohem	v	np-lemma
+non-active	1	u kthye	kthehem	v	np-lemma
+non-active	1	u la	laj	v	np-aor-3sg
+non-active	1	u nisa	nis	v	aor-1sg|np-u
+non-active	1	u nisa	nisem	v	np-lemma
+non-active	1	u largova	largoj	v	aor-1sg|np-u
+non-active	1	u ngritën	ngrihem	v	aor-3pl
+non-active	1	u bëfsh	bëj	v	opt-2sg|np-u
+imperative	1	puno	punoj	v	imp-2sg
+imperative	1	kthe	kthej	v	imp-2sg
+imperative	1	fshi	fshij	v	imp-2sg
+imperative	1	hidh	hedh	v	imp-2sg
+imperative	1	merr	marr	v	imp-2sg
+imperative	1	thuaj	them	v	imp-2sg
+imperative	1	eja	vij	v	imp-2sg
+imperative clitic	1	hape	hap	v	cl-e
+imperative clitic	1	merre	marr	v	imp-2sg|cl-e
+imperative clitic	1	lexoje	lexoj	v	imp-2sg|cl-e
+imperative clitic	1	bëje	bëj	v	cl-e
+imperative clitic	1	hapeni	hap	v	pres-2pl|cl-e
+imperative clitic	1	lexojeni	lexoj	v	pres-2pl|cl-e
+imperative clitic	1	jepi	jap	v	imp-2sg|cl-i
+imperative clitic	1	tregoji	tregoj	v	imp-2sg|cl-i
+imperative clitic	1	thuaji	them	v	imp-2sg|cl-i
+imperative clitic	1	jepini	jap	v	pres-2pl|cl-i
+imperative clitic	1	jepmë	jap	v	imp-2sg|cl-me
+imperative clitic	1	tregomë	tregoj	v	imp-2sg|cl-me
+imperative clitic	1	tregona	tregoj	v	imp-2sg|cl-na
+imperative clitic	1	jepna	jap	v	imp-2sg|cl-na
+negatives	0	e di	di	v	*
+negatives	0	i djalit	djalë	n	*
+negatives	0	të shtëpisë	shtëpi	n	*
+negatives	0	e vajzës	vajzë	n	*
+negatives	0	kam shtëpi	shtëpi	n	*
+negatives	0	pa ujë	ujë	n	*
+negatives	0	më thuaj	them	v	*
+negatives	0	më jep	jap	v	*
+negatives	0	e ka	e kam	*	*
+negatives	0	të mira	të mirë	*	*
+negatives	0	do të punojë	do të punoj	*	*
+negatives	0	vajzat e vogla	vajzat e vogël	*	*
+negatives	0	fola	fal	v	*
+negatives	0	punon	punoj	v	impf-3sg
+negatives	0	shkon	shkoj	v	aor-3pl
+negatives	0	ka ardhur	ardhem	v	*
+negatives	0	kam lodhur	lodhem	v	*

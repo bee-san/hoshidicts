@@ -1,0 +1,997 @@
+# Source: UniMorph sqi (https://github.com/unimorph/sqi) at 63fed8fdd510d14a75d2d2dacb1c5ab1475617e7, file sqi, CC BY-SA 3.0, by the UniMorph contributors (data from English Wiktionary).
+# 1,000 rows sampled with seed 1 by sources/build-corpus.mjs: 450 single-word verb forms, 150 analytic verb forms, 400 noun forms; corpus.tsv has the rows the rules reach, gaps.tsv the others.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+V;1;PL;OPT;PRS	1	dhurofshim	dhuroj	v	*
+V;1;PL;ADM;IPFV	1	vendoskëshim	vendos	v	*
+V;3;SG;ADM;PRS	1	abstenuaka	abstenoj	v	*
+V;2;SG;IND;IPFV	1	abstenoje	abstenoj	v	*
+V;2;PL;IND;IPFV	1	sodomizonit	sodomizoj	v	*
+V;3;PL;ADM;PRS	1	menduakan	mendoj	v	*
+V;3;SG;ADM;PRS	1	abuzuaka	abuzoj	v	*
+V;3;PL;ADM;IPFV	1	paskëshin	kam	v	*
+V;2;PL;IMP	1	udhëzoni	udhëzoj	v	*
+V;V.PTCP	1	mbuluar	mbuloj	v	*
+V;3;PL;ADM;IPFV	1	dëshiruakëshin	dëshiroj	v	*
+V;2;PL;ADM;IPFV	1	paskëshit	kam	v	*
+V;2;PL;ADM;PRS	1	reaguakeni	reagoj	v	*
+V;3;SG;IND;IPFV	1	ndryshonte	ndryshoj	v	*
+V;2;PL;OPT;PRS	1	fillofshit	filloj	v	*
+V;3;PL;IND;IPFV	1	shihnin	shoh	v	*
+V;3;SG;ADM;IPFV	1	zhvilluakësh	zhvilloj	v	*
+V;2;SG;ADM;IPFV	1	udhëheqkëshe	udhëheq	v	*
+V;V.PTCP	1	shtegtuar	shtegtoj	v	*
+V;2;SG;IMP	1	kafsho	kafshoj	v	*
+V;2;PL;ADM;IPFV	1	ndihkëshit	ndih	v	*
+V;1;SG;ADM;PRS	1	prodhuakam	prodhoj	v	*
+V;2;PL;ADM;PRS	1	ndakeni	ndaj	v	*
+V;2;SG;ADM;IPFV	1	themeluakëshe	themeloj	v	*
+V;1;SG;OPT;PRS	1	udhëtofsha	udhëtoj	v	*
+V;3;PL;OPT;PRS	1	shfuqizofshin	shfuqizoj	v	*
+V;3;PL;ADM;IPFV	1	peshuakëshin	peshoj	v	*
+V;1;PL;IND;IPFV	1	shtrembëronim	shtrembëroj	v	*
+V;1;SG;IND;IPFV	1	qëndroja	qëndroj	v	*
+V;1;SG;ADM;IPFV	1	shfuqizuakësha	shfuqizoj	v	*
+V;3;PL;IND;PRS	1	takojnë	takoj	v	*
+V;2;SG;IMP	1	kupto	kuptoj	v	*
+V;1;PL;IND;PST	1	skllavëruam	skllavëroj	v	*
+V;1;PL;OPT;PRS	1	urofshim	uroj	v	*
+V;3;SG;ADM;PRS	1	fshehka	fsheh	v	*
+V;1;SG;IND;IPFV	1	peshohesha	peshohem	v	*
+V;2;PL;IND;PST	1	përgjithësuat	përgjithësoj	v	*
+V;1;PL;ADM;PRS	1	ledhatuakemi	ledhatoj	v	*
+V;1;PL;IND;IPFV	1	sulmonim	sulmoj	v	*
+V;2;PL;IND;PST	1	përsosët	përsos	v	*
+V;2;SG;ADM;PRS	1	jetuake	jetoj	v	*
+V;3;SG;OPT;PRS	1	lëshoftë	lëshoj	v	*
+V;3;SG;IND;PST	1	harroi	harroj	v	*
+V;3;SG;OPT;PRS	1	kuptoftë	kuptoj	v	*
+V;1;SG;IND;IPFV	1	qaja	qaj	v	*
+V;1;SG;ADM;IPFV	1	shkretuakësha	shkretoj	v	*
+V;3;PL;IND;IPFV	1	këndonin	këndoj	v	*
+V;1;PL;IND;IPFV	1	degjonim	degjoj	v	*
+V;1;PL;OPT;PRS	1	thekshim	thek	v	*
+V;2;SG;ADM;IPFV	1	paskëshe	kam	v	*
+V;1;SG;OPT;PRS	1	shurrofsha	shurroj	v	*
+V;1;SG;IND;IPFV	1	shkretoja	shkretoj	v	*
+V;1;PL;IND;PRS	1	përfitojmë	përfitoj	v	*
+V;2;PL;ADM;PRS	1	fshikeni	fshij	v	*
+V;2;SG;OPT;PRS	1	shkatërrofsh	shkatërroj	v	*
+V;3;SG;IND;IPFV	1	mendonte	mendoj	v	*
+V;3;PL;OPT;PRS	1	ngrënçin	ha	v	*
+V;1;SG;ADM;PRS	1	ndalkam	ndal	v	*
+V;2;PL;IND;PST	1	shpresuat	shpresoj	v	*
+V;1;SG;IND;IPFV	1	reagoja	reagoj	v	*
+V;3;PL;ADM;IPFV	1	puthkëshin	puth	v	*
+V;1;SG;IND;IPFV	1	kërkoja	kërkoj	v	*
+V;2;SG;OPT;PRS	1	kafshofsh	kafshoj	v	*
+V;2;PL;ADM;IPFV	1	përgjithësuakëshit	përgjithësoj	v	*
+V;1;PL;IND;PRS	1	prodhojmë	prodhoj	v	*
+V;3;SG;OPT;PRS	1	njoftoftë	njoftoj	v	*
+V;2;PL;OPT;PRS	1	gënjefshit	gënjej	v	*
+V;3;SG;ADM;PRS	1	dhuruaka	dhuroj	v	*
+V;2;SG;ADM;PRS	1	përmirësuake	përmirësoj	v	*
+V;1;PL;OPT;PRS	1	pafshim	shoh	v	*
+V;3;SG;IND;PST	1	qau	qaj	v	*
+V;1;SG;OPT;PRS	1	ngrënça	ha	v	*
+V;1;PL;OPT;PRS	1	shkëlqefshim	shkëlqej	v	*
+V;2;PL;OPT;PRS	1	zgjofshit	zgjoj	v	*
+V;3;SG;ADM;IPFV	1	qenkësh	jam	v	*
+V;2;SG;ADM;IPFV	1	ngrikëshe	ngrij	v	*
+V;3;PL;IND;IPFV	1	zgjonin	zgjoj	v	*
+V;3;SG;ADM;IPFV	1	admiruakësh	admiroj	v	*
+V;1;PL;IND;PST	1	bekuam	bekoj	v	*
+V;3;PL;IND;IPFV	1	ngrinin	ngre	v	*
+V;1;SG;OPT;PRS	1	urrefsha	urrej	v	*
+V;1;SG;IND;IPFV	1	armatosja	armatos	v	*
+V;1;PL;IND;IPFV	1	ngjiteshim	ngjitem	v	*
+V;3;SG;ADM;PRS	1	dëshiruaka	dëshiroj	v	*
+V;3;SG;IND;IPFV	1	sajonte	sajoj	v	*
+V;2;SG;IND;PRS	1	sajon	sajoj	v	*
+V;1;SG;OPT;PRS	1	transferofsha	transferoj	v	*
+V;V.PTCP	1	shkretuar	shkretoj	v	*
+V;1;PL;IND;PST	1	preferuam	preferoj	v	*
+V;3;PL;IND;IPFV	1	vyshkeshin	vyshkem	v	*
+V;1;PL;OPT;PRS	1	mendofshim	mendoj	v	*
+V;2;PL;IMP	1	dërmoni	dërmoj	v	*
+V;1;SG;OPT;PRS	1	degjofsha	degjoj	v	*
+V;2;SG;OPT;PRS	1	kundërshtofsh	kundërshtoj	v	*
+V;3;PL;IND;IPFV	1	qëndronin	qëndroj	v	*
+V;1;PL;ADM;PRS	1	ngrënkemi	ha	v	*
+V;2;PL;ADM;IPFV	1	mbaruakëshit	mbaroj	v	*
+V;3;PL;IND;PRS	1	lexojnë	lexoj	v	*
+V;2;SG;OPT;PRS	1	përfitofsh	përfitoj	v	*
+V;3;PL;ADM;PRS	1	shpifkan	shpif	v	*
+V;3;SG;ADM;PRS	1	vazhduaka	vazhdoj	v	*
+V;2;SG;IND;PRS	1	mësohesh	mësohem	v	*
+V;1;PL;IND;IPFV	1	qortonim	qortoj	v	*
+V;2;SG;IMP	1	asnjanëso	asnjanësoj	v	*
+V;1;SG;ADM;IPFV	1	udhëzuakësha	udhëzoj	v	*
+V;3;SG;OPT;PRS	1	avulloftë	avulloj	v	*
+V;1;PL;IND;IPFV	1	gëzonim	gëzoj	v	*
+V;2;SG;ADM;IPFV	1	organizuakëshe	organizoj	v	*
+V;2;PL;OPT;PRS	1	justifikofshit	justifikoj	v	*
+V;1;PL;OPT;PRS	1	kafshofshim	kafshoj	v	*
+V;2;PL;IND;PST	1	krahasuat	krahasoj	v	*
+V;1;SG;ADM;PRS	1	krijuakam	krijoj	v	*
+V;1;PL;IND;IPFV	1	organizonim	organizoj	v	*
+V;3;SG;ADM;IPFV	1	interpretuakësh	interpretoj	v	*
+V;3;PL;ADM;PRS	1	gabuakan	gaboj	v	*
+V;2;PL;IMP	1	fshini	fshij	v	*
+V;2;SG;ADM;PRS	1	flirtuake	flirtoj	v	*
+V;3;SG;IND;PST	1	uroi	uroj	v	*
+V;3;SG;ADM;PRS	1	qenka	jam	v	*
+V;2;PL;ADM;PRS	1	flirtuakeni	flirtoj	v	*
+V;2;SG;IND;IPFV	1	këndoje	këndoj	v	*
+V;2;SG;IND;IPFV	1	ndryshoje	ndryshoj	v	*
+V;3;PL;ADM;PRS	1	ndakan	ndaj	v	*
+V;1;PL;IND;PST	1	luftuam	luftoj	v	*
+V;2;SG;ADM;IPFV	1	sajuakëshe	sajoj	v	*
+V;3;SG;OPT;PRS	1	adhuroftë	adhuroj	v	*
+V;2;SG;IND;PRS	1	rrezikon	rrezikoj	v	*
+V;V.PTCP	1	shkërdhyer	shkërdhej	v	*
+V;2;SG;IND;PST	1	injorove	injoroj	v	*
+V;2;PL;IMP	1	udhëhiqni	udhëheq	v	*
+V;1;PL;ADM;IPFV	1	dërmuakëshim	dërmoj	v	*
+V;3;SG;ADM;PRS	1	sodomizuaka	sodomizoj	v	*
+V;1;PL;IND;IPFV	1	fshinim	fshij	v	*
+V;3;PL;ADM;IPFV	1	fshikëshin	fshij	v	*
+V;1;SG;ADM;PRS	1	dhuruakam	dhuroj	v	*
+V;1;PL;OPT;PRS	1	skllavërofshim	skllavëroj	v	*
+V;2;PL;IMP	1	interpretoni	interpretoj	v	*
+V;1;PL;IND;PRS	1	dashurojmë	dashuroj	v	*
+V;1;SG;IND;IPFV	1	këndoja	këndoj	v	*
+V;3;PL;ADM;IPFV	1	shpresuakëshin	shpresoj	v	*
+V;3;PL;IND;PRS	1	shkëlqejnë	shkëlqej	v	*
+V;3;SG;IND;PST	1	palloi	palloj	v	*
+V;1;SG;IND;PST	1	copëtova	copëtoj	v	*
+V;2;SG;IND;PST	1	dërgove	dërgoj	v	*
+V;1;PL;OPT;PRS	1	përkëdhelshim	përkëdhel	v	*
+V;3;SG;IND;PST	1	la	lë	v	*
+V;1;PL;IND;PRS	1	punësojmë	punësoj	v	*
+V;1;PL;OPT;PRS	1	ardhshim	vij	v	*
+V;2;PL;IMP	1	bëni	bëj	v	*
+V;2;PL;IND;IPFV	1	peshonit	peshoj	v	*
+V;3;SG;OPT;PRS	1	shpresoftë	shpresoj	v	*
+V;2;SG;ADM;PRS	1	krahasuake	krahasoj	v	*
+V;1;PL;IND;IPFV	1	udhëtonim	udhëtoj	v	*
+V;1;SG;ADM;IPFV	1	peshuakësha	peshoj	v	*
+V;1;PL;IND;IPFV	1	zhvirgjëroheshim	zhvirgjërohem	v	*
+V;1;PL;OPT;PRS	1	udhëzofshim	udhëzoj	v	*
+V;3;SG;IND;IPFV	1	arsimonte	arsimoj	v	*
+V;3;PL;IND;PRS	1	relaksohen	relaksohem	v	*
+V;2;PL;IND;IPFV	1	hapnit	hap	v	*
+V;2;SG;IND;PST	1	qëndrove	qëndroj	v	*
+V;2;PL;OPT;PRS	1	propozofshit	propozoj	v	*
+V;1;PL;IND;PST	1	abroguam	abrogoj	v	*
+V;2;PL;OPT;PRS	1	shkatërrofshit	shkatërroj	v	*
+V;1;PL;ADM;PRS	1	fërkuakemi	fërkoj	v	*
+V;1;PL;ADM;IPFV	1	shpallkëshim	shpall	v	*
+V;2;PL;IND;IPFV	1	shkërdhenit	shkërdhej	v	*
+V;3;SG;IND;PST	1	propozoi	propozoj	v	*
+V;2;PL;ADM;PRS	1	abdikuakeni	abdikoj	v	*
+V;2;PL;ADM;IPFV	1	takuakëshit	takoj	v	*
+V;3;PL;ADM;PRS	1	mësuakan	mësoj	v	*
+V;1;PL;IND;PST	1	urryem	urrej	v	*
+V;1;PL;ADM;PRS	1	udhëheqkemi	udhëheq	v	*
+V;1;SG;ADM;IPFV	1	krijuakësha	krijoj	v	*
+V;1;SG;ADM;IPFV	1	votuakësha	votoj	v	*
+V;2;SG;OPT;PRS	1	përsossh	përsos	v	*
+V;1;SG;IND;PST	1	zbukurova	zbukuroj	v	*
+V;1;SG;IND;IPFV	1	ligjëroja	ligjëroj	v	*
+V;1;SG;IND;PST	1	udhëtova	udhëtoj	v	*
+V;3;PL;IND;PRS	1	durojnë	duroj	v	*
+V;2;PL;ADM;PRS	1	zbuluakeni	zbuloj	v	*
+V;1;SG;OPT;PRS	1	dhurofsha	dhuroj	v	*
+V;V.PTCP	1	preferuar	preferoj	v	*
+V;1;PL;IND;PRS	1	copëtojmë	copëtoj	v	*
+V;1;PL;OPT;PRS	1	luftofshim	luftoj	v	*
+V;1;PL;IND;IPFV	1	hapnim	hap	v	*
+V;2;SG;ADM;PRS	1	bashkëvepruake	bashkëveproj	v	*
+V;3;PL;IND;PST	1	thjeshtëzuan	thjeshtëzoj	v	*
+V;3;SG;IND;IPFV	1	shurrohej	shurrohem	v	*
+V;2;PL;IMP	1	mbarohuni	mbarohem	v	*
+V;1;PL;IND;IPFV	1	bekonim	bekoj	v	*
+V;1;SG;OPT;PRS	1	shpallsha	shpall	v	*
+V;2;PL;IND;IPFV	1	vazhdonit	vazhdoj	v	*
+V;1;PL;ADM;IPFV	1	njoftuakëshim	njoftoj	v	*
+V;3;PL;IND;IPFV	1	adhuronin	adhuroj	v	*
+V;3;PL;ADM;PRS	1	flirtuakan	flirtoj	v	*
+V;3;PL;IND;PST	1	qortuan	qortoj	v	*
+V;2;SG;ADM;IPFV	1	shuajtkëshe	shuaj	v	*
+V;3;SG;IND;IPFV	1	rrinte	rri	v	*
+V;2;SG;ADM;IPFV	1	pëlqyekëshe	pëlqej	v	*
+V;3;PL;IND;PST	1	hëngrën	ha	v	*
+V;3;PL;IND;PST	1	kërkuan	kërkoj	v	*
+V;3;SG;ADM;PRS	1	tradhëtuaka	tradhëtoj	v	*
+V;3;SG;ADM;PRS	1	kërkuaka	kërkoj	v	*
+V;1;SG;IND;IPFV	1	thjeshtëzoja	thjeshtëzoj	v	*
+V;1;PL;IND;PST	1	menduam	mendoj	v	*
+V;1;SG;IND;IPFV	1	shqipoja	shqipoj	v	*
+V;2;PL;IMP	1	përkëdhelni	përkëdhel	v	*
+V;V.PTCP	1	filluar	filloj	v	*
+V;2;SG;IND;PRS	1	shpreson	shpresoj	v	*
+V;3;SG;IND;IPFV	1	përparonte	përparoj	v	*
+V;2;PL;IND;PST	1	ndërlikuat	ndërlikoj	v	*
+V;2;PL;ADM;IPFV	1	shtypkëshit	shtyp	v	*
+V;1;PL;IND;PST	1	argëtuam	argëtoj	v	*
+V;2;PL;ADM;PRS	1	lidhkeni	lidh	v	*
+V;3;SG;ADM;IPFV	1	fshikësh	fshij	v	*
+V;1;PL;IND;IPFV	1	thanim	thaj	v	*
+V;1;PL;OPT;PRS	1	qeshshim	qesh	v	*
+V;3;SG;ADM;IPFV	1	qëndruakësh	qëndroj	v	*
+V;1;PL;OPT;PRS	1	çlirofshim	çliroj	v	*
+V;2;SG;IND;PRS	1	lëshon	lëshoj	v	*
+V;2;SG;IND;PST	1	lype	lyp	v	*
+V;V.PTCP	1	shpifur	shpif	v	*
+V;1;PL;OPT;PRS	1	prodhofshim	prodhoj	v	*
+V;1;PL;IND;IPFV	1	shpresonim	shpresoj	v	*
+V;2;SG;IMP	1	jeto	jetoj	v	*
+V;2;PL;IMP	1	admironi	admiroj	v	*
+V;2;PL;IND;PST	1	shtrembëruat	shtrembëroj	v	*
+V;1;SG;OPT;PRS	1	sakrifikofsha	sakrifikoj	v	*
+V;3;PL;OPT;PRS	1	thafshin	thaj	v	*
+V;3;SG;ADM;PRS	1	shurruaka	shurroj	v	*
+V;1;SG;IND;IPFV	1	parapëlqeja	parapëlqej	v	*
+V;2;SG;OPT;PRS	1	shqipofsh	shqipoj	v	*
+V;1;PL;IND;IPFV	1	përdornim	përdor	v	*
+V;3;PL;ADM;IPFV	1	shuajtkëshin	shuaj	v	*
+V;2;PL;ADM;PRS	1	bekuakeni	bekoj	v	*
+V;3;SG;OPT;PRS	1	besoftë	besoj	v	*
+V;1;PL;IND;PST	1	takuam	takoj	v	*
+V;2;SG;IND;PST	1	pe	shoh	v	*
+V;3;PL;IND;PST	1	dhuruan	dhuroj	v	*
+V;2;SG;IMP	1	abdiko	abdikoj	v	*
+V;1;SG;OPT;PRS	1	shpresofsha	shpresoj	v	*
+V;1;PL;IND;PRS	1	pshurrim	pshurr	v	*
+V;2;PL;ADM;PRS	1	përdorkeni	përdor	v	*
+V;1;SG;OPT;PRS	1	hapsha	hap	v	*
+V;3;SG;OPT;PRS	1	gënjeftë	gënjej	v	*
+V;2;PL;IND;PST	1	mësuat	mësoj	v	*
+V;3;PL;OPT;PRS	1	pompofshin	pompoj	v	*
+V;3;PL;OPT;PRS	1	stimulofshin	stimuloj	v	*
+V;2;PL;ADM;IPFV	1	ligjëruakëshit	ligjëroj	v	*
+V;3;SG;IND;PRS	1	stopohet	stopohem	v	*
+V;1;PL;ADM;IPFV	1	thakëshim	thaj	v	*
+V;3;PL;ADM;PRS	1	asnjanësuakan	asnjanësoj	v	*
+V;3;SG;IND;PST	1	besoi	besoj	v	*
+V;3;SG;IND;IPFV	1	shqiponte	shqipoj	v	*
+V;1;SG;ADM;PRS	1	shpresuakam	shpresoj	v	*
+V;1;PL;ADM;IPFV	1	bëkëshim	bëj	v	*
+V;2;SG;IND;IPFV	1	shkatërroje	shkatërroj	v	*
+V;3;PL;IND;PST	1	shkërdhyen	shkërdhej	v	*
+V;1;SG;IND;IPFV	1	përkufizoja	përkufizoj	v	*
+V;2;PL;IND;PST	1	pastruat	pastroj	v	*
+V;2;SG;IND;PST	1	gabove	gaboj	v	*
+V;2;SG;OPT;PRS	1	lexofsh	lexoj	v	*
+V;3;SG;OPT;PRS	1	punësoftë	punësoj	v	*
+V;2;PL;IND;PST	1	shuajtët	shuaj	v	*
+V;3;SG;ADM;IPFV	1	ndihmuakësh	ndihmoj	v	*
+V;2;SG;OPT;PRS	1	zhvillofsh	zhvilloj	v	*
+V;2;SG;IND;IPFV	1	hidhëroheshe	hidhërohem	v	*
+V;1;PL;ADM;PRS	1	thakemi	thaj	v	*
+V;2;PL;ADM;IPFV	1	punësuakëshit	punësoj	v	*
+V;2;SG;IND;IPFV	1	thekje	thek	v	*
+V;2;SG;ADM;IPFV	1	mësuakëshe	mësoj	v	*
+V;3;PL;IND;PST	1	thanë	them	v	*
+V;2;SG;IND;PST	1	ndale	ndal	v	*
+V;3;PL;OPT;PRS	1	arsimofshin	arsimoj	v	*
+V;1;PL;OPT;PRS	1	shuajshim	shuaj	v	*
+V;1;SG;IND;IPFV	1	gaboja	gaboj	v	*
+V;2;PL;ADM;IPFV	1	biseduakëshit	bisedoj	v	*
+V;2;SG;IND;PRS	1	konsiston	konsistoj	v	*
+V;3;PL;IND;PRS	1	udhëhiqen	udhëhiqem	v	*
+V;3;SG;IND;IPFV	1	takonte	takoj	v	*
+V;2;PL;IND;PST	1	shqipuat	shqipoj	v	*
+V;3;PL;IND;PRS	1	mësohen	mësohem	v	*
+V;3;PL;ADM;IPFV	1	ngrënkëshin	ha	v	*
+V;2;SG;IND;IPFV	1	ngrije	ngre	v	*
+V;1;SG;ADM;PRS	1	ledhatuakam	ledhatoj	v	*
+V;3;PL;ADM;PRS	1	sakrifikuakan	sakrifikoj	v	*
+V;2;PL;ADM;IPFV	1	dëshiruakëshit	dëshiroj	v	*
+V;2;PL;ADM;IPFV	1	luftuakëshit	luftoj	v	*
+V;2;PL;IND;IPFV	1	zgjedhnit	zgjedh	v	*
+V;2;PL;IMP	1	arësyetoni	arësyetoj	v	*
+V;1;PL;IND;PRS	1	punësohemi	punësohem	v	*
+V;1;PL;IND;PRS	1	përsosim	përsos	v	*
+V;1;PL;ADM;IPFV	1	mbuluakëshim	mbuloj	v	*
+V;2;SG;IND;PST	1	shkërdheve	shkërdhej	v	*
+V;1;PL;IND;PST	1	dëmtuam	dëmtoj	v	*
+V;2;SG;ADM;PRS	1	zgjuake	zgjoj	v	*
+V;3;SG;IND;IPFV	1	arratisej	arratisem	v	*
+V;2;SG;IND;IPFV	1	punësoje	punësoj	v	*
+V;3;SG;OPT;PRS	1	ndihtë	ndih	v	*
+V;1;SG;IND;PST	1	ngriva	ngrij	v	*
+V;2;SG;IMP	1	zgjo	zgjoj	v	*
+V;2;PL;OPT;PRS	1	plagofshit	plagoj	v	*
+V;3;PL;IND;PST	1	parapëlqyen	parapëlqej	v	*
+V;1;SG;ADM;IPFV	1	degjuakësha	degjoj	v	*
+V;2;PL;OPT;PRS	1	shpjegofshit	shpjegoj	v	*
+V;2;PL;IND;IPFV	1	votonit	votoj	v	*
+V;2;PL;ADM;IPFV	1	vendoskëshit	vendos	v	*
+V;3;SG;IND;PST	1	dëshiroi	dëshiroj	v	*
+V;3;SG;OPT;PRS	1	haptë	hap	v	*
+V;3;PL;OPT;PRS	1	arësyetofshin	arësyetoj	v	*
+V;2;PL;ADM;PRS	1	arsimuakeni	arsimoj	v	*
+V;1;PL;ADM;PRS	1	mbruakemi	mbroj	v	*
+V;2;PL;IND;PST	1	çliruat	çliroj	v	*
+V;3;PL;ADM;IPFV	1	kafshuakëshin	kafshoj	v	*
+V;1;PL;IND;PST	1	kundërthamë	kundërthem	v	*
+V;2;PL;IMP	1	sajoni	sajoj	v	*
+V;1;SG;ADM;PRS	1	paskam	kam	v	*
+V;2;SG;OPT;PRS	1	besofsh	besoj	v	*
+V;2;SG;IND;IPFV	1	nderoje	nderoj	v	*
+V;2;PL;IND;PST	1	zbuluat	zbuloj	v	*
+V;3;SG;OPT;PRS	1	mësoftë	mësoj	v	*
+V;2;PL;IMP	1	abonohuni	abonohem	v	*
+V;3;PL;ADM;IPFV	1	shpallkëshin	shpall	v	*
+V;3;SG;OPT;PRS	1	përsostë	përsos	v	*
+V;1;SG;OPT;PRS	1	pëlqefsha	pëlqej	v	*
+V;2;PL;ADM;IPFV	1	përmirësuakëshit	përmirësoj	v	*
+V;2;SG;OPT;PRS	1	ndafsh	ndaj	v	*
+V;3;PL;IND;IPFV	1	besonin	besoj	v	*
+V;2;SG;IND;IPFV	1	stopoheshe	stopohem	v	*
+V;1;SG;IND;PST	1	udhëhoqa	udhëheq	v	*
+V;2;SG;IND;IPFV	1	tradhëtoje	tradhëtoj	v	*
+V;V.PTCP	1	injoruar	injoroj	v	*
+V;1;PL;IND;PRS	1	transferojmë	transferoj	v	*
+V;3;PL;IND;PRS	1	mëndin	mënd	v	*
+V;1;SG;ADM;IPFV	1	dhunuakësha	dhunoj	v	*
+V;2;SG;ADM;PRS	1	mbuluake	mbuloj	v	*
+V;1;SG;IND;IPFV	1	provoja	provoj	v	*
+V;3;PL;ADM;PRS	1	tërheqkan	tërheq	v	*
+V;1;PL;OPT;PRS	1	gënjefshim	gënjej	v	*
+V;2;PL;IMP	1	besoni	besoj	v	*
+V;3;PL;ADM;PRS	1	mbaruakan	mbaroj	v	*
+V;3;PL;ADM;PRS	1	udhëtuakan	udhëtoj	v	*
+V;1;SG;ADM;IPFV	1	punësuakësha	punësoj	v	*
+V;1;PL;OPT;PRS	1	puthshim	puth	v	*
+V;2;SG;IMP	1	grumbullo	grumbulloj	v	*
+V;3;PL;IND;IPFV	1	dhunonin	dhunoj	v	*
+V;2;PL;OPT;PRS	1	skllavërofshit	skllavëroj	v	*
+V;3;SG;ADM;IPFV	1	ngrënkësh	ha	v	*
+V;1;PL;IND;IPFV	1	bisedonim	bisedoj	v	*
+V;1;SG;ADM;IPFV	1	bashkëvepruakësha	bashkëveproj	v	*
+V;1;SG;OPT;PRS	1	urofsha	uroj	v	*
+V;1;PL;IND;PRS	1	shohim	shoh	v	*
+V;2;SG;IND;PRS	1	preferon	preferoj	v	*
+V;3;PL;OPT;PRS	1	përgjithësofshin	përgjithësoj	v	*
+V;2;SG;IND;PRS	1	çlirohesh	çlirohem	v	*
+V;2;PL;ADM;IPFV	1	adhuruakëshit	adhuroj	v	*
+V;2;SG;IND;PST	1	organizove	organizoj	v	*
+V;1;SG;OPT;PRS	1	grumbullofsha	grumbulloj	v	*
+V;3;PL;OPT;PRS	1	këndofshin	këndoj	v	*
+V;2;SG;IND;IPFV	1	kafshoje	kafshoj	v	*
+V;1;PL;IND;IPFV	1	shkretonim	shkretoj	v	*
+V;1;SG;IND;IPFV	1	dhembja	dhemb	v	*
+V;2;PL;OPT;PRS	1	bisedofshit	bisedoj	v	*
+V;3;PL;IND;PST	1	përkëdhelën	përkëdhel	v	*
+V;3;PL;IND;IPFV	1	vinin	vij	v	*
+V;3;SG;IND;PRS	1	është	jam	v	*
+V;2;PL;IND;IPFV	1	dëmtonit	dëmtoj	v	*
+V;2;SG;IND;IPFV	1	dashuroje	dashuroj	v	*
+V;3;SG;ADM;PRS	1	mbaruaka	mbaroj	v	*
+V;1;SG;ADM;PRS	1	urryekam	urrej	v	*
+V;3;PL;IND;PRS	1	asnjanësojnë	asnjanësoj	v	*
+V;1;PL;IND;PST	1	prishëm	prish	v	*
+V;1;PL;ADM;IPFV	1	ndihmuakëshim	ndihmoj	v	*
+V;1;SG;IND;IPFV	1	qortoja	qortoj	v	*
+V;2;PL;IND;PST	1	biseduat	bisedoj	v	*
+V;3;SG;IND;PST	1	mirësoi	mirësoj	v	*
+V;V.PTCP	1	dërguar	dërgoj	v	*
+V;V.PTCP	1	lexuar	lexoj	v	*
+V;V.PTCP	1	jetuar	jetoj	v	*
+V;2;SG;IMP	1	dhuro	dhuroj	v	*
+V;1;SG;ADM;PRS	1	dëshiruakam	dëshiroj	v	*
+V;2;PL;ADM;PRS	1	shurruakeni	shurroj	v	*
+V;1;PL;IND;IPFV	1	shtypnim	shtyp	v	*
+V;2;SG;ADM;PRS	1	përkëdhelke	përkëdhel	v	*
+V;1;SG;IND;IPFV	1	uroja	uroj	v	*
+V;2;PL;IMP	1	jepni	jap	v	*
+V;3;SG;IND;IPFV	1	udhëhiqte	udhëheq	v	*
+V;3;PL;ADM;IPFV	1	arësyetuakëshin	arësyetoj	v	*
+V;1;PL;ADM;PRS	1	kundërshtuakemi	kundërshtoj	v	*
+V;2;PL;ADM;IPFV	1	dëmtuakëshit	dëmtoj	v	*
+V;2;PL;IMP	1	abrogoni	abrogoj	v	*
+V;2;PL;IMP	1	fërgoni	fërgoj	v	*
+V;1;PL;ADM;IPFV	1	shpjeguakëshim	shpjegoj	v	*
+V;3;PL;IND;PST	1	themeluan	themeloj	v	*
+V;2;PL;IND;PST	1	shurruat	shurroj	v	*
+V;3;SG;ADM;IPFV	1	mirësuakësh	mirësoj	v	*
+V;2;PL;OPT;PRS	1	mëndshit	mënd	v	*
+V;1;PL;OPT;PRS	1	shkretofshim	shkretoj	v	*
+V;3;SG;OPT;PRS	1	ëndërroftë	ëndërroj	v	*
+V;3;SG;IND;IPFV	1	thekte	thek	v	*
+V;2;PL;IND;IPFV	1	shtypnit	shtyp	v	*
+V;1;SG;OPT;PRS	1	kundërthënça	kundërthem	v	*
+V;2;SG;ADM;IPFV	1	abuzuakëshe	abuzoj	v	*
+V;2;PL;IND;PST	1	masturbuat	masturboj	v	*
+V;1;SG;ADM;IPFV	1	qëndruakësha	qëndroj	v	*
+V;1;SG;IND;IPFV	1	arsimoja	arsimoj	v	*
+V;1;SG;IND;IPFV	1	asnjanësoja	asnjanësoj	v	*
+V;3;PL;IND;PRS	1	dajnë	daj	v	*
+V;2;SG;IND;PST	1	avullove	avulloj	v	*
+V;3;SG;IND;IPFV	1	urronte	urroj	v	*
+V;3;SG;ADM;IPFV	1	shtegtuakësh	shtegtoj	v	*
+V;2;SG;IND;PRS	1	ndan	ndaj	v	*
+V;3;PL;OPT;PRS	1	lidhshin	lidh	v	*
+V;3;SG;ADM;IPFV	1	bekuakësh	bekoj	v	*
+V;3;PL;ADM;IPFV	1	dhembkëshin	dhemb	v	*
+V;2;SG;OPT;PRS	1	lëshofsh	lëshoj	v	*
+V;3;PL;IND;PRS	1	ndryshojnë	ndryshoj	v	*
+V;2;SG;ADM;IPFV	1	provuakëshe	provoj	v	*
+V;2;PL;ADM;IPFV	1	ndihmuakëshit	ndihmoj	v	*
+V;1;SG;ADM;IPFV	1	komunikuakësha	komunikoj	v	*
+V;3;PL;ADM;PRS	1	armatoskan	armatos	v	*
+V;2;PL;IND;IPFV	1	avullonit	avulloj	v	*
+V;3;SG;OPT;PRS	1	kërkoftë	kërkoj	v	*
+V;2;SG;OPT;PRS	1	stimulofsh	stimuloj	v	*
+V;3;PL;ADM;IPFV	1	dakëshin	daj	v	*
+V;3;SG;OPT;PRS	1	injoroftë	injoroj	v	*
+V;2;SG;IND;IPFV	1	sajoje	sajoj	v	*
+V;2;SG;ADM;IPFV	1	zgjuakëshe	zgjoj	v	*
+V;2;PL;IND;IPFV	1	bënit	bëj	v	*
+V;1;PL;ADM;IPFV	1	gëzuakëshim	gëzoj	v	*
+V;3;PL;ADM;IPFV	1	pompuakëshin	pompoj	v	*
+V;3;SG;OPT;PRS	1	dhunoftë	dhunoj	v	*
+V;2;PL;IMP	1	shurrohuni	shurrohem	v	*
+V;1;SG;IND;IPFV	1	besoja	besoj	v	*
+V;1;SG;IND;IPFV	1	udhëtoja	udhëtoj	v	*
+V;1;PL;IND;PST	1	krijuam	krijoj	v	*
+V;2;PL;IND;PST	1	datë	daj	v	*
+V;3;PL;ADM;PRS	1	gënjyekan	gënjej	v	*
+V;2;SG;IND;IPFV	1	përkëdhelje	përkëdhel	v	*
+V;3;SG;OPT;PRS	1	kafshoftë	kafshoj	v	*
+V;2;PL;ADM;IPFV	1	shpifkëshit	shpif	v	*
+V;3;SG;IND;PST	1	zbuloi	zbuloj	v	*
+V;3;PL;IND;IPFV	1	lexonin	lexoj	v	*
+V;1;PL;IND;PST	1	rënkuam	rënkoj	v	*
+V;3;PL;IND;PRS	1	pompojnë	pompoj	v	*
+V;3;PL;ADM;PRS	1	degjuakan	degjoj	v	*
+V;1;SG;OPT;PRS	1	mbulofsha	mbuloj	v	*
+V;3;SG;IND;PRF;PST	1	pati përkthyer	përkthej	v	*
+V;3;PL;ADM;PRF	1	paskan dëmtuar	dëmtoj	v	*
+V;3;PL;SBJV;PRF;PST	1	të ishin masturbuar	masturbohem	v	*
+V;3;SG;IND;FUT	1	do të fërgojë	fërgoj	v	*
+V;3;PL;COND;PRF	1	do të kishin transferuar	transferoj	v	*
+V;2;SG;COND;PRS	1	do të vendosje	vendos	v	*
+V;1;PL;COND;PRS	1	do të lëshonim	lëshoj	v	*
+V;2;PL;COND;PRF	1	do të kishit lypur	lyp	v	*
+V;3;SG;IND;PRF;PST	1	ishte mësuar	mësohem	v	*
+V;3;SG;SBJV;PRF;PST	1	të kishte bashkëpunuar	bashkëpunoj	v	*
+V;3;SG;IND;PRF;FUT	1	do të ketë mbuluar	mbuloj	v	*
+V;3;SG;SBJV;PRF	1	të ketë flirtuar	flirtoj	v	*
+V;3;SG;IND;PRF;PST	1	pati takuar	takoj	v	*
+V;3;PL;OPT;PRF	1	paçin përdorur	përdor	v	*
+V;2;PL;IND;PRF;FUT	1	do të keni sakrifikuar	sakrifikoj	v	*
+V;1;PL;SBJV;PRS	1	të shkërdhejmë	shkërdhej	v	*
+V;2;PL;IND;FUT	1	do të lëpini	lëpij	v	*
+V;3;SG;ADM;PRF	1	paska gënjyer	gënjej	v	*
+V;2;PL;SBJV;PRF	1	të jeni abonuar	abonohem	v	*
+V;3;SG;ADM;PRF;PST	1	paskësh harruar	harroj	v	*
+V;3;SG;COND;PRS	1	do të sqaronte	sqaroj	v	*
+V;2;PL;SBJV;PST	1	të punësonit	punësoj	v	*
+V;1;SG;SBJV;PRS	1	të dërgoj	dërgoj	v	*
+V;1;SG;IND;PRF;FUT	1	do të kem gënjyer	gënjej	v	*
+V;2;PL;IND;PRF;PRF	1	patët mësuar	mësoj	v	*
+V;3;PL;SBJV;PRS	1	të mendojnë	mendoj	v	*
+V;1;SG;SBJV;PRS	1	të ndihmoj	ndihmoj	v	*
+V;3;SG;SBJV;PRF;PST	1	të kishte mbruar	mbroj	v	*
+V;2;SG;IND;PRF;FUT	1	do të kesh ardhur	vij	v	*
+V;1;SG;OPT;PRF	1	paça ndihur	ndih	v	*
+V;2;SG;SBJV;PRF	1	të jesh hidhëruar	hidhërohem	v	*
+V;1;SG;ADM;PRF	1	paskam absorbuar	absorboj	v	*
+V;3;PL;ADM;PRF;PST	1	paskëshin shfuqizuar	shfuqizoj	v	*
+V;2;SG;IND;PRF	1	ke kuptuar	kuptoj	v	*
+V;1;PL;COND;PRS	1	do të pallonim	palloj	v	*
+V;3;SG;IND;PRF;PST	1	pati gabuar	gaboj	v	*
+V;2;SG;SBJV;PRF;PST	1	të kishe mësuar	mësoj	v	*
+V;1;PL;SBJV;PRS	1	të fillojmë	filloj	v	*
+V;1;PL;COND;PRS	1	do të mëndnim	mënd	v	*
+V;1;SG;IND;PRF	1	kam udhëzuar	udhëzoj	v	*
+V;1;SG;IND;PRF;FUT	1	do të kem votuar	votoj	v	*
+V;3;SG;IND;PRF	1	ka shkërdhyer	shkërdhej	v	*
+V;1;PL;SBJV;PRF;PST	1	të kishim dhënë	jap	v	*
+V;3;PL;COND;PRS	1	do të ligjëronin	ligjëroj	v	*
+V;1;SG;OPT;PRF	1	paça përkthyer	përkthej	v	*
+V;3;SG;IND;PRF;PST	1	pati skllavëruar	skllavëroj	v	*
+V;1;PL;OPT;PRF	1	qofshim zgjuar	zgjohem	v	*
+V;1;PL;COND;PRF	1	do të kishim asgjësuar	asgjësoj	v	*
+V;1;SG;SBJV;PST	1	të besoja	besoj	v	*
+V;1;SG;SBJV;PRF	1	të kem bashkëpunuar	bashkëpunoj	v	*
+V;2;SG;SBJV;PRF	1	të kesh zhvirgjëruar	zhvirgjëroj	v	*
+V;3;PL;COND;PRF	1	do të ishin sodomizuar	sodomizohem	v	*
+V;2;SG;IND;PRF;PST	1	pate palluar	palloj	v	*
+V;3;SG;COND;PRF	1	do të kishte nderuar	nderoj	v	*
+V;1;SG;COND;PRF	1	do të kisha qenë	jam	v	*
+V;3;SG;OPT;PRF	1	qoftë injoruar	injorohem	v	*
+V;1;SG;ADM;PRF	1	paskam mbuluar	mbuloj	v	*
+V;2;SG;SBJV;PST	1	të krahasoje	krahasoj	v	*
+V;3;SG;ADM;PRF	1	paska kënduar	këndoj	v	*
+V;V.PTCP;PST	1	duke pasë pranuar	pranoj	v	*
+V;2;PL;COND;PRF	1	do të kishit zgjuar	zgjoj	v	*
+V;V.PTCP;PRS	1	duke fshehur	fsheh	v	*
+V;3;PL;SBJV;PRF	1	të kenë prodhuar	prodhoj	v	*
+V;3;PL;COND;PRF	1	do të kishin kërcyer	kërcej	v	*
+V;3;PL;COND;PRF	1	do të kishin menduar	mendoj	v	*
+V;2;PL;SBJV;PRS	1	të ngriheni	ngrihem	v	*
+V;3;SG;IND;PRF	1	ka filluar	filloj	v	*
+V;3;PL;SBJV;PRS	1	të adhurojnë	adhuroj	v	*
+V;2;PL;IND;PRF;FUT	1	do të keni punësuar	punësoj	v	*
+V;3;SG;ADM;PRS	1	u zhvirgjëruaka	zhvirgjërohem	v	*
+V;1;PL;COND;PRF	1	do të kishim gëzuar	gëzoj	v	*
+V;2;PL;ADM;PRF;PRF	1	paskëshit urryer	urrej	v	*
+V;3;PL;OPT;PRF	1	paçin ndihmuar	ndihmoj	v	*
+V;2;PL;IND;PRF	1	keni nderuar	nderoj	v	*
+V;1;PL;SBJV;PRS	1	të lahemi	lahem	v	*
+V;1;SG;IND;PRF;FUT	1	do të kem admiruar	admiroj	v	*
+V;3;PL;ADM;PRF;PST	1	paskëshin përkufizuar	përkufizoj	v	*
+V;2;SG;SBJV;PST	1	të urinoje	urinoj	v	*
+V;2;PL;OPT;PRF	1	paçit armatosur	armatos	v	*
+V;3;SG;COND;PRF	1	do të kishte udhëzuar	udhëzoj	v	*
+V;1;SG;ADM;PRF	1	paskam shkërdhyer	shkërdhej	v	*
+V;3;PL;IND;PST	1	u ngritën	ngrihem	v	*
+V;2;PL;COND;PRF	1	do të kishit justifikuar	justifikoj	v	*
+V;2;PL;ADM;PRF;PRF	1	paskëshit urruar	urroj	v	*
+V;1;SG;ADM;PRF	1	paskam kënduar	këndoj	v	*
+V;1;PL;ADM;PRF;PST	1	paskëshim pshurrur	pshurr	v	*
+V;1;PL;SBJV;PST	1	të abstenonim	abstenoj	v	*
+V;2;PL;COND;PRS	1	do të relaksoheshit	relaksohem	v	*
+V;3;PL;COND;PRS	1	do të linin	lë	v	*
+V;3;SG;COND;PRS	1	do të qinte	qij	v	*
+V;3;PL;IND;PRF;FUT	1	do të jenë mbaruar	mbarohem	v	*
+V;1;PL;IND;PRF;PST	1	patëm kafshuar	kafshoj	v	*
+V;2;PL;SBJV;PRF;PRF	1	të kishit biseduar	bisedoj	v	*
+V;3;SG;ADM;PRF	1	paska puthur	puth	v	*
+V;3;SG;IND;PRF	1	ka asnjanësuar	asnjanësoj	v	*
+V;2;PL;IND;PRF;PRF	1	patët ngritur	ngre	v	*
+V;1;PL;IND;PRF	1	kemi shikuar	shikoj	v	*
+V;3;PL;IND;PRF;FUT	1	do të kenë shpresuar	shpresoj	v	*
+V;2;PL;IND;PRF;PRF	1	patët bashkëvepruar	bashkëveproj	v	*
+V;1;PL;ADM;PRF	1	paskemi ndenjur	rri	v	*
+V;2;PL;COND;PRF	1	do të kishit komunikuar	komunikoj	v	*
+V;3;SG;ADM;IPFV	1	u takuakësh	takohem	v	*
+V;3;PL;SBJV;PRF;PST	1	të kishin ledhatuar	ledhatoj	v	*
+V;2;SG;SBJV;PRF;PST	1	të kishe skllavëruar	skllavëroj	v	*
+V;NFIN	1	për të absorbuar	absorboj	v	*
+V;3;SG;SBJV;PRF;PST	1	të ishte peshuar	peshohem	v	*
+V;NFIN	1	për të plaguar	plagoj	v	*
+V;1;SG;COND;PRS	1	do të bekoja	bekoj	v	*
+V;2;SG;COND;PRS	1	do të hapje	hap	v	*
+V;1;SG;ADM;PRF;PST	1	paskësha bashkëvepruar	bashkëveproj	v	*
+V;3;PL;IND;PRF;PST	1	patën gëzuar	gëzoj	v	*
+V;2;SG;IND;PRF;PST	1	pate qëndruar	qëndroj	v	*
+V;3;SG;SBJV;PRS	1	të lëpijë	lëpij	v	*
+V;2;SG;IND;FUT	1	do të mbarosh	mbaroj	v	*
+V;1;SG;SBJV;PRF;PST	1	të kisha kundërshtuar	kundërshtoj	v	*
+V;3;PL;ADM;PRF;PST	1	paskëshin thekur	thek	v	*
+V;1;PL;COND;PRS	1	do të zbehnim	zbeh	v	*
+V;2;PL;SBJV;PRF;PRF	1	të kishit organizuar	organizoj	v	*
+V;1;SG;IND;PRF;PST	1	isha miqësuar	miqësohem	v	*
+V;1;PL;SBJV;PRF	1	të kemi mësuar	mësoj	v	*
+V;3;PL;SBJV;PRF	1	të kenë votuar	votoj	v	*
+V;1;SG;IND;PRF;FUT	1	do të jem sodomizuar	sodomizohem	v	*
+V;2;PL;SBJV;PRF	1	të keni dhembur	dhemb	v	*
+V;V.PTCP;PRS	1	duke u çliruar	çlirohem	v	*
+V;2;PL;ADM;PRF	1	paskeni përkufizuar	përkufizoj	v	*
+V;3;PL;IND;PRF;PST	1	ishin çliruar	çlirohem	v	*
+V;1;PL;COND;PRS	1	do të udhëzonim	udhëzoj	v	*
+V;1;SG;IND;PRF	1	kam ngrirë	ngrij	v	*
+V;1;SG;SBJV;PRF	1	të kem shtrembëruar	shtrembëroj	v	*
+V;2;SG;COND;PRF	1	do të kishe duruar	duroj	v	*
+V;2;PL;SBJV;PRF	1	të keni prishur	prish	v	*
+V;1;PL;OPT;PRF	1	paçim admiruar	admiroj	v	*
+V;1;PL;SBJV;PRF	1	të kemi plaguar	plagoj	v	*
+V;2;SG;COND;PRF	1	do të kishe absorbuar	absorboj	v	*
+V;2;PL;ADM;PRF;PRF	1	qenkëshit trishtuar	trishtohem	v	*
+V;3;PL;ADM;PRF	1	qenkan injoruar	injorohem	v	*
+V;3;SG;IND;PRF;PST	1	pati votuar	votoj	v	*
+V;3;SG;IND;PRF	1	ka kundërshtuar	kundërshtoj	v	*
+V;V.PTCP;PRS	1	duke ligjëruar	ligjëroj	v	*
+V;3;SG;SBJV;PRF	1	të ketë filluar	filloj	v	*
+V;2;SG;ADM;IPFV	1	u abonuakëshe	abonohem	v	*
+V;2;SG;IND;PRF;PST	1	pate ardhur	vij	v	*
+V;2;PL;OPT;PRF	1	paçit palluar	palloj	v	*
+V;3;SG;ADM;PRF	1	paska ngritur	ngre	v	*
+V;3;SG;SBJV;PRS	1	të interpretojë	interpretoj	v	*
+V;2;SG;IND;FUT	1	do të masturbohesh	masturbohem	v	*
+V;1;PL;IND;PRF	1	kemi sqaruar	sqaroj	v	*
+V;2;SG;IND;PRF;PST	1	pate lypur	lyp	v	*
+V;1;PL;COND;PRF	1	do të kishim pranuar	pranoj	v	*
+N;ABL;SG;NDEF	1	kërthize	kërthizë	n	*
+N;NOM;SG;DEF	1	kronologjia	kronologji	n	*
+N;ABL;PL;DEF	1	bashkëveprimeve	bashkëveprim	n	*
+N;ACC;SG;DEF	1	ekologjinë	ekologji	n	*
+N;ACC;SG;DEF	1	shigjetën	shigjetë	n	*
+N;NOM;SG;DEF	1	gjuha	gjuhë	n	*
+N;ABL;PL;DEF	1	fortësive	fortësi	n	*
+N;ABL;SG;DEF	1	enigmës	enigmë	n	*
+N;ACC;PL;NDEF	1	çifte	çift	n	*
+N;ABL;SG;NDEF	1	bilete	biletë	n	*
+N;ABL;SG;NDEF	1	dritareje	dritare	n	*
+N;ABL;SG;NDEF	1	gjahtari	gjahtar	n	*
+N;ACC;PL;DEF	1	zonjat	zonjë	n	*
+N;ABL;SG;DEF	1	biologjisë	biologji	n	*
+N;ACC;SG;DEF	1	madhësinë	madhësi	n	*
+N;ABL;PL;DEF	1	bizoneve	bizon	n	*
+N;NOM;SG;DEF	1	apologjia	apologji	n	*
+N;ACC;PL;DEF	1	ishujt	ishull	n	*
+N;NOM;SG;DEF	1	historia	histori	n	*
+N;ABL;PL;NDEF	1	aktivistësh	aktivist	n	*
+N;ABL;PL;DEF	1	lafshave	lafshë	n	*
+N;ABL;PL;NDEF	1	fytesh	fyt	n	*
+N;ACC;PL;DEF	1	paradigmat	paradigmë	n	*
+N;ACC;SG;DEF	1	testikulin	testikul	n	*
+N;ABL;SG;DEF	1	thjeshtësisë	thjeshtësi	n	*
+N;ABL;SG;DEF	1	reagimit	reagim	n	*
+N;ABL;PL;DEF	1	prezervativeve	prezervativ	n	*
+N;ABL;PL;DEF	1	sistemeve	sistem	n	*
+N;ABL;SG;NDEF	1	krimi	krim	n	*
+N;ACC;SG;DEF	1	zyrën	zyrë	n	*
+N;ACC;PL;DEF	1	pjeshkat	pjeshkë	n	*
+N;ABL;SG;DEF	1	hënës	hënë	n	*
+N;ACC;SG;DEF	1	peshkaqenin	peshkaqen	n	*
+N;ACC;SG;DEF	1	gjeologjinë	gjeologji	n	*
+N;ACC;PL;DEF	1	shtetet	shtet	n	*
+N;ABL;PL;DEF	1	biseksualëve	biseksual	n	*
+N;ABL;PL;DEF	1	dhuratave	dhuratë	n	*
+N;ACC;PL;NDEF	1	muskuj	muskul	n	*
+N;NOM;SG;DEF	1	stuhia	stuhi	n	*
+N;ACC;PL;NDEF	1	përdorime	përdorim	n	*
+N;ACC;SG;DEF	1	njeriun	njeri	n	*
+N;ACC;PL;DEF	1	titujt	titull	n	*
+N;ACC;SG;DEF	1	bashkëpunimin	bashkëpunim	n	*
+N;ABL;SG;DEF	1	cjapit	cjap	n	*
+N;ABL;PL;DEF	1	gjahtarëve	gjahtar	n	*
+N;ACC;SG;DEF	1	astrobiologun	astrobiolog	n	*
+N;ACC;PL;NDEF	1	sqarime	sqarim	n	*
+N;ACC;SG;DEF	1	mbretin	mbret	n	*
+N;ABL;PL;NDEF	1	luginash	luginë	n	*
+N;ABL;SG;DEF	1	ligjit	ligj	n	*
+N;ABL;SG;NDEF	1	shahisti	shahist	n	*
+N;ABL;PL;NDEF	1	shembujsh	shembull	n	*
+N;ACC;SG;DEF	1	shtëpinë	shtëpi	n	*
+N;ACC;PL;DEF	1	bythët	bythë	n	*
+N;ABL;SG;NDEF	1	yjësie	yjësi	n	*
+N;ACC;PL;DEF	1	pornografët	pornograf	n	*
+N;ACC;PL;DEF	1	qeveritë	qeveri	n	*
+N;ABL;SG;NDEF	1	dorashke	dorashkë	n	*
+N;ABL;PL;DEF	1	mbretërive	mbretëri	n	*
+N;ABL;SG;DEF	1	dardhës	dardhë	n	*
+N;ACC;PL;DEF	1	kënaqësitë	kënaqësi	n	*
+N;ACC;SG;DEF	1	birën	birë	n	*
+N;ACC;PL;DEF	1	sytë	sy	n	*
+N;ABL;PL;DEF	1	rrëmujaxhinjve	rrëmujaxhi	n	*
+N;ABL;SG;NDEF	1	valixheje	valixhe	n	*
+N;ABL;SG;DEF	1	hierarkisë	hierarki	n	*
+N;ACC;PL;NDEF	1	ajra	ajër	n	*
+N;ABL;PL;DEF	1	vampirëve	vampir	n	*
+N;ABL;PL;DEF	1	lezbikeve	lezbike	n	*
+N;ACC;PL;NDEF	1	anëtarë	anëtar	n	*
+N;ABL;PL;DEF	1	sqarimeve	sqarim	n	*
+N;ABL;SG;DEF	1	stuhisë	stuhi	n	*
+N;ACC;PL;DEF	1	motrat	motër	n	*
+N;ABL;PL;DEF	1	librave	libër	n	*
+N;ABL;SG;DEF	1	qenit	qen	n	*
+N;ABL;SG;DEF	1	shkencëtarit	shkencëtar	n	*
+N;NOM;SG;DEF	1	pjekunia	pjekuni	n	*
+N;ACC;PL;NDEF	1	tituj	titull	n	*
+N;ABL;SG;NDEF	1	liqeni	liqen	n	*
+N;ACC;SG;DEF	1	planetin	planet	n	*
+N;ACC;SG;DEF	1	mendjen	mendje	n	*
+N;ABL;SG;NDEF	1	shpëtimi	shpëtim	n	*
+N;ABL;PL;NDEF	1	merimangash	merimangë	n	*
+N;ACC;PL;NDEF	1	psikologë	psikolog	n	*
+N;ABL;PL;NDEF	1	çiftesh	çift	n	*
+N;ABL;PL;NDEF	1	copash	copë	n	*
+N;ABL;PL;NDEF	1	axhash	axhë	n	*
+N;ABL;PL;NDEF	1	testikujsh	testikul	n	*
+N;ABL;PL;DEF	1	doktorëve	doktor	n	*
+N;ACC;PL;NDEF	1	parabola	parabolë	n	*
+N;ACC;PL;NDEF	1	pjeshka	pjeshkë	n	*
+N;ACC;SG;DEF	1	grafikun	grafik	n	*
+N;ACC;PL;DEF	1	akrepat	akrep	n	*
+N;ABL;SG;DEF	1	pornografit	pornograf	n	*
+N;ACC;PL;NDEF	1	matematikanë	matematikan	n	*
+N;ABL;SG;NDEF	1	hyrjeje	hyrje	n	*
+N;ACC;SG;DEF	1	radiologun	radiolog	n	*
+N;ABL;SG;NDEF	1	mirësie	mirësi	n	*
+N;ABL;SG;NDEF	1	shëndeti	shëndet	n	*
+N;ACC;SG;DEF	1	bakteriologjinë	bakteriologji	n	*
+N;ABL;PL;NDEF	1	shkollash	shkollë	n	*
+N;ABL;SG;DEF	1	farës	farë	n	*
+N;ACC;SG;DEF	1	thithkën	thithkë	n	*
+N;ABL;SG;NDEF	1	lodre	lodër	n	*
+N;ACC;PL;DEF	1	bashkëpunëtorët	bashkëpunëtor	n	*
+N;ABL;PL;NDEF	1	pjeshkash	pjeshkë	n	*
+N;ABL;PL;NDEF	1	mënyrash	mënyrë	n	*
+N;ABL;PL;DEF	1	antonimeve	antonim	n	*
+N;ACC;PL;NDEF	1	ndryshime	ndryshim	n	*
+N;ABL;PL;DEF	1	këmbëve	këmbë	n	*
+N;ABL;PL;NDEF	1	bukësh	bukë	n	*
+N;ACC;PL;NDEF	1	gjunjë	gju	n	*
+N;ABL;SG;DEF	1	orgazmës	orgazmë	n	*
+N;ACC;PL;NDEF	1	gjilpëra	gjilpërë	n	*
+N;ABL;PL;DEF	1	orgjive	orgji	n	*
+N;ACC;PL;DEF	1	kombësitë	kombësi	n	*
+N;ABL;SG;NDEF	1	kthetre	kthetër	n	*
+N;ABL;SG;DEF	1	nxehtësisë	nxehtësi	n	*
+N;ACC;SG;DEF	1	fillimin	fillim	n	*
+N;ABL;SG;DEF	1	grafikut	grafik	n	*
+N;ABL;SG;DEF	1	beqarit	beqar	n	*
+N;ABL;SG;NDEF	1	burrërie	burrëri	n	*
+N;ACC;SG;DEF	1	botën	botë	n	*
+N;ABL;SG;DEF	1	emtës	emtë	n	*
+N;ABL;PL;DEF	1	grafikëve	grafik	n	*
+N;ABL;PL;NDEF	1	karesh	kar	n	*
+N;ACC;SG;DEF	1	ujin	ujë	n	*
+N;ACC;PL;NDEF	1	mënyra	mënyrë	n	*
+N;ACC;SG;DEF	1	nektarinën	nektarinë	n	*
+N;NOM;SG;DEF	1	dora	dorë	n	*
+N;ACC;PL;DEF	1	sulmimet	sulmim	n	*
+N;ABL;PL;NDEF	1	rajonesh	rajon	n	*
+N;ABL;SG;DEF	1	bisedës	bisedë	n	*
+N;ABL;SG;NDEF	1	gjenealogjie	gjenealogji	n	*
+N;ACC;SG;DEF	1	shfuqizimin	shfuqizim	n	*
+N;ACC;SG;DEF	1	zdrukthëtarin	zdrukthëtar	n	*
+N;ABL;SG;DEF	1	rajonit	rajon	n	*
+N;ACC;PL;NDEF	1	struktura	strukturë	n	*
+N;ACC;SG;DEF	1	rrethin	rreth	n	*
+N;ABL;SG;DEF	1	barkut	bark	n	*
+N;ABL;PL;NDEF	1	forcash	forcë	n	*
+N;ABL;SG;DEF	1	gjenocidit	gjenocid	n	*
+N;ACC;PL;NDEF	1	krime	krim	n	*
+N;ABL;SG;DEF	1	farmakologjisë	farmakologji	n	*
+N;ABL;PL;DEF	1	kënaqësive	kënaqësi	n	*
+N;ACC;PL;NDEF	1	enigma	enigmë	n	*
+N;ABL;SG;NDEF	1	fortësie	fortësi	n	*
+N;ABL;PL;NDEF	1	radiologësh	radiolog	n	*
+N;ACC;PL;DEF	1	barqet	bark	n	*
+N;ABL;SG;NDEF	1	kafshe	kafshë	n	*
+N;ABL;PL;NDEF	1	planetesh	planet	n	*
+N;ACC;SG;DEF	1	lezbiken	lezbike	n	*
+N;ACC;SG;DEF	1	qytetin	qytet	n	*
+N;ABL;PL;NDEF	1	rrathësh	rreth	n	*
+N;ABL;PL;DEF	1	fillimeve	fillim	n	*
+N;ABL;SG;DEF	1	shqiptarit	shqiptar	n	*
+N;ABL;PL;NDEF	1	kurrizësh	kurriz	n	*
+N;ACC;SG;DEF	1	kryqëzatën	kryqëzatë	n	*
+N;ABL;SG;NDEF	1	mesazhi	mesazh	n	*
+N;ABL;PL;DEF	1	partnerëve	partner	n	*
+N;ACC;SG;DEF	1	gjeologun	gjeolog	n	*
+N;ABL;PL;DEF	1	gjenocideve	gjenocid	n	*
+N;ABL;SG;DEF	1	bizonit	bizon	n	*
+N;ABL;PL;DEF	1	çakmakëve	çakmak	n	*
+N;ACC;PL;DEF	1	zonat	zonë	n	*
+N;ABL;PL;NDEF	1	bashkëpunëtorësh	bashkëpunëtor	n	*
+N;ACC;PL;DEF	1	hardhucat	hardhucë	n	*
+N;ACC;PL;NDEF	1	halla	hallë	n	*
+N;ACC;SG;DEF	1	xhelozinë	xhelozi	n	*
+N;ABL;PL;DEF	1	zëmrave	zëmër	n	*
+N;ABL;SG;NDEF	1	cjapi	cjap	n	*
+N;ABL;PL;NDEF	1	ligjesh	ligj	n	*
+N;ABL;PL;NDEF	1	luftash	luftë	n	*
+N;ACC;SG;DEF	1	gjëlpërën	gjëlpërë	n	*
+N;ABL;SG;NDEF	1	barku	bark	n	*
+N;ACC;PL;NDEF	1	cjape	cjap	n	*
+N;ACC;SG;DEF	1	urimin	urim	n	*
+N;ACC;PL;NDEF	1	kolegë	koleg	n	*
+N;ABL;SG;NDEF	1	kapaku	kapak	n	*
+N;ABL;SG;NDEF	1	funksioni	funksion	n	*
+N;ACC;SG;DEF	1	shigjetarin	shigjetar	n	*
+N;ACC;SG;DEF	1	orientimin	orientim	n	*
+N;ABL;PL;NDEF	1	veçantish	veçanti	n	*
+N;ABL;SG;DEF	1	ajrit	ajër	n	*
+N;ABL;PL;NDEF	1	përvojash	përvojë	n	*
+N;ACC;PL;DEF	1	manaferrat	manaferrë	n	*
+N;ABL;PL;NDEF	1	dimrash	dimër	n	*
+N;ABL;SG;DEF	1	bashkëpunëtorit	bashkëpunëtor	n	*
+N;ACC;PL;NDEF	1	barqe	bark	n	*
+N;NOM;SG;DEF	1	bioteknologjia	bioteknologji	n	*
+N;ABL;SG;DEF	1	nektarinës	nektarinë	n	*
+N;ABL;SG;NDEF	1	njoftimi	njoftim	n	*
+N;ABL;SG;DEF	1	institucionit	institucion	n	*
+N;ABL;SG;DEF	1	kapakut	kapak	n	*
+N;NOM;SG;DEF	1	burrëria	burrëri	n	*
+N;ACC;SG;DEF	1	rrugën	rrugë	n	*
+N;ABL;PL;DEF	1	zanafillave	zanafillë	n	*
+N;ABL;PL;DEF	1	dialekteve	dialekt	n	*
+N;ABL;PL;DEF	1	çokave	çok	n	*
+N;ACC;PL;DEF	1	këpushat	këpushë	n	*
+N;ABL;PL;DEF	1	kombësive	kombësi	n	*
+N;ABL;PL;DEF	1	zbulimeve	zbulim	n	*
+N;ACC;SG;DEF	1	lirinë	liri	n	*
+N;ACC;SG;DEF	1	ishullin	ishull	n	*
+N;ABL;PL;DEF	1	peshave	peshë	n	*
+N;ABL;PL;DEF	1	gjakmarrjeve	gjakmarrje	n	*
+N;ABL;PL;DEF	1	çakajve	çakall	n	*
+N;ACC;SG;DEF	1	valixhen	valixhe	n	*
+N;ABL;SG;DEF	1	luginës	luginë	n	*
+N;NOM;SG;DEF	1	bakteriologjia	bakteriologji	n	*
+N;ABL;SG;NDEF	1	gjeografie	gjeografi	n	*
+N;ABL;SG;DEF	1	shkakut	shkak	n	*
+N;ABL;SG;NDEF	1	antropologjie	antropologji	n	*
+N;ABL;SG;NDEF	1	zyre	zyrë	n	*
+N;ACC;PL;NDEF	1	shqiponja	shqiponjë	n	*
+N;ACC;PL;DEF	1	grafikët	grafik	n	*
+N;ACC;PL;DEF	1	bizonet	bizon	n	*
+N;ACC;SG;DEF	1	flamurin	flamur	n	*
+N;ACC;PL;DEF	1	rrahjet	rrahje	n	*
+N;ABL;PL;NDEF	1	hasmërish	hasmëri	n	*
+N;NOM;SG;DEF	1	pederastia	pederasti	n	*
+N;ACC;PL;DEF	1	gjylpanat	gjylpanë	n	*
+N;ABL;PL;DEF	1	fjalave	fjalë	n	*
+N;ACC;PL;NDEF	1	trajta	trajtë	n	*
+N;ABL;SG;DEF	1	zdrukthëtarit	zdrukthëtar	n	*
+N;ABL;SG;DEF	1	pasthirrmës	pasthirrmë	n	*
+N;ACC;PL;NDEF	1	nektarina	nektarinë	n	*
+N;ABL;PL;NDEF	1	fitoresh	fitore	n	*
+N;ABL;PL;NDEF	1	mirësish	mirësi	n	*
+N;ACC;PL;DEF	1	bashkëpunimet	bashkëpunim	n	*
+N;ACC;PL;NDEF	1	zvarranikë	zvarranik	n	*
+N;ACC;PL;NDEF	1	fushata	fushatë	n	*
+N;ABL;SG;NDEF	1	përkthimi	përkthim	n	*
+N;ABL;PL;NDEF	1	lakimesh	lakim	n	*
+N;ABL;SG;NDEF	1	zhdukjeje	zhdukje	n	*
+N;ACC;PL;DEF	1	filxhanët	filxhan	n	*
+N;ABL;PL;DEF	1	rajoneve	rajon	n	*
+N;ACC;PL;DEF	1	lajthitë	lajthi	n	*
+N;ABL;PL;NDEF	1	kënaqësish	kënaqësi	n	*
+N;ABL;PL;DEF	1	institucioneve	institucion	n	*
+N;ABL;SG;DEF	1	tempullit	tempull	n	*
+N;ABL;SG;DEF	1	mbretërisë	mbretëri	n	*
+N;ACC;PL;DEF	1	dardhat	dardhë	n	*
+N;ABL;PL;DEF	1	manaferrave	manaferrë	n	*
+N;ABL;PL;NDEF	1	gjakmarrjesh	gjakmarrje	n	*
+N;ABL;PL;DEF	1	shtrembërimeve	shtrembërim	n	*
+N;ACC;PL;DEF	1	zhdukjet	zhdukje	n	*
+N;ABL;PL;NDEF	1	pornografësh	pornograf	n	*
+N;ABL;PL;NDEF	1	byrektoresh	byrektore	n	*
+N;ABL;SG;DEF	1	planetit	planet	n	*
+N;ACC;PL;DEF	1	birat	birë	n	*
+N;ACC;SG;DEF	1	sqarimin	sqarim	n	*
+N;ACC;SG;DEF	1	femrën	femër	n	*
+N;ABL;SG;NDEF	1	kolegu	koleg	n	*
+N;ABL;PL;NDEF	1	sinonimesh	sinonim	n	*
+N;ABL;SG;DEF	1	trajtës	trajtë	n	*
+N;ACC;PL;DEF	1	numrat	numër	n	*
+N;ABL;PL;NDEF	1	hyrjesh	hyrje	n	*
+N;ACC;SG;DEF	1	manaferrën	manaferrë	n	*
+N;ABL;SG;DEF	1	doktorit	doktor	n	*
+N;ABL;SG;DEF	1	krahasimit	krahasim	n	*
+N;ABL;SG;DEF	1	gjenealogjisë	gjenealogji	n	*
+N;ACC;SG;DEF	1	sëmundjen	sëmundje	n	*
+N;ABL;SG;DEF	1	shëndetit	shëndet	n	*
+N;ABL;PL;DEF	1	rrepave	rrepë	n	*
+N;ABL;PL;DEF	1	beqarëve	beqar	n	*
+N;ABL;SG;DEF	1	kënaqësisë	kënaqësi	n	*
+N;ABL;SG;DEF	1	veprimit	veprim	n	*
+N;ABL;SG;NDEF	1	burri	burrë	n	*
+N;ABL;PL;NDEF	1	nektarinash	nektarinë	n	*
+N;ACC;PL;NDEF	1	shkenca	shkencë	n	*
+N;ABL;PL;DEF	1	femrave	femër	n	*
+N;ABL;PL;DEF	1	reagimeve	reagim	n	*
+N;ACC;PL;NDEF	1	baktere	bakter	n	*
+N;ABL;SG;NDEF	1	shtëpie	shtëpi	n	*
+N;ABL;SG;NDEF	1	emte	emtë	n	*
+N;ABL;PL;DEF	1	zhvirgjërimeve	zhvirgjërim	n	*
+N;ACC;SG;DEF	1	delfinin	delfin	n	*
+N;ABL;SG;DEF	1	fiziologut	fiziolog	n	*
+N;ABL;PL;DEF	1	qeverive	qeveri	n	*
+N;ABL;SG;NDEF	1	vrime	vrimë	n	*
+N;ABL;PL;NDEF	1	botësh	botë	n	*
+N;ACC;PL;DEF	1	gropat	gropë	n	*
+N;ABL;PL;NDEF	1	kuajsh	kalë	n	*
+N;ACC;PL;DEF	1	doktorët	doktor	n	*
+N;ACC;SG;DEF	1	copën	copë	n	*
+N;ACC;PL;DEF	1	seksologët	seksolog	n	*
+N;ABL;PL;NDEF	1	buzëqeshjesh	buzëqeshje	n	*
+N;ABL;PL;NDEF	1	bashkëndodhish	bashkëndodhi	n	*
+N;ABL;SG;DEF	1	çadrës	çadër	n	*
+N;ACC;PL;NDEF	1	tempuj	tempull	n	*
+N;ABL;SG;DEF	1	xixëllonjës	xixëllonjë	n	*
+N;ABL;SG;DEF	1	gjithësisë	gjithësi	n	*
+N;ACC;PL;DEF	1	shkencëtarët	shkencëtar	n	*
+N;ABL;SG;NDEF	1	skllavi	skllav	n	*
+N;ACC;PL;DEF	1	farat	farë	n	*
+N;ABL;PL;DEF	1	çifutëve	çifut	n	*
+N;NOM;SG;DEF	1	sëmundja	sëmundje	n	*
+N;ABL;SG;DEF	1	mandarinës	mandarinë	n	*
+N;NOM;SG;DEF	1	xhelozia	xhelozi	n	*
+N;ABL;PL;NDEF	1	hallash	hallë	n	*
+N;ACC;PL;DEF	1	strukturat	strukturë	n	*
+N;ABL;SG;DEF	1	muskulit	muskul	n	*
+N;ACC;PL;DEF	1	gjenealogjitë	gjenealogji	n	*
+N;NOM;SG;DEF	1	ngritja	ngritje	n	*
+N;ACC;PL;NDEF	1	emta	emtë	n	*
+N;ABL;PL;NDEF	1	çokash	çok	n	*
+N;ABL;SG;NDEF	1	urine	urinë	n	*
+N;ACC;PL;NDEF	1	udhëzime	udhëzim	n	*
+N;ACC;SG;DEF	1	gjenealogjinë	gjenealogji	n	*
+N;NOM;SG;DEF	1	arkeologjia	arkeologji	n	*
+N;ABL;SG;NDEF	1	virgjëreshe	virgjëreshë	n	*
+N;ACC;PL;NDEF	1	byrekë	byrek	n	*
+N;ABL;SG;NDEF	1	skllavërie	skllavëri	n	*
+N;ACC;PL;NDEF	1	dhurata	dhuratë	n	*
+N;ABL;PL;DEF	1	njoftimeve	njoftim	n	*
+N;ACC;SG;DEF	1	thjeshtësinë	thjeshtësi	n	*
+N;ABL;SG;DEF	1	delfinit	delfin	n	*
+N;NOM;SG;DEF	1	buzëqeshja	buzëqeshje	n	*
+N;ACC;PL;NDEF	1	zyra	zyrë	n	*
+N;ACC;PL;NDEF	1	skllavë	skllav	n	*
+N;ACC;PL;DEF	1	liritë	liri	n	*
+N;ABL;PL;NDEF	1	kuçedrash	kuçedër	n	*
+N;ABL;SG;DEF	1	femrës	femër	n	*
+N;ACC;PL;DEF	1	legjendat	legjendë	n	*
+N;ABL;SG;DEF	1	mendjes	mendje	n	*
+N;ACC;SG;DEF	1	kënaqësinë	kënaqësi	n	*
+N;ABL;SG;DEF	1	antropologjisë	antropologji	n	*
+N;ABL;PL;NDEF	1	abdikimesh	abdikim	n	*
+N;ABL;PL;DEF	1	përvojave	përvojë	n	*
+N;ACC;PL;NDEF	1	dorashka	dorashkë	n	*
+N;ABL;PL;NDEF	1	ndryshimesh	ndryshim	n	*
+N;ABL;PL;NDEF	1	tatuazhesh	tatuazh	n	*
+N;ABL;SG;NDEF	1	keqkuptimi	keqkuptim	n	*
+N;ACC;PL;DEF	1	hallat	hallë	n	*
+N;NOM;SG;DEF	1	mirësia	mirësi	n	*
+N;ABL;PL;NDEF	1	teknologjish	teknologji	n	*
+N;ACC;PL;NDEF	1	orgazma	orgazmë	n	*
+N;NOM;SG;DEF	1	tërësia	tërësi	n	*
+N;ACC;SG;DEF	1	gjahtarin	gjahtar	n	*
+N;ABL;PL;NDEF	1	kapakësh	kapak	n	*
+N;ABL;SG;DEF	1	hasmërisë	hasmëri	n	*
+N;ABL;PL;DEF	1	krahasimeve	krahasim	n	*
+N;ABL;PL;DEF	1	dhelprave	dhelpër	n	*
+N;ABL;PL;DEF	1	lakimeve	lakim	n	*
+N;ABL;SG;DEF	1	skeletit	skelet	n	*
+N;ABL;SG;NDEF	1	mbretërie	mbretëri	n	*
+N;ACC;PL;NDEF	1	peshkaqene	peshkaqen	n	*
+N;ABL;SG;NDEF	1	matematikani	matematikan	n	*
+N;ABL;SG;DEF	1	perineumit	perineum	n	*
+N;ABL;PL;DEF	1	vrimave	vrimë	n	*
+N;ACC;SG;DEF	1	përdorimin	përdorim	n	*
+N;ACC;PL;DEF	1	lëndimit	lëndim	n	*
+N;ABL;PL;NDEF	1	lëvizjesh	lëvizje	n	*
+N;ABL;PL;DEF	1	forcave	forcë	n	*
+N;ACC;PL;NDEF	1	çadra	çadër	n	*
+N;ABL;PL;DEF	1	motrave	motër	n	*
+N;ABL;PL;DEF	1	hidrateve	hidrat	n	*
+N;ABL;SG;DEF	1	lakimit	lakim	n	*
+N;ACC;PL;DEF	1	shkencat	shkencë	n	*
+N;ABL;PL;NDEF	1	luftëtarësh	luftëtar	n	*
+N;ABL;PL;NDEF	1	frikash	frikë	n	*
+N;ABL;PL;NDEF	1	ajrash	ajër	n	*
+N;ABL;SG;DEF	1	gjuhës	gjuhë	n	*
+N;ABL;PL;NDEF	1	shkaqesh	shkak	n	*
+N;ABL;SG;NDEF	1	aftësie	aftësi	n	*
+N;ABL;PL;NDEF	1	hidratesh	hidrat	n	*
+N;NOM;SG;DEF	1	sodomia	sodomi	n	*
+N;ABL;SG;DEF	1	hyrjes	hyrje	n	*
+N;ACC;SG;DEF	1	syrin	sy	n	*
+N;ACC;SG;DEF	1	psikologun	psikolog	n	*
+N;ACC;PL;NDEF	1	motra	motër	n	*
+N;ACC;PL;DEF	1	bisedat	bisedë	n	*
+N;ABL;SG;NDEF	1	tërësie	tërësi	n	*
+N;ABL;PL;DEF	1	shembujve	shembull	n	*
+N;ACC;PL;DEF	1	dhuratat	dhuratë	n	*
+N;ABL;PL;NDEF	1	sistemesh	sistem	n	*
+N;ABL;SG;NDEF	1	ironie	ironi	n	*
+N;ABL;PL;DEF	1	kolegëve	koleg	n	*
+N;ABL;PL;DEF	1	luftëtarëve	luftëtar	n	*
+N;ACC;PL;NDEF	1	zoologë	zoolog	n	*
+N;ACC;SG;DEF	1	sociologjinë	sociologji	n	*
+N;ABL;SG;NDEF	1	rrepe	rrepë	n	*
+N;ABL;PL;NDEF	1	stinësh	stinë	n	*
+N;NOM;SG;DEF	1	goja	gojë	n	*
+N;ACC;PL;DEF	1	kërthizat	kërthizë	n	*
+N;ABL;PL;DEF	1	xhaxhallarëve	xhaxha	n	*
+N;ABL;SG;NDEF	1	mbreti	mbret	n	*
+N;ABL;PL;DEF	1	bashkëpunëtorëve	bashkëpunëtor	n	*
+N;ABL;PL;NDEF	1	shokësh	shok	n	*
+N;ABL;SG;NDEF	1	heteroseksualiteti	heteroseksualitet	n	*
+N;ACC;PL;DEF	1	shpalljet	shpallje	n	*
+N;ACC;PL;DEF	1	lezbiket	lezbike	n	*
+N;ABL;SG;DEF	1	gjylpanës	gjylpanë	n	*
+N;ABL;SG;DEF	1	rrugës	rrugë	n	*
+N;ACC;PL;NDEF	1	forca	forcë	n	*
+N;ABL;SG;NDEF	1	goje	gojë	n	*
+N;ACC;PL;DEF	1	ligjet	ligj	n	*

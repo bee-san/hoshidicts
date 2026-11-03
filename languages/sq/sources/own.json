@@ -90,7 +90,8 @@
         {"type": "suffix", "inflected": "rri", "deinflected": "ërr", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "i", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[ao]"},
         {"type": "suffix", "inflected": "u", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[kgheia]"},
-        {"type": "suffix", "inflected": "ri", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[uyiea]"},
+        {"type": "suffix", "inflected": "ri", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[uyieaë]"},
+        {"type": "suffix", "inflected": "oi", "deinflected": "ua", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "mi", "deinflected": "ëm", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "ni", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[youe]"}
       ]
@@ -106,8 +107,10 @@
         {"type": "suffix", "inflected": "rin", "deinflected": "ër", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "rrin", "deinflected": "ërr", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "in", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[o]"},
+        {"type": "suffix", "inflected": "në", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[a]"},
         {"type": "suffix", "inflected": "un", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[kgheia]"},
-        {"type": "suffix", "inflected": "rin", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[uyiea]"},
+        {"type": "suffix", "inflected": "rin", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[uyieaë]"},
+        {"type": "suffix", "inflected": "oin", "deinflected": "ua", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "min", "deinflected": "ëm", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "nin", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[youe]"}
       ]
@@ -124,7 +127,8 @@
         {"type": "suffix", "inflected": "rrit", "deinflected": "ërr", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "it", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[ao]"},
         {"type": "suffix", "inflected": "ut", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[kgheia]"},
-        {"type": "suffix", "inflected": "rit", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[uyiea]"},
+        {"type": "suffix", "inflected": "rit", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[uyieaë]"},
+        {"type": "suffix", "inflected": "oit", "deinflected": "ua", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "mit", "deinflected": "ëm", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "nit", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[youe]"}
       ]
@@ -144,6 +148,7 @@
         {"type": "suffix", "inflected": "a", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[ji]"},
         {"type": "suffix", "inflected": "a", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "ja", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{consonant}"},
+        {"type": "suffix", "inflected": "a", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "ja", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{vowel}"}
       ]
     },
@@ -154,6 +159,7 @@
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "n", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[ëeao]"},
+        {"type": "suffix", "inflected": "ën", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "rën", "deinflected": "ër", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "rrën", "deinflected": "ërr", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "lën", "deinflected": "ël", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "{consonant}"},
@@ -166,7 +172,8 @@
       "description": "Feminine singular definite genitive, dative or ablative (vajzë → vajzës, lule → lules, motër → motrës, shtëpi → shtëpisë, grua → gruas).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "s", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[ëea]"},
+        {"type": "suffix", "inflected": "s", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[ëeao]"},
+        {"type": "suffix", "inflected": "ës", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "rës", "deinflected": "ër", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "rrës", "deinflected": "ërr", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "lës", "deinflected": "ël", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "{consonant}"},
@@ -193,9 +200,9 @@
       "description": "Plural definite nominative or accusative (male → malet, vajza → vajzat, miq → miqtë, shtëpi → shtëpitë, njerëz → njerëzit).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "t", "deinflected": "", "conditionsIn": [], "conditionsOut": ["np"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[eaëjr]"},
-        {"type": "suffix", "inflected": "të", "deinflected": "", "conditionsIn": [], "conditionsOut": ["np"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "it", "deinflected": "", "conditionsIn": [], "conditionsOut": ["np"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[szr]"}
+        {"type": "suffix", "inflected": "t", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[eaëjrou]"},
+        {"type": "suffix", "inflected": "të", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "it", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[szr]"}
       ]
     },
     {
@@ -204,8 +211,8 @@
       "description": "Plural genitive, dative or ablative, definite or indefinite (male → maleve, vajza → vajzave, miq → miqve).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ve", "deinflected": "", "conditionsIn": [], "conditionsOut": ["np"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "vet", "deinflected": "", "conditionsIn": [], "conditionsOut": ["np"], "stemCharacters": "[^ ]", "stemMinLength": 2}
+        {"type": "suffix", "inflected": "ve", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "vet", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[^ ]", "stemMinLength": 2}
       ]
     },
     {
@@ -214,8 +221,8 @@
       "description": "Plural indefinite ablative (male → malesh, vajza → vajzash, miq → miqsh, nxënës → nxënësish).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "sh", "deinflected": "", "conditionsIn": [], "conditionsOut": ["np"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ish", "deinflected": "", "conditionsIn": [], "conditionsOut": ["np"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[szr]"}
+        {"type": "suffix", "inflected": "sh", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ish", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[szr]"}
       ]
     },
     {
@@ -248,6 +255,7 @@
         {"type": "suffix", "inflected": "onj", "deinflected": "ua", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "një", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "uj", "deinflected": "ull", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "aj", "deinflected": "all", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "j", "deinflected": "ll", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[e]"},
         {"type": "suffix", "inflected": "je", "deinflected": "ll", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[iy]"},
         {"type": "suffix", "inflected": "uj", "deinflected": "ul", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 1},
@@ -268,7 +276,18 @@
         {"type": "suffix", "inflected": "etër", "deinflected": "atë", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "[^ ]"},
         {"type": "wholeWord", "inflected": "bij", "deinflected": "bir", "conditionsIn": ["np"], "conditionsOut": ["ns"]},
         {"type": "suffix", "inflected": "thonj", "deinflected": "thua", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "dhen", "deinflected": "dele", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "[^ ]"}
+        {"type": "suffix", "inflected": "dhen", "deinflected": "dele", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "rrathë", "deinflected": "rreth", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "[^ ]"}
+      ]
+    },
+    {
+      "id": "vn",
+      "name": "verbal noun (-im)",
+      "description": "A verbal noun in -im read as its verb (bashkim → bashkoj, kthim → kthej, përkthim → përkthej).",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "im", "deinflected": "oj", "conditionsIn": ["ns"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 3},
+        {"type": "suffix", "inflected": "im", "deinflected": "ej", "conditionsIn": ["ns"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 3}
       ]
     },
     {
@@ -1133,6 +1152,8 @@
       "description": "A non-active form read as the mediopassive verb a dictionary lists (u largua → largohem, u ul → ulem, është kthyer → kthehem).",
       "source": "own",
       "rules": [
+        {"type": "suffix", "inflected": "ua", "deinflected": "ohem", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "ye", "deinflected": "ehem", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["u ", ""]], "suffixes": [["ova", "ohem"], ["ove", "ohem"], ["oi", "ohem"], ["ua", "ohem"], ["uam", "ohem"], ["uat", "ohem"], ["uan", "ohem"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["u ", ""]], "suffixes": [["eva", "ehem"], ["eve", "ehem"], ["eu", "ehem"], ["ye", "ehem"], ["yem", "ehem"], ["yet", "ehem"], ["yen", "ehem"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["u ", ""]], "suffixes": [["iva", "ihem"], ["ive", "ihem"], ["iu", "ihem"], ["i", "ihem"], ["imë", "ihem"], ["itë", "ihem"], ["inë", "ihem"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
@@ -1141,8 +1162,8 @@
         {"type": "circumfix", "prefixes": [["u ", ""]], "suffixes": [["ofsha", "ohem"], ["ofsh", "ohem"], ["oftë", "ohem"], ["ofshim", "ohem"], ["ofshi", "ohem"], ["ofshit", "ohem"], ["ofshin", "ohem"], ["uakam", "ohem"], ["uake", "ohem"], ["uaka", "ohem"], ["uakemi", "ohem"], ["uakeni", "ohem"], ["uakan", "ohem"], ["uakësha", "ohem"], ["uakëshe", "ohem"], ["uakësh", "ohem"], ["uakëshim", "ohem"], ["uakëshit", "ohem"], ["uakëshin", "ohem"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["u ", ""]], "suffixes": [["efsha", "ehem"], ["efsh", "ehem"], ["eftë", "ehem"], ["efshim", "ehem"], ["efshi", "ehem"], ["efshit", "ehem"], ["efshin", "ehem"], ["yekam", "ehem"], ["yeke", "ehem"], ["yeka", "ehem"], ["yekemi", "ehem"], ["yekeni", "ehem"], ["yekan", "ehem"], ["yekësha", "ehem"], ["yekëshe", "ehem"], ["yekësh", "ehem"], ["yekëshim", "ehem"], ["yekëshit", "ehem"], ["yekëshin", "ehem"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["u ", ""]], "suffixes": [["sha", "em"], ["sh", "em"], ["të", "em"], ["shim", "em"], ["shi", "em"], ["shit", "em"], ["shin", "em"], ["kam", "em"], ["ke", "em"], ["ka", "em"], ["kemi", "em"], ["keni", "em"], ["kan", "em"], ["kësha", "em"], ["këshe", "em"], ["kësh", "em"], ["këshim", "em"], ["këshit", "em"], ["këshin", "em"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{consonant}"},
-        {"type": "circumfix", "prefixes": [["jam ", ""], ["je ", ""], ["është ", ""], ["jemi ", ""], ["jeni ", ""], ["janë ", ""], ["isha ", ""], ["ishe ", ""], ["ishte ", ""], ["ishim ", ""], ["ishit ", ""], ["ishin ", ""], ["jem ", ""], ["jesh ", ""], ["jetë ", ""], ["jenë ", ""], ["qenkam ", ""], ["qenke ", ""], ["qenka ", ""], ["qenkemi ", ""], ["qenkeni ", ""], ["qenkan ", ""], ["qofsha ", ""], ["qofsh ", ""], ["qoftë ", ""], ["qofshim ", ""], ["qofshi ", ""], ["qofshit ", ""], ["qofshin ", ""], ["duke u ", ""], ["për t'u ", ""], ["pa u ", ""]], "suffixes": [["uar", "ohem"], ["yer", "ehem"], ["irë", "ihem"], ["arë", "ahem"]], "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
-        {"type": "circumfix", "prefixes": [["jam ", ""], ["je ", ""], ["është ", ""], ["jemi ", ""], ["jeni ", ""], ["janë ", ""], ["isha ", ""], ["ishe ", ""], ["ishte ", ""], ["ishim ", ""], ["ishit ", ""], ["ishin ", ""], ["jem ", ""], ["jesh ", ""], ["jetë ", ""], ["jenë ", ""], ["qenkam ", ""], ["qenke ", ""], ["qenka ", ""], ["qenkemi ", ""], ["qenkeni ", ""], ["qenkan ", ""], ["qofsha ", ""], ["qofsh ", ""], ["qoftë ", ""], ["qofshim ", ""], ["qofshi ", ""], ["qofshit ", ""], ["qofshin ", ""], ["duke u ", ""], ["për t'u ", ""], ["pa u ", ""]], "suffixes": [["ur", "em"]], "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{consonant}"}
+        {"type": "circumfix", "prefixes": [["jam ", ""], ["je ", ""], ["është ", ""], ["jemi ", ""], ["jeni ", ""], ["janë ", ""], ["isha ", ""], ["ishe ", ""], ["ishte ", ""], ["ishim ", ""], ["ishit ", ""], ["ishin ", ""], ["jem ", ""], ["jesh ", ""], ["jetë ", ""], ["jenë ", ""], ["qenkam ", ""], ["qenke ", ""], ["qenka ", ""], ["qenkemi ", ""], ["qenkeni ", ""], ["qenkan ", ""], ["qenkësha ", ""], ["qenkëshe ", ""], ["qenkësh ", ""], ["qenkëshim ", ""], ["qenkëshit ", ""], ["qenkëshin ", ""], ["qofsha ", ""], ["qofsh ", ""], ["qoftë ", ""], ["qofshim ", ""], ["qofshi ", ""], ["qofshit ", ""], ["qofshin ", ""], ["duke u ", ""], ["për t'u ", ""], ["pa u ", ""]], "suffixes": [["uar", "ohem"], ["yer", "ehem"], ["irë", "ihem"], ["arë", "ahem"]], "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "circumfix", "prefixes": [["jam ", ""], ["je ", ""], ["është ", ""], ["jemi ", ""], ["jeni ", ""], ["janë ", ""], ["isha ", ""], ["ishe ", ""], ["ishte ", ""], ["ishim ", ""], ["ishit ", ""], ["ishin ", ""], ["jem ", ""], ["jesh ", ""], ["jetë ", ""], ["jenë ", ""], ["qenkam ", ""], ["qenke ", ""], ["qenka ", ""], ["qenkemi ", ""], ["qenkeni ", ""], ["qenkan ", ""], ["qenkësha ", ""], ["qenkëshe ", ""], ["qenkësh ", ""], ["qenkëshim ", ""], ["qenkëshit ", ""], ["qenkëshin ", ""], ["qofsha ", ""], ["qofsh ", ""], ["qoftë ", ""], ["qofshim ", ""], ["qofshi ", ""], ["qofshit ", ""], ["qofshin ", ""], ["duke u ", ""], ["për t'u ", ""], ["pa u ", ""]], "suffixes": [["ur", "em"]], "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{consonant}"}
       ]
     },
     {
@@ -1176,8 +1197,8 @@
         {"type": "suffix", "inflected": "ecën", "deinflected": "eci", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "hipën", "deinflected": "hipi", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "godet", "deinflected": "godas", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "humbaet", "deinflected": "humbas", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "stërviet", "deinflected": "stërvis", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "humbet", "deinflected": "humbas", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "stërvit", "deinflected": "stërvis", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "rreh", "deinflected": "rrah", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"}
       ]
     },
@@ -1219,63 +1240,66 @@
       "rules": [
         {"type": "suffix", "inflected": "ni", "deinflected": "j", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]"},
         {"type": "suffix", "inflected": "ni", "deinflected": "", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{consonant}"},
-        {"type": "suffix", "inflected": "jeni", "deinflected": "jam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "jeni", "deinflected": "jam", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "wholeWord", "inflected": "jini", "deinflected": "jam", "conditionsIn": ["v_imp"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "keni", "deinflected": "kam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "keni", "deinflected": "kam", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "wholeWord", "inflected": "kini", "deinflected": "kam", "conditionsIn": ["v_imp"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "thoni", "deinflected": "them", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "jepni", "deinflected": "jap", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "shihni", "deinflected": "shoh", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "thoni", "deinflected": "them", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "jepni", "deinflected": "jap", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "shihni", "deinflected": "shoh", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "wholeWord", "inflected": "ejani", "deinflected": "vij", "conditionsIn": ["v_imp"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "doni", "deinflected": "dua", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "hani", "deinflected": "ha", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "pini", "deinflected": "pi", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "dini", "deinflected": "di", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "rrini", "deinflected": "rri", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "flini", "deinflected": "fle", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "lini", "deinflected": "lë", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "vini", "deinflected": "vë", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "zini", "deinflected": "zë", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "bini", "deinflected": "bie", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "dilni", "deinflected": "dal", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "merrni", "deinflected": "marr", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "flisni", "deinflected": "flas", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "prisni", "deinflected": "pres", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "pritni", "deinflected": "pres", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "vritni", "deinflected": "vras", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "shitni", "deinflected": "shes", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "pyetni", "deinflected": "pyes", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "njihni", "deinflected": "njoh", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "vdisni", "deinflected": "vdes", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "hidhni", "deinflected": "hedh", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "hiqni", "deinflected": "heq", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "zgjidhni", "deinflected": "zgjedh", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "mblidhni", "deinflected": "mbledh", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "sillni", "deinflected": "sjell", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "mbillni", "deinflected": "mbjell", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "villni", "deinflected": "vjell", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "digjni", "deinflected": "djeg", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "ndiqni", "deinflected": "ndjek", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "piqni", "deinflected": "pjek", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "nxirrni", "deinflected": "nxjerr", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "ndizni", "deinflected": "ndez", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "vishni", "deinflected": "vesh", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "bridhni", "deinflected": "bredh", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "vidhni", "deinflected": "vjedh", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "pillni", "deinflected": "pjell", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "milni", "deinflected": "mjel", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "vilni", "deinflected": "vjel", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "tirrni", "deinflected": "tjerr", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "ikni", "deinflected": "iki", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "ecni", "deinflected": "eci", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "hipni", "deinflected": "hipi", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "goditni", "deinflected": "godas", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "humbitni", "deinflected": "humbas", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "stërvitni", "deinflected": "stërvis", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "rrihni", "deinflected": "rrah", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "ngrini", "deinflected": "ngre", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "blini", "deinflected": "blej", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "veni", "deinflected": "vete", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"}
+        {"type": "suffix", "inflected": "doni", "deinflected": "dua", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "hani", "deinflected": "ha", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "pini", "deinflected": "pi", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "dini", "deinflected": "di", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "rrini", "deinflected": "rri", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "flini", "deinflected": "fle", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "lini", "deinflected": "lë", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "lëni", "deinflected": "lë", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "vini", "deinflected": "vë", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "vëni", "deinflected": "vë", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "zini", "deinflected": "zë", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "zëni", "deinflected": "zë", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "bini", "deinflected": "bie", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "dilni", "deinflected": "dal", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "merrni", "deinflected": "marr", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "flisni", "deinflected": "flas", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "prisni", "deinflected": "pres", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "pritni", "deinflected": "pres", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "vritni", "deinflected": "vras", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "shitni", "deinflected": "shes", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "pyetni", "deinflected": "pyes", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "njihni", "deinflected": "njoh", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "vdisni", "deinflected": "vdes", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "hidhni", "deinflected": "hedh", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "hiqni", "deinflected": "heq", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "zgjidhni", "deinflected": "zgjedh", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "mblidhni", "deinflected": "mbledh", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "sillni", "deinflected": "sjell", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "mbillni", "deinflected": "mbjell", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "villni", "deinflected": "vjell", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "digjni", "deinflected": "djeg", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "ndiqni", "deinflected": "ndjek", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "piqni", "deinflected": "pjek", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "nxirrni", "deinflected": "nxjerr", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "ndizni", "deinflected": "ndez", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "vishni", "deinflected": "vesh", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "bridhni", "deinflected": "bredh", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "vidhni", "deinflected": "vjedh", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "pillni", "deinflected": "pjell", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "milni", "deinflected": "mjel", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "vilni", "deinflected": "vjel", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "tirrni", "deinflected": "tjerr", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "ikni", "deinflected": "iki", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "ecni", "deinflected": "eci", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "hipni", "deinflected": "hipi", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "goditni", "deinflected": "godas", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "humbitni", "deinflected": "humbas", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "stërvitni", "deinflected": "stërvis", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "rrihni", "deinflected": "rrah", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "ngrini", "deinflected": "ngre", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "blini", "deinflected": "blej", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "veni", "deinflected": "vete", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"}
       ]
     },
     {
@@ -1748,6 +1772,7 @@
         {"type": "suffix", "inflected": "mbërrita", "deinflected": "mbërrij", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "gjeta", "deinflected": "gjej", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "ngrita", "deinflected": "ngre", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "wholeWord", "inflected": "u ngrita", "deinflected": "ngrihem", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "vajta", "deinflected": "vete", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"}
       ]
     },
@@ -1768,7 +1793,6 @@
         {"type": "suffix", "inflected": "yre", "deinflected": "yj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ave", "deinflected": "aj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{consonant}"},
-        {"type": "wholeWord", "inflected": "qe", "deinflected": "jam", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "pate", "deinflected": "kam", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "wholeWord", "inflected": "the", "deinflected": "them", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "dhe", "deinflected": "jap", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
@@ -1820,6 +1844,7 @@
         {"type": "suffix", "inflected": "mbërrite", "deinflected": "mbërrij", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "gjete", "deinflected": "gjej", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "ngrite", "deinflected": "ngre", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "wholeWord", "inflected": "u ngrite", "deinflected": "ngrihem", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "vajte", "deinflected": "vete", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"}
       ]
     },
@@ -1841,6 +1866,7 @@
         {"type": "suffix", "inflected": "au", "deinflected": "aj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "i", "deinflected": "", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "u", "deinflected": "", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[kgh]"},
+        {"type": "wholeWord", "inflected": "qe", "deinflected": "jam", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "pati", "deinflected": "kam", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "wholeWord", "inflected": "tha", "deinflected": "them", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "dha", "deinflected": "jap", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
@@ -1968,6 +1994,7 @@
         {"type": "suffix", "inflected": "mbërritëm", "deinflected": "mbërrij", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "gjetëm", "deinflected": "gjej", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "ngritëm", "deinflected": "ngre", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "wholeWord", "inflected": "u ngritëm", "deinflected": "ngrihem", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "vajtëm", "deinflected": "vete", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"}
       ]
     },
@@ -2040,6 +2067,7 @@
         {"type": "suffix", "inflected": "mbërritët", "deinflected": "mbërrij", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "gjetët", "deinflected": "gjej", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "ngritët", "deinflected": "ngre", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "wholeWord", "inflected": "u ngritët", "deinflected": "ngrihem", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "vajtët", "deinflected": "vete", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"}
       ]
     },
@@ -2112,6 +2140,7 @@
         {"type": "suffix", "inflected": "mbërritën", "deinflected": "mbërrij", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "gjetën", "deinflected": "gjej", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "ngritën", "deinflected": "ngre", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "wholeWord", "inflected": "u ngritën", "deinflected": "ngrihem", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "vajtën", "deinflected": "vete", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"}
       ]
     },
@@ -2214,6 +2243,7 @@
         {"type": "suffix", "inflected": "pafsh", "deinflected": "shoh", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "ardhsh", "deinflected": "vij", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "wholeWord", "inflected": "daç", "deinflected": "dua", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "ngrënç", "deinflected": "ha", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "pifsh", "deinflected": "pi", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "ditsh", "deinflected": "di", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "folsh", "deinflected": "flas", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
@@ -2263,6 +2293,7 @@
         {"type": "suffix", "inflected": "pafshim", "deinflected": "shoh", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "ardhshim", "deinflected": "vij", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "daçim", "deinflected": "dua", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "ngrënçim", "deinflected": "ha", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "ditshim", "deinflected": "di", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "folshim", "deinflected": "flas", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "ikshim", "deinflected": "iki", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
@@ -2296,6 +2327,8 @@
         {"type": "suffix", "inflected": "ardhshit", "deinflected": "vij", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "daçi", "deinflected": "dua", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "daçit", "deinflected": "dua", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "ngrënçi", "deinflected": "ha", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "ngrënçit", "deinflected": "ha", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "ditshi", "deinflected": "di", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "ditshit", "deinflected": "di", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "folshi", "deinflected": "flas", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
@@ -2324,6 +2357,7 @@
         {"type": "suffix", "inflected": "pafshin", "deinflected": "shoh", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "ardhshin", "deinflected": "vij", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "daçin", "deinflected": "dua", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "ngrënçin", "deinflected": "ha", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "ditshin", "deinflected": "di", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "folshin", "deinflected": "flas", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "ikshin", "deinflected": "iki", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
@@ -2938,7 +2972,11 @@
       "description": "Non-active aorist, third person singular, after u (u largua, u kthye, u fshi, u la, u hap, u bë).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["u ", ""]], "suffixes": [["ua", "oj"], ["ua", "uaj"], ["ye", "ej"], ["ye", "yej"], ["ajt", "aj"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "ua", "deinflected": "oj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "ua", "deinflected": "uaj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "ye", "deinflected": "ej", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "ye", "deinflected": "yej", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "jt", "deinflected": "j", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "{vowel}"},
         {"type": "circumfix", "prefixes": [["u ", ""]], "suffixes": [["", "j"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aië]"},
         {"type": "wholeWord", "inflected": "tha", "deinflected": "them", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "dha", "deinflected": "jap", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},

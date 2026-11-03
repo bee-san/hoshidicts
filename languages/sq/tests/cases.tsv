@@ -1,0 +1,11 @@
+# Hand-written for this pack (GPL-3.0-or-later): rows that need the optional addMissingDiacritics processor (text written without ë and ç), run with every option on.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+missing diacritics	1	shtepia	shtëpi	n	n-def-nom-f
+missing diacritics	1	punen	punë	n	n-def-acc-f
+missing diacritics	1	vajzes	vajzë	n	n-def-obl-f
+missing diacritics	1	Shkruajme	shkruaj	v	pres-1pl
+missing diacritics	1	cfare	çfarë	*	
+missing diacritics	1	nje	një	*	
+missing diacritics	1	kerkoj	kërkoj	*	
+missing diacritics	1	do te shkoj	shkoj	v	fut
+missing diacritics	1	s'eshte	jam	v	pres-2sg|neg
