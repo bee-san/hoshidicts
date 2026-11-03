@@ -13,8 +13,8 @@ The recommended dictionaries, wty-pt-en and wty-pt-pt, give no part of speech:
 wiktionary-to-yomitan fills the `rules` column only for the 16 languages of its
 rule table (`src/dict/rules/valid.rs` at 4b02478), and Portuguese is not one:
 all 572,340 rows of wty-pt-en and all 504,951 of wty-pt-pt leave it empty.
-The pack therefore sets `lookup.untaggedTerms` to `"pass"`
-(bee-san/hoshidicts#58): an untagged term matches a deinflection whose
+The pack therefore sets `lookup.untaggedTerms` to `"pass"` (docs/languages.md
+4.4 and 9.4): an untagged term matches a deinflection whose
 conditions include a dictionary form (`v`, `n`, `adj` or `adv`), and not one
 that holds only the intermediate condition `vf` (Rule provenance). Without the field, no rule's output finds a
 term of these dictionaries; only the dictionary's own form-of rows for the
@@ -231,8 +231,8 @@ Every number uses wty-pt-en as published, imported by `hoshidicts-cli
 import`, with the pack as committed (`untaggedTerms: "pass"`). The pack has no
 optional processor, transform or variant pass, so each file gives the same
 numbers with every option on and with its `# options: default` copy (both were
-run). Where a number from hoshidicts without `untaggedTerms` (main before #58)
-is given, it is labelled "without the field".
+run). Where a number for the pack without the field (as `"filter"`) is
+given, it is labelled "without the field".
 
 1. **`eval-language --dictionary`**, on every test file with
    `untaggedTerms` `"pass"` (the pack) and `"filter"` (a copy without the
@@ -481,10 +481,10 @@ Checks:
   verb first (`previstas` → prever). `untaggedTerms: "pass"` lets every rule's
   output match these untagged rows; `vf` keeps verb forms with a removed
   pronoun from matching nouns.
-- **Runtimes.** A host must run hoshidicts at or after #58 to load this pack:
-  older engines refuse `lookup.untaggedTerms` as an unknown key. Hachidori's
-  prebuilt WebAssembly at feat/multi-language 803f7b6e is built from b145feb,
-  before it.
+- **Runtimes.** A host must run hoshidicts at or after 0a73e5e (#58) to load
+  this pack: older engines refuse `lookup.untaggedTerms` as an unknown key.
+  Hachidori's prebuilt WebAssembly at feat/multi-language 803f7b6e is built
+  from b145feb, before it.
 - **`traceSelection`** cannot be observed by a test (`lookup.tsv` compares a
   result's expression and matched text, not its trace), so it is set as the
   contract recommends (`shortest`).
