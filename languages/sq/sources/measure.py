@@ -15,7 +15,9 @@ repository root with a built hoshidicts-cli:
       the word gives with a compatible part of speech), each looked up alone
       as a host does (build/lookup-batch, from languages/en/sources); the
       first result is right when the word's form-of rows name it, or it is
-      the word itself, which has definitions of its own (a homograph).
+      the word itself, which has definitions of its own. When the rows name
+      two lemmas or more (a homograph: dita, day or I knew), either passes,
+      so those words are listed apart for judging by hand.
 
   python3 languages/sq/sources/measure.py real <wty-sq-en.zip> <imported dir> <unimorph sqi> <out dir> <text>...
       Every word of the texts (runs of letters; an apostrophe or hyphen ends a
@@ -24,8 +26,10 @@ repository root with a built hoshidicts-cli:
       text's own rows name it (a form-of row, or UniMorph sqi), or it is the
       matched text itself with definitions; wrong by script when the
       matched text has rows that name other lemmas and the result comes from
-      the rules; the rest are written to <out dir>/unjudged.tsv, from which a
-      random sample is judged by hand.
+      the rules; a homograph when the rows name it and another lemma, so the
+      script cannot tell (<out dir>/homographs.tsv, grouped by word and first
+      result, judged by hand); the rest are written to <out dir>/unjudged.tsv,
+      from which a random sample is judged by hand.
 
   python3 languages/sq/sources/measure.py phrases <wty-sq-en.zip> <imported dir> <unimorph sqi> <sqi_sentences.tsv.bz2>
       Every place in Tatoeba's Albanian sentences where an article, particle,
@@ -240,12 +244,16 @@ def cmd_frequent(dictionary, imported, freq, unimorph, n='10000'):
             reached.append((w, c, named))
     results = lookup_batch([w for w, _, _ in reached], imported)
     wrong = []
+    homographs = []
     for (w, c, named), res in zip(reached, results):
         first = res['results'][0] if res['results'] else None
         if first is None:
             wrong.append((w, c, None, None))
             continue
         e = first['expression']
+        if e in named and len(named) >= 2 and e != w:
+            homographs.append((w, c, e, first['trace'], sorted(named - {e})))
+            continue
         if e in named or (e == w and w in lemmas):
             continue
         wrong.append((w, c, e, first['trace']))
@@ -255,6 +263,10 @@ def cmd_frequent(dictionary, imported, freq, unimorph, n='10000'):
     print(f'first result wrong for {len(wrong)} of them, {tokens_wrong} tokens ({100*tokens_wrong/total_tokens:.2f}% of the list)')
     for w, c, e, trace in sorted(wrong, key=lambda x: -x[1]):
         print(f'  {w} ({c}) -> {e} {trace}  [named: {", ".join(sorted({l for l, _ in forms.get(w, [])} | um.get(w, set())))}]')
+    print(f'{len(homographs)} of them are homographs, whose rows name two lemmas or more ({sum(h[1] for h in homographs)} tokens): '
+          'the first result is one of those lemmas, judged by hand:')
+    for w, c, e, trace, others in homographs:
+        print(f'  {w} ({c}) -> {e} {trace}  [also: {", ".join(others)}]')
     # Words no form-of row or UniMorph row names a lemma for, whose first result
     # comes from the pack's rules (a trace of transform ids): judged by hand.
     ids = {t['id'] for t in json.load(open(os.path.join(PACK, 'transforms.json'), encoding='utf-8'))['transforms']}
@@ -294,6 +306,8 @@ def cmd_real(dictionary, imported, unimorph, out_dir, *texts):
     wrong_rules = collections.Counter()
     wrong = []
     unjudged = []
+    homographs = collections.Counter()
+    homograph_text = {}
     for (word, text), res in zip(hovers, results):
         if not res['results']:
             counts['nothing'] += 1
@@ -303,7 +317,12 @@ def cmd_real(dictionary, imported, unimorph, out_dir, *texts):
         e = first['expression']
         named = {l for l, _ in forms.get(matched, [])} | {l for l, _ in forms.get(first['matched'], [])} | um.get(matched, set())
         own_trace = first['trace'] and set(first['trace']) <= ids
-        if e in named or (e.lower() == matched and (e in lemmas or e.lower() in lemmas)):
+        if e in named and len(named) >= 2 and e.lower() != matched:
+            counts['homograph'] += 1
+            key = (matched, e, ', '.join(sorted(named - {e})))
+            homographs[key] += 1
+            homograph_text.setdefault(key, text[:80])
+        elif e in named or (e.lower() == matched and (e in lemmas or e.lower() in lemmas)):
             counts['right'] += 1
         elif named and own_trace:
             counts['wrong'] += 1
@@ -317,8 +336,13 @@ def cmd_real(dictionary, imported, unimorph, out_dir, *texts):
         f.write('# word\tmatched\tfirst result\ttrace\ttext\n' + ''.join('\t'.join(u) + '\n' for u in unjudged))
     with open(os.path.join(out_dir, 'wrong.tsv'), 'w', encoding='utf-8') as f:
         f.write('# word\tmatched\tfirst result\ttrace\n' + ''.join('\t'.join(w) + '\n' for w in wrong))
+    with open(os.path.join(out_dir, 'homographs.tsv'), 'w', encoding='utf-8') as f:
+        f.write('# lookups\tmatched\tfirst result\tother lemmas the rows name\ttext\n')
+        for key, n in homographs.most_common():
+            f.write(f'{n}\t' + '\t'.join(key) + f'\t{homograph_text[key]}\n')
     total = len(hovers)
-    print(f'{total} lookups: {counts["right"]} right by script, {counts["wrong"]} wrong by script, {counts["unjudged"]} to judge, {counts["nothing"]} with no result')
+    print(f'{total} lookups: {counts["right"]} right by script, {counts["wrong"]} wrong by script, {counts["homograph"]} homographs '
+          f'({len(homographs)} groups) and {counts["unjudged"]} others to judge, {counts["nothing"]} with no result')
     for trace, n in wrong_rules.most_common(15):
         print(f'  wrong via {trace}: {n}')
 

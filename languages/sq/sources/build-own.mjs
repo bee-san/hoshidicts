@@ -139,10 +139,12 @@ const WHOLE_WORD_VERBS = new Set(['jam', 'kam', 'ha', 'pi', 'di', 'rri', 'fle', 
 function irregular(id, forms, lemma, conditionsIn, conditionsOut = ['v']) {
     for (const form of forms) {
         if ([...form].length >= 4 && !WHOLE_WORD_VERBS.has(lemma)) {
-            // No space constraint: the stem before a whole form is a
-            // compound's prefix, and a phrase ending in one (e merr → e marr)
-            // spells no headword.
-            add(id, {type: 'suffix', inflected: form, deinflected: lemma, conditionsIn, conditionsOut});
+            // The stem before a whole form is a compound's prefix (tërhoqi
+            // → tërheq). Not të, which the subjunctive and article rules read:
+            // të folur would leave të flas, a form-of row of wty-sq-en, whose
+            // trace (present subjunctive) would be shown. Other phrases ending
+            // in a whole form (e merr → e marr) spell no headword.
+            add(id, {type: 'suffix', inflected: form, deinflected: lemma, conditionsIn, conditionsOut, stemNotStartsWithText: 'të '});
         } else {
             whole(id, form, lemma, conditionsIn, conditionsOut);
         }
@@ -251,6 +253,28 @@ suffix('n-def-nom-f', 'a', '', [], N, {stemMinLength: 3, stemEndsWith: '[i]'});
 suffix('n-def-nom-f', 'ja', 'e', [], N, {stemMinLength: 2, stemEndsWith: CONSONANT});
 suffix('n-def-nom-f', 'a', 'e', [], N, {stemMinLength: 2, stemEndsWith: '[ji]'});
 suffix('n-def-nom-f', 'ja', '', [], N, {stemMinLength: 2, stemEndsWith: '[aeouyë]'});
+// The deinflector tries the longest ending first, and the file order decides
+// only between rules at one ending (docs/languages.md 7.4). Where a verb
+// ending is longer than the noun ending that reads a word, the verb came
+// first although the dictionary names both: jeta (jes, aorist), lidhja (lidh,
+// imperfect), pika (pi, admirative), tokën (tok, aorist). These rules make the
+// deinflections of the rules above (a → ë after t or k, a → e after j,
+// n → '' after ë) at the verb's ending, where nouns come first.
+suffix('n-def-nom-f', 'ta', 'të', [], N, {stemMinLength: 1});
+suffix('n-def-nom-f', 'ka', 'kë', [], N, {stemMinLength: 1});
+suffix('n-def-nom-f', 'ja', 'je', [], N, {stemMinLength: 2, stemEndsWith: CONSONANT});
+// e majta (the left) before the aorist in -jta (mbajta, I held).
+suffix('n-def-nom-f', 'jta', 'jtë', [], N, {stemMinLength: 1});
+// Not after o: the imperfect of the -oj verbs (kaloja, I was passing) is far
+// more common than the nouns in -ojë (kalojë, passageway).
+suffix('n-def-nom-f', 'ja', 'jë', [], N, {stemMinLength: 1, stemEndsWith: '[aeuyë]'});
+// Whole verb forms are tried first of all; these are more often a noun in
+// text: vija (the line, lines; vij, vë: I was coming, putting), bija (the
+// daughter; bie: I was falling), goditja (the blow; godas) and zgjidhja (the
+// solution; zgjedh: I was choosing).
+for (const [form, noun] of [['vija', 'vijë'], ['bija', 'bijë'], ['goditja', 'goditje'], ['zgjidhja', 'zgjidhje']]) {
+    whole('n-def-nom-f', form, noun, [], N);
+}
 
 transform('n-def-acc-f', 'definite accusative (feminine)',
     'Feminine singular definite accusative (vajzë → vajzën, lule → lulen, motër → motrën, shtëpi → shtëpinë, grua → gruan).');
@@ -260,6 +284,8 @@ suffix('n-def-acc-f', 'rën', 'ër', [], N, {stemMinLength: 1, stemEndsWith: CON
 suffix('n-def-acc-f', 'rrën', 'ërr', [], N, {stemMinLength: 1, stemEndsWith: CONSONANT});
 suffix('n-def-acc-f', 'lën', 'ël', [], N, {stemMinLength: 1, stemEndsWith: CONSONANT});
 suffix('n-def-acc-f', 'në', '', [], N, {stemMinLength: 2, stemEndsWith: '[aeiouy]'});
+suffix('n-def-acc-f', 'ën', 'ë', [], N, {stemMinLength: 2, stemEndsWith: CONSONANT});
+suffix('n-def-acc-f', 'jtën', 'jtë', [], N, {stemMinLength: 1});
 
 transform('n-def-obl-f', 'definite genitive/dative/ablative (feminine)',
     'Feminine singular definite genitive, dative or ablative (vajzë → vajzës, lule → lules, motër → motrës, shtëpi → shtëpisë, grua → gruas).');
@@ -278,6 +304,7 @@ suffix('n-indef-obl-f', 'rre', 'ërr', [], N, {stemMinLength: 1, stemEndsWith: C
 suffix('n-indef-obl-f', 'le', 'ël', [], N, {stemMinLength: 1, stemEndsWith: CONSONANT});
 suffix('n-indef-obl-f', 'e', '', [], N, {stemMinLength: 2, stemEndsWith: '[i]'});
 suffix('n-indef-obl-f', 'je', '', [], N, {stemMinLength: 2, stemEndsWith: VOWEL});
+suffix('n-indef-obl-f', 'ke', 'kë', [], N, {stemMinLength: 1});
 
 // Plural case endings leave the indefinite plural (n_pl): -t after a vowel, r
 // or j (malet, vajzat, shokët, duart, kuajt), -të after other consonants and
@@ -344,13 +371,18 @@ for (const [inflected, deinflected, extra] of [
 ]) {
     suffix('n-pl', inflected, deinflected, NPL, N, extra);
 }
+// zotërinj is the plural of zotëri (gentleman, sir) more often than of zot
+// (lord), whose -ërinj rule is tried first; male (mountains) is the plural of
+// mal more often than the oblique of malë.
+whole('n-pl', 'zotërinj', 'zotëri', NPL, N);
+whole('n-pl', 'male', 'mal', NPL, N);
 // Plurals that change the stem.
 for (const [plural, singular] of [
     ['djem', 'djalë'], ['kuaj', 'kalë'], ['duar', 'dorë'], ['dyer', 'derë'], ['net', 'natë'], ['netë', 'natë'],
     ['gra', 'grua'], ['njerëz', 'njeri'], ['desh', 'dash'], ['qe', 'ka'], ['vjet', 'vit'], ['etër', 'atë'],
     ['bij', 'bir'], ['thonj', 'thua'], ['dhen', 'dele'], ['rrathë', 'rreth'],
-    // The plural of a masculine noun in -ë, which the feminine definite -a
-    // would name otherwise.
+    // The plural of a masculine noun in -ë, so its trace is plural, not the
+    // feminine definite -a, which reaches burrë first otherwise.
     ['burra', 'burrë'],
 ]) {
     if ([...plural].length >= 4) {
@@ -402,6 +434,9 @@ suffix('adj-f', 'me', 'ëm', ['adj_f', 'adj_pl'], A, {stemMinLength: 2});
 suffix('adj-f', 'e', '', ['adj_f', 'adj_pl'], A, {stemMinLength: 2, stemEndsWith: '[i]'});
 suffix('adj-f', 'zezë', 'zi', ['adj_f'], A);
 whole('adj-f', 're', 'ri', ['adj_f'], A);
+// kuqe (red) before the aorist (2sg) of the verb kuq (to redden), which
+// wty-sq-en also lists: the lemma is the same, the trace would be the verb's.
+whole('adj-f', 'kuqe', 'kuq', ['adj_f'], A);
 
 transform('adj-pl-f', 'feminine plural', 'Feminine plural (mirë → mira, bukur → bukura, vogël → vogla, vjetër → vjetra, madh → mëdha, ri → reja, keq → këqija, zi → zeza).');
 suffix('adj-pl-f', 'a', 'ë', ['adj_pl'], A, {stemMinLength: 2, stemEndsWith: CONSONANT});
@@ -607,6 +642,10 @@ transform('adm-impf', 'admirative (imperfect)', 'Imperfect admirative, built on 
 
 // Present.
 suffix('pres-2sg', 'n', 'j', SB, V, {stemMinLength: 1, stemEndsWith: VJ});
+// The present of the -uaj verbs at the ending of the aorist (3pl) of the
+// shkrova type, so ruan, quan, vuan (present only; their aorist is ruajtën)
+// show the present: the same deinflection as n → j after a.
+suffix('pres-2sg', 'uan', 'uaj', SB, V, {stemMinLength: 1});
 suffix('pres-1pl', 'jmë', 'j', SB, V, {stemMinLength: 1, stemEndsWith: VJ});
 suffix('pres-2pl', 'ni', 'j', ['v_sbjv', 'v_imp'], V, {stemMinLength: 1, stemEndsWith: VJ});
 suffix('pres-3pl', 'jnë', 'j', SB, V, {stemMinLength: 1, stemEndsWith: VJ});
@@ -665,6 +704,9 @@ for (const rules of Object.values(aorist)) {
         suffix(`aor-${persons[i]}`, inflected, deinflected, AO, V, {stemMinLength: 1});
     });
 }
+// ftoi (invited) before the noun ftua (quince, definite ftoi), whose
+// rule comes first at the ending oi.
+whole('aor-3sg', 'ftoi', 'ftoj', AO, V);
 // Consonant stems: hapa, hape, hapi (preku after k, g, h), hapëm, hapët, hapën.
 for (const [p, end, extra] of [['1sg', 'a', {}], ['2sg', 'e', {}], ['3sg', 'i', {}], ['3sg', 'u', {stemEndsWith: '[kgh]'}], ['1pl', 'ëm', {}], ['2pl', 'ët', {}], ['3pl', 'ën', {}]]) {
     suffix(`aor-${p}`, end, '', AO, V, {stemMinLength: 2, stemEndsWith: VC, ...extra});
@@ -724,6 +766,9 @@ for (const [p, vowelEnd, consEnd] of [['1sg', 'hem', 'em'], ['2sg', 'hesh', 'esh
     suffix(`np-pres-${p}`, vowelEnd, 'j', SB, V, {stemMinLength: 1, stemEndsWith: VJ});
     suffix(`np-pres-${p}`, `u${vowelEnd}`, 'uaj', SB, V, {stemMinLength: 1});
     suffix(`np-pres-${p}`, `y${vowelEnd}`, 'yej', SB, V, {stemMinLength: 1});
+    // After a consonant too, the mediopassive verb first (ulet → ulem before
+    // ul, dukej → dukem before duk, varet → varem before var).
+    if (p !== '1sg') { suffix(`np-pres-${p}`, consEnd, 'em', SB, V, {stemMinLength: 2, stemEndsWith: VC}); }
     suffix(`np-pres-${p}`, consEnd, '', SB, V, {stemMinLength: 2, stemEndsWith: VC});
 }
 for (const [p, vowelEnd, consEnd] of [['1sg', 'hesha', 'esha'], ['2sg', 'heshe', 'eshe'], ['3sg', 'hej', 'ej'], ['1pl', 'heshim', 'eshim'], ['2pl', 'heshit', 'eshit'], ['3pl', 'heshin', 'eshin']]) {
@@ -731,28 +776,24 @@ for (const [p, vowelEnd, consEnd] of [['1sg', 'hesha', 'esha'], ['2sg', 'heshe',
     suffix(`np-impf-${p}`, vowelEnd, 'j', SB, V, {stemMinLength: 1, stemEndsWith: VJ});
     suffix(`np-impf-${p}`, `u${vowelEnd}`, 'uaj', SB, V, {stemMinLength: 1});
     suffix(`np-impf-${p}`, `y${vowelEnd}`, 'yej', SB, V, {stemMinLength: 1});
+    suffix(`np-impf-${p}`, consEnd, 'em', SB, V, {stemMinLength: 2, stemEndsWith: VC});
     suffix(`np-impf-${p}`, consEnd, '', SB, V, {stemMinLength: 2, stemEndsWith: VC});
 }
 suffix('np-imp-2sg', 'hu', 'hem', IMP, V, {stemMinLength: 1, stemEndsWith: VJ});
 suffix('np-imp-2sg', 'hu', 'j', IMP, V, {stemMinLength: 1, stemEndsWith: VJ});
 suffix('np-imp-2sg', 'uhu', 'uaj', IMP, V, {stemMinLength: 1});
+suffix('np-imp-2sg', 'u', 'em', IMP, V, {stemMinLength: 2, stemEndsWith: VC});
 suffix('np-imp-2sg', 'u', '', IMP, V, {stemMinLength: 2, stemEndsWith: VC});
 // After mos (do not), the non-active imperative is u and the active stem:
 // mos u shqetëso, mos u kthe → shqetësohem, kthehem (and the active verb).
 circumfix('np-imp-2sg', [['u ', '']], [['o', 'ohem'], ['o', 'oj'], ['e', 'ehem'], ['e', 'ej']], [], V, {stemMinLength: 2});
 suffix('np-imp-2pl', 'huni', 'hem', IMP, V, {stemMinLength: 1, stemEndsWith: VJ});
 suffix('np-imp-2pl', 'huni', 'j', IMP, V, {stemMinLength: 1, stemEndsWith: VJ});
+suffix('np-imp-2pl', 'uni', 'em', IMP, V, {stemMinLength: 2, stemEndsWith: VC});
 suffix('np-imp-2pl', 'uni', '', IMP, V, {stemMinLength: 2, stemEndsWith: VC});
-// ... and to the mediopassive verb a dictionary lists (largohet → largohem,
-// duket → dukem, lutej → lutem, ulu → ulem): the -hem verbs are the -em
-// endings after h.
-for (const [id, end] of [
-    ['np-pres-2sg', 'esh'], ['np-pres-3sg', 'et'], ['np-pres-1pl', 'emi'], ['np-pres-2pl', 'eni'], ['np-pres-3pl', 'en'],
-    ['np-impf-1sg', 'esha'], ['np-impf-2sg', 'eshe'], ['np-impf-3sg', 'ej'], ['np-impf-1pl', 'eshim'], ['np-impf-2pl', 'eshit'], ['np-impf-3pl', 'eshin'],
-    ['np-imp-2sg', 'u'], ['np-imp-2pl', 'uni'],
-]) {
-    suffix(id, end, 'em', id.startsWith('np-imp-') ? IMP : SB, V, {stemMinLength: 2, stemEndsWith: VC});
-}
+// The -em rules above read the mediopassive verb a dictionary lists
+// (largohet → largohem, duket → dukem, lutej → lutem, ulu → ulem); the -hem
+// verbs are the -em endings after h.
 
 // Pronouns attached to an imperative: e (it, him, her), i (to him, her,
 // them), with j between vowels (hape, merre, bëje, lexoje, tregoji); in the
@@ -859,6 +900,21 @@ verb('vij', {
     'ptcp': 'ardhur', 'imp-2sg': 'eja',
 });
 whole('pres-2pl', 'ejani', 'vij', IMP, V);
+// vë (put) has these forms too (whole words below); vij (come) is the common
+// reading, so its rules come first at the same ending.
+for (const [id, form] of [['pres-2pl', 'vini'], ['impf-1sg', 'vija'], ['impf-2sg', 'vije'], ['impf-3sg', 'vinte'],
+    ['impf-1pl', 'vinim'], ['impf-2pl', 'vinit'], ['impf-3pl', 'vinin']]) {
+    whole(id, form, 'vij', id === 'pres-2pl' ? ['v_sbjv', 'v_imp'] : SB, V);
+}
+// mundja is mostly I could (nuk mundja), not the rare noun mundje, which the
+// noun rule -ja → -je reaches first.
+whole('impf-1sg', 'mundja', 'mund', SB, V);
+// The subjunctive (3sg) of marr is spelt like its participle marrë, which
+// wty-sq-en has as a headword of its own: të marrë (that he take) would show
+// marrë first. (të dalë cannot be helped: wty-sq-en names only dalë for it.)
+for (const phrase of ['të marrë', 'ta marrë']) {
+    whole('sbjv-3sg', phrase, 'marr', [], V);
+}
 verb('dua', {
     'pres-2sg': 'do', 'pres-1pl': 'duam', 'pres-2pl': 'doni', 'pres-3pl': 'duan',
     'impf-1sg': 'doja', 'impf-2sg': 'doje', 'impf-3sg': 'donte', 'impf-1pl': 'donim', 'impf-2pl': 'donit', 'impf-3pl': 'donin',
@@ -889,9 +945,9 @@ verb('pi', {
 verb('di', {
     'pres-1pl': 'dimë', 'pres-2pl': 'dini', 'pres-3pl': 'dinë',
     'impf-1sg': 'dija', 'impf-2sg': 'dije', 'impf-3sg': 'dinte', 'impf-1pl': 'dinim', 'impf-2pl': 'dinit', 'impf-3pl': 'dinin',
-    // dita, ditët and ditën are also the definite forms of ditë (day), the
-    // reading in almost every text; wty-sq-en's own rows still give di.
-    'aor-2sg': 'dite', 'aor-3sg': 'diti', 'aor-1pl': 'ditëm',
+    // dita, dite, ditët and ditën are also forms of ditë (day), the reading in
+    // almost every text; wty-sq-en's own rows still give di.
+    'aor-3sg': 'diti', 'aor-1pl': 'ditëm',
     'sbjv-2sg': 'dish', 'sbjv-3sg': 'dijë',
     'opt-1sg': 'ditsha', 'opt-2sg': 'ditsh', 'opt-3sg': 'dittë', 'opt-1pl': 'ditshim', 'opt-2pl': 'ditshi ditshit', 'opt-3pl': 'ditshin',
     'ptcp': 'ditur',

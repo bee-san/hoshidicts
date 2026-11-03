@@ -9,8 +9,8 @@ For every transform and stem constraint whose removal leaves tests/ passing
 (the mutation check of sources/mutations.py, run here through the CLI), a
 probe text is built from one of the transform's rules: a stem that breaks the
 constraint (a space for stemCharacters, a stem one letter short for
-stemMinLength, a last letter outside the class for stemEndsWith) followed by
-the rule's ending. The row `probe ↛ stem + replacement` is printed when the
+stemMinLength, a last letter outside the class for stemEndsWith, the excluded
+text for stemNotStartsWithText) followed by the rule's ending. The row `probe ↛ stem + replacement` is printed when the
 pack's rules do not give that text and the rules without the constraint do.
 """
 import copy
@@ -22,7 +22,7 @@ import tempfile
 ROOT = os.getcwd()
 PACK = os.path.join(ROOT, 'languages', 'sq')
 CLI = os.path.join(ROOT, 'build', 'hoshidicts-cli')
-CONSTRAINTS = ['stemCharacters', 'stemMinLength', 'stemEndsWith', 'stemNotEndsWith']
+CONSTRAINTS = ['stemCharacters', 'stemMinLength', 'stemEndsWith', 'stemNotEndsWith', 'stemNotStartsWithText']
 CLASSES = {'{consonant}': set('bcçdfghjklmnpqrstvxz'), '{verbConsonant}': set('bcçdfghklmnpqrstvxz'), '{vowel}': set('aeiouyë')}
 
 
@@ -67,6 +67,9 @@ def probes(rule, key):
         banned = members(rule['stemNotEndsWith']) or set()
         for last in sorted(banned):
             out += [(b + last + infl, b + last + deinfl) for b in base]
+    elif key == 'stemNotStartsWithText':
+        head = rule['stemNotStartsWithText']
+        out = [(head + infl, head + deinfl)]
     return [(t, w) for t, w in out if t and w and t != w]
 
 

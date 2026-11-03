@@ -478,6 +478,19 @@ negatives	0	më së	së	adv	*
 comparative	1	më saktësisht	saktësisht	adv	cmp
 comparative	1	më shpesh	shpesh	adv	cmp
 negatives	0	më sot	sot	adv	*
+negatives	0	më shpejt se natyrisht	shpejt se natyrisht	adv	cmp
+negatives	0	ka masë	mas	v	*
+negatives	0	urdhëri	urdhë	n	*
+negatives	0	të vërtetuar	vërtetoj	v	*
+negatives	0	barin	baër	n	*
+negatives	0	lidhja	lidhj	v	*
+negatives	0	rin	ër	n	*
+negatives	0	kimi	kimë	n	*
+negatives	0	seri	serë	n	*
+negatives	0	arrit	arrë	n	*
+negatives (minimum stem)	0	ta	të	*	*
+negatives (minimum stem)	0	ka	kë	*	*
+negatives (minimum stem)	0	ke	kë	*	*
 negatives (constructed: n-def-sg-m stemCharacters)	0	e doti	e dot	*	*
 negatives (constructed: n-def-sg-m stemMinLength)	0	bi	b	*	*
 negatives (constructed: n-def-sg-m stemEndsWith)	0	doei	doe	*	*
@@ -514,128 +527,169 @@ negatives (constructed: vn stemCharacters)	0	e dotim	e dotoj	*	*
 negatives (constructed: vn stemMinLength)	0	dtim	dtoj	*	*
 negatives (constructed: np-lemma stemCharacters)	0	e dotua	e dotohem	*	*
 negatives (constructed: np-lemma stemMinLength)	0	ua	ohem	*	*
-negatives (constructed: pres-2sg stemCharacters)	0	e dotet	e dotes	*	*
+negatives (constructed: pres-2sg stemCharacters)	0	e dotuan	e dotuaj	*	*
 negatives (constructed: pres-2sg stemMinLength)	0	bet	bes	*	*
 negatives (constructed: pres-2sg stemEndsWith)	0	doun	douj	*	*
+negatives (constructed: pres-2sg stemNotStartsWithText)	0	të thua	të them	*	*
 negatives (constructed: pres-1pl stemCharacters)	0	e dotim	e dot	*	*
 negatives (constructed: pres-1pl stemMinLength)	0	bim	b	*	*
 negatives (constructed: pres-1pl stemEndsWith)	0	doaim	doa	*	*
+negatives (constructed: pres-1pl stemNotStartsWithText)	0	të themi	të them	*	*
 negatives (constructed: pres-2pl stemCharacters)	0	e dotni	e dot	*	*
 negatives (constructed: pres-2pl stemMinLength)	0	bni	b	*	*
 negatives (constructed: pres-2pl stemEndsWith)	0	douni	douj	*	*
+negatives (constructed: pres-2pl stemNotStartsWithText)	0	të thoni	të them	*	*
 negatives (constructed: pres-3pl stemCharacters)	0	e dotin	e dot	*	*
 negatives (constructed: pres-3pl stemMinLength)	0	bin	b	*	*
 negatives (constructed: pres-3pl stemEndsWith)	0	doujnë	douj	*	*
+negatives (constructed: pres-3pl stemNotStartsWithText)	0	të thonë	të them	*	*
 negatives (constructed: impf-1sg stemCharacters)	0	e dotja	e dot	*	*
 negatives (constructed: impf-1sg stemMinLength)	0	bja	b	*	*
 negatives (constructed: impf-1sg stemEndsWith)	0	doija	doi	*	*
+negatives (constructed: impf-1sg stemNotStartsWithText)	0	të thosha	të them	*	*
 negatives (constructed: impf-2sg stemCharacters)	0	e dotje	e dot	*	*
 negatives (constructed: impf-2sg stemMinLength)	0	bje	b	*	*
 negatives (constructed: impf-2sg stemEndsWith)	0	dojje	doj	*	*
+negatives (constructed: impf-2sg stemNotStartsWithText)	0	të thoshe	të them	*	*
 negatives (constructed: impf-3sg stemCharacters)	0	e dotte	e dot	*	*
 negatives (constructed: impf-3sg stemMinLength)	0	bte	b	*	*
 negatives (constructed: impf-3sg stemEndsWith)	0	dounte	douj	*	*
+negatives (constructed: impf-3sg stemNotStartsWithText)	0	të thoshte	të them	*	*
 negatives (constructed: impf-1pl stemCharacters)	0	e dotnim	e dot	*	*
 negatives (constructed: impf-1pl stemMinLength)	0	bnim	b	*	*
 negatives (constructed: impf-1pl stemEndsWith)	0	dounim	douj	*	*
+negatives (constructed: impf-1pl stemNotStartsWithText)	0	të thoshim	të them	*	*
 negatives (constructed: impf-2pl stemCharacters)	0	e dotnit	e dot	*	*
 negatives (constructed: impf-2pl stemMinLength)	0	bnit	b	*	*
 negatives (constructed: impf-2pl stemEndsWith)	0	dounit	douj	*	*
+negatives (constructed: impf-2pl stemNotStartsWithText)	0	të thoshit	të them	*	*
 negatives (constructed: impf-3pl stemCharacters)	0	e dotnin	e dot	*	*
 negatives (constructed: impf-3pl stemMinLength)	0	bnin	b	*	*
 negatives (constructed: impf-3pl stemEndsWith)	0	dounin	douj	*	*
+negatives (constructed: impf-3pl stemNotStartsWithText)	0	të thoshin	të them	*	*
 negatives (constructed: aor-1sg stemCharacters)	0	e dotova	e dotoj	*	*
 negatives (constructed: aor-1sg stemMinLength)	0	ova	oj	*	*
 negatives (constructed: aor-1sg stemEndsWith)	0	doaa	doa	*	*
+negatives (constructed: aor-1sg stemNotStartsWithText)	0	të thashë	të them	*	*
 negatives (constructed: aor-2sg stemCharacters)	0	e dotove	e dotoj	*	*
 negatives (constructed: aor-2sg stemMinLength)	0	ove	oj	*	*
 negatives (constructed: aor-2sg stemEndsWith)	0	doae	doa	*	*
+negatives (constructed: aor-2sg stemNotStartsWithText)	0	të erdhe	të vij	*	*
 negatives (constructed: aor-3sg stemCharacters)	0	e dotoi	e dotoj	*	*
 negatives (constructed: aor-3sg stemMinLength)	0	oi	oj	*	*
 negatives (constructed: aor-3sg stemEndsWith)	0	doei	doe	*	*
+negatives (constructed: aor-3sg stemNotStartsWithText)	0	të erdhi	të vij	*	*
 negatives (constructed: aor-1pl stemCharacters)	0	e dotuam	e dotoj	*	*
 negatives (constructed: aor-1pl stemMinLength)	0	uam	oj	*	*
 negatives (constructed: aor-1pl stemEndsWith)	0	doaëm	doa	*	*
+negatives (constructed: aor-1pl stemNotStartsWithText)	0	të thamë	të them	*	*
 negatives (constructed: aor-2pl stemCharacters)	0	e dotuat	e dotoj	*	*
 negatives (constructed: aor-2pl stemMinLength)	0	uat	oj	*	*
 negatives (constructed: aor-2pl stemEndsWith)	0	doaët	doa	*	*
+negatives (constructed: aor-2pl stemNotStartsWithText)	0	të thatë	të them	*	*
 negatives (constructed: aor-3pl stemCharacters)	0	e dotuan	e dotoj	*	*
 negatives (constructed: aor-3pl stemMinLength)	0	uan	oj	*	*
 negatives (constructed: aor-3pl stemEndsWith)	0	doaën	doa	*	*
+negatives (constructed: aor-3pl stemNotStartsWithText)	0	të thanë	të them	*	*
 negatives (constructed: sbjv-2sg stemCharacters)	0	e dotësh	e dot	*	*
 negatives (constructed: sbjv-2sg stemMinLength)	0	bësh	b	*	*
 negatives (constructed: sbjv-2sg stemEndsWith)	0	doush	douj	*	*
+negatives (constructed: sbjv-2sg stemNotStartsWithText)	0	të thuash	të them	*	*
 negatives (constructed: sbjv-3sg stemCharacters)	0	e dotë	e dot	*	*
 negatives (constructed: sbjv-3sg stemMinLength)	0	bë	b	*	*
 negatives (constructed: sbjv-3sg stemEndsWith)	0	doaë	doa	*	*
+negatives (constructed: sbjv-3sg stemNotStartsWithText)	0	të thotë	të them	*	*
 negatives (constructed: opt-1sg stemCharacters)	0	e dotofsha	e dotuaj	*	*
 negatives (constructed: opt-1sg stemMinLength)	0	ofsha	uaj	*	*
 negatives (constructed: opt-1sg stemEndsWith)	0	doufsha	douj	*	*
+negatives (constructed: opt-1sg stemNotStartsWithText)	0	të thënça	të them	*	*
 negatives (constructed: opt-2sg stemCharacters)	0	e dotofsh	e dotuaj	*	*
 negatives (constructed: opt-2sg stemMinLength)	0	ofsh	uaj	*	*
 negatives (constructed: opt-2sg stemEndsWith)	0	doufsh	douj	*	*
+negatives (constructed: opt-2sg stemNotStartsWithText)	0	të thënç	të them	*	*
 negatives (constructed: opt-3sg stemCharacters)	0	e dotoftë	e dotuaj	*	*
 negatives (constructed: opt-3sg stemMinLength)	0	oftë	uaj	*	*
 negatives (constructed: opt-3sg stemEndsWith)	0	douftë	douj	*	*
+negatives (constructed: opt-3sg stemNotStartsWithText)	0	të thëntë	të them	*	*
 negatives (constructed: opt-1pl stemCharacters)	0	e dotofshim	e dotuaj	*	*
 negatives (constructed: opt-1pl stemMinLength)	0	ofshim	uaj	*	*
 negatives (constructed: opt-1pl stemEndsWith)	0	doufshim	douj	*	*
+negatives (constructed: opt-1pl stemNotStartsWithText)	0	të thënçim	të them	*	*
 negatives (constructed: opt-2pl stemCharacters)	0	e dotofshi	e dotuaj	*	*
 negatives (constructed: opt-2pl stemMinLength)	0	ofshi	uaj	*	*
 negatives (constructed: opt-2pl stemEndsWith)	0	doufshi	douj	*	*
+negatives (constructed: opt-2pl stemNotStartsWithText)	0	të thënçi	të them	*	*
 negatives (constructed: opt-3pl stemCharacters)	0	e dotofshin	e dotuaj	*	*
 negatives (constructed: opt-3pl stemMinLength)	0	ofshin	uaj	*	*
 negatives (constructed: opt-3pl stemEndsWith)	0	doufshin	douj	*	*
+negatives (constructed: opt-3pl stemNotStartsWithText)	0	të thënçin	të them	*	*
 negatives (constructed: imp-2sg stemCharacters)	0	e dotyr	e dotyj	*	*
 negatives (constructed: imp-2sg stemMinLength)	0	o	oj	*	*
 negatives (constructed: imp-2sg stemEndsWith)	0	doa	doaj	*	*
+negatives (constructed: imp-2sg stemNotStartsWithText)	0	të thuaj	të them	*	*
 negatives (constructed: ptcp stemCharacters)	0	e dotuar	e dotoj	*	*
 negatives (constructed: ptcp stemMinLength)	0	uar	oj	*	*
 negatives (constructed: ptcp stemEndsWith)	0	dotjtur	dotj	*	*
+negatives (constructed: ptcp stemNotStartsWithText)	0	të thënë	të them	*	*
 negatives (constructed: np-pres-1sg stemCharacters)	0	e dotuhem	e dotuaj	*	*
 negatives (constructed: np-pres-1sg stemMinLength)	0	uhem	uaj	*	*
 negatives (constructed: np-pres-1sg stemEndsWith)	0	douhem	douj	*	*
+negatives (constructed: np-pres-1sg stemNotStartsWithText)	0	të thuhem	të them	*	*
 negatives (constructed: np-pres-2sg stemCharacters)	0	e dothesh	e dothem	*	*
 negatives (constructed: np-pres-2sg stemMinLength)	0	hesh	hem	*	*
 negatives (constructed: np-pres-2sg stemEndsWith)	0	douhesh	douj	*	*
+negatives (constructed: np-pres-2sg stemNotStartsWithText)	0	të thuhesh	të them	*	*
 negatives (constructed: np-pres-3sg stemCharacters)	0	e dothet	e dothem	*	*
 negatives (constructed: np-pres-3sg stemMinLength)	0	het	hem	*	*
 negatives (constructed: np-pres-3sg stemEndsWith)	0	douhet	douj	*	*
+negatives (constructed: np-pres-3sg stemNotStartsWithText)	0	të thuhet	të them	*	*
 negatives (constructed: np-pres-1pl stemCharacters)	0	e marhemi	e marhem	*	*
 negatives (constructed: np-pres-1pl stemMinLength)	0	uhemi	uaj	*	*
 negatives (constructed: np-pres-1pl stemEndsWith)	0	douhemi	douj	*	*
+negatives (constructed: np-pres-1pl stemNotStartsWithText)	0	të thuhemi	të them	*	*
 negatives (constructed: np-pres-2pl stemCharacters)	0	e dotheni	e dothem	*	*
 negatives (constructed: np-pres-2pl stemMinLength)	0	heni	hem	*	*
 negatives (constructed: np-pres-2pl stemEndsWith)	0	douheni	douj	*	*
+negatives (constructed: np-pres-2pl stemNotStartsWithText)	0	të thuheni	të them	*	*
 negatives (constructed: np-pres-3pl stemCharacters)	0	e dothen	e dothem	*	*
 negatives (constructed: np-pres-3pl stemMinLength)	0	hen	hem	*	*
 negatives (constructed: np-pres-3pl stemEndsWith)	0	douhen	douj	*	*
+negatives (constructed: np-pres-3pl stemNotStartsWithText)	0	të thuhen	të them	*	*
 negatives (constructed: np-impf-1sg stemCharacters)	0	e dothesha	e dothem	*	*
 negatives (constructed: np-impf-1sg stemMinLength)	0	hesha	hem	*	*
 negatives (constructed: np-impf-1sg stemEndsWith)	0	douhesha	douj	*	*
+negatives (constructed: np-impf-1sg stemNotStartsWithText)	0	të thuhesha	të them	*	*
 negatives (constructed: np-impf-2sg stemCharacters)	0	e dotheshe	e dothem	*	*
 negatives (constructed: np-impf-2sg stemMinLength)	0	heshe	hem	*	*
 negatives (constructed: np-impf-2sg stemEndsWith)	0	douheshe	douj	*	*
+negatives (constructed: np-impf-2sg stemNotStartsWithText)	0	të thuheshe	të them	*	*
 negatives (constructed: np-impf-3sg stemCharacters)	0	e dothej	e dothem	*	*
 negatives (constructed: np-impf-3sg stemMinLength)	0	hej	hem	*	*
 negatives (constructed: np-impf-3sg stemEndsWith)	0	douhej	douj	*	*
+negatives (constructed: np-impf-3sg stemNotStartsWithText)	0	të thuhej	të them	*	*
 negatives (constructed: np-impf-1pl stemCharacters)	0	e dotheshim	e dothem	*	*
 negatives (constructed: np-impf-1pl stemMinLength)	0	heshim	hem	*	*
 negatives (constructed: np-impf-1pl stemEndsWith)	0	douheshim	douj	*	*
+negatives (constructed: np-impf-1pl stemNotStartsWithText)	0	të thuheshim	të them	*	*
 negatives (constructed: np-impf-2pl stemCharacters)	0	e dotheshit	e dothem	*	*
 negatives (constructed: np-impf-2pl stemMinLength)	0	heshit	hem	*	*
 negatives (constructed: np-impf-2pl stemEndsWith)	0	douheshit	douj	*	*
+negatives (constructed: np-impf-2pl stemNotStartsWithText)	0	të thuheshit	të them	*	*
 negatives (constructed: np-impf-3pl stemCharacters)	0	e dotheshin	e dothem	*	*
 negatives (constructed: np-impf-3pl stemMinLength)	0	heshin	hem	*	*
 negatives (constructed: np-impf-3pl stemEndsWith)	0	douheshin	douj	*	*
+negatives (constructed: np-impf-3pl stemNotStartsWithText)	0	të thuheshin	të them	*	*
 negatives (constructed: np-imp-2sg stemCharacters)	0	e dothu	e dothem	*	*
 negatives (constructed: np-imp-2sg stemMinLength)	0	hu	hem	*	*
 negatives (constructed: np-imp-2sg stemEndsWith)	0	douhu	douj	*	*
+negatives (constructed: np-imp-2sg stemNotStartsWithText)	0	të shihu	të shoh	*	*
 negatives (constructed: np-imp-2pl stemCharacters)	0	e dothuni	e dothem	*	*
 negatives (constructed: np-imp-2pl stemMinLength)	0	huni	hem	*	*
 negatives (constructed: np-imp-2pl stemEndsWith)	0	douhuni	douj	*	*
+negatives (constructed: np-imp-2pl stemNotStartsWithText)	0	të shihuni	të shoh	*	*
 negatives (constructed: np-aor-3sg stemCharacters)	0	e dotua	e dotoj	*	*
 negatives (constructed: np-aor-3sg stemMinLength)	0	ua	oj	*	*
+negatives (constructed: np-aor-3sg stemNotStartsWithText)	0	të prit	të pres	*	*
 negatives (constructed: adm-pres stemCharacters)	0	e dotkam	e dotur	*	*
 negatives (constructed: adm-pres stemMinLength)	0	bkam	bur	*	*
 negatives (constructed: adm-pres stemEndsWith)	0	dookam	door	*	*
@@ -671,10 +725,3 @@ negatives (constructed: adj-def-f stemEndsWith)	0	doaa	doaë	*	*
 negatives (constructed: adj-def-pl stemCharacters)	0	e dottë	e dot	*	*
 negatives (constructed: adj-def-pl stemMinLength)	0	at	a	*	*
 negatives (constructed: adj-def-pl stemEndsWith)	0	doit	doi	*	*
-negatives	0	më shpejt se natyrisht	shpejt se natyrisht	adv	cmp
-negatives	0	ka masë	mas	v	*
-negatives	0	urdhëri	urdhë	n	*
-negatives	0	të vërtetuar	vërtetoj	v	*
-negatives	0	barin	baër	n	*
-negatives	0	lidhja	lidhj	v	*
-negatives	0	rin	ër	n	*

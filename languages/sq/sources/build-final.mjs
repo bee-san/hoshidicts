@@ -65,6 +65,8 @@ function same(a, b) {
 const MASCULINE_E = ['djal', 'kal', 'lum', 'uj', 'gjum', 'burr', 'brum', 'djath', 'gjalp', 'drith', 'dhjam', 'mjalt', 'grur', 'dyll', 'ball', 'vrer', 'lëm', 'at', 'qir', 'bab', 'mam'];
 const LATER = new Set([
     'n-def-sg-m\u0000oi\u0000ua', 'np-aor-3sg\u0000ye\u0000ej',
+    // After audit-hachi-lang-sq-b: noun and present rules at the longer endings.
+    'n-def-nom-f\u0000ta\u0000të', 'n-def-nom-f\u0000ka\u0000kë', 'n-def-acc-f\u0000ën\u0000ë', 'pres-2sg\u0000uan\u0000uaj', 'n-def-nom-f\u0000ja\u0000jë', 'n-def-nom-f\u0000jta\u0000jtë', 'n-def-acc-f\u0000jtën\u0000jtë',
     ...['np-pres-2sg:hesh', 'np-pres-3sg:het', 'np-pres-1pl:hemi', 'np-pres-2pl:heni', 'np-pres-3pl:hen',
         'np-impf-1sg:hesha', 'np-impf-2sg:heshe', 'np-impf-3sg:hej', 'np-impf-1pl:heshim', 'np-impf-2pl:heshit', 'np-impf-3pl:heshin',
         'np-imp-2sg:hu', 'np-imp-2pl:huni'].map((x) => { const [id, end] = x.split(':'); return `${id}\u0000${end}\u0000hem`; }),
