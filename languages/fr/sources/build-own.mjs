@@ -26,12 +26,13 @@ const here = dirname(fileURLToPath(import.meta.url));
 
 // --- Conditions ----------------------------------------------------------------
 // v, n and adj are the part-of-speech tags French Yomitan dictionaries put in
-// their `rules` column (wiktionary-to-yomitan writes v, n, adj and adv). A
-// verb rule gives vf. vcl is what an elided pronoun before a verb leaves
-// (s'élève → élève, j'ai → ai): the word after j', m', t', s', n' and c' is a
-// verb, so it is read only by the verb rules and matches only verbs (élève
-// is élever there, never the noun élève). The verb rules take vcl and do not
-// take vf, so a verb they reach is not read again.
+// their `rules` column (wiktionary-to-yomitan writes v, n, adj and adv).
+// They have Yomitan's definitions, which tools/merge-transforms.mjs requires
+// of a condition both files have. vcl is what an elided pronoun before a
+// verb leaves (s'élève → élève, j'ai → ai): the word after j', m', t', s',
+// n' and c' is a verb, so only the verb rules read it, and it matches no
+// dictionary term itself (élève is élever there, never the noun élève). The
+// verb rules take vcl and not v, so a verb they reach is not read again.
 // p1s and p2s mark a verb form of the first or second person singular, which
 // a reflexive pronoun before it must agree with to make a pronominal verb
 // (je me lève → se lever, tu te lèves → se lever; il me dit is not se dire,
@@ -40,8 +41,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 // whose subject was inverted (parle-t-il → parle). No dictionary term carries
 // them, so a text with only these conditions never matches.
 const conditions = {
-    v: {name: 'Verb', isDictionaryForm: true, subConditions: ['vf', 'vcl']},
-    vf: {name: 'Verb, deinflected', isDictionaryForm: false},
+    v: {name: 'Verb', isDictionaryForm: true},
     vcl: {name: 'Verb after an elided pronoun (j\', m\', t\', s\', n\', c\')', isDictionaryForm: false},
     n: {name: 'Noun', isDictionaryForm: true},
     adj: {name: 'Adjective', isDictionaryForm: true},
@@ -632,7 +632,7 @@ for (const m of MODELS) {
         const t = TENSE.get(tense);
         const set = PERSON_SETS.find((s) => s.join() === persons.join());
         if (set === undefined) { throw new Error(`${inf} ${tense} ${form}: no transform for ${persons.join(',')}`); }
-        const out = ['vf'];
+        const out = ['v'];
         if (t.finite && persons.includes('1s')) { out.push('p1s'); }
         if (t.finite && persons.includes('2s')) { out.push('p2s'); }
         const extra = {};
@@ -661,7 +661,7 @@ const MUTE = [
 ];
 for (const [tense, persons, ending] of MUTE) {
     const t = TENSE.get(tense);
-    const out = ['vf'];
+    const out = ['v'];
     if (t.finite && persons.includes('1s')) { out.push('p1s'); }
     if (t.finite && persons.includes('2s')) { out.push('p2s'); }
     for (const to of ['e', 'é']) {
@@ -684,7 +684,7 @@ for (const [tense, persons, ending] of [
     ['imperative', ['2s'], 'e'], ['imperfect', ['1p'], 'ions'], ['imperfect', ['2p'], 'iez'],
     ['subjunctive', ['1p'], 'ions'], ['subjunctive', ['2p'], 'iez']]) {
     const t = TENSE.get(tense);
-    const out = ['vf'];
+    const out = ['v'];
     if (t.finite && persons.includes('1s')) { out.push('p1s'); }
     if (t.finite && persons.includes('2s')) { out.push('p2s'); }
     verbRules.unshift([verbTransformId(tense, persons), suffix(`ass${ending}`, 'asser', t.conditionsIn, out, {stemMinLength: 1})]);
@@ -748,7 +748,7 @@ transform('pronominal', 'pronominal',
 const INFINITIVE_ENDINGS = [['er', 'er'], ['ir', 'ir'], ['re', 're']];
 for (const [pronoun, person] of [['me', 'p1s'], ['te', 'p2s']]) {
     const circumfix = (inflectedPrefix, deinflectedPrefix, extra) => ({type: 'circumfix', prefixes: [[inflectedPrefix, deinflectedPrefix]],
-        suffixes: INFINITIVE_ENDINGS, conditionsIn: [person], conditionsOut: ['vf'], stemCharacters: '{letter}', ...extra});
+        suffixes: INFINITIVE_ENDINGS, conditionsIn: [person], conditionsOut: ['v'], stemCharacters: '{letter}', ...extra});
     add('pronominal', circumfix(`${pronoun} `, 'se ', {stemNotStartsWith: '{vowel}', stemNotStartsWithText: 'suiv'}));
     add('pronominal', circumfix(`${pronoun[0]}'`, "s'", {stemStartsWith: '{elidable}'}));
     add('pronominal', circumfix(`${pronoun[0]}'en `, "s'en ", {}));
