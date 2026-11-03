@@ -161,6 +161,7 @@
       "name": "-거니",
       "source": "yomitan",
       "rules": [
+        {"type": "suffix", "inflected": "ㄱㅓㄴㅣ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida"]},
         {"type": "suffix", "inflected": "ㄱㅓㄴㅣ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f", "euob", "eusi"]}
       ]
     },
@@ -3247,6 +3248,7 @@
       "name": "-(으)리만큼",
       "source": "yomitan",
       "rules": [
+        {"type": "suffix", "inflected": "ㄹㅣㅁㅏㄴㅋㅡㅁ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida"]},
         {"type": "suffix", "inflected": "ㄹㅣㅁㅏㄴㅋㅡㅁ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj"]},
         {"type": "suffix", "inflected": "ㅇㅡㄹㅣㅁㅏㄴㅋㅡㅁ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj"]},
         {"type": "suffix", "inflected": "ㅇㅜㄹㅣㅁㅏㄴㅋㅡㅁ", "deinflected": "ㅂㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj"]},

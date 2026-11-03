@@ -407,3 +407,5 @@ particle	1	당신이	당신	*	particle
 particle	1	그것은	그것	*	particle
 particle	1	무엇을	무엇	*	particle
 particle	1	누구도	누구	*	particle
+plain stems	1	주거니	주다	v	*
+plain stems	1	치리만큼	치다	v	*

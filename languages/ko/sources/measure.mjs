@@ -61,13 +61,13 @@ function lookup(texts) {
 
 /**
  * right: a lemma of the word; own: the word's own entry; phrase: an entry of several words that begins with
- * the word, matched as written (캐나다 사람, 안 돼요); wrong: anything else; none: no result.
+ * the word (캐나다 사람, 안 돼요, 어쩔 수 없다 for 어쩔 수 없었지); wrong: anything else; none: no result.
  */
 function judge(first, word, lemmas) {
     if (first === null) { return 'none'; }
     if (lemmas.has(first.expression)) { return 'right'; }
     if (first.expression === word) { return 'own'; }
-    return first.trace.length === 0 && first.matched.startsWith(`${word} `) ? 'phrase' : 'wrong';
+    return first.expression.startsWith(`${word} `) ? 'phrase' : 'wrong';
 }
 
 const pct = (n, d) => `${(100 * n / d).toFixed(2)}%`;
