@@ -58,5 +58,9 @@
   ["aluguer", "", "n masc", "", 0, ["rent"], 57, ""],
   ["comprar", "", "v", "", 0, ["to buy"], 58, ""],
   ["cumprir", "", "v", "", 0, ["to fulfil"], 59, ""],
-  ["falir", "", "v", "", 0, ["to go bankrupt"], 60, ""]
+  ["falir", "", "v", "", 0, ["to go bankrupt"], 60, ""],
+  ["Bento", "", "name masc", "", 0, ["a male given name"], 61, ""],
+  ["bento", "", "adj", "", 0, ["blessed"], 62, ""],
+  ["marinha", "", "n fem", "", 0, ["navy"], 63, ""],
+  ["Mara", "", "name fem", "", 0, ["a female given name"], 64, ""]
 ]

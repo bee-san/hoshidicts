@@ -868,6 +868,13 @@ for (const [inflected, deinflected, stemMinLength, accents, notAfter] of [
     const write = (extra) => nominal('diminutive', inflected, deinflected, NA, NA, {stemMinLength, ...(notAfter ? {stemNotEndsWith: notAfter} : {}), ...extra});
     if (accents) { withAccents(write); } else { write({}); }
 }
+// Names: Bentinho, Pedrinho, Paulinho, Jacintinho are Bento, Pedro, Paulo and
+// Jacinto. The stems above have no capital letter, so these copies take a
+// capitalised stem of four letters or more: a shorter one (Marinha, the
+// Navy, as Mara) is more often a word of its own.
+for (const [inflected, deinflected] of [['inho', 'o'], ['inha', 'a'], ['zinho', ''], ['zinha', '']]) {
+    nominal('diminutive', inflected, deinflected, NA, NA, {stemMinLength: 4, stemStartsWith: '[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]', stemCharacters: '[^ ]'});
+}
 // -azinho is -inho after a stem in -az (rapazinho, cartazinho) more often than
 // -zinho after -a (casazinha, festazinha): the -az reading comes first, at
 // the longer ending.

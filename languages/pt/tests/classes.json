@@ -4941,13 +4941,23 @@
     ],
     "transforms[58].rules[20].stemCharacters": [
       [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[58].rules[20].stemStartsWith": [
+      [65, 90],
+      [192, 214],
+      [216, 222]
+    ],
+    "transforms[58].rules[21].stemCharacters": [
+      [0, 31],
       [33, 64],
       [91, 191],
       [215, 215],
       [223, 55295],
       [57344, 1114111]
     ],
-    "transforms[58].rules[20].stemEndsWith": [
+    "transforms[58].rules[21].stemEndsWith": [
       [108, 108],
       [114, 115],
       [122, 122]
@@ -8572,6 +8582,11 @@
         ["erguemos", "erguemos"],
         ["erguem", "erguem"],
         ["distingue", "distingue"],
+        ["Bentinho", "bentinho"],
+        ["Pedrinho", "pedrinho"],
+        ["Mariazinha", "mariazinha"],
+        ["Marinha", "marinha"],
+        ["Joãozinho", "joãozinho"],
         ["respigemos", "respigemos"],
         ["requisermos", "requisermos"],
         ["reúnamos", "reúnamos"],
@@ -8665,6 +8680,8 @@
         ["Aluga-se casa", "aluga-se casa"],
         ["Compre-me pão", "compre-me pão"],
         ["Fale-me de ti", "fale-me de ti"],
+        ["Bentinho chegou", "bentinho chegou"],
+        ["Marinha de guerra", "marinha de guerra"],
         ["Ela falou com o professor depois da aula.", "ela falou com o professor depois da aula."],
         ["falar", "falar"]
       ]
@@ -10687,6 +10704,11 @@
         ["erguemos", "Erguemos"],
         ["erguem", "Erguem"],
         ["distingue", "Distingue"],
+        ["Bentinho", "Bentinho"],
+        ["Pedrinho", "Pedrinho"],
+        ["Mariazinha", "Mariazinha"],
+        ["Marinha", "Marinha"],
+        ["Joãozinho", "Joãozinho"],
         ["respigemos", "Respigemos"],
         ["requisermos", "Requisermos"],
         ["reúnamos", "Reúnamos"],
@@ -10780,6 +10802,8 @@
         ["Aluga-se casa", "Aluga-se casa"],
         ["Compre-me pão", "Compre-me pão"],
         ["Fale-me de ti", "Fale-me de ti"],
+        ["Bentinho chegou", "Bentinho chegou"],
+        ["Marinha de guerra", "Marinha de guerra"],
         ["Ela falou com o professor depois da aula.", "Ela falou com o professor depois da aula."],
         ["falar", "Falar"]
       ]

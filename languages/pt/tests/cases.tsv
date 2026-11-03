@@ -583,3 +583,8 @@ exclusions keep	1	sobem	subir	v	present-eles
 exclusions keep	1	erguemos	erguer	v	present-nos
 exclusions keep	1	erguem	erguer	v	present-eles
 exclusions keep	1	distingue	distinguir	v	present-ele
+names	1	Bentinho	Bento	n	diminutive
+names	1	Pedrinho	Pedro	n	diminutive
+names	1	Mariazinha	Maria	n	diminutive
+negatives	0	Marinha	Mara	*	*
+names	1	Joãozinho	João	n	diminutive
