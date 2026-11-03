@@ -203,7 +203,7 @@ no Russian rules, so the own rules are also the union and the final set, and
   comparator then decides by the first rule reached (docs/languages.md 9.6).
   Measured with the contract's judge (Measurements 2), these changes take the
   rule-caused wrong first results of the top 10,000 from 31 words (191,857
-  tokens) to 16 (46,002), and in the README's texts from 99 positions to 50:
+  tokens) to 15 (40,361), and in the README's texts from 99 positions to 41:
   - after a hushing stem the -ой rows come before -ий (`большая` → большой,
     not больший); the long adjective forms come before the noun cases
     (`белом` → белый, `скорой` → скорый, `такою` → такой, not бел, скора,
@@ -290,19 +290,18 @@ numbers. "filter" lines use a scratch copy of the pack with the field set to
      of the list's words whose rows name only it); a participle's verb counts
      as its participle. By this judge, **54 words show a wrong lemma first:
      809,285 tokens, 1.38% of the reached words' tokens**. With `--no-rules`
-     (a copy of the pack without transforms), 38 of them (763,283 tokens) are
-     wrong without any rule too, and 16 (46,002 tokens) are caused by the
+     (a copy of the pack without transforms), 39 of them (768,924 tokens) are
+     wrong without any rule too, and 15 (40,361 tokens) are caused by the
      rules:
-     - caused by the rules: `душе` → душ (5,641; wrong without the rules
-       too, as дух), `убийцу` → убиец (4,839), `ванной` → ванный (4,432),
+     - caused by the rules: `убийцу` → убиец (4,839), `ванной` → ванный (4,432),
        `чертов` → чёрт (4,343), `сучка` → сучок (4,093), `вел` → вести
        (3,310), `карьеру` → карьер (3,114), `воздухе` → воздуха (2,711),
        `лагере` → лагер (2,392), `убийц` → убиец (1,989), `методы` → метода
        (1,703), `поешь` → петь (1,673), `носки` → носка (1,558), `спорю` →
        спороть (1,533), `десятки` → десятка (1,473), `двоим` → двоить
        (1,198);
-     - wrong without the rules too (Known gaps): the third-person and
-       reflexive pronouns (`ей`, `ней`, `них`, `неё`, `ними`, `ими`, `ею`,
+     - wrong without the rules too (Known gaps): `душе` → душ (5,641; дух
+       without the rules), the third-person and reflexive pronouns (`ей`, `ней`, `них`, `неё`, `ними`, `ими`, `ею`,
        `собой` → я; 440,952 tokens), `лет` → лёт (102,100), `дела`, `дел` →
        деть (69,299), `пару`, `пары`, `паре` → пар (45,460), `готов` → гот
        (38,243), `пришёл` → the phrase `пришёл, увидел, победил` (14,385),
@@ -332,13 +331,12 @@ numbers. "filter" lines use a scratch copy of the pack with the field set to
    lookups, 74,822 with a result.
    - Judged by script where the word has form-of rows or is a headword
      (72,556 positions), by the word's own lemma: **470 wrong first results
-     (0.65%)**. 420 of them are wrong without any rule too: the pronoun forms
+     (0.65%)**. 429 of them are wrong without any rule too: the pronoun forms
      (`ей`, `ней`, `них`, `ними`, `собою` → я: 279), `лет` → лёт (58), `дела`
-     → деть (15), `готов` → гот (10), the forms of стена → стен (20). 50 are
-     caused by the rules: `душе` → душ (9; wrong without the rules too, as
-     дух), `вел` → вести (3), `Тише` → Тихон (3), `эхе` → Эхо (3), `писано`
-     → писаный (3), `этою` → эта (2), `сует` → совать (2) and 25 single
-     positions. At the audited head the auditor counted 99 rule-caused
+     → деть (15), `готов` → гот (10), the forms of стена → стен (20), `душе`
+     → душ (9). 41 are caused by the rules: `вел` → вести (3), `Тише` →
+     Тихон (3), `эхе` → Эхо (3), `писано` → писаный (3), `этою` → эта (2),
+     `сует` → совать (2) and 25 single positions. At the audited head the auditor counted 99 rule-caused
      positions (`минут` → минуть 17, `прав` → права 11, `спал` → спасть 9,
      `белом` → бел 9, `пушку` → пушок 7, the больш- forms 13).
    - By any lemma the word's rows name: 23 wrong (0.032%).
@@ -442,8 +440,8 @@ node languages/ru/sources/wasm-load.mjs <hachidori checkout> languages/ru 10
 
 ## Known gaps
 
-- **Ties the rules cannot break** (Measurements 2 and 4: 38 of the 10,000
-  frequent words, 763,283 tokens, and 420 of the 72,556 judged positions of
+- **Ties the rules cannot break** (Measurements 2 and 4: 39 of the 10,000
+  frequent words, 768,924 tokens, and 429 of the 72,556 judged positions of
   the three texts). A word's own form-of rows name two lemmas, both reach
   the word at one step and the same trace length, both are
   dictionary-confirmed, and the comparator's last keys decide
@@ -456,7 +454,8 @@ node languages/ru/sources/wasm-load.mjs <hachidori checkout> languages/ru 10
   - the third-person and reflexive pronouns: wty-ru-en's rows for `ей`,
     `ней`, `них`, `неё`, `ними`, `ими`, `ею`, `собой` and `собою` name every
     personal pronoun, and я comes first (440,952 tokens; 279 positions);
-  - `лет` → лёт before год and лето (102,100; 58 positions), `дела`, `дел` →
+  - `душе` → душ (5,641; 9 positions; the dictionary alone gives дух, also
+    wrong), `лет` → лёт before год and лето (102,100; 58 positions), `дела`, `дел` →
     деть before дело (69,299; 19), `пару`, `пары`, `паре` → пар before пара
     (45,460), `готов` → гот before готовый (38,243; 10), the forms of стена →
     стен (13,815; 20), `песни` → песнь, `плачу` → плач, `веди` → В (the
@@ -469,12 +468,11 @@ node languages/ru/sources/wasm-load.mjs <hachidori checkout> languages/ru 10
   - `читал`, `читала`, `любимый`, `пишущий` and `меня` are entries of their
     own (their glosses name the lemma) and come first; that is right, but
     `eval-language`'s first rank counts them as misses (Measurements 1).
-- **Ties the rules cause that remain** (16 frequent words, 46,002 tokens; 50
+- **Ties the rules cause that remain** (15 frequent words, 40,361 tokens; 41
   positions of the three texts). Each comes from a rare homonym that
   wty-ru-en lists and a rule reaches as early as the right lemma; the
   orders that would fix them move more words the wrong way (History):
-  - `душе` → душ (5,641; the dictionary alone gives дух, also wrong),
-    `убийцу`, `убийц` → убиец (6,828), `ванной` → ванный (4,432), `сучка` →
+  - `убийцу`, `убийц` → убиец (6,828), `ванной` → ванный (4,432), `сучка` →
     сучок (4,093), `карьеру` → карьер (3,114), `воздухе` → воздуха (2,711),
     `лагере` → лагер (2,392), `методы` → метода (1,703), `носки` → носка
     (1,558), `десятки` → десятка (1,473), `спорю` → спороть (1,533; спороть's
