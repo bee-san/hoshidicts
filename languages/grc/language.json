@@ -1,0 +1,311 @@
+{
+  "schema": 1,
+  "code": "grc",
+  "iso639_3": "grc",
+  "name": "Ancient Greek",
+  "nativeName": "Ἑλληνική",
+  "bcp47": "grc",
+  "scripts": [
+    "Grek"
+  ],
+  "direction": "ltr",
+  "classes": {
+    "letter": "[\\u0370-\\u0373\\u0376\\u0377\\u037B-\\u037D\\u037F\\u0386\\u0388-\\u038A\\u038C\\u038E-\\u03A1\\u03A3-\\u03F5\\u03F7-\\u03FF\\u1F00-\\u1F15\\u1F18-\\u1F1D\\u1F20-\\u1F45\\u1F48-\\u1F4D\\u1F50-\\u1F57\\u1F59\\u1F5B\\u1F5D\\u1F5F-\\u1F7D\\u1F80-\\u1FB4\\u1FB6-\\u1FBC\\u1FBE\\u1FC2-\\u1FC4\\u1FC6-\\u1FCC\\u1FD0-\\u1FD3\\u1FD6-\\u1FDB\\u1FE0-\\u1FEC\\u1FF2-\\u1FF4\\u1FF6-\\u1FFC]",
+    "upper": "[\\u0386\\u0388-\\u038A\\u038C\\u038E\\u038F\\u0391-\\u03A1\\u03A3-\\u03AB\\u03DC\\u1F08-\\u1F0F\\u1F18-\\u1F1D\\u1F28-\\u1F2F\\u1F38-\\u1F3F\\u1F48-\\u1F4D\\u1F59\\u1F5B\\u1F5D\\u1F5F\\u1F68-\\u1F6F\\u1F88-\\u1F8F\\u1F98-\\u1F9F\\u1FA8-\\u1FAF\\u1FB8-\\u1FBA\\u1FBC\\u1FC8\\u1FCA\\u1FCC\\u1FD8-\\u1FDA\\u1FE8-\\u1FEA\\u1FEC\\u1FF8\\u1FFA\\u1FFC]",
+    "mark": "[\\u0300-\\u036F]",
+    "accent": "[\\u0300\\u0301\\u0342]",
+    "apostrophe": "['\\u02BC\\u1FBD\\u1FBF\\u2019]",
+    "word": "[{letter}{mark}{apostrophe}]"
+  },
+  "text": {
+    "pattern": "[{letter}{mark}]",
+    "scanStart": "word",
+    "segmentation": "spaces",
+    "wordCharacters": "{word}",
+    "wordInternal": null,
+    "sentence": {
+      "terminators": [
+        ".",
+        ";",
+        "!",
+        "…"
+      ],
+      "quotePairs": [
+        [
+          "«",
+          "»"
+        ],
+        [
+          "“",
+          "”"
+        ],
+        [
+          "\"",
+          "\""
+        ],
+        [
+          "(",
+          ")"
+        ],
+        [
+          "[",
+          "]"
+        ],
+        [
+          "⟨",
+          "⟩"
+        ]
+      ]
+    },
+    "highlightBreaks": {
+      "sentenceEnd": [
+        ".",
+        ";",
+        "!",
+        "…"
+      ],
+      "clauseEnd": [
+        ",",
+        "·",
+        "·",
+        ":"
+      ]
+    },
+    "lineJoiner": " "
+  },
+  "lookup": {
+    "searchResolution": "word",
+    "preprocessors": [
+      {
+        "id": "normalizeUnicode",
+        "name": "Normalize Unicode (NFC)",
+        "keepInput": false,
+        "variants": [
+          [
+            {
+              "normalize": "NFC"
+            }
+          ]
+        ]
+      },
+      {
+        "id": "normalizeLetterForms",
+        "name": "Lunate sigma and letter symbols to plain letters",
+        "keepInput": false,
+        "variants": [
+          [
+            {
+              "map": {
+                "ϲ": "σ",
+                "Ϲ": "Σ",
+                "ϐ": "β",
+                "ϑ": "θ",
+                "ϕ": "φ",
+                "ϖ": "π",
+                "ϱ": "ρ",
+                "ϰ": "κ",
+                "ϵ": "ε",
+                "ϴ": "Θ",
+                "ϒ": "Υ",
+                "µ": "μ"
+              }
+            },
+            {
+              "pattern": "σ(?![\\u0370-\\u03FF\\u1F00-\\u1FFF\\u0300-\\u036F'\\u02BC\\u1FBD\\u1FBF\\u2019])",
+              "replace": "ς",
+              "global": true
+            }
+          ]
+        ]
+      },
+      {
+        "id": "normalizeApostrophes",
+        "name": "Elision apostrophe variants",
+        "keepInput": false,
+        "variants": [
+          [
+            {
+              "map": {
+                "'": "’",
+                "ʼ": "’",
+                "᾽": "’",
+                "᾿": "’"
+              }
+            }
+          ],
+          [
+            {
+              "map": {
+                "’": "'",
+                "ʼ": "'",
+                "᾽": "'",
+                "᾿": "'"
+              }
+            }
+          ]
+        ]
+      },
+      {
+        "id": "graveToAcute",
+        "name": "Grave accent to acute",
+        "keepInput": false,
+        "variants": [
+          [
+            {
+              "normalize": "NFD"
+            },
+            {
+              "map": {
+                "̀": "́"
+              }
+            },
+            {
+              "normalize": "NFC"
+            }
+          ]
+        ]
+      },
+      {
+        "id": "removeEncliticAccent",
+        "name": "Remove the accent an enclitic adds",
+        "variants": [
+          [
+            {
+              "normalize": "NFD"
+            },
+            {
+              "pattern": "([\\u0301\\u0342][\\u0370-\\u03FF\\u1F00-\\u1FFF\\u0300\\u0302-\\u0341\\u0343-\\u036F]*)\\u0301",
+              "replace": "$1",
+              "repeat": true
+            },
+            {
+              "normalize": "NFC"
+            }
+          ]
+        ]
+      },
+      {
+        "id": "decapitalize",
+        "name": "Decapitalize text",
+        "variants": [
+          [
+            {
+              "case": "lower"
+            }
+          ]
+        ]
+      },
+      {
+        "id": "removeAccents",
+        "name": "Remove accents",
+        "variants": [
+          [
+            {
+              "normalize": "NFD"
+            },
+            {
+              "strip": "[\\u0300\\u0301\\u0342\\u0304\\u0306]"
+            },
+            {
+              "normalize": "NFC"
+            }
+          ]
+        ]
+      },
+      {
+        "id": "removeDiacritics",
+        "name": "Remove accents, breathings and other diacritics",
+        "variants": [
+          [
+            {
+              "normalize": "NFD"
+            },
+            {
+              "strip": "{mark}"
+            },
+            {
+              "normalize": "NFC"
+            }
+          ]
+        ]
+      }
+    ],
+    "postprocessors": [],
+    "readingNormalizer": null,
+    "transforms": "transforms.json",
+    "traceSelection": "shortest",
+    "formOf": "follow",
+    "functionWords": [],
+    "variantPasses": []
+  },
+  "capabilities": {
+    "readings": "optional",
+    "ruby": null,
+    "pitchAccent": false,
+    "characterView": null,
+    "wordHighlighting": true
+  },
+  "presentation": {
+    "typography": {
+      "fontFamily": null,
+      "wordBreak": null,
+      "lineBreak": null,
+      "joinedScript": false
+    },
+    "labels": {},
+    "displayTransforms": {}
+  },
+  "settings": [
+    {
+      "id": "doricAlpha",
+      "type": "boolean",
+      "default": false,
+      "label": "Doric ᾱ for η",
+      "description": "Also read ᾱ where Attic writes η, as Pindar and the choral lyrics of tragedy do (δίκα, ἄταν → δίκη, ἄτη).",
+      "group": "lookup",
+      "effect": {
+        "transforms": [
+          "doric-alpha"
+        ]
+      }
+    }
+  ],
+  "host": {
+    "ttsLanguage": "el-GR",
+    "audioLanguage": "grc",
+    "anki": {
+      "noteTypeFamilies": [],
+      "fieldAliases": {},
+      "partOfSpeechLabels": {}
+    },
+    "frequencySamples": null,
+    "recommendedDictionaries": [
+      {
+        "name": "wty-grc-en (wiktionary-to-yomitan)",
+        "url": "https://github.com/yomidevs/wiktionary-to-yomitan",
+        "description": "Ancient Greek to English, from Wiktionary through kaikki.org.",
+        "licence": "CC BY-SA 4.0"
+      }
+    ],
+    "sample": {
+      "warmup": "λόγος",
+      "practice": {
+        "text": "ἐν ἀρχῇ ἦν ὁ λόγος.",
+        "lookup": "ἀρχῇ"
+      },
+      "entry": {
+        "expression": "ἀρχή",
+        "reading": "ἀρχή",
+        "glossary": [
+          "beginning, origin"
+        ],
+        "definitionTags": "n",
+        "matched": "ἀρχῇ",
+        "trace": [
+          "dative singular"
+        ]
+      },
+      "character": null
+    }
+  }
+}

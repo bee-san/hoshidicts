@@ -1,0 +1,6 @@
+# Source: hand-written placeholder rows; replaced by the licensed corpus in a later commit.
+# category	valid	source	term	rule	reasons
+nouns	1	λόγου	λόγος	n	*
+nouns	1	ἀνθρώπων	ἄνθρωπος	n	*
+verbs	1	ἐλύσαμεν	λύω	v	*
+verbs	1	ἔλυσα	λύω	v	*
