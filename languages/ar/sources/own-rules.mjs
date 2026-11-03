@@ -69,6 +69,11 @@ function cross(prefixes, suffixes, {min = 2, out = V_OUT, into = V_IN, extra = {
 // The hollow-verb change: the و or ي right before the last consonant becomes
 // ا (يقول -> قال, يستطيع -> استطاع), written out per consonant so that only
 // that letter changes (بيوت is not read as ب + يوت -> اتى).
+// The hamza of a root changes its seat with the vowel next to it: the
+// present of ابتدأ is يبتدئ, of ابتأس يبتئس, of بئس يبأس. The last hamza of
+// the stem takes the dictionary form's seat.
+const SEAT_TO_ALIF = {from: ['ئ', 'ؤ'], to: 'أ', occurrence: 'last', between: STEM, betweenMinLength: 0};
+const SEAT_TO_YA = {from: ['أ'], to: 'ئ', occurrence: 'last', between: STEM, betweenMinLength: 0};
 const hollow = (ending, deinflected = '') => RADICALS.flatMap((c) => [['و' + c + ending, 'ا' + c + deinflected], ['ي' + c + ending, 'ا' + c + deinflected]]);
 
 const transforms = [];
@@ -168,6 +173,7 @@ transform('feminine', 'feminine (ـة)', 'The feminine ending ـة of an adjecti
     // Only on the word as written and after the proclitics, dual and plural
     // endings: a noun before a pronoun (مدرسته) keeps its ة.
     suffix('ة', ''),
+    suffix('ئة', 'ء'),
     {type: 'circumfix', inflectedPrefix: 'ال', deinflectedPrefix: 'ال', inflectedSuffix: 'ة', deinflectedSuffix: '', conditionsIn: [], conditionsOut: [], stemMinLength: 2, stemCharacters: STEM},
 ]);
 transform('accusative', 'accusative (ـًا)', 'The indefinite accusative ending ـًا, written with an alif: كتابًا (كتابا), شكرًا, شيئًا (شيئا, from شيء). Words that end in ة, ى or ا take no alif.', [
@@ -181,6 +187,7 @@ transform('dual', 'dual (ـان)', 'The dual ending ـان (nominative), and ـ�
     suffix('وان', 'ا', {into: N_IN}),
     suffix('اوان', 'اء', {into: N_IN}),
     suffix('آن', 'أ', {into: N_IN}),
+    suffix('ئان', 'ء', {into: N_IN}),
     suffix('تا', 'ة', {extra: NOT_AL}),
 ]);
 transform('oblique', 'dual or plural (ـين)', 'The ending ـين, the dual (ـَيْن) or the masculine plural (ـِين) after a preposition or as an object: كتابين is two of كتاب, معلمين is معلم in the plural, مدرستين is two of مدرسة, عربيين is عربي in the dual or plural.', [
@@ -189,9 +196,11 @@ transform('oblique', 'dual or plural (ـين)', 'The ending ـين, the dual (ـ
     suffix('يين', 'ى', {into: N_IN}),
     suffix('وين', 'ا', {into: N_IN}),
     suffix('اوين', 'اء', {into: N_IN}),
+    suffix('ئين', 'ء', {into: N_IN}),
 ]);
 transform('pluralMasc', 'plural (ـون)', 'The masculine sound plural ending ـون (nominative): معلمون is معلم in the plural.', [
     suffix('ون', '', {into: N_IN}),
+    suffix('ئون', 'ء', {into: N_IN}),
 ]);
 transform('construct', 'construct (ـو)', 'The ending ـو of a masculine plural before the word it belongs to (معلمو المدرسة, "the school\'s teachers"), and of أبو and أخو.', [
     suffix('و', '', {extra: NOT_AL}),
@@ -203,11 +212,45 @@ transform('pluralFem', 'plural (ـات)', 'The feminine sound plural ending ـا
     suffix('وات', 'ة', {into: N_IN}),
     suffix('اوات', 'اء', {into: N_IN}),
     suffix('آت', 'أة', {into: N_IN}),
+    suffix('ئات', 'ء', {into: N_IN}),
 ]);
 // The comparative's feminine فُعلى (كبرى) and plural أفاعل (أكابر) are not
 // rules: written as a cross product of first letters, their output (أكبر)
 // has no conditions, every rule runs on it again, and on the dev pool they
 // gave 364 false candidates for 20 rows. Dictionaries list these forms.
+
+// Broken plurals: the patterns whose singular the letters show. Only nouns
+// answer them (wiktionary-to-yomitan gives adjectives no part of speech, so
+// كبار is not read as كبير; the dictionary's own row names it). Measured on
+// the dev pool and the 10,000 most frequent words of the subtitle list;
+// فُعول, فِعال and فَعَلة are left out because they read verbal nouns,
+// participles and singulars (خروج -> خرج, مكان -> مكن, ليلة -> لايل).
+{
+    const CONS = RADICALS;
+    const DROP_ALIF = (min) => ({from: ['ا'], to: '', occurrence: 'last', between: STEM, betweenMinLength: min});
+    transform('brokenPlural', 'plural (broken)', 'A broken plural whose pattern shows its singular: أطفال (طفل), وزراء (وزير), مكاتب (مكتب), مشاكل (مشكلة), شوارع (شارع), قواعد (قاعدة), رسائل (رسالة), حقائق (حقيقة), تفاصيل (تفصيل), أسلحة (سلاح).', [
+        // أفعال -> فعل: أطفال, أخبار, أعمال, أولاد.
+        // Not after a middle و or ي, whose singular has ا (أبواب: باب, not بوب).
+        cross([['أ', '']], CONS.map((c) => ['ا' + c, c]), {into: N_IN, out: ['n'], extra: {stemNotEndsWith: '[وي]'}}),
+        // فعلاء -> فعيل: وزراء, عملاء, غرباء, فقراء.
+        cross([['', '']], CONS.map((c) => [c + 'اء', 'ي' + c]), {into: N_IN, out: ['n']}),
+        // مفاعل -> مفعل, مفعلة: مكاتب, مشاكل, ملابس.
+        cross([['م', 'م']], [['', ''], ['', 'ة']], {min: 3, into: N_IN, out: ['n'], extra: {stemChange: DROP_ALIF(2)}}),
+        // فواعل -> فاعل, فاعلة: شوارع, هواتف, قواعد, نوافذ.
+        suffix('', '', {min: 4, into: N_IN, out: ['n'], extra: {stemChange: {from: ['وا'], to: 'ا', occurrence: 'last', between: STEM, betweenMinLength: 2}}}),
+        suffix('', 'ة', {min: 4, into: N_IN, out: ['n'], extra: {stemChange: {from: ['وا'], to: 'ا', occurrence: 'last', between: STEM, betweenMinLength: 2}}}),
+        // فعائل -> فعيلة, فعالة, فعيل: رسائل, حقائق, نتائج, وسائل.
+        ...CONS.flatMap((c) => [
+            suffix('ائ' + c, 'ي' + c + 'ة', {into: N_IN, out: ['n']}),
+            suffix('ائ' + c, 'ا' + c + 'ة', {into: N_IN, out: ['n']}),
+            suffix('ائ' + c, 'ي' + c, {into: N_IN, out: ['n']}),
+        ]),
+        // تفاعيل -> تفعيل: تفاصيل, تقارير, تكاليف.
+        cross([['ت', 'ت']], [['', '']], {min: 4, into: N_IN, out: ['n'], extra: {stemChange: DROP_ALIF(3)}}),
+        // أفعلة -> فعال: أسلحة, أجهزة, أطعمة.
+        cross([['أ', '']], CONS.map((c) => [c + 'ة', 'ا' + c]), {into: N_IN, out: ['n'], extra: {stemNotEndsWith: '[وي]'}}),
+    ]);
+}
 
 // --------------------------------------------------------------------- verbs
 // A verb's dictionary form is its past tense "he" form (كتب, قال, رمى,
@@ -238,6 +281,8 @@ function pastRules(ending, {defectiveA = [], defectiveY = [], defectiveI = [], h
     for (const [i, d] of defectiveI) { rules.push(suffix(i, d, {into: V_IN, out: V_OUT})); }
     for (const [i, d, m = 1] of hamza) { rules.push(suffix(i, d, {min: m, into: V_IN, out: V_OUT})); }
     if (consonant) {
+        // Hollow with a final hamza: أضأت -> أضاء, استأت -> استاء.
+        rules.push(suffix('أ' + ending, 'اء', {min: 1, into: V_IN, out: V_OUT}));
         // Hollow: the ا of the dictionary form returns before the last consonant.
         for (const c of RADICALS) { rules.push(suffix(c + ending, 'ا' + c, {min: 1, into: V_IN, out: V_OUT})); }
         // Doubled: both consonants are written.
@@ -295,7 +340,8 @@ transform('pastWe', 'past (we)', 'The past tense ending ـنا "we did": كتب�
 ]);
 
 // Passive past tense, where it is spelled differently from the active.
-const PASSIVE_ENDINGS = [['', 'he'], ['ت', 'she'], ['تا', 'they f. two'], ['ا', 'they two'], ['وا', 'they']];
+const PASSIVE_ENDINGS = [['', 'he'], ['ت', 'she'], ['تا', 'they f. two'], ['ا', 'they two'], ['وا', 'they'],
+    ['تم', 'you pl.'], ['تما', 'you two'], ['تن', 'you f. pl.'], ['نا', 'we'], ['ن', 'they f.']];
 {
     const rules = [];
     for (const [ending] of PASSIVE_ENDINGS) {
@@ -305,6 +351,11 @@ const PASSIVE_ENDINGS = [['', 'he'], ['ت', 'she'], ['تا', 'they f. two'], ['�
             // Hamza in the middle: سئل -> سأل.
             rules.push(suffix('ئ' + c + ending, 'أ' + c, {min: 1, into: V_IN, out: V_OUT}));
         }
+    }
+    // A final hamza on ي: أنبئ -> أنبأ, أنبئت -> أنبأ; with a hollow verb: أضيئت -> أضاء.
+    for (const [ending] of PASSIVE_ENDINGS) {
+        rules.push(suffix('ئ' + ending, 'أ', {into: V_IN, out: V_OUT}));
+        rules.push(suffix('يئ' + ending, 'اء', {min: 1, into: V_IN, out: V_OUT}));
     }
     // Defective: رمي -> رمى, دعي -> دعا, أعطي -> أعطى; دعيت -> دعا.
     rules.push(suffix('ي', 'ى', {into: V_IN, out: V_OUT}), suffix('ي', 'ا', {into: V_IN, out: V_OUT}));
@@ -323,9 +374,9 @@ const PASSIVE_ENDINGS = [['', 'he'], ['ت', 'she'], ['تا', 'they f. two'], ['�
 function personPrefixes(p) {
     if (p === 'أ') {
         // I: أكرمُ is the dictionary form itself, so أ never gives أ; آكل is أ + أكل.
-        return [['أ', ''], ['أ', 'ا'], ['أ', 'و'], ['أؤ', 'آ'], ['أؤ', 'أ'], ['أؤا', 'آ'], ['آ', 'أ']];
+        return [['أ', ''], ['أ', 'ا'], ['أ', 'و'], ['أؤ', 'آ'], ['أؤ', 'أ'], ['أؤا', 'آ'], ['آ', 'أ'], ['آ', 'ائ']];
     }
-    return [[p, ''], [p, 'أ'], [p, 'ا'], [p, 'و'], [p + 'ؤ', 'آ'], [p + 'ؤ', 'أ'], [p + 'ؤا', 'آ']];
+    return [[p, ''], [p, 'أ'], [p, 'ا'], [p, 'و'], [p + 'ؤ', 'آ'], [p + 'ؤ', 'أ'], [p + 'ؤا', 'آ'], [p + 'أ', 'ائ']];
 }
 const PRESENT = {
     ي: personPrefixes('ي'), ت: personPrefixes('ت'), أ: personPrefixes('أ'), ن: personPrefixes('ن'),
@@ -336,6 +387,9 @@ const PRESENT = {
 function hollowEndings(ending) { return hollow(ending); }
 function presentRules(prefixes, ending, {defective = [], hamza = [], hollow = true, short = false} = {}) {
     const rules = [cross(prefixes, [[ending, '']])];
+    const plain = prefixes.filter(([, d]) => d === '' || d === 'أ' || d === 'ا');
+    rules.push(cross(plain, [[ending, '']], {extra: {stemChange: SEAT_TO_ALIF}}));
+    rules.push(cross(plain, [[ending, '']], {extra: {stemChange: SEAT_TO_YA}}));
     if (defective.length > 0) { rules.push(cross(prefixes, defective)); }
     if (hamza.length > 0) { rules.push(cross(prefixes, hamza, {min: 1})); }
     // Hollow verbs are form I, IV (أقام), VII (انقاد), VIII (اختار) or X (استطاع).
@@ -447,6 +501,9 @@ const ASSIMILATED = ['قف', 'ضع', 'دع', 'صل', 'جد', 'عد', 'زن', 'ه
     .map((stem) => [stem, 'و' + stem]);
 function imperativeRules(ending, {defective = [], others = [], hollowShort = false, assimilated = true} = {}) {
     const rules = [cross(FORM_I, [[ending, '']], {min: 3})];
+    rules.push(cross(FORM_I, [[ending, '']], {min: 3, extra: {stemChange: SEAT_TO_ALIF}}));
+    rules.push(cross(FORM_I, [[ending, '']], {min: 3, extra: {stemChange: SEAT_TO_YA}}));
+    rules.push(suffix(ending, '', {min: 3, into: V_IN, out: V_OUT, extra: {stemChange: SEAT_TO_ALIF}}));
     if (defective.length > 0) { rules.push(cross(FORM_I, defective)); }
     if (assimilated) { rules.push(cross(ASSIMILATED, [[ending, '']], {min: 0, extra: {stemCharacters: '[]'}})); }
     if (hollowShort) {
