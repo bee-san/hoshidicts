@@ -1,13 +1,13 @@
 # Yomitan rules (sources/yomitan.json) that add a reading the own rules lack, written by sources/yomitan-rules.py; every other Yomitan rule adds none.
 # decision: keep when the rule adds more right readings than false ones, else drop; sources/yomitan-harm.py then changes keep to drop-first (a false add is the first result of its word) or drop-negative (it fails a negative of tests/cases.tsv); sources/build-final.mjs keeps only keep.
 # transform	index	inflected	deinflected	right adds	false adds	decision	examples (right; false)
-present indicative	5	sont	être	1	0	keep	resont>reêtre(re-être,reêtre) ;
+present indicative	5	sont	être	1	0	drop-first	en sont>en être (text) ; resont>reêtre(re-être,reêtre) ;
 present indicative	6	ai	avoir	2	2	drop	hai>havoir(avoir) rai>ravoir ; assai>assavoir sai>savoir
-present indicative	7	as	avoir	3	1	keep	has>havoir(avoir) ras>ravoir réas>réavoir ; sas>savoir
-present indicative	8	a	avoir	3	1	keep	ha>havoir(avoir) ra>ravoir réa>réavoir ; sa>savoir
-present indicative	9	avons	avoir	1	0	keep	havons>havoir(avoir) ;
-present indicative	10	avez	avoir	1	0	keep	havez>havoir(avoir) ;
-present indicative	11	ont	avoir	2	1	keep	hont>havoir(avoir) ront>ravoir ; sont>savoir
+present indicative	7	as	avoir	3	1	drop-first	y as>y avoir (text) ; has>havoir(avoir) ras>ravoir réas>réavoir ; sas>savoir
+present indicative	8	a	avoir	3	1	drop-first	faire sa>faire savoir (text) ; ha>havoir(avoir) ra>ravoir réa>réavoir ; sa>savoir
+present indicative	9	avons	avoir	1	0	drop-first	y avons>y avoir (text) ; havons>havoir(avoir) ;
+present indicative	10	avez	avoir	1	0	drop-negative	y avez>y avoir ; havez>havoir(avoir) ;
+present indicative	11	ont	avoir	2	1	drop-first	y ont>y avoir (text) ; hont>havoir(avoir) ront>ravoir ; sont>savoir
 present indicative	124	iers	érir	0	1	drop	; fiers>férir
 present indicative	126	érons	érir	0	3	drop	; attérons>attérir(atterrir) férons>férir renchérons>renchérir
 present indicative	127	érez	érir	0	2	drop	; attérez>attérir(atterrir) renchérez>renchérir
@@ -80,11 +80,11 @@ present indicative	421	cisent	cire	1	0	keep	circoncisent>circoncire ;
 present indicative	424	frisons	frire	0	1	drop	; frisons>frire
 present indicative	425	frisez	frire	0	1	drop	; frisez>frire
 present indicative	426	frisent	frire	0	1	drop	; frisent>frire
-imperfect indicative	5	avais	avoir	1	0	keep	havais>havoir(avoir) ;
+imperfect indicative	5	avais	avoir	1	0	drop-first	y avais>y avoir (text) ; havais>havoir(avoir) ;
 imperfect indicative	6	avait	avoir	1	0	keep	havait>havoir(avoir) ;
-imperfect indicative	7	avions	avoir	1	0	keep	havions>havoir(avoir) ;
+imperfect indicative	7	avions	avoir	1	0	drop-first	y avions>y avoir (text) ; havions>havoir(avoir) ;
 imperfect indicative	8	aviez	avoir	1	0	keep	haviez>havoir(avoir) ;
-imperfect indicative	9	avaient	avoir	1	0	keep	havaient>havoir(avoir) ;
+imperfect indicative	9	avaient	avoir	1	0	drop-first	y avaient>y avoir (text) ; havaient>havoir(avoir) ;
 imperfect indicative	46	érais	érir	0	2	drop	; attérais>attérir(atterrir) renchérais>renchérir
 imperfect indicative	47	érait	érir	0	2	drop	; attérait>attérir(atterrir) renchérait>renchérir
 imperfect indicative	48	érions	érir	0	3	drop	; attérions>attérir(atterrir) férions>férir renchérions>renchérir
@@ -278,8 +278,8 @@ imperative present	298	cisons	cire	1	0	keep	circoncisons>circoncire ;
 imperative present	299	cisez	cire	1	0	keep	circoncisez>circoncire ;
 imperative present	301	frisons	frire	0	1	drop	; frisons>frire
 imperative present	302	frisez	frire	0	1	drop	; frisez>frire
-Conditional	6	aurais	avoir	1	0	keep	haurais>havoir(avoir) ;
-Conditional	7	aurais	avoir	1	0	keep	haurais>havoir(avoir) ;
+Conditional	6	aurais	avoir	1	0	drop-first	y aurais>y avoir (text) ; haurais>havoir(avoir) ;
+Conditional	7	aurais	avoir	1	0	drop-first	y aurais>y avoir (text) ; haurais>havoir(avoir) ;
 Conditional	8	aurait	avoir	1	0	keep	haurait>havoir(avoir) ;
 Conditional	9	aurions	avoir	1	0	keep	haurions>havoir(avoir) ;
 Conditional	10	auriez	avoir	1	0	keep	hauriez>havoir(avoir) ;
@@ -341,8 +341,8 @@ Conditional	524	cirait	cire	1	0	keep	circoncirait>circoncire ;
 Conditional	525	cirions	cire	1	0	keep	circoncirions>circoncire ;
 Conditional	526	ciriez	cire	1	0	keep	circonciriez>circoncire ;
 Conditional	527	ciraient	cire	1	0	keep	circonciraient>circoncire ;
-Preterite	0	fus	être	1	0	keep	refus>reêtre(re-être,reêtre) ;
-Preterite	1	fus	être	1	0	keep	refus>reêtre(re-être,reêtre) ;
+Preterite	0	fus	être	1	0	drop-first	en fus>en être (text) ; refus>reêtre(re-être,reêtre) ;
+Preterite	1	fus	être	1	0	drop-first	en fus>en être (text) ; refus>reêtre(re-être,reêtre) ;
 Preterite	6	eus	avoir	1	0	keep	heus>havoir(avoir) ;
 Preterite	7	eus	avoir	1	0	keep	heus>havoir(avoir) ;
 Preterite	8	eut	avoir	1	1	drop	heut>havoir(avoir) ; seut>savoir
@@ -393,7 +393,7 @@ Preterite	425	cîtes	cire	1	0	keep	circoncîtes>circoncire ;
 Preterite	434	ûmes	uire	0	3	drop	; dûmes>duire lûmes>luire relûmes>reluire
 Preterite	435	ûtes	uire	0	3	drop	; dûtes>duire lûtes>luire relûtes>reluire
 Preterite	436	urent	uire	0	5	drop	; curent>cuire(cuire,cuirer) durent>duire endurent>enduire
-plural	0	s		1	2	drop	as>a ; ms>m ps>p(Matildas,Socceroos,espèces sonnantes et trébuchantes)
+plural	0	s		1	19	drop	as>a ; ass>as(a,as) bass>bas brass>bras
 plural	6	aux	ail	0	1	drop	; aux>ail
 present participle	3	ant	ir	1	43	drop	chauvant>chauvir ; abonnant>abonnir aboutant>aboutir affermant>affermir
 present participle	4	ant	re	2	38	drop	ardant>ardre estant>estre(être) ; accouant>accoure(accourir) aiant>aire(airer) confiant>confire

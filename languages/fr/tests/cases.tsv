@@ -495,6 +495,10 @@ pronominal	1	me souviens	se souvenir	v	pronominal|present-1s-2s
 pronominal	1	te souviendras	se souvenir	v	*
 pronominal	1	m'en vais	s'en aller	v	pronominal|present-1s
 pronominal	1	t'en vas	s'en aller	v	pronominal|present-2s
+phrases	1	y a	y avoir	v	present-3s
+phrases	1	n'y avait	y avoir	v	imperfect-3s|elision
+phrases	1	y vais	y aller	v	present-1s
+phrases	1	s'en allant	s'en aller	v	present-participle
 pronominal	1	s'en va	s'en aller	v	present-3s
 pronominal	1	me tais	se taire	v	*
 pronominal	1	me lever	se lever	v	pronominal
@@ -724,3 +728,15 @@ negatives	0	elle	el	*	*
 negatives	0	elle	eler	*	*
 negatives	0	que	c	*	*
 negatives	0	lève-toi	lever	*	*
+negatives	0	en suis	en être	*	*
+negatives	0	j'en suis	en être	*	*
+negatives	0	n'en était	en être	*	*
+negatives	0	m'en suis	s'en être	*	*
+negatives	0	en veux	en vouloir	*	*
+negatives	0	y ai	y avoir	*	*
+negatives	0	y avez	y avoir	*	*
+negatives	0	j'y ai	y avoir	*	*
+negatives	0	en revenant	en revenir	*	*
+negatives	0	en parlant	en parler	*	*
+negatives	0	miss	mis	n	*
+negatives	0	stress	stres	n	*

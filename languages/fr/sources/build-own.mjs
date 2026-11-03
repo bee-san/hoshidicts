@@ -165,7 +165,9 @@ for (const [inflected, deinflected] of [['es', 'e'], ['ées', 'ée'], ['és', '�
     ['aies', 'aie'], ['uies', 'uie'], ['ons', 'on'], ['ions', 'ion'], ['is', 'i'], ['us', 'u']]) {
     add('plural', suffix(inflected, deinflected, [], ['n', 'adj'], {...W, stemMinLength: 1}));
 }
-add('plural', suffix('s', '', [], ['n', 'adj'], {...W, stemMinLength: 2}));
+// A word in -s, -x or -z keeps its form in the plural, so a plural in -s
+// never ends in ss, xs or zs: Miss is not the plural of mis.
+add('plural', suffix('s', '', [], ['n', 'adj'], {...W, stemMinLength: 2, stemNotEndsWith: '[sxz]'}));
 add('plural', suffix('eaux', 'eau', [], ['n', 'adj'], W));
 for (const [inflected, deinflected] of [['aux', 'au'], ['eux', 'eu'], ['œux', 'œu'], ['oux', 'ou'], ['aux', 'al'], ['aux', 'ail']]) {
     add('plural', suffix(inflected, deinflected, [], ['n', 'adj'], {...W, stemMinLength: 1}));
@@ -298,7 +300,19 @@ const MODELS = [];
 function model(inf, keep, stem, m) { MODELS.push({inf, keep, stem, ...m}); }
 
 // être, avoir, aller: every form written out.
-model('être', 0, 'alone', {
+// être and vouloir are not read after en (j'en suis sûr, je n'en veux plus):
+// there en is the pronoun and the verb a copula, an auxiliary (je m'en suis
+// allé) or wants some of it, and a reading of the phrases en être and en
+// vouloir would come first, being longer. 9 of 12 sampled en être readings
+// of Tatoeba were wrong (README.md, Rule provenance). avoir's forms other
+// than the third person singular are not read after y: il y a is the
+// phrase y avoir, j'y ai and vous y avez are y and the auxiliary. The stem
+// constraint leaves out every stem that starts with the letters of en, m'en,
+// t'en, s'en (e, m, t, s) or y: of wty-fr-en's headwords that end in être,
+// vouloir or avoir, only en être, s'en être, tant qu'à y être, en vouloir
+// and y avoir start with them. The elided pronoun before a verb (s'est,
+// m'est, t'es) is removed by its own rule first.
+model('être', 0, 'alone', {notAfter: '[emst]',
     set: {
         present: {'1s': 'suis', '2s': 'es', '3s': 'est', '1p': 'sommes', '2p': 'êtes', '3p': 'sont'},
         imperfect: {'1s': 'étais', '2s': 'étais', '3s': 'était', '1p': 'étions', '2p': 'étiez', '3p': 'étaient'},
@@ -312,7 +326,7 @@ model('être', 0, 'alone', {
         'past-participle': {'-': 'été'},
     },
 });
-model('avoir', 0, 'alone', {
+model('avoir', 0, 'alone', {notAfter: '[y]', notAfterPersons: ['1s', '2s', '1p', '2p', '3p'],
     set: {
         present: {'1s': 'ai', '2s': 'as', '3s': 'a', '1p': 'avons', '2p': 'avez', '3p': 'ont'},
         imperfect: {'1s': 'avais', '2s': 'avais', '3s': 'avait', '1p': 'avions', '2p': 'aviez', '3p': 'avaient'},
@@ -400,7 +414,7 @@ model('savoir', 0, 'free', {
     sg: [['sai', 's']], pl: 'sav', p3: 'sav', sb: 'sach', sb2: 'sach', ps: [['s', 'u']], fut: 'saur', pp: 'su',
     imp: ['sache', 'sachons', 'sachez'], ppr: 'sachant',
 });
-model('vouloir', 0, 'free', {
+model('vouloir', 0, 'free', {notAfter: '[e]',
     sg: [['veu', 'x']], pl: 'voul', p3: 'veul', sb: 'veuill', sb2: 'voul', ps: [['voul', 'u']], fut: 'voudr', pp: 'voulu',
     imp: [['veuille', 'veux'], ['veuillons', 'voulons'], ['veuillez', 'voulez']],
 });
@@ -644,7 +658,13 @@ for (const m of MODELS) {
         } else if (m.stem === 'alone') {
             extra.stemNotEndsWith = '{letter}';
         }
+        // After en, a present participle is the gerund (en revenant, en
+        // voulant), not a form of a phrase with en (en revenir, en vouloir).
+        if (tense === 'present-participle') { extra.stemNotStartsWithText = 'en '; }
         if (inflected === '' && Object.keys(extra).length === 0) { throw new Error(`${inf}: empty ending without a constraint`); }
+        if (m.notAfter !== undefined && (m.notAfterPersons === undefined || persons.every((p) => m.notAfterPersons.includes(p)))) {
+            extra.stemNotStartsWith = m.notAfter;
+        }
         verbRules.push([verbTransformId(tense, set), suffix(inflected, deinflected, t.conditionsIn, out, extra)]);
     }
 }

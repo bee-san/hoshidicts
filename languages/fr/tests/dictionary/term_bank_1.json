@@ -77,5 +77,16 @@
   ["drogue", "", "n", "n", 0, ["drug"], 76, ""],
   ["droguer", "", "v", "v", 0, ["to drug"], 77, ""],
   ["dangereux", "", "adj", "adj", 0, ["dangerous"], 78, ""],
-  ["pied", "", "n", "n", 0, ["foot"], 79, ""]
+  ["pied", "", "n", "n", 0, ["foot"], 79, ""],
+  ["en", "", "", "", 0, ["of it, some"], 80, ""],
+  ["en être", "", "v", "v", 0, ["to have reached a point"], 81, ""],
+  ["y", "", "", "", 0, ["there"], 82, ""],
+  ["y avoir", "", "v", "v", 0, ["there to be"], 83, ""],
+  ["y aller", "", "v", "v", 0, ["to go there"], 84, ""],
+  ["en revenir", "", "v", "v", 0, ["to get over it"], 85, ""],
+  ["revenir", "", "v", "v", 0, ["to come back"], 86, ""],
+  ["sûr", "", "adj", "adj", 0, ["sure"], 87, ""],
+  ["penser", "", "v", "v", 0, ["to think"], 88, ""],
+  ["personne", "", "n", "n", 0, ["person"], 89, ""],
+  ["demain", "", "adv", "adv", 0, ["tomorrow"], 90, ""]
 ]
