@@ -207,9 +207,9 @@ Yomitan rules `sources/yomitan-removed.tsv` lists left out.
     of these rules) changes the first result of 25 labelled words: 12
     become wrong (другу → другий, дорогу → дорогий, тепла → теплий) and
     none becomes right.
-- **History**: the first commit of this pack, `uk: own rules` (9fb3f26), has
+- **History**: the first commit of this pack, `uk: own rules` (c6e7b8c), has
   the own rules as written before Yomitan's file was read (75 transforms,
-  4,255 rules); the next, `uk: Yomitan's rules and processors` (01c87cb),
+  4,255 rules); the next, `uk: Yomitan's rules and processors` (9493dcd),
   the port. Later commits changed the own rules after measuring: adjective
   declension also reaching verbs (participles) and nouns; the forms the
   table measurement missed (-ок after й and ь, -ов, -ин, plural-only nouns,
@@ -226,7 +226,7 @@ Yomitan rules `sources/yomitan-removed.tsv` lists left out.
 ## Measurements
 
 Every number is with wty-uk-en as published (form-of rows included), imported
-by `hoshidicts-cli import`, at hoshidicts b145feb with this pack (GCC 14.3,
+by `hoshidicts-cli import`, at hoshidicts 1fed676 with this pack (GCC 14.3,
 Release; the dictionary was imported at 23cd5a3, and #54 changes how its
 files are read, not what they hold). The pack has no optional processor,
 transform or variant pass, so each file gives the same numbers with every
@@ -265,6 +265,19 @@ identical).
    candidates come mostly from the adjective declension, which also gives
    the participle's verb (процвітаючою → процвітати beside процвітаючий)
    and an adjective for a noun (сліпою → сліпий for сліпа).
+
+   `lookup.untaggedTerms` stays at its default, `filter` (docs/languages.md
+   9.4). 27,793 of wty-uk-en's 450,682 rows (6.2%) have an empty `rules`
+   column; by first definition tag they are 23,569 form-of rows
+   (`non-lemma`), 3,111 names, 408 suffixes, 175 interjections, 110
+   prefixes, 100 prepositions and 82 phrases, while the parts of speech the
+   rules produce are tagged (`n` 14,062 rows, `v` 6,318, `adj` 5,625). With
+   `pass`, the final set ranks as many lemmas first on `corpus.tsv` (930 of
+   988), `gaps.tsv` (9 of 14) and `cases.tsv` (446 of 514) and one fewer on
+   the measurement set (293,916 of 312,318); recall and negatives are the
+   same, and false candidates per row rise from 0.513 to 0.529 on
+   `corpus.tsv`, from 1.171 to 1.243 on `cases.tsv` and from 0.505 to 0.534
+   on the measurement set.
 2. **Frequent words** (`sources/measure.py words`): the 10,000 most frequent
    words of `uk_50k.txt`, each looked up alone as a host does (16 results,
    scan length 16) and judged by the lemma the word means (Measure notes
@@ -349,22 +362,22 @@ identical).
      --term <wty-uk-en> --languages <copy> --language uk --json`: the 80 texts
      of `sources/benchmark-words.txt` (each the rest of a sentence from an
      inflected word), 6 passes with the first dropped, three runs, machine
-     load about 54 (of 64 cores). Budget 1 ms p50.
+     load about 48 (of 64 cores). Budget 1 ms p50.
 
      | Rule set | p50 | p95 |
      | --- | ---: | ---: |
-     | Final | 41-46 µs | 66-73 µs |
-     | Own | 28-32 µs | 41-53 µs |
-     | Union | 59-70 µs | 89-108 µs |
-     | Yomitan's rules | 44-45 µs | 69-72 µs |
+     | Final | 39 µs | 61-63 µs |
+     | Own | 30-31 µs | 45-48 µs |
+     | Union | 55-60 µs | 87-91 µs |
+     | Yomitan's rules | 41-54 µs | 58-83 µs |
    - WebAssembly (`node languages/uk/sources/wasm-measure.mjs <hachidori>
      <wty-uk-en.zip>`, Hachidori feat/multi-language d7e82b0c's prebuilt
      engines in Node 22, 10 fresh engines): `hdw_language_load` of this pack
-     takes 14.9 ms (median; 14.2-21.6) single-thread and 16.4 ms (15.3-24.1)
+     takes 14.8 ms (median; 14.2-21.3) single-thread and 16.3 ms (14.9-20.2)
      threaded, and adds 2,599,264 and 2,599,488 bytes of live heap
      (`hdw_memory_stats`). With wty-uk-en imported into the engine and added
-     paged, `hdw_lookup` of the 80 texts takes 0.107 ms p50 and 0.199 ms p95
-     single-thread, 0.107 ms and 0.202 ms threaded. Budgets 50 ms and 20 MB.
+     paged, `hdw_lookup` of the 80 texts takes 0.101 ms p50 and 0.189 ms p95
+     single-thread, 0.108 ms and 0.199 ms threaded. Budgets 50 ms and 20 MB.
      The pack has no `pattern` rule.
 6. **Other checks.**
    - Differential check (`tools/check-yomitan.mjs <yomitan d3c54c1> uk --cli
