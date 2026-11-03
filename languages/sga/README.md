@@ -139,8 +139,9 @@ of each Yomitan rule:
     to palatalise), `nom_pal` and `nom_uinf` (a palatal or u-infected case
     stem), `spelt`;
   - the palatal stem as a step of its own (`conj-palatal`, `abs-palatal`)
-    instead of a copy of every ending rule, which took the rules from 1,256
-    to 1,124 and `tests/classes.json` from 567 KB to 362 KB;
+    instead of a copy of every ending rule, which cut the final set from
+    1,256 to 1,026 rules and `tests/classes.json` from 567 KB to 362 KB (the
+    rules added after it bring the set to 1,124);
   - minimum stems and consonant-final stems for the noun endings
     (`naib` is not `na` + `-ib`, `fria` is not `fri` + `-a`), syncope, the
     Táin's `ā` for á, `ṅ`/`ṁ` for the nasal, `lenitionInCompound`, the forms
@@ -155,8 +156,8 @@ of each Yomitan rule:
 ## Measurements
 
 All numbers with wty-sga-en as published, imported by `hoshidicts-cli
-import`, at hoshidicts 1fed676 (GCC 14.3, Release), unless a line says
-otherwise. The pack has no optional processor or transform, so every file
+import`, measured on hoshidicts 1fed676 (GCC 14.3, Release; main has since
+changed only other packs' directories), unless a line says otherwise. The pack has no optional processor or transform, so every file
 gives the same numbers with every option on and with the defaults
 (`sources/measure.py eval` runs both; each pair below is equal).
 
