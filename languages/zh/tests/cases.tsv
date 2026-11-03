@@ -1,0 +1,9 @@
+# Hand-written for this pack (GPL-3.0-or-later): rows that need the optional script conversions, with every option on.
+# category	valid	source	term	rule	reasons
+script	1	说不说	說	*	aNotA
+script	1	說不說	说	*	aNotA
+script	1	理了个发	理髮	*	separable
+script	1	理了個髮	理发	*	separable
+script	1	干干净净	乾淨	*	redupAABB
+script	1	乾乾淨淨	干净	*	redupAABB
+script	1	看不见	看見	*	potentialNot

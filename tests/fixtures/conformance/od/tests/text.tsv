@@ -1,0 +1,5 @@
+# options: default
+# Hand-written for the test, with the pack's defaults: the optional accent processor is off.
+# category	valid	input	variant
+accents	1	estan	estan
+accents	0	estan	están

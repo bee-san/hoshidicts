@@ -1,0 +1,613 @@
+# Source: kaikki.org's extract of English Wiktionary, Vietnamese entries
+# (https://kaikki.org/dictionary/Vietnamese/kaikki.org-dictionary-Vietnamese.jsonl, sha256 186cd0a6…d945,
+# downloaded 2026-11-03), CC BY-SA 4.0 and GFDL, by the Wiktionary contributors.
+# 1000 rows written by sources/build-corpus.py (every reduplication pair, a sample of spelling pairs with seed 1);
+# the rows the pack's rules and processors reach are in corpus.tsv (607), the others in gaps.tsv (393).
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+reduplication	1	chầm chậm	chậm	*	*
+reduplication	1	cuồn cuộn	cuộn	*	*
+reduplication	1	kha khá	khá	*	*
+reduplication	1	ngồ ngộ	ngộ	*	*
+reduplication	1	nho nhỏ	nhỏ	*	*
+reduplication	1	nhè nhẹ	nhẹ	*	*
+reduplication	1	rười rượi	rượi	*	*
+reduplication	1	thoai thoải	thoải	*	*
+reduplication	1	thăm thẳm	thẳm	*	*
+reduplication	1	tàm tạm	tạm	*	*
+reduplication	1	vun vút	vút	*	*
+reduplication	1	vời vợi	vợi	*	*
+reduplication	1	đo đỏ	đỏ	*	*
+spelling	1	cổ địa lý học	cổ địa lí học	*	*
+spelling	1	giảng-dụ	giảng dụ	*	*
+spelling	1	lý lẽ	lí lẽ	*	*
+spelling	1	chích chòe	chích choè	*	*
+spelling	1	kỳ diệu	kì diệu	*	*
+spelling	1	xâm-phạm	xâm phạm	*	*
+spelling	1	đế quốc Mỹ	đế quốc Mĩ	*	*
+spelling	1	chí chóe	chí choé	*	*
+spelling	1	hòe	hoè	*	*
+spelling	1	luận lý học	luận lí học	*	*
+spelling	1	nguyên lý	nguyên lí	*	*
+spelling	1	Ta	ta	*	*
+spelling	1	hạ sỹ	hạ sĩ	*	*
+spelling	1	đạo Hòa Hảo	đạo Hoà Hảo	*	*
+spelling	1	tự động hóa	tự động hoá	*	*
+spelling	1	ma quỉ	ma quỷ	*	*
+spelling	1	tỷ số	tỉ số	*	*
+spelling	1	ký túc xá	kí túc xá	*	*
+spelling	1	kỳ sau	kì sau	*	*
+spelling	1	khoa-cử	khoa cử	*	*
+spelling	1	tương kỵ	tương kị	*	*
+spelling	1	Vạn Lý Trường Thành	Vạn Lí Trường Thành	*	*
+spelling	1	xuề xòa	xuề xoà	*	*
+spelling	1	thủy tinh thể	thuỷ tinh thể	*	*
+spelling	1	kỹ trị	kĩ trị	*	*
+spelling	1	ngôn ngữ ký hiệu	ngôn ngữ kí hiệu	*	*
+spelling	1	chóe	choé	*	*
+spelling	1	tỳ	tì	*	*
+spelling	1	kỳ thú	kì thú	*	*
+spelling	1	My	Mi	*	*
+spelling	1	cù kỳ	cù kì	*	*
+spelling	1	minh ty	minh ti	*	*
+spelling	1	mít-tinh	mít tinh	*	*
+spelling	1	Liên bang Cộng hòa Xã hội Chủ nghĩa Xô viết	Liên bang Cộng hoà Xã hội Chủ nghĩa Xô viết	*	*
+spelling	1	ký tên	kí tên	*	*
+spelling	1	sinh hóa	sinh hoá	*	*
+spelling	1	Bình-An	Bình An	*	*
+spelling	1	vũ-trụ	vũ trụ	*	*
+spelling	1	Anh	anh	*	*
+spelling	1	chữ ký	chữ kí	*	*
+spelling	1	nhòa	nhoà	*	*
+spelling	1	rơ-le	rơ le	*	*
+spelling	1	Đại Việt sử ký	Đại Việt sử kí	*	*
+spelling	1	Châu Á	châu Á	*	*
+spelling	1	ký sinh trùng	kí sinh trùng	*	*
+spelling	1	sỹ	sĩ	*	*
+spelling	1	chũm chọe	chũm choẹ	*	*
+spelling	1	Thượng-Đế	Thượng Đế	*	*
+spelling	1	Hy-Hoàng	Hi Hoàng	*	*
+spelling	1	nghiêm-nghị	nghiêm nghị	*	*
+spelling	1	Hy Lạp cổ đại	Hi Lạp cổ đại	*	*
+spelling	1	Xô-viết	Xô viết	*	*
+spelling	1	đoạn-đầu-đài	đoạn đầu đài	*	*
+spelling	1	công-nhân	công nhân	*	*
+spelling	1	Hy Lạp	Hi Lạp	*	*
+spelling	1	tâm lý học	tâm lí học	*	*
+spelling	1	chuyên-trị	chuyên trị	*	*
+spelling	1	góa bụa	goá bụa	*	*
+spelling	1	bờ-lốc	bờ lốc	*	*
+spelling	1	bôn-sê-vích	Bôn-sê-vích	*	*
+spelling	1	cao-su	cao su	*	*
+spelling	1	ti-vi	ti vi	*	*
+spelling	1	thoái hóa	thoái hoá	*	*
+spelling	1	định kỳ	định kì	*	*
+spelling	1	vịnh Mễ-Tây-Cơ	vịnh Mễ Tây Cơ	*	*
+spelling	1	tổng công ty	tổng công ti	*	*
+spelling	1	biện-biệt	biện biệt	*	*
+spelling	1	trợ lý	trợ lí	*	*
+spelling	1	kỷ-nguyên	kỉ nguyên	*	*
+spelling	1	tây hóa	Tây hoá	*	*
+spelling	1	kỳ học	kì học	*	*
+spelling	1	vật lý cổ điển	vật lí cổ điển	*	*
+spelling	1	Nha lộ vận	nha lộ vận	*	*
+spelling	1	kỳ vĩ	kì vĩ	*	*
+spelling	1	qui tụ	quy tụ	*	*
+spelling	1	Hà-nội	Hà Nội	*	*
+spelling	1	kỷ	kỉ	*	*
+spelling	1	thủy chung	thuỷ chung	*	*
+spelling	1	pháp lý	pháp lí	*	*
+spelling	1	quị lụy	quỵ luỵ	*	*
+spelling	1	tỳ hưu	tì hưu	*	*
+spelling	1	chi ly	chi li	*	*
+spelling	1	giỗ kỵ	giỗ kị	*	*
+spelling	1	Trung Mỹ	Trung Mĩ	*	*
+spelling	1	kỹ nghệ	kĩ nghệ	*	*
+spelling	1	dung hòa	dung hoà	*	*
+spelling	1	yên sĩ phi lý thuần	yên sĩ phi lí thuần	*	*
+spelling	1	kỹ thuật điện	kĩ thuật điện	*	*
+spelling	1	vật lý hoá học	vật lí hoá học	*	*
+spelling	1	ký sinh trùng học	kí sinh trùng học	*	*
+spelling	1	qui đầu	quy đầu	*	*
+spelling	1	thật-tiễn	thật tiễn	*	*
+spelling	1	hành lang pháp lý	hành lang pháp lí	*	*
+spelling	1	lầm lỳ	lầm lì	*	*
+spelling	1	bao qui đầu	bao quy đầu	*	*
+spelling	1	phẫu thuật thẩm mỹ	phẫu thuật thẩm mĩ	*	*
+spelling	1	ly thân	li thân	*	*
+spelling	1	tự ty	tự ti	*	*
+spelling	1	tỷ	tỉ	*	*
+spelling	1	ganh tỵ	ganh tị	*	*
+spelling	1	Châu Úc	châu Úc	*	*
+spelling	1	Tý	Tí	*	*
+spelling	1	kỳ vọng	kì vọng	*	*
+spelling	1	hoan hỷ	hoan hỉ	*	*
+spelling	1	hy hữu	hi hữu	*	*
+spelling	1	cự ly	cự li	*	*
+spelling	1	chữ Khẩu	chữ khẩu	*	*
+spelling	1	nho	Nho	*	*
+spelling	1	sông Hồng	Sông Hồng	*	*
+spelling	1	Mẹ	mẹ	*	*
+spelling	1	điện Mặt Trời	điện mặt trời	*	*
+spelling	1	thiên-tư	thiên tư	*	*
+spelling	1	chí-thành	chí thành	*	*
+spelling	1	nhạt nhòa	nhạt nhoà	*	*
+spelling	1	thanh-nữ	thanh nữ	*	*
+spelling	1	kỳ công	kì công	*	*
+spelling	1	ly hương	li hương	*	*
+spelling	1	văn lý	văn lí	*	*
+spelling	1	biển Đông	Biển Đông	*	*
+spelling	1	nhật kỳ	nhật kì	*	*
+spelling	1	mỹ vị	mĩ vị	*	*
+spelling	1	tâm-truyền	tâm truyền	*	*
+spelling	1	phát-xít	phát xít	*	*
+spelling	1	nội bệnh lý	nội bệnh lí	*	*
+spelling	1	số vô tỷ	số vô tỉ	*	*
+spelling	1	quỉ vương	quỷ vương	*	*
+spelling	1	hành lý	hành lí	*	*
+spelling	1	Oa-hoàng	Oa Hoàng	*	*
+spelling	1	Phục Hy	Phục Hi	*	*
+spelling	1	đại lý	đại lí	*	*
+spelling	1	Thụy	Thuỵ	*	*
+spelling	1	Ngọc-nữ	Ngọc Nữ	*	*
+spelling	1	cực kỳ	cực kì	*	*
+spelling	1	lão-nam	lão nam	*	*
+spelling	1	Tịnh độ	tịnh độ	*	*
+spelling	1	dậm dọa	dậm doạ	*	*
+spelling	1	tổng thư ký	tổng thư kí	*	*
+spelling	1	hòa quyện	hoà quyện	*	*
+spelling	1	men-sê-vích	Men-sê-vích	*	*
+spelling	1	nghịch lý	nghịch lí	*	*
+spelling	1	bác sỹ	bác sĩ	*	*
+spelling	1	từ-chương	từ chương	*	*
+spelling	1	hoàn mỹ	hoàn mĩ	*	*
+spelling	1	li kỳ	li kì	*	*
+spelling	1	nội qui	nội quy	*	*
+spelling	1	hồ ly	hồ li	*	*
+spelling	1	chính qui	chính quy	*	*
+spelling	1	cuống quít	cuống quýt	*	*
+spelling	1	đố kỵ	đố kị	*	*
+spelling	1	tri kỷ	tri kỉ	*	*
+spelling	1	tỳ vị	tì vị	*	*
+spelling	1	thụ lý	thụ lí	*	*
+spelling	1	kỳ quặc	kì quặc	*	*
+spelling	1	sĩ-hoạn	sĩ hoạn	*	*
+spelling	1	Đao	đao	*	*
+spelling	1	Nguyên Đán	nguyên đán	*	*
+spelling	1	sinh-thú	sinh thú	*	*
+spelling	1	kỳ thị	kì thị	*	*
+spelling	1	Mỹ Quốc	Mĩ Quốc	*	*
+spelling	1	Thụy Sỹ	Thuỵ Sĩ	*	*
+spelling	1	tỳ bà	tì bà	*	*
+spelling	1	kị sỹ	kị sĩ	*	*
+spelling	1	dân túy	dân tuý	*	*
+spelling	1	dũng sỹ	dũng sĩ	*	*
+spelling	1	chói-lói	chói lói	*	*
+spelling	1	kỹ thuật	kĩ thuật	*	*
+spelling	1	Cao Câu Ly	Cao Câu Li	*	*
+spelling	1	Cộng hòa Nam Phi	Cộng hoà Nam Phi	*	*
+spelling	1	tiêu-ma	tiêu ma	*	*
+spelling	1	ký kết	kí kết	*	*
+spelling	1	giáo lý	giáo lí	*	*
+spelling	1	bát ô-tô	bát ô tô	*	*
+spelling	1	chủ-nhật	chủ nhật	*	*
+spelling	1	tự-hồ	tự hồ	*	*
+spelling	1	An-nam	An Nam	*	*
+spelling	1	bất-nhân	bất nhân	*	*
+spelling	1	chu kỳ tế bào	chu kì tế bào	*	*
+spelling	1	lý trí	lí trí	*	*
+spelling	1	trường kỳ	trường kì	*	*
+spelling	1	Hoa Kỳ	Hoa Kì	*	*
+spelling	1	nhạc lý	nhạc lí	*	*
+spelling	1	sơ kỳ	sơ kì	*	*
+spelling	1	Tua Rua	tua rua	*	*
+spelling	1	kỷ cương	kỉ cương	*	*
+spelling	1	Phú Quí	Phú Quý	*	*
+spelling	1	kỵ sỹ	kị sĩ	*	*
+spelling	1	kiết lỵ	kiết lị	*	*
+spelling	1	kỳ giông	kì giông	*	*
+spelling	1	tốc ký	tốc kí	*	*
+spelling	1	Trấn-Võ	Trấn Võ	*	*
+spelling	1	siêu tâm lý học	siêu tâm lí học	*	*
+spelling	1	quị	quỵ	*	*
+spelling	1	quỉ	quỷ	*	*
+spelling	1	tôn-quí	tôn quý	*	*
+spelling	1	Bắc Kỳ	Bắc Kì	*	*
+spelling	1	tư-dục	tư dục	*	*
+spelling	1	cũ kỹ	cũ kĩ	*	*
+spelling	1	hoá học vật lý	hoá học vật lí	*	*
+spelling	1	Nhật-Bản	Nhật Bản	*	*
+spelling	1	dạ-xoa	dạ xoa	*	*
+spelling	1	Thích-ca Mâu-ni	Thích Ca Mâu Ni	*	*
+spelling	1	Tây-lịch	Tây lịch	*	*
+spelling	1	bệnh lý	bệnh lí	*	*
+spelling	1	ăn quỵt	ăn quịt	*	*
+spelling	1	hủ hóa	hủ hoá	*	*
+spelling	1	Phú Sỹ	Phú Sĩ	*	*
+spelling	1	chũ	Chũ	*	*
+spelling	1	hóa học vật lý	hoá học vật lí	*	*
+spelling	1	hý trường	hí trường	*	*
+spelling	1	Việt-nam	Việt Nam	*	*
+spelling	1	quí vị	quý vị	*	*
+spelling	1	hòa hợp	hoà hợp	*	*
+spelling	1	lý học	lí học	*	*
+spelling	1	xử lý	xử lí	*	*
+spelling	1	ly	li	*	*
+spelling	1	thập kỷ	thập kỉ	*	*
+spelling	1	kỳ phùng địch thủ	kì phùng địch thủ	*	*
+spelling	1	Thượng Toạ Bộ	Thượng toạ bộ	*	*
+spelling	1	nghệ sỹ	nghệ sĩ	*	*
+spelling	1	chữ thập đỏ	Chữ thập đỏ	*	*
+spelling	1	Cao Ly	Cao Li	*	*
+spelling	1	kỷ nguyên	kỉ nguyên	*	*
+spelling	1	tỷ giá	tỉ giá	*	*
+spelling	1	bản địa hóa	bản địa hoá	*	*
+spelling	1	ngoại-giao	ngoại giao	*	*
+spelling	1	đáng lý	đáng lí	*	*
+spelling	1	người Hoa Kỳ	người Hoa Kì	*	*
+spelling	1	hộ lý	hộ lí	*	*
+spelling	1	Mỹ	Mĩ	*	*
+spelling	1	hoạt họa	hoạt hoạ	*	*
+spelling	1	bình-yên	bình yên	*	*
+spelling	1	hư-văn	hư văn	*	*
+spelling	1	kỳ	kì	*	*
+spelling	1	vờ-vĩnh	vờ vĩnh	*	*
+spelling	1	Hợp chúng quốc Hoa Kỳ	Hợp chúng quốc Hoa Kì	*	*
+spelling	1	Do-thái	Do Thái	*	*
+spelling	1	tết	Tết	*	*
+spelling	1	Mỹ châu	Mĩ châu	*	*
+spelling	1	Á Châu	Á châu	*	*
+spelling	1	kỵ binh	kị binh	*	*
+spelling	1	kiêu kỳ	kiêu kì	*	*
+spelling	1	Tây-lịch kỷ-nguyên	Tây lịch kỉ nguyên	*	*
+spelling	1	Tứ Thư	Tứ thư	*	*
+spelling	1	đường tiêu hóa	đường tiêu hoá	*	*
+spelling	1	Mỹ Lợi Gia	Mĩ Lợi Gia	*	*
+spelling	1	bánh mỳ	bánh mì	*	*
+spelling	1	òa	oà	*	*
+spelling	1	kỳ ảo	kì ảo	*	*
+spelling	1	kỳ thủ	kì thủ	*	*
+spelling	1	trung sỹ	trung sĩ	*	*
+spelling	1	Tiên-Đồng	Tiên Đồng	*	*
+spelling	1	giải tỏa	giải toả	*	*
+spelling	1	dân-trị	dân trị	*	*
+spelling	1	cơ thể bệnh lý	cơ thể bệnh lí	*	*
+spelling	1	đậu Hòa Lan	đậu hoà lan	*	*
+spelling	1	ký	kí	*	*
+spelling	1	nước Mỹ	nước Mĩ	*	*
+spelling	1	Tam quốc sử ký	Tam quốc sử kí	*	*
+spelling	1	lý sự	lí sự	*	*
+spelling	1	thiếu-nữ	thiếu nữ	*	*
+spelling	1	tây lịch	Tây lịch	*	*
+spelling	1	giáp	Giáp	*	*
+spelling	1	kỳ nhông	kì nhông	*	*
+spelling	1	suy lý	suy lí	*	*
+spelling	1	cung hỷ phát tài	cung hỉ phát tài	*	*
+spelling	1	Ngũ Kinh	Ngũ kinh	*	*
+spelling	1	A-phú-hãn	A Phú Hãn	*	*
+spelling	1	kỳ thực	kì thực	*	*
+spelling	1	luân thường đạo lý	luân thường đạo lí	*	*
+spelling	1	kỷ lục	kỉ lục	*	*
+spelling	1	tỷ lệ xích	tỉ lệ xích	*	*
+spelling	1	kỵ khí	kị khí	*	*
+spelling	1	bất kỳ	bất kì	*	*
+spelling	1	Tiền Lý	Tiền Lí	*	*
+spelling	1	luân lý học	luân lí học	*	*
+spelling	1	hóa đơn	hoá đơn	*	*
+spelling	1	kẻ sỹ	kẻ sĩ	*	*
+spelling	1	tôn ti trật-tự	tôn ti trật tự	*	*
+spelling	1	Ly	Li	*	*
+spelling	1	kỷ luật	kỉ luật	*	*
+spelling	1	tiếng Mỹ	tiếng Mĩ	*	*
+spelling	1	song hỷ	song hỉ	*	*
+spelling	1	cấm kỵ	cấm kị	*	*
+spelling	1	bộ xử lý	bộ xử lí	*	*
+spelling	1	mạ lỵ	mạ lị	*	*
+spelling	1	vật lý	vật lí	*	*
+spelling	1	tâm sinh lý	tâm sinh lí	*	*
+spelling	1	Nam Mỹ	Nam Mĩ	*	*
+spelling	1	phây	Phây	*	*
+spelling	1	bất hợp lý	bất hợp lí	*	*
+spelling	1	kỹ càng	kĩ càng	*	*
+spelling	1	tỏa sáng	toả sáng	*	*
+spelling	1	thủy quân	thuỷ quân	*	*
+spelling	1	có lý	có lí	*	*
+spelling	1	quản lý	quản lí	*	*
+spelling	1	công-phu	công phu	*	*
+spelling	1	nội thủy	nội thuỷ	*	*
+spelling	1	sâm-panh	sâm panh	*	*
+spelling	1	mỹ nữ	mĩ nữ	*	*
+spelling	1	Thúy	Thuý	*	*
+spelling	1	thành-thử	thành thử	*	*
+spelling	1	đeo ba-lô ngược	đeo ba lô ngược	*	*
+spelling	1	Mỹ Khê	Mĩ Khê	*	*
+spelling	1	thời kỳ	thời kì	*	*
+spelling	1	Địa Ngục	địa ngục	*	*
+spelling	1	Tóp Tóp	tóp tóp	*	*
+spelling	1	kỳ hạm	kì hạm	*	*
+spelling	1	hạnh-phúc	hạnh phúc	*	*
+spelling	1	nhân-giả	nhân giả	*	*
+spelling	1	góa	goá	*	*
+spelling	1	thuần hóa	thuần hoá	*	*
+spelling	1	Va-Linh-Tinh	Va linh tinh	*	*
+spelling	1	phiêu lưu ký	phiêu lưu kí	*	*
+spelling	1	Bắc Mỹ	Bắc Mĩ	*	*
+spelling	1	hòa nhập	hoà nhập	*	*
+spelling	1	thượng sỹ	thượng sĩ	*	*
+spelling	1	kỳ dư	kì dư	*	*
+spelling	1	lỵ	lị	*	*
+spelling	1	ô-sin	Ô-sin	*	*
+spelling	1	mỹ thuật	mĩ thuật	*	*
+spelling	1	diệu kỳ	diệu kì	*	*
+spelling	1	kị húy	kị huý	*	*
+spelling	1	chứng lý	chứng lí	*	*
+spelling	1	hy sinh	hi sinh	*	*
+spelling	1	Hy Hoàng	Hi Hoàng	*	*
+spelling	1	thẩm mỹ	thẩm mĩ	*	*
+spelling	1	ký thác	kí thác	*	*
+spelling	1	ríp-pê	ríp pê	*	*
+spelling	1	Mặc-giáo	Mặc giáo	*	*
+spelling	1	hữu tỷ	hữu tỉ	*	*
+spelling	1	Ngọc-Nữ	Ngọc Nữ	*	*
+spelling	1	tỷ phú	tỉ phú	*	*
+spelling	1	kỹ thuật phần mềm	kĩ thuật phần mềm	*	*
+spelling	1	kinh kỳ	kinh kì	*	*
+spelling	1	hỷ	hỉ	*	*
+spelling	1	vật-dục	vật dục	*	*
+spelling	1	kỷ niệm	kỉ niệm	*	*
+spelling	1	mỹ nhân	mĩ nhân	*	*
+spelling	1	kỳ khôi	kì khôi	*	*
+spelling	1	nghệ-thuật vị nghệ-thuật	nghệ thuật vị nghệ thuật	*	*
+spelling	1	biệt ly	biệt li	*	*
+spelling	1	kỹ năng	kĩ năng	*	*
+spelling	1	hải lý	hải lí	*	*
+spelling	1	Tây	tây	*	*
+spelling	1	tích lũy	tích luỹ	*	*
+spelling	1	lý tưởng	lí tưởng	*	*
+spelling	1	qui trình	quy trình	*	*
+spelling	1	mỳ	mì	*	*
+spelling	1	số hữu tỷ	số hữu tỉ	*	*
+spelling	1	kỳ lạ	kì lạ	*	*
+spelling	1	công-truyền	công truyền	*	*
+spelling	1	Thiên Đường	thiên đường	*	*
+spelling	1	kỷ hà	kỉ hà	*	*
+spelling	1	lý thú	lí thú	*	*
+spelling	1	thỏa đáng	thoả đáng	*	*
+spelling	1	kỹ xảo	kĩ xảo	*	*
+spelling	1	quốc kỳ	quốc kì	*	*
+spelling	1	vô tỷ	vô tỉ	*	*
+spelling	1	thuỷ quan	Thuỷ quan	*	*
+spelling	1	công lý	công lí	*	*
+spelling	1	Thuỷ Tinh	Thuỷ tinh	*	*
+spelling	1	kỳ tôm	kì tôm	*	*
+spelling	1	kỳ cựu	kì cựu	*	*
+spelling	1	khỏa thân	khoả thân	*	*
+spelling	1	lỵ trực khuẩn	lị trực khuẩn	*	*
+spelling	1	Nho gia	nho gia	*	*
+spelling	1	độc-tôn	độc tôn	*	*
+spelling	1	ly khai	li khai	*	*
+spelling	1	bút ký	bút kí	*	*
+spelling	1	phú quí	phú quý	*	*
+spelling	1	kỷ vật	kỉ vật	*	*
+spelling	1	tiến-hoá	tiến hoá	*	*
+spelling	1	cầu kỳ	cầu kì	*	*
+spelling	1	tôn-giáo	tôn giáo	*	*
+spelling	1	mỹ lệ	mĩ lệ	*	*
+spelling	1	hải quì	hải quỳ	*	*
+spelling	1	Trung Kỳ	Trung Kì	*	*
+spelling	1	ký sự	kí sự	*	*
+spelling	1	tỵ hiềm	tị hiềm	*	*
+spelling	1	bác sỹ chuyên khoa	bác sĩ chuyên khoa	*	*
+spelling	1	hy vọng	hi vọng	*	*
+spelling	1	tự-do	tự do	*	*
+spelling	1	ca-nô	ca nô	*	*
+spelling	1	kỵ húy	kị huý	*	*
+spelling	1	Kim Cương Thừa	Kim cương thừa	*	*
+spelling	1	ọe	oẹ	*	*
+spelling	1	kiêng kỵ	kiêng kị	*	*
+spelling	1	khoa học máy tính lý thuyết	khoa học máy tính lí thuyết	*	*
+spelling	1	ghen tỵ	ghen tị	*	*
+spelling	1	tỷ lệ	tỉ lệ	*	*
+spelling	1	Chủ Nhật	chủ nhật	*	*
+spelling	1	người Mỹ	người Mĩ	*	*
+spelling	1	đường thủy	đường thuỷ	*	*
+spelling	1	bộ chế hòa khí	bộ chế hoà khí	*	*
+spelling	1	dọa dẫm	doạ dẫm	*	*
+spelling	1	kỹ sư	kĩ sư	*	*
+spelling	1	thiên niên kỷ	thiên niên kỉ	*	*
+spelling	1	thư ký	thư kí	*	*
+spelling	1	mỹ nhân kế	mĩ nhân kế	*	*
+spelling	1	kỳ nam	kì nam	*	*
+spelling	1	quịt	quỵt	*	*
+spelling	1	thẩm mỹ viện	thẩm mĩ viện	*	*
+spelling	1	tông-giáo	tông giáo	*	*
+spelling	1	Sáng thế ký	Sáng thế kí	*	*
+spelling	1	Việt-Nam	Việt Nam	*	*
+spelling	1	thiếu-niên	thiếu niên	*	*
+spelling	1	thiếu-nam	thiếu nam	*	*
+spelling	1	nghi-tắc	nghi tắc	*	*
+spelling	1	u-uẩn	u uẩn	*	*
+spelling	1	thủy diệu	thuỷ diệu	*	*
+spelling	1	tọa đàm	toạ đàm	*	*
+spelling	1	tỷ dụ	tỉ dụ	*	*
+spelling	1	công-tắc	công tắc	*	*
+spelling	1	kỵ mã	kị mã	*	*
+spelling	1	mỹ nhân ngư	mĩ nhân ngư	*	*
+spelling	1	xõa	xoã	*	*
+spelling	1	cà-rốt	cà rốt	*	*
+spelling	1	Mỹ Tho	Mĩ Tho	*	*
+spelling	1	quỹ	quĩ	*	*
+spelling	1	thỏa hiệp	thoả hiệp	*	*
+spelling	1	Sao Thủy	sao Thuỷ	*	*
+spelling	1	thường kỳ	thường kì	*	*
+spelling	1	Tây lịch kỷ nguyên	Tây lịch kỉ nguyên	*	*
+spelling	1	họa sĩ	hoạ sĩ	*	*
+spelling	1	ký sinh	kí sinh	*	*
+spelling	1	Da-Tô	Da Tô	*	*
+spelling	1	sinh lý học	sinh lí học	*	*
+spelling	1	tự kỷ	tự kỉ	*	*
+spelling	1	tiên-nho	tiên nho	*	*
+spelling	1	nhật ký web	nhật kí web	*	*
+spelling	1	liệt sỹ	liệt sĩ	*	*
+spelling	1	vật lý hóa học	vật lí hoá học	*	*
+spelling	1	thuế khóa	thuế khoá	*	*
+spelling	1	hú họa	hú hoạ	*	*
+spelling	1	thần kỳ	thần kì	*	*
+spelling	1	xích-lô	xích lô	*	*
+spelling	1	cà-sa	cà sa	*	*
+spelling	1	trường kỷ	trường kỉ	*	*
+spelling	1	Thủy	Thuỷ	*	*
+spelling	1	Nam Kỳ	Nam Kì	*	*
+spelling	1	Da-tô	Da Tô	*	*
+spelling	1	Kim Cương thừa	Kim cương thừa	*	*
+spelling	1	chí lý	chí lí	*	*
+spelling	1	mi-nhon	mi nhon	*	*
+spelling	1	mẫn-tiệp	mẫn tiệp	*	*
+spelling	1	Nhật-bản	Nhật Bản	*	*
+spelling	1	kỳ hạn	kì hạn	*	*
+spelling	1	Thủy Tinh	Thủy tinh	*	*
+spelling	1	mỹ từ pháp	mĩ từ pháp	*	*
+spelling	1	giảng hòa	giảng hoà	*	*
+spelling	1	trí-thuật	trí thuật	*	*
+spelling	1	Tỵ	Tị	*	*
+spelling	1	sử ký	sử kí	*	*
+spelling	1	cạnh khóe	cạnh khoé	*	*
+spelling	1	ky bo	ki bo	*	*
+spelling	1	vị-tất	vị tất	*	*
+spelling	1	trị-thủy	trị thuỷ	*	*
+spelling	1	xử lý ngôn ngữ tự nhiên	xử lí ngôn ngữ tự nhiên	*	*
+spelling	1	địa lý học	địa lí học	*	*
+spelling	1	Phù-Tang	Phù Tang	*	*
+spelling	1	luận lý	luận lí	*	*
+spelling	1	đại kỵ	đại kị	*	*
+spelling	1	địa lý	địa lí	*	*
+spelling	1	ngoại kỷ	ngoại kỉ	*	*
+spelling	1	tàu hủ ky	tàu hủ ki	*	*
+spelling	1	hiệp sỹ	hiệp sĩ	*	*
+spelling	1	bất đắc kỳ tử	bất đắc kì tử	*	*
+spelling	1	hậu chấn tâm lý	hậu chấn tâm lí	*	*
+spelling	1	quít	quýt	*	*
+spelling	1	lý do	lí do	*	*
+spelling	1	pê-đê	pê đê	*	*
+spelling	1	ba-lô	ba lô	*	*
+spelling	1	kỵ sĩ	kị sĩ	*	*
+spelling	1	ty chức	ti chức	*	*
+spelling	1	cao lương mĩ vị	cao lương mỹ vị	*	*
+spelling	1	nhà Lý	nhà Lí	*	*
+spelling	1	Cộng hòa miền Nam Việt Nam	Cộng hoà miền Nam Việt Nam	*	*
+spelling	1	tâm lý	tâm lí	*	*
+spelling	1	Thổ Tinh	Thổ tinh	*	*
+spelling	1	chỉnh lý	chỉnh lí	*	*
+spelling	1	Úc Châu	Úc châu	*	*
+spelling	1	Va-linh-tinh	Va linh tinh	*	*
+spelling	1	thạc sỹ	thạc sĩ	*	*
+spelling	1	Mộc Tinh	Mộc tinh	*	*
+spelling	1	thủy điện	thuỷ điện	*	*
+spelling	1	dã-thú	dã thú	*	*
+spelling	1	bụt	Bụt	*	*
+spelling	1	Thùy	Thuỳ	*	*
+spelling	1	vi-diệu	vi diệu	*	*
+spelling	1	quí hoá	quý hoá	*	*
+spelling	1	khóe	khoé	*	*
+spelling	1	đăng ký	đăng kí	*	*
+spelling	1	kỳ đảo	kì đảo	*	*
+spelling	1	lý thuyết	lí thuyết	*	*
+spelling	1	quí	quý	*	*
+spelling	1	mạnh khỏe	mạnh khoẻ	*	*
+spelling	1	tàu	Tàu	*	*
+spelling	1	đậu Hoà Lan	đậu hoà lan	*	*
+spelling	1	Cộng hòa Séc	Cộng hoà Séc	*	*
+spelling	1	Tây du ký	Tây du kí	*	*
+spelling	1	Ca-li	Ca Li	*	*
+spelling	1	chu kỳ	chu kì	*	*
+spelling	1	Châu Mỹ	Châu Mĩ	*	*
+spelling	1	kỳ lân	kì lân	*	*
+spelling	1	lý giải	lí giải	*	*
+spelling	1	Phục-hy	Phục Hi	*	*
+spelling	1	kỳ cọ	kì cọ	*	*
+spelling	1	hợp lý	hợp lí	*	*
+spelling	1	Châu Âu	châu Âu	*	*
+spelling	1	Sao Kim	sao Kim	*	*
+spelling	1	kỹ lưỡng	kĩ lưỡng	*	*
+spelling	1	ly hôn	li hôn	*	*
+spelling	1	gian-ác	gian ác	*	*
+spelling	1	kỵ huý	kị huý	*	*
+spelling	1	cộng hòa chuối	cộng hoà chuối	*	*
+spelling	1	công ty	công ti	*	*
+spelling	1	tối kỵ	tối kị	*	*
+spelling	1	Đông-Kinh	Đông Kinh	*	*
+spelling	1	tinh túy	tinh tuý	*	*
+spelling	1	Lý	Lí	*	*
+spelling	1	bánh mỳ Pháp	bánh mì Pháp	*	*
+spelling	1	qui luật	quy luật	*	*
+spelling	1	Qui Nhơn	Quy Nhơn	*	*
+spelling	1	tăng-già	tăng già	*	*
+spelling	1	chếch-lệch	chếch lệch	*	*
+spelling	1	cường hóa	cường hoá	*	*
+spelling	1	kỵ	kị	*	*
+spelling	1	Bồ Tát	bồ tát	*	*
+spelling	1	Mỹ kim	Mĩ kim	*	*
+spelling	1	thanh-nam	thanh nam	*	*
+spelling	1	Cộng hòa Liên bang Đức	Cộng hoà Liên bang Đức	*	*
+spelling	1	mực Tàu	mực tàu	*	*
+spelling	1	Ngụy	Nguỵ	*	*
+spelling	1	một tỷ	một tỉ	*	*
+spelling	1	biện lý	biện lí	*	*
+spelling	1	Chủ nhật	chủ nhật	*	*
+spelling	1	nhật ký	nhật kí	*	*
+spelling	1	kỵ nước	kị nước	*	*
+spelling	1	qui	quy	*	*
+spelling	1	mãng cầu Xiêm	mãng cầu xiêm	*	*
+spelling	1	hiển-đạt	hiển đạt	*	*
+spelling	1	vô lý	vô lí	*	*
+spelling	1	hà-chính	hà chính	*	*
+spelling	1	lao-động	lao động	*	*
+spelling	1	ký tự	kí tự	*	*
+spelling	1	lão-nữ	lão nữ	*	*
+spelling	1	tọa lạc	toạ lạc	*	*
+spelling	1	mỹ học	mĩ học	*	*
+spelling	1	nghĩa-lý	nghĩa lí	*	*
+spelling	1	hóa sinh	hoá sinh	*	*
+spelling	1	kỹ thuật viên	kĩ thuật viên	*	*
+spelling	1	Hy Mã Lạp Sơn	Hi Mã Lạp Sơn	*	*
+spelling	1	kỳ dị	kì dị	*	*
+spelling	1	bệnh lý học	bệnh lí học	*	*
+spelling	1	mỹ phẩm	mĩ phẩm	*	*
+spelling	1	lý tính	lí tính	*	*
+spelling	1	Thổ Nhĩ Kỳ	Thổ Nhĩ Kì	*	*
+spelling	1	lý luận	lí luận	*	*
+spelling	1	tuyệt kỹ	tuyệt kĩ	*	*
+spelling	1	hồi ký	hồi kí	*	*
+spelling	1	A-tư-đà	A Tư Đà	*	*
+spelling	1	trì-độn	trì độn	*	*
+spelling	1	tỉ-khâu-ni	tỉ khâu ni	*	*
+spelling	1	cách ly	cách li	*	*
+spelling	1	ích kỷ	ích kỉ	*	*
+spelling	1	huyện lỵ	huyện lị	*	*
+spelling	1	nguyên-tắc	nguyên tắc	*	*
+spelling	1	lý lịch	lí lịch	*	*
+spelling	1	ký hiệu	kí hiệu	*	*
+spelling	1	châu Mỹ	châu Mĩ	*	*
+spelling	1	bất ly thân	bất li thân	*	*
+spelling	1	Bánh Thánh	bánh Thánh	*	*
+spelling	1	chung thủy	chung thuỷ	*	*
+spelling	1	lãng-mạn	lãng mạn	*	*
+spelling	1	ba-lê	ba lê	*	*
+spelling	1	khóa học	khoá học	*	*
+spelling	1	ngân quĩ	ngân quỹ	*	*
+spelling	1	nhân-dục	nhân dục	*	*
+spelling	1	phác họa	phác hoạ	*	*
+spelling	1	thế-giới	thế giới	*	*
+spelling	1	dược lý học	dược lí học	*	*
+spelling	1	Dân số ký	Dân số kí	*	*
+spelling	1	kỷ niệm chương	kỉ niệm chương	*	*
+spelling	1	trường mỹ thuật	trường mĩ thuật	*	*
+spelling	1	luân lý	luân lí	*	*
+spelling	1	vật lý học	vật lí học	*	*
+spelling	1	lũy	luỹ	*	*
+spelling	1	tự kỷ ám thị	tự kỉ ám thị	*	*
+spelling	1	Phục quốc Do Thái	phục quốc Do Thái	*	*
+spelling	1	lý	lí	*	*
+spelling	1	sơ-mi	sơ mi	*	*
+spelling	1	kỳ quái	kì quái	*	*
+spelling	1	Nguyên Tiêu	nguyên tiêu	*	*
+spelling	1	hải ly	hải li	*	*

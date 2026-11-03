@@ -16,5 +16,5 @@ const rows = categories.flatMap(({category, valid, tests}) => tests.map(({source
 const header = '# GPL-3.0-or-later; Copyright (C) 2023-2026 Yomitan Authors; 2020-2022 Yomichan Authors\n' +
     '# https://github.com/yomidevs/yomitan/blob/' + revision + '/test/language/japanese-transforms.test.js\n' +
     '# category\tvalid\tsource\tterm\trule\treasons (forward order, | separated; * means any)\n';
-writeFileSync(fileURLToPath(new URL('fixtures/yomitan-deinflections.tsv', import.meta.url)), header + rows.join('\n') + '\n');
+writeFileSync(fileURLToPath(new URL('../languages/ja/tests/yomitan.tsv', import.meta.url)), header + rows.join('\n') + '\n');
 console.log('Wrote ' + rows.length + ' Yomitan cases at ' + revision);

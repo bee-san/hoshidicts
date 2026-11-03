@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "conditions": {
+    "v": {
+      "name": "Verb",
+      "isDictionaryForm": true
+    }
+  },
+  "transforms": [
+    {
+      "id": "present",
+      "name": "present",
+      "description": "the present ending, with its accent (están) and without it (estan), which the optional accent processor also reads as están",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "án", "deinflected": "ar", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "an", "deinflected": "ar", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2}
+      ]
+    },
+    {
+      "id": "archaic",
+      "name": "archaic",
+      "description": "an optional transform: walketh",
+      "source": "own",
+      "optional": true,
+      "rules": [
+        {"type": "suffix", "inflected": "eth", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2}
+      ]
+    }
+  ]
+}

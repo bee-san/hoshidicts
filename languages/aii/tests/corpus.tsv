@@ -1,0 +1,1649 @@
+# options: default
+# Source: English Wiktionary (CC BY-SA 4.0 and GFDL), by the Wiktionary contributors, through
+# wiktionary-to-yomitan's wty-aii-en 2026.10.22 (form-of rows; sha256 3690c937...9ca8) and kaikki.org's
+# Assyrian Neo-Aramaic extract of 2026-10-01 (active non-past and passive past forms; sha256 5f35e0fe...09ed).
+# 1677 rows sampled with seed 1 by sources/build-corpus.py (README.md); the rows the pack's rules
+# do not reach are in gaps.tsv. Sources are pointed as Wiktionary writes them; the pack strips the points.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+adjective feminine	1	ܐܵܐܲܪܵܝܬܵܐ	ܐܐܪܝܐ	*	*
+adjective feminine	1	ܐܲܟ݂ܘܵܬ݂ܵܝܬܵܐ	ܐܟܘܬܝܐ	*	*
+adjective feminine	1	ܐܸܣܛܪܵܛܹܝܓ݂ܝܵܝܬܵܐ	ܐܣܛܪܛܝܓܝܝܐ	*	*
+adjective feminine	1	ܒܲܓܝܼܪܬܵܐ	ܒܓܝܪܐ	*	*
+adjective feminine	1	ܒܲܪܙܲܒ݂ܢܵܝܬܵܐ	ܒܪܙܒܢܝܐ	*	*
+adjective feminine	1	ܙܵܝܘܿܥܬܵܐ	ܙܝܘܥܐ	*	*
+adjective feminine	1	ܙܲܝܬܵܝܬܵܐ	ܙܝܬܝܐ	*	*
+adjective feminine	1	ܙܵܪܸܓ݂ܬܵܐ	ܙܪܓܐ	*	*
+adjective feminine	1	ܙܪܝܼܙܬܵܐ	ܙܪܝܙܐ	*	*
+adjective feminine	1	ܚܙܝܼܬ݂ܵܐ	ܚܙܝܐ	*	*
+adjective feminine	1	ܚܲܪܵܒ݂ܬܵܐ	ܚܪܒܐ	*	*
+adjective feminine	1	ܛܲܟ݂ܣܵܢܵܝܬܵܐ	ܛܟܣܢܝܐ	*	*
+adjective feminine	1	ܛܵܠܘܿܡܬܵܐ	ܛܠܘܡܐ	*	*
+adjective feminine	1	ܝܲܪܘܿܩܬܵܐ	ܝܪܘܩܐ	*	*
+adjective feminine	1	ܝܲܪܝܼܟ݂ܬܵܐ	ܝܪܝܟܐ	*	*
+adjective feminine	1	ܝܲܬܝܼܪܬܵܐ	ܝܬܝܪܐ	*	*
+adjective feminine	1	ܟܲܒܝܼܪܬܵܐ	ܟܒܝܪܐ	*	*
+adjective feminine	1	ܟܲܕܵܒ݂ܬܵܐ	ܟܕܒܐ	*	*
+adjective feminine	1	ܟܢܝܼܙܬܵܐ	ܟܢܝܙܐ	*	*
+adjective feminine	1	ܡܐܘܼܠܲܥܬܵܐ	ܡܐܘܠܥܐ	*	*
+adjective feminine	1	ܡܘܼܓܠܵܝܬܵܐ	ܡܘܓܠܝܐ	*	*
+adjective feminine	1	ܡܲܘܕܝܵܢܝܼܬ݂ܵܐ	ܡܘܕܝܢܐ	*	*
+adjective feminine	1	ܡܘܿܢܛܸܢܹܓܪܵܝܬܵܐ	ܡܘܢܛܢܓܪܝܐ	*	*
+adjective feminine	1	ܡܙܘܼܘܲܓ݂ܬܵܐ	ܡܙܘܘܓܐ	*	*
+adjective feminine	1	ܡܲܣܝܡܵܢܝܼܬ݂ܵܐ	ܡܣܝܡܢܐ	*	*
+adjective feminine	1	ܡܣܲܬܪܵܢܝܼܬ݂ܵܐ	ܡܣܬܪܢܐ	*	*
+adjective feminine	1	ܡܥܲܕܪܵܢܝܼܬ݂ܵܐ	ܡܥܕܪܢܐ	*	*
+adjective feminine	1	ܡܲܪܝܼܪܬܵܐ	ܡܪܝܪܐ	*	*
+adjective feminine	1	ܡܸܫܬܲܢܝܵܢܝܼܬ݂ܵܐ	ܡܫܬܢܝܢܐ	*	*
+adjective feminine	1	ܡܸܬ݂ܥܲܢܝܵܢܝܼܬ݂ܵܐ	ܡܬܥܢܝܢܐ	*	*
+adjective feminine	1	ܡܸܬܬܚܝܼܒ݂ܵܢܝܼܬ݂ܵܐ	ܡܬܬܚܝܒܢܐ	*	*
+adjective feminine	1	ܢܕ݂ܝܼܕܬܵܐ	ܢܕܝܕܐ	*	*
+adjective feminine	1	ܥܪܝܼܨܬܵܐ	ܥܪܝܨܐ	*	*
+adjective feminine	1	ܦܪܝܼܫܬܵܐ	ܦܪܝܫܐ	*	*
+adjective feminine	1	ܦܫܝܼܛܬܵܐ	ܦܫܝܛܐ	*	*
+adjective feminine	1	ܩܸܘܦܪܵܝܬܵܐ	ܩܘܦܪܝܐ	*	*
+adjective feminine	1	ܩܛܘܿܡܬܵܐ	ܩܛܘܡܐ	*	*
+adjective feminine	1	ܩܪܝܼܚܬܵܐ	ܩܪܝܚܐ	*	*
+adjective feminine	1	ܩܲܪܝܼܪܬܵܐ	ܩܪܝܪܐ	*	*
+adjective feminine	1	ܪܗܝܼܒ݂ܵܝܬܵܐ	ܪܗܝܒܝܐ	*	*
+adjective feminine	1	ܫܵܚܘܿܠܬܵܐ	ܫܚܘܠܐ	*	*
+adjective feminine	1	ܫܲܚܝܼܢܬܵܐ	ܫܚܝܢܐ	*	*
+adjective feminine	1	ܫܛܝܼܚܬܵܐ	ܫܛܝܚܐ	*	*
+adjective feminine	1	ܫܟ݂ܝܼܪܬܵܐ	ܫܟܝܪܐ	*	*
+adjective feminine	1	ܫܲܠܝܼܛܬܵܐ	ܫܠܝܛܐ	*	*
+adjective feminine	1	ܫܲܪܒܬ݂ܵܢܵܝܬܵܐ	ܫܪܒܬܢܝܐ	*	*
+adjective feminine	1	ܫܸܪܫܵܢܵܝܬܵܐ	ܫܪܫܢܝܐ	*	*
+adjective feminine	1	ܬܘܼܪܵܨܡܲܡܠܠܵܝܬܵܐ	ܬܘܪܨܡܡܠܠܝܐ	*	*
+adjective feminine	1	ܬܪܝܼܨܬܵܐ	ܬܪܝܨܐ	*	*
+adjective feminine	1	ܬܫܹܟ݂ܵܝܬ݂ܵܐ	ܬܫܟܝܐ	*	*
+adjective plural	1	ܐܘܼܡܬ݂ܵܢܵܝܹ̈ܐ	ܐܘܡܬܢܝܐ	*	*
+adjective plural	1	ܐܝܼܒܪ̈ܵܝܹܐ	ܐܝܒܪܝܐ	*	*
+adjective plural	1	ܒܸܪ̈ܝܹܐ	ܒܪܝܐ	*	*
+adjective plural	1	ܚܘܼܪ̈ܓܹܐ	ܚܘܪܓܐ	*	*
+adjective plural	1	ܚܵܝܝܼܢ݇	ܚܝܐ	*	*
+adjective plural	1	ܚ̈ܠܘܼܠܹܐ	ܚܠܘܠܐ	*	*
+adjective plural	1	ܚܸܠܵܝܦܹ̈ܐ	ܚܠܝܦܐ	*	*
+adjective plural	1	ܛܝܼܡܵܢܹ̈ܐ	ܛܝܡܢܐ	*	*
+adjective plural	1	ܝܲܘܡܵܝܹ̈ܐ	ܝܘܡܝܐ	*	*
+adjective plural	1	ܟܠܵܢܵܝܹ̈ܐ	ܟܠܢܝܐ	*	*
+adjective plural	1	ܠܝܼܬ݂ܘܵܢܵܝܹ̈ܐ	ܠܝܬܘܢܝܐ	*	*
+adjective plural	1	ܡܙܘܼܘܓ݂ܹ̈ܐ	ܡܙܘܘܓܐ	*	*
+adjective plural	1	ܡܸܚܕ݂ܵܝܹ̈ܐ	ܡܚܕܝܐ	*	*
+adjective plural	1	ܡܲܪ̈ܝܡܵܢܹܐ	ܡܪܝܡܢܐ	*	*
+adjective plural	1	ܡܫܘܼܘܬܦܹ̈ܐ	ܡܫܘܘܬܦܐ	*	*
+adjective plural	1	ܡܸܫܬܲܢܝܵܢܹ̈ܐ	ܡܫܬܢܝܢܐ	*	*
+adjective plural	1	ܥܲܡܡܵܝܹ̈ܐ	ܥܡܡܝܐ	*	*
+adjective plural	1	ܥܪ̈ܝܼܨܹܐ	ܥܪܝܨܐ	*	*
+adjective plural	1	ܦܲܥܝܼ̈ܠܹܐ	ܦܥܝܠܐ	*	*
+adjective plural	1	ܦܪ̈ܘܿܛܸܣܛܲܢܛܵܝܹܐ	ܦܪܘܛܣܛܢܛܝܐ	*	*
+adjective plural	1	ܨܠܝܼܒ݂ܵܝܹ̈ܐ	ܨܠܝܒܝܐ	*	*
+adjective plural	1	ܩܲܝܛܵܝܹ̈ܐ	ܩܝܛܝܐ	*	*
+adjective plural	1	ܩܲܪ̈ܝܼܒ݂ܹܐ	ܩܪܝܒܐ	*	*
+adjective plural	1	ܩܪ̈ܝܼܚܹܐ	ܩܪܝܚܐ	*	*
+adjective plural	1	ܫܲܘܝܹ̈ܐ	ܫܘܝܐ	*	*
+adjective plural	1	ܫܘܝܼܨܪ̈ܵܝܹܐ	ܫܘܝܨܪܝܐ	*	*
+adjective plural	1	ܫܸܪ̈ܫܵܢܵܝܹܐ	ܫܪܫܢܝܐ	*	*
+adjective plural	1	ܬܹܒ݂ܹܝܠܵܝܹ̈ܐ	ܬܒܝܠܝܐ	*	*
+noun plural absolute	1	ܐܹܘܩܝܵܢܘܿܣܝܼ̈ܢ	ܐܘܩܝܢܘܣ	*	*
+noun plural absolute	1	ܐܲܘܬܵܓ݂ܝܼ̈ܢ	ܐܘܬܓ	*	*
+noun plural absolute	1	ܐܲܡܙܵܪ̈ܝܼܢ	ܐܡܙܪܐ	*	*
+noun plural absolute	1	ܒܲܗܪ̈ܝܼܢ	ܒܗܪܐ	*	*
+noun plural absolute	1	ܒܘܼܠܝܼ̈ܢ	ܒܘܠܐ	*	*
+noun plural absolute	1	ܓܘܼܢܵܝܝܼ̈ܢ	ܓܘܢܝܐ	*	*
+noun plural absolute	1	ܕܘܼܟ݂ܪ̈ܵܢܝܼܢ	ܕܘܟܪܢܐ	*	*
+noun plural absolute	1	ܛܲܢܵܢܝܼ̈ܢ	ܛܢܢܐ	*	*
+noun plural absolute	1	ܝܲܗܠܝܼ̈ܢ	ܝܗܠܐ	*	*
+noun plural absolute	1	ܝܘܼܐܵܒ݂ܝܼ̈ܢ	ܝܘܐܒܐ	*	*
+noun plural absolute	1	ܠܘܼܙܝܼ̈ܢ	ܠܘܙܐ	*	*
+noun plural absolute	1	ܡܘܼܢܵܚܝܼ̈ܢ	ܡܘܢܚܐ	*	*
+noun plural absolute	1	ܡܲܢܗܪ̈ܵܢܝܼܢ	ܡܢܗܪܢܐ	*	*
+noun plural absolute	1	ܥܲܒ݂ܕܝܼ̈ܢ	ܥܒܕܐ	*	*
+noun plural absolute	1	ܩܘܼܟ݂ܠܵܝܝܼ̈ܢ	ܩܘܟܠܝܐ	*	*
+noun plural absolute	1	ܩܵܠܝܼ̈ܢ	ܩܠܐ	*	*
+noun plural absolute	1	ܫܲܝܢܝܼ̈ܢ	ܫܝܢܐ	*	*
+noun plural absolute	1	ܫܸܟܠܝܼ̈ܢ	ܫܟܠܐ	*	*
+noun plural absolute	1	ܬܸܒ݂ܪ̈ܝܼܢ	ܬܒܪܐ	*	*
+noun plural absolute	1	ܬܘܼܠܚܵܡܝܼ̈ܢ	ܬܘܠܚܡܐ	*	*
+noun plural absolute	1	ܬܲܪܥܝܼ̈ܢ	ܬܪܥܐ	*	*
+noun plural construct	1	ܐܲܡܙܵܪ̈ܲܝ	ܐܡܙܪܐ	*	*
+noun plural construct	1	ܐܸܢܓܠܝܼܣܵܝܲܝ̈	ܐܢܓܠܝܣܝܐ	*	*
+noun plural construct	1	ܐܲܦܬ݂ܲܝ̈	ܐܦܬܐ	*	*
+noun plural construct	1	ܐܸܨܲܝ̈	ܐܨܐ	*	*
+noun plural construct	1	ܐܲܬ݂ܠܹܝܛܵܪ̈ܲܝ	ܐܬܠܝܛܪܐ	*	*
+noun plural construct	1	ܒܪ̈ܵܙܝܼܠܵܝܲܝ	ܒܪܙܝܠܝܐ	*	*
+noun plural construct	1	ܓܲܪ̈ܕܲܝ	ܓܪܕܐ	*	*
+noun plural construct	1	ܕܘܼܝܵܪ̈ܲܝ	ܕܘܝܪܐ	*	*
+noun plural construct	1	ܘܲܪ̈ܕܲܝ	ܘܪܕܐ	*	*
+noun plural construct	1	ܙܲܥܦܪ̈ܵܢܲܝ	ܙܥܦܪܢܐ	*	*
+noun plural construct	1	ܚܠܘܼܠܲܝ̈	ܚܠܘܠܐ	*	*
+noun plural construct	1	ܚܸܦܝܵܝܲܝ̈	ܚܦܝܝܐ	*	*
+noun plural construct	1	ܚܵܫܘܿܒ݂ܲܝ̈	ܚܫܘܒܐ	*	*
+noun plural construct	1	ܛܚܵܠܲܝ̈	ܛܚܠܐ	*	*
+noun plural construct	1	ܝܲܠܦܘܼܟܲܝ̈	ܝܠܦܘܟ	*	*
+noun plural construct	1	ܟܘܼܬܵܪ̈ܲܝ	ܟܘܬܪܐ	*	*
+noun plural construct	1	ܡܕܝܼܢܬܘܿܢܝܵܬ݂̈	ܡܕܝܢܬܘܢܝܬܐ	*	*
+noun plural construct	1	ܡܛܘܼܟܣܵܬ݂̈	ܡܛܘܟܣܬܐ	*	*
+noun plural construct	1	ܡܵܟ݂ܣܲܝ̈	ܡܟܣܐ	*	*
+noun plural construct	1	ܡܣܲܟܝܵܢܲܝ̈	ܡܣܟܝܢܐ	*	*
+noun plural construct	1	ܡܸܨܪ̈ܵܝܲܝ	ܡܨܪܝܐ	*	*
+noun plural construct	1	ܢܝܼܠܲܝ̈	ܢܝܠܐ	*	*
+noun plural construct	1	ܣܸܦܪ̈ܲܝ	ܣܦܪܐ	*	*
+noun plural construct	1	ܥܘܼܙܲܝܠܲܝ̈	ܥܘܙܝܠܐ	*	*
+noun plural construct	1	ܥܘܼܪ̈ܠܲܘܵܬ݂	ܥܘܪܠܘܬܐ	*	*
+noun plural construct	1	ܥܘܼܪ̈ܦܵܢܲܝ	ܥܘܪܦܢܐ	*	*
+noun plural construct	1	ܥܢܵܝܵܬ݂̈	ܥܢܝܬܐ	*	*
+noun plural construct	1	ܦ̮ܘܼܫܝܼܲܝ̈	ܦܘܫܝܐ	*	*
+noun plural construct	1	ܦܨܵܚܲܝ̈	ܦܨܚܐ	*	*
+noun plural construct	1	ܦܵܪ̈ܡܲܝ	ܦܪܡܐ	*	*
+noun plural construct	1	ܦܲܪ̈ܨܘܿܦܲܝ	ܦܪܨܘܦܐ	*	*
+noun plural construct	1	ܨܝܼܒ݂ܲܝ̈	ܨܝܒܐ	*	*
+noun plural construct	1	ܨܸܡܕܲܝ̈	ܨܡܕܐ	*	*
+noun plural construct	1	ܪ̈ܲܦܲܝ	ܪܦܐ	*	*
+noun plural construct	1	ܫܹܐܪ̈ܲܝ	ܫܐܪܐ	*	*
+noun plural construct	1	ܫܲܡܵܫܝܵܬ݂̈	ܫܡܫܝܬܐ	*	*
+noun plural construct	1	ܬܲܘܬܵܒ݂ܲܝ̈	ܬܘܬܒܐ	*	*
+noun plural emphatic	1	ܐܘܼܣܬܪ̈ܵܠܝܵܝܹܐ	ܐܘܣܬܪܠܝܝܐ	*	*
+noun plural emphatic	1	ܐܘܿܪ̈ܫܸܠܡܵܝܹܐ	ܐܘܪܫܠܡܝܐ	*	*
+noun plural emphatic	1	ܐܝܼ̈ܕ݂ܵܬ݂ܵܐ	ܐܝܕܐ	*	*
+noun plural emphatic	1	ܐܲܝܟܲܢܵܝ̈ܘܵܬ݂ܵܐ	ܐܝܟܢܝܘܬܐ	*	*
+noun plural emphatic	1	ܐܝܼܩܵܪܹ̈ܐ	ܐܝܩܪܐ	*	*
+noun plural emphatic	1	ܐܸܣܦܹܝܪܹ̈ܐ	ܐܣܦܝܪܐ	*	*
+noun plural emphatic	1	ܒܸܙܥܹ̈ܐ	ܒܙܥܐ	*	*
+noun plural emphatic	1	ܒ̮ܝܼ̈ܙܵܬ݂ܵܐ	ܒܝܙܐ	*	*
+noun plural emphatic	1	ܓܸܠܝܘܿܢܵܝܹ̈ܐ	ܓܠܝܘܢܝܐ	*	*
+noun plural emphatic	1	ܕܸܒ݂ܚܹ̈ܐ	ܕܒܚܐ	*	*
+noun plural emphatic	1	ܕܲܒ݂ܪܹ̈ܐ	ܕܒܪܐ	*	*
+noun plural emphatic	1	ܕܥܵܪ̈ܝܵܬ݂ܵܐ	ܕܥܪܬܐ	*	*
+noun plural emphatic	1	ܕܲܪ̈ܓ݂ܵܬ݂ܵܐ	ܕܪܓܬܐ	*	*
+noun plural emphatic	1	ܕܪ̈ܘܼܙܵܝܹܐ	ܕܪܘܙܝܐ	*	*
+noun plural emphatic	1	ܙܵܒܘܿܪ̈ܝܵܬ݂ܵܐ	ܙܒܘܪܬܐ	*	*
+noun plural emphatic	1	ܙܲܝ̈ܢܹܐ	ܙܝܢܐ	*	*
+noun plural emphatic	1	ܚܲܕ݂̈ܘܵܬ݂ܵܐ	ܚܕܘܬܐ	*	*
+noun plural emphatic	1	ܚܸܦܪܹ̈ܐ	ܚܦܪܐ	*	*
+noun plural emphatic	1	ܛܘܼܦ̮ܣܹ̈ܐ	ܛܘܦܣܐ	*	*
+noun plural emphatic	1	ܛܝܵܪܹ̈ܐ	ܛܝܪܐ	*	*
+noun plural emphatic	1	ܝܲܕܝܼܕ݂ܹ̈ܐ	ܝܕܝܕܐ	*	*
+noun plural emphatic	1	ܟ̈ܲܘܵܬ݂ܵܐ	ܟܘܐ	*	*
+noun plural emphatic	1	ܟܘܿܐܵܠܹ̈ܐ	ܟܘܐܠܐ	*	*
+noun plural emphatic	1	ܟ̈ܦܲܦܵܬ݂ܵܐ	ܟܦܦܬܐ	*	*
+noun plural emphatic	1	ܟܲܪ̈ܣܵܢܹܐ	ܟܪܣܢܐ	*	*
+noun plural emphatic	1	ܟܬ݂ܵܒ݂̈ܝܵܬ݂ܵܐ	ܟܬܒܬܐ	*	*
+noun plural emphatic	1	ܠܘܼܠܹ̈ܐ	ܠܘܠܐ	*	*
+noun plural emphatic	1	ܡܲܓܕ݂ܹ̈ܐ	ܡܓܕܐ	*	*
+noun plural emphatic	1	ܡܙܲܡܪܵܢܹ̈ܐ	ܡܙܡܪܢܐ	*	*
+noun plural emphatic	1	ܡܵܚܘܿܪܹ̈ܐ	ܡܚܘܪܐ	*	*
+noun plural emphatic	1	ܡܲܚܡܨܵܢܹ̈ܐ	ܡܚܡܨܢܐ	*	*
+noun plural emphatic	1	ܡܲܚܪ̈ܦܵܢܝܵܬ݂ܵܐ	ܡܚܪܦܢܝܬܐ	*	*
+noun plural emphatic	1	ܡܲܛܥܢܵܢܹ̈ܐ	ܡܛܥܢܢܐ	*	*
+noun plural emphatic	1	ܡܲܠܘܵܫܹ̈ܐ	ܡܠܘܫܐ	*	*
+noun plural emphatic	1	ܡܲܣ̈ܐܵܬ݂ܵܐ	ܡܣܐܬܐ	*	*
+noun plural emphatic	1	ܡܲܣܵܪܹ̈ܐ	ܡܣܪܐ	*	*
+noun plural emphatic	1	ܡܨܲܘܪ̈ܵܢܝܵܬ݂ܵܐ	ܡܨܘܪܢܝܬܐ	*	*
+noun plural emphatic	1	ܡܫܲܕܪ̈ܵܢܹܐ	ܡܫܕܪܢܐ	*	*
+noun plural emphatic	1	ܡܸܫܬܲܘܩܵܢܘ̈ܵܬ݂ܵܐ	ܡܫܬܘܩܢܘܬܐ	*	*
+noun plural emphatic	1	ܡܬܲܪ̈ܨܵܢܹܐ	ܡܬܪܨܢܐ	*	*
+noun plural emphatic	1	ܢܲܘܦܹ̈ܐ	ܢܘܦܐ	*	*
+noun plural emphatic	1	ܢܸܢܚܹ̈ܐ	ܢܢܚܐ	*	*
+noun plural emphatic	1	ܢܲܦ̈ܩܵܬ݂ܵܐ	ܢܦܩܬܐ	*	*
+noun plural emphatic	1	ܣܘܼܕ݂ܵܪܹ̈ܐ	ܣܘܕܪܐ	*	*
+noun plural emphatic	1	ܣܲܪ̈ܓܹܐ	ܣܪܓܐ	*	*
+noun plural emphatic	1	ܣܪ̈ܵܛܹܐ	ܣܪܛܐ	*	*
+noun plural emphatic	1	ܣܲܪ̈ܛܵܢܹܐ	ܣܪܛܢܐ	*	*
+noun plural emphatic	1	ܣܸܬ݂ܘܹ̈ܐ	ܣܬܘܐ	*	*
+noun plural emphatic	1	ܥܵܓ݂̈ܠܵܬ݂ܵܐ	ܥܓܠܬܐ	*	*
+noun plural emphatic	1	ܥܸܛܠܵܢܹ̈ܐ	ܥܛܠܢܐ	*	*
+noun plural emphatic	1	ܥܲܠܥܵܠܹ̈ܐ	ܥܠܥܠܐ	*	*
+noun plural emphatic	1	ܥܸܪ̈ܙܵܠܹܐ	ܥܪܙܠܐ	*	*
+noun plural emphatic	1	ܦܘܼܠܵܕ݂ܹ̈ܐ	ܦܘܠܕܐ	*	*
+noun plural emphatic	1	ܦܲܠܲܛ̈ܝܵܬ݂ܵܐ	ܦܠܛܬܐ	*	*
+noun plural emphatic	1	ܦܸܠܥܹ̈ܐ	ܦܠܥܐ	*	*
+noun plural emphatic	1	ܨܸܒ̈ܥܵܬ݂ܵܐ	ܨܒܥܐ	*	*
+noun plural emphatic	1	ܨܘܼܢܵܡܝܼܹ̈ܐ	ܨܘܢܡܝ	*	*
+noun plural emphatic	1	ܨܠܝܼܒ݂ܵܝܹ̈ܐ	ܨܠܝܒܝܐ	*	*
+noun plural emphatic	1	ܨܸܪ̈ܒܵܝܹܐ	ܨܪܒܝܐ	*	*
+noun plural emphatic	1	ܩܸܕܘܿܪ̈ܵܬ݂ܵܐ	ܩܕܘܪܬܐ	*	*
+noun plural emphatic	1	ܩܕ݂ܝܼܠܹ̈ܐ	ܩܕܝܠܐ	*	*
+noun plural emphatic	1	ܩܵܠܒ݂ܹ̈ܐ	ܩܠܒܐ	*	*
+noun plural emphatic	1	ܩܲܪ̈ܒܘܿܢܹܐ	ܩܪܒܘܢ	*	*
+noun plural emphatic	1	ܩܵܪ̈ܝܵܬ݂ܵܐ	ܩܪܝܬܐ	*	*
+noun plural emphatic	1	ܪܸ̈ܒܝܵܬ݂ܵܐ	ܪܒܝܬܐ	*	*
+noun plural emphatic	1	ܪ̈ܲܘܒܹܐ	ܪܘܒܐ	*	*
+noun plural emphatic	1	ܪܸ̈ܙܩܹܐ	ܪܙܩܐ	*	*
+noun plural emphatic	1	ܪ̈ܲܚܡܹܐ	ܪܚܡܐ	*	*
+noun plural emphatic	1	ܪܸܚܫܹ̈ܐ	ܪܚܫܐ	*	*
+noun plural emphatic	1	ܪܹ̈ܝܫܵܢܹܐ	ܪܝܫܢܐ	*	*
+noun plural emphatic	1	ܪ̈ܲܫܝܼܥܹܐ	ܪܫܝܥܐ	*	*
+noun plural emphatic	1	ܫܘܼܒ݂ܥܹ̈ܐ	ܫܘܒܥܐ	*	*
+noun plural emphatic	1	ܫܵܘ̈ܝܵܬ݂ܵܐ	ܫܘܝܬܐ	*	*
+noun plural emphatic	1	ܫܘܼܪ̈ܒ݂ܹܐ	ܫܘܪܒܐ	*	*
+noun plural emphatic	1	ܫܟ݂ܝܼܚܘ̈ܵܬ݂ܵܐ	ܫܟܝܚܘܬܐ	*	*
+noun plural emphatic	1	ܫܲܠܵܛܹ̈ܐ	ܫܠܛܐ	*	*
+noun plural emphatic	1	ܬܵܓ݂ܹ̈ܐ	ܬܓܐ	*	*
+noun plural emphatic	1	ܬܘܼܪ̈ܣܵܝܹܐ	ܬܘܪܣܝܐ	*	*
+noun plural emphatic	1	ܬܲܚܬܵܝܹ̈ܐ	ܬܚܬܝܐ	*	*
+noun plural emphatic	1	ܬܸܫܘܝ̈ܵܬ݂ܵܐ	ܬܫܘܝܬܐ	*	*
+noun possessed 1p	1	ܐܸܙܢܲܢ	ܐܙܢܐ	*	*
+noun possessed 1p	1	ܐܵܬ݂ܘܿܝܲܢ̈	ܐܬܘܝܐ	*	*
+noun possessed 1p	1	ܓܲܒ݂ܪܲܢ	ܓܒܪܐ	*	*
+noun possessed 1p	1	ܕܘܼܟܵܢܲܢ	ܕܘܟܢܐ	*	*
+noun possessed 1p	1	ܗܲܠܘܲܙܢܲܢ̈	ܗܠܘܙܢܐ	*	*
+noun possessed 1p	1	ܙܓ݂ܘܿܓ݂ܝܼܬ݂ܲܢ	ܙܓܘܓܝܬܐ	*	*
+noun possessed 1p	1	ܙܘܿܪܢܲܢ	ܙܘܪܢܐ	*	*
+noun possessed 1p	1	ܚܘܼܪܛܲܢ	ܚܘܪܛܐ	*	*
+noun possessed 1p	1	ܚܸܠܘܲܢ̈	ܚܠܘܐ	*	*
+noun possessed 1p	1	ܛܲܢܵܢܲܢ	ܛܢܢܐ	*	*
+noun possessed 1p	1	ܝܲܪܕܲܢ	ܝܪܕܐ	*	*
+noun possessed 1p	1	ܠܘܼܚܝܼܬ݂ܲܢ	ܠܘܚܝܬܐ	*	*
+noun possessed 1p	1	ܡܘܼܕܵܟ݂ܲܢ	ܡܘܕܟܐ	*	*
+noun possessed 1p	1	ܡܘܼܚܲܢ	ܡܘܚܐ	*	*
+noun possessed 1p	1	ܡܲܛܥܸܡܬܲܢ	ܡܛܥܡܬܐ	*	*
+noun possessed 1p	1	ܡܲܟܝܡܵܢܲܢ	ܡܟܝܡܢܐ	*	*
+noun possessed 1p	1	ܡܢܵܪܬܲܢ	ܡܢܪܬܐ	*	*
+noun possessed 1p	1	ܡܲܣܵܪ̈ܲܢ	ܡܣܪܐ	*	*
+noun possessed 1p	1	ܡܸܪܬ݂ܲܢ	ܡܪܬܐ	*	*
+noun possessed 1p	1	ܢܲܘܠܲܢ̈	ܢܘܠܐ	*	*
+noun possessed 1p	1	ܣܦܲܪ̈ܓܠܲܢ	ܣܦܪܓܠܐ	*	*
+noun possessed 1p	1	ܦܘܼܠܣܲܢ̈	ܦܘܠܣܐ	*	*
+noun possessed 1p	1	ܦܝܵܫܲܢ	ܦܝܫܐ	*	*
+noun possessed 1p	1	ܦܸܪܫܘܿܢܲܢ	ܦܪܫܘܢܐ	*	*
+noun possessed 1p	1	ܦܸܬ݂ܘܲܢ	ܦܬܘܐ	*	*
+noun possessed 1p	1	ܨܸܗܘܲܢ	ܨܗܘܐ	*	*
+noun possessed 1p	1	ܨܸܗܘܲܢ̈	ܨܗܘܐ	*	*
+noun possessed 1p	1	ܨܗܵܠܲܢ	ܨܗܠܐ	*	*
+noun possessed 1p	1	ܨܸܪܒܵܝܲܢ	ܨܪܒܝܐ	*	*
+noun possessed 1p	1	ܩܒ݂ܘܼܪܲܢ	ܩܒܘܪܐ	*	*
+noun possessed 1p	1	ܩܝܼܬ݂ܵܪܲܢ	ܩܝܬܪܐ	*	*
+noun possessed 1p	1	ܩܸܪܡܝܼܙܲܢ	ܩܪܡܝܙܐ	*	*
+noun possessed 1p	1	ܪܨܝܼܦܲܢ	ܪܨܝܦܐ	*	*
+noun possessed 1p	1	ܫܸܒܵܩܲܢ̈	ܫܒܩܐ	*	*
+noun possessed 1p	1	ܫܘܼܠܗܵܒ݂ܲܢ	ܫܘܠܗܒܐ	*	*
+noun possessed 1p	1	ܫܘܼܪ̈ܛܵܝܵܬ݂ܲܢ	ܫܘܪܛܝܬܐ	*	*
+noun possessed 1p	1	ܬܘܼܠܚܵܡܲܢ	ܬܘܠܚܡܐ	*	*
+noun possessed 1p	1	ܬܲܚܪܸܙܬܲܢ	ܬܚܪܙܬܐ	*	*
+noun possessed 1p	1	ܬܲܛܠܝܼܠܲܢ̈	ܬܛܠܝܠܐ	*	*
+noun possessed 1s	1	ܐܲܣܘܼܪ̈ܝܼ	ܐܣܘܪܐ	*	*
+noun possessed 1s	1	ܐܲܪ̈ܥܵܬ݂ܝܼ	ܐܪܥܐ	*	*
+noun possessed 1s	1	ܐܵܬ݂ܲܠܝܝܼ	ܐܬܠܝܐ	*	*
+noun possessed 1s	1	ܒܘܼܪܵܟ݂ܝܼ̈	ܒܘܪܟܐ	*	*
+noun possessed 1s	1	ܓܲܕܝܼ	ܓܕܐ	*	*
+noun possessed 1s	1	ܓܠܝܼܕ݂ܬܝܼ	ܓܠܝܕܬܐ	*	*
+noun possessed 1s	1	ܕܲܘܠܝܼ	ܕܘܠܐ	*	*
+noun possessed 1s	1	ܕܝܼܠܵܝܵܬ݂ܝܼ̈	ܕܝܠܝܬܐ	*	*
+noun possessed 1s	1	ܗܝܼܕ݂ܪ̈ܘܿܓ̰ܝܼܢܝܼ	ܗܝܕܪܘܓܝܢ	*	*
+noun possessed 1s	1	ܗܸܠܡܝܼ	ܗܠܡܐ	*	*
+noun possessed 1s	1	ܙܵܢܝܲܘܵܬ݂ܝܼ̈	ܙܢܝܘܬܐ	*	*
+noun possessed 1s	1	ܚܹܐܪܘܼܬ݂ܝܼ	ܚܐܪܘܬܐ	*	*
+noun possessed 1s	1	ܚܘܼܪ̈ܦܝܼ	ܚܘܪܦܐ	*	*
+noun possessed 1s	1	ܚܲܛܵܝܬܝܼ	ܚܛܝܬܐ	*	*
+noun possessed 1s	1	ܚܵܠܝܼ	ܚܠܐ	*	*
+noun possessed 1s	1	ܚܲܫܝܼ	ܚܫܐ	*	*
+noun possessed 1s	1	ܝܼܚܝܼܕ݂ܵܝܝܼ	ܝܚܝܕܝܐ	*	*
+noun possessed 1s	1	ܟܘܿܠܵܝܵܬ݂ܝܼ̈	ܟܘܠܝܬܐ	*	*
+noun possessed 1s	1	ܟܘܼܫܦܝܼ̈	ܟܘܫܦܐ	*	*
+noun possessed 1s	1	ܡܚܝܼܠܘܼܬ݂ܝܼ	ܡܚܝܠܘܬܐ	*	*
+noun possessed 1s	1	ܡܲܚܣܢܝܼ̈	ܡܚܣܢܐ	*	*
+noun possessed 1s	1	ܡܲܠܵܠܝܼ̈	ܡܠܠܐ	*	*
+noun possessed 1s	1	ܡܣܲܪܚܵܢܝܼ	ܡܣܪܚܢܐ	*	*
+noun possessed 1s	1	ܡܲܥܒܪ̈ܝܼ	ܡܥܒܪܐ	*	*
+noun possessed 1s	1	ܡܲܥܣܵܪܝܼ	ܡܥܣܪܐ	*	*
+noun possessed 1s	1	ܡܨܝܼܪ̈ܵܬ݂ܝܼ	ܡܨܝܪܬܐ	*	*
+noun possessed 1s	1	ܡܸܫܚܝܼ̈	ܡܫܚܐ	*	*
+noun possessed 1s	1	ܥܹܐܕ݂ܝܼ̈	ܥܐܕܐ	*	*
+noun possessed 1s	1	ܥܘܼܕܪܵܢܝܼ	ܥܘܕܪܢܐ	*	*
+noun possessed 1s	1	ܥܘܼܣܪܝܼ	ܥܘܣܪܐ	*	*
+noun possessed 1s	1	ܥܸܙܲܩܬܝܼ	ܥܙܩܬܐ	*	*
+noun possessed 1s	1	ܥܣܲܪܬܝܼ	ܥܣܪܬܐ	*	*
+noun possessed 1s	1	ܦܲܛܪ̈ܝܼܵܪܟܝܼ	ܦܛܪܝܪܟܐ	*	*
+noun possessed 1s	1	ܦܸܠܓ݂ܝܼ	ܦܠܓܐ	*	*
+noun possessed 1s	1	ܪ̈ܘܼܟܵܒ݂ܝܼ	ܪܘܟܒܐ	*	*
+noun possessed 1s	1	ܫܘܼܒ݂ܥܝܼ̈	ܫܘܒܥܐ	*	*
+noun possessed 1s	1	ܫܘܼܘܙܵܒ݂ܝܼ	ܫܘܘܙܒܐ	*	*
+noun possessed 1s	1	ܫܘܼܬܐܵܣܝܼ̈	ܫܘܬܐܣܐ	*	*
+noun possessed 1s	1	ܫܲܘܬܵܦܝܼ	ܫܘܬܦܐ	*	*
+noun possessed 2fs	1	ܐܲܒ݂ܩܵܟ݂ܝ	ܐܒܩܐ	*	*
+noun possessed 2fs	1	ܐܝܼܬ݂ܝܵܟ݂ܝ	ܐܝܬܝܐ	*	*
+noun possessed 2fs	1	ܐܲܠܦܵܟ݂ܝ̈	ܐܠܦܐ	*	*
+noun possessed 2fs	1	ܐܵܣܝܘܼܬ݂ܵܟ݂ܝ	ܐܣܝܘܬܐ	*	*
+noun possessed 2fs	1	ܐܲܪ̈ܙܵܟ݂ܝ	ܐܪܙܐ	*	*
+noun possessed 2fs	1	ܒܘܼܪ̈ܓܵܟ݂ܝ	ܒܘܪܓܐ	*	*
+noun possessed 2fs	1	ܒܲܠܵܢܵܟ݂ܝ	ܒܠܢܐ	*	*
+noun possessed 2fs	1	ܒܵܢܲܦ̮ܫܵܟ݂ܝ	ܒܢܦܫܐ	*	*
+noun possessed 2fs	1	ܒܥܸܠܕܒ݂ܵܒ݂ܵܟ݂ܝ̈	ܒܥܠܕܒܒܐ	*	*
+noun possessed 2fs	1	ܓܲܕ݂ܝܵܟ݂ܝ̈	ܓܕܝܐ	*	*
+noun possessed 2fs	1	ܓܸܠܝܘܿܢܵܟ݂ܝ	ܓܠܝܘܢܐ	*	*
+noun possessed 2fs	1	ܓܸܫܬܵܟ݂ܝ	ܓܫܬܐ	*	*
+noun possessed 2fs	1	ܕܸܒܵܟ݂ܝ̈	ܕܒܐ	*	*
+noun possessed 2fs	1	ܕܲܗܒ݂ܵܟ݂ܝ	ܕܗܒܐ	*	*
+noun possessed 2fs	1	ܚܘܼܡܨܵܟ݂ܝ̈	ܚܘܡܨܐ	*	*
+noun possessed 2fs	1	ܚܘܼܪ̈ܙܵܟ݂ܝ	ܚܘܪܙܐ	*	*
+noun possessed 2fs	1	ܛܲܒ݂ܠܝܼܬ݂ܵܟ݂ܝ	ܛܒܠܝܬܐ	*	*
+noun possessed 2fs	1	ܛܢܵܢܵܟ݂ܝ	ܛܢܢܐ	*	*
+noun possessed 2fs	1	ܝܲܠܕܬܵܟ݂ܝ	ܝܠܕܬܐ	*	*
+noun possessed 2fs	1	ܝܲܢܩܵܟ݂ܝ	ܝܢܩܐ	*	*
+noun possessed 2fs	1	ܟܲܠܝܼܦ̮ܵܟ݂ܝ̈	ܟܠܝܦܐ	*	*
+noun possessed 2fs	1	ܟܲܡܵܢܵܟ݂ܝ	ܟܡܢܐ	*	*
+noun possessed 2fs	1	ܟܪܸ̈ܣܛܝܵܢܵܟ݂ܝ	ܟܪܣܛܝܢܐ	*	*
+noun possessed 2fs	1	ܠܸܘܝܵܟ݂ܝ̈	ܠܘܝܐ	*	*
+noun possessed 2fs	1	ܡܲܒܘܼܥܵܟ݂ܝ̈	ܡܒܘܥܐ	*	*
+noun possessed 2fs	1	ܡܸܠܚܵܟ݂ܝ	ܡܠܚܐ	*	*
+noun possessed 2fs	1	ܡܣܘܼܡܠܵܟ݂ܝ̈	ܡܣܘܡܠܐ	*	*
+noun possessed 2fs	1	ܡܸܣܬܲܟܝܵܢܘܼܬ݂ܵܟ݂ܝ	ܡܣܬܟܝܢܘܬܐ	*	*
+noun possessed 2fs	1	ܣܘܼܟܵܠܵܟ݂ܝ	ܣܘܟܠܐ	*	*
+noun possessed 2fs	1	ܣܸܦܬ݂ܵܟ݂ܝ	ܣܦܬܐ	*	*
+noun possessed 2fs	1	ܥܘܼܪ̈ܒ݂ܵܟ݂ܝ	ܥܘܪܒܐ	*	*
+noun possessed 2fs	1	ܥܢܵܝܬܵܟ݂ܝ	ܥܢܝܬܐ	*	*
+noun possessed 2fs	1	ܥܲܩܘܼܒܪ̈ܵܟ݂ܝ	ܥܩܘܒܪܐ	*	*
+noun possessed 2fs	1	ܩܲܕ݂ܪܵܟ݂ܝ	ܩܕܪܐ	*	*
+noun possessed 2fs	1	ܩܘܼܛܒܵܟ݂ܝ̈	ܩܘܛܒܐ	*	*
+noun possessed 2fs	1	ܩܪܵܒ݂ܬܵܢܵܟ݂ܝ	ܩܪܒܬܢܐ	*	*
+noun possessed 2fs	1	ܪܲܓܵܠܵܟ݂ܝ	ܪܓܠܐ	*	*
+noun possessed 2fs	1	ܬܲܚܒܲܪܬܵܟ݂ܝ	ܬܚܒܪܬܐ	*	*
+noun possessed 2fs	1	ܬܲܦܨܝܼܠܵܟ݂ܝ	ܬܦܨܝܠܐ	*	*
+noun possessed 2fs	1	ܬܲܪܥܵܟ݂ܝ̈	ܬܪܥܐ	*	*
+noun possessed 2ms	1	ܐܲܪ̈ܡܝܼܠܘܼܟ݂	ܐܪܡܝܠܐ	*	*
+noun possessed 2ms	1	ܒܵܙܝܼܩܘܼܟ݂	ܒܙܝܩܐ	*	*
+noun possessed 2ms	1	ܒܝܼܫܬܘܼܟ݂	ܒܝܫܬܐ	*	*
+noun possessed 2ms	1	ܒܲܪܩܘܿܩܘܼܟ݂	ܒܪܩܘܩܐ	*	*
+noun possessed 2ms	1	ܓܸܢܕܘܿܪܘܼܟ݂	ܓܢܕܘܪܐ	*	*
+noun possessed 2ms	1	ܓܲܪܡܘܼܟ݂	ܓܪܡܐ	*	*
+noun possessed 2ms	1	ܕܡܵܟ݂ܘܼܟ݂	ܕܡܟܐ	*	*
+noun possessed 2ms	1	ܙܸܠܓܵܐܘܼܟ݂	ܙܠܓܐ	*	*
+noun possessed 2ms	1	ܚܘܼܣܟܵܢܘܼܟ݂	ܚܘܣܟܢܐ	*	*
+noun possessed 2ms	1	ܚܵܫܘܿܒ݂ܵܬ݂ܘܼ̈ܟ݂	ܚܫܘܒܬܐ	*	*
+noun possessed 2ms	1	ܛܵܒ݂ܘܼܬ݂ܘܼܟ݂	ܛܒܘܬܐ	*	*
+noun possessed 2ms	1	ܛܘܼܟܵܣܘܼܟ݂	ܛܘܟܣܐ	*	*
+noun possessed 2ms	1	ܝܲܩܕܘܼ̈ܟ݂	ܝܩܕܐ	*	*
+noun possessed 2ms	1	ܟܲܟܘܼܟ݂	ܟܟܐ	*	*
+noun possessed 2ms	1	ܠܸܥܙܘܼ̈ܟ݂	ܠܥܙܐ	*	*
+noun possessed 2ms	1	ܡܝܼܛܪܘܼܟ݂	ܡܝܛܪܐ	*	*
+noun possessed 2ms	1	ܡܲܡܨܝܵܬ݂ܘܼ̈ܟ݂	ܡܡܨܝܬܐ	*	*
+noun possessed 2ms	1	ܡܲܣܡܩܵܢܘܼܟ݂	ܡܣܡܩܢܐ	*	*
+noun possessed 2ms	1	ܡܲܪܟܲܒ݂ܬܘܼܟ݂	ܡܪܟܒܬܐ	*	*
+noun possessed 2ms	1	ܡܬܲܪܣܝܵܢܘܼܟ݂	ܡܬܪܣܝܢܐ	*	*
+noun possessed 2ms	1	ܢܘܼܩܵܝܘܼ̈ܟ݂	ܢܘܩܝܐ	*	*
+noun possessed 2ms	1	ܣܹܝܩܘܿܡܘܼ̈ܟ݂	ܣܝܩܘܡܐ	*	*
+noun possessed 2ms	1	ܣܲܠܘܿܦܝܵܬ݂ܘܼ̈ܟ݂	ܣܠܘܦܝܬܐ	*	*
+noun possessed 2ms	1	ܣܵܡܘܿܵܝܘܼܟ݂	ܣܡܘܝܐ	*	*
+noun possessed 2ms	1	ܣܥܲܪܬܘܼܟ݂	ܣܥܪܬܐ	*	*
+noun possessed 2ms	1	ܣܦ̮ܵܪ̈݇ܢܵܢܘܼ̈ܟ݂	ܣܦܪܢܐ	*	*
+noun possessed 2ms	1	ܦܘܼܢܕܘܼܟ݂	ܦܘܢܕܐ	*	*
+noun possessed 2ms	1	ܨܝܼܡܘܼ̈ܟ݂	ܨܝܡܐ	*	*
+noun possessed 2ms	1	ܩܲܗܘܘܼ̈ܟ݂	ܩܗܘܐ	*	*
+noun possessed 2ms	1	ܩܝܼܢܬܘܼܟ݂	ܩܝܢܬܐ	*	*
+noun possessed 2ms	1	ܩܠܵܝܘܼܟ݂	ܩܠܝܐ	*	*
+noun possessed 2ms	1	ܩܪܵܒ݂ܘܼܟ݂	ܩܪܒܐ	*	*
+noun possessed 2ms	1	ܫܒ݂ܵܒ݂ܘܵܬ݂ܘܼ̈ܟ݂	ܫܒܒܘܬܐ	*	*
+noun possessed 2ms	1	ܫܘܼܟܒ݂ܵܢܘܼ̈ܟ݂	ܫܘܟܒܢܐ	*	*
+noun possessed 2ms	1	ܫܸܛܚܘܼ̈ܟ݂	ܫܛܚܐ	*	*
+noun possessed 2ms	1	ܫܡܵܥܝܵܬ݂ܘܼ̈ܟ݂	ܫܡܥܬܐ	*	*
+noun possessed 2ms	1	ܬܲܘܠܸܥܬ݂ܘܼܟ݂	ܬܘܠܥܬܐ	*	*
+noun possessed 2ms	1	ܬܵܪ̈ܘܿܩܵܬ݂ܘܼܟ݂	ܬܪܘܩܬܐ	*	*
+noun possessed 2ms	1	ܬܸܪܨܵܢܘܼܟ݂	ܬܪܨܢܐ	*	*
+noun possessed 2p	1	ܐ݇ܢܵܫܘܼܬ݂ܲܘܟ݂ܘܿܢ	ܐܢܫܘܬܐ	*	*
+noun possessed 2p	1	ܐܲܦܝܼܣܩܘܿܦܲܘ̈ܟ݂ܘܿܢ	ܐܦܝܣܩܘܦܐ	*	*
+noun possessed 2p	1	ܒܝܼܠܕܵܪܘܼܬ݂ܲܘܟ݂ܘܿܢ	ܒܝܠܕܪܘܬܐ	*	*
+noun possessed 2p	1	ܒܵܠܲܘܟ݂ܘܿܢ	ܒܠܐ	*	*
+noun possessed 2p	1	ܒܸܢܝܵܢܲܘܟ݂ܘܿܢ	ܒܢܝܢܐ	*	*
+noun possessed 2p	1	ܒܲܪܝܼܲܘܟ݂ܘܿܢ	ܒܪܝܐ	*	*
+noun possessed 2p	1	ܕܝܼܢܵܨܲܘܪܲܘܟ݂ܘܿܢ	ܕܝܢܨܘܪܐ	*	*
+noun possessed 2p	1	ܕܥܵܪܬܲܘܟ݂ܘܿܢ	ܕܥܪܬܐ	*	*
+noun possessed 2p	1	ܕܪܵܝܲܘܟ݂ܘܿܢ	ܕܪܝܐ	*	*
+noun possessed 2p	1	ܙܲܪܙܝܼܪܲܘܟ݂ܘܿܢ	ܙܪܙܝܪܐ	*	*
+noun possessed 2p	1	ܚܵܕ݂ܸܪ̈ܘܵܢܲܘܟ݂ܘܿܢ	ܚܕܪܘܢܐ	*	*
+noun possessed 2p	1	ܚܸܠܡܲܘܟ݂ܘܿܢ	ܚܠܡܐ	*	*
+noun possessed 2p	1	ܚܲܣܲܘ̈ܟ݂ܘܿܢ	ܚܣܐ	*	*
+noun possessed 2p	1	ܛܵܒ݂ܘܼܬ݂ܲܘܟ݂ܘܿܢ	ܛܒܘܬܐ	*	*
+noun possessed 2p	1	ܡܲܒ݂ܩܠܲܘܟ݂ܘܿܢ	ܡܒܩܠܐ	*	*
+noun possessed 2p	1	ܡܲܕܥܟ݂ܵܢܲܘܟ݂ܘܿܢ	ܡܕܥܟܢܐ	*	*
+noun possessed 2p	1	ܡܲܘܠܕ݂ܵܢܲܘ̈ܟ݂ܘܿܢ	ܡܘܠܕܢܐ	*	*
+noun possessed 2p	1	ܡܘܼܣܝܼܩܵܘܟ݂ܘܿܢ	ܡܘܣܝܩܐ	*	*
+noun possessed 2p	1	ܡܲܛܒܲܥܬܲܘܟ݂ܘܿܢ	ܡܛܒܥܬܐ	*	*
+noun possessed 2p	1	ܡܛܵܝܬܲܘܟ݂ܘܿܢ	ܡܛܝܬܐ	*	*
+noun possessed 2p	1	ܡܝܼܟܪܘܿܦ̮ܘܿܢܲܘܟ݂ܘܿܢ	ܡܝܟܪܘܦܘܢ	*	*
+noun possessed 2p	1	ܡܲܟ݂ܬܲܒ݂ܬܲܘܟ݂ܘܿܢ	ܡܟܬܒܬܐ	*	*
+noun possessed 2p	1	ܡܲܠܵܠܲܘܟ݂ܘܿܢ	ܡܠܠܐ	*	*
+noun possessed 2p	1	ܡܲܪܗܲܛܬܲܘܟ݂ܘܿܢ	ܡܪܗܛܬܐ	*	*
+noun possessed 2p	1	ܡܬܲܪ̈ܣܝܵܢܲܘܟ݂ܘܿܢ	ܡܬܪܣܝܢܐ	*	*
+noun possessed 2p	1	ܢܘܼܩܙܵܬ݂ܲܘ̈ܟ݂ܘܿܢ	ܢܘܩܙܬܐ	*	*
+noun possessed 2p	1	ܢܸܙܠܲܘ̈ܟ݂ܘܿܢ	ܢܙܠܐ	*	*
+noun possessed 2p	1	ܢܵܡܘܿܣܲܘܟ݂ܘܿܢ	ܢܡܘܣܐ	*	*
+noun possessed 2p	1	ܣܲܘܵܕ݂ܲܘ̈ܟ݂ܘܿܢ	ܣܘܕܐ	*	*
+noun possessed 2p	1	ܣܝܵܓ݂ܲܘ̈ܟ݂ܘܿܢ	ܣܝܓܐ	*	*
+noun possessed 2p	1	ܣܸܡܵܠܵܝܲܘ̈ܟ݂ܘܿܢ	ܣܡܠܝܐ	*	*
+noun possessed 2p	1	ܥܸܣܒܲܘܟ݂ܘܿܢ	ܥܣܒܐ	*	*
+noun possessed 2p	1	ܦܘܿܙܲܘܟ݂ܘܿܢ	ܦܘܙܐ	*	*
+noun possessed 2p	1	ܦܝܵܢܲܘܵܬ݂ܲܘ̈ܟ݂ܘܿܢ	ܦܝܢܘ	*	*
+noun possessed 2p	1	ܩܝܼܬ݂ܵܪܲܘܟ݂ܘܿܢ	ܩܝܬܪܐ	*	*
+noun possessed 2p	1	ܩܲܡܨܲܘ̈ܟ݂ܘܿܢ	ܩܡܨܐ	*	*
+noun possessed 2p	1	ܩܲܪܬ݂ܲܘܟ݂ܘܿܢ	ܩܪܬܐ	*	*
+noun possessed 2p	1	ܪܘܼܚܩܲܘܟ݂ܘܿܢ	ܪܘܚܩܐ	*	*
+noun possessed 2p	1	ܫܘܼܚܠܵܦܲܘ̈ܟ݂ܘܿܢ	ܫܘܚܠܦܐ	*	*
+noun possessed 3fs	1	ܐܸܓܲܪܬ݂ܵܗ̇	ܐܓܪܬܐ	*	*
+noun possessed 3fs	1	ܐܸܣܛܘܿܢܘܼ̈ܗ̇	ܐܣܛܘܢܐ	*	*
+noun possessed 3fs	1	ܒܲܛܵܪ̈ܝܵܬ݂ܵܗ̇	ܒܛܪܝܬܐ	*	*
+noun possessed 3fs	1	ܓܘܼܫܡܵܗ̇	ܓܘܫܡܐ	*	*
+noun possessed 3fs	1	ܓܸܢܣܵܗ̇	ܓܢܣܐ	*	*
+noun possessed 3fs	1	ܓܵܫܘܿܫܵܗ̇	ܓܫܘܫܐ	*	*
+noun possessed 3fs	1	ܕܘܼܒܵܪ̈ܘܼܗ̇	ܕܘܒܪܐ	*	*
+noun possessed 3fs	1	ܕܘܼܟܵܢܵܗ̇	ܕܘܟܢܐ	*	*
+noun possessed 3fs	1	ܚܵܕ݂ܸܪ̈ܘܵܢܘܼܗ̇	ܚܕܪܘܢܐ	*	*
+noun possessed 3fs	1	ܚܲܢܦܘܼ̈ܗ̇	ܚܢܦܐ	*	*
+noun possessed 3fs	1	ܝܘܼܕܵܥܵܗ̇	ܝܘܕܥܐ	*	*
+noun possessed 3fs	1	ܟܹܐܦܘܼ̈ܗ̇	ܟܐܦܐ	*	*
+noun possessed 3fs	1	ܟܲܘܟ݂ܒ݂ܵܗ̇	ܟܘܟܒܐ	*	*
+noun possessed 3fs	1	ܟܝܵܢܵܗ̇	ܟܝܢܐ	*	*
+noun possessed 3fs	1	ܟܲܡܵܢܘܼ̈ܗ̇	ܟܡܢܐ	*	*
+noun possessed 3fs	1	ܟܸܦܢܵܗ̇	ܟܦܢܐ	*	*
+noun possessed 3fs	1	ܡܟ݂ܝܼܪ̈ܘܼܗ̇	ܡܟܝܪܐ	*	*
+noun possessed 3fs	1	ܡܲܠܦܵܢ̈ܝܵܬ݂ܵܗ̇	ܡܠܦܢܝܬܐ	*	*
+noun possessed 3fs	1	ܡܲܥ̈ܝܲܘܵܬ݂ܵܗ̇	ܡܥܝܐ	*	*
+noun possessed 3fs	1	ܡܲܦܪܝܵܢܵܗ̇	ܡܦܪܝܢܐ	*	*
+noun possessed 3fs	1	ܡܸܬ݂ܩܲܪ̈ܒ݂ܵܢܘܵܬ݂ܵܗ̇	ܡܬܩܪܒܢܘܬܐ	*	*
+noun possessed 3fs	1	ܣܝܼܡ̈ܵܬ݂ܵܗ̇	ܣܝܡܬܐ	*	*
+noun possessed 3fs	1	ܣܲܠܘܼ̈ܗ̇	ܣܠܐ	*	*
+noun possessed 3fs	1	ܣܡܵܟ݂ܘܼ̈ܗ̇	ܣܡܟܐ	*	*
+noun possessed 3fs	1	ܥܘܼܪ̈ܠܘܼܗ̇	ܥܘܪܠܐ	*	*
+noun possessed 3fs	1	ܦܹܐܘܿܩܝܼܢܵܗ̇	ܦܐܘܩܝܢܐ	*	*
+noun possessed 3fs	1	ܦܲܘܚܘܼ̈ܗ̇	ܦܘܚܐ	*	*
+noun possessed 3fs	1	ܦܸܨܚܘܼ̈ܗ̇	ܦܨܚܐ	*	*
+noun possessed 3fs	1	ܦܸܪܥܘܿܢܵܗ̇	ܦܪܥܘܢܐ	*	*
+noun possessed 3fs	1	ܦܵܬܘܿܪܵܗ̇	ܦܬܘܪܐ	*	*
+noun possessed 3fs	1	ܩܲܠܦܵܗ̇	ܩܠܦܐ	*	*
+noun possessed 3fs	1	ܫܲܒ̈ܵܬ݂ܵܗ̇	ܫܒܬܐ	*	*
+noun possessed 3fs	1	ܫܘܼܝܵܫܘܼ̈ܗ̇	ܫܘܝܫܐ	*	*
+noun possessed 3fs	1	ܫܘܼܪ̈ܘܼܗ̇	ܫܘܪܐ	*	*
+noun possessed 3fs	1	ܫܸܠܘܘܼ̈ܗ̇	ܫܠܘܐ	*	*
+noun possessed 3fs	1	ܫܲܡܵܫ̈ܝܵܬ݂ܵܗ̇	ܫܡܫܝܬܐ	*	*
+noun possessed 3fs	1	ܫܲܢ݇ܬܵܗ̇	ܫܢܬܐ	*	*
+noun possessed 3fs	1	ܫܲܬܐܸܣܵܝܵܗ̇	ܫܬܐܣܝܐ	*	*
+noun possessed 3fs	1	ܬܘܼܬ݂ܘܼ̈ܗ̇	ܬܘܬܐ	*	*
+noun possessed 3ms	1	ܐܸܓܲܪܬ݂ܹܗ	ܐܓܪܬܐ	*	*
+noun possessed 3ms	1	ܐ݇ܙܵܠܬܹܗ	ܐܙܠܬܐ	*	*
+noun possessed 3ms	1	ܐܲܡܵܙܝܼܓ݂ܵܝܹܗ	ܐܡܙܝܓܝܐ	*	*
+noun possessed 3ms	1	ܐܵܦܲܙܓܹܗ	ܐܦܙܓܐ	*	*
+noun possessed 3ms	1	ܒܲܠܩܘܿܩܘܼ̈ܗܝ	ܒܠܩܘܩܐ	*	*
+noun possessed 3ms	1	ܒܲܪ̈ܝܼܘܼܗܝ	ܒܪܝܐ	*	*
+noun possessed 3ms	1	ܓܸܢܕܘܿܪ̈ܘܼܗܝ	ܓܢܕܘܪܐ	*	*
+noun possessed 3ms	1	ܕܘܼܪ̈ܵܬ݂ܹܗ	ܕܘܪܬܐ	*	*
+noun possessed 3ms	1	ܘܲܙܝܼܪ̈ܘܼܗܝ	ܘܙܝܪܐ	*	*
+noun possessed 3ms	1	ܘܲܙܝܼܪܘܼܬ݂ܹܗ	ܘܙܝܪܘܬܐ	*	*
+noun possessed 3ms	1	ܚܘܼܪܵܪܹܗ	ܚܘܪܪܐ	*	*
+noun possessed 3ms	1	ܚܙܵܝܹܗ	ܚܙܝܐ	*	*
+noun possessed 3ms	1	ܛܵܥ̈ܘܿܢܵܬ݂ܹܗ	ܛܥܘܢܬܐ	*	*
+noun possessed 3ms	1	ܟܡܵܝܘܼܬ݂ܹܗ	ܟܡܝܘܬܐ	*	*
+noun possessed 3ms	1	ܟܲܪ̈ܵܒ݂ܘܼܗܝ	ܟܪܒܐ	*	*
+noun possessed 3ms	1	ܠܲܝ̈ܠܲܘܵܬ݂ܹܗ	ܠܝܠܐ	*	*
+noun possessed 3ms	1	ܡܸܕ݂ܝܵܪ̈ܘܼܗܝ	ܡܕܝܪܐ	*	*
+noun possessed 3ms	1	ܡܲܠܘܵܫܹܗ	ܡܠܘܫܐ	*	*
+noun possessed 3ms	1	ܡܲܣܩܹܗ	ܡܣܩܐ	*	*
+noun possessed 3ms	1	ܡܥܲܓܠܵܢܹܗ	ܡܥܓܠܢܐ	*	*
+noun possessed 3ms	1	ܡܫܲܚܢܵܢܘܼ̈ܗܝ	ܡܫܚܢܢܐ	*	*
+noun possessed 3ms	1	ܡܲܫܪ̈ܝܵܬ݂ܹܗ	ܡܫܪܝܬܐ	*	*
+noun possessed 3ms	1	ܡܸܫܬܲܐܠܵܢܘ̈ܵܬ݂ܹܗ	ܡܫܬܐܠܢܘܬܐ	*	*
+noun possessed 3ms	1	ܡܬܲܪ̈ܣܝܵܢܘܼܗܝ	ܡܬܪܣܝܢܐ	*	*
+noun possessed 3ms	1	ܢܘܼܦܵܩܘܼ̈ܗܝ	ܢܘܦܩܐ	*	*
+noun possessed 3ms	1	ܢܝܼܣܵܢܵܝܘܼ̈ܗܝ	ܢܝܣܢܝܐ	*	*
+noun possessed 3ms	1	ܢܲܦܩܝܼܬ݂ܹܗ	ܢܦܩܝܬܐ	*	*
+noun possessed 3ms	1	ܢܵܪܓܝܼܠܹܗ	ܢܪܓܝܠܐ	*	*
+noun possessed 3ms	1	ܣܘܼܝܵܟ݂ܹܗ	ܣܘܝܟܐ	*	*
+noun possessed 3ms	1	ܣܲܘܟܵܢܘܼ̈ܗܝ	ܣܘܟܢܐ	*	*
+noun possessed 3ms	1	ܣܝܵܠܹܗ	ܣܝܠܐ	*	*
+noun possessed 3ms	1	ܣܲܪ̈ܓܘܼܗܝ	ܣܪܓܐ	*	*
+noun possessed 3ms	1	ܨܘܼܦܵܚܘܼ̈ܗܝ	ܨܘܦܚܐ	*	*
+noun possessed 3ms	1	ܪܘܵܚܹܗ	ܪܘܚܐ	*	*
+noun possessed 3ms	1	ܪܸܚܫܘܼ̈ܗܝ	ܪܚܫܐ	*	*
+noun possessed 3ms	1	ܫܒ݂ܵܒ݂ܘܼ̈ܗܝ	ܫܒܒܐ	*	*
+noun possessed 3ms	1	ܫܘܼܪܬܵܚܹܗ	ܫܘܪܬܚܐ	*	*
+noun possessed 3ms	1	ܫܲܪܒܬ݂ܹܗ	ܫܪܒܬܐ	*	*
+noun possessed 3ms	1	ܬܐܵܡܹܗ	ܬܐܡܐ	*	*
+noun possessed 3ms	1	ܬܵܘܦܘܼ̈ܗܝ	ܬܘܦܐ	*	*
+noun possessed 3p	1	ܐܝܼܡܵܡܲܘܵܬ݂ܗ̈ܘܿܢ	ܐܝܡܡܐ	*	*
+noun possessed 3p	1	ܐܸܣܛܪܵܛܗܘܿܢ	ܐܣܛܪܛܐ	*	*
+noun possessed 3p	1	ܓܘܼܢܚܗܘܿܢ	ܓܘܢܚܐ	*	*
+noun possessed 3p	1	ܓܘܼܢܚܲܝ̈ܗܘܿܢ	ܓܘܢܚܐ	*	*
+noun possessed 3p	1	ܓܘܼܢܵܝܲܝ̈ܗܘܿܢ	ܓܘܢܝܐ	*	*
+noun possessed 3p	1	ܓܡܘܼܪܬܗܘܿܢ	ܓܡܘܪܬܐ	*	*
+noun possessed 3p	1	ܕܲܡܵܟ݂ܗܘܿܢ	ܕܡܟܐ	*	*
+noun possessed 3p	1	ܕܸܦ̮ܬܵܪܗܘܿܢ	ܕܦܬܪܐ	*	*
+noun possessed 3p	1	ܘܵܠܝܼܙܵܝܗܘܿܢ	ܘܠܝܙܝܐ	*	*
+noun possessed 3p	1	ܙܩܝܼܦܲܝ̈ܗܘܿܢ	ܙܩܝܦܐ	*	*
+noun possessed 3p	1	ܝܲܕ݂ܥܲܝ̈ܗܘܿܢ	ܝܕܥܐ	*	*
+noun possessed 3p	1	ܝܵܠܘܿܕ݂ܲܝ̈ܗܘܿܢ	ܝܠܘܕܐ	*	*
+noun possessed 3p	1	ܟܘܿܬܝܼܢܗܘܿܢ	ܟܘܬܝܢܐ	*	*
+noun possessed 3p	1	ܟܲܠܵܒ݂ܬܗܘܿܢ	ܟܠܒܬܐ	*	*
+noun possessed 3p	1	ܟܵܡܝܼܪܗܘܿܢ	ܟܡܝܪܐ	*	*
+noun possessed 3p	1	ܠܲܡܛܗܘܿܢ	ܠܡܛܐ	*	*
+noun possessed 3p	1	ܡܲܘܠܵܕ݂ܗܘܿܢ	ܡܘܠܕܐ	*	*
+noun possessed 3p	1	ܡܲܡܠܟ݂ܵܬ݂ܗ̈ܘܿܢ	ܡܡܠܟܬܐ	*	*
+noun possessed 3p	1	ܡܲܥܒܪܵܢܗܘܿܢ	ܡܥܒܪܢܐ	*	*
+noun possessed 3p	1	ܡܥܲܕܪܵܢܗܘܿܢ	ܡܥܕܪܢܐ	*	*
+noun possessed 3p	1	ܡܲܦܠܚܵܢܗܘܿܢ	ܡܦܠܚܢܐ	*	*
+noun possessed 3p	1	ܢܵܒ݂ܓܵܬ݂ܗ̈ܘܿܢ	ܢܒܓܬܐ	*	*
+noun possessed 3p	1	ܢܸܣܝܵܢܲܝ̈ܗܘܿܢ	ܢܣܝܢܐ	*	*
+noun possessed 3p	1	ܢܨܝܼܒ݂ܘܵܬ݂ܗ̈ܘܿܢ	ܢܨܝܒܘܬܐ	*	*
+noun possessed 3p	1	ܢܸܫܒ݂ܗܘܿܢ	ܢܫܒܐ	*	*
+noun possessed 3p	1	ܣܲܦ̮ܣܵܪܗܘܿܢ	ܣܦܣܪܐ	*	*
+noun possessed 3p	1	ܦܲܐܬ݂ܗܘܿܢ	ܦܐܬܐ	*	*
+noun possessed 3p	1	ܦܵܩܘܿܕ݂ܗܘܿܢ	ܦܩܘܕܐ	*	*
+noun possessed 3p	1	ܦܲܪ̈ܕܲܝܗܘܿܢ	ܦܪܕܐ	*	*
+noun possessed 3p	1	ܦܪܸܙܠܵܐܗܘܿܢ	ܦܪܙܠܐ	*	*
+noun possessed 3p	1	ܦܪܝܼܫܵܝܗܘܿܢ	ܦܪܝܫܝܐ	*	*
+noun possessed 3p	1	ܩܲܗܘܵܚܵܢܲܝ̈ܗܘܿܢ	ܩܗܘܚܢܐ	*	*
+noun possessed 3p	1	ܩܵܝܘܿܡܗܘܿܢ	ܩܝܘܡܐ	*	*
+noun possessed 3p	1	ܪܦܵܦܗܘܿܢ	ܪܦܦܐ	*	*
+noun possessed 3p	1	ܫܘܼܘܙܵܒ݂ܲܝ̈ܗܘܿܢ	ܫܘܘܙܒܐ	*	*
+noun possessed 3p	1	ܫܘܼܪ̈ܛܲܝܗܘܿܢ	ܫܘܪܛܐ	*	*
+noun possessed 3p	1	ܫܵܡܘܿܥܲܝ̈ܗܘܿܢ	ܫܡܘܥܐ	*	*
+noun possessed 3p	1	ܬܵܓ݂ܗܘܿܢ	ܬܓܐ	*	*
+noun possessed 3p	1	ܬܲܘܣܦܵܬ݂ܗ̈ܘܿܢ	ܬܘܣܦܬܐ	*	*
+noun possessed 3p	1	ܬܸܫܡܸܫܬܗܘܿܢ	ܬܫܡܫܬܐ	*	*
+noun singular absolute	1	ܓܹܐܙܒ݂ܲܪ	ܓܐܙܒܪܐ	*	*
+noun singular absolute	1	ܓܕ݂ܘܿܕ݂	ܓܕܘܕܐ	*	*
+noun singular absolute	1	ܓܝܼܓܲܠ	ܓܝܓܠܐ	*	*
+noun singular absolute	1	ܗܠܲܟ݂	ܗܠܟܐ	*	*
+noun singular absolute	1	ܙܲܓܵܓ݂	ܙܓܓܐ	*	*
+noun singular absolute	1	ܚܘܼܛܒܪܸܩ	ܚܘܛܒܪܩܐ	*	*
+noun singular absolute	1	ܝܲܒ݂ܪܘܼܚ	ܝܒܪܘܚܐ	*	*
+noun singular absolute	1	ܝܘܼܪܬܵܢ	ܝܘܪܬܢܐ	*	*
+noun singular absolute	1	ܟܘܼܪܲܚ	ܟܘܪܚܐ	*	*
+noun singular absolute	1	ܟܲܪܣܵܢ	ܟܪܣܢܐ	*	*
+noun singular absolute	1	ܡܘܼܢܵܚ	ܡܘܢܚܐ	*	*
+noun singular absolute	1	ܡܛܲܝܠܵܢ	ܡܛܝܠܢܐ	*	*
+noun singular absolute	1	ܢܲܬܝܼܓ̰	ܢܬܝܓܐ	*	*
+noun singular absolute	1	ܦܘܼܪܩܵܢ	ܦܘܪܩܢܐ	*	*
+noun singular absolute	1	ܦܪܲܕ݂	ܦܪܕܐ	*	*
+noun singular absolute	1	ܨܲܝܵܕ݂	ܨܝܕܐ	*	*
+noun singular absolute	1	ܨܠܲܡ	ܨܠܡܐ	*	*
+noun singular absolute	1	ܩܡܲܨ	ܩܡܨܐ	*	*
+noun singular absolute	1	ܫܪܲܟ݂	ܫܪܟܐ	*	*
+noun singular absolute	1	ܬܸܒ݂ܢ	ܬܒܢܐ	*	*
+noun singular construct	1	ܒܲܪ	ܐܒܪܐ	*	*
+noun singular construct	1	ܐܲܠܒܘܼܡ	ܐܠܒܘܡ	*	*
+noun singular construct	1	ܐܸܠܸܦ	ܐܠܦܐ	*	*
+noun singular construct	1	ܐܵܢܵܝܘܼܬ݂	ܐܢܝܘܬܐ	*	*
+noun singular construct	1	ܒܘܼܠܓܵܪܵܝ	ܒܘܠܓܪܝܐ	*	*
+noun singular construct	1	ܒܸܙܥ	ܒܙܥܐ	*	*
+noun singular construct	1	ܒܸܢܝܵܢ	ܒܢܝܢܐ	*	*
+noun singular construct	1	ܓܲܠܝܼ	ܓܠܝܐ	*	*
+noun singular construct	1	ܕܵܘܣܬ	ܕܘܣܬ	*	*
+noun singular construct	1	ܕܪܵܝ	ܕܪܝܐ	*	*
+noun singular construct	1	ܗܦܸܟ݂	ܗܦܟܐ	*	*
+noun singular construct	1	ܚܹܐܪܘܼܬ݂	ܚܐܪܘܬܐ	*	*
+noun singular construct	1	ܛܥܘܼܢܲܬ݂	ܛܥܘܢܬܐ	*	*
+noun singular construct	1	ܟܘܼܙ	ܟܘܙܐ	*	*
+noun singular construct	1	ܟܘܵܪܲܬ݂	ܟܘܪܬܐ	*	*
+noun singular construct	1	ܟܬ݂ܲܘ	ܟܬܘܐ	*	*
+noun singular construct	1	ܡܲܙܝܥܵܢ	ܡܙܝܥܢܐ	*	*
+noun singular construct	1	ܡܲܚܡܨܵܢ	ܡܚܡܨܢܐ	*	*
+noun singular construct	1	ܡܲܠܚܡܵܢ	ܡܠܚܡܢܐ	*	*
+noun singular construct	1	ܡܲܡܛܝܵܢ	ܡܡܛܝܢܐ	*	*
+noun singular construct	1	ܡܸܣܬܲܥܪܵܢܘܼܬ݂	ܡܣܬܥܪܢܘܬܐ	*	*
+noun singular construct	1	ܡܩܘܼܦܲܣ	ܡܩܘܦܣܐ	*	*
+noun singular construct	1	ܡܲܪܵܟܫܵܝ	ܡܪܟܫܝܐ	*	*
+noun singular construct	1	ܡܵܫܘܿܚܲܬ݂	ܡܫܘܚܬܐ	*	*
+noun singular construct	1	ܡܸܬ݂ܐܲܘܝܵܢܘܼܬ݂	ܡܬܐܘܝܢܘܬܐ	*	*
+noun singular construct	1	ܡܸܬ݂ܗܲܪܓ݂ܵܢܘܼܬ݂	ܡܬܗܪܓܢܘܬܐ	*	*
+noun singular construct	1	ܡܸܬ݂ܩܲܪܒܵܢܘܼܬ݂	ܡܬܩܪܒܢܘܬܐ	*	*
+noun singular construct	1	ܢܣܵܪ	ܢܣܪܐ	*	*
+noun singular construct	1	ܢܦܵܠܲܬ݂	ܢܦܠܬܐ	*	*
+noun singular construct	1	ܣܹܐܡ	ܣܐܡܐ	*	*
+noun singular construct	1	ܣܘܼܟܵܡ	ܣܘܟܡܐ	*	*
+noun singular construct	1	ܣܲܡ	ܣܡܐ	*	*
+noun singular construct	1	ܥܵܒ݂	ܥܒܐ	*	*
+noun singular construct	1	ܦܘܿܕ݂	ܦܘܕܐ	*	*
+noun singular construct	1	ܦܲܛܪܝܼܵܪܟ	ܦܛܪܝܪܟܐ	*	*
+noun singular construct	1	ܦܸܠܚܘܿܢ	ܦܠܚܘܢܐ	*	*
+noun singular construct	1	ܦܲܪܕܲܝܣܲܩ	ܦܪܕܝܣܩܐ	*	*
+noun singular construct	1	ܦܪܲܟ݂	ܦܪܟܐ	*	*
+noun singular construct	1	ܦܬ݂ܝܼܚܘܿܢ	ܦܬܝܚܘܢܐ	*	*
+noun singular construct	1	ܩܲܕܝܼܫ	ܩܕܝܫܐ	*	*
+noun singular construct	1	ܩܘܿܢܨܘܼܠܘܼܼܬ݂	ܩܘܢܨܘܠܘܬܐ	*	*
+noun singular construct	1	ܩܠܵܝ	ܩܠܝܐ	*	*
+noun singular construct	1	ܪܹܝܫܥܵܒ݂	ܪܝܫܥܒܐ	*	*
+noun singular construct	1	ܪܲܦܝܼܬ݂	ܪܦܝܬܐ	*	*
+noun singular construct	1	ܫܸܒܵܩ	ܫܒܩܐ	*	*
+noun singular construct	1	ܫܚܵܩ	ܫܚܩܐ	*	*
+noun singular construct	1	ܫܲܪܟ݂	ܫܪܟܐ	*	*
+noun singular construct	1	ܬܘܼܪܓܵܡ	ܬܘܪܓܡܐ	*	*
+noun singular construct	1	ܬܪܲܥ	ܬܪܥܐ	*	*
+preposition with a pronoun	1	ܐܲܟ݂ܘܵܬ݂ܲܢ	ܐܝܟ	*	*
+preposition with a pronoun	1	ܐܝܼܬ݂ ܒܘܼܟ݂	ܐܝܬ	*	*
+preposition with a pronoun	1	ܐܝܼܬ݂ ܠܵܗ̇	ܐܝܬ	*	*
+preposition with a pronoun	1	ܒܝܼܲܘܟ݂ܘܿܢ	ܒ-	*	*
+preposition with a pronoun	1	ܒܵܗ̇	ܒ-	*	*
+preposition with a pronoun	1	ܒܕܘܼܟܬ݂ܲܘܟ݂ܘܿܢ	ܒܕܘܟܬ	*	*
+preposition with a pronoun	1	ܒܕܘܼܟܬ݂ܲܢ	ܒܕܘܟܬ	*	*
+preposition with a pronoun	1	ܒܲܝܢܝܼ	ܒܝܢ	*	*
+preposition with a pronoun	1	ܒܲܝܢܹܗ	ܒܝܢ	*	*
+preposition with a pronoun	1	ܒܹܝܦܲܠܓܵܟ݂ܝ	ܒܝܦܠܓܐ	*	*
+preposition with a pronoun	1	ܒܢܲܦ̮ܫܲܘܟ݂ܘܿܢ	ܒܢܦܫܐ	*	*
+preposition with a pronoun	1	ܒܲܣܘܼܟ݂	ܒܣܐ	*	*
+preposition with a pronoun	1	ܒܲܪܩܘܼܒ݂ܠܗܘܿܢ	ܒܪܩܘܒܠ	*	*
+preposition with a pronoun	1	ܕܝܼܝܼ	ܕ-	*	*
+preposition with a pronoun	1	ܕܲܠܩܘܼܒ݂ܠܹܗ	ܕܠܩܘܒܠ	*	*
+preposition with a pronoun	1	ܘܵܠܹܐ ܠܗܘܿܢ	ܘܠܐ	*	*
+preposition with a pronoun	1	ܘܵܠܹܐ ܠܵܟ݂ܝ	ܘܠܐ	*	*
+preposition with a pronoun	1	ܙܵܕ݂ܹܩ ܠܵܟ݂ܝ	ܙܕܩ	*	*
+preposition with a pronoun	1	ܚܠܵܦܘܼܗܝ	ܚܠܦ	*	*
+preposition with a pronoun	1	ܝܵܐܹܐ ܠܗܘܿܢ	ܝܐܐ	*	*
+preposition with a pronoun	1	ܟܸܣܠܝܼ	ܟܣ	*	*
+preposition with a pronoun	1	ܟܸܣܠܲܢ	ܟܣ	*	*
+preposition with a pronoun	1	ܟܸܣܠܵܗ̇	ܟܣ	*	*
+preposition with a pronoun	1	ܟܸܣܠܵܟ݂ܝ	ܟܣ	*	*
+preposition with a pronoun	1	ܠܹܗ	ܠ-	*	*
+preposition with a pronoun	1	ܠܚܘܿܕ݂ܝܼ	ܠܚܘܕ	*	*
+preposition with a pronoun	1	ܠܲܝܬ ܠܗܘܿܢ	ܠܝܬ	*	*
+preposition with a pronoun	1	ܠܦܘܼܬ݂ܝܼ	ܠܦܘܬ	*	*
+preposition with a pronoun	1	ܠܦܘܼܬ݂ܲܘܟ݂ܘܿܢ	ܠܦܘܬ	*	*
+preposition with a pronoun	1	ܡܐܲܟ݂ܘܵܬ݂ܵܟ݂ܝ	ܡܐܝܟ	*	*
+preposition with a pronoun	1	ܡܓܵܘܗܘܿܢ	ܡܓܘ	*	*
+preposition with a pronoun	1	ܡܓܵܘܲܢ	ܡܓܘ	*	*
+preposition with a pronoun	1	ܡܨܲܥܬ݂ܲܢ	ܡܨܥܬ	*	*
+preposition with a pronoun	1	ܥܲܡܵܗ̇	ܥܡ	*	*
+preposition with a pronoun	1	ܥܲܡܹܗ	ܥܡ	*	*
+preposition with a pronoun	1	ܩܵܬܗܘܿܢ	ܩܐ	*	*
+preposition with a pronoun	1	ܩܵܕ݇ܡܬ݂ܵܟ݂ܝ	ܩܕܡܬ	*	*
+verb gerund	1	ܒܸܓܝܵܪܵܐ	ܓܐܪ	*	*
+verb gerund	1	ܒܸܓ̰ܠܵܚܵܐ	ܓܠܚ	*	*
+verb gerund	1	ܒܸܕܪܵܫܵܐ	ܕܪܫ	*	*
+verb gerund	1	ܒܸܚܠܵܛܵܐ	ܚܠܛ	*	*
+verb gerund	1	ܒܸܚܦܵܪܵܐ	ܚܦܪ	*	*
+verb gerund	1	ܒܸܛܥܵܡܵܐ	ܛܥܡ	*	*
+verb gerund	1	ܒܸܟܪܵܟ݂ܵܐ	ܟܪܟ	*	*
+verb gerund	1	ܡܓ̰ܲܢܓ̰ܘܿܪܹܐ	ܡܓܢܓܪ	*	*
+verb gerund	1	ܡܗܲܝܡܘܿܢܹܐ	ܡܗܝܡܢ	*	*
+verb gerund	1	ܡܲܚܡܘܿܨܹܐ	ܡܚܡܨ	*	*
+verb gerund	1	ܡܚܲܪܕܘܿܥܹܐ	ܡܚܪܕܥ	*	*
+verb gerund	1	ܡܲܛܐܘܿܒ݂ܹܐ	ܡܛܐܒ	*	*
+verb gerund	1	ܡܛܲܟܘܿܣܹܐ	ܡܛܟܣ	*	*
+verb gerund	1	ܡܝܲܬܘܿܒ݂ܹܐ	ܡܝܬܒ	*	*
+verb gerund	1	ܡܢܲܣܘܿܝܹܐ	ܡܢܣܐ	*	*
+verb gerund	1	ܒܸܡܢܵܥܵܐ	ܡܢܥ	*	*
+verb gerund	1	ܡܣܲܓܘܿܠܹܐ	ܡܣܓܠ	*	*
+verb gerund	1	ܡܣܲܪܘܿܩܹܐ	ܡܣܪܩ	*	*
+verb gerund	1	ܡܲܥܡܘܿܕ݂ܹܐ	ܡܥܡܕ	*	*
+verb gerund	1	ܡܨܲܚܨܘܿܝܹܐ	ܡܨܚܨܐ	*	*
+verb gerund	1	ܡܩܲܢܘܘܿܢܹܐ	ܡܩܢܘܢ	*	*
+verb gerund	1	ܡܲܪܓܘܿܫܹܐ	ܡܪܓܫ	*	*
+verb gerund	1	ܡܲܪܗܘܿܛܹܐ	ܡܪܗܛ	*	*
+verb gerund	1	ܡܲܪܝܘܿܡܹܐ	ܡܪܝܡ	*	*
+verb gerund	1	ܡܫܲܪܬܘܿܚܹܐ	ܡܫܪܬܚ	*	*
+verb gerund	1	ܡܬܲܡܘܿܢܹܐ	ܡܬܡܢ	*	*
+verb gerund	1	ܒܸܢܓܵܙܵܐ	ܢܓܙ	*	*
+verb gerund	1	ܒܸܢܥܵܨܵܐ	ܢܥܨ	*	*
+verb gerund	1	ܒܸܣܗܵܕܵܐ	ܣܗܕ	*	*
+verb gerund	1	ܒܸܥܝܵܪܵܐ	ܥܐܪ	*	*
+verb gerund	1	ܒܸܥܓ̰ܵܒܵܐ	ܥܓܒ	*	*
+verb gerund	1	ܒܸܦܠܵܚܵܐ	ܦܠܚ	*	*
+verb gerund	1	ܒܸܦܪܵܓ݂ܵܐ	ܦܪܓ	*	*
+verb gerund	1	ܒܸܩܝܵܪܵܐ	ܩܐܪ	*	*
+verb gerund	1	ܒܸܩܪܵܛܵܐ	ܩܪܛ	*	*
+verb gerund	1	ܒܸܪܝܵܣܵܐ	ܪܐܣ	*	*
+verb gerund	1	ܒܸܪܒ݂ܵܝܵܐ	ܪܒܐ	*	*
+verb gerund	1	ܒܸܪܚܵܦܵܐ	ܪܚܦ	*	*
+verb gerund	1	ܒܸܪܦܵܝܵܐ	ܪܦܐ	*	*
+verb gerund	1	ܒܸܫܚܵܩܵܐ	ܫܚܩ	*	*
+verb imperative 2fs	1	ܒܨܘܿܪܝ	ܒܨܪ	*	*
+verb imperative 2fs	1	ܛܠܘܿܥܝ	ܛܠܥ	*	*
+verb imperative 2fs	1	ܝܠܘܿܕ݂ܝ	ܝܠܕ	*	*
+verb imperative 2fs	1	ܟܣܲܝ	ܟܣܐ	*	*
+verb imperative 2fs	1	ܐܲܢܸܠܝ	ܡܐܢܠ	*	*
+verb imperative 2fs	1	ܕܲܓܸܠܝ	ܡܕܓܠ	*	*
+verb imperative 2fs	1	ܕܲܝܸܠܝ	ܡܕܝܠ	*	*
+verb imperative 2fs	1	ܚܲܝܸܕ݂ܝ	ܡܚܝܕ	*	*
+verb imperative 2fs	1	ܛܲܫܲܝ	ܡܛܫܐ	*	*
+verb imperative 2fs	1	ܟܲܘܬܸܪܝ	ܡܟܘܬܪ	*	*
+verb imperative 2fs	1	ܟܲܣܲܝ	ܡܟܣܐ	*	*
+verb imperative 2fs	1	ܡܲܠܸܠܝ	ܡܡܠܠ	*	*
+verb imperative 2fs	1	ܡܲܪܕܸܢܝ	ܡܡܪܕܢ	*	*
+verb imperative 2fs	1	ܐܲܡܪܸܥܝ	ܡܡܪܥ	*	*
+verb imperative 2fs	1	ܢܲܟܸܦܝ	ܡܢܟܦ	*	*
+verb imperative 2fs	1	ܣܲܪܥܸܦܝ	ܡܣܪܥܦ	*	*
+verb imperative 2fs	1	ܥܲܒܲܝ	ܡܥܒܐ	*	*
+verb imperative 2fs	1	ܐܲܥܪܲܝ	ܡܥܪܐ	*	*
+verb imperative 2fs	1	ܐܲܦܪܲܝ	ܡܦܪܐ	*	*
+verb imperative 2fs	1	ܪܲܦܪܸܦܝ	ܡܪܦܪܦ	*	*
+verb imperative 2fs	1	ܫܲܠܸܚܝ	ܡܫܠܚ	*	*
+verb imperative 2fs	1	ܫܲܩܛܸܒ݂ܝ	ܡܫܩܛܒ	*	*
+verb imperative 2fs	1	ܐܲܫܬܲܝ	ܡܫܬܐ	*	*
+verb imperative 2fs	1	ܡܬ݂ܘܿܚܝ	ܡܬܚ	*	*
+verb imperative 2fs	1	ܬܲܪܩܸܕ݂ܝ	ܡܬܪܩܕ	*	*
+verb imperative 2fs	1	ܣܟ݂ܘܿܪܝ	ܣܟܪ	*	*
+verb imperative 2fs	1	ܦܠܘܿܚܝ	ܦܠܚ	*	*
+verb imperative 2fs	1	ܨܗܲܝ	ܨܗܐ	*	*
+verb imperative 2fs	1	ܨܠܘܿܨܝ	ܨܠܨ	*	*
+verb imperative 2fs	1	ܬܪܘܿܦܝ	ܬܪܦ	*	*
+verb imperative 2ms	1	ܓܒ݂ܘܿܠ	ܓܒܠ	*	*
+verb imperative 2ms	1	ܓ̰ܪܝܼ	ܓܪܐ	*	*
+verb imperative 2ms	1	ܕܩܘܿܫ	ܕܩܫ	*	*
+verb imperative 2ms	1	ܚܛܘܿܦ	ܚܛܦ	*	*
+verb imperative 2ms	1	ܒܲܢܝܼ	ܡܒܢܐ	*	*
+verb imperative 2ms	1	ܐܲܕܥܸܟ݂	ܡܕܥܟ	*	*
+verb imperative 2ms	1	ܡܙܘܿܓ݂	ܡܙܓ	*	*
+verb imperative 2ms	1	ܙܲܡܸܢ	ܡܙܡܢ	*	*
+verb imperative 2ms	1	ܚܲܘܸܓ݂	ܡܚܘܓ	*	*
+verb imperative 2ms	1	ܚܲܙܕܸܓ	ܡܚܙܕܓ	*	*
+verb imperative 2ms	1	ܚܲܡܝܼ	ܡܚܡܐ	*	*
+verb imperative 2ms	1	ܛܲܥܝܼ	ܡܛܥܐ	*	*
+verb imperative 2ms	1	ܡܲܠܸܠ	ܡܡܠܠ	*	*
+verb imperative 2ms	1	ܡܲܥܪܸܒ݂	ܡܡܥܪܒ	*	*
+verb imperative 2ms	1	ܐܲܣܡܸܟ݂	ܡܣܡܟ	*	*
+verb imperative 2ms	1	ܥܲܒܝܼ	ܡܥܒܐ	*	*
+verb imperative 2ms	1	ܐܲܥܒܸܪ	ܡܥܒܪ	*	*
+verb imperative 2ms	1	ܐܲܥܸܠ	ܡܥܠ	*	*
+verb imperative 2ms	1	ܥܲܬܸܕ݂	ܡܥܬܕ	*	*
+verb imperative 2ms	1	ܦܲܘܸܩ	ܡܦܘܩ	*	*
+verb imperative 2ms	1	ܦܲܠܗܝܼ	ܡܦܠܗܐ	*	*
+verb imperative 2ms	1	ܨܲܘܝܼ	ܡܨܘܐ	*	*
+verb imperative 2ms	1	ܐܲܪܬܝܼ	ܡܪܬܐ	*	*
+verb imperative 2ms	1	ܣܒ݂ܘܿܥ	ܣܒܥ	*	*
+verb imperative 2ms	1	ܣܡܘܿܟ݂	ܣܡܟ	*	*
+verb imperative 2ms	1	ܣܦܘܿܢ	ܣܦܢ	*	*
+verb imperative 2ms	1	ܣܩܘܿܕ݂	ܣܩܕ	*	*
+verb imperative 2ms	1	ܣܪܘܿܚ	ܣܪܚ	*	*
+verb imperative 2ms	1	ܥܒ݂ܝܼ	ܥܒܐ	*	*
+verb imperative 2ms	1	ܦܨܘܿܠ	ܦܨܠ	*	*
+verb imperative 2p	1	ܒܘܼܣܘܼܢ	ܒܐܣ	*	*
+verb imperative 2p	1	ܒܛܘܿܠܘܼܢ	ܒܛܠ	*	*
+verb imperative 2p	1	ܒܠܲܘ	ܒܠܐ	*	*
+verb imperative 2p	1	ܚܛܲܘ	ܚܛܐ	*	*
+verb imperative 2p	1	ܛܪܘܿܨܘܼܢ	ܛܪܨ	*	*
+verb imperative 2p	1	ܟ̰ܡܘܿܥܘܼܢ	ܟܡܥ	*	*
+verb imperative 2p	1	ܗܲܩܲܘ	ܡܗܩܐ	*	*
+verb imperative 2p	1	ܘܲܙܘܙܘܼܢ	ܡܘܙܘܙ	*	*
+verb imperative 2p	1	ܐܲܚܡܘܼܢ	ܡܚܡ	*	*
+verb imperative 2p	1	ܛܲܪܡܫܘܼܢ	ܡܛܪܡܫ	*	*
+verb imperative 2p	1	ܟܲܪܡܟ݂ܘܼܢ	ܡܟܪܡܟ	*	*
+verb imperative 2p	1	ܠܲܩܛܘܼܢ	ܡܠܩܛ	*	*
+verb imperative 2p	1	ܡܲܢܫܠܘܼܢ	ܡܡܢܫܠ	*	*
+verb imperative 2p	1	ܐܲܣܒܥܘܼܢ	ܡܣܒܥ	*	*
+verb imperative 2p	1	ܣܲܦܩܘܼܢ	ܡܣܦܩ	*	*
+verb imperative 2p	1	ܨܲܦܚܘܼܢ	ܡܨܦܚ	*	*
+verb imperative 2p	1	ܐܲܩܝܡܘܼܢ	ܡܩܝܡ	*	*
+verb imperative 2p	1	ܐܲܩܪܘܼܢ	ܡܩܪ	*	*
+verb imperative 2p	1	ܐܲܪܬܚܘܼܢ	ܡܪܬܚ	*	*
+verb imperative 2p	1	ܫܲܕܪܘܼܢ	ܡܫܕܪ	*	*
+verb imperative 2p	1	ܫܲܘܬܦܘܼܢ	ܡܫܘܬܦ	*	*
+verb imperative 2p	1	ܫܲܦܟ݂ܘܼܢ	ܡܫܦܟ	*	*
+verb imperative 2p	1	ܫܲܪܫܲܘ	ܡܫܪܫܐ	*	*
+verb imperative 2p	1	ܢܣܲܘ	ܢܣܐ	*	*
+verb imperative 2p	1	ܣܩܘܿܕ݂ܘܼܢ	ܣܩܕ	*	*
+verb imperative 2p	1	ܦܫܘܿܩܘܼܢ	ܦܫܩ	*	*
+verb imperative 2p	1	ܩܕ݂ܘܿܚܘܼܢ	ܩܕܚ	*	*
+verb imperative 2p	1	ܩܢܘܿܙܘܼܢ	ܩܢܙ	*	*
+verb infinitive	1	ܒܪܵܝܵܐ	ܒܪܐ	*	*
+verb infinitive	1	ܓ̰ܪܵܝܵܐ	ܓܪܐ	*	*
+verb infinitive	1	ܚܒ݂ܵܫܵܐ	ܚܒܫ	*	*
+verb infinitive	1	ܛܦܵܝܵܐ	ܛܦܐ	*	*
+verb infinitive	1	ܝܦܵܝܵܐ	ܝܦܐ	*	*
+verb infinitive	1	ܟ̰ܘܵܟ̰ܵܐ	ܟܘܟ	*	*
+verb infinitive	1	ܐܘܼܢܵܠܵܐ	ܡܐܢܠ	*	*
+verb infinitive	1	ܒܘܼܢܵܝܵܐ	ܡܒܢܐ	*	*
+verb infinitive	1	ܒܘܼܫܵܠܵܐ	ܡܒܫܠ	*	*
+verb infinitive	1	ܙܘܼܠܗܵܙܵܐ	ܡܙܠܗܙ	*	*
+verb infinitive	1	ܚܘܼܡܵܝܵܐ	ܡܚܡܐ	*	*
+verb infinitive	1	ܡܲܚܪܒ݂ܵܢܘܼܬ݂ܵܐ	ܡܚܪܒ	*	*
+verb infinitive	1	ܝܘܼܩܵܪܵܐ	ܡܝܩܪ	*	*
+verb infinitive	1	ܟܘܼܡܵܡܵܐ	ܡܟܡܡ	*	*
+verb infinitive	1	ܡܲܠܗܒ݂ܵܢܘܼܬ݂ܵܐ	ܡܠܗܒ	*	*
+verb infinitive	1	ܡܘܼܚܵܪܵܐ	ܡܡܚܪ	*	*
+verb infinitive	1	ܡܲܡܛܪܵܢܘܼܬ݂ܵܐ	ܡܡܛܪ	*	*
+verb infinitive	1	ܢܘܼܛܵܪܵܐ	ܡܢܛܪ	*	*
+verb infinitive	1	ܢܘܼܟܵܦܵܐ	ܡܢܟܦ	*	*
+verb infinitive	1	ܣܘܼܦܵܝܵܐ	ܡܣܦܐ	*	*
+verb infinitive	1	ܡܲܣܦܩܵܢܘܼܬ݂ܵܐ	ܡܣܦܩ	*	*
+verb infinitive	1	ܡܲܥܝܪܵܢܘܼܬ݂ܵܐ	ܡܥܝܪ	*	*
+verb infinitive	1	ܡܲܦܬܝܵܢܘܼܬ݂ܵܐ	ܡܦܬܐ	*	*
+verb infinitive	1	ܩܘܼܢܘܵܢܵܐ	ܡܩܢܘܢ	*	*
+verb infinitive	1	ܩܘܼܪܩܵܪܵܐ	ܡܩܪܩܪ	*	*
+verb infinitive	1	ܪܘܼܟܵܒ݂ܵܐ	ܡܪܟܒ	*	*
+verb infinitive	1	ܡܲܪܫܡܵܢܘܼܬ݂ܵܐ	ܡܪܫܡ	*	*
+verb infinitive	1	ܫܘܼܗܵܪܵܐ	ܡܫܗܪ	*	*
+verb infinitive	1	ܫܘܼܦܵܟ݂ܵܐ	ܡܫܦܟ	*	*
+verb infinitive	1	ܡܸܬ݂ܚܲܙܐܵܢܘܼܬ݂ܵܐ	ܡܬܚܙܐ	*	*
+verb infinitive	1	ܬܘܼܪܓܵܠܵܐ	ܡܬܪܓܠ	*	*
+verb infinitive	1	ܬܘܼܪܟܵܣܵܐ	ܡܬܪܟܣ	*	*
+verb infinitive	1	ܣܡܵܩܵܐ	ܣܡܩ	*	*
+verb infinitive	1	ܨܠܵܦܵܐ	ܨܠܦ	*	*
+verb infinitive	1	ܩܗܵܝܵܐ	ܩܗܐ	*	*
+verb infinitive	1	ܩܦܵܠܵܐ	ܩܦܠ	*	*
+verb infinitive	1	ܪܚܵܡܵܐ	ܪܚܡ	*	*
+verb infinitive	1	ܪܡܵܙܵܐ	ܪܡܙ	*	*
+verb infinitive	1	ܬܦܵܩܵܐ	ܬܦܩ	*	*
+verb infinitive	1	ܬܪܵܩܵܐ	ܬܪܩ	*	*
+verb non-past 1fs	1	ܓܵܪܥܵܢ	ܓܪܥ	*	*
+verb non-past 1fs	1	ܛܵܝܦܵܢ	ܛܐܦ	*	*
+verb non-past 1fs	1	ܡܒܲܗܪܢܲܢ	ܡܒܗܪܢ	*	*
+verb non-past 1fs	1	ܡܓܲܒܝܵܢ	ܡܓܒܐ	*	*
+verb non-past 1fs	1	ܡܲܕܒܩܲܢ	ܡܕܒܩ	*	*
+verb non-past 1fs	1	ܡܲܚܪܦܲܢ	ܡܚܪܦ	*	*
+verb non-past 1fs	1	ܡܡܲܬܠܲܢ	ܡܡܬܠ	*	*
+verb non-past 1fs	1	ܡܲܣܪܕ݂ܲܢ	ܡܣܪܕ	*	*
+verb non-past 1fs	1	ܡܦܲܪܦܛܲܢ	ܡܦܪܦܛ	*	*
+verb non-past 1fs	1	ܡܲܩܪܛܲܢ	ܡܩܪܛ	*	*
+verb non-past 1fs	1	ܡܬܲܠܠܲܢ	ܡܬܠܠ	*	*
+verb non-past 1fs	1	ܣܵܟ݂ܪܵܢ	ܣܟܪ	*	*
+verb non-past 1fs	1	ܥܵܪܛܵܢ	ܥܪܛ	*	*
+verb non-past 1fs	1	ܦܵܪܚܵܢ	ܦܪܚ	*	*
+verb non-past 1fs	1	ܩܵܦܝܲܢ	ܩܦܐ	*	*
+verb non-past 1p	1	ܐܵܟ݂ܪܲܚ	ܐܟܪ	*	*
+verb non-past 1p	1	ܓܵܪܒ݂ܲܚ	ܓܪܒ	*	*
+verb non-past 1p	1	ܓܵܪܡܲܚ	ܓܪܡ	*	*
+verb non-past 1p	1	ܕܵܒ݂ܚܲܚ	ܕܒܚ	*	*
+verb non-past 1p	1	ܕܵܟ݂ܪܲܚ	ܕܟܪ	*	*
+verb non-past 1p	1	ܗܵܕ݂ܣܲܚ	ܗܕܣ	*	*
+verb non-past 1p	1	ܝܘܲܚ	ܗܘܐ	*	*
+verb non-past 1p	1	ܙܵܪܥܲܚ	ܙܪܥ	*	*
+verb non-past 1p	1	ܚܵܝܨܲܚ	ܚܐܨ	*	*
+verb non-past 1p	1	ܚܵܙܹܝܚ	ܚܙܐ	*	*
+verb non-past 1p	1	ܝܵܠܦܲܚ	ܝܠܦ	*	*
+verb non-past 1p	1	ܝܵܪܬ݂ܲܚ	ܝܪܬ	*	*
+verb non-past 1p	1	ܠܵܟܚܲܚ	ܠܟܚ	*	*
+verb non-past 1p	1	ܠܵܥܙܲܚ	ܠܥܙ	*	*
+verb non-past 1p	1	ܡܲܐܕ݂ܢܲܚ	ܡܐܕܢ	*	*
+verb non-past 1p	1	ܡܐܲܪܓܸܘܢܲܚ	ܡܐܪܓܘܢ	*	*
+verb non-past 1p	1	ܡܒܲܠܕܪܲܚ	ܡܒܠܕܪ	*	*
+verb non-past 1p	1	ܡܓܲܒܹܝܚ	ܡܓܒܐ	*	*
+verb non-past 1p	1	ܡܓܲܡܓܡܲܚ	ܡܓܡܓܡ	*	*
+verb non-past 1p	1	ܡܓ̰ܲܢܓ̰ܪܲܚ	ܡܓܢܓܪ	*	*
+verb non-past 1p	1	ܡܲܓܪܫܲܚ	ܡܓܪܫ	*	*
+verb non-past 1p	1	ܡܙܲܡܪܲܚ	ܡܙܡܪ	*	*
+verb non-past 1p	1	ܡܚܲܙܕܓܲܚ	ܡܚܙܕܓ	*	*
+verb non-past 1p	1	ܡܲܚܡܥܲܚ	ܡܚܡܥ	*	*
+verb non-past 1p	1	ܡܚܲܫܒܢܲܚ	ܡܚܫܒܢ	*	*
+verb non-past 1p	1	ܡܵܛܹܝܚ	ܡܛܐ	*	*
+verb non-past 1p	1	ܡܛܲܦܹܝܚ	ܡܛܦܐ	*	*
+verb non-past 1p	1	ܡܟܲܦܫܲܚ	ܡܟܦܫ	*	*
+verb non-past 1p	1	ܡܠܲܨܠܨܲܚ	ܡܠܨܠܨ	*	*
+verb non-past 1p	1	ܡܲܣܚܪܲܚ	ܡܣܚܪ	*	*
+verb non-past 1p	1	ܡܲܣܡܩܲܚ	ܡܣܡܩ	*	*
+verb non-past 1p	1	ܡܲܣܪܕ݂ܲܚ	ܡܣܪܕ	*	*
+verb non-past 1p	1	ܡܲܥܝܕ݂ܲܚ	ܡܥܝܕ	*	*
+verb non-past 1p	1	ܡܦܲܪܦܥܲܚ	ܡܦܪܦܥ	*	*
+verb non-past 1p	1	ܡܲܨܦܹܝܚ	ܡܨܦܐ	*	*
+verb non-past 1p	1	ܡܩܲܕܹܝܚ	ܡܩܕܐ	*	*
+verb non-past 1p	1	ܡܫܲܚܪܲܚ	ܡܫܚܪ	*	*
+verb non-past 1p	1	ܢܵܣܹܝܚ	ܢܣܐ	*	*
+verb non-past 1p	1	ܢܵܥܨܲܚ	ܢܥܨ	*	*
+verb non-past 1p	1	ܢܵܩܦܲܚ	ܢܩܦ	*	*
+verb non-past 1p	1	ܣܵܒ݂ܠܲܚ	ܣܒܠ	*	*
+verb non-past 1p	1	ܣܵܦܩܲܚ	ܣܦܩ	*	*
+verb non-past 1p	1	ܣܵܪܦܲܚ	ܣܪܦ	*	*
+verb non-past 1p	1	ܩܵܪܡܲܚ	ܩܪܡ	*	*
+verb non-past 1p	1	ܪܵܥܠܲܚ	ܪܥܠ	*	*
+verb non-past 1p	1	ܪܵܥܫܲܚ	ܪܥܫ	*	*
+verb non-past 1p	1	ܫܵܓ݂ܪܲܚ	ܫܓܪ	*	*
+verb non-past 1p	1	ܫܵܛܦܲܚ	ܫܛܦ	*	*
+verb non-past 1p	1	ܫܵܬܹܝܚ	ܫܬܐ	*	*
+verb non-past 1p	1	ܬܵܥܣܲܚ	ܬܥܣ	*	*
+verb non-past 1s	1	ܐܵܙܹܠ݇ܢ	ܐܙܠ	*	*
+verb non-past 1s	1	ܐܵܟ݂ܠܹܢ	ܐܟܠ	*	*
+verb non-past 1s	1	ܒܵܝܙܹܢ	ܒܐܙ	*	*
+verb non-past 1s	1	ܒܵܣܡܹܢ	ܒܣܡ	*	*
+verb non-past 1s	1	ܓ̰ܵܝܓܹܢ	ܓܐܓ	*	*
+verb non-past 1s	1	ܓܵܪܥܹܢ	ܓܪܥ	*	*
+verb non-past 1s	1	ܕܵܪܓ݂ܹܢ	ܕܪܓ	*	*
+verb non-past 1s	1	ܕܵܪܟ݂ܹܢ	ܕܪܟ	*	*
+verb non-past 1s	1	ܚܵܒ݂ܟ݂ܹܢ	ܚܒܟ	*	*
+verb non-past 1s	1	ܚܵܠܩܹܢ	ܚܠܩ	*	*
+verb non-past 1s	1	ܚܵܩܪܹܢ	ܚܩܪ	*	*
+verb non-past 1s	1	ܝܵܒ݂ܫܹܢ	ܝܒܫ	*	*
+verb non-past 1s	1	ܝܵܕ݂ܥܹܢ	ܝܕܥ	*	*
+verb non-past 1s	1	ܡܲܒܗܪܸܢ	ܡܒܗܪ	*	*
+verb non-past 1s	1	ܡܓ̰ܲܥܨܸܢ	ܡܓܥܨ	*	*
+verb non-past 1s	1	ܡܕܲܒܫܸܢ	ܡܕܒܫ	*	*
+verb non-past 1s	1	ܡܙܲܥܙܥܸܢ	ܡܙܥܙܥ	*	*
+verb non-past 1s	1	ܡܲܚܒܸܢ	ܡܚܒ	*	*
+verb non-past 1s	1	ܡܚܲܝܢܸܢ	ܡܚܝܢ	*	*
+verb non-past 1s	1	ܡܚܲܟ̰ܹܝܢ	ܡܚܟܐ	*	*
+verb non-past 1s	1	ܡܚܲܡܫܸܢ	ܡܚܡܫ	*	*
+verb non-past 1s	1	ܡܚܲܪܒܫܸܢ	ܡܚܪܒܫ	*	*
+verb non-past 1s	1	ܡܛܲܥܹܝܢ	ܡܛܥܐ	*	*
+verb non-past 1s	1	ܡܛܲܦܣܸܢ	ܡܛܦܣ	*	*
+verb non-past 1s	1	ܡܲܟܦܢܸܢ	ܡܟܦܢ	*	*
+verb non-past 1s	1	ܡܣܲܟܡܸܢ	ܡܣܟܡ	*	*
+verb non-past 1s	1	ܡܣܲܟܪܸܢ	ܡܣܟܪ	*	*
+verb non-past 1s	1	ܡܲܣܠܹܝܢ	ܡܣܠܐ	*	*
+verb non-past 1s	1	ܡܣܲܥܪܒ݂ܸܢ	ܡܣܥܪܒ	*	*
+verb non-past 1s	1	ܡܲܥܒܪܸܢ	ܡܥܒܪ	*	*
+verb non-past 1s	1	ܡܲܦܥܠܸܢ	ܡܦܥܠ	*	*
+verb non-past 1s	1	ܡܦܲܪܣܸܢ	ܡܦܪܣ	*	*
+verb non-past 1s	1	ܡܦܲܪܦܥܸܢ	ܡܦܪܦܥ	*	*
+verb non-past 1s	1	ܡܲܦܫܪܸܢ	ܡܦܫܪ	*	*
+verb non-past 1s	1	ܡܲܩܪܹܝܢ	ܡܩܪܐ	*	*
+verb non-past 1s	1	ܡܪܲܦܹܝܢ	ܡܪܦܐ	*	*
+verb non-past 1s	1	ܡܪܲܬܪܬܸܢ	ܡܪܬܪܬ	*	*
+verb non-past 1s	1	ܡܲܫܗܪܸܢ	ܡܫܗܪ	*	*
+verb non-past 1s	1	ܡܫܲܪܛܚܸܢ	ܡܫܪܛܚ	*	*
+verb non-past 1s	1	ܡܲܫܬܹܝܢ	ܡܫܬܐ	*	*
+verb non-past 1s	1	ܡܬܲܓܓ݂ܸܢ	ܡܬܓܓ	*	*
+verb non-past 1s	1	ܡܬܲܦ̮ܬܫܸܢ	ܡܬܦܬܫ	*	*
+verb non-past 1s	1	ܥܵܒ݂ܪܹܢ	ܥܒܪ	*	*
+verb non-past 1s	1	ܨܵܗܠܹܢ	ܨܗܠ	*	*
+verb non-past 1s	1	ܩܵܦܠܹܢ	ܩܦܠ	*	*
+verb non-past 1s	1	ܪܵܗܒ݂ܹܢ	ܪܗܒ	*	*
+verb non-past 1s	1	ܫܵܓ݂ܠܹܢ	ܫܓܠ	*	*
+verb non-past 1s	1	ܫܵܚܩܹܢ	ܫܚܩ	*	*
+verb non-past 1s	1	ܫܵܠܨܹܢ	ܫܠܨ	*	*
+verb non-past 1s	1	ܬܵܠܓ݂ܹܢ	ܬܠܓ	*	*
+verb non-past 2fs	1	ܒܵܨܝܲܬܝ	ܒܨܐ	*	*
+verb non-past 2fs	1	ܓܵܗܝܲܬܝ	ܓܗܐ	*	*
+verb non-past 2fs	1	ܓ̰ܵܠܚܵܬܝ	ܓܠܚ	*	*
+verb non-past 2fs	1	ܕܵܟ݂ܝܲܬܝ	ܕܟܐ	*	*
+verb non-past 2fs	1	ܗܵܦܟ݂ܵܬܝ	ܗܦܟ	*	*
+verb non-past 2fs	1	ܙܵܟ݂ܝܲܬܝ	ܙܟܐ	*	*
+verb non-past 2fs	1	ܚܵܘܪܵܬܝ	ܚܘܪ	*	*
+verb non-past 2fs	1	ܚܵܣܪܵܬܝ	ܚܣܪ	*	*
+verb non-past 2fs	1	ܟ̰ܵܘܟ̰ܵܬܝ	ܟܘܟ	*	*
+verb non-past 2fs	1	ܟܵܡܕ݂ܵܬܝ	ܟܡܕ	*	*
+verb non-past 2fs	1	ܟܵܬ݂ܪܵܬܝ	ܟܬܪ	*	*
+verb non-past 2fs	1	ܠܵܝܡܵܬܝ	ܠܐܡ	*	*
+verb non-past 2fs	1	ܠܵܟܚܵܬܝ	ܠܟܚ	*	*
+verb non-past 2fs	1	ܡܲܐܓܪܵܬܝ	ܡܐܓܪ	*	*
+verb non-past 2fs	1	ܡܐܲܫܪܵܬܝ	ܡܐܫܪ	*	*
+verb non-past 2fs	1	ܡܓܲܒܝܵܬܝ	ܡܓܒܐ	*	*
+verb non-past 2fs	1	ܡܓܲܘܢܵܬܝ	ܡܓܘܢ	*	*
+verb non-past 2fs	1	ܡܕܲܒܪܵܬܝ	ܡܕܒܪ	*	*
+verb non-past 2fs	1	ܡܕܲܝܩܵܬܝ	ܡܕܝܩ	*	*
+verb non-past 2fs	1	ܡܚܲܡܣܢܵܬܝ	ܡܚܡܣܢ	*	*
+verb non-past 2fs	1	ܡܛܲܝܠܵܬܝ	ܡܛܝܠ	*	*
+verb non-past 2fs	1	ܡܲܝܪܩܵܬܝ	ܡܝܪܩ	*	*
+verb non-past 2fs	1	ܡܟܲܘܬܪܵܬܝ	ܡܟܘܬܪ	*	*
+verb non-past 2fs	1	ܡܲܠܗܒ݂ܵܬܝ	ܡܠܗܒ	*	*
+verb non-past 2fs	1	ܡܲܡܛܝܵܬܝ	ܡܡܛܐ	*	*
+verb non-past 2fs	1	ܡܣܲܦܢܵܬܝ	ܡܣܦܢ	*	*
+verb non-past 2fs	1	ܡܣܲܪܓ݂ܵܬܝ	ܡܣܪܓ	*	*
+verb non-past 2fs	1	ܡܣܲܬܪܵܬܝ	ܡܣܬܪ	*	*
+verb non-past 2fs	1	ܡܦܲܠܗܝܵܬܝ	ܡܦܠܗܐ	*	*
+verb non-past 2fs	1	ܡܨܲܪܦܵܬܝ	ܡܨܪܦ	*	*
+verb non-past 2fs	1	ܡܩܲܘܦܵܬܝ	ܡܩܘܦ	*	*
+verb non-past 2fs	1	ܡܩܲܛܩܛܵܬܝ	ܡܩܛܩܛ	*	*
+verb non-past 2fs	1	ܡܪܲܟܟ݂ܵܬܝ	ܡܪܟܟ	*	*
+verb non-past 2fs	1	ܡܪܲܩܪܩܵܬܝ	ܡܪܩܪܩ	*	*
+verb non-past 2fs	1	ܡܲܪܬܝܵܬܝ	ܡܪܬܐ	*	*
+verb non-past 2fs	1	ܡܲܫܗܪܵܬܝ	ܡܫܗܪ	*	*
+verb non-past 2fs	1	ܡܫܲܡܫܢܵܬܝ	ܡܫܡܫܢ	*	*
+verb non-past 2fs	1	ܡܬܲܘܒ݂ܵܬܝ	ܡܬܘܒ	*	*
+verb non-past 2fs	1	ܡܬܲܪܓܠܵܬܝ	ܡܬܪܓܠ	*	*
+verb non-past 2fs	1	ܣܵܝܕ݂ܵܬܝ	ܣܐܕ	*	*
+verb non-past 2fs	1	ܣܵܟ݂ܪܵܬܝ	ܣܟܪ	*	*
+verb non-past 2fs	1	ܥܵܝܠܵܬܝ	ܥܐܠ	*	*
+verb non-past 2fs	1	ܥܵܝܪܵܬܝ	ܥܐܪ	*	*
+verb non-past 2fs	1	ܥܵܡܪܵܬܝ	ܥܡܪ	*	*
+verb non-past 2fs	1	ܥܵܢܝܲܬܝ	ܥܢܐ	*	*
+verb non-past 2fs	1	ܩܵܒ݂ܠܵܬܝ	ܩܒܠ	*	*
+verb non-past 2fs	1	ܪܵܨܦܵܬܝ	ܪܨܦ	*	*
+verb non-past 2fs	1	ܫܵܝܦܵܬܝ	ܫܐܦ	*	*
+verb non-past 2fs	1	ܫܵܟ݂ܢܵܬܝ	ܫܟܢ	*	*
+verb non-past 2fs	1	ܫܵܠܨܵܬܝ	ܫܠܨ	*	*
+verb non-past 2ms	1	ܐܵܓ݂ܪܹܬ	ܐܓܪ	*	*
+verb non-past 2ms	1	ܐܵܟ̰ܡܹܬ	ܐܟܡ	*	*
+verb non-past 2ms	1	ܒܵܟ݂ܹܝܬ	ܒܟܐ	*	*
+verb non-past 2ms	1	ܓܵܗܹܝܬ	ܓܗܐ	*	*
+verb non-past 2ms	1	ܓ̰ܵܠܚܹܬ	ܓܠܚ	*	*
+verb non-past 2ms	1	ܕܵܒ݂ܩܹܬ	ܕܒܩ	*	*
+verb non-past 2ms	1	ܗܵܢܹܝܬ	ܗܢܐ	*	*
+verb non-past 2ms	1	ܗܵܦܟ݂ܹܬ	ܗܦܟ	*	*
+verb non-past 2ms	1	ܚܵܙܹܝܬ	ܚܙܐ	*	*
+verb non-past 2ms	1	ܚܵܠܒ݂ܹܬ	ܚܠܒ	*	*
+verb non-past 2ms	1	ܚܵܬܹܝܬ	ܚܬܐ	*	*
+verb non-past 2ms	1	ܛܵܒ݂ܹܝܬ	ܛܒܐ	*	*
+verb non-past 2ms	1	ܛܵܥܦܹܬ	ܛܥܦ	*	*
+verb non-past 2ms	1	ܛܵܪܨܹܬ	ܛܪܨ	*	*
+verb non-past 2ms	1	ܝܵܡܹܝܬ	ܝܡܐ	*	*
+verb non-past 2ms	1	ܡܕܲܝܠܸܬ	ܡܕܝܠ	*	*
+verb non-past 2ms	1	ܡܲܕܥܪܸܬ	ܡܕܥܪ	*	*
+verb non-past 2ms	1	ܡܗܲܘܢܢܸܬ	ܡܗܘܢܢ	*	*
+verb non-past 2ms	1	ܡܵܚܹܝܬ	ܡܚܐ	*	*
+verb non-past 2ms	1	ܡܚܲܒܪܸܬ	ܡܚܒܪ	*	*
+verb non-past 2ms	1	ܡܚܲܘܓ݂ܸܬ	ܡܚܘܓ	*	*
+verb non-past 2ms	1	ܡܚܲܪܡܛܸܬ	ܡܚܪܡܛ	*	*
+verb non-past 2ms	1	ܡܚܲܬܚܬ݂ܸܬ	ܡܚܬܚܬ	*	*
+verb non-past 2ms	1	ܡܲܛܝܣܸܬ	ܡܛܝܣ	*	*
+verb non-past 2ms	1	ܡܟ̰ܲܝܟܸܬ	ܡܟܝܟ	*	*
+verb non-past 2ms	1	ܡܟ̰ܲܠܒܚܸܬ	ܡܟܠܒܚ	*	*
+verb non-past 2ms	1	ܡܲܡܛܹܝܬ	ܡܡܛܐ	*	*
+verb non-past 2ms	1	ܡܢܲܓܠܸܬ	ܡܢܓܠ	*	*
+verb non-past 2ms	1	ܡܢܲܟܦܸܬ	ܡܢܟܦ	*	*
+verb non-past 2ms	1	ܡܦܲܠܗܕ݂ܸܬ	ܡܦܠܗܕ	*	*
+verb non-past 2ms	1	ܡܨܲܘܹܝܬ	ܡܨܘܐ	*	*
+verb non-past 2ms	1	ܡܲܩܪܚܸܬ	ܡܩܪܚ	*	*
+verb non-past 2ms	1	ܡܲܪܗܛܸܬ	ܡܪܗܛ	*	*
+verb non-past 2ms	1	ܡܵܪܟ̰ܹܬ	ܡܪܟ	*	*
+verb non-past 2ms	1	ܡܵܪܥܹܬ	ܡܪܥ	*	*
+verb non-past 2ms	1	ܡܲܫܓ݂ܫܸܬ	ܡܫܓܫ	*	*
+verb non-past 2ms	1	ܡܫܲܕܪܓ݂ܸܬ	ܡܫܕܪܓ	*	*
+verb non-past 2ms	1	ܡܲܫܪܹܝܬ	ܡܫܪܐ	*	*
+verb non-past 2ms	1	ܡܬܲܓܓ݂ܸܬ	ܡܬܓܓ	*	*
+verb non-past 2ms	1	ܡܬܲܡܡܸܬ	ܡܬܡܡ	*	*
+verb non-past 2ms	1	ܢܵܝܚܹܬ	ܢܐܚ	*	*
+verb non-past 2ms	1	ܢܵܥܨܹܬ	ܢܥܨ	*	*
+verb non-past 2ms	1	ܢܵܫܹܝܬ	ܢܫܐ	*	*
+verb non-past 2ms	1	ܢܵܬ݂ܪܹܬ	ܢܬܪ	*	*
+verb non-past 2ms	1	ܦܵܫܪܹܬ	ܦܫܪ	*	*
+verb non-past 2ms	1	ܨܵܗܠܹܬ	ܨܗܠ	*	*
+verb non-past 2ms	1	ܪܵܓ݂ܫܹܬ	ܪܓܫ	*	*
+verb non-past 2ms	1	ܪܵܗܹܝܬ	ܪܗܐ	*	*
+verb non-past 2ms	1	ܪܵܬ݂ܡܹܬ	ܪܬܡ	*	*
+verb non-past 2ms	1	ܫܵܠܚܹܬ	ܫܠܚ	*	*
+verb non-past 2p	1	ܓܵܙܪܝܼܬܘܿܢ	ܓܙܪ	*	*
+verb non-past 2p	1	ܕܵܒ݂ܪܝܼܬܘܿܢ	ܕܒܪ	*	*
+verb non-past 2p	1	ܗܵܢܲܝܬܘܿܢ	ܗܢܐ	*	*
+verb non-past 2p	1	ܙܵܒ݂ܢܝܼܬܘܿܢ	ܙܒܢ	*	*
+verb non-past 2p	1	ܙܵܓ݂ܪܝܼܬܘܿܢ	ܙܓܪ	*	*
+verb non-past 2p	1	ܙܵܢܲܝܬܘܿܢ	ܙܢܐ	*	*
+verb non-past 2p	1	ܚܵܝܟܝܼܬܘܿܢ	ܚܐܟ	*	*
+verb non-past 2p	1	ܚܵܕ݂ܲܝܬܘܿܢ	ܚܕܐ	*	*
+verb non-past 2p	1	ܚܵܣܪܝܼܬܘܿܢ	ܚܣܪ	*	*
+verb non-past 2p	1	ܛܵܝܣܝܼܬܘܿܢ	ܛܐܣ	*	*
+verb non-past 2p	1	ܛܵܦܲܝܬܘܿܢ	ܛܦܐ	*	*
+verb non-past 2p	1	ܛܵܪܨܝܼܬܘܿܢ	ܛܪܨ	*	*
+verb non-past 2p	1	ܠܵܥܙܝܼܬܘܿܢ	ܠܥܙ	*	*
+verb non-past 2p	1	ܠܵܥܣܝܼܬܘܿܢ	ܠܥܣ	*	*
+verb non-past 2p	1	ܡܐܲܪܓܸܘܢܝܼܬܘܿܢ	ܡܐܪܓܘܢ	*	*
+verb non-past 2p	1	ܡܒܲܕܪܝܼܬܘܿܢ	ܡܒܕܪ	*	*
+verb non-past 2p	1	ܡܒܲܪܚܫܝܼܬܘܿܢ	ܡܒܪܚܫ	*	*
+verb non-past 2p	1	ܡܙܲܒܢܝܼܬܘܿܢ	ܡܙܒܢ	*	*
+verb non-past 2p	1	ܡܙܲܗܪܝܼܬܘܿܢ	ܡܙܗܪ	*	*
+verb non-past 2p	1	ܡܙܲܪܙܛܝܼܬܘܿܢ	ܡܙܪܙܛ	*	*
+verb non-past 2p	1	ܡܛܲܝܠܝܼܬܘܿܢ	ܡܛܝܠ	*	*
+verb non-past 2p	1	ܡܛܲܦܣܝܼܬܘܿܢ	ܡܛܦܣ	*	*
+verb non-past 2p	1	ܡܝܲܒܫܝܼܬܘܿܢ	ܡܝܒܫ	*	*
+verb non-past 2p	1	ܡܲܝܪܩܝܼܬܘܿܢ	ܡܝܪܩ	*	*
+verb non-past 2p	1	ܡܵܝܬ݂ܝܼܬܘܿܢ	ܡܝܬ	*	*
+verb non-past 2p	1	ܡܟܲܦܫܝܼܬܘܿܢ	ܡܟܦܫ	*	*
+verb non-past 2p	1	ܡܡܲܠܹܝܬܘܿܢ	ܡܡܠܐ	*	*
+verb non-past 2p	1	ܡܲܢܫܹܝܬܘܿܢ	ܡܢܫܐ	*	*
+verb non-past 2p	1	ܡܲܥܡܕ݂ܝܼܬܘܿܢ	ܡܥܡܕ	*	*
+verb non-past 2p	1	ܡܥܲܪܘܨܝܼܬܘܿܢ	ܡܥܪܘܨ	*	*
+verb non-past 2p	1	ܡܦܲܨܠܝܼܬܘܿܢ	ܡܦܨܠ	*	*
+verb non-past 2p	1	ܡܲܦܪܹܝܬܘܿܢ	ܡܦܪܐ	*	*
+verb non-past 2p	1	ܡܦܲܪܓܝܼܬܘܿܢ	ܡܦܪܓܐ	*	*
+verb non-past 2p	1	ܡܦܲܪܩܥܝܼܬܘܿܢ	ܡܦܪܩܥ	*	*
+verb non-past 2p	1	ܡܫܲܚܪܝܼܬܘܿܢ	ܡܫܚܪ	*	*
+verb non-past 2p	1	ܡܫܲܠܚܝܼܬܘܿܢ	ܡܫܠܚ	*	*
+verb non-past 2p	1	ܡܫܲܩܛܒ݂ܝܼܬܘܿܢ	ܡܫܩܛܒ	*	*
+verb non-past 2p	1	ܡܫܲܪܒܩܝܼܬܘܿܢ	ܡܫܪܒܩ	*	*
+verb non-past 2p	1	ܡܲܫܬܹܝܬܘܿܢ	ܡܫܬܐ	*	*
+verb non-past 2p	1	ܢܵܟ̰ܠܝܼܬܘܿܢ	ܢܟܠ	*	*
+verb non-past 2p	1	ܢܵܥܪܝܼܬܘܿܢ	ܢܥܪ	*	*
+verb non-past 2p	1	ܣܵܒ݂ܥܝܼܬܘܿܢ	ܣܒܥ	*	*
+verb non-past 2p	1	ܥܵܒ݂ܲܝܬܘܿܢ	ܥܒܐ	*	*
+verb non-past 2p	1	ܥܵܢܲܝܬܘܿܢ	ܥܢܐ	*	*
+verb non-past 2p	1	ܦܵܣܥܝܼܬܘܿܢ	ܦܣܥ	*	*
+verb non-past 2p	1	ܨܵܠܒ݂ܝܼܬܘܿܢ	ܨܠܒ	*	*
+verb non-past 2p	1	ܨܵܦܲܝܬܘܿܢ	ܨܦܐ	*	*
+verb non-past 2p	1	ܪܵܡܙܝܼܬܘܿܢ	ܪܡܙ	*	*
+verb non-past 2p	1	ܫܵܐܠܝܼܬܘܿܢ	ܫܐܠ	*	*
+verb non-past 2p	1	ܫܵܚܩܝܼܬܘܿܢ	ܫܚܩ	*	*
+verb non-past 3fs	1	ܕܵܥܪܵܐ	ܕܥܪ	*	*
+verb non-past 3fs	1	ܚܵܙܩܵܐ	ܚܙܩ	*	*
+verb non-past 3fs	1	ܝܵܕ݂ܥܵܐ	ܝܕܥ	*	*
+verb non-past 3fs	1	ܠܵܒ݂ܫܵܐ	ܠܒܫ	*	*
+verb non-past 3fs	1	ܡܲܒܛܠܵܐ	ܡܒܛܠ	*	*
+verb non-past 3fs	1	ܡܲܒܟܝܵܐ	ܡܒܟܐ	*	*
+verb non-past 3fs	1	ܡܕܲܓܠܵܐ	ܡܕܓܠ	*	*
+verb non-past 3fs	1	ܡܲܕܝܩܵܐ	ܡܕܝܩ	*	*
+verb non-past 3fs	1	ܡܲܘܠܕ݂ܵܐ	ܡܘܠܕ	*	*
+verb non-past 3fs	1	ܡܲܚܝܵܐ	ܡܚܐ	*	*
+verb non-past 3fs	1	ܡܚܲܟ̰ܝܵܐ	ܡܚܟܐ	*	*
+verb non-past 3fs	1	ܡܲܛܝܣܵܐ	ܡܛܝܣ	*	*
+verb non-past 3fs	1	ܡܠܲܚܡܵܐ	ܡܠܚܡ	*	*
+verb non-past 3fs	1	ܡܠܲܫܢܵܐ	ܡܠܫܢ	*	*
+verb non-past 3fs	1	ܡܢܲܟܦܵܐ	ܡܢܟܦ	*	*
+verb non-past 3fs	1	ܡܣܲܒܣܵܐ	ܡܣܒܣ	*	*
+verb non-past 3fs	1	ܡܣܲܘܟܢܵܐ	ܡܣܘܟܢ	*	*
+verb non-past 3fs	1	ܡܣܲܦܩܵܐ	ܡܣܦܩ	*	*
+verb non-past 3fs	1	ܡܲܨܦܝܵܐ	ܡܨܦܐ	*	*
+verb non-past 3fs	1	ܡܲܩܛܠܵܐ	ܡܩܛܠ	*	*
+verb non-past 3fs	1	ܡܲܪܫܡܵܐ	ܡܪܫܡ	*	*
+verb non-past 3fs	1	ܡܫܲܚܪܵܐ	ܡܫܚܪ	*	*
+verb non-past 3fs	1	ܡܲܫ݇ܟ̰ܚܵܐ	ܡܫܟܚ	*	*
+verb non-past 3fs	1	ܡܫܲܡܠܝܵܐ	ܡܫܡܠܐ	*	*
+verb non-past 3fs	1	ܡܫܲܥܒܕ݂ܵܐ	ܡܫܥܒܕ	*	*
+verb non-past 3fs	1	ܡܫܲܪܬܚܵܐ	ܡܫܪܬܚ	*	*
+verb non-past 3fs	1	ܡܲܫܬܝܵܐ	ܡܫܬܐ	*	*
+verb non-past 3fs	1	ܡܬܲܓܓ݂ܵܐ	ܡܬܓܓ	*	*
+verb non-past 3fs	1	ܡܬܲܡܢܵܐ	ܡܬܡܢ	*	*
+verb non-past 3fs	1	ܡܬܲܢܢܵܐ	ܡܬܢܢ	*	*
+verb non-past 3fs	1	ܢܵܓܙܵܐ	ܢܓܙ	*	*
+verb non-past 3fs	1	ܢܵܫܩܵܐ	ܢܫܩ	*	*
+verb non-past 3fs	1	ܣܵܕ݂ܩܵܐ	ܣܕܩ	*	*
+verb non-past 3fs	1	ܣܵܘܕ݂ܵܐ	ܣܘܕ	*	*
+verb non-past 3fs	1	ܣܵܚܝܵܐ	ܣܚܐ	*	*
+verb non-past 3fs	1	ܣܵܡܟ݂ܵܐ	ܣܡܟ	*	*
+verb non-past 3fs	1	ܣܵܩܕ݂ܵܐ	ܣܩܕ	*	*
+verb non-past 3fs	1	ܥܵܒ݂ܕ݂ܵܐ	ܥܒܕ	*	*
+verb non-past 3fs	1	ܥܵܕ݂ܪܵܐ	ܥܕܪ	*	*
+verb non-past 3fs	1	ܥܵܡܟ̰ܵܐ	ܥܡܟ	*	*
+verb non-past 3fs	1	ܥܵܪܩܵܐ	ܥܪܩ	*	*
+verb non-past 3fs	1	ܦܵܪܫܵܐ	ܦܪܫ	*	*
+verb non-past 3fs	1	ܨܵܕ݂ܝܵܐ	ܨܕܐ	*	*
+verb non-past 3fs	1	ܨܵܪܚܵܐ	ܨܪܚ	*	*
+verb non-past 3fs	1	ܨܵܪܦܵܐ	ܨܪܦ	*	*
+verb non-past 3fs	1	ܪܵܨܢܵܐ	ܪܨܢ	*	*
+verb non-past 3fs	1	ܫܵܘܝܵܐ	ܫܘܐ	*	*
+verb non-past 3fs	1	ܫܵܥܠܵܐ	ܫܥܠ	*	*
+verb non-past 3fs	1	ܬܵܠܝܵܐ	ܬܠܐ	*	*
+verb non-past 3fs	1	ܬܵܥܣܵܐ	ܬܥܣ	*	*
+verb non-past 3ms	1	ܓ̰ܵܐܹܓ	ܓܐܓ	*	*
+verb non-past 3ms	1	ܓܵܐܹܪ	ܓܐܪ	*	*
+verb non-past 3ms	1	ܓܵܗܹܐ	ܓܗܐ	*	*
+verb non-past 3ms	1	ܓ̰ܵܘܹܓ̰	ܓܘܓ	*	*
+verb non-past 3ms	1	ܓ̰ܵܠܹܒ݂	ܓܠܒ	*	*
+verb non-past 3ms	1	ܕܵܠܹܦ	ܕܠܦ	*	*
+verb non-past 3ms	1	ܙܵܩܹܦ	ܙܩܦ	*	*
+verb non-past 3ms	1	ܚܵܒ݂ܹܫ	ܚܒܫ	*	*
+verb non-past 3ms	1	ܚܵܠܹܒ݂	ܚܠܒ	*	*
+verb non-past 3ms	1	ܝܵܡܹܐ	ܝܡܐ	*	*
+verb non-past 3ms	1	ܝܵܩܹܕ݂	ܝܩܕ	*	*
+verb non-past 3ms	1	ܟ̰ܵܘܹܪ	ܟܘܪ	*	*
+verb non-past 3ms	1	ܡܒܲܪܸܟ݂	ܡܒܪܟ	*	*
+verb non-past 3ms	1	ܡܓܲܫ̰ܸܢ	ܡܓܫܢ	*	*
+verb non-past 3ms	1	ܡܕܲܡܸܪ	ܡܕܡܪ	*	*
+verb non-past 3ms	1	ܡܲܕܩܸܪ	ܡܕܩܪ	*	*
+verb non-past 3ms	1	ܡܗܲܡܙܸܡ	ܡܗܡܙܡ	*	*
+verb non-past 3ms	1	ܡܚܲܒܸܪ	ܡܚܒܪ	*	*
+verb non-past 3ms	1	ܡܲܚܝܸܪ	ܡܚܝܪ	*	*
+verb non-past 3ms	1	ܡܲܛܝܸܣ	ܡܛܝܣ	*	*
+verb non-past 3ms	1	ܡܛܲܠܸܩ	ܡܛܠܩ	*	*
+verb non-past 3ms	1	ܡܲܛܥܸܢ	ܡܛܥܢ	*	*
+verb non-past 3ms	1	ܡܝܲܬܸܒ݂	ܡܝܬܒ	*	*
+verb non-past 3ms	1	ܡܲܠܚܸܡ	ܡܠܚܡ	*	*
+verb non-past 3ms	1	ܡܲܡܛܹܐ	ܡܡܛܐ	*	*
+verb non-past 3ms	1	ܡܡܲܠܹܐ	ܡܡܠܐ	*	*
+verb non-past 3ms	1	ܡܡܲܣܹܐ	ܡܡܣܐ	*	*
+verb non-past 3ms	1	ܡܢܲܛܸܪ	ܡܢܛܪ	*	*
+verb non-past 3ms	1	ܡܢܲܪܢܸܪ	ܡܢܪܢܪ	*	*
+verb non-past 3ms	1	ܡܵܣܹܐ	ܡܣܐ	*	*
+verb non-past 3ms	1	ܡܣܲܡܣܸܡ	ܡܣܡܣܡ	*	*
+verb non-past 3ms	1	ܡܲܥܒܸܪ	ܡܥܒܪ	*	*
+verb non-past 3ms	1	ܡܥܲܪܸܦ	ܡܥܪܦ	*	*
+verb non-past 3ms	1	ܡܦܲܘܸܩ	ܡܦܘܩ	*	*
+verb non-past 3ms	1	ܡܦܲܪܓܹܐ	ܡܦܪܓܐ	*	*
+verb non-past 3ms	1	ܡܩܲܘܩܹܐ	ܡܩܘܩܐ	*	*
+verb non-past 3ms	1	ܡܲܩܫܹܐ	ܡܩܫܐ	*	*
+verb non-past 3ms	1	ܡܲܪܓܸܙ	ܡܪܓܙ	*	*
+verb non-past 3ms	1	ܡܲܪܫܸܡ	ܡܪܫܡ	*	*
+verb non-past 3ms	1	ܡܫܲܚܪܸܢ	ܡܫܚܪܢ	*	*
+verb non-past 3ms	1	ܡܫܲܡܸܫ	ܡܫܡܫ	*	*
+verb non-past 3ms	1	ܡܵܬ݂ܹܠ	ܡܬܠ	*	*
+verb non-past 3ms	1	ܡܬܲܠܸܠ	ܡܬܠܠ	*	*
+verb non-past 3ms	1	ܡܬܲܩܸܢ	ܡܬܩܢ	*	*
+verb non-past 3ms	1	ܡܬܲܪܩܸܠ	ܡܬܪܩܠ	*	*
+verb non-past 3ms	1	ܣܵܒ݂ܹܗ	ܣܒܗ	*	*
+verb non-past 3ms	1	ܩܵܛܹܠ	ܩܛܠ	*	*
+verb non-past 3ms	1	ܪܵܓ݂ܹܫ	ܪܓܫ	*	*
+verb non-past 3ms	1	ܫܵܓ݂ܹܫ	ܫܓܫ	*	*
+verb non-past 3ms	1	ܫܵܟ݂ܹܢ	ܫܟܢ	*	*
+verb non-past 3p	1	ܐܵܩܫܝܼ	ܐܩܫ	*	*
+verb non-past 3p	1	ܒܵܠܣܝܼ	ܒܠܣ	*	*
+verb non-past 3p	1	ܓܵܝܪܝܼ	ܓܐܪ	*	*
+verb non-past 3p	1	ܓܵܒ݂ܠܝܼ	ܓܒܠ	*	*
+verb non-past 3p	1	ܓ̰ܵܠܝܼ	ܓܠܐ	*	*
+verb non-past 3p	1	ܓܵܠܕ݂ܝܼ	ܓܠܕ	*	*
+verb non-past 3p	1	ܕܵܓ݂ܠܝܼ	ܕܓܠ	*	*
+verb non-past 3p	1	ܚܵܡܪܝܼ	ܚܡܪ	*	*
+verb non-past 3p	1	ܚܵܣܪܝܼ	ܚܣܪ	*	*
+verb non-past 3p	1	ܚܵܦܪܝܼ	ܚܦܪ	*	*
+verb non-past 3p	1	ܛܵܒ݂ܥܝܼ	ܛܒܥ	*	*
+verb non-past 3p	1	ܛܵܥܦܝܼ	ܛܥܦ	*	*
+verb non-past 3p	1	ܛܵܪܕ݂ܝܼ	ܛܪܕ	*	*
+verb non-past 3p	1	ܟܵܢܫܝܼ	ܟܢܫ	*	*
+verb non-past 3p	1	ܟܵܪܝܼ	ܟܪܐ	*	*
+verb non-past 3p	1	ܡܵܝܬ݂ܝܼ	ܡܐܬ	*	*
+verb non-past 3p	1	ܡܲܒܟܝܼ	ܡܒܟܐ	*	*
+verb non-past 3p	1	ܡܒܲܠܕܪܝܼ	ܡܒܠܕܪ	*	*
+verb non-past 3p	1	ܡܒܲܫܠܝܼ	ܡܒܫܠ	*	*
+verb non-past 3p	1	ܡܲܓܝܒ݂ܝܼ	ܡܓܝܒ	*	*
+verb non-past 3p	1	ܡܲܘܕܝܼ	ܡܘܕܐ	*	*
+verb non-past 3p	1	ܡܲܚܢܝܼ	ܡܚܢܐ	*	*
+verb non-past 3p	1	ܡܛܲܪܛܡܝܼ	ܡܛܪܛܡ	*	*
+verb non-past 3p	1	ܡܲܟܪܙܝܼ	ܡܟܪܙ	*	*
+verb non-past 3p	1	ܡܲܠܦܝܼ	ܡܠܦ	*	*
+verb non-past 3p	1	ܡܡܲܠܠܝܼ	ܡܡܠܠ	*	*
+verb non-past 3p	1	ܡܢܲܣܝܼ	ܡܢܣܐ	*	*
+verb non-past 3p	1	ܡܲܢܫܝܼ	ܡܢܫܐ	*	*
+verb non-past 3p	1	ܡܥܲܘܟ݂ܝܼ	ܡܥܘܟ	*	*
+verb non-past 3p	1	ܡܦܲܣܩܝܼ	ܡܦܣܩ	*	*
+verb non-past 3p	1	ܡܲܦܪܝܼ	ܡܦܪܐ	*	*
+verb non-past 3p	1	ܡܲܦܪܚܝܼ	ܡܦܪܚ	*	*
+verb non-past 3p	1	ܡܨܲܘܪܝܼ	ܡܨܘܪ	*	*
+verb non-past 3p	1	ܡܲܨܚܝܼ	ܡܨܚ	*	*
+verb non-past 3p	1	ܡܨܲܥܪܝܼ	ܡܨܥܪ	*	*
+verb non-past 3p	1	ܡܲܩܬ݂ܝܼ	ܡܩܬ	*	*
+verb non-past 3p	1	ܡܲܪܗܛܝܼ	ܡܪܗܛ	*	*
+verb non-past 3p	1	ܡܲܫܓ݂ܫܝܼ	ܡܫܓܫ	*	*
+verb non-past 3p	1	ܡܵܬ݂ܚܝܼ	ܡܬܚ	*	*
+verb non-past 3p	1	ܣܵܦܪܝܼ	ܣܦܪ	*	*
+verb non-past 3p	1	ܦܵܟ̰ܠܝܼ	ܦܟܠ	*	*
+verb non-past 3p	1	ܦܵܪܩܝܼ	ܦܪܩ	*	*
+verb non-past 3p	1	ܩܵܝܬ݂ܝܼ	ܩܐܬ	*	*
+verb non-past 3p	1	ܩܵܦ̮ܛܝܼ	ܩܦܛ	*	*
+verb non-past 3p	1	ܪܵܗܛܝܼ	ܪܗܛ	*	*
+verb non-past 3p	1	ܪܵܚܦܝܼ	ܪܚܦ	*	*
+verb non-past 3p	1	ܫܵܚܪܝܼ	ܫܚܪ	*	*
+verb non-past 3p	1	ܫܵܠܛܝܼ	ܫܠܛ	*	*
+verb non-past 3p	1	ܬܵܠܓ݂ܝܼ	ܬܠܓ	*	*
+verb non-past 3p	1	ܬܵܪܩܝܼ	ܬܪܩ	*	*
+verb passive participle fs	1	ܓܪܝܼܒ݂ܬܵܐ	ܓܪܒ	*	*
+verb passive participle fs	1	ܕܠܝܼܦܬܵܐ	ܕܠܦ	*	*
+verb passive participle fs	1	ܛܥܝܼܡܬܵܐ	ܛܥܡ	*	*
+verb passive participle fs	1	ܛܪܝܼܕ݂ܬܵܐ	ܛܪܕ	*	*
+verb passive participle fs	1	ܡܒܘܼܣܲܚܬܵܐ	ܡܒܣܚ	*	*
+verb passive participle fs	1	ܡܒܘܼܪܣܲܡܬܵܐ	ܡܒܪܣܡ	*	*
+verb passive participle fs	1	ܡܗܘܼܠܲܟ݂ܬܵܐ	ܡܗܠܟ	*	*
+verb passive participle fs	1	ܡܚܝܼܬ݂ܵܐ	ܡܚܐ	*	*
+verb passive participle fs	1	ܡܘܼܚܒܲܪܬܵܐ	ܡܚܒܪ	*	*
+verb passive participle fs	1	ܡܚܘܼܒܲܪܬܵܐ	ܡܚܒܪ	*	*
+verb passive participle fs	1	ܡܚܘܼܦܪܲܦܬܵܐ	ܡܚܦܪܦ	*	*
+verb passive participle fs	1	ܡܛܘܼܝܲܣܬܵܐ	ܡܛܝܣ	*	*
+verb passive participle fs	1	ܡܠܘܼܚܲܡܬܵܐ	ܡܠܚܡ	*	*
+verb passive participle fs	1	ܡܡܘܼܥܪܲܒ݂ܬܵܐ	ܡܡܥܪܒ	*	*
+verb passive participle fs	1	ܡܘܼܢܒ݂ܲܗܬܵܐ	ܡܢܒܗ	*	*
+verb passive participle fs	1	ܡܢܘܼܛܲܪܬܵܐ	ܡܢܛܪ	*	*
+verb passive participle fs	1	ܡܣܘܼܪܒܲܣܬܵܐ	ܡܣܪܒܣ	*	*
+verb passive participle fs	1	ܡܦܘܼܚܲܠܬܵܐ	ܡܦܚܠ	*	*
+verb passive participle fs	1	ܡܘܼܦܪܲܝܬܵܐ	ܡܦܪܐ	*	*
+verb passive participle fs	1	ܡܘܼܦܫܲܪܬܵܐ	ܡܦܫܪ	*	*
+verb passive participle fs	1	ܡܩܘܼܒܲܠܬܵܐ	ܡܩܒܠ	*	*
+verb passive participle fs	1	ܡܫܘܼܚܬܲܢܬܵܐ	ܡܫܚܬܢ	*	*
+verb passive participle fs	1	ܡܫܘܼܥܒܲܕ݂ܬܵܐ	ܡܫܥܒܕ	*	*
+verb passive participle fs	1	ܡܫܘܼܩܫܲܩܬܵܐ	ܡܫܩܫܩ	*	*
+verb passive participle fs	1	ܡܘܼܬ݂ܠܲܓ݂ܬܵܐ	ܡܬܠܓ	*	*
+verb passive participle fs	1	ܡܬܘܼܪܓܲܡܬܵܐ	ܡܬܪܓܡ	*	*
+verb passive participle fs	1	ܥܡܝܼܟ̰ܬܵܐ	ܥܡܟ	*	*
+verb passive participle fs	1	ܨܕ݂ܝܼܬ݂ܵܐ	ܨܕܐ	*	*
+verb passive participle fs	1	ܩܦ̮ܝܼܛܬܵܐ	ܩܦܛ	*	*
+verb passive participle fs	1	ܩܪܝܼܫܬܵܐ	ܩܪܫ	*	*
+verb passive participle ms	1	ܐ݇ܣܝܼܩܵܐ	ܐܣܩ	*	*
+verb passive participle ms	1	ܒܙܝܼܩܵܐ	ܒܙܩ	*	*
+verb passive participle ms	1	ܓܝܼܫܵܐ	ܓܐܫ	*	*
+verb passive participle ms	1	ܓ݂ܠܝܼܒܵܐ	ܓܠܒ	*	*
+verb passive participle ms	1	ܓ̰ܸܪܝܵܐ	ܓܪܐ	*	*
+verb passive participle ms	1	ܕܪܝܼܣܵܐ	ܕܪܣ	*	*
+verb passive participle ms	1	ܚܪܝܼܨܵܐ	ܚܪܨ	*	*
+verb passive participle ms	1	ܛܥܝܼܡܵܐ	ܛܥܡ	*	*
+verb passive participle ms	1	ܡܐܘܼܢܠܵܐ	ܡܐܢܠ	*	*
+verb passive participle ms	1	ܡܗܘܼܕܝܵܐ	ܡܗܕܐ	*	*
+verb passive participle ms	1	ܡܘܼܗܘܝܵܐ	ܡܗܘܐ	*	*
+verb passive participle ms	1	ܡܘܼܚܫܒ݂ܵܐ	ܡܚܫܒ	*	*
+verb passive participle ms	1	ܡܘܼܝܪܩܵܐ	ܡܝܪܩ	*	*
+verb passive participle ms	1	ܡܟܘܼܪܦܫܵܐ	ܡܟܪܦܫ	*	*
+verb passive participle ms	1	ܡܘܼܡܛܝܵܐ	ܡܡܛܐ	*	*
+verb passive participle ms	1	ܡܘܼܣܡܝܵܐ	ܡܣܡܐ	*	*
+verb passive participle ms	1	ܡܘܼܦܪܚܵܐ	ܡܦܪܚ	*	*
+verb passive participle ms	1	ܡܨܘܼܠܦܵܐ	ܡܨܠܦ	*	*
+verb passive participle ms	1	ܡܫܘܼܠܚܵܐ	ܡܫܠܚ	*	*
+verb passive participle ms	1	ܡܫܘܼܡܫܢܵܐ	ܡܫܡܫܢ	*	*
+verb passive participle ms	1	ܡܬܘܼܢܢܵܐ	ܡܬܢܢ	*	*
+verb passive participle ms	1	ܣܐܝܼܢܵܐ	ܣܐܢ	*	*
+verb passive participle ms	1	ܥܓ̰ܝܼܒܵܐ	ܥܓܒ	*	*
+verb passive participle ms	1	ܦܠܝܼܓ݂ܵܐ	ܦܠܓ	*	*
+verb passive participle ms	1	ܦܠܝܼܛܵܐ	ܦܠܛ	*	*
+verb passive participle ms	1	ܦܩܝܼܕ݂ܵܐ	ܦܩܕ	*	*
+verb passive participle ms	1	ܨܸܒ݂ܝܵܐ	ܨܒܐ	*	*
+verb passive participle ms	1	ܨܗܝܼܠܵܐ	ܨܗܠ	*	*
+verb passive participle ms	1	ܫܛܝܼܦܵܐ	ܫܛܦ	*	*
+verb passive participle ms	1	ܫܟ݂ܝܼܪܵܐ	ܫܟܪ	*	*
+verb passive participle pl	1	ܒܸܠܝܹ̈ܐ	ܒܠܐ	*	*
+verb passive participle pl	1	ܓܝܼܪܹ̈ܐ	ܓܐܪ	*	*
+verb passive participle pl	1	ܓܸܗܝܹ̈ܐ	ܓܗܐ	*	*
+verb passive participle pl	1	ܕܢܝܼܚܹ̈ܐ	ܕܢܚ	*	*
+verb passive participle pl	1	ܕܥܝܼܟ݂ܹ̈ܐ	ܕܥܟ	*	*
+verb passive participle pl	1	ܙܸܟ݂ܝܹ̈ܐ	ܙܟܐ	*	*
+verb passive participle pl	1	ܟ̰ܘܝܼܟ̰ܹ̈ܐ	ܟܘܟ	*	*
+verb passive participle pl	1	ܡܘܼܗܠܟ݂ܹ̈ܐ	ܡܗܠܟ	*	*
+verb passive participle pl	1	ܡܚܘܼܪ̈ܒܫܹܐ	ܡܚܪܒܫ	*	*
+verb passive participle pl	1	ܡܘܼܛܥܢܹ̈ܐ	ܡܛܥܢ	*	*
+verb passive participle pl	1	ܡܝܘܼܩܪܹ̈ܐ	ܡܝܩܪ	*	*
+verb passive participle pl	1	ܡܘܼܠܗܒ݂ܹ̈ܐ	ܡܠܗܒ	*	*
+verb passive participle pl	1	ܡܘܼܠܝܨܹ̈ܐ	ܡܠܝܨ	*	*
+verb passive participle pl	1	ܡܡܘܼܚܪܹ̈ܐ	ܡܡܚܪ	*	*
+verb passive participle pl	1	ܡܘܼܢܝܚܹ̈ܐ	ܡܢܝܚ	*	*
+verb passive participle pl	1	ܡܣܘܼܘܣܝܹ̈ܐ	ܡܣܘܣܐ	*	*
+verb passive participle pl	1	ܡܦܘܼܗܪܹ̈ܐ	ܡܦܗܪ	*	*
+verb passive participle pl	1	ܡܘܼܪ̈ܓܫܹܐ	ܡܪܓܫ	*	*
+verb passive participle pl	1	ܡܫܘܼܒܠܹ̈ܐ	ܡܫܒܠ	*	*
+verb passive participle pl	1	ܣܸܓ݂ܝܹ̈ܐ	ܣܓܐ	*	*
+verb passive past 1fs	1	ܡܐܘܼܕܫܲܢ	ܡܐܕܫ	*	*
+verb passive past 1fs	1	ܡܣܘܼܬܪܲܢ	ܡܣܬܪ	*	*
+verb passive past 1fs	1	ܢܓܝܼܙܲܢ	ܢܓܙ	*	*
+verb passive past 1fs	1	ܢܨܝܼܒ݂ܲܢ	ܢܨܒ	*	*
+verb passive past 1fs	1	ܥܸܪܝܲܢ	ܥܪܐ	*	*
+verb passive past 1fs	1	ܦܸܫܝܲܢ	ܦܫܐ	*	*
+verb passive past 1p	1	ܓܪܝܼܥܸܚ	ܓܪܥ	*	*
+verb passive past 1p	1	ܚܦܝܼܪܸܚ	ܚܦܪ	*	*
+verb passive past 1p	1	ܠܒ݂ܝܼܫܸܚ	ܠܒܫ	*	*
+verb passive past 1p	1	ܡܓܘܼܪܓ݂ܸܚ	ܡܓܪܓ	*	*
+verb passive past 1p	1	ܡܘܼܕܟܪܸܚ	ܡܕܟܪ	*	*
+verb passive past 1p	1	ܡܗܘܼܕܪܸܚ	ܡܗܕܪ	*	*
+verb passive past 1p	1	ܡܚܘܼܬܡܸܚ	ܡܚܬܡ	*	*
+verb passive past 1p	1	ܡܣܘܼܪܩܠܸܚ	ܡܣܪܩܠ	*	*
+verb passive past 1p	1	ܡܘܼܦܫܛܸܚ	ܡܦܫܛ	*	*
+verb passive past 1p	1	ܡܘܼܩܪܒ݂ܸܚ	ܡܩܪܒ	*	*
+verb passive past 1p	1	ܡܫܘܼܦܠܦܸܚ	ܡܫܦܠܦ	*	*
+verb passive past 1p	1	ܣܒ݂ܝܼܗܸܚ	ܣܒܗ	*	*
+verb passive past 1s	1	ܚܡܝܼܠܸܢ	ܚܡܠ	*	*
+verb passive past 1s	1	ܛܠܝܼܥܸܢ	ܛܠܥ	*	*
+verb passive past 1s	1	ܝܠܝܼܦܸܢ	ܝܠܦ	*	*
+verb passive past 1s	1	ܠܟܝܼܚܸܢ	ܠܟܚ	*	*
+verb passive past 1s	1	ܡܗܘܼܝܡܢܸܢ	ܡܗܝܡܢ	*	*
+verb passive past 1s	1	ܡܛܘܼܝܠܸܢ	ܡܛܝܠ	*	*
+verb passive past 1s	1	ܡܛܘܼܪܡܫܸܢ	ܡܛܪܡܫ	*	*
+verb passive past 1s	1	ܡܬܘܼܚܡܸܢ	ܡܬܚܡ	*	*
+verb passive past 1s	1	ܡܬܘܼܡܢܸܢ	ܡܬܡܢ	*	*
+verb passive past 1s	1	ܦܝܼܚܸܢ	ܦܐܚ	*	*
+verb passive past 1s	1	ܫܦܝܼܠܸܢ	ܫܦܠ	*	*
+verb passive past 1s	1	ܬܦܝܼܩܸܢ	ܬܦܩ	*	*
+verb passive past 2fs	1	ܓܪܝܼܡܲܬܝ	ܓܪܡ	*	*
+verb passive past 2fs	1	ܕܝܼܢܲܬܝ	ܕܐܢ	*	*
+verb passive past 2fs	1	ܕܥܝܼܪܲܬܝ	ܕܥܪ	*	*
+verb passive past 2fs	1	ܡܐܘܼܢܠܲܬܝ	ܡܐܢܠ	*	*
+verb passive past 2fs	1	ܡܒܘܼܩܪܲܬܝ	ܡܒܩܪ	*	*
+verb passive past 2fs	1	ܡܕܘܼܒܫܲܬܝ	ܡܕܒܫ	*	*
+verb passive past 2fs	1	ܡܟܘܼܦܫܲܬܝ	ܡܟܦܫ	*	*
+verb passive past 2fs	1	ܡܣܘܼܚܒܪܲܬܝ	ܡܣܚܒܪ	*	*
+verb passive past 2fs	1	ܡܸܨܝܲܬܝ	ܡܨܐ	*	*
+verb passive past 2fs	1	ܢܦܝܼܩܲܬܝ	ܢܦܩ	*	*
+verb passive past 2fs	1	ܪܒ݂ܝܼܨܲܬܝ	ܪܒܨ	*	*
+verb passive past 2fs	1	ܬܦܝܼܩܲܬܝ	ܬܦܩ	*	*
+verb passive past 2ms	1	ܓ̰ܘܝܼܓ̰ܸܬ	ܓܘܓ	*	*
+verb passive past 2ms	1	ܝܡܹܝܬ	ܝܡܐ	*	*
+verb passive past 2ms	1	ܡܒܘܼܪܒܙܸܬ	ܡܒܪܒܙ	*	*
+verb passive past 2ms	1	ܡܕܘܼܟܹܝܬ	ܡܕܟܐ	*	*
+verb passive past 2ms	1	ܡܠܘܼܚܡܸܬ	ܡܠܚܡ	*	*
+verb passive past 2ms	1	ܡܣܘܼܘܟܢܸܬ	ܡܣܘܟܢ	*	*
+verb passive past 2ms	1	ܡܣܘܼܘܣܹܝܬ	ܡܣܘܣܐ	*	*
+verb passive past 2ms	1	ܡܘܼܣܚܪܸܬ	ܡܣܚܪ	*	*
+verb passive past 2ms	1	ܡܘܼܣܢܹܝܬ	ܡܣܢܐ	*	*
+verb passive past 2ms	1	ܡܘܼܩܕܡܸܬ	ܡܩܕܡ	*	*
+verb passive past 2ms	1	ܡܘܼܩܠܥܸܬ	ܡܩܠܥ	*	*
+verb passive past 2ms	1	ܩܛܝܼܠܸܬ	ܩܛܠ	*	*
+verb passive past 2p	1	ܒܝܼܣܝܼܬܘܿܢ	ܒܐܣ	*	*
+verb passive past 2p	1	ܙܕܝܼܥܝܼܬܘܿܢ	ܙܕܥ	*	*
+verb passive past 2p	1	ܚܝܼܦܝܼܬܘܿܢ	ܚܐܦ	*	*
+verb passive past 2p	1	ܚܠܲܝܬܘܿܢ	ܚܠܐ	*	*
+verb passive past 2p	1	ܠܥܝܼܣܝܼܬܘܿܢ	ܠܥܣ	*	*
+verb passive past 2p	1	ܡܒܘܼܪܟ݂ܝܼܬܘܿܢ	ܡܒܪܟ	*	*
+verb passive past 2p	1	ܡܘܼܘܣܦܝܼܬܘܿܢ	ܡܘܣܦ	*	*
+verb passive past 2p	1	ܡܙܘܼܢܓ݂ܝܼܬܘܿܢ	ܡܙܢܓ	*	*
+verb passive past 2p	1	ܡܢܝܼܥܝܼܬܘܿܢ	ܡܢܥ	*	*
+verb passive past 2p	1	ܡܣܘܼܡܡܝܼܬܘܿܢ	ܡܣܡܡ	*	*
+verb passive past 2p	1	ܡܘܼܫܚܢܝܼܬܘܿܢ	ܡܫܚܢ	*	*
+verb passive past 2p	1	ܨܠܝܼܦܝܼܬܘܿܢ	ܨܠܦ	*	*
+verb passive past 3fs	1	ܚܕ݂ܝܼܥܵܐ	ܚܕܥ	*	*
+verb passive past 3fs	1	ܡܝܼܥܵܐ	ܡܐܥ	*	*
+verb passive past 3fs	1	ܡܒܘܼܗܪܢܵܐ	ܡܒܗܪܢ	*	*
+verb passive past 3fs	1	ܡܓܘܼܢܓܙܵܐ	ܡܓܢܓܙ	*	*
+verb passive past 3fs	1	ܡܝܘܼܠܕ݂ܵܐ	ܡܝܠܕ	*	*
+verb passive past 3fs	1	ܡܣܘܼܩܠܵܐ	ܡܣܩܠ	*	*
+verb passive past 3fs	1	ܡܥܘܼܘܟ݂ܵܐ	ܡܥܘܟ	*	*
+verb passive past 3fs	1	ܡܸܨܝܵܐ	ܡܨܐ	*	*
+verb passive past 3fs	1	ܡܘܼܨܝܬ݂ܵܐ	ܡܨܝܬ	*	*
+verb passive past 3fs	1	ܡܫܘܼܟܪܵܐ	ܡܫܟܪ	*	*
+verb passive past 3fs	1	ܡܬܘܼܡܡܵܐ	ܡܬܡܡ	*	*
+verb passive past 3fs	1	ܦܣܝܼܩܵܐ	ܦܣܩ	*	*
+verb passive past 3ms	1	ܕܠܹܐ	ܕܠܐ	*	*
+verb passive past 3ms	1	ܗܢܹܐ	ܗܢܐ	*	*
+verb passive past 3ms	1	ܡܘܼܒܸܠ	ܡܒܠ	*	*
+verb passive past 3ms	1	ܡܓܘܼܪܸܓ݂	ܡܓܪܓ	*	*
+verb passive past 3ms	1	ܡܙܘܼܠܸܓ݂	ܡܙܠܓ	*	*
+verb passive past 3ms	1	ܡܘܼܚܢܹܐ	ܡܚܢܐ	*	*
+verb passive past 3ms	1	ܡܢܘܼܛܸܪ	ܡܢܛܪ	*	*
+verb passive past 3ms	1	ܡܦܘܼܘܸܩ	ܡܦܘܩ	*	*
+verb passive past 3ms	1	ܡܘܼܦܥܸܠ	ܡܦܥܠ	*	*
+verb passive past 3ms	1	ܡܘܼܨܸܚ	ܡܨܚ	*	*
+verb passive past 3ms	1	ܡܬܘܼܠܚܸܡ	ܡܬܠܚܡ	*	*
+verb passive past 3ms	1	ܨܢܝܼܥ	ܨܢܥ	*	*
+verb passive past 3p	1	ܙܒ݂ܝܼܢܝܼ	ܙܒܢ	*	*
+verb passive past 3p	1	ܚܬܲܝ	ܚܬܐ	*	*
+verb passive past 3p	1	ܡܓܘܼܪܓ݂ܝܼ	ܡܓܪܓ	*	*
+verb passive past 3p	1	ܡܘܼܓܪܫܝܼ	ܡܓܪܫ	*	*
+verb passive past 3p	1	ܡܕܘܼܪܲܝ	ܡܕܪܐ	*	*
+verb passive past 3p	1	ܡܚܘܼܬܚܬ݂ܝܼ	ܡܚܬܚܬ	*	*
+verb passive past 3p	1	ܡܘܼܢܕܦܝܼ	ܡܢܕܦ	*	*
+verb passive past 3p	1	ܡܣܘܼܟܡܝܼ	ܡܣܟܡ	*	*
+verb passive past 3p	1	ܡܘܼܪܫܡܝܼ	ܡܪܫܡ	*	*
+verb passive past 3p	1	ܡܬܘܼܪܨܝܼ	ܡܬܪܨ	*	*
+verb passive past 3p	1	ܣܒ݂ܝܼܠܝܼ	ܣܒܠ	*	*
+verb passive past 3p	1	ܦܩܝܼܥܝܼ	ܦܩܥ	*	*
+verb past 1p	1	ܒܠܝܼܓ݂ ܠܲܢ	ܒܠܓ	*	*
+verb past 1p	1	ܕܥܝܼܟ݂ ܠܲܢ	ܕܥܟ	*	*
+verb past 1p	1	ܙܘܹܐ ܠܲܢ	ܙܘܐ	*	*
+verb past 1p	1	ܛܠܝܼܒ݂ ܠܲܢ	ܛܠܒ	*	*
+verb past 1p	1	ܟ̰ܘܝܼܟ̰ ܠܲܢ	ܟܘܟ	*	*
+verb past 1p	1	ܟܢܝܼܫ ܠܲܢ	ܟܢܫ	*	*
+verb past 1p	1	ܡܒܘܼܢܹܐ ܠܲܢ	ܡܒܢܐ	*	*
+verb past 1p	1	ܡܒܘܼܣܸܡ ܠܲܢ	ܡܒܣܡ	*	*
+verb past 1p	1	ܡܒܘܼܪܒܸܪ ܠܲܢ	ܡܒܪܒܪ	*	*
+verb past 1p	1	ܡܓܘܼܢܓܸܙ ܠܲܢ	ܡܓܢܓܙ	*	*
+verb past 1p	1	ܡܕܘܼܒܸܪ ܠܲܢ	ܡܕܒܪ	*	*
+verb past 1p	1	ܡܙܘܼܦܸܬ݂ ܠܲܢ	ܡܙܦܬ	*	*
+verb past 1p	1	ܡܚܘܼܡܸܫ ܠܲܢ	ܡܚܡܫ	*	*
+verb past 1p	1	ܡܘܼܚܬܹܐ ܠܲܢ	ܡܚܬܐ	*	*
+verb past 1p	1	ܡܘܼܛܐܸܒ݂ ܠܲܢ	ܡܛܐܒ	*	*
+verb past 1p	1	ܡܘܼܡܛܸܪ ܠܲܢ	ܡܡܛܪ	*	*
+verb past 1p	1	ܡܣܘܼܚܒܸܪ ܠܲܢ	ܡܣܚܒܪ	*	*
+verb past 1p	1	ܡܨܘܼܠܸܦ ܠܲܢ	ܡܨܠܦ	*	*
+verb past 1p	1	ܡܩܘܼܛܸܠ ܠܲܢ	ܡܩܛܠ	*	*
+verb past 1p	1	ܡܪܘܼܣܸܣ ܠܲܢ	ܡܪܣܣ	*	*
+verb past 1p	1	ܡܘܼܫܐܸܠ ܠܲܢ	ܡܫܐܠ	*	*
+verb past 1p	1	ܡܫܘܼܠܗܸܒ݂ ܠܲܢ	ܡܫܠܗܒ	*	*
+verb past 1p	1	ܡܘܼܫܠܸܡ ܠܲܢ	ܡܫܠܡ	*	*
+verb past 1p	1	ܡܫܘܼܦܠܸܦ ܠܲܢ	ܡܫܦܠܦ	*	*
+verb past 1p	1	ܡܫܘܼܪܫܸܪ ܠܲܢ	ܡܫܪܫܪ	*	*
+verb past 1p	1	ܡܘܼܫܬܸܩ ܠܲܢ	ܡܫܬܩ	*	*
+verb past 1p	1	ܡܬ݂ܝܼܚ ܠܲܢ	ܡܬܚ	*	*
+verb past 1p	1	ܡܬܘܼܦܬܸܦ ܠܲܢ	ܡܬܦܬܦ	*	*
+verb past 1p	1	ܥܢܹܐ ܠܲܢ	ܥܢܐ	*	*
+verb past 1p	1	ܫܠܝܼܡ ܠܲܢ	ܫܠܡ	*	*
+verb past 1s	1	ܒܪܝܼܟ ܠܝܼ	ܒܪܟ	*	*
+verb past 1s	1	ܓܡܝܼܥ ܠܝܼ	ܓܡܥ	*	*
+verb past 1s	1	ܓܪܝܼܫ ܠܝܼ	ܓܪܫ	*	*
+verb past 1s	1	ܕܡܹܐ ܠܝܼ	ܕܡܐ	*	*
+verb past 1s	1	ܕܥܝܼܨ ܠܝܼ	ܕܥܨ	*	*
+verb past 1s	1	ܚܘܝܼܪ ܠܝܼ	ܚܘܪ	*	*
+verb past 1s	1	ܛܒ݂ܹܐ ܠܝܼ	ܛܒܐ	*	*
+verb past 1s	1	ܡܘܼܒܗܸܪ ܠܝܼ	ܡܒܗܪ	*	*
+verb past 1s	1	ܡܒܘܼܠܩܸܢ ܠܝܼ	ܡܒܠܩܢ	*	*
+verb past 1s	1	ܡܓܘܼܢܒܸܠ ܠܝܼ	ܡܓܢܒܠ	*	*
+verb past 1s	1	ܡܕܘܼܟܹܐ ܠܝܼ	ܡܕܟܐ	*	*
+verb past 1s	1	ܡܕܘܼܠܕܸܠ ܠܝܼ	ܡܕܠܕܠ	*	*
+verb past 1s	1	ܡܕܘܼܩܕܸܩ ܠܝܼ	ܡܕܩܕܩ	*	*
+verb past 1s	1	ܡܕܘܼܪܸܫ ܠܝܼ	ܡܕܪܫ	*	*
+verb past 1s	1	ܡܗܘܼܕܸܪ ܠܝܼ	ܡܗܕܪ	*	*
+verb past 1s	1	ܡܚܘܼܕܪܹܐ ܠܝܼ	ܡܚܕܪܐ	*	*
+verb past 1s	1	ܡܘܼܚܬܹܐ ܠܝܼ	ܡܚܬܐ	*	*
+verb past 1s	1	ܡܟܘܼܪܦܸܫ ܠܝܼ	ܡܟܪܦܫ	*	*
+verb past 1s	1	ܡܘܼܣܓܹܐ ܠܝܼ	ܡܣܓܐ	*	*
+verb past 1s	1	ܡܘܼܣܦܸܩ ܠܝܼ	ܡܣܦܩ	*	*
+verb past 1s	1	ܡܦܘܼܫܸܩ ܠܝܼ	ܡܦܫܩ	*	*
+verb past 1s	1	ܡܫܘܼܪܛܸܚ ܠܝܼ	ܡܫܪܛܚ	*	*
+verb past 1s	1	ܡܘܼܫܬܹܐ ܠܝܼ	ܡܫܬܐ	*	*
+verb past 1s	1	ܡܬܘܼܪܓܸܡ ܠܝܼ	ܡܬܪܓܡ	*	*
+verb past 1s	1	ܢܟ̰ܝܼܠ ܠܝܼ	ܢܟܠ	*	*
+verb past 1s	1	ܢܥܝܼܪ ܠܝܼ	ܢܥܪ	*	*
+verb past 1s	1	ܣܡܝܼܟ݂ ܠܝܼ	ܣܡܟ	*	*
+verb past 1s	1	ܣܪܝܼܚ ܠܝܼ	ܣܪܚ	*	*
+verb past 1s	1	ܩܕ݂ܝܼܡ ܠܝܼ	ܩܕܡ	*	*
+verb past 1s	1	ܫܠܝܼܨ ܠܝܼ	ܫܠܨ	*	*
+verb past 2fs	1	ܒܪܝܼܩ ܠܵܟ݂ܝ	ܒܪܩ	*	*
+verb past 2fs	1	ܓ̰ܝܼܓ ܠܵܟ݂ܝ	ܓܐܓ	*	*
+verb past 2fs	1	ܕܒ݂ܝܼܚ ܠܵܟ݂ܝ	ܕܒܚ	*	*
+verb past 2fs	1	ܚܠܝܼܒ݂ ܠܵܟ݂ܝ	ܚܠܒ	*	*
+verb past 2fs	1	ܟܝܼܒ ܠܵܟ݂ܝ	ܟܐܒ	*	*
+verb past 2fs	1	ܡܒܘܼܙܒܸܙ ܠܵܟ݂ܝ	ܡܒܙܒܙ	*	*
+verb past 2fs	1	ܡܒܘܼܪܣܸܡ ܠܵܟ݂ܝ	ܡܒܪܣܡ	*	*
+verb past 2fs	1	ܡܕܘܼܝܸܪ ܠܵܟ݂ܝ	ܡܕܝܪ	*	*
+verb past 2fs	1	ܡܘܼܚܹܐ ܠܵܟ݂ܝ	ܡܚܐ	*	*
+verb past 2fs	1	ܡܘܼܚܬܹܐ ܠܵܟ݂ܝ	ܡܚܬܐ	*	*
+verb past 2fs	1	ܡܟܘܼܡܸܡ ܠܵܟ݂ܝ	ܡܟܡܡ	*	*
+verb past 2fs	1	ܡܠܘܼܨܠܸܨ ܠܵܟ݂ܝ	ܡܠܨܠܨ	*	*
+verb past 2fs	1	ܡܘܼܢܕܸܦ ܠܵܟ݂ܝ	ܡܢܕܦ	*	*
+verb past 2fs	1	ܡܣܘܼܓܸܠ ܠܵܟ݂ܝ	ܡܣܓܠ	*	*
+verb past 2fs	1	ܡܦܘܼܚܸܠ ܠܵܟ݂ܝ	ܡܦܚܠ	*	*
+verb past 2fs	1	ܡܨܘܼܠܸܦ ܠܵܟ݂ܝ	ܡܨܠܦ	*	*
+verb past 2fs	1	ܡܘܼܩܠܸܥ ܠܵܟ݂ܝ	ܡܩܠܥ	*	*
+verb past 2fs	1	ܡܘܼܩܪܸܒ݂ ܠܵܟ݂ܝ	ܡܩܪܒ	*	*
+verb past 2fs	1	ܡܘܼܪܝܸܟ݂ ܠܵܟ݂ܝ	ܡܪܝܟ	*	*
+verb past 2fs	1	ܡܪܝܼܟ̰ ܠܵܟ݂ܝ	ܡܪܟ	*	*
+verb past 2fs	1	ܡܪܘܼܦܹܐ ܠܵܟ݂ܝ	ܡܪܦܐ	*	*
+verb past 2fs	1	ܡܫܘܼܚܠܸܦ ܠܵܟ݂ܝ	ܡܫܚܠܦ	*	*
+verb past 2fs	1	ܡܘܼܫ݇ܟ̰ܸܚ ܠܵܟ݂ܝ	ܡܫܟܚ	*	*
+verb past 2fs	1	ܡܘܼܫܡܸܥ ܠܵܟ݂ܝ	ܡܫܡܥ	*	*
+verb past 2fs	1	ܣܒ݂ܝܼܠ ܠܵܟ݂ܝ	ܣܒܠ	*	*
+verb past 2fs	1	ܥܪܹܐ ܠܵܟ݂ܝ	ܥܪܐ	*	*
+verb past 2fs	1	ܩܪܝܼܒ݂ ܠܵܟ݂ܝ	ܩܪܒ	*	*
+verb past 2fs	1	ܩܫܹܐ ܠܵܟ݂ܝ	ܩܫܐ	*	*
+verb past 2fs	1	ܪܝܼܚ ܠܵܟ݂ܝ	ܪܐܚ	*	*
+verb past 2fs	1	ܪܗܝܼܒ݂ ܠܵܟ݂ܝ	ܪܗܒ	*	*
+verb past 2ms	1	ܒܛܝܼܠ ܠܘܼܟ݂	ܒܛܠ	*	*
+verb past 2ms	1	ܒܨܝܼܪ ܠܘܼܟ݂	ܒܨܪ	*	*
+verb past 2ms	1	ܓ݂ܠܝܼܒ ܠܘܼܟ݂	ܓܠܒ	*	*
+verb past 2ms	1	ܛܪܹܐ ܠܘܼܟ݂	ܛܪܐ	*	*
+verb past 2ms	1	ܟܪܹܐ ܠܘܼܟ݂	ܟܪܐ	*	*
+verb past 2ms	1	ܡܒܘܼܛܒܸܛ ܠܘܼܟ݂	ܡܒܛܒܛ	*	*
+verb past 2ms	1	ܡܒܘܼܩܸܪ ܠܘܼܟ݂	ܡܒܩܪ	*	*
+verb past 2ms	1	ܡܕܘܼܒܸܫ ܠܘܼܟ݂	ܡܕܒܫ	*	*
+verb past 2ms	1	ܡܘܼܘܕܹܐ ܠܘܼܟ݂	ܡܘܕܐ	*	*
+verb past 2ms	1	ܡܙܘܼܡܸܢ ܠܘܼܟ݂	ܡܙܡܢ	*	*
+verb past 2ms	1	ܡܚܘܼܡܸܠ ܠܘܼܟ݂	ܡܚܡܠ	*	*
+verb past 2ms	1	ܡܚܘܼܪܙܸܦ ܠܘܼܟ݂	ܡܚܪܙܦ	*	*
+verb past 2ms	1	ܡܚܘܼܫܒܸܢ ܠܘܼܟ݂	ܡܚܫܒܢ	*	*
+verb past 2ms	1	ܡܝܘܼܩܸܪ ܠܘܼܟ݂	ܡܝܩܪ	*	*
+verb past 2ms	1	ܡܘܼܟܸܦ ܠܘܼܟ݂	ܡܟܦ	*	*
+verb past 2ms	1	ܡܘܼܠܗܸܒ݂ ܠܘܼܟ݂	ܡܠܗܒ	*	*
+verb past 2ms	1	ܡܠܘܼܩܸܛ ܠܘܼܟ݂	ܡܠܩܛ	*	*
+verb past 2ms	1	ܡܣܘܼܙܓܸܪ ܠܘܼܟ݂	ܡܣܙܓܪ	*	*
+verb past 2ms	1	ܡܣܘܼܪܒܸܣ ܠܘܼܟ݂	ܡܣܪܒܣ	*	*
+verb past 2ms	1	ܡܘܼܥܝܸܕ݂ ܠܘܼܟ݂	ܡܥܝܕ	*	*
+verb past 2ms	1	ܡܘܼܥܝܸܩ ܠܘܼܟ݂	ܡܥܝܩ	*	*
+verb past 2ms	1	ܡܦܘܼܪܡܹܐ ܠܘܼܟ݂	ܡܦܪܡܐ	*	*
+verb past 2ms	1	ܡܨܘܼܥܸܪ ܠܘܼܟ݂	ܡܨܥܪ	*	*
+verb past 2ms	1	ܡܫܘܼܥܡܸܪ ܠܘܼܟ݂	ܡܫܥܡܪ	*	*
+verb past 2ms	1	ܣܒ݂ܝܼܗ ܠܘܼܟ݂	ܣܒܗ	*	*
+verb past 2ms	1	ܣܥܝܼܪ ܠܘܼܟ݂	ܣܥܪ	*	*
+verb past 2ms	1	ܣܪܝܼܩ ܠܘܼܟ݂	ܣܪܩ	*	*
+verb past 2ms	1	ܥܠܹܐ ܠܘܼܟ݂	ܥܠܐ	*	*
+verb past 2ms	1	ܩܝܼܨ ܠܘܼܟ݂	ܩܐܨ	*	*
+verb past 2ms	1	ܫܝܼܦ ܠܘܼܟ݂	ܫܐܦ	*	*
+verb past 2p	1	ܟܡܝܼܕ݂ ܠܲܘܟ݂ܘܿܢ	ܟܡܕ	*	*
+verb past 2p	1	ܟܦܝܼܢ ܠܲܘܟ݂ܘܿܢ	ܟܦܢ	*	*
+verb past 2p	1	ܟܬ݂ܝܼܒ݂ ܠܲܘܟ݂ܘܿܢ	ܟܬܒ	*	*
+verb past 2p	1	ܡܒܘܼܛܸܠ ܠܲܘܟ݂ܘܿܢ	ܡܒܛܠ	*	*
+verb past 2p	1	ܡܘܼܚܕܹܐ ܠܲܘܟ݂ܘܿܢ	ܡܚܕܐ	*	*
+verb past 2p	1	ܡܘܼܚܸܡ ܠܲܘܟ݂ܘܿܢ	ܡܚܡ	*	*
+verb past 2p	1	ܡܘܼܚܡܸܨ ܠܲܘܟ݂ܘܿܢ	ܡܚܡܨ	*	*
+verb past 2p	1	ܡܟܘܼܫܟܸܫ ܠܲܘܟ݂ܘܿܢ	ܡܟܫܟܫ	*	*
+verb past 2p	1	ܡܢܘܼܛܸܪ ܠܲܘܟ݂ܘܿܢ	ܡܢܛܪ	*	*
+verb past 2p	1	ܡܘܼܣܓܹܐ ܠܲܘܟ݂ܘܿܢ	ܡܣܓܐ	*	*
+verb past 2p	1	ܡܘܼܥܪܹܐ ܠܲܘܟ݂ܘܿܢ	ܡܥܪܐ	*	*
+verb past 2p	1	ܡܘܼܦܠܸܛ ܠܲܘܟ݂ܘܿܢ	ܡܦܠܛ	*	*
+verb past 2p	1	ܡܘܼܨܦܹܐ ܠܲܘܟ݂ܘܿܢ	ܡܨܦܐ	*	*
+verb past 2p	1	ܡܘܼܩܫܹܐ ܠܲܘܟ݂ܘܿܢ	ܡܩܫܐ	*	*
+verb past 2p	1	ܡܪܝܼܟ̰ ܠܲܘܟ݂ܘܿܢ	ܡܪܟ	*	*
+verb past 2p	1	ܡܘܼܫ݇ܟ̰ܸܚ ܠܲܘܟ݂ܘܿܢ	ܡܫܟܚ	*	*
+verb past 2p	1	ܢܚܝܼܬ݂ ܠܲܘܟ݂ܘܿܢ	ܢܚܬ	*	*
+verb past 2p	1	ܢܩܝܼܫ ܠܲܘܟ݂ܘܿܢ	ܢܩܫ	*	*
+verb past 2p	1	ܥܝܼܩ ܠܲܘܟ݂ܘܿܢ	ܥܐܩ	*	*
+verb past 2p	1	ܦܝܼܕ݂ ܠܲܘܟ݂ܘܿܢ	ܦܐܕ	*	*
+verb past 2p	1	ܦܢܹܐ ܠܲܘܟ݂ܘܿܢ	ܦܢܐ	*	*
+verb past 2p	1	ܦܫܝܼܩ ܠܲܘܟ݂ܘܿܢ	ܦܫܩ	*	*
+verb past 2p	1	ܦܬ݂ܹܐ ܠܲܘܟ݂ܘܿܢ	ܦܬܐ	*	*
+verb past 2p	1	ܩܠܝܼܥ ܠܲܘܟ݂ܘܿܢ	ܩܠܥ	*	*
+verb past 2p	1	ܩܫܹܐ ܠܲܘܟ݂ܘܿܢ	ܩܫܐ	*	*
+verb past 2p	1	ܪܟܝܼܟ݂ ܠܲܘܟ݂ܘܿܢ	ܪܟܟ	*	*
+verb past 2p	1	ܫܥܝܼܠ ܠܲܘܟ݂ܘܿܢ	ܫܥܠ	*	*
+verb past 2p	1	ܫܪܹܐ ܠܲܘܟ݂ܘܿܢ	ܫܪܐ	*	*
+verb past 2p	1	ܬܦܝܼܩ ܠܲܘܟ݂ܘܿܢ	ܬܦܩ	*	*
+verb past 2p	1	ܬܪܝܼܦ ܠܲܘܟ݂ܘܿܢ	ܬܪܦ	*	*
+verb past 3fs	1	ܒܠܹܐ ܠܵܗ̇	ܒܠܐ	*	*
+verb past 3fs	1	ܓܪܝܼܫ ܠܵܗ̇	ܓܪܫ	*	*
+verb past 3fs	1	ܙܠܝܼܥ ܠܵܗ̇	ܙܠܥ	*	*
+verb past 3fs	1	ܛܗܝܼܪ ܠܵܗ̇	ܛܗܪ	*	*
+verb past 3fs	1	ܛܘܹܐ ܠܵܗ̇	ܛܘܐ	*	*
+verb past 3fs	1	ܛܪܝܼܕ݂ ܠܵܗ̇	ܛܪܕ	*	*
+verb past 3fs	1	ܛܪܝܼܨ ܠܵܗ̇	ܛܪܨ	*	*
+verb past 3fs	1	ܡܘܼܒܛܸܠ ܠܵܗ̇	ܡܒܛܠ	*	*
+verb past 3fs	1	ܡܘܼܒܠܸܓ݂ ܠܵܗ̇	ܡܒܠܓ	*	*
+verb past 3fs	1	ܡܒܘܼܪܚܸܫ ܠܵܗ̇	ܡܒܪܚܫ	*	*
+verb past 3fs	1	ܡܓܘܼܫܸܩ ܠܵܗ̇	ܡܓܫܩ	*	*
+verb past 3fs	1	ܡܕܘܼܫܕܸܫ ܠܵܗ̇	ܡܕܫܕܫ	*	*
+verb past 3fs	1	ܡܘܼܚܙܹܐ ܠܵܗ̇	ܡܚܙܐ	*	*
+verb past 3fs	1	ܡܡܘܼܠܸܠ ܠܵܗ̇	ܡܡܠܠ	*	*
+verb past 3fs	1	ܡܣܘܼܙܓܸܪ ܠܵܗ̇	ܡܣܙܓܪ	*	*
+verb past 3fs	1	ܡܘܼܣܩܸܕ݂ ܠܵܗ̇	ܡܣܩܕ	*	*
+verb past 3fs	1	ܡܨܘܼܦܸܚ ܠܵܗ̇	ܡܨܦܚ	*	*
+verb past 3fs	1	ܡܘܼܫܐܸܠ ܠܵܗ̇	ܡܫܐܠ	*	*
+verb past 3fs	1	ܡܫܘܼܦܸܟ݂ ܠܵܗ̇	ܡܫܦܟ	*	*
+verb past 3fs	1	ܡܫܘܼܪܬܸܚ ܠܵܗ̇	ܡܫܪܬܚ	*	*
+verb past 3fs	1	ܣܐܝܼܢ ܠܵܗ̇	ܣܐܢ	*	*
+verb past 3fs	1	ܥܪܝܼܩ ܠܵܗ̇	ܥܪܩ	*	*
+verb past 3fs	1	ܦܣܝܼܩ ܠܵܗ̇	ܦܣܩ	*	*
+verb past 3fs	1	ܦܬ݂ܝܼܠ ܠܵܗ̇	ܦܬܠ	*	*
+verb past 3fs	1	ܨܠܝܼܨ ܠܵܗ̇	ܨܠܨ	*	*
+verb past 3fs	1	ܩܝܼܪ ܠܵܗ̇	ܩܝܪ	*	*
+verb past 3fs	1	ܪܝܼܩ ܠܵܗ̇	ܪܐܩ	*	*
+verb past 3fs	1	ܫܝܼܦ ܠܵܗ̇	ܫܐܦ	*	*
+verb past 3fs	1	ܫܗܹܐ ܠܵܗ̇	ܫܗܐ	*	*
+verb past 3fs	1	ܬܒ݂ܝܼܢ ܠܵܗ̇	ܬܒܢ	*	*
+verb past 3ms	1	ܕܝܼܩ ܠܹܗ	ܕܐܩ	*	*
+verb past 3ms	1	ܚܝܼܦ ܠܹܗ	ܚܐܦ	*	*
+verb past 3ms	1	ܝܪܝܼܟ݂ ܠܹܗ	ܝܪܟ	*	*
+verb past 3ms	1	ܟܣܹܐ ܠܹܗ	ܟܣܐ	*	*
+verb past 3ms	1	ܡܘܼܒܠܸܓ݂ ܠܹܗ	ܡܒܠܓ	*	*
+verb past 3ms	1	ܡܓ̰ܘܼܢܓ̰ܸܪ ܠܹܗ	ܡܓܢܓܪ	*	*
+verb past 3ms	1	ܡܘܼܕܪܸܟ݂ ܠܹܗ	ܡܕܪܟ	*	*
+verb past 3ms	1	ܡܘܼܘܡܹܐ ܠܹܗ	ܡܘܡܐ	*	*
+verb past 3ms	1	ܡܙܘܼܒܸܢ ܠܹܗ	ܡܙܒܢ	*	*
+verb past 3ms	1	ܡܚܘܼܪܦܸܫ ܠܹܗ	ܡܚܪܦܫ	*	*
+verb past 3ms	1	ܡܛܘܼܝܸܣ ܠܹܗ	ܡܛܝܣ	*	*
+verb past 3ms	1	ܡܛܘܼܦܹܐ ܠܹܗ	ܡܛܦܐ	*	*
+verb past 3ms	1	ܡܘܼܟܸܦ ܠܹܗ	ܡܟܦ	*	*
+verb past 3ms	1	ܡܟܘܼܪܦܸܫ ܠܹܗ	ܡܟܪܦܫ	*	*
+verb past 3ms	1	ܡܣܘܼܪܗܸܒ݂ ܠܹܗ	ܡܣܪܗܒ	*	*
+verb past 3ms	1	ܡܦܘܼܠܗܸܕ݂ ܠܹܗ	ܡܦܠܗܕ	*	*
+verb past 3ms	1	ܡܘܼܦܠܸܛ ܠܹܗ	ܡܦܠܛ	*	*
+verb past 3ms	1	ܡܘܼܦܸܩ ܠܹܗ	ܡܦܩ	*	*
+verb past 3ms	1	ܡܨܘܼܦܹܐ ܠܹܗ	ܡܨܦܐ	*	*
+verb past 3ms	1	ܡܫܘܼܕܸܠ ܠܹܗ	ܡܫܕܠ	*	*
+verb past 3ms	1	ܡܫܘܼܠܸܡ ܠܹܗ	ܡܫܠܡ	*	*
+verb past 3ms	1	ܡܫܘܼܪܒܸܛ ܠܹܗ	ܡܫܪܒܛ	*	*
+verb past 3ms	1	ܡܘܼܬܸܒ݂ ܠܹܗ	ܡܬܒ	*	*
+verb past 3ms	1	ܡܬܘܼܪܩܸܠ ܠܹܗ	ܡܬܪܩܠ	*	*
+verb past 3ms	1	ܢܥܝܼܪ ܠܹܗ	ܢܥܪ	*	*
+verb past 3ms	1	ܣܢܹܐ ܠܹܗ	ܣܢܐ	*	*
+verb past 3ms	1	ܫܛܝܼܦ ܠܹܗ	ܫܛܦ	*	*
+verb past 3ms	1	ܫܠܝܼܚ ܠܹܗ	ܫܠܚ	*	*
+verb past 3ms	1	ܫܦܝܼܟ݂ ܠܹܗ	ܫܦܟ	*	*
+verb past 3ms	1	ܬܪܝܼܦ ܠܹܗ	ܬܪܦ	*	*
+verb past 3p	1	ܒܠܹܐ ܠܗܘܿܢ	ܒܠܐ	*	*
+verb past 3p	1	ܕܡܝܼܪ ܠܗܘܿܢ	ܕܡܪ	*	*
+verb past 3p	1	ܙܟ݂ܹܐ ܠܗܘܿܢ	ܙܟܐ	*	*
+verb past 3p	1	ܙܥܝܼܦ ܠܗܘܿܢ	ܙܥܦ	*	*
+verb past 3p	1	ܚܕ݂ܝܼܥ ܠܗܘܿܢ	ܚܕܥ	*	*
+verb past 3p	1	ܡܘܼܐܣܸܩ ܠܗܘܿܢ	ܡܐܣܩ	*	*
+verb past 3p	1	ܡܒܘܼܕܸܪ ܠܗܘܿܢ	ܡܒܕܪ	*	*
+verb past 3p	1	ܡܒܘܼܪܚܸܫ ܠܗܘܿܢ	ܡܒܪܚܫ	*	*
+verb past 3p	1	ܡܓ̰ܘܼܥܸܨ ܠܗܘܿܢ	ܡܓܥܨ	*	*
+verb past 3p	1	ܡܕܘܼܝܸܠ ܠܗܘܿܢ	ܡܕܝܠ	*	*
+verb past 3p	1	ܡܘܼܙܝܸܥ ܠܗܘܿܢ	ܡܙܝܥ	*	*
+verb past 3p	1	ܡܟ̰ܘܼܪܟ̰ܸܪ ܠܗܘܿܢ	ܡܟܪܟܪ	*	*
+verb past 3p	1	ܡܠܘܼܩܸܛ ܠܗܘܿܢ	ܡܠܩܛ	*	*
+verb past 3p	1	ܡܡܘܼܬܸܠ ܠܗܘܿܢ	ܡܡܬܠ	*	*
+verb past 3p	1	ܡܘܼܢܫܹܐ ܠܗܘܿܢ	ܡܢܫܐ	*	*
+verb past 3p	1	ܡܣܘܼܝܸܡ ܠܗܘܿܢ	ܡܣܝܡ	*	*
+verb past 3p	1	ܡܘܼܥܠܹܐ ܠܗܘܿܢ	ܡܥܠܐ	*	*
+verb past 3p	1	ܡܘܼܦܪܹܐ ܠܗܘܿܢ	ܡܦܪܐ	*	*
+verb past 3p	1	ܡܨܘܼܪܨܸܪ ܠܗܘܿܢ	ܡܨܪܨܪ	*	*
+verb past 3p	1	ܡܫܘܼܕܪܸܓ݂ ܠܗܘܿܢ	ܡܫܕܪܓ	*	*
+verb past 3p	1	ܡܬܘܼܓܸܓ݂ ܠܗܘܿܢ	ܡܬܓܓ	*	*
+verb past 3p	1	ܡܬܘܼܪܩܸܕ݂ ܠܗܘܿܢ	ܡܬܪܩܕ	*	*
+verb past 3p	1	ܣܕ݂ܝܼܩ ܠܗܘܿܢ	ܣܕܩ	*	*
+verb past 3p	1	ܣܢܹܐ ܠܗܘܿܢ	ܣܢܐ	*	*
+verb past 3p	1	ܨܗܝܼܠ ܠܗܘܿܢ	ܨܗܠ	*	*
+verb past 3p	1	ܩܠܹܐ ܠܗܘܿܢ	ܩܠܐ	*	*
+verb past 3p	1	ܪܒ݂ܝܼܨ ܠܗܘܿܢ	ܪܒܨ	*	*
+verb past 3p	1	ܪܕܹܐ ܠܗܘܿܢ	ܪܕܐ	*	*
+verb past 3p	1	ܫܛܝܼܚ ܠܗܘܿܢ	ܫܛܚ	*	*
+verb past 3p	1	ܫܠܝܼܦ ܠܗܘܿܢ	ܫܠܦ	*	*

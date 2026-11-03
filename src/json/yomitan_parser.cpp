@@ -147,21 +147,13 @@ constexpr BankOpts bank_opts{{.error_on_unknown_keys = false, .error_on_missing_
 }  // namespace
 
 namespace {
-// Decodes a raw JSON string's escapes over its own bytes in `content` and
-// narrows the view to the result. Decoding never lengthens a string: every
-// escape is at least as long as the UTF-8 it stands for, a surrogate pair's
-// twelve bytes become four, and a lone surrogate's six become U+FFFD's three,
-// which is how a renderer shows the unpaired UTF-16 JSON.parse would keep. An
-// unknown escape keeps its character.
-void decode_in_place(std::string& content, std::string_view& view) {
-  if (view.find('\\') == std::string_view::npos) {
-    return;
-  }
-  const size_t offset = static_cast<size_t>(view.data() - content.data());
-  char* out = content.data() + offset;
-  const char* in = out;
-  const char* const end = in + view.size();
-  char* write = out;
+// Decodes the escapes of a raw JSON string's bytes [in, end) into `write`,
+// which may be `in` itself, and returns the end of what it wrote. Decoding
+// never lengthens a string: every escape is at least as long as the UTF-8 it
+// stands for, a surrogate pair's twelve bytes become four, and a lone
+// surrogate's six become U+FFFD's three, which is how a renderer shows the
+// unpaired UTF-16 JSON.parse would keep. An unknown escape keeps its character.
+char* decode_escapes(const char* in, const char* const end, char* write) {
   const auto hex4 = [&](const char* at, uint32_t& value) {
     if (end - at < 4) {
       return false;
@@ -232,6 +224,18 @@ void decode_in_place(std::string& content, std::string_view& view) {
       default: *write++ = kind; break;  // \" \\ \/ and anything unknown
     }
   }
+  return write;
+}
+
+// Decodes a raw JSON string's escapes over its own bytes in `content` and
+// narrows the view to the result.
+void decode_in_place(std::string& content, std::string_view& view) {
+  if (view.find('\\') == std::string_view::npos) {
+    return;
+  }
+  const size_t offset = static_cast<size_t>(view.data() - content.data());
+  char* out = content.data() + offset;
+  char* const write = decode_escapes(out, out + view.size(), out);
   view = std::string_view(out, static_cast<size_t>(write - out));
 }
 
@@ -413,4 +417,146 @@ bool yomitan_parser::parse_ipa(std::string_view content, ParsedPitch& out) {
     out.transcriptions.push_back(std::move(transcription.ipa));
   }
   return true;
+}
+
+namespace {
+bool is_json_space(char c) { return c == ' ' || c == '\t' || c == '\n' || c == '\r'; }
+
+const char* skip_space(const char* p, const char* end) {
+  while (p < end && is_json_space(*p)) ++p;
+  return p;
+}
+
+// One past the closing quote of the JSON string that opens at `p`, or nullptr.
+const char* skip_string(const char* p, const char* end) {
+  const char* q = p + 1;
+  while (q < end) {
+    q = static_cast<const char*>(std::memchr(q, '"', static_cast<size_t>(end - q)));
+    if (q == nullptr) return nullptr;
+    size_t backslashes = 0;
+    for (const char* b = q; b > p + 1 && b[-1] == '\\'; --b) ++backslashes;
+    if (backslashes % 2 == 0) return q + 1;
+    ++q;
+  }
+  return nullptr;
+}
+
+// One past the JSON value that starts at `p`, or nullptr. Like
+// skip_json_container, it checks structure, not grammar.
+const char* skip_value(const char* p, const char* end) {
+  if (p >= end) return nullptr;
+  if (*p == '"') return skip_string(p, end);
+  if (*p == '[' || *p == '{') return hoshidicts::skip_json_container(p, end);
+  const char* q = p;
+  while (q < end && *q != ',' && *q != ']' && *q != '}' && !is_json_space(*q)) ++q;
+  return q == p ? nullptr : q;
+}
+
+// Calls `item` with each element of the JSON array `array`, raw. False when
+// `array` is not a well-formed array (the elements before the fault were
+// visited).
+template <typename Item>
+bool each_element(std::string_view array, Item&& item) {
+  const char* p = array.data();
+  const char* const end = p + array.size();
+  p = skip_space(p, end);
+  if (p == end || *p != '[') return false;
+  p = skip_space(p + 1, end);
+  if (p < end && *p == ']') return skip_space(p + 1, end) == end;
+  while (p < end) {
+    const char* const next = skip_value(p, end);
+    if (next == nullptr) return false;
+    item(std::string_view(p, static_cast<size_t>(next - p)));
+    p = skip_space(next, end);
+    if (p < end && *p == ',') {
+      p = skip_space(p + 1, end);
+      continue;
+    }
+    return p < end && *p == ']' && skip_space(p + 1, end) == end;
+  }
+  return false;
+}
+
+// The decoded text of a raw JSON string (with its quotes).
+std::string decode_string(std::string_view raw) {
+  const std::string_view inner = raw.substr(1, raw.size() - 2);
+  std::string out(inner.size(), '\0');
+  char* const write = decode_escapes(inner.data(), inner.data() + inner.size(), out.data());
+  out.resize(static_cast<size_t>(write - out.data()));
+  return out;
+}
+// The raw formOf string and rules list of a definition that is a reference:
+// [formOf, [rules...]], exactly two elements, a non-empty string and an array,
+// as Yomitan's term bank schema defines a deinflection; empty otherwise.
+struct RawReference {
+  std::string_view form_of;
+  std::string_view rules;
+};
+RawReference raw_reference(std::string_view definition) {
+  RawReference out;
+  size_t index = 0;
+  each_element(definition, [&](std::string_view element) {
+    if (index == 0 && element.front() == '"') out.form_of = element;
+    if (index == 1 && element.front() == '[') out.rules = element;
+    ++index;
+  });
+  // A raw JSON string of more than its two quotes decodes to text (an escape
+  // never decodes to nothing).
+  if (index != 2 || out.form_of.size() <= 2 || out.rules.empty()) return {};
+  return out;
+}
+
+// Whether a ']' is followed, after JSON whitespace, by another ']'. A
+// reference ends that way (its rules array closes, then it does), so a list
+// without such a pair holds none; inside strings the pair is a false alarm.
+bool has_closing_pair(std::string_view s) {
+  const char* p = s.data();
+  const char* const end = p + s.size();
+  while ((p = static_cast<const char*>(std::memchr(p, ']', static_cast<size_t>(end - p)))) != nullptr) {
+    p = skip_space(p + 1, end);
+    if (p < end && *p == ']') return true;
+  }
+  return false;
+}
+}  // namespace
+
+void yomitan_parser::read_form_of(std::string_view definitions, std::vector<FormOfReference>& out) {
+  each_element(definitions, [&](std::string_view definition) {
+    if (definition.front() != '[') return;
+    const RawReference raw = raw_reference(definition);
+    if (raw.form_of.empty()) return;
+    FormOfReference reference{.form_of = decode_string(raw.form_of), .rules = {}};
+    each_element(raw.rules, [&](std::string_view rule) {
+      if (rule.front() == '"') reference.rules.push_back(decode_string(rule));
+    });
+    out.push_back(std::move(reference));
+  });
+}
+
+yomitan_parser::FormOfKind yomitan_parser::form_of_kind(std::string_view definitions) {
+  // Most glossaries hold no reference; the pair check is about three times
+  // faster than walking their elements.
+  if (!has_closing_pair(definitions)) return FormOfKind::None;
+  bool other = false;
+  bool reference = false;
+  each_element(definitions, [&](std::string_view definition) {
+    if (definition.front() != '[') {
+      other = true;
+    } else if (!reference) {
+      reference = !raw_reference(definition).form_of.empty();
+    }
+  });
+  return !reference ? FormOfKind::None : other ? FormOfKind::WithOthers : FormOfKind::Only;
+}
+
+std::string yomitan_parser::without_form_of(std::string_view definitions) {
+  std::string out = "[";
+  const bool ok = each_element(definitions, [&](std::string_view definition) {
+    if (definition.front() == '[') return;
+    if (out.size() > 1) out += ',';
+    out.append(definition);
+  });
+  if (!ok) return std::string(definitions);
+  out += ']';
+  return out;
 }

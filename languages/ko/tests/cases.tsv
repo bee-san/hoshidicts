@@ -1,0 +1,421 @@
+# Hand-written for hoshidicts (GPL-3.0-or-later): irregular stems, honorifics, the copula, quoted speech,
+# pronoun contractions, and negatives (valid = 0: the term must not be among the deinflections).
+# category	valid	source	term	rule	reasons
+regular	1	먹었어요	먹다	v	-았/었|-아/어요
+regular	1	먹었습니다	먹다	v	-았/었|-(스)ㅂ니다
+regular	1	먹겠어요	먹다	v	-겠|-아/어요
+regular	1	먹었겠지만	먹다	v	-았/었|-겠|-지만
+regular	1	먹는다	먹다	v	-(느)ㄴ다
+regular	1	간다	가다	v	-(느)ㄴ다
+regular	1	먹었었다	먹다	v	-았/었었
+regular	1	먹어야겠어요	먹다	v	-아/어야겠|-아/어요
+regular	1	읽으세요	읽다	v	-(으)시|-(으)세요
+regular	1	가셨습니다	가다	v	-(으)시|-았/었|-(스)ㅂ니다
+regular	1	오셨어요	오다	v	-(으)시|-았/었|-아/어요
+regular	1	앉으십시오	앉다	v	-(으)시|-(으)십시오
+regular	1	갑시다	가다	v	-(으)ㅂ시다
+regular	1	먹읍시다	먹다	v	-(으)ㅂ시다
+regular	1	봤어요	보다	v	-았/었|-아/어요
+regular	1	와요	오다	v	-아/어요
+regular	1	줘요	주다	v	-아/어요
+regular	1	배웠어요	배우다	v	-았/었|-아/어요
+regular	1	마셔요	마시다	v	-아/어요
+regular	1	마시어요	마시다	v	-아/어요
+regular	1	돼요	되다	v	-아/어요
+regular	1	됐어요	되다	v	-았/었|-아/어요
+regular	1	보내요	보내다	v	-아/어요
+regular	1	켜요	켜다	v	-아/어요
+regular	1	있었어요	있다	*	-았/었|-아/어요
+regular	1	없는	없다	*	-는
+regular	1	좋아요	좋다	adj	-아/어요
+regular	1	놔요	놓다	v	-아/어요
+regular	1	놨어요	놓다	v	-았/었|-아/어요
+하다	1	해요	하다	v	-아/어요
+하다	1	했어요	하다	v	-았/었|-아/어요
+하다	1	하였다	하다	v	-았/었
+하다	1	공부했어요	공부하다	v	-았/었|-아/어요
+하다	1	공부하세요	공부하다	v	-(으)시|-(으)세요
+하다	1	해야겠어요	하다	v	-아/어야겠|-아/어요
+하다	1	감사합니다	감사하다	v	-(스)ㅂ니다
+하다	1	안녕하세요	안녕하다	adj	-(으)시|-(으)세요
+ㅡ	1	써요	쓰다	v	-아/어요
+ㅡ	1	커요	크다	adj	-아/어요
+ㅡ	1	예뻐요	예쁘다	adj	-아/어요
+ㅡ	1	바빠서	바쁘다	adj	-아/어서
+ㅡ	1	배고파요	배고프다	adj	-아/어요
+ㅡ	1	따라요	따르다	v	-아/어요
+르	1	몰라요	모르다	v	-아/어요
+르	1	몰랐어요	모르다	v	-았/었|-아/어요
+르	1	불러요	부르다	v	-아/어요
+르	1	빨라요	빠르다	adj	-아/어요
+르	1	달라요	다르다	adj	-아/어요
+러	1	이르러	이르다	v	-아/어
+러	1	푸르러요	푸르다	adj	-아/어요
+ㅂ	1	추워요	춥다	adj	-아/어요
+ㅂ	1	추운	춥다	adj	-(으)ㄴ
+ㅂ	1	추우면	춥다	adj	-(으)면
+ㅂ	1	고마워요	고맙다	adj	-아/어요
+ㅂ	1	도와요	돕다	v	-아/어요
+ㅂ	1	도우세요	돕다	v	-(으)시|-(으)세요
+ㅂ	1	아름다운	아름답다	adj	-(으)ㄴ
+ㅂ	1	구웠어요	굽다	v	-았/었|-아/어요
+ㄷ	1	들어요	듣다	v	-아/어요
+ㄷ	1	들으면	듣다	v	-(으)면
+ㄷ	1	들은	듣다	v	-(으)ㄴ
+ㄷ	1	듣는	듣다	v	-는
+ㄷ	1	걸었어요	걷다	v	-았/었|-아/어요
+ㄷ	1	물어봤어요	물어보다	v	-았/었|-아/어요
+ㄷ	1	깨달았다	깨닫다	v	-았/었
+ㅅ	1	지어요	짓다	v	-아/어요
+ㅅ	1	지은	짓다	v	-(으)ㄴ
+ㅅ	1	나았어요	낫다	*	-았/었|-아/어요
+ㅅ	1	나으면	낫다	*	-(으)면
+ㅅ	1	부어요	붓다	v	-아/어요
+ㅎ	1	그래요	그렇다	adj	-아/어요
+ㅎ	1	그랬어요	그렇다	adj	-았/었|-아/어요
+ㅎ	1	그런	그렇다	adj	-(으)ㄴ
+ㅎ	1	그러면	그렇다	adj	-(으)면
+ㅎ	1	그러네요	그렇다	adj	-네
+ㅎ	1	어때요	어떻다	adj	-아/어요
+ㅎ	1	빨간	빨갛다	adj	-(으)ㄴ
+ㅎ	1	빨개요	빨갛다	adj	-아/어요
+ㅎ	1	하얘요	하얗다	adj	-아/어요
+ㅎ	1	하얀	하얗다	adj	-(으)ㄴ
+ㄹ	1	살아요	살다	v	-아/어요
+ㄹ	1	사는	살다	v	-는
+ㄹ	1	삽니다	살다	v	-(스)ㅂ니다
+ㄹ	1	사세요	살다	v	-(으)시|-(으)세요
+ㄹ	1	산	살다	v	-(으)ㄴ
+ㄹ	1	살면	살다	v	-(으)면
+ㄹ	1	삶	살다	v	-(으)ㅁ
+ㄹ	1	만든	만들다	v	-(으)ㄴ
+ㄹ	1	만듭니다	만들다	v	-(스)ㅂ니다
+ㄹ	1	아세요	알다	v	-(으)시|-(으)세요
+ㄹ	1	긴	길다	adj	-(으)ㄴ
+ㄹ	1	노는	놀다	v	-는
+ㄹ	1	갈까요	가다	v	-(으)ㄹ까
+ㄹ	1	마세요	말다	v	-(으)시|-(으)세요
+우	1	퍼요	푸다	v	-아/어요
+honorific verbs	1	계세요	계시다	v	-(으)세요
+honorific verbs	1	주무세요	주무시다	v	-(으)세요
+honorific verbs	1	드세요	드시다	v	-(으)세요
+copula	1	이에요	이다	particle	-이에요
+copula	1	예요	이다	*	-이에요
+copula	1	이야	이다	*	-야
+copula	1	입니다	이다	*	-(스)ㅂ니다
+copula	1	이었어요	이다	*	-았/었|-아/어요
+copula	1	였어요	이다	*	-았/었|-아/어요
+copula	1	아니에요	아니다	*	-이에요
+copula	1	아니야	아니다	*	-야
+copula	1	아니라	아니다	*	-이라
+copula	1	이라서	이다	*	-라서
+connectives	1	먹고	먹다	v	-고
+connectives	1	먹지만	먹다	v	-지만
+connectives	1	먹어서	먹다	v	-아/어서
+connectives	1	먹으니까	먹다	v	-(으)니까
+connectives	1	먹으면서	먹다	v	-(으)면서
+connectives	1	먹으러	먹다	v	-(으)러
+connectives	1	먹으려고	먹다	v	-(으)려고
+connectives	1	먹었는데	먹다	v	-았/었|-(으/느)ㄴ데
+connectives	1	좋은데	좋다	adj	-(으/느)ㄴ데
+connectives	1	먹다가	먹다	v	-다가
+connectives	1	갔더니	가다	v	-았/었|-더니
+connectives	1	먹자마자	먹다	v	-자마자
+connectives	1	먹을수록	먹다	v	-(으)ㄹ수록
+endings	1	먹었네요	먹다	v	-았/었|-네
+endings	1	먹었군요	먹다	v	-았/었|-군
+endings	1	먹는군요	먹다	v	-는군
+endings	1	먹었죠	먹다	v	-았/었|-죠
+endings	1	먹었거든요	먹다	v	-았/었|-거든
+endings	1	먹었잖아요	먹다	v	-았/었|-잖아
+endings	1	먹을게요	먹다	v	-(으)ㄹ게
+endings	1	먹을래요	먹다	v	-(으)ㄹ래
+endings	1	먹었을까요	먹다	v	-았/었|-(으)ㄹ까
+endings	1	먹었나요	먹다	v	-았/었|-나요
+endings	1	먹었니	먹다	v	-았/었|-(으)니
+endings	1	먹었냐	먹다	v	-았/었|-(으)냐
+endings	1	먹느냐	먹다	v	-느냐
+endings	1	먹어라	먹다	v	-아/어라
+endings	1	가거라	가다	v	-거라
+endings	1	먹자	먹다	v	-자
+endings	1	먹더라고요	먹다	v	-더라
+endings	1	먹던데요	먹다	v	-던데
+endings	1	보라	보다	v	-(으)라
+adnominal	1	먹는	먹다	v	-는
+adnominal	1	먹은	먹다	v	-(으)ㄴ
+adnominal	1	먹을	먹다	v	-(으)ㄹ
+adnominal	1	먹던	먹다	v	-던
+adnominal	1	먹었던	먹다	v	-았/었|-던
+adnominal	1	먹기	먹다	v	-기
+adnominal	1	먹음	먹다	v	-(으)ㅁ
+quotation	1	간다고	가다	v	-(느)ㄴ다|-((느)ㄴ)다고
+quotation	1	먹는대요	먹다	v	-(느)ㄴ다|-((느)ㄴ)다고
+quotation	1	먹었대요	먹다	v	-았/었|-((느)ㄴ)다고
+quotation	1	좋다고	좋다	adj	-((느)ㄴ)다고
+quotation	1	간다면	가다	v	-(느)ㄴ다|-((느)ㄴ)다고
+quotation	1	먹냐고	먹다	v	-(으)냐고
+quotation	1	먹으라고	먹다	v	-(으)라고
+quotation	1	가래요	가다	v	-(으)라고
+quotation	1	가자고	가다	v	-자고
+quotation	1	가재요	가다	v	-자고
+auxiliary	1	예뻐졌어요	예쁘다	adj	-아/어지다|-았/었|-아/어요
+auxiliary	1	행복해졌다	행복하다	adj	-아/어지다|-았/었
+auxiliary	1	좋아해요	좋다	adj	-어하다|-아/어요
+pronouns	1	난	나	*	topic
+pronouns	1	넌	너	*	topic
+pronouns	1	이건	이것	*	topic
+pronouns	1	그걸	그것	*	object
+pronouns	1	뭘	뭐	*	object
+pronouns	1	내가	나	*	subject
+pronouns	1	제가	저	*	subject
+pronouns	1	이게	이것	*	subject
+pronouns	1	내	나	*	possessive
+connectives	1	읽거나	읽다	v	-거나
+connectives	1	씻고서	씻다	v	-고서
+connectives	1	오기에	오다	v	-기에
+connectives	1	공부하느라고	공부하다	v	-느라고
+connectives	1	맞는지	맞다	v	-(으/느)ㄴ지
+connectives	1	좋은지	좋다	adj	-(으/느)ㄴ지
+connectives	1	않도록	않다	*	-도록
+connectives	1	가든지	가다	v	-든지
+connectives	1	웃으며	웃다	v	-(으)며
+connectives	1	없으므로	없다	*	-(으)므로
+connectives	1	올지	오다	v	-(으)ㄹ지
+endings	1	늦을걸	늦다	*	-(으)ㄹ걸
+endings	1	좋은걸	좋다	adj	-(으/느)ㄴ걸
+endings	1	있는걸요	있다	*	-(으/느)ㄴ걸
+endings	1	바쁘고요	바쁘다	adj	-고요
+endings	1	추우니까요	춥다	adj	-니까요
+endings	1	아파서요	아프다	adj	-어서요
+future	1	갈 거예요	가다	v	-(으)ㄹ 거예요
+future	1	먹을 거야	먹다	v	-(으)ㄹ 거야
+future	1	할 것이다	하다	v	-(으)ㄹ 것이다
+copula	1	예요	이다	ida	-이에요
+르	1	치러	치르다	v	-아/어
+르	1	들러요	들르다	v	-아/어요
+르	1	우러러	우러르다	v	-아/어
+르	1	다다랐다	다다르다	v	-았/었
+르	1	뒤따라	뒤따르다	v	-아/어
+ㅎ	1	이랬어요	이러다	v	-았/었|-아/어요
+ㅎ	1	어째서	어쩌다	v	-아/어서
+말다	1	마	말다	v	-아/어
+말다	1	마요	말다	v	-아/어요
+말다	1	마라	말다	v	-아/어라
+pronouns	1	건	것	*	topic
+pronouns	1	걸	것	*	object
+pronouns	1	게	것	*	subject
+pronouns	1	나는	나	*	particle
+pronouns	1	그는	그	*	particle
+pronouns	1	우리를	우리	*	particle
+pronouns	1	그녀의	그녀	*	particle
+pronouns	1	이것을	이것	*	particle
+yomitan endings	1	먹었으나	먹다	v	*
+yomitan endings	1	하였으나	하다	v	*
+yomitan endings	1	됐건만	되다	v	*
+yomitan endings	1	가셨으나	가다	v	*
+yomitan endings	1	받았더라도	받다	v	*
+yomitan endings	1	되었으리라	되다	v	*
+yomitan endings	1	먹겠거니	먹다	v	*
+yomitan endings	1	읽으시건만	읽다	v	*
+connectives	1	가져다가	가지다	v	-아/어다가
+connectives	1	먹어야만	먹다	v	-아/어야만
+negatives	0	몰라요	몰다	*	*
+negatives	0	몰라	몰다	*	*
+negatives	0	불러요	불다	*	*
+negatives	0	빨라요	빨다	*	*
+negatives	0	달라요	달다	*	*
+negatives	0	골라요	골다	*	*
+negatives	0	길러요	길다	*	*
+negatives	0	추운	추다	*	*
+negatives	0	지은	지다	*	*
+negatives	0	나은	나다	*	*
+negatives	0	나아요	나다	*	*
+negatives	0	들은	들다	*	*
+negatives	0	들으면	들다	*	*
+negatives	0	살면	사다	*	*
+negatives	0	가요	갈다	*	*
+negatives	0	사요	살다	*	*
+negatives	0	도와요	돌다	*	*
+negatives	0	줄어요	주다	*	*
+negatives	0	그런	그르다	*	*
+negatives	0	먹이다	먹다	*	*
+negatives	0	보이다	보다	*	*
+negatives	0	난로	나	*	*
+negatives	0	내일	나	*	*
+negatives	0	이건물	이것	*	*
+negatives	0	나아서	나다	*	*
+negatives	0	나아도	나다	*	*
+negatives	0	나았다	나다	*	*
+negatives	0	몰라서	몰다	*	*
+negatives	0	불러서	불다	*	*
+negatives	0	골라서	골다	*	*
+negatives	0	추워서	추다	*	*
+negatives	0	들으니까	들다	*	*
+negatives	0	우리도	우리다	*	*
+negatives	0	여기서	여기다	*	*
+negatives	0	사러	사르다	*	*
+negatives	0	자러	자르다	*	*
+negatives	0	나라도	나르다	*	*
+negatives	0	이라서	이르다	*	*
+negatives	0	바라요	바르다	*	*
+negatives	0	이러한	이르다	*	*
+negatives	0	마라	마르다	*	*
+negatives	0	거라	거르다	*	*
+negatives	0	떨어졌다	떨다	v	*
+negatives	0	예쁘는	예쁘다	adj	*
+negatives	0	그랬구나	그리다	*	*
+negatives	0	있지	이다	*	*
+negatives	0	저러다가	절다	*	*
+negatives	0	그러다가	그르다	*	*
+negatives	0	그러다가	글다	*	*
+negatives	0	이러다가	이르다	*	*
+negatives	0	나라다	나르다	*	*
+negatives	0	그러다	그르다	*	*
+negatives	0	이러다	이르다	*	*
+negatives	0	그러라	그르다	*	*
+negatives	0	이러라	이르다	*	*
+ㅡ	1	바빠야지	바쁘다	adj	-아/어야
+ㅡ	1	써야만	쓰다	v	-아/어야만
+ㅡ	1	담가다가	담그다	v	-아/어다가
+ㅡ	1	써야겠어요	쓰다	v	-아/어야겠|-아/어요
+connectives	1	봤자	보다	v	-았/었자
+negatives	0	바라다가	바르다	*	*
+negatives	0	자라다가	자르다	*	*
+negatives	0	자라다가	잘다	*	*
+negatives	0	바라야지	바르다	*	*
+negatives	0	바라야만	바르다	*	*
+negatives	0	바랐자	바르다	*	*
+negatives	0	자라야겠어요	자르다	*	*
+negatives	0	자랐었다	자르다	*	*
+plain stems	1	하곤	하다	v	*
+plain stems	1	가곤	가다	v	*
+plain stems	1	하고자	하다	v	*
+plain stems	1	하듯이	하다	v	*
+plain stems	1	하되	하다	v	*
+plain stems	1	가는가	가다	v	*
+plain stems	1	하더라도	하다	v	*
+plain stems	1	보고도	보다	v	*
+plain stems	1	가다가는	가다	v	*
+plain stems	1	오려나	오다	v	*
+plain stems	1	건강하려면	건강하다	adj	*
+honorific	1	가시겠거니	가다	v	*
+-(으)ㅂ시오	1	마십시오	마시다	v	*
+-(으)세요	1	마세요	말다	v	-(으)세요
+negatives	0	바라야	바르다	*	*
+negatives	0	감기로	감다	*	*
+negatives	0	사고는	사다	*	*
+negatives	0	물건만	물다	*	*
+negatives	0	바라야지	발다	*	*
+negatives	0	바랐자	발다	*	*
+plain stems	1	먹곤	먹다	v	*
+plain stems	1	하곤 했다	하다	v	-곤 하다|-았/었
+plain stems	1	가고는 했다	가다	v	*
+plain stems	1	먹고도	먹다	v	*
+plain stems	1	읽고자	읽다	v	*
+plain stems	1	먹더라도	먹다	v	*
+plain stems	1	힘들더라도	힘들다	adj	*
+plain stems	1	하듯	하다	v	*
+plain stems	1	바뀌듯이	바뀌다	v	*
+plain stems	1	먹으되	먹다	v	*
+plain stems	1	먹는가	먹다	v	*
+plain stems	1	좋은가	좋다	adj	*
+plain stems	1	큰가	크다	adj	*
+plain stems	1	먹다가는	먹다	v	*
+plain stems	1	알게끔	알다	v	*
+plain stems	1	가더군	가다	v	*
+plain stems	1	먹더구나	먹다	v	*
+plain stems	1	가더니만	가다	v	*
+plain stems	1	가느니	가다	v	*
+plain stems	1	하거니와	하다	v	*
+plain stems	1	하고말고	하다	v	*
+plain stems	1	좋구먼	좋다	adj	*
+plain stems	1	갈지라도	가다	v	*
+plain stems	1	먹을지언정	먹다	v	*
+plain stems	1	간다더라	가다	v	*
+plain stems	1	가니깐	가다	v	*
+plain stems	1	먹으려	먹다	v	*
+plain stems	1	간답니다	가다	v	*
+plain stems	1	먹는답니다	먹다	v	*
+plain stems	1	하던가	하다	v	*
+plain stems	1	가던지	가다	v	*
+plain stems	1	좋던가	좋다	adj	*
+plain stems	1	가데요	가다	v	*
+plain stems	1	하던걸	하다	v	*
+-(으)려 하다	1	가려 했다	가다	v	-(으)려 하다|-았/었
+-(으)려 하다	1	하려 했다	하다	v	*
+-(으)려 하다	1	보려 했다	보다	v	*
+-(으)려 하다	1	바꾸려 한다	바꾸다	v	*
+-(으)려 하다	1	마시려 한다	마시다	v	*
+-(으)려 하다	1	먹으려 했어요	먹다	v	*
+-(으)려 하다	1	만들려 했다	만들다	v	*
+-(으)려 하다	1	도우려 했다	돕다	v	*
+plain stems	1	할려고	하다	v	*
+plain stems	1	볼려고	보다	v	*
+plain stems	1	그러다간	그러다	v	*
+plain stems	1	먹다간	먹다	v	*
+plain stems	1	할는지	하다	v	*
+negatives	0	걸려	걸다	*	*
+negatives	0	안되	안다	*	*
+negatives	0	살러	사르다	*	*
+negatives	0	놀러	노르다	*	*
+negatives	0	불라	부르다	*	*
+# Rows that fail when a stem constraint or word list of the own rules is taken out (docs/languages.md 14, step 7); some sources are built, not words.
+stem	0	네	다	*	*
+stem	0	네	ㄹ다	*	*
+stem	0	당신	당ㄹ다	*	*
+stem	0	운	ㅂ다	*	*
+stem	0	일을	잀다	*	*
+stem	0	좀	좋다	*	*
+stem	0	어서	다	*	*
+stem	0	허어	허다	*	*
+stem	0	아	다	*	*
+stem	0	르러요	르다	*	*
+stem	0	워	ㅂ다	*	*
+stem	0	와	ㅂ다	*	*
+stem	0	들어	듨다	*	*
+stem	0	알아	앐다	*	*
+stem	0	왜	오ㅓㅎ다	*	*
+stem	0	왜	왛다	*	*
+stem	0	궤도	궣다	*	*
+stem	0	가습니다	가다	*	*
+stem	0	넓니다	널다	*	*
+stem	0	삷니다	살ㄹ다	*	*
+stem	0	가습니까	가다	*	*
+stem	0	넓니까	널다	*	*
+stem	0	밟니까	발ㄹ다	*	*
+stem	0	세요	시다	*	*
+stem	0	무세요	무시다	v	*
+stem	0	삷시오	살다	*	*
+stem	0	읍시오	다	*	*
+stem	0	갈읍시오	갈다	*	*
+stem	0	삷시오	살ㄹ다	*	*
+stem	0	웁시오	ㅂ다	*	*
+stem	0	갈읍시오	갌다	*	*
+stem	0	마시는다	마다	*	*
+stem	0	거라	다	*	*
+stem	0	너라	다	*	*
+stem	0	니네	닣다	*	*
+stem	0	보이네요	보잏다	*	*
+stem	0	에요	다	*	*
+stem	0	말야	말다	*	*
+stem	0	나라면	나다	*	*
+stem	0	파란	파다	*	*
+stem	1	있는	있다	adj	*
+particle	1	너한테	너	*	particle
+particle	1	저도	저	*	particle
+particle	1	당신이	당신	*	particle
+particle	1	그것은	그것	*	particle
+particle	1	무엇을	무엇	*	particle
+particle	1	누구도	누구	*	particle
+plain stems	1	주거니	주다	v	*
+plain stems	1	치리만큼	치다	v	*
+alternation	1	그랬어요	그러다	v	*
+alternation	1	그래서	그러다	v	*
+alternation	1	저래	저러다	v	*
+alternation	1	저랬어	저러다	v	*
+negatives	0	가려	갈다	*	*
+negatives	0	주려	줄다	*	*
+negatives	0	걸려 있다	걸다	*	*
+negatives	0	내려 왔다	내다	*	*
+negatives	0	알려 주세요	알다	*	*
+negatives	0	열려 있다	열다	*	*

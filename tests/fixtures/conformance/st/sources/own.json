@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "conditions": {
+    "n": {
+      "name": "Noun",
+      "isDictionaryForm": true
+    }
+  },
+  "transforms": [
+    {
+      "id": "s",
+      "name": "s",
+      "description": "the s probe rule",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "s", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "archaic",
+      "name": "archaic",
+      "description": "an optional rule that transforms.json does not have",
+      "source": "own",
+      "optional": true,
+      "rules": [
+        {"type": "suffix", "inflected": "eth", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    }
+  ]
+}

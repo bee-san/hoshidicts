@@ -1,0 +1,4 @@
+# Hand-written for the test: the rows that need an optional feature. This file runs with every optional processor and transform on.
+# category	valid	source	term	rule	reasons
+accents	1	estan	están	*	*
+archaic	1	walketh	walk	v	archaic

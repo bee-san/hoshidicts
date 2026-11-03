@@ -1,0 +1,81 @@
+{
+  "schema": 1,
+  "code": "vg",
+  "iso639_3": "zzz",
+  "name": "Verb guard words",
+  "nativeName": "Verb guard words",
+  "bcp47": "zz",
+  "scripts": ["Latn"],
+  "direction": "ltr",
+  "classes": {
+    "letter": "[A-Za-z]"
+  },
+  "text": {
+    "pattern": "{letter}",
+    "scanStart": "cursor",
+    "segmentation": "spaces",
+    "wordCharacters": "{letter}",
+    "wordInternal": null,
+    "sentence": {
+      "terminators": ["."],
+      "quotePairs": []
+    },
+    "highlightBreaks": null,
+    "lineJoiner": " "
+  },
+  "lookup": {
+    "searchResolution": "character",
+    "preprocessors": [],
+    "postprocessors": [],
+    "readingNormalizer": null,
+    "transforms": "transforms.json",
+    "traceSelection": "shortest",
+    "functionWords": [],
+    "variantPasses": []
+  },
+  "capabilities": {
+    "readings": "optional",
+    "ruby": null,
+    "pitchAccent": false,
+    "characterView": null,
+    "wordHighlighting": true
+  },
+  "presentation": {
+    "typography": {
+      "fontFamily": null,
+      "wordBreak": null,
+      "lineBreak": null,
+      "joinedScript": false
+    },
+    "labels": {},
+    "displayTransforms": {}
+  },
+  "settings": [],
+  "host": {
+    "ttsLanguage": "zz",
+    "audioLanguage": "zz",
+    "anki": {
+      "noteTypeFamilies": [],
+      "fieldAliases": {},
+      "partOfSpeechLabels": {}
+    },
+    "frequencySamples": null,
+    "recommendedDictionaries": [],
+    "sample": {
+      "warmup": "pointed it out",
+      "practice": {
+        "text": "She pointed it out.",
+        "lookup": "pointed it out"
+      },
+      "entry": {
+        "expression": "point out",
+        "reading": "point out",
+        "glossary": ["to show"],
+        "definitionTags": "v",
+        "matched": "pointed it out",
+        "trace": ["interposed", "past"]
+      },
+      "character": null
+    }
+  }
+}

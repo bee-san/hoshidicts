@@ -1,0 +1,4 @@
+# Hand-written for the test.
+# category	valid	source	term	rule	reasons
+nouns	1	cats	cat	n	s
+negatives	0	cat	ca	*	*

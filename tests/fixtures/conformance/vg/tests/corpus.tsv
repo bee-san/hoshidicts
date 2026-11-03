@@ -1,0 +1,7 @@
+# Hand-written for the test.
+# category	valid	source	term	rule	reasons
+phrasal	1	pointed it out	point out	v	past|interposed
+phrasal	1	had out	have out	v	past
+negatives	0	had pointed out	had out	*	*
+negatives	0	had pointed out	have out	*	*
+negatives	0	have turned out	have out	*	*

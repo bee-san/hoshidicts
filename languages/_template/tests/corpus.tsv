@@ -1,0 +1,6 @@
+# Source: describe the source, its licence and attribution here and in README.md.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+nouns	1	books	book	n	plural
+verbs	1	walked	walk	v	past
+verbs	1	went	go	v	past
+negatives	0	red	r	*	*

@@ -1,6 +1,6 @@
 # hoshidicts
 
-This library implements a dictionary backend that works similarly to [Yomitan](https://github.com/yomidevs/yomitan). This was made for [Hoshi Reader](https://github.com/Manhhao/Hoshi-Reader) and was only tested with Japanese. Other languages might need their own deinflector or adjustments to the lookup strategy.
+This library implements a dictionary backend that works similarly to [Yomitan](https://github.com/yomidevs/yomitan). This was made for [Hoshi Reader](https://github.com/Manhhao/Hoshi-Reader). Each language is a data-only **language pack** in `languages/<code>/` (descriptor, deinflection rules, tests); Japanese is built in, and other packs load at run time. [`docs/languages.md`](docs/languages.md) is the contract for packs and the language API.
 
 A MIT version of the library is available on the [main-mit](https://github.com/Manhhao/hoshidicts/tree/main-mit) branch.
 
@@ -13,6 +13,8 @@ ImportResult dictionary_importer::import(const std::string& source_path, const s
 Imports a Yomitan `.zip` dictionary file or an MDict `.mdx` dictionary into a custom format. The resulting folder is stored in `output_dir/<folder_name(dict_title)>`: the title itself when it is a single path component, otherwise the title with `/`, `\`, `:` and NUL replaced by `_` plus ` #` and the title's FNV-1a 32-bit hash in hex (`Nico/Pixiv` → `Nico_Pixiv #c747f3db`). `dictionary_importer::folder_name` returns it. Glossaries are compressed using zstd. Term, frequency and pitch dictionaries are generally supported, but only a small part of the pitch accent spec was implemented. Setting `low_ram` to `true` can reduce memory usage significantly at the cost of slightly lower import speed.
 
 The format is detected from the file contents, not the extension.
+
+A term bank row whose definitions hold form-of references (`[term, [rules]]`, as wiktionary-to-yomitan dictionaries write them) is flagged in its record; the references stay in the glossary. Packs whose `lookup.formOf` is `follow` read them through the flag (`docs/languages.md` 9.10), so a dictionary imported before the flag existed must be imported again for its references to be followed. A dictionary without such rows imports byte for byte as before.
 
 #### MDX / MDD import
 
@@ -85,11 +87,19 @@ size_t DictionaryQuery::read_media_file(const std::string& dict_name, const std:
 ```
 Returns the stored size of the media file (0 when there is none) and copies it into `out` when it is at most `max_bytes` long, so a caller can refuse a large file without reading it. `get_media_file_view` returns a view into the mapping instead, and an empty one where media is read on demand.
 
+### languages
+```cpp
+hoshidicts::LanguageRegistry registry = hoshidicts::LanguageRegistry::with_builtin();  // Japanese
+bool LanguageRegistry::add(std::string_view language_json, std::string_view transforms_json, std::string* error)
+bool LanguageRegistry::add_directory(const std::string& languages_dir, std::string* error)
+```
+A registry holds the language packs a host has loaded. `with_builtin()` starts with the Japanese pack, which is compiled into the library (`src/languages/builtin_packs.cpp`, written by `tools/embed-packs.py` from `languages/ja/`). `add` parses one pack from its `language.json` and `transforms.json`, replacing a pack with the same code; `add_directory` loads every `<dir>/<code>/language.json` whose directory name does not start with `_`. Errors name the pack, the file, the JSON path and the reason. `find(code)` and `codes()` list what is loaded. A pack is the generic, data-driven pipeline of `docs/languages.md`: character classes, text processors, rule types from suffixes to anchored patterns, and the dictionary-form conditions its part-of-speech filter uses.
+
 ### deinflector
 ```cpp
 std::vector<DeinflectionResult> Deinflector::deinflect(const std::string& text) const
 ```
-Deinflects a given Japanese string using rules from the Yomitan deinflector. As this doesn't use any dictionary data, the result may include invalid deinflections.
+Deinflects a string with a pack's rules: `Deinflector()` uses the built-in Japanese pack (Yomitan's Japanese rules and hoshidicts' own auxiliaries, `languages/ja/transforms.json`), `Deinflector(pack)` any other. As this doesn't use any dictionary data, the result may include invalid deinflections. Each trace step has the transform's `id`, `name` and `description`.
 
 ```cpp
 std::vector<DeinflectionResult> Deinflector::deinflect_neko_speech(const std::string& text) const
@@ -99,13 +109,16 @@ Reads NekoPara's cat speech, which says `にゃ` for `な` and sometimes for `�
 ```cpp
 static uint32_t Deinflector::pos_to_conditions(const std::vector<std::string>& part_of_speech)
 ```
-Converts a vector of part-of-speech tags into a bitmask used for deinflection filtering.
+Converts a vector of Japanese part-of-speech tags into a bitmask used for deinflection filtering. `conditions_for_parts_of_speech` does the same for the deinflector's own pack.
 
 ### lookup
 ```cpp
+Lookup::Lookup(DictionaryQuery& query, const hoshidicts::LanguageRegistry& languages)
 Lookup::Lookup(DictionaryQuery& query, Deinflector& deinflector)
 ```
-Creates a Lookup object using a given query with dictionaries added and a deinflector.
+Creates a Lookup object using a given query with dictionaries added, and either a registry, whose every pack it can look up (`LookupOptions::language`, default `ja`; an unknown code throws `std::invalid_argument`), or a deinflector, whose pack is its only language.
+
+`LookupOptions::dictionaries` names the loaded dictionaries (paths) a request uses, in rank order: term, frequency, pitch and kanji queries and the long-key length use only those, an empty list selects nothing, and without it every loaded dictionary is used in load order, as before. `language_options` turns on a pack's optional processors, transforms and variant passes (`nekoSpeech` for Japanese, which `neko_speech` also enables). `pos_filter_exempt` lists dictionaries whose terms skip the part-of-speech filter. `DictionaryQuery::query_kanji(kanji, dictionaries)` takes the same selection.
 
 ```cpp
 std::vector<LookupResult> Lookup::lookup(const std::string& lookup_string, int max_results = 16, size_t scan_length = 16) const
@@ -115,6 +128,8 @@ Follows a parsing strategy similar to Yomitan. Substrings of `lookup_string` are
 Keys longer than `scan_length` are still found when `scan_length` is at least 8 and `lookup_string` is long enough to contain them: the importer records every key longer than 16 code points by its first eight code points in `scan.idx`, and when the input begins like such a key the scan extends to that key's length plus eight code points for an inflected ending. Inputs that do not begin like a long key keep the cost of `scan_length`. `DictionaryQuery::max_long_key_length()` returns the longest such key across the loaded term dictionaries so a caller can size `lookup_string`. Dictionaries imported before `scan.idx` existed simply never extend.
 
 Results are filtered by part-of-speech tags defined in dictionaries, or added directly if none are present. The results are sorted by matched length first, then by preprocessing steps, then deinflection trace length and finally by frequency.
+
+A pack whose `lookup.formOf` is `follow` (every pack but Japanese) follows form-of references as Yomitan does: `walked` with `[["walk", ["simple past"]]]` gives `walk` with the trace step `simple past` (`TransformGroup::from_dictionary`), a row that is only references never appears, and a term the dictionary names ranks before one only the rules reach on equal length, steps and trace length (`docs/languages.md` 9.6 and 9.10).
 
 `LookupOptions::neko_speech` (off by default) also reads NekoPara's cat speech (`deinflect_neko_speech`). A cat-speech reading counts only where it matches a longer part of `lookup_string` than every ordinary one, long keys included, and then comes first (after any `primary_reading` results, which sort before matched length): `できにゃい` finds `出来る` over the whole word, and `そんにゃ` finds `そんな`. A term found both ways is listed once, under the longer match. Every other ordinary result is kept, but since cat speech takes the first places, a list capped by `max_results` can lose the last of them. `lookup_dictionary` judges this within its one dictionary. Off, the results are exactly those without the option. The option is meant for NekoPara-style text; on other text with `にゃ` or `ニャ` it also reads, wherever that reaches further than the dictionary's own words:
 
@@ -151,6 +166,8 @@ added metadata dictionary.
 - [lzokay](https://github.com/AxioDL/lzokay): MIT (vendored in `external/lzokay`)
 - [gumbo-parser](https://github.com/sparklemotion/nokogiri/tree/main/gumbo-parser) (Nokogiri's fork of Google's gumbo): Apache-2.0, `hashmap.c` MIT (vendored in `external/gumbo-parser`)
 - [Nekopara-Speech](https://huggingface.co/datasets/OpenSpeechHub/Nekopara-Speech): the transcripts the `neko speech` substitutions were taken from (no data from it is included)
+- [Hangul.js](https://github.com/e-/Hangul.js) 0.2.6: MIT, Copyright 2017 Jaemin Jo (ported in `src/languages/builtins/hangul.cpp`)
+- Language packs carry their own sources and licences in `languages/<code>/README.md`
 
 ## Lookup benchmark
 
@@ -159,8 +176,13 @@ Build with `-DHOSHIDICTS_BENCHMARK=ON`. `benchmark-lookup` accepts a word list
 count and `--term`, `--freq`, `--pitch` or `--kanji` package paths. Defaults keep
 entries and hashes mapped. Add `--paged-entries` and independently
 `--paged-index` to compare the readers. `--metadata-only-terms` turns
-`LookupOptions::metadata_only_terms` on. `--json` emits per-lookup milliseconds
+`LookupOptions::metadata_only_terms` on. `--language <code>` looks words up with
+that pack, loaded from `--languages <dir>` (default: this checkout's
+`languages/`); without it the built-in Japanese pack is used through
+`Lookup(query, deinflector)`. `--json` emits per-lookup milliseconds
 for each pass, result/glossary counts and the shared cache's activity.
+[`docs/benchmarks-languages.md`](docs/benchmarks-languages.md) has the
+measurements of the language framework against 35e2dab.
 
 ```sh
 ./build/benchmark-lookup words.txt 2 --paged-entries --paged-index --json \

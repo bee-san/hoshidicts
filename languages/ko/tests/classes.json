@@ -1,0 +1,2362 @@
+{
+  "generator": "tools/check-classes.mjs",
+  "unicode": "17.0",
+  "classes": {
+    "syllable": [
+      [44032, 55203]
+    ],
+    "jamo": [
+      [4352, 4607],
+      [12593, 12686],
+      [43360, 43391],
+      [55216, 55295]
+    ],
+    "hanja": [
+      [13312, 19903],
+      [19968, 40959],
+      [63744, 64255],
+      [131072, 195103]
+    ],
+    "letter": [
+      [4352, 4607],
+      [12593, 12686],
+      [43360, 43391],
+      [44032, 55203],
+      [55216, 55295]
+    ],
+    "word": [
+      [48, 57],
+      [1632, 1641],
+      [1776, 1785],
+      [1984, 1993],
+      [2406, 2415],
+      [2534, 2543],
+      [2662, 2671],
+      [2790, 2799],
+      [2918, 2927],
+      [3046, 3055],
+      [3174, 3183],
+      [3302, 3311],
+      [3430, 3439],
+      [3558, 3567],
+      [3664, 3673],
+      [3792, 3801],
+      [3872, 3881],
+      [4160, 4169],
+      [4240, 4249],
+      [4352, 4607],
+      [6112, 6121],
+      [6160, 6169],
+      [6470, 6479],
+      [6608, 6617],
+      [6784, 6793],
+      [6800, 6809],
+      [6992, 7001],
+      [7088, 7097],
+      [7232, 7241],
+      [7248, 7257],
+      [12593, 12686],
+      [13312, 19903],
+      [19968, 40959],
+      [42528, 42537],
+      [43216, 43225],
+      [43264, 43273],
+      [43360, 43391],
+      [43472, 43481],
+      [43504, 43513],
+      [43600, 43609],
+      [44016, 44025],
+      [44032, 55203],
+      [55216, 55295],
+      [63744, 64255],
+      [65296, 65305],
+      [66720, 66729],
+      [68912, 68921],
+      [68928, 68937],
+      [69734, 69743],
+      [69872, 69881],
+      [69942, 69951],
+      [70096, 70105],
+      [70384, 70393],
+      [70736, 70745],
+      [70864, 70873],
+      [71248, 71257],
+      [71360, 71369],
+      [71376, 71395],
+      [71472, 71481],
+      [71904, 71913],
+      [72016, 72025],
+      [72688, 72697],
+      [72784, 72793],
+      [73040, 73049],
+      [73120, 73129],
+      [73184, 73193],
+      [73552, 73561],
+      [90416, 90425],
+      [92768, 92777],
+      [92864, 92873],
+      [93008, 93017],
+      [93552, 93561],
+      [118000, 118009],
+      [120782, 120831],
+      [123200, 123209],
+      [123632, 123641],
+      [124144, 124153],
+      [124401, 124410],
+      [125264, 125273],
+      [130032, 130041],
+      [131072, 195103]
+    ],
+    "vowel": [
+      [12623, 12643]
+    ],
+    "consonant": [
+      [12593, 12622]
+    ]
+  },
+  "fields": {
+    "text.pattern": [
+      [4352, 4607],
+      [12593, 12686],
+      [13312, 19903],
+      [19968, 40959],
+      [43360, 43391],
+      [44032, 55203],
+      [55216, 55295],
+      [63744, 64255],
+      [131072, 195103]
+    ],
+    "text.wordCharacters": [
+      [48, 57],
+      [1632, 1641],
+      [1776, 1785],
+      [1984, 1993],
+      [2406, 2415],
+      [2534, 2543],
+      [2662, 2671],
+      [2790, 2799],
+      [2918, 2927],
+      [3046, 3055],
+      [3174, 3183],
+      [3302, 3311],
+      [3430, 3439],
+      [3558, 3567],
+      [3664, 3673],
+      [3792, 3801],
+      [3872, 3881],
+      [4160, 4169],
+      [4240, 4249],
+      [4352, 4607],
+      [6112, 6121],
+      [6160, 6169],
+      [6470, 6479],
+      [6608, 6617],
+      [6784, 6793],
+      [6800, 6809],
+      [6992, 7001],
+      [7088, 7097],
+      [7232, 7241],
+      [7248, 7257],
+      [12593, 12686],
+      [13312, 19903],
+      [19968, 40959],
+      [42528, 42537],
+      [43216, 43225],
+      [43264, 43273],
+      [43360, 43391],
+      [43472, 43481],
+      [43504, 43513],
+      [43600, 43609],
+      [44016, 44025],
+      [44032, 55203],
+      [55216, 55295],
+      [63744, 64255],
+      [65296, 65305],
+      [66720, 66729],
+      [68912, 68921],
+      [68928, 68937],
+      [69734, 69743],
+      [69872, 69881],
+      [69942, 69951],
+      [70096, 70105],
+      [70384, 70393],
+      [70736, 70745],
+      [70864, 70873],
+      [71248, 71257],
+      [71360, 71369],
+      [71376, 71395],
+      [71472, 71481],
+      [71904, 71913],
+      [72016, 72025],
+      [72688, 72697],
+      [72784, 72793],
+      [73040, 73049],
+      [73120, 73129],
+      [73184, 73193],
+      [73552, 73561],
+      [90416, 90425],
+      [92768, 92777],
+      [92864, 92873],
+      [93008, 93017],
+      [93552, 93561],
+      [118000, 118009],
+      [120782, 120831],
+      [123200, 123209],
+      [123632, 123641],
+      [124144, 124153],
+      [124401, 124410],
+      [125264, 125273],
+      [130032, 130041],
+      [131072, 195103]
+    ],
+    "transforms[46].rules[2].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[46].rules[3].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[46].rules[4].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[46].rules[7].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[46].rules[8].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[48].rules[2].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[48].rules[3].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[48].rules[4].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[48].rules[7].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[48].rules[8].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[48].rules[9].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[48].rules[10].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[48].rules[11].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[48].rules[14].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[48].rules[15].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[62].rules[3].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[62].rules[4].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[62].rules[7].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[62].rules[8].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[63].rules[3].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[63].rules[5].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[63].rules[7].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[63].rules[11].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[63].rules[13].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[63].rules[14].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[63].rules[17].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[63].rules[18].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[64].rules[2].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[64].rules[4].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[64].rules[5].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[64].rules[6].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[76].rules[2].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[82].rules[2].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[82].rules[4].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[83].rules[3].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[84].rules[1].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[84].rules[2].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[84].rules[3].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[84].rules[6].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[84].rules[7].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[87].rules[5].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[87].rules[9].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[87].rules[12].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[87].rules[13].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[87].rules[14].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[87].rules[17].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[87].rules[18].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[87].rules[19].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[87].rules[20].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[87].rules[21].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[87].rules[24].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[87].rules[25].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[89].rules[2].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[95].rules[2].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[95].rules[4].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[98].rules[6].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[122].rules[5].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[122].rules[9].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[122].rules[12].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[122].rules[13].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[122].rules[14].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[122].rules[17].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[122].rules[18].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[122].rules[19].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[122].rules[20].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[122].rules[21].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[122].rules[24].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[122].rules[25].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[126].rules[5].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[126].rules[8].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[126].rules[9].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[126].rules[10].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[126].rules[13].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[126].rules[14].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[129].rules[2].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[129].rules[3].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[129].rules[6].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[129].rules[7].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[130].rules[2].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[130].rules[3].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[130].rules[4].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[130].rules[7].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[130].rules[8].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[175].rules[2].stemEndsWith": [
+      [12601, 12601],
+      [12623, 12643]
+    ],
+    "transforms[175].rules[3].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[175].rules[6].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[175].rules[7].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[197].rules[2].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[197].rules[3].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[197].rules[6].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[198].rules[2].stemEndsWith": [
+      [12601, 12601],
+      [12623, 12643]
+    ],
+    "transforms[198].rules[3].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[198].rules[6].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[198].rules[7].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[198].rules[8].stemEndsWith": [
+      [12601, 12601],
+      [12623, 12643]
+    ],
+    "transforms[198].rules[9].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[198].rules[12].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[198].rules[13].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[198].rules[14].stemEndsWith": [
+      [12601, 12601],
+      [12623, 12643]
+    ],
+    "transforms[198].rules[15].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[198].rules[18].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[198].rules[19].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[198].rules[20].stemEndsWith": [
+      [12601, 12601],
+      [12623, 12643]
+    ],
+    "transforms[198].rules[21].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[198].rules[24].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[198].rules[25].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[198].rules[26].stemEndsWith": [
+      [12601, 12601],
+      [12623, 12643]
+    ],
+    "transforms[198].rules[27].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[198].rules[30].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[198].rules[31].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[209].rules[2].stemEndsWith": [
+      [12643, 12643]
+    ],
+    "transforms[225].rules[2].stemEndsWith": [
+      [12601, 12601],
+      [12623, 12643]
+    ],
+    "transforms[225].rules[3].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[225].rules[6].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[237].rules[5].stemEndsWith": [
+      [12601, 12601],
+      [12623, 12643]
+    ],
+    "transforms[237].rules[6].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[237].rules[9].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[237].rules[10].stemEndsWith": [
+      [12601, 12601],
+      [12623, 12643]
+    ],
+    "transforms[237].rules[11].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[237].rules[14].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[278].rules[3].stemEndsWith": [
+      [12601, 12601],
+      [12623, 12643]
+    ],
+    "transforms[278].rules[4].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[278].rules[7].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[278].rules[8].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[279].rules[1].stemEndsWith": [
+      [12601, 12601],
+      [12623, 12643]
+    ],
+    "transforms[279].rules[2].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[279].rules[5].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[279].rules[6].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[280].rules[3].stemEndsWith": [
+      [12601, 12601],
+      [12623, 12643]
+    ],
+    "transforms[280].rules[4].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[280].rules[7].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[280].rules[8].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[281].rules[3].stemEndsWith": [
+      [12601, 12601],
+      [12623, 12643]
+    ],
+    "transforms[281].rules[4].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[281].rules[7].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[281].rules[8].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[310].rules[2].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[310].rules[3].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[310].rules[4].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[311].rules[2].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[311].rules[3].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[311].rules[4].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[322].rules[2].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[322].rules[3].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[322].rules[4].stemEndsWith": [
+      [12623, 12624],
+      [12627, 12629]
+    ],
+    "transforms[322].rules[5].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[322].rules[6].stemEndsWith": [
+      [12636, 12636]
+    ],
+    "transforms[322].rules[8].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[322].rules[9].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[322].rules[10].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[322].rules[16].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12631, 12631]
+    ],
+    "transforms[322].rules[17].stemEndsWith": [
+      [12624, 12624],
+      [12626, 12630],
+      [12636, 12636],
+      [12640, 12641],
+      [12643, 12643]
+    ],
+    "transforms[322].rules[18].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[322].rules[23].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[322].rules[24].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[322].rules[25].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[322].rules[26].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[322].rules[29].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[324].rules[4].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[324].rules[5].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[324].rules[6].stemEndsWith": [
+      [12623, 12624],
+      [12627, 12629]
+    ],
+    "transforms[324].rules[7].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[324].rules[8].stemEndsWith": [
+      [12636, 12636]
+    ],
+    "transforms[324].rules[10].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[324].rules[11].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[324].rules[12].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[324].rules[18].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12631, 12631]
+    ],
+    "transforms[324].rules[19].stemEndsWith": [
+      [12624, 12624],
+      [12626, 12630],
+      [12636, 12636],
+      [12640, 12641],
+      [12643, 12643]
+    ],
+    "transforms[324].rules[20].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[324].rules[25].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[324].rules[26].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[324].rules[27].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[324].rules[28].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[324].rules[31].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[325].rules[4].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[325].rules[5].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[325].rules[6].stemEndsWith": [
+      [12623, 12624],
+      [12627, 12629]
+    ],
+    "transforms[325].rules[7].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[325].rules[8].stemEndsWith": [
+      [12636, 12636]
+    ],
+    "transforms[325].rules[10].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[325].rules[11].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[325].rules[12].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[325].rules[18].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12631, 12631]
+    ],
+    "transforms[325].rules[19].stemEndsWith": [
+      [12624, 12624],
+      [12626, 12630],
+      [12636, 12636],
+      [12640, 12641],
+      [12643, 12643]
+    ],
+    "transforms[325].rules[20].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[325].rules[25].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[325].rules[26].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[325].rules[27].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[325].rules[28].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[325].rules[31].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[326].rules[4].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[326].rules[5].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[326].rules[6].stemEndsWith": [
+      [12623, 12624],
+      [12627, 12629]
+    ],
+    "transforms[326].rules[7].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[326].rules[8].stemEndsWith": [
+      [12636, 12636]
+    ],
+    "transforms[326].rules[10].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[326].rules[11].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[326].rules[12].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[326].rules[18].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12631, 12631]
+    ],
+    "transforms[326].rules[19].stemEndsWith": [
+      [12624, 12624],
+      [12626, 12630],
+      [12636, 12636],
+      [12640, 12641],
+      [12643, 12643]
+    ],
+    "transforms[326].rules[20].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[326].rules[25].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[326].rules[26].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[326].rules[27].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[326].rules[28].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[326].rules[31].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[327].rules[4].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[327].rules[5].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[327].rules[6].stemEndsWith": [
+      [12623, 12624],
+      [12627, 12629]
+    ],
+    "transforms[327].rules[7].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[327].rules[8].stemEndsWith": [
+      [12636, 12636]
+    ],
+    "transforms[327].rules[10].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[327].rules[11].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[327].rules[12].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[327].rules[18].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12631, 12631]
+    ],
+    "transforms[327].rules[19].stemEndsWith": [
+      [12624, 12624],
+      [12626, 12630],
+      [12636, 12636],
+      [12640, 12641],
+      [12643, 12643]
+    ],
+    "transforms[327].rules[20].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[327].rules[25].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[327].rules[26].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[327].rules[27].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[327].rules[28].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[327].rules[31].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[328].rules[4].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[328].rules[5].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[328].rules[6].stemEndsWith": [
+      [12623, 12624],
+      [12627, 12629]
+    ],
+    "transforms[328].rules[7].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[328].rules[8].stemEndsWith": [
+      [12636, 12636]
+    ],
+    "transforms[328].rules[10].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[328].rules[11].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[328].rules[12].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[328].rules[18].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12631, 12631]
+    ],
+    "transforms[328].rules[19].stemEndsWith": [
+      [12624, 12624],
+      [12626, 12630],
+      [12636, 12636],
+      [12640, 12641],
+      [12643, 12643]
+    ],
+    "transforms[328].rules[20].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[328].rules[25].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[328].rules[26].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[328].rules[27].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[328].rules[28].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[328].rules[31].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[328].rules[40].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[328].rules[41].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[328].rules[42].stemEndsWith": [
+      [12623, 12624],
+      [12627, 12629]
+    ],
+    "transforms[328].rules[43].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[328].rules[44].stemEndsWith": [
+      [12636, 12636]
+    ],
+    "transforms[328].rules[46].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[328].rules[47].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[328].rules[48].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[328].rules[54].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12631, 12631]
+    ],
+    "transforms[328].rules[55].stemEndsWith": [
+      [12624, 12624],
+      [12626, 12630],
+      [12636, 12636],
+      [12640, 12641],
+      [12643, 12643]
+    ],
+    "transforms[328].rules[56].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[328].rules[61].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[328].rules[62].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[328].rules[63].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[328].rules[64].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[328].rules[67].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[328].rules[76].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[328].rules[77].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[328].rules[78].stemEndsWith": [
+      [12623, 12624],
+      [12627, 12629]
+    ],
+    "transforms[328].rules[79].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[328].rules[80].stemEndsWith": [
+      [12636, 12636]
+    ],
+    "transforms[328].rules[82].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[328].rules[83].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[328].rules[84].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[328].rules[90].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12631, 12631]
+    ],
+    "transforms[328].rules[91].stemEndsWith": [
+      [12624, 12624],
+      [12626, 12630],
+      [12636, 12636],
+      [12640, 12641],
+      [12643, 12643]
+    ],
+    "transforms[328].rules[92].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[328].rules[97].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[328].rules[98].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[328].rules[99].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[328].rules[100].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[328].rules[103].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[328].rules[112].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[328].rules[113].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[328].rules[114].stemEndsWith": [
+      [12623, 12624],
+      [12627, 12629]
+    ],
+    "transforms[328].rules[115].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[328].rules[116].stemEndsWith": [
+      [12636, 12636]
+    ],
+    "transforms[328].rules[118].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[328].rules[119].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[328].rules[120].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[328].rules[126].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12631, 12631]
+    ],
+    "transforms[328].rules[127].stemEndsWith": [
+      [12624, 12624],
+      [12626, 12630],
+      [12636, 12636],
+      [12640, 12641],
+      [12643, 12643]
+    ],
+    "transforms[328].rules[128].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[328].rules[133].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[328].rules[134].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[328].rules[135].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[328].rules[136].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[328].rules[139].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[329].rules[3].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[329].rules[4].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[329].rules[5].stemEndsWith": [
+      [12623, 12624],
+      [12627, 12629]
+    ],
+    "transforms[329].rules[6].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[329].rules[7].stemEndsWith": [
+      [12636, 12636]
+    ],
+    "transforms[329].rules[9].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[329].rules[10].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[329].rules[11].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[329].rules[17].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12631, 12631]
+    ],
+    "transforms[329].rules[18].stemEndsWith": [
+      [12624, 12624],
+      [12626, 12630],
+      [12636, 12636],
+      [12640, 12641],
+      [12643, 12643]
+    ],
+    "transforms[329].rules[19].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[329].rules[24].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[329].rules[25].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[329].rules[26].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[329].rules[27].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[329].rules[30].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[329].rules[39].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[329].rules[40].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[329].rules[41].stemEndsWith": [
+      [12623, 12624],
+      [12627, 12629]
+    ],
+    "transforms[329].rules[42].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[329].rules[43].stemEndsWith": [
+      [12636, 12636]
+    ],
+    "transforms[329].rules[45].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[329].rules[46].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[329].rules[47].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[329].rules[53].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12631, 12631]
+    ],
+    "transforms[329].rules[54].stemEndsWith": [
+      [12624, 12624],
+      [12626, 12630],
+      [12636, 12636],
+      [12640, 12641],
+      [12643, 12643]
+    ],
+    "transforms[329].rules[55].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[329].rules[60].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[329].rules[61].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[329].rules[62].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[329].rules[63].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[329].rules[66].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[330].rules[4].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[330].rules[5].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[330].rules[6].stemEndsWith": [
+      [12623, 12624],
+      [12627, 12629]
+    ],
+    "transforms[330].rules[7].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[330].rules[8].stemEndsWith": [
+      [12636, 12636]
+    ],
+    "transforms[330].rules[10].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[330].rules[11].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[330].rules[12].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[330].rules[18].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12631, 12631]
+    ],
+    "transforms[330].rules[19].stemEndsWith": [
+      [12624, 12624],
+      [12626, 12630],
+      [12636, 12636],
+      [12640, 12641],
+      [12643, 12643]
+    ],
+    "transforms[330].rules[20].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[330].rules[25].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[330].rules[26].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[330].rules[27].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[330].rules[28].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[330].rules[31].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[332].rules[4].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[332].rules[5].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[332].rules[6].stemEndsWith": [
+      [12623, 12624],
+      [12627, 12629]
+    ],
+    "transforms[332].rules[7].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[332].rules[8].stemEndsWith": [
+      [12636, 12636]
+    ],
+    "transforms[332].rules[10].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[332].rules[11].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[332].rules[12].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[332].rules[18].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12631, 12631]
+    ],
+    "transforms[332].rules[19].stemEndsWith": [
+      [12624, 12624],
+      [12626, 12630],
+      [12636, 12636],
+      [12640, 12641],
+      [12643, 12643]
+    ],
+    "transforms[332].rules[20].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[332].rules[25].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[332].rules[26].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[332].rules[27].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[332].rules[28].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[332].rules[31].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[334].rules[28].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[334].rules[29].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[334].rules[30].stemEndsWith": [
+      [12623, 12624],
+      [12627, 12629]
+    ],
+    "transforms[334].rules[31].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[334].rules[32].stemEndsWith": [
+      [12636, 12636]
+    ],
+    "transforms[334].rules[34].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[334].rules[35].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[334].rules[36].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[334].rules[42].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12631, 12631]
+    ],
+    "transforms[334].rules[43].stemEndsWith": [
+      [12624, 12624],
+      [12626, 12630],
+      [12636, 12636],
+      [12640, 12641],
+      [12643, 12643]
+    ],
+    "transforms[334].rules[44].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[334].rules[49].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[334].rules[50].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[334].rules[51].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[334].rules[52].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[334].rules[55].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[335].rules[5].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[335].rules[6].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[335].rules[7].stemEndsWith": [
+      [12623, 12624],
+      [12627, 12629]
+    ],
+    "transforms[335].rules[8].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[335].rules[9].stemEndsWith": [
+      [12636, 12636]
+    ],
+    "transforms[335].rules[11].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[335].rules[12].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[335].rules[13].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[335].rules[19].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12631, 12631]
+    ],
+    "transforms[335].rules[20].stemEndsWith": [
+      [12624, 12624],
+      [12626, 12630],
+      [12636, 12636],
+      [12640, 12641],
+      [12643, 12643]
+    ],
+    "transforms[335].rules[21].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[335].rules[26].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[335].rules[27].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[335].rules[28].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[335].rules[29].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[335].rules[32].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[335].rules[41].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[335].rules[42].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[335].rules[43].stemEndsWith": [
+      [12623, 12624],
+      [12627, 12629]
+    ],
+    "transforms[335].rules[44].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[335].rules[45].stemEndsWith": [
+      [12636, 12636]
+    ],
+    "transforms[335].rules[47].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[335].rules[48].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[335].rules[49].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[335].rules[55].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12631, 12631]
+    ],
+    "transforms[335].rules[56].stemEndsWith": [
+      [12624, 12624],
+      [12626, 12630],
+      [12636, 12636],
+      [12640, 12641],
+      [12643, 12643]
+    ],
+    "transforms[335].rules[57].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[335].rules[62].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[335].rules[63].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[335].rules[64].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[335].rules[65].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[335].rules[68].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[336].rules[3].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[336].rules[4].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[336].rules[5].stemEndsWith": [
+      [12623, 12624],
+      [12627, 12629]
+    ],
+    "transforms[336].rules[6].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[336].rules[7].stemEndsWith": [
+      [12636, 12636]
+    ],
+    "transforms[336].rules[9].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[336].rules[10].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[336].rules[11].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[336].rules[17].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12631, 12631]
+    ],
+    "transforms[336].rules[18].stemEndsWith": [
+      [12624, 12624],
+      [12626, 12630],
+      [12636, 12636],
+      [12640, 12641],
+      [12643, 12643]
+    ],
+    "transforms[336].rules[19].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[336].rules[24].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[336].rules[25].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[336].rules[26].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[336].rules[27].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[336].rules[30].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[336].rules[39].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[336].rules[40].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[336].rules[41].stemEndsWith": [
+      [12623, 12624],
+      [12627, 12629]
+    ],
+    "transforms[336].rules[42].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[336].rules[43].stemEndsWith": [
+      [12636, 12636]
+    ],
+    "transforms[336].rules[45].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[336].rules[46].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[336].rules[47].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[336].rules[53].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12631, 12631]
+    ],
+    "transforms[336].rules[54].stemEndsWith": [
+      [12624, 12624],
+      [12626, 12630],
+      [12636, 12636],
+      [12640, 12641],
+      [12643, 12643]
+    ],
+    "transforms[336].rules[55].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[336].rules[60].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[336].rules[61].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[336].rules[62].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[336].rules[63].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[336].rules[66].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[337].rules[5].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[337].rules[6].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[337].rules[7].stemEndsWith": [
+      [12623, 12624],
+      [12627, 12629]
+    ],
+    "transforms[337].rules[8].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[337].rules[9].stemEndsWith": [
+      [12636, 12636]
+    ],
+    "transforms[337].rules[11].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[337].rules[12].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[337].rules[13].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[337].rules[19].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12631, 12631]
+    ],
+    "transforms[337].rules[20].stemEndsWith": [
+      [12624, 12624],
+      [12626, 12630],
+      [12636, 12636],
+      [12640, 12641],
+      [12643, 12643]
+    ],
+    "transforms[337].rules[21].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[337].rules[26].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[337].rules[27].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[337].rules[28].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[337].rules[29].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[337].rules[32].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[338].rules[2].stemEndsWith": [
+      [12643, 12643]
+    ],
+    "transforms[365].rules[2].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[365].rules[3].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[365].rules[4].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[365].rules[7].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[365].rules[8].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[365].rules[9].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[365].rules[10].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[365].rules[11].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[365].rules[14].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[365].rules[15].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[374].rules[1].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[374].rules[2].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[374].rules[3].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[374].rules[6].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[374].rules[7].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[374].rules[8].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[374].rules[9].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[374].rules[10].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[374].rules[13].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[374].rules[14].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[393].rules[2].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[393].rules[3].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[393].rules[4].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[393].rules[7].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[393].rules[8].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[401].rules[2].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[401].rules[3].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[401].rules[4].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[401].rules[7].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[401].rules[8].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[415].rules[3].stemEndsWith": [
+      [12601, 12601],
+      [12623, 12643]
+    ],
+    "transforms[415].rules[4].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[415].rules[7].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[415].rules[8].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[437].rules[0].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[437].rules[1].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[437].rules[2].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[437].rules[5].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[438].rules[0].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[438].rules[1].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[438].rules[2].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[438].rules[5].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[439].rules[0].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[439].rules[1].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[439].rules[2].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[439].rules[5].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[439].rules[6].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[439].rules[7].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[439].rules[8].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[439].rules[9].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[439].rules[12].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[439].rules[13].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[441].rules[1].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[441].rules[3].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[444].rules[0].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[444].rules[1].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[444].rules[2].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[444].rules[5].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[444].rules[6].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[444].rules[7].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[444].rules[8].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[444].rules[9].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[444].rules[12].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[444].rules[13].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[446].rules[0].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[446].rules[1].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[446].rules[2].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[446].rules[5].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[446].rules[6].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12627, 12627],
+      [12629, 12629]
+    ],
+    "transforms[447].rules[0].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[447].rules[1].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[447].rules[2].stemEndsWith": [
+      [12623, 12624],
+      [12627, 12629]
+    ],
+    "transforms[447].rules[3].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[447].rules[4].stemEndsWith": [
+      [12636, 12636]
+    ],
+    "transforms[447].rules[6].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[447].rules[7].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[447].rules[8].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[447].rules[14].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12631, 12631]
+    ],
+    "transforms[447].rules[15].stemEndsWith": [
+      [12624, 12624],
+      [12626, 12630],
+      [12636, 12636],
+      [12640, 12641],
+      [12643, 12643]
+    ],
+    "transforms[447].rules[16].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[447].rules[21].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[447].rules[22].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[447].rules[23].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[447].rules[24].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[447].rules[27].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[450].rules[0].stemEndsWith": [
+      [12601, 12601],
+      [12623, 12643]
+    ],
+    "transforms[450].rules[1].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[450].rules[4].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[452].rules[0].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[452].rules[1].stemNotEndsWith": [
+      [12623, 12623],
+      [12627, 12627],
+      [12629, 12629],
+      [12641, 12641]
+    ],
+    "transforms[452].rules[2].stemEndsWith": [
+      [12623, 12624],
+      [12627, 12629]
+    ],
+    "transforms[452].rules[3].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[452].rules[4].stemEndsWith": [
+      [12636, 12636]
+    ],
+    "transforms[452].rules[6].stemEndsWith": [
+      [12631, 12631]
+    ],
+    "transforms[452].rules[7].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[452].rules[8].stemEndsWith": [
+      [12593, 12600],
+      [12602, 12622]
+    ],
+    "transforms[452].rules[14].stemEndsWith": [
+      [12623, 12623],
+      [12625, 12625],
+      [12631, 12631]
+    ],
+    "transforms[452].rules[15].stemEndsWith": [
+      [12624, 12624],
+      [12626, 12630],
+      [12636, 12636],
+      [12640, 12641],
+      [12643, 12643]
+    ],
+    "transforms[452].rules[16].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[452].rules[21].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[452].rules[22].stemEndsWith": [
+      [12623, 12643]
+    ],
+    "transforms[452].rules[23].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[452].rules[24].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[452].rules[27].stemEndsWith": [
+      [12593, 12622]
+    ],
+    "transforms[453].rules[0].stemEndsWith": [
+      [12643, 12643]
+    ],
+    "transforms[454].rules[0].stemEndsWith": [
+      [12643, 12643]
+    ],
+    "transforms[454].rules[1].stemEndsWith": [
+      [12643, 12643]
+    ],
+    "transforms[454].rules[2].stemEndsWith": [
+      [12643, 12643]
+    ]
+  },
+  "steps": []
+}

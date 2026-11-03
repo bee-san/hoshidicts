@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <glaze/glaze.hpp>
 
+#include "form_of.hpp"
 #include "json_skip.hpp"
 #include <optional>
 #include <string>
@@ -85,6 +86,7 @@ struct ParsedPitch {
   std::vector<std::string> transcriptions;
 };
 
+
 namespace yomitan_parser {
 bool parse_index(std::string_view content, Index& out);
 // The bank parsers keep each string as a view into `content`. A string the
@@ -99,4 +101,18 @@ bool parse_tag_bank(std::string_view content, std::vector<Tag>& out);
 bool parse_frequency(std::string_view content, ParsedFrequency& out);
 bool parse_pitch(std::string_view content, ParsedPitch& out);
 bool parse_ipa(std::string_view content, ParsedPitch& out);
+// The form-of references of a row's definitions (its raw JSON array), in
+// order, appended to `out`: every item that is an array of two elements, a
+// non-empty string and an array, which Yomitan's term bank schema calls a
+// deinflection, with the strings of the second as its rules. Other array
+// items are neither references nor definitions.
+void read_form_of(std::string_view definitions, std::vector<FormOfReference>& out);
+// What read_form_of would find, without decoding anything: no reference, or
+// references beside other definitions, or only references (and arrays that
+// are not references).
+enum class FormOfKind : unsigned char { None, WithOthers, Only };
+FormOfKind form_of_kind(std::string_view definitions);
+// `definitions` without its top-level array items, which are form-of data;
+// unchanged when it is not a well-formed array.
+std::string without_form_of(std::string_view definitions);
 };

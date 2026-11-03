@@ -1,0 +1,40 @@
+# Known gaps: run by the conformance test and counted, not enforced.
+# Hand-written rows (categories without ";"): written for this pack, no third-party data.
+# Source: UniMorph spa (https://github.com/unimorph/spa/blob/b9655efb0e5ce0f99809badaa7f4e93017ab8430/spa, sha256 7a165d4b44eb078d), CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/), by the UniMorph contributors, from English Wiktionary.
+# 1000 rows sampled with seed 1 by sources/build-corpus.mjs (450 verb, finite, 80 verb, gerund or participle, 150 verb with pronouns, 150 noun, plural, 40 noun, singular, 130 adjective); the rows the pack's rules reach are in corpus.tsv, the others in gaps.tsv.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+V;IMP;FORM;2;PL;DAT;PRO;3;PL	1	corróyanse	corroer	v	*
+N;MASC;PL	1	vicerrectores	vicerrectora	n	*
+N;MASC;PL	1	manitobanos	manitobana	n	*
+N;FEM;PL	1	sículas	sículo	n	*
+N;MASC;PL	1	raelianos	raeliana	n	*
+N;MASC;PL	1	gambianos	gambiana	n	*
+N;MASC;PL	1	choznos	chozna	n	*
+N;MASC;PL	1	coacusados	coacusada	n	*
+N;MASC;PL	1	protesoreros	protesorera	n	*
+N;MASC;SG	1	panfletario	panfletaria	n	*
+N;MASC;SG	1	rugidor	rugidora	n	*
+N;MASC;SG	1	cuatrillizo	cuatrilliza	n	*
+N;FEM;SG	1	charra	charro	n	*
+N;MASC;SG	1	texcocano	texcocana	n	*
+N;FEM;SG	1	pollita	pollito	n	*
+N;MASC;SG	1	organero	organera	n	*
+N;MASC;SG	1	ciezano	ciezana	n	*
+N;FEM;SG	1	quía	quío	n	*
+N;FEM;SG	1	gata	gato	n	*
+N;FEM;SG	1	ecua	ecuo	n	*
+N;MASC;SG	1	usuluteco	usuluteca	n	*
+N;MASC;SG	1	ceibeño	ceibeña	n	*
+N;FEM;SG	1	habilitada	habilitado	n	*
+N;FEM;SG	1	exnovia	exnovio	n	*
+N;MASC;SG	1	galleguiño	galleguiña	n	*
+N;MASC;SG	1	minskeño	minskeña	n	*
+N;MASC;SG	1	cabildero	cabildera	n	*
+N;MASC;SG	1	cristino	cristina	n	*
+N;FEM;SG	1	hijita	hijito	n	*
+N;FEM;SG	1	sonsa	sonso	n	*
+N;MASC;SG	1	amigovio	amigovia	n	*
+N;FEM;SG	1	vampirita	vampirito	n	*
+N;FEM;SG	1	caledonia	caledonio	n	*
+N;FEM;SG	1	maragata	maragato	n	*
+ADJ;FEM;SG	1	esa	ese	adj	*

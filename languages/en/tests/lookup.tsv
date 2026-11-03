@@ -1,0 +1,43 @@
+# Written for this pack (GPL-3.0-or-later): whole lookups against tests/dictionary/ (written for the pack).
+# category	valid	text	expression	matched (valid = 1: the first result; 0: not the first result)
+verbs	1	running away again	run away	running away
+verbs	1	Walked home alone	walk	Walked
+verbs	1	stopped at the station	stop	stopped
+verbs	1	taking the train	take	taking
+nouns	1	children's toys	child	children's
+nouns	1	wolves howled	wolf	wolves
+nouns	1	knives and forks	knife	knives
+nouns	1	cities of Europe	city	cities
+nouns	1	mothers-in-law are welcome	mother-in-law	mothers-in-law
+adjectives	1	happiest day	happy	happiest
+adjectives	1	better than ever	good	better
+apostrophes	1	mother’s house	mother	mother’s
+apostrophes	1	Mary's coat	Mary	Mary's
+apostrophes	1	teacher’s desk	teacher	teacher’s
+apostrophes	1	doesn't matter	do	doesn't
+apostrophes	1	I'll go	I	I'll
+apostrophes	1	lov'd her	love	lov'd
+apostrophes	1	goin'	go	goin'
+hyphens	1	minute walk to the station	minute	minute
+phrasal verbs	1	looked the word up in the dictionary	look up	looked the word up
+phrasal verbs	1	looked up the word	look up	looked up
+phrasal verbs	1	turned it off again	turn off	turned it off
+phrasal verbs	1	put Mary's coat away	put away	put Mary's coat away
+phrasal verbs	1	picked Tom up from school	pick up	picked Tom up
+phrasal verbs	1	took off on time	take off	took off
+phrasal verbs	1	gave up smoking	give up	gave up
+phrasal verbs	1	lost his temper	lose one's temper	lost his temper
+processors	1	naïve idea	naive	naïve
+processors	1	ﬁnding it	find	ﬁnding
+processors	1	beau­tiful day	beautiful	beau­tiful
+negatives	0	put her foot on the table	put on	put her foot on
+negatives	0	had gone out for a walk	have out	had gone out
+negatives	0	all came out	all out	all came out
+negatives	0	he'd go	heed	he'd
+negatives	0	bed time	b	bed
+negatives	0	serves the king	serf	serves
+negatives	0	looked uptown	look up	looked up
+multiword prefixes	1	long as I live	long	long
+multiword prefixes	0	long as I live	long a	long as
+multiword prefixes	1	found a little door	find	found
+multiword prefixes	0	found a little door	found on	found a

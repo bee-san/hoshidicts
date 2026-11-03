@@ -1,0 +1,1598 @@
+# Source: UniMorph eng (https://github.com/unimorph/eng), commit 66e0e9e8e2dcd196da081a25a48e5c1fe3d8b49b, file eng
+# (sha256 20a191cefdc7cad6fa74b00f49d6f658684f17b14541aae372e5a3d5a8c15c67), CC BY-SA 3.0, by the UniMorph contributors.
+# 1,600 rows sampled with seed 1 by sources/sample-corpus.py (README.md); the rows the final rules do not reach are in gaps.tsv.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+noun plural (frequent)	1	someones	someone	n	*
+noun plural (frequent)	1	apps	app	n	*
+noun plural (frequent)	1	clots	clot	n	*
+noun plural (frequent)	1	kiddies	kiddie	n	*
+noun plural (frequent)	1	bollocks	bollock	n	*
+noun plural (frequent)	1	offices	office	n	*
+noun plural (frequent)	1	cranberries	cranberry	n	*
+noun plural (frequent)	1	shucks	shuck	n	*
+noun plural (frequent)	1	aspects	aspect	n	*
+noun plural (frequent)	1	palms	palm	n	*
+noun plural (frequent)	1	gaskets	gasket	n	*
+noun plural (frequent)	1	annuals	annual	n	*
+noun plural (frequent)	1	outskirts	outskirt	n	*
+noun plural (frequent)	1	insulators	insulator	n	*
+noun plural (frequent)	1	visitors	visitor	n	*
+noun plural (frequent)	1	actives	active	n	*
+noun plural (frequent)	1	closes	close	n	*
+noun plural (frequent)	1	endowments	endowment	n	*
+noun plural (frequent)	1	portfolios	portfolio	n	*
+noun plural (frequent)	1	johnsons	johnson	n	*
+noun plural (frequent)	1	shrugs	shrug	n	*
+noun plural (frequent)	1	donuts	donut	n	*
+noun plural (frequent)	1	pows	pow	n	*
+noun plural (frequent)	1	fusiliers	fusilier	n	*
+noun plural (frequent)	1	completes	complete	n	*
+noun plural (frequent)	1	surcharges	surcharge	n	*
+noun plural (frequent)	1	boosts	boost	n	*
+noun plural (frequent)	1	bones	bone	n	*
+noun plural (frequent)	1	agents	agent	n	*
+noun plural (frequent)	1	borrowers	borrower	n	*
+noun plural (frequent)	1	indexes	index	n	*
+noun plural (frequent)	1	spaceships	spaceship	n	*
+noun plural (frequent)	1	junkies	junky	n	*
+noun plural (frequent)	1	supporters	supporter	n	*
+noun plural (frequent)	1	connotations	connotation	n	*
+noun plural (frequent)	1	dubs	dub	n	*
+noun plural (frequent)	1	ufos	ufo	n	*
+noun plural (frequent)	1	normans	norman	n	*
+noun plural (frequent)	1	choppers	chopper	n	*
+noun plural (frequent)	1	waves	wave	n	*
+noun plural (frequent)	1	bigots	bigot	n	*
+noun plural (frequent)	1	peripherals	peripheral	n	*
+noun plural (frequent)	1	crutches	crutch	n	*
+noun plural (frequent)	1	simulators	simulator	n	*
+noun plural (frequent)	1	grays	gray	n	*
+noun plural (frequent)	1	soybeans	soybean	n	*
+noun plural (frequent)	1	peas	pea	n	*
+noun plural (frequent)	1	martens	marten	n	*
+noun plural (frequent)	1	lugs	lug	n	*
+noun plural (frequent)	1	reports	report	n	*
+noun plural (frequent)	1	refs	ref	n	*
+noun plural (frequent)	1	wallets	wallet	n	*
+noun plural (frequent)	1	mumps	mump	n	*
+noun plural (frequent)	1	millimetres	millimetre	n	*
+noun plural (frequent)	1	rises	rise	n	*
+noun plural (frequent)	1	frontlines	frontline	n	*
+noun plural (frequent)	1	shares	share	n	*
+noun plural (frequent)	1	cooperatives	cooperative	n	*
+noun plural (frequent)	1	parallels	parallel	n	*
+noun plural (frequent)	1	nappies	nappie	n	*
+noun plural (frequent)	1	shirts	shirt	n	*
+noun plural (frequent)	1	patrons	patron	n	*
+noun plural (frequent)	1	processes	process	n	*
+noun plural (frequent)	1	decoys	decoy	n	*
+noun plural (frequent)	1	settings	setting	n	*
+noun plural (frequent)	1	floods	flood	n	*
+noun plural (frequent)	1	franks	frank	n	*
+noun plural (frequent)	1	locks	lock	n	*
+noun plural (frequent)	1	dinos	dino	n	*
+noun plural (frequent)	1	kinds	kind	n	*
+noun plural (frequent)	1	clinicians	clinician	n	*
+noun plural (frequent)	1	specks	speck	n	*
+noun plural (frequent)	1	reservists	reservist	n	*
+noun plural (frequent)	1	linebackers	linebacker	n	*
+noun plural (frequent)	1	posses	posse	n	*
+noun plural (frequent)	1	urns	urn	n	*
+noun plural (frequent)	1	droplets	droplet	n	*
+noun plural (frequent)	1	outfitters	outfitter	n	*
+noun plural (frequent)	1	swans	swan	n	*
+noun plural (frequent)	1	candlesticks	candlestick	n	*
+noun plural (frequent)	1	cutouts	cutout	n	*
+noun plural (frequent)	1	suckers	sucker	n	*
+noun plural (frequent)	1	stubs	stub	n	*
+noun plural (frequent)	1	successors	successor	n	*
+noun plural (frequent)	1	ways	way	n	*
+noun plural (frequent)	1	hedgehogs	hedgehog	n	*
+noun plural (frequent)	1	tanks	tank	n	*
+noun plural (frequent)	1	payouts	payout	n	*
+noun plural (frequent)	1	ambulances	ambulance	n	*
+noun plural (frequent)	1	brewers	brewer	n	*
+noun plural (frequent)	1	stevens	steven	n	*
+noun plural (frequent)	1	routers	router	n	*
+noun plural (frequent)	1	rumbles	rumble	n	*
+noun plural (frequent)	1	devotees	devotee	n	*
+noun plural (frequent)	1	weekends	weekend	n	*
+noun plural (frequent)	1	lofts	loft	n	*
+noun plural (frequent)	1	sashes	sash	n	*
+noun plural (frequent)	1	vertebrates	vertebrate	n	*
+noun plural (frequent)	1	freeways	freeway	n	*
+noun plural (frequent)	1	prairies	prairie	n	*
+noun plural (frequent)	1	glens	glen	n	*
+noun plural (frequent)	1	instructors	instructor	n	*
+noun plural (frequent)	1	squats	squat	n	*
+noun plural (frequent)	1	foothills	foothill	n	*
+noun plural (frequent)	1	seashells	seashell	n	*
+noun plural (frequent)	1	dares	dare	n	*
+noun plural (frequent)	1	basements	basement	n	*
+noun plural (frequent)	1	precedes	precede	n	*
+noun plural (frequent)	1	wipes	wipe	n	*
+noun plural (frequent)	1	chiles	chile	n	*
+noun plural (frequent)	1	cupboards	cupboard	n	*
+noun plural (frequent)	1	artists	artist	n	*
+noun plural (frequent)	1	fullbacks	fullback	n	*
+noun plural (frequent)	1	commas	comma	n	*
+noun plural (frequent)	1	coates	coate	n	*
+noun plural (frequent)	1	cogs	cog	n	*
+noun plural (frequent)	1	els	el	n	*
+noun plural (frequent)	1	counsellors	counsellor	n	*
+noun plural (frequent)	1	climbers	climber	n	*
+noun plural (frequent)	1	deploys	deploy	n	*
+noun plural (frequent)	1	galaxies	galaxy	n	*
+noun plural (frequent)	1	levies	levy	n	*
+noun plural (frequent)	1	beards	beard	n	*
+noun plural (frequent)	1	nucleotides	nucleotide	n	*
+noun plural (frequent)	1	sermons	sermon	n	*
+noun plural (frequent)	1	cations	cation	n	*
+noun plural (frequent)	1	trustees	trustee	n	*
+noun plural (frequent)	1	kites	kite	n	*
+noun plural (frequent)	1	yards	yard	n	*
+noun plural (frequent)	1	asides	aside	n	*
+noun plural (frequent)	1	envelopes	envelope	n	*
+noun plural (frequent)	1	primitives	primitive	n	*
+noun plural (frequent)	1	coordinates	coordinate	n	*
+noun plural (frequent)	1	cupcakes	cupcake	n	*
+noun plural (frequent)	1	forts	fort	n	*
+noun plural (frequent)	1	mailboxes	mailbox	n	*
+noun plural (frequent)	1	attackers	attacker	n	*
+noun plural (frequent)	1	tories	tory	n	*
+noun plural (frequent)	1	dispensaries	dispensary	n	*
+noun plural (frequent)	1	overdoses	overdose	n	*
+noun plural (frequent)	1	owls	owl	n	*
+noun plural (frequent)	1	corvettes	corvette	n	*
+noun plural (frequent)	1	cougars	cougar	n	*
+noun plural (frequent)	1	lollipops	lollipop	n	*
+noun plural (frequent)	1	drakes	drake	n	*
+noun plural (frequent)	1	martyrs	martyr	n	*
+noun plural (frequent)	1	metrics	metric	n	*
+noun plural (frequent)	1	humanists	humanist	n	*
+noun plural (frequent)	1	honorees	honoree	n	*
+noun plural (frequent)	1	parties	party	n	*
+noun plural (frequent)	1	stories	story	n	*
+noun plural (frequent)	1	facades	facade	n	*
+noun plural (frequent)	1	bikes	bike	n	*
+noun plural (frequent)	1	loaves	loave	n	*
+noun plural (frequent)	1	rts	rt	n	*
+noun plural (frequent)	1	skiers	skier	n	*
+noun plural (frequent)	1	beckons	beckon	n	*
+noun plural (frequent)	1	results	result	n	*
+noun plural (frequent)	1	units	unit	n	*
+noun plural (frequent)	1	stances	stance	n	*
+noun plural (frequent)	1	clones	clone	n	*
+noun plural (frequent)	1	wasps	wasp	n	*
+noun plural (frequent)	1	populists	populist	n	*
+noun plural (frequent)	1	knees	knee	n	*
+noun plural (frequent)	1	miles	mile	n	*
+noun plural (frequent)	1	searchers	searcher	n	*
+noun plural (frequent)	1	dabs	dab	n	*
+noun plural (frequent)	1	dampers	damper	n	*
+noun plural (frequent)	1	accolades	accolade	n	*
+noun plural (frequent)	1	headlights	headlight	n	*
+noun plural (frequent)	1	anniversaries	anniversary	n	*
+noun plural (frequent)	1	mocks	mock	n	*
+noun plural (frequent)	1	beaches	beach	n	*
+noun plural (frequent)	1	cataracts	cataract	n	*
+noun plural (frequent)	1	sprinkles	sprinkle	n	*
+noun plural (frequent)	1	baptists	baptist	n	*
+noun plural (frequent)	1	visas	visa	n	*
+noun plural (frequent)	1	orbs	orb	n	*
+noun plural (frequent)	1	beginners	beginner	n	*
+noun plural (frequent)	1	welders	welder	n	*
+noun plural (frequent)	1	burgers	burger	n	*
+noun plural (frequent)	1	royalists	royalist	n	*
+noun plural (frequent)	1	conscripts	conscript	n	*
+noun plural (frequent)	1	analysts	analyst	n	*
+noun plural (frequent)	1	tendencies	tendency	n	*
+noun plural (frequent)	1	bares	bare	n	*
+noun plural (frequent)	1	marshes	marsh	n	*
+noun plural (frequent)	1	wins	win	n	*
+noun plural (frequent)	1	bags	bag	n	*
+noun plural (frequent)	1	scrambles	scramble	n	*
+noun plural (frequent)	1	strangers	stranger	n	*
+noun plural (frequent)	1	synthetics	synthetic	n	*
+noun plural (frequent)	1	statisticians	statistician	n	*
+noun plural (frequent)	1	hinges	hinge	n	*
+noun plural (frequent)	1	bears	bear	n	*
+noun plural (frequent)	1	crocodiles	crocodile	n	*
+noun plural (frequent)	1	bombings	bombing	n	*
+noun plural (frequent)	1	narrows	narrow	n	*
+noun plural (frequent)	1	freebies	freebie	n	*
+noun plural (frequent)	1	nerds	nerd	n	*
+noun plural (frequent)	1	faces	face	n	*
+noun plural (frequent)	1	treats	treat	n	*
+noun plural (frequent)	1	lances	lance	n	*
+noun plural (frequent)	1	boulevards	boulevard	n	*
+noun plural (frequent)	1	mergers	merger	n	*
+noun plural (frequent)	1	homelands	homeland	n	*
+noun plural (frequent)	1	terriers	terrier	n	*
+noun plural (frequent)	1	leftovers	leftover	n	*
+noun plural (frequent)	1	pilots	pilot	n	*
+noun plural (frequent)	1	advertisers	advertiser	n	*
+noun plural (frequent)	1	amines	amine	n	*
+noun plural (frequent)	1	custodians	custodian	n	*
+noun plural (frequent)	1	hipsters	hipster	n	*
+noun plural (frequent)	1	staples	staple	n	*
+noun plural (frequent)	1	crickets	cricket	n	*
+noun plural (frequent)	1	moons	moon	n	*
+noun plural (frequent)	1	seats	seat	n	*
+noun plural (frequent)	1	gremlins	gremlin	n	*
+noun plural (frequent)	1	unicorns	unicorn	n	*
+noun plural (frequent)	1	cannibals	cannibal	n	*
+noun plural (frequent)	1	hawkeyes	hawkeye	n	*
+noun plural (frequent)	1	intros	intro	n	*
+noun plural (frequent)	1	chutes	chute	n	*
+noun plural (frequent)	1	webinars	webinar	n	*
+noun plural (frequent)	1	splints	splint	n	*
+noun plural (frequent)	1	miners	miner	n	*
+noun plural (frequent)	1	carbohydrates	carbohydrate	n	*
+noun plural (frequent)	1	tribulations	tribulation	n	*
+noun plural (frequent)	1	packers	packer	n	*
+noun plural (frequent)	1	vistas	vista	n	*
+noun plural (frequent)	1	basses	bass	n	*
+noun plural (frequent)	1	thighs	thigh	n	*
+noun plural (frequent)	1	clogs	clog	n	*
+noun plural (frequent)	1	faints	faint	n	*
+noun plural (frequent)	1	sidekicks	sidekick	n	*
+noun plural (frequent)	1	opens	open	n	*
+noun plural (frequent)	1	pours	pour	n	*
+noun plural (frequent)	1	harlequins	harlequin	n	*
+noun plural (frequent)	1	joggers	jogger	n	*
+noun plural (frequent)	1	opponents	opponent	n	*
+noun plural (frequent)	1	saves	save	n	*
+noun plural (frequent)	1	attorneys	attorney	n	*
+noun plural (frequent)	1	vikas	vika	n	*
+noun plural (frequent)	1	capillaries	capillary	n	*
+noun plural (frequent)	1	tresses	tress	n	*
+noun plural (frequent)	1	voids	void	n	*
+noun plural (frequent)	1	forests	forest	n	*
+noun plural (frequent)	1	commodities	commoditie	n	*
+noun plural (frequent)	1	chuckles	chuckle	n	*
+noun plural (any)	1	fontanelles	fontanelle	n	*
+noun plural (any)	1	bootkits	bootkit	n	*
+noun plural (any)	1	azulenoids	azulenoid	n	*
+noun plural (any)	1	tetanospasms	tetanospasm	n	*
+noun plural (any)	1	necklocks	necklock	n	*
+noun plural (any)	1	smiters	smiter	n	*
+noun plural (any)	1	wiretappers	wiretapper	n	*
+noun plural (any)	1	bifolds	bifold	n	*
+noun plural (any)	1	bioprovinces	bioprovince	n	*
+noun plural (any)	1	dewans	dewan	n	*
+noun plural (any)	1	demibrigades	demibrigade	n	*
+noun plural (any)	1	thrivers	thriver	n	*
+noun plural (any)	1	lactocins	lactocin	n	*
+noun plural (any)	1	mampalons	mampalon	n	*
+noun plural (any)	1	shoggoths	shoggoth	n	*
+noun plural (any)	1	millepeds	milleped	n	*
+noun plural (any)	1	tiptops	tiptop	n	*
+noun plural (any)	1	cytomes	cytome	n	*
+noun plural (any)	1	adapisoricids	adapisoricid	n	*
+noun plural (any)	1	isofields	isofield	n	*
+noun plural (any)	1	caiquejees	caiquejee	n	*
+noun plural (any)	1	copartneries	copartnery	n	*
+noun plural (any)	1	covectors	covector	n	*
+noun plural (any)	1	sparres	sparre	n	*
+noun plural (any)	1	antibiotics	antibiotic	n	*
+noun plural (any)	1	yentas	yenta	n	*
+noun plural (any)	1	alcoholists	alcoholist	n	*
+noun plural (any)	1	sectorectomies	sectorectomy	n	*
+noun plural (any)	1	groundscrapers	groundscraper	n	*
+noun plural (any)	1	quadripoles	quadripole	n	*
+noun plural (any)	1	hexafluoroplatinates	hexafluoroplatinate	n	*
+noun plural (any)	1	pneumatograms	pneumatogram	n	*
+noun plural (any)	1	cropouts	cropout	n	*
+noun plural (any)	1	retepores	retepore	n	*
+noun plural (any)	1	ironmasters	ironmaster	n	*
+noun plural (any)	1	wikes	wike	n	*
+noun plural (any)	1	admiralcies	admiralcy	n	*
+noun plural (any)	1	freakshows	freakshow	n	*
+noun plural (any)	1	photoorganoheterotrophs	photoorganoheterotroph	n	*
+noun plural (any)	1	monsterings	monstering	n	*
+noun plural (any)	1	enamoviruses	enamovirus	n	*
+noun plural (any)	1	morphographs	morphograph	n	*
+noun plural (any)	1	worktables	worktable	n	*
+noun plural (any)	1	biliments	biliment	n	*
+noun plural (any)	1	crocodylids	crocodylid	n	*
+noun plural (any)	1	wanings	waning	n	*
+noun plural (any)	1	premetrics	premetric	n	*
+noun plural (any)	1	fingersbreadths	fingersbreadth	n	*
+noun plural (any)	1	fluoroalkanes	fluoroalkane	n	*
+noun plural (any)	1	chromosols	chromosol	n	*
+noun plural (any)	1	solars	solar	n	*
+noun plural (any)	1	thyatirids	thyatirid	n	*
+noun plural (any)	1	timezones	timezone	n	*
+noun plural (any)	1	cimbias	cimbia	n	*
+noun plural (any)	1	lipovesicles	lipovesicle	n	*
+noun plural (any)	1	tympanists	tympanist	n	*
+noun plural (any)	1	leukotomies	leukotomy	n	*
+noun plural (any)	1	queridas	querida	n	*
+noun plural (any)	1	parachurches	parachurch	n	*
+noun plural (any)	1	moocows	moocow	n	*
+noun plural (any)	1	pyrogeometers	pyrogeometer	n	*
+noun plural (any)	1	immunopharmaceuticals	immunopharmaceutical	n	*
+noun plural (any)	1	cupheads	cuphead	n	*
+noun plural (any)	1	stains	stain	n	*
+noun plural (any)	1	otacousticons	otacousticon	n	*
+noun plural (any)	1	kolinskis	kolinski	n	*
+noun plural (any)	1	prostigmatids	prostigmatid	n	*
+noun plural (any)	1	gastrobots	gastrobot	n	*
+noun plural (any)	1	lobsteries	lobstery	n	*
+noun plural (any)	1	sawflies	sawfly	n	*
+noun plural (any)	1	nanotubes	nanotube	n	*
+noun plural (any)	1	steerers	steerer	n	*
+noun plural (any)	1	ranees	ranee	n	*
+noun plural (any)	1	mockernuts	mockernut	n	*
+noun plural (any)	1	bebees	bebee	n	*
+noun plural (any)	1	conformatures	conformature	n	*
+noun plural (any)	1	psittacosaurids	psittacosaurid	n	*
+noun plural (any)	1	backslabs	backslab	n	*
+noun plural (any)	1	strophanthuses	strophanthus	n	*
+noun plural (any)	1	cropfields	cropfield	n	*
+noun plural (any)	1	pasticcios	pasticcio	n	*
+noun plural (any)	1	nargilis	nargili	n	*
+noun plural (any)	1	starfinches	starfinch	n	*
+noun plural (any)	1	cuntlets	cuntlet	n	*
+noun plural (any)	1	eigenfunctions	eigenfunction	n	*
+noun plural (any)	1	synaptiphilids	synaptiphilid	n	*
+noun plural (any)	1	annexins	annexin	n	*
+noun plural (any)	1	emptiers	emptier	n	*
+noun plural (any)	1	dowses	dowse	n	*
+noun plural (any)	1	sepuhs	sepuh	n	*
+noun plural (any)	1	logisticians	logistician	n	*
+noun plural (any)	1	sparers	sparer	n	*
+noun plural (any)	1	showstoppers	showstopper	n	*
+noun plural (any)	1	agentries	agentry	n	*
+noun plural (any)	1	blowens	blowen	n	*
+noun plural (any)	1	belaborers	belaborer	n	*
+noun plural (any)	1	cracids	cracid	n	*
+noun plural (any)	1	pholids	pholid	n	*
+noun plural (any)	1	aniseikonias	aniseikonia	n	*
+noun plural (any)	1	syllogizers	syllogizer	n	*
+noun plural (any)	1	nonresponses	nonresponse	n	*
+noun plural (any)	1	analogates	analogate	n	*
+noun plural (any)	1	azauridines	azauridine	n	*
+noun plural (any)	1	disialosides	disialoside	n	*
+noun plural (any)	1	squawls	squawl	n	*
+noun plural (any)	1	coplayers	coplayer	n	*
+noun plural (any)	1	browbeaters	browbeater	n	*
+noun plural (any)	1	montbretias	montbretia	n	*
+noun plural (any)	1	orangutangs	orangutang	n	*
+noun plural (any)	1	stripings	striping	n	*
+noun plural (any)	1	doublequotes	doublequote	n	*
+noun plural (any)	1	xerepts	xerept	n	*
+noun plural (any)	1	protologists	protologist	n	*
+noun plural (any)	1	mils	mil	n	*
+noun plural (any)	1	palookas	palooka	n	*
+noun plural (any)	1	fallboards	fallboard	n	*
+noun plural (any)	1	depurators	depurator	n	*
+noun plural (any)	1	banquines	banquine	n	*
+noun plural (any)	1	crutters	crutter	n	*
+noun plural (any)	1	bellies	belly	n	*
+noun plural (any)	1	accelerators	accelerator	n	*
+noun plural (any)	1	gooders	gooder	n	*
+noun plural (any)	1	knitches	knitch	n	*
+noun plural (any)	1	jarks	jark	n	*
+noun plural (any)	1	bathycrinids	bathycrinid	n	*
+noun plural (any)	1	stipulators	stipulator	n	*
+noun plural (any)	1	kapanas	kapana	n	*
+noun plural (any)	1	prosyllogisms	prosyllogism	n	*
+noun plural (any)	1	recyclables	recyclable	n	*
+noun plural (any)	1	campervanners	campervanner	n	*
+noun plural (any)	1	superficializations	superficialization	n	*
+noun plural (any)	1	schlimazls	schlimazl	n	*
+noun plural (any)	1	dryandras	dryandra	n	*
+noun plural (any)	1	macrochannels	macrochannel	n	*
+noun plural (any)	1	graphs	graph	n	*
+noun plural (any)	1	zamas	zama	n	*
+noun plural (any)	1	cumaceans	cumacean	n	*
+noun plural (any)	1	skippers	skipper	n	*
+noun plural (any)	1	gerenuks	gerenuk	n	*
+noun plural (any)	1	leftards	leftard	n	*
+noun plural (any)	1	mirlitons	mirliton	n	*
+noun plural (any)	1	pyrocarbonates	pyrocarbonate	n	*
+noun plural (any)	1	girles	girle	n	*
+noun plural (any)	1	jonquilles	jonquille	n	*
+noun plural (any)	1	transcribers	transcriber	n	*
+noun plural (any)	1	topophotomaps	topophotomap	n	*
+noun plural (any)	1	redockings	redocking	n	*
+noun plural (any)	1	galactoglycoproteins	galactoglycoprotein	n	*
+noun plural (any)	1	howajis	howaji	n	*
+noun plural (any)	1	quinolizinones	quinolizinone	n	*
+noun plural (any)	1	proterosuchids	proterosuchid	n	*
+noun plural (any)	1	boilovers	boilover	n	*
+noun plural (any)	1	kirbehs	kirbeh	n	*
+noun plural (any)	1	seraglios	seraglio	n	*
+noun plural (any)	1	capotes	capote	n	*
+noun plural (any)	1	trochanteriids	trochanteriid	n	*
+noun plural (any)	1	hypermajorities	hypermajority	n	*
+noun plural (any)	1	bolyeriids	bolyeriid	n	*
+noun plural (any)	1	oikophobes	oikophobe	n	*
+noun plural (any)	1	hagstones	hagstone	n	*
+noun plural (any)	1	distractionists	distractionist	n	*
+noun plural (any)	1	shaheens	shaheen	n	*
+noun plural (any)	1	sovrings	sovring	n	*
+noun plural (any)	1	oligodendrimers	oligodendrimer	n	*
+noun plural (any)	1	sphenopsids	sphenopsid	n	*
+noun plural (any)	1	hemigordiopsids	hemigordiopsid	n	*
+noun plural (any)	1	stationmistresses	stationmistress	n	*
+noun plural (any)	1	subcontraries	subcontrary	n	*
+noun plural (any)	1	joes	joe	n	*
+noun plural (any)	1	bikathons	bikathon	n	*
+noun plural (any)	1	acylazoliums	acylazolium	n	*
+noun plural (any)	1	pseudocapacitors	pseudocapacitor	n	*
+noun plural (any)	1	anxietists	anxietist	n	*
+noun plural (any)	1	czapkas	czapka	n	*
+noun plural (any)	1	scintiscans	scintiscan	n	*
+noun plural (any)	1	warerooms	wareroom	n	*
+noun plural (any)	1	epimmunomes	epimmunome	n	*
+noun plural (any)	1	shanghaiers	shanghaier	n	*
+noun plural (any)	1	advisers	adviser	n	*
+noun plural (any)	1	elapids	elapid	n	*
+noun plural (any)	1	bbs	bb	n	*
+noun plural (any)	1	bucketsorts	bucketsort	n	*
+noun plural (any)	1	cumwhores	cumwhore	n	*
+noun plural (any)	1	lowbrows	lowbrow	n	*
+noun plural (any)	1	commsats	commsat	n	*
+noun plural (any)	1	marinobactins	marinobactin	n	*
+noun plural (any)	1	boyos	boyo	n	*
+noun plural (any)	1	pottants	pottant	n	*
+noun plural (any)	1	phantasists	phantasist	n	*
+noun plural (any)	1	shopgoers	shopgoer	n	*
+noun plural (any)	1	elderfathers	elderfather	n	*
+noun plural (any)	1	mononucleocytes	mononucleocyte	n	*
+noun plural (any)	1	merocytes	merocyte	n	*
+noun plural (any)	1	mestees	mestee	n	*
+noun plural (any)	1	securitisations	securitisation	n	*
+noun plural (any)	1	washlets	washlet	n	*
+noun plural (any)	1	koulibiacs	koulibiac	n	*
+noun plural (any)	1	mycophagists	mycophagist	n	*
+noun plural (any)	1	foxtresses	foxtress	n	*
+noun plural (any)	1	haloclines	halocline	n	*
+noun plural (any)	1	groundsells	groundsell	n	*
+noun plural (any)	1	tetrathiolates	tetrathiolate	n	*
+noun plural (any)	1	monoxenics	monoxenic	n	*
+noun plural (any)	1	oystres	oystre	n	*
+noun plural (any)	1	arquebusiers	arquebusier	n	*
+noun plural (any)	1	highliners	highliner	n	*
+noun plural (any)	1	arbours	arbour	n	*
+noun plural (any)	1	sircars	sircar	n	*
+noun plural (any)	1	forbidders	forbidder	n	*
+noun plural (any)	1	committings	committing	n	*
+noun plural (any)	1	guardposts	guardpost	n	*
+noun plural (any)	1	undersupports	undersupport	n	*
+noun plural (any)	1	colpomicroscopes	colpomicroscope	n	*
+noun plural (any)	1	nesidioblasts	nesidioblast	n	*
+noun plural (any)	1	heterosomes	heterosome	n	*
+noun plural (any)	1	progenates	progenate	n	*
+noun plural (any)	1	problemettes	problemette	n	*
+noun plural (any)	1	kombis	kombi	n	*
+noun plural (any)	1	hyperoctants	hyperoctant	n	*
+noun plural (any)	1	cortinars	cortinar	n	*
+noun plural (any)	1	misdeeds	misdeed	n	*
+noun plural (any)	1	nanomolars	nanomolar	n	*
+noun plural (any)	1	touristscapes	touristscape	n	*
+noun plural (any)	1	thermodesorptions	thermodesorption	n	*
+noun plural (any)	1	thistletails	thistletail	n	*
+noun plural (any)	1	quatrefoils	quatrefoil	n	*
+noun plural (any)	1	ovatoxins	ovatoxin	n	*
+noun plural (any)	1	bachelorhoods	bachelorhood	n	*
+noun plural (any)	1	noncancers	noncancer	n	*
+noun plural (any)	1	heterophytes	heterophyte	n	*
+noun plural (any)	1	empyreans	empyrean	n	*
+noun plural (any)	1	haplargids	haplargid	n	*
+noun plural (any)	1	hatriots	hatriot	n	*
+noun plural (any)	1	coatdresses	coatdress	n	*
+noun plural (any)	1	leechdoms	leechdom	n	*
+noun plural (any)	1	peens	peen	n	*
+noun plural (any)	1	hematotoxins	hematotoxin	n	*
+noun plural (any)	1	blits	blit	n	*
+noun plural (any)	1	grubstakes	grubstake	n	*
+noun plural (any)	1	technobureaucrats	technobureaucrat	n	*
+noun plural (any)	1	herlings	herling	n	*
+noun plural (any)	1	postmaterialists	postmaterialist	n	*
+noun plural (any)	1	ulvoids	ulvoid	n	*
+noun plural (any)	1	cockslaves	cockslave	n	*
+noun plural (any)	1	vanquishers	vanquisher	n	*
+noun plural (any)	1	allotteries	allottery	n	*
+noun plural (any)	1	ummas	umma	n	*
+noun plural (any)	1	foundings	founding	n	*
+noun plural (any)	1	aunts	aunt	n	*
+noun plural (any)	1	bluets	bluet	n	*
+verb third-person singular (frequent)	1	wrongs	wrong	v	*
+verb third-person singular (frequent)	1	omens	omen	v	*
+verb third-person singular (frequent)	1	tapers	taper	v	*
+verb third-person singular (frequent)	1	pockets	pocket	v	*
+verb third-person singular (frequent)	1	rebels	rebel	v	*
+verb third-person singular (frequent)	1	kangaroos	kangaroo	v	*
+verb third-person singular (frequent)	1	flanks	flank	v	*
+verb third-person singular (frequent)	1	calculates	calculate	v	*
+verb third-person singular (frequent)	1	breasts	breast	v	*
+verb third-person singular (frequent)	1	decreases	decrease	v	*
+verb third-person singular (frequent)	1	hawks	hawk	v	*
+verb third-person singular (frequent)	1	sums	sum	v	*
+verb third-person singular (frequent)	1	minnows	minnow	v	*
+verb third-person singular (frequent)	1	massacres	massacre	v	*
+verb third-person singular (frequent)	1	blesses	bless	v	*
+verb third-person singular (frequent)	1	couples	couple	v	*
+verb third-person singular (frequent)	1	paces	pace	v	*
+verb third-person singular (frequent)	1	plotters	plotter	v	*
+verb third-person singular (frequent)	1	plumes	plume	v	*
+verb third-person singular (frequent)	1	clusters	cluster	v	*
+verb third-person singular (frequent)	1	bowes	bowe	v	*
+verb third-person singular (frequent)	1	qualifies	qualify	v	*
+verb third-person singular (frequent)	1	buffaloes	buffalo	v	*
+verb third-person singular (frequent)	1	laps	lap	v	*
+verb third-person singular (frequent)	1	pins	pin	v	*
+verb third-person singular (frequent)	1	blends	blend	v	*
+verb third-person singular (frequent)	1	chronicles	chronicle	v	*
+verb third-person singular (frequent)	1	fumbles	fumble	v	*
+verb third-person singular (frequent)	1	cowboys	cowboy	v	*
+verb third-person singular (frequent)	1	smurfs	smurf	v	*
+verb third-person singular (frequent)	1	experiences	experience	v	*
+verb third-person singular (frequent)	1	gripes	gripe	v	*
+verb third-person singular (frequent)	1	sparks	spark	v	*
+verb third-person singular (frequent)	1	sequences	sequence	v	*
+verb third-person singular (frequent)	1	trims	trim	v	*
+verb third-person singular (frequent)	1	jellies	jelly	v	*
+verb third-person singular (frequent)	1	rivals	rival	v	*
+verb third-person singular (frequent)	1	sticks	stick	v	*
+verb third-person singular (frequent)	1	possesses	possess	v	*
+verb third-person singular (frequent)	1	weeds	weed	v	*
+verb third-person singular (frequent)	1	forces	force	v	*
+verb third-person singular (frequent)	1	mumps	mump	v	*
+verb third-person singular (frequent)	1	favs	fav	v	*
+verb third-person singular (frequent)	1	completes	complete	v	*
+verb third-person singular (frequent)	1	cartoons	cartoon	v	*
+verb third-person singular (frequent)	1	circulates	circulate	v	*
+verb third-person singular (frequent)	1	teaches	teach	v	*
+verb third-person singular (frequent)	1	undertones	undertone	v	*
+verb third-person singular (frequent)	1	hires	hire	v	*
+verb third-person singular (frequent)	1	coupons	coupon	v	*
+verb third-person singular (frequent)	1	crepes	crepe	v	*
+verb third-person singular (frequent)	1	draws	draw	v	*
+verb third-person singular (frequent)	1	offsets	offset	v	*
+verb third-person singular (frequent)	1	fridges	fridge	v	*
+verb third-person singular (frequent)	1	oracles	oracle	v	*
+verb third-person singular (frequent)	1	sandwiches	sandwich	v	*
+verb third-person singular (frequent)	1	meshes	mesh	v	*
+verb third-person singular (frequent)	1	locusts	locust	v	*
+verb third-person singular (frequent)	1	gags	gag	v	*
+verb third-person singular (frequent)	1	nuts	nut	v	*
+verb third-person singular (frequent)	1	heats	heat	v	*
+verb third-person singular (frequent)	1	comes	come	v	*
+verb third-person singular (frequent)	1	jockeys	jockey	v	*
+verb third-person singular (frequent)	1	designates	designate	v	*
+verb third-person singular (frequent)	1	trunks	trunk	v	*
+verb third-person singular (frequent)	1	inquires	inquire	v	*
+verb third-person singular (frequent)	1	hashtags	hashtag	v	*
+verb third-person singular (frequent)	1	mavericks	maverick	v	*
+verb third-person singular (frequent)	1	seals	seal	v	*
+verb third-person singular (frequent)	1	snakes	snake	v	*
+verb third-person singular (frequent)	1	chunks	chunk	v	*
+verb third-person singular (frequent)	1	moths	moth	v	*
+verb third-person singular (frequent)	1	splits	split	v	*
+verb third-person singular (frequent)	1	monks	monk	v	*
+verb third-person singular (frequent)	1	fences	fence	v	*
+verb third-person singular (frequent)	1	cabs	cab	v	*
+verb third-person singular (frequent)	1	searches	search	v	*
+verb third-person singular (frequent)	1	kennels	kennel	v	*
+verb third-person singular (frequent)	1	fractures	fracture	v	*
+verb third-person singular (frequent)	1	escapes	escape	v	*
+verb third-person singular (frequent)	1	plunges	plunge	v	*
+verb third-person singular (frequent)	1	buoys	buoy	v	*
+verb third-person singular (frequent)	1	masturbates	masturbate	v	*
+verb third-person singular (frequent)	1	wiretaps	wiretap	v	*
+verb third-person singular (frequent)	1	hays	hay	v	*
+verb third-person singular (frequent)	1	veers	veer	v	*
+verb third-person singular (frequent)	1	pits	pit	v	*
+verb third-person singular (frequent)	1	trades	trade	v	*
+verb third-person singular (frequent)	1	pods	pod	v	*
+verb third-person singular (frequent)	1	assembles	assemble	v	*
+verb third-person singular (frequent)	1	posters	poster	v	*
+verb third-person singular (frequent)	1	blizzards	blizzard	v	*
+verb third-person singular (frequent)	1	moves	move	v	*
+verb third-person singular (frequent)	1	hampers	hamper	v	*
+verb third-person singular (frequent)	1	slings	sling	v	*
+verb third-person singular (frequent)	1	bridesmaids	bridesmaid	v	*
+verb third-person singular (frequent)	1	notices	notice	v	*
+verb third-person singular (frequent)	1	ways	way	v	*
+verb third-person singular (frequent)	1	converges	converge	v	*
+verb third-person singular (frequent)	1	supplements	supplement	v	*
+verb third-person singular (any)	1	refurnishes	refurnish	v	*
+verb third-person singular (any)	1	deinitializes	deinitialize	v	*
+verb third-person singular (any)	1	panes	pane	v	*
+verb third-person singular (any)	1	decorporates	decorporate	v	*
+verb third-person singular (any)	1	photolabels	photolabel	v	*
+verb third-person singular (any)	1	sedates	sedate	v	*
+verb third-person singular (any)	1	disincarcerates	disincarcerate	v	*
+verb third-person singular (any)	1	angelicizes	angelicize	v	*
+verb third-person singular (any)	1	mars	mar	v	*
+verb third-person singular (any)	1	fluctuates	fluctuate	v	*
+verb third-person singular (any)	1	cows	cow	v	*
+verb third-person singular (any)	1	pikeys	pikey	v	*
+verb third-person singular (any)	1	unalienates	unalienate	v	*
+verb third-person singular (any)	1	misroutes	misroute	v	*
+verb third-person singular (any)	1	craftes	crafte	v	*
+verb third-person singular (any)	1	invisiblizes	invisiblize	v	*
+verb third-person singular (any)	1	micromanipulates	micromanipulate	v	*
+verb third-person singular (any)	1	outpunches	outpunch	v	*
+verb third-person singular (any)	1	overtrips	overtrip	v	*
+verb third-person singular (any)	1	devolatilizes	devolatilize	v	*
+verb third-person singular (any)	1	hyperactivates	hyperactivate	v	*
+verb third-person singular (any)	1	depressurises	depressurise	v	*
+verb third-person singular (any)	1	wafers	wafer	v	*
+verb third-person singular (any)	1	graphitises	graphitise	v	*
+verb third-person singular (any)	1	outshops	outshop	v	*
+verb third-person singular (any)	1	rejogs	rejog	v	*
+verb third-person singular (any)	1	unchooses	unchoose	v	*
+verb third-person singular (any)	1	pusses	pus	v	*
+verb third-person singular (any)	1	chemosensitizes	chemosensitize	v	*
+verb third-person singular (any)	1	ables	able	v	*
+verb third-person singular (any)	1	implunges	implunge	v	*
+verb third-person singular (any)	1	befuddles	befuddle	v	*
+verb third-person singular (any)	1	resamples	resample	v	*
+verb third-person singular (any)	1	gaps	gap	v	*
+verb third-person singular (any)	1	architecturalizes	architecturalize	v	*
+verb third-person singular (any)	1	jills	jill	v	*
+verb third-person singular (any)	1	thugs	thug	v	*
+verb third-person singular (any)	1	fluidifies	fluidify	v	*
+verb third-person singular (any)	1	moblogs	moblog	v	*
+verb third-person singular (any)	1	outprocesses	outprocess	v	*
+verb third-person singular (any)	1	jetties	jetty	v	*
+verb third-person singular (any)	1	peregrinates	peregrinate	v	*
+verb third-person singular (any)	1	resides	reside	v	*
+verb third-person singular (any)	1	touzles	touzle	v	*
+verb third-person singular (any)	1	ensieges	ensiege	v	*
+verb third-person singular (any)	1	perforces	perforce	v	*
+verb third-person singular (any)	1	redips	redip	v	*
+verb third-person singular (any)	1	torifies	torify	v	*
+verb third-person singular (any)	1	demodernizes	demodernize	v	*
+verb third-person singular (any)	1	senilises	senilise	v	*
+verb third-person singular (any)	1	genotypifies	genotypify	v	*
+verb third-person singular (any)	1	tocuts	tocut	v	*
+verb third-person singular (any)	1	watermarks	watermark	v	*
+verb third-person singular (any)	1	affricates	affricate	v	*
+verb third-person singular (any)	1	crossfades	crossfade	v	*
+verb third-person singular (any)	1	underfertilizes	underfertilize	v	*
+verb third-person singular (any)	1	foreignises	foreignise	v	*
+verb third-person singular (any)	1	bifurcates	bifurcate	v	*
+verb third-person singular (any)	1	oopsies	oopsie	v	*
+verb third-person singular (any)	1	bituminates	bituminate	v	*
+verb third-person singular (any)	1	uncastles	uncastle	v	*
+verb third-person singular (any)	1	hyporegulates	hyporegulate	v	*
+verb third-person singular (any)	1	disquantities	disquantity	v	*
+verb third-person singular (any)	1	pearces	pearce	v	*
+verb third-person singular (any)	1	cubiclizes	cubiclize	v	*
+verb third-person singular (any)	1	forfights	forfight	v	*
+verb third-person singular (any)	1	forensicates	forensicate	v	*
+verb third-person singular (any)	1	interfiles	interfile	v	*
+verb third-person singular (any)	1	cornrows	cornrow	v	*
+verb third-person singular (any)	1	metropolises	metropolise	v	*
+verb third-person singular (any)	1	infringes	infringe	v	*
+verb third-person singular (any)	1	malnourishes	malnourish	v	*
+verb third-person singular (any)	1	revascularizes	revascularize	v	*
+verb third-person singular (any)	1	hobnails	hobnail	v	*
+verb third-person singular (any)	1	expones	expone	v	*
+verb third-person singular (any)	1	iridectomizes	iridectomize	v	*
+verb third-person singular (any)	1	inferiorises	inferiorise	v	*
+verb third-person singular (any)	1	solemnises	solemnise	v	*
+verb third-person singular (any)	1	scrubs	scrub	v	*
+verb third-person singular (any)	1	renters	renter	v	*
+verb third-person singular (any)	1	backtraces	backtrace	v	*
+verb third-person singular (any)	1	octaviates	octaviate	v	*
+verb third-person singular (any)	1	swallowes	swallowe	v	*
+verb third-person singular (any)	1	moults	moult	v	*
+verb third-person singular (any)	1	renominates	renominate	v	*
+verb third-person singular (any)	1	maturates	maturate	v	*
+verb third-person singular (any)	1	interacts	interact	v	*
+verb third-person singular (any)	1	borylates	borylate	v	*
+verb third-person singular (any)	1	archaicises	archaicise	v	*
+verb third-person singular (any)	1	desynes	desyne	v	*
+verb third-person singular (any)	1	backcombs	backcomb	v	*
+verb third-person singular (any)	1	hospitates	hospitate	v	*
+verb third-person singular (any)	1	walls	wall	v	*
+verb third-person singular (any)	1	weathercocks	weathercock	v	*
+verb third-person singular (any)	1	retches	retch	v	*
+verb third-person singular (any)	1	flukes	fluke	v	*
+verb third-person singular (any)	1	garlics	garlic	v	*
+verb third-person singular (any)	1	undertheorizes	undertheorize	v	*
+verb third-person singular (any)	1	presumes	presume	v	*
+verb third-person singular (any)	1	ungarnishes	ungarnish	v	*
+verb past (frequent)	1	ferried	ferry	v	*
+verb past (frequent)	1	benched	bench	v	*
+verb past (frequent)	1	entangled	entangle	v	*
+verb past (frequent)	1	bettered	better	v	*
+verb past (frequent)	1	devoted	devote	v	*
+verb past (frequent)	1	knackered	knacker	v	*
+verb past (frequent)	1	repurposed	repurpose	v	*
+verb past (frequent)	1	mutilated	mutilate	v	*
+verb past (frequent)	1	purchased	purchase	v	*
+verb past (frequent)	1	divulged	divulge	v	*
+verb past (frequent)	1	bloodied	bloody	v	*
+verb past (frequent)	1	expunged	expunge	v	*
+verb past (frequent)	1	reigned	reign	v	*
+verb past (frequent)	1	crooked	crook	v	*
+verb past (frequent)	1	slanted	slant	v	*
+verb past (frequent)	1	budgeted	budget	v	*
+verb past (frequent)	1	granted	grant	v	*
+verb past (frequent)	1	itemized	itemize	v	*
+verb past (frequent)	1	patented	patent	v	*
+verb past (frequent)	1	baked	bake	v	*
+verb past (frequent)	1	chased	chase	v	*
+verb past (frequent)	1	estranged	estrange	v	*
+verb past (frequent)	1	paralyzed	paralyze	v	*
+verb past (frequent)	1	nipped	nip	v	*
+verb past (frequent)	1	reimbursed	reimburse	v	*
+verb past (frequent)	1	amassed	amass	v	*
+verb past (frequent)	1	recruited	recruit	v	*
+verb past (frequent)	1	specialized	specialize	v	*
+verb past (frequent)	1	tiered	tier	v	*
+verb past (frequent)	1	inscribed	inscribe	v	*
+verb past (frequent)	1	competed	compete	v	*
+verb past (frequent)	1	perpetrated	perpetrate	v	*
+verb past (frequent)	1	dragged	drag	v	*
+verb past (frequent)	1	legislated	legislate	v	*
+verb past (frequent)	1	culled	cull	v	*
+verb past (frequent)	1	parked	park	v	*
+verb past (frequent)	1	added	adde	v	*
+verb past (frequent)	1	vetted	vet	v	*
+verb past (frequent)	1	batted	bat	v	*
+verb past (frequent)	1	naked	nake	v	*
+verb past (frequent)	1	incorporated	incorporate	v	*
+verb past (frequent)	1	subbed	sub	v	*
+verb past (frequent)	1	vindicated	vindicate	v	*
+verb past (frequent)	1	latched	latch	v	*
+verb past (frequent)	1	hardwired	hardwire	v	*
+verb past (frequent)	1	afterthought	afterthink	v	*
+verb past (frequent)	1	consumed	consume	v	*
+verb past (frequent)	1	delved	delve	v	*
+verb past (frequent)	1	gambled	gamble	v	*
+verb past (frequent)	1	rocked	rock	v	*
+verb past (frequent)	1	stopped	stop	v	*
+verb past (frequent)	1	contributed	contribute	v	*
+verb past (frequent)	1	jumbled	jumble	v	*
+verb past (frequent)	1	piqued	pique	v	*
+verb past (frequent)	1	curved	curve	v	*
+verb past (frequent)	1	relished	relish	v	*
+verb past (frequent)	1	dived	dive	v	*
+verb past (frequent)	1	reached	reach	v	*
+verb past (frequent)	1	clapped	clap	v	*
+verb past (frequent)	1	realized	realize	v	*
+verb past (frequent)	1	keeled	keel	v	*
+verb past (frequent)	1	targeted	target	v	*
+verb past (frequent)	1	crashed	crash	v	*
+verb past (frequent)	1	eclipsed	eclipse	v	*
+verb past (frequent)	1	punished	punishe	v	*
+verb past (frequent)	1	flanked	flank	v	*
+verb past (frequent)	1	briefed	brief	v	*
+verb past (frequent)	1	minded	minde	v	*
+verb past (frequent)	1	yelled	yell	v	*
+verb past (frequent)	1	sited	site	v	*
+verb past (frequent)	1	recounted	recount	v	*
+verb past (frequent)	1	tore	tear	v	*
+verb past (frequent)	1	nabbed	nab	v	*
+verb past (frequent)	1	fanned	fan	v	*
+verb past (frequent)	1	lent	lend	v	*
+verb past (frequent)	1	intercepted	intercept	v	*
+verb past (frequent)	1	discriminated	discriminate	v	*
+verb past (frequent)	1	marked	marke	v	*
+verb past (frequent)	1	closed	close	v	*
+verb past (frequent)	1	readied	ready	v	*
+verb past (frequent)	1	skimmed	skim	v	*
+verb past (frequent)	1	tanned	tan	v	*
+verb past (frequent)	1	privatized	privatize	v	*
+verb past (frequent)	1	dehydrated	dehydrate	v	*
+verb past (frequent)	1	lapped	lap	v	*
+verb past (frequent)	1	alleviated	alleviate	v	*
+verb past (frequent)	1	overthrew	overthrow	v	*
+verb past (frequent)	1	tasked	task	v	*
+verb past (frequent)	1	overlapped	overlap	v	*
+verb past (frequent)	1	crunched	crunch	v	*
+verb past (frequent)	1	guided	guide	v	*
+verb past (frequent)	1	glimpsed	glimpse	v	*
+verb past (frequent)	1	tugged	tug	v	*
+verb past (frequent)	1	abstracted	abstract	v	*
+verb past (frequent)	1	stuffed	stuffe	v	*
+verb past (frequent)	1	attached	attach	v	*
+verb past (frequent)	1	flowed	flow	v	*
+verb past (frequent)	1	jerked	jerk	v	*
+verb past (frequent)	1	bequeathed	bequeath	v	*
+verb past (frequent)	1	bedded	bed	v	*
+verb past (frequent)	1	gutted	gut	v	*
+verb past (frequent)	1	complimented	compliment	v	*
+verb past (frequent)	1	consulted	consult	v	*
+verb past (frequent)	1	came	come	v	*
+verb past (frequent)	1	quipped	quip	v	*
+verb past (frequent)	1	upped	up	v	*
+verb past (frequent)	1	retorted	retort	v	*
+verb past (frequent)	1	automated	automate	v	*
+verb past (frequent)	1	hoarded	hoard	v	*
+verb past (frequent)	1	boomed	boom	v	*
+verb past (frequent)	1	flattered	flatter	v	*
+verb past (frequent)	1	denominated	denominate	v	*
+verb past (frequent)	1	modernised	modernise	v	*
+verb past (frequent)	1	premiered	premier	v	*
+verb past (frequent)	1	brought	bring	v	*
+verb past (frequent)	1	augmented	augment	v	*
+verb past (frequent)	1	clamped	clamp	v	*
+verb past (frequent)	1	eluded	elude	v	*
+verb past (frequent)	1	holed	hole	v	*
+verb past (frequent)	1	wrestled	wrestle	v	*
+verb past (frequent)	1	owed	owe	v	*
+verb past (frequent)	1	irritated	irritate	v	*
+verb past (any)	1	photostatted	photostat	v	*
+verb past (any)	1	demucified	demucify	v	*
+verb past (any)	1	waxed	wax	v	*
+verb past (any)	1	unkenneled	unkennel	v	*
+verb past (any)	1	expulsed	expulse	v	*
+verb past (any)	1	wrassled	wrassle	v	*
+verb past (any)	1	melded	meld	v	*
+verb past (any)	1	slivercasted	slivercast	v	*
+verb past (any)	1	jeed	jee	v	*
+verb past (any)	1	carbonitrided	carbonitride	v	*
+verb past (any)	1	depolished	depolish	v	*
+verb past (any)	1	dehegemonized	dehegemonize	v	*
+verb past (any)	1	plowtered	plowter	v	*
+verb past (any)	1	liued	liue	v	*
+verb past (any)	1	earplugged	earplug	v	*
+verb past (any)	1	misgraded	misgrade	v	*
+verb past (any)	1	cozied	cozy	v	*
+verb past (any)	1	splenectomized	splenectomize	v	*
+verb past (any)	1	outperformed	outperform	v	*
+verb past (any)	1	condensated	condensate	v	*
+verb past (any)	1	necrobumped	necrobump	v	*
+verb past (any)	1	rebranded	rebrand	v	*
+verb past (any)	1	slished	slish	v	*
+verb past (any)	1	remowed	remow	v	*
+verb past (any)	1	depinned	depin	v	*
+verb past (any)	1	alluminated	alluminate	v	*
+verb past (any)	1	stoushed	stoush	v	*
+verb past (any)	1	hoddled	hoddle	v	*
+verb past (any)	1	sclaffed	sclaff	v	*
+verb past (any)	1	shanked	shank	v	*
+verb past (any)	1	sulfurated	sulfurate	v	*
+verb past (any)	1	cc'ed	cc	v	*
+verb past (any)	1	interlinearized	interlinearize	v	*
+verb past (any)	1	flavorized	flavorize	v	*
+verb past (any)	1	unpinned	unpin	v	*
+verb past (any)	1	ablactated	ablactate	v	*
+verb past (any)	1	valedicted	valedict	v	*
+verb past (any)	1	outplotted	outplot	v	*
+verb past (any)	1	cruised	cruise	v	*
+verb past (any)	1	prooved	proove	v	*
+verb past (any)	1	pished	pish	v	*
+verb past (any)	1	melted	melt	v	*
+verb past (any)	1	sensitized	sensitize	v	*
+verb past (any)	1	eckled	eckle	v	*
+verb past (any)	1	orationed	oration	v	*
+verb past (any)	1	transgenderised	transgenderise	v	*
+verb past (any)	1	raxed	rax	v	*
+verb past (any)	1	ruled	rule	v	*
+verb past (any)	1	premade	premake	v	*
+verb past (any)	1	autoregenerated	autoregenerate	v	*
+verb past (any)	1	flammed	flam	v	*
+verb past (any)	1	magnoperated	magnoperate	v	*
+verb past (any)	1	derecognised	derecognise	v	*
+verb past (any)	1	carried	carry	v	*
+verb past (any)	1	postscribed	postscribe	v	*
+verb past (any)	1	disfeatured	disfeature	v	*
+verb past (any)	1	conservated	conservate	v	*
+verb past (any)	1	reworked	rework	v	*
+verb past (any)	1	emperiled	emperil	v	*
+verb past (any)	1	rostered	roster	v	*
+verb past (any)	1	convocated	convocate	v	*
+verb past (any)	1	storyboarded	storyboard	v	*
+verb past (any)	1	undertriaged	undertriage	v	*
+verb past (any)	1	understeered	understeer	v	*
+verb past (any)	1	archived	archive	v	*
+verb past (any)	1	avolated	avolate	v	*
+verb past (any)	1	zigged	zig	v	*
+verb past (any)	1	shipped	ship	v	*
+verb past (any)	1	repelled	repel	v	*
+verb past (any)	1	protonized	protonize	v	*
+verb past (any)	1	stoozed	stooze	v	*
+verb past (any)	1	emblematicized	emblematicize	v	*
+verb past (any)	1	gifted	gift	v	*
+verb past (any)	1	rootched	rootch	v	*
+verb past (any)	1	coffled	coffle	v	*
+verb past (any)	1	sicced	sic	v	*
+verb past (any)	1	cockblocked	cockblock	v	*
+verb past (any)	1	adzed	adze	v	*
+verb past (any)	1	enslaved	enslave	v	*
+verb past (any)	1	undulated	undulate	v	*
+verb past (any)	1	foresensed	foresense	v	*
+verb past (any)	1	verminated	verminate	v	*
+verb past (any)	1	shouldered	shoulder	v	*
+verb past (any)	1	translocated	translocate	v	*
+verb past (any)	1	livetrapped	livetrap	v	*
+verb past (any)	1	eighthed	eighth	v	*
+verb past (any)	1	torent	torend	v	*
+verb past (any)	1	inculcated	inculcate	v	*
+verb past (any)	1	crosslinked	crosslink	v	*
+verb past (any)	1	disagreed	disagree	v	*
+verb past (any)	1	jewelled	jewel	v	*
+verb past (any)	1	disorganised	disorganise	v	*
+verb past (any)	1	pawled	pawl	v	*
+verb past (any)	1	grapevined	grapevine	v	*
+verb past (any)	1	apahacked	apahack	v	*
+verb past (any)	1	degged	deg	v	*
+verb past (any)	1	allotted	allot	v	*
+verb past (any)	1	denaturalised	denaturalise	v	*
+verb past (any)	1	confuted	confute	v	*
+verb past (any)	1	fordrove	fordrive	v	*
+verb past (any)	1	blacklegged	blackleg	v	*
+verb past (any)	1	legered	leger	v	*
+verb past (any)	1	acronymed	acronym	v	*
+verb past (any)	1	forehewed	forehew	v	*
+verb past (any)	1	phlebotomized	phlebotomize	v	*
+verb past (any)	1	ozonised	ozonise	v	*
+verb past (any)	1	ensepulchred	ensepulchre	v	*
+verb past (any)	1	wembled	wemble	v	*
+verb past (any)	1	templatised	templatise	v	*
+verb past (any)	1	gallised	gallise	v	*
+verb past (any)	1	hepped	hep	v	*
+verb past (any)	1	shelved	shelve	v	*
+verb past (any)	1	formicated	formicate	v	*
+verb past (any)	1	accurized	accurize	v	*
+verb past (any)	1	embellished	embellish	v	*
+verb past (any)	1	vided	vide	v	*
+verb past (any)	1	mudged	mudge	v	*
+verb past (any)	1	retrocalculated	retrocalculate	v	*
+verb past (any)	1	verballed	verbal	v	*
+verb past (any)	1	inbroke	inbreak	v	*
+verb past (any)	1	dummied	dummy	v	*
+verb past (any)	1	verbified	verbify	v	*
+verb past (any)	1	imperilled	imperil	v	*
+verb past (any)	1	unwilled	unwill	v	*
+verb past (any)	1	tanged	tang	v	*
+verb past participle (frequent)	1	costumed	costume	v	*
+verb past participle (frequent)	1	pasted	paste	v	*
+verb past participle (frequent)	1	accounted	account	v	*
+verb past participle (frequent)	1	bankrupted	bankrupt	v	*
+verb past participle (frequent)	1	posted	post	v	*
+verb past participle (frequent)	1	capsized	capsize	v	*
+verb past participle (frequent)	1	nullified	nullify	v	*
+verb past participle (frequent)	1	dipped	dip	v	*
+verb past participle (frequent)	1	hunched	hunch	v	*
+verb past participle (frequent)	1	miffed	miff	v	*
+verb past participle (frequent)	1	pushed	push	v	*
+verb past participle (frequent)	1	unfiltered	unfilter	v	*
+verb past participle (frequent)	1	arranged	arrange	v	*
+verb past participle (frequent)	1	prophesied	prophesy	v	*
+verb past participle (frequent)	1	demonstrated	demonstrate	v	*
+verb past participle (frequent)	1	impounded	impound	v	*
+verb past participle (frequent)	1	hydrated	hydrate	v	*
+verb past participle (frequent)	1	pinned	pin	v	*
+verb past participle (frequent)	1	nicked	nick	v	*
+verb past participle (frequent)	1	standardised	standardise	v	*
+verb past participle (frequent)	1	overstated	overstate	v	*
+verb past participle (frequent)	1	synthesized	synthesize	v	*
+verb past participle (frequent)	1	curbed	curb	v	*
+verb past participle (frequent)	1	maximized	maximize	v	*
+verb past participle (frequent)	1	simulated	simulate	v	*
+verb past participle (frequent)	1	deprecated	deprecate	v	*
+verb past participle (frequent)	1	stymied	stymy	v	*
+verb past participle (frequent)	1	discharged	discharge	v	*
+verb past participle (frequent)	1	caked	cake	v	*
+verb past participle (frequent)	1	sprinkled	sprinkle	v	*
+verb past participle (frequent)	1	submitted	submit	v	*
+verb past participle (frequent)	1	compromised	compromise	v	*
+verb past participle (frequent)	1	parted	part	v	*
+verb past participle (frequent)	1	lamented	lament	v	*
+verb past participle (frequent)	1	risen	rise	v	*
+verb past participle (frequent)	1	dumped	dump	v	*
+verb past participle (frequent)	1	blindsided	blindside	v	*
+verb past participle (frequent)	1	idolized	idolize	v	*
+verb past participle (frequent)	1	stocked	stock	v	*
+verb past participle (frequent)	1	capitulated	capitulate	v	*
+verb past participle (frequent)	1	copied	copy	v	*
+verb past participle (frequent)	1	searched	search	v	*
+verb past participle (frequent)	1	shoved	shove	v	*
+verb past participle (frequent)	1	masked	mask	v	*
+verb past participle (frequent)	1	unrelated	unrelate	v	*
+verb past participle (frequent)	1	articulated	articulate	v	*
+verb past participle (frequent)	1	traumatized	traumatize	v	*
+verb past participle (frequent)	1	envied	envy	v	*
+verb past participle (frequent)	1	jointed	joint	v	*
+verb past participle (frequent)	1	minimized	minimize	v	*
+verb past participle (frequent)	1	fallen	fall	v	*
+verb past participle (frequent)	1	rebounded	rebound	v	*
+verb past participle (frequent)	1	rooted	root	v	*
+verb past participle (frequent)	1	questioned	question	v	*
+verb past participle (frequent)	1	refrained	refrain	v	*
+verb past participle (frequent)	1	cycled	cycle	v	*
+verb past participle (frequent)	1	attributed	attribute	v	*
+verb past participle (frequent)	1	envisaged	envisage	v	*
+verb past participle (frequent)	1	clouded	cloud	v	*
+verb past participle (frequent)	1	listened	listen	v	*
+verb past participle (frequent)	1	incurred	incur	v	*
+verb past participle (frequent)	1	hung	hang	v	*
+verb past participle (frequent)	1	manufactured	manufacture	v	*
+verb past participle (frequent)	1	excerpted	excerpt	v	*
+verb past participle (frequent)	1	persecuted	persecute	v	*
+verb past participle (frequent)	1	destroyed	destroy	v	*
+verb past participle (frequent)	1	understated	understate	v	*
+verb past participle (frequent)	1	serrated	serrate	v	*
+verb past participle (frequent)	1	dramatized	dramatize	v	*
+verb past participle (frequent)	1	substantiated	substantiate	v	*
+verb past participle (frequent)	1	lost	lose	v	*
+verb past participle (frequent)	1	subjected	subject	v	*
+verb past participle (frequent)	1	fitted	fit	v	*
+verb past participle (frequent)	1	reconstituted	reconstitute	v	*
+verb past participle (frequent)	1	pricked	prick	v	*
+verb past participle (frequent)	1	scrolled	scroll	v	*
+verb past participle (frequent)	1	underscored	underscore	v	*
+verb past participle (frequent)	1	immersed	immerse	v	*
+verb past participle (frequent)	1	boasted	boast	v	*
+verb past participle (frequent)	1	spliced	splice	v	*
+verb past participle (frequent)	1	ended	end	v	*
+verb past participle (frequent)	1	teleported	teleport	v	*
+verb past participle (frequent)	1	supercharged	supercharge	v	*
+verb past participle (frequent)	1	splashed	splash	v	*
+verb past participle (frequent)	1	transformed	transform	v	*
+verb past participle (frequent)	1	matched	match	v	*
+verb past participle (frequent)	1	validated	validate	v	*
+verb past participle (frequent)	1	attuned	attune	v	*
+verb past participle (frequent)	1	tainted	taint	v	*
+verb past participle (frequent)	1	signalled	signal	v	*
+verb past participle (frequent)	1	zoned	zone	v	*
+verb past participle (frequent)	1	spayed	spay	v	*
+verb past participle (frequent)	1	snagged	snag	v	*
+verb past participle (frequent)	1	carded	card	v	*
+verb past participle (frequent)	1	flowered	flower	v	*
+verb past participle (frequent)	1	venerated	venerate	v	*
+verb past participle (frequent)	1	aborted	abort	v	*
+verb past participle (frequent)	1	tipped	tip	v	*
+verb past participle (frequent)	1	deciphered	decipher	v	*
+verb past participle (any)	1	winched	winch	v	*
+verb past participle (any)	1	redonned	redon	v	*
+verb past participle (any)	1	discomfited	discomfit	v	*
+verb past participle (any)	1	bunked	bunk	v	*
+verb past participle (any)	1	counterfactualized	counterfactualize	v	*
+verb past participle (any)	1	uuencoded	uuencode	v	*
+verb past participle (any)	1	vanillafied	vanillafy	v	*
+verb past participle (any)	1	hologramized	hologramize	v	*
+verb past participle (any)	1	interessed	interess	v	*
+verb past participle (any)	1	mesmerised	mesmerise	v	*
+verb past participle (any)	1	petticoated	petticoat	v	*
+verb past participle (any)	1	harboured	harbour	v	*
+verb past participle (any)	1	chaffered	chaffer	v	*
+verb past participle (any)	1	oxtercogged	oxtercog	v	*
+verb past participle (any)	1	gised	gise	v	*
+verb past participle (any)	1	jetted	jet	v	*
+verb past participle (any)	1	preauthorized	preauthorize	v	*
+verb past participle (any)	1	electroblotted	electroblot	v	*
+verb past participle (any)	1	overthinned	overthin	v	*
+verb past participle (any)	1	dassed	dass	v	*
+verb past participle (any)	1	verticalized	verticalize	v	*
+verb past participle (any)	1	demolished	demolish	v	*
+verb past participle (any)	1	miscontrolled	miscontrol	v	*
+verb past participle (any)	1	surtaxed	surtax	v	*
+verb past participle (any)	1	opinioned	opinion	v	*
+verb past participle (any)	1	stickled	stickle	v	*
+verb past participle (any)	1	misanalysed	misanalyse	v	*
+verb past participle (any)	1	shlentered	shlenter	v	*
+verb past participle (any)	1	twinned	twin	v	*
+verb past participle (any)	1	imboweled	imbowel	v	*
+verb past participle (any)	1	tined	tine	v	*
+verb past participle (any)	1	interknitted	interknit	v	*
+verb past participle (any)	1	nanoencapsulated	nanoencapsulate	v	*
+verb past participle (any)	1	halalified	halalify	v	*
+verb past participle (any)	1	overwearied	overweary	v	*
+verb past participle (any)	1	multiplicated	multiplicate	v	*
+verb past participle (any)	1	storied	story	v	*
+verb past participle (any)	1	letheonized	letheonize	v	*
+verb past participle (any)	1	misassembled	misassemble	v	*
+verb past participle (any)	1	crossmated	crossmate	v	*
+verb past participle (any)	1	gorged	gorge	v	*
+verb past participle (any)	1	placarded	placard	v	*
+verb past participle (any)	1	degreased	degrease	v	*
+verb past participle (any)	1	splotched	splotch	v	*
+verb past participle (any)	1	retotalled	retotal	v	*
+verb past participle (any)	1	anhydrated	anhydrate	v	*
+verb past participle (any)	1	disillusionized	disillusionize	v	*
+verb past participle (any)	1	implied	imply	v	*
+verb past participle (any)	1	denaturated	denaturate	v	*
+verb past participle (any)	1	predialled	predial	v	*
+verb past participle (any)	1	bonsaied	bonsai	v	*
+verb past participle (any)	1	repaneled	repanel	v	*
+verb past participle (any)	1	spurtled	spurtle	v	*
+verb past participle (any)	1	withborne	withbear	v	*
+verb past participle (any)	1	sectionized	sectionize	v	*
+verb past participle (any)	1	bongoed	bongo	v	*
+verb past participle (any)	1	teazed	teaze	v	*
+verb past participle (any)	1	importunated	importunate	v	*
+verb past participle (any)	1	stanned	stan	v	*
+verb past participle (any)	1	rerandomised	rerandomise	v	*
+verb past participle (any)	1	hashtagged	hashtag	v	*
+verb past participle (any)	1	banished	banish	v	*
+verb past participle (any)	1	sung	sing	v	*
+verb past participle (any)	1	unassociated	unassociate	v	*
+verb past participle (any)	1	parrotised	parrotise	v	*
+verb past participle (any)	1	scised	scise	v	*
+verb past participle (any)	1	twistled	twistle	v	*
+verb past participle (any)	1	forwearied	forweary	v	*
+verb past participle (any)	1	preassessed	preassess	v	*
+verb past participle (any)	1	emetized	emetize	v	*
+verb past participle (any)	1	galvanized	galvanize	v	*
+verb past participle (any)	1	overloaded	overload	v	*
+verb past participle (any)	1	clutched	clutch	v	*
+verb past participle (any)	1	undertoned	undertone	v	*
+verb past participle (any)	1	counterplotted	counterplot	v	*
+verb past participle (any)	1	dueled	duel	v	*
+verb past participle (any)	1	reposed	repose	v	*
+verb past participle (any)	1	excreted	excrete	v	*
+verb past participle (any)	1	rippled	ripple	v	*
+verb past participle (any)	1	cospecialized	cospecialize	v	*
+verb past participle (any)	1	fixtured	fixture	v	*
+verb past participle (any)	1	subitised	subitise	v	*
+verb past participle (any)	1	chopsticked	chopstick	v	*
+verb past participle (any)	1	tectonized	tectonize	v	*
+verb past participle (any)	1	disobliged	disoblige	v	*
+verb past participle (any)	1	incrassated	incrassate	v	*
+verb past participle (any)	1	organed	organ	v	*
+verb past participle (any)	1	infibulated	infibulate	v	*
+verb past participle (any)	1	greenlit	greenlight	v	*
+verb past participle (any)	1	demitted	demit	v	*
+verb past participle (any)	1	jonesed	jones	v	*
+verb past participle (any)	1	adulticided	adulticide	v	*
+verb past participle (any)	1	emanated	emanate	v	*
+verb past participle (any)	1	greyscaled	greyscale	v	*
+verb past participle (any)	1	anagrammed	anagram	v	*
+verb past participle (any)	1	mistagged	mistag	v	*
+verb past participle (any)	1	diagonalized	diagonalize	v	*
+verb past participle (any)	1	immunocaptured	immunocapture	v	*
+verb past participle (any)	1	recarried	recarry	v	*
+verb past participle (any)	1	intonated	intonate	v	*
+verb present participle (frequent)	1	compromising	compromise	v	*
+verb present participle (frequent)	1	fueling	fuel	v	*
+verb present participle (frequent)	1	bleaching	bleach	v	*
+verb present participle (frequent)	1	conceding	concede	v	*
+verb present participle (frequent)	1	captivating	captivate	v	*
+verb present participle (frequent)	1	sinning	sinne	v	*
+verb present participle (frequent)	1	tweaking	tweak	v	*
+verb present participle (frequent)	1	postponing	postpone	v	*
+verb present participle (frequent)	1	thrashing	thrash	v	*
+verb present participle (frequent)	1	minimizing	minimize	v	*
+verb present participle (frequent)	1	flexing	flex	v	*
+verb present participle (frequent)	1	misspelling	misspell	v	*
+verb present participle (frequent)	1	characterizing	characterize	v	*
+verb present participle (frequent)	1	fleeing	flee	v	*
+verb present participle (frequent)	1	twitching	twitch	v	*
+verb present participle (frequent)	1	constituting	constitute	v	*
+verb present participle (frequent)	1	blistering	blister	v	*
+verb present participle (frequent)	1	sheltering	shelter	v	*
+verb present participle (frequent)	1	gating	gate	v	*
+verb present participle (frequent)	1	shunning	shun	v	*
+verb present participle (frequent)	1	cycling	cycle	v	*
+verb present participle (frequent)	1	sniping	snipe	v	*
+verb present participle (frequent)	1	screeching	screech	v	*
+verb present participle (frequent)	1	buzzing	buz	v	*
+verb present participle (frequent)	1	caregiving	caregive	v	*
+verb present participle (frequent)	1	legalizing	legalize	v	*
+verb present participle (frequent)	1	wetting	wet	v	*
+verb present participle (frequent)	1	exhausting	exhaust	v	*
+verb present participle (frequent)	1	ranging	range	v	*
+verb present participle (frequent)	1	patterning	pattern	v	*
+verb present participle (frequent)	1	overbearing	overbear	v	*
+verb present participle (frequent)	1	listing	list	v	*
+verb present participle (frequent)	1	establishing	establish	v	*
+verb present participle (frequent)	1	failing	fail	v	*
+verb present participle (frequent)	1	snapping	snap	v	*
+verb present participle (frequent)	1	peeing	pee	v	*
+verb present participle (frequent)	1	zooming	zoom	v	*
+verb present participle (frequent)	1	issuing	issue	v	*
+verb present participle (frequent)	1	pinching	pinch	v	*
+verb present participle (frequent)	1	diving	dive	v	*
+verb present participle (frequent)	1	pointing	point	v	*
+verb present participle (frequent)	1	pursuing	pursue	v	*
+verb present participle (frequent)	1	buying	buy	v	*
+verb present participle (frequent)	1	appeasing	appease	v	*
+verb present participle (frequent)	1	planing	plane	v	*
+verb present participle (frequent)	1	looming	loom	v	*
+verb present participle (frequent)	1	implying	imply	v	*
+verb present participle (frequent)	1	allocating	allocate	v	*
+verb present participle (frequent)	1	phoning	phone	v	*
+verb present participle (frequent)	1	sobbing	sob	v	*
+verb present participle (frequent)	1	wading	wade	v	*
+verb present participle (frequent)	1	disparaging	disparage	v	*
+verb present participle (frequent)	1	eclipsing	eclipse	v	*
+verb present participle (frequent)	1	apologizing	apologize	v	*
+verb present participle (frequent)	1	endorsing	endorse	v	*
+verb present participle (frequent)	1	alleviating	alleviate	v	*
+verb present participle (frequent)	1	amplifying	amplify	v	*
+verb present participle (frequent)	1	laundering	launder	v	*
+verb present participle (frequent)	1	tantalizing	tantalize	v	*
+verb present participle (frequent)	1	annexing	annexe	v	*
+verb present participle (frequent)	1	tolerating	tolerate	v	*
+verb present participle (frequent)	1	gaslighting	gaslight	v	*
+verb present participle (frequent)	1	idling	idle	v	*
+verb present participle (frequent)	1	creaking	creak	v	*
+verb present participle (frequent)	1	cocking	cock	v	*
+verb present participle (frequent)	1	shipping	ship	v	*
+verb present participle (frequent)	1	sweltering	swelter	v	*
+verb present participle (frequent)	1	hiding	hide	v	*
+verb present participle (frequent)	1	excavating	excavate	v	*
+verb present participle (frequent)	1	anticipating	anticipate	v	*
+verb present participle (frequent)	1	paging	page	v	*
+verb present participle (frequent)	1	remaining	remain	v	*
+verb present participle (frequent)	1	saying	say	v	*
+verb present participle (frequent)	1	arriving	arrive	v	*
+verb present participle (frequent)	1	winking	wink	v	*
+verb present participle (frequent)	1	dx'ing	dx	v	*
+verb present participle (frequent)	1	chewing	chew	v	*
+verb present participle (frequent)	1	deleting	delete	v	*
+verb present participle (frequent)	1	prodding	prod	v	*
+verb present participle (frequent)	1	shuddering	shudder	v	*
+verb present participle (frequent)	1	pivoting	pivot	v	*
+verb present participle (frequent)	1	rummaging	rummage	v	*
+verb present participle (frequent)	1	aching	ache	v	*
+verb present participle (frequent)	1	linking	link	v	*
+verb present participle (frequent)	1	wasting	waste	v	*
+verb present participle (frequent)	1	imagining	imagine	v	*
+verb present participle (frequent)	1	heating	heat	v	*
+verb present participle (frequent)	1	integrating	integrate	v	*
+verb present participle (frequent)	1	birding	bird	v	*
+verb present participle (frequent)	1	whopping	whop	v	*
+verb present participle (frequent)	1	curling	curl	v	*
+verb present participle (frequent)	1	thanking	thanke	v	*
+verb present participle (frequent)	1	eroding	erode	v	*
+verb present participle (frequent)	1	draining	drain	v	*
+verb present participle (frequent)	1	dressing	dress	v	*
+verb present participle (frequent)	1	suing	sue	v	*
+verb present participle (frequent)	1	braiding	braid	v	*
+verb present participle (frequent)	1	reorganizing	reorganize	v	*
+verb present participle (frequent)	1	concluding	conclude	v	*
+verb present participle (frequent)	1	paraphrasing	paraphrase	v	*
+verb present participle (frequent)	1	recharging	recharge	v	*
+verb present participle (frequent)	1	sprinting	sprint	v	*
+verb present participle (frequent)	1	raking	rake	v	*
+verb present participle (frequent)	1	associating	associate	v	*
+verb present participle (frequent)	1	emanating	emanate	v	*
+verb present participle (frequent)	1	generating	generate	v	*
+verb present participle (frequent)	1	gardening	garden	v	*
+verb present participle (frequent)	1	lighting	light	v	*
+verb present participle (frequent)	1	majoring	major	v	*
+verb present participle (frequent)	1	nudging	nudge	v	*
+verb present participle (frequent)	1	pending	pend	v	*
+verb present participle (frequent)	1	decreasing	decrease	v	*
+verb present participle (frequent)	1	bubbling	bubble	v	*
+verb present participle (frequent)	1	welding	weld	v	*
+verb present participle (frequent)	1	figuring	figure	v	*
+verb present participle (frequent)	1	vaulting	vault	v	*
+verb present participle (frequent)	1	denouncing	denounce	v	*
+verb present participle (frequent)	1	stunting	stunt	v	*
+verb present participle (frequent)	1	masking	mask	v	*
+verb present participle (frequent)	1	enthralling	enthral	v	*
+verb present participle (frequent)	1	flanking	flank	v	*
+verb present participle (frequent)	1	launching	launch	v	*
+verb present participle (frequent)	1	charging	charge	v	*
+verb present participle (frequent)	1	casting	cast	v	*
+verb present participle (frequent)	1	activating	activate	v	*
+verb present participle (any)	1	raisinating	raisinate	v	*
+verb present participle (any)	1	unmoving	unmove	v	*
+verb present participle (any)	1	foraying	foray	v	*
+verb present participle (any)	1	skriking	skrike	v	*
+verb present participle (any)	1	desposing	despose	v	*
+verb present participle (any)	1	topinching	topinch	v	*
+verb present participle (any)	1	titling	title	v	*
+verb present participle (any)	1	resliming	reslime	v	*
+verb present participle (any)	1	reticencing	reticence	v	*
+verb present participle (any)	1	genderising	genderise	v	*
+verb present participle (any)	1	disusing	disuse	v	*
+verb present participle (any)	1	deindustrialising	deindustrialise	v	*
+verb present participle (any)	1	gifting	gift	v	*
+verb present participle (any)	1	tetramerizing	tetramerize	v	*
+verb present participle (any)	1	glimmering	glimmer	v	*
+verb present participle (any)	1	minacking	minac	v	*
+verb present participle (any)	1	digiting	digit	v	*
+verb present participle (any)	1	renicing	renice	v	*
+verb present participle (any)	1	adrenalectomising	adrenalectomise	v	*
+verb present participle (any)	1	autoresuscitating	autoresuscitate	v	*
+verb present participle (any)	1	crackling	crackle	v	*
+verb present participle (any)	1	cussing	cuss	v	*
+verb present participle (any)	1	dering	dere	v	*
+verb present participle (any)	1	misreferencing	misreference	v	*
+verb present participle (any)	1	ensafing	ensafe	v	*
+verb present participle (any)	1	gouting	gout	v	*
+verb present participle (any)	1	sporterizing	sporterize	v	*
+verb present participle (any)	1	coinducing	coinduce	v	*
+verb present participle (any)	1	preswabbing	preswab	v	*
+verb present participle (any)	1	airbrushing	airbrush	v	*
+verb present participle (any)	1	smoothifying	smoothify	v	*
+verb present participle (any)	1	crossbarring	crossbar	v	*
+verb present participle (any)	1	puggering	pugger	v	*
+verb present participle (any)	1	enhypostatizing	enhypostatize	v	*
+verb present participle (any)	1	misling	misle	v	*
+verb present participle (any)	1	disgrading	disgrade	v	*
+verb present participle (any)	1	dingeing	dinge	v	*
+verb present participle (any)	1	unraping	unrape	v	*
+verb present participle (any)	1	expeding	expede	v	*
+verb present participle (any)	1	deculturing	deculture	v	*
+verb present participle (any)	1	neckbanding	neckband	v	*
+verb present participle (any)	1	inlining	inline	v	*
+verb present participle (any)	1	begnawing	begnaw	v	*
+verb present participle (any)	1	celestifying	celestify	v	*
+verb present participle (any)	1	silanating	silanate	v	*
+verb present participle (any)	1	moshing	mosh	v	*
+verb present participle (any)	1	deduplicating	deduplicate	v	*
+verb present participle (any)	1	scening	scene	v	*
+verb present participle (any)	1	micromanufacturing	micromanufacture	v	*
+verb present participle (any)	1	neocolonising	neocolonise	v	*
+verb present participle (any)	1	numericising	numericise	v	*
+verb present participle (any)	1	roining	roin	v	*
+verb present participle (any)	1	sleeping	sleepe	v	*
+verb present participle (any)	1	hobnailing	hobnail	v	*
+verb present participle (any)	1	promulging	promulge	v	*
+verb present participle (any)	1	orphaning	orphan	v	*
+verb present participle (any)	1	absenting	absent	v	*
+verb present participle (any)	1	counterinfluencing	counterinfluence	v	*
+verb present participle (any)	1	sharpshooting	sharpshoot	v	*
+verb present participle (any)	1	aggerating	aggerate	v	*
+verb present participle (any)	1	scratting	scrat	v	*
+verb present participle (any)	1	gipseying	gipsey	v	*
+verb present participle (any)	1	nippling	nipple	v	*
+verb present participle (any)	1	outracing	outrace	v	*
+verb present participle (any)	1	yodelling	yodel	v	*
+verb present participle (any)	1	haloing	halo	v	*
+verb present participle (any)	1	downsweeping	downsweep	v	*
+verb present participle (any)	1	pogroming	pogrom	v	*
+verb present participle (any)	1	whirreting	whirret	v	*
+verb present participle (any)	1	preprogramming	preprogram	v	*
+verb present participle (any)	1	blotting	blot	v	*
+verb present participle (any)	1	reaccreting	reaccrete	v	*
+verb present participle (any)	1	dyslexifying	dyslexify	v	*
+verb present participle (any)	1	vinculating	vinculate	v	*
+verb present participle (any)	1	fluidifying	fluidify	v	*
+verb present participle (any)	1	mutexing	mutex	v	*
+verb present participle (any)	1	sloping	slope	v	*
+verb present participle (any)	1	unboxing	unbox	v	*
+verb present participle (any)	1	reskimming	reskim	v	*
+verb present participle (any)	1	antipathising	antipathise	v	*
+verb present participle (any)	1	unzipping	unzip	v	*
+verb present participle (any)	1	hyperbolizing	hyperbolize	v	*
+verb present participle (any)	1	nettling	nettle	v	*
+verb present participle (any)	1	overshading	overshade	v	*
+verb present participle (any)	1	skurrying	skurry	v	*
+verb present participle (any)	1	provisionalizing	provisionalize	v	*
+verb present participle (any)	1	quartersawing	quartersaw	v	*
+verb present participle (any)	1	caressing	caress	v	*
+verb present participle (any)	1	physicalising	physicalise	v	*
+verb present participle (any)	1	frescoing	fresco	v	*
+verb present participle (any)	1	overrestoring	overrestore	v	*
+verb present participle (any)	1	dehumidifying	dehumidify	v	*
+verb present participle (any)	1	forslinging	forsling	v	*
+verb present participle (any)	1	worthing	worth	v	*
+verb present participle (any)	1	jalousing	jalouse	v	*
+verb present participle (any)	1	deinactivating	deinactivate	v	*
+verb present participle (any)	1	deifying	deify	v	*
+verb present participle (any)	1	genialising	genialise	v	*
+verb present participle (any)	1	caboshing	cabosh	v	*
+verb present participle (any)	1	beastifying	beastify	v	*
+verb present participle (any)	1	unpluming	unplume	v	*
+verb present participle (any)	1	miscutting	miscut	v	*
+verb present participle (any)	1	affining	affine	v	*
+verb present participle (any)	1	delving	delve	v	*
+verb present participle (any)	1	unspending	unspend	v	*
+verb present participle (any)	1	disbursing	disburse	v	*
+verb present participle (any)	1	borming	borm	v	*
+verb present participle (any)	1	undercounting	undercount	v	*
+verb present participle (any)	1	rewatching	rewatch	v	*
+verb present participle (any)	1	reboring	rebore	v	*
+verb present participle (any)	1	coiling	coil	v	*
+verb present participle (any)	1	pricking	prick	v	*
+verb present participle (any)	1	atwiting	atwite	v	*
+verb present participle (any)	1	photographing	photograph	v	*
+verb present participle (any)	1	combining	combine	v	*
+verb present participle (any)	1	benettling	benettle	v	*
+verb present participle (any)	1	roosting	roost	v	*
+verb present participle (any)	1	coregulating	coregulate	v	*
+verb present participle (any)	1	brining	brine	v	*
+verb present participle (any)	1	deafing	deaf	v	*
+verb present participle (any)	1	repeopling	repeople	v	*
+verb present participle (any)	1	recutting	recut	v	*
+verb present participle (any)	1	inthroning	inthrone	v	*
+verb present participle (any)	1	monarchizing	monarchize	v	*
+verb present participle (any)	1	pillioning	pillion	v	*
+adjective comparative (frequent)	1	earlier	early	adj	*
+adjective comparative (frequent)	1	taller	tall	adj	*
+adjective comparative (frequent)	1	later	late	adj	*
+adjective comparative (frequent)	1	quicker	quick	adj	*
+adjective comparative (frequent)	1	healthier	healthy	adj	*
+adjective comparative (frequent)	1	bolder	bold	adj	*
+adjective comparative (frequent)	1	whiter	white	adj	*
+adjective comparative (frequent)	1	slimmer	slim	adj	*
+adjective comparative (frequent)	1	crazier	crazy	adj	*
+adjective comparative (frequent)	1	looser	loose	adj	*
+adjective comparative (frequent)	1	dimmer	dim	adj	*
+adjective comparative (frequent)	1	wetter	wet	adj	*
+adjective comparative (frequent)	1	firmer	firm	adj	*
+adjective comparative (frequent)	1	closer	close	adj	*
+adjective comparative (frequent)	1	flier	fly	adj	*
+adjective comparative (frequent)	1	camper	camp	adj	*
+adjective comparative (frequent)	1	fancier	fancy	adj	*
+adjective comparative (frequent)	1	milder	mild	adj	*
+adjective comparative (frequent)	1	snider	snide	adj	*
+adjective comparative (frequent)	1	fresher	fresh	adj	*
+adjective comparative (frequent)	1	sharper	sharp	adj	*
+adjective comparative (frequent)	1	shorter	short	adj	*
+adjective comparative (frequent)	1	slacker	slack	adj	*
+adjective comparative (frequent)	1	stiffer	stiff	adj	*
+adjective comparative (frequent)	1	fatter	fat	adj	*
+adjective comparative (frequent)	1	better	well	adj	*
+adjective comparative (frequent)	1	wider	wide	adj	*
+adjective comparative (frequent)	1	meaner	mean	adj	*
+adjective comparative (frequent)	1	better	good	adj	*
+adjective comparative (frequent)	1	greener	green	adj	*
+adjective comparative (frequent)	1	fowler	fowl	adj	*
+adjective comparative (frequent)	1	cheaper	cheap	adj	*
+adjective comparative (frequent)	1	fader	fade	adj	*
+adjective comparative (frequent)	1	fuller	full	adj	*
+adjective comparative (frequent)	1	greener	greene	adj	*
+adjective comparative (frequent)	1	funnier	funny	adj	*
+adjective comparative (frequent)	1	blacker	black	adj	*
+adjective comparative (frequent)	1	flatter	flat	adj	*
+adjective comparative (frequent)	1	paler	pale	adj	*
+adjective comparative (frequent)	1	younger	young	adj	*
+adjective comparative (frequent)	1	straighter	straight	adj	*
+adjective comparative (frequent)	1	trimmer	trim	adj	*
+adjective comparative (frequent)	1	wilder	wild	adj	*
+adjective comparative (frequent)	1	larger	large	adj	*
+adjective comparative (frequent)	1	denser	dense	adj	*
+adjective comparative (frequent)	1	prettier	pretty	adj	*
+adjective comparative (frequent)	1	trigger	trig	adj	*
+adjective comparative (frequent)	1	braver	brave	adj	*
+adjective comparative (frequent)	1	cleaner	clean	adj	*
+adjective comparative (any)	1	mugger	mug	adj	*
+adjective comparative (any)	1	ghastlier	ghastly	adj	*
+adjective comparative (any)	1	clunkier	clunky	adj	*
+adjective comparative (any)	1	shadier	shady	adj	*
+adjective comparative (any)	1	wanner	wan	adj	*
+adjective comparative (any)	1	barnier	barny	adj	*
+adjective comparative (any)	1	spoonier	spoony	adj	*
+adjective comparative (any)	1	brannier	branny	adj	*
+adjective comparative (any)	1	rainier	rainy	adj	*
+adjective comparative (any)	1	oilier	oily	adj	*
+adjective comparative (any)	1	slovenlier	slovenly	adj	*
+adjective comparative (any)	1	glissier	glissy	adj	*
+adjective comparative (any)	1	shoaler	shoal	adj	*
+adjective comparative (any)	1	tetchier	tetchy	adj	*
+adjective comparative (any)	1	titchier	titchy	adj	*
+adjective comparative (any)	1	lousier	lousy	adj	*
+adjective comparative (any)	1	ghostlier	ghostly	adj	*
+adjective comparative (any)	1	steeper	steep	adj	*
+adjective comparative (any)	1	glitzier	glitzy	adj	*
+adjective comparative (any)	1	plunkier	plunky	adj	*
+adjective comparative (any)	1	vampier	vampy	adj	*
+adjective comparative (any)	1	mightier	mighty	adj	*
+adjective comparative (any)	1	wheezier	wheezy	adj	*
+adjective comparative (any)	1	fluffier	fluffy	adj	*
+adjective comparative (any)	1	crabbier	crabby	adj	*
+adjective comparative (any)	1	toploftier	toplofty	adj	*
+adjective comparative (any)	1	kewler	kewl	adj	*
+adjective comparative (any)	1	sorer	sore	adj	*
+adjective comparative (any)	1	chieflier	chiefly	adj	*
+adjective comparative (any)	1	wordier	wordy	adj	*
+adjective comparative (any)	1	feelier	feely	adj	*
+adjective comparative (any)	1	rushier	rushy	adj	*
+adjective comparative (any)	1	cosier	cosie	adj	*
+adjective comparative (any)	1	screamier	screamy	adj	*
+adjective comparative (any)	1	snifflier	sniffly	adj	*
+adjective comparative (any)	1	blobbier	blobby	adj	*
+adjective comparative (any)	1	beefier	beefy	adj	*
+adjective comparative (any)	1	fervider	fervid	adj	*
+adjective comparative (any)	1	whippier	whippy	adj	*
+adjective comparative (any)	1	hypier	hypey	adj	*
+adjective comparative (any)	1	nebbier	nebbie	adj	*
+adjective comparative (any)	1	whiffier	whiffy	adj	*
+adjective comparative (any)	1	typier	typey	adj	*
+adjective comparative (any)	1	viewier	viewy	adj	*
+adjective comparative (any)	1	swannier	swanny	adj	*
+adjective comparative (any)	1	smoochier	smoochy	adj	*
+adjective comparative (any)	1	faggier	faggy	adj	*
+adjective comparative (any)	1	cootier	cooty	adj	*
+adjective comparative (any)	1	twiddlier	twiddly	adj	*
+adjective comparative (any)	1	randier	randy	adj	*
+adjective superlative (frequent)	1	nicest	nice	adj	*
+adjective superlative (frequent)	1	toughest	tough	adj	*
+adjective superlative (frequent)	1	slightest	slight	adj	*
+adjective superlative (frequent)	1	finest	fine	adj	*
+adjective superlative (frequent)	1	faintest	faint	adj	*
+adjective superlative (frequent)	1	blackest	black	adj	*
+adjective superlative (frequent)	1	prettiest	pretty	adj	*
+adjective superlative (frequent)	1	clearest	clear	adj	*
+adjective superlative (frequent)	1	nearest	near	adj	*
+adjective superlative (frequent)	1	kindest	kind	adj	*
+adjective superlative (frequent)	1	dirtiest	dirty	adj	*
+adjective superlative (frequent)	1	best	well	adj	*
+adjective superlative (frequent)	1	cleanest	clean	adj	*
+adjective superlative (frequent)	1	warmest	warm	adj	*
+adjective superlative (frequent)	1	tiniest	tiny	adj	*
+adjective superlative (frequent)	1	fiercest	fierce	adj	*
+adjective superlative (frequent)	1	nastiest	nasty	adj	*
+adjective superlative (frequent)	1	highest	high	adj	*
+adjective superlative (frequent)	1	darkest	dark	adj	*
+adjective superlative (frequent)	1	weakest	weak	adj	*
+adjective superlative (frequent)	1	broadest	broad	adj	*
+adjective superlative (frequent)	1	fondest	fond	adj	*
+adjective superlative (frequent)	1	wildest	wild	adj	*
+adjective superlative (frequent)	1	roughest	rough	adj	*
+adjective superlative (frequent)	1	dearest	dear	adj	*
+adjective superlative (frequent)	1	busiest	busy	adj	*
+adjective superlative (frequent)	1	craziest	crazy	adj	*
+adjective superlative (frequent)	1	surest	sure	adj	*
+adjective superlative (frequent)	1	gravest	grave	adj	*
+adjective superlative (frequent)	1	fullest	full	adj	*
+adjective superlative (frequent)	1	loveliest	lovely	adj	*
+adjective superlative (frequent)	1	deepest	deep	adj	*
+adjective superlative (frequent)	1	sexiest	sexy	adj	*
+adjective superlative (frequent)	1	rarest	rare	adj	*
+adjective superlative (frequent)	1	sickest	sick	adj	*
+adjective superlative (frequent)	1	holiest	holy	adj	*
+adjective superlative (frequent)	1	lightest	light	adj	*
+adjective superlative (frequent)	1	harshest	harsh	adj	*
+adjective superlative (frequent)	1	thinnest	thin	adj	*
+adjective superlative (frequent)	1	foremost	fore	adj	*
+adjective superlative (frequent)	1	hardest	hard	adj	*
+adjective superlative (frequent)	1	best	good	adj	*
+adjective superlative (frequent)	1	whitest	white	adj	*
+adjective superlative (frequent)	1	smallest	small	adj	*
+adjective superlative (frequent)	1	quickest	quick	adj	*
+adjective superlative (frequent)	1	biggest	big	adj	*
+adjective superlative (frequent)	1	mightiest	mighty	adj	*
+adjective superlative (frequent)	1	shortest	short	adj	*
+adjective superlative (frequent)	1	worst	bad	adj	*
+adjective superlative (frequent)	1	eldest	eld	adj	*
+adjective superlative (any)	1	slickest	slick	adj	*
+adjective superlative (any)	1	toothiest	toothy	adj	*
+adjective superlative (any)	1	kvetchiest	kvetchy	adj	*
+adjective superlative (any)	1	pooiest	pooey	adj	*
+adjective superlative (any)	1	sleepiest	sleepy	adj	*
+adjective superlative (any)	1	crappest	crap	adj	*
+adjective superlative (any)	1	chokiest	choky	adj	*
+adjective superlative (any)	1	typiest	typey	adj	*
+adjective superlative (any)	1	reddest	red	adj	*
+adjective superlative (any)	1	tuskiest	tusky	adj	*
+adjective superlative (any)	1	flippiest	flippy	adj	*
+adjective superlative (any)	1	whippiest	whippy	adj	*
+adjective superlative (any)	1	chocolatiest	chocolaty	adj	*
+adjective superlative (any)	1	clammest	clam	adj	*
+adjective superlative (any)	1	dreckiest	drecky	adj	*
+adjective superlative (any)	1	fizziest	fizzy	adj	*
+adjective superlative (any)	1	brushiest	brushy	adj	*
+adjective superlative (any)	1	douchiest	douchy	adj	*
+adjective superlative (any)	1	zappiest	zappy	adj	*
+adjective superlative (any)	1	wassiest	wassy	adj	*
+adjective superlative (any)	1	blobbiest	blobby	adj	*
+adjective superlative (any)	1	thrilliest	thrilly	adj	*
+adjective superlative (any)	1	wobbliest	wobbly	adj	*
+adjective superlative (any)	1	fumiest	fumy	adj	*
+adjective superlative (any)	1	squooshiest	squooshy	adj	*
+adjective superlative (any)	1	glaziest	glazy	adj	*
+adjective superlative (any)	1	woggiest	woggy	adj	*
+adjective superlative (any)	1	barmiest	barmy	adj	*
+adjective superlative (any)	1	wintriest	wintry	adj	*
+adjective superlative (any)	1	gloppiest	gloppy	adj	*
+adjective superlative (any)	1	marliest	marly	adj	*
+adjective superlative (any)	1	frowniest	frowny	adj	*
+adjective superlative (any)	1	cliquiest	cliquey	adj	*
+adjective superlative (any)	1	glissiest	glissy	adj	*
+adjective superlative (any)	1	cheapest	cheap	adj	*
+adjective superlative (any)	1	whackest	whack	adj	*
+adjective superlative (any)	1	fruitiest	fruity	adj	*
+adjective superlative (any)	1	tawdriest	tawdry	adj	*
+adjective superlative (any)	1	curtest	curt	adj	*
+adjective superlative (any)	1	snackiest	snacky	adj	*
+adjective superlative (any)	1	loungiest	loungy	adj	*
+adjective superlative (any)	1	pursiest	pursy	adj	*
+adjective superlative (any)	1	cuntiest	cunty	adj	*
+adjective superlative (any)	1	backstabbiest	backstabby	adj	*
+adjective superlative (any)	1	burbliest	burbly	adj	*
+adjective superlative (any)	1	muggest	mug	adj	*
+adjective superlative (any)	1	quaintest	quaint	adj	*
+adjective superlative (any)	1	drabbiest	drabby	adj	*
+adjective superlative (any)	1	dankest	dank	adj	*
+adjective superlative (any)	1	pappiest	pappy	adj	*

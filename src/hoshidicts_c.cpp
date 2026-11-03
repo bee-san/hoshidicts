@@ -1,5 +1,6 @@
 #include "hoshidicts_c.h"
 
+#include <cstddef>
 #include <cstdint>
 #include <memory>
 #include <optional>
@@ -10,6 +11,7 @@
 
 #include "hoshidicts/deinflector.hpp"
 #include "hoshidicts/importer.hpp"
+#include "hoshidicts/languages.hpp"
 #include "hoshidicts/lookup.hpp"
 #include "hoshidicts/query.hpp"
 
@@ -283,11 +285,23 @@ hd_results* hd_query_run(const hd_query* q, const char* expression, const hd_ter
 
 void hd_results_free(hd_results* r) { delete r; }
 
+static hd_kanji_results* marshal_kanji(std::unique_ptr<hd_kanji_results> r, const hd_kanji_entry** out_entries,
+                                       size_t* out_count);
+
 hd_kanji_results* hd_query_run_kanji(const hd_query* q, const char* kanji, const hd_kanji_entry** out_entries,
                                      size_t* out_count) {
   try {
     auto r = std::make_unique<hd_kanji_results>();
     r->res = q->query.query_kanji(kanji);
+    return marshal_kanji(std::move(r), out_entries, out_count);
+  } catch (...) {
+    return nullptr;
+  }
+}
+
+static hd_kanji_results* marshal_kanji(std::unique_ptr<hd_kanji_results> r, const hd_kanji_entry** out_entries,
+                                       size_t* out_count) {
+  {
 
     size_t definitions_count = 0;
     size_t stats_count = 0;
@@ -325,8 +339,6 @@ hd_kanji_results* hd_query_run_kanji(const hd_query* q, const char* kanji, const
     *out_entries = r->entries.data();
     *out_count = r->entries.size();
     return r.release();
-  } catch (...) {
-    return nullptr;
   }
 }
 
@@ -471,30 +483,38 @@ static std::optional<std::string_view> optional_string_view(hd_str value) {
   return std::string_view(value.ptr, value.len);
 }
 
+// Reads hd_lookup_options; false for an unknown frequency order.
+static bool read_options(const hd_lookup_options* options, LookupOptions& native_options) {
+  if (options == nullptr) {
+    return true;
+  }
+  native_options.frequency_dictionary = optional_string_view(options->frequency_dictionary);
+  native_options.primary_reading = optional_string_view(options->primary_reading);
+  switch (options->frequency_order) {
+    case HD_LOOKUP_FREQUENCY_ORDER_AUTO:
+      native_options.frequency_order = LookupFrequencyOrder::Auto;
+      return true;
+    case HD_LOOKUP_FREQUENCY_ORDER_ASCENDING:
+      native_options.frequency_order = LookupFrequencyOrder::Ascending;
+      return true;
+    case HD_LOOKUP_FREQUENCY_ORDER_DESCENDING:
+      native_options.frequency_order = LookupFrequencyOrder::Descending;
+      return true;
+    case HD_LOOKUP_FREQUENCY_ORDER_DISABLED:
+      native_options.frequency_order = LookupFrequencyOrder::Disabled;
+      return true;
+    default:
+      return false;
+  }
+}
+
 hd_lookup_results* hd_lookup_run_with_options(const hd_lookup* l, const char* lookup_string, int max_results,
                                               size_t scan_length, const hd_lookup_options* options,
                                               const hd_lookup_result** out_results, size_t* out_count) {
   try {
     LookupOptions native_options;
-    if (options != nullptr) {
-      native_options.frequency_dictionary = optional_string_view(options->frequency_dictionary);
-      native_options.primary_reading = optional_string_view(options->primary_reading);
-      switch (options->frequency_order) {
-        case HD_LOOKUP_FREQUENCY_ORDER_AUTO:
-          native_options.frequency_order = LookupFrequencyOrder::Auto;
-          break;
-        case HD_LOOKUP_FREQUENCY_ORDER_ASCENDING:
-          native_options.frequency_order = LookupFrequencyOrder::Ascending;
-          break;
-        case HD_LOOKUP_FREQUENCY_ORDER_DESCENDING:
-          native_options.frequency_order = LookupFrequencyOrder::Descending;
-          break;
-        case HD_LOOKUP_FREQUENCY_ORDER_DISABLED:
-          native_options.frequency_order = LookupFrequencyOrder::Disabled;
-          break;
-        default:
-          return nullptr;
-      }
+    if (!read_options(options, native_options)) {
+      return nullptr;
     }
 
     auto r = std::make_unique<hd_lookup_results>();
@@ -510,3 +530,178 @@ hd_lookup_results* hd_lookup_run_with_options(const hd_lookup* l, const char* lo
 }
 
 void hd_lookup_results_free(hd_lookup_results* r) { delete r; }
+
+// languages
+struct hd_languages {
+  hoshidicts::LanguageRegistry registry = hoshidicts::LanguageRegistry::with_builtin();
+  std::string error;
+};
+
+hd_languages* hd_languages_new(void) {
+  try {
+    return new hd_languages;
+  } catch (...) {
+    return nullptr;
+  }
+}
+
+void hd_languages_free(hd_languages* languages) { delete languages; }
+
+int hd_languages_add(hd_languages* languages, const char* language_json, const char* transforms_json) {
+  try {
+    languages->error.clear();
+    if (language_json == nullptr) {
+      languages->error = "no language.json given";
+      return 1;
+    }
+    return languages->registry.add(language_json, transforms_json == nullptr ? "" : transforms_json, &languages->error)
+               ? 0
+               : 1;
+  } catch (const std::exception& error) {
+    languages->error = error.what();
+    return 1;
+  } catch (...) {
+    languages->error = "unknown error";
+    return 1;
+  }
+}
+
+int hd_languages_add_directory(hd_languages* languages, const char* path) {
+  try {
+    languages->error.clear();
+    if (path == nullptr) {
+      languages->error = "no directory given";
+      return 1;
+    }
+    return languages->registry.add_directory(path, &languages->error) ? 0 : 1;
+  } catch (const std::exception& error) {
+    languages->error = error.what();
+    return 1;
+  } catch (...) {
+    languages->error = "unknown error";
+    return 1;
+  }
+}
+
+const char* hd_languages_last_error(const hd_languages* languages) { return languages->error.c_str(); }
+
+hd_lookup* hd_lookup_new_with_languages(hd_query* q, const hd_languages* languages) {
+  try {
+    return new hd_lookup{Lookup(q->query, languages->registry)};
+  } catch (...) {
+    return nullptr;
+  }
+}
+
+namespace {
+// Whether a request of `struct_size` bytes has the field at `offset`.
+bool has_field(const hd_language_request* request, size_t offset, size_t size) {
+  return request != nullptr && request->struct_size >= offset + size;
+}
+
+#define HD_REQUEST_HAS(request, field) \
+  has_field(request, offsetof(hd_language_request, field), sizeof(static_cast<hd_language_request*>(nullptr)->field))
+
+std::vector<std::string> strings(const char* const* list, size_t count) {
+  std::vector<std::string> out;
+  if (list == nullptr) {
+    return out;
+  }
+  out.reserve(count);
+  for (size_t i = 0; i < count; ++i) {
+    if (list[i] != nullptr) {
+      out.emplace_back(list[i]);
+    }
+  }
+  return out;
+}
+
+// The dictionary selection of a request, or nullopt for every loaded one.
+std::optional<std::vector<std::string>> selection(const hd_language_request* request) {
+  if (!HD_REQUEST_HAS(request, select_dictionaries) || request->select_dictionaries == 0) {
+    return std::nullopt;
+  }
+  if (!HD_REQUEST_HAS(request, dictionaries) || !HD_REQUEST_HAS(request, dictionary_count)) {
+    return std::vector<std::string>{};
+  }
+  return strings(request->dictionaries, request->dictionary_count);
+}
+
+void read_request(const hd_language_request* request, LookupOptions& options) {
+  if (HD_REQUEST_HAS(request, language) && request->language != nullptr) {
+    options.language = request->language;
+  }
+  options.dictionaries = selection(request);
+  if (HD_REQUEST_HAS(request, language_options) && HD_REQUEST_HAS(request, language_option_count)) {
+    options.language_options = strings(request->language_options, request->language_option_count);
+  }
+  if (HD_REQUEST_HAS(request, pos_filter_exempt) && HD_REQUEST_HAS(request, pos_filter_exempt_count)) {
+    options.pos_filter_exempt = strings(request->pos_filter_exempt, request->pos_filter_exempt_count);
+  }
+}
+
+thread_local std::string last_lookup_error;
+}  // namespace
+
+hd_lookup_results* hd_lookup_run_with_language(const hd_lookup* l, const char* lookup_string, int max_results,
+                                               size_t scan_length, const hd_lookup_options* options,
+                                               const hd_language_request* request,
+                                               const hd_lookup_result** out_results, size_t* out_count,
+                                               const char** out_error) {
+  const auto fail = [out_error](std::string message) -> hd_lookup_results* {
+    last_lookup_error = std::move(message);
+    if (out_error != nullptr) {
+      *out_error = last_lookup_error.c_str();
+    }
+    return nullptr;
+  };
+  if (out_error != nullptr) {
+    *out_error = nullptr;
+  }
+  try {
+    LookupOptions native_options;
+    if (!read_options(options, native_options)) {
+      return fail("unknown frequency order");
+    }
+    read_request(request, native_options);
+    auto r = std::make_unique<hd_lookup_results>();
+    r->res = l->lookup.lookup(lookup_string, max_results, scan_length, native_options);
+    marshal_lookup_results(r.get());
+
+    *out_results = r->results.data();
+    *out_count = r->results.size();
+    return r.release();
+  } catch (const std::exception& error) {
+    return fail(error.what());
+  } catch (...) {
+    return fail("unknown error");
+  }
+}
+
+hd_str hd_lookup_results_trace_id(const hd_lookup_results* r, size_t i, size_t j) {
+  if (r == nullptr || i >= r->res.size() || j >= r->res[i].trace.size()) {
+    return hd_str{"", 0};
+  }
+  const std::string& id = r->res[i].trace[j].id;
+  return hd_str{id.c_str(), id.size()};
+}
+
+int hd_lookup_results_trace_from_dictionary(const hd_lookup_results* r, size_t i, size_t j) {
+  if (r == nullptr || i >= r->res.size() || j >= r->res[i].trace.size()) {
+    return 0;
+  }
+  return r->res[i].trace[j].from_dictionary ? 1 : 0;
+}
+
+hd_kanji_results* hd_query_run_kanji_with_request(const hd_query* q, const char* kanji,
+                                                  const hd_language_request* request,
+                                                  const hd_kanji_entry** out_entries, size_t* out_count) {
+  try {
+    auto r = std::make_unique<hd_kanji_results>();
+    const auto chosen = selection(request);
+    r->res = chosen ? q->query.query_kanji(kanji, *chosen) : q->query.query_kanji(kanji);
+    return marshal_kanji(std::move(r), out_entries, out_count);
+  } catch (...) {
+    return nullptr;
+  }
+}

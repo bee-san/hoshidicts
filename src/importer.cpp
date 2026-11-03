@@ -145,6 +145,8 @@ struct Files {
 struct GlossarySpan {
   uint64_t offset = 0;
   uint32_t size = 0;
+  // What form-of references the glossary holds (src/json/form_of.hpp).
+  yomitan_parser::FormOfKind form_of = yomitan_parser::FormOfKind::None;
 };
 
 struct ProcessedFile {
@@ -400,6 +402,24 @@ std::vector<char> train_zstd_dict(const DictionarySource& source, const Files& f
   return dict;
 }
 
+// A term record's form-of slot (src/json/form_of.hpp; docs/languages.md,
+// section 9.10): count 0 for a row without form-of references, as every
+// importer wrote before, otherwise the flag entry.
+void write_form_of(std::vector<char>& out, yomitan_parser::FormOfKind kind) {
+  if (kind == yomitan_parser::FormOfKind::None) {
+    write_val<uint32_t>(out, 0);
+    return;
+  }
+  const uint32_t rules = kind == yomitan_parser::FormOfKind::WithOthers ? form_of_slot::with_definitions
+                                                                        : form_of_slot::only_references;
+  write_val<uint32_t>(out, 1);
+  write_val<uint32_t>(out, 0);  // an empty formOf
+  write_val<uint32_t>(out, rules);
+  for (uint32_t i = 0; i < rules; ++i) {
+    write_val<uint32_t>(out, 0);  // an empty rule
+  }
+}
+
 ProcessedFile process_term_bank(std::string content, const ZSTD_CDict* cdict) {
   ProcessedFile processed;
   if (content.empty()) {
@@ -438,7 +458,7 @@ ProcessedFile process_term_bank(std::string content, const ZSTD_CDict* cdict) {
         throw std::runtime_error("failed to compress glossary");
       }
       processed.glossary_blob.resize(start + compressed_size);
-      it->second = GlossarySpan{start, static_cast<uint32_t>(compressed_size)};
+      it->second = GlossarySpan{start, static_cast<uint32_t>(compressed_size), yomitan_parser::form_of_kind(glossary)};
     }
 
     uint64_t offset = processed.data.size();
@@ -468,7 +488,7 @@ ProcessedFile process_term_bank(std::string content, const ZSTD_CDict* cdict) {
     write_str(processed.data, term.rules);
     write_val<uint8_t>(processed.data, term.term_tags.size());
     write_str(processed.data, term.term_tags);
-    write_val<uint32_t>(processed.data, 0);
+    write_form_of(processed.data, it->second.form_of);
     // The Yomitan schema types score as a JSON number; keep the parsed double
     // rather than truncating to int32 (fractions were collapsing, and magnitudes
     // beyond int32 were undefined behaviour in the cast). Readers select on the

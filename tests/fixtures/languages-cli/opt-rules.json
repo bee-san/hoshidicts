@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "conditions": {
+    "n": {
+      "name": "Noun",
+      "isDictionaryForm": true
+    }
+  },
+  "transforms": [
+    {
+      "id": "s",
+      "name": "s",
+      "description": "the s probe rule",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "s", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "z",
+      "name": "z",
+      "description": "an optional rule only this file has",
+      "source": "yomitan",
+      "optional": true,
+      "rules": [
+        {"type": "suffix", "inflected": "z", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    }
+  ]
+}

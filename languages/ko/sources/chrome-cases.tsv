@@ -1,0 +1,12 @@
+# Cases for Hachidori's test/chrome-language-pack.mjs with kty-ko-en (HACHIDORI_CASES), written for hoshidicts (GPL-3.0-or-later).
+# sentence	word	expected headword
+학교에서 친구를 만났어요.	학교에서	학교
+이건 제 가방이에요.	이건	이것
+점심을 먹으러 식당에 갔다.	먹으러	먹다
+동생이 감기에 걸렸는데 다 나았어요.	걸렸는데	걸리다
+하늘이 정말 파랗네요.	파랗네요	파랗다
+친구가 이사를 도와줬어요.	도와줬어요	도와주다
+내일 시험이 있어서 일찍 자야겠어요.	자야겠어요	자다
+그녀는 노래를 잘 부른다고 했어요.	부른다고	부르다
+요즘 날씨가 따뜻해졌어요.	따뜻해졌어요	따뜻하다
+커피를 마시면서 이야기했다.	마시면서	마시다

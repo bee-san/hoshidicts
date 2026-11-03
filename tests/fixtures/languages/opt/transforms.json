@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "conditions": {
+    "n": {
+      "name": "Noun",
+      "isDictionaryForm": true
+    }
+  },
+  "transforms": [
+    {
+      "id": "s",
+      "name": "s",
+      "description": "the s probe rule",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "s", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "opt",
+      "name": "opt",
+      "description": "the opt probe rule",
+      "source": "own",
+      "optional": true,
+      "rules": [
+        {"type": "suffix", "inflected": "q", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+# Source: written for this pack (GPL-3.0-or-later), no third-party data. The pack has no optional processor.
+# category	valid	input	variant
+decapitalize	1	Parle	parle
+decapitalize	1	PARLE	parle
+decapitalize	1	ÉCOLE	école
+decapitalize	1	ŒUVRE	œuvre
+decapitalize	1	Ça	ça
+capitalize	1	paris	Paris
+capitalize	1	état	État
+capitalize	1	œil	Œil
+keep input	1	Parle	Parle
+keep input	1	l’homme	l’homme
+unicode	1	école	école
+unicode	1	ﬁn	fin
+unicode	1	ＰＡＲＬＥ	parle
+unicode	1	Mᵐᵉ	Mme
+apostrophe	1	l’homme	l'homme
+apostrophe	1	aujourd’hui	aujourd'hui
+apostrophe	1	j’ai	j'ai
+apostrophe	1	lʼeau	l'eau
+apostrophe	1	l‘eau	l'eau
+apostrophe	1	L’Homme	l'homme
+apostrophe	1	va-t’en	va-t'en
+ligature	1	coeur	cœur
+ligature	1	soeurs	sœurs
+ligature	1	Oeuvre	Œuvre
+ligature	1	OEUVRE	œuvre
+ligature	1	manoeuvre	manœuvre
+ligature	1	coefficient	coefficient
+negatives	0	parle	PARLE
+negatives	0	Parle	pARLE
+apostrophe	1	l'homme	l’homme
+negatives	0	l'homme	l‘homme
+negatives	0	l’homme	lʼhomme
+negatives	0	cœur	coeur
+negatives	0	école	ecole
+negatives	0	homme	l'homme
+join pronoun	1	me parle	me+parle
+join pronoun	1	Se lève	se+lève
+join pronoun	1	s'en moque	s'en+moque
+join pronoun	1	s’en moque	s'en+moque
+join pronoun	1	m'y attendais	m'y+attendais
+join pronoun	1	me parle	me parle
+negatives	0	la parle	la+parle
+negatives	0	en jette	en+jette
+negatives	0	l'y allait	l'y+allait
+negatives	0	je me parle	je me+parle
+negatives	0	y allait	y+allait
+negatives	0	n'y allait	n'y+allait
+join pronoun	1	t'en vas	t'en+vas
+join pronoun	1	t'y attends	t'y+attends
+join pronoun	1	s'y prend	s'y+prend

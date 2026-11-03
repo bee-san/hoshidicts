@@ -1,15 +1,29 @@
 #pragma once
 
+#include <cstddef>
+#include <cstdint>
+#include <memory>
+#include <span>
 #include <string>
 #include <string_view>
 #include <utility>
 #include <vector>
-#include <cstdint>
-#include <cstddef>
+
+namespace hoshidicts {
+class LanguagePack;
+}
 
 struct TransformGroup {
   std::string name;
   std::string description;
+  // The transform's id in its pack (docs/languages.md, section 7.1). Japanese
+  // ids are the names; the cat-speech step's id is its variant pass,
+  // nekoSpeech.
+  std::string id;
+  // A step a dictionary's form-of reference names (docs/languages.md,
+  // section 9.10): its id and name are the rule as the dictionary writes it,
+  // and it has no description.
+  bool from_dictionary = false;
 };
 
 struct DeinflectionResult {
@@ -18,75 +32,40 @@ struct DeinflectionResult {
   std::vector<TransformGroup> trace;
 };
 
+// The generic deinflector built from a pack's transforms
+// (docs/languages.md, section 7).
 class Deinflector {
  public:
+  // Kept for existing callers: the built-in Japanese pack's rules.
   Deinflector();
+  // The rules of `pack` (which must not be null).
+  explicit Deinflector(std::shared_ptr<const hoshidicts::LanguagePack> pack);
+
+  // Every deinflection of `text`, depth first, the text itself first.
   std::vector<DeinflectionResult> deinflect(const std::string& text) const;
+  // The condition bits of the dictionary-form tags among `tags` (a term
+  // bank's `rules`); tags the pack does not know are ignored.
+  uint32_t conditions_for_parts_of_speech(std::span<const std::string> tags) const;
+  // The condition bits of condition names (a corpus `rule`).
+  uint32_t conditions_for_types(std::span<const std::string> names) const;
+
+  // Kept for existing callers: Japanese part-of-speech conditions, and
+  // NekoPara cat speech (now the Japanese pack's variant pass nekoSpeech).
+  static uint32_t pos_to_conditions(const std::vector<std::string>& part_of_speech);
   // Readings of NekoPara's cat speech: each にゃ in text, one at a time, read as
   // な, だ, ら, ま or じゃ and deinflected, with neko_speech as the trace's first
-  // step. Empty when text has no にゃ. deinflect() never returns these.
+  // step. Empty when text has no にゃ, or the pack has no nekoSpeech pass.
+  // deinflect() never returns these.
   std::vector<DeinflectionResult> deinflect_neko_speech(const std::string& text) const;
-  static uint32_t pos_to_conditions(const std::vector<std::string>& part_of_speech);
 
-  // The first trace step of a deinflect_neko_speech() result.
+  // The name of the first trace step of a deinflect_neko_speech() result.
   static constexpr std::string_view neko_speech = "neko speech";
   static bool is_neko_speech(const DeinflectionResult& result) {
     return !result.trace.empty() && result.trace.front().name == neko_speech;
   }
 
+  const std::shared_ptr<const hoshidicts::LanguagePack>& pack() const { return pack_; }
+
  private:
-  struct Rule {
-    std::string from;
-    std::string to;
-    uint32_t conditions_in;
-    uint32_t conditions_out;
-    int group_id;
-    bool whole_word = false;
-  };
-
-  enum Conditions : uint32_t {
-    NONE = 0,
-    V1D = 1 << 0,
-    V1P = 1 << 1,
-    V5D = 1 << 2,
-    V5SS = 1 << 3,
-    V5SP = 1 << 4,
-    VK = 1 << 5,
-    VS = 1 << 6,
-    VZ = 1 << 7,
-    ADJ_I = 1 << 8,
-    MASU = 1 << 9,
-    MASEN = 1 << 10,
-    TE = 1 << 11,
-    BA = 1 << 12,
-    KU = 1 << 13,
-    TA = 1 << 14,
-    NN = 1 << 15,
-    NASAI = 1 << 16,
-    YA = 1 << 17,
-    V1 = V1D | V1P,
-    V5S = V5SS | V5SP,
-    V5 = V5D | V5S,
-    V = V1 | V5 | VK | VS | VZ,
-  };
-
-  void deinflect_recursive(const std::string& text, uint32_t conditions, std::vector<int>& trace,
-                           std::vector<DeinflectionResult>& results) const;
-
-  void init_transforms();
-
-  int add_group(const TransformGroup& group);
-  void add_rule(const Rule& rule);
-  void add_irregular(std::string_view suffix, uint32_t conditions_in, uint32_t conditions_out, int group_id);
-
-  struct TrieNode {
-    std::vector<std::pair<char32_t, uint32_t>> children;
-    int rules = -1;
-  };
-
-  std::vector<TrieNode> trie_;
-  std::vector<std::vector<Rule>> rule_lists_;
-  std::vector<TransformGroup> groups_;
-  size_t max_length_;
-  int neko_group_ = -1;
+  std::shared_ptr<const hoshidicts::LanguagePack> pack_;
 };

@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "code": "trs",
+  "iso639_3": "zzz",
+  "name": "Trace shortest",
+  "nativeName": "Trace shortest",
+  "bcp47": "zz",
+  "scripts": ["Latn"],
+  "direction": "ltr",
+  "classes": {
+    "letter": "[A-Za-z]"
+  },
+  "text": {
+    "pattern": "{letter}",
+    "scanStart": "cursor",
+    "segmentation": "spaces",
+    "wordCharacters": "{letter}",
+    "wordInternal": null,
+    "sentence": {
+      "terminators": ["."],
+      "quotePairs": []
+    },
+    "highlightBreaks": null,
+    "lineJoiner": " "
+  },
+  "lookup": {
+    "searchResolution": "character",
+    "preprocessors": [
+      {
+        "id": "za",
+        "name": "z to a",
+        "variants": [[{"map": {"z": "a"}, "at": "first"}]]
+      }
+    ],
+    "postprocessors": [],
+    "readingNormalizer": null,
+    "transforms": "transforms.json",
+    "traceSelection": "shortest",
+    "functionWords": [],
+    "variantPasses": []
+  },
+  "capabilities": {
+    "readings": "optional",
+    "ruby": null,
+    "pitchAccent": false,
+    "characterView": null,
+    "wordHighlighting": true
+  },
+  "presentation": {
+    "typography": {
+      "fontFamily": null,
+      "wordBreak": null,
+      "lineBreak": null,
+      "joinedScript": false
+    },
+    "labels": {},
+    "displayTransforms": {}
+  },
+  "settings": [],
+  "host": {
+    "ttsLanguage": "zz",
+    "audioLanguage": "zz",
+    "anki": {
+      "noteTypeFamilies": [],
+      "fieldAliases": {},
+      "partOfSpeechLabels": {}
+    },
+    "frequencySamples": null,
+    "recommendedDictionaries": [],
+    "sample": {
+      "warmup": "cats",
+      "practice": {
+        "text": "Two cats.",
+        "lookup": "cats"
+      },
+      "entry": {
+        "expression": "cat",
+        "reading": "cat",
+        "glossary": ["a cat"],
+        "definitionTags": "n",
+        "matched": "cats",
+        "trace": ["s"]
+      },
+      "character": null
+    }
+  }
+}

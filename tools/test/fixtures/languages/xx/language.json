@@ -1,0 +1,76 @@
+{
+  "schema": 1,
+  "code": "xx",
+  "iso639_3": "xxx",
+  "name": "Test",
+  "nativeName": "Test",
+  "bcp47": "xx",
+  "scripts": ["Latn"],
+  "direction": "ltr",
+  "classes": {
+    "letter": "[A-Za-z\\u00C0-\\u024F]",
+    "word": "[{letter}\\p{M}\\p{Nd}]",
+    "marks": "[\\u0300-\\u036F]",
+    "notLetter": "[^{letter}]"
+  },
+  "text": {
+    "pattern": "{letter}",
+    "scanStart": "word",
+    "segmentation": "spaces",
+    "wordCharacters": "{word}",
+    "wordInternal": null,
+    "sentence": {
+      "terminators": [".", "!", "?"],
+      "quotePairs": [["\"", "\""], ["(", ")"]]
+    },
+    "highlightBreaks": null,
+    "lineJoiner": " "
+  },
+  "lookup": {
+    "searchResolution": "word",
+    "preprocessors": [
+      {"id": "decapitalize", "name": "Decapitalize text", "variants": [[{"case": "lower"}]]},
+      {"id": "capitalizeFirstLetter", "name": "Capitalize first letter", "variants": [[{"case": "upperFirst"}]]},
+      {"id": "removeMarks", "name": "Remove marks", "variants": [[{"normalize": "NFD"}, {"strip": "{marks}"}, {"normalize": "NFC"}]]},
+      {"id": "firstA", "name": "First a", "variants": [[{"map": {"a": "\u00E1"}, "at": "first"}]]},
+      {"id": "dropApostrophe", "name": "Drop a final apostrophe s", "variants": [[{"pattern": "['\\u2019]s$", "replace": ""}], [{"case": "upper"}]]}
+    ],
+    "postprocessors": [],
+    "readingNormalizer": null,
+    "transforms": "transforms.json",
+    "traceSelection": "shortest",
+    "functionWords": [],
+    "variantPasses": []
+  },
+  "capabilities": {
+    "readings": "none",
+    "ruby": null,
+    "pitchAccent": false,
+    "characterView": null,
+    "wordHighlighting": true
+  },
+  "presentation": {
+    "typography": {"fontFamily": null, "wordBreak": null, "lineBreak": null, "joinedScript": false},
+    "labels": {},
+    "displayTransforms": {
+      "stripMarks": [{"normalize": "NFD"}, {"strip": "{marks}"}, {"normalize": "NFC"}],
+      "shout": [{"case": "upper"}]
+    }
+  },
+  "settings": [
+    {"id": "archaicForms", "type": "boolean", "default": false, "label": "Early Modern English forms", "description": "Also look up -eth forms such as walketh.", "group": "lookup", "effect": {"transforms": ["archaic"]}}
+  ],
+  "host": {
+    "ttsLanguage": "xx",
+    "audioLanguage": "xx",
+    "anki": {"noteTypeFamilies": [], "fieldAliases": {}, "partOfSpeechLabels": {}},
+    "frequencySamples": null,
+    "recommendedDictionaries": [],
+    "sample": {
+      "warmup": "walking",
+      "practice": {"text": "She walked home.", "lookup": "walked"},
+      "entry": {"expression": "walk", "reading": "walk", "glossary": ["to move on foot"], "definitionTags": "v", "matched": "walked", "trace": ["past"]},
+      "character": null
+    }
+  }
+}

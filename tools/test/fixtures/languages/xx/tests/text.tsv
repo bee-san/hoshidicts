@@ -1,0 +1,5 @@
+# category	valid	input	variant
+case	1	Walked	walked
+marks	1	café	cafe
+first	1	banana	bánana
+first	0	banana	bananá

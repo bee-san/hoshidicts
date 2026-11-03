@@ -1,0 +1,10 @@
+{
+  "title": "hoshidicts fr test dictionary",
+  "format": 3,
+  "revision": "1",
+  "sequenced": false,
+  "author": "hoshidicts",
+  "description": "A tiny French dictionary for languages/fr/tests/lookup.tsv, written for the pack. Its pronominal verbs are listed with se, as French-French dictionaries list them; aujourd'hui is spelt with a straight apostrophe and s’en aller with a typographic one, as dictionaries spell them either way.",
+  "sourceLanguage": "fr",
+  "targetLanguage": "en"
+}

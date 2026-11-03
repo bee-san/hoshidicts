@@ -1,0 +1,67 @@
+# Source: written for this pack (GPL-3.0-or-later), against tests/dictionary/. The pack has no optional processor.
+# category	valid	text	expression	matched
+apostrophe	1	homme est là	homme	homme
+apostrophe	1	l’homme est là	homme	l’homme
+apostrophe	1	l'homme est là	homme	l'homme
+apostrophe	1	aujourd’hui	aujourd'hui	aujourd’hui
+apostrophe	1	d'eau	eau	d'eau
+inflection	1	parlons français	parler	parlons
+inflection	1	chevaux blancs	cheval	chevaux
+inflection	1	blancs chevaux	blanc	blancs
+inflection	1	heureusement	heureusement	heureusement
+inflection	1	coeurs	cœur	coeurs
+inflection	1	yeux bleus	œil	yeux
+pronominal	1	me lève tôt	se lever	me lève
+pronominal	1	m'appelle Pierre	s'appeler	m'appelle
+pronominal	1	m’appelle Pierre	s'appeler	m’appelle
+pronominal	1	m'en vais	s’en aller	m'en vais
+pronominal	1	te souviens	se souvenir	te souviens
+hyphen	1	lève-toi vite	se lever	lève-toi
+hyphen	1	assieds-toi là	s'asseoir	assieds-toi
+hyphen	1	va-t'en d'ici	s’en aller	va-t'en
+hyphen	1	parle-t-il français	parler	parle-t-il
+hyphen	1	donne-moi ça	donner	donne-moi
+hyphen	1	rouge-gorge	rouge	rouge
+hyphen	1	gorge rouge	gorge	gorge
+hyphen	1	jour-là	jour	jour-là
+ties	1	portes ouvertes	porte	portes
+ties	1	élèves du lycée	élève	élèves
+ties	1	drogues dangereuses	drogue	drogues
+ties	1	ramasse les feuilles	ramasser	ramasse
+ties	1	tue le temps	tuer	tue
+ties	1	jeunes gens	jeune	jeunes
+word resolution	1	je me lève	je	je
+word resolution	1	l	l'	l
+negatives	0	donne une pomme	don	donne
+negatives	0	me dit	se dire	me dit
+negatives	0	me suis levé	se suivre	me suis
+negatives	0	avis	avoir	avis
+negatives	0	rentrait tard	rentraire	rentrait
+negatives	0	jeunes gens	jeun	jeunes
+negatives	0	ramasse les feuilles	ramer	ramasse
+negatives	0	tue le temps	taire	tue
+negatives	0	vous voyez	se voir	vous voyez
+phrases	1	n'y avait personne	y avoir	n'y avait
+phrases	1	y vais demain	y aller	y vais
+phrases	1	en revenant	en	en
+negatives	0	en suis sûr	en être	en suis
+negatives	0	j'en suis sûr	en être	j'en suis
+negatives	0	y ai pensé	y avoir	y ai
+negatives	0	en revenant	en revenir	en revenant
+hyphen	1	porte-le ici	porter	porte-le
+hyphen	1	porte-t-il	porter	porte-t-il
+joined	1	s'en moque bien	s'en moquer	s'en moque
+joined	1	y allait souvent	y aller	y allait
+negatives	0	prendre chez elle	prendre cher	prendre chez
+negatives	0	le cherchions partout	le chercher	le cherchions
+negatives	0	la bouclait	la boucler	la bouclait
+infinitive	1	m'appeler demain	appeler	m'appeler
+apostrophe	1	jusqu'à demain	jusqu'à	jusqu'à
+negatives	0	jusqu'à demain	à demain	jusqu'à demain
+negatives	0	m'appeler demain	s'appeler	m'appeler
+negatives	0	te prendre à huit heures	se prendre	te prendre
+negatives	0	me prends pour un idiot	se prendre	me prends
+negatives	0	chevaliers	cheval	cheval
+negatives	0	homme2	homme	homme
+word resolution	1	l'xyzw	l'	l
+negatives	0	qu'à demain	à demain	qu'à demain

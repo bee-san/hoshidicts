@@ -1,0 +1,118 @@
+# Sentences written for this pack (GPL-3.0-or-later), with a word to hover and the headword a learner should
+# see first (the dictionary's spelling). Used for the real-dictionary check, the Chrome pack check and the
+# lookup benchmark (README.md, Measurements). Not a pack test file: it needs a real dictionary.
+# sentence	word	expected (| separates headwords that are equally right)
+The children were running across the playground.	children	child
+The children were running across the playground.	running	run|run across
+She was running late, so she took the earlier train.	took	take
+She was running late, so she took the earlier train.	earlier	early
+We stopped at three different cities on the way.	stopped	stop
+We stopped at three different cities on the way.	cities	city
+Two wolves crept out of the forest at night.	wolves	wolf
+Two wolves crept out of the forest at night.	crept	creep|creep out
+He put the knives back in the drawer.	knives	knife
+The leaves had already fallen by October.	leaves	leaf
+The leaves had already fallen by October.	fallen	fall|fall by
+My feet hurt after the long walk.	feet	foot
+The mice ran under the floorboards.	mice	mouse
+Their teeth were whiter than mine.	teeth	tooth
+Their teeth were whiter than mine.	whiter	white
+The women thanked the firemen.	women	woman
+The women thanked the firemen.	thanked	thank
+The women thanked the firemen.	firemen	fireman
+The data were collected over two years.	collected	collect
+She wishes she had studied harder.	wishes	wish
+She wishes she had studied harder.	studied	study
+She wishes she had studied harder.	harder	hard
+He carries his phone everywhere he goes.	carries	carry
+He carries his phone everywhere he goes.	goes	go
+The baby is lying in the cot.	lying	lie|lie in
+They were hoping for better weather.	hoping	hope
+They were hoping for better weather.	better	good
+I have never swum in the sea.	swum	swim
+The bread was eaten before noon.	eaten	eat
+They had forgotten the password again.	forgotten	forget
+She bought the biggest cake in the shop.	bought	buy
+She bought the biggest cake in the shop.	biggest	big
+This is the happiest day of my life.	happiest	happy
+That was the worst film I have seen.	worst	bad
+The prices are getting higher every month.	getting	get
+The prices are getting higher every month.	higher	high
+He admitted that he had planned the trip.	admitted	admit
+He admitted that he had planned the trip.	planned	plan
+The dog panicked when it heard the thunder.	panicked	panic
+Someone is knocking at the door.	knocking	knock
+We are traveling to Spain next week.	traveling	travel
+She travelled across Europe by train.	travelled	travel
+The teacher's notes were on the desk.	teacher's	teacher
+The teacher’s notes were on the desk.	teacher’s	teacher
+The dogs' bowls were empty.	dogs'	dog
+We borrowed my brother's car for the weekend.	brother's	brother
+I can't find my keys anywhere.	can't	can
+She doesn't like spicy food.	doesn't	do
+It isn't raining any more.	isn't	be
+They won't come to the party.	won't	will
+You shouldn't have said that.	shouldn't	should
+I don’t know the answer.	don’t	do
+It's a long way to the station.	It's	it
+They're waiting outside.	They're	they
+We've already eaten.	We've	we
+She'd rather stay at home.	She'd	she
+I'm not sure about that.	I'm	I
+You'll see what I mean.	You'll	you
+She looked up the word in the dictionary.	looked	look up
+She looked the word up in her dictionary.	looked	look up
+He turned the radio off before bed.	turned	turn off
+Please turn it off when you leave.	turn	turn off
+He picked her up from the airport.	picked	pick up
+I gave up smoking last year.	gave	give up
+The car broke down on the motorway.	broke	break down
+She came up with a brilliant idea.	came	come up with
+The plane took off on time.	took	take off
+We ran into an old friend at the station.	ran	run into
+He's been looking after his little sister.	looking	look after
+The old man finally kicked the bucket.	kicked	kick the bucket
+He lost his temper and shouted at everyone.	lost	lose one's temper
+She made up her mind to leave.	made	make up one's mind
+They let him down again.	let	let someone down|let down
+We enjoyed ourselves at the beach.	enjoyed	enjoy oneself
+Running water is safer to drink.	Running	running water|running
+Walking home, she saw a fox.	Walking	walk
+The meeting was postponed until Friday.	postponed	postpone
+The explanations were confusing.	explanations	explanation
+She has written three novels.	written	write
+She has written three novels.	novels	novel
+The rivers flooded the valleys.	flooded	flood
+The rivers flooded the valleys.	valleys	valley
+The heroes saved the city.	heroes	hero
+The boxes were stacked in the garage.	boxes	box
+The boxes were stacked in the garage.	stacked	stack
+Those churches are very old.	churches	church
+The phenomena were hard to explain.	phenomena	phenomenon
+The criteria for the prize are strict.	criteria	criterion
+The cacti need little water.	cacti	cactus
+The analyses showed no errors.	analyses	analysis|analyse
+My sisters-in-law live in Leeds.	sisters-in-law	sister-in-law
+It is a five-minute walk to the station.	minute	minute
+I met her mother-in-law yesterday.	mother-in-law	mother-in-law
+He felt sleepier than usual.	sleepier	sleepy
+He felt sleepier than usual.	felt	feel
+She sang more beautifully than anyone.	sang	sing
+The wind blew the hats away.	blew	blow away|blow
+The wind blew the hats away.	hats	hat
+He drove faster than the others.	drove	drive
+He drove faster than the others.	faster	fast
+We are going to school tomorrow.	going	go|go to
+I will paint the fence tomorrow.	will	will|will paint
+Don't touch the wet paint.	Don't	do
+She went by bus.	by	by
+Only my sister came.	Only	only
+They arrived early in the morning.	early	early
+The party lasted all night.	party	party
+He was under a lot of pressure.	under	under
+Is there any milk left?	any	any
+The army marched north.	army	army
+He had a family of five.	family	family
+Nothin' ever happens here.	Nothin'	nothing
+We were goin' home.	goin'	go
+Those are the best seats.	best	good

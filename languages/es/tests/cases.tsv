@@ -1,0 +1,453 @@
+# Source: written for this pack (GPL-3.0-or-later), no third-party data. Expected traces are this pack's transform ids, newest first.
+# Test files run with every optional processor on, so the negatives leave out words the optional accent processor reads as another word (de as dé, se as sé).
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+present	1	hablo	hablar	v	present-yo
+present	1	comes	comer	v	present-tu
+present	1	vive	vivir	v	present-el
+present	1	hablamos	hablar	v	present-nosotros
+present	1	coméis	comer	v	present-vosotros
+present	1	viven	vivir	v	present-ellos
+voseo	1	hablás	hablar	v	present-vos
+voseo	1	comés	comer	v	present-vos
+voseo	1	tenés	tener	v	present-vos
+voseo	1	sos	ser	v	present-vos
+voseo	1	hablés	hablar	v	subjunctive-vos
+voseo	1	hablá	hablar	v	imperative-vos
+voseo	1	tené	tener	v	imperative-vos
+voseo	1	decime	decir	v	imperative-vos|clitic-me
+voseo	1	escribile	escribir	v	imperative-vos|clitic-le
+voseo	1	abrilo	abrir	v	imperative-vos|clitic-lo
+voseo	1	vestite	vestirse	v	pronominal|imperative-vos|clitic-te
+voseo	1	decímelo	decir	v	imperative-vos|clitic-melo
+voseo	1	vestítelo	vestirse	v	pronominal|imperative-vos|clitic-telo
+stem changes	1	pienso	pensar	v	present-yo
+stem changes	1	cuento	contar	v	present-yo
+stem changes	1	pide	pedir	v	present-el
+stem changes	1	duermen	dormir	v	present-ellos
+stem changes	1	durmió	dormir	v	preterite-el
+stem changes	1	sintieron	sentir	v	preterite-ellos
+stem changes	1	pidiendo	pedir	v	gerund
+stem changes	1	juego	jugar	v	present-yo
+stem changes	1	juegue	jugar	v	subjunctive-yo-el
+stem changes	1	huele	oler	v	present-el
+stem changes	1	huelan	oler	v	subjunctive-ellos
+stem changes	1	sueña	soñar	v	present-el
+stem changes	1	adquiero	adquirir	v	present-yo
+stem changes	1	quieras	querer	v	subjunctive-tu
+stem changes	1	vuelvan	volver	v	subjunctive-ellos
+stem changes	1	durmamos	dormir	v	subjunctive-nosotros
+stem changes	1	sigas	seguir	v	subjunctive-tu
+stem changes	1	pensamos	pensar	v	present-nosotros
+stem changes	1	muestra	mostrar	v	present-el
+stem changes	1	fuerza	forzar	v	present-el
+stem changes	1	pruebo	probar	v	present-yo
+stem changes	1	renueva	renovar	v	present-el
+stem changes	1	vierte	verter	v	present-el
+stem changes	1	estallan	estallar	v	present-ellos
+collisions kept	1	estalla	estallar	v	present-el
+collisions kept	1	estacionas	estacionar	v	present-tu
+collisions kept	1	solapas	solapar	v	present-tu
+stem changes	1	enciende	encender	v	present-el
+spelling	1	busqué	buscar	v	preterite-yo
+spelling	1	pagué	pagar	v	preterite-yo
+spelling	1	empecé	empezar	v	preterite-yo
+spelling	1	averigüé	averiguar	v	preterite-yo
+spelling	1	venzo	vencer	v	present-yo
+spelling	1	conozco	conocer	v	present-yo
+spelling	1	cojo	coger	v	present-yo
+spelling	1	dirijo	dirigir	v	present-yo
+spelling	1	sigo	seguir	v	present-yo
+spelling	1	distingo	distinguir	v	present-yo
+spelling	1	delinco	delinquir	v	present-yo
+spelling	1	busquen	buscar	v	subjunctive-ellos
+spelling	1	empiece	empezar	v	subjunctive-yo-el
+spelling	1	conduzca	conducir	v	subjunctive-yo-el
+accented stems	1	envío	enviar	v	present-yo
+accented stems	1	continúa	continuar	v	present-el
+accented stems	1	reúno	reunir	v	present-yo
+accented stems	1	prohíbe	prohibir	v	present-el
+vowel stems	1	construyo	construir	v	present-yo
+vowel stems	1	huyó	huir	v	preterite-el
+vowel stems	1	arguyo	argüir	v	present-yo
+vowel stems	1	leyeron	leer	v	preterite-ellos
+vowel stems	1	cayendo	caer	v	gerund
+vowel stems	1	creíste	creer	v	preterite-tu
+vowel stems	1	oigo	oír	v	present-yo
+vowel stems	1	oyendo	oír	v	gerund
+vowel stems	1	ríe	reír	v	present-el
+vowel stems	1	sonrió	sonreír	v	preterite-el
+vowel stems	1	riñó	reñir	v	preterite-el
+vowel stems	1	bulló	bullir	v	preterite-el
+vowel stems	1	yerro	errar	v	present-yo
+tenses	1	hablé	hablar	v	preterite-yo
+tenses	1	comiste	comer	v	preterite-tu
+tenses	1	vivisteis	vivir	v	preterite-vosotros
+tenses	1	hablamos	hablar	v	preterite-nosotros
+tenses	1	vivimos	vivir	v	preterite-nosotros
+tenses	1	hablaba	hablar	v	imperfect-yo-el
+tenses	1	comíamos	comer	v	imperfect-nosotros
+tenses	1	hablaré	hablar	v	future-yo
+tenses	1	comerás	comer	v	future-tu
+tenses	1	viviremos	vivir	v	future-nosotros
+tenses	1	hablaréis	hablar	v	future-vosotros
+tenses	1	comerán	comer	v	future-ellos
+tenses	1	viviría	vivir	v	conditional-yo-el
+tenses	1	hablaríais	hablar	v	conditional-vosotros
+tenses	1	hables	hablar	v	subjunctive-tu
+tenses	1	comáis	comer	v	subjunctive-vosotros
+tenses	1	comieran	comer	v	subjunctive-ra-ellos
+tenses	1	hablásemos	hablar	v	subjunctive-se-nosotros
+tenses	1	viviere	vivir	v	subjunctive-future-yo-el
+tenses	1	hablares	hablar	v	subjunctive-future-tu
+tenses	1	comiéremos	comer	v	subjunctive-future-nosotros
+tenses	1	viviereis	vivir	v	subjunctive-future-vosotros
+tenses	1	hablaren	hablar	v	subjunctive-future-ellos
+tenses	1	hablando	hablar	v	gerund
+tenses	1	hablado	hablar	v	participle
+tenses	1	comidas	comer	v	participle
+imperative	1	habla	hablar	v	imperative-tu
+imperative	1	comed	comer	v	imperative-vosotros
+imperative	1	hable	hablar	v	imperative-usted
+imperative	1	vivan	vivir	v	imperative-ustedes
+imperative	1	comamos	comer	v	imperative-nosotros
+irregular verbs	1	soy	ser	v	present-yo
+irregular verbs	1	fuimos	ser	v	preterite-nosotros
+irregular verbs	1	fuimos	ir	v	preterite-nosotros
+irregular verbs	1	era	ser	v	imperfect-yo-el
+irregular verbs	1	íbamos	ir	v	imperfect-nosotros
+irregular verbs	1	vaya	ir	v	subjunctive-yo-el
+irregular verbs	1	yendo	ir	v	gerund
+irregular verbs	1	estoy	estar	v	present-yo
+irregular verbs	1	estás	estar	v	present-tu
+irregular verbs	1	estuvieron	estar	v	preterite-ellos
+irregular verbs	1	hay	haber	v	present-el
+irregular verbs	1	hubiera	haber	v	subjunctive-ra-yo-el
+irregular verbs	1	tengo	tener	v	present-yo
+irregular verbs	1	tuvo	tener	v	preterite-el
+irregular verbs	1	tendremos	tener	v	future-nosotros
+irregular verbs	1	mantuvo	mantener	v	preterite-el
+irregular verbs	1	hizo	hacer	v	preterite-el
+irregular verbs	1	haría	hacer	v	conditional-yo-el
+irregular verbs	1	deshice	deshacer	v	preterite-yo
+irregular verbs	1	satisfizo	satisfacer	v	preterite-el
+irregular verbs	1	dijeron	decir	v	preterite-ellos
+irregular verbs	1	dirás	decir	v	future-tu
+irregular verbs	1	puse	poner	v	preterite-yo
+irregular verbs	1	propuso	proponer	v	preterite-el
+irregular verbs	1	vinieron	venir	v	preterite-ellos
+irregular verbs	1	salgo	salir	v	present-yo
+irregular verbs	1	saldré	salir	v	future-yo
+irregular verbs	1	sé	saber	v	present-yo
+irregular verbs	1	supimos	saber	v	preterite-nosotros
+irregular verbs	1	quepo	caber	v	present-yo
+irregular verbs	1	quiso	querer	v	preterite-el
+irregular verbs	1	querría	querer	v	conditional-yo-el
+irregular verbs	1	pude	poder	v	preterite-yo
+irregular verbs	1	podremos	poder	v	future-nosotros
+irregular verbs	1	traje	traer	v	preterite-yo
+irregular verbs	1	traigo	traer	v	present-yo
+irregular verbs	1	condujo	conducir	v	preterite-el
+irregular verbs	1	tradujeron	traducir	v	preterite-ellos
+irregular verbs	1	anduvimos	andar	v	preterite-nosotros
+irregular verbs	1	di	dar	v	preterite-yo
+irregular verbs	1	dio	dar	v	preterite-el
+irregular verbs	1	dé	dar	v	subjunctive-yo-el
+irregular verbs	1	das	dar	v	present-tu
+irregular verbs	1	damos	dar	v	present-nosotros
+irregular verbs	1	daba	dar	v	imperfect-yo-el
+irregular verbs	1	daremos	dar	v	future-nosotros
+irregular verbs	1	den	dar	v	subjunctive-ellos
+irregular verbs	1	dando	dar	v	gerund
+irregular verbs	1	dado	dar	v	participle
+irregular verbs	1	vi	ver	v	preterite-yo
+irregular verbs	1	veía	ver	v	imperfect-yo-el
+irregular verbs	1	vemos	ver	v	present-nosotros
+irregular verbs	1	viste	ver	v	preterite-tu
+irregular verbs	1	vieron	ver	v	preterite-ellos
+irregular verbs	1	viera	ver	v	subjunctive-ra-yo-el
+irregular verbs	1	viendo	ver	v	gerund
+irregular verbs	1	sido	ser	v	participle
+irregular verbs	1	siendo	ser	v	gerund
+old spellings	1	fué	ser	v	preterite-el
+old spellings	1	fuí	ir	v	preterite-yo
+old spellings	1	dió	dar	v	preterite-el
+old spellings	1	vió	ver	v	preterite-el
+old spellings	1	vé	ir	v	imperative-tu
+old spellings	1	ví	ver	v	preterite-yo
+2010 spellings	1	hui	huir	v	preterite-yo
+missing accents	1	estan	estar	v	present-ellos
+missing accents	1	estes	estar	v	subjunctive-tu
+irregular verbs	1	ve	ver	v	present-el
+irregular verbs	1	ve	ir	v	imperative-tu
+irregular verbs	1	caigo	caer	v	present-yo
+irregular verbs	1	valdrá	valer	v	future-el
+irregular verbs	1	asgo	asir	v	present-yo
+irregular verbs	1	haz	hacer	v	imperative-tu
+irregular verbs	1	ten	tener	v	imperative-tu
+irregular verbs	1	detén	detener	v	imperative-tu
+irregular verbs	1	pon	poner	v	imperative-tu
+irregular verbs	1	sal	salir	v	imperative-tu
+irregular verbs	1	di	decir	v	imperative-tu
+irregular verbs	1	sé	ser	v	imperative-tu
+participles	1	abierto	abrir	v	participle
+participles	1	muertos	morir	v	participle
+participles	1	vuelta	volver	v	participle
+participles	1	devuelto	devolver	v	participle
+participles	1	puesta	poner	v	participle
+participles	1	visto	ver	v	participle
+participles	1	escrito	escribir	v	participle
+participles	1	descritas	describir	v	participle
+participles	1	hecho	hacer	v	participle
+participles	1	dicho	decir	v	participle
+participles	1	roto	romper	v	participle
+participles	1	impreso	imprimir	v	participle
+participles	1	frito	freír	v	participle
+participles	1	provisto	proveer	v	participle
+participles	1	leído	leer	v	participle
+participles	1	oído	oír	v	participle
+participles	1	reído	reír	v	participle
+pronouns	1	hacerlo	hacer	v	clitic-lo
+pronouns	1	decirte	decir	v	clitic-te
+pronouns	1	verla	ver	v	clitic-la
+pronouns	1	oírlos	oír	v	clitic-los
+pronouns	1	llamarlas	llamar	v	clitic-las
+pronouns	1	darle	dar	v	clitic-le
+pronouns	1	decirles	decir	v	clitic-les
+pronouns	1	ayudarnos	ayudar	v	clitic-nos
+pronouns	1	veros	ver	v	clitic-os
+pronouns	1	irme	irse	v	clitic-me
+pronouns	1	lavarse	lavar	v	clitic-se
+pronouns	1	diciéndolo	decir	v	gerund|clitic-lo
+pronouns	1	hazlo	hacer	v	imperative-tu|clitic-lo
+pronouns	1	dime	decir	v	imperative-tu|clitic-me
+pronouns	1	cómpralo	comprar	v	imperative-tu|clitic-lo
+pronouns	1	cómprelo	comprar	v	imperative-usted|clitic-lo
+pronouns	1	léelo	leer	v	imperative-tu|clitic-lo
+pronouns	1	oídme	oír	v	imperative-vosotros|clitic-me
+pronouns	1	ponte	poner	v	imperative-tu|clitic-te
+pronouns	1	ponte	ponerse	v	pronominal|imperative-tu|clitic-te
+pronouns	1	vete	irse	v	pronominal|imperative-tu|clitic-te
+pronouns	1	siéntate	sentarse	v	pronominal|imperative-tu|clitic-te
+pronouns	1	siéntese	sentarse	v	pronominal|imperative-usted|clitic-se
+pronouns	1	acuérdate	acordarse	v	pronominal|imperative-tu|clitic-te
+pronouns	1	levántense	levantarse	v	pronominal|imperative-ustedes|clitic-se
+pronouns	1	ríete	reírse	v	pronominal|imperative-tu|clitic-te
+pronouns	1	sentaos	sentarse	v	pronominal|imperative-vosotros|clitic-os
+pronouns	1	vestíos	vestirse	v	pronominal|imperative-vosotros|clitic-os
+pronouns	1	idos	irse	v	pronominal|imperative-vosotros|clitic-os
+pronouns	1	vámonos	irse	v	pronominal|imperative-nosotros|clitic-nos
+pronouns	1	sentémonos	sentarse	v	pronominal|imperative-nosotros|clitic-nos
+pronouns	1	yéndose	irse	v	pronominal|gerund|clitic-se
+two pronouns	1	dámelo	dar	v	imperative-tu|clitic-melo
+two pronouns	1	dímela	decir	v	imperative-tu|clitic-mela
+two pronouns	1	tráemelos	traer	v	imperative-tu|clitic-melos
+two pronouns	1	tráemelas	traer	v	imperative-tu|clitic-melas
+two pronouns	1	cómetelo	comerse	v	pronominal|imperative-tu|clitic-telo
+two pronouns	1	bébetela	beberse	v	pronominal|imperative-tu|clitic-tela
+two pronouns	1	póntelos	ponerse	v	pronominal|imperative-tu|clitic-telos
+two pronouns	1	quítatelas	quitarse	v	pronominal|imperative-tu|clitic-telas
+two pronouns	1	dáselo	dar	v	imperative-tu|clitic-selo
+two pronouns	1	dísela	decir	v	imperative-tu|clitic-sela
+two pronouns	1	explícaselos	explicar	v	imperative-tu|clitic-selos
+two pronouns	1	mándaselas	mandar	v	imperative-tu|clitic-selas
+two pronouns	1	dánoslo	dar	v	imperative-tu|clitic-noslo
+two pronouns	1	enséñanosla	enseñar	v	imperative-tu|clitic-nosla
+two pronouns	1	tráenoslos	traer	v	imperative-tu|clitic-noslos
+two pronouns	1	cántanoslas	cantar	v	imperative-tu|clitic-noslas
+two pronouns	1	decíroslo	decir	v	clitic-oslo
+two pronouns	1	dárosla	dar	v	clitic-osla
+two pronouns	1	enviároslos	enviar	v	clitic-oslos
+two pronouns	1	mostrároslas	mostrar	v	clitic-oslas
+two pronouns	1	olvidárseme	olvidarse	v	clitic-seme
+two pronouns	1	ocurrírsete	ocurrirse	v	clitic-sete
+two pronouns	1	escapársenos	escaparse	v	clitic-senos
+two pronouns	1	perdérseos	perderse	v	clitic-seos
+two pronouns	1	ocurrírsele	ocurrirse	v	clitic-sele
+two pronouns	1	olvidárseles	olvidarse	v	clitic-seles
+two pronouns	1	hacérselo	hacer	v	clitic-selo
+two pronouns	1	diciéndoselo	decir	v	gerund|clitic-selo
+two pronouns	1	digámoselo	decir	v	imperative-nosotros|clitic-selo
+pronominal verbs	1	me levanto	levantarse	v	pronominal|present-yo
+pronominal verbs	1	te acuerdas	acordarse	v	pronominal|present-tu
+pronominal verbs	1	se fue	irse	v	pronominal|preterite-el
+pronominal verbs	1	nos sentamos	sentarse	v	pronominal|present-nosotros
+pronominal verbs	1	os vestís	vestirse	v	pronominal|present-vosotros
+pronominal verbs	1	se ríen	reírse	v	pronominal|present-ellos
+pronominal verbs	1	me lavo	lavarse	v	pronominal|present-yo
+pronominal verbs	1	me levanto	levantarse	v	pronominal|present-yo
+pronominal verbs	1	me levantaba	levantarse	v	pronominal|imperfect-yo-el
+pronominal verbs	1	se levantaba	levantarse	v	pronominal|imperfect-yo-el
+pronominal verbs	1	te levantes	levantarse	v	pronominal|subjunctive-tu
+pronominal verbs	1	se ve	verse	v	pronominal|present-el
+pronominal verbs	1	me voy	irse	v	pronominal|present-yo
+pronominal verbs	1	nos vamos	irse	v	pronominal|present-nosotros
+pronominal verbs	1	nos vemos	verse	v	pronominal|present-nosotros
+pronominal verbs	1	se dio	darse	v	pronominal|preterite-el
+pronominal verbs	1	te oyes	oírse	v	pronominal|present-tu
+pronominal verbs	1	me encuentro	encontrarse	v	pronominal|present-yo
+pronominal verbs	1	dése	darse	v	pronominal|imperative-usted|clitic-se
+pronominal verbs	1	viéndose	verse	v	pronominal|gerund|clitic-se
+pronominal verbs	1	se muere	morirse	v	pronominal|present-el
+pronominal verbs	1	te mortificas	mortificarse	v	pronominal|present-tu
+pronominal verbs	1	se apodera	apoderarse	v	pronominal|present-el
+pronominal verbs	1	se porta	portarse	v	pronominal|present-el
+pronominal verbs	1	se fué	irse	v	pronominal|preterite-el
+pronominal verbs	1	se funde	fundirse	v	pronominal|present-el
+collisions kept	1	fundimos	fundir	v	present-nosotros
+collisions kept	1	fungiste	fungir	v	preterite-tu
+stem changes	1	pida	pedir	v	subjunctive-yo-el
+stem changes	1	sienta	sentir	v	subjunctive-yo-el
+pronominal agreement	0	me dijo	decirse	v	*
+pronominal agreement	0	nos dijo	decirse	v	*
+pronominal agreement	0	te digo	decirse	v	*
+pronominal agreement	0	me dio	darse	v	*
+pronominal agreement	0	te llamo	llamarse	v	*
+pronominal agreement	0	te quiero	quererse	v	*
+pronominal agreement	0	me gusta	gustarse	v	*
+pronominal agreement	0	se ve	irse	v	*
+pronominal agreement	0	te sienta	sentarse	v	*
+pronominal agreement	0	te sentando	sentarse	v	*
+pronominal agreement	0	me va	verse	v	*
+pronominal agreement	0	me va	irse	v	*
+pronominal agreement	0	se va	verse	v	*
+pronominal agreement	0	nos vamos	verse	v	*
+pronominal agreement	0	te es	irse	v	*
+pronominal agreement	0	me ha	herse	v	*
+pronominal agreement	0	se ha	herse	v	*
+plurals	1	casas	casa	n	plural
+plurals	1	árboles	árbol	n	plural
+plurals	1	luces	luz	n	plural
+plurals	1	canciones	canción	n	plural
+plurals	1	autobuses	autobús	n	plural
+plurals	1	jóvenes	joven	n	plural
+plurals	1	exámenes	examen	n	plural
+plurals	1	regímenes	régimen	n	plural
+plurals	1	caracteres	carácter	n	plural
+plurals	1	rubíes	rubí	n	plural
+plurals	1	tabúes	tabú	n	plural
+plurals	1	sofás	sofá	n	plural
+plurals	1	intereses	interés	n	plural
+plurals	1	rehenes	rehén	n	plural
+plurals	1	entremeses	entremés	n	plural
+plurals	1	terraplenes	terraplén	n	plural
+plurals	1	leyes	ley	n	plural
+plurals	1	clubs	club	n	plural
+plurals	1	emails	email	n	plural
+plurals	1	ONGs	ONG	n	plural
+gender	1	bonita	bonito	adj	feminine
+gender	1	bonitas	bonito	adj	feminine|plural
+gender	1	trabajadora	trabajador	adj	feminine
+gender	1	inglesa	inglés	adj	feminine
+gender	1	alemana	alemán	adj	feminine
+gender	1	española	español	adj	feminine
+gender	1	andaluza	andaluz	adj	feminine
+gender	1	panadera	panadero	n	feminine-noun
+gender	1	campeona	campeón	n	feminine-noun
+gender	1	presidenta	presidente	n	feminine-noun
+gender	1	bióloga	biólogo	n	feminine-noun
+gender	1	vecinas	vecino	n	feminine-noun|plural
+superlatives	1	buenísimo	bueno	adj	superlative
+superlatives	1	facilísimo	fácil	adj	superlative
+superlatives	1	riquísimo	rico	adj	superlative
+superlatives	1	amabilísimo	amable	adj	superlative
+superlatives	1	rapidísimo	rápido	adj	superlative
+superlatives	1	antiquísimo	antiguo	adj	superlative
+superlatives	1	felicísimo	feliz	adj	superlative
+superlatives	1	larguísimas	largo	adj	superlative|feminine|plural
+superlatives	1	muchísimas	mucho	*	superlative|feminine|plural
+diminutives	1	perrito	perro	n	diminutive
+diminutives	1	casita	casa	n	diminutive
+diminutives	1	cafecito	café	n	diminutive
+diminutives	1	poquito	poco	adj	diminutive
+diminutives	1	pedacito	pedazo	n	diminutive
+diminutives	1	jovencito	joven	n	diminutive
+diminutives	1	perritos	perro	n	diminutive|plural
+diminutives	1	florecita	flor	n	diminutive
+diminutives	1	panecito	pan	n	diminutive
+diminutives	1	ahorita	ahora	*	diminutive
+adverbs	1	rápidamente	rápido	adj	adverb
+adverbs	1	fácilmente	fácil	adj	adverb
+adverbs	1	felizmente	feliz	adj	adverb
+adverbs	1	egoístamente	egoísta	adj	adverb
+capitals	1	Hablo	hablar	v	present-yo
+capitals	1	HABLAMOS	hablar	v	present-nosotros
+capitals	1	Dámelo	dar	v	imperative-tu|clitic-melo
+normalization	1	está	estar	v	present-el
+normalization	1	ﬁjamos	fijar	v	present-nosotros
+missing accents	1	cancion	canción	n	
+missing accents	1	nino	niño	n	
+negatives	0	es	ir	v	*
+negatives	0	en	ir	v	*
+negatives	0	a	ir	v	*
+negatives	0	o	ir	v	*
+negatives	0	va	ver	v	*
+negatives	0	vas	ver	v	*
+negatives	0	vamos	ver	v	*
+negatives	0	teníamos	ten	v	*
+negatives	0	para	paro	n	*
+negatives	0	casa	caso	n	*
+negatives	0	cosa	coso	n	*
+negatives	0	cuenta	cuento	n	*
+negatives	0	puerta	puerto	n	*
+negatives	0	buena	buen	adj	*
+negatives	0	mala	mal	adj	*
+negatives	0	anillo	ano	n	*
+negatives	0	cuchillo	cucho	n	*
+negatives	0	pasillo	paso	n	*
+negatives	0	abuelo	abolir	v	*
+negatives	0	dices	dic	*	*
+reflexive agreement	0	cómprame	comprarse	v	*
+reflexive agreement	0	dáselo	darse	v	*
+reflexive agreement	0	dinos	decirse	v	*
+reflexive agreement	0	dígame	decirse	v	*
+negatives	0	exactamente	exacta	*	*
+yomitan differences	0	juegen	jugen	*	*
+yomitan differences	0	ya me levantar	ya levantarse	*	*
+collisions	0	puedo	podar	v	*
+collisions	0	puede	podar	v	*
+collisions	0	pueden	podar	v	*
+collisions	0	muere	morar	v	*
+collisions	0	muero	morar	v	*
+collisions	0	nueva	novar	v	*
+collisions	0	puertas	portar	v	*
+collisions	0	fuese	fosar	v	*
+collisions	0	viendo	vender	v	*
+collisions	0	viendo	vendar	v	*
+collisions	0	vieja	vejar	v	*
+collisions	0	sola	soler	v	*
+collisions	0	solo	soler	v	*
+collisions	0	sala	salir	v	*
+collisions	0	empezamos	empecer	v	*
+collisions	0	empiece	empecer	v	*
+collisions	0	peces	pecar	v	*
+collisions	0	rejas	regir	v	*
+collisions	0	fuera	fuero	n	*
+collisions	0	reina	reino	n	*
+collisions	0	adora	ador	n	*
+collisions	0	cruza	cruz	n	*
+collisions	0	mejora	mejor	adj	*
+one-letter stems	0	ten	tar	v	*
+one-letter stems	0	vidas	ver	v	*
+one-letter stems	0	vías	ver	v	*
+one-letter stems	0	te	tar	v	*
+one-letter stems	0	me	mar	v	*
+one-letter stems	0	le	lar	v	*
+one-letter stems	0	do	dar	v	*
+one-letter stems	0	lo	lar	v	*
+collisions	0	se pueden	podarse	v	*
+collisions	0	me puede	podarse	v	*
+collisions	0	te puedes	podarse	v	*
+collisions	0	se pueda	podarse	v	*
+collisions	0	se muere	morarse	v	*
+collisions	0	me muero	morarse	v	*
+collisions	0	te mueras	morarse	v	*
+collisions	0	fue	fuer	v	*
+collisions	0	fuimos	fuir	v	*
+collisions	0	fuiste	fuer	v	*
+collisions	0	se fue	fuirse	v	*
+collisions	0	fuisteis	fuer	v	*
+collisions	0	fuerte	fuer	v	*
+collisions	0	fueros	fuer	v	*
+collisions	0	fueres	fuer	n	*
+collisions	0	ellos	ello	n	*
+collisions	0	medios	medir	v	imperative-vos|clitic-os
