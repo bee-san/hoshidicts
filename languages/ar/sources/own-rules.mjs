@@ -45,6 +45,10 @@ const STEM = '{base}';
 
 const V_IN = ['vf'];
 const V_OUT = ['v'];
+// Noun endings also follow الـ, whose output is a noun; construct endings,
+// the pronouns and the accusative ـًا never do.
+const N_IN = ['n'];
+const NOT_AL = {stemNotStartsWithText: 'ال'};
 
 function suffix(inflected, deinflected, {min = 2, out = [], into = [], extra = {}} = {}) {
     return {type: 'suffix', inflected, deinflected, conditionsIn: into, conditionsOut: out, stemMinLength: min, stemCharacters: STEM, ...extra};
@@ -87,12 +91,15 @@ transform('ka', 'كـ (like, as)', 'The preposition كَ (ka, "like, as") writte
     prefix('ك', ''),
 ]);
 transform('li', 'لـ (for, to)', 'The preposition or particle لِ (li, "for, to, so that") written together with the next word: لمحمد is لـ + محمد, ليكتب is لـ + يكتب. Before الـ the alif of the article is not written: للبيت is لـ + البيت, and before a word that starts with ل only two lams are written: لله is لـ + الله, لليل is لـ + الليل.', [
-    prefix('ل', ''),
-    prefix('لل', 'ال'),
-    prefix('لل', 'الل', {min: 1}),
+    prefix('ل', '', {extra: {stemNotStartsWith: '[ل]'}}),
+    prefix('لل', 'ال', {extra: {stemNotStartsWith: '[ل]'}}),
+    prefix('لل', 'الل', {min: 1, extra: {stemNotStartsWith: '[ل]'}}),
 ]);
 transform('al', 'الـ (the)', 'The definite article الـ (al-, "the"): الكتاب is الـ + كتاب.', [
-    prefix('ال', ''),
+    // A noun: a pronoun or the accusative ـًا never follows الـ, so those
+    // rules do not take its output. Definite adjectives and names are found
+    // through the dictionary's own rows for them (الكبيرة, القاهرة).
+    prefix('ال', '', {out: ['n']}),
 ]);
 transform('sa', 'سـ (will)', 'The future prefix سَ (sa-, "will") before a present-tense verb: سيكتب is سـ + يكتب, سأذهب is سـ + أذهب.', [
     prefix('س', '', {min: 3, out: ['v', 'vf'], extra: {stemStartsWith: '[يتنأ]'}}),
@@ -125,12 +132,13 @@ const PRONOUNS = [
 ];
 for (const [id, name, p, gloss, example] of PRONOUNS) {
     const rules = [
-        suffix(p, ''),
-        suffix('ؤ' + p, 'ء'), suffix('ئ' + p, 'ء'), suffix('ؤ' + p, 'أ'), suffix('ئ' + p, 'أ'),
-        suffix('ا' + p, 'ى'),
+        suffix(p, '', {extra: p === 'ي' ? {...NOT_AL, stemNotEndsWith: '[ي]'} : NOT_AL}),
+        suffix('ؤ' + p, 'ء', {extra: NOT_AL}), suffix('ئ' + p, 'ء', {extra: NOT_AL}),
+        suffix('ؤ' + p, 'أ', {extra: NOT_AL}), suffix('ئ' + p, 'أ', {extra: NOT_AL}),
+        suffix('ا' + p, 'ى', {extra: NOT_AL}),
     ];
     if (p !== 'ني') {
-        rules.push(suffix('ت' + p, 'ة'));
+        rules.push(suffix('ت' + p, 'ة', {extra: NOT_AL}));
     }
     if (p !== 'ي') {
         // Verbs: only an object pronoun.
@@ -152,41 +160,46 @@ for (const [id, name, p, gloss, example] of PRONOUNS) {
 
 // --------------------------------------------------------- nouns and adjectives
 transform('feminine', 'feminine (ـة)', 'The feminine ending ـة of an adjective or a noun for a person: كبيرة is كبير + ـة, عربية is عربي + ـة.', [
-    suffix('ة', ''),
+    suffix('ة', '', {into: N_IN}),
 ]);
 transform('accusative', 'accusative (ـًا)', 'The indefinite accusative ending ـًا, written with an alif: كتابًا (كتابا), شكرًا, شيئًا (شيئا, from شيء). Words that end in ة, ى or ا take no alif.', [
-    suffix('ا', '', {extra: {stemNotEndsWith: '[اةى]'}}),
-    suffix('ئا', 'ء'),
+    suffix('ا', '', {extra: {...NOT_AL, stemNotEndsWith: '[اةى]'}}),
+    suffix('ئا', 'ء', {extra: NOT_AL}),
 ]);
-transform('dual', 'dual (ـان)', 'The dual ending ـان (nominative): كتابان is two of كتاب, مدرستان of مدرسة, مستشفيان of مستشفى, عصوان of عصا, صحراوان of صحراء.', [
-    suffix('ان', ''),
-    suffix('تان', 'ة'),
-    suffix('يان', 'ى'),
-    suffix('وان', 'ا'),
-    suffix('اوان', 'اء'),
-    suffix('آن', 'أ'),
+transform('dual', 'dual (ـان)', 'The dual ending ـان (nominative), and ـتا of a word in ة before the word it belongs to: كتابان is two of كتاب, مدرستان and مدرستا of مدرسة, مستشفيان of مستشفى, عصوان of عصا, صحراوان of صحراء.', [
+    suffix('ان', '', {into: N_IN}),
+    suffix('تان', 'ة', {into: N_IN}),
+    suffix('يان', 'ى', {into: N_IN}),
+    suffix('وان', 'ا', {into: N_IN}),
+    suffix('اوان', 'اء', {into: N_IN}),
+    suffix('آن', 'أ', {into: N_IN}),
+    suffix('تا', 'ة', {extra: NOT_AL}),
 ]);
 transform('oblique', 'dual or plural (ـين)', 'The ending ـين, the dual (ـَيْن) or the masculine plural (ـِين) after a preposition or as an object: كتابين is two of كتاب, معلمين is معلم in the plural, مدرستين is two of مدرسة, عربيين is عربي in the dual or plural.', [
-    suffix('ين', ''),
-    suffix('تين', 'ة'),
-    suffix('يين', 'ى'),
-    suffix('وين', 'ا'),
-    suffix('اوين', 'اء'),
+    suffix('ين', '', {into: N_IN}),
+    suffix('تين', 'ة', {into: N_IN}),
+    suffix('يين', 'ى', {into: N_IN}),
+    suffix('وين', 'ا', {into: N_IN}),
+    suffix('اوين', 'اء', {into: N_IN}),
 ]);
 transform('pluralMasc', 'plural (ـون)', 'The masculine sound plural ending ـون (nominative): معلمون is معلم in the plural.', [
-    suffix('ون', ''),
+    suffix('ون', '', {into: N_IN}),
 ]);
 transform('construct', 'construct (ـو)', 'The ending ـو of a masculine plural before the word it belongs to (معلمو المدرسة, "the school\'s teachers"), and of أبو and أخو.', [
-    suffix('و', ''),
+    suffix('و', '', {extra: NOT_AL}),
 ]);
 transform('pluralFem', 'plural (ـات)', 'The feminine sound plural ending ـات: معلمات is معلمة in the plural, سيارات of سيارة, امتحانات of امتحان, مستشفيات of مستشفى, سنوات of سنة, سماوات of سماء, منشآت of منشأة.', [
-    suffix('ات', 'ة'),
-    suffix('ات', ''),
-    suffix('يات', 'ى'),
-    suffix('وات', 'ة'),
-    suffix('اوات', 'اء'),
-    suffix('آت', 'أة'),
+    suffix('ات', 'ة', {into: N_IN}),
+    suffix('ات', '', {into: N_IN}),
+    suffix('يات', 'ى', {into: N_IN}),
+    suffix('وات', 'ة', {into: N_IN}),
+    suffix('اوات', 'اء', {into: N_IN}),
+    suffix('آت', 'أة', {into: N_IN}),
 ]);
+// The comparative's feminine فُعلى (كبرى) and plural أفاعل (أكابر) are not
+// rules: written as a cross product of first letters, their output (أكبر)
+// has no conditions, every rule runs on it again, and on the dev pool they
+// gave 364 false candidates for 20 rows. Dictionaries list these forms.
 
 // --------------------------------------------------------------------- verbs
 // A verb's dictionary form is its past tense "he" form (كتب, قال, رمى,
@@ -457,30 +470,30 @@ transform('imperativeYouFPl', 'imperative (you f. pl.)', 'The imperative "do!" t
 {
     const rules = [];
     // Forms II-X: م replaces the person prefix (مستخدم, يستخدم -> استخدم).
-    rules.push(prefix('م', '', {min: 3, out: V_OUT}), prefix('م', 'أ', {min: 3, out: V_OUT}), prefix('م', 'ا', {min: 3, out: V_OUT}));
-    rules.push(cross([['م', 'أ'], ['م', 'ا']], [['', '']], {into: [], extra: {stemChange: HOLLOW}}));
-    rules.push(cross([['م', ''], ['م', 'أ'], ['م', 'ا']], [['', 'ى'], ['ي', 'ى']], {into: []}));
+    rules.push(prefix('م', '', {min: 3, into: N_IN, out: V_OUT}), prefix('م', 'أ', {min: 3, into: N_IN, out: V_OUT}), prefix('م', 'ا', {min: 3, into: N_IN, out: V_OUT}));
+    rules.push(cross([['م', 'أ'], ['م', 'ا']], [['', '']], {into: N_IN, extra: {stemChange: HOLLOW}}));
+    rules.push(cross([['م', ''], ['م', 'أ'], ['م', 'ا']], [['', 'ى'], ['ي', 'ى']], {into: N_IN}));
     // Form I active فاعل: كاتب -> كتب, قائل -> قال, داع -> دعا, رام -> رمى.
-    rules.push(cross(RADICALS.map((c) => [c + 'ا', c]), [['', ''], ['ي', 'ى'], ['ي', 'ا']], {into: []}));
+    rules.push(cross(RADICALS.map((c) => [c + 'ا', c]), [['', ''], ['ي', 'ى'], ['ي', 'ا']], {into: N_IN}));
     rules.push(cross(RADICALS.map((c) => [c + 'ا', c]), [['', 'ا'], ['', 'ى']], {min: 1, into: []}));
     rules.push(cross(RADICALS.map((c) => [c + 'ائ', c + 'ا']), [['', '']], {min: 1, into: []}));
     // Form I passive مفعول: مكتوب -> كتب, مقول -> قال, مبيع -> باع, مدعو -> دعا, مرمي -> رمى.
-    rules.push(cross([['م', '']], RADICALS.map((c) => ['و' + c, c]), {into: []}));
+    rules.push(cross([['م', '']], RADICALS.map((c) => ['و' + c, c]), {into: N_IN}));
     rules.push(cross([['م', '']], RADICALS.flatMap((c) => [['و' + c, 'ا' + c], ['ي' + c, 'ا' + c]]), {min: 1, into: []}));
-    rules.push(cross([['م', '']], [['و', 'ا'], ['ي', 'ى']], {into: []}));
+    rules.push(cross([['م', '']], [['و', 'ا'], ['ي', 'ى']], {into: N_IN}));
     transform('participle', 'participle', 'An active or passive participle read as its verb: كاتب and مكتوب (كتب), قائل and مقول (قال), مستخدم (استخدم), مقيم (أقام), معط (أعطى). Off unless the derivedForms setting is on.', rules, {optional: true});
 }
 {
     const rules = [];
     // II تفعيل, تفعية: تكليم -> كلم, تسمية -> سمى.
-    rules.push(cross([['ت', '']], RADICALS.map((c) => ['ي' + c, c]), {into: []}));
-    rules.push(cross([['ت', '']], [['ية', 'ى']], {into: []}));
+    rules.push(cross([['ت', '']], RADICALS.map((c) => ['ي' + c, c]), {into: N_IN}));
+    rules.push(cross([['ت', '']], [['ية', 'ى']], {into: N_IN}));
     // III مفاعلة: مساعدة -> ساعد.
     rules.push(cross([['م', '']], [['ة', '']], {min: 3, into: []}));
     // IV إفعال, إفالة, إفعاء: إكرام -> أكرم, إقامة -> أقام, إعطاء -> أعطى.
-    rules.push(cross([['إ', 'أ']], RADICALS.map((c) => ['ا' + c, c]), {into: []}));
+    rules.push(cross([['إ', 'أ']], RADICALS.map((c) => ['ا' + c, c]), {into: N_IN}));
     rules.push(cross([['إ', 'أ']], RADICALS.map((c) => ['ا' + c + 'ة', 'ا' + c]), {min: 1, into: []}));
-    rules.push(cross([['إ', 'أ']], [['اء', 'ى']], {into: []}));
+    rules.push(cross([['إ', 'أ']], [['اء', 'ى']], {into: N_IN}));
     // VII-X انفعال, افتعال, استفعال: انكسار -> انكسر, اجتماع -> اجتمع, استخدام -> استخدم,
     // استقالة -> استقال, انتهاء -> انتهى, استدعاء -> استدعى.
     rules.push(cross([['ا', 'ا']], RADICALS.map((c) => ['ا' + c, c]), {min: 3, into: []}));

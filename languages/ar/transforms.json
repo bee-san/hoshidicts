@@ -3,6 +3,19 @@
   "conditions": {
     "v": {
       "name": "Verb",
+      "isDictionaryForm": true,
+      "subConditions": ["pv", "iv", "cv"]
+    },
+    "pv": {
+      "name": "Perfect Verb (no affixes)",
+      "isDictionaryForm": true
+    },
+    "iv": {
+      "name": "Imperfect Verb (no affixes)",
+      "isDictionaryForm": true
+    },
+    "cv": {
+      "name": "Command Verb (no affixes)",
       "isDictionaryForm": true
     },
     "n": {
@@ -57,9 +70,9 @@
       "description": "The preposition or particle لِ (li, \"for, to, so that\") written together with the next word: لمحمد is لـ + محمد, ليكتب is لـ + يكتب. Before الـ the alif of the article is not written: للبيت is لـ + البيت, and before a word that starts with ل only two lams are written: لله is لـ + الله, لليل is لـ + الليل.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "ل", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemStartsWith": "{base}"},
-        {"type": "prefix", "inflected": "لل", "deinflected": "ال", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemStartsWith": "{base}"},
-        {"type": "prefix", "inflected": "لل", "deinflected": "الل", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 1, "stemStartsWith": "{base}"}
+        {"type": "prefix", "inflected": "ل", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemStartsWith": "{base}", "stemNotStartsWith": "[ل]"},
+        {"type": "prefix", "inflected": "لل", "deinflected": "ال", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemStartsWith": "{base}", "stemNotStartsWith": "[ل]"},
+        {"type": "prefix", "inflected": "لل", "deinflected": "الل", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 1, "stemStartsWith": "{base}", "stemNotStartsWith": "[ل]"}
       ]
     },
     {
@@ -68,7 +81,7 @@
       "description": "The definite article الـ (al-, \"the\"): الكتاب is الـ + كتاب.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "ال", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemStartsWith": "{base}"}
+        {"type": "prefix", "inflected": "ال", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemStartsWith": "{base}"}
       ]
     },
     {
@@ -86,13 +99,13 @@
       "description": "The attached pronoun ـي (my (and me after a preposition)): كتابي is كتاب + ـي, مني is من + ـي.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ي", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ؤي", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ئي", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ؤي", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ئي", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "اي", "deinflected": "ى", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "تي", "deinflected": "ة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "ي", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال", "stemNotEndsWith": "[ي]"},
+        {"type": "suffix", "inflected": "ؤي", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ئي", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ؤي", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ئي", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "اي", "deinflected": "ى", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "تي", "deinflected": "ة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
         {"type": "wholeWord", "inflected": "بي", "deinflected": "ب", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "لي", "deinflected": "ل", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "علي", "deinflected": "على", "conditionsIn": [], "conditionsOut": []},
@@ -107,12 +120,12 @@
       "description": "The attached pronoun ـني (me, after a verb or إنّ and its sisters): علمني is علم + ـني, إنني is إن + ـني.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ني", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ؤني", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ئني", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ؤني", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ئني", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "اني", "deinflected": "ى", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "ني", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ؤني", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ئني", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ؤني", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ئني", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "اني", "deinflected": "ى", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
         {"type": "suffix", "inflected": "وني", "deinflected": "وا", "conditionsIn": [], "conditionsOut": ["v", "vf"], "stemMinLength": 3, "stemCharacters": "{base}"},
         {"type": "suffix", "inflected": "تموني", "deinflected": "تم", "conditionsIn": [], "conditionsOut": ["v", "vf"], "stemMinLength": 2, "stemCharacters": "{base}"},
         {"type": "suffix", "inflected": "آني", "deinflected": "أى", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{base}"}
@@ -124,13 +137,13 @@
       "description": "The attached pronoun ـنا (our, us): بيتنا is بيت + ـنا.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "نا", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ؤنا", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ئنا", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ؤنا", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ئنا", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "انا", "deinflected": "ى", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "تنا", "deinflected": "ة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "نا", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ؤنا", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ئنا", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ؤنا", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ئنا", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "انا", "deinflected": "ى", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "تنا", "deinflected": "ة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
         {"type": "suffix", "inflected": "ونا", "deinflected": "وا", "conditionsIn": [], "conditionsOut": ["v", "vf"], "stemMinLength": 3, "stemCharacters": "{base}"},
         {"type": "suffix", "inflected": "تمونا", "deinflected": "تم", "conditionsIn": [], "conditionsOut": ["v", "vf"], "stemMinLength": 2, "stemCharacters": "{base}"},
         {"type": "suffix", "inflected": "آنا", "deinflected": "أى", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{base}"},
@@ -149,13 +162,13 @@
       "description": "The attached pronoun ـك (your, you (one person)): كتابك is كتاب + ـك.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ك", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ؤك", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ئك", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ؤك", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ئك", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "اك", "deinflected": "ى", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "تك", "deinflected": "ة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "ك", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ؤك", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ئك", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ؤك", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ئك", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "اك", "deinflected": "ى", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "تك", "deinflected": "ة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
         {"type": "suffix", "inflected": "وك", "deinflected": "وا", "conditionsIn": [], "conditionsOut": ["v", "vf"], "stemMinLength": 3, "stemCharacters": "{base}"},
         {"type": "suffix", "inflected": "تموك", "deinflected": "تم", "conditionsIn": [], "conditionsOut": ["v", "vf"], "stemMinLength": 2, "stemCharacters": "{base}"},
         {"type": "suffix", "inflected": "آك", "deinflected": "أى", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{base}"},
@@ -174,13 +187,13 @@
       "description": "The attached pronoun ـكما (your, you (two)): بيتكما is بيت + ـكما.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "كما", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ؤكما", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ئكما", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ؤكما", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ئكما", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "اكما", "deinflected": "ى", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "تكما", "deinflected": "ة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "كما", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ؤكما", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ئكما", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ؤكما", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ئكما", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "اكما", "deinflected": "ى", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "تكما", "deinflected": "ة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
         {"type": "suffix", "inflected": "وكما", "deinflected": "وا", "conditionsIn": [], "conditionsOut": ["v", "vf"], "stemMinLength": 3, "stemCharacters": "{base}"},
         {"type": "suffix", "inflected": "تموكما", "deinflected": "تم", "conditionsIn": [], "conditionsOut": ["v", "vf"], "stemMinLength": 2, "stemCharacters": "{base}"},
         {"type": "suffix", "inflected": "آكما", "deinflected": "أى", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{base}"},
@@ -199,13 +212,13 @@
       "description": "The attached pronoun ـكم (your, you (plural)): بيتكم is بيت + ـكم.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "كم", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ؤكم", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ئكم", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ؤكم", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ئكم", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "اكم", "deinflected": "ى", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "تكم", "deinflected": "ة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "كم", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ؤكم", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ئكم", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ؤكم", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ئكم", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "اكم", "deinflected": "ى", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "تكم", "deinflected": "ة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
         {"type": "suffix", "inflected": "وكم", "deinflected": "وا", "conditionsIn": [], "conditionsOut": ["v", "vf"], "stemMinLength": 3, "stemCharacters": "{base}"},
         {"type": "suffix", "inflected": "تموكم", "deinflected": "تم", "conditionsIn": [], "conditionsOut": ["v", "vf"], "stemMinLength": 2, "stemCharacters": "{base}"},
         {"type": "suffix", "inflected": "آكم", "deinflected": "أى", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{base}"},
@@ -224,13 +237,13 @@
       "description": "The attached pronoun ـكن (your, you (feminine plural)): بيتكن is بيت + ـكن.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "كن", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ؤكن", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ئكن", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ؤكن", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ئكن", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "اكن", "deinflected": "ى", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "تكن", "deinflected": "ة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "كن", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ؤكن", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ئكن", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ؤكن", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ئكن", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "اكن", "deinflected": "ى", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "تكن", "deinflected": "ة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
         {"type": "suffix", "inflected": "وكن", "deinflected": "وا", "conditionsIn": [], "conditionsOut": ["v", "vf"], "stemMinLength": 3, "stemCharacters": "{base}"},
         {"type": "suffix", "inflected": "تموكن", "deinflected": "تم", "conditionsIn": [], "conditionsOut": ["v", "vf"], "stemMinLength": 2, "stemCharacters": "{base}"},
         {"type": "suffix", "inflected": "آكن", "deinflected": "أى", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{base}"},
@@ -249,13 +262,13 @@
       "description": "The attached pronoun ـه (his, him, its, it): كتابه is كتاب + ـه, كتبه is كتب + ـه.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ه", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ؤه", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ئه", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ؤه", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ئه", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "اه", "deinflected": "ى", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ته", "deinflected": "ة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "ه", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ؤه", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ئه", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ؤه", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ئه", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "اه", "deinflected": "ى", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ته", "deinflected": "ة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
         {"type": "suffix", "inflected": "وه", "deinflected": "وا", "conditionsIn": [], "conditionsOut": ["v", "vf"], "stemMinLength": 3, "stemCharacters": "{base}"},
         {"type": "suffix", "inflected": "تموه", "deinflected": "تم", "conditionsIn": [], "conditionsOut": ["v", "vf"], "stemMinLength": 2, "stemCharacters": "{base}"},
         {"type": "suffix", "inflected": "آه", "deinflected": "أى", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{base}"},
@@ -274,13 +287,13 @@
       "description": "The attached pronoun ـها (her, its, it): بيتها is بيت + ـها.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ها", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ؤها", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ئها", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ؤها", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ئها", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "اها", "deinflected": "ى", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "تها", "deinflected": "ة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "ها", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ؤها", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ئها", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ؤها", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ئها", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "اها", "deinflected": "ى", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "تها", "deinflected": "ة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
         {"type": "suffix", "inflected": "وها", "deinflected": "وا", "conditionsIn": [], "conditionsOut": ["v", "vf"], "stemMinLength": 3, "stemCharacters": "{base}"},
         {"type": "suffix", "inflected": "تموها", "deinflected": "تم", "conditionsIn": [], "conditionsOut": ["v", "vf"], "stemMinLength": 2, "stemCharacters": "{base}"},
         {"type": "suffix", "inflected": "آها", "deinflected": "أى", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{base}"},
@@ -299,13 +312,13 @@
       "description": "The attached pronoun ـهما (their, them (two)): بيتهما is بيت + ـهما.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "هما", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ؤهما", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ئهما", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ؤهما", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ئهما", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "اهما", "deinflected": "ى", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "تهما", "deinflected": "ة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "هما", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ؤهما", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ئهما", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ؤهما", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ئهما", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "اهما", "deinflected": "ى", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "تهما", "deinflected": "ة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
         {"type": "suffix", "inflected": "وهما", "deinflected": "وا", "conditionsIn": [], "conditionsOut": ["v", "vf"], "stemMinLength": 3, "stemCharacters": "{base}"},
         {"type": "suffix", "inflected": "تموهما", "deinflected": "تم", "conditionsIn": [], "conditionsOut": ["v", "vf"], "stemMinLength": 2, "stemCharacters": "{base}"},
         {"type": "suffix", "inflected": "آهما", "deinflected": "أى", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{base}"},
@@ -324,13 +337,13 @@
       "description": "The attached pronoun ـهم (their, them): بيتهم is بيت + ـهم.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "هم", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ؤهم", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ئهم", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ؤهم", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ئهم", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "اهم", "deinflected": "ى", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "تهم", "deinflected": "ة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "هم", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ؤهم", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ئهم", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ؤهم", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ئهم", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "اهم", "deinflected": "ى", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "تهم", "deinflected": "ة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
         {"type": "suffix", "inflected": "وهم", "deinflected": "وا", "conditionsIn": [], "conditionsOut": ["v", "vf"], "stemMinLength": 3, "stemCharacters": "{base}"},
         {"type": "suffix", "inflected": "تموهم", "deinflected": "تم", "conditionsIn": [], "conditionsOut": ["v", "vf"], "stemMinLength": 2, "stemCharacters": "{base}"},
         {"type": "suffix", "inflected": "آهم", "deinflected": "أى", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{base}"},
@@ -349,13 +362,13 @@
       "description": "The attached pronoun ـهن (their, them (feminine plural)): بيتهن is بيت + ـهن.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "هن", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ؤهن", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ئهن", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ؤهن", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ئهن", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "اهن", "deinflected": "ى", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "تهن", "deinflected": "ة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "هن", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ؤهن", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ئهن", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ؤهن", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "ئهن", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "اهن", "deinflected": "ى", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
+        {"type": "suffix", "inflected": "تهن", "deinflected": "ة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
         {"type": "suffix", "inflected": "وهن", "deinflected": "وا", "conditionsIn": [], "conditionsOut": ["v", "vf"], "stemMinLength": 3, "stemCharacters": "{base}"},
         {"type": "suffix", "inflected": "تموهن", "deinflected": "تم", "conditionsIn": [], "conditionsOut": ["v", "vf"], "stemMinLength": 2, "stemCharacters": "{base}"},
         {"type": "suffix", "inflected": "آهن", "deinflected": "أى", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{base}"},
@@ -374,7 +387,7 @@
       "description": "The feminine ending ـة of an adjective or a noun for a person: كبيرة is كبير + ـة, عربية is عربي + ـة.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ة", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"}
+        {"type": "suffix", "inflected": "ة", "deinflected": "", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"}
       ]
     },
     {
@@ -383,22 +396,23 @@
       "description": "The indefinite accusative ending ـًا, written with an alif: كتابًا (كتابا), شكرًا, شيئًا (شيئا, from شيء). Words that end in ة, ى or ا take no alif.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ا", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotEndsWith": "[اةى]"},
-        {"type": "suffix", "inflected": "ئا", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"}
+        {"type": "suffix", "inflected": "ا", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال", "stemNotEndsWith": "[اةى]"},
+        {"type": "suffix", "inflected": "ئا", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"}
       ]
     },
     {
       "id": "dual",
       "name": "dual (ـان)",
-      "description": "The dual ending ـان (nominative): كتابان is two of كتاب, مدرستان of مدرسة, مستشفيان of مستشفى, عصوان of عصا, صحراوان of صحراء.",
+      "description": "The dual ending ـان (nominative), and ـتا of a word in ة before the word it belongs to: كتابان is two of كتاب, مدرستان and مدرستا of مدرسة, مستشفيان of مستشفى, عصوان of عصا, صحراوان of صحراء.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ان", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "تان", "deinflected": "ة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "يان", "deinflected": "ى", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "وان", "deinflected": "ا", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "اوان", "deinflected": "اء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "آن", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"}
+        {"type": "suffix", "inflected": "ان", "deinflected": "", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "تان", "deinflected": "ة", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "يان", "deinflected": "ى", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "وان", "deinflected": "ا", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "اوان", "deinflected": "اء", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "آن", "deinflected": "أ", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "تا", "deinflected": "ة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"}
       ]
     },
     {
@@ -407,11 +421,11 @@
       "description": "The ending ـين, the dual (ـَيْن) or the masculine plural (ـِين) after a preposition or as an object: كتابين is two of كتاب, معلمين is معلم in the plural, مدرستين is two of مدرسة, عربيين is عربي in the dual or plural.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ين", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "تين", "deinflected": "ة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "يين", "deinflected": "ى", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "وين", "deinflected": "ا", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "اوين", "deinflected": "اء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"}
+        {"type": "suffix", "inflected": "ين", "deinflected": "", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "تين", "deinflected": "ة", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "يين", "deinflected": "ى", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "وين", "deinflected": "ا", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "اوين", "deinflected": "اء", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"}
       ]
     },
     {
@@ -420,7 +434,7 @@
       "description": "The masculine sound plural ending ـون (nominative): معلمون is معلم in the plural.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ون", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"}
+        {"type": "suffix", "inflected": "ون", "deinflected": "", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"}
       ]
     },
     {
@@ -429,7 +443,7 @@
       "description": "The ending ـو of a masculine plural before the word it belongs to (معلمو المدرسة, \"the school's teachers\"), and of أبو and أخو.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "و", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"}
+        {"type": "suffix", "inflected": "و", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"}
       ]
     },
     {
@@ -438,12 +452,12 @@
       "description": "The feminine sound plural ending ـات: معلمات is معلمة in the plural, سيارات of سيارة, امتحانات of امتحان, مستشفيات of مستشفى, سنوات of سنة, سماوات of سماء, منشآت of منشأة.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ات", "deinflected": "ة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ات", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "يات", "deinflected": "ى", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "وات", "deinflected": "ة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "اوات", "deinflected": "اء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "آت", "deinflected": "أة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"}
+        {"type": "suffix", "inflected": "ات", "deinflected": "ة", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "ات", "deinflected": "", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "يات", "deinflected": "ى", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "وات", "deinflected": "ة", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "اوات", "deinflected": "اء", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "آت", "deinflected": "أة", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"}
       ]
     },
     {
@@ -1729,17 +1743,17 @@
       "source": "own",
       "optional": true,
       "rules": [
-        {"type": "prefix", "inflected": "م", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 3, "stemStartsWith": "{base}"},
-        {"type": "prefix", "inflected": "م", "deinflected": "أ", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 3, "stemStartsWith": "{base}"},
-        {"type": "prefix", "inflected": "م", "deinflected": "ا", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 3, "stemStartsWith": "{base}"},
-        {"type": "circumfix", "prefixes": [["م", "أ"], ["م", "ا"]], "suffixes": [["", ""]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemChange": {"from": ["و", "ي"], "to": "ا", "occurrence": "last", "between": "{base}", "betweenMinLength": 1}, "stemMinLength": 2},
-        {"type": "circumfix", "prefixes": [["م", ""], ["م", "أ"], ["م", "ا"]], "suffixes": [["", "ى"], ["ي", "ى"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 2},
-        {"type": "circumfix", "prefixes": [["ءا", "ء"], ["أا", "أ"], ["إا", "إ"], ["آا", "آ"], ["ؤا", "ؤ"], ["ئا", "ئ"], ["با", "ب"], ["تا", "ت"], ["ثا", "ث"], ["جا", "ج"], ["حا", "ح"], ["خا", "خ"], ["دا", "د"], ["ذا", "ذ"], ["را", "ر"], ["زا", "ز"], ["سا", "س"], ["شا", "ش"], ["صا", "ص"], ["ضا", "ض"], ["طا", "ط"], ["ظا", "ظ"], ["عا", "ع"], ["غا", "غ"], ["فا", "ف"], ["قا", "ق"], ["كا", "ك"], ["لا", "ل"], ["ما", "م"], ["نا", "ن"], ["ها", "ه"], ["وا", "و"], ["يا", "ي"]], "suffixes": [["", ""], ["ي", "ى"], ["ي", "ا"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 2},
+        {"type": "prefix", "inflected": "م", "deinflected": "", "conditionsIn": ["n"], "conditionsOut": ["v"], "stemMinLength": 3, "stemStartsWith": "{base}"},
+        {"type": "prefix", "inflected": "م", "deinflected": "أ", "conditionsIn": ["n"], "conditionsOut": ["v"], "stemMinLength": 3, "stemStartsWith": "{base}"},
+        {"type": "prefix", "inflected": "م", "deinflected": "ا", "conditionsIn": ["n"], "conditionsOut": ["v"], "stemMinLength": 3, "stemStartsWith": "{base}"},
+        {"type": "circumfix", "prefixes": [["م", "أ"], ["م", "ا"]], "suffixes": [["", ""]], "conditionsIn": ["n"], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemChange": {"from": ["و", "ي"], "to": "ا", "occurrence": "last", "between": "{base}", "betweenMinLength": 1}, "stemMinLength": 2},
+        {"type": "circumfix", "prefixes": [["م", ""], ["م", "أ"], ["م", "ا"]], "suffixes": [["", "ى"], ["ي", "ى"]], "conditionsIn": ["n"], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 2},
+        {"type": "circumfix", "prefixes": [["ءا", "ء"], ["أا", "أ"], ["إا", "إ"], ["آا", "آ"], ["ؤا", "ؤ"], ["ئا", "ئ"], ["با", "ب"], ["تا", "ت"], ["ثا", "ث"], ["جا", "ج"], ["حا", "ح"], ["خا", "خ"], ["دا", "د"], ["ذا", "ذ"], ["را", "ر"], ["زا", "ز"], ["سا", "س"], ["شا", "ش"], ["صا", "ص"], ["ضا", "ض"], ["طا", "ط"], ["ظا", "ظ"], ["عا", "ع"], ["غا", "غ"], ["فا", "ف"], ["قا", "ق"], ["كا", "ك"], ["لا", "ل"], ["ما", "م"], ["نا", "ن"], ["ها", "ه"], ["وا", "و"], ["يا", "ي"]], "suffixes": [["", ""], ["ي", "ى"], ["ي", "ا"]], "conditionsIn": ["n"], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 2},
         {"type": "circumfix", "prefixes": [["ءا", "ء"], ["أا", "أ"], ["إا", "إ"], ["آا", "آ"], ["ؤا", "ؤ"], ["ئا", "ئ"], ["با", "ب"], ["تا", "ت"], ["ثا", "ث"], ["جا", "ج"], ["حا", "ح"], ["خا", "خ"], ["دا", "د"], ["ذا", "ذ"], ["را", "ر"], ["زا", "ز"], ["سا", "س"], ["شا", "ش"], ["صا", "ص"], ["ضا", "ض"], ["طا", "ط"], ["ظا", "ظ"], ["عا", "ع"], ["غا", "غ"], ["فا", "ف"], ["قا", "ق"], ["كا", "ك"], ["لا", "ل"], ["ما", "م"], ["نا", "ن"], ["ها", "ه"], ["وا", "و"], ["يا", "ي"]], "suffixes": [["", "ا"], ["", "ى"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["ءائ", "ءا"], ["أائ", "أا"], ["إائ", "إا"], ["آائ", "آا"], ["ؤائ", "ؤا"], ["ئائ", "ئا"], ["بائ", "با"], ["تائ", "تا"], ["ثائ", "ثا"], ["جائ", "جا"], ["حائ", "حا"], ["خائ", "خا"], ["دائ", "دا"], ["ذائ", "ذا"], ["رائ", "را"], ["زائ", "زا"], ["سائ", "سا"], ["شائ", "شا"], ["صائ", "صا"], ["ضائ", "ضا"], ["طائ", "طا"], ["ظائ", "ظا"], ["عائ", "عا"], ["غائ", "غا"], ["فائ", "فا"], ["قائ", "قا"], ["كائ", "كا"], ["لائ", "لا"], ["مائ", "ما"], ["نائ", "نا"], ["هائ", "ها"], ["وائ", "وا"], ["يائ", "يا"]], "suffixes": [["", ""]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 1},
-        {"type": "circumfix", "prefixes": [["م", ""]], "suffixes": [["وء", "ء"], ["وأ", "أ"], ["وإ", "إ"], ["وآ", "آ"], ["وؤ", "ؤ"], ["وئ", "ئ"], ["وب", "ب"], ["وت", "ت"], ["وث", "ث"], ["وج", "ج"], ["وح", "ح"], ["وخ", "خ"], ["ود", "د"], ["وذ", "ذ"], ["ور", "ر"], ["وز", "ز"], ["وس", "س"], ["وش", "ش"], ["وص", "ص"], ["وض", "ض"], ["وط", "ط"], ["وظ", "ظ"], ["وع", "ع"], ["وغ", "غ"], ["وف", "ف"], ["وق", "ق"], ["وك", "ك"], ["ول", "ل"], ["وم", "م"], ["ون", "ن"], ["وه", "ه"], ["وو", "و"], ["وي", "ي"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 2},
+        {"type": "circumfix", "prefixes": [["م", ""]], "suffixes": [["وء", "ء"], ["وأ", "أ"], ["وإ", "إ"], ["وآ", "آ"], ["وؤ", "ؤ"], ["وئ", "ئ"], ["وب", "ب"], ["وت", "ت"], ["وث", "ث"], ["وج", "ج"], ["وح", "ح"], ["وخ", "خ"], ["ود", "د"], ["وذ", "ذ"], ["ور", "ر"], ["وز", "ز"], ["وس", "س"], ["وش", "ش"], ["وص", "ص"], ["وض", "ض"], ["وط", "ط"], ["وظ", "ظ"], ["وع", "ع"], ["وغ", "غ"], ["وف", "ف"], ["وق", "ق"], ["وك", "ك"], ["ول", "ل"], ["وم", "م"], ["ون", "ن"], ["وه", "ه"], ["وو", "و"], ["وي", "ي"]], "conditionsIn": ["n"], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 2},
         {"type": "circumfix", "prefixes": [["م", ""]], "suffixes": [["وء", "اء"], ["يء", "اء"], ["وأ", "اأ"], ["يأ", "اأ"], ["وإ", "اإ"], ["يإ", "اإ"], ["وآ", "اآ"], ["يآ", "اآ"], ["وؤ", "اؤ"], ["يؤ", "اؤ"], ["وئ", "ائ"], ["يئ", "ائ"], ["وب", "اب"], ["يب", "اب"], ["وت", "ات"], ["يت", "ات"], ["وث", "اث"], ["يث", "اث"], ["وج", "اج"], ["يج", "اج"], ["وح", "اح"], ["يح", "اح"], ["وخ", "اخ"], ["يخ", "اخ"], ["ود", "اد"], ["يد", "اد"], ["وذ", "اذ"], ["يذ", "اذ"], ["ور", "ار"], ["ير", "ار"], ["وز", "از"], ["يز", "از"], ["وس", "اس"], ["يس", "اس"], ["وش", "اش"], ["يش", "اش"], ["وص", "اص"], ["يص", "اص"], ["وض", "اض"], ["يض", "اض"], ["وط", "اط"], ["يط", "اط"], ["وظ", "اظ"], ["يظ", "اظ"], ["وع", "اع"], ["يع", "اع"], ["وغ", "اغ"], ["يغ", "اغ"], ["وف", "اف"], ["يف", "اف"], ["وق", "اق"], ["يق", "اق"], ["وك", "اك"], ["يك", "اك"], ["ول", "ال"], ["يل", "ال"], ["وم", "ام"], ["يم", "ام"], ["ون", "ان"], ["ين", "ان"], ["وه", "اه"], ["يه", "اه"], ["وو", "او"], ["يو", "او"], ["وي", "اي"], ["يي", "اي"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 1},
-        {"type": "circumfix", "prefixes": [["م", ""]], "suffixes": [["و", "ا"], ["ي", "ى"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 2}
+        {"type": "circumfix", "prefixes": [["م", ""]], "suffixes": [["و", "ا"], ["ي", "ى"]], "conditionsIn": ["n"], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 2}
       ]
     },
     {
@@ -1749,12 +1763,12 @@
       "source": "own",
       "optional": true,
       "rules": [
-        {"type": "circumfix", "prefixes": [["ت", ""]], "suffixes": [["يء", "ء"], ["يأ", "أ"], ["يإ", "إ"], ["يآ", "آ"], ["يؤ", "ؤ"], ["يئ", "ئ"], ["يب", "ب"], ["يت", "ت"], ["يث", "ث"], ["يج", "ج"], ["يح", "ح"], ["يخ", "خ"], ["يد", "د"], ["يذ", "ذ"], ["ير", "ر"], ["يز", "ز"], ["يس", "س"], ["يش", "ش"], ["يص", "ص"], ["يض", "ض"], ["يط", "ط"], ["يظ", "ظ"], ["يع", "ع"], ["يغ", "غ"], ["يف", "ف"], ["يق", "ق"], ["يك", "ك"], ["يل", "ل"], ["يم", "م"], ["ين", "ن"], ["يه", "ه"], ["يو", "و"], ["يي", "ي"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 2},
-        {"type": "circumfix", "prefixes": [["ت", ""]], "suffixes": [["ية", "ى"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 2},
+        {"type": "circumfix", "prefixes": [["ت", ""]], "suffixes": [["يء", "ء"], ["يأ", "أ"], ["يإ", "إ"], ["يآ", "آ"], ["يؤ", "ؤ"], ["يئ", "ئ"], ["يب", "ب"], ["يت", "ت"], ["يث", "ث"], ["يج", "ج"], ["يح", "ح"], ["يخ", "خ"], ["يد", "د"], ["يذ", "ذ"], ["ير", "ر"], ["يز", "ز"], ["يس", "س"], ["يش", "ش"], ["يص", "ص"], ["يض", "ض"], ["يط", "ط"], ["يظ", "ظ"], ["يع", "ع"], ["يغ", "غ"], ["يف", "ف"], ["يق", "ق"], ["يك", "ك"], ["يل", "ل"], ["يم", "م"], ["ين", "ن"], ["يه", "ه"], ["يو", "و"], ["يي", "ي"]], "conditionsIn": ["n"], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 2},
+        {"type": "circumfix", "prefixes": [["ت", ""]], "suffixes": [["ية", "ى"]], "conditionsIn": ["n"], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 2},
         {"type": "circumfix", "prefixes": [["م", ""]], "suffixes": [["ة", ""]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 3},
-        {"type": "circumfix", "prefixes": [["إ", "أ"]], "suffixes": [["اء", "ء"], ["اأ", "أ"], ["اإ", "إ"], ["اآ", "آ"], ["اؤ", "ؤ"], ["ائ", "ئ"], ["اب", "ب"], ["ات", "ت"], ["اث", "ث"], ["اج", "ج"], ["اح", "ح"], ["اخ", "خ"], ["اد", "د"], ["اذ", "ذ"], ["ار", "ر"], ["از", "ز"], ["اس", "س"], ["اش", "ش"], ["اص", "ص"], ["اض", "ض"], ["اط", "ط"], ["اظ", "ظ"], ["اع", "ع"], ["اغ", "غ"], ["اف", "ف"], ["اق", "ق"], ["اك", "ك"], ["ال", "ل"], ["ام", "م"], ["ان", "ن"], ["اه", "ه"], ["او", "و"], ["اي", "ي"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 2},
+        {"type": "circumfix", "prefixes": [["إ", "أ"]], "suffixes": [["اء", "ء"], ["اأ", "أ"], ["اإ", "إ"], ["اآ", "آ"], ["اؤ", "ؤ"], ["ائ", "ئ"], ["اب", "ب"], ["ات", "ت"], ["اث", "ث"], ["اج", "ج"], ["اح", "ح"], ["اخ", "خ"], ["اد", "د"], ["اذ", "ذ"], ["ار", "ر"], ["از", "ز"], ["اس", "س"], ["اش", "ش"], ["اص", "ص"], ["اض", "ض"], ["اط", "ط"], ["اظ", "ظ"], ["اع", "ع"], ["اغ", "غ"], ["اف", "ف"], ["اق", "ق"], ["اك", "ك"], ["ال", "ل"], ["ام", "م"], ["ان", "ن"], ["اه", "ه"], ["او", "و"], ["اي", "ي"]], "conditionsIn": ["n"], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 2},
         {"type": "circumfix", "prefixes": [["إ", "أ"]], "suffixes": [["اءة", "اء"], ["اأة", "اأ"], ["اإة", "اإ"], ["اآة", "اآ"], ["اؤة", "اؤ"], ["ائة", "ائ"], ["ابة", "اب"], ["اتة", "ات"], ["اثة", "اث"], ["اجة", "اج"], ["احة", "اح"], ["اخة", "اخ"], ["ادة", "اد"], ["اذة", "اذ"], ["ارة", "ار"], ["ازة", "از"], ["اسة", "اس"], ["اشة", "اش"], ["اصة", "اص"], ["اضة", "اض"], ["اطة", "اط"], ["اظة", "اظ"], ["اعة", "اع"], ["اغة", "اغ"], ["افة", "اف"], ["اقة", "اق"], ["اكة", "اك"], ["الة", "ال"], ["امة", "ام"], ["انة", "ان"], ["اهة", "اه"], ["اوة", "او"], ["اية", "اي"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 1},
-        {"type": "circumfix", "prefixes": [["إ", "أ"]], "suffixes": [["اء", "ى"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 2},
+        {"type": "circumfix", "prefixes": [["إ", "أ"]], "suffixes": [["اء", "ى"]], "conditionsIn": ["n"], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 2},
         {"type": "circumfix", "prefixes": [["ا", "ا"]], "suffixes": [["اء", "ء"], ["اأ", "أ"], ["اإ", "إ"], ["اآ", "آ"], ["اؤ", "ؤ"], ["ائ", "ئ"], ["اب", "ب"], ["ات", "ت"], ["اث", "ث"], ["اج", "ج"], ["اح", "ح"], ["اخ", "خ"], ["اد", "د"], ["اذ", "ذ"], ["ار", "ر"], ["از", "ز"], ["اس", "س"], ["اش", "ش"], ["اص", "ص"], ["اض", "ض"], ["اط", "ط"], ["اظ", "ظ"], ["اع", "ع"], ["اغ", "غ"], ["اف", "ف"], ["اق", "ق"], ["اك", "ك"], ["ال", "ل"], ["ام", "م"], ["ان", "ن"], ["اه", "ه"], ["او", "و"], ["اي", "ي"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 3},
         {"type": "circumfix", "prefixes": [["ا", "ا"]], "suffixes": [["اء", "ى"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 3},
         {"type": "circumfix", "prefixes": [["است", "است"]], "suffixes": [["اءة", "اء"], ["اأة", "اأ"], ["اإة", "اإ"], ["اآة", "اآ"], ["اؤة", "اؤ"], ["ائة", "ائ"], ["ابة", "اب"], ["اتة", "ات"], ["اثة", "اث"], ["اجة", "اج"], ["احة", "اح"], ["اخة", "اخ"], ["ادة", "اد"], ["اذة", "اذ"], ["ارة", "ار"], ["ازة", "از"], ["اسة", "اس"], ["اشة", "اش"], ["اصة", "اص"], ["اضة", "اض"], ["اطة", "اط"], ["اظة", "اظ"], ["اعة", "اع"], ["اغة", "اغ"], ["افة", "اف"], ["اقة", "اق"], ["اكة", "اك"], ["الة", "ال"], ["امة", "ام"], ["انة", "ان"], ["اهة", "اه"], ["اوة", "او"], ["اية", "اي"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 1}

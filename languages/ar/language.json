@@ -5,7 +5,9 @@
   "name": "Arabic",
   "nativeName": "العربية",
   "bcp47": "ar",
-  "scripts": ["Arab"],
+  "scripts": [
+    "Arab"
+  ],
   "direction": "rtl",
   "classes": {
     "base": "[\\u0621-\\u063A\\u0641-\\u064A]",
@@ -20,12 +22,53 @@
     "wordCharacters": "{word}",
     "wordInternal": null,
     "sentence": {
-      "terminators": [".", "!", "?", "؟", "۔", "…"],
-      "quotePairs": [["«", "»"], ["“", "”"], ["\"", "\""], ["(", ")"], ["﴿", "﴾"]]
+      "terminators": [
+        ".",
+        "!",
+        "?",
+        "؟",
+        "۔",
+        "…"
+      ],
+      "quotePairs": [
+        [
+          "«",
+          "»"
+        ],
+        [
+          "“",
+          "”"
+        ],
+        [
+          "\"",
+          "\""
+        ],
+        [
+          "(",
+          ")"
+        ],
+        [
+          "﴿",
+          "﴾"
+        ]
+      ]
     },
     "highlightBreaks": {
-      "sentenceEnd": [".", "!", "?", "؟", "۔", "…"],
-      "clauseEnd": ["،", "؛", ",", ";", ":"]
+      "sentenceEnd": [
+        ".",
+        "!",
+        "?",
+        "؟",
+        "۔",
+        "…"
+      ],
+      "clauseEnd": [
+        "،",
+        "؛",
+        ",",
+        ";",
+        ":"
+      ]
     },
     "lineJoiner": " "
   },
@@ -33,59 +76,190 @@
     "searchResolution": "word",
     "preprocessors": [
       {
-        "id": "nfkc",
-        "name": "Normalize Unicode (NFKC)",
-        "variants": [[{"normalize": "NFKC"}]]
+        "id": "normalizeUnicode",
+        "name": "Normalize Unicode",
+        "variants": [
+          [
+            {
+              "normalize": "NFKC"
+            }
+          ]
+        ]
       },
       {
-        "id": "stripVowelMarks",
-        "name": "Remove vowel marks",
-        "variants": [[{"strip": "{marks}"}]]
+        "id": "removeArabicScriptDiacritics",
+        "name": "Remove diacritics",
+        "variants": [
+          [
+            {
+              "strip": "[\\u0618-\\u061A\\u064B-\\u0656\\u0670]"
+            }
+          ]
+        ]
       },
       {
-        "id": "stripTatweel",
-        "name": "Remove tatweel",
-        "variants": [[{"strip": "[\\u0640]"}]]
+        "id": "removeQuranicMarks",
+        "name": "Remove Quranic marks",
+        "variants": [
+          [
+            {
+              "strip": "[\\u0610-\\u0617\\u0657-\\u065F\\u06D6-\\u06DC\\u06DF-\\u06E8\\u06EA-\\u06ED]"
+            }
+          ]
+        ]
+      },
+      {
+        "id": "removeTatweel",
+        "name": "Remove tatweel characters",
+        "variants": [
+          [
+            {
+              "strip": "[\\u0640]"
+            }
+          ]
+        ]
       },
       {
         "id": "arabicLetterForms",
         "name": "Arabic letters for Persian and Quranic letter forms",
-        "variants": [[{"map": {"\u06CC": "\u064A", "\u06A9": "\u0643", "\u06AA": "\u0643", "\u0671": "\u0627"}, "at": "all"}]]
+        "variants": [
+          [
+            {
+              "map": {
+                "ی": "ي",
+                "ک": "ك",
+                "ڪ": "ك",
+                "ٱ": "ا"
+              },
+              "at": "all"
+            }
+          ]
+        ]
       },
       {
-        "id": "initialHamza",
-        "name": "Add hamza to a first alif",
+        "id": "addHamzaTop",
+        "name": "Add Hamza to top of Alif",
         "variants": [
-          [{"pattern": "^\u0627(?!\u0644[\u0621-\u064A]{2})", "replace": "\u0623"}],
-          [{"pattern": "^\u0627(?!\u0644[\u0621-\u064A]{2})", "replace": "\u0625"}],
-          [{"pattern": "^\u0627(?!\u0644[\u0621-\u064A]{2})", "replace": "\u0622"}]
+          [
+            {
+              "map": {
+                "ا": "أ"
+              },
+              "at": "first"
+            }
+          ]
+        ]
+      },
+      {
+        "id": "addHamzaBottom",
+        "name": "Add Hamza to bottom of Alif",
+        "variants": [
+          [
+            {
+              "map": {
+                "ا": "إ"
+              },
+              "at": "first"
+            }
+          ]
+        ]
+      },
+      {
+        "id": "addMaddaTop",
+        "name": "Add madda to a first alif",
+        "variants": [
+          [
+            {
+              "pattern": "^ا(?!ل[ء-ي]{2})",
+              "replace": "آ"
+            }
+          ]
         ]
       },
       {
         "id": "hamzaAfterPrefix",
         "name": "Add hamza to an alif after ال or a one-letter prefix",
         "variants": [
-          [{"pattern": "^([\u0648\u0641]?[\u0628\u0643]?\u0627\u0644|[\u0648\u0641]?\u0644\u0644)\u0627", "replace": "$1\u0623"}],
-          [{"pattern": "^([\u0648\u0641]?[\u0628\u0643]?\u0627\u0644|[\u0648\u0641]?\u0644\u0644)\u0627", "replace": "$1\u0625"}],
-          [{"pattern": "^([\u0648\u0641]?[\u0628\u0643]?\u0627\u0644|[\u0648\u0641]?\u0644\u0644)\u0627", "replace": "$1\u0622"}],
-          [{"pattern": "^([\u0648\u0641]?[\u0628\u0643\u0644]|[\u0648\u0641])\u0627(?!\u0644[\u0621-\u064A]{2})", "replace": "$1\u0623"}],
-          [{"pattern": "^([\u0648\u0641]?[\u0628\u0643\u0644]|[\u0648\u0641])\u0627(?!\u0644[\u0621-\u064A]{2})", "replace": "$1\u0625"}],
-          [{"pattern": "^([\u0648\u0641]?[\u0628\u0643\u0644]|[\u0648\u0641])\u0627(?!\u0644[\u0621-\u064A]{2})", "replace": "$1\u0622"}]
+          [
+            {
+              "pattern": "^([وف]?[بك]?ال|[وف]?لل)ا",
+              "replace": "$1أ"
+            }
+          ],
+          [
+            {
+              "pattern": "^([وف]?[بك]?ال|[وف]?لل)ا",
+              "replace": "$1إ"
+            }
+          ],
+          [
+            {
+              "pattern": "^([وف]?[بك]?ال|[وف]?لل)ا",
+              "replace": "$1آ"
+            }
+          ],
+          [
+            {
+              "pattern": "^([وف]?[بكل]|[وف])ا(?!ل[ء-ي]{2})",
+              "replace": "$1أ"
+            }
+          ],
+          [
+            {
+              "pattern": "^([وف]?[بكل]|[وف])ا(?!ل[ء-ي]{2})",
+              "replace": "$1إ"
+            }
+          ],
+          [
+            {
+              "pattern": "^([وف]?[بكل]|[وف])ا(?!ل[ء-ي]{2})",
+              "replace": "$1آ"
+            }
+          ]
         ]
       },
       {
-        "id": "finalYa",
-        "name": "Final ي and ى for each other",
+        "id": "convertAlifMaqsuraToYaa",
+        "name": "Convert Alif Maqsura to Yaa",
         "variants": [
-          [{"map": {"\u064A": "\u0649"}, "at": "end"}],
-          [{"map": {"\u0649": "\u064A"}, "at": "end"}]
+          [
+            {
+              "map": {
+                "ى": "ي"
+              },
+              "at": "end"
+            }
+          ]
         ]
       },
       {
-        "id": "taMarbuta",
-        "name": "Final ه as ة",
+        "id": "convertYaaToAlifMaqsura",
+        "name": "Convert final Yaa to Alif Maqsura",
+        "variants": [
+          [
+            {
+              "map": {
+                "ي": "ى"
+              },
+              "at": "end"
+            }
+          ]
+        ]
+      },
+      {
+        "id": "convertHaToTaMarbuta",
+        "name": "Convert final Ha to Ta Marbuta",
         "optional": true,
-        "variants": [[{"map": {"\u0647": "\u0629"}, "at": "end"}]]
+        "variants": [
+          [
+            {
+              "map": {
+                "ه": "ة"
+              },
+              "at": "end"
+            }
+          ]
+        ]
       }
     ],
     "postprocessors": [],
@@ -114,7 +288,11 @@
       "reading": "Vowelled"
     },
     "displayTransforms": {
-      "stripVowelMarks": [{"strip": "{marks}"}]
+      "stripVowelMarks": [
+        {
+          "strip": "{marks}"
+        }
+      ]
     }
   },
   "settings": [
@@ -122,11 +300,29 @@
       "id": "vowelMarks",
       "type": "enum",
       "default": "show",
-      "values": [{"id": "show", "label": "Show"}, {"id": "hide", "label": "Hide"}],
+      "values": [
+        {
+          "id": "show",
+          "label": "Show"
+        },
+        {
+          "id": "hide",
+          "label": "Hide"
+        }
+      ],
       "label": "Vowel marks in headwords",
       "description": "Arabic dictionaries often write short vowels. Hiding them shows words as they appear in most text.",
       "group": "display",
-      "effect": {"display": {"fields": ["expression", "reading"], "when": "hide", "transform": "stripVowelMarks"}}
+      "effect": {
+        "display": {
+          "fields": [
+            "expression",
+            "reading"
+          ],
+          "when": "hide",
+          "transform": "stripVowelMarks"
+        }
+      }
     },
     {
       "id": "informalTaMarbuta",
@@ -135,7 +331,9 @@
       "label": "Read a final ه as ة",
       "description": "Informal writing often spells ة as ه (مدرسه for مدرسة). With this on, a word ending in ه is also looked up with ة, after the readings of ه as a pronoun.",
       "group": "lookup",
-      "effect": {"preprocessor": "taMarbuta"}
+      "effect": {
+        "preprocessor": "convertHaToTaMarbuta"
+      }
     },
     {
       "id": "derivedForms",
@@ -144,7 +342,12 @@
       "label": "Verbs behind participles and verbal nouns",
       "description": "Also look up the verb a participle or verbal noun is formed from (مستخدم and استخدام give استخدم). Dictionaries list most of these words on their own.",
       "group": "lookup",
-      "effect": {"transforms": ["participle", "verbalNoun"]}
+      "effect": {
+        "transforms": [
+          "participle",
+          "verbalNoun"
+        ]
+      }
     }
   ],
   "host": {
@@ -187,10 +390,15 @@
       "entry": {
         "expression": "استعار",
         "reading": "اِسْتَعَارَ",
-        "glossary": ["to borrow"],
+        "glossary": [
+          "to borrow"
+        ],
         "definitionTags": "v",
         "matched": "واستعرت",
-        "trace": ["و (and)", "past (I, you, she)"]
+        "trace": [
+          "و (and)",
+          "past (I, you, she)"
+        ]
       },
       "character": null
     }
