@@ -1,0 +1,63 @@
+# Hand-judged first results of README.md (Measurements, real text): 60 of the 1,826 positions that sources/measure.mjs text leaves unjudged for
+# transforms.json at the four texts, drawn by sources/hand-sample.py with seed 3. Judged by the pack author (Claude Opus 5.5) by reading each sentence.
+# n	text	hovered word	matched	first result with a definition	trace	verdict	why it is wrong
+1	tatoeba	alter	alter Mann	Alter Mann		wrong	dictionary: Alter Mann is the mining term; here an old man
+2	pg22367	DIE	DIE	der	nominative/accusative plural	right	
+3	pg69327	Unehrenhaftes	Unehrenhaftes	ehrenhaft	negative|nominative/accusative singular neuter strong without-article	right	
+4	tatoeba	Toms	Toms	Tom	genitive	right	
+5	tatoeba	schrieb	schrieb alle an und	anschreiben	separated-prefix|past	right	
+6	pg22367	Einschaltung	Einschaltung	einschalten	nominalization	right	
+7	pg69327	stand	stand auf und ging im Zimmer auf und	aufstehen	separated-prefix|past	right	
+8	pg22367	Gregors	Gregors	Gregor	genitive	right	
+9	pg69327	Lebendigkeit	Lebendigkeit	lebendig	-heit	right	
+10	tatoeba	Janes	Janes	Jan	genitive	wrong	rule: genitive of the English name Jane read as Jan
+11	pg22367	Munterkeit	Munterkeit	munter	-heit	right	
+12	tatoeba	statten	statten	Statt	plural	wrong	rule: statten (from ... einen Besuch ab, beyond the 16-code-point scan) read as the plural of Statt
+13	pg5323	aufgelegte	aufgelegte	auflegen	declined|past-participle	right	
+14	pg69327	z	z.	Z.		wrong	dictionary: the abbreviation Z.
+15	tatoeba	Umfall	Umfall	umfallen	imperative	wrong	rule: Umfall (a typo for Unfall) read as the imperative of umfallen
+16	pg69327	alten	alten Mannes	Alter Mann	genitive	wrong	dictionary: Alter Mann (mining term) for alten Mannes
+17	tatoeba	geboren	geboren wurde	geboren werden	past	right	
+18	tatoeba	aufladbaren	aufladbaren	aufladen	declined|-bar	right	
+19	pg5323	in	in Anspruch genommen	in Anspruch nehmen	past-participle	right	
+20	pg69327	z	z.	Z.		wrong	dictionary: the abbreviation Z.
+21	pg69327	DES	DES	Des		wrong	processor: DES read as Des (D flat) by capitalizeWord
+22	pg5323	so	so daß	sodass	alt-of	right	
+23	pg69327	ging	ging hin und	hingehen	separated-prefix|past	right	
+24	pg69327	Miethauses	Miethauses	Mietshaus	genitive|alternative	right	
+25	tatoeba	zu	zu tun hat	zu tun haben	present-er	right	
+26	pg22367	Gregors	Gregors	Gregor	genitive	right	
+27	pg5323	trat	trat ein und	eintreten	separated-prefix|past	right	
+28	tatoeba	Usern	Usern	U	dative-plural|plural|nominative/genitive/dative/accusative plural definite	wrong	rule: Usern (User missing in the dictionary) read through the plural of U
+29	tatoeba	Spanisch	Spanisch spricht	spanisch sprechen	present-er|alternative	right	
+30	pg22367	verbissenem	verbissenem	verbeißen	declined|past-participle	right	
+31	tatoeba	aufragenden	aufragenden	aufragen	declined|present-participle	right	
+32	pg5323	sei	sei Da	da sein	first/third-person singular subjunctive subjunctive-i	wrong	dictionary and scan: sei Da (inside sei Dank) read as da sein
+33	pg69327	unabweisbar	unabweisbar	abweisen	negative|-bar	right	
+34	tatoeba	einE	einE	eine		right	
+35	pg5323	recht	recht gehabt	Recht haben	past-participle|alt-of	right	
+36	tatoeba	Auto	Auto fuhr	Auto fahren	past	wrong	rule and dictionary: Auto fuhr (the car drove) read as the idiom Auto fahren
+37	pg5323	wirf	wirf die Schalen weit weg oder	wegwerfen	separated-prefix|imperative	right	
+38	pg5323	tut's	tut's	tun	clitic-es|present-er	right	
+39	tatoeba	großer	großer Bruder	Großer Bruder		wrong	dictionary: Großer Bruder (Big Brother) for großer Bruder
+40	tatoeba	so	so.	So.		wrong	dictionary: So. (Sunday) for so at the end of a sentence
+41	pg5323	unritterlich	unritterlich	ritterlich	negative	right	
+42	pg69327	einleuchtendster	einleuchtendster	einleuchtend	declined|superlative	right	
+43	tatoeba	geboren	geboren wurde	geboren werden	past	right	
+44	tatoeba	ovalen	ovalen	oval	declined	right	
+45	pg5323	Forcierung	Forcierung	forcieren	nominalization	right	
+46	tatoeba	gesäuselten	gesäuselten	säuseln	declined|past-participle	right	
+47	pg5323	Wie's	Wie's	wie	clitic-es	right	
+48	pg5323	passierenden	passierenden	passieren	declined|present-participle	right	
+49	tatoeba	saß	saß da und	dasitzen	separated-prefix|past	right	
+50	pg69327	sprang	sprang auf und	aufspringen	separated-prefix|past	right	
+51	pg22367	GEDRUCKT	GEDRUCKT	drucken	past-participle	right	
+52	pg5323	Behang	Behang	behängen	imperative|past participle	wrong	rule: the noun Behang read as the imperative of behängen
+53	pg5323	komm	komm.	Komm.		wrong	dictionary: Komm. (an abbreviation) for komm at the end of a sentence
+54	tatoeba	Erregende	Erregende	erregen	declined|present-participle	right	
+55	pg5323	Eintretenden	Eintretenden	eintreten	declined|present-participle	right	
+56	pg5323	allein	allein ließ	alleinlassen	past|alternative	right	
+57	tatoeba	hat	hat Lieb	lieb haben	third-person singular present indicative	wrong	dictionary and scan: hat Lieb (inside Liebeskummer) read as lieb haben
+58	tatoeba	ruf	ruf dich an oder	anrufen	separated-prefix|imperative	right	
+59	pg5323	wie's	wie's	wie	clitic-es	right	
+60	pg5323	Entsagenden	Entsagenden	entsagen	declined|present-participle	right	
