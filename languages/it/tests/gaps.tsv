@@ -3,12 +3,10 @@
 # Hand-written rows (categories without ";" or ":"): written for this pack, no third-party data.
 # Source: UniMorph ita (https://github.com/unimorph/ita/blob/fa2cc6ce173643e748bd8f4162709365bdc98805/ita, sha256 6347bb15b3d2c3da), CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/), by the UniMorph contributors, from English Wiktionary: the verb rows (category: UniMorph tags; a space after an elided pronoun removed).
 # Source: kaikki.org's Italian dictionary (https://kaikki.org/dictionary/Italian/, extracted 2026-10-30 from enwiktionary 2026-10-01, sha256 edfb787898b80c6e), English Wiktionary content, CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/) and GFDL, by the Wiktionary contributors: the noun and adjective rows (category: part of speech and form tags).
-# 1000 rows sampled with seed 1 by sources/build-corpus.mjs (420 verb, finite, 80 verb, gerund or participle, 180 verb with pronouns, 160 noun, plural, 20 noun, other gender, 140 adjective); the rows the pack's rules reach with its defaults are in corpus.tsv, the others in gaps.tsv.
+# 850 rows sampled with seed 1 by sources/build-corpus.mjs (360 verb, finite, 70 verb, gerund or participle, 150 verb with pronouns, 135 noun, plural, 15 noun, other gender, 120 adjective); the rows the pack's rules reach with its defaults are in corpus.tsv, the others in gaps.tsv.
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
 V;SBJV;PRS;1;SG	1	mi prolunghi	prolungarsi	v	*
 V;SBJV;PRS;1;SG	1	mi invigorisca	invigorirsi	v	*
-V;POS;IMP;2;SG	1	reciditi	redidersi	v	*
-V;SBJV;PRS;1;SG	1	mi scontri	scontrarsi	v	*
 noun:feminine	1	emesena	emeseno	n	*
 noun:feminine	1	conservativa	conservativo	n	*
 noun:feminine	1	tabaccaia	tabaccaio	n	*
@@ -18,6 +16,3 @@ noun:feminine	1	boera	boero	n	*
 noun:feminine	1	uruguaiana	uruguaiano	n	*
 noun:feminine	1	cravattaia	cravattaio	n	*
 noun:feminine	1	feltrina	feltrino	n	*
-noun:feminine	1	geochimica	geochimico	n	*
-noun:feminine	1	astrogeologa	astrogeologo	n	*
-noun:feminine	1	lucia	lucio	n	*
