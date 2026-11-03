@@ -63,17 +63,6 @@
         "variants": [[{"normalize": "NFD"}, {"pattern": "(\u0301[^\u0301]*)\u0301", "replace": "$1", "repeat": true}, {"normalize": "NFC"}]]
       },
       {
-        "id": "removeMonosyllableAccent",
-        "name": "Remove the accent of a one-syllable word",
-        "variants": [
-          [
-            {"normalize": "NFD"},
-            {"pattern": "^([^αεηιουωΑΕΗΙΟΥΩ\\u0301\\u0308 ]+[αεηιουωΑΕΗΙΟΥΩ\\u0308]+)\\u0301([^αεηιουωΑΕΗΙΟΥΩ\\u0301\\u0308 ]*)$", "replace": "$1$2"},
-            {"normalize": "NFC"}
-          ]
-        ]
-      },
-      {
         "id": "decapitalize",
         "name": "Decapitalize text",
         "variants": [[{"case": "lower"}]]

@@ -1109,6 +1109,17 @@ for (const w of ['σ\'', 'μ\'', 'τ\'', 'θ\'', 'ν\'', 'απ\'', 'γι\'', 'σ
     prefix('elided-proclitic', w, '', {min: 2});
 }
 
+// --- One-syllable words written with an accent -------------------------------------
+// Monotonic spelling gives one-syllable words no accent (the 1982 rules), but
+// older and careless text writes μιά, ποιός, πιά, δυό, μού. A closed list:
+// πού, πώς and ή are words of their own and keep it.
+transform('monosyllable', 'one-syllable word', 'A one-syllable word written with an accent, which monotonic spelling leaves out: μιά, ποιός, πιά, δυό, μού → μια, ποιος, πια, δυο, μου.');
+const MONOSYLLABLES = ['μιά', 'πιά', 'γιά', 'δυό', 'γειά', 'μού', 'σού', 'τού', 'τής', 'τό', 'τά', 'μάς', 'σάς', 'τούς', 'τίς',
+    'ποιός', 'ποιά', 'ποιό', 'ποιοί', 'ποιές', 'ποιόν', 'ποιού', 'ποιάς', 'ποιών', 'ποιούς', 'γιό', 'γιός', 'γιού', 'μπρός', 'ναί', 'καί'];
+for (const word of MONOSYLLABLES) {
+    whole('monosyllable', word, plain(word));
+}
+
 // --- Accent ----------------------------------------------------------------------------
 // The second step of a reading whose accent moved (see the header). Each rule
 // takes the lemma's ending as its suffix, unchanged, and accents one vowel

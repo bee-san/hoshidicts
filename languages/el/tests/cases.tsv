@@ -313,9 +313,9 @@ polytonic	1	ἔγραψα	γράφω	v	accent|aorist-1sg
 enclitic	1	πρόσωπό	πρόσωπο	*	
 enclitic	1	άνθρωπός	άνθρωπος	*	
 enclitic	1	αυτοκίνητό	αυτοκίνητο	*	
-monosyllable	1	μιά	μια	*	
-monosyllable	1	ποιός	ποιος	*	
-monosyllable	1	πιά	πια	*	
+monosyllable	1	μιά	μια	*	monosyllable
+monosyllable	1	ποιός	ποιος	*	monosyllable
+monosyllable	1	πιά	πια	*	monosyllable
 elision	1	κ'	και	*	elision
 elision	1	Κ'	και	*	elision
 elision	1	ν'	να	*	elision
@@ -330,6 +330,9 @@ older	1	εφώναξεν	φωνάζω	v	accent|aorist-3sg|old-augment|movable-n
 older	1	εψιθύρισε	ψιθυρίζω	v	accent|aorist-3sg|old-augment
 older	1	είνε	είμαι	v	present-3sg
 older	1	'νε	είναι	*	aphaeresis
+monosyllable	1	Ποιός	ποιος	*	monosyllable
+monosyllable	1	δυό	δυο	*	monosyllable
+monosyllable	1	μού	μου	*	monosyllable
 negatives	0	για	γιος	*	*
 negatives	0	στα	στο	*	*
 negatives	0	στα	στης	*	*
@@ -375,4 +378,6 @@ phrases	0	'ρθει εδώ	έρθει εδώ	*	*
 phrases	0	επέστρεψα σπίτι	επιστρεψα σπίτι	*	*
 negatives	0	Στάθη	στάζω	*	*
 negatives	0	μηδέν	μηδέ	*	*
-negatives	0	εκεί	κεί	*	*
+negatives	0	εκεί	κεί	v	*
+negatives	0	πού	που	*	*
+negatives	0	πώς	πως	*	*
