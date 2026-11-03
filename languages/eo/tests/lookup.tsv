@@ -1,4 +1,6 @@
-# Source: written for this pack (GPL-3.0-or-later), against tests/dictionary/. Every optional processor and transform is on.
+# options: default
+# Source: written for this pack (GPL-3.0-or-later), against tests/dictionary/. Run with the pack's defaults, as a host looks words up
+# (the h-system and otherWordClass are tested in text.tsv, cases.tsv and defaults.tsv).
 # category	valid	text	expression	matched
 inflection	1	manĝis en malgranda restoracio	manĝi	manĝis
 inflection	1	manĝis ni hieraŭ	manĝi	manĝis
@@ -22,7 +24,6 @@ apostrophe	1	kor' al kor'	koro	kor'
 phrases	1	ĝis revido, amiko	ĝis revido	ĝis revido
 phrases	1	tiun ĉi libron	tiu ĉi	tiun ĉi
 x-system	1	mangxis pomon	manĝi	mangxis
-h-system	1	ankau mi	ankaŭ	ankau
 first result	1	Marta venis	Marta	Marta
 first result	1	Sinjorino Marta	sinjorino	Sinjorino
 first result	1	Sinjoro estas mia paŝtisto	Sinjoro	Sinjoro
@@ -62,3 +63,8 @@ names	0	Karolino ridetis	karolo	Karolino
 names	0	Kate venis	kata	Kate
 names	0	Elena venis	ena	Elena
 names	0	Helen venis	hele	Helen
+apostrophe	1	korʼ al korʼ	koro	korʼ
+order	1	decidigis lin	decidi	decidigis
+order	1	fleksiĝis la branĉo	fleksi	fleksiĝis
+order	1	stanisto laboris	stano	stanisto
+order	1	feliĉulo ridis	feliĉa	feliĉulo

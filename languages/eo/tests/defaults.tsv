@@ -24,9 +24,9 @@ guard: stem of 2 letters at least	0	bojn	boj	*	*
 rule: accusative	1	brsajn	brsaj	*	accusative
 guard: no space in the stem	0	mi brsajn	mi brsaj	*	*
 guard: stem of 2 letters at least	0	bajn	baj	*	*
-rule: accusative	1	brsen	brse	*	accusative
-guard: no space in the stem	0	mi brsen	mi brse	*	*
-guard: stem of 2 letters at least	0	ben	be	*	*
+rule: accusative	1	srsen	srse	*	accusative
+guard: no space in the stem	0	mi srsen	mi srse	*	*
+guard: stem of 2 letters at least	0	sen	se	*	*
 guard: excluded stem (Biden)	0	biden	bide	*	*
 guard: excluded stem (Helen)	0	helen	hele	*	*
 guard: excluded stem (Ruben)	0	ruben	rube	*	*
@@ -282,13 +282,13 @@ rule: an	1	mbrano	mbro	n	an
 rule: an	1	milbano	milbo	n	an
 rule: an	1	sbrano	sbro	n	an
 rule: an	1	saltbano	saltbo	n	an
-rule: ar	1	brsaro	brso	n	ar
-guard: no space in the stem	0	mi brsaro	mi brso	*	*
-guard: stem of 2 letters at least	0	baro	bo	*	*
+rule: ar	1	rrsaro	rrso	n	ar
+guard: no space in the stem	0	mi rrsaro	mi rrso	*	*
+guard: stem of 2 letters at least	0	raro	ro	*	*
 guard: no capital stem	0	Brsaro	Brso	*	*
 guard: no capital stem	0	Ĉrsaro	Ĉrso	*	*
-guard: output is n	0	brsaro	brso	v	*
-chain: input is n	1	gebrsaro	brso	n	ar|ge
+guard: output is n	0	rrsaro	rrso	v	*
+chain: input is n	1	gerrsaro	rrso	n	ar|ge
 guard: excluded stem (bojaro (a boyar))	0	bojaro	bojo	*	*
 guard: excluded stem (barbaro (a barbarian))	0	barbaro	barbo	*	*
 guard: excluded stem (solidareco)	0	solidaro	solido	*	*
@@ -680,13 +680,13 @@ guard: no capital stem	0	Brsiĝo	Brso	*	*
 guard: no capital stem	0	Ĉrsiĝo	Ĉrso	*	*
 guard: output is n	0	brsiĝo	brso	v	*
 chain: input is n	1	gebrsiĝo	brso	n	iĝ|ge
-rule: il	1	brsilo	brsi	v	il
-guard: no space in the stem	0	mi brsilo	mi brsi	*	*
-guard: stem of 2 letters at least	0	bilo	bi	*	*
+rule: il	1	rrsilo	rrsi	v	il
+guard: no space in the stem	0	mi rrsilo	mi rrsi	*	*
+guard: stem of 2 letters at least	0	rilo	ri	*	*
 guard: no capital stem	0	Brsilo	Brsi	*	*
 guard: no capital stem	0	Ĉrsilo	Ĉrsi	*	*
-guard: output is v	0	brsilo	brsi	n	*
-chain: input is n	1	gebrsilo	brsi	v	il|ge
+guard: output is v	0	rrsilo	rrsi	n	*
+chain: input is n	1	gerrsilo	rrsi	v	il|ge
 guard: excluded stem (Emilo)	0	emilo	emi	*	*
 guard: excluded stem (Bazilo)	0	bazilo	bazi	*	*
 rule: il	1	bbrilo	bbri	v	il

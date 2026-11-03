@@ -46,6 +46,18 @@ hoshidicts-cli or the batch lookup tool (sources/lookup-batch.cpp).
         inside a Tatoeba sentence (not its first word), looked up from that
         word to the end of the sentence; or the N (10,000) most frequent words
         of the list, looked up alone.
+
+    python3 measure.py plurals <lookup-batch> <languages> <imported dict> <json dir> <sentences.tsv.bz2> <hover dir>
+        [--options <ids>]
+        The capitalised plurals of a sentence corpus: every word of capital +
+        small letters ending in -oj, -aj, -ojn or -ajn, with the text from it
+        to the end of its sentence, written as a hover directory (hover.txt,
+        words.txt) and judged as `text` judges.
+
+    python3 measure.py misses <lookup-batch> <languages> <imported dict> <file.tsv>
+        The valid rows of a corpus whose term is not the first result of a
+        lookup of the whole source with every option on (eval-language's
+        firstRank), by category.
 """
 import bz2
 import collections
@@ -462,8 +474,56 @@ def command_names(args):
           f'({len(found)} distinct words) without a form-of row; listed in {out_file}')
 
 
+PLURAL = re.compile(r'(?<![\w\'\u2019])[A-ZĈĜĤĴŜŬ][a-zĉĝĥĵŝŭ]+(?:oj|aj)n?(?![\w\'\u2019])')
+
+
+def command_plurals(args):
+    options = option(args, '--options')
+    tool, languages, imported, json_dir, corpus, hover_dir = args
+    texts, words = [], []
+    with bz2.open(corpus, 'rt', encoding='utf-8') as f:
+        for line in f:
+            parts = line.rstrip('\n').split('\t')
+            if len(parts) < 3:
+                continue
+            sentence = parts[2]
+            for m in PLURAL.finditer(sentence):
+                texts.append(sentence[m.start():])
+                words.append(m.group(0))
+    import os
+    os.makedirs(hover_dir, exist_ok=True)
+    with open(f'{hover_dir}/hover.txt', 'w', encoding='utf-8') as f:
+        f.write('\n'.join(texts) + '\n')
+    with open(f'{hover_dir}/words.txt', 'w', encoding='utf-8') as f:
+        f.write('\n'.join(words) + '\n')
+    print(f'{len(texts)} capitalised plurals')
+    command_text([tool, languages, imported, json_dir, hover_dir, '--sample', '0'] + (['--options', options] if options else []))
+
+
+def command_misses(args):
+    tool, languages, imported, tsv = args
+    rows = [r for r in read_tsv(tsv) if r[1] == '1']
+    texts = [r[2] for r in rows]
+    # Every option on, and the whole source looked up (scan length at least
+    # its length), as eval-language's firstRank does.
+    longest = max(len(t) for t in texts)
+    command = [tool, languages, 'eo', imported, '--options', 'otherWordClass,hSystem', '--scan-length', str(max(16, longest))]
+    out = subprocess.run(command, input='\n'.join(texts) + '\n', capture_output=True, text=True, check=True).stdout
+    misses = collections.defaultdict(list)
+    for row, line in zip(rows, out.splitlines()):
+        results = json.loads(line)['results']
+        first = results[0]['expression'] if results else None
+        if first != row[3]:
+            category = re.sub(r' \((frequent|any)\)$', '', row[0])
+            misses[category].append(f'{row[2]}: {first} (want {row[3]})')
+    total = sum(len(v) for v in misses.values())
+    print(f'{len(rows)} rows; the term is not first for {total}')
+    for category, items in sorted(misses.items(), key=lambda x: -len(x[1])):
+        print(f'  {len(items)}\t{category}\t{"; ".join(items[:6])}')
+
+
 COMMANDS = {'fc': command_fc, 'frequent': command_frequent, 'phrases': command_phrases, 'text': command_text,
-            'names': command_names}
+            'names': command_names, 'plurals': command_plurals, 'misses': command_misses}
 
 if __name__ == '__main__':
     if len(sys.argv) < 2 or sys.argv[1] not in COMMANDS:

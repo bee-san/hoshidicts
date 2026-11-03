@@ -66,6 +66,13 @@ const capital = (s, letter) => letter + s.slice(1);
 function stemFor(rule, n) {
     const start = rule.stemStartsWithText ?? '';
     let stem = stemOf(n, start);
+    // A first copy whose stemNotStartsWith class leaves some first letters
+    // to the split copies takes a stem that starts with another letter.
+    const not = (rule.stemNotStartsWith ?? '').replace('{upper}', '');
+    if (start === '' && not.includes(stem[0])) {
+        const first = [...'rstpkdl'].find((c) => !not.includes(c));
+        stem = first + stem.slice(1);
+    }
     if (rule.stemEndsWith) {
         stem = stemOf(Math.max(n, start.length + 1) - 1, start) + rule.stemEndsWith[1];
     } else if (rule.stemNotEndsWith) {
@@ -124,7 +131,7 @@ for (const t of final.transforms) {
         // A stem one letter short; a split copy's start text is already as
         // long as that for the stems its minimum stops.
         if (min >= 1 && min - 1 >= start.length && !copy) {
-            const short = stem.slice(0, min - 1);
+            const short = stem.slice(0, Math.max(min - 1, 0));
             const [f, d] = make(short);
             if (d !== '' && f !== d) {
                 candidates.push([`guard: stem of ${min} letters at least`, '0', f, d, '*', '*']);

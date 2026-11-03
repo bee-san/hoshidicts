@@ -17,7 +17,12 @@
 # turned on by default. Each copy gets its own tests/classes.json (tools/check-
 # classes.mjs, with node from PATH) and is checked with build/language-
 # conformance-test. A mutation that every test survives is printed as
-# SURVIVED. [count] stops after that many mutations.
+# SURVIVED, or as EQUIVALENT when it changes no deinflection of any source of
+# the test files (texts and conditions, every option on), such as a split
+# copy of a rule that loses a constraint the other copies still make. A
+# change of order keeps the deinflections and changes only their order, so
+# it is never EQUIVALENT: one that no test sees is SURVIVED.
+# [count] stops after that many mutations.
 import copy
 import json
 import os
@@ -182,9 +187,42 @@ def run(name, edit, edit_l, index):
     r = subprocess.run([conformance, dest, os.path.join(repo, 'build')], capture_output=True, text=True)
     out = r.stdout + r.stderr
     failures = [line for line in out.splitlines() if line.startswith('FAIL') or 'error' in line.lower()]
+    status = 'KILLED' if r.returncode != 0 else 'SURVIVED'
+    order = 'order' in name or 'first' in name
+    if status == 'SURVIVED' and edit_l is None and not order and deinflections(os.path.join(root, 'languages')) == BASE_DEINFLECTIONS:
+        # The same deinflections (texts and conditions, every option on) for
+        # every source of the test files: the mutant makes no observable
+        # change there, such as a split copy that loses a constraint another
+        # copy still makes.
+        status = 'EQUIVALENT'
     shutil.rmtree(root)
-    return ('KILLED' if r.returncode != 0 else 'SURVIVED'), (failures[0] if failures else '')
+    return status, (failures[0] if failures else '')
 
+
+def test_sources():
+    texts = []
+    for name in ('corpus.tsv', 'cases.tsv', 'defaults.tsv', 'gaps.tsv', 'yomitan.tsv'):
+        for line in open(os.path.join(pack, 'tests', name), encoding='utf-8'):
+            if line.startswith('#') or not line.strip():
+                continue
+            texts.append(line.split('\t')[2])
+    for line in open(os.path.join(pack, 'tests', 'lookup.tsv'), encoding='utf-8'):
+        if not line.startswith('#') and line.strip():
+            texts.append(line.split('\t')[2])
+    return sorted(set(texts))
+
+
+SOURCES = test_sources()
+cli = os.path.join(repo, 'build', 'hoshidicts-cli')
+
+
+def deinflections(languages):
+    out = subprocess.run([cli, '--languages', languages, 'deinflect', 'eo', '--stdin', '--all-options'],
+                         input='\n'.join(SOURCES) + '\n', capture_output=True, text=True).stdout
+    return [sorted({(r['text'], tuple(r['conditions'])) for r in json.loads(line)['results']}) for line in out.splitlines()]
+
+
+BASE_DEINFLECTIONS = deinflections(os.path.join(repo, 'languages'))
 
 results = []
 limit = int(sys.argv[3]) if len(sys.argv) > 3 else None
@@ -196,4 +234,5 @@ for i, (name, edit, edit_l) in enumerate(mutations()):
     print(f'{status}\t{name}\t{detail[:160]}', flush=True)
 killed = sum(1 for s, _, _ in results if s == 'KILLED')
 print(f'{len(results)} mutations: {killed} killed, {sum(1 for s, _, _ in results if s == "SURVIVED")} survived, '
+      f'{sum(1 for s, _, _ in results if s == "EQUIVALENT")} equivalent, '
       f'{sum(1 for s, _, _ in results if s == "ERROR")} errors')

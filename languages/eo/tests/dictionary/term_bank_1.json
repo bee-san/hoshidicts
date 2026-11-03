@@ -68,5 +68,13 @@
   ["kata", "", "adj", "adj", 0, ["of cats"], 0, ""],
   ["ena", "", "adj", "adj", 0, ["inner"], 0, ""],
   ["hele", "", "adv", "adv", 0, ["brightly"], 0, ""],
-  ["min", "", "pron", "", 0, ["me (the accusative of mi)"], 0, ""]
+  ["min", "", "pron", "", 0, ["me (the accusative of mi)"], 0, ""],
+  ["decidi", "", "v", "v", 0, ["to decide"], 0, ""],
+  ["decido", "", "n", "n", 0, ["decision"], 0, ""],
+  ["fleksi", "", "v", "v", 0, ["to bend"], 0, ""],
+  ["fleksa", "", "adj", "adj", 0, ["flexible"], 0, ""],
+  ["stano", "", "n", "n", 0, ["tin"], 0, ""],
+  ["stani", "", "v", "v", 0, ["to tin"], 0, ""],
+  ["feliĉa", "", "adj", "adj", 0, ["happy"], 0, ""],
+  ["feliĉo", "", "n", "n", 0, ["happiness"], 0, ""]
 ]
