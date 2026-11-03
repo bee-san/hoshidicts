@@ -186,9 +186,11 @@ rules) is measured beside it below.
     negatives each.
 
   No Yomitan rule was left out because no corpus row needs it: each removal
-  has the counts above, and with the union's other rules every one of their
-  readings is still made by an own rule (the union rescues no position the
-  final set leaves empty, apart from those of `adjectival`).
+  has the counts above. On the four books the union finds a result at 2,084
+  lookups where the final set finds none: 1,857 through `adjectival`, which
+  `otherWordClass` makes when turned on, and 227 others, all wrong (*Ann* →
+  the letter *A* at 88, *in* → *I* at 69, *ron* → *ro*, *Mistra* → *tra*).
+  It changes 826 first results, the groups above.
 
 ## Measurements
 
