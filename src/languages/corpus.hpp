@@ -49,9 +49,9 @@ inline constexpr std::string_view default_options_line = "# options: default";
 // Readers for the three formats; false with `error` (file:line: reason) on a
 // malformed file. Lines starting with # are comments. With `options`, the
 // first line is also read as the file's options: `options` receives
-// TestOptions::Default for `# options: default`, and any other comment that
-// starts like it (`#`, `options` in any case, `:`) is an error, so a misspelt
-// or misplaced line never leaves a file in the wrong mode.
+// TestOptions::Default for `# options: default`, and any other comment whose
+// first word is `option` or `options`, in any case, is an error, so the usual
+// misspellings never leave a file in the wrong mode.
 bool read_corpus(const std::string& path, std::vector<CorpusRow>& rows, std::string* error,
                  TestOptions* options = nullptr);
 bool read_text_tsv(const std::string& path, std::vector<TextRow>& rows, std::string* error,

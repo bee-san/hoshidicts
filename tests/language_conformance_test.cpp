@@ -18,7 +18,7 @@
 //    with transforms has tests/corpus.tsv (Japanese: tests/yomitan.tsv).
 //    Each file runs with every optional processor, transform and variant
 //    pass on, or with none when its first line is `# options: default`
-//    (section 12.2).
+//    (section 12.2), which tests/defaults.tsv must have.
 // 5. Every `own` and `both` transform has a passing `valid = 1` row; the
 //    rules no row exercises are printed.
 // 6. README.md has the sections of languages/_template/README.md.
@@ -111,7 +111,7 @@ std::vector<std::string> corpus_strings(const fs::path& tests, const lang::PackD
     if (!s.empty() && seen.insert(s).second) out.push_back(s);
   };
   std::string error;
-  for (const char* name : {"yomitan.tsv", "corpus.tsv", "cases.tsv", "gaps.tsv"}) {
+  for (const char* name : {"yomitan.tsv", "corpus.tsv", "cases.tsv", "defaults.tsv", "gaps.tsv"}) {
     std::vector<lang::CorpusRow> rows;
     if (fs::exists(tests / name) && lang::read_corpus((tests / name).string(), rows, &error)) {
       for (const auto& row : rows) add(row.source);
@@ -469,7 +469,8 @@ int main(int argc, char** argv) {
   check_classes_json(tests, data);
 
   // 4 and 5. The test files.
-  std::set<std::string> known = {"yomitan.tsv", "corpus.tsv", "cases.tsv", "gaps.tsv", "text.tsv", "lookup.tsv"};
+  std::set<std::string> known = {"yomitan.tsv", "corpus.tsv", "cases.tsv", "defaults.tsv",
+                                 "gaps.tsv",    "text.tsv",   "lookup.tsv"};
   std::error_code ec;
   if (fs::is_directory(tests, ec)) {
     for (const auto& entry : fs::directory_iterator(tests)) {
@@ -486,13 +487,20 @@ int main(int argc, char** argv) {
   std::set<size_t> exercised_rules;
   std::set<uint16_t> exercised_transforms;
   bool limit_reached = false;
-  for (const char* name : {"yomitan.tsv", "corpus.tsv", "cases.tsv", "gaps.tsv"}) {
+  for (const char* name : {"yomitan.tsv", "corpus.tsv", "cases.tsv", "defaults.tsv", "gaps.tsv"}) {
     if (!fs::exists(tests / name)) continue;
     std::vector<lang::CorpusRow> rows;
     lang::TestOptions options = lang::TestOptions::All;
     if (!lang::read_corpus((tests / name).string(), rows, &error, &options)) {
       fail(error);
       continue;
+    }
+    // tests/defaults.tsv holds the hand-written rows that run with the pack's
+    // defaults (section 12.2), and says so on its first line.
+    if (std::string_view(name) == "defaults.tsv" && options != lang::TestOptions::Default) {
+      fail(std::string("tests/defaults.tsv runs with the pack's defaults: its first line is \"") +
+           std::string(lang::default_options_line) + "\"");
+      options = lang::TestOptions::Default;
     }
     const bool gaps = std::string_view(name) == "gaps.tsv";
     size_t passed = 0;

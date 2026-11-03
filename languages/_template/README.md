@@ -40,10 +40,11 @@ Every number with the recommended dictionary as published, form-of rows
 included (a number from a modified copy may follow, labelled):
 
 1. `hoshidicts-cli eval-language --dictionary` on `corpus.tsv` with
-   `gaps.tsv`, on `cases.tsv` and on `yomitan.tsv`, for your rules, Yomitan's
-   rules, their union and the final set: recall, negatives passed, false
-   candidates and first rank, with every option on and with the defaults (a
-   copy of each file with `# options: default` as its first line).
+   `gaps.tsv`, on `cases.tsv`, `defaults.tsv` and `yomitan.tsv`, for your
+   rules, Yomitan's rules, their union and the final set (your rules alone
+   where Yomitan has none): recall, negatives passed, false candidates and
+   first rank, with every option on and with the defaults (each file as it
+   is and a copy with its `# options: default` line added, or removed).
 2. Frequent forms: of the 10,000 most frequent words of a frequency list,
    how many a rule reaches, and how many of those, and what share of the
    list's tokens, show a wrong lemma as the first result with a definition.

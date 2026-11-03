@@ -18,23 +18,18 @@ std::vector<std::string> split(const std::string& text, char separator) {
   }
 }
 
-// A comment that starts like the options line: `#`, spaces, `options` in any
-// case, spaces, `:`.
+// A comment whose first word is `option` or `options`, in any case: what a
+// misspelt options line looks like (`# option: default`, `# options default`,
+// `#Options: default`).
 bool looks_like_options(std::string_view line) {
   size_t i = 1;
-  const auto skip_spaces = [&] {
-    while (i < line.size() && (line[i] == ' ' || line[i] == '\t')) ++i;
-  };
-  skip_spaces();
-  constexpr std::string_view word = "options";
-  if (line.size() - i < word.size()) return false;
-  for (size_t k = 0; k < word.size(); ++k) {
-    const char c = line[i + k];
-    if ((c >= 'A' && c <= 'Z' ? static_cast<char>(c - 'A' + 'a') : c) != word[k]) return false;
-  }
-  i += word.size();
-  skip_spaces();
-  return i < line.size() && line[i] == ':';
+  while (i < line.size() && (line[i] == ' ' || line[i] == '\t')) ++i;
+  const auto lower = [](char c) { return c >= 'A' && c <= 'Z' ? static_cast<char>(c - 'A' + 'a') : c; };
+  size_t end = i;
+  while (end < line.size() && lower(line[end]) >= 'a' && lower(line[end]) <= 'z') ++end;
+  std::string word;
+  for (size_t k = i; k < end; ++k) word += lower(line[k]);
+  return word == "option" || word == "options";
 }
 
 template <typename Row, typename Parse>

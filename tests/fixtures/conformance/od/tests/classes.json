@@ -17,5 +17,17 @@
       [225, 225]
     ]
   },
-  "steps": []
+  "steps": [
+    {
+      "processor": "decapitalize",
+      "step": 0,
+      "cases": [
+        ["están", "están"],
+        ["estan", "estan"],
+        ["walketh", "walketh"],
+        ["Trabajan", "trabajan"],
+        ["estar", "estar"]
+      ]
+    }
+  ]
 }

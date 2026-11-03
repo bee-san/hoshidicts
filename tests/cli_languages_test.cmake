@@ -298,6 +298,58 @@ file(WRITE ${OD}/misplaced.tsv "${OD_ROWS}# options: default\n")
 expect_message("eval-language: an options line below the first line" ${OD}/languages 1 ""
   [=[misplaced.tsv:5: an options line is "# options: default", and only on the first line]=]
   eval-language od ${OD}/misplaced.tsv)
+
+# firstRank's lookups turn on no optional processor with the defaults: in a
+# copy of od without the rule for estan, only the accent processor could reach
+# estar, so nothing is found.
+file(COPY ${FIXTURES}/conformance/od DESTINATION ${OD}/no-rule)
+file(READ ${OD}/no-rule/od/transforms.json rules)
+string(REPLACE [=[,
+        {"type": "suffix", "inflected": "an", "deinflected": "ar", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2}]=] "" without "${rules}")
+if(without STREQUAL rules)
+  message(SEND_ERROR "the od fixture has no rule for estan")
+endif()
+file(WRITE ${OD}/no-rule/od/transforms.json "${without}")
+expect_message("eval-language # options: default: firstRank without optional processors" ${OD}/no-rule 0
+  [=[{"options":"default","rows":3,"positives":3,"negatives":0,"recall":0,"negativesPassed":null,"falseCandidates":0,"firstRank":0}
+]=]
+  "" eval-language od ${OD}/default.tsv --dictionary ${OD}/od-test)
+# ... and no optional postprocessor: in a copy of od with one that replaces
+# estar by walk, the defaults still rank estar first for estan.
+file(COPY ${FIXTURES}/conformance/od DESTINATION ${OD}/post)
+file(READ ${OD}/post/od/language.json language)
+string(REPLACE [=["postprocessors": [],]=]
+               [=["postprocessors": [{"id": "walkInstead", "optional": true, "keepInput": false, "variants": [[{"map": {"estar": "walk"}}]]}],]=]
+               with_post "${language}")
+if(with_post STREQUAL language)
+  message(SEND_ERROR "the od fixture has postprocessors")
+endif()
+file(WRITE ${OD}/post/od/language.json "${with_post}")
+expect_message("eval-language # options: default: firstRank without optional postprocessors" ${OD}/post 0
+  [=[{"options":"default","rows":3,"positives":3,"negatives":0,"recall":0.3333333333333333,"negativesPassed":null,"falseCandidates":0.3333333333333333,"firstRank":0.3333333333333333}
+]=]
+  "" eval-language od ${OD}/default.tsv --dictionary ${OD}/od-test)
+# ... and no variant pass, while every option on runs them: Japanese cat
+# speech reads そんにゃ as そんな only with nekoSpeech.
+file(WRITE ${OD}/ja-dictionary/index.json "{\"title\": \"ja-neko-test\", \"revision\": \"1\", \"format\": 3}\n")
+file(WRITE ${OD}/ja-dictionary/term_bank_1.json "[[\"そんな\", \"そんな\", \"adj-pn\", \"\", 0, [\"such\"], 1, \"\"]]\n")
+execute_process(COMMAND ${CMAKE_COMMAND} -E tar cf ${OD}/ja-neko-test.zip --format=zip index.json term_bank_1.json
+                WORKING_DIRECTORY ${OD}/ja-dictionary RESULT_VARIABLE rc)
+execute_process(COMMAND ${CLI} import ${OD}/ja-neko-test.zip OUTPUT_VARIABLE out ERROR_VARIABLE err RESULT_VARIABLE import_rc)
+if(NOT rc EQUAL 0 OR NOT import_rc EQUAL 0 OR NOT IS_DIRECTORY ${OD}/ja-neko-test)
+  message(SEND_ERROR "the Japanese test dictionary does not import: exit ${rc}, ${import_rc}\n  stdout: ${out}\n  stderr: ${err}")
+endif()
+set(SONNA_ROWS "# category\tvalid\tsource\tterm\trule\treasons\nneko\t1\tそんにゃ\tそんな\t*\t*\n")
+file(WRITE ${OD}/sonna-all.tsv "${SONNA_ROWS}")
+file(WRITE ${OD}/sonna-default.tsv "# options: default\n${SONNA_ROWS}")
+expect("eval-language ja --dictionary: firstRank with the nekoSpeech pass" 0
+  [=[{"rows":1,"positives":1,"negatives":0,"recall":1,"negativesPassed":null,"falseCandidates":0,"firstRank":1}
+]=]
+  eval-language ja ${OD}/sonna-all.tsv --dictionary ${OD}/ja-neko-test)
+expect("eval-language ja --dictionary # options: default: firstRank without it" 0
+  [=[{"options":"default","rows":1,"positives":1,"negatives":0,"recall":0,"negativesPassed":null,"falseCandidates":0,"firstRank":0}
+]=]
+  eval-language ja ${OD}/sonna-default.tsv --dictionary ${OD}/ja-neko-test)
 file(REMOVE_RECURSE ${OD})
 
 # An unknown language: the error, and no runtime line after it.

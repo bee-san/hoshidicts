@@ -445,11 +445,12 @@ if(HOSHIDICTS_LANGUAGE_TESTS)
                      -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/conformance_refuses_test.cmake)
     # A test file whose first line is `# options: default` runs with the
     # pack's defaults, every other file with every option on (12.2): the od
-    # fixture, and copies with a rule removed and the line removed, moved or
-    # misspelt.
+    # fixture, copies with a rule removed and the line removed, added, moved
+    # or misspelt, and a copy of the Japanese pack with such a lookup.tsv.
     add_test(NAME language-options-default
              COMMAND ${CMAKE_COMMAND} -DTEST=$<TARGET_FILE:language-conformance-test>
                      -DPACK=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/conformance/od
+                     -DJA=${CMAKE_CURRENT_SOURCE_DIR}/languages/ja
                      -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}
                      -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/conformance_options_test.cmake)
 endif()

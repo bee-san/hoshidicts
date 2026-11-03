@@ -27,6 +27,11 @@
     "searchResolution": "word",
     "preprocessors": [
       {
+        "id": "decapitalize",
+        "name": "Decapitalize text",
+        "variants": [[{"case": "lower"}]]
+      },
+      {
         "id": "addMissingAccents",
         "name": "Add missing accents",
         "optional": true,

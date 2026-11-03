@@ -375,7 +375,7 @@ export async function compareRules({root, pack, cli, languagesDir, differences})
     const testFile = findTransformTest(root, pack.code);
     const testSources = testFile === null ? [] : (await loadTransformTests(root, testFile)).flatMap((c) => c.tests.map((t) => t.source));
     const corpusWords = [];
-    for (const name of ['corpus.tsv', 'cases.tsv']) {
+    for (const name of ['corpus.tsv', 'cases.tsv', 'defaults.tsv']) {
         const file = join(pack.dir, 'tests', name);
         if (existsSync(file)) {
             for (const row of readDeinflectionTsv(file).rows) { corpusWords.push(row.source, row.term); }
