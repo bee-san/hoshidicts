@@ -173,7 +173,7 @@ gaps_file = os.path.join(tests, 'gaps.tsv')
 hand = []
 if os.path.exists(gaps_file):
     hand = [line for line in open(gaps_file, encoding='utf-8').read().splitlines()
-            if line and not line.startswith('#') and line.split('\t')[0].endswith(('(frequent)', '(any)')) is False]
+            if line and not line.startswith('#') and not line.split('\t')[0].endswith(('(frequent)', '(any)'))]
 with open(gaps_file, 'w', encoding='utf-8') as f:
     f.write('# Known failures: reported, not enforced (docs/languages.md 12.2).\n')
     f.write('# Rows whose category ends in (frequent) or (any) are the sampled rows of corpus.tsv the final rules do not reach;\n')

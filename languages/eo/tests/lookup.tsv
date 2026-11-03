@@ -1,0 +1,32 @@
+# Source: written for this pack (GPL-3.0-or-later), against tests/dictionary/. Every optional processor and transform is on.
+# category	valid	text	expression	matched
+inflection	1	manĝis en malgranda restoracio	manĝi	manĝis
+inflection	1	manĝis ni hieraŭ	manĝi	manĝis
+inflection	1	legantajn librojn	legi	legantajn
+inflection	1	domojn kaj ĝardenojn	domo	domojn
+inflection	1	belan tagon	bela	belan
+inflection	1	iru hejmen	iri	iru
+capitals	1	Manĝis li?	manĝi	Manĝis
+capitals	1	MANĜIS	manĝi	MANĜIS
+capitals	1	Parizon en printempo	Parizo	Parizon
+word formation	1	ekridetis subite	ekridi	ekridetis
+word formation	1	dometo apud la rivero	domo	dometo
+word formation	1	rapide kuris	rapida	rapide
+word formation	1	kaŭze de la pluvo	kaŭzo	kaŭze
+word formation	1	lavujo plena	lavi	lavujo
+pronouns	1	min vidis	mi	min
+pronouns	1	kiujn vi vidis	kiu	kiujn
+apostrophe	1	dank' al vi	dank' al	dank' al
+apostrophe	1	dank’ al vi	dank' al	dank’ al
+apostrophe	1	kor' al kor'	koro	kor'
+phrases	1	ĝis revido, amiko	ĝis revido	ĝis revido
+phrases	1	tiun ĉi libron	tiu ĉi	tiun ĉi
+x-system	1	mangxis pomon	manĝi	mangxis
+h-system	1	ankau mi	ankaŭ	ankau
+first result	1	Marta venis	Marta	Marta
+first result	1	Sinjorino Marta	sinjorino	Sinjorino
+first result	1	Sinjoro estas mia paŝtisto	Sinjoro	Sinjoro
+first result	1	En la domo	en	En
+first result	1	kaj tiam	kaj	kaj
+first result	1	jen la libro	jen	jen
+first result	1	hejmen iris	hejme	hejmen
