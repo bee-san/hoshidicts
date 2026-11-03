@@ -13,6 +13,7 @@
     "stemChar": "[{letter}\\u0300-\\u036F0-9\\-]",
     "upper": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]",
     "lower": "[a-z\\u00DF-\\u00F6\\u00F8-\\u00FF]",
+    "lowerInitial": "[a-z\\u00E0-\\u00F6\\u00F8-\\u00FE]",
     "consonant": "[bcdfghjklmnpqrstvwxzß]",
     "vowel": "[aeiouyäöü]"
   },

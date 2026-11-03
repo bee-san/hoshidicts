@@ -1,0 +1,26 @@
+# Source: written for this pack (GPL-3.0-or-later), against tests/dictionary/. The pack has no optional feature.
+# category	valid	text	expression	matched
+sentence start	1	Alles klar.	alles	Alles
+sentence start	1	Lassen Sie das.	lassen	Lassen
+sentence start	1	Sagen Sie mir, wann.	sagen	Sagen
+sentence start	0	Alles klar.	All	Alles
+sentence start	0	Lassen Sie das.	Lasso	Lassen
+nouns	1	Häusern	Haus	Häusern
+nouns	1	Kindern gegeben.	Kind	Kindern
+nouns	1	Busse fahren hier.	Bus	Busse
+nouns	1	Häuser stehen leer.	Haus	Häuser
+separated	1	kommt morgen an.	ankommen	kommt morgen an.
+separated	1	Hör auf!	aufhören	Hör auf!
+separated	1	sieht fern, wenn	fernsehen	sieht fern,
+separated	1	wartet auf den Bus.	warten	wartet
+separated	0	wartet auf den Bus.	aufwarten	wartet auf
+subordinate clause	1	ankommt, ist es spät.	ankommen	ankommt
+verbs	1	ging nach Hause.	gehen	ging
+verbs	1	gefällt mir.	gefallen	gefällt
+old spellings	1	schloß die Tür.	schließen	schloß
+old spellings	1	daß er kommt.	dass	daß
+old spellings	1	Strasse	Straße	Strasse
+contractions	1	zum Bahnhof	zu	zum
+derivations	1	Erreichung des Ziels	erreichen	Erreichung
+derivations	1	unmöglich	möglich	unmöglich
+compounds	1	Hausaufgaben	Haus	Haus

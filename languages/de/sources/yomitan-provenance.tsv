@@ -1,0 +1,148 @@
+# Every rule of sources/yomitan.json (Yomitan d3c54c1, GPL-3.0-or-later, Copyright (C) 2024-2026 Yomitan Authors), whether
+# transforms.json keeps it, and the own rules of transforms.json that make the same deinflection (marked source "both").
+# Written by sources/build-final.mjs.
+# transform	rule	deinflection	in transforms.json	own rules with that deinflection
+nominalization	0	suffix ung -> en	kept	-
+nominalization	1	suffix lung -> eln	kept	-
+nominalization	2	suffix rung -> rn	kept	-
+-bar	0	suffix bar -> en	kept	-
+-bar	1	suffix bar -> n	kept	-
+negative	0	prefix un -> 	kept	-
+past participle	0	ge-, -t -> n	kept	past-participle[0] past-participle[1] past-participle[2] past-participle[3]
+past participle	1	ge-, -t -> en	kept	past-participle[0] past-participle[1] past-participle[2] past-participle[3]
+past participle	2	66 prefixes + ge-, -t -> n	kept	past-participle[0] past-participle[1] past-participle[2] past-participle[3]
+past participle	3	66 prefixes + ge-, -t -> en	kept	past-participle[0] past-participle[1] past-participle[2] past-participle[3]
+separated prefix	0	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ ab$ -> $1 ab	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	1	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ an$ -> $1 an	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	2	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ auf$ -> $1 auf	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	3	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ aus$ -> $1 aus	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	4	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ auseinander$ -> $1 auseinander	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	5	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ bei$ -> $1 bei	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	6	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ da$ -> $1 da	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	7	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ dabei$ -> $1 dabei	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	8	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ dar$ -> $1 dar	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	9	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ daran$ -> $1 daran	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	10	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ dazwischen$ -> $1 dazwischen	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	11	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ durch$ -> $1 durch	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	12	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ ein$ -> $1 ein	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	13	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ empor$ -> $1 empor	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	14	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ entgegen$ -> $1 entgegen	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	15	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ entlang$ -> $1 entlang	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	16	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ entzwei$ -> $1 entzwei	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	17	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ fehl$ -> $1 fehl	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	18	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ fern$ -> $1 fern	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	19	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ fest$ -> $1 fest	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	20	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ fort$ -> $1 fort	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	21	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ frei$ -> $1 frei	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	22	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ gegenüber$ -> $1 gegenüber	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	23	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ gleich$ -> $1 gleich	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	24	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ heim$ -> $1 heim	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	25	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ her$ -> $1 her	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	26	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ herab$ -> $1 herab	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	27	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ heran$ -> $1 heran	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	28	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ herauf$ -> $1 herauf	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	29	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ heraus$ -> $1 heraus	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	30	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ herbei$ -> $1 herbei	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	31	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ herein$ -> $1 herein	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	32	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ herüber$ -> $1 herüber	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	33	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ herum$ -> $1 herum	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	34	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ herunter$ -> $1 herunter	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	35	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ hervor$ -> $1 hervor	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	36	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ hin$ -> $1 hin	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	37	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ hinab$ -> $1 hinab	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	38	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ hinauf$ -> $1 hinauf	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	39	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ hinaus$ -> $1 hinaus	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	40	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ hinein$ -> $1 hinein	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	41	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ hinterher$ -> $1 hinterher	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	42	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ hinunter$ -> $1 hinunter	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	43	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ hinweg$ -> $1 hinweg	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	44	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ hinzu$ -> $1 hinzu	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	45	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ hoch$ -> $1 hoch	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	46	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ los$ -> $1 los	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	47	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ mit$ -> $1 mit	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	48	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ nach$ -> $1 nach	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	49	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ nebenher$ -> $1 nebenher	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	50	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ nieder$ -> $1 nieder	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	51	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ statt$ -> $1 statt	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	52	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ um$ -> $1 um	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	53	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ vor$ -> $1 vor	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	54	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ voran$ -> $1 voran	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	55	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ voraus$ -> $1 voraus	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	56	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ vorbei$ -> $1 vorbei	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	57	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ vorüber$ -> $1 vorüber	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	58	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ vorweg$ -> $1 vorweg	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	59	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ weg$ -> $1 weg	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	60	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ weiter$ -> $1 weiter	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	61	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ wieder$ -> $1 wieder	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	62	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ zu$ -> $1 zu	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	63	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ zurecht$ -> $1 zurecht	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	64	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ zurück$ -> $1 zurück	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+separated prefix	65	^([a-zA-Z\u00E4\u00F6\u00FC\u00DF\u00C4\u00D6\u00DC\u1E9E]+) .+ zusammen$ -> $1 zusammen	left out: reads a preposition as a separated particle and puts a wrong verb first (README.md, Rule provenance)	-
+zu-infinitive	0	prefix abzu -> ab	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	1	prefix anzu -> an	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	2	prefix aufzu -> auf	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	3	prefix auszu -> aus	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	4	prefix auseinanderzu -> auseinander	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	5	prefix beizu -> bei	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	6	prefix dazu -> da	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	7	prefix dabeizu -> dabei	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	8	prefix darzu -> dar	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	9	prefix daranzu -> daran	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	10	prefix dazwischenzu -> dazwischen	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	11	prefix durchzu -> durch	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	12	prefix einzu -> ein	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	13	prefix emporzu -> empor	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	14	prefix entgegenzu -> entgegen	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	15	prefix entlangzu -> entlang	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	16	prefix entzweizu -> entzwei	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	17	prefix fehlzu -> fehl	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	18	prefix fernzu -> fern	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	19	prefix festzu -> fest	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	20	prefix fortzu -> fort	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	21	prefix freizu -> frei	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	22	prefix gegenüberzu -> gegenüber	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	23	prefix gleichzu -> gleich	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	24	prefix heimzu -> heim	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	25	prefix herzu -> her	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	26	prefix herabzu -> herab	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	27	prefix heranzu -> heran	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	28	prefix heraufzu -> herauf	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	29	prefix herauszu -> heraus	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	30	prefix herbeizu -> herbei	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	31	prefix hereinzu -> herein	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	32	prefix herüberzu -> herüber	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	33	prefix herumzu -> herum	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	34	prefix herunterzu -> herunter	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	35	prefix hervorzu -> hervor	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	36	prefix hinzu -> hin	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	37	prefix hinabzu -> hinab	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	38	prefix hinaufzu -> hinauf	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	39	prefix hinauszu -> hinaus	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	40	prefix hineinzu -> hinein	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	41	prefix hinterherzu -> hinterher	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	42	prefix hinunterzu -> hinunter	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	43	prefix hinwegzu -> hinweg	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	44	prefix hinzuzu -> hinzu	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	45	prefix hochzu -> hoch	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	46	prefix loszu -> los	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	47	prefix mitzu -> mit	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	48	prefix nachzu -> nach	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	49	prefix nebenherzu -> nebenher	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	50	prefix niederzu -> nieder	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	51	prefix stattzu -> statt	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	52	prefix umzu -> um	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	53	prefix vorzu -> vor	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	54	prefix voranzu -> voran	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	55	prefix vorauszu -> voraus	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	56	prefix vorbeizu -> vorbei	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	57	prefix vorüberzu -> vorüber	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	58	prefix vorwegzu -> vorweg	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	59	prefix wegzu -> weg	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	60	prefix weiterzu -> weiter	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	61	prefix wiederzu -> wieder	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	62	prefix zuzu -> zu	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	63	prefix zurechtzu -> zurecht	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	64	prefix zurückzu -> zurück	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+zu-infinitive	65	prefix zusammenzu -> zusammen	left out: the own zu-infinitive rule makes this deinflection; the prefix rule also reads dazu ist and einzu... (README.md)	zu-infinitive[0]
+-heit	0	suffix heit -> 	kept	-
+-heit	1	suffix keit -> 	kept	-

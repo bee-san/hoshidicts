@@ -100,7 +100,23 @@ function form(id, inflected, deinflected, conditionsIn, conditionsOut) {
     entry.seen.add(pair);
     entry.pairs.push([inflected, deinflected]);
 }
+// The spelling before 1996 wrote ß for ss at the end of a word and before a
+// consonant (schloß, mußte, läßt, gewußt). Old texts use it, and the
+// eszettPreprocessor's ss reading costs a processor step, which loses to a
+// dictionary row of the old spelling that names another word (Schloß ->
+// Schloss), so the listed verb forms get their old spelling too.
+const OLD_SPELLING = /ss(?=$|[^aeiouyäöü])/gu;
 function writeListed() {
+    for (const entry of listed.values()) {
+        if (entry.conditionsOut !== VERB_OUT) { continue; }
+        for (const [inflected, deinflected] of [...entry.pairs]) {
+            const old = inflected.replace(OLD_SPELLING, 'ß');
+            if (old !== inflected && !entry.seen.has(`${old}\u0000${deinflected}`)) {
+                entry.seen.add(`${old}\u0000${deinflected}`);
+                entry.pairs.push([old, deinflected]);
+            }
+        }
+    }
     for (const {id, conditionsIn, conditionsOut, pairs} of listed.values()) {
         add(id, {type: 'circumfix', prefixes: [['', '']], suffixes: pairs, conditionsIn, conditionsOut});
     }
@@ -206,6 +222,7 @@ salzen | - | - | - | - | gesalzen
 saufen | säufst säuft | - | soff | söffe | gesoffen
 saugen | - | - | sog | söge | gesogen
 schaffen | - | - | schuf | schüfe | geschaffen
+scheißen | - | - | schiss | schisse | geschissen
 scheiden | - | - | schied | schiede | geschieden
 scheinen | - | - | schien | schiene | geschienen
 schelten | schiltst schilt | schilt | schalt | schölte | gescholten
@@ -248,6 +265,7 @@ stehen | - | - | stand | stünde,stände | gestanden
 stehlen | stiehlst stiehlt | stiehl | stahl | stähle,stöhle | gestohlen
 steigen | - | - | stieg | stiege | gestiegen
 sterben | stirbst stirbt | stirb | starb | stürbe | gestorben
+stieben | - | - | stob | stöbe | gestoben
 stinken | - | - | stank | stänke | gestunken
 stoßen | stößt stößt | - | stieß | stieße | gestoßen
 streichen | - | - | strich | striche | gestrichen
@@ -258,6 +276,7 @@ treiben | - | - | trieb | triebe | getrieben
 treten | trittst tritt | tritt | trat | träte | getreten
 trinken | - | - | trank | tränke | getrunken
 trügen | - | - | trog | tröge | getrogen
+verbleichen | - | - | verblich | verbliche | verblichen
 verderben | verdirbst verdirbt | verdirb | verdarb | verdürbe | verdorben
 verdrießen | - | - | verdross | verdrösse | verdrossen
 vergessen | vergisst vergisst | vergiss | vergaß | vergäße | vergessen
@@ -290,7 +309,7 @@ nennen | - | nannte | nennte | genannt
 rennen | - | rannte | rennte | gerannt
 senden | - | sandte | - | gesandt
 wenden | - | wandte | - | gewandt
-haben | - | hatte | hätte | -
+haben | - | hatte | hätte | gehabt
 wissen | weiß weißt | wusste | wüsste | gewusst
 dürfen | darf darfst | durfte | dürfte | gedurft
 können | kann kannst | konnte | könnte | gekonnt
@@ -325,6 +344,11 @@ const PARTICLES = [
     'raus', 'rein', 'rüber', 'rum', 'runter', 'schief', 'statt', 'still', 'teil', 'tot', 'über', 'überein', 'um',
     'umher', 'unter', 'voll', 'voran', 'voraus', 'vorbei', 'vorüber', 'vorweg', 'vor', 'wach', 'wahr', 'warm', 'weg',
     'weh', 'weiter', 'wider', 'wieder', 'zu', 'zurecht', 'zurück', 'zusammen', 'zuvor', 'zwischen',
+    // less frequent particles, and words written together with the verb in
+    // the older spelling (stehenbleiben, kennenlernen)
+    'abhanden', 'anheim', 'aufrecht', 'beiseite', 'dran', 'drin', 'drüber', 'drum', 'drunter', 'fallen', 'gegen', 'groß',
+    'hängen', 'inne', 'klein', 'kurz', 'liegen', 'nebenher', 'ran', 'schön', 'schwarz', 'sitzen', 'spazieren', 'stecken',
+    'stehen', 'überhand', 'übrig', 'umhin', 'weis', 'wett', 'zugute',
 ];
 
 // --- Verb transforms ---------------------------------------------------------------
@@ -339,7 +363,7 @@ transform('present-du-er', 'present (du, er)',
 transform('present-er', 'present (er, ihr)',
     'Present tense, third person singular, which is also the second person plural and its imperative (er macht, arbeitet, gibt, fährt; ihr macht, macht!).');
 transform('present-wir', 'present (wir, sie)',
-    'Present tense, first and third person plural, which other verbs write like the infinitive (wir sind, sie sind).');
+    'Present tense, first and third person plural, written like the infinitive (wir fangen ... an, sie kommen ... zurück; wir sind, sie sind).');
 transform('imperative', 'imperative (du)',
     'Imperative, second person singular, without -e (mach!, komm!, gib!, nimm!, sieh!, lies!, sei!).');
 transform('past-participle', 'past participle',
@@ -376,7 +400,6 @@ transform('separated-prefix', 'separated prefix',
 // small letters; decapitalize and capitalizeFirstLetter give sentence-initial
 // words (Gingen sie?) and lowercased nouns (häuser) the other case.
 const LOWER = '{lower}';
-const UPPER = '{upper}';
 const MIN2 = {stemMinLength: 2, stemStartsWith: LOWER};
 const DTMN = {stemMinLength: 2, stemStartsWith: LOWER, stemEndsWith: '[dtmn]'};
 // present
@@ -385,7 +408,9 @@ suffix('present-ich', 'le', 'eln', FINITE_IN, VERB_OUT, MIN2);
 suffix('present-ich', 'ele', 'eln', FINITE_IN, VERB_OUT, MIN2);
 suffix('present-ich', 're', 'ern', FINITE_IN, VERB_OUT, MIN2);
 suffix('present-ich', 'ere', 'ern', FINITE_IN, VERB_OUT, MIN2);
-suffix('present-du', 'st', 'en', FINITE_IN, VERB_OUT, MIN2);
+// A stem in s, ß, x or z takes -t for du (du reist, heißt, mixt, tanzt), so
+// weisst is not weisen.
+suffix('present-du', 'st', 'en', FINITE_IN, VERB_OUT, {...MIN2, stemNotEndsWith: '[sßxz]'});
 suffix('present-du', 'est', 'en', FINITE_IN, VERB_OUT, DTMN);
 suffix('present-du', 'elst', 'eln', FINITE_IN, VERB_OUT, MIN2);
 suffix('present-du', 'erst', 'ern', FINITE_IN, VERB_OUT, MIN2);
@@ -395,7 +420,9 @@ suffix('present-er', 'elt', 'eln', FINITE_IN, VERB_OUT, MIN2);
 suffix('present-er', 'ert', 'ern', FINITE_IN, VERB_OUT, MIN2);
 // imperative without -e: not after d or t (warte!, arbeite! keep the -e,
 // which present-ich reads), and only after a consonant or u (freu dich!).
-suffix('imperative', '', 'en', FINITE_IN, VERB_OUT, {stemMinLength: 2, stemStartsWith: LOWER, stemEndsWith: '[bcfghjklmnpqrsvwxzßu]'});
+// schloß is the spelling before 1996 of schloss (schließen), not the
+// imperative of the rare schloßen (to hail), which came first for it.
+suffix('imperative', '', 'en', FINITE_IN, VERB_OUT, {stemMinLength: 2, stemStartsWith: LOWER, stemEndsWith: '[bcfghjklmnpqrsvwxzßu]', stemNotStartsWithText: 'schloß'});
 suffix('imperative', 'el', 'eln', FINITE_IN, VERB_OUT, MIN2);  // wandel!, sammel!
 suffix('imperative', 'er', 'ern', FINITE_IN, VERB_OUT, MIN2);  // steiger!, bedauer!
 // past participle: the last ge- of the stem is removed (gemacht, eingekauft,
@@ -450,7 +477,12 @@ for (const [[inf], present, imperatives, preterites, subjunctives, participles] 
     for (const imperative of imperatives) { form('imperative', imperative, inf, FINITE_IN, VERB_OUT); }
     for (const pt of preterites) {
         form('past', pt, inf, FINITE_IN, VERB_OUT);
-        form('past-du', `${pt}st`, inf, FINITE_IN, VERB_OUT);
+        // du las-est, aß-est, bisst (not lasst, which is lassen), du fand-st, fand-est
+        if (/[sßxz]$/u.test(pt)) {
+            form('past-du', `${pt}t`, inf, FINITE_IN, VERB_OUT);
+        } else {
+            form('past-du', `${pt}st`, inf, FINITE_IN, VERB_OUT);
+        }
         if (VOWEL_END.test(pt) && !pt.endsWith('h')) {
             form('past-wir', `${pt}n`, inf, FINITE_IN, VERB_OUT);  // schrien, spien
         }
@@ -508,18 +540,20 @@ for (const [[inf], present, preterites, subjunctives, participles] of parse(MIXE
 }
 
 // After an inseparable prefix a participle has no ge- (verstanden,
-// bekommen, unterschrieben, missverstanden): one cross-product rule over the
-// prefixes and the participles whose stem differs from the infinitive.
-add('past-participle', {
-    type: 'circumfix', prefixes: INSEPARABLE.map((p) => [p, p]), suffixes: inseparable,
-    conditionsIn: ['adj'], conditionsOut: VERB_OUT,
-});
+// bekommen, unterschrieben, missverstanden), also when a separable particle
+// comes before the prefix (anerkannt, vorbekommen): the prefix and the
+// participle are an ending of their own.
+for (const prefix of INSEPARABLE) {
+    for (const [stem, inf] of inseparable) {
+        form('past-participle', `${prefix}${stem}`, `${prefix}${inf}`, ['adj'], VERB_OUT);
+    }
+}
 
 // haben, werden and tun, whose present forms are irregular.
 for (const [id, word, inf] of [
     ['present-du', 'hast', 'haben'], ['present-er', 'hat', 'haben'],
     ['present-du', 'wirst', 'werden'], ['present-er', 'wird', 'werden'],
-    ['past', 'ward', 'werden'], ['past-du', 'wardst', 'werden'],
+    ['past', 'ward', 'werden'], ['past-du', 'wardst', 'werden'], ['past-du', 'wardest', 'werden'],
     ['present-ich', 'tue', 'tun'], ['present-du', 'tust', 'tun'], ['present-er', 'tut', 'tun'],
     ['imperative', 'tu', 'tun'], ['subjunctive-1', 'tuest', 'tun'], ['subjunctive-1', 'tuet', 'tun'],
     ['past', 'tat', 'tun'], ['past-du', 'tatst', 'tun'], ['past-du', 'tatest', 'tun'], ['past-wir', 'taten', 'tun'], ['past-ihr', 'tatet', 'tun'],
@@ -552,73 +586,31 @@ add('zu-infinitive', {
 // without punctuation, then the particle, then a punctuation mark or und/oder
 // that ends the clause. Without the punctuation mark the particle would also
 // be read where it is a preposition (wartet lange auf den Bus -> aufwarten).
-// The result is the verb with its particle in front, which the rules for
-// finite forms (sep) read, or which is already a verb (fangen ... an).
+// The result is the verb with its particle in front, which only the rules
+// for finite forms read (sep): a word before the particle that is not a
+// finite verb gives nothing (sah ihn lächelnd an. from lächelnd is not
+// anlächeln). The first and third person plural, which are written like the
+// infinitive (wir fangen morgen an.), are read by the present-wir rules
+// below.
 const particleAlternation = [...PARTICLES].sort((a, b) => b.length - a.length || (a < b ? -1 : 1)).join('|');
 const MIDDLE = '(?: [^ .!?,;:…]+)*';
 for (const [anchor, source] of [['.', '\\.'], ['!', '!'], ['?', '\\?'], [',', ','], [';', ';'], [':', ':'], ['…', '…'],
     [' und', ' und'], [' oder', ' oder']]) {
     add('separated-prefix', {
         type: 'pattern', pattern: `^([a-zäöüß]+)${MIDDLE} (${particleAlternation})${source}$`, replacement: '$2$1',
-        anchorSuffix: anchor, conditionsIn: [], conditionsOut: ['sep', 'v'],
+        anchorSuffix: anchor, conditionsIn: [], conditionsOut: ['sep'],
     });
 }
-
-// --- Nouns ---------------------------------------------------------------------------
-transform('plural', 'plural',
-    'Plural of a noun (Tage, Bäume, Kinder, Häuser, Mütter, Äpfel, Blumen, Frauen, Lehrerinnen, Autos, Ergebnisse, Museen, Themen).');
-transform('genitive', 'genitive',
-    'Genitive singular (des Vaters, des Tages, des Hauses, des Namens, Peters, Deutschlands).');
-transform('plural-s', 'plural',
-    'Plural in -s of a noun that ends in a consonant (Hotels, Jobs, Teams).');
-transform('dative-plural', 'dative plural',
-    'Dative plural, the plural with -n added (den Tagen, den Kindern, den Äpfeln).');
-
-const UMLAUTS = [['äu', 'au'], ['ä', 'a'], ['ö', 'o'], ['ü', 'u'], ['Äu', 'Au'], ['Ä', 'A'], ['Ö', 'O'], ['Ü', 'U']];
-const umlaut = (from, to) => ({from: [from], to, occurrence: 'last', between: '{consonant}', betweenMinLength: 1});
-const PLURAL_IN = ['np'];
-const NOUN_OUT = ['n'];
-const NOUN = {stemMinLength: 2, stemStartsWith: UPPER};
-suffix('plural', 'e', '', PLURAL_IN, NOUN_OUT, NOUN);
-suffix('plural', 'er', '', PLURAL_IN, NOUN_OUT, NOUN);
-for (const [from, to] of UMLAUTS) {
-    const extra = {stemMinLength: 1, stemStartsWith: UPPER, stemChange: umlaut(from, to)};
-    suffix('plural', 'e', '', PLURAL_IN, NOUN_OUT, extra);
-    suffix('plural', 'er', '', PLURAL_IN, NOUN_OUT, extra);
-    for (const end of ['er', 'el', 'en']) {  // Mütter, Äpfel, Gärten
-        suffix('plural', end, end, PLURAL_IN, NOUN_OUT, extra);
-    }
+// The plural forms of a verb with its particle put back (anfangen, einsammeln,
+// zurückwandern) are its infinitive.
+for (const end of ['en', 'eln', 'ern']) {
+    add('present-wir', {type: 'suffix', inflected: end, deinflected: end, conditionsIn: FINITE_IN, conditionsOut: VERB_OUT, stemMinLength: 2});
 }
-suffix('plural', 'n', '', PLURAL_IN, NOUN_OUT, {...NOUN, stemEndsWith: '[elr]'});
-suffix('plural', 'en', '', PLURAL_IN, NOUN_OUT, NOUN);
-suffix('plural', 'innen', 'in', PLURAL_IN, NOUN_OUT, NOUN);
-suffix('plural', 's', '', PLURAL_IN, NOUN_OUT, {...NOUN, stemEndsWith: '[aeiouyäöü]'});
-suffix('plural', 'nisse', 'nis', PLURAL_IN, NOUN_OUT, NOUN);
-suffix('plural', 'usse', 'us', PLURAL_IN, NOUN_OUT, NOUN);
-suffix('plural', 'asse', 'as', PLURAL_IN, NOUN_OUT, NOUN);  // Atlasse
-suffix('plural', 'isse', 'is', PLURAL_IN, NOUN_OUT, NOUN);  // Kürbisse, Iltisse
-suffix('plural', 'osse', 'os', PLURAL_IN, NOUN_OUT, NOUN);  // Rhinozerosse
-form('plural', 'Bauten', 'Bau', PLURAL_IN, NOUN_OUT);
-form('plural', 'bauten', 'bau', PLURAL_IN, NOUN_OUT);  // Neubauten
-// Latin, Greek and Italian plurals.
-for (const [inflected, deinflected] of [
-    ['en', 'um'], ['een', 'eum'], ['ien', 'ium'], ['ien', 'ion'], ['en', 'a'], ['en', 'us'], ['en', 'os'], ['een', 'us'],
-    ['en', 'o'], ['en', 'is'], ['a', 'um'], ['a', 'on'], ['ata', 'a'], ['ien', ''], ['i', 'o'], ['izes', 'ix'], ['izes', 'ex'],
-]) {
-    suffix('plural', inflected, deinflected, PLURAL_IN, NOUN_OUT, {stemMinLength: 3, stemStartsWith: UPPER});
-}
-// Genitive: nouns and names are capitalized; a name has no part of speech in
-// wiktionary-to-yomitan, so the genitive keeps every part of speech.
-const CAPITAL = {stemMinLength: 2, stemStartsWith: UPPER};
-suffix('genitive', 's', '', [], [], CAPITAL);
-suffix('genitive', 'es', '', [], [], CAPITAL);
-suffix('genitive', 'ens', 'e', [], [], CAPITAL);
-suffix('genitive', 'ens', '', [], [], CAPITAL);
-suffix('genitive', "'", '', [], [], {...CAPITAL, stemEndsWith: '[sßxz]'});
-suffix('plural-s', 's', '', PLURAL_IN, NOUN_OUT, {...NOUN, stemEndsWith: '{consonant}'});
-suffix('dative-plural', 'n', '', [], ['n', 'np'], {...NOUN, stemEndsWith: '[elr]'});
 
 // --- Adjectives ----------------------------------------------------------------------
+// The adjective transforms come before the noun transforms: where a word in
+// small letters is read both ways at the same cost (gute -> gut, Gut), the
+// adjective is found first and wins the tie (docs/languages.md 9.6).
 transform('declined', 'declined',
     'Adjective with a case ending (schöne, schönen, schöner, schönes, schönem; leise, dunkle, teure, hohe).');
 transform('comparative', 'comparative',
@@ -638,7 +630,8 @@ for (const end of ['e', 'en', 'er', 'es', 'em']) {
 suffix('comparative', 'er', '', ADJ_OUT, ADJ_OUT, MIN2);
 suffix('comparative', 'ler', 'el', ADJ_OUT, ADJ_OUT, MIN2);
 suffix('comparative', 'rer', 'er', ADJ_OUT, ADJ_OUT, {...MIN2, stemEndsWith: '[u]'});
-suffix('superlative', 'st', '', ADJ_OUT, ADJ_OUT, MIN2);
+// After s, ß, x and z the superlative is -est (heißeste, weiseste).
+suffix('superlative', 'st', '', ADJ_OUT, ADJ_OUT, {...MIN2, stemNotEndsWith: '[sßxz]'});
 suffix('superlative', 'est', '', ADJ_OUT, ADJ_OUT, {...MIN2, stemEndsWith: '[dtsßxzaeiouäöü]'});
 // Adjectives with umlaut in the comparative and superlative.
 const UMLAUT_ADJ = ['alt', 'arg', 'arm', 'bang', 'blass', 'dumm', 'fromm', 'gesund', 'glatt', 'grob', 'hart', 'jung', 'kalt',
@@ -659,6 +652,86 @@ for (const [id, word, base] of [
 ]) {
     form(id, word, base, ADJ_OUT, ADJ_OUT);
 }
+
+// --- Nouns ---------------------------------------------------------------------------
+// The noun rules read a word in small letters and give the noun with its
+// capital letter back. A noun in running text is capitalized, so they read it
+// through the decapitalize processor, at one processor step: a word at the
+// start of a sentence keeps its own reading in small letters first (Sagen
+// Sie ... -> sagen, not the plural of Sage; Alles -> alles, not the genitive
+// of All), because a lookup ranks fewer processor steps first
+// (docs/languages.md 9.6). The capital letter is written by a map step: case
+// steps are listed in tests/classes.json for every corpus string, map steps
+// are not.
+transform('plural', 'plural',
+    'Plural of a noun (Tage, Bäume, Kinder, Häuser, Mütter, Äpfel, Blumen, Frauen, Lehrerinnen, Autos, Ergebnisse, Museen, Themen).');
+transform('genitive', 'genitive',
+    'Genitive singular (des Vaters, des Tages, des Hauses, des Namens, Peters, Deutschlands).');
+transform('plural-s', 'plural',
+    'Plural in -s of a noun that ends in a consonant (Hotels, Jobs, Teams).');
+transform('dative-plural', 'dative plural',
+    'Dative plural, the plural with -n added (den Tagen, den Kindern, den Äpfeln).');
+
+const CAPITAL_LETTERS = 'abcdefghijklmnopqrstuvwxyzàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþ';
+const CAPITALIZE = [{map: Object.fromEntries([...CAPITAL_LETTERS].map((c) => [c, c.toUpperCase()])), at: 'start'}];
+const UMLAUTS = [['äu', 'au'], ['ä', 'a'], ['ö', 'o'], ['ü', 'u']];
+const umlaut = (from, to) => ({from: [from], to, occurrence: 'last', between: '{consonant}', betweenMinLength: 1});
+const PLURAL_IN = ['np'];
+const NOUN_OUT = ['n'];
+const NOUN_STEM = '{lowerInitial}';
+const NOUN = {stemMinLength: 2, stemStartsWith: NOUN_STEM, then: CAPITALIZE};
+function noun(id, inflected, deinflected, conditionsIn, conditionsOut, extra = {}) {
+    suffix(id, inflected, deinflected, conditionsIn, conditionsOut, {...NOUN, ...extra});
+}
+noun('plural', 'e', '', PLURAL_IN, NOUN_OUT);
+noun('plural', 'er', '', PLURAL_IN, NOUN_OUT);
+for (const [from, to] of UMLAUTS) {
+    const extra = {stemMinLength: 1, stemChange: umlaut(from, to)};
+    noun('plural', 'e', '', PLURAL_IN, NOUN_OUT, extra);
+    noun('plural', 'er', '', PLURAL_IN, NOUN_OUT, extra);
+    for (const end of ['er', 'el', 'en']) {  // Mütter, Äpfel, Gärten
+        noun('plural', end, end, PLURAL_IN, NOUN_OUT, extra);
+    }
+}
+noun('plural', 'n', '', PLURAL_IN, NOUN_OUT, {stemEndsWith: '[elr]'});
+noun('plural', 'en', '', PLURAL_IN, NOUN_OUT);
+noun('plural', 'innen', 'in', PLURAL_IN, NOUN_OUT);
+noun('plural', 's', '', PLURAL_IN, NOUN_OUT, {stemEndsWith: '[aeiouyäöü]'});
+noun('plural', 'nisse', 'nis', PLURAL_IN, NOUN_OUT);
+noun('plural', 'usse', 'us', PLURAL_IN, NOUN_OUT, {stemMinLength: 1});  // Busse
+noun('plural', 'asse', 'as', PLURAL_IN, NOUN_OUT, {stemMinLength: 1});  // Atlasse
+noun('plural', 'isse', 'is', PLURAL_IN, NOUN_OUT, {stemMinLength: 1});  // Kürbisse, Iltisse
+noun('plural', 'osse', 'os', PLURAL_IN, NOUN_OUT, {stemMinLength: 1});  // Rhinozerosse
+// Compounds of Bau and Saal (Neubauten, Hörsäle); the dictionary lists Bauten
+// and Säle themselves, and bauten alone is also bauen.
+for (const [inflected, deinflected] of [['bauten', 'bau'], ['säle', 'saal']]) {
+    noun('plural', inflected, deinflected, PLURAL_IN, NOUN_OUT, {stemMinLength: 1});
+}
+// Latin, Greek and Italian plurals; -ien only after the l, p or z of
+// Material, Prinzip and Indiz (Photographien is Photographie, not Photograph),
+// -en for -o only after k, d or t (Risiken, Salden, Konten; Lassen is not
+// Lasso), -en for -is only after s or x (Krisen, Praxen; Jeden is not Jedis).
+for (const [inflected, deinflected, extra] of [
+    ['en', 'um', {}], ['een', 'eum', {}], ['ien', 'ium', {}], ['ien', 'ion', {}], ['en', 'a', {}], ['en', 'us', {}], ['en', 'os', {}],
+    ['een', 'us', {}], ['en', 'o', {stemEndsWith: '[dkt]'}], ['en', 'is', {stemEndsWith: '[sx]'}], ['a', 'um', {}], ['a', 'on', {}],
+    ['ata', 'a', {}], ['ien', '', {stemEndsWith: '[lpz]'}], ['i', 'o', {}], ['izes', 'ix', {}], ['izes', 'ex', {}],
+]) {
+    noun('plural', inflected, deinflected, PLURAL_IN, NOUN_OUT, {stemMinLength: 3, ...extra});
+}
+// Genitive: a name has no part of speech in wiktionary-to-yomitan, so the
+// genitive keeps every part of speech.
+// A noun in s, ß, x or z takes -es (des Hauses, des Fußes), so ass is not As.
+noun('genitive', 's', '', [], [], {stemNotEndsWith: '[sßxz]'});
+noun('genitive', 'es', '', [], []);
+noun('genitive', 'ens', 'e', [], []);
+noun('genitive', 'ens', '', [], []);
+noun('genitive', "'", '', [], [], {stemEndsWith: '[sßxz]'});
+noun('plural-s', 's', '', PLURAL_IN, NOUN_OUT, {stemEndsWith: '[bcdfghjklmnpqrtvw]'});  // not after s, ß, x, z
+// The dative plural gives the plural, in small letters for the plural rules
+// (Kindern -> kinder -> Kind) and capitalized for a plural the dictionary
+// lists (Leuten -> Leute, Eltern).
+suffix('dative-plural', 'n', '', [], ['np'], {stemMinLength: 2, stemStartsWith: NOUN_STEM, stemEndsWith: '[elr]'});
+noun('dative-plural', 'n', '', [], NOUN_OUT, {stemEndsWith: '[elr]'});
 
 // --- Contractions -------------------------------------------------------------------
 transform('contraction', 'contraction',
