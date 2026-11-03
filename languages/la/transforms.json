@@ -121,43 +121,463 @@
   },
   "transforms": [
     {
-      "id": "plural",
-      "name": "plural",
-      "description": "Plural declension",
-      "source": "yomitan",
+      "id": "adj-i",
+      "name": "genitive singular masculine/neuter, nominative plural masculine",
+      "description": "Adjective, participle or gerundive, genitive singular masculine/neuter, nominative plural masculine.",
+      "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "i", "deinflected": "us", "conditionsIn": ["n2p"], "conditionsOut": ["n2s"]},
-        {"type": "suffix", "inflected": "i", "deinflected": "us", "conditionsIn": ["adj12"], "conditionsOut": ["adj12"]},
-        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": ["n1p"], "conditionsOut": ["n1s"]},
-        {"type": "suffix", "inflected": "ae", "deinflected": "a", "conditionsIn": ["adj12"], "conditionsOut": ["adj12"]},
-        {"type": "suffix", "inflected": "a", "deinflected": "um", "conditionsIn": ["adj12"], "conditionsOut": ["adj12"]}
+        {"type": "suffix", "inflected": "i", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj12", "ptc", "v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "source": "both"},
+        {"type": "suffix", "inflected": "i", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "ri", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "i", "deinflected": "us", "conditionsIn": ["aux"], "conditionsOut": ["ptc"], "stemCharacters": "[^ ]", "stemMinLength": 3}
       ]
     },
     {
-      "id": "feminine",
-      "name": "feminine",
-      "description": "Adjective form",
-      "source": "yomitan",
+      "id": "adj-o",
+      "name": "dative/ablative singular masculine/neuter",
+      "description": "Adjective, participle or gerundive, dative/ablative singular masculine/neuter.",
+      "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "a", "deinflected": "us", "conditionsIn": ["adj12"], "conditionsOut": ["adj12"]}
+        {"type": "suffix", "inflected": "o", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj12", "ptc", "v"], "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "o", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "ro", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2}
       ]
     },
     {
-      "id": "neuter",
-      "name": "neuter",
-      "description": "Adjective form",
-      "source": "yomitan",
+      "id": "adj-um",
+      "name": "accusative singular masculine, nominative/accusative singular neuter",
+      "description": "Adjective, participle or gerundive, accusative singular masculine, nominative/accusative singular neuter.",
+      "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "um", "deinflected": "us", "conditionsIn": ["adj12"], "conditionsOut": ["adj12"]}
+        {"type": "suffix", "inflected": "um", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj12", "ptc", "v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "source": "both"},
+        {"type": "suffix", "inflected": "um", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "rum", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj12"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "um", "deinflected": "us", "conditionsIn": ["aux"], "conditionsOut": ["ptc"], "stemCharacters": "[^ ]", "stemMinLength": 3}
       ]
     },
     {
-      "id": "ablative",
-      "name": "ablative",
-      "description": "Ablative case",
-      "source": "yomitan",
+      "id": "adj-e",
+      "name": "vocative singular masculine",
+      "description": "Adjective, participle or gerundive, vocative singular masculine.",
+      "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "o", "deinflected": "um", "conditionsIn": ["n2s"], "conditionsOut": ["n2s"]}
+        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "re", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2}
+      ]
+    },
+    {
+      "id": "adj-orum",
+      "name": "genitive plural masculine/neuter",
+      "description": "Adjective, participle or gerundive, genitive plural masculine/neuter.",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "orum", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj12", "ptc", "v"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "orum", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj12"], "stemMinLength": 2, "stemEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "rorum", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj12"], "stemMinLength": 2}
+      ]
+    },
+    {
+      "id": "adj-is",
+      "name": "dative/ablative plural",
+      "description": "Adjective, participle or gerundive, dative/ablative plural.",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "is", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj12", "ptc", "v"], "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "is", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "ris", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj12"], "stemMinLength": 2}
+      ]
+    },
+    {
+      "id": "adj-os",
+      "name": "accusative plural masculine",
+      "description": "Adjective, participle or gerundive, accusative plural masculine.",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "os", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj12", "ptc", "v"], "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "os", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "ros", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj12"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "os", "deinflected": "us", "conditionsIn": ["aux"], "conditionsOut": ["ptc"], "stemCharacters": "[^ ]", "stemMinLength": 3}
+      ]
+    },
+    {
+      "id": "adj-a",
+      "name": "nominative/ablative singular feminine, nominative/accusative plural neuter",
+      "description": "Adjective, participle or gerundive, nominative/ablative singular feminine, nominative/accusative plural neuter.",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "a", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj12", "ptc", "v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "source": "both"},
+        {"type": "suffix", "inflected": "a", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "ra", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "a", "deinflected": "us", "conditionsIn": ["aux"], "conditionsOut": ["ptc"], "stemCharacters": "[^ ]", "stemMinLength": 3}
+      ]
+    },
+    {
+      "id": "adj-ae",
+      "name": "genitive/dative singular feminine, nominative plural feminine",
+      "description": "Adjective, participle or gerundive, genitive/dative singular feminine, nominative plural feminine.",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "ae", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj12", "ptc", "v"], "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ae", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "rae", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj12"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ae", "deinflected": "us", "conditionsIn": ["aux"], "conditionsOut": ["ptc"], "stemCharacters": "[^ ]", "stemMinLength": 3}
+      ]
+    },
+    {
+      "id": "adj-am",
+      "name": "accusative singular feminine",
+      "description": "Adjective, participle or gerundive, accusative singular feminine.",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "am", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj12", "ptc", "v"], "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "am", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "ram", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj12"], "stemMinLength": 2}
+      ]
+    },
+    {
+      "id": "adj-arum",
+      "name": "genitive plural feminine",
+      "description": "Adjective, participle or gerundive, genitive plural feminine.",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "arum", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj12", "ptc", "v"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "arum", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj12"], "stemMinLength": 2, "stemEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "rarum", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj12"], "stemMinLength": 2}
+      ]
+    },
+    {
+      "id": "adj-as",
+      "name": "accusative plural feminine",
+      "description": "Adjective, participle or gerundive, accusative plural feminine.",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "as", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj12", "ptc", "v"], "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "as", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "ras", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj12"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "as", "deinflected": "us", "conditionsIn": ["aux"], "conditionsOut": ["ptc"], "stemCharacters": "[^ ]", "stemMinLength": 3}
+      ]
+    },
+    {
+      "id": "adj3-e",
+      "name": "nominative/accusative singular neuter, ablative singular",
+      "description": "Third-declension adjective or participle, nominative/accusative singular neuter, ablative singular.",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "e", "deinflected": "is", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "re", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[lr]"},
+        {"type": "suffix", "inflected": "ce", "deinflected": "x", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ice", "deinflected": "ex", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "nte", "deinflected": "ns", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "rte", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ite", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ete", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ote", "deinflected": "os", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ere", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ipite", "deinflected": "eps", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "de", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ate", "deinflected": "as", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "iore", "deinflected": "ior", "conditionsIn": [], "conditionsOut": ["cmp", "adj3"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "eunte", "deinflected": "iens", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"]}
+      ]
+    },
+    {
+      "id": "adj3-em",
+      "name": "accusative singular masculine/feminine",
+      "description": "Third-declension adjective or participle, accusative singular masculine/feminine.",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "em", "deinflected": "is", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "rem", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "em", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[lr]"},
+        {"type": "suffix", "inflected": "cem", "deinflected": "x", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "icem", "deinflected": "ex", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ntem", "deinflected": "ns", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "rtem", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "item", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "etem", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "otem", "deinflected": "os", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "erem", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ipitem", "deinflected": "eps", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "dem", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "atem", "deinflected": "as", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "iorem", "deinflected": "ior", "conditionsIn": [], "conditionsOut": ["cmp", "adj3"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "euntem", "deinflected": "iens", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"]}
+      ]
+    },
+    {
+      "id": "adj3-i",
+      "name": "dative/ablative singular",
+      "description": "Third-declension adjective or participle, dative/ablative singular.",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "i", "deinflected": "is", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ri", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "i", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[lr]"},
+        {"type": "suffix", "inflected": "ci", "deinflected": "x", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ici", "deinflected": "ex", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "nti", "deinflected": "ns", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "rti", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "iti", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "eti", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "oti", "deinflected": "os", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "eri", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ipiti", "deinflected": "eps", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "di", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ati", "deinflected": "as", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "iori", "deinflected": "ior", "conditionsIn": [], "conditionsOut": ["cmp", "adj3"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "eunti", "deinflected": "iens", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"]}
+      ]
+    },
+    {
+      "id": "adj3-es",
+      "name": "nominative/accusative plural masculine/feminine",
+      "description": "Third-declension adjective or participle, nominative/accusative plural masculine/feminine.",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "es", "deinflected": "is", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "res", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "es", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[lr]"},
+        {"type": "suffix", "inflected": "ces", "deinflected": "x", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ices", "deinflected": "ex", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ntes", "deinflected": "ns", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "rtes", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ites", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "etes", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "otes", "deinflected": "os", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "eres", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ipites", "deinflected": "eps", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "des", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ates", "deinflected": "as", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "iores", "deinflected": "ior", "conditionsIn": [], "conditionsOut": ["cmp", "adj3"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "euntes", "deinflected": "iens", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"]}
+      ]
+    },
+    {
+      "id": "adj3-ia",
+      "name": "nominative/accusative plural neuter",
+      "description": "Third-declension adjective or participle, nominative/accusative plural neuter.",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "ia", "deinflected": "is", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ria", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ia", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[lr]"},
+        {"type": "suffix", "inflected": "cia", "deinflected": "x", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "icia", "deinflected": "ex", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ntia", "deinflected": "ns", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "rtia", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "itia", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "etia", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "otia", "deinflected": "os", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "eria", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ipitia", "deinflected": "eps", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "dia", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "atia", "deinflected": "as", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "euntia", "deinflected": "iens", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"]}
+      ]
+    },
+    {
+      "id": "adj3-ium",
+      "name": "genitive plural",
+      "description": "Third-declension adjective or participle, genitive plural.",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "ium", "deinflected": "is", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "rium", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ium", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2, "stemEndsWith": "[lr]"},
+        {"type": "suffix", "inflected": "cium", "deinflected": "x", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "icium", "deinflected": "ex", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ntium", "deinflected": "ns", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "rtium", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "itium", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "etium", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "otium", "deinflected": "os", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "erium", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ipitium", "deinflected": "eps", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "dium", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "atium", "deinflected": "as", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "euntium", "deinflected": "iens", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"]}
+      ]
+    },
+    {
+      "id": "adj3-ibus",
+      "name": "dative/ablative plural",
+      "description": "Third-declension adjective or participle, dative/ablative plural.",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "ibus", "deinflected": "is", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ribus", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ibus", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2, "stemEndsWith": "[lr]"},
+        {"type": "suffix", "inflected": "cibus", "deinflected": "x", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "icibus", "deinflected": "ex", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ntibus", "deinflected": "ns", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "rtibus", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "itibus", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "etibus", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "otibus", "deinflected": "os", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "eribus", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ipitibus", "deinflected": "eps", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "dibus", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "atibus", "deinflected": "as", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ioribus", "deinflected": "ior", "conditionsIn": [], "conditionsOut": ["cmp", "adj3"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "euntibus", "deinflected": "iens", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"]}
+      ]
+    },
+    {
+      "id": "adj3-is",
+      "name": "genitive singular",
+      "description": "Third-declension adjective or participle, genitive singular.",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "ris", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "is", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[lr]"},
+        {"type": "suffix", "inflected": "cis", "deinflected": "x", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "icis", "deinflected": "ex", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ntis", "deinflected": "ns", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "rtis", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "itis", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "etis", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "otis", "deinflected": "os", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "eris", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ipitis", "deinflected": "eps", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "dis", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "atis", "deinflected": "as", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ioris", "deinflected": "ior", "conditionsIn": [], "conditionsOut": ["cmp", "adj3"], "stemMinLength": 1},
+        {"type": "wholeWord", "inflected": "unius", "deinflected": "unus", "conditionsIn": [], "conditionsOut": ["adj12"]},
+        {"type": "wholeWord", "inflected": "solius", "deinflected": "solus", "conditionsIn": [], "conditionsOut": ["adj12"]},
+        {"type": "wholeWord", "inflected": "totius", "deinflected": "totus", "conditionsIn": [], "conditionsOut": ["adj12"]},
+        {"type": "suffix", "inflected": "euntis", "deinflected": "iens", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"]}
+      ]
+    },
+    {
+      "id": "adj3-a",
+      "name": "nominative/accusative plural neuter",
+      "description": "Third-declension adjective or participle, nominative/accusative plural neuter.",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "ca", "deinflected": "x", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ica", "deinflected": "ex", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "nta", "deinflected": "ns", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "rta", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ita", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "eta", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ota", "deinflected": "os", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "era", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ipita", "deinflected": "eps", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "da", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ata", "deinflected": "as", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "iora", "deinflected": "ior", "conditionsIn": [], "conditionsOut": ["cmp", "adj3"], "stemMinLength": 1}
+      ]
+    },
+    {
+      "id": "adj3-um",
+      "name": "genitive plural",
+      "description": "Third-declension adjective or participle, genitive plural.",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "cum", "deinflected": "x", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "icum", "deinflected": "ex", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ntum", "deinflected": "ns", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "rtum", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "itum", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "etum", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "otum", "deinflected": "os", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "erum", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ipitum", "deinflected": "eps", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "dum", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "atum", "deinflected": "as", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "iorum", "deinflected": "ior", "conditionsIn": [], "conditionsOut": ["cmp", "adj3"], "stemMinLength": 1}
+      ]
+    },
+    {
+      "id": "adj3-ius",
+      "name": "nominative/accusative singular neuter",
+      "description": "Third-declension adjective or participle, nominative/accusative singular neuter.",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "ius", "deinflected": "ior", "conditionsIn": [], "conditionsOut": ["cmp", "adj3"], "stemMinLength": 2}
+      ]
+    },
+    {
+      "id": "comparative",
+      "name": "comparative",
+      "description": "Comparative degree: altior → altus, fortior → fortis, pulchrior → pulcher, fēlīcior → fēlīx, sapientior → sapiēns; melior → bonus, peior → malus, maior → magnus, minor → parvus, plūs → multus.",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "ior", "deinflected": "us", "conditionsIn": ["cmp"], "conditionsOut": ["adj"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ior", "deinflected": "is", "conditionsIn": ["cmp"], "conditionsOut": ["adj"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ior", "deinflected": "", "conditionsIn": ["cmp"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "rior", "deinflected": "er", "conditionsIn": ["cmp"], "conditionsOut": ["adj"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "cior", "deinflected": "x", "conditionsIn": ["cmp"], "conditionsOut": ["adj"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ntior", "deinflected": "ns", "conditionsIn": ["cmp"], "conditionsOut": ["adj"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "rtior", "deinflected": "rs", "conditionsIn": ["cmp"], "conditionsOut": ["adj"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "etior", "deinflected": "es", "conditionsIn": ["cmp"], "conditionsOut": ["adj"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "itior", "deinflected": "es", "conditionsIn": ["cmp"], "conditionsOut": ["adj"], "stemMinLength": 2},
+        {"type": "wholeWord", "inflected": "melior", "deinflected": "bonus", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "peior", "deinflected": "malus", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "pejor", "deinflected": "malus", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "maior", "deinflected": "magnus", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "major", "deinflected": "magnus", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "minor", "deinflected": "parvus", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "senior", "deinflected": "senex", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "iunior", "deinflected": "iuvenis", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "ditior", "deinflected": "dives", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "divitior", "deinflected": "dives", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "superior", "deinflected": "superus", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "inferior", "deinflected": "inferus", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "posterior", "deinflected": "posterus", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "exterior", "deinflected": "exterus", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "vetustior", "deinflected": "vetus", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "ditior", "deinflected": "dis", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "plus", "deinflected": "multus", "conditionsIn": [], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "pluris", "deinflected": "multus", "conditionsIn": [], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "plures", "deinflected": "multus", "conditionsIn": [], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "plura", "deinflected": "multus", "conditionsIn": [], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "plurium", "deinflected": "multus", "conditionsIn": [], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "pluribus", "deinflected": "multus", "conditionsIn": [], "conditionsOut": ["adj"]}
+      ]
+    },
+    {
+      "id": "superlative",
+      "name": "superlative",
+      "description": "Superlative degree: altissimus → altus, fortissimus → fortis, fēlīcissimus → fēlīx, pulcherrimus → pulcher, facillimus → facilis; optimus → bonus, pessimus → malus, maximus → magnus, minimus → parvus, plūrimus → multus.",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "issimus", "deinflected": "us", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "issimus", "deinflected": "is", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "cissimus", "deinflected": "x", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ntissimus", "deinflected": "ns", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "rtissimus", "deinflected": "rs", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "errimus", "deinflected": "er", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "illimus", "deinflected": "ilis", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "issumus", "deinflected": "us", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "issumus", "deinflected": "is", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "errumus", "deinflected": "er", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "illumus", "deinflected": "ilis", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2},
+        {"type": "wholeWord", "inflected": "optimus", "deinflected": "bonus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "pessimus", "deinflected": "malus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "maximus", "deinflected": "magnus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "minimus", "deinflected": "parvus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "plurimus", "deinflected": "multus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "summus", "deinflected": "superus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "supremus", "deinflected": "superus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "infimus", "deinflected": "inferus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "imus", "deinflected": "inferus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "postremus", "deinflected": "posterus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "extremus", "deinflected": "exterus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "veterrimus", "deinflected": "vetus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "ditissimus", "deinflected": "dives", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "maturrimus", "deinflected": "maturus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "vetustissimus", "deinflected": "vetus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "optumus", "deinflected": "bonus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "pessumus", "deinflected": "malus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "maxumus", "deinflected": "magnus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "minumus", "deinflected": "parvus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "plurumus", "deinflected": "multus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "extimus", "deinflected": "exterus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "extremus", "deinflected": "exter", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "extimus", "deinflected": "exter", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "ditissimus", "deinflected": "dis", "conditionsIn": ["adj"], "conditionsOut": ["adj"]}
       ]
     },
     {
@@ -166,7 +586,7 @@
       "description": "Noun, genitive singular. Also: dative singular; nominative plural.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ae", "deinflected": "a", "conditionsIn": [], "conditionsOut": ["n1s"], "stemCharacters": "[^ ]", "stemMinLength": 2}
+        {"type": "suffix", "inflected": "ae", "deinflected": "a", "conditionsIn": [], "conditionsOut": ["n1s"], "stemCharacters": "[^ ]", "stemMinLength": 2, "source": "both"}
       ]
     },
     {
@@ -467,7 +887,7 @@
       "description": "Noun, genitive singular. Also: nominative plural.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "i", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["n2s"], "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "i", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["n2s"], "stemCharacters": "[^ ]", "stemMinLength": 2, "source": "both"},
         {"type": "suffix", "inflected": "ri", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["n2s"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "eri", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["n2s"], "stemMinLength": 2},
         {"type": "suffix", "inflected": "iri", "deinflected": "ir", "conditionsIn": [], "conditionsOut": ["n2s"], "stemMinLength": 1},
@@ -482,7 +902,7 @@
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "o", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["n2s"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "o", "deinflected": "um", "conditionsIn": [], "conditionsOut": ["n2s"], "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "o", "deinflected": "um", "conditionsIn": [], "conditionsOut": ["n2s"], "stemCharacters": "[^ ]", "stemMinLength": 2, "source": "both"},
         {"type": "suffix", "inflected": "ro", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["n2s"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ero", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["n2s"], "stemMinLength": 2},
         {"type": "suffix", "inflected": "iro", "deinflected": "ir", "conditionsIn": [], "conditionsOut": ["n2s"], "stemMinLength": 1},
@@ -871,500 +1291,6 @@
       "source": "own",
       "rules": [
         {"type": "wholeWord", "inflected": "humi", "deinflected": "humus", "conditionsIn": [], "conditionsOut": ["n"]}
-      ]
-    },
-    {
-      "id": "adj-i",
-      "name": "genitive singular masculine/neuter, nominative plural masculine",
-      "description": "Adjective, participle or gerundive, genitive singular masculine/neuter, nominative plural masculine.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "i", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj12", "ptc", "v"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "i", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "ri", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "i", "deinflected": "us", "conditionsIn": ["aux"], "conditionsOut": ["ptc"], "stemCharacters": "[^ ]", "stemMinLength": 3}
-      ]
-    },
-    {
-      "id": "adj-o",
-      "name": "dative/ablative singular masculine/neuter",
-      "description": "Adjective, participle or gerundive, dative/ablative singular masculine/neuter.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "o", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj12", "ptc", "v"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "o", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "ro", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2}
-      ]
-    },
-    {
-      "id": "adj-um",
-      "name": "accusative singular masculine, nominative/accusative singular neuter",
-      "description": "Adjective, participle or gerundive, accusative singular masculine, nominative/accusative singular neuter.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "um", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj12", "ptc", "v"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "um", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "rum", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj12"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "um", "deinflected": "us", "conditionsIn": ["aux"], "conditionsOut": ["ptc"], "stemCharacters": "[^ ]", "stemMinLength": 3}
-      ]
-    },
-    {
-      "id": "adj-e+adverb",
-      "name": "vocative singular masculine / adverb",
-      "description": "Adjective, participle or gerundive, vocative singular masculine. Also: adverb.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "e", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj12", "ptc", "v"], "stemCharacters": "[^ ]", "stemMinLength": 2}
-      ]
-    },
-    {
-      "id": "adj-e",
-      "name": "vocative singular masculine",
-      "description": "Adjective, participle or gerundive, vocative singular masculine.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "re", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2}
-      ]
-    },
-    {
-      "id": "adj-orum",
-      "name": "genitive plural masculine/neuter",
-      "description": "Adjective, participle or gerundive, genitive plural masculine/neuter.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "orum", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj12", "ptc", "v"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "orum", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj12"], "stemMinLength": 2, "stemEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "rorum", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj12"], "stemMinLength": 2}
-      ]
-    },
-    {
-      "id": "adj-is",
-      "name": "dative/ablative plural",
-      "description": "Adjective, participle or gerundive, dative/ablative plural.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "is", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj12", "ptc", "v"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "is", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "ris", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj12"], "stemMinLength": 2}
-      ]
-    },
-    {
-      "id": "adj-os",
-      "name": "accusative plural masculine",
-      "description": "Adjective, participle or gerundive, accusative plural masculine.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "os", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj12", "ptc", "v"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "os", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "ros", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj12"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "os", "deinflected": "us", "conditionsIn": ["aux"], "conditionsOut": ["ptc"], "stemCharacters": "[^ ]", "stemMinLength": 3}
-      ]
-    },
-    {
-      "id": "adj-a",
-      "name": "nominative/ablative singular feminine, nominative/accusative plural neuter",
-      "description": "Adjective, participle or gerundive, nominative/ablative singular feminine, nominative/accusative plural neuter.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "a", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj12", "ptc", "v"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "a", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "ra", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "a", "deinflected": "us", "conditionsIn": ["aux"], "conditionsOut": ["ptc"], "stemCharacters": "[^ ]", "stemMinLength": 3}
-      ]
-    },
-    {
-      "id": "adj-ae",
-      "name": "genitive/dative singular feminine, nominative plural feminine",
-      "description": "Adjective, participle or gerundive, genitive/dative singular feminine, nominative plural feminine.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "ae", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj12", "ptc", "v"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ae", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "rae", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj12"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ae", "deinflected": "us", "conditionsIn": ["aux"], "conditionsOut": ["ptc"], "stemCharacters": "[^ ]", "stemMinLength": 3}
-      ]
-    },
-    {
-      "id": "adj-am",
-      "name": "accusative singular feminine",
-      "description": "Adjective, participle or gerundive, accusative singular feminine.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "am", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj12", "ptc", "v"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "am", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "ram", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj12"], "stemMinLength": 2}
-      ]
-    },
-    {
-      "id": "adj-arum",
-      "name": "genitive plural feminine",
-      "description": "Adjective, participle or gerundive, genitive plural feminine.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "arum", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj12", "ptc", "v"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "arum", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj12"], "stemMinLength": 2, "stemEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "rarum", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj12"], "stemMinLength": 2}
-      ]
-    },
-    {
-      "id": "adj-as",
-      "name": "accusative plural feminine",
-      "description": "Adjective, participle or gerundive, accusative plural feminine.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "as", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj12", "ptc", "v"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "as", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "ras", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj12"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "as", "deinflected": "us", "conditionsIn": ["aux"], "conditionsOut": ["ptc"], "stemCharacters": "[^ ]", "stemMinLength": 3}
-      ]
-    },
-    {
-      "id": "adj3-e",
-      "name": "nominative/accusative singular neuter, ablative singular",
-      "description": "Third-declension adjective or participle, nominative/accusative singular neuter, ablative singular.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "e", "deinflected": "is", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "re", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[lr]"},
-        {"type": "suffix", "inflected": "ce", "deinflected": "x", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ice", "deinflected": "ex", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "nte", "deinflected": "ns", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "rte", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ite", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ete", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ote", "deinflected": "os", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ere", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ipite", "deinflected": "eps", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "de", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ate", "deinflected": "as", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "iore", "deinflected": "ior", "conditionsIn": [], "conditionsOut": ["cmp", "adj3"], "stemMinLength": 1},
-        {"type": "suffix", "inflected": "eunte", "deinflected": "iens", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"]}
-      ]
-    },
-    {
-      "id": "adj3-em",
-      "name": "accusative singular masculine/feminine",
-      "description": "Third-declension adjective or participle, accusative singular masculine/feminine.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "em", "deinflected": "is", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "rem", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "em", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[lr]"},
-        {"type": "suffix", "inflected": "cem", "deinflected": "x", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "icem", "deinflected": "ex", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ntem", "deinflected": "ns", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "rtem", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "item", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "etem", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "otem", "deinflected": "os", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "erem", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ipitem", "deinflected": "eps", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "dem", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "atem", "deinflected": "as", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "iorem", "deinflected": "ior", "conditionsIn": [], "conditionsOut": ["cmp", "adj3"], "stemMinLength": 1},
-        {"type": "suffix", "inflected": "euntem", "deinflected": "iens", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"]}
-      ]
-    },
-    {
-      "id": "adj3-i",
-      "name": "dative/ablative singular",
-      "description": "Third-declension adjective or participle, dative/ablative singular.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "i", "deinflected": "is", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ri", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "i", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[lr]"},
-        {"type": "suffix", "inflected": "ci", "deinflected": "x", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ici", "deinflected": "ex", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "nti", "deinflected": "ns", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "rti", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "iti", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "eti", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "oti", "deinflected": "os", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "eri", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ipiti", "deinflected": "eps", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "di", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ati", "deinflected": "as", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "iori", "deinflected": "ior", "conditionsIn": [], "conditionsOut": ["cmp", "adj3"], "stemMinLength": 1},
-        {"type": "suffix", "inflected": "eunti", "deinflected": "iens", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"]}
-      ]
-    },
-    {
-      "id": "adj3-es",
-      "name": "nominative/accusative plural masculine/feminine",
-      "description": "Third-declension adjective or participle, nominative/accusative plural masculine/feminine.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "es", "deinflected": "is", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "res", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "es", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[lr]"},
-        {"type": "suffix", "inflected": "ces", "deinflected": "x", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ices", "deinflected": "ex", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ntes", "deinflected": "ns", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "rtes", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ites", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "etes", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "otes", "deinflected": "os", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "eres", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ipites", "deinflected": "eps", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "des", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ates", "deinflected": "as", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "iores", "deinflected": "ior", "conditionsIn": [], "conditionsOut": ["cmp", "adj3"], "stemMinLength": 1},
-        {"type": "suffix", "inflected": "euntes", "deinflected": "iens", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"]}
-      ]
-    },
-    {
-      "id": "adj3-ia",
-      "name": "nominative/accusative plural neuter",
-      "description": "Third-declension adjective or participle, nominative/accusative plural neuter.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "ia", "deinflected": "is", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ria", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ia", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[lr]"},
-        {"type": "suffix", "inflected": "cia", "deinflected": "x", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "icia", "deinflected": "ex", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ntia", "deinflected": "ns", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "rtia", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "itia", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "etia", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "otia", "deinflected": "os", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "eria", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ipitia", "deinflected": "eps", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "dia", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "atia", "deinflected": "as", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "euntia", "deinflected": "iens", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"]}
-      ]
-    },
-    {
-      "id": "adj3-ium",
-      "name": "genitive plural",
-      "description": "Third-declension adjective or participle, genitive plural.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "ium", "deinflected": "is", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "rium", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ium", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2, "stemEndsWith": "[lr]"},
-        {"type": "suffix", "inflected": "cium", "deinflected": "x", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "icium", "deinflected": "ex", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ntium", "deinflected": "ns", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "rtium", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "itium", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "etium", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "otium", "deinflected": "os", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "erium", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ipitium", "deinflected": "eps", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "dium", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "atium", "deinflected": "as", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "euntium", "deinflected": "iens", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"]}
-      ]
-    },
-    {
-      "id": "adj3-ibus",
-      "name": "dative/ablative plural",
-      "description": "Third-declension adjective or participle, dative/ablative plural.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "ibus", "deinflected": "is", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ribus", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ibus", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2, "stemEndsWith": "[lr]"},
-        {"type": "suffix", "inflected": "cibus", "deinflected": "x", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "icibus", "deinflected": "ex", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ntibus", "deinflected": "ns", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "rtibus", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "itibus", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "etibus", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "otibus", "deinflected": "os", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "eribus", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ipitibus", "deinflected": "eps", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "dibus", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "atibus", "deinflected": "as", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ioribus", "deinflected": "ior", "conditionsIn": [], "conditionsOut": ["cmp", "adj3"], "stemMinLength": 1},
-        {"type": "suffix", "inflected": "euntibus", "deinflected": "iens", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"]}
-      ]
-    },
-    {
-      "id": "adj3-is",
-      "name": "genitive singular",
-      "description": "Third-declension adjective or participle, genitive singular.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "ris", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "is", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[lr]"},
-        {"type": "suffix", "inflected": "cis", "deinflected": "x", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "icis", "deinflected": "ex", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ntis", "deinflected": "ns", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "rtis", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "itis", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "etis", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "otis", "deinflected": "os", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "eris", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ipitis", "deinflected": "eps", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "dis", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "atis", "deinflected": "as", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ioris", "deinflected": "ior", "conditionsIn": [], "conditionsOut": ["cmp", "adj3"], "stemMinLength": 1},
-        {"type": "wholeWord", "inflected": "unius", "deinflected": "unus", "conditionsIn": [], "conditionsOut": ["adj12"]},
-        {"type": "wholeWord", "inflected": "solius", "deinflected": "solus", "conditionsIn": [], "conditionsOut": ["adj12"]},
-        {"type": "wholeWord", "inflected": "totius", "deinflected": "totus", "conditionsIn": [], "conditionsOut": ["adj12"]},
-        {"type": "suffix", "inflected": "euntis", "deinflected": "iens", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"]}
-      ]
-    },
-    {
-      "id": "adj3-a",
-      "name": "nominative/accusative plural neuter",
-      "description": "Third-declension adjective or participle, nominative/accusative plural neuter.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "ca", "deinflected": "x", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ica", "deinflected": "ex", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "nta", "deinflected": "ns", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "rta", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ita", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "eta", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ota", "deinflected": "os", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "era", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ipita", "deinflected": "eps", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "da", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ata", "deinflected": "as", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "iora", "deinflected": "ior", "conditionsIn": [], "conditionsOut": ["cmp", "adj3"], "stemMinLength": 1}
-      ]
-    },
-    {
-      "id": "adj3-um",
-      "name": "genitive plural",
-      "description": "Third-declension adjective or participle, genitive plural.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "cum", "deinflected": "x", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "icum", "deinflected": "ex", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ntum", "deinflected": "ns", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "rtum", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "itum", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "etum", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "otum", "deinflected": "os", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "erum", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ipitum", "deinflected": "eps", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "dum", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "atum", "deinflected": "as", "conditionsIn": [], "conditionsOut": ["adj3"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "iorum", "deinflected": "ior", "conditionsIn": [], "conditionsOut": ["cmp", "adj3"], "stemMinLength": 1}
-      ]
-    },
-    {
-      "id": "adj3-ius",
-      "name": "nominative/accusative singular neuter",
-      "description": "Third-declension adjective or participle, nominative/accusative singular neuter.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "ius", "deinflected": "ior", "conditionsIn": [], "conditionsOut": ["cmp", "adj3"], "stemMinLength": 2}
-      ]
-    },
-    {
-      "id": "comparative",
-      "name": "comparative",
-      "description": "Comparative degree: altior → altus, fortior → fortis, pulchrior → pulcher, fēlīcior → fēlīx, sapientior → sapiēns; melior → bonus, peior → malus, maior → magnus, minor → parvus, plūs → multus.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "ior", "deinflected": "us", "conditionsIn": ["cmp"], "conditionsOut": ["adj"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ior", "deinflected": "is", "conditionsIn": ["cmp"], "conditionsOut": ["adj"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ior", "deinflected": "", "conditionsIn": ["cmp"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "rior", "deinflected": "er", "conditionsIn": ["cmp"], "conditionsOut": ["adj"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "cior", "deinflected": "x", "conditionsIn": ["cmp"], "conditionsOut": ["adj"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ntior", "deinflected": "ns", "conditionsIn": ["cmp"], "conditionsOut": ["adj"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "rtior", "deinflected": "rs", "conditionsIn": ["cmp"], "conditionsOut": ["adj"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "etior", "deinflected": "es", "conditionsIn": ["cmp"], "conditionsOut": ["adj"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "itior", "deinflected": "es", "conditionsIn": ["cmp"], "conditionsOut": ["adj"], "stemMinLength": 2},
-        {"type": "wholeWord", "inflected": "melior", "deinflected": "bonus", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "peior", "deinflected": "malus", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "pejor", "deinflected": "malus", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "maior", "deinflected": "magnus", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "major", "deinflected": "magnus", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "minor", "deinflected": "parvus", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "senior", "deinflected": "senex", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "iunior", "deinflected": "iuvenis", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "ditior", "deinflected": "dives", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "divitior", "deinflected": "dives", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "superior", "deinflected": "superus", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "inferior", "deinflected": "inferus", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "posterior", "deinflected": "posterus", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "exterior", "deinflected": "exterus", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "vetustior", "deinflected": "vetus", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "ditior", "deinflected": "dis", "conditionsIn": ["cmp"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "plus", "deinflected": "multus", "conditionsIn": [], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "pluris", "deinflected": "multus", "conditionsIn": [], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "plures", "deinflected": "multus", "conditionsIn": [], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "plura", "deinflected": "multus", "conditionsIn": [], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "plurium", "deinflected": "multus", "conditionsIn": [], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "pluribus", "deinflected": "multus", "conditionsIn": [], "conditionsOut": ["adj"]}
-      ]
-    },
-    {
-      "id": "superlative",
-      "name": "superlative",
-      "description": "Superlative degree: altissimus → altus, fortissimus → fortis, fēlīcissimus → fēlīx, pulcherrimus → pulcher, facillimus → facilis; optimus → bonus, pessimus → malus, maximus → magnus, minimus → parvus, plūrimus → multus.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "issimus", "deinflected": "us", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "issimus", "deinflected": "is", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "cissimus", "deinflected": "x", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ntissimus", "deinflected": "ns", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "rtissimus", "deinflected": "rs", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "errimus", "deinflected": "er", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "illimus", "deinflected": "ilis", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "issumus", "deinflected": "us", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "issumus", "deinflected": "is", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "errumus", "deinflected": "er", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "illumus", "deinflected": "ilis", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2},
-        {"type": "wholeWord", "inflected": "optimus", "deinflected": "bonus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "pessimus", "deinflected": "malus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "maximus", "deinflected": "magnus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "minimus", "deinflected": "parvus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "plurimus", "deinflected": "multus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "summus", "deinflected": "superus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "supremus", "deinflected": "superus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "infimus", "deinflected": "inferus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "imus", "deinflected": "inferus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "postremus", "deinflected": "posterus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "extremus", "deinflected": "exterus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "veterrimus", "deinflected": "vetus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "ditissimus", "deinflected": "dives", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "maturrimus", "deinflected": "maturus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "vetustissimus", "deinflected": "vetus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "optumus", "deinflected": "bonus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "pessumus", "deinflected": "malus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "maxumus", "deinflected": "magnus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "minumus", "deinflected": "parvus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "plurumus", "deinflected": "multus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "extimus", "deinflected": "exterus", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "extremus", "deinflected": "exter", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "extimus", "deinflected": "exter", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "ditissimus", "deinflected": "dis", "conditionsIn": ["adj"], "conditionsOut": ["adj"]}
-      ]
-    },
-    {
-      "id": "adverb",
-      "name": "adverb",
-      "description": "Adverb made from an adjective: longē → longus, fortiter → fortis, celeriter → celer, ācriter → ācer, fēlīciter → fēlīx, audācter → audāx, sapienter → sapiēns; bene → bonus, male → malus.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "iter", "deinflected": "is", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "iter", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "riter", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "citer", "deinflected": "x", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "cter", "deinflected": "x", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "nter", "deinflected": "ns", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "rter", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2},
-        {"type": "wholeWord", "inflected": "bene", "deinflected": "bonus", "conditionsIn": [], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "male", "deinflected": "malus", "conditionsIn": [], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "melius", "deinflected": "bonus", "conditionsIn": [], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "optime", "deinflected": "bonus", "conditionsIn": [], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "peius", "deinflected": "malus", "conditionsIn": [], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "pessime", "deinflected": "malus", "conditionsIn": [], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "maxime", "deinflected": "magnus", "conditionsIn": [], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "minime", "deinflected": "parvus", "conditionsIn": [], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "minus", "deinflected": "parvus", "conditionsIn": [], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "plurimum", "deinflected": "multus", "conditionsIn": [], "conditionsOut": ["adj"]}
       ]
     },
     {
@@ -2277,6 +2203,40 @@
       "source": "own",
       "rules": [
         {"type": "wholeWord", "inflected": "tris", "deinflected": "tres", "conditionsIn": [], "conditionsOut": []}
+      ]
+    },
+    {
+      "id": "adj-e+adverb",
+      "name": "vocative singular masculine / adverb",
+      "description": "Adjective, participle or gerundive, vocative singular masculine. Also: adverb.",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "e", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj12", "ptc", "v"], "stemCharacters": "[^ ]", "stemMinLength": 2}
+      ]
+    },
+    {
+      "id": "adverb",
+      "name": "adverb",
+      "description": "Adverb made from an adjective: longē → longus, fortiter → fortis, celeriter → celer, ācriter → ācer, fēlīciter → fēlīx, audācter → audāx, sapienter → sapiēns; bene → bonus, male → malus.",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "iter", "deinflected": "is", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "iter", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2, "stemEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "riter", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "citer", "deinflected": "x", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "cter", "deinflected": "x", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "nter", "deinflected": "ns", "conditionsIn": [], "conditionsOut": ["adj3", "ptc", "v"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "rter", "deinflected": "rs", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 2},
+        {"type": "wholeWord", "inflected": "bene", "deinflected": "bonus", "conditionsIn": [], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "male", "deinflected": "malus", "conditionsIn": [], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "melius", "deinflected": "bonus", "conditionsIn": [], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "optime", "deinflected": "bonus", "conditionsIn": [], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "peius", "deinflected": "malus", "conditionsIn": [], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "pessime", "deinflected": "malus", "conditionsIn": [], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "maxime", "deinflected": "magnus", "conditionsIn": [], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "minime", "deinflected": "parvus", "conditionsIn": [], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "minus", "deinflected": "parvus", "conditionsIn": [], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "plurimum", "deinflected": "multus", "conditionsIn": [], "conditionsOut": ["adj"]}
       ]
     },
     {
