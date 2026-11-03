@@ -45,6 +45,21 @@ def key(rule):
     return rule['inflectedPrefix'] + '…' + rule['inflectedSuffix'], rule['deinflectedPrefix'] + '…' + rule['deinflectedSuffix']
 
 
+def detail(rule):
+    """What else tells a rule apart from another with the same affixes; build-final.mjs computes the same."""
+    parts = []
+    if 'stemChange' in rule:
+        parts.append('change ' + '|'.join(rule['stemChange']['from']) + '>' + rule['stemChange']['to'])
+    if rule.get('stemMinLength'):
+        parts.append(f"min {rule['stemMinLength']}")
+    if 'stemEndsWith' in rule:
+        parts.append('ends ' + rule['stemEndsWith'])
+    if 'stemContains' in rule:
+        parts.append('has ' + rule['stemContains'])
+    parts.append('in ' + ','.join(rule['conditionsIn']) + ' out ' + ','.join(rule['conditionsOut']))
+    return '; '.join(parts)
+
+
 def main():
     args = sys.argv[1:]
     rounds = 3
@@ -79,7 +94,7 @@ def main():
                     e = stats[(t['id'], i)]
                     if e['breaks'] > 0 or (e['falseCandidates'] > 0 and e['recovers'] == 0) or (e['falseCandidates'] >= 5 and e['falseCandidates'] > 3 * e['recovers']):
                         why = 'breaks' if e['breaks'] > 0 else 'fc only' if e['recovers'] == 0 else 'fc'
-                        removed.append((t['id'], *key(rule), e['recovers'], e['falseCandidates'], e['breaks'], f'{why}, round {round_ + 1}'))
+                        removed.append((t['id'], *key(rule), detail(rule), e['recovers'], e['falseCandidates'], e['breaks'], f'{why}, round {round_ + 1}'))
                         n += 1
                     else:
                         keep.append(rule)
@@ -90,7 +105,7 @@ def main():
     with open(os.path.join(HERE, 'yomitan-removed.tsv'), 'w', encoding='utf-8') as f:
         f.write('# Yomitan rules transforms.json leaves out, written by sources/select-removals.py.\n')
         f.write('# reason: breaks (a negative), fc (more than three false candidates per row recovered), fc only (false candidates, nothing recovered).\n')
-        f.write('# transform\tinflected\tdeinflected\trecovers\tfalseCandidates\tbreaks\treason\n')
+        f.write('# transform\tinflected\tdeinflected\trule\trecovers\tfalseCandidates\tbreaks\treason\n')
         for row in sorted(removed):
             f.write('\t'.join(map(str, row)) + '\n')
     print(f'{len(removed)} rules in sources/yomitan-removed.tsv', file=sys.stderr)

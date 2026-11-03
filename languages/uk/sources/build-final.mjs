@@ -72,22 +72,33 @@ function replacement(rule) {
 }
 
 // sources/yomitan-removed.tsv: transform, inflected, deinflected (for a
-// circumfix, prefix and suffix joined by '…'), recovers, falseCandidates,
-// breaks, reason.
+// circumfix, prefix and suffix joined by '…'), the rest of the rule (its
+// stem change, minimum, classes and conditions, as detail() writes them),
+// recovers, falseCandidates, breaks, reason.
 const removals = new Map();
 for (const line of readFileSync(removalsFile, 'utf8').split('\n')) {
     if (line === '' || line.startsWith('#')) { continue; }
-    const [transform, inflected, deinflected, , , , reason] = line.split('\t');
+    const [transform, inflected, deinflected, rule, , , , reason] = line.split('\t');
     if (!reason) { throw new Error(`${removalsFile}: a row without a reason: ${line}`); }
-    removals.set(`${transform}\t${inflected}\t${deinflected}`, 0);
+    removals.set(`${transform}\t${inflected}\t${deinflected}\t${rule}`, 0);
+}
+/** The rest of a rule, as sources/select-removals.py writes it. */
+function detail(rule) {
+    const parts = [];
+    if (rule.stemChange) { parts.push(`change ${rule.stemChange.from.join('|')}>${rule.stemChange.to}`); }
+    if (rule.stemMinLength) { parts.push(`min ${rule.stemMinLength}`); }
+    if (rule.stemEndsWith !== undefined) { parts.push(`ends ${rule.stemEndsWith}`); }
+    if (rule.stemContains !== undefined) { parts.push(`has ${rule.stemContains}`); }
+    parts.push(`in ${rule.conditionsIn.join(',')} out ${rule.conditionsOut.join(',')}`);
+    return parts.join('; ');
 }
 const removalKey = (id, rule) => {
     if (rule.type === 'circumfix' && !(rule.stemCharacters === '[]' || (rule.inflectedPrefix === '' && rule.deinflectedPrefix === ''))) {
-        return `${id}\t${rule.inflectedPrefix}…${rule.inflectedSuffix}\t${rule.deinflectedPrefix}…${rule.deinflectedSuffix}`;
+        return `${id}\t${rule.inflectedPrefix}…${rule.inflectedSuffix}\t${rule.deinflectedPrefix}…${rule.deinflectedSuffix}\t${detail(rule)}`;
     }
     const [, pair] = replacement(rule).split(' ');
     const [inflected, deinflected] = pair.split('>');
-    return `${id}\t${inflected}\t${deinflected}`;
+    return `${id}\t${inflected}\t${deinflected}\t${detail(rule)}`;
 };
 
 // Yomitan's rules without the removed ones, written back as cross products
