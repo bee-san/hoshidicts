@@ -71,8 +71,8 @@
       "description": "Plural -j of nouns and adjectives. domoj → domo, belaj → bela, kiuj → kiu, miaj → mia.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "oj", "deinflected": "o", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "[^ ]", "source": "both"},
-        {"type": "suffix", "inflected": "aj", "deinflected": "a", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "[^ ]", "source": "both"},
+        {"type": "suffix", "inflected": "oj", "deinflected": "o", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "{upper}", "source": "both"},
+        {"type": "suffix", "inflected": "aj", "deinflected": "a", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "{upper}", "source": "both"},
         {"type": "wholeWord", "inflected": "kiuj", "deinflected": "kiu", "conditionsIn": [], "conditionsOut": [], "source": "both"},
         {"type": "wholeWord", "inflected": "tiuj", "deinflected": "tiu", "conditionsIn": [], "conditionsOut": [], "source": "both"},
         {"type": "wholeWord", "inflected": "iuj", "deinflected": "iu", "conditionsIn": [], "conditionsOut": [], "source": "both"},

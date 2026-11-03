@@ -252,8 +252,10 @@ guard: no space in the stem	0	mi brs'jn	mi brs'j	*	*
 guard: stem of 2 letters at least	0	b'jn	b'j	*	*
 guard: no space in the stem	0	mi brsoj	mi brso	*	*
 guard: stem of 2 letters at least	0	boj	bo	*	*
+guard: no capital stem	0	Brsoj	Brso	*	*
 guard: no space in the stem	0	mi brsaj	mi brsa	*	*
 guard: stem of 2 letters at least	0	baj	ba	*	*
+guard: no capital stem	0	Brsaj	Brsa	*	*
 guard: no space in the stem	0	mi brs'j	mi brs	*	*
 guard: stem of 2 letters at least	0	b'j	b	*	*
 guard: no space in the stem	0	mi brsas	mi brsi	*	*

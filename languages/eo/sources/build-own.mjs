@@ -80,6 +80,8 @@ function add(id, rule) {
 }
 
 const NO_SPACE = '[^ ]';
+// The class `upper` of language.json: the capitals of the pack's letter class.
+const UPPER_CLASS = '{upper}';
 
 function suffix(id, inflected, deinflected, conditionsIn, conditionsOut, stemMinLength, extra = {}) {
     add(id, {type: 'suffix', inflected, deinflected, conditionsIn, conditionsOut, stemMinLength, stemCharacters: NO_SPACE, ...extra});
@@ -136,9 +138,16 @@ suffix('accusative', "'n", '', [], [], 2);
 suffix('accusative', "'jn", "'j", [], [], 2);
 
 transform('plural', 'plural', 'Plural -j of nouns and adjectives. domoj → domo, belaj → bela, kiuj → kiu, miaj → mia.');
-// Two letters at least: kaj (and) is not ka, hoj (ahoy) is not ho.
-suffix('plural', 'oj', 'o', [], [], 2);
-suffix('plural', 'aj', 'a', [], [], 2);
+// Two letters at least: kaj (and) is not ka, hoj (ahoy) is not ho. And no
+// capital: a capitalised plural is almost always a common word at the start
+// of a sentence (Leonoj, Kronoj, Egiptoj), which the lookup also tries
+// decapitalised, while its capitalised singular is often a name (Leono,
+// Egipto), which would come first. On Tatoeba's 22,130 capitalised plurals
+// this took the wrong first results from 324 to 1; 25 plurals of names
+// (Amerikoj, Koreoj) lose their reading (README.md, Known gaps). This was
+// added after Yomitan's rules were read, from that measurement.
+suffix('plural', 'oj', 'o', [], [], 2, {stemNotStartsWith: UPPER_CLASS});
+suffix('plural', 'aj', 'a', [], [], 2, {stemNotStartsWith: UPPER_CLASS});
 for (const word of U_CORRELATIVES) {
     whole('plural', `${word}j`, word);
 }
