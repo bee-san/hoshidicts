@@ -6,6 +6,7 @@
     python3 languages/eu/sources/measure.py text <cache> <imported dictionary> [--languages <dir>] [--corpus garoa|wikipedia|tatoeba]
     python3 languages/eu/sources/measure.py sample <cache> <imported dictionary> [--languages <dir>] [--corpus ...] [--n 60]
     python3 languages/eu/sources/measure.py yomitan <cache> <imported dictionary> [--languages <dir>] [--union <file>]
+    python3 languages/eu/sources/measure.py contexts <cache> <imported dictionary> [--languages <dir>] [--corpus tatoeba]
 
 <cache> holds the downloads the README names (MANIFEST in hachi-lang-cache/eu):
 wty-eu-en-json/ (the dictionary's banks, unzipped), eu_50k-2018.txt,
@@ -26,6 +27,11 @@ rule writes whose spelling ends with its deinflected text, with its inflected
 ending put in place; how many of them are attested (in the subtitle list or
 in kaikki's tables for that lemma), and how many attested ones the pack's
 transforms.json and the rule itself reach.
+
+contexts: the text measurement restricted to the words behind a personal
+pronoun or demonstrative (nik, zuk, hark, ...), behind the negation ez, and
+in front of a form of the auxiliaries (ikusi dut, nahi dut): where a lookup
+from the word could read the phrase.
 
 text: every word of the corpus looked up with the rest of its sentence. The
 first result is judged by script where the word has form-of rows (right: a
@@ -311,6 +317,44 @@ def yomitan(cache, dictionary, opts):
     print(json.dumps(dict(totals)))
 
 
+PRONOUNS = set('ni nik niri nire hi hik hiri hire gu guk guri gure zu zuk zuri zure zuek zuei zuen hura hark hari haren haiek haiei haien '
+               'hau honek honi hori horrek horri hauek horiek'.split())
+AUXILIARY = set('naiz haiz da gara zara zarete dira nintzen zen ginen zinen ziren dut duk dun du dugu duzu duzue dute ditut ditu ditugu '
+                'dituzu dituzte nuen zuen genuen zenuen zuten nituen zituen nuke luke zenuke genuke zait zaio zaizu dit dio dizu digu diot '
+                'dizut diogu diozu diote zitzaion zion nion zidan'.split())
+
+
+def contexts(cache, dictionary, opts):
+    rows = dictionary_rows(cache)
+    pos = []
+    for s in sentences(cache, opts['--corpus'] if opts['--corpus'] != 'garoa' else 'tatoeba'):
+        words = [(m.group(0), m.start()) for m in WORD.finditer(s) if not any(c.isdigit() for c in m.group(0))]
+        for i, (w, start) in enumerate(words):
+            before = words[i - 1][0].lower() if i > 0 else ''
+            after = words[i + 1][0].lower() if i + 1 < len(words) else ''
+            kinds = []
+            if before in PRONOUNS:
+                kinds.append('after a pronoun')
+            if before == 'ez':
+                kinds.append('after ez')
+            if after in AUXILIARY:
+                kinds.append('before an auxiliary')
+            for k in kinds:
+                pos.append((k, w, s[start:]))
+    looked = lookups(opts['--languages'], dictionary, [t for _, _, t in pos])
+    counts = collections.defaultdict(collections.Counter)
+    wrong = collections.defaultdict(collections.Counter)
+    for (kind, word, t), d in zip(pos, looked):
+        first = d['results'][0] if d['results'] else None
+        verdict = judge(word, first, rows) or 'unjudged'
+        counts[kind][verdict] += 1
+        if verdict == 'wrong':
+            wrong[kind][(word.lower(), first['expression'], first['matched'])] += 1
+    for kind in counts:
+        print(json.dumps({'context': kind, 'positions': sum(counts[kind].values()), **counts[kind]}, ensure_ascii=False))
+        print('  wrong: ' + json.dumps(wrong[kind].most_common(15), ensure_ascii=False))
+
+
 def main(argv):
     pos, opts = args_of(argv)
     if len(pos) != 3:
@@ -324,6 +368,8 @@ def main(argv):
         text(cache, dictionary, opts, sample=True)
     elif command == 'yomitan':
         yomitan(cache, dictionary, opts)
+    elif command == 'contexts':
+        contexts(cache, dictionary, opts)
     else:
         raise SystemExit(__doc__)
 

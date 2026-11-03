@@ -6,6 +6,15 @@
 # one for each finite-verb transform no row of corpus.tsv exercises, written by sources/build-corpus.py; the reason is that transform.
 # one for each finite-verb transform no row of corpus.tsv exercises, written by sources/build-corpus.py; the reason is that transform.
 # one for each finite-verb transform no row of corpus.tsv exercises, written by sources/build-corpus.py; the reason is that transform.
+negatives	0	da	d	*	*
+negatives	0	mendiean	mendi	*	*
+negatives	0	ugari	ugar	*	*
+negatives	0	etxeari	etxe	v	*
+negatives	0	zaharrago	zaharr	*	*
+negatives	0	lanka	lan	*	*
+negatives	0	dakitak	jakin	*	*
+negatives	0	zion	edun	v	allo-a3s-d3s-e3s
+negatives	0	dezake	edun	v	pot-a3s-e3s
 # UniMorph rows (categories with ";"): 654 rows from UniMorph eus (https://github.com/unimorph/eus/blob/256a35d915d4689e96e79cc9725e0518b8152db0/eus, sha256 b80f2538), CC BY-SA 3.0, by the UniMorph contributors,
 # one for each finite-verb transform no row of corpus.tsv exercises, written by sources/build-corpus.py; the reason is that transform.
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
