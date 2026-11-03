@@ -423,7 +423,11 @@ suffix('present-du', 'st', 'en', FINITE_IN, VERB_OUT, {...MIN2, stemNotEndsWith:
 suffix('present-du', 'est', 'en', FINITE_IN, VERB_OUT, DTMN);
 suffix('present-du', 'elst', 'eln', FINITE_IN, VERB_OUT, MIN2);
 suffix('present-du', 'erst', 'ern', FINITE_IN, VERB_OUT, MIN2);
-suffix('present-er', 't', 'en', FINITE_IN, VERB_OUT, MIN2);
+// heut is heute (wiktionary-to-yomitan's row for it names heute), not heuen
+// (to make hay): the stems in u have a rule of their own that leaves out heu,
+// so heult keeps heulen and freut, baut keep freuen, bauen.
+suffix('present-er', 't', 'en', FINITE_IN, VERB_OUT, {...MIN2, stemNotEndsWith: '[u]'});
+suffix('present-er', 't', 'en', FINITE_IN, VERB_OUT, {...MIN2, stemEndsWith: '[u]', stemNotStartsWithText: 'heu'});
 suffix('present-er', 'et', 'en', FINITE_IN, VERB_OUT, DTMN);
 // The present of a verb whose stem ends in t (du kostest, er kostet) is spelled
 // like the past of a verb without the t (kosen: du kostest, ihr kostet). These
@@ -437,9 +441,11 @@ suffix('present-er', 'ert', 'ern', FINITE_IN, VERB_OUT, MIN2);
 // which present-ich reads), and only after a consonant or u (freu dich!).
 // schloß is the spelling before 1996 of schloss (schließen), not the
 // imperative of the rare schloßen (to hail), which came first for it; sehn is
-// the short sehen, not the imperative of sehnen. A rule takes one exclusion,
-// so the stems in n have a rule of their own.
-suffix('imperative', '', 'en', FINITE_IN, VERB_OUT, {stemMinLength: 2, stemStartsWith: LOWER, stemEndsWith: '[bcfghjklmpqrsvwxzßu]', stemNotStartsWithText: 'schloß'});
+// the short sehen, not the imperative of sehnen, and heu, the start of heut
+// (heute), is not read as heuen. A rule takes one exclusion, so the stems in n
+// and in u have rules of their own.
+suffix('imperative', '', 'en', FINITE_IN, VERB_OUT, {stemMinLength: 2, stemStartsWith: LOWER, stemEndsWith: '[bcfghjklmpqrsvwxzß]', stemNotStartsWithText: 'schloß'});
+suffix('imperative', '', 'en', FINITE_IN, VERB_OUT, {stemMinLength: 2, stemStartsWith: LOWER, stemEndsWith: '[u]', stemNotStartsWithText: 'heu'});
 suffix('imperative', '', 'en', FINITE_IN, VERB_OUT, {stemMinLength: 2, stemStartsWith: LOWER, stemEndsWith: '[n]', stemNotStartsWithText: 'sehn'});
 suffix('imperative', 'el', 'eln', FINITE_IN, VERB_OUT, MIN2);  // wandel!, sammel!
 suffix('imperative', 'er', 'ern', FINITE_IN, VERB_OUT, MIN2);  // steiger!, bedauer!
@@ -490,7 +496,8 @@ form('present-ich', 'koste', 'kosten', FINITE_IN, VERB_OUT);
 // ge- or a particle and ge- (gewartet: warten, or the archaic gewarten), and
 // are far more often the participle: listed, so they are found before the
 // present (er, ihr), whose ending is shorter.
-for (const [participle, verb] of [['gewartet', 'warten'], ['gelobt', 'loben'], ['geleitet', 'leiten'], ['angehört', 'anhören'], ['zugehört', 'zuhören']]) {
+for (const [participle, verb] of [['gewartet', 'warten'], ['gelobt', 'loben'], ['geleitet', 'leiten'], ['angehört', 'anhören'], ['zugehört', 'zuhören'],
+    ['getraut', 'trauen'], ['geduldet', 'dulden']]) {
     form('past-participle', participle, verb, ['adj'], VERB_OUT);
 }
 // schalt is the imperative of schalten more often than the past of schelten.
@@ -500,6 +507,13 @@ form('imperative', 'schalt', 'schalten', FINITE_IN, VERB_OUT);
 // with the present before the past, schalten is found first.
 form('present-er', 'schaltet', 'schalten', FINITE_IN, VERB_OUT);
 form('present-du', 'schaltest', 'schalten', FINITE_IN, VERB_OUT);
+// gelangt and drängt are also the past (ihr) of gelingen and the subjunctive
+// II (ihr) of dringen, which the dictionary's own rows for them name; the
+// listed present of gelangen and drängen is found first.
+for (const [form3, form2, verb] of [['gelangt', 'gelangst', 'gelangen'], ['drängt', 'drängst', 'drängen']]) {
+    form('present-er', form3, verb, FINITE_IN, VERB_OUT);
+    form('present-du', form2, verb, FINITE_IN, VERB_OUT);
+}
 
 // Strong verbs.
 const SIBILANT_OR_DENTAL = /[dtsßzx]$|sch$/u;
@@ -769,10 +783,22 @@ function noun(id, inflected, deinflected, conditionsIn, conditionsOut, extra = {
 // found first (Stunden is Stunde, not Stund; Katzen Katze, not Katz; Reisen
 // Reise, not Reis, rice).
 noun('plural', 'en', 'e', PLURAL_IN, NOUN_OUT);
-noun('plural', 'e', '', PLURAL_IN, NOUN_OUT);
+// Lowercase words that are a numeral, adjective or adverb spelled like the
+// plural of a noun (grade: gerade, not Grad; oberste, obersten: oberer;
+// zehnten: zehnte; zweier, zweien, dreier, dreien: zwei, drei) keep the
+// reading their own rows give: their stems are left out of the plural rules,
+// in rules split by the stem's last and first letter, since a rule takes one
+// exclusion. The nouns (Grade, Oberste, Zehnten, Zweien, Dreien) have form-of
+// rows of their own.
+noun('plural', 'e', '', PLURAL_IN, NOUN_OUT, {stemNotEndsWith: '[dt]'});
+noun('plural', 'e', '', PLURAL_IN, NOUN_OUT, {stemEndsWith: '[d]', stemNotStartsWithText: 'grad'});
+noun('plural', 'e', '', PLURAL_IN, NOUN_OUT, {stemEndsWith: '[t]', stemNotStartsWithText: 'oberst'});
 // No noun with a plain -er plural has a stem in k, so Techniker and Musiker
 // are not read as plurals of Technik and Musik.
-noun('plural', 'er', '', PLURAL_IN, NOUN_OUT, {stemNotEndsWith: '[k]'});
+noun('plural', 'er', '', PLURAL_IN, NOUN_OUT, {stemNotEndsWith: '[ik]'});
+noun('plural', 'er', '', PLURAL_IN, NOUN_OUT, {stemEndsWith: '[i]', stemStartsWith: '[d]', stemNotStartsWithText: 'drei'});
+noun('plural', 'er', '', PLURAL_IN, NOUN_OUT, {stemEndsWith: '[i]', stemStartsWith: '[z]', stemNotStartsWithText: 'zwei'});
+noun('plural', 'er', '', PLURAL_IN, NOUN_OUT, {stemEndsWith: '[i]', stemNotStartsWith: '[dz]'});
 for (const [from, to] of UMLAUTS) {
     const extra = {stemMinLength: 1, stemChange: umlaut(from, to)};
     noun('plural', 'e', '', PLURAL_IN, NOUN_OUT, extra);
@@ -785,13 +811,20 @@ for (const [from, to] of UMLAUTS) {
     }
 }
 noun('plural', 'n', '', PLURAL_IN, NOUN_OUT, {stemEndsWith: '[elr]'});
-noun('plural', 'en', '', PLURAL_IN, NOUN_OUT);
+noun('plural', 'en', '', PLURAL_IN, NOUN_OUT, {stemNotEndsWith: '[it]'});
+noun('plural', 'en', '', PLURAL_IN, NOUN_OUT, {stemEndsWith: '[t]', stemStartsWith: '[o]', stemNotStartsWithText: 'oberst'});
+noun('plural', 'en', '', PLURAL_IN, NOUN_OUT, {stemEndsWith: '[t]', stemStartsWith: '[z]', stemNotStartsWithText: 'zehnt'});
+noun('plural', 'en', '', PLURAL_IN, NOUN_OUT, {stemEndsWith: '[t]', stemNotStartsWith: '[oz]'});
+noun('plural', 'en', '', PLURAL_IN, NOUN_OUT, {stemEndsWith: '[i]', stemStartsWith: '[d]', stemNotStartsWithText: 'drei'});
+noun('plural', 'en', '', PLURAL_IN, NOUN_OUT, {stemEndsWith: '[i]', stemStartsWith: '[z]', stemNotStartsWithText: 'zwei'});
+noun('plural', 'en', '', PLURAL_IN, NOUN_OUT, {stemEndsWith: '[i]', stemNotStartsWith: '[dz]'});
 noun('plural', 'innen', 'in', PLURAL_IN, NOUN_OUT);
 noun('plural', 's', '', PLURAL_IN, NOUN_OUT, {stemEndsWith: '[aeiouyäöü]'});
 noun('plural', 'usse', 'us', PLURAL_IN, NOUN_OUT, {stemMinLength: 1});  // Busse
 noun('plural', 'asse', 'as', PLURAL_IN, NOUN_OUT, {stemMinLength: 1});  // Atlasse
 noun('plural', 'isse', 'is', PLURAL_IN, NOUN_OUT, {stemMinLength: 1});  // Kürbisse, Iltisse, Ergebnisse
-noun('plural', 'osse', 'os', PLURAL_IN, NOUN_OUT, {stemMinLength: 1});  // Rhinozerosse
+// grosse is the Swiss spelling of große, not the plural of Gros.
+noun('plural', 'osse', 'os', PLURAL_IN, NOUN_OUT, {stemMinLength: 1, stemNotStartsWithText: 'gr'});  // Rhinozerosse
 // Compounds of Bau and Saal (Neubauten, Hörsäle); the dictionary lists Bauten
 // and Säle themselves, and bauten alone is also bauen.
 for (const [inflected, deinflected] of [['bauten', 'bau'], ['säle', 'saal']]) {
@@ -811,12 +844,19 @@ for (const [inflected, deinflected, extra] of [
 // Genitive: a name has no part of speech in wiktionary-to-yomitan, so the
 // genitive keeps every part of speech.
 // A noun in s, ß, x or z takes -es (des Hauses, des Fußes), so ass is not As.
-noun('genitive', 's', '', [], [], {stemNotEndsWith: '[sßxz]'});
+// draus is daraus (its row names it), not the genitive of the river Drau,
+// whose rows have no part of speech, so only this rule reaches them: the
+// stems in u have a rule of their own that leaves out drau.
+// seins is the possessive (seiner), not the genitive of Sein.
+noun('genitive', 's', '', [], [], {stemNotEndsWith: '[nsßxzu]'});
+noun('genitive', 's', '', [], [], {stemEndsWith: '[n]', stemNotStartsWithText: 'sein'});
+noun('genitive', 's', '', [], [], {stemEndsWith: '[u]', stemNotStartsWithText: 'drau'});
 noun('genitive', 'es', '', [], []);
 noun('genitive', 'ens', 'e', [], []);
 noun('genitive', 'ens', '', [], []);
 noun('genitive', "'", '', [], [], {stemEndsWith: '[sßxz]'});
-noun('plural-s', 's', '', PLURAL_IN, NOUN_OUT, {stemEndsWith: '[bcdfghjklmnpqrtvw]'});  // not after s, ß, x, z
+noun('plural-s', 's', '', PLURAL_IN, NOUN_OUT, {stemEndsWith: '[bcdfghjklmpqrtvw]'});  // not after s, ß, x, z
+noun('plural-s', 's', '', PLURAL_IN, NOUN_OUT, {stemEndsWith: '[n]', stemNotStartsWithText: 'sein'});  // seins, as in the genitive
 // The dative plural gives the plural, in small letters for the plural rules
 // (Kindern -> kinder -> Kind) and capitalized for a plural the dictionary
 // lists (Leuten -> Leute, Eltern).

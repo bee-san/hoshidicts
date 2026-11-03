@@ -42,6 +42,26 @@ const rules = (t, id, test) => {
 const suffixRule = (inflected, deinflected) => (r) => r.type === 'suffix' && r.inflected === inflected && r.deinflected === deinflected;
 const listedVerbRules = (t) => t.transforms.flatMap((x) => x.rules.filter((r) => r.type === 'circumfix' && r.prefixes?.length === 1 && r.prefixes[0][0] === '' && r.conditionsOut.includes('v')));
 const separated = (t) => rules(t, 'separated-prefix', (r) => r.type === 'pattern');
+// Removes the listed forms (circumfix suffixes [inflected, lemma]) that keep() rejects, in the transforms ids names (null: all).
+const dropListed = (t, ids, keep) => {
+    let dropped = 0;
+    for (const x of t.transforms) {
+        if (ids !== null && !ids.includes(x.id)) { continue; }
+        for (const r of x.rules) {
+            if (r.type !== 'circumfix' || r.suffixes === undefined) { continue; }
+            const kept = r.suffixes.filter(keep);
+            dropped += r.suffixes.length - kept.length;
+            r.suffixes = kept;
+        }
+    }
+    if (dropped === 0) { throw new Error('no listed form matched'); }
+};
+// Removes the exclusion stemNotStartsWithText: text from the rules of a transform (only those with that inflected ending, if given).
+const exclusion = (t, id, text, inflected = null) => {
+    const found = byId(t, id).rules.filter((r) => r.stemNotStartsWithText === text && (inflected === null || r.inflected === inflected));
+    if (found.length === 0) { throw new Error(`no exclusion ${text} in ${id}`); }
+    for (const r of found) { delete r.stemNotStartsWithText; }
+};
 
 // name -> function(transforms, language) that changes them in place
 const MUTATIONS = {
@@ -52,7 +72,7 @@ const MUTATIONS = {
     'stems without a space': (t) => { for (const x of t.transforms) { for (const r of x.rules) { if (r.stemCharacters === '{stemChar}') { delete r.stemCharacters; } } } },
     'verb and adjective endings only in small letters': (t) => { for (const x of t.transforms) { for (const r of x.rules) { if (r.stemStartsWith === '{lower}') { delete r.stemStartsWith; } } } },
     'imperative: not after a vowel, d or t': (t) => { for (const r of rules(t, 'imperative', suffixRule('', 'en'))) { delete r.stemEndsWith; } },
-    'imperative: not schloß': (t) => { for (const r of rules(t, 'imperative', suffixRule('', 'en'))) { delete r.stemNotStartsWithText; } },
+    'imperative: not schloß': (t) => exclusion(t, 'imperative', 'schloß'),
     'short subjunctive II forms that clash': (t) => {
         for (const [id, end] of [['subjunctive-2-du', 'st'], ['subjunctive-2-ihr', 't']]) {
             for (const r of byId(t, id).rules) {
@@ -106,17 +126,30 @@ const MUTATIONS = {
     },
     'declined ten -> te': (t) => { const x = byId(t, 'declined'); x.rules = x.rules.filter((r) => !(r.type === 'suffix' && r.inflected === 'ten' && r.deinflected === 'te')); },
     'declined ere -> er': (t) => { const x = byId(t, 'declined'); x.rules = x.rules.filter((r) => !(r.type === 'suffix' && r.inflected === 'ere' && r.deinflected === 'er')); },
-    'listed -t adjectives': (t) => { for (const r of rules(t, 'declined', (x) => x.type === 'circumfix')) { r.suffixes = r.suffixes.filter(([inflected]) => !/^(bekannt|berühmt|bestimmt|doppelt|kompliziert|recht|verdammt|verfickt|verrückt)/u.test(inflected)); } },
-    'listed present (ich) of frequent verbs': (t) => { for (const r of rules(t, 'present-ich', (x) => x.type === 'circumfix')) { r.suffixes = r.suffixes.filter(([inflected]) => !['bereite', 'heiße', 'lasse', 'leide', 'liebe', 'schicke', 'wette'].includes(inflected)); } },
     'present of t stems (tet, test)': (t) => {
         for (const id of ['present-er', 'present-du']) { const x = byId(t, id); x.rules = x.rules.filter((r) => !(r.type === 'suffix' && ['tet', 'test'].includes(r.inflected) && r.deinflected === 'ten')); }
     },
     'listed koste': (t) => { for (const r of rules(t, 'present-ich', (x) => x.type === 'circumfix')) { r.suffixes = r.suffixes.filter(([inflected]) => inflected !== 'koste'); } },
-    'imperative: not sehn': (t) => { for (const r of byId(t, 'imperative').rules) { if (r.stemNotStartsWithText === 'sehn') { delete r.stemNotStartsWithText; } } },
-    'present (ich): not mein': (t) => { for (const r of byId(t, 'present-ich').rules) { if (r.stemNotStartsWithText === 'mein') { delete r.stemNotStartsWithText; } } },
-    'listed participles of verbs with a ge- homograph': (t) => { for (const r of rules(t, 'past-participle', (x) => x.type === 'circumfix')) { r.suffixes = r.suffixes.filter(([inflected]) => !['gewartet', 'gelobt', 'geleitet', 'angehört', 'zugehört'].includes(inflected)); } },
+    'imperative: not sehn': (t) => exclusion(t, 'imperative', 'sehn'),
+    'present (ich): not mein': (t) => exclusion(t, 'present-ich', 'mein'),
+    'present (er, ihr): not heu': (t) => exclusion(t, 'present-er', 'heu'),
+    'imperative: not heu': (t) => exclusion(t, 'imperative', 'heu'),
+    'genitive: not drau': (t) => exclusion(t, 'genitive', 'drau'),
+    'genitive keeps every part of speech (names)': (t) => { for (const r of byId(t, 'genitive').rules) { r.conditionsOut = ['n']; } },
+    'short subjunctive II forms that clash: tränk': (t) => {
+        for (const [id, end] of [['subjunctive-2-du', 'st'], ['subjunctive-2-ihr', 't']]) {
+            for (const r of byId(t, id).rules) { if (r.suffixes !== undefined) { r.suffixes.push([`tränk${end}`, 'trinken']); } }
+        }
+    },
+    'verbs before nouns': (t) => {
+        const ids = ['plural', 'genitive', 'plural-s', 'dative-plural'];
+        const moved = t.transforms.filter((x) => ids.includes(x.id));
+        t.transforms = t.transforms.filter((x) => !ids.includes(x.id));
+        const at = t.transforms.findIndex((x) => x.id === 'superlative') + 1;
+        t.transforms.splice(at, 0, ...moved);
+    },
+    'traceSelection shortest': (_t, l) => { l.lookup.traceSelection = 'first'; },
     'listed imperative schalt': (t) => { for (const r of rules(t, 'imperative', (x) => x.type === 'circumfix')) { r.suffixes = r.suffixes.filter(([inflected]) => inflected !== 'schalt'); } },
-    'listed present of schalten': (t) => { for (const id of ['present-er', 'present-du']) { for (const r of byId(t, id).rules) { if (r.suffixes !== undefined) { r.suffixes = r.suffixes.filter(([, lemma]) => lemma !== 'schalten'); } } } },
     'dropped e of -eren and -erem': (t) => { const x = byId(t, 'declined'); x.rules = x.rules.filter((r) => !(r.type === 'suffix' && ['ern', 'erm'].includes(r.inflected) && r.deinflected === 'er')); },
     'old spellings of listed verb forms': (t) => {
         for (const r of listedVerbRules(t)) {
@@ -136,6 +169,29 @@ const MUTATIONS = {
     'processor normalizeUnicode': (_t, l) => { l.lookup.preprocessors = l.lookup.preprocessors.filter((p) => p.id !== 'normalizeUnicode'); },
     'searchResolution character': (_t, l) => { l.lookup.searchResolution = 'word'; },
 };
+
+// One mutation per entry of the homograph lists of README.md (Rule provenance), each with a row that fails without it.
+for (const adjective of ['bekannt', 'berühmt', 'bestimmt', 'bewaffnet', 'doppelt', 'kompliziert', 'recht', 'verdammt', 'verehrt', 'verfickt', 'verflucht', 'vereinigt', 'verrückt']) {
+    MUTATIONS[`listed -t adjective ${adjective}`] = (t) => dropListed(t, ['declined'], ([, lemma]) => lemma !== adjective);
+}
+for (const form of ['bereite', 'heiße', 'lasse', 'leide', 'liebe', 'schicke', 'wette']) {
+    MUTATIONS[`listed present (ich) ${form}`] = (t) => dropListed(t, ['present-ich'], ([inflected]) => inflected !== form);
+}
+for (const form of ['gewartet', 'gelobt', 'geleitet', 'angehört', 'zugehört', 'getraut', 'geduldet']) {
+    MUTATIONS[`listed participle ${form}`] = (t) => dropListed(t, ['past-participle'], ([inflected]) => inflected !== form);
+}
+for (const [id, form] of [['present-er', 'schaltet'], ['present-du', 'schaltest'], ['present-er', 'gelangt'], ['present-du', 'gelangst'], ['present-er', 'drängt'], ['present-du', 'drängst']]) {
+    MUTATIONS[`listed ${id} ${form}`] = (t) => dropListed(t, [id], ([inflected]) => inflected !== form);
+}
+// Lowercase numerals, adjectives and adverbs left out of the noun rules (grade, oberste, zehnten, zweier, dreien, grosse, seins).
+for (const [id, inflected, text] of [['plural', 'e', 'grad'], ['plural', 'e', 'oberst'], ['plural', 'en', 'oberst'], ['plural', 'en', 'zehnt'],
+    ['plural', 'en', 'drei'], ['plural', 'en', 'zwei'], ['plural', 'er', 'drei'], ['plural', 'er', 'zwei'], ['plural', 'osse', 'gr'],
+    ['genitive', 's', 'sein'], ['plural-s', 's', 'sein']]) {
+    MUTATIONS[`${id} -${inflected}: not ${text}`] = (t) => exclusion(t, id, text, inflected);
+}
+for (const verb of ['schlafen', 'kennen', 'schreiben', 'verlieren']) {
+    MUTATIONS[`verb table without ${verb}`] = (t) => dropListed(t, null, ([, lemma]) => lemma !== verb);
+}
 
 mkdirSync(scratch, {recursive: true});
 let survivors = 0;

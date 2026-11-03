@@ -328,3 +328,6 @@ negatives	0	Kinder	Kind	v	*
 negatives	0	anzurufen	anrufen	n	*
 negatives	0	geht	hen	*	past-participle
 negatives	0	gegengezeichnet	gengezeichnen	*	past-participle
+present	1	heult	heulen	v	present-er
+negatives	0	heut	heuen	v	present-er
+negatives	0	draus	Drau	*	genitive

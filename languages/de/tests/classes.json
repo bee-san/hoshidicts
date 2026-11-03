@@ -871,6 +871,9 @@
       [223, 246],
       [248, 255]
     ],
+    "transforms[7].rules[0].stemNotEndsWith": [
+      [117, 117]
+    ],
     "transforms[7].rules[1].stemCharacters": [
       [45, 45],
       [48, 57],
@@ -889,9 +892,7 @@
       [248, 255]
     ],
     "transforms[7].rules[1].stemEndsWith": [
-      [100, 100],
-      [109, 110],
-      [116, 116]
+      [117, 117]
     ],
     "transforms[7].rules[2].stemCharacters": [
       [45, 45],
@@ -909,6 +910,11 @@
       [97, 122],
       [223, 246],
       [248, 255]
+    ],
+    "transforms[7].rules[2].stemEndsWith": [
+      [100, 100],
+      [109, 110],
+      [116, 116]
     ],
     "transforms[7].rules[3].stemCharacters": [
       [45, 45],
@@ -961,7 +967,24 @@
       [223, 246],
       [248, 255]
     ],
-    "transforms[7].rules[8].stemNotEndsWith": [
+    "transforms[7].rules[6].stemCharacters": [
+      [45, 45],
+      [48, 57],
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [768, 879],
+      [7838, 7838],
+      [64256, 64262]
+    ],
+    "transforms[7].rules[6].stemStartsWith": [
+      [97, 122],
+      [223, 246],
+      [248, 255]
+    ],
+    "transforms[7].rules[9].stemNotEndsWith": [
       [99, 99]
     ],
     "transforms[9].rules[0].stemCharacters": [
@@ -986,7 +1009,7 @@
       [102, 104],
       [106, 109],
       [112, 115],
-      [117, 120],
+      [118, 120],
       [122, 122],
       [223, 223]
     ],
@@ -1008,7 +1031,7 @@
       [248, 255]
     ],
     "transforms[9].rules[1].stemEndsWith": [
-      [110, 110]
+      [117, 117]
     ],
     "transforms[9].rules[2].stemCharacters": [
       [45, 45],
@@ -1027,6 +1050,9 @@
       [223, 246],
       [248, 255]
     ],
+    "transforms[9].rules[2].stemEndsWith": [
+      [110, 110]
+    ],
     "transforms[9].rules[3].stemCharacters": [
       [45, 45],
       [48, 57],
@@ -1044,7 +1070,24 @@
       [223, 246],
       [248, 255]
     ],
-    "transforms[9].rules[5].stemNotEndsWith": [
+    "transforms[9].rules[4].stemCharacters": [
+      [45, 45],
+      [48, 57],
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [768, 879],
+      [7838, 7838],
+      [64256, 64262]
+    ],
+    "transforms[9].rules[4].stemStartsWith": [
+      [97, 122],
+      [223, 246],
+      [248, 255]
+    ],
+    "transforms[9].rules[6].stemNotEndsWith": [
       [99, 99]
     ],
     "transforms[10].rules[0].stemCharacters": [
@@ -1842,6 +1885,10 @@
       [224, 246],
       [248, 254]
     ],
+    "transforms[23].rules[1].stemNotEndsWith": [
+      [100, 100],
+      [116, 116]
+    ],
     "transforms[23].rules[2].stemCharacters": [
       [45, 45],
       [48, 57],
@@ -1859,8 +1906,8 @@
       [224, 246],
       [248, 254]
     ],
-    "transforms[23].rules[2].stemNotEndsWith": [
-      [107, 107]
+    "transforms[23].rules[2].stemEndsWith": [
+      [100, 100]
     ],
     "transforms[23].rules[3].stemCharacters": [
       [45, 45],
@@ -1879,14 +1926,8 @@
       [224, 246],
       [248, 254]
     ],
-    "transforms[23].rules[3].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 116],
-      [118, 120],
-      [122, 122],
-      [223, 223]
+    "transforms[23].rules[3].stemEndsWith": [
+      [116, 116]
     ],
     "transforms[23].rules[4].stemCharacters": [
       [45, 45],
@@ -1905,14 +1946,9 @@
       [224, 246],
       [248, 254]
     ],
-    "transforms[23].rules[4].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 116],
-      [118, 120],
-      [122, 122],
-      [223, 223]
+    "transforms[23].rules[4].stemNotEndsWith": [
+      [105, 105],
+      [107, 107]
     ],
     "transforms[23].rules[5].stemCharacters": [
       [45, 45],
@@ -1927,18 +1963,10 @@
       [64256, 64262]
     ],
     "transforms[23].rules[5].stemStartsWith": [
-      [97, 122],
-      [224, 246],
-      [248, 254]
+      [100, 100]
     ],
-    "transforms[23].rules[5].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 116],
-      [118, 120],
-      [122, 122],
-      [223, 223]
+    "transforms[23].rules[5].stemEndsWith": [
+      [105, 105]
     ],
     "transforms[23].rules[6].stemCharacters": [
       [45, 45],
@@ -1953,18 +1981,10 @@
       [64256, 64262]
     ],
     "transforms[23].rules[6].stemStartsWith": [
-      [97, 122],
-      [224, 246],
-      [248, 254]
+      [122, 122]
     ],
-    "transforms[23].rules[6].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 116],
-      [118, 120],
-      [122, 122],
-      [223, 223]
+    "transforms[23].rules[6].stemEndsWith": [
+      [105, 105]
     ],
     "transforms[23].rules[7].stemCharacters": [
       [45, 45],
@@ -1983,14 +2003,12 @@
       [224, 246],
       [248, 254]
     ],
-    "transforms[23].rules[7].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 116],
-      [118, 120],
-      [122, 122],
-      [223, 223]
+    "transforms[23].rules[7].stemEndsWith": [
+      [105, 105]
+    ],
+    "transforms[23].rules[7].stemNotStartsWith": [
+      [100, 100],
+      [122, 122]
     ],
     "transforms[23].rules[8].stemCharacters": [
       [45, 45],
@@ -2321,10 +2339,14 @@
       [224, 246],
       [248, 254]
     ],
-    "transforms[23].rules[20].stemEndsWith": [
-      [101, 101],
-      [108, 108],
-      [114, 114]
+    "transforms[23].rules[20].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 116],
+      [118, 120],
+      [122, 122],
+      [223, 223]
     ],
     "transforms[23].rules[21].stemCharacters": [
       [45, 45],
@@ -2343,6 +2365,15 @@
       [224, 246],
       [248, 254]
     ],
+    "transforms[23].rules[21].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 116],
+      [118, 120],
+      [122, 122],
+      [223, 223]
+    ],
     "transforms[23].rules[22].stemCharacters": [
       [45, 45],
       [48, 57],
@@ -2359,6 +2390,15 @@
       [97, 122],
       [224, 246],
       [248, 254]
+    ],
+    "transforms[23].rules[22].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 116],
+      [118, 120],
+      [122, 122],
+      [223, 223]
     ],
     "transforms[23].rules[23].stemCharacters": [
       [45, 45],
@@ -2377,16 +2417,14 @@
       [224, 246],
       [248, 254]
     ],
-    "transforms[23].rules[23].stemEndsWith": [
-      [97, 97],
-      [101, 101],
-      [105, 105],
-      [111, 111],
-      [117, 117],
-      [121, 121],
-      [228, 228],
-      [246, 246],
-      [252, 252]
+    "transforms[23].rules[23].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 116],
+      [118, 120],
+      [122, 122],
+      [223, 223]
     ],
     "transforms[23].rules[24].stemCharacters": [
       [45, 45],
@@ -2405,6 +2443,15 @@
       [224, 246],
       [248, 254]
     ],
+    "transforms[23].rules[24].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 116],
+      [118, 120],
+      [122, 122],
+      [223, 223]
+    ],
     "transforms[23].rules[25].stemCharacters": [
       [45, 45],
       [48, 57],
@@ -2421,6 +2468,11 @@
       [97, 122],
       [224, 246],
       [248, 254]
+    ],
+    "transforms[23].rules[25].stemEndsWith": [
+      [101, 101],
+      [108, 108],
+      [114, 114]
     ],
     "transforms[23].rules[26].stemCharacters": [
       [45, 45],
@@ -2439,6 +2491,10 @@
       [224, 246],
       [248, 254]
     ],
+    "transforms[23].rules[26].stemNotEndsWith": [
+      [105, 105],
+      [116, 116]
+    ],
     "transforms[23].rules[27].stemCharacters": [
       [45, 45],
       [48, 57],
@@ -2452,9 +2508,10 @@
       [64256, 64262]
     ],
     "transforms[23].rules[27].stemStartsWith": [
-      [97, 122],
-      [224, 246],
-      [248, 254]
+      [111, 111]
+    ],
+    "transforms[23].rules[27].stemEndsWith": [
+      [116, 116]
     ],
     "transforms[23].rules[28].stemCharacters": [
       [45, 45],
@@ -2469,9 +2526,10 @@
       [64256, 64262]
     ],
     "transforms[23].rules[28].stemStartsWith": [
-      [97, 122],
-      [224, 246],
-      [248, 254]
+      [122, 122]
+    ],
+    "transforms[23].rules[28].stemEndsWith": [
+      [116, 116]
     ],
     "transforms[23].rules[29].stemCharacters": [
       [45, 45],
@@ -2490,6 +2548,13 @@
       [224, 246],
       [248, 254]
     ],
+    "transforms[23].rules[29].stemEndsWith": [
+      [116, 116]
+    ],
+    "transforms[23].rules[29].stemNotStartsWith": [
+      [111, 111],
+      [122, 122]
+    ],
     "transforms[23].rules[30].stemCharacters": [
       [45, 45],
       [48, 57],
@@ -2503,9 +2568,10 @@
       [64256, 64262]
     ],
     "transforms[23].rules[30].stemStartsWith": [
-      [97, 122],
-      [224, 246],
-      [248, 254]
+      [100, 100]
+    ],
+    "transforms[23].rules[30].stemEndsWith": [
+      [105, 105]
     ],
     "transforms[23].rules[31].stemCharacters": [
       [45, 45],
@@ -2520,9 +2586,10 @@
       [64256, 64262]
     ],
     "transforms[23].rules[31].stemStartsWith": [
-      [97, 122],
-      [224, 246],
-      [248, 254]
+      [122, 122]
+    ],
+    "transforms[23].rules[31].stemEndsWith": [
+      [105, 105]
     ],
     "transforms[23].rules[32].stemCharacters": [
       [45, 45],
@@ -2540,6 +2607,13 @@
       [97, 122],
       [224, 246],
       [248, 254]
+    ],
+    "transforms[23].rules[32].stemEndsWith": [
+      [105, 105]
+    ],
+    "transforms[23].rules[32].stemNotStartsWith": [
+      [100, 100],
+      [122, 122]
     ],
     "transforms[23].rules[33].stemCharacters": [
       [45, 45],
@@ -2574,6 +2648,17 @@
       [97, 122],
       [224, 246],
       [248, 254]
+    ],
+    "transforms[23].rules[34].stemEndsWith": [
+      [97, 97],
+      [101, 101],
+      [105, 105],
+      [111, 111],
+      [117, 117],
+      [121, 121],
+      [228, 228],
+      [246, 246],
+      [252, 252]
     ],
     "transforms[23].rules[35].stemCharacters": [
       [45, 45],
@@ -2643,11 +2728,6 @@
       [224, 246],
       [248, 254]
     ],
-    "transforms[23].rules[38].stemEndsWith": [
-      [100, 100],
-      [107, 107],
-      [116, 116]
-    ],
     "transforms[23].rules[39].stemCharacters": [
       [45, 45],
       [48, 57],
@@ -2664,10 +2744,6 @@
       [97, 122],
       [224, 246],
       [248, 254]
-    ],
-    "transforms[23].rules[39].stemEndsWith": [
-      [115, 115],
-      [120, 120]
     ],
     "transforms[23].rules[40].stemCharacters": [
       [45, 45],
@@ -2737,11 +2813,6 @@
       [224, 246],
       [248, 254]
     ],
-    "transforms[23].rules[43].stemEndsWith": [
-      [108, 108],
-      [112, 112],
-      [122, 122]
-    ],
     "transforms[23].rules[44].stemCharacters": [
       [45, 45],
       [48, 57],
@@ -2793,6 +2864,207 @@
       [224, 246],
       [248, 254]
     ],
+    "transforms[23].rules[47].stemCharacters": [
+      [45, 45],
+      [48, 57],
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [768, 879],
+      [7838, 7838],
+      [64256, 64262]
+    ],
+    "transforms[23].rules[47].stemStartsWith": [
+      [97, 122],
+      [224, 246],
+      [248, 254]
+    ],
+    "transforms[23].rules[48].stemCharacters": [
+      [45, 45],
+      [48, 57],
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [768, 879],
+      [7838, 7838],
+      [64256, 64262]
+    ],
+    "transforms[23].rules[48].stemStartsWith": [
+      [97, 122],
+      [224, 246],
+      [248, 254]
+    ],
+    "transforms[23].rules[49].stemCharacters": [
+      [45, 45],
+      [48, 57],
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [768, 879],
+      [7838, 7838],
+      [64256, 64262]
+    ],
+    "transforms[23].rules[49].stemStartsWith": [
+      [97, 122],
+      [224, 246],
+      [248, 254]
+    ],
+    "transforms[23].rules[49].stemEndsWith": [
+      [100, 100],
+      [107, 107],
+      [116, 116]
+    ],
+    "transforms[23].rules[50].stemCharacters": [
+      [45, 45],
+      [48, 57],
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [768, 879],
+      [7838, 7838],
+      [64256, 64262]
+    ],
+    "transforms[23].rules[50].stemStartsWith": [
+      [97, 122],
+      [224, 246],
+      [248, 254]
+    ],
+    "transforms[23].rules[50].stemEndsWith": [
+      [115, 115],
+      [120, 120]
+    ],
+    "transforms[23].rules[51].stemCharacters": [
+      [45, 45],
+      [48, 57],
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [768, 879],
+      [7838, 7838],
+      [64256, 64262]
+    ],
+    "transforms[23].rules[51].stemStartsWith": [
+      [97, 122],
+      [224, 246],
+      [248, 254]
+    ],
+    "transforms[23].rules[52].stemCharacters": [
+      [45, 45],
+      [48, 57],
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [768, 879],
+      [7838, 7838],
+      [64256, 64262]
+    ],
+    "transforms[23].rules[52].stemStartsWith": [
+      [97, 122],
+      [224, 246],
+      [248, 254]
+    ],
+    "transforms[23].rules[53].stemCharacters": [
+      [45, 45],
+      [48, 57],
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [768, 879],
+      [7838, 7838],
+      [64256, 64262]
+    ],
+    "transforms[23].rules[53].stemStartsWith": [
+      [97, 122],
+      [224, 246],
+      [248, 254]
+    ],
+    "transforms[23].rules[54].stemCharacters": [
+      [45, 45],
+      [48, 57],
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [768, 879],
+      [7838, 7838],
+      [64256, 64262]
+    ],
+    "transforms[23].rules[54].stemStartsWith": [
+      [97, 122],
+      [224, 246],
+      [248, 254]
+    ],
+    "transforms[23].rules[54].stemEndsWith": [
+      [108, 108],
+      [112, 112],
+      [122, 122]
+    ],
+    "transforms[23].rules[55].stemCharacters": [
+      [45, 45],
+      [48, 57],
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [768, 879],
+      [7838, 7838],
+      [64256, 64262]
+    ],
+    "transforms[23].rules[55].stemStartsWith": [
+      [97, 122],
+      [224, 246],
+      [248, 254]
+    ],
+    "transforms[23].rules[56].stemCharacters": [
+      [45, 45],
+      [48, 57],
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [768, 879],
+      [7838, 7838],
+      [64256, 64262]
+    ],
+    "transforms[23].rules[56].stemStartsWith": [
+      [97, 122],
+      [224, 246],
+      [248, 254]
+    ],
+    "transforms[23].rules[57].stemCharacters": [
+      [45, 45],
+      [48, 57],
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [768, 879],
+      [7838, 7838],
+      [64256, 64262]
+    ],
+    "transforms[23].rules[57].stemStartsWith": [
+      [97, 122],
+      [224, 246],
+      [248, 254]
+    ],
     "transforms[24].rules[0].stemCharacters": [
       [45, 45],
       [48, 57],
@@ -2811,7 +3083,9 @@
       [248, 254]
     ],
     "transforms[24].rules[0].stemNotEndsWith": [
+      [110, 110],
       [115, 115],
+      [117, 117],
       [120, 120],
       [122, 122],
       [223, 223]
@@ -2833,6 +3107,9 @@
       [224, 246],
       [248, 254]
     ],
+    "transforms[24].rules[1].stemEndsWith": [
+      [110, 110]
+    ],
     "transforms[24].rules[2].stemCharacters": [
       [45, 45],
       [48, 57],
@@ -2849,6 +3126,9 @@
       [97, 122],
       [224, 246],
       [248, 254]
+    ],
+    "transforms[24].rules[2].stemEndsWith": [
+      [117, 117]
     ],
     "transforms[24].rules[3].stemCharacters": [
       [45, 45],
@@ -2884,7 +3164,41 @@
       [224, 246],
       [248, 254]
     ],
-    "transforms[24].rules[4].stemEndsWith": [
+    "transforms[24].rules[5].stemCharacters": [
+      [45, 45],
+      [48, 57],
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [768, 879],
+      [7838, 7838],
+      [64256, 64262]
+    ],
+    "transforms[24].rules[5].stemStartsWith": [
+      [97, 122],
+      [224, 246],
+      [248, 254]
+    ],
+    "transforms[24].rules[6].stemCharacters": [
+      [45, 45],
+      [48, 57],
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [768, 879],
+      [7838, 7838],
+      [64256, 64262]
+    ],
+    "transforms[24].rules[6].stemStartsWith": [
+      [97, 122],
+      [224, 246],
+      [248, 254]
+    ],
+    "transforms[24].rules[6].stemEndsWith": [
       [115, 115],
       [120, 120],
       [122, 122],
@@ -2910,10 +3224,30 @@
     "transforms[25].rules[0].stemEndsWith": [
       [98, 100],
       [102, 104],
-      [106, 110],
+      [106, 109],
       [112, 114],
       [116, 116],
       [118, 119]
+    ],
+    "transforms[25].rules[1].stemCharacters": [
+      [45, 45],
+      [48, 57],
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [768, 879],
+      [7838, 7838],
+      [64256, 64262]
+    ],
+    "transforms[25].rules[1].stemStartsWith": [
+      [97, 122],
+      [224, 246],
+      [248, 254]
+    ],
+    "transforms[25].rules[1].stemEndsWith": [
+      [110, 110]
     ],
     "transforms[26].rules[0].stemCharacters": [
       [45, 45],
@@ -5115,6 +5449,9 @@
         ["sehr best", "sehr best"],
         ["Elektrotechniker", "elektrotechniker"],
         ["geht", "geht"],
+        ["heult", "heult"],
+        ["heut", "heut"],
+        ["draus", "draus"],
         ["räum den Tisch auf", "räum den tisch auf"],
         ["krankesten", "krankesten"],
         ["schwuligem", "schwuligem"],
@@ -5207,6 +5544,51 @@
         ["bösen Wolf", "bösen wolf"],
         ["koste, was es wolle.", "koste, was es wolle."],
         ["sehn wir uns?", "sehn wir uns?"],
+        ["heut ist es kalt.", "heut ist es kalt."],
+        ["draus wird nichts.", "draus wird nichts."],
+        ["gelangt zum Ziel.", "gelangt zum ziel."],
+        ["drängt mich.", "drängt mich."],
+        ["getraut.", "getraut."],
+        ["geduldet.", "geduldet."],
+        ["heiße Anna.", "heiße anna."],
+        ["lasse es sein.", "lasse es sein."],
+        ["leide sehr.", "leide sehr."],
+        ["schicke dir Blumen.", "schicke dir blumen."],
+        ["wette mit dir.", "wette mit dir."],
+        ["bereite Tee.", "bereite tee."],
+        ["bekannte Gesichter", "bekannte gesichter"],
+        ["bestimmte Dinge", "bestimmte dinge"],
+        ["bewaffnete Männer", "bewaffnete männer"],
+        ["doppelte Arbeit", "doppelte arbeit"],
+        ["komplizierte Frage", "komplizierte frage"],
+        ["rechte Hand", "rechte hand"],
+        ["verdammte Tür", "verdammte tür"],
+        ["verehrte Gäste", "verehrte gäste"],
+        ["verfickte Kiste", "verfickte kiste"],
+        ["vereinigten Staaten", "vereinigten staaten"],
+        ["verrückte Idee", "verrückte idee"],
+        ["geleitet.", "geleitet."],
+        ["angehört.", "angehört."],
+        ["schaltest das Licht", "schaltest das licht"],
+        ["brauche Hilfe.", "brauche hilfe."],
+        ["tränkt die Blumen.", "tränkt die blumen."],
+        ["schlief lange.", "schlief lange."],
+        ["kannte ihn.", "kannte ihn."],
+        ["geschrieben.", "geschrieben."],
+        ["verlor alles.", "verlor alles."],
+        ["Toms Hund", "toms hund"],
+        ["gelangst du nach Hause?", "gelangst du nach hause?"],
+        ["drängst mich.", "drängst mich."],
+        ["grade eben.", "grade eben."],
+        ["oberste Etage", "oberste etage"],
+        ["obersten Stock", "obersten stock"],
+        ["zehnten Klasse", "zehnten klasse"],
+        ["zweier Herren", "zweier herren"],
+        ["dreier Kinder", "dreier kinder"],
+        ["zweien.", "zweien."],
+        ["dreien.", "dreien."],
+        ["grosse Haus", "grosse haus"],
+        ["seins.", "seins."],
         ["Sie ist heute früh aufgestanden und hat ihre Freunde angerufen.", "sie ist heute früh aufgestanden und hat ihre freunde angerufen."],
         ["aufstehen", "aufstehen"]
       ]
@@ -7300,6 +7682,9 @@
         ["sehr best", "Sehr best"],
         ["Elektrotechniker", "Elektrotechniker"],
         ["geht", "Geht"],
+        ["heult", "Heult"],
+        ["heut", "Heut"],
+        ["draus", "Draus"],
         ["räum den Tisch auf", "Räum den Tisch auf"],
         ["krankesten", "Krankesten"],
         ["schwuligem", "Schwuligem"],
@@ -7392,6 +7777,51 @@
         ["bösen Wolf", "Bösen Wolf"],
         ["koste, was es wolle.", "Koste, was es wolle."],
         ["sehn wir uns?", "Sehn wir uns?"],
+        ["heut ist es kalt.", "Heut ist es kalt."],
+        ["draus wird nichts.", "Draus wird nichts."],
+        ["gelangt zum Ziel.", "Gelangt zum Ziel."],
+        ["drängt mich.", "Drängt mich."],
+        ["getraut.", "Getraut."],
+        ["geduldet.", "Geduldet."],
+        ["heiße Anna.", "Heiße Anna."],
+        ["lasse es sein.", "Lasse es sein."],
+        ["leide sehr.", "Leide sehr."],
+        ["schicke dir Blumen.", "Schicke dir Blumen."],
+        ["wette mit dir.", "Wette mit dir."],
+        ["bereite Tee.", "Bereite Tee."],
+        ["bekannte Gesichter", "Bekannte Gesichter"],
+        ["bestimmte Dinge", "Bestimmte Dinge"],
+        ["bewaffnete Männer", "Bewaffnete Männer"],
+        ["doppelte Arbeit", "Doppelte Arbeit"],
+        ["komplizierte Frage", "Komplizierte Frage"],
+        ["rechte Hand", "Rechte Hand"],
+        ["verdammte Tür", "Verdammte Tür"],
+        ["verehrte Gäste", "Verehrte Gäste"],
+        ["verfickte Kiste", "Verfickte Kiste"],
+        ["vereinigten Staaten", "Vereinigten Staaten"],
+        ["verrückte Idee", "Verrückte Idee"],
+        ["geleitet.", "Geleitet."],
+        ["angehört.", "Angehört."],
+        ["schaltest das Licht", "Schaltest das Licht"],
+        ["brauche Hilfe.", "Brauche Hilfe."],
+        ["tränkt die Blumen.", "Tränkt die Blumen."],
+        ["schlief lange.", "Schlief lange."],
+        ["kannte ihn.", "Kannte ihn."],
+        ["geschrieben.", "Geschrieben."],
+        ["verlor alles.", "Verlor alles."],
+        ["Toms Hund", "Toms Hund"],
+        ["gelangst du nach Hause?", "Gelangst du nach Hause?"],
+        ["drängst mich.", "Drängst mich."],
+        ["grade eben.", "Grade eben."],
+        ["oberste Etage", "Oberste Etage"],
+        ["obersten Stock", "Obersten Stock"],
+        ["zehnten Klasse", "Zehnten Klasse"],
+        ["zweier Herren", "Zweier Herren"],
+        ["dreier Kinder", "Dreier Kinder"],
+        ["zweien.", "Zweien."],
+        ["dreien.", "Dreien."],
+        ["grosse Haus", "Grosse Haus"],
+        ["seins.", "Seins."],
         ["Sie ist heute früh aufgestanden und hat ihre Freunde angerufen.", "Sie ist heute früh aufgestanden und hat ihre Freunde angerufen."],
         ["aufstehen", "Aufstehen"]
       ]
@@ -9485,6 +9915,9 @@
         ["sehr best", "sehr best"],
         ["Elektrotechniker", "elektrotechniker"],
         ["geht", "geht"],
+        ["heult", "heult"],
+        ["heut", "heut"],
+        ["draus", "draus"],
         ["räum den Tisch auf", "räum den tisch auf"],
         ["krankesten", "krankesten"],
         ["schwuligem", "schwuligem"],
@@ -9577,6 +10010,51 @@
         ["bösen Wolf", "bösen wolf"],
         ["koste, was es wolle.", "koste, was es wolle."],
         ["sehn wir uns?", "sehn wir uns?"],
+        ["heut ist es kalt.", "heut ist es kalt."],
+        ["draus wird nichts.", "draus wird nichts."],
+        ["gelangt zum Ziel.", "gelangt zum ziel."],
+        ["drängt mich.", "drängt mich."],
+        ["getraut.", "getraut."],
+        ["geduldet.", "geduldet."],
+        ["heiße Anna.", "heiße anna."],
+        ["lasse es sein.", "lasse es sein."],
+        ["leide sehr.", "leide sehr."],
+        ["schicke dir Blumen.", "schicke dir blumen."],
+        ["wette mit dir.", "wette mit dir."],
+        ["bereite Tee.", "bereite tee."],
+        ["bekannte Gesichter", "bekannte gesichter"],
+        ["bestimmte Dinge", "bestimmte dinge"],
+        ["bewaffnete Männer", "bewaffnete männer"],
+        ["doppelte Arbeit", "doppelte arbeit"],
+        ["komplizierte Frage", "komplizierte frage"],
+        ["rechte Hand", "rechte hand"],
+        ["verdammte Tür", "verdammte tür"],
+        ["verehrte Gäste", "verehrte gäste"],
+        ["verfickte Kiste", "verfickte kiste"],
+        ["vereinigten Staaten", "vereinigten staaten"],
+        ["verrückte Idee", "verrückte idee"],
+        ["geleitet.", "geleitet."],
+        ["angehört.", "angehört."],
+        ["schaltest das Licht", "schaltest das licht"],
+        ["brauche Hilfe.", "brauche hilfe."],
+        ["tränkt die Blumen.", "tränkt die blumen."],
+        ["schlief lange.", "schlief lange."],
+        ["kannte ihn.", "kannte ihn."],
+        ["geschrieben.", "geschrieben."],
+        ["verlor alles.", "verlor alles."],
+        ["Toms Hund", "toms hund"],
+        ["gelangst du nach Hause?", "gelangst du nach hause?"],
+        ["drängst mich.", "drängst mich."],
+        ["grade eben.", "grade eben."],
+        ["oberste Etage", "oberste etage"],
+        ["obersten Stock", "obersten stock"],
+        ["zehnten Klasse", "zehnten klasse"],
+        ["zweier Herren", "zweier herren"],
+        ["dreier Kinder", "dreier kinder"],
+        ["zweien.", "zweien."],
+        ["dreien.", "dreien."],
+        ["grosse Haus", "grosse haus"],
+        ["seins.", "seins."],
         ["Sie ist heute früh aufgestanden und hat ihre Freunde angerufen.", "sie ist heute früh aufgestanden und hat ihre freunde angerufen."],
         ["aufstehen", "aufstehen"]
       ]
@@ -11670,6 +12148,9 @@
         ["sehr best", "Sehr best"],
         ["Elektrotechniker", "Elektrotechniker"],
         ["geht", "Geht"],
+        ["heult", "Heult"],
+        ["heut", "Heut"],
+        ["draus", "Draus"],
         ["räum den Tisch auf", "Räum den Tisch auf"],
         ["krankesten", "Krankesten"],
         ["schwuligem", "Schwuligem"],
@@ -11762,6 +12243,51 @@
         ["bösen Wolf", "Bösen Wolf"],
         ["koste, was es wolle.", "Koste, was es wolle."],
         ["sehn wir uns?", "Sehn wir uns?"],
+        ["heut ist es kalt.", "Heut ist es kalt."],
+        ["draus wird nichts.", "Draus wird nichts."],
+        ["gelangt zum Ziel.", "Gelangt zum Ziel."],
+        ["drängt mich.", "Drängt mich."],
+        ["getraut.", "Getraut."],
+        ["geduldet.", "Geduldet."],
+        ["heiße Anna.", "Heiße Anna."],
+        ["lasse es sein.", "Lasse es sein."],
+        ["leide sehr.", "Leide sehr."],
+        ["schicke dir Blumen.", "Schicke dir Blumen."],
+        ["wette mit dir.", "Wette mit dir."],
+        ["bereite Tee.", "Bereite Tee."],
+        ["bekannte Gesichter", "Bekannte Gesichter"],
+        ["bestimmte Dinge", "Bestimmte Dinge"],
+        ["bewaffnete Männer", "Bewaffnete Männer"],
+        ["doppelte Arbeit", "Doppelte Arbeit"],
+        ["komplizierte Frage", "Komplizierte Frage"],
+        ["rechte Hand", "Rechte Hand"],
+        ["verdammte Tür", "Verdammte Tür"],
+        ["verehrte Gäste", "Verehrte Gäste"],
+        ["verfickte Kiste", "Verfickte Kiste"],
+        ["vereinigten Staaten", "Vereinigten Staaten"],
+        ["verrückte Idee", "Verrückte Idee"],
+        ["geleitet.", "Geleitet."],
+        ["angehört.", "Angehört."],
+        ["schaltest das Licht", "Schaltest das Licht"],
+        ["brauche Hilfe.", "Brauche Hilfe."],
+        ["tränkt die Blumen.", "Tränkt die Blumen."],
+        ["schlief lange.", "Schlief lange."],
+        ["kannte ihn.", "Kannte ihn."],
+        ["geschrieben.", "Geschrieben."],
+        ["verlor alles.", "Verlor alles."],
+        ["Toms Hund", "Toms Hund"],
+        ["gelangst du nach Hause?", "Gelangst du nach Hause?"],
+        ["drängst mich.", "Drängst mich."],
+        ["grade eben.", "Grade eben."],
+        ["oberste Etage", "Oberste Etage"],
+        ["obersten Stock", "Obersten Stock"],
+        ["zehnten Klasse", "Zehnten Klasse"],
+        ["zweier Herren", "Zweier Herren"],
+        ["dreier Kinder", "Dreier Kinder"],
+        ["zweien.", "Zweien."],
+        ["dreien.", "Dreien."],
+        ["grosse Haus", "Grosse Haus"],
+        ["seins.", "Seins."],
         ["Sie ist heute früh aufgestanden und hat ihre Freunde angerufen.", "Sie ist heute früh aufgestanden und hat ihre Freunde angerufen."],
         ["aufstehen", "Aufstehen"]
       ]
