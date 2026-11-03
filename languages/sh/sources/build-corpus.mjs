@@ -4,7 +4,11 @@
 // UniMorph hbs, and splits the sample with hoshidicts-cli: rows the pack's
 // rules reach go to corpus.tsv, the others to gaps.tsv (docs/languages.md
 // 12.2). Hand-written rows already in gaps.tsv (categories without ';') are
-// kept. A row is reached as the conformance test decides it: the source
+// kept. It also writes the reasons of the rows that `build-own.mjs --cases`
+// writes at the end of tests/cases.tsv (one example of each transform): the
+// trace of the shortest deinflection that reaches the row's lemma (the CLI
+// prints it in the order of the reasons column), so that
+// each transform id is tested (run build-own.mjs --cases first). A row is reached as the conformance test decides it: the source
 // through every preprocessor (all options on), each variant deinflected, and
 // the lemma among the results with no conditions or the row's part of
 // speech.
@@ -144,5 +148,26 @@ writeFileSync(gapsFile, `${[
     ...handWritten,
     ...gaps.map(line),
 ].join('\n')}\n`);
+// The reasons of the generated example rows of cases.tsv.
+const CASES_MARKER = '# --- One example of each transform';
+const casesFile = join(outDir, 'cases.tsv');
+if (existsSync(casesFile)) {
+    const text = readFileSync(casesFile, 'utf8');
+    const at = text.indexOf(CASES_MARKER);
+    if (at >= 0) {
+        const lines = text.slice(at).split('\n').filter((l) => l !== '');
+        const rows = lines.slice(1).map((l) => l.split('\t'));
+        const pre = run('preprocess', rows.map((r) => r[2]));
+        const texts = [...new Set(pre.flatMap((p) => p.variants.map((v) => v.text)))];
+        const found = new Map(run('deinflect', texts).map((d) => [d.input, d.results]));
+        const pinned = rows.map((r, i) => {
+            const paths = pre[i].variants.flatMap((v) => (found.get(v.text) ?? []).filter(
+                (d) => d.text === r[3] && (d.conditions.length === 0 || d.conditions.includes(r[4]))).map((d) => d.trace));
+            const best = paths.sort((a, b) => a.length - b.length)[0];
+            return [...r.slice(0, 5), best === undefined ? '*' : best.join('|')].join('\t');
+        });
+        writeFileSync(casesFile, `${text.slice(0, at)}${lines[0]}\n${pinned.join('\n')}\n`);
+    }
+}
 const byStratum = (list) => STRATA.map(([n]) => `${n} ${list.filter((r) => r.stratum === n).length}`).join(', ');
 console.log(`sample ${sample.length}: corpus ${corpus.length}, gaps ${gaps.length} (${byStratum(gaps)})`);

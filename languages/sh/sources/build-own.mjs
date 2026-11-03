@@ -61,6 +61,7 @@
 import {readFileSync, writeFileSync} from 'node:fs';
 import {dirname, join} from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {ClassSet} from '../../../tools/lib/classes.mjs';
 import {formatTransforms} from '../../../tools/lib/json.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -136,27 +137,29 @@ function pattern(group, fields, tags, examples) {
 
 // ===== Nouns ================================================================
 // Masculine nouns on a consonant (grad, prozor, brat, muž, prijatelj): the
-// lemma is the stem.
+// lemma is the stem, of three letters or more (wty-sh-en's eighteen
+// masculine nouns of two letters, such as um and ud, have form-of rows for
+// their forms): opa is not op, Nju not Nj.
 
 sfx('noun', 'a', '', ['gen. sg.', 'gen. pl.', 'acc. sg. (animate)'],
-    [['grada', 'grad'], ['brata', 'brat'], ['prozora', 'prozor'], ['studenta', 'student']], {end: C});
-sfx('noun', 'u', '', ['dat./loc. sg.', 'voc. sg.'], [['gradu', 'grad'], ['prijatelju', 'prijatelj']], {end: C});
-sfx('noun', 'om', '', ['ins. sg.'], [['gradom', 'grad'], ['bratom', 'brat']], {end: C});
-sfx('noun', 'em', '', ['ins. sg.'], [['mužem', 'muž'], ['prijateljem', 'prijatelj'], ['krajem', 'kraj'], ['stricem', 'stric'], ['carem', 'car']], {end: '{palatalOrR}'});
-sfx('noun', 'e', '', ['acc. pl.', 'voc. sg.'], [['prozore', 'prozor'], ['brate', 'brat'], ['studente', 'student']], {end: C});
-sfx('noun', 'i', '', ['nom./voc. pl.'], [['prozori', 'prozor'], ['studenti', 'student']], {end: C});
-sfx('noun', 'ima', '', ['dat./loc./ins. pl.'], [['prozorima', 'prozor'], ['studentima', 'student']], {end: C});
+    [['grada', 'grad'], ['brata', 'brat'], ['prozora', 'prozor'], ['studenta', 'student']], {end: C, min: 3});
+sfx('noun', 'u', '', ['dat./loc. sg.', 'voc. sg.'], [['gradu', 'grad'], ['prijatelju', 'prijatelj']], {end: C, min: 3});
+sfx('noun', 'om', '', ['ins. sg.'], [['gradom', 'grad'], ['bratom', 'brat']], {end: C, min: 3});
+sfx('noun', 'em', '', ['ins. sg.'], [['mužem', 'muž'], ['prijateljem', 'prijatelj'], ['krajem', 'kraj'], ['stricem', 'stric'], ['carem', 'car']], {end: '{palatalOrR}', min: 3});
+sfx('noun', 'e', '', ['acc. pl.', 'voc. sg.'], [['prozore', 'prozor'], ['brate', 'brat'], ['studente', 'student']], {end: C, min: 3});
+sfx('noun', 'i', '', ['nom./voc. pl.'], [['prozori', 'prozor'], ['studenti', 'student']], {end: C, min: 3});
+sfx('noun', 'ima', '', ['dat./loc./ins. pl.'], [['prozorima', 'prozor'], ['studentima', 'student']], {end: C, min: 3});
 // Long plural of (mostly monosyllabic) nouns: gradovi, muževi.
 for (const [ending, tags] of [['ovi', ['nom./voc. pl.']], ['ova', ['gen. pl.']], ['ovima', ['dat./loc./ins. pl.']], ['ove', ['acc. pl.']]]) {
-    sfx('noun', ending, '', tags, [[`grad${ending}`, 'grad'], [`sin${ending}`, 'sin']], {end: C});
-    sfx('noun', ending.replace('o', 'e'), '', tags, [[`muž${ending.replace('o', 'e')}`, 'muž'], [`kralj${ending.replace('o', 'e')}`, 'kralj']], {end: PAL});
+    sfx('noun', ending, '', tags, [[`grad${ending}`, 'grad'], [`sin${ending}`, 'sin']], {end: C, min: 3});
+    sfx('noun', ending.replace('o', 'e'), '', tags, [[`muž${ending.replace('o', 'e')}`, 'muž'], [`kralj${ending.replace('o', 'e')}`, 'kralj']], {end: PAL, min: 3});
     // c becomes č before -ev-: stric → stričevi, zec → zečevi.
     sfx('noun', `č${ending.replace('o', 'e')}`, 'c', tags, [[`strič${ending.replace('o', 'e')}`, 'stric']], {min: 1});
     // Ijekavian je of the plural comes from the lemma's ije: cvijet → cvjetovi.
     sfx('noun', ending, '', tags, [[`cvjet${ending}`, 'cvijet'], [`snjeg${ending}`, 'snijeg']],
         {end: C, change: {from: ['je'], to: 'ije', occurrence: 'last', between: C}});
 }
-sfx('noun', 'iju', '', ['gen. pl.'], [['prstiju', 'prst'], ['gostiju', 'gost'], ['kostiju', 'kost']], {end: C});
+sfx('noun', 'iju', '', ['gen. pl.'], [['prstiju', 'prst'], ['gostiju', 'gost'], ['kostiju', 'kost']], {end: C, min: 3});
 // Sibilarisation before -i: vojnik → vojnici, bubreg → bubrezi, orah → orasi.
 for (const [form, lemma, examples] of [
     ['c', 'k', [['vojnici', 'vojnik'], ['junaci', 'junak'], ['vojnicima', 'vojnik']]],
@@ -280,8 +283,8 @@ sfx('noun', 'ama', 'e', ['dat./loc./ins. pl.'], [['novinama', 'novine'], ['hlač
 // Feminine nouns on a consonant (stvar, noć, radost): -i in most cases,
 // which the masculine -i and -ima rules read. The instrumental singular
 // has -ju, with jotation after most consonants.
-sfx('noun', 'i', '', ['gen./dat./loc. sg.', 'nom./acc./gen. pl.'], [['stvari', 'stvar'], ['noći', 'noć'], ['radosti', 'radost']], {end: C});
-sfx('noun', 'ima', '', ['dat./loc./ins. pl.'], [['stvarima', 'stvar'], ['noćima', 'noć']], {end: C});
+sfx('noun', 'i', '', ['gen./dat./loc. sg.', 'nom./acc./gen. pl.'], [['stvari', 'stvar'], ['noći', 'noć'], ['radosti', 'radost']], {end: C, min: 3});
+sfx('noun', 'ima', '', ['dat./loc./ins. pl.'], [['stvarima', 'stvar'], ['noćima', 'noć']], {end: C, min: 3});
 sfx('noun', 'rju', 'r', ['ins. sg.'], [['stvarju', 'stvar'], ['večerju', 'večer']]);
 sfx('noun', 'vlju', 'v', ['ins. sg.'], [['ljubavlju', 'ljubav'], ['krvlju', 'krv']], {min: 1});
 sfx('noun', 'šću', 'st', ['ins. sg.'], [['radošću', 'radost'], ['mladošću', 'mladost'], ['košću', 'kost']], {min: 1});
@@ -316,8 +319,12 @@ for (const [ending, tags] of [['a', ['gen. sg.', 'nom./acc./voc. pl.']], ['u', [
 }
 sfx('noun', 'esa', 'o', ['nom./acc./voc. pl.'], [['čudesa', 'čudo'], ['nebesa', 'nebo']]);
 sfx('noun', 'esima', 'o', ['dat./loc./ins. pl.'], [['čudesima', 'čudo']]);
-sfx('noun', 'ad', 'e', ['collective plural'], [['pilad', 'pile'], ['telad', 'tele'], ['dugmad', 'dugme']], {min: 3});
-sfx('noun', 'adi', 'e', ['collective plural (gen./dat./loc./ins.)'], [['piladi', 'pile'], ['teladi', 'tele']], {min: 3});
+// The collectives in -ad of the neuters in -e (pile → pilad), a closed set:
+// pozadi is not a form of a noun poze.
+for (const root of ['pil', 'tel', 'dugm', 'bur', 'pras', 'jagnj', 'janj', 'mač', 'unuč', 'siroč', 'kuč', 'šten', 'ždreb', 'ždrijeb']) {
+    whole('noun', `${root}ad`, `${root}e`, ['collective plural'], [[`${root}ad`, `${root}e`]]);
+    whole('noun', `${root}adi`, `${root}e`, ['collective plural (gen./dat./loc./ins.)'], [[`${root}adi`, `${root}e`]]);
+}
 
 // Irregular nouns: [forms, lemmas, tags]; each form gives each lemma.
 for (const [forms, lemmas, tags] of [
@@ -366,6 +373,7 @@ for (const [forms, lemmas, tags] of [
     [['kćer'], ['kći'], ['acc. sg.']],
     [['kćerju'], ['kći'], ['ins. sg.']],
     [['kćerima'], ['kći'], ['dat./loc./ins. pl.']],
+    [['kolima'], ['kola'], ['dat./loc./ins. pl.']],
 ]) {
     for (const form of forms) {
         for (const lemma of lemmas) { whole('irregular-noun', form, lemma, tags, [[form, lemma]]); }
@@ -409,9 +417,12 @@ const ADJ_EXAMPLES = {
     omu: [['novomu', 'nov']], oj: [['novoj', 'nov'], ['srpskoj', 'srpski']], im: [['novim', 'nov'], ['srpskim', 'srpski']],
     ima: [['novima', 'nov'], ['srpskima', 'srpski']], ih: [['novih', 'nov'], ['srpskih', 'srpski']],
 };
+// A lemma of three letters or more: opa (an interjection) is not read as
+// op, whose form-of row names the verb opiti. Of wty-sh-en's adjectives only
+// go and in are shorter.
 for (const [ending, tags] of ADJ) {
     const examples = ADJ_EXAMPLES[ending];
-    sfx('adjective', ending, '', adjTags(tags), examples.filter(([, l]) => !l.endsWith('i')), {end: C});
+    sfx('adjective', ending, '', adjTags(tags), examples.filter(([, l]) => !l.endsWith('i')), {end: C, min: 3});
     // jeste (is) is not a form of an adjective jesti.
     if (ending !== 'i') {
         sfx('adjective', ending, 'i', adjTags(tags), [...examples.filter(([, l]) => l.endsWith('i')), [`prv${ending}`, 'prvi']], {end: C, notStartText: 'jest'});
@@ -449,6 +460,16 @@ for (const [lemmaTail, formTail, stems] of [
         const min = lemmaTail === 'ao' || lemmaTail === 'zak' || lemmaTail === 'žak' ? 1 : 2;
         sfx('adjective', `${formTail}${ending}`, lemmaTail, adjTags(tags), examples, {end: formTail.length > 1 ? undefined : C, min});
     }
+}
+
+// cio / ceo (whole): the stem is cijel- (ijekavian) and cel- (ekavian), and
+// the masculine lemma has the vocalised l. Written out: a rule cijel- → cio
+// would read nothing else.
+// beo (white, ekavian) likewise has bel-; ijekavian bijel is regular.
+for (const [ending, tags] of ADJ) {
+    whole('adjective', `cijel${ending}`, 'cio', adjTags(tags), [[`cijel${ending}`, 'cio']]);
+    whole('adjective', `cel${ending}`, 'ceo', adjTags(tags), [[`cel${ending}`, 'ceo']]);
+    whole('adjective', `bel${ending}`, 'beo', adjTags(tags), [[`bel${ending}`, 'beo']]);
 }
 
 // Comparative: -iji (noviji, stariji), declined like a definite adjective
@@ -501,6 +522,12 @@ for (const [form, lemmas] of [
 ]) {
     for (const lemma of lemmas) { whole('comparative', form, lemma, ['comparative'], [[form, lemma]], CMP); }
 }
+// teže (harder, heavier) is the neuter and the adverb of teži; read as a
+// vocative it was the noun teg. veća, veću and šire are comparatives, not
+// the nouns veće (council) and šira (grape must).
+for (const [form, lemma] of [['teže', 'težak'], ['veća', 'velik'], ['veću', 'velik'], ['šire', 'širok']]) {
+    whole('comparative', form, lemma, ['comparative'], [[form, lemma]], CMP);
+}
 
 // ===== Pronouns and numerals ===============================================
 
@@ -521,11 +548,13 @@ for (const [lemmas, forms, tags] of [
     [['nešto'], ['nečega', 'nečeg'], ['gen.']], [['nešto'], ['nečemu', 'nečem'], ['dat./loc.']], [['nešto'], ['nečim'], ['ins.']],
     [['sav'], ['sva'], ['fem. nom. sg.', 'neut. nom./acc. pl.']], [['sav'], ['sve'], ['neut. nom./acc. sg.', 'fem. gen. sg.', 'acc. pl.']],
     [['sav'], ['svi'], ['masc. nom. pl.']], [['sav'], ['svu'], ['fem. acc. sg.']], [['sav'], ['svega', 'sveg'], ['masc./neut. gen. sg.']],
-    [['sav'], ['svemu', 'svem', 'svom', 'svome'], ['masc./neut. dat./loc. sg.']], [['sav'], ['svim', 'svime'], ['masc./neut. ins. sg.', 'dat./loc./ins. pl.']],
+    [['sav'], ['svemu', 'svem'], ['masc./neut. dat./loc. sg.']], [['sav'], ['svim', 'svime'], ['masc./neut. ins. sg.', 'dat./loc./ins. pl.']],
     [['sav'], ['svih'], ['gen. pl.']], [['sav'], ['svima'], ['dat./loc./ins. pl.']],
     [['moj'], ['mog', 'moga'], ['masc./neut. gen. sg.']], [['moj'], ['mom', 'mome', 'momu'], ['masc./neut. dat./loc. sg.']],
     [['tvoj'], ['tvog', 'tvoga'], ['masc./neut. gen. sg.']], [['tvoj'], ['tvom', 'tvome', 'tvomu'], ['masc./neut. dat./loc. sg.']],
     [['svoj'], ['svog', 'svoga'], ['masc./neut. gen. sg.']], [['svoj'], ['svom', 'svome', 'svomu'], ['masc./neut. dat./loc. sg.']],
+    // svom and svome are also forms of sav; svoj comes first.
+    [['sav'], ['svom', 'svome'], ['masc./neut. dat./loc. sg.']],
     [['koji'], ['kog', 'koga'], ['masc./neut. gen. sg.']], [['koji'], ['kom', 'kome', 'komu'], ['masc./neut. dat./loc. sg.']],
     [['ovaj'], ['ova'], ['fem. nom. sg.', 'neut. nom./acc. pl.']], [['ovaj'], ['ovo'], ['neut. nom./acc. sg.']],
     [['ovaj'], ['ovi'], ['masc. nom. pl.']], [['ovaj'], ['ove'], ['fem. gen. sg.', 'acc. pl.', 'fem. nom. pl.']],
@@ -535,7 +564,7 @@ for (const [lemmas, forms, tags] of [
     [['taj'], ['ta'], ['fem. nom. sg.', 'neut. nom./acc. pl.']], [['taj'], ['to'], ['neut. nom./acc. sg.']],
     [['taj'], ['ti'], ['masc. nom. pl.']], [['taj'], ['te'], ['fem. gen. sg.', 'acc. pl.', 'fem. nom. pl.']],
     [['taj'], ['tog', 'toga'], ['masc./neut. gen. sg.']], [['taj'], ['tom', 'tome', 'tomu'], ['masc./neut. dat./loc. sg.', 'fem. ins. sg.']],
-    [['taj'], ['tim'], ['masc./neut. ins. sg.', 'dat./loc./ins. pl.']], [['taj'], ['toj'], ['fem. dat./loc. sg.']], [['taj'], ['tu'], ['fem. acc. sg.']],
+    [['taj'], ['tim', 'time'], ['masc./neut. ins. sg.', 'dat./loc./ins. pl.']], [['taj'], ['toj'], ['fem. dat./loc. sg.']], [['taj'], ['tu'], ['fem. acc. sg.']],
     [['taj'], ['tih'], ['gen. pl.']], [['taj'], ['tima'], ['dat./loc./ins. pl.']],
     [['onaj'], ['ona'], ['fem. nom. sg.', 'neut. nom./acc. pl.']], [['onaj'], ['ono'], ['neut. nom./acc. sg.']],
     [['onaj'], ['oni'], ['masc. nom. pl.']], [['onaj'], ['one'], ['fem. gen. sg.', 'acc. pl.', 'fem. nom. pl.']],
@@ -677,8 +706,8 @@ present('verb-present', 'mlje', 'mati', 'mlju', [['uzimljem', 'uzimati'], ['izuz
 // sresti, susresti → sretnem, susretnem.
 present('verb-present', 'tne', 'sti', 'tnu', [['sretnem', 'sresti'], ['susretnem', 'susresti']], {min: 1});
 present('verb-present', 'ove', 'vati', 'ovu', [['zovem', 'zvati'], ['pozovem', 'pozvati'], ['nazovem', 'nazvati']], {min: 1});
-present('verb-present', 're', 'rijeti', 'ru', [['umrem', 'umrijeti'], ['prostrem', 'prostrijeti']], {min: 1});
-present('verb-present', 're', 'reti', 'ru', [['umrem', 'umreti'], ['prostrem', 'prostreti']], {min: 1});
+present('verb-present', 're', 'rijeti', 'ru', [['umrem', 'umrijeti'], ['prostrem', 'prostrijeti']], {min: 1, end: C});
+present('verb-present', 're', 'reti', 'ru', [['umrem', 'umreti'], ['prostrem', 'prostreti']], {min: 1, end: C});
 present('verb-present', 'šalje', 'slati', 'šalju', [['pošaljem', 'poslati'], ['šaljem', 'slati']], {min: 0});
 present('verb-present', 'kune', 'kleti', 'kunu', [['kunem', 'kleti'], ['prokunem', 'prokleti']], {min: 0});
 present('verb-present', 'jebe', 'jebati', 'jebu', [['jebem', 'jebati'], ['zajebem', 'zajebati']], {min: 0});
@@ -704,13 +733,34 @@ lParticiple('uo', 'u', 'uti', [['č', 'čuti'], ['kren', 'krenuti'], ['okren', '
 lParticiple('kao', 'k', 'ći', [['re', 'reći'], ['pe', 'peći'], ['vu', 'vući'], ['sje', 'sjeći']]);
 lParticiple('gao', 'g', 'ći', [['mo', 'moći'], ['pomo', 'pomoći'], ['sti', 'stići'], ['le', 'leći']]);
 lParticiple('šao', 'š', 'ći', [['do', 'doći'], ['i', 'ići'], ['na', 'naći'], ['oti', 'otići'], ['pro', 'proći']]);
-lParticiple('eo', 'e', 'esti', [['j', 'jesti'], ['sj', 'sjesti'], ['pl', 'plesti']]);
-lParticiple('ao', 'a', 'asti', [['p', 'pasti'], ['kr', 'krasti'], ['nap', 'napasti']]);
-lParticiple('sao', 's', 'sti', [['tre', 'tresti'], ['ne', 'nesti']]);
-lParticiple('zao', 'z', 'sti', [['gri', 'gristi']]);
-lParticiple('stao', 's', 'sti', [['ra', 'rasti'], ['odra', 'odrasti']]);
-lParticiple('ro', 'r', 'rijeti', [['um', 'umrijeti']]);
-lParticiple('ro', 'r', 'reti', [['um', 'umreti']]);
+// The -sti verbs, per root as in the present: a suffix rule for each
+// ending read the l-participles of the -stati verbs (nestao, prestao) as
+// nesti and presti, and selo, posla as sesti, posti.
+// [masculine, the stem before -la, -lo, -li, -le, the root before -sti, examples]
+for (const [masc, base, root, examples] of [
+    ['jeo', 'je', 'je', [['', 'jesti'], ['po', 'pojesti']]],
+    ['sjeo', 'sje', 'sje', [['', 'sjesti'], ['pri', 'prisjesti']]],
+    ['seo', 'se', 'se', [['', 'sesti'], ['pri', 'prisesti']]],
+    ['pleo', 'ple', 'ple', [['', 'plesti'], ['is', 'isplesti']]],
+    ['meo', 'me', 'me', [['', 'mesti'], ['po', 'pomesti']]],
+    ['veo', 've', 've', [['do', 'dovesti'], ['iz', 'izvesti'], ['u', 'uvesti']]],
+    ['preo', 'pre', 'pre', [['', 'presti']]],
+    ['pao', 'pa', 'pa', [['', 'pasti'], ['na', 'napasti'], ['pro', 'propasti']]],
+    ['krao', 'kra', 'kra', [['', 'krasti'], ['u', 'ukrasti']]],
+    ['cvao', 'cva', 'cva', [['pro', 'procvasti']]],
+    ['rastao', 'ras', 'ra', [['', 'rasti'], ['od', 'odrasti'], ['po', 'porasti']]],
+    ['tresao', 'tres', 'tre', [['', 'tresti'], ['pro', 'protresti']]],
+    ['nesao', 'nes', 'ne', [['do', 'donesti'], ['pre', 'prenesti']]],
+    ['grizao', 'griz', 'gri', [['', 'gristi'], ['u', 'ugristi']]],
+    ['muzao', 'muz', 'mu', [['', 'musti']]],
+    ['vezao', 'vez', 've', [['iz', 'izvesti']]],
+]) {
+    lParticiple(masc, base, `${root}sti`, examples, {min: 0});
+}
+// -rijeti and -reti verbs (umrijeti, zatrijeti, prostrijeti) have a
+// consonant before the r: staro is not stareti.
+lParticiple('ro', 'r', 'rijeti', [['um', 'umrijeti'], ['zat', 'zatrijeti']], {end: C});
+lParticiple('ro', 'r', 'reti', [['um', 'umreti'], ['zat', 'zatreti']], {end: C});
 // Colloquial -'o for -ao: rek'o, doš'o, pos'o.
 sfx('verb-participle', "'o", 'ao', ['colloquial -ao'], [["rek'o", 'reći'], ["doš'o", 'doći']], {min: 1, out: ['lpart']});
 sfx('verb-participle', '’o', 'ao', ['colloquial -ao'], [['rek’o', 'reći']], {min: 1, out: ['lpart']});
@@ -740,6 +790,8 @@ passive('đen', 'diti', [['ro', 'roditi'], ['osu', 'osuditi'], ['probu', 'probud
 passive('đen', 'djeti', [['vi', 'vidjeti']]);
 passive('đen', 'deti', [['vi', 'videti']]);
 passive('ćen', 'titi', [['pla', 'platiti'], ['vra', 'vratiti'], ['shva', 'shvatiti'], ['uhva', 'uhvatiti']]);
+// baciti and its compounds: c → č (bačen, izbačen), not bačiti.
+passive('bačen', 'baciti', [['', 'baciti'], ['iz', 'izbaciti'], ['pre', 'prebaciti'], ['u', 'ubaciti'], ['od', 'odbaciti']], {min: 0});
 passive('šten', 'stiti', [['pu', 'pustiti'], ['opro', 'oprostiti'], ['napu', 'napustiti']]);
 passive('šćen', 'stiti', [['oči', 'očistiti'], ['iskori', 'iskoristiti']]);
 passive('šen', 'siti', [['no', 'nositi'], ['pro', 'prositi']]);
@@ -777,6 +829,8 @@ for (const [form, inf, examples, opts] of [
     ['ujući', 'uti', [['čujući', 'čuti']], {min: 1}],
     ['ujući', 'ivati', [['pokazujući', 'pokazivati']], {min: 2}],
     ['ijući', 'iti', [['pijući', 'piti']], {min: 1}],
+    ['ijući', 'ijati', [['smijući', 'smijati'], ['grijući', 'grijati']], {min: 1}],
+    ['ejući', 'ejati', [['smejući', 'smejati'], ['grejući', 'grejati']], {min: 1}],
     ['eći', 'iti', [['radeći', 'raditi'], ['govoreći', 'govoriti'], ['noseći', 'nositi']], {min: 2}],
     ['eći', 'jeti', [['videći', 'vidjeti'], ['voleći', 'voljeti']], {min: 2}],
     ['eći', 'eti', [['videći', 'videti'], ['voleći', 'voleti']], {min: 2}],
@@ -820,8 +874,16 @@ for (const [ending, person] of [['h', '1sg'], ['smo', '1pl'], ['ste', '2pl'], ['
     for (const [root, base, examples] of STI_ROOTS) {
         sfx('verb-past', `${root}o${ending}`, `${base}sti`, [`aorist ${person}`], examples.map(([form, lemma]) => [form.replace(/em$/, `o${ending}`), lemma]), {min: 0});
     }
+    // pasti, sjesti and sesti have another present stem (padnem, sjednem).
+    for (const [root, base, prefixes] of [['pad', 'pa', ['', 'na', 'u']], ['sjed', 'sje', ['', 'pri']], ['sed', 'se', ['', 'pri']]]) {
+        sfx('verb-past', `${root}o${ending}`, `${base}sti`, [`aorist ${person}`], prefixes.map((x) => [`${x}${root}o${ending}`, `${x}${base}sti`]), {min: 0});
+    }
 }
 sfx('verb-past', 'ahu', 'ati', ['imperfect 3pl'], [['čitahu', 'čitati'], ['pisahu', 'pisati']]);
+// The aorist 2/3sg of pasti, sjesti and sesti: pade, napade, sjede.
+for (const [root, base, prefixes] of [['pad', 'pa', ['', 'na', 'u', 'pro', 'is']], ['sjed', 'sje', ['', 'pri']], ['sed', 'se', ['', 'pri']]]) {
+    sfx('verb-past', `${root}e`, `${base}sti`, ['aorist 2/3sg'], prefixes.map((x) => [`${x}${root}e`, `${x}${base}sti`]), {min: 0});
+}
 for (const [ending, person] of [['ah', '1sg'], ['aše', '2/3sg'], ['asmo', '1pl'], ['aste', '2pl'], ['ahu', '3pl']]) {
     sfx('verb-past', `ij${ending}`, 'iti', [`imperfect ${person}`], [[`bij${ending}`, 'biti'], [`pij${ending}`, 'piti']], {min: 1});
     for (const [form, inf, examples] of [
@@ -949,6 +1011,8 @@ for (const [lemmas, forms] of [
     [['moći'], [['mogu', 'present 1sg/3pl'], ['mogoh', 'aorist 1sg']]],
     [['dati'], [['dam', 'present 1sg'], ['daš', 'present 2sg'], ['da', 'present 3sg'], ['damo', 'present 1pl'], ['date', 'present 2pl'], ['daju', 'present 3pl']]],
     [['stajati'], [['stojim', 'present 1sg'], ['stojiš', 'present 2sg'], ['stoji', 'present 3sg'], ['stojimo', 'present 1pl'], ['stojite', 'present 2pl'], ['stoje', 'present 3pl']]],
+    [['otići'], [['odem', 'present 1sg'], ['odeš', 'present 2sg'], ['ode', 'present 3sg'], ['odemo', 'present 1pl'], ['odete', 'present 2pl'],
+        ['odu', 'present 3pl'], ['odi', 'imperative 2sg'], ['odoh', 'aorist 1sg'], ['odoše', 'aorist 3pl']]],
     [['klati'], [['koljem', 'present 1sg'], ['kolješ', 'present 2sg'], ['kolje', 'present 3sg'], ['koljemo', 'present 1pl'], ['koljete', 'present 2pl'],
         ['kolju', 'present 3pl'], ['kolji', 'imperative 2sg'], ['koljimo', 'imperative 1pl'], ['koljite', 'imperative 2pl']]],
     [['nemoj'], [['nemojmo', 'imperative 1pl'], ['nemojte', 'imperative 2pl']]],
@@ -963,6 +1027,15 @@ for (const [lemmas, forms] of [
 
 // --- Assemble ---------------------------------------------------------------
 
+// Rules that match at one suffix node apply in file order (docs/languages.md
+// 7.4), and readings that tie on every ranking key are shown in the order
+// they were found (9.6), with the trace of the first rule that found them, so
+// this order decides ties and traces. Nouns come before adjectives: where a
+// noun and an adjective ending give the same text (gradu → grad, novu →
+// nov), the noun's trace is shown, which suits the more frequent nouns (94%
+// of the reached corpus rows show their own form against 93% with
+// adjectives first); the frequent adjectives that would lose a tie to a noun
+// are in PREFER below.
 const GROUP_ORDER = ['irregular-verb', 'irregular-noun', 'pronoun', 'noun', 'adjective', 'comparative', 'verb-present', 'verb-participle',
     'verb-past', 'verb-imperative', 'verb-future', 'verb-adverbial', 'verb-noun'];
 
@@ -1019,6 +1092,90 @@ for (const spec of specs) {
         for (const t of spec.tags) { if (!existing.tags.includes(t)) { existing.tags.push(t); } }
         for (const e of spec.examples) { if (!existing.examples.some(([f, l]) => f === e[0] && l === e[1])) { existing.examples.push(e); } }
         if (GROUP_ORDER.indexOf(spec.group) < GROUP_ORDER.indexOf(existing.group)) { existing.group = spec.group; }
+    }
+}
+
+// --- Preferred readings of frequent homographs -------------------------------
+// A frequent word that two rules read as two lemmas of the dictionary shows
+// the reading found first. For these words the reading of the dominant
+// lemma is also written as a whole-word rule, which the deinflector finds
+// before any shorter ending (7.4), in the transform of the suffix rule that
+// already makes that reading: the trace stays the same and no reading is
+// added. The words are those of the 10,000 most frequent words of
+// FrequencyWords hr_50k and sr_50k whose first result was another lemma
+// the word's form-of rows name, judged by the pack author (the dominant
+// reading in ordinary text; words whose readings are both common are left
+// out). [word, lemma, ...more lemmas]
+const PREFER = [
+    // verb forms read as nouns or adjectives
+    ['nema', 'nemati'], ['izgleda', 'izgledati'], ['čeka', 'čekati'], ['pada', 'padati'], ['hoda', 'hodati'],
+    ['reci', 'reći'], ['obuci', 'obući'], ['radim', 'raditi'], ['rade', 'raditi'], ['pusti', 'pustiti'], ['pustim', 'pustiti'],
+    ['misli', 'misliti'], ['pomisli', 'pomisliti'], ['zamisli', 'zamisliti'], ['govori', 'govoriti'], ['govore', 'govoriti'],
+    ['otvori', 'otvoriti'], ['zatvori', 'zatvoriti'], ['odgovori', 'odgovoriti'], ['zaboravi', 'zaboraviti'], ['koristi', 'koristiti'],
+    ['koriste', 'koristiti'], ['ostavi', 'ostaviti'], ['nastavi', 'nastaviti'], ['napravi', 'napraviti'], ['javi', 'javiti'],
+    ['kupi', 'kupiti'], ['plati', 'platiti'], ['sredi', 'srediti'], ['pojavi', 'pojaviti'], ['pripremi', 'pripremiti'],
+    ['provjeri', 'provjeriti'], ['proveri', 'proveriti'], ['promeni', 'promeniti'], ['pozdravi', 'pozdraviti'], ['zaštiti', 'zaštititi'],
+    ['dozvoli', 'dozvoliti'], ['dopusti', 'dopustiti'], ['izlazi', 'izlaziti'], ['nalazi', 'nalaziti'], ['nalaze', 'nalaziti'],
+    ['prolazi', 'prolaziti'], ['donosi', 'donositi'], ['tvrdi', 'tvrditi'], ['udari', 'udariti'], ['bori', 'boriti'], ['bore', 'boriti'],
+    ['spremi', 'spremiti'], ['odmori', 'odmoriti'], ['skloni', 'skloniti'], ['spasi', 'spasiti'], ['muči', 'mučiti'], ['važi', 'važiti'],
+    ['zvoni', 'zvoniti'], ['čine', 'činiti'], ['sude', 'suditi'], ['nose', 'nositi'], ['vrate', 'vratiti'], ['traže', 'tražiti'],
+    ['vise', 'visiti'], ['kasnim', 'kasniti'], ['kasni', 'kasniti'], ['pravim', 'praviti'], ['razume', 'razumeti'],
+    ['vole', 'voljeti', 'voleti'], ['vide', 'vidjeti', 'videti'], ['želi', 'željeti', 'želeti'], ['živim', 'živjeti', 'živeti'],
+    ['sedi', 'sedeti'], ['bojim', 'bojati'], ['bojiš', 'bojati'], ['boji', 'bojati'], ['pomaže', 'pomagati'], ['pomažem', 'pomagati'],
+    ['biću', 'biti'],
+    // feminine nouns read as masculine ones, and nouns read as verbs
+    ['sobu', 'soba'], ['sobe', 'soba'], ['vodu', 'voda'], ['vode', 'voda'], ['vodom', 'voda'], ['kosu', 'kosa'], ['kose', 'kosa'],
+    ['strane', 'strana'], ['stranu', 'strana'], ['ulogu', 'uloga'], ['tatu', 'tata'], ['tate', 'tata'], ['tatom', 'tata'],
+    ['dušu', 'duša'], ['duše', 'duša'], ['rane', 'rana'], ['tajne', 'tajna'], ['tajnu', 'tajna'], ['veze', 'veza'], ['vezi', 'veza'],
+    ['vezu', 'veza'], ['listu', 'lista'], ['robu', 'roba'], ['boju', 'boja'], ['šumu', 'šuma'], ['šume', 'šuma'], ['brigu', 'briga'],
+    ['zamku', 'zamka'], ['metu', 'meta'], ['mete', 'meta'], ['mačke', 'mačka'], ['šale', 'šala'],
+    ['sine', 'sin'], ['sinu', 'sin'], ['stanu', 'stan'], ['planu', 'plan'], ['planete', 'planet'],
+    ['tela', 'telo'], ['pravila', 'pravilo'], ['krila', 'krilo'], ['svetla', 'svetlo'], ['jezera', 'jezero'],
+    ['pogleda', 'pogledati'], ['sjeti', 'sjetiti'], ['seti', 'setiti'], ['pjeva', 'pjevati'], ['peva', 'pevati'], ['vara', 'varati'],
+    ['puši', 'pušiti'], ['naprave', 'napraviti'], ['znače', 'značiti'], ['pleše', 'plesati'], ['slijede', 'slijediti'],
+    ['obrati', 'obratiti'], ['žali', 'žaliti'], ['rodi', 'roditi'], ['uda', 'udati'], ['jure', 'juriti'], ['ostave', 'ostaviti'],
+    ['zahvali', 'zahvaliti'], ['stave', 'staviti'], ['ispravi', 'ispraviti'], ['obavesti', 'obavestiti'], ['napiše', 'napisati'],
+    ['dobiću', 'dobiti'], ['kiše', 'kiša'], ['kiši', 'kiša'], ['duši', 'duša'], ['liste', 'lista'], ['bravu', 'brava'],
+    ['pade', 'pasti'], ['puše', 'puhati', 'pušiti'],
+    // adjectives and pronouns: nouns come first (GROUP_ORDER), so the
+    // frequent adjectives whose forms are also forms of a rare noun are
+    // written out (drugi, svaki, nov; the nouns drug, svak, nova).
+    ['stare', 'star:adj'], ['sretni', 'sretan'], ['nekima', 'neki'],
+    ...['a', 'e', 'o', 'u', 'og', 'oga', 'om', 'ome', 'omu', 'oj', 'im', 'ima', 'ih'].flatMap((e) => [[`drug${e}`, 'drugi'], [`svak${e}`, 'svaki']]),
+    // A lemma written lemma:adj is read by the adjective rules, where a noun
+    // rule also makes it (stare → star, nove → nov).
+    ['novo', 'nov:adj'], ['novu', 'nov:adj'], ['nove', 'nov:adj'], ['novom', 'nov:adj'], ['novoj', 'nov:adj'],
+    ['vojne', 'vojni:adj'], ['vojnu', 'vojni:adj'], ['pete', 'peti:adj'],
+];
+
+const classSet = new ClassSet(JSON.parse(readFileSync(join(pack, 'language.json'), 'utf8')).classes);
+const matchers = new Map();
+const matches = (cls, character) => {
+    if (!matchers.has(cls)) { matchers.set(cls, classSet.matcher(cls)); }
+    return matchers.get(cls)(character.codePointAt(0));
+};
+/** The text one suffix rule makes of a word, or null (rules with a stem change are not tried). */
+function oneStep(rule, word) {
+    if (rule.type !== 'suffix' || rule.stemChange !== undefined || !word.endsWith(rule.inflected)) { return null; }
+    const stem = word.slice(0, word.length - rule.inflected.length);
+    const cps = [...stem];
+    if (cps.length < (rule.stemMinLength ?? 0)) { return null; }
+    if (rule.stemCharacters !== undefined && !cps.every((c) => matches(rule.stemCharacters, c))) { return null; }
+    if (rule.stemEndsWith !== undefined && (cps.length === 0 || !matches(rule.stemEndsWith, cps.at(-1)))) { return null; }
+    if (rule.stemNotEndsWith !== undefined && cps.length > 0 && matches(rule.stemNotEndsWith, cps.at(-1))) { return null; }
+    if (rule.stemNotStartsWithText !== undefined && stem.startsWith(rule.stemNotStartsWithText)) { return null; }
+    return stem + rule.deinflected;
+}
+for (const [word, ...readings] of PREFER) {
+    for (const reading of readings) {
+        const [lemma, as] = reading.split(':');
+        const groups = as === 'adj' ? ['adjective', 'comparative'] : null;
+        const entry = [...merged.values()].find((e) => (groups === null || groups.includes(e.group)) && oneStep(ruleOf(e.spec), word) === lemma);
+        if (entry === undefined) { throw new Error(`PREFER: no suffix rule reads ${word} as ${lemma}`); }
+        const spec = {group: entry.group, type: 'wholeWord', inflected: word, deinflected: lemma, tags: entry.tags, examples: [[word, lemma]],
+            opts: {out: ruleOf(entry.spec).conditionsOut}};
+        const k = key(ruleOf(spec));
+        if (!merged.has(k)) { merged.set(k, {spec, tags: [...entry.tags], examples: [[word, lemma]], group: entry.group}); }
     }
 }
 
@@ -1126,7 +1283,8 @@ if (examplesAt !== -1) {
     writeFileSync(process.argv[examplesAt + 1], `${exampleRows.map((r) => r.join('\t')).join('\n')}\n`);
 }
 // --cases <file>: replaces the block of the file after CASES_MARKER with one
-// example of each transform, so that every transform has a passing row.
+// example of each transform, so that every transform has a passing row;
+// sources/build-corpus.mjs then writes each row's reasons (its trace).
 const CASES_MARKER = '# --- One example of each transform, written by sources/build-own.mjs --cases (hand-written examples, no third-party data) ---';
 const casesAt = process.argv.indexOf('--cases');
 if (casesAt !== -1) {

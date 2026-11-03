@@ -90,6 +90,66 @@ def drop_whole(forms):
 
 
 V = ['v']
+def add_rule(transform_id, rule):
+    return generic_suffix(transform_id, rule)
+
+
+def drop_rules(predicate):
+    def edit(t, lang):
+        n = 0
+        for tr in t['transforms']:
+            keep = [r for r in tr['rules'] if not predicate(tr, r)]
+            n += len(tr['rules']) - len(keep)
+            tr['rules'] = keep
+        return n
+    return edit
+
+
+def rename(transform_id):
+    def edit(t, lang):
+        for tr in t['transforms']:
+            if tr['id'] == transform_id:
+                tr['id'] += '-renamed'
+                return 1
+        return 0
+    return edit
+
+
+def processor_map(processor, key, value):
+    def edit(t, lang):
+        for p in lang['lookup']['preprocessors']:
+            if p['id'] == processor:
+                for variant in p['variants']:
+                    for step in variant:
+                        if 'map' in step and key in step['map']:
+                            step['map'][key] = value
+                            return 1
+        return 0
+    return edit
+
+
+def word_internal_null(t, lang):
+    lang['text']['wordInternal'] = None
+    return 1
+
+
+def order_nouns_first(t, lang):
+    nouns = [tr for tr in t['transforms'] if tr['id'].startswith('n-') and not tr['id'].startswith('n-irr')]
+    rest = [tr for tr in t['transforms'] if tr not in nouns]
+    first = next(i for i, tr in enumerate(rest) if tr['id'].startswith('adj-'))
+    t['transforms'] = rest[:first] + nouns + rest[first:]
+    return len(nouns)
+
+
+def order_adjectives_first(t, lang):
+    adjectives = [tr for tr in t['transforms'] if tr['id'].startswith(('adj-', 'cmp-'))]
+    rest = [tr for tr in t['transforms'] if tr not in adjectives]
+    first = next(i for i, tr in enumerate(rest) if tr['id'].startswith('n-') and not tr['id'].startswith('n-irr'))
+    t['transforms'] = rest[:first] + adjectives + rest[first:]
+    return len(adjectives)
+
+
+PREFERRED = {'nema', 'reci', 'radim', 'izgleda', 'pusti', 'govori', 'otvori', 'druge', 'sobu', 'vodu'}
 MUTATIONS = [
     ('no space guard ({stem})', drop_key('stemCharacters', '{stem}')),
     ('no space and capital guard ({lowerStem})', drop_key('stemCharacters', '{lowerStem}')),
@@ -121,6 +181,24 @@ MUTATIONS = [
     ('future pattern: any stem before ti or ći', pattern_edit('^([^ ]*[aeiu]s?ti|[^ ]*bosti|[^ ]*[aeiou]ći)', '^([^ ]+(?:ti|ći))')),
     ('jotated comparatives removed (brži, mlađi, ...)', drop_whole({'brži', 'mlađi', 'žući', 'skuplji', 'jači', 'kraći', 'lakši', 'ljepši', 'viši', 'niži'})),
     ('pronoun nikom, nekom removed', drop_whole({'nikom', 'nekom'})),
+    # The audit's (audit-hachi-lang-sh) and the fixes after it.
+    ('generic l-participle stao → sti', add_rule('ptcp-past-masc-sg', {'type': 'suffix', 'inflected': 'stao', 'deinflected': 'sti', 'conditionsIn': ['lpart'], 'conditionsOut': V, 'stemMinLength': 1, 'stemCharacters': '{lowerStem}'})),
+    ('generic l-participle ao → asti', add_rule('ptcp-past-masc-sg', {'type': 'suffix', 'inflected': 'ao', 'deinflected': 'asti', 'conditionsIn': ['lpart'], 'conditionsOut': V, 'stemMinLength': 1, 'stemCharacters': '{lowerStem}'})),
+    ('generic l-participle sla → sti', add_rule('ptcp-past-fem-sg-neut-pl', {'type': 'suffix', 'inflected': 'sla', 'deinflected': 'sti', 'conditionsIn': [], 'conditionsOut': V, 'stemMinLength': 1, 'stemCharacters': '{lowerStem}'})),
+    ('generic l-participle ela → esti', add_rule('ptcp-past-fem-sg-neut-pl', {'type': 'suffix', 'inflected': 'ela', 'deinflected': 'esti', 'conditionsIn': [], 'conditionsOut': V, 'stemMinLength': 1, 'stemCharacters': '{lowerStem}'})),
+    ('generic comparative đi → d', add_rule('cmp-comparative', {'type': 'suffix', 'inflected': 'đi', 'deinflected': 'd', 'conditionsIn': ['adj', 'cmp'], 'conditionsOut': ['adj'], 'stemMinLength': 2, 'stemCharacters': '{lowerStem}'})),
+    ('generic comparative lji → p', add_rule('cmp-comparative', {'type': 'suffix', 'inflected': 'lji', 'deinflected': 'p', 'conditionsIn': ['adj', 'cmp'], 'conditionsOut': ['adj'], 'stemMinLength': 2, 'stemCharacters': '{lowerStem}'})),
+    ('generic comparative ši → h', add_rule('cmp-comparative', {'type': 'suffix', 'inflected': 'ši', 'deinflected': 'h', 'conditionsIn': ['adj', 'cmp'], 'conditionsOut': ['adj'], 'stemMinLength': 2, 'stemCharacters': '{lowerStem}'})),
+    ('passive bačen → baciti removed', drop_rules(lambda tr, r: r.get('inflected') == 'bačen' or ['bačen', 'baciti'] in r.get('suffixes', []))),
+    ('noun and adjective lemmas of 2 letters', lambda t, lang: sum(1 for tr, r in rules(t) if r.get('stemMinLength') == 3 and r.get('deinflected', '') == '' and r.update(stemMinLength=2) is None)),
+    ('preferred readings removed', drop_rules(lambda tr, r: r['type'] == 'wholeWord' and r['inflected'] in PREFERRED)),
+    ('otići written out removed', drop_rules(lambda tr, r: r['type'] == 'wholeWord' and r['deinflected'] == 'otići')),
+    ('cio written out removed', drop_rules(lambda tr, r: r['type'] == 'wholeWord' and r['deinflected'] == 'cio')),
+    ('pronoun time removed', drop_whole({'time'})),
+    ('processor: Cyrillic Џ → D', processor_map('cyrillicToLatin', 'Џ', 'D')),
+    ('wordInternal null (the apostrophe separates words)', word_internal_null),
+    ('rename transform id ptcp-past-masc-sg', rename('ptcp-past-masc-sg')),
+    ('rename transform id n-dat-loc-sg-voc-sg', rename('n-dat-loc-sg-voc-sg')),
 ]
 
 

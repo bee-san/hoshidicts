@@ -9,7 +9,7 @@
 #
 # CACHE holds the inputs, none of them committed (README.md, Sources and
 # licences): wty-sh-en.zip and its import dict/wty-sh-en (hoshidicts-cli
-# import), hr_50k.txt and sr_50k.txt, {srp,hrv,bos}_sentences.tsv.bz2,
+# import), hr_50k.txt, sr_50k.txt and bs_50k.txt, {srp,hrv,bos}_sentences.tsv.bz2,
 # texts/zlatarevo-zlato.txt and texts/sr-gutenberg.txt, and unimorph-hbs/hbs.
 # TAGGED, when set, is a second imported dictionary to measure with: the
 # copy of sources/tag-all-rows.py (labelled in README.md).
@@ -56,6 +56,24 @@ print('per rule:', len(r), 'rows;', sum(1 for x in r if x['recovers'] > 0), 'rec
     done
     for t in zlatarevo-zlato sr-gutenberg; do
       echo "text $t: $(python3 $P/measure.py text --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --text "$CACHE/texts/$t.txt" --out "$OUT/unjudged-$i-$t.tsv" --sample 60 --show 40)"
+      echo "ties $t: $(python3 $P/measure.py ties --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --text "$CACHE/texts/$t.txt" --lemma-lists "$CACHE/hr_50k.txt" "$CACHE/sr_50k.txt" --show 30)"
+      echo "tiesample $t: $(python3 $P/measure.py tiesample --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --text "$CACHE/texts/$t.txt" --out "$OUT/ties-$i-$t.tsv" --sample 60)"
+    done
+    for f in hr sr; do
+      echo "ties $f: $(python3 $P/measure.py ties --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --frequency "$CACHE/${f}_50k.txt" --lemma-lists "$CACHE/hr_50k.txt" "$CACHE/sr_50k.txt" --show 40)"
+      echo "nogold $f: $(python3 $P/measure.py nogold --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --frequency "$CACHE/${f}_50k.txt" --out "$OUT/nogold-$i-$f.tsv" --sample 60)"
+    done
+    # The diacritics processor: the pack against a copy without it.
+    rm -rf "$OUT/no-diacritics" && mkdir -p "$OUT/no-diacritics" && cp -r languages/sh "$OUT/no-diacritics/sh"
+    python3 -c "
+import json
+p = '$OUT/no-diacritics/sh/language.json'
+d = json.load(open(p))
+d['lookup']['preprocessors'] = [x for x in d['lookup']['preprocessors'] if x['id'] != 'addSerboCroatianDiacritics']
+json.dump(d, open(p, 'w'), ensure_ascii=False, indent=2)
+"
+    for f in hr sr bs; do
+      echo "diacritics $f: $(python3 $P/measure.py compare --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --other "$OUT/no-diacritics" --frequency "$CACHE/${f}_50k.txt" --show 15)"
     done
     echo "clitics: $(python3 $P/measure.py clitics --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --tatoeba "$CACHE"/srp_sentences.tsv.bz2 "$CACHE"/hrv_sentences.tsv.bz2 "$CACHE"/bos_sentences.tsv.bz2 --show 30)"
     for run in 1 2 3; do
@@ -70,7 +88,7 @@ print(f'benchmark run $run: {len(ms)} lookups, p50 {q(0.5) * 1000:.1f} us, p95 {
     done
   } > "$OUT/measure-$i.txt" 2>&1
 done
-python3 $P/measure.py traces --zip "$CACHE/wty-sh-en.zip" --dictionary "$CACHE/dict/wty-sh-en" --show 8 > "$OUT/traces.txt" 2>&1
+python3 $P/measure.py traces --zip "$CACHE/wty-sh-en.zip" --dictionary "${TAGGED:-$CACHE/dict/wty-sh-en}" --show 8 > "$OUT/traces.txt" 2>&1
 python3 $P/mutate.py > "$OUT/mutations.txt" 2>&1
 [ -n "${HACHIDORI:-}" ] && node $P/wasm-measure.mjs "$HACHIDORI" "$CACHE/wty-sh-en.zip" > "$OUT/wasm.txt" 2>&1
 echo "load $(cat /proc/loadavg)" > "$OUT/load.txt"

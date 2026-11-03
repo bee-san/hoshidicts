@@ -44,10 +44,18 @@ Commands:
             lemma of the matched text, by rule.
   nothing   The --top most frequent words of --frequency looked up alone: how
             many find nothing, and their share of the list's tokens.
-  traces    tests/corpus.tsv: the share of rows whose shown trace (the
-            shortest that reaches the lemma, as traceSelection "shortest"
-            keeps) names the row's UniMorph case and number, or tense and
-            person.
+  traces    tests/corpus.tsv: each source looked up alone; the share of rows
+            whose shown trace (of the result with the row's lemma) names the
+            row's UniMorph case and number, or tense and person.
+  ties      Ties of the frequent words (--frequency) or of a text (--text):
+            first results a rule made while another lemma the matched text's
+            form-of rows name comes later, judged by lemma frequency
+            (--lemma-lists, see LemmaFrequency).
+  tiesample A seeded sample of a text's ties, for judging in context (--out).
+  nogold    Frequent words whose rule-made first result has no form-of row or
+            entry to judge it by, with a seeded sample to judge (--out).
+  compare   The pack against another version of it (--other) on the
+            frequent words: words only one finds, first results that differ.
 
 --languages loads the packs of another directory (another version of the
 pack, for comparisons). --cli and --batch are build/hoshidicts-cli and
@@ -118,6 +126,50 @@ class Dictionary:
         return expression in self.gold_of(matched) or strip_accents(expression) in self.gold_of(matched)
 
 
+class LemmaFrequency:
+    """How often each lemma's forms occur in frequency lists: a form's count
+    is shared among the lemmas its gold names. A tie between two lemmas the
+    matched text's gold both names is judged by it: the first result is
+    wrong when another such lemma occurs at least RATIO times as often, right
+    when it occurs at least RATIO times as often as every other, and
+    undecided otherwise."""
+    RATIO = 3
+
+    def __init__(self, d, paths):
+        self.count = collections.Counter()
+        for path in paths:
+            with open(path, encoding='utf-8') as f:
+                for line in f:
+                    word, n = line.split()
+                    gold = d.gold_of(word)
+                    for lemma in gold:
+                        self.count[lemma] += int(n) / len(gold)
+
+    def judge(self, first, others):
+        """'right', 'wrong' or 'undecided' for the first lemma against the others."""
+        a = self.count[first]
+        best = max(others, key=lambda o: self.count[o])
+        if self.count[best] >= self.RATIO * max(a, 1):
+            return 'wrong', best
+        if all(a >= self.RATIO * max(self.count[o], 1) for o in others):
+            return 'right', first
+        return 'undecided', best
+
+
+def ties(d, entry):
+    """For a lookup whose first result a pack rule made: the other lemmas the
+    matched text's gold names, among the results for the same matched text."""
+    results = entry['results']
+    if not results or not by_rule(results[0]):
+        return None
+    first = results[0]
+    if not d.right(first['expression'], first['matched']):
+        return None
+    others = sorted({r['expression'] for r in results[1:] if r['matched'] == first['matched']
+                     and r['expression'] != first['expression'] and d.right(r['expression'], r['matched'])})
+    return others or None
+
+
 def lookup_batch(args, texts):
     batch = args.batch or os.path.join(REPO, 'build', 'lookup-batch')
     result = subprocess.run([batch, args.languages, 'sh', args.dictionary], input='\n'.join(texts) + '\n',
@@ -151,9 +203,22 @@ def frequent(path, n):
     return words
 
 
+PACK_IDS = set()
+
+
 def rule_of(result):
-    """The transform that first changed the text (the last one of the trace)."""
-    return result['trace'][-1] if result['trace'] else '(as written)'
+    """The pack transform that first changed the matched text. A lookup's
+    trace is in application order (docs/languages.md 7.4); a step that is not
+    a pack transform is a form-of reference of the dictionary (9.10)."""
+    for step in result['trace']:
+        if step in PACK_IDS:
+            return step
+    return '(form-of reference)' if result['trace'] else '(as written)'
+
+
+def by_rule(result):
+    """Whether a pack rule made the result (its first step is a pack transform)."""
+    return bool(result['trace']) and result['trace'][0] in PACK_IDS
 
 
 def cmd_frequent(args, d):
@@ -305,6 +370,44 @@ def cmd_clitics(args, d):
         print(f'  {n:>5}  {matched} -> {expression} ({rule})')
 
 
+def cmd_ties(args, d):
+    """Ties of the frequent words (--frequency, --top) or of a text (--text):
+    first results a pack rule made while another lemma the matched text's
+    gold names comes later. Judged with the lemma frequency of --lemma-lists
+    (default: --frequency)."""
+    lf = LemmaFrequency(d, args.lemma_lists or [args.frequency])
+    if args.text:
+        with open(args.text, encoding='utf-8') as f:
+            items = [(w, rest, 1) for w, rest in hovers(f.read())]
+        total = len(items)
+    else:
+        words = frequent(args.frequency, args.top)
+        items = [(w, w, c) for w, c in words]
+        total = sum(c for _, c in words)
+    looked = lookup_batch(args, [rest for _, rest, _ in items])
+    verdicts = collections.Counter()
+    weight = collections.Counter()
+    wrong = collections.Counter()
+    by_pair = collections.Counter()
+    for (word, rest, count), entry in zip(items, looked):
+        others = ties(d, entry)
+        if others is None:
+            continue
+        first = entry['results'][0]
+        verdict, best = lf.judge(first['expression'], others)
+        verdicts[verdict] += 1
+        weight[verdict] += count
+        if verdict == 'wrong':
+            wrong[(first['matched'].lower(), first['expression'], best, rule_of(first))] += count
+            rival = next(r for r in entry['results'] if r['expression'] == best)
+            by_pair[(rule_of(first), rule_of(rival))] += count
+    print(json.dumps({'items': len(items), 'ties': sum(verdicts.values()), **{k: verdicts[k] for k in ('right', 'wrong', 'undecided')},
+                      'wrongWeight': weight['wrong'], 'wrongShare': round(weight['wrong'] / max(1, total), 5)}))
+    print('wrong ties by (first result\'s rule, the better lemma\'s rule):', by_pair.most_common(12))
+    for (matched, expression, best, rule), n in wrong.most_common(args.show):
+        print(f'  {n:>9}  {matched} -> {expression} ({rule}) before {best}')
+
+
 def cmd_nothing(args, d):
     words = frequent(args.frequency, args.top)
     total = sum(c for _, c in words)
@@ -342,27 +445,30 @@ def names(tags, name):
 
 
 def cmd_traces(args, d):
+    """What a lookup shows: each corpus source looked up alone; the trace of
+    the result whose expression is the row's lemma, its first pack transform
+    named against the row's UniMorph features."""
     with open(os.path.join(args.languages, 'sh', 'transforms.json'), encoding='utf-8') as f:
         transform_names = {t['id']: t['name'] for t in json.load(f)['transforms']}
     rows = [line.rstrip('\n').split('\t') for line in open(os.path.join(args.languages, 'sh', 'tests', 'corpus.tsv'), encoding='utf-8')
             if not line.startswith('#')]
-    found = deinflections(args, [r[2] for r in rows])
+    rows = [r for r in rows if ' ' not in r[2]]
+    looked = lookup_batch(args, [r[2] for r in rows])
     kinds = collections.Counter()
     good = collections.Counter()
     misses = collections.defaultdict(list)
-    for row, results in zip(rows, found):
-        tags, source, lemma, pos = row[0], row[2], row[3], row[4]
-        paths = [trace for text, conditions, trace in results if text == lemma and trace and (not conditions or pos in conditions)]
-        if not paths:
+    for row, entry in zip(rows, looked):
+        tags, source, lemma = row[0], row[2], row[3]
+        shown = next((r for r in entry['results'] if r['expression'] == lemma and r['matched'] == source), None)
+        if shown is None or not by_rule(shown):
             continue
-        trace = min(paths, key=len)
         kind = tags.split(';')[0] + (';' + tags.split(';')[1] if tags.startswith('V;') else '')
         kinds[kind] += 1
-        # The trace's first step is the inflection of the source.
-        if names(tags, transform_names.get(trace[0], '')):
+        name = transform_names.get(rule_of(shown), '')
+        if names(tags, name):
             good[kind] += 1
         else:
-            misses[kind].append((source, lemma, transform_names.get(trace[0], trace[0])))
+            misses[kind].append((source, lemma, name))
     total = sum(kinds.values())
     print(json.dumps({'rows': total, 'named': sum(good.values()), 'share': round(sum(good.values()) / max(1, total), 4),
                       'byKind': {k: f'{good[k]}/{n}' for k, n in sorted(kinds.items())}}, ensure_ascii=False))
@@ -370,9 +476,85 @@ def cmd_traces(args, d):
         print(kind, items[:args.show])
 
 
+def cmd_compare(args, d):
+    """The pack (--languages) against another version of it (--other) on the
+    --top words of --frequency, looked up alone: words only one of them finds
+    something for, and words whose first results differ."""
+    words = frequent(args.frequency, args.top)
+    total = sum(c for _, c in words)
+    a = lookup_batch(args, [w for w, _ in words])
+    other = argparse.Namespace(**{**vars(args), 'languages': args.other})
+    b = lookup_batch(other, [w for w, _ in words])
+    only_a, only_b, differ = [], [], []
+    for (word, count), x, y in zip(words, a, b):
+        fx = x['results'][0]['expression'] if x['results'] else None
+        fy = y['results'][0]['expression'] if y['results'] else None
+        if fx and not fy:
+            only_a.append((count, word, fx))
+        elif fy and not fx:
+            only_b.append((count, word, fy))
+        elif fx != fy:
+            differ.append((count, word, fx, fy))
+    share = lambda xs: round(sum(x[0] for x in xs) / total, 5)
+    print(json.dumps({'words': len(words), 'onlyThis': len(only_a), 'onlyThisShare': share(only_a), 'onlyOther': len(only_b),
+                      'onlyOtherShare': share(only_b), 'firstDiffers': len(differ), 'firstDiffersShare': share(differ)}))
+    for label, xs in (('only this', only_a), ('only the other', only_b), ('first differs', differ)):
+        print(f'{label}:', ' '.join(f'{x[1]}→{"/".join(x[2:])}' for x in sorted(xs, reverse=True)[:args.show]))
+
+
+def cmd_nogold(args, d):
+    """The --top words of --frequency whose first result a pack rule made and
+    whose matched text has no form-of row or entry, so that `frequent` cannot
+    judge it; a random sample (--sample, seed 1) is written to --out for
+    judging by hand."""
+    words = frequent(args.frequency, args.top)
+    total = sum(c for _, c in words)
+    looked = lookup_batch(args, [w for w, _ in words])
+    found = []
+    for (word, count), entry in zip(words, looked):
+        if not entry['results']:
+            continue
+        first = entry['results'][0]
+        if by_rule(first) and not d.gold_of(first['matched']):
+            found.append((word, count, first))
+    print(json.dumps({'words': len(words), 'noGold': len(found), 'noGoldShare': round(sum(c for _, c, _ in found) / total, 5)}))
+    if args.out:
+        rng = random.Random(1)
+        sample = rng.sample(found, min(args.sample, len(found)))
+        with open(args.out, 'w', encoding='utf-8') as f:
+            f.write('# word\tcount\tmatched\texpression\ttrace\tjudgement (fill in: right, wrong)\n')
+            for word, count, first in sorted(sample, key=lambda x: -x[1]):
+                f.write(f"{word}\t{count}\t{first['matched']}\t{first['expression']}\t{'|'.join(first['trace'])}\t\n")
+        print(f'{len(sample)} of them sampled to {args.out}')
+
+
+def cmd_tiesample(args, d):
+    """A random sample (--sample, seed 1) of the tie positions of a text
+    (--text): first results a pack rule made while another lemma the matched
+    text's form-of rows name comes later, with the text, for judging in
+    context (--out)."""
+    with open(args.text, encoding='utf-8') as f:
+        items = list(hovers(f.read()))
+    looked = lookup_batch(args, [rest for _, rest in items])
+    found = []
+    for (word, rest), entry in zip(items, looked):
+        others = ties(d, entry)
+        if others:
+            found.append((word, rest, entry['results'][0], others))
+    print(json.dumps({'lookups': len(items), 'ties': len(found)}))
+    if args.out:
+        rng = random.Random(1)
+        sample = rng.sample(found, min(args.sample, len(found)))
+        with open(args.out, 'w', encoding='utf-8') as f:
+            f.write('# word\ttext\tfirst\tothers\tjudgement (fill in: right, wrong)\n')
+            for word, rest, first, others in sample:
+                f.write(f"{word}\t{rest[:70]}\t{first['expression']}\t{' '.join(others)}\t\n")
+        print(f'{len(sample)} sampled to {args.out}')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('command', choices=['frequent', 'text', 'clitics', 'traces', 'nothing'])
+    parser.add_argument('command', choices=['frequent', 'text', 'clitics', 'traces', 'nothing', 'ties', 'compare', 'nogold', 'tiesample'])
     parser.add_argument('--zip', required=True)
     parser.add_argument('--dictionary', required=True)
     parser.add_argument('--languages', default=os.path.join(REPO, 'languages'))
@@ -385,9 +567,13 @@ def main():
     parser.add_argument('--sample', type=int, default=60)
     parser.add_argument('--out')
     parser.add_argument('--show', type=int, default=40)
+    parser.add_argument('--other', help='another languages directory, for compare')
+    parser.add_argument('--lemma-lists', nargs='+', help='frequency lists for the lemma frequency of ties (default: --frequency)')
     args = parser.parse_args()
     d = Dictionary(args.zip)
-    {'frequent': cmd_frequent, 'text': cmd_text, 'clitics': cmd_clitics, 'traces': cmd_traces, 'nothing': cmd_nothing}[args.command](args, d)
+    with open(os.path.join(args.languages, 'sh', 'transforms.json'), encoding='utf-8') as f:
+        PACK_IDS.update(t['id'] for t in json.load(f)['transforms'])
+    {'compare': cmd_compare, 'nogold': cmd_nogold, 'tiesample': cmd_tiesample, 'ties': cmd_ties, 'frequent': cmd_frequent, 'text': cmd_text, 'clitics': cmd_clitics, 'traces': cmd_traces, 'nothing': cmd_nothing}[args.command](args, d)
 
 
 if __name__ == '__main__':

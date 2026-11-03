@@ -40,6 +40,7 @@
         {"type": "wholeWord", "inflected": "idem", "deinflected": "ići", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "dam", "deinflected": "dati", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "stojim", "deinflected": "stajati", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "odem", "deinflected": "otići", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "koljem", "deinflected": "klati", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
@@ -56,6 +57,7 @@
         {"type": "wholeWord", "inflected": "ideš", "deinflected": "ići", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "daš", "deinflected": "dati", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "stojiš", "deinflected": "stajati", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "odeš", "deinflected": "otići", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "kolješ", "deinflected": "klati", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
@@ -70,6 +72,7 @@
         {"type": "wholeWord", "inflected": "ide", "deinflected": "ići", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "da", "deinflected": "dati", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "stoji", "deinflected": "stajati", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "ode", "deinflected": "otići", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "kolje", "deinflected": "klati", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
@@ -86,6 +89,7 @@
         {"type": "wholeWord", "inflected": "idemo", "deinflected": "ići", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "damo", "deinflected": "dati", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "stojimo", "deinflected": "stajati", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "odemo", "deinflected": "otići", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "koljemo", "deinflected": "klati", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
@@ -101,6 +105,7 @@
         {"type": "wholeWord", "inflected": "idete", "deinflected": "ići", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "date", "deinflected": "dati", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "stojite", "deinflected": "stajati", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "odete", "deinflected": "otići", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "koljete", "deinflected": "klati", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
@@ -115,6 +120,7 @@
         {"type": "wholeWord", "inflected": "idu", "deinflected": "ići", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "daju", "deinflected": "dati", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "stoje", "deinflected": "stajati", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "odu", "deinflected": "otići", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "kolju", "deinflected": "klati", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
@@ -287,12 +293,13 @@
     {
       "id": "v-irr-aorist-3pl",
       "name": "aorist 3pl",
-      "description": "Irregular verb form: aorist 3pl (biše → biti, htjedoše → htjeti, htedoše → hteti).",
+      "description": "Irregular verb form: aorist 3pl (biše → biti, htjedoše → htjeti, htedoše → hteti, odoše → otići).",
       "source": "own",
       "rules": [
         {"type": "wholeWord", "inflected": "biše", "deinflected": "biti", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "htjedoše", "deinflected": "htjeti", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "htedoše", "deinflected": "hteti", "conditionsIn": [], "conditionsOut": ["v"]}
+        {"type": "wholeWord", "inflected": "htedoše", "deinflected": "hteti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "odoše", "deinflected": "otići", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -319,11 +326,12 @@
     {
       "id": "v-irr-imperative-2sg",
       "name": "imperative 2sg",
-      "description": "Irregular verb form: imperative 2sg (budi → biti, idi → ići, kolji → klati).",
+      "description": "Irregular verb form: imperative 2sg (budi → biti, idi → ići, odi → otići, kolji → klati).",
       "source": "own",
       "rules": [
         {"type": "wholeWord", "inflected": "budi", "deinflected": "biti", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "idi", "deinflected": "ići", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "odi", "deinflected": "otići", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "kolji", "deinflected": "klati", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
@@ -480,7 +488,8 @@
         {"type": "wholeWord", "inflected": "htjedoh", "deinflected": "htjeti", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "htedoh", "deinflected": "hteti", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "idoh", "deinflected": "ići", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "mogoh", "deinflected": "moći", "conditionsIn": [], "conditionsOut": ["v"]}
+        {"type": "wholeWord", "inflected": "mogoh", "deinflected": "moći", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "odoh", "deinflected": "otići", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -556,7 +565,8 @@
         {"type": "wholeWord", "inflected": "putevima", "deinflected": "put", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "očevima", "deinflected": "otac", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "vremenima", "deinflected": "vrijeme", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "kćerima", "deinflected": "kći", "conditionsIn": [], "conditionsOut": ["n"]}
+        {"type": "wholeWord", "inflected": "kćerima", "deinflected": "kći", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "kolima", "deinflected": "kola", "conditionsIn": [], "conditionsOut": ["n"]}
       ]
     },
     {
@@ -1023,13 +1033,11 @@
     {
       "id": "pron-masc-neut-dat-loc-sg",
       "name": "pron. masc./neut. dat./loc. sg.",
-      "description": "Pronoun or numeral form: pron. masc./neut. dat./loc. sg. (svemu → sav, svem → sav, svom → sav, svome → sav).",
+      "description": "Pronoun or numeral form: pron. masc./neut. dat./loc. sg. (svemu → sav, svem → sav, mom → moj, mome → moj).",
       "source": "own",
       "rules": [
         {"type": "wholeWord", "inflected": "svemu", "deinflected": "sav", "conditionsIn": [], "conditionsOut": ["pron"]},
         {"type": "wholeWord", "inflected": "svem", "deinflected": "sav", "conditionsIn": [], "conditionsOut": ["pron"]},
-        {"type": "wholeWord", "inflected": "svom", "deinflected": "sav", "conditionsIn": [], "conditionsOut": ["pron"]},
-        {"type": "wholeWord", "inflected": "svome", "deinflected": "sav", "conditionsIn": [], "conditionsOut": ["pron"]},
         {"type": "wholeWord", "inflected": "mom", "deinflected": "moj", "conditionsIn": [], "conditionsOut": ["pron"]},
         {"type": "wholeWord", "inflected": "mome", "deinflected": "moj", "conditionsIn": [], "conditionsOut": ["pron"]},
         {"type": "wholeWord", "inflected": "momu", "deinflected": "moj", "conditionsIn": [], "conditionsOut": ["pron"]},
@@ -1039,6 +1047,8 @@
         {"type": "wholeWord", "inflected": "svom", "deinflected": "svoj", "conditionsIn": [], "conditionsOut": ["pron"]},
         {"type": "wholeWord", "inflected": "svome", "deinflected": "svoj", "conditionsIn": [], "conditionsOut": ["pron"]},
         {"type": "wholeWord", "inflected": "svomu", "deinflected": "svoj", "conditionsIn": [], "conditionsOut": ["pron"]},
+        {"type": "wholeWord", "inflected": "svom", "deinflected": "sav", "conditionsIn": [], "conditionsOut": ["pron"]},
+        {"type": "wholeWord", "inflected": "svome", "deinflected": "sav", "conditionsIn": [], "conditionsOut": ["pron"]},
         {"type": "wholeWord", "inflected": "kom", "deinflected": "koji", "conditionsIn": [], "conditionsOut": ["pron"]},
         {"type": "wholeWord", "inflected": "kome", "deinflected": "koji", "conditionsIn": [], "conditionsOut": ["pron"]},
         {"type": "wholeWord", "inflected": "komu", "deinflected": "koji", "conditionsIn": [], "conditionsOut": ["pron"]}
@@ -1054,6 +1064,7 @@
         {"type": "wholeWord", "inflected": "svime", "deinflected": "sav", "conditionsIn": [], "conditionsOut": ["pron"]},
         {"type": "wholeWord", "inflected": "ovim", "deinflected": "ovaj", "conditionsIn": [], "conditionsOut": ["pron"]},
         {"type": "wholeWord", "inflected": "tim", "deinflected": "taj", "conditionsIn": [], "conditionsOut": ["pron"]},
+        {"type": "wholeWord", "inflected": "time", "deinflected": "taj", "conditionsIn": [], "conditionsOut": ["pron"]},
         {"type": "wholeWord", "inflected": "onim", "deinflected": "onaj", "conditionsIn": [], "conditionsOut": ["pron"]}
       ]
     },
@@ -1149,16 +1160,19 @@
       "description": "Noun ending: gen. sg., gen. pl., acc. sg. (animate) (grada → grad, brata → brat, prozora → prozor, studenta → student).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "a", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"}
+        {"type": "suffix", "inflected": "a", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"}
       ]
     },
     {
       "id": "n-dat-loc-sg-voc-sg",
       "name": "dat./loc. sg., voc. sg.",
-      "description": "Noun ending: dat./loc. sg., voc. sg. (gradu → grad, prijatelju → prijatelj).",
+      "description": "Noun ending: dat./loc. sg., voc. sg. (gradu → grad, prijatelju → prijatelj, sinu → sin, stanu → stan).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "u", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"}
+        {"type": "suffix", "inflected": "u", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
+        {"type": "wholeWord", "inflected": "sinu", "deinflected": "sin", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "stanu", "deinflected": "stan", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "planu", "deinflected": "plan", "conditionsIn": [], "conditionsOut": ["n"]}
       ]
     },
     {
@@ -1167,8 +1181,9 @@
       "description": "Noun ending: ins. sg. (gradom → grad, bratom → brat, mužem → muž, prijateljem → prijatelj).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["om", ""], ["cem", "ac"], ["kom", "ak"], ["mom", "am"], ["tom", "at"], ["rom", "ar"], ["om", "a"], ["om", "o"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
-        {"type": "suffix", "inflected": "em", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{palatalOrR}"},
+        {"type": "suffix", "inflected": "om", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
+        {"type": "suffix", "inflected": "em", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "{stem}", "stemEndsWith": "{palatalOrR}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["cem", "ac"], ["kom", "ak"], ["mom", "am"], ["tom", "at"], ["rom", "ar"], ["om", "a"], ["om", "o"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["nom", "an"], ["njem", "anj"], ["som", "as"], ["lom", "ao"], ["elom", "eo"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ocem", "lac"], ["skom", "zak"], ["tkom", "dak"], ["pcem", "bac"], ["rju", "r"], ["ću", "t"], ["đu", "d"], ["etom", "e"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["vlju", "v"], ["šću", "st"], ["šlju", "sao"], ["enom", "e"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}"},
@@ -1178,7 +1193,9 @@
         {"type": "wholeWord", "inflected": "nemoću", "deinflected": "nemoć", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "svemoću", "deinflected": "svemoć", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "peću", "deinflected": "peć", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "suffix", "inflected": "em", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{softNeuter}"}
+        {"type": "suffix", "inflected": "em", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{softNeuter}"},
+        {"type": "wholeWord", "inflected": "vodom", "deinflected": "voda", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "tatom", "deinflected": "tata", "conditionsIn": [], "conditionsOut": ["n"]}
       ]
     },
     {
@@ -1187,8 +1204,10 @@
       "description": "Noun ending: voc. sg., acc. pl. (prozore → prozor, brate → brat, studente → student, čitaoce → čitalac).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
-        {"type": "suffix", "inflected": "oce", "deinflected": "lac", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}"}
+        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
+        {"type": "suffix", "inflected": "oce", "deinflected": "lac", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}"},
+        {"type": "wholeWord", "inflected": "sine", "deinflected": "sin", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "planete", "deinflected": "planet", "conditionsIn": [], "conditionsOut": ["n"]}
       ]
     },
     {
@@ -1197,7 +1216,7 @@
       "description": "Noun ending: nom./voc. pl., gen./dat./loc. sg., nom./acc./gen. pl. (prozori → prozor, studenti → student, stvari → stvar, noći → noć).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "i", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"}
+        {"type": "suffix", "inflected": "i", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"}
       ]
     },
     {
@@ -1206,11 +1225,12 @@
       "description": "Noun ending: dat./loc./ins. pl. (prozorima → prozor, studentima → student, stvarima → stvar, noćima → noć).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ima", ""], ["ovima", ""], ["cima", "ac"], ["cima", "ak"], ["mima", "am"], ["movima", "am"], ["tima", "at"], ["rima", "ar"], ["rovima", "ar"], ["ama", "a"], ["ama", "e"], ["ima", "o"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
-        {"type": "suffix", "inflected": "evima", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{palatal}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ima", ""], ["ovima", ""]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
+        {"type": "suffix", "inflected": "evima", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "{stem}", "stemEndsWith": "{palatal}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["čevima", "c"], ["slima", "sao"], ["enima", "e"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}"},
         {"type": "suffix", "inflected": "ovima", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}", "stemChange": {"from": ["je"], "to": "ije", "occurrence": "last", "between": "{consonant}"}},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["cima", "k"], ["zima", "g"], ["sima", "h"], ["ocima", "lac"], ["anima", "anin"], ["esima", "o"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["cima", "ac"], ["cima", "ak"], ["mima", "am"], ["movima", "am"], ["tima", "at"], ["rima", "ar"], ["rovima", "ar"], ["ama", "a"], ["ama", "e"], ["ima", "o"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "cima", "deinflected": "tak", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{stemVowel}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["nima", "an"], ["novima", "an"], ["njima", "anj"], ["sima", "as"], ["lima", "ao"], ["lovima", "ao"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "ima", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{softNeuter}"}
@@ -1222,13 +1242,15 @@
       "description": "Noun ending: nom./voc. pl. (gradovi → grad, sinovi → sin, muževi → muž, kraljevi → kralj).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ovi", ""], ["ci", "ac"], ["ci", "ak"], ["mi", "am"], ["movi", "am"], ["ti", "at"], ["ri", "ar"], ["rovi", "ar"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
-        {"type": "suffix", "inflected": "evi", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{palatal}"},
+        {"type": "suffix", "inflected": "ovi", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
+        {"type": "suffix", "inflected": "evi", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "{stem}", "stemEndsWith": "{palatal}"},
         {"type": "suffix", "inflected": "čevi", "deinflected": "c", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}"},
         {"type": "suffix", "inflected": "ovi", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}", "stemChange": {"from": ["je"], "to": "ije", "occurrence": "last", "between": "{consonant}"}},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ci", "k"], ["zi", "g"], ["si", "h"], ["oci", "lac"], ["sci", "zak"], ["pci", "bac"], ["ani", "anin"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ci", "ac"], ["ci", "ak"], ["mi", "am"], ["movi", "am"], ["ti", "at"], ["ri", "ar"], ["rovi", "ar"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "ci", "deinflected": "tak", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{stemVowel}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ni", "an"], ["novi", "an"], ["nji", "anj"], ["si", "as"], ["li", "ao"], ["lovi", "ao"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ni", "an"], ["novi", "an"], ["nji", "anj"], ["si", "as"], ["li", "ao"], ["lovi", "ao"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
+        {"type": "wholeWord", "inflected": "sretni", "deinflected": "sretan", "conditionsIn": [], "conditionsOut": ["n"]}
       ]
     },
     {
@@ -1237,11 +1259,12 @@
       "description": "Noun ending: gen. pl. (gradova → grad, sinova → sin, muževa → muž, kraljeva → kralj).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ova", ""], ["iju", ""], ["mova", "am"], ["rova", "ar"], ["aka", "ka"], ["ara", "ra"], ["ala", "la"], ["ama", "ma"], ["aca", "ca"], ["ama", "mo"], ["ala", "lo"], ["ara", "ro"], ["aca", "ce"], ["ava", "vo"], ["ana", "no"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
-        {"type": "suffix", "inflected": "eva", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{palatal}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ova", ""], ["iju", ""]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
+        {"type": "suffix", "inflected": "eva", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "{stem}", "stemEndsWith": "{palatal}"},
         {"type": "suffix", "inflected": "čeva", "deinflected": "c", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}"},
         {"type": "suffix", "inflected": "ova", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}", "stemChange": {"from": ["je"], "to": "ije", "occurrence": "last", "between": "{consonant}"}},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["nova", "an"], ["lova", "ao"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["mova", "am"], ["rova", "ar"], ["aka", "ka"], ["ara", "ra"], ["ala", "la"], ["ama", "ma"], ["aca", "ca"], ["ama", "mo"], ["ala", "lo"], ["ara", "ro"], ["aca", "ce"], ["ava", "vo"], ["ana", "no"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "ana", "deinflected": "anin", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}"}
       ]
     },
@@ -1251,10 +1274,11 @@
       "description": "Noun ending: acc. pl. (gradove → grad, sinove → sin, muževe → muž, kraljeve → kralj).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ove", ""], ["ce", "ac"], ["ke", "ak"], ["me", "am"], ["move", "am"], ["te", "at"], ["re", "ar"], ["rove", "ar"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
-        {"type": "suffix", "inflected": "eve", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{palatal}"},
+        {"type": "suffix", "inflected": "ove", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
+        {"type": "suffix", "inflected": "eve", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "{stem}", "stemEndsWith": "{palatal}"},
         {"type": "suffix", "inflected": "čeve", "deinflected": "c", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}"},
         {"type": "suffix", "inflected": "ove", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}", "stemChange": {"from": ["je"], "to": "ije", "occurrence": "last", "between": "{consonant}"}},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ce", "ac"], ["ke", "ak"], ["me", "am"], ["move", "am"], ["te", "at"], ["re", "ar"], ["rove", "ar"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ne", "an"], ["nove", "an"], ["nje", "anj"], ["se", "as"], ["le", "ao"], ["love", "ao"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["pce", "bac"], ["ske", "zak"], ["tke", "dak"], ["ane", "anin"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}"}
       ]
@@ -1302,25 +1326,65 @@
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["e", "a"], ["a", "o"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "a", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{softNeuter}"},
-        {"type": "suffix", "inflected": "ena", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}"}
+        {"type": "suffix", "inflected": "ena", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}"},
+        {"type": "wholeWord", "inflected": "sobe", "deinflected": "soba", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "vode", "deinflected": "voda", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "kose", "deinflected": "kosa", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "strane", "deinflected": "strana", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "tate", "deinflected": "tata", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "duše", "deinflected": "duša", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "rane", "deinflected": "rana", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "tajne", "deinflected": "tajna", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "veze", "deinflected": "veza", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "šume", "deinflected": "šuma", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "mete", "deinflected": "meta", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "mačke", "deinflected": "mačka", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "šale", "deinflected": "šala", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "tela", "deinflected": "telo", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "pravila", "deinflected": "pravilo", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "krila", "deinflected": "krilo", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "svetla", "deinflected": "svetlo", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "jezera", "deinflected": "jezero", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "kiše", "deinflected": "kiša", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "liste", "deinflected": "lista", "conditionsIn": [], "conditionsOut": ["n"]}
       ]
     },
     {
       "id": "n-gen-pl-dat-loc-sg",
       "name": "gen. pl., dat./loc. sg.",
-      "description": "Noun ending: gen. pl., dat./loc. sg. (ženi → žena, kući → kuća, majki → majka).",
+      "description": "Noun ending: gen. pl., dat./loc. sg. (ženi → žena, kući → kuća, majki → majka, vezi → veza).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "i", "deinflected": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"}
+        {"type": "suffix", "inflected": "i", "deinflected": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
+        {"type": "wholeWord", "inflected": "vezi", "deinflected": "veza", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "kiši", "deinflected": "kiša", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "duši", "deinflected": "duša", "conditionsIn": [], "conditionsOut": ["n"]}
       ]
     },
     {
       "id": "n-gen-pl-acc-sg",
       "name": "gen. pl., acc. sg.",
-      "description": "Noun ending: gen. pl., acc. sg. (ženu → žena, kuću → kuća, ruku → ruka).",
+      "description": "Noun ending: gen. pl., acc. sg. (ženu → žena, kuću → kuća, ruku → ruka, sobu → soba).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "u", "deinflected": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"}
+        {"type": "suffix", "inflected": "u", "deinflected": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
+        {"type": "wholeWord", "inflected": "sobu", "deinflected": "soba", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "vodu", "deinflected": "voda", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "kosu", "deinflected": "kosa", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "stranu", "deinflected": "strana", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "ulogu", "deinflected": "uloga", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "tatu", "deinflected": "tata", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "dušu", "deinflected": "duša", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "tajnu", "deinflected": "tajna", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "vezu", "deinflected": "veza", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "listu", "deinflected": "lista", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "robu", "deinflected": "roba", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "boju", "deinflected": "boja", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "šumu", "deinflected": "šuma", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "brigu", "deinflected": "briga", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "zamku", "deinflected": "zamka", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "metu", "deinflected": "meta", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "bravu", "deinflected": "brava", "conditionsIn": [], "conditionsOut": ["n"]}
       ]
     },
     {
@@ -1353,19 +1417,45 @@
     {
       "id": "n-collective-plural",
       "name": "collective plural",
-      "description": "Noun ending: collective plural (pilad → pile, telad → tele, dugmad → dugme).",
+      "description": "Noun ending: collective plural (pilad → pile, telad → tele, dugmad → dugme, burad → bure).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ad", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "{stem}"}
+        {"type": "wholeWord", "inflected": "pilad", "deinflected": "pile", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "telad", "deinflected": "tele", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "dugmad", "deinflected": "dugme", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "burad", "deinflected": "bure", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "prasad", "deinflected": "prase", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "jagnjad", "deinflected": "jagnje", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "janjad", "deinflected": "janje", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "mačad", "deinflected": "mače", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "unučad", "deinflected": "unuče", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "siročad", "deinflected": "siroče", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "kučad", "deinflected": "kuče", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "štenad", "deinflected": "štene", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "ždrebad", "deinflected": "ždrebe", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "ždrijebad", "deinflected": "ždrijebe", "conditionsIn": [], "conditionsOut": ["n"]}
       ]
     },
     {
       "id": "n-collective-plural-gen-dat-loc-ins",
       "name": "collective plural (gen./dat./loc./ins.)",
-      "description": "Noun ending: collective plural (gen./dat./loc./ins.) (piladi → pile, teladi → tele).",
+      "description": "Noun ending: collective plural (gen./dat./loc./ins.) (piladi → pile, teladi → tele, dugmadi → dugme, buradi → bure).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "adi", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "{stem}"}
+        {"type": "wholeWord", "inflected": "piladi", "deinflected": "pile", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "teladi", "deinflected": "tele", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "dugmadi", "deinflected": "dugme", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "buradi", "deinflected": "bure", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "prasadi", "deinflected": "prase", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "jagnjadi", "deinflected": "jagnje", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "janjadi", "deinflected": "janje", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "mačadi", "deinflected": "mače", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "unučadi", "deinflected": "unuče", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "siročadi", "deinflected": "siroče", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "kučadi", "deinflected": "kuče", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "štenadi", "deinflected": "štene", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "ždrebadi", "deinflected": "ždrebe", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "ždrijebadi", "deinflected": "ždrijebe", "conditionsIn": [], "conditionsOut": ["n"]}
       ]
     },
     {
@@ -1374,21 +1464,49 @@
       "description": "Adjective ending: adj. fem. nom./voc. sg., masc./neut. gen. sg., neut. nom./acc./voc. pl. (nova → nov, srpska → srpski, prva → prvi, dobra → dobar).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["a", ""], ["ra", "ar"], ["na", "an"], ["ka", "ak"], ["va", "av"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
+        {"type": "suffix", "inflected": "a", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "a", "deinflected": "i", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}", "stemNotStartsWithText": "jest"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ra", "ar"], ["na", "an"], ["ka", "ak"], ["va", "av"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["sna", "stan"], ["ela", "eo"], ["tka", "dak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "la", "deinflected": "ao", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ška", "žak"], ["ska", "zak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ška", "žak"], ["ska", "zak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "wholeWord", "inflected": "cijela", "deinflected": "cio", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "cela", "deinflected": "ceo", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "bela", "deinflected": "beo", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "druga", "deinflected": "drugi", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "svaka", "deinflected": "svaki", "conditionsIn": [], "conditionsOut": ["adj", "pron"]}
+      ]
+    },
+    {
+      "id": "adj-fem-gen-sg-fem-nom-acc-voc-pl-masc-acc-pl",
+      "name": "adj. fem. gen. sg., fem. nom./acc./voc. pl., masc. acc. pl.",
+      "description": "Adjective ending: adj. fem. gen. sg., fem. nom./acc./voc. pl., masc. acc. pl. (nove → nov, dobre → dobar, mudre → mudar, sretne → sretan).",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["re", "ar"], ["ne", "an"], ["ke", "ak"], ["ve", "av"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["sne", "stan"], ["ele", "eo"], ["tke", "dak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "le", "deinflected": "ao", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ške", "žak"], ["ske", "zak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "wholeWord", "inflected": "cijele", "deinflected": "cio", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "cele", "deinflected": "ceo", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "bele", "deinflected": "beo", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "stare", "deinflected": "star", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "nove", "deinflected": "nov", "conditionsIn": [], "conditionsOut": ["adj", "pron"]}
       ]
     },
     {
       "id": "adj-fem-gen-sg-fem-nom-acc-voc-pl-masc-acc-pl-ne",
       "name": "adj. fem. gen. sg., fem. nom./acc./voc. pl., masc. acc. pl., neut. nom./acc./voc. sg.",
-      "description": "Adjective ending: adj. fem. gen. sg., fem. nom./acc./voc. pl., masc. acc. pl., neut. nom./acc./voc. sg. (nove → nov, naše → naš, vruće → vruć, srpske → srpski).",
+      "description": "Adjective ending: adj. fem. gen. sg., fem. nom./acc./voc. pl., masc. acc. pl., neut. nom./acc./voc. sg. (srpske → srpski, prve → prvi, domaće → domaći, naše → naš).",
       "source": "own",
       "rules": [
+        {"type": "suffix", "inflected": "e", "deinflected": "i", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}", "stemNotStartsWithText": "jest"},
         {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
-        {"type": "suffix", "inflected": "e", "deinflected": "i", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}", "stemNotStartsWithText": "jest"}
+        {"type": "wholeWord", "inflected": "druge", "deinflected": "drugi", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "svake", "deinflected": "svaki", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "vojne", "deinflected": "vojni", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "pete", "deinflected": "peti", "conditionsIn": [], "conditionsOut": ["adj", "pron"]}
       ]
     },
     {
@@ -1397,10 +1515,14 @@
       "description": "Adjective ending: adj. masc. nom./voc. pl., definite masc. nom./voc. sg. (novi → nov, stari → star, dobri → dobar, mudri → mudar).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["i", ""], ["ri", "ar"], ["ni", "an"], ["ki", "ak"], ["vi", "av"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
+        {"type": "suffix", "inflected": "i", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ri", "ar"], ["ni", "an"], ["ki", "ak"], ["vi", "av"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["sni", "stan"], ["eli", "eo"], ["tki", "dak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "li", "deinflected": "ao", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ški", "žak"], ["ski", "zak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ški", "žak"], ["ski", "zak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "wholeWord", "inflected": "cijeli", "deinflected": "cio", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "celi", "deinflected": "ceo", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "beli", "deinflected": "beo", "conditionsIn": [], "conditionsOut": ["adj", "pron"]}
       ]
     },
     {
@@ -1409,11 +1531,18 @@
       "description": "Adjective ending: adj. neut. nom./acc./voc. sg. (novo → nov, srpsko → srpski, prvo → prvi, dobro → dobar).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["o", ""], ["ro", "ar"], ["no", "an"], ["ko", "ak"], ["vo", "av"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
+        {"type": "suffix", "inflected": "o", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "o", "deinflected": "i", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}", "stemNotStartsWithText": "jest"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ro", "ar"], ["no", "an"], ["ko", "ak"], ["vo", "av"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["sno", "stan"], ["elo", "eo"], ["tko", "dak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "lo", "deinflected": "ao", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ško", "žak"], ["sko", "zak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ško", "žak"], ["sko", "zak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "wholeWord", "inflected": "cijelo", "deinflected": "cio", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "celo", "deinflected": "ceo", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "belo", "deinflected": "beo", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "drugo", "deinflected": "drugi", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "svako", "deinflected": "svaki", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "novo", "deinflected": "nov", "conditionsIn": [], "conditionsOut": ["adj", "pron"]}
       ]
     },
     {
@@ -1422,11 +1551,19 @@
       "description": "Adjective ending: adj. fem. acc. sg., masc./neut. dat./loc. sg. (novu → nov, srpsku → srpski, prvu → prvi, dobru → dobar).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["u", ""], ["ru", "ar"], ["nu", "an"], ["ku", "ak"], ["vu", "av"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
+        {"type": "suffix", "inflected": "u", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "u", "deinflected": "i", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}", "stemNotStartsWithText": "jest"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ru", "ar"], ["nu", "an"], ["ku", "ak"], ["vu", "av"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["snu", "stan"], ["elu", "eo"], ["tku", "dak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "lu", "deinflected": "ao", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["šku", "žak"], ["sku", "zak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["šku", "žak"], ["sku", "zak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "wholeWord", "inflected": "cijelu", "deinflected": "cio", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "celu", "deinflected": "ceo", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "belu", "deinflected": "beo", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "drugu", "deinflected": "drugi", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "svaku", "deinflected": "svaki", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "novu", "deinflected": "nov", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "vojnu", "deinflected": "vojni", "conditionsIn": [], "conditionsOut": ["adj", "pron"]}
       ]
     },
     {
@@ -1435,12 +1572,23 @@
       "description": "Adjective ending: adj. masc./neut. gen. sg., masc. acc. sg. (animate) (novog → nov, srpskog → srpski, prvog → prvi, novoga → nov).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["og", ""], ["oga", ""], ["rog", "ar"], ["roga", "ar"], ["nog", "an"], ["noga", "an"], ["kog", "ak"], ["koga", "ak"], ["vog", "av"], ["voga", "av"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["og", ""], ["oga", ""]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["og", "i"], ["oga", "i"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}", "stemNotStartsWithText": "jest"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["eg", ""], ["eg", "i"], ["ega", ""], ["ega", "i"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{palatal}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["rog", "ar"], ["roga", "ar"], ["nog", "an"], ["noga", "an"], ["kog", "ak"], ["koga", "ak"], ["vog", "av"], ["voga", "av"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["snog", "stan"], ["snoga", "stan"], ["elog", "eo"], ["eloga", "eo"], ["tkog", "dak"], ["tkoga", "dak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["log", "ao"], ["loga", "ao"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["škog", "žak"], ["škoga", "žak"], ["skog", "zak"], ["skoga", "zak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["škog", "žak"], ["škoga", "žak"], ["skog", "zak"], ["skoga", "zak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "wholeWord", "inflected": "cijelog", "deinflected": "cio", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "celog", "deinflected": "ceo", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "belog", "deinflected": "beo", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "cijeloga", "deinflected": "cio", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "celoga", "deinflected": "ceo", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "beloga", "deinflected": "beo", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "drugog", "deinflected": "drugi", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "svakog", "deinflected": "svaki", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "drugoga", "deinflected": "drugi", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "svakoga", "deinflected": "svaki", "conditionsIn": [], "conditionsOut": ["adj", "pron"]}
       ]
     },
     {
@@ -1449,11 +1597,18 @@
       "description": "Adjective ending: adj. masc./neut. dat./loc. sg., fem. ins. sg. (novom → nov, srpskom → srpski, prvom → prvi, dobrom → dobar).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["om", ""], ["rom", "ar"], ["nom", "an"], ["kom", "ak"], ["vom", "av"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
+        {"type": "suffix", "inflected": "om", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "om", "deinflected": "i", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}", "stemNotStartsWithText": "jest"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["rom", "ar"], ["nom", "an"], ["kom", "ak"], ["vom", "av"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["snom", "stan"], ["elom", "eo"], ["tkom", "dak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "lom", "deinflected": "ao", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["škom", "žak"], ["skom", "zak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["škom", "žak"], ["skom", "zak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "wholeWord", "inflected": "cijelom", "deinflected": "cio", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "celom", "deinflected": "ceo", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "belom", "deinflected": "beo", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "drugom", "deinflected": "drugi", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "svakom", "deinflected": "svaki", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "novom", "deinflected": "nov", "conditionsIn": [], "conditionsOut": ["adj", "pron"]}
       ]
     },
     {
@@ -1462,12 +1617,23 @@
       "description": "Adjective ending: adj. masc./neut. dat./loc. sg. (novome → nov, glavnome → glavni, prvome → prvi, novomu → nov).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ome", ""], ["omu", ""], ["rome", "ar"], ["romu", "ar"], ["nome", "an"], ["nomu", "an"], ["kome", "ak"], ["komu", "ak"], ["vome", "av"], ["vomu", "av"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ome", ""], ["omu", ""]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ome", "i"], ["omu", "i"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}", "stemNotStartsWithText": "jest"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["em", ""], ["em", "i"], ["emu", ""], ["emu", "i"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{palatal}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["rome", "ar"], ["romu", "ar"], ["nome", "an"], ["nomu", "an"], ["kome", "ak"], ["komu", "ak"], ["vome", "av"], ["vomu", "av"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["snome", "stan"], ["snomu", "stan"], ["elome", "eo"], ["elomu", "eo"], ["tkome", "dak"], ["tkomu", "dak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["lome", "ao"], ["lomu", "ao"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["škome", "žak"], ["škomu", "žak"], ["skome", "zak"], ["skomu", "zak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["škome", "žak"], ["škomu", "žak"], ["skome", "zak"], ["skomu", "zak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "wholeWord", "inflected": "cijelome", "deinflected": "cio", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "celome", "deinflected": "ceo", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "belome", "deinflected": "beo", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "cijelomu", "deinflected": "cio", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "celomu", "deinflected": "ceo", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "belomu", "deinflected": "beo", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "drugome", "deinflected": "drugi", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "svakome", "deinflected": "svaki", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "drugomu", "deinflected": "drugi", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "svakomu", "deinflected": "svaki", "conditionsIn": [], "conditionsOut": ["adj", "pron"]}
       ]
     },
     {
@@ -1476,11 +1642,18 @@
       "description": "Adjective ending: adj. fem. dat./loc. sg. (novoj → nov, srpskoj → srpski, prvoj → prvi, dobroj → dobar).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["oj", ""], ["roj", "ar"], ["noj", "an"], ["koj", "ak"], ["voj", "av"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
+        {"type": "suffix", "inflected": "oj", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "oj", "deinflected": "i", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}", "stemNotStartsWithText": "jest"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["roj", "ar"], ["noj", "an"], ["koj", "ak"], ["voj", "av"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["snoj", "stan"], ["eloj", "eo"], ["tkoj", "dak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "loj", "deinflected": "ao", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["škoj", "žak"], ["skoj", "zak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["škoj", "žak"], ["skoj", "zak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "wholeWord", "inflected": "cijeloj", "deinflected": "cio", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "celoj", "deinflected": "ceo", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "beloj", "deinflected": "beo", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "drugoj", "deinflected": "drugi", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "svakoj", "deinflected": "svaki", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "novoj", "deinflected": "nov", "conditionsIn": [], "conditionsOut": ["adj", "pron"]}
       ]
     },
     {
@@ -1489,11 +1662,17 @@
       "description": "Adjective ending: adj. dat./loc./ins. pl., masc./neut. ins. sg. (novim → nov, srpskim → srpski, prvim → prvi, dobrim → dobar).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["im", ""], ["rim", "ar"], ["nim", "an"], ["kim", "ak"], ["vim", "av"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
+        {"type": "suffix", "inflected": "im", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "im", "deinflected": "i", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}", "stemNotStartsWithText": "jest"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["rim", "ar"], ["nim", "an"], ["kim", "ak"], ["vim", "av"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["snim", "stan"], ["elim", "eo"], ["tkim", "dak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "lim", "deinflected": "ao", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["škim", "žak"], ["skim", "zak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["škim", "žak"], ["skim", "zak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "wholeWord", "inflected": "cijelim", "deinflected": "cio", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "celim", "deinflected": "ceo", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "belim", "deinflected": "beo", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "drugim", "deinflected": "drugi", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "svakim", "deinflected": "svaki", "conditionsIn": [], "conditionsOut": ["adj", "pron"]}
       ]
     },
     {
@@ -1502,11 +1681,18 @@
       "description": "Adjective ending: adj. dat./loc./ins. pl. (novima → nov, srpskima → srpski, prvima → prvi, dobrima → dobar).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ima", ""], ["rima", "ar"], ["nima", "an"], ["kima", "ak"], ["vima", "av"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
+        {"type": "suffix", "inflected": "ima", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "ima", "deinflected": "i", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}", "stemNotStartsWithText": "jest"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["rima", "ar"], ["nima", "an"], ["kima", "ak"], ["vima", "av"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["snima", "stan"], ["elima", "eo"], ["tkima", "dak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "lima", "deinflected": "ao", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["škima", "žak"], ["skima", "zak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["škima", "žak"], ["skima", "zak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "wholeWord", "inflected": "cijelima", "deinflected": "cio", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "celima", "deinflected": "ceo", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "belima", "deinflected": "beo", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "nekima", "deinflected": "neki", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "drugima", "deinflected": "drugi", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "svakima", "deinflected": "svaki", "conditionsIn": [], "conditionsOut": ["adj", "pron"]}
       ]
     },
     {
@@ -1515,23 +1701,17 @@
       "description": "Adjective ending: adj. gen. pl. (novih → nov, srpskih → srpski, prvih → prvi, dobrih → dobar).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ih", ""], ["rih", "ar"], ["nih", "an"], ["kih", "ak"], ["vih", "av"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
+        {"type": "suffix", "inflected": "ih", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "ih", "deinflected": "i", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}", "stemNotStartsWithText": "jest"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["rih", "ar"], ["nih", "an"], ["kih", "ak"], ["vih", "av"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["snih", "stan"], ["elih", "eo"], ["tkih", "dak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "lih", "deinflected": "ao", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ških", "žak"], ["skih", "zak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
-      ]
-    },
-    {
-      "id": "adj-fem-gen-sg-fem-nom-acc-voc-pl-masc-acc-pl",
-      "name": "adj. fem. gen. sg., fem. nom./acc./voc. pl., masc. acc. pl.",
-      "description": "Adjective ending: adj. fem. gen. sg., fem. nom./acc./voc. pl., masc. acc. pl. (dobre → dobar, mudre → mudar, sretne → sretan, tamne → taman).",
-      "source": "own",
-      "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["re", "ar"], ["ne", "an"], ["ke", "ak"], ["ve", "av"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["sne", "stan"], ["ele", "eo"], ["tke", "dak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
-        {"type": "suffix", "inflected": "le", "deinflected": "ao", "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ške", "žak"], ["ske", "zak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ških", "žak"], ["skih", "zak"]], "conditionsIn": [], "conditionsOut": ["adj", "pron"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "wholeWord", "inflected": "cijelih", "deinflected": "cio", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "celih", "deinflected": "ceo", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "belih", "deinflected": "beo", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "drugih", "deinflected": "drugi", "conditionsIn": [], "conditionsOut": ["adj", "pron"]},
+        {"type": "wholeWord", "inflected": "svakih", "deinflected": "svaki", "conditionsIn": [], "conditionsOut": ["adj", "pron"]}
       ]
     },
     {
@@ -1601,7 +1781,11 @@
         {"type": "wholeWord", "inflected": "dalji", "deinflected": "dalek", "conditionsIn": ["adj", "cmp"], "conditionsOut": ["adj"]},
         {"type": "wholeWord", "inflected": "deblji", "deinflected": "debeo", "conditionsIn": ["adj", "cmp"], "conditionsOut": ["adj"]},
         {"type": "wholeWord", "inflected": "bjelji", "deinflected": "bijel", "conditionsIn": ["adj", "cmp"], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "belji", "deinflected": "beo", "conditionsIn": ["adj", "cmp"], "conditionsOut": ["adj"]}
+        {"type": "wholeWord", "inflected": "belji", "deinflected": "beo", "conditionsIn": ["adj", "cmp"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "teže", "deinflected": "težak", "conditionsIn": ["adj", "cmp"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "veća", "deinflected": "velik", "conditionsIn": ["adj", "cmp"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "veću", "deinflected": "velik", "conditionsIn": ["adj", "cmp"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "šire", "deinflected": "širok", "conditionsIn": ["adj", "cmp"], "conditionsOut": ["adj"]}
       ]
     },
     {
@@ -1612,11 +1796,20 @@
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["am", "ati"], ["im", "iti"], ["im", "jeti"], ["im", "eti"], ["ujem", "ivati"], ["ajem", "ajati"], ["em", "eti"], ["mljem", "mati"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "im", "deinflected": "ati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{afterA}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ujem", "ovati"], ["ujem", "uti"], ["ajem", "avati"], ["ijem", "ijati"], ["ijem", "jeti"], ["nem", "nuti"], ["dnem", "sti"], ["gnem", "ći"], ["čnem", "četi"], ["pnem", "peti"], ["knem", "ći"], ["zmem", "zeti"], ["tmem", "teti"], ["šem", "sati"], ["šem", "hati"], ["žem", "zati"], ["žem", "gati"], ["čem", "kati"], ["čem", "cati"], ["ćem", "tati"], ["pćem", "ptati"], ["pljem", "pati"], ["šćem", "skati"], ["čem", "ći"], ["žem", "ći"], ["đem", "ći"], ["erem", "rati"], ["nesem", "nijeti"], ["nesem", "neti"], ["tnem", "sti"], ["ovem", "vati"], ["rem", "rijeti"], ["rem", "reti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ujem", "ovati"], ["ujem", "uti"], ["ajem", "avati"], ["ijem", "ijati"], ["ijem", "jeti"], ["nem", "nuti"], ["dnem", "sti"], ["gnem", "ći"], ["čnem", "četi"], ["pnem", "peti"], ["knem", "ći"], ["zmem", "zeti"], ["tmem", "teti"], ["šem", "sati"], ["šem", "hati"], ["žem", "zati"], ["žem", "gati"], ["čem", "kati"], ["čem", "cati"], ["ćem", "tati"], ["pćem", "ptati"], ["pljem", "pati"], ["šćem", "skati"], ["čem", "ći"], ["žem", "ći"], ["đem", "ći"], ["erem", "rati"], ["nesem", "nijeti"], ["nesem", "neti"], ["tnem", "sti"], ["ovem", "vati"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "ujem", "deinflected": "evati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{palatal}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["pijem", "piti"], ["bijem", "biti"], ["šijem", "šiti"], ["lijem", "liti"], ["vijem", "viti"], ["mijem", "miti"], ["krijem", "kriti"], ["gnjijem", "gnjiti"], ["stanem", "stati"], ["jedem", "jesti"], ["kradem", "krasti"], ["bodem", "bosti"], ["vedem", "vesti"], ["bredem", "bresti"], ["predem", "presti"], ["pletem", "plesti"], ["metem", "mesti"], ["gnjetem", "gnjesti"], ["cvatem", "cvasti"], ["rastem", "rasti"], ["tresem", "tresti"], ["pasem", "pasti"], ["nesem", "nesti"], ["grizem", "gristi"], ["muzem", "musti"], ["vezem", "vesti"], ["šaljem", "slati"], ["kunem", "kleti"], ["jebem", "jebati"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "rijem", "deinflected": "riti", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[pk]"},
-        {"type": "suffix", "inflected": "rem", "deinflected": "rati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "[ieo]"}
+        {"type": "suffix", "inflected": "rem", "deinflected": "rati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "[ieo]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["rem", "rijeti"], ["rem", "reti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
+        {"type": "wholeWord", "inflected": "radim", "deinflected": "raditi", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "pustim", "deinflected": "pustiti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "kasnim", "deinflected": "kasniti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "pravim", "deinflected": "praviti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "živim", "deinflected": "živjeti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "živim", "deinflected": "živeti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "bojim", "deinflected": "bojati", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "pomažem", "deinflected": "pomagati", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -1627,11 +1820,13 @@
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aš", "ati"], ["iš", "iti"], ["iš", "jeti"], ["iš", "eti"], ["uješ", "ivati"], ["aješ", "ajati"], ["eš", "eti"], ["mlješ", "mati"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "iš", "deinflected": "ati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{afterA}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uješ", "ovati"], ["uješ", "uti"], ["aješ", "avati"], ["iješ", "ijati"], ["iješ", "jeti"], ["neš", "nuti"], ["dneš", "sti"], ["gneš", "ći"], ["čneš", "četi"], ["pneš", "peti"], ["kneš", "ći"], ["zmeš", "zeti"], ["tmeš", "teti"], ["šeš", "sati"], ["šeš", "hati"], ["žeš", "zati"], ["žeš", "gati"], ["češ", "kati"], ["češ", "cati"], ["ćeš", "tati"], ["pćeš", "ptati"], ["plješ", "pati"], ["šćeš", "skati"], ["češ", "ći"], ["žeš", "ći"], ["đeš", "ći"], ["ereš", "rati"], ["neseš", "nijeti"], ["neseš", "neti"], ["tneš", "sti"], ["oveš", "vati"], ["reš", "rijeti"], ["reš", "reti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uješ", "ovati"], ["uješ", "uti"], ["aješ", "avati"], ["iješ", "ijati"], ["iješ", "jeti"], ["neš", "nuti"], ["dneš", "sti"], ["gneš", "ći"], ["čneš", "četi"], ["pneš", "peti"], ["kneš", "ći"], ["zmeš", "zeti"], ["tmeš", "teti"], ["šeš", "sati"], ["šeš", "hati"], ["žeš", "zati"], ["žeš", "gati"], ["češ", "kati"], ["češ", "cati"], ["ćeš", "tati"], ["pćeš", "ptati"], ["plješ", "pati"], ["šćeš", "skati"], ["češ", "ći"], ["žeš", "ći"], ["đeš", "ći"], ["ereš", "rati"], ["neseš", "nijeti"], ["neseš", "neti"], ["tneš", "sti"], ["oveš", "vati"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "uješ", "deinflected": "evati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{palatal}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["piješ", "piti"], ["biješ", "biti"], ["šiješ", "šiti"], ["liješ", "liti"], ["viješ", "viti"], ["miješ", "miti"], ["kriješ", "kriti"], ["gnjiješ", "gnjiti"], ["staneš", "stati"], ["jedeš", "jesti"], ["kradeš", "krasti"], ["bodeš", "bosti"], ["vedeš", "vesti"], ["bredeš", "bresti"], ["predeš", "presti"], ["pleteš", "plesti"], ["meteš", "mesti"], ["gnjeteš", "gnjesti"], ["cvateš", "cvasti"], ["rasteš", "rasti"], ["treseš", "tresti"], ["paseš", "pasti"], ["neseš", "nesti"], ["grizeš", "gristi"], ["muzeš", "musti"], ["vezeš", "vesti"], ["šalješ", "slati"], ["kuneš", "kleti"], ["jebeš", "jebati"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "riješ", "deinflected": "riti", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[pk]"},
-        {"type": "suffix", "inflected": "reš", "deinflected": "rati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "[ieo]"}
+        {"type": "suffix", "inflected": "reš", "deinflected": "rati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "[ieo]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["reš", "rijeti"], ["reš", "reti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
+        {"type": "wholeWord", "inflected": "bojiš", "deinflected": "bojati", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -1641,7 +1836,17 @@
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "a", "deinflected": "ati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["če", "ći"], ["že", "ći"], ["đe", "ći"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["če", "ći"], ["že", "ći"], ["đe", "ći"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "wholeWord", "inflected": "nema", "deinflected": "nemati", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "izgleda", "deinflected": "izgledati", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "čeka", "deinflected": "čekati", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "pada", "deinflected": "padati", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "hoda", "deinflected": "hodati", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "pogleda", "deinflected": "pogledati", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "pjeva", "deinflected": "pjevati", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "peva", "deinflected": "pevati", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "vara", "deinflected": "varati", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "uda", "deinflected": "udati", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -1651,11 +1856,12 @@
       "source": "own",
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["amo", "ati"], ["ujemo", "ivati"], ["ajemo", "ajati"], ["emo", "eti"], ["mljemo", "mati"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ujemo", "ovati"], ["ujemo", "uti"], ["ajemo", "avati"], ["ijemo", "ijati"], ["ijemo", "jeti"], ["nemo", "nuti"], ["dnemo", "sti"], ["gnemo", "ći"], ["čnemo", "četi"], ["pnemo", "peti"], ["knemo", "ći"], ["zmemo", "zeti"], ["tmemo", "teti"], ["šemo", "sati"], ["šemo", "hati"], ["žemo", "zati"], ["žemo", "gati"], ["čemo", "kati"], ["čemo", "cati"], ["ćemo", "tati"], ["pćemo", "ptati"], ["pljemo", "pati"], ["šćemo", "skati"], ["čemo", "ći"], ["žemo", "ći"], ["đemo", "ći"], ["eremo", "rati"], ["nesemo", "nijeti"], ["nesemo", "neti"], ["tnemo", "sti"], ["ovemo", "vati"], ["remo", "rijeti"], ["remo", "reti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ujemo", "ovati"], ["ujemo", "uti"], ["ajemo", "avati"], ["ijemo", "ijati"], ["ijemo", "jeti"], ["nemo", "nuti"], ["dnemo", "sti"], ["gnemo", "ći"], ["čnemo", "četi"], ["pnemo", "peti"], ["knemo", "ći"], ["zmemo", "zeti"], ["tmemo", "teti"], ["šemo", "sati"], ["šemo", "hati"], ["žemo", "zati"], ["žemo", "gati"], ["čemo", "kati"], ["čemo", "cati"], ["ćemo", "tati"], ["pćemo", "ptati"], ["pljemo", "pati"], ["šćemo", "skati"], ["čemo", "ći"], ["žemo", "ći"], ["đemo", "ći"], ["eremo", "rati"], ["nesemo", "nijeti"], ["nesemo", "neti"], ["tnemo", "sti"], ["ovemo", "vati"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "ujemo", "deinflected": "evati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{palatal}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["pijemo", "piti"], ["bijemo", "biti"], ["šijemo", "šiti"], ["lijemo", "liti"], ["vijemo", "viti"], ["mijemo", "miti"], ["krijemo", "kriti"], ["gnjijemo", "gnjiti"], ["stanemo", "stati"], ["jedemo", "jesti"], ["krademo", "krasti"], ["bodemo", "bosti"], ["vedemo", "vesti"], ["bredemo", "bresti"], ["predemo", "presti"], ["pletemo", "plesti"], ["metemo", "mesti"], ["gnjetemo", "gnjesti"], ["cvatemo", "cvasti"], ["rastemo", "rasti"], ["tresemo", "tresti"], ["pasemo", "pasti"], ["nesemo", "nesti"], ["grizemo", "gristi"], ["muzemo", "musti"], ["vezemo", "vesti"], ["šaljemo", "slati"], ["kunemo", "kleti"], ["jebemo", "jebati"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "rijemo", "deinflected": "riti", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[pk]"},
-        {"type": "suffix", "inflected": "remo", "deinflected": "rati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "[ieo]"}
+        {"type": "suffix", "inflected": "remo", "deinflected": "rati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "[ieo]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["remo", "rijeti"], ["remo", "reti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"}
       ]
     },
     {
@@ -1665,11 +1871,12 @@
       "source": "own",
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ate", "ati"], ["ujete", "ivati"], ["ajete", "ajati"], ["mljete", "mati"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ujete", "ovati"], ["ujete", "uti"], ["ajete", "avati"], ["ijete", "ijati"], ["ijete", "jeti"], ["nete", "nuti"], ["dnete", "sti"], ["gnete", "ći"], ["čnete", "četi"], ["pnete", "peti"], ["knete", "ći"], ["zmete", "zeti"], ["tmete", "teti"], ["šete", "sati"], ["šete", "hati"], ["žete", "zati"], ["žete", "gati"], ["čete", "kati"], ["čete", "cati"], ["ćete", "tati"], ["pćete", "ptati"], ["pljete", "pati"], ["šćete", "skati"], ["čete", "ći"], ["žete", "ći"], ["đete", "ći"], ["erete", "rati"], ["nesete", "nijeti"], ["nesete", "neti"], ["tnete", "sti"], ["ovete", "vati"], ["rete", "rijeti"], ["rete", "reti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ujete", "ovati"], ["ujete", "uti"], ["ajete", "avati"], ["ijete", "ijati"], ["ijete", "jeti"], ["nete", "nuti"], ["dnete", "sti"], ["gnete", "ći"], ["čnete", "četi"], ["pnete", "peti"], ["knete", "ći"], ["zmete", "zeti"], ["tmete", "teti"], ["šete", "sati"], ["šete", "hati"], ["žete", "zati"], ["žete", "gati"], ["čete", "kati"], ["čete", "cati"], ["ćete", "tati"], ["pćete", "ptati"], ["pljete", "pati"], ["šćete", "skati"], ["čete", "ći"], ["žete", "ći"], ["đete", "ći"], ["erete", "rati"], ["nesete", "nijeti"], ["nesete", "neti"], ["tnete", "sti"], ["ovete", "vati"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "ujete", "deinflected": "evati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{palatal}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["pijete", "piti"], ["bijete", "biti"], ["šijete", "šiti"], ["lijete", "liti"], ["vijete", "viti"], ["mijete", "miti"], ["krijete", "kriti"], ["gnjijete", "gnjiti"], ["stanete", "stati"], ["jedete", "jesti"], ["kradete", "krasti"], ["bodete", "bosti"], ["vedete", "vesti"], ["bredete", "bresti"], ["predete", "presti"], ["pletete", "plesti"], ["metete", "mesti"], ["gnjetete", "gnjesti"], ["cvatete", "cvasti"], ["rastete", "rasti"], ["tresete", "tresti"], ["pasete", "pasti"], ["nesete", "nesti"], ["grizete", "gristi"], ["muzete", "musti"], ["vezete", "vesti"], ["šaljete", "slati"], ["kunete", "kleti"], ["jebete", "jebati"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "rijete", "deinflected": "riti", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[pk]"},
-        {"type": "suffix", "inflected": "rete", "deinflected": "rati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "[ieo]"}
+        {"type": "suffix", "inflected": "rete", "deinflected": "rati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "[ieo]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["rete", "rijeti"], ["rete", "reti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"}
       ]
     },
     {
@@ -1680,20 +1887,91 @@
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aju", "ati"], ["e", "iti"], ["e", "jeti"], ["uju", "ivati"], ["aju", "ajati"], ["eju", "eti"], ["mlju", "mati"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "e", "deinflected": "ati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{afterA}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uju", "ovati"], ["uju", "uti"], ["aju", "avati"], ["iju", "ijati"], ["iju", "jeti"], ["dnu", "sti"], ["gnu", "ći"], ["čnu", "četi"], ["pnu", "peti"], ["knu", "ći"], ["zmu", "zeti"], ["tmu", "teti"], ["šu", "sati"], ["šu", "hati"], ["žu", "zati"], ["žu", "gati"], ["ču", "kati"], ["ču", "cati"], ["ću", "tati"], ["pću", "ptati"], ["plju", "pati"], ["šću", "skati"], ["ku", "ći"], ["đu", "ći"], ["eru", "rati"], ["nesu", "nijeti"], ["nesu", "neti"], ["tnu", "sti"], ["ovu", "vati"], ["ru", "rijeti"], ["ru", "reti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uju", "ovati"], ["uju", "uti"], ["aju", "avati"], ["iju", "ijati"], ["iju", "jeti"], ["dnu", "sti"], ["gnu", "ći"], ["čnu", "četi"], ["pnu", "peti"], ["knu", "ći"], ["zmu", "zeti"], ["tmu", "teti"], ["šu", "sati"], ["šu", "hati"], ["žu", "zati"], ["žu", "gati"], ["ču", "kati"], ["ču", "cati"], ["ću", "tati"], ["pću", "ptati"], ["plju", "pati"], ["šću", "skati"], ["ku", "ći"], ["đu", "ći"], ["eru", "rati"], ["nesu", "nijeti"], ["nesu", "neti"], ["tnu", "sti"], ["ovu", "vati"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "uju", "deinflected": "evati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{palatal}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["piju", "piti"], ["biju", "biti"], ["šiju", "šiti"], ["liju", "liti"], ["viju", "viti"], ["miju", "miti"], ["kriju", "kriti"], ["gnjiju", "gnjiti"], ["stanu", "stati"], ["jedu", "jesti"], ["kradu", "krasti"], ["bodu", "bosti"], ["vedu", "vesti"], ["bredu", "bresti"], ["predu", "presti"], ["pletu", "plesti"], ["metu", "mesti"], ["gnjetu", "gnjesti"], ["cvatu", "cvasti"], ["rastu", "rasti"], ["tresu", "tresti"], ["pasu", "pasti"], ["nesu", "nesti"], ["grizu", "gristi"], ["muzu", "musti"], ["vezu", "vesti"], ["šalju", "slati"], ["kunu", "kleti"], ["jebu", "jebati"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "riju", "deinflected": "riti", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[pk]"},
-        {"type": "suffix", "inflected": "ru", "deinflected": "rati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "[ieo]"}
+        {"type": "suffix", "inflected": "ru", "deinflected": "rati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "[ieo]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ru", "rijeti"], ["ru", "reti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
+        {"type": "wholeWord", "inflected": "rade", "deinflected": "raditi", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "govore", "deinflected": "govoriti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "koriste", "deinflected": "koristiti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "nalaze", "deinflected": "nalaziti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "bore", "deinflected": "boriti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "čine", "deinflected": "činiti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "sude", "deinflected": "suditi", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "nose", "deinflected": "nositi", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "vrate", "deinflected": "vratiti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "traže", "deinflected": "tražiti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "vise", "deinflected": "visiti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "vole", "deinflected": "voljeti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "vide", "deinflected": "vidjeti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "naprave", "deinflected": "napraviti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "znače", "deinflected": "značiti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "slijede", "deinflected": "slijediti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "jure", "deinflected": "juriti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "ostave", "deinflected": "ostaviti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "stave", "deinflected": "staviti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "puše", "deinflected": "pušiti", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
       "id": "prs-present-3sg-aorist-2-3sg-imperative-2sg",
       "name": "present 3sg, aorist 2/3sg, imperative 2sg",
-      "description": "Present tense: present 3sg, aorist 2/3sg, imperative 2sg (radi → raditi, misli → misliti, govori → govoriti).",
+      "description": "Present tense: present 3sg, aorist 2/3sg, imperative 2sg (radi → raditi, misli → misliti, govori → govoriti, pusti → pustiti).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "i", "deinflected": "iti", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"}
+        {"type": "suffix", "inflected": "i", "deinflected": "iti", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "wholeWord", "inflected": "pusti", "deinflected": "pustiti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "misli", "deinflected": "misliti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "pomisli", "deinflected": "pomisliti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "zamisli", "deinflected": "zamisliti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "govori", "deinflected": "govoriti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "otvori", "deinflected": "otvoriti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "zatvori", "deinflected": "zatvoriti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "odgovori", "deinflected": "odgovoriti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "zaboravi", "deinflected": "zaboraviti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "koristi", "deinflected": "koristiti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "ostavi", "deinflected": "ostaviti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "nastavi", "deinflected": "nastaviti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "napravi", "deinflected": "napraviti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "javi", "deinflected": "javiti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "kupi", "deinflected": "kupiti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "plati", "deinflected": "platiti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "sredi", "deinflected": "srediti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "pojavi", "deinflected": "pojaviti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "pripremi", "deinflected": "pripremiti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "provjeri", "deinflected": "provjeriti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "proveri", "deinflected": "proveriti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "promeni", "deinflected": "promeniti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "pozdravi", "deinflected": "pozdraviti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "zaštiti", "deinflected": "zaštititi", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "dozvoli", "deinflected": "dozvoliti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "dopusti", "deinflected": "dopustiti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "izlazi", "deinflected": "izlaziti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "nalazi", "deinflected": "nalaziti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "prolazi", "deinflected": "prolaziti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "donosi", "deinflected": "donositi", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "tvrdi", "deinflected": "tvrditi", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "udari", "deinflected": "udariti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "bori", "deinflected": "boriti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "spremi", "deinflected": "spremiti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "odmori", "deinflected": "odmoriti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "skloni", "deinflected": "skloniti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "spasi", "deinflected": "spasiti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "muči", "deinflected": "mučiti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "važi", "deinflected": "važiti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "zvoni", "deinflected": "zvoniti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "kasni", "deinflected": "kasniti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "sjeti", "deinflected": "sjetiti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "seti", "deinflected": "setiti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "puši", "deinflected": "pušiti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "obrati", "deinflected": "obratiti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "žali", "deinflected": "žaliti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "rodi", "deinflected": "roditi", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "zahvali", "deinflected": "zahvaliti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "ispravi", "deinflected": "ispraviti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "obavesti", "deinflected": "obavestiti", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -1722,7 +2000,11 @@
       "source": "own",
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["i", "jeti"], ["i", "eti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
-        {"type": "suffix", "inflected": "i", "deinflected": "ati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{afterA}"}
+        {"type": "suffix", "inflected": "i", "deinflected": "ati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{afterA}"},
+        {"type": "wholeWord", "inflected": "želi", "deinflected": "željeti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "želi", "deinflected": "želeti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "sedi", "deinflected": "sedeti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "boji", "deinflected": "bojati", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -1741,7 +2023,10 @@
       "description": "Present tense: present 3sg, aorist 2/3sg, present 3pl (vide → videti, vole → voleti, žive → živeti, razume → razumeti).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "e", "deinflected": "eti", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"}
+        {"type": "suffix", "inflected": "e", "deinflected": "eti", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "wholeWord", "inflected": "razume", "deinflected": "razumeti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "vole", "deinflected": "voleti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "vide", "deinflected": "videti", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -1750,12 +2035,17 @@
       "description": "Present tense: present 3sg (kupuje → kupovati, putuje → putovati, raduje → radovati, pokazuje → pokazivati).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uje", "ovati"], ["uje", "uti"], ["aje", "avati"], ["ije", "ijati"], ["ije", "jeti"], ["ne", "nuti"], ["dne", "sti"], ["gne", "ći"], ["čne", "četi"], ["pne", "peti"], ["kne", "ći"], ["zme", "zeti"], ["tme", "teti"], ["še", "sati"], ["še", "hati"], ["že", "zati"], ["že", "gati"], ["če", "kati"], ["če", "cati"], ["će", "tati"], ["pće", "ptati"], ["plje", "pati"], ["šće", "skati"], ["ere", "rati"], ["nese", "nijeti"], ["nese", "neti"], ["tne", "sti"], ["ove", "vati"], ["re", "rijeti"], ["re", "reti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uje", "ovati"], ["uje", "uti"], ["aje", "avati"], ["ije", "ijati"], ["ije", "jeti"], ["ne", "nuti"], ["dne", "sti"], ["gne", "ći"], ["čne", "četi"], ["pne", "peti"], ["kne", "ći"], ["zme", "zeti"], ["tme", "teti"], ["še", "sati"], ["še", "hati"], ["že", "zati"], ["že", "gati"], ["če", "kati"], ["če", "cati"], ["će", "tati"], ["pće", "ptati"], ["plje", "pati"], ["šće", "skati"], ["ere", "rati"], ["nese", "nijeti"], ["nese", "neti"], ["tne", "sti"], ["ove", "vati"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uje", "ivati"], ["aje", "ajati"], ["mlje", "mati"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "uje", "deinflected": "evati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{palatal}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["pije", "piti"], ["bije", "biti"], ["šije", "šiti"], ["lije", "liti"], ["vije", "viti"], ["mije", "miti"], ["krije", "kriti"], ["gnjije", "gnjiti"], ["stane", "stati"], ["jede", "jesti"], ["krade", "krasti"], ["bode", "bosti"], ["vede", "vesti"], ["brede", "bresti"], ["prede", "presti"], ["plete", "plesti"], ["mete", "mesti"], ["gnjete", "gnjesti"], ["cvate", "cvasti"], ["raste", "rasti"], ["trese", "tresti"], ["pase", "pasti"], ["nese", "nesti"], ["grize", "gristi"], ["muze", "musti"], ["veze", "vesti"], ["šalje", "slati"], ["kune", "kleti"], ["jebe", "jebati"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "rije", "deinflected": "riti", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[pk]"},
-        {"type": "suffix", "inflected": "re", "deinflected": "rati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "[ieo]"}
+        {"type": "suffix", "inflected": "re", "deinflected": "rati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "[ieo]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["re", "rijeti"], ["re", "reti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"},
+        {"type": "wholeWord", "inflected": "pomaže", "deinflected": "pomagati", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "pleše", "deinflected": "plesati", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "napiše", "deinflected": "napisati", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "puše", "deinflected": "puhati", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -1791,7 +2081,9 @@
       "description": "Participle: past (l-participle), masc. sg. (čitao → čitati, dao → dati, pisao → pisati, trebao → trebati).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ao", "ati"], ["io", "iti"], ["io", "jeti"], ["eo", "eti"], ["uo", "uti"], ["kao", "ći"], ["gao", "ći"], ["šao", "ći"], ["eo", "esti"], ["ao", "asti"], ["sao", "sti"], ["zao", "sti"], ["stao", "sti"], ["ro", "rijeti"], ["ro", "reti"]], "conditionsIn": ["lpart"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ao", "ati"], ["io", "iti"], ["io", "jeti"], ["eo", "eti"], ["uo", "uti"], ["kao", "ći"], ["gao", "ći"], ["šao", "ći"]], "conditionsIn": ["lpart"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["jeo", "jesti"], ["sjeo", "sjesti"], ["seo", "sesti"], ["pleo", "plesti"], ["meo", "mesti"], ["veo", "vesti"], ["preo", "presti"], ["pao", "pasti"], ["krao", "krasti"], ["cvao", "cvasti"], ["rastao", "rasti"], ["tresao", "tresti"], ["nesao", "nesti"], ["grizao", "gristi"], ["muzao", "musti"], ["vezao", "vesti"]], "conditionsIn": ["lpart"], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ro", "rijeti"], ["ro", "reti"]], "conditionsIn": ["lpart"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"}
       ]
     },
     {
@@ -1800,7 +2092,9 @@
       "description": "Participle: past (l-participle), fem. sg./neut. pl. (čitala → čitati, dala → dati, pisala → pisati, trebala → trebati).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ala", "ati"], ["ila", "iti"], ["jela", "jeti"], ["ela", "eti"], ["ula", "uti"], ["kla", "ći"], ["gla", "ći"], ["šla", "ći"], ["ela", "esti"], ["ala", "asti"], ["sla", "sti"], ["zla", "sti"], ["rla", "rijeti"], ["rla", "reti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ala", "ati"], ["ila", "iti"], ["jela", "jeti"], ["ela", "eti"], ["ula", "uti"], ["kla", "ći"], ["gla", "ći"], ["šla", "ći"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["jela", "jesti"], ["sjela", "sjesti"], ["sela", "sesti"], ["plela", "plesti"], ["mela", "mesti"], ["vela", "vesti"], ["prela", "presti"], ["pala", "pasti"], ["krala", "krasti"], ["cvala", "cvasti"], ["rasla", "rasti"], ["tresla", "tresti"], ["nesla", "nesti"], ["grizla", "gristi"], ["muzla", "musti"], ["vezla", "vesti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["rla", "rijeti"], ["rla", "reti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"}
       ]
     },
     {
@@ -1809,7 +2103,9 @@
       "description": "Participle: past (l-participle), neut. sg. (čitalo → čitati, dalo → dati, pisalo → pisati, trebalo → trebati).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["alo", "ati"], ["ilo", "iti"], ["jelo", "jeti"], ["elo", "eti"], ["ulo", "uti"], ["klo", "ći"], ["glo", "ći"], ["šlo", "ći"], ["elo", "esti"], ["alo", "asti"], ["slo", "sti"], ["zlo", "sti"], ["rlo", "rijeti"], ["rlo", "reti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["alo", "ati"], ["ilo", "iti"], ["jelo", "jeti"], ["elo", "eti"], ["ulo", "uti"], ["klo", "ći"], ["glo", "ći"], ["šlo", "ći"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["jelo", "jesti"], ["sjelo", "sjesti"], ["selo", "sesti"], ["plelo", "plesti"], ["melo", "mesti"], ["velo", "vesti"], ["prelo", "presti"], ["palo", "pasti"], ["kralo", "krasti"], ["cvalo", "cvasti"], ["raslo", "rasti"], ["treslo", "tresti"], ["neslo", "nesti"], ["grizlo", "gristi"], ["muzlo", "musti"], ["vezlo", "vesti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["rlo", "rijeti"], ["rlo", "reti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"}
       ]
     },
     {
@@ -1818,7 +2114,9 @@
       "description": "Participle: past (l-participle), masc. pl. (čitali → čitati, dali → dati, pisali → pisati, trebali → trebati).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ali", "ati"], ["ili", "iti"], ["jeli", "jeti"], ["eli", "eti"], ["uli", "uti"], ["kli", "ći"], ["gli", "ći"], ["šli", "ći"], ["eli", "esti"], ["ali", "asti"], ["sli", "sti"], ["zli", "sti"], ["rli", "rijeti"], ["rli", "reti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ali", "ati"], ["ili", "iti"], ["jeli", "jeti"], ["eli", "eti"], ["uli", "uti"], ["kli", "ći"], ["gli", "ći"], ["šli", "ći"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["jeli", "jesti"], ["sjeli", "sjesti"], ["seli", "sesti"], ["pleli", "plesti"], ["meli", "mesti"], ["veli", "vesti"], ["preli", "presti"], ["pali", "pasti"], ["krali", "krasti"], ["cvali", "cvasti"], ["rasli", "rasti"], ["tresli", "tresti"], ["nesli", "nesti"], ["grizli", "gristi"], ["muzli", "musti"], ["vezli", "vesti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["rli", "rijeti"], ["rli", "reti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"}
       ]
     },
     {
@@ -1827,7 +2125,9 @@
       "description": "Participle: past (l-participle), fem. pl. (čitale → čitati, dale → dati, pisale → pisati, trebale → trebati).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ale", "ati"], ["ile", "iti"], ["jele", "jeti"], ["ele", "eti"], ["ule", "uti"], ["kle", "ći"], ["gle", "ći"], ["šle", "ći"], ["ele", "esti"], ["ale", "asti"], ["sle", "sti"], ["zle", "sti"], ["rle", "rijeti"], ["rle", "reti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ale", "ati"], ["ile", "iti"], ["jele", "jeti"], ["ele", "eti"], ["ule", "uti"], ["kle", "ći"], ["gle", "ći"], ["šle", "ći"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["jele", "jesti"], ["sjele", "sjesti"], ["sele", "sesti"], ["plele", "plesti"], ["mele", "mesti"], ["vele", "vesti"], ["prele", "presti"], ["pale", "pasti"], ["krale", "krasti"], ["cvale", "cvasti"], ["rasle", "rasti"], ["tresle", "tresti"], ["nesle", "nesti"], ["grizle", "gristi"], ["muzle", "musti"], ["vezle", "vesti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["rle", "rijeti"], ["rle", "reti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"}
       ]
     },
     {
@@ -1846,6 +2146,7 @@
       "source": "own",
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["an", "ati"], ["ren", "riti"], ["jen", "jiti"], ["ljen", "liti"], ["ljen", "ljeti"], ["ljen", "leti"], ["njen", "niti"], ["pljen", "piti"], ["bljen", "biti"], ["vljen", "viti"], ["mljen", "miti"], ["šljen", "sliti"], ["đen", "diti"], ["đen", "djeti"], ["đen", "deti"], ["ćen", "titi"], ["šten", "stiti"], ["šćen", "stiti"], ["šen", "siti"], ["šen", "šiti"], ["žen", "ziti"], ["žen", "žiti"], ["čen", "ći"], ["iven", "iti"], ["uven", "uti"], ["den", "sti"]], "conditionsIn": ["adj"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "bačen", "deinflected": "baciti", "conditionsIn": ["adj"], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["čen", "čiti"], ["ijen", "iti"], ["nesen", "nijeti"], ["nesen", "neti"]], "conditionsIn": ["adj"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
       ]
     },
@@ -1856,6 +2157,7 @@
       "source": "own",
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ana", "ati"], ["rena", "riti"], ["jena", "jiti"], ["ljena", "liti"], ["ljena", "ljeti"], ["ljena", "leti"], ["njena", "niti"], ["pljena", "piti"], ["bljena", "biti"], ["vljena", "viti"], ["mljena", "miti"], ["šljena", "sliti"], ["đena", "diti"], ["đena", "djeti"], ["đena", "deti"], ["ćena", "titi"], ["štena", "stiti"], ["šćena", "stiti"], ["šena", "siti"], ["šena", "šiti"], ["žena", "ziti"], ["žena", "žiti"], ["čena", "ći"], ["ivena", "iti"], ["uvena", "uti"], ["dena", "sti"], ["eta", "eti"], ["ita", "iti"], ["uta", "uti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "bačena", "deinflected": "baciti", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["čena", "čiti"], ["ijena", "iti"], ["nesena", "nijeti"], ["nesena", "neti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
       ]
     },
@@ -1866,6 +2168,7 @@
       "source": "own",
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ano", "ati"], ["reno", "riti"], ["jeno", "jiti"], ["ljeno", "liti"], ["ljeno", "ljeti"], ["ljeno", "leti"], ["njeno", "niti"], ["pljeno", "piti"], ["bljeno", "biti"], ["vljeno", "viti"], ["mljeno", "miti"], ["šljeno", "sliti"], ["đeno", "diti"], ["đeno", "djeti"], ["đeno", "deti"], ["ćeno", "titi"], ["šteno", "stiti"], ["šćeno", "stiti"], ["šeno", "siti"], ["šeno", "šiti"], ["ženo", "ziti"], ["ženo", "žiti"], ["čeno", "ći"], ["iveno", "iti"], ["uveno", "uti"], ["deno", "sti"], ["eto", "eti"], ["ito", "iti"], ["uto", "uti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "bačeno", "deinflected": "baciti", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["čeno", "čiti"], ["ijeno", "iti"], ["neseno", "nijeti"], ["neseno", "neti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
       ]
     },
@@ -1876,6 +2179,7 @@
       "source": "own",
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ani", "ati"], ["reni", "riti"], ["jeni", "jiti"], ["ljeni", "liti"], ["ljeni", "ljeti"], ["ljeni", "leti"], ["njeni", "niti"], ["pljeni", "piti"], ["bljeni", "biti"], ["vljeni", "viti"], ["mljeni", "miti"], ["šljeni", "sliti"], ["đeni", "diti"], ["đeni", "djeti"], ["đeni", "deti"], ["ćeni", "titi"], ["šteni", "stiti"], ["šćeni", "stiti"], ["šeni", "siti"], ["šeni", "šiti"], ["ženi", "ziti"], ["ženi", "žiti"], ["čeni", "ći"], ["iveni", "iti"], ["uveni", "uti"], ["deni", "sti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "bačeni", "deinflected": "baciti", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["čeni", "čiti"], ["ijeni", "iti"], ["neseni", "nijeti"], ["neseni", "neti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
       ]
     },
@@ -1886,6 +2190,7 @@
       "source": "own",
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ane", "ati"], ["rene", "riti"], ["jene", "jiti"], ["ljene", "liti"], ["ljene", "ljeti"], ["ljene", "leti"], ["njene", "niti"], ["pljene", "piti"], ["bljene", "biti"], ["vljene", "viti"], ["mljene", "miti"], ["šljene", "sliti"], ["đene", "diti"], ["đene", "djeti"], ["đene", "deti"], ["ćene", "titi"], ["štene", "stiti"], ["šćene", "stiti"], ["šene", "siti"], ["šene", "šiti"], ["žene", "ziti"], ["žene", "žiti"], ["čene", "ći"], ["ivene", "iti"], ["uvene", "uti"], ["dene", "sti"], ["ute", "uti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "bačene", "deinflected": "baciti", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["čene", "čiti"], ["ijene", "iti"], ["nesene", "nijeti"], ["nesene", "neti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
       ]
     },
@@ -1915,7 +2220,7 @@
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ih", "iti"], ["eh", "eti"], ["uh", "uti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["jeh", "jeti"], ["koh", "ći"], ["goh", "ći"], ["đoh", "ći"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["jedoh", "jesti"], ["kradoh", "krasti"], ["bodoh", "bosti"], ["vedoh", "vesti"], ["bredoh", "bresti"], ["predoh", "presti"], ["pletoh", "plesti"], ["metoh", "mesti"], ["gnjetoh", "gnjesti"], ["cvatoh", "cvasti"], ["rastoh", "rasti"], ["tresoh", "tresti"], ["pasoh", "pasti"], ["nesoh", "nesti"], ["grizoh", "gristi"], ["muzoh", "musti"], ["vezoh", "vesti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["jedoh", "jesti"], ["kradoh", "krasti"], ["bodoh", "bosti"], ["vedoh", "vesti"], ["bredoh", "bresti"], ["predoh", "presti"], ["pletoh", "plesti"], ["metoh", "mesti"], ["gnjetoh", "gnjesti"], ["cvatoh", "cvasti"], ["rastoh", "rasti"], ["tresoh", "tresti"], ["pasoh", "pasti"], ["nesoh", "nesti"], ["grizoh", "gristi"], ["muzoh", "musti"], ["vezoh", "vesti"], ["padoh", "pasti"], ["sjedoh", "sjesti"], ["sedoh", "sesti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"}
       ]
     },
     {
@@ -1935,7 +2240,7 @@
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ismo", "iti"], ["esmo", "eti"], ["usmo", "uti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["jesmo", "jeti"], ["kosmo", "ći"], ["gosmo", "ći"], ["đosmo", "ći"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["jedosmo", "jesti"], ["kradosmo", "krasti"], ["bodosmo", "bosti"], ["vedosmo", "vesti"], ["bredosmo", "bresti"], ["predosmo", "presti"], ["pletosmo", "plesti"], ["metosmo", "mesti"], ["gnjetosmo", "gnjesti"], ["cvatosmo", "cvasti"], ["rastosmo", "rasti"], ["tresosmo", "tresti"], ["pasosmo", "pasti"], ["nesosmo", "nesti"], ["grizosmo", "gristi"], ["muzosmo", "musti"], ["vezosmo", "vesti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["jedosmo", "jesti"], ["kradosmo", "krasti"], ["bodosmo", "bosti"], ["vedosmo", "vesti"], ["bredosmo", "bresti"], ["predosmo", "presti"], ["pletosmo", "plesti"], ["metosmo", "mesti"], ["gnjetosmo", "gnjesti"], ["cvatosmo", "cvasti"], ["rastosmo", "rasti"], ["tresosmo", "tresti"], ["pasosmo", "pasti"], ["nesosmo", "nesti"], ["grizosmo", "gristi"], ["muzosmo", "musti"], ["vezosmo", "vesti"], ["padosmo", "pasti"], ["sjedosmo", "sjesti"], ["sedosmo", "sesti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"}
       ]
     },
     {
@@ -1955,7 +2260,7 @@
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["iste", "iti"], ["este", "eti"], ["uste", "uti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["jeste", "jeti"], ["koste", "ći"], ["goste", "ći"], ["đoste", "ći"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["jedoste", "jesti"], ["kradoste", "krasti"], ["bodoste", "bosti"], ["vedoste", "vesti"], ["bredoste", "bresti"], ["predoste", "presti"], ["pletoste", "plesti"], ["metoste", "mesti"], ["gnjetoste", "gnjesti"], ["cvatoste", "cvasti"], ["rastoste", "rasti"], ["tresoste", "tresti"], ["pasoste", "pasti"], ["nesoste", "nesti"], ["grizoste", "gristi"], ["muzoste", "musti"], ["vezoste", "vesti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["jedoste", "jesti"], ["kradoste", "krasti"], ["bodoste", "bosti"], ["vedoste", "vesti"], ["bredoste", "bresti"], ["predoste", "presti"], ["pletoste", "plesti"], ["metoste", "mesti"], ["gnjetoste", "gnjesti"], ["cvatoste", "cvasti"], ["rastoste", "rasti"], ["tresoste", "tresti"], ["pasoste", "pasti"], ["nesoste", "nesti"], ["grizoste", "gristi"], ["muzoste", "musti"], ["vezoste", "vesti"], ["padoste", "pasti"], ["sjedoste", "sjesti"], ["sedoste", "sesti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"}
       ]
     },
     {
@@ -1975,7 +2280,7 @@
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["iše", "iti"], ["eše", "eti"], ["uše", "uti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ješe", "jeti"], ["koše", "ći"], ["goše", "ći"], ["đoše", "ći"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["jedoše", "jesti"], ["kradoše", "krasti"], ["bodoše", "bosti"], ["vedoše", "vesti"], ["bredoše", "bresti"], ["predoše", "presti"], ["pletoše", "plesti"], ["metoše", "mesti"], ["gnjetoše", "gnjesti"], ["cvatoše", "cvasti"], ["rastoše", "rasti"], ["tresoše", "tresti"], ["pasoše", "pasti"], ["nesoše", "nesti"], ["grizoše", "gristi"], ["muzoše", "musti"], ["vezoše", "vesti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["jedoše", "jesti"], ["kradoše", "krasti"], ["bodoše", "bosti"], ["vedoše", "vesti"], ["bredoše", "bresti"], ["predoše", "presti"], ["pletoše", "plesti"], ["metoše", "mesti"], ["gnjetoše", "gnjesti"], ["cvatoše", "cvasti"], ["rastoše", "rasti"], ["tresoše", "tresti"], ["pasoše", "pasti"], ["nesoše", "nesti"], ["grizoše", "gristi"], ["muzoše", "musti"], ["vezoše", "vesti"], ["padoše", "pasti"], ["sjedoše", "sjesti"], ["sedoše", "sesti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"}
       ]
     },
     {
@@ -1987,6 +2292,16 @@
         {"type": "suffix", "inflected": "ahu", "deinflected": "ati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ijahu", "iti"], ["đahu", "diti"], ["đahu", "djeti"], ["đahu", "deti"], ["šahu", "siti"], ["žahu", "ziti"], ["ćahu", "titi"], ["ljahu", "liti"], ["njahu", "niti"], ["pljahu", "piti"], ["bljahu", "biti"], ["vljahu", "viti"], ["mljahu", "miti"], ["štahu", "stiti"], ["ljahu", "ljeti"], ["ljahu", "leti"], ["njahu", "njeti"], ["njahu", "neti"], ["pljahu", "pjeti"], ["pljahu", "peti"], ["bljahu", "bjeti"], ["bljahu", "beti"], ["vljahu", "vjeti"], ["vljahu", "veti"], ["mljahu", "mjeti"], ["mljahu", "meti"], ["ćahu", "tjeti"], ["ćahu", "teti"], ["šahu", "sjeti"], ["šahu", "seti"], ["žahu", "zjeti"], ["žahu", "zeti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "ahu", "deinflected": "iti", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{nonJotated}"}
+      ]
+    },
+    {
+      "id": "past-aorist-2-3sg",
+      "name": "aorist 2/3sg",
+      "description": "Aorist or imperfect: aorist 2/3sg (pade → pasti, napade → napasti, upade → upasti, propade → propasti).",
+      "source": "own",
+      "rules": [
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["pade", "pasti"], ["sjede", "sjesti"], ["sede", "sesti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"},
+        {"type": "wholeWord", "inflected": "pade", "deinflected": "pasti", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -2039,7 +2354,9 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uj", "ivati"], ["ij", "jeti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "uj", "deinflected": "evati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "{palatal}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["jedi", "jesti"], ["kradi", "krasti"], ["bodi", "bosti"], ["vedi", "vesti"], ["bredi", "bresti"], ["predi", "presti"], ["pleti", "plesti"], ["meti", "mesti"], ["gnjeti", "gnjesti"], ["cvati", "cvasti"], ["rasti", "rasti"], ["tresi", "tresti"], ["pasi", "pasti"], ["nesi", "nesti"], ["grizi", "gristi"], ["muzi", "musti"], ["vezi", "vesti"], ["stani", "stati"], ["zmi", "zeti"], ["šalji", "slati"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"},
-        {"type": "suffix", "inflected": "ri", "deinflected": "rati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "[ieo]"}
+        {"type": "suffix", "inflected": "ri", "deinflected": "rati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemEndsWith": "[ieo]"},
+        {"type": "wholeWord", "inflected": "reci", "deinflected": "reći", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "obuci", "deinflected": "obući", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -2076,7 +2393,9 @@
       "rules": [
         {"type": "suffix", "inflected": "ću", "deinflected": "ti", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{stemVowel}"},
         {"type": "pattern", "pattern": "^([^ ]*[aeiu]s?|[^ ]*bos)t ću$", "replacement": "$1ti", "anchorSuffix": " ću", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "pattern", "pattern": "^([^ ]*[aeiu]s?ti|[^ ]*bosti|[^ ]*[aeiou]ći) ću$", "replacement": "$1", "anchorSuffix": " ću", "conditionsIn": [], "conditionsOut": ["v"]}
+        {"type": "pattern", "pattern": "^([^ ]*[aeiu]s?ti|[^ ]*bosti|[^ ]*[aeiou]ći) ću$", "replacement": "$1", "anchorSuffix": " ću", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "biću", "deinflected": "biti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "dobiću", "deinflected": "dobiti", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -2129,7 +2448,7 @@
       "description": "Adverbial participle: present adverbial participle (čitajući → čitati, znajući → znati, kupujući → kupovati, putujući → putovati).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ajući", "ati"], ["ujući", "ovati"], ["ujući", "uti"], ["ijući", "iti"], ["nući", "nuti"], ["šući", "sati"], ["žući", "zati"], ["čući", "kati"], ["ćući", "tati"], ["kući", "ći"], ["erući", "rati"], ["ovući", "vati"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ajući", "ati"], ["ujući", "ovati"], ["ujući", "uti"], ["ijući", "iti"], ["ijući", "ijati"], ["ejući", "ejati"], ["nući", "nuti"], ["šući", "sati"], ["žući", "zati"], ["čući", "kati"], ["ćući", "tati"], ["kući", "ći"], ["erući", "rati"], ["ovući", "vati"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ujući", "ivati"], ["eći", "iti"], ["eći", "jeti"], ["eći", "eti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "eći", "deinflected": "ati", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{afterA}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["jedući", "jesti"], ["kradući", "krasti"], ["bodući", "bosti"], ["vedući", "vesti"], ["bredući", "bresti"], ["predući", "presti"], ["pletući", "plesti"], ["metući", "mesti"], ["gnjetući", "gnjesti"], ["cvatući", "cvasti"], ["rastući", "rasti"], ["tresući", "tresti"], ["pasući", "pasti"], ["nesući", "nesti"], ["grizući", "gristi"], ["muzući", "musti"], ["vezući", "vesti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"}
