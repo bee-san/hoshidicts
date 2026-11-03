@@ -291,9 +291,9 @@ same recall, false candidates and first rank (`eval-language` prints
   kept: no measured first result is wrong because of them, and their
   families are what reaches the forms the corpus lacks.
 - **Differential check** (`tools/check-yomitan.mjs` with
-  `build/hoshidicts-cli`): 5,345 inputs, 21,671 Yomitan results and no
-  difference; the three processors agree with Yomitan's on 2,068, 2,068 and
-  2,056 inputs.
+  `build/hoshidicts-cli`): 5,362 inputs, 21,715 Yomitan results and no
+  difference; the three processors agree with Yomitan's on 2,078, 2,078 and
+  2,066 inputs.
 
 **Frequent forms** (`sources/measure.py frequent`). Of the 10,000 most
 frequent words of the subtitle list (94,596 tokens), 1,798 have a lemma a
