@@ -169,6 +169,7 @@ separated	1	schaut sich nach einem Hotel um.	umschauen	v	present-er|separated-pr
 nouns	1	Häuser	Haus	n	plural
 nouns	1	Häusern	Haus	n	plural|dative-plural
 nouns	1	Kinder	Kind	n	plural
+nouns	1	Bilder	Bild	n	plural
 nouns	1	Kindern	Kind	n	plural|dative-plural
 nouns	1	Leuten	Leute	n	dative-plural
 nouns	1	Bäume	Baum	n	plural
@@ -316,3 +317,7 @@ negatives	0	hab'	Hab	*	*
 negatives	0	weisst	weis	*	*
 negatives	0	machest	mach	*	*
 negatives	0	ehre	eher	*	*
+negatives	0	führt	fahren	*	*
+negatives	0	führst	fahren	*	*
+negatives	0	sehr best	sehr gut	*	*
+negatives	0	Elektrotechniker	Elektrotechnik	*	*

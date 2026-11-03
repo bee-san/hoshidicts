@@ -53,6 +53,16 @@ const MUTATIONS = {
     'verb and adjective endings only in small letters': (t) => { for (const x of t.transforms) { for (const r of x.rules) { if (r.stemStartsWith === '{lower}') { delete r.stemStartsWith; } } } },
     'imperative: not after a vowel, d or t': (t) => { for (const r of rules(t, 'imperative', suffixRule('', 'en'))) { delete r.stemEndsWith; } },
     'imperative: not schloß': (t) => { for (const r of rules(t, 'imperative', suffixRule('', 'en'))) { delete r.stemNotStartsWithText; } },
+    'short subjunctive II forms that clash': (t) => {
+        for (const [id, end] of [['subjunctive-2-du', 'st'], ['subjunctive-2-ihr', 't']]) {
+            for (const r of byId(t, id).rules) {
+                if (r.suffixes === undefined) { continue; }
+                for (const [base, inf] of [['führ', 'fahren'], ['trüg', 'tragen']]) { r.suffixes.push([`${base}${end}`, inf]); }
+            }
+        }
+    },
+    'listed adjective forms without a space': (t) => { for (const x of t.transforms) { for (const r of x.rules) { if (r.type === 'circumfix' && r.conditionsOut.includes('adj') && r.stemCharacters !== undefined) { delete r.stemCharacters; } } } },
+    'plural er not after k': (t) => { for (const r of rules(t, 'plural', suffixRule('er', ''))) { delete r.stemNotEndsWith; } },
     'listed verb forms not after c': (t) => { for (const r of listedVerbRules(t)) { delete r.stemNotEndsWith; } },
     'separated: no article as the verb': (t) => { for (const r of separated(t)) { r.pattern = r.pattern.replace(/^\^\(\?![^)]*\) \)/u, '^'); } },
     'separated: only finite verbs (sep)': (t) => { for (const r of separated(t)) { r.conditionsOut = ['sep', 'v']; } },

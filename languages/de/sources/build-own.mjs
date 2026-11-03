@@ -120,8 +120,11 @@ function writeListed() {
     // A listed verb form may follow a prefix (verstand, bekam, ankam), but no
     // German prefix ends in c, so a form after sc is part of another word
     // (schießt is not sc + hießt -> scheißen, schiebt not sc + hiebt -> schauen).
+    // A listed adjective form (best, meist, höher) stands for one word: after
+    // a space it would make a phrase of the word before it (sehr best..., the
+    // start of sehr bestimmt, read as sehr gut).
     for (const {id, conditionsIn, conditionsOut, pairs} of listed.values()) {
-        const extra = conditionsOut === VERB_OUT ? {stemNotEndsWith: '[c]'} : {};
+        const extra = conditionsOut === VERB_OUT ? {stemNotEndsWith: '[c]'} : conditionsOut === ADJ_OUT ? {stemCharacters: STEM} : {};
         add(id, {type: 'circumfix', prefixes: [['', '']], suffixes: pairs, conditionsIn, conditionsOut, ...extra});
     }
 }
@@ -464,6 +467,13 @@ suffix('past-participle', 'iet', 'ien', ['adj'], VERB_OUT, {stemStartsWith: LOWE
 // Strong verbs.
 const SIBILANT_OR_DENTAL = /[dtsßzx]$|sch$/u;
 const VOWEL_END = /[aeiouäöüh]$/u;
+// Short subjunctive II forms (du führst, ihr führt for führest, führet) that
+// are also the present of a weak verb (führen): the present is far more
+// frequent, and the listed form, being the longer ending, would be found
+// first (führt -> fahren). Found by looking for a verb headword base + en in
+// wiktionary-to-yomitan's German dictionary (README.md, Rule provenance).
+const SHORT_FORM_CLASHES = new Set(['dräng', 'flöh', 'führ', 'schien', 'schlief', 'stähl', 'tränk', 'trüg', 'verzieh', 'zwäng']);
+
 // Verbs whose ge- is part of the verb itself, not the participle's prefix.
 const GE_VERBS = new Set(['gebären', 'gedeihen', 'gelingen', 'genesen', 'genießen', 'geschehen', 'gewinnen']);
 const strong = parse(STRONG, 6);
@@ -503,10 +513,10 @@ for (const [[inf], present, imperatives, preterites, subjunctives, participles] 
         form('subjunctive-2-du', `${k2}st`, inf, FINITE_IN, VERB_OUT);
         // The short forms (du gingst, ihr gingt) only after a stem that does
         // not end in s, ß, x or z: du läsest has no short form (lässt would be lässt).
-        if (!/[sßxz]$/u.test(base)) { form('subjunctive-2-du', `${base}st`, inf, FINITE_IN, VERB_OUT); }
+        if (!/[sßxz]$/u.test(base) && !SHORT_FORM_CLASHES.has(base)) { form('subjunctive-2-du', `${base}st`, inf, FINITE_IN, VERB_OUT); }
         form('subjunctive-2-wir', `${k2}n`, inf, FINITE_IN, VERB_OUT);
         form('subjunctive-2-ihr', `${k2}t`, inf, FINITE_IN, VERB_OUT);
-        if (!/[sßxz]$/u.test(base)) { form('subjunctive-2-ihr', `${base}t`, inf, FINITE_IN, VERB_OUT); }
+        if (!/[sßxz]$/u.test(base) && !SHORT_FORM_CLASHES.has(base)) { form('subjunctive-2-ihr', `${base}t`, inf, FINITE_IN, VERB_OUT); }
     }
     for (const pp of participles) {
         form('past-participle', pp, inf, ['adj'], VERB_OUT);
@@ -699,7 +709,9 @@ function noun(id, inflected, deinflected, conditionsIn, conditionsOut, extra = {
     suffix(id, inflected, deinflected, conditionsIn, conditionsOut, {...NOUN, ...extra});
 }
 noun('plural', 'e', '', PLURAL_IN, NOUN_OUT);
-noun('plural', 'er', '', PLURAL_IN, NOUN_OUT);
+// No noun with a plain -er plural has a stem in k, so Techniker and Musiker
+// are not read as plurals of Technik and Musik.
+noun('plural', 'er', '', PLURAL_IN, NOUN_OUT, {stemNotEndsWith: '[k]'});
 for (const [from, to] of UMLAUTS) {
     const extra = {stemMinLength: 1, stemChange: umlaut(from, to)};
     noun('plural', 'e', '', PLURAL_IN, NOUN_OUT, extra);

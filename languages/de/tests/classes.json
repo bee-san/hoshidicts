@@ -1577,6 +1577,18 @@
       [223, 246],
       [248, 255]
     ],
+    "transforms[20].rules[21].stemCharacters": [
+      [45, 45],
+      [48, 57],
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [768, 879],
+      [7838, 7838],
+      [64256, 64262]
+    ],
     "transforms[21].rules[0].stemCharacters": [
       [45, 45],
       [48, 57],
@@ -1631,6 +1643,18 @@
     "transforms[21].rules[2].stemEndsWith": [
       [117, 117]
     ],
+    "transforms[21].rules[3].stemCharacters": [
+      [45, 45],
+      [48, 57],
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [768, 879],
+      [7838, 7838],
+      [64256, 64262]
+    ],
     "transforms[22].rules[0].stemCharacters": [
       [45, 45],
       [48, 57],
@@ -1684,6 +1708,18 @@
       [246, 246],
       [252, 252]
     ],
+    "transforms[22].rules[2].stemCharacters": [
+      [45, 45],
+      [48, 57],
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [768, 879],
+      [7838, 7838],
+      [64256, 64262]
+    ],
     "transforms[23].rules[0].stemCharacters": [
       [45, 45],
       [48, 57],
@@ -1717,6 +1753,9 @@
       [97, 122],
       [224, 246],
       [248, 254]
+    ],
+    "transforms[23].rules[1].stemNotEndsWith": [
+      [107, 107]
     ],
     "transforms[23].rules[2].stemCharacters": [
       [45, 45],
@@ -4843,6 +4882,7 @@
         ["Häuser", "häuser"],
         ["Häusern", "häusern"],
         ["Kinder", "kinder"],
+        ["Bilder", "bilder"],
         ["Kindern", "kindern"],
         ["Leuten", "leuten"],
         ["Bäume", "bäume"],
@@ -4979,6 +5019,10 @@
         ["Mann", "mann"],
         ["hab'", "hab'"],
         ["ehre", "ehre"],
+        ["führt", "führt"],
+        ["führst", "führst"],
+        ["sehr best", "sehr best"],
+        ["Elektrotechniker", "elektrotechniker"],
         ["räum den Tisch auf", "räum den tisch auf"],
         ["krankesten", "krankesten"],
         ["schwuligem", "schwuligem"],
@@ -6999,6 +7043,7 @@
         ["Häuser", "Häuser"],
         ["Häusern", "Häusern"],
         ["Kinder", "Kinder"],
+        ["Bilder", "Bilder"],
         ["Kindern", "Kindern"],
         ["Leuten", "Leuten"],
         ["Bäume", "Bäume"],
@@ -7135,6 +7180,10 @@
         ["Mann", "Mann"],
         ["hab'", "Hab'"],
         ["ehre", "Ehre"],
+        ["führt", "Führt"],
+        ["führst", "Führst"],
+        ["sehr best", "Sehr best"],
+        ["Elektrotechniker", "Elektrotechniker"],
         ["räum den Tisch auf", "Räum den Tisch auf"],
         ["krankesten", "Krankesten"],
         ["schwuligem", "Schwuligem"],
@@ -9155,6 +9204,7 @@
         ["Häuser", "häuser"],
         ["Häusern", "häusern"],
         ["Kinder", "kinder"],
+        ["Bilder", "bilder"],
         ["Kindern", "kindern"],
         ["Leuten", "leuten"],
         ["Bäume", "bäume"],
@@ -9291,6 +9341,10 @@
         ["Mann", "mann"],
         ["hab'", "hab'"],
         ["ehre", "ehre"],
+        ["führt", "führt"],
+        ["führst", "führst"],
+        ["sehr best", "sehr best"],
+        ["Elektrotechniker", "elektrotechniker"],
         ["räum den Tisch auf", "räum den tisch auf"],
         ["krankesten", "krankesten"],
         ["schwuligem", "schwuligem"],
@@ -11311,6 +11365,7 @@
         ["Häuser", "Häuser"],
         ["Häusern", "Häusern"],
         ["Kinder", "Kinder"],
+        ["Bilder", "Bilder"],
         ["Kindern", "Kindern"],
         ["Leuten", "Leuten"],
         ["Bäume", "Bäume"],
@@ -11447,6 +11502,10 @@
         ["Mann", "Mann"],
         ["hab'", "Hab'"],
         ["ehre", "Ehre"],
+        ["führt", "Führt"],
+        ["führst", "Führst"],
+        ["sehr best", "Sehr best"],
+        ["Elektrotechniker", "Elektrotechniker"],
         ["räum den Tisch auf", "Räum den Tisch auf"],
         ["krankesten", "Krankesten"],
         ["schwuligem", "Schwuligem"],
