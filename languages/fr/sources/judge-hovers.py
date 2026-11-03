@@ -24,7 +24,9 @@ is not a form-of row) is judged by the dictionary's own rows:
   is an elided word alone (m in m'aider) where the text goes on after the
   apostrophe.
 
-Unjudged results are left to a hand sample. Writes <prefix>-wrong.tsv and
+Unjudged results are left to a hand sample; unjudgedBy counts them by
+reason, and an elided word alone by what follows the apostrophe (en or y,
+a capital letter, anything else). Writes <prefix>-wrong.tsv and
 <prefix>-unjudged.tsv and prints one JSON object.
 """
 import argparse, collections, json, os, random, re, sys
@@ -58,6 +60,7 @@ by_class = collections.defaultdict(collections.Counter)
 counts = collections.Counter()
 wrong, unjudged = [], []
 groups = collections.Counter()
+why = collections.Counter()
 with open(a.lookups, encoding='utf-8') as f:
     for i, line in enumerate(f):
         d = json.loads(line)
@@ -70,14 +73,19 @@ with open(a.lookups, encoding='utf-8') as f:
         e, m = norm(first['expression']), first['matched']
         trace = '|'.join(first['trace'])
         text = norm(d['text'])
+        reason = None
         if REFLEXIVE.match(e) and re.match(r"^(?:me |te |m'|t')", norm(m).lower()):
-            kind = 'unjudged'
+            kind, reason = 'unjudged', "a verb with se after me, te, m' or t'"
         elif re.fullmatch(r"(?i)(?:l|d|j|m|t|s|n|c|qu)", m) and text[len(m):len(m) + 1] == "'" and len(text) > len(m) + 1:
+            after = text[len(m) + 1:]
             kind = 'unjudged'
+            reason = ('an elided word alone, before en or y' if re.match(r"(?:en|y)\b", after)
+                      else 'an elided word alone, before a capital' if after[:1].isupper()
+                      else 'an elided word alone, before another word')
         elif m.lower() == word.lower():
             ls = {norm(x) for x in own(word)}
             if not ls:
-                kind = 'unjudged'
+                kind, reason = 'unjudged', 'a word without rows'
             else:
                 kind = 'right' if e in ls or e.lower() in {x.lower() for x in ls} else 'wrong'
         elif has_rows(m):
@@ -89,7 +97,10 @@ with open(a.lookups, encoding='utf-8') as f:
             for p in parts:
                 ls |= {norm(x).lower() for x in own(p)}
             kind = 'right' if e.lower() in ls else 'unjudged'
+            reason = 'a phrase without rows whose words do not give it'
         counts[kind] += 1
+        if kind == 'unjudged':
+            why[reason] += 1
         if classes is not None:
             by_class[classes[i]][kind] += 1
             if kind == 'wrong':
@@ -113,7 +124,7 @@ with open(f'{a.out}-unjudged-sample.tsv', 'w', encoding='utf-8') as f:
         f.write('\t'.join(r) + '\n')
 judged = counts['right'] + counts['wrong']
 print(json.dumps({**counts, 'wrongRate': counts['wrong'] / judged if judged else 0,
-                  'wrongByTrace': groups.most_common(15)}, ensure_ascii=False))
+                  'wrongByTrace': groups.most_common(15), 'unjudgedBy': dict(why.most_common())}, ensure_ascii=False))
 for c in sorted(by_class):
     k = by_class[c]
     j = k['right'] + k['wrong']

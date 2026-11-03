@@ -822,22 +822,14 @@ for (const [tense] of TENSES) {
 }
 
 // --- Pronominal verbs ---------------------------------------------------------------
-// A reflexive pronoun before a verb of its person gives the pronominal verb,
-// which dictionaries list with se: je me lève → me*lever → se lever, tu
-// t'appelles → s'appeler, je m'en vais → s'en aller. se itself needs no rule
-// (se lève → se+lever → se lever). The rule takes an infinitive whose
-// pronoun a rule of its person marked (see personThen), so a form of
-// another person is never read (il me dit is not se dire), nor an
-// infinitive after the pronoun (il va m'appeler is not s'appeler; in
-// Tatoeba such readings were wrong more often than right). A form that is
-// first and third person (il me parle) or first and second (tu me prends)
-// still reads as pronominal: the subject before the pronoun is not in the
-// text. Two exceptions, measured on Tatoeba: prendre (tu me prends pour un
-// idiot is not se prendre; that reading was wrong 37 times and right 15),
-// and suivre (je me suis, je te suis are être and suivre). m'en, t'en, m'y
-// and t'y before an infinitive (je vais m'en aller, je vais m'y prendre) do
-// give the pronominal verb, except être (m'en être pris is not s'en être):
-// those rows take only the scanned text itself (condition raw).
+// A reflexive pronoun before a verb of its person gives the verb with se
+// (je me lève → me*lever → se lever, je m'en vais → s'en aller); se needs no
+// rule. Only a pronoun that a rule of its person marked is read
+// (personThen): not il me dit (se dire), not il va m'appeler (s'appeler). A
+// form of two persons (tu me prends) still reads as pronominal: the subject
+// is not in the text. Left out: prendre (se prendre was wrong 29 times of 33
+// in the first audit's judged list) and suivre (je me suis). m'en, t'en, m'y
+// and t'y before an infinitive (m'en aller) read the raw text, except être.
 transform('pronominal', 'pronominal',
     'A verb with a reflexive pronoun of its person before it, looked up with se: je me lève → se lever, tu t\'appelles → s\'appeler, je m\'en vais → s\'en aller.');
 const INFINITIVE_ENDINGS = [['er', 'er'], ['ir', 'ir'], ['re', 're']];

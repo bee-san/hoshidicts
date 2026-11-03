@@ -8,10 +8,11 @@
 #   languages/fr/sources/measure.sh inputs <cache> <work>   lemma-only copy, index, hovers, word set, universe
 #   languages/fr/sources/measure.sh final  <cache> <work>   sources/yomitan-provenance.tsv and transforms.json
 #   languages/fr/sources/measure.sh sets   <cache> <work>   the own, Yomitan, union and final packs in <work>/packs
-#   languages/fr/sources/measure.sh eval   <cache> <work>   eval-language for every set, file and option mode
+#   languages/fr/sources/measure.sh eval   <cache> <work>   eval-language for every set, file and option mode, and untaggedTerms "pass"
 #   languages/fr/sources/measure.sh lookups <cache> <work> <set>...   frequent words, real text, Tatoeba, pronominal verbs
 #   languages/fr/sources/measure.sh displaced <cache> <work>   the first results the kept Yomitan rules change
 #   languages/fr/sources/measure.sh bench  <cache> <work> <set>...   benchmark-lookup on sources/benchmark-sentences.txt
+#   languages/fr/sources/measure.sh judged <cache> <work> <judged.tsv>   the first audit's judged readings, looked up again
 #
 # <cache> holds the downloads of README.md (Sources and licences):
 # wty-fr-en.zip and its import wty-fr-en/ (hoshidicts-cli import), unimorph/
@@ -101,6 +102,19 @@ EOF
         done
       done
     done > $W/results/eval.txt
+    # lookup.untaggedTerms: wty-fr-en's untagged rows by first definition
+    # tag, and the final set with "pass" (the pack keeps "filter").
+    python3 -c "
+import collections as c,json,sys,zipfile
+z=zipfile.ZipFile(sys.argv[1]);k=c.Counter()
+for n in z.namelist():
+  if n.startswith('term_bank'):k.update((r[2].split() or ['-'])[0] for r in json.loads(z.read(n)) if not r[3].strip())
+print(sum(k.values()),k.most_common(12))" $C/wty-fr-en.zip > $W/results/untagged.txt
+    mkdir -p $W/pass/fr; cp languages/fr/transforms.json $W/pass/fr
+    sed 's/"formOf": "follow",/&\n    "untaggedTerms": "pass",/' languages/fr/language.json > $W/pass/fr/language.json
+    for f in sample cases universe; do
+      echo "$f final pass $(build/hoshidicts-cli --languages $W/pass eval-language fr $W/$f-default.tsv --dictionary $C/wty-fr-en)"
+    done >> $W/results/eval.txt
     build/hoshidicts-cli eval-language fr $W/sample-cases.tsv --transforms languages/fr/transforms.json --dictionary $C/wty-fr-en --per-rule > $W/results/per-rule-final.json
     ;;
   lookups)
@@ -129,6 +143,10 @@ EOF
     # lemma-only copy (README.md, Rule provenance).
     python3 $S/displaced.py $W/packs/own $W/packs/final $LOOKUP $W/wordset.txt --dictionary $C/wty-fr-en --dictionary "$LD" > $W/results/displaced.tsv
     tail -1 $W/results/displaced.tsv
+    ;;
+  judged)
+    python3 $S/rejudge.py "$1" $W/packs/final $LOOKUP $C/wty-fr-en > $W/results/judged.tsv
+    tail -1 $W/results/judged.tsv
     ;;
   bench)
     # benchmark-lookup on the texts from each word of four letters or more (or

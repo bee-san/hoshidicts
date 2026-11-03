@@ -5,8 +5,8 @@ Lookups start at the hovered word and try only prefixes that end at a word
 boundary (`word` / `word` / `spaces`, docs/languages.md 14.1). Apostrophes
 and hyphens separate words, so a lookup that starts at an elided word or a
 verb reads the words around it: `l'homme` → `homme`, `je m'appelle` →
-`s'appeler`, `lève-toi` → `lever`, `parle-t-il` → `parler`, `il y avait` →
-`y avoir`.
+`s'appeler`, `m'aider` → `aider`, `lève-toi` → `lever`, `parle-t-il` →
+`parler`, `il y avait` → `y avoir`.
 
 ## Sources and licences
 
@@ -70,7 +70,7 @@ verb reads the words around it: `l'homme` → `homme`, `je m'appelle` →
 
 ## Rule provenance
 
-`transforms.json` has 74 transforms and 4,978 rules: 3,265 `own`, 1,527
+`transforms.json` has 75 transforms and 5,014 rules: 3,286 `own`, 1,542
 `both` and 186 `yomitan`. `sources/build-final.mjs` writes it from
 `sources/own.json`, `sources/yomitan.json` and the decisions of
 `sources/yomitan-provenance.tsv`.
@@ -79,7 +79,7 @@ verb reads the words around it: `l'homme` → `homme`, `je m'appelle` →
   as a Yomitan rule of the same tense or form (Yomitan's `present
   indicative` against the own `present-*` transforms, `Preterite` against
   `simple-past-*`, `plural` against `plural`, …), whatever the persons and
-  stem constraints. 1,539 of Yomitan's rules are such pairs.
+  stem constraints. 1,554 of Yomitan's rules are such pairs.
 - **Yomitan rules kept**: 186, in Yomitan's transforms after the own ones,
   so the own readings come first on ties. `sources/yomitan-rules.py`
   applies each of Yomitan's rules once to 405,675 words (the forms of
@@ -104,17 +104,18 @@ verb reads the words around it: `l'homme` → `homme`, `je m'appelle` →
     `rentraire` (`rait` → `raire`), `brayons` → `braire` over `brayer`,
     `choyons` → `choir` over `choyer`, `sied` → `seoir` over `soir`,
     `inouïs` → `inouïr` over `inouï`, `rayant` → `ravoir` over `rayer`,
-    `en sont` → `en être`, `y avais` → `y avoir`, `faire sa` → `faire
-    savoir`. 6 more fail a negative of `tests/cases.tsv` (`rentrait` →
-    `rentraire`, `accrut` → `accroire`, `rayons` → `ravoir`, `y avez` → `y
-    avoir`).
+    `en sont` → `en être`, `y avais` → `y avoir`. 6 more fail a negative of
+    `tests/cases.tsv` (`rentrait` → `rentraire`, `accrut` → `accroire`,
+    `rayons` → `ravoir`, `y avez` → `y avoir`, and `a` → `avoir`, which
+    read `faire sa` as `faire savoir`).
   - 186 are kept (284 right readings, 15 false). They read rare and old
     verbs the own models leave out: `circoncire`, `ouïr`, `gésir`,
     `braire`, `attraire`, `mécroire`, `soudre`, `amuïr`, `choir`, `occire`,
     and the old spellings `connoître` and `havoir`. On the 405,675 words,
-    with wty-fr-en and the lemma-only copy, they change 156 first results,
-    all where the own rules give none (`connoissait` → `connaître`,
-    `havait` → `avoir`).
+    with wty-fr-en and the lemma-only copy, the own and the final rules
+    give a different first result for 234 lookups (60 and 174;
+    `measure.sh displaced`), all where the own rules give none
+    (`connoissait` → `connaître`, `havait` → `avoir`).
 - **Own rules**: tenses and persons are separate transforms, so a trace
   names both (`imperfect (ils)`, `present (je, il)`):
   - the regular endings of the first group (-er) and the second group (-ir,
@@ -128,22 +129,29 @@ verb reads the words around it: `l'homme` → `homme`, `je m'appelle` →
     `-uire`; `recevoir`; `connaître`, `paraître` and the 1990 spellings
     `connait`, `paraitra`; …), and être, avoir, aller, faire and dire
     written out;
-  - elision: an elided article, pronoun or conjunction is removed before a
-    word (`l'`, `d'`, `j'`, `m'`, `t'`, `s'`, `n'`, `c'`, `ç'`, `qu'`,
-    `jusqu'`, `lorsqu'`, `puisqu'`, `quoiqu'`, `presqu'`), and an elided
-    word alone reads as its elided and full forms (`l` → `l'`, `le`,
-    `la`); after `j'`, `m'`, `t'`, `s'`, `n'` and `c'` only a verb is read
-    (`s'élève` is `élever`, not the noun `élève`);
+  - elision: an elided article, pronoun, de, ne or que is removed before a
+    word (`l'`, `d'`, `j'`, `m'`, `t'`, `s'`, `n'`, `c'`, `ç'`, `qu'`),
+    and an elided word alone reads as its elided and full forms (`l` →
+    `l'`, `le`, `la`). After `j'`, `m'`, `t'`, `s'`, `n'` and `c'` only a
+    verb is read: a conjugated form or an infinitive (`s'élève` is
+    `élever`, not the noun `élève`; `m'aider` is `aider`). The
+    conjunctions `jusqu'`, `lorsqu'`, `puisqu'`, `quoiqu'` and `presqu'`
+    are not removed, and `qu'` is not removed before `à`. Removed, they let
+    a lookup read the phrase after them first: `jusqu'à la fin` gave `à la
+    fin` (153 of the 707 lookups at `jusqu'` in the measured texts, by the
+    first audit's count) and `qu'à la condition` gave `à la`. Those lookups
+    now give `jusqu'à`, `qu'à`, `lorsqu'`;
   - pronouns after a hyphen: affirmative imperatives (`donne-moi`,
     `dis-le-lui`, `vas-y`), reflexive imperatives (`lève-toi`,
     `assieds-toi`, `va-t'en`, `allez-vous-en`), inverted subjects
     (`parle-t-il`, `dit-elle`, `puis-je`, `est-ce`) and `-ci`, `-là`;
   - pronominal verbs: `me`, `te`, `m'`, `t'`, `m'en`, `t'en`, `m'y` and
-    `t'y` before a verb of their person give the verb with `se`, `s'en` or
-    `s'y` (`je me lève` → `se lever`, `tu t'appelles` → `s'appeler`, `je
-    m'en vais` → `s'en aller`). `il me dit` is not `se dire` (dit is not a
-    first person form), and `je me suis`, `je te suis` are not `se
-    suivre`;
+    `t'y` before a verb form of their person give the verb with `se`,
+    `s'en` or `s'y` (`je me lève` → `se lever`, `tu t'appelles` →
+    `s'appeler`, `je m'en vais` → `s'en aller`, `tu t'y connais` → `s'y
+    connaître`), and `m'en`, `t'en`, `m'y` and `t'y` before an infinitive
+    too (`je vais m'en aller`, `je ne sais pas m'y prendre`). See *Pronouns
+    before the verb* below;
   - plurals (`-s`, `-x`, `-aux`, `-eaux`, `-eux`, `yeux`, `messieurs`,
     `bonshommes`), feminine adjectives (`-ère`, `-ette`, `-elle`, `-enne`,
     `-euse`, `-rice`, `-ve`, `-che`, `-que`, `-gue`, `belle`, `vieille`,
@@ -153,21 +161,60 @@ verb reads the words around it: `l'homme` → `homme`, `je m'appelle` →
     `gentiment`), and the forms of determiners, pronouns and numerals that
     dictionaries list without a part of speech (`toutes` → `tout`,
     `cette` → `ce`, `laquelle` → `lequel`, `millions` → `million`).
+- **Pronouns before the verb.** `me` and `te` are reflexive or objects
+  (`je me lève`, `il me voit`), and the text a lookup gets starts at the
+  pronoun, without the subject. A rule for a first person singular form
+  marks a `me`, `m'`, `m'en` or `m'y` at the start of the text (a `then`
+  step: `me+lève` → `me*lever`), a rule for a second person singular form
+  a `te`, `t'`, `t'en` or `t'y`, and the pronominal rule reads only marked
+  pronouns. So:
+  - a pronoun before a form of another person gives no pronominal verb
+    (`il me dit` is not `se dire`, `te lève` not `se lever`);
+  - `me`, `te`, `m'` or `t'` before an infinitive gives none: in *Tu peux
+    m'appeler Tom* and *Je passerai te prendre*, `m'` and `te` are
+    objects. The first audit of this pack judged by hand the 152 Tatoeba
+    lookups whose first result the pronominal rule made: 63 of the 114
+    before an infinitive were wrong, and 13 of the 38 before a finite
+    form. `m'aider` and `t'appeler` now give the verb itself (the transform
+    `infinitive`);
+  - `m'en`, `t'en`, `m'y` and `t'y` before an infinitive still give the
+    pronominal verb, except être: those readings were right 24 times of
+    27 in the judged list (`m'en aller` 12, `m'y prendre` 4, `t'en aller`
+    3). `m'en être pris` (wrong twice) is excluded; `à m'en faire
+    éclater` (wrong once) still gives `s'en faire`;
+  - `prendre` gives no pronominal reading after `me` and `te`: `se
+    prendre` was wrong 29 times of 33 (`tu me prends pour un idiot`, `ça va
+    me prendre du temps`);
+  - je me suis and je te suis are être and suivre, never se suivre.
+
+  Looked up again with the final rules (`measure.sh judged`, which takes
+  the audit's list; it is not committed), 73 of the 76 wrong readings
+  change: 24 now show the verb (`m'appeler` → `appeler`) and 49 the
+  pronoun (`me`, `te`, `m'en`). 47 of the 76 right ones stay; the other 29
+  now show the pronoun or the verb without se (Known gaps). Forms that je
+  shares with tu or il still read as pronominal whatever the subject
+  (Known gaps).
 - **Words before the verb.** A lookup tries prefixes of several words
   (docs/languages.md 9.2), and a suffix rule's stem holds the words before
   the ending. The regular, stem-change and -asser endings need a one-word
   stem (`stemCharacters` `{notSpace}`), so `prendre chez` is not
   `prendre cher`, `le cherchions` not `le chercher`, `la bouclait` not
-  `la boucler`, `la ramène` not `la ramener` (19 wrong first results in
-  the measured texts before), and their minimum stem counts the verb
-  alone. The preprocessor `joinPronoun` writes a reflexive pronoun or `y`
-  at the start of the text joined to the verb with `+` (`me+parle`,
-  `s'en+moque`, `y+allait`, `n'y+allait`), so those endings still read the
-  pronominal verbs and the phrases with `y` (`nous y allions` → `y
-  aller`); the postprocessor `unjoinPronoun` writes the space again, and
-  the reflexive imperative joins its pronoun the same way. The irregular
-  verbs' own forms keep reading across a space, which `il y a`, `s'en va`
-  and `me souviens` need, with these exclusions, each with a negative row:
+  `la boucler`, `la ramène` not `la ramener`. The preprocessor
+  `joinPronoun` writes a reflexive pronoun at the start of the text joined
+  to the verb with `+` (`me+parle`, `s'en+moque`), so those endings still
+  read the pronominal verbs. Their minimum stem then counts the joined
+  pronoun too: `me+va` gives `me+ver` (the stem `me+v` has the two letters
+  the rule needs), which is looked up as `me ver` and matches no headword.
+  The postprocessor `unjoinPronoun` writes the space back for the joined
+  and marked pronouns only (headwords such as `a+` and `CSP+` are found),
+  and the reflexive imperative joins its pronoun the same way (`lève-toi`
+  → `se+lève`). `y`
+  is not joined: through the regular endings it gave the idioms `y
+  passer` and `y rester` ("to die") for literal text (`j'y passerai`,
+  `elle y resta`). aller keeps every form, so `nous y allions` is still
+  `y aller`. The irregular verbs' own forms keep reading across a space,
+  which `il y a`, `s'en va` and `me souviens` need, with these
+  exclusions, each with a negative row:
   - être's forms are not read after a word that starts with e, m, s or t,
     so not after en, m'en, t'en or s'en (`j'en suis sûr` is not `en
     être`; 9 of 12 sampled Tatoeba readings of it were wrong); of
@@ -196,22 +243,32 @@ verb reads the words around it: `l'homme` → `homme`, `je m'appelle` →
   -s, -x, -z (`miss` is not `mis`); minimum stems for plurals, feminines,
   feminine nouns and adverbs (`aux` is not `al`, `elle` not `el`, `bière`
   not `bier`, `ciment` not `ci`).
-- **History**: the first commit of this pack, `fr: own rules` (d876ea3),
+- **History**: the first commit of this pack, `fr: own rules` (9f8270d),
   has the own rules as written before Yomitan's file was read (66
   transforms). Later commits changed them after measuring:
   - the shared condition `v` took Yomitan's definition, which the merge
-    tool requires (0abeca7);
+    tool requires (f717131);
   - the è stem change before gu and qu (`allègue`) and accroître's
-    present, found by comparing with Yomitan's rules (b3b0bc0);
-  - the en, y, gerund and -s plural exclusions above (ccf933d);
+    present, found by comparing with Yomitan's rules (276835f);
+  - the en, y, gerund and -s plural exclusions above (c04aebc);
   - constraints that changed no result were removed, the others got tests
-    (65869b0);
+    (ee0cdae);
   - one-word stems for the regular endings and the joined pronouns
-    (7411f86, 141d156).
+    (ce9b8a3, 222fe3d);
+  - after the first audit (MAJOR-1, MAJOR-2 and its MINOR findings): the
+    person marks, the infinitive rule after elided pronouns, the prendre
+    exclusion, the conjunctions and `qu'à` kept, `y` not joined, aller's
+    forms, paître without a simple past (`put` and `pus` are pouvoir
+    alone), tests for the surviving mutants (the je/tu simple past and the
+    nous subjunctive of irregular verbs, each Yomitan transform's kept
+    rules, the join keys, `searchResolution`, `wordInternal`, digits in
+    words), part-of-speech labels as wty-fr-en's tag bank files them, and
+    rare frequency samples ranked 22,991 to 46,580 in the subtitle list
+    (b188a83, dc5a7c7).
 
 ## Measurements
 
-`hoshidicts-cli eval-language` at hoshidicts 23cd5a3 (GCC 14.3, Release)
+`hoshidicts-cli eval-language` at hoshidicts 1fed676 (GCC 14.3, Release)
 with `--transforms` for each rule set and `--dictionary` wty-fr-en imported
 by `hoshidicts-cli import`. The sample is the 800 UniMorph rows of
 `corpus.tsv` and `gaps.tsv`; the universe is 46,157 rows: 40,000 more
@@ -223,23 +280,34 @@ with the defaults (each file was also run with `# options: default` added).
 
 | Rule set | Sample recall | False candidates | First rank | cases.tsv positives / negatives | Universe recall | Universe false candidates |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Own (`sources/own.json`) | 98.13% | 0.178 | 0.890 | 98.4% / 100% | 97.36% | 0.147 |
-| Yomitan (`sources/yomitan.json`) | 58.00% | 0.126 | 0.818 | 25.6% / 63.0% | 66.04% | 0.118 |
-| Union (merge tool) | 98.13% | 0.180 | 0.876 | 100% / 63.0% | 97.48% | 0.151 |
+| Own (`sources/own.json`) | 98.13% | 0.178 | 0.890 | 97.9% / 100% | 97.36% | 0.147 |
+| Yomitan (`sources/yomitan.json`) | 58.00% | 0.126 | 0.818 | 25.8% / 69.2% | 66.04% | 0.118 |
+| Union (merge tool) | 98.13% | 0.180 | 0.876 | 100% / 69.2% | 97.47% | 0.151 |
 | Final (`transforms.json`) | 98.13% | 0.178 | 0.890 | 100% / 100% | 97.42% | 0.147 |
 
-False candidates are per row of the sample; `cases.tsv` has 699 positives
-and 92 negatives.
+False candidates are per row of the sample; `cases.tsv` has 710 positives
+and 117 negatives. The own rules miss 15 positives of `cases.tsv`: the rare
+verbs that only the kept Yomitan rules read (`circoncis`, `ouïrai`,
+`gisait`).
 
-The own rules miss 11 positives of `cases.tsv`: the rare verbs that only
-the kept Yomitan rules read (`circoncis`, `ouïrai`, `gisait`).
-
-- **Per rule** (`--per-rule` on the final set, sample and `cases.tsv`): 325
+- **Rows without tags** (`measure.sh eval`, `untagged.txt`): wty-fr-en
+  leaves `rules` empty on 16,627 of its 494,982 rows (3.4%): 9,686 names,
+  3,169 form-of rows, 687 interjections, 560 phrases, 365 prefixes, 342
+  suffixes, 303 prepositions and smaller groups, and no verb, noun or
+  adjective row. So the pack keeps `lookup.untaggedTerms` at its default,
+  `filter` (docs/languages.md 9.4), and does not write it, as the en and es
+  packs. With `pass`, the final rules rank as many lemmas first on the
+  sample (712) and `cases.tsv` (482) and one fewer on the universe (40,684
+  of 46,157, against 40,685), and give more false candidates: 0.195
+  against 0.178 on the sample, 0.413 against 0.372 on `cases.tsv`, 0.160
+  against 0.147 on the universe. Recall and negatives do not change.
+- **Per rule** (`--per-rule` on the final set, sample and `cases.tsv`): 339
   rules recover rows no other rule reaches, no rule breaks a negative, and
-  12 rules add 15 false candidates without recovering a row: nine elided
-  forms (`ç` → `ça`, `qu` → `que`), which a lookup shows only when nothing
-  longer matches, `suis` → `suivre`, and Yomitan's `croit` → `croire` and
-  `ait` → `avoir`.
+  12 rules add 15 false candidates without recovering a row: nine
+  `elided-form` rules that add the apostrophe to an elided word (`ç` →
+  `ç'`, `jusqu` → `jusqu'`), which a lookup shows only when nothing longer
+  matches, `suis` → `suivre`, and Yomitan's `croit` → `croire` and `ait` →
+  `avoir`.
 - **Trace quality** (`sources/traces.py`): the final rules reach 546 verb
   rows of the sample; the trace a lookup shows names the row's tense or
   form in 540 (98.9%) and, for the 411 finite rows, the person in 406
@@ -265,86 +333,115 @@ the kept Yomitan rules read (`circoncis`, `ouïrai`, `gisait`).
   Tatoeba sentence (104,233), at every word after an elided word, a subject
   or object pronoun, an article or a form of avoir or être, looked up from
   that word and from the word before it: 580,422 lookups, 579,682 with a
-  result. The script judges 577,653 right and 2 wrong (`entr'ouverte` →
-  `entrouvrir`, `paux` → `pal`); 2,027 are left to a hand sample of 60, in
-  which 2 are wrong (`jusqu'à demain` → `à demain`, "see you tomorrow";
-  `eustache` → the name `Eustache`). By class, the script finds 0 wrong
-  from the clitic, pronoun, article or auxiliary, and 1 each from the word
-  after a pronoun and after an auxiliary. Of the 18,422 lookups that start
-  at `me`, `te`, `m'` or `t'`, 544 show a pronominal verb first, and all
-  544 agree with the person of the pronoun (`sources/pronominal.py`: the
-  word's form-of rows name the verb in that person, or it is an
-  infinitive). Yomitan's rules give 98 such results, all from the
-  dictionary's own rows.
+  result. The script judges 575,968 right and 2 wrong (`entr'ouverte` →
+  `entrouvrir`, `paux` → `pal`). It leaves 3,712 to a hand sample
+  (`unjudgedBy`): 1,999 phrases without rows whose words do not give the
+  result, 1,124 elided words shown alone (809 before en or y, 215 before a
+  capital, 100 before another word), 422 verbs with se after `me`, `te`,
+  `m'` or `t'` (whether the pronoun is reflexive depends on the subject),
+  and 167 words without rows. In the random sample of 60, 48 are right, 11
+  show the elided letter (`n` for *n'y comprends rien*, `L` for
+  *L'Australie*) and 1 is wrong (`bar.` → the abbreviation `Bar.`): about
+  62 wrong of the 3,712 by the sample's rate. By
+  class, the script finds 0 wrong from the clitic, pronoun, article or
+  auxiliary, and 1 each from the word after a pronoun and after an
+  auxiliary.
+- **Pronominal readings against the subject** (`sources/pronominal-subject.py`):
+  every `me`, `te`, `m'` and `t'` before a word in all 729,625 Tatoeba
+  sentences (68,822 lookups from the pronoun). Where the first result is a
+  verb with se that the pronominal rule made, the last subject pronoun
+  before it in the sentence agrees (je for me, tu for te) 209 times,
+  disagrees 55 times and is missing 120 times (imperatives, noun
+  subjects); at 4561ca6, before the person marks, these were 465, 369 and
+  249. Of the 55 disagreements, 16 are forms je shares with tu or il (`tu
+  me mets`, `je te mets`) and 39 are m'en, t'en before an infinitive,
+  where the pronoun is often reflexive all the same: *Il a eu pitié de moi
+  et m'a aidé à m'en sortir* counts as a disagreement.
+  The dictionary's own rows make the other se-verb first results (1,015
+  agree, 51 disagree, 114 missing).
 - **Real text** (`sources/make-hovers.py`, `sources/judge-hovers.py`):
   every word of the three novels, the text from the word to the end of its
   sentence, 264,672 lookups, 259,640 with a result. The script judges
-  259,160 right and 1 wrong (`siéges`, an old spelling of `sièges`, read
-  as the verb `siéger`). Of the 479 it cannot judge (mostly phrases after
-  an elided word, whose matched text has no row), a random sample
-  of 60 was judged by hand: 54 right (`n'y avait` → `y avoir`, `d'eau-de-vie`
-  → `eau-de-vie`, `jusqu'au fond` → `au fond`, `qu'il y a` → `il y a`) and
-  6 wrong: `s'en revinrent` and `s'en revint` looked up from `en` give `en
-  revenir` ("to get over it"); `y resta` and `j'y passerai` give `y
-  rester` and `y passer` ("to die"); `mon oeil le distinguait` gives the
-  interjection `mon œil`; and the name `Bone` gives `bon`. Counting the
-  sample's rate for all 479, about 49 wrong first results, 0.02% of the
-  lookups. Yomitan's rules: 7 wrong by script, 277 unjudged; the union: 1
-  and 633. With the lemma-only copy: final 123 wrong by script (77 of them
-  `d'autres` → `autre`), Yomitan 1,179, union 311.
+  258,549 right and 1 wrong (`siéges`, an old spelling of `sièges`, read
+  as the verb `siéger`). It leaves 1,090: 440 phrases without rows, 482
+  elided words shown alone (268 before en or y, 146 before a capital, 68
+  before another word), 151 words without rows and 17 verbs with se after
+  `me` or `te`. A random sample of 60 of them was judged by hand: 27 right
+  (`n'y avait` → `y avoir`, `l'eau-de-vie` → `eau-de-vie`, `se mit à
+  parler` → `se mettre`, `t'en aller` → `s'en aller`), 31 show the elided
+  letter (`d` for *d'Aden*, `j` for *j'en jurerais*), and 2 are wrong: `en
+  revenait` and `en reviendrai` (looked up from `en` in *elle s'en
+  revenait*, *je n'en reviendrai pas*) give `en revenir`, which wty-fr-en
+  glosses "to believe (something incredible); to get over something". By
+  the sample's rate, about 36 wrong first results of the 1,090, 0.014% of
+  the lookups. Yomitan's rules: 7 wrong by
+  script and 10,135 left (mostly the elided letter: Yomitan has no elision
+  rules); the union: 1 and 1,253. With the lemma-only copy: final 133
+  wrong by script (77 of them `d'autres` → `autre`), Yomitan 1,192, union
+  321.
+- **The elided letter.** Where nothing after an elided word is read (a name
+  the dictionary lacks, *j'en jurerais*, *s'y élevait*), the first result
+  is the letter itself, with its elided and full forms after it: 482 of
+  the 264,672 lookups in the novels and 1,124 of the 580,422 in the
+  Tatoeba sample (`unjudgedBy` above).
 - **Lookup speed** (`benchmark-lookup --languages <pack> --language fr`,
-  wty-fr-en mapped): 203 texts from the words of
+  hoshidicts 1fed676, wty-fr-en mapped): 203 texts from the words of
   `sources/benchmark-sentences.txt` (25 sentences written for the pack) to
   the end of their sentence, 6 passes with the first dropped, three runs,
-  machine load about 40. The budget is 1 ms p50.
+  machine load 38 to 46. The budget is 1 ms p50.
 
   | Rule set | p50 | p95 |
   | --- | ---: | ---: |
-  | Final | 35-36 µs | 80-87 µs |
-  | Own | 35-36 µs | 79-82 µs |
-  | Yomitan's rules | 65 µs | 196 µs |
-  | Union | 79-87 µs | 248-283 µs |
+  | Final | 37-38 µs | 87-90 µs |
+  | Own | 37-38 µs | 88-91 µs |
+  | Yomitan's rules | 65-67 µs | 195-199 µs |
+  | Union | 86-90 µs | 273-288 µs |
 - **WebAssembly** (Hachidori feat/multi-language d7e82b0c prebuilt engines
   with this branch's pack, Node 22). The budgets are 50 ms and 20 MB, and
   the pack has no `pattern` rule.
   - `hdw_lookup` (`benchmark/node-lookup.mjs`, `HACHIDORI_LOOKUP_LANGUAGE=fr`,
-    every word of the 25 sentences, 287 hovers, 6 passes): p50 92 µs and
-    p95 248 µs single-thread; p50 104 µs and p95 265 µs threaded.
+    every word of the 25 sentences, 287 hovers, 6 passes): p50 102 µs and
+    p95 278 µs single-thread; p50 106 µs and p95 270 µs threaded.
   - `hdw_language_load` (`sources/wasm-load.mjs`, 10 fresh engines):
-    median 13.5 ms single-thread, 14.9 ms threaded; live heap +1,171,608
-    bytes after the load.
-- **Differential check** (`tools/check-yomitan.mjs`): 18,135 inputs,
-  174,425 Yomitan results, 0 differences; `decapitalize` and
-  `capitalizeFirstLetter` agree on 1,650 inputs each, `apostropheVariants`
-  on 1,634. The pack adds its own processors `normalizeUnicode` (NFKC),
+    median 15.8 ms single-thread, 17.0 ms threaded; live heap +1,840,736
+    bytes after the load (+1,171,608 at 4561ca6, before the audit fixes).
+- **Differential check** (`tools/check-yomitan.mjs`): 18,169 inputs,
+  174,547 Yomitan results, 0 differences; `decapitalize` and
+  `capitalizeFirstLetter` agree on 1,693 inputs each, `apostropheVariants`
+  on 1,677. The pack adds its own processors `normalizeUnicode` (NFKC),
   `otherApostrophes` (ʼ and ‘ as '), `oeLigature` (`coeur` → `cœur`) and
   `joinPronoun`, and the postprocessors `unjoinPronoun` and
   `typographicApostrophe` (dictionaries spell `aujourd’hui` either way).
-- **Hachidori** (feat/multi-language d7e82b0c with this branch at 141d156
+- **Hachidori** (feat/multi-language d7e82b0c with this branch at dc5a7c7,
+  whose pack files the head keeps,
   in `third_party/hoshidicts`, `test/chrome-language-pack.mjs`, Chrome
-  152.0.7977.75, wty-fr-en): 20 / 20 checks pass. Settings adds French
-  beside Japanese and imports the dictionary (494,982 terms, 1.3 s);
-  sixteen hovered words find their lemma first with their traces
-  (`chevaux` → `cheval`, `me souviens` → `se souvenir`, `L'homme` →
-  `homme`, `Dis-moi` → `dire`, `y avait` → `y avoir`, `Va-t'en` → `s'en
-  aller`, `y allions` → `y aller`); the Anki note and the switch to
+  152.0.7977.75, wty-fr-en): 22 / 22 checks pass. Settings adds French
+  beside Japanese and imports the dictionary (494,982 terms); eighteen
+  hovered words find their lemma first with their traces (`chevaux` →
+  `cheval`, `me souviens` → `se souvenir`, `L'homme` → `homme`, `Dis-moi`
+  → `dire`, `y avait` → `y avoir`, `Va-t'en` → `s'en aller`, `m'appeler`
+  → `appeler`, `me prends` → `prendre`); the Anki note and the switch to
   Japanese and back work.
 - **Conformance** (`language-conformance-test`): corpus.tsv 785 / 785,
-  cases.tsv 791 / 791, text.tsv 47 / 47, lookup.tsv 55 / 55; gaps.tsv 0 /
-  15 (reported); classes.json agrees with the engine (5 classes, 513
-  fields, 2 steps, 3,244 outputs); 926 of the 4,978 rules are exercised by
-  a passing row; `tests/` and `sources/` hold 984,316 bytes. Removing each
-  stem constraint, exclusion, written-out group, condition, joined pronoun
-  or processor of the pack in turn (`sources/mutate.py`, 51 mutants)
-  fails a test every time.
+  cases.tsv 827 / 827, text.tsv 50 / 50, lookup.tsv 65 / 65; gaps.tsv 0 /
+  15 (reported); classes.json agrees with the engine (5 classes, 532
+  fields, 2 steps, 3,330 outputs); 936 of the 5,014 rules are exercised by
+  a passing row. The files of `tests/` and `sources/` hold 999,344 bytes
+  (`git ls-files languages/fr/tests languages/fr/sources`). Removing each
+  stem constraint, exclusion, written-out group, condition, person mark,
+  join key, scanning setting or transform of the pack in turn
+  (`sources/mutate.py`, 138 mutants) fails a test every time.
 - **Commands** (`sources/measure.sh` runs them; its header says how):
   `measure.sh inputs` (lemma-only copy, hover texts, word set, universe),
   `measure.sh final` (`sources/yomitan-provenance.tsv` and
-  `transforms.json`), `measure.sh sets`, `measure.sh eval` (the table and
-  `--per-rule`), `measure.sh lookups own yomitan union final` (frequent
-  forms, real text, Tatoeba, pronominal readings, traces), `measure.sh
-  bench own yomitan union final`; `sources/build-corpus.mjs <fra.um4>
-  <fr_50k.txt>` writes the sample.
+  `transforms.json`), `measure.sh sets`, `measure.sh eval` (the table,
+  `--per-rule` and `untaggedTerms`), `measure.sh displaced`, `measure.sh
+  lookups own yomitan
+  union final` (frequent forms, real text, Tatoeba, pronominal readings,
+  traces), `measure.sh bench own yomitan union final`, `measure.sh judged
+  <the audit's tatoeba-every7th-judged.tsv>`;
+  `sources/build-corpus.mjs <fra.um4> <fr_50k.txt>` writes the sample;
+  `sources/wasm-load.mjs <hachidori checkout> languages/fr` times the load.
 
 ## Known gaps
 
@@ -358,26 +455,41 @@ the kept Yomitan rules read (`circoncis`, `ouïrai`, `gisait`).
   `cheval`, `chèvre` → `bouc`, `sœurette` → `frérot`, `maligne` →
   `malin`, `coincée` → `coincé`, `dalleuse` → `dalleux`, `broussarde` →
   `broussard`, 8): dictionaries list these feminines as headwords.
-- Phrases with en and y that the dictionary lists as idioms come first
-  where the words are literal: `y passer` and `y rester` ("to die") for
-  `j'y passerai` and `il y resta` (27 first results in the measured
-  texts), `en revenir` ("to get over it") for `s'en revenait` looked up
-  from `en`. The phrase `en X` is not reached through the regular endings
-  (`n'en finissait` is not `en finir`), only through the irregular verbs'
-  own forms.
-- Forms shared by je and tu agree with both me and te: `je t'en veux`
-  gives `s'en vouloir`.
+- A form that je shares with tu (`mets`, `mis`) or with il (`mette`,
+  `plante`) reads as pronominal after `me` or `te` whatever the subject:
+  *tu me mets* and *je te mets au défi* give `se mettre`. The subject is
+  not in the text a lookup gets. In all of Tatoeba, 16 of the rule's
+  se-verb first results are such forms with a subject that disagrees.
+- A pronoun before an infinitive is never reflexive in a lookup, so
+  reflexive uses lose their se-verb: a lookup from `me` in *je dois me
+  souvenir* gives `me`, not `se souvenir`. Of the 76 readings the first
+  audit judged right, 25 are lost this way (`me souvenir` 7, `te mettre`
+  5, `me mettre` 5, `t'enfuir` → `enfuir` 2) and 4 by the prendre
+  exclusion (`te prends`, `me prenais`).
+- The irregular verbs' forms read across a space, so a phrase with en can
+  come first where en is the pronoun: `en revenir` ("to believe; to get
+  over something") for *elle s'en revenait* or *je n'en reviendrai pas*,
+  looked up from `en` (about 36 wrong first results in the three novels,
+  by the hand sample).
+- Where nothing after an elided word is read, the elided letter comes
+  first, with the elided and full forms after it: 482 lookups in the
+  novels and 1,124 in the Tatoeba sample. Most are before en or y (268 and
+  809: `j` for *j'en jurerais*, `n` for *n'y comprends rien*), where
+  `en être`, `y avoir` and the like are excluded or the dictionary has no
+  phrase; then before a capital (146 and 215): names the dictionary lacks
+  (*d'Aden*), and capital `L'` before a name it has (*L'Australie*: the
+  elision rules are lower case, and decapitalizing gives `australie`).
 - `nous` and `vous` as reflexive pronouns give no pronominal verb (`nous
   nous levons`).
 - A plural noun comes before the verb of the same spelling (`portes` →
-  `porte`, then `porter`): 3,330 first results in the three novels are a
-  plural noun where the word is also a verb form; the dictionary's own
-  rows decide the order where it has them.
+  `porte`, then `porter`); the dictionary's own rows decide the order
+  where it has them.
 - The dictionary decides some lemmas: wty-fr-en has no `se lever` or `se
   parler`, so `me lève` shows `me`, and `je m'en moque` shows `moquer`
   through its own row.
-- Old spellings read as other words: `siéges` → `siéger`; proper nouns
-  read through the rules: `Bone` → `bon`.
+- Old spellings read as other words: `siéges` → `siéger`; phrases after
+  `d'` read as the dictionary's idioms (`d'étoiles d'argent` →
+  `étoile d'argent`, the edelweiss).
 - The feminine of nouns for people covers `-euse`, `-rice`, `-eresse`,
   `-ière`, `-ienne`, `-yenne` and `-ve`; `-ante`, `-ente` and `-onne` are
   left out because `chante`, `présente` and `donne` would read `chant`,
