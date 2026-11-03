@@ -33,16 +33,16 @@ present indicative	210	voient	voir	1	1	drop	avoient>avoir ; recevoient>recevoir
 present indicative	246	soyons	seoir	0	1	drop	; soyons>seoir
 present indicative	247	soyez	seoir	0	1	drop	; soyez>seoir
 present indicative	248	soient	seoir	0	1	drop	; soient>seoir
-present indicative	254	sied	seoir	2	0	keep	messied>messeoir sied>seoir ;
-present indicative	257	choyons	choir	1	0	keep	choyons>choir ;
-present indicative	258	choyez	choir	1	0	keep	choyez>choir ;
-present indicative	259	choient	choir	1	0	keep	choient>choir ;
+present indicative	254	sied	seoir	2	0	drop-first	sied>seoir over soir ; messied>messeoir sied>seoir ;
+present indicative	257	choyons	choir	1	0	drop-first	choyons>choir over choyer ; choyons>choir ;
+present indicative	258	choyez	choir	1	0	drop-first	choyez>choir over choyer ; choyez>choir ;
+present indicative	259	choient	choir	1	0	drop-first	choient>choir over choyer ; choient>choir ;
 present indicative	261	échet	échoir	1	0	keep	déchet>déchoir ;
 present indicative	291	prenent	prendre	0	1	drop	; prenent>prendre
 present indicative	322	rais	raire	4	1	drop-first	rentrais>rentraire ; attrais>attraire brais>braire rais>raire ; rentrais>rentraire
 present indicative	323	rait	raire	3	1	drop-first	rentrait>rentraire ; attrait>attraire brait>braire retrait>retraire ; rentrait>rentraire
-present indicative	324	rayons	raire	4	0	keep	attrayons>attraire brayons>braire rayons>raire ;
-present indicative	325	rayez	raire	4	0	keep	attrayez>attraire brayez>braire rayez>raire ;
+present indicative	324	rayons	raire	4	0	drop-first	brayons>braire over brayer ; attrayons>attraire brayons>braire rayons>raire ;
+present indicative	325	rayez	raire	4	0	drop-first	brayez>braire over brayer ; attrayez>attraire brayez>braire rayez>raire ;
 present indicative	326	raient	raire	4	1	drop-first	rentraient>rentraire ; attraient>attraire braient>braire raient>raire ; rentraient>rentraire
 present indicative	332	plais	faire	0	2	drop	; déplais>défaire plais>faire
 present indicative	333	plait	faire	0	1	drop	; plait>faire
@@ -110,17 +110,17 @@ imperfect indicative	154	valait	vouloir	0	1	drop	; valait>vouloir
 imperfect indicative	155	valions	vouloir	0	1	drop	; valions>vouloir
 imperfect indicative	156	valiez	vouloir	0	1	drop	; valiez>vouloir
 imperfect indicative	157	valaient	vouloir	0	1	drop	; valaient>vouloir
-imperfect indicative	164	seyait	seoir	2	0	keep	messeyait>messeoir seyait>seoir ;
-imperfect indicative	167	seyaient	seoir	2	0	keep	messeyaient>messeoir seyaient>seoir ;
+imperfect indicative	164	seyait	seoir	2	0	drop-first	seyait>seoir over soir ; messeyait>messeoir seyait>seoir ;
+imperfect indicative	167	seyaient	seoir	2	0	drop-first	seyaient>seoir over soir ; messeyaient>messeoir seyaient>seoir ;
 imperfect indicative	171	soyiez	seoir	0	1	drop	; soyiez>seoir
-imperfect indicative	178	sied	seoir	2	0	keep	messied>messeoir sied>seoir ;
-imperfect indicative	179	siéent	seoir	2	0	keep	messiéent>messeoir siéent>seoir ;
+imperfect indicative	178	sied	seoir	2	0	drop-first	sied>seoir over soir ; messied>messeoir sied>seoir ;
+imperfect indicative	179	siéent	seoir	2	0	drop-first	siéent>seoir over soir ; messiéent>messeoir siéent>seoir ;
 imperfect indicative	180	échoyait	échoir	1	0	keep	échoyait>échoir ;
 imperfect indicative	181	échoyaient	échoir	1	0	keep	échoyaient>échoir ;
-imperfect indicative	242	rayais	raire	4	0	keep	attrayais>attraire brayais>braire rayais>raire ;
-imperfect indicative	244	rayions	raire	4	0	keep	attrayions>attraire brayions>braire rayions>raire ;
-imperfect indicative	245	rayiez	raire	4	0	keep	attrayiez>attraire brayiez>braire rayiez>raire ;
-imperfect indicative	246	rayaient	raire	4	0	keep	attrayaient>attraire brayaient>braire rayaient>raire ;
+imperfect indicative	242	rayais	raire	4	0	drop-first	brayais>braire over brayer ; attrayais>attraire brayais>braire rayais>raire ;
+imperfect indicative	244	rayions	raire	4	0	drop-first	brayions>braire over brayer ; attrayions>attraire brayions>braire rayions>raire ;
+imperfect indicative	245	rayiez	raire	4	0	drop-first	brayiez>braire over brayer ; attrayiez>attraire brayiez>braire rayiez>raire ;
+imperfect indicative	246	rayaient	raire	4	0	drop-first	brayaient>braire over brayer ; attrayaient>attraire brayaient>braire rayaient>raire ;
 imperfect indicative	252	plaisais	faire	0	2	drop	; déplaisais>défaire plaisais>faire
 imperfect indicative	253	plaisait	faire	0	2	drop	; déplaisait>défaire plaisait>faire
 imperfect indicative	254	plaisions	faire	0	2	drop	; déplaisions>défaire plaisions>faire
@@ -152,7 +152,7 @@ imperfect indicative	334	cisions	cire	1	1	drop	circoncisions>circoncire ; décis
 imperfect indicative	335	cisiez	cire	1	0	keep	circoncisiez>circoncire ;
 imperfect indicative	336	cisaient	cire	1	0	keep	circoncisaient>circoncire ;
 imperfect indicative	337	frisais	frire	0	1	drop	; frisais>frire
-imperfect indicative	338	frisait	frire	1	0	keep	frisait>frire ;
+imperfect indicative	338	frisait	frire	1	0	drop-first	frisait>frire over friser ; frisait>frire ;
 imperfect indicative	339	frisions	frire	0	1	drop	; frisions>frire
 imperfect indicative	340	frisiez	frire	0	1	drop	; frisiez>frire
 imperfect indicative	341	frisaient	frire	0	1	drop	; frisaient>frire
@@ -191,11 +191,11 @@ future	217	orras	ouïr	1	0	keep	orras>ouïr ;
 future	218	orra	ouïr	1	0	keep	orra>ouïr ;
 future	219	orrons	ouïr	1	0	keep	orrons>ouïr ;
 future	221	orront	ouïr	1	0	keep	orront>ouïr ;
-future	291	siéra	seoir	2	0	keep	messiéra>messeoir siéra>seoir ;
-future	292	siéront	seoir	2	0	keep	messiéront>messeoir siéront>seoir ;
-future	299	cherrai	choir	1	0	keep	cherrai>choir ;
-future	300	cherras	choir	1	0	keep	cherras>choir ;
-future	301	cherra	choir	1	0	keep	cherra>choir ;
+future	291	siéra	seoir	2	0	drop-first	siéra>seoir over soir ; messiéra>messeoir siéra>seoir ;
+future	292	siéront	seoir	2	0	drop-first	siéront>seoir over soir ; messiéront>messeoir siéront>seoir ;
+future	299	cherrai	choir	1	0	drop-first	cherrai>choir over cherrer ; cherrai>choir ;
+future	300	cherras	choir	1	0	drop-first	cherras>choir over cherrer ; cherras>choir ;
+future	301	cherra	choir	1	0	drop-first	cherra>choir over cherrer ; cherra>choir ;
 future	304	cherront	choir	1	0	keep	cherront>choir ;
 future	371	rairai	raire	3	0	keep	attrairai>attraire brairai>braire retrairai>retraire ;
 future	372	rairas	raire	3	0	keep	attrairas>attraire brairas>braire retrairas>retraire ;
@@ -229,7 +229,7 @@ future	489	cirez	cire	1	0	keep	circoncirez>circoncire ;
 future	490	ciront	cire	1	0	keep	circonciront>circoncire ;
 imperative present	3	aie	avoir	2	1	keep	haie>havoir(avoir) raie>ravoir ; saie>savoir
 imperative present	4	ayons	avoir	2	1	drop-first	sayons>savoir ; hayons>havoir(avoir) rayons>ravoir ; sayons>savoir
-imperative present	5	ayez	avoir	2	0	keep	hayez>havoir(avoir) rayez>ravoir ;
+imperative present	5	ayez	avoir	2	0	drop-first	rayez>ravoir over rayer ; hayez>havoir(avoir) rayez>ravoir ;
 imperative present	9	ce	er	0	27	drop	; avarice>avarier dolce>doler douce>douer
 imperative present	10	çons	er	0	12	drop	; forçons>forer garçons>garer murçons>murer
 imperative present	11	cez	er	0	7	drop	; forcez>forer mucez>muer pincez>piner
@@ -239,7 +239,7 @@ imperative present	100	ettons	eter	0	1	drop	; jettons>jeter
 imperative present	101	ettez	eter	0	1	drop	; jettez>jeter
 imperative present	106	étons	eter	0	1	drop	; décollétons>décolleter
 imperative present	107	étez	eter	0	2	drop	; arrétez>arreter(arrêter) décollétez>décolleter
-imperative present	123	ïs	ïr	3	0	keep	amuïs>amuïr inouïs>inouïr ouïs>ouïr ;
+imperative present	123	ïs	ïr	3	0	drop-first	inouïs>inouïr over inouï ; amuïs>amuïr inouïs>inouïr ouïs>ouïr ;
 imperative present	124	ïssons	ïr	2	0	keep	amuïssons>amuïr ouïssons>ouïr ;
 imperative present	125	ïssez	ïr	2	0	keep	amuïssez>amuïr ouïssez>ouïr ;
 imperative present	135	iers	érir	0	1	drop	; fiers>férir
@@ -256,8 +256,8 @@ imperative present	176	oyez	ouïr	1	0	keep	oyez>ouïr ;
 imperative present	201	soyons	seoir	0	1	drop	; soyons>seoir
 imperative present	202	soyez	seoir	0	1	drop	; soyez>seoir
 imperative present	242	rais	raire	4	1	drop-first	rentrais>rentraire ; attrais>attraire brais>braire rais>raire ; rentrais>rentraire
-imperative present	243	rayons	raire	4	0	keep	attrayons>attraire brayons>braire rayons>raire ;
-imperative present	244	rayez	raire	4	0	keep	attrayez>attraire brayez>braire rayez>raire ;
+imperative present	243	rayons	raire	4	0	drop-first	brayons>braire over brayer ; attrayons>attraire brayons>braire rayons>raire ;
+imperative present	244	rayez	raire	4	0	drop-first	brayez>braire over brayer ; attrayez>attraire brayez>braire rayez>raire ;
 imperative present	248	plais	faire	0	2	drop	; déplais>défaire plais>faire
 imperative present	249	plaisons	faire	0	2	drop	; déplaisons>défaire plaisons>faire
 imperative present	250	plaisez	faire	0	2	drop	; déplaisez>défaire plaisez>faire
@@ -310,7 +310,7 @@ Conditional	348	serait	seoir	0	1	drop	; serait>seoir
 Conditional	349	serions	seoir	0	1	drop	; serions>seoir
 Conditional	350	seriez	seoir	0	1	drop	; seriez>seoir
 Conditional	351	seraient	seoir	0	1	drop	; seraient>seoir
-Conditional	357	siéraient	seoir	2	0	keep	messiéraient>messeoir siéraient>seoir ;
+Conditional	357	siéraient	seoir	2	0	drop-first	siéraient>seoir over soir ; messiéraient>messeoir siéraient>seoir ;
 Conditional	428	rairais	raire	3	0	keep	attrairais>attraire brairais>braire retrairais>retraire ;
 Conditional	429	rairait	raire	3	0	keep	attrairait>attraire brairait>braire retrairait>retraire ;
 Conditional	430	rairions	raire	3	0	keep	attrairions>attraire brairions>braire retrairions>retraire ;
@@ -349,7 +349,7 @@ Preterite	8	eut	avoir	1	1	drop	heut>havoir(avoir) ; seut>savoir
 Preterite	9	eûmes	avoir	1	0	keep	heûmes>havoir(avoir) ;
 Preterite	10	eûtes	avoir	1	0	keep	heûtes>havoir(avoir) ;
 Preterite	11	eurent	avoir	1	1	drop	heurent>havoir(avoir) ; asseurent>assavoir
-Preterite	200	ouïs	ouïr	2	0	keep	inouïs>inouïr ouïs>ouïr ;
+Preterite	200	ouïs	ouïr	2	0	drop-first	inouïs>inouïr over inouï ; inouïs>inouïr ouïs>ouïr ;
 Preterite	201	ouït	ouïr	1	0	keep	ouït>ouïr ;
 Preterite	202	ouïmes	ouïr	1	0	keep	ouïmes>ouïr ;
 Preterite	203	ouïtes	ouïr	1	0	keep	ouïtes>ouïr ;
@@ -370,8 +370,8 @@ Preterite	265	chûtes	choir	1	0	keep	chûtes>choir ;
 Preterite	266	churent	choir	2	0	keep	churent>choir échurent>échoir ;
 Preterite	327	rais	raire	4	1	drop-first	rentrais>rentraire ; attrais>attraire brais>braire rais>raire ; rentrais>rentraire
 Preterite	328	rait	raire	3	1	drop-negative	rentrait>rentraire ; attrait>attraire brait>braire retrait>retraire ; rentrait>rentraire
-Preterite	329	rayons	raire	4	0	keep	attrayons>attraire brayons>braire rayons>raire ;
-Preterite	330	rayez	raire	4	0	keep	attrayez>attraire brayez>braire rayez>raire ;
+Preterite	329	rayons	raire	4	0	drop-first	brayons>braire over brayer ; attrayons>attraire brayons>braire rayons>raire ;
+Preterite	330	rayez	raire	4	0	drop-first	brayez>braire over brayer ; attrayez>attraire brayez>braire rayez>raire ;
 Preterite	331	raient	raire	4	1	drop-first	rentraient>rentraire ; attraient>attraire braient>braire raient>raire ; rentraient>rentraire
 Preterite	352	crus	croire	2	1	keep	mécrus>mécroire recrus>recroire ; accrus>accroire
 Preterite	353	crut	croire	2	1	keep	mécrut>mécroire recrut>recroire ; accrut>accroire
@@ -402,7 +402,7 @@ present participle	7	solvant	soudre	2	0	keep	resolvant>resoudre solvant>soudre ;
 present participle	8	ant	dre	0	12	drop	; attenant>attendre(attendre,entendre) détenant>détendre morant>mordre
 present participle	9	rait	raire	3	1	drop-negative	rentrait>rentraire ; attrait>attraire brait>braire retrait>retraire ; rentrait>rentraire
 present participle	10	ant	oir	5	6	drop	comparant>comparoir doulant>douloir fallant>falloir ; assavant>assavoir avant>avoir chalant>chaloir
-present participle	11	ayant	avoir	2	0	keep	hayant>havoir(avoir) rayant>ravoir ;
+present participle	11	ayant	avoir	2	0	drop-first	rayant>ravoir over rayer ; hayant>havoir(avoir) rayant>ravoir ;
 present subjunctive	6	sse	ir	0	2	drop	; fusse>fuir rousse>rouir
 present subjunctive	7	sses	ir	0	2	drop	; fusses>fuir rousses>rouir
 present subjunctive	8	t	ir	0	14	drop	; alunt>alunir assot>assoir(asseoir,assoir) brandt>brandir
@@ -413,7 +413,7 @@ present subjunctive	18	aie	avoir	2	1	keep	haie>havoir(avoir) raie>ravoir ; saie>
 present subjunctive	19	aies	avoir	2	1	keep	haies>havoir(avoir) raies>ravoir ; saies>savoir
 present subjunctive	20	ait	avoir	1	0	keep	hait>havoir(avoir) ;
 present subjunctive	21	ayons	avoir	2	1	drop-first	sayons>savoir ; hayons>havoir(avoir) rayons>ravoir ; sayons>savoir
-present subjunctive	22	ayez	avoir	2	0	keep	hayez>havoir(avoir) rayez>ravoir ;
+present subjunctive	22	ayez	avoir	2	0	drop-first	rayez>ravoir over rayer ; hayez>havoir(avoir) rayez>ravoir ;
 present subjunctive	23	aient	avoir	2	0	keep	haient>havoir(avoir) raient>ravoir ;
 present subjunctive	30	aille	aller	0	2	drop	; baille>baller caille>caller
 present subjunctive	31	ailles	aller	0	2	drop	; bailles>baller cailles>caller

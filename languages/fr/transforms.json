@@ -1775,13 +1775,7 @@
         {"type": "suffix", "inflected": "gisons", "deinflected": "gésir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "gisez", "deinflected": "gésir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "gisent", "deinflected": "gésir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "sied", "deinflected": "seoir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "choyons", "deinflected": "choir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "choyez", "deinflected": "choir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "choient", "deinflected": "choir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "échet", "deinflected": "échoir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "rayons", "deinflected": "raire", "conditionsIn": ["v"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "rayez", "deinflected": "raire", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ois", "deinflected": "oître", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "oissons", "deinflected": "oître", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "oissez", "deinflected": "oître", "conditionsIn": ["v"], "conditionsOut": ["v"]},
@@ -1819,16 +1813,8 @@
         {"type": "suffix", "inflected": "gisions", "deinflected": "gésir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "gisiez", "deinflected": "gésir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "gisaient", "deinflected": "gésir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "seyait", "deinflected": "seoir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "seyaient", "deinflected": "seoir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "sied", "deinflected": "seoir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "siéent", "deinflected": "seoir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "échoyait", "deinflected": "échoir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "échoyaient", "deinflected": "échoir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "rayais", "deinflected": "raire", "conditionsIn": ["v"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "rayions", "deinflected": "raire", "conditionsIn": ["v"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "rayiez", "deinflected": "raire", "conditionsIn": ["v"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "rayaient", "deinflected": "raire", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "oissais", "deinflected": "oître", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "oissait", "deinflected": "oître", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "oissions", "deinflected": "oître", "conditionsIn": ["v"], "conditionsOut": ["v"]},
@@ -1847,8 +1833,7 @@
         {"type": "suffix", "inflected": "cisais", "deinflected": "cire", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "cisait", "deinflected": "cire", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "cisiez", "deinflected": "cire", "conditionsIn": ["v"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "cisaient", "deinflected": "cire", "conditionsIn": ["v"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "frisait", "deinflected": "frire", "conditionsIn": ["v"], "conditionsOut": ["v"]}
+        {"type": "suffix", "inflected": "cisaient", "deinflected": "cire", "conditionsIn": ["v"], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -1874,11 +1859,6 @@
         {"type": "suffix", "inflected": "orra", "deinflected": "ouïr", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "orrons", "deinflected": "ouïr", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "orront", "deinflected": "ouïr", "conditionsIn": ["v"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "siéra", "deinflected": "seoir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "siéront", "deinflected": "seoir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "cherrai", "deinflected": "choir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "cherras", "deinflected": "choir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "cherra", "deinflected": "choir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "cherront", "deinflected": "choir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "rairai", "deinflected": "raire", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "rairas", "deinflected": "raire", "conditionsIn": ["v"], "conditionsOut": ["v"]},
@@ -1919,14 +1899,10 @@
       "source": "yomitan",
       "rules": [
         {"type": "suffix", "inflected": "aie", "deinflected": "avoir", "conditionsIn": ["aux"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "ayez", "deinflected": "avoir", "conditionsIn": ["aux"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "ïs", "deinflected": "ïr", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ïssons", "deinflected": "ïr", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ïssez", "deinflected": "ïr", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ois", "deinflected": "ouïr", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "oyez", "deinflected": "ouïr", "conditionsIn": ["v"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "rayons", "deinflected": "raire", "conditionsIn": ["v"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "rayez", "deinflected": "raire", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ois", "deinflected": "oître", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "oissons", "deinflected": "oître", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "oissez", "deinflected": "oître", "conditionsIn": ["v"], "conditionsOut": ["v"]},
@@ -1958,7 +1934,6 @@
         {"type": "suffix", "inflected": "ouïrions", "deinflected": "ouïr", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ouïriez", "deinflected": "ouïr", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ouïraient", "deinflected": "ouïr", "conditionsIn": ["v"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "siéraient", "deinflected": "seoir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "rairais", "deinflected": "raire", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "rairait", "deinflected": "raire", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "rairions", "deinflected": "raire", "conditionsIn": ["v"], "conditionsOut": ["v"]},
@@ -1998,7 +1973,6 @@
         {"type": "suffix", "inflected": "eus", "deinflected": "avoir", "conditionsIn": ["aux"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "eûmes", "deinflected": "avoir", "conditionsIn": ["aux"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "eûtes", "deinflected": "avoir", "conditionsIn": ["aux"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "ouïs", "deinflected": "ouïr", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ouït", "deinflected": "ouïr", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ouïmes", "deinflected": "ouïr", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ouïtes", "deinflected": "ouïr", "conditionsIn": ["v"], "conditionsOut": ["v"]},
@@ -2009,8 +1983,6 @@
         {"type": "suffix", "inflected": "chûmes", "deinflected": "choir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "chûtes", "deinflected": "choir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "churent", "deinflected": "choir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "rayons", "deinflected": "raire", "conditionsIn": ["v"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "rayez", "deinflected": "raire", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "crus", "deinflected": "croire", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "crut", "deinflected": "croire", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "crûmes", "deinflected": "croire", "conditionsIn": ["v"], "conditionsOut": ["v"]},
@@ -2033,8 +2005,7 @@
       "description": "Present participle form of a verb",
       "source": "yomitan",
       "rules": [
-        {"type": "suffix", "inflected": "solvant", "deinflected": "soudre", "conditionsIn": ["v"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "ayant", "deinflected": "avoir", "conditionsIn": ["v"], "conditionsOut": ["v"]}
+        {"type": "suffix", "inflected": "solvant", "deinflected": "soudre", "conditionsIn": ["v"], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -2046,7 +2017,6 @@
         {"type": "suffix", "inflected": "aie", "deinflected": "avoir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "aies", "deinflected": "avoir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ait", "deinflected": "avoir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "ayez", "deinflected": "avoir", "conditionsIn": ["v"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "aient", "deinflected": "avoir", "conditionsIn": ["v"], "conditionsOut": ["v"]}
       ]
     }
