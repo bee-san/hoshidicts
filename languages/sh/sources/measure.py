@@ -221,6 +221,21 @@ def by_rule(result):
     return bool(result['trace']) and result['trace'][0] in PACK_IDS
 
 
+def cmd_judged(args, d):
+    """First results for hand-judged words (sources/judged-ties-hr.tsv: word, the lemmas of its
+    dominant reading separated by |, its count): wrong when the first result is none of them."""
+    rows = [line.rstrip('\n').split('\t') for line in open(args.judged, encoding='utf-8') if line.strip() and not line.startswith('#')]
+    total = sum(c for _, c in frequent(args.frequency, args.top))
+    wrong = []
+    for (word, lemmas, count), result in zip(rows, lookup_batch(args, [r[0] for r in rows])):
+        first = result['results'][0] if result['results'] else None
+        if first is None or first['expression'] not in lemmas.split('|'):
+            wrong.append((int(count), word, first['expression'] if first else '(nothing)', lemmas))
+    tokens = sum(w[0] for w in wrong)
+    print(json.dumps({'judged': len(rows), 'wrongFirst': len(wrong), 'wrongTokens': tokens, 'shareOfListTokens': round(tokens / total, 5)}))
+    print('wrong: ' + ' '.join(f'{w}→{f} (not {l}, {c})' for c, w, f, l in sorted(wrong, reverse=True)[:args.show]))
+
+
 def cmd_frequent(args, d):
     words = frequent(args.frequency, args.top)
     total = sum(c for _, c in words)
@@ -554,7 +569,7 @@ def cmd_tiesample(args, d):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('command', choices=['frequent', 'text', 'clitics', 'traces', 'nothing', 'ties', 'compare', 'nogold', 'tiesample'])
+    parser.add_argument('command', choices=['frequent', 'text', 'clitics', 'traces', 'nothing', 'ties', 'compare', 'nogold', 'tiesample', 'judged'])
     parser.add_argument('--zip', required=True)
     parser.add_argument('--dictionary', required=True)
     parser.add_argument('--languages', default=os.path.join(REPO, 'languages'))
@@ -567,13 +582,14 @@ def main():
     parser.add_argument('--sample', type=int, default=60)
     parser.add_argument('--out')
     parser.add_argument('--show', type=int, default=40)
+    parser.add_argument('--judged', default=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'judged-ties-hr.tsv'))
     parser.add_argument('--other', help='another languages directory, for compare')
     parser.add_argument('--lemma-lists', nargs='+', help='frequency lists for the lemma frequency of ties (default: --frequency)')
     args = parser.parse_args()
     d = Dictionary(args.zip)
     with open(os.path.join(args.languages, 'sh', 'transforms.json'), encoding='utf-8') as f:
         PACK_IDS.update(t['id'] for t in json.load(f)['transforms'])
-    {'compare': cmd_compare, 'nogold': cmd_nogold, 'tiesample': cmd_tiesample, 'ties': cmd_ties, 'frequent': cmd_frequent, 'text': cmd_text, 'clitics': cmd_clitics, 'traces': cmd_traces, 'nothing': cmd_nothing}[args.command](args, d)
+    {'judged': cmd_judged, 'compare': cmd_compare, 'nogold': cmd_nogold, 'tiesample': cmd_tiesample, 'ties': cmd_ties, 'frequent': cmd_frequent, 'text': cmd_text, 'clitics': cmd_clitics, 'traces': cmd_traces, 'nothing': cmd_nothing}[args.command](args, d)
 
 
 if __name__ == '__main__':

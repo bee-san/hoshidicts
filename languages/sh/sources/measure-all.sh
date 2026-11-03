@@ -76,6 +76,7 @@ print('per rule:', len(r), 'rows;', sum(1 for x in r if x['recovers'] > 0), 'rec
     done
     for f in hr sr; do
       echo "ties $f: $(python3 $P/measure.py ties --languages "$LANGS" --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --frequency "$CACHE/${f}_50k.txt" --lemma-lists "$CACHE/hr_50k.txt" "$CACHE/sr_50k.txt" --show 40)"
+      [ "$f" = hr ] && echo "judged hr: $(python3 $P/measure.py judged --languages "$LANGS" --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --frequency "$CACHE/hr_50k.txt")"
       echo "nogold $f: $(python3 $P/measure.py nogold --languages "$LANGS" --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --frequency "$CACHE/${f}_50k.txt" --out "$OUT/nogold-$i-$f.tsv" --sample 60)"
     done
     # The diacritics processor: the pack against a copy without it.
