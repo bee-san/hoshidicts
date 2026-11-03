@@ -123,7 +123,7 @@ ext/js/language/zh/*-transforms.js"). So there is no `sources/yomitan.json`,
 no Yomitan rule to leave out, and the union is the own rules. Yomitan's
 Chinese code is two text functions, both in the pack (above):
 
-- `tools/check-yomitan.mjs` compares `normalizeRadicalCharacters` on 2,512
+- `tools/check-yomitan.mjs` compares `normalizeRadicalCharacters` on 2,531
   inputs: 675 listed differences (the supplement radicals, one row of
   `sources/yomitan-differences.tsv`) and 0 unexplained.
 - `sources/check-reading-normalizer.mjs` passes Yomitan's 9 pinyin tests. Of
