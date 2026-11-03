@@ -4,7 +4,7 @@
     "v": {
       "name": "Verb",
       "isDictionaryForm": true,
-      "subConditions": ["v_dict", "v_conj", "v_conj3"]
+      "subConditions": ["v_dict", "v_conj", "v_conj3", "spelt"]
     },
     "v_dict": {
       "name": "Verb, third singular present (headword form)",
@@ -18,10 +18,18 @@
       "name": "Third singular conjunct (·beir, do·beir)",
       "isDictionaryForm": false
     },
+    "v_conj3u": {
+      "name": "Third singular conjunct whose stem may still need palatalising (·ber for ·beir)",
+      "isDictionaryForm": false
+    },
+    "v_absu": {
+      "name": "Third singular absolute whose stem may still need palatalising (berid for beirid)",
+      "isDictionaryForm": false
+    },
     "n": {
       "name": "Noun",
       "isDictionaryForm": true,
-      "subConditions": ["n_dict", "nom_pal", "nom_uinf"]
+      "subConditions": ["n_dict", "nom_pal", "nom_uinf", "spelt"]
     },
     "n_dict": {
       "name": "Noun, nominative singular (headword form)",
@@ -30,7 +38,7 @@
     "adj": {
       "name": "Adjective",
       "isDictionaryForm": true,
-      "subConditions": ["adj_dict", "nom_pal", "nom_uinf"]
+      "subConditions": ["adj_dict", "nom_pal", "nom_uinf", "spelt"]
     },
     "adj_dict": {
       "name": "Adjective, nominative singular masculine (headword form)",
@@ -42,6 +50,10 @@
     },
     "nom_uinf": {
       "name": "Noun or adjective stem with u-infection (fiur, purt)",
+      "isDictionaryForm": false
+    },
+    "spelt": {
+      "name": "Spelling variant (any part of speech)",
       "isDictionaryForm": false
     }
   },
@@ -75,6 +87,8 @@
         {"type": "prefix", "inflected": "n-", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "[aeiouáéíóúæǽAEIOUÁÉÍÓÚÆǼ]"},
         {"type": "prefix", "inflected": "n‑", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "[aeiouáéíóúæǽAEIOUÁÉÍÓÚÆǼ]"},
         {"type": "prefix", "inflected": "mb", "deinflected": "b", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "[{letter}]"},
+        {"type": "prefix", "inflected": "ṅ", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "[{letter}]"},
+        {"type": "prefix", "inflected": "ṁb", "deinflected": "b", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "[{letter}]"},
         {"type": "prefix", "inflected": "nd", "deinflected": "d", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "[{letter}]"},
         {"type": "prefix", "inflected": "ng", "deinflected": "g", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "[{letter}]"},
         {"type": "prefix", "inflected": "ll", "deinflected": "l", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "[aeiouáéíóúæǽ]"},
@@ -333,61 +347,17 @@
         {"type": "suffix", "inflected": "em", "deinflected": "i", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "id", "deinflected": "i", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "et", "deinflected": "i", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "u", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "u", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "u", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "u", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "u", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "iu", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "iu", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "iu", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "iu", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "iu", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "im", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "im", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "im", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "im", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "im", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "imm", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "imm", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "imm", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "imm", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "imm", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "am", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "am", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "am", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "am", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "am", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "em", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "em", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "em", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "em", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "em", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "id", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "id", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "id", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "id", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "id", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "aid", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "aid", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "aid", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "aid", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "aid", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "at", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "at", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "at", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "at", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "at", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "et", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "et", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "et", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "et", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "et", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ait", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "ait", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ait", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ait", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ait", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}}
+        {"type": "suffix", "inflected": "u", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "iu", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "im", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "imm", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "am", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "em", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "id", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "aid", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "at", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "et", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ait", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}
       ]
     },
     {
@@ -402,36 +372,12 @@
         {"type": "suffix", "inflected": "ther", "deinflected": "i", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "ter", "deinflected": "i", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "etar", "deinflected": "i", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "ar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "tar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "tar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "tar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "tar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "tar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ter", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "ter", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ter", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ter", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ter", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ther", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "ther", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ther", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ther", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ther", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "thar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "thar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "thar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "thar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "thar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}}
+        {"type": "suffix", "inflected": "ar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "tar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ter", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ther", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "thar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}
       ]
     },
     {
@@ -455,66 +401,18 @@
         {"type": "suffix", "inflected": "mis", "deinflected": "i", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "the", "deinflected": "i", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "tis", "deinflected": "i", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "inn", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "inn", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "inn", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "inn", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "inn", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ainn", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "ainn", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ainn", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ainn", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ainn", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "tha", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "tha", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "tha", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "tha", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "tha", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "thea", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "thea", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "thea", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "thea", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "thea", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ed", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "ed", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ed", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ed", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ed", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ad", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "ad", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ad", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ad", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ad", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "mis", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "mis", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "mis", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "mis", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "mis", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "mais", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "mais", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "mais", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "mais", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "mais", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "the", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "the", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "the", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "the", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "the", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "thae", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "thae", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "thae", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "thae", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "thae", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "tis", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "tis", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "tis", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "tis", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "tis", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "tais", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "tais", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "tais", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "tais", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "tais", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}}
+        {"type": "suffix", "inflected": "inn", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ainn", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "tha", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "thea", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ed", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ad", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "mis", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "mais", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "the", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "thae", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "tis", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "tais", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}
       ]
     },
     {
@@ -535,56 +433,16 @@
         {"type": "suffix", "inflected": "sem", "deinflected": "i", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "sid", "deinflected": "i", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "set", "deinflected": "i", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "us", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "us", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "us", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "us", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "us", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ius", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "ius", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ius", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ius", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ius", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "sam", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "sam", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "sam", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "sam", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "sam", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "sem", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "sem", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "sem", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "sem", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "sem", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "set", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "set", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "set", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "set", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "set", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "sat", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "sat", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "sat", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "sat", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "sat", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "atar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "atar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "atar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "atar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "atar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "etar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "etar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "etar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "etar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "etar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ammar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "ammar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ammar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ammar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ammar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "emmar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "emmar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "emmar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "emmar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "emmar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}}
+        {"type": "suffix", "inflected": "us", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ius", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "sam", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "sem", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "set", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "sat", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "atar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "etar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ammar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "emmar", "deinflected": "", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3", "v_conj3u"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}
       ]
     },
     {
@@ -643,6 +501,16 @@
       ]
     },
     {
+      "id": "conj-1sg",
+      "name": "1st singular",
+      "description": "First singular present, conjunct, of a strong verb (as·biur → as·beir, do·biur → do·beir).",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "iur", "deinflected": "eir", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "iurt", "deinflected": "ert", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}
+      ]
+    },
+    {
       "id": "conj-dep",
       "name": "deponent",
       "description": "Deponent verb, conjunct: other persons and tenses to the third singular (·labratar → ·labrathar, ·midiur → ·midethar).",
@@ -687,6 +555,28 @@
       "rules": [
         {"type": "suffix", "inflected": "", "deinflected": "a", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
         {"type": "suffix", "inflected": "", "deinflected": "i", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}
+      ]
+    },
+    {
+      "id": "conj-spelling",
+      "name": "spelling",
+      "description": "Spelling of a conjunct third singular: final ch for g (ad·aich → ad·aig).",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "ch", "deinflected": "g", "conditionsIn": ["v_conj"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2}
+      ]
+    },
+    {
+      "id": "conj-palatal",
+      "name": "palatal stem",
+      "description": "Third singular conjunct of a strong verb with its palatal stem (·ber → ·beir, ·gab → ·gaib, ·dleg → ·dlig; as·ber → as·beir).",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "", "deinflected": "", "conditionsIn": ["v_conj", "v_conj3u"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
+        {"type": "suffix", "inflected": "", "deinflected": "", "conditionsIn": ["v_conj", "v_conj3u"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
+        {"type": "suffix", "inflected": "", "deinflected": "", "conditionsIn": ["v_conj", "v_conj3u"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
+        {"type": "suffix", "inflected": "", "deinflected": "", "conditionsIn": ["v_conj", "v_conj3u"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
+        {"type": "suffix", "inflected": "", "deinflected": "", "conditionsIn": ["v_conj", "v_conj3u"], "conditionsOut": ["v_conj3"], "stemCharacters": "[{letter}\\u0300-\\u036F\\u00B7]", "stemContains": "[\\u00B7]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "i", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}}
       ]
     },
     {
@@ -762,11 +652,7 @@
         {"type": "circumfix", "inflectedPrefix": "·", "deinflectedPrefix": "", "inflectedSuffix": "adar", "deinflectedSuffix": "aidir", "conditionsIn": ["v_conj", "v_conj3"], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 1},
         {"type": "circumfix", "inflectedPrefix": "·", "deinflectedPrefix": "", "inflectedSuffix": "edar", "deinflectedSuffix": "idir", "conditionsIn": ["v_conj", "v_conj3"], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 1},
         {"type": "circumfix", "inflectedPrefix": "·", "deinflectedPrefix": "", "inflectedSuffix": "", "deinflectedSuffix": "id", "conditionsIn": ["v_conj", "v_conj3"], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "circumfix", "inflectedPrefix": "·", "deinflectedPrefix": "", "inflectedSuffix": "", "deinflectedSuffix": "aid", "conditionsIn": ["v_conj", "v_conj3"], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "circumfix", "inflectedPrefix": "·", "deinflectedPrefix": "", "inflectedSuffix": "", "deinflectedSuffix": "id", "conditionsIn": ["v_conj", "v_conj3"], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "circumfix", "inflectedPrefix": "·", "deinflectedPrefix": "", "inflectedSuffix": "", "deinflectedSuffix": "id", "conditionsIn": ["v_conj", "v_conj3"], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["o"], "to": "oi", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "circumfix", "inflectedPrefix": "·", "deinflectedPrefix": "", "inflectedSuffix": "", "deinflectedSuffix": "id", "conditionsIn": ["v_conj", "v_conj3"], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "ui", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "circumfix", "inflectedPrefix": "·", "deinflectedPrefix": "", "inflectedSuffix": "", "deinflectedSuffix": "id", "conditionsIn": ["v_conj", "v_conj3"], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}}
+        {"type": "circumfix", "inflectedPrefix": "·", "deinflectedPrefix": "", "inflectedSuffix": "", "deinflectedSuffix": "aid", "conditionsIn": ["v_conj", "v_conj3"], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}
       ]
     },
     {
@@ -778,26 +664,20 @@
         {"type": "suffix", "inflected": "aim", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "aimm", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "u", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "im", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "imm", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "iu", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "u", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "u", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "u", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["i"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "u", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}}
+        {"type": "suffix", "inflected": "im", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "imm", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "iu", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "u", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
       ]
     },
     {
       "id": "pres-2sg",
       "name": "2nd singular present",
-      "description": "Second singular present indicative (carai → caraid, léici → léicid, biri → beirid).",
+      "description": "Second singular present indicative (carai → caraid, biri → beirid).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ai", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "i", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "i", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "i", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["i"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "i", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}}
+        {"type": "suffix", "inflected": "ai", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "i", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}
       ]
     },
     {
@@ -809,15 +689,9 @@
         {"type": "suffix", "inflected": "mai", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "mmai", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "ammai", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "mi", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "mi", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "mi", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["i"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "mi", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "mmi", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "mai", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "mai", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "mai", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["i"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "mai", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}}
+        {"type": "suffix", "inflected": "mi", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "mmi", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "mai", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
       ]
     },
     {
@@ -827,14 +701,7 @@
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "thae", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "the", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "the", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "the", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["i"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "the", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "te", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "te", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "te", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["i"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "te", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}}
+        {"type": "suffix", "inflected": "the", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
       ]
     },
     {
@@ -844,11 +711,8 @@
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ait", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "it", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ait", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ait", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ait", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["i"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ait", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}}
+        {"type": "suffix", "inflected": "it", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ait", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
       ]
     },
     {
@@ -858,11 +722,8 @@
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "as", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "es", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "es", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "es", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["i"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "es", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "s", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
+        {"type": "suffix", "inflected": "es", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "s", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
       ]
     },
     {
@@ -873,11 +734,8 @@
       "rules": [
         {"type": "suffix", "inflected": "mae", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "tae", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "me", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "te", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "te", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "te", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["i"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "te", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}}
+        {"type": "suffix", "inflected": "me", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "te", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
       ]
     },
     {
@@ -890,19 +748,12 @@
         {"type": "suffix", "inflected": "thar", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "tair", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "tar", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "thir", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ther", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "tir", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ter", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "thir", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ther", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "tir", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ter", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "air", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "air", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "air", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "air", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["i"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "air", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ir", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ir", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ir", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["i"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "ir", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}}
+        {"type": "suffix", "inflected": "air", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
       ]
     },
     {
@@ -917,12 +768,12 @@
         {"type": "suffix", "inflected": "saimmi", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "saithe", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "sait", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "is", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "si", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "siu", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "simmi", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "sithe", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "sit", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
+        {"type": "suffix", "inflected": "is", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "si", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "siu", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "simmi", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "sithe", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "sit", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
       ]
     },
     {
@@ -933,11 +784,8 @@
       "rules": [
         {"type": "suffix", "inflected": "thae", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "thai", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "the", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "the", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "the", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["i"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "the", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "thi", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
+        {"type": "suffix", "inflected": "the", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "thi", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
       ]
     },
     {
@@ -960,15 +808,15 @@
         {"type": "suffix", "inflected": "fit", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["ai"], "to": "a", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
         {"type": "suffix", "inflected": "fas", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "fs", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemChange": {"from": ["ai"], "to": "a", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "fea", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "fe", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "fid", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "fimmi", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "fide", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "fit", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "fes", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "fidir", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "fitir", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
+        {"type": "suffix", "inflected": "fea", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "fe", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "fid", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "fimmi", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "fide", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "fit", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "fes", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "fidir", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "fitir", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
       ]
     },
     {
@@ -980,9 +828,9 @@
         {"type": "suffix", "inflected": "ad", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "am", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "at", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ed", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "em", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "et", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
+        {"type": "suffix", "inflected": "ed", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "em", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "et", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
       ]
     },
     {
@@ -991,7 +839,7 @@
       "description": "Third singular with a suffixed pronoun \"it, him\" (beirthi → beirid, gaibthi → gaibid, bentai → benaid).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "thi", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "thi", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "tai", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
       ]
     },
@@ -1015,6 +863,18 @@
         {"type": "suffix", "inflected": "ethar", "deinflected": "ithir", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "edar", "deinflected": "idir", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "adar", "deinflected": "aidir", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
+      ]
+    },
+    {
+      "id": "abs-palatal",
+      "name": "palatal stem",
+      "description": "Third singular absolute of a strong verb with its palatal stem (berid → beirid, gabid → gaibid, dlegid → dligid).",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "id", "deinflected": "id", "conditionsIn": ["v_absu"], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
+        {"type": "suffix", "inflected": "id", "deinflected": "id", "conditionsIn": ["v_absu"], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["i"], "to": "ei", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
+        {"type": "suffix", "inflected": "id", "deinflected": "id", "conditionsIn": ["v_absu"], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
+        {"type": "suffix", "inflected": "id", "deinflected": "id", "conditionsIn": ["v_absu"], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["e"], "to": "i", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}}
       ]
     },
     {
@@ -1160,13 +1020,12 @@
       "description": "Dative plural or dual (feraib → fer, súilib → súil, airib → aire, bélraib → bélrae).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "aib", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ib", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ib", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "aib", "deinflected": "ae", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ib", "deinflected": "i", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "aibh", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "aibh", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
+        {"type": "suffix", "inflected": "aib", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ib", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ib", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "aib", "deinflected": "ae", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "aibh", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "aibh", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}
       ]
     },
     {
@@ -1175,18 +1034,19 @@
       "description": "Nominative or accusative plural (falla → fall, branu → bran, cailli → caille, súili → súil, rechtae → recht).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "a", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "a", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "u", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "u", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "i", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "i", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "i", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ai", "deinflected": "ae", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ae", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ae", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
+        {"type": "suffix", "inflected": "a", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "a", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "u", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "u", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "i", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "i", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "i", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ai", "deinflected": "ae", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ae", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ae", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "a", "deinflected": "ae", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}
       ]
     },
     {
@@ -1195,16 +1055,16 @@
       "description": "Genitive singular (rechto, rechta → recht; fechtae → fecht; imdai → imdae; tíre → tír).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "o", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "o", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "a", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "a", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ae", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ae", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ai", "deinflected": "ae", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "i", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
+        {"type": "suffix", "inflected": "o", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "o", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "a", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "a", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ae", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ae", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ai", "deinflected": "ae", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "i", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}
       ]
     },
     {
@@ -1213,9 +1073,9 @@
       "description": "Dative singular of io- and ia-stems (cailliu → caille, éscu → éscae, airdiu → airde).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "iu", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "u", "deinflected": "ae", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "iu", "deinflected": "ae", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
+        {"type": "suffix", "inflected": "iu", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "u", "deinflected": "ae", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "iu", "deinflected": "ae", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}
       ]
     },
     {
@@ -1224,41 +1084,49 @@
       "description": "Oblique cases of n-stems (déicsin, déicsen → déicsiu; toimten → toimtiu; léimmen → léimm; luamain, luamon → luam).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "in", "deinflected": "iu", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "en", "deinflected": "iu", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ain", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ain", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "on", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "on", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "an", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "an", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "men", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "men", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "me", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "me", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "mim", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "mim", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "menaib", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "menaib", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "main", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "main", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "mon", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "mon", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
+        {"type": "suffix", "inflected": "in", "deinflected": "iu", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "en", "deinflected": "iu", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}
+      ]
+    },
+    {
+      "id": "mn-stem",
+      "name": "n-stem",
+      "description": "Oblique cases of the neuter n-stems in -m (léimmen, léimmenaib, léimmim → léimm; neimim → neim; luamain, luamon, luamnaib → luam).",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "men", "deinflected": "m", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "mim", "deinflected": "m", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "menaib", "deinflected": "m", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "main", "deinflected": "m", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "mon", "deinflected": "m", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "mna", "deinflected": "m", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "mnaib", "deinflected": "m", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "mann", "deinflected": "m", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "manaib", "deinflected": "m", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "me", "deinflected": "m", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
+      ]
+    },
+    {
+      "id": "aid-stem",
+      "name": "i-stem",
+      "description": "Oblique cases of the i-stems in -aid (sercada, sercado, sercadaib → sercaid; búada → búaid).",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "ada", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ado", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "adaib", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "adi", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
       ]
     },
     {
       "id": "dental-stem",
       "name": "dental stem",
-      "description": "Oblique cases of t- and d-stems (carat, cairdea → cara; filed → fili; treodataid, treodatad → treodatu; araid → arae).",
+      "description": "Oblique cases of the abstract nouns in -tu (slántad, slántaid → slántu; treodatad → treodatu).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "at", "deinflected": "a", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ed", "deinflected": "i", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "taid", "deinflected": "tu", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "tad", "deinflected": "tu", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "aid", "deinflected": "ae", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ait", "deinflected": "ae", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "at", "deinflected": "ae", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
+        {"type": "suffix", "inflected": "taid", "deinflected": "tu", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3},
+        {"type": "suffix", "inflected": "tad", "deinflected": "tu", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3},
+        {"type": "suffix", "inflected": "taith", "deinflected": "tu", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3}
       ]
     },
     {
@@ -1267,24 +1135,137 @@
       "description": "Genitive of the r-stems athair, máthair, bráthair (athar → athair, máthar → máthair).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "thar", "deinflected": "thair", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "thraib", "deinflected": "thair", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "thrib", "deinflected": "thair", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
+        {"type": "suffix", "inflected": "thar", "deinflected": "thair", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "thraib", "deinflected": "thair", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "thrib", "deinflected": "thair", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 1}
       ]
     },
     {
       "id": "guttural-stem",
       "name": "guttural stem",
-      "description": "Oblique cases of k- and g-stems (ríg → rí, airech → aire, cathrach → cathair).",
+      "description": "Oblique cases of the k-stems cathair and nathair (cathrach, cathraig → cathair).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "g", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "g", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ig", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ech", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "rach", "deinflected": "air", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "raig", "deinflected": "air", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "rchaib", "deinflected": "ir", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
+        {"type": "suffix", "inflected": "rach", "deinflected": "air", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[h]"},
+        {"type": "suffix", "inflected": "raig", "deinflected": "air", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[h]"},
+        {"type": "suffix", "inflected": "rchaib", "deinflected": "air", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[h]"},
+        {"type": "suffix", "inflected": "rachaib", "deinflected": "air", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[h]"}
+      ]
+    },
+    {
+      "id": "syncope",
+      "name": "syncope",
+      "description": "Case form of a noun whose second syllable lost its vowel before the ending (bríathraib, bríathra → bríathar; samlae → samail; lánamnae → lánamain; féchemna → féchem).",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "raib", "deinflected": "ar", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "rib", "deinflected": "ar", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ra", "deinflected": "ar", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "rae", "deinflected": "ar", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "rai", "deinflected": "ar", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "re", "deinflected": "ar", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ri", "deinflected": "ar", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ru", "deinflected": "ar", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ro", "deinflected": "ar", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "raib", "deinflected": "air", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "rib", "deinflected": "air", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ra", "deinflected": "air", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "rae", "deinflected": "air", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "rai", "deinflected": "air", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "re", "deinflected": "air", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ri", "deinflected": "air", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ru", "deinflected": "air", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ro", "deinflected": "air", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "raib", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "rib", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ra", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "rae", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "rai", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "re", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ri", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ru", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ro", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "laib", "deinflected": "al", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "lib", "deinflected": "al", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "la", "deinflected": "al", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "lae", "deinflected": "al", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "lai", "deinflected": "al", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "le", "deinflected": "al", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "li", "deinflected": "al", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "lu", "deinflected": "al", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "lo", "deinflected": "al", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "laib", "deinflected": "ail", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "lib", "deinflected": "ail", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "la", "deinflected": "ail", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "lae", "deinflected": "ail", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "lai", "deinflected": "ail", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "le", "deinflected": "ail", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "li", "deinflected": "ail", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "lu", "deinflected": "ail", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "lo", "deinflected": "ail", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "laib", "deinflected": "el", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "lib", "deinflected": "el", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "la", "deinflected": "el", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "lae", "deinflected": "el", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "lai", "deinflected": "el", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "le", "deinflected": "el", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "li", "deinflected": "el", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "lu", "deinflected": "el", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "lo", "deinflected": "el", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "naib", "deinflected": "an", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "nib", "deinflected": "an", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "na", "deinflected": "an", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "nae", "deinflected": "an", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "nai", "deinflected": "an", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ne", "deinflected": "an", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ni", "deinflected": "an", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "nu", "deinflected": "an", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "no", "deinflected": "an", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "naib", "deinflected": "ain", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "nib", "deinflected": "ain", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "na", "deinflected": "ain", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "nae", "deinflected": "ain", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "nai", "deinflected": "ain", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ne", "deinflected": "ain", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ni", "deinflected": "ain", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "nu", "deinflected": "ain", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "no", "deinflected": "ain", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "naib", "deinflected": "en", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "nib", "deinflected": "en", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "na", "deinflected": "en", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "nae", "deinflected": "en", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "nai", "deinflected": "en", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ne", "deinflected": "en", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ni", "deinflected": "en", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "nu", "deinflected": "en", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "no", "deinflected": "en", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "maib", "deinflected": "am", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "mib", "deinflected": "am", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ma", "deinflected": "am", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "mae", "deinflected": "am", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "mai", "deinflected": "am", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "me", "deinflected": "am", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "mi", "deinflected": "am", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "mu", "deinflected": "am", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "mo", "deinflected": "am", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "maib", "deinflected": "aim", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "mib", "deinflected": "aim", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ma", "deinflected": "aim", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "mae", "deinflected": "aim", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "mai", "deinflected": "aim", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "me", "deinflected": "aim", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "mi", "deinflected": "aim", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "mu", "deinflected": "aim", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "mo", "deinflected": "aim", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "maib", "deinflected": "em", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "mib", "deinflected": "em", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "ma", "deinflected": "em", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "mae", "deinflected": "em", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "mai", "deinflected": "em", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "me", "deinflected": "em", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "mi", "deinflected": "em", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "mu", "deinflected": "em", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "mo", "deinflected": "em", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}
       ]
     },
     {
@@ -1329,10 +1310,10 @@
       "description": "Case form with u-infection: dative singular of o-stems (fiur → fer, purt → port, maull → mall).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["iu"], "to": "e", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["au"], "to": "a", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
-        {"type": "suffix", "inflected": "", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["eu"], "to": "e", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}}
+        {"type": "suffix", "inflected": "", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 4, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["iu"], "to": "e", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
+        {"type": "suffix", "inflected": "", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 4, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
+        {"type": "suffix", "inflected": "", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 4, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["au"], "to": "a", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}},
+        {"type": "suffix", "inflected": "", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_dict", "adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 4, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]", "stemChange": {"from": ["eu"], "to": "e", "occurrence": "last", "between": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}}
       ]
     },
     {
@@ -1369,12 +1350,11 @@
     {
       "id": "superlative",
       "name": "superlative",
-      "description": "Superlative of an adjective (sinem → sen, ardam → ard, maillem → mall).",
+      "description": "Superlative of an adjective (sinem → sen, maillem → mall, láinem → lán).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "em", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "am", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "em", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2}
+        {"type": "suffix", "inflected": "em", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
+        {"type": "suffix", "inflected": "em", "deinflected": "", "conditionsIn": [], "conditionsOut": ["nom_pal"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 3, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}
       ]
     },
     {
@@ -1453,7 +1433,21 @@
         {"type": "wholeWord", "inflected": "láithe", "deinflected": "lá", "conditionsIn": [], "conditionsOut": ["n_dict"]},
         {"type": "wholeWord", "inflected": "láib", "deinflected": "lá", "conditionsIn": [], "conditionsOut": ["n_dict"]},
         {"type": "wholeWord", "inflected": "laib", "deinflected": "lá", "conditionsIn": [], "conditionsOut": ["n_dict"]},
-        {"type": "wholeWord", "inflected": "laithib", "deinflected": "lá", "conditionsIn": [], "conditionsOut": ["n_dict"]}
+        {"type": "wholeWord", "inflected": "laithib", "deinflected": "lá", "conditionsIn": [], "conditionsOut": ["n_dict"]},
+        {"type": "wholeWord", "inflected": "carat", "deinflected": "cara", "conditionsIn": [], "conditionsOut": ["n_dict"]},
+        {"type": "wholeWord", "inflected": "carait", "deinflected": "cara", "conditionsIn": [], "conditionsOut": ["n_dict"]},
+        {"type": "wholeWord", "inflected": "cairde", "deinflected": "cara", "conditionsIn": [], "conditionsOut": ["n_dict"]},
+        {"type": "wholeWord", "inflected": "cairdea", "deinflected": "cara", "conditionsIn": [], "conditionsOut": ["n_dict"]},
+        {"type": "wholeWord", "inflected": "cairdib", "deinflected": "cara", "conditionsIn": [], "conditionsOut": ["n_dict"]},
+        {"type": "wholeWord", "inflected": "carit", "deinflected": "cara", "conditionsIn": [], "conditionsOut": ["n_dict"]},
+        {"type": "wholeWord", "inflected": "filed", "deinflected": "fili", "conditionsIn": [], "conditionsOut": ["n_dict"]},
+        {"type": "wholeWord", "inflected": "filid", "deinflected": "fili", "conditionsIn": [], "conditionsOut": ["n_dict"]},
+        {"type": "wholeWord", "inflected": "fileda", "deinflected": "fili", "conditionsIn": [], "conditionsOut": ["n_dict"]},
+        {"type": "wholeWord", "inflected": "filedaib", "deinflected": "fili", "conditionsIn": [], "conditionsOut": ["n_dict"]},
+        {"type": "wholeWord", "inflected": "filedo", "deinflected": "fili", "conditionsIn": [], "conditionsOut": ["n_dict"]},
+        {"type": "wholeWord", "inflected": "tened", "deinflected": "tene", "conditionsIn": [], "conditionsOut": ["n_dict"]},
+        {"type": "wholeWord", "inflected": "teneid", "deinflected": "tene", "conditionsIn": [], "conditionsOut": ["n_dict"]},
+        {"type": "wholeWord", "inflected": "tenid", "deinflected": "tene", "conditionsIn": [], "conditionsOut": ["n_dict"]}
       ]
     },
     {
@@ -1504,21 +1498,36 @@
     {
       "id": "spelling",
       "name": "spelling",
-      "description": "Spelling variant: nd for nn, mm for mb (and back), a single or doubled final c, t or p, -th for unstressed final -d, -e for -ae (cend → cenn, imb → imm, mac → macc, caraith → caraid, dorche → dorchae).",
+      "description": "Spelling variant: nd for nn, mm for mb (and back), a single or doubled final c or t, -th for unstressed final -d, -e for -ae (cend → cenn, imb → imm, mac → macc, caraith → caraid, dorche → dorchae).",
       "source": "own",
       "rules": [
-        {"type": "replace", "inflected": "nd", "deinflected": "nn", "conditionsIn": [], "conditionsOut": [], "occurrence": "all", "notAtStart": true},
-        {"type": "replace", "inflected": "nn", "deinflected": "nd", "conditionsIn": [], "conditionsOut": [], "occurrence": "all", "notAtStart": true},
-        {"type": "replace", "inflected": "mb", "deinflected": "mm", "conditionsIn": [], "conditionsOut": [], "occurrence": "all", "notAtStart": true},
-        {"type": "replace", "inflected": "mm", "deinflected": "mb", "conditionsIn": [], "conditionsOut": [], "occurrence": "all", "notAtStart": true},
-        {"type": "suffix", "inflected": "cc", "deinflected": "c", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "[{letter}\\u0300-\\u036F]"},
-        {"type": "suffix", "inflected": "c", "deinflected": "cc", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemNotEndsWith": "[c]"},
-        {"type": "suffix", "inflected": "tt", "deinflected": "t", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "[{letter}\\u0300-\\u036F]"},
-        {"type": "suffix", "inflected": "t", "deinflected": "tt", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemNotEndsWith": "[t]"},
-        {"type": "suffix", "inflected": "pp", "deinflected": "p", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "[{letter}\\u0300-\\u036F]"},
-        {"type": "suffix", "inflected": "th", "deinflected": "d", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 3, "stemCharacters": "[{letter}\\u0300-\\u036F]"},
-        {"type": "suffix", "inflected": "e", "deinflected": "ae", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 3, "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemNotEndsWith": "[aeiouáéíóúæǽ]"},
-        {"type": "suffix", "inflected": "ae", "deinflected": "e", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 3, "stemCharacters": "[{letter}\\u0300-\\u036F]"}
+        {"type": "replace", "inflected": "nd", "deinflected": "nn", "conditionsIn": ["n_dict", "adj_dict", "v_dict"], "conditionsOut": ["spelt"], "occurrence": "all", "notAtStart": true},
+        {"type": "replace", "inflected": "nn", "deinflected": "nd", "conditionsIn": ["n_dict", "adj_dict", "v_dict"], "conditionsOut": ["spelt"], "occurrence": "all", "notAtStart": true},
+        {"type": "replace", "inflected": "mb", "deinflected": "mm", "conditionsIn": ["n_dict", "adj_dict", "v_dict"], "conditionsOut": ["spelt"], "occurrence": "all", "notAtStart": true},
+        {"type": "replace", "inflected": "mm", "deinflected": "mb", "conditionsIn": ["n_dict", "adj_dict", "v_dict"], "conditionsOut": ["spelt"], "occurrence": "all", "notAtStart": true},
+        {"type": "suffix", "inflected": "c", "deinflected": "cc", "conditionsIn": ["n_dict", "adj_dict", "v_dict"], "conditionsOut": ["spelt"], "stemMinLength": 2, "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemNotEndsWith": "[c]"},
+        {"type": "suffix", "inflected": "t", "deinflected": "tt", "conditionsIn": ["n_dict", "adj_dict", "v_dict"], "conditionsOut": ["spelt"], "stemMinLength": 2, "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemNotEndsWith": "[t]"},
+        {"type": "suffix", "inflected": "th", "deinflected": "d", "conditionsIn": ["n_dict", "adj_dict", "v_dict"], "conditionsOut": ["spelt"], "stemMinLength": 3, "stemCharacters": "[{letter}\\u0300-\\u036F]"},
+        {"type": "suffix", "inflected": "e", "deinflected": "ae", "conditionsIn": ["n_dict", "adj_dict", "v_dict"], "conditionsOut": ["spelt"], "stemMinLength": 3, "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemNotEndsWith": "[aeiouáéíóúæǽ]"},
+        {"type": "suffix", "inflected": "ae", "deinflected": "e", "conditionsIn": ["n_dict", "adj_dict", "v_dict"], "conditionsOut": ["spelt"], "stemMinLength": 3, "stemCharacters": "[{letter}\\u0300-\\u036F]"}
+      ]
+    },
+    {
+      "id": "emphaticAlone",
+      "name": "emphasising suffix",
+      "description": "An emphasising suffix on its own, as a hover after the hyphen finds it: its headword has the hyphen (som → -som, sa → -sa).",
+      "source": "own",
+      "rules": [
+        {"type": "wholeWord", "inflected": "som", "deinflected": "-som", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "sem", "deinflected": "-sem", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "sa", "deinflected": "-sa", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "se", "deinflected": "-se", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "su", "deinflected": "-su", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "so", "deinflected": "-so", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "siu", "deinflected": "-siu", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "si", "deinflected": "-si", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "ni", "deinflected": "-ni", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "sni", "deinflected": "-sni", "conditionsIn": [], "conditionsOut": []}
       ]
     }
   ]

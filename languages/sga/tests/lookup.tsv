@@ -1,0 +1,44 @@
+# Source: written for this pack (GPL-3.0-or-later), against tests/dictionary/. The pack has no optional feature, so these lookups are as a host makes them by default.
+# category	valid	text	expression	matched
+verbal complex	1	Ní·charat ind ḟir in n-ech	caraid	Ní·charat
+verbal complex	1	ní·charat	caraid	ní·charat
+verbal complex	1	do·berat a n-ech	dobeir	do·berat
+verbal complex	1	dom·beir in n-ech	dobeir	dom·beir
+verbal complex	1	ro·gab in tech	gaibid	ro·gab
+verbal complex	1	as·biur-sa	asbeir	as·biur-sa
+verbal complex	1	ní·fil	attá	ní·fil
+verbal complex	1	·léicset	léicid	·léicset
+verbal complex	1	·labratar	labraithir	·labratar
+absolute	1	berait in mbóin	beirid	berait
+absolute	1	caraim in fer	caraid	caraim
+copula	1	níptar maithi	is	níptar
+copula	1	ropo mór	is	ropo
+mutation	1	Chenn	cenn	Chenn
+mutation	1	chenn in fir	cenn	chenn
+mutation	1	n-ech ndub	ech	n-ech
+mutation	1	mbó	bó	mbó
+mutation	1	ndía	día	ndía
+mutation	1	hÉrinn	Érinn	hÉrinn
+noun	1	fir in tige	fer	fir
+noun	1	feraib	fer	feraib
+noun	1	mná	ben	mná
+noun	1	Dé	día	Dé
+noun	1	súilib	súil	súilib
+noun	1	bríathraib	bríathar	bríathraib
+noun	1	mainn	mann	mainn
+noun	1	brataig	bratach	brataig
+noun	1	labrad-sa	labrad	labrad-sa
+adjective	1	ardu	ard	ardu
+adjective	1	siniu	sen	siniu
+adjective	1	maull	mall	maull
+spelling	1	intan	in tan	intan
+spelling	1	cend	cenn	cend
+emphatic	1	som	-som	som
+case	1	FIR	fer	FIR
+case	1	Feraib	fer	Feraib
+case	1	MNÁ	ben	MNÁ
+word boundary	1	fer mór	fer	fer
+word boundary	1	in fer	in	in
+negatives	0	cara	caraid	cara
+negatives	0	naib	na	naib
+negatives	0	mbói	bó	mbói

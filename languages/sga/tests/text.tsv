@@ -1,0 +1,19 @@
+# Source: written for this pack (GPL-3.0-or-later), no third-party data. The pack has no optional processor.
+# category	valid	input	variant
+normalizeUnicode	1	ní	ní
+normalizeUnicode	0	ní	ní
+middleDot	1	ní‧beir	ní·beir
+middleDot	1	ní∙beir	ní·beir
+middleDot	1	ní⋅beir	ní·beir
+middleDot	1	ní·beir	ní·beir
+decapitalize	1	Ní·charat	ní·charat
+decapitalize	1	CHENN	chenn
+capitalizeFirstLetter	1	érinn	Érinn
+capitalizeFirstLetter	1	hérinn	Hérinn
+removeAlphabeticDiacritics	1	ḟer	fer
+removeAlphabeticDiacritics	1	ṡúil	suil
+removeAlphabeticDiacritics	1	mná	mna
+removeAlphabeticDiacritics	1	ní·charat	ni·charat
+aeLigature	1	dǽ	dáe
+aeLigature	1	æcni	aecni
+aeLigature	1	Ǽrinn	Áerinn

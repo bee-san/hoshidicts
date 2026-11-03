@@ -39,23 +39,34 @@ const here = dirname(fileURLToPath(import.meta.url));
 //   (·charat, do·cuirethar).
 // - v_conj3: the third singular conjunct form an ending rule reached
 //   (·cara, do·beir), which the last step turns into the headword.
+// - v_conj3u, v_absu: a third singular conjunct or absolute whose stem
+//   vowel may still need palatalising (·berat → ·ber → ·beir; berait →
+//   berid → beirid); a step of its own does it.
 // - nom_pal: a noun or adjective stem with the palatal final consonant of a
 //   case form (fir, maicc), which the depalatalisation rules undo.
 // - nom_uinf: a stem with u-infection (fiur, purt).
 // - n_dict, adj_dict: a noun's or adjective's headword form.
+// - spelt: a spelling variant of the text (cend for cenn, macc for mac).
+//   It can be any word, so every part of speech accepts it; the condition
+//   only keeps the alternations from being applied to each other's output
+//   (cenn → cend → cenn …), which multiplied the deinflections of a word
+//   with several of them into the hundreds.
 // A text after a removed initial mutation has no conditions: it can be any
 // word, and every rule applies to it as to the text as written.
 const conditions = {
-    v: {name: 'Verb', isDictionaryForm: true, subConditions: ['v_dict', 'v_conj', 'v_conj3']},
+    v: {name: 'Verb', isDictionaryForm: true, subConditions: ['v_dict', 'v_conj', 'v_conj3', 'spelt']},
     v_dict: {name: 'Verb, third singular present (headword form)', isDictionaryForm: false},
     v_conj: {name: 'Conjunct verbal complex (·beir, do·beir)', isDictionaryForm: false},
     v_conj3: {name: 'Third singular conjunct (·beir, do·beir)', isDictionaryForm: false},
-    n: {name: 'Noun', isDictionaryForm: true, subConditions: ['n_dict', 'nom_pal', 'nom_uinf']},
+    v_conj3u: {name: 'Third singular conjunct whose stem may still need palatalising (·ber for ·beir)', isDictionaryForm: false},
+    v_absu: {name: 'Third singular absolute whose stem may still need palatalising (berid for beirid)', isDictionaryForm: false},
+    n: {name: 'Noun', isDictionaryForm: true, subConditions: ['n_dict', 'nom_pal', 'nom_uinf', 'spelt']},
     n_dict: {name: 'Noun, nominative singular (headword form)', isDictionaryForm: false},
-    adj: {name: 'Adjective', isDictionaryForm: true, subConditions: ['adj_dict', 'nom_pal', 'nom_uinf']},
+    adj: {name: 'Adjective', isDictionaryForm: true, subConditions: ['adj_dict', 'nom_pal', 'nom_uinf', 'spelt']},
     adj_dict: {name: 'Adjective, nominative singular masculine (headword form)', isDictionaryForm: false},
     nom_pal: {name: 'Noun or adjective stem with a palatal final consonant (fir, maicc)', isDictionaryForm: false},
     nom_uinf: {name: 'Noun or adjective stem with u-infection (fiur, purt)', isDictionaryForm: false},
+    spelt: {name: 'Spelling variant (any part of speech)', isDictionaryForm: false},
 };
 
 const NOMINAL = ['n_dict', 'adj_dict'];
@@ -116,6 +127,10 @@ add('nasalization', 'nasalization',
         pfx('n-', '', [], [], {stemStartsWith: VOWEL_CLASS}),
         pfx('n\u2011', '', [], [], {stemStartsWith: VOWEL_CLASS}),
         pfx('mb', 'b', [], [], {stemStartsWith: '[{letter}]'}),
+        // Manuscripts and diplomatic editions mark the nasal with a dot over
+        // n or m (ṅdé for nDé, ṁbith for mbith).
+        pfx('ṅ', '', [], [], {stemStartsWith: '[{letter}]'}),
+        pfx('ṁb', 'b', [], [], {stemStartsWith: '[{letter}]'}),
         pfx('nd', 'd', [], [], {stemStartsWith: '[{letter}]'}),
         pfx('ng', 'g', [], [], {stemStartsWith: '[{letter}]'}),
         pfx('ll', 'l', [], [], {stemStartsWith: LOWER_VOWEL_CLASS}),
@@ -284,15 +299,20 @@ for (const [id, [name, description]] of Object.entries(conjNames)) {
         rules.push(sfx(inflected, deinflected, ['v_conj'], ['v_conj3'], dotted()));
     }
     for (const [inflected, deinflected] of sConj[id] ?? []) {
-        rules.push(sfx(inflected, deinflected, ['v_conj'], ['v_conj3'], dotted({stemEndsWith: CONSONANT_CLASS})));
-        // ·berat → ·beir, ·gabat → ·gaib: the third singular is palatal.
-        for (const [from, to] of [['e', 'ei'], ['a', 'ai'], ['o', 'oi'], ['u', 'ui']]) {
-            rules.push(sfx(inflected, deinflected, ['v_conj'], ['v_conj3'],
-                dotted({stemEndsWith: CONSONANT_CLASS, stemChange: palatalize(from, to)})));
-        }
+        // ·benat → ·ben; ·berat → ·ber, which the palatal-stem step makes
+        // ·beir.
+        rules.push(sfx(inflected, deinflected, ['v_conj'], ['v_conj3', 'v_conj3u'], dotted({stemEndsWith: CONSONANT_CLASS})));
     }
     add(id, name, description, rules);
 }
+// The first singular conjunct of strong verbs has u-infection (·biur,
+// as·biur → as·beir; ·gaibiu → ·gaib).
+add('conj-1sg', '1st singular',
+    'First singular present, conjunct, of a strong verb (as·biur → as·beir, do·biur → do·beir).',
+    [
+        sfx('iur', 'eir', ['v_conj'], ['v_conj3'], dotted({stemEndsWith: CONSONANT_CLASS})),
+        sfx('iurt', 'ert', ['v_conj'], ['v_conj3'], dotted({stemEndsWith: CONSONANT_CLASS})),
+    ]);
 add('conj-dep', 'deponent',
     'Deponent verb, conjunct: other persons and tenses to the third singular (·labratar → ·labrathar, ·midiur → ·midethar).',
     depConj.map(([inflected, deinflected]) => sfx(inflected, deinflected, ['v_conj'], ['v_conj3'], dotted())));
@@ -304,6 +324,21 @@ add('conj-pret3sg', 'preterite',
         sfx('', 'a', ['v_conj'], ['v_conj3'], dotted({stemEndsWith: CONSONANT_CLASS})),
         sfx('', 'i', ['v_conj'], ['v_conj3'], dotted({stemEndsWith: CONSONANT_CLASS})),
     ]);
+
+// A final lenited g is often written ch (ad·aich for ad·aig), and a strong
+// verb's third singular conjunct is sometimes written without its palatal
+// stem (as·ber for as·beir).
+add('conj-spelling', 'spelling',
+    'Spelling of a conjunct third singular: final ch for g (ad·aich → ad·aig).',
+    [sfx('ch', 'g', ['v_conj'], ['v_conj3'], dotted())]);
+// The third singular of a strong verb has a palatal stem where other
+// persons do not (·berat, ·beir; ·gabat, ·gaib), and e is raised to i
+// before it (·dlegat, ·dlig; ·ebat, ·ib). Texts also write the third
+// singular without it (as·ber for as·beir).
+add('conj-palatal', 'palatal stem',
+    'Third singular conjunct of a strong verb with its palatal stem (·ber → ·beir, ·gab → ·gaib, ·dleg → ·dlig; as·ber → as·beir).',
+    [['e', 'ei'], ['a', 'ai'], ['o', 'oi'], ['u', 'ui'], ['e', 'i']].map(([from, to]) =>
+        sfx('', '', ['v_conj', 'v_conj3u'], ['v_conj3'], dotted({stemEndsWith: CONSONANT_CLASS, stemChange: palatalize(from, to)}))));
 
 // --- From the conjunct form to the headword -------------------------------------
 // A compound verb's headword is its deuterotonic third singular without the
@@ -339,8 +374,6 @@ add('absolute', 'absolute',
         ...simpleHead.map(([s, d]) => head(s, d, {stemMinLength: 1})),
         head('', 'id', {stemMinLength: 2}),
         head('', 'aid', {stemMinLength: 2, stemEndsWith: CONSONANT_CLASS}),
-        ...[['a', 'ai'], ['o', 'oi'], ['u', 'ui'], ['e', 'ei']].map(([from, to]) =>
-            head('', 'id', {stemMinLength: 2, stemEndsWith: CONSONANT_CLASS, stemChange: palatalize(from, to)})),
     ]);
 
 // --- Absolute endings ---------------------------------------------------------
@@ -352,12 +385,12 @@ const plain = (extra = {}) => ({stemCharacters: LETTERS, stemMinLength: 2, ...ex
 const absolute = {
     'pres-1sg': ['1st singular present', 'First singular present indicative or subjunctive (caraim → caraid, léiciu → léicid, biru → beirid, gníu → gníid).',
         [['aim', 'aid'], ['aimm', 'aid'], ['u', 'aid'], ['im', 'id'], ['imm', 'id'], ['iu', 'id'], ['u', 'id']]],
-    'pres-2sg': ['2nd singular present', 'Second singular present indicative (carai → caraid, léici → léicid, biri → beirid).',
-        [['ai', 'aid'], ['i', 'id']]],
+    'pres-2sg': ['2nd singular present', 'Second singular present indicative (carai → caraid, biri → beirid).',
+        [['ai', 'aid'], ['i', 'id']], {stemMinLength: 3, stemEndsWith: CONSONANT_CLASS}],
     'pres-1pl': ['1st plural present', 'First plural present indicative (carmai → caraid, léicmi → léicid, bermai → beirid).',
         [['mai', 'aid'], ['mmai', 'aid'], ['ammai', 'aid'], ['mi', 'id'], ['mmi', 'id'], ['mai', 'id']]],
     'pres-2pl': ['2nd plural present', 'Second plural present indicative (carthae → caraid, léicthe → léicid, beirthe → beirid).',
-        [['thae', 'aid'], ['the', 'id'], ['te', 'id']]],
+        [['thae', 'aid'], ['the', 'id']]],
     'pres-3pl': ['3rd plural present', 'Third plural present indicative or subjunctive (carait → caraid, léicit → léicid, berait → beirid).',
         [['ait', 'aid'], ['it', 'id'], ['ait', 'id']]],
     'rel-3sg': ['relative', 'Third singular relative (caras → caraid, léices → léicid, beres → beirid, gnís → gníid).',
@@ -365,7 +398,7 @@ const absolute = {
     'rel-pl': ['relative', 'First and third plural relative (carmae, cartae → caraid; léicme, léicte → léicid).',
         [['mae', 'aid'], ['tae', 'aid'], ['me', 'id'], ['te', 'id']]],
     'pass-pres': ['passive', 'Passive present (carthair, carthar, cartair → caraid; léicthir, léictir → léicid; berair → beirid).',
-        [['thair', 'aid'], ['thar', 'aid'], ['tair', 'aid'], ['tar', 'aid'], ['thir', 'id'], ['ther', 'id'], ['tir', 'id'], ['ter', 'id'], ['air', 'aid'], ['air', 'id'], ['ir', 'id']]],
+        [['thair', 'aid'], ['thar', 'aid'], ['tair', 'aid'], ['tar', 'aid'], ['thir', 'id'], ['ther', 'id'], ['tir', 'id'], ['ter', 'id'], ['air', 'aid'], ['air', 'id']]],
     'pret-abs': ['preterite', 'Preterite, absolute (carais, carsait → caraid; léicis, léicsit → léicid).',
         [['ais', 'aid'], ['sai', 'aid'], ['su', 'aid'], ['saimmi', 'aid'], ['saithe', 'aid'], ['sait', 'aid'],
             ['is', 'id'], ['si', 'id'], ['siu', 'id'], ['simmi', 'id'], ['sithe', 'id'], ['sit', 'id']]],
@@ -382,19 +415,12 @@ const absolute = {
         [['ur', 'aithir'], ['iur', 'ithir'], ['iur', 'idir'], ['ither', 'aithir'], ['ammair', 'aithir'], ['immir', 'ithir'], ['mir', 'idir'],
             ['atair', 'aithir'], ['itir', 'ithir'], ['itir', 'idir'], ['athar', 'aithir'], ['ethar', 'ithir'], ['edar', 'idir'], ['adar', 'aidir']]],
 };
-for (const [id, [name, description, list]] of Object.entries(absolute)) {
+for (const [id, [name, description, list, extra = {}]] of Object.entries(absolute)) {
     const rules = [];
     for (const [inflected, deinflected] of list) {
-        rules.push(sfx(inflected, deinflected, [], VERB, plain()));
-        if (deinflected === 'id') {
-            // biru, berait, beres → beirid: strong verbs palatalise the stem
-            // in the third singular.
-            for (const [from, to] of [['e', 'ei'], ['i', 'ei'], ['a', 'ai']]) {
-                if (['u', 'i', 'mai', 'ait', 'es', 'air', 'ir', 'the', 'te', 'mi'].includes(inflected)) {
-                    rules.push(sfx(inflected, deinflected, [], VERB, plain({stemChange: palatalize(from, to)})));
-                }
-            }
-        }
+        // biru, berait, beres → berid, which the palatal-stem step makes
+        // beirid.
+        rules.push(sfx(inflected, deinflected, [], deinflected === 'id' ? ['v_dict', 'v_absu'] : VERB, plain(extra)));
         if (id === 'fut-abs' && deinflected === 'aid') {
             // mairbfid → marbaid: the W1 f-future has a palatal stem.
             rules.push(sfx(inflected.replace(/^fa/, 'f'), deinflected, [], VERB, plain({stemChange: {from: ['ai'], to: 'a', occurrence: 'last', between: CONSONANT_CLASS}})));
@@ -402,6 +428,13 @@ for (const [id, [name, description, list]] of Object.entries(absolute)) {
     }
     add(id, name, description, rules);
 }
+
+// Strong verbs palatalise the stem in the third singular absolute (biru,
+// berait, beres; beirid), and e is raised to i before it (dlegait, dligid).
+add('abs-palatal', 'palatal stem',
+    'Third singular absolute of a strong verb with its palatal stem (berid → beirid, gabid → gaibid, dlegid → dligid).',
+    [['e', 'ei'], ['i', 'ei'], ['a', 'ai'], ['e', 'i']].map(([from, to]) =>
+        sfx('id', 'id', ['v_absu'], VERB, plain({stemEndsWith: CONSONANT_CLASS, stemChange: palatalize(from, to)}))));
 
 // --- The copula and the substantive verb --------------------------------------
 // Irregular forms, written out (is "is", attá "is, exists").
@@ -440,33 +473,47 @@ add('substantive', 'substantive verb',
 const nom = (extra = {}) => ({stemCharacters: LETTERS, stemMinLength: 2, ...extra});
 const endings = {
     'dat-pl': ['dative plural', 'Dative plural or dual (feraib → fer, súilib → súil, airib → aire, bélraib → bélrae).',
-        [['aib', ''], ['ib', ''], ['ib', 'e'], ['aib', 'ae'], ['ib', 'i'], ['aibh', '']]],
+        [['aib', ''], ['ib', ''], ['ib', 'e'], ['aib', 'ae'], ['aibh', '']], {stemMinLength: 3, stemEndsWith: CONSONANT_CLASS}],
     'nom-pl': ['plural', 'Nominative or accusative plural (falla → fall, branu → bran, cailli → caille, súili → súil, rechtae → recht).',
-        [['a', ''], ['u', ''], ['i', 'e'], ['i', ''], ['ai', 'ae'], ['ae', ''], ['e', '']]],
+        [['a', ''], ['u', ''], ['i', 'e'], ['i', ''], ['ai', 'ae'], ['ae', ''], ['e', ''], ['a', 'ae']], {stemMinLength: 3, stemEndsWith: CONSONANT_CLASS}],
     'gen-sg': ['genitive', 'Genitive singular (rechto, rechta → recht; fechtae → fecht; imdai → imdae; tíre → tír).',
-        [['o', ''], ['a', ''], ['ae', ''], ['e', ''], ['ai', 'ae'], ['i', 'e']]],
+        [['o', ''], ['a', ''], ['ae', ''], ['e', ''], ['ai', 'ae'], ['i', 'e']], {stemMinLength: 3, stemEndsWith: CONSONANT_CLASS}],
     'dat-sg-io': ['dative', 'Dative singular of io- and ia-stems (cailliu → caille, éscu → éscae, airdiu → airde).',
-        [['iu', 'e'], ['u', 'ae'], ['iu', 'ae']]],
+        [['iu', 'e'], ['u', 'ae'], ['iu', 'ae']], {stemMinLength: 3, stemEndsWith: CONSONANT_CLASS}],
     'n-stem': ['n-stem', 'Oblique cases of n-stems (déicsin, déicsen → déicsiu; toimten → toimtiu; léimmen → léimm; luamain, luamon → luam).',
-        [['in', 'iu'], ['en', 'iu'], ['ain', ''], ['on', ''], ['an', ''], ['men', ''], ['me', ''], ['mim', ''], ['menaib', ''], ['main', ''], ['mon', '']]],
-    'dental-stem': ['dental stem', 'Oblique cases of t- and d-stems (carat, cairdea → cara; filed → fili; treodataid, treodatad → treodatu; araid → arae).',
-        [['at', 'a'], ['ed', 'i'], ['taid', 'tu'], ['tad', 'tu'], ['aid', 'ae'], ['ait', 'ae'], ['at', 'ae']]],
+        [['in', 'iu'], ['en', 'iu']], {stemMinLength: 3, stemEndsWith: CONSONANT_CLASS}],
+    'mn-stem': ['n-stem', 'Oblique cases of the neuter n-stems in -m (léimmen, léimmenaib, léimmim → léimm; neimim → neim; luamain, luamon, luamnaib → luam).',
+        [['men', 'm'], ['mim', 'm'], ['menaib', 'm'], ['main', 'm'], ['mon', 'm'], ['mna', 'm'], ['mnaib', 'm'], ['mann', 'm'], ['manaib', 'm'], ['me', 'm']], {stemMinLength: 2}],
+    'aid-stem': ['i-stem', 'Oblique cases of the i-stems in -aid (sercada, sercado, sercadaib → sercaid; búada → búaid).',
+        [['ada', 'aid'], ['ado', 'aid'], ['adaib', 'aid'], ['adi', 'aid']], {stemMinLength: 2}],
+    'dental-stem': ['dental stem', 'Oblique cases of the abstract nouns in -tu (slántad, slántaid → slántu; treodatad → treodatu).',
+        [['taid', 'tu'], ['tad', 'tu'], ['taith', 'tu']], {stemMinLength: 3}],
     'r-stem': ['r-stem', 'Genitive of the r-stems athair, máthair, bráthair (athar → athair, máthar → máthair).',
-        [['thar', 'thair'], ['thraib', 'thair'], ['thrib', 'thair']]],
-    'guttural-stem': ['guttural stem', 'Oblique cases of k- and g-stems (ríg → rí, airech → aire, cathrach → cathair).',
-        [['g', ''], ['ig', 'e'], ['ech', 'e'], ['rach', 'air'], ['raig', 'air'], ['rchaib', 'ir']]],
+        [['thar', 'thair'], ['thraib', 'thair'], ['thrib', 'thair']], {stemMinLength: 1}],
+    'guttural-stem': ['guttural stem', 'Oblique cases of the k-stems cathair and nathair (cathrach, cathraig → cathair).',
+        [['rach', 'air'], ['raig', 'air'], ['rchaib', 'air'], ['rachaib', 'air']], {stemMinLength: 3, stemEndsWith: '[h]'}],
 };
-for (const [id, [name, description, list]] of Object.entries(endings)) {
+for (const [id, [name, description, list, extra = {}]] of Object.entries(endings)) {
     add(id, name, description, list.flatMap(([inflected, deinflected]) => {
-        const rules = [sfx(inflected, deinflected, [], NOMINAL, nom())];
+        const rules = [sfx(inflected, deinflected, [], NOMINAL, nom(extra))];
         // The ending removed, the stem may still be palatal (túaithe →
         // túaith → túath) or u-infected; the second step undoes it.
         if (deinflected === '' && inflected !== 'aib' && inflected !== 'ib') {
-            rules.push(sfx(inflected, '', [], ['nom_pal'], nom()));
+            rules.push(sfx(inflected, '', [], ['nom_pal'], nom(extra)));
         }
         return rules;
     }));
 }
+
+// Syncope: a noun of two syllables loses the vowel of its second syllable
+// before an ending (bríathar, bríathraib; samail, samlae; lánamain,
+// lánamnae; féchem, féchemna). The vowel is put back before the last
+// consonant.
+const syncopeEndings = ['aib', 'ib', 'a', 'ae', 'ai', 'e', 'i', 'u', 'o'];
+add('syncope', 'syncope',
+    'Case form of a noun whose second syllable lost its vowel before the ending (bríathraib, bríathra → bríathar; samlae → samail; lánamnae → lánamain; féchemna → féchem).',
+    ['r', 'l', 'n', 'm'].flatMap((c) => ['a', 'ai', 'e'].flatMap((v) => syncopeEndings.map((e) =>
+        sfx(`${c}${e}`, `${v}${c}`, [], NOMINAL, nom({stemMinLength: 3, stemEndsWith: CONSONANT_CLASS}))))));
 
 // Palatal final consonants undone: the i written before them is removed, and
 // e raised to i is lowered again (fir → fer, cinn → cenn, maicc → macc, baill
@@ -491,7 +538,7 @@ add('depalatalization', 'palatal stem',
 add('uInfection', 'u-infection',
     'Case form with u-infection: dative singular of o-stems (fiur → fer, purt → port, maull → mall).',
     [['iu', 'e'], ['u', 'o'], ['au', 'a'], ['eu', 'e']].map(([from, to]) => sfx('', '', [], NOMINAL,
-        {stemCharacters: LETTERS, stemMinLength: 2, stemEndsWith: CONSONANT_CLASS, stemChange: {from: [from], to, occurrence: 'last', between: CONSONANT_CLASS}})));
+        {stemCharacters: LETTERS, stemMinLength: 4, stemEndsWith: CONSONANT_CLASS, stemChange: {from: [from], to, occurrence: 'last', between: CONSONANT_CLASS}})));
 
 // The accusative plural -u raises e to i (firu → fer).
 add('acc-pl-raised', 'accusative plural',
@@ -509,12 +556,14 @@ add('comparative', 'comparative',
         sfx('u', '', [], ['adj_dict'], nom()),
         sfx('iu', '', [], ['nom_pal'], nom()),
     ]);
+// Superlatives in -am (ardam) are left out: -am is also the first plural of
+// conjunct and imperative verbs (·cerdam, beram), which a real text has far
+// more often.
 add('superlative', 'superlative',
-    'Superlative of an adjective (sinem → sen, ardam → ard, maillem → mall).',
+    'Superlative of an adjective (sinem → sen, maillem → mall, láinem → lán).',
     [
-        sfx('em', '', [], ['adj_dict'], nom()),
-        sfx('am', '', [], ['adj_dict'], nom()),
-        sfx('em', '', [], ['nom_pal'], nom()),
+        sfx('em', '', [], ['adj_dict'], nom({stemMinLength: 3, stemEndsWith: CONSONANT_CLASS})),
+        sfx('em', '', [], ['nom_pal'], nom({stemMinLength: 3, stemEndsWith: CONSONANT_CLASS})),
     ]);
 add('equative', 'equative',
     'Equative of an adjective (ardithir → ard, lethidir → lethan).',
@@ -537,6 +586,9 @@ const irregularNouns = {
     'rí': ['ríg', 'ríga', 'rígu', 'rígaib', 'rig', 'riga'],
     'tech': ['taige', 'tige', 'tig', 'taig', 'tigi', 'tigib', 'tegdais'],
     'lá': ['laa', 'láa', 'lae', 'laithe', 'láithe', 'láib', 'laib', 'laithib'],
+    'cara': ['carat', 'carait', 'cairde', 'cairdea', 'cairdib', 'carit'],
+    'fili': ['filed', 'filid', 'fileda', 'filedaib', 'filedo'],
+    'tene': ['tened', 'teneid', 'tenid'],
 };
 add('irregularNoun', 'irregular noun',
     'A case form of an irregular noun (Dé → día, mná → ben, bóu → bó, dóini → duine, coin → cú, ríg → rí, taige → tech, laithe → lá).',
@@ -565,28 +617,36 @@ add('emphatic', 'emphasising suffix',
 // ============================================================================
 // 5. Spelling alternations
 // ============================================================================
-// Old Irish spelling varies between manuscripts and editions; a dictionary
-// lists one spelling. nd and nn, mb and mm stand for the same sound (cend,
-// cenn; imb, imm); a final voiceless stop may be written single or double
-// (mac, macc; brat, bratt); an unstressed final -d is often written -th
-// (caraith for caraid); final unstressed -ae and -e interchange (dorche,
-// dorchae). The output can be any kind of word, so it has no conditions.
+// Old Irish spelling varies between manuscripts and editions, and a
+// dictionary lists one spelling. nd and nn, mb and mm stand for the same
+// sound (cend, cenn; imb, imm); a final c or t may be written single or
+// doubled (mac, macc; brat, bratt); an unstressed final -d is often written
+// -th (caraith for caraid); final unstressed -ae and -e interchange
+// (dorche, dorchae). Each alternation is applied once, at the end of a
+// deinflection (the condition spelt).
+const SPELT = ['spelt'];
+// A spelling variant of the text as written, or of the headword form an
+// inflection rule reached (cendaib → cend → cenn).
+const BEFORE_SPELT = ['n_dict', 'adj_dict', 'v_dict'];
 add('spelling', 'spelling',
-    'Spelling variant: nd for nn, mm for mb (and back), a single or doubled final c, t or p, -th for unstressed final -d, -e for -ae (cend → cenn, imb → imm, mac → macc, caraith → caraid, dorche → dorchae).',
+    'Spelling variant: nd for nn, mm for mb (and back), a single or doubled final c or t, -th for unstressed final -d, -e for -ae (cend → cenn, imb → imm, mac → macc, caraith → caraid, dorche → dorchae).',
     [
-        replace('nd', 'nn', [], [], {occurrence: 'all', notAtStart: true}),
-        replace('nn', 'nd', [], [], {occurrence: 'all', notAtStart: true}),
-        replace('mb', 'mm', [], [], {occurrence: 'all', notAtStart: true}),
-        replace('mm', 'mb', [], [], {occurrence: 'all', notAtStart: true}),
-        sfx('cc', 'c', [], [], {stemMinLength: 2, stemCharacters: LETTERS}),
-        sfx('c', 'cc', [], [], {stemMinLength: 2, stemCharacters: LETTERS, stemNotEndsWith: '[c]'}),
-        sfx('tt', 't', [], [], {stemMinLength: 2, stemCharacters: LETTERS}),
-        sfx('t', 'tt', [], [], {stemMinLength: 2, stemCharacters: LETTERS, stemNotEndsWith: '[t]'}),
-        sfx('pp', 'p', [], [], {stemMinLength: 2, stemCharacters: LETTERS}),
-        sfx('th', 'd', [], [], {stemMinLength: 3, stemCharacters: LETTERS}),
-        sfx('e', 'ae', [], [], {stemMinLength: 3, stemCharacters: LETTERS, stemNotEndsWith: LOWER_VOWEL_CLASS}),
-        sfx('ae', 'e', [], [], {stemMinLength: 3, stemCharacters: LETTERS}),
+        replace('nd', 'nn', BEFORE_SPELT, SPELT, {occurrence: 'all', notAtStart: true}),
+        replace('nn', 'nd', BEFORE_SPELT, SPELT, {occurrence: 'all', notAtStart: true}),
+        replace('mb', 'mm', BEFORE_SPELT, SPELT, {occurrence: 'all', notAtStart: true}),
+        replace('mm', 'mb', BEFORE_SPELT, SPELT, {occurrence: 'all', notAtStart: true}),
+        sfx('c', 'cc', BEFORE_SPELT, SPELT, {stemMinLength: 2, stemCharacters: LETTERS, stemNotEndsWith: '[c]'}),
+        sfx('t', 'tt', BEFORE_SPELT, SPELT, {stemMinLength: 2, stemCharacters: LETTERS, stemNotEndsWith: '[t]'}),
+        sfx('th', 'd', BEFORE_SPELT, SPELT, {stemMinLength: 3, stemCharacters: LETTERS}),
+        sfx('e', 'ae', BEFORE_SPELT, SPELT, {stemMinLength: 3, stemCharacters: LETTERS, stemNotEndsWith: LOWER_VOWEL_CLASS}),
+        sfx('ae', 'e', BEFORE_SPELT, SPELT, {stemMinLength: 3, stemCharacters: LETTERS}),
     ]);
+// A host's hover after the hyphen starts at the suffix itself (labrad-sa:
+// the text sa …). Dictionaries list the suffixes with their hyphen (-sa).
+const emphaticHeads = ['som', 'sem', 'sa', 'se', 'su', 'so', 'siu', 'si', 'ni', 'sni'];
+add('emphaticAlone', 'emphasising suffix',
+    'An emphasising suffix on its own, as a hover after the hyphen finds it: its headword has the hyphen (som → -som, sa → -sa).',
+    emphaticHeads.map((w) => whole(w, `-${w}`, [], [])));
 
 // --- Output -------------------------------------------------------------------
 const out = {schema: 1, conditions, transforms};

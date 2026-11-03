@@ -1,0 +1,169 @@
+# Source: written for this pack (GPL-3.0-or-later), no third-party data. Forms of the regular Old Irish paradigms (Thurneysen, A Grammar of Old Irish; Stifter, Sengoídelc). The pack has no optional processor or transform, so these rows run as a lookup does by default.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+lenition	1	chenn	cenn	*	lenition
+lenition	1	thech	tech	*	lenition
+lenition	1	phopul	popul	*	lenition
+lenition	1	ḟer	fer	*	lenition
+lenition	1	ṡúil	súil	*	lenition
+lenition	1	ṁac	mac	*	lenition
+nasalization	1	n-ech	ech	*	nasalization
+nasalization	1	mbó	bó	*	nasalization
+nasalization	1	ndía	día	*	nasalization
+nasalization	1	ngein	gein	*	nasalization
+nasalization	1	llia	lia	*	nasalization
+nasalization	1	ṅdé	dé	*	nasalization
+nasalization	1	nech	ech	*	nasalizationNoHyphen
+nasalization	1	nanmae	anmae	*	nasalizationNoHyphen
+hProthesis	1	hÉrinn	Érinn	*	hProthesis
+hProthesis	1	h-uile	uile	*	hProthesis
+hProthesis	1	huile	uile	*	hProthesis
+verbal complex	1	ní·charat	caraid	v	absolute|conj-pres|lenitionAfterDot|particle
+verbal complex	1	ní·beir	beirid	v	absolute|particle
+verbal complex	1	ro·gab	gaibid	v	*
+verbal complex	1	nom·charat	caraid	v	*
+verbal complex	1	nod·n-ail	ailid	v	*
+verbal complex	1	dom·beir	dobeir	v	deuterotonic|infixedPronoun
+verbal complex	1	do·chuirethar	docuirethar	v	deuterotonic|lenitionAfterDot
+verbal complex	1	fod·era	fofera	v	*
+verbal complex	1	ara·mberar	beirid	v	*
+verbal complex	1	ní·léicet	léicid	v	*
+verbal complex	1	ad·aich	adaig	v	*
+verbal complex	1	as·ber	asbeir	v	*
+verbal complex	1	du·gní	dogní	v	*
+verbal complex	1	fu·ceird	foceird	v	*
+verbal complex	1	n-as·beir	asbeir	v	*
+conjunct	1	do·berat	dobeir	v	deuterotonic|conj-palatal|conj-pres
+conjunct	1	·carat	caraid	v	absolute|conj-pres
+conjunct	1	·caram	caraid	v	absolute|conj-pres
+conjunct	1	·léicem	léicid	v	absolute|conj-pres
+conjunct	1	·berat	beirid	v	absolute|conj-palatal|conj-pres
+conjunct	1	·gabat	gaibid	v	absolute|conj-palatal|conj-pres
+conjunct	1	·dlegat	dligid	v	absolute|conj-palatal|conj-pres
+conjunct	1	·carthar	caraid	v	absolute|conj-pass
+conjunct	1	do·berar	dobeir	v	deuterotonic|conj-palatal|conj-pass
+conjunct	1	·léicther	léicid	v	absolute|conj-pass
+conjunct	1	·carad	caraid	v	absolute|conj-ipf
+conjunct	1	·léictis	léicid	v	absolute|conj-ipf
+conjunct	1	·carsat	caraid	v	absolute|conj-pret
+conjunct	1	·léicset	léicid	v	absolute|conj-pret
+conjunct	1	·léicfea	léicid	v	absolute|conj-fut
+conjunct	1	·léicfed	léicid	v	absolute|conj-cond
+conjunct	1	·carae	caraid	v	absolute|conj-subj
+conjunct	1	as·biur	asbeir	v	deuterotonic|conj-1sg
+conjunct	1	·labratar	labraithir	v	absolute|conj-dep
+conjunct	1	·midiur	midithir	v	absolute|conj-dep
+conjunct	1	·car	caraid	v	absolute|conj-pret3sg
+conjunct	1	·cara	caraid	v	absolute
+conjunct	1	·léici	léicid	v	absolute
+conjunct	1	·ben	benaid	v	absolute
+conjunct	1	·labrathar	labraithir	v	absolute
+conjunct	1	·gaib	gaibid	v	absolute
+absolute	1	caraim	caraid	v	pres-1sg
+absolute	1	léiciu	léicid	v	pres-1sg
+absolute	1	biru	beirid	v	abs-palatal|pres-1sg
+absolute	1	carai	caraid	v	pres-2sg
+absolute	1	carmai	caraid	v	pres-1pl
+absolute	1	léicmi	léicid	v	pres-1pl
+absolute	1	carthae	caraid	v	pres-2pl
+absolute	1	carait	caraid	v	pres-3pl
+absolute	1	léicit	léicid	v	pres-3pl
+absolute	1	berait	beirid	v	abs-palatal|pres-3pl
+absolute	1	caras	caraid	v	rel-3sg
+absolute	1	léices	léicid	v	rel-3sg
+absolute	1	beres	beirid	v	abs-palatal|rel-3sg
+absolute	1	cartae	caraid	v	rel-pl
+absolute	1	carthair	caraid	v	pass-pres
+absolute	1	léicthir	léicid	v	pass-pres
+absolute	1	berair	beirid	v	abs-palatal|pass-pres
+absolute	1	carais	caraid	v	pret-abs
+absolute	1	léicis	léicid	v	pret-abs
+absolute	1	carsait	caraid	v	pret-abs
+absolute	1	carthae	caraid	v	*
+absolute	1	léicthe	léicid	v	*
+absolute	1	léicfid	léicid	v	fut-abs
+absolute	1	línfaid	línaid	v	fut-abs
+absolute	1	mairbfid	marbaid	v	fut-abs
+absolute	1	carad	caraid	v	imperative
+absolute	1	léiced	léicid	v	imperative
+absolute	1	beirthi	beirid	v	suffixed-pronoun
+absolute	1	labrathar	labraithir	v	deponent
+absolute	1	midiur	midithir	v	deponent
+copula	1	am	is	v	copula
+copula	1	it	is	v	copula
+copula	1	níptar	is	v	copula
+copula	1	ropo	is	v	copula
+copula	1	bid	is	v	copula
+substantive	1	fil	attá	v	substantive
+substantive	1	filet	attá	v	substantive
+substantive	1	bíid	attá	v	substantive
+substantive	1	boí	attá	v	substantive
+substantive	1	ní·fil	attá	v	substantive|particle
+substantive	1	ataat	attá	v	substantive
+noun	1	feraib	fer	n	dat-pl
+noun	1	súilib	súil	n	dat-pl
+noun	1	airib	aire	n	dat-pl
+noun	1	bélraib	bélrae	n	dat-pl
+noun	1	falla	fall	n	nom-pl
+noun	1	branu	bran	n	nom-pl
+noun	1	cailli	caille	n	*
+noun	1	rechtae	recht	n	*
+noun	1	rechto	recht	n	gen-sg
+noun	1	cailliu	caille	n	dat-sg-io
+noun	1	déicsin	déicsiu	n	n-stem
+noun	1	léimmen	léimm	n	mn-stem
+noun	1	sercada	sercaid	n	aid-stem
+noun	1	slántad	slántu	n	dental-stem
+noun	1	athar	athair	n	r-stem
+noun	1	cathrach	cathair	n	guttural-stem
+noun	1	bríathraib	bríathar	n	syncope
+noun	1	samlae	samail	n	syncope
+noun	1	fir	fer	n	depalatalization
+noun	1	maicc	macc	n	depalatalization
+noun	1	puirt	port	n	depalatalization
+noun	1	mainn	mann	n	depalatalization
+noun	1	brataig	bratach	n	depalatalization
+noun	1	túaithe	túath	n	*
+noun	1	fiur	fer	n	uInfection
+noun	1	purt	port	n	uInfection
+noun	1	firu	fer	n	acc-pl-raised
+noun	1	mná	ben	n	irregularNoun
+noun	1	Dé	día	n	*
+noun	1	ríg	rí	n	irregularNoun
+noun	1	coin	cú	n	irregularNoun
+noun	1	taige	tech	n	irregularNoun
+noun	1	bóu	bó	n	irregularNoun
+adjective	1	ardu	ard	adj	comparative
+adjective	1	siniu	sen	adj	*
+adjective	1	sinem	sen	adj	depalatalization|superlative
+adjective	1	ardithir	ard	adj	equative
+adjective	1	móir	mór	adj	depalatalization
+adjective	1	maull	mall	adj	uInfection
+spelling	1	intan	in tan	*	fused
+spelling	1	cend	cenn	*	spelling
+spelling	1	imb	imm	*	spelling
+spelling	1	mac	macc	*	spelling
+spelling	1	caraith	caraid	*	spelling
+spelling	1	dorche	dorchae	*	spelling
+spelling	1	cendaib	cenn	*	*
+emphatic	1	labrad-sa	labrad	*	emphatic
+emphatic	1	tuit-som	tuit	*	emphatic
+emphatic	1	as·berat-som	asbeir	v	*
+emphatic	1	som	-som	*	emphaticAlone
+emphatic	1	sa	-sa	*	emphaticAlone
+phrase	1	Ní·charat	caraid	v	*
+phrase	1	Ro·gab	gaibid	v	*
+phrase	1	CHENN	cenn	*	*
+# Negatives: wrong readings the constraints keep out.
+negatives	0	cara	caraid	*	*
+negatives	0	beram	ber	*	*
+negatives	0	naib	na	*	*
+negatives	0	mbói	bó	*	*
+negatives	0	ní·beir	níbeir	*	*
+negatives	0	in fir	in fer	*	*
+negatives	0	is mó	is mór	*	*
+negatives	0	dún	don	*	*
+negatives	0	ciam	cía	*	*
+negatives	0	nitat	níta	*	*
+negatives	0	beraid	bir	*	*
+negatives	0	daman	dam	*	*
+negatives	0	naib	aub	*	*

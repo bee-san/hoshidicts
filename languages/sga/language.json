@@ -9,11 +9,12 @@
   "direction": "ltr",
   "classes": {
     "letter": "[A-Za-z\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u024F\\u1E00-\\u1EFF]",
-    "word": "[{letter}\\u0300-\\u036F0-9]",
+    "abbreviation": "[\\u0254\\u0186\\u2183\\u2184\\u204A\\uA749\\u026B]",
+    "word": "[{letter}{abbreviation}\\u0300-\\u036F0-9]",
     "dot": "[\\u00B7\\u0387\\u2027\\u2219\\u22C5]"
   },
   "text": {
-    "pattern": "[{letter}\\u0300-\\u036F{dot}]",
+    "pattern": "[{letter}{abbreviation}\\u0300-\\u036F{dot}]",
     "scanStart": "word",
     "segmentation": "spaces",
     "wordCharacters": "{word}",
