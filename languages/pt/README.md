@@ -323,7 +323,8 @@ given, it is labelled "without the field".
      names encargar, which wty-pt-en only refers to encarregar; `fofinha`
      shows the noun fofa, because its row names fofinho, whose lemma fofo is a
      second hop away (docs/languages.md 16).
-   - A hand check of 60 unjudged results drawn from them (seed 11): 53 right,
+   - A hand check of 60 unjudged results drawn from them (seed 11; each has
+     the same first result with the final rules): 53 right,
      6 wrong (names read as words: `Toni` → toner, `Elma` → elmo, `Joko` →
      jóquer; the Asturian `moi`; `viamos`, víamos without its accent, read as
      vir; the typo `deses`) and 1 related word (`peja` shown as pejo, not
@@ -344,15 +345,17 @@ given, it is labelled "without the field".
    | "Brasil" (Wikipedia) | 12,359 | 0 | 2 |
    | "Portugal" (Wikipedia) | 13,702 | 0 | 23 |
 
-   - All 36 judged wrong are spellings of their editions: `azas` (asas) and
-     `familias` (famílias) read as the tu present of azar and familiar (25),
-     `peccados` (pecados) as the participle of peccar (5), `deviamos`
-     (devíamos) as vir (4), `triumpha` as triumpho, and the place name
-     `Ribeirinha` as Ribeira. wty-pt-en writes these spellings as references
+   - 35 of the 36 judged wrong are spellings of their editions: `azas`
+     (asas) and `familias` (famílias) read as the tu present of azar and
+     familiar (25), `peccados` (pecados) as pecar, through the participle of
+     its old spelling peccar (5), `deviamos` (devíamos) as vir (4), and
+     `triumpha` as triumpho (1). The other is the place name `Ribeirinha`
+     read as Ribeira. wty-pt-en writes these spellings as references
      to a reference (`azas` → aza → asa), which one hop does not reach, so the
      right lemma has no entry the lookup can show.
    - A hand check of 60 unjudged results drawn from the three novels and the
-     first article (seed 11): 42 right, 14 wrong and 4 related words. Of the
+     first article (seed 11; each has the same first result with the final
+     rules): 42 right, 14 wrong and 4 related words. Of the
      wrong, 10 are spellings without the accents of the 1911 and 1945 reforms
      (`politicos`, `magnificos`, `sitios`, `visinho`, `cosinha`, `bôa`,
      `desdem`, `miudas`), 2 Roman numerals (`VII` → vir), 1 the French
@@ -424,9 +427,9 @@ Checks:
   transforms (`falava` → falar `imperfect (eu/ele)`, `pôs` → pôr `preterite
   (ele)`, `leões` → leão `plural`, `soubesse` → saber `imperfect subjunctive
   (eu/ele)`, `lembrava-se` → lembrar); the Anki note and the switch to
-  Japanese and back work. With the prebuilt b145feb runtimes and the pack
-  without the field, the same 16 checks pass, the traces coming from
-  wty-pt-en's form-of rows.
+  Japanese and back work. With the prebuilt b145feb runtimes and an earlier
+  head of this branch without the field, the same 16 checks passed, the
+  traces coming from wty-pt-en's form-of rows.
 
 ## Known gaps
 
