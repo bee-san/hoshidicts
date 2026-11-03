@@ -7,9 +7,10 @@
 <build dir> has language-conformance-test (a build configured with
 HOSHIDICTS_LANGUAGE_TESTS). For each mutation the pack is copied into
 <scratch dir>/languages/pt (tools/ linked beside it), one text replacement is
-made in sources/build-own.mjs or language.json, own.json, transforms.json and
-tests/classes.json are written again for the copy, and the conformance test
-runs on it. A mutation is killed when a test row fails (not only the
+made in sources/build-own.mjs or language.json (or, for an 'order' mutation,
+one transform is moved before another in the written transforms.json),
+own.json, transforms.json and tests/classes.json are written again for the
+copy, and the conformance test runs on it. A mutation is killed when a test row fails (not only the
 classes.json comparison, which is rewritten). Prints one line per mutation and
 writes <scratch dir>/mutations.json.
 """
@@ -77,6 +78,40 @@ MUTATIONS = [
     ('processor: decapitalize -> upper', 'language.json', '"case": "lower"', '"case": "upper"'),
     ('hyphen made word-internal', 'language.json', '"wordInternal": null', '"wordInternal": "[\\\\-]"'),
     ('searchResolution character', 'language.json', '"searchResolution": "word"', '"searchResolution": "character"'),
+    # The order of the transforms decides ties between readings (README, Rule provenance).
+    ('order: subjunctive-eles before present-eles', 'order', 'subjunctive-eles', 'present-eles'),
+    ('order: feminine before the verbs', 'order', 'feminine', 'present-eu'),
+    ('order: participle before plural', 'order', 'participle', 'plural'),
+    ('order: participle before feminine', 'order', 'participle', 'feminine'),
+    # Plurals at the longer endings of verb forms, and the feminine at the participle's.
+    ('plural at -ados, -adas, -idos, -idas removed', 'build-own.mjs', "    ['ados', 'ado'], ['adas', 'ada'], ['idos', 'ido'], ['idas', 'ida'],      // soldados, piadas, sentidos, bebidas\n", ""),
+    ('plural at -eias, -iras removed', 'build-own.mjs', "    ['eias', 'eia'], ['iras', 'ira'],                                         // ideias, mentiras\n", ""),
+    ('plural at -ques, -gues, -guas, -ças removed', 'build-own.mjs', "    ['ques', 'que'], ['gues', 'gue'], ['guas', 'gua'], ['ças', 'ça'],         // ataques, águas, peças\n", ""),
+    ('plural at -áveis, -íveis removed', 'build-own.mjs', "    ['áveis', 'ável'], ['íveis', 'ível'],                                     // saudáveis, possíveis\n", ""),
+    ('plural at -postos, -postas, -feitos removed', 'build-own.mjs', "    ['postos', 'posto'], ['postas', 'posta'], ['feitos', 'feito'],            // impostos, apostas, perfeitos\n", ""),
+    ('plural at -vistos, -vistas, -ditos removed', 'build-own.mjs', "    ['vistos', 'visto'], ['vistas', 'vista'], ['ditos', 'dito'],              // imprevistos, revistas, malditos\n", ""),
+    ('feminine at the participle endings removed', 'build-own.mjs', "    ['ada', 'ado', 2], ['ida', 'ido', 2], ['ída', 'ído', 2],  // cansada, conhecida, distraída\n", ""),
+    ('possessives removed', 'build-own.mjs', "['minha', 'meu'], ['minhas', 'meu']]) {\n    add('feminine',", "['minha', 'meu'], ['minhas', 'meu']]) {\n    if (false) add('feminine',"),
+    # Preferred readings.
+    ('preferred readings removed', 'build-own.mjs', "    const verbSlot = !['feminine', 'plural'].includes(slot);\n    add(slot,", "    const verbSlot = !['feminine', 'plural'].includes(slot);\n    if (false) add(slot,"),
+    ('preferred: amiga removed', 'build-own.mjs', "['feminine', 'amiga', 'amigo'], ", ""),
+    ('preferred: perfeita removed', 'build-own.mjs', "['feminine', 'perfeita', 'perfeito'], ", ""),
+    ('preferred: verdes removed', 'build-own.mjs', "['plural', 'verdes', 'verde'], ", ""),
+    ('preferred: pare removed', 'build-own.mjs', "['subjunctive-eu-ele', 'pare', 'parar'], ", ""),
+    ('preferred: atende removed', 'build-own.mjs', "['present-ele', 'atende', 'atender'],", ""),
+    ('preferred: achas removed', 'build-own.mjs', "['present-tu', 'achas', 'achar'], ", ""),
+    # The audit's surviving mutations (audit of #72, m1).
+    ('clitic -o, -a, -os, -as: also a noun', 'build-own.mjs', "clitic(p, `-${p}`, '', ['vf'], {stemNotEndsWith: '[rszm]'});", "clitic(p, `-${p}`, '', ['vf', 'n'], {stemNotEndsWith: '[rszm]'});"),
+    ('compound prefix removed: ante (antever)', 'build-own.mjs', "prefixes: ['re', 'pre', 'ante', 'entre', 'des']", "prefixes: ['re', 'pre', 'entre', 'des']"),
+    ('compound prefix removed: equi (equivaler)', 'build-own.mjs', "{prefixes: ['equi']}", "{prefixes: []}"),
+    ('compound prefix removed: sor (sorrir)', 'build-own.mjs', "prefixes: ['sor']", "prefixes: []"),
+    ('prover paradigm removed', 'build-own.mjs', "irregular('prover', {", "if (false) irregular('prover', {"),
+    ('-gredir rule removed', 'build-own.mjs', "    verb(slot, `grid${ending}`, 'gredir', {stemMinLength: 1});", ""),
+    ('ser and ir: pluperfect removed', 'build-own.mjs', "    pp: ['fora', 'foras', 'fôramos', 'fôreis', 'foram'],\n", ""),
+    ('vós ending -ísseis wrong', 'build-own.mjs', "'imperfect-subjunctive-nos': 'íssemos', 'imperfect-subjunctive-vos': 'ísseis'", "'imperfect-subjunctive-nos': 'íssemos', 'imperfect-subjunctive-vos': 'isseis'"),
+    ('vós ending -erdes wrong', 'build-own.mjs', "'personal-infinitive-vos': 'erdes'", "'personal-infinitive-vos': 'erdez'"),
+    ('processor: NFKC -> NFKD', 'language.json', '"normalize": "NFKC"', '"normalize": "NFKD"'),
+    ('stems: Latin-1 capitals allowed', 'language.json', '"lowerStem": "[^ A-Z\\\\u00C0-\\\\u00D6\\\\u00D8-\\\\u00DE]"', '"lowerStem": "[^ A-Z]"'),
 ]
 
 
@@ -91,20 +126,34 @@ def prepare(root, file, old, new):
     shutil.copytree(REPO / 'languages' / 'pt', root / 'languages' / 'pt')
     (root / 'tools').symlink_to(REPO / 'tools')
     pack = root / 'languages' / 'pt'
-    path = pack / ('sources/build-own.mjs' if file == 'build-own.mjs' else 'language.json')
-    text = path.read_text(encoding='utf-8')
-    if old not in text:
-        return f'pattern not found in {file}'
-    if new is None:  # remove a processor object and the comma before it
-        i = text.index(old)
-        j = text.rindex(',', 0, i)
-        text = text[:j] + text[i + len(old):]
-    else:
-        text = text.replace(old, new)
-    path.write_text(text, encoding='utf-8')
-    for cmd in (['node', str(pack / 'sources' / 'build-own.mjs')],
-                ['node', str(REPO / 'tools' / 'merge-transforms.mjs'), 'pt', '--languages', str(root / 'languages'), '--force'],
-                ['node', str(REPO / 'tools' / 'check-classes.mjs'), 'pt', '--write', '--languages', str(root / 'languages')]):
+    if file != 'order':
+        path = pack / ('sources/build-own.mjs' if file == 'build-own.mjs' else 'language.json')
+        text = path.read_text(encoding='utf-8')
+        if old not in text:
+            return f'pattern not found in {file}'
+        if new is None:  # remove a processor object and the comma before it
+            i = text.index(old)
+            j = text.rindex(',', 0, i)
+            text = text[:j] + text[i + len(old):]
+        else:
+            text = text.replace(old, new)
+        path.write_text(text, encoding='utf-8')
+    steps = [['node', str(pack / 'sources' / 'build-own.mjs')],
+             ['node', str(REPO / 'tools' / 'merge-transforms.mjs'), 'pt', '--languages', str(root / 'languages'), '--force'],
+             'order',
+             ['node', str(REPO / 'tools' / 'check-classes.mjs'), 'pt', '--write', '--languages', str(root / 'languages')]]
+    for cmd in steps:
+        if cmd == 'order':
+            if file == 'order':  # move transform `old` before transform `new`
+                path = pack / 'transforms.json'
+                data = json.loads(path.read_text(encoding='utf-8'))
+                ids = [t['id'] for t in data['transforms']]
+                if old not in ids or new not in ids:
+                    return f'no transform {old} or {new}'
+                moved = data['transforms'].pop(ids.index(old))
+                data['transforms'].insert([t['id'] for t in data['transforms']].index(new), moved)
+                path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+            continue
         r = run(cmd)
         if r.returncode:
             return f'{Path(cmd[1]).name} failed: ' + (r.stderr or r.stdout)[-300:]
