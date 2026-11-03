@@ -330,7 +330,7 @@
     "transforms[1].rules[28].stemCharacters": [],
     "transforms[1].rules[29].stemCharacters": [],
     "transforms[1].rules[30].stemCharacters": [],
-    "transforms[1].rules[32].stemCharacters": [
+    "transforms[1].rules[35].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 191],
@@ -872,7 +872,7 @@
     "transforms[3].rules[31].stemCharacters": [],
     "transforms[3].rules[32].stemCharacters": [],
     "transforms[3].rules[33].stemCharacters": [],
-    "transforms[3].rules[36].stemCharacters": [
+    "transforms[3].rules[37].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 191],
@@ -3119,7 +3119,7 @@
     "transforms[34].rules[29].stemCharacters": [],
     "transforms[34].rules[30].stemCharacters": [],
     "transforms[34].rules[31].stemCharacters": [],
-    "transforms[34].rules[35].stemCharacters": [
+    "transforms[34].rules[39].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 191],
@@ -3127,7 +3127,7 @@
       [223, 55295],
       [57344, 1114111]
     ],
-    "transforms[34].rules[35].stemNotEndsWith": [
+    "transforms[34].rules[39].stemNotEndsWith": [
       [99, 99],
       [103, 103]
     ],
@@ -3372,7 +3372,7 @@
     "transforms[35].rules[29].stemCharacters": [],
     "transforms[35].rules[30].stemCharacters": [],
     "transforms[35].rules[31].stemCharacters": [],
-    "transforms[35].rules[33].stemCharacters": [
+    "transforms[35].rules[35].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 191],
@@ -3380,7 +3380,7 @@
       [223, 55295],
       [57344, 1114111]
     ],
-    "transforms[35].rules[33].stemNotEndsWith": [
+    "transforms[35].rules[35].stemNotEndsWith": [
       [99, 99],
       [103, 103]
     ],
@@ -8425,6 +8425,8 @@
         ["verdes", "verdes"],
         ["tais", "tais"],
         ["erradas", "erradas"],
+        ["crises", "crises"],
+        ["secretarias", "secretarias"],
         ["bonita", "bonita"],
         ["trabalhadora", "trabalhadora"],
         ["portuguesa", "portuguesa"],
@@ -8455,6 +8457,8 @@
         ["distraída", "distraída"],
         ["farta", "farta"],
         ["ladra", "ladra"],
+        ["vasta", "vasta"],
+        ["surda", "surda"],
         ["gatinho", "gatinho"],
         ["casinha", "casinha"],
         ["cafezinho", "cafezinho"],
@@ -8665,6 +8669,10 @@
         ["saudáveis demais", "saudáveis demais"],
         ["revistas antigas", "revistas antigas"],
         ["malditos sejam", "malditos sejam"],
+        ["vasta planície", "vasta planície"],
+        ["vivam bem", "vivam bem"],
+        ["crises econômicas", "crises econômicas"],
+        ["secretarias municipais", "secretarias municipais"],
         ["chama-se João", "chama-se joão"],
         ["deixa-me ir", "deixa-me ir"],
         ["fazê-lo agora", "fazê-lo agora"],
@@ -10646,6 +10654,8 @@
         ["verdes", "Verdes"],
         ["tais", "Tais"],
         ["erradas", "Erradas"],
+        ["crises", "Crises"],
+        ["secretarias", "Secretarias"],
         ["bonita", "Bonita"],
         ["trabalhadora", "Trabalhadora"],
         ["portuguesa", "Portuguesa"],
@@ -10676,6 +10686,8 @@
         ["distraída", "Distraída"],
         ["farta", "Farta"],
         ["ladra", "Ladra"],
+        ["vasta", "Vasta"],
+        ["surda", "Surda"],
         ["gatinho", "Gatinho"],
         ["casinha", "Casinha"],
         ["cafezinho", "Cafezinho"],
@@ -10886,6 +10898,10 @@
         ["saudáveis demais", "Saudáveis demais"],
         ["revistas antigas", "Revistas antigas"],
         ["malditos sejam", "Malditos sejam"],
+        ["vasta planície", "Vasta planície"],
+        ["vivam bem", "Vivam bem"],
+        ["crises econômicas", "Crises econômicas"],
+        ["secretarias municipais", "Secretarias municipais"],
         ["chama-se João", "Chama-se João"],
         ["deixa-me ir", "Deixa-me ir"],
         ["fazê-lo agora", "Fazê-lo agora"],

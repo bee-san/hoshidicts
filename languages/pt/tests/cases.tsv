@@ -488,6 +488,8 @@ plural	1	peças	peça	n	plural
 plural	1	verdes	verde	adj	plural
 plural	1	tais	tal	adj	plural
 plural	1	erradas	errado	adj	feminine|plural
+plural	1	crises	crise	n	plural
+plural	1	secretarias	secretaria	n	plural
 feminine	1	bonita	bonito	adj	feminine
 feminine	1	trabalhadora	trabalhador	adj	feminine
 feminine	1	portuguesa	português	adj	feminine
@@ -519,6 +521,8 @@ feminine	1	conhecida	conhecido	adj	feminine
 feminine	1	distraída	distraído	adj	feminine
 feminine	1	farta	farto	adj	feminine
 feminine	1	ladra	ladrão	n	feminine
+feminine	1	vasta	vasto	adj	feminine
+feminine	1	surda	surdo	adj	feminine
 diminutive	1	gatinho	gato	n	diminutive
 diminutive	1	casinha	casa	n	diminutive
 diminutive	1	cafezinho	café	n	diminutive

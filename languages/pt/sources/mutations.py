@@ -100,6 +100,10 @@ MUTATIONS = [
     ('preferred: pare removed', 'build-own.mjs', "['subjunctive-eu-ele', 'pare', 'parar'], ", ""),
     ('preferred: atende removed', 'build-own.mjs', "['present-ele', 'atende', 'atender'],", ""),
     ('preferred: achas removed', 'build-own.mjs', "['present-tu', 'achas', 'achar'], ", ""),
+    ('preferred: vasta removed', 'build-own.mjs', "['feminine', 'vasta', 'vasto'], ", ""),
+    ('preferred: vivam removed', 'build-own.mjs', " ['subjunctive-eles', 'vivam', 'viver'],", ""),
+    ('plural at -arias removed', 'build-own.mjs', "    ['arias', 'aria'],                                                        // secretarias (the -ar conditional's -arias)\n", ""),
+    ('plural at -ises removed', 'build-own.mjs', "    ['ises', 'ise'],                                                          // crises (not cris + es)\n", ""),
     # The audit's surviving mutations (audit of #72, m1).
     ('clitic -o, -a, -os, -as: also a noun', 'build-own.mjs', "clitic(p, `-${p}`, '', ['vf'], {stemNotEndsWith: '[rszm]'});", "clitic(p, `-${p}`, '', ['vf', 'n'], {stemNotEndsWith: '[rszm]'});"),
     ('compound prefix removed: ante (antever)', 'build-own.mjs', "prefixes: ['re', 'pre', 'ante', 'entre', 'des']", "prefixes: ['re', 'pre', 'entre', 'des']"),

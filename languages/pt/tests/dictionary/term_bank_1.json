@@ -141,5 +141,21 @@
   ["maldito", "", "adj", "", 0, ["damned"], 140, ""],
   ["maldizer", "", "v", "", 0, ["to curse"], 141, ""],
   ["malditos", "", "non-lemma", "", 0, [["maldito", ["plural masculine"]]], 142, ""],
-  ["malditos", "", "non-lemma", "", 0, [["maldizer", ["plural masculine past participle"]]], 143, ""]
+  ["malditos", "", "non-lemma", "", 0, [["maldizer", ["plural masculine past participle"]]], 143, ""],
+  ["vasto", "", "adj", "", 0, ["vast"], 144, ""],
+  ["vastar", "", "v", "", 0, ["to lay waste"], 145, ""],
+  ["vasta", "", "non-lemma", "", 0, [["vasto", ["singular feminine"]]], 146, ""],
+  ["vasta", "", "non-lemma", "", 0, [["vastar", ["third-person singular present indicative"]]], 147, ""],
+  ["viver", "", "v", "", 0, ["to live"], 148, ""],
+  ["vivar", "", "v", "", 0, ["to cheer"], 149, ""],
+  ["vivam", "", "non-lemma", "", 0, [["viver", ["third-person plural present subjunctive"]]], 150, ""],
+  ["vivam", "", "non-lemma", "", 0, [["vivar", ["third-person plural present indicative"]]], 151, ""],
+  ["crise", "", "n fem", "", 0, ["crisis"], 152, ""],
+  ["cris", "", "n masc", "", 0, ["eclipse (dated)"], 153, ""],
+  ["crises", "", "non-lemma", "", 0, [["cris", ["plural"]]], 154, ""],
+  ["crises", "", "non-lemma", "", 0, [["crise", ["plural"]]], 155, ""],
+  ["secretaria", "", "n fem", "", 0, ["secretariat"], 156, ""],
+  ["secretar", "", "v", "", 0, ["to secrete"], 157, ""],
+  ["secretarias", "", "non-lemma", "", 0, [["secretar", ["second-person singular conditional"]]], 158, ""],
+  ["secretarias", "", "non-lemma", "", 0, [["secretaria", ["plural"]]], 159, ""]
 ]
