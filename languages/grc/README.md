@@ -172,6 +172,16 @@ wty-grc-en keys without diacritics.
   declension before the first (`φίλων` → φίλος, not φίλη), the accusative
   plural before the genitive singular (the trace of `λόγους` is `acc-pl`),
   and a middle form's -ομαι lemma before its -ω lemma (`ἕποντο` → ἕπομαι).
+- **`lookup.untaggedTerms` stays `filter`**, the default (the descriptor
+  leaves the key out, which Hachidori's shipped engines do not know yet).
+  wty-grc-en tags its nouns,
+  adjectives and verbs and leaves names, pronouns and particles untagged, as
+  wty-en-en and wty-es-en do. With `pass` the corpus's false candidates go
+  from 0.769 to 0.974 per row and its first rank from 0.901 to 0.903; in real
+  text 682 first results change (326 become the treebank's lemma, 150 stop
+  being it, 206 neither), the wrong first results go from 9,832 to 9,959 and
+  the lookups with nothing from 3,234 to 2,951; the frequent forms' wrong
+  first words go from 34,299 to 34,579.
 - **Stem constraints.** `sources/mutate.py` removes each of the 56 stem
   constraints of the final set (a transform's `stemMinLength`,
   `stemCharacters`, `stemContains`, ...) in a copy; every removal breaks a
@@ -379,7 +389,7 @@ first step is a case, the case and number agree with the treebank's tag for
 - **Patterns**: 18 `pattern` rules, 12 in `accent` (antepenult) and 6 in
   `reduplication-preverb`; they take 94,424 bytes of the heap (the load
   without them: +4,072,288 bytes). No processor has a pattern.
-- `tests/` and `sources/` hold SIZE_TOTAL bytes; the largest TSV is
+- `tests/` and `sources/` hold 955,752 bytes; the largest TSV is
   `corpus.tsv` with 901 rows.
 
 ### 6. Commands and checks
@@ -422,7 +432,8 @@ python3 languages/grc/sources/mutate.py <scratch dir>
   classes, 109 fields, no step); `yomitan.tsv` 59/59, `corpus.tsv` 901/901,
   `cases.tsv` 503/503, `defaults.tsv` 6/6 with the defaults, `text.tsv`
   17/17, `gaps.tsv` 0/99; every own and both transform has a passing row
-  (1,848 of the 14,224 rules are exercised). The full `ctest` passes, CTEST.
+  (1,848 of the 14,224 rules are exercised). The full `ctest` passes, 52 of
+  52, on main 39cebbe.
 - **Traces in the tests.** The 37 `trace` rows of `cases.tsv` give their
   reasons (`λόγους` → λόγος `acc-pl`, `ἔλυσα` → λύω
   `accent|augment|aorist|ind-act-1sg`, `δίκα` → δίκη `doric-alpha`), so a
@@ -444,7 +455,9 @@ python3 languages/grc/sources/mutate.py <scratch dir>
 - **Hachidori** (feat/multi-language 803f7b6e with this branch in
   `third_party/hoshidicts`, `node scripts/sync-languages.mjs`, then
   `node test/chrome-language-pack.mjs` with wty-grc-en.zip and 11 cases of
-  real sentences): HACHIDORI_RESULT.
+  real sentences): 15 checks pass and none fails, among them ξυνέγραψε →
+  συγγράφω, ἄειδε → ἀείδω, ἔπεμψαν → πέμπω, γένοιτ’ → γίγνομαι, the Anki
+  note and the switch to Japanese and back.
 
 ## Known gaps
 
