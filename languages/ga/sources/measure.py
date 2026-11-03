@@ -415,6 +415,60 @@ def cmd_dictpairs(args):
                       'rows only one transform recovers, by transform': dict(by_transform.most_common())}, ensure_ascii=False, indent=1))
 
 
+TENSE_OF = {
+    # transform id → the UniMorph features it names
+    'present-1sg': {'PRS', 'IMP'}, 'present': {'PRS'}, 'present-1pl': {'PRS'}, 'present-autonomous': {'PRS', 'IMP'},
+    'present-2sg-munster': {'PRS'}, 'present-3pl-munster': {'PRS'},
+    'past': {'PST'}, 'past-1sg-munster': {'PST'}, 'past-2sg-munster': {'PST'}, 'past-1pl': {'PST'}, 'past-2pl-munster': {'PST'},
+    'past-3pl-munster': {'PST'}, 'adh': {'PST', 'HAB', 'IMP', 'SBJV'},
+    'future': {'FUT'}, 'future-1pl': {'FUT'}, 'future-autonomous': {'FUT'}, 'future-1sg-munster': {'FUT'}, 'future-2sg-munster': {'FUT'},
+    'future-3pl-munster': {'FUT'}, 'future-relative-munster': {'FUT'},
+    'conditional-1sg': {'COND'}, 'conditional-2sg': {'COND'}, 'conditional': {'COND'}, 'conditional-1pl': {'COND'},
+    'conditional-3pl': {'COND'}, 'conditional-autonomous': {'COND'},
+    'habitual-1sg': {'HAB', 'SBJV'}, 'habitual-2sg': {'HAB', 'SBJV'}, 'habitual-1pl': {'HAB', 'SBJV', 'IMP'},
+    'habitual-3pl': {'HAB', 'SBJV', 'IMP'}, 'habitual-autonomous': {'HAB', 'SBJV'},
+    'imperative-2pl': {'IMP'}, 'subjunctive': {'SBJV'},
+    'verbal-adjective': {'V.PTCP'}, 'verbal-noun': {'V.MSDR'},
+}
+
+
+def cmd_traces(args):
+    """Trace quality: for each verb row of the sample (corpus.tsv) a lookup
+    reaches, whether the trace it shows for the row's lemma names the row's
+    tense, mood or form (UniMorph PRS, PST, FUT, COND, HAB, SBJV, IMP,
+    V.PTCP, V.MSDR) and, for the past, whether it names only the lenition or
+    elided d' that marks it."""
+    tests = os.path.join(args.languages, 'ga', 'tests')
+    rows = [l.split('\t') for l in open(os.path.join(tests, 'corpus.tsv'), encoding='utf-8').read().split('\n')
+            if l and not l.startswith('#') and l.split('\t')[0].startswith('V;')]
+    answers = run_batch(args, [r[2] for r in rows])
+    counts = collections.Counter()
+    examples = collections.defaultdict(list)
+    for (tag, _valid, source, term, *_), answer in zip(rows, answers):
+        features = set(tag.split(';'))
+        wanted = features & {'PRS', 'PST', 'FUT', 'COND', 'HAB', 'SBJV', 'IMP', 'V.PTCP', 'V.MSDR'}
+        if 'HAB' in features:
+            wanted -= {'PST'}
+        result = next((r for r in answer['results'] if r['expression'] == term), None)
+        if result is None:
+            counts['lemma not among the results'] += 1
+            continue
+        steps = [s for s, d in zip(result['trace'], result.get('dictionary', [False] * len(result['trace']))) if not d]
+        named = set().union(*(TENSE_OF.get(s, set()) for s in steps)) if steps else set()
+        if wanted & named:
+            counts['names it'] += 1
+        elif 'PST' in wanted and steps and set(steps) <= {'lenition', 'elision'}:
+            counts['past shown as lenition or elision only'] += 1
+            examples['past shown as lenition or elision only'].append(source)
+        elif not steps:
+            counts['dictionary reference only'] += 1
+            examples['dictionary reference only'].append(f"{source} [{'|'.join(result['trace'])}]")
+        else:
+            counts['other'] += 1
+            examples['other'].append(f"{source} {tag} [{'|'.join(result['trace'])}]")
+    print(json.dumps({'verb rows': len(rows), **counts, 'examples': {k: v[:12] for k, v in examples.items()}}, ensure_ascii=False, indent=1))
+
+
 def transform_ids(args):
     pack = json.load(open(os.path.join(args.languages, 'ga', 'transforms.json'), encoding='utf-8'))
     return {t['id'] for t in pack['transforms']}
@@ -542,7 +596,7 @@ def cmd_particles(args):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('command', choices=['eval', 'dictpairs', 'frequent', 'realtext', 'particles'])
+    parser.add_argument('command', choices=['eval', 'dictpairs', 'frequent', 'realtext', 'particles', 'traces'])
     parser.add_argument('--cache', required=True)
     parser.add_argument('--batch', help='lookup-batch-ga built from languages/ga/sources/lookup-batch.cpp (frequent, realtext, particles)')
     here = os.path.dirname(os.path.abspath(__file__))
@@ -559,7 +613,7 @@ def main():
     if args.command not in ('eval', 'dictpairs') and not args.batch:
         parser.error(f'{args.command} needs --batch')
     {'eval': cmd_eval, 'dictpairs': cmd_dictpairs, 'frequent': cmd_frequent, 'realtext': cmd_realtext,
-     'particles': cmd_particles}[args.command](args)
+     'particles': cmd_particles, 'traces': cmd_traces}[args.command](args)
 
 
 if __name__ == '__main__':
