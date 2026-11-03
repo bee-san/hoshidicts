@@ -668,19 +668,21 @@ for (const [p, before] of [['kasing', '[aeioughkmnwy]'], ['kasin', '[dlrst]'], [
 }
 add('equative', 'kasing-', 'As … as: kasing-, kasin- or kasim- with the root of an adjective (kasingganda → maganda, ganda; kasinlaki → malaki).', equative);
 simplePrefix('taga', 'taga-', 'The one who does something, or someone from a place (tagaluto → luto, taga-Maynila → Maynila).', 'taga', RAW_ROOT);
+// Without the hyphen pang- takes one word (paningin ko is not pang- + tingin
+// ko); with it, a phrase too (pang-alas onse -> alas-onse).
 add('pang', 'pang-', 'pang- for an instrument or purpose, which merges with the root\'s first consonant (pang-araw-araw, panulat → sulat, pambansa → bansa).', [
-    prefix('pang', '', {stemStartsWith: '[aeioughkmnwy]', stemMinLength: 3}, RAW_ROOT),
+    prefix('pang', '', {...ONE, stemStartsWith: '[aeioughkmnwy]', stemMinLength: 3}, RAW_ROOT),
     prefix('pang-', '', {stemMinLength: 2}, RAW_ROOT),
-    prefix('pam', '', {stemStartsWith: '[bp]', stemMinLength: 3}, RAW_ROOT),
+    prefix('pam', '', {...ONE, stemStartsWith: '[bp]', stemMinLength: 3}, RAW_ROOT),
     // A root's first consonant merged into the prefix: the rest of the root
     // has four letters (panulat -> sulat, pamutol -> putol), so pamuli is pa-
     // + muli, not pang- + buli.
-    prefix('pam', 'b', {stemStartsWith: VOWEL, stemMinLength: 4}, RAW_ROOT),
-    prefix('pam', 'p', {stemStartsWith: VOWEL, stemMinLength: 4}, RAW_ROOT),
-    prefix('pan', '', {stemStartsWith: '[dlrst]', stemMinLength: 3}, RAW_ROOT),
-    prefix('pan', 'd', {stemStartsWith: VOWEL, stemMinLength: 4}, RAW_ROOT),
-    prefix('pan', 's', {stemStartsWith: VOWEL, stemMinLength: 4}, RAW_ROOT),
-    prefix('pan', 't', {stemStartsWith: VOWEL, stemMinLength: 4}, RAW_ROOT),
+    prefix('pam', 'b', {...ONE, stemStartsWith: VOWEL, stemMinLength: 4}, RAW_ROOT),
+    prefix('pam', 'p', {...ONE, stemStartsWith: VOWEL, stemMinLength: 4}, RAW_ROOT),
+    prefix('pan', '', {...ONE, stemStartsWith: '[dlrst]', stemMinLength: 3}, RAW_ROOT),
+    prefix('pan', 'd', {...ONE, stemStartsWith: VOWEL, stemMinLength: 4}, RAW_ROOT),
+    prefix('pan', 's', {...ONE, stemStartsWith: VOWEL, stemMinLength: 4}, RAW_ROOT),
+    prefix('pan', 't', {...ONE, stemStartsWith: VOWEL, stemMinLength: 4}, RAW_ROOT),
 ]);
 add('mapag', 'mapag-', 'Inclined to (mapagmahal → mahal), and mapag- verbs (mapagtanto → tanto).', [
     prefix('mapag', '', {stemStartsWith: CONSONANT, stemMinLength: 3}, FROM_M),

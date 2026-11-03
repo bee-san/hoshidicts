@@ -2272,15 +2272,15 @@
       "description": "pang- for an instrument or purpose, which merges with the root's first consonant (pang-araw-araw, panulat → sulat, pambansa → bansa).",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "pang", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeioughkmnwy]", "stemMinLength": 3},
+        {"type": "prefix", "inflected": "pang", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[aeioughkmnwy]", "stemMinLength": 3},
         {"type": "prefix", "inflected": "pang-", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "pam", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[bp]", "stemMinLength": 3},
-        {"type": "prefix", "inflected": "pam", "deinflected": "b", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeiou]", "stemMinLength": 4},
-        {"type": "prefix", "inflected": "pam", "deinflected": "p", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeiou]", "stemMinLength": 4},
-        {"type": "prefix", "inflected": "pan", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[dlrst]", "stemMinLength": 3},
-        {"type": "prefix", "inflected": "pan", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeiou]", "stemMinLength": 4},
-        {"type": "prefix", "inflected": "pan", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeiou]", "stemMinLength": 4},
-        {"type": "prefix", "inflected": "pan", "deinflected": "t", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeiou]", "stemMinLength": 4}
+        {"type": "prefix", "inflected": "pam", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[bp]", "stemMinLength": 3},
+        {"type": "prefix", "inflected": "pam", "deinflected": "b", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[aeiou]", "stemMinLength": 4},
+        {"type": "prefix", "inflected": "pam", "deinflected": "p", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[aeiou]", "stemMinLength": 4},
+        {"type": "prefix", "inflected": "pan", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[dlrst]", "stemMinLength": 3},
+        {"type": "prefix", "inflected": "pan", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[aeiou]", "stemMinLength": 4},
+        {"type": "prefix", "inflected": "pan", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[aeiou]", "stemMinLength": 4},
+        {"type": "prefix", "inflected": "pan", "deinflected": "t", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[aeiou]", "stemMinLength": 4}
       ]
     },
     {

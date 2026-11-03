@@ -3557,6 +3557,11 @@
       [111, 111],
       [117, 117]
     ],
+    "transforms[47].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[47].rules[0].stemStartsWith": [
       [97, 97],
       [101, 101],
@@ -3567,9 +3572,19 @@
       [119, 119],
       [121, 121]
     ],
+    "transforms[47].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[47].rules[2].stemStartsWith": [
       [98, 98],
       [112, 112]
+    ],
+    "transforms[47].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
     ],
     "transforms[47].rules[3].stemStartsWith": [
       [97, 97],
@@ -3578,6 +3593,11 @@
       [111, 111],
       [117, 117]
     ],
+    "transforms[47].rules[4].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[47].rules[4].stemStartsWith": [
       [97, 97],
       [101, 101],
@@ -3585,10 +3605,20 @@
       [111, 111],
       [117, 117]
     ],
+    "transforms[47].rules[5].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[47].rules[5].stemStartsWith": [
       [100, 100],
       [108, 108],
       [114, 116]
+    ],
+    "transforms[47].rules[6].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
     ],
     "transforms[47].rules[6].stemStartsWith": [
       [97, 97],
@@ -3597,12 +3627,22 @@
       [111, 111],
       [117, 117]
     ],
+    "transforms[47].rules[7].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[47].rules[7].stemStartsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111],
       [117, 117]
+    ],
+    "transforms[47].rules[8].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
     ],
     "transforms[47].rules[8].stemStartsWith": [
       [97, 97],
@@ -7183,6 +7223,7 @@
         ["mapala", "mapala"],
         ["makaya", "makaya"],
         ["magsimula", "magsimula"],
+        ["paningin ko", "paningin ko"],
         ["binalaan", "binalaan"],
         ["bumibista", "bumibista"],
         ["diringinggin", "diringinggin"],
@@ -9307,6 +9348,7 @@
         ["mapala", "Mapala"],
         ["makaya", "Makaya"],
         ["magsimula", "Magsimula"],
+        ["paningin ko", "Paningin ko"],
         ["binalaan", "Binalaan"],
         ["bumibista", "Bumibista"],
         ["diringinggin", "Diringinggin"],
