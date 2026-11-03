@@ -316,7 +316,10 @@ transform('pluralFem', 'plural (ـات)', 'The feminine sound plural ending ـا
 
 const CONSONANT_ENDINGS = ['ت', 'نا', 'تم', 'تما', 'تن', 'ن'];
 
-function pastRules(ending, {defectiveA = [], defectiveY = [], defectiveI = [], hamza = [], consonant = false, min = 2}) {
+function pastRules(ending, {defectiveA = [], defectiveY = [], defectiveI = [], hamza = [], consonant = false, min = consonant && ending !== 'ت' ? 3 : 2}) {
+    // A doubled verb writes both letters before ن, نا, تم, تما and تن
+    // (مددن, مددنا), so a stem of two letters there is never a verb (فلن is
+    // ف + لن); before ت it may be "she" (مدت).
     const rules = [suffix(ending, '', {min, into: V_IN, out: V_OUT})];
     for (const [i, d] of defectiveA) { rules.push(suffix(i, d, {into: V_IN, out: V_OUT})); }
     for (const [i, d] of defectiveY) { rules.push(suffix(i, d, {into: V_IN, out: V_OUT})); }
@@ -382,29 +385,6 @@ transform('pastWe', 'past (we)', 'The past tense ending ـنا "we did": كتب�
     suffix('نا', 'ن', {into: V_IN, out: V_OUT}),
     whole('لسنا', 'ليس', {into: V_IN, out: V_OUT}),
 ]);
-
-// Passive past tense, where it is spelled differently from the active.
-const PASSIVE_ENDINGS = [['', 'he'], ['ت', 'she'], ['تا', 'they f. two'], ['ا', 'they two'], ['وا', 'they'],
-    ['تم', 'you pl.'], ['تما', 'you two'], ['تن', 'you f. pl.'], ['نا', 'we'], ['ن', 'they f.']];
-{
-    const rules = [];
-    // Hollow: قيل -> قال, أقيم -> أقام, اختير -> اختار; hamza in the middle: سئل -> سأل.
-    rules.push(suffixes(PASSIVE_ENDINGS.flatMap(([ending]) => RADICALS.flatMap((c) => [['ي' + c + ending, 'ا' + c], ['ئ' + c + ending, 'أ' + c]])), {min: 1, into: V_IN, out: V_OUT}));
-    // A final hamza on ي: أنبئ -> أنبأ, أنبئت -> أنبأ; with a hollow verb: أضيئت -> أضاء.
-    for (const [ending] of PASSIVE_ENDINGS) {
-        rules.push(suffix('ئ' + ending, 'أ', {into: V_IN, out: V_OUT}));
-        rules.push(suffix('يئ' + ending, 'اء', {min: 1, into: V_IN, out: V_OUT}));
-    }
-    // Defective: رمي -> رمى, دعي -> دعا, أعطي -> أعطى; دعيت -> دعا.
-    rules.push(suffix('ي', 'ى', {into: V_IN, out: V_OUT}), suffix('ي', 'ا', {into: V_IN, out: V_OUT}));
-    rules.push(suffix('يت', 'ا', {into: V_IN, out: V_OUT}), suffix('يا', 'ا', {into: V_IN, out: V_OUT}));
-    rules.push(suffix('يتا', 'ى', {into: V_IN, out: V_OUT}), suffix('يتا', 'ا', {into: V_IN, out: V_OUT}));
-    // Form III and VI: كوتب -> كاتب, تقوبل -> تقابل.
-    const formThree = [];
-    for (const c of RADICALS) { formThree.push([c + 'و', c + 'ا'], ['ت' + c + 'و', 'ت' + c + 'ا']); }
-    rules.push(cross(formThree, [['', ''], ...['ت', 'تا', 'ا', 'وا', ...CONSONANT_ENDINGS.filter((e) => e !== 'ت')].map((e) => [e, ''])]));
-    transform('pastPassive', 'past passive', 'The passive past tense where it is spelled differently from the active: قيل "it was said" (قال), أقيم (أقام), اختير (اختار), سئل (سأل), رمي (رمى), دعي (دعا), كوتب (كاتب), with the endings ـت, ـتا, ـا and ـوا.', rules);
-}
 
 // The present tense. Person prefixes, each with what it replaces at the start
 // of the dictionary form: nothing (form I, II, III, V, VI), the أ of form IV,
@@ -580,6 +560,31 @@ transform('imperativeYouPl', 'imperative (you pl.)', 'The imperative "do!" to se
 transform('imperativeYouFPl', 'imperative (you f. pl.)', 'The imperative "do!" to several women, ending in ـن: اكتبن (كتب), قلن (قال), ادعون (دعا), ارمين (رمى).', [
     ...imperativeRules('ن', {defective: [['ون', 'ا'], ['ين', 'ى'], ['ين', 'ي']], hollowShort: true}),
 ]);
+
+// Passive past tense, where it is spelled differently from the active. It
+// comes after the present and imperative, which it ties with in a few spellings
+// (تريده: تُرِيدُهُ from أراد before تريد read as a passive of تراد).
+const PASSIVE_ENDINGS = [['', 'he'], ['ت', 'she'], ['تا', 'they f. two'], ['ا', 'they two'], ['وا', 'they'],
+    ['تم', 'you pl.'], ['تما', 'you two'], ['تن', 'you f. pl.'], ['نا', 'we'], ['ن', 'they f.']];
+{
+    const rules = [];
+    // Hollow: قيل -> قال, أقيم -> أقام, اختير -> اختار; hamza in the middle: سئل -> سأل.
+    rules.push(suffixes(PASSIVE_ENDINGS.flatMap(([ending]) => RADICALS.flatMap((c) => [['ي' + c + ending, 'ا' + c], ['ئ' + c + ending, 'أ' + c]])), {min: 1, into: V_IN, out: V_OUT}));
+    // A final hamza on ي: أنبئ -> أنبأ, أنبئت -> أنبأ; with a hollow verb: أضيئت -> أضاء.
+    for (const [ending] of PASSIVE_ENDINGS) {
+        rules.push(suffix('ئ' + ending, 'أ', {into: V_IN, out: V_OUT}));
+        rules.push(suffix('يئ' + ending, 'اء', {min: 1, into: V_IN, out: V_OUT}));
+    }
+    // Defective: رمي -> رمى, دعي -> دعا, أعطي -> أعطى; دعيت -> دعا.
+    rules.push(suffix('ي', 'ى', {into: V_IN, out: V_OUT}), suffix('ي', 'ا', {into: V_IN, out: V_OUT}));
+    rules.push(suffix('يت', 'ا', {into: V_IN, out: V_OUT}), suffix('يا', 'ا', {into: V_IN, out: V_OUT}));
+    rules.push(suffix('يتا', 'ى', {into: V_IN, out: V_OUT}), suffix('يتا', 'ا', {into: V_IN, out: V_OUT}));
+    // Form III and VI: كوتب -> كاتب, تقوبل -> تقابل.
+    const formThree = [];
+    for (const c of RADICALS) { formThree.push([c + 'و', c + 'ا'], ['ت' + c + 'و', 'ت' + c + 'ا']); }
+    rules.push(cross(formThree, [['', ''], ...['ت', 'تا', 'ا', 'وا', ...CONSONANT_ENDINGS.filter((e) => e !== 'ت')].map((e) => [e, ''])]));
+    transform('pastPassive', 'past passive', 'The passive past tense where it is spelled differently from the active: قيل "it was said" (قال), أقيم (أقام), اختير (اختار), سئل (سأل), رمي (رمى), دعي (دعا), كوتب (كاتب), with the endings ـت, ـتا, ـا and ـوا.', rules);
+}
 
 // ----------------------------------------------- participles and verbal nouns
 // Derivation rather than inflection, and dictionaries list most of these words
