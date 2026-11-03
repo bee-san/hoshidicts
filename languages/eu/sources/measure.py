@@ -7,6 +7,7 @@
     python3 languages/eu/sources/measure.py sample <cache> <imported dictionary> [--languages <dir>] [--corpus ...] [--n 60]
     python3 languages/eu/sources/measure.py yomitan <cache> <imported dictionary> [--languages <dir>] [--union <file>]
     python3 languages/eu/sources/measure.py contexts <cache> <imported dictionary> [--languages <dir>] [--corpus tatoeba]
+    python3 languages/eu/sources/measure.py unimorph <cache> - [--languages <dir>]
 
 <cache> holds the downloads the README names (MANIFEST in hachi-lang-cache/eu):
 wty-eu-en-json/ (the dictionary's banks, unzipped), eu_50k-2018.txt,
@@ -27,6 +28,9 @@ rule writes whose spelling ends with its deinflected text, with its inflected
 ending put in place; how many of them are attested (in the subtitle list or
 in kaikki's tables for that lemma), and how many attested ones the pack's
 transforms.json and the rule itself reach.
+
+unimorph: recall over every distinct (form, lemma) of UniMorph eus (ukan read
+as edun), and the same weighted by each form's count in the subtitle list.
 
 contexts: the text measurement restricted to the words behind a personal
 pronoun or demonstrative (nik, zuk, hark, ...), behind the negation ez, and
@@ -355,6 +359,27 @@ def contexts(cache, dictionary, opts):
         print('  wrong: ' + json.dumps(wrong[kind].most_common(15), ensure_ascii=False))
 
 
+def unimorph(cache, opts):
+    pairs = set()
+    with open(os.path.join(cache, 'unimorph-eus', 'eus'), encoding='utf-8') as f:
+        for line in f:
+            parts = line.rstrip('\n').split('\t')
+            if len(parts) == 3 and parts[1] != parts[0]:
+                pairs.add((parts[1], 'edun' if parts[0] == 'ukan' else parts[0]))
+    freq = {}
+    with open(os.path.join(cache, 'eu_full-2018.txt'), encoding='utf-8') as f:
+        for line in f:
+            w, c = line.split()
+            freq[w] = int(c)
+    dein = deinflections(opts['--languages'], sorted({form for form, _ in pairs}))
+    reached = {(form, lemma) for form, lemma in pairs if any(r['text'] == lemma and (not r['conditions'] or 'v' in r['conditions'])
+                                                            for r in dein[form])}
+    tokens = sum(freq.get(form, 0) for form, _ in pairs)
+    hit = sum(freq.get(form, 0) for form, _ in reached)
+    print(json.dumps({'pairs': len(pairs), 'reached': len(reached), 'recall': round(len(reached) / len(pairs), 4),
+                      'subtitleTokens': tokens, 'reachedTokens': hit, 'tokenRecall': round(hit / max(tokens, 1), 4)}))
+
+
 def main(argv):
     pos, opts = args_of(argv)
     if len(pos) != 3:
@@ -370,6 +395,8 @@ def main(argv):
         yomitan(cache, dictionary, opts)
     elif command == 'contexts':
         contexts(cache, dictionary, opts)
+    elif command == 'unimorph':
+        unimorph(cache, opts)
     else:
         raise SystemExit(__doc__)
 

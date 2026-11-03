@@ -226,22 +226,23 @@ def main(argv):
     cases_file = os.path.join(tests, 'cases.tsv')
     hand_cases = []
     hand_header = []
+    unimorph_header = ('# UniMorph rows', '# one for each finite-verb transform')
     if os.path.exists(cases_file):
         with open(cases_file, encoding='utf-8') as f:
             for l in f:
                 l = l.rstrip('\n')
-                if l.startswith('# UniMorph rows') or l.startswith(f'# Source: {UNIMORPH}'):
+                if l.startswith(unimorph_header) or l.startswith('# category'):
                     continue
                 if l.startswith('#'):
-                    if not l.startswith('# category'):
+                    if l not in hand_header:
                         hand_header.append(l)
                 elif l.strip() and ';' not in l.split('\t')[0]:
                     hand_cases.append(l)
     with open(cases_file, 'w', encoding='utf-8') as f:
-        f.write('\n'.join(hand_header + [
+        f.write('\n'.join(hand_header + [columns] + hand_cases + [
             f'# UniMorph rows (categories with ";"): {len(coverage)} rows from {UNIMORPH}, CC BY-SA 3.0, by the UniMorph contributors,',
-            '# one for each finite-verb transform no row of corpus.tsv exercises, written by sources/build-corpus.py; the reason is that transform.',
-            columns] + hand_cases + [f'{c[0]}\t1\t{c[1]}\t{c[2]}\t{c[3]}\t{c[4]}' for c in coverage]) + '\n')
+            '# one for each finite-verb transform no row of corpus.tsv exercises, written by sources/build-corpus.py; the reason is that transform.']
+            + [f'{c[0]}\t1\t{c[1]}\t{c[2]}\t{c[3]}\t{c[4]}' for c in coverage]) + '\n')
     by = lambda rs: {n: sum(1 for r in rs if stratum_of(r, rows) == n) for n, _ in STRATA}
     print(json.dumps({'sampled': len(rows), 'corpus': len(passed), 'gaps': len(failed), 'recall': round(len(passed) / len(rows), 4),
                       'reached': by(passed), 'missed': by(failed), 'coverageRows': len(coverage),

@@ -316,8 +316,9 @@ function adverbs() {
     // Distributive -ka: ehunka (by hundreds), bakarka (one by one), taldeka
     // (in groups), oihuka (shouting).
     transform('adverb-ka', 'distributive (-ka)', 'Adverb made with -ka from a noun, adjective or numeral: ehunka (by hundreds), bakarka (one by one), taldeka (in groups), oihuka (shouting).');
+    // Not after -i: politika (politics) is not polit + -ka.
     add('adverb-ka', {type: 'suffix', inflected: 'ka', deinflected: '', conditionsIn: [], conditionsOut: ['n', 'adj', 'sg'], stemMinLength: 4,
-        stemEndsWith: '[aeioulnrt]'});
+        stemEndsWith: '[aeoulnrt]'});
     transform('adverb-tik', 'ablative of an adverb', 'Adverbs take -tik with no -e- after a consonant, and -dik after -n: hortik (from there), gaurtik, hemendik, handik.');
     add('adverb-tik', {type: 'suffix', inflected: 'tik', deinflected: '', conditionsIn: [], conditionsOut: ['adv'], stemMinLength: 2,
         stemEndsWith: '[lrsxz]'});
@@ -861,7 +862,8 @@ const SYNTHETIC = [
 // A few familiar (hi) forms that are also common words are left out: hau
 // (this) as "he has you", zain (waiting) as "it is to you (f.)", and the
 // feminine dion, didan and digun, which are also the -n forms of dio, dit
-// and digu. det, dezu, degu and dezue (dut, duzu, dugu, duzue), genduen,
+// and digu. zan, ziran and nintzan (zen, ziren, nintzen), det, dezu, degu
+// and dezue (dut, duzu, dugu, duzue), genduen,
 // zenduen and zenduten (genuen, zenuen, zenuten), and zuan and zituan
 // (zuen, zituen) are Gipuzkoan forms that older literature writes (Txomin
 // Agirre's Garoa); zuan and zituan are also the familiar forms of zen and
@@ -869,7 +871,7 @@ const SYNTHETIC = [
 const AUXILIARIES = [
     {key: 'izan', lemmas: ['izan'], compound: true, about: 'izan (to be), the intransitive auxiliary', roles: 'nor', tenses: {
         present: '1s:naiz 2f:haiz 3s:da 1p:gara 2s:zara 2p:zarete 3p:dira',
-        past: '1s:nintzen 2f:hintzen 3s:zen 1p:ginen 2s:zinen 2p:zineten 3p:ziren',
+        past: '1s:nintzen,nintzan 2f:hintzen 3s:zen,zan 1p:ginen 2s:zinen 2p:zineten 3p:ziren,ziran',
         cond: '1s:nintzateke 2f:hintzateke 3s:litzateke 1p:ginateke 2s:zinateke 2p:zinatekete 3p:lirateke',
         condpast: '1s:nintzatekeen 2f:hintzatekeen 3s:zatekeen 1p:ginatekeen 2s:zinatekeen 2p:zinateketen 3p:ziratekeen',
         hyp: '1s:nintz 2f:hintz 3s:litz,bailitzan 1p:gina 2s:zina 2p:zinete 3p:lira',
@@ -1212,6 +1214,8 @@ function subordination() {
     rel({inflected: 'dan', deinflected: 't', stemMinLength: 1});
     rel({inflected: 'rren', deinflected: 'r', stemMinLength: 2});
     add('relative', {type: 'wholeWord', inflected: 'den', deinflected: 'da', conditionsIn: ['sg'], conditionsOut: ['sub']});
+    // Gipuzkoan and older writing: dan for den (danean, when it is).
+    add('relative', {type: 'wholeWord', inflected: 'dan', deinflected: 'da', conditionsIn: ['sg'], conditionsOut: ['sub']});
     transform('complementizer', '-(e)la (that)', 'Complementizer -(e)la on a finite verb: dela (that it is), duela, dudala, naizela, zela (that it was); with -ko, because (delako), and -rik, while (delarik).');
     const comp = (rule) => add('complementizer', {type: 'suffix', conditionsIn: IN, conditionsOut: ['sub'], ...rule});
     comp({inflected: 'la', deinflected: '', stemMinLength: 2, stemEndsWith: VOWEL});

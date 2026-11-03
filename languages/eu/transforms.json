@@ -56,7 +56,8 @@
         {"type": "suffix", "conditionsIn": ["sg", "pl"], "conditionsOut": ["sub"], "inflected": "en", "deinflected": "a", "stemMinLength": 2},
         {"type": "suffix", "conditionsIn": ["sg", "pl"], "conditionsOut": ["sub"], "inflected": "dan", "deinflected": "t", "stemMinLength": 1},
         {"type": "suffix", "conditionsIn": ["sg", "pl"], "conditionsOut": ["sub"], "inflected": "rren", "deinflected": "r", "stemMinLength": 2},
-        {"type": "wholeWord", "inflected": "den", "deinflected": "da", "conditionsIn": ["sg"], "conditionsOut": ["sub"]}
+        {"type": "wholeWord", "inflected": "den", "deinflected": "da", "conditionsIn": ["sg"], "conditionsOut": ["sub"]},
+        {"type": "wholeWord", "inflected": "dan", "deinflected": "da", "conditionsIn": ["sg"], "conditionsOut": ["sub"]}
       ]
     },
     {
@@ -1202,7 +1203,7 @@
       "description": "Adverb made with -ka from a noun, adjective or numeral: ehunka (by hundreds), bakarka (one by one), taldeka (in groups), oihuka (shouting).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ka", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "sg"], "stemMinLength": 4, "stemEndsWith": "[aeioulnrt]"}
+        {"type": "suffix", "inflected": "ka", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "sg"], "stemMinLength": 4, "stemEndsWith": "[aeoulnrt]"}
       ]
     },
     {
@@ -1889,7 +1890,9 @@
         {"type": "wholeWord", "inflected": "nenbilen", "deinflected": "ibili", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "netzan", "deinflected": "etzan", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "nintzen", "deinflected": "izan", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": " nintzen", "deinflected": " izan", "conditionsIn": ["dep"], "conditionsOut": ["v"], "stemMinLength": 2, "stemNotStartsWithText": "gauza"}
+        {"type": "wholeWord", "inflected": "nintzan", "deinflected": "izan", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": " nintzen", "deinflected": " izan", "conditionsIn": ["dep"], "conditionsOut": ["v"], "stemMinLength": 2, "stemNotStartsWithText": "gauza"},
+        {"type": "suffix", "inflected": " nintzan", "deinflected": " izan", "conditionsIn": ["dep"], "conditionsOut": ["v"], "stemMinLength": 2, "stemNotStartsWithText": "gauza"}
       ]
     },
     {
@@ -1917,7 +1920,9 @@
         {"type": "wholeWord", "inflected": "zebilen", "deinflected": "ibili", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "zetzan", "deinflected": "etzan", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "zen", "deinflected": "izan", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": " zen", "deinflected": " izan", "conditionsIn": ["dep"], "conditionsOut": ["v"], "stemMinLength": 2, "stemNotStartsWithText": "gauza"}
+        {"type": "wholeWord", "inflected": "zan", "deinflected": "izan", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": " zen", "deinflected": " izan", "conditionsIn": ["dep"], "conditionsOut": ["v"], "stemMinLength": 2, "stemNotStartsWithText": "gauza"},
+        {"type": "suffix", "inflected": " zan", "deinflected": " izan", "conditionsIn": ["dep"], "conditionsOut": ["v"], "stemMinLength": 2, "stemNotStartsWithText": "gauza"}
       ]
     },
     {
@@ -1969,7 +1974,9 @@
         {"type": "wholeWord", "inflected": "zetozen", "deinflected": "etorri", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "zebiltzan", "deinflected": "ibili", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "ziren", "deinflected": "izan", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": " ziren", "deinflected": " izan", "conditionsIn": ["dep"], "conditionsOut": ["v"], "stemMinLength": 2, "stemNotStartsWithText": "gauza"}
+        {"type": "wholeWord", "inflected": "ziran", "deinflected": "izan", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": " ziren", "deinflected": " izan", "conditionsIn": ["dep"], "conditionsOut": ["v"], "stemMinLength": 2, "stemNotStartsWithText": "gauza"},
+        {"type": "suffix", "inflected": " ziran", "deinflected": " izan", "conditionsIn": ["dep"], "conditionsOut": ["v"], "stemMinLength": 2, "stemNotStartsWithText": "gauza"}
       ]
     },
     {
