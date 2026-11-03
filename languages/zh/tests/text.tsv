@@ -1,0 +1,22 @@
+# Hand-written for this pack (GPL-3.0-or-later): processor variants, with every option on.
+# category	valid	input	variant
+width	1	１２３个人	123个人
+width	1	ＡＢＣ书	ABC书
+radicals	1	⾼兴	高兴
+radicals	1	⻔口	门口
+radicals	1	⻓城	长城
+radicals	1	⻢上	马上
+simplifiedToTraditional	1	说话	說話
+simplifiedToTraditional	1	头发	頭發
+simplifiedToTraditional	1	头发	頭髮
+simplifiedToTraditional	1	干净	幹淨
+simplifiedToTraditional	1	干净	乾淨
+simplifiedToTraditional	1	后来	後來
+simplifiedToTraditional	1	面条	麵條
+simplifiedToTraditional	0	头发	頭发
+simplifiedToTraditional	0	头发	头髮
+traditionalToSimplified	1	說話	说话
+traditionalToSimplified	1	頭髮	头发
+traditionalToSimplified	1	乾淨	干净
+traditionalToSimplified	1	後來	后来
+traditionalToSimplified	0	說話	說话
