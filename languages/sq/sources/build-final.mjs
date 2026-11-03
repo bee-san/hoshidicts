@@ -62,7 +62,7 @@ function same(a, b) {
 // and replacement are not in the first own-rules commit, ffdf983): they are
 // not `both`, whatever Yomitan has (section 7.1: `both` is written
 // independently and also in Yomitan).
-const MASCULINE_E = ['djal', 'kal', 'lum', 'uj', 'gjum', 'burr', 'brum', 'djath', 'gjalp', 'drith', 'dhjam', 'mjalt', 'grur', 'dyll', 'ball', 'vrer', 'lëm', 'at', 'qir'];
+const MASCULINE_E = ['djal', 'kal', 'lum', 'uj', 'gjum', 'burr', 'brum', 'djath', 'gjalp', 'drith', 'dhjam', 'mjalt', 'grur', 'dyll', 'ball', 'vrer', 'lëm', 'at', 'qir', 'bab', 'mam'];
 const LATER = new Set([
     'n-def-sg-m\u0000oi\u0000ua', 'np-aor-3sg\u0000ye\u0000ej',
     ...['np-pres-2sg:hesh', 'np-pres-3sg:het', 'np-pres-1pl:hemi', 'np-pres-2pl:heni', 'np-pres-3pl:hen',

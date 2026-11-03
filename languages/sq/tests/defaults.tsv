@@ -471,6 +471,13 @@ negatives	0	arrin	arrë	n	*
 negatives	0	hija	hi	n	*
 negatives	0	urdhërin	urdhë	n	*
 negatives	0	miri	mi	n	*
+noun	1	llaçi	llaç	n	n-def-sg-m
+noun	1	gjiri	gji	n	n-def-sg-m
+noun	1	babin	babë	n	n-def-acc-m
+negatives	0	më së	së	adv	*
+comparative	1	më saktësisht	saktësisht	adv	cmp
+comparative	1	më shpesh	shpesh	adv	cmp
+negatives	0	më sot	sot	adv	*
 negatives (constructed: n-def-sg-m stemCharacters)	0	e doti	e dot	*	*
 negatives (constructed: n-def-sg-m stemMinLength)	0	bi	b	*	*
 negatives (constructed: n-def-sg-m stemEndsWith)	0	doei	doe	*	*
@@ -664,4 +671,10 @@ negatives (constructed: adj-def-f stemEndsWith)	0	doaa	doaë	*	*
 negatives (constructed: adj-def-pl stemCharacters)	0	e dottë	e dot	*	*
 negatives (constructed: adj-def-pl stemMinLength)	0	at	a	*	*
 negatives (constructed: adj-def-pl stemEndsWith)	0	doit	doi	*	*
-noun	1	llaçi	llaç	n	n-def-sg-m
+negatives	0	më shpejt se natyrisht	shpejt se natyrisht	adv	cmp
+negatives	0	ka masë	mas	v	*
+negatives	0	urdhëri	urdhë	n	*
+negatives	0	të vërtetuar	vërtetoj	v	*
+negatives	0	barin	baër	n	*
+negatives	0	lidhja	lidhj	v	*
+negatives	0	rin	ër	n	*

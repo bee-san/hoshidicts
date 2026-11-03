@@ -190,7 +190,7 @@ suffix('n-def-sg-m', 'rri', 'ërr', [], N, {stemMinLength: 1, stemEndsWith: CONS
 suffix('n-def-sg-m', 'i', '', [], N, {stemMinLength: 2, stemEndsWith: '[ao]'});
 suffix('n-def-sg-m', 'u', '', [], N, {stemMinLength: 2, stemEndsWith: '[kgheia]'});
 suffix('n-def-sg-m', 'ri', '', [], N, {stemMinLength: 2, stemEndsWith: '[uyea]'});
-suffix('n-def-sg-m', 'ri', '', [], N, {stemMinLength: 4, stemEndsWith: '[i]'});
+suffix('n-def-sg-m', 'ri', '', [], N, {stemMinLength: 3, stemEndsWith: '[i]'});
 suffix('n-def-sg-m', 'oi', 'ua', [], N, {stemMinLength: 1});
 suffix('n-def-sg-m', 'mi', 'ëm', [], N, {stemMinLength: 2, stemEndsWith: '[zs]'});
 suffix('n-def-sg-m', 'ni', '', [], N, {stemMinLength: 2, stemEndsWith: '[youe]'});
@@ -204,7 +204,7 @@ suffix('n-def-acc-m', 'in', '', [], N, {stemMinLength: 2, stemEndsWith: '[o]'});
 suffix('n-def-acc-m', 'në', '', [], N, {stemMinLength: 2, stemEndsWith: '[a]'});
 suffix('n-def-acc-m', 'un', '', [], N, {stemMinLength: 2, stemEndsWith: '[kgheia]'});
 suffix('n-def-acc-m', 'rin', '', [], N, {stemMinLength: 2, stemEndsWith: '[uyea]'});
-suffix('n-def-acc-m', 'rin', '', [], N, {stemMinLength: 4, stemEndsWith: '[i]'});
+suffix('n-def-acc-m', 'rin', '', [], N, {stemMinLength: 3, stemEndsWith: '[i]'});
 suffix('n-def-acc-m', 'oin', 'ua', [], N, {stemMinLength: 1});
 suffix('n-def-acc-m', 'min', 'ëm', [], N, {stemMinLength: 2, stemEndsWith: '[zs]'});
 suffix('n-def-acc-m', 'nin', '', [], N, {stemMinLength: 2, stemEndsWith: '[youe]'});
@@ -217,7 +217,7 @@ suffix('n-def-obl-m', 'rrit', 'ërr', [], N, {stemMinLength: 1, stemEndsWith: CO
 suffix('n-def-obl-m', 'it', '', [], N, {stemMinLength: 2, stemEndsWith: '[ao]'});
 suffix('n-def-obl-m', 'ut', '', [], N, {stemMinLength: 2, stemEndsWith: '[kgheia]'});
 suffix('n-def-obl-m', 'rit', '', [], N, {stemMinLength: 2, stemEndsWith: '[uyea]'});
-suffix('n-def-obl-m', 'rit', '', [], N, {stemMinLength: 4, stemEndsWith: '[i]'});
+suffix('n-def-obl-m', 'rit', '', [], N, {stemMinLength: 3, stemEndsWith: '[i]'});
 suffix('n-def-obl-m', 'oit', 'ua', [], N, {stemMinLength: 1});
 suffix('n-def-obl-m', 'mit', 'ëm', [], N, {stemMinLength: 2, stemEndsWith: '[zs]'});
 suffix('n-def-obl-m', 'nit', '', [], N, {stemMinLength: 2, stemEndsWith: '[youe]'});
@@ -226,9 +226,10 @@ suffix('n-def-obl-m', 'nit', '', [], N, {stemMinLength: 2, stemEndsWith: '[youe]
 // djali, djalin, djalit). They are a closed set beside the 1,700 feminine
 // nouns in -ë, whose -in, -it forms do not exist, so a rule for every stem in
 // -ë read arrin as arrë and fermit as fermë; the common ones are listed. zë
-// (voice) takes -ri (zëri).
+// (voice) takes -ri (zëri). The colloquial babi and mami (dad, mum) decline
+// so too (babin, mamit).
 for (const noun of ['djalë', 'kalë', 'lumë', 'ujë', 'gjumë', 'burrë', 'brumë', 'djathë', 'gjalpë', 'drithë', 'dhjamë',
-    'mjaltë', 'grurë', 'dyllë', 'ballë', 'vrerë', 'lëmë', 'atë', 'qirë']) {
+    'mjaltë', 'grurë', 'dyllë', 'ballë', 'vrerë', 'lëmë', 'atë', 'qirë', 'babë', 'mamë']) {
     const stem = noun.slice(0, -1);
     suffix('n-def-sg-m', `${stem}i`, noun, [], N);
     suffix('n-def-acc-m', `${stem}in`, noun, [], N);
@@ -375,8 +376,18 @@ suffix('vn', 'im', 'ej', ['ns'], ['v'], {stemMinLength: 3});
 // accusative), të (plural, and singular oblique cases), së (feminine oblique
 // after a definite noun). The comparative and superlative put më before the
 // article (më i mirë, më i miri).
-transform('cmp', 'comparative (më)', 'The comparative or superlative më before an adjective or adverb: më i mirë → mirë, më shpejt → shpejt, më vonë → vonë.');
-prefix('cmp', 'më ', '', [], ['adj', 'adv', 'adj_cmp'], {stemMinLength: 1});
+transform('cmp', 'comparative (më)', 'The comparative or superlative më before an adjective or a gradable adverb: më i mirë → mirë, më shpejt → shpejt, më vonë → vonë.');
+prefix('cmp', 'më ', '', [], ['adj', 'adj_cmp'], {stemMinLength: 1});
+// Adverbs only from a list of gradable ones and those in -isht: më is also
+// a preposition (deri më sot, deri më tani: until today, until now), which
+// an open rule read as the comparative of sot and tani.
+for (const adverb of ['vonë', 'herët', 'shpejt', 'ngadalë', 'shpesh', 'rrallë', 'shumë', 'pak', 'tepër', 'mirë', 'keq',
+    'lart', 'lartë', 'poshtë', 'sipër', 'afër', 'pranë', 'larg', 'tej', 'tutje', 'përpara', 'prapa', 'mbrapa', 'pas',
+    'parë', 'thellë', 'gjatë', 'fort', 'lehtë', 'rëndë', 'qartë', 'drejt', 'thjesht', 'mjaft', 'bukur', 'butë', 'saktë',
+    'brenda', 'jashtë']) {
+    whole('cmp', `më ${adverb}`, adverb, [], ['adv']);
+}
+circumfix('cmp', [['më ', '']], [['isht', 'isht']], [], ['adv']);
 
 transform('art', 'adjective article (i/e/të/së)', 'The article an adjective takes: i mirë, e mirë, të mira, së madhe → mirë, madh.');
 prefix('art', 'i ', '', ['adj_cmp'], ['adj', 'adj_m'], {stemMinLength: 1});

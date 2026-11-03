@@ -57,5 +57,11 @@
   ["gjej", "", "v", "v", 0, ["to find"], 56, ""],
   ["ditën", "", "n", "n", 0, [["ditë", ["accusative singular definite"]]], 57, ""],
   ["ditën", "", "v", "v", 0, [["di", ["third-person plural aorist indicative"]]], 58, ""],
-  ["shtëpisë", "", "n", "n", 0, [["shtëpi", ["dative/ablative singular definite"]]], 59, ""]
+  ["shtëpisë", "", "n", "n", 0, [["shtëpi", ["dative/ablative singular definite"]]], 59, ""],
+  ["grua", "", "n", "n", 0, ["woman"], 60, ""],
+  ["gravë", "", "n", "n", 0, ["pit, den"], 61, ""],
+  ["mas", "", "v", "v", 0, ["to measure"], 62, ""],
+  ["masë", "", "n", "n", 0, ["mass, measure"], 63, ""],
+  ["gra", "", "n", "n", 0, [["grua", ["nominative plural indefinite"]]], 64, ""],
+  ["grave", "", "n", "n", 0, [["grua", ["dative plural indefinite"]]], 65, ""]
 ]

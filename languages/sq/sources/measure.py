@@ -42,6 +42,14 @@ repository root with a built hoshidicts-cli:
       must name its tense or mood and person (V;3;SG;IND;PST: aor-3sg), a
       noun's its case and definiteness (N;ACC;SG;DEF: n-def-acc-m or -f).
 
+  python3 languages/sq/sources/measure.py order <imported dir> <sq_50k.txt> <text>...
+      The lookups of `real` and the 10,000 most frequent words alone, with
+      transforms.json as written (nouns, verbs, adjectives) and with two
+      other orders: the adjective transforms before the verbs (after vn, the
+      order before audit-hachi-lang-sq), and the noun transforms (n-*) after
+      the verbs; and with traceSelection first instead of shortest. Every
+      lookup whose first result differs, with its count, for judging by hand.
+
 The dictionary is wty-sq-en as published (term banks read from the zip). The
 word list of `yomitan` is the 50,000 words of the frequency list, the
 single-word forms of UniMorph sqi and the single-word form-of rows of the
@@ -451,6 +459,43 @@ def cmd_traces(sample):
         print(f'  {n} {category}: {trace}')
 
 
+def cmd_order(imported, freq, *texts):
+    is_adjective = lambda t: t['id'].startswith('adj-') or t['id'] in ('art', 'cmp')
+    pack = json.load(open(os.path.join(PACK, 'transforms.json'), encoding='utf-8'))
+    all_t = pack['transforms']
+    adjectives = [t for t in all_t if is_adjective(t)]
+    rest = [t for t in all_t if not is_adjective(t)]
+    at = [t['id'] for t in rest].index('vn') + 1
+    nouns = [t for t in rest if t['id'].startswith('n-')]
+    head = rest[:[t['id'] for t in rest].index(nouns[0]['id'])]
+    verbs = [t for t in rest if t not in nouns and t not in head]
+    language = json.load(open(os.path.join(PACK, 'language.json'), encoding='utf-8'))
+    first_trace = dict(language, lookup=dict(language['lookup'], traceSelection='first'))
+    others = [('adjectives before the verbs', rest[:at] + adjectives + rest[at:], language),
+              ('nouns after the verbs', head + verbs + nouns + adjectives, language),
+              ('traceSelection first', all_t, first_trace)]
+    inputs = [(w, h) for w, h in hovers_of(texts)] + [(w, w) for w, _ in read_frequency(freq, 10000)]
+    tool = os.environ.get('LOOKUP_BATCH', os.path.join(ROOT, 'build', 'lookup-batch'))
+    texts_in = '\n'.join(h for _, h in inputs) + '\n'
+    run = lambda d: [json.loads(line) for line in subprocess.run([tool, d, 'sq', imported], input=texts_in,
+                                                                capture_output=True, text=True, check=True).stdout.splitlines()]
+    first = lambda r: r['results'][0]['expression'] if r['results'] else '-'
+    now = [first(r) for r in run(os.path.join(ROOT, 'languages'))]
+    print(f'{len(inputs)} lookups')
+    for name, order, lang in others:
+        with tempfile.TemporaryDirectory() as tmp:
+            os.makedirs(os.path.join(tmp, 'sq'))
+            with open(os.path.join(tmp, 'sq', 'language.json'), 'w', encoding='utf-8') as f:
+                json.dump(lang, f, ensure_ascii=False)
+            with open(os.path.join(tmp, 'sq', 'transforms.json'), 'w', encoding='utf-8') as f:
+                json.dump(dict(pack, transforms=order), f, ensure_ascii=False)
+            other = [first(r) for r in run(tmp)]
+        changed = collections.Counter((w, b, a) for (w, _), a, b in zip(inputs, now, other) if a != b)
+        print(f'{name}: {sum(changed.values())} first results differ ({len(changed)} distinct), that order -> as written')
+        for (w, before, after), n in changed.most_common():
+            print(f'  {n}\t{w}\t{before} -> {after}')
+
+
 def main(argv):
     if len(argv) >= 1 and argv[0] == 'yomitan' and len(argv) == 4:
         cmd_yomitan(*argv[1:])
@@ -460,6 +505,8 @@ def main(argv):
         cmd_phrases(*argv[1:])
     elif len(argv) >= 6 and argv[0] == 'real':
         cmd_real(*argv[1:])
+    elif len(argv) >= 4 and argv[0] == 'order':
+        cmd_order(*argv[1:])
     elif len(argv) >= 1 and argv[0] == 'frequent' and len(argv) in (5, 6):
         cmd_frequent(*argv[1:])
     else:

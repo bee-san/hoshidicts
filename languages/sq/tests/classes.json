@@ -270,6 +270,16 @@
       [33, 55295],
       [57344, 1114111]
     ],
+    "transforms[2].rules[29].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[2].rules[30].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[3].rules[0].stemCharacters": [
       [0, 31],
       [33, 55295],
@@ -481,6 +491,16 @@
       [33, 55295],
       [57344, 1114111]
     ],
+    "transforms[3].rules[30].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[3].rules[31].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[4].rules[0].stemCharacters": [
       [0, 31],
       [33, 55295],
@@ -681,6 +701,16 @@
       [57344, 1114111]
     ],
     "transforms[4].rules[28].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[4].rules[29].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[4].rules[30].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
@@ -4638,6 +4668,11 @@
     "transforms[141].rules[1].stemEndsWith": [
       [111, 111]
     ],
+    "transforms[142].rules[40].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[144].rules[0].stemCharacters": [
       [0, 31],
       [33, 55295],
@@ -6715,6 +6750,13 @@
         ["hija", "hija"],
         ["urdhërin", "urdhërin"],
         ["miri", "miri"],
+        ["llaçi", "llaçi"],
+        ["gjiri", "gjiri"],
+        ["babin", "babin"],
+        ["më së", "më së"],
+        ["më saktësisht", "më saktësisht"],
+        ["më shpesh", "më shpesh"],
+        ["më sot", "më sot"],
         ["e doti", "e doti"],
         ["bi", "bi"],
         ["doei", "doei"],
@@ -6873,7 +6915,13 @@
         ["e dotna", "e dotna"],
         ["bna", "bna"],
         ["e dottë", "e dottë"],
-        ["llaçi", "llaçi"],
+        ["më shpejt se natyrisht", "më shpejt se natyrisht"],
+        ["ka masë", "ka masë"],
+        ["urdhëri", "urdhëri"],
+        ["të vërtetuar", "të vërtetuar"],
+        ["barin", "barin"],
+        ["lidhja", "lidhja"],
+        ["rin", "rin"],
         ["ikinim", "ikinim"],
         ["ikikeni", "ikikeni"],
         ["ikiët", "ikiët"],
@@ -6938,6 +6986,7 @@
         ["kur'ani", "kur'ani"],
         ["kosovarët", "kosovarët"],
         ["mija", "mija"],
+        ["grave", "grave"],
         ["Fëmijët lexonin libra në bibliotekën e qytetit.", "fëmijët lexonin libra në bibliotekën e qytetit."],
         ["lexoj", "lexoj"]
       ]
@@ -8477,6 +8526,13 @@
         ["hija", "Hija"],
         ["urdhërin", "Urdhërin"],
         ["miri", "Miri"],
+        ["llaçi", "Llaçi"],
+        ["gjiri", "Gjiri"],
+        ["babin", "Babin"],
+        ["më së", "Më së"],
+        ["më saktësisht", "Më saktësisht"],
+        ["më shpesh", "Më shpesh"],
+        ["më sot", "Më sot"],
         ["e doti", "E doti"],
         ["bi", "Bi"],
         ["doei", "Doei"],
@@ -8635,7 +8691,13 @@
         ["e dotna", "E dotna"],
         ["bna", "Bna"],
         ["e dottë", "E dottë"],
-        ["llaçi", "Llaçi"],
+        ["më shpejt se natyrisht", "Më shpejt se natyrisht"],
+        ["ka masë", "Ka masë"],
+        ["urdhëri", "Urdhëri"],
+        ["të vërtetuar", "Të vërtetuar"],
+        ["barin", "Barin"],
+        ["lidhja", "Lidhja"],
+        ["rin", "Rin"],
         ["ikinim", "Ikinim"],
         ["ikikeni", "Ikikeni"],
         ["ikiët", "Ikiët"],
@@ -8700,6 +8762,7 @@
         ["kur'ani", "Kur'ani"],
         ["kosovarët", "Kosovarët"],
         ["mija", "Mija"],
+        ["grave", "Grave"],
         ["Fëmijët lexonin libra në bibliotekën e qytetit.", "Fëmijët lexonin libra në bibliotekën e qytetit."],
         ["lexoj", "Lexoj"]
       ]

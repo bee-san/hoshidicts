@@ -11,7 +11,7 @@
 #
 # Writes <out dir>/*.txt: eval-table (eval-language for the own, Yomitan,
 # union and final rules on every test file, with every option on and with the
-# defaults), frequent, phrases, real, yomitan, traces (sources/measure.py), bench
+# defaults), frequent, phrases, real, yomitan, order, traces (sources/measure.py), bench
 # (benchmark-lookup, 3 runs), wasm (sources/wasm-bench.mjs) and mutations
 # (sources/mutations.py).
 set -euo pipefail
@@ -42,6 +42,7 @@ python3 $P/sources/measure.py frequent "$DICT_ZIP" "$DICT_DIR" "$FREQ" "$UNIMORP
 python3 $P/sources/measure.py phrases "$DICT_ZIP" "$DICT_DIR" "$UNIMORPH" "$TATOEBA" > "$OUT/phrases.txt"
 python3 $P/sources/measure.py real "$DICT_ZIP" "$DICT_DIR" "$UNIMORPH" "$OUT/real" "$TEXTS"/*.txt > "$OUT/real.txt"
 python3 $P/sources/measure.py yomitan "$DICT_ZIP" "$FREQ" "$UNIMORPH" > "$OUT/yomitan.txt"
+python3 $P/sources/measure.py order "$DICT_DIR" "$FREQ" "$TEXTS"/*.txt > "$OUT/order.txt"
 python3 $P/sources/measure.py traces "$OUT/sample.tsv" > "$OUT/traces.txt"
 
 # Lookup speed: the final, union and Yomitan rules, each in a copy of the pack.
