@@ -151,7 +151,7 @@ conjugate verbs of every root type. So وسيكتبونها gives كتب, بال
   | File | First rank, filter → pass | False candidates, filter → pass |
   | --- | --- | --- |
   | corpus.tsv + gaps.tsv | 80.41% → 80.35% | 1.725 → 2.077 |
-  | cases.tsv | 79.69% → 78.35% | 3.435 → 4.074 |
+  | cases.tsv | 79.73% → 78.40% | 3.441 → 4.082 |
   | defaults.tsv | 85.71% → 85.71% | 2.571 → 3.000 |
   | yomitan.tsv | 89.66% → 81.61% | 2.782 → 4.084 |
 
@@ -167,10 +167,10 @@ conjugate verbs of every root type. So وسيكتبونها gives كتب, بال
 
 ## Rule provenance
 
-`transforms.json` has 71 transforms, 1,040 JSON rules and 14,261 rules once
-cross products expand: 13,703 `own` and 558 `both` (86 JSON rules), and no
+`transforms.json` has 71 transforms, 1,041 JSON rules and 14,262 rules once
+cross products expand: 13,704 `own` and 558 `both` (86 JSON rules), and no
 `yomitan` rule. By type, 13,444 are `circumfix` (cross products of person
-prefixes and endings, or of an empty prefix and a list of endings), 548
+prefixes and endings, or of an empty prefix and a list of endings), 549
 `wholeWord`, 257 `suffix` and 12 `prefix`; there is no `pattern` rule.
 `sources/build-final.mjs` writes it: `sources/own.json` with each own rule
 marked `both` when one of its affix pairs (prefix and suffix, inflected and
@@ -189,7 +189,7 @@ compatible part of speech.
   - they reach 1 more row of the sample (لبا, below), 2 more of the dev
     subset (93.66% → 93.71%), and none of `cases.tsv` or `yomitan.tsv`;
   - they add false candidates per row: 1.725 → 1.758 on the sample, 1.614 →
-    1.651 on the dev subset, 3.435 → 3.647 on `cases.tsv` and 2.782 → 3.042
+    1.651 on the dev subset, 3.441 → 3.655 on `cases.tsv` and 2.782 → 3.042
     on `yomitan.tsv`;
   - in the conformance test, 14 of the 63 negatives of `cases.tsv` fail with
     them: `NSuff-ath` reads
@@ -252,7 +252,7 @@ compatible part of speech.
     يصل) and their imperatives; seven definite words whose rows also name a
     rarer noun (الكبيرة, الأولى, الكلاب; `definiteAdjective`); أيدي
     (`listedPlural`); الحين, معنا, منا, عنا, صوت with a pronoun, نكن, العب,
-    أعطني, انسي, the eight form V and VI imperatives for a woman that the form
+    أعطني, انسي, بحكم, the eight form V and VI imperatives for a woman that the form
     I subjunctive would read first (تعالي, توقفي), and 36 frequent words written without their hamza (اين, الان,
     اريد; `hamzaOmitted`). Each list is in `sources/own-rules.mjs` with what
     it fixes. `tests/lookup.tsv` pins 15 of these fixes by their first
@@ -317,7 +317,7 @@ compatible part of speech.
 
 ## Measurements
 
-All numbers use hoshidicts at this branch's head (on main 90022a8; GCC 14.3,
+All numbers use hoshidicts at this branch's head (on main 5ac86a3; GCC 14.3,
 Release) and wty-ar-en as published, form-of rows included. The scripts are
 in `sources/`, run from the repository root.
 
@@ -335,10 +335,10 @@ in `sources/`, run from the repository root.
    | Yomitan | corpus.tsv + gaps.tsv | defaults | 67.45% | - | 1.206 | 78.54% |
    | union | corpus.tsv + gaps.tsv | all on | 92.31% | - | 1.758 | 78.74% |
    | union | corpus.tsv + gaps.tsv | defaults | 87.43% | - | 1.448 | 78.88% |
-   | final | cases.tsv (511) | all on | 100% | 100% | 3.435 | 79.69% |
-   | final | cases.tsv | defaults | 90.40% | 100% | 3.154 | 79.24% |
-   | Yomitan | cases.tsv | all on | 3.12% | 87.30% | 2.248 | 59.38% |
-   | union | cases.tsv | all on | 100% | 87.30% | 3.647 | 73.88% |
+   | final | cases.tsv (512) | all on | 100% | 100% | 3.441 | 79.73% |
+   | final | cases.tsv | defaults | 90.42% | 100% | 3.160 | 79.29% |
+   | Yomitan | cases.tsv | all on | 3.12% | 87.30% | 2.254 | 59.24% |
+   | union | cases.tsv | all on | 100% | 87.30% | 3.655 | 73.94% |
    | final | defaults.tsv (19) | defaults | 100% | 100% | 2.571 | 85.71% |
    | final | yomitan.tsv (304) | all on | 100% | 100% | 2.782 | 89.66% |
    | Yomitan | yomitan.tsv | all on | 100% | 83.72% | 1.525 | 82.76% |
@@ -393,13 +393,13 @@ in `sources/`, run from the repository root.
    The counts below say how many positions each kind judged.
 3. **Frequent forms** (`measure.py frequent <wty-ar-en.zip> <imported>
    ar_50k.txt --homographs sources/homographs.tsv --split`). Of the 10,000
-   most frequent entries of the subtitle list, 9,215 are Arabic words; 4,265 of
+   most frequent entries of the subtitle list, 9,215 are Arabic words; 4,264 of
    them (34.8% of the list's tokens) are words whose own lemma a rule reaches.
    Looked up alone:
    - 39 show a wrong first result, 2.05% of the list's tokens. The rules make
      none of them: with no rules each is wrong too (Known gaps). 262 of the
-     4,265 are decided by hand (39 wrong), 2,439 have one lemma (0 wrong) and
-     1,564 several not decided by hand (0 wrong; any of them counts).
+     4,264 are decided by hand (39 wrong), 2,439 have one lemma (0 wrong) and
+     1,563 several not decided by hand (0 wrong; any of them counts).
    - Yomitan's rules: 55 of the 3,798 words they reach (2.71% of the
      tokens), 14 of them made by the rules. The union: 62 of 4,274 (3.12%),
      15 made by the rules.
@@ -410,7 +410,7 @@ in `sources/`, run from the repository root.
 
    | Text | Positions | Judged | Wrong | By the rules | By the dictionary | Yomitan's rules | Union |
    | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-   | *al-Nazarat* | 87,910 | 84,177 | 3,186 (3.78%) | 211 (0.25%) | 2,975 | 6,502 (7.81%), 1,483 | 5,160 (6.13%), 1,538 |
+   | *al-Nazarat* | 87,910 | 84,177 | 3,185 (3.78%) | 211 (0.25%) | 2,974 | 6,502 (7.81%), 1,483 | 5,160 (6.13%), 1,538 |
    | *Kalila wa Dimna* | 43,622 | 42,242 | 1,972 (4.67%) | 80 (0.19%) | 1,892 | 4,115 (9.87%), 721 | 2,959 (7.00%), 751 |
    | Tatoeba | 306,356 | 290,607 | 8,178 (2.81%) | 485 (0.17%) | 7,693 | 18,572 (6.45%), 5,100 | 14,973 (5.15%), 4,915 |
 
@@ -438,42 +438,48 @@ in `sources/`, run from the repository root.
      كنانة → كن; derived forms shown as form I, يتخلق → خلق), 3 of 20 in
      *Kalila*, and 21 of 40 in Tatoeba, 13 of them Tom (توم → آم) and 6
      other names.
-5. **Performance** (host load 30-35 on 64 cores, so these are upper bounds).
+5. **Performance** (host load 45-52 on 64 cores, so these are upper bounds).
    - Native `benchmark-lookup --languages languages --language ar --term
      <imported wty-ar-en>` on the 135 texts of `sources/benchmark-words.txt`
      (each word of 20 sentences written for the pack, with the rest of its
-     sentence), 6 passes, the first dropped, three runs: p50 86.4-86.9 µs, p95
-     242.4-248.0 µs. The budget is 1 ms p50.
+     sentence), 6 passes, the first dropped, three runs: p50 86.3-87.7 µs, p95
+     248.4-256.9 µs. The budget is 1 ms p50.
    - Native pack load (`sources/pack-load.cpp`): `LanguageRegistry::add`
-     median 4.5-5.3 ms over 50 runs, three runs; the registry holds
-     6,781,904 bytes of heap. The 13,889 rules are mostly cross products,
+     median 7.38-7.71 ms over 50 runs, three runs; the registry holds
+     6,507,232 bytes of heap. The 14,262 rules are mostly cross products,
      indexed by their endings.
    - WebAssembly, Hachidori feat/multi-language 803f7b6 engines (built from
      hoshidicts b145feb), Node 22:
      - `sources/wasm-load.mjs`, 10 fresh engines each: `hdw_language_load`
-       median 11.95 ms single-thread and 13.12 ms threaded; live heap
-       +3,339,952 bytes. The budgets are 50 ms and 20 MB.
+       median 12.34 ms single-thread and 13.77 ms threaded; live heap
+       +3,234,896 bytes. The budgets are 50 ms and 20 MB.
      - `benchmark/node-lookup.mjs` with `HACHIDORI_LOOKUP_LANGUAGE=ar` on the
-       same 20 sentences (135 hovers, 6 passes): `hdw_lookup` p50 227 µs and
-       p95 571 µs single-thread, p50 209 µs and p95 513 µs threaded.
+       same 20 sentences (135 hovers, 6 passes): `hdw_lookup` p50 206 µs and
+       p95 530 µs single-thread, p50 221 µs and p95 544 µs threaded.
    - The pack has no `pattern` rule, so no pattern heap.
 6. **Hachidori** (feat/multi-language 803f7b6 with this branch in
    `third_party/hoshidicts` and `node scripts/sync-languages.mjs`;
-   `test/chrome-language-pack.mjs`, Chrome 152, wty-ar-en): 17 / 17 checks
-   pass.
-   - Settings adds Arabic beside Japanese and imports the dictionary
-     (1,019,773 terms, 1.4 s).
-   - Thirteen hovered words find their headword first, with their traces:
-     واستعرتُ → استعار (و, past), سيكتبون → كتب, بالقلم → قلم, مفاتيحنا →
-     مفتاح, تساعديني → ساعد, ليستخدمه → استخدم, رأيتهم → رأى, كِتَابَهُ →
-     كتاب and others.
-   - The Anki note and the switch to Japanese and back work.
-   - `test/node-smoke-languages.mjs` loads the pack in all three runtimes.
+   `test/chrome-language-pack.mjs`, Chrome 152, wty-ar-en):
+   - with the pack's 13 cases, 17 / 17 checks pass. Settings adds Arabic
+     beside Japanese and imports the dictionary (1,019,773 terms, 1.3 s);
+     the hovered words find their headword first with their traces
+     (واستعرتُ → استعار, سيكتبون → كتب, بالقلم → قلم, مفاتيحنا → مفتاح,
+     تساعديني → ساعد, رأيتهم → رأى, كِتَابَهُ → كتاب); the Anki note and the
+     switch to Japanese and back work;
+   - with the audit's 30 cases, 31 / 34 checks pass. The three that fail are
+     the dictionary's ties of Known gaps: لم يقل → قلا, أنه → نهى and ابني →
+     بنى. The audit's other wrong cards now show the right lemma: تلك → ذلك,
+     يمكنك → أمكن, يجب → وجب, يجد → وجد, لذا → لهذا, نسيت → نسي, صوته → صوت
+     and أعطني → أعطى;
+   - `test/node-smoke-languages.mjs`: the pack loads and deinflects its
+     warm-up sample; 36 of its 40 checks pass, and the 4 that fail are the
+     aii, el, tl and zh packs, whose `lookup.untaggedTerms` the vendored
+     engines predate.
 7. **Conformance and checks**:
-   - `language-conformance-test`: corpus.tsv 1,380 / 1,380, cases.tsv 509 /
-     509, defaults.tsv 19 / 19 (with the pack's defaults), yomitan.tsv 304 /
+   - `language-conformance-test`: corpus.tsv 1,380 / 1,380, cases.tsv 512 /
+     512, defaults.tsv 19 / 19 (with the pack's defaults), yomitan.tsv 304 /
      304, text.tsv 41 / 41, lookup.tsv 56 / 56; gaps.tsv 0 / 116 (reported).
-   - `tests/classes.json` agrees with the engine (4 classes, 564 fields, 2
+   - `tests/classes.json` agrees with the engine (4 classes, 570 fields, 2
      steps).
    - `tools/check-yomitan.mjs`: 10,260 inputs, 155,488 Yomitan results, 0
      unexplained. The processors `normalizeUnicode`,
@@ -483,7 +489,7 @@ in `sources/`, run from the repository root.
    - `sources/ablate.py`: each of its 26 edits (a constraint, exclusion or
      condition removed, a listed word dropped, two processors swapped) makes
      the conformance test fail.
-   - `tests/` and `sources/` hold 997,507 bytes.
+   - `tests/` and `sources/` hold 997,817 bytes.
 8. **Commands**:
 
    ```sh
