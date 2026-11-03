@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "conditions": {
+    "v": {
+      "name": "Verb",
+      "isDictionaryForm": true
+    }
+  },
+  "transforms": [
+    {
+      "id": "ξανα-",
+      "name": "ξανα-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "ξανα", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "ξανα", "deinflected": "α", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "ξανά", "deinflected": "έ", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "ξανά", "deinflected": "ά", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "ξανάπα", "deinflected": "είπα", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "ξανα", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"], "then": [{"normalize": "NFD"}, {"strip": "[\\u0300-\\u036F]"}, {"normalize": "NFC"}]}
+      ]
+    }
+  ]
+}
