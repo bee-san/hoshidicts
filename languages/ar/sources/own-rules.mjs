@@ -274,7 +274,12 @@ transform('pluralFem', 'plural (ـات)', 'The feminine sound plural ending ـا
 {
     const CONS = RADICALS;
     const DROP_ALIF = (min) => ({from: ['ا'], to: '', occurrence: 'last', between: STEM, betweenMinLength: min});
-    transform('brokenPlural', 'plural (broken)', 'A broken plural whose pattern shows its singular: أطفال (طفل), وزراء (وزير), مكاتب (مكتب), مشاكل (مشكلة), شوارع (شارع), قواعد (قاعدة), رسائل (رسالة), حقائق (حقيقة), تفاصيل (تفصيل), أسلحة (سلاح).', [
+    // Optional (the brokenPlurals setting): wty-ar-en lists most broken plurals
+    // as form-of rows of their singular, which a lookup follows, and the rule
+    // then ties with them and wins (أصحابه -> صحب, the collective, before the
+    // dictionary's صاحب): on al-Manfaluti's al-Nazarat, Kalila wa Dimna and
+    // Tatoeba it fixed 1 first result and made 104 wrong.
+    transform('brokenPlural', 'plural (broken)', 'A broken plural whose pattern shows its singular: أطفال (طفل), وزراء (وزير), مكاتب (مكتب), مشاكل (مشكلة), شوارع (شارع), قواعد (قاعدة), رسائل (رسالة), حقائق (حقيقة), تفاصيل (تفصيل), أسلحة (سلاح). Off unless the brokenPlurals setting is on.', [
         // أفعال -> فعل: أطفال, أخبار, أعمال, أولاد.
         // Not after a middle و or ي, whose singular has ا (أبواب: باب, not بوب).
         cross([['أ', '']], CONS.map((c) => ['ا' + c, c]), {into: N_IN, out: ['n'], extra: {...NOT_AL, stemNotEndsWith: '[وي]'}}),
@@ -291,7 +296,7 @@ transform('pluralFem', 'plural (ـات)', 'The feminine sound plural ending ـا
         cross([['ت', 'ت']], [['', '']], {min: 4, into: N_IN, out: ['n'], extra: {...NOT_AL, stemChange: DROP_ALIF(3)}}),
         // أفعلة -> فعال: أسلحة, أجهزة, أطعمة.
         cross([['أ', '']], CONS.map((c) => [c + 'ة', 'ا' + c]), {into: N_IN, out: ['n'], extra: {...NOT_AL, stemNotEndsWith: '[وي]'}}),
-    ]);
+    ], {optional: true});
 }
 
 // --------------------------------------------------------------------- verbs

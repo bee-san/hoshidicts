@@ -297,6 +297,19 @@
           "verbalNoun"
         ]
       }
+    },
+    {
+      "id": "brokenPlurals",
+      "type": "boolean",
+      "default": false,
+      "label": "Singular of broken plurals by their pattern",
+      "description": "Also read a broken plural as its singular by its pattern (أطفال as طفل, مكاتب as مكتب, رسائل as رسالة). Dictionaries such as wty-ar-en list most plurals with their singular already; turn this on for a dictionary that does not.",
+      "group": "lookup",
+      "effect": {
+        "transforms": [
+          "brokenPlural"
+        ]
+      }
     }
   ],
   "host": {

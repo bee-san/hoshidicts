@@ -4,6 +4,11 @@
 
     python3 languages/ar/sources/measure.py frequent <wty-ar-en.zip> <imported dir> <ar_50k.txt> [--languages dir]
     python3 languages/ar/sources/measure.py text <wty-ar-en.zip> <imported dir> <text file> [--languages dir] [--sample N]
+    python3 languages/ar/sources/measure.py sets <imported dir> [--languages dir]
+
+sets: eval-language --dictionary on corpus.tsv + gaps.tsv, cases.tsv,
+defaults.tsv and yomitan.tsv for the own, Yomitan, union and final rules,
+each file with every option on and with the defaults.
 
 Run from the repository root after building build/hoshidicts-cli and
 build/lookup-batch-ar (sources/lookup-batch.cpp). Lookups use the pack's
@@ -241,6 +246,73 @@ def text_measure(args):
         print('  %s | %s -> %s [%s] {%s}' % (word, hover[:40], first['expression'], first['matched'], '>'.join(reversed(first['trace']))))
 
 
+def scratch_pack(languages, transforms_path, out_dir):
+    """A copy of the pack whose transforms.json is another rule file, without
+    the settings that name transforms that file may lack."""
+    import shutil
+    from pathlib import Path
+    target = Path(out_dir) / 'ar'
+    if target.exists():
+        shutil.rmtree(target)
+    shutil.copytree(Path(languages) / 'ar', target)
+    shutil.copy(transforms_path, target / 'transforms.json')
+    descriptor = json.loads((target / 'language.json').read_text(encoding='utf-8'))
+    ids = {t['id'] for t in json.loads(Path(transforms_path).read_text(encoding='utf-8'))['transforms']}
+    descriptor['settings'] = [s for s in descriptor['settings']
+                              if 'transforms' not in s['effect'] or set(s['effect']['transforms']) <= ids]
+    (target / 'language.json').write_text(json.dumps(descriptor, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    return str(Path(out_dir))
+
+
+def with_options_line(path, out_path, default):
+    """A copy of a test file with the `# options: default` line added or removed."""
+    lines = open(path, encoding='utf-8').read().splitlines()
+    lines = [line for line in lines if line != '# options: default']
+    if default:
+        lines.insert(0, '# options: default')
+    open(out_path, 'w', encoding='utf-8').write('\n'.join(lines) + '\n')
+
+
+def sets(args):
+    """eval-language on each test file for the own, Yomitan, union and final
+    rules, with every option on and with the defaults (docs/languages.md 14,
+    "What to measure and report", item 1)."""
+    import tempfile
+    imported = args[0]
+    languages = option(args, '--languages', 'languages')
+    pack = languages + '/ar'
+    tmp = tempfile.mkdtemp(prefix='ar-sets-')
+    union = tmp + '/union.json'
+    subprocess.run(['node', 'tools/merge-transforms.mjs', 'ar', '--languages', languages, '--out', union],
+                   check=True, capture_output=True)
+    rule_sets = [('own', pack + '/sources/own.json'), ('Yomitan', pack + '/sources/yomitan.json'),
+                 ('union', union), ('final', pack + '/transforms.json')]
+    sample = tmp + '/sample.tsv'
+    corpus = open(pack + '/tests/corpus.tsv', encoding='utf-8').read().splitlines()
+    gaps = [line for line in open(pack + '/tests/gaps.tsv', encoding='utf-8').read().splitlines() if not line.startswith('#')]
+    open(sample, 'w', encoding='utf-8').write('\n'.join(corpus + gaps) + '\n')
+    files = [('corpus.tsv + gaps.tsv', sample), ('cases.tsv', pack + '/tests/cases.tsv'),
+             ('defaults.tsv', pack + '/tests/defaults.tsv'), ('yomitan.tsv', pack + '/tests/yomitan.tsv')]
+    print('| Rule set | File | Options | Rows | Recall | Negatives passed | False candidates | First rank |')
+    print('| --- | --- | --- | ---: | ---: | ---: | ---: | ---: |')
+    for name, rules in rule_sets:
+        langs = scratch_pack(languages, rules, tmp + '/' + name)
+        for label, path in files:
+            for default in (False, True):
+                copy = '%s/%s-%s-%d.tsv' % (tmp, name, label.split()[0].replace('.', '_'), default)
+                with_options_line(path, copy, default)
+                cmd = ['build/hoshidicts-cli', '--languages', langs, 'eval-language', 'ar', copy, '--dictionary', imported]
+                out = subprocess.run(cmd, capture_output=True, text=True)
+                if out.returncode != 0 and not out.stdout:
+                    print('| %s | %s | %s | error: %s |' % (name, label, 'defaults' if default else 'all on', out.stderr.strip()[:80]))
+                    continue
+                r = json.loads(out.stdout.strip().splitlines()[-1])
+                fmt = lambda v, p=True: '-' if v is None else ('%.2f%%' % (100 * v) if p else '%.3f' % v)  # noqa: E731
+                print('| %s | %s | %s | %d | %s | %s | %s | %s |' % (
+                    name, label, 'defaults' if default else 'all on', r['rows'], fmt(r['recall']) if r['positives'] else '-',
+                    fmt(r['negativesPassed']), fmt(r.get('falseCandidates'), False), fmt(r.get('firstRank'))))
+
+
 if __name__ == '__main__':
     command, rest = sys.argv[1], sys.argv[2:]
-    {'frequent': frequent, 'text': text_measure}[command](rest)
+    {'frequent': frequent, 'text': text_measure, 'sets': sets}[command](rest)

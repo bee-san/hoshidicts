@@ -17,3 +17,6 @@ derivation off	1	استخدمنا	استخدم	v	pastWe
 final ya off	0	حتي	حتى	n	*
 final ya off	1	إلي	إلى	*	p1s
 final ya off	1	يبقي	بقى	v	presentHe
+broken plural off	0	أطفال	طفل	*	*
+broken plural off	0	أصحابه	صحب	*	*
+broken plural off	1	أطفالهم	أطفال	*	p3mp
