@@ -133,7 +133,7 @@ affix to root	1	pakainin	kain	*	*
 affix to root	1	patawarin	tawad	*	*
 affix to root	1	masaktan	sakit	*	*
 nouns and adjectives	1	pagkain	kain	*	*
-nouns and adjectives	1	pagbabasa	basa	*	*
+nouns and adjectives	1	pagbabasa	basa	*	gerund
 nouns and adjectives	1	pag-aaral	aral	*	*
 nouns and adjectives	1	pagkakamali	mali	*	*
 nouns and adjectives	1	pakikipag-usap	usap	*	*
@@ -148,7 +148,7 @@ nouns and adjectives	1	taga-Maynila	Maynila	*	*
 nouns and adjectives	1	panulat	sulat	*	*
 nouns and adjectives	1	pambansa	bansa	*	*
 nouns and adjectives	1	mapagmahal	mahal	*	*
-nouns and adjectives	1	tig-isa	isa	*	*
+nouns and adjectives	1	tig-isa	isa	*	tig
 comparison	1	pinakamaganda	maganda	*	pinaka
 comparison	1	pinakamalaki	malaki	*	pinaka
 comparison	1	napakaganda	maganda	*	napaka
@@ -264,6 +264,51 @@ aspect -in	1	ginagawa	gawin	*	*
 aspect -in	1	ginamit	gamitin	*	*
 aspect -in	1	tinukso	tuksuhin	*	*
 aspect -in	1	inaawit	awitin	*	*
+affix to root	1	ipaliwanag	paliwanag	*	i
+abilitative	1	maipaliwanag	ipaliwanag	*	abilitative
+abilitative	1	maipagluto	ipagluto	*	abilitative
+abilitative	1	makapag-aral	mag-aral	*	abilitative
+aspect i-	1	ipapaluto	ipaluto	*	contemplative
+aspect -in	1	papakainin	pakainin	*	contemplative
+recently completed	1	kakapag-aral	aral	*	recentlyCompleted
+affix to root	1	dinggin	dinig	*	objectIn
+affix to root	1	tamnin	tanim	*	objectIn
+affix to root	1	lagyan	lagay	*	locativeAn
+affix to root	1	tanggapan	tanggap	*	locativeAn
+affix to root	1	sunurin	sunod	*	objectIn
+affix to root	1	luhuran	luhod	*	locativeAn
+affix to root	1	umpisahan	umpisa	*	locativeAn
+affix to root	1	katamaran	tamad	*	kaAn
+affix to root	1	maramdaman	damdam	*	maAn
+nouns and adjectives	1	pang-abay	abay	*	pang
+nouns and adjectives	1	pang-araw-araw	araw-araw	*	pang
+nouns and adjectives	1	taga-Bulacan	Bulacan	*	taga
+nouns and adjectives	1	pagpapaluto	luto	*	gerund
+linker	1	yung	yun	*	linker
+linker	1	yong	yon	*	linker
+linker	1	tong	to	*	linker
+linker	1	ding	din	*	linker
+linker	1	bang	ba	*	linker
+linker	1	nung	nun	*	linker
+linker	1	yang	yan	*	linker
+linker	1	saang	saan	*	linker
+linker	1	hapong	hapon	*	linker
+linker	1	bayang	bayan	*	linker
+linker	1	kanang	kanan	*	linker
+linker	1	labang	laban	*	linker
+linker	1	pangunahing	pangunahin	*	linker
+linker	1	usapang	usapan	*	linker
+linker	1	kainang	kainan	*	linker
+linker	1	tuwirang	tuwiran	*	linker
+linker	1	dati ring	dati rin	*	linker
+linker	1	sino pong	sino po	*	linker
+spelling	1	nangangailangan	mangailangan	*	*
+spelling	1	pangalan	pangalan	*	
+spelling	1	pangalawa	dalawa	*	pang-
+spelling	1	ikalawa	dalawa	*	ika-
+linker	1	araling	aralin	*	linker
+spelling	1	pangabay	pang-abay	*	prefixHyphen
+spelling	1	mangaawit	mang-aawit	*	prefixHyphen
 negatives	0	ang	a	*	*
 negatives	0	lang	la	*	*
 negatives	0	nang	na	*	*
@@ -286,7 +331,6 @@ negatives	0	Kunin	Ko	*	*
 negatives	0	maghapunan	maghapon	*	*
 negatives	0	nagpasya	sya	*	*
 negatives	0	paano ba	ano ba	*	*
-negatives	0	pauna	una	*	*
 negatives	0	palala	la	*	*
 negatives	0	magasin	gas	*	*
 negatives	0	ka nang	ka nan	*	*
@@ -305,3 +349,20 @@ negatives	0	palapag	pag	*	*
 negatives	0	palaboy	boy	*	*
 negatives	0	magkamayan	may	*	*
 negatives	0	tindahan	tdahan	*	*
+negatives	0	pay	y	*	*
+negatives	0	umpisa	pisa	*	*
+negatives	0	nangako si	ako si	*	*
+negatives	0	pakialam mo	alam mo	*	*
+negatives	0	nagsimula ngayon	mula ngayon	*	*
+negatives	0	kakatingin ko	tingin ko	*	*
+negatives	0	pagtingin ko	tingin ko	*	*
+negatives	0	nasa unahan	sa una	*	*
+negatives	0	magsipilyo	pilyo	*	*
+negatives	0	nagsisigawan	gawan	*	*
+negatives	0	ipasa	sa	*	*
+negatives	0	magkasing	si	*	*
+negatives	0	mango	o	*	*
+negatives	0	nakama	ma	*	*
+negatives	0	mapala	la	*	*
+negatives	0	makaya	ya	*	*
+negatives	0	magsimula	mula	*	*

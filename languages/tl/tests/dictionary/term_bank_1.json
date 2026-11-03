@@ -48,7 +48,19 @@
   ["ilang", "", "adj", "adj", 0, ["a few (an entry a wrong reading of kailang̃an would reach)"], 47, ""],
   ["tanda", "", "n", "n", 0, ["sign; age"], 48, ""],
   ["matanda", "", "adj", "adj", 0, ["old (an entry a wrong reading of matandaan would reach)"], 49, ""],
-  ["nakita", "", "non-lemma", "", 0, [["makita", ["completive"]]], 50, ""],
-  ["ᜃᜓᜋᜁᜈ᜔", "", "non-lemma", "", 0, [["kumain", ["Baybayin"]]], 51, ""],
-  ["ilang̃", "", "non-lemma", "", 0, [["ilang", ["alternative"]]], 52, ""]
+  ["pagmamahal", "", "n", "n", 0, ["love; affection"], 50, ""],
+  ["diyeta", "", "n", "n", 0, ["diet"], 51, ""],
+  ["usisa", "", "n", "n", 0, ["inquiry"], 52, ""],
+  ["bahay", "", "n", "n", 0, ["house"], 53, ""],
+  ["lupa", "", "n", "n", 0, ["earth; soil"], 54, ""],
+  ["ᜎᜓᜉ", "", "non-lemma", "", 0, [["lupa", ["Baybayin"]]], 55, ""],
+  ["galing", "", "n", "n", 0, ["skill; excellence"], 56, ""],
+  ["aling", "", "n", "n", 0, ["a title for a woman (an entry a wrong reading of magaling would reach)"], 57, ""],
+  ["gamot", "", "n", "n", 0, ["medicine"], 58, ""],
+  ["amot", "", "adj", "adj", 0, ["an entry a wrong reading of ipagamot would reach"], 59, ""],
+  ["silang", "", "v", "v", 0, ["birth; to be born"], 60, ""],
+  ["lang", "", "adv", "adv", 0, ["only (an entry a wrong reading of nagsilang would reach)"], 61, ""],
+  ["nakita", "", "non-lemma", "", 0, [["makita", ["completive"]]], 62, ""],
+  ["ᜃᜓᜋᜁᜈ᜔", "", "non-lemma", "", 0, [["kumain", ["Baybayin"]]], 63, ""],
+  ["ilang̃", "", "non-lemma", "", 0, [["ilang", ["alternative"]]], 64, ""]
 ]

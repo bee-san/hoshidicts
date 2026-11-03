@@ -1,0 +1,3 @@
+# Deliberate differences between sources/yomitan.json and Yomitan's Tagalog rules (docs/languages.md 8.2).
+# kind	id	side	input	text	conditions	reason
+rule	*	pack	/^(ka|kar|pa|par|ma|mar|mag|makipag|pag|pang|pan[dlrst]|pam[bp]|papang|papan[dlrst]|papam[bp])u[bcdfghjklmnpqrstvwxyz]+(an|ran|in|rin)$/	*	*	Yomitan's sandwichInflectionWithOtoUSoundChange (ka-...-an, pa-...-an, ma-...-an, mag-...-an, makipag-...-an, pa-...-in, pag-...-an, pang-...-an, pag-...-in, papang-...-in) needs a letter before the u, as ^P(\w+)u([C]+)S$; the pack's circumfix with a stem change cannot ask for one, so it also changes a u that starts a stem of a u and consonants (kaunran -> onr). No such stem is a Tagalog root.

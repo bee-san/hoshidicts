@@ -105,6 +105,8 @@
       "fieldAliases": {"phonetic-transcriptions": ["IPA"]},
       "partOfSpeechLabels": {
         "v": "Verb",
+        "vt": "Transitive verb",
+        "vi": "Intransitive verb",
         "n": "Noun",
         "adj": "Adjective",
         "adv": "Adverb",

@@ -7,15 +7,24 @@
 //
 // 1. The union of sources/own.json and sources/yomitan.json, as
 //    tools/merge-transforms.mjs makes it.
-// 2. A Yomitan rule that makes the deinflection an own rule makes (the same
-//    rule type and affixes, whatever its conditions and stem constraints) is
-//    left out, and the own rule is marked `both`.
-// 3. The Yomitan transforms in REMOVED are left out, each for the harm
-//    README.md (Rule provenance) measures.
-// 4. The own transforms come first, in sources/own.json's order, then the
+// 2. An own rule that makes a deinflection a Yomitan rule makes (the same rule
+//    type and affixes) is marked `both`, whether or not the Yomitan rule
+//    stays.
+// 3. A Yomitan rule is left out when an own rule repeats it: the same type
+//    and affixes, and the own rule accepts every stem the Yomitan rule
+//    accepts (each of the own rule's stem constraints and stem changes is
+//    also the Yomitan rule's). A Yomitan rule that an own rule only narrows
+//    stays, so nothing it reads is lost.
+// 4. The Yomitan transforms in REMOVED and the single Yomitan rules in
+//    REMOVED_RULES are left out, each for the harm README.md (Rule
+//    provenance) measures.
+// 5. The own rules written after Yomitan's rules were read, as constrained
+//    versions of them (DERIVED), are marked `yomitan`: they are ported, not
+//    written independently.
+// 6. The own transforms come first, in sources/own.json's order, then the
 //    Yomitan transforms that remain, so that where both reach a term with
 //    the same number of steps, the own trace is the one a lookup keeps.
-// 5. A row of tests/yomitan.tsv whose reasons name a transform the final set
+// 7. A row of tests/yomitan.tsv whose reasons name a transform the final set
 //    does not have gets the reasons `*` (the final rules reach its term
 //    through their own transforms); sources/yomitan.json passes the file with
 //    Yomitan's reasons, which README.md reports.
@@ -29,8 +38,6 @@ import {mergeTransforms} from '../../../tools/merge-transforms.mjs';
 
 const pack = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (name) => JSON.parse(readFileSync(join(pack, name), 'utf8'));
-const own = read('sources/own.json');
-const yomitan = read('sources/yomitan.json');
 
 // Yomitan transforms left out of the final set, with the harm each does in
 // the union (README.md, Rule provenance, has the numbers and the commands).
@@ -56,76 +63,130 @@ export const REMOVED = {
     'makapang-': 'makapangahas -> ahas first at 12 of its 17 Gutenberg positions; the own maka- reads it as maka- + pangahas, and makapanggamot as maka- + manggamot',
 };
 
-export function buildFinal() {
-    const union = mergeTransforms(own, yomitan).transforms;
+// Single Yomitan rules left out, by `<transform id> <inflected affix>`, with
+// their harm. Each is a prefix rule that an own rule makes with a stem
+// constraint; without the constraint it reads only wrong first results on
+// Tatoeba (T) and the two Gutenberg texts (G), measured with the pass copy.
+// The rest of each transform stays (Yomitan's pang- and mapag- stay whole:
+// they read pangdiyeta, mapagusisa).
+export const REMOVED_RULES = {
+    'mag- mag': 'a vowel after mag- without the hyphen: magubat -> ubat, magalak -> alak, magipit -> ipit (T 4, G 14)',
+    'ipa- ipa': 'stems of two letters and phrases: ipasa -> sa, ipaalam mo -> alam mo (T 14)',
+    'magka- magka': 'magkasing -> si (T 13)',
+    'maka- maka': 'makaya -> ya, makal -> l, makaw -> w (T 4, G 4)',
+    'maka- makar': 'makar -> d (T 1)',
+    'ika- ika': 'ikasang -> sa, ikama -> ma (T 3, G 1)',
+    'mang- mang': 'mango -> o (T 3)',
+    'naka- naka': 'nakama -> ma, nakay -> y, nakawang -> wa (T 2, G 1)',
+    'naka- nakar': 'nakar -> d (T 1, G 1)',
+    'kaka- kaka': 'kakae -> e (T 1)',
+    'mapa- mapa': 'mapala -> la, mapag -> g, mapasa -> sa (T 1, G 9)',
+    'pakiki- pakiki': 'pakikita -> ta (G 1)',
+};
+export const ruleKey = (transform, rule) => `${transform.id} ${rule.inflected ?? rule.inflectedPrefix ?? rule.anchorPrefix ?? ''}`;
 
-    // Rule identity for step 2: type and affixes.
-    const keysOf = (rule) => {
-        switch (rule.type) {
-            case 'prefix':
-            case 'suffix':
-            case 'wholeWord':
-            case 'replace':
-                return [`${rule.type}\u0000${rule.inflected}\u0000${rule.deinflected}`];
-            case 'circumfix': {
-                const prefixes = rule.prefixes ?? [[rule.inflectedPrefix, rule.deinflectedPrefix]];
-                const suffixes = rule.suffixes ?? [[rule.inflectedSuffix, rule.deinflectedSuffix]];
-                const change = rule.stemChange ? JSON.stringify(rule.stemChange.from) + rule.stemChange.to : '';
-                return prefixes.flatMap(([ip, dp]) => suffixes.map(([is, ds]) => `circumfix\u0000${ip}\u0000${dp}\u0000${is}\u0000${ds}\u0000${change}`));
-            }
-            default:
-                return [];
+// Own rules added after Yomitan's rules were read, as constrained versions of
+// them (README.md, History): the transforms ka, pa, pala, tag and maIn
+// (Yomitan's ka-, pa-, pala-, tag-, ma-...-in), and the -unan, -unin,
+// -ran -> d and pagkar-/pagkakar- rules (its -an, -in, sandwich and pagka-
+// rules).
+const DERIVED_TRANSFORMS = new Set(['ka', 'pa', 'pala', 'tag', 'maIn']);
+function derived(transform, rule) {
+    if (DERIVED_TRANSFORMS.has(transform.id)) { return true; }
+    if (rule.type === 'suffix' && (rule.inflected === 'unin' || rule.inflected === 'unan')) { return true; }
+    if (rule.type === 'prefix' && (rule.inflected === 'pagkar' || rule.inflected === 'pagkakar')) { return true; }
+    if (rule.type === 'circumfix' && rule.suffixes !== undefined &&
+        rule.suffixes.every(([inflected, deinflected]) => /^un(an|in)$/.test(inflected) || (inflected === 'ran' && deinflected === 'd'))) { return true; }
+    return false;
+}
+
+// The fields of a rule that decide which stems it accepts.
+const STEM_FIELDS = ['stemMinLength', 'stemCharacters', 'stemContains', 'stemStartsWith', 'stemEndsWith', 'stemNotStartsWith',
+    'stemNotEndsWith', 'stemStartsWithText', 'stemNotStartsWithText', 'stemChange'];
+
+/** True when every stem `yomitanRule` accepts, `ownRule` accepts too. */
+export function acceptsAll(ownRule, yomitanRule) {
+    return STEM_FIELDS.every((field) => ownRule[field] === undefined || JSON.stringify(ownRule[field]) === JSON.stringify(yomitanRule[field]));
+}
+
+/** Rule identity for steps 2 and 3: type and affixes (one key per pair of a cross product). */
+export function keysOf(rule) {
+    switch (rule.type) {
+        case 'prefix':
+        case 'suffix':
+        case 'wholeWord':
+        case 'replace':
+            return [`${rule.type}\u0000${rule.inflected}\u0000${rule.deinflected}`];
+        case 'circumfix': {
+            const prefixes = rule.prefixes ?? [[rule.inflectedPrefix, rule.deinflectedPrefix]];
+            const suffixes = rule.suffixes ?? [[rule.inflectedSuffix, rule.deinflectedSuffix]];
+            return prefixes.flatMap(([ip, dp]) => suffixes.map(([is, ds]) => `circumfix\u0000${ip}\u0000${dp}\u0000${is}\u0000${ds}`));
         }
-    };
+        default:
+            return [];
+    }
+}
+
+export function buildFinal() {
+    const union = mergeTransforms(read('sources/own.json'), read('sources/yomitan.json')).transforms;
+
     const ownKeys = new Map();
     for (const transform of union.transforms) {
         if (transform.source === 'yomitan') { continue; }
-        transform.rules.forEach((rule) => {
+        for (const rule of transform.rules) {
             for (const key of keysOf(rule)) {
-                if (!ownKeys.has(key)) { ownKeys.set(key, rule); }
+                if (!ownKeys.has(key)) { ownKeys.set(key, []); }
+                ownKeys.get(key).push(rule);
             }
-        });
+        }
     }
 
     const ownTransforms = [];
     const yomitanTransforms = [];
-    let both = 0;
     let duplicates = 0;
     let removedRules = 0;
+    const markBoth = (rule) => { rule.source = 'both'; };
     for (const transform of union.transforms) {
         if (transform.source !== 'yomitan') {
             ownTransforms.push(transform);
             continue;
         }
-        if (transform.id in REMOVED) {
-            removedRules += transform.rules.length;
-            continue;
-        }
         const rules = [];
         for (const rule of transform.rules) {
             const keys = keysOf(rule);
-            const matches = keys.length > 0 && keys.every((key) => ownKeys.has(key));
-            if (!matches) {
-                rules.push(rule);
+            // Step 2.
+            for (const key of keys) { (ownKeys.get(key) ?? []).forEach(markBoth); }
+            if (transform.id in REMOVED || ruleKey(transform, rule) in REMOVED_RULES) {
+                ++removedRules;
                 continue;
             }
-            ++duplicates;
-            for (const key of keys) {
-                const mine = ownKeys.get(key);
-                if (mine.source !== 'both') {
-                    mine.source = 'both';
-                    ++both;
-                }
+            // Step 3.
+            const repeated = keys.length > 0 && keys.every((key) => (ownKeys.get(key) ?? []).some((mine) => acceptsAll(mine, rule)));
+            if (repeated) {
+                ++duplicates;
+                continue;
             }
+            rules.push(rule);
         }
         if (rules.length > 0) { yomitanTransforms.push({...transform, rules}); }
     }
 
-    // A transform whose rules are all `both` says so itself.
+    // Step 5.
+    let derivedRules = 0;
+    for (const transform of ownTransforms) {
+        for (const rule of transform.rules) {
+            if (derived(transform, rule)) {
+                rule.source = 'yomitan';
+                ++derivedRules;
+            }
+        }
+    }
+
+    // A transform whose rules all have one source says so itself.
     for (const transform of ownTransforms) {
         const sources = new Set(transform.rules.map((r) => r.source ?? transform.source));
-        if (sources.size === 1 && sources.has('both')) {
-            transform.source = 'both';
+        if (sources.size === 1) {
+            transform.source = [...sources][0];
             for (const rule of transform.rules) { delete rule.source; }
         }
     }
@@ -136,9 +197,11 @@ export function buildFinal() {
     const count = (pred) => final.transforms.reduce((n, t) => n + t.rules.filter((r) => pred(r.source ?? t.source)).length, 0);
     console.log(`transforms.json: ${final.transforms.length} transforms, ${count(() => true)} rules ` +
         `(${count((s) => s === 'own')} own, ${count((s) => s === 'yomitan')} yomitan, ${count((s) => s === 'both')} both); ` +
-        `${duplicates} Yomitan rules are own rules too (${both} own rules marked both), ${removedRules} rules of ${Object.keys(REMOVED).length} Yomitan transforms removed`);
+        `${duplicates} Yomitan rules an own rule repeats left out, ${removedRules} Yomitan rules removed ` +
+        `(${Object.keys(REMOVED).length} transforms and ${Object.keys(REMOVED_RULES).length} single rules), ` +
+        `${derivedRules} own rules written after Yomitan's were read marked yomitan`);
 
-    // Step 5: tests/yomitan.tsv.
+    // Step 6: tests/yomitan.tsv.
     const ids = new Set(final.transforms.map((t) => t.id));
     const tsv = join(pack, 'tests', 'yomitan.tsv');
     let changed = 0;

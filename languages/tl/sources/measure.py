@@ -72,7 +72,11 @@ FUNCTION_WORDS = {
                  'yata', 'sana', 'man', 'hindi', 'huwag', 'wag', 'di', 'may', 'mayroon', 'wala', 'kung', 'kapag', 'para'],
 }
 GROUP_OF = {w: g for g, ws in FUNCTION_WORDS.items() for w in ws}
-WORD = re.compile(r"[^\W\d_]+(?:[-'’][^\W\d_]+)*")
+# A word: letters and the combining marks after them (the tilde of ng̃, the
+# accents of old text, the Baybayin vowel signs), as the pack's
+# text.wordCharacters has them, joined by hyphens and apostrophes.
+LETTERS = r"(?:[^\W\d_]|[\u0300-\u036f\u1712-\u1715])+"
+WORD = re.compile(LETTERS + r"(?:[-'’]" + LETTERS + r")*")
 END = re.compile(r'(?<=[.!?…])["”’)]*\s+')
 
 
@@ -96,8 +100,14 @@ def rule_sets(work):
     }
 
 
+def written(text):
+    """The text without marks, letter case kept."""
+    return strip_marks(text).replace('’', "'")
+
+
 def dictionary_lemmas(zip_path):
-    """Lemmas each headword's form-of rows name, and the headwords with definitions."""
+    """Lemmas each headword's form-of rows name, and every headword as written
+    (without marks, letter case kept)."""
     lemmas = collections.defaultdict(set)
     defined = set()
     with zipfile.ZipFile(zip_path) as z:
@@ -108,8 +118,7 @@ def dictionary_lemmas(zip_path):
                 refs = [d for d in row[5] if isinstance(d, list) and len(d) == 2 and isinstance(d[0], str) and d[0]]
                 for ref in refs:
                     lemmas[norm(row[0])].add(norm(ref[0]))
-                if len(refs) < len(row[5]):
-                    defined.add(norm(row[0]))
+                defined.add(written(row[0]))
     return lemmas, defined
 
 
@@ -197,15 +206,16 @@ def frequent_words(args):
 
 
 def cmd_frequent(args, sets):
-    lemmas, _ = dictionary_lemmas(Path(args.cache) / 'wty-tl-en.zip')
+    lemmas, headwords = dictionary_lemmas(Path(args.cache) / 'wty-tl-en.zip')
     for word, extra in corpus_lemmas().items():
         lemmas[word] |= extra
     words, counts = frequent_words(args)
     total = sum(counts)
     print(f'{len(words)} words, {total} tokens; {sum(1 for w in words if lemmas.get(norm(w)))} have a lemma named by a form-of row or the corpus')
-    print('| Rule set | Words a rule reaches | Their tokens | Wrong first (words) | Wrong first (share of tokens) | Other rule readings first (words) |')
-    print('| --- | ---: | ---: | ---: | ---: | ---: |')
+    print('| Rule set | Words a rule reaches | Their tokens | Wrong first (words) | Wrong first (share of tokens) | Other rule readings first (words) | Capitalised: a capitalised headword first |')
+    print('| --- | ---: | ---: | ---: | ---: | ---: | ---: |')
     listed = {}
+    cap_words = {}
     for set_name, transforms in sets.items():
         deinflections = run_deinflect(transforms, [norm(w) for w in words])
         answers = run_batch(transforms, args.dictionary, words)
@@ -225,8 +235,17 @@ def cmd_frequent(args, sets):
             if first and classify(first, lemmas) == 'other rule reading':
                 unnamed.append((count, word, first['expression'], [t for t, _ in first['trace']]))
         listed[set_name] = unnamed
-        print(f'| {set_name} | {reached} | {100 * reached_tokens / total:.2f}% | {wrong} | {100 * wrong_tokens / total:.3f}% | {len(unnamed)} |')
+        # The same words written with a capital letter, as at a sentence start.
+        capitalised = run_batch(transforms, args.dictionary, [w[:1].upper() + w[1:] for w in words])
+        caps = [(c, w, a['results'][0]['expression']) for w, c, a in zip(words, counts, capitalised)
+                if a['results'] and capital_at_start(a['results'][0], w[:1].upper() + w[1:], '', headwords)]
+        cap_words[set_name] = caps
+        print(f'| {set_name} | {reached} | {100 * reached_tokens / total:.2f}% | {wrong} | {100 * wrong_tokens / total:.3f}% | {len(unnamed)} | '
+              f'{len(caps)} ({100 * sum(c for c, _, _ in caps) / total:.2f}% of tokens) |')
     if args.show:
+        for set_name, caps in cap_words.items():
+            print(f'\n{set_name}: written with a capital, a capitalised headword first ({len(caps)}):')
+            print('  ' + ' | '.join(f'{c}:{w}->{e}' for c, w, e in sorted(caps, reverse=True)[:args.show]))
         for set_name, unnamed in listed.items():
             print(f'\n{set_name}: other rule readings first ({len(unnamed)}):')
             for count, word, expression, trace in sorted(unnamed, reverse=True)[:args.show]:
@@ -270,8 +289,23 @@ def hovers(sentences):
 GRAMMAR = {'linker', '-ng', 'contractionAy', 'contractionAt', 'contractionAng', 'apostropheSpelling', 'prefixHyphen', 'hyphenated'}
 
 
-def classify(first, lemmas):
-    """own entry / named lemma / linker or contraction / other rule reading."""
+def capital_at_start(first, word, previous, headwords):
+    """A capitalised headword (a name, an abbreviation) first for a word that
+    starts its sentence, whose lowercase spelling is a headword too: Ang (a
+    surname) for the article ang, May for may. The text as written needs no
+    processor step and decapitalize one, so such a row comes first (README.md,
+    Known gaps). Counted as wrong; right only where the capital is meant at the
+    start of a sentence, as for Diyos."""
+    if previous != '' or not word[:1].isupper() or not first['expression'][:1].isupper():
+        return False
+    return written(word[:1].lower() + word[1:]) in headwords
+
+
+def classify(first, lemmas, word=None, previous=None, headwords=None):
+    """own entry / named lemma / linker or contraction / other rule reading,
+    or a capitalised headword at a sentence start."""
+    if headwords is not None and capital_at_start(first, word, previous, headwords):
+        return 'capital at sentence start'
     trace = first['trace']
     rule_steps = [t for t, from_dictionary in trace if not from_dictionary]
     if not rule_steps:
@@ -285,14 +319,14 @@ def classify(first, lemmas):
 
 
 def cmd_positions(args, sets, sentences, label):
-    lemmas, _ = dictionary_lemmas(Path(args.cache) / 'wty-tl-en.zip')
+    lemmas, headwords = dictionary_lemmas(Path(args.cache) / 'wty-tl-en.zip')
     for word, extra in corpus_lemmas().items():
         lemmas[word] |= extra
     positions = hovers(sentences)
     texts = [h for h, _, _ in positions]
     print(f'{label}: {len(sentences)} sentences, {len(positions)} positions')
-    print('| Rule set | Positions found | First result as written or by a form-of row | A lemma a form-of row names | Linker, contraction or hyphen only | Other rule reading | of which multiword | Other, after a marker / pronoun / particle |')
-    print('| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |')
+    print('| Rule set | Positions found | Capitalised headword at a sentence start | First result as written or by a form-of row | A lemma a form-of row names | Linker, contraction or hyphen only | Other rule reading | of which multiword | Other, after a marker / pronoun / particle |')
+    print('| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |')
     listed = {}
     for set_name, transforms in sets.items():
         answers = run_batch(transforms, args.dictionary, texts)
@@ -303,6 +337,7 @@ def cmd_positions(args, sets, sentences, label):
                                        ensure_ascii=False) + '\n')
         found = 0
         kinds = collections.Counter()
+        capitals = collections.Counter()
         multi = 0
         after = collections.Counter()
         items = []
@@ -311,17 +346,22 @@ def cmd_positions(args, sets, sentences, label):
                 continue
             found += 1
             first = a['results'][0]
-            kind = classify(first, lemmas)
+            kind = classify(first, lemmas, word, previous, headwords)
             kinds[kind] += 1
+            if kind == 'capital at sentence start':
+                capitals[(word, first['expression'])] += 1
             if kind == 'other rule reading':
                 multi += ' ' in first['matched']
                 after[GROUP_OF.get(norm(previous), 'other')] += 1
                 items.append((first['matched'], first['expression'], '|'.join(t for t, _ in first['trace']), text[:60]))
-        listed[set_name] = items
-        print(f"| {set_name} | {found} | {kinds['own entry or dictionary']} | {kinds['named lemma']} | {kinds['linker, contraction or spelling']} | "
-              f"{kinds['other rule reading']} | {multi} | {after['marker']} / {after['pronoun']} / {after['particle']} |")
+        listed[set_name] = (items, capitals)
+        print(f"| {set_name} | {found} | {kinds['capital at sentence start']} | {kinds['own entry or dictionary']} | {kinds['named lemma']} | "
+              f"{kinds['linker, contraction or spelling']} | {kinds['other rule reading']} | {multi} | {after['marker']} / {after['pronoun']} / {after['particle']} |")
     if args.show:
-        for set_name, items in listed.items():
+        for set_name, (items, capitals) in listed.items():
+            print(f'\n{set_name}: capitalised headwords at a sentence start, by (word, expression), most frequent first:')
+            for (w, e), c in capitals.most_common(args.show):
+                print(f'  {c}\t{w}\t{e}')
             groups = collections.Counter((m.lower(), e) for m, e, _, _ in items)
             print(f'\n{set_name}: other rule readings by (matched, expression), most frequent first:')
             for (m, e), c in groups.most_common(args.show):
