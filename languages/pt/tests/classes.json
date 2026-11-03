@@ -8254,6 +8254,8 @@
         ["estime", "estime"],
         ["estimes", "estimes"],
         ["duas", "duas"],
+        ["distingui", "distingui"],
+        ["seguia", "seguia"],
         ["respigemos", "respigemos"],
         ["requisermos", "requisermos"],
         ["reúnamos", "reúnamos"],
@@ -8349,6 +8351,10 @@
         ["Fale-me de ti", "fale-me de ti"],
         ["Bentinho chegou", "bentinho chegou"],
         ["Marinha de guerra", "marinha de guerra"],
+        ["rapazinhos da rua", "rapazinhos da rua"],
+        ["franco-brasileira", "franco-brasileira"],
+        ["casacos azuis", "casacos azuis"],
+        ["casebre velho", "casebre velho"],
         ["Ela falou com o professor depois da aula.", "ela falou com o professor depois da aula."],
         ["falar", "falar"]
       ]
@@ -10382,6 +10388,8 @@
         ["estime", "Estime"],
         ["estimes", "Estimes"],
         ["duas", "Duas"],
+        ["distingui", "Distingui"],
+        ["seguia", "Seguia"],
         ["respigemos", "Respigemos"],
         ["requisermos", "Requisermos"],
         ["reúnamos", "Reúnamos"],
@@ -10477,6 +10485,10 @@
         ["Fale-me de ti", "Fale-me de ti"],
         ["Bentinho chegou", "Bentinho chegou"],
         ["Marinha de guerra", "Marinha de guerra"],
+        ["rapazinhos da rua", "Rapazinhos da rua"],
+        ["franco-brasileira", "Franco-brasileira"],
+        ["casacos azuis", "Casacos azuis"],
+        ["casebre velho", "Casebre velho"],
         ["Ela falou com o professor depois da aula.", "Ela falou com o professor depois da aula."],
         ["falar", "Falar"]
       ]

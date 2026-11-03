@@ -595,3 +595,8 @@ exclusions keep	1	estime	estimar	v	subjunctive-eu-ele
 exclusions keep	1	estimes	estimar	v	subjunctive-tu
 negatives	0	duas	duo	*	*
 negatives	0	gatinho	gat	*	*
+negatives	0	segui	seguir	*	present-ele
+negatives	0	distingui	distinguir	*	present-ele
+negatives	0	seguia	segueir	*	*
+negatives	0	claramente	clara	*	*
+negatives	0	rapidamente	rapida	*	*

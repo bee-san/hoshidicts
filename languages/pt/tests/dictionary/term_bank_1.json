@@ -62,5 +62,9 @@
   ["Bento", "", "name masc", "", 0, ["a male given name"], 61, ""],
   ["bento", "", "adj", "", 0, ["blessed"], 62, ""],
   ["marinha", "", "n fem", "", 0, ["navy"], 63, ""],
-  ["Mara", "", "name fem", "", 0, ["a female given name"], 64, ""]
+  ["Mara", "", "name fem", "", 0, ["a female given name"], 64, ""],
+  ["rapaz", "", "n masc", "", 0, ["boy"], 65, ""],
+  ["rapa", "", "n fem", "", 0, ["scrapings"], 66, ""],
+  ["franco", "", "adj", "", 0, ["frank; French"], 67, ""],
+  ["casaco", "", "n masc", "", 0, ["coat"], 68, ""]
 ]
