@@ -69,12 +69,13 @@ SPELLING = ('alternative', 'alt-of', 'misspelling', 'contraction', 'syncop', 'sp
 
 def ref_kind(rules):
     """A form-of reference's kind: 'spell' (another spelling of the lemma),
-    'ptc' (a participle or gerundive of a verb) or 'form'."""
+    'parent' (a participle or gerundive of a verb, a comparative or
+    superlative of an adjective or adverb) or 'form'."""
     names = ' '.join(rules)
     if any(word in names for word in SPELLING):
         return 'spell'
-    if 'participle' in names or 'gerundive' in names:
-        return 'ptc'
+    if any(word in names for word in ('participle', 'gerundive', 'comparative', 'superlative')):
+        return 'parent'
     return 'form'
 
 
@@ -188,12 +189,13 @@ def reach(cli, languages, hover_lines, refs):
 
 def readings(keys, lemma, refs):
     """A word's own lemmas (keys that are lemmas and the lemmas their form-of
-    rows name), the lemmas right for it (those, their other spellings and the
-    verbs of participles among them), and how many words the own lemmas are:
-    lemmas joined by a spelling or participle reference count once."""
+    rows name), the lemmas right for it (those, their other spellings, the
+    verbs of participles and the positives of comparatives among them), and
+    how many words the own lemmas are: lemmas joined by such a reference
+    count once."""
     own = {k for k in keys if k in lemma} | {t for k in keys for t, _ in refs.get(k, ())}
     spelled = own | {t for x in own for t, kind in refs.get(x, ()) if kind == 'spell'}
-    right = spelled | {t for x in spelled for t, kind in refs.get(x, ()) if kind == 'ptc'}
+    right = spelled | {t for x in spelled for t, kind in refs.get(x, ()) if kind == 'parent'}
     parent = {x: x for x in right}
     def find(x):
         while parent[x] != x:
@@ -301,7 +303,7 @@ def judge(args):
             # that word, or a lemma it is a form of, is also a noun or adjective.
             first_keys = keys_of(matched.split(' ')[0])
             own, right, count = readings(first_keys, lemma, refs)
-            right -= own - {t for x in own for t, k in refs.get(x, ()) if k == 'ptc'}
+            right -= own - {t for x in own for t, k in refs.get(x, ()) if k == 'parent'}
             count = 2 if any(nominal(x) for x in set(first_keys) | own) else 1
         found = expression in right or plain(expression) in right
         # The word's own headword, as written, is its own entry whatever else

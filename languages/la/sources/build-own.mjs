@@ -1545,7 +1545,7 @@ function buildTransforms() {
 for (const [slotId, inflected, deinflected, conditionsOut, stem] of [
     ['adj-i', 'i', 'us', ['adj12', 'ptc', 'v'], 'nav'],        // nāvī: nāvis, not nāvus
     ['adj-o', 'o', 'us', ['adj12', 'ptc', 'v'], 'argent'],     // argentō: argentum, not argentus
-    ['adj-am', 'am', 'us', ['adj12', 'ptc', 'v'], 'patri'],    // patriam: patria, not patrius
+    ['adj-am', 'am', 'us', ['adj12', 'ptc', 'v'], 'mens'],     // mēnsam: mēnsa, not mēnsus
     ['adj-ae', 'ae', 'us', ['adj12', 'ptc', 'v'], 'patri'],    // patriae
     ['adj-a', 'a', 'us', ['adj12', 'ptc', 'v'], 'bell'],       // bella: bellum, not bellus
     ['adj-as', 'as', 'us', ['adj12', 'ptc', 'v'], 'mens'],     // mēnsās: mēnsa, not mēnsus

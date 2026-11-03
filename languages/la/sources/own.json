@@ -328,7 +328,7 @@
       "description": "Adjective, participle or gerundive, accusative singular feminine.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "am", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj12", "ptc", "v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemNotStartsWithText": "patri"},
+        {"type": "suffix", "inflected": "am", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["adj12", "ptc", "v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemNotStartsWithText": "mens"},
         {"type": "suffix", "inflected": "am", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj12"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[r]"},
         {"type": "suffix", "inflected": "ram", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj12"], "stemMinLength": 2}
       ]
