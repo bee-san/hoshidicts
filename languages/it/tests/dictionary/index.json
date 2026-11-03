@@ -1,0 +1,10 @@
+{
+  "title": "hoshidicts it test dictionary",
+  "format": 3,
+  "revision": "1",
+  "sequenced": false,
+  "author": "hoshidicts",
+  "description": "A tiny Italian dictionary for languages/it/tests/lookup.tsv, written for the pack. Iero, Gia and casera stand for the proper names and rare words of a full dictionary that rules or processors could reach by mistake; alzare is left out so that alziamoci is read through the reflexive rules.",
+  "sourceLanguage": "it",
+  "targetLanguage": "en"
+}

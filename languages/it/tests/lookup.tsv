@@ -1,0 +1,36 @@
+# Source: written for this pack (GPL-3.0-or-later), against tests/dictionary/. Every optional processor is on.
+# category	valid	text	expression	matched
+inflection	1	Parlavano di te	parlare	Parlavano
+inflection	1	ho parlato con lei	avere	ho
+inflection	1	case bianche	casa	case
+inflection	1	bellissime case	bello	bellissime
+inflection	1	lentamente	lento	lentamente
+inflection	1	precipitevolissimevolmente	precipitevolissimevolmente	precipitevolissimevolmente
+elision	1	l'amico mio	amico	l'amico
+elision	1	L'amico mio	amico	L'amico
+elision	1	dell'acqua fresca	acqua	dell'acqua
+elision	1	un po' di pane	un po'	un po
+elision	1	po' di pane	po'	po
+clitic	1	dammelo subito	dare	dammelo
+clitic	1	parlarne adesso	parlare	parlarne
+clitic	1	Alziamoci subito	alzarsi	Alziamoci
+pronominal	1	mi lavo le mani	lavarsi	mi lavo
+pronominal	1	Mi lavo le mani	lavarsi	Mi lavo
+pronominal	1	se ne va subito	andarsene	se ne va
+pronominal	1	ce la faccio	farcela	ce la faccio
+pronominal	1	c'entra niente	entrarci	c'entra
+pronominal	1	si accorse che	accorgersi	si accorse
+pronominal	1	mi lava le mani	mi	mi
+pronominal	0	mi lava le mani	lavarsi	mi lava
+pronominal	1	ti amo	ti	ti
+words	1	a casa mia	a	a
+words	0	a casa mia	a caso	a casa
+words	1	Ieri sono uscito	ieri	Ieri
+words	0	Ieri sono uscito	Iero	Ieri
+words	1	Già fatto	già	Già
+words	0	Già fatto	Gia	Già
+words	1	è poi vero	è	è
+words	0	è poi vero	e poi	è poi
+words	1	casette bianche	casetta	casette
+words	0	casette bianche	casera	casette
+words	1	anglo-americano	anglo	anglo

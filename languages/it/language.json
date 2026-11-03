@@ -9,7 +9,8 @@
   "direction": "ltr",
   "classes": {
     "letter": "[A-Za-z\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u024F]",
-    "word": "[{letter}\\u0300-\\u036F0-9]"
+    "word": "[{letter}\\u0300-\\u036F0-9]",
+    "upper": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]"
   },
   "text": {
     "pattern": "[{letter}\\u0300-\\u036F]",
@@ -56,6 +57,17 @@
         }, "at": "start"}]]
       },
       {
+        "id": "addElisionApostrophe",
+        "name": "Add the apostrophe of an elided word",
+        "keepInput": false,
+        "variants": [[{"pattern": "^(.* )?([Ll]|[Gg]l|[Dd]ell|[Aa]ll|[Dd]all|[Nn]ell|[Ss]ull|[Cc]oll|[Qq]uest|[Qq]uell|[Bb]ell|[Ss]ant|[Gg]rand|[Mm]ezz|[Tt]utt|[Nn]ient|[Ss]enz|[Aa]nch|[Cc]om|[Cc]os|[Dd]ov|[Qq]uand|[Dd]ev|[Ss]ott|[Cc]|[Dd]|[Nn]|[Ss]|[Mm]|[Tt]|[Vv]|[Pp]o|[Mm]o|[Bb]e|[Tt]o)$", "replace": "$1$2'"}]]
+      },
+      {
+        "id": "acuteFinalE",
+        "name": "Write -chè as -ché",
+        "variants": [[{"map": {"ch\u00E8": "ch\u00E9"}, "at": "end"}]]
+      },
+      {
         "id": "decapitalize",
         "name": "Decapitalize text",
         "variants": [[{"case": "lower"}]]
@@ -68,17 +80,16 @@
       {
         "id": "removeAlphabeticDiacritics",
         "name": "Remove alphabetic diacritics",
-        "variants": [[{"normalize": "NFD"}, {"strip": "[\\u0300-\\u036F]"}]]
+        "variants": [[
+          {"normalize": "NFD"},
+          {"pattern": "^([^A-Z\\u00C0-\\u00DE\\u0300-\\u036F ][^\\u0300-\\u036F ]*)[\\u0300-\\u036F]([^ ]*)$", "replace": "$1$2", "repeat": true},
+          {"normalize": "NFC"}
+        ]]
       },
       {
         "id": "removeApostrophedWords",
         "name": "Remove common apostrophed words",
         "variants": [[{"pattern": "(l|dell|all|dall|nell|sull|coll|un|quest|quell|c|n)['\\u2019]", "replace": "", "global": true}]]
-      },
-      {
-        "id": "addElisionApostrophe",
-        "name": "Add the apostrophe of an elided word",
-        "variants": [[{"pattern": "^(l|gl|dell|all|dall|nell|sull|coll|quest|quell|bell|sant|grand|mezz|tutt|nient|senz|anch|com|cos|dov|quand|dev|sott|c|d|n|s|m|t|v|po|mo|be|to)$", "replace": "$1'"}]]
       },
       {
         "id": "addFinalAccent",

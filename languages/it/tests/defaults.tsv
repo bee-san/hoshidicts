@@ -1,0 +1,634 @@
+# options: default
+# Source: written for this pack (GPL-3.0-or-later), no third-party data. Expected traces are this pack's transform ids, newest first.
+# These rows run with the pack's defaults: with every option on, the optional accent processor (setting missingAccents) reaches several of these lemmas another way (parlo → parlò → parlare) and breaks negatives (e → è → essere).
+# category	valid	source	term	rule	reasons
+present	1	parlo	parlare	v	present-io
+present	1	temo	temere	v	present-io
+present	1	dormo	dormire	v	present-io
+present	1	finisco	finire	v	present-io
+present	1	parli	parlare	v	present-tu
+present	1	temi	temere	v	present-tu
+present	1	finisci	finire	v	present-tu
+present	1	parla	parlare	v	present-lui
+present	1	teme	temere	v	present-lui
+present	1	dorme	dormire	v	present-lui
+present	1	capisce	capire	v	present-lui
+present	1	parliamo	parlare	v	present-noi
+present	1	dormiamo	dormire	v	present-noi
+present	1	parlate	parlare	v	present-voi
+present	1	temete	temere	v	present-voi
+present	1	dormite	dormire	v	present-voi
+present	1	parlano	parlare	v	present-loro
+present	1	temono	temere	v	present-loro
+present	1	finiscono	finire	v	present-loro
+imperfect	1	parlavo	parlare	v	imperfect-io
+imperfect	1	temevi	temere	v	imperfect-tu
+imperfect	1	dormiva	dormire	v	imperfect-lui
+imperfect	1	parlavamo	parlare	v	imperfect-noi
+imperfect	1	temevate	temere	v	imperfect-voi
+imperfect	1	dormivano	dormire	v	imperfect-loro
+preterite	1	parlai	parlare	v	preterite-io
+preterite	1	temetti	temere	v	preterite-io
+preterite	1	credetti	credere	v	preterite-io
+preterite	1	dormii	dormire	v	preterite-io
+preterite	1	parlasti	parlare	v	preterite-tu
+preterite	1	parlò	parlare	v	preterite-lui
+preterite	1	temé	temere	v	preterite-lui
+preterite	1	credette	credere	v	preterite-lui
+preterite	1	dormì	dormire	v	preterite-lui
+preterite	1	parlammo	parlare	v	preterite-noi
+preterite	1	dormiste	dormire	v	preterite-voi
+preterite	1	parlarono	parlare	v	preterite-loro
+preterite	1	temettero	temere	v	preterite-loro
+preterite	1	dormirono	dormire	v	preterite-loro
+future	1	parlerò	parlare	v	future-io
+future	1	temerai	temere	v	future-tu
+future	1	dormirà	dormire	v	future-lui
+future	1	parleremo	parlare	v	future-noi
+future	1	temerete	temere	v	future-voi
+future	1	dormiranno	dormire	v	future-loro
+conditional	1	parlerei	parlare	v	conditional-io
+conditional	1	temeresti	temere	v	conditional-tu
+conditional	1	dormirebbe	dormire	v	conditional-lui
+conditional	1	parleremmo	parlare	v	conditional-noi
+conditional	1	temereste	temere	v	conditional-voi
+conditional	1	dormirebbero	dormire	v	conditional-loro
+subjunctive	1	tema	temere	v	subjunctive-sg
+subjunctive	1	dorma	dormire	v	subjunctive-sg
+subjunctive	1	finisca	finire	v	subjunctive-sg
+subjunctive	1	parliate	parlare	v	subjunctive-voi
+subjunctive	1	parlino	parlare	v	subjunctive-loro
+subjunctive	1	temano	temere	v	subjunctive-loro
+subjunctive	1	finiscano	finire	v	subjunctive-loro
+subjunctive	1	temiamo	temere	v	subjunctive-noi
+subjunctive	1	parlassi	parlare	v	subjunctive-imperfect-sg
+subjunctive	1	temesse	temere	v	subjunctive-imperfect-lui
+subjunctive	1	dormissimo	dormire	v	subjunctive-imperfect-noi
+subjunctive	1	parlaste	parlare	v	subjunctive-imperfect-voi
+subjunctive	1	temessero	temere	v	subjunctive-imperfect-loro
+imperative	1	parla	parlare	v	imperative-tu
+imperative	1	finisci	finire	v	imperative-tu
+imperative	1	parliamo	parlare	v	imperative-noi
+imperative	1	dormite	dormire	v	imperative-voi
+nonfinite	1	parlando	parlare	v	gerund
+nonfinite	1	temendo	temere	v	gerund
+nonfinite	1	dormendo	dormire	v	gerund
+nonfinite	1	parlante	parlare	v	participle-present
+nonfinite	1	credenti	credere	v	participle-present
+nonfinite	1	dormiente	dormire	v	participle-present
+nonfinite	1	parlato	parlare	v	participle
+nonfinite	1	parlate	parlare	v	participle
+nonfinite	1	temuto	temere	v	participle
+nonfinite	1	finita	finire	v	participle
+spelling	1	cerchi	cercare	v	present-tu
+spelling	1	cerchiamo	cercare	v	present-noi
+spelling	1	cercherò	cercare	v	future-io
+spelling	1	paghi	pagare	v	present-tu
+spelling	1	pagherei	pagare	v	conditional-io
+spelling	1	comincerò	cominciare	v	future-io
+spelling	1	mangerei	mangiare	v	conditional-io
+spelling	1	lascerà	lasciare	v	future-lui
+spelling	1	studi	studiare	v	present-tu
+spelling	1	studiamo	studiare	v	present-noi
+spelling	1	studino	studiare	v	subjunctive-loro
+spelling	1	mangi	mangiare	v	present-tu
+spelling	1	tolgo	togliere	v	present-io
+spelling	1	togli	togliere	v	present-tu
+spelling	1	tolgono	togliere	v	present-loro
+spelling	1	scelga	scegliere	v	subjunctive-sg
+spelling	1	spengo	spegnere	v	present-io
+spelling	1	piaccio	piacere	v	present-io
+spelling	1	piacciono	piacere	v	present-loro
+spelling	1	tacque	tacere	v	preterite-lui
+spelling	1	cucio	cucire	v	present-io
+spelling	1	conosciuto	conoscere	v	participle
+spelling	1	piaciuto	piacere	v	participle
+spelling	0	baci	bacare	*	*
+spelling	0	pesche	pescere	*	*
+spelling	0	casette	casere	*	*
+essere	1	sono	essere	v	present-io
+essere	1	sei	essere	v	present-tu
+essere	1	è	essere	v	present-lui
+essere	1	siamo	essere	v	present-noi
+essere	1	siete	essere	v	present-voi
+essere	1	sono	essere	v	present-loro
+essere	1	ero	essere	v	imperfect-io
+essere	1	eravamo	essere	v	imperfect-noi
+essere	1	fui	essere	v	preterite-io
+essere	1	fu	essere	v	preterite-lui
+essere	1	furono	essere	v	preterite-loro
+essere	1	sarò	essere	v	future-io
+essere	1	sarebbe	essere	v	conditional-lui
+essere	1	sia	essere	v	subjunctive-sg
+essere	1	siano	essere	v	subjunctive-loro
+essere	1	fossi	essere	v	subjunctive-imperfect-sg
+essere	1	fosse	essere	v	subjunctive-imperfect-lui
+essere	1	sii	essere	v	imperative-tu
+essere	1	essendo	essere	v	gerund
+essere	1	stato	essere	v	participle
+avere	1	ho	avere	v	present-io
+avere	1	hai	avere	v	present-tu
+avere	1	ha	avere	v	present-lui
+avere	1	abbiamo	avere	v	present-noi
+avere	1	hanno	avere	v	present-loro
+avere	1	ebbe	avere	v	preterite-lui
+avere	1	avrò	avere	v	future-io
+avere	1	avremmo	avere	v	conditional-noi
+avere	1	abbia	avere	v	subjunctive-sg
+avere	1	abbi	avere	v	imperative-tu
+modals	1	posso	potere	v	present-io
+modals	1	puoi	potere	v	present-tu
+modals	1	può	potere	v	present-lui
+modals	1	possono	potere	v	present-loro
+modals	1	potrei	potere	v	conditional-io
+modals	1	possa	potere	v	subjunctive-sg
+modals	1	voglio	volere	v	present-io
+modals	1	vuoi	volere	v	present-tu
+modals	1	vuole	volere	v	present-lui
+modals	1	vogliono	volere	v	present-loro
+modals	1	volle	volere	v	preterite-lui
+modals	1	vorrei	volere	v	conditional-io
+modals	1	voglia	volere	v	subjunctive-sg
+modals	1	devo	dovere	v	present-io
+modals	1	debbo	dovere	v	present-io
+modals	1	deve	dovere	v	present-lui
+modals	1	dobbiamo	dovere	v	present-noi
+modals	1	dovrà	dovere	v	future-lui
+modals	1	debba	dovere	v	subjunctive-sg
+modals	1	so	sapere	v	present-io
+modals	1	sa	sapere	v	present-lui
+modals	1	sanno	sapere	v	present-loro
+modals	1	seppe	sapere	v	preterite-lui
+modals	1	saprò	sapere	v	future-io
+modals	1	sappia	sapere	v	subjunctive-sg
+andare	1	vado	andare	v	present-io
+andare	1	vai	andare	v	present-tu
+andare	1	va	andare	v	present-lui
+andare	1	vanno	andare	v	present-loro
+andare	1	vada	andare	v	subjunctive-sg
+andare	1	andrò	andare	v	future-io
+andare	1	andremmo	andare	v	conditional-noi
+dare	1	do	dare	v	present-io
+dare	1	dai	dare	v	present-tu
+dare	1	dà	dare	v	present-lui
+dare	1	danno	dare	v	present-loro
+dare	1	diedi	dare	v	preterite-io
+dare	1	dette	dare	v	preterite-lui
+dare	1	darò	dare	v	future-io
+dare	1	dia	dare	v	subjunctive-sg
+dare	1	dessi	dare	v	subjunctive-imperfect-sg
+dare	1	ridà	ridare	v	present-lui
+dare	1	ridò	ridare	v	present-io
+dare	1	ridiede	ridare	v	preterite-lui
+stare	1	sto	stare	v	present-io
+stare	1	stai	stare	v	present-tu
+stare	1	sta	stare	v	present-lui
+stare	1	stanno	stare	v	present-loro
+stare	1	stette	stare	v	preterite-lui
+stare	1	starò	stare	v	future-io
+stare	1	stia	stare	v	subjunctive-sg
+stare	1	stessero	stare	v	subjunctive-imperfect-loro
+stare	1	sottostà	sottostare	v	present-lui
+stare	1	sottostette	sottostare	v	preterite-lui
+fare	1	faccio	fare	v	present-io
+fare	1	fai	fare	v	present-tu
+fare	1	fa	fare	v	present-lui
+fare	1	facciamo	fare	v	present-noi
+fare	1	fanno	fare	v	present-loro
+fare	1	facevo	fare	v	imperfect-io
+fare	1	feci	fare	v	preterite-io
+fare	1	fece	fare	v	preterite-lui
+fare	1	farò	fare	v	future-io
+fare	1	faccia	fare	v	subjunctive-sg
+fare	1	facessi	fare	v	subjunctive-imperfect-sg
+fare	1	facendo	fare	v	gerund
+fare	1	fatto	fare	v	participle
+fare	1	rifà	rifare	v	present-lui
+fare	1	rifaccio	rifare	v	present-io
+fare	1	soddisfanno	soddisfare	v	present-loro
+fare	1	contraffatto	contraffare	v	participle
+fare	0	affaccia	affare	*	*
+fare	0	affatto	affare	*	*
+dire	1	dico	dire	v	present-io
+dire	1	dici	dire	v	present-tu
+dire	1	dice	dire	v	present-lui
+dire	1	diciamo	dire	v	present-noi
+dire	1	dite	dire	v	present-voi
+dire	1	dicono	dire	v	present-loro
+dire	1	dicevo	dire	v	imperfect-io
+dire	1	dissi	dire	v	preterite-io
+dire	1	disse	dire	v	preterite-lui
+dire	1	dirò	dire	v	future-io
+dire	1	dica	dire	v	subjunctive-sg
+dire	1	dicesse	dire	v	subjunctive-imperfect-lui
+dire	1	dicendo	dire	v	gerund
+dire	1	detto	dire	v	participle
+dire	1	predetto	predire	v	participle
+dire	1	benedice	benedire	v	present-lui
+bere	1	bevo	bere	v	present-io
+bere	1	beve	bere	v	present-lui
+bere	1	bevve	bere	v	preterite-lui
+bere	1	berrò	bere	v	future-io
+bere	1	beva	bere	v	subjunctive-sg
+bere	1	bevuto	bere	v	participle
+irregular	1	vengo	venire	v	present-io
+irregular	1	vieni	venire	v	present-tu
+irregular	1	viene	venire	v	present-lui
+irregular	1	vengono	venire	v	present-loro
+irregular	1	venne	venire	v	preterite-lui
+irregular	1	verrò	venire	v	future-io
+irregular	1	venga	venire	v	subjunctive-sg
+irregular	1	venuto	venire	v	participle
+irregular	1	convengo	convenire	v	present-io
+irregular	1	avviene	avvenire	v	present-lui
+irregular	1	tengo	tenere	v	present-io
+irregular	1	tiene	tenere	v	present-lui
+irregular	1	tenne	tenere	v	preterite-lui
+irregular	1	terrò	tenere	v	future-io
+irregular	1	ottengo	ottenere	v	present-io
+irregular	1	mantiene	mantenere	v	present-lui
+irregular	1	esco	uscire	v	present-io
+irregular	1	esce	uscire	v	present-lui
+irregular	1	riesco	riuscire	v	present-io
+irregular	1	salgo	salire	v	present-io
+irregular	1	salga	salire	v	subjunctive-sg
+irregular	1	rimango	rimanere	v	present-io
+irregular	1	rimase	rimanere	v	preterite-lui
+irregular	1	rimarrò	rimanere	v	future-io
+irregular	1	rimasto	rimanere	v	participle
+irregular	1	valgo	valere	v	present-io
+irregular	1	varrà	valere	v	future-lui
+irregular	1	paio	parere	v	present-io
+irregular	1	parrà	parere	v	future-lui
+irregular	1	appaio	apparire	v	present-io
+irregular	1	apparve	apparire	v	preterite-lui
+irregular	1	apparso	apparire	v	participle
+irregular	1	compaiono	comparire	v	present-loro
+irregular	1	duole	dolere	v	present-lui
+irregular	1	muoio	morire	v	present-io
+irregular	1	muore	morire	v	present-lui
+irregular	1	morrò	morire	v	future-io
+irregular	1	muoia	morire	v	subjunctive-sg
+irregular	1	morto	morire	v	participle
+irregular	1	odo	udire	v	present-io
+irregular	1	ode	udire	v	present-lui
+irregular	1	udrà	udire	v	future-lui
+irregular	1	siedo	sedere	v	present-io
+irregular	1	siede	sedere	v	present-lui
+irregular	1	sieda	sedere	v	subjunctive-sg
+irregular	1	nuoce	nuocere	v	present-lui
+irregular	1	nocque	nuocere	v	preterite-lui
+irregular	1	cuocio	cuocere	v	present-io
+irregular	1	cotto	cuocere	v	participle
+irregular	1	moviamo	muovere	v	present-noi
+irregular	1	moverò	muovere	v	future-io
+irregular	1	cocevo	cuocere	v	imperfect-io
+irregular	1	scotendo	scuotere	v	gerund
+irregular	1	mosso	muovere	v	participle
+irregular	1	vedrò	vedere	v	future-io
+irregular	1	vivrei	vivere	v	conditional-io
+irregular	1	cadrà	cadere	v	future-lui
+irregular	1	godrò	godere	v	future-io
+porre	1	pongo	porre	v	present-io
+porre	1	pone	porre	v	present-lui
+porre	1	poniamo	porre	v	present-noi
+porre	1	pongono	porre	v	present-loro
+porre	1	ponevo	porre	v	imperfect-io
+porre	1	posi	porre	v	preterite-io
+porre	1	pose	porre	v	preterite-lui
+porre	1	porrò	porre	v	future-io
+porre	1	ponga	porre	v	subjunctive-sg
+porre	1	ponendo	porre	v	gerund
+porre	1	posto	porre	v	participle
+porre	1	propongo	proporre	v	present-io
+porre	1	suppose	supporre	v	preterite-lui
+porre	1	composto	comporre	v	participle
+trarre	1	traggo	trarre	v	present-io
+trarre	1	trae	trarre	v	present-lui
+trarre	1	trasse	trarre	v	preterite-lui
+trarre	1	trarrò	trarre	v	future-io
+trarre	1	tratto	trarre	v	participle
+trarre	1	distrae	distrarre	v	present-lui
+trarre	1	attrasse	attrarre	v	preterite-lui
+durre	1	conduco	condurre	v	present-io
+durre	1	produce	produrre	v	present-lui
+durre	1	tradussi	tradurre	v	preterite-io
+durre	1	ridurrà	ridurre	v	future-lui
+durre	1	condotto	condurre	v	participle
+durre	1	introducendo	introdurre	v	gerund
+mpiere	1	compio	compiere	v	present-io
+mpiere	1	compirò	compiere	v	future-io
+mpiere	1	compiuto	compiere	v	participle
+mpiere	1	adempì	adempiere	v	preterite-lui
+strong	1	presi	prendere	v	preterite-io
+strong	1	prese	prendere	v	preterite-lui
+strong	1	presero	prendere	v	preterite-loro
+strong	1	preso	prendere	v	participle
+strong	1	sorpreso	sorprendere	v	participle
+strong	1	spese	spendere	v	preterite-lui
+strong	1	difese	difendere	v	preterite-lui
+strong	1	sospese	sospendere	v	preterite-lui
+strong	1	divisi	dividere	v	preterite-io
+strong	1	inciso	incidere	v	participle
+strong	1	concluse	concludere	v	preterite-lui
+strong	1	illuso	illudere	v	participle
+strong	1	eluso	eludere	v	participle
+strong	1	persuase	persuadere	v	preterite-lui
+strong	1	invaso	invadere	v	participle
+strong	1	esplose	esplodere	v	preterite-lui
+strong	1	chiesi	chiedere	v	preterite-io
+strong	1	chiesto	chiedere	v	participle
+strong	1	risposi	rispondere	v	preterite-io
+strong	1	risposto	rispondere	v	participle
+strong	1	nascose	nascondere	v	preterite-lui
+strong	1	nascosto	nascondere	v	participle
+strong	1	misi	mettere	v	preterite-io
+strong	1	messo	mettere	v	participle
+strong	1	scrissi	scrivere	v	preterite-io
+strong	1	scritto	scrivere	v	participle
+strong	1	lessi	leggere	v	preterite-io
+strong	1	letto	leggere	v	participle
+strong	1	corresse	correggere	v	preterite-lui
+strong	1	fritto	friggere	v	participle
+strong	1	afflitto	affliggere	v	participle
+strong	1	sconfitto	sconfiggere	v	participle
+strong	1	trafisse	trafiggere	v	preterite-lui
+strong	1	crocifisso	crocifiggere	v	participle
+strong	1	diresse	dirigere	v	preterite-lui
+strong	1	diretto	dirigere	v	participle
+strong	1	redasse	redigere	v	preterite-lui
+strong	1	esatto	esigere	v	participle
+strong	1	giunse	giungere	v	preterite-lui
+strong	1	unto	ungere	v	participle
+strong	1	dipinto	dipingere	v	participle
+strong	1	stretto	stringere	v	participle
+strong	1	spense	spegnere	v	preterite-lui
+strong	1	spento	spegnere	v	participle
+strong	1	risorto	risorgere	v	participle
+strong	1	sommerso	sommergere	v	participle
+strong	1	rivolto	rivolgere	v	participle
+strong	1	torse	torcere	v	preterite-lui
+strong	1	cosse	cuocere	v	preterite-lui
+strong	1	scosse	scuotere	v	preterite-lui
+strong	1	mosse	muovere	v	preterite-lui
+strong	1	visse	vivere	v	preterite-lui
+strong	1	vissuto	vivere	v	participle
+strong	1	scelse	scegliere	v	preterite-lui
+strong	1	scelto	scegliere	v	participle
+strong	1	tolse	togliere	v	preterite-lui
+strong	1	tolto	togliere	v	participle
+strong	1	colse	cogliere	v	preterite-lui
+strong	1	valse	valere	v	preterite-lui
+strong	1	valso	valere	v	participle
+strong	1	parve	parere	v	preterite-lui
+strong	1	parso	parere	v	participle
+strong	1	dolse	dolere	v	preterite-lui
+strong	1	corso	correre	v	participle
+strong	1	morse	mordere	v	preterite-lui
+strong	1	espresse	esprimere	v	preterite-lui
+strong	1	impresso	imprimere	v	participle
+strong	1	redense	redimere	v	preterite-lui
+strong	1	redento	redimere	v	participle
+strong	1	assunse	assumere	v	preterite-lui
+strong	1	presunto	presumere	v	participle
+strong	1	connesso	connettere	v	participle
+strong	1	rifletté	riflettere	v	preterite-lui
+strong	1	riflesso	riflettere	v	participle
+strong	1	nacque	nascere	v	preterite-lui
+strong	1	nato	nascere	v	participle
+strong	1	conobbe	conoscere	v	preterite-lui
+strong	1	rotto	rompere	v	participle
+strong	1	vide	vedere	v	preterite-lui
+strong	1	visto	vedere	v	participle
+strong	1	successe	succedere	v	preterite-lui
+strong	1	discusse	discutere	v	preterite-lui
+strong	1	scisso	scindere	v	participle
+strong	1	intriso	intridere	v	participle
+strong	1	aperto	aprire	v	participle
+strong	1	offerto	offrire	v	participle
+strong	1	eccelse	eccellere	v	preterite-lui
+strong	1	protruse	protrudere	v	preterite-lui
+strong	1	esistito	esistere	v	participle
+strong	1	assistito	assistere	v	participle
+strong	1	ascose	ascondere	v	preterite-lui
+strong	1	corrisposto	corrispondere	v	participle
+pronominal-participle	1	pentito	pentirsi	v	participle-pronominal|participle
+pronominal-participle	1	accorto	accorgersi	v	participle-pronominal|participle
+pronominal-participle	1	misurantesi	misurarsi	v	participle-present
+infinitive	1	parlarmi	parlare	v	infinitive|clitic-mi
+infinitive	1	vederti	vedere	v	infinitive|clitic-ti
+infinitive	1	lavarsi	lavare	v	infinitive|clitic-si
+infinitive	1	aiutarci	aiutare	v	infinitive|clitic-ci
+infinitive	1	dirvi	dire	v	infinitive|clitic-vi
+infinitive	1	farlo	fare	v	infinitive|clitic-lo
+infinitive	1	vederla	vedere	v	infinitive|clitic-la
+infinitive	1	prenderli	prendere	v	infinitive|clitic-li
+infinitive	1	dirle	dire	v	infinitive|clitic-le
+infinitive	1	dargli	dare	v	infinitive|clitic-gli
+infinitive	1	parlarne	parlare	v	infinitive|clitic-ne
+infinitive	1	porlo	porre	v	infinitive|clitic-lo
+infinitive	1	condurla	condurre	v	infinitive|clitic-la
+infinitive	1	trarne	trarre	v	infinitive|clitic-ne
+infinitive	1	berlo	bere	v	infinitive|clitic-lo
+infinitive	1	dirmelo	dire	v	infinitive|clitic-melo
+infinitive	1	farmela	fare	v	infinitive|clitic-mela
+infinitive	1	darmeli	dare	v	infinitive|clitic-meli
+infinitive	1	portarmele	portare	v	infinitive|clitic-mele
+infinitive	1	andarmene	andare	v	infinitive|clitic-mene
+infinitive	1	dirtelo	dire	v	infinitive|clitic-telo
+infinitive	1	dartela	dare	v	infinitive|clitic-tela
+infinitive	1	mandarteli	mandare	v	infinitive|clitic-teli
+infinitive	1	portartele	portare	v	infinitive|clitic-tele
+infinitive	1	andartene	andare	v	infinitive|clitic-tene
+infinitive	1	farselo	fare	v	infinitive|clitic-selo
+infinitive	1	cavarsela	cavare	v	infinitive|clitic-sela
+infinitive	1	metterseli	mettere	v	infinitive|clitic-seli
+infinitive	1	togliersele	togliere	v	infinitive|clitic-sele
+infinitive	1	andarsene	andare	v	infinitive|clitic-sene
+infinitive	1	dircelo	dire	v	infinitive|clitic-celo
+infinitive	1	farcela	fare	v	infinitive|clitic-cela
+infinitive	1	portarceli	portare	v	infinitive|clitic-celi
+infinitive	1	portarcele	portare	v	infinitive|clitic-cele
+infinitive	1	parlarcene	parlare	v	infinitive|clitic-cene
+infinitive	1	dirvelo	dire	v	infinitive|clitic-velo
+infinitive	1	darvela	dare	v	infinitive|clitic-vela
+infinitive	1	mandarveli	mandare	v	infinitive|clitic-veli
+infinitive	1	portarvele	portare	v	infinitive|clitic-vele
+infinitive	1	parlarvene	parlare	v	infinitive|clitic-vene
+infinitive	1	darglielo	dare	v	infinitive|clitic-glielo
+infinitive	1	dargliela	dare	v	infinitive|clitic-gliela
+infinitive	1	mandarglieli	mandare	v	infinitive|clitic-glieli
+infinitive	1	portargliele	portare	v	infinitive|clitic-gliele
+infinitive	1	parlargliene	parlare	v	infinitive|clitic-gliene
+infinitive	1	lavarmi	lavarsi	v	pronominal|infinitive|clitic-mi
+infinitive	1	andarsene	andarsene	v	pronominal|infinitive|clitic-sene
+infinitive	1	cavarsela	cavarsela	v	pronominal|infinitive|clitic-sela
+gerund	1	dicendomi	dire	v	gerund|clitic-mi
+gerund	1	facendolo	fare	v	gerund|clitic-lo
+gerund	1	guardandoti	guardare	v	gerund|clitic-ti
+gerund	1	mangiandone	mangiare	v	gerund|clitic-ne
+gerund	1	alzandosi	alzarsi	v	pronominal|gerund|clitic-si
+gerund	1	ponendoselo	porre	v	gerund|clitic-selo
+imperative-clitic	1	guardalo	guardare	v	imperative-tu|clitic-lo
+imperative-clitic	1	prendimi	prendere	v	imperative-tu|clitic-mi
+imperative-clitic	1	facciamolo	fare	v	imperative-noi|clitic-lo
+imperative-clitic	1	ditemi	dire	v	imperative-voi|clitic-mi
+imperative-clitic	1	dammi	dare	v	imperative-tu|clitic-mi
+imperative-clitic	1	dimmelo	dire	v	imperative-tu|clitic-melo
+imperative-clitic	1	fallo	fare	v	imperative-tu|clitic-lo
+imperative-clitic	1	stacci	stare	v	imperative-tu|clitic-ci
+imperative-clitic	1	vattene	andare	v	imperative-tu|clitic-tene
+imperative-clitic	1	vattene	andarsene	v	pronominal|imperative-tu|clitic-tene
+imperative-clitic	1	diglielo	dire	v	imperative-tu|clitic-glielo
+imperative-clitic	1	alzati	alzarsi	v	pronominal|imperative-tu|clitic-ti
+imperative-clitic	1	alziamoci	alzarsi	v	pronominal|imperative-noi|clitic-ci
+imperative-clitic	1	alzatevi	alzarsi	v	pronominal|imperative-voi|clitic-vi
+imperative-clitic	1	sbrigati	sbrigarsi	v	pronominal|imperative-tu|clitic-ti
+imperative-clitic	1	calmatevi	calmarsi	v	pronominal|imperative-voi|clitic-vi
+imperative-clitic	0	alzami	alzarsi	*	*
+imperative-clitic	0	alziamovi	alzarsi	*	*
+imperative-clitic	0	alzatemi	alzarsi	*	*
+imperative-clitic	0	dalla	da'	*	*
+imperative-clitic	0	stalla	sta'	*	*
+imperative-clitic	0	dagli	da'	*	*
+imperative-clitic	0	valle	va'	*	*
+pronominal	1	mi lavo	lavarsi	v	pronominal|present-io|proclitic
+pronominal	1	ti lavi	lavarsi	v	pronominal|present-tu|proclitic
+pronominal	1	si lava	lavarsi	v	pronominal|present-lui|proclitic
+pronominal	1	ci laviamo	lavarsi	v	pronominal|present-noi|proclitic
+pronominal	1	vi lavate	lavarsi	v	pronominal|present-voi|proclitic
+pronominal	1	si lavano	lavarsi	v	pronominal|present-loro|proclitic
+pronominal	1	mi alzai	alzarsi	v	pronominal|preterite-io|proclitic
+pronominal	1	ti alzerai	alzarsi	v	pronominal|future-tu|proclitic
+pronominal	1	si accorse	accorgersi	v	pronominal|preterite-lui|proclitic
+pronominal	1	si pose	porsi	v	pronominal|preterite-lui|proclitic
+pronominal	1	si condusse	condursi	v	pronominal|preterite-lui|proclitic
+pronominal	1	si distrae	distrarsi	v	pronominal|present-lui|proclitic
+pronominal	1	m'alzo	alzarsi	v	pronominal|present-io|proclitic
+pronominal	1	t'accorgi	accorgersi	v	pronominal|present-tu|proclitic
+pronominal	1	s'accorge	accorgersi	v	pronominal|present-lui|proclitic
+pronominal	1	v'arrabbiate	arrabbiarsi	v	pronominal|present-voi|proclitic
+pronominal	1	me ne vado	andarsene	v	pronominal|present-io|proclitic
+pronominal	1	te ne vai	andarsene	v	pronominal
+pronominal	1	se ne va	andarsene	v	pronominal
+pronominal	1	se ne andò	andarsene	v	pronominal|preterite-lui|proclitic
+pronominal	1	ce ne andiamo	andarsene	v	pronominal|present-noi|proclitic
+pronominal	1	me la cavo	cavarsela	v	pronominal|present-io|proclitic
+pronominal	1	se la prende	prendersela	v	pronominal|present-lui|proclitic
+pronominal	1	ce la faccio	farcela	v	pronominal|present-io|proclitic
+pronominal	1	ce la fai	farcela	v	pronominal|present-tu|proclitic
+pronominal	1	ce l'ho	avercela	v	pronominal
+pronominal	1	ce l'ho fatta	farcela	v	pronominal
+pronominal	1	c'è	esserci	v	pronominal
+pronominal	1	ci sono	esserci	v	pronominal
+pronominal	1	c'erano	esserci	v	pronominal
+pronominal	1	ci vuole	volerci	v	pronominal
+pronominal	1	ci vogliono	volerci	v	pronominal
+pronominal	1	c'entra	entrarci	v	pronominal|present-lui|proclitic
+pronominal	1	ci penso	pensarci	v	pronominal|present-io|proclitic
+pronominal	1	ci metto	metterci	v	pronominal|present-io|proclitic
+pronominal	1	ce ne vuole	volercene	v	pronominal
+pronominal	1	si fa	farsi	v	pronominal|present-lui|proclitic
+pronominal	1	si dice	dirsi	v	pronominal|present-lui|proclitic
+pronominal	1	mi dico	dirsi	v	pronominal|present-io|proclitic
+pronominal	1	si dà	darsi	v	pronominal|present-lui|proclitic
+pronominal	1	me la bevo	bersela	v	pronominal|present-io|proclitic
+pronominal	1	si rifà	rifarsi	v	pronominal|present-lui|proclitic
+pronominal	1	si sta	starsi	v	pronominal|present-lui|proclitic
+pronominal	1	ci amiamo	amarsi	v	pronominal|present-noi|proclitic
+pronominal	1	si unisce	unirsi	v	pronominal|present-lui|proclitic
+pronominal	1	si usa	usarsi	v	pronominal|present-lui|proclitic
+pronominal	0	mi lava	lavarsi	*	*
+pronominal	0	ti amo	amarsi	*	*
+pronominal	0	mi dica	dirsi	*	*
+pronominal	0	mi baci	baciarsi	*	*
+pronominal	0	mi dà	darsi	*	*
+pronominal	0	mi dà	dirsi	*	*
+pronominal	0	mi compare	comparsi	*	*
+pronominal	0	si scava	scarsi	*	*
+pronominal	0	si vola	volersi	*	*
+pronominal	0	ci vola	volerci	*	*
+pronominal	0	ti ridi	ridarsi	*	*
+pronominal	0	si può	potersi	*	*
+pronominal	0	si è	essersi	*	*
+pronominal	0	mi disse	dirsi	*	*
+pronominal	0	non mi disse	non mi dire	*	*
+pronominal	0	un'ora sola	ora solare	*	*
+plural	1	libri	libro	n	plural
+plural	1	case	casa	n	plural
+plural	1	cani	cane	n	plural
+plural	1	problemi	problema	n	plural
+plural	1	poeti	poeta	n	plural
+plural	1	amiche	amica	n	plural
+plural	1	parchi	parco	n	plural
+plural	1	laghi	lago	n	plural
+plural	1	righe	riga	n	plural
+plural	1	duchi	duca	n	plural
+plural	1	colleghi	collega	n	plural
+plural	1	amici	amico	n	plural
+plural	1	psicologi	psicologo	n	plural
+plural	1	arance	arancia	n	plural
+plural	1	spiagge	spiaggia	n	plural
+plural	1	figli	figlio	n	plural
+plural	1	occhi	occhio	n	plural
+plural	1	computers	computer	n	plural
+plural	1	uomini	uomo	n	plural
+plural	1	dei	dio	n	plural
+plural	1	buoi	bue	n	plural
+plural	1	mogli	moglie	n	plural
+plural	1	uova	uovo	n	plural
+plural	1	braccia	braccio	n	plural
+plural	1	dita	dito	n	plural
+plural	1	ossa	osso	n	plural
+plural	1	lenzuola	lenzuolo	n	plural
+plural	1	migliaia	migliaio	n	plural
+plural	1	mura	muro	n	plural
+plural	1	begli	bello	adj	plural
+plural	1	quei	quello	adj	plural
+plural	0	a casa	a caso	*	*
+plural	0	se ne	se no	*	*
+plural	0	Ieri	Iero	*	*
+feminine	1	rossa	rosso	adj	feminine
+feminine	1	attrice	attore	n	feminine
+feminine	1	studentessa	studente	n	feminine
+feminine	1	poetessa	poeta	n	feminine
+feminine	1	padrona	padrone	n	feminine
+feminine	1	infermiera	infermiere	n	feminine
+feminine	1	signora	signore	n	feminine
+feminine	1	attrici	attore	n	feminine|plural
+feminine	1	studentesse	studente	n	feminine|plural
+feminine	1	rosse	rosso	adj	feminine-plural
+feminine	1	bianche	bianco	adj	feminine-plural
+feminine	1	lunghe	lungo	adj	feminine-plural
+feminine	1	lisce	liscio	adj	feminine-plural
+feminine	1	grige	grigio	adj	feminine-plural
+superlative	1	bellissimo	bello	adj	superlative
+superlative	1	grandissima	grande	adj	superlative
+superlative	1	lunghissimi	lungo	adj	superlative
+superlative	1	bianchissime	bianco	adj	superlative
+superlative	1	vecchissimo	vecchio	adj	superlative
+superlative	1	benissimo	bene	adv	superlative
+adverb	1	lentamente	lento	adj	adverb
+adverb	1	fortemente	forte	adj	adverb
+adverb	1	facilmente	facile	adj	adverb
+adverb	1	regolarmente	regolare	adj	adverb
+stems	0	da	dare	*	*
+stems	0	di	dire	*	*
+stems	0	e	essere	*	*
+stems	0	mare	mandare	*	*
+stems	0	disco	dire	*	*
+stems	0	dove	dovere	*	*
+stems	0	sede	sedere	*	*
+stems	0	sala	salire	*	*
+stems	0	vena	venire	*	*
+stems	0	mora	morire	*	*
+stems	0	credette	credare	*	*
+elision	1	l'amico	amico	*	
+elision	1	dell'acqua	acqua	*	
+elision	1	un'amica	amica	*	
+elision	1	quell'uomo	uomo	*	
+elision	1	bell'idea	idea	*	
+elision	1	l’amico	amico	*	
+elision	1	c'erano	essere	v	imperfect-loro
+elision	1	po	po'	*	
+elision	1	L	l'	*	

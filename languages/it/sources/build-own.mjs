@@ -33,9 +33,9 @@ const here = dirname(fileURLToPath(import.meta.url));
 // `rules` column (wiktionary-to-yomitan writes these names for the languages
 // it tags). The others are intermediate states that no dictionary term
 // carries: a form whose attached pronouns were removed, and the person of a
-// conjugated verb, which a reflexive pronoun written before it must agree with
-// (mi lavo, ti lavi, si lava, ci laviamo, vi lavate give lavarsi; mi lava, it
-// washes me, does not).
+// conjugated verb read after a pronoun, which a reflexive pronoun must agree
+// with (mi lavo, ti lavi, si lava, ci laviamo, vi lavate give lavarsi; mi
+// lava, it washes me, does not).
 const conditions = {
     v: {name: 'Verb', isDictionaryForm: true},
     n: {name: 'Noun', isDictionaryForm: true},
@@ -47,11 +47,22 @@ const conditions = {
     imp_voi: {name: 'Imperative (voi) with vi before it', isDictionaryForm: false},
     ger: {name: 'Gerund without its pronouns', isDictionaryForm: false},
     ptcp: {name: 'Infinitive read from a past participle', isDictionaryForm: false},
+    refl: {name: 'A verb after a pronoun, the pronoun marked with a +', isDictionaryForm: false},
+    clinf: {name: 'Infinitive without its final e, before an attached pronoun', isDictionaryForm: false},
     p1s: {name: 'First person singular (agrees with mi)', isDictionaryForm: false},
     p2s: {name: 'Second person singular (agrees with ti)', isDictionaryForm: false},
     p3: {name: 'Third person (agrees with si)', isDictionaryForm: false},
     p1p: {name: 'First person plural (agrees with ci)', isDictionaryForm: false},
     p2p: {name: 'Second person plural (agrees with vi)', isDictionaryForm: false},
+    // The written-out forms of fare, dare, dire and bere after a pronoun, by
+    // person: their stem has one letter, which the pronominal rule takes only
+    // from these forms (si fa, si dice, me la bevo), never from a regular
+    // ending (mi dà is not mi + dire).
+    short_p1s: {name: 'fare, dare, dire or bere, first person singular', isDictionaryForm: false},
+    short_p2s: {name: 'fare, dare, dire or bere, second person singular', isDictionaryForm: false},
+    short_p3: {name: 'fare, dare, dire or bere, third person', isDictionaryForm: false},
+    short_p1p: {name: 'fare, dare, dire or bere, first person plural', isDictionaryForm: false},
+    short_p2p: {name: 'fare, dare, dire or bere, second person plural', isDictionaryForm: false},
 };
 
 // --- Transforms and rules -------------------------------------------------------------
@@ -67,9 +78,19 @@ function transform(id, name, description) {
     return t;
 }
 
+// No noun or adjective rule reads a stem that starts with a capital letter: a
+// capitalized word is read through its decapitalized variant (Libri → libri
+// → libro), so a rule never reaches a proper name from a capitalized word at
+// the start of a sentence (Ieri is ieri, not the surname Iero). Verb rules
+// need no such stem: their outputs end in -are, -ere or -ire, which names do
+// not.
+const NOT_CAPITALIZED = {stemNotStartsWith: '{upper}'};
+const NOMINAL_TRANSFORMS = new Set(['plural', 'feminine', 'feminine-plural', 'superlative', 'adverb']);
+
 function add(id, rule) {
     const t = byId.get(id);
     if (t === undefined) { throw new Error(`no transform ${id}`); }
+    if (NOMINAL_TRANSFORMS.has(id) && (rule.type === 'suffix' || rule.type === 'circumfix')) { rule = {...rule, ...NOT_CAPITALIZED}; }
     const key = `${id}\u0000${JSON.stringify(rule)}`;
     if (seen.has(key)) { return; }
     seen.add(key);
@@ -80,8 +101,11 @@ function suffix(id, inflected, deinflected, conditionsIn, conditionsOut, extra =
     add(id, {type: 'suffix', inflected, deinflected, conditionsIn, conditionsOut, ...extra});
 }
 
+// A whole word is written as a suffix rule whose stem must be empty
+// (stemCharacters [], which no code point is in), so the compaction below can
+// put the whole words of one transform and conditions in one cross product.
 function whole(id, inflected, deinflected, conditionsIn, conditionsOut) {
-    add(id, {type: 'wholeWord', inflected, deinflected, conditionsIn, conditionsOut});
+    add(id, {type: 'suffix', inflected, deinflected, conditionsIn, conditionsOut, stemCharacters: '[]'});
 }
 
 // --- Verb slots ------------------------------------------------------------------------
@@ -151,7 +175,11 @@ const SLOTS = [
         {are: ['ereste'], ere: ['ereste'], ire: ['ireste']}],
     ['conditional-loro', 'conditional (loro)', 'Present conditional, third person plural (loro): parlerebbero, temerebbero, dormirebbero.', ['p3'],
         {are: ['erebbero'], ere: ['erebbero'], ire: ['irebbero']}],
-    ['subjunctive-sg', 'present subjunctive (io, tu, lui)', 'Present subjunctive, singular (che io, tu, lui, lei; also the Lei imperative): parli, tema, dorma, finisca.', ['p1s', 'p2s', 'p3'],
+    // A reflexive pronoun before the present subjunctive agrees with tu and
+    // lui (che tu ti lavi, si accomodi), not with io: mi dica, mi ami and mi
+    // salvi are tell me, you love me and save me, far more often than che io
+    // mi dica.
+    ['subjunctive-sg', 'present subjunctive (io, tu, lui)', 'Present subjunctive, singular (che io, tu, lui, lei; also the Lei imperative): parli, tema, dorma, finisca.', ['p2s', 'p3'],
         {are: ['i'], ere: ['a'], ire: ['a'], isc: ['isca']}],
     ['subjunctive-noi', 'present subjunctive (noi)', 'Present subjunctive, first person plural (che noi): parliamo, temiamo, dormiamo, finiamo.', ['p1p'],
         {are: ['iamo'], ere: ['iamo'], ire: ['iamo']}],
@@ -200,7 +228,36 @@ const IN = {
 const inFor = (slot) => IN[slot] ?? [];
 // A past participle's infinitive also has ptcp, which the pronominal
 // participle rule reads (pentito → pentire → pentirsi).
-const outFor = (slot) => ['v', ...PERSONS.get(slot), ...(slot === 'participle' ? ['ptcp'] : [])];
+const outFor = (slot) => ['v', ...(slot === 'participle' ? ['ptcp'] : [])];
+const SHORT = {p1s: 'short_p1s', p2s: 'short_p2s', p3: 'short_p3', p1p: 'short_p1p', p2p: 'short_p2p'};
+// The slots a pronoun the clitic rules moved (+) can stand before: the
+// gerund and the imperatives (dicendosi → si+dicendo, alzati → ti+alza).
+const MARKED = new Set(['gerund', 'imperative-tu', 'imperative-noi', 'imperative-voi']);
+
+// Every verb rule is written for one word of letters, and again for a verb
+// after a pronoun marked with a + (stemContains [+]):
+// - a pronoun written before a conjugated verb, which the proclitic rule
+//   marks (mi lavo → mi+lavo, refl): the rule gives only the person of the
+//   slot, which no dictionary term carries, so the phrase is read only
+//   through a pronominal rule that agrees with it, and a verb rule never
+//   turns the last word of a phrase into another phrase (non mi disse is not
+//   the idiom non mi dire, un'ora sola is not ora solare);
+// - a pronoun the clitic rules moved from after an imperative or a gerund
+//   (alzati → ti+alza): the rule gives the verb, for the pronominal rule
+//   (ti+alzare → alzarsi).
+// The stems a rule leaves out (`split`) are left out of the single word only:
+// after a mark the stem starts with the pronoun, and the pronominal rule
+// checks the verb's own stem.
+function forms(slot, inflected, deinflected, extra, short, split = {}) {
+    suffix(slot, inflected, deinflected, inFor(slot), outFor(slot), {...extra, ...split, stemCharacters: '{letter}'});
+    const persons = PERSONS.get(slot);
+    if (persons.length > 0) {
+        suffix(slot, inflected, deinflected, ['refl'], short ? persons.map((p) => SHORT[p]) : persons, {...extra, stemContains: '[+]'});
+    }
+    if (MARKED.has(slot)) {
+        suffix(slot, inflected, deinflected, inFor(slot), ['v'], {...extra, stemContains: '[+]'});
+    }
+}
 
 // Every regular ending needs a stem of two letters or more, so short words do
 // not read as verbs (da is not a form of dare through -a, mare is not a form
@@ -209,16 +266,63 @@ const outFor = (slot) => ['v', ...PERSONS.get(slot), ...(slot === 'participle' ?
 const MIN_STEM = 2;
 const LEMMA = {are: 'are', ere: 'ere', ire: 'ire', isc: 'ire'};
 
-function verb(slot, inflected, deinflected, extra = {}) {
-    suffix(slot, inflected, deinflected, inFor(slot), outFor(slot), {stemMinLength: MIN_STEM, ...extra});
+function verb(slot, inflected, deinflected, extra = {}, split = {}) {
+    forms(slot, inflected, deinflected, {stemMinLength: MIN_STEM, ...extra}, false, split);
 }
 
+// -care, -gare, -ciare and -giare verbs write ch, gh or ci, gi before e and
+// i (cerchi, paghi, cominci, comincerò), which the rules below read; the
+// plain -are endings that start with e or i leave out stems that end in c or
+// g, so baci is baciare, not a verb bacare.
+const PLAIN_ARE = {stemNotEndsWith: '[cg]'};
+// Irregular verbs whose stem a regular ending would also read in a frequent
+// word that is not their form: dove and sede are where and seat, not dovere
+// and sedere (whose third persons are deve and siede); sala, vena and mora
+// are room, vein and blackberry, not salire, venire and morire (salga,
+// venga, muoia). The regular rules of those slots leave out exactly these
+// stems; longer stems that start with them stay (dovete, sedete, saliva).
+const EXCLUDED_STEMS = [
+    {cls: 'ere', stems: ['dov', 'sed'], slots: /^present-lui$/u},
+    {cls: 'ire', stems: ['sal', 'ven', 'mor'], slots: /^subjunctive-sg$/u},
+];
+// The rule objects for a regular ending that leave out whole stems (at most
+// one per first letter): the stems that start with none of their letters,
+// and for each, the stems that start with its letter but not with it, and
+// the longer stems that start with it.
+function splitStems(slot, cls) {
+    const stems = EXCLUDED_STEMS.filter((e) => e.cls === cls && e.slots.test(slot)).flatMap((e) => e.stems);
+    if (stems.length === 0) { return [{}]; }
+    const firsts = stems.map((stem) => stem[0]);
+    if (new Set(firsts).size !== firsts.length) { throw new Error(`${slot}: two excluded stems start with one letter`); }
+    return [
+        {stemNotStartsWith: `[${firsts.join('')}]`},
+        ...stems.flatMap((stem) => [
+            {stemStartsWith: `[${stem[0]}]`, stemNotStartsWithText: stem},
+            {stemStartsWithText: stem, stemMinLength: [...stem].length + 1},
+        ]),
+    ];
+}
+// The past historic in -etti, -ette and -ettero is used after the stems of
+// credere, vendere, temere, ricevere, dovere, potere, sedere, battere and the
+// like, which end in d, m, t or v; other stems are left out, so the plural of
+// a diminutive is not read as one (casette is not a form of a verb casere).
+const ETTI = {stemEndsWith: '[dmtv]'};
 for (const [slot, , , , endings] of SLOTS) {
     for (const cls of ['are', 'ere', 'ire', 'isc']) {
         for (const ending of endings[cls] ?? []) {
             // -isc- verbs: the stem before -isc- is two letters or more
             // (capisco, finisce), so disco and fisco are not dire and fire.
-            verb(slot, ending, LEMMA[cls]);
+            const spelling = cls === 'are' && /^[ei]/u.test(ending) ? PLAIN_ARE : {};
+            const splits = splitStems(slot, cls);
+            splits.forEach((split, i) => {
+                // The marked variant once, without the split.
+                if (i === 0) {
+                    verb(slot, ending, LEMMA[cls], /^ett/u.test(ending) ? ETTI : spelling, split);
+                } else {
+                    suffix(slot, ending, LEMMA[cls], inFor(slot), outFor(slot),
+                        {stemMinLength: MIN_STEM, ...(/^ett/u.test(ending) ? ETTI : spelling), ...split, stemCharacters: '{letter}'});
+                }
+            });
         }
     }
 }
@@ -359,30 +463,28 @@ const IRREGULAR = [
         ...subj('vada', null, null, 'vadano'),
         ...future('andr'),
     }},
-    // dare and stare: the short forms with the prefixes of their compounds,
-    // the longer ones at the end of any word (ridarò, sottostette; the -dare
-    // verbs' davo, guardavo, are guar + davo too).
+    // dare and stare: every form, as a word and with the prefixes of their
+    // compounds (ridà, ridiede, sottostà, sottostette). Most verbs in -dare
+    // and -stare are regular (guardare, mandare, restare, costare), so these
+    // forms are not read at the end of other words (credette is not cre +
+    // dette).
     {lemma: 'dare', mode: ['ri'], forms: {
         ...tense('present', ['do', 'dai', 'dà', 'diamo', 'date', 'danno']),
-        ...subj('dia', 'diamo', 'diate', 'diano'),
-        ...imp('dai', 'diamo', 'date'),
-        ...participle('dato'),
-    }},
-    {lemma: 'dare', mode: 'compound', forms: {
         ...tense('imperfect', ['davo', 'davi', 'dava', 'davamo', 'davate', 'davano']),
         ...tense('preterite', [['diedi', 'detti'], 'desti', ['diede', 'dette'], 'demmo', 'deste', ['diedero', 'dettero']]),
         ...future('dar'),
+        ...subj('dia', 'diamo', 'diate', 'diano'),
         ...subjImpf('dessi', 'desse', 'dessimo', 'deste', 'dessero'),
+        ...imp('dai', 'diamo', 'date'),
+        ...participle('dato'),
     }},
     {lemma: 'stare', mode: ['ri', 'sotto', 'sovra', 'sopra'], forms: {
         ...tense('present', ['sto', 'stai', 'sta', null, null, 'stanno']),
-        ...subj('stia', 'stiamo', 'stiate', 'stiano'),
-        ...imp('stai', null, null),
-    }},
-    {lemma: 'stare', mode: 'compound', forms: {
         ...tense('preterite', ['stetti', 'stesti', 'stette', 'stemmo', 'steste', 'stettero']),
         ...future('star'),
+        ...subj('stia', 'stiamo', 'stiate', 'stiano'),
         ...subjImpf('stessi', 'stesse', 'stessimo', 'steste', 'stessero'),
+        ...imp('stai', null, null),
     }},
     // fare: the short forms with the prefixes of its compounds; the longer
     // ones at the end of any word (rifacevo, soddisfacendo, contraffatto).
@@ -565,6 +667,19 @@ const IRREGULAR = [
     }},
 ];
 
+// compiere, adempiere, empiere and riempiere take the endings of -ire verbs
+// in most persons (compio, compiamo, compirò, compii, compì, compiuto).
+IRREGULAR.push({lemma: 'mpiere', mode: 'compound', minStem: 1, forms: {
+    ...tense('present', ['mpio', 'mpi', 'mpie', 'mpiamo', 'mpite', 'mpiono']),
+    ...tense('imperfect', sixOn('mpiv', ['o', 'i', 'a', 'amo', 'ate', 'ano'])),
+    ...tense('preterite', sixOn('mp', ['ii', 'isti', 'ì', 'immo', 'iste', 'irono'])),
+    ...future('mpir'),
+    ...subj('mpia', 'mpiamo', 'mpiate', 'mpiano'),
+    ...subjImpf(...sixOn('mp', ['issi', 'isse', 'issimo', 'iste', 'issero'])),
+    gerund: 'mpiendo',
+    ...participle('mpiuto'),
+}});
+
 // Future and conditional stems that drop or change the e or i of the
 // infinitive (vedrò, vivrò, cadrò, rimarrò, terrò).
 for (const [stem, lemma] of [['vedr', 'vedere'], ['vivr', 'vivere'], ['cadr', 'cadere'], ['godr', 'godere']]) {
@@ -586,10 +701,12 @@ const STRONG = [
     ['alludere', 'allusi', 'alluso'], ['eludere', 'elusi', 'eluso'], ['accludere', 'acclusi', 'accluso'], ['precludere', 'preclusi', 'precluso'],
     ['persuadere', 'persuasi', 'persuaso'], ['dissuadere', 'dissuasi', 'dissuaso'], ['evadere', 'evasi', 'evaso'], ['invadere', 'invasi', 'invaso'],
     ['radere', 'rasi', 'raso'], ['rodere', 'rosi', 'roso'], ['esplodere', 'esplosi', 'esploso'], ['chiedere', 'chiesi', 'chiesto'],
-    ['rispondere', 'risposi', 'risposto'], ['nascondere', 'nascosi', 'nascosto'], ['fondere', 'fusi', 'fuso'], ['mettere', 'misi', 'messo'],
+    ['spondere', 'sposi', 'sposto'], ['scondere', 'scosi', 'scosto'], ['fondere', 'fusi', 'fuso'], ['mettere', 'misi', 'messo'],
+    ['sistere', '', 'sistito'],
     ['scrivere', 'scrissi', 'scritto'], ['leggere', 'lessi', 'letto'], ['eleggere', 'elessi', 'eletto'], ['reggere', 'ressi', 'retto'],
     ['correggere', 'corressi', 'corretto'], ['proteggere', 'protessi', 'protetto'], ['distruggere', 'distrussi', 'distrutto'],
-    ['friggere', 'frissi', 'fritto'], ['fliggere', 'flissi', 'flitto'], ['figgere', 'fissi', 'fitto'], ['trudere', 'trusi', 'truso'],
+    ['friggere', 'frissi', 'fritto'], ['fliggere', 'flissi', 'flitto'], ['sconfiggere', 'sconfissi', 'sconfitto'],
+    ['trafiggere', 'trafissi', 'trafitto'], ['crocifiggere', 'crocifissi', 'crocifisso'], ['trudere', 'trusi', 'truso'],
     ['eccellere', 'eccelsi', 'eccelso'],
     ['dirigere', 'diressi', 'diretto'], ['erigere', 'eressi', 'eretto'], ['redigere', 'redassi', 'redatto'], ['esigere', '', 'esatto'],
     ['piangere', 'piansi', 'pianto'], ['giungere', 'giunsi', 'giunto'], ['pungere', 'punsi', 'punto'], ['ungere', 'unsi', 'unto'],
@@ -619,31 +736,61 @@ for (const [lemma, preterite, pp] of STRONG) {
     }
     if (pp !== '') { Object.assign(forms, participle(pp)); }
     if (Object.keys(forms).length > 0) {
-        // -primere, -sumere, -fliggere, -figgere and -trudere have no
-        // common verb without a prefix (esprimere, assumere, affliggere,
-        // sconfiggere, protrudere), so their stem is two letters or more.
-        IRREGULAR.push({lemma, mode: 'compound', minStem: /^(primere|sumere|fliggere|figgere|trudere)$/u.test(lemma) ? 2 : 0, forms});
+        // -primere, -sumere, -fliggere and -trudere have no common verb
+        // without a prefix (esprimere, assumere, affliggere, protrudere),
+        // so their stem is two letters or more;
+        // -spondere, -scondere and -sistere one (rispondere, nascondere,
+        // ascondere, esistere, assistere).
+        const minStem = /^(primere|sumere|fliggere|trudere)$/u.test(lemma) ? 2 : /^(spondere|scondere|sistere)$/u.test(lemma) ? 1 : 0;
+        IRREGULAR.push({lemma, mode: 'compound', minStem, forms});
     }
 }
 
-for (const {lemma, mode, minStem = 0, forms} of IRREGULAR) {
-    for (const [slot, value] of Object.entries(forms)) {
+// fare, dare, dire and bere: their written-out forms after a pronoun carry
+// the short_* conditions.
+const SHORT_LEMMAS = new Set(['fare', 'dare', 'dire', 'bere']);
+// The compounds of fare are read from their forms at the end of a word, but a
+// stem ending in f must be contraf or sopraf (contraffatto, sopraffaccio):
+// affaccia, affaccio and affatto are not af + fare.
+const SPLITS = {fare: [{stemNotEndsWith: '[f]'}, {stemStartsWithText: 'contraf'}, {stemStartsWithText: 'sopraf'}]};
+for (const {lemma, mode, minStem = 0, forms: table} of IRREGULAR) {
+    for (const [slot, value] of Object.entries(table)) {
         if (!PERSONS.has(slot)) { throw new Error(`${lemma}: no slot ${slot}`); }
         for (const form of [value].flat().filter((f) => f !== null && f !== undefined)) {
             if (mode === 'whole') {
                 whole(slot, form, lemma, inFor(slot), outFor(slot));
             } else if (mode === 'compound') {
-                suffix(slot, form, lemma, inFor(slot), outFor(slot), minStem > 0 ? {stemMinLength: minStem} : {});
+                const base = minStem > 0 ? {stemMinLength: minStem} : {};
+                (SPLITS[lemma] ?? [{}]).forEach((split, i) => {
+                    if (i === 0) {
+                        forms(slot, form, lemma, base, SHORT_LEMMAS.has(lemma), split);
+                    } else {
+                        suffix(slot, form, lemma, inFor(slot), outFor(slot), {...base, ...split, stemCharacters: '{letter}'});
+                    }
+                });
             } else {
+                // The short forms of fare, dare and stare: as words, after a
+                // pronoun (si fa, ci sta), and with the prefixes of their
+                // compounds (rifà, soddisfanno, sottostà).
                 whole(slot, form, lemma, inFor(slot), outFor(slot));
+                const persons = PERSONS.get(slot);
+                // After a marked pronoun the form is the whole verb (si+fa):
+                // the stem ends with the mark.
+                const marked = (written, lemma2, outs) => suffix(slot, written, lemma2, ['refl'], outs, {stemEndsWith: '[+]'});
+                if (persons.length > 0) {
+                    marked(form, lemma, SHORT_LEMMAS.has(lemma) ? persons.map((p) => SHORT[p]) : persons);
+                }
                 for (const prefix of mode) {
                     // The compounds of fa, da and sta are written with an
-                    // accent (rifà, ridà, sottostà) and often without one.
-                    // With their prefix they are long enough to be read at
-                    // the end of a text, after a pronoun (si soddisfanno).
+                    // accent (rifà, ridà, sottostà) and often without one;
+                    // ridò keeps its accent (rido is ridere).
                     const short = /^(fa|dà|sta)$/u.test(form);
-                    for (const written of short ? [form.replace(/à$/u, 'a'), form.replace(/a$/u, 'à')] : [form]) {
-                        suffix(slot, prefix + written, prefix + lemma, inFor(slot), outFor(slot), {stemNotEndsWith: '{letter}'});
+                    const spellings = short ? [form.replace(/à$/u, 'a'), form.replace(/a$/u, 'à')] : form === 'do' ? ['dò'] : [form];
+                    for (const written of spellings) {
+                        whole(slot, prefix + written, prefix + lemma, inFor(slot), outFor(slot));
+                        if (persons.length > 0) {
+                            marked(prefix + written, prefix + lemma, persons);
+                        }
                     }
                 }
             }
@@ -668,17 +815,18 @@ for (const [inflected, deinflected] of [['are', 'arsi'], ['ere', 'ersi'], ['ire'
 // affirmative imperative of tu, noi and voi (guardalo, prendimi, facciamolo,
 // ditemi). One transform per pronoun or pair: an indirect or reflexive one
 // (me, te, se, ce, ve, glie) before a direct one or ne (dimmelo, darglielo,
-// andarsene, cavarsela).
+// andarsene, cavarsela). A clitic rule removes the pronouns and marks what
+// is left as the verb they followed (clinf, ger, imp); the infinitive,
+// gerund and imperative rules then read it (farlo → far → fare).
 //
 // A reflexive pronoun also gives the -rsi verb, one step later than the verb
 // itself (lavarmi → lavare, then → lavarsi), because it is often an object
 // (dirmi, tell me). The clitic rule moves it before the verb with a + (si+,
-// se+ne+, se+la+), the conjugation rules read the verb, and the pronominal
-// rule gives the -rsi verb. With an imperative the pronoun must agree with
-// its person: ti with tu (alzati), ci with noi (alziamoci), vi with voi
+// se+ne+, se+la+), the verb rules read the verb, and the pronominal rule
+// gives the -rsi verb. With an imperative the pronoun must agree with its
+// person: ti with tu (alzati), ci with noi (alziamoci), vi with voi
 // (alzatevi); alzami (lift me) is only alzare.
 const SINGLE = ['mi', 'ti', 'si', 'ci', 'vi', 'lo', 'la', 'li', 'le', 'gli', 'ne'];
-const REFLEXIVE = ['mi', 'ti', 'si', 'ci', 'vi'];
 const INDIRECT = ['me', 'te', 'se', 'ce', 've', 'glie'];
 const DIRECT = ['lo', 'la', 'li', 'le', 'ne'];
 const CLUSTERS = [...SINGLE.map((p) => [p]), ...INDIRECT.flatMap((p) => DIRECT.map((d) => [p, d]))];
@@ -693,19 +841,19 @@ function marker(pronouns, person = 'si') {
     return `${{si: 'se', ti: 'te', ci: 'ce', vi: 've'}[person]}+${pronouns[1]}+`;
 }
 const IMPERATIVE_OF = {ti: 'imp_tu', ci: 'imp_noi', vi: 'imp_voi'};
-// Infinitives without their final e, and the infinitive they come from; the
-// stem before the ending is two letters or more (vederlo, parlarne, but not
-// carlo or parli, which are not care + lo or pare + li), except for porre and
-// trarre (porlo, trarne). fare, dare, dire and bere are written out.
-const INFINITIVES = [['ar', 'are', 2], ['er', 'ere', 2], ['ir', 'ire', 2], ['or', 'orre', 1], ['ur', 'urre', 2], ['rar', 'rarre', 1]];
-const SHORT_INFINITIVES = [['far', 'fare'], ['dar', 'dare'], ['dir', 'dire'], ['ber', 'bere']];
+// The verb before the pronouns is one word that ends in r (an infinitive
+// without its e), o (a gerund, facciamo) or another vowel (guarda, prendi,
+// fate), so the rules never turn the last word of a phrase into another
+// phrase (modo di farsi is not modo di fare), and casi and baci are not ca
+// + si and ba + ci (the infinitive, gerund and imperative rules need longer
+// stems).
+const CLITIC_HOST = {stemCharacters: '{letter}', stemEndsWith: '[aeior]', stemMinLength: 2};
 // Monosyllabic imperatives double the pronoun's first consonant (dammi,
 // dillo, fallo, stacci, vattene); gli does not (dagli, diglielo).
 const MONOSYLLABIC = [['da', "da'", 'dare'], ['di', "di'", 'dire'], ['fa', "fa'", 'fare'], ['sta', "sta'", 'stare'], ['va', "va'", 'andare']];
 for (const [, written, lemma] of MONOSYLLABIC) {
     suffix('imperative-tu', written, lemma, inFor('imperative-tu'), outFor('imperative-tu'));
 }
-
 for (const pronouns of CLUSTERS) {
     const cluster = pronouns.join('');
     const id = `clitic-${cluster}`;
@@ -713,33 +861,19 @@ for (const pronouns of CLUSTERS) {
     transform(id, pronouns.map((p) => `+${p}`).join(' '),
         `${pronouns.length === 2 ? 'The pronouns' : 'The pronoun'} ${pronouns.join(' and ')} attached to an infinitive, a gerund or an imperative: ` +
         `${['parlar', 'dicendo', 'guarda'].map((host) => host + cluster).join(', ')}.`);
-    const reflexivePath = (inflectedSuffix, deinflectedSuffix, conditionsOut, extra, person = 'si') => {
-        add(id, {type: 'circumfix', inflectedPrefix: '', deinflectedPrefix: marker(pronouns, person), inflectedSuffix, deinflectedSuffix,
-            conditionsIn: [], conditionsOut, ...extra});
-    };
-    // Infinitive.
-    for (const [ending, lemma, min] of INFINITIVES) {
-        suffix(id, ending + cluster, lemma, [], ['v'], {stemMinLength: min});
-        if (reflexive !== null) { reflexivePath(ending + cluster, lemma, ['v'], {stemMinLength: min}); }
+    // si and se (third person) never follow an imperative of tu, noi or voi.
+    const hosts = reflexive === 'si' ? ['clinf', 'ger'] : ['clinf', 'ger', 'imp'];
+    suffix(id, cluster, '', [], hosts, CLITIC_HOST);
+    if (reflexive !== null) {
+        add(id, {type: 'circumfix', inflectedPrefix: '', deinflectedPrefix: marker(pronouns), inflectedSuffix: cluster, deinflectedSuffix: '',
+            conditionsIn: [], conditionsOut: ['clinf', 'ger'], ...CLITIC_HOST});
     }
-    for (const [ending, lemma] of SHORT_INFINITIVES) {
-        suffix(id, ending + cluster, lemma, [], ['v']);
-        if (reflexive !== null) { reflexivePath(ending + cluster, lemma, ['v'], {}); }
-    }
-    // Gerund.
-    for (const ending of ['ando', 'endo']) {
-        suffix(id, ending + cluster, ending, [], ['ger'], {stemMinLength: 1});
-        if (reflexive !== null) { reflexivePath(ending + cluster, ending, ['ger'], {stemMinLength: 1}); }
-    }
-    // Imperative of tu, noi and voi; si and se (third person) never follow
-    // one. The imperative ends in a vowel and has three letters or more
-    // (guarda, prendi, facciamo, fate), so casi and baci are not ca + si and
-    // ba + ci.
-    if (reflexive === 'si') { continue; }
-    const host = {stemMinLength: 3, stemEndsWith: '[aeio]'};
-    suffix(id, cluster, '', [], ['imp'], host);
     const agreeing = IMPERATIVE_OF[reflexive];
-    if (agreeing !== undefined) { reflexivePath(cluster, '', [agreeing], host, reflexive); }
+    if (agreeing !== undefined) {
+        add(id, {type: 'circumfix', inflectedPrefix: '', deinflectedPrefix: marker(pronouns, reflexive), inflectedSuffix: cluster,
+            deinflectedSuffix: '', conditionsIn: [], conditionsOut: [agreeing], ...CLITIC_HOST, stemEndsWith: '[aeio]'});
+    }
+    if (reflexive === 'si') { continue; }
     for (const [base, written] of MONOSYLLABIC) {
         // dalla, dallo, dalle, dalli and dagli are the preposition da with an
         // article; stalla, stallo, valle and vallo are nouns.
@@ -752,57 +886,125 @@ for (const pronouns of CLUSTERS) {
         }
     }
 }
+// The infinitive the clitic rules leave without its final e: parlar(lo),
+// veder(ti), dormir(ne), por(lo), condur(la), trar(ne); the stem before -ar,
+// -er and -ir has two letters or more, fare, dare, dire and bere one. After a
+// moved pronoun (si+lavar) it gives the verb the pronominal rule reads.
+transform('infinitive', 'infinitive', 'An infinitive that lost its final e before an attached pronoun: parlarlo, vederti, dormirne, porlo, condurla, farlo.');
+for (const [inflected, deinflected, constraint] of [
+    ['ar', 'are', {stemMinLength: 2}], ['er', 'ere', {stemMinLength: 2}], ['ir', 'ire', {stemMinLength: 2}],
+    ['or', 'orre', {stemEndsWith: '[p]'}], ['ur', 'urre', {stemEndsWith: '[d]'}], ['ar', 'arre', {stemEndsWith: '[r]'}],
+    ['far', 'fare', {}], ['dar', 'dare', {}], ['dir', 'dire', {}], ['ber', 'bere', {}],
+]) {
+    suffix('infinitive', inflected, deinflected, ['clinf'], ['v'], {...constraint, stemCharacters: '{letter}'});
+    suffix('infinitive', inflected, deinflected, ['clinf'], ['v'], {...constraint, stemContains: '[+]'});
+}
 
 // The irregular gerunds, at the end of any word (rifacendo, proponendo,
 // distraendo, producendo) and after a pronoun the clitic rules moved (si+).
 for (const [form, lemma, min] of [['dando', 'dare', 0], ['facendo', 'fare', 0], ['dicendo', 'dire', 0], ['bevendo', 'bere', 0],
     ['ponendo', 'porre', 0], ['traendo', 'trarre', 0], ['ducendo', 'durre', 2]]) {
-    suffix('gerund', form, lemma, inFor('gerund'), outFor('gerund'), min > 0 ? {stemMinLength: min} : {});
+    forms('gerund', form, lemma, min > 0 ? {stemMinLength: min} : {}, false);
 }
 
 // --- Pronominal verbs ---------------------------------------------------------------------
+// A pronoun written before a verb is marked first (mi lavo → mi+lavo, refl),
+// the verb rules then read the marked verb and give its person, and a
+// pronominal rule turns the phrase into the -rsi verb when the pronoun agrees
+// with that person (mi+lavare, p1s → lavarsi). The mark keeps the phrase as
+// written away from the pronominal rules: a rule whose conditionsIn holds a
+// person also applies to a text without conditions (docs/languages.md 7.2),
+// which would read mi compare (it appears to me) as the infinitive compare.
+transform('proclitic', 'pronoun before the verb', 'A pronoun written before a verb: mi lavo, ti ricordi, si accorge, ci vuole, ' +
+    "se ne va, me la cavo, c'entra, m'alzo.");
 transform('pronominal', '-rsi verb', 'A verb with a reflexive pronoun before it or attached to it, looked up in its -rsi form: mi lavo → lavarsi, ' +
     'ti ricordi → ricordarsi, se ne va → andarsene, me la cavo → cavarsela, alzati → alzarsi.');
-const INFINITIVE_ENDINGS = ['are', 'ere', 'ire', 'orre', 'urre', 'arre'];
 const PERSON = {mi: 'p1s', ti: 'p2s', si: 'p3', ci: 'p1p', vi: 'p2p'};
 const BEFORE = {mi: 'me', ti: 'te', si: 'se', ci: 'ce', vi: 've'};
-// The verb's stem is letters only (one word) and two letters or more, so a
-// pronoun before a short word gives no -rsi verb through a regular ending:
-// si fa and si dà are impersonal or reflexive, and fa and dà are only read as
-// fare and dare when written alone.
-const VERB_STEM = {stemCharacters: '{letter}', stemMinLength: 2};
-// porre, condurre and trarre lose their whole -re: porsi, condursi, trarsi.
-const ending = (tail) => INFINITIVE_ENDINGS.map((e) => [e, e.replace(/r?re$/u, 'r') + tail]);
-for (const [pronoun, person] of Object.entries(PERSON)) {
-    // mi lavo, ti lavi, si lava, ci laviamo, vi lavate.
-    add('pronominal', {type: 'circumfix', prefixes: [[pronoun + ' ', '']], suffixes: ending('si'),
-        conditionsIn: [person], conditionsOut: ['v'], ...VERB_STEM});
-    // me ne vado (andarsene), me la cavo (cavarsela), me lo aspettavo
-    // (aspettarselo).
-    for (const direct of ['ne', 'la', 'lo']) {
-        add('pronominal', {type: 'circumfix', prefixes: [[`${BEFORE[pronoun]} ${direct} `, '']], suffixes: ending(`se${direct}`),
-            conditionsIn: [person], conditionsOut: ['v'], ...VERB_STEM});
+const ELIDED = {mi: "m'", ti: "t'", si: "s'", ci: "c'", vi: "v'"};
+const ANY_PERSON = Object.values(PERSON);
+const ANY_SHORT = Object.values(SHORT);
+// The marks: one pronoun (mi lavo, m'alzo) and the pairs before ne and la
+// (me ne vado, ce la faccio).
+for (const pronoun of Object.keys(PERSON)) {
+    add('proclitic', {type: 'prefix', inflected: pronoun + ' ', deinflected: pronoun + '+', conditionsIn: [], conditionsOut: ['refl']});
+    add('proclitic', {type: 'prefix', inflected: ELIDED[pronoun], deinflected: pronoun + '+', conditionsIn: [], conditionsOut: ['refl']});
+    for (const direct of ['ne', 'la']) {
+        add('proclitic', {type: 'prefix', inflected: `${BEFORE[pronoun]} ${direct} `, deinflected: `${BEFORE[pronoun]}+${direct}+`,
+            conditionsIn: [], conditionsOut: ['refl']});
     }
 }
-// ce la faccio, ce la fai, ce la fa (farcela): ce la is fixed, whatever the
-// person, and fare's stem has one letter.
-add('pronominal', {type: 'circumfix', prefixes: [['ce la ', '']], suffixes: ending('cela'),
-    conditionsIn: Object.values(PERSON), conditionsOut: ['v'], stemCharacters: '{letter}', stemMinLength: 1});
-// ci before any person (ci vuole, ci metto, ci entra, ci pensi, ci credo):
-// esserci, volerci, metterci, entrarci, pensarci and the other verbs with a
-// fixed ci. Where ci is the reflexive of noi (ci laviamo), the rule above
-// also gives the -rsi verb.
-add('pronominal', {type: 'circumfix', prefixes: [['ci ', '']], suffixes: ending('ci'),
-    conditionsIn: Object.values(PERSON), conditionsOut: ['v'], ...VERB_STEM});
+// The infinitive endings, each with the stems its class has: porre and its
+// compounds end their stem in p (proporsi), the -durre verbs in d
+// (condursi), trarre and its compounds in r (distrarsi). The verb's own stem
+// is letters and three or more of them, so a pronoun before a short or
+// misread word gives no -rsi verb (si scava is not sc + ava, scarsi).
+const VERB_STEM = {stemCharacters: '{letter}', stemMinLength: 3};
+const CLASSES = [
+    [['are', 'ar'], ['ere', 'er'], ['ire', 'ir']],
+    [['orre', 'or'], {stemEndsWith: '[p]'}],
+    [['urre', 'ur'], {stemEndsWith: '[d]'}],
+    [['arre', 'ar'], {stemEndsWith: '[r]'}],
+];
+// The regular endings read a few stems of verbs that conjugate otherwise
+// (sections above): after a pronoun, volere and ridare give no -rsi verb
+// through them (si vola is volare, ti ridi is ridere). Their own forms do
+// (ci vuole, ci vorrà: volerci, written out below).
+const PRONOMINAL_EXCLUDED = {are: 'rid', ere: 'vol'};
+function pronominal(prefixes, tail, conditionsIn) {
+    for (const [e, b] of CLASSES[0]) {
+        const stem = tail === 'si' || tail === 'ci' ? PRONOMINAL_EXCLUDED[e] : undefined;
+        const splits = stem === undefined ? [{}] : [{stemNotStartsWith: `[${stem[0]}]`},
+            {stemStartsWith: `[${stem[0]}]`, stemNotStartsWithText: stem}, {stemStartsWithText: stem, stemMinLength: [...stem].length + 1}];
+        for (const split of splits) {
+            add('pronominal', {type: 'circumfix', prefixes: prefixes.map((p) => [p, '']), suffixes: [[e, b + tail]],
+                conditionsIn, conditionsOut: ['v'], ...VERB_STEM, ...split});
+        }
+    }
+    for (const [[e, b], constraint] of CLASSES.slice(1)) {
+        add('pronominal', {type: 'circumfix', prefixes: prefixes.map((p) => [p, '']), suffixes: [[e, b + tail]],
+            conditionsIn, conditionsOut: ['v'], ...VERB_STEM, stemMinLength: 1, ...constraint});
+    }
+}
+// Verbs whose stem has fewer than three letters are written out: fare, dare,
+// dire and bere, from their written-out forms (short_*: si fa, si dice, me
+// la bevo), and stare, amare, unire, usare and beare from any form (si sta,
+// ci amiamo, si unisce, si usa). Their compounds keep them (si rifà).
+const SHORT_VERBS = [['fare', 'far'], ['dare', 'dar'], ['dire', 'dir'], ['bere', 'ber']];
+const SHORT_STEMS = [['stare', 'star'], ['amare', 'amar'], ['unire', 'unir'], ['usare', 'usar'], ['beare', 'bear']];
+function shortPronominal(prefixes, tail, persons) {
+    add('pronominal', {type: 'circumfix', prefixes: prefixes.map((p) => [p, '']), suffixes: SHORT_VERBS.map(([v, b]) => [v, b + tail]),
+        conditionsIn: persons.map((p) => SHORT[p]), conditionsOut: ['v'], stemCharacters: '{letter}'});
+    add('pronominal', {type: 'circumfix', prefixes: prefixes.map((p) => [p, '']), suffixes: SHORT_STEMS.map(([v, b]) => [v, b + tail]),
+        conditionsIn: persons, conditionsOut: ['v'], stemCharacters: '{letter}'});
+}
+for (const [pronoun, person] of Object.entries(PERSON)) {
+    // mi lavo, ti lavi, si lava, ci laviamo, vi lavate (lavarsi).
+    pronominal([pronoun + '+'], 'si', [person]);
+    shortPronominal([pronoun + '+'], 'si', [person]);
+    // me ne vado (andarsene), me la cavo (cavarsela).
+    for (const direct of ['ne', 'la']) {
+        pronominal([`${BEFORE[pronoun]}+${direct}+`], `se${direct}`, [person]);
+        shortPronominal([`${BEFORE[pronoun]}+${direct}+`], `se${direct}`, [person]);
+    }
+}
+// ci, ce ne and ce la before any person: esserci, volerci, metterci,
+// entrarci, pensarci (ci vuole, ci metto, c'entra, ci penso),
+// volercene, andarcene (ce ne vuole), farcela, cavarcela (ce la faccio).
+for (const [prefix, tail] of [['ci+', 'ci'], ['ce+ne+', 'cene'], ['ce+la+', 'cela']]) {
+    pronominal([prefix], tail, ANY_PERSON);
+    shortPronominal([prefix], tail, ANY_PERSON);
+}
 // essere and volere are read only as whole words (si è and si vuole are not
 // essersi and volersi), so their third persons after ci are written out:
 // c'è, ci sono, c'era, ci sarà (esserci); ci vuole, ci vogliono, ci vorrà
-// (volerci).
+// (volerci); ce ne vuole (volercene).
 for (const [lemma, forms] of [
     ['esserci', ["c'è", 'ci sono', "c'era", "c'erano", 'ci sarà', 'ci saranno', 'ci sarebbe', 'ci sarebbero', 'ci fu', 'ci furono',
         'ci sia', 'ci siano', 'ci fosse', 'ci fossero', 'ci siamo', 'ci sei', 'ci siete']],
     ['volerci', ['ci vuole', 'ci vogliono', 'ci voleva', 'ci volevano', 'ci vorrà', 'ci vorranno', 'ci vorrebbe', 'ci vorrebbero',
         'ci volle', 'ci vollero', 'ci voglia', 'ci vogliano', 'ci volesse', 'ci volessero']],
+    ['volercene', ['ce ne vuole', 'ce ne vogliono', 'ce ne voleva', 'ce ne volevano', 'ce ne vorrà', 'ce ne vorrebbe', 'ce ne volle']],
 ]) {
     for (const form of forms) { whole('pronominal', form, lemma, [], ['v']); }
 }
@@ -819,14 +1021,15 @@ for (const form of ['ho', 'hai', 'ha', 'abbiamo', 'avete', 'hanno', ...sixOn('av
 for (const [text, lemma] of [['se ne va', 'andarsene'], ['te ne vai', 'andarsene'], ['se ne vada', 'andarsene']]) {
     whole('pronominal', text, lemma, [], ['v']);
 }
-// A pronoun the clitic rules moved before the verb (si+lavare, ti+alzare,
-// se+ne+andare).
+// A pronoun the clitic rules moved before the verb (ti+alza → ti+alzare,
+// se+ne+andare): the verb rules give v, and the pronoun already agrees.
 const MARKERS = [
     [['si+', 'ti+', 'ci+', 'vi+'], 'si'],
     ...DIRECT.map((d) => [['se', 'te', 'ce', 've'].map((p) => `${p}+${d}+`), `se${d}`]),
 ];
 for (const [prefixes, tail] of MARKERS) {
-    add('pronominal', {type: 'circumfix', prefixes: prefixes.map((p) => [p, '']), suffixes: ending(tail),
+    add('pronominal', {type: 'circumfix', prefixes: prefixes.map((p) => [p, '']),
+        suffixes: [...CLASSES[0], CLASSES[1][0], CLASSES[2][0], CLASSES[3][0]].map(([e, b]) => [e, b + tail]),
         conditionsIn: ['v'], conditionsOut: ['v'], stemCharacters: '{letter}', stemMinLength: 1});
 }
 
@@ -838,6 +1041,9 @@ transform('superlative', 'superlative', 'Absolute superlative (-issimo): belliss
 transform('adverb', 'adverb (-mente)', 'Adverb formed from an adjective with -mente: lentamente, fortemente, facilmente, regolarmente.');
 
 const NOMINAL = ['n', 'adj'];
+// Noun and adjective rules read one word, so the last word of a phrase is not
+// read as another phrase (a casa is not a caso, se ne is not se no).
+const ONE_WORD = {stemCharacters: '{letter}'};
 // Plural endings: -o/-i, -a/-e, -e/-i, -a/-i (problema, poeta), the hard c
 // and g of -co, -go, -ca, -ga (parchi, laghi, amiche, righe, duchi,
 // colleghi), the soft ones of -co and -go (amici, psicologi), -cia and -gia
@@ -850,11 +1056,11 @@ for (const [inflected, deinflected, out] of [
     ['chi', 'ca', ['n']], ['ghi', 'ga', ['n']], ['ci', 'co', NOMINAL], ['gi', 'go', NOMINAL],
     ['ce', 'cia', NOMINAL], ['ge', 'gia', NOMINAL], ['i', 'io', NOMINAL],
 ]) {
-    suffix('plural', inflected, deinflected, [], out, {stemMinLength: 2});
+    suffix('plural', inflected, deinflected, [], out, {stemMinLength: 2, ...ONE_WORD});
 }
 // Loanwords with an English plural (computers, mainframes, yuppies); Italian
 // writes most of them without -s.
-suffix('plural', 's', '', [], ['n'], {stemMinLength: 3});
+suffix('plural', 's', '', [], ['n'], {stemMinLength: 3, ...ONE_WORD});
 // Plurals that are not regular: uomini, dei, buoi, mogli, templi, and the
 // feminine plurals in -a of masculine nouns in -o (uova, braccia, dita).
 for (const [plural, singular] of [
@@ -867,20 +1073,27 @@ for (const [plural, singular] of [
 ]) {
     whole('plural', plural, singular, [], ['n']);
 }
+// bello and quello before a noun: begli, bei, quegli, quei (begli occhi, quei
+// giorni).
+for (const [plural, singular] of [['begli', 'bello'], ['bei', 'bello'], ['quegli', 'quello'], ['quei', 'quello']]) {
+    whole('plural', plural, singular, [], ['adj']);
+}
 // Feminine adjectives in -a; nouns for people in -trice, -essa, -ona, -iera
 // and -ora (attrice → attore, studentessa → studente, poetessa → poeta,
 // padrona → padrone, infermiera → infermiere, signora → signore).
-suffix('feminine', 'a', 'o', [], ['adj'], {stemMinLength: 2});
-for (const [inflected, deinflected] of [['trice', 'tore'], ['essa', 'e'], ['essa', 'a'], ['ona', 'one'], ['iera', 'iere'], ['ora', 'ore']]) {
-    suffix('feminine', inflected, deinflected, [], NOMINAL, {stemMinLength: 3});
+suffix('feminine', 'a', 'o', [], ['adj'], {stemMinLength: 2, ...ONE_WORD});
+// These also read the singular the plural rule gives (attrici → attrice →
+// attore), so the feminine noun, which dictionaries list, comes first and the
+// masculine second (patronesse is patronessa before patrona).
+for (const [inflected, deinflected, min] of [['trice', 'tore', 2], ['essa', 'e', 3], ['essa', 'a', 3], ['ona', 'one', 3], ['iera', 'iere', 3], ['ora', 'ore', 3]]) {
+    suffix('feminine', inflected, deinflected, NOMINAL, NOMINAL, {stemMinLength: min, ...ONE_WORD});
 }
 // Feminine plural adjectives: rosse, bianche, lunghe, and lisce and grige
-// (liscio, grigio); attrici, studentesse.
+// (liscio, grigio).
 for (const [inflected, deinflected, out, min] of [
     ['e', 'o', ['adj'], 2], ['che', 'co', ['adj'], 2], ['ghe', 'go', ['adj'], 2], ['ce', 'cio', ['adj'], 2], ['ge', 'gio', ['adj'], 2],
-    ['trici', 'tore', NOMINAL, 3], ['esse', 'e', NOMINAL, 3], ['esse', 'a', NOMINAL, 3],
 ]) {
-    suffix('feminine-plural', inflected, deinflected, [], out, {stemMinLength: min});
+    suffix('feminine-plural', inflected, deinflected, [], out, {stemMinLength: min, ...ONE_WORD});
 }
 // Superlatives in -issimo, -issima, -issimi, -issime of adjectives and
 // adverbs in -o, -e and -io (bellissimo, grandissimo, benissimo,
@@ -888,14 +1101,14 @@ for (const [inflected, deinflected, out, min] of [
 // lunghissimo).
 for (const tail of ['o', 'a', 'i', 'e']) {
     for (const [inflected, deinflected] of [['issim', 'o'], ['issim', 'e'], ['issim', 'io'], ['chissim', 'co'], ['ghissim', 'go']]) {
-        suffix('superlative', inflected + tail, deinflected, [], ['adj', 'adv'], {stemMinLength: 2});
+        suffix('superlative', inflected + tail, deinflected, [], ['adj', 'adv'], {stemMinLength: 2, ...ONE_WORD});
     }
 }
 // Adverbs in -mente: the feminine of adjectives in -o (lentamente → lento),
 // adjectives in -e (fortemente → forte), and those in -le and -re, which
 // lose their e (facilmente → facile, regolarmente → regolare).
 for (const [inflected, deinflected] of [['amente', 'o'], ['emente', 'e'], ['lmente', 'le'], ['rmente', 're']]) {
-    suffix('adverb', inflected, deinflected, [], ['adj'], {stemMinLength: 2});
+    suffix('adverb', inflected, deinflected, [], ['adj'], {stemMinLength: 2, ...ONE_WORD});
 }
 
 // --- Output -----------------------------------------------------------------------------------
@@ -909,34 +1122,34 @@ function compact(rules) {
     const out = [];
     const groups = new Map();
     for (const rule of rules) {
-        let prefix;
-        let tail;
+        let prefixes;
+        let tails;
         let rest;
         if (rule.type === 'suffix') {
             const {type: _type, inflected, deinflected, ...others} = rule;
-            [prefix, tail, rest] = [['', ''], [inflected, deinflected], others];
+            [prefixes, tails, rest] = [[['', '']], [[inflected, deinflected]], others];
         } else if (rule.type === 'circumfix' && rule.inflectedPrefix !== undefined) {
             const {type: _type, inflectedPrefix, deinflectedPrefix, inflectedSuffix, deinflectedSuffix, ...others} = rule;
-            [prefix, tail, rest] = [[inflectedPrefix, deinflectedPrefix], [inflectedSuffix, deinflectedSuffix], others];
+            [prefixes, tails, rest] = [[[inflectedPrefix, deinflectedPrefix]], [[inflectedSuffix, deinflectedSuffix]], others];
+        } else if (rule.type === 'circumfix' && rule.prefixes !== undefined) {
+            const {type: _type, prefixes: p, suffixes, ...others} = rule;
+            [prefixes, tails, rest] = [p, suffixes, others];
         } else {
             out.push(rule);
             continue;
         }
-        const key = JSON.stringify([prefix, rest]);
+        const key = JSON.stringify([prefixes, rest]);
         let group = groups.get(key);
         if (group === undefined) {
-            group = {type: 'circumfix', prefixes: [prefix], suffixes: [], ...rest};
+            group = {type: 'circumfix', prefixes, suffixes: [], ...rest};
             groups.set(key, group);
             out.push(group);
         }
-        group.suffixes.push(tail);
+        group.suffixes.push(...tails);
     }
-    // A group of one is written as the rule it was.
+    // A group of one prefix and one suffix is written as the rule it was.
     return out.map((rule) => {
-        if (rule.type !== 'circumfix' || rule.suffixes === undefined || rule.suffixes.length > 1 ||
-            !groups.has(JSON.stringify([rule.prefixes[0], Object.fromEntries(Object.entries(rule).filter(([k]) => !['type', 'prefixes', 'suffixes'].includes(k)))]))) {
-            return rule;
-        }
+        if (rule.type !== 'circumfix' || rule.prefixes.length > 1 || rule.suffixes.length > 1) { return rule; }
         const {type: _type, prefixes: [[inflectedPrefix, deinflectedPrefix]], suffixes: [[inflected, deinflected]], ...rest} = rule;
         if (inflectedPrefix === '' && deinflectedPrefix === '') { return {type: 'suffix', inflected, deinflected, ...rest}; }
         return {type: 'circumfix', inflectedPrefix, deinflectedPrefix, inflectedSuffix: inflected, deinflectedSuffix: deinflected, ...rest};

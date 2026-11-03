@@ -1,0 +1,989 @@
+# options: default
+# Source: UniMorph ita (https://github.com/unimorph/ita/blob/fa2cc6ce173643e748bd8f4162709365bdc98805/ita, sha256 6347bb15b3d2c3da), CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/), by the UniMorph contributors, from English Wiktionary: the verb rows (category: UniMorph tags; a space after an elided pronoun removed).
+# Source: kaikki.org's Italian dictionary (https://kaikki.org/dictionary/Italian/, extracted 2026-10-30 from enwiktionary 2026-10-01, sha256 edfb787898b80c6e), English Wiktionary content, CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/) and GFDL, by the Wiktionary contributors: the noun and adjective rows (category: part of speech and form tags).
+# 1000 rows sampled with seed 1 by sources/build-corpus.mjs (420 verb, finite, 80 verb, gerund or participle, 180 verb with pronouns, 160 noun, plural, 20 noun, other gender, 140 adjective); the rows the pack's rules reach with its defaults are in corpus.tsv, the others in gaps.tsv.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+V;IND;PST;3;SG;IPFV	1	sconficcava	sconficcare	v	*
+V;COND;1;PL	1	disastreremmo	disastrare	v	*
+V;IND;PST;1;PL;PFV	1	alluminammo	alluminare	v	*
+V;IND;PST;1;PL;IPFV	1	pregustavamo	pregustare	v	*
+V;IND;PRS;2;SG	1	dosi	dosare	v	*
+V;IND;PRS;3;PL	1	dogano	dogare	v	*
+V;IND;PST;3;PL;IPFV	1	dipingevano	dipingere	v	*
+V;POS;IMP;3;PL	1	rimbocchino	rimboccare	v	*
+V;COND;2;SG	1	scontorceresti	scontorcere	v	*
+V;IND;FUT;2;PL	1	reinoltrerete	reinoltrare	v	*
+V;IND;PRS;3;SG	1	ammutina	ammutinare	v	*
+V;IND;PST;1;SG;IPFV	1	allattavo	allattare	v	*
+V;IND;PRS;3;SG	1	ricalcifica	ricalcificare	v	*
+V;IND;PST;2;SG;IPFV	1	riseppellivi	riseppellire	v	*
+V;COND;2;SG	1	ridefiniresti	ridefinire	v	*
+V;IND;FUT;2;PL	1	discaricherete	discaricare	v	*
+V;COND;1;SG	1	isterilirei	isterilire	v	*
+V;IND;PST;1;PL;PFV	1	presapemmo	presapere	v	*
+V;IND;PST;2;PL;IPFV	1	tallonavate	tallonare	v	*
+V;IND;PST;2;SG;IPFV	1	decimalizzavi	decimalizzare	v	*
+V;IND;FUT;3;PL	1	colpiranno	colpire	v	*
+V;IND;PRS;3;SG	1	biondeggia	biondeggiare	v	*
+V;IND;FUT;3;SG	1	smoverà	smuovere	v	*
+V;SBJV;PST;1;SG	1	cateterizzassi	cateterizzare	v	*
+V;SBJV;PRS;2;PL	1	valiate	valere	v	*
+V;POS;IMP;3;PL	1	restringano	restringere	v	*
+V;IND;PRS;3;PL	1	tergiversano	tergiversare	v	*
+V;IND;PRS;3;SG	1	inscatola	inscatolare	v	*
+V;SBJV;PST;3;SG	1	occhieggiasse	occhieggiare	v	*
+V;COND;2;PL	1	gocciolereste	gocciolare	v	*
+V;IND;FUT;3;PL	1	sopporteranno	sopportare	v	*
+V;COND;2;PL	1	manduchereste	manducare	v	*
+V;IND;PRS;3;SG	1	gelifica	gelificare	v	*
+V;COND;3;PL	1	impoverirebbero	impoverire	v	*
+V;SBJV;PST;1;PL	1	bucherellassimo	bucherellare	v	*
+V;COND;3;SG	1	accarpionerebbe	accarpionare	v	*
+V;IND;PST;1;SG;IPFV	1	rimediavo	rimediare	v	*
+V;COND;1;PL	1	tituberemmo	titubare	v	*
+V;SBJV;PST;1;PL	1	infornassimo	infornare	v	*
+V;IND;PST;2;SG;PFV	1	teleradiotrasmettesti	teleradiotrasmettere	v	*
+V;COND;3;PL	1	brontolerebbero	brontolare	v	*
+V;COND;1;PL	1	crocifiggeremmo	crocifiggere	v	*
+V;POS;IMP;3;PL	1	agguerriscano	agguerrire	v	*
+V;COND;3;PL	1	scrutinerebbero	scrutinare	v	*
+V;IND;FUT;2;SG	1	circuirai	circuire	v	*
+V;IND;PST;2;PL;PFV	1	picconaste	picconare	v	*
+V;SBJV;PST;3;SG	1	rispiegasse	rispiegare	v	*
+V;SBJV;PST;1;PL	1	socchiudessimo	socchiudere	v	*
+V;IND;PRS;3;SG	1	transpone	transporre	v	*
+V;IND;PST;2;PL;PFV	1	accingeste	accingere	v	*
+V;IND;PRS;3;PL	1	decolorano	decolorare	v	*
+V;IND;PRS;1;PL	1	spanniamo	spannare	v	*
+V;COND;2;SG	1	marimetteresti	marimettere	v	*
+V;IND;FUT;1;SG	1	avvantaggerò	avvantaggiare	v	*
+V;IND;FUT;2;SG	1	evidenzierai	evidenziare	v	*
+V;IND;PRS;1;PL	1	invalidiamo	invalidare	v	*
+V;IND;FUT;3;PL	1	riporteranno	riportare	v	*
+V;SBJV;PRS;2;PL	1	scarifichiate	scarificare	v	*
+V;IND;PRS;3;SG	1	raccozza	raccozzare	v	*
+V;SBJV;PST;3;PL	1	assecondassero	assecondare	v	*
+V;SBJV;PST;3;PL	1	guadagnassero	guadagnare	v	*
+V;IND;FUT;3;SG	1	parassiterà	parassitare	v	*
+V;IND;FUT;1;PL	1	impasticceremo	impasticciare	v	*
+V;COND;3;SG	1	penalizzerebbe	penalizzare	v	*
+V;SBJV;PRS;2;PL	1	priviate	privare	v	*
+V;SBJV;PST;1;PL	1	parallelizzassimo	parallelizzare	v	*
+V;IND;FUT;2;PL	1	principierete	principiare	v	*
+V;IND;PST;1;SG;PFV	1	dollarizzai	dollarizzare	v	*
+V;IND;PST;3;SG;IPFV	1	rimarcava	rimarcare	v	*
+V;SBJV;PST;1;PL	1	sorradessimo	sorradere	v	*
+V;IND;FUT;3;PL	1	rimpagineranno	rimpaginare	v	*
+V;SBJV;PST;3;PL	1	strabevessero	strabere	v	*
+V;IND;PST;2;SG;IPFV	1	manimettevi	manimettere	v	*
+V;SBJV;PST;1;SG	1	volantinassi	volantinare	v	*
+V;IND;PST;2;SG;IPFV	1	calibravi	calibrare	v	*
+V;SBJV;PST;3;PL	1	ingessassero	ingessare	v	*
+V;IND;PST;3;SG;IPFV	1	circondava	circondare	v	*
+V;SBJV;PRS;2;PL	1	affrittelliate	affrittellare	v	*
+V;IND;PRS;2;PL	1	invecchiate	invecchiare	v	*
+V;COND;1;PL	1	arretreremmo	arretrare	v	*
+V;IND;PST;2;PL;PFV	1	ripianaste	ripianare	v	*
+V;IND;PST;2;PL;IPFV	1	craccavate	craccare	v	*
+V;SBJV;PST;3;SG	1	trasparesse	trasparere	v	*
+V;IND;PST;3;SG;IPFV	1	piagava	piagare	v	*
+V;IND;FUT;3;SG	1	disqualificherà	disqualificare	v	*
+V;IND;PST;1;PL;PFV	1	perscrutammo	perscrutare	v	*
+V;IND;PRS;3;SG	1	trappone	trapporre	v	*
+V;IND;PST;1;PL;IPFV	1	sensibilizzavamo	sensibilizzare	v	*
+V;IND;PST;1;PL;IPFV	1	agivamo	agire	v	*
+V;IND;FUT;3;PL	1	venderanno	vendere	v	*
+V;SBJV;PRS;2;PL	1	latriate	latrare	v	*
+V;IND;PST;1;PL;PFV	1	ingarbugliammo	ingarbugliare	v	*
+V;IND;PRS;2;SG	1	demoneti	demonetare	v	*
+V;SBJV;PST;1;SG	1	calettassi	calettare	v	*
+V;IND;PRS;2;SG	1	pirogeni	pirogenare	v	*
+V;SBJV;PRS;2;PL	1	detassiate	detassare	v	*
+V;IND;PRS;2;PL	1	abbrunite	abbrunire	v	*
+V;SBJV;PST;1;SG	1	impicciassi	impicciare	v	*
+V;IND;FUT;2;SG	1	tumulerai	tumulare	v	*
+V;IND;FUT;2;SG	1	sbracerai	sbraciare	v	*
+V;COND;2;PL	1	sminuireste	sminuire	v	*
+V;IND;FUT;2;SG	1	pullulerai	pullulare	v	*
+V;IND;PRS;1;PL	1	imbardiamo	imbardare	v	*
+V;SBJV;PRS;2;PL	1	quadrettiate	quadrettare	v	*
+V;IND;PST;2;PL;IPFV	1	preferivate	preferire	v	*
+V;IND;PST;2;PL;PFV	1	afferraste	afferrare	v	*
+V;IND;PST;1;PL;PFV	1	rifiatammo	rifiatare	v	*
+V;SBJV;PST;1;SG	1	sviticchiassi	sviticchiare	v	*
+V;IND;PST;3;SG;PFV	1	affogliò	affogliare	v	*
+V;IND;PST;2;SG;PFV	1	ammortisti	ammortire	v	*
+V;IND;PST;3;PL;IPFV	1	succiavano	succiare	v	*
+V;COND;3;SG	1	zufolerebbe	zufolare	v	*
+V;IND;PRS;2;PL	1	supplite	supplire	v	*
+V;COND;3;SG	1	obiurgherebbe	obiurgare	v	*
+V;COND;3;PL	1	fotterebbero	fottere	v	*
+V;IND;PRS;2;SG	1	lisi	lisare	v	*
+V;IND;FUT;3;SG	1	cestinerà	cestinare	v	*
+V;IND;FUT;3;SG	1	frenerà	frenare	v	*
+V;IND;PRS;2;SG	1	straorzi	straorzare	v	*
+V;IND;PRS;2;SG	1	tedescheggi	tedescheggiare	v	*
+V;IND;PST;2;SG;PFV	1	preludiasti	preludiare	v	*
+V;IND;PST;1;SG;IPFV	1	impalavo	impalare	v	*
+V;POS;IMP;3;PL	1	infossino	infossare	v	*
+V;COND;2;PL	1	rincentrereste	rincentrare	v	*
+V;IND;PRS;1;PL	1	piatiamo	piatire	v	*
+V;IND;FUT;1;PL	1	scaleremo	scalare	v	*
+V;IND;FUT;1;SG	1	rammenderò	rammendare	v	*
+V;IND;PST;3;PL;PFV	1	raffigurarono	raffigurare	v	*
+V;IND;PRS;3;PL	1	seminano	seminare	v	*
+V;IND;FUT;3;SG	1	sposterà	spostare	v	*
+V;IND;PST;3;SG;PFV	1	consolidò	consolidare	v	*
+V;IND;PST;1;PL;IPFV	1	increspavamo	increspare	v	*
+V;POS;IMP;3;SG	1	trasvolga	trasvolgere	v	*
+V;IND;PRS;2;SG	1	ammorbidisci	ammorbidire	v	*
+V;IND;FUT;2;SG	1	ridonderai	ridondare	v	*
+V;SBJV;PST;3;PL	1	sovrasterzassero	sovrasterzare	v	*
+V;IND;PRS;3;SG	1	spadroneggia	spadroneggiare	v	*
+V;IND;PST;2;SG;IPFV	1	benefacevi	benefare	v	*
+V;IND;PRS;1;SG	1	menziono	menzionare	v	*
+V;IND;PST;3;PL;PFV	1	cardarono	cardare	v	*
+V;IND;PST;1;SG;PFV	1	dissimulai	dissimulare	v	*
+V;COND;1;SG	1	canonizzerei	canonizzare	v	*
+V;IND;PST;2;SG;IPFV	1	salificavi	salificare	v	*
+V;IND;PRS;3;SG	1	imbastisce	imbastire	v	*
+V;COND;3;SG	1	disilluderebbe	disilludere	v	*
+V;IND;PST;1;SG;PFV	1	dispersi	disperdere	v	*
+V;IND;FUT;3;SG	1	scoperà	scopare	v	*
+V;IND;PST;2;PL;PFV	1	salpaste	salpare	v	*
+V;COND;2;SG	1	radicheresti	radicare	v	*
+V;IND;PRS;3;PL	1	stressano	stressare	v	*
+V;SBJV;PRS;2;PL	1	sovveniate	sovvenire	v	*
+V;IND;PST;1;PL;PFV	1	gibollammo	gibollare	v	*
+V;IND;PST;2;PL;PFV	1	trepidaste	trepidare	v	*
+V;IND;FUT;3;PL	1	ingegnerizzeranno	ingegnerizzare	v	*
+V;IND;PRS;3;PL	1	protraggono	protrarre	v	*
+V;IND;PST;3;SG;PFV	1	influenzò	influenzare	v	*
+V;IND;PST;3;PL;IPFV	1	spolverizzavano	spolverizzare	v	*
+V;POS;IMP;3;PL	1	origlino	origliare	v	*
+V;COND;2;PL	1	imbianchireste	imbianchire	v	*
+V;SBJV;PST;1;SG	1	appurassi	appurare	v	*
+V;IND;PST;1;SG;IPFV	1	cooptavo	cooptare	v	*
+V;POS;IMP;3;PL	1	smemorino	smemorare	v	*
+V;COND;1;PL	1	cofonderemmo	cofondare	v	*
+V;IND;PST;3;SG;PFV	1	snocciolò	snocciolare	v	*
+V;COND;1;SG	1	carbonerei	carbonare	v	*
+V;IND;PST;1;SG;PFV	1	scrollai	scrollare	v	*
+V;POS;IMP;3;PL	1	aggiacchino	aggiaccare	v	*
+V;IND;FUT;3;PL	1	sucheranno	sucare	v	*
+V;IND;PRS;3;SG	1	virgola	virgolare	v	*
+V;SBJV;PRS;2;PL	1	rivoltiate	rivoltare	v	*
+V;IND;PRS;2;PL	1	dolcificate	dolcificare	v	*
+V;IND;PST;1;PL;PFV	1	mixammo	mixare	v	*
+V;SBJV;PST;1;PL	1	discacciassimo	discacciare	v	*
+V;IND;PRS;1;PL	1	rimarginiamo	rimarginare	v	*
+V;SBJV;PST;1;SG	1	incoiassi	incoiare	v	*
+V;IND;PST;1;SG;IPFV	1	sconcordavo	sconcordare	v	*
+V;COND;3;PL	1	sganascerebbero	sganasciare	v	*
+V;IND;PST;2;SG;PFV	1	divariasti	divariare	v	*
+V;IND;PRS;3;SG	1	disperge	dispergere	v	*
+V;COND;2;PL	1	strafareste	strafare	v	*
+V;SBJV;PST;3;PL	1	scritturassero	scritturare	v	*
+V;IND;PRS;3;SG	1	rigonfia	rigonfiare	v	*
+V;IND;PRS;3;PL	1	anchilosano	anchilosare	v	*
+V;SBJV;PST;3;PL	1	separassero	separare	v	*
+V;COND;3;PL	1	pacciamerebbero	pacciamare	v	*
+V;IND;PST;2;SG;PFV	1	sbollentasti	sbollentare	v	*
+V;IND;PST;1;SG;PFV	1	ribattei	ribattere	v	*
+V;IND;PRS;1;PL	1	abborracciamo	abborracciare	v	*
+V;IND;PST;2;SG;PFV	1	socializzasti	socializzare	v	*
+V;IND;FUT;1;SG	1	esternerò	esternare	v	*
+V;IND;FUT;2;PL	1	bratterete	brattare	v	*
+V;IND;PST;1;PL;PFV	1	plissettammo	plissettare	v	*
+V;IND;PST;1;SG;PFV	1	comminai	comminare	v	*
+V;IND;PST;3;SG;IPFV	1	ninfeggiava	ninfeggiare	v	*
+V;IND;FUT;3;SG	1	impiccolirà	impiccolire	v	*
+V;COND;2;SG	1	enucleeresti	enucleare	v	*
+V;IND;FUT;1;SG	1	ingenererò	ingenerare	v	*
+V;IND;FUT;1;SG	1	irrorerò	irrorare	v	*
+V;IND;PRS;1;SG	1	peggioro	peggiorare	v	*
+V;IND;PRS;1;SG	1	tempero	temperare	v	*
+V;SBJV;PST;1;SG	1	dannassi	dannare	v	*
+V;SBJV;PST;3;PL	1	smettessero	smettere	v	*
+V;IND;FUT;3;SG	1	angarierà	angariare	v	*
+V;SBJV;PST;1;SG	1	interferissi	interferire	v	*
+V;IND;FUT;3;SG	1	doserà	dosare	v	*
+V;IND;FUT;2;PL	1	guarirete	guarire	v	*
+V;IND;PST;1;PL;IPFV	1	castravamo	castrare	v	*
+V;IND;PST;2;PL;IPFV	1	cavalcavate	cavalcare	v	*
+V;COND;2;PL	1	archeggereste	archeggiare	v	*
+V;IND;PRS;3;SG	1	prezzola	prezzolare	v	*
+V;SBJV;PRS;2;PL	1	riascendiate	riascendere	v	*
+V;IND;PRS;3;PL	1	rigonfiano	rigonfiare	v	*
+V;IND;PST;1;PL;IPFV	1	stagionavamo	stagionare	v	*
+V;IND;PST;2;PL;PFV	1	aggiudicaste	aggiudicare	v	*
+V;IND;PRS;1;SG	1	macadamizzo	macadamizzare	v	*
+V;IND;PST;3;SG;PFV	1	stigliò	stigliare	v	*
+V;COND;2;PL	1	fungereste	fungere	v	*
+V;COND;1;SG	1	imbastardirei	imbastardire	v	*
+V;COND;3;SG	1	commetterebbe	commettere	v	*
+V;SBJV;PST;3;SG	1	sgraffiasse	sgraffiare	v	*
+V;SBJV;PST;3;PL	1	degassificassero	degassificare	v	*
+V;IND;PST;3;SG;PFV	1	solforò	solforare	v	*
+V;POS;IMP;3;PL	1	riaccompagnino	riaccompagnare	v	*
+V;IND;PST;3;SG;IPFV	1	rincasava	rincasare	v	*
+V;SBJV;PST;1;PL	1	inzuppassimo	inzuppare	v	*
+V;IND;PST;3;SG;PFV	1	compose	comporre	v	*
+V;IND;PST;3;PL;PFV	1	sillogizzarono	sillogizzare	v	*
+V;SBJV;PST;3;PL	1	riappendessero	riappendere	v	*
+V;COND;1;SG	1	istorierei	istoriare	v	*
+V;IND;FUT;3;PL	1	inverniceranno	inverniciare	v	*
+V;IND;PST;1;SG;IPFV	1	tacitavo	tacitare	v	*
+V;IND;PST;2;SG;IPFV	1	disusavi	disusare	v	*
+V;COND;3;SG	1	stravolgerebbe	stravolgere	v	*
+V;IND;PRS;3;PL	1	allibrano	allibrare	v	*
+V;COND;2;SG	1	ascenderesti	ascendere	v	*
+V;COND;2;SG	1	puniresti	punire	v	*
+V;IND;PST;2;SG;PFV	1	razzolasti	razzolare	v	*
+V;IND;PST;1;SG;IPFV	1	acconigliavo	acconigliare	v	*
+V;SBJV;PST;3;PL	1	corricchiassero	corricchiare	v	*
+V;COND;3;PL	1	raggrinzirebbero	raggrinzire	v	*
+V;IND;PST;3;SG;PFV	1	purgò	purgare	v	*
+V;SBJV;PST;3;SG	1	chioccolasse	chioccolare	v	*
+V;IND;FUT;1;PL	1	scarcereremo	scarcerare	v	*
+V;IND;FUT;3;SG	1	sfigurerà	sfigurare	v	*
+V;IND;PST;3;PL;IPFV	1	estinguevano	estinguere	v	*
+V;COND;1;PL	1	museremmo	musare	v	*
+V;IND;PST;2;PL;IPFV	1	ricascavate	ricascare	v	*
+V;IND;PRS;2;SG	1	parcellizzi	parcellizzare	v	*
+V;IND;PST;2;PL;IPFV	1	impollinavate	impollinare	v	*
+V;IND;PST;2;SG;PFV	1	sanforizzasti	sanforizzare	v	*
+V;IND;PST;2;PL;PFV	1	allegorizzaste	allegorizzare	v	*
+V;IND;PRS;2;PL	1	riannodate	riannodare	v	*
+V;IND;PST;2;SG;PFV	1	assorgesti	assorgere	v	*
+V;IND;FUT;2;SG	1	avvicinerai	avvicinare	v	*
+V;SBJV;PST;3;PL	1	direzionassero	direzionare	v	*
+V;IND;FUT;2;PL	1	ridiscuterete	ridiscutere	v	*
+V;COND;3;SG	1	segreterebbe	segretare	v	*
+V;IND;PST;2;SG;PFV	1	alluminasti	alluminare	v	*
+V;POS;IMP;3;PL	1	parametrino	parametrare	v	*
+V;IND;PRS;2;SG	1	solarizzi	solarizzare	v	*
+V;IND;FUT;3;PL	1	subordineranno	subordinare	v	*
+V;IND;PST;2;PL;PFV	1	ricresceste	ricrescere	v	*
+V;IND;FUT;2;PL	1	sopporterete	sopportare	v	*
+V;IND;FUT;2;PL	1	hackererete	hackerare	v	*
+V;SBJV;PST;1;SG	1	ostassi	ostare	v	*
+V;IND;PST;3;PL;IPFV	1	rinchiodavano	rinchiodare	v	*
+V;IND;PST;2;SG;PFV	1	tacchettasti	tacchettare	v	*
+V;IND;FUT;3;SG	1	buttererà	butterare	v	*
+V;IND;FUT;1;SG	1	trapungerò	trapungere	v	*
+V;IND;FUT;2;SG	1	pazzierai	pazziare	v	*
+V;SBJV;PST;1;SG	1	affiorassi	affiorare	v	*
+V;IND;PST;2;PL;PFV	1	corazzaste	corazzare	v	*
+V;SBJV;PST;3;PL	1	privassero	privare	v	*
+V;IND;PST;2;SG;PFV	1	moristi	morire	v	*
+V;IND;PST;2;PL;IPFV	1	arrotondavate	arrotondare	v	*
+V;IND;PST;3;PL;IPFV	1	stizzivano	stizzire	v	*
+V;IND;PRS;3;SG	1	responsabilizza	responsabilizzare	v	*
+V;IND;PRS;1;PL	1	svolazziamo	svolazzare	v	*
+V;IND;FUT;3;SG	1	userà	usare	v	*
+V;IND;PRS;1;SG	1	trasmuto	trasmutare	v	*
+V;IND;PST;3;SG;PFV	1	terebrò	terebrare	v	*
+V;IND;PST;1;PL;IPFV	1	direzionavamo	direzionare	v	*
+V;IND;PRS;2;SG	1	sibili	sibilare	v	*
+V;POS;IMP;3;PL	1	scalettino	scalettare	v	*
+V;IND;PRS;2;PL	1	spiritualizzate	spiritualizzare	v	*
+V;IND;PST;3;SG;PFV	1	destatizzò	destatizzare	v	*
+V;SBJV;PST;1;SG	1	videocomunicassi	videocomunicare	v	*
+V;IND;FUT;1;SG	1	olezzerò	olezzare	v	*
+V;SBJV;PST;1;PL	1	defilassimo	defilare	v	*
+V;SBJV;PRS;2;PL	1	responsabilizziate	responsabilizzare	v	*
+V;IND;FUT;1;SG	1	ricompilerò	ricompilare	v	*
+V;IND;PST;1;SG;PFV	1	risoggiunsi	risoggiungere	v	*
+V;IND;FUT;1;SG	1	svolgerò	svolgere	v	*
+V;IND;PST;1;SG;IPFV	1	incalcinavo	incalcinare	v	*
+V;IND;PST;1;PL;IPFV	1	banalizzavamo	banalizzare	v	*
+V;IND;PRS;3;SG	1	fraintende	fraintendere	v	*
+V;IND;PST;1;SG;PFV	1	ingolfai	ingolfare	v	*
+V;COND;1;PL	1	temporizzeremmo	temporizzare	v	*
+V;COND;3;SG	1	compatterebbe	compattare	v	*
+V;IND;PRS;3;PL	1	duplicano	duplicare	v	*
+V;COND;1;SG	1	gallerei	gallare	v	*
+V;IND;PST;3;SG;PFV	1	rassottigliò	rassottigliare	v	*
+V;IND;PST;2;PL;IPFV	1	deducevate	dedurre	v	*
+V;IND;PRS;2;PL	1	colludete	colludere	v	*
+V;COND;3;PL	1	fustigherebbero	fustigare	v	*
+V;COND;1;SG	1	tralascerei	tralasciare	v	*
+V;POS;IMP;3;SG	1	soccorra	soccorrere	v	*
+V;IND;FUT;2;PL	1	sconsolerete	sconsolare	v	*
+V;IND;FUT;2;PL	1	sofisticherete	sofisticare	v	*
+V;IND;FUT;1;PL	1	rimembreremo	rimembrare	v	*
+V;SBJV;PST;1;SG	1	elettrizzassi	elettrizzare	v	*
+V;IND;PRS;2;PL	1	scollinate	scollinare	v	*
+V;IND;PRS;2;PL	1	broccate	broccare	v	*
+V;IND;PST;3;SG;PFV	1	ascose	ascondere	v	*
+V;COND;3;SG	1	zafferebbe	zaffare	v	*
+V;IND;PRS;2;PL	1	franate	franare	v	*
+V;IND;PST;1;PL;PFV	1	rintristimmo	rintristire	v	*
+V;IND;PST;1;SG;IPFV	1	abballavo	abballare	v	*
+V;IND;PRS;2;SG	1	ordini	ordinare	v	*
+V;COND;2;PL	1	esplorereste	esplorare	v	*
+V;IND;PST;1;PL;IPFV	1	ninfeggiavamo	ninfeggiare	v	*
+V;IND;PRS;2;SG	1	deframmenti	deframmentare	v	*
+V;SBJV;PST;3;PL	1	parificassero	parificare	v	*
+V;SBJV;PST;3;SG	1	stravolgesse	stravolgere	v	*
+V;IND;FUT;2;SG	1	pronuncerai	pronunciare	v	*
+V;IND;FUT;2;PL	1	impunterete	impuntare	v	*
+V;IND;FUT;1;SG	1	emanerò	emanare	v	*
+V;IND;PRS;2;SG	1	sposti	spostare	v	*
+V;IND;PRS;3;SG	1	antichizza	antichizzare	v	*
+V;IND;PST;1;PL;IPFV	1	riprivatizzavamo	riprivatizzare	v	*
+V;IND;PST;3;PL;IPFV	1	gremivano	gremire	v	*
+V;COND;3;PL	1	trebbierebbero	trebbiare	v	*
+V;IND;PST;3;SG;PFV	1	salariò	salariare	v	*
+V;IND;FUT;1;PL	1	ispezioneremo	ispezionare	v	*
+V;IND;PST;1;SG;PFV	1	trapunsi	trapungere	v	*
+V;COND;2;PL	1	deidratereste	deidratare	v	*
+V;IND;PST;2;SG;PFV	1	circuisti	circuire	v	*
+V;SBJV;PST;3;SG	1	autocontraesse	autocontrarre	v	*
+V;SBJV;PST;1;SG	1	rivestissi	rivestire	v	*
+V;IND;PRS;2;SG	1	programmi	programmare	v	*
+V;COND;2;PL	1	erodereste	erodere	v	*
+V;IND;PST;2;SG;IPFV	1	annichilivi	annichilire	v	*
+V;COND;3;PL	1	retrodaterebbero	retrodatare	v	*
+V;IND;PST;1;SG;PFV	1	sciabolai	sciabolare	v	*
+V;IND;PST;2;PL;PFV	1	denuclearizzaste	denuclearizzare	v	*
+V;IND;PST;1;SG;PFV	1	presidiai	presidiare	v	*
+V;SBJV;PST;3;PL	1	godronassero	godronare	v	*
+V;COND;3;SG	1	volterebbe	voltare	v	*
+V;IND;PRS;1;PL	1	dugliamo	dugliare	v	*
+V;IND;FUT;2;PL	1	vivanderete	vivandare	v	*
+V;IND;FUT;1;SG	1	inimicherò	inimicare	v	*
+V;SBJV;PST;3;PL	1	imprimessero	imprimere	v	*
+V;IND;PST;3;SG;PFV	1	oziò	oziare	v	*
+V;IND;PRS;2;SG	1	vanifichi	vanificare	v	*
+V;IND;PST;2;SG;IPFV	1	riassopivi	riassopire	v	*
+V;IND;PST;1;SG;IPFV	1	apponevo	apporre	v	*
+V;COND;3;SG	1	esporterebbe	esportare	v	*
+V;IND;PST;1;SG;PFV	1	vilificai	vilificare	v	*
+V;IND;PST;3;PL;PFV	1	tinsero	tingere	v	*
+V;IND;FUT;2;PL	1	cointeresserete	cointeressare	v	*
+V;IND;FUT;3;SG	1	caraterà	caratare	v	*
+V;IND;FUT;1;SG	1	contratterò	contrattare	v	*
+V;COND;2;SG	1	succideresti	succidere	v	*
+V;SBJV;PST;3;PL	1	addimesticassero	addimesticare	v	*
+V;IND;FUT;1;PL	1	rifaremo	rifare	v	*
+V;IND;PRS;3;SG	1	spignora	spignorare	v	*
+V;SBJV;PRS;2;PL	1	inframettiate	inframettere	v	*
+V;SBJV;PRS;2;PL	1	stenografiate	stenografare	v	*
+V;IND;PST;2;PL;PFV	1	diffondeste	diffondere	v	*
+V;IND;FUT;2;SG	1	defecherai	defecare	v	*
+V;IND;FUT;3;SG	1	bulletterà	bullettare	v	*
+V;COND;3;PL	1	ridorerebbero	ridorare	v	*
+V;IND;PST;2;PL;IPFV	1	deodoravate	deodorare	v	*
+V;COND;3;PL	1	restringerebbero	restringere	v	*
+V;IND;FUT;1;PL	1	travaseremo	travasare	v	*
+V;COND;3;PL	1	abbiaderebbero	abbiadare	v	*
+V;COND;1;PL	1	imbronciremmo	imbroncire	v	*
+V;IND;PST;2;PL;IPFV	1	inzeppavate	inzeppare	v	*
+V;SBJV;PST;1;SG	1	rimuovessi	rimuovere	v	*
+V;COND;3;PL	1	macinerebbero	macinare	v	*
+V;IND;PRS;2;SG	1	bacchi	bacchiare	v	*
+V;IND;PST;1;PL;PFV	1	battibeccammo	battibeccare	v	*
+V;SBJV;PST;1;PL	1	allucchettassimo	allucchettare	v	*
+V;POS;IMP;3;PL	1	denaturalizzino	denaturalizzare	v	*
+V;COND;3;PL	1	fiaccherebbero	fiaccare	v	*
+V;COND;3;SG	1	incruscherebbe	incruscare	v	*
+V;SBJV;PRS;2;PL	1	attraversiate	attraversare	v	*
+V;IND;FUT;1;SG	1	franceseggerò	franceseggiare	v	*
+V;IND;FUT;3;PL	1	deregolamenteranno	deregolamentare	v	*
+V;IND;PST;1;SG;PFV	1	compresi	comprendere	v	*
+V;IND;PRS;3;PL	1	arretrano	arretrare	v	*
+V;IND;PST;1;SG;IPFV	1	fluitavo	fluitare	v	*
+V;IND;PST;1;SG;IPFV	1	infagottavo	infagottare	v	*
+V;COND;1;SG	1	sbreccherei	sbreccare	v	*
+V;COND;3;PL	1	interverrebbero	intervenire	v	*
+V;IND;PST;2;SG;PFV	1	contraddistinguesti	contraddistinguere	v	*
+V;IND;PRS;2;SG	1	strusci	strusciare	v	*
+V;SBJV;PST;1;SG	1	sopportassi	sopportare	v	*
+V;COND;2;SG	1	singolarizzeresti	singolarizzare	v	*
+V;IND;PRS;3;PL	1	pazziano	pazziare	v	*
+V;COND;3;PL	1	sanguinerebbero	sanguinare	v	*
+V;SBJV;PST;1;SG	1	sistemassi	sistemare	v	*
+V;SBJV;PST;3;SG	1	riscoppiasse	riscoppiare	v	*
+V;COND;3;PL	1	avvelenerebbero	avvelenare	v	*
+V;COND;1;PL	1	inchioderemmo	inchiodare	v	*
+V;SBJV;PST;3;SG	1	unguentasse	unguentare	v	*
+V;IND;PRS;3;SG	1	recinge	recingere	v	*
+V;COND;1;SG	1	svetterei	svettare	v	*
+V;COND;1;SG	1	imburrerei	imburrare	v	*
+V;IND;PST;2;SG;PFV	1	incarnasti	incarnare	v	*
+V;IND;PST;2;SG;IPFV	1	spiccavi	spiccare	v	*
+V;IND;PST;1;SG;PFV	1	rugghiai	rugghiare	v	*
+V;IND;PST;2;PL;PFV	1	feriste	ferire	v	*
+V;COND;2;SG	1	conterresti	contenere	v	*
+V;SBJV;PST;1;PL	1	ofiziassimo	ofiziare	v	*
+V;IND;FUT;1;SG	1	sovrautilizzerò	sovrautilizzare	v	*
+V;IND;PST;1;SG;PFV	1	zampillai	zampillare	v	*
+V;IND;PRS;2;PL	1	arrenate	arrenare	v	*
+V;IND;FUT;3;SG	1	frastaglierà	frastagliare	v	*
+V;SBJV;PST;1;SG	1	aggraticciassi	aggraticciare	v	*
+V.PTCP;PRS	1	imbottante	imbottare	v	*
+V.PTCP;PRS	1	postsincronizzante	postsincronizzare	v	*
+V.PTCP;PST	1	biluxato	biluxare	v	*
+V.CVB;PRS	1	mordenzando	mordenzare	v	*
+V.PTCP;PST	1	lucrato	lucrare	v	*
+V.CVB;PRS	1	riaggiornando	riaggiornare	v	*
+V.PTCP;PST	1	resposto	respondere	v	*
+V.PTCP;PST	1	acciaccato	acciaccare	v	*
+V.PTCP;PRS	1	infuocante	infuocare	v	*
+V.CVB;PRS	1	svantaggiando	svantaggiare	v	*
+V.PTCP;PST	1	satisfatto	satisfare	v	*
+V.PTCP;PST	1	ebraizzato	ebraizzare	v	*
+V.CVB;PRS	1	appropinquando	appropinquare	v	*
+V.CVB;PRS	1	riecheggiando	riecheggiare	v	*
+V.PTCP;PRS	1	scostolante	scostolare	v	*
+V.PTCP;PRS	1	disindustrializzante	disindustrializzare	v	*
+V.PTCP;PRS	1	risarcente	risarcire	v	*
+V.PTCP;PST	1	gremito	gremire	v	*
+V.CVB;PRS	1	innervosendo	innervosire	v	*
+V.PTCP;PRS	1	ritendente	ritendere	v	*
+V.PTCP;PST	1	snodato	snodare	v	*
+V.CVB;PRS	1	vocabolarizzando	vocabolarizzare	v	*
+V.CVB;PRS	1	rasentando	rasentare	v	*
+V.PTCP;PST	1	cavillato	cavillare	v	*
+V.PTCP;PRS	1	ricreante	ricreare	v	*
+V.PTCP;PRS	1	discomponente	discomporre	v	*
+V.PTCP;PST	1	agonizzato	agonizzare	v	*
+V.CVB;PRS	1	falsificando	falsificare	v	*
+V.CVB;PRS	1	introvertendo	introvertire	v	*
+V.CVB;PRS	1	rimischiando	rimischiare	v	*
+V.CVB;PRS	1	espurgando	espurgare	v	*
+V.PTCP;PRS	1	permettente	permettere	v	*
+V.CVB;PRS	1	ortogonalizzando	ortogonalizzare	v	*
+V.PTCP;PST	1	campeggiato	campeggiare	v	*
+V.PTCP;PRS	1	dissaldante	dissaldare	v	*
+V.CVB;PRS	1	demarcando	demarcare	v	*
+V.PTCP;PST	1	conflitto	confliggere	v	*
+V.CVB;PRS	1	acidando	acidare	v	*
+V.PTCP;PRS	1	raddobbante	raddobbare	v	*
+V.PTCP;PST	1	avvicendato	avvicendare	v	*
+V.CVB;PRS	1	capitozzando	capitozzare	v	*
+V.PTCP;PST	1	falcidiato	falcidiare	v	*
+V.PTCP;PRS	1	depellente	depellere	v	*
+V.PTCP;PST	1	latineggiato	latineggiare	v	*
+V.CVB;PRS	1	accincignando	accincignare	v	*
+V.PTCP;PRS	1	calunniante	calunniare	v	*
+V.PTCP;PRS	1	ammezzante	ammezzare	v	*
+V.CVB;PRS	1	infierendo	infierire	v	*
+V.PTCP;PRS	1	ciclostilante	ciclostilare	v	*
+V.PTCP;PRS	1	insozzante	insozzare	v	*
+V.CVB;PRS	1	graduando	graduare	v	*
+V.PTCP;PST	1	restituito	restituire	v	*
+V.PTCP;PST	1	invidiato	invidiare	v	*
+V.PTCP;PST	1	snebbiato	snebbiare	v	*
+V.PTCP;PST	1	scavezzato	scavezzare	v	*
+V.CVB;PRS	1	gommando	gommare	v	*
+V.PTCP;PRS	1	rinvoltolante	rinvoltolare	v	*
+V.PTCP;PRS	1	trinciante	trinciare	v	*
+V.CVB;PRS	1	detossificando	detossificare	v	*
+V.PTCP;PST	1	affondato	affondare	v	*
+V.CVB;PRS	1	estendendo	estendere	v	*
+V.PTCP;PRS	1	ricalcificante	ricalcificare	v	*
+V.PTCP;PRS	1	decompilante	decompilare	v	*
+V.PTCP;PST	1	estrapolato	estrapolare	v	*
+V.PTCP;PST	1	intrecciato	intrecciare	v	*
+V.CVB;PRS	1	ripolarizzando	ripolarizzare	v	*
+V.PTCP;PST	1	eclissato	eclissare	v	*
+V.PTCP;PST	1	riqualificato	riqualificare	v	*
+V.PTCP;PRS	1	impostante	impostare	v	*
+V.PTCP;PRS	1	bulinante	bulinare	v	*
+V.PTCP;PST	1	registrato	registrare	v	*
+V.CVB;PRS	1	frustando	frustare	v	*
+V.PTCP;PST	1	contristato	contristare	v	*
+V.CVB;PRS	1	preregistrando	preregistrare	v	*
+V.CVB;PRS	1	fallendo	fallire	v	*
+V.PTCP;PST	1	assistito	assistere	v	*
+V.PTCP;PRS	1	scampanellante	scampanellare	v	*
+V.CVB;PRS	1	binando	binare	v	*
+V.CVB;PRS	1	pianeggiando	pianeggiare	v	*
+V.PTCP;PST	1	telegrafato	telegrafare	v	*
+V;IND;PST;3;PL;PFV	1	si centuplicarono	centuplicarsi	v	*
+V;IND;FUT;2;PL	1	vi familiarizzerete	familiarizzarsi	v	*
+V.CVB;PRS	1	maturandosi	maturarsi	v	*
+V;IND;PST;2;PL;PFV	1	vi acutizzaste	acutizzarsi	v	*
+V;IND;FUT;3;PL	1	si contraffaranno	contraffarsi	v	*
+V;COND;1;PL	1	ci ritaglieremmo	ritagliarsi	v	*
+V;IND;FUT;3;SG	1	si opererà	operarsi	v	*
+V;SBJV;PST;2;SG	1	ti comunicassi	comunicarsi	v	*
+V;POS;IMP;1;PL	1	riverberiamoci	riverberarsi	v	*
+V;POS;IMP;3;PL	1	si aggruppino	aggrupparsi	v	*
+V;IND;FUT;3;PL	1	si sciacqueranno	sciacquarsi	v	*
+V;IND;PRS;2;SG	1	ti impadronisci	impadronirsi	v	*
+V;POS;IMP;3;SG	1	si raggrumi	raggrumarsi	v	*
+V;SBJV;PST;1;PL	1	ci infeltrissimo	infeltrirsi	v	*
+V;SBJV;PST;3;PL	1	si confinassero	confinarsi	v	*
+V;IND;PST;2;SG;PFV	1	ti scolpasti	scolparsi	v	*
+V;IND;PST;2;PL;PFV	1	vi cristallizzaste	cristallizzarsi	v	*
+V;SBJV;PST;1;PL	1	ci contassimo	contarsi	v	*
+V;POS;IMP;1;PL	1	schiacciamoci	schiacciarsi	v	*
+V.CVB;PRS	1	ingozzandosi	ingozzarsi	v	*
+V;IND;FUT;1;PL	1	ci ripareremo	ripararsi	v	*
+V;IND;PST;3;SG;PFV	1	si riallineò	riallinearsi	v	*
+V;COND;1;PL	1	ci lanceremmo	lanciarsi	v	*
+V;COND;2;PL	1	vi disporreste	disporsi	v	*
+V;POS;IMP;2;PL	1	annichilatevi	annichilarsi	v	*
+V.PTCP;PRS	1	svestentesi	svestirsi	v	*
+V;SBJV;PST;1;SG	1	mi arrangiassi	arrangiarsi	v	*
+V;COND;3;PL	1	si attrarrebbero	attrarsi	v	*
+V;IND;PST;3;PL;IPFV	1	se ne impipavano	impiparsene	v	*
+V;SBJV;PST;1;SG	1	me la bevessi	bersela	v	*
+V;SBJV;PST;3;PL	1	si aggruppassero	aggrupparsi	v	*
+V.PTCP;PST	1	sganasciato	sganasciarsi	v	*
+V;IND;PST;2;PL;IPFV	1	vi acchiappavate	acchiapparsi	v	*
+V;SBJV;PRS;2;PL	1	vi impiantiate	impiantarsi	v	*
+V;POS;IMP;3;PL	1	si inguaino	inguaiarsi	v	*
+V;POS;IMP;3;SG	1	si svelenisca	svelenirsi	v	*
+V;IND;PST;2;SG;PFV	1	ti rilanciasti	rilanciarsi	v	*
+V;IND;PST;3;PL;PFV	1	si pigmentarono	pigmentarsi	v	*
+V;SBJV;PST;3;PL	1	si eterificassero	eterificarsi	v	*
+V;IND;FUT;1;SG	1	mi sopirò	sopirsi	v	*
+V;IND;PRS;2;SG	1	ti riveli	rivelarsi	v	*
+V;IND;FUT;3;SG	1	si appellerà	appellarsi	v	*
+V;IND;PRS;3;PL	1	si incardinano	incardinarsi	v	*
+V;SBJV;PST;1;SG	1	mi smagliassi	smagliarsi	v	*
+V;IND;PST;1;SG;IPFV	1	mi mineralizzavo	mineralizzarsi	v	*
+V;IND;PST;3;PL;IPFV	1	si ravvolgevano	ravvolgersi	v	*
+V;IND;PST;1;PL;PFV	1	ci curammo	curarsi	v	*
+V;IND;PST;2;SG;PFV	1	ti riscattasti	riscattarsi	v	*
+V;IND;PRS;3;SG	1	si inferocisce	inferocirsi	v	*
+V;IND;FUT;3;PL	1	si coniugheranno	coniugarsi	v	*
+V;IND;PST;3;PL;PFV	1	si incartapecorirono	incartapecorirsi	v	*
+V;IND;FUT;2;PL	1	vi immedesimerete	immedesimarsi	v	*
+V;IND;PST;1;PL;IPFV	1	ci convenivamo	convenirsi	v	*
+V;IND;FUT;1;SG	1	mi giocherò	giocarsi	v	*
+V;SBJV;PST;3;PL	1	si intrecciassero	intrecciarsi	v	*
+V;SBJV;PRS;2;PL	1	vi sprigioniate	sprigionarsi	v	*
+V;SBJV;PRS;2;PL	1	vi muniate	munirsi	v	*
+V;IND;FUT;2;SG	1	ti appollaierai	appollaiarsi	v	*
+V.PTCP;PRS	1	smemorantesi	smemorarsi	v	*
+V;IND;PST;2;SG;PFV	1	ti riassicurasti	riassicurarsi	v	*
+V;SBJV;PST;2;SG	1	ti imbellettassi	imbellettarsi	v	*
+V;POS;IMP;3;SG	1	si forzi	forzarsi	v	*
+V;COND;3;PL	1	si rivolterebbero	rivoltarsi	v	*
+V;IND;FUT;1;PL	1	ci stireremo	stirarsi	v	*
+V;COND;2;PL	1	vi notifichereste	notificarsi	v	*
+V;IND;PST;3;SG;IPFV	1	si materializzava	materializzarsi	v	*
+V;POS;IMP;2;SG	1	sdegnati	sdegnarsi	v	*
+V;SBJV;PST;3;PL	1	si rallegrassero	rallegrarsi	v	*
+V;SBJV;PST;3;SG	1	ci sentisse	sentirci	v	*
+V;SBJV;PST;1;SG	1	mi infrangessi	infrangersi	v	*
+V;IND;PST;2;PL;PFV	1	vi stancaste	stancarsi	v	*
+V;IND;FUT;1;SG	1	mi misurerò	misurarsi	v	*
+V;IND;PST;3;SG;IPFV	1	si smascellava	smascellarsi	v	*
+V;IND;PST;2;SG;PFV	1	ti incretinisti	incretinirsi	v	*
+V;SBJV;PST;2;SG	1	ti sostanziassi	sostanziarsi	v	*
+V;POS;IMP;2;PL	1	sbattezzatevi	sbattezzarsi	v	*
+V;COND;2;SG	1	ti rincantucceresti	rincantucciarsi	v	*
+V;POS;IMP;3;PL	1	si instaurino	instaurarsi	v	*
+V;COND;1;SG	1	mi diramerei	diramarsi	v	*
+V;IND;PRS;3;SG	1	si rileva	rilevarsi	v	*
+V.CVB;PRS	1	dimenticandosi	dimenticarsi	v	*
+V;SBJV;PST;1;PL	1	ci equilibrassimo	equilibrarsi	v	*
+V;IND;FUT;2;SG	1	ti emanciperai	emanciparsi	v	*
+V;SBJV;PST;1;SG	1	mi coagulassi	coagularsi	v	*
+V;SBJV;PST;3;PL	1	si disonorassero	disonorarsi	v	*
+V;IND;PST;3;SG;PFV	1	si esfoliò	esfoliarsi	v	*
+V;IND;FUT;3;SG	1	si arrischierà	arrischiarsi	v	*
+V;IND;PST;1;PL;PFV	1	ci esaltammo	esaltarsi	v	*
+V;IND;PRS;2;PL	1	vi lavate	lavarsi	v	*
+V;IND;PST;1;SG;PFV	1	mi incistai	incistarsi	v	*
+V.PTCP;PST	1	permesso	permettersi	v	*
+V;COND;1;PL	1	ci acquatteremmo	acquattarsi	v	*
+V;IND;PRS;2;PL	1	vi scamiciate	scamiciarsi	v	*
+V;IND;PST;1;SG;PFV	1	ci presi	prenderci	v	*
+V;IND;PST;1;PL;IPFV	1	ci disgregavamo	disgregarsi	v	*
+V;IND;PRS;3;PL	1	si abbrustoliscono	abbrustolirsi	v	*
+V;IND;PRS;3;PL	1	si sbellicano	sbellicarsi	v	*
+V;IND;PST;3;SG;IPFV	1	si smagliava	smagliarsi	v	*
+V;SBJV;PST;3;SG	1	si amalgamasse	amalgamarsi	v	*
+V;COND;2;SG	1	ti disaffezioneresti	disaffezionarsi	v	*
+V;IND;PRS;3;SG	1	si intervalla	intervallarsi	v	*
+V;COND;3;PL	1	si ricomporrebbero	ricomporsi	v	*
+V;SBJV;PRS;2;PL	1	vi intersechiate	intersecarsi	v	*
+V;IND;PST;2;SG;PFV	1	ti osservasti	osservarsi	v	*
+V.PTCP;PRS	1	impestantesi	impestarsi	v	*
+V;IND;PST;3;PL;PFV	1	si trasmisero	trasmettersi	v	*
+V;IND;PST;3;PL;IPFV	1	si affrontavano	affrontarsi	v	*
+V;IND;PST;2;SG;PFV	1	ti smarristi	smarrirsi	v	*
+V;IND;PRS;1;PL	1	ci informatizziamo	informatizzarsi	v	*
+V;SBJV;PRS;2;PL	1	vi inorgogliate	inorgoglirsi	v	*
+V;SBJV;PRS;2;PL	1	vi consolidiate	consolidarsi	v	*
+V;POS;IMP;2;SG	1	stirati	stirarsi	v	*
+V;IND;PRS;1;SG	1	mi cullo	cullarsi	v	*
+V;IND;FUT;3;PL	1	si imbriglieranno	imbrigliarsi	v	*
+V;COND;3;PL	1	si aumenterebbero	aumentarsi	v	*
+V;IND;PST;3;SG;PFV	1	si disaffezionò	disaffezionarsi	v	*
+V;IND;PST;1;SG;PFV	1	mi disaffezionai	disaffezionarsi	v	*
+V;SBJV;PST;3;SG	1	si erudisse	erudirsi	v	*
+V;IND;PST;2;SG;IPFV	1	ti slegavi	slegarsi	v	*
+V;IND;PRS;3;SG	1	si ricorica	ricoricarsi	v	*
+V;IND;PRS;2;SG	1	ti cicatrizzi	cicatrizzarsi	v	*
+V.CVB;PRS	1	proiettandosi	proiettarsi	v	*
+V;IND;PRS;3;SG	1	si ingrandisce	ingrandirsi	v	*
+V;IND;PRS;3;SG	1	si rinselva	rinselvarsi	v	*
+V;IND;PRS;3;PL	1	si spiegano	spiegarsi	v	*
+V;IND;PST;2;PL;IPFV	1	vi vergognavate	vergognarsi	v	*
+V;IND;FUT;3;SG	1	si imperlerà	imperlarsi	v	*
+V;COND;1;PL	1	ci ingavoneremmo	ingavonarsi	v	*
+V;IND;FUT;1;PL	1	ci inquadreremo	inquadrarsi	v	*
+V;IND;PST;3;PL;IPFV	1	si acutizzavano	acutizzarsi	v	*
+V;COND;1;SG	1	mi frenerei	frenarsi	v	*
+V;SBJV;PRS;2;PL	1	vi riguardiate	riguardarsi	v	*
+V;POS;IMP;3;SG	1	si inchini	inchinarsi	v	*
+V;IND;PST;1;PL;IPFV	1	ci insudiciavamo	insudiciarsi	v	*
+V;IND;PST;2;SG;PFV	1	ti giurasti	giurarsi	v	*
+V;IND;FUT;3;SG	1	si contornerà	contornarsi	v	*
+V;POS;IMP;2;SG	1	obbligati	obbligarsi	v	*
+V;IND;FUT;1;SG	1	mi estenderò	estendersi	v	*
+V;IND;PST;3;PL;IPFV	1	si assideravano	assiderarsi	v	*
+V;IND;PST;1;PL;IPFV	1	ci bruciavamo	bruciarsi	v	*
+V;IND;PST;3;PL;PFV	1	si denaturarono	denaturarsi	v	*
+V;IND;PST;1;SG;IPFV	1	mi appesantivo	appesantirsi	v	*
+V;IND;PST;1;SG;PFV	1	mi ridestai	ridestarsi	v	*
+V;IND;PST;1;SG;PFV	1	mi insospettii	insospettirsi	v	*
+V;IND;PST;1;SG;IPFV	1	mi raccomandavo	raccomandarsi	v	*
+V;SBJV;PST;1;SG	1	mi cercassi	cercarsi	v	*
+V.PTCP;PST	1	allietato	allietarsi	v	*
+V;POS;IMP;1;PL	1	scoloriamoci	scolorarsi	v	*
+V;IND;PRS;1;SG	1	mi mostro	mostrarsi	v	*
+V;IND;PRS;1;PL	1	ci accoriamo	accorarsi	v	*
+V;IND;PST;1;SG;PFV	1	mi inguantai	inguantarsi	v	*
+V;IND;PST;2;PL;IPFV	1	vi bisticciavate	bisticciarsi	v	*
+V;IND;PRS;1;SG	1	mi rabbuio	rabbuiarsi	v	*
+V.PTCP;PRS	1	redimentesi	redimersi	v	*
+V;IND;PST;3;SG;IPFV	1	si cresimava	cresimarsi	v	*
+V;IND;FUT;1;PL	1	ci ricalcificheremo	ricalcificarsi	v	*
+V;IND;FUT;1;SG	1	mi verrò	venirsi	v	*
+V;IND;PRS;3;SG	1	si ammolla	ammollarsi	v	*
+V;SBJV;PST;1;SG	1	mi dannassi	dannarsi	v	*
+V;IND;PRS;3;SG	1	si annerisce	annerirsi	v	*
+V;COND;1;PL	1	ci disturberemmo	disturbarsi	v	*
+V;IND;PST;2;SG;PFV	1	ti ischeletristi	ischeletrirsi	v	*
+V;IND;PST;2;PL;IPFV	1	vi riassumevate	riassumersi	v	*
+V;IND;PST;3;PL;IPFV	1	si paragonavano	paragonarsi	v	*
+V;IND;PRS;2;PL	1	vi rifugiate	rifugiarsi	v	*
+V;IND;PST;2;PL;PFV	1	vi allarmaste	allarmarsi	v	*
+V;IND;PST;2;SG;IPFV	1	ti sostantivavi	sostantivarsi	v	*
+V;IND;FUT;1;PL	1	ci risponderemo	rispondersi	v	*
+V;SBJV;PST;2;SG	1	ti armassi	armarsi	v	*
+V;IND;PST;3;SG;PFV	1	si aggrumò	aggrumarsi	v	*
+V;IND;PST;1;SG;IPFV	1	mi conciliavo	conciliarsi	v	*
+V;COND;3;SG	1	si consoliderebbe	consolidarsi	v	*
+V;POS;IMP;3;SG	1	si accoppi	accoppiarsi	v	*
+V;IND;PST;3;PL;IPFV	1	si leggevano	leggersi	v	*
+V;SBJV;PST;1;PL	1	ci infiammassimo	infiammarsi	v	*
+V;SBJV;PRS;2;PL	1	vi accaloriate	accalorarsi	v	*
+noun:plural	1	calandrature	calandratura	n	*
+noun:plural	1	strozzamenti	strozzamento	n	*
+noun:plural	1	omopolimerizzazioni	omopolimerizzazione	n	*
+noun:plural	1	martinicche	martinicca	n	*
+noun:plural	1	centinamenti	centinamento	n	*
+noun:feminine,plural	1	francesiste	francesista	n	*
+noun:plural	1	congiure	congiura	n	*
+noun:plural	1	ascrei	ascreo	n	*
+noun:plural	1	crepelle	crepella	n	*
+noun:plural	1	colecistiti	colecistite	n	*
+noun:plural	1	terricciati	terricciato	n	*
+noun:plural	1	eterocarpie	eterocarpia	n	*
+noun:plural	1	venturoni	venturone	n	*
+noun:plural	1	predestinazionismi	predestinazionismo	n	*
+noun:plural	1	microftalmi	microftalmo	n	*
+noun:plural	1	messori	messore	n	*
+noun:plural	1	correntocrazie	correntocrazia	n	*
+noun:plural	1	criticoni	criticone	n	*
+noun:plural	1	orsaggini	orsaggine	n	*
+noun:plural	1	indulti	indulto	n	*
+noun:plural	1	melopsittaci	melopsittaco	n	*
+noun:plural	1	rigge	riggia	n	*
+noun:plural	1	illusionismi	illusionismo	n	*
+noun:plural	1	nefropi	nefrope	n	*
+noun:plural	1	decompositori	decompositore	n	*
+noun:plural	1	nebbie	nebbia	n	*
+noun:plural	1	parametri	parametrio	n	*
+noun:plural	1	soprerbe	soprerba	n	*
+noun:plural	1	elettrologi	elettrologo	n	*
+noun:plural	1	straordinari	straordinario	n	*
+noun:plural	1	reddituari	reddituario	n	*
+noun:plural	1	sberle	sberla	n	*
+noun:plural	1	notazioni	notazione	n	*
+noun:plural	1	distretti	distretto	n	*
+noun:plural	1	gastralgie	gastralgia	n	*
+noun:plural	1	chioccolatori	chioccolatore	n	*
+noun:plural	1	capezzoni	capezzone	n	*
+noun:plural	1	rigattieri	rigattiere	n	*
+noun:plural	1	retoriche	retorica	n	*
+noun:plural	1	dietologi	dietologo	n	*
+noun:plural	1	malgarbi	malgarbo	n	*
+noun:plural	1	assicurati	assicurato	n	*
+noun:plural	1	ribellamenti	ribellamento	n	*
+noun:plural	1	nosologie	nosologia	n	*
+noun:plural	1	anablefobie	anablefobia	n	*
+noun:plural	1	torture	tortura	n	*
+noun:plural	1	avanguardismi	avanguardismo	n	*
+noun:plural	1	spruzzate	spruzzata	n	*
+noun:plural	1	verghe	verga	n	*
+noun:plural	1	baggiane	baggiana	n	*
+noun:plural	1	sellini	sellino	n	*
+noun:plural	1	ultranazionalismi	ultranazionalismo	n	*
+noun:plural	1	amanite	amanita	n	*
+noun:plural	1	barimetrie	barimetria	n	*
+noun:plural	1	vasopressori	vasopressore	n	*
+noun:plural	1	purificatori	purificatorio	n	*
+noun:plural	1	granduchi	granduca	n	*
+noun:masculine,plural	1	bahreiniti	bahreinita	n	*
+noun:plural	1	mimiambi	mimiambo	n	*
+noun:plural	1	polisilici	polisilicio	n	*
+noun:plural	1	tramezzamenti	tramezzamento	n	*
+noun:plural	1	bradicinesie	bradicinesia	n	*
+noun:plural	1	etiopici	etiopico	n	*
+noun:plural	1	nitratine	nitratina	n	*
+noun:plural	1	aggottatoi	aggottatoio	n	*
+noun:plural	1	roverelle	roverella	n	*
+noun:plural	1	ammobiliamenti	ammobiliamento	n	*
+noun:plural	1	collagenopatie	collagenopatia	n	*
+noun:plural	1	oritteropi	oritteropo	n	*
+noun:plural	1	giavazzi	giavazzo	n	*
+noun:plural	1	ninfe	ninfa	n	*
+noun:plural	1	cassoni	cassone	n	*
+noun:plural	1	pazzoidi	pazzoide	n	*
+noun:plural	1	racani	racano	n	*
+noun:plural	1	galle	galla	n	*
+noun:plural	1	tachinistagmi	tachinistagmo	n	*
+noun:plural	1	dissimulatori	dissimulatore	n	*
+noun:plural	1	politiconi	politicone	n	*
+noun:plural	1	perimetrazioni	perimetrazione	n	*
+noun:plural	1	endopatagi	endopatagio	n	*
+noun:plural	1	upupe	upupa	n	*
+noun:plural	1	riquadrature	riquadratura	n	*
+noun:plural	1	cianidrine	cianidrina	n	*
+noun:plural	1	pirogassificazioni	pirogassificazione	n	*
+noun:plural	1	passatrici	passatrice	n	*
+noun:feminine,plural	1	penaliste	penalista	n	*
+noun:plural	1	indottrinamenti	indottrinamento	n	*
+noun:plural	1	bancari	bancario	n	*
+noun:plural	1	epatizzazioni	epatizzazione	n	*
+noun:plural	1	ottantenni	ottantennio	n	*
+noun:plural	1	bruciature	bruciatura	n	*
+noun:plural	1	tachigrafie	tachigrafia	n	*
+noun:plural	1	dislocazioni	dislocazione	n	*
+noun:plural	1	cimurri	cimurro	n	*
+noun:plural	1	escapismi	escapismo	n	*
+noun:plural	1	griseofulvine	griseofulvina	n	*
+noun:plural	1	palpebrazioni	palpebrazione	n	*
+noun:plural	1	flussimetri	flussimetro	n	*
+noun:plural	1	psicolettici	psicolettico	n	*
+noun:plural	1	aramaismi	aramaismo	n	*
+noun:plural	1	aromantici	aromantico	n	*
+noun:plural	1	satrapie	satrapia	n	*
+noun:plural	1	rappacificamenti	rappacificamento	n	*
+noun:plural	1	psicopolizie	psicopolizia	n	*
+noun:plural	1	timonieri	timoniere	n	*
+noun:plural	1	mandragore	mandragora	n	*
+noun:masculine,plural	1	corsivisti	corsivista	n	*
+noun:plural	1	suffragazioni	suffragazione	n	*
+noun:plural	1	alaesi	alaese	n	*
+noun:plural	1	ipocondriaci	ipocondriaco	n	*
+noun:plural	1	macrosistemi	macrosistema	n	*
+noun:plural	1	arrembaggi	arrembaggio	n	*
+noun:plural	1	cassinesi	cassinese	n	*
+noun:plural	1	scemate	scemata	n	*
+noun:plural	1	sonochimiche	sonochimica	n	*
+noun:plural	1	carassi	carassio	n	*
+noun:plural	1	emicarpi	emicarpo	n	*
+noun:plural	1	inframmettenze	inframmettenza	n	*
+noun:plural	1	ergastici	ergastico	n	*
+noun:plural	1	osteofite	osteofita	n	*
+noun:plural	1	zuppiere	zuppiera	n	*
+noun:plural	1	scompaginature	scompaginatura	n	*
+noun:plural	1	gloriuzze	gloriuzza	n	*
+noun:plural	1	termoreattori	termoreattore	n	*
+noun:plural	1	camerlenghi	camerlengo	n	*
+noun:plural	1	proteinemie	proteinemia	n	*
+noun:plural	1	sproloqui	sproloquio	n	*
+noun:plural	1	sottodominanti	sottodominante	n	*
+noun:plural	1	riallacciamenti	riallacciamento	n	*
+noun:plural	1	reami	reame	n	*
+noun:plural	1	zonazioni	zonazione	n	*
+noun:plural	1	binomi	binomio	n	*
+noun:plural	1	coassicuratori	coassicuratore	n	*
+noun:plural	1	capovaccai	capovaccaio	n	*
+noun:plural	1	accattoni	accattone	n	*
+noun:plural	1	modismi	modismo	n	*
+noun:plural	1	clorobenzochinoni	clorobenzochinone	n	*
+noun:plural	1	osteodensitometrie	osteodensitometria	n	*
+noun:plural	1	ricreamenti	ricreamento	n	*
+noun:plural	1	tappezzerie	tappezzeria	n	*
+noun:plural	1	sentierismi	sentierismo	n	*
+noun:plural	1	studi	studio	n	*
+noun:plural	1	epizoi	epizoo	n	*
+noun:plural	1	cimbri	cimbro	n	*
+noun:plural	1	terpineoli	terpineolo	n	*
+noun:plural	1	autoflagellazioni	autoflagellazione	n	*
+noun:plural	1	anzianati	anzianato	n	*
+noun:plural	1	mirabolani	mirabolano	n	*
+noun:plural	1	zoccoli	zoccolo	n	*
+noun:plural	1	lanzardi	lanzardo	n	*
+noun:plural	1	fluoroalluminati	fluoroalluminato	n	*
+noun:plural	1	autobiblioteche	autobiblioteca	n	*
+noun:feminine,plural	1	aramaiste	aramaista	n	*
+noun:plural	1	neostoricismi	neostoricismo	n	*
+noun:plural	1	ceppe	ceppa	n	*
+noun:plural	1	teine	teina	n	*
+noun:plural	1	microregistratori	microregistratore	n	*
+noun:plural	1	verdezze	verdezza	n	*
+noun:plural	1	fritillarie	fritillaria	n	*
+noun:masculine,plural	1	hinduisti	hinduista	n	*
+noun:feminine	1	tatuatrice	tatuatore	n	*
+noun:feminine	1	succhiatrice	succhiatore	n	*
+noun:feminine	1	attestatrice	attestatore	n	*
+noun:feminine	1	consigliera	consigliere	n	*
+noun:feminine	1	sciabolatrice	sciabolatore	n	*
+noun:feminine	1	reintegratrice	reintegratore	n	*
+noun:feminine	1	ceditrice	ceditore	n	*
+noun:feminine	1	cicalona	cicalone	n	*
+adj:feminine,plural	1	inattiniche	inattinico	adj	*
+adj:feminine	1	autoalimentata	autoalimentato	adj	*
+adj:masculine,plural	1	occhialuti	occhialuto	adj	*
+adj:masculine,plural	1	filospartani	filospartano	adj	*
+adj:masculine,plural	1	amarascati	amarascato	adj	*
+adj:masculine,plural	1	onorativi	onorativo	adj	*
+adj:feminine	1	spartana	spartano	adj	*
+adj:feminine	1	europeistica	europeistico	adj	*
+adj:masculine,plural	1	farnetici	farnetico	adj	*
+adj:masculine,plural	1	trisillabici	trisillabico	adj	*
+adj:masculine,plural	1	incoativi	incoativo	adj	*
+adj:masculine,plural	1	chirografari	chirografario	adj	*
+adj:masculine,plural	1	pentasillabi	pentasillabo	adj	*
+adj:masculine,plural	1	simpatici	simpatico	adj	*
+adj:feminine,plural	1	monocarpiche	monocarpico	adj	*
+adj:masculine,plural	1	deontologici	deontologico	adj	*
+adj:feminine,plural	1	grommose	grommoso	adj	*
+adj:masculine,plural	1	poltacei	poltaceo	adj	*
+adj:feminine,plural	1	suffruticose	suffruticoso	adj	*
+adj:masculine,plural	1	priapici	priapico	adj	*
+adj:feminine	1	semidesertica	semidesertico	adj	*
+adj:feminine,plural	1	benaugurate	benaugurato	adj	*
+adj:feminine,plural	1	scaciate	scaciato	adj	*
+adj:feminine,plural	1	laminose	laminoso	adj	*
+adj:feminine	1	copulatrice	copulatore	adj	*
+adj:masculine,plural	1	perxenici	perxenico	adj	*
+adj:feminine	1	metalinguistica	metalinguistico	adj	*
+adj:masculine,plural	1	informatori	informatore	adj	*
+adj:masculine,plural	1	emersi	emerso	adj	*
+adj:masculine,plural	1	insubordinati	insubordinato	adj	*
+adj:masculine,plural	1	isosmotici	isosmotico	adj	*
+adj:masculine,plural	1	metamatematici	metamatematico	adj	*
+adj:feminine,plural	1	spumose	spumoso	adj	*
+adj:feminine	1	afroitaliana	afroitaliano	adj	*
+adj:feminine	1	venusta	venusto	adj	*
+adj:masculine,plural	1	intellettivi	intellettivo	adj	*
+adj:masculine,plural	1	corrucciati	corrucciato	adj	*
+adj:feminine,plural	1	aggrinzite	aggrinzito	adj	*
+adj:feminine,plural	1	antiasmatiche	antiasmatico	adj	*
+adj:masculine,plural	1	floridi	florido	adj	*
+adj:masculine,plural	1	illegittimi	illegittimo	adj	*
+adj:feminine	1	fanerogamica	fanerogamico	adj	*
+adj:plural	1	sensibilizzanti	sensibilizzante	adj	*
+adj:feminine	1	introspettiva	introspettivo	adj	*
+adj:masculine,plural	1	farinosi	farinoso	adj	*
+adj:plural	1	motocampestri	motocampestre	adj	*
+adj:masculine,plural	1	ipotecari	ipotecario	adj	*
+adj:feminine	1	ohmica	ohmico	adj	*
+adj:feminine,plural	1	galestrose	galestroso	adj	*
+adj:feminine,plural	1	magagnate	magagnato	adj	*
+adj:feminine	1	persiana	persiano	adj	*
+adj:feminine	1	parlata	parlato	adj	*
+adj:masculine,plural	1	accogliticci	accogliticcio	adj	*
+adj:feminine	1	festivaliera	festivaliero	adj	*
+adj:feminine	1	ardita	ardito	adj	*
+adj:masculine,plural	1	codimozzi	codimozzo	adj	*
+adj:feminine,plural	1	pirroniane	pirroniano	adj	*
+adj:masculine,plural	1	malfussi	malfusso	adj	*
+adj:masculine,plural	1	mnemotecnici	mnemotecnico	adj	*
+adj:masculine,plural	1	capitolini	capitolino	adj	*
+adj:feminine,plural	1	labbrute	labbruto	adj	*
+adj:feminine,plural	1	coordinate	coordinato	adj	*
+adj:masculine,plural	1	giovannei	giovanneo	adj	*
+adj:plural	1	coincidenti	coincidente	adj	*
+adj:feminine,plural	1	testacee	testaceo	adj	*
+adj:masculine,plural	1	germani	germano	adj	*
+adj:feminine,plural	1	sacrificate	sacrificato	adj	*
+adj:masculine,plural	1	dalemiani	dalemiano	adj	*
+adj:feminine,plural	1	sperimentatissime	sperimentatissimo	adj	*
+adj:masculine,plural	1	disparitari	disparitario	adj	*
+adj:feminine	1	accorcita	accorcito	adj	*
+adj:masculine,plural	1	termocromatici	termocromatico	adj	*
+adj:feminine	1	pestosa	pestoso	adj	*
+adj:feminine	1	zirconica	zirconico	adj	*
+adj:feminine,plural	1	assolte	assolto	adj	*
+adj:feminine	1	bruciaticcia	bruciaticcio	adj	*
+adj:feminine,plural	1	valutative	valutativo	adj	*
+adj:feminine,plural	1	adonie	adonio	adj	*
+adj:feminine	1	munita	munito	adj	*
+adj:masculine,plural	1	slavi	slavo	adj	*
+adj:masculine,plural	1	terraformati	terraformato	adj	*
+adj:feminine	1	elettroacustica	elettroacustico	adj	*
+adj:masculine,plural	1	minerari	minerario	adj	*
+adj:masculine,plural	1	imbanditi	imbandito	adj	*
+adj:feminine	1	scollata	scollato	adj	*
+adj:feminine,plural	1	miopatiche	miopatico	adj	*
+adj:plural	1	estradabili	estradabile	adj	*
+adj:masculine,plural	1	scompigliati	scompigliato	adj	*
+adj:feminine	1	assopita	assopito	adj	*
+adj:masculine,plural	1	pirolegnosi	pirolegnoso	adj	*
+adj:feminine,plural	1	emicraniche	emicranico	adj	*
+adj:feminine	1	dilettosa	dilettoso	adj	*
+adj:feminine,plural	1	ingentilite	ingentilito	adj	*
+adj:feminine,plural	1	otoiatriche	otoiatrico	adj	*
+adj:feminine,plural	1	eterogenee	eterogeneo	adj	*
+adj:feminine	1	autobilanciata	autobilanciato	adj	*
+adj:masculine,plural	1	rebussistici	rebussistico	adj	*
+adj:feminine,plural	1	stantie	stantio	adj	*
+adj:feminine,plural	1	tortuose	tortuoso	adj	*
+adj:masculine,plural	1	precipitativi	precipitativo	adj	*
+adj:feminine	1	dislessica	dislessico	adj	*
+adj:feminine,plural	1	suburbane	suburbano	adj	*
+adj:masculine,plural	1	navigatori	navigatorio	adj	*
+adj:feminine	1	volitiva	volitivo	adj	*
+adj:feminine,plural	1	superdimensionate	superdimensionato	adj	*
+adj:masculine,plural	1	fusellati	fusellato	adj	*
+adj:feminine	1	odontoblastica	odontoblastico	adj	*
+adj:feminine	1	riunificatrice	riunificatore	adj	*
+adj:feminine	1	glottologica	glottologico	adj	*
+adj:masculine,plural	1	emulsivi	emulsivo	adj	*
+adj:feminine	1	citoscheletrica	citoscheletrico	adj	*
+adj:feminine,plural	1	quadrilinee	quadrilineo	adj	*
+adj:feminine,plural	1	radiestesiche	radiestesico	adj	*
+adj:feminine,plural	1	opposte	opposto	adj	*
+adj:feminine	1	buggata	buggato	adj	*
+adj:masculine,plural	1	eterometaboli	eterometabolo	adj	*
+adj:feminine,plural	1	neuromotorie	neuromotorio	adj	*
+adj:masculine,plural	1	cramponati	cramponato	adj	*
+adj:feminine	1	oligoemica	oligoemico	adj	*
+adj:feminine	1	pericolosa	pericoloso	adj	*
+adj:feminine	1	notaiesca	notaiesco	adj	*
+adj:feminine,plural	1	mineralogiche	mineralogico	adj	*
+adj:masculine,plural	1	performativi	performativo	adj	*
+adj:masculine,plural	1	semisintetici	semisintetico	adj	*
+adj:masculine,plural	1	lattiferi	lattifero	adj	*
+adj:masculine,plural	1	preferiti	preferito	adj	*
+adj:feminine	1	tramortita	tramortito	adj	*
+adj:feminine	1	amigdaliana	amigdaliano	adj	*
+adj:plural	1	motivazionali	motivazionale	adj	*
+adj:feminine	1	termogalvanomagnetica	termogalvanomagnetico	adj	*
+adj:feminine	1	anguinea	anguineo	adj	*
+adj:feminine,plural	1	ultramontane	ultramontano	adj	*
+adj:masculine,plural	1	vassalloni	vassallone	adj	*
+adj:feminine,plural	1	vincolate	vincolato	adj	*
+adj:feminine,plural	1	romite	romito	adj	*
+adj:masculine,plural	1	fotogeneratori	fotogeneratore	adj	*
+adj:feminine	1	mangiaticcia	mangiaticcio	adj	*
+adj:masculine,plural	1	neotestamentari	neotestamentario	adj	*
+adj:feminine,plural	1	inibitorie	inibitorio	adj	*
+adj:feminine,plural	1	invernenghe	invernengo	adj	*

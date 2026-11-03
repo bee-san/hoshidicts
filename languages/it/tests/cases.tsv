@@ -1,0 +1,18 @@
+# Source: written for this pack (GPL-3.0-or-later), no third-party data. Expected traces are this pack's transform ids, newest first.
+# Every optional processor is on: these rows need the optional addFinalAccent (setting missingAccents), for text written without a final accent or with an apostrophe for it.
+# category	valid	source	term	rule	reasons
+accent	1	citta	città	*	
+accent	1	perche	perché	*	
+accent	1	piu	più	*	
+accent	1	cosi	così	*	
+accent	1	verita	verità	*	
+accent	1	puo	potere	v	present-lui
+accent	1	e	essere	v	present-lui
+accent	1	parlo	parlare	v	preterite-lui
+accent	1	finira	finire	v	future-lui
+accent	1	sara	essere	v	future-lui
+accent	1	fara	fare	v	future-lui
+accent	1	dara	dare	v	future-lui
+accent	1	torno	tornare	v	preterite-lui
+accent	1	partira	partire	v	future-lui
+accent	1	ando	andare	v	preterite-lui
