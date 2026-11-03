@@ -34,5 +34,9 @@
   ["ავიდა", "", "v", "v", 0, ["went up"], 33, ""],
   ["მივდივარ", "", "non-lemma", "", 0, [["მიდის", ["first-person singular present"]]], 0, ""],
   ["ვარ", "", "non-lemma", "", 0, [["არის", ["first-person singular present indicative"]]], 0, ""],
-  ["არის", "", "v", "v", 0, ["to be"], 34, ""]
+  ["არის", "", "v", "v", 0, ["to be"], 34, ""],
+  ["ფანჯარა", "", "n", "", 0, ["window"], 35, ""],
+  ["ხატავს", "", "v", "", 0, ["to draw, to paint"], 36, ""],
+  ["ლამაზი", "", "adj", "", 0, ["beautiful"], 37, ""],
+  ["მას", "", "pron", "", 0, ["him, her, it (dative)"], 38, ""]
 ]
