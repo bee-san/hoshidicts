@@ -382,11 +382,13 @@ Checks:
 - `tools/check-yomitan.mjs`: no `sources/yomitan.json`, so no rules to
   compare; `decapitalize` and `capitalizeFirstLetter` agree with Yomitan's on
   2,165 inputs each, with no listed difference.
-- Mutation checks (section 14 step 7): 48 edits of a scratch copy, each
-  removing or loosening one stem constraint, exclusion, word list part,
-  processor or scanning setting (every one of the Rule provenance list, the
-  NFKC, diaeresis and case processors, the hyphen, `searchResolution`),
-  regenerated and run through the conformance test: all 48 fail it.
+- Mutation checks (section 14 step 7, `sources/mutations.py <build dir>
+  <scratch dir>`): 48 edits of a scratch copy, each removing or loosening one
+  stem constraint, exclusion, word-list part, processor or scanning setting
+  (every one of the Rule provenance list, the NFKC, diaeresis and case
+  processors, the hyphen, `searchResolution`), regenerated with its own
+  `tests/classes.json` and run through the conformance test: all 48 fail
+  it.
 - Hachidori (`test/chrome-language-pack.mjs` in Chrome 152, feat/multi-language
   803f7b6e with this pack in `third_party/hoshidicts` on #58's engine and the
   runtimes rebuilt from it, wty-pt-en): 16 / 16 checks pass. Settings adds
