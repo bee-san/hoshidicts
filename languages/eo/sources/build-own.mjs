@@ -220,7 +220,10 @@ whole('elision', "l'", 'la');
 // of the word as written ranks first on processor steps (docs/languages.md
 // 9.6): without this, Sinjorino at the start of a sentence would show
 // Sinjoro (the Lord), a form-of row of sinjoro, before sinjorino.
-const UPPER = '[\\p{Lu}]';
+// The capital letters of the pack's letter class (Latin script): A-Z, the
+// Latin-1 capitals and the capitals of Latin Extended-A and -B, which
+// include Ĉ Ĝ Ĥ Ĵ Ŝ Ŭ. language.json defines it as the class `upper`.
+const UPPER = '{upper}';
 
 const ENDING_CONDITION = {o: 'n', a: 'adj', e: 'adv', i: 'v'};
 
