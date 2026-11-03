@@ -64,6 +64,12 @@ function cross(prefixes, suffixes, {min = 2, out = V_OUT, into = V_IN, extra = {
     if (min > 0) { rule.stemMinLength = min; }
     return rule;
 }
+// Several suffix rules with the same constraints, as one cross product with
+// an empty prefix (one JSON rule instead of one per consonant).
+function suffixes(pairs, {min = 2, out = [], into = [], extra = {}} = {}) {
+    return cross([['', '']], pairs, {min, out, into, extra});
+}
+
 // The hollow-verb stem change: the last و or ي before the final consonant
 // becomes ا (يقول -> قال, يستطيع -> استطاع).
 // The hollow-verb change: the و or ي right before the last consonant becomes
@@ -110,7 +116,7 @@ transform('al', 'الـ (the)', 'The definite article الـ (al-, "the"): ال�
     prefix('ال', '', {out: ['n']}),
 ]);
 transform('sa', 'سـ (will)', 'The future prefix سَ (sa-, "will") before a present-tense verb: سيكتب is سـ + يكتب, سأذهب is سـ + أذهب.', [
-    prefix('س', '', {min: 3, out: ['v', 'vf'], extra: {stemStartsWith: '[يتنأ]'}}),
+    prefix('س', '', {min: 3, out: ['v', 'vf'], extra: {stemStartsWith: '[يتنأآ]'}}),
 ]);
 
 // ------------------------------------------------------------ pronoun suffixes
@@ -139,11 +145,12 @@ const PRONOUNS = [
     ['p3fp', 'ـهن (their, them f.)', 'هن', 'their, them (feminine plural)', 'بيتهن is بيت + ـهن'],
 ];
 for (const [id, name, p, gloss, example] of PRONOUNS) {
+    // A pronoun also follows the future prefix: سيكتبونه is سـ + يكتبون + ـه.
     const rules = [
-        suffix(p, '', {extra: p === 'ي' ? {...NOT_AL, stemNotEndsWith: '[ي]'} : NOT_AL}),
+        suffix(p, '', {into: V_IN, extra: p === 'ي' ? {...NOT_AL, stemNotEndsWith: '[ي]'} : NOT_AL}),
         suffix('ؤ' + p, 'ء', {extra: NOT_AL}), suffix('ئ' + p, 'ء', {extra: NOT_AL}),
         suffix('ؤ' + p, 'أ', {extra: NOT_AL}), suffix('ئ' + p, 'أ', {extra: NOT_AL}),
-        suffix('ا' + p, 'ى', {extra: NOT_AL}),
+        suffix('ا' + p, 'ى', {into: V_IN, extra: NOT_AL}),
     ];
     if (p !== 'ني') {
         // A noun: the feminine rule does not read مدرسته as مدرس, nor رأيته
@@ -152,9 +159,10 @@ for (const [id, name, p, gloss, example] of PRONOUNS) {
     }
     if (p !== 'ي') {
         // Verbs: only an object pronoun.
-        rules.push(suffix('و' + p, 'وا', {min: 3, out: ['v', 'vf']}));
-        rules.push(suffix('تمو' + p, 'تم', {out: ['v', 'vf']}));
-        rules.push(suffix('آ' + p, 'أى', {min: 1, out: V_OUT}));
+        rules.push(suffix('و' + p, 'وا', {min: 3, into: V_IN, out: ['v', 'vf']}));
+        // ـتمو is "you (pl.)", which takes no object "you" (علمتموك is not a word).
+        if (!['ك', 'كما', 'كم', 'كن'].includes(p)) { rules.push(suffix('تمو' + p, 'تم', {into: V_IN, out: ['v', 'vf']})); }
+        rules.push(suffix('آ' + p, 'أى', {min: 1, into: V_IN, out: V_OUT}));
         if (p !== 'ني') {
             rules.push(suffix('تي' + p, 'ت', {out: ['v', 'vf']}));
         }
@@ -206,7 +214,7 @@ transform('pluralMasc', 'plural (ـون)', 'The masculine sound plural ending ـ
     suffix('ئون', 'ء', {into: N_IN}),
 ]);
 transform('construct', 'construct (ـو)', 'The ending ـو of a masculine plural before the word it belongs to (معلمو المدرسة, "the school\'s teachers"), and of أبو and أخو.', [
-    suffix('و', '', {extra: NOT_AL}),
+    suffix('و', '', {out: ['n'], extra: NOT_AL}),
 ]);
 transform('pluralFem', 'plural (ـات)', 'The feminine sound plural ending ـات: معلمات is معلمة in the plural, سيارات of سيارة, امتحانات of امتحان, مستشفيات of مستشفى, سنوات of سنة, سماوات of سماء, منشآت of منشأة.', [
     suffix('ات', 'ة', {into: N_IN}),
@@ -243,11 +251,7 @@ transform('pluralFem', 'plural (ـات)', 'The feminine sound plural ending ـا
         suffix('', '', {min: 4, into: N_IN, out: ['n'], extra: {stemChange: {from: ['وا'], to: 'ا', occurrence: 'last', between: STEM, betweenMinLength: 2}}}),
         suffix('', 'ة', {min: 4, into: N_IN, out: ['n'], extra: {stemChange: {from: ['وا'], to: 'ا', occurrence: 'last', between: STEM, betweenMinLength: 2}}}),
         // فعائل -> فعيلة, فعالة, فعيل: رسائل, حقائق, نتائج, وسائل.
-        ...CONS.flatMap((c) => [
-            suffix('ائ' + c, 'ي' + c + 'ة', {into: N_IN, out: ['n']}),
-            suffix('ائ' + c, 'ا' + c + 'ة', {into: N_IN, out: ['n']}),
-            suffix('ائ' + c, 'ي' + c, {into: N_IN, out: ['n']}),
-        ]),
+        suffixes(CONS.flatMap((c) => [['ائ' + c, 'ي' + c + 'ة'], ['ائ' + c, 'ا' + c + 'ة'], ['ائ' + c, 'ي' + c]]), {into: N_IN, out: ['n']}),
         // تفاعيل -> تفعيل: تفاصيل, تقارير, تكاليف.
         cross([['ت', 'ت']], [['', '']], {min: 4, into: N_IN, out: ['n'], extra: {stemChange: DROP_ALIF(3)}}),
         // أفعلة -> فعال: أسلحة, أجهزة, أطعمة.
@@ -287,9 +291,9 @@ function pastRules(ending, {defectiveA = [], defectiveY = [], defectiveI = [], h
         // Hollow with a final hamza: أضأت -> أضاء, استأت -> استاء.
         rules.push(suffix('أ' + ending, 'اء', {min: 1, into: V_IN, out: V_OUT}));
         // Hollow: the ا of the dictionary form returns before the last consonant.
-        for (const c of RADICALS) { rules.push(suffix(c + ending, 'ا' + c, {min: 1, into: V_IN, out: V_OUT})); }
+        rules.push(suffixes(RADICALS.map((c) => [c + ending, 'ا' + c]), {min: 1, into: V_IN, out: V_OUT}));
         // Doubled: both consonants are written.
-        for (const c of RADICALS) { rules.push(suffix(c + c + ending, c, {min: 1, into: V_IN, out: V_OUT})); }
+        rules.push(suffixes(RADICALS.map((c) => [c + c + ending, c]), {min: 1, into: V_IN, out: V_OUT}));
     }
     return rules;
 }
@@ -347,14 +351,8 @@ const PASSIVE_ENDINGS = [['', 'he'], ['ت', 'she'], ['تا', 'they f. two'], ['�
     ['تم', 'you pl.'], ['تما', 'you two'], ['تن', 'you f. pl.'], ['نا', 'we'], ['ن', 'they f.']];
 {
     const rules = [];
-    for (const [ending] of PASSIVE_ENDINGS) {
-        for (const c of RADICALS) {
-            // Hollow: قيل -> قال, أقيم -> أقام, اختير -> اختار.
-            rules.push(suffix('ي' + c + ending, 'ا' + c, {min: 1, into: V_IN, out: V_OUT}));
-            // Hamza in the middle: سئل -> سأل.
-            rules.push(suffix('ئ' + c + ending, 'أ' + c, {min: 1, into: V_IN, out: V_OUT}));
-        }
-    }
+    // Hollow: قيل -> قال, أقيم -> أقام, اختير -> اختار; hamza in the middle: سئل -> سأل.
+    rules.push(suffixes(PASSIVE_ENDINGS.flatMap(([ending]) => RADICALS.flatMap((c) => [['ي' + c + ending, 'ا' + c], ['ئ' + c + ending, 'أ' + c]])), {min: 1, into: V_IN, out: V_OUT}));
     // A final hamza on ي: أنبئ -> أنبأ, أنبئت -> أنبأ; with a hollow verb: أضيئت -> أضاء.
     for (const [ending] of PASSIVE_ENDINGS) {
         rules.push(suffix('ئ' + ending, 'أ', {into: V_IN, out: V_OUT}));
@@ -510,10 +508,10 @@ function imperativeRules(ending, {defective = [], others = [], hollowShort = fal
     if (defective.length > 0) { rules.push(cross(FORM_I, defective)); }
     if (assimilated) { rules.push(cross(ASSIMILATED, [[ending, '']], {min: 0, extra: {stemCharacters: '[]'}})); }
     if (hollowShort) {
-        for (const c of RADICALS) { rules.push(suffix(c + ending, 'ا' + c, {min: 1, into: V_IN, out: V_OUT})); }
+        rules.push(suffixes(RADICALS.map((c) => [c + ending, 'ا' + c]), {min: 1, into: V_IN, out: V_OUT}));
         rules.push(cross(FORM_I, RADICALS.map((c) => [c + c + ending, c]), {min: 1}));
     } else {
-        for (const [i, d] of hollow(ending)) { rules.push(suffix(i, d, {min: 1, into: V_IN, out: V_OUT})); }
+        rules.push(suffixes(hollow(ending), {min: 1, into: V_IN, out: V_OUT}));
     }
     for (const [i, d, m = 3] of others) { rules.push(suffix(i, d, {min: m, into: V_IN, out: V_OUT})); }
     return rules;

@@ -432,3 +432,6 @@ negative assimilated	0	قط	وقط	v	*
 negative assimilated	0	كم	وكم	v	*
 negative assimilated	0	من	ومن	v	*
 negative li	0	لليل	ليل	*	li
+future	1	سيكتبوه	كتب	v	subjunctiveThey|p3ms|sa
+future	1	سيكتبونه	كتب	v	presentThey|p3ms|sa
+future	1	سنراه	رأى	v	*

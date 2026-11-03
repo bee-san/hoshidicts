@@ -1,0 +1,28 @@
+# The negatives of Yomitan's Arabic test (tests/yomitan.tsv as tools/port-yomitan-tests.mjs writes it) that the final rules do not reject (sources/build-final.mjs; README.md, Known gaps).
+# category	valid	source	term	rule	reasons
+perfect verb invalid attached direct object pronouns	0	علمناني	علم	pv	*
+perfect verb invalid attached direct object pronouns	0	علمنانا	علم	pv	*
+perfect verb invalid attached direct object pronouns	0	علمتماك	علم	pv	*
+perfect verb invalid attached direct object pronouns	0	علمتماكما	علم	pv	*
+perfect verb invalid attached direct object pronouns	0	علمتماكم	علم	pv	*
+perfect verb invalid attached direct object pronouns	0	علمتماكن	علم	pv	*
+perfect verb invalid attached direct object pronouns	0	علمتنك	علم	pv	*
+perfect verb invalid attached direct object pronouns	0	علمتنكما	علم	pv	*
+perfect verb invalid attached direct object pronouns	0	علمتنكم	علم	pv	*
+perfect verb invalid attached direct object pronouns	0	علمتنكن	علم	pv	*
+imperfect verb invalid attached direct object pronouns	0	أضربنا	ضرب	iv	*
+imperfect verb invalid attached direct object pronouns	0	أضربني	ضرب	iv	*
+imperfect verb invalid attached direct object pronouns	0	نضربني	ضرب	iv	*
+imperfect verb invalid attached direct object pronouns	0	تضربينك	ضرب	iv	*
+imperfect verb invalid attached direct object pronouns	0	تضربونك	ضرب	iv	*
+imperfect verb invalid attached direct object pronouns	0	تضربنك	ضرب	iv	*
+imperfect verb invalid attached direct object pronouns	0	تضربنكما	ضرب	iv	*
+imperfect verb invalid attached direct object pronouns	0	تضربنكم	ضرب	iv	*
+imperfect verb invalid attached direct object pronouns	0	تضربنكن	ضرب	iv	*
+imperfect verb invalid chains	0	ليجلسان	جلس	iv	*
+imperfect verb invalid chains	0	ليجلسون	جلس	iv	*
+imperfect verb invalid chains	0	لتجلسين	جلس	iv	*
+command verb invalid attached direct object pronouns	0	ادرسك	درس	cv	*
+command verb invalid attached direct object pronouns	0	ادرسكما	درس	cv	*
+command verb invalid attached direct object pronouns	0	ادرسكم	درس	cv	*
+command verb invalid attached direct object pronouns	0	ادرسكن	درس	cv	*

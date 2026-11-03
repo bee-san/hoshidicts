@@ -137,66 +137,24 @@
         ]
       },
       {
-        "id": "addHamzaToFirstAlif",
-        "name": "Add hamza or madda to a first alif",
+        "id": "addHamza",
+        "name": "Add hamza or madda to an alif that starts a word, or follows ال or a one-letter proclitic",
         "variants": [
           [
             {
-              "pattern": "^ا(?!ل[ء-ي]{2})",
-              "replace": "أ"
-            }
-          ],
-          [
-            {
-              "pattern": "^ا(?!ل[ء-ي]{2})",
-              "replace": "إ"
-            }
-          ],
-          [
-            {
-              "pattern": "^ا(?!ل[ء-ي]{2})",
-              "replace": "آ"
-            }
-          ]
-        ]
-      },
-      {
-        "id": "hamzaAfterPrefix",
-        "name": "Add hamza to an alif after ال or a one-letter prefix",
-        "variants": [
-          [
-            {
-              "pattern": "^([وف]?[بك]?ال|[وف]?لل)ا",
+              "pattern": "^([وف]?[بك]?ال|[وف]?لل|[وف]?[بكل]|[وف]|)ا(?!ل[ء-ي]{2})",
               "replace": "$1أ"
             }
           ],
           [
             {
-              "pattern": "^([وف]?[بك]?ال|[وف]?لل)ا",
+              "pattern": "^([وف]?[بك]?ال|[وف]?لل|[وف]?[بكل]|[وف]|)ا(?!ل[ء-ي]{2})",
               "replace": "$1إ"
             }
           ],
           [
             {
-              "pattern": "^([وف]?[بك]?ال|[وف]?لل)ا",
-              "replace": "$1آ"
-            }
-          ],
-          [
-            {
-              "pattern": "^([وف]?[بكل]|[وف])ا(?!ل[ء-ي]{2})",
-              "replace": "$1أ"
-            }
-          ],
-          [
-            {
-              "pattern": "^([وف]?[بكل]|[وف])ا(?!ل[ء-ي]{2})",
-              "replace": "$1إ"
-            }
-          ],
-          [
-            {
-              "pattern": "^([وف]?[بكل]|[وف])ا(?!ل[ء-ي]{2})",
+              "pattern": "^([وف]?[بك]?ال|[وف]?لل|[وف]?[بكل]|[وف]|)ا(?!ل[ء-ي]{2})",
               "replace": "$1آ"
             }
           ]
