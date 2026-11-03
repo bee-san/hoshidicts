@@ -50,5 +50,7 @@
   ["بيوت", "", "non-lemma", "n", 0, [["بيت", ["plural"]]], 49, ""],
   ["أبواب", "", "non-lemma", "n", 0, [["باب", ["plural"]]], 50, ""],
   ["الكبيرة", "", "non-lemma", "", 0, [["كبير", ["definite feminine singular"]]], 51, ""],
-  ["رجال", "", "non-lemma", "n", 0, [["رجل", ["plural"]]], 52, ""]
+  ["رجال", "", "non-lemma", "n", 0, [["رجل", ["plural"]]], 52, ""],
+  ["كبيرة", "", "non-lemma", "", 0, [["كبير", ["feminine singular"]]], 53, ""],
+  ["جميلة", "", "non-lemma", "", 0, [["جميل", ["feminine singular"]]], 54, ""]
 ]
