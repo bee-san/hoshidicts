@@ -54,19 +54,28 @@ const LETTERS = '{mkhedruli}';
 // ending it reads (-ა → -ება) never applies to that output. dat, gen, ins and adv are
 // intermediate states: a case form whose postposition or extension was
 // removed, which only the rules of that case take.
+//
+// After Yomitan's rules were read (step 3), the conditions both files have
+// (v, n, adj, adv) were given Yomitan's definitions, which
+// tools/merge-transforms.mjs requires to be equal: n became the union of np
+// and ns, the adverbial state was renamed advc (adv is Yomitan's adverb), and
+// verb outputs carry v beside their own state. No deinflection changed.
 const conditions = {
-    n: {name: 'Noun', isDictionaryForm: true},
+    v: {name: 'Verb', isDictionaryForm: true},
+    n: {name: 'Noun', isDictionaryForm: true, subConditions: ['np', 'ns']},
+    np: {name: 'Noun plural', isDictionaryForm: true},
+    ns: {name: 'Noun singular', isDictionaryForm: true},
     adj: {name: 'Adjective', isDictionaryForm: true},
+    adv: {name: 'Adverb', isDictionaryForm: true},
     nom: {name: 'Noun or adjective', isDictionaryForm: true, subConditions: ['n', 'adj']},
     pron: {name: 'Pronoun', isDictionaryForm: true},
     vs: {name: 'Verb whose ending was made third person singular', isDictionaryForm: false},
     vp: {name: 'Verb whose person prefix was made third person', isDictionaryForm: false},
     vf: {name: 'Verb in the present, made from the future', isDictionaryForm: false},
-    v: {name: 'Verb', isDictionaryForm: true, subConditions: ['vs', 'vp', 'vf']},
     dat: {name: 'Dative form before a postposition', isDictionaryForm: false},
     gen: {name: 'Genitive form before a postposition', isDictionaryForm: false},
     ins: {name: 'Instrumental form before a postposition', isDictionaryForm: false},
-    adv: {name: 'Adverbial form before a postposition', isDictionaryForm: false},
+    advc: {name: 'Adverbial form before a postposition', isDictionaryForm: false},
 };
 
 // --- Helpers ------------------------------------------------------------------
@@ -137,8 +146,8 @@ transform('ins', 'instrumental', 'Instrumental case: -ით (სახლით
     suffix('თ', '', ['ins'], NOM, {stemMinLength: 2, stemEndsWith: '[ოუ]'}),
 ]);
 transform('adv', 'adverbial', 'Adverbial case: -ად (სახლად → სახლი, კარგად → კარგი, ქვეყნად → ქვეყანა); -დ after an -ე, -ო or -უ stem (მეფედ → მეფე).', [
-    ...reducedStemRules('ად', ['adv'], NOM).filter((rule) => rule.deinflected !== 'ე'),
-    suffix('დ', '', ['adv'], NOM, {stemMinLength: 2, stemEndsWith: '[ეოუ]'}),
+    ...reducedStemRules('ად', ['advc'], NOM).filter((rule) => rule.deinflected !== 'ე'),
+    suffix('დ', '', ['advc'], NOM, {stemMinLength: 2, stemEndsWith: '[ეოუ]'}),
 ]);
 transform('voc', 'vocative', 'Vocative case: -ო after a consonant stem (კაცო → კაცი), -ვ or -ო after a vowel stem (დედავ → დედა, ძმაო → ძმა).', [
     suffix('ო', 'ი', [], NOM, {stemMinLength: 2, stemEndsWith: CONS}),
@@ -162,7 +171,7 @@ transform('pl-archaic', 'archaic plural', 'Archaic (literary) plural: nominative
 ]);
 
 transform('sync', 'syncope', 'The vowel a stem loses before an ending that starts with a vowel, put back (წყლის → წყალის, ქვეყნები → ქვეყანები, სოფლიდან → სოფელიდან).', [
-    ...[['ის', ['gen']], ['ით', ['ins']], ['ად', ['adv']], ['ები', ['nom']]].flatMap(([ending, condition]) =>
+    ...[['ის', ['gen']], ['ით', ['ins']], ['ად', ['advc']], ['ები', ['nom']]].flatMap(([ending, condition]) =>
         SYNCOPE.map(([reduced, full]) => suffix(reduced + ending, full + ending, condition, condition, {stemMinLength: 1, stemEndsWith: CONS}))),
 ]);
 
@@ -171,8 +180,8 @@ transform('ext', '-ა extension', 'The vowel -ა added to a case ending in car
     suffix('სა', 'ს', ['dat'], ['dat'], {stemMinLength: 2}),
     suffix('ისა', 'ის', ['gen'], ['gen'], {stemMinLength: 1}),
     suffix('ითა', 'ით', ['ins'], ['ins'], {stemMinLength: 1}),
-    suffix('ადა', 'ად', ['adv'], ['adv'], {stemMinLength: 1}),
-    suffix('და', 'დ', ['adv'], ['adv'], {stemMinLength: 2, stemEndsWith: '[ეოუ]'}),
+    suffix('ადა', 'ად', ['advc'], ['advc'], {stemMinLength: 1}),
+    suffix('და', 'დ', ['advc'], ['advc'], {stemMinLength: 2, stemEndsWith: '[ეოუ]'}),
 ]);
 
 // --- Postpositions written together with a case form -------------------------
@@ -215,7 +224,7 @@ transform('pp-urt', '-ურთ (together with)', 'The literary postposition -�
     suffix('ურთ', '', [], ['ins'], {stemMinLength: 2, stemEndsWith: '[თ]'}),
 ]);
 transform('pp-mde', '-მდე (up to)', 'The postposition -მდე "up to, until", on the adverbial, whose -დ it replaces (სახლამდე → სახლად, დედამდე → დედად).', [
-    suffix('მდე', 'დ', [], ['adv'], {stemMinLength: 2, stemEndsWith: VSTEM}),
+    suffix('მდე', 'დ', [], ['advc'], {stemMinLength: 2, stemEndsWith: VSTEM}),
 ]);
 
 // --- Adjectives: superlative, moderative, attributive form --------------------
@@ -297,9 +306,9 @@ transform('pron', 'pronoun case', 'A case form of a personal, demonstrative or i
 const PREVERBS = ['ა', 'ამო', 'აღ', 'გა', 'გადა', 'გადმო', 'გამო', 'გარდა', 'და', 'მი', 'მიმო', 'მო', 'შე', 'შემო', 'ჩა', 'ჩამო', 'წა', 'წამო', 'წარ'];
 const PV = ['', ...PREVERBS];
 const VIN = ['vp'];
-const VOUT = ['vs'];
+const VOUT = ['v', 'vs'];
 const VF_IN = ['vs', 'vp'];
-const VF = ['vf'];
+const VF = ['v', 'vf'];
 // The third person singular of an active verb ends in a thematic suffix and
 // -ს, or in a root consonant and -ს.
 const ACTIVE = ['ებს', 'ავს', 'ობს', 'ამს', 'ს', 'ის'];
@@ -402,7 +411,7 @@ transform('perf-subj', 'perfect subjunctive', 'Perfect subjunctive, third person
 // have hidden"); the participle then gives the future.
 const PARTICIPLE_ENDINGS = ['ვარ', 'ხარ', 'ა', 'ვართ', 'ხართ', 'ან', 'იყავი', 'იყო', 'იყავით', 'იყვნენ', 'იყოს', 'იყოთ', 'იყონ'];
 transform('perf-pass', 'perfect, intransitive', 'Perfect series of an intransitive verb: the past participle with the copula (დამალულა → დამალული, გაწითლებულხარ → გაწითლებული).', [
-    ...['ულ', 'ილ'].flatMap((p) => PARTICIPLE_ENDINGS.map((e) => suffix(p + e, p + 'ი', [], ['vs', 'adj'], {stemMinLength: 2}))),
+    ...['ულ', 'ილ'].flatMap((p) => PARTICIPLE_ENDINGS.map((e) => suffix(p + e, p + 'ი', [], ['v', 'vs', 'adj'], {stemMinLength: 2}))),
 ]);
 transform('ptcp-pass', 'past participle', 'The past participle of an intransitive verb made into its future (დამალული → დაიმალება, გაწითლებული → გაწითლდება).', [
     circumfix(PREVERBS.map((p) => [p, p + 'ი']), [['ული', 'ება']], ['vs', 'vp', 'adj'], VOUT, {stemMinLength: 2, stemEndsWith: CONS}),
@@ -411,17 +420,17 @@ transform('ptcp-pass', 'past participle', 'The past participle of an intransitiv
 
 // Person markers at the front of the verb, after any preverb.
 transform('subj-1', '1st person ვ-', 'The first-person subject marker ვ- (ვაკეთებ → აკეთებ, დავწერე → დაწერე), and before a verb with a third-person indirect object ს- or ჰ- (ვთხოვ → სთხოვ).', PV.flatMap((p) => [
-    prefix(p + 'ვ', p, ['vs'], ['vp'], {stemMinLength: 3}),
-    prefix(p + 'ვ', p + 'ს', ['vs'], ['vp'], {stemMinLength: 3, stemStartsWith: '[დთტძცწჭჩჯზ]'}),
-    prefix(p + 'ვ', p + 'ჰ', ['vs'], ['vp'], {stemMinLength: 3, stemStartsWith: '[გკქყპფ]'}),
+    prefix(p + 'ვ', p, ['vs'], ['v', 'vp'], {stemMinLength: 3}),
+    prefix(p + 'ვ', p + 'ს', ['vs'], ['v', 'vp'], {stemMinLength: 3, stemStartsWith: '[დთტძცწჭჩჯზ]'}),
+    prefix(p + 'ვ', p + 'ჰ', ['vs'], ['v', 'vp'], {stemMinLength: 3, stemStartsWith: '[გკქყპფ]'}),
 ]));
 function objectRules(marker, extra = {}) {
     return PV.flatMap((p) => [
-        prefix(p + marker, p, ['vs'], ['vp'], {stemMinLength: 3, ...(p === '' ? extra : {})}),
-        prefix(p + marker, p + 'ს', ['vs'], ['vp'], {stemMinLength: 3, stemStartsWith: '[დთტძცწჭჩჯზ]'}),
-        prefix(p + marker, p + 'ჰ', ['vs'], ['vp'], {stemMinLength: 3, stemStartsWith: '[გკქყპფ]'}),
-        prefix(p + marker + 'ი', p + 'უ', ['vs'], ['vp'], {stemMinLength: 2}),
-        prefix(p + marker + 'ი', p + 'ი', ['vs'], ['vp'], {stemMinLength: 2}),
+        prefix(p + marker, p, ['vs'], ['v', 'vp'], {stemMinLength: 3, ...(p === '' ? extra : {})}),
+        prefix(p + marker, p + 'ს', ['vs'], ['v', 'vp'], {stemMinLength: 3, stemStartsWith: '[დთტძცწჭჩჯზ]'}),
+        prefix(p + marker, p + 'ჰ', ['vs'], ['v', 'vp'], {stemMinLength: 3, stemStartsWith: '[გკქყპფ]'}),
+        prefix(p + marker + 'ი', p + 'უ', ['vs'], ['v', 'vp'], {stemMinLength: 2}),
+        prefix(p + marker + 'ი', p + 'ი', ['vs'], ['v', 'vp'], {stemMinLength: 2}),
     ]);
 }
 transform('obj-1', '1st person object მ-', 'A first-person singular object or experiencer, made third person (მხატავს → ხატავს, მიყვარს → უყვარს, მომწონს → მოსწონს, მყავს → ჰყავს).', objectRules('მ'));
