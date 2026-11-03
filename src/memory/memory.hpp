@@ -26,9 +26,16 @@ void unmap(mapped_file mapping);
 // Through WasmFS's OPFS backend every read of a read-only file is an
 // asynchronous round trip, so a 112 KB dict.zstd costs one instead of 56. The
 // file is opened read-only, as by the stream, and is not mapped: the classic
-// Emscripten FS writes a mapping back into its file when it is synced. False,
-// with `out` empty, when the path cannot be opened, is not a regular file, has
-// a size of 0 (procfs gives that for files with content) or a read fails.
+// Emscripten FS writes a mapping back into its file when it is synced. As the
+// stream does, it reads on to the end of the file, past the size it was given
+// if the file is longer. A path that stat does not show as a non-empty regular
+// file is not opened, so a FIFO's writer is not let go for nothing. Under
+// WasmFS (HOSHIDICTS_WASMFS), which keeps no FIFOs and whose read-only OPFS
+// descriptor reads a snapshot of the size fstat gives, the open and the fstat
+// decide alone and the read stops at that size: there each stat or read is a
+// round trip. False, with `out` empty, when the path is not a non-empty regular
+// file (procfs sizes files with content as 0), cannot be opened or a read
+// fails.
 bool read_file(const std::filesystem::path& path, std::string& out);
 
 // A file kept open for positional reads, for data that is read on demand

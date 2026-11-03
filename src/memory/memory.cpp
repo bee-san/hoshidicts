@@ -1,6 +1,7 @@
 #include "memory.hpp"
 
 #include <algorithm>
+#include <memory>
 #include <utility>
 
 #ifdef _WIN32
@@ -14,6 +15,47 @@
 #endif
 
 namespace memory {
+namespace {
+// Reads `size` bytes, the size the file is said to have, into `out`, then on
+// to the end of the file as a stream does: short of `size` if the file is
+// shorter, past it if it is longer (it grew, or its file system gives sizes
+// that are off), unless `exact` says the size is the content's. `read_some`
+// returns the bytes it read, 0 at the end of the file or -1 on an error. False,
+// with `out` empty, on an error.
+template <typename ReadSome>
+bool read_all(size_t size, bool exact, ReadSome read_some, std::string& out) {
+  out.resize(size);
+  size_t done = 0;
+  while (done < size) {
+    const int64_t n = read_some(out.data() + done, size - done);
+    if (n < 0) {
+      out.clear();
+      return false;
+    }
+    if (n == 0) {
+      out.resize(done);
+      return true;
+    }
+    done += static_cast<size_t>(n);
+  }
+  if (exact) {
+    return true;
+  }
+  char more[4096];
+  for (;;) {
+    const int64_t n = read_some(more, sizeof(more));
+    if (n < 0) {
+      out.clear();
+      return false;
+    }
+    if (n == 0) {
+      return true;
+    }
+    out.append(more, static_cast<size_t>(n));
+  }
+}
+}  // namespace
+
 mapped_file map_rd(const std::filesystem::path& path) {
 #ifdef _WIN32
   HANDLE file =
@@ -168,7 +210,16 @@ void unmap(mapped_file mapping) {
 
 bool read_file(const std::filesystem::path& path, std::string& out) {
   out.clear();
-  bool ok = false;
+#if defined(__EMSCRIPTEN__) && HOSHIDICTS_WASMFS
+  // WasmFS keeps no FIFOs (mknod refuses them, and its node backend does not
+  // show the host's), and a read-only descriptor of its OPFS backend reads the
+  // snapshot its open took, whose size fstat gives. Each stat or read through
+  // that backend is a round trip, so neither the stat before the open nor the
+  // read that finds the end is made there.
+  constexpr bool exact_sizes = true;
+#else
+  constexpr bool exact_sizes = false;
+#endif
 #ifdef _WIN32
   // The sharing of the std::ifstream it replaces (_SH_DENYNO): a writer may
   // hold the file open, and may open it while it is read.
@@ -177,28 +228,31 @@ bool read_file(const std::filesystem::path& path, std::string& out) {
   if (file == INVALID_HANDLE_VALUE) {
     return false;
   }
+  // Closed on every return, and when the buffer's allocation throws.
+  const std::unique_ptr<void, decltype(&CloseHandle)> closer(file, &CloseHandle);
   LARGE_INTEGER file_size;
-  if (GetFileType(file) == FILE_TYPE_DISK && GetFileSizeEx(file, &file_size) && file_size.QuadPart > 0 &&
-      static_cast<uint64_t>(file_size.QuadPart) <= out.max_size()) {
-    out.resize(static_cast<size_t>(file_size.QuadPart));
-    size_t done = 0;
-    ok = true;
-    while (done < out.size()) {
-      const auto chunk = static_cast<DWORD>(std::min<size_t>(out.size() - done, 1u << 30));
-      DWORD n = 0;
-      if (!ReadFile(file, out.data() + done, chunk, &n, nullptr)) {
-        ok = false;
-        break;
-      }
-      if (n == 0) {
-        break;
-      }
-      done += n;
-    }
-    out.resize(done);
+  if (GetFileType(file) != FILE_TYPE_DISK || !GetFileSizeEx(file, &file_size) || file_size.QuadPart <= 0 ||
+      static_cast<uint64_t>(file_size.QuadPart) > out.max_size()) {
+    return false;
   }
-  CloseHandle(file);
+  const auto read_some = [file](char* buf, size_t len) -> int64_t {
+    DWORD n = 0;
+    if (!ReadFile(file, buf, static_cast<DWORD>(std::min<size_t>(len, 1u << 30)), &n, nullptr)) {
+      return -1;
+    }
+    return n;
+  };
+  return read_all(static_cast<size_t>(file_size.QuadPart), exact_sizes, read_some, out);
 #else
+  if constexpr (!exact_sizes) {
+    // Only a non-empty regular file is opened. Opening a FIFO would let its
+    // writer's open return, and the stream's own open after this one would
+    // then wait for a writer that has gone.
+    struct stat path_st{};
+    if (::stat(path.c_str(), &path_st) != 0 || !S_ISREG(path_st.st_mode) || path_st.st_size <= 0) {
+      return false;
+    }
+  }
 #ifdef __EMSCRIPTEN__
   const int fd = ::open(path.c_str(), O_RDONLY);
 #else
@@ -207,34 +261,26 @@ bool read_file(const std::filesystem::path& path, std::string& out) {
   if (fd < 0) {
     return false;
   }
+  // Closed on every return, and when the buffer's allocation throws.
+  struct closer {
+    int fd;
+    ~closer() { ::close(fd); }
+  } const close_fd{fd};
   struct stat st{};
-  if (fstat(fd, &st) == 0 && S_ISREG(st.st_mode) && st.st_size > 0 &&
-      static_cast<uint64_t>(st.st_size) <= out.max_size()) {
-    out.resize(static_cast<size_t>(st.st_size));
-    size_t done = 0;
-    ok = true;
-    while (done < out.size()) {
-      const ssize_t n = ::read(fd, out.data() + done, out.size() - done);
-      if (n < 0 && errno == EINTR) {
-        continue;
+  if (fstat(fd, &st) != 0 || !S_ISREG(st.st_mode) || st.st_size <= 0 ||
+      static_cast<uint64_t>(st.st_size) > out.max_size()) {
+    return false;
+  }
+  const auto read_some = [fd](char* buf, size_t len) -> int64_t {
+    for (;;) {
+      const ssize_t n = ::read(fd, buf, len);
+      if (n >= 0 || errno != EINTR) {
+        return n;
       }
-      if (n < 0) {
-        ok = false;
-        break;
-      }
-      if (n == 0) {
-        break;
-      }
-      done += static_cast<size_t>(n);
     }
-    out.resize(done);
-  }
-  ::close(fd);
+  };
+  return read_all(static_cast<size_t>(st.st_size), exact_sizes, read_some, out);
 #endif
-  if (!ok) {
-    out.clear();
-  }
-  return ok;
 }
 
 file_reader::~file_reader() { close(); }

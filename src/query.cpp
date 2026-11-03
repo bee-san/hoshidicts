@@ -64,11 +64,15 @@ constexpr size_t media_probe_bytes = sizeof(uint16_t) + 256 + sizeof(uint32_t);
 // Reads a whole file as std::ifstream(path, mode) and an istreambuf_iterator
 // would, but a non-empty regular file with one read (memory::read_file)
 // instead of one per stream buffer: through WasmFS's OPFS backend each is an
-// asynchronous round trip. Every other path, and a read that fails, is left to
-// the stream, so what it gives is unchanged, down to libstdc++'s exception for
-// a directory; so is a Windows text-mode read, which turns CRLF into LF. False
-// when the stream cannot open the file, with `out` empty.
+// asynchronous round trip. Every other path is left to the stream, so what it
+// gives is unchanged, down to libstdc++'s exception for a directory; so is a
+// Windows text-mode read, which turns CRLF into LF. When the one read fails,
+// the stream reads the file again: an error that happens again ends it as it
+// ends the stream (libstdc++ throws, libc++ stops there), and only one that
+// does not lets the add read what the stream alone would have refused. False,
+// with `out` empty, when the stream cannot open the file.
 bool read_whole(const std::filesystem::path& path, std::string& out, std::ios::openmode mode) {
+  out.clear();
 #ifdef _WIN32
   const bool raw = (mode & std::ios::binary) != 0;
 #else

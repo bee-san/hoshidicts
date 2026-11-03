@@ -370,11 +370,19 @@ if(HOSHIDICTS_TESTS)
     # index.json, dict.zstd and styles.css in every state, against the oracle.
     add_executable(open-dict-files-test tests/open_dict_files_test.cpp)
     target_include_directories(open-dict-files-test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/tests)
-    target_link_libraries(open-dict-files-test PRIVATE hoshidicts-legacy hoshidicts)
+    target_link_libraries(open-dict-files-test PRIVATE hoshidicts-legacy hoshidicts ${CMAKE_DL_LIBS})
     if(MSVC)
         target_compile_options(open-dict-files-test PRIVATE /utf-8)
     endif()
     add_test(NAME open-dict-files COMMAND open-dict-files-test)
+    # The same files while their reads fail, are interrupted, come short or
+    # meet a file that changes size, through an LD_PRELOAD shim (Linux only).
+    if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+        add_library(read-fault-shim MODULE tests/read_fault_shim.c)
+        target_link_libraries(read-fault-shim PRIVATE ${CMAKE_DL_LIBS})
+        add_test(NAME open-dict-reads COMMAND open-dict-files-test --faults)
+        set_tests_properties(open-dict-reads PROPERTIES ENVIRONMENT "LD_PRELOAD=$<TARGET_FILE:read-fault-shim>")
+    endif()
 
     add_executable(paged-hash-test tests/paged_hash_test.cpp)
     target_link_libraries(paged-hash-test PRIVATE hoshidicts)
