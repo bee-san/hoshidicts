@@ -834,7 +834,7 @@
       "name": "-ujo",
       "description": "Suffix which turns a descriptive word into a box or container for that specific type of thing\nfrida: cold\nfridujo: a refrigerator",
       "rules": [
-        {"type": "suffix", "inflected": "ujo", "deinflected": "a", "conditionsIn": [], "conditionsOut": ["adj"]}
+        {"type": "suffix", "inflected": "ujo", "deinflected": "a", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "[^ ]"}
       ],
       "source": "yomitan"
     },
@@ -843,7 +843,7 @@
       "name": "-ujo",
       "description": "Suffix which turns an action into a box or container for that specific type of activity\nlavi: to wash\nlavujo: a sink",
       "rules": [
-        {"type": "suffix", "inflected": "ujo", "deinflected": "i", "conditionsIn": [], "conditionsOut": ["v"]}
+        {"type": "suffix", "inflected": "ujo", "deinflected": "i", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ ]"}
       ],
       "source": "yomitan"
     },
@@ -852,7 +852,7 @@
       "name": "kun-",
       "description": "Prefix meaning to do the action together with other people\nlabori: to work\nkunlabori: to collaborate",
       "rules": [
-        {"type": "prefix", "inflected": "kun", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "kun", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "[^ ]"}
       ],
       "source": "yomitan"
     },
@@ -861,7 +861,7 @@
       "name": "ekster-",
       "description": "Prefix meaning \"outside of\"\nlando: country\neksterlando: foreign country",
       "rules": [
-        {"type": "prefix", "inflected": "ekster", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "ekster", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "[^ ]"}
       ],
       "source": "yomitan"
     },
@@ -870,7 +870,7 @@
       "name": "ek-",
       "description": "Prefix meaning to begin the action\nkanti: to sing\nekkanti: to begin to sing",
       "rules": [
-        {"type": "prefix", "inflected": "ek", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "ek", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "[^ ]"}
       ],
       "source": "yomitan"
     },
@@ -879,7 +879,7 @@
       "name": "ĵus-",
       "description": "Prefix meaning something is newly or recently done\nvekita: awakened\nĵusvekita: newly/recently awakened",
       "rules": [
-        {"type": "prefix", "inflected": "ĵus", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "ĵus", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "[^ ]"}
       ],
       "source": "yomitan"
     },
@@ -888,7 +888,7 @@
       "name": "el-",
       "description": "Prefix meaning to do the action in an outward direction\ntiri: to pull\neltiri: to pull out\n\nPrefix meaning to do the action all the way to completion\ntrinki: to drink\neltrinki: to drink up, to drink all of something\nlerni: to learn\nellerni: to learn all that you can, to master\nuzi: to use\neluzi: to use up, wear out",
       "rules": [
-        {"type": "prefix", "inflected": "el", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "el", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "[^ ]"}
       ],
       "source": "yomitan"
     },
@@ -897,7 +897,7 @@
       "name": "dis-",
       "description": "Prefix meaning \"separation, being apart, spreading out\"\nŝvebi: to float\ndisŝvebi: to float out/separately\nfali: to fall\ndisfali: to fall apart\ndoni: to give\ndisdoni: to give out, to distribute\nsendo: a thing that is sent\ndissendo: a broadcast",
       "rules": [
-        {"type": "prefix", "inflected": "dis", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 3}
+        {"type": "prefix", "inflected": "dis", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 3, "stemCharacters": "[^ ]"}
       ],
       "source": "yomitan"
     },
@@ -906,7 +906,7 @@
       "name": "for-",
       "description": "Prefix meaning \"movement to a far distance\"\nflugi: to fly\nforflugi: to fly away\n\nPrefix meaning \"disappearance/annihilation\"\nuzi: to use\nforuzi: to use up (until nothing is left)",
       "rules": [
-        {"type": "prefix", "inflected": "for", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 3}
+        {"type": "prefix", "inflected": "for", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 3, "stemCharacters": "[^ ]"}
       ],
       "source": "yomitan"
     },
@@ -915,7 +915,7 @@
       "name": "mis-",
       "description": "Prefix meaning \"wrong, erroneous\"\nkompreni: to understand\nmiskompreni: to misunderstand\nparoli: to speak\nmisparoli: to misspeak",
       "rules": [
-        {"type": "prefix", "inflected": "mis", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "mis", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "[^ ]"}
       ],
       "source": "yomitan"
     }

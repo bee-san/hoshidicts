@@ -35,5 +35,15 @@
   ["hejme", "", "adv", "adv", 0, ["at home"], 0, ""],
   ["lavi", "", "v", "v", 0, ["to wash"], 0, ""],
   ["lano", "", "n", "n", 0, ["wool"], 0, ""],
-  ["koro", "", "n", "n", 0, ["heart"], 0, ""]
+  ["koro", "", "n", "n", 0, ["heart"], 0, ""],
+  ["pli", "", "adv", "adv", 0, ["more"], 0, ""],
+  ["plendo", "", "n", "n", 0, ["complaint"], 0, ""],
+  ["plendi", "", "v", "v", 0, ["to complain"], 0, ""],
+  ["formo", "", "n", "n", 0, ["form, shape"], 0, ""],
+  ["formi", "", "v", "v", 0, ["to form, to shape"], 0, ""],
+  ["kanto", "", "n", "n", 0, ["song"], 0, ""],
+  ["kanti", "", "v", "v", 0, ["to sing"], 0, ""],
+  ["kanta", "", "adj", "adj", 0, ["(test) an adjective a verb rule must not reach"], 0, ""],
+  ["sano", "", "n", "n", 0, ["health"], 0, ""],
+  ["sana", "", "adj", "adj", 0, ["healthy"], 0, ""]
 ]
