@@ -12,8 +12,8 @@
   "classes": {
     "letter": "[\\u0410-\\u044F\\u0401\\u0451]",
     "oldLetter": "[\\u0406\\u0456\\u0462\\u0463\\u0472-\\u0475]",
-    "word": "[{letter}{oldLetter}\\p{M}\\p{Nd}]",
-    "stem": "[{letter}{oldLetter}\\-]",
+    "word": "[{letter}{oldLetter}\\u0300-\\u036F0-9]",
+    "stem": "[\\-\\u0400-\\u04FF]",
     "consonant": "[бвгджзклмнпрстфхцчшщ]",
     "hardConsonant": "[бвдзлмнпрстф]",
     "vowel": "[аеёиоуыэюя]",

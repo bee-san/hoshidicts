@@ -84,7 +84,6 @@ adjectival-noun	1	запятые	запятая	n	*
 adjectival-noun	1	животного	животное	n	*
 adjectival-noun	1	жаркими	жаркое	n	*
 adjectival-noun	1	мороженым	мороженое	n	*
-surname	1	Толстого	Толстой	name	*
 surname	1	Пушкиным	Пушкин	name	*
 surname	1	Ивановой	Иванов	name	*
 short-adjective	1	красива	красивый	adj	*
@@ -436,3 +435,5 @@ negatives	0	прочёл	прочести	*	*
 negatives	0	Итак	Итака	*	*
 negatives	0	Вас	Васи	*	*
 negatives	0	Наше	Нахой	*	*
+negatives	0	Милая	Милой	*	*
+negatives	0	Никого	Никой	*	*

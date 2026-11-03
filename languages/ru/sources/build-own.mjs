@@ -451,6 +451,11 @@ function adjective(lemma, stemEnd, table, {min = 2, example = null, conditionsOu
     for (const [ending, forms] of Object.entries(table)) {
         const extra = {stemMinLength: min};
         if (stemEnd !== null) { extra.stemEndsWith = stemEnd; }
+        // A capitalised word read as an -ой adjective is mostly a name's form
+        // that wiktionary-to-yomitan lists (Милая → Милой → Мила, Никого →
+        // Никой → Ника); the surnames in -ой have their own form-of rows
+        // (Толстого → Толстой), so -ой leaves out capitalised stems.
+        if (lemma === 'ой') { extra.stemNotStartsWith = CAPITAL; }
         const ex = example && example[ending] ? [example[ending], example.lemma] : null;
         suffix('adj', forms, ending, lemma, [], conditionsOut, extra, ex);
         // Text writes ё as е, dictionaries write ё (темном → тёмный, веселого →

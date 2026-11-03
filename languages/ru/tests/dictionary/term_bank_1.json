@@ -43,5 +43,12 @@
   ["читала", "чита́ла", "non-lemma", "", 0, [["читать", ["singular feminine past"]]], 42, ""],
   ["пришла", "пришла́", "non-lemma", "", 0, [["прийти", ["singular feminine past"]]], 43, ""],
   ["итак", "", "conj", "", 0, ["so, thus"], 44, ""],
-  ["Итака", "", "name inanim fem", "", 0, ["Ithaca"], 45, ""]
+  ["Итака", "", "name inanim fem", "", 0, ["Ithaca"], 45, ""],
+  ["Толстой", "Толсто́й", "name animate masc", "", 0, ["Tolstoy (surname)"], 46, ""],
+  ["толстый", "то́лстый", "adj", "", 0, ["thick, fat"], 47, ""],
+  ["Толстого", "Толсто́го", "non-lemma", "", 0, [["Толстой", ["genitive/accusative masculine"]]], 48, ""],
+  ["милая", "ми́лая", "n animate fem", "", 0, ["darling, dear"], 49, ""],
+  ["милый", "ми́лый", "adj", "", 0, ["nice, dear"], 50, ""],
+  ["Мила", "Ми́ла", "name animate fem", "", 0, ["a female given name"], 51, ""],
+  ["Милой", "Ми́лой", "non-lemma", "", 0, [["Мила", ["instrumental singular"]]], 52, ""]
 ]
