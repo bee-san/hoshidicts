@@ -2152,7 +2152,8 @@
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["an", "ati"], ["ren", "riti"], ["jen", "jiti"], ["ljen", "liti"], ["ljen", "ljeti"], ["ljen", "leti"], ["njen", "niti"], ["pljen", "piti"], ["bljen", "biti"], ["vljen", "viti"], ["mljen", "miti"], ["šljen", "sliti"], ["đen", "diti"], ["đen", "djeti"], ["đen", "deti"], ["ćen", "titi"], ["šten", "stiti"], ["šćen", "stiti"], ["šen", "siti"], ["šen", "šiti"], ["žen", "ziti"], ["žen", "žiti"], ["čen", "ći"], ["iven", "iti"], ["uven", "uti"], ["den", "sti"]], "conditionsIn": ["adj"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "bačen", "deinflected": "baciti", "conditionsIn": ["adj"], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["čen", "čiti"], ["ijen", "iti"], ["nesen", "nijeti"], ["nesen", "neti"]], "conditionsIn": ["adj"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["čen", "čiti"], ["ijen", "iti"], ["nesen", "nijeti"], ["nesen", "neti"]], "conditionsIn": ["adj"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "wholeWord", "inflected": "rešen", "deinflected": "rešiti", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -2174,7 +2175,8 @@
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ano", "ati"], ["reno", "riti"], ["jeno", "jiti"], ["ljeno", "liti"], ["ljeno", "ljeti"], ["ljeno", "leti"], ["njeno", "niti"], ["pljeno", "piti"], ["bljeno", "biti"], ["vljeno", "viti"], ["mljeno", "miti"], ["šljeno", "sliti"], ["đeno", "diti"], ["đeno", "djeti"], ["đeno", "deti"], ["ćeno", "titi"], ["šteno", "stiti"], ["šćeno", "stiti"], ["šeno", "siti"], ["šeno", "šiti"], ["ženo", "ziti"], ["ženo", "žiti"], ["čeno", "ći"], ["iveno", "iti"], ["uveno", "uti"], ["deno", "sti"], ["eto", "eti"], ["ito", "iti"], ["uto", "uti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "bačeno", "deinflected": "baciti", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["čeno", "čiti"], ["ijeno", "iti"], ["neseno", "nijeti"], ["neseno", "neti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["čeno", "čiti"], ["ijeno", "iti"], ["neseno", "nijeti"], ["neseno", "neti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "wholeWord", "inflected": "rešeno", "deinflected": "rešiti", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -2185,7 +2187,8 @@
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ani", "ati"], ["reni", "riti"], ["jeni", "jiti"], ["ljeni", "liti"], ["ljeni", "ljeti"], ["ljeni", "leti"], ["njeni", "niti"], ["pljeni", "piti"], ["bljeni", "biti"], ["vljeni", "viti"], ["mljeni", "miti"], ["šljeni", "sliti"], ["đeni", "diti"], ["đeni", "djeti"], ["đeni", "deti"], ["ćeni", "titi"], ["šteni", "stiti"], ["šćeni", "stiti"], ["šeni", "siti"], ["šeni", "šiti"], ["ženi", "ziti"], ["ženi", "žiti"], ["čeni", "ći"], ["iveni", "iti"], ["uveni", "uti"], ["deni", "sti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "bačeni", "deinflected": "baciti", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["čeni", "čiti"], ["ijeni", "iti"], ["neseni", "nijeti"], ["neseni", "neti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["čeni", "čiti"], ["ijeni", "iti"], ["neseni", "nijeti"], ["neseni", "neti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "wholeWord", "inflected": "rešeni", "deinflected": "rešiti", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -2196,7 +2199,8 @@
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ane", "ati"], ["rene", "riti"], ["jene", "jiti"], ["ljene", "liti"], ["ljene", "ljeti"], ["ljene", "leti"], ["njene", "niti"], ["pljene", "piti"], ["bljene", "biti"], ["vljene", "viti"], ["mljene", "miti"], ["šljene", "sliti"], ["đene", "diti"], ["đene", "djeti"], ["đene", "deti"], ["ćene", "titi"], ["štene", "stiti"], ["šćene", "stiti"], ["šene", "siti"], ["šene", "šiti"], ["žene", "ziti"], ["žene", "žiti"], ["čene", "ći"], ["ivene", "iti"], ["uvene", "uti"], ["dene", "sti"], ["ute", "uti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "bačene", "deinflected": "baciti", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{lowerStem}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["čene", "čiti"], ["ijene", "iti"], ["nesene", "nijeti"], ["nesene", "neti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["čene", "čiti"], ["ijene", "iti"], ["nesene", "nijeti"], ["nesene", "neti"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "wholeWord", "inflected": "rešene", "deinflected": "rešiti", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {

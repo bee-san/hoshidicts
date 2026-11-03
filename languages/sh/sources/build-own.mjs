@@ -1106,7 +1106,7 @@ for (const spec of specs) {
 // the word's form-of rows name, judged by the pack author (the dominant
 // reading in ordinary text; words whose readings are both common are left
 // out), and a few found in the judged samples of the real texts (teče,
-// stupi, jezeru). [word, lemma, ...more lemmas]
+// stupi, jezeru, rešeno). [word, lemma, ...more lemmas]
 const PREFER = [
     // verb forms read as nouns or adjectives
     ['nema', 'nemati'], ['izgleda', 'izgledati'], ['čeka', 'čekati'], ['pada', 'padati'], ['hoda', 'hodati'],
@@ -1139,6 +1139,7 @@ const PREFER = [
     ['dobiću', 'dobiti'], ['kiše', 'kiša'], ['kiši', 'kiša'], ['duši', 'duša'], ['liste', 'lista'], ['bravu', 'brava'],
     ['pade', 'pasti'], ['puše', 'puhati', 'pušiti'], ['teče', 'teći'], ['stupi', 'stupiti'],
     ['jezeru', 'jezero'], ['jezerom', 'jezero'], ['jezerima', 'jezero'],
+    ['rešen', 'rešiti'], ['rešeno', 'rešiti'], ['rešeni', 'rešiti'], ['rešene', 'rešiti'],
     // adjectives and pronouns: nouns come first (GROUP_ORDER), so the
     // frequent adjectives whose forms are also forms of a rare noun are
     // written out (drugi, svaki, nov; the nouns drug, svak, nova).
