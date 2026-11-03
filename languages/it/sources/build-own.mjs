@@ -1,0 +1,953 @@
+#!/usr/bin/env node
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Writes languages/it/sources/own.json: the Italian deinflection rules written
+// for this pack (docs/languages.md, section 14 step 2), from the paradigm
+// tables below. Run from the repository root:
+//
+//   node languages/it/sources/build-own.mjs
+//
+// The tables follow the standard description of Italian inflection (Serianni,
+// Grammatica italiana; the conjugation and declension tables of Wiktionary's
+// Italian entries; Treccani's verb tables): the three conjugations (-are,
+// -ere, -ire, and -ire with -isc-) in every simple tense and mood, with the
+// spelling of -care/-gare (cerchi), -ciare/-giare (comincerò), -iare
+// (studi), -gliere (tolgo), -gnere (spengo) and -cere (piaccio) verbs; the
+// irregular verbs and their compounds (essere, avere, andare, dare, stare,
+// fare, dire, the modals, venire, tenere, porre, trarre, -durre, bere and
+// the others); the strong past historic and past participle (presi, preso);
+// enclitic pronouns after infinitives, gerunds and imperatives (farlo,
+// dicendomi, dammelo, alziamoci); pronominal (-rsi) verbs after a reflexive
+// pronoun that agrees with the verb (mi lavo, se ne va, me la cavo); and the
+// plural, feminine, superlative and -mente forms of nouns and adjectives.
+// No text or table is copied from those sources.
+
+import {writeFileSync} from 'node:fs';
+import {dirname, join} from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {formatTransforms} from '../../../tools/lib/json.mjs';
+
+const here = dirname(fileURLToPath(import.meta.url));
+
+// --- Conditions ------------------------------------------------------------------
+// v, n, adj and adv are the parts of speech dictionaries write in their
+// `rules` column (wiktionary-to-yomitan writes these names for the languages
+// it tags). The others are intermediate states that no dictionary term
+// carries: a form whose attached pronouns were removed, and the person of a
+// conjugated verb, which a reflexive pronoun written before it must agree with
+// (mi lavo, ti lavi, si lava, ci laviamo, vi lavate give lavarsi; mi lava, it
+// washes me, does not).
+const conditions = {
+    v: {name: 'Verb', isDictionaryForm: true},
+    n: {name: 'Noun', isDictionaryForm: true},
+    adj: {name: 'Adjective', isDictionaryForm: true},
+    adv: {name: 'Adverb', isDictionaryForm: true},
+    imp: {name: 'Imperative without its pronouns', isDictionaryForm: false},
+    imp_tu: {name: 'Imperative (tu) with ti before it', isDictionaryForm: false},
+    imp_noi: {name: 'Imperative (noi) with ci before it', isDictionaryForm: false},
+    imp_voi: {name: 'Imperative (voi) with vi before it', isDictionaryForm: false},
+    ger: {name: 'Gerund without its pronouns', isDictionaryForm: false},
+    ptcp: {name: 'Infinitive read from a past participle', isDictionaryForm: false},
+    p1s: {name: 'First person singular (agrees with mi)', isDictionaryForm: false},
+    p2s: {name: 'Second person singular (agrees with ti)', isDictionaryForm: false},
+    p3: {name: 'Third person (agrees with si)', isDictionaryForm: false},
+    p1p: {name: 'First person plural (agrees with ci)', isDictionaryForm: false},
+    p2p: {name: 'Second person plural (agrees with vi)', isDictionaryForm: false},
+};
+
+// --- Transforms and rules -------------------------------------------------------------
+const transforms = [];
+const byId = new Map();
+const seen = new Set();
+
+function transform(id, name, description) {
+    if (byId.has(id)) { return byId.get(id); }
+    const t = {id, name, description, source: 'own', rules: []};
+    transforms.push(t);
+    byId.set(id, t);
+    return t;
+}
+
+function add(id, rule) {
+    const t = byId.get(id);
+    if (t === undefined) { throw new Error(`no transform ${id}`); }
+    const key = `${id}\u0000${JSON.stringify(rule)}`;
+    if (seen.has(key)) { return; }
+    seen.add(key);
+    t.rules.push(rule);
+}
+
+function suffix(id, inflected, deinflected, conditionsIn, conditionsOut, extra = {}) {
+    add(id, {type: 'suffix', inflected, deinflected, conditionsIn, conditionsOut, ...extra});
+}
+
+function whole(id, inflected, deinflected, conditionsIn, conditionsOut) {
+    add(id, {type: 'wholeWord', inflected, deinflected, conditionsIn, conditionsOut});
+}
+
+// --- Verb slots ------------------------------------------------------------------------
+// One transform per tense (or mood) and person, so a trace names both. Each
+// slot lists its regular endings for -are, -ere, -ire and -isc- verbs (the
+// last only where they differ from -ire), the persons a reflexive pronoun
+// before it may agree with, and the conditions it reads (an imperative or a
+// gerund whose pronouns were removed).
+const SLOTS = [
+    ['present-io', 'present (io)', 'Present indicative, first person singular (io): parlo, temo, dormo, finisco.', ['p1s'],
+        {are: ['o'], ere: ['o'], ire: ['o'], isc: ['isco']}],
+    ['present-tu', 'present (tu)', 'Present indicative, second person singular (tu): parli, temi, dormi, finisci.', ['p2s'],
+        {are: ['i'], ere: ['i'], ire: ['i'], isc: ['isci']}],
+    ['present-lui', 'present (lui, lei)', 'Present indicative, third person singular (lui, lei, Lei): parla, teme, dorme, finisce.', ['p3'],
+        {are: ['a'], ere: ['e'], ire: ['e'], isc: ['isce']}],
+    ['present-noi', 'present (noi)', 'Present indicative, first person plural (noi): parliamo, temiamo, dormiamo, finiamo.', ['p1p'],
+        {are: ['iamo'], ere: ['iamo'], ire: ['iamo']}],
+    ['present-voi', 'present (voi)', 'Present indicative, second person plural (voi): parlate, temete, dormite, finite.', ['p2p'],
+        {are: ['ate'], ere: ['ete'], ire: ['ite']}],
+    ['present-loro', 'present (loro)', 'Present indicative, third person plural (loro): parlano, temono, dormono, finiscono.', ['p3'],
+        {are: ['ano'], ere: ['ono'], ire: ['ono'], isc: ['iscono']}],
+    ['imperfect-io', 'imperfect (io)', 'Imperfect indicative, first person singular (io): parlavo, temevo, dormivo.', ['p1s'],
+        {are: ['avo'], ere: ['evo'], ire: ['ivo']}],
+    ['imperfect-tu', 'imperfect (tu)', 'Imperfect indicative, second person singular (tu): parlavi, temevi, dormivi.', ['p2s'],
+        {are: ['avi'], ere: ['evi'], ire: ['ivi']}],
+    ['imperfect-lui', 'imperfect (lui, lei)', 'Imperfect indicative, third person singular (lui, lei): parlava, temeva, dormiva.', ['p3'],
+        {are: ['ava'], ere: ['eva'], ire: ['iva']}],
+    ['imperfect-noi', 'imperfect (noi)', 'Imperfect indicative, first person plural (noi): parlavamo, temevamo, dormivamo.', ['p1p'],
+        {are: ['avamo'], ere: ['evamo'], ire: ['ivamo']}],
+    ['imperfect-voi', 'imperfect (voi)', 'Imperfect indicative, second person plural (voi): parlavate, temevate, dormivate.', ['p2p'],
+        {are: ['avate'], ere: ['evate'], ire: ['ivate']}],
+    ['imperfect-loro', 'imperfect (loro)', 'Imperfect indicative, third person plural (loro): parlavano, temevano, dormivano.', ['p3'],
+        {are: ['avano'], ere: ['evano'], ire: ['ivano']}],
+    ['preterite-io', 'past historic (io)', 'Past historic (passato remoto), first person singular (io): parlai, temei or temetti, dormii.', ['p1s'],
+        {are: ['ai'], ere: ['ei', 'etti'], ire: ['ii']}],
+    ['preterite-tu', 'past historic (tu)', 'Past historic (passato remoto), second person singular (tu): parlasti, temesti, dormisti.', ['p2s'],
+        {are: ['asti'], ere: ['esti'], ire: ['isti']}],
+    ['preterite-lui', 'past historic (lui, lei)', 'Past historic (passato remoto), third person singular (lui, lei): parlò, temé or temette, dormì.', ['p3'],
+        {are: ['ò'], ere: ['é', 'ette', 'è'], ire: ['ì']}],
+    ['preterite-noi', 'past historic (noi)', 'Past historic (passato remoto), first person plural (noi): parlammo, tememmo, dormimmo.', ['p1p'],
+        {are: ['ammo'], ere: ['emmo'], ire: ['immo']}],
+    ['preterite-voi', 'past historic (voi)', 'Past historic (passato remoto), second person plural (voi): parlaste, temeste, dormiste.', ['p2p'],
+        {are: ['aste'], ere: ['este'], ire: ['iste']}],
+    ['preterite-loro', 'past historic (loro)', 'Past historic (passato remoto), third person plural (loro): parlarono, temerono or temettero, dormirono.', ['p3'],
+        {are: ['arono'], ere: ['erono', 'ettero'], ire: ['irono']}],
+    ['future-io', 'future (io)', 'Future indicative, first person singular (io): parlerò, temerò, dormirò.', ['p1s'],
+        {are: ['erò'], ere: ['erò'], ire: ['irò']}],
+    ['future-tu', 'future (tu)', 'Future indicative, second person singular (tu): parlerai, temerai, dormirai.', ['p2s'],
+        {are: ['erai'], ere: ['erai'], ire: ['irai']}],
+    ['future-lui', 'future (lui, lei)', 'Future indicative, third person singular (lui, lei): parlerà, temerà, dormirà.', ['p3'],
+        {are: ['erà'], ere: ['erà'], ire: ['irà']}],
+    ['future-noi', 'future (noi)', 'Future indicative, first person plural (noi): parleremo, temeremo, dormiremo.', ['p1p'],
+        {are: ['eremo'], ere: ['eremo'], ire: ['iremo']}],
+    ['future-voi', 'future (voi)', 'Future indicative, second person plural (voi): parlerete, temerete, dormirete.', ['p2p'],
+        {are: ['erete'], ere: ['erete'], ire: ['irete']}],
+    ['future-loro', 'future (loro)', 'Future indicative, third person plural (loro): parleranno, temeranno, dormiranno.', ['p3'],
+        {are: ['eranno'], ere: ['eranno'], ire: ['iranno']}],
+    ['conditional-io', 'conditional (io)', 'Present conditional, first person singular (io): parlerei, temerei, dormirei.', ['p1s'],
+        {are: ['erei'], ere: ['erei'], ire: ['irei']}],
+    ['conditional-tu', 'conditional (tu)', 'Present conditional, second person singular (tu): parleresti, temeresti, dormiresti.', ['p2s'],
+        {are: ['eresti'], ere: ['eresti'], ire: ['iresti']}],
+    ['conditional-lui', 'conditional (lui, lei)', 'Present conditional, third person singular (lui, lei): parlerebbe, temerebbe, dormirebbe.', ['p3'],
+        {are: ['erebbe'], ere: ['erebbe'], ire: ['irebbe']}],
+    ['conditional-noi', 'conditional (noi)', 'Present conditional, first person plural (noi): parleremmo, temeremmo, dormiremmo.', ['p1p'],
+        {are: ['eremmo'], ere: ['eremmo'], ire: ['iremmo']}],
+    ['conditional-voi', 'conditional (voi)', 'Present conditional, second person plural (voi): parlereste, temereste, dormireste.', ['p2p'],
+        {are: ['ereste'], ere: ['ereste'], ire: ['ireste']}],
+    ['conditional-loro', 'conditional (loro)', 'Present conditional, third person plural (loro): parlerebbero, temerebbero, dormirebbero.', ['p3'],
+        {are: ['erebbero'], ere: ['erebbero'], ire: ['irebbero']}],
+    ['subjunctive-sg', 'present subjunctive (io, tu, lui)', 'Present subjunctive, singular (che io, tu, lui, lei; also the Lei imperative): parli, tema, dorma, finisca.', ['p1s', 'p2s', 'p3'],
+        {are: ['i'], ere: ['a'], ire: ['a'], isc: ['isca']}],
+    ['subjunctive-noi', 'present subjunctive (noi)', 'Present subjunctive, first person plural (che noi): parliamo, temiamo, dormiamo, finiamo.', ['p1p'],
+        {are: ['iamo'], ere: ['iamo'], ire: ['iamo']}],
+    ['subjunctive-voi', 'present subjunctive (voi)', 'Present subjunctive, second person plural (che voi): parliate, temiate, dormiate, finiate.', ['p2p'],
+        {are: ['iate'], ere: ['iate'], ire: ['iate']}],
+    ['subjunctive-loro', 'present subjunctive (loro)', 'Present subjunctive, third person plural (che loro; also the Loro imperative): parlino, temano, dormano, finiscano.', ['p3'],
+        {are: ['ino'], ere: ['ano'], ire: ['ano'], isc: ['iscano']}],
+    ['subjunctive-imperfect-sg', 'imperfect subjunctive (io, tu)', 'Imperfect subjunctive, first and second person singular (che io, che tu): parlassi, temessi, dormissi.', ['p1s', 'p2s'],
+        {are: ['assi'], ere: ['essi'], ire: ['issi']}],
+    ['subjunctive-imperfect-lui', 'imperfect subjunctive (lui, lei)', 'Imperfect subjunctive, third person singular (che lui, che lei): parlasse, temesse, dormisse.', ['p3'],
+        {are: ['asse'], ere: ['esse'], ire: ['isse']}],
+    ['subjunctive-imperfect-noi', 'imperfect subjunctive (noi)', 'Imperfect subjunctive, first person plural (che noi): parlassimo, temessimo, dormissimo.', ['p1p'],
+        {are: ['assimo'], ere: ['essimo'], ire: ['issimo']}],
+    ['subjunctive-imperfect-voi', 'imperfect subjunctive (voi)', 'Imperfect subjunctive, second person plural (che voi): parlaste, temeste, dormiste.', ['p2p'],
+        {are: ['aste'], ere: ['este'], ire: ['iste']}],
+    ['subjunctive-imperfect-loro', 'imperfect subjunctive (loro)', 'Imperfect subjunctive, third person plural (che loro): parlassero, temessero, dormissero.', ['p3'],
+        {are: ['assero'], ere: ['essero'], ire: ['issero']}],
+    ['imperative-tu', 'imperative (tu)', 'Imperative, second person singular (tu): parla, temi, dormi, finisci; da\', di\', fa\', sta\', va\'.', [],
+        {are: ['a'], ere: ['i'], ire: ['i'], isc: ['isci']}],
+    ['imperative-noi', 'imperative (noi)', 'Imperative, first person plural (noi): parliamo, temiamo, dormiamo, finiamo.', [],
+        {are: ['iamo'], ere: ['iamo'], ire: ['iamo']}],
+    ['imperative-voi', 'imperative (voi)', 'Imperative, second person plural (voi): parlate, temete, dormite, finite.', [],
+        {are: ['ate'], ere: ['ete'], ire: ['ite']}],
+    ['gerund', 'gerund', 'Gerund: parlando, temendo, dormendo, finendo.', [],
+        {are: ['ando'], ere: ['endo'], ire: ['endo']}],
+    ['participle-present', 'present participle', 'Present participle, singular and plural: parlante, parlanti, temente, dormiente.', [],
+        {are: ['ante', 'anti'], ere: ['ente', 'enti'], ire: ['ente', 'enti', 'iente', 'ienti']}],
+    ['participle', 'past participle', 'Past participle, masculine and feminine, singular and plural: parlato, parlata, parlati, parlate; temuto; dormito.', [],
+        {are: ['ato', 'ata', 'ati', 'ate'], ere: ['uto', 'uta', 'uti', 'ute'], ire: ['ito', 'ita', 'iti', 'ite']}],
+];
+const PERSONS = new Map(SLOTS.map(([id, , , persons]) => [id, persons]));
+for (const [id, name, description] of SLOTS) { transform(id, name, description); }
+
+// The conditions each slot reads. An imperative whose pronouns were removed
+// (guardalo → guarda) has imp; one whose reflexive pronoun was moved before
+// it, which must agree with it, has imp_tu, imp_noi or imp_voi (alzati →
+// ti+alza, alziamoci → ci+alziamo, alzatevi → vi+alzate). A gerund whose
+// pronouns were removed (dicendolo → dicendo) has ger. Every other slot reads
+// only the text as it was scanned (or as a processor wrote it).
+const IN = {
+    'imperative-tu': ['imp', 'imp_tu'],
+    'imperative-noi': ['imp', 'imp_noi'],
+    'imperative-voi': ['imp', 'imp_voi'],
+    gerund: ['ger'],
+};
+const inFor = (slot) => IN[slot] ?? [];
+// A past participle's infinitive also has ptcp, which the pronominal
+// participle rule reads (pentito → pentire → pentirsi).
+const outFor = (slot) => ['v', ...PERSONS.get(slot), ...(slot === 'participle' ? ['ptcp'] : [])];
+
+// Every regular ending needs a stem of two letters or more, so short words do
+// not read as verbs (da is not a form of dare through -a, mare is not a form
+// of mandare). The verbs whose stem has one letter (dare, fare, dire, bere)
+// are written out below.
+const MIN_STEM = 2;
+const LEMMA = {are: 'are', ere: 'ere', ire: 'ire', isc: 'ire'};
+
+function verb(slot, inflected, deinflected, extra = {}) {
+    suffix(slot, inflected, deinflected, inFor(slot), outFor(slot), {stemMinLength: MIN_STEM, ...extra});
+}
+
+for (const [slot, , , , endings] of SLOTS) {
+    for (const cls of ['are', 'ere', 'ire', 'isc']) {
+        for (const ending of endings[cls] ?? []) {
+            // -isc- verbs: the stem before -isc- is two letters or more
+            // (capisco, finisce), so disco and fisco are not dire and fire.
+            verb(slot, ending, LEMMA[cls]);
+        }
+    }
+}
+
+// --- Spelling of -are verbs ----------------------------------------------------------
+// -care and -gare keep the hard sound with an h before e and i (cerchi,
+// cerchiamo, cercherò; paghi, pagherei). -ciare and -giare drop their i before
+// e (comincerò, mangerei; lascerò is -sciare). -iare verbs write one i where
+// the stem's i meets an ending's (studi, studiamo, studiate, studino; mangi,
+// cominci, lasci, sbagli); the stressed ì of inviare keeps both (invii,
+// inviino), which the plain endings read.
+for (const [slot, , , , endings] of SLOTS) {
+    for (const ending of endings.are ?? []) {
+        if (/^[ei]/u.test(ending)) {
+            verb(slot, 'ch' + ending, 'care');
+            verb(slot, 'gh' + ending, 'gare');
+        }
+        if (/^e/u.test(ending)) {
+            verb(slot, 'c' + ending, 'ciare');
+            verb(slot, 'g' + ending, 'giare');
+        }
+        if (/^i/u.test(ending)) {
+            verb(slot, ending, 'iare');
+        }
+    }
+}
+
+// --- Spelling of -ere and -ire verbs --------------------------------------------------
+// -gliere verbs (togliere, scegliere, cogliere, sciogliere) write lg before a
+// and o (tolgo, tolgono, tolga) and gli where the stem's i meets an ending's
+// (togli, togliamo, togliate). -gnere (spegnere) writes ng before a and o
+// (spengo, spenga). -cere verbs with cqu in the past historic (piacere,
+// tacere, giacere) write cci before a and o (piaccio, piacciono, piaccia,
+// piacciamo). -cire verbs with u (cucire, scucire) write ci before a and o
+// (cucio, cuciono, cucia). Past participles in -iuto keep the stem's soft c
+// (conosciuto, cresciuto, piaciuto, taciuto).
+const SPELLING = [
+    ['present-io', [['lgo', 'gliere'], ['ngo', 'gnere'], ['accio', 'acere'], ['ucio', 'ucire']]],
+    ['present-tu', [['gli', 'gliere']]],
+    ['present-noi', [['gliamo', 'gliere'], ['acciamo', 'acere']]],
+    ['present-loro', [['lgono', 'gliere'], ['ngono', 'gnere'], ['acciono', 'acere'], ['uciono', 'ucire']]],
+    ['subjunctive-sg', [['lga', 'gliere'], ['nga', 'gnere'], ['accia', 'acere'], ['ucia', 'ucire']]],
+    ['subjunctive-noi', [['gliamo', 'gliere'], ['acciamo', 'acere']]],
+    ['subjunctive-voi', [['gliate', 'gliere'], ['acciate', 'acere']]],
+    ['subjunctive-loro', [['lgano', 'gliere'], ['ngano', 'gnere'], ['acciano', 'acere'], ['uciano', 'ucire']]],
+    ['imperative-tu', [['gli', 'gliere']]],
+    ['imperative-noi', [['gliamo', 'gliere'], ['acciamo', 'acere']]],
+    ['preterite-io', [['acqui', 'acere']]],
+    ['preterite-lui', [['acque', 'acere']]],
+    ['preterite-loro', [['acquero', 'acere']]],
+    ['participle', [['ciuto', 'cere'], ['ciuta', 'cere'], ['ciuti', 'cere'], ['ciute', 'cere']]],
+];
+// tacere and cucire have a one-letter stem (taccio, tacque, cucio).
+for (const [slot, pairs] of SPELLING) {
+    for (const [inflected, deinflected] of pairs) {
+        verb(slot, inflected, deinflected, /^(acere|ucire)$/u.test(deinflected) ? {stemMinLength: 1} : {});
+    }
+}
+
+// --- Irregular verbs -------------------------------------------------------------------
+// Forms that the regular endings do not give, by slot. `mode` says where a
+// form is read: 'whole' only as the word itself (the modals, essere, avere:
+// si può, si deve and si è are not potersi, doversi and essersi); 'compound'
+// also at the end of a longer word, so compounds share the forms (rifaccio,
+// ottengo, propongo, produssi); a list of prefixes for the short forms of
+// fare, dare and stare (rifà, ridà, sottostà), which as endings would read
+// other words (truffa, staffa). Forms the regular endings give (andavo,
+// stavo, avevo, potei) are not repeated.
+const tense = (name, forms) => Object.fromEntries(['io', 'tu', 'lui', 'noi', 'voi', 'loro']
+    .map((person, i) => [`${name}-${person}`, forms[i]]).filter(([, f]) => f !== null && f !== undefined));
+const subj = (sg, noi, voi, loro) => ({'subjunctive-sg': sg, 'subjunctive-noi': noi, 'subjunctive-voi': voi, 'subjunctive-loro': loro});
+const subjImpf = (sg, lui, noi, voi, loro) => ({
+    'subjunctive-imperfect-sg': sg, 'subjunctive-imperfect-lui': lui, 'subjunctive-imperfect-noi': noi,
+    'subjunctive-imperfect-voi': voi, 'subjunctive-imperfect-loro': loro,
+});
+const imp = (tu, noi, voi) => ({'imperative-tu': tu, 'imperative-noi': noi, 'imperative-voi': voi});
+// The six persons of a stem with regular endings (fac + evo ..., dic + essi ...).
+const sixOn = (stem, endings) => endings.map((e) => stem + e);
+const IMPF_E = ['evo', 'evi', 'eva', 'evamo', 'evate', 'evano'];
+const FUT = ['ò', 'ai', 'à', 'emo', 'ete', 'anno'];
+const COND = ['ei', 'esti', 'ebbe', 'emmo', 'este', 'ebbero'];
+const SUBJ_IMPF_E = ['essi', 'esse', 'essimo', 'este', 'essero'];
+const future = (stem) => ({...tense('future', sixOn(stem, FUT)), ...tense('conditional', sixOn(stem, COND))});
+const participle = (masculine) => ({participle: ['o', 'a', 'i', 'e'].map((e) => masculine.slice(0, -1) + e)});
+
+const IRREGULAR = [
+    {lemma: 'essere', mode: 'whole', forms: {
+        ...tense('present', ['sono', 'sei', 'è', 'siamo', 'siete', 'sono']),
+        ...tense('imperfect', ['ero', 'eri', 'era', 'eravamo', 'eravate', 'erano']),
+        ...tense('preterite', ['fui', 'fosti', 'fu', 'fummo', 'foste', 'furono']),
+        ...future('sar'),
+        ...subj('sia', 'siamo', 'siate', 'siano'),
+        ...subjImpf('fossi', 'fosse', 'fossimo', 'foste', 'fossero'),
+        ...imp('sii', 'siamo', 'siate'),
+        gerund: 'essendo',
+        ...participle('stato'),
+    }},
+    {lemma: 'avere', mode: 'whole', forms: {
+        ...tense('present', ['ho', 'hai', 'ha', 'abbiamo', null, 'hanno']),
+        ...tense('preterite', ['ebbi', null, 'ebbe', null, null, 'ebbero']),
+        ...future('avr'),
+        ...subj('abbia', 'abbiamo', 'abbiate', 'abbiano'),
+        ...imp('abbi', 'abbiamo', 'abbiate'),
+    }},
+    {lemma: 'potere', mode: 'whole', forms: {
+        ...tense('present', ['posso', 'puoi', 'può', 'possiamo', null, 'possono']),
+        ...future('potr'),
+        ...subj('possa', 'possiamo', 'possiate', 'possano'),
+    }},
+    {lemma: 'volere', mode: 'whole', forms: {
+        ...tense('present', ['voglio', 'vuoi', 'vuole', 'vogliamo', null, 'vogliono']),
+        ...tense('preterite', ['volli', null, 'volle', null, null, 'vollero']),
+        ...future('vorr'),
+        ...subj('voglia', 'vogliamo', 'vogliate', 'vogliano'),
+        ...imp('vogli', 'vogliamo', 'vogliate'),
+    }},
+    {lemma: 'dovere', mode: 'whole', forms: {
+        ...tense('present', ['devo', 'devi', 'deve', 'dobbiamo', null, 'devono']),
+        'present-io': ['devo', 'debbo'], 'present-loro': ['devono', 'debbono'],
+        ...future('dovr'),
+        ...subj(['debba', 'deva'], 'dobbiamo', 'dobbiate', ['debbano', 'devano']),
+    }},
+    {lemma: 'sapere', mode: 'whole', forms: {
+        ...tense('present', ['so', 'sai', 'sa', 'sappiamo', null, 'sanno']),
+        ...tense('preterite', ['seppi', null, 'seppe', null, null, 'seppero']),
+        ...future('sapr'),
+        ...subj('sappia', 'sappiamo', 'sappiate', 'sappiano'),
+        ...imp('sappi', 'sappiamo', 'sappiate'),
+    }},
+    // andare: vo, vai and va only as words (va is also the end of nova,
+    // riva); vado, vanno, vada and vadano also after a pronoun (me ne vado).
+    {lemma: 'andare', mode: 'whole', forms: {
+        ...tense('present', ['vo', 'vai', 'va', null, null, null]),
+        ...imp('vai', null, null),
+    }},
+    {lemma: 'andare', mode: 'compound', forms: {
+        ...tense('present', ['vado', null, null, null, null, 'vanno']),
+        ...subj('vada', null, null, 'vadano'),
+        ...future('andr'),
+    }},
+    // dare and stare: the short forms with the prefixes of their compounds,
+    // the longer ones at the end of any word (ridarò, sottostette; the -dare
+    // verbs' davo, guardavo, are guar + davo too).
+    {lemma: 'dare', mode: ['ri'], forms: {
+        ...tense('present', ['do', 'dai', 'dà', 'diamo', 'date', 'danno']),
+        ...subj('dia', 'diamo', 'diate', 'diano'),
+        ...imp('dai', 'diamo', 'date'),
+        ...participle('dato'),
+    }},
+    {lemma: 'dare', mode: 'compound', forms: {
+        ...tense('imperfect', ['davo', 'davi', 'dava', 'davamo', 'davate', 'davano']),
+        ...tense('preterite', [['diedi', 'detti'], 'desti', ['diede', 'dette'], 'demmo', 'deste', ['diedero', 'dettero']]),
+        ...future('dar'),
+        ...subjImpf('dessi', 'desse', 'dessimo', 'deste', 'dessero'),
+    }},
+    {lemma: 'stare', mode: ['ri', 'sotto', 'sovra', 'sopra'], forms: {
+        ...tense('present', ['sto', 'stai', 'sta', null, null, 'stanno']),
+        ...subj('stia', 'stiamo', 'stiate', 'stiano'),
+        ...imp('stai', null, null),
+    }},
+    {lemma: 'stare', mode: 'compound', forms: {
+        ...tense('preterite', ['stetti', 'stesti', 'stette', 'stemmo', 'steste', 'stettero']),
+        ...future('star'),
+        ...subjImpf('stessi', 'stesse', 'stessimo', 'steste', 'stessero'),
+    }},
+    // fare: the short forms with the prefixes of its compounds; the longer
+    // ones at the end of any word (rifacevo, soddisfacendo, contraffatto).
+    {lemma: 'fare', mode: ['ri', 'dis', 'soddis', 'contraf', 'sopraf', 'assue', 'lique', 'stupe', 'tume', 'putre', 'rare', 'torre', 'stra'], forms: {
+        ...tense('present', [['faccio', 'fo'], 'fai', 'fa', null, 'fate', 'fanno']),
+        ...imp('fai', null, 'fate'),
+    }},
+    {lemma: 'fare', mode: 'compound', forms: {
+        'present-io': 'faccio', 'present-noi': 'facciamo',
+        ...tense('imperfect', sixOn('fac', IMPF_E)),
+        ...tense('preterite', ['feci', 'facesti', 'fece', 'facemmo', 'faceste', 'fecero']),
+        ...future('far'),
+        ...subj('faccia', 'facciamo', 'facciate', 'facciano'),
+        ...subjImpf(...sixOn('fac', SUBJ_IMPF_E)),
+        ...imp(null, 'facciamo', null),
+        gerund: 'facendo',
+        'participle-present': ['facente', 'facenti'],
+        ...participle('fatto'),
+    }},
+    {lemma: 'dire', mode: 'compound', forms: {
+        ...tense('present', ['dico', 'dici', 'dice', 'diciamo', 'dite', 'dicono']),
+        ...tense('imperfect', sixOn('dic', IMPF_E)),
+        ...tense('preterite', ['dissi', 'dicesti', 'disse', 'dicemmo', 'diceste', 'dissero']),
+        ...future('dir'),
+        ...subj('dica', 'diciamo', 'diciate', 'dicano'),
+        ...subjImpf(...sixOn('dic', SUBJ_IMPF_E)),
+        ...imp(null, 'diciamo', 'dite'),
+        gerund: 'dicendo',
+        'participle-present': ['dicente', 'dicenti'],
+        ...participle('detto'),
+    }},
+    {lemma: 'bere', mode: 'compound', forms: {
+        ...tense('present', sixOn('bev', ['o', 'i', 'e', 'iamo', 'ete', 'ono'])),
+        ...tense('imperfect', sixOn('bev', IMPF_E)),
+        ...tense('preterite', [['bevvi', 'bevetti'], 'bevesti', ['bevve', 'bevette'], 'bevemmo', 'beveste', ['bevvero', 'bevettero']]),
+        ...future('berr'),
+        ...subj('beva', 'beviamo', 'beviate', 'bevano'),
+        ...subjImpf(...sixOn('bev', SUBJ_IMPF_E)),
+        ...imp('bevi', 'beviamo', 'bevete'),
+        gerund: 'bevendo',
+        'participle-present': ['bevente', 'beventi'],
+        ...participle('bevuto'),
+    }},
+    {lemma: 'venire', mode: 'compound', forms: {
+        ...tense('present', ['vengo', 'vieni', 'viene', null, null, 'vengono']),
+        ...tense('preterite', ['venni', null, 'venne', null, null, 'vennero']),
+        ...future('verr'),
+        ...subj('venga', null, null, 'vengano'),
+        ...imp('vieni', null, null),
+        ...participle('venuto'),
+    }},
+    {lemma: 'tenere', mode: 'compound', forms: {
+        ...tense('present', ['tengo', 'tieni', 'tiene', null, null, 'tengono']),
+        ...tense('preterite', ['tenni', null, 'tenne', null, null, 'tennero']),
+        ...future('terr'),
+        ...subj('tenga', null, null, 'tengano'),
+        ...imp('tieni', null, null),
+    }},
+    {lemma: 'uscire', mode: 'compound', forms: {
+        ...tense('present', ['esco', 'esci', 'esce', null, null, 'escono']),
+        ...subj('esca', null, null, 'escano'),
+        ...imp('esci', null, null),
+    }},
+    {lemma: 'salire', mode: 'compound', forms: {
+        ...tense('present', ['salgo', null, null, null, null, 'salgono']),
+        ...subj('salga', null, null, 'salgano'),
+    }},
+    {lemma: 'rimanere', mode: 'compound', forms: {
+        ...tense('present', ['rimango', null, null, null, null, 'rimangono']),
+        ...tense('preterite', ['rimasi', null, 'rimase', null, null, 'rimasero']),
+        ...future('rimarr'),
+        ...subj('rimanga', null, null, 'rimangano'),
+        ...participle('rimasto'),
+    }},
+    {lemma: 'valere', mode: 'compound', forms: {
+        ...tense('present', ['valgo', null, null, null, null, 'valgono']),
+        ...future('varr'),
+        ...subj('valga', null, null, 'valgano'),
+    }},
+    {lemma: 'parere', mode: 'compound', forms: {
+        ...tense('present', ['paio', null, null, 'paiamo', null, 'paiono']),
+        ...future('parr'),
+        ...subj('paia', 'paiamo', 'paiate', 'paiano'),
+    }},
+    // apparire and comparire (also apparisco, comparisco, through -isc-).
+    {lemma: 'apparire', mode: 'compound', forms: {
+        ...tense('present', ['appaio', null, null, null, null, 'appaiono']),
+        ...subj('appaia', null, null, 'appaiano'),
+        ...tense('preterite', [['apparvi', 'apparsi'], null, ['apparve', 'apparse'], null, null, ['apparvero', 'apparsero']]),
+        ...participle('apparso'),
+    }},
+    {lemma: 'comparire', mode: 'compound', forms: {
+        ...tense('present', ['compaio', null, null, null, null, 'compaiono']),
+        ...subj('compaia', null, null, 'compaiano'),
+        ...tense('preterite', [['comparvi', 'comparsi'], null, ['comparve', 'comparse'], null, null, ['comparvero', 'comparsero']]),
+        ...participle('comparso'),
+    }},
+    {lemma: 'dolere', mode: 'compound', forms: {
+        ...tense('present', ['dolgo', 'duoli', 'duole', null, null, 'dolgono']),
+        ...future('dorr'),
+        ...subj('dolga', null, null, 'dolgano'),
+    }},
+    {lemma: 'morire', mode: 'compound', forms: {
+        ...tense('present', ['muoio', 'muori', 'muore', null, null, 'muoiono']),
+        ...future('morr'),
+        ...subj('muoia', null, null, 'muoiano'),
+        ...imp('muori', null, null),
+        ...participle('morto'),
+    }},
+    {lemma: 'udire', mode: 'whole', forms: {
+        ...tense('present', ['odo', 'odi', 'ode', null, null, 'odono']),
+        ...future('udr'),
+        ...subj('oda', null, null, 'odano'),
+        ...imp('odi', null, null),
+    }},
+    {lemma: 'sedere', mode: 'compound', forms: {
+        ...tense('present', [['siedo', 'seggo'], 'siedi', 'siede', null, null, ['siedono', 'seggono']]),
+        ...future('sieder'),
+        ...subj(['sieda', 'segga'], null, null, ['siedano', 'seggano']),
+        ...imp('siedi', null, null),
+    }},
+    {lemma: 'nuocere', mode: 'whole', forms: {
+        ...tense('present', [['noccio', 'nuoccio'], 'nuoci', 'nuoce', ['nociamo', 'nuociamo'], ['nocete', 'nuocete'], ['nocciono', 'nuocciono']]),
+        ...tense('preterite', ['nocqui', null, 'nocque', null, null, 'nocquero']),
+        ...subj(['noccia', 'nuoccia'], null, null, ['nocciano', 'nuocciano']),
+        ...participle('nociuto'),
+    }},
+    {lemma: 'cuocere', mode: 'compound', forms: {
+        ...tense('present', ['cuocio', null, null, 'cociamo', 'cocete', 'cuociono']),
+        ...subj('cuocia', null, null, 'cuociano'),
+    }},
+    // muovere, cuocere, nuocere and scuotere may write o for uo where the
+    // stress falls on the ending (moviamo, moverò, cocevo, scotendo).
+    ...[['muovere', 'mov'], ['cuocere', 'coc'], ['nuocere', 'noc'], ['scuotere', 'scot'], ['percuotere', 'percot']].map(([lemma, stem]) => ({
+        lemma, mode: 'compound', forms: {
+            ...tense('present', [null, null, null, stem + 'iamo', stem + 'ete', null]),
+            ...tense('imperfect', sixOn(stem, IMPF_E)),
+            ...future(stem + 'er'),
+            ...subjImpf(...sixOn(stem, SUBJ_IMPF_E)),
+            gerund: stem + 'endo',
+            'participle-present': [stem + 'ente', stem + 'enti'],
+        }})),
+    // porre, trarre and -durre: every form, at the end of any word (propongo,
+    // distraevo, produssi); -durre has no verb without a prefix.
+    {lemma: 'porre', mode: 'compound', forms: {
+        ...tense('present', sixOn('pon', ['go', 'i', 'e', 'iamo', 'ete', 'gono'])),
+        ...tense('imperfect', sixOn('pon', IMPF_E)),
+        ...tense('preterite', ['posi', 'ponesti', 'pose', 'ponemmo', 'poneste', 'posero']),
+        ...future('porr'),
+        ...subj('ponga', 'poniamo', 'poniate', 'pongano'),
+        ...subjImpf(...sixOn('pon', SUBJ_IMPF_E)),
+        ...imp('poni', 'poniamo', 'ponete'),
+        gerund: 'ponendo',
+        'participle-present': ['ponente', 'ponenti'],
+        ...participle('posto'),
+    }},
+    {lemma: 'trarre', mode: 'compound', forms: {
+        ...tense('present', ['traggo', 'trai', 'trae', 'traiamo', 'traete', 'traggono']),
+        ...tense('imperfect', sixOn('tra', IMPF_E)),
+        ...tense('preterite', ['trassi', 'traesti', 'trasse', 'traemmo', 'traeste', 'trassero']),
+        ...future('trarr'),
+        ...subj('tragga', 'traiamo', 'traiate', 'traggano'),
+        ...subjImpf(...sixOn('tra', SUBJ_IMPF_E)),
+        ...imp('trai', 'traiamo', 'traete'),
+        gerund: 'traendo',
+        'participle-present': ['traente', 'traenti'],
+        ...participle('tratto'),
+    }},
+    {lemma: 'durre', mode: 'compound', minStem: 2, forms: {
+        ...tense('present', sixOn('duc', ['o', 'i', 'e', 'iamo', 'ete', 'ono'])),
+        ...tense('imperfect', sixOn('duc', IMPF_E)),
+        ...tense('preterite', ['dussi', 'ducesti', 'dusse', 'ducemmo', 'duceste', 'dussero']),
+        ...future('durr'),
+        ...subj('duca', 'duciamo', 'duciate', 'ducano'),
+        ...subjImpf(...sixOn('duc', SUBJ_IMPF_E)),
+        ...imp('duci', 'duciamo', 'ducete'),
+        gerund: 'ducendo',
+        'participle-present': ['ducente', 'ducenti'],
+        ...participle('dotto'),
+    }},
+];
+
+// Future and conditional stems that drop or change the e or i of the
+// infinitive (vedrò, vivrò, cadrò, rimarrò, terrò).
+for (const [stem, lemma] of [['vedr', 'vedere'], ['vivr', 'vivere'], ['cadr', 'cadere'], ['godr', 'godere']]) {
+    IRREGULAR.push({lemma, mode: 'compound', forms: future(stem)});
+}
+
+// The strong past historic (first and third person singular, third person
+// plural) and past participle of -ere verbs and some -ire verbs; the other
+// persons are regular (presi, prendesti, prese, prendemmo, prendeste,
+// presero). At the end of any word, so compounds share them (compresi,
+// sorpreso, riconobbi, interruppe). An empty participle is regular.
+const STRONG = [
+    ['prendere', 'presi', 'preso'], ['rendere', 'resi', 'reso'], ['scendere', 'scesi', 'sceso'], ['spendere', 'spesi', 'speso'],
+    ['accendere', 'accesi', 'acceso'], ['offendere', 'offesi', 'offeso'], ['difendere', 'difesi', 'difeso'], ['tendere', 'tesi', 'teso'],
+    ['appendere', 'appesi', 'appeso'], ['dipendere', 'dipesi', 'dipeso'], ['sospendere', 'sospesi', 'sospeso'], ['espandere', 'espansi', 'espanso'],
+    ['ridere', 'risi', 'riso'], ['dividere', 'divisi', 'diviso'], ['uccidere', 'uccisi', 'ucciso'], ['decidere', 'decisi', 'deciso'],
+    ['incidere', 'incisi', 'inciso'], ['coincidere', 'coincisi', 'coinciso'], ['chiudere', 'chiusi', 'chiuso'], ['concludere', 'conclusi', 'concluso'],
+    ['escludere', 'esclusi', 'escluso'], ['includere', 'inclusi', 'incluso'], ['illudere', 'illusi', 'illuso'], ['deludere', 'delusi', 'deluso'],
+    ['alludere', 'allusi', 'alluso'], ['eludere', 'elusi', 'eluso'], ['accludere', 'acclusi', 'accluso'], ['precludere', 'preclusi', 'precluso'],
+    ['persuadere', 'persuasi', 'persuaso'], ['dissuadere', 'dissuasi', 'dissuaso'], ['evadere', 'evasi', 'evaso'], ['invadere', 'invasi', 'invaso'],
+    ['radere', 'rasi', 'raso'], ['rodere', 'rosi', 'roso'], ['esplodere', 'esplosi', 'esploso'], ['chiedere', 'chiesi', 'chiesto'],
+    ['rispondere', 'risposi', 'risposto'], ['nascondere', 'nascosi', 'nascosto'], ['fondere', 'fusi', 'fuso'], ['mettere', 'misi', 'messo'],
+    ['scrivere', 'scrissi', 'scritto'], ['leggere', 'lessi', 'letto'], ['eleggere', 'elessi', 'eletto'], ['reggere', 'ressi', 'retto'],
+    ['correggere', 'corressi', 'corretto'], ['proteggere', 'protessi', 'protetto'], ['distruggere', 'distrussi', 'distrutto'],
+    ['friggere', 'frissi', 'fritto'], ['fliggere', 'flissi', 'flitto'], ['figgere', 'fissi', 'fitto'], ['trudere', 'trusi', 'truso'],
+    ['eccellere', 'eccelsi', 'eccelso'],
+    ['dirigere', 'diressi', 'diretto'], ['erigere', 'eressi', 'eretto'], ['redigere', 'redassi', 'redatto'], ['esigere', '', 'esatto'],
+    ['piangere', 'piansi', 'pianto'], ['giungere', 'giunsi', 'giunto'], ['pungere', 'punsi', 'punto'], ['ungere', 'unsi', 'unto'],
+    ['spingere', 'spinsi', 'spinto'], ['fingere', 'finsi', 'finto'], ['dipingere', 'dipinsi', 'dipinto'], ['cingere', 'cinsi', 'cinto'],
+    ['stringere', 'strinsi', 'stretto'], ['tingere', 'tinsi', 'tinto'], ['spegnere', 'spensi', 'spento'], ['accorgere', 'accorsi', 'accorto'],
+    ['porgere', 'porsi', 'porto'], ['sorgere', 'sorsi', 'sorto'], ['emergere', 'emersi', 'emerso'], ['immergere', 'immersi', 'immerso'],
+    ['sommergere', 'sommersi', 'sommerso'], ['spargere', 'sparsi', 'sparso'], ['volgere', 'volsi', 'volto'], ['vincere', 'vinsi', 'vinto'],
+    ['torcere', 'torsi', 'torto'], ['cuocere', 'cossi', 'cotto'], ['scuotere', 'scossi', 'scosso'], ['percuotere', 'percossi', 'percosso'],
+    ['muovere', 'mossi', 'mosso'], ['vivere', 'vissi', 'vissuto'], ['scegliere', 'scelsi', 'scelto'], ['togliere', 'tolsi', 'tolto'],
+    ['cogliere', 'colsi', 'colto'], ['sciogliere', 'sciolsi', 'sciolto'], ['valere', 'valsi', 'valso'], ['parere', 'parvi', 'parso'],
+    ['dolere', 'dolsi', ''], ['correre', 'corsi', 'corso'], ['perdere', 'persi', 'perso'], ['mordere', 'morsi', 'morso'],
+    ['ardere', 'arsi', 'arso'], ['espellere', 'espulsi', 'espulso'], ['primere', 'pressi', 'presso'], ['redimere', 'redensi', 'redento'],
+    ['sumere', 'sunsi', 'sunto'], ['connettere', 'connessi', 'connesso'], ['annettere', 'annessi', 'annesso'], ['riflettere', 'riflessi', 'riflesso'],
+    ['nascere', 'nacqui', 'nato'], ['conoscere', 'conobbi', ''], ['crescere', 'crebbi', ''], ['rompere', 'ruppi', 'rotto'],
+    ['cadere', 'caddi', ''], ['vedere', 'vidi', 'visto'], ['succedere', 'successi', 'successo'], ['concedere', 'concessi', 'concesso'],
+    ['discutere', 'discussi', 'discusso'], ['risolvere', 'risolsi', 'risolto'], ['assolvere', 'assolsi', 'assolto'], ['scindere', 'scissi', 'scisso'],
+    ['ledere', 'lesi', 'leso'], ['elidere', 'elisi', 'eliso'], ['intridere', 'intrisi', 'intriso'], ['aprire', 'apersi', 'aperto'],
+    ['coprire', 'copersi', 'coperto'], ['offrire', 'offersi', 'offerto'], ['soffrire', 'soffersi', 'sofferto'],
+];
+for (const [lemma, preterite, pp] of STRONG) {
+    const forms = {};
+    if (preterite !== '') {
+        const stem = preterite.slice(0, -1);
+        forms['preterite-io'] = preterite;
+        forms['preterite-lui'] = stem + 'e';
+        forms['preterite-loro'] = stem + 'ero';
+    }
+    if (pp !== '') { Object.assign(forms, participle(pp)); }
+    if (Object.keys(forms).length > 0) {
+        // -primere, -sumere, -fliggere, -figgere and -trudere have no
+        // common verb without a prefix (esprimere, assumere, affliggere,
+        // sconfiggere, protrudere), so their stem is two letters or more.
+        IRREGULAR.push({lemma, mode: 'compound', minStem: /^(primere|sumere|fliggere|figgere|trudere)$/u.test(lemma) ? 2 : 0, forms});
+    }
+}
+
+for (const {lemma, mode, minStem = 0, forms} of IRREGULAR) {
+    for (const [slot, value] of Object.entries(forms)) {
+        if (!PERSONS.has(slot)) { throw new Error(`${lemma}: no slot ${slot}`); }
+        for (const form of [value].flat().filter((f) => f !== null && f !== undefined)) {
+            if (mode === 'whole') {
+                whole(slot, form, lemma, inFor(slot), outFor(slot));
+            } else if (mode === 'compound') {
+                suffix(slot, form, lemma, inFor(slot), outFor(slot), minStem > 0 ? {stemMinLength: minStem} : {});
+            } else {
+                whole(slot, form, lemma, inFor(slot), outFor(slot));
+                for (const prefix of mode) {
+                    // The compounds of fa, da and sta are written with an
+                    // accent (rifà, ridà, sottostà) and often without one.
+                    // With their prefix they are long enough to be read at
+                    // the end of a text, after a pronoun (si soddisfanno).
+                    const short = /^(fa|dà|sta)$/u.test(form);
+                    for (const written of short ? [form.replace(/à$/u, 'a'), form.replace(/a$/u, 'à')] : [form]) {
+                        suffix(slot, prefix + written, prefix + lemma, inFor(slot), outFor(slot), {stemNotEndsWith: '{letter}'});
+                    }
+                }
+            }
+        }
+    }
+}
+
+// The present participle with an attached si (misurantesi, occupantisi).
+for (const [inflected, deinflected] of [['antesi', 'arsi'], ['antisi', 'arsi'], ['entesi', 'ersi'], ['entisi', 'ersi'], ['entesi', 'irsi'], ['entisi', 'irsi']]) {
+    verb('participle-present', inflected, deinflected);
+}
+// The past participle of a pronominal verb, one step after its infinitive
+// (pentito → pentire → pentirsi, accorto → accorgere → accorgersi).
+transform('participle-pronominal', 'past participle (-rsi verb)', 'The past participle of a pronominal verb, looked up in its -rsi form: pentito → pentirsi, accorto → accorgersi, vergognata → vergognarsi.');
+for (const [inflected, deinflected] of [['are', 'arsi'], ['ere', 'ersi'], ['ire', 'irsi'], ['rre', 'rsi']]) {
+    suffix('participle-pronominal', inflected, deinflected, ['ptcp'], ['v'], {stemMinLength: 2});
+}
+
+// --- Enclitic pronouns -------------------------------------------------------------------
+// Pronouns written after an infinitive (which loses its final e: farlo,
+// vederti, porlo, condurla), a gerund (dicendomi, facendone) or an
+// affirmative imperative of tu, noi and voi (guardalo, prendimi, facciamolo,
+// ditemi). One transform per pronoun or pair: an indirect or reflexive one
+// (me, te, se, ce, ve, glie) before a direct one or ne (dimmelo, darglielo,
+// andarsene, cavarsela).
+//
+// A reflexive pronoun also gives the -rsi verb, one step later than the verb
+// itself (lavarmi → lavare, then → lavarsi), because it is often an object
+// (dirmi, tell me). The clitic rule moves it before the verb with a + (si+,
+// se+ne+, se+la+), the conjugation rules read the verb, and the pronominal
+// rule gives the -rsi verb. With an imperative the pronoun must agree with
+// its person: ti with tu (alzati), ci with noi (alziamoci), vi with voi
+// (alzatevi); alzami (lift me) is only alzare.
+const SINGLE = ['mi', 'ti', 'si', 'ci', 'vi', 'lo', 'la', 'li', 'le', 'gli', 'ne'];
+const REFLEXIVE = ['mi', 'ti', 'si', 'ci', 'vi'];
+const INDIRECT = ['me', 'te', 'se', 'ce', 've', 'glie'];
+const DIRECT = ['lo', 'la', 'li', 'le', 'ne'];
+const CLUSTERS = [...SINGLE.map((p) => [p]), ...INDIRECT.flatMap((p) => DIRECT.map((d) => [p, d]))];
+// The reflexive pronoun of a cluster (me, te, se, ce, ve are the forms of mi,
+// ti, si, ci, vi before another pronoun), or null.
+const REFLEXIVE_OF = {mi: 'mi', ti: 'ti', si: 'si', ci: 'ci', vi: 'vi', me: 'mi', te: 'ti', se: 'si', ce: 'ci', ve: 'vi'};
+// The + marker a reflexive cluster becomes: si+ for one pronoun (any person:
+// lavarmi, lavarti and lavarsi are all lavarsi), se+X+ for a pair
+// (andarmene → se+ne+, cavarsela → se+la+). Imperatives keep the person.
+function marker(pronouns, person = 'si') {
+    if (pronouns.length === 1) { return `${person}+`; }
+    return `${{si: 'se', ti: 'te', ci: 'ce', vi: 've'}[person]}+${pronouns[1]}+`;
+}
+const IMPERATIVE_OF = {ti: 'imp_tu', ci: 'imp_noi', vi: 'imp_voi'};
+// Infinitives without their final e, and the infinitive they come from; the
+// stem before the ending is two letters or more (vederlo, parlarne, but not
+// carlo or parli, which are not care + lo or pare + li), except for porre and
+// trarre (porlo, trarne). fare, dare, dire and bere are written out.
+const INFINITIVES = [['ar', 'are', 2], ['er', 'ere', 2], ['ir', 'ire', 2], ['or', 'orre', 1], ['ur', 'urre', 2], ['rar', 'rarre', 1]];
+const SHORT_INFINITIVES = [['far', 'fare'], ['dar', 'dare'], ['dir', 'dire'], ['ber', 'bere']];
+// Monosyllabic imperatives double the pronoun's first consonant (dammi,
+// dillo, fallo, stacci, vattene); gli does not (dagli, diglielo).
+const MONOSYLLABIC = [['da', "da'", 'dare'], ['di', "di'", 'dire'], ['fa', "fa'", 'fare'], ['sta', "sta'", 'stare'], ['va', "va'", 'andare']];
+for (const [, written, lemma] of MONOSYLLABIC) {
+    suffix('imperative-tu', written, lemma, inFor('imperative-tu'), outFor('imperative-tu'));
+}
+
+for (const pronouns of CLUSTERS) {
+    const cluster = pronouns.join('');
+    const id = `clitic-${cluster}`;
+    const reflexive = REFLEXIVE_OF[pronouns[0]] ?? null;
+    transform(id, pronouns.map((p) => `+${p}`).join(' '),
+        `${pronouns.length === 2 ? 'The pronouns' : 'The pronoun'} ${pronouns.join(' and ')} attached to an infinitive, a gerund or an imperative: ` +
+        `${['parlar', 'dicendo', 'guarda'].map((host) => host + cluster).join(', ')}.`);
+    const reflexivePath = (inflectedSuffix, deinflectedSuffix, conditionsOut, extra, person = 'si') => {
+        add(id, {type: 'circumfix', inflectedPrefix: '', deinflectedPrefix: marker(pronouns, person), inflectedSuffix, deinflectedSuffix,
+            conditionsIn: [], conditionsOut, ...extra});
+    };
+    // Infinitive.
+    for (const [ending, lemma, min] of INFINITIVES) {
+        suffix(id, ending + cluster, lemma, [], ['v'], {stemMinLength: min});
+        if (reflexive !== null) { reflexivePath(ending + cluster, lemma, ['v'], {stemMinLength: min}); }
+    }
+    for (const [ending, lemma] of SHORT_INFINITIVES) {
+        suffix(id, ending + cluster, lemma, [], ['v']);
+        if (reflexive !== null) { reflexivePath(ending + cluster, lemma, ['v'], {}); }
+    }
+    // Gerund.
+    for (const ending of ['ando', 'endo']) {
+        suffix(id, ending + cluster, ending, [], ['ger'], {stemMinLength: 1});
+        if (reflexive !== null) { reflexivePath(ending + cluster, ending, ['ger'], {stemMinLength: 1}); }
+    }
+    // Imperative of tu, noi and voi; si and se (third person) never follow
+    // one. The imperative ends in a vowel and has three letters or more
+    // (guarda, prendi, facciamo, fate), so casi and baci are not ca + si and
+    // ba + ci.
+    if (reflexive === 'si') { continue; }
+    const host = {stemMinLength: 3, stemEndsWith: '[aeio]'};
+    suffix(id, cluster, '', [], ['imp'], host);
+    const agreeing = IMPERATIVE_OF[reflexive];
+    if (agreeing !== undefined) { reflexivePath(cluster, '', [agreeing], host, reflexive); }
+    for (const [base, written] of MONOSYLLABIC) {
+        // dalla, dallo, dalle, dalli and dagli are the preposition da with an
+        // article; stalla, stallo, valle and vallo are nouns.
+        if (base === 'da' && ['lo', 'la', 'li', 'le', 'gli'].includes(cluster)) { continue; }
+        if ((base === 'sta' || base === 'va') && ['lo', 'la', 'li', 'le'].includes(cluster)) { continue; }
+        const doubled = cluster.startsWith('gli') ? cluster : cluster[0] + cluster;
+        whole(id, base + doubled, written, [], ['imp']);
+        if (reflexive === 'ti') {
+            whole(id, base + doubled, marker(pronouns, 'ti') + written, [], ['imp_tu']);
+        }
+    }
+}
+
+// The irregular gerunds, at the end of any word (rifacendo, proponendo,
+// distraendo, producendo) and after a pronoun the clitic rules moved (si+).
+for (const [form, lemma, min] of [['dando', 'dare', 0], ['facendo', 'fare', 0], ['dicendo', 'dire', 0], ['bevendo', 'bere', 0],
+    ['ponendo', 'porre', 0], ['traendo', 'trarre', 0], ['ducendo', 'durre', 2]]) {
+    suffix('gerund', form, lemma, inFor('gerund'), outFor('gerund'), min > 0 ? {stemMinLength: min} : {});
+}
+
+// --- Pronominal verbs ---------------------------------------------------------------------
+transform('pronominal', '-rsi verb', 'A verb with a reflexive pronoun before it or attached to it, looked up in its -rsi form: mi lavo → lavarsi, ' +
+    'ti ricordi → ricordarsi, se ne va → andarsene, me la cavo → cavarsela, alzati → alzarsi.');
+const INFINITIVE_ENDINGS = ['are', 'ere', 'ire', 'orre', 'urre', 'arre'];
+const PERSON = {mi: 'p1s', ti: 'p2s', si: 'p3', ci: 'p1p', vi: 'p2p'};
+const BEFORE = {mi: 'me', ti: 'te', si: 'se', ci: 'ce', vi: 've'};
+// The verb's stem is letters only (one word) and two letters or more, so a
+// pronoun before a short word gives no -rsi verb through a regular ending:
+// si fa and si dà are impersonal or reflexive, and fa and dà are only read as
+// fare and dare when written alone.
+const VERB_STEM = {stemCharacters: '{letter}', stemMinLength: 2};
+// porre, condurre and trarre lose their whole -re: porsi, condursi, trarsi.
+const ending = (tail) => INFINITIVE_ENDINGS.map((e) => [e, e.replace(/r?re$/u, 'r') + tail]);
+for (const [pronoun, person] of Object.entries(PERSON)) {
+    // mi lavo, ti lavi, si lava, ci laviamo, vi lavate.
+    add('pronominal', {type: 'circumfix', prefixes: [[pronoun + ' ', '']], suffixes: ending('si'),
+        conditionsIn: [person], conditionsOut: ['v'], ...VERB_STEM});
+    // me ne vado (andarsene), me la cavo (cavarsela), me lo aspettavo
+    // (aspettarselo).
+    for (const direct of ['ne', 'la', 'lo']) {
+        add('pronominal', {type: 'circumfix', prefixes: [[`${BEFORE[pronoun]} ${direct} `, '']], suffixes: ending(`se${direct}`),
+            conditionsIn: [person], conditionsOut: ['v'], ...VERB_STEM});
+    }
+}
+// ce la faccio, ce la fai, ce la fa (farcela): ce la is fixed, whatever the
+// person, and fare's stem has one letter.
+add('pronominal', {type: 'circumfix', prefixes: [['ce la ', '']], suffixes: ending('cela'),
+    conditionsIn: Object.values(PERSON), conditionsOut: ['v'], stemCharacters: '{letter}', stemMinLength: 1});
+// ci before any person (ci vuole, ci metto, ci entra, ci pensi, ci credo):
+// esserci, volerci, metterci, entrarci, pensarci and the other verbs with a
+// fixed ci. Where ci is the reflexive of noi (ci laviamo), the rule above
+// also gives the -rsi verb.
+add('pronominal', {type: 'circumfix', prefixes: [['ci ', '']], suffixes: ending('ci'),
+    conditionsIn: Object.values(PERSON), conditionsOut: ['v'], ...VERB_STEM});
+// essere and volere are read only as whole words (si è and si vuole are not
+// essersi and volersi), so their third persons after ci are written out:
+// c'è, ci sono, c'era, ci sarà (esserci); ci vuole, ci vogliono, ci vorrà
+// (volerci).
+for (const [lemma, forms] of [
+    ['esserci', ["c'è", 'ci sono', "c'era", "c'erano", 'ci sarà', 'ci saranno', 'ci sarebbe', 'ci sarebbero', 'ci fu', 'ci furono',
+        'ci sia', 'ci siano', 'ci fosse', 'ci fossero', 'ci siamo', 'ci sei', 'ci siete']],
+    ['volerci', ['ci vuole', 'ci vogliono', 'ci voleva', 'ci volevano', 'ci vorrà', 'ci vorranno', 'ci vorrebbe', 'ci vorrebbero',
+        'ci volle', 'ci vollero', 'ci voglia', 'ci vogliano', 'ci volesse', 'ci volessero']],
+]) {
+    for (const form of forms) { whole('pronominal', form, lemma, [], ['v']); }
+}
+// ce l'ho, ce l'hai, ce l'avevo (avercela) and ce l'ho fatta (farcela).
+const AVERE_FORMS = ['ho', 'hai', 'ha', 'abbiamo', 'avete', 'hanno', ...sixOn('av', IMPF_E), ...sixOn('avr', FUT), ...sixOn('avr', COND),
+    'abbia', 'abbiate', 'abbiano', ...sixOn('av', SUBJ_IMPF_E)];
+for (const form of AVERE_FORMS) {
+    whole('pronominal', `ce l'${form}`, 'avercela', [], ['v']);
+}
+for (const form of ['ho', 'hai', 'ha', 'abbiamo', 'avete', 'hanno', ...sixOn('av', IMPF_E), ...sixOn('avr', FUT)]) {
+    whole('pronominal', `ce l'${form} fatta`, 'farcela', [], ['v']);
+}
+// se ne va and te ne vai: the short forms of andare after the pronouns.
+for (const [text, lemma] of [['se ne va', 'andarsene'], ['te ne vai', 'andarsene'], ['se ne vada', 'andarsene']]) {
+    whole('pronominal', text, lemma, [], ['v']);
+}
+// A pronoun the clitic rules moved before the verb (si+lavare, ti+alzare,
+// se+ne+andare).
+const MARKERS = [
+    [['si+', 'ti+', 'ci+', 'vi+'], 'si'],
+    ...DIRECT.map((d) => [['se', 'te', 'ce', 've'].map((p) => `${p}+${d}+`), `se${d}`]),
+];
+for (const [prefixes, tail] of MARKERS) {
+    add('pronominal', {type: 'circumfix', prefixes: prefixes.map((p) => [p, '']), suffixes: ending(tail),
+        conditionsIn: ['v'], conditionsOut: ['v'], stemCharacters: '{letter}', stemMinLength: 1});
+}
+
+// --- Nouns and adjectives ------------------------------------------------------------------
+transform('plural', 'plural', 'Plural of a noun or adjective: libri, case, cani, problemi, amiche, parchi, amici, arance, figli.');
+transform('feminine', 'feminine', 'Feminine singular of an adjective, or of a noun for a person: rossa, attrice, studentessa, padrona.');
+transform('feminine-plural', 'feminine plural', 'Feminine plural of an adjective: rosse, bianche, lunghe, lisce.');
+transform('superlative', 'superlative', 'Absolute superlative (-issimo): bellissimo, grandissima, lunghissimi, velocissime.');
+transform('adverb', 'adverb (-mente)', 'Adverb formed from an adjective with -mente: lentamente, fortemente, facilmente, regolarmente.');
+
+const NOMINAL = ['n', 'adj'];
+// Plural endings: -o/-i, -a/-e, -e/-i, -a/-i (problema, poeta), the hard c
+// and g of -co, -go, -ca, -ga (parchi, laghi, amiche, righe, duchi,
+// colleghi), the soft ones of -co and -go (amici, psicologi), -cia and -gia
+// after a consonant (arance, spiagge), and the unstressed -io (figli,
+// occhi). The stem is two letters or more, so short function words are not
+// plurals (dei, lei, noi, mai).
+for (const [inflected, deinflected, out] of [
+    ['i', 'o', NOMINAL], ['e', 'a', NOMINAL], ['i', 'e', NOMINAL], ['i', 'a', NOMINAL],
+    ['chi', 'co', NOMINAL], ['ghi', 'go', NOMINAL], ['che', 'ca', NOMINAL], ['ghe', 'ga', NOMINAL],
+    ['chi', 'ca', ['n']], ['ghi', 'ga', ['n']], ['ci', 'co', NOMINAL], ['gi', 'go', NOMINAL],
+    ['ce', 'cia', NOMINAL], ['ge', 'gia', NOMINAL], ['i', 'io', NOMINAL],
+]) {
+    suffix('plural', inflected, deinflected, [], out, {stemMinLength: 2});
+}
+// Loanwords with an English plural (computers, mainframes, yuppies); Italian
+// writes most of them without -s.
+suffix('plural', 's', '', [], ['n'], {stemMinLength: 3});
+// Plurals that are not regular: uomini, dei, buoi, mogli, templi, and the
+// feminine plurals in -a of masculine nouns in -o (uova, braccia, dita).
+for (const [plural, singular] of [
+    ['uomini', 'uomo'], ['dei', 'dio'], ['buoi', 'bue'], ['mogli', 'moglie'], ['templi', 'tempio'], ['superfici', 'superficie'],
+    ['uova', 'uovo'], ['paia', 'paio'], ['centinaia', 'centinaio'], ['migliaia', 'migliaio'], ['mila', 'mille'], ['dita', 'dito'],
+    ['braccia', 'braccio'], ['ginocchia', 'ginocchio'], ['labbra', 'labbro'], ['ossa', 'osso'], ['ciglia', 'ciglio'],
+    ['sopracciglia', 'sopracciglio'], ['lenzuola', 'lenzuolo'], ['mura', 'muro'], ['urla', 'urlo'], ['grida', 'grido'],
+    ['corna', 'corno'], ['membra', 'membro'], ['fondamenta', 'fondamento'], ['budella', 'budello'], ['miglia', 'miglio'],
+    ['calcagna', 'calcagno'], ['cervella', 'cervello'], ['fusa', 'fuso'], ['gesta', 'gesto'], ['risa', 'riso'],
+]) {
+    whole('plural', plural, singular, [], ['n']);
+}
+// Feminine adjectives in -a; nouns for people in -trice, -essa, -ona, -iera
+// and -ora (attrice → attore, studentessa → studente, poetessa → poeta,
+// padrona → padrone, infermiera → infermiere, signora → signore).
+suffix('feminine', 'a', 'o', [], ['adj'], {stemMinLength: 2});
+for (const [inflected, deinflected] of [['trice', 'tore'], ['essa', 'e'], ['essa', 'a'], ['ona', 'one'], ['iera', 'iere'], ['ora', 'ore']]) {
+    suffix('feminine', inflected, deinflected, [], NOMINAL, {stemMinLength: 3});
+}
+// Feminine plural adjectives: rosse, bianche, lunghe, and lisce and grige
+// (liscio, grigio); attrici, studentesse.
+for (const [inflected, deinflected, out, min] of [
+    ['e', 'o', ['adj'], 2], ['che', 'co', ['adj'], 2], ['ghe', 'go', ['adj'], 2], ['ce', 'cio', ['adj'], 2], ['ge', 'gio', ['adj'], 2],
+    ['trici', 'tore', NOMINAL, 3], ['esse', 'e', NOMINAL, 3], ['esse', 'a', NOMINAL, 3],
+]) {
+    suffix('feminine-plural', inflected, deinflected, [], out, {stemMinLength: min});
+}
+// Superlatives in -issimo, -issima, -issimi, -issime of adjectives and
+// adverbs in -o, -e and -io (bellissimo, grandissimo, benissimo,
+// vecchissimo), with the hard c and g of -co and -go (bianchissimo,
+// lunghissimo).
+for (const tail of ['o', 'a', 'i', 'e']) {
+    for (const [inflected, deinflected] of [['issim', 'o'], ['issim', 'e'], ['issim', 'io'], ['chissim', 'co'], ['ghissim', 'go']]) {
+        suffix('superlative', inflected + tail, deinflected, [], ['adj', 'adv'], {stemMinLength: 2});
+    }
+}
+// Adverbs in -mente: the feminine of adjectives in -o (lentamente → lento),
+// adjectives in -e (fortemente → forte), and those in -le and -re, which
+// lose their e (facilmente → facile, regolarmente → regolare).
+for (const [inflected, deinflected] of [['amente', 'o'], ['emente', 'e'], ['lmente', 'le'], ['rmente', 're']]) {
+    suffix('adverb', inflected, deinflected, [], ['adj'], {stemMinLength: 2});
+}
+
+// --- Output -----------------------------------------------------------------------------------
+// The suffix rules of a transform that share their conditions and stem
+// constraints are written as one circumfix in cross-product form with an
+// empty prefix (docs/languages.md 7.3), which the engine expands when the
+// pack loads: the same rules in a fifth of the bytes. `--expanded` writes
+// them as separate suffix rules instead (for `eval-language --per-rule`,
+// which counts a cross product as one rule), to the file given after it.
+function compact(rules) {
+    const out = [];
+    const groups = new Map();
+    for (const rule of rules) {
+        let prefix;
+        let tail;
+        let rest;
+        if (rule.type === 'suffix') {
+            const {type: _type, inflected, deinflected, ...others} = rule;
+            [prefix, tail, rest] = [['', ''], [inflected, deinflected], others];
+        } else if (rule.type === 'circumfix' && rule.inflectedPrefix !== undefined) {
+            const {type: _type, inflectedPrefix, deinflectedPrefix, inflectedSuffix, deinflectedSuffix, ...others} = rule;
+            [prefix, tail, rest] = [[inflectedPrefix, deinflectedPrefix], [inflectedSuffix, deinflectedSuffix], others];
+        } else {
+            out.push(rule);
+            continue;
+        }
+        const key = JSON.stringify([prefix, rest]);
+        let group = groups.get(key);
+        if (group === undefined) {
+            group = {type: 'circumfix', prefixes: [prefix], suffixes: [], ...rest};
+            groups.set(key, group);
+            out.push(group);
+        }
+        group.suffixes.push(tail);
+    }
+    // A group of one is written as the rule it was.
+    return out.map((rule) => {
+        if (rule.type !== 'circumfix' || rule.suffixes === undefined || rule.suffixes.length > 1 ||
+            !groups.has(JSON.stringify([rule.prefixes[0], Object.fromEntries(Object.entries(rule).filter(([k]) => !['type', 'prefixes', 'suffixes'].includes(k)))]))) {
+            return rule;
+        }
+        const {type: _type, prefixes: [[inflectedPrefix, deinflectedPrefix]], suffixes: [[inflected, deinflected]], ...rest} = rule;
+        if (inflectedPrefix === '' && deinflectedPrefix === '') { return {type: 'suffix', inflected, deinflected, ...rest}; }
+        return {type: 'circumfix', inflectedPrefix, deinflectedPrefix, inflectedSuffix: inflected, deinflectedSuffix: deinflected, ...rest};
+    });
+}
+const expanded = process.argv.indexOf('--expanded');
+const written = expanded >= 0 ? transforms : transforms.map((t) => ({...t, rules: compact(t.rules)}));
+const own = {schema: 1, conditions, transforms: written};
+const file = expanded >= 0 ? process.argv[expanded + 1] : join(here, 'own.json');
+if (file === undefined) { throw new Error('--expanded needs a file'); }
+writeFileSync(file, formatTransforms(own));
+const rules = transforms.reduce((n, t) => n + t.rules.length, 0);
+const objects = written.reduce((n, t) => n + t.rules.length, 0);
+console.log(`${file}: ${transforms.length} transforms, ${rules} rules (${objects} rule objects)`);
