@@ -86,46 +86,6 @@
   },
   "transforms": [
     {
-      "id": "nounAdjSuffixStripping",
-      "name": "noun-adj-suffix-stripping",
-      "description": "Strip Georgian noun and adjective declension suffixes",
-      "source": "yomitan",
-      "rules": [
-        {"type": "suffix", "inflected": "ები", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]},
-        {"type": "suffix", "inflected": "ებს", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]},
-        {"type": "suffix", "inflected": "ებების", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]},
-        {"type": "suffix", "inflected": "მა", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]},
-        {"type": "suffix", "inflected": "ს", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]},
-        {"type": "suffix", "inflected": "ის", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]},
-        {"type": "suffix", "inflected": "ით", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]},
-        {"type": "suffix", "inflected": "ად", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]},
-        {"type": "suffix", "inflected": "ო", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]},
-        {"type": "suffix", "inflected": "ში", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]},
-        {"type": "suffix", "inflected": "ზე", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]},
-        {"type": "suffix", "inflected": "შია", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]},
-        {"type": "suffix", "inflected": "ზეა", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
-      ]
-    },
-    {
-      "id": "nounAdjStemCompletion",
-      "name": "noun-adj-stem-completion",
-      "description": "Restore nominative suffix -ი for consonant-ending noun/adjective stems",
-      "source": "yomitan",
-      "rules": [
-        {"type": "suffix", "inflected": "გნ", "deinflected": "გნი", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]},
-        {"type": "suffix", "inflected": "ნ", "deinflected": "ნი", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
-      ]
-    },
-    {
-      "id": "vowelRestoration",
-      "name": "vowel-restoration",
-      "description": "Restore truncated vowels if applicable",
-      "source": "yomitan",
-      "rules": [
-        {"type": "suffix", "inflected": "გ", "deinflected": "გა", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
-      ]
-    },
-    {
       "id": "erg",
       "name": "ergative",
       "description": "Ergative case: -მა after a consonant stem (კაცმა → კაცი), -მ after a vowel stem (დედამ → დედა).",
