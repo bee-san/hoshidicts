@@ -753,6 +753,11 @@ const NOUN = {stemMinLength: 2, stemStartsWith: NOUN_STEM, then: CAPITALIZE};
 function noun(id, inflected, deinflected, conditionsIn, conditionsOut, extra = {}) {
     suffix(id, inflected, deinflected, conditionsIn, conditionsOut, {...NOUN, ...extra});
 }
+// The plural -n of a noun in -e is written with the e, so that it matches the
+// same letters as the plural -en of a noun without it and, coming first, is
+// found first (Stunden is Stunde, not Stund; Katzen Katze, not Katz; Reisen
+// Reise, not Reis, rice).
+noun('plural', 'en', 'e', PLURAL_IN, NOUN_OUT);
 noun('plural', 'e', '', PLURAL_IN, NOUN_OUT);
 // No noun with a plain -er plural has a stem in k, so Techniker and Musiker
 // are not read as plurals of Technik and Musik.

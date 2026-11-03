@@ -1834,9 +1834,6 @@
       [224, 246],
       [248, 254]
     ],
-    "transforms[23].rules[1].stemNotEndsWith": [
-      [107, 107]
-    ],
     "transforms[23].rules[2].stemCharacters": [
       [45, 45],
       [48, 57],
@@ -1854,14 +1851,8 @@
       [224, 246],
       [248, 254]
     ],
-    "transforms[23].rules[2].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 116],
-      [118, 120],
-      [122, 122],
-      [223, 223]
+    "transforms[23].rules[2].stemNotEndsWith": [
+      [107, 107]
     ],
     "transforms[23].rules[3].stemCharacters": [
       [45, 45],
@@ -2296,10 +2287,14 @@
       [224, 246],
       [248, 254]
     ],
-    "transforms[23].rules[19].stemEndsWith": [
-      [101, 101],
-      [108, 108],
-      [114, 114]
+    "transforms[23].rules[19].stemChange.between": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 116],
+      [118, 120],
+      [122, 122],
+      [223, 223]
     ],
     "transforms[23].rules[20].stemCharacters": [
       [45, 45],
@@ -2317,6 +2312,11 @@
       [97, 122],
       [224, 246],
       [248, 254]
+    ],
+    "transforms[23].rules[20].stemEndsWith": [
+      [101, 101],
+      [108, 108],
+      [114, 114]
     ],
     "transforms[23].rules[21].stemCharacters": [
       [45, 45],
@@ -2352,17 +2352,6 @@
       [224, 246],
       [248, 254]
     ],
-    "transforms[23].rules[22].stemEndsWith": [
-      [97, 97],
-      [101, 101],
-      [105, 105],
-      [111, 111],
-      [117, 117],
-      [121, 121],
-      [228, 228],
-      [246, 246],
-      [252, 252]
-    ],
     "transforms[23].rules[23].stemCharacters": [
       [45, 45],
       [48, 57],
@@ -2379,6 +2368,17 @@
       [97, 122],
       [224, 246],
       [248, 254]
+    ],
+    "transforms[23].rules[23].stemEndsWith": [
+      [97, 97],
+      [101, 101],
+      [105, 105],
+      [111, 111],
+      [117, 117],
+      [121, 121],
+      [228, 228],
+      [246, 246],
+      [252, 252]
     ],
     "transforms[23].rules[24].stemCharacters": [
       [45, 45],
@@ -2618,11 +2618,6 @@
       [224, 246],
       [248, 254]
     ],
-    "transforms[23].rules[37].stemEndsWith": [
-      [100, 100],
-      [107, 107],
-      [116, 116]
-    ],
     "transforms[23].rules[38].stemCharacters": [
       [45, 45],
       [48, 57],
@@ -2641,8 +2636,9 @@
       [248, 254]
     ],
     "transforms[23].rules[38].stemEndsWith": [
-      [115, 115],
-      [120, 120]
+      [100, 100],
+      [107, 107],
+      [116, 116]
     ],
     "transforms[23].rules[39].stemCharacters": [
       [45, 45],
@@ -2660,6 +2656,10 @@
       [97, 122],
       [224, 246],
       [248, 254]
+    ],
+    "transforms[23].rules[39].stemEndsWith": [
+      [115, 115],
+      [120, 120]
     ],
     "transforms[23].rules[40].stemCharacters": [
       [45, 45],
@@ -2712,11 +2712,6 @@
       [224, 246],
       [248, 254]
     ],
-    "transforms[23].rules[42].stemEndsWith": [
-      [108, 108],
-      [112, 112],
-      [122, 122]
-    ],
     "transforms[23].rules[43].stemCharacters": [
       [45, 45],
       [48, 57],
@@ -2733,6 +2728,11 @@
       [97, 122],
       [224, 246],
       [248, 254]
+    ],
+    "transforms[23].rules[43].stemEndsWith": [
+      [108, 108],
+      [112, 112],
+      [122, 122]
     ],
     "transforms[23].rules[44].stemCharacters": [
       [45, 45],
@@ -2764,6 +2764,23 @@
       [64256, 64262]
     ],
     "transforms[23].rules[45].stemStartsWith": [
+      [97, 122],
+      [224, 246],
+      [248, 254]
+    ],
+    "transforms[23].rules[46].stemCharacters": [
+      [45, 45],
+      [48, 57],
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [768, 879],
+      [7838, 7838],
+      [64256, 64262]
+    ],
+    "transforms[23].rules[46].stemStartsWith": [
       [97, 122],
       [224, 246],
       [248, 254]
@@ -5177,6 +5194,8 @@
         ["gelobt.", "gelobt."],
         ["schalt doch", "schalt doch"],
         ["verfluchte Mist", "verfluchte mist"],
+        ["Stunden später", "stunden später"],
+        ["Reisen bilden.", "reisen bilden."],
         ["Sie ist heute früh aufgestanden und hat ihre Freunde angerufen.", "sie ist heute früh aufgestanden und hat ihre freunde angerufen."],
         ["aufstehen", "aufstehen"]
       ]
@@ -7357,6 +7376,8 @@
         ["gelobt.", "Gelobt."],
         ["schalt doch", "Schalt doch"],
         ["verfluchte Mist", "Verfluchte Mist"],
+        ["Stunden später", "Stunden später"],
+        ["Reisen bilden.", "Reisen bilden."],
         ["Sie ist heute früh aufgestanden und hat ihre Freunde angerufen.", "Sie ist heute früh aufgestanden und hat ihre Freunde angerufen."],
         ["aufstehen", "Aufstehen"]
       ]
@@ -9537,6 +9558,8 @@
         ["gelobt.", "gelobt."],
         ["schalt doch", "schalt doch"],
         ["verfluchte Mist", "verfluchte mist"],
+        ["Stunden später", "stunden später"],
+        ["Reisen bilden.", "reisen bilden."],
         ["Sie ist heute früh aufgestanden und hat ihre Freunde angerufen.", "sie ist heute früh aufgestanden und hat ihre freunde angerufen."],
         ["aufstehen", "aufstehen"]
       ]
@@ -11717,6 +11740,8 @@
         ["gelobt.", "Gelobt."],
         ["schalt doch", "Schalt doch"],
         ["verfluchte Mist", "Verfluchte Mist"],
+        ["Stunden später", "Stunden später"],
+        ["Reisen bilden.", "Reisen bilden."],
         ["Sie ist heute früh aufgestanden und hat ihre Freunde angerufen.", "Sie ist heute früh aufgestanden und hat ihre Freunde angerufen."],
         ["aufstehen", "Aufstehen"]
       ]

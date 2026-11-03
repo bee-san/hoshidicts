@@ -19,7 +19,10 @@ Writes into <out dir>:
   (at most 60,000, every sentence of German letters, digits and punctuation);
 - hovers-<name>.txt and words-<name>.txt for each text (the Project Gutenberg
   books, and tatoeba): for every word, the text from that word to the end of
-  its sentence, as a host passes it to a lookup, and the word itself.
+  its sentence, as a host passes it to a lookup, and the word itself;
+  hovers-frequent.txt and words-frequent.txt hold the 10,000 frequent words
+  as German writes them (frequent.tsv's third column), one per line, so that
+  `measure.mjs diff` compares rule sets on them too.
 
 A book's text is the part between its *** START and *** END lines, split into
 paragraphs at blank lines and into sentences after . ! ? or … (with any
@@ -109,6 +112,11 @@ with open(frequency, encoding='utf-8') as f, open(join(out_dir, 'frequent.tsv'),
         else:
             cased = word
         out.write(f'{word}\t{count}\t{cased}\n')
+with open(join(out_dir, 'frequent.tsv'), encoding='utf-8') as f:
+    cased_words = [line.rstrip('\n').split('\t')[2] for line in f]
+for name in ('hovers-frequent.txt', 'words-frequent.txt'):
+    with open(join(out_dir, name), 'w', encoding='utf-8') as f:
+        f.write('\n'.join(cased_words) + '\n')
 
 for path in books:
     text = open(path, encoding='utf-8', errors='replace').read()

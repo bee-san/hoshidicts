@@ -82,5 +82,9 @@
   ["geloben", "", "v", "v", 0, ["to vow"], 81, ""],
   ["verflucht", "", "adj", "adj", 0, ["damned, cursed"], 82, ""],
   ["verfluchen", "", "v", "v", 0, ["to curse"], 83, ""],
-  ["meine", "", "non-lemma", "", 0, [["mein", ["nominative feminine singular"]], ["meinen", ["first-person singular present"]]], 84, ""]
+  ["meine", "", "non-lemma", "", 0, [["mein", ["nominative feminine singular"]], ["meinen", ["first-person singular present"]]], 84, ""],
+  ["Stunde", "", "n", "n", 0, ["hour"], 85, ""],
+  ["Stund", "", "n", "n", 0, ["(archaic) hour"], 86, ""],
+  ["Reise", "", "n", "n", 0, ["journey"], 87, ""],
+  ["Reis", "", "n", "n", 0, ["rice"], 88, ""]
 ]
