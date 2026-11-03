@@ -1,0 +1,445 @@
+# Yomitan rules (sources/yomitan.json) that add a reading the own rules lack, written by sources/yomitan-rules.py; every other Yomitan rule adds none.
+# decision: keep when the rule adds more right readings than false ones, else drop; sources/yomitan-harm.py then changes keep to drop-first (a false add is the first result of its word) or drop-negative (it fails a negative of tests/cases.tsv); sources/build-final.mjs keeps only keep.
+# transform	index	inflected	deinflected	right adds	false adds	decision	examples (right; false)
+present indicative	5	sont	être	1	0	keep	resont>reêtre(re-être,reêtre) ;
+present indicative	6	ai	avoir	2	2	drop	hai>havoir(avoir) rai>ravoir ; assai>assavoir sai>savoir
+present indicative	7	as	avoir	3	1	keep	has>havoir(avoir) ras>ravoir réas>réavoir ; sas>savoir
+present indicative	8	a	avoir	3	1	keep	ha>havoir(avoir) ra>ravoir réa>réavoir ; sa>savoir
+present indicative	9	avons	avoir	1	0	keep	havons>havoir(avoir) ;
+present indicative	10	avez	avoir	1	0	keep	havez>havoir(avoir) ;
+present indicative	11	ont	avoir	2	1	keep	hont>havoir(avoir) ront>ravoir ; sont>savoir
+present indicative	124	iers	érir	0	1	drop	; fiers>férir
+present indicative	126	érons	érir	0	3	drop	; attérons>attérir(atterrir) férons>férir renchérons>renchérir
+present indicative	127	érez	érir	0	2	drop	; attérez>attérir(atterrir) renchérez>renchérir
+present indicative	128	ièrent	érir	0	2	drop	; chièrent>chérir fièrent>férir
+present indicative	129	s	tir	0	13	drop	; advers>advertir(avertir) amas>amatir avers>avertir
+present indicative	130	t	tir	0	12	drop	; about>aboutir aplat>aplatir bât>bâtir
+present indicative	131	tons	tir	0	8	drop	; aboutons>aboutir bâtons>bâtir cotons>cotir
+present indicative	132	tez	tir	0	7	drop	; aboutez>aboutir bâtez>bâtir cotez>cotir
+present indicative	133	tent	tir	0	7	drop	; aboutent>aboutir bâtent>bâtir cotent>cotir
+present indicative	171	cours	dormir	0	3	drop	; cours>dormir encours>endormir recours>redormir
+present indicative	172	court	dormir	0	3	drop	; court>dormir encourt>endormir recourt>redormir
+present indicative	173	courons	dormir	0	3	drop	; courons>dormir encourons>endormir recourons>redormir
+present indicative	174	courez	dormir	0	3	drop	; courez>dormir encourez>endormir recourez>redormir
+present indicative	175	courent	dormir	0	3	drop	; courent>dormir encourent>endormir recourent>redormir
+present indicative	191	ois	ouïr	1	0	keep	ois>ouïr ;
+present indicative	194	oyez	ouïr	1	0	keep	oyez>ouïr ;
+present indicative	195	oient	ouïr	1	0	keep	oient>ouïr ;
+present indicative	196	gis	gésir	1	0	keep	gis>gésir ;
+present indicative	198	gisons	gésir	1	0	keep	gisons>gésir ;
+present indicative	199	gisez	gésir	1	0	keep	gisez>gésir ;
+present indicative	200	gisent	gésir	1	0	keep	gisent>gésir ;
+present indicative	210	voient	voir	1	1	drop	avoient>avoir ; recevoient>recevoir
+present indicative	246	soyons	seoir	0	1	drop	; soyons>seoir
+present indicative	247	soyez	seoir	0	1	drop	; soyez>seoir
+present indicative	248	soient	seoir	0	1	drop	; soient>seoir
+present indicative	254	sied	seoir	2	0	keep	messied>messeoir sied>seoir ;
+present indicative	257	choyons	choir	1	0	keep	choyons>choir ;
+present indicative	258	choyez	choir	1	0	keep	choyez>choir ;
+present indicative	259	choient	choir	1	0	keep	choient>choir ;
+present indicative	261	échet	échoir	1	0	keep	déchet>déchoir ;
+present indicative	291	prenent	prendre	0	1	drop	; prenent>prendre
+present indicative	322	rais	raire	4	1	drop-first	rentrais>rentraire ; attrais>attraire brais>braire rais>raire ; rentrais>rentraire
+present indicative	323	rait	raire	3	1	drop-first	rentrait>rentraire ; attrait>attraire brait>braire retrait>retraire ; rentrait>rentraire
+present indicative	324	rayons	raire	4	0	keep	attrayons>attraire brayons>braire rayons>raire ;
+present indicative	325	rayez	raire	4	0	keep	attrayez>attraire brayez>braire rayez>raire ;
+present indicative	326	raient	raire	4	1	drop-first	rentraient>rentraire ; attraient>attraire braient>braire raient>raire ; rentraient>rentraire
+present indicative	332	plais	faire	0	2	drop	; déplais>défaire plais>faire
+present indicative	333	plait	faire	0	1	drop	; plait>faire
+present indicative	334	plaisons	faire	0	2	drop	; déplaisons>défaire plaisons>faire
+present indicative	335	plaisez	faire	0	2	drop	; déplaisez>défaire plaisez>faire
+present indicative	336	plaisent	faire	0	2	drop	; déplaisent>défaire plaisent>faire
+present indicative	343	ois	oître	2	1	keep	connois>connoître(connaître) reconnois>reconnoître(reconnaître) ; crois>croître
+present indicative	344	oît	oître	0	2	drop	; connoît>connoître(connaître) reconnoît>reconnoître(reconnaître)
+present indicative	345	oit	oître	0	1	drop	; croit>croître
+present indicative	346	oissons	oître	2	0	keep	connoissons>connoître(connaître) reconnoissons>reconnoître(reconnaître) ;
+present indicative	347	oissez	oître	2	0	keep	connoissez>connoître(connaître) reconnoissez>reconnoître(reconnaître) ;
+present indicative	348	oissent	oître	2	0	keep	connoissent>connoître(connaître) reconnoissent>reconnoître(reconnaître) ;
+present indicative	349	crois	croire	2	1	keep	mécrois>mécroire recrois>recroire ; accrois>accroire
+present indicative	350	croît	croire	0	3	drop	; accroît>accroire croît>croire recroît>recroire
+present indicative	351	croit	croire	2	1	keep	mécroit>mécroire recroit>recroire ; accroit>accroire
+present indicative	352	croyons	croire	2	0	keep	mécroyons>mécroire recroyons>recroire ;
+present indicative	353	croyez	croire	2	0	keep	mécroyez>mécroire recroyez>recroire ;
+present indicative	354	croient	croire	2	0	keep	mécroient>mécroire recroient>recroire ;
+present indicative	363	closent	croire	0	2	drop	; closent>croire reclosent>recroire
+present indicative	369	sous	soudre	1	0	keep	sous>soudre ;
+present indicative	370	sout	soudre	1	0	keep	sout>soudre ;
+present indicative	371	solvons	soudre	2	0	keep	resolvons>resoudre solvons>soudre ;
+present indicative	372	solvez	soudre	2	0	keep	resolvez>resoudre solvez>soudre ;
+present indicative	373	solvent	soudre	2	0	keep	resolvent>resoudre solvent>soudre ;
+present indicative	384	is	vivre	0	2	drop	; is>vivre suris>survivre
+present indicative	385	it	vivre	0	1	drop	; it>vivre
+present indicative	401	rions	rire	0	4	drop	; décrions>décrire escrions>escrire(écrire) récrions>récrire(réécrire)
+present indicative	402	riez	rire	0	4	drop	; décriez>décrire escriez>escrire(écrire) récriez>récrire(réécrire)
+present indicative	403	rient	rire	0	4	drop	; décrient>décrire escrient>escrire(écrire) récrient>récrire(réécrire)
+present indicative	417	cis	cire	2	1	keep	circoncis>circoncire occis>occire ; décis>décire(décirer)
+present indicative	418	cit	cire	1	0	keep	circoncit>circoncire ;
+present indicative	419	cisons	cire	1	0	keep	circoncisons>circoncire ;
+present indicative	420	cisez	cire	1	0	keep	circoncisez>circoncire ;
+present indicative	421	cisent	cire	1	0	keep	circoncisent>circoncire ;
+present indicative	424	frisons	frire	0	1	drop	; frisons>frire
+present indicative	425	frisez	frire	0	1	drop	; frisez>frire
+present indicative	426	frisent	frire	0	1	drop	; frisent>frire
+imperfect indicative	5	avais	avoir	1	0	keep	havais>havoir(avoir) ;
+imperfect indicative	6	avait	avoir	1	0	keep	havait>havoir(avoir) ;
+imperfect indicative	7	avions	avoir	1	0	keep	havions>havoir(avoir) ;
+imperfect indicative	8	aviez	avoir	1	0	keep	haviez>havoir(avoir) ;
+imperfect indicative	9	avaient	avoir	1	0	keep	havaient>havoir(avoir) ;
+imperfect indicative	46	érais	érir	0	2	drop	; attérais>attérir(atterrir) renchérais>renchérir
+imperfect indicative	47	érait	érir	0	2	drop	; attérait>attérir(atterrir) renchérait>renchérir
+imperfect indicative	48	érions	érir	0	3	drop	; attérions>attérir(atterrir) férions>férir renchérions>renchérir
+imperfect indicative	49	ériez	érir	0	3	drop	; attériez>attérir(atterrir) fériez>férir renchériez>renchérir
+imperfect indicative	50	éraient	érir	0	2	drop	; attéraient>attérir(atterrir) renchéraient>renchérir
+imperfect indicative	51	tais	tir	0	8	drop	; aboutais>aboutir bâtais>bâtir cotais>cotir
+imperfect indicative	52	tait	tir	0	7	drop	; aboutait>aboutir bâtait>bâtir cotait>cotir
+imperfect indicative	53	tions	tir	0	8	drop	; aboutions>aboutir bâtions>bâtir cotions>cotir
+imperfect indicative	54	tiez	tir	0	7	drop	; aboutiez>aboutir bâtiez>bâtir cotiez>cotir
+imperfect indicative	55	taient	tir	0	7	drop	; aboutaient>aboutir bâtaient>bâtir cotaient>cotir
+imperfect indicative	91	courais	dormir	0	3	drop	; courais>dormir encourais>endormir recourais>redormir
+imperfect indicative	92	courait	dormir	0	3	drop	; courait>dormir encourait>endormir recourait>redormir
+imperfect indicative	93	courions	dormir	0	3	drop	; courions>dormir encourions>endormir recourions>redormir
+imperfect indicative	94	couriez	dormir	0	3	drop	; couriez>dormir encouriez>endormir recouriez>redormir
+imperfect indicative	95	couraient	dormir	0	3	drop	; couraient>dormir encouraient>endormir recouraient>redormir
+imperfect indicative	116	gisais	gésir	1	0	keep	gisais>gésir ;
+imperfect indicative	117	gisait	gésir	1	0	keep	gisait>gésir ;
+imperfect indicative	118	gisions	gésir	1	0	keep	gisions>gésir ;
+imperfect indicative	119	gisiez	gésir	1	0	keep	gisiez>gésir ;
+imperfect indicative	120	gisaient	gésir	1	0	keep	gisaient>gésir ;
+imperfect indicative	153	valais	vouloir	0	1	drop	; valais>vouloir
+imperfect indicative	154	valait	vouloir	0	1	drop	; valait>vouloir
+imperfect indicative	155	valions	vouloir	0	1	drop	; valions>vouloir
+imperfect indicative	156	valiez	vouloir	0	1	drop	; valiez>vouloir
+imperfect indicative	157	valaient	vouloir	0	1	drop	; valaient>vouloir
+imperfect indicative	164	seyait	seoir	2	0	keep	messeyait>messeoir seyait>seoir ;
+imperfect indicative	167	seyaient	seoir	2	0	keep	messeyaient>messeoir seyaient>seoir ;
+imperfect indicative	171	soyiez	seoir	0	1	drop	; soyiez>seoir
+imperfect indicative	178	sied	seoir	2	0	keep	messied>messeoir sied>seoir ;
+imperfect indicative	179	siéent	seoir	2	0	keep	messiéent>messeoir siéent>seoir ;
+imperfect indicative	180	échoyait	échoir	1	0	keep	échoyait>échoir ;
+imperfect indicative	181	échoyaient	échoir	1	0	keep	échoyaient>échoir ;
+imperfect indicative	242	rayais	raire	4	0	keep	attrayais>attraire brayais>braire rayais>raire ;
+imperfect indicative	244	rayions	raire	4	0	keep	attrayions>attraire brayions>braire rayions>raire ;
+imperfect indicative	245	rayiez	raire	4	0	keep	attrayiez>attraire brayiez>braire rayiez>raire ;
+imperfect indicative	246	rayaient	raire	4	0	keep	attrayaient>attraire brayaient>braire rayaient>raire ;
+imperfect indicative	252	plaisais	faire	0	2	drop	; déplaisais>défaire plaisais>faire
+imperfect indicative	253	plaisait	faire	0	2	drop	; déplaisait>défaire plaisait>faire
+imperfect indicative	254	plaisions	faire	0	2	drop	; déplaisions>défaire plaisions>faire
+imperfect indicative	255	plaisiez	faire	0	2	drop	; déplaisiez>défaire plaisiez>faire
+imperfect indicative	256	plaisaient	faire	0	2	drop	; déplaisaient>défaire plaisaient>faire
+imperfect indicative	262	oissais	oître	2	0	keep	connoissais>connoître(connaître) reconnoissais>reconnoître(reconnaître) ;
+imperfect indicative	263	oissait	oître	2	0	keep	connoissait>connoître(connaître) reconnoissait>reconnoître(reconnaître) ;
+imperfect indicative	264	oissions	oître	2	0	keep	connoissions>connoître(connaître) reconnoissions>reconnoître(reconnaître) ;
+imperfect indicative	265	oissiez	oître	2	0	keep	connoissiez>connoître(connaître) reconnoissiez>reconnoître(reconnaître) ;
+imperfect indicative	266	oissaient	oître	2	0	keep	connoissaient>connoître(connaître) reconnoissaient>reconnoître(reconnaître) ;
+imperfect indicative	267	croyais	croire	2	0	keep	mécroyais>mécroire recroyais>recroire ;
+imperfect indicative	268	croyait	croire	2	0	keep	mécroyait>mécroire recroyait>recroire ;
+imperfect indicative	269	croyions	croire	2	0	keep	mécroyions>mécroire recroyions>recroire ;
+imperfect indicative	270	croyiez	croire	2	0	keep	mécroyiez>mécroire recroyiez>recroire ;
+imperfect indicative	271	croyaient	croire	2	0	keep	mécroyaient>mécroire recroyaient>recroire ;
+imperfect indicative	282	solvais	soudre	1	0	keep	solvais>soudre ;
+imperfect indicative	283	solvait	soudre	1	0	keep	solvait>soudre ;
+imperfect indicative	284	solvions	soudre	1	0	keep	solvions>soudre ;
+imperfect indicative	285	solviez	soudre	1	0	keep	solviez>soudre ;
+imperfect indicative	286	solvaient	soudre	1	0	keep	solvaient>soudre ;
+imperfect indicative	312	riais	rire	0	3	drop	; décriais>décrire récriais>récrire(réécrire) écriais>écrire
+imperfect indicative	313	riait	rire	0	3	drop	; décriait>décrire récriait>récrire(réécrire) écriait>écrire
+imperfect indicative	314	riions	rire	0	4	drop	; décriions>décrire escriions>escrire(écrire) récriions>récrire(réécrire)
+imperfect indicative	315	riiez	rire	0	4	drop	; décriiez>décrire escriiez>escrire(écrire) récriiez>récrire(réécrire)
+imperfect indicative	316	riaient	rire	0	3	drop	; décriaient>décrire récriaient>récrire(réécrire) écriaient>écrire
+imperfect indicative	332	cisais	cire	1	0	keep	circoncisais>circoncire ;
+imperfect indicative	333	cisait	cire	1	0	keep	circoncisait>circoncire ;
+imperfect indicative	334	cisions	cire	1	1	drop	circoncisions>circoncire ; décisions>décire(décirer)
+imperfect indicative	335	cisiez	cire	1	0	keep	circoncisiez>circoncire ;
+imperfect indicative	336	cisaient	cire	1	0	keep	circoncisaient>circoncire ;
+imperfect indicative	337	frisais	frire	0	1	drop	; frisais>frire
+imperfect indicative	338	frisait	frire	1	0	keep	frisait>frire ;
+imperfect indicative	339	frisions	frire	0	1	drop	; frisions>frire
+imperfect indicative	340	frisiez	frire	0	1	drop	; frisiez>frire
+imperfect indicative	341	frisaient	frire	0	1	drop	; frisaient>frire
+future	6	aurai	avoir	1	0	keep	haurai>havoir(avoir) ;
+future	7	auras	avoir	1	0	keep	hauras>havoir(avoir) ;
+future	8	aura	avoir	1	0	keep	haura>havoir(avoir) ;
+future	9	aurons	avoir	1	0	keep	haurons>havoir(avoir) ;
+future	10	aurez	avoir	1	0	keep	haurez>havoir(avoir) ;
+future	11	auront	avoir	1	0	keep	hauront>havoir(avoir) ;
+future	132	ïrai	ïr	2	0	keep	amuïrai>amuïr ouïrai>ouïr ;
+future	133	ïras	ïr	2	0	keep	amuïras>amuïr ouïras>ouïr ;
+future	134	ïra	ïr	2	0	keep	amuïra>amuïr ouïra>ouïr ;
+future	135	ïrons	ïr	2	0	keep	amuïrons>amuïr ouïrons>ouïr ;
+future	136	ïrez	ïr	2	0	keep	amuïrez>amuïr ouïrez>ouïr ;
+future	137	ïront	ïr	2	0	keep	amuïront>amuïr ouïront>ouïr ;
+future	138	irai	aller	0	2	drop	; cirai>caller dirai>daller
+future	139	iras	aller	0	2	drop	; ciras>caller diras>daller
+future	140	ira	aller	0	2	drop	; cira>caller dira>daller
+future	141	irons	aller	0	2	drop	; cirons>caller dirons>daller
+future	142	irez	aller	0	2	drop	; cirez>caller direz>daller
+future	143	iront	aller	0	1	drop	; diront>daller
+future	149	errai	érir	0	3	drop	; atterrai>attérir(atterrir) cherrai>chérir ferrai>férir
+future	150	erras	érir	0	3	drop	; atterras>attérir(atterrir) cherras>chérir ferras>férir
+future	151	erra	érir	0	3	drop	; atterra>attérir(atterrir) cherra>chérir ferra>férir
+future	152	errons	érir	0	4	drop	; atterrons>attérir(atterrir) cherrons>chérir ferrons>férir
+future	153	errez	érir	0	2	drop	; atterrez>attérir(atterrir) ferrez>férir
+future	154	erront	érir	0	1	drop	; cherront>chérir
+future	203	courrai	dormir	0	3	drop	; courrai>dormir encourrai>endormir recourrai>redormir
+future	204	courras	dormir	0	3	drop	; courras>dormir encourras>endormir recourras>redormir
+future	205	courra	dormir	0	3	drop	; courra>dormir encourra>endormir recourra>redormir
+future	206	courrons	dormir	0	3	drop	; courrons>dormir encourrons>endormir recourrons>redormir
+future	207	courrez	dormir	0	3	drop	; courrez>dormir encourrez>endormir recourrez>redormir
+future	208	courront	dormir	0	3	drop	; courront>dormir encourront>endormir recourront>redormir
+future	215	orrai	ouïr	1	0	keep	orrai>ouïr ;
+future	217	orras	ouïr	1	0	keep	orras>ouïr ;
+future	218	orra	ouïr	1	0	keep	orra>ouïr ;
+future	219	orrons	ouïr	1	0	keep	orrons>ouïr ;
+future	221	orront	ouïr	1	0	keep	orront>ouïr ;
+future	291	siéra	seoir	2	0	keep	messiéra>messeoir siéra>seoir ;
+future	292	siéront	seoir	2	0	keep	messiéront>messeoir siéront>seoir ;
+future	299	cherrai	choir	1	0	keep	cherrai>choir ;
+future	300	cherras	choir	1	0	keep	cherras>choir ;
+future	301	cherra	choir	1	0	keep	cherra>choir ;
+future	304	cherront	choir	1	0	keep	cherront>choir ;
+future	371	rairai	raire	3	0	keep	attrairai>attraire brairai>braire retrairai>retraire ;
+future	372	rairas	raire	3	0	keep	attrairas>attraire brairas>braire retrairas>retraire ;
+future	373	raira	raire	3	0	keep	attraira>attraire braira>braire retraira>retraire ;
+future	374	rairons	raire	3	0	keep	attrairons>attraire brairons>braire retrairons>retraire ;
+future	375	rairez	raire	3	0	keep	attrairez>attraire brairez>braire retrairez>retraire ;
+future	376	rairont	raire	3	0	keep	attrairont>attraire brairont>braire retrairont>retraire ;
+future	395	oîtrai	oître	2	0	keep	connoîtrai>connoître(connaître) reconnoîtrai>reconnoître(reconnaître) ;
+future	396	oîtras	oître	2	0	keep	connoîtras>connoître(connaître) reconnoîtras>reconnoître(reconnaître) ;
+future	397	oîtra	oître	2	0	keep	connoîtra>connoître(connaître) reconnoîtra>reconnoître(reconnaître) ;
+future	398	oîtrons	oître	2	0	keep	connoîtrons>connoître(connaître) reconnoîtrons>reconnoître(reconnaître) ;
+future	399	oîtrez	oître	2	0	keep	connoîtrez>connoître(connaître) reconnoîtrez>reconnoître(reconnaître) ;
+future	400	oîtront	oître	2	0	keep	connoîtront>connoître(connaître) reconnoîtront>reconnoître(reconnaître) ;
+future	401	croirai	croire	2	0	keep	mécroirai>mécroire recroirai>recroire ;
+future	402	croiras	croire	2	0	keep	mécroiras>mécroire recroiras>recroire ;
+future	403	croira	croire	2	0	keep	mécroira>mécroire recroira>recroire ;
+future	404	croirons	croire	2	0	keep	mécroirons>mécroire recroirons>recroire ;
+future	405	croirez	croire	2	0	keep	mécroirez>mécroire recroirez>recroire ;
+future	406	croiront	croire	2	0	keep	mécroiront>mécroire recroiront>recroire ;
+future	425	soudrai	soudre	1	0	keep	soudrai>soudre ;
+future	426	soudras	soudre	1	0	keep	soudras>soudre ;
+future	427	soudra	soudre	1	0	keep	soudra>soudre ;
+future	428	soudrons	soudre	1	0	keep	soudrons>soudre ;
+future	429	soudrez	soudre	1	0	keep	soudrez>soudre ;
+future	430	soudront	soudre	1	0	keep	soudront>soudre ;
+future	485	cirai	cire	1	0	keep	circoncirai>circoncire ;
+future	486	ciras	cire	1	0	keep	circonciras>circoncire ;
+future	487	cira	cire	1	0	keep	circoncira>circoncire ;
+future	488	cirons	cire	1	0	keep	circoncirons>circoncire ;
+future	489	cirez	cire	1	0	keep	circoncirez>circoncire ;
+future	490	ciront	cire	1	0	keep	circonciront>circoncire ;
+imperative present	3	aie	avoir	2	1	keep	haie>havoir(avoir) raie>ravoir ; saie>savoir
+imperative present	4	ayons	avoir	2	1	drop-first	sayons>savoir ; hayons>havoir(avoir) rayons>ravoir ; sayons>savoir
+imperative present	5	ayez	avoir	2	0	keep	hayez>havoir(avoir) rayez>ravoir ;
+imperative present	9	ce	er	0	27	drop	; avarice>avarier dolce>doler douce>douer
+imperative present	10	çons	er	0	12	drop	; forçons>forer garçons>garer murçons>murer
+imperative present	11	cez	er	0	7	drop	; forcez>forer mucez>muer pincez>piner
+imperative present	97	ellons	eler	0	5	drop	; gellons>geler interpellons>interpeler pellons>peler
+imperative present	98	ellez	eler	0	5	drop	; gellez>geler interpellez>interpeler pellez>peler
+imperative present	100	ettons	eter	0	1	drop	; jettons>jeter
+imperative present	101	ettez	eter	0	1	drop	; jettez>jeter
+imperative present	106	étons	eter	0	1	drop	; décollétons>décolleter
+imperative present	107	étez	eter	0	2	drop	; arrétez>arreter(arrêter) décollétez>décolleter
+imperative present	123	ïs	ïr	3	0	keep	amuïs>amuïr inouïs>inouïr ouïs>ouïr ;
+imperative present	124	ïssons	ïr	2	0	keep	amuïssons>amuïr ouïssons>ouïr ;
+imperative present	125	ïssez	ïr	2	0	keep	amuïssez>amuïr ouïssez>ouïr ;
+imperative present	135	iers	érir	0	1	drop	; fiers>férir
+imperative present	136	érons	érir	0	3	drop	; attérons>attérir(atterrir) férons>férir renchérons>renchérir
+imperative present	137	érez	érir	0	2	drop	; attérez>attérir(atterrir) renchérez>renchérir
+imperative present	138	s	tir	0	13	drop	; advers>advertir(avertir) amas>amatir avers>avertir
+imperative present	139	tons	tir	0	8	drop	; aboutons>aboutir bâtons>bâtir cotons>cotir
+imperative present	140	tez	tir	0	7	drop	; aboutez>aboutir bâtez>bâtir cotez>cotir
+imperative present	162	cours	dormir	0	3	drop	; cours>dormir encours>endormir recours>redormir
+imperative present	163	courons	dormir	0	3	drop	; courons>dormir encourons>endormir recourons>redormir
+imperative present	164	courez	dormir	0	3	drop	; courez>dormir encourez>endormir recourez>redormir
+imperative present	174	ois	ouïr	1	0	keep	ois>ouïr ;
+imperative present	176	oyez	ouïr	1	0	keep	oyez>ouïr ;
+imperative present	201	soyons	seoir	0	1	drop	; soyons>seoir
+imperative present	202	soyez	seoir	0	1	drop	; soyez>seoir
+imperative present	242	rais	raire	4	1	drop-first	rentrais>rentraire ; attrais>attraire brais>braire rais>raire ; rentrais>rentraire
+imperative present	243	rayons	raire	4	0	keep	attrayons>attraire brayons>braire rayons>raire ;
+imperative present	244	rayez	raire	4	0	keep	attrayez>attraire brayez>braire rayez>raire ;
+imperative present	248	plais	faire	0	2	drop	; déplais>défaire plais>faire
+imperative present	249	plaisons	faire	0	2	drop	; déplaisons>défaire plaisons>faire
+imperative present	250	plaisez	faire	0	2	drop	; déplaisez>défaire plaisez>faire
+imperative present	254	ois	oître	2	1	keep	connois>connoître(connaître) reconnois>reconnoître(reconnaître) ; crois>croître
+imperative present	255	oissons	oître	2	0	keep	connoissons>connoître(connaître) reconnoissons>reconnoître(reconnaître) ;
+imperative present	256	oissez	oître	2	0	keep	connoissez>connoître(connaître) reconnoissez>reconnoître(reconnaître) ;
+imperative present	257	crois	croire	2	1	keep	mécrois>mécroire recrois>recroire ; accrois>accroire
+imperative present	258	croyons	croire	2	0	keep	mécroyons>mécroire recroyons>recroire ;
+imperative present	259	croyez	croire	2	0	keep	mécroyez>mécroire recroyez>recroire ;
+imperative present	267	sous	soudre	1	0	keep	sous>soudre ;
+imperative present	268	solvons	soudre	2	0	keep	resolvons>resoudre solvons>soudre ;
+imperative present	269	solvez	soudre	2	0	keep	resolvez>resoudre solvez>soudre ;
+imperative present	276	is	vivre	0	2	drop	; is>vivre suris>survivre
+imperative present	286	rions	rire	0	4	drop	; décrions>décrire escrions>escrire(écrire) récrions>récrire(réécrire)
+imperative present	287	riez	rire	0	4	drop	; décriez>décrire escriez>escrire(écrire) récriez>récrire(réécrire)
+imperative present	297	cis	cire	2	1	keep	circoncis>circoncire occis>occire ; décis>décire(décirer)
+imperative present	298	cisons	cire	1	0	keep	circoncisons>circoncire ;
+imperative present	299	cisez	cire	1	0	keep	circoncisez>circoncire ;
+imperative present	301	frisons	frire	0	1	drop	; frisons>frire
+imperative present	302	frisez	frire	0	1	drop	; frisez>frire
+Conditional	6	aurais	avoir	1	0	keep	haurais>havoir(avoir) ;
+Conditional	7	aurais	avoir	1	0	keep	haurais>havoir(avoir) ;
+Conditional	8	aurait	avoir	1	0	keep	haurait>havoir(avoir) ;
+Conditional	9	aurions	avoir	1	0	keep	haurions>havoir(avoir) ;
+Conditional	10	auriez	avoir	1	0	keep	hauriez>havoir(avoir) ;
+Conditional	11	auraient	avoir	1	0	keep	hauraient>havoir(avoir) ;
+Conditional	26	géraient	ger	0	1	drop	; cogéraient>coger
+Conditional	217	irais	aller	0	2	drop	; cirais>caller dirais>daller
+Conditional	218	irait	aller	0	2	drop	; cirait>caller dirait>daller
+Conditional	219	irions	aller	0	2	drop	; cirions>caller dirions>daller
+Conditional	220	iriez	aller	0	2	drop	; ciriez>caller diriez>daller
+Conditional	221	iraient	aller	0	2	drop	; ciraient>caller diraient>daller
+Conditional	227	ierais	érir	0	2	drop	; chierais>chérir fierais>férir
+Conditional	228	ierait	érir	0	2	drop	; chierait>chérir fierait>férir
+Conditional	229	irions	érir	0	1	drop	; attirions>attérir(atterrir)
+Conditional	230	iriez	érir	0	1	drop	; attiriez>attérir(atterrir)
+Conditional	231	ièrent	érir	0	2	drop	; chièrent>chérir fièrent>férir
+Conditional	232	irais	tir	0	1	drop	; tarirais>tartir
+Conditional	233	irait	tir	0	1	drop	; tarirait>tartir
+Conditional	234	irions	tir	0	1	drop	; taririons>tartir
+Conditional	235	iriez	tir	0	1	drop	; taririez>tartir
+Conditional	236	raient	tir	0	3	drop	; comparaient>compatir desserraient>dessertir serraient>sertir
+Conditional	297	ouïrais	ouïr	1	0	keep	ouïrais>ouïr ;
+Conditional	298	ouïrait	ouïr	1	0	keep	ouïrait>ouïr ;
+Conditional	299	ouïrions	ouïr	1	0	keep	ouïrions>ouïr ;
+Conditional	300	ouïriez	ouïr	1	0	keep	ouïriez>ouïr ;
+Conditional	301	ouïraient	ouïr	1	0	keep	ouïraient>ouïr ;
+Conditional	347	serais	seoir	0	1	drop	; serais>seoir
+Conditional	348	serait	seoir	0	1	drop	; serait>seoir
+Conditional	349	serions	seoir	0	1	drop	; serions>seoir
+Conditional	350	seriez	seoir	0	1	drop	; seriez>seoir
+Conditional	351	seraient	seoir	0	1	drop	; seraient>seoir
+Conditional	357	siéraient	seoir	2	0	keep	messiéraient>messeoir siéraient>seoir ;
+Conditional	428	rairais	raire	3	0	keep	attrairais>attraire brairais>braire retrairais>retraire ;
+Conditional	429	rairait	raire	3	0	keep	attrairait>attraire brairait>braire retrairait>retraire ;
+Conditional	430	rairions	raire	3	0	keep	attrairions>attraire brairions>braire retrairions>retraire ;
+Conditional	431	rairiez	raire	3	0	keep	attrairiez>attraire brairiez>braire retrairiez>retraire ;
+Conditional	432	rairaient	raire	3	0	keep	attrairaient>attraire brairaient>braire retrairaient>retraire ;
+Conditional	438	plairais	faire	0	2	drop	; déplairais>défaire plairais>faire
+Conditional	439	plairait	faire	0	2	drop	; déplairait>défaire plairait>faire
+Conditional	440	plairions	faire	0	2	drop	; déplairions>défaire plairions>faire
+Conditional	441	plairiez	faire	0	2	drop	; déplairiez>défaire plairiez>faire
+Conditional	442	plairaient	faire	0	2	drop	; déplairaient>défaire plairaient>faire
+Conditional	448	oîtrais	oître	2	0	keep	connoîtrais>connoître(connaître) reconnoîtrais>reconnoître(reconnaître) ;
+Conditional	449	oîtrait	oître	2	0	keep	connoîtrait>connoître(connaître) reconnoîtrait>reconnoître(reconnaître) ;
+Conditional	450	oîtrions	oître	2	0	keep	connoîtrions>connoître(connaître) reconnoîtrions>reconnoître(reconnaître) ;
+Conditional	451	oîtriez	oître	2	0	keep	connoîtriez>connoître(connaître) reconnoîtriez>reconnoître(reconnaître) ;
+Conditional	452	oîtraient	oître	2	0	keep	connoîtraient>connoître(connaître) reconnoîtraient>reconnoître(reconnaître) ;
+Conditional	453	croirais	croire	2	0	keep	mécroirais>mécroire recroirais>recroire ;
+Conditional	454	croirait	croire	2	0	keep	mécroirait>mécroire recroirait>recroire ;
+Conditional	455	croirions	croire	2	0	keep	mécroirions>mécroire recroirions>recroire ;
+Conditional	456	croiriez	croire	2	0	keep	mécroiriez>mécroire recroiriez>recroire ;
+Conditional	457	croiraient	croire	2	0	keep	mécroiraient>mécroire recroiraient>recroire ;
+Conditional	473	soudrais	soudre	1	0	keep	soudrais>soudre ;
+Conditional	474	soudrait	soudre	1	0	keep	soudrait>soudre ;
+Conditional	475	soudrions	soudre	1	0	keep	soudrions>soudre ;
+Conditional	476	soudriez	soudre	1	0	keep	soudriez>soudre ;
+Conditional	477	soudraient	soudre	1	0	keep	soudraient>soudre ;
+Conditional	523	cirais	cire	1	0	keep	circoncirais>circoncire ;
+Conditional	524	cirait	cire	1	0	keep	circoncirait>circoncire ;
+Conditional	525	cirions	cire	1	0	keep	circoncirions>circoncire ;
+Conditional	526	ciriez	cire	1	0	keep	circonciriez>circoncire ;
+Conditional	527	ciraient	cire	1	0	keep	circonciraient>circoncire ;
+Preterite	0	fus	être	1	0	keep	refus>reêtre(re-être,reêtre) ;
+Preterite	1	fus	être	1	0	keep	refus>reêtre(re-être,reêtre) ;
+Preterite	6	eus	avoir	1	0	keep	heus>havoir(avoir) ;
+Preterite	7	eus	avoir	1	0	keep	heus>havoir(avoir) ;
+Preterite	8	eut	avoir	1	1	drop	heut>havoir(avoir) ; seut>savoir
+Preterite	9	eûmes	avoir	1	0	keep	heûmes>havoir(avoir) ;
+Preterite	10	eûtes	avoir	1	0	keep	heûtes>havoir(avoir) ;
+Preterite	11	eurent	avoir	1	1	drop	heurent>havoir(avoir) ; asseurent>assavoir
+Preterite	200	ouïs	ouïr	2	0	keep	inouïs>inouïr ouïs>ouïr ;
+Preterite	201	ouït	ouïr	1	0	keep	ouït>ouïr ;
+Preterite	202	ouïmes	ouïr	1	0	keep	ouïmes>ouïr ;
+Preterite	203	ouïtes	ouïr	1	0	keep	ouïtes>ouïr ;
+Preterite	204	ouïrent	ouïr	1	0	keep	ouïrent>ouïr ;
+Preterite	205	gis	gésir	1	0	keep	gis>gésir ;
+Preterite	208	gîtes	gésir	0	1	drop	; gîtes>gésir
+Preterite	215	vis	voir	0	4	drop	; avis>avoir devis>devoir havis>havoir(avoir)
+Preterite	216	vit	voir	0	2	drop	; havit>havoir(avoir) ravit>ravoir
+Preterite	217	vîmes	voir	0	2	drop	; havîmes>havoir(avoir) ravîmes>ravoir
+Preterite	218	vîtes	voir	0	2	drop	; havîtes>havoir(avoir) ravîtes>ravoir
+Preterite	219	virent	voir	0	2	drop	; havirent>havoir(avoir) ravirent>ravoir
+Preterite	253	seut	seoir	0	1	drop	; seut>seoir
+Preterite	256	seurent	seoir	0	1	drop	; asseurent>asseoir
+Preterite	262	chus	choir	1	0	keep	chus>choir ;
+Preterite	263	chut	choir	1	0	keep	chut>choir ;
+Preterite	264	chûmes	choir	1	0	keep	chûmes>choir ;
+Preterite	265	chûtes	choir	1	0	keep	chûtes>choir ;
+Preterite	266	churent	choir	2	0	keep	churent>choir échurent>échoir ;
+Preterite	327	rais	raire	4	1	drop-first	rentrais>rentraire ; attrais>attraire brais>braire rais>raire ; rentrais>rentraire
+Preterite	328	rait	raire	3	1	drop-negative	rentrait>rentraire ; attrait>attraire brait>braire retrait>retraire ; rentrait>rentraire
+Preterite	329	rayons	raire	4	0	keep	attrayons>attraire brayons>braire rayons>raire ;
+Preterite	330	rayez	raire	4	0	keep	attrayez>attraire brayez>braire rayez>raire ;
+Preterite	331	raient	raire	4	1	drop-first	rentraient>rentraire ; attraient>attraire braient>braire raient>raire ; rentraient>rentraire
+Preterite	352	crus	croire	2	1	keep	mécrus>mécroire recrus>recroire ; accrus>accroire
+Preterite	353	crut	croire	2	1	keep	mécrut>mécroire recrut>recroire ; accrut>accroire
+Preterite	354	crûmes	croire	2	1	keep	mécrûmes>mécroire recrûmes>recroire ; accrûmes>accroire
+Preterite	355	crûtes	croire	2	1	keep	mécrûtes>mécroire recrûtes>recroire ; accrûtes>accroire
+Preterite	356	crurent	croire	2	1	keep	mécrurent>mécroire recrurent>recroire ; accrurent>accroire
+Preterite	372	sous	soudre	1	0	keep	sous>soudre ;
+Preterite	373	sout	soudre	1	0	keep	sout>soudre ;
+Preterite	374	solvons	soudre	2	0	keep	resolvons>resoudre solvons>soudre ;
+Preterite	375	solvez	soudre	2	0	keep	resolvez>resoudre solvez>soudre ;
+Preterite	376	solvent	soudre	2	0	keep	resolvent>resoudre solvent>soudre ;
+Preterite	389	vîmes	vivre	0	2	drop	; revîmes>revivre vîmes>vivre
+Preterite	390	vîtes	vivre	0	2	drop	; revîtes>revivre vîtes>vivre
+Preterite	391	virent	vivre	0	3	drop	; revirent>revivre survirent>survivre virent>vivre
+Preterite	422	cis	cire	2	1	keep	circoncis>circoncire occis>occire ; décis>décire(décirer)
+Preterite	423	cit	cire	1	0	keep	circoncit>circoncire ;
+Preterite	424	cîmes	cire	1	0	keep	circoncîmes>circoncire ;
+Preterite	425	cîtes	cire	1	0	keep	circoncîtes>circoncire ;
+Preterite	434	ûmes	uire	0	3	drop	; dûmes>duire lûmes>luire relûmes>reluire
+Preterite	435	ûtes	uire	0	3	drop	; dûtes>duire lûtes>luire relûtes>reluire
+Preterite	436	urent	uire	0	5	drop	; curent>cuire(cuire,cuirer) durent>duire endurent>enduire
+plural	0	s		1	2	drop	as>a ; ms>m ps>p(Matildas,Socceroos,espèces sonnantes et trébuchantes)
+plural	6	aux	ail	0	1	drop	; aux>ail
+present participle	3	ant	ir	1	43	drop	chauvant>chauvir ; abonnant>abonnir aboutant>aboutir affermant>affermir
+present participle	4	ant	re	2	38	drop	ardant>ardre estant>estre(être) ; accouant>accoure(accourir) aiant>aire(airer) confiant>confire
+present participle	5	ant	oir	5	6	drop	comparant>comparoir doulant>douloir fallant>falloir ; assavant>assavoir avant>avoir chalant>chaloir
+present participle	7	solvant	soudre	2	0	keep	resolvant>resoudre solvant>soudre ;
+present participle	8	ant	dre	0	12	drop	; attenant>attendre(attendre,entendre) détenant>détendre morant>mordre
+present participle	9	rait	raire	3	1	drop-negative	rentrait>rentraire ; attrait>attraire brait>braire retrait>retraire ; rentrait>rentraire
+present participle	10	ant	oir	5	6	drop	comparant>comparoir doulant>douloir fallant>falloir ; assavant>assavoir avant>avoir chalant>chaloir
+present participle	11	ayant	avoir	2	0	keep	hayant>havoir(avoir) rayant>ravoir ;
+present subjunctive	6	sse	ir	0	2	drop	; fusse>fuir rousse>rouir
+present subjunctive	7	sses	ir	0	2	drop	; fusses>fuir rousses>rouir
+present subjunctive	8	t	ir	0	14	drop	; alunt>alunir assot>assoir(asseoir,assoir) brandt>brandir
+present subjunctive	9	ssions	ir	0	1	drop	; fussions>fuir
+present subjunctive	10	ssiez	ir	0	1	drop	; fussiez>fuir
+present subjunctive	11	ssent	ir	0	1	drop	; fussent>fuir
+present subjunctive	18	aie	avoir	2	1	keep	haie>havoir(avoir) raie>ravoir ; saie>savoir
+present subjunctive	19	aies	avoir	2	1	keep	haies>havoir(avoir) raies>ravoir ; saies>savoir
+present subjunctive	20	ait	avoir	1	0	keep	hait>havoir(avoir) ;
+present subjunctive	21	ayons	avoir	2	1	drop-first	sayons>savoir ; hayons>havoir(avoir) rayons>ravoir ; sayons>savoir
+present subjunctive	22	ayez	avoir	2	0	keep	hayez>havoir(avoir) rayez>ravoir ;
+present subjunctive	23	aient	avoir	2	0	keep	haient>havoir(avoir) raient>ravoir ;
+present subjunctive	30	aille	aller	0	2	drop	; baille>baller caille>caller
+present subjunctive	31	ailles	aller	0	2	drop	; bailles>baller cailles>caller
+present subjunctive	32	aille	aller	0	2	drop	; baille>baller caille>caller
+present subjunctive	35	aillent	aller	0	2	drop	; baillent>baller caillent>caller
+present subjunctive	48	sse	re	1	30	drop	circoncisse>circoncire ; accroisse>accroire admisse>admire(admirer) adosse>adore(adorer)
+present subjunctive	49	sses	re	1	30	drop	circoncisses>circoncire ; accroisses>accroire admisses>admire(admirer) adosses>adore(adorer)
+present subjunctive	50	t	re	6	41	drop	attrait>attraire brait>braire circoncit>circoncire ; accot>accore(accorer) accroit>accroire admit>admire(admirer)
+present subjunctive	51	ssions	re	1	24	drop	circoncissions>circoncire ; accroissions>accroire admissions>admire(admirer) adossions>adore(adorer)
+present subjunctive	52	ssiez	re	1	25	drop	circoncissiez>circoncire ; accroissiez>accroire admissiez>admire(admirer) adossiez>adore(adorer)
+present subjunctive	53	ssent	re	1	25	drop	circoncissent>circoncire ; accroissent>accroire admissent>admire(admirer) adossent>adore(adorer)
+present subjunctive	54	ienne	ir	0	4	drop	; bondienne>bondir saurienne>saurir servienne>servir
+present subjunctive	55	iennes	ir	0	4	drop	; bondiennes>bondir sauriennes>saurir serviennes>servir
+present subjunctive	56	ienne	ir	0	4	drop	; bondienne>bondir saurienne>saurir servienne>servir
+present subjunctive	57	nions	ir	0	2	drop	; assonions>assoir(asseoir,assoir) régnions>régir
+present subjunctive	58	niez	ir	0	2	drop	; assoniez>assoir(asseoir,assoir) régniez>régir
+present subjunctive	60	sse	indre	0	8	drop	; cesse>ceindre contrasse>contraindre crasse>craindre
+present subjunctive	61	sses	indre	0	9	drop	; cesses>ceindre contrasses>contraindre crasses>craindre
+present subjunctive	62	t	indre	0	12	drop	; cet>ceindre contrat>contraindre crat>craindre
+present subjunctive	63	nions	indre	0	6	drop	; attenions>atteindre détenions>déteindre planions>plaindre
+present subjunctive	64	niez	indre	0	6	drop	; atteniez>atteindre déteniez>déteindre planiez>plaindre
+present subjunctive	68	t	oudre	0	6	drop	; arst>arsoudre(resoudre) ct>coudre mt>moudre
+present subjunctive	74	t	uire	0	4	drop	; ct>cuire(cuire,cuirer) dt>duire lt>luire
+present subjunctive	78	sse	ir	0	2	drop	; fusse>fuir rousse>rouir
+present subjunctive	79	sses	ir	0	2	drop	; fusses>fuir rousses>rouir
+present subjunctive	80	t	ir	0	14	drop	; alunt>alunir assot>assoir(asseoir,assoir) brandt>brandir
+present subjunctive	81	ssions	ir	0	1	drop	; fussions>fuir
+present subjunctive	82	ssiez	ir	0	1	drop	; fussiez>fuir
+present subjunctive	83	ssent	ir	0	1	drop	; fussent>fuir
