@@ -186,9 +186,9 @@
       "description": "Formal honorific command (하십시오체).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ㅅㅣㅂㅅㅣㅇㅗ", "deinflected": "ㅅㅣㄷㅏ", "conditionsIn": [], "conditionsOut": ["-시"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "ㅅㅣㅂㅅㅣㅇㅗ", "deinflected": "ㅅㅣㄷㅏ", "conditionsIn": [], "conditionsOut": ["-시"]},
         {"type": "suffix", "inflected": "ㄱㅖㅅㅣㅂㅅㅣㅇㅗ", "deinflected": "ㄱㅖㅅㅣㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida"]},
-        {"type": "suffix", "inflected": "ㅁㅜㅅㅣㅂㅅㅣㅇㅗ", "deinflected": "ㅁㅜㅅㅣㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida"], "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ㅁㅜㅅㅣㅂㅅㅣㅇㅗ", "deinflected": "ㅁㅜㅅㅣㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida"]},
         {"type": "suffix", "inflected": "ㄷㅡㅅㅣㅂㅅㅣㅇㅗ", "deinflected": "ㄷㅡㅅㅣㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida"]},
         {"type": "suffix", "inflected": "ㅈㅏㅂㅅㅜㅅㅣㅂㅅㅣㅇㅗ", "deinflected": "ㅈㅏㅂㅅㅜㅅㅣㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida"]}
       ]

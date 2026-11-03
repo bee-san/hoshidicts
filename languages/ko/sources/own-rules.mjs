@@ -285,9 +285,9 @@ transform('-(으)세요', '-(으)세요', 'Honorific polite ending (-(으)시- +
 // The honorific verbs 계시다, 주무시다, 드시다 and 잡수시다 have -시- in their
 // dictionary form (as in -(으)세요).
 transform('-(으)십시오', '-(으)십시오', 'Formal honorific command (하십시오체).', [
-    suffix(jamo('십시오'), jamo('시다'), [], ['-시'], {stemMinLength: 1}),
+    suffix(jamo('십시오'), jamo('시다'), [], ['-시']),
     suffix(jamo('계십시오'), jamo('계시다'), [], PRED),
-    suffix(jamo('무십시오'), jamo('무시다'), [], PRED, {stemMinLength: 2}),
+    suffix(jamo('무십시오'), jamo('무시다'), [], PRED),
     suffix(jamo('드십시오'), jamo('드시다'), [], PRED),
     suffix(jamo('잡수십시오'), jamo('잡수시다'), [], PRED),
 ]);

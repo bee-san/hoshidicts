@@ -3642,9 +3642,9 @@
         {"type": "suffix", "inflected": "ㅅㅣㅂㅅㅣㅇㅗ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㅇㅜㅅㅣㅂㅅㅣㅇㅗ", "deinflected": "ㅂㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㄹㅇㅡㅅㅣㅂㅅㅣㅇㅗ", "deinflected": "ㄷㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"], "source": "yomitan"},
-        {"type": "suffix", "inflected": "ㅅㅣㅂㅅㅣㅇㅗ", "deinflected": "ㅅㅣㄷㅏ", "conditionsIn": [], "conditionsOut": ["-시"], "stemMinLength": 1, "source": "own"},
+        {"type": "suffix", "inflected": "ㅅㅣㅂㅅㅣㅇㅗ", "deinflected": "ㅅㅣㄷㅏ", "conditionsIn": [], "conditionsOut": ["-시"], "source": "own"},
         {"type": "suffix", "inflected": "ㄱㅖㅅㅣㅂㅅㅣㅇㅗ", "deinflected": "ㄱㅖㅅㅣㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida"], "source": "own"},
-        {"type": "suffix", "inflected": "ㅁㅜㅅㅣㅂㅅㅣㅇㅗ", "deinflected": "ㅁㅜㅅㅣㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida"], "stemMinLength": 2, "source": "own"},
+        {"type": "suffix", "inflected": "ㅁㅜㅅㅣㅂㅅㅣㅇㅗ", "deinflected": "ㅁㅜㅅㅣㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida"], "source": "own"},
         {"type": "suffix", "inflected": "ㄷㅡㅅㅣㅂㅅㅣㅇㅗ", "deinflected": "ㄷㅡㅅㅣㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida"], "source": "own"},
         {"type": "suffix", "inflected": "ㅈㅏㅂㅅㅜㅅㅣㅂㅅㅣㅇㅗ", "deinflected": "ㅈㅏㅂㅅㅜㅅㅣㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida"], "source": "own"}
       ]
