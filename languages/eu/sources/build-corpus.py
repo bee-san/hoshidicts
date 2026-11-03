@@ -59,6 +59,14 @@ LETTERS = set('abcdefghijklmnopqrstuvwxyzñçü')
 FINITE_TENSES = {'present', 'past', 'cond', 'condpast', 'hyp', 'pot', 'pothyp', 'potpast', 'subj', 'subjpast', 'imp', 'allo', 'allopast'}
 
 
+def short(feats):
+    """A UniMorph feature bundle without its argument features (the
+    transform names the persons): V;ARGABS3;ARGABSSG;PRES;IND -> V;PRES;IND,
+    and INFM for a familiar form."""
+    kept = [f for f in feats.split(';') if not f.startswith('ARG') and f not in ('MASC', 'FEM')]
+    return ';'.join(kept)
+
+
 def key(stratum, form, lemma):
     return hashlib.sha256(f'{SEED}\0{stratum}\0{form}\0{lemma}'.encode()).hexdigest()
 
@@ -147,7 +155,7 @@ def main(argv):
         if stratum.startswith('verb, finite'):
             pool = um.keys() if 'all of' in stratum else [fl for fl in um if fl[0] in subtitles]
             for form, lemma in sample(pool, stratum, quota, taken):
-                rows.append((um[(form, lemma)], form, lemma, 'v', 'unimorph'))
+                rows.append((short(um[(form, lemma)]), form, lemma, 'v', 'unimorph'))
         else:
             pool = kk[stratum]
             for form, lemma in sample(pool.keys(), stratum, quota, taken):
@@ -192,11 +200,11 @@ def main(argv):
         pairs = [fl for fl in sorted(um, key=lambda fl: key('coverage', *fl)) if fl in finite[tid]]
         if pairs:
             form, lemma = pairs[0]
-            coverage.append((um[(form, lemma)], form, lemma, 'v', tid))
+            coverage.append((short(um[(form, lemma)]), form, lemma, 'v', tid))
         else:
             uncovered.append(tid)
     header = [
-        f'# Source: {UNIMORPH}, CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/), by the UniMorph contributors, from English Wiktionary (categories with V; and ARG features);',
+        f'# Source: {UNIMORPH}, CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/), by the UniMorph contributors, from English Wiktionary (categories V;<tense and mood features>, the argument features left out);',
         f'# and {KAIKKI}, CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/) and GFDL, by the Wiktionary contributors, extracted by kaikki.org (wiktextract) (categories N;, ADJ;, V.PTCP;, V;MSDR and V;SHORT).',
         f'# {len(rows)} rows sampled by sources/build-corpus.py ({", ".join(f"{q} {n}" for n, q in STRATA)}); the rows the pack\'s rules reach are in corpus.tsv, the others in gaps.tsv.',
     ]

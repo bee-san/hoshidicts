@@ -147,6 +147,8 @@ const CASES = [
         sg: [['ranzko', 'eranzko']], pl: [['etaranzko', 'etaranzko']], indef: [['taranzko', 'etaranzko']]},
     {id: 'terko', name: 'terminative + -ko', adv: true, stacker: true,
         sg: [['rainoko', 'erainoko']], pl: [['etarainoko', 'etarainoko']], indef: [['tarainoko', 'etarainoko']]},
+    {id: 'insko', name: 'instrumental + -ko (made of, about)', stacker: true,
+        indef: [['zko', 'ezko']]},
     {id: 'par', name: 'partitive', v: true,
         indef: [['rik', 'ik']]},
     {id: 'pro', name: 'prolative',
@@ -285,6 +287,8 @@ function degree() {
     // Suppletive degrees: on (good) - hobe, hoberen; asko (much) - gehiago,
     // gehien, gehiegi; ondo/ongi (well) - hobeto.
     transform('degree-suppletive', 'comparative or superlative (irregular)', 'Irregular degree: hobe (better) and hoberen (best) of on, gehiago, gehien and gehiegi of asko, hobeto (better) of ondo.');
+    // nahiago (rather; nahiago dut, I prefer) is the comparative of nahi (wish).
+    add('comparative', {type: 'wholeWord', inflected: 'nahiago', deinflected: 'nahi', conditionsIn: [], conditionsOut: ['n']});
     for (const [form, lemma, pos] of [['hobe', 'on', 'adj'], ['hoberen', 'on', 'adj'], ['hobeto', 'ondo', 'adv'], ['gehiago', 'asko', 'adj'],
         ['gehien', 'asko', 'adj'], ['gehiegi', 'asko', 'adj'], ['gutxiago', 'gutxi', 'adj'], ['gutxien', 'gutxi', 'adj'], ['txarrago', 'txar', 'adj']]) {
         add('degree-suppletive', {type: 'wholeWord', inflected: form, deinflected: lemma, conditionsIn: ['sg', 'pl'], conditionsOut: [pos, 'adv']});
@@ -304,11 +308,17 @@ function adverbs() {
         stemEndsWith: '[lrsxz]'});
     add('adverb-ko', {type: 'suffix', inflected: 'go', deinflected: '', conditionsIn: ['sg', 'pl'], conditionsOut: ['adv', 'n', 'adj', 'sg'], stemMinLength: 2,
         stemEndsWith: '[n]'});
+    // Distributive -ka: ehunka (by hundreds), bakarka (one by one), taldeka
+    // (in groups), oihuka (shouting).
+    transform('adverb-ka', 'distributive (-ka)', 'Adverb made with -ka from a noun, adjective or numeral: ehunka (by hundreds), bakarka (one by one), taldeka (in groups), oihuka (shouting).');
+    add('adverb-ka', {type: 'suffix', inflected: 'ka', deinflected: '', conditionsIn: [], conditionsOut: ['n', 'adj', 'sg'], stemMinLength: 3,
+        stemEndsWith: '[aeioulnrt]'});
     transform('adverb-tik', 'ablative of an adverb', 'Adverbs take -tik with no -e- after a consonant, and -dik after -n: hortik (from there), gaurtik, hemendik, handik.');
     add('adverb-tik', {type: 'suffix', inflected: 'tik', deinflected: '', conditionsIn: [], conditionsOut: ['adv'], stemMinLength: 2,
         stemEndsWith: '[lrsxz]'});
     add('adverb-tik', {type: 'suffix', inflected: 'dik', deinflected: '', conditionsIn: [], conditionsOut: ['adv'], stemMinLength: 2,
         stemEndsWith: '[n]'});
+    add('adverb-tik', {type: 'wholeWord', inflected: 'geroztik', deinflected: 'gero', conditionsIn: [], conditionsOut: ['adv']});
     // hona, horra, hara: to here, to there; the allatives of hemen, hor, han.
     transform('adverb-place', 'allative, terminative or directive of hemen, hor, han', 'Hona (to here), horra and hara are the allatives of hemen, hor and han; honaino, honantz and the others their terminative and directive.');
     for (const [forms, lemma] of [[['hona', 'honaino', 'honantz'], 'hemen'], [['horra', 'horraino', 'horrantz'], 'hor'], [['hara', 'haraino', 'harantz'], 'han']]) {
@@ -379,10 +389,14 @@ function nonFinite() {
         add('compound', {type: 'wholeWord', inflected: w, deinflected: `${w} izan`, conditionsIn: [], conditionsOut: ['v']});
     }
     transform('future', 'future participle', 'Future (prospective) participle, -ko, or -go after -n (-en after -n and -l in the east: eginen): ikusiko (will see), etorriko, egingo, joango. With an auxiliary it makes the future (ikusiko dut, I will see it).');
-    add('future', {type: 'suffix', inflected: 'ko', deinflected: '', conditionsIn: [], conditionsOut: ['v'], stemMinLength: 2, stemEndsWith: '[aeioul]'});
+    // ü is Souletin (batüko).
+    add('future', {type: 'suffix', inflected: 'ko', deinflected: '', conditionsIn: [], conditionsOut: ['v'], stemMinLength: 2, stemEndsWith: '[aeioulü]'});
     add('future', {type: 'suffix', inflected: 'go', deinflected: '', conditionsIn: [], conditionsOut: ['v'], stemMinLength: 2, stemEndsWith: '[n]'});
     // Navarrese and Lapurdian, and Batua beside -go: -en after -n and -l (eginen, hilen).
     add('future', {type: 'suffix', inflected: 'en', deinflected: '', conditionsIn: [], conditionsOut: ['v'], stemMinLength: 2, stemEndsWith: '[nl]'});
+    // beharko (beharko dut, I will have to) is the future of behar izan,
+    // which dictionaries list as behar (need).
+    add('future', {type: 'wholeWord', inflected: 'beharko', deinflected: 'behar', conditionsIn: [], conditionsOut: ['n', 'adj']});
     transform('resultative', 'resultative participle (-ta, -da)', 'Participle of a state or a completed action, -ta, or -da after -n and -l: ikusita (having seen), nekatuta (tired), eginda (done), hilda (dead).');
     add('resultative', {type: 'suffix', inflected: 'ta', deinflected: '', conditionsIn: [], conditionsOut: ['v'], stemMinLength: 2, stemEndsWith: VOWEL});
     add('resultative', {type: 'suffix', inflected: 'da', deinflected: '', conditionsIn: [], conditionsOut: ['v'], stemMinLength: 2, stemEndsWith: '[ln]'});
@@ -401,7 +415,7 @@ function nonFinite() {
 const CLOSED_CASES = {
     erg: 'ergative', dat: 'dative', gen: 'genitive', com: 'comitative', ben: 'benefactive',
     mot: 'motivative (because of)', ins: 'instrumental', ine: 'inessive', loc: 'locative genitive (-ko)', abl: 'ablative',
-    all: 'allative', ter: 'terminative', des: 'destinative', aine: 'inessive (animate)', aabl: 'ablative (animate)',
+    all: 'allative', ter: 'terminative', des: 'destinative', dir: 'directive', aine: 'inessive (animate)', aabl: 'ablative (animate)',
     aall: 'allative (animate)',
 };
 const CLOSED = {
@@ -431,7 +445,7 @@ const CLOSED = {
     nor: {erg: 'nork', dat: 'nori', gen: 'noren', com: 'norekin', ben: 'norentzat', mot: 'norengatik', ins: 'noretaz', aine: 'norengan', aabl: 'norengandik', aall: 'norengana'},
     inor: {erg: 'inork', dat: 'inori', gen: 'inoren', com: 'inorekin', ben: 'inorentzat', mot: 'inorengatik', aine: 'inorengan'},
     zer: {erg: 'zerk', dat: 'zeri', gen: 'zeren', com: 'zerekin', ben: 'zerentzat', mot: 'zergatik', ins: 'zertaz zerez', ine: 'zertan',
-        loc: 'zertako', abl: 'zertatik', all: 'zertara', ter: 'zertaraino', des: 'zertarako'},
+        loc: 'zertako', abl: 'zertatik', all: 'zertara', ter: 'zertaraino', des: 'zertarako', dir: 'zertarantz'},
     ezer: {erg: 'ezerk', dat: 'ezeri', gen: 'ezeren', com: 'ezerekin', ben: 'ezerentzat', ins: 'ezertaz ezerez', ine: 'ezertan',
         loc: 'ezertako', abl: 'ezertatik', all: 'ezertara', des: 'ezertarako'},
     zein: {erg: 'zeintzuek', dat: 'zeintzuei', gen: 'zeintzuen', com: 'zeintzuekin', ine: 'zeintzuetan'},
@@ -575,7 +589,7 @@ function paradigm(p) {
             for (const lemma of p.lemmas) {
                 entry.rules.push({type: 'wholeWord', inflected: form, deinflected: lemma, conditionsIn, conditionsOut: ['v']});
             }
-            if (p.compound && COMPOUND_TENSES.has(cell.tense)) {
+            if (compoundCell(p, cell)) {
                 entry.compound.push(form);
             }
         }
@@ -600,12 +614,14 @@ function finiteTransforms() {
         // the auxiliary: uste dut, nahi nuke, maite zaitut, bizi naiz. The
         // first word is the prefix, the auxiliary the suffix, and nothing
         // may come between them (an empty stem: [] has no members).
-        // The first word is any one word (stemCharacters), so a dictionary
-        // decides which compounds exist; gauza izan (to be able) is left out,
-        // since gauza da is more often "it is a thing".
+        // A dictionary decides which compounds exist: the rule writes " izan"
+        // for the auxiliary whatever comes before it (a lookup starts at the
+        // hovered word, so that is the compound's first word, or a phrase no
+        // dictionary has). gauza izan (to be able) is left out, since gauza da
+        // is more often "it is a thing".
         for (const form of compound) {
             add(id, {type: 'suffix', inflected: ' ' + form, deinflected: ' izan', conditionsIn: finiteIn(cell.tense, form),
-                conditionsOut: ['v'], stemMinLength: 2, stemCharacters: '[^ ]', stemNotStartsWithText: 'gauza'});
+                conditionsOut: ['v'], stemMinLength: 2, stemNotStartsWithText: 'gauza'});
         }
     }
 }
@@ -615,8 +631,13 @@ function finiteTransforms() {
 // apart from its auxiliary (ez dut uste). gauza izan and gisa izan are left
 // out: gauza da is more often "it is a thing".
 const COMPOUND_VERBS = ['uste', 'nahi', 'maite', 'bizi', 'beldur', 'ari', 'balio', 'gai', 'opa', 'presa'];
-// The tenses whose auxiliary forms also read as a compound verb's.
-const COMPOUND_TENSES = new Set(['present', 'past', 'cond', 'condpast', 'hyp', 'allo', 'allopast']);
+// The auxiliary forms that also read as a compound verb's: the present,
+// past and conditional of izan and *edun, and of *edun with a dative when
+// its object is the third person singular (opa dizut, I wish you).
+const COMPOUND_TENSES = new Set(['present', 'past', 'cond']);
+function compoundCell(p, cell) {
+    return p.compound && COMPOUND_TENSES.has(cell.tense) && (cell.dat === null || cell.abs === '3s');
+}
 
 // Synthetic verbs: the verbs with finite forms of their own. They come before
 // the auxiliaries, so where a form is both (dakit: jakin "I know" and the

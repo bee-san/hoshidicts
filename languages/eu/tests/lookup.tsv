@@ -1,0 +1,36 @@
+# Source: written for this pack (GPL-3.0-or-later), against tests/dictionary/. The pack has no optional feature, so this is also a lookup with the defaults.
+# category	valid	text	expression	matched
+declension	1	etxean dago	etxe	etxean
+declension	1	Etxetik irten naiz	etxe	Etxetik
+declension	1	gizonarekin hitz egin dut	gizon	gizonarekin
+declension	1	lurrean eseri	lur	lurrean
+declension	1	eskolara joan	eskola	eskolara
+declension	1	zakurrarekin	zakur	zakurrarekin
+declension	1	lagunarengana joan zen	lagun	lagunarengana
+declension	1	etxekoak	etxe	etxekoak
+degree	1	handiena da	handi	handiena
+degree	1	hobea	on	hobea
+adverb	1	hemendik joan	hemen	hemendik
+pronoun	1	nirea da	ni	nirea
+pronoun	1	zuk esan duzu	zu	zuk
+pronoun	1	horretan	hori	horretan
+pronoun	1	hartan	hura	hartan
+pronoun	1	batean	bat	batean
+verb	1	dakit	jakin	dakit
+verb	1	badakit zer den	jakin	badakit
+verb	1	zenean etorri	izan	zenean
+verb	1	dudan guztia	edun	dudan
+verb	1	ikusten dut	ikusi	ikusten
+verb	1	etorriko da	etorri	etorriko
+verb	1	nagoela	egon	nagoela
+verb	1	esan zuela	esan	esan
+verb	1	har ezazu	hartu	har
+compound	1	hitz egin dut	hitz egin	hitz egin
+compound	1	uste dut hori	uste izan	uste dut
+compound	1	nahi nuke	nahi izan	nahi nuke
+compound	1	maite zaitut	maite izan	maite zaitut
+compound	1	ez dut uste	ez	ez
+words	1	euskal hiztegia	euskal	euskal
+negatives	0	euskalki	euskal	euskalki
+negatives	0	bezala	edun	bezala
+negatives	0	zuk esan duzu	edun	zuk

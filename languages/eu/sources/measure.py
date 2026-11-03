@@ -5,6 +5,7 @@
     python3 languages/eu/sources/measure.py freq <cache> <imported dictionary> [--languages <dir>] [--top N]
     python3 languages/eu/sources/measure.py text <cache> <imported dictionary> [--languages <dir>] [--corpus garoa|wikipedia|tatoeba]
     python3 languages/eu/sources/measure.py sample <cache> <imported dictionary> [--languages <dir>] [--corpus ...] [--n 60]
+    python3 languages/eu/sources/measure.py yomitan <cache> <imported dictionary> [--languages <dir>] [--union <file>]
 
 <cache> holds the downloads the README names (MANIFEST in hachi-lang-cache/eu):
 wty-eu-en-json/ (the dictionary's banks, unzipped), eu_50k-2018.txt,
@@ -18,6 +19,13 @@ freq: of the N (10,000) most frequent words of the subtitle list, the words
 whose lemma a rule reaches, where the word's form-of rows in the dictionary
 or UniMorph eus name the lemma; for each, whether the first result is right:
 the word's own headword (a row of it with definitions) or a lemma they name.
+
+yomitan: for each of Yomitan's rules (sources/yomitan.json), forms built
+from the ten most frequent lemmas (subtitle list) of the parts of speech the
+rule writes whose spelling ends with its deinflected text, with its inflected
+ending put in place; how many of them are attested (in the subtitle list or
+in kaikki's tables for that lemma), and how many attested ones the pack's
+transforms.json and the rule itself reach.
 
 text: every word of the corpus looked up with the rest of its sentence. The
 first result is judged by script where the word has form-of rows (right: a
@@ -227,6 +235,78 @@ def text(cache, dictionary, opts, sample=False):
     print('traces of wrong first results: ' + json.dumps(rules.most_common(25), ensure_ascii=False))
 
 
+def kaikki_forms(cache):
+    out = collections.defaultdict(set)
+    with open(os.path.join(cache, 'kaikki.org-dictionary-Basque.jsonl'), encoding='utf-8') as f:
+        for line in f:
+            entry = json.loads(line)
+            for form in entry.get('forms', []):
+                out[entry.get('word', '')].add(form.get('form', ''))
+    return out
+
+
+def deinflect_with(languages, transforms, words):
+    cli = os.path.join(ROOT, 'build', 'hoshidicts-cli')
+    args = [cli, '--languages', languages, 'deinflect', 'eu', '--stdin', '--all-options']
+    if transforms:
+        args += ['--transforms', transforms]
+    result = subprocess.run(args, input='\n'.join(words) + '\n', capture_output=True, text=True, check=True)
+    return {d['input']: d['results'] for d in map(json.loads, result.stdout.splitlines())}
+
+
+def yomitan(cache, dictionary, opts):
+    languages = opts['--languages']
+    pack = os.path.join(languages, 'eu')
+    with open(os.path.join(pack, 'sources', 'yomitan.json'), encoding='utf-8') as f:
+        yrules = json.load(f)
+    freq = {}
+    with open(os.path.join(cache, 'eu_full-2018.txt'), encoding='utf-8') as f:
+        for rank, line in enumerate(f):
+            w, c = line.split()
+            freq[w] = int(c)
+    lemmas = collections.defaultdict(list)
+    for path in sorted(glob.glob(os.path.join(cache, 'wty-eu-en-json', 'term_bank_*.json'))):
+        with open(path, encoding='utf-8') as f:
+            for row in json.load(f):
+                if row[2] != 'non-lemma' and row[3] in ('n', 'adj', 'adv', 'v') and ' ' not in row[0] and row[0].islower():
+                    lemmas[row[3]].append(row[0])
+    for pos in lemmas:
+        lemmas[pos] = sorted(set(lemmas[pos]), key=lambda w: -freq.get(w, 0))
+    kk = kaikki_forms(cache)
+    built = []
+    for t in yrules['transforms']:
+        for i, rule in enumerate(t['rules']):
+            pos = [p for p in rule['conditionsOut'] if p in lemmas]
+            pool = []
+            for p in pos:
+                pool += [w for w in lemmas[p] if w.endswith(rule['deinflected']) and len(w) > len(rule['deinflected'])]
+            pool = sorted(set(pool), key=lambda w: -freq.get(w, 0))[:10]
+            for lemma in pool:
+                form = lemma[:len(lemma) - len(rule['deinflected'])] + rule['inflected']
+                attested = form in freq or form in kk.get(lemma, set())
+                built.append((t['id'], i, lemma, form, attested))
+    words = sorted({b[3] for b in built})
+    own = deinflect_with(languages, os.path.join(pack, 'transforms.json'), words)
+    yom = deinflect_with(languages, os.path.join(pack, 'sources', 'yomitan.json'), words)
+    by = collections.OrderedDict()
+    for tid, i, lemma, form, attested in built:
+        e = by.setdefault((tid, i), {'built': 0, 'attested': 0, 'ownReaches': 0, 'yomitanReaches': 0, 'unreachedByOwn': []})
+        e['built'] += 1
+        if attested:
+            e['attested'] += 1
+            if any(r['text'] == lemma for r in own[form]):
+                e['ownReaches'] += 1
+            else:
+                e['unreachedByOwn'].append(f'{form} > {lemma}')
+            if any(r['text'] == lemma for r in yom[form]):
+                e['yomitanReaches'] += 1
+    totals = collections.Counter()
+    for (tid, i), e in by.items():
+        totals.update({k: v for k, v in e.items() if isinstance(v, int)})
+        print(json.dumps({'transform': tid, 'rule': i, **e}, ensure_ascii=False))
+    print(json.dumps(dict(totals)))
+
+
 def main(argv):
     pos, opts = args_of(argv)
     if len(pos) != 3:
@@ -238,6 +318,8 @@ def main(argv):
         text(cache, dictionary, opts)
     elif command == 'sample':
         text(cache, dictionary, opts, sample=True)
+    elif command == 'yomitan':
+        yomitan(cache, dictionary, opts)
     else:
         raise SystemExit(__doc__)
 

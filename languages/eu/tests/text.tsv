@@ -1,0 +1,10 @@
+# Source: written for this pack (GPL-3.0-or-later), no third-party data. The pack has no optional processor.
+# category	valid	input	variant
+decapitalize	1	Etxean	etxean
+decapitalize	1	ETXEAN	etxean
+decapitalize	1	Ñabardura	ñabardura
+decapitalize	1	Ü	ü
+capitalizeFirstLetter	1	bilbon	Bilbon
+capitalizeFirstLetter	1	ñabardura	Ñabardura
+capitalizeFirstLetter	0	etxean	ETXEAN
+decapitalize	1	etxean	etxean
