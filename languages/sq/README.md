@@ -83,8 +83,8 @@ read from their first word, as the dictionary's own form-of rows read them
 
 ## Rule provenance
 
-`transforms.json` has 150 transforms and 2,078 rules (2,354 with the
-circumfix cross products expanded): 1,935 `own`, 143 `both` and no
+`transforms.json` has 150 transforms and 2,215 rules (2,491 with the
+circumfix cross products expanded): 2,087 `own`, 128 `both` and no
 `yomitan` rule. `sources/build-final.mjs` writes it: `sources/own.json` with
 every Yomitan rule left out and the own rules that make a Yomitan rule's
 deinflection marked `both`.
@@ -92,23 +92,39 @@ deinflection marked `both`.
 - **`both`**: an own rule of the same type in the transform of the same
   form that replaces the same ending with the same text, or a longer ending
   with a common part in front (Yomitan's aorist `va` → `j` is the own `ova` →
-  `oj`, `eva` → `ej`, `iva` → `ij`, … on the stems Yomitan's rule reaches).
-  91 of Yomitan's 94 rules have such own rules
-  (`sources/yomitan-provenance.tsv` lists them). The other three are
-  Yomitan's nominalization (`im` → `oj`, `im` → `ej`, `je` → ``).
+  `oj`, `eva` → `ej`, `iva` → `ij`, … on the stems Yomitan's rule reaches),
+  and only when the own rule is in the first commit of this pack, `sq: own
+  rules` (History below). `LATER` in `build-final.mjs` keeps 36 rules `own`
+  that Yomitan also has, because they were written after its file was read:
+  `oi` → `ua`, the aorist `ye` → `ej`, 13 mediopassive endings to `hem` and
+  the definite of the 21 listed masculine nouns in -ë (`djali` → `djalë`).
+  Without it 164 rules would be `both` and 91 Yomitan rules paired. 88 of
+  Yomitan's 94 rules have such own rules (`sources/yomitan-provenance.tsv`
+  lists them). The other six are the nominalization (`im` → `oj`, `im` →
+  `ej`, `je` → ``) and three whose only own counterparts came later:
+  `definite` `i` → `ë`, `oi` → `ua` and the aorist `ye` → `ej`.
 - **Yomitan rules left out**: all 94. On 117,771 words (the frequency
   list, the single-word forms of UniMorph sqi and of the dictionary's
   form-of rows; `sources/measure.py yomitan`, which also prints a table of
   the per-rule counts and examples), each Yomitan rule
   applied alone gives a headword with a compatible part of speech that no
-  final deinflection gives 792 times (798 before nxë and the compounds of
-  vë and zë were added; the active verbs in -gj losing their twin rules,
-  Known gaps, and `mia` add a few). A random sample of 50 of the 798, judged by hand: 8 right
+  final deinflection gives 1,038 times (792 before audit-hachi-lang-sq).
+  222 of them come from Yomitan's `definite` `i` → `ë` (2 before), which
+  the own rules now apply only to the 21 listed masculine nouns in -ë,
+  because the general rule read `arrin` (arrives) as `arrë` (walnut); a
+  random sample of 40 of the 222, judged by hand, has 3 right (`api`,
+  `lavdi`, `dhuni`) and 37 wrong (`ari` → `arë`, `molli` → `mollë`,
+  `stivi` → `stivë`). Three other Yomitan rules each give a few more such
+  readings than before: `ja` → `e` 17, the plural `e` → `` 17 and `ri` →
+  `` 9. Earlier, at
+  798 (before nxë and the compounds of vë and zë were added), a random
+  sample of 50, judged by hand, had 8 right
   (`lavdin` → `lavdi`, `fea` → `fe`, `magjin` → `magji`, `selin` → `seli`,
   `shtetast` → `shtetas`, `oficerja` → `oficer`, `nxëmë` → `nxë`, `përzëmë`
   → `përzë`), 3 feminine nouns of persons read as the masculine (`mikja` →
   `mik`, `nxënësja` → `nxënës`, `përkthyesja` → `përkthyes`, whose rows
-  name the feminine), and 39 wrong. The wrong ones come from Yomitan's rules having no minimum stem
+  name the feminine), and 39 wrong (the audit's own sample of 50: 11, 4
+  and 35). The wrong ones come from Yomitan's rules having no minimum stem
   or class (`deti` → `de`, `arta` → `ar`, `ma` → `më`, `liqen` → `liq`,
   `drejtorë` → `drejtoj` through `rë` → `j`, `botë` → `boj` through `të` →
   `j`), and from spellings that are not words (`përfundojni`, `irnojnin`).
@@ -149,11 +165,22 @@ deinflection marked `both`.
     sjell, mbjell, vjell, djeg, ndjek, pjek, nxjerr, bredh, vjedh, pjell,
     mjel, vjel, tjerr, ndez, vesh, rrah, whose forms of four letters or more
     are suffix rules so that compounds share them (`tërhoqi` → `tërheq`).
+- **Lists and homographs** (after audit-hachi-lang-sq): the masculine
+  nouns in -ë that drop it before -i, -in and -it are a list of 21 (djalë,
+  kalë, lumë, ujë, gjumë, burrë, babë, mamë, …), since most nouns in -ë are
+  feminine; `zë` has `zëri`; `dita`, `ditën` and `ditët` read first as
+  `ditë` (day), and wty-sq-en's rows still give the aorist of `di` second;
+  `më` reads adverbs only from a list of gradable ones and those in -isht
+  (`më vonë` → `vonë`, `më saktësisht` → `saktësisht`), so `deri më sot`
+  (until today) is not a comparative.
 - **Stem constraints** keep the rules off the words they would misread:
   - every suffix rule needs a stem without a space, so the last word of a
     phrase is never read on its own (`e ka`, `të mira`);
   - minimum stems and final-letter classes: `hej` is not `hell`, `pra` is
-    not `pre`, `lart` is not `lar`, `mira` and `mia` are not `mi`, `vetmi` is not
+    not `pre`, `lart` is not `lar`, `mira`, `mia`, `mija` and `miri` are
+    not `mi` (`-ri` after i needs three letters before it, `-ja` comes after
+    a vowel other than i, so `hija` is `hije`), `urdhërin` is not `urdhë`,
+    `VI` is not `vij`, `vetmi` is not
     `vetëm`, `hyjni` is not `hyj` (a verb stem before a consonant ending
     does not end in j; the non-active endings have twin rules for the
     digraphs gj and nj, so `përgjigjet` → `përgjigjem`);
@@ -164,7 +191,8 @@ deinflection marked `both`.
     → `marr`, not the adjective `i marrë`), and after `të` the oblique
     definite adjective is read only in -s and -it after `e`, `së` and `i`,
     and in -it only for adjectives in -r, since after `të` these endings are
-    genitive nouns (`të fizikës`, `të lumit`);
+    genitive nouns (`të fizikës`, `të lumit`); the feminine oblique in -s is
+    read only after `së` (`e matematikës` is a genitive noun);
   - the mediopassive lemma of the non-active aorist, perfect and gerund is
     read only after `u` and the non-active auxiliaries (circumfix rules:
     `u largova`, `është ulur`, `duke u larë`), not after `ka` (`ka ardhur`
@@ -188,12 +216,25 @@ deinflection marked `both`.
     → `jap`), and `mos u shqetëso` → `shqetësohem`;
   - after the mutation check (docs/languages.md 14 step 7): a test for every
     constraint, and prefix rules without a minimum stem (which changed
-    nothing).
+    nothing);
+  - after audit-hachi-lang-sq: the lists and homographs above, the `-ri`,
+    `-ja` and `-s` constraints, the feminine plural in -a before the
+    masculine one (`kokat` → `kokë`), `both` only for rules of the first
+    commit, nouns, then verbs, then adjectives in file order (`dalin` →
+    `dal`), `gjendet` → `gjej`, `thyhet` → `thyej`, `blinin` → `blej`, `e
+    bukura` → `bukur`, `burra` → `burrë` with the trace `plural`, the
+    irregular verbs' full forms without the space constraint (a compound's
+    stem is the only one they meet), and rows that pin the conditions,
+    order, `traceSelection` and scanning the audit's mutations showed
+    untested. A comparison of first results with the pack before the audit,
+    on the Wikipedia articles and the frequent words, then showed losses
+    that a first version of these fixes had made (`gjiri` → `gji`, `babin`
+    → `babë`, `më sot`), which were fixed before measuring.
 
 ## Measurements
 
 Every number below is reproduced by `sources/measure-all.sh` (it lists the
-commands) at hoshidicts 558fdeb (GCC 14.3, Release), with wty-sq-en as
+commands) at hoshidicts 64f61b4 (GCC 14.3, Release), with wty-sq-en as
 published, imported by `hoshidicts-cli import`, form-of rows included, and
 `lookup.formOf` `follow`. The sample is the 1,000 UniMorph rows of
 `corpus.tsv` and `gaps.tsv` together. The pack's one optional feature is the
@@ -207,25 +248,25 @@ file is measured with every option on and with the defaults.
    hand-written files are measured with their reasons replaced by `*`
    (any trace), since Yomitan's rules have other transform ids; as written,
    the own and final rules pass every row of `defaults.tsv` with the
-   defaults (280 / 280 negatives) and 276 / 280 with every option on.
+   defaults (298 / 298 negatives) and 294 / 298 with every option on.
 
    | Rule set | Sample recall | False candidates | First rank | defaults.tsv positives | defaults.tsv negatives | cases.tsv | yomitan.tsv |
    | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-   | Own (`sources/own.json`) | 99.4% (994) / 99.4% | 0.276 / 0.264 | 97.8% / 97.8% | 358 / 358 of 358 | 274 / 278 of 280 | 9 / 0 of 9 | 98 / 98 |
-   | Yomitan (`sources/yomitan.json`) | 37.0% (370) / 35.9% | 0.132 / 0.121 | 93.2% / 93.2% | 60 / 58 | 117 / 121 | 3 / 0 | 98 / 98 |
-   | Union (merge tool) | 99.6% (996) / 99.6% | 0.284 / 0.270 | 97.9% / 97.9% | 358 / 358 | 117 / 121 | 9 / 0 | 98 / 98 |
-   | Final (`transforms.json`) | 99.4% (994) / 99.4% | 0.276 / 0.264 | 97.8% / 97.8% | 358 / 358 | 274 / 278 | 9 / 0 | 98 / 98 |
+   | Own (`sources/own.json`) | 99.4% (994) / 99.4% | 0.275 / 0.263 | 97.8% / 97.8% | 379 / 379 of 379 | 292 / 296 of 298 | 9 / 0 of 9 | 98 / 98 |
+   | Yomitan (`sources/yomitan.json`) | 37.0% (370) / 35.9% | 0.132 / 0.121 | 93.2% / 93.2% | 63 / 61 | 129 / 133 | 3 / 0 | 98 / 98 |
+   | Union (merge tool) | 99.6% (996) / 99.6% | 0.284 / 0.270 | 97.9% / 97.9% | 379 / 379 | 129 / 133 | 9 / 0 | 98 / 98 |
+   | Final (`transforms.json`) | 99.4% (994) / 99.4% | 0.275 / 0.263 | 97.8% / 97.8% | 379 / 379 | 292 / 296 | 9 / 0 | 98 / 98 |
 
    - The final set is the own set with provenance marks, so its numbers are
      the own set's.
    - The union reaches two more sample rows than the final set, `ikinim`
      and `ikiët`: UniMorph errors that give iki a vowel stem, which
      Yomitan's `nim` → `` and `ët` → `` reach because they have no stem
-     class. It breaks 157 of the 280 negatives.
+     class. It breaks 163 of the 298 negatives.
    - `cases.tsv` holds text without ë and ç, which only the optional
      processor reads, so with the defaults no rule set reaches it.
-   - With every option on, the processor writes ë for e and so passes 4
-     constructed negatives (`me` → `më`, `be` → `bë`); with any trace, two
+   - With every option on, the processor writes ë for e, so 4 constructed
+     negatives fail (`me` → `më`, `be` → `bë`); with any trace, two
      rows that name a trace (`punon` not as an imperfect, `shkon` not as an
      aorist) also count as failing.
 2. **Frequent forms** (`sources/measure.py frequent`): of the 10,000 most
@@ -234,83 +275,121 @@ file is measured with every option on and with the defaults.
    tokens). Looked up alone as a host does, the first result is that lemma
    for all of them (0 wrong): wty-sq-en has a form-of row for most
    inflected words, whose lemma comes first (dictionary-confirmed, 9.6).
-   For 1,182 more words (320,000 tokens, 3.0%) with no form-of or UniMorph
-   row, the first result comes from the rules alone; a random sample of 60
-   judged by hand has 55 right and 5 wrong: `tete` → `tet`, `shoq` → `shok`
-   (`i shoq`, her husband), `përgëzime` → `përgëzoj`, `telefonatë` →
-   `telefon` and `hekurt` → `hekur`, all words the dictionary lacks.
+   The script counts a first result as right when the word's form-of rows
+   name it, so a homograph whose rows name two lemmas passes with either:
+   that is how `dita`, `ditën` and `ditët` passed while they showed `di`
+   first (audit-hachi-lang-sq MAJOR-1; now `ditë`).
+   For 1,167 more words (316,000 tokens, 2.9%) with no form-of or UniMorph
+   row, the first result comes from the rules alone. A random sample of 60
+   (drawn before the audit; the same first results at this commit), judged
+   by hand, has 55 right and 5 wrong: `tete` → `tet`, `shoq` → `shok` (`i
+   shoq`, her husband), `përgëzime` → `përgëzoj`, `telefonatë` →
+   `telefon` and `hekurt` → `hekur`, all words the dictionary lacks; the
+   audit's own sample of 60 had 52 right. The 100 most frequent of the
+   1,167, judged by hand, have 90 right; the 10 wrong are informal
+   spellings without ë (`jane`, `ben`, `bere`, `thash`, `kan`, `beje`,
+   `besh`, `beni`, `pelqen`) and `çmenduri` (Known gaps).
 3. **Forms behind articles, particles, auxiliaries and pronouns**
    (`sources/measure.py phrases`, Tatoeba): at the 4,535 places where one of
    35 such words is followed by a word, the lookup from it shows a phrase
-   reading first at 1,724 (38%) and the word itself at the others. 1,438 of
+   reading first at 1,747 (39%) and the word itself at the others. 1,456 of
    the phrase readings are right by script (the following word's or the
-   phrase's own rows name the lemma); a random sample of 50 of the other 286
-   judged by hand has 49 right (`ta fajësosh` → `fajësoj`, `u përgjigj` →
+   phrase's own rows name the lemma). A random sample of 50 of the other 286
+   (drawn before the audit; 291 now, the same first results at this
+   commit), judged by hand, has 49 right (`ta fajësosh` → `fajësoj`, `u përgjigj` →
    `përgjigjem`, `më të bukurat` → `bukur`, `do të shpallet` → `shpall`) and
-   one wrong (`i imi`, mine, → `imtë`). After `të` the phrase reading comes
-   first at 771 of 965 places, after `do` at 167 of 246, after `u` at 76 of
-   88, after `s’` at 20 of 21; after `nuk`, `mos`, `ju` and `na` the word
-   itself comes first, as no rule removes them.
+   one wrong (`i imi`, mine, → `imtë`); the audit's own sample of 50 had 47
+   right (wrong: `Do ta gjesh` → `gjesh`, `të dashurin` → `dua`, `e të
+   tjerë` → `tjetër`; Known gaps). After `të` the phrase reading comes first
+   at 771 of 965 places, after `do` at 167 of 246, after `u` at 76 of 88,
+   after `s’` at 20 of 21, after `më` at 69 of 213 (51 before `më` read
+   adverbs); after `nuk`, `mos`, `ju` and `na` the word itself comes first,
+   as no rule removes them.
 4. **Real text** (`sources/measure.py real`): every word of the 20
    Wikipedia articles looked up with the text from it to the end of its
-   sentence, 124,165 lookups. 87,027 first results are right by script (the
+   sentence, 124,165 lookups. 86,750 first results are right by script (the
    matched text's rows name the result, or it is the matched text itself);
    9 are wrong by script and right on reading them (`domosdoshme` →
    `domosdoshëm`, whose rows name `i domosdoshëm`; `duke qenë` → the
-   headword `qenë`); 25,442 find nothing (names, numbers and words the
-   dictionary of 13,775 headwords lacks). A random sample of 60 of the
-   other 11,687 judged by hand has 56 right and 4 wrong: `dalin` → `dalë`
-   (they go out; `dalë` is a noun, adjective and participle headword whose
-   reading comes first in rule order), `vat` → `va`, `t’i dhënë` → the
-   headword `dhënë`, and `huaja` → `hua` (the foreign, `huaj`). That is
-   about 6.7% of the unjudged lookups, or 0.6% of all of them (95%
-   interval about 0.2% to 1.5%).
+   headword `qenë`); 25,410 find nothing (names, numbers and words the
+   dictionary of 13,775 headwords lacks). The other 11,996 are judged by
+   hand. A random sample of 60 of them, drawn before the audit (11,687
+   then), had 56 right and 4 wrong; at this commit `dalin` (they go out)
+   gives `dal`, not the adjective `dalë`, so 57 are right. The other wrong
+   ones are `vat` → `va`, `t’i dhënë` → the headword `dhënë`, and `huaja` →
+   `hua` (the foreign, `huaj`). That is about 5% of the lookups judged by
+   hand, or 0.5% of all of them (95% interval about 0.2% to 1.3%). The
+   audit's own sample of 60 had 54 right; its wrong ones are in Known gaps,
+   or fixed (`e matematikës` no longer gives the adjective `matematik`).
+   Against the pack before the audit, 449 lookups joined those judged by
+   hand and 140 left them. Most that joined are the comparatives (`më vonë`
+   → `vonë` 87, `më shumë` 65, `më pas` 49), where `më` itself had counted
+   as right by script, and `gjendet` → `gjej` (44), which found nothing;
+   the sample, drawn before, does not include them, but the 25 most
+   frequent of them (408 lookups) are right by my reading. Those that left are
+   wrong readings the audit fixes removed (`VI` → `vij` 24, `e matematikës`
+   → `matematik` 18, `arrin` → `arrë` 16).
 5. **Trace quality** (`sources/measure.py traces`): for the sample rows the
    rules reach, the trace a lookup shows names the tense or mood and person
    of the row's UniMorph features in 577 of 596 verb rows (96.8%) and the
    case and definiteness in 376 of 398 noun rows (94.5%). The misses are
    the non-active forms the mediopassive circumfix reads in one step,
-   named `non-active` (17), and feminine plurals that are also the definite
-   singular, named `definite (feminine)` (`vajza`, 21).
+   named `non-active` (17), and plurals in -a that are also a feminine
+   definite singular, named `definite (feminine)` (21: `vajza`, `motra`
+   and 18 more feminine nouns, and the masculine `ajra` → `ajër`).
 6. **Lookup speed** (`benchmark-lookup --languages languages --language sq`,
    wty-sq-en mapped): the 70 texts of `sources/benchmark-words.txt` in 6
-   passes, the first dropped, three runs at machine load about 40. The
+   passes, the first dropped, three runs at machine load about 45. The
    budget is 1 ms p50.
 
    | Rule set | p50 | p95 |
    | --- | ---: | ---: |
-   | Final | 17.2-17.7 µs | 32.0-32.4 µs |
-   | Union | 22.3-22.5 µs | 37.3-38.8 µs |
-   | Yomitan's rules | 13.8-14.1 µs | 21.7-22.3 µs |
+   | Final | 17.7-18.0 µs | 31.3-33.2 µs |
+   | Union | 23.3-24.6 µs | 42.0-48.0 µs |
+   | Yomitan's rules | 13.9-15.7 µs | 22.0-28.9 µs |
 7. **WebAssembly** (`sources/wasm-bench.mjs`, Hachidori feat/multi-language
    d7e82b0 prebuilt engines, Node 22, the same texts, dictionary paged).
    The budgets are 50 ms and 20 MB, and the pack has no `pattern` rule.
-   - `hdw_language_load` of this pack: median 9.3 ms single-thread and 10.1
-     ms threaded, over 10 fresh engines (8.4-15.8 ms).
-   - Live heap: +1,109,568 bytes after the load (mallinfo,
-     `hdw_memory_stats`).
-   - `hdw_lookup`: p50 0.055 ms and p95 0.154 ms single-thread; p50 0.060
+   - `hdw_language_load` of this pack: median 8.0 ms single-thread and 8.0
+     ms threaded, over 10 fresh engines (7.0-14.3 ms).
+   - Live heap: +851,552 bytes after the load single-thread, +851,872
+     threaded (mallinfo, `hdw_memory_stats`).
+   - `hdw_lookup`: p50 0.059 ms and p95 0.160 ms single-thread; p50 0.062
      ms and p95 0.157 ms threaded.
 8. **Hachidori in Chrome** (feat/multi-language d7e82b0 with this branch in
    `third_party/hoshidicts`, `test/chrome-language-pack.mjs`, Chrome 152,
-   wty-sq-en): 15 / 15 checks pass. Settings adds Albanian beside Japanese
-   and imports the dictionary (220,164 terms, 0.8 s); eleven hovered words
-   in sentences written for the check find their lemma first with their
-   traces (`lexonin` → `lexoj`, `S’kam` → `kam`, `vjetra` → `vjetër`,
-   `duket` → `dukem`, `largua` → `largoj`); the Anki note and the switch to
-   Japanese and back work.
+   wty-sq-en): 18 / 18 checks pass. Settings adds Albanian beside Japanese
+   and imports the dictionary (220,164 terms, 0.8 s); fourteen hovered
+   words in sentences find their lemma first with their traces, eleven
+   written for the check (`lexonin` → `lexoj`, `S’kam` → `kam`, `vjetra` →
+   `vjetër`, `duket` → `dukem`, `largua` → `largoj`) and three from the
+   audit (`arrin` → `arrij`, `ditën` → `ditë`, `Hija` → `hije`); the Anki
+   note and the switch to Japanese and back work.
 9. **Differential check** (`tools/check-yomitan.mjs` with
-   `build/hoshidicts-cli`): 2,755 inputs, 8,624 Yomitan results, 0
+   `build/hoshidicts-cli`): 2,811 inputs, 8,794 Yomitan results, 0
    differences; `decapitalize` and `capitalizeFirstLetter` agree with
-   Yomitan's on 1,748 inputs each (the inputs include the test files'
+   Yomitan's on 1,802 inputs each (the inputs include the test files'
    strings, so these counts move with the tests).
 10. **Conformance** (`language-conformance-test`): corpus.tsv 994 / 994,
-    defaults.tsv 638 / 638 with the defaults, cases.tsv 9 / 9,
-    yomitan.tsv 98 / 98, text.tsv 24 / 24, lookup.tsv 31 / 31; gaps.tsv
+    defaults.tsv 677 / 677 with the defaults, cases.tsv 9 / 9,
+    yomitan.tsv 98 / 98, text.tsv 25 / 25, lookup.tsv 47 / 47; gaps.tsv
     0 / 6 (reported); `tests/` and `sources/` hold under 1 MB.
 11. **Mutations** (`sources/mutations.py`): deleting any one stem
-    constraint of any transform (196 mutations), or making the one-syllable
+    constraint of any transform (197 mutations), or making the one-syllable
     verbs' forms suffix rules, fails the conformance test in every case.
+    The audit's mutations of conditions, order, scanning and processors
+    (audit-hachi-lang-sq m2) now fail it too, through `lookup.tsv`,
+    `defaults.tsv` and `text.tsv` rows: the article rules giving nouns, the
+    participle auxiliaries giving `v`, `të` giving participles, `më` giving
+    every adverb, the order of the transforms, `traceSelection` `first`,
+    character resolution, apostrophes inside words, ç in the consonant
+    class and ´ as an apostrophe. Those that still pass change no first
+    result on the audit's lookups (the Wikipedia texts, ten more articles
+    and the frequent words): a transform's name, y in the vowel class (no
+    word there has y before the three endings that use it), `stemMinLength` 1 beside a final-letter
+    class (which already needs a letter), and three condition changes that
+    no rule's output reaches (the `ptcp` rules giving `v`, `n-def-pl` on
+    any text, the non-active `…em` rules giving `v_aor`).
 
 ## Known gaps
 
@@ -322,12 +401,42 @@ file is measured with every option on and with the defaults.
   played) shows `luan` (lion) first, because wty-sq-en lists `luanin` as
   the definite accusative of `luan` and has no table for luaj.
 - Ties between readings of equal length and steps that no form-of row
-  decides follow rule order, nouns before adjectives before verbs: `dalin`
-  → `dalë` before `dal`, `huaja` → `hua` before `huaj`. Verbs, then
-  adjectives, then nouns change 102 first results of the Wikipedia text (19
-  distinct): by my reading 48 get better (`huaja`, `të mundur`, `dalin`)
-  and 35 worse (`toka` → `tok` instead of `tokë`, `të tretë`), so the order
-  stays.
+  decides follow the file order: nouns, then verbs, then adjectives.
+  `sources/measure.py order` compares it with two others on the lookups of
+  item 4 and the 10,000 frequent words alone (134,165 lookups); by my
+  reading:
+  - with the adjectives before the verbs (the order before
+    audit-hachi-lang-sq), 25 first results differ. The order as written is
+    better for 22 (`të mundur` → `mund`, `dalin` → `dal`), worse for 2
+    (`të tretë`, third, → the verb `tret`) and unclear for 1 (`dali`);
+  - with the nouns after the verbs, 90 differ. As written is better for 34
+    (`Toka`, the Earth, → `tokë`, not the verb `tok`) and worse for 30
+    (`huaja` → `hua`, loan, not `huaj`, foreign, 17; `marrja` → `marre`;
+    `ftoi`, invited, → `ftua`, quince), and 26 are names or unclear. That
+    is close; nouns stay first. `lookup.tsv` pins the order with `toka`
+    and `dalin`.
+- Wrong first results that remain in the Wikipedia lookups of item 4
+  (counted in `real/unjudged.tsv`), mostly for words wty-sq-en lacks:
+  `masë` and `masa` → the verb `mas` (35; `masë`, mass, is not a
+  headword); `dhëna`, `dhënat` and their cases → `dhen`, sheep and goats
+  (41; `të dhënat`, data); `Vlora` → `vëlla` through an alternative-form
+  row (23); `Berat` → `ber` (22); `politika`, `politikën`, `politikës` →
+  the adjective `politik` (20; `politikë` is not a headword);
+  `llogaritja`, `llogaritje` → `llogaris` (16); `huaja` → `hua` (16);
+  `perimetër` → `perime`; `Fatat` → `fat`. In Tatoeba, `Do ta gjesh` shows
+  the verb `gjesh` before `gjej` (one step against two), and `të dashurin`
+  shows `dua`.
+- Masculine plurals in -ra of nouns in -ër (`libra`, 289 occurrences in
+  the subtitle list; `emra`, 275; `numra`, 219) have the trace `definite
+  (feminine)`, because the feminine definite of a noun in -ër (`motra`) is
+  spelt alike and comes first; the lemma is right. Other masculine plurals
+  in -a (`burra`, `gishta`, `filma`) have the trace `plural`.
+- Masculine nouns in -ë outside the list of 21 (rare ones such as `tatë`)
+  are read in their -i, -in and -it forms only through wty-sq-en's rows.
+- The feminine definite of an adjective after `e` is read where the
+  dictionary has the adjective (`e bukura` → `bukur`, `e lumtura` →
+  `lumtur`); `e dashura` and `e njohura` show `e`, since wty-sq-en has
+  `dashur` and `njohur` only as form-of rows of `dua` and `njoh`.
 - Words the dictionary lacks are read as the nearest form the rules reach:
   feminine nouns of persons as the masculine is not done (see Rule
   provenance), so `aktorja` finds nothing when the dictionary has only
@@ -354,6 +463,13 @@ file is measured with every option on and with the defaults.
 - The non-active forms read in one step by the mediopassive circumfix
   (`u largova` → `largohem`) have the trace `non-active`, without tense
   and person; the same forms read as the active verb have both.
-- `tests/lookup.tsv` checks the first result's expression and matched
-  text, not its trace, so no lookup test observes `traceSelection`; it is
-  set as the contract recommends.
+- `traceSelection` is `shortest`, Yomitan's choice and the contract's
+  default; `lookup.tsv` pins it with `grave` → `grua`. The trace a result
+  keeps also ranks it, so `first` would change 308 first results of the
+  same lookups (`measure.py order`). By my reading `shortest` is better for
+  218 (`gjermanët` → `gjerman`, not `Gjermani`; `ka dhënë` → `jap`; `ka
+  bërë` → `bëj`, not `bëhem`) and worse for 79: the non-active `u bënë`,
+  `është bërë` and `u pa` show the active `bëj` and `shoh` before `bëhem`
+  and `shihem` (51), `pika` and `pike` show the admirative of `pi` before
+  `pikë` (point, 20), and 8 others (`të tretë`, `varka`, `preka`). 11 are
+  unclear.
