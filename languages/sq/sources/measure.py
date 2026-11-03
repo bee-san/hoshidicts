@@ -35,6 +35,13 @@ repository root with a built hoshidicts-cli:
       the following word's own rows name its lemma, or the phrase's own rows
       name it, and the rest are listed for judging by hand.
 
+  python3 languages/sq/sources/measure.py traces <sample.tsv>
+      For the rows of corpus.tsv and gaps.tsv that the rules reach, the trace
+      a lookup shows (the deinflection with the fewest steps, the first among
+      equals) is compared with the row's UniMorph features: a verb's trace
+      must name its tense or mood and person (V;3;SG;IND;PST: aor-3sg), a
+      noun's its case and definiteness (N;ACC;SG;DEF: n-def-acc-m or -f).
+
 The dictionary is wty-sq-en as published (term banks read from the zip). The
 word list of `yomitan` is the 50,000 words of the frequency list, the
 single-word forms of UniMorph sqi and the single-word form-of rows of the
@@ -350,9 +357,95 @@ def cmd_phrases(dictionary, imported, unimorph, sentences):
         print('  ' + ' | '.join(u))
 
 
+def expected_ids(tags):
+    """Transform ids that name the UniMorph features of a row, or None when no rule should be named.
+    UniMorph sqi writes the past anterior (pata punuar) IND;PRF;PST, the
+    pluperfect subjunctive (të kisha punuar) SBJV;PRF;PST, and PRF;PRF for
+    PRF;PST in the second person plural; mediopassive verbs' forms carry the
+    tags of the active ones."""
+    t = tags.split(';')
+    pos = t[0]
+    person = next((f'{p}{n.lower()}' for p in '123' for n in ('SG', 'PL') if p in t and n in t), None)
+    if pos == 'N':
+        sg, defn = 'SG' in t, 'DEF' in t
+        case = next(c for c in ('NOM', 'ACC', 'GEN', 'DAT', 'ABL') if c in t)
+        if sg and defn:
+            return {'NOM': {'n-def-sg-m', 'n-def-nom-f'}, 'ACC': {'n-def-acc-m', 'n-def-acc-f'}}.get(case, {'n-def-obl-m', 'n-def-obl-f'})
+        if sg:
+            return {'n-def-sg-m', 'n-indef-obl-f'}
+        if case in ('NOM', 'ACC'):
+            return {'n-def-pl'} if defn else {'n-pl'}
+        if case == 'ABL' and not defn:
+            return {'n-abl-pl'}
+        return {'n-obl-pl'}
+    if 'V.PTCP' in t:
+        return {'ptcp', 'ger'}
+    if 'NFIN' in t:
+        return {'inf'}
+    if 'IMP' in t:
+        return {'imp-2sg', 'cl-e', 'np-imp-2sg'} if person == '2sg' else {'pres-2pl', 'np-imp-2pl'}
+    mood = next(m for m in ('IND', 'SBJV', 'OPT', 'ADM', 'COND') if m in t)
+    past = 'PST' in t or t.count('PRF') == 2
+    if 'PRF' in t:
+        aux = {'IND': 'pant' if past else 'perf', 'SBJV': 'plup' if past else 'perf-sbjv', 'COND': 'plup',
+               'OPT': 'opt-perf', 'ADM': 'adm-plup' if past else 'adm-perf'}[mood]
+        if 'FUT' in t:
+            aux = 'perf-sbjv'
+        ids = {f'{aux}-{person}', f'np-{aux}-{person}'}
+        if aux == 'perf-sbjv':
+            ids |= {f'perf-{person}', f'np-perf-{person}'}
+        return ids
+    np = lambda ids: ids | {f'np-{i}' for i in ids}
+    if mood == 'COND':
+        return np({f'impf-{person}'})
+    if mood == 'ADM':
+        return {'adm-impf'} if 'IPFV' in t else {'adm-pres'}
+    if mood == 'OPT':
+        return {f'opt-{person}'}
+    present = {'1sg': set(), '2sg': {'pres-2sg', 'sbjv-2sg'}, '3sg': {'pres-2sg', 'sbjv-3sg'}}.get(person, {f'pres-{person}'})
+    if 'FUT' in t:
+        return {'fut'} | np(present)
+    if 'IPFV' in t or (mood == 'SBJV' and 'PST' in t):
+        return np({f'impf-{person}'})
+    if 'PST' in t:
+        return {f'aor-{person}'} | ({'np-aor-3sg'} if person == '3sg' else set())
+    if mood == 'SBJV':
+        return {'sbjv'} | np(present)
+    return np(present) if present else None
+
+
+def cmd_traces(sample):
+    rows = [l.rstrip('\n').split('\t') for l in open(sample, encoding='utf-8') if l.strip() and not l.startswith('#')]
+    leaves, _ = conditions_of(os.path.join(PACK, 'transforms.json'))
+    family = {'v': leaves['v'], 'n': leaves['n']}
+    results = deinflect(sorted({r[2] for r in rows}))
+    stats = collections.defaultdict(lambda: [0, 0])
+    misses = collections.Counter()
+    for category, _valid, source, term, rule, _ in rows:
+        found = [r for r in results.get(source, []) if r['text'] == term and (not r['conditions'] or set(r['conditions']) & family[rule])]
+        if not found:
+            continue
+        best = min(found, key=lambda r: len(r['trace']))
+        want = expected_ids(category)
+        if want is None:
+            continue
+        key = 'verbs' if rule == 'v' else 'nouns'
+        stats[key][1] += 1
+        if set(best['trace']) & want:
+            stats[key][0] += 1
+        else:
+            misses[(category, ' '.join(best['trace']))] += 1
+    for key, (good, total) in stats.items():
+        print(f'{key}: the shown trace names the features in {good} of {total} rows ({100*good/total:.1f}%)')
+    for (category, trace), n in misses.most_common(15):
+        print(f'  {n} {category}: {trace}')
+
+
 def main(argv):
     if len(argv) >= 1 and argv[0] == 'yomitan' and len(argv) == 4:
         cmd_yomitan(*argv[1:])
+    elif len(argv) == 2 and argv[0] == 'traces':
+        cmd_traces(argv[1])
     elif len(argv) == 5 and argv[0] == 'phrases':
         cmd_phrases(*argv[1:])
     elif len(argv) >= 6 and argv[0] == 'real':
