@@ -608,3 +608,7 @@ negatives	0	mass	mas	*	*
 stem changes	1	ceias	cear	v	present-tu
 stem changes	1	geie	gear	v	subjunctive-eu-ele
 negatives	0	ei-lo	ei	*	*
+negatives	0	alguem	algar	*	*
+negatives	0	sida	sido	*	*
+exclusions keep	1	alegue	alegar	v	subjunctive-eu-ele
+exclusions keep	1	siderúrgica	siderúrgico	adj	feminine

@@ -177,12 +177,16 @@ yomitan, 0 both"). No Yomitan rule is left out, because there is none.
     - `afaste` is afastar, not a preterite of the noun afar;
     - `convida`, `intervia`, `provida`, `avia`, `sobrevia` are not vir
       compounds, whose imperfects and participles are irregular (convinha,
-      convindo).
+      convindo);
+    - `alguem` (alguém without its accent, frequent in informal text) is not
+      a subjunctive of algar, a dated noun, and `sida` (AIDS) not a feminine
+      of sido, ser's invariable participle; `alegue` and `siderúrgica` keep
+      alegar and siderúrgico.
 
     A literal constraint takes one string, so each rule is split by the
     excluded stems' first letters; a copy keeps the longer stems only where
-    wty-pt-en has a verb with one (`contorcer`, `convergir`, `querer`,
-    `afastar`). On 459,646 words (UniMorph por, both frequency lists and every
+    wty-pt-en has a word with one (`contorcer`, `convergir`, `querer`,
+    `afastar`, `alegar`, `siderúrgico`). On 459,646 words (UniMorph por, both frequency lists and every
     one-word headword of wty-pt-en) these exclusions remove no deinflection a
     form-of row of the word names;
   - -guer is only erguer, and the plain -er present endings do not follow u:
@@ -383,11 +387,11 @@ Checks:
   compare; `decapitalize` and `capitalizeFirstLetter` agree with Yomitan's on
   2,165 inputs each, with no listed difference.
 - Mutation checks (section 14 step 7, `sources/mutations.py <build dir>
-  <scratch dir>`): 48 edits of a scratch copy, each removing or loosening one
+  <scratch dir>`): 52 edits of a scratch copy, each removing or loosening one
   stem constraint, exclusion, word-list part, processor or scanning setting
   (every one of the Rule provenance list, the NFKC, diaeresis and case
   processors, the hyphen, `searchResolution`), regenerated with its own
-  `tests/classes.json` and run through the conformance test: all 48 fail
+  `tests/classes.json` and run through the conformance test: all 52 fail
   it.
 - Hachidori (`test/chrome-language-pack.mjs` in Chrome 152, feat/multi-language
   803f7b6e with this pack in `third_party/hoshidicts` on #58's engine and the

@@ -981,6 +981,11 @@ const EXACT_STEM_EXCLUSIONS = [
     [(rule) => rule.deinflected === 'ar' && ['aste', 'astes'].includes(rule.inflected) && rule.stemChange === undefined, ['af']],
     [(rule) => rule.deinflected === 'ir' && /^(ido|ida|idos|idas|ia|ias|iam|íamos|íeis)$/u.test(rule.inflected) && rule.stemChange === undefined,
         ['conv', 'interv!', 'prov!', 'av!', 'sobrev!']],
+    // alguem (alguém without its accent, frequent in informal text) is not a
+    // subjunctive of algar, a dated noun; no -gar verb has the stem al.
+    [(rule) => rule.deinflected === 'gar' && /^gu/u.test(rule.inflected) && rule.stemChange === undefined, ['al']],
+    // sida (AIDS) is not a feminine of sido, ser's invariable participle.
+    [(rule) => rule.inflected === 'a' && rule.deinflected === 'o' && rule.conditionsIn.includes('adj'), ['sid']],
 ];
 for (const t of transforms) {
     t.rules = t.rules.flatMap((rule) => {
