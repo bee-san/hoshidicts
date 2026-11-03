@@ -143,7 +143,7 @@
         {"type": "suffix", "inflected": "ra", "deinflected": "ër", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "rra", "deinflected": "ërr", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "la", "deinflected": "ël", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "{consonant}"},
-        {"type": "suffix", "inflected": "a", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[i]", "source": "both"},
+        {"type": "suffix", "inflected": "a", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 3, "stemEndsWith": "[i]", "source": "both"},
         {"type": "suffix", "inflected": "ja", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{consonant}", "source": "both"},
         {"type": "suffix", "inflected": "a", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[ji]"},
         {"type": "suffix", "inflected": "a", "deinflected": "", "conditionsIn": [], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{consonant}", "source": "both"},

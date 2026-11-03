@@ -224,7 +224,9 @@ suffix('n-def-nom-f', 'a', 'ë', [], N, {stemMinLength: 2, stemEndsWith: CONSONA
 suffix('n-def-nom-f', 'ra', 'ër', [], N, {stemMinLength: 1, stemEndsWith: CONSONANT});
 suffix('n-def-nom-f', 'rra', 'ërr', [], N, {stemMinLength: 1, stemEndsWith: CONSONANT});
 suffix('n-def-nom-f', 'la', 'ël', [], N, {stemMinLength: 1, stemEndsWith: CONSONANT});
-suffix('n-def-nom-f', 'a', '', [], N, {stemMinLength: 2, stemEndsWith: '[i]'});
+// shtëpia → shtëpi; a stem of three letters at least, so mia (e mia, mine)
+// is not mi (mouse).
+suffix('n-def-nom-f', 'a', '', [], N, {stemMinLength: 3, stemEndsWith: '[i]'});
 suffix('n-def-nom-f', 'ja', 'e', [], N, {stemMinLength: 2, stemEndsWith: CONSONANT});
 suffix('n-def-nom-f', 'a', 'e', [], N, {stemMinLength: 2, stemEndsWith: '[ji]'});
 suffix('n-def-nom-f', 'a', '', [], N, {stemMinLength: 2, stemEndsWith: CONSONANT});

@@ -153,7 +153,7 @@ deinflection marked `both`.
   - every suffix rule needs a stem without a space, so the last word of a
     phrase is never read on its own (`e ka`, `të mira`);
   - minimum stems and final-letter classes: `hej` is not `hell`, `pra` is
-    not `pre`, `lart` is not `lar`, `mira` is not `mi`, `vetmi` is not
+    not `pre`, `lart` is not `lar`, `mira` and `mia` are not `mi`, `vetmi` is not
     `vetëm`, `hyjni` is not `hyj` (a verb stem before a consonant ending
     does not end in j; the non-active endings have twin rules for the
     digraphs gj and nj, so `përgjigjet` → `përgjigjem`);
@@ -333,8 +333,14 @@ file is measured with every option on and with the defaults.
   `aktor`; `telefonatë` → `telefon`, `hekurt` (`i hekurt`, of iron) →
   `hekur`.
 - Informal spelling without ë and ç is read only with the
-  `missingDiacritics` setting (`jane` → `jan`, `thash` → `thaj`, `bere`
-  → `ber` without it); a dropped final ë (`pun` for `punë`) is not read.
+  `missingDiacritics` setting. Without it, frequent subtitle words give
+  another headword first: `jane` → `jan` (2,968 occurrences in the list),
+  `ben` → `be` (2,093), `bere` → `ber` (1,720), `thash` → `thaj` (1,125),
+  `kan` → `ka` (915), `beje` → `be` (895). A dropped final ë (`pun` for
+  `punë`) is not read.
+- Abstract nouns in -i that the dictionary lacks are read as the
+  definite adjective they derive from: `çmenduri` (madness, 876
+  occurrences) → `çmendur` (mad).
 - The few active verbs whose stem ends in the digraph gj or nj (dergj,
   gjegj, regj) are not read in their consonant-ending forms (`regjin`); the
   non-active ones (përgjigjem, shmenjem) are.
