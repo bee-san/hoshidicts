@@ -28,24 +28,14 @@
     "searchResolution": "word",
     "preprocessors": [
       {
-        "id": "decapitalize",
-        "name": "Decapitalize text",
-        "variants": [[{"case": "lower"}]]
+        "id": "removeAlphabeticDiacritics",
+        "name": "Remove Alphabetic Diacritics",
+        "variants": [[{"normalize": "NFD"}, {"strip": "[\\u0300-\\u036F]"}]]
       },
       {
-        "id": "capitalizeFirstLetter",
-        "name": "Capitalize first letter",
-        "variants": [[{"case": "upperFirst"}]]
-      },
-      {
-        "id": "removeDiacritics",
-        "name": "Remove macrons, breves and other marks",
-        "variants": [[{"normalize": "NFD"}, {"strip": "[\\u0300-\\u036F]"}, {"normalize": "NFC"}]]
-      },
-      {
-        "id": "ligatures",
-        "name": "Write æ and œ as ae and oe",
-        "variants": [[{"map": {"æ": "ae", "Æ": "Ae", "œ": "oe", "Œ": "Oe"}}]]
+        "id": "processDiphtongs",
+        "name": "Convert æ to ae",
+        "variants": [[{"map": {"æ": "ae", "Æ": "AE", "œ": "oe", "Œ": "OE"}}], [{"map": {"ae": "æ", "AE": "Æ", "oe": "œ", "OE": "Œ"}}]]
       },
       {
         "id": "jToI",
@@ -56,6 +46,16 @@
         "id": "uToV",
         "name": "Read u as v",
         "variants": [[{"alternatives": {"u": ["v"], "U": ["V"]}, "limit": 64}]]
+      },
+      {
+        "id": "decapitalize",
+        "name": "Decapitalize text",
+        "variants": [[{"case": "lower"}]]
+      },
+      {
+        "id": "capitalizeFirstLetter",
+        "name": "Capitalize first letter",
+        "variants": [[{"case": "upperFirst"}]]
       }
     ],
     "postprocessors": [],

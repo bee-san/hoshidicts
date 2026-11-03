@@ -41,20 +41,42 @@ import {formatTransforms} from '../../../tools/lib/json.mjs';
 const here = dirname(fileURLToPath(import.meta.url));
 
 // --- Conditions --------------------------------------------------------------
-// vb, ptc and vpf are parts of v, so a dictionary row tagged v (a lemma, a
-// participle, or a form-of row such as rēxī "first-person singular perfect
-// active indicative of regō") matches each of them: a perfect form brought to
-// its first person singular (rēxērunt → rēxī) reaches the verb through the
-// dictionary's own row when the stem table below does not know it.
+// v, n, adj and adv are the conditions of Yomitan's Latin rules, with Yomitan's
+// definitions (tools/merge-transforms.mjs requires a condition both rule files
+// have to be defined the same way). The first version of this file made vb,
+// ptc and vpf parts of v; v has no parts in Yomitan's file, so a form that
+// must match a row tagged v carries v itself, besides the marker the next rule
+// takes: a perfect brought to its first person singular is [vpf, v] (rēxērunt
+// → rēxī, which a dictionary's form-of row for rēxī names as regō's), and a
+// participle is [ptc, v] (amātōrum → amātus, which has an entry of its own).
 const conditions = {
-    v: {name: 'Verb', isDictionaryForm: true, subConditions: ['vb', 'ptc', 'vpf']},
-    vb: {name: 'Verb, first person singular present indicative (the dictionary form)', isDictionaryForm: false},
+    v: {name: 'Verb', isDictionaryForm: true},
+    n: {name: 'Noun', isDictionaryForm: true, subConditions: ['ns', 'np']},
+    ns: {name: 'Noun singular', isDictionaryForm: true, subConditions: ['n1s', 'n2s', 'n3s', 'n4s', 'n5s']},
+    np: {name: 'Noun plural', isDictionaryForm: true, subConditions: ['n1p', 'n2p', 'n3p', 'n4p', 'n5p']},
+    n1: {name: 'Noun, 1st declension', isDictionaryForm: true, subConditions: ['n1s', 'n1p']},
+    n1p: {name: 'Noun, 1st declension, plural', isDictionaryForm: true},
+    n1s: {name: 'Noun, 1st declension, singular', isDictionaryForm: true},
+    n2: {name: 'Noun, 2nd declension', isDictionaryForm: true, subConditions: ['n2s', 'n2p']},
+    n2p: {name: 'Noun, 2nd declension, plural', isDictionaryForm: true},
+    n2s: {name: 'Noun, 2nd declension, singular', isDictionaryForm: true},
+    n3: {name: 'Noun, 3rd declension', isDictionaryForm: true, subConditions: ['n3s', 'n3p']},
+    n3p: {name: 'Noun, 3rd declension, plural', isDictionaryForm: true},
+    n3s: {name: 'Noun, 3rd declension, singular', isDictionaryForm: true},
+    n4: {name: 'Noun, 4th declension', isDictionaryForm: true, subConditions: ['n4s', 'n4p']},
+    n4p: {name: 'Noun, 4th declension, plural', isDictionaryForm: true},
+    n4s: {name: 'Noun, 4th declension, singular', isDictionaryForm: true},
+    n5: {name: 'Noun, 5th declension', isDictionaryForm: true, subConditions: ['n5s', 'n5p']},
+    n5p: {name: 'Noun, 5th declension, plural', isDictionaryForm: true},
+    n5s: {name: 'Noun, 5th declension, singular', isDictionaryForm: true},
+    adj: {name: 'Adjective', isDictionaryForm: true, subConditions: ['adj3', 'adj12']},
+    adj12: {name: 'Adjective, 1st-2nd declension', isDictionaryForm: true},
+    adj3: {name: 'Adjective, 3rd declension', isDictionaryForm: true},
+    adv: {name: 'Adverb', isDictionaryForm: true},
+    // Markers the next rule takes; no dictionary row has them.
     ptc: {name: 'Participle or gerundive, masculine nominative singular', isDictionaryForm: false},
     vpf: {name: 'Verb, first person singular perfect indicative', isDictionaryForm: false},
-    n: {name: 'Noun', isDictionaryForm: true},
-    adj: {name: 'Adjective', isDictionaryForm: true, subConditions: ['adj_pos', 'adj_cmp']},
-    adj_pos: {name: 'Adjective, masculine nominative singular', isDictionaryForm: false},
-    adj_cmp: {name: 'Adjective, comparative, masculine nominative singular', isDictionaryForm: false},
+    cmp: {name: 'Adjective, comparative, masculine nominative singular', isDictionaryForm: false},
     // A participle or gerundive followed by a form of esse (amātus est,
     // amātūrus esse, delenda est), whose esse was removed.
     aux: {name: 'Participle or gerundive before a form of esse', isDictionaryForm: false},
@@ -121,7 +143,7 @@ const PERSON_TEXT = {
 // A verb ending needs a root of two letters (st-at, ag-it), so that short
 // words are not read as verbs (e-at, d-at; dō is written out below).
 const MIN = {stemMinLength: 2};
-const VB = ['vb'];
+const VB = ['v'];
 
 const ACTIVE = ['m', 's', 't', 'mus', 'tis', 'nt'];
 const PASSIVE = ['r', 'ris|re', 'tur', 'mur', 'mini', 'ntur'];
@@ -260,7 +282,8 @@ for (const c of CONJ) {
 // or through the stem table below (rēxī → regō). A first person singular the
 // table lacks still reaches its verb through a dictionary's form-of row for
 // it, which vpf matches (see the conditions above).
-const VPF = ['vpf'];
+const VPF = ['vpf', 'v'];
+const VPF_IN = ['vpf'];
 const PERFECT = [
     ['perf', 'perfect', 'Perfect indicative active', [null, 'isti', 'it', 'imus', 'istis', 'erunt|ere']],
     ['plupf', 'pluperfect', 'Pluperfect indicative active', ['eram', 'eras', 'erat', 'eramus', 'eratis', 'erant']],
@@ -318,7 +341,7 @@ slot('perf-stem', 'perfect stem', 'The first person singular perfect (-ī) read 
 for (const [ending, lemma, extra] of [['avi', 'o', MIN], ['ivi', 'io', MIN], ['ii', 'io', MIN], ['evi', 'eo', MIN], ['ui', 'eo', MIN],
                                       ['ui', 'o', MIN], ['ui', 'io', MIN], ['i', 'o', {stemMinLength: 3}], ['i', 'eo', {stemMinLength: 3}],
                                       ['i', 'io', {stemMinLength: 3}]]) {
-    sfx('perf-stem', ending, lemma, VPF, VB, extra);
+    sfx('perf-stem', ending, lemma, VPF_IN, VB, extra);
 }
 
 // Perfect passive participle, future active participle and supine.
@@ -641,9 +664,9 @@ for (const line of PRINCIPAL_PARTS.trim().split('\n')) {
     const extra = compound ? {stemMinLength: 1} : {};
     for (const perfect of perfects === '-' ? [] : alts(perfects)) {
         if (!compound && perfect.length <= 3) {
-            whole('perf-stem', perfect, lemma, VPF, VB);
+            whole('perf-stem', perfect, lemma, VPF_IN, VB);
         } else {
-            sfx('perf-stem', perfect, lemma, VPF, VB, extra);
+            sfx('perf-stem', perfect, lemma, VPF_IN, VB, extra);
         }
     }
     const future = rest.find((r) => r.startsWith('fap:'))?.slice(4);
@@ -662,7 +685,7 @@ for (const [lemma, perfects, supines] of [
     ['infero', 'intuli', 'illatus|inlatus'], ['offero', 'obtuli', 'oblatus'], ['refero', 'rettuli|retuli', 'relatus'],
     ['transfero', 'transtuli', 'translatus|tralatus'], ['suffero', 'sustuli', 'sublatus'],
 ]) {
-    for (const perfect of alts(perfects)) { sfx('perf-stem', perfect, lemma, VPF, VB); }
+    for (const perfect of alts(perfects)) { sfx('perf-stem', perfect, lemma, VPF_IN, VB); }
     for (const supine of alts(supines)) { participles(supine.slice(0, -2), lemma, {}); }
 }
 // The imperatives dīc, dūc, fac (and their compounds ēdūc, indīc).
@@ -671,7 +694,7 @@ for (const [form, lemma, kind] of [['dic', 'dico', 'suffix'], ['duc', 'duco', 's
 }
 // sum, possum and the compounds of sum: fuī → sum (adfuī → adsum).
 for (const [perfect, lemma] of [['fui', 'sum'], ['afui', 'absum'], ['abfui', 'absum'], ['affui', 'adsum'], ['offui', 'obsum'], ['potui', 'possum']]) {
-    sfx('perf-stem', perfect, lemma, VPF, VB);
+    sfx('perf-stem', perfect, lemma, VPF_IN, VB);
 }
 for (const [future, lemma] of [['futurus', 'sum'], ['afuturus', 'absum'], ['abfuturus', 'absum'], ['affuturus', 'adsum'], ['offuturus', 'obsum']]) {
     sfx('ptc-fut', future, lemma, PARTICIPLE_IN, VB);
@@ -788,7 +811,7 @@ for (const prefix of ['', 'ab', 'ad', 'ante', 'circum', 'co', 'ex', 'in', 'inter
         // ī, ītur are kept (the dictionary has them as forms of eō too).
     }
     paradigm(lemma, table);
-    for (const perfect of [`${prefix}ii`, `${prefix}ivi`]) { whole('perf-stem', perfect, lemma, VPF, VB); }
+    for (const perfect of [`${prefix}ii`, `${prefix}ivi`]) { whole('perf-stem', perfect, lemma, VPF_IN, VB); }
     if (prefix !== '') {
         for (const [slotId, ending] of Object.entries(EO_PERFECT_CONTRACTED)) { whole(slotId, prefix + ending, `${prefix}ii`, [], VPF); }
     }
@@ -892,6 +915,11 @@ for (const lemma of ['licet', 'oportet', 'decet', 'dedecet', 'libet', 'lubet', '
 }
 
 // --- Nouns ----------------------------------------------------------------------------
+const N1 = ['n1s'];
+const N2 = ['n2s'];
+const N3 = ['n3s'];
+const N4 = ['n4s'];
+const N5 = ['n5s'];
 const N = ['n'];
 const CASE_SLOTS = [
     ['gen-sg', 'genitive singular'], ['dat-sg', 'dative singular'], ['acc-sg', 'accusative singular'], ['abl-sg', 'ablative singular'],
@@ -909,17 +937,17 @@ function declension(slotPrefix, nominative, stem, cases, conditionsOut, extra) {
 }
 const NOUN_MIN = {stemMinLength: 2};
 // First declension: rosa, rosae.
-declension('n', 'a', '', {'gen-sg': 'ae', 'dat-sg': 'ae', 'acc-sg': 'am', 'nom-pl': 'ae', 'gen-pl': 'arum', 'dat-pl': 'is|abus', 'acc-pl': 'as'}, N, NOUN_MIN);
+declension('n', 'a', '', {'gen-sg': 'ae', 'dat-sg': 'ae', 'acc-sg': 'am', 'nom-pl': 'ae', 'gen-pl': 'arum', 'dat-pl': 'is|abus', 'acc-pl': 'as'}, N1, NOUN_MIN);
 // Second declension: dominus, -ī; bellum, -ī; filius, gen. and voc. filī; puer, puerī; ager, agrī; vir, virī.
-declension('n', 'us', '', {'gen-sg': 'i', 'dat-sg': 'o', 'acc-sg': 'um', 'abl-sg': 'o', 'voc-sg': 'e', 'nom-pl': 'i', 'gen-pl': 'orum|um', 'dat-pl': 'is', 'acc-pl': 'os'}, N, NOUN_MIN);
-declension('n', 'ius', '', {'gen-sg': 'i', 'voc-sg': 'i'}, N, NOUN_MIN);
-declension('n', 'um', '', {'gen-sg': 'i', 'dat-sg': 'o', 'abl-sg': 'o', 'nom-pl': 'a', 'gen-pl': 'orum', 'dat-pl': 'is', 'acc-pl': 'a'}, N, NOUN_MIN);
-declension('n', 'ium', '', {'gen-sg': 'i'}, N, NOUN_MIN);
-declension('n', 'er', 'r', {'gen-sg': 'i', 'dat-sg': 'o', 'acc-sg': 'um', 'abl-sg': 'o', 'nom-pl': 'i', 'gen-pl': 'orum', 'dat-pl': 'is', 'acc-pl': 'os'}, N, {stemMinLength: 1});
+declension('n', 'us', '', {'gen-sg': 'i', 'dat-sg': 'o', 'acc-sg': 'um', 'abl-sg': 'o', 'voc-sg': 'e', 'nom-pl': 'i', 'gen-pl': 'orum|um', 'dat-pl': 'is', 'acc-pl': 'os'}, N2, NOUN_MIN);
+declension('n', 'ius', '', {'gen-sg': 'i', 'voc-sg': 'i'}, N2, NOUN_MIN);
+declension('n', 'um', '', {'gen-sg': 'i', 'dat-sg': 'o', 'abl-sg': 'o', 'nom-pl': 'a', 'gen-pl': 'orum', 'dat-pl': 'is', 'acc-pl': 'a'}, N2, NOUN_MIN);
+declension('n', 'ium', '', {'gen-sg': 'i'}, N2, NOUN_MIN);
+declension('n', 'er', 'r', {'gen-sg': 'i', 'dat-sg': 'o', 'acc-sg': 'um', 'abl-sg': 'o', 'nom-pl': 'i', 'gen-pl': 'orum', 'dat-pl': 'is', 'acc-pl': 'os'}, N2, {stemMinLength: 1});
 // Stems that are the nominative (puer, vir; consul, sōl, labor, carcer,
 // animal, exemplar): second and third declension endings after l or r.
 const LR = {stemMinLength: 2, stemEndsWith: '[lr]'};
-declension('n', '', '', {'gen-sg': 'i|is', 'dat-sg': 'o|i', 'acc-sg': 'um|em', 'abl-sg': 'o|e|i', 'nom-pl': 'i|es|ia', 'gen-pl': 'orum|um|ium', 'dat-pl': 'is|ibus', 'acc-pl': 'os|es'}, N, LR);
+declension('n', '', '', {'gen-sg': 'i|is', 'dat-sg': 'o|i', 'acc-sg': 'um|em', 'abl-sg': 'o|e|i', 'nom-pl': 'i|es|ia', 'gen-pl': 'orum|um|ium', 'dat-pl': 'is|ibus', 'acc-pl': 'os|es'}, ['n2s', 'n3s'], LR);
 // Third declension: the nominative from the stem (cīvitās, cīvitātis; legiō,
 // legiōnis; homō, hominis; pater, patris; rēx, rēgis; nox, noctis; pēs, pedis;
 // mīles, mīlitis; mōns, montis; urbs, urbis; prīnceps, prīncipis ...).
@@ -928,30 +956,30 @@ const THIRD_MIN = {stemMinLength: 1};
 for (const [nominative, stem] of [['as', 'at'], ['us', 'ut'], ['o', 'on'], ['o', 'in'], ['en', 'in'], ['os', 'or'], ['er', 'r'], ['x', 'c'], ['ex', 'ic'],
                                   ['x', 'g'], ['x', 'ct'], ['s', 'd'], ['es', 'id'], ['es', 'it'], ['es', 'et'], ['os', 'ot'], ['ns', 'nt'], ['rs', 'rt'],
                                   ['eps', 'ip'], ['ps', 'p'], ['bs', 'b'], ['l', 'll'], ['s', 'ss'], ['guis', 'guin']]) {
-    declension('n', nominative, stem, THIRD, N, THIRD_MIN);
+    declension('n', nominative, stem, THIRD, N3, THIRD_MIN);
 }
 // Neuters: corpus, corporis; genus, generis; nōmen, nōminis; rōbur, rōboris;
 // poēma, poēmatis; mare, maris (i-stem).
 const THIRD_NEUTER = {'gen-sg': 'is', 'dat-sg': 'i', 'abl-sg': 'e', 'nom-pl': 'a', 'gen-pl': 'um', 'dat-pl': 'ibus', 'acc-pl': 'a'};
 for (const [nominative, stem] of [['us', 'or'], ['us', 'er'], ['en', 'in'], ['ur', 'or'], ['ma', 'mat']]) {
-    declension('n', nominative, stem, THIRD_NEUTER, N, NOUN_MIN);
+    declension('n', nominative, stem, THIRD_NEUTER, N3, NOUN_MIN);
 }
-declension('n', 'e', '', {'gen-sg': 'is', 'dat-sg': 'i', 'abl-sg': 'i', 'nom-pl': 'ia', 'gen-pl': 'ium', 'dat-pl': 'ibus', 'acc-pl': 'ia'}, N, NOUN_MIN);
+declension('n', 'e', '', {'gen-sg': 'is', 'dat-sg': 'i', 'abl-sg': 'i', 'nom-pl': 'ia', 'gen-pl': 'ium', 'dat-pl': 'ibus', 'acc-pl': 'ia'}, N3, NOUN_MIN);
 // i-stems whose nominative is -is or -ēs: cīvis, cīvem, turrim; nūbēs, nūbis.
-declension('n', 'is', '', {'acc-sg': 'em|im', 'dat-sg': 'i', 'abl-sg': 'e|i', 'nom-pl': 'es', 'gen-pl': 'ium|um', 'dat-pl': 'ibus', 'acc-pl': 'es'}, N, NOUN_MIN);
-declension('n', 'es', '', {'gen-sg': 'is', 'dat-sg': 'i', 'acc-sg': 'em', 'abl-sg': 'e', 'gen-pl': 'ium|um', 'dat-pl': 'ibus', 'acc-pl': 'is'}, N, NOUN_MIN);
+declension('n', 'is', '', {'acc-sg': 'em|im', 'dat-sg': 'i', 'abl-sg': 'e|i', 'nom-pl': 'es', 'gen-pl': 'ium|um', 'dat-pl': 'ibus', 'acc-pl': 'es'}, N3, NOUN_MIN);
+declension('n', 'es', '', {'gen-sg': 'is', 'dat-sg': 'i', 'acc-sg': 'em', 'abl-sg': 'e', 'gen-pl': 'ium|um', 'dat-pl': 'ibus', 'acc-pl': 'is'}, N3, NOUN_MIN);
 // Fourth declension: manus, manuī, manum, manū, manuum, manibus; cornū, cornua.
-declension('n', 'us', '', {'dat-sg': 'ui', 'abl-sg': 'u', 'gen-pl': 'uum', 'dat-pl': 'ibus|ubus'}, N, {stemMinLength: 3});
-declension('n', 'u', '', {'gen-sg': 'us', 'nom-pl': 'ua', 'gen-pl': 'uum', 'dat-pl': 'ibus', 'acc-pl': 'ua'}, N, NOUN_MIN);
+declension('n', 'us', '', {'dat-sg': 'ui', 'abl-sg': 'u', 'gen-pl': 'uum', 'dat-pl': 'ibus|ubus'}, N4, {stemMinLength: 3});
+declension('n', 'u', '', {'gen-sg': 'us', 'nom-pl': 'ua', 'gen-pl': 'uum', 'dat-pl': 'ibus', 'acc-pl': 'ua'}, N4, NOUN_MIN);
 // Fifth declension: rēs, reī, rem, rē, rērum, rēbus; diēs.
-declension('n', 'es', '', {'gen-sg': 'ei', 'dat-sg': 'ei', 'acc-sg': 'em', 'abl-sg': 'e', 'gen-pl': 'erum', 'dat-pl': 'ebus'}, N, {stemMinLength: 1});
+declension('n', 'es', '', {'gen-sg': 'ei', 'dat-sg': 'ei', 'acc-sg': 'em', 'abl-sg': 'e', 'gen-pl': 'erum', 'dat-pl': 'ebus'}, N5, {stemMinLength: 1});
 // Plural-only nouns, whose dictionary form is the nominative plural: īnsidiae,
 // līberī, castra, moenia, maiōrēs.
-declension('n', 'ae', '', {'gen-pl': 'arum', 'dat-pl': 'is', 'acc-pl': 'as'}, N, NOUN_MIN);
-declension('n', 'i', '', {'gen-pl': 'orum', 'dat-pl': 'is', 'acc-pl': 'os'}, N, NOUN_MIN);
-declension('n', 'a', '', {'gen-pl': 'orum', 'dat-pl': 'is'}, N, NOUN_MIN);
-declension('n', 'ia', '', {'gen-pl': 'ium', 'dat-pl': 'ibus'}, N, NOUN_MIN);
-declension('n', 'es', '', {'gen-pl': 'um|ium', 'dat-pl': 'ibus'}, N, NOUN_MIN);
+declension('n', 'ae', '', {'gen-pl': 'arum', 'dat-pl': 'is', 'acc-pl': 'as'}, ['n1p'], NOUN_MIN);
+declension('n', 'i', '', {'gen-pl': 'orum', 'dat-pl': 'is', 'acc-pl': 'os'}, ['n2p'], NOUN_MIN);
+declension('n', 'a', '', {'gen-pl': 'orum', 'dat-pl': 'is'}, ['n2p'], NOUN_MIN);
+declension('n', 'ia', '', {'gen-pl': 'ium', 'dat-pl': 'ibus'}, ['n3p'], NOUN_MIN);
+declension('n', 'es', '', {'gen-pl': 'um|ium', 'dat-pl': 'ibus'}, ['n3p'], NOUN_MIN);
 // Irregular nouns.
 for (const [lemma, table] of [
     ['vis', {'acc-sg': 'vim', 'abl-sg': 'vi', 'nom-pl': 'vires', 'gen-pl': 'virium', 'dat-pl': 'viribus', 'acc-pl': 'vires|viris'}],
@@ -989,7 +1017,7 @@ for (const [lemma, table] of [
 // --- Adjectives ------------------------------------------------------------------------
 // First and second declension (bonus, -a, -um; līber, -era, -erum; pulcher,
 // -chra, -chrum). Participles and gerundives decline the same way, so these
-// rules give ptc as well as adj_pos (amātōrum → amātus → amō).
+// rules give ptc and v as well as adj12 (amātōrum → amātus → amō).
 const ADJ_ENDINGS = [
     ['i', 'genitive singular masculine/neuter, nominative plural masculine'],
     ['o', 'dative/ablative singular masculine/neuter'],
@@ -1005,47 +1033,50 @@ const ADJ_ENDINGS = [
     ['as', 'accusative plural feminine'],
 ];
 for (const [ending, name] of ADJ_ENDINGS) { slot(`adj-${ending}`, name, `Adjective, participle or gerundive, ${name}.`); }
-const ADJ_PTC = ['adj_pos', 'ptc'];
-const ADJ = ['adj_pos'];
+const ADJ_PTC = ['adj12', 'ptc', 'v'];
+const ADJ3_PTC = ['adj3', 'ptc', 'v'];
+const ADJ12 = ['adj12'];
+const ADJ3 = ['adj3'];
+const ADJ = ['adj'];
 for (const [ending] of ADJ_ENDINGS) {
     sfx(`adj-${ending}`, ending, 'us', [], ADJ_PTC, {stemMinLength: 2});
     // līber, lībera; miser, misera (the stem is the dictionary form)
-    sfx(`adj-${ending}`, ending, '', [], ADJ, {stemMinLength: 2, stemEndsWith: '[r]'});
+    sfx(`adj-${ending}`, ending, '', [], ADJ12, {stemMinLength: 2, stemEndsWith: '[r]'});
     // pulcher, pulchra; sacer, sacra; noster is a determiner (below)
-    sfx(`adj-${ending}`, `r${ending}`, 'er', [], ADJ, {stemMinLength: 2});
+    sfx(`adj-${ending}`, `r${ending}`, 'er', [], ADJ12, {stemMinLength: 2});
 }
 // Third declension: fortis, forte; ācer, ācris, ācre; celer, celeris;
 // fēlīx, fēlīcis; ingēns, ingentis; vetus, veteris; dīves, dīvitis; and the
 // comparative (altior, altius, altiōris). Present participles decline so too.
-const ADJ3 = [
+const ADJ3_ENDINGS = [
     ['is', 'genitive singular'], ['e', 'nominative/accusative singular neuter, ablative singular'], ['em', 'accusative singular masculine/feminine'],
     ['i', 'dative/ablative singular'], ['es', 'nominative/accusative plural masculine/feminine'], ['ia', 'nominative/accusative plural neuter'],
     ['a', 'nominative/accusative plural neuter'], ['ium', 'genitive plural'], ['um', 'genitive plural'], ['ibus', 'dative/ablative plural'],
     ['ius', 'nominative/accusative singular neuter'],
 ];
-for (const [ending, name] of ADJ3) { slot(`adj3-${ending}`, name, `Third-declension adjective or participle, ${name}.`); }
+for (const [ending, name] of ADJ3_ENDINGS) { slot(`adj3-${ending}`, name, `Third-declension adjective or participle, ${name}.`); }
 const ADJ3_REGULAR = ['e', 'em', 'i', 'es', 'ia', 'ium', 'ibus'];
 const ADJ3_CONSONANT = ['is', 'e', 'em', 'i', 'es', 'ia', 'a', 'ium', 'um', 'ibus'];
-for (const ending of ADJ3_REGULAR) { sfx(`adj3-${ending}`, ending, 'is', [], ADJ, {stemMinLength: 2}); }
+for (const ending of ADJ3_REGULAR) { sfx(`adj3-${ending}`, ending, 'is', [], ADJ3, {stemMinLength: 2}); }
 for (const ending of ['is', ...ADJ3_REGULAR]) {
-    sfx(`adj3-${ending}`, `r${ending}`, 'er', [], ADJ, {stemMinLength: 2});
-    sfx(`adj3-${ending}`, ending, '', [], ADJ, {stemMinLength: 2, stemEndsWith: '[lr]'});
+    sfx(`adj3-${ending}`, `r${ending}`, 'er', [], ADJ3, {stemMinLength: 2});
+    sfx(`adj3-${ending}`, ending, '', [], ADJ3, {stemMinLength: 2, stemEndsWith: '[lr]'});
 }
-for (const [nominative, stem, conditionsOut] of [['x', 'c', ADJ], ['ex', 'ic', ADJ], ['ns', 'nt', ADJ_PTC], ['rs', 'rt', ADJ], ['es', 'it', ADJ],
-                                                 ['es', 'et', ADJ], ['os', 'ot', ADJ], ['us', 'er', ADJ], ['eps', 'ipit', ADJ]]) {
+for (const [nominative, stem, conditionsOut] of [['x', 'c', ADJ3], ['ex', 'ic', ADJ3], ['ns', 'nt', ADJ3_PTC], ['rs', 'rt', ADJ3], ['es', 'it', ADJ3],
+                                                 ['es', 'et', ADJ3], ['os', 'ot', ADJ3], ['us', 'er', ADJ3], ['eps', 'ipit', ADJ3]]) {
     for (const ending of ADJ3_CONSONANT) { sfx(`adj3-${ending}`, stem + ending, nominative, [], conditionsOut, {stemMinLength: 1}); }
 }
 // The comparative declines like a consonant stem (altiōrem, altiōra, altius).
-const CMP = ['adj_cmp'];
+const CMP = ['cmp', 'adj3'];
 for (const ending of ['is', 'e', 'em', 'i', 'es', 'a', 'um', 'ibus']) { sfx(`adj3-${ending}`, `ior${ending}`, 'ior', [], CMP, {stemMinLength: 1}); }
 sfx('adj3-ius', 'ius', 'ior', [], CMP, {stemMinLength: 2});
 // The pronominal adjectives ūnus, sōlus, tōtus: genitive -īus.
-for (const lemma of ['unus', 'solus', 'totus']) { whole('adj3-is', `${lemma.slice(0, -2)}ius`, lemma, [], ADJ); }
+for (const lemma of ['unus', 'solus', 'totus']) { whole('adj3-is', `${lemma.slice(0, -2)}ius`, lemma, [], ADJ12); }
 slot('comparative', 'comparative', 'Comparative degree: altior → altus, fortior → fortis, pulchrior → pulcher, fēlīcior → fēlīx, sapientior → sapiēns; melior → bonus, peior → malus, maior → magnus, minor → parvus, plūs → multus.');
 slot('superlative', 'superlative', 'Superlative degree: altissimus → altus, fortissimus → fortis, fēlīcissimus → fēlīx, pulcherrimus → pulcher, facillimus → facilis; optimus → bonus, pessimus → malus, maximus → magnus, minimus → parvus, plūrimus → multus.');
 for (const [inflected, deinflected, extra] of [['ior', 'us', {}], ['ior', 'is', {}], ['ior', '', {stemEndsWith: '[r]'}], ['rior', 'er', {}],
                                               ['cior', 'x', {}], ['ntior', 'ns', {}], ['rtior', 'rs', {}]]) {
-    sfx('comparative', inflected, deinflected, CMP, ADJ, {stemMinLength: 2, ...extra});
+    sfx('comparative', inflected, deinflected, ['cmp'], ADJ, {stemMinLength: 2, ...extra});
 }
 for (const [inflected, deinflected] of [['issimus', 'us'], ['issimus', 'is'], ['cissimus', 'x'], ['ntissimus', 'ns'], ['rtissimus', 'rs'],
                                         ['errimus', 'er'], ['illimus', 'ilis']]) {
@@ -1061,7 +1092,7 @@ for (const [form, lemma, slotId] of [
     ['imus', 'inferus', 'superlative'], ['postremus', 'posterus', 'superlative'], ['extremus', 'exterus', 'superlative'], ['veterrimus', 'vetus', 'superlative'],
     ['ditissimus', 'dives', 'superlative'], ['maturrimus', 'maturus', 'superlative'],
 ]) {
-    whole(slotId, form, lemma, slotId === 'comparative' ? CMP : ADJ, ADJ);
+    whole(slotId, form, lemma, slotId === 'comparative' ? ['cmp'] : ADJ, ADJ);
 }
 // plūs, plūris and plūrēs, plūrium: the comparative of multus.
 for (const form of ['plus', 'pluris', 'plures', 'plura', 'plurium', 'pluribus']) { whole('comparative', form, 'multus', [], ADJ); }
@@ -1069,7 +1100,7 @@ for (const form of ['plus', 'pluris', 'plures', 'plura', 'plurium', 'pluribus'])
 slot('adverb', 'adverb', 'Adverb made from an adjective: longē → longus, fortiter → fortis, celeriter → celer, ācriter → ācer, fēlīciter → fēlīx, audācter → audāx, sapienter → sapiēns; bene → bonus, male → malus.');
 sfx('adverb', 'e', 'us', [], ADJ_PTC, {stemMinLength: 2});
 for (const [inflected, deinflected, extra, conditionsOut] of [['iter', 'is', {}, ADJ], ['iter', '', {stemEndsWith: '[r]'}, ADJ], ['riter', 'er', {}, ADJ],
-                                                             ['citer', 'x', {}, ADJ], ['cter', 'x', {}, ADJ], ['nter', 'ns', {}, ADJ_PTC], ['rter', 'rs', {}, ADJ]]) {
+                                                             ['citer', 'x', {}, ADJ], ['cter', 'x', {}, ADJ], ['nter', 'ns', {}, ADJ3_PTC], ['rter', 'rs', {}, ADJ]]) {
     sfx('adverb', inflected, deinflected, [], conditionsOut, {stemMinLength: 2, ...extra});
 }
 for (const [form, lemma] of [['bene', 'bonus'], ['male', 'malus'], ['melius', 'bonus'], ['optime', 'bonus'], ['peius', 'malus'], ['pessime', 'malus'],

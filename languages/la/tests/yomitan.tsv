@@ -1,0 +1,10 @@
+# GPL-3.0-or-later; Copyright (C) 2023-2026 Yomitan Authors; 2020-2022 Yomichan Authors
+# https://github.com/yomidevs/yomitan/blob/d3c54c10264673eca0d66b970ef74cd5c8b048e3/test/language/latin-transforms.test.js
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+plural	1	fluvii	fluvius	n	plural
+plural	1	magni	magnus	adj	plural
+plural	1	insulae	insula	n	plural
+adjective	1	magna	magnus	adj	feminine
+adjective	1	Graecum	Graecus	adj	neuter
+adjective	1	prima	primus	adj	neuter|plural
+ablative	1	vocabulo	vocabulum	n	ablative
