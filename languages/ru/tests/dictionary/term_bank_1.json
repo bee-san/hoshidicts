@@ -50,5 +50,7 @@
   ["милая", "ми́лая", "n animate fem", "", 0, ["darling, dear"], 49, ""],
   ["милый", "ми́лый", "adj", "", 0, ["nice, dear"], 50, ""],
   ["Мила", "Ми́ла", "name animate fem", "", 0, ["a female given name"], 51, ""],
-  ["Милой", "Ми́лой", "non-lemma", "", 0, [["Мила", ["instrumental singular"]]], 52, ""]
+  ["Милой", "Ми́лой", "non-lemma", "", 0, [["Мила", ["instrumental singular"]]], 52, ""],
+  ["тёмный", "тёмный", "adj", "", 0, ["dark"], 53, ""],
+  ["темно", "темно́", "adv", "", 0, ["darkly; it is dark"], 54, ""]
 ]

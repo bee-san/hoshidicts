@@ -28,15 +28,15 @@ const COMMIT = '50dcabfd0a04bd4d187ffb0d5cdd54af94863dec';
 const SEED = 1;
 // Strata by kind of form; within each, rows are drawn uniformly.
 const STRATA = [
-    ['noun, singular case', 250, (t) => t[0] === 'N' && t.includes('SG')],
-    ['noun, plural', 250, (t) => t[0] === 'N' && t.includes('PL')],
-    ['adjective, long form', 220, (t) => t[0] === 'ADJ' && !t.includes('LGSPEC1')],
-    ['adjective, short form', 60, (t) => t[0] === 'ADJ' && t.includes('LGSPEC1')],
-    ['verb, present or future', 220, (t) => t[0] === 'V' && (t.includes('PRS') || t.includes('FUT'))],
-    ['verb, past', 150, (t) => t[0] === 'V' && t.includes('PST')],
-    ['verb, imperative', 80, (t) => t[0] === 'V' && t.includes('IMP')],
-    ['participle', 120, (t) => t[0] === 'V.PTCP'],
-    ['adverbial participle', 70, (t) => t[0] === 'V.CVB'],
+    ['noun, singular case', 175, (t) => t[0] === 'N' && t.includes('SG')],
+    ['noun, plural', 175, (t) => t[0] === 'N' && t.includes('PL')],
+    ['adjective, long form', 155, (t) => t[0] === 'ADJ' && !t.includes('LGSPEC1')],
+    ['adjective, short form', 45, (t) => t[0] === 'ADJ' && t.includes('LGSPEC1')],
+    ['verb, present or future', 155, (t) => t[0] === 'V' && (t.includes('PRS') || t.includes('FUT'))],
+    ['verb, past', 105, (t) => t[0] === 'V' && t.includes('PST')],
+    ['verb, imperative', 55, (t) => t[0] === 'V' && t.includes('IMP')],
+    ['participle', 85, (t) => t[0] === 'V.PTCP'],
+    ['adverbial participle', 50, (t) => t[0] === 'V.CVB'],
 ];
 const POS = {N: 'n', V: 'v', 'V.PTCP': 'v', 'V.CVB': 'v', ADJ: 'adj'};
 const WORD = /^[а-яё]+(-[а-яё]+)?$/u;

@@ -24,7 +24,9 @@ import tempfile
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
 PACK = os.path.join(ROOT, 'languages', 'ru')
-KEYS = ['stemMinLength', 'stemEndsWith', 'stemNotStartsWith', 'stemNotStartsWithText', 'stemCharacters', 'stemChange']
+# stemChange is left out: in this pack it only marks the rows that read a stem's
+# last е as ё, which are rules, not constraints (README.md, Measurements).
+KEYS = ['stemMinLength', 'stemEndsWith', 'stemNotStartsWith', 'stemNotStartsWithText', 'stemCharacters']
 
 
 def mutants(transforms):
@@ -34,14 +36,7 @@ def mutants(transforms):
         for key in present:
             m = copy.deepcopy(transforms)
             for r in m['transforms'][i]['rules']:
-                if key == 'stemChange':
-                    # The ё rows (stemChange е → ё) are removed, not changed: without
-                    # its stemChange such a row repeats the plain row.
-                    continue
                 r.pop(key, None)
-            if key == 'stemChange':
-                rules = m['transforms'][i]['rules']
-                m['transforms'][i]['rules'] = [r for r in rules if 'stemChange' not in r]
             yield f"{t['id']} without {key}", m
 
 

@@ -292,7 +292,7 @@ noun('я', CONSONANT, {
     'gen.sg': ['и'], 'dat.sg': ['е'], 'acc.sg': ['ю'], 'ins.sg': ['ей', 'ею', 'ёй', 'ёю'], 'prp.sg': ['е'],
     'nom.pl': ['и'], 'gen.pl': ['ь', 'ей'], 'dat.pl': ['ям'], 'ins.pl': ['ями'], 'prp.pl': ['ях'],
 }, {example: {lemma: 'неделя', 'gen.sg': 'недели', 'ins.sg': 'неделей', 'gen.pl': 'недель'}});
-noun('я', '[аеоуэ]', {
+noun('я', '[аеоуэй]', {
     'gen.sg': ['и'], 'dat.sg': ['е'], 'acc.sg': ['ю'], 'ins.sg': ['ей', 'ею', 'ёй', 'ёю'], 'prp.sg': ['е'],
     'nom.pl': ['и'], 'gen.pl': ['й'], 'dat.pl': ['ям'], 'ins.pl': ['ями'], 'prp.pl': ['ях'],
 }, {example: {lemma: 'идея', 'gen.pl': 'идей'}});
@@ -331,11 +331,13 @@ noun('о', CONSONANT, {
 noun('о', '[гкхжшщч]', {'nom.pl': ['и']}, {example: {lemma: 'яблоко', 'nom.pl': 'яблоки'}});
 for (const [inflected, lemma, ex] of [
     ['он', 'но', ['окон', 'окно']], ['ен', 'но', ['пятен', 'пятно']], ['ён', 'но', ['зёрен', 'зерно']],
-    ['ер', 'ро', ['ведер', 'ведро']], ['ец', 'цо', null], ['лец', 'льцо', ['колец', 'кольцо']],
-    ['ем', 'ьмо', ['писем', 'письмо']], ['ек', 'ко', ['окошек', 'окошко']],
+    ['ер', 'ро', ['ведер', 'ведро']], ['ец', 'цо', null],
+    ['ем', 'ьмо', ['писем', 'письмо']], ['ем', 'ьма', ['тюрем', 'тюрьма']], ['ек', 'ко', ['окошек', 'окошко']],
 ]) {
     suffix('noun', ['gen.pl'], inflected, lemma, [], NOUN, {stemMinLength: 1, stemEndsWith: CONSONANT}, ex);
 }
+// колец, крылец: the л of кольцо, крыльцо follows a vowel.
+suffix('noun', ['gen.pl'], 'лец', 'льцо', [], NOUN, {stemMinLength: 2, stemEndsWith: VOWEL}, ['колец', 'кольцо']);
 // весел → весло, but тел is тело's (no fleeting vowel): a stem of two letters.
 suffix('noun', ['gen.pl'], 'ел', 'ло', [], NOUN, {stemMinLength: 2, stemEndsWith: CONSONANT}, ['весел', 'весло']);
 noun('е', '[лрнм]', {
@@ -436,6 +438,7 @@ for (const [lemma, forms] of [
     ['чёрт', {'nom.pl': 'черти', 'gen.pl': 'чертей', 'dat.pl': 'чертям', 'ins.pl': 'чертями', 'prp.pl': 'чертях'}],
     ['цветок', {'nom.pl': 'цветы', 'gen.pl': 'цветов', 'dat.pl': 'цветам', 'ins.pl': 'цветами', 'prp.pl': 'цветах'}],
     ['путь', {'ins.sg': 'путём'}],
+    ['господь', {'dat.sg': 'господу', 'ins.sg': 'господом', 'prp.sg': 'господе'}],
 ]) {
     for (const [form, word] of Object.entries(forms)) {
         wholeWord('noun', [form], word, lemma, [], NOUN, [word, lemma]);
@@ -494,7 +497,7 @@ adjective('ий', VELAR, VELAR_ENDINGS, {example: {lemma: 'русский', ог
 adjective('ой', VELAR, Object.fromEntries(Object.entries(VELAR_ENDINGS).filter(([ending]) => ending !== 'ой')), {example: {lemma: 'другой', ого: 'другого', ие: 'другие'}});
 adjective('ий', HUSHING, SOFT_ENDINGS('ая', 'ую'), {example: {lemma: 'хороший', его: 'хорошего', ая: 'хорошая', ей: 'хорошей', ую: 'хорошую'}});
 adjective('ой', HUSHING, Object.fromEntries(Object.entries(VELAR_ENDINGS).filter(([ending]) => ending !== 'ой')), {example: {lemma: 'большой', ого: 'большого', им: 'большим'}});
-adjective('ий', '[н]', SOFT_ENDINGS('яя', 'юю'), {example: {lemma: 'синий', его: 'синего', яя: 'синяя', юю: 'синюю'}});
+adjective('ий', '[нр]', SOFT_ENDINGS('яя', 'юю'), {example: {lemma: 'синий', его: 'синего', яя: 'синяя', юю: 'синюю'}});
 adjective('ий', null, Object.fromEntries(Object.entries(SOFT_ENDINGS('я', 'ю')).map(([ending, forms]) => [`ь${ending}`, forms])), {min: 1, example: {lemma: 'третий', ьего: 'третьего', ья: 'третья', ье: 'третье'}});
 
 // Nouns declined as feminine or neuter adjectives, whose lemma is the feminine
@@ -558,7 +561,7 @@ for (const [inflected, lemma, stemEnd, ex] of [
     ['лен', 'льный', null, ['силен', 'сильный']], ['лён', 'льный', null, ['силён', 'сильный']], ['лен', 'льной', null, ['болен', 'больной']],
     ['он', 'ный', '[л]', ['полон', 'полный']], ['ок', 'кий', CONSONANT, ['короток', 'короткий']], ['ёк', 'кий', CONSONANT, ['лёгок', 'лёгкий']],
     ['ек', 'ький', '[р]', ['горек', 'горький']], ['ел', 'лый', '[т]', ['светел', 'светлый']], ['ол', 'лой', '[з]', ['зол', 'злой']],
-    ['ог', 'гий', '[л]', ['долог', 'долгий']],
+    ['ог', 'гий', '[л]', ['долог', 'долгий']], ['ёр', 'рый', '[т]', ['остёр', 'острый']],
 ]) {
     const extra = {stemMinLength: 1};
     if (stemEnd !== null) { extra.stemEndsWith = stemEnd; }
@@ -924,7 +927,7 @@ for (const [form, word] of Object.entries({'pres.1sg': 'ем', 'pres.2sg': 'еш
     wholeWord('verb', forms, word, 'есть', [], VERB, [word, 'есть']);
     wholeWord('verb', forms, `по${word}`, 'поесть', [], VERB, null);
     wholeWord('verb', forms, `на${reflexive(word)}`, 'наесться', [], VERB, null);
-    suffix('verb', forms, word, 'есть', [], VERB, {stemMinLength: 1, stemEndsWith: '[ъ]'}, form === 'pres.1sg' ? ['съем', 'съесть'] : null);
+    suffix('verb', forms, word, 'есть', [], VERB, {stemEndsWith: '[ъ]'}, form === 'pres.1sg' ? ['съем', 'съесть'] : null);
 }
 
 // The vowel a prefix gains before a stem without a vowel (собью → сбить, обовью → обвить, разольёт → разлить, изошью → изшить is not a word).

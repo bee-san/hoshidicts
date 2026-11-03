@@ -1,5 +1,6 @@
 # Source: written for this pack (GPL-3.0-or-later), no third-party data. Expected traces are this pack's transform ids, newest first (* means any trace).
 # The pack has no optional processor, transform or variant pass, so this file and defaults.tsv run the same rules; rows are split by what they test.
+# Rows of category guard are negatives that fail without one stem constraint each (sources/mutate.py, README.md Measurements).
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
 fleeting	1	отца	отец	n	noun-fleeting|noun-gen.sg+nom.pl
 fleeting	1	отцом	отец	n	*
@@ -28,9 +29,13 @@ genitive-plural	1	песен	песня	n	*
 genitive-plural	1	деревень	деревня	n	*
 genitive-plural	1	окон	окно	n	*
 genitive-plural	1	писем	письмо	n	*
+genitive-plural	1	тюрем	тюрьма	n	*
 genitive-plural	1	сердец	сердце	n	*
+genitive-plural	1	колец	кольцо	n	*
+genitive-plural	1	крылец	крыльцо	n	*
 genitive-plural	1	статей	статья	n	*
 genitive-plural	1	идей	идея	n	*
+noun	1	секвойе	секвойя	n	*
 genitive-plural	1	линий	линия	n	*
 irregular-noun	1	люди	человек	n	*
 irregular-noun	1	людьми	человек	n	*
@@ -54,6 +59,7 @@ irregular-noun	1	хозяева	хозяин	n	*
 irregular-noun	1	соседей	сосед	n	*
 irregular-noun	1	небеса	небо	n	*
 irregular-noun	1	путём	путь	n	*
+irregular-noun	1	господу	господь	n	*
 yo	1	словарём	словарь	n	*
 yo	1	словарем	словарь	n	*
 yo	1	статьёй	статья	n	*
@@ -76,8 +82,10 @@ adjective	1	другие	другой	adj	*
 adjective	1	хорошую	хороший	adj	*
 adjective	1	большими	большой	adj	*
 adjective	1	синюю	синий	adj	*
+adjective	1	карими	карий	adj	*
 adjective	1	третьего	третий	adj	*
 adjective	1	лисьей	лисий	adj	*
+adjective	1	мамино	мамин	adj	*
 adjectival-noun	1	учёного	учёный	n	*
 adjectival-noun	1	столовой	столовая	n	*
 adjectival-noun	1	запятые	запятая	n	*
@@ -94,6 +102,8 @@ short-adjective	1	болен	больной	adj	*
 short-adjective	1	короток	короткий	adj	*
 short-adjective	1	светел	светлый	adj	*
 short-adjective	1	зол	злой	adj	*
+short-adjective	1	остёр	острый	adj	*
+short-adjective	1	хитер	хитрый	adj	*
 short-adjective	1	уверена	уверенный	adj	*
 short-adjective	1	решена	решённый	adj	*
 comparative	1	быстрее	быстрый	adj	*
@@ -445,3 +455,192 @@ negatives	0	Вас	Васи	*	*
 negatives	0	Наше	Нахой	*	*
 negatives	0	Милая	Милой	*	*
 negatives	0	Никого	Никой	*	*
+guard	0	я	й	*	*
+guard	0	и я	и й	*	*
+guard	0	я	ь	*	*
+guard	0	она	оне	*	*
+guard	0	и та	и то	*	*
+guard	0	по имени	по имя	*	*
+guard	0	и	ь	*	*
+guard	0	что ли	что ль	*	*
+guard	0	ну	но	*	*
+guard	0	буду	буде	*	*
+guard	0	на волю	на воле	*	*
+guard	0	на борту	на борт	*	*
+guard	0	не	ня	*	*
+guard	0	самое	Самоа	*	*
+guard	0	не те	не та	*	*
+guard	0	ну	на	*	*
+guard	0	теряю	теряя	*	*
+guard	0	я эту	я эта	*	*
+guard	0	чем	че	*	*
+guard	0	будем	буде	*	*
+guard	0	и том	и то	*	*
+guard	0	ней	ня	*	*
+guard	0	идеей	идёя	*	*
+guard	0	о ней	о ня	*	*
+guard	0	не	но	*	*
+guard	0	мае	Мао	*	*
+guard	0	а те	а то	*	*
+guard	0	у марии	у марий	*	*
+guard	0	были	было	*	*
+guard	0	в и	в й	*	*
+guard	0	было	былое	*	*
+guard	0	всё ж	всё же	*	*
+guard	0	вам	во	*	*
+guard	0	местам	месть	*	*
+guard	0	не там	не то	*	*
+guard	0	вами	во	*	*
+guard	0	местами	месть	*	*
+guard	0	я вами	я вы	*	*
+guard	0	бах	бы	*	*
+guard	0	местах	месть	*	*
+guard	0	на улицах	на улице	*	*
+guard	0	дл	дол	*	*
+guard	0	в парк	в парок	*	*
+guard	0	чего	чий	*	*
+guard	0	большого	больший	*	*
+guard	0	я чего	я чий	*	*
+guard	0	кому	кой	*	*
+guard	0	большому	больший	*	*
+guard	0	никому	Никой	*	*
+guard	0	так называемому	так называемой	*	*
+guard	0	ким	кой	*	*
+guard	0	самым	сам	*	*
+guard	0	милым	Милой	*	*
+guard	0	в дым	в дый	*	*
+guard	0	чем	чий	*	*
+guard	0	большом	больший	*	*
+guard	0	ханом	Ханой	*	*
+guard	0	я чем	я чий	*	*
+guard	0	но	н	*	*
+guard	0	просто	прост	*	*
+guard	0	я во	я в	*	*
+guard	0	кое	кий	*	*
+guard	0	большое	больший	*	*
+guard	0	единственное	Ёдинствённой	*	*
+guard	0	ё моё	е мый	*	*
+guard	0	кого	кое	*	*
+guard	0	большого	большое	*	*
+guard	0	что такого	что такое	*	*
+guard	0	кому	кое	*	*
+guard	0	большому	большое	*	*
+guard	0	так называемому	так называемое	*	*
+guard	0	ком	кое	*	*
+guard	0	большом	большое	*	*
+guard	0	я том	я тое	*	*
+guard	0	чая	чий	*	*
+guard	0	юлая	Юлий	*	*
+guard	0	уж чья	уж чий	*	*
+guard	0	свой	свая	*	*
+guard	0	такой	так	*	*
+guard	0	с той	с тый	*	*
+guard	0	чую	чий	*	*
+guard	0	чувствую	чувствий	*	*
+guard	0	вселенную	Вселенной	*	*
+guard	0	я пью	я пий	*	*
+guard	0	свою	свая	*	*
+guard	0	змею	змий	*	*
+guard	0	пеленою	Пёлёной	*	*
+guard	0	в бою	в бый	*	*
+guard	0	злые	злое	*	*
+guard	0	занятие	занятой	*	*
+guard	0	милые	Милой	*	*
+guard	0	что такие	что такое	*	*
+guard	0	оных	он	*	*
+guard	0	самых	сам	*	*
+guard	0	невинных	Невинной	*	*
+guard	0	у них	у ний	*	*
+guard	0	ким	кое	*	*
+guard	0	кривим	кривая	*	*
+guard	0	в дым	в дое	*	*
+guard	0	иными	иное	*	*
+guard	0	самыми	сам	*	*
+guard	0	милыми	Милой	*	*
+guard	0	с ними	с ний	*	*
+guard	0	к	кий	*	*
+guard	0	рад	радий	*	*
+guard	0	сам	самый	*	*
+guard	0	я с	я сый	*	*
+guard	0	ка	кий	*	*
+guard	0	рада	радий	*	*
+guard	0	я на	я ный	*	*
+guard	0	ко	кий	*	*
+guard	0	вино	винный	*	*
+guard	0	я по	я пый	*	*
+guard	0	ки	кий	*	*
+guard	0	ради	радий	*	*
+guard	0	я бы	я бый	*	*
+guard	0	еще	едкий	*	*
+guard	0	змей	змий	*	*
+guard	0	я уже	я узкий	*	*
+guard	0	пока	ка	*	*
+guard	0	пот в	т в	*	*
+guard	0	милейший	Милой	*	*
+guard	0	он величайший	он вёликий	*	*
+guard	0	даю	дать	*	*
+guard	0	чем	честь	*	*
+guard	0	я эту	я эсти	*	*
+guard	0	лишь	лить	*	*
+guard	0	видишь	видать	*	*
+guard	0	ты лишь	ты лить	*	*
+guard	0	тешь	тесть	*	*
+guard	0	счет	стать	*	*
+guard	0	хватит	хватать	*	*
+guard	0	не курит	не курить	*	*
+guard	0	чем	тать	*	*
+guard	0	каким	какать	*	*
+guard	0	я им	я ить	*	*
+guard	0	счете	стать	*	*
+guard	0	ведите	весть	*	*
+guard	0	не спите	нё спать	*	*
+guard	0	дите	деть	*	*
+guard	0	видите	видать	*	*
+guard	0	не курите	не курить	*	*
+guard	0	дают	дать	*	*
+guard	0	брат	брить	*	*
+guard	0	я тут	я сти	*	*
+guard	0	п	пнуть	*	*
+guard	0	так сказал	так сказать	*	*
+guard	0	тела	тесть	*	*
+guard	0	так сказала	так сказать	*	*
+guard	0	тело	тесть	*	*
+guard	0	должно было	должно быть	*	*
+guard	0	пули	путь	*	*
+guard	0	вели	весть	*	*
+guard	0	так сказали	так сказать	*	*
+guard	0	ли	лить	*	*
+guard	0	пути	путать	*	*
+guard	0	не суй	не суть	*	*
+guard	0	пейте	петь	*	*
+guard	0	давайте	даваить	*	*
+guard	0	о дайте	о даять	*	*
+guard	0	сущий	сти	*	*
+guard	0	следующий	слёдевать	*	*
+guard	0	не любящий	нё любить	*	*
+guard	0	шедший	йти	*	*
+guard	0	хороший	хоронуть	*	*
+guard	0	мой младший	мой мласти	*	*
+guard	0	метимый	метать	*	*
+guard	0	он знакомый	он значь	*	*
+guard	0	пятый	пять	*	*
+guard	0	в десятый	в дёсять	*	*
+guard	0	мая	мать	*	*
+guard	0	куда	кудить	*	*
+guard	0	будет для	будет длить	*	*
+guard	0	гав	гать	*	*
+guard	0	лев	лесть	*	*
+guard	0	а исав	а исать	*	*
+guard	0	она	он	*	noun-gen.sg
+guard	0	ии	ий	*	noun-prp.sg+nom.pl
+guard	0	ним	нить	*	verb-ptcp.pres.pass|adj-short.m
+guard	0	мои	моь	n	*
+guard	0	ну	н	n	*
+guard	0	шоу	шо	n	*
+guard	0	бейший	бой	adj	*
+guard	0	боейший	боый	adj	*
+guard	0	мени	мя	*	*
+guard	0	ька	ёк	*	*
+guard	0	о съешь	о съесть	*	*
+guard	0	по-тому	тый	*	*
+guard	0	по-а новому	а новый	*	*

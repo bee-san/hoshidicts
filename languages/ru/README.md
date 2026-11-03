@@ -180,3 +180,11 @@ no Russian rules, so the own rules are also the union and the final set, and
     above, and the -честь verbs;
   - adverbs of manner with по- were added after the hand-judged sample of
     the texts (`по-старинному`).
+
+## Measurements
+
+(being written)
+
+## Known gaps
+
+(being written)

@@ -59,7 +59,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["я", "ь"], ["и", "я"], ["а", "о"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "я", "deinflected": "й", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{vowel}"},
         {"type": "suffix", "inflected": "ы", "deinflected": "а", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[ц]"},
-        {"type": "suffix", "inflected": "и", "deinflected": "я", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[аеоуэ]"},
+        {"type": "suffix", "inflected": "и", "deinflected": "я", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[аеоуэй]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ьи", "ья"], ["ья", "ье"], ["ья", "ьё"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1},
         {"type": "suffix", "inflected": "я", "deinflected": "е", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[лрнм]"},
         {"type": "suffix", "inflected": "а", "deinflected": "е", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[жшщчц]"},
@@ -90,7 +90,7 @@
     {
       "id": "noun-dat.sg",
       "name": "dative singular",
-      "description": "Dative singular of a noun.",
+      "description": "Dative singular of a noun: господу → господь.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "у", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}"},
@@ -101,7 +101,8 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ию", "ий"], ["ию", "ие"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2},
         {"type": "suffix", "inflected": "ю", "deinflected": "е", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[лрнм]"},
         {"type": "suffix", "inflected": "у", "deinflected": "е", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[жшщчц]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ью", "ье"], ["ью", "ьё"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ью", "ье"], ["ью", "ьё"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1},
+        {"type": "wholeWord", "inflected": "господу", "deinflected": "господь", "conditionsIn": [], "conditionsOut": ["n", "name"]}
       ]
     },
     {
@@ -126,7 +127,7 @@
         {"type": "suffix", "inflected": "е", "deinflected": "а", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}"},
         {"type": "suffix", "inflected": "е", "deinflected": "а", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[ц]"},
         {"type": "suffix", "inflected": "е", "deinflected": "я", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{consonant}"},
-        {"type": "suffix", "inflected": "е", "deinflected": "я", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[аеоуэ]"},
+        {"type": "suffix", "inflected": "е", "deinflected": "я", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[аеоуэй]"},
         {"type": "suffix", "inflected": "ье", "deinflected": "ья", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1}
       ]
     },
@@ -141,7 +142,7 @@
         {"type": "suffix", "inflected": "у", "deinflected": "а", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}"},
         {"type": "suffix", "inflected": "у", "deinflected": "а", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[ц]"},
         {"type": "suffix", "inflected": "ю", "deinflected": "я", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{consonant}"},
-        {"type": "suffix", "inflected": "ю", "deinflected": "я", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[аеоуэ]"},
+        {"type": "suffix", "inflected": "ю", "deinflected": "я", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[аеоуэй]"},
         {"type": "suffix", "inflected": "ию", "deinflected": "ия", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2},
         {"type": "suffix", "inflected": "ью", "deinflected": "ья", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1}
       ]
@@ -160,12 +161,13 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ем", "ь"], ["ём", "ь"], ["ею", "я"], ["ёй", "я"], ["ёю", "я"], ["ью", "ь"], ["ом", "о"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{consonant}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ем", "й"], ["ём", "й"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{vowel}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ием", "ий"], ["ией", "ия"], ["иею", "ия"], ["ием", "ие"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ей", "я"], ["ею", "я"], ["ёй", "я"], ["ёю", "я"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[аеоуэ]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ей", "я"], ["ею", "я"], ["ёй", "я"], ["ёю", "я"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[аеоуэй]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ьей", "ья"], ["ьёй", "ья"], ["ьею", "ья"], ["ьёю", "ья"], ["терью", "ть"], ["черью", "чь"], ["ьем", "ье"], ["ьём", "ье"], ["ьём", "ьё"], ["менем", "мя"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ем", "deinflected": "е", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[лрнм]"},
         {"type": "suffix", "inflected": "ем", "deinflected": "е", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[жшщчц]"},
         {"type": "wholeWord", "inflected": "путём", "deinflected": "путь", "conditionsIn": [], "conditionsOut": ["n", "name"]},
-        {"type": "wholeWord", "inflected": "путем", "deinflected": "путь", "conditionsIn": [], "conditionsOut": ["n", "name"]}
+        {"type": "wholeWord", "inflected": "путем", "deinflected": "путь", "conditionsIn": [], "conditionsOut": ["n", "name"]},
+        {"type": "wholeWord", "inflected": "господом", "deinflected": "господь", "conditionsIn": [], "conditionsOut": ["n", "name"]}
       ]
     },
     {
@@ -180,7 +182,7 @@
     {
       "id": "noun-prp.sg",
       "name": "prepositional singular",
-      "description": "Prepositional singular of a noun: столе → стол.",
+      "description": "Prepositional singular of a noun: столе → стол, господе → господь.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "е", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hardConsonant}"},
@@ -191,7 +193,8 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["е", "ь"], ["е", "о"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "е", "deinflected": "й", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{vowel}"},
         {"type": "suffix", "inflected": "ии", "deinflected": "ие", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ье", "ьё"], ["ье", "ье"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ье", "ьё"], ["ье", "ье"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1},
+        {"type": "wholeWord", "inflected": "господе", "deinflected": "господь", "conditionsIn": [], "conditionsOut": ["n", "name"]}
       ]
     },
     {
@@ -247,14 +250,14 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ей", ""], ["ат", "онок"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ов", ""], ["ев", ""]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[ц]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ей", "ь"], ["ь", "я"], ["ел", "ло"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{consonant}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ев", "й"], ["ёв", "й"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{vowel}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ев", "й"], ["ёв", "й"], ["лец", "льцо"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{vowel}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["иев", "ий"], ["ий", "ия"], ["ий", "ие"], ["ан", "анин"], ["ян", "янин"], ["ят", "ёнок"], ["ят", "енок"], ["ьев", ""], ["ьев", "о"], ["ей", "ь"], ["овей", ""], ["зей", "г"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2},
         {"type": "suffix", "inflected": "", "deinflected": "а", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 3, "stemNotStartsWith": "{capital}", "stemEndsWith": "{hardConsonant}"},
         {"type": "suffix", "inflected": "", "deinflected": "а", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 3, "stemNotStartsWith": "{capital}", "stemEndsWith": "{velar}"},
         {"type": "suffix", "inflected": "", "deinflected": "а", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 3, "stemNotStartsWith": "{capital}", "stemEndsWith": "{hushing}"},
         {"type": "suffix", "inflected": "", "deinflected": "а", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 3, "stemNotStartsWith": "{capital}", "stemEndsWith": "[ц]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ок", "ка"], ["ек", "ка"], ["еек", "ейка"], ["ен", "на"], ["ён", "на"], ["ер", "ра"], ["ёр", "ра"], ["ол", "ла"], ["ел", "ла"], ["ец", "ца"], ["ен", "ня"], ["ень", "ня"], ["онь", "ня"], ["ель", "ля"], ["ен", "ьня"], ["он", "но"], ["ен", "но"], ["ён", "но"], ["ер", "ро"], ["ец", "цо"], ["лец", "льцо"], ["ем", "ьмо"], ["ек", "ко"], ["ец", "це"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "{consonant}"},
-        {"type": "suffix", "inflected": "й", "deinflected": "я", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[аеоуэ]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ок", "ка"], ["ек", "ка"], ["еек", "ейка"], ["ен", "на"], ["ён", "на"], ["ер", "ра"], ["ёр", "ра"], ["ол", "ла"], ["ел", "ла"], ["ец", "ца"], ["ен", "ня"], ["ень", "ня"], ["онь", "ня"], ["ель", "ля"], ["ен", "ьня"], ["он", "но"], ["ен", "но"], ["ён", "но"], ["ер", "ро"], ["ец", "цо"], ["ем", "ьмо"], ["ем", "ьма"], ["ек", "ко"], ["ец", "це"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "{consonant}"},
+        {"type": "suffix", "inflected": "й", "deinflected": "я", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[аеоуэй]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ей", "ья"], ["ий", "ья"], ["терей", "ть"], ["черей", "чь"], ["ий", "ье"], ["ьев", "ье"], ["ей", "ье"], ["ий", "ьё"], ["ей", "ьё"], ["мён", "мя"], ["мен", "мя"], ["яр", "ярин"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1},
         {"type": "suffix", "inflected": "", "deinflected": "о", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 3, "stemNotStartsWith": "{capital}", "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "ей", "deinflected": "е", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[лрнм]"},
@@ -292,7 +295,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ям", "ь"], ["ям", "я"], ["ам", "о"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "ям", "deinflected": "й", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{vowel}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["иям", "ий"], ["иям", "ия"], ["иям", "ие"], ["анам", "анин"], ["янам", "янин"], ["ятам", "ёнок"], ["ятам", "енок"], ["ьям", ""], ["ьям", "о"], ["ьям", "ь"], ["овьям", ""], ["зьям", "г"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ям", "deinflected": "я", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[аеоуэ]"},
+        {"type": "suffix", "inflected": "ям", "deinflected": "я", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[аеоуэй]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ьям", "ья"], ["терям", "ть"], ["черям", "чь"], ["ьям", "ье"], ["ьям", "ьё"], ["менам", "мя"], ["ярам", "ярин"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ям", "deinflected": "е", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[лрнм]"},
         {"type": "suffix", "inflected": "ам", "deinflected": "е", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[жшщчц]"},
@@ -328,7 +331,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ями", "ь"], ["ями", "я"], ["ьми", "ь"], ["ами", "о"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "ями", "deinflected": "й", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{vowel}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["иями", "ий"], ["иями", "ия"], ["иями", "ие"], ["анами", "анин"], ["янами", "янин"], ["ятами", "ёнок"], ["ятами", "енок"], ["ьями", ""], ["ьями", "о"], ["ьями", "ь"], ["овьями", ""], ["зьями", "г"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ями", "deinflected": "я", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[аеоуэ]"},
+        {"type": "suffix", "inflected": "ями", "deinflected": "я", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[аеоуэй]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ьями", "ья"], ["терями", "ть"], ["черями", "чь"], ["черьми", "чь"], ["ьями", "ье"], ["ьями", "ьё"], ["менами", "мя"], ["ярами", "ярин"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ями", "deinflected": "е", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[лрнм]"},
         {"type": "suffix", "inflected": "ами", "deinflected": "е", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[жшщчц]"},
@@ -364,7 +367,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ях", "ь"], ["ях", "я"], ["ах", "о"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "ях", "deinflected": "й", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{vowel}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["иях", "ий"], ["иях", "ия"], ["иях", "ие"], ["анах", "анин"], ["янах", "янин"], ["ятах", "ёнок"], ["ятах", "енок"], ["ьях", ""], ["ьях", "о"], ["ьях", "ь"], ["овьях", ""], ["зьях", "г"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ях", "deinflected": "я", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[аеоуэ]"},
+        {"type": "suffix", "inflected": "ях", "deinflected": "я", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[аеоуэй]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ьях", "ья"], ["терях", "ть"], ["черях", "чь"], ["ьях", "ье"], ["ьях", "ьё"], ["менах", "мя"], ["ярах", "ярин"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ях", "deinflected": "е", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[лрнм]"},
         {"type": "suffix", "inflected": "ах", "deinflected": "е", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[жшщчц]"},
@@ -423,8 +426,8 @@
         {"type": "suffix", "inflected": "его", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "ого", "deinflected": "ой", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemNotStartsWith": "{capital}"},
         {"type": "suffix", "inflected": "ого", "deinflected": "ой", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemNotStartsWith": "{capital}", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
-        {"type": "suffix", "inflected": "его", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[н]"},
-        {"type": "suffix", "inflected": "его", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[н]", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
+        {"type": "suffix", "inflected": "его", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[нр]"},
+        {"type": "suffix", "inflected": "его", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[нр]", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "ьего", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ьего", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "егося", "deinflected": "ийся", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[шщ]"}
@@ -448,8 +451,8 @@
         {"type": "suffix", "inflected": "ему", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "ому", "deinflected": "ой", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemNotStartsWith": "{capital}"},
         {"type": "suffix", "inflected": "ому", "deinflected": "ой", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemNotStartsWith": "{capital}", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
-        {"type": "suffix", "inflected": "ему", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[н]"},
-        {"type": "suffix", "inflected": "ему", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[н]", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
+        {"type": "suffix", "inflected": "ему", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[нр]"},
+        {"type": "suffix", "inflected": "ему", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[нр]", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "ьему", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ьему", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "емуся", "deinflected": "ийся", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[шщ]"}
@@ -473,8 +476,8 @@
         {"type": "suffix", "inflected": "им", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "им", "deinflected": "ой", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemNotStartsWith": "{capital}"},
         {"type": "suffix", "inflected": "им", "deinflected": "ой", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemNotStartsWith": "{capital}", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
-        {"type": "suffix", "inflected": "им", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[н]"},
-        {"type": "suffix", "inflected": "им", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[н]", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
+        {"type": "suffix", "inflected": "им", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[нр]"},
+        {"type": "suffix", "inflected": "им", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[нр]", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "ьим", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ьим", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "имся", "deinflected": "ийся", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[шщ]"},
@@ -499,8 +502,8 @@
         {"type": "suffix", "inflected": "ем", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "ом", "deinflected": "ой", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemNotStartsWith": "{capital}"},
         {"type": "suffix", "inflected": "ом", "deinflected": "ой", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemNotStartsWith": "{capital}", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
-        {"type": "suffix", "inflected": "ем", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[н]"},
-        {"type": "suffix", "inflected": "ем", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[н]", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
+        {"type": "suffix", "inflected": "ем", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[нр]"},
+        {"type": "suffix", "inflected": "ем", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[нр]", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "ьем", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ьем", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "емся", "deinflected": "ийся", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[шщ]"}
@@ -533,8 +536,8 @@
         {"type": "suffix", "inflected": "ее", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "ое", "deinflected": "ой", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemNotStartsWith": "{capital}"},
         {"type": "suffix", "inflected": "ое", "deinflected": "ой", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemNotStartsWith": "{capital}", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
-        {"type": "suffix", "inflected": "ее", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[н]"},
-        {"type": "suffix", "inflected": "ее", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[н]", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
+        {"type": "suffix", "inflected": "ее", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[нр]"},
+        {"type": "suffix", "inflected": "ее", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[нр]", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "ьее", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ьее", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "ееся", "deinflected": "ийся", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[шщ]"}
@@ -585,8 +588,8 @@
         {"type": "suffix", "inflected": "ая", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "ая", "deinflected": "ой", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemNotStartsWith": "{capital}"},
         {"type": "suffix", "inflected": "ая", "deinflected": "ой", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemNotStartsWith": "{capital}", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
-        {"type": "suffix", "inflected": "яя", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[н]"},
-        {"type": "suffix", "inflected": "яя", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[н]", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
+        {"type": "suffix", "inflected": "яя", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[нр]"},
+        {"type": "suffix", "inflected": "яя", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[нр]", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "ья", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ья", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "аяся", "deinflected": "ийся", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[шщ]"}
@@ -604,8 +607,8 @@
         {"type": "suffix", "inflected": "ой", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{velar}", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "ей", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}"},
         {"type": "suffix", "inflected": "ей", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
-        {"type": "suffix", "inflected": "ей", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[н]"},
-        {"type": "suffix", "inflected": "ей", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[н]", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
+        {"type": "suffix", "inflected": "ей", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[нр]"},
+        {"type": "suffix", "inflected": "ей", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[нр]", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "ьей", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ьей", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "ой", "deinflected": "ая", "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "{stem}", "stemMinLength": 3, "stemEndsWith": "[бвдзлмнпрстфгкх]"},
@@ -631,8 +634,8 @@
         {"type": "suffix", "inflected": "ую", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "ую", "deinflected": "ой", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemNotStartsWith": "{capital}"},
         {"type": "suffix", "inflected": "ую", "deinflected": "ой", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemNotStartsWith": "{capital}", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
-        {"type": "suffix", "inflected": "юю", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[н]"},
-        {"type": "suffix", "inflected": "юю", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[н]", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
+        {"type": "suffix", "inflected": "юю", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[нр]"},
+        {"type": "suffix", "inflected": "юю", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[нр]", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "ью", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ью", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "ую", "deinflected": "ая", "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "{stem}", "stemMinLength": 3, "stemEndsWith": "[бвдзлмнпрстфгкх]"},
@@ -657,8 +660,8 @@
         {"type": "suffix", "inflected": "ею", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "ою", "deinflected": "ой", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemNotStartsWith": "{capital}"},
         {"type": "suffix", "inflected": "ою", "deinflected": "ой", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemNotStartsWith": "{capital}", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
-        {"type": "suffix", "inflected": "ею", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[н]"},
-        {"type": "suffix", "inflected": "ею", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[н]", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
+        {"type": "suffix", "inflected": "ею", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[нр]"},
+        {"type": "suffix", "inflected": "ею", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[нр]", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "ьею", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ьею", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "ою", "deinflected": "ая", "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "{stem}", "stemMinLength": 3, "stemEndsWith": "[бвдзлмнпрстфгкх]"},
@@ -683,8 +686,8 @@
         {"type": "suffix", "inflected": "ие", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "ие", "deinflected": "ой", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemNotStartsWith": "{capital}"},
         {"type": "suffix", "inflected": "ие", "deinflected": "ой", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemNotStartsWith": "{capital}", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
-        {"type": "suffix", "inflected": "ие", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[н]"},
-        {"type": "suffix", "inflected": "ие", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[н]", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
+        {"type": "suffix", "inflected": "ие", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[нр]"},
+        {"type": "suffix", "inflected": "ие", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[нр]", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "ьие", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ьие", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ые", "ая"], ["ые", "ое"]], "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "{stem}", "stemMinLength": 3, "stemEndsWith": "{hardConsonant}"},
@@ -712,8 +715,8 @@
         {"type": "suffix", "inflected": "их", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "их", "deinflected": "ой", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemNotStartsWith": "{capital}"},
         {"type": "suffix", "inflected": "их", "deinflected": "ой", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemNotStartsWith": "{capital}", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
-        {"type": "suffix", "inflected": "их", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[н]"},
-        {"type": "suffix", "inflected": "их", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[н]", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
+        {"type": "suffix", "inflected": "их", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[нр]"},
+        {"type": "suffix", "inflected": "их", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[нр]", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "ьих", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ьих", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ых", "ая"], ["ых", "ое"]], "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "{stem}", "stemMinLength": 3, "stemEndsWith": "{hardConsonant}"},
@@ -754,8 +757,8 @@
         {"type": "suffix", "inflected": "ими", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "ими", "deinflected": "ой", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemNotStartsWith": "{capital}"},
         {"type": "suffix", "inflected": "ими", "deinflected": "ой", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{hushing}", "stemNotStartsWith": "{capital}", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
-        {"type": "suffix", "inflected": "ими", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[н]"},
-        {"type": "suffix", "inflected": "ими", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[н]", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
+        {"type": "suffix", "inflected": "ими", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[нр]"},
+        {"type": "suffix", "inflected": "ими", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[нр]", "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "ьими", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ьими", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj", "n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemChange": {"from": ["е"], "to": "ё", "occurrence": "last", "between": "{consonant}"}},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ыми", "ая"], ["ыми", "ое"]], "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "{stem}", "stemMinLength": 3, "stemEndsWith": "{hardConsonant}"},
@@ -804,7 +807,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["лен", "льный"], ["лён", "льный"], ["лен", "льной"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "{stem}", "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["он", "ный"], ["ог", "гий"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "[л]"},
         {"type": "suffix", "inflected": "ек", "deinflected": "ький", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "[р]"},
-        {"type": "suffix", "inflected": "ел", "deinflected": "лый", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "[т]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ел", "лый"], ["ёр", "рый"], ["ер", "рый"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "[т]"},
         {"type": "suffix", "inflected": "ол", "deinflected": "лой", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "[з]"},
         {"type": "suffix", "inflected": "н", "deinflected": "нный", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[аяеёо]"}
       ]
@@ -1725,7 +1728,7 @@
         {"type": "wholeWord", "inflected": "ем", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "поем", "deinflected": "поесть", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "наемся", "deinflected": "наесться", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "ем", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "[ъ]"},
+        {"type": "suffix", "inflected": "ем", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemEndsWith": "[ъ]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["обью", "бить"], ["обьюсь", "биться"], ["овью", "вить"], ["овьюсь", "виться"], ["олью", "лить"], ["ольюсь", "литься"], ["опью", "пить"], ["опьюсь", "питься"], ["ошью", "шить"], ["ошьюсь", "шиться"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "[бвдзстр]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["олю", "олоть"], ["олюсь", "олоться"], ["орю", "ороть"], ["орюсь", "ороться"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "{consonant}"},
         {"type": "wholeWord", "inflected": "доем", "deinflected": "доесть", "conditionsIn": [], "conditionsOut": ["v"]},
@@ -1790,7 +1793,7 @@
         {"type": "wholeWord", "inflected": "ешь", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "поешь", "deinflected": "поесть", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "наешься", "deinflected": "наесться", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "ешь", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "[ъ]"}
+        {"type": "suffix", "inflected": "ешь", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemEndsWith": "[ъ]"}
       ]
     },
     {
@@ -1807,7 +1810,7 @@
         {"type": "wholeWord", "inflected": "ест", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "поест", "deinflected": "поесть", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "наестся", "deinflected": "наесться", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "ест", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "[ъ]"},
+        {"type": "suffix", "inflected": "ест", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemEndsWith": "[ъ]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["обьёт", "бить"], ["обьет", "бить"], ["обьётся", "биться"], ["обьется", "биться"], ["овьёт", "вить"], ["овьет", "вить"], ["овьётся", "виться"], ["овьется", "виться"], ["ольёт", "лить"], ["ольет", "лить"], ["ольётся", "литься"], ["ольется", "литься"], ["опьёт", "пить"], ["опьет", "пить"], ["опьётся", "питься"], ["опьется", "питься"], ["ошьёт", "шить"], ["ошьет", "шить"], ["ошьётся", "шиться"], ["ошьется", "шиться"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "[бвдзстр]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["олет", "олоть"], ["олется", "олоться"], ["орет", "ороть"], ["орется", "ороться"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "{consonant}"},
         {"type": "wholeWord", "inflected": "доест", "deinflected": "доесть", "conditionsIn": [], "conditionsOut": ["v"]},
@@ -1844,7 +1847,7 @@
         {"type": "wholeWord", "inflected": "едим", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "поедим", "deinflected": "поесть", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "наедимся", "deinflected": "наесться", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "едим", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "[ъ]"},
+        {"type": "suffix", "inflected": "едим", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemEndsWith": "[ъ]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["обьём", "бить"], ["обьем", "бить"], ["обьёмся", "биться"], ["обьемся", "биться"], ["овьём", "вить"], ["овьем", "вить"], ["овьёмся", "виться"], ["овьемся", "виться"], ["ольём", "лить"], ["ольем", "лить"], ["ольёмся", "литься"], ["ольемся", "литься"], ["опьём", "пить"], ["опьем", "пить"], ["опьёмся", "питься"], ["опьемся", "питься"], ["ошьём", "шить"], ["ошьем", "шить"], ["ошьёмся", "шиться"], ["ошьемся", "шиться"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "[бвдзстр]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["олем", "олоть"], ["олемся", "олоться"], ["орем", "ороть"], ["оремся", "ороться"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "{consonant}"},
         {"type": "wholeWord", "inflected": "доедим", "deinflected": "доесть", "conditionsIn": [], "conditionsOut": ["v"]},
@@ -1880,7 +1883,7 @@
         {"type": "wholeWord", "inflected": "едите", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "поедите", "deinflected": "поесть", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "наедитесь", "deinflected": "наесться", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "едите", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "[ъ]"},
+        {"type": "suffix", "inflected": "едите", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemEndsWith": "[ъ]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["обьёте", "бить"], ["обьете", "бить"], ["обьётесь", "биться"], ["обьетесь", "биться"], ["овьёте", "вить"], ["овьете", "вить"], ["овьётесь", "виться"], ["овьетесь", "виться"], ["ольёте", "лить"], ["ольете", "лить"], ["ольётесь", "литься"], ["ольетесь", "литься"], ["опьёте", "пить"], ["опьете", "пить"], ["опьётесь", "питься"], ["опьетесь", "питься"], ["ошьёте", "шить"], ["ошьете", "шить"], ["ошьётесь", "шиться"], ["ошьетесь", "шиться"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "[бвдзстр]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["олете", "олоть"], ["олетесь", "олоться"], ["орете", "ороть"], ["оретесь", "ороться"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "{consonant}"},
         {"type": "wholeWord", "inflected": "доедите", "deinflected": "доесть", "conditionsIn": [], "conditionsOut": ["v"]},
@@ -1927,7 +1930,7 @@
         {"type": "wholeWord", "inflected": "едят", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "поедят", "deinflected": "поесть", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "наедятся", "deinflected": "наесться", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "едят", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "[ъ]"},
+        {"type": "suffix", "inflected": "едят", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemEndsWith": "[ъ]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["обьют", "бить"], ["обьются", "биться"], ["овьют", "вить"], ["овьются", "виться"], ["ольют", "лить"], ["ольются", "литься"], ["опьют", "пить"], ["опьются", "питься"], ["ошьют", "шить"], ["ошьются", "шиться"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "[бвдзстр]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["олют", "олоть"], ["олются", "олоться"], ["орют", "ороть"], ["орются", "ороться"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "{consonant}"},
         {"type": "wholeWord", "inflected": "доедят", "deinflected": "доесть", "conditionsIn": [], "conditionsOut": ["v"]},
@@ -1978,7 +1981,7 @@
         {"type": "wholeWord", "inflected": "ел", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "поел", "deinflected": "поесть", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "наелся", "deinflected": "наесться", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "ел", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "[ъ]"},
+        {"type": "suffix", "inflected": "ел", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemEndsWith": "[ъ]"},
         {"type": "wholeWord", "inflected": "доел", "deinflected": "доесть", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "доелся", "deinflected": "доесться", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "заел", "deinflected": "заесть", "conditionsIn": [], "conditionsOut": ["v"]},
@@ -2030,7 +2033,7 @@
         {"type": "wholeWord", "inflected": "ела", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "поела", "deinflected": "поесть", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "наелась", "deinflected": "наесться", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "ела", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "[ъ]"},
+        {"type": "suffix", "inflected": "ела", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemEndsWith": "[ъ]"},
         {"type": "wholeWord", "inflected": "доела", "deinflected": "доесть", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "доелась", "deinflected": "доесться", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "заела", "deinflected": "заесть", "conditionsIn": [], "conditionsOut": ["v"]},
@@ -2082,7 +2085,7 @@
         {"type": "wholeWord", "inflected": "ело", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "поело", "deinflected": "поесть", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "наелось", "deinflected": "наесться", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "ело", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "[ъ]"},
+        {"type": "suffix", "inflected": "ело", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemEndsWith": "[ъ]"},
         {"type": "wholeWord", "inflected": "доело", "deinflected": "доесть", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "доелось", "deinflected": "доесться", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "заело", "deinflected": "заесть", "conditionsIn": [], "conditionsOut": ["v"]},
@@ -2134,7 +2137,7 @@
         {"type": "wholeWord", "inflected": "ели", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "поели", "deinflected": "поесть", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "наелись", "deinflected": "наесться", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "ели", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "[ъ]"},
+        {"type": "suffix", "inflected": "ели", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemEndsWith": "[ъ]"},
         {"type": "wholeWord", "inflected": "доели", "deinflected": "доесть", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "доелись", "deinflected": "доесться", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "заели", "deinflected": "заесть", "conditionsIn": [], "conditionsOut": ["v"]},
@@ -2192,7 +2195,7 @@
         {"type": "wholeWord", "inflected": "ешьте", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "поешьте", "deinflected": "поесть", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "наешьтесь", "deinflected": "наесться", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "ешьте", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "[ъ]"}
+        {"type": "suffix", "inflected": "ешьте", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemEndsWith": "[ъ]"}
       ]
     },
     {
@@ -2224,7 +2227,7 @@
         {"type": "wholeWord", "inflected": "евший", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "поевший", "deinflected": "поесть", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "наевшийся", "deinflected": "наесться", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "евший", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "[ъ]"}
+        {"type": "suffix", "inflected": "евший", "deinflected": "есть", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemEndsWith": "[ъ]"}
       ]
     },
     {

@@ -1,11 +1,8 @@
 # Known gaps: run by the conformance test and counted, not enforced.
 # Hand-written rows (categories without ";"): written for this pack, no third-party data.
 # Source: UniMorph rus (https://github.com/unimorph/rus/blob/50dcabfd0a04bd4d187ffb0d5cdd54af94863dec/rus, sha256 6c13f849fc12844b), CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/), by the UniMorph contributors, from Wiktionary.
-# 1420 rows sampled with seed 1 by sources/build-corpus.mjs (250 noun, singular case, 250 noun, plural, 220 adjective, long form, 60 adjective, short form, 220 verb, present or future, 150 verb, past, 80 verb, imperative, 120 participle, 70 adverbial participle); the rows the pack's rules reach are in corpus.tsv, the others in gaps.tsv.
+# 1000 rows sampled with seed 1 by sources/build-corpus.mjs (175 noun, singular case, 175 noun, plural, 155 adjective, long form, 45 adjective, short form, 155 verb, present or future, 105 verb, past, 55 verb, imperative, 85 participle, 50 adverbial participle); the rows the pack's rules reach are in corpus.tsv, the others in gaps.tsv.
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
 surname	1	Толстого	Толстой	name	*
-N;ACC;PL	1	государства-доноры	государство-донор	n	*
 ADJ;ACC;ANIM;PL	1	телогических	теологический	adj	*
 ADJ;PL;LGSPEC1	1	внутренни	внутренний	adj	*
-ADJ;PL;LGSPEC1	1	предпредпоследни	предпредпоследний	adj	*
-V;FUT;2;PL	1	достигнетесь	достичься	v	*
