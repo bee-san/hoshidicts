@@ -1,0 +1,40 @@
+# Source: written for this pack (GPL-3.0-or-later), against tests/dictionary/. The pack has no optional processor.
+# category	valid	text	expression	matched
+inflection	1	falou com ele	falar	falou
+inflection	1	Falamos amanhã	falar	Falamos
+inflection	1	casas bonitas	casa	casas
+inflection	1	flores bonitas	flor	flores
+inflection	1	pãezinhos quentes	pão	pãezinhos
+inflection	1	cafezinho quente	café	cafezinho
+inflection	1	rapidamente demais	rápido	rapidamente
+inflection	1	rapidíssimo hoje	rápido	rapidíssimo
+inflection	1	bonitas casas	bonito	bonitas
+inflection	1	portuguesas e brasileiras	português	portuguesas
+ranking	1	pode ser	poder	pode
+ranking	0	pode ser	podar	pode
+ranking	1	segue em frente	seguir	segue
+ranking	0	segue em frente	segar	segue
+ranking	1	casas grandes	casa	casas
+ranking	0	casas grandes	casar	casas
+pronouns	1	chama-se João	chamar	chama-se
+pronouns	0	chama-se João	chama	chama
+pronouns	1	deixa-me ir	deixar	deixa-me
+pronouns	1	fazê-lo agora	fazer	fazê-lo
+pronouns	1	dir-te-ei amanhã	dizer	dir-te-ei
+pronouns	1	dá-me isso	dar	dá-me
+pronouns	1	lembrou-se tarde	lembrar	lembrou-se
+pronouns	1	sentamo-nos aqui	sentar	sentamo-nos
+pronouns	1	pô-lo na mesa	pôr	pô-lo
+pronouns	1	te amo muito	te	te
+capitals	1	Minha casa	meu	Minha
+capitals	0	Minha casa	Minho	Minha
+capitals	1	Esta casa	este	Esta
+capitals	0	Esta casa	Ester	Esta
+capitals	1	Porta aberta	porta	Porta
+demonstratives	1	esta casa	este	esta
+demonstratives	0	esta casa	estar	esta
+colloquial	1	tá bom	estar	tá
+word resolution	1	guarda-chuvas abertos	guarda-chuva	guarda-chuvas
+word resolution	1	caixa-d'água cheia	caixa-d'água	caixa-d'água
+word resolution	1	desafortunadamente choveu	desafortunado	desafortunadamente
+word resolution	1	Ontem falamos	ontem	Ontem

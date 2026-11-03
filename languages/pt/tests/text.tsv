@@ -1,0 +1,26 @@
+# Source: written for this pack (GPL-3.0-or-later), no third-party data. The pack has no optional processor.
+# category	valid	input	variant
+decapitalize	1	Falou	falou
+decapitalize	1	FALOU	falou
+decapitalize	1	ÁRVORE	árvore
+decapitalize	1	CORAÇÃO	coração
+decapitalize	1	ÇA	ça
+capitalize	1	maria	Maria
+capitalize	1	ângela	Ângela
+capitalize	1	évora	Évora
+keep input	1	Falou	Falou
+keep input	1	falou	falou
+keep input	1	freqüente	freqüente
+unicode	1	ﬁz	fiz
+unicode	1	Ｃasa	casa
+unicode	1	coração	coração
+diaeresis	1	freqüente	frequente
+diaeresis	1	lingüiça	linguiça
+diaeresis	1	agüentar	aguentar
+diaeresis	1	Ügo	Ugo
+no other change	0	falou	falo
+no other change	0	coração	coracao
+no other change	0	está	esta
+no other change	0	esta	está
+no other change	0	pôr	por
+no other change	0	avó	avô

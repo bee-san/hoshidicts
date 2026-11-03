@@ -1,0 +1,10 @@
+{
+  "title": "hoshidicts pt test dictionary",
+  "format": 3,
+  "revision": "1",
+  "sequenced": false,
+  "author": "hoshidicts",
+  "description": "A tiny Portuguese dictionary for languages/pt/tests/lookup.tsv, written for the pack. Like wty-pt-en, its rows have no rules (part of speech) column.",
+  "sourceLanguage": "pt",
+  "targetLanguage": "en"
+}

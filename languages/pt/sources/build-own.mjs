@@ -63,17 +63,35 @@ function add(id, rule) {
 // A verb rule: the ending of a conjugated form, or of a form whose pronoun was
 // removed (vf), replaced by the infinitive's. The stem has two letters unless
 // the rule says otherwise: de, se and vê are not dar, ser and ver through a
-// regular ending (those verbs are written out). An ending of one or two
-// letters also needs a stem of letters only, so it never reads a word after
-// a space or a hyphen as inflected (te ama, deixa-me).
-const SHORT = 2;
-const letters = (inflected) => ([...inflected].length <= SHORT ? {stemCharacters: '{letter}'} : {});
+// regular ending (those verbs are written out). Every stem is without a
+// space, so a rule never reads the last word of a phrase as inflected (te
+// ama, o que), while compounds keep their readings (bem-sucedida, pré-datou,
+// infra-sons). Nor may a stem have a capital letter: a capitalised word is
+// deinflected through its lowercase variant (decapitalize), so Minha, Esta,
+// Estamos and Porta at the start of a sentence give meu, este, estar and
+// porta, not the names Minho, Ester and Porto. (The reading of the text as
+// written takes fewer processor steps, so it would rank first.)
+const letters = () => ({stemCharacters: '{lowerStem}'});
 function verb(id, inflected, deinflected, extra = {}) {
     add(id, {type: 'suffix', inflected, deinflected, conditionsIn: ['vf'], conditionsOut: ['v'], stemMinLength: 2, ...letters(inflected), ...extra});
 }
 
+// Irregular forms are whole words. They are collected by slot and written as
+// one cross-product row per slot (an empty prefix, the forms as suffixes, an
+// empty stem), which stands for one whole-word rule per form (section 7.3)
+// and keeps own.json small. flushWords() writes them, in the order given.
+const WORDS = new Map();
 function verbWord(id, inflected, deinflected) {
-    add(id, {type: 'wholeWord', inflected, deinflected, conditionsIn: ['vf'], conditionsOut: ['v']});
+    if (!byId.has(id)) { throw new Error(`no transform ${id}`); }
+    if (!WORDS.has(id)) { WORDS.set(id, []); }
+    const list = WORDS.get(id);
+    if (!list.some(([f, l]) => f === inflected && l === deinflected)) { list.push([inflected, deinflected]); }
+}
+function flushWords() {
+    for (const [id, suffixes] of WORDS) {
+        add(id, {type: 'circumfix', prefixes: [['', '']], suffixes, conditionsIn: ['vf'], conditionsOut: ['v'], stemCharacters: '[]'});
+    }
+    WORDS.clear();
 }
 
 // A rule of a noun or adjective form.
@@ -101,19 +119,29 @@ const TENSES = [
     ['pluperfect', 'pluperfect', 'Simple pluperfect (pretérito mais-que-perfeito)', FIVE],
     ['future', 'future', 'Future indicative (futuro do presente)', SIX],
     ['conditional', 'conditional', 'Conditional (futuro do pretérito)', FIVE],
-    ['subjunctive', 'present subjunctive', 'Present subjunctive, also the negative imperative', FIVE],
+    ['subjunctive', 'present subjunctive', 'Present subjunctive', FIVE],
     ['imperfect-subjunctive', 'imperfect subjunctive', 'Imperfect subjunctive', FIVE],
     ['future-subjunctive', 'future subjunctive', 'Future subjunctive of a verb whose future subjunctive is not its personal infinitive', FIVE],
     ['personal-infinitive', 'personal infinitive', 'Personal infinitive, which is also the future subjunctive of a regular verb', ['tu', 'nos', 'vos', 'eles']],
 ];
 // [person id, trace label, description]
+// The imperative of você, nós and vocês is the present subjunctive, and the
+// regular tu imperative is the third person present (fala, come, parte), so
+// those forms are deinflected once, by transforms whose names give both
+// moods. Only the tu imperatives that differ (sê, faze, dize) and the vós
+// imperative (falai, comei, parti) have transforms of their own.
 const IMPERATIVES = [
-    ['tu', 'tu', 'Affirmative imperative, tu'],
+    ['tu', 'tu', 'Affirmative imperative, tu, where it is not the third person present'],
     ['vos', 'vós', 'Affirmative imperative, vós'],
-    ['voce', 'você', 'Imperative, você (the present subjunctive form)'],
-    ['nos', 'nós', 'Imperative, nós (the present subjunctive form)'],
-    ['voces', 'vocês', 'Imperative, vocês (the present subjunctive form)'],
 ];
+const ALSO = {
+    'present-ele': ['present (ele) or imperative (tu)', 'Present indicative, third person singular (ele, ela, você), also the affirmative imperative of tu'],
+    'subjunctive-eu-ele': ['present subjunctive (eu/ele) or imperative (você)', 'Present subjunctive, first and third person singular (eu, ele, ela, você), also the imperative of você'],
+    'subjunctive-tu': ['present subjunctive (tu)', 'Present subjunctive, second person singular (tu), also the negative imperative of tu (não fales)'],
+    'subjunctive-nos': ['present subjunctive or imperative (nós)', 'Present subjunctive, first person plural (nós), also the imperative of nós'],
+    'subjunctive-vos': ['present subjunctive (vós)', 'Present subjunctive, second person plural (vós), also the negative imperative of vós'],
+    'subjunctive-eles': ['present subjunctive (eles) or imperative (vocês)', 'Present subjunctive, third person plural (eles, elas, vocês), also the imperative of vocês'],
+};
 // The forms the descriptions give, for the slots whose examples are not the
 // regular forms of falar, comer and partir.
 const EXAMPLES = {
@@ -142,7 +170,7 @@ const ENDINGS = {
         'subjunctive-eu-ele': 'e', 'subjunctive-tu': 'es', 'subjunctive-nos': 'emos', 'subjunctive-vos': 'eis', 'subjunctive-eles': 'em',
         'imperfect-subjunctive-eu-ele': 'asse', 'imperfect-subjunctive-tu': 'asses', 'imperfect-subjunctive-nos': 'ássemos', 'imperfect-subjunctive-vos': 'ásseis', 'imperfect-subjunctive-eles': 'assem',
         'personal-infinitive-tu': 'ares', 'personal-infinitive-nos': 'armos', 'personal-infinitive-vos': 'ardes', 'personal-infinitive-eles': 'arem',
-        'imperative-tu': 'a', 'imperative-vos': 'ai', 'imperative-voce': 'e', 'imperative-nos': 'emos', 'imperative-voces': 'em',
+        'imperative-vos': 'ai',
         'gerund': 'ando',
         'participle': ['ado', 'ada', 'ados', 'adas'],
     },
@@ -156,7 +184,7 @@ const ENDINGS = {
         'subjunctive-eu-ele': 'a', 'subjunctive-tu': 'as', 'subjunctive-nos': 'amos', 'subjunctive-vos': 'ais', 'subjunctive-eles': 'am',
         'imperfect-subjunctive-eu-ele': 'esse', 'imperfect-subjunctive-tu': 'esses', 'imperfect-subjunctive-nos': 'êssemos', 'imperfect-subjunctive-vos': 'êsseis', 'imperfect-subjunctive-eles': 'essem',
         'personal-infinitive-tu': 'eres', 'personal-infinitive-nos': 'ermos', 'personal-infinitive-vos': 'erdes', 'personal-infinitive-eles': 'erem',
-        'imperative-tu': 'e', 'imperative-vos': 'ei', 'imperative-voce': 'a', 'imperative-nos': 'amos', 'imperative-voces': 'am',
+        'imperative-vos': 'ei',
         'gerund': 'endo',
         'participle': ['ido', 'ida', 'idos', 'idas'],
     },
@@ -179,7 +207,8 @@ transform('plural', 'plural', 'Plural of a noun or adjective: casas, flores, le�
 for (const [tense, name, text, persons] of TENSES) {
     for (const person of persons) {
         const id = `${tense}-${person}`;
-        transform(id, `${name} (${PERSON_NAME[person]})`, `${text}, ${PERSON_TEXT[person]}: ${examples(id)}.`);
+        const [alsoName, alsoText] = ALSO[id] ?? [`${name} (${PERSON_NAME[person]})`, `${text}, ${PERSON_TEXT[person]}`];
+        transform(id, alsoName, `${alsoText}: ${examples(id)}.`);
     }
 }
 for (const [person, label, text] of IMPERATIVES) {
@@ -224,7 +253,7 @@ for (const conj of ['ar', 'er', 'ir']) {
             } else if (conj !== 'ar' && /^[ao]/u.test(ending)) {
                 verb(slot, ending, conj, {stemNotEndsWith: '[cg]'});
                 if (conj === 'er') { verb(slot, `ç${ending}`, 'cer'); }
-                verb(slot, `j${ending}`, `g${conj}`);
+                verb(slot, `j${ending}`, `g${conj}`, {stemMinLength: 1});   // aja, ajo (agir), protejo
                 verb(slot, `g${ending}`, `gu${conj}`);
             } else {
                 verb(slot, ending, conj);
@@ -236,7 +265,7 @@ for (const conj of ['ar', 'er', 'ir']) {
 // The present of -guir and -guer verbs keeps gu before e. These come before the
 // -gar subjunctive at the same ending, so segue, consegue and persegue give
 // seguir, conseguir and perseguir before segar.
-for (const slot of ['present-tu', 'present-ele', 'present-eles', 'imperative-tu']) {
+for (const slot of ['present-tu', 'present-ele', 'present-eles']) {
     verb(slot, `gu${ENDINGS.ir[slot]}`, 'guir');
     verb(slot, `gu${ENDINGS.er[slot]}`, 'guer');
 }
@@ -244,8 +273,7 @@ for (const slot of ['present-tu', 'present-ele', 'present-eles', 'imperative-tu'
 // -ir verbs whose stem vowel changes: e → i and o → u before a and o
 // (sinto, sirva, prefiro, visto, durmo, cubra, tussa), u → o before a
 // stressed e (sobe, foge, consome, cospe, sacode).
-const IR_BEFORE_AO = ['present-eu', 'subjunctive-eu-ele', 'subjunctive-tu', 'subjunctive-nos', 'subjunctive-vos', 'subjunctive-eles',
-    'imperative-voce', 'imperative-nos', 'imperative-voces'];
+const IR_BEFORE_AO = ['present-eu', 'subjunctive-eu-ele', 'subjunctive-tu', 'subjunctive-nos', 'subjunctive-vos', 'subjunctive-eles'];
 for (const slot of IR_BEFORE_AO) {
     const ending = ENDINGS.ir[slot];
     verb(slot, ending, 'ir', {stemNotEndsWith: '[cg]', stemChange: {from: ['i'], to: 'e', occurrence: 'last', between: '{consonant}'}});
@@ -253,12 +281,12 @@ for (const slot of IR_BEFORE_AO) {
     // seguir and its compounds: sigo, consiga, persigam, prossigamos.
     verb(slot, `ig${ending}`, 'eguir', {stemMinLength: 1});
 }
-for (const slot of ['present-tu', 'present-ele', 'present-eles', 'imperative-tu']) {
+for (const slot of ['present-tu', 'present-ele', 'present-eles']) {
     verb(slot, ENDINGS.ir[slot], 'ir', {stemChange: {from: ['o'], to: 'u', occurrence: 'last', between: '{consonant}'}});
 }
 // agredir, progredir, regredir, transgredir and prevenir change e to i in
 // every stressed form: agrido, progride, transgridam, previne.
-for (const slot of [...IR_BEFORE_AO, 'present-tu', 'present-ele', 'present-eles', 'imperative-tu']) {
+for (const slot of [...IR_BEFORE_AO, 'present-tu', 'present-ele', 'present-eles']) {
     const ending = ENDINGS.ir[slot];
     verb(slot, `grid${ending}`, 'gredir', {stemMinLength: 1});
     verb(slot, `evin${ending}`, 'evenir', {stemMinLength: 1});
@@ -266,8 +294,7 @@ for (const slot of [...IR_BEFORE_AO, 'present-tu', 'present-ele', 'present-eles'
 
 // A stressed i or u after a vowel takes an accent where the infinitive has
 // none: proíbe → proibir, reúne → reunir, saúda → saudar, enraízo → enraizar.
-const STRESSED = ['present-eu', 'present-tu', 'present-ele', 'present-eles', 'subjunctive-eu-ele', 'subjunctive-tu', 'subjunctive-eles',
-    'imperative-tu', 'imperative-voce', 'imperative-voces'];
+const STRESSED = ['present-eu', 'present-tu', 'present-ele', 'present-eles', 'subjunctive-eu-ele', 'subjunctive-tu', 'subjunctive-eles'];
 for (const conj of ['ar', 'er', 'ir']) {
     for (const slot of STRESSED) {
         const ending = ENDINGS[conj][slot];
@@ -282,11 +309,25 @@ for (const conj of ['ar', 'er', 'ir']) {
 // mediar, remediar, incendiar, intermediar and ansiar do the same (odeio,
 // anseia).
 const EAR = {'present-eu': 'eio', 'present-tu': 'eias', 'present-ele': 'eia', 'present-eles': 'eiam', 'subjunctive-eu-ele': 'eie',
-    'subjunctive-tu': 'eies', 'subjunctive-eles': 'eiem', 'imperative-tu': 'eia', 'imperative-voce': 'eie', 'imperative-voces': 'eiem'};
+    'subjunctive-tu': 'eies', 'subjunctive-eles': 'eiem'};
 for (const [slot, ending] of Object.entries(EAR)) {
     verb(slot, ending, 'ear');
     verb(slot, `d${ending}`, 'diar', {stemMinLength: 1});
     verb(slot, `ns${ending}`, 'nsiar', {stemMinLength: 1});
+    // negociar, premiar, comerciar, agenciar, also written like -ear verbs.
+    verb(slot, `c${ending}`, 'ciar');
+    verb(slot, `m${ending}`, 'miar');
+}
+// -guar and -quar verbs, and -guir and -quir, stressed on the stem in the
+// Brazilian norm: enxáguo, deságua, averígua, apazíguam, adéquo, delínquo.
+// The infinitive loses the accent (then: the last accented vowel).
+const UNACCENT_LAST = [{map: {'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u'}, at: 'last'}];
+for (const slot of STRESSED) {
+    for (const conj of ['ar', 'ir']) {
+        for (const g of ['gu', 'qu']) {
+            verb(slot, `${g}${ENDINGS[conj][slot]}`, `${g}${conj}`, {stemMinLength: 1, stemContains: '[áéíóú]', then: UNACCENT_LAST});
+        }
+    }
 }
 
 // -uir, -air and -oer verbs write the vowel of the ending apart from the stem's
@@ -299,7 +340,7 @@ const HIATUS = {
     'imperfect-subjunctive-eu-ele': ['ísse'], 'imperfect-subjunctive-tu': ['ísses'], 'imperfect-subjunctive-nos': ['íssemos'],
     'imperfect-subjunctive-vos': ['ísseis'], 'imperfect-subjunctive-eles': ['íssem'],
     'personal-infinitive-tu': ['íres'], 'personal-infinitive-eles': ['írem'],
-    'imperative-tu': ['i'], 'imperative-vos': ['í'],
+    'imperative-vos': ['í'],
     'participle': ['ído', 'ída', 'ídos', 'ídas'],
 };
 for (const [slot, endings] of Object.entries(HIATUS)) {
@@ -311,22 +352,37 @@ for (const [slot, endings] of Object.entries(HIATUS)) {
 }
 verb('present-eles', 'uem', 'uir', {stemMinLength: 1, stemNotEndsWith: '[gq]'});
 for (const [slot, ending] of [['present-eu', 'aio'], ['present-eles', 'aem'], ['subjunctive-eu-ele', 'aia'], ['subjunctive-tu', 'aias'],
-    ['subjunctive-nos', 'aiamos'], ['subjunctive-vos', 'aiais'], ['subjunctive-eles', 'aiam'], ['imperative-voce', 'aia'],
-    ['imperative-nos', 'aiamos'], ['imperative-voces', 'aiam']]) {
+    ['subjunctive-nos', 'aiamos'], ['subjunctive-vos', 'aiais'], ['subjunctive-eles', 'aiam']]) {
     verb(slot, ending, 'air', {stemMinLength: 1});
 }
 // construir, destruir and reconstruir: constróis, constrói, constroem.
-for (const [slot, ending] of [['present-tu', 'tróis'], ['present-ele', 'trói'], ['present-eles', 'troem'], ['imperative-tu', 'trói']]) {
+for (const [slot, ending] of [['present-tu', 'tróis'], ['present-ele', 'trói'], ['present-eles', 'troem']]) {
     verb(slot, ending, 'truir', {stemMinLength: 1});
 }
-for (const [slot, ending] of [['present-eu', 'oo'], ['present-tu', 'óis'], ['present-ele', 'ói'], ['imperative-tu', 'ói'], ['preterite-eu', 'oí'],
+for (const [slot, ending] of [['present-eu', 'oo'], ['present-tu', 'óis'], ['present-ele', 'ói'], ['preterite-eu', 'oí'],
     ['imperfect-eu-ele', 'oía'], ['imperfect-tu', 'oías'], ['imperfect-nos', 'oíamos'], ['imperfect-vos', 'oíeis'], ['imperfect-eles', 'oíam'],
     ['participle', 'oído'], ['participle', 'oída'], ['participle', 'oídos'], ['participle', 'oídas']]) {
     verb(slot, ending, 'oer', {stemMinLength: 1});
 }
+// emergir, convergir, divergir, imergir, submergir: e → i before a and o, with
+// g → j (emirjo, convirja, divirjam).
+for (const slot of IR_BEFORE_AO) {
+    verb(slot, `irj${ENDINGS.ir[slot]}`, 'ergir', {stemMinLength: 1});
+}
+// The circumflex and acute accents the 1990 agreement removed, still common
+// in older text: enjôo, abençôo, môo (oar, oer); apóio, bóia (oiar); and the
+// European -gúe of averiguar and apaziguar.
+verb('present-eu', 'ôo', 'oar', {stemMinLength: 1});
+verb('present-eu', 'ôo', 'oer', {stemMinLength: 1});
+for (const slot of STRESSED) {
+    verb(slot, `ói${ENDINGS.ar[slot]}`, 'oiar', {stemMinLength: 1});
+}
+for (const slot of ['subjunctive-eu-ele', 'subjunctive-tu', 'subjunctive-eles']) {
+    verb(slot, `gú${ENDINGS.ar[slot]}`, 'guar', {stemMinLength: 1});
+    verb(slot, `qú${ENDINGS.ar[slot]}`, 'quar', {stemMinLength: 1});
+}
 // -uzir verbs drop the e of the third person: conduz, produz, traduz.
 verb('present-ele', 'uz', 'uzir');
-verb('imperative-tu', 'uz', 'uzir');
 
 // --- Irregular verbs -----------------------------------------------------------------
 // A paradigm lists the irregular forms by tense: p present, pt preterite,
@@ -345,7 +401,7 @@ const TENSE_SLOTS = {
     is: FIVE.map((p) => `imperfect-subjunctive-${p}`),
     fs: FIVE.map((p) => `future-subjunctive-${p}`),
     pi: ['tu', 'nos', 'vos', 'eles'].map((p) => `personal-infinitive-${p}`),
-    imp: ['tu', 'vos', 'voce', 'nos', 'voces'].map((p) => `imperative-${p}`),
+    imp: ['imperative-tu', 'imperative-vos', null, null, null],
     g: ['gerund'],
     pa: ['participle', 'participle', 'participle', 'participle'],
 };
@@ -359,7 +415,12 @@ function cells(paradigm) {
         const slots = TENSE_SLOTS[tense];
         if (slots === undefined || list.length > slots.length) { throw new Error(`bad tense ${tense}`); }
         list.forEach((cell, k) => {
-            for (const form of [cell ?? []].flat()) { out.push([slots[k], form]); }
+            if (slots[k] === null) { return; }
+            // A tu imperative that is also the third person present is that slot's.
+            const present = tense === 'imp' && k === 0 ? [paradigm.p?.[2] ?? []].flat() : [];
+            for (const form of [cell ?? []].flat()) {
+                if (!present.includes(form)) { out.push([slots[k], form]); }
+            }
         });
     }
     return out;
@@ -428,7 +489,7 @@ irregular('ir', {
     fs: ['for', 'fores', 'formos', 'fordes', 'forem'],
     imp: ['vai', 'ide', 'vá', 'vamos', 'vão'],
     g: ['indo'],
-    pa: ['ido'],
+    pa: ['ido', 'ida', 'idos', 'idas'],
 }, {fill: ['f', 'c', 'pi']});
 irregular('estar', {
     p: ['estou', 'estás', 'está', 'estamos', 'estais', 'estão'],
@@ -439,6 +500,12 @@ irregular('estar', {
     fs: ['estiver', 'estiveres', 'estivermos', 'estiverdes', 'estiverem'],
     imp: ['está', 'estai', 'esteja', 'estejamos', 'estejam'],
 });
+// Brazilian colloquial forms of estar: tô, tá, tamo, tava.
+for (const [slot, form] of [['present-eu', 'tô'], ['present-eu', 'tou'], ['present-tu', 'tás'], ['present-ele', 'tá'], ['present-nos', 'tamo'],
+    ['present-nos', 'tamos'], ['present-eles', 'tão'], ['imperfect-eu-ele', 'tava'], ['imperfect-tu', 'tavas'], ['imperfect-nos', 'távamos'],
+    ['imperfect-eles', 'tavam']]) {
+    verbWord(slot, form, 'estar');
+}
 irregular('ter', {
     p: ['tenho', 'tens', 'tem', 'temos', 'tendes', 'têm'],
     pt: ['tive', 'tiveste', 'teve', 'tivemos', 'tivestes', 'tiveram'],
@@ -470,7 +537,7 @@ irregular('vir', {
     imp: ['vem', 'vinde', 'venha', 'venhamos', 'venham'],
     g: ['vindo'],
     pa: ['vindo', 'vinda', 'vindos', 'vindas'],
-}, {fill: ['f', 'c', 'pi'], prefixes: ['con', 'inter', 'pro', 'ad', 'sobre'],
+}, {fill: ['f', 'c', 'pi'], prefixes: ['con', 'inter', 'pro', 'ad', 'sobre', 'a', 'desa', 'de', 'descon'],
     compound: {p: [null, 'véns', 'vém', null, null, null], imp: ['vém', null, null, null, null]}});
 irregular('ver', {
     p: ['vejo', 'vês', 'vê', 'vemos', 'vedes', ['veem', 'vêem']],
@@ -481,7 +548,7 @@ irregular('ver', {
     fs: ['vir', 'vires', 'virmos', 'virdes', 'virem'],
     imp: ['vê', 'vede', 'veja', 'vejamos', 'vejam'],
     pa: ['visto', 'vista', 'vistos', 'vistas'],
-}, {fill: ['i', 'f', 'c', 'pi', 'g'], prefixes: ['re', 'pre', 'ante', 'entre']});
+}, {fill: ['i', 'f', 'c', 'pi', 'g'], prefixes: ['re', 'pre', 'ante', 'entre', 'des']});
 irregular('dar', {
     p: ['dou', 'dás', 'dá', 'damos', 'dais', 'dão'],
     pt: ['dei', 'deste', 'deu', 'demos', 'destes', 'deram'],
@@ -490,7 +557,7 @@ irregular('dar', {
     is: ['desse', 'desses', 'déssemos', 'désseis', 'dessem'],
     fs: ['der', 'deres', 'dermos', 'derdes', 'derem'],
     imp: ['dá', 'dai', 'dê', 'demos', ['deem', 'dêem']],
-}, {fill: ['i', 'f', 'c', 'pi', 'g', 'pa']});
+}, {fill: ['i', 'f', 'c', 'pi', 'g', 'pa'], prefixes: ['re', 'des']});
 irregular('fazer', {
     p: ['faço', null, 'faz'],
     pt: ['fiz', 'fizeste', 'fez', 'fizemos', 'fizestes', 'fizeram'],
@@ -502,7 +569,7 @@ irregular('fazer', {
     fs: ['fizer', 'fizeres', 'fizermos', 'fizerdes', 'fizerem'],
     imp: [['faz', 'faze'], null, 'faça', 'façamos', 'façam'],
     pa: ['feito', 'feita', 'feitos', 'feitas'],
-}, {prefixes: ['re', 'des', 'satis', 'contra', 'per']});
+}, {prefixes: ['re', 'des', 'satis', 'contra', 'per', 'a', 'lique', 'putre', 'rare', 'tume', 'mal', 'ben']});
 irregular('dizer', {
     p: ['digo', null, 'diz'],
     pt: ['disse', 'disseste', 'disse', 'dissemos', 'dissestes', 'disseram'],
@@ -514,7 +581,7 @@ irregular('dizer', {
     fs: ['disser', 'disseres', 'dissermos', 'disserdes', 'disserem'],
     imp: [['diz', 'dize'], null, 'diga', 'digamos', 'digam'],
     pa: ['dito', 'dita', 'ditos', 'ditas'],
-}, {prefixes: ['pre', 'contra', 'des', 'ben', 'mal']});
+}, {prefixes: ['pre', 'contra', 'des', 'ben', 'mal', 'con', 'inter']});
 irregular('trazer', {
     p: ['trago', null, 'traz'],
     pt: ['trouxe', 'trouxeste', 'trouxe', 'trouxemos', 'trouxestes', 'trouxeram'],
@@ -542,7 +609,7 @@ irregular('querer', {
     is: ['quisesse', 'quisesses', 'quiséssemos', 'quisésseis', 'quisessem'],
     fs: ['quiser', 'quiseres', 'quisermos', 'quiserdes', 'quiserem'],
     imp: [null, null, 'queira', 'queiramos', 'queiram'],
-});
+}, {prefixes: ['mal', 'mais', 'ben']});
 irregular('requerer', {
     p: ['requeiro', null, 'requer'],
     s: ['requeira', 'requeiras', 'requeiramos', 'requeirais', 'requeiram'],
@@ -580,8 +647,8 @@ irregular('pôr', {
     imp: ['põe', 'ponde', 'ponha', 'ponhamos', 'ponham'],
     g: ['pondo'],
     pa: ['posto', 'posta', 'postos', 'postas'],
-}, {compoundInfinitive: 'por', prefixes: ['com', 'decom', 'recom', 'de', 'dis', 'indis', 'predis', 'ex', 'im', 'o', 'pro', 're', 'su',
-    'pressu', 'trans', 'ante', 'contra', 'entre', 'inter', 'justa', 'sobre', 'super', 'a']});
+}, {compoundInfinitive: 'por', prefixes: ['com', 'decom', 'descom', 'recom', 'de', 'dis', 'indis', 'predis', 'ex', 'reex', 'im', 'reim', 'o',
+    'pro', 're', 'su', 'pressu', 'trans', 'ante', 'contra', 'entre', 'inter', 'justa', 'sobre', 'super', 'a', 'pos', 'pre']});
 irregular('ler', {
     p: ['leio', 'lês', 'lê', 'lemos', 'ledes', ['leem', 'lêem']],
     pt: ['li', 'leste', 'leu', 'lemos', 'lestes', 'leram'],
@@ -602,23 +669,39 @@ irregular('rir', {
     s: ['ria', 'rias', 'riamos', 'riais', 'riam'],
     imp: ['ri', 'ride', 'ria', 'riamos', 'riam'],
 }, {fill: ['i', 'pp', 'f', 'c', 'is', 'pi', 'g', 'pa'], prefixes: ['sor']});
+irregular('parir', {p: ['pairo'], s: ['paira', 'pairas', 'pairamos', 'pairais', 'pairam'], imp: [null, null, 'paira', 'pairamos', 'pairam']});
+irregular('prazer', {
+    p: [null, null, 'praz'],
+    pt: ['prouve', 'prouveste', 'prouve', 'prouvemos', 'prouvestes', 'prouveram'],
+    pp: ['prouvera', 'prouveras', 'prouvéramos', 'prouvéreis', 'prouveram'],
+    is: ['prouvesse', 'prouvesses', 'prouvéssemos', 'prouvésseis', 'prouvessem'],
+    fs: ['prouver', 'prouveres', 'prouvermos', 'prouverdes', 'prouverem'],
+}, {prefixes: ['a', 'com', 'des']});
+irregular('reaver', {
+    pt: ['reouve', 'reouveste', 'reouve', 'reouvemos', 'reouvestes', 'reouveram'],
+    pp: ['reouvera', 'reouveras', 'reouvéramos', 'reouvéreis', 'reouveram'],
+    is: ['reouvesse', 'reouvesses', 'reouvéssemos', 'reouvésseis', 'reouvessem'],
+    fs: ['reouver', 'reouveres', 'reouvermos', 'reouverdes', 'reouverem'],
+});
+verbWord('present-ele', 'jaz', 'jazer');
 irregular('perder', {p: ['perco'], s: ['perca', 'percas', 'percamos', 'percais', 'percam'], imp: [null, null, 'perca', 'percamos', 'percam']});
 irregular('valer', {p: ['valho'], s: ['valha', 'valhas', 'valhamos', 'valhais', 'valham'], imp: [null, null, 'valha', 'valhamos', 'valham']},
     {prefixes: ['equi']});
 irregular('ouvir', {p: [['ouço', 'oiço']], s: [['ouça', 'oiça'], ['ouças', 'oiças'], ['ouçamos', 'oiçamos'], ['ouçais', 'oiçais'], ['ouçam', 'oiçam']],
-    imp: [null, null, ['ouça', 'oiça'], ['ouçamos', 'oiçamos'], ['ouçam', 'oiçam']]});
+    imp: [null, null, ['ouça', 'oiça'], ['ouçamos', 'oiçamos'], ['ouçam', 'oiçam']]}, {prefixes: ['entre']});
 irregular('pedir', {p: ['peço'], s: ['peça', 'peças', 'peçamos', 'peçais', 'peçam'], imp: [null, null, 'peça', 'peçamos', 'peçam']},
-    {prefixes: ['des', 'im', 'ex', 'desim']});
+    {prefixes: ['des', 'im', 'ex', 'desim', 'es']});
 irregular('medir', {p: ['meço'], s: ['meça', 'meças', 'meçamos', 'meçais', 'meçam'], imp: [null, null, 'meça', 'meçamos', 'meçam']});
 irregular('prover', {p: ['provejo', 'provês', 'provê', null, 'provedes', 'proveem'], s: ['proveja', 'provejas', 'provejamos', 'provejais', 'provejam'],
-    imp: ['provê', null, 'proveja', 'provejamos', 'provejam']});
+    imp: ['provê', 'provede', 'proveja', 'provejamos', 'provejam']}, {prefixes: ['des']});
 
 // Irregular participles, with their feminine and plural. Families that
 // share an ending (escrito, descrito, inscrito; aberto, reaberto; coberto,
 // descoberto, encoberto) are suffix rules.
 const PARTICIPLE_FORMS = (masculine) => [masculine, `${masculine.slice(0, -1)}a`, `${masculine}s`, `${masculine.slice(0, -1)}as`];
-for (const [form, infinitive] of [['crito', 'crever'], ['aberto', 'abrir'], ['coberto', 'cobrir']]) {
-    for (const f of PARTICIPLE_FORMS(form)) { verb('participle', f, infinitive, {stemMinLength: form === 'crito' ? 2 : 0}); }
+for (const [form, infinitive, stemMinLength] of [['crito', 'crever', 2], ['aberto', 'abrir', 0], ['coberto', 'cobrir', 0], ['cluso', 'cluir', 1],
+    ['merso', 'mergir', 1], ['eleito', 'eleger', 0]]) {
+    for (const f of PARTICIPLE_FORMS(form)) { verb('participle', f, infinitive, {stemMinLength}); }
 }
 for (const [form, infinitives] of [
     ['ganho', ['ganhar']], ['gasto', ['gastar']], ['pago', ['pagar']], ['aceito', ['aceitar']], ['aceite', ['aceitar']], ['entregue', ['entregar']],
@@ -626,12 +709,15 @@ for (const [form, infinitives] of [
     ['aceso', ['acender']], ['limpo', ['limpar']], ['salvo', ['salvar']], ['expresso', ['exprimir', 'expressar']], ['extinto', ['extinguir']],
     ['frito', ['fritar']], ['suspenso', ['suspender']], ['envolto', ['envolver']], ['junto', ['juntar']], ['enxuto', ['enxugar']],
     ['isento', ['isentar']], ['omisso', ['omitir']], ['tinto', ['tingir']], ['farto', ['fartar']], ['roto', ['romper']], ['expulso', ['expulsar']],
-    ['inserto', ['inserir']], ['incluso', ['incluir']], ['confuso', ['confundir']], ['corrupto', ['corromper']], ['distinto', ['distinguir']],
-    ['submerso', ['submergir']], ['absorto', ['absorver']], ['bento', ['benzer']], ['findo', ['findar']], ['pego', ['pegar']],
+    ['inserto', ['inserir']], ['confuso', ['confundir']], ['corrupto', ['corromper']], ['distinto', ['distinguir']],
+    ['absorto', ['absorver']], ['bento', ['benzer']], ['findo', ['findar']], ['pego', ['pegar']],
+    ['surpreso', ['surpreender']], ['revolto', ['revolver']], ['frito', ['frigir']], ['compresso', ['comprimir']], ['opresso', ['oprimir']],
 ]) {
     const forms = form.endsWith('o') ? PARTICIPLE_FORMS(form) : [form, `${form}s`];
     for (const f of forms) { for (const infinitive of infinitives) { verbWord('participle', f, infinitive); } }
 }
+
+flushWords();
 
 // --- Pronouns attached to verbs -------------------------------------------------------
 // The pronoun is removed and the verb form is deinflected again (vf), except
@@ -696,10 +782,10 @@ for (const form of ['hei', 'hás', 'há', 'havemos', 'hemos', 'haveis', 'heis', 
 // fácil → facilmente). A copy of the rule puts it back on the last vowel
 // that has at least two letters after it in the stem.
 const ACCENTS = [['a', 'á'], ['a', 'â'], ['e', 'é'], ['e', 'ê'], ['i', 'í'], ['o', 'ó'], ['o', 'ô'], ['u', 'ú']];
-function withAccents(write) {
+function withAccents(write, betweenMinLength = 2) {
     write({});
     for (const [plain, accented] of ACCENTS) {
-        write({stemChange: {from: [plain], to: accented, occurrence: 'last', between: '{letter}', betweenMinLength: 2}});
+        write({stemChange: {from: [plain], to: accented, occurrence: 'last', between: '{letter}', betweenMinLength}});
     }
 }
 const NA = ['n', 'adj'];
@@ -716,22 +802,40 @@ for (const [inflected, deinflected, stemMinLength] of [
     ['eses', 'ês', 1], ['ases', 'ás', 1], ['íses', 'ís', 1], // meses, gases, países
     ['ns', 'm', 1], ['éns', 'ém', 1],                        // homens, jardins, armazéns
     ['ais', 'al', 2], ['éis', 'el', 1], ['eis', 'el', 2], ['eis', 'il', 2], ['óis', 'ol', 1], ['uis', 'ul', 1], ['is', 'il', 2],
+    ['ns', 'n', 2], ['ies', 'y', 2],                         // hífens, hobbies
 ]) {
     nominal('plural', inflected, deinflected, [], NA, {stemMinLength});
 }
+// Loanwords add -s after a consonant: sites, chips, blogs, camemberts,
+// suéters, gols, and acronyms (ONGs, PCs).
+nominal('plural', 's', '', [], NA, {stemMinLength: 2, stemEndsWith: '[bcdfgklnprtwy]'});
+nominal('plural', 's', '', [], NA, {stemMinLength: 2, stemCharacters: '[A-Z]'});   // acronyms: ONGs, PCs, CDs (their own stem class)
+// -x and -n words add -es: tóraxes, hífenes, líquenes, cânones.
+nominal('plural', 'xes', 'x', [], NA, {stemMinLength: 2});
+nominal('plural', 'nes', 'n', [], NA, {stemMinLength: 2});
+// A compound whose first word is plural (tartarugas-do-mar, segundas-feiras,
+// caixas-pretas): the first plural before a hyphen, after the last word's.
+add('plural', {type: 'replace', inflected: 's-', deinflected: '-', occurrence: 'first', conditionsIn: NA, conditionsOut: NA});
 
 // Feminine of adjectives and of nouns for people.
 for (const [inflected, deinflected, stemMinLength] of [
     ['a', 'o', 3], ['ora', 'or', 2], ['esa', 'ês', 2], ['ã', 'ão', 2], ['ona', 'ão', 2], ['oa', 'ão', 2], ['eia', 'eu', 2], ['ua', 'u', 1], ['triz', 'tor', 1],
+    ['atriz', 'ador', 1],                                     // imperatriz, embaixatriz
+    ['uma', 'um', 2],                                         // alguma, nenhuma
+    ['esa', 'e', 3],                                          // duquesa, tigresa
+    ['vó', 'vô', 1],                                          // avó, bisavó
+    ['nhola', 'nhol', 1],                                     // espanhola
+    ['íza', 'iz', 1],                                         // juíza
 ]) {
     nominal('feminine', inflected, deinflected, ['adj'], NA, {stemMinLength});
 }
-for (const [form, base] of [['boa', 'bom'], ['boas', 'bom'], ['má', 'mau'], ['más', 'mau'], ['judia', 'judeu'], ['judias', 'judeu']]) {
+for (const [form, base] of [['boa', 'bom'], ['boas', 'bom'], ['má', 'mau'], ['más', 'mau'], ['judia', 'judeu'], ['judias', 'judeu'],
+    ['esta', 'este'], ['essa', 'esse'], ['aquela', 'aquele'], ['estas', 'este'], ['essas', 'esse'], ['aquelas', 'aquele']]) {
     add('feminine', {type: 'wholeWord', inflected: form, deinflected: base, conditionsIn: ['adj'], conditionsOut: NA});
 }
 
 // Diminutives in -inho and -zinho, singular and plural, to the base word.
-for (const [inflected, deinflected, stemMinLength, accents] of [
+for (const [inflected, deinflected, stemMinLength, accents, notAfter] of [
     ['inho', 'o', 2, true], ['inha', 'a', 2, true], ['inhos', 'o', 2, true], ['inhas', 'a', 2, true],
     ['inho', 'e', 2, false], ['inha', 'e', 2, false], ['inhos', 'e', 2, false], ['inhas', 'e', 2, false],
     ['quinho', 'co', 1, false], ['quinha', 'ca', 1, false], ['quinhos', 'co', 1, false], ['quinhas', 'ca', 1, false],
@@ -742,11 +846,23 @@ for (const [inflected, deinflected, stemMinLength, accents] of [
     ['ezinhos', 'é', 1, false], ['ezinhos', 'ê', 1, false], ['ezinhas', 'é', 1, false], ['ezinhas', 'ê', 1, false],
     ['azinho', 'á', 1, false], ['azinha', 'á', 1, false], ['ozinho', 'ô', 1, false], ['ozinha', 'ó', 1, false],
     ['ãezinhos', 'ão', 1, false], ['õezinhos', 'ão', 1, false], ['õezinhas', 'ão', 1, false],
+    ['nzinho', 'm', 1, false], ['nzinha', 'm', 1, false], ['nzinhos', 'm', 1, false], ['nzinhas', 'm', 1, false],     // homenzinho, viagenzinha
+    ['ozinho', 'ó', 1, false], ['ozinha', 'ó', 1, false], ['euzinho', 'éu', 1, false], ['euzinha', 'éu', 1, false],    // pozinho, chapeuzinho
     ['aizinhos', 'al', 1, false], ['aizinhas', 'al', 1, false], ['eizinhos', 'el', 1, false], ['eizinhas', 'el', 1, false],
     ['ezinhos', '', 2, false], ['ezinhas', '', 2, false],
 ]) {
-    const write = (extra) => nominal('diminutive', inflected, deinflected, NA, NA, {stemMinLength, ...extra});
+    const write = (extra) => nominal('diminutive', inflected, deinflected, NA, NA, {stemMinLength, ...(notAfter ? {stemNotEndsWith: notAfter} : {}), ...extra});
     if (accents) { withAccents(write); } else { write({}); }
+}
+// -azinho is -inho after a stem in -az (rapazinho, cartazinho) more often than
+// -zinho after -a (casazinha, festazinha): the -az reading comes first, at
+// the longer ending.
+for (const ending of ['inho', 'inha', 'inhos', 'inhas']) {
+    nominal('diminutive', `az${ending}`, 'az', NA, NA, {stemMinLength: 2});
+}
+// After l, r, s and z: papelinho, colherinha, vozinha, adeusinho.
+for (const ending of ['inho', 'inha', 'inhos', 'inhas']) {
+    nominal('diminutive', ending, '', NA, NA, {stemMinLength: 3, stemEndsWith: '[lrsz]'});
 }
 
 // Absolute superlatives, every gender and number, to the base adjective.
@@ -754,13 +870,16 @@ for (const ending of ['íssimo', 'íssima', 'íssimos', 'íssimas']) {
     const tail = ending.slice('íssim'.length);   // o, a, os, as
     for (const [inflected, deinflected, accents] of [
         [ending, 'o', true], [ending, 'e', false], [ending, '', true],               // lindíssimo, grandíssimo, normalíssimo, facilíssimo
-        [`c${ending}`, 'z', false], [`qu${ending}`, 'co', false], [`gu${ending}`, 'go', false], // felicíssimo, riquíssimo, larguíssimo
+        [`c${ending}`, 'z', false], [`qu${ending}`, 'co', true], [`gu${ending}`, 'go', false], // felicíssimo, riquíssimo, sarcastiquíssimo, larguíssimo
         [`abil${ending}`, 'ável', false], [`ibil${ending}`, 'ível', false],           // amabilíssimo, possibilíssimo
-        [`ílim${tail}`, 'il', true],                                                   // facílimo, dificílimo
+        [`n${ending}`, 'm', false], [`ist${ending}`, 'ista', false],                  // comuníssimo, racistíssimo
+        [`ar${ending}`, 'ário', false], [`er${ending}`, 'ério', false],               // extraordinaríssimo, seríssimo
     ]) {
-        const write = (extra) => nominal('superlative', inflected, deinflected, ['adj'], ['adj'], extra);
+        const write = (extra) => nominal('superlative', inflected, deinflected, ['adj'], ['adj'], {stemMinLength: 1, ...extra});
         if (accents) { withAccents(write); } else { write({}); }
     }
+    // facílimo, dificílimo: the accent of fácil is one letter before the end of the stem.
+    withAccents((extra) => nominal('superlative', `ílim${tail}`, 'il', ['adj'], ['adj'], extra), 1);
 }
 for (const [masculine, base] of [['paupérrimo', 'pobre'], ['celebérrimo', 'célebre'], ['libérrimo', 'livre'], ['misérrimo', 'mísero'],
     ['nigérrimo', 'negro'], ['aspérrimo', 'áspero'], ['macérrimo', 'magro'], ['integérrimo', 'íntegro'], ['salubérrimo', 'salubre'],
@@ -771,12 +890,14 @@ for (const [masculine, base] of [['paupérrimo', 'pobre'], ['celebérrimo', 'cé
     }
 }
 
+// The superlative of an adverb in -mente: rapidissimamente, justissimamente.
+nominal('superlative', 'issimamente', 'amente', [], [], {stemMinLength: 2});
 // Adverbs in -mente: the feminine adjective + mente, so -amente gives the
 // masculine (rapidamente → rápido) and -velmente the accented -vel.
 withAccents((extra) => nominal('adverb', 'amente', 'o', [], ['adj'], extra));
 withAccents((extra) => nominal('adverb', 'mente', '', [], ['adj'], {stemMinLength: 3, stemNotEndsWith: '[a]', ...extra}));
 for (const [inflected, deinflected] of [['avelmente', 'ável'], ['ivelmente', 'ível'], ['ovelmente', 'óvel'], ['uvelmente', 'úvel'],
-    ['istamente', 'ista'], ['ãmente', 'ão']]) {
+    ['istamente', 'ista'], ['ãmente', 'ão'], ['esmente', 'ês']]) {
     nominal('adverb', inflected, deinflected, [], ['adj'], {stemMinLength: 1});
 }
 
@@ -797,6 +918,45 @@ for (const t of transforms) {
 }
 
 // --- Output --------------------------------------------------------------------------------
+// Adjacent suffix rules of one transform that differ only in their endings are
+// written as one cross-product row (an empty prefix and the endings as
+// suffixes, docs/languages.md 7.3). The row stands for the same rules in the
+// same order, so deinflections are unchanged, and own.json stays small
+// enough for the 1 MB that tests/ and sources/ may hold (section 3).
+function compact(rules) {
+    // A rule joins the last earlier group with the same constraints unless a
+    // rule emitted after that group ends with the same text: rules at one
+    // node of the suffix trie apply in file order (section 7.4), and those
+    // are the only rules whose order can change a result.
+    const groups = [];
+    const keyOf = (rule) => {
+        const {inflected: _i, deinflected: _d, ...rest} = rule;
+        return rule.type === 'suffix' ? JSON.stringify(rest) : null;
+    };
+    const endings = (rule) => (rule.type === 'suffix' || rule.type === 'wholeWord' ? [rule.inflected]
+        : rule.type === 'circumfix' ? (rule.suffixes ?? [[rule.inflectedSuffix]]).map((x) => x[0]) : []);
+    for (const rule of rules) {
+        const key = keyOf(rule);
+        let target = -1;
+        if (key !== null) {
+            for (let g = groups.length - 1; g >= 0; --g) {
+                if (groups[g].key === key) { target = g; break; }
+                if (groups[g].rules.some((r) => endings(r).includes(rule.inflected))) { break; }
+            }
+        }
+        if (target >= 0) {
+            groups[target].rules.push(rule);
+        } else {
+            groups.push({key, rules: [rule]});
+        }
+    }
+    return groups.flatMap(({key, rules: group}) => {
+        if (key === null || group.length === 1) { return group; }
+        const {type: _t, inflected: _i, deinflected: _d, conditionsIn, conditionsOut, ...constraints} = group[0];
+        return [{type: 'circumfix', prefixes: [['', '']], suffixes: group.map((r) => [r.inflected, r.deinflected]), conditionsIn, conditionsOut, ...constraints}];
+    });
+}
+for (const t of transforms) { t.rules = compact(t.rules); }
 const out = {schema: 1, conditions, transforms: transforms.filter((t) => t.rules.length > 0)};
 const file = join(here, 'own.json');
 writeFileSync(file, formatTransforms(out));

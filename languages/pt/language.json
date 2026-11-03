@@ -10,7 +10,8 @@
   "classes": {
     "letter": "[A-Za-z\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u024F]",
     "word": "[{letter}\\u0300-\\u036F0-9]",
-    "consonant": "[bcdfghjklmnpqrstvwxyzç]"
+    "consonant": "[bcdfghjklmnpqrstvwxyzç]",
+    "lowerStem": "[^ A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]"
   },
   "text": {
     "pattern": "[{letter}\\u0300-\\u036F]",
