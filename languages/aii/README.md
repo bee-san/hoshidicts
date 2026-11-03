@@ -25,12 +25,13 @@ written.
   of the Assyrian Christians of Urmi*). `sources/own-rules.mjs` generates it
   (`node languages/aii/sources/own-rules.mjs`); `transforms.json` is
   `node tools/merge-transforms.mjs aii --force` on it. The first version is
-  commit 208a4b8 ("aii: own rules"); Rule provenance lists the revisions.
+  commit 2b66acf ("aii: own rules", 208a4b8 before the rebase onto main);
+  Rule provenance lists the revisions.
 - The `removeSyriacScriptDiacritics` processor: ported from
   [Yomitan](https://github.com/yomidevs/yomitan/blob/d3c54c10264673eca0d66b970ef74cd5c8b048e3/ext/js/language/aii/assyrian-neo-aramaic-text-preprocessors.js)
   at d3c54c1, GPL-3.0-or-later, Copyright (C) 2024-2026 Yomitan Authors
-  (commit fcf428d). Yomitan has no `aii` transforms
-  (`tools/port-yomitan-transforms.mjs`: "Yomitan has no
+  (commit c3d7922, fcf428d before the rebase). Yomitan has no `aii`
+  transforms (`tools/port-yomitan-transforms.mjs`: "Yomitan has no
   ext/js/language/aii/*-transforms.js") and no transform tests
   (`tools/port-yomitan-tests.mjs`), so there is no `sources/yomitan.json`
   and no `tests/yomitan.tsv`.
@@ -67,8 +68,8 @@ written.
   the stem, pattern and condition constraints (Measurements, mutations).
 - `sources/build-corpus.py`, `measure.py`, `measure-examples.py`,
   `measure-urmia.py`, `measure-gaps.py`, `eval-table.py`, `mutations.py`,
-  `tag-dictionary.py`, `lookup-batch.cpp`, `load-bench.cpp` and
-  `wasm-load.mjs`: the measurements below, written for this pack.
+  `lookup-batch.cpp`, `load-bench.cpp` and `wasm-load.mjs`: the
+  measurements below, written for this pack.
 - `host.recommendedDictionaries`: wty-aii-en from
   [wiktionary-to-yomitan](https://github.com/yomidevs/wiktionary-to-yomitan)
   (wty), the only Yomitan-format Assyrian Neo-Aramaic dictionary there is
@@ -81,22 +82,15 @@ written.
     (`https://huggingface.co/datasets/daxida/wty-release/resolve/main/latest/dict/aii/en/wty-aii-en.zip`):
     82,731 terms, 6,842 with definitions and 75,889 whose definitions are
     only form-of references; imported by `hoshidicts-cli import` in 0.32 s.
-    Wiktionary content, CC BY-SA 4.0; the converter is MIT. **Its `rules`
-    (part-of-speech) column is empty on all 82,731 rows**: wty writes it only
-    for the languages Yomitan has transforms for. Every number below is given
-    for it as published.
-  - **wty-aii-en (tagged)**, labelled so everywhere: a copy written by
-    `sources/tag-dictionary.py` with `v n adj prep` in the `rules` column of
-    every row. The script writes the same archive on every run (sha256
-    `f6dc11eccfcd63e22d98628029ee9f52ca8c57d57aae4595962fff618cca2d07`) and
-    prints the sha256 of its members' contents, which does not depend on the
-    zip library (`9a93b4fa5d6b96050b740e7580368613714ffcabbd55cf5a204b1b80e1531757`).
-    Those four conditions cover every
-    condition the rules give, so every deinflection passes the
-    part-of-speech filter for every term: this is what
-    `lookup.untaggedTerms: "pass"` (bee-san/hoshidicts#58, not on main yet)
-    does with the published dictionary. The numbers with it show what users
-    get once the pack sets that field.
+    Wiktionary content, CC BY-SA 4.0; the converter is MIT. Every number
+    below is measured with it as published. **Its `rules` (part-of-speech)
+    column is empty on all 82,731 rows** (wty writes it only for the
+    languages Yomitan has transforms for); by their first definition tag
+    they are non-lemma 75,889, n 3,256, v 1,189, adj 793, name 772, adv 204,
+    intj 136, r 124, phrase 87, prep 76, pron 55, num 55, ptcl 31, conj 24,
+    det 18, suf 13, pref 6, artic 2 and char 1. So the pack sets
+    `lookup.untaggedTerms: "pass"` (section 9.4): an untagged row carries
+    every dictionary-form condition, and the rules keep theirs.
   - The **Urmia Bible of 1893** in Unicode:
     [abrahameishow/assyrian-bible-api](https://github.com/abrahameishow/assyrian-bible-api)
     at b43160b (`books/*/<book>/<chapter>.json`); the text is public domain,
@@ -153,11 +147,12 @@ pack loads them as 1,688 rules). Two transforms are optional (`lJoined`,
   form), `n` (with `n_p`, without its possessive suffix; `n_f`), `adj`,
   `prep`. They keep the chains to the ones the grammar has: proclitics
   first, then an L-suffix, then one subject ending or one noun ending, then
-  one stem alternation. wty-aii-en's empty `rules` column means a form with
-  conditions finds no term of it today (section 7.2); hachi-lang-lead's
-  answer (reports/hachi-lang-questions.md, 2026-11-03) keeps the conditions
-  and adds `lookup.untaggedTerms: "pass"` to the engine (#58). The pack sets
-  it once #58 is on main; Known gaps gives the cost until then.
+  one stem alternation. wty-aii-en's `rules` column is empty, and the pack
+  sets `lookup.untaggedTerms: "pass"`, so its rows match every condition
+  (section 9.4); as hachi-lang-lead decided for such dictionaries
+  (reports/hachi-lang-questions.md, 2026-11-03), the rules keep their
+  conditions, which still decide which rule reads which output.
+  Measurements gives `eval-language` with both values.
 - **Proclitics** (prefix rules on the text as written, so a pointed word
   after them can meet its form-of row): ܘ- (and), ܕ- (of, that), ܒ- (in),
   ܠ- (to), and ܟ- / ܒܕ- of the indicative and the future joined to a verb.
@@ -217,10 +212,11 @@ pack loads them as 1,688 rules). Two transforms are optional (`lJoined`,
     verb's) and the consonant-final possessive and plural take a stem in ܐ
     (ܦܪܸܙܠܵܐܗܘܿܢ); dev recall 96.88% → 97.02%.
 - **Revisions after the audits** (bee-san/hoshidicts#59), measured on the
-  Urmia text with the tagged copy against the rules the first audit judged
-  (56d0f53). None changes a number of the dev pool; the pointed example
-  hovers gain 4 and lose 2 (2,710 → 2,712: ܕܥܒ݂ܝܼܪܹܗ and the idiom ܐܵܡܪܸܬ,
-  Known gaps). Of the 45,406 Urmia hovers, 2,016 show another first entry
+  Urmia text with `"pass"` against the rules the first audit judged
+  (56d0f53, e3d7f6c after the rebase, with the same field). None changes
+  a number of the dev pool; the pointed example hovers gain 4 and lose 2
+  (2,710 → 2,712: ܕܥܒ݂ܝܼܪܹܗ and the idiom ܐܵܡܪܸܬ, Known gaps). Of the
+  45,406 Urmia hovers, 2,016 show another first entry
   (`sources/measure-gaps.py` and the commands below give every count):
   - the strong and hollow pointed patterns no longer take ܝ as the last
     radical (ܐܵܕܝܵܐ, now, was the verb ܐܕܝ), and four words are kept out of
@@ -242,7 +238,7 @@ pack loads them as 1,688 rules). Two transforms are optional (`lJoined`,
     ܐܘܪ, which wty-aii-en has only as Ur, the city;
   - the spelling variants: 264 hovers (ܬܪܵܝ 140, now ܬܪܝܢ, two, not ܬܪܐ,
     to soak; ܡܵܐܐ 83; ܐܸܕܝܘܼ ܝܘܿܡܵܐ 40, before read as ܐܕܝܐ, now), with the
-    published dictionary too, where they had no entry;
+    `"filter"` too, where they had no entry;
   - the Urmia ܒܹܝܠ- and ܒܝܼܵܝ: 68 hovers (ܒܝܼܵܝ, in me, 22, before ܒܐܝ,
     bye-bye; ܒܹܝܠܝܼ, between me, 17, before ܒܝܠ, Jupiter);
   - the -in and -it endings: 48 hovers (ܘܐܵܡܪܸܬ and ܐܵܡܪܸܬ, you say, 15,
@@ -250,9 +246,9 @@ pack loads them as 1,688 rules). Two transforms are optional (`lJoined`,
 
   Judged by hand, the first entry of each of the 2,016 hovers is right now
   except ܘܒܟܸܠܘܿܢ (and in all of them, 1 hover: ܒܟܠ), which was wrong
-  before as well. With the published dictionary 264 hovers change, all
-  through the spelling variants and all right.
-- **Tried and rejected**, measured with the tagged copy:
+  before as well. With `"filter"` 264 hovers change, all through the
+  spelling variants and all right.
+- **Tried and rejected**, measured with `"pass"`:
   - possessive transforms before the subject endings (so a noun reading
     wins ties): dev unpointed first results +1.0 point, example hovers −0.6
     (−20 of 3,217);
@@ -265,14 +261,19 @@ pack loads them as 1,688 rules). Two transforms are optional (`lJoined`,
 
 ## Measurements
 
-`hoshidicts-cli` (Release, GCC 14.3) on `main` b145feb plus this pack. "Tagged
-copy" is the labelled copy above, which stands for `untaggedTerms: "pass"`.
-The pack's own rules are also the union and the final set.
+`hoshidicts-cli` (Release, GCC 14.3) on `main` 1fed676 plus this pack, with
+wty-aii-en as published. **pass** is the pack as it is
+(`lookup.untaggedTerms: "pass"`); **filter** is a copy with `"filter"`,
+Yomitan's behaviour and the engine's default, under which no untagged row
+matches a rule's output with conditions. Section 14 asks for
+`eval-language` with both values; the other measurements give both where
+the difference shows what the field does. The pack's own rules are also the
+union and the final set.
 
 1. **`eval-language --dictionary`** (`sources/eval-table.py`; "flipped" is
    the file with its options line removed, or added):
 
-   | File | Options | Rows | Recall | Negatives | False candidates (published / tagged) | First rank (published / tagged) |
+   | File | Options | Rows | Recall | Negatives | False candidates (filter / pass) | First rank (filter / pass) |
    | --- | --- | ---: | ---: | ---: | ---: | ---: |
    | sample (corpus.tsv + gaps.tsv) | defaults (as is) | 1,677 | **97.91%** | | 0.076 / 0.389 | 71.6% / 97.7% |
    | sample | every option (flipped) | 1,677 | 97.91% | | 0.076 / 0.418 | 71.6% / 97.4% |
@@ -281,12 +282,14 @@ The pack's own rules are also the union and the final set.
    | defaults.tsv | defaults (as is) | 14 | 100% | 100% | 0 / 0.2 | 100% / 100% |
    | defaults.tsv | every option (flipped) | 14 | 100% | 33.3% | 0 / 0.4 | 100% / 100% |
 
-   With the published dictionary the false candidates are few and the first
-   rank low for one reason: a rule's output has conditions, so no term of
-   the untagged dictionary matches it. The 71.6% are the rows whose pointed
-   form has a form-of row. With the defaults, `cases.tsv` loses its ten rows
-   of the optional joined spellings, and `defaults.tsv` keeps its joined
-   negatives only with the defaults, as intended.
+   With `"filter"` the false candidates are few and the first rank low for
+   one reason: a rule's output has conditions, so no untagged row matches
+   it. The 71.6% are the rows whose pointed form has a form-of row.
+   `"pass"` ranks more lemmas first on every file but `defaults.tsv`, where
+   both rank all of them first, so the pack keeps it. With the defaults,
+   `cases.tsv` loses its ten rows of the optional joined spellings, and
+   `defaults.tsv` keeps its joined negatives only with the defaults, as
+   intended.
 
    The **dev pool** (89,080 rows, `sources/measure.py`): recall 97.02% with
    the defaults and with every option; 0.380 (defaults) and 0.405 (every
@@ -294,7 +297,7 @@ The pack's own rules are also the union and the final set.
    than the source and the lemma, before any part-of-speech filter. A
    lookup of each source as a host makes it (`measure.py firstrank`):
 
-   | Dev pool, first result is the lemma (lemma among the results) | Published | Tagged copy |
+   | Dev pool, first result is the lemma (lemma among the results) | filter | pass |
    | --- | ---: | ---: |
    | pointed, as Wiktionary writes the forms | 79.7% (80.8%) | 97.6% (99.97%) |
    | the same forms unpointed | 5.4% (5.4%) | 88.0% (97.0%) |
@@ -307,16 +310,16 @@ The pack's own rules are also the union and the final set.
    7,619 tokens (16.8% of the text). Looked up alone, the first entry with
    definitions is not one of the lemmas those rows name for:
 
-   | | Published | Tagged copy |
+   | | filter | pass |
    | --- | ---: | ---: |
    | judged types with a wrong first entry | 88 (350 tokens, 0.77% of the text) | 30 (154 tokens, 0.34%) |
 
-   With the tagged copy, 140 of the 154 tokens are words that are headwords
+   With `"pass"`, 140 of the 154 tokens are words that are headwords
    themselves, mostly numerals, whose own entry comes first (ܚܲܡܫܵܐ →
    ܚܡܫܐ, five, where the form-of row names ܚܡܫ), which is right; of the
    other 14, 5 are 3p readings of possessed nouns (ܓܲܒ̣ܪܝܼ → ܓܒܪ for ܓܒܪܐ,
    3 tokens), 4 find no entry, 2 are possessive and 2 feminine readings,
-   and 1 a Stem II participle. With the published dictionary, 208
+   and 1 a Stem II participle. With `"filter"`, 208
    tokens find no entry: their reading needs a rule. A looser judge
    (`--loose`: the form-of rows of every form with the word's letters)
    judges 2,479 types and marks many right readings wrong (ܐܸܠܹܗ, to him, →
@@ -328,10 +331,10 @@ The pack's own rules are also the union and the final set.
 
    | | ܘ- | ܕ- | ܒ- | ܠ- |
    | --- | ---: | ---: | ---: | ---: |
-   | published | 89.1% | 87.6% | 88.7% | 88.9% |
-   | tagged copy | 95.8% | 93.6% | 94.1% | 95.0% |
+   | filter | 89.1% | 87.6% | 88.7% | 88.9% |
+   | pass | 95.8% | 93.6% | 94.1% | 95.0% |
 
-   Of the wrong ones with the tagged copy, 14-16 per proclitic are the
+   Of the wrong ones with `"pass"`, 14-16 per proclitic are the
    numerals above; the others are 3p or gerund readings that tie with the
    noun (ܒܙܲܒ̣ܢܵܐ, in a time, → ܙܒܢ, the gerund of to buy), and ܕܓܸܠܵܐ (of
    grass), which the contracted past reads as ܕܓܠ (she saw). The particles
@@ -343,12 +346,12 @@ The pack's own rules are also the union and the final set.
      from the bold word to the end of its sentence; `measure-examples.py`),
      first result right, and lemma among the results:
 
-     | | Published | Tagged copy |
+     | | filter | pass |
      | --- | ---: | ---: |
      | pointed, as written | 71.9% (79.6%), no result 491 | **84.3%** (93.3%), no result 52 |
      | unpointed | 56.4% (57.0%), no result 1,154 | **87.2%** (92.6%), no result 60 |
 
-     With the tagged copy, of the 453 pointed hovers with a wrong first
+     With `"pass"`, of the 453 pointed hovers with a wrong first
      result, 274 show a form-of row of the dictionary first (ܛܵܒ݂ܵܐ →
      ܛܒܬܐ, goodness, where the example's entry is ܛܒܐ, good: both are right
      analyses of the letters), 96 the word as written (an idiom or
@@ -358,21 +361,21 @@ The pack's own rules are also the union and the final set.
      351 unpointed ones, 177 are the word as written (an unpointed word is
      often several words) and no rule has more than 12.
    - *The Urmia Bible* (every one of the 45,406 words hovered with the
-     rest of its sentence): with the tagged copy, 8,793 hovers find no
+     rest of its sentence): with `"pass"`, 8,793 hovers find no
      entry (the 1893 spelling, the joined L-suffix, names) and, of the
      7,619 judged by script, 194 (2.55%) have a wrong first entry: 164 the
      word as written (the numerals, and phrase entries such as ܪܘܼܚܵܐ
      ܕܩܘܼܕܫܵܐ, the Holy Spirit, which are right) and 12 the past particle
      (ܚܘܵܪܵܐ ܗ݇ܘܵܐ → ܚܘܪܐ, white, where the row names ܚܘܪ, to be white).
-     With the published dictionary 18,379 find no entry and 379 of the
-     judged (4.97%) are wrong. With `olderSpellings` on (tagged copy),
+     With `"filter"` 18,379 find no entry and 379 of the judged (4.97%)
+     are wrong. With `olderSpellings` on (`"pass"`),
      5,948 find no entry and 198 of the judged are wrong.
      The script judges a hover only when wty-aii-en has a form-of row for
      the word as written, so it does not see the 37,787 others, among them
      every headword: ܡܵܪܝܵܐ (the Lord, the third most frequent word) has no
      such row, and the first audit found its 648 hovers read as a verb
      (Rule provenance). A seeded random sample of 60 of those hovers,
-     judged by hand (tagged copy, defaults): 35 right, 8 wrong, 17 with no
+     judged by hand (`"pass"`, defaults): 35 right, 8 wrong, 17 with no
      entry. The wrong ones: ܐ݇ܬܹܠܘܿܢ (they came, ×2) and ܘܚܹܝܠܹܐ (and he
      lived), Urmia joined L-suffixes, without the setting; a proclitic and
      a word read as one word (ܕܐܵܢܵܐ, that I, → ܕܐܢ, to judge; ܕܚܵܐ, that
@@ -385,50 +388,56 @@ The pack's own rules are also the union and the final set.
      took, had no entry).
    - *Sentences written for the pack* (`sources/sentences.tsv`, 60 hovered
      words in 26 sentences, `aii-lookup-batch`): first entry the expected
-     headword for 55 pointed and 51 unpointed with the tagged copy, 44 and
-     28 with the published dictionary. All five pointed misses are the
+     headword for 55 pointed and 51 unpointed with `"pass"`, 44 and 28 with
+     `"filter"`. All five pointed misses are the
      dictionary's own form-of rows (ܢܸܫܹ̈ܐ → ܢܫܐ, women, its own headword;
      ܡܲܠܟܬ݂ܵܐ → ܡܠܟܐ, as the feminine of king); unpointed misses include
      ܨܝܡܝ (they fast, or my fast) and ܐܪܝܡ (raise!, or ܐܪܡ).
 
-5. **Performance** (host load 38-45 on 64 cores).
+5. **Performance** (host load 49-60 on 64 cores).
    - Native `benchmark-lookup --languages languages --language aii` on the
      120 texts of `sources/benchmark-texts.txt` (the 60 hovers of the
      sentences, pointed and unpointed), 21 passes, the first dropped, three
-     runs: published p50 14.2-14.5 µs, p95 32.7-33.2 µs; tagged copy p50
-     16.2-16.3 µs, p95 35.0-35.5 µs (budget 1 ms p50).
+     runs: pass p50 15.8-16.2 µs, p95 34.6-35.5 µs; filter p50 13.9-14.1 µs,
+     p95 32.4-32.7 µs (budget 1 ms p50).
    - Hachidori's WebAssembly (`benchmark/node-lookup.mjs` of
-     feat/multi-language 803f7b6, its vendored runtimes, Node 22,
-     `HACHIDORI_LOOKUP_LANGUAGE=aii`, the 206 words of the 26 sentences,
-     pointed and unpointed, 11 passes): threaded p50 57.6 µs, p95 150.0 µs
-     (published), 90.4 / 198.2 µs (tagged); single-thread 54.1 / 143.0 µs
-     and 80.8 / 186.8 µs. The dictionary imports in 0.27-0.30 s (threaded).
-   - Pack load: natively `LanguageRegistry::add` takes 2.90-2.99 ms (median
+     feat/multi-language 803f7b6, Node 22, `HACHIDORI_LOOKUP_LANGUAGE=aii`,
+     the 206 words of the 26 sentences, pointed and unpointed, 11 passes),
+     with runtimes built from hoshidicts main 1fed676 (Hachidori in Chrome,
+     below): threaded p50 87.6 µs, p95 188.4 µs (pass), 61.7 / 158.0 µs
+     (filter); single-thread 84.0 / 191.3 µs and 53.6 / 144.0 µs. The
+     dictionary imports in 0.29-0.30 s (threaded).
+   - Pack load: natively `LanguageRegistry::add` takes 2.92-2.95 ms (median
      of 50, three runs; `sources/load-bench.cpp`) and the registry holds
      1,259,568 bytes of heap. In WebAssembly (`sources/wasm-load.mjs`, 10
-     fresh engines) the first `hdw_language_load` takes 10.5 ms
-     single-thread and 10.6 ms threaded (medians), a second one 6.1 and
-     6.3 ms, and the allocator's live bytes grow by 781,384 and 781,424
+     fresh engines, the same runtimes) the first `hdw_language_load` takes
+     10.2 ms single-thread and 10.5 ms threaded (medians), a second one 5.7
+     and 6.0 ms, and the allocator's live bytes grow by 781,336 and 781,480
      bytes. Budgets 50 ms and 20 MB.
    - 58 `pattern` rules (the pointed Stem I and hollow non-past, the -ē
      endings, the contracted past, the Stem III imperative, the gerund,
-     ܬܪܵܝ): without them the native load takes 1.52 ms and the registry
-     1,010,304 bytes, so they cost about 1.4 ms and 250 KB.
+     ܬܪܵܝ): without them the native load takes 1.51-1.55 ms and the
+     registry 1,010,304 bytes, so they cost about 1.4 ms and 250 KB.
 
 6. **Hachidori in Chrome.** `test/chrome-language-pack.mjs` on
    bee-san/hachidori feat/multi-language 803f7b6 with
-   `third_party/hoshidicts` at this branch and `scripts/sync-languages.mjs`
-   run, Chrome 152, the 60 cases of `sources/sentences.tsv`:
-   - wty-aii-en as published: 48 passed, 16 failed (the profile, the
-     import in 0.5 s, 44 of 60 cases, the Anki note and the switch to
-     Japanese and back passed). Of the 16 failed cases, 11 need a rule with
-     conditions and 5 show a form-of row of the dictionary first.
-   - the tagged copy: 59 passed, 5 failed, all five the dictionary's own
-     form-of rows above (`ܟܬ݂ܵܒ݂ܵܐ` → ܟܬܒ, its verbal noun, before ܟܬܒܐ, book).
-   No WebAssembly rebuild was needed. A Syriac font has to be on the
-   system: without one the pages and the popup show no Syriac glyphs.
+   `third_party/hoshidicts` at hoshidicts main 1fed676 plus this pack and
+   `scripts/sync-languages.mjs` run, Chrome 152, wty-aii-en as published,
+   the 60 cases of `sources/sentences.tsv`. The runtimes Hachidori ships
+   (built before bee-san/hoshidicts#58) refuse the pack ("aii:
+   language.json: lookup.untaggedTerms: unknown key"), so the three were
+   built with Hachidori's `wasm/build.sh` steps from that tree (locally,
+   not committed):
+   - pass: 59 passed, 5 failed (the profile, the import in 0.6 s, 55 of 60
+     cases, the Anki note and the switch to Japanese and back passed). All
+     five failures are the dictionary's own form-of rows (`ܟܬ݂ܵܒ݂ܵܐ` → ܟܬܒ,
+     its verbal noun, before ܟܬܒܐ, book).
+   - filter: 48 passed, 16 failed. Of the 16 failed cases, 11 need a rule
+     with conditions and 5 show a form-of row of the dictionary first.
+   A Syriac font has to be on the system: without one the pages and the
+   popup show no Syriac glyphs.
 
-7. **Mutations** (section 14 step 7, `sources/mutations.py`): 227 edits of
+7. **Mutations** (section 14 step 7, `sources/mutations.py`): 228 edits of
    `transforms.json` and `language.json` in scratch copies, plus the
    identity: each stem constraint of each transform deleted, each minimum
    lowered, the patterns loosened (any vowel, ܝ as middle or last radical,
@@ -442,7 +451,8 @@ The pack's own rules are also the union and the final set.
    made required; transforms moved (the subject endings after the
    possessives, 3p after poss1s, the past base after the endings, the
    Stem II imperative before the nouns, and four more below); character
-   resolution; and the setting without one of its transforms. Every one
+   resolution; `untaggedTerms` set to `"filter"`; and the setting without
+   one of its transforms. Every one
    fails the conformance test except the identity and seven:
    - two pointed patterns of the verbs in -ē, those of the second person
      feminine in -yāt (ܐܵܬ݂ܝܵܬܝ) and of the second person plural
@@ -463,7 +473,7 @@ The pack's own rules are also the union and the final set.
 
    The minimums of `pastBaseMt` and `infinitiveM` give the same
    deinflected texts with and without them, but other traces, and so
-   other first entries (tagged copy). Without that of `infinitiveM`, 11
+   other first entries. Without that of `infinitiveM`, 11
    pointed dev rows change, 10 of them for the worse (ܡܓܲܘܢܵܐ, she colours,
    → ܡܓܢ, for nothing); 3 Urmia hovers and 2 example hovers get better
    (ܡܲܬܘܼܒܹܐ, putting, → ܡܬܒ, to put, instead of ܡܬܘܒ, to repent;
@@ -475,10 +485,10 @@ The pack's own rules are also the union and the final set.
 
 8. **Conformance and checks**: `language-conformance-test languages/aii`
    conforms: corpus.tsv 1,642/1,642 and defaults.tsv 14/14 with the pack's
-   defaults, cases.tsv 401/401, text.tsv 22/22, lookup.tsv 65/65, gaps.tsv
+   defaults, cases.tsv 401/401, text.tsv 22/22, lookup.tsv 68/68, gaps.tsv
    0/35 (reported); 430 of the 1,688 rules are exercised by a passing row.
    `tools/check-yomitan.mjs aii`: no `sources/yomitan.json`, rules not
-   compared; `removeSyriacScriptDiacritics` agrees with Yomitan's on 2,204
+   compared; `removeSyriacScriptDiacritics` agrees with Yomitan's on 2,207
    inputs, 0 differences. `tools/check-classes.mjs aii` matches.
 
 Commands (from the repository root, `C` the directory with the downloads
@@ -487,16 +497,17 @@ above):
 ```sh
 node languages/aii/sources/own-rules.mjs && node tools/merge-transforms.mjs aii --force
 python3 languages/aii/sources/build-corpus.py $C/wty-aii-en.zip $C/kaikki-aii.jsonl --cli build/hoshidicts-cli --dev dev.tsv
-python3 languages/aii/sources/tag-dictionary.py $C/wty-aii-en.zip $C/wty-aii-en-tagged.zip
-build/hoshidicts-cli import $C/wty-aii-en.zip; build/hoshidicts-cli import $C/wty-aii-en-tagged.zip
-python3 languages/aii/sources/eval-table.py "$C/wty-aii-en" "$C/wty-aii-en (tagged)"
+build/hoshidicts-cli import $C/wty-aii-en.zip
+cp -r languages/aii filter/aii   # then set "untaggedTerms": "filter" in filter/aii/language.json
+python3 languages/aii/sources/eval-table.py "$C/wty-aii-en" --label pass
+python3 languages/aii/sources/eval-table.py "$C/wty-aii-en" --label filter --languages filter
 python3 languages/aii/sources/measure.py candidates dev.tsv --headwords $C/wty-aii-en.zip --options default
-python3 languages/aii/sources/measure.py firstrank dev.tsv --dictionary "$C/wty-aii-en (tagged)" [--unpointed]
-python3 languages/aii/sources/measure-examples.py $C/kaikki-aii.jsonl "$C/wty-aii-en (tagged)" [--unpointed] --report 15
-python3 languages/aii/sources/measure-urmia.py $C/urmia-1893 $C/wty-aii-en.zip "$C/wty-aii-en (tagged)" [--options lJoined,pastBaseUrmia] \
-  --sample 60 --sample-out sample.jsonl
-python3 languages/aii/sources/measure-gaps.py $C/urmia-1893 $C/wty-aii-en.zip "$C/wty-aii-en" "$C/wty-aii-en (tagged)" \
-  $C/kaikki-aii.jsonl --dev dev.tsv --report 45
+python3 languages/aii/sources/measure.py firstrank dev.tsv --dictionary "$C/wty-aii-en" [--unpointed] [--languages filter]
+python3 languages/aii/sources/measure-examples.py $C/kaikki-aii.jsonl "$C/wty-aii-en" [--unpointed] [--languages filter] --report 15
+python3 languages/aii/sources/measure-urmia.py $C/urmia-1893 $C/wty-aii-en.zip "$C/wty-aii-en" [--options lJoined,pastBaseUrmia] \
+  [--languages filter] --sample 60 --sample-out sample.jsonl
+python3 languages/aii/sources/measure-gaps.py $C/urmia-1893 $C/wty-aii-en.zip "$C/wty-aii-en" $C/kaikki-aii.jsonl \
+  --dev dev.tsv --filter-languages filter --report 45
 python3 languages/aii/sources/mutations.py /tmp/aii-mutations
 build/benchmark-lookup languages/aii/sources/benchmark-texts.txt 21 --term "$C/wty-aii-en" --languages languages --language aii --json
 build/aii-load-bench languages 50; node languages/aii/sources/wasm-load.mjs <hachidori checkout> 10
@@ -508,19 +519,19 @@ say.
 
 ## Known gaps
 
-- **The published dictionary has no part-of-speech tags.** Until the pack
-  can set `lookup.untaggedTerms: "pass"` (#58), a rule's output with
-  conditions finds no term of wty-aii-en: unpointed text finds the lemma
-  for 5.4% of the dev pool forms (88.0% with the tagged copy), and the
-  example hovers 56.4% unpointed and 71.9% pointed (87.2% and 84.3%); the
-  contracted past and the other pointed patterns need it too. Pointed
-  forms the dictionary lists are found through its form-of rows either
-  way. The pack adds the field when #58 is on main, and a Hachidori
-  runtime built after #58 is needed to load it there.
+- **Untagged rows match every condition.** With `"pass"` a rule's reading
+  finds any term of its letters, whatever its part of speech (the items
+  below). With `"filter"` the rules would reach almost nothing: 5.4% of the
+  unpointed dev-pool forms and 56.4% of the unpointed example hovers find
+  their lemma first (88.0% and 87.2% with `"pass"`). A Hachidori runtime
+  built before bee-san/hoshidicts#58 refuses the field ("aii:
+  language.json: lookup.untaggedTerms: unknown key"), so Hachidori needs
+  runtimes built from hoshidicts main to ship the pack (Measurements,
+  Hachidori).
 - **Ties go to the reading found first.** A proclitic and a word tie with a
   one-step suffix reading of the whole word, and the suffix reading comes
   first: the trie finds suffix rules before prefix rules (section 7.4), so
-  no order of the transforms changes it. In the Urmia text (tagged copy),
+  no order of the transforms changes it. In the Urmia text
   472 hovers of 67 words have such a tie (`sources/measure-gaps.py` gives
   this count and the others below, each with its definition). Judged by
   hand, 249 are right
@@ -534,23 +545,23 @@ say.
   example hovers (Rule provenance).
 - **Proclitics stack in any order.** The proclitic rules take and give no
   condition, so they apply to each other's output, in any order and more
-  than once. In the Urmia text, 181 first entries with the published
-  dictionary and 133 with the tagged copy come through a stack that the
+  than once. In the Urmia text, 181 first entries with `"filter"` and 133
+  with `"pass"` come through a stack that the
   grammar does not have (it has ܘ-, then ܕ-, then ܒ- or ܠ-, each once):
-  ܒܵܒ̇ܘܼܗܝ, his father, → ܗܝ, she, through ܒ- ܒ- ܘ- (26 hovers, published);
-  ܒܸܠܘܼܩܝܵܬܹ̈ܐ → ܩܐܬ (10, tagged). A proclitic needs a letter after it, so
+  ܒܵܒ̇ܘܼܗܝ, his father, → ܗܝ, she, through ܒ- ܒ- ܘ- (26 hovers, filter);
+  ܒܸܠܘܼܩܝܵܬܹ̈ܐ → ܩܐܬ (10, pass). A proclitic needs a letter after it, so
   in pointed text it stops before a vowel point and most stacks come from
-  the unpointed variant. Keeping the order needs a condition on each
-  proclitic's output, which no untagged row of the published dictionary
-  matches until the pack sets `untaggedTerms: "pass"`.
-- **Two readings of one lemma keep the trace found first.** With the
-  tagged copy the lemma comes first through the rules for 74,357 unpointed
+  the unpointed variant. The proclitic rules give no condition so that the
+  word after them is read as the text as written is; giving them one would
+  take the bare word away from every rule that reads the text as written.
+- **Two readings of one lemma keep the trace found first.** The lemma
+  comes first through the rules for 74,357 unpointed
   dev-pool rows; for 1,315 (1.8%), noun or adjective forms, the trace
   names only a verb ending, mostly 3p (1,123: ܐܒܝ, my father, → ܐܒܐ with
   -ī, they). The lemma is right; the popup shows the verb ending.
 - **A verb reading finds a noun or a name.** With "pass" every row
   carries every condition, so a rule's verb reading matches any term of
-  those letters. 535 first entries of the Urmia text (tagged copy) come
+  those letters. 535 first entries of the Urmia text come
   through a verb rule to a lemma that has no verb row in wty-aii-en. Many
   are the right word with a verb trace (ܒܵܒ̇ܝܼ, my father, → ܒܒܐ, the item
   above); the largest wrong groups are ܕܣܝܼܢܲܝ, of Sinai, → ܣܝܢ, a pagan
@@ -594,7 +605,7 @@ say.
   letters right (Measurements, mutations).
 - **Urmia (1893) spellings.** The Urmia Bible writes ܥܒܪ (to enter) as it
   is spoken, with ܐܘܪ; apart from the contracted past (ܐ݇ܘܸܪܹܐ, above),
-  these forms read as ܐܘܪ, Ur, the city, with the tagged copy (34 hovers:
+  these forms read as ܐܘܪ, Ur, the city (34 hovers:
   ܐ݇ܘܘܿܪ, enter!, 8; ܕܐܵܘܪܸܬ, that you enter, 4; ܒܹܐܘܵܪܵܐ, entering), as
   every untagged row matches every condition under "pass". The contracted
   past is read for Stem I verbs with a base of three letters, pointed; not
@@ -605,7 +616,7 @@ say.
   emir) and is read as one. The past base without ܝ before a joined
   L-suffix (ܦܸܫܠܹܐ) and the dot below and above for rukkakha and qushshaya
   are not read; the joined L-suffix needs the `olderSpellings` setting.
-  With the tagged copy and the setting on, 5,967 of the 45,406 words of
+  With the setting on, 5,948 of the 45,406 words of
   the Urmia Bible still find no entry.
 - **References to pointed forms.** 187 form-of rows of wty-aii-en refer
   only to pointed forms that no row has (ܐܡܝܪܐ → ܐܵܡܹܪ, ܝܘܡܢܐ → ܝܵܘܡܵܐ);

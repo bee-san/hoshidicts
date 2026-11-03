@@ -2,40 +2,42 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """The counts of README.md's Known gaps, each with the definition it uses.
 
-    python3 languages/aii/sources/measure-gaps.py <urmia checkout> <wty-aii-en.zip> \\
-        <imported wty-aii-en> <imported wty-aii-en (tagged)> <kaikki-aii.jsonl> [--dev dev.tsv] [--languages DIR]
+    python3 languages/aii/sources/measure-gaps.py <urmia checkout> <wty-aii-en.zip> <imported wty-aii-en> \\
+        <kaikki-aii.jsonl> [--dev dev.tsv] [--languages DIR] [--filter-languages DIR]
 
 Lookups are build/aii-lookup-batch's, as in measure-urmia.py (16 results,
-scan length 16, the pack's defaults): every word of the Urmia Bible hovered
-with the rest of its sentence. "First entry" is the first result with
-definitions (not a form-of row). It prints:
+scan length 16, the pack's defaults, so `untaggedTerms: "pass"`): every word
+of the Urmia Bible hovered with the rest of its sentence, in wty-aii-en as
+published. `--filter-languages` names a copy of the pack with
+`untaggedTerms: "filter"`, for the stacks with that value. "First entry" is
+the first result with definitions (not a form-of row). It prints:
 
-- ties: hovers (tagged copy) whose first entry is reached by one rule that is
+- ties: hovers whose first entry is reached by one rule that is
   not a proclitic and not from the dictionary, where a later result with the
   same matched text and processor steps is reached by one proclitic alone.
   Each word is listed with its count, both lemmas and both traces, for
   judging by hand;
-- stacks: first entries (both dictionaries) whose trace has two or more of
+- stacks: first entries (with each value) whose trace has two or more of
   ܘ- ܕ- ܒ- ܠ- not in the grammar's order (ܘ-, then ܕ-, then ܒ- or ܠ-, each
   once);
-- non-verbs: first entries (tagged copy) that a verb rule reaches (a trace
+- non-verbs: first entries that a verb rule reaches (a trace
   with a verb transform and no noun transform) whose lemma has no verb row
   in wty-aii-en, grouped by word;
-- citation forms: kaikki's pointed citation forms whose first entry (tagged
-  copy) is another lemma, read with no processor step by one pattern
+- citation forms: kaikki's pointed citation forms whose first entry is
+  another lemma, read with no processor step by one pattern
   transform, after a proclitic or not;
 - contracted-past homographs: the pointed forms of kaikki's tables, alone
   and after ܕ-, ܒ- or ܠ-, that a `pastContracted` pattern matches, whose
-  first entry (tagged copy) comes through `pastContracted` with a lemma that
-  is not the form's own;
+  first entry comes through `pastContracted` with a lemma that is not the
+  form's own;
 - contractions: the hovers of the shapes of the Urmia contracted pasts the
   pack does not read, a base of two letters (C + zlama + ܪ/ܠ + ending,
   after a proclitic or not) and Stems II and III (C ܘܼ C + zlama + ܪ/ܠ +
-  ending), leaving out the words whose first entry (tagged copy) comes
-  through `pastContracted`; the list shows the words, nouns of the same
+  ending), leaving out the words whose first entry comes through
+  `pastContracted`; the list shows the words, nouns of the same
   shape included, for judging by hand;
 - trace labels (with --dev): unpointed dev-pool rows whose lemma comes first
-  through the rules (tagged copy), and of those the noun and adjective rows
+  through the rules, and of those the noun and adjective rows
   whose trace names only verb transforms.
 """
 import argparse
@@ -92,11 +94,11 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('checkout')
     ap.add_argument('wty')
-    ap.add_argument('published')
-    ap.add_argument('tagged')
+    ap.add_argument('dictionary')
     ap.add_argument('kaikki')
     ap.add_argument('--dev')
     ap.add_argument('--languages', default=str(HERE.parents[1]))
+    ap.add_argument('--filter-languages')
     ap.add_argument('--report', type=int, default=12)
     args = ap.parse_args()
     lang = args.languages
@@ -110,12 +112,14 @@ def main():
         for m in mu.WORD.finditer(s):
             hovers.append(s[m.start():].strip())
             words.append(m.group(0))
-    tagged = mu.lookup(hovers, args.tagged, None, lang)
-    published = mu.lookup(hovers, args.published, None, lang)
+    hovered = mu.lookup(hovers, args.dictionary, None, lang)
+    runs = [("pass", hovered)]
+    if args.filter_languages:
+        runs.insert(0, ('filter', mu.lookup(hovers, args.dictionary, None, args.filter_languages)))
 
     # Ties.
     ties = collections.Counter()
-    for w, results in zip(words, tagged):
+    for w, results in zip(words, hovered):
         d = [r for r in results if not r['formOf']]
         if not d:
             continue
@@ -125,12 +129,12 @@ def main():
                    and len(g['trace']) == 1 and g['trace'][0] in PROCLITICS]
             if alt:
                 ties[(w, f['expression'], f['trace'][0], alt[0]['expression'], alt[0]['trace'][0])] += 1
-    print(f'ties (tagged): {sum(ties.values())} hovers of {len(ties)} words; first entry, then the proclitic reading:')
+    print(f'ties: {sum(ties.values())} hovers of {len(ties)} words; first entry, then the proclitic reading:')
     for (w, a, ta, b, tb), n in ties.most_common():
         print(f'  {n:4} {w} {a} [{ta}] / {b} [{tb}]')
 
     # Stacks.
-    for name, res in (('published', published), ('tagged', tagged)):
+    for name, res in runs:
         stacks = collections.Counter()
         for w, results in zip(words, res):
             f = mu.first_entry(results)
@@ -144,14 +148,14 @@ def main():
 
     # Non-verbs a verb rule reaches.
     groups = collections.Counter()
-    for w, results in zip(words, tagged):
+    for w, results in zip(words, hovered):
         f = mu.first_entry(results)
         if f is None or any(f['fromDictionary']):
             continue
         tr = set(f['trace'])
         if tr & VERB and not tr & NOUN and 'v' not in pos.get(f['expression'], set()):
             groups[(w, f['expression'], '>'.join(f['trace']))] += 1
-    print(f'non-verbs (tagged): {sum(groups.values())} first entries through a verb rule whose lemma has no verb row; '
+    print(f'non-verbs: {sum(groups.values())} first entries through a verb rule whose lemma has no verb row; '
           + '; '.join(f'{w} → {e} [{t}] {n}' for (w, e, t), n in groups.most_common(args.report)))
 
     # Citation forms.
@@ -171,7 +175,7 @@ def main():
                     seen.add((form, w))
                     items.append((form, w))
     citation = []
-    for (form, w), results in zip(items, mu.lookup([f for f, _ in items], args.tagged, None, lang)):
+    for (form, w), results in zip(items, mu.lookup([f for f, _ in items], args.dictionary, None, lang)):
         f = mu.first_entry(results)
         if f is None:
             continue
@@ -192,7 +196,7 @@ def main():
                 lemmas[form].add(e['word'])
     texts = [(p + form, form) for form in sorted(lemmas) for p in ('', 'ܕ', 'ܒ', 'ܠ') if any(rx.match(p + form) for rx in pc)]
     homographs = []
-    for (text, form), results in zip(texts, mu.lookup([t for t, _ in texts], args.tagged, None, lang)):
+    for (text, form), results in zip(texts, mu.lookup([t for t, _ in texts], args.dictionary, None, lang)):
         f = mu.first_entry(results)
         if f is not None and 'pastContracted' in f['trace'] and f['expression'] not in lemmas[form]:
             homographs.append(f"{text} → {f['expression']} [{'>'.join(f['trace'])}] (a form of {'/'.join(sorted(lemmas[form]))})")
@@ -201,7 +205,7 @@ def main():
 
     # Contractions not read.
     two, stem2 = collections.Counter(), collections.Counter()
-    for w, results in zip(words, tagged):
+    for w, results in zip(words, hovered):
         f = mu.first_entry(results)
         if f is not None and 'pastContracted' in f['trace']:
             continue
@@ -223,7 +227,7 @@ def main():
                 continue
             p = line.rstrip('\n').split('\t')
             dev.append((p[0], p[2], p[3]))
-        res = mu.lookup([unpoint(s) for _, s, _ in dev], args.tagged, None, lang)
+        res = mu.lookup([unpoint(s) for _, s, _ in dev], args.dictionary, None, lang)
         total, bad = 0, collections.Counter()
         for (cat, _, lemma), results in zip(dev, res):
             if not results or results[0]['expression'] != lemma or any(results[0]['fromDictionary']) or not results[0]['trace']:

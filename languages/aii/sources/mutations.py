@@ -318,6 +318,10 @@ def mutations(t):
         x['lookup']['searchResolution'] = 'character'
     out.append(('language:searchResolutionCharacter', char_resolution))
 
+    def untagged_filter(x):
+        x['lookup']['untaggedTerms'] = 'filter'
+    out.append(('language:untaggedTermsFilter', untagged_filter))
+
     def setting_short(x):
         for st in x['settings']:
             st['effect']['transforms'] = [t for t in st['effect']['transforms'] if t != 'pastBaseUrmia']

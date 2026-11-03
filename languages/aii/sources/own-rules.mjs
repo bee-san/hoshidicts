@@ -40,10 +40,11 @@
 // one stem alternation (past base, hollow verb). A rule with conditionsIn []
 // applies only to the text as written and after a proclitic (section 7.2).
 // wiktionary-to-yomitan leaves the `rules` column of its Assyrian Neo-Aramaic
-// dictionaries empty (all 82,731 rows of wty-aii-en 2026.10.22), which a
-// conditioned form matches only with `lookup.untaggedTerms: "pass"`
-// (hachi-lang-lead, reports/hachi-lang-questions.md, 2026-11-03); v and n
-// below are what a dictionary that tags verbs and nouns would use.
+// dictionaries empty (all 82,731 rows of wty-aii-en 2026.10.22), so the pack
+// sets `lookup.untaggedTerms: "pass"`: such a row matches every condition
+// below (docs/languages.md 9.4), and the conditions still decide which rule
+// reads which output; v and n are also what a dictionary that tags verbs and
+// nouns would use.
 
 import {writeFileSync} from 'node:fs';
 import {dirname, join} from 'node:path';
