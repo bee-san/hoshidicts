@@ -368,18 +368,17 @@ numbers. "filter" lines use a scratch copy of the pack with the field set to
 5. **Performance** (section 13; the budgets are 1 ms p50, 50 ms load and 20 MB).
    - Native `benchmark-lookup --languages languages --language ru` with
      `sources/benchmark-words.txt` (82 hover texts from the three works), 6
-     passes with the first dropped, three runs on main 0a73e5e at a machine
-     load of 38-41: p50 49-61 µs, p95 137-207 µs (filter: p50 43-52 µs, p95
-     102-125 µs).
+     passes with the first dropped, three runs at a machine load of 44-56:
+     p50 51-57 µs, p95 152-169 µs (filter: p50 48-52 µs, p95 111-129 µs).
    - WebAssembly: Hachidori feat/multi-language 803f7b6e's engines, built
      locally (`wasm/`, emsdk as its `docs/source-build.md` says, not
      committed) with this branch on #58 in `third_party/hoshidicts`, Node 22.
-     `hdw_language_load` takes a median 10.4 ms single-thread and 11.0 ms
+     `hdw_language_load` takes a median 10.9 ms single-thread and 12.5 ms
      threaded over 10 fresh engines (`sources/wasm-load.mjs`), and the live
-     heap grows by 1,449,680 bytes. `hdw_lookup` on the 399 hover positions
+     heap grows by 1,499,528 bytes. `hdw_lookup` on the 399 hover positions
      of the 82 texts (Hachidori's `benchmark/node-lookup.mjs`, 6 passes,
-     machine load 41) takes p50 126 µs and p95 427 µs single-thread, p50
-     136 µs and p95 442 µs threaded. The prebuilt engines of 803f7b6e predate
+     machine load 52) takes p50 133 µs and p95 440 µs single-thread, p50
+     135 µs and p95 439 µs threaded. The prebuilt engines of 803f7b6e predate
      #58 and refuse the field; with the pack without it they load it in
      10.2 ms and 10.8 ms (+1,444,880 bytes).
    - The pack has no `pattern` rule or step.
@@ -387,7 +386,7 @@ numbers. "filter" lines use a scratch copy of the pack with the field set to
    `third_party/hoshidicts` and the engines built from it, as above;
    `test/chrome-language-pack.mjs`, Chrome 152, wty-ru-en): 16 / 16 checks
    pass. Settings adds Russian beside Japanese and imports the dictionary
-   (1.8 s); 12 hovered words find their lemma first with the pack's traces
+   (about 2 s); 12 hovered words find their lemma first with the pack's traces
    (`гуляли` → гулять "plural past", `отца` → отец, `Дети` → ребёнок, `идет`
    → идти, `темном` → тёмный "prepositional masculine/neuter", `Итак` →
    итак, `пойду` → пойти); the Anki note and the switch to Japanese and
