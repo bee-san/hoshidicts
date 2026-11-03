@@ -1,0 +1,12 @@
+# Hachidori's real-Chrome pack check (test/chrome-language-pack.mjs): sentence<TAB>word<TAB>expected headword, as wty-sh-en writes it
+# (it names djeca for djeci). Hand-written for this pack.
+Vratili smo se kućama tek kasno navečer.	kućama	kuća
+Gledali smo film koji si nam preporučio.	Gledali	gledati
+Najboljeg prijatelja upoznao sam u školi.	Najboljeg	dobar
+Djeci treba dati vremena da se igraju.	Djeci	djeca
+Vidio sam ga jučer na ulici.	Vidio	vidjeti
+Radit ću na tome cijeli tjedan.	Radit	raditi
+Rekla mi je da će doći sutra.	doći	doći
+Gradovima na obali ljeti dolaze turisti.	Gradovima	grad
+Видео сам га јуче на улици.	Видео	видети
+Кућама у старом делу града недостаје светла.	Кућама	кућа
