@@ -234,27 +234,37 @@ numbers with every option on and with its `# options: default` copy (both were
 run). Where a number from hoshidicts without `untaggedTerms` (main before #58)
 is given, it is labelled "without the field".
 
-1. **`eval-language --dictionary`.** Own, union and final are one set, and
+1. **`eval-language --dictionary`**, on every test file with
+   `untaggedTerms` `"pass"` (the pack) and `"filter"` (a copy without the
+   field, run by the same CLI). Own, union and final are one set, and
    `--transforms sources/own.json` gives the same numbers as the pack's
-   `transforms.json`. The sample is `corpus.tsv` and `gaps.tsv` together.
+   `transforms.json`.
 
-   | File | Rows (positives / negatives) | Recall | Negatives passed | False candidates per row | First rank |
+   | File | Rows (positives / negatives) | Recall | Negatives passed | False candidates per row, pass / filter | Ranked first, pass / filter |
    | --- | ---: | ---: | ---: | ---: | ---: |
-   | sample (corpus + gaps) | 1,498 (1,498 / 0) | 97.46% (1,460) | | 0.180 | 90.05% |
-   | `cases.tsv` | 606 (549 / 57) | 100% | 100% | 0.377 | 77.41% |
-   | sample, without the field | 1,498 | 97.46% | | 0.065 | 90.12% |
-   | `cases.tsv`, without the field | 606 | 100% | 100% | 0.189 | 68.49% |
+   | `corpus.tsv` | 1,460 (1,460 / 0) | 100% | | 0.174 / 0.059 | 1,339 / 1,340 |
+   | `gaps.tsv` | 38 (38 / 0) | 0% | | 0.395 / 0.289 | 10 / 10 |
+   | sample (corpus + gaps) | 1,498 | 97.46% | | 0.180 / 0.065 | 1,349 / 1,350 |
+   | `cases.tsv` | 613 (551 / 62) | 100% | 100% | 0.370 / 0.189 | 427 / 376 |
 
-   - Recall and negatives do not depend on the dictionary. Without the field,
-     a rule's output finds no term of wty-pt-en, so false candidates are only
-     the deinflections that reach a form-of row's lemma.
-   - First rank of the sample is lower with the field for 13 rows and higher
-     for 11: an adjectival participle now shows its verb first
-     (`previstas` → prever, not the adjective previsto), and `bicas` shows
-     bica before bicar.
-   - First rank of `cases.tsv` is lower because many of its sources are
-     headwords themselves (`fala`, `falo`, `como`, `visto`), whose own entry
-     ranks first.
+   - Section 14 step 5's census of the `rules` column: wty-pt-en leaves it
+     empty on all 572,340 rows (by first definition tag: `non-lemma`
+     491,273, `n` 39,501, `adj` 13,675, `v` 12,817, `name` 9,782, `adv`
+     2,499, …), wty-pt-pt on all 504,951. The rules' outputs are verbs, nouns
+     and adjectives, which the dictionary never tags, so the pack takes
+     `"pass"`; with it the test files rank 1,776 lemmas first against 1,726.
+   - Recall and negatives do not depend on the dictionary. With `"filter"`,
+     a rule's output finds no term of wty-pt-en, so the lookups rank first
+     only what the dictionary's own form-of rows for the text as written name;
+     `corpus.tsv` mostly holds such forms, while `cases.tsv` has the verb
+     forms with attached pronouns, mesoclisis and colloquial forms no row
+     names.
+   - Of the sample's first-ranked rows, 13 are lower with `"pass"` and 12
+     higher: an adjectival participle now shows its verb first (`previstas` →
+     prever, not the adjective previsto), and `bicas` shows bica before bicar.
+   - First rank of `cases.tsv` is lower than of the corpus because many of its
+     sources are headwords themselves (`fala`, `falo`, `como`, `visto`), whose
+     own entry ranks first.
    - `--per-rule` on the sample and `cases.tsv`: 304 of the 1,047 rule rows
      recover a row no other rule reaches, no rule breaks a negative, and 4 add
      one false candidate each without recovering a row: copies of general
