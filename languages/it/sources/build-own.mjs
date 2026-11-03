@@ -628,8 +628,11 @@ const IRREGULAR = [
             'participle-present': [stem + 'ente', stem + 'enti'],
         }})),
     // porre, trarre and -durre: every form, at the end of any word (propongo,
-    // distraevo, produssi); -durre has no verb without a prefix.
-    {lemma: 'porre', mode: 'compound', forms: {
+    // distraevo, produssi); -durre has no verb without a prefix. The
+    // compounds of porre have a prefix of two letters or more (esporre,
+    // proporre), so sposi, spose and sposto are not s + porre (sposare,
+    // spostare); its own forms are whole words (PORRE below).
+    {lemma: 'porre', mode: 'compound', minStem: 2, forms: {
         ...tense('present', sixOn('pon', ['go', 'i', 'e', 'iamo', 'ete', 'gono'])),
         ...tense('imperfect', sixOn('pon', IMPF_E)),
         ...tense('preterite', ['posi', 'ponesti', 'pose', 'ponemmo', 'poneste', 'posero']),
@@ -679,6 +682,9 @@ IRREGULAR.push({lemma: 'mpiere', mode: 'compound', minStem: 1, forms: {
     gerund: 'mpiendo',
     ...participle('mpiuto'),
 }});
+
+// porre's own forms, as whole words (pongo, posi, porrò, posto).
+IRREGULAR.push({...IRREGULAR.find((entry) => entry.lemma === 'porre'), mode: 'whole', minStem: 0});
 
 // Future and conditional stems that drop or change the e or i of the
 // infinitive (vedrò, vivrò, cadrò, rimarrò, terrò).
@@ -942,13 +948,15 @@ for (const pronoun of Object.keys(PERSON)) {
 // of them, so a pronoun before a short or misread word gives no -rsi verb
 // through a regular ending (si scava is not sc + ava, scarsi). Only the forms
 // of porre, condurre and trarre and their compounds give -orre, -urre and
-// -arre (si pose, si conduce, si distrae), so those take any stem.
+// -arre, so those take the stems of those verbs: p alone or three letters or
+// more (si pose, si espose; mi sposi is not sp + orre, sporsi), three or more
+// (si conduce, si riduce), tr alone or four or more (si trae, si distrae).
 const VERB_STEM = {stemMinLength: 3};
 const CLASSES = [
     [['are', 'ar'], ['ere', 'er'], ['ire', 'ir']],
-    [['orre', 'or'], {}],
-    [['urre', 'ur'], {}],
-    [['arre', 'ar'], {}],
+    [['orre', 'or'], [{stemCharacters: '[p]', stemMinLength: 1}, {stemMinLength: 3}]],
+    [['urre', 'ur'], [{stemMinLength: 3}]],
+    [['arre', 'ar'], [{stemCharacters: '[rt]', stemMinLength: 2}, {stemMinLength: 4}]],
 ];
 // The regular endings read a few stems of verbs that conjugate otherwise
 // (sections above): after a pronoun, volere and ridare give no -rsi verb
@@ -965,9 +973,11 @@ function pronominal(prefixes, tail, conditionsIn) {
                 conditionsIn, conditionsOut: ['v'], ...VERB_STEM, ...split});
         }
     }
-    for (const [[e, b], constraint] of CLASSES.slice(1)) {
-        add('pronominal', {type: 'circumfix', prefixes: prefixes.map((p) => [p, '']), suffixes: [[e, b + tail]],
-            conditionsIn, conditionsOut: ['v'], ...VERB_STEM, stemMinLength: 1, ...constraint});
+    for (const [[e, b], constraints] of CLASSES.slice(1)) {
+        for (const constraint of constraints) {
+            add('pronominal', {type: 'circumfix', prefixes: prefixes.map((p) => [p, '']), suffixes: [[e, b + tail]],
+                conditionsIn, conditionsOut: ['v'], ...constraint});
+        }
     }
 }
 // Verbs whose stem has fewer than three letters are written out: fare, dare,

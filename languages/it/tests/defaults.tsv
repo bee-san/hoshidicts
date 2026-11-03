@@ -303,6 +303,16 @@ porre	1	posto	porre	v	participle
 porre	1	propongo	proporre	v	present-io
 porre	1	suppose	supporre	v	preterite-lui
 porre	1	composto	comporre	v	participle
+porre	1	espose	esporre	v	preterite-lui
+porre	0	sposi	sporre	*	*
+porre	0	sposto	sporre	*	*
+pronominal	0	mi sposi	sporsi	*	*
+pronominal	1	si espose	esporsi	v	pronominal|preterite-lui|proclitic
+pronominal	1	si riduce	ridursi	v	pronominal|present-lui|proclitic
+pronominal	1	si trae	trarsi	v	pronominal|present-lui|proclitic
+pronominal	1	si estrae	estrarsi	v	pronominal|present-lui|proclitic
+pronominal	0	si duce	dursi	*	*
+pronominal	0	si strae	strarsi	*	*
 trarre	1	traggo	trarre	v	present-io
 trarre	1	trae	trarre	v	present-lui
 trarre	1	trasse	trarre	v	preterite-lui

@@ -6,6 +6,12 @@
     python3 measure.py text     <wty zip> <imported dict> <pg*.txt>... [--languages DIR] [--out FILE] [--sample N]
     python3 measure.py pronouns <wty zip> <imported dict> <ita_sentences.tsv(.bz2)> [--languages DIR] [--out FILE]
     python3 measure.py eval     <imported dict> [--languages DIR] [--per-rule FILE]
+    python3 measure.py bench    <imported dict> [--languages DIR] [--runs N] [--passes N]
+
+bench: build/benchmark-lookup on sources/benchmark-words.txt (64 texts, each
+the rest of a sentence from an inflected word, written for the pack) with the
+pack, --passes passes per run (default 6) with the first dropped, --runs runs
+(default 3); prints p50 and p95 per run in microseconds.
 
 eval: hoshidicts-cli eval-language for the own rules (sources/own.json),
 Yomitan's (none for Italian: the pack's conditions with no transform), their
@@ -458,6 +464,26 @@ def cmd_eval(args):
     write(lines, None)
 
 
+def cmd_bench(args):
+    languages = option(args, "--languages", os.path.join(REPO, "languages"))
+    runs = int(option(args, "--runs", "3"))
+    passes = int(option(args, "--passes", "6"))
+    (dictionary,) = args
+    words = os.path.join(HERE, "benchmark-words.txt")
+    binary = os.path.join(REPO, "build", "benchmark-lookup")
+    lines = []
+    for run in range(runs):
+        out = subprocess.run([binary, words, str(passes), "--term", dictionary, "--languages", languages, "--language", "it", "--json"],
+                             capture_output=True, text=True, check=True)
+        data = json.loads(out.stdout)
+        times = sorted(t for timings in data["passes"][1:] for t in timings)
+        p50 = times[len(times) // 2] * 1000
+        p95 = times[min(len(times) - 1, int(len(times) * 0.95))] * 1000
+        lines.append(f"run {run + 1}: {data['words']} texts x {passes - 1} passes, p50 {p50:.1f} us, p95 {p95:.1f} us, "
+                     f"{data['result_count']} results")
+    write(lines, None)
+
+
 def write(lines, out_file):
     text = "\n".join(lines) + "\n"
     if out_file:
@@ -468,4 +494,4 @@ def write(lines, out_file):
 
 if __name__ == "__main__":
     command, rest = sys.argv[1], sys.argv[2:]
-    {"freq": cmd_freq, "text": cmd_text, "pronouns": cmd_pronouns, "eval": cmd_eval}[command](rest)
+    {"freq": cmd_freq, "text": cmd_text, "pronouns": cmd_pronouns, "eval": cmd_eval, "bench": cmd_bench}[command](rest)

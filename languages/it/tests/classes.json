@@ -3786,6 +3786,7 @@
       [223, 246],
       [248, 255]
     ],
+    "transforms[43].rules[3].stemCharacters": [],
     "transforms[44].rules[0].stemCharacters": [
       [97, 122],
       [223, 246],
@@ -4971,41 +4972,92 @@
     "transforms[89].rules[4].stemStartsWith": [
       [118, 118]
     ],
-    "transforms[89].rules[18].stemNotStartsWith": [
+    "transforms[89].rules[7].stemCharacters": [
+      [112, 112]
+    ],
+    "transforms[89].rules[8].stemCharacters": [
+      [114, 114],
+      [116, 116]
+    ],
+    "transforms[89].rules[13].stemCharacters": [
+      [112, 112]
+    ],
+    "transforms[89].rules[14].stemCharacters": [
+      [114, 114],
+      [116, 116]
+    ],
+    "transforms[89].rules[19].stemCharacters": [
+      [112, 112]
+    ],
+    "transforms[89].rules[20].stemCharacters": [
+      [114, 114],
+      [116, 116]
+    ],
+    "transforms[89].rules[24].stemNotStartsWith": [
       [114, 114]
     ],
-    "transforms[89].rules[19].stemStartsWith": [
+    "transforms[89].rules[25].stemStartsWith": [
       [114, 114]
     ],
-    "transforms[89].rules[21].stemNotStartsWith": [
+    "transforms[89].rules[27].stemNotStartsWith": [
       [118, 118]
     ],
-    "transforms[89].rules[22].stemStartsWith": [
+    "transforms[89].rules[28].stemStartsWith": [
       [118, 118]
     ],
-    "transforms[89].rules[36].stemNotStartsWith": [
+    "transforms[89].rules[31].stemCharacters": [
+      [112, 112]
+    ],
+    "transforms[89].rules[32].stemCharacters": [
+      [114, 114],
+      [116, 116]
+    ],
+    "transforms[89].rules[37].stemCharacters": [
+      [112, 112]
+    ],
+    "transforms[89].rules[38].stemCharacters": [
+      [114, 114],
+      [116, 116]
+    ],
+    "transforms[89].rules[43].stemCharacters": [
+      [112, 112]
+    ],
+    "transforms[89].rules[44].stemCharacters": [
+      [114, 114],
+      [116, 116]
+    ],
+    "transforms[89].rules[48].stemNotStartsWith": [
       [114, 114]
     ],
-    "transforms[89].rules[37].stemStartsWith": [
+    "transforms[89].rules[49].stemStartsWith": [
       [114, 114]
     ],
-    "transforms[89].rules[39].stemNotStartsWith": [
+    "transforms[89].rules[51].stemNotStartsWith": [
       [118, 118]
     ],
-    "transforms[89].rules[40].stemStartsWith": [
+    "transforms[89].rules[52].stemStartsWith": [
       [118, 118]
     ],
-    "transforms[89].rules[54].stemNotStartsWith": [
-      [114, 114]
+    "transforms[89].rules[55].stemCharacters": [
+      [112, 112]
     ],
-    "transforms[89].rules[55].stemStartsWith": [
-      [114, 114]
+    "transforms[89].rules[56].stemCharacters": [
+      [114, 114],
+      [116, 116]
     ],
-    "transforms[89].rules[57].stemNotStartsWith": [
-      [118, 118]
+    "transforms[89].rules[61].stemCharacters": [
+      [112, 112]
     ],
-    "transforms[89].rules[58].stemStartsWith": [
-      [118, 118]
+    "transforms[89].rules[62].stemCharacters": [
+      [114, 114],
+      [116, 116]
+    ],
+    "transforms[89].rules[67].stemCharacters": [
+      [112, 112]
+    ],
+    "transforms[89].rules[68].stemCharacters": [
+      [114, 114],
+      [116, 116]
     ],
     "transforms[89].rules[72].stemNotStartsWith": [
       [114, 114]
@@ -5019,24 +5071,99 @@
     "transforms[89].rules[76].stemStartsWith": [
       [118, 118]
     ],
-    "transforms[89].rules[90].stemCharacters": [
+    "transforms[89].rules[79].stemCharacters": [
+      [112, 112]
+    ],
+    "transforms[89].rules[80].stemCharacters": [
+      [114, 114],
+      [116, 116]
+    ],
+    "transforms[89].rules[85].stemCharacters": [
+      [112, 112]
+    ],
+    "transforms[89].rules[86].stemCharacters": [
+      [114, 114],
+      [116, 116]
+    ],
+    "transforms[89].rules[91].stemCharacters": [
+      [112, 112]
+    ],
+    "transforms[89].rules[92].stemCharacters": [
+      [114, 114],
+      [116, 116]
+    ],
+    "transforms[89].rules[96].stemNotStartsWith": [
+      [114, 114]
+    ],
+    "transforms[89].rules[97].stemStartsWith": [
+      [114, 114]
+    ],
+    "transforms[89].rules[99].stemNotStartsWith": [
+      [118, 118]
+    ],
+    "transforms[89].rules[100].stemStartsWith": [
+      [118, 118]
+    ],
+    "transforms[89].rules[103].stemCharacters": [
+      [112, 112]
+    ],
+    "transforms[89].rules[104].stemCharacters": [
+      [114, 114],
+      [116, 116]
+    ],
+    "transforms[89].rules[109].stemCharacters": [
+      [112, 112]
+    ],
+    "transforms[89].rules[110].stemCharacters": [
+      [114, 114],
+      [116, 116]
+    ],
+    "transforms[89].rules[115].stemCharacters": [
+      [112, 112]
+    ],
+    "transforms[89].rules[116].stemCharacters": [
+      [114, 114],
+      [116, 116]
+    ],
+    "transforms[89].rules[120].stemCharacters": [
       [97, 122],
       [223, 246],
       [248, 255]
     ],
-    "transforms[89].rules[91].stemNotStartsWith": [
+    "transforms[89].rules[121].stemNotStartsWith": [
       [114, 114]
     ],
-    "transforms[89].rules[92].stemStartsWith": [
+    "transforms[89].rules[122].stemStartsWith": [
       [114, 114]
     ],
-    "transforms[89].rules[94].stemNotStartsWith": [
+    "transforms[89].rules[124].stemNotStartsWith": [
       [118, 118]
     ],
-    "transforms[89].rules[95].stemStartsWith": [
+    "transforms[89].rules[125].stemStartsWith": [
       [118, 118]
     ],
-    "transforms[89].rules[109].stemCharacters": [],
+    "transforms[89].rules[128].stemCharacters": [
+      [112, 112]
+    ],
+    "transforms[89].rules[129].stemCharacters": [
+      [114, 114],
+      [116, 116]
+    ],
+    "transforms[89].rules[134].stemCharacters": [
+      [112, 112]
+    ],
+    "transforms[89].rules[135].stemCharacters": [
+      [114, 114],
+      [116, 116]
+    ],
+    "transforms[89].rules[140].stemCharacters": [
+      [112, 112]
+    ],
+    "transforms[89].rules[141].stemCharacters": [
+      [114, 114],
+      [116, 116]
+    ],
+    "transforms[89].rules[145].stemCharacters": [],
     "transforms[90].rules[0].stemCharacters": [
       [97, 122],
       [223, 246],
@@ -6417,6 +6544,16 @@
         ["propongo", "propongo"],
         ["suppose", "suppose"],
         ["composto", "composto"],
+        ["espose", "espose"],
+        ["sposi", "sposi"],
+        ["sposto", "sposto"],
+        ["mi sposi", "mi sposi"],
+        ["si espose", "si espose"],
+        ["si riduce", "si riduce"],
+        ["si trae", "si trae"],
+        ["si estrae", "si estrae"],
+        ["si duce", "si duce"],
+        ["si strae", "si strae"],
         ["traggo", "traggo"],
         ["trae", "trae"],
         ["trasse", "trasse"],
@@ -8136,6 +8273,16 @@
         ["propongo", "propongo"],
         ["suppose", "suppose"],
         ["composto", "composto"],
+        ["espose", "espose"],
+        ["sposi", "sposi"],
+        ["sposto", "sposto"],
+        ["mi sposi", "mi sposi"],
+        ["si espose", "si espose"],
+        ["si riduce", "si riduce"],
+        ["si trae", "si trae"],
+        ["si estrae", "si estrae"],
+        ["si duce", "si duce"],
+        ["si strae", "si strae"],
         ["traggo", "traggo"],
         ["trae", "trae"],
         ["trasse", "trasse"],
@@ -9855,6 +10002,16 @@
         ["propongo", "Propongo"],
         ["suppose", "Suppose"],
         ["composto", "Composto"],
+        ["espose", "Espose"],
+        ["sposi", "Sposi"],
+        ["sposto", "Sposto"],
+        ["mi sposi", "Mi sposi"],
+        ["si espose", "Si espose"],
+        ["si riduce", "Si riduce"],
+        ["si trae", "Si trae"],
+        ["si estrae", "Si estrae"],
+        ["si duce", "Si duce"],
+        ["si strae", "Si strae"],
         ["traggo", "Traggo"],
         ["trae", "Trae"],
         ["trasse", "Trasse"],
@@ -11574,6 +11731,16 @@
         ["propongo", "propongo"],
         ["suppose", "suppose"],
         ["composto", "composto"],
+        ["espose", "espose"],
+        ["sposi", "sposi"],
+        ["sposto", "sposto"],
+        ["mi sposi", "mi sposi"],
+        ["si espose", "si espose"],
+        ["si riduce", "si riduce"],
+        ["si trae", "si trae"],
+        ["si estrae", "si estrae"],
+        ["si duce", "si duce"],
+        ["si strae", "si strae"],
         ["traggo", "traggo"],
         ["trae", "trae"],
         ["trasse", "trasse"],
@@ -13293,6 +13460,16 @@
         ["propongo", "propongo"],
         ["suppose", "suppose"],
         ["composto", "composto"],
+        ["espose", "espose"],
+        ["sposi", "sposi"],
+        ["sposto", "sposto"],
+        ["mi sposi", "mi sposi"],
+        ["si espose", "si espose"],
+        ["si riduce", "si riduce"],
+        ["si trae", "si trae"],
+        ["si estrae", "si estrae"],
+        ["si duce", "si duce"],
+        ["si strae", "si strae"],
         ["traggo", "traggo"],
         ["trae", "trae"],
         ["trasse", "trasse"],
