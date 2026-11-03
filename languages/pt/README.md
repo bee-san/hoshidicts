@@ -206,7 +206,7 @@ yomitan, 0 both"). No Yomitan rule is left out, because there is none.
     follow g or q (`segui` is the preterite of seguir, not a present of
     "seguuir"); the -ir e → i change only applies between consonants (`seguia`
     is not "segueir").
-- **History.** The first commit of this pack, `pt: own rules` (e533611), has
+- **History.** The first commit of this pack, `pt: own rules` (7d19e88), has
   the own rules as written before any measurement: 88 transforms and 2,745
   rule rows (5,223 rules expanded). Later commits changed them after
   measuring:
@@ -218,7 +218,7 @@ yomitan, 0 both"). No Yomitan rule is left out, because there is none.
     the same deinflections twice under two names;
   - rows were written as cross products (the same deinflections on the
     459,646 words above, in the same order), which keeps `own.json` at
-    316 KB although the rules grew (479 KB at e533611);
+    316 KB although the rules grew (479 KB at 7d19e88);
   - the stems without spaces or capitals, the pronoun stems without spaces,
     the exact-stem exclusions (`alguem`, `sida` among them), -guer, u → o, the
     names, -azinho, `esto` and `sao` came from the real-text, Tatoeba and
