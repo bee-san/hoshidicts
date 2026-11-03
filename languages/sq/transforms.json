@@ -66,7 +66,7 @@
       "description": "The negation s' (nuk) written before a verb: s'kam → kam, s'di → di.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "s'", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 1}
+        {"type": "prefix", "inflected": "s'", "deinflected": "", "conditionsIn": [], "conditionsOut": []}
       ]
     },
     {
@@ -75,7 +75,7 @@
       "description": "The interrogative ç' (çfarë) written before a verb: ç'bën → bën → bëj.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "ç'", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 1}
+        {"type": "prefix", "inflected": "ç'", "deinflected": "", "conditionsIn": [], "conditionsOut": []}
       ]
     },
     {
@@ -295,7 +295,7 @@
       "description": "The comparative or superlative më before an adjective or adverb: më i mirë → mirë, më shpejt → shpejt.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "më ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj", "adj_cmp"], "stemMinLength": 1}
+        {"type": "prefix", "inflected": "më ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj", "adj_cmp"]}
       ]
     },
     {
@@ -304,10 +304,10 @@
       "description": "The article an adjective takes: i mirë, e mirë, të mira, së madhe → mirë, madh.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "i ", "deinflected": "", "conditionsIn": ["adj_cmp"], "conditionsOut": ["adj", "adj_m"], "stemMinLength": 1},
-        {"type": "prefix", "inflected": "e ", "deinflected": "", "conditionsIn": ["adj_cmp"], "conditionsOut": ["adj", "adj_f"], "stemMinLength": 1},
-        {"type": "prefix", "inflected": "të ", "deinflected": "", "conditionsIn": ["adj_cmp"], "conditionsOut": ["adj", "adj_pl"], "stemMinLength": 1},
-        {"type": "prefix", "inflected": "së ", "deinflected": "", "conditionsIn": ["adj_cmp"], "conditionsOut": ["adj", "adj_f"], "stemMinLength": 1}
+        {"type": "prefix", "inflected": "i ", "deinflected": "", "conditionsIn": ["adj_cmp"], "conditionsOut": ["adj", "adj_m"]},
+        {"type": "prefix", "inflected": "e ", "deinflected": "", "conditionsIn": ["adj_cmp"], "conditionsOut": ["adj", "adj_f"]},
+        {"type": "prefix", "inflected": "të ", "deinflected": "", "conditionsIn": ["adj_cmp"], "conditionsOut": ["adj", "adj_pl"]},
+        {"type": "prefix", "inflected": "së ", "deinflected": "", "conditionsIn": ["adj_cmp"], "conditionsOut": ["adj", "adj_f"]}
       ]
     },
     {
@@ -414,10 +414,10 @@
       "description": "do të before the subjunctive (future: do të punoj) or the imperfect (conditional: do të punoja); do ta and do t'i carry the pronoun e or i.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "do të ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v", "v_sbjv"], "stemMinLength": 1},
-        {"type": "prefix", "inflected": "do ta ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v", "v_sbjv"], "stemMinLength": 1},
-        {"type": "prefix", "inflected": "do t'i ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v", "v_sbjv"], "stemMinLength": 1},
-        {"type": "prefix", "inflected": "do t'ia ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v", "v_sbjv"], "stemMinLength": 1}
+        {"type": "prefix", "inflected": "do të ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v", "v_sbjv"]},
+        {"type": "prefix", "inflected": "do ta ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v", "v_sbjv"]},
+        {"type": "prefix", "inflected": "do t'i ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v", "v_sbjv"]},
+        {"type": "prefix", "inflected": "do t'ia ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v", "v_sbjv"]}
       ]
     },
     {
@@ -426,11 +426,11 @@
       "description": "të before the present or imperfect subjunctive (të punoj, të punosh, të punonte); ta and t'i carry the pronoun e or i.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "të ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v", "v_sbjv"], "stemMinLength": 1},
-        {"type": "prefix", "inflected": "ta ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v", "v_sbjv"], "stemMinLength": 1},
-        {"type": "prefix", "inflected": "t'i ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v", "v_sbjv"], "stemMinLength": 1},
-        {"type": "prefix", "inflected": "t'ia ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v", "v_sbjv"], "stemMinLength": 1},
-        {"type": "prefix", "inflected": "t'u ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v", "v_sbjv"], "stemMinLength": 1},
+        {"type": "prefix", "inflected": "të ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v", "v_sbjv"]},
+        {"type": "prefix", "inflected": "ta ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v", "v_sbjv"]},
+        {"type": "prefix", "inflected": "t'i ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v", "v_sbjv"]},
+        {"type": "prefix", "inflected": "t'ia ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v", "v_sbjv"]},
+        {"type": "prefix", "inflected": "t'u ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v", "v_sbjv"]},
         {"type": "wholeWord", "inflected": "jem", "deinflected": "jam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "kem", "deinflected": "kam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]}
       ]
@@ -441,7 +441,7 @@
       "description": "The perfect with kam, 1sg (kam punuar): the auxiliary kam before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "kam ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "kam ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -450,7 +450,7 @@
       "description": "The perfect with kam, 2sg (kam punuar): the auxiliary ke before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "ke ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "ke ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -459,7 +459,7 @@
       "description": "The perfect with kam, 3sg (kam punuar): the auxiliary ka before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "ka ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "ka ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -468,7 +468,7 @@
       "description": "The perfect with kam, 1pl (kam punuar): the auxiliary kemi before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "kemi ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "kemi ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -477,7 +477,7 @@
       "description": "The perfect with kam, 2pl (kam punuar): the auxiliary keni before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "keni ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "keni ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -486,7 +486,7 @@
       "description": "The perfect with kam, 3pl (kam punuar): the auxiliary kanë before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "kanë ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "kanë ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -495,7 +495,7 @@
       "description": "The perfect subjunctive with të kem, 1sg (të kem punuar): the auxiliary kem before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "kem ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "kem ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -504,7 +504,7 @@
       "description": "The perfect subjunctive with të kem, 2sg (të kem punuar): the auxiliary kesh before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "kesh ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "kesh ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -513,7 +513,7 @@
       "description": "The perfect subjunctive with të kem, 3sg (të kem punuar): the auxiliary ketë before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "ketë ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "ketë ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -522,7 +522,7 @@
       "description": "The perfect subjunctive with të kem, 3pl (të kem punuar): the auxiliary kenë before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "kenë ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "kenë ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -531,7 +531,7 @@
       "description": "The pluperfect with kisha, 1sg (kisha punuar): the auxiliary kisha before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "kisha ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "kisha ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -540,7 +540,7 @@
       "description": "The pluperfect with kisha, 2sg (kisha punuar): the auxiliary kishe before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "kishe ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "kishe ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -549,7 +549,7 @@
       "description": "The pluperfect with kisha, 3sg (kisha punuar): the auxiliary kishte before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "kishte ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "kishte ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -558,7 +558,7 @@
       "description": "The pluperfect with kisha, 1pl (kisha punuar): the auxiliary kishim before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "kishim ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "kishim ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -567,7 +567,7 @@
       "description": "The pluperfect with kisha, 2pl (kisha punuar): the auxiliary kishit before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "kishit ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "kishit ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -576,7 +576,7 @@
       "description": "The pluperfect with kisha, 3pl (kisha punuar): the auxiliary kishin before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "kishin ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "kishin ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -585,7 +585,7 @@
       "description": "The past anterior with pata, 1sg (pata punuar): the auxiliary pata before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "pata ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "pata ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -594,7 +594,7 @@
       "description": "The past anterior with pata, 2sg (pata punuar): the auxiliary pate before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "pate ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "pate ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -603,7 +603,7 @@
       "description": "The past anterior with pata, 3sg (pata punuar): the auxiliary pati before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "pati ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "pati ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -612,7 +612,7 @@
       "description": "The past anterior with pata, 1pl (pata punuar): the auxiliary patëm before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "patëm ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "patëm ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -621,7 +621,7 @@
       "description": "The past anterior with pata, 2pl (pata punuar): the auxiliary patët before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "patët ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "patët ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -630,7 +630,7 @@
       "description": "The past anterior with pata, 3pl (pata punuar): the auxiliary patën before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "patën ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "patën ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -639,7 +639,7 @@
       "description": "The non-active perfect with jam, 1sg (është bërë): the auxiliary jam before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "jam ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "jam ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -648,7 +648,7 @@
       "description": "The non-active perfect with jam, 2sg (është bërë): the auxiliary je before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "je ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "je ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -657,7 +657,7 @@
       "description": "The non-active perfect with jam, 3sg (është bërë): the auxiliary është before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "është ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "është ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -666,7 +666,7 @@
       "description": "The non-active perfect with jam, 1pl (është bërë): the auxiliary jemi before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "jemi ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "jemi ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -675,7 +675,7 @@
       "description": "The non-active perfect with jam, 2pl (është bërë): the auxiliary jeni before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "jeni ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "jeni ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -684,7 +684,7 @@
       "description": "The non-active perfect with jam, 3pl (është bërë): the auxiliary janë before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "janë ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "janë ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -693,7 +693,7 @@
       "description": "The non-active perfect subjunctive with të jem, 1sg (të jetë bërë): the auxiliary jem before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "jem ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "jem ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -702,7 +702,7 @@
       "description": "The non-active perfect subjunctive with të jem, 2sg (të jetë bërë): the auxiliary jesh before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "jesh ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "jesh ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -711,7 +711,7 @@
       "description": "The non-active perfect subjunctive with të jem, 3sg (të jetë bërë): the auxiliary jetë before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "jetë ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "jetë ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -720,7 +720,7 @@
       "description": "The non-active perfect subjunctive with të jem, 3pl (të jetë bërë): the auxiliary jenë before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "jenë ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "jenë ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -729,7 +729,7 @@
       "description": "The non-active pluperfect with isha, 1sg (ishte bërë): the auxiliary isha before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "isha ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "isha ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -738,7 +738,7 @@
       "description": "The non-active pluperfect with isha, 2sg (ishte bërë): the auxiliary ishe before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "ishe ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "ishe ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -747,7 +747,7 @@
       "description": "The non-active pluperfect with isha, 3sg (ishte bërë): the auxiliary ishte before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "ishte ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "ishte ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -756,7 +756,7 @@
       "description": "The non-active pluperfect with isha, 1pl (ishte bërë): the auxiliary ishim before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "ishim ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "ishim ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -765,7 +765,7 @@
       "description": "The non-active pluperfect with isha, 2pl (ishte bërë): the auxiliary ishit before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "ishit ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "ishit ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -774,7 +774,7 @@
       "description": "The non-active pluperfect with isha, 3pl (ishte bërë): the auxiliary ishin before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "ishin ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "ishin ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -783,7 +783,7 @@
       "description": "The perfect optative with paça, 1sg (paça punuar): the auxiliary paça before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "paça ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "paça ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -792,7 +792,7 @@
       "description": "The perfect optative with paça, 2sg (paça punuar): the auxiliary paç before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "paç ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "paç ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -801,7 +801,7 @@
       "description": "The perfect optative with paça, 3sg (paça punuar): the auxiliary pastë before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "pastë ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "pastë ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -810,7 +810,7 @@
       "description": "The perfect optative with paça, 1pl (paça punuar): the auxiliary paçim before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "paçim ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "paçim ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -819,8 +819,8 @@
       "description": "The perfect optative with paça, 2pl (paça punuar): the auxiliary paçi before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "paçi ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "paçit ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "paçi ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]},
+        {"type": "prefix", "inflected": "paçit ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -829,7 +829,7 @@
       "description": "The perfect optative with paça, 3pl (paça punuar): the auxiliary paçin before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "paçin ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "paçin ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -838,7 +838,7 @@
       "description": "The non-active perfect optative with qofsha, 1sg (qoftë bërë): the auxiliary qofsha before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "qofsha ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "qofsha ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -847,7 +847,7 @@
       "description": "The non-active perfect optative with qofsha, 2sg (qoftë bërë): the auxiliary qofsh before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "qofsh ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "qofsh ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -856,7 +856,7 @@
       "description": "The non-active perfect optative with qofsha, 3sg (qoftë bërë): the auxiliary qoftë before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "qoftë ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "qoftë ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -865,7 +865,7 @@
       "description": "The non-active perfect optative with qofsha, 1pl (qoftë bërë): the auxiliary qofshim before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "qofshim ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "qofshim ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -874,8 +874,8 @@
       "description": "The non-active perfect optative with qofsha, 2pl (qoftë bërë): the auxiliary qofshi before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "qofshi ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "qofshit ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "qofshi ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]},
+        {"type": "prefix", "inflected": "qofshit ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -884,7 +884,7 @@
       "description": "The non-active perfect optative with qofsha, 3pl (qoftë bërë): the auxiliary qofshin before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "qofshin ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "qofshin ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -893,7 +893,7 @@
       "description": "The perfect admirative with paskam, 1sg (paska punuar): the auxiliary paskam before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "paskam ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "paskam ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -902,7 +902,7 @@
       "description": "The perfect admirative with paskam, 2sg (paska punuar): the auxiliary paske before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "paske ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "paske ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -911,7 +911,7 @@
       "description": "The perfect admirative with paskam, 3sg (paska punuar): the auxiliary paska before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "paska ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "paska ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -920,7 +920,7 @@
       "description": "The perfect admirative with paskam, 1pl (paska punuar): the auxiliary paskemi before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "paskemi ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "paskemi ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -929,7 +929,7 @@
       "description": "The perfect admirative with paskam, 2pl (paska punuar): the auxiliary paskeni before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "paskeni ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "paskeni ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -938,7 +938,7 @@
       "description": "The perfect admirative with paskam, 3pl (paska punuar): the auxiliary paskan before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "paskan ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "paskan ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -947,7 +947,7 @@
       "description": "The pluperfect admirative with paskësha, 1sg (paskësh punuar): the auxiliary paskësha before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "paskësha ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "paskësha ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -956,7 +956,7 @@
       "description": "The pluperfect admirative with paskësha, 2sg (paskësh punuar): the auxiliary paskëshe before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "paskëshe ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "paskëshe ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -965,7 +965,7 @@
       "description": "The pluperfect admirative with paskësha, 3sg (paskësh punuar): the auxiliary paskësh before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "paskësh ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "paskësh ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -974,7 +974,7 @@
       "description": "The pluperfect admirative with paskësha, 1pl (paskësh punuar): the auxiliary paskëshim before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "paskëshim ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "paskëshim ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -983,7 +983,7 @@
       "description": "The pluperfect admirative with paskësha, 2pl (paskësh punuar): the auxiliary paskëshit before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "paskëshit ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "paskëshit ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -992,7 +992,7 @@
       "description": "The pluperfect admirative with paskësha, 3pl (paskësh punuar): the auxiliary paskëshin before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "paskëshin ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "paskëshin ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -1001,7 +1001,7 @@
       "description": "The non-active perfect admirative with qenkam, 1sg (qenka bërë): the auxiliary qenkam before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "qenkam ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "qenkam ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -1010,7 +1010,7 @@
       "description": "The non-active perfect admirative with qenkam, 2sg (qenka bërë): the auxiliary qenke before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "qenke ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "qenke ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -1019,7 +1019,7 @@
       "description": "The non-active perfect admirative with qenkam, 3sg (qenka bërë): the auxiliary qenka before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "qenka ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "qenka ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -1028,7 +1028,7 @@
       "description": "The non-active perfect admirative with qenkam, 1pl (qenka bërë): the auxiliary qenkemi before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "qenkemi ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "qenkemi ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -1037,7 +1037,7 @@
       "description": "The non-active perfect admirative with qenkam, 2pl (qenka bërë): the auxiliary qenkeni before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "qenkeni ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "qenkeni ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -1046,7 +1046,7 @@
       "description": "The non-active perfect admirative with qenkam, 3pl (qenka bërë): the auxiliary qenkan before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "qenkan ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "qenkan ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -1055,7 +1055,7 @@
       "description": "The non-active pluperfect admirative with qenkësha, 1sg (qenkësh bërë): the auxiliary qenkësha before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "qenkësha ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "qenkësha ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -1064,7 +1064,7 @@
       "description": "The non-active pluperfect admirative with qenkësha, 2sg (qenkësh bërë): the auxiliary qenkëshe before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "qenkëshe ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "qenkëshe ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -1073,7 +1073,7 @@
       "description": "The non-active pluperfect admirative with qenkësha, 3sg (qenkësh bërë): the auxiliary qenkësh before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "qenkësh ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "qenkësh ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -1082,7 +1082,7 @@
       "description": "The non-active pluperfect admirative with qenkësha, 1pl (qenkësh bërë): the auxiliary qenkëshim before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "qenkëshim ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "qenkëshim ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -1091,7 +1091,7 @@
       "description": "The non-active pluperfect admirative with qenkësha, 2pl (qenkësh bërë): the auxiliary qenkëshit before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "qenkëshit ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "qenkëshit ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -1100,7 +1100,7 @@
       "description": "The non-active pluperfect admirative with qenkësha, 3pl (qenkësh bërë): the auxiliary qenkëshin before the participle.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "qenkëshin ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "qenkëshin ", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -1109,11 +1109,11 @@
       "description": "duke before the participle (duke punuar, duke u larë, duke pasë punuar).",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "duke ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v_ptcp"], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "duke u ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v_ptcp"], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "duke pasë ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v_ptcp"], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "duke qenë ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v_ptcp"], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "duke u pasë ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "duke ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v_ptcp"]},
+        {"type": "prefix", "inflected": "duke u ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v_ptcp"]},
+        {"type": "prefix", "inflected": "duke pasë ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v_ptcp"]},
+        {"type": "prefix", "inflected": "duke qenë ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v_ptcp"]},
+        {"type": "prefix", "inflected": "duke u pasë ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -1122,8 +1122,8 @@
       "description": "pa before the participle (pa folur, pa u larë).",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "pa ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v_ptcp"], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "pa u ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "pa ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v_ptcp"]},
+        {"type": "prefix", "inflected": "pa u ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -1132,8 +1132,8 @@
       "description": "për të before the participle (për të punuar), për t'u in the non-active (për t'u larë).",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "për të ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v_ptcp"], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "për t'u ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v_ptcp"], "stemMinLength": 2}
+        {"type": "prefix", "inflected": "për të ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v_ptcp"]},
+        {"type": "prefix", "inflected": "për t'u ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v_ptcp"]}
       ]
     },
     {
@@ -1142,7 +1142,7 @@
       "description": "u before the aorist, optative or admirative of the non-active (u bë, u largova, u bëfsha, u bëka).",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "u ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v", "v_aor"], "stemMinLength": 1}
+        {"type": "prefix", "inflected": "u ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v", "v_aor"]}
       ]
     },
     {
@@ -1173,7 +1173,11 @@
       "rules": [
         {"type": "suffix", "inflected": "n", "deinflected": "j", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]", "source": "both"},
         {"type": "suffix", "inflected": "et", "deinflected": "es", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gjet", "deinflected": "gjes", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njet", "deinflected": "njes", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "et", "deinflected": "as", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gjet", "deinflected": "gjas", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njet", "deinflected": "njas", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "wholeWord", "inflected": "je", "deinflected": "jam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "është", "deinflected": "jam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "ke", "deinflected": "kam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
@@ -1209,6 +1213,8 @@
       "rules": [
         {"type": "suffix", "inflected": "jmë", "deinflected": "j", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]", "source": "both"},
         {"type": "suffix", "inflected": "im", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gjim", "deinflected": "gj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
+        {"type": "suffix", "inflected": "njim", "deinflected": "nj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
         {"type": "wholeWord", "inflected": "jemi", "deinflected": "jam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "kemi", "deinflected": "kam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "themi", "deinflected": "them", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "source": "both"},
@@ -1239,6 +1245,8 @@
       "rules": [
         {"type": "suffix", "inflected": "ni", "deinflected": "j", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]", "source": "both"},
         {"type": "suffix", "inflected": "ni", "deinflected": "", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gjni", "deinflected": "gj", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
+        {"type": "suffix", "inflected": "njni", "deinflected": "nj", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
         {"type": "wholeWord", "inflected": "jeni", "deinflected": "jam", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "jini", "deinflected": "jam", "conditionsIn": ["v_imp"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "keni", "deinflected": "kam", "conditionsIn": ["v_sbjv", "v_imp"], "conditionsOut": ["v"]},
@@ -1309,6 +1317,8 @@
       "rules": [
         {"type": "suffix", "inflected": "jnë", "deinflected": "j", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]", "source": "both"},
         {"type": "suffix", "inflected": "in", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gjin", "deinflected": "gj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
+        {"type": "suffix", "inflected": "njin", "deinflected": "nj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
         {"type": "wholeWord", "inflected": "janë", "deinflected": "jam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "jenë", "deinflected": "jam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "kanë", "deinflected": "kam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
@@ -1341,6 +1351,8 @@
       "rules": [
         {"type": "suffix", "inflected": "ja", "deinflected": "j", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]", "source": "both"},
         {"type": "suffix", "inflected": "ja", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gjja", "deinflected": "gj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
+        {"type": "suffix", "inflected": "njja", "deinflected": "nj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
         {"type": "wholeWord", "inflected": "isha", "deinflected": "jam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "kisha", "deinflected": "kam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "thosha", "deinflected": "them", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
@@ -1402,6 +1414,8 @@
       "rules": [
         {"type": "suffix", "inflected": "je", "deinflected": "j", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]", "source": "both"},
         {"type": "suffix", "inflected": "je", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gjje", "deinflected": "gj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
+        {"type": "suffix", "inflected": "njje", "deinflected": "nj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
         {"type": "wholeWord", "inflected": "ishe", "deinflected": "jam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "kishe", "deinflected": "kam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "thoshe", "deinflected": "them", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
@@ -1463,6 +1477,8 @@
       "rules": [
         {"type": "suffix", "inflected": "nte", "deinflected": "j", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]", "source": "both"},
         {"type": "suffix", "inflected": "te", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gjte", "deinflected": "gj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
+        {"type": "suffix", "inflected": "njte", "deinflected": "nj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
         {"type": "wholeWord", "inflected": "ishte", "deinflected": "jam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "ish", "deinflected": "jam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "kishte", "deinflected": "kam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
@@ -1527,6 +1543,8 @@
       "rules": [
         {"type": "suffix", "inflected": "nim", "deinflected": "j", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]", "source": "both"},
         {"type": "suffix", "inflected": "nim", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gjnim", "deinflected": "gj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
+        {"type": "suffix", "inflected": "njnim", "deinflected": "nj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
         {"type": "wholeWord", "inflected": "ishim", "deinflected": "jam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "kishim", "deinflected": "kam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "thoshim", "deinflected": "them", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
@@ -1588,6 +1606,8 @@
       "rules": [
         {"type": "suffix", "inflected": "nit", "deinflected": "j", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]", "source": "both"},
         {"type": "suffix", "inflected": "nit", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gjnit", "deinflected": "gj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
+        {"type": "suffix", "inflected": "njnit", "deinflected": "nj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
         {"type": "wholeWord", "inflected": "ishit", "deinflected": "jam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "kishit", "deinflected": "kam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "thoshit", "deinflected": "them", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
@@ -1649,6 +1669,8 @@
       "rules": [
         {"type": "suffix", "inflected": "nin", "deinflected": "j", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]", "source": "both"},
         {"type": "suffix", "inflected": "nin", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gjnin", "deinflected": "gj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
+        {"type": "suffix", "inflected": "njnin", "deinflected": "nj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
         {"type": "wholeWord", "inflected": "ishin", "deinflected": "jam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "kishin", "deinflected": "kam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "thoshin", "deinflected": "them", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
@@ -1719,6 +1741,8 @@
         {"type": "suffix", "inflected": "yra", "deinflected": "yj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ava", "deinflected": "aj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
         {"type": "suffix", "inflected": "a", "deinflected": "", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gja", "deinflected": "gj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
+        {"type": "suffix", "inflected": "nja", "deinflected": "nj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
         {"type": "wholeWord", "inflected": "qeshë", "deinflected": "jam", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "pata", "deinflected": "kam", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "thashë", "deinflected": "them", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
@@ -1792,6 +1816,8 @@
         {"type": "suffix", "inflected": "yre", "deinflected": "yj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ave", "deinflected": "aj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
         {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gje", "deinflected": "gj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
+        {"type": "suffix", "inflected": "nje", "deinflected": "nj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
         {"type": "wholeWord", "inflected": "pate", "deinflected": "kam", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "the", "deinflected": "them", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "dhe", "deinflected": "jap", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
@@ -1864,6 +1890,8 @@
         {"type": "suffix", "inflected": "yri", "deinflected": "yj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "au", "deinflected": "aj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
         {"type": "suffix", "inflected": "i", "deinflected": "", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gji", "deinflected": "gj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
+        {"type": "suffix", "inflected": "nji", "deinflected": "nj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
         {"type": "suffix", "inflected": "u", "deinflected": "", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[kgh]"},
         {"type": "wholeWord", "inflected": "qe", "deinflected": "jam", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "pati", "deinflected": "kam", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
@@ -1941,6 +1969,8 @@
         {"type": "suffix", "inflected": "ymë", "deinflected": "yj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
         {"type": "suffix", "inflected": "amë", "deinflected": "aj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
         {"type": "suffix", "inflected": "ëm", "deinflected": "", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gjëm", "deinflected": "gj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
+        {"type": "suffix", "inflected": "njëm", "deinflected": "nj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
         {"type": "wholeWord", "inflected": "qemë", "deinflected": "jam", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "patëm", "deinflected": "kam", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "thamë", "deinflected": "them", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
@@ -2014,6 +2044,8 @@
         {"type": "suffix", "inflected": "ytë", "deinflected": "yj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
         {"type": "suffix", "inflected": "atë", "deinflected": "aj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
         {"type": "suffix", "inflected": "ët", "deinflected": "", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gjët", "deinflected": "gj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
+        {"type": "suffix", "inflected": "njët", "deinflected": "nj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
         {"type": "wholeWord", "inflected": "qetë", "deinflected": "jam", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "patët", "deinflected": "kam", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "thatë", "deinflected": "them", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
@@ -2087,6 +2119,8 @@
         {"type": "suffix", "inflected": "ynë", "deinflected": "yj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
         {"type": "suffix", "inflected": "anë", "deinflected": "aj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
         {"type": "suffix", "inflected": "ën", "deinflected": "", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gjën", "deinflected": "gj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
+        {"type": "suffix", "inflected": "njën", "deinflected": "nj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
         {"type": "wholeWord", "inflected": "qenë", "deinflected": "jam", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "patën", "deinflected": "kam", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "thanë", "deinflected": "them", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
@@ -2151,6 +2185,8 @@
       "rules": [
         {"type": "suffix", "inflected": "sh", "deinflected": "j", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]"},
         {"type": "suffix", "inflected": "ësh", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gjësh", "deinflected": "gj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njësh", "deinflected": "nj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "wholeWord", "inflected": "jesh", "deinflected": "jam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "kesh", "deinflected": "kam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "thuash", "deinflected": "them", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
@@ -2180,6 +2216,8 @@
       "rules": [
         {"type": "suffix", "inflected": "jë", "deinflected": "j", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]"},
         {"type": "suffix", "inflected": "ë", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gjë", "deinflected": "gj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "një", "deinflected": "nj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "wholeWord", "inflected": "jetë", "deinflected": "jam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "ketë", "deinflected": "kam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "thotë", "deinflected": "them", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
@@ -2442,6 +2480,8 @@
         {"type": "suffix", "inflected": "arë", "deinflected": "aj", "conditionsIn": ["v_ptcp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
         {"type": "suffix", "inflected": "ërë", "deinflected": "ëj", "conditionsIn": ["v_ptcp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
         {"type": "suffix", "inflected": "ur", "deinflected": "", "conditionsIn": ["v_ptcp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gjur", "deinflected": "gj", "conditionsIn": ["v_ptcp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
+        {"type": "suffix", "inflected": "njur", "deinflected": "nj", "conditionsIn": ["v_ptcp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "source": "both"},
         {"type": "suffix", "inflected": "ë", "deinflected": "", "conditionsIn": ["v_ptcp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[lr]"},
         {"type": "wholeWord", "inflected": "qenë", "deinflected": "jam", "conditionsIn": ["v_ptcp"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "pasur", "deinflected": "kam", "conditionsIn": ["v_ptcp"], "conditionsOut": ["v"]},
@@ -2489,6 +2529,8 @@
         {"type": "suffix", "inflected": "hem", "deinflected": "j", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]", "source": "both"},
         {"type": "suffix", "inflected": "uhem", "deinflected": "uaj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "em", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gjem", "deinflected": "gj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njem", "deinflected": "nj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "thuhem", "deinflected": "them", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "jepem", "deinflected": "jap", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "shihem", "deinflected": "shoh", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
@@ -2531,7 +2573,11 @@
         {"type": "suffix", "inflected": "hesh", "deinflected": "j", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]"},
         {"type": "suffix", "inflected": "uhesh", "deinflected": "uaj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "esh", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gjesh", "deinflected": "gj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njesh", "deinflected": "nj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "esh", "deinflected": "em", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gjesh", "deinflected": "gjem", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njesh", "deinflected": "njem", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "thuhesh", "deinflected": "them", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "jepesh", "deinflected": "jap", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "shihesh", "deinflected": "shoh", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
@@ -2575,7 +2621,11 @@
         {"type": "suffix", "inflected": "het", "deinflected": "j", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]"},
         {"type": "suffix", "inflected": "uhet", "deinflected": "uaj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "et", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gjet", "deinflected": "gj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njet", "deinflected": "nj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "et", "deinflected": "em", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gjet", "deinflected": "gjem", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njet", "deinflected": "njem", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "thuhet", "deinflected": "them", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "jepet", "deinflected": "jap", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "shihet", "deinflected": "shoh", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
@@ -2631,7 +2681,11 @@
         {"type": "suffix", "inflected": "hemi", "deinflected": "j", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]"},
         {"type": "suffix", "inflected": "uhemi", "deinflected": "uaj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "emi", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gjemi", "deinflected": "gj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njemi", "deinflected": "nj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "emi", "deinflected": "em", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gjemi", "deinflected": "gjem", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njemi", "deinflected": "njem", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "thuhemi", "deinflected": "them", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "jepemi", "deinflected": "jap", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "shihemi", "deinflected": "shoh", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
@@ -2674,7 +2728,11 @@
         {"type": "suffix", "inflected": "heni", "deinflected": "j", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]"},
         {"type": "suffix", "inflected": "uheni", "deinflected": "uaj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "eni", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gjeni", "deinflected": "gj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njeni", "deinflected": "nj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "eni", "deinflected": "em", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gjeni", "deinflected": "gjem", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njeni", "deinflected": "njem", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "thuheni", "deinflected": "them", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "jepeni", "deinflected": "jap", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "shiheni", "deinflected": "shoh", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
@@ -2717,7 +2775,11 @@
         {"type": "suffix", "inflected": "hen", "deinflected": "j", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]"},
         {"type": "suffix", "inflected": "uhen", "deinflected": "uaj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "en", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gjen", "deinflected": "gj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njen", "deinflected": "nj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "en", "deinflected": "em", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gjen", "deinflected": "gjem", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njen", "deinflected": "njem", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "thuhen", "deinflected": "them", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "jepen", "deinflected": "jap", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "shihen", "deinflected": "shoh", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
@@ -2774,7 +2836,11 @@
         {"type": "suffix", "inflected": "hesha", "deinflected": "j", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]"},
         {"type": "suffix", "inflected": "uhesha", "deinflected": "uaj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "esha", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gjesha", "deinflected": "gj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njesha", "deinflected": "nj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "esha", "deinflected": "em", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gjesha", "deinflected": "gjem", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njesha", "deinflected": "njem", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "thuhesha", "deinflected": "them", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "jepesha", "deinflected": "jap", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "shihesha", "deinflected": "shoh", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
@@ -2810,7 +2876,11 @@
         {"type": "suffix", "inflected": "heshe", "deinflected": "j", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]"},
         {"type": "suffix", "inflected": "uheshe", "deinflected": "uaj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "eshe", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gjeshe", "deinflected": "gj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njeshe", "deinflected": "nj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "eshe", "deinflected": "em", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gjeshe", "deinflected": "gjem", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njeshe", "deinflected": "njem", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "thuheshe", "deinflected": "them", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "jepeshe", "deinflected": "jap", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "shiheshe", "deinflected": "shoh", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
@@ -2827,7 +2897,11 @@
         {"type": "suffix", "inflected": "hej", "deinflected": "j", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]"},
         {"type": "suffix", "inflected": "uhej", "deinflected": "uaj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ej", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gjej", "deinflected": "gj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njej", "deinflected": "nj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ej", "deinflected": "em", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gjej", "deinflected": "gjem", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njej", "deinflected": "njem", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "thuhej", "deinflected": "them", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "jepej", "deinflected": "jap", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "shihej", "deinflected": "shoh", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
@@ -2881,7 +2955,11 @@
         {"type": "suffix", "inflected": "heshim", "deinflected": "j", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]"},
         {"type": "suffix", "inflected": "uheshim", "deinflected": "uaj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "eshim", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gjeshim", "deinflected": "gj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njeshim", "deinflected": "nj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "eshim", "deinflected": "em", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gjeshim", "deinflected": "gjem", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njeshim", "deinflected": "njem", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "thuheshim", "deinflected": "them", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "jepeshim", "deinflected": "jap", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "shiheshim", "deinflected": "shoh", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
@@ -2898,7 +2976,11 @@
         {"type": "suffix", "inflected": "heshit", "deinflected": "j", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]"},
         {"type": "suffix", "inflected": "uheshit", "deinflected": "uaj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "eshit", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gjeshit", "deinflected": "gj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njeshit", "deinflected": "nj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "eshit", "deinflected": "em", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gjeshit", "deinflected": "gjem", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njeshit", "deinflected": "njem", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "thuheshit", "deinflected": "them", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "jepeshit", "deinflected": "jap", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "shiheshit", "deinflected": "shoh", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
@@ -2915,7 +2997,11 @@
         {"type": "suffix", "inflected": "heshin", "deinflected": "j", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]"},
         {"type": "suffix", "inflected": "uheshin", "deinflected": "uaj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "eshin", "deinflected": "", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gjeshin", "deinflected": "gj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njeshin", "deinflected": "nj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "eshin", "deinflected": "em", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gjeshin", "deinflected": "gjem", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njeshin", "deinflected": "njem", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "thuheshin", "deinflected": "them", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "jepeshin", "deinflected": "jap", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "shiheshin", "deinflected": "shoh", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
@@ -2958,7 +3044,12 @@
         {"type": "suffix", "inflected": "hu", "deinflected": "j", "conditionsIn": ["v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]"},
         {"type": "suffix", "inflected": "uhu", "deinflected": "uaj", "conditionsIn": ["v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "u", "deinflected": "", "conditionsIn": ["v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gju", "deinflected": "gj", "conditionsIn": ["v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "nju", "deinflected": "nj", "conditionsIn": ["v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "circumfix", "prefixes": [["u ", ""]], "suffixes": [["o", "ohem"], ["o", "oj"], ["e", "ehem"], ["e", "ej"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "u", "deinflected": "em", "conditionsIn": ["v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gju", "deinflected": "gjem", "conditionsIn": ["v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "nju", "deinflected": "njem", "conditionsIn": ["v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "shihu", "deinflected": "shoh", "conditionsIn": ["v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "ngrihu", "deinflected": "ngre", "conditionsIn": ["v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "ngrihu", "deinflected": "ngrihem", "conditionsIn": ["v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "source": "both"}
@@ -2973,7 +3064,11 @@
         {"type": "suffix", "inflected": "huni", "deinflected": "hem", "conditionsIn": ["v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]", "source": "both"},
         {"type": "suffix", "inflected": "huni", "deinflected": "j", "conditionsIn": ["v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]"},
         {"type": "suffix", "inflected": "uni", "deinflected": "", "conditionsIn": ["v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gjuni", "deinflected": "gj", "conditionsIn": ["v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njuni", "deinflected": "nj", "conditionsIn": ["v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "uni", "deinflected": "em", "conditionsIn": ["v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}", "source": "both"},
+        {"type": "suffix", "inflected": "gjuni", "deinflected": "gjem", "conditionsIn": ["v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njuni", "deinflected": "njem", "conditionsIn": ["v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "shihuni", "deinflected": "shoh", "conditionsIn": ["v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "ngrihuni", "deinflected": "ngrihem", "conditionsIn": ["v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "source": "both"}
       ]
@@ -3037,31 +3132,43 @@
       "rules": [
         {"type": "suffix", "inflected": "kam", "deinflected": "r", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[ae]"},
         {"type": "suffix", "inflected": "kam", "deinflected": "ur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gjkam", "deinflected": "gjur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njkam", "deinflected": "njur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "kam", "deinflected": "rë", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeiyë]"},
         {"type": "suffix", "inflected": "kam", "deinflected": "ë", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[nlr]"},
         {"type": "suffix", "inflected": "ëkam", "deinflected": "ur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[kg]"},
         {"type": "suffix", "inflected": "ke", "deinflected": "r", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[ae]"},
         {"type": "suffix", "inflected": "ke", "deinflected": "ur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gjke", "deinflected": "gjur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njke", "deinflected": "njur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ke", "deinflected": "rë", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeiyë]"},
         {"type": "suffix", "inflected": "ke", "deinflected": "ë", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[nlr]"},
         {"type": "suffix", "inflected": "ëke", "deinflected": "ur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[kg]"},
         {"type": "suffix", "inflected": "ka", "deinflected": "r", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[ae]"},
         {"type": "suffix", "inflected": "ka", "deinflected": "ur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gjka", "deinflected": "gjur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njka", "deinflected": "njur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ka", "deinflected": "rë", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeiyë]"},
         {"type": "suffix", "inflected": "ka", "deinflected": "ë", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[nlr]"},
         {"type": "suffix", "inflected": "ëka", "deinflected": "ur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[kg]"},
         {"type": "suffix", "inflected": "kemi", "deinflected": "r", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[ae]"},
         {"type": "suffix", "inflected": "kemi", "deinflected": "ur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gjkemi", "deinflected": "gjur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njkemi", "deinflected": "njur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "kemi", "deinflected": "rë", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeiyë]"},
         {"type": "suffix", "inflected": "kemi", "deinflected": "ë", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[nlr]"},
         {"type": "suffix", "inflected": "ëkemi", "deinflected": "ur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[kg]"},
         {"type": "suffix", "inflected": "keni", "deinflected": "r", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[ae]"},
         {"type": "suffix", "inflected": "keni", "deinflected": "ur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gjkeni", "deinflected": "gjur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njkeni", "deinflected": "njur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "keni", "deinflected": "rë", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeiyë]"},
         {"type": "suffix", "inflected": "keni", "deinflected": "ë", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[nlr]"},
         {"type": "suffix", "inflected": "ëkeni", "deinflected": "ur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[kg]"},
         {"type": "suffix", "inflected": "kan", "deinflected": "r", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[ae]"},
         {"type": "suffix", "inflected": "kan", "deinflected": "ur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gjkan", "deinflected": "gjur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njkan", "deinflected": "njur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "kan", "deinflected": "rë", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeiyë]"},
         {"type": "suffix", "inflected": "kan", "deinflected": "ë", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[nlr]"},
         {"type": "suffix", "inflected": "ëkan", "deinflected": "ur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[kg]"}
@@ -3075,31 +3182,43 @@
       "rules": [
         {"type": "suffix", "inflected": "kësha", "deinflected": "r", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[ae]"},
         {"type": "suffix", "inflected": "kësha", "deinflected": "ur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gjkësha", "deinflected": "gjur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njkësha", "deinflected": "njur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "kësha", "deinflected": "rë", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeiyë]"},
         {"type": "suffix", "inflected": "kësha", "deinflected": "ë", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[nlr]"},
         {"type": "suffix", "inflected": "ëkësha", "deinflected": "ur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[kg]"},
         {"type": "suffix", "inflected": "këshe", "deinflected": "r", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[ae]"},
         {"type": "suffix", "inflected": "këshe", "deinflected": "ur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gjkëshe", "deinflected": "gjur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njkëshe", "deinflected": "njur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "këshe", "deinflected": "rë", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeiyë]"},
         {"type": "suffix", "inflected": "këshe", "deinflected": "ë", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[nlr]"},
         {"type": "suffix", "inflected": "ëkëshe", "deinflected": "ur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[kg]"},
         {"type": "suffix", "inflected": "kësh", "deinflected": "r", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[ae]"},
         {"type": "suffix", "inflected": "kësh", "deinflected": "ur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gjkësh", "deinflected": "gjur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njkësh", "deinflected": "njur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "kësh", "deinflected": "rë", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeiyë]"},
         {"type": "suffix", "inflected": "kësh", "deinflected": "ë", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[nlr]"},
         {"type": "suffix", "inflected": "ëkësh", "deinflected": "ur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[kg]"},
         {"type": "suffix", "inflected": "këshim", "deinflected": "r", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[ae]"},
         {"type": "suffix", "inflected": "këshim", "deinflected": "ur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gjkëshim", "deinflected": "gjur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njkëshim", "deinflected": "njur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "këshim", "deinflected": "rë", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeiyë]"},
         {"type": "suffix", "inflected": "këshim", "deinflected": "ë", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[nlr]"},
         {"type": "suffix", "inflected": "ëkëshim", "deinflected": "ur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[kg]"},
         {"type": "suffix", "inflected": "këshit", "deinflected": "r", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[ae]"},
         {"type": "suffix", "inflected": "këshit", "deinflected": "ur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gjkëshit", "deinflected": "gjur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njkëshit", "deinflected": "njur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "këshit", "deinflected": "rë", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeiyë]"},
         {"type": "suffix", "inflected": "këshit", "deinflected": "ë", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[nlr]"},
         {"type": "suffix", "inflected": "ëkëshit", "deinflected": "ur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[kg]"},
         {"type": "suffix", "inflected": "këshin", "deinflected": "r", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[ae]"},
         {"type": "suffix", "inflected": "këshin", "deinflected": "ur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "suffix", "inflected": "gjkëshin", "deinflected": "gjur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "njkëshin", "deinflected": "njur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "këshin", "deinflected": "rë", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeiyë]"},
         {"type": "suffix", "inflected": "këshin", "deinflected": "ë", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[nlr]"},
         {"type": "suffix", "inflected": "ëkëshin", "deinflected": "ur", "conditionsIn": ["v_aor"], "conditionsOut": ["v_ptcp"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[kg]"}

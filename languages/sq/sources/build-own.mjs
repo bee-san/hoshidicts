@@ -97,10 +97,21 @@ function suffix(id, inflected, deinflected, conditionsIn, conditionsOut, extra =
     const constraints = {stemCharacters: ONE_WORD, ...extra};
     if (constraints.stemCharacters === null) { delete constraints.stemCharacters; }
     add(id, {...rule, ...constraints});
+    // A verb stem that ends in the digraph gj or nj (përgjigjem, regj) ends in
+    // j too: the twin rules carry the digraph in the ending.
+    if (constraints.stemEndsWith === '{verbConsonant}') {
+        for (const digraph of ['gj', 'nj']) {
+            const {stemEndsWith: _drop, ...rest} = constraints;
+            add(id, {...rule, inflected: digraph + inflected, deinflected: digraph + deinflected, ...rest, stemMinLength: Math.max(0, (rest.stemMinLength ?? 0) - 1)});
+        }
+    }
 }
 
+// Prefix rules take no minimum stem: an empty remainder is never recorded
+// and a one-letter one reaches no headword, so a minimum would change nothing.
 function prefix(id, inflected, deinflected, conditionsIn, conditionsOut, extra = {}) {
-    add(id, {type: 'prefix', inflected, deinflected, conditionsIn, conditionsOut, ...extra});
+    const {stemMinLength: _ignored, ...rest} = extra;
+    add(id, {type: 'prefix', inflected, deinflected, conditionsIn, conditionsOut, ...rest});
 }
 
 function whole(id, inflected, deinflected, conditionsIn, conditionsOut) {
@@ -680,6 +691,9 @@ suffix('np-imp-2sg', 'hu', 'hem', IMP, V, {stemMinLength: 1, stemEndsWith: VJ});
 suffix('np-imp-2sg', 'hu', 'j', IMP, V, {stemMinLength: 1, stemEndsWith: VJ});
 suffix('np-imp-2sg', 'uhu', 'uaj', IMP, V, {stemMinLength: 1});
 suffix('np-imp-2sg', 'u', '', IMP, V, {stemMinLength: 2, stemEndsWith: VC});
+// After mos (do not), the non-active imperative is u and the active stem:
+// mos u shqetëso, mos u kthe → shqetësohem, kthehem (and the active verb).
+circumfix('np-imp-2sg', [['u ', '']], [['o', 'ohem'], ['o', 'oj'], ['e', 'ehem'], ['e', 'ej']], [], V, {stemMinLength: 2});
 suffix('np-imp-2pl', 'huni', 'hem', IMP, V, {stemMinLength: 1, stemEndsWith: VJ});
 suffix('np-imp-2pl', 'huni', 'j', IMP, V, {stemMinLength: 1, stemEndsWith: VJ});
 suffix('np-imp-2pl', 'uni', '', IMP, V, {stemMinLength: 2, stemEndsWith: VC});
