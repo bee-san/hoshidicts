@@ -88,9 +88,12 @@ V;V.MSDR;IPFV	1	ხრჩობა	იხრჩობა	v	*
 V;V.MSDR;PRF	1	მოკვლა	კლავს	v	*
 V;V.MSDR;PRF	1	დასწრება	ესწრება	v	*
 V;V.MSDR;PRF	1	დამთავრება	ამთავრებს	v	*
+V;V.MSDR;PRF	1	აშენება	აშენებს	v	*
 V;V.MSDR;IPFV	1	ჭმევა	აჭმევს	v	*
+V;V.MSDR;IPFV	1	ხუმრობა	ხუმრობს	v	*
 V;V.MSDR;PRF	1	დარჩენა	რჩება	v	*
 V;V.MSDR;PRF	1	აწონვა	წონის	v	*
+V;V.MSDR;IPFV	1	თამაშობა	თამაშობს	v	*
 V;V.MSDR;IPFV	1	წუხილი	წუხს	v	*
 V;V.MSDR;IPFV	1	სიმღერა	მღერის	v	*
 V;V.MSDR;PRF	1	შეცდომა	ცდება	v	*

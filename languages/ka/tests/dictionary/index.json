@@ -1,0 +1,10 @@
+{
+  "title": "hoshidicts ka test dictionary",
+  "format": 3,
+  "revision": "1",
+  "sequenced": true,
+  "author": "hoshidicts",
+  "description": "A tiny Georgian dictionary for languages/ka/tests/lookup.tsv, written for the pack (GPL-3.0-or-later). Lemma rows carry a part of speech; the form-of rows have none, as wiktionary-to-yomitan writes them.",
+  "sourceLanguage": "ka",
+  "targetLanguage": "en"
+}

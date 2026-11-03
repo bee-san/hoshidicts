@@ -371,10 +371,7 @@ V;ARGNO2S;COND	1	გაწითლდებოდი	წითლდება	v
 V;ARGNO3P;ARGAC2S;COND	1	დაგემალებოდნენ	ემალება	v	*
 V;ARGNO3P;COND	1	მოითმენდნენ	ითმენს	v	*
 V;V.MSDR;IPFV	1	ჭამა	ჭამს	v	*
-V;V.MSDR;PRF	1	აშენება	აშენებს	v	*
-V;V.MSDR;IPFV	1	ხუმრობა	ხუმრობს	v	*
 V;V.MSDR;IPFV	1	ყოფა	ყოფს	v	*
-V;V.MSDR;IPFV	1	თამაშობა	თამაშობს	v	*
 N;SG;VOC	1	მაგნიტოფონო	მაგნიტოფონი	n	*
 N;SG;ERG	1	შუამავალმა	შუამავალი	n	*
 N;SG;ERG	1	ფლორამ	ფლორა	n	*
