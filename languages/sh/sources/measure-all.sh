@@ -10,7 +10,9 @@
 # CACHE holds the inputs, none of them committed (README.md, Sources and
 # licences): wty-sh-en.zip and its import dict/wty-sh-en (hoshidicts-cli
 # import), hr_50k.txt, sr_50k.txt and bs_50k.txt, {srp,hrv,bos}_sentences.tsv.bz2,
-# texts/zlatarevo-zlato.txt and texts/sr-gutenberg.txt, and unimorph-hbs/hbs.
+# texts/zlatarevo-zlato.txt and texts/sr-gutenberg.txt (sources/gutenberg-text.py
+# writes it from texts/pg11291.txt, pg11292.txt and pg15008.txt), and
+# unimorph-hbs/hbs.
 # TAGGED, when set, is a second imported dictionary to measure with (a
 # labelled copy, such as sources/tag-all-rows.py writes).
 # FILTER=1 measures a copy of the pack with "untaggedTerms": "filter"
