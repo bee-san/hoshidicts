@@ -206,7 +206,12 @@ function shared(id, pairs, then, opts = {}) {
         // word has; the accent step takes only such forms, so it never moves
         // the accent of a word as written (κυρία is not κύρια).
         if (then === 'ante' && opts.keepsAccent) {
+            // The same ending on a stem without an accent (text in capitals,
+            // ΑΝΘΡΩΠΟΥ → ανθρωπου) is an ordinary ante reading.
+            t.rules.push({type: 'circumfix', prefixes: opts.prefixes ?? [['', '']], suffixes: unique, conditionsIn: opts.in ?? [], conditionsOut: out,
+                ...constraints({...opts, chars: '{unaccented}'})});
             suffixes = unique.map(([a, b]) => [a, acc(b)]);
+            more = {stemContains: ACCENTED};
         }
     } else if (then !== null && then.final !== undefined) {
         const bare = plain(then.final);
@@ -295,7 +300,7 @@ personTransforms('passive-dependent', 'passive dependent', 'Mediopassive perfect
 transform('passive-imperative-2sg', 'passive imperative (2nd sg)', 'Mediopassive imperative, second person singular: ντύσου, σκέψου, θυμήσου.');
 transform('passive-participle', 'passive participle', 'Perfect passive participle, as an adjective in -μένος: γραμμένος, αγορασμένος, αγαπημένος.');
 transform('internal-augment', 'internal augment', 'Past form of a compound verb with the augment ε inside it: επέστρεψα (επιστρέφω), κατέστρεψα, παρέδωσα, συνέλαβα.');
-transform('xana', 'ξανα- (again)', 'The prefix ξανα- (again): ξαναγράφω, ξανάγραψα → γράφω.');
+transform('ξανα-', 'ξανα-', 'The prefix ξανα- (again): ξαναγράφω, ξανάγραψα → γράφω.');
 
 const VERB = {out: ['v'], in: ['aug']};
 
@@ -325,7 +330,9 @@ for (const [p, endings] of Object.entries(PRESENT_ENDINGS)) {
 // Stems ending in a vowel add γ (άκουγα, έφταιγα, έκλαιγα).
 for (const [p, endings] of Object.entries(PAST_STRESSED)) {
     const pairs = endings.flatMap((e) => [[e, 'ω'], ['γ' + e, 'ω']]);
-    shared(`imperfect-${p}`, pairs, stemLast('ω'), {...VERB, stemContains: ACCENTED});
+    // Without the augment the stem has two syllables or more, the first
+    // accented (αγόραζ-α, όριζ-α), so μέσα is not μέσω.
+    shared(`imperfect-${p}`, pairs, stemLast('ω'), {...VERB, stemContains: ACCENTED, min: 4});
     // After an internal augment the stem has no accent: υπήρχε → υπαρχε → υπάρχω.
     shared(`imperfect-${p}`, pairs, stemLast('ω'), {...VERB, in: ['aug'], chars: '{unaccented}', min: 3});
     // After the augment the stem has a vowel (έγραφα), so ήταν is not τω.
@@ -375,7 +382,10 @@ for (const [aor, pres, only] of PERFECTIVE) {
     const vowelInStem = /[αεηιουω]/.test(aor) ? undefined : '{vowel}';
     const accentInStem = aor === acc(aor) ? ACCENTED : undefined;
     for (const [p, endings] of Object.entries(PAST_STRESSED)) {
-        shared(`aorist-${p}`, endings.map((e) => [aor + e, pres + 'ω']), stemLast('ω'), {...VERB, min: 2});
+        // Without the augment the accent is two vowels back, and a
+        // consonant-only ending follows the stem's last vowel: αγόρα-σα,
+        // κοίτα-ξα (μέσα is not μέσω).
+        shared(`aorist-${p}`, endings.map((e) => [aor + e, pres + 'ω']), stemLast('ω'), {...VERB, min: 2, stemEndsWith: vowelInStem ? '[αεηιουω]' : undefined});
         shared(`aorist-${p}`, endings.map((e) => [aor + e, pres + 'ω']), stemLast('ω'), {...VERB, prefixes: AUGMENTS, min: IRREGULAR_STEMS.has(aor) ? 0 : 1, stemContains: vowelInStem});
         shared(`aorist-${p}`, endings.map((e) => [aor + e, pres + 'ω']), stemLast('ω'), {...VERB, prefixes: BARE_AUGMENTS, min: 2, chars: '{unaccented}', stemContains: vowelInStem});
     }
@@ -610,10 +620,10 @@ const INTERNAL_AUGMENTS = [
 for (const [inf, def] of INTERNAL_AUGMENTS) {
     prefix('internal-augment', inf, def, {out: ['aug'], min: 2});
 }
-prefix('xana', 'ξανα', '', {min: 2});
-prefix('xana', 'ξανά', '', {min: 2});
+prefix('ξανα-', 'ξανα', '', {min: 2});
+prefix('ξανα-', 'ξανά', '', {min: 2});
 // A monosyllable loses its accent without the prefix: ξαναπώ → πω, ξαναδεί → δει.
-byId.get('xana').rules.push({type: 'prefix', inflected: 'ξανα', deinflected: '', conditionsIn: [], conditionsOut: [], stemMinLength: 2, stemCharacters: LETTERS,
+byId.get('ξανα-').rules.push({type: 'prefix', inflected: 'ξανα', deinflected: '', conditionsIn: [], conditionsOut: [], stemMinLength: 2, stemCharacters: LETTERS,
     then: [NFD, {strip: '[\\u0300-\\u036F]'}, NFC]});
 
 // Irregular verbs, written out.

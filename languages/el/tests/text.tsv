@@ -1,0 +1,32 @@
+# Source: written for this pack (GPL-3.0-or-later), no third-party data. Every optional processor is on.
+# category	valid	input	variant
+decapitalize	1	Έγραψα	έγραψα
+decapitalize	1	ΘΑΛΑΣΣΑ	θαλασσα
+decapitalize	1	ΟΔΟΣ	οδος
+decapitalize	1	ΑΘΗΝΑ	αθηνα
+capitalize	1	αθήνα	Αθήνα
+capitalize	1	ελλάδα	Ελλάδα
+double accent	1	πρόσωπό	πρόσωπο
+double accent	1	άνθρωπός	άνθρωπος
+double accent	1	αυτοκίνητό	αυτοκίνητο
+double accent	1	ναΰδριό	ναΰδριο
+polytonic	1	ἀνθρώπου	ανθρώπου
+polytonic	1	τοῦ	του
+polytonic	1	θεοῦ	θεού
+polytonic	1	ἔγραψα	έγραψα
+polytonic	1	τὸν	τον
+polytonic	1	καλὸς	καλός
+polytonic	1	ψυχῇ	ψυχή
+polytonic	1	ῥήτωρ	ρήτωρ
+apostrophe	1	απ’	απ'
+apostrophe	1	σ’αγαπώ	σ'αγαπώ
+apostrophe	1	δώσʼ	δώσ'
+missing accent	1	καλημερα	καλημέρα
+missing accent	1	θαλασσα	θάλασσα
+missing accent	1	εχω	έχω
+missing accent	1	ειναι	είναι
+missing accent	1	ΕΙΝΑΙ	είναι
+missing accent	1	ωρα	ώρα
+missing accent	1	ποιος	ποιός
+missing accent	0	γράφω	γραφώ
+double accent	0	παιδί	παιδ

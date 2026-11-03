@@ -1,0 +1,10 @@
+{
+  "title": "hoshidicts el test dictionary",
+  "format": 3,
+  "revision": "1",
+  "sequenced": false,
+  "author": "hoshidicts",
+  "description": "A tiny Modern Greek dictionary for languages/el/tests/lookup.tsv, written for the pack. Its nouns and adjectives carry the part-of-speech tags n and adj, which wty-el-en leaves out (README, Known gaps); its function words have none, and three form-of rows are written as wiktionary-to-yomitan writes them.",
+  "sourceLanguage": "el",
+  "targetLanguage": "en"
+}
