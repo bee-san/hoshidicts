@@ -325,6 +325,98 @@ def write_wrong(out, name, rows, key):
     return groups
 
 
+def eval_rows(path):
+    """The data rows of a test file, without its comment lines."""
+    return [line for line in open(path, encoding='utf-8').read().split('\n') if line and not line.startswith('#')]
+
+
+def cmd_eval(args):
+    """Measurements 1: eval-language on the sample (corpus.tsv with gaps.tsv),
+    cases.tsv, defaults.tsv and yomitan.tsv, for the own rules, Yomitan's, their
+    union (tools/merge-transforms.mjs) and the final set, with every option on
+    and with the pack's defaults (each file once without and once with the
+    `# options: default` line)."""
+    import tempfile
+    root = os.path.abspath(os.path.join(args.languages, '..'))
+    pack = os.path.join(args.languages, 'ga')
+    tmp = tempfile.mkdtemp(prefix='ga-eval-')
+    union = os.path.join(tmp, 'union.json')
+    subprocess.run([args.node, os.path.join(root, 'tools', 'merge-transforms.mjs'), 'ga', '--languages', args.languages, '--out', union],
+                   check=True, capture_output=True, text=True)
+    sets = [('own', os.path.join(pack, 'sources', 'own.json')), ('yomitan', os.path.join(pack, 'sources', 'yomitan.json')),
+            ('union', union), ('final', os.path.join(pack, 'transforms.json'))]
+    tests = os.path.join(pack, 'tests')
+    files = [('sample', eval_rows(os.path.join(tests, 'corpus.tsv')) + eval_rows(os.path.join(tests, 'gaps.tsv'))),
+             ('cases.tsv', eval_rows(os.path.join(tests, 'cases.tsv'))),
+             ('defaults.tsv', eval_rows(os.path.join(tests, 'defaults.tsv'))),
+             ('yomitan.tsv', eval_rows(os.path.join(tests, 'yomitan.tsv')))]
+    results = []
+    for mode in ('all', 'default'):
+        for name, rows in files:
+            path = os.path.join(tmp, f'{mode}-{name}')
+            with open(path, 'w', encoding='utf-8') as f:
+                f.write(('# options: default\n' if mode == 'default' else '') + '\n'.join(rows) + '\n')
+            for set_name, transforms in sets:
+                out = subprocess.run([args.cli, '--languages', args.languages, 'eval-language', 'ga', path, '--transforms', transforms,
+                                      '--dictionary', os.path.join(args.cache, 'wty-ga-en')], check=True, capture_output=True, text=True)
+                answer = json.loads(out.stdout)
+                results.append({'options': mode, 'file': name, 'rules': set_name, **answer})
+    with open(os.path.join(args.out, 'eval.jsonl'), 'w', encoding='utf-8') as f:
+        for r in results:
+            f.write(json.dumps(r, ensure_ascii=False) + '\n')
+    fmt = lambda v: '-' if v is None else (f'{v:.3f}' if isinstance(v, float) else str(v))
+    print('| Options | File | Rules | Rows | Recall | Negatives passed | False candidates | First rank |')
+    print('| --- | --- | --- | ---: | ---: | ---: | ---: | ---: |')
+    for r in results:
+        print(f"| {r['options']} | {r['file']} | {r['rules']} | {r['rows']} | {fmt(r['recall'])} | {fmt(r['negativesPassed'])} | "
+              f"{fmt(r.get('falseCandidates'))} | {fmt(r.get('firstRank'))} |")
+
+
+def cmd_dictpairs(args):
+    """Per-rule counts on the dictionary's own inflection pairs: every
+    single-word form-of row of wty-ga-en whose target is a single-word
+    headword with a definition, as a corpus (form → target, the row's part of
+    speech), run with eval-language --per-rule on the expanded final rules
+    (sources/build-own.mjs --expanded, with build-final's provenance)."""
+    import tempfile
+    tmp = tempfile.mkdtemp(prefix='ga-pairs-')
+    pairs = {}
+    lemma_rows = set()
+    banks = sorted(glob.glob(os.path.join(args.cache, 'wty-ga-en-banks', 'term_bank_*.json')))
+    for bank in banks:
+        for row in json.load(open(bank, encoding='utf-8')):
+            if any(not isinstance(d, list) for d in row[5]):
+                lemma_rows.add(row[0])
+    single = re.compile(f"^[{LETTERS}'-]+$")
+    for bank in banks:
+        for row in json.load(open(bank, encoding='utf-8')):
+            form, pos = row[0], row[3].split(' ')[0] if row[3] else '*'
+            if not single.match(form):
+                continue
+            for d in row[5]:
+                if isinstance(d, list) and len(d) == 2 and isinstance(d[0], str) and single.match(d[0]) and d[0] != form and d[0] in lemma_rows:
+                    pairs.setdefault((form, d[0], pos if pos in ('v', 'n', 'adj') else '*'), '/'.join(d[1]))
+    corpus = os.path.join(args.out, 'dictpairs.tsv')
+    with open(corpus, 'w', encoding='utf-8') as f:
+        f.write('# wty-ga-en form-of rows (form → target), single words; not committed.\n')
+        for (form, target, pos), label in sorted(pairs.items()):
+            f.write(f'{label.replace(chr(9), " ")}\t1\t{form}\t{target}\t{pos}\t*\n')
+    root = os.path.abspath(os.path.join(args.languages, '..'))
+    expanded = os.path.join(tmp, 'expanded.json')
+    subprocess.run([args.node, os.path.join(args.languages, 'ga', 'sources', 'build-own.mjs'), '--expanded', '--out', expanded],
+                   check=True, capture_output=True, text=True, cwd=root)
+    out = subprocess.run([args.cli, '--languages', args.languages, 'eval-language', 'ga', corpus, '--transforms', expanded, '--per-rule'],
+                         check=True, capture_output=True, text=True)
+    answer = json.loads(out.stdout)
+    with open(os.path.join(args.out, 'dictpairs-perrule.json'), 'w', encoding='utf-8') as f:
+        json.dump(answer, f, ensure_ascii=False)
+    by_transform = collections.Counter()
+    for r in answer['perRule']:
+        by_transform[r['transform']] += r['recovers']
+    print(json.dumps({'pairs': len(pairs), **{k: v for k, v in answer.items() if k != 'perRule'},
+                      'rows only one transform recovers, by transform': dict(by_transform.most_common())}, ensure_ascii=False, indent=1))
+
+
 def transform_ids(args):
     pack = json.load(open(os.path.join(args.languages, 'ga', 'transforms.json'), encoding='utf-8'))
     return {t['id'] for t in pack['transforms']}
@@ -451,18 +543,23 @@ def cmd_particles(args):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('command', choices=['frequent', 'realtext', 'particles'])
+    parser.add_argument('command', choices=['eval', 'dictpairs', 'frequent', 'realtext', 'particles'])
     parser.add_argument('--cache', required=True)
-    parser.add_argument('--batch', required=True, help='lookup-batch built from languages/en/sources/lookup-batch.cpp')
+    parser.add_argument('--batch', help='lookup-batch built from languages/en/sources/lookup-batch.cpp (frequent, realtext, particles)')
     here = os.path.dirname(os.path.abspath(__file__))
     root = os.path.abspath(os.path.join(here, '..', '..', '..'))
     parser.add_argument('--cli', default=os.path.join(root, 'build', 'hoshidicts-cli'))
+    parser.add_argument('--node', default='node')
     parser.add_argument('--languages', default=os.path.join(root, 'languages'))
     parser.add_argument('--top', type=int, default=10000)
     parser.add_argument('--out', default='.')
     args = parser.parse_args()
+    args.languages = os.path.abspath(args.languages)
     os.makedirs(args.out, exist_ok=True)
-    {'frequent': cmd_frequent, 'realtext': cmd_realtext, 'particles': cmd_particles}[args.command](args)
+    if args.command not in ('eval', 'dictpairs') and not args.batch:
+        parser.error(f'{args.command} needs --batch')
+    {'eval': cmd_eval, 'dictpairs': cmd_dictpairs, 'frequent': cmd_frequent, 'realtext': cmd_realtext,
+     'particles': cmd_particles}[args.command](args)
 
 
 if __name__ == '__main__':
