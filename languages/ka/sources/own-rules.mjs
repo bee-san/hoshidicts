@@ -320,6 +320,8 @@ transform('pres-2', '2nd person', 'Second person singular of the present or futu
 ]);
 transform('pres-1', 'person prefix, bare stem', 'A first-person subject (ვ-) or a first- or second-person object (მ-, გ-, გვ-) on the bare stem of a verb whose stem ends in its root, made third person (ვწერ → წერს, დავწერ → დაწერს, მიჭერ → იჭერს); and the second person of such a verb with the version vowel ი- (იჭერ → იჭერს).', [
     circumfix(PV.flatMap((p) => ['ვ', 'მ', 'გ', 'გვ'].map((m) => [p + m, p])), [['', 'ს']], [], VOUT, {stemMinLength: 2, stemEndsWith: CONS}),
+    circumfix(PV.flatMap((p) => ['ვ', 'მ', 'გ', 'გვ'].map((m) => [p + m, p + 'ს'])), [['', 'ს']], [], VOUT, {stemMinLength: 2, stemEndsWith: CONS, stemStartsWith: '[დთტძცწჭჩჯზ]'}),
+    circumfix(PV.flatMap((p) => ['ვ', 'მ', 'გ', 'გვ'].map((m) => [p + m, p + 'ჰ'])), [['', 'ს']], [], VOUT, {stemMinLength: 2, stemEndsWith: CONS, stemStartsWith: '[გკქყპფ]'}),
     circumfix(PV.map((p) => [p + 'ი', p + 'ი']), [['', 'ს']], [], VOUT, {stemMinLength: 2, stemEndsWith: '[რლნ]'}),
 ]);
 transform('pres-pl', '1st/2nd person plural', 'The -თ of the first and second person plural (ვაკეთებთ → ვაკეთებს, ვიმალებით → ვიმალება, უნდათ → უნდა).', [
@@ -356,7 +358,7 @@ transform('subj', 'subjunctive', 'Present and future subjunctive: -დე, -დ�
 const STRONG = {stemMinLength: 2, stemEndsWith: CONS, stemChange: {from: ['ე', 'ა'], to: '', occurrence: 'last', between: CONS}};
 transform('aor', 'aorist', 'Aorist (past), whose second person is also the imperative: -ე, -ა, -ო, -ეთ, -ეს, and -ი, -ით with a root vowel (დავწერე → დავწერს, გააკეთა → გააკეთებს, გაათბო → გაათბობს, გავჭერი → გავჭრის); of passives -ე, -ა, -ეთ, -ნენ, -ი, -ით and -დი, -და, -დით, -დნენ (დაიმალა → დაიმალება, გაწითლდა → გაწითლდება).', [
     ...['ე', 'ა', 'ეთ', 'ეს'].flatMap((e) => ACTIVE.map((t) => suffix(e, t, VIN, VOUT, {stemMinLength: 2, stemEndsWith: CONS}))),
-    ...['ებს', 'ობს'].map((t) => suffix('ო', t, VIN, VOUT, {stemMinLength: 2, stemEndsWith: CONS})),
+    ...['ებს', 'ობს', 'ოფს'].map((t) => suffix('ო', t, VIN, VOUT, {stemMinLength: 2, stemEndsWith: CONS})),
     ...['ი', 'ით'].flatMap((e) => ACTIVE.map((t) => suffix(e, t, VIN, VOUT, STRONG))),
     ...['ი', 'ით'].flatMap((e) => ['ავს', 'ამს', 'ებს'].map((t) => suffix(e, t, VIN, VOUT, {stemMinLength: 2, stemEndsWith: CONS}))),
     ...['ე', 'ა', 'ეთ', 'ეს'].map((e) => suffix(e, 'ს', VIN, VOUT, {stemMinLength: 2, stemEndsWith: CONS, stemChange: {from: ['ი'], to: 'ე', occurrence: 'last', between: CONS}})),
@@ -393,17 +395,20 @@ transform('inv-person', 'perfect, 1st/2nd person', 'A first- or second-person su
 ]);
 transform('perf', 'perfect', 'Perfect (evidential past), third person singular -უ-...-ია, made into the future (დაუწერია → დაწერს, გაუკეთებია → გააკეთებს, უთამაშია → ითამაშებს).', [
     circumfix(PV.map((p) => [p + 'უ', p]), ['ს', 'ავს', 'ამს', 'ის', 'ებს'].map((t) => ['ია', t]), VPERF, VOUT, {stemMinLength: 1, stemEndsWith: CONS}),
-    circumfix(PV.map((p) => [p + 'უ', p + 'ა']), [['ია', 'ს'], ['ია', 'ობს']], VPERF, VOUT, {stemMinLength: 1, stemEndsWith: CONS}),
+    circumfix(PV.map((p) => [p + 'უ', p + 'ა']), [['ია', 'ს'], ['ია', 'ობს'], ['ია', 'ებს']], VPERF, VOUT, {stemMinLength: 1, stemEndsWith: CONS}),
+    circumfix(PV.map((p) => [p + 'უ', p + 'უ']), [['ია', 'ს'], ['ია', 'ებს'], ['ია', 'ავს']], VPERF, VOUT, {stemMinLength: 1, stemEndsWith: CONS}),
     circumfix(PV.map((p) => [p + 'უ', p + 'ი']), [['ია', 'ებს']], VPERF, VOUT, {stemMinLength: 1, stemEndsWith: CONS}),
 ]);
 transform('pluperf', 'pluperfect', 'Pluperfect, third person singular -ე-...-ა (-ინა, -ო), made into the future (დაეწერა → დაწერს, გაეკეთებინა → გააკეთებს, გაეთბო → გაათბობს, ეთამაშა → ითამაშებს).', [
     circumfix(PV.map((p) => [p + 'ე', p]), [...['ს', 'ავს', 'ამს', 'ის'].map((t) => ['ა', t]), ['ო', 'ებს'], ['ინა', 'ს']], VPERF, VOUT, {stemMinLength: 1, stemEndsWith: CONS}),
     circumfix(PV.map((p) => [p + 'ე', p + 'ა']), [['ინა', 'ს'], ['ო', 'ობს']], VPERF, VOUT, {stemMinLength: 1, stemEndsWith: CONS}),
+    circumfix(PV.map((p) => [p + 'ე', p + 'უ']), [['ა', 'ებს'], ['ა', 'ს']], VPERF, VOUT, {stemMinLength: 1, stemEndsWith: CONS}),
     circumfix(PV.map((p) => [p + 'ე', p + 'ი']), [['ა', 'ებს']], VPERF, VOUT, {stemMinLength: 1, stemEndsWith: CONS}),
 ]);
 transform('perf-subj', 'perfect subjunctive', 'Perfect subjunctive, third person singular -ე-...-ოს (-ინოს, -ას), made into the future (დაეწეროს → დაწერს, გაეკეთებინოს → გააკეთებს).', [
     circumfix(PV.map((p) => [p + 'ე', p]), [...['ს', 'ავს', 'ამს', 'ებს'].map((t) => ['ოს', t]), ['ას', 'ის'], ['ინოს', 'ს']], VPERF, VOUT, {stemMinLength: 1, stemEndsWith: CONS}),
     circumfix(PV.map((p) => [p + 'ე', p + 'ა']), [['ინოს', 'ს'], ['ოს', 'ობს']], VPERF, VOUT, {stemMinLength: 1, stemEndsWith: CONS}),
+    circumfix(PV.map((p) => [p + 'ე', p + 'უ']), [['ას', 'ებს'], ['ოს', 'ს']], VPERF, VOUT, {stemMinLength: 1, stemEndsWith: CONS}),
     circumfix(PV.map((p) => [p + 'ე', p + 'ი']), [['ოს', 'ებს']], VPERF, VOUT, {stemMinLength: 1, stemEndsWith: CONS}),
 ]);
 // Intransitive (passive) verbs make the perfect series from the past
@@ -415,26 +420,37 @@ transform('perf-pass', 'perfect, intransitive', 'Perfect series of an intransiti
 ]);
 transform('ptcp-pass', 'past participle', 'The past participle of an intransitive verb made into its future (დამალული → დაიმალება, გაწითლებული → გაწითლდება).', [
     circumfix(PREVERBS.map((p) => [p, p + 'ი']), [['ული', 'ება']], ['vs', 'vp', 'adj'], VOUT, {stemMinLength: 2, stemEndsWith: CONS}),
-    circumfix(PREVERBS.map((p) => [p, p]), [['ებული', 'დება']], ['vs', 'vp', 'adj'], VOUT, {stemMinLength: 2, stemEndsWith: CONS}),
+    circumfix(PREVERBS.map((p) => [p, p]), [['ებული', 'დება'], ['ენილი', 'ება']], ['vs', 'vp', 'adj'], VOUT, {stemMinLength: 2, stemEndsWith: CONS}),
+    circumfix(PREVERBS.map((p) => [p, p + 'ი']), [['ებული', 'ება'], ['ილი', 'ება']], ['vs', 'vp', 'adj'], VOUT, {stemMinLength: 2, stemEndsWith: CONS}),
 ]);
 
 // Person markers at the front of the verb, after any preverb.
+// Without a preverb, the rest of the word has at least four letters, so
+// short words that start like a person marker (ვისი, მისი, მათ) are left
+// alone.
+const personMin = (p) => (p === '' ? 4 : 3);
 transform('subj-1', '1st person ვ-', 'The first-person subject marker ვ- (ვაკეთებ → აკეთებ, დავწერე → დაწერე), and before a verb with a third-person indirect object ს- or ჰ- (ვთხოვ → სთხოვ).', PV.flatMap((p) => [
-    prefix(p + 'ვ', p, ['vs'], ['v', 'vp'], {stemMinLength: 3}),
+    prefix(p + 'ვ', p, ['vs'], ['v', 'vp'], {stemMinLength: personMin(p)}),
     prefix(p + 'ვ', p + 'ს', ['vs'], ['v', 'vp'], {stemMinLength: 3, stemStartsWith: '[დთტძცწჭჩჯზ]'}),
     prefix(p + 'ვ', p + 'ჰ', ['vs'], ['v', 'vp'], {stemMinLength: 3, stemStartsWith: '[გკქყპფ]'}),
 ]));
 function objectRules(marker, extra = {}) {
     return PV.flatMap((p) => [
-        prefix(p + marker, p, ['vs'], ['v', 'vp'], {stemMinLength: 3, ...(p === '' ? extra : {})}),
+        prefix(p + marker, p, ['vs'], ['v', 'vp'], {stemMinLength: personMin(p), ...(p === '' ? extra : {})}),
         prefix(p + marker, p + 'ს', ['vs'], ['v', 'vp'], {stemMinLength: 3, stemStartsWith: '[დთტძცწჭჩჯზ]'}),
         prefix(p + marker, p + 'ჰ', ['vs'], ['v', 'vp'], {stemMinLength: 3, stemStartsWith: '[გკქყპფ]'}),
-        prefix(p + marker + 'ი', p + 'უ', ['vs'], ['v', 'vp'], {stemMinLength: 2}),
-        prefix(p + marker + 'ი', p + 'ი', ['vs'], ['v', 'vp'], {stemMinLength: 2}),
+        prefix(p + marker + 'ი', p + 'უ', ['vs'], ['v', 'vp'], {stemMinLength: personMin(p) - 1}),
+        prefix(p + marker + 'ი', p + 'ი', ['vs'], ['v', 'vp'], {stemMinLength: personMin(p) - 1}),
     ]);
 }
 transform('obj-1', '1st person object მ-', 'A first-person singular object or experiencer, made third person (მხატავს → ხატავს, მიყვარს → უყვარს, მომწონს → მოსწონს, მყავს → ჰყავს).', objectRules('მ'));
-transform('obj-2', '2nd person object გ-', 'A second-person object or experiencer, made third person (გხატავს → ხატავს, გიყვარს → უყვარს, გეშინია → ეშინია).', objectRules('გ', {stemNotStartsWith: '[ა]'}));
+// გ- before the version vowel ა- looks like the preverb გა-: after a stem
+// that starts like a first person, a version vowel or a preverb (გავიდა,
+// გაიგო, გადავიდა) it is the preverb.
+transform('obj-2', '2nd person object გ-', 'A second-person object or experiencer, made third person (გხატავს → ხატავს, გიყვარს → უყვარს, გეშინია → ეშინია, გაკეთებს → აკეთებს).', [
+    ...objectRules('გ', {stemNotStartsWith: '[ა]'}),
+    prefix('გა', 'ა', ['vs'], ['v', 'vp'], {stemMinLength: 2, stemNotStartsWith: '[ვიეუდმ]'}),
+]);
 transform('obj-1pl', '1st person plural object გვ-', 'A first-person plural object or experiencer, made third person (გვხატავს → ხატავს, გვიყვარს → უყვარს).', objectRules('გვ'));
 
 // The future is the present with a preverb; removing it gives the present,
@@ -444,7 +460,7 @@ transform('pv', 'future → present', 'A preverb removed: the future made into t
     circumfix(PREVERBS.map((p) => [p, '']), [['ს', 'ს']], VF_IN, VF, {stemMinLength: 3, stemEndsWith: '[ბვმრნლფ]'}),
     circumfix(PREVERBS.map((p) => [p, '']), [['ის', 'ის']], VF_IN, VF, {stemMinLength: 2, stemEndsWith: CONS}),
     circumfix(PREVERBS.map((p) => [p, '']), [['ება', 'ება'], ['ობა', 'ობა'], ['ევა', 'ევა']], VF_IN, VF, {stemMinLength: 2}),
-    circumfix([['ი', '']], [['ებს', 'ობს'], ['ებს', 'ავს'], ['ებს', 'ეობს'], ['ებს', 'ებს'], ['ებს', 'ს'], ['ავებს', 'ავს'], ['ავებს', 'აობს'], ['ის', 'ობს']], VF_IN, VF, {stemMinLength: 2}),
+    circumfix([['ი', '']], [['ებს', 'ობს'], ['ებს', 'ავს'], ['ებს', 'ეობს'], ['ებს', 'ებს'], ['ებს', 'ს'], ['ებს', 'ის'], ['ავებს', 'ავს'], ['ავებს', 'აობს'], ['ის', 'ობს']], VF_IN, VF, {stemMinLength: 2}),
     circumfix([['ი', 'ი']], [['ებს', 'ის']], VF_IN, VF, {stemMinLength: 2}),
 ]);
 
