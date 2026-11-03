@@ -211,7 +211,7 @@ const SEPARABLE = words(`
     劝架 放假 请假 休假 排队 插队 道歉 鞠躬 握手 招手 挥手 拍手 动手 分手
     插手 举手 撒手 放手 起床 丢脸 翻脸 上班 下班 加班 值班 换班 上学 放学 留学
     退学 逃学 看病 生病 治病 住院 出院 报名 签名 点名 录音 滑冰 溜冰 爬山
-    登山 上山 下山 花钱 赚钱 挣钱 借钱 还钱 付钱 换钱 找钱 存钱 取钱 收钱 交钱
+    登山 上山 下山 花钱 赚钱 挣钱 借钱 还钱 付钱 换钱 存钱 取钱 收钱 交钱
     省钱 出事 办事 闹事 惹事 下雨 下雪 刮风 吹风 上当 开玩笑 打招呼 打交道 出主意
     拿主意 打主意 占便宜 吃醋 吃亏 吃苦 受苦 吃惊 受惊 受罪 犯罪 赔罪 遭罪 点头
     摇头 带头 低头 回头 磕头 抬头 剃头 皱眉 耸肩 眨眼 睁眼 闭眼 瞪眼 张嘴 闭嘴
@@ -222,7 +222,7 @@ const SEPARABLE = words(`
     尽力 费力 使劲 费劲 起劲 走神 出神 分神 留神 加油 出汗 流汗 流血 出血 献血
     抽血 流泪 掉泪 受伤 冒险 辞职 任职 就职 打工 上工 开工 收工 罢工 当兵 当官
     做官 做生意 做梦 做主 作主 做操 作弊 做手术 动手术 化妆 整容 失踪 搁浅 洗礼 送礼
-    行礼 敬礼 分类 借火 发火 生火 点火 着火 开户 打赌 打折 充电 停电 享福 生根 出国
+    行礼 敬礼 分类 借火 发火 点火 着火 开户 打赌 打折 充电 停电 享福 生根 出国
     回国 吃素 告状 报案 破案 作案 保密 告密 泄密 发财 发言 发誓 发呆 发疯 发愁 发脾气
     发牢骚 发芽 接吻 鼓掌 拍戏 上台 下台 上岗 下岗 退休 入伍 参军 掌权 用心 用功
     吃苦头 拍马屁 吹牛 吹牛皮 走后门 开夜车 泼冷水 碰钉子 打哈欠 打喷嚏 打瞌睡 打官司
@@ -251,8 +251,11 @@ const HUI_VERBS = chars('学 教');
 
 // Characters after which 不C, 得C and 不了 do not make a potential form: the
 // adverbs, pronouns and nouns of time that came first through these rules on
-// Tatoeba (都不会, 我不去, 我得去, 天不下, 都不了解).
-const NOT_POTENTIAL = chars(`都 也 就 还 全 将 永 天 年 我 你 他 她 它 们 不 没 是 很 太 更 眼`);
+// Tatoeba and in Lu Xun's stories (都不会, 我不去, 我得去, 天不下, 再不见, 早不来,
+// 以不上), and the other adverbs that come before 不.
+const NOT_POTENTIAL = chars(`
+    都 也 就 还 全 将 永 天 年 我 你 他 她 它 们 不 没 是 很 太 更 眼 再 早 以 面 从 决 绝 并 毫
+    仍 尚 亦 皆 均 竟 怎 何 岂 偏 总 只 已 曾 正 刚 又 才 可`);
 // Before 得 also the characters that form a word with it (变得, 觉得, 值得).
 const NOT_POTENTIAL_DE = chars(`${NOT_POTENTIAL.join('')} 变 经 显 值 免 使 懂 觉 舍 晓 落 难 取 获 赢 博`);
 // The verbs before 不了 (做不了, 去不了, 解决不了): only after a verb is 不了 the
@@ -264,13 +267,14 @@ const LIAO_VERBS = chars(`
     懂 等 找 说 讲 听 看 想 进 出 回 上 下 起 离 赶 追 管 控 逃 躲 穿 搬 拿 抓 站 坐 走 拖 扛 挡 帮`);
 
 // Characters after which 儿 is not erhua but a word of its own (的儿子,
-// 我儿子, 一个儿子, 女儿, 婴儿, 儿童): function words, pronouns, numerals and
-// the words 儿 most often follows as 儿子, 儿女 or 儿童.
+// 我儿子, 一个儿子, 女儿, 婴儿, 儿童): function words, pronouns, numerals, the
+// words 儿 most often follows as 儿子, 儿女 or 儿童, and 莱 and 丽, after which
+// it writes the end of a foreign name (克莱儿 Claire, 爱丽儿 Ariel).
 const NOT_ERHUA = chars(`
     的 地 得 了 着 过 我 你 您 他 她 它 们 是 有 没 给 对 为 和 跟 与 在 把 被 让 叫 个
     两 一 二 三 四 五 六 七 八 九 十 几 生 养 大 小 女 男 孤 婴 幼 胎 健 宠 侄 孙 乳 少 新
     患 病 弃 混 托 育 合 理 现 道 吉 当 家 爱 宝 都 也 就 还 和 及 或 并 同 向 从 自 由 到
-    帮 教 救 送 要 想 去 来 让 请 叫 带 养 生 死 打 骂 疼 抱 怀 亲`);
+    帮 教 救 送 要 想 去 来 让 请 叫 带 养 生 死 打 骂 疼 抱 怀 亲 莱 丽`);
 
 // --- Rules ---------------------------------------------------------------------
 // The output of a rule names the part of speech of the dictionary form it
@@ -398,6 +402,10 @@ const named = (name, members) => {
 const INSERTED = `[${WORD_CHARS}${NUMERALS}]{1,6}`;
 const INSERTED_BEFORE_MEASURE = `[${WORD_CHARS}${NUMERALS}]{0,5}[${WORD_CHARS}]`;
 const MEASURE_OBJECTS = new Set(t('口门年天次场顿把张本头节份件首支根盒包瓶期段番声眼步身个下'));
+// Characters that may not stand right before an object, because with it they
+// make another word or a measure word with its noun (见下面, 见过大场面, 碰那面
+// 镜子).
+const NOT_BEFORE = new Map([...spellings('面')].map((o) => [o, t('这那上下场')]));
 const ADJ = `[${t('好小白')}]|${spellings('大学').join('|')}`;
 const OTHER_DE = `[^的]*[^${t('我你您他她它咱谁们己家人年天月周时钟头个次')}的]的`;
 const COMMON = `的|${ADJ}|${OTHER_DE}`;
@@ -428,13 +436,20 @@ for (const [kind, list] of [['separable', SEPARABLE], ['compositional', COMPOSIT
     }
 }
 const escape = (s) => s.replace(/[\\^$.*+?()[\]{}|/]/gu, '\\$&');
+function insertedBefore(object) {
+    if (NOT_BEFORE.has(object)) {
+        const last = [...WORD_CHARS].filter((c) => !NOT_BEFORE.get(object).includes(c)).join('');
+        return `[${WORD_CHARS}${NUMERALS}]{0,5}[${last}${NUMERALS}]`;
+    }
+    return MEASURE_OBJECTS.has(object) ? INSERTED_BEFORE_MEASURE : INSERTED;
+}
 transforms.push(transform('separable', 'separated verb-object', 'A verb-object compound with words between the verb and its object: 洗了个澡 → 洗澡, 生他的气 → 生气.',
     [...byObject].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)).map(([object, groups]) => {
         const alternatives = [...groups].sort(([a], [b]) => (a < b ? -1 : 1))
             .map(([key, verbs]) => `(${[...verbs].sort().map(escape).join('|')})${AFTER[key]}`);
         return {
             type: 'pattern',
-            pattern: `^(?!.(?:${COMMON}))(?:${alternatives.join('|')})${MEASURE_OBJECTS.has(object) ? INSERTED_BEFORE_MEASURE : INSERTED}${escape(object)}$`,
+            pattern: `^(?!.(?:${COMMON}))(?:${alternatives.join('|')})${insertedBefore(object)}${escape(object)}$`,
             replacement: `${alternatives.map((_, i) => `$${i + 1}`).join('')}${object}`,
             anchorSuffix: object,
             ...V,

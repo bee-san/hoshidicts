@@ -13,8 +13,8 @@
     "bopomofo": "[\\u3100-\\u312F\\u31A0-\\u31BF]",
     "ideographicMark": "[\\u3005\\u3007\\u303B]",
     "word": "[{han}{radical}{ideographicMark}A-Za-z0-9\\uFF10-\\uFF19\\uFF21-\\uFF3A\\uFF41-\\uFF5A]",
-    "zhNotPotential": "[都也就还還全将將永天年我你妳他她它牠们們不没沒是很太更眼得]",
-    "zhNotPotentialDe": "[都也就还還全将將永天年我你妳他她它牠们們不没沒是很太更眼变變经經显顯值免使懂觉覺舍捨晓曉落难難取获獲穫赢贏博得]"
+    "zhNotPotential": "[都也就还還全将將永天年我你妳他她它牠们們不没沒是很太更眼再早以面麵从從决決绝絕并並併竝毫仍尚亦皆均竟怎何岂豈偏总總只祇隻已曾正刚剛又才可得]",
+    "zhNotPotentialDe": "[都也就还還全将將永天年我你妳他她它牠们們不没沒是很太更眼再早以面麵从從决決绝絕并並併竝毫仍尚亦皆均竟怎何岂豈偏总總只祇隻已曾正刚剛又才可变變经經显顯值免使懂觉覺舍捨晓曉落难難取获獲穫赢贏博得]"
   },
   "text": {
     "pattern": "[{han}{radical}{bopomofo}{ideographicMark}]",

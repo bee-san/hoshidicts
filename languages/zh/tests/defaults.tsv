@@ -80,6 +80,7 @@ separable	1	睡不着觉	睡觉	*	separable
 separable	1	帮个忙	帮忙	*	separable
 separable	1	幫我一個忙	幫忙	*	separable
 separable	1	见过几次面	见面	*	separable
+separable	1	见一面	见面	*	separable
 separable	1	住了两天院	住院	*	separable
 separable	1	结了婚	结婚	*	separable
 separable	1	上了他的当	上当	*	separable
@@ -130,6 +131,9 @@ negatives	0	说的话	说话	*	*
 negatives	0	说过的话	说话	*	*
 negatives	0	写了的信	写信	*	*
 negatives	0	點三十分的火	點火	*	*
+negatives	0	见下面	见面	*	*
+negatives	0	碰那面	碰面	*	*
+negatives	0	见过大场面	见面	*	*
 # An adjective right after the verb modifies a longer noun.
 negatives	0	上大学	上学	*	*
 negatives	0	上小学	上学	*	*
@@ -159,6 +163,8 @@ negatives	0	他不来	他来	*	*
 negatives	0	天不下	天下	*	*
 negatives	0	都不来	都来	*	*
 negatives	0	眼不见	眼见	*	*
+negatives	0	再不见	再见	*	*
+negatives	0	早不来	早来	*	*
 negatives	0	我得去	我去	*	*
 negatives	0	变得通	变通	*	*
 negatives	0	经得过	经过	*	*
@@ -179,6 +185,7 @@ negatives	0	女儿	女	*	*
 negatives	0	一个儿	一个	*	*
 negatives	0	婴儿	婴	*	*
 negatives	0	教育儿	教育	*	*
+negatives	0	克萊兒	克萊	*	*
 # A-not-A: only listed words, and only the whole text.
 negatives	0	得不得了	得了	*	*
 negatives	0	会不会同	会同	*	*

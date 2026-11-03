@@ -11,7 +11,9 @@
 hovers: what a host looks up when the pointer is on each Han character of a
 text, scanStart "cursor": the text from that character to the end of its
 sentence (。！？!?… and line ends), at most 32 code points. --tatoeba reads
-Tatoeba's sentences.tsv format (id, lang, text).
+Tatoeba's sentences.tsv format (id, lang, text); --gutenberg a Project
+Gutenberg text, whose wrapped lines it joins (Chinese joins lines without a
+space).
 
 compare: looks every hover text up with build/zh-lookup-batch twice, with the
 pack of --base (default: a copy of languages/ without rules, transforms
@@ -96,9 +98,31 @@ def first(result):
     return result['results'][0] if result['results'] else None
 
 
+def gutenberg_lines(text):
+    """The body of a Project Gutenberg text, its wrapped lines joined: one line
+    per paragraph, a paragraph ending at a blank line before an indented line
+    or at a line that ends a sentence."""
+    start = text.find('*** START')
+    end = text.find('*** END')
+    body = text[text.find('\n', start) + 1:end]
+    out = []
+    for line in body.split('\n'):
+        line = line.strip()
+        if not line:
+            continue
+        out.append(line)
+    joined = ''.join(out)
+    return re.split(r'(?<=[。！？!?…])', joined)
+
+
 def cmd_hovers(args):
     with open(args.text, encoding='utf-8') as f:
-        lines = (l.split('\t')[2] for l in f) if args.tatoeba else f
+        if args.gutenberg:
+            lines = gutenberg_lines(f.read())
+        elif args.tatoeba:
+            lines = (l.split('\t')[2] for l in f)
+        else:
+            lines = f
         for h in hovers(lines):
             print(h)
 
@@ -175,6 +199,7 @@ def main():
     p = sub.add_parser('hovers')
     p.add_argument('text')
     p.add_argument('--tatoeba', action='store_true')
+    p.add_argument('--gutenberg', action='store_true')
     for name in ('compare', 'frequent'):
         p = sub.add_parser(name)
         p.add_argument('--dictionary', required=True)
