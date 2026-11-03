@@ -58,5 +58,22 @@
   ["letzte", "", "adj", "adj", 0, ["last"], 57, ""],
   ["Letzt", "", "n", "n", 0, ["(only in zu guter Letzt) end"], 58, ""],
   ["anlächelnd", "", "non-lemma", "v", 0, [["anlächeln", ["present participle"]]], 59, ""],
-  ["gehört", "", "non-lemma", "v", 0, [["gehören", ["third-person singular present"]], ["hören", ["past participle"]]], 60, ""]
+  ["gehört", "", "non-lemma", "v", 0, [["gehören", ["third-person singular present"]], ["hören", ["past participle"]]], 60, ""],
+  ["letzen", "", "v", "v", 0, ["(archaic) to refresh"], 61, ""],
+  ["kosten", "", "v", "v", 0, ["to cost"], 62, ""],
+  ["kosen", "", "v", "v", 0, ["to caress"], 63, ""],
+  ["gewarten", "", "v", "v", 0, ["(archaic) to expect"], 64, ""],
+  ["berühmt", "", "adj", "adj", 0, ["famous"], 65, ""],
+  ["berühmen", "", "v", "v", 0, ["(rare) to praise"], 66, ""],
+  ["schönen", "", "v", "v", 0, ["to gloss over"], 67, ""],
+  ["lieb", "", "adj", "adj", 0, ["dear"], 68, ""],
+  ["besser", "", "adj", "adj", 0, ["better"], 69, ""],
+  ["bessern", "", "v", "v", 0, ["to improve"], 70, ""],
+  ["schalten", "", "v", "v", 0, ["to switch"], 71, ""],
+  ["schelten", "", "v", "v", 0, ["to scold"], 72, ""],
+  ["zuhören", "", "v", "v", 0, ["to listen"], 73, ""],
+  ["zugehören", "", "v", "v", 0, ["to belong to"], 74, ""],
+  ["dunkel", "", "adj", "adj", 0, ["dark"], 75, ""],
+  ["dunkeln", "", "v", "v", 0, ["to darken"], 76, ""],
+  ["lieben", "", "v", "v", 0, ["to love"], 77, ""]
 ]

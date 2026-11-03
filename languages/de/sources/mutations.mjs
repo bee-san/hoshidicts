@@ -95,7 +95,23 @@ const MUTATIONS = {
         const at = t.transforms.findIndex((x) => x.id === 'dative-plural') + 1;
         t.transforms.splice(at, 0, ...moved);
     },
-    'e-adjective endings written with the e': (t) => { for (const r of rules(t, 'declined', (x) => x.type === 'suffix' && x.deinflected === 'e' && ['en', 'er', 'es', 'em'].includes(x.inflected))) { r.inflected = r.inflected.slice(1); r.deinflected = ''; r.stemEndsWith = '[e]'; } },
+    'adjectives before verbs': (t) => {
+        const ids = ['declined', 'comparative', 'superlative'];
+        const moved = t.transforms.filter((x) => ids.includes(x.id));
+        t.transforms = t.transforms.filter((x) => !ids.includes(x.id));
+        const at = t.transforms.findIndex((x) => x.id === 'separated-prefix') + 1;
+        t.transforms.splice(at, 0, ...moved);
+    },
+    'declined ten -> te': (t) => { const x = byId(t, 'declined'); x.rules = x.rules.filter((r) => !(r.type === 'suffix' && r.inflected === 'ten' && r.deinflected === 'te')); },
+    'declined ere -> er': (t) => { const x = byId(t, 'declined'); x.rules = x.rules.filter((r) => !(r.type === 'suffix' && r.inflected === 'ere' && r.deinflected === 'er')); },
+    'listed -t adjectives': (t) => { for (const r of rules(t, 'declined', (x) => x.type === 'circumfix')) { r.suffixes = r.suffixes.filter(([inflected]) => !/^(bekannt|berühmt|bestimmt|doppelt|kompliziert|recht|verdammt|verfickt|verrückt)/u.test(inflected)); } },
+    'listed present (ich) of frequent verbs': (t) => { for (const r of rules(t, 'present-ich', (x) => x.type === 'circumfix')) { r.suffixes = r.suffixes.filter(([inflected]) => !['bereite', 'heiße', 'lasse', 'leide', 'liebe', 'schicke', 'wette'].includes(inflected)); } },
+    'present of t stems (tet, test)': (t) => {
+        for (const id of ['present-er', 'present-du']) { const x = byId(t, id); x.rules = x.rules.filter((r) => !(r.type === 'suffix' && ['tet', 'test'].includes(r.inflected) && r.deinflected === 'ten')); }
+    },
+    'present-er: not gewart, gewar': (t) => { for (const r of byId(t, 'present-er').rules) { if (['gewart', 'gewar'].includes(r.stemNotStartsWithText)) { delete r.stemNotStartsWithText; } } },
+    'present-er: not zugehör': (t) => { for (const r of byId(t, 'present-er').rules) { if (r.stemNotStartsWithText === 'zugehör') { delete r.stemNotStartsWithText; } } },
+    'listed present of schalten': (t) => { for (const id of ['present-er', 'present-du']) { for (const r of byId(t, id).rules) { if (r.suffixes !== undefined) { r.suffixes = r.suffixes.filter(([, lemma]) => lemma !== 'schalten'); } } } },
     'dropped e of -eren and -erem': (t) => { const x = byId(t, 'declined'); x.rules = x.rules.filter((r) => !(r.type === 'suffix' && ['ern', 'erm'].includes(r.inflected) && r.deinflected === 'er')); },
     'old spellings of listed verb forms': (t) => {
         for (const r of listedVerbRules(t)) {

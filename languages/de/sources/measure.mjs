@@ -13,6 +13,7 @@
 //   node languages/de/sources/measure.mjs diff <inputs dir> <unimorph deu> <dictionary> <name> <a.json> <b.json> [--batch <lookup-batch>] [--show N]
 //   node languages/de/sources/measure.mjs capitals <inputs dir> <unimorph deu> <dictionary> <transforms.json> [--batch <lookup-batch>]
 //   node languages/de/sources/measure.mjs separated <inputs dir> <unimorph deu> <dictionary>
+//   node languages/de/sources/measure.mjs rare <inputs dir> <unimorph deu> <dictionary> <transforms.json>... [--batch <lookup-batch>] [--show N]
 //
 // <inputs dir> is what sources/measure-inputs.py writes and <dictionary> the
 // same dictionary imported by hoshidicts-cli import. A word's lemmas are the
@@ -64,6 +65,14 @@
 //   result with a definition for the whole word is wrong when it is not one
 //   of the word's lemmas and its trace has a rule of the pack (Alles -> All,
 //   the universe); counted with the share of the list's tokens.
+// rare: a stricter judge for the frequent words. A word's first result with
+//   a definition counts as one of its lemmas above even when it is a rare
+//   homograph (letzten is also the past of the rare verb letzen). Here the
+//   first result is flagged when a rule of the pack reached it and another
+//   result for the whole word is one of the word's lemmas at least 20 times
+//   as frequent as it, the frequency of a lemma being that of its spelling
+//   in the frequency list (FrequencyWords counts every word form, so this is
+//   a rough measure: letzte 34,029, letzen absent).
 // capitals: the hovers of the four texts whose word is written in capitals
 //   (two or more letters), looked up with the pack and with a copy of the
 //   pack without the capitalizeWord processor; prints the first results
@@ -222,6 +231,45 @@ if (mode === 'frequent') {
         console.log(`${file}: ${words.length} frequent words written in small letters, looked up with a capital letter; the first entry with a definition is a wrong reading of a rule for ${wrong} (${share(wrongTokens)}), and another wrong entry (the capitalized word's own entry or form-of row) for ${dictionaryWrong} (${share(dictionaryTokens)})`);
         for (const example of examples) { console.log(`   rule: ${example}`); }
         for (const example of dictionaryExamples) { console.log(`   dictionary: ${example}`); }
+    }
+} else if (mode === 'rare') {
+    const all = lines(join(inputs, 'frequent.tsv'));
+    const words = all.map(([, count, cased]) => [cased, count]);
+    const total = all.reduce((n, [, c]) => n + Number(c), 0);
+    const counts = new Map();
+    for (const line of readFileSync(join(dirname(inputs), 'inputs', 'frequent.tsv'), 'utf8').split('\n')) {
+        const [word, count] = line.split('\t');
+        if (word) { counts.set(word, Number(count)); }
+    }
+    // The whole list (50,000 words) gives the lemma frequencies, when it is there.
+    const fullList = join(inputs, 'frequency-full.tsv');
+    try {
+        for (const line of readFileSync(fullList, 'utf8').split('\n')) {
+            const [word, count] = line.split(' ');
+            if (word) { counts.set(word, Number(count)); }
+        }
+    } catch { /* only the 10,000 words */ }
+    const frequency = (expression) => counts.get(lower(expression)) ?? 0;
+    for (const file of rest) {
+        let flagged = 0, flaggedTokens = 0;
+        const examples = [];
+        await lookups(file, Readable.from([`${words.map(([w]) => w).join('\n')}\n`]), (i, results) => {
+            const [word, count] = words[i];
+            const defs = results.filter((r) => !r.formOf && lower(r.matched) === lower(word));
+            if (defs.length === 0 || !defs[0].dictionary.some((d) => !d)) { return; }
+            const first = defs[0];
+            const ok = lemmasOf(word);
+            const better = defs.slice(1).filter((r) => ok.has(r.expression) && r.expression !== first.expression)
+                .sort((a, b) => frequency(b.expression) - frequency(a.expression))[0];
+            if (better === undefined || frequency(better.expression) < 20 * Math.max(frequency(first.expression), 1)) { return; }
+            ++flagged;
+            flaggedTokens += Number(count);
+            if (examples.length < show) {
+                examples.push(`${word} (${count}): ${first.expression}[${first.trace.join(',')}] (${frequency(first.expression)}) before ${better.expression}[${better.trace.join(',')}] (${frequency(better.expression)})`);
+            }
+        });
+        console.log(`${file}: of the 10,000 frequent words, ${flagged} (${(100 * flaggedTokens / total).toFixed(2)}% of the list's tokens) show a rule's reading first whose lemma is at least 20 times rarer than another of the word's lemmas among the results`);
+        for (const example of examples) { console.log(`   ${example}`); }
     }
 } else if (mode === 'capitals') {
     const [file] = rest;

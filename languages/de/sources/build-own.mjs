@@ -421,8 +421,16 @@ suffix('present-du', 'st', 'en', FINITE_IN, VERB_OUT, {...MIN2, stemNotEndsWith:
 suffix('present-du', 'est', 'en', FINITE_IN, VERB_OUT, DTMN);
 suffix('present-du', 'elst', 'eln', FINITE_IN, VERB_OUT, MIN2);
 suffix('present-du', 'erst', 'ern', FINITE_IN, VERB_OUT, MIN2);
-suffix('present-er', 't', 'en', FINITE_IN, VERB_OUT, MIN2);
-suffix('present-er', 'et', 'en', FINITE_IN, VERB_OUT, DTMN);
+// zugehört and gewartet are participles of zuhören and warten far more often
+// than the present of zugehören and of the archaic gewarten.
+suffix('present-er', 't', 'en', FINITE_IN, VERB_OUT, {...MIN2, stemNotStartsWithText: 'zugehör'});
+suffix('present-er', 'et', 'en', FINITE_IN, VERB_OUT, {...DTMN, stemNotStartsWithText: 'gewart'});
+// The present of a verb whose stem ends in t (du kostest, er kostet) is spelled
+// like the past of a verb without the t (kosen: du kostest, ihr kostet). These
+// rules match those letters too, so the present, whose transforms come first,
+// is found first.
+suffix('present-du', 'test', 'ten', FINITE_IN, VERB_OUT, MIN2);
+suffix('present-er', 'tet', 'ten', FINITE_IN, VERB_OUT, {...MIN2, stemNotStartsWithText: 'gewar'});
 suffix('present-er', 'elt', 'eln', FINITE_IN, VERB_OUT, MIN2);
 suffix('present-er', 'ert', 'ern', FINITE_IN, VERB_OUT, MIN2);
 // imperative without -e: not after d or t (warte!, arbeite! keep the -e,
@@ -463,6 +471,19 @@ for (const [id, inflected] of [['present-du', 'iest'], ['present-er', 'iet'], ['
     suffix(id, inflected, 'ien', FINITE_IN, VERB_OUT, {stemMinLength: 1, stemStartsWith: LOWER});
 }
 suffix('past-participle', 'iet', 'ien', ['adj'], VERB_OUT, {stemStartsWith: LOWER, stemChange: GE});
+
+// Present (ich) forms that are more frequent than the adjective of the same
+// spelling (Ich liebe dich, ich lasse, ich heiße, ich wette, ich schicke, ich
+// leide, ich bereite): listed, so that they are found before the adjective
+// (lieb, lass, heiß, wett, schick, leid, bereit), whose transform comes first.
+for (const verb of ['bereiten', 'heißen', 'lassen', 'leiden', 'lieben', 'schicken', 'wetten']) {
+    form('present-ich', verb.slice(0, -1), verb, FINITE_IN, VERB_OUT);
+}
+// schelten's past (ihr schaltet, du schaltest) is spelled like the present of
+// the far more frequent schalten: schalten's forms are listed too, so that,
+// with the present before the past, schalten is found first.
+form('present-er', 'schaltet', 'schalten', FINITE_IN, VERB_OUT);
+form('present-du', 'schaltest', 'schalten', FINITE_IN, VERB_OUT);
 
 // Strong verbs.
 const SIBILANT_OR_DENTAL = /[dtsßzx]$|sch$/u;
@@ -642,11 +663,25 @@ for (const end of ['e', 'en', 'er', 'es', 'em']) {
     suffix('declined', `r${end}`, 'er', [], ADJ_OUT, {...MIN2, stemEndsWith: '[u]'});  // teure -> teuer
     form('declined', `hoh${end}`, 'hoch', [], ADJ_OUT);
     if (end !== 'e') {
-        // An adjective that ends in e (leise, zehnte, oberste): the ending is
-        // written with that e, so that it is as long as the noun plural's -en
-        // and is found first (zehnten is zehnte, not the plural of Zehnt).
-        suffix('declined', end, 'e', [], ADJ_OUT, {...MIN2, stemMinLength: 2});  // leisen -> leise
+        suffix('declined', end.slice(1), '', [], ADJ_OUT, {...MIN2, stemMinLength: 3, stemEndsWith: '[e]'});  // leisen -> leise
     }
+}
+// An adjective in -te or -er with its ending is spelled like a verb form whose
+// ending begins with that letter (letzten: letzte + n, or letzen + ten;
+// sichere: sicher + e, or sichern + e, which the present (ich) rule reads as
+// sich + ere). These rules match the same letters as
+// the verb rules, so the two readings tie on the ending too, and the
+// adjective, whose transform comes first, is found first.
+suffix('declined', 'ten', 'te', [], ADJ_OUT, MIN2);
+suffix('declined', 'ere', 'er', [], ADJ_OUT, MIN2);  // bessere, sichere: present (ich) ere → ern
+// Adjectives in -t whose declined forms are spelled like the past of a rare
+// verb (berühmte: berühmt + e, or berühmen + te; verrückte, verdammte;
+// bekannte, the past of bekennen): their forms are listed, so the adjective
+// is found first. For participles of
+// common verbs (erklärte, versteckte, passierte) the past is as frequent as
+// the adjective in the texts of README.md, and the verb comes first.
+for (const adjective of ['bekannt', 'berühmt', 'bestimmt', 'doppelt', 'kompliziert', 'recht', 'verdammt', 'verfickt', 'verrückt']) {
+    for (const end of ['e', 'en', 'er', 'es', 'em']) { form('declined', `${adjective}${end}`, adjective, [], ADJ_OUT); }
 }
 // Older and literary texts drop the e of an ending after -er (einem ältern
 // Greis, die höhern Beamten, des andern): -ern and -erm are -eren and -erem.
@@ -778,6 +813,12 @@ for (const [form, preposition] of [
 suffix('clitic-es', "'s", '', [], [], MIN2);
 
 writeListed();
+// The adjective transforms come first: where a word in small letters is read
+// as an adjective and as a verb or noun with the same cost and the same
+// ending (weiße: weiß or weißen, schnelle: schnell or schnellen), the
+// adjective is found first and wins the tie (docs/languages.md 9.6).
+const ADJECTIVES = ['declined', 'comparative', 'superlative'];
+transforms.sort((a, b) => Number(!ADJECTIVES.includes(a.id)) - Number(!ADJECTIVES.includes(b.id)));
 const file = join(here, 'own.json');
 const out = {schema: 1, conditions, transforms};
 writeFileSync(file, formatTransforms(out));
