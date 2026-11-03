@@ -1,0 +1,8 @@
+# Known failures: reported, not enforced (docs/languages.md 12.2).
+# Rows whose category ends in (frequent) or (any) are the sampled rows of corpus.tsv the final rules do not reach;
+# see corpus.tsv for their source and licence. The others are hand-written (README.md, Known gaps).
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+compound	1	duonvoĉe	voĉo	n	*
+compound	1	laborenspezon	enspezo	n	*
+compound	1	vizaĝesprimo	esprimo	n	*
+adjective (plural) (frequent)	1	Usonaj	Usona	adj	*

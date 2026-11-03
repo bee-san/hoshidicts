@@ -1,0 +1,603 @@
+# Esperanto (`eo`)
+
+Deinflection rules, text processors and scanning settings for Esperanto.
+Lookups start at the hovered word and try only prefixes that end at a word
+boundary (`word` / `word` / `spaces`, docs/languages.md 14.1).
+
+- **Words.** Letters, combining marks, digits and the apostrophes `'`, `’`
+  and `ʼ` make up a word, so the elided forms *dank'* and *l'* and names such
+  as *Tolstoj'n* are one word. Hyphens separate words.
+- **Processors**, in order:
+  - `normalizeUnicode`: NFC, replacing the text (`keepInput: false`), so a
+    *ĉ* typed as *c* + U+0302 is looked up as *ĉ*;
+  - `normalizeApostrophes`: `’` and `ʼ` as `'`;
+  - `removeQuotes`: apostrophes used as quotation marks removed, at the start
+    and after two letters at the end (*'Ĉu* → *Ĉu*), so the elided *l'* keeps
+    its apostrophe;
+  - `elision`: the elided *-o* of a noun written back after two letters
+    (*dank'* → *danko*, *kor'* → *koro*). It is a processor, not a rule, so
+    that a word before a closing quote and the elided noun cost the same
+    step and the word comes first (*'Trinku min'*: *min*, then *mino*);
+  - `xSystem`: the x-system (*cxu* → *ĉu*, *auxdis* → *aŭdis*), always on,
+    replacing the text (`keepInput: false`): *x* is not an Esperanto letter.
+    With the text as written kept beside its conversion, the rules read it
+    unconverted, and wty-eo-en's x-system rows made the root's reading come
+    first: *malfelicxa* (unhappy) showed *feliĉa* (happy), through *mal-* and
+    the row *felicxa* → *feliĉa* (the second audit's MAJOR finding;
+    Measurements, item 4);
+  - `hSystem`: Zamenhof's h-system (*ch*, *gh*, *hh*, *jh*, *sh*, *au* and *eu*
+    → *ĉ*, *ĝ*, *ĥ*, *ĵ*, *ŝ*, *aŭ*, *eŭ*), off unless the `hSystem` setting
+    turns it on, because these letters also occur in ordinary words
+    (*flughaveno*: *flug* + *haveno*);
+  - `decapitalize` and `capitalizeFirstLetter`: Yomitan's capitalisation
+    processors.
+- **Settings.** `hSystem` (above) and `otherWordClasses`, which turns on the
+  optional transform `otherWordClass` (Rule provenance).
+
+## Sources and licences
+
+- `sources/own.json` and every rule of `transforms.json` with source `own` or
+  `both`: written for this pack (GPL-3.0-or-later) by
+  `sources/build-own.mjs`, from the standard description of Esperanto
+  grammar: the *Fundamento de Esperanto* (1905), Kalocsay and Waringhien's
+  *Plena Analiza Gramatiko de Esperanto*, and Wiktionary's Esperanto
+  inflection tables. No text or table is copied from them. The first commit
+  of the pack, `eo: own rules`, has them as written before Yomitan's
+  Esperanto file was read.
+- `sources/yomitan.json` and every rule with source `yomitan`: Yomitan's
+  Esperanto rules,
+  [`ext/js/language/eo/esperanto-transforms.js` at d3c54c1](https://github.com/yomidevs/yomitan/blob/d3c54c10264673eca0d66b970ef74cd5c8b048e3/ext/js/language/eo/esperanto-transforms.js),
+  ported by `tools/port-yomitan-transforms.mjs` (24 transforms, 24 literal
+  rules, no `todo`). The processors `decapitalize` and
+  `capitalizeFirstLetter` are Yomitan's `capitalizationPreprocessors`
+  (`ext/js/language/text-processors.js`), Yomitan's only processors for
+  Esperanto. GPL-3.0-or-later, Copyright (C) 2024-2026 Yomitan Authors.
+- `tests/yomitan.tsv`: Yomitan's
+  [Esperanto transform test](https://github.com/yomidevs/yomitan/blob/d3c54c10264673eca0d66b970ef74cd5c8b048e3/test/language/esperanto-transforms.test.js)
+  (24 cases), converted by `tools/port-yomitan-tests.mjs`; its reasons are
+  set to `*` by `sources/build-final.mjs`, because the final rules reach most
+  of those lemmas through own transforms. GPL-3.0-or-later, Copyright (C)
+  2023-2026 Yomitan Authors, 2020-2022 Yomichan Authors.
+- `tests/corpus.tsv` and the rows of `tests/gaps.tsv` whose category ends in
+  *(frequent)* or *(any)*: 1,000 inflected form → lemma pairs sampled with
+  seed 1 by `sources/build-corpus.py` from the form-of senses of
+  [kaikki.org's English Wiktionary extraction for Esperanto](https://kaikki.org/dictionary/Esperanto/)
+  (`kaikki.org-dictionary-Esperanto.jsonl`, extracted 2026-10-30 from the
+  enwiktionary dump of 2026-10-01, sha256 `3b2dc933…9e61`), CC BY-SA 4.0 and
+  GFDL, by the Wiktionary contributors. 22 categories (the five finite verb
+  forms, the participles as adjective, noun and adverb with their plurals
+  and accusatives, nouns and adjectives in the plural and the accusative,
+  names, pronouns and determiners), each half from the 10,000 most frequent
+  words of the frequency list below and half from all its forms. The final
+  rules reach 999 rows (`corpus.tsv`); the other one is in `gaps.tsv`.
+- `tests/cases.tsv`, `tests/defaults.tsv`, `tests/text.tsv`,
+  `tests/lookup.tsv`, `tests/dictionary/`, `sources/benchmark-words.txt` and
+  every script in `sources/`: written for this pack (GPL-3.0-or-later). The
+  rows of `defaults.tsv` and `cases.tsv` after their `guards` line are
+  generated by `sources/build-guards.mjs` from the final rules; the chain
+  rows of `cases.tsv` use words of *Marta* (below). The names and loanwords
+  of `sources/excluded-stems.mjs` are single words of the measured texts.
+  `tests/dictionary/` (73 rows) holds the headwords `lookup.tsv` expects and
+  the readings that a wrong rule, order or processor would show first.
+  Removing any one of 48 rows fails a test. The other 25 are such competing
+  readings: 15 make a mutation fail (below; *dolĉe* for *maldolĉe*, *tra*
+  for *ekstertra*), 7 are the readings negative rows name (*karolo* for
+  *Karolino*), and 3 copy wty-eo-en's x-system rows (*felicxa* → *feliĉa*),
+  without which the x-system rows of `lookup.tsv` would pass with the text as
+  written kept.
+- Not committed, used for the measurements below:
+  - the dictionary [wty-eo-en](https://huggingface.co/datasets/daxida/wty-release/resolve/main/latest/dict/eo/en/wty-eo-en.zip)
+    of [wiktionary-to-yomitan](https://github.com/yomidevs/wiktionary-to-yomitan),
+    revision 2026.10.22, sha256 `bc7b1809…540b`, 317,333 term rows (297,464 of
+    them only form-of references), CC BY-SA 4.0 (Wiktionary through
+    kaikki.org). It is the recommended dictionary: wiktionary-to-yomitan has
+    no Esperanto-Esperanto dictionary, and no other Yomitan-format Esperanto
+    dictionary with a free licence was found;
+  - the kaikki.org extraction above (also for `sources/measure-derivation.py`);
+  - the frequency list `content/2018/eo/eo_full.txt` of
+    [FrequencyWords](https://github.com/hermitdave/FrequencyWords) at bd9e231
+    (sha256 `2e5eb94f…c369`; 36,346 words, 403,882 tokens, from OpenSubtitles),
+    content CC BY-SA 4.0;
+  - Tatoeba's Esperanto sentences, `epo_sentences.tsv.bz2` of
+    [the per-language export](https://downloads.tatoeba.org/exports/per_language/epo/)
+    downloaded 2026-11-03 (sha256 `0ebfde8d…b10a`, 824,273 sentences), CC BY
+    2.0 FR;
+  - four Project Gutenberg books, public domain in the USA: *Marta* (Eliza
+    Orzeszkowa, translated by L. L. Zamenhof; pg61860, sha256
+    `16334a61…a940`), *La Mirinda Sorĉisto de Oz* (L. Frank Baum; pg31348,
+    `b2284ad5…5959`), *Princo Serebrjanij* (A. K. Tolstoj; pg55302,
+    `c7ef3504…1f2a`) and *La Reĝo de la Montoj* (Edmond About; pg65835,
+    `6620a2e1…9ffc`);
+  - three Project Gutenberg books written in the x-system, public domain in
+    the USA, for the x-system measurement: *La Aventuroj de Alicio en
+    Mirlando* (Lewis Carroll, translated by E. L. Kearney; pg17482, sha256
+    `94bc2075…10e0`), and the two the second audit chose, *Doktoro Jekyll kaj
+    Sinjoro Hyde* (R. L. Stevenson, translated by W. W. Mann; pg24145,
+    `1fc80715…2ae4`) and *La Batalo de l' Vivo* (Charles Dickens, translated
+    by L. L. Zamenhof; pg24501, `d99eaf2b…70cd`).
+
+## Rule provenance
+
+`transforms.json` has 89 transforms and 358 rules: 207 `own`, 139 `both`
+and 12 `yomitan`. `node languages/eo/sources/build-final.mjs` writes it: the
+own rules in their order, with each own rule whose deinflection a Yomitan
+rule also makes marked `both`, then the Yomitan transforms its `KEPT` list
+names, with the constraints the list adds. Before the exact-stem exclusions
+below split them, the rules number 188 (112 own, 66 both, 10 yomitan); the
+split copies take disjoint sets of stems. The merge tool's union
+(`node tools/merge-transforms.mjs eo --out <file>`, 101 transforms and 370
+rules: the own file's 346 and Yomitan's 24) is measured beside it below.
+
+- **Own rules** (69 transforms only own, 10 also Yomitan's):
+  - declension: the accusative *-n* and the plural *-j* of nouns, adjectives
+    and the adverbs of place (*domojn*, *belan*, *hejmen*), the personal
+    pronouns (*min*, *ŝin*, *ilin*; *ri*, *ŝli* and *iŝi*), the correlatives
+    (*kiujn*, *tian*, *nenion*), *unu*, *tiun ĉi*, and names written with an
+    apostrophe (*Tolstoj'n*);
+  - the five finite verb endings (*-as*, *-is*, *-os*, *-us*, *-u*), and the
+    six participles as adjective, noun and adverb (*leganta*, *leganto*,
+    *legante*, *legitaj*);
+  - the elided article (*l'*); the elided *-o* of a noun is the processor
+    `elision` (above), which was a rule until the first audit;
+  - word formation: 22 suffixes (*-ad-*, *-aĉ-*, *-aĵ-*, *-an-*, *-ar-*,
+    *-ebl-*, *-ec-*, *-eg-*, *-ej-*, *-em-*, *-end-*, *-estr-*, *-et-*,
+    *-id-*, *-ig-*, *-iĝ-*, *-il-*, *-in-*, *-ind-*, *-ist-*, *-uj-*,
+    *-ul-*), 30 prefixes (*mal-*, *ne-*, *re-*, *ek-*, the prepositions used
+    as prefixes, *ge-*, *pra-*, *mis-*), *sen-* (*senforta* → *forto*), and
+    the adverb of a root whose adjective, noun or verb is the headword
+    (*rapide* → *rapida*, *kaŭze* → *kaŭzo*);
+  - `otherWordClass` (optional, the `otherWordClasses` setting): an
+    adjective as the noun or verb of its root and a noun as its verb (*lana*
+    → *lano*, *eldiro* → *eldiri*).
+- **Stem constraints.** Every rule takes a stem without a space: a lookup
+  tries every prefix that ends at a word boundary, and an Esperanto phrase
+  never inflects on its last word alone. Minimums keep short words from
+  being read as inflections: *kaj*, *jen*, *nun*, *kun*, *ĝis* and *nu* are
+  not *ka* + *-j*, *je* + *-n*, *nu* + *-n*, *ku* + *-n*, *ĝi* + *-is* and
+  *ni* + *-u*. The accusative *-on* and *-an* need two letters (*von*, *don*
+  and *ron* are not *vo*, *do* and *ro*). The word-formation rules and the
+  plural take no stem that starts with a capital, as written: a capitalised
+  word is a name or the first word of a sentence, and the second is also
+  looked up decapitalised. On Tatoeba's 22,128 capitalised plurals
+  (`measure.py plurals`) this took the wrong first results from 324
+  (*Leonoj* → *Leono*, *Egiptoj* → *Egipto*) to 1.
+- **Exact stems left out** (`sources/excluded-stems.mjs`). The capital guard
+  does not stop the decapitalised variant of a word, which goes through every
+  rule: a name or loanword the dictionary lacks was read as a derived word
+  and shown first (*Karolino* → *karolo* "whole note" + *-in-*, *Kate* →
+  *kata*, *Elena* → *ena*, *semestro* → *semo* + *-estr-*; the first audit's
+  MAJOR finding). `measure.py names` lists the first results a rule makes at
+  words without a form-of row, on the books, the capitalised words inside
+  Tatoeba's sentences and the 10,000 most frequent words. 49 exact stems
+  are left out, in 16 transforms: each one whose wrong first results number
+  at least 4 in Tatoeba or the frequency list, or 2 in the books, and at
+  least three times the uses of the word as the derived word in the same
+  texts (*kate*, like a cat, has 3 uses in Tatoeba against 45 wrong first
+  results for *Kate*). Only the exact stem is left out (*katolike* →
+  *katolika* stays): a rule is split by the text its stem starts with and,
+  where excluded stems branch, by the stem's last letter. `build-guards.mjs`
+  writes a row for each excluded stem, and `sources/check-exclusions.py`
+  checks the split against the rules without exclusions. It makes 64,468
+  words, one per rule and stem, from the prefixes of the excluded stems
+  extended by one character of a wide set (letters outside the alphabet,
+  capitals, an apostrophe and a hyphen included) and by two letters. The
+  rules without exclusions read 64,023 of them in one step; the committed
+  rules give the same readings, except the 85 words of excluded stems, and
+  no other.
+  Against the first audited head, the exclusions change 59 first results of
+  the books, 294 of Tatoeba's capitalised words and 15 of the frequent words,
+  each from a wrong reading to no result or to the dictionary's own name
+  (*milano* → *Milano*, *irano* → *Irano*, *KABE* → *Kabe*); the stem *boj*
+  (*bojaro*, a boyar: 345 places of *Princo Serebrjanij*) was left out
+  before. Kept, with their counts in Known gaps: *grace*, *mame* and *luiĝi*,
+  which are also derived words.
+- **`both`**: an own rule whose deinflection a Yomitan rule also makes: the
+  same ending replaced by the same text (own *-on* → *-o* and Yomitan's *-n*
+  → ``), or the same prefix removed, with compatible parts of speech. 66 own
+  rules before the split, in the accusative, the plural, *-ad-*, *-ebl-*,
+  *-ej-*, *-et-*, *-uj-*, the adverb, `otherWordClass` and the prefixes
+  *mal-*, *ek-*, *dis-*, *for-*, *el-*, *kun-*, *mis-*.
+- **Yomitan rules kept** (10), because no own rule makes them:
+  - `-ujo (adjective)` and `-ujo (verb)` (*fridujo* → *frida*, *lavujo* →
+    *lavi*), which take a stem without a space;
+  - `ekster-` and `ĵus-` (*eksterlando* → *lando*, *ĵusvekita* → *vekita*);
+  - `ek-`, `el-`, `dis-`, `for-`, `kun-` and `mis-`, which take every word
+    class where the own prefixes take verbs (*ekspiro* → *spiro*, *eldiro* →
+    *diro*). Compared with the own rules on the four books, they read 82
+    more positions and change 8 first results, all to another reading of the
+    same root (*kunvojaĝantoj* → *vojaĝi*, not *vojaĝanto*).
+
+  The eight prefixes take a stem of three letters without a space, and give
+  a noun, verb, adjective or adverb. With one letter, frequent words gave a
+  letter of the alphabet (*eki* → *i*, *fora* → *a*); with two, *elia* gave
+  *ia*, *disko* *ko* and *formi* *mi*. Without the part of speech, *distra*
+  gave the preposition *tra*, and the town *Mistra* gave *tra* at five places
+  of the books. `build-guards.mjs` and `lookup.tsv` have a row for each of
+  these constraints.
+- **Yomitan rules left out** (14). Their `--per-rule` numbers in the union
+  (recovered rows / false candidates / broken negatives) on the hand-written
+  rows (the sample and the hand-written rows of `cases.tsv` with every
+  option on, those of `defaults.tsv` with the defaults: 1,248 rows), and
+  their effect on the first results of the four books (277,231 lookups; the
+  union against the final set):
+  - `accusative` (*n* → ``, no minimum): 0 / 0 / 7; *En* (in) shows the
+    letter *E* first at 220 places, and *kun* is read as *ku*;
+  - `plural` (*j* → ``, no minimum): 1 / 1 / 4 (it recovers *Usonaj* →
+    *Usona*, which the own plural leaves to the dictionary's form-of row);
+    *Aj* gives the letter *A*, and capitalised plurals give names first
+    (*Leonoj* → *Leono*, 11 places);
+  - `locational` (*e* → *o*): 0 / 0 / 0; *Ne* (no) shows *nordo* (north)
+    first at 408 places, through wty-eo-en's abbreviation *No*, and adverbs
+    of adjectives show their noun first (*merite* → *merito*, not *merita*;
+    132 places);
+  - `adjectival` (*a* → *o*): 0 / 2 / 4; on by default it reads names as
+    words, *Marta* as *marto* (March) at 451 places of *Marta*. The own
+    optional `otherWordClass` makes it (Measurements, item 4);
+  - `-ejo (noun)`: 0 / 1 / 0; it shows the noun before the verb (*komercejo*
+    → *komerco*, *edukejo* → *eduko*; 32 places), where the own *-ej-* rule
+    tries the verb first;
+  - `diminutive` (0 / 1 / 0), `directional`, `adverbial (adj -> adv)`,
+    `adverbial (v -> adv)`, `-ejo (verb)`, `-ujo (noun)`, `-ebla`, `-ado`
+    (0 / 0 / 0 each) and `mal-` (0 / 1 / 0): an own rule makes each
+    deinflection, with a stem minimum, the capital guard and the part of
+    speech of its input, so in the union they recover nothing. Each but
+    `directional` also fails rows of `defaults.tsv` that test those own
+    constraints (*bado* is not *bi* + *-ad-*).
+
+  No Yomitan rule was left out because no corpus row needs it: each removal
+  has the counts above. On the four books the union finds a result at 2,089
+  lookups where the final set finds none: 1,856 through `adjectival`, which
+  `otherWordClass` makes when turned on, and 233 others, all wrong (*Ann* →
+  the letter *A* at 88, *in* → *I* at 69, *ron* → *ro*, *Mistra* → *tra*).
+  It changes 833 first results, the groups above.
+
+## Measurements
+
+All numbers are measured at 444ab36, this branch on main 39cebbe (the head
+changes only this README after it), with
+wty-eo-en as published (form-of rows included), with hoshidicts-cli and
+`sources/lookup-batch.cpp` built from this tree (GCC 14.3, Release).
+`lookup-batch` looks texts up as a host does (16 results, scan length 16, the
+pack's defaults unless `--options`); its build command is in its header.
+
+1. **eval-language** (`sources/eval-table.py`, which runs `hoshidicts-cli
+   eval-language --transforms <rules> --dictionary <wty-eo-en>` on each file,
+   as committed and with the `# options: default` line added or removed). The
+   sample is `corpus.tsv` with the sampled row of `gaps.tsv` (1,000 rows).
+   Each cell is recall / false candidates per row / first rank, and for the
+   files with negatives, negatives passed second.
+
+   With every option on:
+
+   | Rule set | Sample | cases.tsv | defaults.tsv | yomitan.tsv |
+   | --- | --- | --- | --- | --- |
+   | Own (`sources/own.json`) | 99.9% / 0.612 / 95.1% | 95.2% / 100.0% / 0.447 / 52.9% | 96.5% / 98.9% / 0.026 / 0.9% | 87.5% / 0.583 / 12.5% |
+   | Yomitan (`sources/yomitan.json`) | 44.0% / 0.228 / 95.1% | 29.8% / 44.4% / 0.245 / 33.2% | 8.5% / 77.9% / 0.019 / 0.5% | 100.0% / 0.500 / 12.5% |
+   | Union (merge tool) | 100.0% / 0.618 / 95.1% | 100.0% / 44.4% / 0.466 / 53.8% | 100.0% / 77.7% / 0.026 / 0.9% | 100.0% / 0.750 / 12.5% |
+   | Final (`transforms.json`) | 99.9% / 0.614 / 95.1% | 100.0% / 100.0% / 0.452 / 53.8% | 100.0% / 98.9% / 0.026 / 0.9% | 100.0% / 0.750 / 12.5% |
+
+   With the defaults:
+
+   | Rule set | Sample | cases.tsv | defaults.tsv | yomitan.tsv |
+   | --- | --- | --- | --- | --- |
+   | Own (`sources/own.json`) | 99.9% / 0.430 / 95.1% | 88.0% / 100.0% / 0.274 / 52.4% | 96.5% / 100.0% / 0.010 / 0.9% | 79.2% / 0.208 / 12.5% |
+   | Yomitan (`sources/yomitan.json`) | 44.0% / 0.228 / 95.1% | 28.4% / 44.4% / 0.245 / 33.2% | 8.5% / 78.3% / 0.019 / 0.5% | 100.0% / 0.500 / 12.5% |
+   | Union (merge tool) | 100.0% / 0.516 / 95.1% | 92.8% / 44.4% / 0.361 / 54.3% | 100.0% / 78.2% / 0.019 / 0.9% | 100.0% / 0.500 / 12.5% |
+   | Final (`transforms.json`) | 99.9% / 0.430 / 95.1% | 92.8% / 100.0% / 0.288 / 53.8% | 100.0% / 100.0% / 0.010 / 0.9% | 95.8% / 0.417 / 12.5% |
+
+   - **Recall.** Yomitan's rules have no verb endings and no participles, so
+     they reach 440 of the 1,000 sample rows. The final rules miss *Usonaj*
+     → *Usona* (Known gaps). With the defaults, `yomitan.tsv`'s *amika* →
+     *amiko* and the `cases.tsv` rows that test the options need the
+     optional features. `defaults.tsv`'s negatives are readings an option
+     adds (*lana* → *lano*), so 1.1% of them fail with every option on, as
+     intended. The rows `build-guards.mjs` generates are built from the own
+     rules' affixes and constraints, which is why Yomitan's rules and the
+     union pass few of them.
+   - **False candidates** (`sources/measure.py fc`, the sample). Of the final
+     set's 0.614 per row, 0.074 come from inflection alone and 0.540 from
+     traces with word formation, which reads a word as its root's other
+     headwords (*malfermitaj* → *fermi*, *konataj* → *konato*). 0.017 per
+     row are intermediate forms on the way to the lemma (*leganta* for
+     *legantajn* → *legi*), which the dictionary lists as adjectives.
+   - **First rank** is 95.1% on the sample for every set: wty-eo-en has a
+     form-of row for almost every inflected form, which names the lemma
+     whatever the rules do. `measure.py misses` lists the 49 rows where
+     another result comes first: 37 are participles the dictionary also
+     lists as words (*gvidanto*, *konato*, *farita*), shown before the verb,
+     and the others spelling variants (*okulvitrojn* → *okulvitroj*,
+     *surdamutulojn* → *surdmutulo*), adjectives whose verb comes first
+     (*krakintaj* → *kraki*) and the dictionary's own *kiuj* and *ŝlin*. On
+     the test files, first rank counts the generated rows on made-up stems,
+     which no dictionary has.
+   - **Word formation against Wiktionary's etymologies**
+     (`sources/measure-derivation.py`). Every single-word headword of
+     wty-eo-en with a definition and a part of speech is deinflected; a
+     reading made by one word-formation rule, whose text is a headword the
+     filter keeps, is right when the word's etymology names the affix, wrong
+     when it names other parts, and unknown without an etymology. Own rules
+     4,967 right, 98 wrong (98.1%, 384 unknown); Yomitan's 1,306 / 41
+     (97.0%); union 6,273 / 139 (97.8%); final 5,234 / 104 (98.1%). Wrong
+     readings are mostly words that only look derived (*aneto* → *ano*,
+     *balano* → *balo*).
+   - **Per rule** (`--per-rule`, final set): no rule breaks a negative of the
+     sample with `cases.tsv` (every option on) or of `defaults.tsv` (the
+     defaults).
+   - **Terms without part-of-speech tags** (docs/languages.md 9.4 and 14
+     step 5). wty-eo-en leaves `rules` empty on 4,289 of its 317,333 rows
+     (1.4%): 2,167 form-of rows, 1,358 names, 129 phrases, and numbers,
+     affixes, interjections, letters and function words. None is a whole
+     part of speech the rules produce (*n*, *v*, *adj*, *adv*), so the pack
+     keeps the default, `untaggedTerms: filter`. With `pass`, the final set
+     ranks no more lemmas first (the sample, `defaults.tsv` and `yomitan.tsv`
+     the same, `cases.tsv` 53.4% against 53.8%), and its false candidates
+     rise: the sample 0.614 → 0.633 with every option on and 0.430 → 0.441
+     with the defaults, `cases.tsv` 0.452 → 0.476 and 0.288 → 0.303,
+     `yomitan.tsv` 0.750 → 0.875 and 0.417 → 0.500; `defaults.tsv` is
+     unchanged. Recall is the same everywhere.
+2. **Frequent forms** (`sources/measure.py frequent`). The 10,000 most
+   frequent words of the frequency list (369,915 of its 403,882 tokens), each
+   looked up alone. 4,532 have a form-of row that names a lemma. For the
+   final set the first result is that lemma for 4,530 words (117,915 tokens,
+   29.2% of the list), a wrong lemma for none, and nothing for 2: *ghin* (15
+   tokens, the h-system *ĝin*; right with the `hSystem` setting) and *signis*
+   (3 tokens; its row names *signi*, which wty-eo-en does not define). Own
+   rules and the union: the same, the union also reading *ghin*. Yomitan's
+   rules: 4,527 right, 0 wrong, 5 nothing (*audis*, *serchas*, *shatas* and
+   *bedauras*: h-system verbs, which the own verb endings reach through the
+   dictionary's h-system rows). `measure.py names --frequent` lists 484
+   other words (2,556 tokens) whose first result a rule makes without a
+   form-of row; judged one by one (the first audit's verdicts for 483 of
+   them, mine for *iranon*), 468 are right, 12 unclear (*have* → *havo*,
+   *side* → *sidi*) and 4 wrong (12 tokens: *ekvido* → *ekvo*, *kompano* →
+   *kompo*, *maten* → *mato*, *recitis* → *citi*).
+3. **Phrases** (`sources/measure.py phrases`): 40,000 random Tatoeba
+   sentences (seed 1), 113,036 places where a word follows a pronoun, the
+   article, a correlative, a preposition or an auxiliary such as *estas*,
+   *povas*, *ne* or *kaj*.
+   - Looked up from the word, the first result is the lemma a form-of row of
+     the word names at 43,938 places (pronoun 19,779, article 6,206,
+     correlative 4,180, preposition 4,026, auxiliary 9,747), and wrong at 1
+     (*sekaĵon* → *seka*: wty-eo-en's *sekaĵo* names only the English *dry
+     goods*). Yomitan's rules: 5 wrong (*Egiptoj* → *Egipto* at 4, *Dioj* →
+     *Dio*); the union 6; the own rules 1.
+   - Looked up from the word in front, no rule joins the two words: the 84
+     phrases the rules make are the accusatives *tiun ĉi* and *tion ĉi*,
+     which give *tiu ĉi* and *tio ĉi*. The other 1,399 first results that
+     span both words are the dictionary's own phrases (*kiel eble*, *ĝis
+     revido*).
+4. **Real text** (`sources/make-hovers.py`, `sources/measure.py text`): every
+   word of the four books, 277,231 lookups, each the rest of its sentence.
+   - 88,178 hovered words have a form-of row. The first result is the lemma
+     it names at 88,177 and wrong at 1 (*venadas* → *veni*: its row names
+     *venadi*, which wty-eo-en lists only as a form of *veni*; one hop,
+     docs/languages.md 16).
+   - At the other words, 162,732 first results are the hovered word itself,
+     29 reach a headword through a dictionary step only, and 2,720 are
+     phrases or parts of a word.
+   - 8,811 are made by a rule at a word without a form-of row. Of 100 drawn
+     at random (seed 20261103) and judged by hand, 99 are right
+     (*senfortiĝintaj* → *forto*, *interfingrigitaj* → *fingro*,
+     *vidviniĝis* → *vidvino*) and 1 wrong (*Luiĝi* → *lui*, Known gaps).
+   - **Names and loanwords** (`measure.py names`; Rule provenance, Exact stems
+     left out). In the books a rule makes the first result at 279 lookups of
+     capitalised words without a form-of row; judged one by one (the first
+     audit's verdicts), 263 are right (*Hakisto* → *haki*, the Woodman;
+     *Ekmemoru* → *memori* at the start of a sentence) and 16 wrong (*Luiĝi*
+     → *lui* 3, *Mame* → *mamo* 2, and 11 single words such as *Spiro'n* →
+     *spiro* and *HERCEN* → *herco*). At the first audited head: 74 wrong of
+     338. Inside Tatoeba's sentences (172,309 capitalised words) a rule makes
+     the first result at 951 occurrences of 620 words. Of 100 drawn at random
+     (seed 20261103), 72 are right (*Koreujo* → *korea*, *Muelisto* →
+     *mueli*) and 28 wrong, all names and foreign words (*Robino* → *robo*,
+     *Vistulo* → *visto*, *Grace* → *graco*). Five of these 28 I first
+     judged right or unclear; the second audit judged them again from their
+     Tatoeba contexts (*Ride*, Sally Ride; *Dune*, the novel; *Arte*, the TV
+     channel; *Dame* twice, Notre-Dame), and I agree. Its own sample of 100
+     (seed 5150) has 34 wrong and 3 unclear. Together 62 of 200 are wrong:
+     about 295 of the 951 (95% interval 235-355), against about 440 at the
+     first audited head.
+   - 14,761 lookups find nothing: capitalised words (names: *Marta*,
+     *Serèbrjanij*, *Ivano*), Esperanto words wty-eo-en lacks (*cara*,
+     *bojaro*, *opriĉniko*), foreign words, abbreviations and numbers.
+   - With the optional `otherWordClass`, 2,225 of these find a result and 82
+     first results change, to other readings of the same root (*forveturo* →
+     *forveturi*, not *veturo*). 1,511 of the new results are at lowercase
+     words (*cara* → *caro*, 266; *princa* → *princo*; *reaĉeto* →
+     *reaĉeti*); 50 of them drawn at random and judged by hand are right. 714
+     are at capitalised words; judged by hand (all 58 distinct words), 232
+     are right (*Stana* → *stano*, 128, the Tin Woodman; *Smeralda* →
+     *smeraldo*, 57, the Emerald City) and 482 read a name as a word
+     (*Marta* → *marto*, 451; *Aleksandra*, *Marula*, *Tula*). Since a wrong
+     first result is worse than none, the transform is off by default.
+   - Yomitan's rules leave 18,401 lookups with nothing and give 17 wrong
+     first results at words with a form-of row (*Leonoj* → *Leono*, *vilan*
+     → *vilo*); the union 18; the own rules 1 (*venadas*).
+   - **Quotes.** *'Trinku min'* shows *min* first, and *mino* (a mine) second
+     (`lookup.tsv`; at the first audited head *mino* came first).
+   - **x-system and h-system** (`measure.py xsystem`). 1,523 of the 10,000
+     frequent words have ĉ ĝ ĥ ĵ ŝ ŭ (41,651 tokens). Written in the x-system
+     and looked up alone, each has the same first result as in proper
+     letters. With the text as written kept beside its conversion, as at the
+     second audited head, 100 of them (1,319 tokens) differed, 97 with the
+     right lemma second (*gxuste* → *ĝusta*, 218 tokens; *suficxe* →
+     *sufiĉi*; *malfelicxa* → *feliĉa*). The three x-system books were looked
+     up as written and with the digraphs replaced: the first result is the
+     same at all 9,919 hovers of words with a digraph (3,837 in *Alicio en
+     Mirlando*, 2,579 in *Doktoro Jekyll kaj Sinjoro Hyde*, 3,503 in *La
+     Batalo de l' Vivo*) and at every other hover; with the text as written
+     kept, 480 differed (193, 139 and 148). Replacing the text changes no
+     first result of the four books, which have 8 words with a digraph.
+     Written in the h-system and looked up with the `hSystem` setting, 98 of
+     the 1,523 words (1,209 tokens) show another first result than in proper
+     letters (Known gaps).
+5. **Performance** (docs/languages.md 13). The pack has no `pattern` rule;
+   its processors have three `pattern` steps.
+   - Native `build/benchmark-lookup languages/eo/sources/benchmark-words.txt
+     6 --term <wty-eo-en> --languages <dir> --language eo --json` on 80 texts
+     written for the pack (the rest of a sentence from an inflected word), the
+     first of 6 passes dropped, three runs at machine load about 39-43
+     (`sources/bench-summary.py`). Budget: 1 ms p50. At load 37-41 the final
+     set gave p50 27.8-28.4 µs and p95 37.0-38.6 µs before the exclusions.
+
+     | Rule set | p50 | p95 |
+     | --- | ---: | ---: |
+     | Final | 36.8-37.8 µs | 50.3-52.1 µs |
+     | Own | 35.5-36.6 µs | 49.2-50.6 µs |
+     | Yomitan's | 33.3-36.4 µs | 48.2-54.7 µs |
+     | Union | 42.5-42.7 µs | 62.2-63.9 µs |
+   - WebAssembly, Hachidori feat/multi-language 803f7b6e's prebuilt engines in
+     Node 22.23.1 (`benchmark/node-lookup.mjs` with
+     `HACHIDORI_LOOKUP_LANGUAGE=eo`, the same 80 texts as 413 hover
+     positions, 6 passes, wty-eo-en imported into MEMFS, two runs, load about
+     42-49): `hdw_lookup` p50 73.0-74.7 µs and p95 116.8-117.8 µs threaded,
+     p50 67.8-70.2 µs and p95 108.3-111.3 µs single-thread.
+   - Pack load (`sources/pack-load.mjs`, ten fresh engines each):
+     `hdw_language_load` median 6.88 ms single-thread and 7.32 ms threaded
+     (budget 50 ms); live heap +302,368 and +301,840 bytes (budget 20 MB).
+6. **Tests and checks.**
+   - `language-conformance-test` (`ctest -R language-eo`): corpus.tsv 999/999,
+     cases.tsv 262/262, defaults.tsv 1,234/1,234 and lookup.tsv 75/75 with
+     the pack's defaults, yomitan.tsv 24/24, text.tsv 69/69; gaps.tsv 0/4
+     (reported); every rule exercised by a passing row (358/358). The files
+     in `tests/` and `sources/` hold 885,111 bytes, and no TSV has 2,000 rows.
+   - Mutations (docs/languages.md 14 step 7, `sources/mutate.py`): every stem
+     constraint and exclusion removed per transform, every minimum lowered by
+     one, every whole-word rule and every transform removed, every
+     transform's `conditionsOut` and `conditionsIn` emptied, every single
+     part-of-speech condition changed to each other one, the order of the
+     transforms and of each transform's rules reversed, Yomitan's kept
+     transforms put first, the letter, upper and apostrophe classes narrowed,
+     word resolution changed to character, four processor details changed,
+     every processor removed, and the optional processor and transform turned
+     on by default, each in a scratch copy with its own `classes.json`. Of
+     1,438 mutations, 1,421 fail the conformance test. 6 are equivalent:
+     they change no deinflection of any test source (a split copy of a rule
+     that loses its start text or end letter, which the other copies still
+     cover). 11 survive, all reversals of the rules of one transform (the
+     accusative, the plural, *-ad-*, *-aĉ-*, *-ebl-*, *-eg-*, *-em-*,
+     *-end-*, *-et-*, *-ind-* and the optional `otherWordClass`).
+   - The second audit's own mutations (its `audit-mutate.py`, 444 at this
+     head): 324 fail. Every minimum raised by one (116), every whole-word
+     output, declension condition and output ending changed, and every
+     excluded stem let back in fails. The survivors are the 88 swaps of
+     adjacent transforms (below), the 25 competing readings of the test
+     dictionary removed one at a time (Sources), and 7 processor changes:
+     `keepInput: false` on `xSystem`, now the pack's own value, NFKC, and the
+     swaps of `removeQuotes` and `elision`, `xSystem` and `decapitalize`,
+     `hSystem` and `xSystem`, `elision` and `xSystem`, and `normalizeUnicode`
+     and `normalizeApostrophes`. None of the last six changes a first result
+     of the four books or the three x-system books.
+   - Order (`sources/order-effect.py`). Rules that match at one index node
+     apply in file order (docs/languages.md 7.4), so the order of the
+     transforms can decide which of two results that tie on every ranking
+     key comes first. Of 108 changes of order (the 88 adjacent swaps, the
+     second audit's 9 moves and the 11 reversals that survive `mutate.py`),
+     97 keep the order of every deinflection of every variant of the four
+     books' words. Of the other 11, 5 change first results with the defaults:
+     the adverb rule moved after *sen-* (79), *mal-*, *ne-* or *sen-* moved
+     before it (44, 7 and 28), and *-uj-* after `-ujo (verb)` (29). Each
+     fails a `lookup.tsv` row (*maldolĉe* → *maldolĉa*, *nelerte* →
+     *nelerta*, *sentime* → *sentima*, *herbujo* → *herbo*). The 6 left
+     change none with the defaults. With the `otherWordClasses` setting on,
+     3 of them, all of the optional `otherWordClass`, change first results
+     among readings of one root: swapped with *mal-* (38) or moved after
+     *sen-* (40) (*malestimo* → *estimo*, not *malestimi*), and its rules
+     reversed (386; *Stana* → *stani*, not *stano*). No test can see them:
+     `lookup.tsv` runs with the defaults, and a file has one mode
+     (docs/languages.md 12.2).
+   - `tools/check-yomitan.mjs`: 3,529 inputs, 7,065 Yomitan results, 0
+     differences; both processors agree with Yomitan's on 2,303 inputs each.
+   - Hachidori (feat/multi-language 803f7b6e with this branch in
+     `third_party/hoshidicts`, `test/chrome-language-pack.mjs`, Chrome 152,
+     wty-eo-en): 22/22 checks pass. Settings adds Esperanto beside Japanese
+     and imports the dictionary (317,333 terms, under 1 s); eighteen hovered
+     words find their lemma first with their trace (*manĝis* → *manĝi*,
+     *turnadis* → *turni*, *Kion* → *kio*, *ekridetis* → *ekridi*, *cxu* →
+     *ĉu*, *sereneco* → *serena*, *min'* in quotes → *min*, *malfelicxa* →
+     *malfeliĉa*, *Gxuste* → *ĝuste*, *dauxrigis* → *daŭrigi*, *ĉiujn* →
+     *ĉiu*, *maldolĉe* → *maldolĉa*); the Anki note and the switch to
+     Japanese and back work.
+
+Commands: `sources/eval-table.py` (item 1), `sources/measure.py` with `fc`,
+`misses`, `frequent`, `phrases`, `text`, `names`, `plurals` and `xsystem`
+(items 1-4), `sources/measure-derivation.py`, `sources/make-hovers.py`,
+`sources/lookup-batch.cpp`, `sources/bench-summary.py` and
+`sources/pack-load.mjs` (item 5), and `sources/mutate.py`,
+`sources/order-effect.py` and `sources/check-exclusions.py` (item 6 and Rule
+provenance). Each script's header gives its arguments.
+
+## Known gaps
+
+- **Names and loanwords the dictionary lacks** can still be read as derived
+  words, through the decapitalised variant every lookup tries: 16 first
+  results of the books (*Luiĝi* → *lui* 3, *Mame* → *mamo* 2, *Spiro'n* →
+  *spiro*), about 295 of Tatoeba's 951 rule-made first results at
+  capitalised words inside a sentence (62 of 200 judged; *Grace* → *graco*
+  6, *Robino* → *robo*, *Vistulo* → *visto*), and 4 of the 10,000 frequent
+  words (*ekvido* → *ekvo*, *kompano* → *kompo*, *maten* → *mato*,
+  *recitis* → *citi*; 12 tokens). One name can make most of them in a text:
+  in *La Batalo de l' Vivo*, 81 of the 94 rule-made first results at
+  capitalised words are its heroine *Grace* (*graco*, grace).
+  `excluded-stems.mjs` leaves out the larger groups of the measured texts;
+  *grace*, *mame* and *luiĝi* are kept because they are also derived words
+  (*grace*, graciously, has 3 uses in Tatoeba against 6 wrong first results
+  for *Grace*). A lookup cannot tell a name from a capitalised word at the
+  start of a sentence, and both are tried decapitalised.
+- **Compounds** whose first part is a word, not a prefix, are not split
+  (`gaps.tsv`: *duonvoĉe* → *voĉo*, *laborenspezon* → *enspezo*,
+  *vizaĝesprimo* → *esprimo*).
+- **Capitalised plurals of names.** The plural takes no capitalised stem, so
+  plurals of names lose their reading: 25 of Tatoeba's 22,128 capitalised
+  plurals (*Amerikoj* 9, *Koreoj* 2), and *Usonaj* → *Usona* in `gaps.tsv`
+  (a lookup still shows *Usona* first, through the dictionary's form-of
+  row).
+- **Adjectives and nouns of other roots** are read only with the
+  `otherWordClasses` setting: 1,511 lowercase lookups of the four books find
+  nothing by default (*cara*, *princa*), and with the setting 482
+  capitalised lookups read a name as a word (*Marta* → *marto*).
+- ***sen-* before a participle**: *senfortigita* (weakened) is read as *sen-*
+  + *fortigito* → *fortigi* (to strengthen); 11 first results of the books
+  (*senfortigita*, *senkuraĝigita*). Its base *senforta* is not a
+  headword.
+- **Order of readings of one root**: where a root has several headwords,
+  the verb comes before the adjective for *-iĝ-* (*bluiĝinta* → *blui*, not
+  *blua*), and the adjective before the noun for *-aĵ-* (*amasaĵo* →
+  *amasa*); 2 of the 100 lookups judged at the first audited head.
+- **Exact-stem exclusions** lose the one word they name if it is ever used
+  as the derived word (*kate*, like a cat: 3 uses in Tatoeba, against 45
+  wrong first results for *Kate*). `sources/excluded-stems.mjs` stops with
+  an error where it cannot split a rule exactly, and
+  `sources/check-exclusions.py` checks the split it makes (Rule provenance).
+- **One hop.** A form-of row that names another form-of row reaches nothing
+  (*venadas* → *venadi* → *veni*; *signis* → *signi*), so the rules' reading
+  comes first (docs/languages.md 16).
+- **h-system text** is read only with the `hSystem` setting: *ghin* (15
+  tokens of the frequency list) finds nothing by default. With the setting,
+  the text as written stays beside its conversion, because the h-system's
+  letter pairs also occur in ordinary words (*flughaveno*), so the rules
+  also read it unconverted, and wty-eo-en's h-system rows can bring a root's
+  reading first: 98 of the 1,523 frequent words with ĉ ĝ ĥ ĵ ŝ ŭ (1,209
+  tokens) show another first result written in the h-system than in proper
+  letters, the right lemma second for 94 (*ghuste* → *ĝusta*, *sufiche* →
+  *sufiĉi*, *shlosilo* → *ŝlosi*).
+- **x-system spellings in the dictionary.** The x-system replaces the text,
+  so wty-eo-en's few terms written with a digraph are not reached as
+  written: the digraph names *cx* … *ux* show the letters *ĉ* … *ŭ*, and
+  *kasxitojn* shows its lemma *kaŝi*.
+- **A word right after an apostrophe used as an opening quote** (*'jes'*,
+  *’Ĉu*) shows no popup in Hachidori (feat/multi-language 803f7b6e), though
+  the engine reads it (`removeQuotes`). The apostrophe is a word character,
+  for the elided *dank'* and *l'*, so the scan starts at the quote, and
+  Hachidori's text gate tests the scan's first token, split at punctuation,
+  which is empty. 14 of the four books' 277,231 words start with an
+  apostrophe, 61 of the 25,567 of *Alicio en Mirlando*, whose dialogue is in
+  single quotes, and 221 of Tatoeba's 5.85 million. Reported to the
+  framework (hachi-lang-questions.md, 2026-11-03).
+- **The order of the optional `otherWordClass`** among the transforms, and
+  of its rules, decides some first results with the `otherWordClasses`
+  setting on (Measurements, item 6), and no test pins it: `lookup.tsv` runs
+  with the defaults.
+- **Participles listed as words** (*gvidanto*, *konato*, *farita*) show the
+  dictionary's own entry before the verb: 37 of the 49 sample rows where the
+  expected lemma is not first.

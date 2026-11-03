@@ -1,0 +1,27 @@
+# GPL-3.0-or-later; Copyright (C) 2023-2026 Yomitan Authors; 2020-2022 Yomichan Authors
+# https://github.com/yomidevs/yomitan/blob/d3c54c10264673eca0d66b970ef74cd5c8b048e3/test/language/esperanto-transforms.test.js
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+general	1	amikon	amiko	n	*
+general	1	amikoj	amiko	n	*
+general	1	amiketo	amiko	n	*
+general	1	kien	kie	adv	*
+general	1	surpinte	surpinto	n	*
+general	1	amika	amiko	n	*
+general	1	amike	amika	adj	*
+general	1	amike	amiki	v	*
+suffixes	1	kafejo	kafo	n	*
+suffixes	1	kuirejo	kuiri	v	*
+suffixes	1	abelujo	abelo	n	*
+suffixes	1	fridujo	frida	adj	*
+suffixes	1	lavujo	lavi	v	*
+suffixes	1	komprenebla	kompreni	v	*
+suffixes	1	vivado	vivi	v	*
+prefixes	1	malbona	bona	adj	*
+prefixes	1	kunlabori	labori	v	*
+prefixes	1	eksterdome	dome	adv	*
+prefixes	1	eklerni	lerni	v	*
+prefixes	1	ĵusvekita	vekita	adj	*
+prefixes	1	eliri	iri	v	*
+prefixes	1	disfali	fali	v	*
+prefixes	1	forflugi	flugi	v	*
+prefixes	1	misparoli	paroli	v	*

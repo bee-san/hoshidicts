@@ -1,0 +1,10 @@
+{
+  "title": "hoshidicts eo test dictionary",
+  "format": 3,
+  "revision": "1",
+  "sequenced": false,
+  "author": "hoshidicts",
+  "description": "A tiny Esperanto dictionary for languages/eo/tests/lookup.tsv, written for the pack. Some rows are form-of references as wiktionary-to-yomitan writes them.",
+  "sourceLanguage": "eo",
+  "targetLanguage": "en"
+}

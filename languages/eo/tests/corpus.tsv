@@ -1,0 +1,1005 @@
+# Source: kaikki.org, English Wiktionary extraction for Esperanto (https://kaikki.org/dictionary/Esperanto/),
+# extracted 2026-10-30 from the enwiktionary dump of 2026-10-01 (kaikki.org-dictionary-Esperanto.jsonl, sha256 3b2dc933f034ebcf),
+# CC BY-SA 4.0 and GFDL, by the Wiktionary contributors (https://en.wiktionary.org/). Form-of senses: the form and the word it is a form of.
+# 1000 rows sampled with seed 1 by sources/build-corpus.py, half from the 10,000 most frequent words of FrequencyWords eo_full (2018);
+# the rows the final rules reach are in corpus.tsv, the others in gaps.tsv.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+verb present (frequent)	1	radias	radii	v	*
+verb present (frequent)	1	transdonas	transdoni	v	*
+verb present (frequent)	1	pekas	peki	v	*
+verb present (frequent)	1	stariĝas	stariĝi	v	*
+verb present (frequent)	1	neas	nei	v	*
+verb present (frequent)	1	forgesas	forgesi	v	*
+verb present (frequent)	1	koncernas	koncerni	v	*
+verb present (frequent)	1	disponas	disponi	v	*
+verb present (frequent)	1	stultas	stulti	v	*
+verb present (frequent)	1	profitas	profiti	v	*
+verb present (frequent)	1	dronas	droni	v	*
+verb present (frequent)	1	pripensas	pripensi	v	*
+verb present (frequent)	1	supreniras	supreniri	v	*
+verb present (frequent)	1	atendas	atendi	v	*
+verb present (frequent)	1	fieras	fieri	v	*
+verb present (frequent)	1	brakumas	brakumi	v	*
+verb present (frequent)	1	etendas	etendi	v	*
+verb present (frequent)	1	deklaras	deklari	v	*
+verb present (frequent)	1	pretas	preti	v	*
+verb present (frequent)	1	ŝanĝiĝas	ŝanĝiĝi	v	*
+verb present (frequent)	1	edziniĝas	edziniĝi	v	*
+verb present (frequent)	1	forprenas	forpreni	v	*
+verb present (frequent)	1	malvenkas	malvenki	v	*
+verb present (frequent)	1	ĝojas	ĝoji	v	*
+verb present (frequent)	1	preferas	preferi	v	*
+verb present (any)	1	satas	sati	v	*
+verb present (any)	1	simpligas	simpligi	v	*
+verb present (any)	1	elpelas	elpeli	v	*
+verb present (any)	1	printas	printi	v	*
+verb present (any)	1	plialtiĝas	plialtiĝi	v	*
+verb present (any)	1	dubigas	dubigi	v	*
+verb present (any)	1	malsekigas	malsekigi	v	*
+verb present (any)	1	skuas	skui	v	*
+verb present (any)	1	patronas	patroni	v	*
+verb present (any)	1	superas	superi	v	*
+verb present (any)	1	voras	vori	v	*
+verb present (any)	1	malŝlosas	malŝlosi	v	*
+verb present (any)	1	alias	alii	v	*
+verb present (any)	1	malbenas	malbeni	v	*
+verb present (any)	1	striglas	strigli	v	*
+verb present (any)	1	reabonas	reaboni	v	*
+verb present (any)	1	furiozas	furiozi	v	*
+verb present (any)	1	asekuras	asekuri	v	*
+verb present (any)	1	pacas	paci	v	*
+verb present (any)	1	almozas	almozi	v	*
+verb present (any)	1	fablas	fabli	v	*
+verb present (any)	1	vergas	vergi	v	*
+verb present (any)	1	ŝanceliĝas	ŝanceliĝi	v	*
+verb present (any)	1	tajlas	tajli	v	*
+verb present (any)	1	leviĝas	leviĝi	v	*
+verb past (frequent)	1	devis	devi	v	*
+verb past (frequent)	1	allasis	allasi	v	*
+verb past (frequent)	1	transdonis	transdoni	v	*
+verb past (frequent)	1	feliĉis	feliĉi	v	*
+verb past (frequent)	1	malpermesis	malpermesi	v	*
+verb past (frequent)	1	ricevis	ricevi	v	*
+verb past (frequent)	1	elpensis	elpensi	v	*
+verb past (frequent)	1	devigis	devigi	v	*
+verb past (frequent)	1	boris	bori	v	*
+verb past (frequent)	1	persekutis	persekuti	v	*
+verb past (frequent)	1	subskribis	subskribi	v	*
+verb past (frequent)	1	informis	informi	v	*
+verb past (frequent)	1	elprenis	elpreni	v	*
+verb past (frequent)	1	kondukis	konduki	v	*
+verb past (frequent)	1	venkis	venki	v	*
+verb past (frequent)	1	vivis	vivi	v	*
+verb past (frequent)	1	inventis	inventi	v	*
+verb past (frequent)	1	ekkriis	ekkrii	v	*
+verb past (frequent)	1	malkovris	malkovri	v	*
+verb past (frequent)	1	respondis	respondi	v	*
+verb past (frequent)	1	anoncis	anonci	v	*
+verb past (frequent)	1	saltis	salti	v	*
+verb past (frequent)	1	ligis	ligi	v	*
+verb past (frequent)	1	ekzistis	ekzisti	v	*
+verb past (frequent)	1	komprenis	kompreni	v	*
+verb past (any)	1	mensogis	mensogi	v	*
+verb past (any)	1	damnis	damni	v	*
+verb past (any)	1	regajnis	regajni	v	*
+verb past (any)	1	aspergis	aspergi	v	*
+verb past (any)	1	poluris	poluri	v	*
+verb past (any)	1	ŝirmis	ŝirmi	v	*
+verb past (any)	1	alpikis	alpiki	v	*
+verb past (any)	1	maltrankviligis	maltrankviligi	v	*
+verb past (any)	1	certigis	certigi	v	*
+verb past (any)	1	importis	importi	v	*
+verb past (any)	1	rememoris	rememori	v	*
+verb past (any)	1	najlis	najli	v	*
+verb past (any)	1	travivis	travivi	v	*
+verb past (any)	1	resaltis	resalti	v	*
+verb past (any)	1	ĝojigis	ĝojigi	v	*
+verb past (any)	1	elvokis	elvoki	v	*
+verb past (any)	1	adiciis	adicii	v	*
+verb past (any)	1	arĝentis	arĝenti	v	*
+verb past (any)	1	humiliĝis	humiliĝi	v	*
+verb past (any)	1	alarmis	alarmi	v	*
+verb past (any)	1	sanis	sani	v	*
+verb past (any)	1	furiozis	furiozi	v	*
+verb past (any)	1	frostis	frosti	v	*
+verb past (any)	1	tradukis	traduki	v	*
+verb past (any)	1	almontris	almontri	v	*
+verb future (frequent)	1	pafos	pafi	v	*
+verb future (frequent)	1	resaniĝos	resaniĝi	v	*
+verb future (frequent)	1	lernos	lerni	v	*
+verb future (frequent)	1	maldungos	maldungi	v	*
+verb future (frequent)	1	kreos	krei	v	*
+verb future (frequent)	1	revokos	revoki	v	*
+verb future (frequent)	1	aranĝos	aranĝi	v	*
+verb future (frequent)	1	kunlaboros	kunlabori	v	*
+verb future (frequent)	1	transportos	transporti	v	*
+verb future (frequent)	1	trovos	trovi	v	*
+verb future (frequent)	1	portos	porti	v	*
+verb future (frequent)	1	interparolos	interparoli	v	*
+verb future (frequent)	1	iĝos	iĝi	v	*
+verb future (frequent)	1	venos	veni	v	*
+verb future (frequent)	1	divenos	diveni	v	*
+verb future (frequent)	1	malhelpos	malhelpi	v	*
+verb future (frequent)	1	rompos	rompi	v	*
+verb future (frequent)	1	geedziĝos	geedziĝi	v	*
+verb future (frequent)	1	reiros	reiri	v	*
+verb future (frequent)	1	loĝos	loĝi	v	*
+verb future (frequent)	1	gardos	gardi	v	*
+verb future (frequent)	1	bruligos	bruligi	v	*
+verb future (frequent)	1	mankos	manki	v	*
+verb future (frequent)	1	ĉasos	ĉasi	v	*
+verb future (frequent)	1	donos	doni	v	*
+verb future (any)	1	afrankos	afranki	v	*
+verb future (any)	1	omaĝos	omaĝi	v	*
+verb future (any)	1	degrados	degradi	v	*
+verb future (any)	1	sanos	sani	v	*
+verb future (any)	1	dividos	dividi	v	*
+verb future (any)	1	speguliĝos	speguliĝi	v	*
+verb future (any)	1	fantomos	fantomi	v	*
+verb future (any)	1	kovos	kovi	v	*
+verb future (any)	1	marŝos	marŝi	v	*
+verb future (any)	1	cenzuros	cenzuri	v	*
+verb future (any)	1	sketos	sketi	v	*
+verb future (any)	1	rajtos	rajti	v	*
+verb future (any)	1	printos	printi	v	*
+verb future (any)	1	ĉagreniĝos	ĉagreniĝi	v	*
+verb future (any)	1	naĝos	naĝi	v	*
+verb future (any)	1	flirtos	flirti	v	*
+verb future (any)	1	alportos	alporti	v	*
+verb future (any)	1	mamsuĉos	mamsuĉi	v	*
+verb future (any)	1	adeptigos	adeptigi	v	*
+verb future (any)	1	pezos	pezi	v	*
+verb future (any)	1	sovaĝos	sovaĝi	v	*
+verb future (any)	1	enkondukos	enkonduki	v	*
+verb future (any)	1	komentarios	komentarii	v	*
+verb future (any)	1	ŝaltos	ŝalti	v	*
+verb future (any)	1	kakos	kaki	v	*
+verb conditional (frequent)	1	ricevus	ricevi	v	*
+verb conditional (frequent)	1	venus	veni	v	*
+verb conditional (frequent)	1	preferus	preferi	v	*
+verb conditional (frequent)	1	eblus	ebli	v	*
+verb conditional (frequent)	1	farus	fari	v	*
+verb conditional (frequent)	1	helpus	helpi	v	*
+verb conditional (frequent)	1	estus	esti	v	*
+verb conditional (frequent)	1	donus	doni	v	*
+verb conditional (frequent)	1	restus	resti	v	*
+verb conditional (frequent)	1	batus	bati	v	*
+verb conditional (frequent)	1	plaĉus	plaĉi	v	*
+verb conditional (frequent)	1	sentus	senti	v	*
+verb conditional (frequent)	1	dirus	diri	v	*
+verb conditional (frequent)	1	ŝatus	ŝati	v	*
+verb conditional (frequent)	1	prenus	preni	v	*
+verb conditional (frequent)	1	mortus	morti	v	*
+verb conditional (frequent)	1	flugus	flugi	v	*
+verb conditional (frequent)	1	kredus	kredi	v	*
+verb conditional (frequent)	1	akceptus	akcepti	v	*
+verb conditional (frequent)	1	aspektus	aspekti	v	*
+verb conditional (frequent)	1	parolus	paroli	v	*
+verb conditional (frequent)	1	komprenus	kompreni	v	*
+verb conditional (frequent)	1	bezonus	bezoni	v	*
+verb conditional (frequent)	1	provus	provi	v	*
+verb conditional (frequent)	1	irus	iri	v	*
+verb conditional (any)	1	eltirus	eltiri	v	*
+verb conditional (any)	1	malenretigus	malenretigi	v	*
+verb conditional (any)	1	enhavus	enhavi	v	*
+verb conditional (any)	1	opinius	opinii	v	*
+verb conditional (any)	1	transirus	transiri	v	*
+verb conditional (any)	1	klopodus	klopodi	v	*
+verb conditional (any)	1	polvosuĉus	polvosuĉi	v	*
+verb conditional (any)	1	taksus	taksi	v	*
+verb conditional (any)	1	diamantus	diamanti	v	*
+verb conditional (any)	1	alteriĝus	alteriĝi	v	*
+verb conditional (any)	1	priskribus	priskribi	v	*
+verb conditional (any)	1	bruus	brui	v	*
+verb conditional (any)	1	fariĝus	fariĝi	v	*
+verb conditional (any)	1	neglektus	neglekti	v	*
+verb conditional (any)	1	tuŝus	tuŝi	v	*
+verb conditional (any)	1	tostus	tosti	v	*
+verb conditional (any)	1	ĝisus	ĝisi	v	*
+verb conditional (any)	1	malĝojigus	malĝojigi	v	*
+verb conditional (any)	1	malŝategus	malŝategi	v	*
+verb conditional (any)	1	sennecesigus	sennecesigi	v	*
+verb conditional (any)	1	komplikus	kompliki	v	*
+verb conditional (any)	1	ekkantus	ekkanti	v	*
+verb conditional (any)	1	serĉus	serĉi	v	*
+verb conditional (any)	1	surfus	surfi	v	*
+verb conditional (any)	1	pardonpetus	pardonpeti	v	*
+verb imperative (frequent)	1	protektu	protekti	v	*
+verb imperative (frequent)	1	sidu	sidi	v	*
+verb imperative (frequent)	1	uzu	uzi	v	*
+verb imperative (frequent)	1	telefonu	telefoni	v	*
+verb imperative (frequent)	1	konduku	konduki	v	*
+verb imperative (frequent)	1	klopodu	klopodi	v	*
+verb imperative (frequent)	1	lernu	lerni	v	*
+verb imperative (frequent)	1	supreniru	supreniri	v	*
+verb imperative (frequent)	1	klarigu	klarigi	v	*
+verb imperative (frequent)	1	registru	registri	v	*
+verb imperative (frequent)	1	deprenu	depreni	v	*
+verb imperative (frequent)	1	apogu	apogi	v	*
+verb imperative (frequent)	1	konfidu	konfidi	v	*
+verb imperative (frequent)	1	raportu	raporti	v	*
+verb imperative (frequent)	1	starigu	starigi	v	*
+verb imperative (frequent)	1	timu	timi	v	*
+verb imperative (frequent)	1	fiksu	fiksi	v	*
+verb imperative (frequent)	1	pensu	pensi	v	*
+verb imperative (frequent)	1	dancu	danci	v	*
+verb imperative (frequent)	1	dividu	dividi	v	*
+verb imperative (frequent)	1	forigu	forigi	v	*
+verb imperative (frequent)	1	laboru	labori	v	*
+verb imperative (frequent)	1	kuŝiĝu	kuŝiĝi	v	*
+verb imperative (frequent)	1	okupiĝu	okupiĝi	v	*
+verb imperative (frequent)	1	koleru	koleri	v	*
+verb imperative (any)	1	forstreku	forstreki	v	*
+verb imperative (any)	1	iniciatu	iniciati	v	*
+verb imperative (any)	1	fariĝu	fariĝi	v	*
+verb imperative (any)	1	lukru	lukri	v	*
+verb imperative (any)	1	forpelu	forpeli	v	*
+verb imperative (any)	1	ĵonglu	ĵongli	v	*
+verb imperative (any)	1	koruptu	korupti	v	*
+verb imperative (any)	1	notu	noti	v	*
+verb imperative (any)	1	enŝaltu	enŝalti	v	*
+verb imperative (any)	1	vagu	vagi	v	*
+verb imperative (any)	1	vaku	vaki	v	*
+verb imperative (any)	1	parku	parki	v	*
+verb imperative (any)	1	siblu	sibli	v	*
+verb imperative (any)	1	lunĉu	lunĉi	v	*
+verb imperative (any)	1	elĉerpu	elĉerpi	v	*
+verb imperative (any)	1	aliigu	aliigi	v	*
+verb imperative (any)	1	rifuĝu	rifuĝi	v	*
+verb imperative (any)	1	malfaru	malfari	v	*
+verb imperative (any)	1	teoriu	teorii	v	*
+verb imperative (any)	1	interagu	interagi	v	*
+verb imperative (any)	1	inflamu	inflami	v	*
+verb imperative (any)	1	eldonu	eldoni	v	*
+verb imperative (any)	1	cundoku	cundoki	v	*
+verb imperative (any)	1	disputu	disputi	v	*
+verb imperative (any)	1	vojaĝu	vojaĝi	v	*
+participle adjective (singular) (frequent)	1	farita	fari	v	*
+participle adjective (singular) (frequent)	1	bezonata	bezoni	v	*
+participle adjective (singular) (frequent)	1	ludanta	ludi	v	*
+participle adjective (singular) (frequent)	1	benita	beni	v	*
+participle adjective (singular) (frequent)	1	ekzilita	ekzili	v	*
+participle adjective (singular) (frequent)	1	vendita	vendi	v	*
+participle adjective (singular) (frequent)	1	faranta	fari	v	*
+participle adjective (singular) (frequent)	1	prenita	preni	v	*
+participle adjective (singular) (frequent)	1	enŝlosita	enŝlosi	v	*
+participle adjective (singular) (frequent)	1	infektita	infekti	v	*
+participle adjective (singular) (frequent)	1	plenumanta	plenumi	v	*
+participle adjective (singular) (frequent)	1	informita	informi	v	*
+participle adjective (singular) (frequent)	1	ridetanta	rideti	v	*
+participle adjective (singular) (frequent)	1	elektita	elekti	v	*
+participle adjective (singular) (frequent)	1	devinta	devi	v	*
+participle adjective (singular) (frequent)	1	laŭdata	laŭdi	v	*
+participle adjective (singular) (frequent)	1	staranta	stari	v	*
+participle adjective (singular) (frequent)	1	fermita	fermi	v	*
+participle adjective (singular) (frequent)	1	metita	meti	v	*
+participle adjective (singular) (frequent)	1	ŝlosita	ŝlosi	v	*
+participle adjective (singular) (frequent)	1	estonta	esti	v	*
+participle adjective (singular) (frequent)	1	sekvonta	sekvi	v	*
+participle adjective (singular) (frequent)	1	sendita	sendi	v	*
+participle adjective (singular) (frequent)	1	mordita	mordi	v	*
+participle adjective (singular) (frequent)	1	pensanta	pensi	v	*
+participle adjective (singular) (any)	1	atingita	atingi	v	*
+participle adjective (singular) (any)	1	deklamanta	deklami	v	*
+participle adjective (singular) (any)	1	kraĉita	kraĉi	v	*
+participle adjective (singular) (any)	1	fermata	fermi	v	*
+participle adjective (singular) (any)	1	sufiĉeganta	sufiĉegi	v	*
+participle adjective (singular) (any)	1	ekskomunikanta	ekskomuniki	v	*
+participle adjective (singular) (any)	1	ekskomunikata	ekskomuniki	v	*
+participle adjective (singular) (any)	1	elŝaltinta	elŝalti	v	*
+participle adjective (singular) (any)	1	komencota	komenci	v	*
+participle adjective (singular) (any)	1	inflamiginta	inflamigi	v	*
+participle adjective (singular) (any)	1	mendonta	mendi	v	*
+participle adjective (singular) (any)	1	altirita	altiri	v	*
+participle adjective (singular) (any)	1	kombanta	kombi	v	*
+participle adjective (singular) (any)	1	malŝtoponta	malŝtopi	v	*
+participle adjective (singular) (any)	1	truita	trui	v	*
+participle adjective (singular) (any)	1	dabata	dabi	v	*
+participle adjective (singular) (any)	1	donata	doni	v	*
+participle adjective (singular) (any)	1	reironta	reiri	v	*
+participle adjective (singular) (any)	1	luonta	lui	v	*
+participle adjective (singular) (any)	1	diktota	dikti	v	*
+participle adjective (singular) (any)	1	manĝiginta	manĝigi	v	*
+participle adjective (singular) (any)	1	publikigonta	publikigi	v	*
+participle adjective (singular) (any)	1	simpligita	simpligi	v	*
+participle adjective (singular) (any)	1	alaranĝinta	alaranĝi	v	*
+participle adjective (singular) (any)	1	kuraĝinta	kuraĝi	v	*
+participle adjective (plural) (frequent)	1	falintaj	fali	v	*
+participle adjective (plural) (frequent)	1	okupitaj	okupi	v	*
+participle adjective (plural) (frequent)	1	pasintaj	pasi	v	*
+participle adjective (plural) (frequent)	1	senditaj	sendi	v	*
+participle adjective (plural) (frequent)	1	venontaj	veni	v	*
+participle adjective (plural) (frequent)	1	mortintaj	morti	v	*
+participle adjective (plural) (frequent)	1	brilantaj	brili	v	*
+participle adjective (plural) (frequent)	1	restintaj	resti	v	*
+participle adjective (plural) (frequent)	1	finitaj	fini	v	*
+participle adjective (plural) (frequent)	1	vunditaj	vundi	v	*
+participle adjective (plural) (frequent)	1	transdonitaj	transdoni	v	*
+participle adjective (plural) (frequent)	1	savitaj	savi	v	*
+participle adjective (plural) (frequent)	1	malfermitaj	malfermi	v	*
+participle adjective (plural) (frequent)	1	ligitaj	ligi	v	*
+participle adjective (plural) (frequent)	1	okupataj	okupi	v	*
+participle adjective (plural) (frequent)	1	faritaj	fari	v	*
+participle adjective (plural) (frequent)	1	konataj	koni	v	*
+participle adjective (plural) (frequent)	1	arestitaj	aresti	v	*
+participle adjective (plural) (frequent)	1	estontaj	esti	v	*
+participle adjective (plural) (frequent)	1	entombigitaj	entombigi	v	*
+participle adjective (plural) (any)	1	oferdonotaj	oferdoni	v	*
+participle adjective (plural) (any)	1	oscilotaj	oscili	v	*
+participle adjective (plural) (any)	1	diktantaj	dikti	v	*
+participle adjective (plural) (any)	1	financontaj	financi	v	*
+participle adjective (plural) (any)	1	hontantaj	honti	v	*
+participle adjective (plural) (any)	1	datotaj	dati	v	*
+participle adjective (plural) (any)	1	girlanditaj	girlandi	v	*
+participle adjective (plural) (any)	1	konvertontaj	konverti	v	*
+participle adjective (plural) (any)	1	plenumotaj	plenumi	v	*
+participle adjective (plural) (any)	1	aktivigotaj	aktivigi	v	*
+participle adjective (plural) (any)	1	brunigintaj	brunigi	v	*
+participle adjective (plural) (any)	1	dankitaj	danki	v	*
+participle adjective (plural) (any)	1	kolapsitaj	kolapsi	v	*
+participle adjective (plural) (any)	1	alklimatigotaj	alklimatigi	v	*
+participle adjective (plural) (any)	1	certigontaj	certigi	v	*
+participle adjective (plural) (any)	1	brakumontaj	brakumi	v	*
+participle adjective (plural) (any)	1	fajrigontaj	fajrigi	v	*
+participle adjective (plural) (any)	1	neŭtraligintaj	neŭtraligi	v	*
+participle adjective (plural) (any)	1	literumontaj	literumi	v	*
+participle adjective (plural) (any)	1	mordantaj	mordi	v	*
+participle adjective (accusative) (frequent)	1	spiritan	spiri	v	*
+participle adjective (accusative) (frequent)	1	pasintan	pasi	v	*
+participle adjective (accusative) (frequent)	1	rompitan	rompi	v	*
+participle adjective (accusative) (frequent)	1	malbenitan	malbeni	v	*
+participle adjective (accusative) (frequent)	1	venontan	veni	v	*
+participle adjective (accusative) (frequent)	1	mortantan	morti	v	*
+participle adjective (accusative) (frequent)	1	vivantan	vivi	v	*
+participle adjective (accusative) (frequent)	1	ŝatatan	ŝati	v	*
+participle adjective (accusative) (frequent)	1	estontan	esti	v	*
+participle adjective (accusative) (frequent)	1	forgesitan	forgesi	v	*
+participle adjective (accusative) (frequent)	1	nomatan	nomi	v	*
+participle adjective (accusative) (any)	1	gustintan	gusti	v	*
+participle adjective (accusative) (any)	1	ĉirkaŭprenotan	ĉirkaŭpreni	v	*
+participle adjective (accusative) (any)	1	ĉerpontan	ĉerpi	v	*
+participle adjective (accusative) (any)	1	murmurotan	murmuri	v	*
+participle adjective (accusative) (any)	1	diferencigotan	diferencigi	v	*
+participle adjective (accusative) (any)	1	eksportotan	eksporti	v	*
+participle adjective (accusative) (any)	1	studitan	studi	v	*
+participle adjective (accusative) (any)	1	sistemigitan	sistemigi	v	*
+participle adjective (accusative) (any)	1	tradandontan	tradandi	v	*
+participle adjective (accusative) (any)	1	bazatan	bazi	v	*
+participle adjective (accusative) (any)	1	kontentigitan	kontentigi	v	*
+participle adjective (accusative) (any)	1	relegontan	relegi	v	*
+participle adjective (accusative) (any)	1	denuncintan	denunci	v	*
+participle adjective (accusative) (any)	1	sintezintan	sintezi	v	*
+participle adjective (accusative) (any)	1	figurotan	figuri	v	*
+participle adjective (accusative) (any)	1	radiotan	radii	v	*
+participle adjective (accusative) (any)	1	apartenantan	aparteni	v	*
+participle adjective (accusative) (any)	1	aranĝantan	aranĝi	v	*
+participle adjective (accusative) (any)	1	vigliĝintan	vigliĝi	v	*
+participle adjective (accusative plural) (any)	1	militatajn	militi	v	*
+participle adjective (accusative plural) (any)	1	fakturatajn	fakturi	v	*
+participle adjective (accusative plural) (any)	1	alkonfidantajn	alkonfidi	v	*
+participle adjective (accusative plural) (any)	1	etigantajn	etigi	v	*
+participle adjective (accusative plural) (any)	1	akuzotajn	akuzi	v	*
+participle adjective (accusative plural) (any)	1	studitajn	studi	v	*
+participle adjective (accusative plural) (any)	1	soifantajn	soifi	v	*
+participle adjective (accusative plural) (any)	1	blovantajn	blovi	v	*
+participle adjective (accusative plural) (any)	1	ŝuldontajn	ŝuldi	v	*
+participle adjective (accusative plural) (any)	1	adiciontajn	adicii	v	*
+participle adjective (accusative plural) (any)	1	disdonatajn	disdoni	v	*
+participle adjective (accusative plural) (any)	1	venigantajn	venigi	v	*
+participle adjective (accusative plural) (any)	1	senarbarigotajn	senarbarigi	v	*
+participle adjective (accusative plural) (any)	1	ĝenintajn	ĝeni	v	*
+participle adjective (accusative plural) (any)	1	aniĝantajn	aniĝi	v	*
+participle adjective (accusative plural) (any)	1	pasigontajn	pasigi	v	*
+participle adjective (accusative plural) (any)	1	ignorantajn	ignori	v	*
+participle adjective (accusative plural) (any)	1	dronontajn	droni	v	*
+participle adjective (accusative plural) (any)	1	ĉerpotajn	ĉerpi	v	*
+participle adjective (accusative plural) (any)	1	krucigitajn	krucigi	v	*
+participle adjective (accusative plural) (any)	1	deputotajn	deputi	v	*
+participle adjective (accusative plural) (any)	1	kompatontajn	kompati	v	*
+participle adjective (accusative plural) (any)	1	malbarantajn	malbari	v	*
+participle adjective (accusative plural) (any)	1	vorontajn	vori	v	*
+participle adjective (accusative plural) (any)	1	esperantistiĝantajn	esperantistiĝi	v	*
+participle adjective (accusative plural) (any)	1	financantajn	financi	v	*
+participle adjective (accusative plural) (any)	1	vespirontajn	vespiri	v	*
+participle adjective (accusative plural) (any)	1	butikumintajn	butikumi	v	*
+participle adjective (accusative plural) (any)	1	malŝarĝantajn	malŝarĝi	v	*
+participle adjective (accusative plural) (any)	1	indulgatajn	indulgi	v	*
+participle noun (singular) (frequent)	1	gvidanto	gvidi	v	*
+participle noun (singular) (frequent)	1	akuzato	akuzi	v	*
+participle noun (singular) (frequent)	1	komandanto	komandi	v	*
+participle noun (singular) (frequent)	1	ludanto	ludi	v	*
+participle noun (singular) (frequent)	1	posedanto	posedi	v	*
+participle noun (singular) (frequent)	1	produktanto	produkti	v	*
+participle noun (singular) (frequent)	1	organizanto	organizi	v	*
+participle noun (singular) (frequent)	1	vizitanto	viziti	v	*
+participle noun (singular) (frequent)	1	estonto	esti	v	*
+participle noun (singular) (frequent)	1	spirito	spiri	v	*
+participle noun (singular) (frequent)	1	kaptito	kapti	v	*
+participle noun (singular) (frequent)	1	konato	koni	v	*
+participle noun (singular) (frequent)	1	esperanto	esperi	v	*
+participle noun (singular) (frequent)	1	venkinto	venki	v	*
+participle noun (singular) (frequent)	1	mutaciinto	mutacii	v	*
+participle noun (singular) (frequent)	1	lernanto	lerni	v	*
+participle noun (singular) (frequent)	1	kredito	kredi	v	*
+participle noun (singular) (frequent)	1	invitito	inviti	v	*
+participle noun (singular) (frequent)	1	akuzito	akuzi	v	*
+participle noun (singular) (frequent)	1	mortinto	morti	v	*
+participle noun (singular) (any)	1	atentonto	atenti	v	*
+participle noun (singular) (any)	1	pakonto	paki	v	*
+participle noun (singular) (any)	1	ŝtelito	ŝteli	v	*
+participle noun (singular) (any)	1	malrespektinto	malrespekti	v	*
+participle noun (singular) (any)	1	krakanto	kraki	v	*
+participle noun (singular) (any)	1	luonto	lui	v	*
+participle noun (singular) (any)	1	pinĉanto	pinĉi	v	*
+participle noun (singular) (any)	1	ŝanĝinto	ŝanĝi	v	*
+participle noun (singular) (any)	1	disligato	disligi	v	*
+participle noun (singular) (any)	1	ĵetonto	ĵeti	v	*
+participle noun (singular) (any)	1	koncernonto	koncerni	v	*
+participle noun (singular) (any)	1	bugrato	bugri	v	*
+participle noun (singular) (any)	1	stukonto	stuki	v	*
+participle noun (singular) (any)	1	deviganto	devigi	v	*
+participle noun (singular) (any)	1	dolorigoto	dolorigi	v	*
+participle noun (singular) (any)	1	propulsito	propulsi	v	*
+participle noun (singular) (any)	1	konsiderito	konsideri	v	*
+participle noun (singular) (any)	1	blovato	blovi	v	*
+participle noun (singular) (any)	1	kribronto	kribri	v	*
+participle noun (singular) (any)	1	hundblekito	hundbleki	v	*
+participle noun (plural) (frequent)	1	direktantoj	direkti	v	*
+participle noun (plural) (frequent)	1	spektantoj	spekti	v	*
+participle noun (plural) (frequent)	1	plenumantoj	plenumi	v	*
+participle noun (plural) (frequent)	1	ŝuldantoj	ŝuldi	v	*
+participle noun (plural) (frequent)	1	atestantoj	atesti	v	*
+participle noun (plural) (frequent)	1	batalantoj	batali	v	*
+participle noun (plural) (frequent)	1	mortintoj	morti	v	*
+participle noun (plural) (frequent)	1	vunditoj	vundi	v	*
+participle noun (plural) (frequent)	1	enloĝantoj	enloĝi	v	*
+participle noun (plural) (frequent)	1	arestitoj	aresti	v	*
+participle noun (plural) (any)	1	gravitontoj	graviti	v	*
+participle noun (plural) (any)	1	malŝatontoj	malŝati	v	*
+participle noun (plural) (any)	1	egigantoj	egigi	v	*
+participle noun (plural) (any)	1	subfosotoj	subfosi	v	*
+participle noun (plural) (any)	1	diskriminantoj	diskrimini	v	*
+participle noun (plural) (any)	1	foroferitoj	foroferi	v	*
+participle noun (plural) (any)	1	striitoj	strii	v	*
+participle noun (plural) (any)	1	deziregontoj	deziregi	v	*
+participle noun (plural) (any)	1	hejtatoj	hejti	v	*
+participle noun (plural) (any)	1	respektatoj	respekti	v	*
+participle noun (accusative) (frequent)	1	edukaton	eduki	v	*
+participle noun (accusative) (frequent)	1	krediton	kredi	v	*
+participle noun (accusative) (frequent)	1	spiriton	spiri	v	*
+participle noun (accusative) (frequent)	1	suspektiton	suspekti	v	*
+participle noun (accusative) (frequent)	1	pasinton	pasi	v	*
+participle noun (accusative) (frequent)	1	lernanton	lerni	v	*
+participle noun (accusative) (frequent)	1	estonton	esti	v	*
+participle noun (accusative) (frequent)	1	salaton	sali	v	*
+participle noun (accusative) (frequent)	1	esperanton	esperi	v	*
+participle noun (accusative) (frequent)	1	varianton	varii	v	*
+participle noun (accusative) (any)	1	dividiĝanton	dividiĝi	v	*
+participle noun (accusative) (any)	1	diboĉinton	diboĉi	v	*
+participle noun (accusative) (any)	1	ekbruliginton	ekbruligi	v	*
+participle noun (accusative) (any)	1	prononconton	prononci	v	*
+participle noun (accusative) (any)	1	hontiginton	hontigi	v	*
+participle noun (accusative) (any)	1	trankviliĝonton	trankviliĝi	v	*
+participle noun (accusative) (any)	1	desegniton	desegni	v	*
+participle noun (accusative) (any)	1	infektoton	infekti	v	*
+participle noun (accusative) (any)	1	admononton	admoni	v	*
+participle noun (accusative) (any)	1	malakcelaton	malakceli	v	*
+participle noun (accusative plural) (frequent)	1	atestantojn	atesti	v	*
+participle noun (accusative plural) (frequent)	1	spiritojn	spiri	v	*
+participle noun (accusative plural) (frequent)	1	mortintojn	morti	v	*
+participle noun (accusative plural) (any)	1	inokulintojn	inokuli	v	*
+participle noun (accusative plural) (any)	1	subtenontojn	subteni	v	*
+participle noun (accusative plural) (any)	1	mallongigontojn	mallongigi	v	*
+participle noun (accusative plural) (any)	1	ŝovitojn	ŝovi	v	*
+participle noun (accusative plural) (any)	1	agitontojn	agiti	v	*
+participle noun (accusative plural) (any)	1	nazaligintojn	nazaligi	v	*
+participle noun (accusative plural) (any)	1	soifantojn	soifi	v	*
+participle noun (accusative plural) (any)	1	plenumiĝintojn	plenumiĝi	v	*
+participle noun (accusative plural) (any)	1	forĵetontojn	forĵeti	v	*
+participle noun (accusative plural) (any)	1	alteriĝontojn	alteriĝi	v	*
+participle noun (accusative plural) (any)	1	drajvitojn	drajvi	v	*
+participle noun (accusative plural) (any)	1	cirkumcidintojn	cirkumcidi	v	*
+participle noun (accusative plural) (any)	1	refarintojn	refari	v	*
+participle noun (accusative plural) (any)	1	disligontojn	disligi	v	*
+participle noun (accusative plural) (any)	1	amortizitojn	amortizi	v	*
+participle noun (accusative plural) (any)	1	volvintojn	volvi	v	*
+participle noun (accusative plural) (any)	1	apartigotojn	apartigi	v	*
+participle adverb (frequent)	1	enirante	eniri	v	*
+participle adverb (frequent)	1	pluvonte	pluvi	v	*
+participle adverb (frequent)	1	volante	voli	v	*
+participle adverb (frequent)	1	malpermesite	malpermesi	v	*
+participle adverb (frequent)	1	estante	esti	v	*
+participle adverb (frequent)	1	komprenite	kompreni	v	*
+participle adverb (frequent)	1	lasante	lasi	v	*
+participle adverb (frequent)	1	volonte	voli	v	*
+participle adverb (frequent)	1	kriante	krii	v	*
+participle adverb (frequent)	1	farite	fari	v	*
+participle adverb (frequent)	1	pensante	pensi	v	*
+participle adverb (frequent)	1	elirante	eliri	v	*
+participle adverb (frequent)	1	mortante	morti	v	*
+participle adverb (frequent)	1	reveninte	reveni	v	*
+participle adverb (frequent)	1	starante	stari	v	*
+participle adverb (frequent)	1	vidite	vidi	v	*
+participle adverb (frequent)	1	venante	veni	v	*
+participle adverb (frequent)	1	prenante	preni	v	*
+participle adverb (frequent)	1	konsentite	konsenti	v	*
+participle adverb (frequent)	1	finite	fini	v	*
+participle adverb (frequent)	1	dirite	diri	v	*
+participle adverb (frequent)	1	estonte	esti	v	*
+participle adverb (frequent)	1	tenante	teni	v	*
+participle adverb (frequent)	1	serĉante	serĉi	v	*
+participle adverb (frequent)	1	uzante	uzi	v	*
+participle adverb (frequent)	1	skribite	skribi	v	*
+participle adverb (frequent)	1	atendante	atendi	v	*
+participle adverb (frequent)	1	parolante	paroli	v	*
+participle adverb (frequent)	1	decidite	decidi	v	*
+participle adverb (frequent)	1	helpante	helpi	v	*
+participle adverb (any)	1	venenite	veneni	v	*
+participle adverb (any)	1	imitite	imiti	v	*
+participle adverb (any)	1	reprezentate	reprezenti	v	*
+participle adverb (any)	1	retirante	retiri	v	*
+participle adverb (any)	1	saltante	salti	v	*
+participle adverb (any)	1	frizonte	frizi	v	*
+participle adverb (any)	1	krucigante	krucigi	v	*
+participle adverb (any)	1	desegnante	desegni	v	*
+participle adverb (any)	1	ŝanĝonte	ŝanĝi	v	*
+participle adverb (any)	1	degelonte	degeli	v	*
+participle adverb (any)	1	deprenate	depreni	v	*
+participle adverb (any)	1	eksciinte	ekscii	v	*
+participle adverb (any)	1	invadote	invadi	v	*
+participle adverb (any)	1	manĝate	manĝi	v	*
+participle adverb (any)	1	neniigonte	neniigi	v	*
+participle adverb (any)	1	prognozinte	prognozi	v	*
+participle adverb (any)	1	supozate	supozi	v	*
+participle adverb (any)	1	likvidate	likvidi	v	*
+participle adverb (any)	1	skuote	skui	v	*
+participle adverb (any)	1	atakinte	ataki	v	*
+participle adverb (any)	1	malkredate	malkredi	v	*
+participle adverb (any)	1	dediĉonte	dediĉi	v	*
+participle adverb (any)	1	preterflugante	preterflugi	v	*
+participle adverb (any)	1	spektite	spekti	v	*
+participle adverb (any)	1	deputate	deputi	v	*
+participle adverb (any)	1	alĝustigote	alĝustigi	v	*
+participle adverb (any)	1	nestigote	nestigi	v	*
+participle adverb (any)	1	preĝate	preĝi	v	*
+participle adverb (any)	1	forlasite	forlasi	v	*
+participle adverb (any)	1	argumentonte	argumenti	v	*
+noun (plural) (frequent)	1	familioj	familio	n	*
+noun (plural) (frequent)	1	rilatoj	rilato	n	*
+noun (plural) (frequent)	1	vespertoj	vesperto	n	*
+noun (plural) (frequent)	1	kranioj	kranio	n	*
+noun (plural) (frequent)	1	anguloj	angulo	n	*
+noun (plural) (frequent)	1	specimenoj	specimeno	n	*
+noun (plural) (frequent)	1	oficistoj	oficisto	n	*
+noun (plural) (frequent)	1	anĝeloj	anĝelo	n	*
+noun (plural) (frequent)	1	maljunuloj	maljunulo	n	*
+noun (plural) (frequent)	1	ŝuldoj	ŝuldo	n	*
+noun (plural) (frequent)	1	samlandanoj	samlandano	n	*
+noun (plural) (frequent)	1	vojoj	vojo	n	*
+noun (plural) (frequent)	1	usonanoj	usonano	n	*
+noun (plural) (frequent)	1	flakonoj	flakono	n	*
+noun (plural) (frequent)	1	roluloj	rolulo	n	*
+noun (plural) (frequent)	1	loĝantoj	loĝanto	n	*
+noun (plural) (frequent)	1	ŝafinoj	ŝafino	n	*
+noun (plural) (frequent)	1	ŝercoj	ŝerco	n	*
+noun (plural) (frequent)	1	fingroj	fingro	n	*
+noun (plural) (frequent)	1	porkoj	porko	n	*
+noun (plural) (frequent)	1	lingvoj	lingvo	n	*
+noun (plural) (frequent)	1	ĵurnalistoj	ĵurnalisto	n	*
+noun (plural) (frequent)	1	picoj	pico	n	*
+noun (plural) (frequent)	1	omoj	omo	n	*
+noun (plural) (frequent)	1	mondoj	mondo	n	*
+noun (plural) (frequent)	1	bildoj	bildo	n	*
+noun (plural) (frequent)	1	riĉuloj	riĉulo	n	*
+noun (plural) (frequent)	1	surskriboj	surskribo	n	*
+noun (plural) (frequent)	1	teranoj	terano	n	*
+noun (plural) (frequent)	1	herbejoj	herbejo	n	*
+noun (plural) (frequent)	1	viktimoj	viktimo	n	*
+noun (plural) (frequent)	1	sonoj	sono	n	*
+noun (plural) (frequent)	1	ritoj	rito	n	*
+noun (plural) (frequent)	1	kordoj	kordo	n	*
+noun (plural) (frequent)	1	leonoj	leono	n	*
+noun (plural) (any)	1	lipogramoj	lipogramo	n	*
+noun (plural) (any)	1	ĉefabatoj	ĉefabato	n	*
+noun (plural) (any)	1	koincidoj	koincido	n	*
+noun (plural) (any)	1	redaktoroj	redaktoro	n	*
+noun (plural) (any)	1	mejloj	mejlo	n	*
+noun (plural) (any)	1	kunlaboroj	kunlaboro	n	*
+noun (plural) (any)	1	torentoj	torento	n	*
+noun (plural) (any)	1	monarkioj	monarkio	n	*
+noun (plural) (any)	1	konatoj	konato	n	*
+noun (plural) (any)	1	haringoj	haringo	n	*
+noun (plural) (any)	1	ostroj	ostro	n	*
+noun (plural) (any)	1	triumfoj	triumfo	n	*
+noun (plural) (any)	1	varmoj	varmo	n	*
+noun (plural) (any)	1	incendioj	incendio	n	*
+noun (plural) (any)	1	strioj	strio	n	*
+noun (plural) (any)	1	ĉenhundoj	ĉenhundo	n	*
+noun (plural) (any)	1	oleandroj	oleandro	n	*
+noun (plural) (any)	1	buloj	bulo	n	*
+noun (plural) (any)	1	ornitorinkoj	ornitorinko	n	*
+noun (plural) (any)	1	dormadoj	dormado	n	*
+noun (plural) (any)	1	amuloj	amulo	n	*
+noun (plural) (any)	1	niveloj	nivelo	n	*
+noun (plural) (any)	1	ŝtatestroj	ŝtatestro	n	*
+noun (plural) (any)	1	kalkuliloj	kalkulilo	n	*
+noun (plural) (any)	1	ĵetonoj	ĵetono	n	*
+noun (plural) (any)	1	hindoj	hindo	n	*
+noun (plural) (any)	1	elegioj	elegio	n	*
+noun (plural) (any)	1	sinonimoj	sinonimo	n	*
+noun (plural) (any)	1	vakuoj	vakuo	n	*
+noun (plural) (any)	1	majstroj	majstro	n	*
+noun (plural) (any)	1	raziloj	razilo	n	*
+noun (plural) (any)	1	baciloj	bacilo	n	*
+noun (plural) (any)	1	retoj	reto	n	*
+noun (plural) (any)	1	kronvirusoj	kronviruso	n	*
+noun (plural) (any)	1	stadionoj	stadiono	n	*
+noun (accusative) (frequent)	1	balailon	balailo	n	*
+noun (accusative) (frequent)	1	premion	premio	n	*
+noun (accusative) (frequent)	1	alkoholon	alkoholo	n	*
+noun (accusative) (frequent)	1	kanton	kanto	n	*
+noun (accusative) (frequent)	1	ribelon	ribelo	n	*
+noun (accusative) (frequent)	1	ŝipanaron	ŝipanaro	n	*
+noun (accusative) (frequent)	1	sencon	senco	n	*
+noun (accusative) (frequent)	1	signalon	signalo	n	*
+noun (accusative) (frequent)	1	frukton	frukto	n	*
+noun (accusative) (frequent)	1	magion	magio	n	*
+noun (accusative) (frequent)	1	pordon	pordo	n	*
+noun (accusative) (frequent)	1	kolbason	kolbaso	n	*
+noun (accusative) (frequent)	1	komputilon	komputilo	n	*
+noun (accusative) (frequent)	1	manĝaĵon	manĝaĵo	n	*
+noun (accusative) (frequent)	1	gloron	gloro	n	*
+noun (accusative) (frequent)	1	knabinon	knabino	n	*
+noun (accusative) (frequent)	1	serion	serio	n	*
+noun (accusative) (frequent)	1	halon	halo	n	*
+noun (accusative) (frequent)	1	karakteron	karaktero	n	*
+noun (accusative) (frequent)	1	esperon	espero	n	*
+noun (accusative) (frequent)	1	mesaĝon	mesaĝo	n	*
+noun (accusative) (frequent)	1	piedon	piedo	n	*
+noun (accusative) (frequent)	1	samovaron	samovaro	n	*
+noun (accusative) (frequent)	1	kurson	kurso	n	*
+noun (accusative) (frequent)	1	verecon	vereco	n	*
+noun (accusative) (frequent)	1	dimanĉon	dimanĉo	n	*
+noun (accusative) (frequent)	1	teleron	telero	n	*
+noun (accusative) (frequent)	1	truon	truo	n	*
+noun (accusative) (frequent)	1	sorton	sorto	n	*
+noun (accusative) (frequent)	1	robon	robo	n	*
+noun (accusative) (frequent)	1	ideon	ideo	n	*
+noun (accusative) (frequent)	1	mandaton	mandato	n	*
+noun (accusative) (frequent)	1	salon	salo	n	*
+noun (accusative) (frequent)	1	liberecon	libereco	n	*
+noun (accusative) (frequent)	1	landon	lando	n	*
+noun (accusative) (any)	1	avĉjon	avĉjo	n	*
+noun (accusative) (any)	1	grason	graso	n	*
+noun (accusative) (any)	1	islamanon	islamano	n	*
+noun (accusative) (any)	1	elektrigadon	elektrigado	n	*
+noun (accusative) (any)	1	sceptron	sceptro	n	*
+noun (accusative) (any)	1	kandelon	kandelo	n	*
+noun (accusative) (any)	1	knanjon	knanjo	n	*
+noun (accusative) (any)	1	ŝipobileton	ŝipobileto	n	*
+noun (accusative) (any)	1	avon	avo	n	*
+noun (accusative) (any)	1	pizon	pizo	n	*
+noun (accusative) (any)	1	humanecon	humaneco	n	*
+noun (accusative) (any)	1	mielabelon	mielabelo	n	*
+noun (accusative) (any)	1	eŭskon	eŭsko	n	*
+noun (accusative) (any)	1	boton	boto	n	*
+noun (accusative) (any)	1	teoremon	teoremo	n	*
+noun (accusative) (any)	1	konsekvencon	konsekvenco	n	*
+noun (accusative) (any)	1	furzon	furzo	n	*
+noun (accusative) (any)	1	sportejon	sportejo	n	*
+noun (accusative) (any)	1	arĝentoton	arĝentoto	n	*
+noun (accusative) (any)	1	anelidon	anelido	n	*
+noun (accusative) (any)	1	maŝon	maŝo	n	*
+noun (accusative) (any)	1	agordiston	agordisto	n	*
+noun (accusative) (any)	1	junulinon	junulino	n	*
+noun (accusative) (any)	1	pavon	pavo	n	*
+noun (accusative) (any)	1	infanmurdon	infanmurdo	n	*
+noun (accusative) (any)	1	virmeleagron	virmeleagro	n	*
+noun (accusative) (any)	1	ejon	ejo	n	*
+noun (accusative) (any)	1	diapazonon	diapazono	n	*
+noun (accusative) (any)	1	paserinon	paserino	n	*
+noun (accusative) (any)	1	jetion	jetio	n	*
+noun (accusative) (any)	1	ironisignon	ironisigno	n	*
+noun (accusative) (any)	1	drinkaĵon	drinkaĵo	n	*
+noun (accusative) (any)	1	ŝanĝon	ŝanĝo	n	*
+noun (accusative) (any)	1	enigmon	enigmo	n	*
+noun (accusative) (any)	1	mikrobon	mikrobo	n	*
+noun (accusative plural) (frequent)	1	raportojn	raporto	n	*
+noun (accusative plural) (frequent)	1	formojn	formo	n	*
+noun (accusative plural) (frequent)	1	eblojn	eblo	n	*
+noun (accusative plural) (frequent)	1	aliulojn	aliulo	n	*
+noun (accusative plural) (frequent)	1	buŝtukojn	buŝtuko	n	*
+noun (accusative plural) (frequent)	1	medalojn	medalo	n	*
+noun (accusative plural) (frequent)	1	larmojn	larmo	n	*
+noun (accusative plural) (frequent)	1	maŝinojn	maŝino	n	*
+noun (accusative plural) (frequent)	1	sentojn	sento	n	*
+noun (accusative plural) (frequent)	1	hispanojn	hispano	n	*
+noun (accusative plural) (frequent)	1	onidirojn	onidiro	n	*
+noun (accusative plural) (frequent)	1	naciojn	nacio	n	*
+noun (accusative plural) (frequent)	1	botelojn	botelo	n	*
+noun (accusative plural) (frequent)	1	laboristojn	laboristo	n	*
+noun (accusative plural) (frequent)	1	ŝanĝojn	ŝanĝo	n	*
+noun (accusative plural) (frequent)	1	ĵurnalojn	ĵurnalo	n	*
+noun (accusative plural) (frequent)	1	bildojn	bildo	n	*
+noun (accusative plural) (frequent)	1	pomojn	pomo	n	*
+noun (accusative plural) (frequent)	1	metrojn	metro	n	*
+noun (accusative plural) (frequent)	1	picojn	pico	n	*
+noun (accusative plural) (frequent)	1	verkojn	verko	n	*
+noun (accusative plural) (frequent)	1	okulvitrojn	okulvitro	n	*
+noun (accusative plural) (frequent)	1	fungojn	fungo	n	*
+noun (accusative plural) (frequent)	1	rilatojn	rilato	n	*
+noun (accusative plural) (frequent)	1	ilojn	ilo	n	*
+noun (accusative plural) (frequent)	1	homojn	homo	n	*
+noun (accusative plural) (frequent)	1	planojn	plano	n	*
+noun (accusative plural) (frequent)	1	armilojn	armilo	n	*
+noun (accusative plural) (frequent)	1	birdojn	birdo	n	*
+noun (accusative plural) (frequent)	1	pilolojn	pilolo	n	*
+noun (accusative plural) (frequent)	1	uncojn	unco	n	*
+noun (accusative plural) (frequent)	1	studentojn	studento	n	*
+noun (accusative plural) (frequent)	1	rozojn	rozo	n	*
+noun (accusative plural) (frequent)	1	knabinojn	knabino	n	*
+noun (accusative plural) (frequent)	1	amikojn	amiko	n	*
+noun (accusative plural) (any)	1	korkokverkojn	korkokverko	n	*
+noun (accusative plural) (any)	1	lazuritojn	lazurito	n	*
+noun (accusative plural) (any)	1	pseŭdonimojn	pseŭdonimo	n	*
+noun (accusative plural) (any)	1	organizaĵojn	organizaĵo	n	*
+noun (accusative plural) (any)	1	laktoglandojn	laktoglando	n	*
+noun (accusative plural) (any)	1	vestaĉojn	vestaĉo	n	*
+noun (accusative plural) (any)	1	adultulinojn	adultulino	n	*
+noun (accusative plural) (any)	1	furzojn	furzo	n	*
+noun (accusative plural) (any)	1	toastojn	toasto	n	*
+noun (accusative plural) (any)	1	cigarojn	cigaro	n	*
+noun (accusative plural) (any)	1	satelitojn	satelito	n	*
+noun (accusative plural) (any)	1	kokosojn	kokoso	n	*
+noun (accusative plural) (any)	1	volumenojn	volumeno	n	*
+noun (accusative plural) (any)	1	karoojn	karoo	n	*
+noun (accusative plural) (any)	1	malplimultojn	malplimulto	n	*
+noun (accusative plural) (any)	1	balanojn	balano	n	*
+noun (accusative plural) (any)	1	militojn	milito	n	*
+noun (accusative plural) (any)	1	atletojn	atleto	n	*
+noun (accusative plural) (any)	1	frizistojn	frizisto	n	*
+noun (accusative plural) (any)	1	lingvojn	lingvo	n	*
+noun (accusative plural) (any)	1	fajropilkojn	fajropilko	n	*
+noun (accusative plural) (any)	1	narcisojn	narciso	n	*
+noun (accusative plural) (any)	1	verkaĵojn	verkaĵo	n	*
+noun (accusative plural) (any)	1	procesiojn	procesio	n	*
+noun (accusative plural) (any)	1	retmesaĝojn	retmesaĝo	n	*
+noun (accusative plural) (any)	1	ublietojn	ublieto	n	*
+noun (accusative plural) (any)	1	paperojn	papero	n	*
+noun (accusative plural) (any)	1	fragojn	frago	n	*
+noun (accusative plural) (any)	1	lekciojn	lekcio	n	*
+noun (accusative plural) (any)	1	altebenaĵojn	altebenaĵo	n	*
+noun (accusative plural) (any)	1	kortbirdojn	kortbirdo	n	*
+noun (accusative plural) (any)	1	kvantumbitojn	kvantumbito	n	*
+noun (accusative plural) (any)	1	surdamutulojn	surdamutulo	n	*
+noun (accusative plural) (any)	1	moralecojn	moraleco	n	*
+noun (accusative plural) (any)	1	fragarbojn	fragarbo	n	*
+adjective (plural) (frequent)	1	kiaj	kia	adj	*
+adjective (plural) (frequent)	1	ceteraj	cetera	adj	*
+adjective (plural) (frequent)	1	malfermaj	malferma	adj	*
+adjective (plural) (frequent)	1	larĝaj	larĝa	adj	*
+adjective (plural) (frequent)	1	malplenaj	malplena	adj	*
+adjective (plural) (frequent)	1	trankvilaj	trankvila	adj	*
+adjective (plural) (frequent)	1	krakintaj	krakinta	adj	*
+adjective (plural) (frequent)	1	malgrandaj	malgranda	adj	*
+adjective (plural) (frequent)	1	bravaj	brava	adj	*
+adjective (plural) (frequent)	1	malproksimaj	malproksima	adj	*
+adjective (plural) (frequent)	1	inteligentaj	inteligenta	adj	*
+adjective (plural) (frequent)	1	afrikaj	afrika	adj	*
+adjective (plural) (frequent)	1	noktaj	nokta	adj	*
+adjective (plural) (frequent)	1	puraj	pura	adj	*
+adjective (plural) (frequent)	1	malfacilaj	malfacila	adj	*
+adjective (plural) (frequent)	1	raciaj	racia	adj	*
+adjective (plural) (frequent)	1	bluaj	blua	adj	*
+adjective (plural) (frequent)	1	blindaj	blinda	adj	*
+adjective (plural) (frequent)	1	mildaj	milda	adj	*
+adjective (plural) (frequent)	1	bonaj	bona	adj	*
+adjective (plural) (frequent)	1	civilaj	civila	adj	*
+adjective (plural) (frequent)	1	teruraj	terura	adj	*
+adjective (plural) (frequent)	1	bongustaj	bongusta	adj	*
+adjective (plural) (frequent)	1	maljunaj	maljuna	adj	*
+adjective (plural) (any)	1	senmovaj	senmova	adj	*
+adjective (plural) (any)	1	ranaj	rana	adj	*
+adjective (plural) (any)	1	aeronaŭtikaj	aeronaŭtika	adj	*
+adjective (plural) (any)	1	aŭtonomaj	aŭtonoma	adj	*
+adjective (plural) (any)	1	severaj	severa	adj	*
+adjective (plural) (any)	1	kompreneblaj	komprenebla	adj	*
+adjective (plural) (any)	1	erotikaj	erotika	adj	*
+adjective (plural) (any)	1	senceremoniaj	senceremonia	adj	*
+adjective (plural) (any)	1	miaj	mia	adj	*
+adjective (plural) (any)	1	poeziaj	poezia	adj	*
+adjective (plural) (any)	1	didamnitaj	didamnita	adj	*
+adjective (plural) (any)	1	kuriozaj	kurioza	adj	*
+adjective (plural) (any)	1	aŭstroneziaj	aŭstronezia	adj	*
+adjective (plural) (any)	1	ĥimeraj	ĥimera	adj	*
+adjective (plural) (any)	1	verŝajnaj	verŝajna	adj	*
+adjective (plural) (any)	1	anerojdaj	anerojda	adj	*
+adjective (plural) (any)	1	lojalaj	lojala	adj	*
+adjective (plural) (any)	1	unuaklasaj	unuaklasa	adj	*
+adjective (plural) (any)	1	deksepaj	deksepa	adj	*
+adjective (plural) (any)	1	pitoreskaj	pitoreska	adj	*
+adjective (plural) (any)	1	tieaj	tiea	adj	*
+adjective (plural) (any)	1	minusklaj	minuskla	adj	*
+adjective (plural) (any)	1	interstelaj	interstela	adj	*
+adjective (plural) (any)	1	profitdonaj	profitdona	adj	*
+adjective (plural) (any)	1	muzikemaj	muzikema	adj	*
+adjective (accusative) (frequent)	1	multekostan	multekosta	adj	*
+adjective (accusative) (frequent)	1	interesan	interesa	adj	*
+adjective (accusative) (frequent)	1	monstran	monstra	adj	*
+adjective (accusative) (frequent)	1	valoran	valora	adj	*
+adjective (accusative) (frequent)	1	akran	akra	adj	*
+adjective (accusative) (frequent)	1	lastan	lasta	adj	*
+adjective (accusative) (frequent)	1	propran	propra	adj	*
+adjective (accusative) (frequent)	1	klaran	klara	adj	*
+adjective (accusative) (frequent)	1	rusan	rusa	adj	*
+adjective (accusative) (frequent)	1	belan	bela	adj	*
+adjective (accusative) (frequent)	1	belegan	belega	adj	*
+adjective (accusative) (frequent)	1	sensencan	sensenca	adj	*
+adjective (accusative) (frequent)	1	bonegan	bonega	adj	*
+adjective (accusative) (frequent)	1	eblan	ebla	adj	*
+adjective (accusative) (frequent)	1	ordinaran	ordinara	adj	*
+adjective (accusative) (frequent)	1	kvaran	kvara	adj	*
+adjective (accusative) (frequent)	1	plenan	plena	adj	*
+adjective (accusative) (frequent)	1	junan	juna	adj	*
+adjective (accusative) (frequent)	1	malbonan	malbona	adj	*
+adjective (accusative) (frequent)	1	fortegan	fortega	adj	*
+adjective (accusative) (frequent)	1	senfinan	senfina	adj	*
+adjective (accusative) (frequent)	1	muzikan	muzika	adj	*
+adjective (accusative) (frequent)	1	urinan	urina	adj	*
+adjective (accusative) (frequent)	1	teruran	terura	adj	*
+adjective (accusative) (frequent)	1	necesan	necesa	adj	*
+adjective (accusative) (any)	1	hommalaman	hommalama	adj	*
+adjective (accusative) (any)	1	neeviteblan	neevitebla	adj	*
+adjective (accusative) (any)	1	anatomian	anatomia	adj	*
+adjective (accusative) (any)	1	farmantan	farmanta	adj	*
+adjective (accusative) (any)	1	malsekuran	malsekura	adj	*
+adjective (accusative) (any)	1	diskretan	diskreta	adj	*
+adjective (accusative) (any)	1	sekegan	sekega	adj	*
+adjective (accusative) (any)	1	hotelan	hotela	adj	*
+adjective (accusative) (any)	1	malsatan	malsata	adj	*
+adjective (accusative) (any)	1	malrespektindan	malrespektinda	adj	*
+adjective (accusative) (any)	1	tardan	tarda	adj	*
+adjective (accusative) (any)	1	timidan	timida	adj	*
+adjective (accusative) (any)	1	artan	arta	adj	*
+adjective (accusative) (any)	1	kloakan	kloaka	adj	*
+adjective (accusative) (any)	1	sombran	sombra	adj	*
+adjective (accusative) (any)	1	supran	supra	adj	*
+adjective (accusative) (any)	1	balistikan	balistika	adj	*
+adjective (accusative) (any)	1	feblan	febla	adj	*
+adjective (accusative) (any)	1	kulturan	kultura	adj	*
+adjective (accusative) (any)	1	indan	inda	adj	*
+adjective (accusative) (any)	1	verdan	verda	adj	*
+adjective (accusative) (any)	1	inertan	inerta	adj	*
+adjective (accusative) (any)	1	sennoman	sennoma	adj	*
+adjective (accusative) (any)	1	hindan	hinda	adj	*
+adjective (accusative) (any)	1	militan	milita	adj	*
+adjective (accusative plural) (frequent)	1	aĉajn	aĉa	adj	*
+adjective (accusative plural) (frequent)	1	altajn	alta	adj	*
+adjective (accusative plural) (frequent)	1	flavajn	flava	adj	*
+adjective (accusative plural) (frequent)	1	longajn	longa	adj	*
+adjective (accusative plural) (frequent)	1	ekstremajn	ekstrema	adj	*
+adjective (accusative plural) (frequent)	1	purajn	pura	adj	*
+adjective (accusative plural) (frequent)	1	miajn	mia	adj	*
+adjective (accusative plural) (frequent)	1	feliĉajn	feliĉa	adj	*
+adjective (accusative plural) (frequent)	1	kelkajn	kelka	adj	*
+adjective (accusative plural) (frequent)	1	grandajn	granda	adj	*
+adjective (accusative plural) (frequent)	1	mirindajn	mirinda	adj	*
+adjective (accusative plural) (frequent)	1	gravajn	grava	adj	*
+adjective (accusative plural) (frequent)	1	sincerajn	sincera	adj	*
+adjective (accusative plural) (frequent)	1	lastajn	lasta	adj	*
+adjective (accusative plural) (frequent)	1	homajn	homa	adj	*
+adjective (accusative plural) (frequent)	1	strangajn	stranga	adj	*
+adjective (accusative plural) (frequent)	1	stultajn	stulta	adj	*
+adjective (accusative plural) (frequent)	1	pliajn	plia	adj	*
+adjective (accusative plural) (frequent)	1	politikajn	politika	adj	*
+adjective (accusative plural) (frequent)	1	fremdajn	fremda	adj	*
+adjective (accusative plural) (frequent)	1	necesajn	necesa	adj	*
+adjective (accusative plural) (frequent)	1	akrajn	akra	adj	*
+adjective (accusative plural) (frequent)	1	tiajn	tia	adj	*
+adjective (accusative plural) (frequent)	1	karajn	kara	adj	*
+adjective (accusative plural) (frequent)	1	aliajn	alia	adj	*
+adjective (accusative plural) (any)	1	cedemajn	cedema	adj	*
+adjective (accusative plural) (any)	1	bibliajn	biblia	adj	*
+adjective (accusative plural) (any)	1	pentrajn	pentra	adj	*
+adjective (accusative plural) (any)	1	okdekajn	okdeka	adj	*
+adjective (accusative plural) (any)	1	albanajn	albana	adj	*
+adjective (accusative plural) (any)	1	skvamajn	skvama	adj	*
+adjective (accusative plural) (any)	1	adverbajn	adverba	adj	*
+adjective (accusative plural) (any)	1	ĉefurbajn	ĉefurba	adj	*
+adjective (accusative plural) (any)	1	sintaksajn	sintaksa	adj	*
+adjective (accusative plural) (any)	1	kortuŝajn	kortuŝa	adj	*
+adjective (accusative plural) (any)	1	montetajn	monteta	adj	*
+adjective (accusative plural) (any)	1	formikajn	formika	adj	*
+adjective (accusative plural) (any)	1	aŭdeblajn	aŭdebla	adj	*
+adjective (accusative plural) (any)	1	idealismajn	idealisma	adj	*
+adjective (accusative plural) (any)	1	respektemajn	respektema	adj	*
+adjective (accusative plural) (any)	1	bazajn	baza	adj	*
+adjective (accusative plural) (any)	1	muarajn	muara	adj	*
+adjective (accusative plural) (any)	1	ananasajn	ananasa	adj	*
+adjective (accusative plural) (any)	1	haveblajn	havebla	adj	*
+adjective (accusative plural) (any)	1	interrompontajn	interromponta	adj	*
+adjective (accusative plural) (any)	1	desubajn	desuba	adj	*
+adjective (accusative plural) (any)	1	groningenajn	groningena	adj	*
+adjective (accusative plural) (any)	1	atutintajn	atutinta	adj	*
+adjective (accusative plural) (any)	1	ebenajn	ebena	adj	*
+adjective (accusative plural) (any)	1	ekzistajn	ekzista	adj	*
+name (frequent)	1	Hispanion	Hispanio	*	*
+name (frequent)	1	Usonon	Usono	*	*
+name (frequent)	1	lundon	lundo	*	*
+name (frequent)	1	Moskvon	Moskvo	*	*
+name (frequent)	1	Sinjoron	Sinjoro	*	*
+name (frequent)	1	Markon	Marko	*	*
+name (frequent)	1	Kronon	Krono	*	*
+name (frequent)	1	Afrikon	Afriko	*	*
+name (frequent)	1	Idon	Ido	*	*
+name (frequent)	1	Brazilon	Brazilo	*	*
+name (frequent)	1	Esperanton	Esperanto	*	*
+name (frequent)	1	Iranon	Irano	*	*
+name (frequent)	1	Lunon	Luno	*	*
+name (frequent)	1	Kristoforon	Kristoforo	*	*
+name (frequent)	1	Teron	Tero	*	*
+name (frequent)	1	Kriston	Kristo	*	*
+name (frequent)	1	Berlinon	Berlino	*	*
+name (frequent)	1	ReVon	ReVo	*	*
+name (frequent)	1	Turkion	Turkio	*	*
+name (frequent)	1	Karlon	Karlo	*	*
+name (any)	1	Viktorion	Viktorio	*	*
+name (any)	1	Jordanon	Jordano	*	*
+name (any)	1	Akraon	Akrao	*	*
+name (any)	1	Niĝerlandon	Niĝerlando	*	*
+name (any)	1	Anastazion	Anastazio	*	*
+name (any)	1	Slovakion	Slovakio	*	*
+name (any)	1	Kamerunon	Kameruno	*	*
+name (any)	1	Meksikurbon	Meksikurbo	*	*
+name (any)	1	Erison	Eriso	*	*
+name (any)	1	Vilhelmon	Vilhelmo	*	*
+name (any)	1	Saturnon	Saturno	*	*
+name (any)	1	Fuĵion	Fuĵio	*	*
+name (any)	1	Mohamedon	Mohamedo	*	*
+name (any)	1	Atlantidon	Atlantido	*	*
+name (any)	1	Portoprincon	Portoprinco	*	*
+name (any)	1	Kiribaton	Kiribato	*	*
+name (any)	1	Viŝnuon	Viŝnuo	*	*
+name (any)	1	majoj	majo	*	*
+name (any)	1	Mikronezion	Mikronezio	*	*
+name (any)	1	Tbilison	Tbiliso	*	*
+pronoun or determiner (frequent)	1	neniun	neniu	*	*
+pronoun or determiner (frequent)	1	ŝian	ŝia	*	*
+pronoun or determiner (frequent)	1	viaj	via	*	*
+pronoun or determiner (frequent)	1	iujn	iu	*	*
+pronoun or determiner (frequent)	1	iajn	ia	*	*
+pronoun or determiner (frequent)	1	iliaj	ilia	*	*
+pronoun or determiner (frequent)	1	ĝiaj	ĝia	*	*
+pronoun or determiner (frequent)	1	ŝiaj	ŝia	*	*
+pronoun or determiner (frequent)	1	ĉiajn	ĉia	*	*
+pronoun or determiner (frequent)	1	ilian	ilia	*	*
+pronoun or determiner (frequent)	1	ĉiujn	ĉiu	*	*
+pronoun or determiner (frequent)	1	sian	sia	*	*
+pronoun or determiner (frequent)	1	niajn	nia	*	*
+pronoun or determiner (frequent)	1	tion	tio	*	*
+pronoun or determiner (frequent)	1	sin	si	*	*
+pronoun or determiner (frequent)	1	ĉion	ĉio	*	*
+pronoun or determiner (frequent)	1	liajn	lia	*	*
+pronoun or determiner (frequent)	1	siajn	sia	*	*
+pronoun or determiner (frequent)	1	cian	cia	*	*
+pronoun or determiner (frequent)	1	ĉian	ĉia	*	*
+pronoun or determiner (any)	1	ŝliaj	ŝlia	*	*
+pronoun or determiner (any)	1	neniajn	nenia	*	*
+pronoun or determiner (any)	1	liaj	lia	*	*
+pronoun or determiner (any)	1	aliulon	aliulo	*	*
+pronoun or determiner (any)	1	siaj	sia	*	*
+pronoun or determiner (any)	1	vin	vi	*	*
+pronoun or determiner (any)	1	ŝlian	ŝlia	*	*
+pronoun or determiner (any)	1	iuj	iu	*	*
+pronoun or determiner (any)	1	ĝin	ĝi	*	*
+pronoun or determiner (any)	1	iŝiaj	iŝia	*	*
+pronoun or determiner (any)	1	ĉiaj	ĉia	*	*
+pronoun or determiner (any)	1	nian	nia	*	*
+pronoun or determiner (any)	1	ion	io	*	*
+pronoun or determiner (any)	1	megaj	mega	*	*
+pronoun or determiner (any)	1	ian	ia	*	*
+pronoun or determiner (any)	1	ŝlin	ŝli	*	*
+pronoun or determiner (any)	1	kiuj	kiu	*	*
+pronoun or determiner (any)	1	viajn	via	*	*
+pronoun or determiner (any)	1	nenian	nenia	*	*
+pronoun or determiner (any)	1	ŝliajn	ŝlia	*	*
