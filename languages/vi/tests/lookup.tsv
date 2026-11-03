@@ -1,0 +1,29 @@
+# Written for this pack (GPL-3.0-or-later): whole lookups against tests/dictionary/ (written for the pack).
+# category	valid	text	expression	matched (valid = 1: the first result; 0: not the first result)
+reduplication	1	trăng trắng quá	trắng	trăng trắng
+reduplication	0	trăng trắng quá	trăng	trăng
+reduplication	1	nho nhỏ thôi	nhỏ	nho nhỏ
+reduplication	1	đo đỏ	đỏ	đo đỏ
+reduplication	1	đo chiều dài	đo	đo
+reduplication	1	xanh xanh lắm	xanh	xanh
+reduplication	1	đi đi lại lại mãi	đi lại	đi đi lại lại
+reduplication	1	lôi tha lôi thôi quá	lôi thôi	lôi tha lôi thôi
+reduplication	1	cho chó ăn	cho	cho
+reduplication	0	cho chó ăn	chó	cho chó
+reduplication	1	tôi tối nay đi	tôi	tôi
+reduplication	0	tôi tối nay đi	tối	tôi tối
+reduplication	1	máy bay bay cao	máy bay	máy bay
+reduplication	0	máy bay bay cao	máy bay	máy bay bay
+words	1	học sinh giỏi	học sinh	học sinh
+words	1	sinh viên tốt	sinh viên	sinh viên
+spelling	1	hòa bình thế giới	hoà bình	hòa bình
+spelling	1	kỹ thuật cao	kĩ thuật	kỹ thuật
+spelling	1	Hồng-bàng	Hồng Bàng	Hồng-bàng
+spelling	1	Hà-nội rộng	Hà Nội	Hà-nội
+spelling	1	HỒNG-BÀNG	Hồng Bàng	HỒNG-BÀNG
+spelling	1	ĐỎ	đỏ	ĐỎ
+spelling	1	Châu Á rộng	châu Á	Châu Á
+spelling	1	Ðỏ	đỏ	Ðỏ
+spelling	1	đỏ	đỏ	đỏ
+spelling	1	sức khỏe tốt	sức khoẻ	sức khỏe
+spelling	1	cuả tôi	của	cuả

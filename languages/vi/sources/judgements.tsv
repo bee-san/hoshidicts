@@ -1,0 +1,86 @@
+# Hand judgements (written for this pack, GPL-3.0-or-later) of the first results that differ from Yomitan's processors
+# in the real-text runs of README.md (Measurements 4), read by judge-real.py: a judged pair applies to every hover with it.
+# matched	expression	verdict	note
+Quảng-nghĩa	Quảng Ngãi	right	old name of Quảng Ngãi (the dictionary names it)
+Phạm phạm	phạm	wrong	a name (Phạm Phạm Chí), read as the verb phạm
+châu châu	châu	wrong	span: Tri-châu | châu Quế (two words)
+ầm-ầm	ầm	right	reduplication
+năm năm	năm	wrong	span: năm (five, or the month) | năm (year)
+du du	dâu	wrong	a transcribed Chinese line
+làu-làu	làu	right	reduplication (làu làu: fluently)
+quan Quan	quan	wrong	span: quan | Quan-sát-sứ
+chuyển-vận	vận chuyển	right	chuyển vận, a form of vận chuyển
+Giang-san	giang sơn	right	giang san, a form of giang sơn
+Chuyển-vận	vận chuyển	right	the title Chuyển-vận-sứ (transport commissioner)
+tài-chánh	tài chính	right	Southern form of tài chính
+thí-dụ	ví dụ	right	thí dụ, a form of ví dụ
+Tôn-miếu	tông miếu	right	tôn miếu, a form of tông miếu
+Thăng-bình	thăng bằng	wrong	Thăng Bình is a district
+chứng-cớ	chứng cứ	right	chứng cớ, a form of chứng cứ
+giang-san	giang sơn	right	giang san, a form of giang sơn
+tự-hồ	tựa hồ	right	tự hồ, a form of tựa hồ
+u-uẩn	u ẩn	right	u uẩn, a form of u ẩn
+ha ha	ha	right	laughter
+năm năm	năm	wrong	span: năm (five) | năm (years)
+đi đi	đi	right	reduplicated imperative
+bay bay	bay	wrong	span: máy bay | bay (the plane flies)
+rất rất	rất	right	very very
+lề mà lề mề	lề mề	right	four-syllable reduplication
+chứng chứng	chứng	wrong	span: bằng chứng | chứng minh
+Này này	này	right	hey hey
+quen quen	quen	right	vaguely familiar
+sinh sinh	sinh	wrong	span: học sinh | sinh viên
+báo báo	báo	wrong	span: two words
+hơn hơn	hơn	wrong	span: two words
+khó khó	khó	wrong	span: two words (uncertain, counted wrong)
+hòm hòm	hòm	wrong	hòm hòm (nearly done) is not hòm (chest)
+Có có	có	right	yes, yes
+mờ mờ	mờ	right	dimly
+thành thành	thành	wrong	span: trở thành | thành viên
+Chộp chộp	chộp	wrong	a sound, not chộp (to snatch)
+hàng hàng	hàng	wrong	span: đơn hàng | hàng tháng
+lắc lắc	lắc	right	shaking repeatedly
+ra ra	ra	wrong	span: tìm ra | ra-di-um
+mài mài	mài	right	sharpening again and again
+liếc liếc	liếc	right	glancing again and again
+đi đi lại lại	đi lại	right	AABB reduplication
+lại lại	lại	right	inside đi đi lại lại
+điều điều	điều	wrong	span: two words
+cao cao	cao	right	tallish
+vàng vàng	vàng	right	yellowish
+khất kha khất khưởng	khật khưỡng	right	four-syllable reduplication, a form of khật khưỡng
+quá quá	quá	right	too much, too much
+dàng dàng	dàng	wrong	span: dễ dàng | dàng (a typo)
+chắn chắn	chắn	wrong	a typo for chắc chắn
+triệu triệu	triệu	right	millions and millions
+sai sai	sai	right	somewhat wrong
+lén lén lút lút	lén lút	right	AABB reduplication
+lút lút	lút	wrong	inside lén lén lút lút; lút alone is not lén lút
+A a	a	right	interjection
+Ha ha ha ha	ha	right	laughter
+ha ha ha ha	ha	right	laughter
+khi khi	khi	wrong	a repeated word (typo)
+quanh quanh	quanh	right	around and around
+ẩn ẩn	ẩn	wrong	span: bí ẩn | ẩn giấu
+đùng đùng	đùng	right	furiously
+tôi tôi	tôi	wrong	span: two words
+có có	có	wrong	span: có | có thể
+be be	be	wrong	a bleat, not be
+nhẹ nhẹ	nhẹ	right	gently
+gì gì	gì	right	gì gì đó: something or other
+cọ cọ	cọ	right	rubbing
+dinh dính	dính	right	partial reduplication
+đần đần	đần	right	somewhat dim
+Đi đi	đi	right	reduplicated imperative
+Ha ha	ha	right	laughter
+thiếu thiếu	thiếu	right	somewhat lacking
+tính tính	tính	wrong	span: máy tính | tính toán
+o o	o	wrong	an exclamation, not o
+kì kỳ	kì	wrong	a typo (kì kỳ lạ)
+của của	của	wrong	a repeated word (typo)
+vớ va vớ vẩn	vớ vẩn	right	four-syllable reduplication
+xem xem	xem	right	let us see
+thông thông	thông	wrong	span: giao thông | thông minh
+vào vào	vào	wrong	a repeated word (typo)
+Ðường	Đường	right	Ð for Đ
+Ðức	Đức	right	Ð for Đ

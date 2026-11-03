@@ -1,0 +1,103 @@
+# Hand-written for this pack (GPL-3.0-or-later): reduplicated forms, spelling variants and negatives.
+# The pack has no optional processor, transform or variant pass, so these rows give the same results with its defaults.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+reduplication	1	đi đi lại lại	đi lại	*	reduplication
+reduplication	1	Đi đi lại lại	đi lại	*	reduplication
+reduplication	1	đi-đi lại-lại	đi lại	*	reduplication
+reduplication	1	vội vội vàng vàng	vội vàng	*	reduplication
+reduplication	1	lén lén lút lút	lén lút	*	reduplication
+reduplication	1	lôi tha lôi thôi	lôi thôi	*	reduplication
+reduplication	1	lề mà lề mề	lề mề	*	reduplication
+reduplication	1	lẩm bà lẩm bẩm	lẩm bẩm	*	reduplication
+reduplication	1	vớ va vớ vẩn	vớ vẩn	*	reduplication
+reduplication	1	ấm a ấm ớ	ấm ớ	*	reduplication
+partial	1	đo đỏ	đỏ	*	partialReduplication
+partial	1	nho nhỏ	nhỏ	*	partialReduplication
+partial	1	trăng trắng	trắng	*	partialReduplication
+partial	1	tim tím	tím	*	partialReduplication
+partial	1	be bé	bé	*	partialReduplication
+partial	1	man mát	mát	*	partialReduplication
+partial	1	sành sạch	sạch	*	partialReduplication
+partial	1	đèm đẹp	đẹp	*	partialReduplication
+partial	1	chầm chậm	chậm	*	partialReduplication
+partial	1	nhè nhẹ	nhẹ	*	partialReduplication
+partial	1	khe khẽ	khẽ	*	partialReduplication
+partial	1	se sẽ	sẽ	*	partialReduplication
+partial	1	sầm sẫm	sẫm	*	partialReduplication
+partial	1	nhăn nhẵn	nhẵn	*	partialReduplication
+partial	1	thâm thấp	thấp	*	partialReduplication
+partial	1	ngòn ngọt	ngọt	*	partialReduplication
+partial	1	chan chát	chát	*	partialReduplication
+partial	1	khen khét	khét	*	partialReduplication
+partial	1	ươn ướt	ướt	*	partialReduplication
+partial	1	nằng nặng	nặng	*	partialReduplication
+partial	1	vun vút	vút	*	partialReduplication
+partial	1	cuồn cuộn	cuộn	*	partialReduplication
+partial	1	hôi hổi	hổi	*	partialReduplication
+partial	1	thinh thích	thích	*	partialReduplication
+partial	1	tưng tức	tức	*	partialReduplication
+partial	1	giông giống	giống	*	partialReduplication
+partial	1	âm ấm	ấm	*	partialReduplication
+partial	1	âm ẩm	ẩm	*	partialReduplication
+partial	1	nong nóng	nóng	*	partialReduplication
+partial	1	bàng bạc	bạc	*	partialReduplication
+partial	1	Đo đỏ	đỏ	*	partialReduplication
+partial	1	đo-đỏ	đỏ	*	partialReduplication
+spelling	1	hòa bình	hoà bình	*	
+spelling	1	hoà bình	hòa bình	*	
+spelling	1	thủy	thuỷ	*	
+spelling	1	Ủy ban	uỷ ban	*	
+spelling	1	sức khỏe	sức khoẻ	*	
+spelling	1	kỹ thuật	kĩ thuật	*	
+spelling	1	lí do	lý do	*	
+spelling	1	nước Mỹ	nước Mĩ	*	
+spelling	1	Mĩ	Mỹ	*	
+spelling	1	công ti	công ty	*	
+spelling	1	quí	quý	*	
+spelling	1	cuống quít	cuống quýt	*	
+spelling	1	thế-kỷ	thế kỉ	*	
+spelling	1	Hồng-bàng	Hồng Bàng	*	
+spelling	1	Châu Á	châu Á	*	
+spelling	1	HỒNG-BÀNG	Hồng Bàng	*	
+spelling	1	Tiếng Việt	tiếng Việt	*	
+spelling	1	Nước Mỹ	nước Mĩ	*	
+spelling	1	Ðà Nẵng	Đà Nẵng	*	
+spelling	1	ngừơi	người	*	
+spelling	1	cuả	của	*	
+spelling	1	baỷ	bảy	*	
+negatives	0	cho chó	chó	*	*
+negatives	0	cùng cũng	cũng	*	*
+negatives	0	nhưng những	những	*	*
+negatives	0	tôi tối	tối	*	*
+negatives	0	về vệ	vệ	*	*
+negatives	0	cô cố	cố	*	*
+negatives	0	là lạ	lạ	*	*
+negatives	0	đu đủ	đủ	*	*
+negatives	0	ba bố	bố	*	*
+negatives	0	con cún	cún	*	*
+negatives	0	máy bay bay	máy bay	*	*
+negatives	0	năm năm	năm	*	*
+negatives	0	chứng chứng	chứng	*	*
+negatives	0	xanh xanh	xanh	*	*
+negatives	0	học sinh sinh	học sinh	*	*
+negatives	0	bằng chứng chứng	bằng chứng	*	*
+negatives	0	đi đi lại	đi lại	*	*
+negatives	0	đi lại lại	đi lại	*	*
+negatives	0	đi đi lại lại	đi	*	*
+negatives	0	lôi tha lôi	lôi thôi	*	*
+negatives	0	lôi ta lôi thôi	lôi thôi	*	*
+negatives	0	lôi tha lôi hôi	lôi hôi	*	*
+negatives	0	lôi thôi lôi thôi	lôi	*	*
+negatives	0	ha ha ha	ha ha	*	*
+negatives	0	khi	khy	*	*
+negatives	0	thi	thy	*	*
+negatives	0	tay	tai	*	*
+negatives	0	tuy	tui	*	*
+negatives	0	y tá	i tá	*	*
+negatives	0	nghĩ	nghỹ	*	*
+negatives	0	quý	qúy	*	*
+negatives	0	hoàng	hòang	*	*
+negatives	0	quà	qùa	*	*
+negatives	0	Mặt trăng	Mặt Trăng	*	*
+negatives	0	cao bằng	Cao Bằng	*	*
+negatives	0	Văn hóa	Văn Hóa	*	*
