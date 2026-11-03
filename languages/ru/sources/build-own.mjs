@@ -205,8 +205,15 @@ function noun(lemma, stemEnd, table, {min = 2, example = null, fleeting = false,
             if (stemEnd !== null) { constraints.stemEndsWith = stemEnd; }
             const ex = example && example[form] ? [example[form], example.lemma] : null;
             if (!fleetingOnly) { suffix('noun', [form], ending, lemma, [], NOUN, constraints, ex); }
+            // The dative and locative in -у leave out stems in к: the feminine
+            // accusatives in -ку (коробку, пушку, бочку) are far more frequent
+            // than the datives of -ок nouns (коробок, пушок), which
+            // wiktionary-to-yomitan's own rows name (куску → кусок), and the
+            // fleeting chain reached the -ок noun first. -цу keeps it
+            // (американцу → американец).
             if (fleeting && OBLIQUE.has(form)) {
-                suffix('noun', [form], ending, lemma, [], ['fl'], {stemMinLength: 1, ...extra}, null);
+                const fl = ending === 'у' ? {stemMinLength: 1, stemNotEndsWith: '[к]', ...extra} : {stemMinLength: 1, ...extra};
+                suffix('noun', [form], ending, lemma, [], ['fl'], fl, null);
             }
         }
     }
@@ -439,6 +446,8 @@ for (const [lemma, forms] of [
     ['чёрт', {'nom.pl': 'черти', 'gen.pl': 'чертей', 'dat.pl': 'чертям', 'ins.pl': 'чертями', 'prp.pl': 'чертях'}],
     ['цветок', {'nom.pl': 'цветы', 'gen.pl': 'цветов', 'dat.pl': 'цветам', 'ins.pl': 'цветами', 'prp.pl': 'цветах'}],
     ['путь', {'ins.sg': 'путём'}],
+    // деньги's forms, which the -а declension also reads as the rare деньга.
+    ['деньги', {'gen.pl': 'денег', 'dat.pl': 'деньгам', 'ins.pl': 'деньгами', 'prp.pl': 'деньгах'}],
     ['господь', {'dat.sg': 'господу', 'ins.sg': 'господом', 'prp.sg': 'господе'}],
 ]) {
     for (const [form, word] of Object.entries(forms)) {
@@ -496,8 +505,11 @@ adjective('ый', HARD, HARD_ENDINGS, {example: {lemma: 'новый', ого: '�
 adjective('ой', HARD, Object.fromEntries(Object.entries(HARD_ENDINGS).filter(([ending]) => ending !== 'ой')), {example: {lemma: 'молодой', ого: 'молодого'}});
 adjective('ий', VELAR, VELAR_ENDINGS, {example: {lemma: 'русский', ого: 'русского', ой: 'русской', ие: 'русские'}});
 adjective('ой', VELAR, Object.fromEntries(Object.entries(VELAR_ENDINGS).filter(([ending]) => ending !== 'ой')), {example: {lemma: 'другой', ого: 'другого', ие: 'другие'}});
-adjective('ий', HUSHING, SOFT_ENDINGS('ая', 'ую'), {example: {lemma: 'хороший', его: 'хорошего', ая: 'хорошая', ей: 'хорошей', ую: 'хорошую'}});
+// The -ой rows come first: большой, чужой and other common -ой adjectives
+// tie with the comparative-like -ий lemmas wty-ru-en lists (больший), and the
+// first row reached wins the tie (docs/languages.md 9.6).
 adjective('ой', HUSHING, Object.fromEntries(Object.entries(VELAR_ENDINGS).filter(([ending]) => ending !== 'ой')), {example: {lemma: 'большой', ого: 'большого', им: 'большим'}});
+adjective('ий', HUSHING, SOFT_ENDINGS('ая', 'ую'), {example: {lemma: 'хороший', его: 'хорошего', ая: 'хорошая', ей: 'хорошей', ую: 'хорошую'}});
 adjective('ий', '[нр]', SOFT_ENDINGS('яя', 'юю'), {example: {lemma: 'синий', его: 'синего', яя: 'синяя', юю: 'синюю'}});
 adjective('ий', null, Object.fromEntries(Object.entries(SOFT_ENDINGS('я', 'ю')).map(([ending, forms]) => [`ь${ending}`, forms])), {min: 1, example: {lemma: 'третий', ьего: 'третьего', ья: 'третья', ье: 'третье'}});
 
@@ -666,9 +678,11 @@ const E2_HUSHING = {'pres.1sg': 'у', 'pres.2sg': 'ишь', 'pres.3sg': 'ит', 
  * adverbial participle are made (from the third-person plural, the first-person
  * plural and the stem). `skip` leaves out forms written elsewhere.
  */
-function presentClass({pres, inf, endings, imp = [], act = true, pass = false, ger = null, min = 2, stemEnd = null, example = null, skip = [], gerExclude = null}) {
+function presentClass({pres, inf, endings, imp = [], act = true, pass = false, ger = null, min = 2, stemEnd = null, stemNotEnd = null, example = null, skip = [], gerExclude = null, exclude = null}) {
     const extra = {stemMinLength: min};
     if (stemEnd !== null) { extra.stemEndsWith = stemEnd; }
+    if (stemNotEnd !== null) { extra.stemNotEndsWith = stemNotEnd; }
+    if (exclude !== null) { extra.stemNotStartsWithText = exclude; }
     const ex = (form) => (example && example[form] ? [example[form], example.inf] : null);
     for (const [form, ending] of Object.entries(endings)) {
         if (skip.includes(form)) { continue; }
@@ -697,7 +711,9 @@ function presentClass({pres, inf, endings, imp = [], act = true, pass = false, g
 presentClass({pres: 'а', inf: 'ать', endings: E1V, imp: ['й'], pass: true, ger: 'я', example: {inf: 'читать', 'pres.1sg': 'читаю', 'pres.2sg': 'читаешь', 'pres.3sg': 'читает', 'pres.1pl': 'читаем', 'pres.2pl': 'читаете', 'pres.3pl': 'читают', 'imp.2sg': 'читай', 'imp.2pl': 'читайте', 'ptcp.pres.act': 'читающий', 'ptcp.pres.pass': 'читаемый', 'ger.pres': 'читая'}});
 presentClass({pres: 'я', inf: 'ять', endings: E1V, imp: ['й'], pass: true, ger: 'я', example: {inf: 'гулять', 'pres.3sg': 'гуляет', 'ger.pres': 'гуляя'}});
 presentClass({pres: 'е', inf: 'еть', endings: E1V, imp: ['й'], pass: false, ger: 'я', example: {inf: 'уметь', 'pres.3sg': 'умеет', 'imp.2sg': 'умей'}});
-presentClass({pres: 'у', inf: 'овать', endings: E1V_STRESSED, imp: ['й'], pass: true, ger: 'я', min: 1, example: {inf: 'рисовать', 'pres.1sg': 'рисую', 'pres.3sg': 'рисует', 'imp.2sg': 'рисуй', 'ptcp.pres.act': 'рисующий', 'ger.pres': 'рисуя'}});
+// After ж, ш, щ, ч and ц the infinitive is -евать (танцевать), so -овать leaves those
+// stems out (танцует is not танцовать, an old spelling).
+presentClass({pres: 'у', inf: 'овать', endings: E1V_STRESSED, imp: ['й'], pass: true, ger: 'я', min: 1, stemNotEnd: '[жшщчц]', example: {inf: 'рисовать', 'pres.1sg': 'рисую', 'pres.3sg': 'рисует', 'imp.2sg': 'рисуй', 'ptcp.pres.act': 'рисующий', 'ger.pres': 'рисуя'}});
 presentClass({pres: 'у', inf: 'евать', endings: E1V_STRESSED, imp: ['й'], pass: true, ger: 'я', min: 1, stemEnd: '[жшщчц]', example: {inf: 'танцевать', 'pres.1sg': 'танцую'}});
 presentClass({pres: 'ю', inf: 'евать', endings: E1V_STRESSED, imp: ['й'], pass: true, ger: 'я', min: 1, example: {inf: 'воевать', 'pres.1sg': 'воюю'}});
 presentClass({pres: 'у', inf: 'уть', endings: E1V_STRESSED, imp: ['й'], ger: 'я', min: 1, example: {inf: 'дуть', 'pres.1sg': 'дую'}});
@@ -722,7 +738,9 @@ for (const [form, ending] of Object.entries({'pres.1sg': 'ю', 'pres.2sg': 'ёш
 }
 
 // First conjugation, consonant stems: -нуть, стать, деть, писать, сказать, плакать, прятать, искать, клеветать, сыпать, колебать, дремать.
-presentClass({pres: 'н', inf: 'нуть', endings: E1C, imp: ['и'], example: {inf: 'крикнуть', 'pres.1sg': 'крикну', 'pres.3sg': 'крикнет', 'imp.2sg': 'крикни'}});
+// The stem ми is left out: минут is минута's genitive plural, not the rare
+// минуть's (мигнуть's forms keep a longer stem, мигнут).
+presentClass({pres: 'н', inf: 'нуть', endings: E1C, imp: ['и'], exclude: 'ми', example: {inf: 'крикнуть', 'pres.1sg': 'крикну', 'pres.3sg': 'крикнет', 'imp.2sg': 'крикни'}});
 presentClass({pres: 'стан', inf: 'стать', endings: E1C, imp: ['ь'], act: false, min: 0, example: {inf: 'встать', 'pres.1sg': 'встану', 'imp.2sg': 'встань'}});
 presentClass({pres: 'ден', inf: 'деть', endings: E1C, imp: ['ь'], act: false, min: 1, example: {inf: 'надеть', 'pres.1sg': 'надену', 'imp.2sg': 'надень'}});
 presentClass({pres: 'ш', inf: 'сать', endings: E1C, imp: ['и'], min: 2, example: {inf: 'писать', 'pres.1sg': 'пишу', 'pres.3sg': 'пишет', 'imp.2sg': 'пиши', 'ptcp.pres.act': 'пишущий'}});
@@ -799,7 +817,11 @@ for (const [inflected, infs, ex] of [
     ['блю', ['бить', 'беть'], ['люблю', 'любить']], ['плю', ['пить', 'петь'], ['куплю', 'купить']],
     ['влю', ['вить', 'веть'], ['ставлю', 'ставить']], ['млю', ['мить', 'меть'], ['кормлю', 'кормить']], ['флю', ['фить'], null],
 ]) {
-    for (const inf of infs) { verb(['pres.1sg'], inflected, inf, {stemMinLength: 1}, inf === infs[0] ? ex : null); }
+    for (const inf of infs) {
+        // кучу is куча's accusative, not the rare кутить's first person.
+        const extra = inflected === 'чу' && inf === 'тить' ? {stemMinLength: 1, stemNotStartsWithText: 'ку'} : {stemMinLength: 1};
+        verb(['pres.1sg'], inflected, inf, extra, inf === infs[0] ? ex : null);
+    }
 }
 // Past passive participles of the second conjugation (решённый, построенный) and with the change (рождённый, брошенный, купленный).
 for (const [inflected, inf, ex] of [
@@ -868,7 +890,8 @@ for (const [m, inf, ex] of [['ёл', 'ести', ['вёл', 'вести']]]) {
 }
 // -честь (прочесть, учесть, счесть, почесть): прочту, прочёл, прочла, прочтённый, прочтя.
 for (const [form, ending] of Object.entries({'pres.1sg': 'чту', 'pres.2sg': 'чтёшь', 'pres.3sg': 'чтёт', 'pres.1pl': 'чтём', 'pres.2pl': 'чтёте', 'pres.3pl': 'чтут', 'past.m': 'чёл', 'past.f': 'чла', 'past.n': 'чло', 'past.pl': 'чли', 'imp.2sg': 'чти', 'imp.2pl': 'чтите', 'ptcp.past.act': 'чётший', 'ger.pres': 'чтя'})) {
-    verb([form], ending, 'честь', {stemMinLength: 1}, form === 'past.m' ? ['прочёл', 'прочесть'] : form === 'past.f' ? ['учла', 'учесть'] : form === 'pres.1sg' ? ['прочту', 'прочесть'] : null);
+    // почту, почти are почта's and the adverb's, not the rare почесть's.
+    verb([form], ending, 'честь', {stemMinLength: 1, stemNotStartsWithText: 'по'}, form === 'past.m' ? ['прочёл', 'прочесть'] : form === 'past.f' ? ['учла', 'учесть'] : form === 'pres.1sg' ? ['прочту', 'прочесть'] : null);
 }
 verb(['ptcp.past.pass'], 'чтённый', 'честь', {stemMinLength: 1}, ['прочтённый', 'прочесть'], {refl: false});
 for (const [m, inf, ex] of [['дший', 'сти', ['ведший', 'вести']], ['тший', 'сти', ['цветший', 'цвести']]]) {
@@ -901,7 +924,8 @@ const IRREGULAR = [
     ['сесть', 0, {'past.m': 'сел', 'past.f': 'села', 'past.n': 'село', 'past.pl': 'сели', 'ptcp.past.act': 'севший'}],
     ['класть', 0, {'past.m': 'клал', 'past.f': 'клала', 'past.n': 'клало', 'past.pl': 'клали', 'ptcp.past.act': 'клавший'}],
     ['красть', 0, {'past.m': 'крал', 'past.f': 'крала', 'past.n': 'крало', 'past.pl': 'крали', 'ptcp.past.act': 'кравший'}],
-    ['пасть', 1, {'past.m': 'пал', 'past.f': 'пала', 'past.n': 'пало', 'past.pl': 'пали', 'ptcp.past.act': 'павший', 'ger.past': 'пав'}, ['упал', 'упасть']],
+    // спал, спала, спали are спать's (the -ал rule), not the rare спасть.
+    ['пасть', 1, {'past.m': 'пал', 'past.f': 'пала', 'past.n': 'пало', 'past.pl': 'пали', 'ptcp.past.act': 'павший', 'ger.past': 'пав'}, ['упал', 'упасть'], {stemNotStartsWithText: 'с'}],
     ['расти', 0, {'past.m': 'рос', 'past.f': 'росла', 'past.n': 'росло', 'past.pl': 'росли', 'ptcp.past.act': 'росший'}],
     ['спать', 0, {'pres.1sg': 'сплю', 'pres.2sg': 'спишь', 'pres.3sg': 'спит', 'pres.1pl': 'спим', 'pres.2pl': 'спите', 'pres.3pl': 'спят', 'imp.2sg': 'спи', 'ptcp.pres.act': 'спящий'}],
     ['гнать', 0, {'pres.1sg': 'гоню', 'pres.2sg': 'гонишь', 'pres.3sg': 'гонит', 'pres.1pl': 'гоним', 'pres.2pl': 'гоните', 'pres.3pl': 'гонят', 'imp.2sg': 'гони', 'ptcp.pres.act': 'гонящий'}],
@@ -914,12 +938,12 @@ const IRREGULAR = [
     ['петь', 0, {'pres.1sg': 'пою', 'pres.2sg': 'поёшь', 'pres.3sg': 'поёт', 'pres.1pl': 'поём', 'pres.2pl': 'поёте', 'pres.3pl': 'поют', 'imp.2sg': 'пой', 'imp.2pl': 'пойте', 'ptcp.pres.act': 'поющий'}],
     ['есть', 0, {'ptcp.pres.act': 'едящий'}],
 ];
-for (const [inf, min, forms, exOverride] of IRREGULAR) {
+for (const [inf, min, forms, exOverride, extra = {}] of IRREGULAR) {
     let first = true;
     for (const [form, word] of Object.entries(forms)) {
         const ex = first ? (exOverride ?? [word, inf]) : null;
         first = false;
-        verb([form], word, inf, {stemMinLength: min}, ex, {refl: !form.startsWith('ger.past')});
+        verb([form], word, inf, {stemMinLength: min, ...extra}, ex, {refl: !form.startsWith('ger.past')});
     }
 }
 // есть (to eat): its short forms only as whole words and after ъ or по- (съем, объем, поем), so тем and систем are not read as it.
@@ -1086,7 +1110,13 @@ for (const entry of collected.values()) {
         if (group.examples.length < 3 && !group.examples.some(([a]) => a === ex[0])) { group.examples.push(ex); }
     }
 }
-const ordered = [...groups.values()].sort((a, b) => (POS_ORDER.indexOf(a.pos) - POS_ORDER.indexOf(b.pos))
+// The long forms of adjectives come before the nouns: a case ending such as -ой,
+// -ом or -ую reads a common adjective (белом → белый, скорой → скорый, такою →
+// такой) and a rare noun (бел, скора, така) at one step each, and the first
+// transform reached wins the tie (docs/languages.md 9.6). Short forms keep
+// their place after the nouns (звонка, тайны, ванной are nouns' forms).
+const rank = (g) => (g.pos === 'adj' && !g.forms.some((f) => f.startsWith('short.') || ['cmp', 'po', 'sup', 'adverb'].includes(f)) ? -1 : POS_ORDER.indexOf(g.pos));
+const ordered = [...groups.values()].sort((a, b) => (rank(a) - rank(b))
     || (FORM_ORDER.get(a.forms[0]) - FORM_ORDER.get(b.forms[0])) || (a.forms.length - b.forms.length) || a.id.localeCompare(b.id));
 // Suffix rules of one transform that differ only in their endings are written
 // as one cross-product row (docs/languages.md 7.3): a circumfix whose only

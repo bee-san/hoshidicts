@@ -34,12 +34,14 @@ each subcommand).
 import argparse
 import collections
 import json
+import os
 import re
 import subprocess
 import sys
 import zipfile
 
 ROOT = __file__.rsplit('/languages/', 1)[0]
+HERE = os.path.dirname(os.path.abspath(__file__))
 CLI = __import__('os').environ.get('HOSHIDICTS_CLI', f'{ROOT}/build/hoshidicts-cli')
 
 
@@ -128,11 +130,89 @@ def accepted(word, refs, lemmas, yo=False):
     return named | second
 
 
+def lemma_proxy(refs, lemmas, counts):
+    """A frequency for each lemma: the tokens of the list's words whose form-of
+    rows name only that lemma, plus the lemma's own tokens when it is a headword
+    no row names as a form of something else."""
+    proxy = collections.Counter()
+    for w, c in counts.items():
+        named = refs.get(w, set())
+        if w in lemmas and not named:
+            proxy[w] += c
+        elif len(named) == 1 and w not in lemmas:
+            proxy[next(iter(named))] += c
+    return proxy
+
+
+def load_labels(path):
+    """(word, first result) -> R (right), W (wrong) or D (debatable), from
+    sources/tie-labels.tsv: the hand labels of first results that a word's
+    rows name beside a more frequent lemma (judged in context)."""
+    labels = {}
+    if path is None:
+        return labels
+    for line in open(path, encoding='utf-8'):
+        if line.startswith('#') or not line.strip():
+            continue
+        word, first, label = line.rstrip('\n').split('\t')[:3]
+        labels[(word, first)] = label
+    return labels
+
+
+PRONOUN_OF = {}
+for _lemma, _forms in {'я': 'меня мне мной мною', 'ты': 'тебя тебе тобой тобою', 'он': 'его него ему нему им ним нём',
+                       'она': 'её неё ее нее ей ней ею нею', 'мы': 'нас нам нами', 'вы': 'вас вам вами',
+                       'они': 'их них ими ними', 'себя': 'себе собой собою'}.items():
+    for _form in _forms.split():
+        PRONOUN_OF.setdefault(_form, _lemma)
+
+
+def own_lemma_ok(word, first, refs, lemmas, proxy, labels, ratio=10):
+    """The contract's judge (docs/languages.md 14 step 5): the first result must be
+    the word's own lemma. A label decides when there is one; otherwise a first
+    result that the word's rows name is right unless another lemma they name is
+    `ratio` times more frequent by the proxy (at least 50 tokens), and a result
+    the rows do not name is wrong."""
+    label = labels.get((word.lower(), first))
+    if label is not None:
+        return label != 'W'
+    spellings = set(yo_spellings(word.lower())) | {word, word.lower(), word.lower().capitalize()}
+    if first in spellings or first.lower() in spellings:
+        # The word itself, as written or with ё or another capital (это, его,
+        # даешь → даёшь, господи → Господи): its own entry.
+        return first in lemmas or first.lower() in lemmas
+    if word.lower() in PRONOUN_OF:
+        # wiktionary-to-yomitan's rows of every personal pronoun's form name
+        # every personal pronoun (её → я, она, он, мы …), so the proxy cannot
+        # tell them apart: the right one is the form's own pronoun.
+        return first == PRONOUN_OF[word.lower()]
+    ok = accepted(word, refs, lemmas)
+    if first not in ok and first.lower() not in ok:
+        return False
+    named = set()
+    for sp in yo_spellings(word):
+        named |= refs.get(sp, set())
+    if word in lemmas:
+        named.add(word)
+    if not named:
+        return True
+    best = max(named, key=lambda l: proxy.get(l, 0))
+    return not (best != first and proxy.get(best, 0) >= ratio * max(proxy.get(first, 0), 1) and proxy.get(best, 0) >= 50)
+
+
 def first_with_definition(results):
     for r in results:
         if not r['formOf']:
             return r
     return None
+
+
+def all_counts(path):
+    counts = {}
+    for line in open(path, encoding='utf-8'):
+        word, count = line.split()
+        counts.setdefault(word, int(count))
+    return counts
 
 
 def frequent(a):
@@ -168,8 +248,11 @@ def frequent(a):
         if got & named:
             reached.append(w)
     looked = lookups(a.batch, a.languages, a.dict, reached, a.exempt)
+    proxy = lemma_proxy(refs, lemmas, all_counts(a.freq))
+    labels = load_labels(a.labels)
     wrong = []
     missing = []
+    strict_wrong = []
     for w, o in zip(reached, looked):
         first = first_with_definition(o['results'])
         if first is None:
@@ -178,6 +261,8 @@ def frequent(a):
         if first['expression'] not in accepted(w, refs, lemmas):
             via_yo = first['expression'] in accepted(w, refs, lemmas, yo=True)
             wrong.append((w, counts[w], first['expression'], first['trace'], sorted(refs[w]), via_yo))
+        if not own_lemma_ok(w, first['expression'], refs, lemmas, proxy, labels):
+            strict_wrong.append((w, counts[w], first['expression'], first['trace']))
     reached_tokens = sum(counts[w] for w in reached)
     wrong_tokens = sum(c for _, c, *_ in wrong)
     print(json.dumps({
@@ -189,10 +274,28 @@ def frequent(a):
         'wrongButAnotherYoSpelling': sum(1 for x in wrong if x[5]), 'wrongButAnotherYoSpellingTokens': sum(x[1] for x in wrong if x[5]),
         'wrongShareOfReachedTokens': wrong_tokens / reached_tokens if reached_tokens else 0,
         'wrongShareOfListTokens': wrong_tokens / total_tokens,
+        'ownLemmaWrong': len(strict_wrong), 'ownLemmaWrongTokens': sum(c for _, c, *_ in strict_wrong),
+        'ownLemmaWrongShareOfReachedTokens': sum(c for _, c, *_ in strict_wrong) / reached_tokens if reached_tokens else 0,
         'exempt': a.exempt,
     }, ensure_ascii=False))
     for w, c, got, trace, want, via_yo in sorted(wrong, key=lambda x: -x[1])[: a.show]:
         print(f'  {w}\t{c}\tfirst={got}\ttrace={trace}\twant={want}' + ('\t(a form of its ё spelling)' if via_yo else ''))
+    # The cause of each: with --no-rules (a copy of the pack without
+    # transforms), a word whose first result is also wrong there is wrong
+    # through the dictionary's own rows and the ranking keys, not the rules.
+    cause = {}
+    if a.no_rules:
+        bare = lookups(a.batch, a.no_rules, a.dict, [w for w, *_ in strict_wrong], a.exempt)
+        for (w, c, got, trace), o in zip(strict_wrong, bare):
+            f = first_with_definition(o['results'])
+            cause[w] = 'rules' if f is not None and own_lemma_ok(w, f['expression'], refs, lemmas, proxy, labels) else 'dictionary'
+        split = collections.Counter(); split_tokens = collections.Counter()
+        for w, c, *_ in strict_wrong:
+            split[cause[w]] += 1; split_tokens[cause[w]] += c
+        print(json.dumps({'ownLemmaWrongByCause': dict(split), 'ownLemmaWrongTokensByCause': dict(split_tokens)}))
+    print('wrong by the own-lemma judge (labels, then the frequency proxy):')
+    for w, c, got, trace in sorted(strict_wrong, key=lambda x: -x[1])[: a.show]:
+        print(f'  {w}\t{c}\tfirst={got}\ttrace={trace}' + (f'\t{cause[w]}' if w in cause else ''))
 
 
 WORD = re.compile(r'[А-Яа-яЁё\u0300\u0301]+(?:-[А-Яа-яЁё\u0300\u0301]+)*')
@@ -219,6 +322,9 @@ def text(a):
         positions += hovers(open(path, encoding='utf-8').read())
     texts = [h for _, h in positions]
     looked = lookups(a.batch, a.languages, a.dict, texts, a.exempt)
+    proxy = lemma_proxy(refs, lemmas, all_counts(a.freq)) if a.freq else collections.Counter()
+    labels = load_labels(a.labels)
+    strict = collections.Counter()
     judged = wrong = none = 0
     groups = collections.Counter()
     rest = []
@@ -242,8 +348,14 @@ def text(a):
             wrong += 1
             groups[tuple(first['trace'][:1])] += 1
             wrong_rows.append((word, first['expression'], first['trace'], sorted(ok)[:4]))
+        if a.freq and not any(own_lemma_ok(k, first['expression'], refs, lemmas, proxy, labels) for k in cands):
+            strict[(word.lower(), first['expression'])] += 1
     print(json.dumps({'lookups': len(positions), 'noResult': none, 'judgedByScript': judged, 'wrongByScript': wrong,
-                      'wrongRate': wrong / judged if judged else 0, 'notJudgedByScript': len(rest), 'exempt': a.exempt}, ensure_ascii=False))
+                      'wrongRate': wrong / judged if judged else 0, 'notJudgedByScript': len(rest),
+                      'ownLemmaWrong': sum(strict.values()) if a.freq else None,
+                      'ownLemmaWrongRate': sum(strict.values()) / judged if a.freq and judged else None, 'exempt': a.exempt}, ensure_ascii=False))
+    if a.freq:
+        print('wrong by the own-lemma judge, largest groups:', strict.most_common(a.show))
     print('rules behind the wrong first results:', groups.most_common(12))
     counts = collections.Counter((w.lower(), e) for w, e, *_ in wrong_rows)
     for (w, e), c in counts.most_common(a.show):
@@ -307,6 +419,8 @@ def main():
     f.add_argument('--exempt', action='store_true')
     f.add_argument('--top', type=int, default=10000)
     f.add_argument('--show', type=int, default=60)
+    f.add_argument('--labels', default=os.path.join(HERE, 'tie-labels.tsv'))
+    f.add_argument('--no-rules', help='a languages dir whose ru pack has no transforms, to split wrong words by cause')
     t = sub.add_parser('text')
     t.add_argument('--zip', required=True)
     t.add_argument('--dict', required=True)
@@ -317,6 +431,8 @@ def main():
     t.add_argument('--sample', type=int, default=60)
     t.add_argument('--seed', type=int, default=1)
     t.add_argument('--show', type=int, default=40)
+    t.add_argument('--freq', help='ru_50k.txt, for the own-lemma judge')
+    t.add_argument('--labels', default=os.path.join(HERE, 'tie-labels.tsv'))
     ph = sub.add_parser('phrases')
     ph.add_argument('--zip', required=True)
     ph.add_argument('--dict', required=True)
