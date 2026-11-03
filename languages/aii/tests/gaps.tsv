@@ -1,0 +1,38 @@
+# options: default
+# Rows of the corpus sample (corpus.tsv, same source and licence) whose lemma the rules do not reach.
+# category	valid	source	term	rule	reasons
+adjective plural	1	ܛܵܒ݂ܲܝ̈	ܛܒ	*	*
+adjective plural	1	ܣܲܓܲܘ	ܣܓܝ	*	*
+noun plural absolute	1	ܒܘܼܪ̈ܟܵܢ	ܒܘܪܟܬܐ	*	*
+noun plural absolute	1	ܓܘܼܒ݂ܢܝܼ̈ܢ	ܓܘܒܬܐ	*	*
+noun plural absolute	1	ܚܲܣܘܼܟ݂ܬܵܢܘܵܢ̈	ܚܣܘܟܬܢܘܬܐ	*	*
+noun plural absolute	1	ܡܲܚܙܝܵܢ̈	ܡܚܙܝܬܐ	*	*
+noun plural absolute	1	ܢܸܫܡܵܢ	ܢܫܡܬܐ	*	*
+noun plural absolute	1	ܥܵܒ݂ܘܿܪ̈ܘܵܢ	ܥܒܘܪܘܬܐ	*	*
+noun plural absolute	1	ܩܲܕܵܚܵܢ̈	ܩܕܚܬܐ	*	*
+noun plural absolute	1	ܫܟ݂ܝܼܚܘܵܢ̈	ܫܟܝܚܘܬܐ	*	*
+noun plural absolute	1	ܬܲܚܪܸ̈ܙܝܵܢ	ܬܚܪܙܬܐ	*	*
+noun plural construct	1	ܕܸܦܢܵܬ݂̈	ܕܦܢܐ	*	*
+noun plural construct	1	ܛܪ̈ܘܿܦܝܼܩܲܝ	ܛܪܘܦܝܩܘܣ	*	*
+noun plural construct	1	ܨܘܼܕ݂ܪ̈ܵܬ݂	ܨܘܕܪܐ	*	*
+noun possessed 1p	1	ܡܥܵܪ̈ܲܢ	ܡܥܪܬܐ	*	*
+noun possessed 1s	1	ܚܸܛܝܼ̈	ܚܛܝܬܐ	*	*
+noun possessed 2ms	1	ܪ̈ܲܒܝܼܘܼܟ݂	ܪܒܝ	*	*
+noun possessed 2p	1	ܐܲܒ̮ܘܼܟܵܕ݂ܘܼܟ݂ܘܿܢ	ܐܒܘܟܕܘ	*	*
+noun possessed 3fs	1	ܐܵܬ݂ܠܲܘ̈ܵܬ݂ܵܗ̇	ܐܬܠܝܐ	*	*
+noun singular absolute	1	ܐܵܣܝܘܼ	ܐܣܝܘܬܐ	*	*
+noun singular absolute	1	ܓܪܵܥܵܐ	ܓܪܥܬܐ	*	*
+noun singular absolute	1	ܚܟ݂ܘܼܡܹܐ	ܚܟܘܡܝܐ	*	*
+noun singular absolute	1	ܚܲܢܘܼ	ܚܢܘܬܐ	*	*
+noun singular absolute	1	ܛܗܘܿܡ	ܛܘܗܡܐ	*	*
+noun singular absolute	1	ܡܲܪܟܒ݂ܵܐ	ܡܪܟܒܬܐ	*	*
+noun singular absolute	1	ܡܲܬܠܓ݂ܵܢܝܼ	ܡܬܠܓܢܝܬܐ	*	*
+noun singular absolute	1	ܦܲܚܲܠܵܐ	ܦܚܠܬܐ	*	*
+noun singular absolute	1	ܦܢܝܼ	ܦܢܝܬܐ	*	*
+noun singular absolute	1	ܫܵܘܝܼ	ܫܘܝܬܐ	*	*
+noun singular construct	1	ܟܒ݂ܘܼܫܹܐ	ܟܒܘܫܝܐ	*	*
+preposition with a pronoun	1	ܒܘܼܬ ܕܝܼܲܢ	ܒܘܬ	*	*
+preposition with a pronoun	1	ܕܝܼܕ݂ܲܘܟ݂ܘܿܢ	ܕܝܕ	*	*
+preposition with a pronoun	1	ܐܸܠܲܝܢ	ܠ-	*	*
+verb imperative 2p	1	ܐܲܚܲܘ	ܡܚܐ	*	*
+verb imperative 2p	1	ܐܸܫܬܲܒ݂ܗܪܘܼܢ	ܡܫܬܒܗܪ	*	*

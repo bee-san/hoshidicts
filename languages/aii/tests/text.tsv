@@ -1,0 +1,24 @@
+# Source: written for this pack (GPL-3.0-or-later), no third-party data. The pack has no optional processor.
+# category	valid	input	variant
+vowel points	1	ܟܬ݂ܵܒ݂ܵܐ	ܟܬܒܐ
+vowel points	1	ܟܬ݂ܵܒ݂ܵܐ	ܟܬ݂ܵܒ݂ܵܐ
+vowel points	1	ܟܲܠܒ݂ܹ̈ܐ	ܟܠܒܐ
+vowel points	1	ܦܬ݂ܝܼܚ ܠܵܗ̇	ܦܬܝܚ ܠܗ
+vowel points	1	ܐ݇ܙܝܼܠ	ܐܙܝܠ
+vowel points	1	ܓ̰ܵܢܵܐ	ܓܢܐ
+vowel points	1	ܡ̣ܢ	ܡܢ
+vowel points	1	ܢܲܦ̮ܫܵܐ	ܢܦܫܐ
+vowel points	1	ܟܬܒܐ	ܟܬܒܐ
+vowel points	0	ܟܬ݂ܵܒ݂ܵܐ	ܟܬ݂ܒ݂
+normalisation	1	ܟܬ݂ܵܒ݂ܵܐ	ܟܬ݂ܵܒ݂ܵܐ
+normalisation	0	ܟܬ݂ܵܒ݂ܵܐ	ܟܬ݂ܵܒ݂ܵܐ
+normalisation	1	ܟܬ݂ܵܒ݂ܵܐ	ܟܬܒܐ
+joiners	1	ܟܬ‍ܒܐ	ܟܬܒܐ
+joiners	0	ܟܬ‍ܒܐ	ܟܬ‍ܒܐ
+joiners	1	ܟܬ‌ܒܐ	ܟܬܒܐ
+joiners	1	ܟܬـܒܐ	ܟܬܒܐ
+joiners	1	ܟܬ­ܒܐ	ܟܬܒܐ
+superscript alaph	1	ܝܗܘܑܕܝܐ	ܝܗܘܕܝܐ
+superscript alaph	0	ܝܗܘܑܕܝܐ	ܝܗܘܑܕܝܐ
+letters kept	1	ܓܡܠܐ	ܓܡܠܐ
+letters kept	0	ܓܡܠܐ	ܓܡܠ
