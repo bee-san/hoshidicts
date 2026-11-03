@@ -509,3 +509,5 @@ imperative	1	ر	رأى	v	imperativeYou
 present	1	يعظ	وعظ	v	presentHe
 noun ending	1	عبئا	عبء	n	accusative
 negative one-step pronoun	0	يبيعه	بيع	v	presentHe
+negative imperative	0	برأي	برأ	v	imperativeYouF
+negative pronoun noun	0	برأي	برأ	*	p1s

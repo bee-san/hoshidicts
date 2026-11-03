@@ -1,82 +1,82 @@
-# nazarat.txt: 40 judged and 40 unjudged positions drawn with seed 20261104 by measure.py text --sample-out.
+# nazarat.clean.txt (sources/fetch-wikisource.py --clean): 40 judged and 40 unjudged positions drawn with seed 20261104 by measure.py text --sample-out.
 # set	word	text	first result	matched	trace	script	hand
-judged	ماشيته	ماشيته؛ ليُشْهِدُوا العالم الإنسانيَّ بأ	ماشية	ماشيته	p3ms	right	right
-judged	ما	ما أذكركم، وقفوا بين يدي ربكم صفًّا واحد	ما	ما		right	right
-judged	طعمها	طعمها:	طعم	طعمها	p3fs	right	right
-judged	عثر	عثر برقعةٍ ملقاةٍ فتناولها، فقرأ هذه الك	عثر	عثر		right	right
-judged	إلى	إلى آخرتكم؛ فإن الأعداء إن ملكوا عليكم ط	إلى	إلى		right	right
-judged	أخطأ	أخطأ التقدير	أخطأ	أخطأ		right	right
-judged	ذهنه	ذهنه صورةً ألَّفها من شتى المحاسن ومتفرق	ذهن	ذهنه	p3ms	right	right
-judged	يعدل	يعدل في القضاء في قضية غيره؛ لأنه ظالم ج	عدل	يعدل	presentHe	right	right
-judged	ثم	ثم أراها بعد ذلك وقد أنعم الله عليها بنع	ثم	ثم		right	right
-judged	أكثر	أكثر مما يكون لي من الحق في حمله على مذه	أكثر	أكثر		right	right
-judged	أنطونيوس	أنطونيوس : «أيها الأصدقاء، أنا ما جئت هن	أنطونيوس	أنطونيوس		right	right
-judged	إلى	إلى دفينٍ في قبره قد شغله عن أكل اللحوم 	إلى	إلى		right	right
-judged	المعاصرون	المعاصرون فهم إما تابعٌ متأثر يعتمد في ا	معاصر	المعاصرون	nominative plural definite masculine sound-form	right	right
-judged	ثم	ثم أخذوا يُعَلِّمُونَها الناس سِرًّا، وي	ثم	ثم		right	right
-judged	الخيال	الخيال الذي لا بدَّ أن سيساورك وَيَفُتُّ	خيال	الخيال	al	right	right
-judged	إلى	إلى هذه المدنية الغربية تتولى عنكم شأنهن	إلى	إلى		right	right
-judged	الطرف	الطَّرْف أن افتقدته فما وجدته، ولو أنك أ	طرف	الطَّرْف	informal singular definite triptote	right	right
-judged	فيه	فيه مع الكتاب المرقوم، ولا فرق بين أن تس	في	فيه	p3ms	right	right
-judged	إلا	إلَّا ورقةً كان كلُّ ما تستفيده منها أن 	إلا	إلَّا		right	right
-judged	لسان	لسان الرثاء	لسان	لسان		right	right
-judged	فيحاكم	فَيُحَاكِمُ القضاءَ أمام العدل، والكهنوت	فاح	فَيُحَاكِمُ	imperativeYouTwo>p2mp	right	wrong (فيحاكم is ف + يحاكم (حاكم))
-judged	حملت	حملت في سبيلي إليك ما حملت	حمل	حملت	pastI	right	right
-judged	يحصلوا	يحصلوا منه على طائل، فلو أنهم عبدوا الله	حصل	يحصلوا	subjunctiveThey	right	right
-judged	بهم	بهم مذاهب القول، فيلجئون إلى الحديث عن ا	بهيم	بهم	informal plural indefinite masculine/feminine broken-form triptote	wrong	wrong (بهم is بـ + هم)
-judged	يستطيع	يستطيع ذلك إلا إذا عاش بين قوم يعرفون ال	استطاع	يستطيع	presentHe	right	right
-judged	من	من تنكر حاله وغرابة أمره	من	من		right	right
-judged	ملكة	مَلَكَةَ البخل في نفس البخيل	ملكة	مَلَكَةَ	accusative singular ar-infl-a construct triptote	right	right
-judged	الناس	الناس عندما يريدون التفريق بينهما وإنزال	ناس	الناس	al	right	right
-judged	ما	ما أراقت منها من الدماء، تلك تقاتلها بال	ما	ما		right	right
-judged	المسيحيون	المسيحيون بآلهةٍ ثلاثةٍ، ولكنهم كأنهم يش	مسيحي	المسيحيون	nominative plural definite masculine sound-form	right	right
-judged	ولا	ولا العيش الذي هو بالموت أشبه منه بالحيا	ولا	ولا		right	right
-judged	يحيى	يحيى لا يضمر لمحمد بن زيد من الموجدة ما 	يحيى	يحيى		right	right
-judged	ردنا	رُدْنًا وأبيض عِرْضًا من مثلها بين جدران	ردن	رُدْنًا	accusative singular indefinite triptote	right	right
-judged	يهم	يَهُمُّ أن ينبسط حتى يفيض عن جوانبه فيضً	هم	يَهُمُّ	third-person singular masculine non-past imperfective active indicative	right	right
-judged	ويقتله	ويُقَتِّله تقتيلًا، ويبرِّح به هذا التبر	قتل	ويُقَتِّله	presentHe>wa	right	right
-judged	نظر	نظرَ التاجر لسلعته، والمحترف إلى حرفته	نظر	نظرَ		right	right
-judged	ولا	ولا جاهلٌ عالمًا	ولا	ولا		right	right
-judged	عما	عما تشتهي، ويسهر حيث لا يستعذب طعم السهر	عما	عما		right	right
-judged	اتقاني	اتَّقاني، فإذا أضاء ما بيني وبينه كنت في	اتقى	اتَّقاني	p1sObj	right	right
-judged	النظر	النظر إليها، أو إلى ما يدب من عقارب شرها	نظر	النظر	al	right	right
-unjudged	تتلجلج	تتلجلجُ في نفس الإنسان حينما يخلو بنفسه،	لجلج	تتلجلجُ	second-person singular masculine non-past imperfective active indicative>presentSheYou	-	right
-unjudged	فولتير	فولتير	تر	فولتير	active participle>pastPassive>li>wa>fa	-	wrong (Voltaire)
-unjudged	النظامون	النظَّامون	نظام	النظَّامون	pluralMasc>al	-	wrong (نظّام, versifier)
-unjudged	عبد	عبد القادر، أغثني يا سلطان عبد القادر، أ	عبد القادر	عبد القادر		-	right
+judged	ولا	ولا شَريبًا، ولولا أني أعلم أنَّ الحساب 	ولا	ولا		right	right
+judged	من	من هذه الدنيا أكثر مما يقيم صلبه، ويمسك 	من	من		right	right
+judged	للوارث	للوارث، وهذا الباني أنه يبني للخراب، وهذ	وارث	للوارث	al>li	right	right
+judged	إذا	إذا رآني هناك ذَهَبَ من نفسه ما كان يخال	إذا	إذا		right	right
+judged	صاحب	صاحب الشريعة»، و«صاحب الوجود التام» إلى 	صاحب	صاحب		right	right
+judged	أفضل	أفضل عاملٍ في الوجود وأشرفُ إنسانٍ	أفضل	أفضل		right	right
+judged	القصة	القصة لأني أنا ذلك الفتى بعينه، لا فرق ب	قصة	القصة	al	right	right
+judged	منه	منه جسمًا وعقلًا، بل السبيل إليه أنْ نُع	أنهى	منه	active participle	wrong	wrong (من + ه)
+judged	الله	الله سبحانه وتعالى قد صنع لي في هذا الأم	الله	الله		right	right
+judged	ويزيفها	ويزيفها بما يعتقد أنه مُبْطِلٌ لها، ولا 	زاف	ويزيفها	presentHe>wa>p3fs	right	right
+judged	مخافة	مخافة أن تنفجر صدوركم حزنًا وجزعًا لقلت 	مخافة	مخافة		right	right
+judged	أو	أو ملبس	أو	أو		right	right
+judged	بدا	بدًّا من أن أستخير الله تعالى في أن أجمع	بدا	بدًّا		right	wrong (بدّ, escape)
+judged	نفسك	نفسك مبلغه، فما كفاك أن أنكرت فضل صاحب ا	نفس	نفسك	p2s	right	right
+judged	أمرها	أمرُها	أمر	أمرُها	p3fs	right	right
+judged	دب	دبَّ الملل إلى نفسه دبيب الصهباء في الأع	دب	دبَّ		right	right
+judged	بقيت	بقيت في يده فذاك، وإلا فقد أعدَّ لفراقها	بقي	بقيت	pastI	right	right
+judged	تأثر	تأثُّر العالم به وظهوره في حَرَكاتِه وسك	تأثر	تأثُّر		right	right
+judged	لها	لها عليه، وما هو إلَّا أن تَجِدَّ في الت	لها	لها		wrong	wrong (لـ + ها)
+judged	فيها	فيها الذئاب الغبراء، والنمور الرقطاء، وم	في	فيها	p3fs	right	right
+judged	يغني	يُغني عنه من الله شيئًا أن يُسَمَّى القي	غنى	يُغني	presentHe	right	wrong (أغنى, to avail)
+judged	الرجل	الرجل متقلبٌ متلوِّن، يسرع إلى البغض كما	رجل	الرجل	al	right	right
+judged	أغفلنا	أغفلنا النظر إليها وسلَّمنا للسائل صحةَ 	أغفل	أغفلنا	p1p	right	right
+judged	الناس	الناس بطريفه وتليده، فاستعفيته بعد أنْ ك	ناس	الناس	al	right	right
+judged	السجين	السجين الشريف	سجين	السجين	al	right	right
+judged	أخرى	أخرى، ويصرخ صرخاتٍ تستمطر المدامع وتحول 	آخر	أخرى	informal singular indefinite feminine invariable	right	right
+judged	رجلا	رجلًا دخل منزلًا يُعرف أهله بالشُّحِّ وا	رجل	رجلًا	accusative	right	right
+judged	أخشى	أخشى بأسًا إنْ قلت: إنَّ علم العامة أفضل	خشي	أخشى	presentI	right	right
+judged	مولاي	مولاي، وألا تلومها في بعدها عنك، فإنَّ ل	مولى	مولاي	p1s	right	right
+judged	للثاني	للثاني جَلَّ جلالُه: «أنت المتصرف في الك	ثان	للثاني	informal singular definite masculine ar-infl-in triptote>li	right	right
+judged	يعبد	يعبد اللهُ بعد اليوم على ظهر الأرض أبدًا	عبد	يعبد	presentHe	right	right
+judged	إلى	إلى ارتشاف الخمر من النهر، في آنية الدُّ	إلى	إلى		right	right
+judged	محسن	محسنٌ عن إحسانه، ولا يستمرَّ مسيءٌ في إس	محسن	محسنٌ		right	right
+judged	حلوه	حُلْوِهِ وحامضه، وأصناف الشَّراب؛ حلالِه	حلو	حُلْوِهِ	p3ms	right	right
+judged	العلم	العلم والعمل، ويُسهِّل له الوصول إلى الق	علم	العلم	al	right	right
+judged	وأعجزكم	وأعجزكم أن تعلموا مكان الروح الشعري من ن	أعجز	وأعجزكم	wa>p2mp	right	right
+judged	مصطفى	مصطفى كامل فعرفنا الموت، وما كنا نعرفه ق	مصطفى	مصطفى		right	right
+judged	في	في نفقة العُرْسِ، فلا تجد لفعله تأويلًا 	في	في		right	right
+judged	به	به التصديقات والتصورات لمعرفة صوابها وخط	باه	به	imperativeYou	wrong	wrong (بـ + ه)
+judged	أخذت	أخذت مكاني، فرفع رأسه، فأدهشني من منظره 	أخذ	أخذت	pastI	right	right
+unjudged	استمدادا	استمدادًا يملأ ما بين جوانحه، حتى يتدفَّ	استمد	استمدادًا	noun-from-verb>pastTheyTwo	-	right
+unjudged	كنانة	كنانة هذا المجتمع الإنساني وعَجَمَتْ عِي	كن	كنانة	nominative singular indefinite dual triptote>feminine	-	wrong (كنانة, quiver)
+unjudged	ليت	ليت شعري	ليت شعري	ليت شعري		-	right
+unjudged	بين	بين يدي ذلك القبر سجودهم بين يدي الله، و	بين يدي	بين يدي		-	right
 unjudged	ملاصقا	ملاصقًا ما زلت أسمع مذ حلَّ في جواري أنَ	لاصق	ملاصقًا	active participle>pastTheyTwo	-	right
-unjudged	إلا	إلا أن يقف بكل طائرٍ يراه على شجرة فيناش	إلا أن	إلا أن		-	right
-unjudged	متذمرا	متذمرًا: «ليت لي زوجةً كفلانة فإنها تُحْ	تذمر	متذمرًا	active participle>pastTheyTwo	-	right
-unjudged	متى	متى ما تُناخي عند باب ابن هاشمٍ	متى ما	متى ما		-	right
-unjudged	وبلوخر	وبلوخر، وفي وقائع القادسية وعمورية وإفري	خر	وبلوخر	wa>li>bi>wa	-	wrong (Blücher)
-unjudged	لا	لا بد له أن ينفِّقه على الناس ويزخرفه له	لا بد	لا بد		-	right
-unjudged	ووهادها	ووهادها من حيث لا تعترض في سبيلها من الم	هاد	ووهادها	wa>wa>p3fs	-	wrong (وهاد, lowlands)
-unjudged	رقدة	رقدةٌ يستريح	رقد	رقدةٌ	feminine	-	right
-unjudged	ونزغات	ونزغات الصبوة، ضنًّا بي، أن أنفق ساعة من	نزغ	ونزغات	pluralFem>wa	-	right
-unjudged	تنوشه	تنوشه	نش	تنوشه	active participle>presentSheYou>p3ms	-	wrong (ناش)
-unjudged	ابن	ابن رشد، ويروي من الشعر لشكسبير وهوجو ما	ابن رشد	ابن رشد		-	right
-unjudged	لا	لا يزال يُزَيِّنُ له أمره حتى يحبب إليه 	لا يزال	لا يزال		-	right
-unjudged	بمائها	بمائها، ولا شَحَّتِ الأرض بنباتها، ولكن 	ماء	بمائها	bi>p3fs	-	right
-unjudged	خديعته	خديعته عن دينه والهجوم على قلبه، والتمكن	خادع	خديعته	noun-from-verb>pastPassive>p3ms	-	wrong (خديعة)
-unjudged	أحشائها	أحشائها مهادك قبل مهادك، والتي قدم لها ا	أحشاء	أحشائها	p3fs	-	right
-unjudged	شافعا	شافعًا يشفع في إساءة المسيء، والتأخر فيه	شفع	شافعًا	active participle>pastTheyTwo	-	right
-unjudged	يتبلغون	يَتبلَّغون بها أو خِرْقةٍ يتقون بخيوطها 	بلغ	يَتبلَّغون	second-person masculine non-past imperfective active indicative dual>presentHe	-	wrong (تبلّغ)
-unjudged	مجيبا	مجيبًا، قد تقطعت بهم الأسباب، وأعوزتهم ا	أجاب	مجيبًا	passive participle>imperativeYouTwo	-	right
-unjudged	محزنا	محزنًا، هزلًا أو جدًّا — فصفقوا لمنظر جو	أحزن	محزنًا	active participle>pastWe	-	right
-unjudged	من	من حيث يُظن أنه يهتف بشيءٍ قام في نفسه، 	من حيث	من حيث		-	right
-unjudged	يتشهى	يتشهَّى ظِلفًا يُمسك رَمَقَه، أو عُرْقُو	وشى	يتشهَّى	second-person singular masculine active jussive>presentHe>p1s	-	wrong (تشهّى)
-unjudged	سمائها	سمائها	سماء	سمائها	p3fs	-	right
+unjudged	يتخلق	يتخلق بها طلبًا لرضا الناس عنه برضاه عنه	خلق	يتخلق	second-person singular masculine non-past imperfective active indicative>presentHe	-	wrong (تخلّق)
+unjudged	من	من حيث أتيت	من حيث	من حيث		-	right
+unjudged	طينة	طينةٌ	طين	طينةٌ	feminine	-	right
+unjudged	نتقلدها	نتقلَّدها وننتحلها ونتخذها قاعدتنا في اس	قلد	نتقلَّدها	second-person singular masculine non-past imperfective active indicative>presentWe	-	wrong (تقلّد)
+unjudged	مصطنعا	مصطنعًا، ولا يظفر منه معتصرٌ ببلةٍ، فَيَ	اصطنع	مصطنعًا	active participle>pastTheyTwo	-	right
+unjudged	ووهادها	ووهادها من حيث لا تعترض في سبيلها من الم	هاد	ووهادها	wa>wa>p3fs	-	wrong (وهدة)
+unjudged	شئونهم	شئونهم صغارًا وكبارًا، رجالًا ونساءً، ما	شآ	شئونهم	alt-of>pastPassive>p3mp	-	wrong (شأن)
+unjudged	ولاستدفعوا	ولاسْتَدْفعوا به عن أنفسهم في أمره شرًّا	دفع	ولاسْتَدْفعوا	subjunctiveYouPl>sa>la>wa	-	right
+unjudged	مرة	مرةً أخرى، هي التي زخرفت لنا هذه الحياة 	مرة أخرى	مرةً أخرى		-	right
+unjudged	ما	ما شاء الله أن أقرأ، ثم لا ألبث أن أنساه	ما شاء الله	ما شاء الله		-	right
+unjudged	طائعا	طائعًا مُذْعِنًا دون أن تبذل في سبيله شي	طاع	طائعًا	active participle>pastTheyTwo	-	right
+unjudged	آباؤكم	آباؤكم أقوياء فاغتصبوا ذلك المال من الضع	أب	آباؤكم	informal plural broken-form construct triptote>p2mp	-	right
+unjudged	من	من قبل ومن بعد	من قبل	من قبل		-	right
+unjudged	ولا	ولا بد أنهم خاسرون، فتغض بصرها، وتشيح بو	لا بد	ولا بد	wa	-	right
+unjudged	أحشائه	أحشائه حتى يصيب لُبَّه، ولا يزال يعالج ذ	أحشاء	أحشائه	p3ms	-	right
+unjudged	مذخورا	مذخورًا لتمنى أن لو انفجر بركانها تحت قد	ذخر	مذخورًا	passive participle>pastTheyTwo	-	right
+unjudged	يتبلغون	يتبلَّغون به ولا عمادًا يعتمدون عليه، فإ	بلغ	يتبلَّغون	second-person masculine non-past imperfective active indicative dual>presentHe	-	wrong (تبلّغ)
+unjudged	بطحائها	بطحائها ظلًّا غير ظلي المستطيل الذي رسمت	أبطح	بطحائها	informal singular indefinite feminine diptote>p3fs	-	right
+unjudged	العظات	العظات عظات المخلصين، وأجمل البكاء بكاء 	وعظ	العظات	verbal noun>pluralFem>al	-	right
+unjudged	بصريخهم	بصريخهم، ويقذون النواظر بمناظرهم المستبش	صرخ	بصريخهم	noun-from-verb>bi>p3mp	-	right
+unjudged	عاهدتني	عاهدتني على الزواج فأخلفت وعدك ذَهابًا ب	عهد	عاهدتني	active participle>pastI>p1sObj	-	right
 unjudged	من	من حيث لا تعترض في سبيلها من المظلات سحب	من حيث	من حيث		-	right
-unjudged	وما	وما هذا الذي تفعل	ما هذا	وما هذا	wa	-	right
-unjudged	أإن	أَإن علمت أني أصبحت بين حياةٍ لا أرجوها 	آن	أَإن	second-person plural feminine imperative active>presentI	-	wrong (أ + إن)
-unjudged	تصاغرهم	تصاغرهم في حضراتكم ما استكبرتم، فلا تجزو	صغر	تصاغرهم	active participle>presentSheYou>p3mp	-	right
-unjudged	زفراتهم	زفراتهم	زفر	زفراتهم	third-person masculine past perfective active indicative dual>pastI>p3mp	-	right
-unjudged	وبكاؤها	وبكاؤها وإمساكها عن الطعام والشراب إلا م	بكاء	وبكاؤها	wa>p3fs	-	right
-unjudged	نقرؤها	نقرؤها في الشريعة والحكمة والمنطق وغيرها	قرأ	نقرؤها	presentWe>p3fs	-	right
-unjudged	والكوكب	والكوكب السَّيَّار	كوكب سيار	والكوكب السَّيَّار	informal singular definite triptote>wa	-	right
-unjudged	المفكرات	المفكرات فبكيت بكاءً رحمت نفسي منه، ثم ط	مفكر	المفكرات	pluralFem>al	-	wrong (مفكّرة)
-unjudged	إلا	إلا أن يُصْقِلَ جبهتَه، ويُصفف طُرَّتَه،	إلا أن	إلا أن		-	right
-unjudged	وهنائي	وهنائي	هنأ	وهنائي	noun-from-verb>wa>p1s	-	wrong (هناء)
-unjudged	وبوفون	وبوفون، وبورماشه، ومونتسكيو — أولئك القو	ون	وبوفون	fa>wa>bi>wa	-	wrong (Buffon)
+unjudged	الهنات	الهنات والسوآت	هن	الهنات	pluralFem>al	-	wrong (هنة)
+unjudged	رآهما	رآهما متحابين متعاطفين، لا يتعاتبان ولا 	رأى	رآهما	p3d	-	right
+unjudged	من	من دون الله	من دون	من دون		-	right
+unjudged	وزفراتها	وزفراتها — قد استحال في أيدي الناس إلى س	زفر	وزفراتها	third-person masculine past perfective active indicative dual>pastI>wa>p3fs	-	right
+unjudged	من	من المهد إلى اللحد	من المهد إلى اللحد	من المهد إلى اللحد		-	right
+unjudged	وأنضائها	وأنضائها في كثيرٍ من مواقفهم يؤلِّفون وي	نضو	وأنضائها	informal plural broken-form construct triptote>wa>p3fs	-	right
+unjudged	رخية	رخية البال، ناعمة العيش، سعيدة الحظِّ بز	رخ	رخية	genitive/accusative singular construct dual triptote>feminine	-	wrong (رخي)
+unjudged	الجثمانية	الجثمانية، فما أضعف همتك، وما أصغر نفسك	جثمان	الجثمانية	genitive/accusative singular construct dual triptote>feminine>al	-	right
+unjudged	وضلة	وضَلَّةٌ من ضلالات العقول، ولكنني أطلب م	ضل	وضَلَّةٌ	verbal noun>feminine>wa	-	right
+unjudged	أحشائها	أحشائها فأُسقط في يدي، وطفقت أرتئي بين أ	أحشاء	أحشائها	p3fs	-	right
+unjudged	وفاخرت	وفاخرتِ السماءَ بنجومها وكواكبها، وذهبنا	خرت	وفاخرتِ	imperativeYou>fa>wa	-	wrong (فاخر)
 unjudged	تترهب	تترهب وتتعزَّب، وأن تقول ما قاله «هملت» 	أرهب	تترهب	second-person singular masculine non-past imperfective active indicative>presentSheYou	-	wrong (ترهّب)
-unjudged	تاركوها	تاركوها حتى يُفَرِّقوا بين الرأس والجسد 	ترك	تاركوها	active participle>pastThey>p3fs	-	right
+unjudged	إلا	إلا أن يضع لها هذا الحد: «الأمة المصرية 	إلا أن	إلا أن		-	right

@@ -1944,6 +1944,9 @@
       [1569, 1594],
       [1601, 1610]
     ],
+    "transforms[63].rules[3].stemNotEndsWith": [
+      [1571, 1571]
+    ],
     "transforms[63].rules[3].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
@@ -1962,9 +1965,15 @@
       [1569, 1594],
       [1601, 1610]
     ],
+    "transforms[63].rules[26].stemNotEndsWith": [
+      [1571, 1571]
+    ],
     "transforms[63].rules[27].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
+    ],
+    "transforms[63].rules[27].stemNotEndsWith": [
+      [1571, 1571]
     ],
     "transforms[64].rules[0].stemCharacters": [
       [1569, 1574],
@@ -1992,6 +2001,9 @@
     "transforms[64].rules[3].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
+    ],
+    "transforms[64].rules[3].stemNotEndsWith": [
+      [1571, 1571]
     ],
     "transforms[64].rules[3].stemChange.between": [
       [1569, 1594],
@@ -2034,6 +2046,9 @@
       [1569, 1594],
       [1601, 1610]
     ],
+    "transforms[65].rules[3].stemNotEndsWith": [
+      [1571, 1571]
+    ],
     "transforms[65].rules[3].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
@@ -2074,6 +2089,9 @@
     "transforms[66].rules[3].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
+    ],
+    "transforms[66].rules[3].stemNotEndsWith": [
+      [1571, 1571]
     ],
     "transforms[66].rules[3].stemChange.between": [
       [1569, 1594],
@@ -2211,6 +2229,7 @@
       [1601, 1610]
     ],
     "transforms[68].rules[0].stemNotEndsWith": [
+      [1571, 1571],
       [1610, 1610]
     ],
     "transforms[68].rules[1].stemCharacters": [
@@ -4462,6 +4481,7 @@
         ["يعظ", "يعظ"],
         ["عبئا", "عبئا"],
         ["يبيعه", "يبيعه"],
+        ["برأي", "برأي"],
         ["الكتابه", "الكتابه"],
         ["استخدمنا", "أستخدمنا"],
         ["يبقي", "يبقي"],
@@ -6807,6 +6827,7 @@
         ["يعظ", "يعظ"],
         ["عبئا", "عبئا"],
         ["يبيعه", "يبيعه"],
+        ["برأي", "برأي"],
         ["الكتابه", "الكتابه"],
         ["استخدمنا", "إستخدمنا"],
         ["يبقي", "يبقي"],

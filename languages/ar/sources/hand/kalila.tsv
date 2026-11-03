@@ -1,42 +1,42 @@
-# kalila-wa-dimna.txt: 20 judged and 20 unjudged positions drawn with seed 20261104 by measure.py text --sample-out.
+# kalila-wa-dimna.clean.txt (sources/fetch-wikisource.py --clean): 20 judged and 20 unjudged positions drawn with seed 20261104 by measure.py text --sample-out.
 # set	word	text	first result	matched	trace	script	hand
-judged	وأكون	وأكون أنا قد قضيت فرضاً وجب علي فأقول: أ	كان	وأكون	presentI>wa	right	right
-judged	كما	كما وصفه له دمنة، فقال: ما صاحب السلطان 	كما	كما		right	right
-judged	أمامه	أمامه افترسه السنور	أمام	أمامه	p3ms	right	right
-judged	على	على غير مال	على	على		right	right
-judged	وكان	وكان معه جماعةٌ من أصحابه، فاستيقظ صاحب 	كان	وكان	wa	right	right
-judged	فأنفذ	فأنفذ فأحضرهما وشاطرهما ماله، وكذلك يجب 	نفذ	فأنفذ	presentI>fa	right	right
-judged	الجماعة	الجماعة البرهميين منذ ليال	جماعة	الجماعة	al	right	right
-judged	في	في وجهه؛ وبصر به دمنة، فترك محاورة كليلة	في	في		right	right
-judged	إذا	إذا أتاكِ ليفعل ما تقولين فقولي له: لا أ	إذا	إذا		right	right
-judged	حية	حية سوداء فدنت من الغلام فضربها ابن عرس 	حية	حية		right	right
-judged	يا	يا أيها الملك، إن في دون ما كلمتك به نهي	يا	يا		right	right
-judged	كلاما	كلاماً كثيراً، وشعبت له شعوباً ؛ وأنشأت 	كلام	كلاماً	accusative	right	right
-judged	وإني	وإني قد وطنت نفسي على غرامته	إن	وإني	wa>p1s	right	right
-judged	ذلك	ذلك الوقت ألقى عليه مسوحة وهي لباس البرا	ذلك	ذلك		right	right
-judged	الله	الله وقدره، وإنما أحب أن تعلموا ذلك وتست	الله	الله		right	right
-judged	سمع	سمع من إقرار دمنة	سمع	سمع		right	right
-judged	ودنا	ودّنا ومكاننا والماء والمرعى كثيران عندن	واد	ودّنا	pastWe	wrong	wrong (ودّ + نا)
-judged	اللون	اللون	لون	اللون	al	right	right
-judged	وسلامي	وسلامي مما قرفت به	سلام	وسلامي	wa>p1s	right	right
-judged	الثلاث	الثلاث	ثلاثة	الثلاث	informal singular definite masculine triptote	right	right
-unjudged	من	من دون إخوتي، حتى إذا بلغت السبع سنين، أ	من دون	من دون		-	right
-unjudged	بسيماههم	بسيماههم، وأنتم معاشر ذوي الاقتدار، بحسن	سام	بسيماههم	imperativeYouTwo>bi>p3ms>p3mp	-	wrong (سيماء)
-unjudged	حكماؤها	حكماؤها	حكيم	حكماؤها	informal plural indefinite masculine broken-form diptote>p3fs	-	right
-unjudged	وابن	وابن آوى	ابن آوى	وابن آوى	wa	-	right
-unjudged	فلا	فلا بد أنه لا يزال يشتكي قرحته، والرجل ا	لا بد	فلا بد	fa	-	right
-unjudged	ابن	ابن آوى: إن شر الأخلاء من التمس منعة نفس	ابن آوى	ابن آوى		-	right
-unjudged	ببيدبا	ببيدبا ذلك	دب	ببيدبا	subjunctiveTheyTwo>bi>bi	-	wrong (Bidpai)
-unjudged	وملقا	وملقاً، قال الفيلسوف : من اغتر بالعدو ال	ألقى	وملقاً	active participle>pastTheyTwo>wa	-	wrong (ملق, flattery)
-unjudged	مثخنا	مثخناً بالجراح، يسيل منه الدم، وقد خدشه 	اثخن	مثخناً	active participle>pastWe	-	right
-unjudged	مصانعة	مصانعة، ولا شيء دون تلف الأنفس	مصنع	مصانعة	informal plural broken-form construct diptote>feminine	-	wrong (مصانعة)
-unjudged	بالمداراة	بالمداراة والرفق؛ فانظر أيها الملك ما أل	مدار	بالمداراة	accusative singular indefinite triptote>feminine>al>bi	-	wrong (مداراة)
-unjudged	من	من غير تكرار النظر والروية، لم يغتبط بمو	من غير	من غير		-	right
+judged	عليه	عليه الملك من جودة القريحة ووفور العقل ح	على	عليه	p3ms	right	right
+judged	سبيلا	سبيلاً	سبيل	سبيلاً	accusative	right	right
+judged	خلاصا	خلاصاً إلا بالذي أرجو لك فيه الخلاص وكلا	خلاص	خلاصاً	accusative	right	right
+judged	وأنعمت	وأنعمت عليّ، وأنت جديرة أن تسرّي نفسك بم	أنعم	وأنعمت	pastI>wa	right	right
+judged	يأبى	يأبى الصبر على أيام قلائل يعيشها في النس	أبى	يأبى	presentHe	right	right
+judged	فيه	فيه هلكتها	في	فيه	p3ms	right	right
+judged	فاسأليه	فاسأليه عن أمره وشأنه	سأل	فاسأليه	imperativeYouF>fa>p3ms	right	right
+judged	ذلك	ذلك بكذبه وغدره وفجوره فقتله شر قتلةٍ	ذلك	ذلك		right	right
+judged	الرأي	الرأي للحمامة، وتعلمها الحيلة لنفسها، وت	رأي	الرأي	al	right	right
+judged	فقتلها	فقتلها ثم قطعها وا متلأفمه من دمها	قتل	فقتلها	fa>p3fs	right	right
+judged	الأمثال	الأمثال والأحاديث التي ألهموا أن يدخلوا 	مثل	الأمثال	informal plural definite broken-form triptote	right	right
+judged	الرجل	الرجل عليهم	رجل	الرجل	al	right	right
+judged	سمع	سمع منه شيئاً ينكت على الأرض بشيءٍ كان ف	سمع	سمع		right	right
+judged	هو	هو أفضل مني حسناً وجمالاً، وأشد اجتهاداً	هو	هو		right	right
+judged	ما	ما احتباس الغيلم وإبطاؤه إلا لأمر ولست آ	ما	ما		right	right
+judged	وطار	وطار الغراب محلقاً ودخل الجرذ بعض الأحجا	طار	وطار	wa	right	right
+judged	أو	أو أن أغلب عليه	أو	أو		right	right
+judged	من	من كشف السر ولكني أطالب الذي استودعنيه أ	من	من		right	right
+judged	بهما	بهما قد سدا ذلك المكان فحينئذٍ قالت: فرط	بهيم	بهما	accusative plural indefinite masculine/feminine broken-form triptote	right	wrong (بـ + هما)
+judged	لو	لو أن رجلاً قدم له جوزٌ صحيحٌ لم ينتفع ب	لو	لو		right	right
+unjudged	ابن	ابن آوى إلى الحمار فقال له: ما الذي جرى 	ابن آوى	ابن آوى		-	right
+unjudged	بالاحتفاظ	بالاحتفاظ به، وأن يرفعه في أحصن موضع طعا	احتفظ	بالاحتفاظ	verbal noun>al>bi	-	right
+unjudged	آخذين	آخذين بما أحب وتاركين لما يكره؛ ولسنا من	آخذ	آخذين	second-person singular feminine imperative active>pastTheyF	-	right
+unjudged	ماؤها	ماؤها، وغارت عيونها، وذوى نبتها، ويبس شج	ماء	ماؤها	p3fs	-	right
+unjudged	متعبدا	متعبداً، يصوم النهار، ويقوم الليل كله ؛ 	تعبد	متعبداً	active participle>pastTheyTwo	-	right
+unjudged	مادا	ماداً بصره نحوك، قد صر أذنيه وفغر فاه، و	مد	ماداً	active participle>pastTheyTwo	-	right
+unjudged	ينشف	ينشف فيتبعه بالثور	شاف	ينشف	first-person plural masculine/feminine non-past imperfective passive indicative>jussiveHe	-	wrong (نشف)
+unjudged	إلا	إلا أن تسمع وتطيع، فقال له : أنا والجند 	إلا أن	إلا أن		-	right
+unjudged	لا	لا يزال ذكره باقياً على الأبد حيثما قرئ 	لا يزال	لا يزال		-	right
+unjudged	بأبخس	بأبخس الثمن	بخس	بأبخس	presentI>bi	-	right
 unjudged	نظرائي	نظرائي الذين هم دوني في العلم وفوقي في ا	نظير	نظرائي	informal plural indefinite masculine broken-form diptote>p1s	-	right
-unjudged	فواضل	فواضل طعامه، فأصاب الأسد جرب، وضعف شديد 	ضل	فواضل	third-person masculine past perfective active indicative dual>imperativeYou>wa>fa	-	wrong (فاضلة)
-unjudged	كان	كان ما يظن حقاً ظفر بالسلامة، وإن كان با	إما	كان ما	alternative>ka	-	wrong (كان + ما)
-unjudged	عبد	عبد الله بن المقفع	عبد الله	عبد الله		-	right
-unjudged	لبيدبا	لبيدبا الفيلسوف: قد سمعت هذا المثل، اضرب	دب	لبيدبا	subjunctiveTheyTwo>bi>li	-	wrong (Bidpai)
-unjudged	إطفائه	إطفائه النار إذا صب عليها، وإنما مصاحب ا	إطفاء	إطفائه	p3ms	-	right
-unjudged	كما	كما تدين تدان	كما تدين تدان	كما تدين تدان		-	right
-unjudged	من	من غير أن تخبره باسمه	من غير	من غير		-	right
+unjudged	مبادرا	مبادراً في طلب العلم، والبحث عن كتب الفل	بادر	مبادراً	active participle>pastTheyTwo	-	right
+unjudged	من	من قبل - : أبي كان من المقاتلة، وكانت أم	من قبل	من قبل		-	right
+unjudged	محلقا	محلقاً ودخل الجرذ بعض الأحجار ولم يبق غي	حلق	محلقاً	active participle>pastTheyTwo	-	right
+unjudged	أصدقائه	أصدقائه رجلاً واحداً قد اتخذه لسره وما ي	صديق	أصدقائه	informal plural indefinite masculine broken-form diptote>p3ms	-	right
+unjudged	استكتمنيه	استكتمنيه، فلا يهنئني سروري بقتل دمنة إذ	استاك	استكتمنيه	pastYouPl>p1sObj>p3ms	-	wrong (استكتم)
+unjudged	أعدائه	أعدائه بعضاً ظفراً حسناً ويرى اشتغال بعض	عدو	أعدائه	informal plural ar-infl-an-maksura ar-infl-in broken-form construct diptote triptote>p3ms	-	right
+unjudged	تيقن	تيقن بجرمه، فنفسه عاقب وإياها ظلم	تاق	تيقن	pastPassive	-	wrong (تيقّن)
+unjudged	كئيبا	كئيباً حزيناً مهموماً: لما ورد عليه من ق	كئب	كئيباً	active participle>pastTheyTwo	-	right
+unjudged	السلام	السلام عليك فإننا ذاهبتان عن هذا المكان 	السلام عليك	السلام عليك		-	right

@@ -197,8 +197,9 @@ for (const [id, name, p, gloss, example] of PRONOUNS) {
     const rules = [
         // ـي not after ي: the dual and plural's oblique ـي takes it as one ي
         // (ولديّ, not ولديي; Yomitan's test marks ولديي invalid), which leaves
-        // a nisba noun's كرسيي (كرسيّ + ي) unread.
-        suffix(p, '', {into: V_IN, extra: p === 'ي' ? {...NOT_AL, stemNotEndsWith: '[ي]'} : NOT_AL}),
+        // a nisba noun's كرسيي (كرسيّ + ي) unread. Nor after أ: before ـي a
+        // final hamza sits on ئ (مبدئي), so برأي is بـ + رأي, not برأ + ـي.
+        suffix(p, '', {into: V_IN, extra: p === 'ي' ? {...NOT_AL, stemNotEndsWith: '[يأ]'} : NOT_AL}),
         suffix('ؤ' + p, 'ء', {extra: NOT_AL}), suffix('ئ' + p, 'ء', {extra: NOT_AL}),
         suffix('ؤ' + p, 'أ', {extra: NOT_AL}), suffix('ئ' + p, 'أ', {extra: NOT_AL}),
         suffix('ا' + p, 'ى', {into: V_IN, extra: NOT_AL}),
@@ -646,7 +647,10 @@ function imperativeRules(ending, {defective = [], others = [], hollowShort = fal
     const rules = [cross(FORM_I, [[ending, '']], {min: 3, extra: {stemCharacters: STRONG}})];
     rules.push(cross(FORM_I, [[ending, '']], {min: 3, extra: {stemCharacters: STRONG, stemChange: SEAT_TO_ALIF}}));
     rules.push(cross(FORM_I, [[ending, '']], {min: 3, extra: {stemCharacters: STRONG, stemChange: SEAT_TO_YA}}));
-    rules.push(suffix(ending, '', {min: 3, into: V_IN, out: V_OUT, extra: {stemChange: SEAT_TO_ALIF}}));
+    // Before an ending, a final hamza sits on ئ or ؤ, never أ (برئي, not
+    // برأي, which is بـ + رأي "my opinion").
+    const notAlifHamza = ending === '' ? {} : {stemNotEndsWith: '[أ]'};
+    rules.push(suffix(ending, '', {min: 3, into: V_IN, out: V_OUT, extra: {stemChange: SEAT_TO_ALIF, ...notAlifHamza}}));
     if (defective.length > 0) { rules.push(cross(FORM_I, defective, {extra: {stemCharacters: NO_ALIF}})); }
     // Whole words, so that they are read before the hollow imperative (ضع is
     // وضع, not ضاع).
@@ -657,7 +661,7 @@ function imperativeRules(ending, {defective = [], others = [], hollowShort = fal
     } else {
         rules.push(suffixes(hollow(ending), {min: 1, into: V_IN, out: V_OUT}));
     }
-    for (const [i, d, m = 3] of others) { rules.push(suffix(i, d, {min: m, into: V_IN, out: V_OUT})); }
+    for (const [i, d, m = 3] of others) { rules.push(suffix(i, d, {min: m, into: V_IN, out: V_OUT, extra: i === '' ? {} : {stemNotEndsWith: '[أ]'}})); }
     return rules;
 }
 transform('imperativeYou', 'imperative (you)', 'The imperative "do!" to one man: اكتب (كتب), قل (قال), ادع (دعا), ارم (رمى), انس (نسي), امدد (مد), قف (وقف), أعط (أعطى), اشتر (اشترى), كل (أكل), خذ (أخذ), مر (أمر), ر (رأى).', [
