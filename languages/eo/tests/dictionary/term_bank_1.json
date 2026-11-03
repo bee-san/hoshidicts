@@ -50,5 +50,9 @@
   ["malsana", "", "adj", "adj", 0, ["ill, sick"], 0, ""],
   ["malsani", "", "adj vi", "adj", 0, ["(test) a row the -ig- verb condition must not show first"], 0, ""],
   ["pesi", "", "v", "v", 0, ["to weigh"], 0, ""],
-  ["pesilo", "", "name", "", 0, ["(test) a row without part of speech"], 0, ""]
+  ["pesilo", "", "name", "", 0, ["(test) a row without part of speech"], 0, ""],
+  ["fri", "", "prep neol", "", 0, ["(test) a preposition without part of speech, which -onte must not reach"], 0, ""],
+  ["fronta", "", "adj", "adj", 0, ["frontal, front"], 0, ""],
+  ["frato", "", "n", "n", 0, ["brother"], 0, ""],
+  ["frata", "", "adj", "adj", 0, ["brotherly"], 0, ""]
 ]

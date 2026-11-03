@@ -97,10 +97,13 @@ function whole(id, inflected, deinflected, conditionsIn = [], conditionsOut = []
 
 transform('accusative', 'accusative',
     'Accusative -n: the direct object, or the direction of motion. domon → domo, belan → bela, domojn → domoj, hejmen → hejme, kien → kie, kion → kio, min → mi, kiun → kiu.');
-// Noun and adjective, singular. A one-letter stem is allowed for ion → io and
-// ian → ia (correlatives); no Esperanto word in -on or -an is anything else.
-suffix('accusative', 'on', 'o', [], [], 1);
-suffix('accusative', 'an', 'a', [], [], 1);
+// Noun and adjective, singular. Two letters at least: von, don, dan and ron
+// (von in German names, a letter's accusative, foreign words) are not vo, do,
+// da and ro; ion and ian, the one-letter correlatives, are written out
+// below. The first version allowed one letter for them; on the four books
+// of the measurements that gave 15 wrong readings and no right one.
+suffix('accusative', 'on', 'o', [], [], 2);
+suffix('accusative', 'an', 'a', [], [], 2);
 // Plural: the stem has two letters at least, as for the plural itself.
 suffix('accusative', 'ojn', 'oj', [], [], 2);
 suffix('accusative', 'ajn', 'aj', [], [], 2);
@@ -126,7 +129,10 @@ for (const word of U_CORRELATIVES) {
     whole('accusative', `${word}n`, word);
     whole('accusative', `${word}jn`, `${word}j`);
 }
-// One-letter stems the minimums leave out: ien (somewhere to), iajn.
+// One-letter stems the minimums leave out: ion (something), ian (some
+// kind), ien (somewhere to), iajn.
+whole('accusative', 'ion', 'io');
+whole('accusative', 'ian', 'ia');
 whole('accusative', 'ien', 'ie');
 whole('accusative', 'iajn', 'iaj');
 // unu (one) as a pronoun: unun, and unuj (some) with unujn.

@@ -19,6 +19,19 @@
 // - stemNotStartsWith {upper}: the form with a capital stem (Dometo must not
 //   give Domo).
 //
+// It also writes a row for each rule's conditions:
+//
+// - conditionsOut: a negative row whose rule column names a part of speech
+//   the rule does not give (brsas → brsi is a verb, so not a noun), which
+//   fails when the rule's output loses its condition;
+// - conditionsIn: a positive row with its trace, where the rule takes the
+//   output of a prefix rule that gives that condition (nebrsanta → ne →
+//   brsanta [adj] → -ant- → brsi), which fails when the rule loses its
+//   conditionsIn, since a rule with none takes only texts without
+//   conditions (docs/languages.md 7.2). The prefixes are own rules without a
+//   Yomitan twin (ne-, ge-, re-), so no unconditioned path reaches the text
+//   with the same trace.
+//
 // The term of a row is what the rule alone would give. A candidate whose
 // term the final rules reach anyway (through another rule) cannot test the
 // constraint and is left out: the script deinflects every candidate with
@@ -42,6 +55,17 @@ const stemOf = (n, upper = false) => {
     return upper && n > 0 ? s[0].toUpperCase() + s.slice(1) : s;
 };
 
+// The four parts of speech of the pack's conditions (none has
+// subConditions), and the own prefix rule that feeds each: it keeps the
+// word's ending and gives that condition.
+const PARTS_OF_SPEECH = ['n', 'v', 'adj', 'adv'];
+const FEEDERS = {
+    adj: {id: 'ne', prefix: 'ne', ending: 'a'},
+    adv: {id: 'ne', prefix: 'ne', ending: 'e'},
+    n: {id: 'ge', prefix: 'ge', ending: 'o'},
+    v: {id: 're', prefix: 're', ending: 'i'},
+};
+
 const candidates = [];
 for (const t of final.transforms) {
     for (const rule of t.rules) {
@@ -58,45 +82,63 @@ for (const t of final.transforms) {
             // prefix rule's prefix.
             if (rule.type === 'suffix') {
                 const [from, to] = make(stemOf(Math.max(min, 3)));
-                candidates.push(['guard: no space in the stem', `mi ${from}`, `mi ${to}`, t.id]);
+                candidates.push(['guard: no space in the stem', '0', `mi ${from}`, `mi ${to}`, '*', '*']);
             } else {
                 const [from, to] = make(`mi ${stemOf(Math.max(min, 3))}`);
-                candidates.push(['guard: no space in the stem', from, to, t.id]);
+                candidates.push(['guard: no space in the stem', '0', from, to, '*', '*']);
             }
         }
         if (min >= 1) {
             const [from, to] = make(stemOf(min - 1));
-            if (to !== '' && from !== to) { candidates.push([`guard: stem of ${min} letters at least`, from, to, t.id]); }
+            if (to !== '' && from !== to) { candidates.push([`guard: stem of ${min} letters at least`, '0', from, to, '*', '*']); }
         }
         if (rule.stemNotStartsWith === '{upper}') {
             const [from, to] = make(stemOf(Math.max(min, 3), true));
-            candidates.push(['guard: no capital stem', from, to, t.id]);
+            candidates.push(['guard: no capital stem', '0', from, to, '*', '*']);
+        }
+        const [from, to] = make(stemOf(Math.max(min, 3)));
+        const out = rule.conditionsOut ?? [];
+        if (out.length > 0) {
+            const other = PARTS_OF_SPEECH.find((c) => !out.includes(c));
+            candidates.push([`guard: output is ${out.join(' ')}`, '0', from, to, other, '*']);
+        }
+        const into = rule.conditionsIn ?? [];
+        if (into.length === 1 && FEEDERS[into[0]] && from.endsWith(FEEDERS[into[0]].ending)) {
+            const feeder = FEEDERS[into[0]];
+            candidates.push([`chain: input is ${into[0]}`, '1', feeder.prefix + from, to, '*', `${t.id}|${feeder.id}`]);
         }
     }
 }
 
-// Keep each (source, term) once, and only rows the final rules pass: the
-// term is not among the deinflections of the source (with every option on).
+// Keep each row once, and only rows the final rules pass (with every option
+// on, as the conformance test runs cases.tsv): a negative's term is not
+// among the deinflections of the source with a condition its rule column
+// accepts, and a positive's term is, with its trace.
 const seen = new Set();
-const unique = candidates.filter(([, from, to]) => {
-    const key = `${from}\t${to}`;
+const unique = candidates.filter((row) => {
+    const key = row.join('\t');
     if (seen.has(key)) { return false; }
     seen.add(key);
     return true;
 });
-const inputs = [...new Set(unique.map(([, from]) => from))];
-const out = execFileSync(cli, ['--languages', join(root, 'languages'), 'deinflect', 'eo', '--stdin', '--all-options'],
+const inputs = [...new Set(unique.map(([, , from]) => from))];
+const deinflected = execFileSync(cli, ['--languages', join(root, 'languages'), 'deinflect', 'eo', '--stdin', '--all-options'],
     {input: inputs.join('\n') + '\n', encoding: 'utf8'});
-const texts = new Map(out.trim().split('\n').map((line) => {
+const results = new Map(deinflected.trim().split('\n').map((line) => {
     const d = JSON.parse(line);
-    return [d.input, new Set(d.results.map((r) => r.text))];
+    return [d.input, d.results];
 }));
-const rows = unique.filter(([, from, to]) => !texts.get(from).has(to));
+const passes = ([, valid, from, to, rule, reasons]) => {
+    const found = results.get(from).filter((r) => r.text === to);
+    if (valid === '1') { return found.some((r) => reasons === '*' || r.trace.join('|') === reasons); }
+    return !found.some((r) => rule === '*' || r.conditions.length === 0 || r.conditions.includes(rule));
+};
+const rows = unique.filter(passes);
 const skipped = unique.length - rows.length;
 
 const kept = readFileSync(casesFile, 'utf8').split('\n');
 const at = kept.indexOf(MARK);
 const head = (at >= 0 ? kept.slice(0, at) : kept).join('\n').replace(/\n+$/, '');
-const body = rows.map(([category, from, to]) => `${category}\t0\t${from}\t${to}\t*\t*`).join('\n');
+const body = rows.map((row) => row.join('\t')).join('\n');
 writeFileSync(casesFile, `${head}\n${MARK}\n${body}\n`);
-console.log(`eo: ${rows.length} guard rows in ${casesFile} (${skipped} candidates whose term another rule reaches, left out)`);
+console.log(`eo: ${rows.length} guard rows in ${casesFile} (${skipped} candidates the final rules do not pass, left out)`);

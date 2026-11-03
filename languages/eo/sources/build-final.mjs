@@ -43,22 +43,23 @@ export const KEPT = [
     ['-ujo (adjective)', {stemCharacters: '[^ ]'}, 'fridujo → frida: no own rule takes -ujo to an adjective'],
     ['-ujo (verb)', {stemCharacters: '[^ ]'}, 'lavujo → lavi: no own rule takes -ujo to a verb'],
     // The own prefix rules take verbs (and kun- nouns); Yomitan's take any
-    // word. Each needs a stem of two letters, or a frequent word gives a
-    // letter of the alphabet, which the dictionary lists without a part of
-    // speech: ekstera → a, ĵuso → o, eki → i, elo → o, dise → e, fora → a,
-    // kune → e, mise → e. And none may take a stem with a space: a lookup
+    // word. Each needs a stem of three letters: with one, a frequent word
+    // gives a letter of the alphabet, which the dictionary lists without a
+    // part of speech (ekstera → a, ĵuso → o, eki → i, elo → o, dise → e, fora
+    // → a, kune → e, mise → e); with two, elia gives ia, Elio io, Misoj oj,
+    // disko ko, forto to and formi mi. Raising the minimum from two to three
+    // changed no first result on the four books of the measurements and
+    // removed only readings such as Elio → io and Misoj → oj. And none may take a stem with a space: a lookup
     // tries every prefix of the scanned text that ends at a word boundary,
     // and el la domo would give " la domo" (docs/languages.md 14 step 2).
-    ['ekster-', {stemMinLength: 2, stemCharacters: '[^ ]'}, 'eksterlando → lando'],
-    ['ĵus-', {stemMinLength: 2, stemCharacters: '[^ ]'}, 'ĵusvekita → vekita'],
-    ['ek-', {stemMinLength: 2, stemCharacters: '[^ ]'}, 'ekspiro → spiro, eksono → sono'],
-    ['el-', {stemMinLength: 2, stemCharacters: '[^ ]'}, 'eldiro → diro'],
-    // dis- and for- need three: disko → ko, forko → ko, formi → mi, forto
-    // → to, forĝi → ĝi (measure-derivation.py).
+    ['ekster-', {stemMinLength: 3, stemCharacters: '[^ ]'}, 'eksterlando → lando'],
+    ['ĵus-', {stemMinLength: 3, stemCharacters: '[^ ]'}, 'ĵusvekita → vekita'],
+    ['ek-', {stemMinLength: 3, stemCharacters: '[^ ]'}, 'ekspiro → spiro, eksono → sono'],
+    ['el-', {stemMinLength: 3, stemCharacters: '[^ ]'}, 'eldiro → diro'],
     ['dis-', {stemMinLength: 3, stemCharacters: '[^ ]'}, 'dissendo → sendo'],
     ['for-', {stemMinLength: 3, stemCharacters: '[^ ]'}, 'foriro → iro'],
-    ['kun-', {stemMinLength: 2, stemCharacters: '[^ ]'}, 'kunulo → ulo'],
-    ['mis-', {stemMinLength: 2, stemCharacters: '[^ ]'}, 'misuzo → uzo'],
+    ['kun-', {stemMinLength: 3, stemCharacters: '[^ ]'}, 'kunulo → ulo'],
+    ['mis-', {stemMinLength: 3, stemCharacters: '[^ ]'}, 'misuzo → uzo'],
 ];
 
 // Yomitan transforms left out, with the reason.
