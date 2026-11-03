@@ -27,6 +27,14 @@ repository root with a built hoshidicts-cli:
       the rules; the rest are written to <out dir>/unjudged.tsv, from which a
       random sample is judged by hand.
 
+  python3 languages/sq/sources/measure.py phrases <wty-sq-en.zip> <imported dir> <unimorph sqi> <sqi_sentences.tsv.bz2>
+      Every place in Tatoeba's Albanian sentences where an article, particle,
+      auxiliary or pronoun is followed by a word: looked up from that word
+      (as a hover there does), the first result is a phrase reading when it
+      matches more than the word itself; the phrase reading is right when
+      the following word's own rows name its lemma, or the phrase's own rows
+      name it, and the rest are listed for judging by hand.
+
 The dictionary is wty-sq-en as published (term banks read from the zip). The
 word list of `yomitan` is the 50,000 words of the frequency list, the
 single-word forms of UniMorph sqi and the single-word form-of rows of the
@@ -290,9 +298,63 @@ def cmd_real(dictionary, imported, unimorph, out_dir, *texts):
         print(f'  wrong via {trace}: {n}')
 
 
+FRONT = ['i', 'e', 'të', 'së', 'më', 'do', 'u', 'duke', 'pa', 'për', 'kam', 'ke', 'ka', 'kemi', 'keni', 'kanë',
+         'kisha', 'kishte', 'kishin', 'jam', 'je', 'është', 'jemi', 'jeni', 'janë', 'ishte', 'ishin', 'ta', 'ma', 'ia',
+         'na', 'ju', 'nuk', 'mos', "s'"]
+
+
+def cmd_phrases(dictionary, imported, unimorph, sentences):
+    import bz2
+    lemmas, forms = load_dictionary(dictionary)
+    um = unimorph_lemmas(unimorph)
+    ids = {t['id'] for t in json.load(open(os.path.join(PACK, 'transforms.json'), encoding='utf-8'))['transforms']}
+    texts = []
+    for line in bz2.open(sentences, 'rt', encoding='utf-8'):
+        parts = line.rstrip('\n').split('\t')
+        if len(parts) < 3:
+            continue
+        sentence = parts[2].replace('’', "'")
+        tokens = list(re.finditer(r"[A-Za-zÀ-ÖØ-öø-ɏ]+'?", sentence))
+        for k, m in enumerate(tokens[:-1]):
+            front = m.group(0).lower()
+            if front in FRONT:
+                texts.append((front, tokens[k + 1].group(0).rstrip("'"), sentence[m.start():]))
+    results = lookup_batch([t for _, _, t in texts], imported)
+    per = collections.defaultdict(collections.Counter)
+    unjudged = []
+    for (front, nxt, text), res in zip(texts, results):
+        c = per[front]
+        c['places'] += 1
+        if not res['results']:
+            c['nothing'] += 1
+            continue
+        first = res['results'][0]
+        if len(first['matched']) <= len(front) + 1:
+            c['word'] += 1
+            continue
+        c['phrase'] += 1
+        e = first['expression']
+        named = {l for l, _ in forms.get(nxt.lower(), [])} | um.get(nxt.lower(), set()) | {l for l, _ in forms.get(first['matched'].lower(), [])}
+        if e in named or e.lower() == nxt.lower():
+            c['right'] += 1
+        else:
+            unjudged.append((front, first['matched'], e, ' '.join(first['trace'])))
+    total = collections.Counter()
+    for front in FRONT:
+        if per[front]['places']:
+            c = per[front]
+            total.update(c)
+            print(f"{front}: {c['places']} places, first result a phrase reading at {c['phrase']} ({c['right']} right by script), the word itself at {c['word']}, nothing at {c['nothing']}")
+    print(f"all: {total['places']} places, phrase readings {total['phrase']}, right by script {total['right']}, to judge {len(unjudged)}")
+    for u in unjudged:
+        print('  ' + ' | '.join(u))
+
+
 def main(argv):
     if len(argv) >= 1 and argv[0] == 'yomitan' and len(argv) == 4:
         cmd_yomitan(*argv[1:])
+    elif len(argv) == 5 and argv[0] == 'phrases':
+        cmd_phrases(*argv[1:])
     elif len(argv) >= 6 and argv[0] == 'real':
         cmd_real(*argv[1:])
     elif len(argv) >= 1 and argv[0] == 'frequent' and len(argv) in (5, 6):

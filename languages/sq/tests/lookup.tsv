@@ -1,0 +1,33 @@
+# Source: written for this pack (GPL-3.0-or-later), against tests/dictionary/. Every optional processor is on.
+# category	valid	text	expression	matched
+inflection	1	Vajzat lexonin libra.	vajzë	Vajzat
+inflection	1	lexonin libra	lexoj	lexonin
+inflection	1	librat e shkollës	libër	librat
+inflection	1	shkollës së qytetit	shkollë	shkollës
+inflection	1	miqtë e mi	mik	miqtë
+inflection	1	djemtë luanin	djalë	djemtë
+inflection	1	derën e shtëpisë	derë	derën
+analytic	1	kam punuar shumë	punoj	kam punuar
+analytic	1	do të shkoj nesër	shkoj	do të shkoj
+analytic	1	u largua herët	largohem	u largua
+analytic	1	duke punuar	punoj	duke punuar
+analytic	1	të shkosh	shkoj	të shkosh
+contraction	1	s'kam kohë	kam	s'kam
+contraction	1	s’kam kohë	kam	s’kam
+contraction	1	ç'bën ti	bëj	ç'bën
+adjective	1	e madhe	madh	e madhe
+adjective	1	më i mirë	mirë	më i mirë
+adjective	1	të vogla	vogël	të vogla
+clitic	1	hape derën	hap	hape
+clitic	1	lexoje librin	lexoj	lexoje
+non-active	1	duket mirë	dukem	duket
+non-active	1	largohet nga qyteti	largohem	largohet
+form-of	1	punova shumë	punoj	punova
+form-of	1	vajza e vogël	vajzë	vajza
+scanning	1	ministri tha	ministër	ministri
+scanning	1	Shtëpia	shtëpi	Shtëpia
+scanning	1	ish-ministri	ish	ish
+negatives	0	e di mirë	di	e di
+negatives	0	të shtëpisë	shtëpi	të shtëpisë
+negatives	0	kam shtëpi	shtëpi	kam shtëpi
+negatives	0	largohet nga qyteti	largoj	largohet

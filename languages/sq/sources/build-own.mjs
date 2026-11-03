@@ -117,9 +117,14 @@ function circumfix(id, prefixes, suffixes, conditionsIn, conditionsOut, extra = 
  * ndërmarr, tërhoqi → tërheq, kundërthotë → kundërthem); a shorter one is a
  * whole-word rule, so it is never read inside another word (pa, ra, del).
  */
+// The verbs whose stem is one syllable ending in a vowel (jam, kam, ha, pi,
+// di, rri, fle, lë, vë, zë, bie, dua, vete) have endings that end many other
+// words (dalësh is not da- + lësh), and almost no compounds: their forms are
+// whole words.
+const WHOLE_WORD_VERBS = new Set(['jam', 'kam', 'ha', 'pi', 'di', 'rri', 'fle', 'lë', 'vë', 'zë', 'bie', 'dua', 'vete']);
 function irregular(id, forms, lemma, conditionsIn, conditionsOut = ['v']) {
     for (const form of forms) {
-        if ([...form].length >= 4) {
+        if ([...form].length >= 4 && !WHOLE_WORD_VERBS.has(lemma)) {
             add(id, {type: 'suffix', inflected: form, deinflected: lemma, conditionsIn, conditionsOut, stemCharacters: ONE_WORD});
         } else {
             whole(id, form, lemma, conditionsIn, conditionsOut);
@@ -284,7 +289,7 @@ for (const [inflected, deinflected, extra] of [
     ['ma', 'ëm', {stemMinLength: 2, stemEndsWith: CONSONANT}],
     ['eq', 'ak', {stemMinLength: 1}],
     ['gj', 'g', {stemMinLength: 1}],
-    ['nj', '', {stemMinLength: 2, stemEndsWith: VOWEL}],
+    ['nj', '', {stemMinLength: 2, stemEndsWith: '[oiu]'}],
     ['enj', 'ë', {stemMinLength: 2}],
     ['inj', '', {stemMinLength: 2}],
     ['ërinj', '', {stemMinLength: 2}],
@@ -369,11 +374,14 @@ whole('adj-pl-m', 'ligj', 'lig', ['adj_pl'], A);
 // Definite adjectives (i miri, e mira, të mirët), used as nouns and in the
 // superlative (më i miri).
 transform('adj-def-m', 'definite (masculine)', 'Masculine definite adjective (i miri, të mirin, të mirit → mirë; i madhi → madh; i riu → ri).');
-for (const [end, extra] of [['i', {}], ['in', {}], ['it', {}]]) {
-    suffix('adj-def-m', end, '', ['adj_m', 'adj_pl'], A, {stemMinLength: 2, stemEndsWith: CONSONANT, ...extra});
-    suffix('adj-def-m', end, 'ë', ['adj_m', 'adj_pl'], A, {stemMinLength: 2, stemEndsWith: CONSONANT, ...extra});
-    suffix('adj-def-m', `r${end}`, 'ër', ['adj_m', 'adj_pl'], A, {stemMinLength: 1, stemEndsWith: CONSONANT});
-    suffix('adj-def-m', `l${end}`, 'ël', ['adj_m', 'adj_pl'], A, {stemMinLength: 1, stemEndsWith: CONSONANT});
+// The nominative follows i (i miri), the accusative të (të mirin); the
+// genitive, dative and ablative (të mirit) are read after i only, since after
+// të the same ending is far more often a genitive noun (të lumit, të shtetit).
+for (const [end, after] of [['i', ['adj_m']], ['in', ['adj_m', 'adj_pl']], ['it', ['adj_m']]]) {
+    suffix('adj-def-m', end, '', after, A, {stemMinLength: 2, stemEndsWith: CONSONANT});
+    suffix('adj-def-m', end, 'ë', after, A, {stemMinLength: 2, stemEndsWith: CONSONANT});
+    suffix('adj-def-m', `r${end}`, 'ër', after, A, {stemMinLength: 1, stemEndsWith: CONSONANT});
+    suffix('adj-def-m', `l${end}`, 'ël', after, A, {stemMinLength: 1, stemEndsWith: CONSONANT});
 }
 for (const end of ['u', 'un', 'ut']) {
     suffix('adj-def-m', end, '', ['adj_m', 'adj_pl'], A, {stemMinLength: 1, stemEndsWith: '[ikgh]'});
@@ -385,17 +393,21 @@ suffix('adj-def-f', 'ra', 'ër', ['adj_f', 'adj_pl'], A, {stemMinLength: 1, stem
 suffix('adj-def-f', 'la', 'ël', ['adj_f', 'adj_pl'], A, {stemMinLength: 1, stemEndsWith: CONSONANT});
 suffix('adj-def-f', 'ja', 'e', ['adj_f', 'adj_pl'], ['adj', 'adj_f'], {stemMinLength: 2, stemEndsWith: CONSONANT});
 suffix('adj-def-f', 'n', '', ['adj_f', 'adj_pl'], ['adj', 'adj_f'], {stemMinLength: 2, stemEndsWith: '[ëe]'});
-suffix('adj-def-f', 's', '', ['adj_f', 'adj_pl'], ['adj', 'adj_f'], {stemMinLength: 2, stemEndsWith: '[ëe]'});
+// The oblique case (të mirës) is read only after e and së: after të the same
+// ending is far more often a genitive noun (të fizikës, të shtetit).
+suffix('adj-def-f', 's', '', ['adj_f'], ['adj', 'adj_f'], {stemMinLength: 2, stemEndsWith: '[ëe]'});
 suffix('adj-def-f', 'rën', 'ër', ['adj_f', 'adj_pl'], A, {stemMinLength: 1, stemEndsWith: CONSONANT});
-suffix('adj-def-f', 'rës', 'ër', ['adj_f', 'adj_pl'], A, {stemMinLength: 1, stemEndsWith: CONSONANT});
+suffix('adj-def-f', 'rës', 'ër', ['adj_f'], A, {stemMinLength: 1, stemEndsWith: CONSONANT});
 suffix('adj-def-f', 'lën', 'ël', ['adj_f', 'adj_pl'], A, {stemMinLength: 1, stemEndsWith: CONSONANT});
-suffix('adj-def-f', 'lës', 'ël', ['adj_f', 'adj_pl'], A, {stemMinLength: 1, stemEndsWith: CONSONANT});
+suffix('adj-def-f', 'lës', 'ël', ['adj_f'], A, {stemMinLength: 1, stemEndsWith: CONSONANT});
 whole('adj-def-f', 'reja', 'ri', ['adj_f'], A);
 
 transform('adj-def-pl', 'definite plural', 'Plural definite adjective (të mirët, të mirat, të mirëve, të mirave → mirë; të mëdhenjtë → madh).');
 suffix('adj-def-pl', 't', '', ['adj_pl'], ['adj', 'adj_pl'], {stemMinLength: 2, stemEndsWith: '[aëe]'});
 suffix('adj-def-pl', 'të', '', ['adj_pl'], ['adj', 'adj_pl'], {stemMinLength: 2, stemEndsWith: CONSONANT});
-suffix('adj-def-pl', 'it', '', ['adj_pl'], ['adj', 'adj_pl'], {stemMinLength: 2, stemEndsWith: CONSONANT});
+// -it is the definite plural of adjectives in -r (të bukurit, të varfërit,
+// të vdekurit); after other consonants të ...-it is a genitive noun (të lumit).
+suffix('adj-def-pl', 'it', '', ['adj_pl'], ['adj', 'adj_pl'], {stemMinLength: 2, stemEndsWith: '[r]'});
 suffix('adj-def-pl', 've', '', ['adj_pl'], ['adj', 'adj_pl'], {stemMinLength: 2, stemEndsWith: '[aë]'});
 
 // ================================================================================
@@ -415,7 +427,11 @@ const IMP = ['v_imp'];
 const V = ['v'];
 // The outputs that leave a state also carry v (see Conditions).
 const SB_OUT = ['v', 'v_sbjv'];
-const PT_OUT = ['v', 'v_ptcp'];
+// A participle is never a verb's dictionary form, so after an auxiliary only
+// the participle rules continue: neither a verb row spelled like a finite form
+// (do të jetë lëvizja: lëvizja is also the imperfect of lëviz) nor an
+// adjective spelled like the participle (për të marrë: i marrë, mad) matches.
+const PT_OUT = ['v_ptcp'];
 const AO_OUT = ['v', 'v_aor'];
 const IMP_OUT = ['v', 'v_imp'];
 

@@ -1,0 +1,26 @@
+# Source: written for this pack (GPL-3.0-or-later), no third-party data. Every optional processor is on.
+# category	valid	input	variant
+decapitalize	1	Shtëpia	shtëpia
+decapitalize	1	SHQIPËRIA	shqipëria
+decapitalize	1	ÇFARË	çfarë
+capitalize	1	tirana	Tirana
+capitalize	1	ëndrra	Ëndrra
+capitalize	1	çamëria	Çamëria
+nfkc	1	shtëpi	shtëpi
+nfkc	1	çka	çka
+nfkc	1	ﬁlm	film
+apostrophe	1	s’kam	s'kam
+apostrophe	1	S’kam	s'kam
+apostrophe	1	s`ka	s'ka
+apostrophe	1	t‘i	t'i
+apostrophe	1	çʼbën	ç'bën
+missing diacritics	1	shtepi	shtëpi
+missing diacritics	1	cfare	çfarë
+missing diacritics	1	nje	një
+missing diacritics	1	Shqiperi	Shqipëri
+missing diacritics	1	cka	çka
+negatives	0	shtëpi	shtepi
+negatives	0	çfarë	cfarë
+negatives	0	kam	kAm
+negatives	0	s'kam	s’kam
+negatives	0	këngë	kengë

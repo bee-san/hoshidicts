@@ -1,0 +1,10 @@
+{
+  "title": "hoshidicts sq test dictionary",
+  "format": 3,
+  "revision": "1",
+  "sequenced": false,
+  "author": "hoshidicts",
+  "description": "A tiny Albanian dictionary for languages/sq/tests/lookup.tsv, written for the pack. punova and vajza are form-of rows, as wiktionary-to-yomitan writes them.",
+  "sourceLanguage": "sq",
+  "targetLanguage": "en"
+}
