@@ -59,6 +59,11 @@
         "variants": [[{"case": "upperFirst"}]]
       },
       {
+        "id": "capitalizeWord",
+        "name": "Capitalize a word written in capitals (FRAU → Frau)",
+        "variants": [[{"case": "lower"}, {"case": "upperFirst"}]]
+      },
+      {
         "id": "eszettPreprocessor",
         "name": "Convert \"ß\" to \"ss\"",
         "variants": [

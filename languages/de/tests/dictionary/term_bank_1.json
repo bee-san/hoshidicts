@@ -44,5 +44,12 @@
   ["auf", "", "prep", "", 0, ["on"], 43, ""],
   ["Schloß", "", "non-lemma", "n", 0, [["Schloss", ["alternative"]]], 44, ""],
   ["ging", "", "non-lemma", "v", 0, [["gehen", ["past"]]], 45, ""],
-  ["Häuser", "", "non-lemma", "n", 0, [["Haus", ["nominative plural"]]], 46, ""]
+  ["Häuser", "", "non-lemma", "n", 0, [["Haus", ["nominative plural"]]], 46, ""],
+  ["Frau", "", "n", "n", 0, ["woman"], 47, ""],
+  ["frau", "", "pron", "", 0, ["(feminist) one, as man"], 48, ""],
+  ["Kündigung", "", "n", "n", 0, ["notice, termination"], 49, ""],
+  ["kündigen", "", "v", "v", 0, ["to give notice"], 50, ""],
+  ["hindern", "", "v", "v", 0, ["to hinder"], 51, ""],
+  ["hoch", "", "adj", "adj", 0, ["high"], 52, ""],
+  ["ander", "", "adj", "adj", 0, ["other"], 53, ""]
 ]

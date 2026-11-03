@@ -43,9 +43,15 @@
 //     clause end (. , ; : ! ? … " » « ) – or und, oder, aber, als, wenn,
 //     weil, dass, denn, sondern, bis, ob), the particle is a preposition or
 //     an adverb there and the reading is wrong (ging nach Hause ->
-//     nachgehen); a reading the dictionary's form-of rows give for the
-//     matched text is right otherwise (bis zu, es gibt); the rest is
-//     unjudged;
+//     nachgehen); a reading of the pack's separated-prefix rule is right when
+//     the dictionary has a form-of row for the hovered word and the particle
+//     that names the verb (strengt an -> anstrengen; wiktionary-to-yomitan
+//     writes these rows for the separated forms of separable verbs), and
+//     wrong when it has none and the hovered word is not a verb form (no row
+//     of the word, as written or in small letters, has the rules tag v:
+//     lange an; -> anlangen, der Hand hin. -> hindern); a reading the
+//     dictionary's form-of rows give for the matched text is right otherwise
+//     (bis zu, es gibt); the rest is unjudged;
 //   - a shorter text (part of a compound or of a word the dictionary lacks):
 //     counted apart.
 //   Wrong results are grouped by the rules of the pack in their trace.
@@ -108,7 +114,15 @@ const addLemma = (form, lemma) => {
     set.add(apostrophe(lemma.replace(/ which was .*$/u, '')));
     lemmas.set(key, set);
 };
-for (const [form, lemma] of lines(join(inputs, 'redirects.tsv'))) { addLemma(form, lemma); }
+const verbForms = new Set();
+for (const [form, lemma, rules = ''] of lines(join(inputs, 'redirects.tsv'))) {
+    addLemma(form, lemma);
+    if (rules.split(' ').includes('v')) { verbForms.add(form); }
+}
+for (const [expression, rules = ''] of lines(join(inputs, 'headwords.tsv'))) {
+    if (rules.split(' ').includes('v')) { verbForms.add(expression); }
+}
+const isVerbForm = (word) => verbForms.has(word) || verbForms.has(lower(word));
 for (const [lemma, form] of lines(unimorph)) { if (form) { addLemma(form, lemma); } }
 const lowerFirst = (s) => s.charAt(0).toLowerCase() + s.slice(1);
 const lemmasOf = (word) => {
@@ -266,6 +280,13 @@ if (mode === 'frequent') {
                 const particleVerb = PARTICLES.has(last) && !top.expression.includes(' ') && lower(top.expression).startsWith(last);
                 if (particleVerb && !CLAUSE_END.test(after)) {
                     verdict = rules.length > 0 ? 'multiWrongRule' : 'multiWrongDictionary';
+                } else if (rules.includes('separated-prefix')) {
+                    const particle = last.replace(/[^a-zäöüß]+$/u, '');
+                    if (isLemma(`${lower(word)} ${particle}`, top.expression)) {
+                        verdict = 'multiRight';
+                    } else {
+                        verdict = isVerbForm(word) ? 'multiUnjudged' : 'multiWrongRule';
+                    }
                 } else if (isLemma(top.matched, top.expression) && rules.length === 0) {
                     verdict = 'multiRight';
                 } else {

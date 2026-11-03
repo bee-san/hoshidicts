@@ -9,6 +9,8 @@ decapitalize	1	ÜBER	über
 decapitalize	1	Alles klar	alles klar
 capitalize	1	haus	Haus
 capitalize	1	über	Über
+capitalize word	1	FRAU	Frau
+capitalize word	1	ÄRZTE	Ärzte
 eszett	1	daß	dass
 eszett	1	Strasse	Straße
 eszett	1	STRASSE	STRAẞE

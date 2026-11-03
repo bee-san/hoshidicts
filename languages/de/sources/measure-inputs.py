@@ -7,8 +7,8 @@
 Writes into <out dir>:
 - headwords.tsv: every expression of the dictionary that has a row with
   definitions, and the rules tags of those rows (space separated);
-- redirects.tsv: form, lemma for every form-of reference of the dictionary
-  (a definition [lemma, [rules]]);
+- redirects.tsv: form, lemma and the row's rules tags for every form-of
+  reference of the dictionary (a definition [lemma, [rules]]);
 - frequent.tsv: the 10,000 most frequent words of the frequency list, with
   their counts and the word as German text writes it: the list is in small
   letters, so a word gets the case it has most often in the Tatoeba
@@ -46,7 +46,7 @@ with zipfile.ZipFile(dictionary) as archive:
             definitions = False
             for item in glossary:
                 if isinstance(item, list) and len(item) == 2 and isinstance(item[0], str) and item[0] and isinstance(item[1], list):
-                    redirects.add((expression, item[0]))
+                    redirects.add((expression, item[0], rules))
                 else:
                     definitions = True
             if definitions:
@@ -55,8 +55,8 @@ with open(join(out_dir, 'headwords.tsv'), 'w', encoding='utf-8') as f:
     for expression in sorted(headwords):
         f.write(f"{expression}\t{' '.join(sorted(headwords[expression]))}\n")
 with open(join(out_dir, 'redirects.tsv'), 'w', encoding='utf-8') as f:
-    for form, lemma in sorted(redirects):
-        f.write(f'{form}\t{lemma}\n')
+    for form, lemma, rules in sorted(redirects):
+        f.write(f'{form}\t{lemma}\t{rules}\n')
 
 WORD = re.compile(r"[A-Za-zÀ-ÖØ-öø-ɏẞ][A-Za-zÀ-ÖØ-öø-ɏẞ'’\-]*")
 END = re.compile(r'(?<=[.!?…])["»«“”‘’)]*\s+')
@@ -95,7 +95,7 @@ for sentence in sentences:
     for m in list(WORD.finditer(sentence))[1:]:
         word = m.group(0).rstrip("'’-")
         cases[word.lower()][word] += 1
-keys = set(headwords) | {form for form, _ in redirects}
+keys = set(headwords) | {form for form, _, _ in redirects}
 with open(frequency, encoding='utf-8') as f, open(join(out_dir, 'frequent.tsv'), 'w', encoding='utf-8') as out:
     for i, line in enumerate(f):
         if i >= 10000:

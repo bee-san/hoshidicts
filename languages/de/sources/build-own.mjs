@@ -117,8 +117,12 @@ function writeListed() {
             }
         }
     }
+    // A listed verb form may follow a prefix (verstand, bekam, ankam), but no
+    // German prefix ends in c, so a form after sc is part of another word
+    // (schießt is not sc + hießt -> scheißen, schiebt not sc + hiebt -> schauen).
     for (const {id, conditionsIn, conditionsOut, pairs} of listed.values()) {
-        add(id, {type: 'circumfix', prefixes: [['', '']], suffixes: pairs, conditionsIn, conditionsOut});
+        const extra = conditionsOut === VERB_OUT ? {stemNotEndsWith: '[c]'} : {};
+        add(id, {type: 'circumfix', prefixes: [['', '']], suffixes: pairs, conditionsIn, conditionsOut, ...extra});
     }
 }
 
@@ -497,10 +501,12 @@ for (const [[inf], present, imperatives, preterites, subjunctives, participles] 
         const base = k2.slice(0, -1);  // gäbe -> gäb
         form('subjunctive-2', k2, inf, FINITE_IN, VERB_OUT);
         form('subjunctive-2-du', `${k2}st`, inf, FINITE_IN, VERB_OUT);
-        form('subjunctive-2-du', `${base}st`, inf, FINITE_IN, VERB_OUT);
+        // The short forms (du gingst, ihr gingt) only after a stem that does
+        // not end in s, ß, x or z: du läsest has no short form (lässt would be lässt).
+        if (!/[sßxz]$/u.test(base)) { form('subjunctive-2-du', `${base}st`, inf, FINITE_IN, VERB_OUT); }
         form('subjunctive-2-wir', `${k2}n`, inf, FINITE_IN, VERB_OUT);
         form('subjunctive-2-ihr', `${k2}t`, inf, FINITE_IN, VERB_OUT);
-        form('subjunctive-2-ihr', `${base}t`, inf, FINITE_IN, VERB_OUT);
+        if (!/[sßxz]$/u.test(base)) { form('subjunctive-2-ihr', `${base}t`, inf, FINITE_IN, VERB_OUT); }
     }
     for (const pp of participles) {
         form('past-participle', pp, inf, ['adj'], VERB_OUT);
@@ -594,10 +600,12 @@ add('zu-infinitive', {
 // below.
 const particleAlternation = [...PARTICLES].sort((a, b) => b.length - a.length || (a < b ? -1 : 1)).join('|');
 const MIDDLE = '(?: [^ .!?,;:…]+)*';
+// An article is never the verb (der Hand hin. is not hinder -> hindern).
+const NOT_ARTICLE = '(?!(?:der|die|das|den|dem|des|ein|eine|einen|einem|einer|eines) )';
 for (const [anchor, source] of [['.', '\\.'], ['!', '!'], ['?', '\\?'], [',', ','], [';', ';'], [':', ':'], ['…', '…'],
     [' und', ' und'], [' oder', ' oder']]) {
     add('separated-prefix', {
-        type: 'pattern', pattern: `^([a-zäöüß]+)${MIDDLE} (${particleAlternation})${source}$`, replacement: '$2$1',
+        type: 'pattern', pattern: `^${NOT_ARTICLE}([a-zäöüß]+)${MIDDLE} (${particleAlternation})${source}$`, replacement: '$2$1',
         anchorSuffix: anchor, conditionsIn: [], conditionsOut: ['sep'],
     });
 }
@@ -624,9 +632,16 @@ for (const end of ['e', 'en', 'er', 'es', 'em']) {
     suffix('declined', `r${end}`, 'er', [], ADJ_OUT, {...MIN2, stemEndsWith: '[u]'});  // teure -> teuer
     form('declined', `hoh${end}`, 'hoch', [], ADJ_OUT);
     if (end !== 'e') {
-        suffix('declined', end.slice(1), '', [], ADJ_OUT, {...MIN2, stemMinLength: 3, stemEndsWith: '[e]'});  // leisen -> leise
+        // An adjective that ends in e (leise, zehnte, oberste): the ending is
+        // written with that e, so that it is as long as the noun plural's -en
+        // and is found first (zehnten is zehnte, not the plural of Zehnt).
+        suffix('declined', end, 'e', [], ADJ_OUT, {...MIN2, stemMinLength: 2});  // leisen -> leise
     }
 }
+// Older and literary texts drop the e of an ending after -er (einem ältern
+// Greis, die höhern Beamten, des andern): -ern and -erm are -eren and -erem.
+suffix('declined', 'ern', 'er', [], ADJ_OUT, MIN2);
+suffix('declined', 'erm', 'er', [], ADJ_OUT, MIN2);
 suffix('comparative', 'er', '', ADJ_OUT, ADJ_OUT, MIN2);
 suffix('comparative', 'ler', 'el', ADJ_OUT, ADJ_OUT, MIN2);
 suffix('comparative', 'rer', 'er', ADJ_OUT, ADJ_OUT, {...MIN2, stemEndsWith: '[u]'});

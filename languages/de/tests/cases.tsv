@@ -231,6 +231,10 @@ adjectives	1	meisten	viel	adj	superlative|declined
 adjectives	1	höchste	hoch	adj	superlative|declined
 adjectives	1	nächste	nah	adj	superlative|declined
 adjectives	1	heißeste	heiß	adj	superlative|declined
+adjectives	1	höhern	hoch	adj	comparative|declined
+adjectives	1	ältern	alt	adj	comparative|declined
+adjectives	1	andern	ander	adj	declined
+adjectives	1	zehnten	zehnte	adj	declined
 contractions	1	zum	zu	*	contraction
 contractions	1	zur	zu	*	contraction
 contractions	1	im	in	*	contraction
@@ -284,3 +288,9 @@ negatives	0	bauten	Bau	*	*
 negatives	0	lasst	lesen	*	*
 negatives	0	dazu ist	da ist	*	*
 negatives	0	einzu	ein	*	*
+negatives	0	schießt	scheißen	*	*
+negatives	0	schiebt	schauen	*	*
+negatives	0	aufschiebe	aufschauen	*	*
+negatives	0	verlässt	verlesen	*	*
+negatives	0	der Hand hin.	hindern	*	*
+negatives	0	die Hand hin.	hindien	*	*
