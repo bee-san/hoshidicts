@@ -475,11 +475,15 @@ in `sources/`, run from the repository root.
      304, text.tsv 41 / 41, lookup.tsv 56 / 56; gaps.tsv 0 / 116 (reported).
    - `tests/classes.json` agrees with the engine (4 classes, 564 fields, 2
      steps).
-   - `tools/check-yomitan.mjs`: CHECK_YOMITAN.
+   - `tools/check-yomitan.mjs`: 10,260 inputs, 155,488 Yomitan results, 0
+     unexplained. The processors `normalizeUnicode`,
+     `removeArabicScriptDiacritics`, `removeTatweel` and
+     `convertAlifMaqsuraToYaa` agree; `addHamzaTop` and `addHamzaBottom` are
+     the two listed differences.
    - `sources/ablate.py`: each of its 26 edits (a constraint, exclusion or
      condition removed, a listed word dropped, two processors swapped) makes
      the conformance test fail.
-   - `tests/` and `sources/` hold SIZE_KB.
+   - `tests/` and `sources/` hold 997,507 bytes.
 8. **Commands**:
 
    ```sh

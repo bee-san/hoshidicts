@@ -56,7 +56,8 @@
       "description": "The preposition بِ (bi, \"with, in, by\") written together with the next word: بالقلم is بـ + القلم, بيده is بـ + يده.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "ب", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemStartsWith": "{base}", "source": "both"}
+        {"type": "prefix", "inflected": "ب", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemStartsWith": "{base}", "source": "both"},
+        {"type": "wholeWord", "inflected": "بحكم", "deinflected": "حكم", "conditionsIn": [], "conditionsOut": []}
       ]
     },
     {

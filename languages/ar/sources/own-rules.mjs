@@ -119,6 +119,8 @@ transform('fa', 'ف (so, then)', 'The conjunction فَ (fa, "so, then") written 
 ]);
 transform('bi', 'بـ (with, in, by)', 'The preposition بِ (bi, "with, in, by") written together with the next word: بالقلم is بـ + القلم, بيده is بـ + يده.', [
     prefix('ب', ''),
+    // بحكم (by virtue of), before بح + ـكم.
+    whole('بحكم', 'حكم'),
 ]);
 transform('ka', 'كـ (like, as)', 'The preposition كَ (ka, "like, as") written together with the next word: كالبحر is كـ + البحر.', [
     prefix('ك', ''),
