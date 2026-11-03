@@ -403,13 +403,16 @@ const INSERTED_BEFORE_MEASURE = `[${WORD_CHARS}${NUMERALS}]{0,5}[${WORD_CHARS}]`
 const MEASURE_OBJECTS = new Set(t('口门年天次场顿把张本头节份件首支根盒包瓶期段番声眼步身个下'));
 // Characters that may not stand right before an object, because with it they
 // make another word or a measure word with its noun (见下面, 见过大场面, 碰那面
-// 镜子, 路上开车, 搬回家, 完成回家作业, 动门把手), measured on Tatoeba and Lu
-// Xun's stories.
+// 镜子, 路上开车, 搬回家, 完成回家作业, 动门把手, 写下字母, 落到那个地步, 吃不了
+// 热豆腐), measured on Tatoeba and Lu Xun's stories.
 const NOT_BEFORE = new Map([
     ...spellings('面').map((o) => [o, t('这那上下场')]),
     ...spellings('车').map((o) => [o, t('开上下')]),
     ...spellings('家').map((o) => [o, t('回')]),
     ...spellings('手').map((o) => [o, t('把')]),
+    ...spellings('字').map((o) => [o, t('下')]),
+    ...spellings('地').map((o) => [o, t('这那个')]),
+    ...spellings('豆腐').map((o) => [o, t('热')]),
 ]);
 const ADJ = `[${t('好小白')}]|${spellings('大学').join('|')}`;
 const OTHER_DE = `[^的]*[^${t('我你您他她它咱谁们己家人年天月周时钟头个次')}的]的`;

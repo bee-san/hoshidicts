@@ -58,6 +58,7 @@ const mutations = {
     'separable: 开 上 下 before 车': (t) => separable(t, (p, r) => (['车', '車'].includes(r.anchorSuffix) ? p.replace(/\{0,5\}\[[^\]]*\](?=[车車]\$$)/u, '{1,6}') : p)),
     'separable: 回 before 家': (t) => separable(t, (p, r) => (r.anchorSuffix === '家' ? p.replace(/\{0,5\}\[[^\]]*\](?=家\$$)/u, '{1,6}') : p)),
     'separable: 把 before 手': (t) => separable(t, (p, r) => (r.anchorSuffix === '手' ? p.replace(/\{0,5\}\[[^\]]*\](?=手\$$)/u, '{1,6}') : p)),
+    'separable: 下 before 字, 这 那 个 before 地, 热 before 豆腐': (t) => separable(t, (p, r) => (['字', '地', '豆腐'].includes(r.anchorSuffix) ? p.replace(/\{0,5\}\[[^\]]*\](?=(?:字|地|豆腐)\$$)/u, '{1,6}') : p)),
     'separable: no 很 in the insertions': (t) => separable(t, (p) => p.replaceAll('很', '')),
     'separable: 度 as a verb of 假 (度过假期)': (t) => separable(t, (p, r) => (r.anchorSuffix === '假' ? p.replace(/\(((?:[\u4E00-\u9FFF]\|?)+)\)/u, (m, v) => `(${v}|度)`) : p)),
     // potential forms: exclusions, groups, the separate 明白/清楚 rules, 会.
