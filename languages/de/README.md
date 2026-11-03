@@ -302,9 +302,11 @@ gehören, not Yomitan's participle reading hören; `lookup.tsv`).
 ## Measurements
 
 Every number is with wty-de-en as its release publishes it, form-of rows
-included, imported by `hoshidicts-cli import`, at hoshidicts 6a65eac with
-this pack (GCC 14.3, Release). The union is `tools/merge-transforms.mjs de
---out`, which puts Yomitan's transforms first. The pack has no optional
+included, imported by `hoshidicts-cli import`, at hoshidicts 1fed676 with
+this pack (GCC 14.3, Release). Items 2 to 4 were measured at 6a65eac and
+again after the rebase on 1fed676 (#58 adds `lookup.untaggedTerms`), with
+identical output. The union is `tools/merge-transforms.mjs de --out`, which
+puts Yomitan's transforms first. The pack has no optional
 processor, transform or variant pass, so every number is the same with every
 option on and with the defaults; a copy of `cases.tsv` with the line
 `# options: default` added gives the same numbers as the file.
@@ -318,10 +320,10 @@ option on and with the defaults; a copy of `cases.tsv` with the line
 
    | Rule set | Sample recall | False candidates | First rank | cases.tsv: 277 positives | 50 negatives | Yomitan's test, its traces / any trace |
    | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-   | Own (`sources/own.json`) | 98.00% (1,764) | 0.144 | 94.50% | 97.11% | 100% | 1 / 4 |
+   | Own (`sources/own.json`) | 98.00% (1,764) | 0.144 | 94.39% | 97.11% | 100% | 1 / 4 |
    | Yomitan (`sources/yomitan.json`) | 5.00% (90) | 0.074 | 94.00% | 5.42% | 92.0% | 14 / 14 |
-   | Union | 98.00% (1,764) | 0.158 | 94.50% | 100% | 92.0% | 14 / 14 |
-   | Final (`transforms.json`) | **98.00% (1,764)** | 0.158 | 94.50% | 100% | 100% | 13 / 13 |
+   | Union | 98.00% (1,764) | 0.158 | 94.39% | 100% | 92.0% | 14 / 14 |
+   | Final (`transforms.json`) | **98.00% (1,764)** | 0.158 | 94.39% | 100% | 100% | 13 / 13 |
 
    - Yomitan's rules reach only participles and zu-infinitives; first rank is
      high for every set because wty-de-en has a form-of row for nearly every
@@ -330,6 +332,33 @@ option on and with the defaults; a copy of `cases.tsv` with the line
      through Yomitan's separated-prefix and zu-infinitive rules (`sagte der
      Auf` → sagte auf, `wartet lange auf` → wartet auf, `einzu` → ein,
      `dazu ist` → da ist).
+   - First rank on the sample was 94.50% with a general rule reading -te as
+     the present (ich) of t-stems; listing `koste` instead (Rule provenance,
+     Homographs) loses 2 rows, the imperatives `faste` and `spurte`, which
+     now show the past of fasen and spuren first.
+   - **Rows without part-of-speech tags** (`sources/untagged-terms.py`):
+     30,153 of wty-de-en's 602,286 rows (5.01%) leave `rules` empty. By first
+     definition tag: 15,575 form-of rows (`non-lemma`, of 505,153), 9,664
+     names, 2,115 adverbs, 515 phrases, 397 interjections, 292 prefixes, 267
+     suffixes, 247 proverbs, 195 numerals, and 1,086 others (pronouns,
+     prepositions, conjunctions, abbreviations, letters). No noun, verb or
+     adjective row is untagged, so the pack keeps `lookup.untaggedTerms` at
+     the default `filter` (language.json leaves the field out).
+     - `eval-language` with `pass` (`untagged-terms.py copies`): the final
+       rules rank the same number of lemmas first on the sample,
+       `corpus.tsv`, `gaps.tsv` and `yomitan.tsv`, and one more on
+       `cases.tsv` (237 against 236 of 277: `zehnten` → zehnte, whose
+       numeral row is untagged). The false candidates per row rise from
+       0.158 to 0.170 on the sample and from 0.419 to 1.134 on `cases.tsv`;
+       recall and the negatives are unchanged.
+     - Real text (`untagged-terms.py compare`): of the 626,124 lookups of the
+       frequent words and the four texts, `pass` changes the first result at
+       1,212 and its lemma at 824. 662 are wrong: `Innstetten` → in (404;
+       `filter` gives Inn) and `dies` read as the imperative of diesen (258;
+       `filter` gives der). 21 numerals become right (`zweier` → zwei,
+       `zehnten` → zehnte, `dreien` → drei). The other 141 are mostly names
+       and particles read as other words (`Joe` → jo, `Nebraska` → neben,
+       `wißt` → wessen).
    - The final set reaches 13 of Yomitan's 14 test rows; the one it lacks is
      `räum den Tisch auf` → `räum auf`, the two-word output of Yomitan's
      separated-prefix rule (the own rule gives aufräumen for `räum den Tisch
@@ -513,7 +542,7 @@ option on and with the defaults; a copy of `cases.tsv` with the line
      difference, so `sources/yomitan-differences.tsv` is not needed;
      `decapitalize` and `capitalizeFirstLetter` agree with Yomitan's on 2,211
      inputs each and `eszettPreprocessor` on 2,203;
-   - `ctest` (43 tests), `tools/check-classes.mjs --all` and `node --test
+   - `ctest` (49 tests), `tools/check-classes.mjs --all` and `node --test
      tools/test/` (115 tests here; CI runs more with the hangul-js bundle)
      pass;
    - mutations (`sources/mutations.mjs`): each of 57 changes to a scratch
@@ -524,23 +553,26 @@ option on and with the defaults; a copy of `cases.tsv` with the line
      (`reports/audit-hachi-lang-de-evidence/tools/my-mutations.mjs`), 10
      survive: one moves the adjective transforms first, where they now are;
      removing verstehen's listed participle leaves `er` + `standen`, which
-     still reaches it; the others are choices no test can observe (`sep` as a
-     dictionary form, the order of transforms that never meet at one ending,
-     `traceSelection`, the trace names, the order of processors whose
-     variants are the same).
+     still reaches it; the others are choices no test can observe: `sep` as a
+     dictionary form, the order of transforms whose readings never compete
+     (separated prefix last, contraction first, Yomitan's negative and past
+     participle before the own ones), `traceSelection: "first"`, swapped
+     trace names of two past transforms, and `eszettPreprocessor` before the
+     case processors, whose variants are the same in either order.
 8. **Lookup speed** (`benchmark-lookup --languages <copy> --language de`,
-   wty-de-en mapped): the 80 texts of `sources/benchmark-words.txt`, each the
-   rest of a sentence from an inflected word, in 6 passes with the first
-   dropped, three runs at machine load about 36-44. The budget is 1 ms p50.
-   Character resolution looks up every prefix of the scan, which costs more
-   than the word resolution of the English and Spanish packs.
+   wty-de-en mapped, hoshidicts 1fed676): the 80 texts of
+   `sources/benchmark-words.txt`, each the rest of a sentence from an
+   inflected word, in 6 passes with the first dropped, three runs at machine
+   load about 35-40. The budget is 1 ms p50. Character resolution looks up
+   every prefix of the scan, which costs more than the word resolution of
+   the English and Spanish packs.
 
    | Rule set | p50 | p95 |
    | --- | ---: | ---: |
-   | Final | 117-132 µs | 267-305 µs |
-   | Union | 127-132 µs | 300-311 µs |
-   | Yomitan's rules | 91-97 µs | 206-223 µs |
-   | Own rules | 120-133 µs | 269-311 µs |
+   | Final | 111-114 µs | 257-265 µs |
+   | Union | 113-130 µs | 270-311 µs |
+   | Yomitan's rules | 91-98 µs | 203-228 µs |
+   | Own rules | 110-120 µs | 257-264 µs |
 9. **WebAssembly** (Hachidori feat/multi-language d7e82b0, its prebuilt
    engines in Node 22). The budgets are 50 ms and 20 MB.
    - `hdw_lookup` (`benchmark/node-lookup.mjs` with
@@ -589,6 +621,9 @@ option on and with the defaults; a copy of `cases.tsv` with the line
     node languages/de/sources/measure.mjs capitals|separated <inputs> <unimorph deu> <wty-de-en> [<set>]
     python3 languages/de/sources/hand-sample.py <dump dir>
     node languages/de/sources/trace-quality.mjs <set>...
+    python3 languages/de/sources/untagged-terms.py count <wty-de-en.zip>
+    python3 languages/de/sources/untagged-terms.py copies <scratch>   # then: hoshidicts-cli --languages <scratch>/pass eval-language de <file> --dictionary <wty-de-en>
+    python3 languages/de/sources/untagged-terms.py compare <inputs> <wty-de-en> build/lookup-batch-de <scratch>
     node languages/de/sources/mutations.mjs <scratch dir>
     build/benchmark-lookup languages/de/sources/benchmark-words.txt 6 --term <wty-de-en> --languages <copy> --language de --json
     node languages/de/sources/wasm-load.mjs <hachidori checkout>
