@@ -1,0 +1,10 @@
+{
+  "title": "hoshidicts Tagalog pack test",
+  "revision": "1",
+  "format": 3,
+  "sequenced": true,
+  "author": "hoshidicts",
+  "description": "A tiny Tagalog dictionary for languages/tl/tests/lookup.tsv, written for the pack (GPL-3.0-or-later).",
+  "sourceLanguage": "tl",
+  "targetLanguage": "en"
+}

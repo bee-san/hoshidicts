@@ -1,0 +1,66 @@
+# Written for this pack (GPL-3.0-or-later): whole lookups against tests/dictionary/ (written for the pack). Its verbs, nouns and
+# adjectives have rules tags; its pronouns, adverbs, phrases and form-of rows have none, as in wiktionary-to-yomitan's dictionary.
+# category	valid	text	expression	matched (valid = 1: the first result; 0: not the first result)
+verbs	1	Kumakain ang bata.	kumain	Kumakain
+verbs	1	Nagluluto siya ng adobo.	magluto	Nagluluto
+verbs	1	nag-aaral siya	mag-aral	nag-aaral
+verbs	1	binili ko ito	bilhin	binili
+verbs	1	nakita ko siya	makita	nakita
+verbs	1	nakarating na sila	dating	nakarating
+verbs	0	nakarating na sila	rating	nakarating
+adjectives	1	Talagang maganda	talaga	Talagang
+adjectives	0	Talagang maganda	Talag	Talagang
+adjectives	1	napakaganda ng araw	maganda	napakaganda
+adjectives	1	magaganda sila	maganda	magaganda
+adjectives	1	kalaki	laki	kalaki
+nouns	1	nakakahiya naman	hiya	nakakahiya
+nouns	0	nakakahiya naman	makahiya	nakakahiya
+nouns	1	makakatulong ka	tulong	makakatulong
+nouns	0	makakatulong ka	katulong	makakatulong
+nouns	1	nakakatawa	tawa	nakakatawa
+nouns	1	baboy	baboy	baboy
+phrases	1	magandang umaga po	magandang umaga	magandang umaga
+phrases	1	araw-araw siyang	araw-araw	araw-araw
+phrases	1	paano ba iyan	paano	paano
+phrases	0	paano ba iyan	ano ba	paano ba
+contractions	1	Ako’y masaya	ako	Ako’y
+names	1	Pilipinong guro	Pilipino	Pilipinong
+spelling	1	pang̃alan niya	pangalan	pang̃alan
+script	1	ᜃᜓᜋᜁᜈ᜔	kumain	ᜃᜓᜋᜁᜈ᜔
+negatives	1	kasi si	kasi	kasi
+linker	1	noong isang taon	noon	noong
+linker	0	noong isang taon	noo	noong
+verbs	1	magsimula tayo	magsimula	magsimula
+verbs	1	nagsimula ang klase	magsimula	nagsimula
+verbs	1	nagsisipilyo ako	sipilyo	nagsisipilyo
+verbs	0	nagsisipilyo ako	pilyo	nagsisipilyo
+spelling	1	kailang̃an ko	kailangan	kailang̃an
+spelling	0	kailang̃an ko	ilang	kailang̃an
+nouns	1	matandaan mo	tanda	matandaan
+nouns	0	matandaan mo	matanda	matandaan
+pang	1	pangdiyeta ito	diyeta	pangdiyeta
+pang	1	mapagusisa siya	usisa	mapagusisa
+scanning	0	bahaykubo	bahay	bahay
+scanning	0	bahay­kubo	bahay	bahay
+scanning	1	mag-aral tayo	mag-aral	mag-aral
+script	1	ᜎᜓᜉ ᜈᜓᜈᜓ	lupa	ᜎᜓᜉ
+ranking	1	magaling siya	galing	magaling
+ranking	0	magaling siya	aling	magaling
+ranking	1	ipagamot mo	gamot	ipagamot
+ranking	0	ipagamot mo	amot	ipagamot
+verbs	1	nagsilang siya	silang	nagsilang
+verbs	0	nagsilang siya	lang	nagsilang
+verbs	1	nagsiklab ang apoy	siklab	nagsiklab
+verbs	0	nagsiklab ang apoy	klab	nagsiklab
+linker	1	saang bayan ka nakatira	saan	saang
+linker	0	saang bayan ka nakatira	saa	saang
+linker	1	hapong iyon	hapon	hapong
+linker	0	hapong iyon	hapo	hapong
+linker	1	bayang sinilangan	bayan	bayang
+linker	0	bayang sinilangan	baya	bayang
+linker	1	kanang kamay	kanan	kanang
+linker	0	kanang kamay	kana	kanang
+linker	1	labang iyon	laban	labang
+linker	0	labang iyon	laba	labang
+linker	1	naming bahay	namin	naming
+linker	0	naming bahay	nami	naming
