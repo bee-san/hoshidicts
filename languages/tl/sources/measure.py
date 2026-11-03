@@ -164,15 +164,9 @@ def cmd_eval(args, sets):
     tests = PACK / 'tests'
     sample = Path(args.work) / 'sample.tsv'
     corpus = (tests / 'corpus.tsv').read_text(encoding='utf-8').splitlines()
-    lines = (tests / 'gaps.tsv').read_text(encoding='utf-8').splitlines()
-    mark = next(i for i, l in enumerate(lines) if l.startswith('# sampled rows'))
-    gaps = [l for l in lines[mark:] if not l.startswith('#')]
-    hand = [l for l in lines[:mark] if not l.startswith('#')]
+    gaps = [l for l in (tests / 'gaps.tsv').read_text(encoding='utf-8').splitlines() if not l.startswith('#')]
     sample.write_text('\n'.join(corpus + gaps) + '\n', encoding='utf-8')
-    hand_file = Path(args.work) / 'gaps-hand.tsv'
-    hand_file.write_text('\n'.join(corpus[:1] + hand) + '\n', encoding='utf-8')
-    files = {'sample (corpus + gaps)': sample, 'cases.tsv': tests / 'cases.tsv', 'gaps.tsv, hand-written': hand_file,
-             'yomitan.tsv': tests / 'yomitan.tsv'}
+    files = {'sample (corpus + gaps)': sample, 'cases.tsv': tests / 'cases.tsv', 'yomitan.tsv': tests / 'yomitan.tsv'}
     print(f'| Rule set | File | Rows | Recall | Negatives passed | False candidates per row | First rank |')
     print('| --- | --- | ---: | ---: | ---: | ---: | ---: |')
     for set_name, transforms in sets.items():

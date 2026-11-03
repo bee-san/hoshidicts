@@ -1,26 +1,5 @@
 # Known gaps: run by the conformance test and counted, not enforced.
-# Hand-written rows (categories without ";" or ","; GPL-3.0-or-later): the -in infinitive of a completive or progressive,
-# which the rules do not rebuild (README.md, Known gaps); the root is reached instead (kinain -> kain).
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
-aspect -in	1	kinain	kainin	*	*
-aspect -in	1	kinakain	kainin	*	*
-aspect -in	1	binasa	basahin	*	*
-aspect -in	1	binabasa	basahin	*	*
-aspect -in	1	ininom	inumin	*	*
-aspect -in	1	iniinom	inumin	*	*
-aspect -in	1	niluto	lutuin	*	*
-aspect -in	1	niluluto	lutuin	*	*
-aspect -in	1	nilakad	lakarin	*	*
-aspect -in	1	binili	bilhin	*	*
-aspect -in	1	binibili	bilhin	*	*
-aspect -in	1	kinuha	kunin	*	*
-aspect -in	1	ginawa	gawin	*	*
-aspect -in	1	ginagawa	gawin	*	*
-aspect -in	1	ginamit	gamitin	*	*
-aspect -in	1	tinukso	tuksuhin	*	*
-aspect -in	1	inaawit	awitin	*	*
-aspect -in	1	pinakain	pakainin	*	*
-aspect -in	1	pinapakain	pakainin	*	*
 # sampled rows of corpus.tsv's sources that the final rules do not reach (sources/build-corpus.py)
 V;PFV;PFOC	1	binalaan	babala	*	*
 V;IPFV;AGFOC	1	bumibista	bisita	*	*

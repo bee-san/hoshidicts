@@ -44,6 +44,12 @@
         "variants": [[{"map": {"‐": "-", "‑": "-"}}]]
       },
       {
+        "id": "oldNg",
+        "name": "The old ng̃ as ng",
+        "keepInput": false,
+        "variants": [[{"map": {"g̃": "g", "G̃": "G"}}]]
+      },
+      {
         "id": "removeSoftHyphens",
         "name": "Remove soft hyphens",
         "keepInput": false,

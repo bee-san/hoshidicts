@@ -44,6 +44,9 @@
   ["mula", "", "prep", "", 0, ["from (an entry a wrong reading of magsimula would reach)"], 43, ""],
   ["sipilyo", "", "n", "n", 0, ["toothbrush"], 44, ""],
   ["pilyo", "", "adj", "adj", 0, ["naughty (an entry a wrong reading of nagsisipilyo would reach)"], 45, ""],
-  ["nakita", "", "non-lemma", "", 0, [["makita", ["completive"]]], 46, ""],
-  ["ᜃᜓᜋᜁᜈ᜔", "", "non-lemma", "", 0, [["kumain", ["Baybayin"]]], 47, ""]
+  ["kailangan", "", "n", "n", 0, ["need"], 46, ""],
+  ["ilang", "", "adj", "adj", 0, ["a few (an entry a wrong reading of kailang̃an would reach)"], 47, ""],
+  ["nakita", "", "non-lemma", "", 0, [["makita", ["completive"]]], 48, ""],
+  ["ᜃᜓᜋᜁᜈ᜔", "", "non-lemma", "", 0, [["kumain", ["Baybayin"]]], 49, ""],
+  ["ilang̃", "", "non-lemma", "", 0, [["ilang", ["alternative"]]], 50, ""]
 ]

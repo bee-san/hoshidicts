@@ -842,10 +842,10 @@
     "text.wordInternal": [
       [173, 173]
     ],
-    "lookup.preprocessors[2].variants[0][0].strip": [
+    "lookup.preprocessors[3].variants[0][0].strip": [
       [173, 173]
     ],
-    "lookup.preprocessors[3].variants[0][1].strip": [
+    "lookup.preprocessors[4].variants[0][1].strip": [
       [768, 879]
     ],
     "transforms[0].rules[0].stemCharacters": [
@@ -6807,6 +6807,9 @@
         ["pamutol", "pamutol"],
         ["pamuli", "pamuli"],
         ["magpaamo", "magpaamo"],
+        ["kinuha", "kinuha"],
+        ["ginawa", "ginawa"],
+        ["tinukso", "tinukso"],
         ["ang", "ang"],
         ["lang", "lang"],
         ["nang", "nang"],
@@ -6839,9 +6842,6 @@
         ["gumaling sa", "gumaling sa"],
         ["tungkol saan", "tungkol saan"],
         ["magpasa", "magpasa"],
-        ["kinuha", "kinuha"],
-        ["ginawa", "ginawa"],
-        ["tinukso", "tinukso"],
         ["binalaan", "binalaan"],
         ["bumibista", "bumibista"],
         ["diringinggin", "diringinggin"],
@@ -6894,6 +6894,7 @@
         ["mag—aral", "mag—aral"],
         ["kuma­kain", "kuma­kain"],
         ["binábasâ", "binábasâ"],
+        ["KAILANG̃AN", "kailang̃an"],
         ["mang̃a", "mang̃a"],
         ["Niño", "niño"],
         ["ᜃᜓᜋᜁᜈ᜔", "ᜃᜓᜋᜁᜈ᜔"],
@@ -6919,6 +6920,7 @@
         ["magsimula tayo", "magsimula tayo"],
         ["nagsimula ang klase", "nagsimula ang klase"],
         ["nagsisipilyo ako", "nagsisipilyo ako"],
+        ["kailang̃an ko", "kailang̃an ko"],
         ["Nagluluto ang nanay ko ng adobo para sa hapunan.", "nagluluto ang nanay ko ng adobo para sa hapunan."],
         ["Nagluluto", "nagluluto"]
       ]
@@ -8851,6 +8853,9 @@
         ["pamutol", "Pamutol"],
         ["pamuli", "Pamuli"],
         ["magpaamo", "Magpaamo"],
+        ["kinuha", "Kinuha"],
+        ["ginawa", "Ginawa"],
+        ["tinukso", "Tinukso"],
         ["ang", "Ang"],
         ["lang", "Lang"],
         ["nang", "Nang"],
@@ -8883,9 +8888,6 @@
         ["gumaling sa", "Gumaling sa"],
         ["tungkol saan", "Tungkol saan"],
         ["magpasa", "Magpasa"],
-        ["kinuha", "Kinuha"],
-        ["ginawa", "Ginawa"],
-        ["tinukso", "Tinukso"],
         ["binalaan", "Binalaan"],
         ["bumibista", "Bumibista"],
         ["diringinggin", "Diringinggin"],
@@ -8938,6 +8940,7 @@
         ["mag—aral", "Mag—aral"],
         ["kuma­kain", "Kuma­kain"],
         ["binábasâ", "Binábasâ"],
+        ["KAILANG̃AN", "KAILANG̃AN"],
         ["mang̃a", "Mang̃a"],
         ["Niño", "Niño"],
         ["ᜃᜓᜋᜁᜈ᜔", "ᜃᜓᜋᜁᜈ᜔"],
@@ -8963,6 +8966,7 @@
         ["magsimula tayo", "Magsimula tayo"],
         ["nagsimula ang klase", "Nagsimula ang klase"],
         ["nagsisipilyo ako", "Nagsisipilyo ako"],
+        ["kailang̃an ko", "Kailang̃an ko"],
         ["Nagluluto ang nanay ko ng adobo para sa hapunan.", "Nagluluto ang nanay ko ng adobo para sa hapunan."],
         ["Nagluluto", "Nagluluto"]
       ]
