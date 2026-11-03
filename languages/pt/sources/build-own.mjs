@@ -837,6 +837,8 @@ for (const [inflected, deinflected] of [
     ['áveis', 'ável'], ['íveis', 'ível'],                                     // saudáveis, possíveis
     ['postos', 'posto'], ['postas', 'posta'], ['feitos', 'feito'],            // impostos, apostas, perfeitos
     ['vistos', 'visto'], ['vistas', 'vista'], ['ditos', 'dito'],              // imprevistos, revistas, malditos
+    ['arias', 'aria'],                                                        // secretarias (the -ar conditional's -arias)
+    ['ises', 'ise'],                                                          // crises (not cris + es)
 ]) {
     nominal('plural', inflected, deinflected, [], NA, {stemMinLength: 1});
 }
@@ -974,19 +976,35 @@ add('adverb', {type: 'wholeWord', inflected: 'comummente', deinflected: 'comum',
 // --- Preferred readings -------------------------------------------------------------------
 // wty-pt-en's rows name both lemmas of a homograph (sua: seu and suar), and
 // tag no part of speech, so both readings tie and the rule order above
-// decides (docs/languages.md 9.6). For these frequent words it would put a
-// rare homograph first; a whole-word rule, which matches before any ending
-// (7.4), gives the common reading first, with the same trace as the rule
-// that also makes it. The other reading stays, after it. The words are those
-// of the 10,000 most frequent of either FrequencyWords list whose first
-// reading was judged a rare homograph by hand (the audit of #72 and the
-// `rare` judgement of sources/measure.py, each read).
+// decides (docs/languages.md 9.6). For these words it would put a rare
+// homograph first; a whole-word rule, which matches before any ending (7.4),
+// gives the common reading first, with the same trace as the rule that also
+// makes it. The other reading stays, after it. The words are those the audit
+// of #72 judged by hand, those of the 10,000 most frequent of either
+// FrequencyWords list that the `rare` judgement of sources/measure.py flags,
+// and those of the two patterns behind most of them that `measure.py
+// homographs` lists; each was read.
 for (const [slot, form, lemma] of [
     // A feminine read as the present of an -ar verb (amiga as amigar).
     ['feminine', 'amiga', 'amigo'], ['feminine', 'humana', 'humano'], ['feminine', 'inteira', 'inteiro'], ['feminine', 'secreta', 'secreto'],
     ['feminine', 'estranha', 'estranho'], ['feminine', 'fina', 'fino'], ['feminine', 'futura', 'futuro'], ['feminine', 'amarela', 'amarelo'],
     ['feminine', 'violenta', 'violento'], ['feminine', 'fresca', 'fresco'], ['feminine', 'serena', 'sereno'], ['feminine', 'externa', 'externo'],
     ['feminine', 'interna', 'interno'], ['feminine', 'cega', 'cego'], ['feminine', 'assassina', 'assassino'],
+    // and the rest of wty-pt-en's 274 words in -a whose rows name both an -o
+    // adjective or noun and an -ar verb, where the masculine plural is more
+    // frequent in the two lists than the verb's infinitive, preterite,
+    // gerund and imperfect together (retrata, dana and ultima left out, and
+    // four the lists do not have).
+    ['feminine', 'grega', 'grego'], ['feminine', 'estreita', 'estreito'], ['feminine', 'vasta', 'vasto'], ['feminine', 'complexa', 'complexo'],
+    ['feminine', 'digna', 'digno'], ['feminine', 'plana', 'plano'], ['feminine', 'amarga', 'amargo'], ['feminine', 'madura', 'maduro'],
+    ['feminine', 'inquieta', 'inquieto'], ['feminine', 'sujeita', 'sujeito'], ['feminine', 'enferma', 'enfermo'], ['feminine', 'atenta', 'atento'],
+    ['feminine', 'efetiva', 'efetivo'], ['feminine', 'efectiva', 'efectivo'], ['feminine', 'arquiteta', 'arquiteto'], ['feminine', 'concreta', 'concreto'],
+    ['feminine', 'descalça', 'descalço'], ['feminine', 'desonesta', 'desonesto'], ['feminine', 'devota', 'devoto'], ['feminine', 'candidata', 'candidato'],
+    ['feminine', 'imunda', 'imundo'], ['feminine', 'inativa', 'inativo'], ['feminine', 'adjetiva', 'adjetivo'], ['feminine', 'chula', 'chulo'],
+    ['feminine', 'malandra', 'malandro'], ['feminine', 'mendiga', 'mendigo'], ['feminine', 'peregrina', 'peregrino'], ['feminine', 'lacaia', 'lacaio'],
+    ['feminine', 'calva', 'calvo'], ['feminine', 'tipa', 'tipo'],
+    // A feminine read as the subjunctive of an -ir verb (surda as surdir).
+    ['feminine', 'surda', 'surdo'],
     ['feminine', 'ladra', 'ladrão'], ['feminine', 'ladras', 'ladrão'],
     // A feminine read as a compound's irregular participle (perfazer, maldizer).
     ['feminine', 'perfeita', 'perfeito'], ['feminine', 'perfeitas', 'perfeito'], ['feminine', 'maldita', 'maldito'], ['feminine', 'malditas', 'maldito'],
@@ -995,14 +1013,30 @@ for (const [slot, form, lemma] of [
     // A plural read as an irregular verb form (pedir's peças, ver's verdes),
     // and tais, whose -ais needs a longer stem (mais is not a plural of mal).
     ['plural', 'peças', 'peça'], ['plural', 'verdes', 'verde'], ['plural', 'tais', 'tal'],
-    // The -ar subjunctive read as the -ir present (pare as parir).
+    // A common verb's form read as a rare verb's of the same stem, because the
+    // present comes before the subjunctive: the -ar subjunctive as the -ir
+    // present (pare as parir, chore as chorir), the -er and -ir subjunctive as
+    // the -ar present (una as unar, vivam as vivar, prendam as prendar). These
+    // are the forms of wty-pt-en's 349 that name two verbs of one stem whose
+    // first verb is ten times rarer in the two lists, among their 50,000
+    // words (each read; surte, contemos and assente left out).
     ['subjunctive-eu-ele', 'pare', 'parar'], ['subjunctive-eles', 'parem', 'parar'],
-    ['subjunctive-eu-ele', 'chore', 'chorar'], ['subjunctive-tu', 'chores', 'chorar'],
-    // atender read as ater (atende as the imperative of vós, atendo as the gerund).
+    ['subjunctive-eu-ele', 'chore', 'chorar'], ['subjunctive-tu', 'chores', 'chorar'], ['subjunctive-eles', 'chorem', 'chorar'],
+    ['subjunctive-eu-ele', 'baste', 'bastar'], ['subjunctive-eu-ele', 'afunde', 'afundar'], ['subjunctive-eu-ele', 'mime', 'mimar'],
+    ['subjunctive-eles', 'soem', 'soar'],
+    ['subjunctive-eu-ele', 'una', 'unir'], ['subjunctive-tu', 'unas', 'unir'], ['subjunctive-eles', 'unam', 'unir'],
+    ['subjunctive-nos', 'vivamos', 'viver'], ['subjunctive-eles', 'vivam', 'viver'],
+    ['present-eu', 'prendo', 'prender'], ['subjunctive-eles', 'prendam', 'prender'],
+    ['present-eu', 'rendo', 'render'], ['subjunctive-eles', 'rendam', 'render'],
+    ['present-eu', 'tremo', 'tremer'], ['subjunctive-eles', 'vendam', 'vender'],
+    // atender read as ater (atende as the imperative of vós, atendo as the
+    // gerund) or as the rare atendar (atendam as its present).
     ['present-eu', 'atendo', 'atender'], ['present-tu', 'atendes', 'atender'], ['present-ele', 'atende', 'atender'],
-    ['subjunctive-eu-ele', 'atenda', 'atender'],
-    // agradar read as the participle of agrar.
-    ['present-ele', 'agrada', 'agradar'],
+    ['subjunctive-eu-ele', 'atenda', 'atender'], ['subjunctive-tu', 'atendas', 'atender'], ['subjunctive-nos', 'atendamos', 'atender'],
+    ['subjunctive-vos', 'atendais', 'atender'], ['subjunctive-eles', 'atendam', 'atender'],
+    // agradar read as the participle of agrar, and validar as the feminine
+    // of valido (a favourite; the feminine's -ida rule is longer).
+    ['present-ele', 'agrada', 'agradar'], ['present-ele', 'valida', 'validar'],
     // European tu forms read as the plural of a rare noun (achas as acha, a billet).
     ['present-tu', 'achas', 'achar'], ['present-tu', 'percebes', 'perceber'], ['present-tu', 'andas', 'andar'],
     ['present-tu', 'deixas', 'deixar'], ['present-tu', 'amas', 'amar'],
