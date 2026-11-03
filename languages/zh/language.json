@@ -57,8 +57,8 @@
         ]
       },
       {
-        "id": "normalizeRadicals",
-        "name": "Radicals to ideographs",
+        "id": "normalizeRadicalCharacters",
+        "name": "Normalize radical characters",
         "variants": [
           [
             {
@@ -4794,7 +4794,12 @@
         "global": true
       },
       {
-        "strip": "[ '’ʼ·‧\\-]"
+        "map": {
+          "//": ""
+        }
+      },
+      {
+        "strip": "[\\u0009-\\u000D\\uFEFF\\p{Z}・:'’ʼ·‧\\-]"
       }
     ],
     "transforms": "transforms.json",

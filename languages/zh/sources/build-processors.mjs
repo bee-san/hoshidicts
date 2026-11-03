@@ -7,11 +7,15 @@
 //   node languages/zh/sources/build-processors.mjs [--unihan <Unihan_Variants.txt>]
 //       [--radicals <EquivalentUnifiedIdeograph.txt>] [--freq-tw <zh_tw_50k.txt>] [--freq-cn <zh_cn_50k.txt>]
 //
-// - normalizeRadicals: every CJK radical (Kangxi Radicals and CJK Radicals
-//   Supplement) that Unicode's EquivalentUnifiedIdeograph.txt (17.0) maps to
-//   a unified ideograph becomes that ideograph. Text copied from PDFs often
-//   has ⻔ (U+2ED4) for 门 or ⾼ (U+2FBC) for 高. NFKC already maps the Kangxi
-//   radicals; the supplement has no decompositions.
+// - normalizeRadicalCharacters: every CJK radical (Kangxi Radicals and CJK
+//   Radicals Supplement) that Unicode's EquivalentUnifiedIdeograph.txt (17.0)
+//   maps to a unified ideograph becomes that ideograph. Text copied from PDFs
+//   often has ⻔ (U+2ED4) for 门 or ⾼ (U+2FBC) for 高. Yomitan's processor of
+//   this id (ext/js/language/CJK-util.js at d3c54c1) applies NFKD to the
+//   radicals and strokes, which maps the 214 Kangxi radicals and two
+//   supplement radicals to the same ideographs as this table; the other 112
+//   supplement radicals have no decomposition, and Yomitan leaves them as
+//   they are (sources/yomitan-differences.tsv).
 // - simplifiedToTraditional (optional): every simplified character that
 //   simplified-character subtitles use (FrequencyWords zh_cn_50k) and that
 //   Unihan gives a traditional form (kTraditionalVariant, and the characters
@@ -137,7 +141,7 @@ const sorted = (object) => Object.fromEntries(Object.entries(object).sort(([a], 
 const file = join(here, '..', 'language.json');
 const language = parseJson(readFileSync(file, 'utf8'), file);
 const tables = {
-    normalizeRadicals: [[{map: sorted(radicals)}]],
+    normalizeRadicalCharacters: [[{map: sorted(radicals)}]],
     // The second variant first writes the second form of the characters
     // that have two, then converts the rest as the first does.
     simplifiedToTraditional: [[{map: sorted(toTraditional)}], [{map: sorted(toTraditionalSecond)}, {map: sorted(toTraditional)}]],
