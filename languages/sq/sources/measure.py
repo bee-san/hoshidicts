@@ -52,7 +52,8 @@ repository root with a built hoshidicts-cli:
       other orders: the adjective transforms before the verbs (after vn, the
       order before audit-hachi-lang-sq), and the noun transforms (n-*) after
       the verbs; and with traceSelection first instead of shortest. Every
-      lookup whose first result differs, with its count, for judging by hand.
+      lookup whose first result differs, with its count, for judging by hand,
+      then those whose first result keeps its lemma and changes its trace.
 
 The dictionary is wty-sq-en as published (term banks read from the zip). The
 word list of `yomitan` is the 50,000 words of the frequency list, the
@@ -503,7 +504,7 @@ def cmd_order(imported, freq, *texts):
     texts_in = '\n'.join(h for _, h in inputs) + '\n'
     run = lambda d: [json.loads(line) for line in subprocess.run([tool, d, 'sq', imported], input=texts_in,
                                                                 capture_output=True, text=True, check=True).stdout.splitlines()]
-    first = lambda r: r['results'][0]['expression'] if r['results'] else '-'
+    first = lambda r: (r['results'][0]['expression'], '+'.join(r['results'][0]['trace'])) if r['results'] else ('-', '')
     now = [first(r) for r in run(os.path.join(ROOT, 'languages'))]
     print(f'{len(inputs)} lookups')
     for name, order, lang in others:
@@ -514,10 +515,14 @@ def cmd_order(imported, freq, *texts):
             with open(os.path.join(tmp, 'sq', 'transforms.json'), 'w', encoding='utf-8') as f:
                 json.dump(dict(pack, transforms=order), f, ensure_ascii=False)
             other = [first(r) for r in run(tmp)]
-        changed = collections.Counter((w, b, a) for (w, _), a, b in zip(inputs, now, other) if a != b)
+        changed = collections.Counter((w, b[0], a[0]) for (w, _), a, b in zip(inputs, now, other) if a[0] != b[0])
         print(f'{name}: {sum(changed.values())} first results differ ({len(changed)} distinct), that order -> as written')
         for (w, before, after), n in changed.most_common():
             print(f'  {n}\t{w}\t{before} -> {after}')
+        traces = collections.Counter((w, a[0], b[1], a[1]) for (w, _), a, b in zip(inputs, now, other) if a[0] == b[0] and a[1] != b[1])
+        print(f'{name}: {sum(traces.values())} first results keep their lemma and change their trace ({len(traces)} distinct), that order -> as written')
+        for (w, lemma, before, after), n in traces.most_common():
+            print(f'  {n}\t{w}\t{lemma}\t{before} -> {after}')
 
 
 def main(argv):
