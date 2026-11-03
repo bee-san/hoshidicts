@@ -1156,7 +1156,9 @@ as Yomitan's translator does (`_getDeinflections` and
    non-empty string `formOf` and an array whose strings are its rules: the
    deinflection of Yomitan's term bank schema
    (`dictionary-term-bank-v3-schema.json`), which Yomitan's importer
-   enforces. Other arrays are neither references nor definitions.
+   enforces. Other arrays (`["", [...]]`, which the schema allows) are not
+   references: a row with a reference drops them with its references (item
+   5), and a row without one keeps them in its glossary.
 2. For every deinflection whose form found rows (sections 9.3 and 9.4), each
    reference of each row that passes the part-of-speech filter for that
    deinflection becomes a deinflection of its own: the same matched text and
@@ -1164,9 +1166,12 @@ as Yomitan's translator does (`_getDeinflections` and
    the deinflection's trace followed by one step per rule, in the
    dictionary's order. Such a step has the rule as its id and name, no
    description, and `TransformGroup::from_dictionary` set. A row without a
-   part of speech, such as a kaikki form-of row, is followed only from a
-   deinflection without conditions, such as the text as written, unless its
-   dictionary is in `pos_filter_exempt` (9.4).
+   part of speech, such as a form-of row of the kty-* (kaikki-to-yomitan)
+   dictionaries, is followed only from a deinflection without conditions,
+   such as the text as written, unless its dictionary is in
+   `pos_filter_exempt` (9.4). wiktionary-to-yomitan's wty-* dictionaries
+   give their form-of rows parts of speech, so those are also followed from
+   forms the rules reach (*me puedo* → the row of *poderse* → *poder*).
 3. `formOf` is looked up in the request's dictionary selection (9.7), within
    `lookup_dictionary()`'s dictionary, without the part-of-speech filter. The
    terms it finds join grouping, ordering and `traceSelection` like any other
@@ -1186,8 +1191,9 @@ as Yomitan's translator does (`_getDeinflections` and
 5. A row that is only references, wherever it is found, is never a term; a
    term left without rows is dropped. A row that also has other definitions
    keeps them, and its glossary is returned without the references
-   (`GlossaryEntry::drop_form_of`). A row whose arrays are all something
-   other than references is an ordinary row, its glossary unchanged.
+   (`GlossaryEntry::drop_form_of`), and without other arrays. A row whose
+   arrays are all something other than references is an ordinary row, its
+   glossary unchanged.
 
 The importer flags each record whose row holds a reference, in the record
 slot every reader since `.hoshidicts_2` skips (`src/json/form_of.hpp`); the
@@ -1207,6 +1213,11 @@ Where hoshidicts differs from Yomitan:
 - hoshidicts applies the part-of-speech filter to the rows of a term together
   (9.4), Yomitan to each row. A reference is followed only when its own row
   passes, as in Yomitan.
+- Yomitan drops every array definition and an entry left with none, so a
+  row of only `["", [...]]` arrays shows nothing there; hoshidicts reads a
+  row without a reference as an ordinary term and keeps its arrays (item 1).
+  No dictionary measured (Jitendex, kty-en-en, kty-ar-en, kty-ko-en,
+  wty-es-en) has such arrays.
 - hoshidicts ranks a dictionary-confirmed term first on a tie (9.6). Yomitan
   has no such key: its `_sortTermDictionaryEntries` orders a tie of length,
   processor chain, inflection chain, exact matches, frequency, dictionary and

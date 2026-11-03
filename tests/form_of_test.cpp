@@ -247,6 +247,7 @@ void test_parser() {
   const std::string_view nested = R"([{"content":[["x",["y"]]]}])";
   check(references(nested).empty() && kind(nested) == Kind::None, "an array inside a definition is not a reference");
   check(references(R"("not an array")").empty() && kind(R"("not an array")") == Kind::None, "a value that is not an array");
+  check(references(R"([[123,["x"]]])").empty() && kind(R"([[123,["x"]]])") == Kind::None, "a formOf that is not a string");
   check(references(R"(["a]",["b\"]",["c"]]])") == "b\"][c]", "brackets and quotes inside strings");
   check(kind(R"(["a",{"type":"text","text":"b"}])") == Kind::None, "kind: no reference");
   check(kind(R"([["walk",["past"]],[],"d"])") == Kind::WithOthers, "kind: beside a definition");
@@ -267,6 +268,7 @@ struct Dictionaries {
   std::string forms;
   std::string lemmas;
   std::string japanese;
+  std::string rank;  // podar only
 };
 
 void test_follow(const fs::path& repo, const Dictionaries& d, DictionaryStorage storage, DictionaryIndexStorage index) {
@@ -443,6 +445,25 @@ void test_follow(const fs::path& repo, const Dictionaries& d, DictionaryStorage 
     // reaches dogg with one.
     check(brief(run("dogged")) == "dogg(dogged;dogg;past) dog(dogged;dog;past*>participle*)",
           "a shorter trace first: " + brief(run("dogged")));
+    // The confirmed key comes before the written form, the frequency, the
+    // dictionary rank and the score (9.6). forms gives podar a higher score
+    // than poder, so the default lookup above already pins the score; podar
+    // is also the more frequent of the two in forms' frequency rows.
+    LookupOptions by_frequency;
+    by_frequency.frequency_dictionary = std::string("forms");
+    by_frequency.frequency_order = LookupFrequencyOrder::Ascending;
+    check(brief(run("puedo", "fo", by_frequency)).starts_with("poder(puedo;poder;present-yo) "),
+          "confirmed before a frequency that prefers podar: " + brief(run("puedo", "fo", by_frequency)));
+    // ZODER is found by its reading zoder, so its written form is not the
+    // form looked up; zuedo's own row names zoder.
+    check(brief(run("zuedo")) == "ZODER(zuedo;zoder;present-yo) zodar(zuedo;zodar;present-yo)",
+          "confirmed before the written form: " + brief(run("zuedo")));
+    // A reference in a deinflected form's row confirms neither an existing
+    // candidate (kits above) nor one it creates: the row of vt (plural of
+    // vts) names vx without rules, and dim reaches v in as many steps,
+    // earlier.
+    check(brief(run("vts")) == "v(vts;v;dim) vx(vts;vx;plural)",
+          "a new candidate from a deinflected form's row is not confirmed: " + brief(run("vts")));
   }
   // walkt's row has the same glossary as walked's, which the importer
   // compresses once: both are flagged.
@@ -456,6 +477,34 @@ void test_follow(const fs::path& repo, const Dictionaries& d, DictionaryStorage 
   // yb and ya from yqv at three, where nothing confirms them.
   check(brief(run("yqv", "fc")) == "yb(yqv;yb;tie2) ya(yqv;ya;tie2)",
         "a confirmation at a shorter match does not count: " + brief(run("yqv", "fc")));
+  // ... and one at a shorter match does not undo the one at the term's own:
+  // the rows of wqv and of wq both name wa, and wq's is followed last.
+  check(brief(run("wqv", "fc")) == "wa(wqv;wa;tie2) wb(wqv;wb;tie2)",
+        "a later confirmation at a shorter match keeps the longer one: " + brief(run("wqv", "fc")));
+  // The flag sits between the term tags and the score in the record: a
+  // flagged row's score reads back as the bank wrote it.
+  {
+    const auto left = run("left");
+    check(!left.empty() && left[0].term.expression == "left" && left[0].term.score == 7,
+          "a row with references and a definition keeps its score: " + (left.empty() ? "" : std::to_string(left[0].term.score)));
+    const auto left_as_term = run("left", "fa");
+    check(!left_as_term.empty() && left_as_term[0].term.score == 7, "asTerm: the same row's score");
+    const auto gone_as_term = run("gone", "fa");
+    check(!gone_as_term.empty() && gone_as_term[0].term.score == 5,
+          "asTerm: a reference-only row's score: " + (gone_as_term.empty() ? "" : std::to_string(gone_as_term[0].term.score)));
+  }
+  // podar's dictionary ranked first in the selection: poder, confirmed, still first.
+  {
+    DictionaryQuery ranked;
+    check(ranked.add_term_dict(d.rank, storage, index) && ranked.add_term_dict(d.forms, storage, index),
+          "load rank and forms");
+    const Lookup ranked_lookup(ranked, registry);
+    LookupOptions options;
+    options.language = "fo";
+    options.dictionaries = std::vector<std::string>{d.rank, d.forms};
+    const auto r = ranked_lookup.lookup("puedo", 16, 16, options);
+    check(brief(r).starts_with("poder(puedo;poder;present-yo) "), "confirmed before the dictionary rank: " + brief(r));
+  }
 
   // The request's dictionary selection: the lemma is only in lemmas.
   {
@@ -563,6 +612,17 @@ void test_japanese(const fs::path& repo, const Dictionaries& d) {
     }
   }
   check(brief(lookup.lookup("食べた")).starts_with("食べた(食べた;食べた;)"), "asTerm: the form-of row comes first");
+  // Flagged rows keep the bank's scores (the flag sits before the score in
+  // the record); the oracle reads the same files, so check the values.
+  {
+    const auto food = lookup.lookup("食べ物");
+    check(!food.empty() && food[0].term.expression == "食べ物" && food[0].term.score == 3,
+          "a Japanese row with a reference and a definition keeps its score: " +
+              (food.empty() ? "" : std::to_string(food[0].term.score)));
+    const auto mita_results = lookup.lookup("見た");
+    const auto* mita = find(mita_results, "見た");
+    check(mita != nullptr && mita->term.score == 2, "a Japanese reference-only row keeps its score");
+  }
 
   hoshidicts::LanguageRegistry follow;
   std::string error;
@@ -623,7 +683,8 @@ int main(int argc, char** argv) {
   const fs::path fixtures = repo / "tests/fixtures/form-of";
   const Dictionaries d{.forms = import_fixture(fixtures / "forms", scratch),
                        .lemmas = import_fixture(fixtures / "lemmas", scratch),
-                       .japanese = import_fixture(fixtures / "japanese", scratch)};
+                       .japanese = import_fixture(fixtures / "japanese", scratch),
+                       .rank = import_fixture(fixtures / "rank", scratch)};
   test_follow(repo, d, DictionaryStorage::Mapped, DictionaryIndexStorage::Mapped);
   test_follow(repo, d, DictionaryStorage::Paged, DictionaryIndexStorage::Paged);
   test_c_api(repo, d);

@@ -439,15 +439,15 @@ Performance (host load 36-42 on 64 cores, so these are upper bounds):
 
 ## Known gaps
 
-- **Form-of rows come first.** wty-en-en and kty-en-en have rows whose only
-  glossary is a form-of redirect (*walked* → [*walk*, past]). The importer
-  stores them as ordinary terms (section 16), so for an inflected word the
-  form's own row matches with no transform and ranks before the lemma: of
-  the 114 sentence words, the lemma is the first result for 17, the first
-  entry with definitions for 60, and within the first three for 112. A pack
-  cannot change this order today. A framework change that follows the
-  references as Yomitan does, chosen by a pack field (`lookup.formOf`), is
-  planned (hachi-lang-engine-f); this pack takes `"follow"` when it lands.
+- **Form-of rows** (followed since bee-san/hoshidicts#53). wty-en-en and
+  kty-en-en have rows whose only glossary is a form-of reference (*walked* →
+  [*walk*, past]). Before #53 such a row matched the inflected word with no
+  transform and ranked before the lemma: of the 114 sentence words, the
+  lemma was the first result for 17, the first entry with definitions for
+  60, and within the first three for 112. Since #53 this pack follows the
+  references (`lookup.formOf` is `"follow"`) and the row no longer appears.
+  The measurements in this README were taken before #53 and are to be
+  measured again.
 - **Wrong deinflections can outrank the lemma** among entries with
   definitions, since the pack cannot order results of the same matched and
   trace length: for 15 of the 20,000 frequent words a wrong deinflection
