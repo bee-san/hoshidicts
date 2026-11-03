@@ -1,0 +1,261 @@
+# Source: written for this pack (GPL-3.0-or-later), from the grammar of the standard literary language; spellings checked
+# against the forms of Wiktionary's tables (wty-aii-en and kaikki.org, README.md). Every optional transform is on.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+# --- past (Stem I, one step) ---
+past	1	ܦܬ݂ܝܼܚ ܠܝܼ	ܦܬܚ	*	past1s
+past	1	ܦܬ݂ܝܼܚ ܠܘܼܟ݂	ܦܬܚ	*	past2ms
+past	1	ܦܬ݂ܝܼܚ ܠܵܟ݂ܝ	ܦܬܚ	*	past2fs
+past	1	ܦܬ݂ܝܼܚ ܠܹܗ	ܦܬܚ	*	past3s
+past	1	ܦܬ݂ܝܼܚ ܠܵܗ̇	ܦܬܚ	*	past3s
+past	1	ܦܬ݂ܝܼܚ ܠܲܢ	ܦܬܚ	*	past1p
+past	1	ܦܬ݂ܝܼܚ ܠܲܘܟ݂ܘܿܢ	ܦܬܚ	*	past2p
+past	1	ܦܬ݂ܝܼܚ ܠܗܘܿܢ	ܦܬܚ	*	past3p
+past	1	ܦܬܝܚ ܠܗ	ܦܬܚ	*	past3s
+past	1	ܟܬ݂ܝܼܒ݂ ܠܹܗ	ܟܬܒ	*	past3s
+past	1	ܐ݇ܙܝܼܠ ܠܹܗ	ܐܙܠ	*	past3s
+past	1	ܐ݇ܟ݂ܝܼܠ ܠܗܘܿܢ	ܐܟܠ	*	past3p
+past	1	ܝܕ݂ܝܼܥ ܠܝܼ	ܝܕܥ	*	past1s
+past (biblical spelling)	1	ܦܬ݂ܝܼܚ ܠܟ݂ܘܿܢ	ܦܬܚ	*	past2p
+past (biblical spelling)	1	ܦܬ݂ܝܼܚ ܠܗܹܝܢ	ܦܬܚ	*	past3p
+past (hollow verb)	1	ܨܝܼܡ ܠܹܗ	ܨܐܡ	*	past3s
+past (hollow verb)	1	ܩܝܼܡ ܠܲܢ	ܩܐܡ	*	past1p
+# --- L-suffixes on other verbs ---
+L-suffix	1	ܕܪܹܐ ܠܝܼ	ܕܪܐ	*	l1s
+L-suffix	1	ܕܪܹܐ ܠܘܼܟ݂	ܕܪܐ	*	l2ms
+L-suffix	1	ܕܪܹܐ ܠܵܟ݂ܝ	ܕܪܐ	*	l2fs
+L-suffix	1	ܕܪܹܐ ܠܹܗ	ܕܪܐ	*	l3s
+L-suffix	1	ܕܪܹܐ ܠܲܢ	ܕܪܐ	*	l1p
+L-suffix	1	ܕܪܹܐ ܠܲܘܟ݂ܘܿܢ	ܕܪܐ	*	l2p
+L-suffix	1	ܕܪܹܐ ܠܗܘܿܢ	ܕܪܐ	*	l3p
+L-suffix	1	ܕܪܹܐ ܠܟ݂ܘܿܢ	ܕܪܐ	*	l2p
+L-suffix	1	ܕܪܹܐ ܠܗܹܝܢ	ܕܪܐ	*	l3p
+L-suffix	1	ܚܙܹܐ ܠܹܗ	ܚܙܐ	*	l3s
+L-suffix	1	ܐ݇ܬ݂ܹܐ ܠܹܗ	ܐܬܐ	*	l3s
+L-suffix	1	ܗ݇ܘܹܐ ܠܹܗ	ܗܘܐ	*	l3s
+L-suffix	1	ܐܝܼܬ݂ ܠܹܗ	ܐܝܬ	*	l3s
+L-suffix	1	ܠܲܝܬ ܠܝܼ	ܠܝܬ	*	l1s
+L-suffix (object of a non-past verb)	1	ܦܵܬ݂ܚܵܐ ܠܹܗ	ܦܬܚ	*	3fs|l3s
+L-suffix (object of a non-past verb)	1	ܦܬܚܝ ܠܗ	ܦܬܚ	*	3p|l3s
+L-suffix (past agreeing with its object)	1	ܦܬܝܚܐ ܠܗ	ܦܬܚ	*	passiveParticiple|l3s
+L-suffix (Stem III)	1	ܡܘܼܪܝܸܡ ܠܹܗ	ܡܪܝܡ	*	pastBaseM|l3s
+L-suffix (Stem II)	1	ܡܦܘܼܚܸܠ ܠܹܗ	ܡܦܚܠ	*	pastBaseM|l3s
+L-suffix (quadriliteral)	1	ܡܬܘܼܪܓܸܡ ܠܹܗ	ܡܬܪܓܡ	*	pastBaseM|l3s
+L-suffix (Stem III, verb in -ē)	1	ܡܘܼܣܬܹܐ ܠܹܗ	ܡܣܬܐ	*	pastBaseM|l3s
+L-suffix (irregular verb)	1	ܝܘܼܗ݇ܒ݂ܹܠ ܠܹܗ	ܝܗܒܠ	*	irregularVerb|l3s
+L-suffix (two steps)	1	ܦܬ݂ܝܼܚ ܠܹܗ	ܦܬܚ	*	pastBase|l3s
+L-suffix (two steps, hollow)	1	ܨܝܼܡ ܠܹܗ	ܨܐܡ	*	hollow|l3s
+# --- joined L-suffix (optional transforms lJoined, pastBaseUrmia) ---
+L-suffix joined (optional)	1	ܦܬ݂ܝܼܚܠܹܗ	ܦܬܚ	*	pastBase|lJoined
+L-suffix joined (optional)	1	ܦܪܸܫܠܹܐ	ܦܪܫ	*	lJoined
+L-suffix joined (optional)	1	ܚܙܹܠܹܐ	ܚܙܐ	*	lJoined
+L-suffix joined (optional)	1	ܘܩܪܹܠܹܐ	ܩܪܐ	*	lJoined|w-
+L-suffix joined (optional)	1	ܫܡܸܥܠܝܼ	ܫܡܥ	*	lJoined
+L-suffix joined (optional)	1	ܥܒܸܕܠܲܢ	ܥܒܕ	*	lJoined
+Stem II past, Urmia spelling (optional)	1	ܬܘܼܪܸܨܠܹܐ	ܡܬܪܨ	*	pastBaseUrmia
+Stem II past, Urmia spelling (optional)	1	ܘܬܘܼܪܸܨܠܹܐ	ܡܬܪܨ	*	pastBaseUrmia|w-
+# --- pluperfect and past habitual ---
+past particle	1	ܦܬ݂ܝܼܚܵܐ ܗ݇ܘܵܐ	ܦܬܚ	*	passiveParticiple|wa
+past particle	1	ܦܵܬ݂ܚܵܐ ܗ݇ܘܵܐ	ܦܬܚ	*	3fs|wa
+past particle	1	ܐܝܼܬ݂ܘܵܐ	ܐܝܬ	*	wa
+past particle	1	ܠܲܝܬ݂ܘܵܐ	ܠܝܬ	*	wa
+past particle	1	ܦܬ݂ܝܼܚ ܗ݇ܘܵܐ ܠܹܗ	ܦܬܚ	*	past3s|wa
+past particle	1	ܕܪܹܐ ܗ݇ܘܵܐ ܠܗܘܿܢ	ܕܪܐ	*	l3p|wa
+past particle	1	ܐܝܼܬ݂ ܘܵܐ	ܐܝܬ	*	wa
+# --- non-past ---
+non-past	1	ܦܵܬ݂ܚܵܐ	ܦܬܚ	*	3fs
+non-past	1	ܦܵܬ݂ܚܝܼ	ܦܬܚ	*	3p
+non-past	1	ܦܵܬ݂ܚܹܬ	ܦܬܚ	*	2ms
+non-past	1	ܦܵܬ݂ܚܵܬܝ	ܦܬܚ	*	2fs
+non-past	1	ܦܵܬ݂ܚܝܼܬܘܿܢ	ܦܬܚ	*	2p
+non-past	1	ܦܵܬ݂ܚܹܢ	ܦܬܚ	*	1s
+non-past	1	ܦܵܬ݂ܚܵܢ	ܦܬܚ	*	1s
+non-past	1	ܦܵܬ݂ܚܲܚ	ܦܬܚ	*	1p
+non-past (unpointed)	1	ܦܬܚܐ	ܦܬܚ	*	3fs
+non-past (unpointed)	1	ܦܬܚܝ	ܦܬܚ	*	3p
+non-past (unpointed)	1	ܦܬܚܬ	ܦܬܚ	*	2ms
+non-past (unpointed)	1	ܦܬܚܬܝ	ܦܬܚ	*	2fs
+non-past (unpointed)	1	ܦܬܚܝܬܘܢ	ܦܬܚ	*	2p
+non-past (unpointed)	1	ܦܬܚܢ	ܦܬܚ	*	1s
+non-past (unpointed)	1	ܦܬܚܚ	ܦܬܚ	*	1p
+non-past (biblical -īn)	1	ܕܵܥܪܝܼܢ	ܕܥܪ	*	3p
+non-past (verb in -ē)	1	ܕܵܪܝܵܐ	ܕܪܐ	*	3fs
+non-past (verb in -ē)	1	ܕܵܪܝܼ	ܕܪܐ	*	3p
+non-past (verb in -ē)	1	ܕܵܪܹܝܬ	ܕܪܐ	*	2ms
+non-past (verb in -ē)	1	ܕܵܪܝܵܬܝ	ܕܪܐ	*	2fs
+non-past (verb in -ē)	1	ܕܵܪܲܝܬܘܿܢ	ܕܪܐ	*	2p
+non-past (verb in -ē)	1	ܕܵܪܹܝܢ	ܕܪܐ	*	1s
+non-past (verb in -ē)	1	ܕܵܪܝܲܢ	ܕܪܐ	*	1s
+non-past (verb in -ē)	1	ܕܵܪܹܝܚ	ܕܪܐ	*	1p
+non-past (verb in -ē, unpointed)	1	ܕܪܝܐ	ܕܪܐ	*	3fs
+non-past (verb in -ē, unpointed)	1	ܚܙܝܢ	ܚܙܐ	*	1s
+non-past (Stem III, verb in -ē)	1	ܡܲܣܬܝܵܐ	ܡܣܬܐ	*	3fs
+non-past (Stem III)	1	ܡܲܪܝܡܵܐ	ܡܪܝܡ	*	3fs
+non-past (Stem III, unpointed)	1	ܡܪܝܡܝ	ܡܪܝܡ	*	3p
+non-past (quadriliteral)	1	ܡܬܲܪܓܡܝܼ	ܡܬܪܓܡ	*	3p
+non-past (hollow verb)	1	ܨܵܝܡܵܐ	ܨܐܡ	*	3fs
+non-past (hollow verb, unpointed)	1	ܨܝܡܐ	ܨܐܡ	*	hollow|3fs
+non-past (hollow verb, unpointed)	1	ܩܝܡܝܬܘܢ	ܩܐܡ	*	hollow|2p
+# --- passive past ---
+passive past	1	ܦܬ݂ܝܼܚ	ܦܬܚ	*	pastBase
+passive past	1	ܦܬ݂ܝܼܚܸܢ	ܦܬܚ	*	pastBase|1s
+passive past	1	ܦܬܝܚܝܬܘܢ	ܦܬܚ	*	pastBase|2p
+passive past (ܡܬ- verb)	1	ܡܸܬ݂ܟܬ݂ܘܼܒ݂ܸܢ	ܡܬܟܬܒ	*	pastBaseMt|1s
+passive past (ܡܬ- verb)	1	ܡܸܬ݂ܟܬ݂ܘܼܒ݂ܵܐ	ܡܬܟܬܒ	*	pastBaseMt
+# --- participles ---
+passive participle	1	ܦܬ݂ܝܼܚܵܐ	ܦܬܚ	*	passiveParticiple
+passive participle	1	ܦܬ݂ܝܼܚܬܵܐ	ܦܬܚ	*	passiveParticiple|feminine
+passive participle	1	ܦܬ݂ܝܼܚܹ̈ܐ	ܦܬܚ	*	passiveParticiple
+passive participle (hollow verb)	1	ܨܝܼܡܵܐ	ܨܐܡ	*	passiveParticiple
+passive participle (verb in -ē)	1	ܕܸܪܝܵܐ	ܕܪܐ	*	passiveParticiple
+passive participle (Stem III)	1	ܡܘܼܪܝܡܵܐ	ܡܪܝܡ	*	passiveParticipleM
+passive participle (Stem III)	1	ܡܘܼܪܝܲܡܬܵܐ	ܡܪܝܡ	*	passiveParticipleM|feminine
+passive participle (Stem III, verb in -ē)	1	ܡܘܼܣܬܝܵܐ	ܡܣܬܐ	*	passiveParticipleM
+# --- imperatives ---
+imperative	1	ܦܬ݂ܘܿܚ	ܦܬܚ	*	imperative
+imperative	1	ܦܬ݂ܘܿܚܝ	ܦܬܚ	*	imperative
+imperative	1	ܦܬ݂ܘܿܚܘܼܢ	ܦܬܚ	*	imperative
+imperative	1	ܟܬ݂ܘܿܒ݂	ܟܬܒ	*	imperative
+imperative (hollow verb)	1	ܨܘܼܡ	ܨܐܡ	*	imperative
+imperative (hollow verb)	1	ܩܘܼܡܘܼܢ	ܩܐܡ	*	imperative
+imperative (verb in -ē)	1	ܕܪܲܘ	ܕܪܐ	*	imperative
+imperative (verb in -ē)	1	ܕܪܝܼ	ܕܪܐ	*	3p
+imperative (Stem III)	1	ܐܲܪܝܸܡ	ܡܪܝܡ	*	imperativeM
+imperative (Stem III)	1	ܐܲܪܝܸܡܝ	ܡܪܝܡ	*	imperativeM
+imperative (Stem III)	1	ܐܲܪܝܡܘܼܢ	ܡܪܝܡ	*	imperativeM
+imperative (Stem III, verb in -ē)	1	ܐܲܣܬܝܼ	ܡܣܬܐ	*	imperativeM
+imperative (Stem III, verb in -ē)	1	ܐܲܣܬܲܘ	ܡܣܬܐ	*	imperativeM
+imperative (ܡܬ- verb)	1	ܐܸܬ݂ܟܬ݂ܸܒ݂	ܡܬܟܬܒ	*	imperativeM
+imperative (Stem II)	1	ܦܲܚܸܠ	ܡܦܚܠ	*	imperativeII
+imperative (Stem II)	1	ܦܲܚܠܘܼܢ	ܡܦܚܠ	*	imperativeII
+imperative (Stem II, root in ܡ)	1	ܡܲܠܸܠ	ܡܡܠܠ	*	imperativeII
+imperative (quadriliteral)	1	ܬܲܪܓܸܡ	ܡܬܪܓܡ	*	imperativeII
+imperative (irregular verb)	1	ܙܹܠ݇	ܐܙܠ	*	irregularVerb
+imperative (irregular verb)	1	ܙܹܠ݇ܡܘܼܢ	ܐܙܠ	*	irregularVerb
+imperative (irregular verb)	1	ܬܵܐ	ܐܬܐ	*	irregularVerb
+imperative (irregular verb)	1	ܬܹܝܡܘܼܢ	ܐܬܐ	*	irregularVerb
+imperative (irregular verb)	1	ܗܲܒ݂݇ܠ	ܝܗܒܠ	*	irregularVerb
+imperative (irregular verb)	1	ܗ݇ܘܝܼ	ܗܘܐ	*	irregularVerb
+# --- infinitives, verbal nouns, gerunds ---
+infinitive (Stem III)	1	ܡܲܪܝܘܿܡܹܐ	ܡܪܝܡ	*	infinitiveM
+infinitive (quadriliteral)	1	ܡܬܲܪܓܘܿܡܹܐ	ܡܬܪܓܡ	*	infinitiveM
+infinitive (Stem III, verb in -ē)	1	ܡܲܣܬܘܿܝܹܐ	ܡܣܬܐ	*	infinitiveM
+verbal noun	1	ܡܲܪܝܡܵܢܘܼܬ݂ܵܐ	ܡܪܝܡ	*	verbalNounM
+verbal noun	1	ܦܘܼܚܵܠܵܐ	ܡܦܚܠ	*	verbalNounM
+verbal noun	1	ܒܘܼܢܵܝܵܐ	ܡܒܢܐ	*	verbalNounM
+infinitive (Stem I)	1	ܦܬ݂ܵܚܵܐ	ܦܬܚ	*	3fs
+gerund	1	ܒܸܦܬ݂ܵܚܵܐ	ܦܬܚ	*	gerund
+gerund	1	ܒܸܕܪܵܝܵܐ	ܕܪܐ	*	gerund
+gerund	1	ܒܹܐ݇ܙܵܠܵܐ	ܐܙܠ	*	gerund
+gerund (hollow verb)	1	ܒܸܨܝܵܡܵܐ	ܨܐܡ	*	hollow|gerund
+gerund (Stem III)	1	ܒܡܲܪܝܘܿܡܹܐ	ܡܪܝܡ	*	infinitiveM|b-
+# --- irregular verbs, copula, particles ---
+irregular verb	1	ܝܵܗ݇ܒ݂ܵܐ	ܝܗܒܠ	*	irregularVerb
+irregular verb	1	ܝܘܼܗ݇ܒ݂ܵܐ	ܝܗܒܠ	*	irregularVerb
+irregular verb	1	ܐܵܬ݂ܲܚ	ܐܬܐ	*	irregularVerb
+irregular verb	1	ܐܵܙܠܝܼ	ܐܙܠ	*	3p
+copula	1	ܝܼܘܸܢ	ܝܠܗ	*	copula
+copula	1	ܝܼܘܸܢ	ܗܘܐ	*	copula
+copula	1	ܝܼܘܸܬ	ܝܠܗ	*	copula
+copula	1	ܝܼܘܵܬܝ	ܝܠܗ	*	copula
+copula	1	ܝܼܘܲܚ	ܝܠܗ	*	copula
+copula	1	ܝܼܬܘܿܢ	ܝܠܗ	*	copula
+copula	1	ܝܼܢܵܐ	ܝܠܗ	*	copula
+copula	1	ܐܝܼܠܹܗ	ܝܠܗ	*	copula
+copula	1	ܝܼܠܹܐ	ܝܠܗ	*	copula
+copula	1	ܝܼܠܵܗ̇	ܝܠܗ	*	
+indicative particle	1	ܟܝ	ܟܐ	*	ke
+# --- proclitics ---
+proclitic	1	ܘܟܲܠܒܵܐ	ܟܠܒܐ	*	w-
+proclitic	1	ܕܡܲܠܟܵܐ	ܡܠܟܐ	*	d-
+proclitic	1	ܒܒܲܝܬܵܐ	ܒܝܬܐ	*	b-
+proclitic	1	ܠܡܲܠܟܵܐ	ܡܠܟܐ	*	l-
+proclitic	1	ܘܕܒܒܲܝܬܵܐ	ܒܝܬܐ	*	b-|d-|w-
+proclitic	1	ܟܐܵܙܹܠ	ܐܙܠ	*	k-
+proclitic	1	ܒܕܐܵܙܹܠ	ܐܙܠ	*	bd-
+proclitic	1	ܘܒܵܬܹ̈ܐ	ܒܝܬܐ	*	irregularNoun|w-
+proclitic	1	ܒܒܲܝܬܘܼܟ݂	ܒܝܬܐ	*	poss2ms|b-
+proclitic	1	ܘܦܬ݂ܝܼܚ ܠܹܗ	ܦܬܚ	*	past3s|w-
+proclitic	1	ܠܟܲܠܒ݂ܹ̈ܐ	ܟܠܒܐ	*	l-
+proclitic	1	ܕܐܲܠܵܗܵܐ	ܐܠܗܐ	*	d-
+proclitic (pointed word after it)	1	ܒܒܵܬܹ̈ܐ	ܒܬܐ	*	b-
+# --- nouns: possessive suffixes ---
+possessive	1	ܟܲܠܒܝܼ	ܟܠܒܐ	*	poss1s
+possessive	1	ܟܲܠܒܘܼܟ݂	ܟܠܒܐ	*	poss2ms
+possessive	1	ܟܲܠܒܵܟ݂ܝ	ܟܠܒܐ	*	poss2fs
+possessive	1	ܟܲܠܒܹܗ	ܟܠܒܐ	*	poss3s
+possessive	1	ܟܲܠܒܵܗ̇	ܟܠܒܐ	*	poss3s
+possessive	1	ܟܲܠܒܲܢ	ܟܠܒܐ	*	poss1p
+possessive	1	ܟܲܠܒܲܘܟ݂ܘܿܢ	ܟܠܒܐ	*	poss2p
+possessive	1	ܟܲܠܒܗܘܿܢ	ܟܠܒܐ	*	poss3p
+possessive (plural noun)	1	ܟܲܠܒ݂ܘܼ̈ܗܝ	ܟܠܒܐ	*	poss3s
+possessive (plural noun)	1	ܟܲܠܒ݂ܘܼ̈ܗ̇	ܟܠܒܐ	*	poss3s
+possessive (plural noun)	1	ܟܲܠܒ݂ܲܝ̈ܗܘܿܢ	ܟܠܒܐ	*	poss3p
+possessive (biblical -kōn)	1	ܡܲܪ̈ܓܵܢܝܵܬ݂ܟ݂ܘܿܢ	ܡܪܓܢܝܬܐ	*	poss2p
+possessive (feminine noun)	1	ܒܪܵܬ݂ܝ	ܒܪܬܐ	*	poss1s
+possessive (plural in -āṯā)	1	ܫܪ̈ܵܓ݂ܵܬ݂ܝܼ	ܫܪܓܐ	*	feminine|poss1s
+possessive (unpointed)	1	ܒܝܬܗܘܢ	ܒܝܬܐ	*	poss3p
+possessive (consonant-final noun)	1	ܐܲܘܛܘܿܒܘܼܣܹܗ	ܐܘܛܘܒܘܣ	*	possessiveC
+# --- nouns: plurals, states, gender ---
+plural	1	ܟܲܠܒ݂ܹ̈ܐ	ܟܠܒܐ	*	
+plural -ānē	1	ܛܘܼܪ̈ܵܢܹܐ	ܛܘܪܐ	*	pluralAne
+plural -wāṯā	1	ܢܲܗܪܲܘܵܬ݂ܵܐ	ܢܗܪܐ	*	pluralWata
+plural -āṯā	1	ܫܪ̈ܵܓ݂ܵܬ݂ܵܐ	ܫܪܓܐ	*	feminine
+plural -yāṯā	1	ܝܕ݂ܵܥ̈ܝܵܬ݂ܵܐ	ܝܕܥܬܐ	*	pluralYata
+plural (consonant-final noun)	1	ܐܲܘܛܘܿܒܘܼ̈ܣܵܬ݂ܵܐ	ܐܘܛܘܒܘܣ	*	pluralC
+absolute plural	1	ܟܲܠܒ݂ܝܼ̈ܢ	ܟܠܒܐ	*	absolutePlural
+construct	1	ܟܠܲܒ݂	ܟܠܒܐ	*	construct
+construct	1	ܡܲܠܟܲܬ݂	ܡܠܟܬܐ	*	construct
+construct	1	ܒܹܝܬ݂	ܒܝܬܐ	*	construct
+feminine	1	ܛܵܒ݂ܬܵܐ	ܛܒܐ	*	feminine
+feminine	1	ܐܵܬ݂ܘܿܪܵܝܬܵܐ	ܐܬܘܪܝܐ	*	feminine
+feminine -ānīṯā	1	ܡܲܪܝܡܵܢܝܼܬ݂ܵܐ	ܡܪܝܡܢܐ	*	feminine
+irregular noun	1	ܒܵܬܹ̈ܐ	ܒܝܬܐ	*	irregularNoun
+irregular noun	1	ܒܵܬܲܝ̈	ܒܝܬܐ	*	irregularNoun
+irregular noun	1	ܒ̈ܢܵܬ݂ܵܐ	ܒܪܬܐ	*	irregularNoun
+irregular noun	1	ܢܸܫܹ̈ܐ	ܐܢܬܬܐ	*	irregularNoun
+irregular noun	1	ܐܸܒ̈ܢܹܐ	ܐܒܪܐ	*	irregularNoun
+irregular noun	1	ܒܲܪ	ܐܒܪܐ	*	irregularNoun
+irregular noun	1	ܐܲܒ݂ܘܼܢ	ܐܒܐ	*	irregularNoun
+irregular noun	1	ܐܲܒ݂ܵܗܹ̈ܐ	ܐܒܐ	*	irregularNoun
+irregular noun	1	ܐܲܚܘܼܟ݂	ܐܚܐ	*	irregularNoun
+irregular noun	1	ܫܸܢܹ̈ܐ	ܫܢܬܐ	*	irregularNoun
+irregular noun	1	ܐܸܡ̈ܘܵܬ݂ܵܐ	ܐܘܡܬܐ	*	irregularNoun
+irregular noun	1	ܝܲܡܡܹ̈ܐ	ܝܡܐ	*	irregularNoun
+# --- prepositions with pronouns ---
+preposition	1	ܥܲܡܹܗ	ܥܡ	*	prepositionSuffix
+preposition	1	ܥܲܠܘܼܗܝ	ܥܠ	*	prepositionSuffix
+preposition	1	ܥܲܠܲܝܗܘܿܢ	ܥܠ	*	prepositionSuffix
+preposition	1	ܩܵܬܝܼ	ܩܐ	*	prepositionSuffix
+preposition	1	ܒܹܗ	ܒ-	*	prepositionSuffix
+preposition	1	ܠܹܗ	ܠ-	*	prepositionSuffix
+preposition	1	ܐܸܠܘܼܗܝ	ܠ-	*	prepositionSuffix
+preposition	1	ܐܸܠܹܗ	ܠ-	*	prepositionSuffix
+preposition	1	ܓܲܘܹܗ	ܓܘ	*	prepositionSuffix
+preposition	1	ܡܸܢܹܗ	ܡܢ	*	prepositionSuffix
+preposition	1	ܐܲܟ݂ܘܵܬ݂ܝܼ	ܐܝܟ	*	prepositionSuffix
+preposition	1	ܩܵܕ݇ܡܝܼ	ܩܕܡ	*	prepositionSuffix
+preposition	1	ܕܝܼܗ	ܕ-	*	prepositionSuffix
+preposition	1	ܐܝܼܬ݂ ܒܹܗ	ܐܝܬ	*	prepositionSuffix
+preposition	1	ܠܲܝܬ ܒܝܼ	ܠܝܬ	*	prepositionSuffix
+# --- negatives: a short ending is not read on a short stem ---
+short stem	0	ܫܡܵܐ	ܫܡ	*	*
+short stem	0	ܐܲܒ݂ܵܐ	ܐܒ	*	*
+short stem	0	ܐܲܚܵܐ	ܐܚ	*	*
+short stem	0	ܡܵܐ	ܡ	*	*
+short stem	0	ܝܼܢܵܐ	ܝ	*	*
+# --- negatives: one word only ---
+one word	0	ܒܲܝܬܵܐ ܕܝܼܠܝܼ	ܒܝܬܐ ܕܝܠܐ	*	*
+one word	0	ܓܲܘ ܒܲܝܬܵܐ	ܓܘ ܒܝܬ	*	*
+one word	0	ܟܲܠܒܵܐ ܛܵܒ݂ܵܐ	ܟܠܒܐ ܛܒ	*	*
+one word	0	ܡܲܠܟܵܐ ܪܲܒܵܐ	ܡܠܟܐ ܪܒ	*	*
+# --- negatives: a nisba adjective is not a verb in -ē ---
+nisba	0	ܐܵܬ݂ܘܿܪܵܝܵܐ	ܐܬܘܪܐ	*	*
+nisba	0	ܣܘܼܪܝܵܝܵܐ	ܣܘܪܝܐ	*	*
+nisba	0	ܐܲܡܪܝܼܟܵܝܵܐ	ܐܡܪܝܟܐ	*	*
+# --- negatives: a Stem I form with ܐ as its last letter is a verb in -ē ---
+weak root	0	ܚܙܝܼܐ	ܚܙ	*	*
+weak root	0	ܚܙܝܵܐ	ܚܙܐܐ	*	*
+# --- negatives: the proclitic leaves a word ---
+proclitic	0	ܒܸܬ	ܬ	*	*
+proclitic	0	ܒܸܦܬ݂ܵܚܵܐ	ܸܦܬ݂ܵܚܵܐ	*	*
+proclitic	0	ܘܐ	ܐ	*	*

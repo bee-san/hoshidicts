@@ -1,0 +1,34 @@
+# Source: written for this pack (GPL-3.0-or-later), against tests/dictionary/ (hand-written rows). No optional transform
+# or processor is needed; every option is on.
+# category	valid	text	expression	matched
+past	1	ܦܬ݂ܝܼܚ ܠܝܼ ܬܲܪܥܵܐ	ܦܬܚ	ܦܬ݂ܝܼܚ ܠܝܼ
+past	1	ܦܬܝܚ ܠܝ ܬܪܥܐ	ܦܬܚ	ܦܬܝܚ ܠܝ
+past	1	ܢܒ݂ܝܼܚ ܠܹܗ ܟܠ ܠܲܝܠܹܐ	ܢܒܚ	ܢܒ݂ܝܼܚ ܠܹܗ
+past	1	ܐ݇ܙܝܼܠ ܠܹܗ ܠܒܲܝܬܵܐ	ܐܙܠ	ܐ݇ܙܝܼܠ ܠܹܗ
+past	1	ܕܪܹܐ ܠܗܘܿܢ ܟܬ݂ܵܒ݂ܵܐ	ܕܪܐ	ܕܪܹܐ ܠܗܘܿܢ
+past	1	ܡܘܼܪܝܸܡ ܠܹܗ ܬܲܪܥܵܐ	ܡܪܝܡ	ܡܘܼܪܝܸܡ ܠܹܗ
+non-past	1	ܦܵܬ݂ܚܵܐ ܬܲܪܥܵܐ	ܦܬܚ	ܦܵܬ݂ܚܵܐ
+non-past	1	ܟܵܬ݂ܒ݂ܝܼ ܟܬ݂ܵܒ݂ܵܐ	ܟܬܒ	ܟܵܬ݂ܒ݂ܝܼ
+non-past	1	ܨܵܝܡܵܐ ܟܠ ܝܲܘܡܵܐ	ܨܐܡ	ܨܵܝܡܵܐ
+gerund	1	ܒܸܦܬ݂ܵܚܵܐ ܬܲܪܥܵܐ	ܦܬܚ	ܒܸܦܬ݂ܵܚܵܐ
+noun	1	ܟܲܠܒܵܐ ܢܒ݂ܝܼܚ ܠܹܗ	ܟܠܒܐ	ܟܲܠܒܵܐ
+noun	1	ܟܲܠܒܹܗ ܕܡܲܠܟܵܐ	ܟܠܒܐ	ܟܲܠܒܹܗ
+noun	1	ܒܒܲܝܬܵܐ ܪܲܒܵܐ	ܒܝܬܐ	ܒܒܲܝܬܵܐ
+noun	1	ܘܟܲܠܒ݂ܹ̈ܐ ܕܡܲܠܟܵܐ	ܟܠܒܐ	ܘܟܲܠܒ݂ܹ̈ܐ
+noun	1	ܕܡܲܠܟܵܐ	ܡܠܟܐ	ܕܡܲܠܟܵܐ
+noun	1	ܒܵܬܹ̈ܐ ܪܲܒܹ̈ܐ	ܒܝܬܐ	ܒܵܬܹ̈ܐ
+noun	1	ܒܒܵܬܹ̈ܐ	ܒܝܬܐ	ܒܒܵܬܹ̈ܐ
+adjective	1	ܛܵܒ݂ܬܵܐ ܝܼܠܵܗ̇	ܛܒܐ	ܛܵܒ݂ܬܵܐ
+adjective	1	ܐܵܬ݂ܘܿܪܵܝܵܐ ܝܼܠܹܗ	ܐܬܘܪܝܐ	ܐܵܬ݂ܘܿܪܵܝܵܐ
+adjective	1	ܐܵܬ݂ܘܿܪܵܝܬܵܐ	ܐܬܘܪܝܐ	ܐܵܬ݂ܘܿܪܵܝܬܵܐ
+preposition	1	ܥܲܡܹܗ ܐ݇ܙܝܼܠ ܠܹܗ	ܥܡ	ܥܲܡܹܗ
+preposition	1	ܥܲܠܘܼܗܝ ܝܼܠܹܗ	ܥܠ	ܥܲܠܘܼܗܝ
+copula	1	ܝܼܠܹܗ ܛܵܒ݂ܵܐ	ܝܠܗ	ܝܼܠܹܗ
+copula	1	ܝܼܢܵܐ ܪܲܒܹ̈ܐ	ܝܠܗ	ܝܼܢܵܐ
+punctuation	1	ܟܲܠܒܵܐ܂	ܟܠܒܐ	ܟܲܠܒܵܐ
+punctuation	1	ܟܲܠܒܵܐ، ܒܲܝܬܵܐ	ܟܠܒܐ	ܟܲܠܒܵܐ
+punctuation	1	ܟܲܠܒܵܐ؟	ܟܠܒܐ	ܟܲܠܒܵܐ
+joiners	1	ܟܲܠ‍ܒܵܐ ܛܵܒ݂ܵܐ	ܟܠܒܐ	ܟܲܠ‍ܒܵܐ
+word boundary	1	ܟܠ ܠܲܝܠܹܐ	ܟܠ	ܟܠ
+word boundary	0	ܟܲܠܒܵܐ ܛܵܒ݂ܵܐ	ܟܠܒܐ	ܟܲܠܒܵܐ ܛܵܒ݂ܵܐ
+word boundary	0	ܒܲܝܬܵܐ ܪܲܒܵܐ	ܪܒܐ	ܒܲܝܬܵܐ ܪܲܒܵܐ

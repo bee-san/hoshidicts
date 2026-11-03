@@ -212,12 +212,14 @@ rule('pastBaseM', {type: 'prefix', inflected: 'ܡܘ', deinflected: 'ܡ', conditi
 for (const c of LETTERS) {
     rule('pastBaseM', {type: 'prefix', inflected: `ܡ${c}ܘ`, deinflected: `ܡ${c}`, conditionsIn: STEM, conditionsOut: VERB, stemMinLength: 1, stemCharacters: LETTER});
 }
-// The Urmia Bible writes the Stem II past base without the ܡ (ܬܘܼܪܸܨܠܹܐ,
-// he made, from ܡܬܲܪܸܨ). Optional, with the joined L-suffixes.
-transform('pastBaseUrmia', 'past base (Stem II, Urmia)', 'The past base of a Stem II verb written without ܡ, with ܘ after the first radical, as the Urmia Bible of 1893 writes it (ܬܘܼܪܸܨܠܹܐ, he made, from ܡܬܲܪܸܨ).', {optional: true});
-for (const c of LETTERS) {
-    rule('pastBaseUrmia', {type: 'prefix', inflected: `${c}ܘ`, deinflected: `ܡ${c}`, conditionsIn: STEM, conditionsOut: VERB, stemMinLength: 2, stemCharacters: LETTER});
-}
+// The Urmia Bible writes the past of a Stem II verb without the ܡ, with the
+// L-suffix joined (ܬܘܼܪܸܨܠܹܐ, he made, from ܡܬܲܪܸܨ). Optional, with the
+// joined L-suffixes; one rule for the whole word, so that a word that only
+// starts like it (ܛܘܼܪܵܐ, mountain) is not read as ܡ + root (ܡܛܪܐ, rain).
+transform('pastBaseUrmia', 'past (Stem II, Urmia)', 'The past of a Stem II verb written without ܡ and with the L-suffix joined, as the Urmia Bible of 1893 writes it (ܬܘܼܪܸܨܠܹܐ, he made, from ܡܬܲܪܸܨ).', {optional: true});
+rule('pastBaseUrmia', {type: 'circumfix', prefixes: LETTERS.map((c) => [`${c}ܘ`, `ܡ${c}`]),
+    suffixes: [...L_SUFFIXES.map(([, letters]) => [letters, '']), ['ܠܐ', ''], ['ܠܟܘܢ', '']],
+    conditionsIn: ANY, conditionsOut: VERB, stemMinLength: 2, stemCharacters: LETTER});
 // Reflexive-passive verbs in ܡܬ- (ܡܸܬ݂ܟܬ݂ܹܒ݂, to be written) put ܘ before
 // the last radical in the passive past and the participle (ܡܸܬ݂ܟܬ݂ܘܼܒ݂ܸܢ, I
 // was written; ܡܸܬ݂ܟܬ݂ܘܼܒ݂ܵܐ).
@@ -253,8 +255,15 @@ suffix('3p', 'ܝܢ', '', AFTER_L, VSTEM, {minStem: 3});
 // Verbs in -ē (third radical weak: ܕܵܪܹܐ, ܒܵܢܹܐ, ܡܲܣܬܹܐ): ܐ becomes ܝ before
 // the endings (ܕܵܪܝܵܐ, ܕܵܪܝܼ, ܕܵܪܹܝܬ, ܕܵܪܝܵܬܝ, ܕܵܪܲܝܬܘܿܢ, ܕܵܪܹܝܢ, ܕܵܪܹܝܚ;
 // the infinitive ܕܪܵܝܵܐ), so the lemma's ܐ comes back.
+// The stem of such a verb is two letters (Stem I: ܕܪ-), or ܡ and two to
+// four (Stems II and III, quadriliterals, and their past bases: ܡܣܬ-,
+// ܡܦܪܡ-, ܡܣܘܘܣ-), so these are patterns of that shape: a longer word in
+// -āyā is a nisba adjective (ܐܵܬ݂ܘܿܪܵܝܵܐ, Assyrian), not the feminine of a
+// verb in -ē (ܐܬܘܪܐ, Assyria).
+const PL = '[\\u0710-\\u072C]';
+const WEAK_STEM = `(${PL}{2}|ܡ${PL}{2,4})`;
 for (const [id, ending] of [['3fs', 'ܝܐ'], ['3p', 'ܝ'], ['2ms', 'ܝܬ'], ['2fs', 'ܝܬܝ'], ['2p', 'ܝܬܘܢ'], ['1s', 'ܝܢ'], ['1p', 'ܝܚ'], ['3p', 'ܝܢ']]) {
-    suffix(id, ending, 'ܐ', AFTER_L, VSTEM, {minStem: 2});
+    rule(id, {type: 'pattern', pattern: `^${WEAK_STEM}${ending}$`, replacement: '$1ܐ', anchorSuffix: ending, conditionsIn: AFTER_L, conditionsOut: VSTEM});
 }
 // Pointed text tells the non-past of a Stem I verb from a noun with the same
 // letters: ܦܵܬ݂ܚܵܐ (pāṯḥā, she opens) has ā after the first radical and no
@@ -310,7 +319,7 @@ for (const c of RADICALS) {
 }
 // Verbs in -ē: ܕܪܝܼܵܐ (put), from ܕܪܐ. Hollow verbs have ܝ for their ܐ
 // (ܒܝܼܙܵܐ, from ܒܵܐܹܙ), as in their non-past.
-suffix('passiveParticiple', 'ܝܐ', 'ܐ', PARTICIPLE_IN, VERB, {minStem: 2});
+rule('passiveParticiple', {type: 'pattern', pattern: `^(${PL}{2})ܝܐ$`, replacement: '$1ܐ', anchorSuffix: 'ܝܐ', conditionsIn: PARTICIPLE_IN, conditionsOut: VERB});
 for (const c of RADICALS) {
     suffix('passiveParticiple', `ܝ${c}ܐ`, `ܐ${c}`, PARTICIPLE_IN, VERB, {minStem: 1});
 }
@@ -338,13 +347,9 @@ suffix('imperative', 'ܘ', 'ܐ', AFTER_L, VERB, {minStem: 2});
 // from ܡܸܬ݂ܟܬ݂ܹܒ݂; ܐܲܣܬܝܼ, ܐܲܣܬܲܘ, from ܡܲܣܬܹܐ). The root has three or four
 // letters, so the ܐ- forms are patterns of that length: many other words
 // start with ܐ.
-const PL = '[\\u0710-\\u072C]';
-transform('imperativeM', 'imperative (Stems II/III)', 'Imperative of a Stem II, Stem III or quadriliteral verb: without the ܡ (ܦܲܚܸܠ, ܬܲܪܓܸܡ) or with ܐ for it (ܐܲܪܝܸܡ, raise!); feminine -ī, plural -ūn (ܐܲܪܝܸܡܝ, ܐܲܪܝܡܘܼܢ; ܐܲܣܬܝܼ, ܐܲܣܬܲܘ from ܡܲܣܬܹܐ).');
-rule('imperativeM', {type: 'pattern', pattern: `^ܐ(${PL}{3,4})(?:ܝ|ܘܢ)?$`, replacement: 'ܡ$1', anchorPrefix: 'ܐ', conditionsIn: AFTER_L, conditionsOut: VERB});
+transform('imperativeM', 'imperative (Stem III)', 'Imperative of a Stem III or reflexive ܡܬ- verb, with ܐ for the ܡ (ܐܲܪܝܸܡ, raise!; ܐܸܬ݂ܟܬ݂ܸܒ݂); feminine -ī, plural -ūn (ܐܲܪܝܸܡܝ, ܐܲܪܝܡܘܼܢ; ܐܲܣܬܝܼ, ܐܲܣܬܲܘ from ܡܲܣܬܹܐ).');
+rule('imperativeM', {type: 'pattern', pattern: `^ܐ(${PL}{2,4}?)(?:ܝ|ܘܢ)?$`, replacement: 'ܡ$1', anchorPrefix: 'ܐ', conditionsIn: AFTER_L, conditionsOut: VERB});
 rule('imperativeM', {type: 'pattern', pattern: `^ܐ(${PL}{2,3})[ܝܘ]$`, replacement: 'ܡ$1ܐ', anchorPrefix: 'ܐ', conditionsIn: AFTER_L, conditionsOut: VERB});
-for (const [ending, out, min] of [['', '', 3], ['ܝ', '', 3], ['ܘܢ', '', 3], ['ܝ', 'ܐ', 2], ['ܘ', 'ܐ', 2]]) {
-    rule('imperativeM', {type: 'circumfix', inflectedPrefix: '', deinflectedPrefix: 'ܡ', inflectedSuffix: ending, deinflectedSuffix: out, conditionsIn: AFTER_L, conditionsOut: VERB, stemMinLength: min, stemCharacters: LETTER, stemNotStartsWith: '[ܡ]', stemNotEndsWith: '[ܐ]'});
-}
 // The verbal noun of Stems II, III and quadriliterals in -ānūṯā
 // (ܡܲܪܝܡܵܢܘܼܬ݂ܵܐ, ܡܲܣܬܝܵܢܘܼܬ݂ܵܐ), which Wiktionary's tables give as their
 // infinitive noun; and that of Stem II and quadriliterals without ܡ, with ܘ
@@ -353,7 +358,8 @@ for (const [ending, out, min] of [['', '', 3], ['ܝ', '', 3], ['ܘܢ', '', 3], [
 transform('verbalNounM', 'verbal noun (Stems II/III)', 'The verbal noun of a Stem II, Stem III or quadriliteral verb: in -ānūṯā (ܡܲܪܝܡܵܢܘܼܬ݂ܵܐ, raising, from ܡܲܪܝܸܡ; ܡܲܣܬܝܵܢܘܼܬ݂ܵܐ, from ܡܲܣܬܹܐ), or without ܡ and with ܘ after the first radical (ܦܘܼܚܵܠܵܐ, from ܡܦܲܚܸܠ).');
 suffix('verbalNounM', 'ܢܘܬܐ', '', ANY, VERB, {minStem: 3, stemStartsWith: '[ܡ]'});
 suffix('verbalNounM', 'ܝܢܘܬܐ', 'ܐ', ANY, VERB, {minStem: 3, stemStartsWith: '[ܡ]'});
-rule('verbalNounM', {type: 'circumfix', prefixes: LETTERS.map((c) => [`${c}ܘ`, `ܡ${c}`]), suffixes: [['ܐ', ''], ['ܝܐ', 'ܐ']], conditionsIn: ANY, conditionsOut: VERB, stemMinLength: 2, stemCharacters: LETTER});
+rule('verbalNounM', {type: 'circumfix', prefixes: LETTERS.map((c) => [`${c}ܘ`, `ܡ${c}`]), suffixes: [['ܐ', '']], conditionsIn: ANY, conditionsOut: VERB, stemMinLength: 2, stemCharacters: LETTER});
+rule('verbalNounM', {type: 'circumfix', prefixes: LETTERS.map((c) => [`${c}ܘ`, `ܡ${c}`]), suffixes: [['ܝܐ', 'ܐ']], conditionsIn: ANY, conditionsOut: VERB, stemMinLength: 1, stemCharacters: LETTER});
 // Infinitive of Stems II, III and quadriliterals: ܘ before the last letter and
 // -ē (ܡܲܪܝܘܿܡܹܐ, ܡܬܲܪܓܘܿܡܹܐ); verbs in -ē end in -ōyē (ܡܲܣܬܘܿܝܹܐ). After ܒ-
 // it is the gerund (ܒܡܲܪܝܘܿܡܹܐ).
@@ -378,6 +384,14 @@ transform('wa', 'ܗ݇ܘܵܐ (past)', 'The past particle ܗ݇ܘܵܐ (wā) after a
 suffix('wa', ' ܗܘܐ', '', ANY, [], {minStem: 2});
 suffix('wa', ' ܘܐ', '', ANY, [], {minStem: 2});
 suffix('wa', 'ܘܐ', '', ANY, [], {minStem: 3});
+// Between a past verb and its L-suffix it makes the pluperfect (ܦܬ݂ܝܼܚ ܗ݇ܘܵܐ
+// ܠܹܗ, he had opened): the particle is removed and the L-suffix kept, for the
+// L-suffix rules to read (their stem is one word).
+for (const [, letters] of L_SUFFIXES) {
+    for (const wa of [' ܗܘܐ', ' ܘܐ']) {
+        suffix('wa', `${wa} ${letters}`, ` ${letters}`, ANY, [], {minStem: 2});
+    }
+}
 
 // --- Nouns and adjectives ---------------------------------------------------------------
 // Possessive suffixes replace the -ā of the emphatic state (ܟܲܠܒܵܐ, dog):
@@ -417,8 +431,9 @@ transform('pluralAne', 'plural -ānē', 'Plural in -ānē (ܛܘܼܪܵܢܹ̈ܐ, m
 suffix('pluralAne', 'ܢܐ', 'ܐ', NOUN_STEM, ['n_f'], {minStem: 2});
 transform('pluralWata', 'plural -wāṯā', 'Plural in -wāṯā or -awāṯā (ܢܲܗܪܲܘܵܬ݂ܵܐ, rivers, from ܢܲܗܪܵܐ).');
 suffix('pluralWata', 'ܘܬܐ', 'ܐ', NOUN_STEM, ['n_f'], {minStem: 2});
-transform('feminine', 'feminine / plural -ṯā', 'Feminine of an adjective or noun in -tā (ܛܵܒ݂ܬܵܐ from ܛܵܒ݂ܵܐ, good; ܐܵܬ݂ܘܿܪܵܝܬܵܐ from ܐܵܬ݂ܘܿܪܵܝܵܐ, Assyrian), and the plural in -āṯā of some nouns (ܫܪ̈ܵܓ݂ܵܬ݂ܵܐ, lamps).');
+transform('feminine', 'feminine / plural -ṯā', 'Feminine of an adjective or noun in -tā (ܛܵܒ݂ܬܵܐ from ܛܵܒ݂ܵܐ, good; ܐܵܬ݂ܘܿܪܵܝܬܵܐ from ܐܵܬ݂ܘܿܪܵܝܵܐ, Assyrian), or in -ānīṯā of one in -ānā (ܡܲܪܝܡܵܢܝܼܬ݂ܵܐ from ܡܲܪܝܡܵܢܵܐ), and the plural in -āṯā of some nouns (ܫܪ̈ܵܓ݂ܵܬ݂ܵܐ, lamps).');
 suffix('feminine', 'ܬܐ', 'ܐ', NOUN_STEM, ['n_f', 'adj'], {minStem: 2});
+suffix('feminine', 'ܢܝܬܐ', 'ܢܐ', NOUN_STEM, ['n_f', 'adj'], {minStem: 2});
 transform('pluralYata', 'plural -yāṯā', 'Plural in -yāṯā of a feminine noun in -tā (ܝܕ݂ܵܥ̈ܝܵܬ݂ܵܐ, from ܝܕ݂ܵܥܬܵܐ; ܚܲܕ݂̈ܘܼܝܵܬ݂ܵܐ, joys, from ܚܲܕ݂ܘܼܬ݂ܵܐ).');
 suffix('pluralYata', 'ܝܬܐ', 'ܬܐ', NOUN_STEM, ['n_f'], {minStem: 2});
 // The absolute plural in -īn (ܟܲܠܒ݂ܝܼ̈ܢ), after numbers and in set phrases.
@@ -575,6 +590,18 @@ for (const [lemma, forms] of IRREGULAR_VERBS) {
     for (const form of forms) {
         rule('irregularVerb', {type: 'wholeWord', inflected: form, deinflected: lemma, conditionsIn: AFTER_L, conditionsOut: VERB});
     }
+}
+
+// --- Stem II imperative ------------------------------------------------------------
+// Stem II and quadriliteral verbs drop the ܡ in the imperative (ܦܲܚܸܠ, from
+// ܡܦܲܚܸܠ; ܬܲܪܓܸܡ, from ܡܬܲܪܓܸܡ; feminine ܦܲܚܸܠܝ, plural ܦܲܚܠܘܼܢ; verbs in -ē:
+// ܢܲܬܝܼ, ܢܲܬܲܘ, from ܡܢܲܬܹܐ). The rule adds ܡ to the word, which also makes
+// a verb of many nouns (ܚܲܒ݂ܪܝܼ, my friend, would be the imperative of
+// ܡܚܲܒܸܪ), so it comes after the noun rules in this file: on a tie the
+// reading found first comes first (docs/languages.md 9.6).
+transform('imperativeII', 'imperative (Stem II)', 'Imperative of a Stem II or quadriliteral verb, without the ܡ (ܦܲܚܸܠ, from ܡܦܲܚܸܠ; ܬܲܪܓܸܡ, from ܡܬܲܪܓܸܡ); feminine -ī, plural -ūn; of a verb in -ē, -ī and plural -aw (ܢܲܬܝܼ, ܢܲܬܲܘ).');
+for (const [ending, out, min] of [['', '', 3], ['ܝ', '', 3], ['ܘܢ', '', 3], ['ܝ', 'ܐ', 2], ['ܘ', 'ܐ', 2]]) {
+    rule('imperativeII', {type: 'circumfix', inflectedPrefix: '', deinflectedPrefix: 'ܡ', inflectedSuffix: ending, deinflectedSuffix: out, conditionsIn: AFTER_L, conditionsOut: VERB, stemMinLength: min, stemCharacters: LETTER, stemNotEndsWith: '[ܐ]'});
 }
 
 // --- The copula ------------------------------------------------------------------------

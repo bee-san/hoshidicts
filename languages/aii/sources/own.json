@@ -711,33 +711,12 @@
     },
     {
       "id": "pastBaseUrmia",
-      "name": "past base (Stem II, Urmia)",
-      "description": "The past base of a Stem II verb written without ܡ, with ܘ after the first radical, as the Urmia Bible of 1893 writes it (ܬܘܼܪܸܨܠܹܐ, he made, from ܡܬܲܪܸܨ).",
+      "name": "past (Stem II, Urmia)",
+      "description": "The past of a Stem II verb written without ܡ and with the L-suffix joined, as the Urmia Bible of 1893 writes it (ܬܘܼܪܸܨܠܹܐ, he made, from ܡܬܲܪܸܨ).",
       "source": "own",
       "optional": true,
       "rules": [
-        {"type": "prefix", "inflected": "ܐܘ", "deinflected": "ܡܐ", "conditionsIn": ["v_l", "v_s"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"},
-        {"type": "prefix", "inflected": "ܒܘ", "deinflected": "ܡܒ", "conditionsIn": ["v_l", "v_s"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"},
-        {"type": "prefix", "inflected": "ܓܘ", "deinflected": "ܡܓ", "conditionsIn": ["v_l", "v_s"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"},
-        {"type": "prefix", "inflected": "ܕܘ", "deinflected": "ܡܕ", "conditionsIn": ["v_l", "v_s"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"},
-        {"type": "prefix", "inflected": "ܗܘ", "deinflected": "ܡܗ", "conditionsIn": ["v_l", "v_s"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"},
-        {"type": "prefix", "inflected": "ܘܘ", "deinflected": "ܡܘ", "conditionsIn": ["v_l", "v_s"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"},
-        {"type": "prefix", "inflected": "ܙܘ", "deinflected": "ܡܙ", "conditionsIn": ["v_l", "v_s"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"},
-        {"type": "prefix", "inflected": "ܚܘ", "deinflected": "ܡܚ", "conditionsIn": ["v_l", "v_s"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"},
-        {"type": "prefix", "inflected": "ܛܘ", "deinflected": "ܡܛ", "conditionsIn": ["v_l", "v_s"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"},
-        {"type": "prefix", "inflected": "ܝܘ", "deinflected": "ܡܝ", "conditionsIn": ["v_l", "v_s"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"},
-        {"type": "prefix", "inflected": "ܟܘ", "deinflected": "ܡܟ", "conditionsIn": ["v_l", "v_s"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"},
-        {"type": "prefix", "inflected": "ܠܘ", "deinflected": "ܡܠ", "conditionsIn": ["v_l", "v_s"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"},
-        {"type": "prefix", "inflected": "ܡܘ", "deinflected": "ܡܡ", "conditionsIn": ["v_l", "v_s"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"},
-        {"type": "prefix", "inflected": "ܢܘ", "deinflected": "ܡܢ", "conditionsIn": ["v_l", "v_s"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"},
-        {"type": "prefix", "inflected": "ܣܘ", "deinflected": "ܡܣ", "conditionsIn": ["v_l", "v_s"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"},
-        {"type": "prefix", "inflected": "ܥܘ", "deinflected": "ܡܥ", "conditionsIn": ["v_l", "v_s"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"},
-        {"type": "prefix", "inflected": "ܦܘ", "deinflected": "ܡܦ", "conditionsIn": ["v_l", "v_s"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"},
-        {"type": "prefix", "inflected": "ܨܘ", "deinflected": "ܡܨ", "conditionsIn": ["v_l", "v_s"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"},
-        {"type": "prefix", "inflected": "ܩܘ", "deinflected": "ܡܩ", "conditionsIn": ["v_l", "v_s"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"},
-        {"type": "prefix", "inflected": "ܪܘ", "deinflected": "ܡܪ", "conditionsIn": ["v_l", "v_s"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"},
-        {"type": "prefix", "inflected": "ܫܘ", "deinflected": "ܡܫ", "conditionsIn": ["v_l", "v_s"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"},
-        {"type": "prefix", "inflected": "ܬܘ", "deinflected": "ܡܬ", "conditionsIn": ["v_l", "v_s"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"}
+        {"type": "circumfix", "prefixes": [["ܐܘ", "ܡܐ"], ["ܒܘ", "ܡܒ"], ["ܓܘ", "ܡܓ"], ["ܕܘ", "ܡܕ"], ["ܗܘ", "ܡܗ"], ["ܘܘ", "ܡܘ"], ["ܙܘ", "ܡܙ"], ["ܚܘ", "ܡܚ"], ["ܛܘ", "ܡܛ"], ["ܝܘ", "ܡܝ"], ["ܟܘ", "ܡܟ"], ["ܠܘ", "ܡܠ"], ["ܡܘ", "ܡܡ"], ["ܢܘ", "ܡܢ"], ["ܣܘ", "ܡܣ"], ["ܥܘ", "ܡܥ"], ["ܦܘ", "ܡܦ"], ["ܨܘ", "ܡܨ"], ["ܩܘ", "ܡܩ"], ["ܪܘ", "ܡܪ"], ["ܫܘ", "ܡܫ"], ["ܬܘ", "ܡܬ"]], "suffixes": [["ܠܝ", ""], ["ܠܘܟ", ""], ["ܠܟܝ", ""], ["ܠܗ", ""], ["ܠܢ", ""], ["ܠܘܟܘܢ", ""], ["ܠܗܘܢ", ""], ["ܠܐ", ""], ["ܠܟܘܢ", ""]], "conditionsIn": [], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"}
       ]
     },
     {
@@ -797,7 +776,7 @@
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ܐ", "deinflected": "", "conditionsIn": ["v_l"], "conditionsOut": ["v_s"], "stemMinLength": 3, "stemCharacters": "{letter}"},
-        {"type": "suffix", "inflected": "ܝܐ", "deinflected": "ܐ", "conditionsIn": ["v_l"], "conditionsOut": ["v_s"], "stemMinLength": 2, "stemCharacters": "{letter}"},
+        {"type": "pattern", "pattern": "^([\\u0710-\\u072C]{2}|ܡ[\\u0710-\\u072C]{2,4})ܝܐ$", "replacement": "$1ܐ", "anchorSuffix": "ܝܐ", "conditionsIn": ["v_l"], "conditionsOut": ["v_s"]},
         {"type": "pattern", "pattern": "^([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0735[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u071C\\u071E-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0735\\u0710$", "replacement": "$1$2$3", "anchorSuffix": "ܵܐ", "conditionsIn": [], "conditionsOut": ["v_f"]},
         {"type": "pattern", "pattern": "^([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0735[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u071D[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0735\\u0710$", "replacement": "$1ܐ$2", "anchorSuffix": "ܵܐ", "conditionsIn": [], "conditionsOut": ["v_f"]},
         {"type": "pattern", "pattern": "^([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0735[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u071D\\u0735\\u0710$", "replacement": "$1$2ܐ", "anchorSuffix": "ܝܵܐ", "conditionsIn": [], "conditionsOut": ["v_f"]}
@@ -811,8 +790,8 @@
       "rules": [
         {"type": "suffix", "inflected": "ܝ", "deinflected": "", "conditionsIn": ["v_l"], "conditionsOut": ["v_s"], "stemMinLength": 3, "stemCharacters": "{letter}"},
         {"type": "suffix", "inflected": "ܝܢ", "deinflected": "", "conditionsIn": ["v_l"], "conditionsOut": ["v_s"], "stemMinLength": 3, "stemCharacters": "{letter}"},
-        {"type": "suffix", "inflected": "ܝ", "deinflected": "ܐ", "conditionsIn": ["v_l"], "conditionsOut": ["v_s"], "stemMinLength": 2, "stemCharacters": "{letter}"},
-        {"type": "suffix", "inflected": "ܝܢ", "deinflected": "ܐ", "conditionsIn": ["v_l"], "conditionsOut": ["v_s"], "stemMinLength": 2, "stemCharacters": "{letter}"},
+        {"type": "pattern", "pattern": "^([\\u0710-\\u072C]{2}|ܡ[\\u0710-\\u072C]{2,4})ܝ$", "replacement": "$1ܐ", "anchorSuffix": "ܝ", "conditionsIn": ["v_l"], "conditionsOut": ["v_s"]},
+        {"type": "pattern", "pattern": "^([\\u0710-\\u072C]{2}|ܡ[\\u0710-\\u072C]{2,4})ܝܢ$", "replacement": "$1ܐ", "anchorSuffix": "ܝܢ", "conditionsIn": ["v_l"], "conditionsOut": ["v_s"]},
         {"type": "pattern", "pattern": "^([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0735[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u071C\\u071E-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u071D\\u073C$", "replacement": "$1$2$3", "anchorSuffix": "ܝܼ", "conditionsIn": [], "conditionsOut": ["v_f"]},
         {"type": "pattern", "pattern": "^([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0735[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u071D[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u071D\\u073C$", "replacement": "$1ܐ$2", "anchorSuffix": "ܝܼ", "conditionsIn": [], "conditionsOut": ["v_f"]},
         {"type": "pattern", "pattern": "^([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0735[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u071D\\u073C$", "replacement": "$1$2ܐ", "anchorSuffix": "ܝܼ", "conditionsIn": [], "conditionsOut": ["v_f"]}
@@ -825,7 +804,7 @@
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ܬ", "deinflected": "", "conditionsIn": ["v_l"], "conditionsOut": ["v_s"], "stemMinLength": 3, "stemCharacters": "{letter}"},
-        {"type": "suffix", "inflected": "ܝܬ", "deinflected": "ܐ", "conditionsIn": ["v_l"], "conditionsOut": ["v_s"], "stemMinLength": 2, "stemCharacters": "{letter}"},
+        {"type": "pattern", "pattern": "^([\\u0710-\\u072C]{2}|ܡ[\\u0710-\\u072C]{2,4})ܝܬ$", "replacement": "$1ܐ", "anchorSuffix": "ܝܬ", "conditionsIn": ["v_l"], "conditionsOut": ["v_s"]},
         {"type": "pattern", "pattern": "^([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0735[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u071C\\u071E-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0739\\u072C$", "replacement": "$1$2$3", "anchorSuffix": "ܹܬ", "conditionsIn": [], "conditionsOut": ["v_f"]},
         {"type": "pattern", "pattern": "^([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0735[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u071D[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0739\\u072C$", "replacement": "$1ܐ$2", "anchorSuffix": "ܹܬ", "conditionsIn": [], "conditionsOut": ["v_f"]},
         {"type": "pattern", "pattern": "^([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0735[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0739\\u071D\\u072C$", "replacement": "$1$2ܐ", "anchorSuffix": "ܹܝܬ", "conditionsIn": [], "conditionsOut": ["v_f"]}
@@ -838,7 +817,7 @@
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ܬܝ", "deinflected": "", "conditionsIn": ["v_l"], "conditionsOut": ["v_s"], "stemMinLength": 3, "stemCharacters": "{letter}"},
-        {"type": "suffix", "inflected": "ܝܬܝ", "deinflected": "ܐ", "conditionsIn": ["v_l"], "conditionsOut": ["v_s"], "stemMinLength": 2, "stemCharacters": "{letter}"},
+        {"type": "pattern", "pattern": "^([\\u0710-\\u072C]{2}|ܡ[\\u0710-\\u072C]{2,4})ܝܬܝ$", "replacement": "$1ܐ", "anchorSuffix": "ܝܬܝ", "conditionsIn": ["v_l"], "conditionsOut": ["v_s"]},
         {"type": "pattern", "pattern": "^([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0735[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u071C\\u071E-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0735\\u072C\\u071D$", "replacement": "$1$2$3", "anchorSuffix": "ܵܬܝ", "conditionsIn": [], "conditionsOut": ["v_f"]},
         {"type": "pattern", "pattern": "^([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0735[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u071D[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0735\\u072C\\u071D$", "replacement": "$1ܐ$2", "anchorSuffix": "ܵܬܝ", "conditionsIn": [], "conditionsOut": ["v_f"]},
         {"type": "pattern", "pattern": "^([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0735[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u071D\\u0735\\u072C\\u071D$", "replacement": "$1$2ܐ", "anchorSuffix": "ܝܵܬܝ", "conditionsIn": [], "conditionsOut": ["v_f"]}
@@ -851,7 +830,7 @@
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ܝܬܘܢ", "deinflected": "", "conditionsIn": ["v_l"], "conditionsOut": ["v_s"], "stemMinLength": 3, "stemCharacters": "{letter}"},
-        {"type": "suffix", "inflected": "ܝܬܘܢ", "deinflected": "ܐ", "conditionsIn": ["v_l"], "conditionsOut": ["v_s"], "stemMinLength": 2, "stemCharacters": "{letter}"},
+        {"type": "pattern", "pattern": "^([\\u0710-\\u072C]{2}|ܡ[\\u0710-\\u072C]{2,4})ܝܬܘܢ$", "replacement": "$1ܐ", "anchorSuffix": "ܝܬܘܢ", "conditionsIn": ["v_l"], "conditionsOut": ["v_s"]},
         {"type": "pattern", "pattern": "^([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0735[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u071C\\u071E-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u071D\\u073C\\u072C\\u0718\\u073F\\u0722$", "replacement": "$1$2$3", "anchorSuffix": "ܝܼܬܘܿܢ", "conditionsIn": [], "conditionsOut": ["v_f"]},
         {"type": "pattern", "pattern": "^([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0735[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u071D[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u071D\\u073C\\u072C\\u0718\\u073F\\u0722$", "replacement": "$1ܐ$2", "anchorSuffix": "ܝܼܬܘܿܢ", "conditionsIn": [], "conditionsOut": ["v_f"]},
         {"type": "pattern", "pattern": "^([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0735[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0732\\u071D\\u072C\\u0718\\u073F\\u0722$", "replacement": "$1$2ܐ", "anchorSuffix": "ܲܝܬܘܿܢ", "conditionsIn": [], "conditionsOut": ["v_f"]}
@@ -864,7 +843,7 @@
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ܢ", "deinflected": "", "conditionsIn": ["v_l"], "conditionsOut": ["v_s"], "stemMinLength": 3, "stemCharacters": "{letter}"},
-        {"type": "suffix", "inflected": "ܝܢ", "deinflected": "ܐ", "conditionsIn": ["v_l"], "conditionsOut": ["v_s"], "stemMinLength": 2, "stemCharacters": "{letter}"},
+        {"type": "pattern", "pattern": "^([\\u0710-\\u072C]{2}|ܡ[\\u0710-\\u072C]{2,4})ܝܢ$", "replacement": "$1ܐ", "anchorSuffix": "ܝܢ", "conditionsIn": ["v_l"], "conditionsOut": ["v_s"]},
         {"type": "pattern", "pattern": "^([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0735[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u071C\\u071E-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0739\\u0722$", "replacement": "$1$2$3", "anchorSuffix": "ܹܢ", "conditionsIn": [], "conditionsOut": ["v_f"]},
         {"type": "pattern", "pattern": "^([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0735[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u071D[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0739\\u0722$", "replacement": "$1ܐ$2", "anchorSuffix": "ܹܢ", "conditionsIn": [], "conditionsOut": ["v_f"]},
         {"type": "pattern", "pattern": "^([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0735[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u071C\\u071E-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0735\\u0722$", "replacement": "$1$2$3", "anchorSuffix": "ܵܢ", "conditionsIn": [], "conditionsOut": ["v_f"]},
@@ -880,7 +859,7 @@
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ܚ", "deinflected": "", "conditionsIn": ["v_l"], "conditionsOut": ["v_s"], "stemMinLength": 3, "stemCharacters": "{letter}"},
-        {"type": "suffix", "inflected": "ܝܚ", "deinflected": "ܐ", "conditionsIn": ["v_l"], "conditionsOut": ["v_s"], "stemMinLength": 2, "stemCharacters": "{letter}"},
+        {"type": "pattern", "pattern": "^([\\u0710-\\u072C]{2}|ܡ[\\u0710-\\u072C]{2,4})ܝܚ$", "replacement": "$1ܐ", "anchorSuffix": "ܝܚ", "conditionsIn": ["v_l"], "conditionsOut": ["v_s"]},
         {"type": "pattern", "pattern": "^([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0735[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u071C\\u071E-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0732\\u071A$", "replacement": "$1$2$3", "anchorSuffix": "ܲܚ", "conditionsIn": [], "conditionsOut": ["v_f"]},
         {"type": "pattern", "pattern": "^([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0735[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u071D[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0732\\u071A$", "replacement": "$1ܐ$2", "anchorSuffix": "ܲܚ", "conditionsIn": [], "conditionsOut": ["v_f"]},
         {"type": "pattern", "pattern": "^([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0735[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*([\\u0710\\u0712-\\u072C])[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*\\u0739\\u071D\\u071A$", "replacement": "$1$2ܐ", "anchorSuffix": "ܹܝܚ", "conditionsIn": [], "conditionsOut": ["v_f"]}
@@ -913,7 +892,7 @@
         {"type": "suffix", "inflected": "ܝܪܐ", "deinflected": "ܪ", "conditionsIn": ["v_l", "adj"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"},
         {"type": "suffix", "inflected": "ܝܫܐ", "deinflected": "ܫ", "conditionsIn": ["v_l", "adj"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"},
         {"type": "suffix", "inflected": "ܝܬܐ", "deinflected": "ܬ", "conditionsIn": ["v_l", "adj"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"},
-        {"type": "suffix", "inflected": "ܝܐ", "deinflected": "ܐ", "conditionsIn": ["v_l", "adj"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"},
+        {"type": "pattern", "pattern": "^([\\u0710-\\u072C]{2})ܝܐ$", "replacement": "$1ܐ", "anchorSuffix": "ܝܐ", "conditionsIn": ["v_l", "adj"], "conditionsOut": ["v_f"]},
         {"type": "suffix", "inflected": "ܝܒܐ", "deinflected": "ܐܒ", "conditionsIn": ["v_l", "adj"], "conditionsOut": ["v_f"], "stemMinLength": 1, "stemCharacters": "{letter}"},
         {"type": "suffix", "inflected": "ܝܓܐ", "deinflected": "ܐܓ", "conditionsIn": ["v_l", "adj"], "conditionsOut": ["v_f"], "stemMinLength": 1, "stemCharacters": "{letter}"},
         {"type": "suffix", "inflected": "ܝܕܐ", "deinflected": "ܐܕ", "conditionsIn": ["v_l", "adj"], "conditionsOut": ["v_f"], "stemMinLength": 1, "stemCharacters": "{letter}"},
@@ -1083,17 +1062,12 @@
     },
     {
       "id": "imperativeM",
-      "name": "imperative (Stems II/III)",
-      "description": "Imperative of a Stem II, Stem III or quadriliteral verb: without the ܡ (ܦܲܚܸܠ, ܬܲܪܓܸܡ) or with ܐ for it (ܐܲܪܝܸܡ, raise!); feminine -ī, plural -ūn (ܐܲܪܝܸܡܝ, ܐܲܪܝܡܘܼܢ; ܐܲܣܬܝܼ, ܐܲܣܬܲܘ from ܡܲܣܬܹܐ).",
+      "name": "imperative (Stem III)",
+      "description": "Imperative of a Stem III or reflexive ܡܬ- verb, with ܐ for the ܡ (ܐܲܪܝܸܡ, raise!; ܐܸܬ݂ܟܬ݂ܸܒ݂); feminine -ī, plural -ūn (ܐܲܪܝܸܡܝ, ܐܲܪܝܡܘܼܢ; ܐܲܣܬܝܼ, ܐܲܣܬܲܘ from ܡܲܣܬܹܐ).",
       "source": "own",
       "rules": [
-        {"type": "pattern", "pattern": "^ܐ([\\u0710-\\u072C]{3,4})(?:ܝ|ܘܢ)?$", "replacement": "ܡ$1", "anchorPrefix": "ܐ", "conditionsIn": ["v_l"], "conditionsOut": ["v_f"]},
-        {"type": "pattern", "pattern": "^ܐ([\\u0710-\\u072C]{2,3})[ܝܘ]$", "replacement": "ܡ$1ܐ", "anchorPrefix": "ܐ", "conditionsIn": ["v_l"], "conditionsOut": ["v_f"]},
-        {"type": "circumfix", "inflectedPrefix": "", "deinflectedPrefix": "ܡ", "inflectedSuffix": "", "deinflectedSuffix": "", "conditionsIn": ["v_l"], "conditionsOut": ["v_f"], "stemMinLength": 3, "stemCharacters": "{letter}", "stemNotStartsWith": "[ܡ]", "stemNotEndsWith": "[ܐ]"},
-        {"type": "circumfix", "inflectedPrefix": "", "deinflectedPrefix": "ܡ", "inflectedSuffix": "ܝ", "deinflectedSuffix": "", "conditionsIn": ["v_l"], "conditionsOut": ["v_f"], "stemMinLength": 3, "stemCharacters": "{letter}", "stemNotStartsWith": "[ܡ]", "stemNotEndsWith": "[ܐ]"},
-        {"type": "circumfix", "inflectedPrefix": "", "deinflectedPrefix": "ܡ", "inflectedSuffix": "ܘܢ", "deinflectedSuffix": "", "conditionsIn": ["v_l"], "conditionsOut": ["v_f"], "stemMinLength": 3, "stemCharacters": "{letter}", "stemNotStartsWith": "[ܡ]", "stemNotEndsWith": "[ܐ]"},
-        {"type": "circumfix", "inflectedPrefix": "", "deinflectedPrefix": "ܡ", "inflectedSuffix": "ܝ", "deinflectedSuffix": "ܐ", "conditionsIn": ["v_l"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}", "stemNotStartsWith": "[ܡ]", "stemNotEndsWith": "[ܐ]"},
-        {"type": "circumfix", "inflectedPrefix": "", "deinflectedPrefix": "ܡ", "inflectedSuffix": "ܘ", "deinflectedSuffix": "ܐ", "conditionsIn": ["v_l"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}", "stemNotStartsWith": "[ܡ]", "stemNotEndsWith": "[ܐ]"}
+        {"type": "pattern", "pattern": "^ܐ([\\u0710-\\u072C]{2,4}?)(?:ܝ|ܘܢ)?$", "replacement": "ܡ$1", "anchorPrefix": "ܐ", "conditionsIn": ["v_l"], "conditionsOut": ["v_f"]},
+        {"type": "pattern", "pattern": "^ܐ([\\u0710-\\u072C]{2,3})[ܝܘ]$", "replacement": "ܡ$1ܐ", "anchorPrefix": "ܐ", "conditionsIn": ["v_l"], "conditionsOut": ["v_f"]}
       ]
     },
     {
@@ -1104,7 +1078,8 @@
       "rules": [
         {"type": "suffix", "inflected": "ܢܘܬܐ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v_f"], "stemMinLength": 3, "stemCharacters": "{letter}", "stemStartsWith": "[ܡ]"},
         {"type": "suffix", "inflected": "ܝܢܘܬܐ", "deinflected": "ܐ", "conditionsIn": [], "conditionsOut": ["v_f"], "stemMinLength": 3, "stemCharacters": "{letter}", "stemStartsWith": "[ܡ]"},
-        {"type": "circumfix", "prefixes": [["ܐܘ", "ܡܐ"], ["ܒܘ", "ܡܒ"], ["ܓܘ", "ܡܓ"], ["ܕܘ", "ܡܕ"], ["ܗܘ", "ܡܗ"], ["ܘܘ", "ܡܘ"], ["ܙܘ", "ܡܙ"], ["ܚܘ", "ܡܚ"], ["ܛܘ", "ܡܛ"], ["ܝܘ", "ܡܝ"], ["ܟܘ", "ܡܟ"], ["ܠܘ", "ܡܠ"], ["ܡܘ", "ܡܡ"], ["ܢܘ", "ܡܢ"], ["ܣܘ", "ܡܣ"], ["ܥܘ", "ܡܥ"], ["ܦܘ", "ܡܦ"], ["ܨܘ", "ܡܨ"], ["ܩܘ", "ܡܩ"], ["ܪܘ", "ܡܪ"], ["ܫܘ", "ܡܫ"], ["ܬܘ", "ܡܬ"]], "suffixes": [["ܐ", ""], ["ܝܐ", "ܐ"]], "conditionsIn": [], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"}
+        {"type": "circumfix", "prefixes": [["ܐܘ", "ܡܐ"], ["ܒܘ", "ܡܒ"], ["ܓܘ", "ܡܓ"], ["ܕܘ", "ܡܕ"], ["ܗܘ", "ܡܗ"], ["ܘܘ", "ܡܘ"], ["ܙܘ", "ܡܙ"], ["ܚܘ", "ܡܚ"], ["ܛܘ", "ܡܛ"], ["ܝܘ", "ܡܝ"], ["ܟܘ", "ܡܟ"], ["ܠܘ", "ܡܠ"], ["ܡܘ", "ܡܡ"], ["ܢܘ", "ܡܢ"], ["ܣܘ", "ܡܣ"], ["ܥܘ", "ܡܥ"], ["ܦܘ", "ܡܦ"], ["ܨܘ", "ܡܨ"], ["ܩܘ", "ܡܩ"], ["ܪܘ", "ܡܪ"], ["ܫܘ", "ܡܫ"], ["ܬܘ", "ܡܬ"]], "suffixes": [["ܐ", ""]], "conditionsIn": [], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"},
+        {"type": "circumfix", "prefixes": [["ܐܘ", "ܡܐ"], ["ܒܘ", "ܡܒ"], ["ܓܘ", "ܡܓ"], ["ܕܘ", "ܡܕ"], ["ܗܘ", "ܡܗ"], ["ܘܘ", "ܡܘ"], ["ܙܘ", "ܡܙ"], ["ܚܘ", "ܡܚ"], ["ܛܘ", "ܡܛ"], ["ܝܘ", "ܡܝ"], ["ܟܘ", "ܡܟ"], ["ܠܘ", "ܡܠ"], ["ܡܘ", "ܡܡ"], ["ܢܘ", "ܡܢ"], ["ܣܘ", "ܡܣ"], ["ܥܘ", "ܡܥ"], ["ܦܘ", "ܡܦ"], ["ܨܘ", "ܡܨ"], ["ܩܘ", "ܡܩ"], ["ܪܘ", "ܡܪ"], ["ܫܘ", "ܡܫ"], ["ܬܘ", "ܡܬ"]], "suffixes": [["ܝܐ", "ܐ"]], "conditionsIn": [], "conditionsOut": ["v_f"], "stemMinLength": 1, "stemCharacters": "{letter}"}
       ]
     },
     {
@@ -1155,7 +1130,21 @@
       "rules": [
         {"type": "suffix", "inflected": " ܗܘܐ", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{letter}"},
         {"type": "suffix", "inflected": " ܘܐ", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{letter}"},
-        {"type": "suffix", "inflected": "ܘܐ", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 3, "stemCharacters": "{letter}"}
+        {"type": "suffix", "inflected": "ܘܐ", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 3, "stemCharacters": "{letter}"},
+        {"type": "suffix", "inflected": " ܗܘܐ ܠܝ", "deinflected": " ܠܝ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{letter}"},
+        {"type": "suffix", "inflected": " ܘܐ ܠܝ", "deinflected": " ܠܝ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{letter}"},
+        {"type": "suffix", "inflected": " ܗܘܐ ܠܘܟ", "deinflected": " ܠܘܟ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{letter}"},
+        {"type": "suffix", "inflected": " ܘܐ ܠܘܟ", "deinflected": " ܠܘܟ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{letter}"},
+        {"type": "suffix", "inflected": " ܗܘܐ ܠܟܝ", "deinflected": " ܠܟܝ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{letter}"},
+        {"type": "suffix", "inflected": " ܘܐ ܠܟܝ", "deinflected": " ܠܟܝ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{letter}"},
+        {"type": "suffix", "inflected": " ܗܘܐ ܠܗ", "deinflected": " ܠܗ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{letter}"},
+        {"type": "suffix", "inflected": " ܘܐ ܠܗ", "deinflected": " ܠܗ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{letter}"},
+        {"type": "suffix", "inflected": " ܗܘܐ ܠܢ", "deinflected": " ܠܢ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{letter}"},
+        {"type": "suffix", "inflected": " ܘܐ ܠܢ", "deinflected": " ܠܢ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{letter}"},
+        {"type": "suffix", "inflected": " ܗܘܐ ܠܘܟܘܢ", "deinflected": " ܠܘܟܘܢ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{letter}"},
+        {"type": "suffix", "inflected": " ܘܐ ܠܘܟܘܢ", "deinflected": " ܠܘܟܘܢ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{letter}"},
+        {"type": "suffix", "inflected": " ܗܘܐ ܠܗܘܢ", "deinflected": " ܠܗܘܢ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{letter}"},
+        {"type": "suffix", "inflected": " ܘܐ ܠܗܘܢ", "deinflected": " ܠܗܘܢ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{letter}"}
       ]
     },
     {
@@ -1246,10 +1235,11 @@
     {
       "id": "feminine",
       "name": "feminine / plural -ṯā",
-      "description": "Feminine of an adjective or noun in -tā (ܛܵܒ݂ܬܵܐ from ܛܵܒ݂ܵܐ, good; ܐܵܬ݂ܘܿܪܵܝܬܵܐ from ܐܵܬ݂ܘܿܪܵܝܵܐ, Assyrian), and the plural in -āṯā of some nouns (ܫܪ̈ܵܓ݂ܵܬ݂ܵܐ, lamps).",
+      "description": "Feminine of an adjective or noun in -tā (ܛܵܒ݂ܬܵܐ from ܛܵܒ݂ܵܐ, good; ܐܵܬ݂ܘܿܪܵܝܬܵܐ from ܐܵܬ݂ܘܿܪܵܝܵܐ, Assyrian), or in -ānīṯā of one in -ānā (ܡܲܪܝܡܵܢܝܼܬ݂ܵܐ from ܡܲܪܝܡܵܢܵܐ), and the plural in -āṯā of some nouns (ܫܪ̈ܵܓ݂ܵܬ݂ܵܐ, lamps).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ܬܐ", "deinflected": "ܐ", "conditionsIn": ["n_p"], "conditionsOut": ["n_f", "adj"], "stemMinLength": 2, "stemCharacters": "{letter}"}
+        {"type": "suffix", "inflected": "ܬܐ", "deinflected": "ܐ", "conditionsIn": ["n_p"], "conditionsOut": ["n_f", "adj"], "stemMinLength": 2, "stemCharacters": "{letter}"},
+        {"type": "suffix", "inflected": "ܢܝܬܐ", "deinflected": "ܢܐ", "conditionsIn": ["n_p"], "conditionsOut": ["n_f", "adj"], "stemMinLength": 2, "stemCharacters": "{letter}"}
       ]
     },
     {
@@ -1834,6 +1824,19 @@
         {"type": "wholeWord", "inflected": "ܐܬܚ", "deinflected": "ܐܬܐ", "conditionsIn": ["v_l"], "conditionsOut": ["v_f"]},
         {"type": "wholeWord", "inflected": "ܗܘܝ", "deinflected": "ܗܘܐ", "conditionsIn": ["v_l"], "conditionsOut": ["v_f"]},
         {"type": "wholeWord", "inflected": "ܗܘܝܡܘܢ", "deinflected": "ܗܘܐ", "conditionsIn": ["v_l"], "conditionsOut": ["v_f"]}
+      ]
+    },
+    {
+      "id": "imperativeII",
+      "name": "imperative (Stem II)",
+      "description": "Imperative of a Stem II or quadriliteral verb, without the ܡ (ܦܲܚܸܠ, from ܡܦܲܚܸܠ; ܬܲܪܓܸܡ, from ܡܬܲܪܓܸܡ); feminine -ī, plural -ūn; of a verb in -ē, -ī and plural -aw (ܢܲܬܝܼ, ܢܲܬܲܘ).",
+      "source": "own",
+      "rules": [
+        {"type": "circumfix", "inflectedPrefix": "", "deinflectedPrefix": "ܡ", "inflectedSuffix": "", "deinflectedSuffix": "", "conditionsIn": ["v_l"], "conditionsOut": ["v_f"], "stemMinLength": 3, "stemCharacters": "{letter}", "stemNotEndsWith": "[ܐ]"},
+        {"type": "circumfix", "inflectedPrefix": "", "deinflectedPrefix": "ܡ", "inflectedSuffix": "ܝ", "deinflectedSuffix": "", "conditionsIn": ["v_l"], "conditionsOut": ["v_f"], "stemMinLength": 3, "stemCharacters": "{letter}", "stemNotEndsWith": "[ܐ]"},
+        {"type": "circumfix", "inflectedPrefix": "", "deinflectedPrefix": "ܡ", "inflectedSuffix": "ܘܢ", "deinflectedSuffix": "", "conditionsIn": ["v_l"], "conditionsOut": ["v_f"], "stemMinLength": 3, "stemCharacters": "{letter}", "stemNotEndsWith": "[ܐ]"},
+        {"type": "circumfix", "inflectedPrefix": "", "deinflectedPrefix": "ܡ", "inflectedSuffix": "ܝ", "deinflectedSuffix": "ܐ", "conditionsIn": ["v_l"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}", "stemNotEndsWith": "[ܐ]"},
+        {"type": "circumfix", "inflectedPrefix": "", "deinflectedPrefix": "ܡ", "inflectedSuffix": "ܘ", "deinflectedSuffix": "ܐ", "conditionsIn": ["v_l"], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}", "stemNotEndsWith": "[ܐ]"}
       ]
     },
     {

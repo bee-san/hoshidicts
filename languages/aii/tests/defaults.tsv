@@ -1,0 +1,21 @@
+# options: default
+# Source: written for this pack (GPL-3.0-or-later). Rows that hold with the pack's defaults, where the optional transforms
+# lJoined and pastBaseUrmia (the olderSpellings setting) are off.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+# --- with the defaults, the joined L-suffix is not read (optional transform lJoined) ---
+joined L-suffix off	0	ܦܬ݂ܝܼܚܠܹܗ	ܦܬܚ	*	*
+joined L-suffix off	0	ܦܪܸܫܠܹܐ	ܦܪܫ	*	*
+joined L-suffix off	0	ܚܙܹܠܹܐ	ܚܙܐ	*	*
+joined L-suffix off	0	ܚܲܝܠܵܐ	ܚܝܐ	*	*
+joined L-suffix off	0	ܚܲܝܠܹܗ	ܚܝܐ	*	*
+joined L-suffix off	0	ܩܵܠܵܐ	ܩܐ	*	*
+joined L-suffix off	0	ܬܘܼܪܸܨܠܹܐ	ܡܬܪܨ	*	*
+# --- with the defaults, the forms of the standard spelling are read ---
+standard spelling	1	ܦܬ݂ܝܼܚ ܠܹܗ	ܦܬܚ	*	past3s
+standard spelling	1	ܚܙܹܐ ܠܹܗ	ܚܙܐ	*	l3s
+standard spelling	1	ܡܬܘܼܪܸܨ ܠܹܗ	ܡܬܪܨ	*	pastBaseM|l3s
+standard spelling	1	ܚܲܝܠܹܗ	ܚܝܠܐ	*	poss3s
+standard spelling	1	ܩܵܠܹܗ	ܩܠܐ	*	poss3s
+# --- a word that starts like the Urmia past is not read as one ---
+Urmia past	0	ܛܘܼܪܵܐ	ܡܛܪܐ	*	*
+Urmia past	0	ܛܘܼܪܹܗ	ܡܛܪܐ	*	*
