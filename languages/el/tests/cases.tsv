@@ -168,10 +168,10 @@ irregular	1	ζεις	ζω	v	present-2sg
 irregular	1	έζησα	ζω	v	aorist-1sg
 irregular	1	άφησε	αφήνω	v	aorist-3sg
 irregular	1	άσε	αφήνω	v	perfective-imperative-2sg
-ξανα-	1	ξαναγράφω	γράφω	v	ξανα-
-ξανα-	1	ξανάγραψα	γράφω	v	accent|aorist-1sg|ξανα-
-ξανα-	1	ξαναπώ	λέω	v	dependent-1sg|ξανα-
-ξανα-	1	ξαναπάς	πάω	v	present-2sg|ξανα-
+xana	1	ξαναγράφω	γράφω	v	ξανα-
+xana	1	ξανάγραψα	γράφω	v	accent|aorist-1sg|ξανα-
+xana	1	ξαναπώ	λέω	v	dependent-1sg|ξανα-
+xana	1	ξαναπάς	πάω	v	present-2sg|ξανα-
 noun	1	δρόμου	δρόμος	n	gen-sg
 noun	1	δρόμο	δρόμος	n	acc-sg
 noun	1	δρόμε	δρόμος	n	voc-sg
@@ -313,6 +313,16 @@ polytonic	1	ἔγραψα	γράφω	v	accent|aorist-1sg
 enclitic	1	πρόσωπό	πρόσωπο	*	
 enclitic	1	άνθρωπός	άνθρωπος	*	
 enclitic	1	αυτοκίνητό	αυτοκίνητο	*	
+monosyllable	1	μιά	μια	*	
+monosyllable	1	ποιός	ποιος	*	
+monosyllable	1	πιά	πια	*	
+elision	1	κ'	και	*	elision
+elision	1	Κ'	και	*	elision
+elision	1	ν'	να	*	elision
+elision	1	θ'	θα	*	elision
+elision	1	καθ'	κατά	*	elision
+aphaeresis	1	'ς	εις	*	aphaeresis
+aphaeresis	1	'σαν	σαν	*	aphaeresis
 negatives	0	για	γιος	*	*
 negatives	0	στα	στο	*	*
 negatives	0	στα	στης	*	*
@@ -347,3 +357,9 @@ phrases	0	κι εγώ	και εγώ	*	*
 negatives	0	μέρες	μέρη	*	*
 negatives	0	μέρες	μέρος	*	*
 negatives	0	αυτιά	αυτός	*	*
+negatives	0	χαράν	χαρώ	*	*
+negatives	0	γέρω	γέρνω	*	*
+capitals	0	Ελληνικά	Ελληνικό	*	*
+capitals	0	Πέτρα	Πέτρος	*	*
+capitals	0	Σάμη	Σάμος	*	*
+capitals	0	Μήνες	Μήνης	*	*

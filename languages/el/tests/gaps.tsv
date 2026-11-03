@@ -4,6 +4,7 @@
 # 1000 rows sampled with seed 1 by sources/build-corpus.mjs (200 verb, present and imperfect, 200 verb, aorist, 150 verb, perfective non-past (dependent), 70 verb, imperative, 30 verb, gerund, 200 noun, 110 adjective, 40 adjective, comparative or superlative); the rows the pack's rules reach are in corpus.tsv, the others in gaps.tsv.
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
 V;1;SG;IPFV;PRS	1	είμαι	ήμαστε	v	*
+V;3;PL;IPFV;PRS	1	ζητάν	ζητάω	v	*
 V;1;PL;PFV;PST	1	εφεύραμε	εφευρίσκω	v	*
 V;1;SG;PFV;PST	1	άκουσα	ακούγω	v	*
 V;3;PL;PFV;FUT	1	σύρουνε	σέρνω	v	*

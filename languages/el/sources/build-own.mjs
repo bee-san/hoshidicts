@@ -376,7 +376,9 @@ const PERFECTIVE = [
     ['ξ', 'κ'], ['ξ', 'χ'], ['ξ', 'γ'], ['ξ', 'ζ'], ['ξ', 'σσ'], ['ξ', 'ττ'], ['ξ', 'χν'], ['ξ', 'γγ'], ['ιξ', 'ι'],
     // asigmatic: φέρνω/έφερα, κάνω/έκανα, κρίνω/έκρινα, πεθαίνω/πέθανα, στέλνω/έστειλα, αγγέλλω/άγγειλα,
     // δέρνω/έδειρα, σέρνω/έσυρα
-    ['ρ', 'ρν'], ['ν', 'ν'], ['λ', 'λλ'], ['αν', 'αιν'], ['ειλ', 'ελν'], ['ειλ', 'ελλ'], ['ειλ', 'ελ'], ['ειρ', 'ερν'], ['υρ', 'ερν'],
+    // ρ/ρν only in φέρνω and its compounds (έφερα, μετέφερα); γέρνω, δέρνω
+    // and σπέρνω have ει (έγειρα), so γέρω is not γέρνω.
+    ['φερ', 'φερν'], ['σουρ', 'σουρν'], ['ν', 'ν'], ['λ', 'λλ'], ['αν', 'αιν'], ['ειλ', 'ελν'], ['ειλ', 'ελλ'], ['ειλ', 'ελ'], ['ειρ', 'ερν'], ['υρ', 'ερν'],
     // νέμω/ένειμα (διανέμω/διένειμα), learned πνέω/έπνευσα, πλέω/έπλευσα
     ['ειμ', 'εμ'], ['ευσ', 'ε'],
     // irregular stems, which compounds share: φεύγω/έφυγα, μένω/έμεινα, βάζω/έβαλα, -βάλλω/-έβαλα,
@@ -389,7 +391,7 @@ const PERFECTIVE = [
 ];
 // Endings of one or two letters need a stem before them; the irregular stems
 // may stand alone after the augment (έφυγα: έ + φυγ + α) or without it (φύγαμε).
-const IRREGULAR_STEMS = new Set(['φυγ', 'μειν', 'βαλ', 'βγαλ', 'λαβ', 'δωσ', 'θεσ', 'πεσ', 'μαθ', 'παθ', 'τυχ', 'πλυν', 'βηκ', 'φαγ', 'πι']);
+const IRREGULAR_STEMS = new Set(['φερ', 'φυγ', 'μειν', 'βαλ', 'βγαλ', 'λαβ', 'δωσ', 'θεσ', 'πεσ', 'μαθ', 'παθ', 'τυχ', 'πλυν', 'βηκ', 'φαγ', 'πι']);
 for (const [aor, pres, only] of PERFECTIVE) {
     // A stem before a consonant-only perfective ending has two letters or
     // more (γράψω, κόψω), so έξω and άσε are not έχω and άνω.
@@ -425,13 +427,18 @@ for (const [aor, pres, only] of PERFECTIVE) {
 // moves it back. Some verbs take both sets of present endings (συζητάς and
 // συζητείς), so those of -ώ/-είς also give -άω.
 const C2 = ['άω', 'ώ'];
+// The archaic 3rd plural -άν (αγαπάν) is left out: it read the old accusative
+// χαράν as a verb.
 const C2_PRESENT = {
-    '2sg': ['άς', 'είς'], '3sg': ['ά', 'άει', 'εί'], '1pl': ['άμε', 'ούμε'], '2pl': ['άτε', 'είτε'], '3pl': ['άνε', 'ούν', 'ούνε', 'άν'],
+    '2sg': ['άς', 'είς'], '3sg': ['ά', 'άει', 'εί'], '1pl': ['άμε', 'ούμε'], '2pl': ['άτε', 'είτε'], '3pl': ['άνε', 'ούν', 'ούνε'],
 };
 suffix('present-1sg', 'ώ', 'άω', {...VERB});
 suffix('present-1sg', 'άω', 'ώ', {...VERB});
 for (const [p, endings] of Object.entries(C2_PRESENT)) {
-    for (const e of endings) { for (const l of C2) { suffix(`present-${p}`, e, l, {...VERB, chars: '{unaccented}'}); } }
+    // The -ά- endings follow a consonant (κρατ-άς, μιλ-ά): ποιά is ποια, not ποιώ.
+    for (const e of endings) {
+        for (const l of C2) { suffix(`present-${p}`, e, l, {...VERB, chars: '{unaccented}', stemEndsWith: e.startsWith('ά') ? '{consonant}' : undefined}); }
+    }
 }
 const C2_IMPERFECT = {'1sg': ['ούσα'], '2sg': ['ούσες'], '3sg': ['ούσε'], '1pl': ['ούσαμε'], '2pl': ['ούσατε'], '3pl': ['ούσαν', 'ούσανε']};
 for (const [p, endings] of Object.entries(C2_IMPERFECT)) {
@@ -1062,9 +1069,25 @@ shared('diminutive', ['ούλα', 'ούλας', 'ούλες', 'ίτσα', 'ίτ�
 // The lookup normalises ’ and ʼ to '.
 transform('elision', 'elision', 'An elided final vowel written as an apostrophe: απ\' (από), είν\' (είναι), δώσ\' (δώσε), αλλ\' (αλλά), κάτ\' (κάτι).');
 transform('aphaeresis', 'aphaeresis', 'A dropped first vowel written as an apostrophe: \'ρθει (έρθει), \'ναι (είναι), \'χε (είχε), \'θελα (ήθελα).');
+// The function words that are elided most, written out: they come before
+// the general rule below, which tries the vowels in a fixed order and read
+// κ' (και) as the abbreviation κα.
+const ELIDED = [
+    ['κ', 'και'], ['κι', 'και'], ['απ', 'από'], ['αφ', 'από'], ['αλλ', 'αλλά'], ['δ', 'δε'], ['ν', 'να'], ['θ', 'θα'], ['σ', 'σε'],
+    ['τ', 'το'], ['τ', 'τα'], ['μ', 'με'], ['μ', 'μου'], ['γι', 'για'], ['στ', 'στο'], ['στ', 'στα'], ['είν', 'είναι'], ['επ', 'επί'],
+    ['εφ', 'επί'], ['κατ', 'κατά'], ['καθ', 'κατά'], ['μετ', 'μετά'], ['μεθ', 'μετά'], ['παρ', 'παρά'], ['δι', 'διά'], ['υπ', 'υπό'],
+    ['υφ', 'υπό'], ['ίν', 'ίνα'], ['ουδ', 'ουδέ'], ['μηδ', 'μηδέ'], ['ουτ', 'ούτε'], ['μήτ', 'μήτε'], ['γιατ', 'γιατί'], ['ποτ', 'ποτέ'],
+];
+for (const [form, word] of ELIDED) {
+    whole('elision', form + '\'', word);
+}
 for (const v of ['ε', 'α', 'ο', 'ι', 'ά', 'ό', 'έ', 'ί', 'αι', 'ού', 'ου']) {
     suffix('elision', '\'', v, {min: 1});
 }
+// 'ς is εις (σε), and 'σαν is σαν (ωσάν); the general rule below would read
+// them as ας and ήσαν.
+whole('aphaeresis', '\'ς', 'εις');
+whole('aphaeresis', '\'σαν', 'σαν');
 // The dropped vowel: έ (έρθει), εί (είναι), ή (ήθελα), ό (όλα), ά (άλλο),
 // and unaccented ε (εγώ, εκεί, εδώ, εμένα) and α (αυτός).
 for (const v of ['έ', 'ε', 'εί', 'ή', 'α', 'ά', 'ό']) {
@@ -1110,8 +1133,15 @@ function accentRule(pos, kind, letter, change, extra, suffixes = identity(pos)) 
 // The accent step also reads capitals: a name written without its accent
 // (ΑΘΗΝΑ → Αθηνα → Αθήνα).
 const CLEAN = {stemCharacters: '{unaccentedAll}'};
+const CAPITALS = new Set(['Α', 'Ε', 'Η', 'Ι', 'Ο', 'Υ', 'Ω']);
 for (const pos of ['v', 'n', 'adj']) {
     for (const letter of VOWEL_LETTERS) {
+        // A capital vowel takes the accent only in a name stressed on its
+        // first letter, a noun (ΑΝΝΑ → Αννα → Άννα, ΟΛΓΑ → Όλγα).
+        if (CAPITALS.has(letter)) {
+            if (pos === 'n') { accentRule(pos, 'last', letter, {occurrence: 'last', between: '{consonant}', betweenMinLength: 0}, CLEAN); }
+            continue;
+        }
         // last: the last vowel of the stem, followed only by consonants
         // (αγοραζ-ω → αγοράζ-ω, ωρ-α → ώρ-α, ακου-ω → ακού-ω).
         const last = {occurrence: 'last', between: '{consonant}', betweenMinLength: 0};

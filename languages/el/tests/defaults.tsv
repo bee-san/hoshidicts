@@ -8,10 +8,12 @@ capitals	1	ΑΝΘΡΩΠΟΥ	άνθρωπος	n	accent|gen-sg
 capitals	1	ΑΘΗΝΑ	Αθήνα	*	accent
 capitals	1	Έγραψα	γράφω	v	accent|aorist-1sg
 capitals	1	ΑΓΑΠΗΣΑ	αγαπάω	v	aorist-1sg
+capitals	1	ΑΝΝΑ	Άννα	*	accent
 capitals	0	ΗΤΑΝ	τω	*	*
 capitals	0	ΕΞΩ	έχω	*	*
 unaccented	0	ενα	ενώ	*	*
 unaccented	0	για	γιος	*	*
+negatives	0	κυρία	κύρια	*	*
+negatives	0	ποιά	ποιώ	*	*
 unaccented	1	εχω	έχω	v	accent
 unaccented	1	θαλασσα	θάλασσα	n	accent
-negatives	0	κυρία	κύρια	*	*

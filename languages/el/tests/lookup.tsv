@@ -45,3 +45,7 @@ negatives	0	άσε	άνω	άσε
 negatives	0	μέσα	μέσω	μέσα
 negatives	0	ήταν	τω	ήταν
 negatives	0	με λένε	λέω	με λένε
+elision	1	κ' εχθροί	και	κ'
+elision	1	Κ' είδε	και	Κ'
+aphaeresis	1	'ς την πόλη	εις	'ς
+aphaeresis	1	'σαν το σπίτι	σαν	'σαν

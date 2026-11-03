@@ -53,5 +53,10 @@
   ["μέρα", "", "n fem", "n", 0, ["day"], 52, ""],
   ["είδα", "", "non-lemma", "v", 0, [["βλέπω", ["first-person singular past perfective"]]], 53, ""],
   ["ήταν", "", "non-lemma", "v", 0, [["είμαι", ["third-person imperfect"]]], 54, ""],
-  ["έγραψα", "", "non-lemma", "v", 0, [["γράφω", ["first-person singular past perfective"]]], 55, ""]
+  ["έγραψα", "", "non-lemma", "v", 0, [["γράφω", ["first-person singular past perfective"]]], 55, ""],
+  ["κα", "", "abbv", "", 0, ["Mrs, Ms (abbreviation of κυρία)"], 56, ""],
+  ["ας", "", "ptcl", "", 0, ["let (hortative particle)"], 57, ""],
+  ["ήσαν", "", "v", "v", 0, ["they were (older form)"], 58, ""],
+  ["εις", "", "prep", "", 0, ["in, to (older form)"], 59, ""],
+  ["σαν", "", "conj prep", "", 0, ["like, as"], 60, ""]
 ]

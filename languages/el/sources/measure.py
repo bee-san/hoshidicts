@@ -5,6 +5,7 @@
 #   python3 languages/el/sources/measure.py frequent <el_50k.txt> <wty-el-en JSON banks dir> <lookups.jsonl>
 #   python3 languages/el/sources/measure.py hovers <text file> [--sentences tsv] > hovers.txt
 #   python3 languages/el/sources/measure.py judge <wty-el-en JSON banks dir> <hovers.txt> <lookups.jsonl> [--sample N]
+#   python3 languages/el/sources/measure.py phrases <wty-el-en JSON banks dir> <hovers.txt> <lookups.jsonl>
 #
 # lookups.jsonl is the output of languages/en/sources/lookup-batch.cpp (built
 # against this checkout) on the words or hover texts, one line each:
@@ -17,6 +18,11 @@
 # tokens, and the wrong words by frequency.
 # hovers: every Greek word of a text, as a host hovers it: the text from the
 # word to the end of its sentence (one per line).
+# phrases: the hover positions at a clitic, pronoun, article, particle or
+# auxiliary (FUNCTION below) and at the word after one: at the function word,
+# whether the first result reads past it (a phrase of the dictionary, or a
+# wrong reading of the two words); after it, the judge's verdict on the word,
+# by the function word before it.
 # judge: the first result with a definition at each hover position, judged by
 # script where the hovered word's form-of rows name its lemmas; the rest are
 # counted as unjudged and a random sample of them is printed for review.
@@ -24,7 +30,9 @@
 import bz2, collections, glob, json, random, re, sys, unicodedata
 
 GREEK = r"[\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03CE\u1F00-\u1FFF]"
-WORD = re.compile(GREEK + r"(?:" + GREEK + r"|['’]" + GREEK + r")*['’]?")
+# A word as a host's word scan finds it: letters and the apostrophes in and
+# around them (text.wordCharacters), so 'ρθει and απ' are words.
+WORD = re.compile(r"['’]?" + GREEK + r"(?:" + GREEK + r"|['’]" + GREEK + r")*['’]?")
 TERMINATORS = re.compile(r"[.!;;…\n]")
 
 
@@ -140,7 +148,7 @@ def judge(banks, hover_file, lookups, sample=60):
     wrong_examples = collections.defaultdict(list)
     unjudged = []
     for text, answer in zip(hover_lines, results):
-        word = WORD.match(text).group(0).rstrip("'’")
+        word = WORD.match(text).group(0)
         first = first_defined(answer['results'])
         if first is None:
             counts['nothing'] += 1
@@ -171,12 +179,69 @@ def judge(banks, hover_file, lookups, sample=60):
         print('\t'.join(item))
 
 
+FUNCTION = ('θα να ας δεν μην μη ο η το οι τα τον την τη του της των τους τις ένας μια μία ένα ενός μιας '
+            'μου σου μας σας τον τη την το τους τις τα του της με σε στο στη στην στον στα στους στις '
+            'έχω έχεις έχει έχουμε έχετε έχουν είχα είχες είχε είχαμε είχατε είχαν').split()
+
+
+def phrases(banks, hover_file, lookups):
+    defined, refs = load_dictionary(banks)
+    hover_lines = [line.rstrip('\n') for line in open(hover_file, encoding='utf-8')]
+    results = [json.loads(line) for line in open(lookups, encoding='utf-8')]
+    at = collections.Counter()
+    longer = collections.Counter()
+    after = collections.defaultdict(collections.Counter)
+    wrong_after = collections.Counter()
+    for i, (text, answer) in enumerate(zip(hover_lines, results)):
+        words = text.split(' ')
+        first = first_defined(answer['results'])
+        w0 = words[0].lower().rstrip("'’,.")
+        if w0 in FUNCTION:
+            at[w0] += 1
+            if first and len(first['matched']) > len(words[0]):
+                longer[(w0, first['matched'], first['expression'], '/'.join(first['trace']))] += 1
+        prev = hover_lines[i - 1] if i > 0 else ''
+        if prev.endswith(text) and prev != text:
+            p0 = prev.split(' ')[0].lower()
+            if p0 in FUNCTION:
+                word = WORD.match(text).group(0).rstrip("'’")
+                lemmas = right_lemmas(word, refs, defined) | right_lemmas(word.lower(), refs, defined)
+                if first is None:
+                    verdict = 'nothing'
+                elif not lemmas:
+                    verdict = 'unjudged'
+                elif first['matched'].lower() != word.lower():
+                    verdict = 'longer match'
+                elif first['expression'] in lemmas or first['expression'].lower() in {l.lower() for l in lemmas}:
+                    verdict = 'right'
+                else:
+                    verdict = 'wrong'
+                    wrong_after[(p0, word.lower(), first['expression'], '/'.join(first['trace']))] += 1
+                after[p0][verdict] += 1
+    total_after = collections.Counter()
+    for c in after.values():
+        total_after.update(c)
+    print(json.dumps({'atFunctionWord': sum(at.values()), 'readPastIt': sum(longer.values()), 'afterFunctionWord': dict(total_after)}, ensure_ascii=False))
+    print('--- read past the function word (count, word, matched, first, trace)')
+    for (w, m, e, t), n in longer.most_common(30):
+        print(f'{n}\t{w}\t{m}\t{e}\t{t}')
+    print('--- after each function word: right / wrong / unjudged / nothing / longer match')
+    for w in sorted(after, key=lambda w: -sum(after[w].values()))[:40]:
+        c = after[w]
+        print(f"{w}\t{c['right']}\t{c['wrong']}\t{c['unjudged']}\t{c['nothing']}\t{c['longer match']}")
+    print('--- wrong after a function word')
+    for (p0, w, e, t), n in wrong_after.most_common(30):
+        print(f'{n}\t{p0} {w}\t{e}\t{t}')
+
+
 if __name__ == '__main__':
     cmd = sys.argv[1]
     if cmd == 'frequent':
         frequent(*sys.argv[2:5])
     elif cmd == 'hovers':
         hovers(sys.argv[2], '--sentences' in sys.argv)
+    elif cmd == 'phrases':
+        phrases(sys.argv[2], sys.argv[3], sys.argv[4])
     elif cmd == 'judge':
         n = int(sys.argv[sys.argv.index('--sample') + 1]) if '--sample' in sys.argv else 60
         judge(sys.argv[2], sys.argv[3], sys.argv[4], n)
