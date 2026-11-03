@@ -446,6 +446,8 @@ for (const [lemma, forms] of [
     ['чёрт', {'nom.pl': 'черти', 'gen.pl': 'чертей', 'dat.pl': 'чертям', 'ins.pl': 'чертями', 'prp.pl': 'чертях'}],
     ['цветок', {'nom.pl': 'цветы', 'gen.pl': 'цветов', 'dat.pl': 'цветам', 'ins.pl': 'цветами', 'prp.pl': 'цветах'}],
     ['путь', {'ins.sg': 'путём'}],
+    ['семя', {'nom.pl': 'семена', 'gen.pl': 'семян', 'dat.pl': 'семенам', 'ins.pl': 'семенами', 'prp.pl': 'семенах'}],
+    ['очки', {'gen.pl': 'очков', 'dat.pl': 'очкам', 'ins.pl': 'очками', 'prp.pl': 'очках'}],
     // деньги's forms, which the -а declension also reads as the rare деньга.
     ['деньги', {'gen.pl': 'денег', 'dat.pl': 'деньгам', 'ins.pl': 'деньгами', 'prp.pl': 'деньгах'}],
     ['господь', {'dat.sg': 'господу', 'ins.sg': 'господом', 'prp.sg': 'господе'}],
@@ -747,7 +749,9 @@ presentClass({pres: 'ш', inf: 'сать', endings: E1C, imp: ['и'], min: 2, ex
 presentClass({pres: 'ш', inf: 'хать', endings: E1C, imp: ['и'], min: 2, example: {inf: 'махать', 'pres.1sg': 'машу'}});
 presentClass({pres: 'ж', inf: 'зать', endings: E1C, imp: ['и', 'ь'], min: 2, example: {inf: 'сказать', 'pres.1sg': 'скажу', 'pres.3sg': 'скажет', 'imp.2sg': 'скажи'}});
 presentClass({pres: 'ч', inf: 'кать', endings: E1C, imp: ['ь'], ger: 'а', min: 2, example: {inf: 'плакать', 'pres.1sg': 'плачу', 'imp.2sg': 'плачь', 'ger.pres': 'плача'}});
-presentClass({pres: 'ч', inf: 'тать', endings: E1C, imp: ['ь'], ger: 'а', min: 2, example: {inf: 'прятать', 'pres.1sg': 'прячу'}});
+// Not after с: the -стать verbs keep their т (перестанешь, стану), so a text such
+// as пересчете is not перес- + -тать (it is пересчёт's prepositional).
+presentClass({pres: 'ч', inf: 'тать', endings: E1C, imp: ['ь'], ger: 'а', min: 2, stemNotEnd: '[с]', example: {inf: 'прятать', 'pres.1sg': 'прячу'}});
 presentClass({pres: 'щ', inf: 'скать', endings: E1C, imp: ['и'], min: 1, example: {inf: 'искать', 'pres.1sg': 'ищу', 'imp.2sg': 'ищи'}});
 presentClass({pres: 'щ', inf: 'тать', endings: E1C, imp: ['и'], min: 2, example: {inf: 'клеветать', 'pres.1sg': 'клевещу'}});
 for (const [cons, inf, ex] of [['пл', 'пать', 'сыплю'], ['бл', 'бать', 'колеблю'], ['мл', 'мать', 'дремлю']]) {
@@ -1014,6 +1018,24 @@ for (const [ending, form] of [['ы', 'nom.pl'], ['', 'gen.pl'], ['ам', 'dat.pl
     suffix('noun', [form], `ар${ending}`, 'арин', [], NOUN, {stemMinLength: 3, stemEndsWith: '[тгб]'}, form === 'nom.pl' ? ['татары', 'татарин'] : null);
 }
 
+// Verbs whose present stem has two letters (гну, мну, чую, кляну), with their
+// prefixed verbs; and шептать's imperative шепчи.
+for (const [stem, inf, ex] of [['гн', 'гнуть', ['гнёт', 'гнуть']], ['мн', 'мять', ['мнёт', 'мять']], ['клян', 'клясть', ['клянётся', 'клясться']]]) {
+    for (const [form, ending] of Object.entries({'pres.1sg': 'у', 'pres.2sg': 'ёшь', 'pres.3sg': 'ёт', 'pres.1pl': 'ём', 'pres.2pl': 'ёте', 'pres.3pl': 'ут'})) {
+        verb([form], stem + ending, inf, {stemMinLength: 0}, form === 'pres.3sg' ? ex : null);
+    }
+    // Not мять's imperative: помни, помните are помнить's.
+    if (inf !== 'мять') {
+        verb(['imp.2sg'], `${stem}и`, inf, {stemMinLength: 0}, null);
+        verb(['imp.2pl'], `${stem}ите`, inf, {stemMinLength: 0}, null);
+    }
+}
+for (const [form, ending] of Object.entries({'pres.1sg': 'ую', 'pres.2sg': 'уешь', 'pres.3sg': 'ует', 'pres.1pl': 'уем', 'pres.2pl': 'уете', 'pres.3pl': 'уют', 'imp.2sg': 'уй', 'imp.2pl': 'уйте', 'ptcp.pres.act': 'ующий', 'ger.pres': 'уя'})) {
+    verb([form], `ч${ending}`, 'чуять', {stemMinLength: 0}, form === 'pres.3sg' ? ['чует', 'чуять'] : null);
+}
+verb(['imp.2sg'], 'шепчи', 'шептать', {stemMinLength: 0}, ['шепчи', 'шептать']);
+verb(['imp.2pl'], 'шепчите', 'шептать', {stemMinLength: 0}, null);
+
 // -стичь, the other infinitive of -стигнуть (достичь, постичь, настичь, застичь):
 // достигну, достиг, достигла, достигнув.
 for (const [form, ending] of Object.entries({'pres.1sg': 'стигну', 'pres.2sg': 'стигнешь', 'pres.3sg': 'стигнет', 'pres.1pl': 'стигнем', 'pres.2pl': 'стигнете', 'pres.3pl': 'стигнут',
@@ -1073,7 +1095,7 @@ closed('num', NUM, 'один', DET('одного', 'одному', 'одним',
 closed('num', NUM, 'два', {двух: ['gen.pl', 'prp.pl', 'acc.pl'], двум: ['dat.pl'], двумя: ['ins.pl'], две: ['nom.f', 'acc.f']});
 closed('num', NUM, 'три', {трёх: ['gen.pl', 'prp.pl', 'acc.pl'], трём: ['dat.pl'], тремя: ['ins.pl']});
 closed('num', NUM, 'четыре', {четырёх: ['gen.pl', 'prp.pl', 'acc.pl'], четырём: ['dat.pl'], четырьмя: ['ins.pl']});
-closed('num', NUM, 'оба', {обоих: ['gen.pl', 'prp.pl', 'acc.pl'], обоим: ['dat.pl'], обоими: ['ins.pl']});
+closed('num', NUM, 'оба', {обоих: ['gen.pl', 'prp.pl', 'acc.pl'], обоим: ['dat.pl'], обоими: ['ins.pl'], обе: ['nom.f', 'acc.f']});
 closed('num', NUM, 'обе', {обеих: ['gen.pl', 'prp.pl', 'acc.pl'], обеим: ['dat.pl'], обеими: ['ins.pl']});
 for (const n of ['пять', 'шесть', 'семь', 'восемь', 'девять', 'десять', 'одиннадцать', 'двенадцать', 'тринадцать', 'четырнадцать', 'пятнадцать', 'шестнадцать', 'семнадцать', 'восемнадцать', 'девятнадцать', 'двадцать', 'тридцать']) {
     const stem = n === 'восемь' ? 'восьм' : n.slice(0, -1);

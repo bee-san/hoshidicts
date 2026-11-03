@@ -52,5 +52,11 @@
   ["Мила", "Ми́ла", "name animate fem", "", 0, ["a female given name"], 51, ""],
   ["Милой", "Ми́лой", "non-lemma", "", 0, [["Мила", ["instrumental singular"]]], 52, ""],
   ["тёмный", "тёмный", "adj", "", 0, ["dark"], 53, ""],
-  ["темно", "темно́", "adv", "", 0, ["darkly; it is dark"], 54, ""]
+  ["темно", "темно́", "adv", "", 0, ["darkly; it is dark"], 54, ""],
+  ["езда", "езда́", "n inanim fem", "", 0, ["riding, driving"], 55, ""],
+  ["поезд", "по́езд", "n inanim masc", "", 0, ["train"], 56, ""],
+  ["абсолютно", "абсолю́тно", "adv", "", 0, ["absolutely"], 57, ""],
+  ["абсолютный", "абсолю́тный", "adj", "", 0, ["absolute"], 58, ""],
+  ["столовая", "столо́вая", "n inanim fem", "", 0, ["dining room, canteen"], 59, ""],
+  ["шире", "ши́ре", "adv", "", 0, ["wider (comparative)"], 60, ""]
 ]

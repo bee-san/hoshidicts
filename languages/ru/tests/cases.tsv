@@ -649,3 +649,35 @@ guard	0	ька	ёк	*	*
 guard	0	о съешь	о съесть	*	*
 guard	0	по-тому	тый	*	*
 guard	0	по-а новому	а новый	*	*
+guard	0	тел	тло	*	*
+guard	0	Лет	Лета	*	*
+guard	0	сам	с	n	*
+guard	0	мер	мереть	*	*
+past	1	дал	дать	v	*
+past	1	пил	пить	v	*
+past	1	жил	жить	v	*
+past	1	мыл	мыть	v	*
+consonant-change	1	вожу	возить	v	*
+guard	0	спал	спасть	*	*
+guard	0	минут	минуть	*	verb-pres.3pl
+guard	0	кучу	кутить	*	*
+guard	0	почту	почесть	*	*
+guard	0	танцует	танцовать	*	*
+guard	0	коробку	коробок	*	*
+past	1	спала	спать	v	*
+present	1	мигнут	мигнуть	v	*
+present	1	прочту	прочесть	v	*
+trace	1	новом	новый	adj	adj-prp.m+prp.n
+trace	1	меня	я	pron	pron-gen.sg+acc.sg
+trace	1	пяти	пять	num	num-gen.pl+dat.pl+prp.pl
+guard	0	пересчете	перестать	*	*
+trace	1	обе	оба	num	num-nom.f+acc.f
+present	1	гнёт	гнуть	v	*
+present	1	мнёт	мять	v	*
+present	1	чует	чуять	v	*
+imperative	1	шепчи	шептать	v	*
+irregular-noun	1	семян	семя	n	*
+plural-only	1	очков	очки	n	*
+present	1	клянусь	клясться	v	*
+present	1	поклянётся	поклясться	v	*
+guard	0	помни	помять	*	*
