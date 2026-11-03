@@ -116,16 +116,16 @@
     "sample": {
       "warmup": "ܟܬ݂ܵܒ݂ܵܐ",
       "practice": {
-        "text": "ܟܲܠܒܵܐ ܢܒ݂ܝܼܚ ܠܹܗ ܟܠ ܠܲܝܠܹܐ.",
-        "lookup": "ܢܒ݂ܝܼܚ"
+        "text": "ܟܲܠܒܹܗ ܕܡܲܠܟܵܐ ܐ݇ܙܝܼܠ ܠܹܗ ܠܛܘܼܪܵܐ.",
+        "lookup": "ܐ݇ܙܝܼܠ"
       },
       "entry": {
-        "expression": "ܢܒܚ",
-        "reading": "ܢܒܚ",
-        "glossary": ["to bark, yelp"],
+        "expression": "ܐܙܠ",
+        "reading": "ܐܙܠ",
+        "glossary": ["to go"],
         "definitionTags": "v",
-        "matched": "ܢܒ݂ܝܼܚ ܠܹܗ",
-        "trace": ["third-person singular masculine past"]
+        "matched": "ܐ݇ܙܝܼܠ ܠܹܗ",
+        "trace": ["past (he, she)"]
       },
       "character": null
     }

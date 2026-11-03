@@ -384,7 +384,7 @@ The pack's own rules are also the union and the final set.
    defaults, cases.tsv 364/364, text.tsv 22/22, lookup.tsv 35/35, gaps.tsv
    0/35 (reported); 415 of the 1,632 rules are exercised by a passing row.
    `tools/check-yomitan.mjs aii`: no `sources/yomitan.json`, rules not
-   compared; `removeSyriacScriptDiacritics` agrees with Yomitan's on 2,142
+   compared; `removeSyriacScriptDiacritics` agrees with Yomitan's on 2,140
    inputs, 0 differences. `tools/check-classes.mjs aii` matches.
 
 Commands (from the repository root, `C` the directory with the downloads
