@@ -3402,7 +3402,8 @@
         {"type": "prefix", "inflected": "i ", "deinflected": "", "conditionsIn": ["adj_cmp"], "conditionsOut": ["adj", "adj_m"]},
         {"type": "prefix", "inflected": "e ", "deinflected": "", "conditionsIn": ["adj_cmp"], "conditionsOut": ["adj", "adj_f"]},
         {"type": "prefix", "inflected": "të ", "deinflected": "", "conditionsIn": ["adj_cmp"], "conditionsOut": ["adj", "adj_pl"]},
-        {"type": "prefix", "inflected": "së ", "deinflected": "", "conditionsIn": ["adj_cmp"], "conditionsOut": ["adj", "adj_f", "adj_fobl"]}
+        {"type": "prefix", "inflected": "së ", "deinflected": "", "conditionsIn": ["adj_cmp"], "conditionsOut": ["adj", "adj_f", "adj_fobl"]},
+        {"type": "wholeWord", "inflected": "të re", "deinflected": "ri", "conditionsIn": ["adj_cmp"], "conditionsOut": ["adj"]}
       ]
     },
     {

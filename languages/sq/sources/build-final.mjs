@@ -59,7 +59,8 @@ function same(a, b) {
 }
 
 // Own rules written after Yomitan's file was read (their transform, ending
-// and replacement are not in the first own-rules commit, ffdf983): they are
+// and replacement are not in the first own-rules commit, `sq: own rules`,
+// ec81a3f on lang/sq rebased onto main 7c854db; ffdf983 before): they are
 // not `both`, whatever Yomitan has (section 7.1: `both` is written
 // independently and also in Yomitan).
 const MASCULINE_E = ['djal', 'kal', 'lum', 'uj', 'gjum', 'burr', 'brum', 'djath', 'gjalp', 'drith', 'dhjam', 'mjalt', 'grur', 'dyll', 'ball', 'vrer', 'lëm', 'at', 'qir', 'bab', 'mam'];

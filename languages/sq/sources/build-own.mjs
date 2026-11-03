@@ -426,6 +426,10 @@ prefix('art', 'i ', '', ['adj_cmp'], ['adj', 'adj_m'], {stemMinLength: 1});
 prefix('art', 'e ', '', ['adj_cmp'], ['adj', 'adj_f'], {stemMinLength: 1});
 prefix('art', 'të ', '', ['adj_cmp'], ['adj', 'adj_pl'], {stemMinLength: 1});
 prefix('art', 'së ', '', ['adj_cmp'], ['adj', 'adj_f', 'adj_fobl'], {stemMinLength: 1});
+// të re (new, feminine after a noun: një punë të re) before the subjunctive
+// of re, which wty-sq-en lists as a form of bie (to fall); the article and the
+// feminine ending would take two steps against the subjunctive's one.
+whole('art', 'të re', 'ri', ['adj_cmp'], ['adj']);
 
 const A = ['adj'];
 transform('adj-f', 'feminine', 'Feminine singular, also the feminine plural of adjectives without an article (madh → madhe, keq → keqe, ndryshëm → ndryshme, shqiptar → shqiptare, zi → zezë).');
