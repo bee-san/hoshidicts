@@ -315,10 +315,10 @@ defaults (`corpus.tsv` + `gaps.tsv` and `cases.tsv` were also run with a
      The pack has no `pattern` rule.
 6. **Other checks.**
    - Differential check (`tools/check-yomitan.mjs <yomitan d3c54c1> uk --cli
-     build/hoshidicts-cli`): rules 12,250 inputs, 86,800 Yomitan results, 0
+     build/hoshidicts-cli`): rules 12,252 inputs, 86,815 Yomitan results, 0
      differences; processors `decapitalize`, `capitalizeFirstLetter`,
-     `removeUkrainianDiacritics` and `ukrainianApostropheVariants` on 1,705 to
-     1,729 inputs each, 7 differences, all from the one row of
+     `removeUkrainianDiacritics` and `ukrainianApostropheVariants` on 1,706 to
+     1,730 inputs each, 7 differences, all from the one row of
      `sources/yomitan-differences.tsv`: the pack's `removeUkrainianDiacritics`
      also removes the grave accent (мо̀ва), which Yomitan's keeps.
    - Conformance (`language-conformance-test languages/uk`): corpus.tsv
