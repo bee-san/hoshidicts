@@ -4,9 +4,9 @@ Polytonic Ancient Greek: Attic prose, tragedy, Herodotus' Ionic and Homer's
 and Hesiod's Epic. A lookup takes the word as an edition prints it (accents,
 breathings, iota subscripts, grave for acute, an enclitic's second accent,
 elision, crasis) and reaches the headword of the recommended dictionary,
-wiktionary-to-yomitan's wty-grc-en. Text without diacritics is read through
-Yomitan's rules and the dictionary's form-of rows, which wty-grc-en keys
-without diacritics.
+wiktionary-to-yomitan's wty-grc-en. Text without diacritics is read by the
+rules whose endings carry none and by the dictionary's form-of rows, which
+wty-grc-en keys without diacritics.
 
 ## Sources and licences
 
@@ -117,7 +117,7 @@ without diacritics.
 ### Own rules
 
 - **Text first.** `normalizeUnicode` (NFC), `normalizeLetterForms` (lunate
-  sigma and letter symbols; σ at the end of a word → ς), `normalizeApostrophes`
+  sigma and letter symbols; a final σ → ς), `normalizeApostrophes`
   (U+2019 and ASCII, both kept as variants), `graveToAcute`, then the
   variants `decapitalize`, `capitalizeFirstLetter` (optional, setting
   `capitalizedNames`), `removeAccents` (acute, grave, circumflex, macron,
@@ -138,7 +138,7 @@ without diacritics.
   that the stem transforms (`augment`, `reduplication`, `aorist`, `future`,
   `perfect`, `aorist-passive`) take off, with preverbs; the principal parts of
   about 120 irregular verbs; εἰμί, εἶμι, φημί, οἶδα, κεῖμαι, δύναμαι,
-  δίδωμι, τίθημι, ἵστημι, ἵημι, δείκνυμι and their compounds in full.
+  δίδωμι, τίθημι, ἵστημι, ἵημι, δείκνυμι and their compounds form by form.
 - **Nouns and adjectives**: case endings of the three declensions with Epic
   and Ionic forms, the feminine and neuter of adjectives, comparison, adverbs
   in -ως, and the irregular nouns.
@@ -159,7 +159,7 @@ without diacritics.
 
 ### History
 
-The first commit, `grc: own rules` (463f3e5), has 237 transforms and 21,309
+The first commit, `grc: own rules` (661cc35), has 237 transforms and 21,309
 rules, each its own row (5.0 MB). Then, measured on the corpus sample, real
 text and the benchmark:
 
@@ -254,9 +254,9 @@ a form of εἰμί:
 | εἰμί | 1,099 | 845 | 17 | 79 | 97 (8.8%) | 61 |
 
 A lookup starts at the hovered word, so the word before it changes nothing;
-the word after it can, through a phrase headword (`οὐχ ἥκιστα`), and the
-rules never end a deinflection inside a phrase (`λόγος γε`, `λόγος δέῃ`
-and `λόγος ’` are negatives of `cases.tsv`).
+the word after it can, through a phrase headword (`οὐχ ἥκιστα`). The
+clitic, elision and whole-word rules do not fire after a space (`λόγος γε`,
+`λόγος δέῃ` and `λόγος ’` are negatives of `cases.tsv`).
 
 ### 4. Real text
 
@@ -330,7 +330,7 @@ node languages/grc/sources/case-maps.mjs
 node languages/grc/sources/build-final.mjs
 node tools/merge-transforms.mjs grc --out union.json
 # corpus (inputs of Sources and licences)
-python3 languages/grc/sources/build-corpus.py unimorph-grc agdt/ wty-grc-en/ > sample.tsv
+python3 languages/grc/sources/build-corpus.py unimorph-grc agdt/ <unzipped wty-grc-en> > sample.tsv
 python3 languages/grc/sources/split-corpus.py sample.tsv build/hoshidicts-cli
 # rule sets, per rule
 build/hoshidicts-cli eval-language grc <file> --transforms <set> --dictionary $D [--per-rule]
@@ -358,7 +358,7 @@ python3 languages/grc/sources/mutate.py <scratch dir>
   classes, 104 fields, no step); `yomitan.tsv` 59/59, `corpus.tsv` 900/900,
   `cases.tsv` 463/463, `defaults.tsv` 5/5 with the defaults, `gaps.tsv`
   0/100; every own and both transform has a passing row (1,843 of the 14,238
-  rules are exercised). The full `ctest` passes, 40 of 40.
+  rules are exercised). The full `ctest` passes, 42 of 42.
 - **Differential check** (`tools/check-yomitan.mjs`): rules 2,596 inputs,
   5,855 Yomitan results, 0 differences; processors `decapitalize` (4,900
   inputs), `capitalizeFirstLetter` (5,295), `removeAlphabeticDiacritics`
