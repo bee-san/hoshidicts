@@ -66,7 +66,10 @@ function cross(prefixes, suffixes, {min = 2, out = V_OUT, into = V_IN, extra = {
 }
 // The hollow-verb stem change: the last و or ي before the final consonant
 // becomes ا (يقول -> قال, يستطيع -> استطاع).
-const HOLLOW = {from: ['و', 'ي'], to: 'ا', occurrence: 'last', between: STEM, betweenMinLength: 1};
+// The hollow-verb change: the و or ي right before the last consonant becomes
+// ا (يقول -> قال, يستطيع -> استطاع), written out per consonant so that only
+// that letter changes (بيوت is not read as ب + يوت -> اتى).
+const hollow = (ending, deinflected = '') => RADICALS.flatMap((c) => [['و' + c + ending, 'ا' + c + deinflected], ['ي' + c + ending, 'ا' + c + deinflected]]);
 
 const transforms = [];
 function transform(id, name, description, rules, more = {}) {
@@ -138,7 +141,9 @@ for (const [id, name, p, gloss, example] of PRONOUNS) {
         suffix('ا' + p, 'ى', {extra: NOT_AL}),
     ];
     if (p !== 'ني') {
-        rules.push(suffix('ت' + p, 'ة', {extra: NOT_AL}));
+        // A noun: the feminine rule does not read مدرسته as مدرس, nor رأيته
+        // ("I saw him") as رأي.
+        rules.push(suffix('ت' + p, 'ة', {out: ['n'], extra: NOT_AL}));
     }
     if (p !== 'ي') {
         // Verbs: only an object pronoun.
@@ -159,8 +164,11 @@ for (const [id, name, p, gloss, example] of PRONOUNS) {
 }
 
 // --------------------------------------------------------- nouns and adjectives
-transform('feminine', 'feminine (ـة)', 'The feminine ending ـة of an adjective or a noun for a person: كبيرة is كبير + ـة, عربية is عربي + ـة.', [
-    suffix('ة', '', {into: N_IN}),
+transform('feminine', 'feminine (ـة)', 'The feminine ending ـة of an adjective or a noun for a person: كبيرة is كبير + ـة, عربية is عربي + ـة, الكبيرة is الكبير + ـة.', [
+    // Only on the word as written and after the proclitics, dual and plural
+    // endings: a noun before a pronoun (مدرسته) keeps its ة.
+    suffix('ة', ''),
+    {type: 'circumfix', inflectedPrefix: 'ال', deinflectedPrefix: 'ال', inflectedSuffix: 'ة', deinflectedSuffix: '', conditionsIn: [], conditionsOut: [], stemMinLength: 2, stemCharacters: STEM},
 ]);
 transform('accusative', 'accusative (ـًا)', 'The indefinite accusative ending ـًا, written with an alif: كتابًا (كتابا), شكرًا, شيئًا (شيئا, from شيء). Words that end in ة, ى or ا take no alif.', [
     suffix('ا', '', {extra: {...NOT_AL, stemNotEndsWith: '[اةى]'}}),
@@ -325,11 +333,13 @@ const PRESENT = {
 
 // The endings of each person, and the dictionary-form ending each gives for
 // the kinds of root (sound, ا, ى, ي, hamza, جاء).
+function hollowEndings(ending) { return hollow(ending); }
 function presentRules(prefixes, ending, {defective = [], hamza = [], hollow = true, short = false} = {}) {
     const rules = [cross(prefixes, [[ending, '']])];
     if (defective.length > 0) { rules.push(cross(prefixes, defective)); }
     if (hamza.length > 0) { rules.push(cross(prefixes, hamza, {min: 1})); }
-    if (hollow) { rules.push(cross(prefixes, [[ending, '']], {extra: {stemChange: HOLLOW}})); }
+    // Hollow verbs are form I, IV (أقام), VII (انقاد), VIII (اختار) or X (استطاع).
+    if (hollow) { rules.push(cross(prefixes.filter(([, d]) => d === '' || d === 'أ' || d === 'ا'), hollowEndings(ending), {min: 1})); }
     if (short) {
         // Hollow verbs without their long vowel (يقل, يقلن) and doubled verbs
         // with both consonants (يمدد, يمددن).
@@ -430,16 +440,20 @@ transform('subjunctiveYouF', 'subjunctive (you f.)', 'The subjunctive and jussiv
 // قلن) and keep it before the others (قولي); verbs like وصل drop their و
 // (صل, قف, ضع).
 const FORM_I = [['ا', '']];
-const ASSIMILATED = [['', 'و']];
+// Verbs like وصل drop their و in the imperative: صل, صلي, صلوا. A rule that
+// adds و to any two letters would read most short words as such verbs, so the
+// common ones are listed (stem of no letters).
+const ASSIMILATED = ['قف', 'ضع', 'دع', 'صل', 'جد', 'عد', 'زن', 'هب', 'صف', 'رث', 'ثق', 'لد', 'قع', 'سع', 'فد', 'سم', 'طأ', 'زع', 'رد', 'صم']
+    .map((stem) => [stem, 'و' + stem]);
 function imperativeRules(ending, {defective = [], others = [], hollowShort = false, assimilated = true} = {}) {
     const rules = [cross(FORM_I, [[ending, '']], {min: 3})];
     if (defective.length > 0) { rules.push(cross(FORM_I, defective)); }
-    if (assimilated) { rules.push(cross(ASSIMILATED, [[ending, '']], {min: 2})); }
+    if (assimilated) { rules.push(cross(ASSIMILATED, [[ending, '']], {min: 0, extra: {stemCharacters: '[]'}})); }
     if (hollowShort) {
         for (const c of RADICALS) { rules.push(suffix(c + ending, 'ا' + c, {min: 1, into: V_IN, out: V_OUT})); }
         rules.push(cross(FORM_I, RADICALS.map((c) => [c + c + ending, c]), {min: 1}));
     } else {
-        rules.push(suffix(ending, '', {into: V_IN, out: V_OUT, extra: {stemChange: HOLLOW}}));
+        for (const [i, d] of hollow(ending)) { rules.push(suffix(i, d, {min: 1, into: V_IN, out: V_OUT})); }
     }
     for (const [i, d, m = 3] of others) { rules.push(suffix(i, d, {min: m, into: V_IN, out: V_OUT})); }
     return rules;
@@ -471,7 +485,7 @@ transform('imperativeYouFPl', 'imperative (you f. pl.)', 'The imperative "do!" t
     const rules = [];
     // Forms II-X: م replaces the person prefix (مستخدم, يستخدم -> استخدم).
     rules.push(prefix('م', '', {min: 3, into: N_IN, out: V_OUT}), prefix('م', 'أ', {min: 3, into: N_IN, out: V_OUT}), prefix('م', 'ا', {min: 3, into: N_IN, out: V_OUT}));
-    rules.push(cross([['م', 'أ'], ['م', 'ا']], [['', '']], {into: N_IN, extra: {stemChange: HOLLOW}}));
+    rules.push(cross([['م', 'أ'], ['م', 'ا']], hollow(''), {min: 1, into: N_IN}));
     rules.push(cross([['م', ''], ['م', 'أ'], ['م', 'ا']], [['', 'ى'], ['ي', 'ى']], {into: N_IN}));
     // Form I active فاعل: كاتب -> كتب, قائل -> قال, داع -> دعا, رام -> رمى.
     rules.push(cross(RADICALS.map((c) => [c + 'ا', c]), [['', ''], ['ي', 'ى'], ['ي', 'ا']], {into: N_IN}));
