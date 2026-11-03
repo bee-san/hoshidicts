@@ -425,12 +425,10 @@ suffix('present-du', 'elst', 'eln', FINITE_IN, VERB_OUT, MIN2);
 suffix('present-du', 'erst', 'ern', FINITE_IN, VERB_OUT, MIN2);
 suffix('present-er', 't', 'en', FINITE_IN, VERB_OUT, MIN2);
 suffix('present-er', 'et', 'en', FINITE_IN, VERB_OUT, DTMN);
-// The present of a verb whose stem ends in t (ich koste, du kostest, er
-// kostet) is spelled like the past of a verb without the t (kosen: ich koste,
-// du kostest, ihr kostet). These
+// The present of a verb whose stem ends in t (du kostest, er kostet) is spelled
+// like the past of a verb without the t (kosen: du kostest, ihr kostet). These
 // rules match those letters too, so the present, whose transforms come first,
 // is found first.
-suffix('present-ich', 'te', 'ten', FINITE_IN, VERB_OUT, MIN2);  // koste, not kosen + -te
 suffix('present-du', 'test', 'ten', FINITE_IN, VERB_OUT, MIN2);
 suffix('present-er', 'tet', 'ten', FINITE_IN, VERB_OUT, MIN2);
 suffix('present-er', 'elt', 'eln', FINITE_IN, VERB_OUT, MIN2);
@@ -484,6 +482,10 @@ suffix('past-participle', 'iet', 'ien', ['adj'], VERB_OUT, {stemStartsWith: LOWE
 for (const verb of ['bereiten', 'heißen', 'lassen', 'leiden', 'lieben', 'schicken', 'wetten']) {
     form('present-ich', verb.slice(0, -1), verb, FINITE_IN, VERB_OUT);
 }
+// koste is kosten (koste, was es wolle), not the past of the rare kosen. A
+// general -te → -ten rule for such stems would also read laute, fette and
+// weite as lauten, fetten and weiten.
+form('present-ich', 'koste', 'kosten', FINITE_IN, VERB_OUT);
 // Participles that are spelled like the present of a verb that starts with
 // ge- or a particle and ge- (gewartet: warten, or the archaic gewarten), and
 // are far more often the participle: listed, so they are found before the

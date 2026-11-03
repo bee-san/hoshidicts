@@ -732,24 +732,7 @@
       [223, 246],
       [248, 255]
     ],
-    "transforms[4].rules[5].stemCharacters": [
-      [45, 45],
-      [48, 57],
-      [65, 90],
-      [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [768, 879],
-      [7838, 7838],
-      [64256, 64262]
-    ],
-    "transforms[4].rules[5].stemStartsWith": [
-      [97, 122],
-      [223, 246],
-      [248, 255]
-    ],
-    "transforms[4].rules[7].stemNotEndsWith": [
+    "transforms[4].rules[6].stemNotEndsWith": [
       [99, 99]
     ],
     "transforms[5].rules[0].stemCharacters": [
