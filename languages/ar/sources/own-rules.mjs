@@ -126,7 +126,11 @@ transform('ka', 'كـ (like, as)', 'The preposition كَ (ka, "like, as") writte
 transform('li', 'لـ (for, to)', 'The preposition or particle لِ (li, "for, to, so that") written together with the next word: لمحمد is لـ + محمد, ليكتب is لـ + يكتب. Before الـ the alif of the article is not written: للبيت is لـ + البيت, and before a word that starts with ل only two lams are written: لله is لـ + الله, لليل is لـ + الليل.', [
     prefix('ل', '', {extra: {stemNotStartsWith: '[ل]'}}),
     prefix('لل', 'ال', {extra: {stemNotStartsWith: '[ل]'}}),
+    // A noun that starts with ل loses the ل of الـ too: لليل is لـ + الليل.
     prefix('لل', 'الل', {min: 1, extra: {stemNotStartsWith: '[ل]'}}),
+]);
+transform('la', 'لا (not, no)', 'The negation لا written together with the next word, as informal text does: لاشيء is لا شيء ("nothing"), لايمكن is لا يمكن.', [
+    prefix('لا', '', {min: 3}),
 ]);
 transform('al', 'الـ (the)', 'The definite article الـ (al-, "the"): الكتاب is الـ + كتاب.', [
     // A noun: a pronoun or the accusative ـًا never follows الـ, so those
@@ -183,7 +187,7 @@ const PRONOUNS = [
 for (const [id, name, p, gloss, example] of PRONOUNS) {
     // A pronoun also follows the future prefix: سيكتبونه is سـ + يكتبون + ـه.
     const rules = [
-        suffix(p, '', {into: V_IN, extra: p === 'ي' ? {...NOT_AL, stemNotEndsWith: '[ي]'} : NOT_AL}),
+        suffix(p, '', {into: V_IN, extra: NOT_AL}),
         suffix('ؤ' + p, 'ء', {extra: NOT_AL}), suffix('ئ' + p, 'ء', {extra: NOT_AL}),
         suffix('ؤ' + p, 'أ', {extra: NOT_AL}), suffix('ئ' + p, 'أ', {extra: NOT_AL}),
         suffix('ا' + p, 'ى', {into: V_IN, extra: NOT_AL}),
@@ -510,7 +514,7 @@ const OBJECTS = ['ني', 'نا', 'ك', 'كما', 'كم', 'كن', 'ه', 'ها', '
 const LISTED_PRESENT = {
     'ي': [['يمكن', 'أمكن'], ...OBJECTS.map((pr) => ['يمكن' + pr, 'أمكن']), ['يهم', 'هم']],
     'ت': [['تمكن', 'أمكن'], ['تهم', 'هم']],
-    'أ': [['أموت', 'مات']],
+    'أ': [['أموت', 'مات'], ['أيمكن', 'أمكن'], ...OBJECTS.map((pr) => ['أيمكن' + pr, 'أمكن'])],
 };
 for (const [id, name, p, gloss, example, see] of PRESENT_PERSONS) {
     transform(id, name, `The present tense "${gloss}", which is also its subjunctive and jussive: ${example} (كتب); يقول (قال), يدعو (دعا), يرمي (رمى), ينسى (نسي), يكرم (أكرم), يستخدم (استخدم), يصل (وصل), يرى (رأى). With an object pronoun in the same step: يمكنك, يعرفه.`, [
@@ -631,6 +635,8 @@ function imperativeRules(ending, {defective = [], others = [], hollowShort = fal
 transform('imperativeYou', 'imperative (you)', 'The imperative "do!" to one man: اكتب (كتب), قل (قال), ادع (دعا), ارم (رمى), انس (نسي), امدد (مد), قف (وقف), أعط (أعطى), اشتر (اشترى), كل (أكل), خذ (أخذ), مر (أمر), ر (رأى).', [
     ...imperativeRules('', {defective: [['', 'ا'], ['', 'ى'], ['', 'ي']], hollowShort: true, others: [['', 'ى']]}),
     ...[['كل', 'أكل'], ['خذ', 'أخذ'], ['مر', 'أمر'], ['ر', SEE], ['ائت', 'أتى'], ['جئ', 'جاء']].map(([i, d]) => whole(i, d, {into: V_IN, out: V_OUT})),
+    // العب (play!), which the dictionary also lists as الـ + عب.
+    whole('العب', 'لعب', {into: V_IN, out: V_OUT}),
     // أعطِ (give!) with an object pronoun, before أ + عط + ني.
     ...['أعطني', 'أعطه', 'أعطها', 'أعطنا', 'أعطهم'].map((i) => whole(i, 'أعطى', {into: V_IN, out: V_OUT})),
 ]);

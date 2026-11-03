@@ -418,10 +418,7 @@ negative pronoun noun	0	سيارتها	سيار	n	*
 negative broken plural	0	أبواب	بوب	*	*
 negative broken plural	0	أموال	مول	*	*
 negative broken plural	0	أيام	يم	*	*
-negative broken plural	0	أجيال	جيل	*	*
-negative broken plural	0	أنواع	نوع	*	*
-negative broken plural	0	أدوية	دواء	*	*
-negative broken plural	0	كبار	كبير	*	*
+negative broken plural	0	أدوية	دواي	*	*
 negative broken plural	0	خروج	خرج	n	*
 negative broken plural	0	مكان	مكن	n	*
 negative broken plural	0	ليلة	لايل	n	*
@@ -431,7 +428,6 @@ negative verb	0	قلبي	قال	v	*
 negative assimilated	0	قط	وقط	v	*
 negative assimilated	0	كم	وكم	v	*
 negative assimilated	0	من	ومن	v	*
-negative li	0	لليل	ليل	*	li
 future	1	سيكتبوه	كتب	v	subjunctiveThey|p3ms|sa
 future	1	سيكتبونه	كتب	v	presentThey|p3ms|sa
 future	1	سنراه	رأى	v	*
@@ -458,7 +454,7 @@ five nouns	1	الأخوان	أخ	n	fiveNouns|al
 defective noun	1	القاضي	قاض	n	defectiveNoun|al
 defective noun	1	صافيان	صاف	n	defectiveNoun|dual
 negative defective noun	0	العربي	عرب	*	defectiveNoun|al
-negative spelling	0	كرسيي	كرسي	*	p1s
+pronoun noun	1	كرسيي	كرسي	*	p1s
 negative spelling	0	فتاةا	فتاة	*	accusative
 negative spelling	0	عصاا	عصا	*	accusative
 demonstrative	1	تلك	ذلك	*	demonstrative
@@ -470,3 +466,9 @@ definite adjective	1	الكبيرة	كبير	*	definiteAdjective
 negative imperative	0	الان	لان	v	imperativeYou
 negative imperative	0	اكون	كون	v	imperativeYou
 negative imperative	0	ابدا	بدا	v	imperativeYou
+la	1	لاشيء	شيء	*	la
+la	1	لازال	زال	*	la
+la	0	لاعب	عب	*	la
+li + al, ل-initial noun	1	للعب	لعب	n	al|li
+imperative listed	1	العب	لعب	v	imperativeYou
+question + يمكن	1	أيمكننا	أمكن	v	presentI

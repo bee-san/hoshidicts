@@ -80,6 +80,15 @@
       ]
     },
     {
+      "id": "la",
+      "name": "لا (not, no)",
+      "description": "The negation لا written together with the next word, as informal text does: لاشيء is لا شيء (\"nothing\"), لايمكن is لا يمكن.",
+      "source": "own",
+      "rules": [
+        {"type": "prefix", "inflected": "لا", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 3, "stemStartsWith": "{base}"}
+      ]
+    },
+    {
       "id": "al",
       "name": "الـ (the)",
       "description": "The definite article الـ (al-, \"the\"): الكتاب is الـ + كتاب.",
@@ -172,7 +181,7 @@
       "description": "The attached pronoun ـي (my (and me after a preposition)): كتابي is كتاب + ـي, مني is من + ـي.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ي", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال", "stemNotEndsWith": "[ي]"},
+        {"type": "suffix", "inflected": "ي", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
         {"type": "suffix", "inflected": "ؤي", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
         {"type": "suffix", "inflected": "ئي", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
         {"type": "suffix", "inflected": "ؤي", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
@@ -848,7 +857,19 @@
         {"type": "circumfix", "prefixes": [["أؤ", "أ"], ["آ", "أ"], ["أ", "أ"], ["أ", ""], ["أ", "ا"]], "suffixes": [["يء", "اء"], ["يأ", "اأ"], ["يإ", "اإ"], ["يآ", "اآ"], ["يؤ", "اؤ"], ["يئ", "ائ"], ["يب", "اب"], ["يت", "ات"], ["يث", "اث"], ["يج", "اج"], ["يح", "اح"], ["يخ", "اخ"], ["يد", "اد"], ["يذ", "اذ"], ["ير", "ار"], ["يز", "از"], ["يس", "اس"], ["يش", "اش"], ["يص", "اص"], ["يض", "اض"], ["يط", "اط"], ["يظ", "اظ"], ["يع", "اع"], ["يغ", "اغ"], ["يف", "اف"], ["يق", "اق"], ["يك", "اك"], ["يل", "ال"], ["يم", "ام"], ["ين", "ان"], ["يه", "اه"], ["يو", "او"], ["يي", "اي"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "{base}", "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["أ", ""]], "suffixes": [["رى", "رأى"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["أ", ""], ["أ", "ا"], ["أ", "و"], ["أؤ", "آ"], ["أؤ", "أ"], ["أؤا", "آ"], ["آ", "أ"], ["آ", "ائ"]], "suffixes": [["ك", ""], ["كما", ""], ["كم", ""], ["كن", ""], ["ه", ""], ["ها", ""], ["هما", ""], ["هم", ""], ["هن", ""]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[\\u0621-\\u0626\\u0628-\\u063A\\u0641-\\u0647]", "stemMinLength": 2},
-        {"type": "wholeWord", "inflected": "أموت", "deinflected": "مات", "conditionsIn": ["vf"], "conditionsOut": ["v"]}
+        {"type": "wholeWord", "inflected": "أموت", "deinflected": "مات", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "أيمكن", "deinflected": "أمكن", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "أيمكنني", "deinflected": "أمكن", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "أيمكننا", "deinflected": "أمكن", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "أيمكنك", "deinflected": "أمكن", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "أيمكنكما", "deinflected": "أمكن", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "أيمكنكم", "deinflected": "أمكن", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "أيمكنكن", "deinflected": "أمكن", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "أيمكنه", "deinflected": "أمكن", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "أيمكنها", "deinflected": "أمكن", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "أيمكنهما", "deinflected": "أمكن", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "أيمكنهم", "deinflected": "أمكن", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "أيمكنهن", "deinflected": "أمكن", "conditionsIn": ["vf"], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -1168,6 +1189,7 @@
         {"type": "wholeWord", "inflected": "ر", "deinflected": "رأى", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "ائت", "deinflected": "أتى", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "جئ", "deinflected": "جاء", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "العب", "deinflected": "لعب", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "أعطني", "deinflected": "أعطى", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "أعطه", "deinflected": "أعطى", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "أعطها", "deinflected": "أعطى", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
