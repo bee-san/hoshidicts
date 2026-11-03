@@ -42,9 +42,10 @@
 # deinflected text whose row with definitions passes the part-of-speech
 # filter, or the text a passing form-of row of a deinflected text names when
 # that text has a row with definitions, other than the source and the
-# lemma. Every optional processor and transform is on. --tagged reads the
-# untagged rows as tagged "v n adj" (the wty-el-en-tagged copy). Prints the
-# mean, which must equal eval-language's falseCandidates, and the rows.
+# lemma. Every optional processor and transform is on. Untagged rows are read
+# as the pack's lookup.untaggedTerms says (with --tagged, always as "v n
+# adj"). Prints the mean, which must equal eval-language's falseCandidates,
+# and the rows.
 # firstrank: why a corpus row's lemma is not the first result (lookups of
 # the sources, `lookup-batch ... 16 64`): the lemma has no row with
 # definitions, comes after another lemma the source's form-of rows name, or
@@ -327,6 +328,10 @@ def phrases(banks, hover_file, lookups):
 
 def falsecands(banks, corpus, cli, languages, tagged=False):
     import subprocess
+    # With lookup.untaggedTerms "pass" an untagged row carries every
+    # dictionary-form condition (v, n, adj), as --tagged reads it.
+    pack = json.load(open(f'{languages}/el/language.json', encoding='utf-8'))
+    tagged = tagged or pack['lookup'].get('untaggedTerms') == 'pass'
     rows_of = collections.defaultdict(list)  # term -> [(tags, has definitions, referenced terms)]
     for f in sorted(glob.glob(banks.rstrip('/') + '/term_bank_*.json')):
         for row in json.load(open(f, encoding='utf-8')):
