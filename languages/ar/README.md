@@ -461,8 +461,8 @@ in `sources/`, run from the repository root.
   A word without its hamza is read only at the start of the word or after
   الـ or a one-letter proclitic (اكبر, والامر); inside the word (مسئول for
   مسؤول, شئ for شيء) it is read only where the dictionary lists the spelling.
-  Without a madda variant, الان is read as the imperative لِن (لان, 15 in
-  Tatoeba).
+  Without a madda variant, الان is read as an imperative of لان (to soften;
+  15 in Tatoeba).
 - **Spaces**: a rule never reads across a space, so a multiword entry is
   found only when the scanned text spells it as the dictionary does (رأس
   مال, من حيث), not with an inflected word inside (رؤوس أموال).
