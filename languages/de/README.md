@@ -249,7 +249,9 @@ gehören, not Yomitan's participle reading hören; `lookup.tsv`).
 
 Every number is with wty-de-en as its release publishes it, form-of rows
 included, imported by `hoshidicts-cli import`, at hoshidicts 23cd5a3 with
-this pack (GCC 14.3, Release). The union is `tools/merge-transforms.mjs de
+this pack (GCC 14.3, Release). After the rebase on b145feb (#54, which
+changes how dictionaries are opened), items 1 to 4 were measured again and
+are identical; the timings of item 8 are given for both. The union is `tools/merge-transforms.mjs de
 --out`, which puts Yomitan's transforms first. The pack has no optional
 processor, transform or variant pass, so every number is the same with every
 option on and with the defaults; a copy of `cases.tsv` with the line
@@ -419,12 +421,12 @@ option on and with the defaults; a copy of `cases.tsv` with the line
    Character resolution looks up every prefix of the scan, which costs more
    than the word resolution of the English and Spanish packs.
 
-   | Rule set | p50 | p95 |
-   | --- | ---: | ---: |
-   | Final | 108-110 µs | 256-257 µs |
-   | Union | 111-113 µs | 264-268 µs |
-   | Yomitan's rules | 87-88 µs | 194-198 µs |
-   | Own rules | 107 µs | 247-250 µs |
+   | Rule set | p50 | p95 | p50, b145feb, load about 44 | p95, b145feb |
+   | --- | ---: | ---: | ---: | ---: |
+   | Final | 108-110 µs | 256-257 µs | 122-125 µs | 269-282 µs |
+   | Union | 111-113 µs | 264-268 µs | 124-129 µs | 291-304 µs |
+   | Yomitan's rules | 87-88 µs | 194-198 µs | 96-103 µs | 220-234 µs |
+   | Own rules | 107 µs | 247-250 µs | 115-121 µs | 263-272 µs |
 9. **WebAssembly** (Hachidori feat/multi-language d7e82b0, its prebuilt
    engines in Node 22). The budgets are 50 ms and 20 MB.
    - `hdw_lookup` (`benchmark/node-lookup.mjs` with
@@ -438,12 +440,13 @@ option on and with the defaults; a copy of `cases.tsv` with the line
    - The pack has 9 `pattern` rules (the separated prefix, one per clause
      end). Without them the load takes about 0.6 ms less and the heap grows
      by 248,280 bytes less.
-10. **Hachidori** (feat/multi-language d7e82b0 with this branch at 6f35254,
+10. **Hachidori** (feat/multi-language d7e82b0 with this branch at 885fb90,
     whose `language.json` and `transforms.json` are this pull request's, in
-    `third_party/hoshidicts`; `test/chrome-language-pack.mjs`, Chrome 152,
-    wty-de-en): 14 of 14 checks pass.
+    `third_party/hoshidicts`, then `node scripts/sync-languages.mjs`;
+    `test/chrome-language-pack.mjs`, Chrome 152, wty-de-en): 14 of 14 checks
+    pass, as before the rebase.
     - Settings adds German beside Japanese and imports the dictionary
-      (602,286 terms, 0.9 s).
+      (602,286 terms, 1.0 s).
     - Ten hovered words find their lemma first, with their traces:
       `aufgestanden` → aufstehen, `kommt` (in `Er kommt morgen an.`) →
       ankommen [separated prefix, present (er, ihr)], `Hör` (in `Hör endlich
