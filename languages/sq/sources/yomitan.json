@@ -1,0 +1,374 @@
+{
+  "schema": 1,
+  "conditions": {
+    "v": {
+      "name": "Verb",
+      "isDictionaryForm": true
+    },
+    "n": {
+      "name": "Noun",
+      "isDictionaryForm": true,
+      "subConditions": ["np", "ns"]
+    },
+    "np": {
+      "name": "Noun plural",
+      "isDictionaryForm": true
+    },
+    "ns": {
+      "name": "Noun singular",
+      "isDictionaryForm": true
+    },
+    "adj": {
+      "name": "Adjective",
+      "isDictionaryForm": true
+    },
+    "adv": {
+      "name": "Adverb",
+      "isDictionaryForm": true
+    }
+  },
+  "transforms": [
+    {
+      "id": "definite",
+      "name": "definite",
+      "description": "Definite form of a noun",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ku", "deinflected": "k", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "gu", "deinflected": "g", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "hu", "deinflected": "h", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "au", "deinflected": "a", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "iu", "deinflected": "i", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "eu", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "i", "deinflected": "ë", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "i", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "ri", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "oi", "deinflected": "ua", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "a", "deinflected": "ë", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "a", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "ja", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "singular definite accusative",
+      "name": "singular definite accusative",
+      "description": "Singular definite accusative form of a noun",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "n", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "plural",
+      "name": "plural",
+      "description": "Plural form of a noun",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"]},
+        {"type": "suffix", "inflected": "t", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"]}
+      ]
+    },
+    {
+      "id": "present indicative second-person singular",
+      "name": "present indicative second-person singular",
+      "description": "Present indicative second-person singular form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "on", "deinflected": "oj", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "uan", "deinflected": "uaj", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "n", "deinflected": "j", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "hesh", "deinflected": "hem", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "present indicative third-person singular",
+      "name": "present indicative third-person singular",
+      "description": "Present indicative third-person singular form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "on", "deinflected": "oj", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "uan", "deinflected": "uaj", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "n", "deinflected": "j", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "het", "deinflected": "hem", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "present indicative first-person plural",
+      "name": "present indicative first-person plural",
+      "description": "Present indicative first-person plural form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "më", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "im", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "hemi", "deinflected": "hem", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "present indicative second-person plural",
+      "name": "present indicative second-person plural",
+      "description": "Present indicative second-person plural form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ni", "deinflected": "j", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "ni", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "heni", "deinflected": "hem", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "present indicative third-person plural",
+      "name": "present indicative third-person plural",
+      "description": "Present indicative third-person plural form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "në", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "in", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "hen", "deinflected": "hem", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "imperfect first-person singular indicative",
+      "name": "imperfect first-person singular indicative",
+      "description": "Imperfect first-person singular indicative form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ja", "deinflected": "j", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "ja", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "hesha", "deinflected": "hem", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "imperfect second-person singular indicative",
+      "name": "imperfect second-person singular indicative",
+      "description": "Imperfect second-person singular indicative form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "je", "deinflected": "j", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "je", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "heshe", "deinflected": "hem", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "imperfect third-person singular indicative",
+      "name": "imperfect third-person singular indicative",
+      "description": "Imperfect third-person singular indicative form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "nte", "deinflected": "j", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "te", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "hej", "deinflected": "hem", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "imperfect first-person plural indicative",
+      "name": "imperfect first-person plural indicative",
+      "description": "Imperfect first-person plural indicative form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "nim", "deinflected": "j", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "nim", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "heshim", "deinflected": "hem", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "imperfect second-person plural indicative",
+      "name": "imperfect second-person plural indicative",
+      "description": "Imperfect second-person plural indicative form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "nit", "deinflected": "j", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "nit", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "heshit", "deinflected": "hem", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "imperfect third-person plural indicative",
+      "name": "imperfect third-person plural indicative",
+      "description": "Imperfect third-person plural indicative form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "nin", "deinflected": "j", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "nin", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "heshin", "deinflected": "hem", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "aorist first-person singular indicative",
+      "name": "aorist first-person singular indicative",
+      "description": "Aorist first-person singular indicative form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ova", "deinflected": "uaj", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "va", "deinflected": "j", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "a", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"], "stemNotEndsWith": "[j]", "stemMinLength": 1}
+      ]
+    },
+    {
+      "id": "aorist second-person singular indicative",
+      "name": "aorist second-person singular indicative",
+      "description": "Aorist second-person singular indicative form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ove", "deinflected": "uaj", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "ve", "deinflected": "j", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"], "stemNotEndsWith": "[j]", "stemMinLength": 1}
+      ]
+    },
+    {
+      "id": "aorist third-person singular indicative",
+      "name": "aorist third-person singular indicative",
+      "description": "Aorist third-person singular indicative form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "oi", "deinflected": "oj", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "oi", "deinflected": "uaj", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "u", "deinflected": "j", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "i", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"], "stemNotEndsWith": "[j]", "stemMinLength": 1},
+        {"type": "suffix", "inflected": "ye", "deinflected": "ej", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "aorist first-person plural indicative",
+      "name": "aorist first-person plural indicative",
+      "description": "Aorist first-person plural indicative form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "uam", "deinflected": "oj", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "uam", "deinflected": "uaj", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "më", "deinflected": "j", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "ëm", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"], "stemNotEndsWith": "[j]", "stemMinLength": 1}
+      ]
+    },
+    {
+      "id": "aorist second-person plural indicative",
+      "name": "aorist second-person plural indicative",
+      "description": "Aorist second-person plural indicative form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "uat", "deinflected": "oj", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "uat", "deinflected": "uaj", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "të", "deinflected": "j", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "ët", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"], "stemNotEndsWith": "[j]", "stemMinLength": 1}
+      ]
+    },
+    {
+      "id": "aorist third-person plural indicative",
+      "name": "aorist third-person plural indicative",
+      "description": "Aorist third-person plural indicative form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "uan", "deinflected": "oj", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "uan", "deinflected": "uaj", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "në", "deinflected": "j", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "ën", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"], "stemNotEndsWith": "[j]", "stemMinLength": 1}
+      ]
+    },
+    {
+      "id": "imperative second-person singular present",
+      "name": "imperative second-person singular present",
+      "description": "Imperative second-person singular present form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "o", "deinflected": "oj", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "hu", "deinflected": "hem", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "imperative second-person plural present",
+      "name": "imperative second-person plural present",
+      "description": "Imperative second-person plural present form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ni", "deinflected": "j", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "ni", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "huni", "deinflected": "hem", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "participle",
+      "name": "participle",
+      "description": "Participle form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "uar", "deinflected": "oj", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "ur", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "rë", "deinflected": "j", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "yer", "deinflected": "ej", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "mediopassive",
+      "name": "mediopassive",
+      "description": "Mediopassive form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "hem", "deinflected": "h", "conditionsIn": ["v"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "hem", "deinflected": "j", "conditionsIn": ["v"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "optative first-person singular present",
+      "name": "optative first-person singular present",
+      "description": "Optative first-person singular present form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "fsha", "deinflected": "j", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "optative second-person singular present",
+      "name": "optative second-person singular present",
+      "description": "Optative second-person singular present form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "fsh", "deinflected": "j", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "optative third-person singular present",
+      "name": "optative third-person singular present",
+      "description": "Optative third-person singular present form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ftë", "deinflected": "j", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "optative first-person plural present",
+      "name": "optative first-person plural present",
+      "description": "Optative first-person plural present form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "fshim", "deinflected": "j", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "optative second-person plural present",
+      "name": "optative second-person plural present",
+      "description": "Optative second-person plural present form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "fshi", "deinflected": "j", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "optative third-person plural present",
+      "name": "optative third-person plural present",
+      "description": "Optative third-person plural present form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "fshin", "deinflected": "j", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "nominalization",
+      "name": "nominalization",
+      "description": "Noun form of a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "im", "deinflected": "oj", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "im", "deinflected": "ej", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "je", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    }
+  ]
+}
