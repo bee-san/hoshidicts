@@ -66,6 +66,16 @@
         "variants": [[{"case": "upperFirst"}]]
       },
       {
+        "id": "removeAlphabeticDiacritics",
+        "name": "Remove alphabetic diacritics",
+        "variants": [[{"normalize": "NFD"}, {"strip": "[\\u0300-\\u036F]"}]]
+      },
+      {
+        "id": "removeApostrophedWords",
+        "name": "Remove common apostrophed words",
+        "variants": [[{"pattern": "(l|dell|all|dall|nell|sull|coll|un|quest|quell|c|n)['\\u2019]", "replace": "", "global": true}]]
+      },
+      {
         "id": "addElisionApostrophe",
         "name": "Add the apostrophe of an elided word",
         "variants": [[{"pattern": "^(l|gl|dell|all|dall|nell|sull|coll|quest|quell|bell|sant|grand|mezz|tutt|nient|senz|anch|com|cos|dov|quand|dev|sott|c|d|n|s|m|t|v|po|mo|be|to)$", "replace": "$1'"}]]

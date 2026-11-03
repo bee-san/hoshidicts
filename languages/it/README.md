@@ -10,9 +10,21 @@ Deinflection rules, text processors and scanning settings for Italian.
   from the standard description of the language. No text or table is copied
   from a source.
 
+- The processors `decapitalize`, `capitalizeFirstLetter`,
+  `removeAlphabeticDiacritics` and `removeApostrophedWords`: Yomitan's Italian
+  text preprocessors ([`ext/js/language/language-descriptors.js`](https://github.com/yomidevs/yomitan/blob/d3c54c10264673eca0d66b970ef74cd5c8b048e3/ext/js/language/language-descriptors.js),
+  [`text-processors.js`](https://github.com/yomidevs/yomitan/blob/d3c54c10264673eca0d66b970ef74cd5c8b048e3/ext/js/language/text-processors.js)
+  and [`it/italian-processors.js`](https://github.com/yomidevs/yomitan/blob/d3c54c10264673eca0d66b970ef74cd5c8b048e3/ext/js/language/it/italian-processors.js)
+  at d3c54c1), ported into the pack format. GPL-3.0-or-later, Copyright (C)
+  2024-2026 Yomitan Authors.
+
 ## Rule provenance
 
-All rules are `own` at this commit; Yomitan has no Italian deinflection rules.
+All rules are `own`. Yomitan has no Italian deinflection rules at d3c54c1:
+`ext/js/language/it/` holds only `italian-processors.js`, and
+`tools/port-yomitan-transforms.mjs` reports "Yomitan has no
+ext/js/language/it/*-transforms.js". So there is no `sources/yomitan.json`,
+and the own rules are also the union.
 
 ## Measurements
 
