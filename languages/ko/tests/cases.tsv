@@ -297,8 +297,6 @@ plain stems	1	하더라도	하다	v	*
 plain stems	1	보고도	보다	v	*
 plain stems	1	가다가는	가다	v	*
 plain stems	1	오려나	오다	v	*
-plain stems	1	하려는	하다	v	*
-plain stems	1	보려던	보다	v	*
 plain stems	1	건강하려면	건강하다	adj	*
 honorific	1	가시겠거니	가다	v	*
 -(으)ㅂ시오	1	마십시오	마시다	v	*
@@ -310,7 +308,7 @@ negatives	0	물건만	물다	*	*
 negatives	0	바라야지	발다	*	*
 negatives	0	바랐자	발다	*	*
 plain stems	1	먹곤	먹다	v	*
-plain stems	1	하곤 했다	하다	v	*
+plain stems	1	하곤 했다	하다	v	-곤 하다|-았/었
 plain stems	1	가고는 했다	가다	v	*
 plain stems	1	먹고도	먹다	v	*
 plain stems	1	읽고자	읽다	v	*
@@ -343,3 +341,21 @@ plain stems	1	가던지	가다	v	*
 plain stems	1	좋던가	좋다	adj	*
 plain stems	1	가데요	가다	v	*
 plain stems	1	하던걸	하다	v	*
+-(으)려 하다	1	가려 했다	가다	v	-(으)려 하다|-았/었
+-(으)려 하다	1	하려 했다	하다	v	*
+-(으)려 하다	1	보려 했다	보다	v	*
+-(으)려 하다	1	바꾸려 한다	바꾸다	v	*
+-(으)려 하다	1	마시려 한다	마시다	v	*
+-(으)려 하다	1	먹으려 했어요	먹다	v	*
+-(으)려 하다	1	만들려 했다	만들다	v	*
+-(으)려 하다	1	도우려 했다	돕다	v	*
+plain stems	1	할려고	하다	v	*
+plain stems	1	볼려고	보다	v	*
+plain stems	1	그러다간	그러다	v	*
+plain stems	1	먹다간	먹다	v	*
+plain stems	1	할는지	하다	v	*
+negatives	0	걸려	걸다	*	*
+negatives	0	안되	안다	*	*
+negatives	0	살러	사르다	*	*
+negatives	0	놀러	노르다	*	*
+negatives	0	불라	부르다	*	*

@@ -61,6 +61,9 @@ const VOWEL_OR_LIEUL = '[\\u314F-\\u3163ㄹ]';
 // A consonant other than ㄹ: ㄹ stems take no 으 (살면, not 살으면), so 들은 is
 // 듣다, never 들다.
 const CONSONANT_NOT_LIEUL = '[\\u3131-\\u3138\\u313A-\\u314E]';
+// Vowel harmony before 르: 모르 + 아 → 몰라 after ㅏ or ㅗ, 부르 + 어 → 불러 after the others.
+const BRIGHT = '[ㅏㅗㅑ]';
+const DARK = '[ㅓㅕㅜㅠㅡㅣㅐㅔㅒㅖ]';
 const LIEUL_DROP_INITIALS = new Set(['ㄴ', 'ㅂ', 'ㅅ']);
 
 // --- Conditions -----------------------------------------------------------------
@@ -198,9 +201,10 @@ const A_FORMS = [
     ['ㄷㅡㄹㄹㅓ', 'ㄷㅡㄹㄹㅡ', {}],
     ['ㅇㅜㄹㅓㄹㅓ', 'ㅇㅜㄹㅓㄹㅡ', {}],
     ['ㄷㅏㄷㅏㄹㅏ', 'ㄷㅏㄷㅏㄹㅡ', {}],
-    // 르: 모르 + 아 → 몰라, 부르 + 어 → 불러.
-    ['ㄹㄹㅏ', 'ㄹㅡ', {stemMinLength: 2, stemEndsWith: VOWEL}],
-    ['ㄹㄹㅓ', 'ㄹㅡ', {stemMinLength: 2, stemEndsWith: VOWEL}],
+    // 르: 모르 + 아 → 몰라, 부르 + 어 → 불러; 라 after ㅏ or ㅗ, 러 after the
+    // other vowels, so 살러 and 놀러 are not 사르다 and 노르다.
+    ['ㄹㄹㅏ', 'ㄹㅡ', {stemMinLength: 2, stemEndsWith: BRIGHT}],
+    ['ㄹㄹㅓ', 'ㄹㅡ', {stemMinLength: 2, stemEndsWith: DARK}],
     // 러: 이르 + 어 → 이르러, 푸르 + 어 → 푸르러.
     ['ㄹㅡㄹㅓ', 'ㄹㅡ', {stemMinLength: 2, stemEndsWith: VOWEL}],
     // ㅂ: 춥 + 어 → 추워, 돕 + 아 → 도와.
@@ -378,11 +382,14 @@ transform('-(으)면', '-(으)면', 'Connective -(으)면: if, when.', [eu('면'
 transform('-(으)니까', '-(으)니까', 'Connective -(으)니까: because, when.', [eu('니까', ALL)]);
 transform('-(으)면서', '-(으)면서', 'Connective -(으)면서: while.', [eu('면서', HON)]);
 transform('-(으)며', '-(으)며', 'Connective -(으)며: and, while (written style).', [eu('며', PAST)]);
+// Written with Yomitan's id, with the own stem checks, so 안되요 (안 돼요) is not 안다.
+transform('-(으)되', '-(으)되', 'Connective -(으)되: but, while (written style).', [eu('되', PAST)]);
 transform('-(으)러', '-(으)러', 'Connective -(으)러: in order to (with a verb of motion).', [eu('러', VERB_HON)]);
 transform('-(으)려고', '-(으)려고', 'Connective -(으)려고: intending to.', [eu('려고', VERB_HON), eu('려면', VERB_HON)]);
-// -(으)려고 하는/하던 contracted (가려는 사람, 하려던 일); neither rule set had it (added
-// after the own-rules commit).
-transform('-(으)려는', '-(으)려는/-(으)려던', 'Adnominal -(으)려는, -(으)려던: intending to (-(으)려고 하는, -(으)려고 하던).', [eu('려는', VERB_HON), eu('려던', VERB_HON)]);
+// -(으)려 하다 (가려 했다), with 하다 deinflected first as Yomitan's -곤 하다 is:
+// the bare -(으)려 would read 걸려 (걸리다) as 걸다. Neither rule set had it
+// (added after the own-rules commit).
+transform('-(으)려 하다', '-(으)려 하다', 'Intend to: -(으)려 하다, -(으)려고 하다 without 고 (written style).', [eu('려 하다', VERB_HON, {conditionsIn: ['v']})]);
 transform('-(으/느)ㄴ지', '-는지/-(으)ㄴ지', 'Connective -는지, -(으)ㄴ지: whether, what; -(으)ㄴ지 after a verb: since (time).', [neun('는지', ALL), eu('ㄴ지', HON)]);
 transform('-(으)ㄹ지', '-(으)ㄹ지', 'Connective -(으)ㄹ지: whether ... will.', [eu('ㄹ지', PAST)]);
 transform('-게', '-게', 'Ending -게: adverb (so that, -ly); before 되다 and 하다.', [direct('게', HON)]);

@@ -744,9 +744,9 @@ function main() {
             '# Yomitan rules the final rule set leaves out, written by sources/select-rules.mjs; sources/final-rules.mjs applies them.',
             '# Each recovers no row of the measurement sets and adds false candidates, breaks a negative, or ties a false candidate with the lemma (README.md, Rule provenance).',
             `${COPIES_LINE} (${removed.filter((r) => r.copy).length} rules at this run).`,
-            '# transform\tinflected\tdeinflected\tconditionsIn\tconditionsOut\trecovers\tfalseCandidates\tbreaks\tnote',
+            '# None recovers a row. transform\tinflected\tdeinflected\tconditionsIn\tconditionsOut\tfalseCandidates\tnote',
             ...removed.filter((r) => !r.copy).map((r) => [r.transform, r.rule.inflected, r.rule.deinflected, r.rule.conditionsIn.join(','), r.rule.conditionsOut.join(','),
-                r.recovers, r.falseCandidates, r.breaks, r.negative ? `breaks ${r.negative} with other paths` : r.ties ? `ties a false candidate with the lemma on ${r.ties} paths, as in ${r.example}`
+                r.falseCandidates, r.negative ? `breaks ${r.negative} with other paths` : r.ties ? `ties a false candidate with the lemma on ${r.ties} paths, as in ${r.example}`
                     : ''].join('\t')),
         ];
         writeFileSync(join(here, 'removed-rules.tsv'), `${lines.join('\n')}\n`);
