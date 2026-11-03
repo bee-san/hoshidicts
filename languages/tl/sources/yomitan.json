@@ -1,0 +1,1076 @@
+{
+  "schema": 1,
+  "conditions": {
+    "n": {
+      "name": "Noun",
+      "isDictionaryForm": true,
+      "subConditions": ["num"]
+    },
+    "adj": {
+      "name": "Adjective",
+      "isDictionaryForm": true
+    },
+    "num": {
+      "name": "Numeral",
+      "isDictionaryForm": true
+    }
+  },
+  "transforms": [
+    {
+      "id": "hyphenated",
+      "name": "hyphenated",
+      "description": "hyphenated form of words",
+      "source": "yomitan",
+      "rules": [
+        {"type": "replace", "inflected": "-", "deinflected": "", "occurrence": "first", "conditionsIn": [], "conditionsOut": []}
+      ]
+    },
+    {
+      "id": "-an",
+      "name": "-an",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "an", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "ran", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "an", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "ran", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "ahan", "deinflected": "a", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "ehan", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "ihan", "deinflected": "i", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "ohan", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "uhan", "deinflected": "u", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "anan", "deinflected": "a", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "enan", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "inan", "deinflected": "i", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "onan", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "unan", "deinflected": "u", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "uhan", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "unan", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "-in",
+      "name": "-in",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "in", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "rin", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "in", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "rin", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "ahin", "deinflected": "a", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "ehin", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "ihin", "deinflected": "i", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "ohin", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "uhin", "deinflected": "u", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "anin", "deinflected": "a", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "enin", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "inin", "deinflected": "i", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "onin", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "unin", "deinflected": "u", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "uhin", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "unin", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "ma-",
+      "name": "ma-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "ma", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj"]},
+        {"type": "prefix", "inflected": "mar", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "pang-",
+      "name": "pang-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "pang", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj"]},
+        {"type": "prefix", "inflected": "pand", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n", "adj"]},
+        {"type": "prefix", "inflected": "panl", "deinflected": "l", "conditionsIn": [], "conditionsOut": ["n", "adj"]},
+        {"type": "prefix", "inflected": "panr", "deinflected": "r", "conditionsIn": [], "conditionsOut": ["n", "adj"]},
+        {"type": "prefix", "inflected": "pans", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["n", "adj"]},
+        {"type": "prefix", "inflected": "pant", "deinflected": "t", "conditionsIn": [], "conditionsOut": ["n", "adj"]},
+        {"type": "prefix", "inflected": "pamb", "deinflected": "b", "conditionsIn": [], "conditionsOut": ["n", "adj"]},
+        {"type": "prefix", "inflected": "pamp", "deinflected": "p", "conditionsIn": [], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "pangalawa", "deinflected": "dalawa", "conditionsIn": [], "conditionsOut": ["num"]},
+        {"type": "wholeWord", "inflected": "pangatlo", "deinflected": "tatlo", "conditionsIn": [], "conditionsOut": ["num"]}
+      ]
+    },
+    {
+      "id": "ka-",
+      "name": "ka-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "ka", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj"]},
+        {"type": "prefix", "inflected": "kar", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "kaka-",
+      "name": "kaka-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "kaka", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "kakar", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "pattern", "anchorPrefix": "ka", "pattern": "^ka([bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]*[aeiou])\\1", "replacement": "$1", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "ka-...-an",
+      "name": "ka-...-an",
+      "source": "yomitan",
+      "rules": [
+        {"type": "circumfix", "inflectedPrefix": "ka", "deinflectedPrefix": "", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "kar", "deinflectedPrefix": "d", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ka", "deinflectedPrefix": "", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "kar", "deinflectedPrefix": "d", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ka", "deinflectedPrefix": "", "inflectedSuffix": "ahan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ka", "deinflectedPrefix": "", "inflectedSuffix": "ehan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ka", "deinflectedPrefix": "", "inflectedSuffix": "ihan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ka", "deinflectedPrefix": "", "inflectedSuffix": "ohan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ka", "deinflectedPrefix": "", "inflectedSuffix": "uhan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "kar", "deinflectedPrefix": "d", "inflectedSuffix": "ahan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "kar", "deinflectedPrefix": "d", "inflectedSuffix": "ehan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "kar", "deinflectedPrefix": "d", "inflectedSuffix": "ihan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "kar", "deinflectedPrefix": "d", "inflectedSuffix": "ohan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "kar", "deinflectedPrefix": "d", "inflectedSuffix": "uhan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ka", "deinflectedPrefix": "", "inflectedSuffix": "anan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ka", "deinflectedPrefix": "", "inflectedSuffix": "enan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ka", "deinflectedPrefix": "", "inflectedSuffix": "inan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ka", "deinflectedPrefix": "", "inflectedSuffix": "onan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ka", "deinflectedPrefix": "", "inflectedSuffix": "unan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "kar", "deinflectedPrefix": "d", "inflectedSuffix": "anan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "kar", "deinflectedPrefix": "d", "inflectedSuffix": "enan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "kar", "deinflectedPrefix": "d", "inflectedSuffix": "inan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "kar", "deinflectedPrefix": "d", "inflectedSuffix": "onan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "kar", "deinflectedPrefix": "d", "inflectedSuffix": "unan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ka", "deinflectedPrefix": "", "inflectedSuffix": "uhan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "kar", "deinflectedPrefix": "d", "inflectedSuffix": "uhan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ka", "deinflectedPrefix": "", "inflectedSuffix": "unan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "kar", "deinflectedPrefix": "d", "inflectedSuffix": "unan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ka", "deinflectedPrefix": "", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "kar", "deinflectedPrefix": "d", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "ka", "deinflectedPrefix": "", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "kar", "deinflectedPrefix": "d", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}}
+      ]
+    },
+    {
+      "id": "mag-",
+      "name": "mag-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "mag", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "mag- + rep1",
+      "name": "mag- + rep1",
+      "source": "yomitan",
+      "rules": [
+        {"type": "pattern", "anchorPrefix": "mag", "pattern": "^mag([bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]*[aeiou])\\1", "replacement": "$1", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "magka-",
+      "name": "magka-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "magka", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj"]},
+        {"type": "prefix", "inflected": "magkar", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "magkaka-",
+      "name": "magkaka-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "magkaka", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj"]},
+        {"type": "prefix", "inflected": "magkakar", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "mang- + rep1",
+      "name": "mang- + rep1",
+      "source": "yomitan",
+      "rules": [
+        {"type": "pattern", "anchorPrefix": "mang", "pattern": "^mang([bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]*[aeiou])\\1", "replacement": "$1", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "pattern", "anchorPrefix": "man", "pattern": "^man([dlrst]*[aeiou])\\1", "replacement": "$1", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "pattern", "anchorPrefix": "mam", "pattern": "^mam([bp]*[aeiou])\\1", "replacement": "$1", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "pa-",
+      "name": "pa-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "pa", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj"]},
+        {"type": "prefix", "inflected": "par", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "pa-...-an",
+      "name": "pa-...-an",
+      "source": "yomitan",
+      "rules": [
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "ahan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "ehan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "ihan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "ohan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "uhan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "ahan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "ehan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "ihan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "ohan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "uhan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "anan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "enan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "inan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "onan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "unan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "anan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "enan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "inan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "onan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "unan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "uhan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "uhan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "unan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "unan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}}
+      ]
+    },
+    {
+      "id": "pag-",
+      "name": "pag-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "pag", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "pag- + rep1",
+      "name": "pag- + rep1",
+      "source": "yomitan",
+      "rules": [
+        {"type": "pattern", "anchorPrefix": "pag", "pattern": "^pag([bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]*[aeiou])\\1", "replacement": "$1", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "pagka-",
+      "name": "pagka-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "pagka", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "pagkar", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "pagkaka", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "pagkakar", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "pakiki-",
+      "name": "pakiki-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "pakiki", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "pattern", "anchorPrefix": "pakiki", "pattern": "^pakiki([bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]*[aeiou])\\1", "replacement": "$1", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "pakikir", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "pakikipag-",
+      "name": "pakikipag-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "pakikipag", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "pang- + rep1",
+      "name": "pang- + rep1",
+      "source": "yomitan",
+      "rules": [
+        {"type": "pattern", "anchorPrefix": "pang", "pattern": "^pang([bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]*[aeiou])\\1", "replacement": "$1", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "pattern", "anchorPrefix": "pan", "pattern": "^pan([dlrst]*[aeiou])\\1", "replacement": "$1", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "pattern", "anchorPrefix": "pam", "pattern": "^pam([bp]*[aeiou])\\1", "replacement": "$1", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "tag-",
+      "name": "tag-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "tag", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "taga-",
+      "name": "taga-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "taga", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "tagapag-",
+      "name": "tagapag-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "tagapag", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "tagapang-",
+      "name": "tagapang-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "tagapang", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "tagapand", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "tagapanl", "deinflected": "l", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "tagapanr", "deinflected": "r", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "tagapans", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "tagapant", "deinflected": "t", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "tagapamb", "deinflected": "b", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "tagapamp", "deinflected": "p", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "i-",
+      "name": "i-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "i", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "ika-",
+      "name": "ika-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "ika", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "ikar", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "ikalawa", "deinflected": "dalawa", "conditionsIn": [], "conditionsOut": ["num"]},
+        {"type": "wholeWord", "inflected": "ikatlo", "deinflected": "tatlo", "conditionsIn": [], "conditionsOut": ["num"]}
+      ]
+    },
+    {
+      "id": "ipa-",
+      "name": "ipa-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "ipa", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "ipag-",
+      "name": "ipag-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "ipag", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "ipag- + rep1",
+      "name": "ipag- + rep1",
+      "source": "yomitan",
+      "rules": [
+        {"type": "pattern", "anchorPrefix": "ipag", "pattern": "^ipag([bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]*[aeiou])\\1", "replacement": "$1", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "ipang-",
+      "name": "ipang-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "ipang", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "ipand", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "ipanl", "deinflected": "l", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "ipanr", "deinflected": "r", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "ipans", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "ipant", "deinflected": "t", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "ipamb", "deinflected": "b", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "ipamp", "deinflected": "p", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "ma-...-an",
+      "name": "ma-...-an",
+      "source": "yomitan",
+      "rules": [
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "ahan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "ehan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "ihan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "ohan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "uhan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "ahan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "ehan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "ihan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "ohan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "uhan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "anan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "enan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "inan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "onan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "unan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "anan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "enan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "inan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "onan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "unan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "uhan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "uhan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "unan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "unan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}}
+      ]
+    },
+    {
+      "id": "mag-...-an",
+      "name": "mag-...-an",
+      "source": "yomitan",
+      "rules": [
+        {"type": "circumfix", "inflectedPrefix": "mag", "deinflectedPrefix": "", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mag", "deinflectedPrefix": "", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mag", "deinflectedPrefix": "", "inflectedSuffix": "ahan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mag", "deinflectedPrefix": "", "inflectedSuffix": "ehan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mag", "deinflectedPrefix": "", "inflectedSuffix": "ihan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mag", "deinflectedPrefix": "", "inflectedSuffix": "ohan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mag", "deinflectedPrefix": "", "inflectedSuffix": "uhan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mag", "deinflectedPrefix": "", "inflectedSuffix": "anan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mag", "deinflectedPrefix": "", "inflectedSuffix": "enan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mag", "deinflectedPrefix": "", "inflectedSuffix": "inan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mag", "deinflectedPrefix": "", "inflectedSuffix": "onan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mag", "deinflectedPrefix": "", "inflectedSuffix": "unan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mag", "deinflectedPrefix": "", "inflectedSuffix": "uhan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mag", "deinflectedPrefix": "", "inflectedSuffix": "unan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mag", "deinflectedPrefix": "", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "mag", "deinflectedPrefix": "", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}}
+      ]
+    },
+    {
+      "id": "magkanda-",
+      "name": "magkanda-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "magkanda", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "magkandar", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "magma-",
+      "name": "magma-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "magma", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "magmar", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "magpa-",
+      "name": "magpa-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "magpa", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "magpar", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "magpaka-",
+      "name": "magpaka-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "magpaka", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "magpakar", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "magsi-",
+      "name": "magsi-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "magsi", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "magsipag", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "makapang-",
+      "name": "makapang-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "makapang", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "makapand", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "makapanl", "deinflected": "l", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "makapanr", "deinflected": "r", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "makapans", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "makapant", "deinflected": "t", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "makapamb", "deinflected": "b", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "makapamp", "deinflected": "p", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "makapag-",
+      "name": "makapag-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "makapag", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "maka-",
+      "name": "maka-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "maka", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj"]},
+        {"type": "prefix", "inflected": "makar", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "maki-",
+      "name": "maki-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "maki", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "makir", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "makipag-",
+      "name": "makipag-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "makipag", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "makipag-...-an",
+      "name": "makipag-...-an",
+      "source": "yomitan",
+      "rules": [
+        {"type": "circumfix", "inflectedPrefix": "makipag", "deinflectedPrefix": "", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "makipag", "deinflectedPrefix": "", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "makipag", "deinflectedPrefix": "", "inflectedSuffix": "ahan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "makipag", "deinflectedPrefix": "", "inflectedSuffix": "ehan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "makipag", "deinflectedPrefix": "", "inflectedSuffix": "ihan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "makipag", "deinflectedPrefix": "", "inflectedSuffix": "ohan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "makipag", "deinflectedPrefix": "", "inflectedSuffix": "uhan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "makipag", "deinflectedPrefix": "", "inflectedSuffix": "anan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "makipag", "deinflectedPrefix": "", "inflectedSuffix": "enan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "makipag", "deinflectedPrefix": "", "inflectedSuffix": "inan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "makipag", "deinflectedPrefix": "", "inflectedSuffix": "onan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "makipag", "deinflectedPrefix": "", "inflectedSuffix": "unan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "makipag", "deinflectedPrefix": "", "inflectedSuffix": "uhan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "makipag", "deinflectedPrefix": "", "inflectedSuffix": "unan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "makipag", "deinflectedPrefix": "", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "makipag", "deinflectedPrefix": "", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}}
+      ]
+    },
+    {
+      "id": "mang-",
+      "name": "mang-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "mang", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "mand", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "manl", "deinflected": "l", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "manr", "deinflected": "r", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "mans", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "mant", "deinflected": "t", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "mamb", "deinflected": "b", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "mamp", "deinflected": "p", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "mapa-",
+      "name": "mapa-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "mapa", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "mapar", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "pa-...-in",
+      "name": "pa-...-in",
+      "source": "yomitan",
+      "rules": [
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "in", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "in", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "rin", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "rin", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "ahin", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "ehin", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "ihin", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "ohin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "uhin", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "ahin", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "ehin", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "ihin", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "ohin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "uhin", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "anin", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "enin", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "inin", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "onin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "unin", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "anin", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "enin", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "inin", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "onin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "unin", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "uhin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "uhin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "unin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "unin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "in", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "in", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "pa", "deinflectedPrefix": "", "inflectedSuffix": "rin", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "par", "deinflectedPrefix": "d", "inflectedSuffix": "rin", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}}
+      ]
+    },
+    {
+      "id": "pag-...-an",
+      "name": "pag-...-an",
+      "source": "yomitan",
+      "rules": [
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "ahan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "ehan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "ihan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "ohan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "uhan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "anan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "enan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "inan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "onan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "unan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "uhan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "unan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}}
+      ]
+    },
+    {
+      "id": "pang-...-an",
+      "name": "pang-...-an",
+      "source": "yomitan",
+      "rules": [
+        {"type": "circumfix", "inflectedPrefix": "pang", "deinflectedPrefix": "", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pang", "deinflectedPrefix": "", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pang", "deinflectedPrefix": "", "inflectedSuffix": "ahan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pang", "deinflectedPrefix": "", "inflectedSuffix": "ehan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pang", "deinflectedPrefix": "", "inflectedSuffix": "ihan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pang", "deinflectedPrefix": "", "inflectedSuffix": "ohan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pang", "deinflectedPrefix": "", "inflectedSuffix": "uhan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pang", "deinflectedPrefix": "", "inflectedSuffix": "anan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pang", "deinflectedPrefix": "", "inflectedSuffix": "enan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pang", "deinflectedPrefix": "", "inflectedSuffix": "inan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pang", "deinflectedPrefix": "", "inflectedSuffix": "onan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pang", "deinflectedPrefix": "", "inflectedSuffix": "unan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pang", "deinflectedPrefix": "", "inflectedSuffix": "uhan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pang", "deinflectedPrefix": "", "inflectedSuffix": "unan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pang", "deinflectedPrefix": "", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "pang", "deinflectedPrefix": "", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "pand", "deinflectedPrefix": "d", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pand", "deinflectedPrefix": "d", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pand", "deinflectedPrefix": "d", "inflectedSuffix": "ahan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pand", "deinflectedPrefix": "d", "inflectedSuffix": "ehan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pand", "deinflectedPrefix": "d", "inflectedSuffix": "ihan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pand", "deinflectedPrefix": "d", "inflectedSuffix": "ohan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pand", "deinflectedPrefix": "d", "inflectedSuffix": "uhan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pand", "deinflectedPrefix": "d", "inflectedSuffix": "anan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pand", "deinflectedPrefix": "d", "inflectedSuffix": "enan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pand", "deinflectedPrefix": "d", "inflectedSuffix": "inan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pand", "deinflectedPrefix": "d", "inflectedSuffix": "onan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pand", "deinflectedPrefix": "d", "inflectedSuffix": "unan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pand", "deinflectedPrefix": "", "inflectedSuffix": "uhan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pand", "deinflectedPrefix": "", "inflectedSuffix": "unan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pand", "deinflectedPrefix": "d", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "pand", "deinflectedPrefix": "d", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "panl", "deinflectedPrefix": "l", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "panl", "deinflectedPrefix": "l", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "panl", "deinflectedPrefix": "l", "inflectedSuffix": "ahan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "panl", "deinflectedPrefix": "l", "inflectedSuffix": "ehan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "panl", "deinflectedPrefix": "l", "inflectedSuffix": "ihan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "panl", "deinflectedPrefix": "l", "inflectedSuffix": "ohan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "panl", "deinflectedPrefix": "l", "inflectedSuffix": "uhan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "panl", "deinflectedPrefix": "l", "inflectedSuffix": "anan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "panl", "deinflectedPrefix": "l", "inflectedSuffix": "enan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "panl", "deinflectedPrefix": "l", "inflectedSuffix": "inan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "panl", "deinflectedPrefix": "l", "inflectedSuffix": "onan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "panl", "deinflectedPrefix": "l", "inflectedSuffix": "unan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "panl", "deinflectedPrefix": "", "inflectedSuffix": "uhan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "panl", "deinflectedPrefix": "", "inflectedSuffix": "unan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "panl", "deinflectedPrefix": "l", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "panl", "deinflectedPrefix": "l", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "panr", "deinflectedPrefix": "r", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "panr", "deinflectedPrefix": "r", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "panr", "deinflectedPrefix": "r", "inflectedSuffix": "ahan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "panr", "deinflectedPrefix": "r", "inflectedSuffix": "ehan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "panr", "deinflectedPrefix": "r", "inflectedSuffix": "ihan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "panr", "deinflectedPrefix": "r", "inflectedSuffix": "ohan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "panr", "deinflectedPrefix": "r", "inflectedSuffix": "uhan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "panr", "deinflectedPrefix": "r", "inflectedSuffix": "anan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "panr", "deinflectedPrefix": "r", "inflectedSuffix": "enan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "panr", "deinflectedPrefix": "r", "inflectedSuffix": "inan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "panr", "deinflectedPrefix": "r", "inflectedSuffix": "onan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "panr", "deinflectedPrefix": "r", "inflectedSuffix": "unan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "panr", "deinflectedPrefix": "", "inflectedSuffix": "uhan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "panr", "deinflectedPrefix": "", "inflectedSuffix": "unan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "panr", "deinflectedPrefix": "r", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "panr", "deinflectedPrefix": "r", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "pans", "deinflectedPrefix": "s", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pans", "deinflectedPrefix": "s", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pans", "deinflectedPrefix": "s", "inflectedSuffix": "ahan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pans", "deinflectedPrefix": "s", "inflectedSuffix": "ehan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pans", "deinflectedPrefix": "s", "inflectedSuffix": "ihan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pans", "deinflectedPrefix": "s", "inflectedSuffix": "ohan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pans", "deinflectedPrefix": "s", "inflectedSuffix": "uhan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pans", "deinflectedPrefix": "s", "inflectedSuffix": "anan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pans", "deinflectedPrefix": "s", "inflectedSuffix": "enan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pans", "deinflectedPrefix": "s", "inflectedSuffix": "inan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pans", "deinflectedPrefix": "s", "inflectedSuffix": "onan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pans", "deinflectedPrefix": "s", "inflectedSuffix": "unan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pans", "deinflectedPrefix": "", "inflectedSuffix": "uhan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pans", "deinflectedPrefix": "", "inflectedSuffix": "unan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pans", "deinflectedPrefix": "s", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "pans", "deinflectedPrefix": "s", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "pant", "deinflectedPrefix": "t", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pant", "deinflectedPrefix": "t", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pant", "deinflectedPrefix": "t", "inflectedSuffix": "ahan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pant", "deinflectedPrefix": "t", "inflectedSuffix": "ehan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pant", "deinflectedPrefix": "t", "inflectedSuffix": "ihan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pant", "deinflectedPrefix": "t", "inflectedSuffix": "ohan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pant", "deinflectedPrefix": "t", "inflectedSuffix": "uhan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pant", "deinflectedPrefix": "t", "inflectedSuffix": "anan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pant", "deinflectedPrefix": "t", "inflectedSuffix": "enan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pant", "deinflectedPrefix": "t", "inflectedSuffix": "inan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pant", "deinflectedPrefix": "t", "inflectedSuffix": "onan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pant", "deinflectedPrefix": "t", "inflectedSuffix": "unan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pant", "deinflectedPrefix": "", "inflectedSuffix": "uhan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pant", "deinflectedPrefix": "", "inflectedSuffix": "unan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pant", "deinflectedPrefix": "t", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "pant", "deinflectedPrefix": "t", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "pamb", "deinflectedPrefix": "b", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pamb", "deinflectedPrefix": "b", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pamb", "deinflectedPrefix": "b", "inflectedSuffix": "ahan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pamb", "deinflectedPrefix": "b", "inflectedSuffix": "ehan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pamb", "deinflectedPrefix": "b", "inflectedSuffix": "ihan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pamb", "deinflectedPrefix": "b", "inflectedSuffix": "ohan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pamb", "deinflectedPrefix": "b", "inflectedSuffix": "uhan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pamb", "deinflectedPrefix": "b", "inflectedSuffix": "anan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pamb", "deinflectedPrefix": "b", "inflectedSuffix": "enan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pamb", "deinflectedPrefix": "b", "inflectedSuffix": "inan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pamb", "deinflectedPrefix": "b", "inflectedSuffix": "onan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pamb", "deinflectedPrefix": "b", "inflectedSuffix": "unan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pamb", "deinflectedPrefix": "", "inflectedSuffix": "uhan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pamb", "deinflectedPrefix": "", "inflectedSuffix": "unan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pamb", "deinflectedPrefix": "b", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "pamb", "deinflectedPrefix": "b", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "pamp", "deinflectedPrefix": "p", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pamp", "deinflectedPrefix": "p", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pamp", "deinflectedPrefix": "p", "inflectedSuffix": "ahan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pamp", "deinflectedPrefix": "p", "inflectedSuffix": "ehan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pamp", "deinflectedPrefix": "p", "inflectedSuffix": "ihan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pamp", "deinflectedPrefix": "p", "inflectedSuffix": "ohan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pamp", "deinflectedPrefix": "p", "inflectedSuffix": "uhan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pamp", "deinflectedPrefix": "p", "inflectedSuffix": "anan", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pamp", "deinflectedPrefix": "p", "inflectedSuffix": "enan", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pamp", "deinflectedPrefix": "p", "inflectedSuffix": "inan", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pamp", "deinflectedPrefix": "p", "inflectedSuffix": "onan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pamp", "deinflectedPrefix": "p", "inflectedSuffix": "unan", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pamp", "deinflectedPrefix": "", "inflectedSuffix": "uhan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pamp", "deinflectedPrefix": "", "inflectedSuffix": "unan", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pamp", "deinflectedPrefix": "p", "inflectedSuffix": "an", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "pamp", "deinflectedPrefix": "p", "inflectedSuffix": "ran", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}}
+      ]
+    },
+    {
+      "id": "pag-...-in",
+      "name": "pag-...-in",
+      "source": "yomitan",
+      "rules": [
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "in", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "rin", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "ahin", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "ehin", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "ihin", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "ohin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "uhin", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "anin", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "enin", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "inin", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "onin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "unin", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "uhin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "unin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "in", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "pag", "deinflectedPrefix": "", "inflectedSuffix": "rin", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}}
+      ]
+    },
+    {
+      "id": "papang-...-in",
+      "name": "papang-...-in",
+      "source": "yomitan",
+      "rules": [
+        {"type": "circumfix", "inflectedPrefix": "papang", "deinflectedPrefix": "", "inflectedSuffix": "in", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papang", "deinflectedPrefix": "", "inflectedSuffix": "rin", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papang", "deinflectedPrefix": "", "inflectedSuffix": "ahin", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papang", "deinflectedPrefix": "", "inflectedSuffix": "ehin", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papang", "deinflectedPrefix": "", "inflectedSuffix": "ihin", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papang", "deinflectedPrefix": "", "inflectedSuffix": "ohin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papang", "deinflectedPrefix": "", "inflectedSuffix": "uhin", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papang", "deinflectedPrefix": "", "inflectedSuffix": "anin", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papang", "deinflectedPrefix": "", "inflectedSuffix": "enin", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papang", "deinflectedPrefix": "", "inflectedSuffix": "inin", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papang", "deinflectedPrefix": "", "inflectedSuffix": "onin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papang", "deinflectedPrefix": "", "inflectedSuffix": "unin", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papang", "deinflectedPrefix": "", "inflectedSuffix": "uhin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papang", "deinflectedPrefix": "", "inflectedSuffix": "unin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papang", "deinflectedPrefix": "", "inflectedSuffix": "in", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "papang", "deinflectedPrefix": "", "inflectedSuffix": "rin", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "papand", "deinflectedPrefix": "d", "inflectedSuffix": "in", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papand", "deinflectedPrefix": "d", "inflectedSuffix": "rin", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papand", "deinflectedPrefix": "d", "inflectedSuffix": "ahin", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papand", "deinflectedPrefix": "d", "inflectedSuffix": "ehin", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papand", "deinflectedPrefix": "d", "inflectedSuffix": "ihin", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papand", "deinflectedPrefix": "d", "inflectedSuffix": "ohin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papand", "deinflectedPrefix": "d", "inflectedSuffix": "uhin", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papand", "deinflectedPrefix": "d", "inflectedSuffix": "anin", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papand", "deinflectedPrefix": "d", "inflectedSuffix": "enin", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papand", "deinflectedPrefix": "d", "inflectedSuffix": "inin", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papand", "deinflectedPrefix": "d", "inflectedSuffix": "onin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papand", "deinflectedPrefix": "d", "inflectedSuffix": "unin", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papand", "deinflectedPrefix": "", "inflectedSuffix": "uhin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papand", "deinflectedPrefix": "", "inflectedSuffix": "unin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papand", "deinflectedPrefix": "d", "inflectedSuffix": "in", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "papand", "deinflectedPrefix": "d", "inflectedSuffix": "rin", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "papanl", "deinflectedPrefix": "l", "inflectedSuffix": "in", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papanl", "deinflectedPrefix": "l", "inflectedSuffix": "rin", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papanl", "deinflectedPrefix": "l", "inflectedSuffix": "ahin", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papanl", "deinflectedPrefix": "l", "inflectedSuffix": "ehin", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papanl", "deinflectedPrefix": "l", "inflectedSuffix": "ihin", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papanl", "deinflectedPrefix": "l", "inflectedSuffix": "ohin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papanl", "deinflectedPrefix": "l", "inflectedSuffix": "uhin", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papanl", "deinflectedPrefix": "l", "inflectedSuffix": "anin", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papanl", "deinflectedPrefix": "l", "inflectedSuffix": "enin", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papanl", "deinflectedPrefix": "l", "inflectedSuffix": "inin", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papanl", "deinflectedPrefix": "l", "inflectedSuffix": "onin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papanl", "deinflectedPrefix": "l", "inflectedSuffix": "unin", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papanl", "deinflectedPrefix": "", "inflectedSuffix": "uhin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papanl", "deinflectedPrefix": "", "inflectedSuffix": "unin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papanl", "deinflectedPrefix": "l", "inflectedSuffix": "in", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "papanl", "deinflectedPrefix": "l", "inflectedSuffix": "rin", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "papanr", "deinflectedPrefix": "r", "inflectedSuffix": "in", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papanr", "deinflectedPrefix": "r", "inflectedSuffix": "rin", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papanr", "deinflectedPrefix": "r", "inflectedSuffix": "ahin", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papanr", "deinflectedPrefix": "r", "inflectedSuffix": "ehin", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papanr", "deinflectedPrefix": "r", "inflectedSuffix": "ihin", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papanr", "deinflectedPrefix": "r", "inflectedSuffix": "ohin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papanr", "deinflectedPrefix": "r", "inflectedSuffix": "uhin", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papanr", "deinflectedPrefix": "r", "inflectedSuffix": "anin", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papanr", "deinflectedPrefix": "r", "inflectedSuffix": "enin", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papanr", "deinflectedPrefix": "r", "inflectedSuffix": "inin", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papanr", "deinflectedPrefix": "r", "inflectedSuffix": "onin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papanr", "deinflectedPrefix": "r", "inflectedSuffix": "unin", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papanr", "deinflectedPrefix": "", "inflectedSuffix": "uhin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papanr", "deinflectedPrefix": "", "inflectedSuffix": "unin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papanr", "deinflectedPrefix": "r", "inflectedSuffix": "in", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "papanr", "deinflectedPrefix": "r", "inflectedSuffix": "rin", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "papans", "deinflectedPrefix": "s", "inflectedSuffix": "in", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papans", "deinflectedPrefix": "s", "inflectedSuffix": "rin", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papans", "deinflectedPrefix": "s", "inflectedSuffix": "ahin", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papans", "deinflectedPrefix": "s", "inflectedSuffix": "ehin", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papans", "deinflectedPrefix": "s", "inflectedSuffix": "ihin", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papans", "deinflectedPrefix": "s", "inflectedSuffix": "ohin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papans", "deinflectedPrefix": "s", "inflectedSuffix": "uhin", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papans", "deinflectedPrefix": "s", "inflectedSuffix": "anin", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papans", "deinflectedPrefix": "s", "inflectedSuffix": "enin", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papans", "deinflectedPrefix": "s", "inflectedSuffix": "inin", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papans", "deinflectedPrefix": "s", "inflectedSuffix": "onin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papans", "deinflectedPrefix": "s", "inflectedSuffix": "unin", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papans", "deinflectedPrefix": "", "inflectedSuffix": "uhin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papans", "deinflectedPrefix": "", "inflectedSuffix": "unin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papans", "deinflectedPrefix": "s", "inflectedSuffix": "in", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "papans", "deinflectedPrefix": "s", "inflectedSuffix": "rin", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "papant", "deinflectedPrefix": "t", "inflectedSuffix": "in", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papant", "deinflectedPrefix": "t", "inflectedSuffix": "rin", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papant", "deinflectedPrefix": "t", "inflectedSuffix": "ahin", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papant", "deinflectedPrefix": "t", "inflectedSuffix": "ehin", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papant", "deinflectedPrefix": "t", "inflectedSuffix": "ihin", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papant", "deinflectedPrefix": "t", "inflectedSuffix": "ohin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papant", "deinflectedPrefix": "t", "inflectedSuffix": "uhin", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papant", "deinflectedPrefix": "t", "inflectedSuffix": "anin", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papant", "deinflectedPrefix": "t", "inflectedSuffix": "enin", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papant", "deinflectedPrefix": "t", "inflectedSuffix": "inin", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papant", "deinflectedPrefix": "t", "inflectedSuffix": "onin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papant", "deinflectedPrefix": "t", "inflectedSuffix": "unin", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papant", "deinflectedPrefix": "", "inflectedSuffix": "uhin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papant", "deinflectedPrefix": "", "inflectedSuffix": "unin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papant", "deinflectedPrefix": "t", "inflectedSuffix": "in", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "papant", "deinflectedPrefix": "t", "inflectedSuffix": "rin", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "papamb", "deinflectedPrefix": "b", "inflectedSuffix": "in", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papamb", "deinflectedPrefix": "b", "inflectedSuffix": "rin", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papamb", "deinflectedPrefix": "b", "inflectedSuffix": "ahin", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papamb", "deinflectedPrefix": "b", "inflectedSuffix": "ehin", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papamb", "deinflectedPrefix": "b", "inflectedSuffix": "ihin", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papamb", "deinflectedPrefix": "b", "inflectedSuffix": "ohin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papamb", "deinflectedPrefix": "b", "inflectedSuffix": "uhin", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papamb", "deinflectedPrefix": "b", "inflectedSuffix": "anin", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papamb", "deinflectedPrefix": "b", "inflectedSuffix": "enin", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papamb", "deinflectedPrefix": "b", "inflectedSuffix": "inin", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papamb", "deinflectedPrefix": "b", "inflectedSuffix": "onin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papamb", "deinflectedPrefix": "b", "inflectedSuffix": "unin", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papamb", "deinflectedPrefix": "", "inflectedSuffix": "uhin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papamb", "deinflectedPrefix": "", "inflectedSuffix": "unin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papamb", "deinflectedPrefix": "b", "inflectedSuffix": "in", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "papamb", "deinflectedPrefix": "b", "inflectedSuffix": "rin", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "papamp", "deinflectedPrefix": "p", "inflectedSuffix": "in", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papamp", "deinflectedPrefix": "p", "inflectedSuffix": "rin", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papamp", "deinflectedPrefix": "p", "inflectedSuffix": "ahin", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papamp", "deinflectedPrefix": "p", "inflectedSuffix": "ehin", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papamp", "deinflectedPrefix": "p", "inflectedSuffix": "ihin", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papamp", "deinflectedPrefix": "p", "inflectedSuffix": "ohin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papamp", "deinflectedPrefix": "p", "inflectedSuffix": "uhin", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papamp", "deinflectedPrefix": "p", "inflectedSuffix": "anin", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papamp", "deinflectedPrefix": "p", "inflectedSuffix": "enin", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papamp", "deinflectedPrefix": "p", "inflectedSuffix": "inin", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papamp", "deinflectedPrefix": "p", "inflectedSuffix": "onin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papamp", "deinflectedPrefix": "p", "inflectedSuffix": "unin", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papamp", "deinflectedPrefix": "", "inflectedSuffix": "uhin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papamp", "deinflectedPrefix": "", "inflectedSuffix": "unin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "papamp", "deinflectedPrefix": "p", "inflectedSuffix": "in", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "papamp", "deinflectedPrefix": "p", "inflectedSuffix": "rin", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}}
+      ]
+    },
+    {
+      "id": "ma-...-in",
+      "name": "ma-...-in",
+      "source": "yomitan",
+      "rules": [
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "in", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "in", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "rin", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "rin", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "ahin", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "ehin", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "ihin", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "ohin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "uhin", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "ahin", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "ehin", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "ihin", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "ohin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "uhin", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "anin", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "enin", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "inin", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "onin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "unin", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "anin", "deinflectedSuffix": "a", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "enin", "deinflectedSuffix": "e", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "inin", "deinflectedSuffix": "i", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "onin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "unin", "deinflectedSuffix": "u", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "uhin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "uhin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "unin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "unin", "deinflectedSuffix": "o", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "[A-Za-z0-9_]"},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "in", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "in", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "ma", "deinflectedPrefix": "", "inflectedSuffix": "rin", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}},
+        {"type": "circumfix", "inflectedPrefix": "mar", "deinflectedPrefix": "d", "inflectedSuffix": "rin", "deinflectedSuffix": "d", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 3, "stemCharacters": "[A-Za-z0-9_]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]", "betweenMinLength": 1}}
+      ]
+    },
+    {
+      "id": "mapag-",
+      "name": "mapag-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "mapag", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "naka-",
+      "name": "naka-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "naka", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj"]},
+        {"type": "prefix", "inflected": "nakar", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "nakaka-",
+      "name": "nakaka-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "nakaka", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj"]},
+        {"type": "prefix", "inflected": "nakakar", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "nakakapang-",
+      "name": "nakakapang-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "nakakapang", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj"]},
+        {"type": "prefix", "inflected": "nakakapand", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n", "adj"]},
+        {"type": "prefix", "inflected": "nakakapanl", "deinflected": "l", "conditionsIn": [], "conditionsOut": ["n", "adj"]},
+        {"type": "prefix", "inflected": "nakakapanr", "deinflected": "r", "conditionsIn": [], "conditionsOut": ["n", "adj"]},
+        {"type": "prefix", "inflected": "nakakapans", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["n", "adj"]},
+        {"type": "prefix", "inflected": "nakakapant", "deinflected": "t", "conditionsIn": [], "conditionsOut": ["n", "adj"]},
+        {"type": "prefix", "inflected": "nakakapamb", "deinflected": "b", "conditionsIn": [], "conditionsOut": ["n", "adj"]},
+        {"type": "prefix", "inflected": "nakakapamp", "deinflected": "p", "conditionsIn": [], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "naka- + rep1",
+      "name": "naka- + rep1",
+      "source": "yomitan",
+      "rules": [
+        {"type": "pattern", "anchorPrefix": "naka", "pattern": "^naka([bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]*[aeiou])\\1", "replacement": "$1", "conditionsIn": [], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "nakapang- + rep1",
+      "name": "nakapang- + rep1",
+      "source": "yomitan",
+      "rules": [
+        {"type": "pattern", "anchorPrefix": "nakapang", "pattern": "^nakapang([bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]*[aeiou])\\1", "replacement": "$1", "conditionsIn": [], "conditionsOut": ["n", "adj"]},
+        {"type": "pattern", "anchorPrefix": "nakapan", "pattern": "^nakapan([dlrst]*[aeiou])\\1", "replacement": "$1", "conditionsIn": [], "conditionsOut": ["n", "adj"]},
+        {"type": "pattern", "anchorPrefix": "nakapam", "pattern": "^nakapam([bp]*[aeiou])\\1", "replacement": "$1", "conditionsIn": [], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "pala-",
+      "name": "pala-",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "pala", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj"]},
+        {"type": "prefix", "inflected": "palar", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "-ng",
+      "name": "ng",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ng", "deinflected": "", "conditionsIn": [], "conditionsOut": []}
+      ]
+    }
+  ]
+}

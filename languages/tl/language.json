@@ -50,9 +50,9 @@
         "variants": [[{"strip": "[\\u00AD]"}]]
       },
       {
-        "id": "removeDiacritics",
-        "name": "Remove diacritics",
-        "variants": [[{"normalize": "NFD"}, {"strip": "[\\u0300-\\u036F]"}, {"normalize": "NFC"}]]
+        "id": "removeAlphabeticDiacritics",
+        "name": "Remove alphabetic diacritics",
+        "variants": [[{"normalize": "NFD"}, {"strip": "[\\u0300-\\u036F]"}]]
       },
       {
         "id": "decapitalize",
