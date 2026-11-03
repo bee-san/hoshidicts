@@ -88,10 +88,10 @@ text as written are followed.
 
 ## Rule provenance
 
-`transforms.json` has 85 transforms and 1,047 rule rows (6,337 rules with
+`transforms.json` has 85 transforms and 1,070 rule rows (6,351 rules with
 cross products expanded), every one `own`. Yomitan has no Portuguese rules, so
 the own rules are also the union and the final set: `transforms.json` is
-`sources/own.json` as `tools/merge-transforms.mjs pt` writes it ("1047 own, 0
+`sources/own.json` as `tools/merge-transforms.mjs pt` writes it ("1070 own, 0
 yomitan, 0 both"). No Yomitan rule is left out, because there is none.
 
 - **What the rules cover.** Tenses and persons are separate transforms, so a
@@ -265,13 +265,14 @@ given, it is labelled "without the field".
    - First rank of `cases.tsv` is lower than of the corpus because many of its
      sources are headwords themselves (`fala`, `falo`, `como`, `visto`), whose
      own entry ranks first.
-   - `--per-rule` on the sample and `cases.tsv`: 304 of the 1,047 rule rows
-     recover a row no other rule reaches, no rule breaks a negative, and 4 add
+   - `--per-rule` on the sample and `cases.tsv`: 311 of the 1,070 rule rows
+     recover a row no other rule reaches, no rule breaks a negative, and 5 add
      one false candidate each without recovering a row: copies of general
      rules (the -ir tu present for stems in f-, the tu imperfects of the
-     written-out verbs, an accent copy of -ílimo and of -mente) whose extra
-     reading is a homograph or a spelling-variant headword (`flores` →
-     florir).
+     written-out verbs, a vós subjunctive, an accent copy of -ílimo and of
+     -mente) whose extra reading is a homograph or a spelling-variant headword
+     (`flores` → florir). With `"filter"` none adds one, because no rule
+     output reaches a term.
    - Corpus by kind (reached / sampled): UniMorph finite and infinitive forms
      751 / 768, gerunds and participles 70 / 70; wty plurals 248 / 250,
      feminines 147 / 150, diminutives 66 / 80, superlatives 56 / 60, verbs
@@ -328,7 +329,7 @@ given, it is labelled "without the field".
      vir; the typo `deses`) and 1 related word (`peja` shown as pejo, not
      pejar).
    - Without the field, 2,873 of the 21,546 verb forms with a pronoun find
-     nothing, and 7,229 show the entry of the word before the hyphen
+     nothing, and 7,244 show the entry of the word before the hyphen
      (`chama-se` → the noun chama, `deixa-me` → the noun deixa).
 4. **Real text** (`sources/measure.py text`): every word of three Project
    Gutenberg novels and three Wikipedia articles, each looked up with the rest
@@ -336,9 +337,9 @@ given, it is labelled "without the field".
 
    | Text | Lookups | Wrong lemma first (judged by form-of rows) | Unjudged |
    | --- | ---: | ---: | ---: |
-   | *Dom Casmurro* | 65,714 | 12 (0.018%) | 327 |
-   | *Memorias Posthumas de Braz Cubas* | 61,579 | 13 (0.021%) | 258 |
-   | *A Cidade e as Serras* | 68,331 | 11 (0.016%) | 551 |
+   | *Dom Casmurro* | 65,714 | 12 (0.018%) | 309 |
+   | *Memorias Posthumas de Braz Cubas* | 61,579 | 13 (0.021%) | 253 |
+   | *A Cidade e as Serras* | 68,331 | 11 (0.016%) | 549 |
    | "Língua portuguesa" (Wikipedia) | 4,863 | 0 | 3 |
    | "Brasil" (Wikipedia) | 12,359 | 0 | 2 |
    | "Portugal" (Wikipedia) | 13,702 | 0 | 23 |
@@ -362,14 +363,14 @@ given, it is labelled "without the field".
      `Montesinho`, `Capelinhos`) and right adverbs (`etnicamente`,
      `tremendamente`).
    - Without the field the novels show no wrong first result judged by
-     form-of rows, and 4,199, 4,552 and 6,795 lookups find nothing (3,729,
-     4,105 and 6,080 with it).
+     form-of rows, and 4,199, 4,552 and 6,795 lookups find nothing (3,747,
+     4,110 and 6,082 with it).
 5. **Performance.**
    - Native `benchmark-lookup --languages languages --language pt` with
      wty-pt-en mapped, on the 74 texts of `sources/benchmark-words.txt` (each
      the rest of a sentence from an inflected word), 6 passes with the first
-     dropped, three runs at machine load 36-39: p50 21.5-23.8 µs, p95
-     32.1-39.1 µs (without the field: 20.5-21.9 µs and 33.6-35.6 µs). The
+     dropped, three runs at machine load 40-51: p50 21.2-24.4 µs, p95
+     33.8-39.1 µs (without the field: 20.0-20.6 µs and 31.7-32.3 µs). The
      budget is 1 ms p50.
    - WebAssembly (`sources/wasm-measure.mjs`, Node 22, the same 74 texts,
      wty-pt-en imported and paged). Hachidori's prebuilt runtimes on
@@ -401,13 +402,13 @@ given, it is labelled "without the field".
 Checks:
 
 - `language-conformance-test languages/pt`: corpus.tsv 1,460 / 1,460,
-  cases.tsv 606 / 606, text.tsv 24 / 24, lookup.tsv 56 / 56, gaps.tsv 0 / 38
-  (reported); classes.json agrees (4 classes, 1,334 fields, 2 steps, 4,266
-  outputs); 707 of the 6,337 rules are exercised by a passing row. `tests/`
-  and `sources/` hold about 830 KB.
+  cases.tsv 613 / 613, text.tsv 24 / 24, lookup.tsv 60 / 60, gaps.tsv 0 / 38
+  (reported); classes.json agrees (4 classes, 1,374 fields, 2 steps, 4,286
+  outputs); 709 of the 6,351 rules are exercised by a passing row. `tests/`
+  and `sources/` hold about 840 KB.
 - `tools/check-yomitan.mjs`: no `sources/yomitan.json`, so no rules to
   compare; `decapitalize` and `capitalizeFirstLetter` agree with Yomitan's on
-  2,165 inputs each, with no listed difference.
+  2,175 inputs each, with no listed difference.
 - Mutation checks (section 14 step 7, `sources/mutations.py <build dir>
   <scratch dir>`): 53 edits of a scratch copy, each removing or loosening one
   stem constraint, exclusion, word-list part, processor or scanning setting
