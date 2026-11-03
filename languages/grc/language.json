@@ -240,14 +240,42 @@
     "anki": {
       "noteTypeFamilies": [],
       "fieldAliases": {},
-      "partOfSpeechLabels": {}
+      "partOfSpeechLabels": {
+        "v": "Verb",
+        "vt": "Transitive verb",
+        "vi": "Intransitive verb",
+        "vr": "Reflexive verb",
+        "n": "Noun",
+        "adj": "Adjective",
+        "adv": "Adverb",
+        "pron": "Pronoun",
+        "prep": "Preposition",
+        "postp": "Postposition",
+        "conj": "Conjunction",
+        "intj": "Interjection",
+        "artic": "Article",
+        "det": "Determiner",
+        "num": "Numeral",
+        "name": "Proper noun",
+        "ptcl": "Particle",
+        "ptcpl": "Participle",
+        "phrase": "Phrase",
+        "prep-phrase": "Prepositional phrase",
+        "prov": "Proverb",
+        "pref": "Prefix",
+        "suf": "Suffix",
+        "char": "Character"
+      }
     },
-    "frequencySamples": null,
+    "frequencySamples": {
+      "common": ["ὁ", "καί", "δέ", "εἰμί", "αὐτός", "οὐ", "ἐν", "γάρ", "μέν", "τε"],
+      "rare": ["κορυθαίολος", "ἀμφιγυήεις", "ἐρίγδουπος", "νεφεληγερέτα", "ποδάρκης", "χρυσόθρονος", "λευκώλενος", "ἀργυρότοξος", "πολύτλας", "ῥοδοδάκτυλος"]
+    },
     "recommendedDictionaries": [
       {
-        "name": "wty-grc-en (wiktionary-to-yomitan)",
-        "url": "https://github.com/yomidevs/wiktionary-to-yomitan",
-        "description": "Ancient Greek to English, from Wiktionary through kaikki.org.",
+        "name": "Wiktionary Ancient Greek-English (wiktionary-to-yomitan)",
+        "url": "https://yomidevs.github.io/wiktionary-to-yomitan/download/",
+        "description": "Ancient Greek words with English definitions from English Wiktionary (kaikki.org), with inflected forms.",
         "licence": "CC BY-SA 4.0"
       }
     ],
@@ -259,7 +287,7 @@
       },
       "entry": {
         "expression": "ἀρχή",
-        "reading": "ἀρχή",
+        "reading": "ᾰ̓ρχή",
         "glossary": ["beginning, origin"],
         "definitionTags": "n",
         "matched": "ἀρχῇ",

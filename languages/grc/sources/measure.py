@@ -5,6 +5,10 @@
     python3 measure.py text <hover.tsv> [--sample 60]   real text: first results judged against the treebank
     python3 measure.py behind <hover.tsv>               the same at words after an article, pronoun, particle or εἰμί
     python3 measure.py frequent <agdt dir>              the 10,000 most frequent forms of the whole treebank
+    python3 measure.py compare <hover.tsv> --other <languages dir> [--trace <transform id>]
+                                                        the first results that change between --languages and --other,
+                                                        and the lookups of --other with a result through the transform
+    python3 measure.py benchmark <hover.tsv>            sources/benchmark-words.txt: 60 texts from inflected words
 
 hover.tsv is what make-hovers-agdt.py writes. Options: --batch build/lookup-batch, --cli build/hoshidicts-cli,
 --languages languages, --dictionary <wty-grc-en imported>. A lookup is a host's hover: the text from the word to
@@ -18,7 +22,7 @@ from pathlib import Path
 import xml.etree.ElementTree as ET
 
 ap = argparse.ArgumentParser()
-ap.add_argument('command', choices=['text', 'behind', 'frequent'])
+ap.add_argument('command', choices=['text', 'behind', 'frequent', 'compare', 'benchmark'])
 ap.add_argument('input')
 ap.add_argument('--batch', default='build/lookup-batch')
 ap.add_argument('--cli', default='build/hoshidicts-cli')
@@ -27,14 +31,16 @@ ap.add_argument('--dictionary', required=True)
 ap.add_argument('--sample', type=int, default=0)
 ap.add_argument('--show', type=int, default=10)
 ap.add_argument('--n', type=int, default=10000)
+ap.add_argument('--other')
+ap.add_argument('--trace')
 a = ap.parse_args()
 
 NFC = lambda s: unicodedata.normalize('NFC', s)
 bare = lambda s: ''.join(c for c in unicodedata.normalize('NFD', s) if not unicodedata.combining(c)).lower()
 
 
-def lookup(texts):
-    p = subprocess.run([a.batch, a.languages, 'grc', a.dictionary, '16', '16'], input=('\n'.join(texts) + '\n').encode(), capture_output=True)
+def lookup(texts, languages=None):
+    p = subprocess.run([a.batch, languages or a.languages, 'grc', a.dictionary, '16', '16'], input=('\n'.join(texts) + '\n').encode(), capture_output=True)
     if p.returncode != 0:
         sys.exit(f'lookup-batch exit {p.returncode}: {p.stderr.decode(errors="replace")[:300]}')
     out = [json.loads(l)['results'] for l in p.stdout.decode().splitlines()]
@@ -87,7 +93,33 @@ def read_hovers(path):
     return items
 
 
-if a.command in ('text', 'behind'):
+if a.command == 'benchmark':
+    rnd = random.Random(1)
+    items = [it for it in read_hovers(a.input) if NFC(it['word']) not in it['golds'] and len(it['word']) >= 4 and not it['pos'][:1] in 'lgcdr']
+    for it in rnd.sample(items, 60):
+        print(' '.join(it['text'].split(' ')[:6]))
+elif a.command == 'compare':
+    items = read_hovers(a.input)
+    texts = [it['text'] for it in items]
+    mine, other = lookup(texts), lookup(texts, a.other)
+    c = collections.Counter()
+    ex = collections.defaultdict(list)
+    for it, x, y in zip(items, mine, other):
+        fx, fy = (x[0]['expression'] if x else None), (y[0]['expression'] if y else None)
+        if fx != fy:
+            k = 'right here' if fx in it['golds'] else 'right in --other' if fy in it['golds'] else 'neither'
+            c[k] += 1
+            if len(ex[k]) < 5:
+                ex[k].append(f'{it["word"]}: {fx} / {fy}')
+    print(f'{sum(c.values())} of {len(items)} first results differ: ' + ', '.join(f'{k} {v}' for k, v in c.most_common()))
+    for k, v in ex.items():
+        print(f'  {k}: ' + '; '.join(v))
+    if a.trace:
+        hits = [(it, y) for it, y in zip(items, other) if any(a.trace in r['trace'] for r in y)]
+        first = sum(1 for _, y in hits if a.trace in y[0]['trace'])
+        right = sum(1 for it, y in hits if any(a.trace in r['trace'] and r['expression'] in it['golds'] for r in y))
+        print(f'--other: {len(hits)} lookups have a result through {a.trace}; it is first in {first}; it is the treebank lemma in {right}')
+elif a.command in ('text', 'behind'):
     items = read_hovers(a.input)
     results = lookup([it['text'] for it in items])
     verdicts = [judge(r, it['golds'], it['word']) for r, it in zip(results, items)]
