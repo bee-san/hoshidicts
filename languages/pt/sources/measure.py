@@ -54,6 +54,8 @@ KINDS = [
         'vou', 'vai', 'vamos', 'vão', 'tenho', 'tem', 'temos', 'têm', 'tinha', 'estou', 'está', 'estamos', 'estão', 'estava',
         'foi', 'era', 'é', 'sou', 'ser', 'há', 'hei', 'havia', 'pode', 'posso', 'podemos', 'quero', 'quer', 'deve', 'devo'}),
 ]
+PRONOUNS = {'me', 'te', 'se', 'lhe', 'lhes', 'nos', 'vos', 'o', 'a', 'os', 'as', 'lo', 'la', 'los', 'las', 'no', 'na', 'nas',
+            'mo', 'ma', 'mos', 'mas', 'to', 'ta', 'tos', 'tas', 'lho', 'lha', 'lhos', 'lhas'}
 ENCLITIC = re.compile(r'^[a-zà-öø-ÿ]+(-(me|te|se|lhe|lhes|nos|vos|o|a|os|as|lo|la|los|las|no|na|nas|mo|ma|to|ta|lho|lha))+(-[a-zàáâãéêíóôõúç]+)?$')
 
 
@@ -88,7 +90,7 @@ class Judge:
         # A verb with an attached pronoun (deixa-me, fá-lo, dir-te-ei) that has
         # no row of its own: the rows of the verb form before the hyphen, or of
         # the infinitive it was cut from (fazê- → fazer).
-        if not out and '-' in text:
+        if not out and '-' in text and norm(text).split('-')[1] in PRONOUNS:
             parts = norm(text).split('-')
             verb, pronoun = parts[0], parts[1]
             candidates = {verb}

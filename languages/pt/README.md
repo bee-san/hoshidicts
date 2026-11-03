@@ -82,8 +82,9 @@ text as written are followed.
     (#55752, sha256 `0fc3dbf3…d0c7`) and *Memorias Posthumas de Braz Cubas*
     (#54829, sha256 `edfe4370…303a`); Eça de Queirós, *A Cidade e as Serras*
     (#18220, sha256 `b7cd088e…b33c`);
-  - the Portuguese Wikipedia article "Língua portuguesa", revision 73290156
-    (plain-text extract, sha256 `20fac7c0…e230`), CC BY-SA 4.0.
+  - Portuguese Wikipedia articles, plain-text extracts, CC BY-SA 4.0: "Língua
+    portuguesa" (revision 73290156, sha256 `20fac7c0…e230`), "Brasil"
+    (73348120, `0b5e28d6…f242`) and "Portugal" (73348067, `6ebb9aef…98fa`).
 
 ## Rule provenance
 
@@ -286,13 +287,13 @@ is given, it is labelled "without the field".
    | Word before | Lookups | Own entry | Lemma | Wrong lemma | Unjudged | Nothing |
    | --- | ---: | ---: | ---: | ---: | ---: | ---: |
    | me, te, se, lhe, lhes, nos, vos | 120,714 | 84,216 | 36,335 | 1 | 6 | 156 |
-   | o, a, os, as | 517,828 | 449,210 | 62,894 | 1 | 80 | 5,643 |
+   | o, a, os, as | 517,828 | 449,210 | 62,894 | 0 | 81 | 5,643 |
    | um, uma, uns, umas | 152,856 | 116,459 | 35,834 | 0 | 87 | 476 |
    | ir, ter, estar, ser, haver, poder, querer, dever (30 forms) | 445,380 | 279,657 | 164,939 | 1 | 85 | 698 |
    | verb forms with an attached pronoun | 21,546 | 386 | 21,077 | 0 | 17 | 66 |
 
-   - The three wrong lemmas are `encarga` → encargo, `fofinha` → fofa and
-     `sexta-feiras` (a misspelling of sextas-feiras) → sexta-feira.
+   - The two wrong lemmas are `encarga` (a verb) → the noun encargo, and
+     `fofinha` → fofa (fofinho is its own headword).
    - A hand check of 60 unjudged results drawn from them (seed 11): 53 right,
      6 wrong (names read as words: `Toni` → toner, `Elma` → elmo, `Joko` →
      jóquer; the Asturian `moi`; `viamos`, víamos without its accent, read as
@@ -302,8 +303,8 @@ is given, it is labelled "without the field".
      nothing, and 7,229 show the entry of the word before the hyphen
      (`chama-se` → the noun chama, `deixa-me` → the noun deixa).
 4. **Real text** (`sources/measure.py text`): every word of three Project
-   Gutenberg novels and a Wikipedia article, each looked up with the rest of
-   its sentence.
+   Gutenberg novels and three Wikipedia articles, each looked up with the rest
+   of its sentence.
 
    | Text | Lookups | Wrong lemma first (judged by form-of rows) | Unjudged |
    | --- | ---: | ---: | ---: |
@@ -311,6 +312,8 @@ is given, it is labelled "without the field".
    | *Memorias Posthumas de Braz Cubas* | 61,579 | 13 (0.021%) | 258 |
    | *A Cidade e as Serras* | 68,331 | 11 (0.016%) | 551 |
    | "Língua portuguesa" (Wikipedia) | 4,863 | 0 | 3 |
+   | "Brasil" (Wikipedia) | 12,359 | 0 | 2 |
+   | "Portugal" (Wikipedia) | 13,702 | 0 | 23 |
 
    - All 36 judged wrong are spellings of their editions: `azas` (asas) and
      `familias` (famílias) read as the tu present of azar and familiar (25),
@@ -320,13 +323,17 @@ is given, it is labelled "without the field".
      to a reference (`azas` → aza → asa), which one hop does not reach, so the
      right lemma has no entry the lookup can show.
    - A hand check of 60 unjudged results drawn from the three novels and the
-     article (seed 11): 42 right, 14 wrong and 4 related words. Of the wrong,
+     first article (seed 11): 42 right, 14 wrong and 4 related words. Of the wrong,
      10 are spellings without the accents of the 1911 and 1945 reforms
      (`politicos`, `magnificos`, `sitios`, `visinho`, `cosinha`, `bôa`,
      `desdem`, `miudas`), 2 Roman numerals (`VII` → vir), 1 the French
      `DES` and 1 a place name. The related words are `fitos` (the adjective
      fito) shown as fitar, `remoque` as remocar and `saida` (saída) as sair.
-   - Without the field the same texts show no wrong first result judged by
+   - The unjudged results of the two newer articles are acronyms (`SNS`,
+     `EA`, `Csa`), prefixes (`intra-`, `Cro-Magnon`), place names (`Peneda`,
+     `Montesinho`, `Capelinhos`) and right adverbs (`etnicamente`,
+     `tremendamente`).
+   - Without the field the novels show no wrong first result judged by
      form-of rows, and 4,199, 4,552 and 6,795 lookups find nothing (3,729,
      4,105 and 6,080 with it).
 5. **Performance.**
