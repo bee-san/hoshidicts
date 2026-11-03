@@ -300,9 +300,10 @@ file is measured with every option on and with the defaults.
    `duket` → `dukem`, `largua` → `largoj`); the Anki note and the switch to
    Japanese and back work.
 9. **Differential check** (`tools/check-yomitan.mjs` with
-   `build/hoshidicts-cli`): 2,754 inputs, 8,620 Yomitan results, 0
+   `build/hoshidicts-cli`): 2,755 inputs, 8,624 Yomitan results, 0
    differences; `decapitalize` and `capitalizeFirstLetter` agree with
-   Yomitan's on 1,747 inputs each.
+   Yomitan's on 1,748 inputs each (the inputs include the test files'
+   strings, so these counts move with the tests).
 10. **Conformance** (`language-conformance-test`): corpus.tsv 994 / 994,
     defaults.tsv 638 / 638 with the defaults, cases.tsv 9 / 9,
     yomitan.tsv 98 / 98, text.tsv 24 / 24, lookup.tsv 31 / 31; gaps.tsv
