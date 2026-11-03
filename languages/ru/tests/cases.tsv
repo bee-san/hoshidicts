@@ -113,6 +113,11 @@ comparative	1	лучше	хороший	adj	*
 comparative	1	получше	хороший	adj	*
 comparative	1	хуже	плохой	adj	*
 comparative	1	меньше	маленький	adj	*
+adverb	1	по-старинному	старинный	adj	*
+adverb	1	по-хорошему	хороший	adj	*
+adverb	1	по-летнему	летний	adj	*
+adverb	1	по-дружески	дружеский	adj	*
+adverb	1	по-волчьи	волчий	adj	*
 superlative	1	новейший	новый	adj	*
 superlative	1	величайший	великий	adj	*
 superlative	1	ближайшего	близкий	adj	*
@@ -240,6 +245,9 @@ past	1	упал	упасть	v	*
 past	1	умер	умереть	v	*
 past	1	тёр	тереть	v	*
 past	1	привык	привыкнуть	v	*
+past	1	достиг	достичь	v	*
+present	1	достигнет	достичь	v	*
+past	1	постигла	постичь	v	*
 past	1	привыкла	привыкнуть	v	*
 past	1	исчез	исчезнуть	v	*
 past	1	шёл	идти	v	*

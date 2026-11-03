@@ -63,6 +63,7 @@ const OTHER_FORMS = [
     ['cmp', 'comparative'],
     ['po', 'по- comparative'],
     ['sup', 'superlative'],
+    ['adverb', 'по- adverb'],
     ['fleeting', 'fleeting vowel'],
     ['pres.1sg', 'first-person singular present/future'],
     ['pres.2sg', 'second-person singular present/future'],
@@ -594,6 +595,10 @@ for (const [word, lemma] of [
 ]) {
     wholeWord('adj', ['cmp'], word, lemma, ['cmp'], ADJ, [word, lemma]);
 }
+// Adverbs of manner by по- (по-новому, по-старинному, по-хорошему, по-русски,
+// по-волчьи) read as their adjective; the common ones are also headwords.
+put('adj', ['adverb'], {type: 'circumfix', prefixes: [['по-', '']], suffixes: [['ому', 'ый'], ['ому', 'ой'], ['ему', 'ий'], ['ски', 'ский'], ['цки', 'цкий'], ['ьи', 'ий']],
+    conditionsIn: [], conditionsOut: ADJ, stemCharacters: STEM, stemMinLength: 2}, ['по-старинному', 'старинный']);
 // Superlatives in -ейший, -айший (новейший, величайший, строжайший, ближайший, тишайший).
 for (const [inflected, lemma, stemEnd, ex] of [
     ['ейший', 'ый', CONSONANT, ['новейший', 'новый']], ['ейший', 'ой', CONSONANT, ['простейший', 'простой']],
@@ -979,6 +984,13 @@ for (const [ending, form] of [['е', 'nom.pl'], ['', 'gen.pl'], ['ам', 'dat.pl
 }
 for (const [ending, form] of [['ы', 'nom.pl'], ['', 'gen.pl'], ['ам', 'dat.pl'], ['ами', 'ins.pl'], ['ах', 'prp.pl']]) {
     suffix('noun', [form], `ар${ending}`, 'арин', [], NOUN, {stemMinLength: 3, stemEndsWith: '[тгб]'}, form === 'nom.pl' ? ['татары', 'татарин'] : null);
+}
+
+// -стичь, the other infinitive of -стигнуть (достичь, постичь, настичь, застичь):
+// достигну, достиг, достигла, достигнув.
+for (const [form, ending] of Object.entries({'pres.1sg': 'стигну', 'pres.2sg': 'стигнешь', 'pres.3sg': 'стигнет', 'pres.1pl': 'стигнем', 'pres.2pl': 'стигнете', 'pres.3pl': 'стигнут',
+    'imp.2sg': 'стигни', 'imp.2pl': 'стигните', 'past.m': 'стиг', 'past.f': 'стигла', 'past.n': 'стигло', 'past.pl': 'стигли', 'ptcp.past.act': 'стигший', 'ger.past': 'стигнув'})) {
+    verb([form], ending, 'стичь', {stemMinLength: 2}, form === 'pres.3sg' ? ['достигнет', 'достичь'] : form === 'past.m' ? ['постиг', 'постичь'] : null, {refl: form !== 'ger.past'});
 }
 
 // --- Pronouns and numerals, as whole words ---------------------------------------------
