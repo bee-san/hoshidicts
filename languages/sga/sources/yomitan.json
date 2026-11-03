@@ -1,0 +1,196 @@
+{
+  "schema": 1,
+  "conditions": {},
+  "transforms": [
+    {
+      "id": "nd for nn",
+      "name": "nd for nn",
+      "description": "nd for nn",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "nd", "deinflected": "nn", "conditionsIn": [], "conditionsOut": []}
+      ]
+    },
+    {
+      "id": "cg for c",
+      "name": "cg for c",
+      "description": "cg for c",
+      "source": "yomitan",
+      "rules": [
+        {"type": "replace", "inflected": "cg", "deinflected": "c", "occurrence": "all", "conditionsIn": [], "conditionsOut": []}
+      ]
+    },
+    {
+      "id": "td for t",
+      "name": "td for t",
+      "description": "td for t",
+      "source": "yomitan",
+      "rules": [
+        {"type": "replace", "inflected": "td", "deinflected": "t", "occurrence": "all", "conditionsIn": [], "conditionsOut": []}
+      ]
+    },
+    {
+      "id": "pb for p",
+      "name": "pb for p",
+      "description": "pb for p",
+      "source": "yomitan",
+      "rules": [
+        {"type": "replace", "inflected": "pb", "deinflected": "p", "occurrence": "all", "conditionsIn": [], "conditionsOut": []}
+      ]
+    },
+    {
+      "id": "ǽ/æ for é",
+      "name": "ǽ/æ for é",
+      "description": "ǽ/æ for é",
+      "source": "yomitan",
+      "rules": [
+        {"type": "replace", "inflected": "ǽ", "deinflected": "é", "occurrence": "all", "conditionsIn": [], "conditionsOut": []},
+        {"type": "replace", "inflected": "æ", "deinflected": "é", "occurrence": "all", "conditionsIn": [], "conditionsOut": []}
+      ]
+    },
+    {
+      "id": "doubled vowel",
+      "name": "doubled vowel",
+      "description": "Doubled Vowel",
+      "source": "yomitan",
+      "rules": [
+        {"type": "replace", "inflected": "aa", "deinflected": "á", "occurrence": "all", "notAtStart": true, "conditionsIn": [], "conditionsOut": []},
+        {"type": "replace", "inflected": "ee", "deinflected": "é", "occurrence": "all", "notAtStart": true, "conditionsIn": [], "conditionsOut": []},
+        {"type": "replace", "inflected": "ii", "deinflected": "í", "occurrence": "all", "notAtStart": true, "conditionsIn": [], "conditionsOut": []},
+        {"type": "replace", "inflected": "oo", "deinflected": "ó", "occurrence": "all", "notAtStart": true, "conditionsIn": [], "conditionsOut": []},
+        {"type": "replace", "inflected": "uu", "deinflected": "ú", "occurrence": "all", "notAtStart": true, "conditionsIn": [], "conditionsOut": []}
+      ]
+    },
+    {
+      "id": "doubled consonant",
+      "name": "doubled consonant",
+      "description": "Doubled Consonant",
+      "source": "yomitan",
+      "rules": [
+        {"type": "replace", "inflected": "cc", "deinflected": "c", "occurrence": "all", "notAtStart": true, "conditionsIn": [], "conditionsOut": []},
+        {"type": "replace", "inflected": "pp", "deinflected": "p", "occurrence": "all", "notAtStart": true, "conditionsIn": [], "conditionsOut": []},
+        {"type": "replace", "inflected": "tt", "deinflected": "t", "occurrence": "all", "notAtStart": true, "conditionsIn": [], "conditionsOut": []},
+        {"type": "replace", "inflected": "gg", "deinflected": "g", "occurrence": "all", "notAtStart": true, "conditionsIn": [], "conditionsOut": []},
+        {"type": "replace", "inflected": "bb", "deinflected": "b", "occurrence": "all", "notAtStart": true, "conditionsIn": [], "conditionsOut": []},
+        {"type": "replace", "inflected": "dd", "deinflected": "d", "occurrence": "all", "notAtStart": true, "conditionsIn": [], "conditionsOut": []},
+        {"type": "replace", "inflected": "rr", "deinflected": "r", "occurrence": "all", "notAtStart": true, "conditionsIn": [], "conditionsOut": []},
+        {"type": "replace", "inflected": "ll", "deinflected": "l", "occurrence": "all", "notAtStart": true, "conditionsIn": [], "conditionsOut": []},
+        {"type": "replace", "inflected": "nn", "deinflected": "n", "occurrence": "all", "notAtStart": true, "conditionsIn": [], "conditionsOut": []},
+        {"type": "replace", "inflected": "mm", "deinflected": "m", "occurrence": "all", "notAtStart": true, "conditionsIn": [], "conditionsOut": []},
+        {"type": "replace", "inflected": "ss", "deinflected": "s", "occurrence": "all", "notAtStart": true, "conditionsIn": [], "conditionsOut": []}
+      ]
+    },
+    {
+      "id": "lenited",
+      "name": "lenited",
+      "description": "Non-Beginning Lenition",
+      "source": "yomitan",
+      "rules": [
+        {"type": "replace", "inflected": "ch", "deinflected": "c", "occurrence": "all", "notAtStart": true, "conditionsIn": [], "conditionsOut": []},
+        {"type": "replace", "inflected": "ph", "deinflected": "p", "occurrence": "all", "notAtStart": true, "conditionsIn": [], "conditionsOut": []},
+        {"type": "replace", "inflected": "th", "deinflected": "t", "occurrence": "all", "notAtStart": true, "conditionsIn": [], "conditionsOut": []}
+      ]
+    },
+    {
+      "id": "lenited (Middle Irish)",
+      "name": "lenited (Middle Irish)",
+      "description": "Non-Beginning Lenition (Middle Irish)",
+      "source": "yomitan",
+      "rules": [
+        {"type": "replace", "inflected": "gh", "deinflected": "g", "occurrence": "all", "notAtStart": true, "conditionsIn": [], "conditionsOut": []},
+        {"type": "replace", "inflected": "bh", "deinflected": "b", "occurrence": "all", "notAtStart": true, "conditionsIn": [], "conditionsOut": []},
+        {"type": "replace", "inflected": "dh", "deinflected": "d", "occurrence": "all", "notAtStart": true, "conditionsIn": [], "conditionsOut": []}
+      ]
+    },
+    {
+      "id": "[IM] nasalized",
+      "name": "[IM] nasalized",
+      "description": "Nasalized Word",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "ng", "deinflected": "g", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "mb", "deinflected": "b", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "nd", "deinflected": "d", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "n-", "deinflected": "", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "m-", "deinflected": "", "conditionsIn": [], "conditionsOut": []}
+      ]
+    },
+    {
+      "id": "[IM] nasalized (Middle Irish)",
+      "name": "[IM] nasalized (Middle Irish)",
+      "description": "Nasalized Word (Middle Irish)",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "gc", "deinflected": "c", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "bp", "deinflected": "p", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "dt", "deinflected": "d", "conditionsIn": [], "conditionsOut": []}
+      ]
+    },
+    {
+      "id": "[IM] lenited",
+      "name": "[IM] lenited",
+      "description": "Lenited Word",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "ch", "deinflected": "c", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "ph", "deinflected": "p", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "th", "deinflected": "t", "conditionsIn": [], "conditionsOut": []}
+      ]
+    },
+    {
+      "id": "[IM] lenited (Middle Irish)",
+      "name": "[IM] lenited (Middle Irish)",
+      "description": "Lenited Word (Middle Irish)",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "gh", "deinflected": "g", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "bh", "deinflected": "b", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "dh", "deinflected": "d", "conditionsIn": [], "conditionsOut": []}
+      ]
+    },
+    {
+      "id": "[IM] aspirated",
+      "name": "[IM] aspirated",
+      "description": "Aspirated Word",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "ha", "deinflected": "a", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "he", "deinflected": "e", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "hi", "deinflected": "i", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "ho", "deinflected": "o", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "hu", "deinflected": "u", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "h-", "deinflected": "", "conditionsIn": [], "conditionsOut": []}
+      ]
+    },
+    {
+      "id": "[IM] geminated",
+      "name": "[IM] geminated",
+      "description": "Geminated Word",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "cc", "deinflected": "c", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "pp", "deinflected": "p", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "tt", "deinflected": "t", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "gg", "deinflected": "g", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "bb", "deinflected": "b", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "dd", "deinflected": "d", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "rr", "deinflected": "r", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "ll", "deinflected": "l", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "nn", "deinflected": "n", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "mm", "deinflected": "m", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "ss", "deinflected": "s", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "c-c", "deinflected": "c", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "p-p", "deinflected": "p", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "t-t", "deinflected": "t", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "g-g", "deinflected": "g", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "b-b", "deinflected": "b", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "d-d", "deinflected": "d", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "r-r", "deinflected": "r", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "l-l", "deinflected": "l", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "n-n", "deinflected": "n", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "m-m", "deinflected": "m", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "s-s", "deinflected": "s", "conditionsIn": [], "conditionsOut": []}
+      ]
+    }
+  ]
+}

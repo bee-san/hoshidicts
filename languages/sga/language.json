@@ -51,9 +51,9 @@
         "variants": [[{"case": "upperFirst"}]]
       },
       {
-        "id": "removeLengthMarks",
+        "id": "removeAlphabeticDiacritics",
         "name": "Remove length marks and dots over letters",
-        "variants": [[{"normalize": "NFD"}, {"strip": "[\\u0300-\\u036F]"}, {"normalize": "NFC"}]]
+        "variants": [[{"normalize": "NFD"}, {"strip": "[\\u0300-\\u036F]"}]]
       },
       {
         "id": "aeLigature",
