@@ -130,6 +130,28 @@ export function readLookupTsv(file) {
     return readTsv(file, 5).rows.map(({line, cells: [category, valid, text, expression, matched]}) => ({line, category, valid: valid === '1', text, expression, matched}));
 }
 
+/** The first line of a test file that runs with the pack's defaults (section 12.2). */
+export const DEFAULT_OPTIONS_LINE = '# options: default';
+
+/**
+ * The options a test file of section 12.2 runs with: 'default' (no optional
+ * processor, transform or variant pass) when its first line is
+ * `# options: default`, otherwise 'all'. Any other comment that starts like it
+ * (`#`, `options` in any case, `:`) is an error, as in the engine's readers.
+ * @param {string} file
+ * @returns {'all' | 'default'}
+ */
+export function testFileOptions(file) {
+    const lines = readFileSync(file, 'utf8').split('\n');
+    lines.forEach((line, index) => {
+        if (index === 0 && line === DEFAULT_OPTIONS_LINE) { return; }
+        if (/^#[ \t]*options[ \t]*:/i.test(line)) {
+            throw new Error(`${file}:${index + 1}: an options line is "${DEFAULT_OPTIONS_LINE}", and only on the first line`);
+        }
+    });
+    return lines[0] === DEFAULT_OPTIONS_LINE ? 'default' : 'all';
+}
+
 /**
  * The texts of a descriptor's host.sample block, in a fixed order.
  * @param {any} language

@@ -1,0 +1,5 @@
+# Hand-written for the test. This file runs with every optional processor and transform on.
+# category	valid	source	term	rule	reasons
+present	1	están	estar	v	present
+present	1	estan	estar	v	present
+archaic	1	walketh	walk	v	archaic

@@ -1,0 +1,105 @@
+{
+  "schema": 1,
+  "code": "od",
+  "iso639_3": "zzz",
+  "name": "Options at the pack's defaults",
+  "nativeName": "Options at the pack's defaults",
+  "bcp47": "zz",
+  "scripts": ["Latn"],
+  "direction": "ltr",
+  "classes": {
+    "letter": "[a-z\u00E1]"
+  },
+  "text": {
+    "pattern": "{letter}",
+    "scanStart": "word",
+    "segmentation": "spaces",
+    "wordCharacters": "{letter}",
+    "wordInternal": null,
+    "sentence": {
+      "terminators": ["."],
+      "quotePairs": []
+    },
+    "highlightBreaks": null,
+    "lineJoiner": " "
+  },
+  "lookup": {
+    "searchResolution": "word",
+    "preprocessors": [
+      {
+        "id": "addMissingAccents",
+        "name": "Add missing accents",
+        "optional": true,
+        "variants": [[{"map": {"an": "\u00E1n"}, "at": "end"}]]
+      }
+    ],
+    "postprocessors": [],
+    "readingNormalizer": null,
+    "transforms": "transforms.json",
+    "traceSelection": "shortest",
+    "functionWords": [],
+    "variantPasses": []
+  },
+  "capabilities": {
+    "readings": "none",
+    "ruby": null,
+    "pitchAccent": false,
+    "characterView": null,
+    "wordHighlighting": true
+  },
+  "presentation": {
+    "typography": {
+      "fontFamily": null,
+      "wordBreak": null,
+      "lineBreak": null,
+      "joinedScript": false
+    },
+    "labels": {},
+    "displayTransforms": {}
+  },
+  "settings": [
+    {
+      "id": "missingAccents",
+      "type": "boolean",
+      "default": false,
+      "label": "Add missing accents",
+      "group": "lookup",
+      "effect": {"preprocessor": "addMissingAccents"}
+    },
+    {
+      "id": "archaicForms",
+      "type": "boolean",
+      "default": false,
+      "label": "Archaic forms",
+      "group": "lookup",
+      "effect": {"transforms": ["archaic"]}
+    }
+  ],
+  "host": {
+    "ttsLanguage": "zz",
+    "audioLanguage": "zz",
+    "anki": {
+      "noteTypeFamilies": [],
+      "fieldAliases": {},
+      "partOfSpeechLabels": {}
+    },
+    "frequencySamples": null,
+    "recommendedDictionaries": [],
+    "sample": {
+      "warmup": "estan",
+      "practice": {
+        "text": "estan",
+        "lookup": "estan"
+      },
+      "entry": {
+        "expression": "estar",
+        "reading": "estar",
+        "glossary": ["to be"],
+        "definitionTags": "v",
+        "matched": "estan",
+        "trace": ["present"]
+      },
+      "character": null
+    }
+  }
+}

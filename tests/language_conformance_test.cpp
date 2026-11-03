@@ -16,6 +16,9 @@
 // 4. Every TSV in tests/ except gaps.tsv passes; gaps.tsv is run and its pass
 //    count printed; no corpus input reaches the 4,096-variant limit; a pack
 //    with transforms has tests/corpus.tsv (Japanese: tests/yomitan.tsv).
+//    Each file runs with every optional processor, transform and variant
+//    pass on, or with none when its first line is `# options: default`
+//    (section 12.2).
 // 5. Every `own` and `both` transform has a passing `valid = 1` row; the
 //    rules no row exercises are printed.
 // 6. README.md has the sections of languages/_template/README.md.
@@ -58,6 +61,12 @@ void fail(const std::string& what) {
 }
 
 void note(const std::string& what) { std::printf("%s: %s\n", code.c_str(), what.c_str()); }
+
+// Added to a test file's line when its first line is `# options: default`
+// (section 12.2).
+std::string defaults_note(lang::TestOptions options) {
+  return options == lang::TestOptions::Default ? " with the pack's defaults" : "";
+}
 
 // The last line, also when a pack stops the test early, and the exit status.
 int finish() {
@@ -350,7 +359,8 @@ void check_lookup_tsv(const fs::path& tests, const std::shared_ptr<const hoshidi
                       const fs::path& scratch) {
   std::vector<lang::LookupRow> rows;
   std::string error;
-  if (!lang::read_lookup_tsv((tests / "lookup.tsv").string(), rows, &error)) {
+  lang::TestOptions file_options = lang::TestOptions::All;
+  if (!lang::read_lookup_tsv((tests / "lookup.tsv").string(), rows, &error, &file_options)) {
     fail(error);
     return;
   }
@@ -383,7 +393,7 @@ void check_lookup_tsv(const fs::path& tests, const std::shared_ptr<const hoshidi
     const Lookup lookup(query, registry);
     LookupOptions options;
     options.language = code;
-    options.language_options = all_option_ids(pack->data());
+    if (file_options == lang::TestOptions::All) options.language_options = all_option_ids(pack->data());
     size_t passed = 0;
     for (const auto& row : rows) {
       // The whole text, as eval-language's firstRank looks a source up.
@@ -403,7 +413,8 @@ void check_lookup_tsv(const fs::path& tests, const std::shared_ptr<const hoshidi
              (row.valid ? ", expected " : ", not expected ") + row.expression + " (" + row.matched + ")");
       }
     }
-    note("tests/lookup.tsv: " + std::to_string(passed) + "/" + std::to_string(rows.size()) + " pass");
+    note("tests/lookup.tsv: " + std::to_string(passed) + "/" + std::to_string(rows.size()) + " pass" +
+         defaults_note(file_options));
   }
   fs::remove_all(dir);
 }
@@ -478,7 +489,8 @@ int main(int argc, char** argv) {
   for (const char* name : {"yomitan.tsv", "corpus.tsv", "cases.tsv", "gaps.tsv"}) {
     if (!fs::exists(tests / name)) continue;
     std::vector<lang::CorpusRow> rows;
-    if (!lang::read_corpus((tests / name).string(), rows, &error)) {
+    lang::TestOptions options = lang::TestOptions::All;
+    if (!lang::read_corpus((tests / name).string(), rows, &error, &options)) {
       fail(error);
       continue;
     }
@@ -487,7 +499,7 @@ int main(int argc, char** argv) {
     size_t shown = 0;
     for (const auto& row : rows) {
       bool limit = false;
-      const auto list = lang::deinflect_source(data, row.source, &limit);
+      const auto list = lang::deinflect_source(data, row.source, &limit, options);
       if (limit && !limit_reached) {
         limit_reached = true;
         fail(std::string("tests/") + name + ":" + std::to_string(row.line) + ": " + row.source +
@@ -518,14 +530,15 @@ int main(int argc, char** argv) {
       }
     }
     note(std::string("tests/") + name + ": " + std::to_string(passed) + "/" + std::to_string(rows.size()) + " pass" +
-         (gaps ? " (gaps are reported, not enforced)" : ""));
+         defaults_note(options) + (gaps ? " (gaps are reported, not enforced)" : ""));
   }
   if (fs::exists(tests / "text.tsv")) {
     std::vector<lang::TextRow> rows;
-    if (!lang::read_text_tsv((tests / "text.tsv").string(), rows, &error)) {
+    lang::TestOptions options = lang::TestOptions::All;
+    if (!lang::read_text_tsv((tests / "text.tsv").string(), rows, &error, &options)) {
       fail(error);
     } else {
-      const auto ids = all_option_ids(data);
+      const auto ids = options == lang::TestOptions::All ? all_option_ids(data) : std::vector<std::string>{};
       size_t passed = 0;
       for (const auto& row : rows) {
         bool limit = false;
@@ -539,7 +552,8 @@ int main(int argc, char** argv) {
                (row.valid ? " is not a variant" : " is a variant"));
         }
       }
-      note("tests/text.tsv: " + std::to_string(passed) + "/" + std::to_string(rows.size()) + " pass");
+      note("tests/text.tsv: " + std::to_string(passed) + "/" + std::to_string(rows.size()) + " pass" +
+           defaults_note(options));
     }
   }
   if (fs::exists(tests / "lookup.tsv")) {

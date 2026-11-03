@@ -9,8 +9,9 @@
 # names, --options and --all-options, an input line that is not UTF-8),
 # eval-language's recall, --transforms (the pack checked with its own rules,
 # which another file replaces, also for a pack whose lookup.transforms is
-# null; nothing on standard error unless a note is due), and that a failed
-# lookup prints no runtime line.
+# null; nothing on standard error unless a note is due), eval-language on a
+# corpus whose first line is `# options: default` (section 12.2), and that a
+# failed lookup prints no runtime line.
 
 set(LANGUAGES ${FIXTURES}/languages)
 
@@ -250,6 +251,54 @@ expect_message("deinflect xx --transforms sources/yomitan.json --options: an own
 ]=]
   "yomitan.json has no transform possessive; it has no effect in this run"
   deinflect xx cat’s --transforms ${XX_YOMITAN} --options possessive)
+
+# The options line (12.2): eval-language reads a corpus whose first line is
+# `# options: default` with the pack's defaults, for its deinflections and for
+# firstRank's lookups, and the JSON starts with "options":"default". The od
+# conformance fixture has an optional accent processor (estan -> están) and an
+# optional transform (walketh -> walk); its tests/dictionary has estar and
+# walk. Of the three rows, the defaults reach only estan -> estar (recall 1/3),
+# and firstRank loses walketh -> walk (2/3 -> 1/3).
+set(OD ${SCRATCH}/cli-languages-od)
+file(REMOVE_RECURSE ${OD})
+file(COPY ${FIXTURES}/conformance/od DESTINATION ${OD}/languages)
+file(COPY ${FIXTURES}/conformance/od/tests/dictionary/ DESTINATION ${OD}/dictionary)
+execute_process(COMMAND ${CMAKE_COMMAND} -E tar cf ${OD}/od-test.zip --format=zip index.json term_bank_1.json
+                WORKING_DIRECTORY ${OD}/dictionary RESULT_VARIABLE rc)
+execute_process(COMMAND ${CLI} import ${OD}/od-test.zip OUTPUT_VARIABLE out ERROR_VARIABLE err RESULT_VARIABLE import_rc)
+string(FIND "${out}" "term_count: 2" imported)
+if(NOT rc EQUAL 0 OR NOT import_rc EQUAL 0 OR imported EQUAL -1 OR NOT IS_DIRECTORY ${OD}/od-test)
+  message(SEND_ERROR "the od test dictionary does not import: exit ${rc}, ${import_rc}\n  stdout: ${out}\n  stderr: ${err}")
+endif()
+set(OD_ROWS "# category\tvalid\tsource\tterm\trule\treasons\npresent\t1\testan\testar\tv\tpresent\naccents\t1\testan\testán\t*\t*\narchaic\t1\twalketh\twalk\tv\tarchaic\n")
+file(WRITE ${OD}/all.tsv "${OD_ROWS}")
+file(WRITE ${OD}/default.tsv "# options: default\n${OD_ROWS}")
+expect_message("eval-language: every option on" ${OD}/languages 0
+  [=[{"rows":3,"positives":3,"negatives":0,"recall":1,"negativesPassed":null,"falseCandidates":0.3333333333333333,"firstRank":0.6666666666666666}
+]=]
+  "" eval-language od ${OD}/all.tsv --dictionary ${OD}/od-test)
+expect_message("eval-language: # options: default" ${OD}/languages 0
+  [=[{"options":"default","rows":3,"positives":3,"negatives":0,"recall":0.3333333333333333,"negativesPassed":null,"falseCandidates":0.3333333333333333,"firstRank":0.3333333333333333}
+]=]
+  "" eval-language od ${OD}/default.tsv --dictionary ${OD}/od-test)
+# Variant passes are optional too: the defaults read no cat speech.
+set(NEKO_ROWS "# category\tvalid\tsource\tterm\trule\treasons\nneko\t1\tできにゃい\tできる\t*\t*\n")
+file(WRITE ${OD}/neko-all.tsv "${NEKO_ROWS}")
+file(WRITE ${OD}/neko-default.tsv "# options: default\n${NEKO_ROWS}")
+expect("eval-language ja: the nekoSpeech pass is on" 0
+  [=[{"rows":1,"positives":1,"negatives":0,"recall":1,"negativesPassed":null}
+]=]
+  eval-language ja ${OD}/neko-all.tsv)
+expect("eval-language ja # options: default: no variant pass" 0
+  [=[{"options":"default","rows":1,"positives":1,"negatives":0,"recall":0,"negativesPassed":null}
+]=]
+  eval-language ja ${OD}/neko-default.tsv)
+# The line is exact and first, as in the conformance test.
+file(WRITE ${OD}/misplaced.tsv "${OD_ROWS}# options: default\n")
+expect_message("eval-language: an options line below the first line" ${OD}/languages 1 ""
+  [=[misplaced.tsv:5: an options line is "# options: default", and only on the first line]=]
+  eval-language od ${OD}/misplaced.tsv)
+file(REMOVE_RECURSE ${OD})
 
 # An unknown language: the error, and no runtime line after it.
 execute_process(COMMAND ${CLI} --languages ${LANGUAGES} lookup --language qq ${FIXTURES}/no-such-dictionary text

@@ -18,13 +18,34 @@ std::vector<std::string> split(const std::string& text, char separator) {
   }
 }
 
+// A comment that starts like the options line: `#`, spaces, `options` in any
+// case, spaces, `:`.
+bool looks_like_options(std::string_view line) {
+  size_t i = 1;
+  const auto skip_spaces = [&] {
+    while (i < line.size() && (line[i] == ' ' || line[i] == '\t')) ++i;
+  };
+  skip_spaces();
+  constexpr std::string_view word = "options";
+  if (line.size() - i < word.size()) return false;
+  for (size_t k = 0; k < word.size(); ++k) {
+    const char c = line[i + k];
+    if ((c >= 'A' && c <= 'Z' ? static_cast<char>(c - 'A' + 'a') : c) != word[k]) return false;
+  }
+  i += word.size();
+  skip_spaces();
+  return i < line.size() && line[i] == ':';
+}
+
 template <typename Row, typename Parse>
-bool read_rows(const std::string& path, size_t columns, std::vector<Row>& rows, std::string* error, Parse parse) {
+bool read_rows(const std::string& path, size_t columns, std::vector<Row>& rows, std::string* error,
+               TestOptions* options, Parse parse) {
   std::ifstream file(path, std::ios::binary);
   if (!file) {
     if (error != nullptr) *error = path + ": cannot be read";
     return false;
   }
+  if (options != nullptr) *options = TestOptions::All;
   std::string line;
   size_t number = 0;
   while (std::getline(file, line)) {
@@ -36,6 +57,19 @@ bool read_rows(const std::string& path, size_t columns, std::vector<Row>& rows, 
     if (!line.empty() && line.back() == '\r') {
       if (error != nullptr) *error = path + ":" + std::to_string(number) + ": lines end with LF, not CRLF";
       return false;
+    }
+    if (options != nullptr && !line.empty() && line[0] == '#') {
+      if (number == 1 && line == default_options_line) {
+        *options = TestOptions::Default;
+        continue;
+      }
+      if (looks_like_options(line)) {
+        if (error != nullptr) {
+          *error = path + ":" + std::to_string(number) + ": an options line is \"" + std::string(default_options_line) +
+                   "\", and only on the first line";
+        }
+        return false;
+      }
     }
     if (line.empty() || line[0] == '#') continue;
     auto cells = split(line, '\t');
@@ -61,8 +95,8 @@ bool read_rows(const std::string& path, size_t columns, std::vector<Row>& rows, 
 }
 }  // namespace
 
-bool read_corpus(const std::string& path, std::vector<CorpusRow>& rows, std::string* error) {
-  return read_rows(path, 6, rows, error, [](CorpusRow& row, std::vector<std::string>& cells) {
+bool read_corpus(const std::string& path, std::vector<CorpusRow>& rows, std::string* error, TestOptions* options) {
+  return read_rows(path, 6, rows, error, options, [](CorpusRow& row, std::vector<std::string>& cells) {
     row.source = cells[2];
     row.term = cells[3];
     if (cells[4] != "*") row.rule = cells[4];
@@ -70,33 +104,37 @@ bool read_corpus(const std::string& path, std::vector<CorpusRow>& rows, std::str
   });
 }
 
-bool read_text_tsv(const std::string& path, std::vector<TextRow>& rows, std::string* error) {
-  return read_rows(path, 4, rows, error, [](TextRow& row, std::vector<std::string>& cells) {
+bool read_text_tsv(const std::string& path, std::vector<TextRow>& rows, std::string* error, TestOptions* options) {
+  return read_rows(path, 4, rows, error, options, [](TextRow& row, std::vector<std::string>& cells) {
     row.input = cells[2];
     row.variant = cells[3];
   });
 }
 
-bool read_lookup_tsv(const std::string& path, std::vector<LookupRow>& rows, std::string* error) {
-  return read_rows(path, 5, rows, error, [](LookupRow& row, std::vector<std::string>& cells) {
+bool read_lookup_tsv(const std::string& path, std::vector<LookupRow>& rows, std::string* error, TestOptions* options) {
+  return read_rows(path, 5, rows, error, options, [](LookupRow& row, std::vector<std::string>& cells) {
     row.text = cells[2];
     row.expression = cells[3];
     row.matched = cells[4];
   });
 }
 
-std::vector<SourceDeinflection> deinflect_source(const PackData& pack, std::string_view source, bool* limit_reached) {
-  // Every optional processor, transform and pass.
+std::vector<SourceDeinflection> deinflect_source(const PackData& pack, std::string_view source, bool* limit_reached,
+                                                 TestOptions options) {
+  // Every optional processor, transform and pass, or none.
+  const bool all = options == TestOptions::All;
   std::vector<std::string> ids;
-  for (const auto* list : {&pack.preprocessors, &pack.postprocessors}) {
-    for (const auto& p : *list) ids.push_back(p.id);
+  if (all) {
+    for (const auto* list : {&pack.preprocessors, &pack.postprocessors}) {
+      for (const auto& p : *list) ids.push_back(p.id);
+    }
+    for (const auto& pass : pack.variant_passes) ids.push_back(pass.id);
   }
-  for (const auto& pass : pack.variant_passes) ids.push_back(pass.id);
   std::vector<bool> enabled_transforms;
   if (pack.transforms) {
     for (const auto& t : pack.transforms->transforms) {
-      ids.push_back(t.id);
-      enabled_transforms.push_back(t.optional);
+      if (all) ids.push_back(t.id);
+      enabled_transforms.push_back(all && t.optional);
     }
   }
   const EnabledOptions enabled{ids};
@@ -137,6 +175,7 @@ std::vector<SourceDeinflection> deinflect_source(const PackData& pack, std::stri
       list.push_back(Deinflection{variant.text, 0, Deinflection::npos, Deinflection::none, 0});
     }
     emit(list);
+    if (!all) continue;  // every variant pass is optional (section 4.4)
     for (const auto& pass : pack.variant_passes) {
       std::vector<std::string> readings;
       pass.builtin->variants(variant.text, readings);

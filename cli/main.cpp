@@ -576,7 +576,9 @@ int cmd_lookup(Context& context, const Arguments& args, int max_results = 8, int
 }
 
 // `eval-language` (section 10.3): recall and negatives over the whole source
-// of each row, and with a dictionary the false candidates and first ranks.
+// of each row, and with a dictionary the false candidates and first ranks,
+// with every optional feature on, or with the pack's defaults for a file whose
+// first line is `# options: default` (section 12.2).
 int cmd_eval_language(Context& context, const Arguments& args) {
   namespace lang = hoshidicts::lang;
   if (args.positional.size() != 2) {
@@ -589,10 +591,12 @@ int cmd_eval_language(Context& context, const Arguments& args) {
   const auto& pack = pack_holder->data();
   std::vector<lang::CorpusRow> rows;
   std::string error;
-  if (!lang::read_corpus(args.positional[1], rows, &error)) {
+  lang::TestOptions file_options = lang::TestOptions::All;
+  if (!lang::read_corpus(args.positional[1], rows, &error, &file_options)) {
     std::cerr << "hoshidicts-cli: " << error << "\n";
     return 1;
   }
+  const bool all_options = file_options == lang::TestOptions::All;
   const bool per_rule = args.flags.contains("--per-rule");
   const std::string* dictionary = args.values.contains("--dictionary") ? &args.values.at("--dictionary") : nullptr;
 
@@ -609,12 +613,14 @@ int cmd_eval_language(Context& context, const Arguments& args) {
     registry.add(pack_holder);
     lookup.emplace(*query, registry);
     options.language = pack.code;
-    for (const auto* list : {&pack.preprocessors, &pack.postprocessors}) {
-      for (const auto& p : *list) options.language_options.push_back(p.id);
-    }
-    for (const auto& pass : pack.variant_passes) options.language_options.push_back(pass.id);
-    if (pack.transforms) {
-      for (const auto& t : pack.transforms->transforms) options.language_options.push_back(t.id);
+    if (all_options) {
+      for (const auto* list : {&pack.preprocessors, &pack.postprocessors}) {
+        for (const auto& p : *list) options.language_options.push_back(p.id);
+      }
+      for (const auto& pass : pack.variant_passes) options.language_options.push_back(pass.id);
+      if (pack.transforms) {
+        for (const auto& t : pack.transforms->transforms) options.language_options.push_back(t.id);
+      }
     }
   }
 
@@ -641,7 +647,7 @@ int cmd_eval_language(Context& context, const Arguments& args) {
   size_t first_ranked = 0;
   for (const auto& row : rows) {
     bool limit = false;
-    const auto list = lang::deinflect_source(pack, row.source, &limit);
+    const auto list = lang::deinflect_source(pack, row.source, &limit, file_options);
     std::vector<size_t> matching;
     error.clear();
     const bool has = lang::row_matches(pack, row, list, &matching, &error);
@@ -695,8 +701,8 @@ int cmd_eval_language(Context& context, const Arguments& args) {
     }
   }
 
-  std::string out = std::format("{{\"rows\":{},\"positives\":{},\"negatives\":{},\"recall\":{},\"negativesPassed\":{}", rows.size(),
-                                positives, negatives,
+  std::string out = std::format("{{{}\"rows\":{},\"positives\":{},\"negatives\":{},\"recall\":{},\"negativesPassed\":{}",
+                                all_options ? "" : "\"options\":\"default\",", rows.size(), positives, negatives,
                                 json_number(positives ? std::optional<double>(static_cast<double>(found) / positives) : std::nullopt),
                                 json_number(negatives ? std::optional<double>(static_cast<double>(passed) / negatives) : std::nullopt));
   if (query) {
