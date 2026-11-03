@@ -1,0 +1,13 @@
+# Written for this pack (GPL-3.0-or-later): the cases of Hachidori's test/chrome-language-pack.mjs (README.md, Measurements).
+# The expected headword is the first result with wty-tl-en as published: the word's own entry where it has one (Kumakain).
+# sentence	word	expected headword
+Nagluluto ang nanay ko ng adobo para sa hapunan.	Nagluluto	magluto
+Kumakain ang mga bata ng mansanas sa kusina.	Kumakain	kumakain
+Nag-aaral ang kapatid ko ng medisina sa Maynila.	Nag-aaral	mag-aral
+Nakita ko si Ana sa palengke kaninang umaga.	Nakita	makita
+Pumupunta kami sa simbahan tuwing Linggo.	Pumupunta	pumunta
+Ako'y masaya na nandito ka.	Ako'y	ako
+Magandang umaga po sa inyong lahat.	Magandang	magandang umaga
+Binili ng tatay ang bagong sapatos.	Binili	binili
+Bibilhin namin ang bahay na iyon sa susunod na taon.	Bibilhin	bilhin
+Nagtatrabaho ang kuya ko sa isang bangko.	Nagtatrabaho	magtrabaho

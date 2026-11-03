@@ -380,9 +380,10 @@ the published dictionary, 37 and 10, and nothing at all for 16 (*Nakarating*,
 *katagal*, *Napakaganda*).
 
 **Hachidori** (feat/multi-language 803f7b6 with this branch in
-`third_party/hoshidicts`, `test/chrome-language-pack.mjs`, Chrome 152,
+`third_party/hoshidicts`, `test/chrome-language-pack.mjs` with
+`HACHIDORI_CASES=languages/tl/sources/chrome-cases.tsv`, Chrome 152,
 wty-tl-en as published): 14 passed, 0 failed (adding Tagalog beside
-Japanese, the import of 124,921 terms in 0.8 s, 10 cases such as
+Japanese, the import of 124,921 terms in 0.6 s, 10 cases such as
 *Nagluluto* → *magluto* [progressive] and *Ako'y* → *ako* ['y], the Anki
 note, and the switch to Japanese and back).
 
