@@ -163,6 +163,10 @@ class TransformSet {
     }
     return 0;
   }
+  // D: the bits of every condition with isDictionaryForm, expanded through
+  // subConditions; a row without tags carries it under lookup.untaggedTerms
+  // "pass" (docs/languages.md, sections 4.4 and 9.4).
+  uint32_t dictionary_form_mask() const { return dictionary_form_mask_; }
   // The names of the leaf conditions set in `bits`, in declaration order.
   std::vector<std::string_view> condition_names(uint32_t bits) const;
 
@@ -229,6 +233,7 @@ class TransformSet {
   Trie phrasal_;
   std::vector<uint32_t> unindexed_;  // replace and interposedObject rules, in file order
   std::vector<std::pair<std::string, uint32_t>> dictionary_forms_;
+  uint32_t dictionary_form_mask_ = 0;
 };
 
 }  // namespace hoshidicts::lang

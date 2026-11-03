@@ -295,6 +295,17 @@ if(HOSHIDICTS_TESTS)
     endif()
     add_test(NAME form-of COMMAND form-of-test ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
+    # Terms without part-of-speech tags (docs/languages.md 4.4, 9.4): matched
+    # only by forms without conditions with untaggedTerms "filter", by forms
+    # whose conditions overlap the dictionary forms with "pass".
+    add_executable(untagged-terms-test tests/untagged_terms_test.cpp)
+    target_include_directories(untagged-terms-test PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+    target_link_libraries(untagged-terms-test PRIVATE hoshidicts glaze::glaze unordered_dense)
+    if(MSVC)
+        target_compile_options(untagged-terms-test PRIVATE /utf-8)
+    endif()
+    add_test(NAME untagged-terms COMMAND untagged-terms-test ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
+
     # The C API with a language request, compiled as C (docs/languages.md 11.3).
     add_executable(c-smoke-test tests/c_smoke_test.c)
     target_link_libraries(c-smoke-test PRIVATE hoshidicts)
@@ -428,6 +439,12 @@ if(HOSHIDICTS_TESTS AND HOSHIDICTS_CLI)
                      -DFIXTURES=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/form-of
                      -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}
                      -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/cli_form_of_test.cmake)
+    # eval-language with lookup.untaggedTerms "filter" and "pass" (docs/languages.md 9.4, 10.3).
+    add_test(NAME cli-untagged-terms
+             COMMAND ${CMAKE_COMMAND} -DCLI=$<TARGET_FILE:hoshidicts-cli>
+                     -DFIXTURES=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/untagged-terms
+                     -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}
+                     -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/cli_untagged_terms_test.cmake)
     # tools/check-yomitan.mjs with the real CLI (the tool tests use a stand-in)
     # on the tool tests' fixture pack, whose setting names an optional
     # transform that its sources/yomitan.json lacks (docs/languages.md 8.2).
@@ -492,5 +509,25 @@ if(HOSHIDICTS_LANGUAGE_TESTS)
                      -DPACK=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/conformance/fv
                      -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}
                      "-DREASON=fv: language.json: lookup.formOf: must be one of follow, asTerm, not \"maybe\""
+                     -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/conformance_refuses_test.cmake)
+    # lookup.untaggedTerms is "filter" or "pass" (4.4, 9.4): the vg pack
+    # conforms with each, and the fv pack with a valid formOf is refused for
+    # any other value.
+    foreach(value filter pass)
+        add_test(NAME language-untagged-terms-${value}
+                 COMMAND ${CMAKE_COMMAND} -DTEST=$<TARGET_FILE:language-conformance-test>
+                         -DPACK=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/conformance/vg
+                         -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}/untagged-terms-${value}
+                         -DEDIT=language.json "-DFROM=\"traceSelection\": \"shortest\","
+                         "-DTO=\"traceSelection\": \"shortest\", \"untaggedTerms\": \"${value}\","
+                         -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/conformance_accepts_test.cmake)
+    endforeach()
+    add_test(NAME language-untagged-terms-value
+             COMMAND ${CMAKE_COMMAND} -DTEST=$<TARGET_FILE:language-conformance-test>
+                     -DPACK=${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures/conformance/fv
+                     -DSCRATCH=${CMAKE_CURRENT_BINARY_DIR}
+                     -DEDIT=language.json "-DFROM=\"formOf\": \"maybe\""
+                     "-DTO=\"formOf\": \"follow\", \"untaggedTerms\": \"maybe\""
+                     "-DREASON=fv: language.json: lookup.untaggedTerms: must be one of filter, pass, not \"maybe\""
                      -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/conformance_refuses_test.cmake)
 endif()

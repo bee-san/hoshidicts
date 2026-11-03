@@ -1,0 +1,4 @@
+# Hand-written for the untagged-terms probe pack: sail has a v row and an untagged row,
+# and sailx is in no dictionary, so sail is a false candidate exactly when one of its rows passes.
+# category	valid	source	term	rule	reasons
+nouns	1	sails	sailx	n	plural

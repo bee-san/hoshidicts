@@ -590,7 +590,11 @@ void count_followed_false_candidates(const DictionaryQuery& query, const hoshidi
                                      const hoshidicts::lang::CorpusRow& row,
                                      const std::vector<hoshidicts::lang::SourceDeinflection>& list,
                                      size_t& false_candidates, std::vector<size_t>& adds, Intersect&& intersect) {
+  // A row's conditions (9.4): its tags' bits, or with untaggedTerms "pass" D,
+  // every dictionary-form condition, for a row without tags.
+  const bool pass_untagged = pack.untagged_terms == hoshidicts::lang::UntaggedTerms::Pass;
   const auto bits_of = [&](std::string_view rules) {
+    if (pass_untagged && hoshidicts::lang::untagged(rules)) return pack.transforms->dictionary_form_mask();
     uint32_t bits = 0;
     for (auto token : rules | std::views::split(' ')) {
       bits |= pack.transforms->dictionary_form_bits(std::string_view(token.begin(), token.end()));
@@ -611,14 +615,17 @@ void count_followed_false_candidates(const DictionaryQuery& query, const hoshidi
     for (size_t i : which) {
       const uint32_t conditions = list[i].conditions;
       const bool any = conditions == 0 || !pack.transforms;
+      const auto passes = [&](std::string_view rules) { return (bits_of(rules) & conditions) != 0; };
       const bool shown = std::ranges::any_of(raw.terms, [&](const RawTerm& term) {
-        uint32_t bits = 0;
-        for (uint32_t g = term.first_glossary; g != UINT32_MAX; g = raw.glossaries[g].next) bits |= bits_of(raw.glossaries[g].rules);
-        return any || (bits & conditions) != 0;
+        if (any) return true;
+        for (uint32_t g = term.first_glossary; g != UINT32_MAX; g = raw.glossaries[g].next) {
+          if (passes(raw.glossaries[g].rules)) return true;
+        }
+        return false;
       });
       if (shown) candidates[text].push_back(i);
       for (const RawFormOfRow& row : rows) {
-        if (!any && (bits_of(row.rules) & conditions) == 0) continue;
+        if (!any && !passes(row.rules)) continue;
         references.clear();
         QueryAccess::read_form_of(row, pins, references);
         for (const auto& reference : references) referenced[reference.form_of].push_back(i);
@@ -747,11 +754,22 @@ int cmd_eval_language(Context& context, const Arguments& args) {
         }
         for (const auto& [text, which] : by_text) {
           const auto terms = query->query(text);
+          // With untaggedTerms "pass", a row without tags carries D, every
+          // dictionary-form condition (9.4). A TermResult joins its rows'
+          // tags, so the rows are read raw.
+          uint32_t untagged_bits = 0;
+          if (pack.untagged_terms == lang::UntaggedTerms::Pass && pack.transforms) {
+            BlobPins pins;
+            const RawTerms raw = QueryAccess::query_raw(*query, text, pins, nullptr);
+            if (std::ranges::any_of(raw.glossaries, [](const RawGlossary& g) { return lang::untagged(g.rules); })) {
+              untagged_bits = pack.transforms->dictionary_form_mask();
+            }
+          }
           std::vector<size_t> passing;
           for (size_t i : which) {
             const uint32_t conditions = list[i].conditions;
             const bool ok = std::ranges::any_of(terms, [&](const TermResult& term) {
-              if (conditions == 0 || !pack.transforms) return true;
+              if (conditions == 0 || !pack.transforms || (untagged_bits & conditions) != 0) return true;
               uint32_t bits = 0;
               for (auto token : term.rules | std::views::split(' ')) {
                 bits |= pack.transforms->dictionary_form_bits(std::string_view(token.begin(), token.end()));

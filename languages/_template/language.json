@@ -43,6 +43,7 @@
     "transforms": "transforms.json",
     "traceSelection": "shortest",
     "formOf": "follow",
+    "untaggedTerms": "filter",
     "functionWords": [],
     "variantPasses": []
   },

@@ -177,6 +177,7 @@ An abridged English example (section 4.8 has Arabic and Japanese excerpts):
     "transforms": "transforms.json",
     "traceSelection": "shortest",
     "formOf": "follow",
+    "untaggedTerms": "filter",
     "functionWords": [],
     "variantPasses": []
   },
@@ -259,6 +260,7 @@ The engine-facing block.
 | `transforms` | string or null | File name of the deinflection rules in this directory. |
 | `traceSelection` | `"shortest"` or `"first"` | When several deinflections reach one term at the same matched length, which trace the result keeps (section 9.6). `shortest` is Yomitan's choice and the default. Japanese uses `first`, today's behaviour. |
 | `formOf` | `"follow"` or `"asTerm"` | How a lookup reads a term bank row's form-of references, the `[term, [rules]]` definitions of wiktionary-to-yomitan (kaikki) dictionaries (section 9.10). `follow` is Yomitan's behaviour and the default: the referenced term is looked up, with the rules as trace steps, a row that is only references never appears, and a term the dictionary names ranks first on ties (9.6). `asTerm` reads such a row as an ordinary term, as hoshidicts did before. The template and every new pack say `follow`; Japanese says `asTerm` (section 11). |
+| `untaggedTerms` | `"filter"` or `"pass"` | How the part-of-speech filter (section 9.4) treats a dictionary row whose `rules` name no tag. `filter` is Yomitan's behaviour and the default: such a row matches only a form without conditions. `pass`: such a row carries D, every condition with `isDictionaryForm: true` and its `subConditions`, so it matches every form whose conditions overlap D; a form with only intermediate conditions (no dictionary form, such as Spanish `imp`) still does not match it. Tagged rows are filtered as before, and form-of rows (9.10) follow the same test. Choose `pass` when the recommended dictionaries leave `rules` empty on the rows the pack's rules should reach: on every row (wty-pt-en, wty-ru-en, wty-it-en) or on whole parts of speech the rules produce (wty-el-en's nouns and adjectives). Keep `filter` when the dictionary tags those parts of speech and leaves only other rows empty, such as names, phrases, affixes and some form-of rows (wty-en-en, wty-es-en): there `pass` adds false candidates and ranks no more lemmas first. Confirm the choice with `eval-language` on both values (section 14 step 5). The template says `filter`; the Japanese pack has no such field and filters, as before. |
 | `functionWords` | array of strings | Words a host's segmenter may split around (section 9.8; Japanese particles today). |
 | `variantPasses` | array | Opt-in extra passes, each `{"id", "builtin", "optional": true}`, that a request enables by id. Japanese declares `nekoSpeech` (section 11.4). |
 
@@ -617,7 +619,9 @@ Conditions mean what they mean in Yomitan:
 - A dictionary term matches a deinflected form when the form's conditions
   are 0 or overlap the conditions of the term's `rules` tags. A tag counts
   when a condition of that name has `isDictionaryForm: true`; tags the pack
-  does not know are ignored, as Yomitan ignores them.
+  does not know are ignored, as Yomitan ignores them. A term without tags
+  matches only conditions 0, unless the pack's `lookup.untaggedTerms` is
+  `pass` (sections 4.4 and 9.4).
 
 ### 7.3 Rule types
 
@@ -1044,6 +1048,63 @@ lists dictionaries whose terms skip the filter, for dictionaries without
 `rules` such as MDX imports; it is empty by default, which is today's
 behaviour.
 
+**Terms without tags.** A row is untagged when its `rules` column is empty
+(or only whitespace); a row with any tag, even one the pack does not know,
+is tagged. wiktionary-to-yomitan writes `rules` only for the languages that
+have Yomitan transforms: wty-pt-en, wty-ru-en and wty-it-en leave it empty
+on every row, and wty-el-en tags only verbs (142,141 of its 294,619 rows).
+With `lookup.untaggedTerms: "filter"` (the default, as Yomitan's
+`conditionsMatch`), an untagged row carries no conditions, so it matches
+only a form with conditions 0: the text as written and the output of rules
+with an empty `conditionsOut`. With `"pass"`, an untagged row carries D, the
+union of the bits of every condition with `isDictionaryForm: true`, with
+their `subConditions`. It matches every form whose conditions are 0 or
+overlap D, and not a form whose conditions are all intermediate (conditions
+that are no dictionary form, such as Spanish `imp` or Portuguese `vf`, a verb
+form whose enclitic pronoun was removed). So `casa-se`, which the rules read as `casa`
+with `vf` and then as `casar` with `v`, finds the verb *casar* and not the
+noun *casa* in a dictionary that tags neither. Tagged rows are filtered as
+with `"filter"`. A term's rows count together, as above, including rows of
+other selected dictionaries: a term with a tagged and an untagged row passes
+when either does, so under `"pass"` one dictionary without tags (an MDX
+import has none) lets every term it shares with a tagged dictionary through.
+A pack with no `isDictionaryForm: true` condition, or without transforms, has
+D = 0, and with `"pass"` it looks up exactly as with `"filter"`. The check is
+one flag per row the filter already reads: the Japanese benchmark of section
+13, which filters, gave the same p50 and p95 before and after it, within the
+noise of repeated runs.
+
+A pack chooses `"pass"` when its recommended dictionaries leave `rules`
+empty on the rows its rules should reach: on every row, or on whole parts of
+speech that its rules produce. Its rules then keep the conditions section 14
+asks for, which still stop chains of rules (7.2) and still filter tagged
+dictionaries. Under `"filter"` such a dictionary makes the rules useless:
+with wty-ru-en, which tags no row, a Russian pack's whole-word lookups of
+1,420 UniMorph forms gave exactly the results of the same pack with every
+rule removed (1,347 lemmas first), and with `"pass"` 1,353 found their lemma
+first. The other way out, an empty `conditionsOut` on every rule that yields
+a dictionary form, lets every such output be deinflected again by every rule.
+For the 500 most frequent words of FrequencyWords el_50k, a Greek rule set
+of 852 rules gives 5.1 deinflections per word with its noun and adjective
+conditions, and 2,031 with those outputs emptied (885,526 for *ανησυχείς*).
+
+A pack keeps `"filter"` when its dictionaries tag the parts of speech its
+rules produce and leave only other rows empty. wty-en-en leaves 15.7% of its
+rows untagged: names, phrases, interjections, affixes and some form-of rows.
+wty-es-en leaves 1.4%: names, adverbs, phrases, affixes and some form-of
+rows. Under `"pass"` those rows carry D, so verb and noun rules reach them. With the en and es packs and those dictionaries,
+`"pass"` ranked the same number of lemmas first on six of eight test files
+and one fewer on two (en `corpus.tsv` 942 → 941 of 1,594, es `gaps.tsv`
+8 → 7 of 35). It raised the false candidates on seven files, by 12% to 115%.
+
+Measure both values with `eval-language` and the recommended dictionary
+(section 14 step 5); it reads the field as a lookup does. `"pass"` also lets
+through untagged words of other parts of speech (a noun for a verb rule),
+which `firstRank` and the false candidates show. The terms only frequency
+and pitch dictionaries have (`LookupOptions::metadata_only_terms`) are not
+affected: their rows answer only forms with conditions 0, whatever the pack
+says.
+
 ### 9.5 Repeated texts
 
 A prefix and variant can produce the same deinflected text more than once:
@@ -1169,9 +1230,14 @@ as Yomitan's translator does (`_getDeinflections` and
    part of speech, such as a form-of row of the kty-* (kaikki-to-yomitan)
    dictionaries, is followed only from a deinflection without conditions,
    such as the text as written, unless its dictionary is in
-   `pos_filter_exempt` (9.4). wiktionary-to-yomitan's wty-* dictionaries
-   give their form-of rows parts of speech, so those are also followed from
-   forms the rules reach (*me puedo* → the row of *poderse* → *poder*).
+   `pos_filter_exempt` (9.4) or the pack's `untaggedTerms` is `pass`, which
+   follows it from every deinflection whose conditions overlap D (9.4).
+   wiktionary-to-yomitan's wty-* dictionaries give their form-of rows parts
+   of speech in most of the languages it writes `rules` for (wty-es-en
+   leaves 3,531 of its 1,231,655 form-of rows untagged), so those are also
+   followed from forms the rules reach (*me puedo* → the row of *poderse* →
+   *poder*). wty-el-en, which tags only verbs, leaves 126,455 of its 263,911
+   form-of rows untagged.
 3. `formOf` is looked up in the request's dictionary selection (9.7), within
    `lookup_dictionary()`'s dictionary, without the part-of-speech filter. The
    terms it finds join grouping, ordering and `traceSelection` like any other
@@ -1440,7 +1506,8 @@ a deinflected text counts as a false candidate only when a row of it with
 definitions passes the filter, and so does the text a form-of reference
 names, when the row naming it passes the filter for the deinflection that
 found it (that row may be the source's own) and the text has a row with
-definitions. `--per-rule` gives
+definitions. Both apply the pack's `untaggedTerms` as a lookup does (9.4),
+whatever its `formOf`. `--per-rule` gives
 one entry per rule in the JSON (a cross product's rules summed): `recovers`
 counts rows every matching path of which uses the rule, `falseCandidates`
 the false-candidate texts every passing path to which uses it (the path to a
@@ -1586,8 +1653,8 @@ For every pack it checks:
 1. `language.json` and `transforms.json` against the schemas in this file:
    required fields (every key of section 4's English example except
    `lookup.postprocessors`, `readingNormalizer`, `traceSelection`, `formOf`,
-   `functionWords`, `variantPasses`, a processor's `name`, `keepInput` and
-   `optional`, and the `labels` entries), no unknown keys (per rule type, so
+   `untaggedTerms`, `functionWords`, `variantPasses`, a processor's `name`,
+   `keepInput` and `optional`, and the `labels` entries), no unknown keys (per rule type, so
    `stemChange` on a `prefix` rule is an error), `host.frequencySamples`
    lists of exactly 10 words, `code` equal to the directory name,
    condition and word-list references defined, at most 32 condition bits, no
@@ -1871,6 +1938,18 @@ Korean (#51).
      form-of rows beside 36,031 entries, and one was the first result at
      25.2% of the Korean Tatoeba positions that found anything. A number
      from a modified copy may follow, labelled.
+   - **Count the rows without part-of-speech tags.** Count the recommended
+     dictionary's rows whose `rules` column is empty, and group them by
+     their first definition tag (`n`, `v`, `name`, `adv`, `non-lemma`, ...).
+     wiktionary-to-yomitan leaves `rules` empty on every row for languages
+     without Yomitan transforms (pt, ru, it), on every Greek row but the
+     verbs', and elsewhere on names, adverbs, phrases and affixes (wty-es-en:
+     1.4% of its rows). When the empty rows are every row, or whole parts of
+     speech your rules produce, set `lookup.untaggedTerms` to `pass` (section
+     9.4) and keep the conditions on your rules. Otherwise keep `filter`.
+     Either way, run `eval-language --dictionary` on every test file with
+     both values, report both, and keep `pass` only when it ranks more
+     lemmas first.
    - **Check the frequent forms.** Take a frequency list whose source and
      licence you record. For each of its 10,000 most frequent words whose
      lemma a rule reaches (a form-of row of the word or the corpus names the
@@ -1971,6 +2050,9 @@ Checklist for reviewers:
   licence, and nothing from the dictionaries, lists or texts is committed.
 - Every measurement uses the recommended dictionary as published and
   reproduces with the committed scripts.
+- `lookup.untaggedTerms` is `pass` only when the recommended dictionary
+  leaves `rules` empty on every row or on whole parts of speech the rules
+  produce, and `eval-language` is reported with both values (step 5).
 - Recall, false candidates and first rank are reported for your rules,
   Yomitan's, their union and the final set, with every option on and with
   the defaults.
