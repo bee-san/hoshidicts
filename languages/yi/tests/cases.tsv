@@ -1,0 +1,301 @@
+# Hand-written for this pack (GPL-3.0-or-later): standard YIVO forms, irregular verbs, phrases, unpointed spellings and negatives.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+present	1	מאַך	מאַכן	v	stem
+present	1	מאַכסט	מאַכן	v	2sg
+present	1	מאַכט	מאַכן	v	3sg
+present	1	קויף	קויפֿן	v	stem
+present	1	קויפֿסט	קויפֿן	v	2sg
+present	1	נעם	נעמען	v	stem
+present	1	נעמסט	נעמען	v	2sg
+present	1	וווינט	וווינען	v	3sg
+present	1	לערנסט	לערנען	v	2sg
+present	1	זינגט	זינגען	v	3sg
+present	1	טרינקסט	טרינקען	v	2sg
+present	1	שמייכלט	שמייכלען	v	3sg
+present	1	שטעלט	שטעלן	v	3sg
+present	1	צייכנט	צייכענען	v	3sg
+present	1	אַרבעט	אַרבעטן	v	stem
+present	1	אַרבעטסט	אַרבעטן	v	2sg
+present	1	עסט	עסן	v	3sg
+present	1	זיצט	זיצן	v	3sg
+present	1	גייט	גיין	v	3sg
+present	1	שטייסט	שטיין	v	2sg
+present	1	זעט	זען	v	3sg
+present	1	שרײַט	שרײַען	v	3sg
+present	1	ציט	ציִען	v	3sg
+present	1	רוט	רוען	v	3sg
+present	1	ראַטעווע	ראַטעווען	v	stem
+present	1	נודיעט	נודיען	v	3sg
+present	1	שטודירט	שטודירן	v	3sg
+present	1	גייען	גיין	v	1pl
+present	1	זעען	זען	v	1pl
+present	1	באַרעכנען	באַרעכענען	v	1pl
+irregular	1	בין	זײַן	v	stem
+irregular	1	ביסט	זײַן	v	2sg
+irregular	1	איז	זײַן	v	3sg
+irregular	1	זענען	זײַן	v	1pl
+irregular	1	זײַנען	זײַן	v	1pl
+irregular	1	זענט	זײַן	v	3sg
+irregular	1	זײַ	זײַן	v	stem
+irregular	1	האָסט	האָבן	v	2sg
+irregular	1	האָט	האָבן	v	3sg
+irregular	1	גיב	געבן	v	stem
+irregular	1	גיסט	געבן	v	2sg
+irregular	1	גיט	געבן	v	3sg
+irregular	1	פֿאַרגיט	פֿאַרגעבן	v	3sg
+irregular	1	טו	טאָן	v	stem
+irregular	1	טוסט	טאָן	v	2sg
+irregular	1	טוט	טאָן	v	3sg
+irregular	1	ווייסט	וויסן	v	2sg
+irregular	1	וויל	וועלן	v	stem
+irregular	1	ווילסט	וועלן	v	2sg
+irregular	1	וועסט	וועל	v	2sg
+irregular	1	וועט	וועל	v	3sg
+irregular	1	פֿלעגט	פֿלעג	v	3sg
+participle	1	געמאַכט	מאַכן	v	pastParticiple
+participle	1	געקויפֿט	קויפֿן	v	pastParticiple
+participle	1	געאַרבעט	אַרבעטן	v	pastParticiple
+participle	1	געלערנט	לערנען	v	pastParticiple
+participle	1	געשריבן	שרײַבן	v	pastParticiple
+participle	1	געגאַנגען	גיין	v	pastParticiple
+participle	1	געשטאַנען	שטיין	v	pastParticiple
+participle	1	גענומען	נעמען	v	pastParticiple
+participle	1	געזעסן	זיצן	v	pastParticiple
+participle	1	געגעסן	עסן	v	pastParticiple
+participle	1	געטרונקען	טרינקען	v	pastParticiple
+participle	1	געהאָלפֿן	העלפֿן	v	pastParticiple
+participle	1	געווען	זײַן	v	pastParticiple
+participle	1	געהאַט	האָבן	v	pastParticiple
+participle	1	געטאָן	טאָן	v	pastParticiple
+participle	1	געלאַנדעט	לאַנדן	v	pastParticiple
+participle	1	פֿאַרשטאַנען	פֿאַרשטיין	v	pastParticiple
+participle	1	באַשלאָסן	באַשליסן	v	pastParticiple
+participle	1	געפֿונען	געפֿינען	v	pastParticiple
+participle	1	אָנגעהויבן	אָנהייבן	v	pastParticiple
+participle	1	אויפֿגעשטאַנען	אויפֿשטיין	v	pastParticiple
+participle	1	אַוועקגעגאַנגען	אַוועקגיין	v	pastParticiple
+participle	1	אויסגעלאָשן	אויסלעשן	v	pastParticiple
+participle	1	צוגעמאַכט	צומאַכן	v	pastParticiple
+participle	1	געמאַכטע	מאַכן	v	pastParticiple|adjE
+participle	1	געשריבענע	שרײַבן	v	*
+participle	1	מאַכנדיק	מאַכן	v	presentParticiple
+participle	1	גייענדיק	גיין	v	presentParticiple
+participle	1	זײַענדיק	זײַן	v	presentParticiple
+participle	1	טוענדיק	טאָן	v	presentParticiple
+participle	1	שמייכלנדיק	שמייכלען	v	presentParticiple
+participle	1	מאַכנדיקע	מאַכן	v	presentParticiple|adjE
+infinitive	1	אָנצוהייבן	אָנהייבן	v	zuInfinitive
+infinitive	1	אויפֿצושטיין	אויפֿשטיין	v	zuInfinitive
+infinitive	1	אַוועקצוגיין	אַוועקגיין	v	zuInfinitive
+separable	1	הייבט אָן	אָנהייבן	v	3sg|separable
+separable	1	הייבסט אָן	אָנהייבן	v	2sg|separable
+separable	1	הייב אָן	אָנהייבן	v	stem|separable
+separable	1	הייבן אָן	אָנהייבן	v	separable
+separable	1	קומט אָן	אָנקומען	v	3sg|separable
+separable	1	שטייט אויף	אויפֿשטיין	v	3sg|separable
+separable	1	גייט אַוועק	אַוועקגיין	v	3sg|separable
+separable	1	גיט אָפּ	אָפּגעבן	v	3sg|separable
+separable	1	קערט אום	אומקערן	v	3sg|separable
+separable	1	ברענגסט פֿיר	פֿירברענגען	v	2sg|separable
+separable	1	קום אַהיים	אַהיימקומען	v	stem|separable
+clitic	1	האָסטו	האָבן	v	2sg|cliticDu
+clitic	1	ביסטו	זײַן	v	2sg|cliticDu
+clitic	1	ווילסטו	וועלן	v	2sg|cliticDu
+clitic	1	קענסטו	קענען	v	2sg|cliticDu
+clitic	1	ווייסטו	וויסן	v	2sg|cliticDu
+clitic	1	מאַכסטו	מאַכן	v	2sg|cliticDu
+compound	1	האָט ליב	ליב האָבן	v	compoundVerb
+compound	1	האָבן מורא	מורא האָבן	v	compoundVerb
+compound	1	איז מסכּים	מסכּים זײַן	v	compoundVerb
+compound	1	בין מסכּים	מסכּים זײַן	v	compoundVerb
+compound	1	ווערט נעלם	נעלם ווערן	v	compoundVerb
+plural	1	טישן	טיש	n	plural
+plural	1	וואָכן	וואָך	n	plural
+plural	1	שולן	שול	n	plural
+plural	1	פֿרויען	פֿרוי	n	plural
+plural	1	צײַטונגען	צײַטונג	n	plural
+plural	1	שטימען	שטים	n	plural
+plural	1	טאַטעס	טאַטע	n	plural
+plural	1	לערערס	לערער	n	plural
+plural	1	צייכנס	צייכן	n	plural
+plural	1	נודניקעס	נודניק	n	plural
+plural	1	קינדער	קינד	n	plural
+plural	1	לידער	ליד	n	plural
+plural	1	ביכער	בוך	n	plural
+plural	1	הײַזער	הויז	n	plural
+plural	1	ביימער	בוים	n	plural
+plural	1	ווערטער	וואָרט	n	plural
+plural	1	מענער	מאַן	n	plural
+plural	1	לעכער	לאָך	n	plural
+plural	1	טעג	טאָג	n	plural
+plural	1	הענט	האַנט	n	plural
+plural	1	שטעט	שטאָט	n	plural
+plural	1	קעפּ	קאָפּ	n	plural
+plural	1	פֿיס	פֿוס	n	plural
+plural	1	ברידער	ברודער	n	plural
+plural	1	טעכטער	טאָכטער	n	plural
+plural	1	מיידן	מויד	n	plural
+plural	1	פֿייגל	פֿויגל	n	plural
+plural	1	מײַז	מויז	n	plural
+plural	1	ציין	צאָן	n	plural
+plural	1	חבֿרים	חבֿר	n	plural
+plural	1	ספֿרים	ספֿר	n	plural
+plural	1	שכנים	שכן	n	plural
+plural	1	עולים	עולה	n	plural
+plural	1	שאלות	שאלה	n	plural
+plural	1	משפּחות	משפּחה	n	plural
+plural	1	חלומות	חלום	n	plural
+plural	1	מעשׂיות	מעשׂה	n	plural
+plural	1	אותיות	אות	n	plural
+plural	1	נשים	אשה	n	plural
+plural	1	ימים	יום	n	plural
+plural	1	טאַטן	טאַטע	n	nounCase
+diminutive	1	טישל	טיש	n	diminutive
+diminutive	1	הײַזל	הויז	n	diminutive
+diminutive	1	ביכל	בוך	n	diminutive
+diminutive	1	בלימל	בלום	n	diminutive
+diminutive	1	קעצל	קאַץ	n	diminutive
+diminutive	1	קינדעלע	קינד	n	diminutive
+diminutive	1	מאַמעלע	מאַמע	n	diminutive
+diminutive	1	הערצעלע	האַרץ	n	diminutive
+diminutive	1	פֿייגעלע	פֿויגל	n	diminutive
+diminutive	1	ניגונדל	ניגון	n	diminutive
+diminutive	1	העמערל	האַמער	n	diminutive
+diminutive	1	שיקסל	שיקסע	n	diminutive
+diminutive	1	גומקע	גומע	n	diminutive
+diminutive	1	יונגערמאַנטשיק	יונגערמאַן	n	diminutive
+diminutive	1	ביכלעך	בוך	n	diminutive|diminutivePlural
+diminutive	1	מיידלעך	מיידל	n	diminutivePlural
+diminutive	1	שטיקעלעך	שטיק	n	diminutive|diminutivePlural
+adjective	1	גוטע	גוט	adj	adjE
+adjective	1	גוטער	גוט	adj	adjEr
+adjective	1	גוטן	גוט	adj	adjN
+adjective	1	גוטס	גוט	adj	adjS
+adjective	1	שיינעם	שיין	adj	adjN
+adjective	1	פֿרומען	פֿרום	adj	adjN
+adjective	1	הויכע	הויך	adj	adjE
+adjective	1	טיפֿע	טיף	adj	adjE
+adjective	1	גאַנצן	גאַנץ	adj	adjN
+adjective	1	אָפֿענע	אָפֿן	adj	adjE
+adjective	1	איידעלע	איידל	adj	adjE
+adjective	1	איידעלן	איידל	adj	adjN
+adjective	1	פֿריִע	פֿרי	adj	adjE
+adjective	1	מאָדנער	מאָדנע	adj	adjEr
+adjective	1	מאָדנעם	מאָדנע	adj	adjN
+adjective	1	ייִדישע	ייִדיש	adj	adjE
+comparison	1	שענער	שיין	adj	comparative
+comparison	1	גרעסער	גרויס	adj	comparative
+comparison	1	עלטער	אַלט	adj	comparative
+comparison	1	ייִנגער	יונג	adj	comparative
+comparison	1	קירצער	קורץ	adj	comparative
+comparison	1	קלענער	קליין	adj	comparative
+comparison	1	העכער	הויך	adj	comparative
+comparison	1	טריקענער	טרוקן	adj	comparative
+comparison	1	פֿריִער	פֿרי	adj	comparative
+comparison	1	בעסער	גוט	adj	comparative
+comparison	1	ערגער	שלעכט	adj	comparative
+comparison	1	שענסט	שיין	adj	superlative
+comparison	1	גרעסט	גרויס	adj	superlative
+comparison	1	עלטסט	אַלט	adj	superlative
+comparison	1	בעסט	גוט	adj	superlative
+comparison	1	שענסטע	שיין	adj	superlative|adjE
+comparison	1	גרעסטע	גרויס	adj	superlative|adjE
+comparison	1	בעסערע	גוט	adj	comparative|adjE
+unpointed	1	געמאכט	מאַכן	v	pastParticiple
+unpointed	1	פארשטאנען	פֿאַרשטיין	v	pastParticiple
+unpointed	1	שרייבט	שרײַבן	v	3sg
+unpointed	1	זיין	זײַן	*	
+unpointed	1	ווייב	ווײַב	*	
+unpointed	1	פרעגט	פֿרעגן	v	3sg
+unpointed	1	אנגעהויבן	אָנהייבן	v	pastParticiple
+unpointed	1	הייזער	הויז	n	plural
+unpointed	1	ייִדיש	ייִדיש	*	
+negatives	0	די טישן	די טיש	*	*
+negatives	0	ער האָט	ער האָבן	*	*
+negatives	0	מיינע	מיינען	*	*
+negatives	0	נייע	נייען	*	*
+negatives	0	ביים	בוים	*	*
+negatives	0	וואָכן	וואָכ	*	*
+negatives	0	זע	זענען	*	*
+negatives	0	שמייכלט	שמייכלן	*	*
+negatives	0	שטעלט	שטעלען	*	*
+negatives	0	וווינט	וווינענען	*	*
+negatives	0	ציט	צין	*	*
+negatives	0	רט	רן	*	*
+negatives	0	שטודירט	שטודירען	*	*
+negatives	0	טישן	טישען	*	*
+present	1	בויט	בויען	v	3sg
+negatives	0	בויט	בויִען	*	*
+negatives	0	זעסט	זענען	*	*
+compound	1	ליב געהאַט	ליב האָבן	v	compoundVerb
+compound	1	מסכּים געווען	מסכּים זײַן	v	compoundVerb
+compound	1	מורא האָבנדיק	מורא האָבן	v	compoundVerb
+one word	0	אַ גוט	אַ גוטן	*	*
+one word	0	מיר זאָלסט	מיר זאָלן	*	*
+one word	0	מיר זאָגט	מיר זאָגן	*	*
+one word	0	איך לייען	איך ליין	*	*
+one word	0	זיי גענומען	זיי נעמען	*	*
+one word	0	אַ מאַכנדיק	אַ מאַכן	*	*
+one word	0	אָנצוגיין זיי	אָנגיין זיי	*	*
+one word	0	מיר האָסטו	מיר האָסט	*	*
+one word	0	אַ פֿולן	אַ פֿולע	*	*
+one word	0	אַ ביסעלע	אַ ביסל	*	*
+one word	0	אַ ביכלעך	אַ ביכל	*	*
+one word	0	אַזוי גערופֿענע	אַזוי גערופֿן	*	*
+one word	0	אַזוי גערופֿענער	אַזוי גערופֿן	*	*
+one word	0	איז דאָס	איז דאָ	*	*
+one word	0	איך זיכער	איך זוך	*	*
+one word	0	ער ווייסט	ער ווייס	*	*
+stems	0	די	דין	*	*
+stems	0	זי	זין	*	*
+stems	0	מעסט	מען	*	*
+stems	0	ביסט	בין	*	*
+stems	0	דאַוונען	דאַווענען	*	*
+stems	0	געגט	גן	*	*
+stems	0	געליינט	לייענען	*	*
+stems	0	געמיט	מין	*	*
+stems	0	פֿאַרגעשריבן	פֿאַרגעשרײַבן	*	*
+stems	0	נדיק	ן	*	*
+stems	0	שטעלנדיק	שטעלען	*	*
+stems	0	אָנצו	אָנ	*	*
+stems	0	סטו	סט	*	*
+stems	0	מים	מה	*	*
+stems	0	אינער	אונ	*	*
+stems	0	גיין	גוי	*	*
+stems	0	איין	אוי	*	*
+stems	0	רן	רע	*	*
+stems	0	גאַנצן	גאַנצע	*	*
+stems	0	מל	מע	*	*
+stems	0	זאָל	זאָ	*	*
+stems	0	אַלע	אַ	*	*
+stems	0	בלימל	בלימ	*	*
+stems	0	ווערימל	וואָרים	*	*
+stems	0	לעך	ל	*	*
+stems	0	אָנגעזעענע	אָנגעזען	*	*
+stems	0	אָנגעזעענער	אָנגעזען	*	*
+stems	0	מער	מע	*	*
+stems	0	פֿריִער	פֿריִע	*	*
+stems	0	נײַער	נײַע	*	*
+stems	0	רעם	רע	*	*
+stems	0	נײַעם	נײַע	*	*
+stems	0	אונס	אונ	*	*
+stems	0	אײַער	אוי	*	*
+stems	0	שענסט	שענ	*	*
+stems	0	וועסט	וויי	*	*
+compound	0	האָט מיר	מיר האָבן	*	*
+compound	0	האָבן זיי	זיי האָבן	*	*
+compound	0	בין איך	איך זײַן	*	*
+compound	1	האָט מירמל	מירמל האָבן	v	compoundVerb
+plural	1	קאָקאָסניס	קאָקאָסנוס	n	plural
+plural	1	זין	זון	n	plural
+plural	0	גביר	גבור	*	*
+plural	0	פֿיר	פֿור	*	*
+separable	0	געשטאַנען אויף	אויפֿגעשטאַנען	*	*
+separable	0	געשטאַנען אויף	אויפֿשטיין	*	*
+diminutive	1	שליסעלע	שליסל	n	diminutive
+diminutive	0	מאָטקע	מאָט	*	*
+separable	1	געוווינסט צו	צוגעוווינען	v	2sg|separable
+irregular	1	מיר זענען	זײַן	v	1pl
+irregular	1	איר זענט	זײַן	v	3sg
+unpointed	1	ווו	וווּ	*	
+plural	0	אידען	אידעע	*	*

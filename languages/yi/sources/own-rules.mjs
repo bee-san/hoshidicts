@@ -49,13 +49,21 @@ const VOWEL_END = '{vowelEnd}';   // a vowel letter or vowel point ends the stem
 const CONSONANT = '{consonant}';  // consonant letters and their points
 const ONE_WORD = '[^ ]';          // the stem has no space: the rule reads one word
 // Medial letters that never end a word: a stem ending in one of them is not a
-// dictionary form (פֿ ends in rafe, which בֿ shares; בֿ endings get their own rules).
-const NOT_FINAL_FORM = '[כמנצ\\u05BF]';
+// dictionary form. (פֿ cannot be told from בֿ by its last code point, the rafe;
+// a stem in פֿ gives a text no headword has.)
+const NOT_FINAL_FORM = '[כמנצ]';
 
 // --- Output structures -------------------------------------------------------------------
+// v, n and their subconditions have Yomitan's definitions (the merge tool
+// requires conditions both files have to be equal); rules give a verb as `v`
+// and the singular a noun rule reaches as `ns`.
 const conditions = {
-    v: {name: 'Verb', isDictionaryForm: true},
-    n: {name: 'Noun', isDictionaryForm: true},
+    v: {name: 'Verb', isDictionaryForm: true, subConditions: ['vpast', 'vpresent']},
+    vpast: {name: 'Verb, past tense', isDictionaryForm: false},
+    vpresent: {name: 'Verb, present tense', isDictionaryForm: true},
+    n: {name: 'Noun', isDictionaryForm: true, subConditions: ['np', 'ns']},
+    np: {name: 'Noun plural', isDictionaryForm: false},
+    ns: {name: 'Noun singular', isDictionaryForm: true},
     adj: {name: 'Adjective', isDictionaryForm: true},
     v_sep: {name: 'Verb with its separable particle put back', isDictionaryForm: false},
     v_2sg: {name: 'Second person singular verb form', isDictionaryForm: false},
@@ -107,10 +115,18 @@ const VERB_TAILS = [
     {tail: 'צ', inf: ['צן']},
     {tail: 'ל', inf: ['לן'], c: {stemEndsWith: VOWEL_END}},       // שטעל → שטעלן
     {tail: 'ל', inf: ['לען'], c: {stemNotEndsWith: VOWEL_END}},   // syllabic l: שמייכל → שמייכלען
-    {tail: 'ע', inf: ['ען', 'ענען']},                             // זע → זען; גנבֿע → גנבֿענען
+    // זע → זען, ראַטעווע → ראַטעווען; גנבֿע → גנבֿענען. Not after י, מ or נ: מיינע and נייע (unpointed
+    // מײַנע, נײַע) are not forms of מיינען and נייען, whose stems are מיינ and ניי.
+    {tail: 'ע', inf: ['ען'], c: {stemNotEndsWith: '[ימנ]'}},
+    {tail: 'ע', inf: ['ענען'], c: {stemMinLength: 2}},             // not זע → זענען
+    {tail: 'יע', inf: ['יען'], c: {stemNotEndsWith: '[י]'}},        // נודיע → נודיען, אָטכאַיע → אָטכאַיען
     {tail: 'י' + HIRIQ, inf: ['י' + HIRIQ + 'ען']},               // בליִ → בליִען
     {tail: AY, inf: [AY + 'ען']},                                 // שרײַ → שרײַען
-    {tail: 'י', inf: ['ין', 'יען']},                               // גיי → גיין; דריי → דרייען
+    {tail: 'י', inf: ['ין', 'יען'], c: {stemEndsWith: VOWEL_END}}, // גיי → גיין; דריי → דרייען
+    {tail: 'י', inf: ['י' + HIRIQ + 'ען'], c: {stemEndsWith: CONSONANT}}, // צי → ציִען, פֿלי → פֿליִען
+    {tail: 'וול', inf: ['וולען']},                                 // באַעוול → באַעוולען
+    {tail: 'דזש', inf: ['דזשען']},                                 // בלאָנדזש → בלאָנדזשען
+    {tail: 'שטש', inf: ['שטשען']},                                 // טרעשטש → טרעשטשען
     {tail: 'ו', inf: ['ון', 'וען']},                               // פּרוּוו → פּרוּוון; רו → רוען
     ...GENERIC_TAILS.map((tail) => ({tail, inf: [tail + 'ן']})),
 ];
@@ -161,7 +177,7 @@ for (const {inflected, deinflected, c} of verbEndings('ט', ['ט'])) {
 // (אָן → אָנהייבן).
 const PARTICLES = ['אָן', 'אָפּ', 'אויס', 'אויף', 'אײַן', 'אַוועק', 'אַהיים', 'אַהין', 'אַהער', 'אַדורך', 'אַנטקעגן', 'אַראָפּ',
     'אַרויס', 'אַרויף', 'אַרום', 'אַרײַן', 'אַריבער', 'אַרונטער', 'אַנידער', 'בײַ', 'דורך', 'מיט', 'נאָך', 'פֿאָר', 'פֿאָרויס',
-    'פֿאַרבײַ', 'פֿונאַנדער', 'צו', 'צוזאַמען', 'צונויף', 'צוריק', 'איבער', 'אונטער'];
+    'פֿאַרבײַ', 'פֿונאַנדער', 'צו', 'צוזאַמען', 'צונויף', 'צוריק', 'איבער', 'אונטער', 'אום', 'פֿיר'];
 // Unstressed prefixes, after which the participle has no גע-.
 const INSEPARABLE = ['באַ', 'גע', 'דער', 'אַנט', 'פֿאַר', 'צע'];
 
@@ -169,7 +185,8 @@ const INSEPARABLE = ['באַ', 'גע', 'דער', 'אַנט', 'פֿאַר', 'צע
 // particles) and the stem endings, one row per stem constraint.
 const ppPrefixes = [['גע', ''], ...PARTICLES.map((p) => [medialForm(p) + 'גע', medialForm(p)])];
 const ppSuffixes = new Map();
-for (const {inflected, deinflected, c} of [...verbEndings('ט', ['ט']), {inflected: 'ט', deinflected: 'טן', c: {}}]) {
+for (const {inflected, deinflected, c} of [...verbEndings('ט', ['ט']), {inflected: 'ט', deinflected: 'טן', c: {}},
+    {inflected: 'דעט', deinflected: 'דן', c: {}}]) {  // געלאַנדעט → לאַנדן
     const key = JSON.stringify(c);
     if (!ppSuffixes.has(key)) { ppSuffixes.set(key, {c, pairs: []}); }
     ppSuffixes.get(key).pairs.push([inflected, deinflected]);
@@ -201,7 +218,12 @@ const STRONG = [
     ['לאָזן', 'לאָזן'], ['בראָטן', 'בראָטן'], ['הייסן', 'הייסן'], ['טאָן', 'טאָן'], ['ווען', 'זײַן'], ['וועזן', 'זײַן'], ['האַט', 'האָבן'],
     ['וווּסט', 'וויסן'], ['בראַכט', 'ברענגען'], ['וואָלט', 'וועלן'], ['טראָטן', 'טרעטן'], ['בעטן', 'בעטן'], ['שוואָרן', 'שווערן'],
     ['שוירן', 'שערן'], ['ווויגן', 'וועגן'], ['שטויסן', 'שטויסן'], ['בלאָזן', 'בלאָזן'], ['שאַפֿן', 'שאַפֿן'], ['שמאָלצן', 'שמעלצן'],
-    ['גאָלטן', 'גילטן'], ['זויגן', 'זויגן'],
+    ['גאָלטן', 'גילטן'], ['זויגן', 'זויגן'], ['דראָשן', 'דרעשן'], ['שאָכטן', 'שעכטן'], ['ראָכטן', 'ריכטן'], ['לויכטן', 'לײַכטן'],
+    ['וווּנטשן', 'ווינטשן'], ['ליגן', 'לײַען'], ['לעזן', 'לעזן'], ['קנאָטן', 'קנעטן'], ['באָדן', 'באָדן'], ['לאָשן', 'לעשן'],
+    ['שפּראָכן', 'שפּרעכן'], ['גליכן', 'גלײַכן'], ['דונגען', 'דינגען'], ['נאָסן', 'ניסן'], ['הונקען', 'הינקען'], ['לונגען', 'לינגען'],
+    ['מאָלדן', 'מעלדן'], ['לאָרן', 'לירן'], ['דאָרבן', 'דאַרבן'], ['בולן', 'בילן'], ['זאָדן', 'זידן'], ['שריגן', 'שרײַען'],
+    ['שטראָכן', 'שטרײַכן'], ['פֿראָרן', 'פֿרירן'], ['שרומפּן', 'שרומפּן'], ['וואָקסן', 'וואַקסן'], ['באָרשטן', 'באַרשטן'],
+    ['האָפֿטן', 'העפֿטן'], ['יוירן', 'יערן'], ['מיטן', 'מיידן'], ['מאָלן', 'מאָלן'], ['גונען', 'גינען'], ['טראָנקען', 'טרענקען'],
 ];
 for (const [participle, infinitive] of STRONG) {
     suffix('pastParticiple', 'גע' + participle, infinitive, ['adj'], ['v']);
@@ -211,8 +233,14 @@ add('pastParticiple', {type: 'circumfix', prefixes: INSEPARABLE.map((p) => [p, p
     suffixes: STRONG.filter(([participle, infinitive]) => participle !== infinitive), conditionsIn: ['adj'], conditionsOut: ['v'],
     stemCharacters: '[]'});
 
+// A weak participle of a stem in -נד takes -עט, also after an unstressed prefix: געלאַנדעט, פֿאַרלענדעט.
+suffix('pastParticiple', 'נדעט', 'נדן', ['adj'], ['v'], {stemMinLength: 2});
+
 // Present participles: the infinitive and -דיק.
 suffix('presentParticiple', 'נדיק', 'ן', ['adj'], ['v'], {stemMinLength: 1});
+suffix('presentParticiple', 'לנדיק', 'לען', ['adj'], ['v'], {stemMinLength: 1, stemNotEndsWith: VOWEL_END}); // שמייכלנדיק
+// The plural of a verb in syllabic -ן: באַרעכענען → מיר באַרעכנען.
+suffix('1pl', 'נען', 'ענען', FINITE_IN, ['v'], {stemMinLength: 1, stemEndsWith: CONSONANT});
 suffix('presentParticiple', 'ייענדיק', 'יין', ['adj'], ['v']);
 suffix('presentParticiple', 'עענדיק', 'ען', ['adj'], ['v']);
 suffix('presentParticiple', AY + 'ענדיק', AY + 'ן', ['adj'], ['v']);
@@ -220,8 +248,10 @@ suffix('presentParticiple', 'טוענדיק', 'טאָן', ['adj'], ['v']);
 
 for (const p of PARTICLES) {
     const m = medialForm(p);
-    prefix('zuInfinitive', m + 'צו', m, [], ['v'], {stemMinLength: 2});
-    add('separable', {type: 'pattern', pattern: `^({word}+) ${p}$`, replacement: `${m}$1`, anchorSuffix: ' ' + p,
+    prefix('zuInfinitive', m + 'צו', m, [], ['v'], {stemMinLength: 1});
+    // Not after a participle, whose particle is written before it (אויפֿגעשטאַנען): געשטאַנען אויף is "stood on".
+    // The verbs whose own stem starts with גע (געוווינען, געוויינען; kaikki lists no other with a particle) stay.
+    add('separable', {type: 'pattern', pattern: `^(?!גע(?!וווינ|וויינ))({word}+) ${p}$`, replacement: `${m}$1`, anchorSuffix: ' ' + p,
         conditionsIn: [], conditionsOut: ['v', 'v_sep']});
 }
 
@@ -235,6 +265,7 @@ const IRREGULAR = [
     ['1pl', 'זענען', 'זײַן', true], ['1pl', 'זײַנען', 'זײַן', true], ['3sg', 'זענט', 'זײַן', true], ['3sg', 'זײַט', 'זײַן', true],
     ['2sg', 'האָסט', 'האָבן', true], ['3sg', 'האָט', 'האָבן', true],
     ['stem', 'גיב', 'געבן', false], ['2sg', 'גיסט', 'געבן', false], ['2sg', 'גיבסט', 'געבן', false], ['3sg', 'גיט', 'געבן', false],
+    ['1pl', 'גיבן', 'געבן', false], ['1pl', 'וועלן', 'וועל', true],
     ['stem', 'טו', 'טאָן', false], ['2sg', 'טוסט', 'טאָן', false], ['3sg', 'טוט', 'טאָן', false], ['1pl', 'טוען', 'טאָן', false],
     ['1pl', 'ייען', 'יין', false], ['1pl', 'עען', 'ען', false],
     ['stem', 'ווייס', 'וויסן', true], ['2sg', 'ווייסט', 'וויסן', true], ['1pl', 'ווייסן', 'וויסן', true],
@@ -243,6 +274,9 @@ const IRREGULAR = [
     ['2sg', 'וואָלטסט', 'וואָלט', true], ['1pl', 'וואָלטן', 'וואָלט', true],
     ['2sg', 'פֿלעגסט', 'פֿלעג', true], ['3sg', 'פֿלעגט', 'פֿלעג', true], ['1pl', 'פֿלעגן', 'פֿלעג', true],
 ];
+// A pronoun and זענען or זענט: wty-yi-en's rows for these three phrases name מסביר זײַן (from a split
+// table), so a lookup needs this reading to offer זײַן at the same length (README.md, Known gaps).
+IRREGULAR.push(['1pl', 'מיר זענען', 'זײַן', true], ['1pl', 'זיי זענען', 'זײַן', true], ['3sg', 'איר זענט', 'זײַן', true]);
 for (const [id, form, infinitive, whole] of IRREGULAR) {
     const conditionsIn = id === '2sg' ? ['v_sep', 'v_2sg'] : FINITE_IN;
     if (whole) {
@@ -259,10 +293,20 @@ const AUXILIARIES = [
     ['זײַן', ['בין', 'ביסט', 'איז', 'זענען', 'זײַנען', 'זענט', 'זײַט']],
     ['ווערן', ['ווער', 'ווערסט', 'ווערט', 'ווערן']],
 ];
+// Their participles, after the word: ליב געהאַט → ליב האָבן, מסכּים געווען → מסכּים זײַן, מורא האָבנדיק → מורא האָבן.
+for (const [participle, infinitive] of [['געהאַט', 'האָבן'], ['געווען', 'זײַן'], ['געוואָרן', 'ווערן'], ['האָבנדיק', 'האָבן'],
+    ['זײַענדיק', 'זײַן'], ['ווערנדיק', 'ווערן']]) {
+    add('compoundVerb', {type: 'pattern', pattern: `^({word}+) ${participle}$`, replacement: `$1 ${infinitive}`, anchorSuffix: ' ' + participle,
+        conditionsIn: [], conditionsOut: ['v']});
+}
+// Not a pronoun after the auxiliary (האָט מיר, האָבן זיי): wty-yi-en lists the
+// pronoun and the verb (מיר האָבן) as a form of the verb, so the reordered text
+// would read two words where the verb is one.
+const PRONOUNS_AFTER = '(?!(?:איך|דו|ער|זי|עס|מיר|איר|זיי|זײ|מען|דיר|מיך|אים|אונדז|אײַך|זיך)$)';
 for (const [infinitive, forms] of AUXILIARIES) {
     for (const form of forms) {
-        add('compoundVerb', {type: 'pattern', pattern: `^${form} ({word}+)$`, replacement: `$1 ${infinitive}`, anchorPrefix: form + ' ',
-            conditionsIn: [], conditionsOut: ['v']});
+        add('compoundVerb', {type: 'pattern', pattern: `^${form} ${PRONOUNS_AFTER}({word}+)$`, replacement: `$1 ${infinitive}`,
+            anchorPrefix: form + ' ', conditionsIn: [], conditionsOut: ['v']});
     }
 }
 
@@ -272,7 +316,7 @@ for (const [infinitive, forms] of AUXILIARIES) {
 // Each pair is [the vowel in the inflected form, the vowel of the dictionary form].
 const UMLAUT = [['ע', A], ['ע', O], ['ע', 'וי'], ['ע', 'יי'], ['י', 'ו'], ['י' + HIRIQ, 'ו'], ['יי', 'וי'], [AY, 'וי']];
 const umlaut = ([from, to], betweenMinLength) =>
-    ({from: [from], to, occurrence: 'last', between: CONSONANT, betweenMinLength});
+    ({from: [from], to, occurrence: 'last', between: CONSONANT, ...(betweenMinLength === 1 ? {} : {betweenMinLength})});
 
 // The endings of a noun or adjective after its stem: the generic rule (the stem
 // ends in a letter that may end a word) and one rule per final letter, whose
@@ -286,14 +330,18 @@ function stemEndings(ending, {finals = Object.keys(FINAL_OF)} = {}) {
 }
 // Adds the endings of `stemEndings`, plain and, when `umlauts` is set, with each
 // vowel change; a final letter's rule changes the vowel just before it.
-function endingRules(id, ending, conditionsIn, conditionsOut, {finals, umlauts = false, extra = {}} = {}) {
-    for (const {inflected, deinflected, c, final} of stemEndings(ending, {finals})) {
+// `plain` constrains only the rule without a final letter.
+function endingRules(id, ending, conditionsIn, conditionsOut, {finals, umlauts = false, extra = {}, plain = {}} = {}) {
+    for (const {inflected, deinflected, c: base, final} of stemEndings(ending, {finals})) {
         if (inflected === '') { continue; }
-        suffix(id, inflected, deinflected, conditionsIn, conditionsOut, {stemMinLength: 1, ...c, ...extra});
+        const c = final ? base : {...base, ...plain};
+        // An empty stem gives an empty text, which is never looked up, unless a final letter is written.
+        const minimum = deinflected === '' ? {} : {stemMinLength: 1};
+        suffix(id, inflected, deinflected, conditionsIn, conditionsOut, {...minimum, ...c, ...extra});
         if (!umlauts) { continue; }
         for (const pair of UMLAUT) {
             suffix(id, inflected, deinflected, conditionsIn, conditionsOut,
-                {stemMinLength: 1, ...c, ...extra, stemChange: umlaut(pair, final ? 0 : 1)});
+                {...minimum, ...c, ...extra, stemChange: umlaut(pair, final ? 0 : 1)});
         }
     }
 }
@@ -308,25 +356,40 @@ transform('diminutive', 'diminutive',
 transform('diminutivePlural', 'diminutive plural',
     'Plural of a diminutive, -עך: ביכל → ביכלעך, שטיקעלע → שטיקעלעך.');
 
-const NOUN = ['n'];
-endingRules('plural', 'ן', [], NOUN, {finals: ['כ', FE, 'צ']});
+const NOUN = ['ns'];
+endingRules('plural', 'ן', [], NOUN, {finals: ['כ', 'נ', FE, 'צ']});
 endingRules('plural', 'ען', [], NOUN, {finals: ['מ', 'נ']});
-endingRules('plural', 'ס', [], NOUN, {finals: []});
-suffix('plural', 'ניקעס', 'ניק', [], NOUN, {stemMinLength: 1});
-endingRules('plural', 'ער', [], NOUN, {umlauts: true});
-// A changed vowel alone: the stem ends in a consonant after the vowel.
-for (const pair of UMLAUT) {
-    suffix('plural', '', '', [], NOUN, {stemMinLength: 2, stemEndsWith: CONSONANT, stemChange: umlaut(pair, 1)});
+endingRules('plural', 'ס', [], NOUN);                    // טאַטעס, צייכנס, לחיימס
+endingRules('plural', 'עס', [], NOUN, {extra: {stemMinLength: 2}}); // נודניקעס, הולטאַיעס
+// -ער after a consonant (טײַער is not a plural of טיי); אייער is written out.
+endingRules('plural', 'ער', [], NOUN, {umlauts: true, plain: {stemNotEndsWith: '[כמנצ{vowelEnd}]'}});
+// A changed vowel alone: the stem ends in a consonant after the vowel, or in
+// an unstressed -ער, -עם or -ען after it (ברודער → ברידער, וואָרעם → ווערעם).
+// Only ע for אַ or אָ (טאָג → טעג, האַנט → הענט); the few plurals with another
+// change are written out below (ביים is בײַם, not a plural of בוים; גביר is not one of גבור).
+for (const pair of UMLAUT.filter(([from, to]) => from === 'ע' && (to === A || to === O))) {
+    suffix('plural', '', '', [], NOUN, {stemMinLength: 2, stemChange: umlaut(pair, 1)});
+    for (const schwa of ['ער', 'עם', 'ען']) {
+        suffix('plural', schwa, schwa, [], NOUN, {stemMinLength: 2, stemChange: umlaut(pair, 1)});
+    }
 }
+// A changed vowel and -ן: מויד → מיידן.
+suffix('plural', 'ן', '', [], NOUN, {stemMinLength: 2, stemNotEndsWith: NOT_FINAL_FORM, stemChange: umlaut(['יי', 'וי'], 1)});
 endingRules('plural', 'ים', [], NOUN);
 suffix('plural', 'ות', 'ה', [], NOUN, {stemMinLength: 1});
+suffix('plural', 'ים', 'ה', [], NOUN, {stemMinLength: 2});  // עולה → עולים
 endingRules('plural', 'ות', [], NOUN);
 suffix('plural', 'יות', 'ה', [], NOUN, {stemMinLength: 1});
+suffix('plural', 'יות', '', [], NOUN, {stemMinLength: 2, stemNotEndsWith: NOT_FINAL_FORM});  // אות → אותיות
+// A compound ends like its last word (טויטפֿייגל → טויטפֿויגל).
+for (const [form, singular] of [['פֿייגל', 'פֿויגל'], ['פֿיס', 'פֿוס'], ['ניס', 'נוס']]) { suffix('plural', form, singular, [], NOUN); }
+wholeWord('plural', 'זין', 'זון', [], NOUN);
 for (const [form, singular] of [['ברידער', 'ברודער'], ['טעכטער', 'טאָכטער'], ['מיטער', 'מוטער'], ['נעמען', 'נאָמען'], ['ציין', 'צאָן'],
-    ['חדשים', 'חודש']]) {
+    ['חדשים', 'חודש'], ['נשים', 'אשה'], ['ימים', 'יום'], ['מײַז', 'מויז'], ['לײַז', 'לויז'], ['אייער', 'איי']]) {
     wholeWord('plural', form, singular, [], NOUN);
 }
-suffix('nounCase', 'ן', 'ע', [], NOUN, {stemMinLength: 2, stemNotEndsWith: NOT_FINAL_FORM});
+// The stem is the noun without its -ע, so it does not end in ע (אידען is not a form of אידעע).
+suffix('nounCase', 'ן', 'ע', [], NOUN, {stemMinLength: 2, stemNotEndsWith: '[כמנצע]'});
 
 const DIMINUTIVE_IN = ['n_dim'];
 for (const {inflected, deinflected, c, final} of stemEndings('ל')) {
@@ -337,10 +400,33 @@ for (const {inflected, deinflected, c, final} of stemEndings('ל')) {
             {stemMinLength: 1, ...constraint, stemChange: umlaut(pair, final ? 0 : 1)});
     }
 }
+// -עלע of a noun in syllabic -ל: שיסל → שיסעלע, פֿויגל → פֿייגעלע. These come first, so a tie with the
+// rules below goes to them (שליסעלע → שליסל before שלוס).
+suffix('diminutive', 'עלע', 'ל', DIMINUTIVE_IN, NOUN, {stemMinLength: 1, stemEndsWith: CONSONANT});
+for (const pair of UMLAUT) {
+    suffix('diminutive', 'עלע', 'ל', DIMINUTIVE_IN, NOUN, {stemMinLength: 1, stemEndsWith: CONSONANT, stemChange: umlaut(pair, 1)});
+}
 endingRules('diminutive', 'עלע', DIMINUTIVE_IN, NOUN, {umlauts: true});
-suffix('diminutive', 'לע', '', DIMINUTIVE_IN, NOUN, {stemMinLength: 2, stemEndsWith: '[ע]'});
-suffix('diminutivePlural', 'לעך', 'ל', [], ['n', 'n_dim'], {stemMinLength: 1});
-suffix('diminutivePlural', 'עלעך', 'עלע', [], ['n', 'n_dim'], {stemMinLength: 1});
+suffix('diminutive', 'לע', '', DIMINUTIVE_IN, NOUN, {stemMinLength: 2, stemEndsWith: '[עה]'}); // מאַמעלע, דירהלע
+// -דל after ן: ניגון → ניגונדל, הון → הינדל.
+suffix('diminutive', 'נדל', 'ן', DIMINUTIVE_IN, NOUN, {stemMinLength: 1});
+// -ל after an unstressed -ער, with a changed vowel before it: ברודער → ברידערל, האַמער → העמערל.
+for (const pair of UMLAUT) {
+    suffix('diminutive', 'ערל', 'ער', DIMINUTIVE_IN, NOUN, {stemMinLength: 1, stemChange: umlaut(pair, 1)});
+}
+suffix('diminutive', 'ל', 'ע', DIMINUTIVE_IN, NOUN, {stemMinLength: 2, stemEndsWith: CONSONANT});  // שיקסע → שיקסל
+for (const pair of UMLAUT) {
+    suffix('diminutive', 'נדל', 'ן', DIMINUTIVE_IN, NOUN, {stemMinLength: 1, stemChange: umlaut(pair, 0)});
+}
+// Slavic -קע, -קעלע and -טשיק: גומע → גומקע, אָליוו → אָליווקע, גאָמבע → גאָמבקעלע, יונגערמאַן → יונגערמאַנטשיק.
+// -קע after a consonant needs a stem of five code points: in text a shorter one is mostly a name
+// (מאָטקע is not a diminutive of מאָט); מינוטקע, אָליווקע and עטיקעטקע keep their reading.
+endingRules('diminutive', 'קע', DIMINUTIVE_IN, NOUN, {extra: {stemMinLength: 5}});
+suffix('diminutive', 'קע', 'ע', DIMINUTIVE_IN, NOUN, {stemMinLength: 2, stemEndsWith: CONSONANT});
+suffix('diminutive', 'קעלע', 'ע', DIMINUTIVE_IN, NOUN, {stemMinLength: 2, stemEndsWith: CONSONANT});
+endingRules('diminutive', 'טשיק', DIMINUTIVE_IN, NOUN, {extra: {stemMinLength: 2}});
+suffix('diminutivePlural', 'לעך', 'ל', [], ['ns', 'n_dim'], {stemMinLength: 1});
+suffix('diminutivePlural', 'עלעך', 'עלע', [], ['ns', 'n_dim'], {stemMinLength: 1});
 
 // --- Adjectives --------------------------------------------------------------------------
 transform('adjE', 'adjective -ע',
@@ -370,8 +456,27 @@ for (const [id, ending] of [['adjE', 'ע'], ['adjEr', 'ער'], ['adjN', 'עם']]
 for (const [id, ending] of [['adjE', 'ע'], ['adjEr', 'ער']]) {
     suffix(id, 'על' + ending, 'ל', [], ADJ, {stemMinLength: 1, stemNotEndsWith: VOWEL_END});
 }
+// Adjectives in -ע (Slavic: מאָדנע, טשיקאַווע) take -ר, -ם and -ס: מאָדנער, מאָדנעם, טשיקאַוועס.
+suffix('adjEr', 'ער', 'ע', [], ADJ, {stemMinLength: 2, stemEndsWith: CONSONANT});
+suffix('adjN', 'עם', 'ע', [], ADJ, {stemMinLength: 2, stemEndsWith: CONSONANT});
+suffix('adjS', 'עס', 'ע', [], ADJ, {stemMinLength: 2});
+// Syllabic l takes ע before -ן: איידל → איידעלן, טונקל → טונקעלען.
+suffix('adjN', 'עלן', 'ל', [], ADJ, {stemMinLength: 1, stemNotEndsWith: VOWEL_END});
+suffix('adjN', 'עלען', 'ל', [], ADJ, {stemMinLength: 1, stemNotEndsWith: VOWEL_END});
+// A final י after a consonant takes a hiriq before an ending: פֿרי → פֿריִע, פֿריִער, פֿריִעסט.
+for (const [id, ending] of [['adjE', 'ע'], ['adjEr', 'ער'], ['adjN', 'ען']]) {
+    suffix(id, 'י' + HIRIQ + ending, 'י', [], ADJ, {stemMinLength: 1});
+}
 endingRules('comparative', 'ער', ADJ, ADJ, {umlauts: true});
 endingRules('superlative', 'סט', ADJ, ADJ, {umlauts: true});
+suffix('comparative', 'י' + HIRIQ + 'ער', 'י', ADJ, ADJ, {stemMinLength: 1});
+// Syllabic n: טרוקן → טריקענער.
+suffix('comparative', 'ענער', 'ן', ADJ, ADJ, {stemMinLength: 1, stemNotEndsWith: VOWEL_END});
+for (const pair of UMLAUT) {
+    suffix('comparative', 'ענער', 'ן', ADJ, ADJ, {stemMinLength: 1, stemNotEndsWith: VOWEL_END, stemChange: umlaut(pair, 1)});
+}
+suffix('superlative', 'שט', 'ש', ADJ, ADJ, {stemMinLength: 2});  // לעפּיש → לעפּישט
+suffix('superlative', 'י' + HIRIQ + 'עסט', 'י', ADJ, ADJ, {stemMinLength: 1});
 suffix('superlative', 'סט', 'ס', ADJ, ADJ, {stemMinLength: 1});
 for (const pair of UMLAUT) {
     suffix('superlative', 'סט', 'ס', ADJ, ADJ, {stemMinLength: 1, stemChange: umlaut(pair, 0)});
@@ -383,6 +488,13 @@ for (const [comparative, superlative, positive] of [['בעסער', 'בעסט', '
 }
 
 // --- Output ------------------------------------------------------------------------------
+// These transforms need no minimum stem: without it no rule of theirs adds a
+// headword to the deinflections of 150,000 words and phrases of the real texts
+// and Tatoeba (sources/mutation-gains.py); an empty stem only gives a lone
+// letter or ending, which no headword is.
+for (const id of ['1pl', 'adjE', 'adjS', 'comparative', 'superlative']) {
+    for (const rule of byId.get(id).rules) { delete rule.stemMinLength; }
+}
 const out = {schema: 1, conditions, transforms: transforms.filter((t) => t.rules.length > 0)};
 const file = join(here, 'own.json');
 writeFileSync(file, formatTransforms(out));

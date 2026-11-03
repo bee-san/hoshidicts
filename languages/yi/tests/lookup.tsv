@@ -1,0 +1,37 @@
+# Source: written for this pack (GPL-3.0-or-later), against tests/dictionary/. The pack has no optional processor.
+# category	valid	text	expression	matched
+inflection	1	האָב געשריבן אַ בריוו	האָבן	האָב
+inflection	1	געשריבן אַ בריוו	שרײַבן	געשריבן
+inflection	1	מאַכסט אַ פֿרייד	מאַכן	מאַכסט
+inflection	1	קינדער שפּילן זיך	קינד	קינדער
+inflection	1	ביכער אויפֿן טיש	בוך	ביכער
+inflection	1	הײַזער און גאַסן	הויז	הײַזער
+inflection	1	טעג און נעכט	טאָג	טעג
+inflection	1	וואָכן לאַנג	וואָך	וואָכן
+inflection	1	חבֿרים מײַנע	חבֿר	חבֿרים
+inflection	1	גרעסערע הײַזער	גרויס	גרעסערע
+inflection	1	שענסטע פֿרויען	שיין	שענסטע
+inflection	1	האָסטו געזען	האָבן	האָסטו
+separable	1	הייבט אָן צו לערנען	אָנהייבן	הייבט אָן
+separable	1	שטייט אויף פֿרי	אויפֿשטיין	שטייט אויף
+separable	1	הייבט אַ שטיין	הייבן	הייבט
+compound	1	האָט ליב די קינדער	ליב האָבן	האָט ליב
+compound	1	איז מסכּים געווען	מסכּים זײַן	איז מסכּים
+unpointed	1	פארשטייסט דו	פֿאַרשטיין	פארשטייסט
+unpointed	1	פרעגט ער	פֿרעגן	פרעגט
+unpointed	1	ביים טיש	בײַם	ביים
+unpointed	1	מיינע קינדער	מײַן	מיינע
+unpointed	1	טייערע פֿרײַנד	טײַער	טייערע
+ligatures	1	װאָכן לאַנג	וואָך	װאָכן
+ligatures	1	בױם	בוים	בױם
+scanning	1	ס'איז גוט	ס׳איז	ס'איז
+scanning	1	ס׳איז גוט	ס׳איז	ס׳איז
+scanning	1	ד״ר כּהן	ד״ר	ד״ר
+scanning	1	ד"ר כּהן	ד״ר	ד"ר
+scanning	1	סאָציאַל־דעמאָקראַטישע פּאַרטיי	סאָציאַל־דעמאָקראַטיש	סאָציאַל־דעמאָקראַטישע
+scanning	1	בין, ווי	זײַן	בין
+negatives	0	ביים טיש	בוים	ביים
+negatives	0	טײַער	טיי	טײַער
+negatives	0	מיינע קינדער	מיינען	מיינע
+negatives	0	שטייט אויף פֿרי	שטיין	שטייט
+negatives	0	איך האָב	האָבן	איך האָב
