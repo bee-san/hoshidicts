@@ -1250,31 +1250,29 @@ sfx('ptc-pres', 'iens', 'eo', ['ptc'], VB);
 // --- Proper names -----------------------------------------------------------------------
 // Dictionaries give proper names no part of speech, so these rules have no
 // conditions (section 7.2) and apply only to a capitalised word: Rōmam →
-// Rōma, Caesaris → Caesar, Cicerōnis → Cicerō, Helvētiōrum → Helvētiī.
+// Rōma, Caesaris → Caesar, Cicerōnis → Cicerō. A capitalised word that
+// begins a sentence is tried as written before it is decapitalised, so a
+// name rule there comes before the word's own reading: with the second
+// declension's endings, Vidē (see!) was read as a name Vidus, Prīmum and
+// Prīmō as Prīmus, at 137 places of the two test books. These rules keep the
+// endings that a common word at the start of a sentence rarely has: the first
+// declension's -ae and -am, the Greek -ān, -ēn and -on, the genitive and
+// accusative of stems in l and r (Caesaris, Caesarem), and the stems of the
+// third declension in -ōn-, -in-, -er-, -rt-, -ant- and -ad-. Other names are
+// reached through dictionaries' form-of rows (Marcī, Herculis).
 const NAME = {stemMinLength: 2, stemStartsWith: '[A-Z]'};
 for (const [id, name] of CASE_SLOTS) { slot(`name-${id}`, name, `Proper name, ${name}.`); }
 declension('name', 'a', '', {'gen-sg': 'ae', 'dat-sg': 'ae', 'acc-sg': 'am', loc: 'ae'}, [], NAME);
 declension('name', 'as', '', {'gen-sg': 'ae', 'dat-sg': 'ae', 'acc-sg': 'am|an'}, [], NAME);
-declension('name', 'es', '', {'gen-sg': 'ae', 'dat-sg': 'ae', 'acc-sg': 'en|em'}, [], NAME);
-declension('name', 'ae', '', {'gen-pl': 'arum'}, [], NAME);
-declension('name', 'us', '', {'gen-sg': 'i', 'dat-sg': 'o', 'acc-sg': 'um', 'abl-sg': 'o', 'voc-sg': 'e'}, [], NAME);
-declension('name', 'ius', '', {'gen-sg': 'i', 'voc-sg': 'i'}, [], NAME);
-declension('name', 'um', '', {'gen-sg': 'i', 'dat-sg': 'o', 'abl-sg': 'o'}, [], NAME);
-declension('name', 'i', '', {'gen-pl': 'orum'}, [], NAME);
-declension('name', 'er', 'r', {'gen-sg': 'i', 'dat-sg': 'o', 'acc-sg': 'um', 'abl-sg': 'o'}, [], NAME);
+declension('name', 'es', '', {'acc-sg': 'en'}, [], NAME);
 declension('name', 'os', '', {'acc-sg': 'on'}, [], NAME);
+declension('name', '', '', {'gen-sg': 'is', 'acc-sg': 'em'}, [], {...NAME, stemEndsWith: '[lr]'});
 // No name rule makes an ending another name rule removes: their outputs have
-// no conditions, so every rule applies to them again. Greek names in -ē
-// (Mytilēnē, Mytilēnēs), the dative of names in -os and the accusative plural
-// are left to dictionaries' form-of rows (with them, Rōmae → Rōme → Rōmēs →
-// ... gave 218 deinflections for Rōmae, and Cicerōnis 283).
+// no conditions, so every rule applies to them again (with Greek names in -ē,
+// Rōmae → Rōme → Rōmēs → ... gave 218 deinflections for Rōmae; a rule that
+// makes -is from -e did not stop at all).
 const NAME_THIRD = {'gen-sg': 'is', 'dat-sg': 'i', 'acc-sg': 'em', 'abl-sg': 'e'};
-declension('name', '', '', NAME_THIRD, [], {...NAME, stemEndsWith: '[lr]'});
-// No name rule makes a word in -is: its output has no conditions, so every
-// rule applies to it again, and -is is itself an ending these rules remove
-// (Rōmae → Rōmais → Rōmaae ... would never end; section 7.4 has no depth
-// limit). Isis, Tiberis and Paris are reached through dictionaries' form-of rows.
-for (const [nominative, stem] of [['o', 'on'], ['o', 'in'], ['us', 'er'], ['es', 'er'], ['rs', 'rt'], ['as', 'ant'], ['as', 'ad'], ['x', 'c'], ['es', '']]) {
+for (const [nominative, stem] of [['o', 'on'], ['o', 'in'], ['us', 'er'], ['es', 'er'], ['rs', 'rt'], ['as', 'ant'], ['as', 'ad']]) {
     declension('name', nominative, stem, NAME_THIRD, [], {stemMinLength: 1, stemStartsWith: '[A-Z]'});
 }
 for (const [lemma, forms] of [['Iuppiter', 'Iovis|Iovi|Iovem|Iove|Iupiter'], ['Iesus', 'Iesu|Iesum'], ['Iuno', 'Iunonis|Iunoni|Iunonem|Iunone']]) {
@@ -1462,7 +1460,12 @@ function buildTransforms() {
         }
         transform.rules.push(entry.rule);
     }
-    return [...groups.values()];
+    // Nominal transforms first: two readings that tie on every other key are
+    // ordered by discovery (section 9.6), and a noun or adjective reading of a
+    // form (nāvī, amīcī, Rōmāna) is the commoner one.
+    const nominal = (t) => /^(n-|adj|name-|pron-|comparative|superlative|adverb)/u.test(t.id);
+    const all = [...groups.values()];
+    return [...all.filter(nominal), ...all.filter((t) => !nominal(t))];
 }
 
 const transforms = buildTransforms();
