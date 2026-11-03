@@ -81,6 +81,7 @@
     "transforms": "transforms.json",
     "traceSelection": "shortest",
     "formOf": "follow",
+    "untaggedTerms": "pass",
     "functionWords": [],
     "variantPasses": []
   },
