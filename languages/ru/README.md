@@ -192,10 +192,12 @@ no Russian rules, so the own rules are also the union and the final set, and
 
 Every number below uses wty-ru-en as published, form-of rows included, with
 the pack's `lookup.untaggedTerms: "pass"`, unless a line says otherwise.
-They were measured with hoshidicts-cli and lookup drivers built from
-bee-san/hoshidicts#58 at 26158c1, which adds the field (its head 32812c9
-changes only `docs/languages.md`), GCC 14.3, Release; "filter" lines use
-main at b145feb, which reads every pack as `filter`.
+They were taken with hoshidicts-cli and the lookup drivers built from
+bee-san/hoshidicts#58's branch (GCC 14.3, Release) and checked again on main
+at 0a73e5e, where #58 is merged with the same engine code: the
+`eval-language` rows, the frequent forms and the texts give the same
+numbers. "filter" lines use a scratch copy of the pack with the field set to
+`filter`, which is how a lookup without the field behaves.
 
 1. **`eval-language --dictionary`** (`sources/measure.py` commands below).
    Yomitan has no Russian rules, so the own rules are also the union and the
@@ -286,9 +288,9 @@ main at b145feb, which reads every pack as `filter`.
 5. **Performance** (section 13; the budgets are 1 ms p50, 50 ms load and 20 MB).
    - Native `benchmark-lookup --languages languages --language ru` with
      `sources/benchmark-words.txt` (82 hover texts from the three works), 6
-     passes with the first dropped, three runs at a machine load of 50:
-     p50 55.5-58.7 µs, p95 164.7-174.3 µs (filter: p50 46.2-47.8 µs, p95
-     112.8-116.4 µs).
+     passes with the first dropped, three runs on main 0a73e5e at a machine
+     load of 38-41: p50 49-61 µs, p95 137-207 µs (filter: p50 43-52 µs, p95
+     102-125 µs).
    - WebAssembly: Hachidori feat/multi-language 803f7b6e's engines, built
      locally (`wasm/`, emsdk as its `docs/source-build.md` says, not
      committed) with this branch on #58 in `third_party/hoshidicts`, Node 22.
