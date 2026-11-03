@@ -1,0 +1,9 @@
+{
+  "title": "uk test dictionary",
+  "revision": "1",
+  "format": 3,
+  "author": "hoshidicts",
+  "description": "A tiny Ukrainian dictionary for languages/uk/tests/lookup.tsv.",
+  "sourceLanguage": "uk",
+  "targetLanguage": "en"
+}

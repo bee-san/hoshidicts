@@ -1,0 +1,21 @@
+# Hand-written for this pack (GPL-3.0-or-later): whole lookups against tests/dictionary/.
+# category	valid	text	expression	matched
+apostrophe	1	м’ясо свіже	м'ясо	м’ясо
+apostrophe	1	мʼясо свіже	м'ясо	мʼясо
+apostrophe	1	п'ять днів	п'ять	п'ять
+stress marks	1	чита́ю книгу	читати	чита́ю
+initial у and в	1	Учора ми гуляли	вчора	Учора
+initial у and в	1	вчитель прийшов	учитель	вчитель
+deinflection	1	книги на столі	книга	книги
+deinflection	1	столі стоїть	стіл	столі
+deinflection	1	гуляли містом	гуляти	гуляли
+deinflection	1	Читаючи книгу	читати	Читаючи
+deinflection	1	пишеться легко	писатися	пишеться
+deinflection	1	нього прийшли	він	нього
+form-of	1	книжки на столі	книжка	книжки
+hyphen	1	будь-якого дня	будь-який	будь-якого
+hyphen	1	якого дня	який	якого
+word boundary	1	читав би	читати	читав
+word boundary	1	мить тому	мить	мить
+word boundary	0	мить тому	мити	мить
+word boundary	0	не знаю	не знати	не знаю
