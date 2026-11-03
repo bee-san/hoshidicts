@@ -13,8 +13,9 @@
 // Each input line is looked up with Lookup::lookup (default 16 results, scan
 // length 16, no language options: what a host's hover does) and answered with
 // one JSON line: {"text", "results": [{"expression", "matched", "steps", "trace":
-// [ids], "formOf"}]}; steps are the result's preprocessor steps. formOf is true when every glossary of the result has the
-// definition tag non-lemma (a form-of row of kaikki- or wiktionary-to-yomitan).
+// [ids], "formOf"}]}; steps are the result's preprocessor steps. formOf is
+// true when every glossary of the result has the definition tag non-lemma (a
+// form-of row of kaikki- or wiktionary-to-yomitan).
 
 #include <fstream>
 #include <iostream>

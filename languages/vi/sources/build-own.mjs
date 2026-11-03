@@ -58,7 +58,7 @@ const LAST_LETTERS = [
 //                        (C the whole onset of the second word, then a or à)
 // The whole text must have that shape. A single word said twice (xanh xanh,
 // đi đi) is not read: in Tatoeba and Việt Nam sử lược the text "X X" was a
-// reduplication at 51 places and two words at 41 (máy bay bay, the plane
+// reduplication at 44 places and two words at 41 (máy bay bay, the plane
 // flies; bằng chứng chứng minh), and either way it shows the word X, which a
 // lookup of X alone shows too; dictionaries list the common ones (xanh xanh).
 const ONSET_LETTERS = '[bcdđghklmnpqrstvx]';
