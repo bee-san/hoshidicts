@@ -4,6 +4,7 @@
 // schema.
 #pragma once
 
+#include <algorithm>
 #include <memory>
 #include <optional>
 #include <string>
@@ -23,6 +24,16 @@ enum class TraceSelection : unsigned char { Shortest, First };
 // lookup.formOf (section 9.10): follow a dictionary's form-of references to
 // their terms, as Yomitan does, or read such a row as an ordinary term.
 enum class FormOf : unsigned char { Follow, AsTerm };
+// lookup.untaggedTerms (section 9.4): a dictionary row without part-of-speech
+// tags matches only a form without conditions, as in Yomitan (Filter), or
+// carries every dictionary-form condition (Pass).
+enum class UntaggedTerms : unsigned char { Filter, Pass };
+
+// Whether a row's `rules` name no part-of-speech tag: empty, or only the
+// whitespace that separates tags.
+inline bool untagged(std::string_view rules) {
+  return std::ranges::all_of(rules, [](char c) { return c == ' ' || (c >= '\t' && c <= '\r'); });
+}
 
 // A trace step: a transform, or a variant pass.
 struct TraceStep {
@@ -65,6 +76,7 @@ struct PackData {
   std::vector<std::pair<std::string, StepList>> display_transforms;
   TraceSelection trace_selection = TraceSelection::Shortest;
   FormOf form_of = FormOf::Follow;
+  UntaggedTerms untagged_terms = UntaggedTerms::Filter;
   std::vector<std::string> function_words;
   std::vector<VariantPass> variant_passes;
   std::unique_ptr<TransformSet> transforms;  // null when lookup.transforms is null

@@ -172,9 +172,11 @@ void TransformSet::index() {
   finish(phrasal_, phrasal_builder);
 
   dictionary_forms_.clear();
+  dictionary_form_mask_ = 0;
   for (const auto& condition : conditions) {
     if (condition.dictionary_form) {
       dictionary_forms_.emplace_back(condition.key, condition.bits);
+      dictionary_form_mask_ |= condition.bits;
     }
   }
 }

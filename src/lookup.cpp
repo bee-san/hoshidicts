@@ -354,8 +354,21 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   };
 
   // A term is kept when the form's conditions are 0 or overlap the conditions
-  // of its `rules` tags under this pack's conditions (section 9.4), or when it
-  // comes from a dictionary in pos_filter_exempt.
+  // of its rows' `rules` tags under this pack's conditions (section 9.4), or
+  // when it comes from a dictionary in pos_filter_exempt. With untaggedTerms
+  // "pass", a row without tags carries D, the bits of every dictionary-form
+  // condition, so it matches every form but one that holds only
+  // intermediate conditions.
+  const bool pass_untagged = pack.untagged_terms == lang::UntaggedTerms::Pass;
+  const uint32_t untagged_mask = pass_untagged && transforms != nullptr ? transforms->dictionary_form_mask() : 0;
+  const auto row_conditions = [&](std::string_view rules) {
+    if (pass_untagged && lang::untagged(rules)) {
+      return untagged_mask;
+    }
+    uint32_t bits = 0;
+    each_token(rules, [&](std::string_view tag) { bits |= transforms->dictionary_form_bits(tag); });
+    return bits;
+  };
   const auto filter_by_pos = [&](RawTerms& terms, uint32_t conditions) {
     if (conditions == 0 || transforms == nullptr) {
       return;
@@ -366,8 +379,7 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
         if (!exempt.empty() && std::ranges::find(exempt, terms.glossaries[i].dict_name) != exempt.end()) {
           return false;
         }
-        each_token(terms.glossaries[i].rules,
-                   [&](std::string_view tag) { dict_conditions |= transforms->dictionary_form_bits(tag); });
+        dict_conditions |= row_conditions(terms.glossaries[i].rules);
       }
       return (dict_conditions & conditions) == 0;
     });
@@ -383,9 +395,7 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     if (!exempt.empty() && std::ranges::find(exempt, dict_name) != exempt.end()) {
       return true;
     }
-    uint32_t dict_conditions = 0;
-    each_token(rules, [&](std::string_view tag) { dict_conditions |= transforms->dictionary_form_bits(tag); });
-    return (dict_conditions & conditions) != 0;
+    return (row_conditions(rules) & conditions) != 0;
   };
 
   const auto note_references = [&](size_t matched_len, const Deinflection* base, uint32_t di, int steps) {
@@ -667,8 +677,8 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
 
   // Terms only frequency and pitch dictionaries have
   // (LookupOptions::metadata_only_terms). A frequency or pitch row has no part
-  // of speech, so it answers only the deinflections filter_by_pos keeps a term
-  // without one for, those that need none: the text as it is written, after
+  // of speech, so, whatever the pack's untaggedTerms, it answers only the
+  // deinflections that need none: the text as it is written, after
   // preprocessing, and the few rules that carry none, such as kansai-ben -うたら
   // for -ったら. It counts only for a prefix longer than every match with
   // glossaries, cat speech included, so it can only add terms in front of them.

@@ -1,0 +1,74 @@
+{
+  "schema": 1,
+  "conditions": {
+    "v": {
+      "name": "Verb",
+      "isDictionaryForm": true,
+      "subConditions": ["v_ar", "v_other"]
+    },
+    "v_ar": {
+      "name": "Verb in -ar",
+      "isDictionaryForm": false
+    },
+    "v_other": {
+      "name": "Other verb",
+      "isDictionaryForm": false
+    },
+    "n": {
+      "name": "Noun",
+      "isDictionaryForm": true
+    },
+    "vf": {
+      "name": "Verb form without its pronoun",
+      "isDictionaryForm": false
+    }
+  },
+  "transforms": [
+    {
+      "id": "past",
+      "name": "past",
+      "description": "the past probe rules: -ed, and -ed to -e",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "ed", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "ed", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "neg",
+      "name": "neg",
+      "description": "the negative probe rule",
+      "source": "own",
+      "rules": [
+        {"type": "prefix", "inflected": "un", "deinflected": "", "conditionsIn": ["v"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "plural",
+      "name": "plural",
+      "description": "the plural probe rule",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "s", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "enclitic",
+      "name": "enclitic",
+      "description": "removes the pronoun -se, leaving an intermediate verb form",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "a-se", "deinflected": "a", "conditionsIn": [], "conditionsOut": ["vf"]}
+      ]
+    },
+    {
+      "id": "infinitive",
+      "name": "infinitive",
+      "description": "the infinitive of an intermediate verb form in -a",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "a", "deinflected": "ar", "conditionsIn": ["vf"], "conditionsOut": ["v_ar"]}
+      ]
+    }
+  ]
+}

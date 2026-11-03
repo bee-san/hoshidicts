@@ -1272,7 +1272,7 @@ std::unique_ptr<PackData> parse(std::string_view language_json, std::string_view
     const std::string lpath = "lookup";
     const Object& lookup = as_object(require(root, "lookup", ""), lpath);
     check_keys(lookup, lpath, {"searchResolution", "preprocessors", "postprocessors", "readingNormalizer", "transforms",
-                               "traceSelection", "formOf", "functionWords", "variantPasses"});
+                               "traceSelection", "formOf", "untaggedTerms", "functionWords", "variantPasses"});
     pack->resolution = one_of(require(lookup, "searchResolution", lpath), "lookup.searchResolution", {"character", "word"}) == "word"
                            ? Resolution::Word
                            : Resolution::Character;
@@ -1306,6 +1306,11 @@ std::unique_ptr<PackData> parse(std::string_view language_json, std::string_view
     }
     if (const Json* form_of = get(lookup, "formOf")) {
       pack->form_of = one_of(*form_of, "lookup.formOf", {"follow", "asTerm"}) == "asTerm" ? FormOf::AsTerm : FormOf::Follow;
+    }
+    if (const Json* untagged_terms = get(lookup, "untaggedTerms")) {
+      pack->untagged_terms = one_of(*untagged_terms, "lookup.untaggedTerms", {"filter", "pass"}) == "pass"
+                                 ? UntaggedTerms::Pass
+                                 : UntaggedTerms::Filter;
     }
     if (const Json* words = get(lookup, "functionWords")) pack->function_words = string_array(*words, "lookup.functionWords");
     if (const Json* passes = get(lookup, "variantPasses")) {
