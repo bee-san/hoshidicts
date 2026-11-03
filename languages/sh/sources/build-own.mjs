@@ -1037,7 +1037,7 @@ for (const [lemmas, forms] of [
 // adjectives first); the frequent adjectives that would lose a tie to a noun
 // are in PREFER below.
 const GROUP_ORDER = ['irregular-verb', 'irregular-noun', 'pronoun', 'noun', 'adjective', 'comparative', 'verb-present', 'verb-participle',
-    'verb-past', 'verb-imperative', 'verb-future', 'verb-adverbial', 'verb-noun'];
+    'verb-past', 'verb-imperative', 'verb-future', 'verb-adverbial', 'verb-noun', 'headword'];
 
 const GROUP_OUT = {
     // Possessives, demonstratives and relatives (moj, taj, koji) decline like
@@ -1045,6 +1045,8 @@ const GROUP_OUT = {
     'irregular-verb': ['v'], 'irregular-noun': ['n'], 'pronoun': ['pron'], 'noun': ['n'], 'adjective': ['adj', 'pron'], 'comparative': ['adj'],
     'verb-present': ['v'], 'verb-participle': ['v'], 'verb-past': ['v'], 'verb-imperative': ['v'], 'verb-future': ['v'],
     'verb-adverbial': ['v'], 'verb-noun': ['v'],
+    // No part of speech: the word is filed under another headword.
+    'headword': [],
 };
 
 function ruleOf(spec) {
@@ -1079,6 +1081,15 @@ function ruleOf(spec) {
 }
 
 function key(rule) { return JSON.stringify(rule); }
+
+// --- Headwords of the recommended dictionary ---------------------------------
+// wty-sh-en files the conjunction, the pronoun and the letter i under
+// "i/languages M to Z", Wiktionary's title for the second half of its split
+// page for i: there is no headword i, so i reaches the dictionary only as I,
+// whose references name И (the Cyrillic letter) first. These rules read i
+// and I as that headword (audit-hachi-lang-sh-c MAJOR-1).
+whole('headword', 'i', 'i/languages M to Z', ['dictionary headword']);
+whole('headword', 'I', 'i/languages M to Z', ['dictionary headword']);
 
 // Merge specs with the same rule.
 const merged = new Map();
@@ -1144,7 +1155,7 @@ const PREFER = [
     // Ties judged by audit-hachi-lang-sh-b beyond sources/judged-ties-hr.tsv.
     ['goriva', 'gorivo'], ['listi', 'lista'], ['točku', 'točka'], ['glumi', 'glumiti'], ['klase', 'klasa'], ['ranu', 'rana'],
     ['sjede', 'sjediti'], ['sedim', 'sedeti'], ['telu', 'telo'], ['telom', 'telo'], ['ume', 'umeti'], ['vili', 'vila'],
-    ['vere', 'vera'], ['veru', 'vera'], ['smete', 'smeti'], ['smela', 'smeti'], ['supu', 'supa'], ['odela', 'odelo'],
+    ['vere', 'vera'], ['veru', 'vera'], ['smete', 'smeti:v'], ['smela', 'smeti'], ['supu', 'supa'], ['odela', 'odelo'],
     ['odelu', 'odelo'], ['trku', 'trka'], ['tetke', 'tetka'], ['sede', 'sedeti'],
     // adjectives and pronouns: nouns come first (GROUP_ORDER), so the
     // frequent adjectives whose forms are also forms of a rare noun are
@@ -1154,7 +1165,7 @@ const PREFER = [
     ...['a', 'e', 'o', 'u', 'og', 'oga', 'om', 'ome', 'omu', 'oj', 'im', 'ima', 'ih'].flatMap((e) => (e === 'o' ? [[`drug${e}`, 'drugi']] : [[`drug${e}`, 'drugi'], [`svak${e}`, 'svaki']])),
     // A lemma written lemma:adj is read by the adjective rules, where a noun
     // rule also makes it (stare → star, nove → nov).
-    ['novo', 'nov:adj'], ['novu', 'nov:adj'], ['nove', 'nov:adj'], ['novom', 'nov:adj'], 
+    ['novo', 'nov:adj'], ['novu', 'nov:adj'], ['nove', 'nov:adj'], ['novom', 'nov:adj'],
     ['vojne', 'vojni:adj'], ['vojnu', 'vojni:adj'], ['pete', 'peti:adj'],
 ];
 
@@ -1176,6 +1187,13 @@ function oneStep(rule, word) {
     if (rule.stemNotStartsWithText !== undefined && stem.startsWith(rule.stemNotStartsWithText)) { return null; }
     return stem + rule.deinflected;
 }
+// A reading written lemma:adj is made by the adjective or comparative
+// rules, lemma:v by the verb rules (smete is the present 2pl of smeti, not
+// an adjective ending).
+const READING_GROUPS = {
+    adj: ['adjective', 'comparative'],
+    v: ['irregular-verb', 'verb-present', 'verb-participle', 'verb-past', 'verb-imperative', 'verb-future', 'verb-adverbial', 'verb-noun'],
+};
 // --no-prefer <file>: writes the rules without these whole-word rules to
 // <file> only (sources/prefer-tests.py compares the lookups both ways).
 const noPreferAt = process.argv.indexOf('--no-prefer');
@@ -1183,13 +1201,53 @@ let preferRules = 0;
 for (const [word, ...readings] of noPreferAt === -1 ? PREFER : []) {
     for (const reading of readings) {
         const [lemma, as] = reading.split(':');
-        const groups = as === 'adj' ? ['adjective', 'comparative'] : null;
+        const groups = READING_GROUPS[as] ?? null;
         const entry = [...merged.values()].find((e) => (groups === null || groups.includes(e.group)) && oneStep(ruleOf(e.spec), word) === lemma);
         if (entry === undefined) { throw new Error(`PREFER: no suffix rule reads ${word} as ${lemma}`); }
         const spec = {group: entry.group, type: 'wholeWord', inflected: word, deinflected: lemma, tags: entry.tags, examples: [[word, lemma]],
             opts: {out: ruleOf(entry.spec).conditionsOut}};
         const k = key(ruleOf(spec));
         if (!merged.has(k)) { merged.set(k, {spec, tags: [...entry.tags], examples: [[word, lemma]], group: entry.group}); preferRules += 1; }
+    }
+}
+
+// --- Cyrillic twins -----------------------------------------------------------
+// A Cyrillic word reaches the Latin rules only through cyrillicToLatin, one
+// processor step, while its own Cyrillic form-of rows name its lemmas with
+// none; those references tie and come in bank order (9.6), which often
+// lists the rarer lemma first (нема → нем, реци → река). The reading of the
+// dominant lemma of a PREFER word or a judged tie of
+// sources/judged-ties-hr.tsv is then also written in Cyrillic, as a
+// whole-word rule in the transform of the rule that makes it in Latin:
+// rules are found before references, so it comes first. Only the twins of
+// sources/cyrillic-twins.tsv are written, the candidates that change a
+// lookup of wty-sh-en (sources/prefer-tests.py chooses them from a build with
+// --all-twins <file>, and writes a test for each).
+/** oneStep, and whole-word rules too. */
+const reads = (rule, word) => (rule.type === 'wholeWord' ? (rule.inflected === word ? rule.deinflected : null) : oneStep(rule, word));
+const judgedTies = readFileSync(join(here, 'judged-ties-hr.tsv'), 'utf8').split('\n')
+    .filter((line) => line.trim() && !line.startsWith('#')).map((line) => line.split('\t')).map(([w, lemmas]) => [w, ...lemmas.split('|')]);
+const allTwinsAt = process.argv.indexOf('--all-twins');
+const twinList = new Set(readFileSync(join(here, 'cyrillic-twins.tsv'), 'utf8').split('\n')
+    .filter((line) => line.trim() && !line.startsWith('#')).map((line) => line.split('\t').slice(0, 2).join('\t')));
+const twinCandidates = [];
+let cyrillicRules = 0;
+const twinned = new Set();
+for (const [word, ...readings] of noPreferAt === -1 ? [...PREFER, ...judgedTies] : []) {
+    if (twinned.has(word)) { continue; }
+    twinned.add(word);
+    for (const reading of readings) {
+        const [lemma, as] = reading.split(':');
+        const groups = READING_GROUPS[as] ?? null;
+        const entry = [...merged.values()].find((e) => (groups === null || groups.includes(e.group)) && reads(ruleOf(e.spec), word) === lemma);
+        if (entry === undefined) { continue; }
+        const [cw, cl] = [toCyrillic(word), toCyrillic(lemma)];
+        twinCandidates.push([word, lemma, cw, cl]);
+        if (allTwinsAt === -1 && !twinList.has(`${word}\t${lemma}`)) { continue; }
+        const spec = {group: entry.group, type: 'wholeWord', inflected: cw, deinflected: cl, tags: entry.tags, examples: [[cw, cl]],
+            opts: {out: ruleOf(entry.spec).conditionsOut}};
+        const k = key(ruleOf(spec));
+        if (!merged.has(k)) { merged.set(k, {spec, tags: [...entry.tags], examples: [[cw, cl]], group: entry.group}); cyrillicRules += 1; }
     }
 }
 
@@ -1208,7 +1266,7 @@ const slug = (text) => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').rep
 const ID_PREFIX = {
     'noun': 'n', 'irregular-noun': 'n-irr', 'adjective': 'adj', 'comparative': 'cmp', 'pronoun': 'pron', 'verb-present': 'prs',
     'verb-participle': 'ptcp', 'verb-past': 'past', 'verb-imperative': 'imp', 'verb-future': 'fut', 'verb-adverbial': 'advp',
-    'verb-noun': 'vn', 'irregular-verb': 'v-irr',
+    'verb-noun': 'vn', 'irregular-verb': 'v-irr', 'headword': 'hw',
 };
 // Shown before the forms in a transform's name, where they could be read as
 // another part of speech's.
@@ -1227,6 +1285,7 @@ const DESCRIPTIONS = {
     'verb-adverbial': 'Adverbial participle',
     'verb-noun': 'Verbal noun',
     'irregular-verb': 'Irregular verb form',
+    'headword': 'The headword under which the recommended dictionary files the word',
 };
 
 /**
@@ -1293,6 +1352,11 @@ if (noPreferAt !== -1) {
     writeFileSync(process.argv[noPreferAt + 1], formatTransforms(own));
     process.exit(0);
 }
+if (allTwinsAt !== -1) {
+    writeFileSync(process.argv[allTwinsAt + 1], formatTransforms(own));
+    writeFileSync(`${process.argv[allTwinsAt + 1]}.candidates.tsv`, `${twinCandidates.map((c) => c.join('\t')).join('\n')}\n`);
+    process.exit(0);
+}
 writeFileSync(join(here, 'own.json'), formatTransforms(own));
 // --prefer-list <file>: the PREFER words as `word<TAB>lemma|lemma`.
 const preferListAt = process.argv.indexOf('--prefer-list');
@@ -1316,7 +1380,7 @@ if (casesAt !== -1) {
     const head = text.includes(CASES_MARKER) ? text.slice(0, text.indexOf(CASES_MARKER)) : text.replace(/\n*$/, '\n');
     const block = groups.map((g, i) => {
         const [form, lemma] = g.entries.flatMap((e) => e.examples).find(([f, l]) => f !== l);
-        return `rule example\t1\t${form}\t${lemma}\t${GROUP_OUT[g.group][0]}\t*`;
+        return `rule example\t1\t${form}\t${lemma}\t${GROUP_OUT[g.group][0] ?? '*'}\t*`;
     });
     writeFileSync(file, `${head}${CASES_MARKER}\n${block.join('\n')}\n`);
 }
@@ -1325,4 +1389,4 @@ if (process.argv.includes('--transforms')) {
 }
 const rows = transforms.reduce((n, t) => n + t.rules.length, 0);
 const ruleCount = transforms.reduce((n, t) => n + t.rules.reduce((m, r) => m + (r.suffixes ? r.suffixes.length * r.prefixes.length : 1), 0), 0);
-console.log(`own.json: ${transforms.length} transforms, ${ruleCount} rules in ${rows} rows; ${exampleRows.length} examples; PREFER: ${PREFER.length} words, ${preferRules} whole-word rules`);
+console.log(`own.json: ${transforms.length} transforms, ${ruleCount} rules in ${rows} rows; ${exampleRows.length} examples; PREFER: ${PREFER.length} words, ${preferRules} whole-word rules; ${cyrillicRules} Cyrillic twins`);

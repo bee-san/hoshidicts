@@ -9,6 +9,15 @@ Where wty-sh-en's form-of rows already put the PREFER lemma first, the
 overridden reading is the copy's first deinflection with the same trace
 length that is a wty-sh-en headword with definitions: the test dictionary
 has no form-of rows, so there it would come first.
+
+The Cyrillic twins (`build-own.mjs --all-twins`) are looked up in Cyrillic
+with every candidate twin and without PREFER. A twin is kept, in
+sources/cyrillic-twins.tsv, when it puts its lemma first and the lookup
+without it shows another: the test dictionary then gets the Cyrillic word as
+a form-of row naming the other lemma first and the twin's lemma second, as
+wty-sh-en's references tie in bank order, and a `prefer` row. Run
+`build-own.mjs --transforms` again afterwards, so that transforms.json has
+the kept twins.
 The script replaces the block of tests/lookup.tsv after MARKER with one
 `prefer` row per word (the pack's first result) and writes
 tests/dictionary/term_bank_2.json with an entry for both readings (the
@@ -70,6 +79,14 @@ def main():
         with_prefer = first_results(batch, LANGUAGES, dictionary, words)
         without = first_results(batch, tmp, dictionary, words)
         order = deinflections(cli, tmp, words)
+        os.makedirs(os.path.join(tmp, 'twins', 'sh'))
+        shutil.copy(os.path.join(PACK, 'language.json'), os.path.join(tmp, 'twins', 'sh', 'language.json'))
+        twins_json = os.path.join(tmp, 'twins', 'sh', 'transforms.json')
+        subprocess.run(['node', os.path.join(HERE, 'build-own.mjs'), '--all-twins', twins_json], check=True, capture_output=True)
+        candidates = [line.rstrip('\n').split('\t') for line in open(twins_json + '.candidates.tsv', encoding='utf-8') if line.strip()]
+        cyrillic = [c[2] for c in candidates]
+        twin_with = first_results(batch, os.path.join(tmp, 'twins'), dictionary, cyrillic)
+        twin_without = first_results(batch, tmp, dictionary, cyrillic)
     headwords = defined_headwords(zip_path)
     rows, entries, skipped = [], [], []
     for (word, lemmas), a, b in zip(prefer, with_prefer, without):
@@ -86,16 +103,32 @@ def main():
                 continue
             rows.append(f"prefer\t1\t{word}\t{a['expression']}\t{word}")
             entries += [a['expression'], other]
+    kept, references = [], []
+    for (word, lemma, cw, cl), a, b in zip(candidates, twin_with, twin_without):
+        if a is not None and b is not None and a['matched'] == cw and a['expression'] == cl and b['expression'] != cl:
+            kept.append((word, lemma, cw, cl))
+            rows.append(f"prefer\t1\t{cw}\t{cl}\t{cw}")
+            entries += [b['expression'], cl]
+            # A Cyrillic competitor is a reference of the word's own rows; a
+            # Latin one is a rule's reading of its transliteration.
+            if any('\u0400' <= ch <= '\u04ff' for ch in b['expression']):
+                references.append((cw, b['expression'], cl))
+    with open(os.path.join(HERE, 'cyrillic-twins.tsv'), 'w', encoding='utf-8') as f:
+        f.write('# Cyrillic twins of build-own.mjs (word, lemma, Cyrillic word, Cyrillic lemma), written by sources/prefer-tests.py:'
+                ' the candidates that change a lookup of wty-sh-en.\n')
+        f.write(''.join('\t'.join(k) + '\n' for k in kept))
     hand = {row[0] for row in json.load(open(os.path.join(PACK, 'tests', 'dictionary', 'term_bank_1.json'), encoding='utf-8'))}
     bank = [[h, '', '', '', 0, ['(test entry)'], 1000 + i, ''] for i, h in enumerate(sorted(set(entries) - hand))]
+    bank += [[cw, '', 'non-lemma', '', 0, [[other, ['(test)']], [cl, ['(test)']]], 5000 + i, ''] for i, (cw, other, cl) in enumerate(references)]
     with open(os.path.join(PACK, 'tests', 'dictionary', 'term_bank_2.json'), 'w', encoding='utf-8') as f:
-        f.write('[\n' + ',\n'.join('  ' + json.dumps(r, ensure_ascii=False) for r in bank) + '\n]\n')
+        f.write('[\n' + ',\n'.join('  ' + json.dumps(r, ensure_ascii=False, separators=(',', ':')) for r in bank) + '\n]\n')
     path = os.path.join(PACK, 'tests', 'lookup.tsv')
     text = open(path, encoding='utf-8').read()
     head = text[:text.index(MARKER)] if MARKER in text else text.rstrip('\n') + '\n'
     with open(path, 'w', encoding='utf-8') as f:
         f.write(head + MARKER + '\n' + '\n'.join(rows) + '\n')
-    print(json.dumps({'prefer': len(prefer), 'rows': len(rows), 'dictionaryRows': len(bank), 'skipped': len(skipped)}, ensure_ascii=False))
+    print(json.dumps({'prefer': len(prefer), 'cyrillicCandidates': len(candidates), 'cyrillicKept': len(kept), 'rows': len(rows),
+                      'dictionaryRows': len(bank), 'skipped': len(skipped)}, ensure_ascii=False))
     for s in skipped:
         print('  skipped:', s)
 

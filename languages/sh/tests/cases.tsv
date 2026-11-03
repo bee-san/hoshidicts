@@ -890,6 +890,10 @@ audit fixes	1	odrasla	odrasti	v	*
 audit fixes	1	dovela	dovesti	v	*
 audit fixes	1	ukrao	ukrasti	v	*
 audit fixes	1	pojeo	pojesti	v	*
+# audit-hachi-lang-sh-c MINOR-4: the ijekavian -ije present (razumije), and a nominative -ad that is
+# not a collective (grad is not gre); lookup.tsv pins the consonant guard of the present -re (stare).
+audit fixes	1	razumije	razumjeti	v	*
+negatives	0	grad	gre	*	*
 negatives	0	dao	dasti	*	*
 negatives	0	posla	posti	*	*
 negatives	0	dela	desti	*	*
@@ -1076,3 +1080,4 @@ rule example	1	radićete	raditi	v	fut-future-2pl
 rule example	1	čitajući	čitati	v	advp-present-adverbial-participle
 rule example	1	pročitavši	pročitati	v	advp-past-adverbial-participle
 rule example	1	čitanje	čitati	v	vn-verbal-noun
+rule example	1	i	i/languages M to Z	*	hw-dictionary-headword

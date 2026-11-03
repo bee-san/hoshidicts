@@ -71,6 +71,7 @@ print('per rule:', len(r), 'rows;', sum(1 for x in r if x['recovers'] > 0), 'rec
       echo "frequent $f: $(python3 $P/measure.py frequent --languages "$LANGS" --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --frequency "$CACHE/${f}_50k.txt" --show 60)"
       echo "nothing $f: $(python3 $P/measure.py nothing --languages "$LANGS" --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --frequency "$CACHE/${f}_50k.txt" --show 20)"
     done
+    echo "cyrlatin sr-gutenberg: $(python3 $P/measure.py cyrlatin --languages "$LANGS" --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --text "$CACHE/texts/sr-gutenberg.txt" --out "$OUT/cyrlatin-$i-sr-gutenberg.tsv" --sample 60 --show 30)"
     for t in zlatarevo-zlato sr-gutenberg; do
       echo "text $t: $(python3 $P/measure.py text --languages "$LANGS" --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --text "$CACHE/texts/$t.txt" --out "$OUT/unjudged-$i-$t.tsv" --own-out "$OUT/ownentry-$i-$t.tsv" --sample 60 --show 40)"
       echo "ties $t: $(python3 $P/measure.py ties --languages "$LANGS" --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --text "$CACHE/texts/$t.txt" --lemma-lists "$CACHE/hr_50k.txt" "$CACHE/sr_50k.txt" --show 30)"
@@ -79,7 +80,13 @@ print('per rule:', len(r), 'rows;', sum(1 for x in r if x['recovers'] > 0), 'rec
     for f in hr sr; do
       echo "ties $f: $(python3 $P/measure.py ties --languages "$LANGS" --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --frequency "$CACHE/${f}_50k.txt" --lemma-lists "$CACHE/hr_50k.txt" "$CACHE/sr_50k.txt" --show 40)"
       echo "ownentry $f: $(python3 $P/measure.py ownentry --languages "$LANGS" --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --frequency "$CACHE/${f}_50k.txt")"
-      [ "$f" = hr ] && echo "judged hr: $(python3 $P/measure.py judged --languages "$LANGS" --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --frequency "$CACHE/hr_50k.txt")"
+      if [ "$f" = hr ]; then
+        node $P/build-own.mjs --prefer-list "$OUT/prefer-list.tsv" > /dev/null
+        echo "judged hr: $(python3 $P/measure.py judged --languages "$LANGS" --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --frequency "$CACHE/hr_50k.txt")"
+        for script in "" --cyrillic; do
+          echo "judged and PREFER hr ${script:-latin}: $(python3 $P/measure.py judged $script --prefer-list "$OUT/prefer-list.tsv" --languages "$LANGS" --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --frequency "$CACHE/hr_50k.txt" --show 60)"
+        done
+      fi
       echo "nogold $f: $(python3 $P/measure.py nogold --languages "$LANGS" --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --frequency "$CACHE/${f}_50k.txt" --out "$OUT/nogold-$i-$f.tsv" --sample 60)"
     done
     # The diacritics processor: the pack against a copy without it.

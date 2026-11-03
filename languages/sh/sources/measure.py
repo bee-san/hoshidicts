@@ -92,6 +92,7 @@ class Dictionary:
     def __init__(self, zip_path):
         self.lemmas = set()
         self.gold = collections.defaultdict(set)
+        tags = collections.defaultdict(set)
         with zipfile.ZipFile(zip_path) as z:
             for name in sorted(n for n in z.namelist() if re.fullmatch(r'term_bank_\d+\.json', n)):
                 for row in json.loads(z.read(name)):
@@ -100,6 +101,11 @@ class Dictionary:
                         self.gold[row[0]].update(r[0] for r in refs)
                     if len(refs) < len(row[5]):
                         self.lemmas.add(row[0])
+                        tags[row[0]].add(row[2])
+        # Headwords whose every entry is a letter of the alphabet (A, И, У):
+        # such a first result for a word of running text is the letter, not
+        # the word (the conjunction a, the preposition u).
+        self.letters = {h for h, t in tags.items() if t == {'char'}}
 
     def gold_of(self, text):
         out = set()
@@ -221,19 +227,79 @@ def by_rule(result):
     return bool(result['trace']) and result['trace'][0] in PACK_IDS
 
 
+def to_cyrillic(text):
+    """Serbian Cyrillic spelling of a lower-case Latin word (digraphs first)."""
+    out, i = '', 0
+    while i < len(text):
+        two = text[i:i + 2]
+        if two in ('lj', 'nj', 'dž'):
+            out += {'lj': 'љ', 'nj': 'њ', 'dž': 'џ'}[two]
+            i += 2
+            continue
+        out += dict(zip('abvgdđežzijklmnoprstćufhcčš', 'абвгдђежзијклмнопрстћуфхцчш')).get(text[i], text[i])
+        i += 1
+    return out
+
+
 def cmd_judged(args, d):
     """First results for hand-judged words (sources/judged-ties-hr.tsv: word, the lemmas of its
-    dominant reading separated by |, its count): wrong when the first result is none of them."""
-    rows = [line.rstrip('\n').split('\t') for line in open(args.judged, encoding='utf-8') if line.strip() and not line.startswith('#')]
-    total = sum(c for _, c in frequent(args.frequency, args.top))
+    dominant reading separated by |, its count), and with --prefer-list for the PREFER words too
+    (build-own.mjs --prefer-list): wrong when the first result is none of them. --cyrillic looks the
+    words up in Serbian Cyrillic and compares the first result in Latin letters."""
+    rows = [line.rstrip('\n').split('\t')[:2] for line in open(args.judged, encoding='utf-8') if line.strip() and not line.startswith('#')]
+    if args.prefer_list:
+        seen = {w for w, _ in rows}
+        rows += [r for r in (line.rstrip('\n').split('\t')[:2] for line in open(args.prefer_list, encoding='utf-8') if line.strip()) if r[0] not in seen]
+    words = frequent(args.frequency, args.top)
+    total = sum(c for _, c in words)
+    counts = {}
+    for line in open(args.frequency, encoding='utf-8'):
+        w, c = line.split()
+        counts.setdefault(w, int(c))
+    texts = [to_cyrillic(w) if args.cyrillic else w for w, _ in rows]
     wrong = []
-    for (word, lemmas, count), result in zip(rows, lookup_batch(args, [r[0] for r in rows])):
+    for (word, lemmas), result in zip(rows, lookup_batch(args, texts)):
         first = result['results'][0] if result['results'] else None
-        if first is None or first['expression'] not in lemmas.split('|'):
-            wrong.append((int(count), word, first['expression'] if first else '(nothing)', lemmas))
+        shown = to_latin(first['expression']) if first else '(nothing)'
+        if shown not in lemmas.split('|') and strip_accents(shown) not in lemmas.split('|'):
+            wrong.append((counts.get(word, 0), word, first['expression'] if first else '(nothing)', lemmas))
     tokens = sum(w[0] for w in wrong)
-    print(json.dumps({'judged': len(rows), 'wrongFirst': len(wrong), 'wrongTokens': tokens, 'shareOfListTokens': round(tokens / total, 5)}))
-    print('wrong: ' + ' '.join(f'{w}→{f} (not {l}, {c})' for c, w, f, l in sorted(wrong, reverse=True)[:args.show]))
+    print(json.dumps({'judged': len(rows), 'script': 'Cyrillic' if args.cyrillic else 'Latin', 'wrongFirst': len(wrong),
+                      'wrongTokens': tokens, 'shareOfListTokens': round(tokens / total, 5)}))
+    print('wrong: ' + ' '.join(f'{to_cyrillic(w) if args.cyrillic else w}→{f} (not {l}, {c})' for c, w, f, l in sorted(wrong, reverse=True)[:args.show]))
+
+
+def cmd_cyrlatin(args, d):
+    """Every hover of a Cyrillic text (--text) looked up as written and transliterated to Latin:
+    the positions whose first results differ (compared in Latin letters) for the same matched text,
+    with the verdicts of the Cyrillic lookup, and a random sample (--sample, seed 1) with context for
+    judging (--out)."""
+    with open(args.text, encoding='utf-8') as f:
+        raw = f.read()
+    pairs = list(hovers(raw))
+    cyr = lookup_batch(args, [rest for _, rest in pairs])
+    lat = lookup_batch(args, [to_latin(rest) for _, rest in pairs])
+    differ = []
+    for i, ((word, rest), a, b) in enumerate(zip(pairs, cyr, lat)):
+        if not a['results'] or not b['results']:
+            continue
+        fa, fb = a['results'][0], b['results'][0]
+        if to_latin(fa['expression']).lower() != to_latin(fb['expression']).lower() and to_latin(fa['matched']) == to_latin(fb['matched']):
+            differ.append((i, word, fa, fb, judge(d, a, word)[0]))
+    print(json.dumps({'lookups': len(pairs), 'differ': len(differ), 'share': round(len(differ) / max(1, len(pairs)), 5),
+                      'verdicts': dict(collections.Counter(x[4] for x in differ))}, ensure_ascii=False))
+    print('most frequent:', collections.Counter(x[1].lower() for x in differ).most_common(args.show))
+    if args.out:
+        flat = ' '.join(raw.split())
+        sample = sorted(random.Random(1).sample(differ, min(args.sample, len(differ))))
+        with open(args.out, 'w', encoding='utf-8') as f:
+            f.write('# index\tword\tCyrillic first (trace)\tLatin first (trace)\tverdict (Cyrillic)\tcontext\tjudgement (fill in: cyr, lat, both, neither)\n')
+            for i, word, fa, fb, verdict in sample:
+                snippet = ' '.join(pairs[i][1].split())
+                h = flat.find(snippet)
+                context = (flat[max(0, h - 80):h] + '[[' + word + ']]' + flat[h + len(word):h + 40]) if h >= 0 else snippet[:80]
+                f.write(f"{i}\t{word}\t{fa['expression']} ({'>'.join(fa['trace']) or '-'})\t{fb['expression']} ({'>'.join(fb['trace']) or '-'})\t{verdict}\t…{context}…\t\n")
+        print(f'{len(sample)} sampled to {args.out}')
 
 
 def cmd_ownentry(args, d):
@@ -332,12 +398,15 @@ def own_entry_later(d, entry):
 
 
 def judge(d, entry, word):
-    """right, wrong, own entry (right by script, but the own entry of a word whose
-    form-of rows name another lemma, listed later), or unjudged (no gold lemma for
-    the matched text), and the first result."""
+    """right, wrong, letter (an entry that is only a letter of the alphabet:
+    wrong for a word of running text), own entry (right by script, but the own
+    entry of a word whose form-of rows name another lemma, listed later), or
+    unjudged (no gold lemma for the matched text), and the first result."""
     if not entry['results']:
         return 'nothing', None
     first = entry['results'][0]
+    if first['expression'] in d.letters:
+        return 'letter', first
     gold = d.gold_of(first['matched'])
     if not gold:
         return 'unjudged', first
@@ -439,7 +508,9 @@ def cmd_clitics(args, d):
         first = entry['results'][0]
         multi = ' ' in first['matched']
         if not multi:
-            if d.right(first['expression'], first['matched']):
+            if first['expression'] in d.letters:
+                counts['the word alone, a letter'] += 1
+            elif d.right(first['expression'], first['matched']):
                 counts['the word alone, own entry' if own_entry_later(d, entry) else 'the word alone, right'] += 1
             elif d.gold_of(first['matched']):
                 counts['the word alone, wrong'] += 1
@@ -649,7 +720,7 @@ def cmd_tiesample(args, d):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('command', choices=['frequent', 'text', 'clitics', 'traces', 'nothing', 'ties', 'compare', 'nogold', 'tiesample', 'judged', 'ownentry'])
+    parser.add_argument('command', choices=['frequent', 'text', 'clitics', 'traces', 'nothing', 'ties', 'compare', 'nogold', 'tiesample', 'judged', 'ownentry', 'cyrlatin'])
     parser.add_argument('--zip', required=True)
     parser.add_argument('--dictionary', required=True)
     parser.add_argument('--languages', default=os.path.join(REPO, 'languages'))
@@ -663,6 +734,8 @@ def main():
     parser.add_argument('--out')
     parser.add_argument('--show', type=int, default=40)
     parser.add_argument('--judged', default=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'judged-ties-hr.tsv'))
+    parser.add_argument('--cyrillic', action='store_true', help='judged: look the words up in Serbian Cyrillic')
+    parser.add_argument('--prefer-list', help='judged: the PREFER words too (build-own.mjs --prefer-list)')
     parser.add_argument('--judged-own', default=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'judged-ownentry.tsv'))
     parser.add_argument('--own-out', help='text: write a sample of the own-entry first results here')
     parser.add_argument('--other', help='another languages directory, for compare')
@@ -671,7 +744,7 @@ def main():
     d = Dictionary(args.zip)
     with open(os.path.join(args.languages, 'sh', 'transforms.json'), encoding='utf-8') as f:
         PACK_IDS.update(t['id'] for t in json.load(f)['transforms'])
-    {'ownentry': cmd_ownentry, 'judged': cmd_judged, 'compare': cmd_compare, 'nogold': cmd_nogold, 'tiesample': cmd_tiesample, 'ties': cmd_ties, 'frequent': cmd_frequent, 'text': cmd_text, 'clitics': cmd_clitics, 'traces': cmd_traces, 'nothing': cmd_nothing}[args.command](args, d)
+    {'cyrlatin': cmd_cyrlatin, 'ownentry': cmd_ownentry, 'judged': cmd_judged, 'compare': cmd_compare, 'nogold': cmd_nogold, 'tiesample': cmd_tiesample, 'ties': cmd_ties, 'frequent': cmd_frequent, 'text': cmd_text, 'clitics': cmd_clitics, 'traces': cmd_traces, 'nothing': cmd_nothing}[args.command](args, d)
 
 
 if __name__ == '__main__':

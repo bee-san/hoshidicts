@@ -198,6 +198,16 @@ MUTATIONS = [
     ('cio written out removed', drop_rules(lambda tr, r: r['type'] == 'wholeWord' and r['deinflected'] == 'cio')),
     ('pronoun time removed', drop_whole({'time'})),
     ('processor: Cyrillic Џ → D', processor_map('cyrillicToLatin', 'Џ', 'D')),
+    ('processor: Cyrillic ћ → c', processor_map('cyrillicToLatin', 'ћ', 'c')),
+    ('processor: Cyrillic Њ → N', processor_map('cyrillicToLatin', 'Њ', 'N')),
+    ('present 3sg -re: consonant guard removed', lambda t, lang: sum(
+        r.pop('stemEndsWith') is not None for tr, r in rules(t) if tr['id'] == 'prs-present-3sg' and 'stemEndsWith' in r
+        and any(a == 're' and b in ('rijeti', 'reti') for a, b in r.get('suffixes', [])))),
+    ('present 3sg -ije → -jeti removed', lambda t, lang: sum(
+        len(r['suffixes']) - len([x for x in r['suffixes'] if x != ['ije', 'jeti']]) + (r.__setitem__('suffixes', [x for x in r['suffixes'] if x != ['ije', 'jeti']]) or 0)
+        for tr, r in rules(t) if tr['id'] == 'prs-present-3sg' and ['ije', 'jeti'] in r.get('suffixes', []))),
+    ('the headword rules of i removed', drop_rules(lambda tr, r: tr['id'].startswith('hw-'))),
+    ('the Cyrillic twins removed', drop_rules(lambda tr, r: r['type'] == 'wholeWord' and any('\u0400' <= c <= '\u04ff' for c in r['inflected']))),
     ('wordInternal null (the apostrophe separates words)', word_internal_null),
     ('untaggedTerms filter (the untagged dictionary meets no rule)', lambda t, lang: (lang['lookup'].update(untaggedTerms='filter'), 1)[1]),
     ('rename transform id ptcp-past-masc-sg', rename('ptcp-past-masc-sg')),

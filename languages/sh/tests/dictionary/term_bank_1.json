@@ -46,7 +46,6 @@
   ["taj", "", "pron", "", 0, ["that"], 45, ""],
   ["u", "", "prep", "", 0, ["in"], 46, ""],
   ["kod", "", "prep", "", 0, ["at"], 47, ""],
-  ["i", "", "conj", "", 0, ["and"], 48, ""],
   ["pet-šest", "", "num", "", 0, ["five or six"], 49, ""],
   ["kod kuće", "", "phrase", "", 0, ["at home"], 50, ""],
   ["kuću", "", "non-lemma", "", 0, [["kuća", ["accusative singular"]]], 51, ""],
@@ -75,5 +74,13 @@
   ["oda", "", "n", "", 0, ["ode"], 74, ""],
   ["Nj", "", "n", "", 0, ["the letter Nj"], 75, ""],
   ["k", "", "prep", "", 0, ["toward"], 76, ""],
-  ["nova", "", "n", "", 0, ["a nova (star)"], 77, ""]
+  ["nova", "", "n", "", 0, ["a nova (star)"], 77, ""],
+  ["I", "", "non-lemma", "", 0, [["И", ["alternative"]]], 78, ""],
+  ["I", "", "non-lemma", "", 0, [["ȉ", ["uppercase"]]], 79, ""],
+  ["I", "", "non-lemma", "", 0, [["i/languages M to Z", ["uppercase"]]], 80, ""],
+  ["И", "", "char", "", 0, ["the Cyrillic letter I"], 81, ""],
+  ["ȉ", "", "char", "", 0, ["a short i vowel with falling tone"], 82, ""],
+  ["i/languages M to Z", "", "conj", "", 0, ["and"], 83, ""],
+  ["star", "", "adj", "", 0, ["old"], 84, ""],
+  ["stareti", "", "v", "", 0, ["to grow old"], 85, ""]
 ]

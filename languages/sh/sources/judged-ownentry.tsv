@@ -2,7 +2,8 @@
 # first result is their own headword (an empty trace) while no lemma row of that entry has the sense of the
 # word's dominant use; the right lemma comes later, through a rule or a reference. Read from the entries of
 # the 700 most frequent such words of FrequencyWords hr_50k and the most frequent sr_50k ones the hr list
-# lacks. Column 3 names the lists that count the word strictly: radi, može, stara and luda have a second
+# lacks, and six words audit-hachi-lang-sh-c added (si, ovoga, ovoj, tiče, tih, stari). Column 3 names the
+# lists that count the word strictly: radi, može, stara, luda, tih and stari have a second
 # common use, and video is mostly the noun in Croatian. measure.py ownentry reads it.
 # word	dominant lemma(s)	strict in	what the first entry says
 bilo	biti	hr sr	pulse, heartbeat; crest; the particle "be it"
@@ -32,3 +33,9 @@ jela	jesti|jelo	hr sr	fir
 puca	pucati	hr sr	(Kajkavian) girl
 kuca	kucati|kuća	hr sr	doggy
 video	videti|vidjeti	sr	video
+si	biti	hr sr	auditor c: the own entry has only the reflexive dative "to oneself"; the 2sg clitic of biti ("you are") dominates (12 of 12 Tatoeba sentences)
+ovoga	ovaj	hr sr	auditor c: the own entry is the interjection "er, um"; the genitive of ovaj dominates
+ovoj	ovaj	hr sr	auditor c: the own entry is "wrapping, shell, casing"; the dat./loc. of ova dominates
+tiče	ticati	hr sr	auditor c: the own entry is "bird"; što se tiče (ticati se) dominates
+tih	taj		auditor c: "quiet" and the gen. pl. of taj are both common (not strict)
+stari	star		auditor c: the own entry is the noun "old man; dad"; as stara (not strict)
