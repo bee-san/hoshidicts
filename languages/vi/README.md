@@ -33,7 +33,11 @@ The pack has no optional processor, transform or setting. Its rules carry no
 conditions: Vietnamese has no inflection classes for them to track, every rule
 shortens the text so chains end, and the recommended dictionary has no part
 of speech in its `rules` column (0 of 76,689 rows; wty-vi-vi 0 of 44,885), so
-a rule output with conditions would find nothing in it.
+a rule output with conditions would find nothing in it. `lookup.untaggedTerms`
+is `pass`, as section 4.4 recommends for such dictionaries; with rules
+without conditions it changes no result (eval-language gives the same
+numbers with `filter`, and both texts of Measurements 4 the same first
+results).
 
 ## Sources and licences
 
@@ -174,6 +178,7 @@ kept one out, and `judge-real.py` judges every first result that differs
 ## Measurements
 
 All with wty-vi-en as published, form-of rows included, at hoshidicts 6a65eac
+(the same with 0a73e5e, which adds `untaggedTerms`)
 (GCC 14.3, Release). The pack has no optional feature, so every file gives
 the same numbers with every option on and with `# options: default`
 (`sources/measure-eval.sh` runs both).
