@@ -667,11 +667,12 @@ transform('imperativeYou', 'imperative (you)', 'The imperative "do!" to one man:
     ...['أعطني', 'أعطه', 'أعطها', 'أعطنا', 'أعطهم'].map((i) => whole(i, 'أعطى', {into: V_IN, out: V_OUT})),
 ]);
 transform('imperativeYouF', 'imperative (you f.)', 'The imperative "do!" to one woman, ending in ـي: اكتبي (كتب), قولي (قال), ادعي (دعا), ارمي (رمى), قفي (وقف), علمي (علم), أعطي (أعطى), كلي (أكل), ري (رأى).', [
-    ...imperativeRules('ي', {defective: [['ي', 'ا'], ['ي', 'ى']], others: [['ي', '', 2], ['ي', 'ى']]}),
+    // A verb in ي before one in ى: انسي is نسي.
+    ...imperativeRules('ي', {defective: [['ي', 'ا'], ['ي', 'ي'], ['ي', 'ى']], others: [['ي', '', 2], ['ي', 'ى']]}),
     ...[['كلي', 'أكل'], ['خذي', 'أخذ'], ['مري', 'أمر'], ['ري', SEE]].map(([i, d]) => whole(i, d, {into: V_IN, out: V_OUT})),
     // Frequent form V and VI imperatives, which the subjunctive of form I
     // (تعالي, "you (f.) rise") would read first.
-    ...[['تعالي', 'تعالى'], ['توقفي', 'توقف'], ['تفضلي', 'تفضل'], ['تحدثي', 'تحدث'], ['تمهلي', 'تمهل'], ['تحركي', 'تحرك'], ['تنفسي', 'تنفس'], ['تذكري', 'تذكر']].map(([i, d]) => whole(i, d, {into: V_IN, out: V_OUT})),
+    ...[['تعالي', 'تعالى'], ['توقفي', 'توقف'], ['تفضلي', 'تفضل'], ['تحدثي', 'تحدث'], ['تمهلي', 'تمهل'], ['تحركي', 'تحرك'], ['تنفسي', 'تنفس'], ['تذكري', 'تذكر'], ['انسي', 'نسي']].map(([i, d]) => whole(i, d, {into: V_IN, out: V_OUT})),
 ]);
 transform('imperativeYouTwo', 'imperative (you two)', 'The imperative "do!" to two people, ending in ـا: اكتبا (كتب), قولا (قال), ادعوا (دعا), ارميا (رمى).', [
     ...imperativeRules('ا', {defective: [['وا', 'ا'], ['يا', 'ى'], ['يا', 'ي']]}),

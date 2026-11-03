@@ -1396,7 +1396,7 @@
         {"type": "circumfix", "prefixes": [["ا", ""]], "suffixes": [["ي", ""]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[\\u0621-\\u0626\\u0628-\\u063A\\u0641-\\u0647]", "stemChange": {"from": ["ئ", "ؤ"], "to": "أ", "occurrence": "last", "between": "{base}", "betweenMinLength": 0}, "stemMinLength": 3},
         {"type": "circumfix", "prefixes": [["ا", ""]], "suffixes": [["ي", ""]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[\\u0621-\\u0626\\u0628-\\u063A\\u0641-\\u0647]", "stemChange": {"from": ["أ"], "to": "ئ", "occurrence": "last", "between": "{base}", "betweenMinLength": 0}, "stemMinLength": 3},
         {"type": "suffix", "inflected": "ي", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "{base}", "stemChange": {"from": ["ئ", "ؤ"], "to": "أ", "occurrence": "last", "between": "{base}", "betweenMinLength": 0}},
-        {"type": "circumfix", "prefixes": [["ا", ""]], "suffixes": [["ي", "ا"], ["ي", "ى"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[\\u0621-\\u0626\\u0628-\\u063A\\u0641-\\u0648\\u064A]", "stemMinLength": 2},
+        {"type": "circumfix", "prefixes": [["ا", ""]], "suffixes": [["ي", "ا"], ["ي", "ي"], ["ي", "ى"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[\\u0621-\\u0626\\u0628-\\u063A\\u0641-\\u0648\\u064A]", "stemMinLength": 2},
         {"type": "wholeWord", "inflected": "قفي", "deinflected": "وقف", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "ضعي", "deinflected": "وضع", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "دعي", "deinflected": "ودع", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
@@ -1431,7 +1431,8 @@
         {"type": "wholeWord", "inflected": "تمهلي", "deinflected": "تمهل", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "تحركي", "deinflected": "تحرك", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "تنفسي", "deinflected": "تنفس", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "تذكري", "deinflected": "تذكر", "conditionsIn": ["vf"], "conditionsOut": ["v"]}
+        {"type": "wholeWord", "inflected": "تذكري", "deinflected": "تذكر", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "انسي", "deinflected": "نسي", "conditionsIn": ["vf"], "conditionsOut": ["v"]}
       ]
     },
     {

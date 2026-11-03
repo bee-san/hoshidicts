@@ -71,6 +71,32 @@ def load_dictionary(path):
     return targets, lemma
 
 
+def load_parts_of_speech(path):
+    """Each lemma's parts of speech: the rules field of its rows with
+    definitions (v, n, or '' for the untagged adjectives, names and particles)."""
+    pos = collections.defaultdict(set)
+    with zipfile.ZipFile(path) as archive:
+        for name in archive.namelist():
+            if not name.startswith('term_bank'):
+                continue
+            for row in json.loads(archive.read(name)):
+                if any(not (isinstance(d, list) and len(d) == 2 and isinstance(d[0], str)) for d in row[5]):
+                    pos[row[0]] |= set(row[3].split()) or {''}
+    return pos
+
+
+def load_homographs(path):
+    """sources/homographs.tsv: word, then the comma-separated lemmas a reader
+    of ordinary prose needs for it, decided by hand."""
+    out = {}
+    for line in open(path, encoding='utf-8'):
+        if line.startswith('#') or not line.strip():
+            continue
+        word, lemmas = line.rstrip('\n').split('\t')[:2]
+        out[word] = set(lemmas.split(','))
+    return out
+
+
 def own_lemmas(word, targets, lemma):
     """The targets of the word's form-of rows and the word itself when it has
     a row with definitions; a target without such a row (عثور, whose rows only
@@ -111,6 +137,7 @@ def option(args, name, default):
 def frequent(args):
     zip_path, imported, freq_path = args[:3]
     languages = option(args, '--languages', 'languages')
+    homographs = load_homographs(option(args, '--homographs', '')) if '--homographs' in args else {}
     targets, lemma = load_dictionary(zip_path)
     entries = [line.split() for line in open(freq_path, encoding='utf-8') if line.strip()]
     top = entries[:10000]
@@ -120,20 +147,37 @@ def frequent(args):
     reached_by_rule = deinflections([w for w, _ in words if targets.get(w)], languages)
     measured = [(w, c) for w, c in words if own_lemmas(w, targets, lemma) & reached_by_rule.get(w, set()) - {w}]
     results = lookup([w for w, _ in measured], imported, languages)
+    variants = variants_of([w for w, _ in measured], languages)
     wrong = []
+    counts = collections.Counter()
     for (w, c), res in zip(measured, results):
         first = res['results'][0] if res['results'] else None
-        if first is None or first['expression'] not in own_lemmas(w, targets, lemma):
-            wrong.append((w, c, first))
+        right, kind = judge(w, targets, lemma, variants, None, homographs)
+        kind = kind_of(right, kind)
+        counts[kind] += 1
+        if first is None or first['expression'] not in right:
+            counts[kind + ' wrong'] += 1
+            wrong.append((w, c, first, right))
     measured_tokens = sum(c for _, c in measured)
-    wrong_tokens = sum(c for _, c, _ in wrong)
+    wrong_tokens = sum(c for _, c, _, _ in wrong)
     print('list: %d entries, %d tokens; top 10,000: %d tokens (%.1f%%)' % (len(entries), all_tokens, top_tokens, 100 * top_tokens / all_tokens))
     print('Arabic words in the top 10,000: %d' % len(words))
     print('words whose lemma a rule reaches: %d (%.1f%% of the list\'s tokens)' % (len(measured), 100 * measured_tokens / all_tokens))
-    print('first result not the word\'s own lemma: %d words, %.2f%% of the list\'s tokens' % (len(wrong), 100 * wrong_tokens / all_tokens))
-    for w, c, first in sorted(wrong, key=lambda x: -x[1])[:40]:
+    print('first result wrong: %d words, %.2f%% of the list\'s tokens' % (len(wrong), 100 * wrong_tokens / all_tokens))
+    for k, label in KINDS[:3]:
+        print('  %s: %d words, wrong %d' % (label, counts[k], counts[k + ' wrong']))
+    made = {}
+    if '--split' in args:
+        for (w, c, first, right), cause in zip(wrong, causes([(w, right, 'listed', first) for w, _, first, right in wrong], imported, languages)):
+            made[w] = cause
+        r = [x for x in wrong if made[x[0]] == 'rules']
+        print('wrong: %d words (%.2f%% of tokens) made by the rules, %d (%.2f%%) by the dictionary' % (
+            len(r), 100 * sum(c for _, c, _, _ in r) / all_tokens, len(wrong) - len(r),
+            100 * (wrong_tokens - sum(c for _, c, _, _ in r)) / all_tokens))
+    for w, c, first, right in sorted(wrong, key=lambda x: -x[1])[:80]:
         got = '-' if first is None else '%s {%s}' % (first['expression'], '>'.join(reversed(first['trace'])))
-        print('  %s (%d): %s; own lemmas %s' % (w, c, got, ' '.join(sorted(own_lemmas(w, targets, lemma)))))
+        tag = ' [%s]' % made[w] if made else ''
+        print('  %s (%d): %s; right %s%s' % (w, c, got, ' '.join(sorted(right)), tag))
 
 
 def positions(text):
@@ -151,10 +195,11 @@ PROCLITICS = ['', 'و', 'ف', 'ب', 'ك', 'ل', 'س', 'وب', 'وك', 'ول', '�
 PRONOUNS = ['', 'ي', 'ني', 'نا', 'ك', 'كما', 'كم', 'كن', 'ه', 'ها', 'هما', 'هم', 'هن']
 
 
-def bases(stem, pronoun):
-    """The spellings a word may have without its pronoun: ة written ت, ى
-    written ا or ي (معناه, عليه) or merged with the pronoun ي (إليّ), and a
-    verb's ـوا without its alif (كتبوه)."""
+def bases(stem, pronoun, lemma=()):
+    """The spellings a word may have without its pronoun: ة written ت (قوته,
+    أمته; where both are words, homographs.tsv decides: صوته is صوت, not
+    صوة), ى written ا or ي (معناه, عليه) or merged with the pronoun ي (إليّ),
+    and a verb's ـوا without its alif (كتبوه)."""
     out = [stem]
     if pronoun:
         if stem.endswith('ت'):
@@ -178,17 +223,26 @@ def variants_of(words, languages):
     return {o['input']: [v['text'] for v in o['variants']] for o in map(json.loads, out.splitlines())}
 
 
-def judge(word, targets, lemma, variants=None):
-    """The word's own lemmas, or, for a word the dictionary does not list, those
-    of the spellings the default preprocessors make (الى -> إلى) and of every
-    way of writing it as proclitics + a listed word + a pronoun (وعلى -> على);
-    and whether the word was not listed. None when nothing is found."""
-    own = own_lemmas(word, targets, lemma)
-    if own:
-        return own, False
+def fits(lemma_pos, prefix, pronoun):
+    """Whether a lemma with these parts of speech can take the proclitics and
+    the pronoun: الـ, بـ and كـ do not go before a verb, سـ goes only before
+    one, a verb does not take ـي (my) and a noun does not take ـني (me). An
+    untagged lemma (adjectives, names, particles) fits anything."""
+    if not lemma_pos or '' in lemma_pos:
+        return True
+    clitic = prefix.lstrip('وف')
+    if lemma_pos == {'v'} and ('ال' in prefix or prefix.endswith('لل') or clitic in ('ب', 'ك') or pronoun == 'ي'):
+        return False
+    if 'v' not in lemma_pos and (clitic == 'س' or pronoun == 'ني'):
+        return False
+    return True
+
+
+def split_lemmas(word, targets, lemma, pos, homographs):
+    """The lemmas of every way of writing the word as proclitics + a listed
+    word + a pronoun that fit the lemma's part of speech, a hand decision for
+    the listed word counting instead of its own lemmas."""
     found = set()
-    for spelling in (variants or {}).get(word, ()):
-        found |= own_lemmas(spelling, targets, lemma)
     for prefix in PROCLITICS:
         if not word.startswith(prefix):
             continue
@@ -198,52 +252,166 @@ def judge(word, targets, lemma, variants=None):
             stem = word[len(prefix):len(word) - len(pronoun)]
             if prefix.endswith('لل'):
                 stem = 'ال' + stem
-            for base in bases(stem, pronoun):
-                found |= own_lemmas(base, targets, lemma)
+            for base in bases(stem, pronoun, lemma):
+                candidates = [base]
                 if prefix.endswith('ال') or prefix.endswith('لل'):
-                    found |= own_lemmas(base[2:] if base.startswith('ال') else base, targets, lemma)
-    return (found, True) if found else (None, False)
+                    candidates.append(base[2:] if base.startswith('ال') else base)
+                for b in candidates:
+                    right = homographs.get(b) or own_lemmas(b, targets, lemma)
+                    found |= {x for x in right if fits(pos.get(x), prefix, pronoun)}
+    return found
+
+
+def judge(word, targets, lemma, variants=None, pos=None, homographs=None):
+    """The lemmas that count as right for a word, and how they were found:
+    'homograph' (decided by hand in homographs.tsv), 'listed' (the word's own
+    lemmas, or those of its spellings after the default preprocessors, الى ->
+    إلى), or 'clitic' (a word wty-ar-en does not list, by the lemmas of every
+    way of writing it as proclitics + a listed word + a pronoun that fit the
+    lemma's part of speech, a hand decision for that word counting instead of
+    its own lemmas). (None, None) when nothing is found."""
+    homographs = homographs or {}
+    pos = pos or {}
+    if word in homographs:
+        return homographs[word], 'homograph'
+    own = own_lemmas(word, targets, lemma)
+    if own and word.startswith('ا'):
+        # Written without its hamza (احد, اريد): the lemmas of its spellings
+        # with the hamza count too.
+        for spelling in (variants or {}).get(word, ()):
+            if spelling != word:
+                own = own | (homographs.get(spelling) or own_lemmas(spelling, targets, lemma))
+    if own:
+        return own, 'listed'
+    found = set()
+    for spelling in (variants or {}).get(word, ()):
+        found |= homographs.get(spelling) or own_lemmas(spelling, targets, lemma)
+    if found:
+        return found, 'listed'
+    found = split_lemmas(word, targets, lemma, pos, homographs)
+    return (found, 'clitic') if found else (None, None)
+
+
+KINDS = [('homograph', 'decided by hand (homographs.tsv)'), ('listed', 'listed, one lemma'),
+         ('listed, several', 'listed, several lemmas not decided by hand (any counts)'),
+         ('clitic', 'not listed, one lemma by its clitic splits'),
+         ('clitic, several', 'not listed, several lemmas by its clitic splits (any counts)')]
+
+
+def norules_languages(languages):
+    """A scratch copy of the pack with no deinflection rules (lookup.transforms
+    null, no setting that turns transforms on): what the dictionary's own rows
+    give."""
+    import shutil
+    import tempfile
+    out = tempfile.mkdtemp(prefix='ar-norules-')
+    shutil.copytree(languages + '/ar', out + '/ar')
+    path = out + '/ar/language.json'
+    d = json.load(open(path, encoding='utf-8'))
+    d['lookup']['transforms'] = None
+    d['settings'] = [x for x in d.get('settings', []) if 'transforms' not in x.get('effect', {})]
+    json.dump(d, open(path, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
+    return out
+
+
+CLITIC_IDS = {'wa', 'fa', 'bi', 'ka', 'li', 'la', 'al', 'sa', 'p1s', 'p1sObj', 'p1p', 'p2s', 'p2d', 'p2mp', 'p2fp',
+              'p3ms', 'p3fs', 'p3d', 'p3mp', 'p3fp'}
+
+
+def causes(items, imported, languages):
+    """For (hover, right lemmas, kind, first result) of wrong first results:
+    'rules' where the pack's rules make it, 'dictionary' where the
+    dictionary's rows do. A word wty-ar-en lists is the rules' when, looked
+    up with no rules, its first result is right; one it does not list (only
+    the rules reach it) when every step of the first result's trace is a
+    transform of the pack, not a form-of row."""
+    if not items:
+        return []
+    ids = {t['id'] for t in json.load(open(languages + '/ar/transforms.json', encoding='utf-8'))['transforms']}
+    res = lookup([h for h, _, _, _ in items], imported, norules_languages(languages))
+    out = []
+    for (_, right, kind, first), r in zip(items, res):
+        if kind.startswith('clitic'):
+            # Only proclitics and pronouns: the word behind them is a headword
+            # or names a form-of target (وأرى -> أرى, سأذهب -> أذهب), as
+            # looked up alone; the dictionary's rows choose the lemma.
+            steps = [t for t in first['trace'] if t not in CLITIC_IDS]
+            out.append('rules' if steps and all(step in ids for step in steps) else 'dictionary')
+        else:
+            out.append('rules' if r['results'] and r['results'][0]['expression'] in right else 'dictionary')
+    return out
+
+
+def kind_of(right, kind):
+    return kind + ', several' if kind in ('listed', 'clitic') and len(right) > 1 else kind
 
 
 def text_measure(args):
     zip_path, imported, text_path = args[:3]
     languages = option(args, '--languages', 'languages')
     sample_size = int(option(args, '--sample', '60'))
+    seed = int(option(args, '--seed', '1'))
+    homographs = load_homographs(option(args, '--homographs', '')) if '--homographs' in args else {}
     targets, lemma = load_dictionary(zip_path)
+    pos_ = load_parts_of_speech(zip_path)
     text = open(text_path, encoding='utf-8').read()
     pos = positions(text)
     results = lookup([hover for _, hover in pos], imported, languages)
     variants = variants_of(sorted({word for word, _ in pos}), languages)
     counts = collections.Counter()
     wrong = collections.Counter()
-    unjudged = []
+    judged, unjudged, judged_right = [], [], []
     for (word, hover), res in zip(pos, results):
         first = res['results'][0] if res['results'] else None
         if first is None:
             counts['no result'] += 1
             continue
-        own, clitic = judge(word, targets, lemma, variants)
-        if own is None or strip(first['matched']) != word:
-            unjudged.append((word, hover, first))
+        right, kind = judge(word, targets, lemma, variants, pos_, homographs)
+        if right is None or strip(first['matched']) != word:
+            unjudged.append((word, hover, first, None))
             continue
-        kind = 'clitic' if clitic else 'listed'
-        counts[kind + ' judged'] += 1
-        if first['expression'] not in own:
+        kind = kind_of(right, kind)
+        counts[kind] += 1
+        ok = first['expression'] in right
+        judged.append((word, hover, first, ok))
+        judged_right.append((right, kind))
+        if not ok:
             counts[kind + ' wrong'] += 1
             wrong[(word, first['expression'], '>'.join(reversed(first['trace'])))] += 1
-    judged = counts['listed judged'] + counts['clitic judged']
-    bad = counts['listed wrong'] + counts['clitic wrong']
-    print('positions %d, without a result %d' % (len(pos), counts['no result']))
-    print('judged by script %d (first result matching the whole word): wrong %d (%.2f%%)' % (judged, bad, 100 * bad / max(judged, 1)))
-    print('  words wty-ar-en lists: %d, wrong %d (%.2f%%)' % (counts['listed judged'], counts['listed wrong'], 100 * counts['listed wrong'] / max(counts['listed judged'], 1)))
-    print('  words it does not list, judged by their proclitic + word + pronoun splits: %d, wrong %d (%.2f%%)' % (
-        counts['clitic judged'], counts['clitic wrong'], 100 * counts['clitic wrong'] / max(counts['clitic judged'], 1)))
-    for (word, got, trace), n in wrong.most_common(40):
-        print('  %4d  %s -> %s {%s}' % (n, word, got, trace))
-    rng = random.Random(1)
-    print('\nsample of %d of the %d positions not judged by script:' % (min(sample_size, len(unjudged)), len(unjudged)))
-    for word, hover, first in rng.sample(unjudged, min(sample_size, len(unjudged))):
-        print('  %s | %s -> %s [%s] {%s}' % (word, hover[:40], first['expression'], first['matched'], '>'.join(reversed(first['trace']))))
+    total = sum(counts[k] for k, _ in KINDS)
+    bad = sum(counts[k + ' wrong'] for k, _ in KINDS)
+    print('positions %d, without a result %d, not judged by script %d' % (len(pos), counts['no result'], len(unjudged)))
+    print('judged by script %d (first result matching the whole word): wrong %d (%.2f%%)' % (total, bad, 100 * bad / max(total, 1)))
+    for k, label in KINDS:
+        print('  %s: %d, wrong %d (%.2f%%)' % (label, counts[k], counts[k + ' wrong'], 100 * counts[k + ' wrong'] / max(counts[k], 1)))
+    made = {}
+    if '--split' in args:
+        bad_items = [(word, hover, first, right, kind) for (word, hover, first, ok), (right, kind) in zip(judged, judged_right) if not ok]
+        cs = causes([(hover, right, kind, first) for _, hover, first, right, kind in bad_items], imported, languages)
+        per = collections.Counter()
+        for (word, hover, first, right, kind), c in zip(bad_items, cs):
+            made[(word, first['expression'], '>'.join(reversed(first['trace'])))] = c
+            per[c] += 1
+        print('wrong: %d made by the rules, %d by the dictionary (a listed word: with no rules the first result is right or not; one not listed: its trace has a transform of the pack other than proclitics and pronouns, or not)' % (
+            per['rules'], per['dictionary']))
+    for (word, got, trace), n in wrong.most_common(60):
+        tag = ' ' + made[(word, got, trace)] if made else ''
+        print('  %4d  %s -> %s {%s}%s' % (n, word, got, trace, tag))
+    if made:
+        print('made by the rules:')
+        for (word, got, trace), n in wrong.most_common():
+            if made[(word, got, trace)] == 'rules':
+                print('  %4d  %s -> %s {%s}' % (n, word, got, trace))
+    if '--sample-out' in args:
+        rng = random.Random(seed)
+        with open(option(args, '--sample-out', ''), 'w', encoding='utf-8') as out:
+            out.write('# %s: %d judged and %d unjudged positions drawn with seed %d by measure.py text --sample-out.\n' % (
+                text_path.split('/')[-1], min(sample_size, len(judged)), min(sample_size, len(unjudged)), seed))
+            out.write('# set\tword\ttext\tfirst result\tmatched\ttrace\tscript\thand\n')
+            for label, group in (('judged', judged), ('unjudged', unjudged)):
+                for word, hover, first, ok in rng.sample(group, min(sample_size, len(group))):
+                    out.write('\t'.join([label, word, hover[:40], first['expression'], first['matched'],
+                                         '>'.join(reversed(first['trace'])), '-' if ok is None else ('right' if ok else 'wrong'), '']) + '\n')
 
 
 def scratch_pack(languages, transforms_path, out_dir):

@@ -1,0 +1,82 @@
+# tatoeba-ara.txt: 40 judged and 40 unjudged positions drawn with seed 20261104 by measure.py text --sample-out.
+# set	word	text	first result	matched	trace	script	hand
+judged	تحلم	تحلم بالعربيّة، تفكّر بالعربيّة، تتكلّم 	حلم	تحلم	presentSheYou	right	right
+judged	لك	لك أن تقفز	لك	لك		wrong	wrong (لـ + ك)
+judged	الماء	الماء	ماء	الماء	al	right	right
+judged	لن	لن يدخل في سيارة أميليا	لن	لن		right	right
+judged	اليوم	اليوم بعد	اليوم	اليوم		right	right
+judged	نشأ	نشأ إيلان بابيه في إسرائيل	نشأ	نشأ		right	right
+judged	أصيب	أصيب زيري بصدمة	أصاب	أصيب	presentI	right	right
+judged	الآخر	الآخر	آخر	الآخر	al	right	right
+judged	لدى	لدى توم حديقة جميلة جدّا	لدى	لدى		right	right
+judged	أمامكم	أمامكم	أمام	أمامكم	p2mp	right	right
+judged	لم	لم تفتح ماري كتابها بعد	لم	لم		right	right
+judged	الرشيد	الرشيد	رشيد	الرشيد	informal singular definite masculine triptote	right	right
+judged	رأيتها	رأيتها تنظف الغرفة	رأى	رأيتها	pastI>p3fs	right	right
+judged	رسالة	رسالة إلكترونية بعد خمس دقائق	رسالة	رسالة		right	right
+judged	لم	لم تكن ترغب في معرفة أي شيئ عن حياته الش	لم	لم		right	right
+judged	ستأتي	ستأتي	أتى	ستأتي	presentSheYou>sa	right	right
+judged	البنك	البنك	بنك	البنك	al	right	right
+judged	بدأ	بدأ سامي يقضي وقتا أكثر في العمل	بدأ	بدأ		right	right
+judged	من	من الوقت معك, ولكن علي العودة إلى العمل	من	من		right	right
+judged	لهم	لهم علاقة باللسانيات ثم إنّهم شتموا السي	لهم	لهم		wrong	wrong (لـ + هم)
+judged	الكردية	الكردية	كردي	الكردية	informal singular definite feminine ar-infl-a triptote	right	right
+judged	خيار	خيار كان لدي	خيار	خيار		right	right
+judged	مكتبي	مكتبي	مكتب	مكتبي	p1s	right	right
+judged	ثري	ثريْ	وثر	ثريْ	second-person singular feminine imperative active	right	wrong (ثري, rich)
+judged	يريدون	يريدون السلام	أراد	يريدون	presentThey	right	right
+judged	بدأ	بدأ زيري يواعد الفتيات مجددا	بدأ	بدأ		right	right
+judged	باللغة	باللغة البرتغالية	لغة	باللغة	al>bi	right	right
+judged	لم	لم يصطد	لم	لم		right	right
+judged	كان	كان ياني يريد المصالحة	كان	كان		right	right
+judged	الله	الله موجود دائما	الله	الله		right	right
+judged	المغرب	المغرب الحديث	المغرب	المغرب		right	right
+judged	أخبروني	أخبروني أنك مريض	أخبر	أخبروني	pastThey>p1sObj	right	right
+judged	ما	مَا نَوَى	ما	مَا		right	right
+judged	ذلك	ذلك	ذلك	ذلك		right	right
+judged	قالت	قالت له	قال	قالت	pastI	right	right
+judged	ماذا	ماذا صنعت ليلى بشعرها	ماذا	ماذا		right	right
+judged	في	في اليابان، ليس بحيرة أكبر من بحيرة بيوا	في	في		right	right
+judged	البروباغندا	البروباغندا في نشر الأكاذيب أحياناً	بروباغندا	البروباغندا	al	right	right
+judged	أي	أي لغة يتحدثون بها في أميركا	أي	أي		right	right
+judged	جلوس	جلوس عند رسول الله صلى الله عليه وسلم ذا	جلوس	جلوس		right	right
+unjudged	ماريا	ماريا توم شيئًا يأكله ، وسقفًا فوق رأسه 	مار	ماريا	defectiveNoun>accusative	-	wrong (Maria)
+unjudged	أليس	أليس كذلك	أليس كذلك	أليس كذلك		-	right
+unjudged	فلافيو	فلافيو يطبخ العشاء	فم	فلافيو	genitive singular construct irregular>construct>la>fa	-	wrong (Flavio)
+unjudged	أحمرا	أحمراً	احمر	أحمراً	first-person singular masculine/feminine non-past imperfective active indicative>pastTheyTwo	-	wrong (أحمر, red)
+unjudged	الغواصون	الغوّاصون قعر المحيط شبرًا شبرًا	غواص	الغوّاصون	pluralMasc>al	-	right
+unjudged	توم	توم إلى قاعة السّينما	آم	توم	noun-from-verb>presentSheYou	-	wrong (Tom)
+unjudged	توم	توم	آم	توم	noun-from-verb>presentSheYou	-	wrong (Tom)
+unjudged	توم	توم بطلقة في البطن	آم	توم	noun-from-verb>presentSheYou	-	wrong (Tom)
+unjudged	توم	توم ينشر المناديل	آم	توم	noun-from-verb>presentSheYou	-	wrong (Tom)
+unjudged	بالمشي	بالمشي على العشب	مشى	بالمشي	verbal noun>al>bi	-	right
+unjudged	تحصلت	تحصلت على تذاكر بالأمس	حصل	تحصلت	second-person singular masculine non-past imperfective active indicative>pastI	-	right
+unjudged	من	من فضلك	من فضلك	من فضلك		-	right
+unjudged	آبائنا	آبائنا المؤسسين لا يزال حياً في زماننا ه	أب	آبائنا	informal plural broken-form construct triptote>p1p	-	right
+unjudged	توم	توم	آم	توم	noun-from-verb>presentSheYou	-	wrong (Tom)
+unjudged	جواز	جواز سفر دبلوماسي كي يسافر	جواز سفر	جواز سفر		-	right
+unjudged	ليندا	ليندا تذهب	ندا	ليندا	presentHe>li	-	wrong (Linda)
+unjudged	توم	توم في مقهى	آم	توم	noun-from-verb>presentSheYou	-	wrong (Tom)
+unjudged	المطرية	المطرية البيضاء لك	مطر	المطرية	genitive/accusative singular construct dual triptote>feminine>al	-	wrong (مطرية, umbrella)
+unjudged	توم	توم وماري	آم	توم	noun-from-verb>presentSheYou	-	wrong (Tom)
+unjudged	كرة	كرة القدم في الجزائر العاصمة	كرة القدم	كرة القدم		-	right
+unjudged	المجموعة	المجموعة الشمسية	مجموعة شمسية	المجموعة الشمسية	informal singular definite ar-infl-a triptote	-	right
+unjudged	رأس	رأس السنة الجديدة	رأس السنة الجديدة	رأس السنة الجديدة		-	right
+unjudged	بييترو	بييترو إلى منزل مسكون مفتوح للزّوّار	وتر	بييترو	third-person masculine active dual jussive>presentHe>bi	-	wrong (Pietro)
+unjudged	توم	توم بطرقة أو بأخرى	آم	توم	noun-from-verb>presentSheYou	-	wrong (Tom)
+unjudged	توم	توم اشتكي من المغص بعدما اكل ما طبخته ما	آم	توم	noun-from-verb>presentSheYou	-	wrong (Tom)
+unjudged	توم	توم بحاجة للمال	آم	توم	noun-from-verb>presentSheYou	-	wrong (Tom)
+unjudged	لوسيا	لوسيا	سي	لوسيا	accusative>wa>li	-	wrong (Lucia)
+unjudged	أليس	أليس كذلك	أليس كذلك	أليس كذلك		-	right
+unjudged	مع	مع السلامة	مع السلامة	مع السلامة		-	right
+unjudged	توم	توم يحبك	آم	توم	noun-from-verb>presentSheYou	-	wrong (Tom)
+unjudged	توم	توم يؤمن بالاستبصار	آم	توم	noun-from-verb>presentSheYou	-	wrong (Tom)
+unjudged	على	على الأقل بالمجان، وأن يكون التعليم الأو	على الأقل	على الأقل		-	right
+unjudged	التذكارية	التذكارية من هذا المتجر	تذكار	التذكارية	genitive/accusative singular construct dual triptote>feminine>al	-	right
+unjudged	لا	لا بد لي أن أطلب منك إطاعة أوامري	لا بد	لا بد		-	right
+unjudged	بوش	بوش يريد حربا صليبية ضد الإسلام	وشى	بوش	second-person singular masculine imperative active>bi	-	wrong (Bush)
+unjudged	آلة	آلة حاسبة	آلة حاسبة	آلة حاسبة		-	right
+unjudged	شمال	شمال إفريقيا	شمال إفريقيا	شمال إفريقيا		-	right
+unjudged	بقائها	بقائها في اليابان	بقاء	بقائها	p3fs	-	right
+unjudged	أقاليما	أقاليما في القارة المتجمدة الجنوبية	إقليم	أقاليما	informal plural broken-form construct diptote>accusative	-	right
+unjudged	توم	توم على الأرض	آم	توم	noun-from-verb>presentSheYou	-	wrong (Tom)
