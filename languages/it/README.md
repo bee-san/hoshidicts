@@ -86,14 +86,14 @@ also given for a copy of the pack set to `"filter"`.
   - Five Project Gutenberg texts (public domain): *Le avventure di Pinocchio*
     (Carlo Collodi, pg52484, sha256 `b51a398d…9ae6`), *Dopo il divorzio*
     (Grazia Deledda, pg43226, `66d41d3f…48e6`), *Un cavallo nella luna*
-    (Luigi Pirandello, pg56775, `31f2d1f7…f2`), *Il mistero del poeta*
+    (Luigi Pirandello, pg56775, `31f2d1f7…9ef2`), *Il mistero del poeta*
     (Antonio Fogazzaro, pg22504, `7fb6f04d…50cd`) and *L'indomani* (Neera,
     pg22020, `86032c2c…51cb`), from `https://www.gutenberg.org/cache/epub/<n>/pg<n>.txt`.
 
 ## Rule provenance
 
-`transforms.json` has 96 transforms and 6,844 rules as the engine counts them
-(`language-conformance-test`), in 973 rule objects: `sources/build-own.mjs`
+`transforms.json` has 96 transforms and 6,863 rules as the engine counts them
+(`language-conformance-test`), in 974 rule objects: `sources/build-own.mjs`
 writes the suffix rules of a transform that share their conditions and
 constraints as one circumfix in cross-product form (docs/languages.md 7.3).
 Every transform and rule is `own`; there is no `yomitan` or `both` rule.
@@ -167,45 +167,59 @@ Every transform and rule is `own`; there is no `yomitan` or `both` rule.
     `inginocchiata` → `inginocchiarsi`), read through a mark only the
     participle rules write, so an infinitive as written never gives the -rsi
     verb;
-  - plurals (with the hard and soft c and g, -cia/-gia, -io, loanwords in -s,
-    and the irregular `uomini`, `dei`, `buoi`, `uova`, `braccia`, `dita`,
-    `orecchie`, the article `i` …), feminines (adjectives in -a; nouns for
+  - plurals (with the hard and soft c and g, -cia/-gia, -io, -ati read as
+    -ato before the enclitic -ti, loanwords in -s, and the irregular
+    `uomini`, `dei`, `buoi`, `uova`, `braccia`, `dita`, `orecchie`, the
+    article `i` …), feminines (adjectives in -a; nouns for
     people in -trice, -essa, -ona, -iera, -ora), superlatives in -issimo and
     adverbs in -mente.
 - **Ties and preferred readings.** When a word's rows name two lemmas that
   the rules reach with traces of one length, the lookup shows first the one
   it found first (docs/languages.md 9.6): the reading through the longer
   ending, and for one ending, the transform and rule that come first in
-  `transforms.json`. Two choices of order decide most such ties; both were
-  measured on the 10,000 most frequent words of it_50k (Measurements 2):
-  - the noun and adjective transforms come before the verb slots: `figli` is
-    figlio before figliare, `chiavi` chiave before chiavare, `ultima` ultimo
-    before ultimare. Of the 306 words whose first result depends on this
-    order, judged by hand, the noun order is right for 216 and the verb order
-    for 37 (`serve`, `credi`, `continua`, `ami`, `scherzi`); 41 are used both
-    ways and keep the noun (`ricordi`, `lavori`, `leggi`), and for 12 neither
-    is right (`cosi`, così without its accent);
-  - for -i, the -e singular comes before the -o one: `cani` is cane before
-    cano, `mesi` mese before meso, `parti` parte before parto.
+  `transforms.json`. Four choices of order decide most such ties. Each was
+  measured on the 10,000 most frequent words of it_50k with every preferred
+  reading removed, and the words whose first result it decides were judged
+  one by one (the evidence files `order-diff-judged.tsv`,
+  `fp-diff-judged.tsv`, `o-diff-judged.tsv` and `ati-diff-judged.tsv`):
+  - the noun and adjective transforms come before the verb slots: `figli`
+    is figlio before figliare, `chiavi` chiave before chiavare. Of the 337
+    words this order decides, the noun order is right for 227 and the verb
+    order for 47; 46 are used both ways and keep the noun (`ricordi`,
+    `lavori`, `leggi`, `aspetti`, `scherzi`), and for 17 neither is right
+    (`cosi`, così without its accent; `armi`, `conti`, `regali`, `temi`);
+  - the plural comes before the feminine plural: of the 55 words this
+    decides, the plural's noun is right for 23 (`volte`, `idee`, `porte`,
+    `amiche`) and the feminine plural's adjective for 21 (`nuove`,
+    `piccole`, `prime`, `vecchie`, whose feminine singular is also a rarer
+    noun: nuova "news", piccola "a small beer"); 7 are used both ways and 4
+    are neither;
+  - for -i, -e comes before -o: of 21 words, 12 need the -e noun (`mesi`,
+    `parti`, `cani`, `tali`) and 8 the -o one (`morti`, `soli`, `conti`,
+    `lenti`); `arti` is used both ways;
+  - -ati is also read as the plural of -ato through an ending longer than
+    the enclitic -ti, so the participle or adjective comes before the
+    reflexive imperative where the word's rows name both (`condannati`,
+    `informati`, `destinati`). This changes 4 of the top 10,000 (three used
+    both ways, one neither) and 80 words of ranks 10,001-50,000: 71 better,
+    2 worse (`sfogati`, `affrettati`), 6 used both ways and 1 neither.
 
-  Of nine orders measured, this one is within one word of the fewest
-  frequent words whose first lemma is at least 10 times rarer than another
-  lemma their rows name (the frequency proxy of the first audit; Measurements
-  2): 56 against 221 for the audited order. For the words it
-  still gets wrong, `PREFERRED` in `sources/build-own.mjs` has 79 whole-word
-  rules, which are found before any ending, so they reach the reading the
-  bare word nearly always has and leave the other second: the 37 verbs and
-  `sali` (salire); nouns and adjectives such as `soli` (solo, not sole),
-  `armi` (arma), `conti` (conto), `regali` (regalo), `stronzate`
-  (stronzata) and `vere` (vero); plural participles such as `armati`,
-  `fregati` and `sbagliati`, which the -arsi imperative would otherwise
-  precede (it is found first through the enclitic `-ti`, and the dictionary's
-  form-of row gives it a trace of one step); `pare` (parere), `accada`
-  (accadere), `torni` (tornare); and `comperò`, `comperai` (comprare, of
-  which comperare is an older spelling that wty-it-en gives only as a form-of
-  row). Each was chosen by hand from the measured lists. A frequency
-  dictionary orders such ties too, since the lookup compares frequencies
-  before the order of discovery.
+  For the words these orders still get wrong, `PREFERRED` in
+  `sources/build-own.mjs` has 97 whole-word rules. A whole-word rule is
+  found before any ending, so it reaches the reading the bare word nearly
+  always has and leaves the other second. They are the 47 verbs of the first
+  list (`serve`, `credi`, `continua`, `ami`, `pare`, `torni`, and the
+  imperatives `alzati`, `fidati`, `figurati`), the 21 feminine plural
+  adjectives, the 8 -o plurals, `armi`, `vari`, `temi` (arma, vario, tema)
+  and `sali` (salire), and 17 ties the frequency proxy of Measurements 2
+  found between two other readings (`rischi` → rischio, not risco; `omicidi`
+  → omicidio; `stronzate` → stronzata, not stronzare; `private` → privato;
+  `domando` → domandare, not domare's gerund; `riposi` → riposare, not
+  riporre), with `comperò` and `comperai` (comprare), found in a text. Each
+  was chosen by hand from these lists, so the top 10,000 is in-sample for
+  them; ranks 10,001-50,000 are held out (Measurements 2). A frequency
+  dictionary would order such ties too, since the lookup compares
+  frequencies before the order of discovery.
 - **Stem constraints and exclusions.** Each is there for a measured wrong
   reading, and each has a test that fails without it (`sources/mutate.py`,
   Measurements 7):
@@ -261,35 +275,49 @@ Every transform and rule is `own`; there is no `yomitan` or `both` rule.
   and exact-stem exclusions; the negative imperative; clitic climbing; the
   participle mark; the narrowed `removeAlphabeticDiacritics`; and
   `addElisionApostrophe` for lower-case words only (initials such as `V.` are
-  not v'). The first audit (NOT_OK at 3b40ab0, reports/audit-hachi-lang-it.md
-  on the measuring machine) led to the commits after the first README:
-  `untaggedTerms` `"pass"` once bee-san/hoshidicts#58 merged, the noun-first order and the
-  preferred readings, the subjunctive agreement, the `ce la`, `ci siamo`,
-  `stessi`, dire and trarre changes, the article `i`, test rows for the
-  strong verbs and the minimum stems, an untagged tiny dictionary with
-  form-of rows, and a 700-row sample, so that `tests/` and `sources/` stay
-  under 1 MB (981,299 bytes).
+  not v'). Two audits (reports/audit-hachi-lang-it.md, NOT_OK at 3b40ab0,
+  and audit-hachi-lang-it-b.md, NOT_OK at 7a1ed92, on the measuring machine)
+  led to the commits after the first README: `untaggedTerms` `"pass"` once
+  bee-san/hoshidicts#58 merged; the noun-first order, the -ati rule and the
+  preferred readings; the subjunctive agreement; the `ce la`, `ci siamo`,
+  `stessi`, dire and trarre changes; the article `i`; lookup rows for each
+  group of preferred readings, test rows for the strong verbs and the
+  minimum stems, an untagged tiny dictionary with form-of rows; and a 700-row
+  sample, so that `tests/` and `sources/` stay under 1 MB (993,080 bytes).
 
 ## Measurements
 
-All numbers were measured with the pack at commit 14f5858 on hoshidicts main
-1fed676 (GCC 14.3, Release), with wty-it-en as published and the commands of
-item 7. The branch was then rebased onto 7c854db, which adds only
-`languages/zh/`; 14f5858's `languages/it/` is 629b10f's byte for byte and
-differs from this pull request's only in this README. Yomitan has no Italian
-rules, so its column is the pack with an empty rule set (processors only), and
-the union and the final set are the own set.
+All numbers were measured with the pack at commit 7164ac1, "it: fixes after the
+second audit", on hoshidicts main 39cebbe (GCC 14.3, Release), with
+wty-it-en as published and the commands of item 7. The branch was then
+rebased onto 176819e, which adds only `languages/el/`; the measured commit
+was 5bb2c09, whose `languages/it/` is 7164ac1's byte for byte. This pull
+request's head differs from 7164ac1 in `languages/it/` only in this README, two
+mutation anchors of `sources/mutate.py` and a reason string of
+`sources/yomitan-differences.tsv`. Yomitan has no Italian rules, so
+its column is the pack with an empty rule set (processors only), and the
+union and the final set are the own set. "The audited pack" is the first
+audit's head, 3b40ab0's `languages/it/`, with `"untaggedTerms": "pass"`
+added. The outputs, judged lists and hand judgements are in
+`/local/home/skerraut/herd-synth3/reports/hachi-lang-it-evidence/` on the
+measuring machine.
 
-1. **`eval-language --dictionary`** (`sources/measure.py eval`). The sample is
-   the 700 rows of `corpus.tsv` and `gaps.tsv` together. Each file runs as it
-   is and as a copy with its options line removed or added. False candidates
-   are per row (defaults / every option on).
+1. **`eval-language --dictionary`** (`sources/measure.py eval`). Each file
+   runs as it is and as a copy with its options line removed or added; each
+   cell gives the pack's defaults / every option on. Recall is of the
+   positive rows; false candidates are per row.
 
-   | Rules | `untaggedTerms` | Sample recall | False candidates | First rank | `defaults.tsv` positives (678) | `defaults.tsv` negatives (103), defaults / all options | `cases.tsv` (15), all options |
-   | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-   | Own = union = final | `"pass"` (the pack) | 98.43% (689) | 0.281 / 0.287 | 93.0% | 100% | 100% / 95.1% | 100% |
-   | Own = union = final | `"filter"` | 98.43% (689) | 0.054 / 0.057 | 78.6% | 100% | 100% / 95.1% | 100% |
-   | Yomitan (none) | either | 0% | 0.054 / 0.057 | 78.6% | 1.0% | 100% / 100% | 33.3% |
+   | Rules | `untaggedTerms` | File | Recall | Negatives passed | False candidates | First rank |
+   | --- | --- | --- | ---: | ---: | ---: | ---: |
+   | Own = union = final | `"pass"` (the pack) | corpus + gaps (700) | 98.43% / 98.43% | | 0.281 / 0.287 | 92.9% / 92.9% |
+   | Own = union = final | `"pass"` (the pack) | `defaults.tsv` (678 positives, 103 negatives) | 100% / 100% | 100% / 95.1% | 0.761 / 0.773 | 72.9% / 72.9% |
+   | Own = union = final | `"pass"` (the pack) | `cases.tsv` (15) | 0% / 100% | | 0.933 / 1.000 | 20.0% / 60.0% |
+   | Own = union = final | `"filter"` | corpus + gaps | 98.43% / 98.43% | | 0.054 / 0.057 | 78.6% / 78.6% |
+   | Own = union = final | `"filter"` | `defaults.tsv` | 100% / 100% | 100% / 95.1% | 0.260 / 0.280 | 54.6% / 55.0% |
+   | Own = union = final | `"filter"` | `cases.tsv` | 0% / 100% | | 0.733 / 0.800 | 6.7% / 60.0% |
+   | Yomitan (none) | either | corpus + gaps | 0% / 0% | | 0.054 / 0.057 | 78.6% / 78.6% |
+   | Yomitan (none) | either | `defaults.tsv` | 1.0% / 1.0% | 100% / 100% | 0.260 / 0.280 | 54.6% / 55.0% |
+   | Yomitan (none) | either | `cases.tsv` | 0% / 33.3% | | 0.733 / 0.800 | 6.7% / 60.0% |
 
    - Recall does not depend on the dictionary. First rank and false
      candidates do: with `"filter"` the rules' outputs find no term, so first
@@ -300,7 +328,7 @@ the union and the final set are the own set.
      `cases.tsv` holds the 15 rows that need the processor (`citta` → città,
      `puo` → potere).
    - **Per rule** (`--per-rule`, corpus, gaps and `defaults.tsv`, 1,481 rows):
-     338 of the 973 rule objects recover a row no other rule reaches, none
+     338 of the 974 rule objects recover a row no other rule reaches, none
      breaks a negative, and 29 add false candidates without recovering a row
      (42 false candidates in all; 5 of the 29 are `pronominal` rules). They
      are kept: they are cross products that also make readings no row has,
@@ -311,44 +339,62 @@ the union and the final set are the own set.
      lookup keeps names the tense or mood in 469 (99.2%) and, of the 410
      finite rows, the person too in 406 (99.0%). The four others: two
      reflexive imperatives (`lavati`) whose shortest trace is the past
-     participle (a lookup shows wty-it-en's own "second-person singular
-     imperative" step first), and two -iare present forms of voi that are
-     also their subjunctive (`studiate`).
-2. **Frequent forms** (`sources/measure.py freq`). Of the 10,000 most frequent
-   words of `it_50k.txt` (227,038,971 tokens), 4,900 have a form-of row naming
-   a lemma a rule also reaches (32.26% of the tokens). The first result with a
-   definition, looked up alone as a host does:
-   - by the dictionary's rows (the word's own entry, a lemma its rows name, or
-     that lemma's lemma): right for all 4,900;
-   - by the word's own dominant lemma: where a word's own form-of rows name
-     several lemmas, 21 words (129,528 tokens, 0.057% of the list's) show one
-     whose citation form is at least 10 times rarer in the list than another
-     they name. By hand, 14 of them are right (`alcuni` → alcuno, `capita` →
-     capitare, `presti` → prestare: an adjective or adverb shares the other
-     lemma's citation form), 2 wrong (`odi` → udire, `starò` → starare; 9,477
-     tokens, 0.004%), and 5 used both ways (`guardati`, `dimenticati`);
-   - against the same pack with `"filter"`, the comparison the first audit
-     used: 206 first results differ; in 10 words (0.015% of the tokens) this
-     pack's lemma is at least 10 times rarer than the filter's first lemma,
-     and in 34 (0.428%) at least 10 times more frequent (`stai` → stare, not
-     staio; `vado` → andare, not guado; `parti` → parte). The first audit
-     counted 220 words (0.68%) and 31 (0.40%) at the audited head;
-   - `"filter"`: 69 words (1.41%, 297,740 tokens, 0.131% of the list's
-     tokens) find nothing, because wty-it-en's row for them names a form that
-     is itself only a reference (`andati` → andato, `bellissima` →
-     bellissimo), and one hop reaches nothing (section 16).
-
-   The order and the preferred readings of Rule provenance were chosen on
-   this list. Nine orders were compared, each without the preferred
-   readings: the noun and adjective transforms before or after the verb
-   slots, the feminine and the feminine plural apart, and -e, -o or -io first
-   for -i. By the frequency proxy they gave between 55 and 221 words: the
-   chosen order 56 (0.171% of the tokens), the audited order (verbs first, -o
-   before -e) 221 (0.714%), and the best, 55, differs from the chosen one
-   only in putting the feminine plural after the verbs. Against the filter
-   copy, the chosen order has 35 words with a 10 times rarer lemma and the
-   audited one 203. The 306 order-dependent words are judged one by one in
-   the evidence file `order-diff-judged.tsv`.
+     participle, and two -iare present forms of voi that are also their
+     subjunctive (`studiate`).
+2. **Frequent forms** (`sources/measure.py freq`): the first result with a
+   definition of each word of `it_50k.txt`, looked up alone as a host does.
+   Three judges: the dictionary's rows (right when the first result is the
+   word's own entry, a lemma its rows name, or that lemma's lemma); the
+   frequency proxy of the first audit (a first result that is one of the
+   lemmas the word's own rows name, whose citation form is at least 10 times
+   rarer in it_50k than another they name: figliare for figli); and the
+   comparison with the same pack set to `"filter"` (the first audit's method:
+   where the first results differ, this pack's lemma 10 times rarer, or more
+   frequent, than the filter copy's).
+   - **Top 10,000** (227,038,971 tokens). The orders and the preferred
+     readings were chosen on these words, so these numbers are in-sample.
+     - By the rows: 4,900 words have a form-of row naming a lemma a rule
+       reaches (32.26% of the tokens), and all 4,900 show a lemma their rows
+       name. With `"filter"`, 69 of them (0.131% of the tokens) find
+       nothing, because wty-it-en's row for them names a form that is itself
+       only a reference (`andati` → andato, `bellissima` → bellissimo), and
+       one hop reaches nothing (section 16).
+     - Frequency proxy: 19 words (125,039 tokens, 0.055%). By hand, 12 are
+       right (`alcuni` → alcuno, `capita` → capitare, `presti` → prestare:
+       an adjective or adverb shares the other lemma's citation form), 2
+       wrong (`odi` → udire, `starò` → starare; 9,477 tokens, 0.004%), 4 used
+       both ways (`guardati`, `tirati`, `beccati`, `capiti`) and 1 neither
+       (`ari`). The audited pack: 223 words (1.283%).
+     - Against `"filter"`: 184 first results differ; this pack's lemma is 10
+       times rarer in 8 words (0.013% of the tokens) and 10 times more
+       frequent in 34 (0.428%: `stai` → stare, not staio; `vado` → andare,
+       not guado). The audited pack: 205 (1.211%) and 28 (0.407%).
+     - The tie classes of Known gaps (`tie_class` in `measure.py`): 40 words
+       where a feminine noun comes before the -o adjective, 14 where an -e
+       noun comes before an -o adjective, and 17 -ati and -iti words that
+       show the -rsi imperative. By hand none of them is wrong; some are
+       used both ways (`coperte`, `rotte`, `guardati`).
+   - **Ranks 10,001-50,000** (14,697,324 tokens), held out: none of these
+     words is a preferred reading or was looked at to choose one.
+     - By the rows: 17,233 words reached (44.74% of the tokens); 8 (0.013%)
+       show a lemma their rows do not name (`pine` → pino, `fighissima` →
+       fico, `sie` → sia).
+     - Frequency proxy: 199 words (0.450% of the range's tokens), against 560
+       (1.601%) for the audited pack and 133 (0.342%) with `"filter"`, which
+       leaves 594 words (1.340%) without the lemma their rows name.
+     - Against `"filter"`: 566 first results differ; this pack's lemma is 10
+       times rarer in 107 words (0.227%) and 10 times more frequent in 65
+       (0.189%). The audited pack: 494 (1.440%) and 90 (0.244%).
+     - Tie classes: 165 words where a feminine noun comes before the -o
+       adjective (0.463% of the tokens); 22 of a random 40 are wrong
+       (`finanziarie`, `mistiche`, `chimiche`, `italiane`, `storiche`), so
+       about 90 words, 0.25%. 32 words where an -e noun comes before an -o
+       adjective (0.127%); of the 33 judged before the -ati rule, 7 are wrong
+       (`testi` → teste, `fari` → fare, `scuri` → scure). 81 -ati and -iti
+       words that show the -rsi imperative (0.216%); 14 of a random 40 are
+       wrong (`eliminati`, `aiutati`, `iniettati`). Their rows name the
+       imperative and not the participle, so the dictionary's own reading
+       outranks the rules' participle.
 3. **Pronouns before a verb in Tatoeba** (`sources/measure.py pronouns`). The
    990,954 sentences have 368,074 places where a clitic or reflexive pronoun
    (mi, ti, si, ci, vi, me, te, se, ce, ve, lo, la, li, le, gli, ne, m', t',
@@ -366,22 +412,31 @@ the union and the final set are the own set.
      object ci read into a -rci verb (`ci renderà felici` → renderci, `ci
      aiuterebbe` → aiutarci, `ci aspetta molto lavoro`, `ci stizzisci`), an
      impersonal si (`si scrive "pretty"?`) and `ci sta mettendo` → starci
-     (metterci). The first audit's own samples found more: 73 of 100 right
-     and 15 "compound of X with ci" cards. So about one -rsi reading in ten
-     to one in seven is wrong, about 1% to 1.5% of the places.
-   - `ti` before a singular present subjunctive (an ad hoc count over the
-     same sentences, `ti-subj.py` in the evidence): the audited pack, set to
-     `"pass"`, gave a -rsi verb at 151 places (`ti piaccia` → piacersi 56,
-     `ti dica` → dirsi 13, `ti dia` → darsi 10); this head at none, and at
-     the 19 places with te ne and te la, all right (`te ne vada` →
-     andarsene 13).
+     (metterci). The first audit's own random 100 had 12 wrong and 15
+     "compound of X with ci" cards.
+   - `ti` before a singular present subjunctive (`ti-subj.py` in the
+     evidence): the audited pack gave a -rsi verb at 151 places (`ti
+     piaccia` → piacersi 56, `ti dica` → dirsi 13, `ti dia` → darsi 10);
+     this pack at none, and at the 19 places with te ne and te la, all right
+     (`te ne vada` → andarsene 13).
+   - What that costs: the first audit judged 44 of the 177 places right, 20
+     of them te ne and te la pairs, which still agree; so about 24 right
+     readings of the 157 `ti` places are lost, one in six or seven (`che tu
+     ti senta`, `ti metta comodo`). In UniMorph ita, 513 rows of
+     V;SBJV;PRS;2;SG of -ere and -ire verbs are no longer reached (`ti
+     accenda` → accendersi, `ti accorga` → accorgersi): of its 499,579 rows
+     whose form differs from the lemma, the rules reach 98.79% instead of
+     98.90% (`unimorph-reach.py` in the evidence). The -are rows (`ti lavi`)
+     are still reached through the tu present indicative, which has the same
+     form.
 4. **Real text** (`sources/measure.py text`). Every word of the five Gutenberg
    texts, looked up with the rest of its sentence as a host does: 233,208
-   lookups. 227,293 can be judged by the dictionary's rows. 224,830 are
-   right, 2,076 are the -rsi verb of the verb's lemma, 289 a phrase's own
-   entry, and 98 (0.043%) are not confirmed; 1,215 hovered words have no row,
-   and 4,700 lookups find nothing. The samples below are reproducible (the
-   texts are read in the order of their file names).
+   lookups, 228,508 of them with a result. 227,293 can be judged by the
+   dictionary's rows: 224,830 are right, 2,076 are the -rsi verb of the
+   verb's lemma, 289 a phrase's own entry, and 98 (0.043%) are not
+   confirmed; 1,215 hovered words have no row, and 4,700 lookups find
+   nothing. The samples below are reproducible (the texts are read in the
+   order of their file names).
    - By hand, 63 of the 98 are right (old spellings such as `dovè` → dovere
      and `checchè` → checché, *accorgersi*, elided articles before markup)
      and 35 wrong: `Póntina`, a surname read as a form of pontare (8); `VI`,
@@ -391,13 +446,13 @@ the union and the final set are the own set.
      form); `ulivi` → aulire (2); and single ones (`d'Orta` → orto,
      `fiuta` → fiuto, `ci anderemo` → andarsi, `pèttine` → pettinare,
      `soppressate`, `tre.`, `Sie`, `d'onze`).
-   - Of the right ones by the rows, 645 show a lemma whose citation form is
-     10 times rarer than another the word's rows name (most are `nè` → né,
-     222, and `alcuni` → alcuno). Of a random 60 of them, 48 are right and 12
-     wrong: a plural participle read as the -arsi imperative or the present
-     of voi (`condannati` → condannarsi ×3, `allungati`, `cavati`,
-     `scollati`, `alate`, `disorientate`), `stringo` → stringare, `cadi` →
-     cado, `punte` → punta (pungere), `menomo` → menomare.
+   - Of the right ones by the rows, 567 show a lemma whose citation form is
+     10 times rarer than another the word's rows name (the audited pack:
+     3,124). Of a random 60, 52 are right (`nè` → né, `alcuni` → alcuno,
+     `partì` → partire, `corresse` → correggere) and 8 wrong (`passivi` →
+     passire, `Messe` → Messa for mettere, `seni` → sene, `echi` → echio,
+     `scollate` → scollare, `circondati` → circondarsi, `disperate`,
+     `Cose` → Cosa).
    - Of a random 60 of the words without a row, 54 are right (apocopated
      infinitives such as `consegnar`, old plurals such as `minaccie`, `varii`
      → vario, `po` → po'); the 6 wrong are foreign words, a place name, a
@@ -406,10 +461,25 @@ the union and the final set are the own set.
      impersonal or passive si (`si vedeva`, `si sapeva perchè`, `si muore
      contenti`, `si poteva rubare`) or an object pronoun (`mi dicessi`, `ci
      piegano`).
-   - **All together**: 35 known wrong, and from the samples about 350 of the
-     -rsi readings, 130 of the rarer-lemma ones and 120 of the words without a
-     row: about 630 wrong first results of the 228,508 lookups with a result,
-     0.28% (roughly 0.15% to 0.5%, given samples of 60).
+   - The tie classes of Known gaps, which the rows count as right (the
+     audited pack in brackets), with a random 20 of each judged: a feminine
+     noun before the -o adjective, 455 lookups (655), 7 of 20 wrong (`poste
+     dov'erano`, `figure tratte dalla vita reale`, `statue classiche`, `ali
+     piccine`); an -e noun before an -o adjective, 179 (9), 1 of 20 wrong
+     (`Si consoli` → console); an -rsi imperative before the participle, 67
+     (173), 10 of 20 wrong (`si fermano meravigliati`, `sassi cacciati`,
+     `cavati fuori`); a capital letter at a sentence start, 1,191 (1,191),
+     of which E, A, I and O are 1,120, all wrong; the other 71 are initials
+     and Roman numerals.
+   - **All together**: the 35 known wrong, and from the samples about 345 of
+     the -rsi readings, 75 of the rarer-lemma ones, 120 of the words without
+     a row and 200 in the first three tie classes: about 780 wrong first
+     results of the 228,508 lookups with a result, 0.34% (roughly 0.2% to
+     0.5%, given samples of 20 and 60). The 1,120 sentence-initial E, A, I
+     and O add 0.49%: a word as written needs no processor step, so a
+     capital letter's own entry outranks the decapitalised word, in any
+     pack; hachi-lang-lead's answer of 2026-11-03T09:45Z to hachi-lang-de
+     makes it a host follow-up. With them, about 1,900 (0.83%).
    - With `"filter"`: 226,268 can be judged, 225,950 are right, 289 a
      phrase's own entry, 29 (0.013%) not confirmed; 6,613 lookups find
      nothing.
@@ -420,10 +490,10 @@ the union and the final set are the own set.
    and refuse the pack (`lookup.untaggedTerms: unknown key`). So the check
    ran with the pack minus that key and wty-it-en tagged `v n adj adv` on its
    untagged rows, which the first audit showed gives the same lookups as
-   `"pass"` with the published dictionary (751,552 lookups, byte for byte).
-   Settings adds Italian beside Japanese and imports the dictionary
-   (1,224,665 terms in 1.2-1.5 s), and the Anki note and the switch to
-   Japanese and back work.
+   `"pass"` with the published dictionary (751,552 lookups byte for byte; the
+   second audit, 867,861). Settings adds Italian beside Japanese and imports
+   the dictionary (1,224,665 terms in 1.8-2.1 s), and the Anki note and the
+   switch to Japanese and back work.
    - Tagged dictionary: 20 / 20 checks pass. The first result of each case
      is the expected lemma, with its trace: `parlavamo` → parlare (imperfect
      (noi)), `andati` → andare, `Mi lavo` → lavarsi (pronoun before the verb,
@@ -435,55 +505,54 @@ the union and the final set are the own set.
      cases that need a rule fail (`andati`, `Raccontamelo` and `bellissime`
      find nothing; `Mi`, `Se`, `Ce` ×2 and `ti` find the pronoun; `Alzati`
      finds alzato).
-6. **Performance** (section 13).
+6. **Performance** (section 13; machine load around 45 on 64 cores).
    - Native `benchmark-lookup --languages <pack> --language it` on the 64 texts
      of `sources/benchmark-words.txt` (each the rest of a sentence from an
      inflected word), 6 passes with the first dropped, three runs:
 
      | Rules | `untaggedTerms` | p50 | p95 |
      | --- | --- | ---: | ---: |
-     | Final | `"pass"` (the pack) | 65.2-67.4 µs | 108-115 µs |
-     | Final | `"filter"` | 64.2-64.3 µs | 106-110 µs |
-     | none (Yomitan) | either | 53.3-53.8 µs | 88-90 µs |
+     | Final | `"pass"` (the pack) | 69.6-72.7 µs | 120-129 µs |
+     | Final | `"filter"` | 65.9-67.8 µs | 108-118 µs |
+     | none (Yomitan) | either | 54.7-56.9 µs | 90-97 µs |
 
      The budget is 1 ms p50.
    - WebAssembly (Hachidori's prebuilt engines, Node 22,
      `benchmark/node-lookup.mjs` with `HACHIDORI_LOOKUP_LANGUAGE=it` on the
      same texts, 342 hovers, 6 passes, the tagged dictionary of item 5
-     imported into MEMFS): `hdw_lookup` p50 230 µs and p95 405 µs
-     single-thread, p50 281 µs and p95 471 µs threaded.
+     imported into MEMFS): `hdw_lookup` p50 242 µs and p95 444 µs
+     single-thread, p50 279 µs and p95 478 µs threaded.
    - `hdw_language_load` of the pack minus the key (`sources/wasm-load.mjs`,
-     10 fresh engines): median 12.7 ms single-thread and 13.8 ms threaded;
-     live heap +1,935,192 bytes. The budgets are 50 ms and 20 MB. The pack has
+     10 fresh engines): median 14.0 ms single-thread and 15.7 ms threaded;
+     live heap +1,938,696 bytes. The budgets are 50 ms and 20 MB. The pack has
      no `pattern` rules; three processors use a `pattern` step
      (`removeAlphabeticDiacritics`, `removeApostrophedWords`,
      `addElisionApostrophe`).
 7. **Checks and commands.**
    - `language-conformance-test languages/it`: conforms. corpus.tsv 689 / 689,
      defaults.tsv 781 / 781 and text.tsv 46 / 46 with the pack's defaults,
-     cases.tsv 15 / 15, lookup.tsv 45 / 45 (against the untagged tiny
+     cases.tsv 15 / 15, lookup.tsv 53 / 53 (against the untagged tiny
      dictionary, as `"pass"` reads wty-it-en); gaps.tsv 0 / 11 (reported);
-     classes.json agrees (3 classes, 1,308 fields, 5 steps, 7,695 outputs).
-     Full `ctest` 49 / 49; `node tools/check-classes.mjs --all`;
-     `node --test tools/test/` 101 pass, 5 skipped.
+     classes.json agrees (3 classes, 1,309 fields, 5 steps, 7,735 outputs). Full `ctest` 52 / 52 (53 / 53 after the rebase, with el's test); `node
+     tools/check-classes.mjs --all`; `node --test tools/test/` 101 pass, 5 skipped.
    - `node tools/check-yomitan.mjs <yomitan> --all --cli build/hoshidicts-cli`:
-     no Italian rules to compare; the four processors on 1,569
-     (`decapitalize`), 1,576 (`capitalizeFirstLetter`), 2,387
-     (`removeAlphabeticDiacritics`) and 1,612 (`removeApostrophedWords`)
-     inputs, 248 listed differences (the two narrowed processors), 0
-     unexplained.
-   - Mutations (`python3 sources/mutate.py <scratch dir>`): 87 changes to a
+     no Italian rules to compare; the four processors on 1,577
+     (`decapitalize`), 1,584 (`capitalizeFirstLetter`), 2,395
+     (`removeAlphabeticDiacritics`) and 1,620 (`removeApostrophedWords`)
+     inputs, 250 listed differences (the two narrowed processors),
+     0 unexplained.
+   - Mutations (`python3 sources/mutate.py <scratch dir>`): 99 changes to a
      copy of the pack (each stem constraint, exclusion and literal list, the
-     person conditions, the marks, the transform order, the preferred
-     readings, each processor detail, `formOf` and `untaggedTerms`), each
-     followed by `check-classes --write` so a stale file cannot be what fails;
-     every one makes a conformance row fail. Of the 122 strong-verb entries,
-     the first audit could remove 59 one at a time without a failing row;
-     `defaults.tsv` now has a row for 49 of them, and the other 10
-     (prendere, sospendere, coincidere, deludere, eleggere, correggere,
-     giungere, pungere, intridere, soffrire) change nothing a lookup sees when
-     removed: another entry's compound reaches the same forms with the same
-     trace (p + rendere, so + spendere).
+     person conditions, the marks, the transform order, the -ati rule, each
+     group of preferred readings, each processor detail, `formOf` and
+     `untaggedTerms`), each followed by `check-classes --write` so a stale
+     file cannot be what fails; every one makes a conformance row fail. Of
+     the 122 strong-verb entries, the first audit could remove 59 one at a
+     time without a failing row; `defaults.tsv` now has a row for 49 of them,
+     and the other 10 (prendere, sospendere, coincidere, deludere, eleggere,
+     correggere, giungere, pungere, intridere, soffrire) change nothing a
+     lookup sees when removed: another entry's compound reaches the same
+     forms with the same trace (p + rendere, so + spendere).
    - Commands (from the repository root, with `build/` configured as CI does
      and `build/lookup-batch-it` built as `sources/lookup-batch.cpp` says):
 
@@ -492,6 +561,7 @@ the union and the final set are the own set.
      node languages/it/sources/build-corpus.mjs <unimorph ita/ita> <kaikki.org-dictionary-Italian.jsonl.gz>
      python3 languages/it/sources/measure.py eval <imported wty-it-en> --per-rule per-rule.json
      python3 languages/it/sources/measure.py freq wty-it-en.zip <imported wty-it-en> it_50k.txt --against <copy set to "filter">
+     python3 languages/it/sources/measure.py freq wty-it-en.zip <imported wty-it-en> it_50k.txt --from 10000 --top 50000 --against <copy set to "filter">
      python3 languages/it/sources/measure.py pronouns wty-it-en.zip <imported wty-it-en> ita_sentences.tsv.bz2
      python3 languages/it/sources/measure.py text wty-it-en.zip <imported wty-it-en> pg52484.txt pg43226.txt pg56775.txt pg22504.txt pg22020.txt --freq it_50k.txt
      python3 languages/it/sources/measure.py traces
@@ -502,26 +572,53 @@ the union and the final set are the own set.
 
 ## Known gaps
 
-- **Ties the order and the preferred readings do not settle.** A plural
-  participle in -ati whose rows also name the -arsi imperative shows the
-  imperative first (`condannati` → condannarsi, 35 of the Gutenberg
-  lookups; `dimenticati`, `attaccati`), except for the frequent ones read as
-  participles by whole-word rules; a verb whose -are and -ere readings tie
-  shows the -are one (`stringo` → stringare); a word used both ways keeps the
-  noun (`ricordi`, `lavori`, `leggi`, 41 of the frequent words); `odi` shows
-  udire, not odiare or odio. A frequency dictionary would order these.
+- **Ties the orders and the preferred readings do not settle.** Where a
+  word's own rows name two lemmas, both reached in one step, the lookup
+  shows the one it found first (9.6). Outside the top 10,000 of it_50k no
+  preferred reading applies, and these remain (Measurements 2 and 4):
+  - feminine plural adjectives whose feminine singular is also a noun show
+    the noun: about 90 words of ranks 10,001-50,000 (22 of a random 40 of
+    the 165 in the class: `finanziarie`, `mistiche`, `chimiche`, `italiane`,
+    `storiche`), and in the five texts about 160 of 455 lookups (`figure
+    tratte dalla vita reale`, `statue classiche`). The opposite order is
+    worse (Rule provenance: 23 against 21 in the top 10,000);
+  - -i plurals whose rows name an -e noun and an -o adjective show the noun
+    (`testi` → teste, `scuri` → scure, `fari` → fare: 7 of the 33 such words
+    of ranks 10,001-50,000; 1 of 20 in the texts);
+  - -ati and -iti words whose rows name only the -rsi imperative show it
+    before the rules' participle, because the dictionary's own reading
+    outranks a rule's (`eliminati`, `aiutati`, `iniettati`: 14 of a random
+    40 of the 81 in ranks 10,001-50,000; in the texts 10 of 20 of 67
+    lookups, `vetri appannati`, `sassi cacciati`). Where the rows name both,
+    the -ati rule puts the participle first, so `sfogati` and `affrettati`,
+    which are usually imperatives, now show the participle;
+  - other ties: an -are and an -ere reading (`stringo` → stringare);
+    words used both ways keep the noun (46 of the top 10,000: `ricordi`,
+    `lavori`, `aspetti`, `scherzi`); `odi` shows udire; `messi` shows messo
+    ("messenger"), since its rows name messo and messe, not mettere.
+
+  A frequency dictionary would order all of these, since the lookup compares
+  frequencies before the order of discovery. `lookup.confirmedOrder:
+  "references"`, queued for the framework (hachi-lang-lead's answer of
+  2026-11-03T18:46Z to hachi-lang-ru), would let the dictionary's bank
+  order decide instead; for the feminine plurals of ranks 10,001-50,000 that
+  order shows the adjective for 96 of the 165 words, but also
+  `caratteristiche` → caratteristico and `curve` → curvo.
 - **Ties decided by a processor variant.** The variants of a word are looked
   up in code point order, and a candidate keeps the place it was first found
   in: `starò` shows starare (found first through `staro`, starare's
-  present), and a capitalised word whose capital form has its own entry shows
-  it first (`E`, `A`, `O` and `I` at the start of a sentence show the letters
-  before the conjunction, preposition and article).
-- **`ti` + singular present subjunctive** gives no -rsi verb any more, so the
-  right reflexive readings among the 151 Tatoeba places are lost (`che tu ti
-  senta`, `ti metta comodo`; the first audit judged about one in four of them
-  right). The io present subjunctive after mi was left out before, for the
-  same reason: these are the two `mi` rows of `gaps.tsv` (`mi prolunghi`,
-  `mi invigorisca`).
+  present). A capitalised word as written needs no processor step, so a
+  capital letter's own entry comes before the decapitalised word at the
+  start of a sentence: `E`, `A`, `I` and `O` show the letters, 1,120 of the
+  233,208 Gutenberg lookups (0.48%). This is the same in every Latin-script
+  pack; hachi-lang-lead's answer of 2026-11-03T09:45Z to hachi-lang-de makes
+  it a host follow-up (a request flag for the scan's first word).
+- **`ti` + singular present subjunctive** gives no -rsi verb any more: about
+  24 right readings of the 157 Tatoeba places are lost (`che tu ti senta`,
+  `ti metta comodo`), and 513 UniMorph rows of -ere and -ire verbs
+  (Measurements 3). The io present subjunctive after mi was left out
+  before, for the same reason: these are the two `mi` rows of `gaps.tsv`
+  (`mi prolunghi`, `mi invigorisca`).
 - **The other 9 rows of `gaps.tsv`** are feminine nouns whose kaikki lemma is
   the masculine (`tabaccaia` → tabaccaio, `boera`, `uruguaiana`,
   `cravattaia`, `emesena`, `conservativa`, `autoreclusa`, `aracnofoba`,
@@ -532,8 +629,8 @@ the union and the final set are the own set.
   caminetto` → vedersi, `si studia francese` → studiarsi, `si poteva` →
   potersi, 128 Tatoeba places for potere and dovere), an object pronoun
   before an imperfect subjunctive agrees with io (`mi dicessi` → dirsi), and
-  an object ci is read into a -rci verb (`ci aiuterebbe` → aiutarci): about
-  one -rsi reading in ten to one in seven in the samples.
+  an object ci is read into a -rci verb (`ci aiuterebbe` → aiutarci): 6 of
+  60 Tatoeba and 10 of 60 Gutenberg -rsi readings in the samples.
 - Clitic climbing is read with stare + gerund and dovere, potere and volere +
   infinitive, not with sapere (`vi sapete allacciare` → sapersi), andare or
   venire, nor with the past historic of a modal (`si dovè accorgere` →
