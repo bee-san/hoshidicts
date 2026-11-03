@@ -138,8 +138,7 @@ Yomitan rules `sources/yomitan-removed.tsv` lists left out.
     `active participle` `ачий` → `ати` (323).
 
   Together they are the only rules for 213 rows and add 4,889 false
-  candidates.
-  Numbers for the final set against the union are under Measurements.
+  candidates. Measurements 1 and 4 compare the final set with the union.
 - **Own rules**: every rule's stem is limited to one word (`{stem}`: letters,
   the apostrophes and the hyphen), so не знаю is not не знати.
   - Nouns: the endings of the four declensions with the hard, soft and mixed
@@ -173,20 +172,21 @@ Yomitan rules `sources/yomitan-removed.tsv` lists left out.
     reflexive -ся/-сь and -ться on every form, the infinitive in -ть and
     -тись.
   - Stem constraints and order, each from a measurement:
-    - a one-letter noun ending needs two letters of stem, so на is not the
-      vocative of но, nor ті the genitive of ть;
+    - a one-letter noun ending needs two letters of stem, so на is not read
+      as a form of но, nor ті as a form of ть;
     - the second-conjugation -ати class is written after ж, ч and щ, and ч
       after ж is excluded, so дорожчим is not дорожчати;
     - іти keeps its і only bare or after п (піду, пішла), so дідуся is not
       дітися;
-    - -авати comes before -ати after д and т (вдає: удавати) and after it
-      after н and р (знає: знати); -іяти comes before -іти (мрію: мріяти
+    - -авати comes before -ати after д and т (дає, продає, стає, видає:
+      давати, продавати, ставати, видавати first) and after it after н and
+      р (знає: знати before знавати); -іяти comes before -іти (мрію: мріяти
       before мріти); the own transforms come before Yomitan's (їм: вони
       before їсти; Yomitan's order puts їсти first at 258 places in
       Tatoeba).
-- **History**: the first commit of this pack, `uk: own rules` (0aa0fae), has
+- **History**: the first commit of this pack, `uk: own rules` (9fb3f26), has
   the own rules as written before Yomitan's file was read (75 transforms,
-  4,255 rules); the next, `uk: Yomitan's rules and processors` (1b458a9),
+  4,255 rules); the next, `uk: Yomitan's rules and processors` (01c87cb),
   the port. Later commits changed the own rules after measuring: adjective
   declension also reaching verbs (participles) and nouns; the forms the
   table measurement missed (-ок after й and ь, -ов, -ин, plural-only nouns,
@@ -199,7 +199,9 @@ Yomitan rules `sources/yomitan-removed.tsv` lists left out.
 
 Every number is with wty-uk-en as published (form-of rows included), imported
 by `hoshidicts-cli import`, at hoshidicts 23cd5a3 with this pack (GCC 14.3,
-Release). The pack has no optional processor, transform or variant pass, so
+Release); the branch was then rebased onto b145feb (#54, which changes how
+dictionary files are read, not lookups), where the checks of item 6 and the
+test suite were run again. The pack has no optional processor, transform or variant pass, so
 each file gives the same numbers with every option on and with the pack's
 defaults (`corpus.tsv` + `gaps.tsv` and `cases.tsv` were also run with a
 `# options: default` line added: identical).
@@ -207,16 +209,16 @@ defaults (`corpus.tsv` + `gaps.tsv` and `cases.tsv` were also run with a
 1. `hoshidicts-cli eval-language uk <file> --transforms <set> --dictionary
    <wty-uk-en>`. The sample is `corpus.tsv` + `gaps.tsv` (1,000 rows); "all
    forms" is the measurement set of Rule provenance (311,298 table forms, the
-   cases and Yomitan's test: 312,551 rows, 246 of them negatives); Yomitan's
+   cases and Yomitan's test: 312,552 rows, 247 of them negatives); Yomitan's
    test is converted by `tools/port-yomitan-tests.mjs`, with Yomitan's
    transform names as reasons and with any trace.
 
-   | Rule set | Sample recall | False candidates per row | First rank | `cases.tsv` (501 positives, 180 negatives) | Yomitan's test, its traces / any trace (506 positives) | All forms: recall, negatives passed, false candidates |
+   | Rule set | Sample recall | False candidates per row | First rank | `cases.tsv` (501 positives, 181 negatives) | Yomitan's test, its traces / any trace (506 positives) | All forms: recall, negatives passed, false candidates |
    | --- | ---: | ---: | ---: | --- | --- | --- |
-   | Own (`sources/own.json`) | 98.80% (988) | 0.511 | 94.00% | 501, 180 | 0 / 490 (96.84%) | 98.62%, 243 of 246, 0.503 |
-   | Yomitan (`sources/yomitan.json`) | 92.40% (924) | 0.459 | 93.50% | 407, 91 | 506 / 506 | 93.97%, 157 of 246, 0.440 |
-   | Union (merge tool) | 98.80% (988) | 0.521 | 93.60% | 501, 91 | 506 / 506 | 98.85%, 154 of 246, 0.521 |
-   | Final (`transforms.json`) | 98.80% (988) | 0.511 | 93.90% | 501, 180 | 454 / 504 (99.60%) | 98.78%, 243 of 246, 0.505 |
+   | Own (`sources/own.json`) | 98.80% (988) | 0.511 | 94.00% | 501, 181 | 0 / 490 (96.84%) | 98.62%, 244 of 247, 0.503 |
+   | Yomitan (`sources/yomitan.json`) | 92.40% (924) | 0.459 | 93.50% | 407, 92 | 506 / 506 | 93.97%, 158 of 247, 0.440 |
+   | Union (merge tool) | 98.80% (988) | 0.521 | 93.60% | 501, 92 | 506 / 506 | 98.85%, 155 of 247, 0.521 |
+   | Final (`transforms.json`) | 98.80% (988) | 0.511 | 93.90% | 501, 181 | 454 / 504 (99.60%) | 98.78%, 244 of 247, 0.505 |
 
    The final set misses Yomitan's зна and бува (Rule provenance) and, as the
    own rules do, fails three of the negatives of Yomitan's test with any
@@ -230,10 +232,9 @@ defaults (`corpus.tsv` + `gaps.tsv` and `cases.tsv` were also run with a
    кінематографіст) or has nothing (голосування); for 25 it is second, after
    a homograph, a doublet or an entry for the form itself (вини → вина
    before винити, меркли → меркнути before меркти, розвиватимуть). False
-   candidates come mostly from the
-   adjective declension, which also gives the participle's verb
-   (процвітаючою → процвітати beside процвітаючий) and an adjective for a
-   noun (сліпою → сліпий for сліпа).
+   candidates come mostly from the adjective declension, which also gives
+   the participle's verb (процвітаючою → процвітати beside процвітаючий)
+   and an adjective for a noun (сліпою → сліпий for сліпа).
 2. **Frequent words** (`sources/measure.py words`): the 10,000 most frequent
    words of `uk_50k.txt`, each looked up alone as a host does (16 results,
    scan length 16) and judged by the word's own rows in wty-uk-en (Measure
@@ -321,12 +322,20 @@ defaults (`corpus.tsv` + `gaps.tsv` and `cases.tsv` were also run with a
      `sources/yomitan-differences.tsv`: the pack's `removeUkrainianDiacritics`
      also removes the grave accent (мо̀ва), which Yomitan's keeps.
    - Conformance (`language-conformance-test languages/uk`): corpus.tsv
-     988/988, cases.tsv 681/681, text.tsv 26/26, lookup.tsv 25/25, gaps.tsv
+     988/988, cases.tsv 682/682, text.tsv 26/26, lookup.tsv 25/25, gaps.tsv
      0/12 (reported); classes.json agrees (11 classes, 1,085 fields, 2
      steps, 3,386 outputs); 1,202 of the 8,294 rules are exercised by a
-     passing row; `tests/` and `sources/` hold 986,318 bytes.
+     passing row; `tests/` and `sources/` hold 986,419 bytes.
    - Stem constraints (`sources/mutate.py`, docs/languages.md 14 step 7):
-     MUT_LINE
+     214 deletions, one per own transform and constraint (`stemMinLength`
+     lowered by one, the others removed from every rule of the transform
+     that has them); a test fails for 160. The other 54 change no
+     deinflection of any of the 53,257 probe words (the corpus and case
+     sources, the 20,000 most frequent words, 30,000 table forms and 3,000
+     phrases after не and на): what the deleted constraint excluded is made
+     anyway by another rule, the plain twin of an alternation rule or a
+     Yomitan rule without the constraint. Run on `sources/own.json` alone,
+     47 of 214 change nothing.
    - Hachidori (feat/multi-language d7e82b0c with this branch in
      `third_party/hoshidicts`, `node scripts/sync-languages.mjs`,
      `test/chrome-language-pack.mjs`, Chrome 152, wty-uk-en): 14 of 14 checks
