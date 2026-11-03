@@ -1,0 +1,102 @@
+# Hand judgements (written for this pack, GPL-3.0-or-later) of the seeded random samples of README.md
+# (Measurements 4): sample-firsts.py <run> 50 7 on each text. text, n, hover index, first result, matched, verdict, note
+vnsl	1	53331	chỗ	chỗ	right	
+vnsl	2	6372	Bính	bính	right	
+vnsl	3	10800	đất	đất	right	
+vnsl	4	5957	đem	đem	right	
+vnsl	5	13102	xã	xã	right	
+vnsl	6	20602	Hoàng	hoàng	right	
+vnsl	7	73221	việc	Việc	right	
+vnsl	8	9367	thì	thì	right	
+vnsl	9	48797	tay	tay	right	
+vnsl	10	15874	với	với	right	
+vnsl	11	39580	Hán văn	Hán-văn	right	
+vnsl	12	53229	ai	ai	right	
+vnsl	13	4348	lễ	lễ	right	
+vnsl	14	57806	Trương	Trương	right	
+vnsl	15	50194	tất	tất	right	
+vnsl	16	20279	lớn lên	lớn lên	right	
+vnsl	17	61189	phục	phục	right	
+vnsl	18	46198	quân	quân	right	
+vnsl	19	7424	Tô	Tô	right	
+vnsl	20	28159			right	
+vnsl	21	239	đẻ	đẻ	right	
+vnsl	22	41478	tin	tin	right	
+vnsl	23	23675	đánh bắt	đánh bắt	wrong	đánh bắt (to fish) for đánh | bắt được (attacked and caught): longest match of the dictionary
+vnsl	24	43353	về	về	right	
+vnsl	25	77315	họ	họ	right	
+vnsl	26	6325	và	và	right	
+vnsl	27	75404	rằng	rằng	right	
+vnsl	28	65740	con	con	right	
+vnsl	29	54511	làm	làm	right	
+vnsl	30	74714	Cầm	Cầm	right	
+vnsl	31	9220	đi	đi	right	
+vnsl	32	73713	việc	VIỆC	right	
+vnsl	33	52950	đại	đại	right	
+vnsl	34	67806	lòng	lòng	right	
+vnsl	35	12846	chính trị	chính-trị	right	
+vnsl	36	21595	chịu	chịu	right	
+vnsl	37	12034	ở	ở	right	
+vnsl	38	55115	long	long	right	
+vnsl	39	75032	tức là	tức là	right	
+vnsl	40	31953	tu	Tu	wrong	Tu is part of a name (Lý Kính Tu), shown as tu (to practise)
+vnsl	41	20577	lấy	lấy	right	
+vnsl	42	64912	Thanh	Thanh	right	
+vnsl	43	57240	lòng	lòng	right	
+vnsl	44	22101	năm	năm	right	
+vnsl	45	49431	cứ	cứ	right	
+vnsl	46	56790	không ai	không ai	right	
+vnsl	47	17173	cao siêu	cao-siêu	right	
+vnsl	48	67394	ngược	ngược	right	
+vnsl	49	73805	ngày càng	ngày càng	right	
+vnsl	50	41252	có	có	right	
+tatoeba	1	162621	gôn	gôn	right	
+tatoeba	2	164922	chưa	chưa	right	
+tatoeba	3	251746	uống	uống	right	
+tatoeba	4	240900	có	có	right	
+tatoeba	5	11704	phố	phố	right	
+tatoeba	6	231024	con	Con	right	
+tatoeba	7	278590	động từ	động từ	right	
+tatoeba	8	278672	dâu	dâu	right	
+tatoeba	9	169102	việc	việc	right	
+tatoeba	10	19166	con	con	right	
+tatoeba	11	93969	độ	Độ	wrong	Độ is the second syllable of Ấn Độ, shown as độ (degree)
+tatoeba	12	64419	giờ	giờ	right	
+tatoeba	13	81849	khiến	khiến	right	
+tatoeba	14	66545	ấy	ấy	right	
+tatoeba	15	235242	là	là	right	
+tatoeba	16	221239	này	này	right	
+tatoeba	17	141312	nhẹ	nhẹ	right	
+tatoeba	18	143573	đến	đến	right	
+tatoeba	19	1378	sao	Sao	right	
+tatoeba	20	134112	cô ấy	cô ấy	right	
+tatoeba	21	213420	hết	hết	right	
+tatoeba	22	10081	hỏi	hỏi	right	
+tatoeba	23	79270	khách	khách	right	
+tatoeba	24	187779	là	là	right	
+tatoeba	25	262207	là	là	right	
+tatoeba	26	102099	cái	Cái	right	
+tatoeba	27	245198	cô	cô	right	
+tatoeba	28	34677	chiến đấu	chiến đấu	right	
+tatoeba	29	43457	nói	nói	right	
+tatoeba	30	164381	có	có	right	
+tatoeba	31	224410	để	để	right	
+tatoeba	32	93104	chắc	Chắc	right	
+tatoeba	33	220373	rằng	rằng	right	
+tatoeba	34	42055	có thể	có thể	right	
+tatoeba	35	162201	có	có	right	
+tatoeba	36	153977	ta	ta	right	
+tatoeba	37	276857	ta	ta	right	
+tatoeba	38	102271	vậy	vậy	right	
+tatoeba	39	63374	bỗng nhiên	Bỗng nhiên	right	
+tatoeba	40	165080	sống	sống	right	
+tatoeba	41	281722	chúng ta	chúng ta	right	
+tatoeba	42	58780	một	Một	right	
+tatoeba	43	125372	thành	thành	right	
+tatoeba	44	58708	xin	Xin	right	
+tatoeba	45	10516	tôi	tôi	right	
+tatoeba	46	77573	phần thưởng	phần thưởng	right	
+tatoeba	47	88298	hàng	hàng	right	
+tatoeba	48	238041	đó	đó	right	
+tatoeba	49	73067	gian	gian	right	
+tatoeba	50	141533	thực hiện	thực hiện	right	

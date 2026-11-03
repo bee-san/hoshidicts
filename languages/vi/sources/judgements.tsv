@@ -1,5 +1,7 @@
 # Hand judgements (written for this pack, GPL-3.0-or-later) of the first results that differ from Yomitan's processors
 # in the real-text runs of README.md (Measurements 4), read by judge-real.py: a judged pair applies to every hover with it.
+# The pairs after "# capitals" were added after the first audit (audit-hachi-lang-vi m3): results whose capitals
+# differ from the matched text, which judge-real.py no longer judges by script.
 # matched	expression	verdict	note
 Quảng-nghĩa	Quảng Ngãi	right	old name of Quảng Ngãi (the dictionary names it)
 Phạm phạm	phạm	wrong	a name (Phạm Phạm Chí), read as the verb phạm
@@ -82,5 +84,637 @@ vớ va vớ vẩn	vớ vẩn	right	four-syllable reduplication
 xem xem	xem	right	let us see
 thông thông	thông	wrong	span: giao thông | thông minh
 vào vào	vào	wrong	a repeated word (typo)
-Ðường	Đường	right	Ð for Đ
-Ðức	Đức	right	Ð for Đ
+Ðường	Đường	wrong	Đường is the surname and the Tang; the sentence means đường, road
+Ðức	Đức	wrong	Đức is Germany or a name; the sentence has đức (Đức Chúa Trời)
+# capitals
+Tiếng Anh	tiếng Anh	right	reviewed: the same word or name in another spelling or capitalisation
+Tiếng Việt	tiếng Việt	right	reviewed: the same word or name in another spelling or capitalisation
+Tiếng Pháp	tiếng Pháp	right	reviewed: the same word or name in another spelling or capitalisation
+Tiếng Nhật	tiếng Nhật	right	reviewed: the same word or name in another spelling or capitalisation
+Sao Hỏa	sao Hỏa	right	reviewed: the same word or name in another spelling or capitalisation
+Tiếng Đức	tiếng Đức	right	reviewed: the same word or name in another spelling or capitalisation
+Sao Mộc	sao Mộc	right	reviewed: the same word or name in another spelling or capitalisation
+Tiếng Trung	tiếng Trung	right	reviewed: the same word or name in another spelling or capitalisation
+Người Mỹ	người Mĩ	right	reviewed: the same word or name in another spelling or capitalisation
+Nước Mỹ	nước Mĩ	right	reviewed: the same word or name in another spelling or capitalisation
+Tôi là người Việt	tôi là người Việt	right	reviewed: the same word or name in another spelling or capitalisation
+Đạo Cơ Đốc	đạo Cơ Đốc	right	reviewed: the same word or name in another spelling or capitalisation
+Chiến tranh chống Mĩ	chiến tranh chống Mĩ	right	reviewed: the same word or name in another spelling or capitalisation
+Mèo già hóa cáo	mèo già hoá cáo	right	reviewed: the same word or name in another spelling or capitalisation
+Tỷ giá hối đoái	tỉ giá hối đoái	right	reviewed: the same word or name in another spelling or capitalisation
+Khẩu Phật tâm xà	khẩu Phật tâm xà	right	reviewed: the same word or name in another spelling or capitalisation
+Phong ba bão táp không bằng ngữ pháp Việt Nam	phong ba bão táp không bằng ngữ pháp Việt Nam	right	reviewed: the same word or name in another spelling or capitalisation
+Chiến tranh Việt Nam	chiến tranh Việt Nam	right	reviewed: the same word or name in another spelling or capitalisation
+Tiếng Thái	tiếng Thái	right	reviewed: the same word or name in another spelling or capitalisation
+Sao Hoả	sao Hoả	right	reviewed: the same word or name in another spelling or capitalisation
+Người Mĩ	người Mĩ	right	reviewed: the same word or name in another spelling or capitalisation
+Người Việt Nam	người Việt Nam	right	reviewed: the same word or name in another spelling or capitalisation
+Cơ-đốc nhân	Cơ Đốc nhân	right	reviewed: the same word or name in another spelling or capitalisation
+đạo Cơ-đốc	đạo Cơ Đốc	right	reviewed: the same word or name in another spelling or capitalisation
+Tiếng Tây Ban Nha	tiếng Tây Ban Nha	right	reviewed: the same word or name in another spelling or capitalisation
+Hệ Mặt Trời	hệ Mặt Trời	right	reviewed: the same word or name in another spelling or capitalisation
+Sao Thiên Vương	sao Thiên Vương	right	reviewed: the same word or name in another spelling or capitalisation
+Chiêm-thành	Chiêm Thành	right	reviewed: the same word or name in another spelling or capitalisation
+Nghệ-an	Nghệ An	right	reviewed: the same word or name in another spelling or capitalisation
+Bình-định	Bình Định	right	reviewed: the same word or name in another spelling or capitalisation
+Thanh-hóa	Thanh Hóa	right	reviewed: the same word or name in another spelling or capitalisation
+Mông-cổ	Mông Cổ	right	reviewed: the same word or name in another spelling or capitalisation
+Giao-chỉ	Giao Chỉ	right	reviewed: the same word or name in another spelling or capitalisation
+Thái-tử	thái tử	right	reviewed: the same word or name in another spelling or capitalisation
+Lâm-ấp	Lâm Ấp	right	reviewed: the same word or name in another spelling or capitalisation
+Lạng-sơn	Lạng Sơn	right	reviewed: the same word or name in another spelling or capitalisation
+Niên-hiệu	niên hiệu	right	reviewed: the same word or name in another spelling or capitalisation
+Thăng-long	Thăng Long	right	reviewed: the same word or name in another spelling or capitalisation
+Hải-dương	Hải Dương	right	reviewed: the same word or name in another spelling or capitalisation
+Sơn-tây	Sơn Tây	right	reviewed: the same word or name in another spelling or capitalisation
+Nam-chiếu	Nam Chiếu	right	reviewed: the same word or name in another spelling or capitalisation
+Vân-nam	Vân Nam	right	reviewed: the same word or name in another spelling or capitalisation
+Hoàng-hậu	hoàng hậu	right	reviewed: the same word or name in another spelling or capitalisation
+Thái-hậu	thái hậu	right	reviewed: the same word or name in another spelling or capitalisation
+Thái-bình	Thái Bình	right	reviewed: the same word or name in another spelling or capitalisation
+Cửu-chân	Cửu Chân	right	reviewed: the same word or name in another spelling or capitalisation
+An-dương	An Dương	right	reviewed: the same word or name in another spelling or capitalisation
+Bắc-ninh	Bắc Ninh	right	reviewed: the same word or name in another spelling or capitalisation
+Triều-đình	triều đình	right	reviewed: the same word or name in another spelling or capitalisation
+Tiết-độ-sứ	tiết độ sứ	right	reviewed: the same word or name in another spelling or capitalisation
+Thượng-thư	thượng thư	right	reviewed: the same word or name in another spelling or capitalisation
+Bạch-đằng	Bạch Đằng	right	reviewed: the same word or name in another spelling or capitalisation
+Quảng-tây	Quảng Tây	right	reviewed: the same word or name in another spelling or capitalisation
+Âu-lạc	Âu Lạc	right	reviewed: the same word or name in another spelling or capitalisation
+CHÍNH-TRỊ	chính trị	right	reviewed: the same word or name in another spelling or capitalisation
+Nhật-nam	Nhật Nam	right	reviewed: the same word or name in another spelling or capitalisation
+Bắc-giang	Bắc Giang	right	reviewed: the same word or name in another spelling or capitalisation
+Ai-lao	Ai Lao	right	reviewed: the same word or name in another spelling or capitalisation
+Thái-nguyên	Thái Nguyên	right	reviewed: the same word or name in another spelling or capitalisation
+Thuận-hóa	Thuận Hóa	right	reviewed: the same word or name in another spelling or capitalisation
+Hưng-yên	Hưng Yên	right	reviewed: the same word or name in another spelling or capitalisation
+Đô-hộ	đô hộ	right	reviewed: the same word or name in another spelling or capitalisation
+Quảng-châu	Quảng Châu	right	reviewed: the same word or name in another spelling or capitalisation
+Văn-lang	Văn Lang	right	reviewed: the same word or name in another spelling or capitalisation
+Sơn-tinh	Sơn Tinh	right	reviewed: the same word or name in another spelling or capitalisation
+Hùng-vương	Hùng Vương	right	reviewed: the same word or name in another spelling or capitalisation
+Ấn-độ	Ấn Độ	right	reviewed: the same word or name in another spelling or capitalisation
+CHIÊM-THÀNH	Chiêm Thành	right	reviewed: the same word or name in another spelling or capitalisation
+Lão-tử	Lão Tử	right	reviewed: the same word or name in another spelling or capitalisation
+BÌNH-ĐỊNH	bình định	right	the title Bình-định-vương (the Pacifying King): bình định is what it says, as chỉ huy is for Chỉ-huy-sứ
+Hồng-bàng	Hồng Bàng	right	reviewed: the same word or name in another spelling or capitalisation
+Hà-tĩnh	Hà Tĩnh	right	reviewed: the same word or name in another spelling or capitalisation
+Lam-sơn	Lam Sơn	right	reviewed: the same word or name in another spelling or capitalisation
+Hợp-phố	Hợp Phố	right	reviewed: the same word or name in another spelling or capitalisation
+Thành-tổ	Thành Tổ	right	reviewed: the same word or name in another spelling or capitalisation
+Tuyên-quang	Tuyên Quang	right	reviewed: the same word or name in another spelling or capitalisation
+Bồn-man	Bồn Man	right	reviewed: the same word or name in another spelling or capitalisation
+Bồ-đề	bồ đề	wrong	Bồ-đề is a place by the Red River and a Cham king, not bodhi (re-audit m2)
+Ninh-bình	Ninh Bình	right	reviewed: the same word or name in another spelling or capitalisation
+Quảng-đông	Quảng Đông	right	reviewed: the same word or name in another spelling or capitalisation
+Khổng-tử	Khổng Tử	right	reviewed: the same word or name in another spelling or capitalisation
+Chân-lạp	Chân Lạp	right	reviewed: the same word or name in another spelling or capitalisation
+Nhà Minh	nhà Minh	right	reviewed: the same word or name in another spelling or capitalisation
+Hồ-nam	Hồ Nam	right	reviewed: the same word or name in another spelling or capitalisation
+Đại-lý	đại lí	wrong	the kingdom of Dali (大理), not đại lí (agent)
+GIAO-THIỆP	giao thiệp	right	reviewed: the same word or name in another spelling or capitalisation
+tôn-thất	Tôn Thất	wrong	tôn thất (royal kin), not the clan name
+Quảng-nam	Quảng Nam	right	reviewed: the same word or name in another spelling or capitalisation
+Nhà Trần	nhà Trần	right	reviewed: the same word or name in another spelling or capitalisation
+mậu-thìn	Mậu Thìn	right	reviewed: the same word or name in another spelling or capitalisation
+Hốt-tất-liệt	Hốt Tất Liệt	right	reviewed: the same word or name in another spelling or capitalisation
+Tứ-xuyên	Tứ Xuyên	right	reviewed: the same word or name in another spelling or capitalisation
+giáp-thìn	Giáp Thìn	right	reviewed: the same word or name in another spelling or capitalisation
+Nhà Lý	nhà Lí	right	reviewed: the same word or name in another spelling or capitalisation
+Thượng-tướng	thượng tướng	right	reviewed: the same word or name in another spelling or capitalisation
+Gia-lâm	Gia Lâm	right	reviewed: the same word or name in another spelling or capitalisation
+Nam-định	Nam Định	right	reviewed: the same word or name in another spelling or capitalisation
+Vân-đồn	Vân Đồn	right	reviewed: the same word or name in another spelling or capitalisation
+Quảng-bình	Quảng Bình	right	reviewed: the same word or name in another spelling or capitalisation
+Tam-quốc	Tam Quốc	right	reviewed: the same word or name in another spelling or capitalisation
+Lạc-long-quân	Lạc Long Quân	right	reviewed: the same word or name in another spelling or capitalisation
+Hà-nam	Hà Nam	right	reviewed: the same word or name in another spelling or capitalisation
+HỌC-HÀNH	học hành	right	reviewed: the same word or name in another spelling or capitalisation
+Nam-sách	Nam Sách	right	reviewed: the same word or name in another spelling or capitalisation
+nho-học	Nho học	right	reviewed: the same word or name in another spelling or capitalisation
+Hoàng-thái-hậu	hoàng thái hậu	right	reviewed: the same word or name in another spelling or capitalisation
+Bệ-hạ	bệ hạ	right	reviewed: the same word or name in another spelling or capitalisation
+Kinh-đô	Kinh Đô	wrong	kinh đô (the capital), not Kyoto
+Trường-sa	Trường Sa	right	reviewed: the same word or name in another spelling or capitalisation
+Kinh-sư	kinh sư	right	reviewed: the same word or name in another spelling or capitalisation
+quí-mão	Quý Mão	right	reviewed: the same word or name in another spelling or capitalisation
+Nhà Đinh	nhà Đinh	right	reviewed: the same word or name in another spelling or capitalisation
+Trường-giang	Trường Giang	right	reviewed: the same word or name in another spelling or capitalisation
+Cao-bằng	Cao Bằng	right	reviewed: the same word or name in another spelling or capitalisation
+Nước Nam	nước Nam	right	reviewed: the same word or name in another spelling or capitalisation
+CAI-TRỊ	cai trị	right	reviewed: the same word or name in another spelling or capitalisation
+Xã-tắc	xã tắc	right	reviewed: the same word or name in another spelling or capitalisation
+Hung-nô	Hung Nô	right	reviewed: the same word or name in another spelling or capitalisation
+Nhà Hồ	nhà Hồ	right	reviewed: the same word or name in another spelling or capitalisation
+Tể-tướng	tể tướng	right	reviewed: the same word or name in another spelling or capitalisation
+Thuận-thiên	Thuận Thiên	wrong	the era name Thuận Thiên and a princess, not the sword (re-audit m2)
+Quân-sĩ	quân sĩ	right	reviewed: the same word or name in another spelling or capitalisation
+Phù-đổng Thiên-vương	Phù Đổng Thiên Vương	right	reviewed: the same word or name in another spelling or capitalisation
+Nhà Tống	nhà Tống	right	reviewed: the same word or name in another spelling or capitalisation
+ất-tị	Ất Tỵ	right	reviewed: the same word or name in another spelling or capitalisation
+Nhà Đường	nhà Đường	right	reviewed: the same word or name in another spelling or capitalisation
+Cổ-loa	Cổ Loa	right	reviewed: the same word or name in another spelling or capitalisation
+Kiến-an	Kiến An	right	reviewed: the same word or name in another spelling or capitalisation
+THĂNG-LONG	thăng long	wrong	Thăng Long, not the eggcorn thăng long
+Thời-kỳ	thời kì	right	reviewed: the same word or name in another spelling or capitalisation
+MÔNG-CỔ	Mông Cổ	right	reviewed: the same word or name in another spelling or capitalisation
+TÌNH-THẾ	tình thế	right	reviewed: the same word or name in another spelling or capitalisation
+Thiên-tử	thiên tử	right	reviewed: the same word or name in another spelling or capitalisation
+Đại-việt	Đại Việt	right	reviewed: the same word or name in another spelling or capitalisation
+Chính-trị	chính trị	right	reviewed: the same word or name in another spelling or capitalisation
+Mê-linh	Mê Linh	right	reviewed: the same word or name in another spelling or capitalisation
+Nhà Ân	nhà Ân	right	reviewed: the same word or name in another spelling or capitalisation
+THỜI-ĐẠI	thời đại	right	reviewed: the same word or name in another spelling or capitalisation
+Mỵ-nương	mị nương	right	reviewed: the same word or name in another spelling or capitalisation
+Tràng-an	Tràng An	right	reviewed: the same word or name in another spelling or capitalisation
+TAM-QUỐC	Tam Quốc	right	reviewed: the same word or name in another spelling or capitalisation
+ĐÔNG-HÁN	Đông Hán	right	reviewed: the same word or name in another spelling or capitalisation
+HỒNG-BÀNG	Hồng Bàng	right	reviewed: the same word or name in another spelling or capitalisation
+Kỳ-anh	Kỳ Anh	right	reviewed: the same word or name in another spelling or capitalisation
+LÂM-ẤP	Lâm Ấp	right	reviewed: the same word or name in another spelling or capitalisation
+Quảng-trị	Quảng Trị	right	reviewed: the same word or name in another spelling or capitalisation
+Thích-ca	Thích Ca	right	reviewed: the same word or name in another spelling or capitalisation
+Phú-thọ	Phú Thọ	right	reviewed: the same word or name in another spelling or capitalisation
+Nhà Thục	nhà Thục	right	reviewed: the same word or name in another spelling or capitalisation
+Xuân-thu	Xuân Thu	right	reviewed: the same word or name in another spelling or capitalisation
+Quan-chế	quan chế	right	reviewed: the same word or name in another spelling or capitalisation
+Đại-cồ-việt	Đại Cồ Việt	right	reviewed: the same word or name in another spelling or capitalisation
+Nhà Ngô	nhà Ngô	right	reviewed: the same word or name in another spelling or capitalisation
+Mạnh-tử	Mạnh Tử	right	reviewed: the same word or name in another spelling or capitalisation
+Đông-kinh	Đông Kinh	right	reviewed: the same word or name in another spelling or capitalisation
+Nam-hán	Nam Hán	right	reviewed: the same word or name in another spelling or capitalisation
+BẮC-THUỘC	Bắc thuộc	right	reviewed: the same word or name in another spelling or capitalisation
+Quan-sát	quan sát	right	the title Quan-sát-sứ: quan sát is what it says, as chỉ huy is for Chỉ-huy-sứ
+Binh-chế	binh chế	right	reviewed: the same word or name in another spelling or capitalisation
+Ôn-châu	Ôn Châu	right	reviewed: the same word or name in another spelling or capitalisation
+Quốc-tử-giám	Quốc Tử Giám	right	reviewed: the same word or name in another spelling or capitalisation
+Nước Tàu	nước Tàu	right	reviewed: the same word or name in another spelling or capitalisation
+THUẾ-MÁ	thuế má	right	reviewed: the same word or name in another spelling or capitalisation
+Hà-đông	Hà Đông	right	reviewed: the same word or name in another spelling or capitalisation
+Án-sát	án sát	right	reviewed: the same word or name in another spelling or capitalisation
+PHÁP-LUẬT	pháp luật	right	reviewed: the same word or name in another spelling or capitalisation
+Thiên-lôi	Thiên Lôi	right	reviewed: the same word or name in another spelling or capitalisation
+Thạch-thất	Thạch Thất	right	reviewed: the same word or name in another spelling or capitalisation
+Viên-ngoại	viên ngoại	right	reviewed: the same word or name in another spelling or capitalisation
+Nhà Tần	nhà Tần	right	reviewed: the same word or name in another spelling or capitalisation
+Mị-nương	mị nương	right	reviewed: the same word or name in another spelling or capitalisation
+VÕ-BỊ	võ bị	right	reviewed: the same word or name in another spelling or capitalisation
+Mãn-châu	Mãn Châu	right	reviewed: the same word or name in another spelling or capitalisation
+Đình-bảng	Đình Bảng	right	reviewed: the same word or name in another spelling or capitalisation
+BIẾN-LOẠN	biến loạn	right	reviewed: the same word or name in another spelling or capitalisation
+Chiến-quốc	Chiến Quốc	right	reviewed: the same word or name in another spelling or capitalisation
+Tri-châu	tri châu	right	reviewed: the same word or name in another spelling or capitalisation
+Chỉ-huy	chỉ huy	right	reviewed: the same word or name in another spelling or capitalisation
+QUAN-CHẾ	quan chế	right	reviewed: the same word or name in another spelling or capitalisation
+Binh-thư	binh thư	right	reviewed: the same word or name in another spelling or capitalisation
+ĐẠI-VIỆT	Đại Việt	right	reviewed: the same word or name in another spelling or capitalisation
+BẮC-TRIỀU	Bắc triều	right	reviewed: the same word or name in another spelling or capitalisation
+An-bài	an bài	wrong	a place, not an bài (to arrange)
+Thuế-má	thuế má	right	reviewed: the same word or name in another spelling or capitalisation
+Hải-nam	Hải Nam	right	reviewed: the same word or name in another spelling or capitalisation
+mậu-tuất	Mậu Tuất	right	reviewed: the same word or name in another spelling or capitalisation
+Dòng-dõi	dòng dõi	right	reviewed: the same word or name in another spelling or capitalisation
+Đô-đốc	đô đốc	right	reviewed: the same word or name in another spelling or capitalisation
+NGHỆ-AN	Nghệ An	right	reviewed: the same word or name in another spelling or capitalisation
+Tây-hạ	Tây Hạ	right	reviewed: the same word or name in another spelling or capitalisation
+Văn-hiến	văn hiến	wrong	the title Văn-hiến-hầu, a name
+BINH-LÍNH	binh lính	right	reviewed: the same word or name in another spelling or capitalisation
+Thái-hòa	thái hoà	wrong	Taihe (太和), a place, not thái hoà (harmony)
+Học-thuật	học thuật	right	reviewed: the same word or name in another spelling or capitalisation
+PHONG-TỤC	phong tục	right	reviewed: the same word or name in another spelling or capitalisation
+VĂN-HỌC	văn học	right	reviewed: the same word or name in another spelling or capitalisation
+hải-khẩu	Hải Khẩu	wrong	hải khẩu (estuary), not Haikou
+Thanh-liêm	thanh liêm	wrong	a district, not thanh liêm (honest)
+SỬA-SANG	sửa sang	right	reviewed: the same word or name in another spelling or capitalisation
+Chiết-giang	Chiết Giang	right	reviewed: the same word or name in another spelling or capitalisation
+Văn-miếu	văn miếu	right	reviewed: the same word or name in another spelling or capitalisation
+Thiên-cực	thiên cực	wrong	Princess Thiên Cực, a name
+Phù-vân	phù vân	wrong	a place, not phù vân (floating clouds)
+NAM-CHIẾU	Nam Chiếu	right	reviewed: the same word or name in another spelling or capitalisation
+Nhà Chu	nhà Chu	right	reviewed: the same word or name in another spelling or capitalisation
+Tình-thế	tình thế	right	reviewed: the same word or name in another spelling or capitalisation
+Đạo Phật	đạo Phật	right	reviewed: the same word or name in another spelling or capitalisation
+Gia-hưng	Gia Hưng	right	reviewed: the same word or name in another spelling or capitalisation
+Quốc-vương	quốc vương	right	reviewed: the same word or name in another spelling or capitalisation
+Bà-la-môn	Bà La Môn	right	reviewed: the same word or name in another spelling or capitalisation
+Đạo-đức	đạo đức	wrong	the Đạo Đức Kinh (Tao Te Ching), not đạo đức (morality)
+BINH-CHẾ	binh chế	right	reviewed: the same word or name in another spelling or capitalisation
+tứ-thư	Tứ thư	right	reviewed: the same word or name in another spelling or capitalisation
+Quan-lại	quan lại	right	reviewed: the same word or name in another spelling or capitalisation
+Sơn-hà	sơn hà	right	reviewed: the same word or name in another spelling or capitalisation
+Võ-lâm	võ lâm	wrong	a village, not võ lâm (martial world)
+Nhà Tấn	nhà Tấn	right	reviewed: the same word or name in another spelling or capitalisation
+Gốc-tích	gốc tích	right	reviewed: the same word or name in another spelling or capitalisation
+Lĩnh-nam	Lĩnh Nam	right	reviewed: the same word or name in another spelling or capitalisation
+Can-lộc	Can Lộc	right	reviewed: the same word or name in another spelling or capitalisation
+Đàn-bà	đàn bà	right	reviewed: the same word or name in another spelling or capitalisation
+AI-LAO	Ai Lao	right	reviewed: the same word or name in another spelling or capitalisation
+Hoàng-thượng	hoàng thượng	right	reviewed: the same word or name in another spelling or capitalisation
+Nhà Hạ	nhà Hạ	right	reviewed: the same word or name in another spelling or capitalisation
+Tây-tạng	Tây Tạng	right	reviewed: the same word or name in another spelling or capitalisation
+Ba-tư	Ba Tư	right	reviewed: the same word or name in another spelling or capitalisation
+An-sinh	an sinh	wrong	the title An-sinh-vương, a name
+người Việt-nam	người Việt Nam	right	reviewed: the same word or name in another spelling or capitalisation
+Quan-lang	quan lang	right	reviewed: the same word or name in another spelling or capitalisation
+Hồ-bắc	Hồ Bắc	right	reviewed: the same word or name in another spelling or capitalisation
+Bắc-ngụy	Bắc Ngụy	right	reviewed: the same word or name in another spelling or capitalisation
+Hàn-lâm-viện	Hàn Lâm Viện	right	reviewed: the same word or name in another spelling or capitalisation
+Nhà Hậu Trần	nhà Hậu Trần	right	reviewed: the same word or name in another spelling or capitalisation
+Quí-hóa	quý hoá	wrong	a place name
+Khai-quốc	khai quốc	right	reviewed: the same word or name in another spelling or capitalisation
+Võ-bị	võ bị	right	reviewed: the same word or name in another spelling or capitalisation
+Thuế-khóa	thuế khoá	right	reviewed: the same word or name in another spelling or capitalisation
+hoàng Thái-hậu	hoàng thái hậu	right	reviewed: the same word or name in another spelling or capitalisation
+Bất-Hại	bất hại	wrong	the name Thân Bất Hại
+mị	Mỵ	wrong	mộng-mị (dreams), not the name Mỵ
+Tích-lan	Tích Lan	right	reviewed: the same word or name in another spelling or capitalisation
+Học-hiệu	học hiệu	right	reviewed: the same word or name in another spelling or capitalisation
+Quả-nhiên	quả nhiên	right	reviewed: the same word or name in another spelling or capitalisation
+Địa-lý	địa lí	wrong	a transcribed place name
+LAM-SƠN	Lam Sơn	right	reviewed: the same word or name in another spelling or capitalisation
+ĐẠO-GIÁO	Đạo giáo	right	reviewed: the same word or name in another spelling or capitalisation
+Gia-định	Gia Định	right	reviewed: the same word or name in another spelling or capitalisation
+Đại-khái	đại khái	right	reviewed: the same word or name in another spelling or capitalisation
+Lâm-an	Lâm An	right	reviewed: the same word or name in another spelling or capitalisation
+Triều-tiên	Triều Tiên	right	reviewed: the same word or name in another spelling or capitalisation
+Chính-đại	chính đại	wrong	a place
+NAM-HÁN	Nam Hán	right	reviewed: the same word or name in another spelling or capitalisation
+Thế-lực	thế lực	right	reviewed: the same word or name in another spelling or capitalisation
+THƯỢNG-CỔ	thượng cổ	right	reviewed: the same word or name in another spelling or capitalisation
+Long-nữ	Long Nữ	right	reviewed: the same word or name in another spelling or capitalisation
+Linh-cảm	linh cảm	wrong	a place
+Cao-ly	Cao Li	right	reviewed: the same word or name in another spelling or capitalisation
+Thái-lan	Thái Lan	right	reviewed: the same word or name in another spelling or capitalisation
+Nhà Hán	nhà Hán	right	reviewed: the same word or name in another spelling or capitalisation
+Tiến-sĩ	tiến sĩ	right	reviewed: the same word or name in another spelling or capitalisation
+Luân-hồi	luân hồi	right	reviewed: the same word or name in another spelling or capitalisation
+Quốc-học	quốc học	right	reviewed: the same word or name in another spelling or capitalisation
+KẾT-QUẢ	kết quả	right	reviewed: the same word or name in another spelling or capitalisation
+Quân-tử	quân tử	right	reviewed: the same word or name in another spelling or capitalisation
+CÔNG-THẦN	công thần	right	reviewed: the same word or name in another spelling or capitalisation
+Trung-úy	trung úy	right	reviewed: the same word or name in another spelling or capitalisation
+Đại-học	Đại Học	wrong	higher learning, not the Great Learning
+Đồ-sơn	Đồ Sơn	right	reviewed: the same word or name in another spelling or capitalisation
+Thượng-sách	thượng sách	right	reviewed: the same word or name in another spelling or capitalisation
+Đại-tướng	đại tướng	right	reviewed: the same word or name in another spelling or capitalisation
+Tiết-chế	tiết chế	right	reviewed: the same word or name in another spelling or capitalisation
+Quả-nhân	quả nhân	right	reviewed: the same word or name in another spelling or capitalisation
+Nội-thị	nội thị	right	reviewed: the same word or name in another spelling or capitalisation
+thổ-công	Thổ công	right	reviewed: the same word or name in another spelling or capitalisation
+Thành-cát-tư-hãn	Thành Cát Tư Hãn	right	reviewed: the same word or name in another spelling or capitalisation
+Địa-thế	địa thế	right	reviewed: the same word or name in another spelling or capitalisation
+Binh-pháp	binh pháp	right	reviewed: the same word or name in another spelling or capitalisation
+Bá-cáo	bá cáo	right	reviewed: the same word or name in another spelling or capitalisation
+Hoàng-hà	Hoàng Hà	right	reviewed: the same word or name in another spelling or capitalisation
+Hồ-tây	hồ Tây	right	reviewed: the same word or name in another spelling or capitalisation
+Quỉ-vương	quỷ vương	right	reviewed: the same word or name in another spelling or capitalisation
+Học-liệu	học liệu	right	reviewed: the same word or name in another spelling or capitalisation
+Nam-kinh	Nam Kinh	right	reviewed: the same word or name in another spelling or capitalisation
+BÁCH-VIỆT	Bách Việt	right	reviewed: the same word or name in another spelling or capitalisation
+Công-việc	công việc	right	reviewed: the same word or name in another spelling or capitalisation
+Cai-trị	cai trị	right	reviewed: the same word or name in another spelling or capitalisation
+ANH-VŨ	anh vũ	wrong	a name (Đỗ Anh Vũ)
+Diến-điện	Diến Điện	right	reviewed: the same word or name in another spelling or capitalisation
+Nhật-lệ	Nhật Lệ	right	reviewed: the same word or name in another spelling or capitalisation
+Nhà Tùy	nhà Tùy	right	reviewed: the same word or name in another spelling or capitalisation
+ĐỊA-ĐỒ	địa đồ	right	reviewed: the same word or name in another spelling or capitalisation
+Binh-lính	binh lính	right	reviewed: the same word or name in another spelling or capitalisation
+Bần-tiện	bần tiện	right	reviewed: the same word or name in another spelling or capitalisation
+Cơ-nghiệp	cơ nghiệp	right	reviewed: the same word or name in another spelling or capitalisation
+bạch-mã	Bạch Mã	wrong	a white horse, not the mountain range
+Giang-sơn	giang sơn	right	reviewed: the same word or name in another spelling or capitalisation
+Tổ-tiên	tổ tiên	right	reviewed: the same word or name in another spelling or capitalisation
+Hy	hi	wrong	the name Lê Hy
+TIỀN-LÝ	Tiền Lí	right	reviewed: the same word or name in another spelling or capitalisation
+Thăng-hoa	thăng hoa	wrong	a prefecture, not thăng hoa (to sublimate)
+Hoạn-quan	hoạn quan	right	reviewed: the same word or name in another spelling or capitalisation
+Tục-lệ	tục lệ	right	reviewed: the same word or name in another spelling or capitalisation
+Pháp-luật	pháp luật	right	reviewed: the same word or name in another spelling or capitalisation
+TÀI-CHÍNH	tài chính	right	reviewed: the same word or name in another spelling or capitalisation
+Thống-soái	thống soái	right	reviewed: the same word or name in another spelling or capitalisation
+Bình-nguyên	bình nguyên	wrong	the title Bình-nguyên-vương, a name
+Thổ-thần	thổ thần	right	reviewed: the same word or name in another spelling or capitalisation
+Nhà Tiền Lý	nhà Tiền Lí	right	reviewed: the same word or name in another spelling or capitalisation
+Nội-các	nội các	right	reviewed: the same word or name in another spelling or capitalisation
+Sóc-sơn	Sóc Sơn	right	reviewed: the same word or name in another spelling or capitalisation
+Nặng-nề	nặng nề	right	reviewed: the same word or name in another spelling or capitalisation
+Quế-lâm	Quế Lâm	right	reviewed: the same word or name in another spelling or capitalisation
+Bảo-hộ	bảo hộ	right	reviewed: the same word or name in another spelling or capitalisation
+TỰ-CHỦ	tự chủ	right	reviewed: the same word or name in another spelling or capitalisation
+Độc-ác	độc ác	right	reviewed: the same word or name in another spelling or capitalisation
+BỒ-ĐỀ	bồ đề	right	reviewed: the same word or name in another spelling or capitalisation
+LUẬT-LỆ	luật lệ	right	reviewed: the same word or name in another spelling or capitalisation
+Bảng-nhãn	bảng nhãn	right	reviewed: the same word or name in another spelling or capitalisation
+Luật-lệ	luật lệ	right	reviewed: the same word or name in another spelling or capitalisation
+Mã-lai	Mã Lai	right	reviewed: the same word or name in another spelling or capitalisation
+Phong-tục	phong tục	right	reviewed: the same word or name in another spelling or capitalisation
+Sơn-đông	Sơn Đông	right	reviewed: the same word or name in another spelling or capitalisation
+Thủ-khoa	thủ khoa	right	reviewed: the same word or name in another spelling or capitalisation
+Bạch-mã	Bạch Mã	wrong	the White Horse temple, not the mountain range
+Thiên-trúc	Thiên Trúc	right	reviewed: the same word or name in another spelling or capitalisation
+Giặc-giã	giặc giã	right	reviewed: the same word or name in another spelling or capitalisation
+Thượng-cổ	thượng cổ	right	reviewed: the same word or name in another spelling or capitalisation
+Đại-lễ	đại lễ	right	reviewed: the same word or name in another spelling or capitalisation
+Sửa-soạn	sửa soạn	right	reviewed: the same word or name in another spelling or capitalisation
+Phong-kiến	phong kiến	right	reviewed: the same word or name in another spelling or capitalisation
+HỌC-THUẬT	học thuật	right	reviewed: the same word or name in another spelling or capitalisation
+QUAN-LẠI	quan lại	right	reviewed: the same word or name in another spelling or capitalisation
+Thiết-mộc-chân	Thiết Mộc Chân	right	reviewed: the same word or name in another spelling or capitalisation
+BỒN-MAN	Bồn Man	right	reviewed: the same word or name in another spelling or capitalisation
+Bí-thư	bí thư	wrong	the imperial library Bí thư (các), not a secretary
+Quỉ-thần	quỷ thần	right	reviewed: the same word or name in another spelling or capitalisation
+GIAO-CHỈ	Giao Chỉ	right	reviewed: the same word or name in another spelling or capitalisation
+ngũ-kinh	Ngũ kinh	right	reviewed: the same word or name in another spelling or capitalisation
+Hoàng-tử	hoàng tử	right	reviewed: the same word or name in another spelling or capitalisation
+Khánh-hòa	Khánh Hòa	right	reviewed: the same word or name in another spelling or capitalisation
+PHONG-KIẾN	phong kiến	right	reviewed: the same word or name in another spelling or capitalisation
+Nhà Đông-Hán	nhà Đông Hán	right	reviewed: the same word or name in another spelling or capitalisation
+Tham-mưu	tham mưu	right	reviewed: the same word or name in another spelling or capitalisation
+Lạc-tướng	lạc tướng	right	reviewed: the same word or name in another spelling or capitalisation
+HỌC-HIỆU	học hiệu	right	reviewed: the same word or name in another spelling or capitalisation
+Tù-trưởng	tù trưởng	right	reviewed: the same word or name in another spelling or capitalisation
+Nam-giao	nam giao	right	reviewed: the same word or name in another spelling or capitalisation
+GỐC-TÍCH	gốc tích	right	reviewed: the same word or name in another spelling or capitalisation
+THANH-HÓA	Thanh Hóa	right	reviewed: the same word or name in another spelling or capitalisation
+Thừa-thiên	Thừa Thiên	right	reviewed: the same word or name in another spelling or capitalisation
+Côn-sơn	Côn Sơn	right	reviewed: the same word or name in another spelling or capitalisation
+Tiên-phong	tiên phong	wrong	a district
+PHÁP-CHẾ	pháp chế	right	reviewed: the same word or name in another spelling or capitalisation
+Nam-tống	Nam Tống	right	reviewed: the same word or name in another spelling or capitalisation
+Cửu-long	Cửu Long	right	reviewed: the same word or name in another spelling or capitalisation
+Hắc-long-giang	Hắc Long Giang	right	reviewed: the same word or name in another spelling or capitalisation
+Giả-sử	giả sử	right	reviewed: the same word or name in another spelling or capitalisation
+Công-thần	công thần	right	reviewed: the same word or name in another spelling or capitalisation
+Quân-lính	quân lính	right	reviewed: the same word or name in another spelling or capitalisation
+Sĩ-phu	sĩ phu	right	reviewed: the same word or name in another spelling or capitalisation
+Nhà Tiền Lê	nhà Tiền Lê	right	reviewed: the same word or name in another spelling or capitalisation
+Đại-bàng	đại bàng	wrong	a place
+Nhân-thọ	nhân thọ	wrong	a palace name
+Thiên-lộc	thiên lộc	wrong	a place
+Ăn-ở	ăn ở	right	reviewed: the same word or name in another spelling or capitalisation
+Giang-tây	Giang Tây	right	reviewed: the same word or name in another spelling or capitalisation
+An-tử	an tử	wrong	An Tử (Yên Tử) mountain
+BẠCH-ĐẰNG	Bạch Đằng	right	reviewed: the same word or name in another spelling or capitalisation
+Trùng-khánh	Trùng Khánh	right	reviewed: the same word or name in another spelling or capitalisation
+Hai-mươi	hai mươi	right	reviewed: the same word or name in another spelling or capitalisation
+Nhà Hậu-Trần	nhà Hậu Trần	right	reviewed: the same word or name in another spelling or capitalisation
+Qui-nhơn	Quy Nhơn	right	reviewed: the same word or name in another spelling or capitalisation
+CANH-NÔNG	canh nông	right	reviewed: the same word or name in another spelling or capitalisation
+Đề-cử	đề cử	right	reviewed: the same word or name in another spelling or capitalisation
+THUẬN-HÓA	Thuận Hóa	right	reviewed: the same word or name in another spelling or capitalisation
+VĂN-LANG	Văn Lang	right	reviewed: the same word or name in another spelling or capitalisation
+TIỀN-LÊ	Tiền Lê	right	reviewed: the same word or name in another spelling or capitalisation
+Địa-đồ	địa đồ	right	reviewed: the same word or name in another spelling or capitalisation
+Thỉnh-thoảng	thỉnh thoảng	right	reviewed: the same word or name in another spelling or capitalisation
+Nhà Tiền-Lê	nhà Tiền Lê	right	reviewed: the same word or name in another spelling or capitalisation
+Thượng-du	thượng du	right	reviewed: the same word or name in another spelling or capitalisation
+Thái-hoàng Thái-hậu	thái hoàng thái hậu	right	reviewed: the same word or name in another spelling or capitalisation
+LÊ-TRIỀU	Lê triều	right	reviewed: the same word or name in another spelling or capitalisation
+Phúc-kiến	Phúc Kiến	right	reviewed: the same word or name in another spelling or capitalisation
+Hạ-sách	hạ sách	right	reviewed: the same word or name in another spelling or capitalisation
+Cà-lồ	Cà Lồ	right	reviewed: the same word or name in another spelling or capitalisation
+THỐNG-NHẤT	thống nhất	right	reviewed: the same word or name in another spelling or capitalisation
+Thiểm-tây	Thiểm Tây	right	reviewed: the same word or name in another spelling or capitalisation
+TÂY-HÁN	Tây Hán	right	reviewed: the same word or name in another spelling or capitalisation
+Hàng-châu	Hàng Châu	right	reviewed: the same word or name in another spelling or capitalisation
+VÂN-ĐỒN	Vân Đồn	right	reviewed: the same word or name in another spelling or capitalisation
+Trung-quân	trung quân	right	reviewed: the same word or name in another spelling or capitalisation
+Vương-phi	vương phi	right	reviewed: the same word or name in another spelling or capitalisation
+KỲ	kì	right	reviewed: the same word or name in another spelling or capitalisation
+Hốt-tất-Liệt	Hốt Tất Liệt	right	reviewed: the same word or name in another spelling or capitalisation
+Thiên-hạ	thiên hạ	right	reviewed: the same word or name in another spelling or capitalisation
+Trang-tử	Trang Tử	right	reviewed: the same word or name in another spelling or capitalisation
+Nhà Triệu	nhà Triệu	right	reviewed: the same word or name in another spelling or capitalisation
+Ải-quan	ải quan	right	reviewed: the same word or name in another spelling or capitalisation
+Đồng-hới	Đồng Hới	right	reviewed: the same word or name in another spelling or capitalisation
+Dân-tình	dân tình	right	reviewed: the same word or name in another spelling or capitalisation
+ĐÔ-HỘ	đô hộ	right	reviewed: the same word or name in another spelling or capitalisation
+Ba-vì	Ba Vì	right	reviewed: the same word or name in another spelling or capitalisation
+Binh-gia	binh gia	right	reviewed: the same word or name in another spelling or capitalisation
+Chính-sự	chính sự	right	reviewed: the same word or name in another spelling or capitalisation
+SỬ-KÝ	sử kí	right	reviewed: the same word or name in another spelling or capitalisation
+Pháp-chế	pháp chế	right	reviewed: the same word or name in another spelling or capitalisation
+GIẶC-GIÃ	giặc giã	right	reviewed: the same word or name in another spelling or capitalisation
+Sứ-giả	sứ giả	right	reviewed: the same word or name in another spelling or capitalisation
+Anh-hùng	anh hùng	right	reviewed: the same word or name in another spelling or capitalisation
+TẾ-TỰ	tế tự	right	reviewed: the same word or name in another spelling or capitalisation
+Tam-giáo	tam giáo	right	reviewed: the same word or name in another spelling or capitalisation
+THỜI-KỲ	thời kì	right	reviewed: the same word or name in another spelling or capitalisation
+Phù-nam	Phù Nam	right	reviewed: the same word or name in another spelling or capitalisation
+canh-tuất	Canh Tuất	right	reviewed: the same word or name in another spelling or capitalisation
+Đại-đồng	đại đồng	wrong	the era name Datong (大同)
+Trị-vì	trị vì	right	reviewed: the same word or name in another spelling or capitalisation
+Nhà Nguyên	nhà Nguyên	right	reviewed: the same word or name in another spelling or capitalisation
+Địa-dư	địa dư	right	reviewed: the same word or name in another spelling or capitalisation
+ÂU-LẠC	Âu Lạc	right	reviewed: the same word or name in another spelling or capitalisation
+Trấn-thủ	trấn thủ	right	reviewed: the same word or name in another spelling or capitalisation
+THI-CỬ	thi cử	right	reviewed: the same word or name in another spelling or capitalisation
+Thủ-tướng	thủ tướng	right	reviewed: the same word or name in another spelling or capitalisation
+Thiếu-úy	thiếu úy	right	reviewed: the same word or name in another spelling or capitalisation
+CÔNG-VIỆC	công việc	right	reviewed: the same word or name in another spelling or capitalisation
+Tây-ninh	Tây Ninh	right	reviewed: the same word or name in another spelling or capitalisation
+An-huy	An Huy	right	reviewed: the same word or name in another spelling or capitalisation
+Thân-chinh	thân chinh	right	reviewed: the same word or name in another spelling or capitalisation
+Tàn-hại	tàn hại	right	reviewed: the same word or name in another spelling or capitalisation
+BẢN-ĐỒ	bản đồ	right	reviewed: the same word or name in another spelling or capitalisation
+CHIẾM-GIỮ	chiếm giữ	right	reviewed: the same word or name in another spelling or capitalisation
+ĂN-MẶC	ăn mặc	right	reviewed: the same word or name in another spelling or capitalisation
+Công-danh	công danh	right	reviewed: the same word or name in another spelling or capitalisation
+Trung-tâm	trung tâm	right	reviewed: the same word or name in another spelling or capitalisation
+Cao-vọng	cao vọng	wrong	a place name (uncertain, counted wrong)
+Đại-nam	Đại Nam	right	reviewed: the same word or name in another spelling or capitalisation
+Tông-miếu	tông miếu	right	reviewed: the same word or name in another spelling or capitalisation
+Phong-hóa	phong hóa	wrong	a place name
+Tô-lịch	Tô Lịch	right	reviewed: the same word or name in another spelling or capitalisation
+Đại-ngu	Đại Ngu	right	reviewed: the same word or name in another spelling or capitalisation
+Khuyến-nông	khuyến nông	right	reviewed: the same word or name in another spelling or capitalisation
+CỔ-TÍCH	cổ tích	right	reviewed: the same word or name in another spelling or capitalisation
+Hương-sơn	Hương Sơn	right	reviewed: the same word or name in another spelling or capitalisation
+Dân-sự	dân sự	right	reviewed: the same word or name in another spelling or capitalisation
+VĂN-MINH	văn minh	right	reviewed: the same word or name in another spelling or capitalisation
+# history.mjs: first results of the pack with a removed rule or processor added back, or a kept one taken out
+cho chó	chó	wrong	two words read as a partial reduplication
+Cho chó	chó	wrong	two words read as a partial reduplication
+cùng cũng	cũng	wrong	two words read as a partial reduplication
+Mân mất	mất	wrong	two words read as a partial reduplication
+nhưng những	những	wrong	two words read as a partial reduplication
+Nhưng những	những	wrong	two words read as a partial reduplication
+tôi tối	tối	wrong	two words read as a partial reduplication
+đình định	định	wrong	two words read as a partial reduplication
+đê để	để	wrong	two words read as a partial reduplication
+Thăng thắng	thắng	wrong	two words read as a partial reduplication
+về vệ	vệ	wrong	two words read as a partial reduplication
+cô cố	cố	wrong	two words read as a partial reduplication
+thư Thứ	thứ	wrong	two words read as a partial reduplication
+thư thứ	thứ	wrong	two words read as a partial reduplication
+săn sắt	sắt	wrong	cá săn sắt is a fish, not sắt (iron)
+chăn-chắn	chắn	wrong	unclear, counted wrong
+nóng hôi hổi	nóng hổi	right	reduplication of nóng hổi
+máy bay bay	máy bay	wrong	a word repeated after a phrase: two words
+Máy bay bay	máy bay	wrong	a word repeated after a phrase: two words
+bằng chứng chứng	bằng chứng	wrong	a word repeated after a phrase: two words
+Tháng năm năm	tháng năm	wrong	a word repeated after a phrase: two words
+Tri-châu châu	tri châu	wrong	a word repeated after a phrase: two words
+giàu có có	giàu có	wrong	a word repeated after a phrase: two words
+cực kì kỳ	cực kì	wrong	a word repeated after a phrase: two words
+ở đâu đâu	ở đâu	wrong	a word repeated after a phrase: two words
+bí ẩn ẩn	bí ẩn	wrong	a word repeated after a phrase: two words
+đèn giao thông thông	đèn giao thông	wrong	a word repeated after a phrase: two words
+ngân hàng hàng	ngân hàng	wrong	a word repeated after a phrase: two words
+giao thông thông	giao thông	wrong	a word repeated after a phrase: two words
+dễ dàng dàng	dễ dàng	wrong	a word repeated after a phrase: two words
+học sinh sinh	học sinh	wrong	a word repeated after a phrase: two words
+Máy tính tính	máy tính	wrong	a word repeated after a phrase: two words
+trở thành thành	trở thành	wrong	a word repeated after a phrase: two words
+ha ha ha	ha	right	laughter, a call, or inside an AABB form
+A ha ha ha	a ha	right	laughter, a call, or inside an AABB form
+Ha ha ha ha ha	ha	right	laughter, a call, or inside an AABB form
+Ha ha ha	ha	right	laughter, a call, or inside an AABB form
+Ò ó o o	ò ó o	right	laughter, a call, or inside an AABB form
+vội vàng vàng	vội vàng	right	laughter, a call, or inside an AABB form
+lén lút lút	lén lút	right	laughter, a call, or inside an AABB form
+đi lại lại	đi lại	right	laughter, a call, or inside an AABB form
+cao bằng	Cao Bằng	wrong	a name shown for ordinary words
+hai bà	Hai Bà	wrong	a name shown for ordinary words
+Sư tử	Sư Tử	wrong	a name shown for ordinary words
+Văn hóa	Văn Hóa	wrong	a name shown for ordinary words
+Dân số	Dân Số	wrong	a name shown for ordinary words
+nhà trắng	Nhà Trắng	wrong	a name shown for ordinary words
+Đại học	Đại Học	wrong	a name shown for ordinary words
+Hoà bình	Hoà Bình	wrong	a name shown for ordinary words
+thiên ma	Thiên Ma	wrong	a name shown for ordinary words
+đường sơn	Đường Sơn	wrong	a name shown for ordinary words
+thánh gia	Thánh Gia	wrong	a name shown for ordinary words
+an hải	An Hải	wrong	a name shown for ordinary words
+đại anh	Đại Anh	wrong	a name shown for ordinary words
+hải khẩu	Hải Khẩu	wrong	a name shown for ordinary words
+Văn học	Văn Học	wrong	a name shown for ordinary words
+miền nam Việt Nam	Nam Việt Nam	wrong	a name shown for ordinary words
+cờ đỏ	Cờ Đỏ	wrong	a name shown for ordinary words
+gia định	Gia Định	wrong	a name shown for ordinary words
+Thái dương	Thái Dương	wrong	a name shown for ordinary words
+phố mới	Phố Mới	wrong	a name shown for ordinary words
+Phú quý	Phú Quý	wrong	a name shown for ordinary words
+Giảng viên	Giảng Viên	wrong	a name shown for ordinary words
+sáng thế	Sáng Thế	wrong	a name shown for ordinary words
+Phục hưng	Phục Hưng	wrong	a name shown for ordinary words
+Siêu nhân	Siêu Nhân	wrong	a name shown for ordinary words
+cái răng	Cái Răng	wrong	a name shown for ordinary words
+cửa đại	Cửa Đại	wrong	a name shown for ordinary words
+đại chính	Đại Chính	wrong	a name shown for ordinary words
+Mặt trăng	Mặt Trăng	right	the name the text means
+Nhật bản	Nhật Bản	right	the name the text means
+Hai bà	Hai Bà	right	the name the text means
+Hốt tất Liệt	Hốt Tất Liệt	right	the name the text means
+An dương	An Dương	right	the name the text means
+Đạo-đức kinh	Đạo Đức Kinh	right	the name the text means
+Thần tài	Thần Tài	right	the name the text means
+Luân đôn	Luân Đôn	right	the name the text means
+thái sơn	Thái Sơn	right	the name the text means
+Liên hợp quốc	Liên Hợp Quốc	right	the name the text means
+Thăng long	Thăng Long	right	the name the text means
+trung quốc	Trung Quốc	right	the name the text means
+Thành-cát tư-hãn	Thành Cát Tư Hãn	right	the name the text means
+Chiêm thành	Chiêm Thành	right	the name the text means
+Tứ xuyên	Tứ Xuyên	right	the name the text means
+TIỀN LÊ	Tiền Lê	right	the name the text means
+Trường sơn	Trường Sơn	right	the name the text means
+HẬU TRẦN	Hậu Trần	right	the name the text means
+NHÀ LÊ	nhà Lê	right	the name the text means
+NGÔ QUYỀN	Ngô Quyền	right	the name the text means
+Nhật lệ	Nhật Lệ	right	the name the text means
+hai bà Trưng	Hai Bà Trưng	right	the name the text means
+Vân nam	Vân Nam	right	the name the text means
+Mông cổ	Mông Cổ	right	the name the text means
+Kinh thánh	Kinh Thánh	right	the name the text means
+ngân hà	Ngân Hà	right	the name the text means
+hàn quốc	Hàn Quốc	right	the name the text means
+Gia nã đại	Gia Nã Đại	right	the name the text means
+nhật bản	Nhật Bản	right	the name the text means
+Hà nội	Hà Nội	right	the name the text means
+Trung quốc	Trung Quốc	right	the name the text means
+Việt nam	Việt Nam	right	the name the text means
+nam bộ	Nam Bộ	right	the name the text means
+châu âu	châu Âu	right	the name the text means
+Ngân hà	Ngân Hà	right	the name the text means
+lọ lem	Lọ Lem	right	the name the text means
+Kinh-đô	kinh đô	right	reviewed: right
+ất	Ất	right	reviewed: right
+NAM	nam	right	reviewed: right
+TAM	tam	right	reviewed: right
+Thích-ca	Thích Ca Mâu Ni	right	reviewed: right
+ĐÔNG	đông	right	reviewed: right
+Bà	bà	right	reviewed: right
+ĐẠI	đại	right	reviewed: right
+Đại-học	đại học	right	reviewed: right
+Hàn-lâm-viện	hàn lâm viện	right	reviewed: right
+TÂY	tây	right	reviewed: right
+Cơ-đốc	Cơ Đốc	right	reviewed: right
+Nghệ	nghệ	wrong	a common word, or part of a name, for a hyphenated name
+Bình-định	bình định	wrong	a common word, or part of a name, for a hyphenated name
+Giao	giao	wrong	a common word, or part of a name, for a hyphenated name
+Lạng	lạng	wrong	a common word, or part of a name, for a hyphenated name
+Thăng-long	thăng long	wrong	a common word, or part of a name, for a hyphenated name
+Hải-dương	hải dương	wrong	a common word, or part of a name, for a hyphenated name
+Thái-bình	thái bình	wrong	a common word, or part of a name, for a hyphenated name
+Ai	ai	wrong	a common word, or part of a name, for a hyphenated name
+CHIÊM	Chiêm	wrong	a common word, or part of a name, for a hyphenated name
+Lão	lão	wrong	a common word, or part of a name, for a hyphenated name
+Hợp	hợp	wrong	a common word, or part of a name, for a hyphenated name
+Ninh	ninh	wrong	a common word, or part of a name, for a hyphenated name
+mậu	戊	wrong	a common word, or part of a name, for a hyphenated name
+Bồn	bồn	wrong	a common word, or part of a name, for a hyphenated name
+Lam	lam	wrong	a common word, or part of a name, for a hyphenated name
+Chân	chân	wrong	a common word, or part of a name, for a hyphenated name
+Hốt	hốt	wrong	a common word, or part of a name, for a hyphenated name
+Tam	tam	wrong	a common word, or part of a name, for a hyphenated name
+Phù	phù	wrong	a common word, or part of a name, for a hyphenated name
+Mê	mê	wrong	a common word, or part of a name, for a hyphenated name
+Xuân-thu	xuân thu	wrong	a common word, or part of a name, for a hyphenated name
+Ôn	ôn	wrong	a common word, or part of a name, for a hyphenated name
+MÔNG	mông	wrong	a common word, or part of a name, for a hyphenated name
+Tràng	tràng	wrong	a common word, or part of a name, for a hyphenated name
+Cổ	cổ	wrong	a common word, or part of a name, for a hyphenated name
+Ba	ba	wrong	a common word, or part of a name, for a hyphenated name
+LÂM	lâm	wrong	a common word, or part of a name, for a hyphenated name
+Kiến	kiến	wrong	a common word, or part of a name, for a hyphenated name
+HỒNG	hồng	wrong	a common word, or part of a name, for a hyphenated name
+Can	can	wrong	a common word, or part of a name, for a hyphenated name
+TIỀN	tiền	wrong	a common word, or part of a name, for a hyphenated name
+Chiết	chiết	wrong	a common word, or part of a name, for a hyphenated name
+NGHỆ	nghệ	wrong	a common word, or part of a name, for a hyphenated name
+Đình	đình	wrong	a common word, or part of a name, for a hyphenated name
+hải	Hải	wrong	a common word, or part of a name, for a hyphenated name
+Đồ	đồ	wrong	a common word, or part of a name, for a hyphenated name
+VĂN	văn	wrong	a common word, or part of a name, for a hyphenated name
+bạch	Bạch	wrong	a common word, or part of a name, for a hyphenated name
+BẠCH	Bạch	wrong	a common word, or part of a name, for a hyphenated name
+Thiết	thiết	wrong	a common word, or part of a name, for a hyphenated name
+BỒN	bồn	wrong	a common word, or part of a name, for a hyphenated name
+Cà	cà	wrong	a common word, or part of a name, for a hyphenated name
+Đại-ngu	đại ngu	wrong	a common word, or part of a name, for a hyphenated name
+BÁCH	bách	wrong	a common word, or part of a name, for a hyphenated name
+Qui	quy	wrong	a common word, or part of a name, for a hyphenated name
+THANH	thanh	wrong	a common word, or part of a name, for a hyphenated name
+THUẬN	thuận	wrong	a common word, or part of a name, for a hyphenated name
+VÂN	vân	wrong	a common word, or part of a name, for a hyphenated name
+LAM	lam	wrong	a common word, or part of a name, for a hyphenated name
+Tích	tích	wrong	a common word, or part of a name, for a hyphenated name
+ÂU	âu	wrong	a common word, or part of a name, for a hyphenated name
+Thừa	thừa	wrong	a common word, or part of a name, for a hyphenated name
+Trùng	trùng	wrong	a common word, or part of a name, for a hyphenated name
+Hắc	hắc	wrong	a common word, or part of a name, for a hyphenated name
+Côn	côn	wrong	a common word, or part of a name, for a hyphenated name
+Sóc	sóc	wrong	a common word, or part of a name, for a hyphenated name
+GIAO	giao	wrong	a common word, or part of a name, for a hyphenated name
+# context-specific judgements: matched, expression, verdict, note, a piece of the hover text (re-audit m2)
+Bình-định	Bình Định	wrong	Lê Lợi's title Bình-định-vương, not the province named in 1799	Bình-định-vương
+Thái-bình	Thái Bình	wrong	thái bình (peace), the era name or the banquet, not the province	Thái-bình nghi nỗ lực
+Thái-bình	Thái Bình	wrong	thái bình (peace), the era name or the banquet, not the province	Thái-bình nên
+Thái-bình	Thái Bình	wrong	thái bình (peace), the era name or the banquet, not the province	Thái-bình nguyên-niên
+Thái-bình	Thái Bình	wrong	thái bình (peace), the era name or the banquet, not the province	Thái-bình, để hội
+Bình-định	bình định	right	the title Bình-định-vương: bình định is what it says	Bình-định-vương
+Thái-bình	thái bình	right	thái bình (peace), the era name or the banquet	Thái-bình nghi nỗ lực
+Thái-bình	thái bình	right	thái bình (peace), the era name or the banquet	Thái-bình nên
+Thái-bình	thái bình	right	thái bình (peace), the era name or the banquet	Thái-bình nguyên-niên
+Thái-bình	thái bình	right	thái bình (peace), the era name or the banquet	Thái-bình, để hội

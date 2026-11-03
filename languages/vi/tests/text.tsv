@@ -11,6 +11,20 @@ hyphens	1	Hồng-bàng	Hồng bàng
 hyphens	1	Hồng-bàng	Hồng Bàng
 hyphens	1	thế-kỷ	thế kỷ
 hyphens	1	ra-đi-ô	ra đi ô
+hyphens	1	Hùng-vương	Hùng Vương
+hyphens	1	Lâm-ấp	Lâm Ấp
+hyphens	1	An-ải	An Ải
+hyphens	1	Lê-à	Lê À
+hyphens	1	Cô-ẵm	Cô Ẵm
+hyphens	1	Ba-ạch	Ba Ạch
+hyphens	1	Cà-ồ	Cà Ồ
+hyphens	1	phi-ơ	phi Ơ
+hyphens	1	San-fran	San Fran
+hyphens	1	Ba-jo	Ba Jo
+hyphens	1	Tai-wan	Tai Wan
+hyphens	1	Da-zi	Da Zi
+hyphens	1	Lạc-long-Quân	Lạc Long Quân
+hyphens	1	Hà-nội-2	Hà Nội 2
 case	1	Tôi	tôi
 case	1	VIỆT NAM	việt nam
 case	0	VIỆT NAM	Việt Nam
@@ -34,6 +48,14 @@ tone marks	1	Uỷ ban	Ủy ban
 tone marks	1	Ủy ban	Uỷ ban
 tone marks	1	ngừơi	người
 tone marks	1	hoà bình	hòa bình
+tone marks	1	tai họa lớn	tai hoạ lớn
+tone marks	1	tai hoạ lớn	tai họa lớn
+tone marks	1	của Ủy ban	của Uỷ ban
+tone marks	1	tranh của họa sĩ	tranh của hoạ sĩ
+tone marks	1	người khỏe	người khoẻ
+tone marks	1	của lũy tre	của luỹ tre
+tone marks	1	của luỹ tre	của lũy tre
+tone marks	1	cứu hỏa	cứu hoả
 tone marks	0	quý	qúy
 tone marks	0	quà	qùa
 tone marks	0	hoàng	hòang
@@ -52,6 +74,9 @@ i and y	1	quí	quý
 i and y	1	quy định	qui định
 i and y	1	cuống quít	cuống quýt
 i and y	1	kì lạ quá	kỳ lạ quá
+i and y	1	thời kỳ này	thời kì này
+i and y	1	một ky lô	một ki lô
+i and y	1	Mĩ và Nhật	Mỹ và Nhật
 i and y	0	khi	khy
 i and y	0	thi	thy
 i and y	0	chị	chỵ

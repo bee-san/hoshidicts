@@ -8,14 +8,18 @@ Both files are lookup-batch-vi runs over the same hovers, with Yomitan's
 processors alone and with this pack. Every hover whose first result with a
 definition differs is judged:
 
-- by script, "spelling": the final result's expression has the letters of the
-  matched text once marks, capitals and hyphens are set aside and y is read as
-  i (Hồng-bàng → Hồng Bàng, kỷ → kỉ, thủy-thổ → thuỷ thổ): the same word in
-  another spelling;
-- by hand, every hover whose result came through a reduplication rule, and a
-  seeded random sample of the rest. The hand judgements are in
+- by script, "spelling": the final result's expression has the letters and
+  capitals of the matched text once marks and hyphens are set aside and y is
+  read as i (kỷ → kỉ, thủy-thổ → thuỷ thổ): the same word in another
+  spelling. A result whose capitals differ (Hồng-bàng → Hồng Bàng, Kinh-đô →
+  Kinh Đô, Kyoto) may be a name shown for a common word, so it is judged by
+  hand;
+- by hand, every hover whose result came through a reduplication rule, and
+  the rest (all of them when sample size is at least their number). The hand judgements are in
   <judgements.tsv> (matched text, expression, verdict right|wrong, note),
-  written for this pack; a judged pair applies to every hover with it.
+  written for this pack; a judged pair applies to every hover with it, and a
+  line with a fifth column (a piece of the hover text) only to the hovers
+  that contain it, before the pair's own line.
 
 Prints the counts per group and the pairs that still need a judgement.
 """
@@ -30,7 +34,7 @@ PACK_RULES = {'reduplication', 'partialReduplication'}
 
 def key(text):
     letters = ''.join(c for c in unicodedata.normalize('NFD', text) if not unicodedata.combining(c))
-    return ' '.join(letters.lower().replace('y', 'i').replace('-', ' ').split())
+    return ' '.join(letters.replace('y', 'i').replace('Y', 'I').replace('-', ' ').split())
 
 
 def first(results):
@@ -39,11 +43,21 @@ def first(results):
 
 def main(yomitan_path, final_path, judgements_path, sample_size='60', seed='1'):
     judged = {}
+    in_context = collections.defaultdict(list)
     for line in open(judgements_path, encoding='utf-8'):
         if line.startswith('#') or not line.strip():
             continue
-        matched, expression, verdict, *_ = line.rstrip('\n').split('\t')
-        judged[(matched, expression)] = verdict
+        matched, expression, verdict, *rest = line.rstrip('\n').split('\t')
+        if len(rest) >= 2 and rest[1]:
+            in_context[(matched, expression)].append((rest[1], verdict))
+        else:
+            judged[(matched, expression)] = verdict
+
+    def verdict_of(pair, text):
+        for piece, verdict in in_context.get(pair, []):
+            if piece in text:
+                return verdict
+        return judged.get(pair)
     groups = collections.Counter()
     rest = []
     unjudged = collections.Counter()
@@ -51,25 +65,26 @@ def main(yomitan_path, final_path, judgements_path, sample_size='60', seed='1'):
     with open(yomitan_path, encoding='utf-8') as fy, open(final_path, encoding='utf-8') as ff:
         for ly, lf in zip(fy, ff):
             total += 1
-            y, f = first(json.loads(ly)['results']), first(json.loads(lf)['results'])
+            row = json.loads(lf)
+            y, f = first(json.loads(ly)['results']), first(row['results'])
             if f is None or (y is not None and (y['expression'], y['matched']) == (f['expression'], f['matched'])):
                 if f is None and y is not None:
                     groups['final finds nothing'] += 1
                 continue
             pair = (f['matched'], f['expression'])
             if PACK_RULES & set(f['trace']):
-                verdict = judged.get(pair)
+                verdict = verdict_of(pair, row['text'])
                 groups[f'rule, {verdict or "unjudged"}'] += 1
                 if verdict is None:
                     unjudged[pair] += 1
             elif key(f['matched']) == key(f['expression']):
                 groups['spelling (script): right'] += 1
             else:
-                rest.append(pair)
+                rest.append((pair, row['text']))
     random.Random(int(seed)).shuffle(rest)
     sample = rest[:int(sample_size)]
-    for pair in sample:
-        verdict = judged.get(pair)
+    for pair, text in sample:
+        verdict = verdict_of(pair, text)
         groups[f'other, sampled, {verdict or "unjudged"}'] += 1
         if verdict is None:
             unjudged[pair] += 1

@@ -22,7 +22,8 @@ partial	1	đèm đẹp	đẹp	*	partialReduplication
 partial	1	chầm chậm	chậm	*	partialReduplication
 partial	1	nhè nhẹ	nhẹ	*	partialReduplication
 partial	1	khe khẽ	khẽ	*	partialReduplication
-partial	1	se sẽ	sẽ	*	partialReduplication
+partial	1	se sẽ	khẽ	*	partialReduplication
+partial	1	sè sẽ	khẽ	*	partialReduplication
 partial	1	sầm sẫm	sẫm	*	partialReduplication
 partial	1	nhăn nhẵn	nhẵn	*	partialReduplication
 partial	1	thâm thấp	thấp	*	partialReduplication
@@ -43,6 +44,57 @@ partial	1	nong nóng	nóng	*	partialReduplication
 partial	1	bàng bạc	bạc	*	partialReduplication
 partial	1	Đo đỏ	đỏ	*	partialReduplication
 partial	1	đo-đỏ	đỏ	*	partialReduplication
+partial (each listed form)	1	xam xám	xám	*	partialReduplication
+partial (each listed form)	1	đùng đục	đục	*	partialReduplication
+partial (each listed form)	1	nhàn nhạt	nhạt	*	partialReduplication
+partial (each listed form)	1	đầm đậm	đậm	*	partialReduplication
+partial (each listed form)	1	sâm sẫm	sẫm	*	partialReduplication
+partial (each listed form)	1	lờn lợt	lợt	*	partialReduplication
+partial (each listed form)	1	lơn lớn	lớn	*	partialReduplication
+partial (each listed form)	1	mong mỏng	mỏng	*	partialReduplication
+partial (each listed form)	1	ngăn ngắn	ngắn	*	partialReduplication
+partial (each listed form)	1	hèm hẹp	hẹp	*	partialReduplication
+partial (each listed form)	1	meo méo	méo	*	partialReduplication
+partial (each listed form)	1	nhòn nhọn	nhọn	*	partialReduplication
+partial (each listed form)	1	dèn dẹt	dẹt	*	partialReduplication
+partial (each listed form)	1	bèn bẹt	bẹt	*	partialReduplication
+partial (each listed form)	1	beo béo	béo	*	partialReduplication
+partial (each listed form)	1	mầm mập	mập	*	partialReduplication
+partial (each listed form)	1	mằn mặn	mặn	*	partialReduplication
+partial (each listed form)	1	đăng đắng	đắng	*	partialReduplication
+partial (each listed form)	1	thôi thối	thối	*	partialReduplication
+partial (each listed form)	1	ngai ngái	ngái	*	partialReduplication
+partial (each listed form)	1	khăm khắm	khắm	*	partialReduplication
+partial (each listed form)	1	lành lạnh	lạnh	*	partialReduplication
+partial (each listed form)	1	ren rét	rét	*	partialReduplication
+partial (each listed form)	1	cưng cứng	cứng	*	partialReduplication
+partial (each listed form)	1	long lỏng	lỏng	*	partialReduplication
+partial (each listed form)	1	deo dẻo	dẻo	*	partialReduplication
+partial (each listed form)	1	nham nhám	nhám	*	partialReduplication
+partial (each listed form)	1	nhơn nhớt	nhớt	*	partialReduplication
+partial (each listed form)	1	dinh dính	dính	*	partialReduplication
+partial (each listed form)	1	nhằn nhẵn	nhẵn	*	partialReduplication
+partial (each listed form)	1	khè khẽ	khẽ	*	partialReduplication
+partial (each listed form)	1	lè lẹ	lẹ	*	partialReduplication
+partial (each listed form)	1	vùn vụt	vụt	*	partialReduplication
+partial (each listed form)	1	thăm thẳm	thẳm	*	partialReduplication
+partial (each listed form)	1	biền biệt	biệt	*	partialReduplication
+partial (each listed form)	1	rười rượi	rượi	*	partialReduplication
+partial (each listed form)	1	vời vợi	vợi	*	partialReduplication
+partial (each listed form)	1	thoai thoải	thoải	*	partialReduplication
+partial (each listed form)	1	xâu xấu	xấu	*	partialReduplication
+partial (each listed form)	1	kha khá	khá	*	partialReduplication
+partial (each listed form)	1	tàm tạm	tạm	*	partialReduplication
+partial (each listed form)	1	khang khác	khác	*	partialReduplication
+partial (each listed form)	1	dơ dở	dở	*	partialReduplication
+partial (each listed form)	1	dài dại	dại	*	partialReduplication
+partial (each listed form)	1	ngồ ngộ	ngộ	*	partialReduplication
+partial (each listed form)	1	mền mệt	mệt	*	partialReduplication
+partial (each listed form)	1	sờ sợ	sợ	*	partialReduplication
+partial (each listed form)	1	văng vắng	vắng	*	partialReduplication
+partial (each listed form)	1	tre trẻ	trẻ	*	partialReduplication
+partial (each listed form)	1	nhơ nhớ	nhớ	*	partialReduplication
+partial (each listed form)	1	ngường ngượng	ngượng	*	partialReduplication
 spelling	1	hòa bình	hoà bình	*	
 spelling	1	hoà bình	hòa bình	*	
 spelling	1	thủy	thuỷ	*	
@@ -66,6 +118,17 @@ spelling	1	ngừơi	người	*
 spelling	1	cuả	của	*	
 spelling	1	baỷ	bảy	*	
 negatives	0	cho chó	chó	*	*
+negatives	0	se sẽ	sẽ	*	*
+negatives	0	sang sáng	sáng	*	*
+negatives	0	học và học viên	học viên	*	*
+negatives	0	tư và tư vấn	tư vấn	*	*
+negatives	0	dịch và dịch vụ	dịch vụ	*	*
+negatives	0	Kim là kim loại	kim loại	*	*
+negatives	0	tiền là tiền lương	tiền lương	*	*
+negatives	0	thứ ba thứ bảy	thứ bảy	*	*
+negatives	0	nhi	nhy	*	*
+negatives	0	phí	phý	*	*
+negatives	0	lôi thá lôi thôi	lôi thôi	*	*
 negatives	0	cùng cũng	cũng	*	*
 negatives	0	nhưng những	những	*	*
 negatives	0	tôi tối	tối	*	*
