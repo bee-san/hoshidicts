@@ -1,78 +1,157 @@
 # Yomitan rules transforms.json leaves out, written by sources/select-removals.py.
+# reason: breaks (a negative), fc (more than three false candidates per row recovered), fc only (false candidates, nothing recovered).
 # transform	inflected	deinflected	recovers	falseCandidates	breaks	reason
-accusative	ю	ій	2	16	0	false candidates (round 1)
-active participle	ачий	ати	0	323	0	false candidates (round 1)
-active participle	лий	ти	7	246	2	breaks a negative (round 1)
-comparative	ший	гий	0	21	0	false candidates (round 1)
-comparative	ший	кий	0	1	1	breaks a negative (round 1)
-dative	ю	е	0	20	0	false candidates (round 2)
-genitive		е	0	24	0	false candidates (round 1)
-genitive	ати	а	1	20	0	false candidates (round 1)
-genitive	ей		0	5	0	false candidates (round 1)
-genitive	и	ь	2	17	0	false candidates (round 1)
-genitive	му	ом	1	9	0	false candidates (round 1)
-genitive	ов	ва	5	0	1	breaks a negative (round 1)
-genitive	ого	ий	0	0	2	breaks a negative (round 1)
-genitive	ою	ій	5	16	1	breaks a negative (round 1)
-genitive	ю		10	539	0	false candidates (round 1)
-genitive	ю	ій	0	11	0	false candidates (round 1)
-genitive	я		0	26	0	false candidates (round 1)
-genitive	ів	е	1	8	0	false candidates (round 1)
-genitive	ів	я	28	11	1	breaks a negative (round 1)
-imperative	ви	ти	0	16	0	false candidates (round 1)
-imperative	віть	ти	0	11	0	false candidates (round 2)
-imperative	и	ати	11	225	0	false candidates (round 1)
-imperative	и	ти	9	40	0	false candidates (round 2)
-imperative	й	ти	5	4	4	breaks a negative (round 1)
-imperative	те	ити	0	13	0	false candidates (round 1)
-imperative	ім	ати	11	91	0	false candidates (round 1)
-imperative	імо	ати	11	66	0	false candidates (round 1)
-imperative	іть	ати	11	73	0	false candidates (round 1)
-instrumental	ем		0	26	0	false candidates (round 1)
-instrumental	ем		1	43	0	false candidates (round 1)
-instrumental	ею	а	0	12	0	false candidates (round 1)
-nominative plural	ата	а	1	19	0	false candidates (round 1)
-nominative plural	и		0	6	0	false candidates (round 1)
-nominative plural	и		0	7	0	false candidates (round 1)
-nominative plural	ми	ом	1	9	0	false candidates (round 1)
-passive participle	ений	ити	0	34	0	false candidates (round 1)
-passive participle	ний	ти	16	447	0	false candidates (round 1)
-passive participle	тий	ти	20	448	0	false candidates (round 1)
-present	ве	ти	0	19	0	false candidates (round 1)
-present	ву	ти	0	33	0	false candidates (round 1)
-present	де	дати	2	34	0	false candidates (round 1)
-present	ду	дати	2	31	0	false candidates (round 2)
-present	дуть	дати	2	14	0	false candidates (round 1)
-present	же	гти	0	0	1	breaks a negative (round 1)
-present	имо	ати	2	71	0	false candidates (round 1)
-present	имось	атися	0	5	0	false candidates (round 1)
-present	имося	атися	0	5	0	false candidates (round 1)
-present	ите	ати	2	74	0	false candidates (round 1)
-present	итесь	атися	0	5	0	false candidates (round 1)
-present	итеся	атися	0	5	0	false candidates (round 1)
-present	ить	ати	2	79	0	false candidates (round 1)
-present	ить	ити	9	5	1	breaks a negative (round 1)
-present	иться	атися	0	9	0	false candidates (round 1)
-present	иш	ати	2	75	0	false candidates (round 1)
-present	ишся	атися	0	7	0	false candidates (round 1)
-present	не	ати	2	95	0	false candidates (round 1)
-present	не	нути	0	0	1	breaks a negative (round 1)
-present	немо	ати	2	28	0	false candidates (round 1)
-present	нете	ати	2	28	0	false candidates (round 1)
-present	неш	ати	2	29	0	false candidates (round 1)
-present	ну	ати	2	92	0	false candidates (round 1)
-present	ну	нути	0	0	1	breaks a negative (round 1)
-present	нуть	ати	2	28	0	false candidates (round 1)
-present	плять	пати	0	6	0	false candidates (round 1)
-present	у	ати	8	214	1	breaks a negative (round 1)
-present	у	ити	0	491	0	false candidates (round 1)
-present	у	ти	9	30	0	false candidates (round 1)
-present	че	тіти	0	6	0	false candidates (round 1)
-present	чемо	тіти	0	6	0	false candidates (round 1)
-present	чете	тіти	0	6	0	false candidates (round 1)
-present	чеш	тіти	0	6	0	false candidates (round 1)
-present	чуть	тіти	0	7	0	false candidates (round 1)
-present	ю	яти	2	22	0	false candidates (round 1)
-superlative	най		0	16	0	false candidates (round 1)
-superlative	най		1	200	1	breaks a negative (round 1)
-truncated stem	а	ати	2	100	0	false candidates (round 1)
+accusative	ю	ій	2	16	0	fc, round 1
+active participle	ачий	ати	0	323	0	fc only, round 1
+active participle	лий	ти	7	246	2	breaks, round 1
+adverbial participle	ачись	атися	0	2	0	fc only, round 1
+adverbial participle	ачися	атися	0	2	0	fc only, round 1
+adverbial participle	жачи	гти	0	2	0	fc only, round 1
+comparative	ш	ше	0	2	0	fc only, round 1
+comparative	ший	гий	0	21	0	fc only, round 1
+comparative	ший	кий	0	1	1	breaks, round 1
+dative	ю	е	0	4	1	breaks, round 1
+future	уду	ути	0	2	0	fc only, round 1
+genitive		е	0	24	0	fc only, round 1
+genitive	ати	а	1	20	0	fc, round 1
+genitive	ву	ев	0	1	0	fc only, round 1
+genitive	да	од	0	1	0	fc only, round 1
+genitive	ду	од	0	1	0	fc only, round 1
+genitive	ей		0	5	0	fc only, round 1
+genitive	жу	еж	0	1	0	fc only, round 1
+genitive	жу	ож	0	2	0	fc only, round 1
+genitive	зям	г	0	2	0	fc only, round 1
+genitive	зями	г	0	2	0	fc only, round 1
+genitive	зях	г	0	2	0	fc only, round 1
+genitive	зів	г	0	2	0	fc only, round 1
+genitive	и	ь	2	17	0	fc, round 1
+genitive	ка	ек	0	1	0	fc only, round 1
+genitive	ку	ек	0	1	0	fc only, round 1
+genitive	ма	ем	0	1	0	fc only, round 1
+genitive	му	ем	0	2	0	fc only, round 1
+genitive	му	ом	1	9	0	fc, round 1
+genitive	на	он	0	2	0	fc only, round 1
+genitive	ну	он	0	2	0	fc only, round 1
+genitive	ов	ва	5	0	1	breaks, round 1
+genitive	ого	ий	0	0	2	breaks, round 1
+genitive	ою	ій	5	16	1	breaks, round 1
+genitive	чу	еч	0	1	0	fc only, round 1
+genitive	ю		10	539	1	breaks, round 1
+genitive	ю	ій	0	11	0	fc only, round 1
+genitive	я		0	26	1	breaks, round 1
+genitive	ів	е	1	8	0	fc, round 1
+genitive	ів	я	28	11	1	breaks, round 1
+imperative	ви	ти	0	16	0	fc only, round 1
+imperative	віть	ти	0	2	0	fc only, round 1
+imperative	ж	зати	0	2	0	fc only, round 1
+imperative	и	ати	11	225	0	fc, round 1
+imperative	и	ти	9	40	0	fc, round 2
+imperative	й	ти	5	4	4	breaks, round 1
+imperative	те	ити	0	13	0	fc only, round 1
+imperative	ім	ати	11	91	2	breaks, round 1
+imperative	імо	ати	11	66	0	fc, round 1
+imperative	іть	ати	11	73	1	breaks, round 1
+impersonal passive	дено	ти	0	3	0	fc only, round 1
+impersonal passive	ено	ити	0	2	0	fc only, round 1
+impersonal passive	лено	ити	0	1	0	fc only, round 1
+instrumental	ем		0	26	0	fc only, round 1
+instrumental	ем		1	43	0	fc, round 1
+instrumental	ею	а	0	12	1	breaks, round 1
+instrumental	ком	ек	0	1	0	fc only, round 1
+instrumental	мом	ем	0	1	0	fc only, round 1
+instrumental	ом		0	1	0	fc only, round 1
+locative	і		0	3	0	fc only, round 1
+nominative plural	ата	а	1	19	0	fc, round 1
+nominative plural	ви	ев	0	1	0	fc only, round 1
+nominative plural	ди	ед	0	1	0	fc only, round 1
+nominative plural	и		0	6	1	breaks, round 1
+nominative plural	и		0	7	0	fc only, round 1
+nominative plural	ки	ек	0	1	0	fc only, round 1
+nominative plural	ми	ем	0	1	0	fc only, round 1
+nominative plural	ми	ом	1	9	0	fc, round 1
+nominative plural	ни	он	0	1	0	fc only, round 1
+nominative plural	чи	еч	0	1	0	fc only, round 1
+passive participle	ений	ити	0	34	1	breaks, round 1
+passive participle	лений	ити	0	1	0	fc only, round 1
+passive participle	ний	ти	16	447	0	fc, round 1
+passive participle	тий	ти	20	448	0	fc, round 1
+past	ла	сти	0	1	0	fc only, round 1
+past	ішли	іти	0	2	0	fc only, round 1
+present	'ю	ити	0	3	0	fc only, round 1
+present	ве	ти	0	19	0	fc only, round 1
+present	ву	ти	0	33	0	fc only, round 1
+present	де	дати	2	34	0	fc, round 1
+present	ду	дати	2	31	0	fc, round 2
+present	дуть	дати	2	14	0	fc, round 1
+present	жать	гти	0	3	0	fc only, round 1
+present	же	гти	0	0	1	breaks, round 1
+present	жить	гти	0	2	0	fc only, round 1
+present	имо	ати	2	71	0	fc, round 1
+present	имо	ити	0	1	0	fc only, round 1
+present	имось	атися	0	5	0	fc only, round 1
+present	имося	атися	0	5	0	fc only, round 1
+present	ите	ати	2	74	1	breaks, round 1
+present	итесь	атися	0	5	0	fc only, round 1
+present	итеся	атися	0	5	0	fc only, round 1
+present	ить	ати	2	79	0	fc, round 1
+present	ить	ити	9	5	1	breaks, round 1
+present	ить	іти	0	4	0	fc only, round 1
+present	иться	атися	0	9	0	fc only, round 1
+present	иш	ати	2	75	0	fc, round 1
+present	иш	іти	0	1	0	fc only, round 1
+present	ишся	атися	0	7	0	fc only, round 1
+present	не	ати	2	95	0	fc, round 1
+present	не	нути	0	0	1	breaks, round 1
+present	немо	ати	2	28	0	fc, round 1
+present	немось	атися	0	3	0	fc only, round 1
+present	немося	атися	0	3	0	fc only, round 1
+present	нете	ати	2	28	0	fc, round 1
+present	нетесь	атися	0	3	0	fc only, round 1
+present	нетеся	атися	0	3	0	fc only, round 1
+present	неться	атися	0	3	0	fc only, round 1
+present	неш	ати	2	29	0	fc, round 1
+present	нешся	атися	0	3	0	fc only, round 1
+present	ну	ати	2	92	0	fc, round 1
+present	ну	нути	0	0	1	breaks, round 1
+present	нусь	атися	0	3	0	fc only, round 1
+present	нуся	атися	0	3	0	fc only, round 1
+present	нуть	ати	2	28	0	fc, round 1
+present	нуться	атися	0	3	0	fc only, round 1
+present	плять	пати	0	6	0	fc only, round 1
+present	пляться	патися	0	1	0	fc only, round 1
+present	у	ати	8	214	2	breaks, round 1
+present	у	ити	0	491	0	fc only, round 1
+present	у	ти	9	30	0	fc, round 1
+present	че	тіти	0	6	0	fc only, round 1
+present	чемо	тіти	0	6	0	fc only, round 1
+present	чете	тіти	0	6	0	fc only, round 1
+present	чеш	тіти	0	6	0	fc only, round 1
+present	чуть	тіти	0	7	0	fc only, round 1
+present	ю	яти	2	22	0	fc, round 1
+present	юсь	ятися	0	3	0	fc only, round 1
+present	юся	ятися	0	3	0	fc only, round 1
+present	ються	ятися	0	3	0	fc only, round 1
+present	ємось	ятися	0	1	0	fc only, round 1
+present	ємося	ятися	0	1	0	fc only, round 1
+present	єтесь	ятися	0	1	0	fc only, round 1
+present	єтеся	ятися	0	1	0	fc only, round 1
+present	ється	ятися	0	1	0	fc only, round 1
+present	єшся	ятися	0	1	0	fc only, round 1
+present	їмо	яти	0	1	0	fc only, round 1
+present	їте	яти	0	1	0	fc only, round 1
+present	їть	яти	0	1	0	fc only, round 1
+present	їш	яти	0	1	0	fc only, round 1
+pronoun declension	усього	усе	0	1	0	fc only, round 1
+pronoun declension	усьому	усе	0	1	0	fc only, round 1
+pronoun declension	усім	усе	0	2	0	fc only, round 1
+substantivised neuter	цим	це	0	1	0	fc only, round 1
+substantivised neuter	цьому	це	0	1	0	fc only, round 1
+substantivised neuter	цім	це	0	1	0	fc only, round 1
+substantivised neuter	іншим	інше	0	1	0	fc only, round 1
+substantivised neuter	іншого	інше	0	1	0	fc only, round 1
+substantivised neuter	іншому	інше	0	1	0	fc only, round 1
+substantivised neuter	іншім	інше	0	1	0	fc only, round 1
+superlative	най		0	16	0	fc only, round 1
+superlative	най		1	200	1	breaks, round 1
+truncated stem	а	ати	2	100	0	fc, round 1
+verbal noun	ття	ти	0	1	0	fc only, round 1

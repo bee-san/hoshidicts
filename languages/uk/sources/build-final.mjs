@@ -16,7 +16,7 @@
 //   of several words (на столі → на стіл, ім'я і → ім'я): a lookup tries
 //   the scanned text's longer prefixes first (section 9.2) and such a
 //   reading claims more of the text than the word. Every Yomitan rule whose
-//   stem is otherwise free takes stemCharacters {stemChar}, as the own rules
+//   stem is otherwise free takes stemCharacters {stem}, as the own rules
 //   do, so it reads one word.
 // - The Yomitan rules listed in sources/yomitan-removed.tsv are left out.
 //   Each row names a rule by its transform id and its two affixes and gives
@@ -29,7 +29,7 @@
 // makes the same replacement (the same inflected and deinflected affixes and
 // stem change) for an overlapping part of speech: the two were written
 // independently and agree, though the own rule usually has stem constraints
-// Yomitan's lacks. Cross products are compared pair by pair.
+// Yomitan's lacks. A cross product is `both` when all of its pairs are.
 
 import {readFileSync, writeFileSync} from 'node:fs';
 import {dirname, join, resolve} from 'node:path';
@@ -150,47 +150,27 @@ for (const transform of yomitan.transforms) {
 const ownTransforms = [];
 const yomitanTransforms = [];
 let both = 0;
+let sharedPairs = 0;
 let ownRules = 0;
 let removed = 0;
 let kept = 0;
 for (const transform of union.transforms) {
     if (ownIds.has(transform.id)) {
-        // An own cross product is `both` only when every pair is; otherwise
-        // its pairs that Yomitan also makes are split off and marked.
+        // An own rule is `both` when Yomitan makes the same replacement for an
+        // overlapping part of speech; a cross product is `both` when every one
+        // of its pairs is, and `own` otherwise (its shared pairs are counted,
+        // not split off, so the rules keep the order build-own.mjs gives them).
         const rules = [];
         for (const rule of transform.rules) {
             const singles = expand(rule);
             ownRules += singles.length;
             const agrees = (single) => [...(yomitanMakes.get(replacement(single)) ?? [])].some((c) => single.conditionsOut.includes(c));
-            const matched = singles.filter(agrees);
+            const shared = singles.filter(agrees).length;
+            sharedPairs += shared;
             const {source: _source, ...plain} = rule;
-            if (matched.length === 0) {
-                rules.push(plain);
-            } else if (matched.length === singles.length) {
+            if (shared === singles.length) {
                 rules.push({...plain, source: 'both'});
-                both += singles.length;
-            } else if (rule.type === 'circumfix' && rule.suffixes !== undefined && rule.prefixes.length === 1) {
-                // The pairs only this pack has and the pairs Yomitan also makes go
-                // into separate rules, as few as possible. Rules that match at
-                // one place apply in file order, which decides ties between
-                // their terms (section 9.6), so two pairs with the same
-                // inflected ending keep their order: a pair joins the first
-                // rule of its kind that comes no earlier than every rule
-                // holding its ending.
-                const groups = [];
-                rule.suffixes.forEach((pair, i) => {
-                    const shared = agrees(singles[i]);
-                    const last = groups.reduce((m, g, gi) => (g.endings.has(pair[0]) ? gi : m), -1);
-                    let group = groups.find((g, gi) => gi >= last && g.shared === shared);
-                    if (!group) {
-                        group = {shared, endings: new Set(), rule: {...plain, suffixes: [], ...(shared ? {source: 'both'} : {})}};
-                        groups.push(group);
-                    }
-                    group.endings.add(pair[0]);
-                    group.rule.suffixes.push(pair);
-                    if (shared) { ++both; }
-                });
-                rules.push(...groups.map((g) => g.rule));
+                both += shared;
             } else {
                 rules.push(plain);
             }
@@ -206,7 +186,7 @@ for (const transform of union.transforms) {
                 continue;
             }
             const {source: _source, ...plain} = rule;
-            if (['suffix', 'prefix', 'circumfix'].includes(plain.type) && plain.stemCharacters === undefined) { plain.stemCharacters = '{stemChar}'; }
+            if (['suffix', 'prefix', 'circumfix'].includes(plain.type) && plain.stemCharacters === undefined) { plain.stemCharacters = '{stem}'; }
             rules.push(plain);
             ++kept;
         }
@@ -218,4 +198,4 @@ if (unused.length > 0) { throw new Error(`${removalsFile} names rules Yomitan's 
 const out = {...union, transforms: [...ownTransforms, ...yomitanTransforms]};
 writeFileSync(outFile, formatTransforms(out));
 const count = (source) => out.transforms.reduce((n, t) => n + t.rules.reduce((m, r) => m + ((r.source ?? t.source) === source ? expand(r).length : 0), 0), 0);
-console.error(`${outFile}: ${out.transforms.length} transforms; ${count('own')} own, ${count('both')} both, ${count('yomitan')} yomitan rules; ${removed} Yomitan rules left out (${kept} kept)`);
+console.error(`${outFile}: ${out.transforms.length} transforms; ${count('own')} own, ${count('both')} both, ${count('yomitan')} yomitan rules; ${sharedPairs} own rules make a replacement Yomitan makes; ${removed} Yomitan rules left out (${kept} kept)`);

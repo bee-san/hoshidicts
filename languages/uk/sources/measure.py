@@ -11,8 +11,8 @@
 # text: every word of the texts, each looked up with the rest of its
 #   sentence, as a host does (scanStart word).
 # phrases: every word of the sentences that follows a preposition, a
-#   pronoun or a particle, looked up from that word with the rest of the
-#   sentence.
+#   particle, a conjunction, a pronoun or a form of бути, looked up from
+#   that word with the rest of the sentence; reported together and by kind.
 # A lookup's first result is judged by the hovered word's own rows in the
 # dictionary: right when it is the word itself (a headword with
 # definitions), a lemma one of the word's form-of rows names, or a lemma the
@@ -52,11 +52,16 @@ for lemma, forms in PRONOUNS.items():
         PRONOUN_LEMMAS[form].add(lemma)
 for form in ['його', 'нього', 'йому', 'ньому', 'ним', 'нім']:
     PRONOUN_LEMMAS[form].add('воно')
-FUNCTION = {'в', 'у', 'на', 'з', 'із', 'зі', 'до', 'від', 'по', 'за', 'при', 'про', 'під', 'над', 'перед', 'між', 'через', 'без',
-            'для', 'біля', 'коло', 'після', 'не', 'ні', 'б', 'би', 'ж', 'же', 'то', 'ще', 'вже', 'уже', 'і', 'й', 'та', 'а', 'але',
-            'що', 'як', 'я', 'ти', 'він', 'вона', 'воно', 'ми', 'ви', 'вони', 'це', 'той', 'цей', 'буду', 'будеш', 'буде',
-            'будемо', 'будете', 'будуть', 'був', 'була', 'було', 'були', 'мене', 'тебе', 'його', 'її', 'нас', 'вас', 'їх', 'мені',
-            'тобі', 'йому', 'їй', 'нам', 'вам', 'їм', 'себе', 'собі'}
+FUNCTION_GROUPS = {
+    'preposition': ['в', 'у', 'на', 'з', 'із', 'зі', 'до', 'від', 'по', 'за', 'при', 'про', 'під', 'над', 'перед', 'між', 'через', 'без',
+                    'для', 'біля', 'коло', 'після'],
+    'particle': ['не', 'ні', 'б', 'би', 'ж', 'же', 'то', 'ще', 'вже', 'уже'],
+    'conjunction': ['і', 'й', 'та', 'а', 'але', 'що', 'як'],
+    'pronoun': ['я', 'ти', 'він', 'вона', 'воно', 'ми', 'ви', 'вони', 'це', 'той', 'цей', 'мене', 'тебе', 'його', 'її', 'нас', 'вас', 'їх',
+                'мені', 'тобі', 'йому', 'їй', 'нам', 'вам', 'їм', 'себе', 'собі'],
+    'бути': ['буду', 'будеш', 'буде', 'будемо', 'будете', 'будуть', 'був', 'була', 'було', 'були'],
+}
+FUNCTION = {w: group for group, words in FUNCTION_GROUPS.items() for w in words}
 
 
 def norm(text):
@@ -225,10 +230,12 @@ def main():
                 continue
             words = hovers(parts[2])
             for (word, hover), (prev, _) in zip(words[1:], words):
-                if norm(prev) in FUNCTION:
-                    items.append((word, hover))
-        answers = lookups([h for _, h in items], languages, dictionary)
-        report('words after a function word', [(w, a) for (w, _), a in zip(items, answers)], lemmas, targets)
+                if norm(prev).lower() in FUNCTION:
+                    items.append((FUNCTION[norm(prev).lower()], word, hover))
+        answers = lookups([h for _, _, h in items], languages, dictionary)
+        report('words after a function word', [(w, a) for (_, w, _), a in zip(items, answers)], lemmas, targets)
+        for group in FUNCTION_GROUPS:
+            report(f'words after a {group}', [(w, a) for (g, w, _), a in zip(items, answers) if g == group], lemmas, targets, show=5)
     else:
         sys.exit(f'unknown mode {mode}')
 

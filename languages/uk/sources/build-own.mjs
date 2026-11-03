@@ -12,7 +12,7 @@
 //
 //   node languages/uk/sources/build-own.mjs [--out <file>]
 //
-// Every suffix rule's stem is limited to {stemChar} (letters, combining
+// Every suffix rule's stem is limited to {stem} (letters, combining
 // marks, apostrophes, hyphens), so no rule reads a word followed by another
 // word as one (docs/languages.md, section 14 step 2).
 
@@ -39,7 +39,7 @@ const conditions = {
 };
 
 // Classes defined in language.json.
-const STEM = '{stemChar}';
+const STEM = '{stem}';
 const C = '{consonant}';      // б в г ґ д ж з к л м н п р с т ф х ц ч ш щ
 const V = '{vowel}';          // а е є и і ї о у ю я
 const VA = '{vowelOrApostrophe}';  // a vowel or an apostrophe (лінія, сім'я)
@@ -78,7 +78,7 @@ const CONSTRAINTS = ['stemMinLength', 'stemCharacters', 'stemEndsWith', 'stemNot
 /**
  * A suffix rule. `opt` may give stemMinLength (default 1), stemEndsWith,
  * stemNotEndsWith, stemChange and the other constraints; stemCharacters is
- * {stemChar} unless opt names another class.
+ * {stem} unless opt names another class.
  */
 function suffix(id, inflected, deinflected, conditionsIn, conditionsOut, opt = {}, example = undefined) {
     const rule = {type: 'suffix', inflected, deinflected, conditionsIn, conditionsOut};

@@ -11,10 +11,10 @@
 # written with one entry per Yomitan rule (cross products split), and
 # `hoshidicts-cli eval-language --per-rule` counts for each rule the rows
 # only it recovers, the false candidates only it adds and the negatives it
-# breaks. A Yomitan rule is left out when it breaks a negative, or when it
-# adds at least 5 false candidates and more than three for each row it
-# recovers. The Yomitan rules are measured as build-final.mjs writes them,
-# each limited to one word (stemCharacters {stemChar}). Removing rules changes the counts of the others (a candidate two
+# breaks. A Yomitan rule is left out when it breaks a negative, when it adds
+# false candidates and recovers nothing, or when it adds at least 5 false
+# candidates and more than three for each row it recovers. The Yomitan rules are measured as build-final.mjs writes them,
+# each limited to one word (stemCharacters {stem}). Removing rules changes the counts of the others (a candidate two
 # rules make counts for neither), so the selection runs again on the rules
 # left until no rule is removed, at most --rounds times.
 
@@ -60,7 +60,7 @@ def main():
         # As build-final.mjs writes them: a Yomitan rule reads one word.
         for r in t['rules']:
             if r['type'] in ('suffix', 'prefix', 'circumfix') and 'stemCharacters' not in r:
-                r['stemCharacters'] = '{stemChar}'
+                r['stemCharacters'] = '{stem}'
     removed = []
     with tempfile.TemporaryDirectory() as tmp:
         path = os.path.join(tmp, 'union.json')
@@ -77,9 +77,9 @@ def main():
                 keep = []
                 for i, rule in enumerate(t['rules']):
                     e = stats[(t['id'], i)]
-                    if e['breaks'] > 0 or (e['falseCandidates'] >= 5 and e['falseCandidates'] > 3 * e['recovers']):
-                        why = 'breaks a negative' if e['breaks'] > 0 else 'false candidates'
-                        removed.append((t['id'], *key(rule), e['recovers'], e['falseCandidates'], e['breaks'], f'{why} (round {round_ + 1})'))
+                    if e['breaks'] > 0 or (e['falseCandidates'] > 0 and e['recovers'] == 0) or (e['falseCandidates'] >= 5 and e['falseCandidates'] > 3 * e['recovers']):
+                        why = 'breaks' if e['breaks'] > 0 else 'fc only' if e['recovers'] == 0 else 'fc'
+                        removed.append((t['id'], *key(rule), e['recovers'], e['falseCandidates'], e['breaks'], f'{why}, round {round_ + 1}'))
                         n += 1
                     else:
                         keep.append(rule)
@@ -89,6 +89,7 @@ def main():
                 break
     with open(os.path.join(HERE, 'yomitan-removed.tsv'), 'w', encoding='utf-8') as f:
         f.write('# Yomitan rules transforms.json leaves out, written by sources/select-removals.py.\n')
+        f.write('# reason: breaks (a negative), fc (more than three false candidates per row recovered), fc only (false candidates, nothing recovered).\n')
         f.write('# transform\tinflected\tdeinflected\trecovers\tfalseCandidates\tbreaks\treason\n')
         for row in sorted(removed):
             f.write('\t'.join(map(str, row)) + '\n')

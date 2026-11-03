@@ -653,3 +653,21 @@ constraint	0	не вбито	не вбити	*	*
 constraint	0	суждено	сужсти	*	*
 constraint	0	не сеть	не сети	*	*
 constraint	0	месть	мести	*	*
+# Mixed-script words (a Latin letter among Cyrillic ones) and Russian spellings: no rule reads them.
+constraint	0	oни	oна	*	*
+constraint	0	йoму	йoма	*	*
+constraint	0	tак	tака	*	*
+constraint	0	знaю	знaя	*	*
+constraint	0	мeня	мeнь	*	*
+constraint	0	йoму	йoм	*	*
+constraint	0	oни	oн	*	*
+constraint	0	йoму	йoмо	*	*
+constraint	0	мeня	мeній	*	*
+constraint	0	мoже	мoжий	*	*
+constraint	0	нiчого	нiчий	*	*
+constraint	0	йoму	йoмий	*	*
+constraint	0	не этих	не этий	*	*
+constraint	0	еще	естий	*	*
+constraint	0	кpаще	кpасоко	*	*
+constraint	0	iз	iзнути	*	*
+constraint	0	кoли	кoти	*	*

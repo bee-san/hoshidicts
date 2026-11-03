@@ -11,7 +11,7 @@
     "letter": "[\\u0400-\\u045F\\u0490\\u0491]",
     "apostrophe": "['\\u2018\\u2019\\u02BC`\\u00B4]",
     "word": "[{letter}\\u0300-\\u036F0-9]",
-    "stemChar": "[{letter}'\\u2019\\u02BC\\-]",
+    "stem": "[{letter}'\\u2019\\u02BC\\-]",
     "vowel": "[аеєиіїоуюя]",
     "vowelOrApostrophe": "[{vowel}{apostrophe}]",
     "consonant": "[бвгґджзклмнпрстфхцчшщ]",
