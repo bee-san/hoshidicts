@@ -17,7 +17,9 @@ judged by the word's English Wiktionary etymology (kaikki.org's extraction):
   mal-, ...), or a word with the affix at the same place (abortigo: from
   abortigi + -o, so its -ig- is right; malagrablaĵo: from malagrabla + -aĵo,
   so its mal- is right);
-- wrong: the word has an etymology template, and none names the affix;
+- wrong: the word has an etymology template, and none names the affix (a
+  lower bound of the right ones: Wiktionary derives baptofilino from bapto +
+  filino, so baptofilino → baptofilo + -in- counts as wrong);
 - unknown: the word has no etymology template.
 
 Prints one line per transform (readings, right, wrong, unknown, precision
@@ -46,7 +48,16 @@ while rest:
 pack_transforms = json.load(open(transforms_file or f'{languages}/eo/transforms.json', encoding='utf-8'))
 INFLECTION = {'accusative', 'plural', 'present', 'past', 'future', 'conditional', 'volitive', 'elision'}
 INFLECTION |= {f'{m}{e}' for m in ('ant', 'int', 'ont', 'at', 'it', 'ot') for e in 'aoe'}
-FORMATION = {t['id']: t for t in pack_transforms['transforms'] if t['id'] not in INFLECTION}
+# The word-class changes (rapide → rapida) add no affix for an etymology to
+# name, so they are not judged here; README.md measures them on real text.
+CLASS_CHANGES = {'adverbClass', 'otherWordClass',
+                 # Yomitan's (sources/yomitan.json)
+                 'locational', 'adjectival', 'adverbial (adj -> adv)', 'adverbial (v -> adv)'}
+INFLECTION |= {'directional'}
+# Yomitan's ids for its affixes: the affix an etymology names.
+YOMITAN_AFFIX = {'diminutive': 'et', '-ejo (noun)': 'ej', '-ejo (verb)': 'ej', '-ujo (noun)': 'uj', '-ujo (adjective)': 'uj',
+                 '-ujo (verb)': 'uj', '-ebla': 'ebl', '-ado': 'ad'}
+FORMATION = {t['id']: t for t in pack_transforms['transforms'] if t['id'] not in INFLECTION | CLASS_CHANGES}
 # The affix a transform removes, as an etymology names it: the suffix id
 # (et, eg, ...) or the prefix id (mal, ek, ...).
 PREFIX_IDS = {t['id'] for t in FORMATION.values() if any(r['type'] in ('circumfix', 'prefix') for r in t['rules'])}
@@ -120,7 +131,7 @@ for line in out.splitlines():
         seen.add((tid, text))
         # Yomitan's ids name the affix with hyphens and a word class
         # (mis-, -ujo (verb)); the etymology names it without them.
-        affix = re.sub(r'[^a-zĉĝĥĵŝŭ]', '', tid.split(' ')[0])
+        affix = YOMITAN_AFFIX.get(tid) or re.sub(r'[^a-zĉĝĥĵŝŭ]', '', tid.split(' ')[0])
         prefix = tid in PREFIX_IDS or tid.endswith('-')
         verdict = names_affix(word, text, affix, prefix)
         key = 'unknown' if verdict is None else ('right' if verdict else 'wrong')
@@ -129,8 +140,12 @@ for line in out.splitlines():
             wrong[tid].append(f'{word} → {text}')
 
 print('transform\treadings\tright\twrong\tunknown\tprecision')
+total = collections.Counter()
 for tid in FORMATION:
     c = counts[tid]
+    total.update(c)
     judged = c['right'] + c['wrong']
     precision = f"{c['right'] / judged:.1%}" if judged else '-'
     print(f"{tid}\t{sum(c.values())}\t{c['right']}\t{c['wrong']}\t{c['unknown']}\t{precision}\t{'; '.join(wrong[tid][:examples])}")
+judged = total['right'] + total['wrong']
+print(f"all\t{sum(total.values())}\t{total['right']}\t{total['wrong']}\t{total['unknown']}\t{total['right'] / judged:.1%}")
