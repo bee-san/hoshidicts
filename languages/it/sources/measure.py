@@ -7,6 +7,13 @@
     python3 measure.py pronouns <wty zip> <imported dict> <ita_sentences.tsv(.bz2)> [--languages DIR] [--out FILE]
     python3 measure.py eval     <imported dict> [--languages DIR] [--per-rule FILE]
     python3 measure.py bench    <imported dict> [--languages DIR] [--runs N] [--passes N]
+    python3 measure.py traces   [--languages DIR]
+
+traces: for the UniMorph verb rows of tests/corpus.tsv and tests/gaps.tsv,
+the trace a lookup keeps (traceSelection "shortest": fewest steps, first on a
+tie) among the deinflections that reach the row's lemma, and whether its
+tense or mood transform is the one the row's UniMorph features name, and its
+person too (the Lei and Loro imperatives are the present subjunctive).
 
 bench: build/benchmark-lookup on sources/benchmark-words.txt (64 texts, each
 the rest of a sentence from an inflected word, written for the pack) with the
@@ -484,6 +491,84 @@ def cmd_bench(args):
     write(lines, None)
 
 
+def unimorph_slot(tags):
+    """The transform id a UniMorph verb feature set names, or None."""
+    t = tags.split(";")
+    person = {("1", "SG"): "io", ("2", "SG"): "tu", ("3", "SG"): "lui", ("1", "PL"): "noi", ("2", "PL"): "voi", ("3", "PL"): "loro"}
+    p = next(((a, b) for a, b in zip(t, t[1:]) if a in "123" and b in ("SG", "PL")), None)
+    if t[0] == "V.CVB":
+        return "gerund"
+    if t[0] == "V.PTCP":
+        return "participle-present" if "PRS" in t else "participle"
+    if "IMP" in t:
+        if p in (("3", "SG"),):
+            return "subjunctive-sg"
+        if p in (("3", "PL"),):
+            return "subjunctive-loro"
+        return {("2", "SG"): "imperative-tu", ("1", "PL"): "imperative-noi", ("2", "PL"): "imperative-voi"}.get(p)
+    if "COND" in t:
+        return f"conditional-{person[p]}"
+    if "SBJV" in t and "PRS" in t:
+        return "subjunctive-sg" if p[1] == "SG" else f"subjunctive-{person[p]}"
+    if "SBJV" in t and "PST" in t:
+        return "subjunctive-imperfect-sg" if p in (("1", "SG"), ("2", "SG")) else f"subjunctive-imperfect-{person[p]}"
+    if "FUT" in t:
+        return f"future-{person[p]}"
+    if "PST" in t:
+        return f"{'imperfect' if 'IPFV' in t else 'preterite'}-{person[p]}"
+    if "PRS" in t:
+        return f"present-{person[p]}"
+    return None
+
+
+def cmd_traces(args):
+    languages = option(args, "--languages", os.path.join(REPO, "languages"))
+    tests = os.path.join(languages, "it", "tests")
+    rows = [r.split("\t") for r in tsv_rows(os.path.join(tests, "corpus.tsv")) + tsv_rows(os.path.join(tests, "gaps.tsv"))]
+    rows = [r for r in rows if r[0].startswith("V") and unimorph_slot(r[0]) is not None]
+    cli = os.path.join(REPO, "build", "hoshidicts-cli")
+    sources = sorted({r[2] for r in rows})
+    pre = subprocess.run([cli, "--languages", languages, "preprocess", "it", "--stdin"], input="\n".join(sources) + "\n",
+                         capture_output=True, text=True, check=True)
+    variants = {}
+    for line in pre.stdout.splitlines():
+        d = json.loads(line)
+        variants[d["input"]] = [(v["text"], v["steps"]) for v in d["variants"]]
+    texts = sorted({t for vs in variants.values() for t, _ in vs})
+    de = subprocess.run([cli, "--languages", languages, "deinflect", "it", "--stdin"], input="\n".join(texts) + "\n",
+                        capture_output=True, text=True, check=True)
+    results = {}
+    for line in de.stdout.splitlines():
+        d = json.loads(line)
+        results[d["input"]] = d["results"]
+    reached = tense = both = finite = person_ok = 0
+    misses = collections.Counter()
+    for category, _valid, source, lemma, _rule, _reasons in rows:
+        best = None
+        for text, steps in variants[source]:
+            for r in results[text]:
+                if r["text"] == lemma and (best is None or (steps, len(r["trace"])) < best[0]):
+                    best = ((steps, len(r["trace"])), r["trace"])
+        if best is None:
+            continue
+        reached += 1
+        want = unimorph_slot(category)
+        trace = best[1]
+        tense_of = lambda tid: tid.rsplit("-", 1)[0] if tid.split("-")[-1] in ("io", "tu", "lui", "noi", "voi", "loro", "sg") else tid
+        has_tense = any(tense_of(x) == tense_of(want) for x in trace)
+        has_slot = want in trace
+        tense += has_tense
+        if want.split("-")[-1] in ("io", "tu", "lui", "noi", "voi", "loro", "sg"):
+            finite += 1
+            person_ok += has_slot
+        if not has_slot:
+            misses[(want, ">".join(trace))] += 1
+    lines = [f"{len(rows)} UniMorph verb rows, {reached} reached; the kept trace names the tense or mood in {tense} ({tense / reached:.1%}), "
+             f"and of the {finite} finite rows the person too in {person_ok} ({person_ok / max(1, finite):.1%})"]
+    lines += [f"  {n}\texpected {want}, kept {trace}" for (want, trace), n in misses.most_common(20)]
+    write(lines, None)
+
+
 def write(lines, out_file):
     text = "\n".join(lines) + "\n"
     if out_file:
@@ -494,4 +579,4 @@ def write(lines, out_file):
 
 if __name__ == "__main__":
     command, rest = sys.argv[1], sys.argv[2:]
-    {"freq": cmd_freq, "text": cmd_text, "pronouns": cmd_pronouns, "eval": cmd_eval, "bench": cmd_bench}[command](rest)
+    {"freq": cmd_freq, "text": cmd_text, "pronouns": cmd_pronouns, "eval": cmd_eval, "bench": cmd_bench, "traces": cmd_traces}[command](rest)

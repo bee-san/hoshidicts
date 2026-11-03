@@ -4985,12 +4985,17 @@
       [114, 114],
       [116, 116]
     ],
-    "transforms[89].rules[13].stemCharacters": [
-      [112, 112]
+    "transforms[89].rules[12].stemNotStartsWith": [
+      [114, 114]
     ],
-    "transforms[89].rules[14].stemCharacters": [
-      [114, 114],
-      [116, 116]
+    "transforms[89].rules[13].stemStartsWith": [
+      [114, 114]
+    ],
+    "transforms[89].rules[15].stemNotStartsWith": [
+      [118, 118]
+    ],
+    "transforms[89].rules[16].stemStartsWith": [
+      [118, 118]
     ],
     "transforms[89].rules[19].stemCharacters": [
       [112, 112]
@@ -5018,12 +5023,17 @@
       [114, 114],
       [116, 116]
     ],
-    "transforms[89].rules[37].stemCharacters": [
-      [112, 112]
+    "transforms[89].rules[36].stemNotStartsWith": [
+      [114, 114]
     ],
-    "transforms[89].rules[38].stemCharacters": [
-      [114, 114],
-      [116, 116]
+    "transforms[89].rules[37].stemStartsWith": [
+      [114, 114]
+    ],
+    "transforms[89].rules[39].stemNotStartsWith": [
+      [118, 118]
+    ],
+    "transforms[89].rules[40].stemStartsWith": [
+      [118, 118]
     ],
     "transforms[89].rules[43].stemCharacters": [
       [112, 112]
@@ -5051,12 +5061,17 @@
       [114, 114],
       [116, 116]
     ],
-    "transforms[89].rules[61].stemCharacters": [
-      [112, 112]
+    "transforms[89].rules[60].stemNotStartsWith": [
+      [114, 114]
     ],
-    "transforms[89].rules[62].stemCharacters": [
-      [114, 114],
-      [116, 116]
+    "transforms[89].rules[61].stemStartsWith": [
+      [114, 114]
+    ],
+    "transforms[89].rules[63].stemNotStartsWith": [
+      [118, 118]
+    ],
+    "transforms[89].rules[64].stemStartsWith": [
+      [118, 118]
     ],
     "transforms[89].rules[67].stemCharacters": [
       [112, 112]
@@ -5084,12 +5099,17 @@
       [114, 114],
       [116, 116]
     ],
-    "transforms[89].rules[85].stemCharacters": [
-      [112, 112]
+    "transforms[89].rules[84].stemNotStartsWith": [
+      [114, 114]
     ],
-    "transforms[89].rules[86].stemCharacters": [
-      [114, 114],
-      [116, 116]
+    "transforms[89].rules[85].stemStartsWith": [
+      [114, 114]
+    ],
+    "transforms[89].rules[87].stemNotStartsWith": [
+      [118, 118]
+    ],
+    "transforms[89].rules[88].stemStartsWith": [
+      [118, 118]
     ],
     "transforms[89].rules[91].stemCharacters": [
       [112, 112]
@@ -5117,12 +5137,17 @@
       [114, 114],
       [116, 116]
     ],
-    "transforms[89].rules[109].stemCharacters": [
-      [112, 112]
+    "transforms[89].rules[108].stemNotStartsWith": [
+      [114, 114]
     ],
-    "transforms[89].rules[110].stemCharacters": [
-      [114, 114],
-      [116, 116]
+    "transforms[89].rules[109].stemStartsWith": [
+      [114, 114]
+    ],
+    "transforms[89].rules[111].stemNotStartsWith": [
+      [118, 118]
+    ],
+    "transforms[89].rules[112].stemStartsWith": [
+      [118, 118]
     ],
     "transforms[89].rules[115].stemCharacters": [
       [112, 112]
@@ -5131,45 +5156,182 @@
       [114, 114],
       [116, 116]
     ],
-    "transforms[89].rules[120].stemCharacters": [
+    "transforms[89].rules[120].stemNotStartsWith": [
+      [114, 114]
+    ],
+    "transforms[89].rules[121].stemStartsWith": [
+      [114, 114]
+    ],
+    "transforms[89].rules[123].stemNotStartsWith": [
+      [118, 118]
+    ],
+    "transforms[89].rules[124].stemStartsWith": [
+      [118, 118]
+    ],
+    "transforms[89].rules[127].stemCharacters": [
+      [112, 112]
+    ],
+    "transforms[89].rules[128].stemCharacters": [
+      [114, 114],
+      [116, 116]
+    ],
+    "transforms[89].rules[132].stemNotStartsWith": [
+      [114, 114]
+    ],
+    "transforms[89].rules[133].stemStartsWith": [
+      [114, 114]
+    ],
+    "transforms[89].rules[135].stemNotStartsWith": [
+      [118, 118]
+    ],
+    "transforms[89].rules[136].stemStartsWith": [
+      [118, 118]
+    ],
+    "transforms[89].rules[139].stemCharacters": [
+      [112, 112]
+    ],
+    "transforms[89].rules[140].stemCharacters": [
+      [114, 114],
+      [116, 116]
+    ],
+    "transforms[89].rules[144].stemNotStartsWith": [
+      [114, 114]
+    ],
+    "transforms[89].rules[145].stemStartsWith": [
+      [114, 114]
+    ],
+    "transforms[89].rules[147].stemNotStartsWith": [
+      [118, 118]
+    ],
+    "transforms[89].rules[148].stemStartsWith": [
+      [118, 118]
+    ],
+    "transforms[89].rules[151].stemCharacters": [
+      [112, 112]
+    ],
+    "transforms[89].rules[152].stemCharacters": [
+      [114, 114],
+      [116, 116]
+    ],
+    "transforms[89].rules[156].stemNotStartsWith": [
+      [114, 114]
+    ],
+    "transforms[89].rules[157].stemStartsWith": [
+      [114, 114]
+    ],
+    "transforms[89].rules[159].stemNotStartsWith": [
+      [118, 118]
+    ],
+    "transforms[89].rules[160].stemStartsWith": [
+      [118, 118]
+    ],
+    "transforms[89].rules[163].stemCharacters": [
+      [112, 112]
+    ],
+    "transforms[89].rules[164].stemCharacters": [
+      [114, 114],
+      [116, 116]
+    ],
+    "transforms[89].rules[168].stemNotStartsWith": [
+      [114, 114]
+    ],
+    "transforms[89].rules[169].stemStartsWith": [
+      [114, 114]
+    ],
+    "transforms[89].rules[171].stemNotStartsWith": [
+      [118, 118]
+    ],
+    "transforms[89].rules[172].stemStartsWith": [
+      [118, 118]
+    ],
+    "transforms[89].rules[175].stemCharacters": [
+      [112, 112]
+    ],
+    "transforms[89].rules[176].stemCharacters": [
+      [114, 114],
+      [116, 116]
+    ],
+    "transforms[89].rules[180].stemCharacters": [
       [97, 122],
       [223, 246],
       [248, 255]
     ],
-    "transforms[89].rules[121].stemNotStartsWith": [
+    "transforms[89].rules[181].stemCharacters": [
+      [112, 112]
+    ],
+    "transforms[89].rules[182].stemCharacters": [
+      [97, 122],
+      [223, 246],
+      [248, 255]
+    ],
+    "transforms[89].rules[183].stemCharacters": [
+      [114, 114],
+      [116, 116]
+    ],
+    "transforms[89].rules[184].stemCharacters": [
+      [97, 122],
+      [223, 246],
+      [248, 255]
+    ],
+    "transforms[89].rules[185].stemCharacters": [],
+    "transforms[89].rules[186].stemNotStartsWith": [
       [114, 114]
     ],
-    "transforms[89].rules[122].stemStartsWith": [
+    "transforms[89].rules[187].stemStartsWith": [
       [114, 114]
     ],
-    "transforms[89].rules[124].stemNotStartsWith": [
+    "transforms[89].rules[189].stemNotStartsWith": [
       [118, 118]
     ],
-    "transforms[89].rules[125].stemStartsWith": [
+    "transforms[89].rules[190].stemStartsWith": [
       [118, 118]
     ],
-    "transforms[89].rules[128].stemCharacters": [
+    "transforms[89].rules[193].stemCharacters": [
       [112, 112]
     ],
-    "transforms[89].rules[129].stemCharacters": [
+    "transforms[89].rules[194].stemCharacters": [
       [114, 114],
       [116, 116]
     ],
-    "transforms[89].rules[134].stemCharacters": [
+    "transforms[89].rules[198].stemNotStartsWith": [
+      [114, 114]
+    ],
+    "transforms[89].rules[199].stemStartsWith": [
+      [114, 114]
+    ],
+    "transforms[89].rules[201].stemNotStartsWith": [
+      [118, 118]
+    ],
+    "transforms[89].rules[202].stemStartsWith": [
+      [118, 118]
+    ],
+    "transforms[89].rules[205].stemCharacters": [
       [112, 112]
     ],
-    "transforms[89].rules[135].stemCharacters": [
+    "transforms[89].rules[206].stemCharacters": [
       [114, 114],
       [116, 116]
     ],
-    "transforms[89].rules[140].stemCharacters": [
+    "transforms[89].rules[210].stemNotStartsWith": [
+      [114, 114]
+    ],
+    "transforms[89].rules[211].stemStartsWith": [
+      [114, 114]
+    ],
+    "transforms[89].rules[213].stemNotStartsWith": [
+      [118, 118]
+    ],
+    "transforms[89].rules[214].stemStartsWith": [
+      [118, 118]
+    ],
+    "transforms[89].rules[217].stemCharacters": [
       [112, 112]
     ],
-    "transforms[89].rules[141].stemCharacters": [
+    "transforms[89].rules[218].stemCharacters": [
       [114, 114],
       [116, 116]
     ],
-    "transforms[89].rules[145].stemCharacters": [],
+    "transforms[89].rules[222].stemCharacters": [],
     "transforms[90].rules[0].stemCharacters": [
       [97, 122],
       [223, 246],
@@ -6799,6 +6961,10 @@
         ["si usa", "si usa"],
         ["ti preoccupare", "ti preoccupare"],
         ["ti pre occupare", "ti pre occupare"],
+        ["ti scorre", "ti scorre"],
+        ["ti pare", "ti pare"],
+        ["ti fare", "ti fare"],
+        ["se ne vola", "se ne vola"],
         ["ti muovere", "ti muovere"],
         ["mi lasciare", "mi lasciare"],
         ["mi lava", "mi lava"],
@@ -8532,6 +8698,10 @@
         ["si usa", "si usa"],
         ["ti preoccupare", "ti preoccupare"],
         ["ti pre occupare", "ti pre occupare"],
+        ["ti scorre", "ti scorre"],
+        ["ti pare", "ti pare"],
+        ["ti fare", "ti fare"],
+        ["se ne vola", "se ne vola"],
         ["ti muovere", "ti muovere"],
         ["mi lasciare", "mi lasciare"],
         ["mi lava", "mi lava"],
@@ -10265,6 +10435,10 @@
         ["si usa", "Si usa"],
         ["ti preoccupare", "Ti preoccupare"],
         ["ti pre occupare", "Ti pre occupare"],
+        ["ti scorre", "Ti scorre"],
+        ["ti pare", "Ti pare"],
+        ["ti fare", "Ti fare"],
+        ["se ne vola", "Se ne vola"],
         ["ti muovere", "Ti muovere"],
         ["mi lasciare", "Mi lasciare"],
         ["mi lava", "Mi lava"],
@@ -11998,6 +12172,10 @@
         ["si usa", "si usa"],
         ["ti preoccupare", "ti preoccupare"],
         ["ti pre occupare", "ti pre occupare"],
+        ["ti scorre", "ti scorre"],
+        ["ti pare", "ti pare"],
+        ["ti fare", "ti fare"],
+        ["se ne vola", "se ne vola"],
         ["ti muovere", "ti muovere"],
         ["mi lasciare", "mi lasciare"],
         ["mi lava", "mi lava"],
@@ -13731,6 +13909,10 @@
         ["si usa", "si usa"],
         ["ti preoccupare", "ti preoccupare"],
         ["ti pre occupare", "ti pre occupare"],
+        ["ti scorre", "ti scorre"],
+        ["ti pare", "ti pare"],
+        ["ti fare", "ti fare"],
+        ["se ne vola", "se ne vola"],
         ["ti muovere", "ti muovere"],
         ["mi lasciare", "mi lasciare"],
         ["mi lava", "mi lava"],

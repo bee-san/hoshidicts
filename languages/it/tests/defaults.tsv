@@ -563,6 +563,10 @@ pronominal	1	si unisce	unirsi	v	pronominal|present-lui|proclitic
 pronominal	1	si usa	usarsi	v	pronominal|present-lui|proclitic
 pronominal	1	ti preoccupare	preoccuparsi	v	pronominal|proclitic
 pronominal	0	ti pre occupare	pre occuparsi	*	*
+pronominal	0	ti scorre	scorsi	*	*
+pronominal	0	ti pare	parsi	*	*
+pronominal	1	ti fare	farsi	v	pronominal|proclitic
+pronominal	0	se ne vola	volersene	*	*
 pronominal	1	ti muovere	muoversi	v	pronominal|proclitic
 pronominal	0	mi lasciare	lasciarsi	*	*
 pronominal	0	mi lava	lavarsi	*	*

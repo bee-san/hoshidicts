@@ -966,12 +966,13 @@ const CLASSES = [
 ];
 // The regular endings read a few stems of verbs that conjugate otherwise
 // (sections above): after a pronoun, volere and ridare give no -rsi verb
-// through them (si vola is volare, ti ridi is ridere). Their own forms do
-// (ci vuole, ci vorrà: volerci, written out below).
+// through them (si vola and se ne vola are volare, ti ridi is ridere), and
+// volere's own forms are whole words, so it gives none at all; volerci and
+// volercene are written out below (ci vuole, ce ne vuole).
 const PRONOMINAL_EXCLUDED = {are: 'rid', ere: 'vol'};
 function pronominal(prefixes, tail, conditionsIn) {
     for (const [e, b] of CLASSES[0]) {
-        const stem = tail === 'si' || tail === 'ci' ? PRONOMINAL_EXCLUDED[e] : undefined;
+        const stem = PRONOMINAL_EXCLUDED[e];
         const splits = stem === undefined ? [{}] : [{stemNotStartsWith: `[${stem[0]}]`},
             {stemStartsWith: `[${stem[0]}]`, stemNotStartsWithText: stem}, {stemStartsWithText: stem, stemMinLength: [...stem].length + 1}];
         for (const split of splits) {
@@ -1011,8 +1012,21 @@ for (const [pronoun, person] of Object.entries(PERSON)) {
 // The negative imperative of tu is non + the infinitive, with the pronoun
 // before it: non ti preoccupare, non ti muovere (preoccuparsi, muoversi).
 // Only ti: non mi lasciare is don't leave me.
-add('pronominal', {type: 'circumfix', prefixes: [['ti+', '']], suffixes: [...CLASSES[0], ...CLASSES.slice(1).map(([pair]) => pair)].map(([e, b]) => [e, b + 'si']),
-    conditionsIn: ['refl'], conditionsOut: ['v'], stemCharacters: '{lower}'});
+// The infinitive is one word with the stems the other pronominal rules take
+// (ti scorre is not ti + scorre, scorsi; ti pare is not parsi), or one of the
+// short verbs (non ti fare, non ti dare).
+for (const [e, b] of CLASSES[0]) {
+    add('pronominal', {type: 'circumfix', prefixes: [['ti+', '']], suffixes: [[e, b + 'si']],
+        conditionsIn: ['refl'], conditionsOut: ['v'], ...VERB_STEM, stemCharacters: '{lower}'});
+}
+for (const [[e, b], constraints] of CLASSES.slice(1)) {
+    for (const constraint of constraints) {
+        add('pronominal', {type: 'circumfix', prefixes: [['ti+', '']], suffixes: [[e, b + 'si']],
+            conditionsIn: ['refl'], conditionsOut: ['v'], stemCharacters: '{lower}', ...constraint});
+    }
+}
+add('pronominal', {type: 'circumfix', prefixes: [['ti+', '']], suffixes: [...SHORT_VERBS, ...SHORT_STEMS].map(([v, b]) => [v, b + 'si']),
+    conditionsIn: ['refl'], conditionsOut: ['v'], stemCharacters: '[]'});
 // ci, ce ne and ce la before any person: esserci, volerci, metterci,
 // entrarci, pensarci (ci vuole, ci metto, c'entra, ci penso),
 // volercene, andarcene (ce ne vuole), farcela, cavarcela (ce la faccio).
