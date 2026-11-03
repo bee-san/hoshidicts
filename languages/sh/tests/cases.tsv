@@ -814,6 +814,46 @@ negatives	0	Mirno	Miran	*	*
 negatives	0	Rekao	Reći	*	*
 negatives	0	Vidim	Vid	*	*
 negatives	0	Dobrog	Dobar	*	*
+negatives	0	vrt će	vrteti	*	*
+negatives	0	studenti će	studenti	*	*
+negatives	0	radost će	radosti	*	*
+negatives	0	gosti ćemo	gosti	*	*
+negatives	0	četvrti će	četvrti	*	*
+negatives	0	znači	znak	*	*
+negatives	0	drži	držak	*	*
+negatives	0	kući	kut	*	*
+negatives	0	vraći	vrat	*	*
+negatives	0	vučiću	vučić	n	n-ins-sg
+negatives	0	pisane	pisati	v	prs-present-3sg
+negatives	0	podrazumevane	podrazumevati	v	prs-present-3sg
+closed lists	1	noću	noć	n	n-ins-sg
+closed lists	1	pomoću	pomoć	n	*
+closed lists	1	stane	stati	v	*
+closed lists	1	ostanu	ostati	v	*
+closed lists	1	mlađeg	mlad	adj	*
+closed lists	1	najbržeg	brz	adj	*
+negatives	0	kao	ka	*	*
+negatives	0	rekao	reka	*	*
+negatives	0	zovem	zov	*	*
+negatives	0	odem	od	*	*
+negatives	0	ima	ime	*	*
+negatives	0	onda	onde	*	*
+negatives	0	razumem	razum	*	*
+negatives	0	stanem	stan	*	*
+negatives	0	ime	imati	*	*
+negatives	0	stvari	stvarati	*	*
+negatives	0	igru	igrati	*	*
+negatives	0	noću	noti	*	*
+negatives	0	pomoću	pomoti	*	*
+negatives	0	djelatovi	dijelat	*	*
+negatives	0	svete	svesti	*	*
+negatives	0	ukrase	ukrasti	*	*
+negatives	0	traži	trag	*	*
+negatives	0	bogataše	bogatiti	*	*
+closed lists	1	nikom	niko	pron	pron-dat-loc
+closed lists	1	nekom	netko	pron	pron-dat-loc
+closed lists	1	uništenje	uništiti	v	*
+closed lists	1	zaposlenja	zaposliti	v	*
 # --- One example of each transform, written by sources/build-own.mjs --cases (hand-written examples, no third-party data) ---
 rule example	1	sam	biti	v	*
 rule example	1	si	biti	v	*

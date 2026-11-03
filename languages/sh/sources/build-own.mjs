@@ -281,7 +281,11 @@ sfx('noun', 'rju', 'r', ['ins. sg.'], [['stvarju', 'stvar'], ['večerju', 'veče
 sfx('noun', 'vlju', 'v', ['ins. sg.'], [['ljubavlju', 'ljubav'], ['krvlju', 'krv']], {min: 1});
 sfx('noun', 'šću', 'st', ['ins. sg.'], [['radošću', 'radost'], ['mladošću', 'mladost'], ['košću', 'kost']], {min: 1});
 sfx('noun', 'ću', 't', ['ins. sg.'], [['smrću', 'smrt'], ['pameću', 'pamet']]);
-sfx('noun', 'ću', 'ć', ['ins. sg.'], [['noću', 'noć'], ['pomoću', 'pomoć']], {min: 1});
+// The feminine nouns in -ć (noć, moć, pomoć, nemoć, peć); a masculine
+// noun in -ć has -u in the dative (vučiću).
+for (const lemma of ['noć', 'moć', 'pomoć', 'nemoć', 'svemoć', 'peć']) {
+    whole('noun', `${lemma}u`, lemma, ['ins. sg.'], [[`${lemma}u`, lemma]]);
+}
 sfx('noun', 'đu', 'd', ['ins. sg.'], [['glađu', 'glad']]);
 sfx('noun', 'šlju', 'sao', ['ins. sg.'], [['mišlju', 'misao']], {min: 1});
 sfx('noun', 'sli', 'sao', ['gen./dat./loc. sg.', 'nom./acc./gen. pl.'], [['misli', 'misao']], {min: 1});
@@ -370,10 +374,10 @@ for (const [forms, lemmas, tags] of [
 
 const ADJ = [
     // ending, tags
-    ['a', ['fem. nom. sg.', 'masc./neut. gen. sg.', 'neut. nom./acc. pl.']],
-    ['e', ['fem. gen. sg.', 'fem. nom./acc. pl.', 'masc. acc. pl.']],
-    ['i', ['masc. nom. pl.', 'definite masc. nom. sg.']],
-    ['o', ['neut. nom./acc. sg.']],
+    ['a', ['fem. nom./voc. sg.', 'masc./neut. gen. sg.', 'neut. nom./acc./voc. pl.']],
+    ['e', ['fem. gen. sg.', 'fem. nom./acc./voc. pl.', 'masc. acc. pl.']],
+    ['i', ['masc. nom./voc. pl.', 'definite masc. nom./voc. sg.']],
+    ['o', ['neut. nom./acc./voc. sg.']],
     ['u', ['fem. acc. sg.', 'masc./neut. dat./loc. sg.']],
     ['og', ['masc./neut. gen. sg.', 'masc. acc. sg. (animate)']],
     ['oga', ['masc./neut. gen. sg.', 'masc. acc. sg. (animate)']],
@@ -386,7 +390,7 @@ const ADJ = [
     ['ih', ['gen. pl.']],
 ];
 const ADJ_PALATAL = [
-    ['e', ['fem. gen. sg.', 'fem. nom./acc. pl.', 'masc. acc. pl.', 'neut. nom./acc. sg.']],
+    ['e', ['fem. gen. sg.', 'fem. nom./acc./voc. pl.', 'masc. acc. pl.', 'neut. nom./acc./voc. sg.']],
     ['eg', ['masc./neut. gen. sg.', 'masc. acc. sg. (animate)']],
     ['ega', ['masc./neut. gen. sg.', 'masc. acc. sg. (animate)']],
     ['em', ['masc./neut. dat./loc. sg.']],
@@ -598,7 +602,9 @@ present('verb-present', 'ije', 'jeti', 'iju', [['razumijem', 'razumjeti'], ['smi
 present('verb-present', 'e', 'eti', 'eju', [['razumem', 'razumeti'], ['smem', 'smeti'], ['umem', 'umeti']], {min: 2});
 present('verb-present', 'ne', 'nuti', 'nu', [['krenem', 'krenuti'], ['maknem', 'maknuti'], ['viknem', 'viknuti'], ['okrenem', 'okrenuti']],
     {min: 1, extraTags: {'3pl': ['aorist 2/3sg']}});
-present('verb-present', 'ane', 'ati', 'anu', [['stanem', 'stati'], ['ostanem', 'ostati'], ['postanem', 'postati'], ['prestanem', 'prestati']], {min: 1});
+// stati and its compounds (ostati, postati, prestati, nestati, ustati):
+// stanem; a passive participle in -an (pisane) is not read as one.
+present('verb-present', 'stane', 'stati', 'stanu', [['stanem', 'stati'], ['ostanem', 'ostati'], ['postanem', 'postati'], ['prestanem', 'prestati']], {min: 0});
 present('verb-present', 'dne', 'sti', 'dnu', [['sjednem', 'sjesti'], ['padnem', 'pasti']], {min: 1});
 present('verb-present', 'gne', 'ći', 'gnu', [['dignem', 'dići'], ['stignem', 'stići'], ['legnem', 'leći'], ['pomognem', 'pomoći']], {min: 1});
 present('verb-present', 'čne', 'četi', 'čnu', [['počnem', 'početi'], ['začnem', 'začeti']], {min: 1});
@@ -872,7 +878,7 @@ imperative('ri', 'rati', [['prezi', 'prezirati'], ['o', 'orati'], ['prožde', 'p
 imperative('nesi', 'nijeti', [['do', 'donijeti'], ['pre', 'prenijeti']]);
 imperative('nesi', 'neti', [['do', 'doneti'], ['pre', 'preneti']]);
 imperative('ni', 'nuti', [['kre', 'krenuti'], ['mak', 'maknuti'], ['okre', 'okrenuti']]);
-imperative('ani', 'ati', [['st', 'stati'], ['ost', 'ostati'], ['prest', 'prestati']]);
+imperative('stani', 'stati', [['', 'stati'], ['o', 'ostati'], ['pre', 'prestati']], {min: 0});
 imperative('dni', 'sti', [['sje', 'sjesti'], ['pa', 'pasti']]);
 imperative('gni', 'ći', [['di', 'dići'], ['sti', 'stići']]);
 imperative('čni', 'četi', [['po', 'početi']]);
@@ -886,17 +892,23 @@ imperative('šalji', 'slati', [['po', 'poslati']], {min: 0});
 // (radit ću), and both write the -ći verbs whole (doći ću).
 for (const [clitic, person] of [['ću', '1sg'], ['ćeš', '2sg'], ['će', '3sg/3pl'], ['ćemo', '1pl'], ['ćete', '2pl']]) {
     sfx('verb-future', clitic, 'ti', [`future ${person}`], [[`radi${clitic}`, 'raditi'], [`čita${clitic}`, 'čitati'], [`vidje${clitic}`, 'vidjeti']], {end: V});
-    pattern('verb-future', {pattern: `^([^ ]+)t ${clitic}$`, replacement: '$1ti', anchorSuffix: ` ${clitic}`},
-        [`future ${person}`], [[`radit ${clitic}`, 'raditi'], [`čitat ${clitic}`, 'čitati'], [`jest ${clitic}`, 'jesti']]);
-    pattern('verb-future', {pattern: `^([^ ]+(?:ti|ći)) ${clitic}$`, replacement: '$1', anchorSuffix: ` ${clitic}`},
-        [`future ${person}`], [[`doći ${clitic}`, 'doći'], [`raditi ${clitic}`, 'raditi']]);
+    // The infinitive before the clitic ends in -ti or -ći after a vowel
+    // (-sti after one: jesti; and bosti), or drops its -i (radit, jest), so nouns
+    // before a clitic are not read as infinitives: vrt će is not vrteti,
+    // studenti, gosti and radost će are not verbs.
+    pattern('verb-future', {pattern: `^([^ ]*[aeiu]s?|[^ ]*bos)t ${clitic}$`, replacement: '$1ti', anchorSuffix: ` ${clitic}`},
+        [`future ${person}`], [[`radit ${clitic}`, 'raditi'], [`čitat ${clitic}`, 'čitati'], [`jest ${clitic}`, 'jesti'], [`krenut ${clitic}`, 'krenuti']]);
+    pattern('verb-future', {pattern: `^([^ ]*[aeiu]s?ti|[^ ]*bosti|[^ ]*[aeiou]ći) ${clitic}$`, replacement: '$1', anchorSuffix: ` ${clitic}`},
+        [`future ${person}`], [[`doći ${clitic}`, 'doći'], [`raditi ${clitic}`, 'raditi'], [`ići ${clitic}`, 'ići'], [`jesti ${clitic}`, 'jesti']]);
 }
 
 // The verbal noun: čitanje, pisanje (čitati, pisati); its other cases are
 // read through the noun rules (pitanja → pitanje → pitati).
 const VN = {in: ['n']};
 sfx('verb-noun', 'anje', 'ati', ['verbal noun'], [['čitanje', 'čitati'], ['pisanje', 'pisati'], ['pitanja', 'pitati']], VN);
-sfx('verb-noun', 'enje', 'iti', ['verbal noun'], [['govorenje', 'govoriti'], ['učenje', 'učiti']], {end: '{nonJotated}', ...VN});
+// Without jotation after any consonant: govorenje, učenje, and after
+// clusters that do not change (uništenje, sjedenje, zaposlenje).
+sfx('verb-noun', 'enje', 'iti', ['verbal noun'], [['govorenje', 'govoriti'], ['učenje', 'učiti'], ['uništenje', 'uništiti'], ['zaposlenje', 'zaposliti']], VN);
 for (const [form, inf, examples] of [
     ['đenje', 'diti', [['rođenje', 'roditi']]], ['šenje', 'siti', [['nošenje', 'nositi']]], ['ženje', 'ziti', [['voženje', 'voziti']]],
     ['ćenje', 'titi', [['posvećenje', 'posvetiti']]], ['ljenje', 'liti', [['hvaljenje', 'hvaliti']]],

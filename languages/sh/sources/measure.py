@@ -38,9 +38,10 @@ Commands:
             trace.
   clitics   Tatoeba sentences (--tatoeba, one or more of srp/hrv/bos
             *_sentences.tsv.bz2): every place where a clitic, auxiliary or
-            short pronoun is followed by a word, looked up from the clitic.
-            Counts first results that match more than the clitic and are not
-            a gold lemma of the matched text, by rule.
+            short pronoun is followed by a word, looked up from the clitic,
+            and every word followed by one, looked up from the word. Counts
+            first results that match more than one word and are not a gold
+            lemma of the matched text, by rule.
   traces    tests/corpus.tsv: the share of rows whose shown trace (the
             shortest that reaches the lemma, as traceSelection "shortest"
             keeps) names the row's UniMorph case and number, or tense and
@@ -264,10 +265,16 @@ def cmd_clitics(args, d):
         words = list(WORD.finditer(sentence))
         for i, m in enumerate(words[:-1]):
             clitic = to_latin(m.group(0)).lower()
-            if clitic in CLITICS:
-                rest = sentence[m.start():]
+            following = to_latin(words[i + 1].group(0)).lower()
+            # From the clitic (se vratio, je li), and from the word before a
+            # clitic (vidio sam, radit ću, kući ću), where a phrase rule or a
+            # multi-word row may match more than the word.
+            for start, kind in ((m, clitic if clitic in CLITICS else None), (m, f'_ {following}' if following in CLITICS else None)):
+                if kind is None:
+                    continue
+                rest = sentence[start.start():]
                 end = SENTENCE_END.search(rest)
-                places.append((clitic, rest[:end.end()] if end else rest))
+                places.append((kind, rest[:end.end()] if end else rest))
     looked = lookup_batch(args, [rest for _, rest in places])
     counts = collections.Counter()
     longer = collections.Counter()
@@ -279,7 +286,7 @@ def cmd_clitics(args, d):
         first = entry['results'][0]
         multi = ' ' in first['matched']
         if not multi:
-            counts['the clitic alone, right' if d.right(first['expression'], first['matched']) else 'the clitic alone, other'] += 1
+            counts['the word alone, right' if d.right(first['expression'], first['matched']) else 'the word alone, other'] += 1
         elif d.right(first['expression'], first['matched']):
             counts['a longer text, its gold lemma'] += 1
         elif d.gold_of(first['matched']):
@@ -291,7 +298,7 @@ def cmd_clitics(args, d):
             longer[(first['matched'], first['expression'], rule_of(first))] += 1
             by_clitic[clitic] += 1
     print(json.dumps({'places': len(places), **counts}))
-    print('clitics before a longer first result that is not a gold lemma:', by_clitic.most_common(12))
+    print('places (clitic, or _ before a clitic) of a longer first result that is not a gold lemma:', by_clitic.most_common(12))
     for (matched, expression, rule), n in longer.most_common(args.show):
         print(f'  {n:>5}  {matched} -> {expression} ({rule})')
 
