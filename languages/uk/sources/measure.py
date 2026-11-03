@@ -7,7 +7,9 @@
 #   python3 languages/uk/sources/measure.py text  <wty-uk-en json dir> <imported wty-uk-en> <text file>... [--languages <dir>]
 #   python3 languages/uk/sources/measure.py phrases <wty-uk-en json dir> <imported wty-uk-en> <ukr_sentences.tsv> [--languages <dir>]
 #
-# words: the 10,000 most frequent words of the list, each looked up alone.
+# words: the 10,000 most frequent words of the list, each looked up alone;
+#   reported for all of them and for the words a rule reaches (a
+#   deinflection of the word is a lemma the word's rows name).
 # text: every word of the texts, each looked up with the rest of its
 #   sentence, as a host does (scanStart word).
 # phrases: every word of the sentences that follows a preposition, a
@@ -127,6 +129,29 @@ def judge(word, answer, lemmas, targets):
     return 'wrong', first
 
 
+def reached(words, languages, lemmas, targets):
+    """The words a rule reaches: a deinflection of the word (or of its
+    lowercase spelling) other than the word itself is a lemma its rows name."""
+    cli = os.path.join(ROOT, 'build', 'hoshidicts-cli')
+    inputs = sorted({k for w in words for k in keys(w)})
+    out = subprocess.run([cli, '--languages', languages, 'deinflect', 'uk', '--stdin'], input='\n'.join(inputs) + '\n',
+                         capture_output=True, text=True, encoding='utf-8', check=True).stdout.splitlines()
+    texts = {}
+    for line in out:
+        d = json.loads(line)
+        texts[d['input']] = {norm(r['text']) for r in d['results'] if r['trace']}
+    result = []
+    for w in words:
+        right = set()
+        for k in keys(w):
+            right |= PRONOUN_LEMMAS.get(k, set())
+            if not PRONOUN_LEMMAS.get(k):
+                named = set(targets.get(k, ()))
+                right |= named | {t for n in named for t in targets.get(n, ())}
+        result.append(any(right & texts.get(k, set()) for k in keys(w)))
+    return result
+
+
 def blame(first):
     steps = [step for step, from_dict in zip(first['trace'], first['dict']) if not from_dict]
     return '|'.join(steps) if steps else '(dictionary only)'
@@ -211,6 +236,10 @@ def main():
                 break
         answers = lookups(words, languages, dictionary)
         report('frequent words', list(zip(words, answers)), lemmas, targets, weights=counts)
+        hit = reached(words, languages, lemmas, targets)
+        items = [(w, a) for w, a, h in zip(words, answers, hit) if h]
+        report('frequent words a rule reaches', items, lemmas, targets, weights=[c for c, h in zip(counts, hit) if h])
+        print(json.dumps({'reachedWords': len(items), 'reachedTokenShare': sum(c for c, h in zip(counts, hit) if h) / sum(counts)}))
     elif mode == 'text':
         for path in files:
             text = open(path, encoding='utf-8').read()

@@ -128,7 +128,10 @@ def main():
         return
     jobs = int(args[args.index('--jobs') + 1]) if '--jobs' in args else 8
     only = args[args.index('--only') + 1] if '--only' in args else ''
-    transforms = json.load(open(os.path.join(PACK, 'transforms.json'), encoding='utf-8'))
+    # --transforms <file> mutates another rule file as the pack's transforms
+    # (sources/own.json: the own rules without Yomitan's).
+    source = args[args.index('--transforms') + 1] if '--transforms' in args else os.path.join(PACK, 'transforms.json')
+    transforms = json.load(open(source, encoding='utf-8'))
     todo = [(name, apply(transforms, ti, rules, key)) for name, ti, rules, key in mutants(transforms) if name.startswith(only)]
     print(f'{len(todo)} mutants', file=sys.stderr)
     survivors = 0

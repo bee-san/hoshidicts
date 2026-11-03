@@ -121,6 +121,8 @@ comparison	1	товщий	товстий	adj	*
 comparison	1	найшвидше	швидко	adv	*
 comparison	1	якнайкраще	добре	adv	*
 comparison	1	частіше	часто	adv	*
+comparison	1	легче	легко	adv	*
+comparison	1	важче	важко	adv	*
 short adjectives	1	повен	повний	adj	*
 short adjectives	1	зелен	зелений	adj	*
 short adjectives	1	рад	радий	adj	*
@@ -320,6 +322,8 @@ second conjugation	1	кричать	кричати	v	*
 second conjugation	1	горить	горіти	v	*
 second conjugation	1	терплю	терпіти	v	*
 second conjugation	1	клею	клеїти	v	*
+second conjugation	1	таю	таїти	v	*
+second conjugation	1	затаїть	затаїти	v	*
 future	1	читатиму	читати	v	v.fut1sg
 future	1	читатимеш	читати	v	v.fut2sg
 future	1	читатиме	читати	v	v.fut3sg

@@ -527,7 +527,7 @@ const ADV_CMP = [
     ['ше', 'о', {stemMinLength: 2, stemEndsWith: '[дтрх]'}, 'тихше → тихо'], ['ше', 'око', {stemMinLength: 2}, 'ширше → широко'],
     ['ше', 'го', {stemMinLength: 2}, 'довше → довго'], ['ще', 'соко', {stemMinLength: 1}, 'вище → високо'],
     ['жче', 'зько', {stemMinLength: 1}, 'нижче → низько'], ['жче', 'го', {stemMinLength: 2}, 'дорожче → дорого'],
-    ['че', 'ко', {stemMinLength: 2, stemEndsWith: '[ж]'}, 'важче → важко']];
+    ['че', 'ко', {stemMinLength: 2, stemEndsWith: '[жг]'}, 'важче → важко']];
 for (const [inflected, deinflected, opt, example] of ADV_CMP) {
     suffix('adv.cmp', inflected, deinflected, ['adv'], ['adv'], opt, example);
 }
@@ -957,7 +957,7 @@ verb('imp2pl', 'ойте', 'оїти', {stemMinLength: 2}, 'adv');
 suffix('v.ptcpPass', 'єний', 'їти', ['adj'], ['v'], {stemEndsWith: '[ео]'});
 suffix('v.impers', 'єно', 'їти', [], ['v'], {stemEndsWith: '[ео]'});
 for (const [ending, id] of [['ю', 'prs1sg'], ['їш', 'prs2sg'], ['їть', 'prs3sg'], ['їмо', 'prs1pl'], ['їте', 'prs2pl'], ['ять', 'prs3pl']]) {
-    verb(id, ending, 'їти', {stemEndsWith: '[ео]', stemMinLength: 2}, 'std', ending === 'ю' ? 'клею → клеїти' : undefined);
+    verb(id, ending, 'їти', {stemEndsWith: '[еоа]', stemMinLength: 2}, 'std', ending === 'ю' ? 'клею → клеїти' : undefined);
 }
 // Second conjugation -ати after ж, ч, щ (лежати, кричати, пищати). No verb
 // of the class ends its stem in ш, and ч after ж is a comparative adjective

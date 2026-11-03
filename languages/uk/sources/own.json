@@ -631,7 +631,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["іше", "о"], ["ше", "ко"], ["ше", "око"], ["ше", "го"], ["жче", "го"]], "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "{stem}"},
         {"type": "suffix", "inflected": "ше", "deinflected": "о", "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "[дтрх]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ще", "соко"], ["жче", "зько"]], "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 1, "stemCharacters": "{stem}"},
-        {"type": "suffix", "inflected": "че", "deinflected": "ко", "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "[ж]"},
+        {"type": "suffix", "inflected": "че", "deinflected": "ко", "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "[жг]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["краще", "добре"], ["краще", "гарно"], ["гірше", "погано"], ["більше", "багато"], ["менше", "мало"], ["далі", "далеко"]], "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemCharacters": "[]"}
       ]
     },
@@ -649,7 +649,7 @@
         {"type": "circumfix", "prefixes": [["най", ""], ["якнай", ""], ["щонай", ""]], "suffixes": [["ще", "соко"]], "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 1, "stemCharacters": "{stem}"},
         {"type": "circumfix", "prefixes": [["най", ""], ["якнай", ""], ["щонай", ""]], "suffixes": [["жче", "зько"]], "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 1, "stemCharacters": "{stem}"},
         {"type": "circumfix", "prefixes": [["най", ""], ["якнай", ""], ["щонай", ""]], "suffixes": [["жче", "го"]], "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "{stem}"},
-        {"type": "circumfix", "prefixes": [["най", ""], ["якнай", ""], ["щонай", ""]], "suffixes": [["че", "ко"]], "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "[ж]"},
+        {"type": "circumfix", "prefixes": [["най", ""], ["якнай", ""], ["щонай", ""]], "suffixes": [["че", "ко"]], "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "[жг]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["найкраще", "добре"], ["найкраще", "гарно"], ["якнайкраще", "добре"], ["якнайкраще", "гарно"], ["щонайкраще", "добре"], ["щонайкраще", "гарно"], ["найгірше", "погано"], ["якнайгірше", "погано"], ["щонайгірше", "погано"], ["найбільше", "багато"], ["якнайбільше", "багато"], ["щонайбільше", "багато"], ["найменше", "мало"], ["якнайменше", "мало"], ["щонайменше", "мало"], ["найдалі", "далеко"], ["якнайдалі", "далеко"], ["щонайдалі", "далеко"]], "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemCharacters": "[]"}
       ]
     },
@@ -760,7 +760,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["очу", "ікти"], ["очуся", "іктися"], ["очусь", "іктися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[л]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["німу", "ійняти"], ["німуся", "ійнятися"], ["німусь", "ійнятися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[д]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["іду", "іти"], ["ідуся", "ітися"], ["ідусь", "ітися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[п]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ю", "їти"], ["юся", "їтися"], ["юсь", "їтися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "[ео]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ю", "їти"], ["юся", "їтися"], ["юсь", "їтися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "[еоа]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["чу", "чати"], ["чуся", "чатися"], ["чусь", "чатися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemNotEndsWith": "[ж]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ою", "ояти"], ["оюся", "оятися"], ["оюсь", "оятися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[тб]"}
       ]
@@ -789,7 +789,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["німеш", "ійняти"], ["німешся", "ійнятися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[д]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ідеш", "іти"], ["ідешся", "ітися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[п]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["иш", "ити"], ["ишся", "итися"], ["иш", "іти"], ["ишся", "ітися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{stem}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["їш", "їти"], ["їшся", "їтися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "[ео]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["їш", "їти"], ["їшся", "їтися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "[еоа]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["чиш", "чати"], ["чишся", "чатися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemNotEndsWith": "[ж]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["оїш", "ояти"], ["оїшся", "оятися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[тб]"}
       ]
@@ -818,7 +818,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["німе", "ійняти"], ["німеться", "ійнятися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[д]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["іде", "іти"], ["ідеться", "ітися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[п]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ить", "ити"], ["иться", "итися"], ["ить", "іти"], ["иться", "ітися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{stem}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["їть", "їти"], ["їться", "їтися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "[ео]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["їть", "їти"], ["їться", "їтися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "[еоа]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["чить", "чати"], ["читься", "чатися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemNotEndsWith": "[ж]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["оїть", "ояти"], ["оїться", "оятися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[тб]"}
       ]
@@ -847,7 +847,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["німемо", "ійняти"], ["німемося", "ійнятися"], ["німемось", "ійнятися"], ["німем", "ійняти"], ["німемся", "ійнятися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[д]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ідемо", "іти"], ["ідемося", "ітися"], ["ідемось", "ітися"], ["ідем", "іти"], ["ідемся", "ітися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[п]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["имо", "ити"], ["имося", "итися"], ["имось", "итися"], ["им", "ити"], ["имся", "итися"], ["имо", "іти"], ["имося", "ітися"], ["имось", "ітися"], ["им", "іти"], ["имся", "ітися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{stem}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["їмо", "їти"], ["їмося", "їтися"], ["їмось", "їтися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "[ео]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["їмо", "їти"], ["їмося", "їтися"], ["їмось", "їтися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "[еоа]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["чимо", "чати"], ["чимося", "чатися"], ["чимось", "чатися"], ["чим", "чати"], ["чимся", "чатися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemNotEndsWith": "[ж]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["оїмо", "ояти"], ["оїмося", "оятися"], ["оїмось", "оятися"], ["оїм", "ояти"], ["оїмся", "оятися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[тб]"}
       ]
@@ -876,7 +876,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["німете", "ійняти"], ["німетеся", "ійнятися"], ["німетесь", "ійнятися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[д]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ідете", "іти"], ["ідетеся", "ітися"], ["ідетесь", "ітися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[п]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ите", "ити"], ["итеся", "итися"], ["итесь", "итися"], ["ите", "іти"], ["итеся", "ітися"], ["итесь", "ітися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{stem}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["їте", "їти"], ["їтеся", "їтися"], ["їтесь", "їтися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "[ео]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["їте", "їти"], ["їтеся", "їтися"], ["їтесь", "їтися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "[еоа]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["чите", "чати"], ["читеся", "чатися"], ["читесь", "чатися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemNotEndsWith": "[ж]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["оїте", "ояти"], ["оїтеся", "оятися"], ["оїтесь", "оятися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[тб]"}
       ]
@@ -904,7 +904,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["очуть", "ікти"], ["очуться", "іктися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[л]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["німуть", "ійняти"], ["німуться", "ійнятися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[д]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ідуть", "іти"], ["ідуться", "ітися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[п]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ять", "їти"], ["яться", "їтися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "[ео]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ять", "їти"], ["яться", "їтися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "[еоа]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["чать", "чати"], ["чаться", "чатися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemNotEndsWith": "[ж]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["оять", "ояти"], ["ояться", "оятися"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[тб]"}
       ]
