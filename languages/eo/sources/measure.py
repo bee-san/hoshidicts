@@ -33,7 +33,19 @@ hoshidicts-cli or the batch lookup tool (sources/lookup-batch.cpp).
         [--sample N] [--seed S]
         Real text: the hovers of make-hovers.py. Judged by script where the
         hovered word has a form-of row (as `frequent`), and a random sample
-        of the others printed for judging by hand.
+        of the others printed for judging by hand. Also prints how the other
+        first results split: the hovered word itself, a dictionary step only,
+        a phrase or part of a word, and a pack rule.
+
+    python3 measure.py names <lookup-batch> <languages> <imported dict> <json dir> <out.tsv>
+        (--hovers <hover dir> | --tatoeba <sentences.tsv.bz2> | --frequent <frequency list> [--top N])
+        The first results a pack rule makes at words without a form-of row
+        (Known gaps: names and loanwords read as derived words), counted by
+        word, with the first result and the rules of its trace, for judging
+        by hand: every capitalised word of the hovers; every capitalised word
+        inside a Tatoeba sentence (not its first word), looked up from that
+        word to the end of the sentence; or the N (10,000) most frequent words
+        of the list, looked up alone.
 """
 import bz2
 import collections
@@ -374,6 +386,18 @@ def command_text(args):
             verdicts['unjudged'] += 1
             unjudged.append((word, first))
     print(f'{len(hovers)} lookups: ' + ', '.join(f'{k} {v}' for k, v in sorted(verdicts.items())))
+    split = collections.Counter()
+    for word, result in zip(words, results):
+        first = result['results'][0] if result['results'] else None
+        if first is None or first['matched'] != word or dictionary.lemmas_of(word):
+            continue
+        if any(not d for d in first['dictionaryRules']):
+            split['a pack rule'] += 1
+        elif first['expression'].lower() == word.lower():
+            split['the word itself'] += 1
+        else:
+            split['a dictionary step only'] += 1
+    print('first results at words without a form-of row (not phrases): ' + ', '.join(f'{k} {v}' for k, v in sorted(split.items())))
     print('wrong, by the rules of the trace:', by_rule.most_common(15))
     for key, count in wrong.most_common(40):
         print(f'  {count}\t{key}')
@@ -385,7 +409,61 @@ def command_text(args):
         print(f"  {word}\t→ {r['expression']}\t{r['matched']}\t{r['trace']}")
 
 
-COMMANDS = {'fc': command_fc, 'frequent': command_frequent, 'phrases': command_phrases, 'text': command_text}
+def command_names(args):
+    hover_dir = option(args, '--hovers')
+    tatoeba = option(args, '--tatoeba')
+    frequent = option(args, '--frequent')
+    top = option(args, '--top', 10000, int)
+    tool, languages, imported, json_dir, out_file = args
+    dictionary = Dictionary(json_dir)
+    texts, words = [], []
+    if hover_dir:
+        hovers = open(f'{hover_dir}/hover.txt', encoding='utf-8').read().split('\n')[:-1]
+        hovered = open(f'{hover_dir}/words.txt', encoding='utf-8').read().split('\n')[:-1]
+        for text, word in zip(hovers, hovered):
+            if word[:1].isupper():
+                texts.append(text)
+                words.append(word)
+    elif tatoeba:
+        with bz2.open(tatoeba, 'rt', encoding='utf-8') as f:
+            for line in f:
+                parts = line.rstrip('\n').split('\t')
+                if len(parts) < 3:
+                    continue
+                sentence = parts[2]
+                for m in list(WORD.finditer(sentence))[1:]:
+                    if m.group(0)[:1].isupper():
+                        texts.append(sentence[m.start():])
+                        words.append(m.group(0))
+    elif frequent:
+        for line in open(frequent, encoding='utf-8'):
+            words.append(line.split()[0])
+            if len(words) == top:
+                break
+        texts = list(words)
+    else:
+        sys.exit('names needs --hovers, --tatoeba or --frequent')
+    results = batch(tool, languages, imported, texts)
+    found = collections.Counter()
+    shown = {}
+    for word, result in zip(words, results):
+        first = result['results'][0] if result['results'] else None
+        if first is None or first['matched'] != word or dictionary.lemmas_of(word):
+            continue
+        rules = [t for t, d in zip(first['trace'], first['dictionaryRules']) if not d]
+        if rules:
+            found[word] += 1
+            shown[word] = (first['expression'], ' '.join(rules))
+    with open(out_file, 'w', encoding='utf-8') as f:
+        f.write('count\tword\tfirst result\ttrace\n')
+        for word, count in sorted(found.items(), key=lambda x: (-x[1], x[0])):
+            f.write(f'{count}\t{word}\t{shown[word][0]}\t{shown[word][1]}\n')
+    print(f'{len(texts)} lookups; a pack rule made the first result at {sum(found.values())} of them '
+          f'({len(found)} distinct words) without a form-of row; listed in {out_file}')
+
+
+COMMANDS = {'fc': command_fc, 'frequent': command_frequent, 'phrases': command_phrases, 'text': command_text,
+            'names': command_names}
 
 if __name__ == '__main__':
     if len(sys.argv) < 2 or sys.argv[1] not in COMMANDS:

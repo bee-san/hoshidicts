@@ -29,6 +29,7 @@ import {dirname, join, resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {formatTransforms, parseJson} from '../../../tools/lib/json.mjs';
 import {mergeTransforms} from '../../../tools/merge-transforms.mjs';
+import {EXCLUDED_STEMS, exclusionKey, withoutStems} from './excluded-stems.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const read = (name) => parseJson(readFileSync(join(here, name), 'utf8'), name);
@@ -132,10 +133,13 @@ for (const t of yomitan.transforms) {
         if (ownIds.has(t.id)) { throw new Error(`KEPT ${t.id} is also an own transform id`); }
         const constraints = kept.get(t.id);
         const {source: _source, ...header} = t;
-        transforms.push({...header, source: 'yomitan', rules: t.rules.map((rule) => {
-            ++counts.yomitan;
+        transforms.push({...header, source: 'yomitan', rules: t.rules.flatMap((rule) => {
             const {source: _s, ...plain} = rule;
-            return {...plain, ...constraints};
+            const kept = {...plain, ...constraints};
+            const excluded = EXCLUDED_STEMS[exclusionKey(t.id, kept)];
+            const copies = excluded ? withoutStems(kept, excluded.map(([stem]) => stem)) : [kept];
+            counts.yomitan += copies.length;
+            return copies;
         })});
     } else if (!(t.id in REMOVED)) {
         throw new Error(`Yomitan transform ${t.id} is neither in KEPT nor in REMOVED`);

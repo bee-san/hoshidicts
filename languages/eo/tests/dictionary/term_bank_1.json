@@ -55,5 +55,18 @@
   ["fronta", "", "adj", "adj", 0, ["frontal, front"], 0, ""],
   ["frato", "", "n", "n", 0, ["brother"], 0, ""],
   ["frata", "", "adj", "adj", 0, ["brotherly"], 0, ""],
-  ["tra", "", "prep", "", 0, ["through"], 0, ""]
+  ["tra", "", "prep", "", 0, ["through"], 0, ""],
+  ["mino", "", "n", "n", 0, ["mine (excavation)"], 0, ""],
+  ["eĉ", "", "adv", "adv", 0, ["even"], 0, ""],
+  ["skribi", "", "v", "v", 0, ["to write"], 0, ""],
+  ["skribo", "", "n", "n", 0, ["writing, script"], 0, ""],
+  ["herbo", "", "n", "n", 0, ["grass, herb"], 0, ""],
+  ["herba", "", "adj", "adj", 0, ["grassy, herbal"], 0, ""],
+  ["manĝo", "", "n", "n", 0, ["meal"], 0, ""],
+  ["manĝa", "", "adj", "adj", 0, ["of eating"], 0, ""],
+  ["karolo", "", "n", "n", 0, ["whole note"], 0, ""],
+  ["kata", "", "adj", "adj", 0, ["of cats"], 0, ""],
+  ["ena", "", "adj", "adj", 0, ["inner"], 0, ""],
+  ["hele", "", "adv", "adv", 0, ["brightly"], 0, ""],
+  ["min", "", "pron", "", 0, ["me (the accusative of mi)"], 0, ""]
 ]

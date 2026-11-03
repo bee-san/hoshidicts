@@ -46,6 +46,11 @@
         "variants": [[{"pattern": "^'+", "replace": ""}, {"pattern": "([^']{2})'+$", "replace": "$1"}]]
       },
       {
+        "id": "elision",
+        "name": "Elided -o (dank' → danko)",
+        "variants": [[{"pattern": "([^' ]{2})'$", "replace": "$1o"}]]
+      },
+      {
         "id": "xSystem",
         "name": "x-system (cx → ĉ)",
         "variants": [[{"map": {"cx": "ĉ", "cX": "ĉ", "Cx": "Ĉ", "CX": "Ĉ", "gx": "ĝ", "gX": "ĝ", "Gx": "Ĝ", "GX": "Ĝ", "hx": "ĥ", "hX": "ĥ", "Hx": "Ĥ", "HX": "Ĥ", "jx": "ĵ", "jX": "ĵ", "Jx": "Ĵ", "JX": "Ĵ", "sx": "ŝ", "sX": "ŝ", "Sx": "Ŝ", "SX": "Ŝ", "ux": "ŭ", "uX": "ŭ", "Ux": "Ŭ", "UX": "Ŭ"}}]]

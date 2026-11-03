@@ -29,7 +29,19 @@
         {"type": "suffix", "inflected": "an", "deinflected": "a", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "ojn", "deinflected": "oj", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "ajn", "deinflected": "aj", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "en", "deinflected": "e", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "en", "deinflected": "e", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "[bhklrv]"},
+        {"type": "suffix", "inflected": "en", "deinflected": "e", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "b", "stemNotStartsWithText": "bid"},
+        {"type": "suffix", "inflected": "en", "deinflected": "e", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "bid"},
+        {"type": "suffix", "inflected": "en", "deinflected": "e", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "h", "stemNotStartsWithText": "hel"},
+        {"type": "suffix", "inflected": "en", "deinflected": "e", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "hel"},
+        {"type": "suffix", "inflected": "en", "deinflected": "e", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "k", "stemNotStartsWithText": "kar"},
+        {"type": "suffix", "inflected": "en", "deinflected": "e", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "kar"},
+        {"type": "suffix", "inflected": "en", "deinflected": "e", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "l", "stemNotStartsWithText": "lad"},
+        {"type": "suffix", "inflected": "en", "deinflected": "e", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "lad"},
+        {"type": "suffix", "inflected": "en", "deinflected": "e", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "r", "stemNotStartsWithText": "rub"},
+        {"type": "suffix", "inflected": "en", "deinflected": "e", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "rub"},
+        {"type": "suffix", "inflected": "en", "deinflected": "e", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "v", "stemNotStartsWithText": "virtan"},
+        {"type": "suffix", "inflected": "en", "deinflected": "e", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 7, "stemCharacters": "[^ ]", "stemStartsWithText": "virtan"},
         {"type": "wholeWord", "inflected": "min", "deinflected": "mi", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "cin", "deinflected": "ci", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "vin", "deinflected": "vi", "conditionsIn": [], "conditionsOut": []},
@@ -226,7 +238,9 @@
       "description": "-ato, the present passive participle as a noun: legi → legata (being read), legato (one who is being read), legate (while being read).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ato", "deinflected": "i", "conditionsIn": ["n"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]"}
+        {"type": "suffix", "inflected": "ato", "deinflected": "i", "conditionsIn": ["n"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "[p]"},
+        {"type": "suffix", "inflected": "ato", "deinflected": "i", "conditionsIn": ["n"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "p", "stemNotStartsWithText": "pen"},
+        {"type": "suffix", "inflected": "ato", "deinflected": "i", "conditionsIn": ["n"], "conditionsOut": ["v"], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "pen"}
       ]
     },
     {
@@ -244,7 +258,9 @@
       "description": "-ita, the past passive participle as an adjective: legi → legita (read, having been read), legito (one who has been read), legite (having been read).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ita", "deinflected": "i", "conditionsIn": ["adj"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]"}
+        {"type": "suffix", "inflected": "ita", "deinflected": "i", "conditionsIn": ["adj"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "[g]"},
+        {"type": "suffix", "inflected": "ita", "deinflected": "i", "conditionsIn": ["adj"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "g", "stemNotStartsWithText": "grav"},
+        {"type": "suffix", "inflected": "ita", "deinflected": "i", "conditionsIn": ["adj"], "conditionsOut": ["v"], "stemMinLength": 5, "stemCharacters": "[^ ]", "stemStartsWithText": "grav"}
       ]
     },
     {
@@ -295,10 +311,9 @@
     {
       "id": "elision",
       "name": "elision",
-      "description": "Elided ending: the -o of a noun or the -a of the article replaced by an apostrophe. dank' → danko, l' → la.",
+      "description": "Elided article: l' → la. (The elided -o of a noun is the processor elision: dank' → danko.)",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "'", "deinflected": "o", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "[^ ]"},
         {"type": "wholeWord", "inflected": "l'", "deinflected": "la", "conditionsIn": [], "conditionsOut": []}
       ]
     },
@@ -343,7 +358,19 @@
       "description": "Member, follower or inhabitant: klubano → klubo, urbano → urbo.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ano", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "{upper}"}
+        {"type": "suffix", "inflected": "ano", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "[{upper}adijms]"},
+        {"type": "suffix", "inflected": "ano", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "a", "stemNotStartsWithText": "al"},
+        {"type": "suffix", "inflected": "ano", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[^ ]", "stemStartsWithText": "al"},
+        {"type": "suffix", "inflected": "ano", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "d", "stemNotStartsWithText": "di"},
+        {"type": "suffix", "inflected": "ano", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[^ ]", "stemStartsWithText": "di"},
+        {"type": "suffix", "inflected": "ano", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "i", "stemNotStartsWithText": "ir"},
+        {"type": "suffix", "inflected": "ano", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[^ ]", "stemStartsWithText": "ir"},
+        {"type": "suffix", "inflected": "ano", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "j", "stemNotStartsWithText": "juli"},
+        {"type": "suffix", "inflected": "ano", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 5, "stemCharacters": "[^ ]", "stemStartsWithText": "juli"},
+        {"type": "suffix", "inflected": "ano", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "m", "stemNotStartsWithText": "mil"},
+        {"type": "suffix", "inflected": "ano", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "mil"},
+        {"type": "suffix", "inflected": "ano", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "s", "stemNotStartsWithText": "salt"},
+        {"type": "suffix", "inflected": "ano", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 5, "stemCharacters": "[^ ]", "stemStartsWithText": "salt"}
       ]
     },
     {
@@ -352,7 +379,43 @@
       "description": "A collection: arbaro (forest) → arbo, vortaro (dictionary) → vorto.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "{upper}", "stemNotStartsWithText": "boj"}
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "[{upper}bs]"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "ba", "stemNotStartsWithText": "barb"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 5, "stemCharacters": "[^ ]", "stemStartsWithText": "barb"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "bb"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "bc"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "bĉ"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "bd"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "be"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "bf"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "bg"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "bĝ"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "bh"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "bĥ"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "bi"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "bj"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "bĵ"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "bk"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "bl"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "bm"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "bn"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "bo", "stemNotStartsWithText": "boj"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "boj"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "bp"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "br"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "bs"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "bŝ"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "bt"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "bu"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "bŭ"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "bv"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "bz"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "bq"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "bw"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "bx"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "by"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "s", "stemNotStartsWithText": "solid"},
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 6, "stemCharacters": "[^ ]", "stemStartsWithText": "solid"}
       ]
     },
     {
@@ -382,10 +445,18 @@
       "description": "Large or intense: domego → domo, grandega → granda, ridegi → ridi, bonege → bone.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ego", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "ega", "deinflected": "a", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "egi", "deinflected": "i", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "ege", "deinflected": "e", "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "{upper}"}
+        {"type": "suffix", "inflected": "ego", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "[{upper}d]"},
+        {"type": "suffix", "inflected": "ego", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "d", "stemNotStartsWithText": "di"},
+        {"type": "suffix", "inflected": "ego", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[^ ]", "stemStartsWithText": "di"},
+        {"type": "suffix", "inflected": "ega", "deinflected": "a", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "[{upper}d]"},
+        {"type": "suffix", "inflected": "ega", "deinflected": "a", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "d", "stemNotStartsWithText": "di"},
+        {"type": "suffix", "inflected": "ega", "deinflected": "a", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 3, "stemCharacters": "[^ ]", "stemStartsWithText": "di"},
+        {"type": "suffix", "inflected": "egi", "deinflected": "i", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "[{upper}d]"},
+        {"type": "suffix", "inflected": "egi", "deinflected": "i", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "d", "stemNotStartsWithText": "di"},
+        {"type": "suffix", "inflected": "egi", "deinflected": "i", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "[^ ]", "stemStartsWithText": "di"},
+        {"type": "suffix", "inflected": "ege", "deinflected": "e", "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "[{upper}d]"},
+        {"type": "suffix", "inflected": "ege", "deinflected": "e", "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "d", "stemNotStartsWithText": "di"},
+        {"type": "suffix", "inflected": "ege", "deinflected": "e", "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 3, "stemCharacters": "[^ ]", "stemStartsWithText": "di"}
       ]
     },
     {
@@ -425,7 +496,9 @@
       "description": "The head of: lernejestro (headmaster) → lernejo, urbestro (mayor) → urbo.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "estro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "{upper}"}
+        {"type": "suffix", "inflected": "estro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "[{upper}s]"},
+        {"type": "suffix", "inflected": "estro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "s", "stemNotStartsWithText": "sem"},
+        {"type": "suffix", "inflected": "estro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "sem"}
       ]
     },
     {
@@ -434,10 +507,42 @@
       "description": "Small or weak: dometo → domo, beleta → bela, rideti (to smile) → ridi.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "eto", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "eta", "deinflected": "a", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "eti", "deinflected": "i", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "ete", "deinflected": "e", "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "{upper}"}
+        {"type": "suffix", "inflected": "eto", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "[{upper}gjnt]"},
+        {"type": "suffix", "inflected": "eto", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "g", "stemNotStartsWithText": "go"},
+        {"type": "suffix", "inflected": "eto", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[^ ]", "stemStartsWithText": "go"},
+        {"type": "suffix", "inflected": "eto", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "j", "stemNotStartsWithText": "juli"},
+        {"type": "suffix", "inflected": "eto", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 5, "stemCharacters": "[^ ]", "stemStartsWithText": "juli"},
+        {"type": "suffix", "inflected": "eto", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "n", "stemNotStartsWithText": "nazar"},
+        {"type": "suffix", "inflected": "eto", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 6, "stemCharacters": "[^ ]", "stemStartsWithText": "nazar"},
+        {"type": "suffix", "inflected": "eto", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "t", "stemNotStartsWithText": "tajg"},
+        {"type": "suffix", "inflected": "eto", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 5, "stemCharacters": "[^ ]", "stemStartsWithText": "tajg"},
+        {"type": "suffix", "inflected": "eta", "deinflected": "a", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "[{upper}gjnt]"},
+        {"type": "suffix", "inflected": "eta", "deinflected": "a", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "g", "stemNotStartsWithText": "go"},
+        {"type": "suffix", "inflected": "eta", "deinflected": "a", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 3, "stemCharacters": "[^ ]", "stemStartsWithText": "go"},
+        {"type": "suffix", "inflected": "eta", "deinflected": "a", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "j", "stemNotStartsWithText": "juli"},
+        {"type": "suffix", "inflected": "eta", "deinflected": "a", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 5, "stemCharacters": "[^ ]", "stemStartsWithText": "juli"},
+        {"type": "suffix", "inflected": "eta", "deinflected": "a", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "n", "stemNotStartsWithText": "nazar"},
+        {"type": "suffix", "inflected": "eta", "deinflected": "a", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 6, "stemCharacters": "[^ ]", "stemStartsWithText": "nazar"},
+        {"type": "suffix", "inflected": "eta", "deinflected": "a", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "t", "stemNotStartsWithText": "tajg"},
+        {"type": "suffix", "inflected": "eta", "deinflected": "a", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 5, "stemCharacters": "[^ ]", "stemStartsWithText": "tajg"},
+        {"type": "suffix", "inflected": "eti", "deinflected": "i", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "[{upper}gjnt]"},
+        {"type": "suffix", "inflected": "eti", "deinflected": "i", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "g", "stemNotStartsWithText": "go"},
+        {"type": "suffix", "inflected": "eti", "deinflected": "i", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "[^ ]", "stemStartsWithText": "go"},
+        {"type": "suffix", "inflected": "eti", "deinflected": "i", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "j", "stemNotStartsWithText": "juli"},
+        {"type": "suffix", "inflected": "eti", "deinflected": "i", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 5, "stemCharacters": "[^ ]", "stemStartsWithText": "juli"},
+        {"type": "suffix", "inflected": "eti", "deinflected": "i", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "n", "stemNotStartsWithText": "nazar"},
+        {"type": "suffix", "inflected": "eti", "deinflected": "i", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 6, "stemCharacters": "[^ ]", "stemStartsWithText": "nazar"},
+        {"type": "suffix", "inflected": "eti", "deinflected": "i", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "t", "stemNotStartsWithText": "tajg"},
+        {"type": "suffix", "inflected": "eti", "deinflected": "i", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 5, "stemCharacters": "[^ ]", "stemStartsWithText": "tajg"},
+        {"type": "suffix", "inflected": "ete", "deinflected": "e", "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "[{upper}gjnt]"},
+        {"type": "suffix", "inflected": "ete", "deinflected": "e", "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "g", "stemNotStartsWithText": "go"},
+        {"type": "suffix", "inflected": "ete", "deinflected": "e", "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 3, "stemCharacters": "[^ ]", "stemStartsWithText": "go"},
+        {"type": "suffix", "inflected": "ete", "deinflected": "e", "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "j", "stemNotStartsWithText": "juli"},
+        {"type": "suffix", "inflected": "ete", "deinflected": "e", "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 5, "stemCharacters": "[^ ]", "stemStartsWithText": "juli"},
+        {"type": "suffix", "inflected": "ete", "deinflected": "e", "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "n", "stemNotStartsWithText": "nazar"},
+        {"type": "suffix", "inflected": "ete", "deinflected": "e", "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 6, "stemCharacters": "[^ ]", "stemStartsWithText": "nazar"},
+        {"type": "suffix", "inflected": "ete", "deinflected": "e", "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "t", "stemNotStartsWithText": "tajg"},
+        {"type": "suffix", "inflected": "ete", "deinflected": "e", "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 5, "stemCharacters": "[^ ]", "stemStartsWithText": "tajg"}
       ]
     },
     {
@@ -446,7 +551,13 @@
       "description": "The young or descendant: katido (kitten) → kato, bovido (calf) → bovo.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ido", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "{upper}"}
+        {"type": "suffix", "inflected": "ido", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "[{upper}afp]"},
+        {"type": "suffix", "inflected": "ido", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "a", "stemNotStartsWithText": "amor"},
+        {"type": "suffix", "inflected": "ido", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 5, "stemCharacters": "[^ ]", "stemStartsWithText": "amor"},
+        {"type": "suffix", "inflected": "ido", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "f", "stemNotStartsWithText": "far"},
+        {"type": "suffix", "inflected": "ido", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "far"},
+        {"type": "suffix", "inflected": "ido", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "p", "stemNotStartsWithText": "perd"},
+        {"type": "suffix", "inflected": "ido", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 5, "stemCharacters": "[^ ]", "stemStartsWithText": "perd"}
       ]
     },
     {
@@ -489,7 +600,11 @@
       "description": "The tool for: tranĉilo (knife) → tranĉi, ludilo (toy) → ludi.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ilo", "deinflected": "i", "conditionsIn": ["n"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "{upper}"}
+        {"type": "suffix", "inflected": "ilo", "deinflected": "i", "conditionsIn": ["n"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "[{upper}be]"},
+        {"type": "suffix", "inflected": "ilo", "deinflected": "i", "conditionsIn": ["n"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "b", "stemNotStartsWithText": "baz"},
+        {"type": "suffix", "inflected": "ilo", "deinflected": "i", "conditionsIn": ["n"], "conditionsOut": ["v"], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "baz"},
+        {"type": "suffix", "inflected": "ilo", "deinflected": "i", "conditionsIn": ["n"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "e", "stemNotStartsWithText": "em"},
+        {"type": "suffix", "inflected": "ilo", "deinflected": "i", "conditionsIn": ["n"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "[^ ]", "stemStartsWithText": "em"}
       ]
     },
     {
@@ -498,7 +613,54 @@
       "description": "Female: patrino (mother) → patro, reĝino (queen) → reĝo, katino → kato.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "{upper}"}
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "[{upper}jklmost]"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "j", "stemNotStartsWithText": "juli"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 5, "stemCharacters": "[^ ]", "stemStartsWithText": "juli"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "k", "stemNotStartsWithText": "karol"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 6, "stemCharacters": "[^ ]", "stemStartsWithText": "karol"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "l", "stemNotStartsWithText": "lad"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "lad"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "m", "stemNotStartsWithText": "ma"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "maa"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "mab"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "mac"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "maĉ"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "mad"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "mae"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "maf"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "mag"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "maĝ"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "mah"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "maĥ"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "mai"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "maj"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "maĵ"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "mak"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "mal", "stemNotStartsWithText": "malv"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 5, "stemCharacters": "[^ ]", "stemStartsWithText": "malv"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "mam"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "man"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "mao"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "map"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "mar", "stemNotStartsWithText": "mart"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 5, "stemCharacters": "[^ ]", "stemStartsWithText": "mart"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "mas"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "maŝ"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "mat"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "mau"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "maŭ"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "mav"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "maz"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "maq"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "maw"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "max"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "may"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "o", "stemNotStartsWithText": "od"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[^ ]", "stemStartsWithText": "od"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "s", "stemNotStartsWithText": "salam"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 6, "stemCharacters": "[^ ]", "stemStartsWithText": "salam"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "t", "stemNotStartsWithText": "tor"},
+        {"type": "suffix", "inflected": "ino", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "tor"}
       ]
     },
     {
@@ -536,8 +698,16 @@
       "description": "A person characterised by: junulo (young person) → juna, riĉulo → riĉa.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ulo", "deinflected": "a", "conditionsIn": ["n"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "ulo", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "{upper}"}
+        {"type": "suffix", "inflected": "ulo", "deinflected": "a", "conditionsIn": ["n"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "[{upper}dt]"},
+        {"type": "suffix", "inflected": "ulo", "deinflected": "a", "conditionsIn": ["n"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "d", "stemNotStartsWithText": "drak"},
+        {"type": "suffix", "inflected": "ulo", "deinflected": "a", "conditionsIn": ["n"], "conditionsOut": ["adj"], "stemMinLength": 5, "stemCharacters": "[^ ]", "stemStartsWithText": "drak"},
+        {"type": "suffix", "inflected": "ulo", "deinflected": "a", "conditionsIn": ["n"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "t", "stemNotStartsWithText": "tusk"},
+        {"type": "suffix", "inflected": "ulo", "deinflected": "a", "conditionsIn": ["n"], "conditionsOut": ["adj"], "stemMinLength": 5, "stemCharacters": "[^ ]", "stemStartsWithText": "tusk"},
+        {"type": "suffix", "inflected": "ulo", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "[{upper}dt]"},
+        {"type": "suffix", "inflected": "ulo", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "d", "stemNotStartsWithText": "drak"},
+        {"type": "suffix", "inflected": "ulo", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 5, "stemCharacters": "[^ ]", "stemStartsWithText": "drak"},
+        {"type": "suffix", "inflected": "ulo", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "t", "stemNotStartsWithText": "tusk"},
+        {"type": "suffix", "inflected": "ulo", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 5, "stemCharacters": "[^ ]", "stemStartsWithText": "tusk"}
       ]
     },
     {
@@ -546,9 +716,54 @@
       "description": "The adverb of a root whose adjective, noun or verb is the headword: rigide (rigidly) → rigida, kaŭze (because of) → kaŭzo, konsente (in agreement) → konsenti.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "e", "deinflected": "a", "conditionsIn": ["adv"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "e", "deinflected": "o", "conditionsIn": ["adv"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "e", "deinflected": "i", "conditionsIn": ["adv"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "{upper}"}
+        {"type": "suffix", "inflected": "e", "deinflected": "a", "conditionsIn": ["adv"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "[{upper}agjkprz]"},
+        {"type": "suffix", "inflected": "e", "deinflected": "a", "conditionsIn": ["adv"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "a", "stemNotStartsWithText": "ann"},
+        {"type": "suffix", "inflected": "e", "deinflected": "a", "conditionsIn": ["adv"], "conditionsOut": ["adj"], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "ann"},
+        {"type": "suffix", "inflected": "e", "deinflected": "a", "conditionsIn": ["adv"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "g", "stemNotStartsWithText": "gal"},
+        {"type": "suffix", "inflected": "e", "deinflected": "a", "conditionsIn": ["adv"], "conditionsOut": ["adj"], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "gal"},
+        {"type": "suffix", "inflected": "e", "deinflected": "a", "conditionsIn": ["adv"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "j", "stemNotStartsWithText": "juli"},
+        {"type": "suffix", "inflected": "e", "deinflected": "a", "conditionsIn": ["adv"], "conditionsOut": ["adj"], "stemMinLength": 5, "stemCharacters": "[^ ]", "stemStartsWithText": "juli"},
+        {"type": "suffix", "inflected": "e", "deinflected": "a", "conditionsIn": ["adv"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "k", "stemNotStartsWithText": "ka"},
+        {"type": "suffix", "inflected": "e", "deinflected": "a", "conditionsIn": ["adv"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "ka", "stemNotEndsWith": "[bt]"},
+        {"type": "suffix", "inflected": "e", "deinflected": "a", "conditionsIn": ["adv"], "conditionsOut": ["adj"], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "ka", "stemEndsWith": "[bt]"},
+        {"type": "suffix", "inflected": "e", "deinflected": "a", "conditionsIn": ["adv"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "p", "stemNotStartsWithText": "pag"},
+        {"type": "suffix", "inflected": "e", "deinflected": "a", "conditionsIn": ["adv"], "conditionsOut": ["adj"], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "pag"},
+        {"type": "suffix", "inflected": "e", "deinflected": "a", "conditionsIn": ["adv"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "r", "stemNotStartsWithText": "ros"},
+        {"type": "suffix", "inflected": "e", "deinflected": "a", "conditionsIn": ["adv"], "conditionsOut": ["adj"], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "ros"},
+        {"type": "suffix", "inflected": "e", "deinflected": "a", "conditionsIn": ["adv"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "z", "stemNotStartsWithText": "zo"},
+        {"type": "suffix", "inflected": "e", "deinflected": "a", "conditionsIn": ["adv"], "conditionsOut": ["adj"], "stemMinLength": 3, "stemCharacters": "[^ ]", "stemStartsWithText": "zo"},
+        {"type": "suffix", "inflected": "e", "deinflected": "o", "conditionsIn": ["adv"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "[{upper}agjkprz]"},
+        {"type": "suffix", "inflected": "e", "deinflected": "o", "conditionsIn": ["adv"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "a", "stemNotStartsWithText": "ann"},
+        {"type": "suffix", "inflected": "e", "deinflected": "o", "conditionsIn": ["adv"], "conditionsOut": ["n"], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "ann"},
+        {"type": "suffix", "inflected": "e", "deinflected": "o", "conditionsIn": ["adv"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "g", "stemNotStartsWithText": "gal"},
+        {"type": "suffix", "inflected": "e", "deinflected": "o", "conditionsIn": ["adv"], "conditionsOut": ["n"], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "gal"},
+        {"type": "suffix", "inflected": "e", "deinflected": "o", "conditionsIn": ["adv"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "j", "stemNotStartsWithText": "juli"},
+        {"type": "suffix", "inflected": "e", "deinflected": "o", "conditionsIn": ["adv"], "conditionsOut": ["n"], "stemMinLength": 5, "stemCharacters": "[^ ]", "stemStartsWithText": "juli"},
+        {"type": "suffix", "inflected": "e", "deinflected": "o", "conditionsIn": ["adv"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "k", "stemNotStartsWithText": "ka"},
+        {"type": "suffix", "inflected": "e", "deinflected": "o", "conditionsIn": ["adv"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "ka", "stemNotEndsWith": "[bt]"},
+        {"type": "suffix", "inflected": "e", "deinflected": "o", "conditionsIn": ["adv"], "conditionsOut": ["n"], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "ka", "stemEndsWith": "[bt]"},
+        {"type": "suffix", "inflected": "e", "deinflected": "o", "conditionsIn": ["adv"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "p", "stemNotStartsWithText": "pag"},
+        {"type": "suffix", "inflected": "e", "deinflected": "o", "conditionsIn": ["adv"], "conditionsOut": ["n"], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "pag"},
+        {"type": "suffix", "inflected": "e", "deinflected": "o", "conditionsIn": ["adv"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "r", "stemNotStartsWithText": "ros"},
+        {"type": "suffix", "inflected": "e", "deinflected": "o", "conditionsIn": ["adv"], "conditionsOut": ["n"], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "ros"},
+        {"type": "suffix", "inflected": "e", "deinflected": "o", "conditionsIn": ["adv"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "z", "stemNotStartsWithText": "zo"},
+        {"type": "suffix", "inflected": "e", "deinflected": "o", "conditionsIn": ["adv"], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[^ ]", "stemStartsWithText": "zo"},
+        {"type": "suffix", "inflected": "e", "deinflected": "i", "conditionsIn": ["adv"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "[{upper}agjkprz]"},
+        {"type": "suffix", "inflected": "e", "deinflected": "i", "conditionsIn": ["adv"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "a", "stemNotStartsWithText": "ann"},
+        {"type": "suffix", "inflected": "e", "deinflected": "i", "conditionsIn": ["adv"], "conditionsOut": ["v"], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "ann"},
+        {"type": "suffix", "inflected": "e", "deinflected": "i", "conditionsIn": ["adv"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "g", "stemNotStartsWithText": "gal"},
+        {"type": "suffix", "inflected": "e", "deinflected": "i", "conditionsIn": ["adv"], "conditionsOut": ["v"], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "gal"},
+        {"type": "suffix", "inflected": "e", "deinflected": "i", "conditionsIn": ["adv"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "j", "stemNotStartsWithText": "juli"},
+        {"type": "suffix", "inflected": "e", "deinflected": "i", "conditionsIn": ["adv"], "conditionsOut": ["v"], "stemMinLength": 5, "stemCharacters": "[^ ]", "stemStartsWithText": "juli"},
+        {"type": "suffix", "inflected": "e", "deinflected": "i", "conditionsIn": ["adv"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "k", "stemNotStartsWithText": "ka"},
+        {"type": "suffix", "inflected": "e", "deinflected": "i", "conditionsIn": ["adv"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "ka", "stemNotEndsWith": "[bt]"},
+        {"type": "suffix", "inflected": "e", "deinflected": "i", "conditionsIn": ["adv"], "conditionsOut": ["v"], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "ka", "stemEndsWith": "[bt]"},
+        {"type": "suffix", "inflected": "e", "deinflected": "i", "conditionsIn": ["adv"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "p", "stemNotStartsWithText": "pag"},
+        {"type": "suffix", "inflected": "e", "deinflected": "i", "conditionsIn": ["adv"], "conditionsOut": ["v"], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "pag"},
+        {"type": "suffix", "inflected": "e", "deinflected": "i", "conditionsIn": ["adv"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "r", "stemNotStartsWithText": "ros"},
+        {"type": "suffix", "inflected": "e", "deinflected": "i", "conditionsIn": ["adv"], "conditionsOut": ["v"], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "ros"},
+        {"type": "suffix", "inflected": "e", "deinflected": "i", "conditionsIn": ["adv"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "z", "stemNotStartsWithText": "zo"},
+        {"type": "suffix", "inflected": "e", "deinflected": "i", "conditionsIn": ["adv"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "[^ ]", "stemStartsWithText": "zo"}
       ]
     },
     {
@@ -569,10 +784,18 @@
       "description": "The opposite: malbona (bad) → bona, malfermi (to open) → fermi, malsupren → supren.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "inflectedPrefix": "mal", "deinflectedPrefix": "", "inflectedSuffix": "o", "deinflectedSuffix": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]"},
-        {"type": "circumfix", "inflectedPrefix": "mal", "deinflectedPrefix": "", "inflectedSuffix": "a", "deinflectedSuffix": "a", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "[^ ]"},
-        {"type": "circumfix", "inflectedPrefix": "mal", "deinflectedPrefix": "", "inflectedSuffix": "i", "deinflectedSuffix": "i", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]"},
-        {"type": "circumfix", "inflectedPrefix": "mal", "deinflectedPrefix": "", "inflectedSuffix": "e", "deinflectedSuffix": "e", "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "[^ ]"}
+        {"type": "circumfix", "inflectedPrefix": "mal", "deinflectedPrefix": "", "inflectedSuffix": "o", "deinflectedSuffix": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "[v]"},
+        {"type": "circumfix", "inflectedPrefix": "mal", "deinflectedPrefix": "", "inflectedSuffix": "o", "deinflectedSuffix": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "v", "stemNotStartsWithText": "vin"},
+        {"type": "circumfix", "inflectedPrefix": "mal", "deinflectedPrefix": "", "inflectedSuffix": "o", "deinflectedSuffix": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "vin"},
+        {"type": "circumfix", "inflectedPrefix": "mal", "deinflectedPrefix": "", "inflectedSuffix": "a", "deinflectedSuffix": "a", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "[v]"},
+        {"type": "circumfix", "inflectedPrefix": "mal", "deinflectedPrefix": "", "inflectedSuffix": "a", "deinflectedSuffix": "a", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "v", "stemNotStartsWithText": "vin"},
+        {"type": "circumfix", "inflectedPrefix": "mal", "deinflectedPrefix": "", "inflectedSuffix": "a", "deinflectedSuffix": "a", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "vin"},
+        {"type": "circumfix", "inflectedPrefix": "mal", "deinflectedPrefix": "", "inflectedSuffix": "i", "deinflectedSuffix": "i", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "[v]"},
+        {"type": "circumfix", "inflectedPrefix": "mal", "deinflectedPrefix": "", "inflectedSuffix": "i", "deinflectedSuffix": "i", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "v", "stemNotStartsWithText": "vin"},
+        {"type": "circumfix", "inflectedPrefix": "mal", "deinflectedPrefix": "", "inflectedSuffix": "i", "deinflectedSuffix": "i", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "vin"},
+        {"type": "circumfix", "inflectedPrefix": "mal", "deinflectedPrefix": "", "inflectedSuffix": "e", "deinflectedSuffix": "e", "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "[v]"},
+        {"type": "circumfix", "inflectedPrefix": "mal", "deinflectedPrefix": "", "inflectedSuffix": "e", "deinflectedSuffix": "e", "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemStartsWithText": "v", "stemNotStartsWithText": "vin"},
+        {"type": "circumfix", "inflectedPrefix": "mal", "deinflectedPrefix": "", "inflectedSuffix": "e", "deinflectedSuffix": "e", "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "vin"}
       ]
     },
     {
@@ -691,7 +914,9 @@
       "description": "From, off: defali (to fall off) → fali, depreni (to take away) → preni.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "inflectedPrefix": "de", "deinflectedPrefix": "", "inflectedSuffix": "i", "deinflectedSuffix": "i", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "[^ ]"}
+        {"type": "circumfix", "inflectedPrefix": "de", "deinflectedPrefix": "", "inflectedSuffix": "i", "deinflectedSuffix": "i", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "[^ ]", "stemNotStartsWith": "[l]"},
+        {"type": "circumfix", "inflectedPrefix": "de", "deinflectedPrefix": "", "inflectedSuffix": "i", "deinflectedSuffix": "i", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "[^ ]", "stemStartsWithText": "l", "stemNotStartsWithText": "leg"},
+        {"type": "circumfix", "inflectedPrefix": "de", "deinflectedPrefix": "", "inflectedSuffix": "i", "deinflectedSuffix": "i", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 4, "stemCharacters": "[^ ]", "stemStartsWithText": "leg"}
       ]
     },
     {

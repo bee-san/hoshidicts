@@ -55,6 +55,7 @@ import {writeFileSync} from 'node:fs';
 import {dirname, join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {formatTransforms} from '../../../tools/lib/json.mjs';
+import {EXCLUDED_STEMS, exclusionKey, withoutStems} from './excluded-stems.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 
@@ -209,10 +210,16 @@ for (const [morpheme, name, examples] of PARTICIPLES) {
 
 // --- Elision ------------------------------------------------------------------------
 // Poetry and older prose replace the -o of a noun and the -a of the article
-// with an apostrophe (dank' al, kor' al kor', de l' mondo). The stem has two
-// letters, so d' (French) is not do.
-transform('elision', 'elision', "Elided ending: the -o of a noun or the -a of the article replaced by an apostrophe. dank' → danko, l' → la.");
-suffix('elision', "'", 'o', [], [], 2);
+// with an apostrophe (dank' al, kor' al kor', de l' mondo). The elided -o is
+// the processor `elision` of language.json, not a rule: a word with an
+// apostrophe at its end is as often a word before a closing single quote
+// ('Trinku min', drink me), and a processor's reading costs the processor
+// step that the quote's removal costs too, so the word itself (min) comes
+// first and the elided noun (mino) after it. A rule's reading would cost
+// no step and come first (the audit's MINOR-1). The first version of the
+// pack had the rule ' → o with a stem of two letters, which the processor's
+// pattern keeps. The article stays a rule.
+transform('elision', 'elision', "Elided article: l' → la. (The elided -o of a noun is the processor elision: dank' → danko.)");
 whole('elision', "l'", 'la');
 
 // --- Word formation --------------------------------------------------------------
@@ -269,17 +276,11 @@ const SUFFIXES = [
     ['uj', '-uj- (container)', 'uj', 'o', 'o', 2, 'Container, tree or country: sukerujo (sugar bowl) → sukero, pomujo → pomo.'],
     ['ul', '-ul- (person)', 'ul', 'o', 'ao', 2, 'A person characterised by: junulo (young person) → juna, riĉulo → riĉa.'],
 ];
-// Stems a suffix rule leaves out, measured on the books of README.md:
-// bojaro (a boyar, the Russian noble: a loanword wty-eo-en lacks) is not a
-// group of barks (bojo), which it was at 345 places of Princo Serebrjanij.
-const EXCLUDED = {ar: 'boj'};
 for (const [id, name, affix, derived, bases, stemMinLength, description] of SUFFIXES) {
     transform(id, name, description);
     for (const d of derived) {
         for (const b of bases === '=' ? d : bases) {
-            const extra = {stemNotStartsWith: UPPER};
-            if (EXCLUDED[id]) { extra.stemNotStartsWithText = EXCLUDED[id]; }
-            suffix(id, `${affix}${d}`, b, [ENDING_CONDITION[d]], [ENDING_CONDITION[b]], stemMinLength, extra);
+            suffix(id, `${affix}${d}`, b, [ENDING_CONDITION[d]], [ENDING_CONDITION[b]], stemMinLength, {stemNotStartsWith: UPPER});
         }
     }
 }
@@ -350,6 +351,18 @@ transform('sen', 'sen- (without)', 'Without: senforta (weak) → forto, senbrue 
 for (const e of 'ae') {
     add('sen', {type: 'circumfix', inflectedPrefix: 'sen', deinflectedPrefix: '', inflectedSuffix: e, deinflectedSuffix: 'o',
         conditionsIn: [ENDING_CONDITION[e]], conditionsOut: ['n'], stemMinLength: 2, stemCharacters: NO_SPACE});
+}
+
+// --- Exact stems left out ---------------------------------------------------------
+// Names and loanwords the dictionary lacks that rules read as derived words,
+// shown first (excluded-stems.mjs has the list, the measurement and the
+// splitting of a rule by the text its stem starts with). These were added
+// after Yomitan's rules were read, from the audit's measurement of real text.
+for (const t of transforms) {
+    t.rules = t.rules.flatMap((rule) => {
+        const excluded = EXCLUDED_STEMS[exclusionKey(t.id, rule)];
+        return excluded ? withoutStems(rule, excluded.map(([stem]) => stem)) : [rule];
+    });
 }
 
 // --- Output ------------------------------------------------------------------------

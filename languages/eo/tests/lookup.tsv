@@ -14,7 +14,7 @@ word formation	1	dometo apud la rivero	domo	dometo
 word formation	1	rapide kuris	rapida	rapide
 word formation	1	kaŭze de la pluvo	kaŭzo	kaŭze
 word formation	1	lavujo plena	lavi	lavujo
-pronouns	1	min vidis	mi	min
+pronouns	1	min vidis	min	min
 pronouns	1	kiujn vi vidis	kiu	kiujn
 apostrophe	1	dank' al vi	dank' al	dank' al
 apostrophe	1	dank’ al vi	dank' al	dank’ al
@@ -49,3 +49,16 @@ conditions	0	distra muziko	tra	distra
 conditions	0	fortra muziko	tra	fortra
 conditions	0	kuntra muziko	tra	kuntra
 conditions	0	mistra muziko	tra	mistra
+quotes	1	min'	min	min'
+quotes	0	min'	mino	min'
+quotes	1	kor'	koro	kor'
+letters	1	ankaŭ mi	ankaŭ	ankaŭ
+letters	1	eĉ ne	eĉ	eĉ
+resolution	0	Ensalutu nun	en	En
+order	1	skribejo plena	skribi	skribejo
+order	1	herbujo plena	herbo	herbujo
+order	1	manĝaĵo bongusta	manĝi	manĝaĵo
+names	0	Karolino ridetis	karolo	Karolino
+names	0	Kate venis	kata	Kate
+names	0	Elena venis	ena	Elena
+names	0	Helen venis	hele	Helen
