@@ -183,6 +183,26 @@ def main():
           f'{wrong_tokens / max(judged_tokens, 1):.2%} of the judged)')
     for key, n in groups.most_common(args.report):
         print(f'  {key}: {n} tokens  e.g. ' + '  '.join(examples[key]))
+    # Behind a proclitic: each judged type that does not start with one,
+    # written after ܘ- (and), ܕ- (of), ܒ- (in), ܠ- (to); right when the
+    # first entry is one of the type's own lemmas.
+    base = [(w, exact[pointed(w)]) for w in types if exact.get(pointed(w)) and w[0] not in 'ܘܕܒܠ']
+    for clitic in 'ܘܕܒܠ':
+        res_c = lookup([clitic + w for w, _ in base], args.dictionary, args.options, args.languages)
+        ok_c = 0
+        bad_c = collections.Counter()
+        bad_ex = collections.defaultdict(list)
+        for (w, right), results in zip(base, res_c):
+            first = first_entry(results)
+            if first is not None and first['expression'] in right:
+                ok_c += 1
+            else:
+                key = (first['trace'][-1] if first and first['trace'] else ('(no entry)' if first is None else '(as written)'))
+                bad_c[key] += 1
+                if len(bad_ex[key]) < 4:
+                    bad_ex[key].append(f"{clitic}{w}→{first['expression'] if first else '-'} (want {'/'.join(sorted(right))})")
+        print(f'behind {clitic}-: {len(base)} forms, first entry right {ok_c} ({ok_c / max(len(base), 1):.2%}); wrong by last rule: '
+              + '; '.join(f'{k} {n} (' + ', '.join(bad_ex[k]) + ')' for k, n in bad_c.most_common(3)))
     # Hovers: each word with the rest of its sentence.
     res = lookup(hovers, args.dictionary, args.options, args.languages)
     h_judged = h_wrong = h_none = 0
