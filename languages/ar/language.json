@@ -138,7 +138,7 @@
       },
       {
         "id": "addHamza",
-        "name": "Add hamza or madda to an alif that starts a word, or follows ال or a one-letter proclitic",
+        "name": "Add hamza to an alif that starts a word, or follows ال or a one-letter proclitic",
         "variants": [
           [
             {
@@ -150,12 +150,6 @@
             {
               "pattern": "^([وف]?[بك]?ال|[وف]?لل|[وف]?[بكل]|[وف]|)ا(?!ل[ء-ي]{2})",
               "replace": "$1إ"
-            }
-          ],
-          [
-            {
-              "pattern": "^([وف]?[بك]?ال|[وف]?لل|[وف]?[بكل]|[وف]|)ا(?!ل[ء-ي]{2})",
-              "replace": "$1آ"
             }
           ]
         ]

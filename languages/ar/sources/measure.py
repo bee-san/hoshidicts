@@ -25,7 +25,8 @@ list's tokens, whose first result is not one of the word's own lemmas.
 text: every word of a text, looked up as a host does: the text from the word
 to the end of its sentence. Positions whose first result matches the whole
 word are judged by script: a word wty-ar-en lists by its own lemmas, a word it
-does not list (وكتابه) by the lemmas of every way of writing it as proclitics
+does not list by those of its spellings after the default preprocessors (الى
+-> إلى) or, failing that (وكتابه), by the lemmas of every way of writing it as proclitics
 (و ف ب ك ل س ال لل and their chains) + a listed word + a pronoun, any of which
 counts as right. A random sample (seed 1) of the other positions with a
 result is printed for judging by hand.
@@ -165,11 +166,23 @@ def bases(stem, pronoun):
     return out
 
 
-def judge(word, targets, lemma):
-    """The word's own lemmas, or, for a word the dictionary does not list, the
+def variants_of(words, languages):
+    """Each word's spellings after the pack's default preprocessors (اذا -> إذا)."""
+    cmd = ['build/hoshidicts-cli', '--languages', languages, 'preprocess', 'ar', '--stdin']
+    out = subprocess.run(cmd, input='\n'.join(words) + '\n', capture_output=True, text=True, check=True).stdout
+    return {o['input']: [v['text'] for v in o['variants']] for o in map(json.loads, out.splitlines())}
+
+
+def judge(word, targets, lemma, variants=None):
+    """The word's own lemmas, or, for a word the dictionary does not list, those
+    of a spelling the default preprocessors make (الى -> إلى), or else the
     lemmas of every way of writing it as proclitics + a listed word + a
-    pronoun; and whether such a split was needed. None when neither works."""
+    pronoun; and whether such a split was needed. None when nothing works."""
     own = own_lemmas(word, targets, lemma)
+    if own:
+        return own, False
+    for spelling in (variants or {}).get(word, ()):
+        own |= own_lemmas(spelling, targets, lemma)
     if own:
         return own, False
     found = set()
@@ -197,6 +210,7 @@ def text_measure(args):
     text = open(text_path, encoding='utf-8').read()
     pos = positions(text)
     results = lookup([hover for _, hover in pos], imported, languages)
+    variants = variants_of(sorted({word for word, _ in pos}), languages)
     counts = collections.Counter()
     wrong = collections.Counter()
     unjudged = []
@@ -205,7 +219,7 @@ def text_measure(args):
         if first is None:
             counts['no result'] += 1
             continue
-        own, clitic = judge(word, targets, lemma)
+        own, clitic = judge(word, targets, lemma, variants)
         if own is None or strip(first['matched']) != word:
             unjudged.append((word, hover, first))
             continue
