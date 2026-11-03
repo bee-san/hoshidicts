@@ -1,0 +1,1757 @@
+# Sources: UniMorph tgl (https://github.com/unimorph/tgl, commit 799d79de338d1370ebfbeabb9823a0e8f86a2b6a, file tgl,
+# sha256 84bcc773fde9430d9c8f9d10c72cd4ebca6410eac0eb8408accf0fd6b49e840b), CC BY-SA 3.0, by the UniMorph contributors
+# (categories with ";", lemma = the root); and kaikki.org's Tagalog extraction of English Wiktionary (2026-10-30,
+# kaikki.org-dictionary-Tagalog.jsonl sha256 d2824e2bc07e4fac812b936a099226df30159180fa73988e5976b2b1d501b146),
+# CC BY-SA 4.0, by the Wiktionary contributors (categories "verb, ..." and "adjective, plural", lemma = the headword).
+# 900 + 800 + 100 rows sampled with seed 1 by sources/build-corpus.py; the rows the final rules do not
+# reach are in gaps.tsv.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+V;AGFOC;LGSPEC1	1	aabuso	abuso	*	*
+V;PFOC;LGSPEC1	1	aakitin	akit	*	*
+V;PFOC;LGSPEC1	1	aakusahan	akusa	*	*
+V;AGFOC;LGSPEC1	1	aakyat	akyat	*	*
+V;PFOC;LGSPEC1	1	aalisin	alis	*	*
+V;AGFOC;LGSPEC1	1	aarkila	arkila	*	*
+V;PFOC;LGSPEC1	1	aartehan	arte	*	*
+V;AGFOC;LGSPEC1	1	aasa	asa	*	*
+V;PFOC;LGSPEC1	1	aasahan	asa	*	*
+V;AGFOC;LGSPEC1	1	aawit	awit	*	*
+V;AGFOC;LGSPEC1	1	aayaw	ayaw	*	*
+V;PFOC;LGSPEC1	1	aayusin	ayos	*	*
+V;PFOC;LGSPEC1	1	babakasyunan	bakasyon	*	*
+V;PFOC;LGSPEC1	1	babalikan	balik	*	*
+V;PFOC;LGSPEC1	1	babalutin	balot	*	*
+V;AGFOC;LGSPEC1	1	babangon	bangon	*	*
+V;PFOC;LGSPEC1	1	babantayan	bantay	*	*
+V;AGFOC;LGSPEC1	1	babasa	basa	*	*
+V;PFOC;LGSPEC1	1	babasahan	basa	*	*
+V;PFOC;LGSPEC1	1	babasahin	basa	*	*
+V;AGFOC;LGSPEC1	1	babati	bati	*	*
+V;PFOC;LGSPEC1	1	babatiin	bati	*	*
+V;PFOC;LGSPEC1	1	babayaran	bayad	*	*
+V;PFOC;LGSPEC1	1	bibilangin	bilang	*	*
+V;PFOC;LGSPEC1	1	bibilhin	bili	*	*
+V;AGFOC;LGSPEC1	1	bibili	bili	*	*
+V;PFOC;LGSPEC1	1	bibisitahin	bisita	*	*
+V;PFV;PFOC	1	bilisan	bilis	*	*
+V;IPFV;PFOC	1	binabalaan	babala	*	*
+V;IPFV;PFOC	1	binabali	bali	*	*
+V;IPFV;PFOC	1	binabalita	balita	*	*
+V;IPFV;PFOC	1	binabalot	balot	*	*
+V;IPFV;PFOC	1	binabati	bati	*	*
+V;PFV;PFOC	1	binali	bali	*	*
+V;PFV;PFOC	1	binalot	balot	*	*
+V;PFV;PFOC	1	binangon	bangon	*	*
+V;PFV;PFOC	1	binantayan	bantay	*	*
+V;PFV;PFOC	1	binasa	basa	*	*
+V;PFV;PFOC	1	binasag	basag	*	*
+V;IPFV;PFOC	1	binibigay	bigay	*	*
+V;IPFV;PFOC	1	binibilang	bilang	*	*
+V;IPFV;PFOC	1	binibili	bili	*	*
+V;IPFV;PFOC	1	binibilisan	bilis	*	*
+V;PFV;PFOC	1	binigay	bigay	*	*
+V;PFV;PFOC	1	binigyan	bigay	*	*
+V;PFV;PFOC	1	binihisan	bihis	*	*
+V;PFV;PFOC	1	binili	bili	*	*
+V;PFV;PFOC	1	binitbit	bitbit	*	*
+V;IPFV;PFOC	1	binubuhos	buhos	*	*
+V;AGFOC;LGSPEC1	1	bubuhay	buhay	*	*
+V;AGFOC;LGSPEC1	1	bubukas	bukas	*	*
+V;AGFOC;LGSPEC1	1	bubulong	bulong	*	*
+V;PFOC;LGSPEC1	1	buburahin	bura	*	*
+V;IPFV;AGFOC	1	bumabali	bali	*	*
+V;IPFV;AGFOC	1	bumabasa	basa	*	*
+V;IPFV;AGFOC	1	bumabati	bati	*	*
+V;PFV;AGFOC	1	bumangon	bangon	*	*
+V;PFV;AGFOC	1	bumati	bati	*	*
+V;PFV;AGFOC	1	bumilang	bilang	*	*
+V;PFV;AGFOC	1	bumilis	bilis	*	*
+V;PFV;AGFOC	1	bumisita	bisita	*	*
+V;IPFV;AGFOC	1	bumoboto	boto	*	*
+V;IPFV;AGFOC	1	bumubuhay	buhay	*	*
+V;IPFV;AGFOC	1	bumubukas	bukas	*	*
+V;IPFV;AGFOC	1	bumubulong	bulong	*	*
+V;PFV;AGFOC	1	bumuhay	buhay	*	*
+V;PFV;AGFOC	1	bumukas	bukas	*	*
+V;PFV;AGFOC	1	bumulong	bulong	*	*
+V;AGFOC;LGSPEC1	1	dadaan	daan	*	*
+V;AGFOC;LGSPEC1	1	dadalaw	dalaw	*	*
+V;PFOC;LGSPEC1	1	dadalawin	dalaw	*	*
+V;AGFOC;LGSPEC1	1	daraan	daan	*	*
+V;PFOC;LGSPEC1	1	daramdamin	damdam	*	*
+V;AGFOC;LGSPEC1	1	didighay	dighay	*	*
+V;PFOC;LGSPEC1	1	didiligan	dilig	*	*
+V;PFV;PFOC	1	dinaanan	daan	*	*
+V;IPFV;PFOC	1	dinadaanan	daan	*	*
+V;IPFV;PFOC	1	dinadama	dama	*	*
+V;PFV;PFOC	1	dinagdagan	dagdag	*	*
+V;PFV;PFOC	1	dinala	dala	*	*
+V;PFV;PFOC	1	dinaluhan	dalo	*	*
+V;PFV;PFOC	1	dinamdam	damdam	*	*
+V;PFV;PFOC	1	dinampot	dampot	*	*
+V;IPFV;PFOC	1	dinaramdam	damdam	*	*
+V;PFV;PFOC	1	diniligan	dilig	*	*
+V;PFV;AGFOC	1	dumaan	daan	*	*
+V;IPFV;AGFOC	1	dumadalo	dalo	*	*
+V;IPFV;AGFOC	1	dumadampot	dampot	*	*
+V;PFV;AGFOC	1	dumampot	dampot	*	*
+V;IPFV;AGFOC	1	dumarating	dating	*	*
+V;PFOC;LGSPEC1	1	gagalitin	galit	*	*
+V;PFOC;LGSPEC1	1	gagamitin	gamit	*	*
+V;AGFOC;LGSPEC1	1	gagamot	gamot	*	*
+V;PFOC;LGSPEC1	1	gagamutin	gamot	*	*
+V;AGFOC;LGSPEC1	1	gagawa	gawa	*	*
+V;PFOC;LGSPEC1	1	gigibain	giba	*	*
+V;IPFV;PFOC	1	ginagalit	galit	*	*
+V;IPFV;PFOC	1	ginagamot	gamot	*	*
+V;IPFV;PFOC	1	ginagawa	gawa	*	*
+V;IPFV;PFOC	1	ginagayat	gayat	*	*
+V;PFV;PFOC	1	ginalit	galit	*	*
+V;PFV;PFOC	1	ginamit	gamit	*	*
+V;PFV;PFOC	1	giniba	giba	*	*
+V;IPFV;PFOC	1	ginugulong	gulong	*	*
+V;PFV;PFOC	1	ginulong	gulong	*	*
+V;PFV;PFOC	1	ginusto	gusto	*	*
+V;PFOC;LGSPEC1	1	guguhitin	guhit	*	*
+V;PFOC;LGSPEC1	1	gugupitin	gupit	*	*
+V;PFOC;LGSPEC1	1	gugustuhin	gusto	*	*
+V;IPFV;AGFOC	1	gumagaling	galing	*	*
+V;PFV;AGFOC	1	gumawa	gawa	*	*
+V;AGFOC;LGSPEC1	1	hahalik	halik	*	*
+V;AGFOC;LGSPEC1	1	hahanda	handa	*	*
+V;AGFOC;LGSPEC1	1	haharap	harap	*	*
+V;PFOC;LGSPEC1	1	hahatiin	hati	*	*
+V;AGFOC;LGSPEC1	1	hihiga	higa	*	*
+V;PFOC;LGSPEC1	1	hihigaan	higa	*	*
+V;PFOC;LGSPEC1	1	hihigpitan	higpit	*	*
+V;AGFOC;LGSPEC1	1	hihinga	hinga	*	*
+V;AGFOC;LGSPEC1	1	hihingi	hingi	*	*
+V;IPFV;PFOC	1	hinahabla	habla	*	*
+V;IPFV;PFOC	1	hinahalikan	halik	*	*
+V;IPFV;PFOC	1	hinahanda	handa	*	*
+V;IPFV;PFOC	1	hinahatid	hatid	*	*
+V;PFV;PFOC	1	hinarap	harap	*	*
+V;PFV;PFOC	1	hinigaan	higa	*	*
+V;IPFV;PFOC	1	hinihikaban	hikab	*	*
+V;IPFV;PFOC	1	hinihindian	hindi	*	*
+V;IPFV;PFOC	1	hinihintay	hintay	*	*
+V;IPFV;PFOC	1	hinihintuan	hinto	*	*
+V;IPFV;PFOC	1	hinihiram	hiram	*	*
+V;IPFV;PFOC	1	hinihirap	hirap	*	*
+V;PFV;PFOC	1	hinikaban	hikab	*	*
+V;PFV;PFOC	1	hiningi	hingi	*	*
+V;PFV;PFOC	1	hinintay	hintay	*	*
+V;PFV;PFOC	1	hiniwa	hiwa	*	*
+V;PFV;PFOC	1	hinubad	hubad	*	*
+V;PFV;PFOC	1	hinugasan	hugas	*	*
+V;IPFV;PFOC	1	hinuhubad	hubad	*	*
+V;IPFV;PFOC	1	hinuhuli	huli	*	*
+V;IPFV;PFOC	1	hinuhulog	hulog	*	*
+V;PFV;PFOC	1	hinuli	huli	*	*
+V;PFV;PFOC	1	hinulog	hulog	*	*
+V;PFOC;LGSPEC1	1	huhubarin	hubad	*	*
+V;PFOC;LGSPEC1	1	huhugasan	hugas	*	*
+V;AGFOC;LGSPEC1	1	huhuni	huni	*	*
+V;PFOC;LGSPEC1	1	huhunihan	huni	*	*
+V;IPFV;AGFOC	1	humahanap	hanap	*	*
+V;PFV;AGFOC	1	humarap	harap	*	*
+V;PFV;AGFOC	1	humawak	hawak	*	*
+V;PFV;AGFOC	1	humiga	higa	*	*
+V;IPFV;AGFOC	1	humihiga	higa	*	*
+V;IPFV;AGFOC	1	humihingi	hingi	*	*
+V;PFV;AGFOC	1	humindi	hindi	*	*
+V;IPFV;AGFOC	1	humuhuli	huli	*	*
+V;PFV;AGFOC	1	humuni	huni	*	*
+V;PFOC;LGSPEC1	1	ibabagsak	bagsak	*	*
+V;PFOC;LGSPEC1	1	ibabalita	balita	*	*
+V;PFOC;LGSPEC1	1	ibabangon	bangon	*	*
+V;PFOC;LGSPEC1	1	ibibigay	bigay	*	*
+V;IPFV;PFOC	1	ibinibigay	bigay	*	*
+V;PFOC;LGSPEC1	1	ibubuhos	buhos	*	*
+V;PFOC;LGSPEC1	1	idadasal	dasal	*	*
+V;PFOC;LGSPEC1	1	igaganda	ganda	*	*
+V;PFOC;LGSPEC1	1	igagarahe	garahe	*	*
+V;IPFV;PFOC	1	iginagaling	galing	*	*
+V;PFOC;LGSPEC1	1	ihahanda	handa	*	*
+V;PFOC;LGSPEC1	1	ihahatid	hatid	*	*
+V;PFOC;LGSPEC1	1	ihihirap	hirap	*	*
+V;PFOC;LGSPEC1	1	ihuhulog	hulog	*	*
+V;AGFOC;LGSPEC1	1	iibig	ibig	*	*
+V;AGFOC;LGSPEC1	1	iilaw	ilaw	*	*
+V;PFOC;LGSPEC1	1	iimbentuhin	imbento	*	*
+V;PFOC;LGSPEC1	1	iingatan	ingat	*	*
+V;PFOC;LGSPEC1	1	iingayan	ingay	*	*
+V;PFOC;LGSPEC1	1	iinumin	inom	*	*
+V;PFOC;LGSPEC1	1	iisip	isip	*	*
+V;PFOC;LGSPEC1	1	ikakagalit	galit	*	*
+V;PFOC;LGSPEC1	1	ikakasaya	saya	*	*
+V;IPFV;PFOC	1	ikinakagalit	galit	*	*
+V;PFV;PFOC	1	ikinasaya	saya	*	*
+V;PFOC;LGSPEC1	1	ilalabas	labas	*	*
+V;PFOC;LGSPEC1	1	ilalaga	laga	*	*
+V;PFOC;LGSPEC1	1	ilulubog	lubog	*	*
+V;IPFV;PFOC	1	inaabuso	abuso	*	*
+V;IPFV;PFOC	1	inaabutan	abot	*	*
+V;IPFV;PFOC	1	inaakit	akit	*	*
+V;IPFV;PFOC	1	inaakusahan	akusa	*	*
+V;IPFV;PFOC	1	inaakyat	akyat	*	*
+V;IPFV;PFOC	1	inaalala	alala	*	*
+V;IPFV;PFOC	1	inaarugaan	aruga	*	*
+V;PFV;PFOC	1	inabot	abot	*	*
+V;PFV;PFOC	1	inakala	akala	*	*
+V;PFV;PFOC	1	inakusahan	akusa	*	*
+V;PFV;PFOC	1	inakyat	akyat	*	*
+V;PFV;PFOC	1	inalagaan	alaga	*	*
+V;PFV;PFOC	1	inalis	alis	*	*
+V;PFV;PFOC	1	inarugaan	aruga	*	*
+V;PFV;PFOC	1	inawit	awit	*	*
+V;PFV;PFOC	1	inayos	ayos	*	*
+V;PFV;PFOC	1	inibig	ibig	*	*
+V;IPFV;PFOC	1	iniibig	ibig	*	*
+V;IPFV;PFOC	1	iniilawan	ilaw	*	*
+V;IPFV;PFOC	1	iniimbento	imbento	*	*
+V;IPFV;PFOC	1	iniingayan	ingay	*	*
+V;IPFV;PFOC	1	iniinis	inis	*	*
+V;IPFV;PFOC	1	iniinit	init	*	*
+V;IPFV;PFOC	1	iniintindi	intindi	*	*
+V;IPFV;PFOC	1	iniipon	ipon	*	*
+V;IPFV;PFOC	1	iniiyakan	iyak	*	*
+V;PFV;PFOC	1	inilaki	laki	*	*
+V;IPFV;PFOC	1	inilalaki	laki	*	*
+V;PFV;PFOC	1	inimbita	imbita	*	*
+V;PFV;PFOC	1	iningatan	ingat	*	*
+V;PFV;PFOC	1	iningayan	ingay	*	*
+V;PFV;PFOC	1	ininom	inom	*	*
+V;PFV;PFOC	1	inintindi	intindi	*	*
+V;PFV;PFOC	1	inipon	ipon	*	*
+V;PFV;PFOC	1	inisip	isip	*	*
+V;PFV;PFOC	1	inulit	ulit	*	*
+V;PFV;PFOC	1	inumpisahan	umpisa	*	*
+V;PFV;PFOC	1	inunlad	unlad	*	*
+V;PFV;PFOC	1	inupahan	upa	*	*
+V;PFV;PFOC	1	inusog	usog	*	*
+V;PFV;PFOC	1	inutot	utot	*	*
+V;IPFV;PFOC	1	inuunlad	unlad	*	*
+V;IPFV;PFOC	1	inuutang	utang	*	*
+V;IPFV;PFOC	1	inuutangan	utang	*	*
+V;IPFV;PFOC	1	inuutot	utot	*	*
+V;IPFV;PFOC	1	inuutusan	utos	*	*
+V;PFV;PFOC	1	inuwi	uwi	*	*
+V;PFOC;LGSPEC1	1	ipagtataka	taka	*	*
+V;PFOC;LGSPEC1	1	ipagyayabang	yabang	*	*
+V;PFOC;LGSPEC1	1	ipapagsaya	saya	*	*
+V;PFOC;LGSPEC1	1	ipapagwagi	wagi	*	*
+V;PFOC;LGSPEC1	1	ipaparada	parada	*	*
+V;PFV;PFOC	1	ipinagdusa	dusa	*	*
+V;PFV;PFOC	1	ipinagtaka	taka	*	*
+V;PFV;PFOC	1	ipinagyabang	yabang	*	*
+V;IPFV;PFOC	1	ipinakikilala	kilala	*	*
+V;IPFV;PFOC	1	ipinaparada	parada	*	*
+V;IPFV;PFOC	1	ipinapasa	pasa	*	*
+V;PFV;PFOC	1	ipininta	pinta	*	*
+V;PFOC;LGSPEC1	1	ipopromote	promote	*	*
+V;PFV;PFOC	1	isinuklam	suklam	*	*
+V;PFV;PFOC	1	isinuko	suko	*	*
+V;PFV;PFOC	1	isinumbong	sumbong	*	*
+V;PFOC;LGSPEC1	1	isusubo	subo	*	*
+V;PFOC;LGSPEC1	1	isusugal	sugal	*	*
+V;PFOC;LGSPEC1	1	isusuklam	suklam	*	*
+V;PFOC;LGSPEC1	1	isusulat	sulat	*	*
+V;PFOC;LGSPEC1	1	isusumbong	sumbong	*	*
+V;PFOC;LGSPEC1	1	itataas	taas	*	*
+V;PFOC;LGSPEC1	1	itatabi	tabi	*	*
+V;PFOC;LGSPEC1	1	itataguyod	taguyod	*	*
+V;PFOC;LGSPEC1	1	itatahimik	tahimik	*	*
+V;PFOC;LGSPEC1	1	itatanan	tanan	*	*
+V;PFOC;LGSPEC1	1	itatanim	tanim	*	*
+V;IPFV;PFOC	1	itinatabi	tabi	*	*
+V;IPFV;PFOC	1	itinatago	tago	*	*
+V;PFV;PFOC	1	itinayo	tayo	*	*
+V;PFV;PFOC	1	itininda	tinda	*	*
+V;IPFV;PFOC	1	itinitinda	tinda	*	*
+V;IPFV;PFOC	1	itinutuloy	tuloy	*	*
+V;PFOC;LGSPEC1	1	ititinda	tinda	*	*
+V;PFOC;LGSPEC1	1	itutulak	tulak	*	*
+V;PFOC;LGSPEC1	1	iwawala	wala	*	*
+V;AGFOC;LGSPEC1	1	kakagat	kagat	*	*
+V;PFOC;LGSPEC1	1	kakailanganin	kailangan	*	*
+V;AGFOC;LGSPEC1	1	kakain	kain	*	*
+V;PFOC;LGSPEC1	1	kakamayan	kamay	*	*
+V;PFOC;LGSPEC1	1	kakamayin	kamay	*	*
+V;PFOC;LGSPEC1	1	kakatayin	katay	*	*
+V;PFOC;LGSPEC1	1	kikilalanin	kilala	*	*
+V;PFOC;LGSPEC1	1	kikipkipin	kipkip	*	*
+V;PFV;PFOC	1	kinabit	kabit	*	*
+V;IPFV;PFOC	1	kinakabit	kabit	*	*
+V;IPFV;PFOC	1	kinakagat	kagat	*	*
+V;IPFV;PFOC	1	kinakailangan	kailangan	*	*
+V;IPFV;PFOC	1	kinakain	kain	*	*
+V;IPFV;PFOC	1	kinakamayan	kamay	*	*
+V;IPFV;PFOC	1	kinakasal	kasal	*	*
+V;PFV;PFOC	1	kinamayan	kamay	*	*
+V;PFV;PFOC	1	kinatay	katay	*	*
+V;PFV;PFOC	1	kinatok	katok	*	*
+V;PFV;PFOC	1	kinipkip	kipkip	*	*
+V;IPFV;PFOC	1	kinukumusta	kumusta	*	*
+V;PFV;PFOC	1	kinumusta	kumusta	*	*
+V;PFV;PFOC	1	kinunan	kuha	*	*
+V;AGFOC;LGSPEC1	1	kukuha	kuha	*	*
+V;PFOC;LGSPEC1	1	kukuhanin	kuha	*	*
+V;PFOC;LGSPEC1	1	kukunin	kuha	*	*
+V;PFOC;LGSPEC1	1	kukusutin	kusot	*	*
+V;PFV;AGFOC	1	kumagat	kagat	*	*
+V;PFV;AGFOC	1	kumain	kain	*	*
+V;IPFV;AGFOC	1	kumakagat	kagat	*	*
+V;IPFV;AGFOC	1	kumakain	kain	*	*
+V;IPFV;AGFOC	1	kumokopya	kopya	*	*
+V;PFV;AGFOC	1	kumopya	kopya	*	*
+V;PFV;AGFOC	1	kumuha	kuha	*	*
+V;PFOC;LGSPEC1	1	lalabagin	labag	*	*
+V;PFOC;LGSPEC1	1	lalabanan	laban	*	*
+V;PFOC;LGSPEC1	1	lalabasan	labas	*	*
+V;PFOC;LGSPEC1	1	lalagnatin	lagnat	*	*
+V;PFOC;LGSPEC1	1	lalakbayin	lakbay	*	*
+V;AGFOC;LGSPEC1	1	liliban	liban	*	*
+V;PFOC;LGSPEC1	1	lilibanan	liban	*	*
+V;PFOC;LGSPEC1	1	lilibangin	libang	*	*
+V;PFOC;LGSPEC1	1	liligawan	ligaw	*	*
+V;AGFOC;LGSPEC1	1	lilimot	limot	*	*
+V;PFOC;LGSPEC1	1	lilinlangin	linlang	*	*
+V;AGFOC;LGSPEC1	1	lilipad	lipad	*	*
+V;AGFOC;LGSPEC1	1	lilipat	lipat	*	*
+V;PFOC;LGSPEC1	1	lilipatan	lipat	*	*
+V;PFOC;LGSPEC1	1	lulutuin	luto	*	*
+V;IPFV;AGFOC	1	lumalaban	laban	*	*
+V;IPFV;AGFOC	1	lumalabas	labas	*	*
+V;IPFV;AGFOC	1	lumalaki	laki	*	*
+V;PFV;AGFOC	1	lumayo	layo	*	*
+V;IPFV;AGFOC	1	lumiligaw	ligaw	*	*
+V;PFV;AGFOC	1	lumipad	lipad	*	*
+V;PFV;AGFOC	1	lumipat	lipat	*	*
+V;PFV;AGFOC	1	lumubog	lubog	*	*
+V;IPFV;AGFOC	1	lumulubog	lubog	*	*
+V;IPFV;AGFOC	1	lumulunok	lunok	*	*
+V;IPFV;AGFOC	1	lumulusob	lusob	*	*
+V;PFV;AGFOC	1	lumunok	lunok	*	*
+V;PFOC;LGSPEC1	1	mababasag	basag	*	*
+V;AGFOC;LGSPEC1	1	mabubusog	busog	*	*
+V;AGFOC;LGSPEC1	1	mag-aabot	abot	*	*
+V;AGFOC;LGSPEC1	1	mag-aalis	alis	*	*
+V;AGFOC;LGSPEC1	1	mag-iingay	ingay	*	*
+V;AGFOC;LGSPEC1	1	mag-iinit	init	*	*
+V;AGFOC;LGSPEC1	1	mag-iipon	ipon	*	*
+V;AGFOC;LGSPEC1	1	mag-imbento	imbento	*	*
+V;AGFOC;LGSPEC1	1	mag-oorder	order	*	*
+V;AGFOC;LGSPEC1	1	mag-uumpisa	umpisa	*	*
+V;AGFOC;LGSPEC1	1	mag-uusog	usog	*	*
+V;AGFOC;LGSPEC1	1	mag-uuwi	uwi	*	*
+V;AGFOC;LGSPEC1	1	magbababala	babala	*	*
+V;AGFOC;LGSPEC1	1	magbabagsak	bagsak	*	*
+V;AGFOC;LGSPEC1	1	magbabali	bali	*	*
+V;AGFOC;LGSPEC1	1	magbabalik	balik	*	*
+V;AGFOC;LGSPEC1	1	magbabalita	balita	*	*
+V;AGFOC;LGSPEC1	1	magbabantay	bantay	*	*
+V;AGFOC;LGSPEC1	1	magbabasa	basa	*	*
+V;AGFOC;LGSPEC1	1	magbabasag	basag	*	*
+V;AGFOC;LGSPEC1	1	magbabawal	bawal	*	*
+V;AGFOC;LGSPEC1	1	magbabayad	bayad	*	*
+V;AGFOC;LGSPEC1	1	magbibitbit	bitbit	*	*
+V;AGFOC;LGSPEC1	1	magbubura	bura	*	*
+V;AGFOC;LGSPEC1	1	magdadala	dala	*	*
+V;AGFOC;LGSPEC1	1	magdaramdam	damdam	*	*
+V;AGFOC;LGSPEC1	1	magdidilig	dilig	*	*
+V;AGFOC;LGSPEC1	1	maggagayat	gayat	*	*
+V;AGFOC;LGSPEC1	1	maggigiba	giba	*	*
+V;AGFOC;LGSPEC1	1	maggugupit	gupit	*	*
+V;AGFOC;LGSPEC1	1	maghahagod	hagod	*	*
+V;AGFOC;LGSPEC1	1	maghihila	hila	*	*
+V;AGFOC;LGSPEC1	1	maghihintay	hintay	*	*
+V;AGFOC;LGSPEC1	1	magkakabit	kabit	*	*
+V;AGFOC;LGSPEC1	1	magkakamay	kamay	*	*
+V;AGFOC;LGSPEC1	1	magkakatay	katay	*	*
+V;AGFOC;LGSPEC1	1	magkukusot	kusot	*	*
+V;AGFOC;LGSPEC1	1	maglalaro	laro	*	*
+V;AGFOC;LGSPEC1	1	maglilinis	linis	*	*
+V;AGFOC;LGSPEC1	1	magmamaneho	maneho	*	*
+V;AGFOC;LGSPEC1	1	magmamasahe	masahe	*	*
+V;AGFOC;LGSPEC1	1	magpapaalam	paalam	*	*
+V;AGFOC;LGSPEC1	1	magpapaalis	alis	*	*
+V;AGFOC;LGSPEC1	1	magpapagupit	gupit	*	*
+V;AGFOC;LGSPEC1	1	magpapahinga	pahinga	*	*
+V;AGFOC;LGSPEC1	1	magpapakita	kita	*	*
+V;AGFOC;LGSPEC1	1	magpapasan	pasan	*	*
+V;AGFOC;LGSPEC1	1	magpapasok	pasok	*	*
+V;AGFOC;LGSPEC1	1	magpapatay	patay	*	*
+V;AGFOC;LGSPEC1	1	magpapatingin	tingin	*	*
+V;AGFOC;LGSPEC1	1	magpapatuloy	patuloy	*	*
+V;AGFOC;LGSPEC1	1	magplaplantsa	plantsa	*	*
+V;AGFOC;LGSPEC1	1	magpupunit	punit	*	*
+V;AGFOC;LGSPEC1	1	magpupuno	puno	*	*
+V;AGFOC;LGSPEC1	1	magrerenta	renta	*	*
+V;AGFOC;LGSPEC1	1	magsasalita	salita	*	*
+V;AGFOC;LGSPEC1	1	magsasama	sama	*	*
+V;AGFOC;LGSPEC1	1	magsasampay	sampay	*	*
+V;AGFOC;LGSPEC1	1	magsasauli	sauli	*	*
+V;AGFOC;LGSPEC1	1	magsisiesta	siesta	*	*
+V;AGFOC;LGSPEC1	1	magsisigawan	sigaw	*	*
+V;AGFOC;LGSPEC1	1	magsisipilyo	sipilyo	*	*
+V;AGFOC;LGSPEC1	1	magsusukat	sukat	*	*
+V;AGFOC;LGSPEC1	1	magsusuklay	suklay	*	*
+V;AGFOC;LGSPEC1	1	magsusulat	sulat	*	*
+V;AGFOC;LGSPEC1	1	magsusumbong	sumbong	*	*
+V;AGFOC;LGSPEC1	1	magsusunog	sunog	*	*
+V;AGFOC;LGSPEC1	1	magtataas	taas	*	*
+V;AGFOC;LGSPEC1	1	magtatabi	tabi	*	*
+V;AGFOC;LGSPEC1	1	magtatago	tago	*	*
+V;AGFOC;LGSPEC1	1	magtataka	taka	*	*
+V;AGFOC;LGSPEC1	1	magtatanan	tanan	*	*
+V;AGFOC;LGSPEC1	1	magtatanggal	tanggal	*	*
+V;AGFOC;LGSPEC1	1	magtatapos	tapos	*	*
+V;AGFOC;LGSPEC1	1	magtatayo	tayo	*	*
+V;AGFOC;LGSPEC1	1	magtitinda	tinda	*	*
+V;AGFOC;LGSPEC1	1	magtuturo	turo	*	*
+V;AGFOC;LGSPEC1	1	magwawagi	wagi	*	*
+V;AGFOC;LGSPEC1	1	magwawasak	wasak	*	*
+V;AGFOC;LGSPEC1	1	makikipagkilala	kilala	*	*
+V;AGFOC;LGSPEC1	1	mamamangha	mangha	*	*
+V;AGFOC;LGSPEC1	1	mang-aakusa	akusa	*	*
+V;AGFOC;LGSPEC1	1	manganga-ilangan	kailangan	*	*
+V;AGFOC;LGSPEC1	1	mangisda	isda	*	*
+V;AGFOC;LGSPEC1	1	mangungumusta	kumusta	*	*
+V;AGFOC;LGSPEC1	1	maniniwala	niwala	*	*
+V;AGFOC;LGSPEC1	1	manloloko	loko	*	*
+V;AGFOC;LGSPEC1	1	manonood	nood	*	*
+V;AGFOC;LGSPEC1	1	manununtok	suntok	*	*
+V;AGFOC;LGSPEC1	1	masasaktan	sakit	*	*
+V;PFV;PFOC	1	minadali	dali	*	*
+V;PFV;PFOC	1	minahal	mahal	*	*
+V;PFV;PFOC	1	minakinilya	makinilya	*	*
+V;IPFV;PFOC	1	minamadali	dali	*	*
+V;IPFV;PFOC	1	minamasahe	masahe	*	*
+V;PFV;PFOC	1	minaneho	maneho	*	*
+V;IPFV;AGFOC	1	naaakit	akit	*	*
+V;PFV;AGFOC	1	naakit	akit	*	*
+V;PFV;PFOC	1	nabali	bali	*	*
+V;PFV;AGFOC	1	nabigay	bigay	*	*
+V;IPFV;AGFOC	1	nabubusog	busog	*	*
+V;PFV;AGFOC	1	nabusog	busog	*	*
+V;IPFV;AGFOC	1	nadidinig	dinig	*	*
+V;IPFV;AGFOC	1	nag-aalaga	alaga	*	*
+V;IPFV;AGFOC	1	nag-aalala	alala	*	*
+V;IPFV;AGFOC	1	nag-aalis	alis	*	*
+V;IPFV;AGFOC	1	nag-aayos	ayos	*	*
+V;PFV;AGFOC	1	nag-abot	abot	*	*
+V;IPFV;AGFOC	1	nag-iingay	ingay	*	*
+V;IPFV;AGFOC	1	nag-iinit	init	*	*
+V;IPFV;AGFOC	1	nag-iipon	ipon	*	*
+V;PFV;AGFOC	1	nag-ingat	ingat	*	*
+V;PFV;AGFOC	1	nag-ingay	ingay	*	*
+V;PFV;AGFOC	1	nag-ipon	ipon	*	*
+V;PFV;AGFOC	1	nag-isip	isip	*	*
+V;PFV;AGFOC	1	nag-okupa	okupa	*	*
+V;PFV;AGFOC	1	nag-ulit	ulit	*	*
+V;PFV;AGFOC	1	nag-usog	usog	*	*
+V;IPFV;AGFOC	1	nag-uulit	ulit	*	*
+V;IPFV;AGFOC	1	nag-uumpisa	umpisa	*	*
+V;IPFV;AGFOC	1	nagagalit	galit	*	*
+V;PFV;AGFOC	1	nagalit	galit	*	*
+V;PFV;AGFOC	1	nagbaba	baba	*	*
+V;IPFV;AGFOC	1	nagbababala	babala	*	*
+V;IPFV;AGFOC	1	nagbabali	bali	*	*
+V;IPFV;AGFOC	1	nagbabalik	balik	*	*
+V;IPFV;AGFOC	1	nagbabalita	balita	*	*
+V;IPFV;AGFOC	1	nagbabalot	balot	*	*
+V;IPFV;AGFOC	1	nagbabasag	basag	*	*
+V;IPFV;AGFOC	1	nagbabawal	bawal	*	*
+V;IPFV;AGFOC	1	nagbabayad	bayad	*	*
+V;PFV;AGFOC	1	nagbagsak	bagsak	*	*
+V;PFV;AGFOC	1	nagbalita	balita	*	*
+V;PFV;AGFOC	1	nagbasa	basa	*	*
+V;PFV;AGFOC	1	nagbawal	bawal	*	*
+V;PFV;AGFOC	1	nagbayad	bayad	*	*
+V;IPFV;AGFOC	1	nagbebenta	benta	*	*
+V;IPFV;AGFOC	1	nagbibihis	bihis	*	*
+V;IPFV;AGFOC	1	nagbibiro	biro	*	*
+V;IPFV;AGFOC	1	nagbubukas	bukas	*	*
+V;IPFV;AGFOC	1	nagbubura	bura	*	*
+V;PFV;AGFOC	1	nagbukas	bukas	*	*
+V;IPFV;AGFOC	1	nagdadasal	dasal	*	*
+V;PFV;AGFOC	1	nagdala	dala	*	*
+V;PFV;AGFOC	1	nagdamdam	damdam	*	*
+V;IPFV;AGFOC	1	nagdaragdag	dagdag	*	*
+V;IPFV;AGFOC	1	nagdudusa	dusa	*	*
+V;IPFV;AGFOC	1	naggagamot	gamot	*	*
+V;IPFV;AGFOC	1	naggagarahe	garahe	*	*
+V;PFV;AGFOC	1	naggarahe	garahe	*	*
+V;IPFV;AGFOC	1	nagguguhit	guhit	*	*
+V;PFV;AGFOC	1	nagguhit	guhit	*	*
+V;PFV;AGFOC	1	naggupit	gupit	*	*
+V;PFV;AGFOC	1	naghabla	habla	*	*
+V;PFV;AGFOC	1	naghagod	hagod	*	*
+V;IPFV;AGFOC	1	naghahabla	habla	*	*
+V;IPFV;AGFOC	1	naghahagod	hagod	*	*
+V;IPFV;AGFOC	1	naghahati	hati	*	*
+V;PFV;AGFOC	1	naghanda	handa	*	*
+V;PFV;AGFOC	1	naghatid	hatid	*	*
+V;IPFV;AGFOC	1	naghihikab	hikab	*	*
+V;PFV;AGFOC	1	naghila	hila	*	*
+V;PFV;AGFOC	1	naghintay	hintay	*	*
+V;PFV;AGFOC	1	naghirap	hirap	*	*
+V;PFV;AGFOC	1	naghugas	hugas	*	*
+V;IPFV;AGFOC	1	nagkakabit	kabit	*	*
+V;IPFV;AGFOC	1	nagkakatay	katay	*	*
+V;PFV;AGFOC	1	nagkamayan	kamay	*	*
+V;IPFV;AGFOC	1	nagkikipkip	kipkip	*	*
+V;PFV;AGFOC	1	naglaba	laba	*	*
+V;PFV;AGFOC	1	naglaga	laga	*	*
+V;PFV;AGFOC	1	naglakad	lakad	*	*
+V;PFV;AGFOC	1	naglakbay	lakbay	*	*
+V;IPFV;AGFOC	1	naglalabas	labas	*	*
+V;IPFV;AGFOC	1	naglalakad	lakad	*	*
+V;IPFV;AGFOC	1	naglalakbay	lakbay	*	*
+V;IPFV;AGFOC	1	naglilinis	linis	*	*
+V;PFV;AGFOC	1	naglipat	lipat	*	*
+V;IPFV;AGFOC	1	nagluluto	luto	*	*
+V;PFV;AGFOC	1	nagluto	luto	*	*
+V;PFV;AGFOC	1	nagmadali	dali	*	*
+V;PFV;AGFOC	1	nagmahal	mahal	*	*
+V;IPFV;AGFOC	1	nagmamakinilya	makinilya	*	*
+V;IPFV;AGFOC	1	nagmamasid	masid	*	*
+V;PFV;AGFOC	1	nagmaneho	maneho	*	*
+V;PFV;AGFOC	1	nagmasahe	masahe	*	*
+V;PFV;AGFOC	1	nagmasid	masid	*	*
+V;PFV;AGFOC	1	nagpagupit	gupit	*	*
+V;PFV;AGFOC	1	nagpahinga	pahinga	*	*
+V;PFV;AGFOC	1	nagpakain	kain	*	*
+V;PFV;AGFOC	1	nagpakasal	kasal	*	*
+V;PFV;AGFOC	1	nagpakilala	kilala	*	*
+V;PFV;AGFOC	1	nagpakita	kita	*	*
+V;PFV;AGFOC	1	nagpalaki	laki	*	*
+V;IPFV;AGFOC	1	nagpapaalam	paalam	*	*
+V;IPFV;AGFOC	1	nagpapagupit	gupit	*	*
+V;IPFV;AGFOC	1	nagpapakilala	kilala	*	*
+V;IPFV;AGFOC	1	nagpapalaki	laki	*	*
+V;IPFV;AGFOC	1	nagpapasok	pasok	*	*
+V;IPFV;AGFOC	1	nagpaplantsa	plantsa	*	*
+V;PFV;AGFOC	1	nagpasa	pasa	*	*
+V;PFV;AGFOC	1	nagpasan	pasan	*	*
+V;PFV;AGFOC	1	nagpasok	pasok	*	*
+V;PFV;AGFOC	1	nagpatuloy	patuloy	*	*
+V;PFV;AGFOC	1	nagpugot	pugot	*	*
+V;PFV;AGFOC	1	nagpunit	punit	*	*
+V;PFV;AGFOC	1	nagpuno	puno	*	*
+V;IPFV;AGFOC	1	nagpupugot	pugot	*	*
+V;IPFV;AGFOC	1	nagpupunit	punit	*	*
+V;IPFV;AGFOC	1	nagpupuno	puno	*	*
+V;PFV;AGFOC	1	nagsabi	sabi	*	*
+V;PFV;AGFOC	1	nagsama	sama	*	*
+V;PFV;AGFOC	1	nagsamba	samba	*	*
+V;PFV;AGFOC	1	nagsampay	sampay	*	*
+V;PFV;AGFOC	1	nagsara	sara	*	*
+V;IPFV;AGFOC	1	nagsasama	sama	*	*
+V;IPFV;AGFOC	1	nagsasanla	sanla	*	*
+V;PFV;AGFOC	1	nagsibak	sibak	*	*
+V;PFV;AGFOC	1	nagsipilyo	sipilyo	*	*
+V;IPFV;AGFOC	1	nagsisibak	sibak	*	*
+V;IPFV;AGFOC	1	nagsisinungaling	sinungaling	*	*
+V;IPFV;AGFOC	1	nagsisipilyo	sipilyo	*	*
+V;IPFV;AGFOC	1	nagsisira	sira	*	*
+V;PFV;AGFOC	1	nagsubo	subo	*	*
+V;PFV;AGFOC	1	nagsukat	sukat	*	*
+V;PFV;AGFOC	1	nagsumbong	sumbong	*	*
+V;PFV;AGFOC	1	nagsunong	sunong	*	*
+V;PFV;AGFOC	1	nagsuri	suri	*	*
+V;IPFV;AGFOC	1	nagsusuklay	suklay	*	*
+V;IPFV;AGFOC	1	nagsusuot	suot	*	*
+V;IPFV;AGFOC	1	nagsusuri	suri	*	*
+V;PFV;AGFOC	1	nagtago	tago	*	*
+V;PFV;AGFOC	1	nagtanggal	tanggal	*	*
+V;PFV;AGFOC	1	nagtanim	tanim	*	*
+V;IPFV;AGFOC	1	nagtataas	taas	*	*
+V;IPFV;AGFOC	1	nagtataka	taka	*	*
+V;IPFV;AGFOC	1	nagtatanggal	tanggal	*	*
+V;IPFV;AGFOC	1	nagtatanong	tanong	*	*
+V;IPFV;AGFOC	1	nagtatapos	tapos	*	*
+V;IPFV;AGFOC	1	nagtatayo	tayo	*	*
+V;IPFV;AGFOC	1	nagtatrabaho	trabaho	*	*
+V;PFV;AGFOC	1	nagtayo	tayo	*	*
+V;IPFV;AGFOC	1	nagtitinda	tinda	*	*
+V;PFV;AGFOC	1	nagtrabaho	trabaho	*	*
+V;PFV;PFOC	1	nagustuhan	gusto	*	*
+V;PFV;AGFOC	1	nagwagi	wagi	*	*
+V;PFV;AGFOC	1	nagwalis	walis	*	*
+V;PFV;AGFOC	1	nagwasak	wasak	*	*
+V;IPFV;AGFOC	1	nagwawalis	walis	*	*
+V;IPFV;AGFOC	1	nahuhubad	hubad	*	*
+V;IPFV;AGFOC	1	nahuhulog	hulog	*	*
+V;PFV;AGFOC	1	nahulog	hulog	*	*
+V;IPFV;PFOC	1	naiintindihan	intindi	*	*
+V;PFV;PFOC	1	naintindihan	intindi	*	*
+V;IPFV;AGFOC	1	nakakalimot	limot	*	*
+V;IPFV;PFOC	1	nakakalimutan	limot	*	*
+V;PFV;AGFOC	1	nakakita	kita	*	*
+V;PFV;AGFOC	1	nakalimot	limot	*	*
+V;PFV;PFOC	1	nakalimutan	limot	*	*
+V;PFV;AGFOC	1	nakamit	kamit	*	*
+V;IPFV;PFOC	1	nakikita	kita	*	*
+V;PFV;PFOC	1	nakipagkita	kita	*	*
+V;PFV;AGFOC	1	nalungkot	lungkot	*	*
+V;IPFV;AGFOC	1	namamangha	mangha	*	*
+V;IPFV;AGFOC	1	namamasyal	pasyal	*	*
+V;IPFV;AGFOC	1	namamatay	patay	*	*
+V;PFV;AGFOC	1	namangha	mangha	*	*
+V;PFV;AGFOC	1	namatay	patay	*	*
+V;PFV;AGFOC	1	namukpok	pukpok	*	*
+V;PFV;AGFOC	1	nanakot	takot	*	*
+V;PFV;AGFOC	1	nandaya	daya	*	*
+V;IPFV;AGFOC	1	nang-aakusa	akusa	*	*
+V;IPFV;AGFOC	1	nang-iinis	inis	*	*
+V;PFV;AGFOC	1	nanganak	anak	*	*
+V;IPFV;AGFOC	1	nanganga-ilangan	kailangan	*	*
+V;IPFV;AGFOC	1	nanganganak	anak	*	*
+V;IPFV;AGFOC	1	nanggagaling	galing	*	*
+V;IPFV;AGFOC	1	nanggagalit	galit	*	*
+V;PFV;AGFOC	1	nanggaling	galing	*	*
+V;PFV;AGFOC	1	nanggalit	galit	*	*
+V;PFV;AGFOC	1	nanglinlang	linlang	*	*
+V;PFV;AGFOC	1	nangumusta	kumusta	*	*
+V;IPFV;AGFOC	1	nangunguha	kuha	*	*
+V;PFV;AGFOC	1	nangyari	yari	*	*
+V;IPFV;AGFOC	1	naninira	sira	*	*
+V;PFV;AGFOC	1	nanira	sira	*	*
+V;PFV;AGFOC	1	nanood	nood	*	*
+V;IPFV;AGFOC	1	nanununtok	suntok	*	*
+V;IPFV;AGFOC	1	napapansin	pansin	*	*
+V;PFV;PFOC	1	napunit	punit	*	*
+V;PFV;AGFOC	1	napuno	puno	*	*
+V;IPFV;PFOC	1	napupunit	punit	*	*
+V;IPFV;AGFOC	1	napupuno	puno	*	*
+V;PFV;AGFOC	1	narinig	dinig	*	*
+V;PFV;AGFOC	1	nasuklam	suklam	*	*
+V;IPFV;AGFOC	1	natutulog	tulog	*	*
+V;PFV;PFOC	1	nawasak	wasak	*	*
+V;IPFV;AGFOC	1	nawawala	wala	*	*
+V;PFV;PFOC	1	nginitian	ngiti	*	*
+V;IPFV;AGFOC	1	ngumingiti	ngiti	*	*
+V;PFV;PFOC	1	nilabhan	laba	*	*
+V;PFV;PFOC	1	nilakbay	lakbay	*	*
+V;IPFV;PFOC	1	nilalabanan	laban	*	*
+V;IPFV;PFOC	1	nilalabas	labas	*	*
+V;IPFV;PFOC	1	nilalabhan	laba	*	*
+V;IPFV;PFOC	1	nilalagay	lagay	*	*
+V;IPFV;PFOC	1	nilalagnat	lagnat	*	*
+V;IPFV;PFOC	1	nilalaro	laro	*	*
+V;PFV;PFOC	1	nilapitan	lapit	*	*
+V;PFV;PFOC	1	nilibanan	liban	*	*
+V;PFV;PFOC	1	nilibang	libang	*	*
+V;IPFV;PFOC	1	nililibang	libang	*	*
+V;IPFV;PFOC	1	nililigawan	ligaw	*	*
+V;IPFV;PFOC	1	nililinis	linis	*	*
+V;IPFV;PFOC	1	nililito	lito	*	*
+V;PFV;PFOC	1	nilimot	limot	*	*
+V;PFV;PFOC	1	nilinis	linis	*	*
+V;PFV;PFOC	1	nilipad	lipad	*	*
+V;IPFV;PFOC	1	nilulubog	lubog	*	*
+V;IPFV;PFOC	1	nilulunok	lunok	*	*
+V;IPFV;PFOC	1	nilulusob	lusob	*	*
+V;PFV;PFOC	1	niluto	luto	*	*
+V;PFV;PFOC	1	ninakaw	nakaw	*	*
+V;PFV;PFOC	1	niregaluhan	regalo	*	*
+V;PFOC;LGSPEC1	1	ookupahin	okupa	*	*
+V;PFOC;LGSPEC1	1	oorderin	order	*	*
+V;PFOC;LGSPEC1	1	pag-aaralan	aral	*	*
+V;PFOC;LGSPEC1	1	pagsasayahan	saya	*	*
+V;PFOC;LGSPEC1	1	paniniwalaan	niwala	*	*
+V;PFOC;LGSPEC1	1	papagalitan	galit	*	*
+V;PFOC;LGSPEC1	1	papagtakpan	takip	*	*
+V;PFOC;LGSPEC1	1	papalakihin	laki	*	*
+V;AGFOC;LGSPEC1	1	papalakpak	palakpak	*	*
+V;PFOC;LGSPEC1	1	papanoorin	nood	*	*
+V;PFOC;LGSPEC1	1	papansinin	pansin	*	*
+V;AGFOC;LGSPEC1	1	papasa	pasa	*	*
+V;PFOC;LGSPEC1	1	papasanin	pasan	*	*
+V;AGFOC;LGSPEC1	1	papasok	pasok	*	*
+V;PFOC;LGSPEC1	1	papasukin	pasok	*	*
+V;PFOC;LGSPEC1	1	papasyalan	pasyal	*	*
+V;AGFOC;LGSPEC1	1	papatay	patay	*	*
+V;PFOC;LGSPEC1	1	paplantsahin	plantsa	*	*
+V;PFV;PFOC	1	pinagalitan	galit	*	*
+V;PFV;PFOC	1	pinaganda	ganda	*	*
+V;PFV;PFOC	1	pinakain	kain	*	*
+V;PFV;PFOC	1	pinakasalan	kasal	*	*
+V;PFV;PFOC	1	pinakinggan	kinig	*	*
+V;PFV;PFOC	1	pinakita	kita	*	*
+V;PFV;PFOC	1	pinalakpakan	palakpak	*	*
+V;PFV;PFOC	1	pinanood	nood	*	*
+V;PFV;PFOC	1	pinansin	pansin	*	*
+V;IPFV;PFOC	1	pinapagalitan	galit	*	*
+V;IPFV;PFOC	1	pinapaganda	ganda	*	*
+V;IPFV;PFOC	1	pinapagtakpan	takip	*	*
+V;IPFV;PFOC	1	pinapakasalan	kasal	*	*
+V;IPFV;PFOC	1	pinapakinggan	kinig	*	*
+V;IPFV;PFOC	1	pinapalaki	laki	*	*
+V;IPFV;PFOC	1	pinapalitan	palit	*	*
+V;IPFV;PFOC	1	pinapanood	nood	*	*
+V;IPFV;PFOC	1	pinapasa	pasa	*	*
+V;IPFV;PFOC	1	pinapasan	pasan	*	*
+V;IPFV;PFOC	1	pinaplantsa	plantsa	*	*
+V;PFV;PFOC	1	pinigilan	pigil	*	*
+V;PFV;PFOC	1	pinili	pili	*	*
+V;IPFV;PFOC	1	pinipigil	pigil	*	*
+V;IPFV;PFOC	1	pinipili	pili	*	*
+V;IPFV;PFOC	1	pinipintahan	pinta	*	*
+V;IPFV;PFOC	1	pinipirmahan	pirma	*	*
+V;PFV;PFOC	1	pinromote	promote	*	*
+V;PFV;PFOC	1	pinukpok	pukpok	*	*
+V;IPFV;PFOC	1	pinupunasan	punas	*	*
+V;IPFV;PFOC	1	pinupuno	puno	*	*
+V;IPFV;PFOC	1	pinuputol	putol	*	*
+V;PFV;PFOC	1	pinutol	putol	*	*
+V;PFOC;LGSPEC1	1	pipigilan	pigil	*	*
+V;PFOC;LGSPEC1	1	pipirmahan	pirma	*	*
+V;IPFV;AGFOC	1	pumapalakpak	palakpak	*	*
+V;IPFV;AGFOC	1	pumapasok	pasok	*	*
+V;IPFV;AGFOC	1	pumapatay	patay	*	*
+V;PFV;AGFOC	1	pumasa	pasa	*	*
+V;PFV;AGFOC	1	pumili	pili	*	*
+V;PFV;AGFOC	1	pumunit	punit	*	*
+V;IPFV;AGFOC	1	pumupunta	punta	*	*
+V;IPFV;AGFOC	1	pumuputol	putol	*	*
+V;PFV;AGFOC	1	pumutol	putol	*	*
+V;AGFOC;LGSPEC1	1	pupunit	punit	*	*
+V;AGFOC;LGSPEC1	1	pupunta	punta	*	*
+V;AGFOC;LGSPEC1	1	puputol	putol	*	*
+V;PFOC;LGSPEC1	1	sasagutin	sagot	*	*
+V;PFOC;LGSPEC1	1	sasakahin	saka	*	*
+V;AGFOC;LGSPEC1	1	sasakay	sakay	*	*
+V;PFOC;LGSPEC1	1	sasaktan	sakit	*	*
+V;AGFOC;LGSPEC1	1	sasali	sali	*	*
+V;AGFOC;LGSPEC1	1	sasalo	salo	*	*
+V;PFOC;LGSPEC1	1	sasaluhin	salo	*	*
+V;PFOC;LGSPEC1	1	sasayawin	sayaw	*	*
+V;AGFOC;LGSPEC1	1	sesenyas	senyas	*	*
+V;PFV;PFOC	1	sinabi	sabi	*	*
+V;PFV;PFOC	1	sinakyan	sakay	*	*
+V;PFV;PFOC	1	sinali	sali	*	*
+V;PFV;PFOC	1	sinamba	samba	*	*
+V;IPFV;PFOC	1	sinasabi	sabi	*	*
+V;IPFV;PFOC	1	sinasagot	sagot	*	*
+V;IPFV;PFOC	1	sinasakyan	sakay	*	*
+V;IPFV;PFOC	1	sinasali	sali	*	*
+V;IPFV;PFOC	1	sinasalihan	sali	*	*
+V;IPFV;PFOC	1	sinasalita	salita	*	*
+V;IPFV;PFOC	1	sinasamahan	sama	*	*
+V;IPFV;PFOC	1	sinasampay	sampay	*	*
+V;IPFV;PFOC	1	sinasara	sara	*	*
+V;PFV;PFOC	1	sinayaw	sayaw	*	*
+V;PFV;PFOC	1	sinenyasan	senyas	*	*
+V;PFV;PFOC	1	sinigaw	sigaw	*	*
+V;PFV;PFOC	1	sinilip	silip	*	*
+V;PFV;PFOC	1	sinimangutan	simangot	*	*
+V;PFV;PFOC	1	sinipilyo	sipilyo	*	*
+V;PFV;PFOC	1	sinira	sira	*	*
+V;IPFV;PFOC	1	sinisibak	sibak	*	*
+V;IPFV;PFOC	1	sinisigawan	sigaw	*	*
+V;IPFV;PFOC	1	sinisimangutan	simangot	*	*
+V;IPFV;PFOC	1	sinisira	sira	*	*
+V;PFV;PFOC	1	sinulatan	sulat	*	*
+V;PFV;PFOC	1	sinulit	sulit	*	*
+V;PFV;PFOC	1	sinulong	sulong	*	*
+V;PFV;PFOC	1	sinunod	sunod	*	*
+V;PFV;PFOC	1	sinuntok	suntok	*	*
+V;IPFV;PFOC	1	sinusubo	subo	*	*
+V;IPFV;PFOC	1	sinusugal	sugal	*	*
+V;IPFV;PFOC	1	sinusulong	sulong	*	*
+V;IPFV;PFOC	1	sinusunog	sunog	*	*
+V;IPFV;PFOC	1	sinusunong	sunong	*	*
+V;IPFV;PFOC	1	sinusuntok	suntok	*	*
+V;IPFV;PFOC	1	sinusuotan	suot	*	*
+V;AGFOC;LGSPEC1	1	sisigaw	sigaw	*	*
+V;PFOC;LGSPEC1	1	sisigawan	sigaw	*	*
+V;AGFOC;LGSPEC1	1	sisipol	sipol	*	*
+V;AGFOC;LGSPEC1	1	sisira	sira	*	*
+V;PFOC;LGSPEC1	1	sisirain	sira	*	*
+V;PFV;AGFOC	1	sumakay	sakay	*	*
+V;PFV;AGFOC	1	sumali	sali	*	*
+V;IPFV;AGFOC	1	sumasagot	sagot	*	*
+V;IPFV;AGFOC	1	sumasayaw	sayaw	*	*
+V;PFV;AGFOC	1	sumenyas	senyas	*	*
+V;PFV;AGFOC	1	sumigaw	sigaw	*	*
+V;PFV;AGFOC	1	sumimangot	simangot	*	*
+V;IPFV;AGFOC	1	sumisigaw	sigaw	*	*
+V;IPFV;AGFOC	1	sumisilip	silip	*	*
+V;IPFV;AGFOC	1	sumisira	sira	*	*
+V;PFV;AGFOC	1	sumubok	subok	*	*
+V;PFV;AGFOC	1	sumuko	suko	*	*
+V;IPFV;AGFOC	1	sumusubok	subok	*	*
+V;IPFV;AGFOC	1	sumusuko	suko	*	*
+V;IPFV;AGFOC	1	sumusulong	sulong	*	*
+V;IPFV;AGFOC	1	sumusuot	suot	*	*
+V;PFV;AGFOC	1	sumuway	suway	*	*
+V;PFOC;LGSPEC1	1	susubukin	subok	*	*
+V;PFOC;LGSPEC1	1	susukatin	sukat	*	*
+V;PFOC;LGSPEC1	1	susulatan	sulat	*	*
+V;PFOC;LGSPEC1	1	susulitin	sulit	*	*
+V;AGFOC;LGSPEC1	1	susulong	sulong	*	*
+V;PFOC;LGSPEC1	1	susuotan	suot	*	*
+V;PFOC;LGSPEC1	1	susuriin	suri	*	*
+V;AGFOC;LGSPEC1	1	susuway	suway	*	*
+V;PFOC;LGSPEC1	1	susuwayin	suway	*	*
+V;PFOC;LGSPEC1	1	tataasin	taas	*	*
+V;AGFOC;LGSPEC1	1	tatahimik	tahimik	*	*
+V;PFOC;LGSPEC1	1	tatahulan	tahol	*	*
+V;PFOC;LGSPEC1	1	tatakbuhin	takbo	*	*
+V;PFOC;LGSPEC1	1	tatakpan	takip	*	*
+V;AGFOC;LGSPEC1	1	tatalon	talon	*	*
+V;PFOC;LGSPEC1	1	tatanggalin	tanggal	*	*
+V;PFOC;LGSPEC1	1	tatanguan	tango	*	*
+V;PFOC;LGSPEC1	1	tatanungin	tanong	*	*
+V;PFOC;LGSPEC1	1	tatapusin	tapos	*	*
+V;AGFOC;LGSPEC1	1	tatawag	tawag	*	*
+V;AGFOC;LGSPEC1	1	tatayo	tayo	*	*
+V;PFV;PFOC	1	tinahulan	tahol	*	*
+V;PFV;PFOC	1	tinakbo	takbo	*	*
+V;PFV;PFOC	1	tinakpan	takip	*	*
+V;PFV;PFOC	1	tinalon	talon	*	*
+V;PFV;PFOC	1	tinanggal	tanggal	*	*
+V;PFV;PFOC	1	tinanggap	tanggap	*	*
+V;PFV;PFOC	1	tinanim	tanim	*	*
+V;PFV;PFOC	1	tinanong	tanong	*	*
+V;IPFV;PFOC	1	tinataas	taas	*	*
+V;IPFV;PFOC	1	tinataguan	tago	*	*
+V;IPFV;PFOC	1	tinatahi	tahi	*	*
+V;IPFV;PFOC	1	tinatahimik	tahimik	*	*
+V;IPFV;PFOC	1	tinatakbo	takbo	*	*
+V;IPFV;PFOC	1	tinatanggihan	tanggi	*	*
+V;IPFV;PFOC	1	tinatanguan	tango	*	*
+V;IPFV;PFOC	1	tinatanim	tanim	*	*
+V;IPFV;PFOC	1	tinatapon	tapon	*	*
+V;IPFV;PFOC	1	tinatawagan	tawag	*	*
+V;IPFV;PFOC	1	tinatawanan	tawa	*	*
+V;IPFV;PFOC	1	tinatawid	tawid	*	*
+V;IPFV;PFOC	1	tinatayuan	tayo	*	*
+V;PFV;PFOC	1	tinira	tira	*	*
+V;IPFV;PFOC	1	tinitira	tira	*	*
+V;PFV;PFOC	1	tinulak	tulak	*	*
+V;PFV;PFOC	1	tinulungan	tulong	*	*
+V;IPFV;PFOC	1	tinutugtog	tugtog	*	*
+V;IPFV;PFOC	1	tinutulugan	tulog	*	*
+V;IPFV;PFOC	1	tinutulungan	tulong	*	*
+V;IPFV;PFOC	1	tinutuluyan	tuloy	*	*
+V;PFOC;LGSPEC1	1	titimbangin	timbang	*	*
+V;AGFOC;LGSPEC1	1	titingin	tingin	*	*
+V;PFOC;LGSPEC1	1	titingnan	tingin	*	*
+V;AGFOC;LGSPEC1	1	titira	tira	*	*
+V;PFV;AGFOC	1	tumahol	tahol	*	*
+V;PFV;AGFOC	1	tumanggap	tanggap	*	*
+V;PFV;AGFOC	1	tumango	tango	*	*
+V;IPFV;AGFOC	1	tumatahol	tahol	*	*
+V;IPFV;AGFOC	1	tumatawag	tawag	*	*
+V;PFV;AGFOC	1	tumawa	tawa	*	*
+V;PFV;AGFOC	1	tumawag	tawag	*	*
+V;PFV;AGFOC	1	tumayo	tayo	*	*
+V;IPFV;AGFOC	1	tumitingin	tingin	*	*
+V;PFV;AGFOC	1	tumulong	tulong	*	*
+V;IPFV;AGFOC	1	tumutuloy	tuloy	*	*
+V;PFOC;LGSPEC1	1	tutugtugin	tugtog	*	*
+V;PFOC;LGSPEC1	1	tutulungan	tulong	*	*
+V;IPFV;AGFOC	1	umaabuso	abuso	*	*
+V;IPFV;AGFOC	1	umaarkila	arkila	*	*
+V;IPFV;AGFOC	1	umaarte	arte	*	*
+V;IPFV;AGFOC	1	umaawit	awit	*	*
+V;IPFV;AGFOC	1	umaayaw	ayaw	*	*
+V;PFV;AGFOC	1	umakyat	akyat	*	*
+V;PFV;AGFOC	1	umalis	alis	*	*
+V;PFV;AGFOC	1	umawit	awit	*	*
+V;PFV;AGFOC	1	umayaw	ayaw	*	*
+V;PFV;AGFOC	1	umibig	ibig	*	*
+V;IPFV;AGFOC	1	umiinom	inom	*	*
+V;IPFV;AGFOC	1	umiintindi	intindi	*	*
+V;PFV;AGFOC	1	umulit	ulit	*	*
+V;PFV;AGFOC	1	umupo	upo	*	*
+V;PFV;AGFOC	1	umutang	utang	*	*
+V;IPFV;AGFOC	1	umuulit	ulit	*	*
+V;IPFV;AGFOC	1	umuupo	upo	*	*
+V;AGFOC;LGSPEC1	1	uulit	ulit	*	*
+V;PFOC;LGSPEC1	1	uulitin	ulit	*	*
+V;AGFOC;LGSPEC1	1	uunlad	unlad	*	*
+V;PFOC;LGSPEC1	1	uupahan	upa	*	*
+V;PFOC;LGSPEC1	1	uutangin	utang	*	*
+V;AGFOC;LGSPEC1	1	uutot	utot	*	*
+V;PFOC;LGSPEC1	1	uututin	utot	*	*
+V;PFOC;LGSPEC1	1	wawalain	wala	*	*
+V;PFV;PFOC	1	winala	wala	*	*
+V;PFV;PFOC	1	winasak	wasak	*	*
+V;IPFV;PFOC	1	winawala	wala	*	*
+V;IPFV;PFOC	1	winawasak	wasak	*	*
+V;PFOC;LGSPEC1	1	yayakapin	yakap	*	*
+V;PFV;AGFOC	1	yumakap	yakap	*	*
+V;IPFV;AGFOC	1	yumayakap	yakap	*	*
+verb, contemplative	1	aagaw	umagaw	*	*
+verb, contemplative	1	aaksiyunan	aksiyunan	*	*
+verb, contemplative	1	aakyat	umakyat	*	*
+verb, contemplative	1	aalahasan	alahasan	*	*
+verb, contemplative	1	aalayan	alayan	*	*
+verb, contemplative	1	aalis	umalis	*	*
+verb, contemplative	1	aalsin	alsin	*	*
+verb, contemplative	1	aamerikanahin	amerikanahin	*	*
+verb, contemplative	1	aanakan	anakan	*	*
+verb, contemplative	1	aaw-aw	umaw-aw	*	*
+verb, contemplative	1	aayslahan	ayslahan	*	*
+verb, contemplative	1	babaklaran	baklaran	*	*
+verb, contemplative	1	babakuran	bakuran	*	*
+verb, contemplative	1	babalikan	balikan	*	*
+verb, contemplative	1	babarilin	barilin	*	*
+verb, contemplative	1	babasurahan	basurahan	*	*
+verb, contemplative	1	babawiin	bawiin	*	*
+verb, contemplative	1	bibigtiin	bigtiin	*	*
+verb, contemplative	1	bibili	bumili	*	*
+verb, contemplative	1	bibiyahe	bumiyahe	*	*
+verb, progressive	1	binabaha	bahain	*	*
+verb, progressive	1	binabahayan	bahayan	*	*
+verb, progressive	1	binabalsahan	balsahan	*	*
+verb, progressive	1	binabasa	basain	*	*
+verb, progressive	1	binabasbasan	basbasan	*	*
+verb, progressive	1	binabatikos	batikusin	*	*
+verb, progressive	1	binabayabasan	bayabasan	*	*
+verb, completive	1	binalsahan	balsahan	*	*
+verb, completive	1	binasa	basahin	*	*
+verb, completive	1	binawi	bawiin	*	*
+verb, completive	1	binaybay	baybayin	*	*
+verb, progressive	1	binibigyang-diin	bigyang-diin	*	*
+verb, progressive	1	binibihasa	bihasahin	*	*
+verb, progressive	1	binibinditahan	binditahan	*	*
+verb, completive	1	binigti	bigtihin	*	*
+verb, completive	1	binihasa	bihasain	*	*
+verb, completive	1	bininditahan	binditahan	*	*
+verb, progressive	1	binubuhusan	buhusan	*	*
+verb, progressive	1	binubuklat	buklatin	*	*
+verb, progressive	1	binubuluran	buluranin	*	*
+verb, progressive	1	binubuwisan	buwisan	*	*
+verb, completive	1	binuweltahan	buweltahan	*	*
+verb, completive	1	binuyon	buyunin	*	*
+verb, contemplative	1	bububungan	bubungan	*	*
+verb, contemplative	1	bubulabugin	bulabugin	*	*
+verb, contemplative	1	bubulakan	bulakan	*	*
+verb, contemplative	1	bubulong	bumulong	*	*
+verb, contemplative	1	bubusan	busan	*	*
+verb, contemplative	1	bubuurin	buurin	*	*
+verb, progressive	1	bumibitiw	bumitiw	*	*
+verb, progressive	1	bumubula	bumula	*	*
+verb, contemplative	1	dadalaw	dumalaw	*	*
+verb, contemplative	1	dadamahan	damahan	*	*
+verb, contemplative	1	dadausdos	dumausdos	*	*
+verb, contemplative	1	daranan	danan	*	*
+verb, contemplative	1	didilim	dumilim	*	*
+verb, contemplative	1	didingsulan	dingsulan	*	*
+verb, contemplative	1	didinigin	dinigin	*	*
+verb, completive	1	dinamdam	damdamin	*	*
+verb, completive	1	dinatingan	datingan	*	*
+verb, progressive	1	dinededma	dedmahin	*	*
+verb, progressive	1	dinedekwat	dekwatin	*	*
+verb, completive	1	dinenggoy	denggoyin	*	*
+verb, completive	1	dinuguan	duguan	*	*
+verb, completive	1	dinuraan	duraan	*	*
+verb, contemplative	1	dudunggulin	dunggulin	*	*
+verb, progressive	1	dumadali	dumali	*	*
+verb, progressive	1	dumaragdag	dumagdag	*	*
+verb, progressive	1	dumarating	dumating	*	*
+verb, progressive	1	dumidighay	dumighay	*	*
+verb, progressive	1	dumudugo	dumugo	*	*
+verb, progressive	1	dumudumi	dumumi	*	*
+verb, progressive	1	dumudupok	dumupok	*	*
+verb, contemplative	1	duruguan	duguan	*	*
+verb, contemplative	1	gagabay	gumabay	*	*
+verb, contemplative	1	gagalawin	galawin	*	*
+verb, contemplative	1	gagantihan	gantihan	*	*
+verb, contemplative	1	gagataan	gataan	*	*
+verb, contemplative	1	gigilid	gumilid	*	*
+verb, contemplative	1	giginawin	ginawin	*	*
+verb, contemplative	1	gigisahin	gisahin	*	*
+verb, completive	1	ginab-ihan	gab-ihan	*	*
+verb, progressive	1	ginagab-ihan	gab-ihan	*	*
+verb, progressive	1	ginagataan	gataan	*	*
+verb, progressive	1	ginagawa	gawain	*	*
+verb, completive	1	ginamot	gamutin	*	*
+verb, completive	1	ginawan	gawan	*	*
+verb, progressive	1	giniginaw	ginawin	*	*
+verb, completive	1	ginisa	gisahin	*	*
+verb, progressive	1	gumagagad	gumagad	*	*
+verb, progressive	1	gumigising	gumising	*	*
+verb, progressive	1	gumuguwapo	gumuwapo	*	*
+verb, contemplative	1	hahambingin	hambingin	*	*
+verb, contemplative	1	hahanayan	hanayan	*	*
+verb, contemplative	1	hahandusay	humandusay	*	*
+verb, contemplative	1	hahapunan	hapunan	*	*
+verb, contemplative	1	hahasain	hasain	*	*
+verb, contemplative	1	hahawakan	hawakan	*	*
+verb, contemplative	1	hahayo	humayo	*	*
+verb, contemplative	1	hihibnin	hibnin	*	*
+verb, contemplative	1	hihimatayin	himatayin	*	*
+verb, contemplative	1	hihintayin	hintayin	*	*
+verb, contemplative	1	hihinto	huminto	*	*
+verb, completive	1	hinagkan	hagkan	*	*
+verb, progressive	1	hinaharap	harapin	*	*
+verb, progressive	1	hinahasa	hasain	*	*
+verb, progressive	1	hinahayaan	hayaan	*	*
+verb, completive	1	hinamak	hamakin	*	*
+verb, completive	1	hinanap	hanapin	*	*
+verb, completive	1	hinantungan	hantungan	*	*
+verb, completive	1	hinasa	hasain	*	*
+verb, completive	1	hinati	hatiin	*	*
+verb, completive	1	hinayaan	hayaan	*	*
+verb, completive	1	hinibnan	hibnan	*	*
+verb, completive	1	hinidman	hidman	*	*
+verb, completive	1	hinigaan	higaan	*	*
+verb, progressive	1	hinihimatay	himatayin	*	*
+verb, progressive	1	hinihirman	hirman	*	*
+verb, completive	1	hiningal	hingalin	*	*
+verb, completive	1	hiningian	hingian	*	*
+verb, completive	1	hinutan	hutan	*	*
+verb, contemplative	1	huhukayin	hukayin	*	*
+verb, contemplative	1	huhulmahin	hulmahin	*	*
+verb, progressive	1	humihimas	humimas	*	*
+verb, contemplative	1	iaandar	iandar	*	*
+verb, contemplative	1	ibabagsak	ibagsak	*	*
+verb, completive	1	ibinabaw	ibabaw	*	*
+verb, progressive	1	ibinabayo	ibayo	*	*
+verb, completive	1	ibinahin	ibahin	*	*
+verb, completive	1	ibinalatkayo	ibalatkayo	*	*
+verb, completive	1	ibinalik-tanaw	ibalik-tanaw	*	*
+verb, completive	1	ibinayo	ibayo	*	*
+verb, progressive	1	ibinebenta	ibenta	*	*
+verb, completive	1	ibinoto	iboto	*	*
+verb, contemplative	1	idadawit	idawit	*	*
+verb, contemplative	1	ihahatid-sundo	ihatid-sundo	*	*
+verb, contemplative	1	iihan	ihan	*	*
+verb, contemplative	1	iinumin	inumin	*	*
+verb, contemplative	1	ikakabit	ikabit	*	*
+verb, completive	1	ikinunwa	ikunwa	*	*
+verb, contemplative	1	ilalabnaw	ilabnaw	*	*
+verb, contemplative	1	ilalampas	ilampas	*	*
+verb, progressive	1	inaabyog	abyugin	*	*
+verb, progressive	1	inaahit	ahitin	*	*
+verb, progressive	1	inaaksiyunan	aksiyunan	*	*
+verb, progressive	1	inaalitunton	alituntunin	*	*
+verb, progressive	1	inaalog	alugin	*	*
+verb, progressive	1	inaanay	anayin	*	*
+verb, progressive	1	inaapuyan	apuyan	*	*
+verb, progressive	1	inaawit	awitin	*	*
+verb, completive	1	inaksentuhan	aksentuhan	*	*
+verb, completive	1	inalitunton	alituntunin	*	*
+verb, completive	1	inalmirulan	almirulan	*	*
+verb, completive	1	inamyendahan	amyendahan	*	*
+verb, completive	1	inano	anuhin	*	*
+verb, completive	1	inanula	anulahin	*	*
+verb, completive	1	inigbahan	igbahan	*	*
+verb, progressive	1	iniilag	ilagin	*	*
+verb, progressive	1	iniinis	inisin	*	*
+verb, progressive	1	iniinom	inumin	*	*
+verb, progressive	1	iniipon	ipunin	*	*
+verb, progressive	1	iniiri	irihin	*	*
+verb, completive	1	inilaglag	ilaglag	*	*
+verb, progressive	1	inilalakas	ilakas	*	*
+verb, completive	1	inilantad	ilantad	*	*
+verb, completive	1	inilikas	ilikas	*	*
+verb, completive	1	inilikha	ilikha	*	*
+verb, completive	1	iniwan	iwan	*	*
+verb, completive	1	inulian	ulian	*	*
+verb, completive	1	inungkat	ungkatin	*	*
+verb, completive	1	inupahan	upahan	*	*
+verb, completive	1	inupan	upan	*	*
+verb, completive	1	inusap	usapin	*	*
+verb, progressive	1	inuudyukan	udyukan	*	*
+verb, progressive	1	inuusig	usigin	*	*
+verb, completive	1	inuwian	uwian	*	*
+verb, contemplative	1	ipagkukunwari	ipagkunwari	*	*
+verb, contemplative	1	ipagmamayabang	ipagmayabang	*	*
+verb, contemplative	1	ipagtatanggol	ipagtanggol	*	*
+verb, contemplative	1	ipamamag-itan	ipamag-itan	*	*
+verb, contemplative	1	ipapalit	ipalit	*	*
+verb, contemplative	1	ipapantakip	ipantakip	*	*
+verb, contemplative	1	ipapuputol	ipaputol	*	*
+verb, progressive	1	ipinaaalam	ipaalam	*	*
+verb, completive	1	ipinadama	ipadama	*	*
+verb, completive	1	ipinagbalatkayo	ipagbalatkayo	*	*
+verb, progressive	1	ipinagmamalaki	ipagmalaki	*	*
+verb, progressive	1	ipinagsasanggalang	ipagsanggalang	*	*
+verb, completive	1	ipinakahulugan	ipakahulugan	*	*
+verb, progressive	1	ipinalilinaw	ipalinaw	*	*
+verb, progressive	1	ipinapatapon	ipatapon	*	*
+verb, progressive	1	ipinasasadya	ipasadya	*	*
+verb, completive	1	ipinawalambisa	ipawalambisa	*	*
+verb, progressive	1	ipinupuwesto	ipuwesto	*	*
+verb, contemplative	1	isasanggalang	isanggalang	*	*
+verb, contemplative	1	isasangkot	isangkot	*	*
+verb, contemplative	1	isasapelikula	isapelikula	*	*
+verb, contemplative	1	isasauli	isauli	*	*
+verb, contemplative	1	iseset	iset	*	*
+verb, completive	1	isinabuhay	isabuhay	*	*
+verb, completive	1	isinagitna	isagitna	*	*
+verb, completive	1	isinama	isama	*	*
+verb, progressive	1	isinasabog	isabog	*	*
+verb, progressive	1	isinasabuhay	isabuhay	*	*
+verb, progressive	1	isinasadiwa	isadiwa	*	*
+verb, progressive	1	isinasalba	isalba	*	*
+verb, progressive	1	isinasama	isama	*	*
+verb, completive	1	isinaulo	isaulo	*	*
+verb, completive	1	isinet	iset	*	*
+verb, completive	1	isinikdo	isikdo	*	*
+verb, progressive	1	isinisingit	isingit	*	*
+verb, completive	1	isinulat	isulat	*	*
+verb, contemplative	1	itatatag	itatag	*	*
+verb, completive	1	itinatag	itatag	*	*
+verb, progressive	1	itinatago	itago	*	*
+verb, progressive	1	itinatali	itali	*	*
+verb, progressive	1	itinatapat	itapat	*	*
+verb, completive	1	itinubig	itubig	*	*
+verb, completive	1	itinulog	itulog	*	*
+verb, contemplative	1	itutulad	itulad	*	*
+verb, contemplative	1	iuunlad	iunlad	*	*
+verb, contemplative	1	iuusli	iusli	*	*
+verb, contemplative	1	kakaibiganin	kaibiganin	*	*
+verb, contemplative	1	kakalabitin	kalabitin	*	*
+verb, contemplative	1	kakanan	kanan	*	*
+verb, contemplative	1	kakapa	kumapa	*	*
+verb, contemplative	1	kikilabutan	kilabutan	*	*
+verb, contemplative	1	kikilusan	kilusan	*	*
+verb, contemplative	1	kikita	kumita	*	*
+verb, contemplative	1	kikitil	kumitil	*	*
+verb, completive	1	kinaburata	kaburatahin	*	*
+verb, completive	1	kinailangan	kailanganin	*	*
+verb, progressive	1	kinakain	kainin	*	*
+verb, progressive	1	kinakanan	kanan	*	*
+verb, progressive	1	kinakandaduhan	kandaduhan	*	*
+verb, completive	1	kinamayan	kamayan	*	*
+verb, completive	1	kinamusta	kamustahin	*	*
+verb, completive	1	kinarir	karirin	*	*
+verb, progressive	1	kinikikilan	kikilan	*	*
+verb, completive	1	kinonsidera	konsiderahin	*	*
+verb, completive	1	kinunan	kunan	*	*
+verb, completive	1	kinuwarenta	kuwarentahin	*	*
+verb, contemplative	1	kokondenahin	kondenahin	*	*
+verb, contemplative	1	kokonsentihin	konsentihin	*	*
+verb, contemplative	1	kokopyahin	kopyahin	*	*
+verb, contemplative	1	kukulimlim	kumulimlim	*	*
+verb, contemplative	1	kukulo	kumulo	*	*
+verb, contemplative	1	kukunin	kunin	*	*
+verb, contemplative	1	kukuryentihin	kuryentihin	*	*
+verb, contemplative	1	kukutsarahin	kutsarahin	*	*
+verb, progressive	1	kumakanan	kumanan	*	*
+verb, progressive	1	kumakandidato	kumandidato	*	*
+verb, progressive	1	kumakapal	kumapal	*	*
+verb, progressive	1	kumukulimlim	kumulimlim	*	*
+verb, progressive	1	kumukunsulta	kumunsulta	*	*
+verb, progressive	1	kumukupas	kumupas	*	*
+verb, contemplative	1	lalangawin	langawin	*	*
+verb, contemplative	1	lalapain	lapain	*	*
+verb, contemplative	1	lalapirot	lumapirot	*	*
+verb, contemplative	1	liligdin	ligdin	*	*
+verb, contemplative	1	liligpitin	ligpitin	*	*
+verb, contemplative	1	lilinisan	linisan	*	*
+verb, contemplative	1	lulubigan	lubigan	*	*
+verb, contemplative	1	luluklukan	luklukan	*	*
+verb, progressive	1	lumalaganap	lumaganap	*	*
+verb, progressive	1	lumiliit	lumiit	*	*
+verb, progressive	1	lumiliwanag	lumiwanag	*	*
+verb, progressive	1	lumuluha	lumuha	*	*
+verb, progressive	1	lumulundag	lumundag	*	*
+verb, progressive	1	lumuluwag	lumuwag	*	*
+verb, contemplative	1	maaayos	maayos	*	*
+verb, contemplative	1	mabababa	mababa	*	*
+verb, contemplative	1	mabobosesan	mabosesan	*	*
+verb, contemplative	1	mabubudol	mabudol	*	*
+verb, contemplative	1	mabubuhay	mabuhay	*	*
+verb, contemplative	1	mabubuhol	mabuhol	*	*
+verb, contemplative	1	mag-aapura	mag-apura	*	*
+verb, contemplative	1	mag-aasikaso	mag-asikaso	*	*
+verb, contemplative	1	mag-eempake	mag-empake	*	*
+verb, contemplative	1	mag-iingles	mag-ingles	*	*
+verb, contemplative	1	mag-iinterbiyu	mag-interbiyu	*	*
+verb, contemplative	1	mag-uusap	mag-usap	*	*
+verb, contemplative	1	magagandahan	magandahan	*	*
+verb, contemplative	1	magbabanda	magbanda	*	*
+verb, contemplative	1	magbibiro	magbiro	*	*
+verb, contemplative	1	magdadalaga	magdalaga	*	*
+verb, contemplative	1	magdadalang-tao	magdalang-tao	*	*
+verb, contemplative	1	magdadaspan	magdaspan	*	*
+verb, contemplative	1	magegets	magets	*	*
+verb, contemplative	1	maghahanda	maghanda	*	*
+verb, contemplative	1	maghahatid	maghatid	*	*
+verb, contemplative	1	maghihikahos	maghikahos	*	*
+verb, contemplative	1	maghihinuha	maghinuha	*	*
+verb, contemplative	1	magkakasiya	magkasiya	*	*
+verb, contemplative	1	magkukuskos	magkuskos	*	*
+verb, contemplative	1	maglalapa	maglapa	*	*
+verb, contemplative	1	maglalaslas	maglaslas	*	*
+verb, contemplative	1	maglalathala	maglathala	*	*
+verb, contemplative	1	maglalayag	maglayag	*	*
+verb, contemplative	1	magluluwat	magluwat	*	*
+verb, contemplative	1	magmamaang-maangan	magmaang-maangan	*	*
+verb, contemplative	1	magmemedyas	magmedyas	*	*
+verb, contemplative	1	magpapalda	magpalda	*	*
+verb, contemplative	1	magpapaputi	magpaputi	*	*
+verb, contemplative	1	magpaparami	magparami	*	*
+verb, contemplative	1	magpapasikat	magpasikat	*	*
+verb, contemplative	1	magpapasubasta	magpasubasta	*	*
+verb, contemplative	1	magpapasulat	magpasulat	*	*
+verb, contemplative	1	magpapawis	magpawis	*	*
+verb, contemplative	1	magpapayong	magpayong	*	*
+verb, contemplative	1	magpupunta	magpunta	*	*
+verb, contemplative	1	magsasalang	magsalang	*	*
+verb, contemplative	1	magsasarili	magsarili	*	*
+verb, contemplative	1	magsisikap	magsikap	*	*
+verb, contemplative	1	magsisindi	magsindi	*	*
+verb, contemplative	1	magsisisi	magsisi	*	*
+verb, contemplative	1	magsisiwalat	magsiwalat	*	*
+verb, contemplative	1	magta-tricycle	mag-tricycle	*	*
+verb, contemplative	1	magtatapat	magtapat	*	*
+verb, contemplative	1	magtutubig	magtubig	*	*
+verb, contemplative	1	magwawagi	magwagi	*	*
+verb, contemplative	1	mahihiya	mahiya	*	*
+verb, contemplative	1	maibabalik	maibalik	*	*
+verb, contemplative	1	maiiksian	maiksian	*	*
+verb, contemplative	1	makakakain	makakain	*	*
+verb, contemplative	1	makakantot	makantot	*	*
+verb, contemplative	1	makakausap	makausap	*	*
+verb, contemplative	1	makasasagap	makasagap	*	*
+verb, contemplative	1	makokoryente	makoryente	*	*
+verb, contemplative	1	makukuryente	makuryente	*	*
+verb, contemplative	1	malalala	malala	*	*
+verb, contemplative	1	malilintikan	malintikan	*	*
+verb, contemplative	1	mamaltratuhin	maltratuhin	*	*
+verb, contemplative	1	mamamagitan	mamagitan	*	*
+verb, contemplative	1	mamamahayag	mamahayag	*	*
+verb, contemplative	1	mamamangka	mamangka	*	*
+verb, contemplative	1	mamamanhikan	mamanhikan	*	*
+verb, contemplative	1	mamamasada	mamasada	*	*
+verb, contemplative	1	mamarcosin	marcosin	*	*
+verb, contemplative	1	mambubulahaw	mambulahaw	*	*
+verb, contemplative	1	mamimintog	mamintog	*	*
+verb, contemplative	1	mamumuro	mamuro	*	*
+verb, contemplative	1	mananagot	managot	*	*
+verb, contemplative	1	mananahan	manahan	*	*
+verb, contemplative	1	mananalangin	manalangin	*	*
+verb, contemplative	1	mananamantala	manamantala	*	*
+verb, contemplative	1	mang-aagrabyado	mang-agrabyado	*	*
+verb, contemplative	1	mangangabayo	mangabayo	*	*
+verb, contemplative	1	mangangahas	mangahas	*	*
+verb, contemplative	1	mangangako	mangako	*	*
+verb, contemplative	1	mangangalabasa	mangalabasa	*	*
+verb, contemplative	1	manganganay	manganay	*	*
+verb, contemplative	1	mangangarnap	mangarnap	*	*
+verb, contemplative	1	mangangaso	mangaso	*	*
+verb, contemplative	1	mangingitlog	mangitlog	*	*
+verb, contemplative	1	mangmomolestiya	mangmolestiya	*	*
+verb, contemplative	1	mangunguling	manguling	*	*
+verb, contemplative	1	mapapahamak	mapahamak	*	*
+verb, contemplative	1	mararanasan	maranasan	*	*
+verb, contemplative	1	masasaktan	masaktan	*	*
+verb, contemplative	1	masisilayan	masilayan	*	*
+verb, contemplative	1	matatapat	matapat	*	*
+verb, contemplative	1	matitinik	matinik	*	*
+verb, contemplative	1	matitisod	matisod	*	*
+verb, contemplative	1	mauusukan	mausukan	*	*
+verb, completive	1	minadali	madaliin	*	*
+verb, progressive	1	minamanipula	manipulahin	*	*
+verb, progressive	1	minamaya-maya	maya-mayain	*	*
+verb, completive	1	minarcos	marcosin	*	*
+verb, completive	1	minasdan	masdan	*	*
+verb, progressive	1	minumura	murahin	*	*
+verb, progressive	1	naaaktuhan	maaktuhan	*	*
+verb, completive	1	naayos	maayos	*	*
+verb, completive	1	nabilog	mabilog	*	*
+verb, completive	1	nabosesan	mabosesan	*	*
+verb, completive	1	nabuhol	mabuhol	*	*
+verb, completive	1	nabulas	mabulas	*	*
+verb, progressive	1	nag-aaga	mag-aga	*	*
+verb, progressive	1	nag-aalog	mag-alog	*	*
+verb, progressive	1	nag-iigib	mag-igib	*	*
+verb, progressive	1	nag-iingat	mag-ingat	*	*
+verb, progressive	1	nag-iingay	mag-ingay	*	*
+verb, progressive	1	nag-iinterbiyu	mag-interbiyu	*	*
+verb, progressive	1	nag-iiras	mag-iras	*	*
+verb, completive	1	nag-imbak	mag-imbak	*	*
+verb, completive	1	nag-inaama	mag-inaama	*	*
+verb, completive	1	nag-ipon	mag-ipon	*	*
+verb, completive	1	nag-overtaym	mag-overtaym	*	*
+verb, progressive	1	nagagalaw	magalaw	*	*
+verb, progressive	1	nagaganap	maganap	*	*
+verb, completive	1	naganap	maganap	*	*
+verb, progressive	1	nagbabahay-bahay	magbahay-bahay	*	*
+verb, completive	1	nagbasa	magbasa	*	*
+verb, completive	1	nagbasanlot	magbasanlot	*	*
+verb, completive	1	nagbenta	magbenta	*	*
+verb, progressive	1	nagbi-bisaya	mag-bisaya	*	*
+verb, progressive	1	nagbibigay	magbigay	*	*
+verb, progressive	1	nagbibingi-bingihan	magbingi-bingihan	*	*
+verb, progressive	1	nagbibiro	magbiro	*	*
+verb, completive	1	nagbigti	magbigti	*	*
+verb, completive	1	nagbinata	magbinata	*	*
+verb, progressive	1	nagbubulakbol	magbulakbol	*	*
+verb, progressive	1	nagdadalang-tao	magdalang-tao	*	*
+verb, completive	1	nagdalang-tao	magdalang-tao	*	*
+verb, completive	1	nagdasal	magdasal	*	*
+verb, progressive	1	nagdidikdik	magdikdik	*	*
+verb, progressive	1	nagdidilig	magdilig	*	*
+verb, completive	1	nagdulang	magdulang	*	*
+verb, completive	1	nagdulot	magdulot	*	*
+verb, completive	1	nagets	magets	*	*
+verb, progressive	1	naghahabilin	maghabilin	*	*
+verb, progressive	1	naghahanda	maghanda	*	*
+verb, progressive	1	naghahari-harian	maghari-harian	*	*
+verb, progressive	1	naghahasik	maghasik	*	*
+verb, completive	1	naghanda	maghanda	*	*
+verb, completive	1	naghatid	maghatid	*	*
+verb, progressive	1	naghihinala	maghinala	*	*
+verb, progressive	1	naghihitso	maghitso	*	*
+verb, progressive	1	naghihiyas	maghiyas	*	*
+verb, completive	1	naghimutok	maghimutok	*	*
+verb, completive	1	naghinto	maghinto	*	*
+verb, completive	1	naging	maging	*	*
+verb, completive	1	nagjakol	magjakol	*	*
+verb, completive	1	nagkaisa	magkaisa	*	*
+verb, progressive	1	nagkakaano	magkaano	*	*
+verb, progressive	1	nagkakabalikan	magkabalikan	*	*
+verb, progressive	1	nagkakakapatid	magkakapatid	*	*
+verb, progressive	1	nagkakani-kaniya	magkani-kaniya	*	*
+verb, progressive	1	nagkakapaa	magkapaa	*	*
+verb, completive	1	nagkakapitbahay	magkakapitbahay	*	*
+verb, progressive	1	nagkakasundo	magkasundo	*	*
+verb, progressive	1	nagkakatsansa	magkatsansa	*	*
+verb, completive	1	nagkakilala	magkakilala	*	*
+verb, completive	1	nagkantutan	magkantutan	*	*
+verb, progressive	1	nagkukulit	magkulit	*	*
+verb, progressive	1	nagkukusang-loob	magkusang-loob	*	*
+verb, progressive	1	nagkukusi	magkusi	*	*
+verb, progressive	1	nagkukuwento	magkuwento	*	*
+verb, completive	1	nagkusang-loob	magkusang-loob	*	*
+verb, completive	1	nagkuwintas	magkuwintas	*	*
+verb, progressive	1	nagla-like	mag-like	*	*
+verb, completive	1	naglakbay	maglakbay	*	*
+verb, progressive	1	naglalaho	maglaho	*	*
+verb, progressive	1	naglalakbay	maglakbay	*	*
+verb, progressive	1	naglalakwatsa	maglakwatsa	*	*
+verb, progressive	1	naglalapastangan	maglapastangan	*	*
+verb, progressive	1	naglalatag	maglatag	*	*
+verb, completive	1	naglarawan	maglarawan	*	*
+verb, completive	1	naglasing	maglasing	*	*
+verb, progressive	1	naglilibing	maglibing	*	*
+verb, progressive	1	naglilingkod	maglingkod	*	*
+verb, completive	1	naglingid	maglingid	*	*
+verb, progressive	1	nagluluwas	magluwas	*	*
+verb, completive	1	naglupagi	maglupagi	*	*
+verb, completive	1	nagmaganda	magmaganda	*	*
+verb, progressive	1	nagmamaliw	magmaliw	*	*
+verb, progressive	1	nagmamana	magmana	*	*
+verb, completive	1	nagmatigas	magmatigas	*	*
+verb, completive	1	nagmedyas	magmedyas	*	*
+verb, progressive	1	nagmumumog	magmumog	*	*
+verb, progressive	1	nagnanais	magnais	*	*
+verb, completive	1	nagpalaglag	magpalaglag	*	*
+verb, progressive	1	nagpapa-x-ray	magpa-x-ray	*	*
+verb, progressive	1	nagpapakahulugan	magpakahulugan	*	*
+verb, progressive	1	nagpapakasasa	magpakasasa	*	*
+verb, progressive	1	nagpapapansin	magpapansin	*	*
+verb, progressive	1	nagpapapintura	magpapintura	*	*
+verb, progressive	1	nagpaparami	magparami	*	*
+verb, progressive	1	nagpapatakas	magpatakas	*	*
+verb, progressive	1	nagpapatuloy	magpatuloy	*	*
+verb, completive	1	nagpaputi	magpaputi	*	*
+verb, completive	1	nagpawir	magpawir	*	*
+verb, progressive	1	nagpoproseso	magproseso	*	*
+verb, progressive	1	nagpupunas	magpunas	*	*
+verb, completive	1	nagreklamo	magreklamo	*	*
+verb, completive	1	nagrelo	magrelo	*	*
+verb, progressive	1	nagrerepake	magrepake	*	*
+verb, completive	1	nagsagawa	magsagawa	*	*
+verb, progressive	1	nagsasakripisyo	magsakripisyo	*	*
+verb, progressive	1	nagsasandok	magsandok	*	*
+verb, completive	1	nagseks	magseks	*	*
+verb, progressive	1	nagseseks	magseks	*	*
+verb, progressive	1	nagsesentimyento	magsentimyento	*	*
+verb, completive	1	nagsikap	magsikap	*	*
+verb, completive	1	nagsilab	magsilab	*	*
+verb, progressive	1	nagsisiyasat	magsiyasat	*	*
+verb, progressive	1	nagsosombrero	magsombrero	*	*
+verb, progressive	1	nagsusunog	magsunog	*	*
+verb, completive	1	nagtalik	magtalik	*	*
+verb, progressive	1	nagtatae	magtae	*	*
+verb, progressive	1	nagtatali	magtali	*	*
+verb, progressive	1	nagtatalik	magtalik	*	*
+verb, progressive	1	nagtitipid	magtipid	*	*
+verb, completive	1	naguluhan	maguluhan	*	*
+verb, completive	1	nagusot	magusot	*	*
+verb, completive	1	nagwagi	magwagi	*	*
+verb, progressive	1	nagwawala	magwala	*	*
+verb, completive	1	nagyo	magyo	*	*
+verb, completive	1	nahirapan	mahirapan	*	*
+verb, completive	1	nainis	mainis	*	*
+verb, completive	1	naisakatuparan	maisakatuparan	*	*
+verb, progressive	1	naisasapinal	maisapinal	*	*
+verb, progressive	1	nakakati	makati	*	*
+verb, completive	1	nakanan	makanan	*	*
+verb, completive	1	nakasagap	makasagap	*	*
+verb, completive	1	nakatulog	makatulog	*	*
+verb, completive	1	nakaumay	makaumay	*	*
+verb, progressive	1	nakikipagbati	makipagbati	*	*
+verb, progressive	1	nakikipagkantahan	makipagkantahan	*	*
+verb, progressive	1	nakukuha	makuha	*	*
+verb, completive	1	nalaon	malaon	*	*
+verb, progressive	1	naliligaw	maligaw	*	*
+verb, completive	1	nalumbay	malumbay	*	*
+verb, completive	1	nalunod	malunod	*	*
+verb, progressive	1	namamasa	mamasa	*	*
+verb, progressive	1	namamasada	mamasada	*	*
+verb, progressive	1	namamayawang	mamayawang	*	*
+verb, completive	1	namantog	mamantog	*	*
+verb, completive	1	namayawang	mamayawang	*	*
+verb, completive	1	nambulahaw	mambulahaw	*	*
+verb, progressive	1	namemersonal	mamersonal	*	*
+verb, completive	1	namersonal	mamersonal	*	*
+verb, progressive	1	namimihasa	mamihasa	*	*
+verb, progressive	1	namimintog	mamintog	*	*
+verb, completive	1	namingwit	mamingwit	*	*
+verb, completive	1	namugot	mamugot	*	*
+verb, progressive	1	namumutla	mamutla	*	*
+verb, completive	1	namupo	mamupo	*	*
+verb, completive	1	namuti	mamuti	*	*
+verb, completive	1	nanahan	manahan	*	*
+verb, completive	1	nanaig	manaig	*	*
+verb, completive	1	nanakmal	manakmal	*	*
+verb, completive	1	nanalo	manalo	*	*
+verb, progressive	1	nananagot	managot	*	*
+verb, completive	1	nandukot	mandukot	*	*
+verb, progressive	1	nang-aagaw	mang-agaw	*	*
+verb, completive	1	nang-abat	mang-abat	*	*
+verb, completive	1	nang-api	mang-api	*	*
+verb, progressive	1	nangangalabit	mangalabit	*	*
+verb, progressive	1	nangangampanya	mangampanya	*	*
+verb, progressive	1	nangangaroling	mangaroling	*	*
+verb, completive	1	nangawit	mangawit	*	*
+verb, completive	1	nanggantso	manggantso	*	*
+verb, progressive	1	nanghahawa	manghawa	*	*
+verb, completive	1	nanghalik	manghalik	*	*
+verb, progressive	1	nanghuhusga	manghusga	*	*
+verb, completive	1	nangibabaw	mangibabaw	*	*
+verb, progressive	1	nangkakarnap	mangkarnap	*	*
+verb, progressive	1	nangongomisyon	mangomisyon	*	*
+verb, progressive	1	nangunguna	manguna	*	*
+verb, progressive	1	naninilip	manilip	*	*
+verb, completive	1	nanirahan	manirahan	*	*
+verb, completive	1	nanlamang	manlamang	*	*
+verb, progressive	1	nanloloko	manloko	*	*
+verb, progressive	1	nanunubig	manubig	*	*
+verb, progressive	1	nanunumbalik	manumbalik	*	*
+verb, progressive	1	nanunundot	manundot	*	*
+verb, progressive	1	nanunungkulan	manungkulan	*	*
+verb, completive	1	napabalik	mapabalik	*	*
+verb, progressive	1	napagtatanto	mapagtanto	*	*
+verb, completive	1	napansin	mapansin	*	*
+verb, completive	1	napayapa	mapayapa	*	*
+verb, progressive	1	napipili	mapili	*	*
+verb, completive	1	nasakyan	masakyan	*	*
+verb, progressive	1	nasasaktan	masaktan	*	*
+verb, progressive	1	nasisilayan	masilayan	*	*
+verb, progressive	1	nasusumpungan	masumpungan	*	*
+verb, completive	1	natanggap	matanggap	*	*
+verb, completive	1	natapunan	matapunan	*	*
+verb, completive	1	natauhan	matauhan	*	*
+verb, completive	1	natikitan	matikitan	*	*
+verb, completive	1	nausukan	mausukan	*	*
+verb, completive	1	nawala	mawala	*	*
+verb, progressive	1	nawiwido	mawido	*	*
+verb, progressive	1	ngumingiti	ngumiti	*	*
+verb, contemplative	1	ngunguya	ngumuya	*	*
+verb, completive	1	nilagyan	lagyan	*	*
+verb, progressive	1	nilalagdaan	lagdaan	*	*
+verb, progressive	1	nilalambit	lambitin	*	*
+verb, completive	1	nilamas	lamasin	*	*
+verb, completive	1	nilayagan	layagan	*	*
+verb, completive	1	nilinang	linangin	*	*
+verb, completive	1	nilinis	linisin	*	*
+verb, completive	1	nilistahan	listahan	*	*
+verb, progressive	1	nilulunok	lunukin	*	*
+verb, progressive	1	niluluto	lutuin	*	*
+verb, completive	1	nilunok	lunukin	*	*
+verb, progressive	1	niraratrat	ratratin	*	*
+verb, completive	1	niyabangan	yabangan	*	*
+verb, completive	1	niyakyakan	yakyakan	*	*
+verb, completive	1	niyurakan	yurakan	*	*
+verb, contemplative	1	paaalisin	paalisin	*	*
+verb, contemplative	1	padadamihan	padamihan	*	*
+verb, contemplative	1	pagbabasehan	pagbasehan	*	*
+verb, contemplative	1	pagtatalunan	pagtalunan	*	*
+verb, contemplative	1	pakikilala	pakilala	*	*
+verb, contemplative	1	palalamigan	palamigan	*	*
+verb, contemplative	1	pamumunuan	pamunuan	*	*
+verb, contemplative	1	pananatilihin	panatilihin	*	*
+verb, contemplative	1	papabilisin	pabilisin	*	*
+verb, contemplative	1	papadaliin	padaliin	*	*
+verb, contemplative	1	papagurin	pagurin	*	*
+verb, contemplative	1	papahinga	pahinga	*	*
+verb, contemplative	1	papakita	pakita	*	*
+verb, contemplative	1	papakiusapan	pakiusapan	*	*
+verb, contemplative	1	papalakpak	pumalakpak	*	*
+verb, contemplative	1	papalitan	palitan	*	*
+verb, contemplative	1	papaliwanag	paliwanag	*	*
+verb, contemplative	1	papaltan	paltan	*	*
+verb, contemplative	1	papangit	pumangit	*	*
+verb, contemplative	1	papantayin	pantayin	*	*
+verb, contemplative	1	paparkingan	parkingan	*	*
+verb, contemplative	1	papasabi	pasabi	*	*
+verb, contemplative	1	papasensyahan	pasensyahan	*	*
+verb, contemplative	1	papasikat	pasikat	*	*
+verb, contemplative	1	pasasayawin	pasayawin	*	*
+verb, contemplative	1	patatapusin	patapusin	*	*
+verb, contemplative	1	patutunayan	patunayan	*	*
+verb, completive	1	pinaasa	paasa	*	*
+verb, progressive	1	pinadadalan	padalan	*	*
+verb, completive	1	pinagamot	pagamot	*	*
+verb, progressive	1	pinagkakaguluhan	pagkaguluhan	*	*
+verb, progressive	1	pinagmumulan	pagmulan	*	*
+verb, completive	1	pinagsalita	pagsalitain	*	*
+verb, progressive	1	pinagtatakpan	pagtakpan	*	*
+verb, completive	1	pinahalagahan	pahalagahan	*	*
+verb, completive	1	pinailalim	pailalim	*	*
+verb, completive	1	pinakain	pakainin	*	*
+verb, progressive	1	pinalalaganap	palaganapin	*	*
+verb, completive	1	pinalamig	palamigin	*	*
+verb, completive	1	pinaliparan	paliparan	*	*
+verb, completive	1	pinalitadahan	palitadahan	*	*
+verb, completive	1	pinamagat	pamagat	*	*
+verb, completive	1	pinanagutan	panagutan	*	*
+verb, progressive	1	pinananagutan	panagutan	*	*
+verb, completive	1	pinanganib	panganib	*	*
+verb, completive	1	pinanghimasukan	panghimasukan	*	*
+verb, progressive	1	pinapagmalupitan	pagmalupitan	*	*
+verb, progressive	1	pinapahalagahan	pahalagahan	*	*
+verb, progressive	1	pinapahintulot	pahintulot	*	*
+verb, progressive	1	pinapailaw	pailaw	*	*
+verb, progressive	1	pinapakunwari	pakunwari	*	*
+verb, progressive	1	pinapalaban	palaban	*	*
+verb, progressive	1	pinapalagi	palagi	*	*
+verb, progressive	1	pinapalamutian	palamutian	*	*
+verb, progressive	1	pinapaligoy-ligoy	paligoy-ligoy	*	*
+verb, progressive	1	pinapaliwanag	paliwanag	*	*
+verb, completive	1	pinapangit	papangitin	*	*
+verb, progressive	1	pinapapasok	papasukin	*	*
+verb, progressive	1	pinapasensiyahan	pasensiyahan	*	*
+verb, progressive	1	pinapatakbo	patakbuhin	*	*
+verb, progressive	1	pinapauwi	pauwi	*	*
+verb, progressive	1	pinapayaman	payamanin	*	*
+verb, completive	1	pinasabi	pasabi	*	*
+verb, completive	1	pinasan	pasanin	*	*
+verb, completive	1	pinasig-an	pasig-an	*	*
+verb, completive	1	pinasigan	pasigan	*	*
+verb, completive	1	pinasok	pasukin	*	*
+verb, completive	1	pinatakbo	patakbuhin	*	*
+verb, progressive	1	pinatataasan	pataasan	*	*
+verb, progressive	1	pinatatahimik	patahimikin	*	*
+verb, progressive	1	pinatatapos	patapusin	*	*
+verb, completive	1	pinatay	patayin	*	*
+verb, progressive	1	pinatutuyo	patuyuin	*	*
+verb, completive	1	pinayaman	payamanin	*	*
+verb, progressive	1	pinipiniran	piniran	*	*
+verb, progressive	1	pinoprotektahan	protektahan	*	*
+verb, completive	1	pinrotektahan	protektahan	*	*
+verb, progressive	1	pinuputok	putukin	*	*
+verb, contemplative	1	pipisil	pumisil	*	*
+verb, progressive	1	pumipinid	puminid	*	*
+verb, contemplative	1	pupusan	pusan	*	*
+verb, contemplative	1	puputaktihin	putaktihin	*	*
+verb, contemplative	1	puputanginahin	putanginahin	*	*
+verb, progressive	1	rinaragragan	ragragan	*	*
+verb, contemplative	1	roronda	rumonda	*	*
+verb, contemplative	1	sasabunan	sabunan	*	*
+verb, contemplative	1	sasadsad	sumadsad	*	*
+verb, contemplative	1	sasadyain	sadyain	*	*
+verb, contemplative	1	sasagkaan	sagkaan	*	*
+verb, contemplative	1	sasailalim	sumailalim	*	*
+verb, contemplative	1	sasaksakan	saksakan	*	*
+verb, contemplative	1	sasaligan	saligan	*	*
+verb, contemplative	1	sasalpukin	salpukin	*	*
+verb, contemplative	1	sasampayan	sampayan	*	*
+verb, contemplative	1	sasang-ayon	sumang-ayon	*	*
+verb, contemplative	1	sasawatain	sawatain	*	*
+verb, contemplative	1	sesenyasan	senyasan	*	*
+verb, contemplative	1	sesesantehin	sesantehin	*	*
+verb, completive	1	sinadya	sadyain	*	*
+verb, completive	1	sinakal	sakalin	*	*
+verb, completive	1	sinaktan	saktan	*	*
+verb, completive	1	sinaligan	saligan	*	*
+verb, completive	1	sinalungguhitan	salungguhitan	*	*
+verb, completive	1	sinanto	santuhin	*	*
+verb, completive	1	sinapnan	sapnan	*	*
+verb, progressive	1	sinasagasa	sagasain	*	*
+verb, progressive	1	sinasaksihan	saksihan	*	*
+verb, progressive	1	sinasakyan	sakyan	*	*
+verb, progressive	1	sinasaway	sawayin	*	*
+verb, completive	1	sinawsawan	sawsawan	*	*
+verb, completive	1	sinimplehan	simplehan	*	*
+verb, completive	1	sinundan	sundan	*	*
+verb, completive	1	sinunggaban	sunggaban	*	*
+verb, progressive	1	sinusunran	sunran	*	*
+verb, progressive	1	sinusuntok	suntukin	*	*
+verb, contemplative	1	sisig-an	sig-an	*	*
+verb, contemplative	1	sisiguraduhin	siguraduhin	*	*
+verb, contemplative	1	sisimulan	simulan	*	*
+verb, contemplative	1	sisinta	suminta	*	*
+verb, contemplative	1	sosobra	sumobra	*	*
+verb, contemplative	1	sosoluhin	soluhin	*	*
+verb, progressive	1	sumasadiyos	sumadiyos	*	*
+verb, progressive	1	sumasahimpapawid	sumahimpapawid	*	*
+verb, progressive	1	sumasakabilang-buhay	sumakabilang-buhay	*	*
+verb, progressive	1	sumasama	sumama	*	*
+verb, progressive	1	sumasang-ayon	sumang-ayon	*	*
+verb, progressive	1	sumisigaw	sumigaw	*	*
+verb, progressive	1	sumusulsol	sumulsol	*	*
+verb, progressive	1	sumusuong	sumuong	*	*
+verb, progressive	1	sumusuway	sumuway	*	*
+verb, contemplative	1	susudsuran	sudsuran	*	*
+verb, contemplative	1	susulatan	sulatan	*	*
+verb, contemplative	1	susunuran	sunuran	*	*
+verb, contemplative	1	susunurin	sunurin	*	*
+verb, contemplative	1	susuong	sumuong	*	*
+verb, contemplative	1	susuwelduhan	suwelduhan	*	*
+verb, contemplative	1	tatalikuran	talikuran	*	*
+verb, contemplative	1	tatalunin	talunin	*	*
+verb, contemplative	1	tatambling	tumambling	*	*
+verb, contemplative	1	tatamuran	tamuran	*	*
+verb, contemplative	1	tatandayag	tumandayag	*	*
+verb, contemplative	1	tatanghaliin	tanghaliin	*	*
+verb, contemplative	1	tatawagan	tawagan	*	*
+verb, completive	1	tinalaban	talaban	*	*
+verb, completive	1	tinalikuran	talikuran	*	*
+verb, completive	1	tinalon	talunin	*	*
+verb, completive	1	tinalunan	talunan	*	*
+verb, completive	1	tinamnan	tamnan	*	*
+verb, completive	1	tinan-awan	tan-awan	*	*
+verb, completive	1	tinanggal	tanggalin	*	*
+verb, progressive	1	tinatalon	talunin	*	*
+verb, progressive	1	tinatamaan	tamaan	*	*
+verb, progressive	1	tinatanaw	tanawin	*	*
+verb, progressive	1	tinatawaran	tawaran	*	*
+verb, completive	1	tinawaran	tawaran	*	*
+verb, completive	1	tiningnan	tingnan	*	*
+verb, progressive	1	tinitibagan	tibagan	*	*
+verb, progressive	1	tinitimbangan	timbangan	*	*
+verb, progressive	1	tinitiyempuhan	tiyempuhan	*	*
+verb, progressive	1	tinutunugan	tunugan	*	*
+verb, contemplative	1	titikitan	tikitan	*	*
+verb, contemplative	1	titipan	tipan	*	*
+verb, progressive	1	tumataba	tumaba	*	*
+verb, progressive	1	tumatakbo	tumakbo	*	*
+verb, progressive	1	tumatawag	tumawag	*	*
+verb, contemplative	1	tutubusin	tubusin	*	*
+verb, contemplative	1	tutuldok	tumuldok	*	*
+verb, contemplative	1	tutuligsain	tuligsain	*	*
+verb, progressive	1	umaamin	umamin	*	*
+verb, progressive	1	umaandar	umandar	*	*
+verb, progressive	1	umiihip	umihip	*	*
+verb, progressive	1	umiiskor	umiskor	*	*
+verb, progressive	1	umuupo	umupo	*	*
+verb, progressive	1	umuuwi	umuwi	*	*
+verb, completive	1	vinideohan	videohan	*	*
+verb, contemplative	1	wawagaywayan	wagaywayan	*	*
+verb, contemplative	1	yayakap	yumakap	*	*
+verb, progressive	1	yumayao	yumao	*	*
+adjective, plural	1	maaaksaya	maaksaya	*	*
+adjective, plural	1	maaalat	maalat	*	*
+adjective, plural	1	maaamo	maamo	*	*
+adjective, plural	1	maaardel	maardel	*	*
+adjective, plural	1	maaarte	maarte	*	*
+adjective, plural	1	mabababang-loob	mababang-loob	*	*
+adjective, plural	1	mababagansiya	mabagansiya	*	*
+adjective, plural	1	mababagyo	mabagyo	*	*
+adjective, plural	1	mababalakubak	mabalakubak	*	*
+adjective, plural	1	mababalasik	mabalasik	*	*
+adjective, plural	1	mabibibig	mabibig	*	*
+adjective, plural	1	mabibikas	mabikas	*	*
+adjective, plural	1	mabibilis	mabilis	*	*
+adjective, plural	1	mabibintog	mabintog	*	*
+adjective, plural	1	mabibituwin	mabituwin	*	*
+adjective, plural	1	mabubuhangin	mabuhangin	*	*
+adjective, plural	1	mabubuhok	mabuhok	*	*
+adjective, plural	1	mabubulaklak	mabulaklak	*	*
+adjective, plural	1	mabubulas	mabulas	*	*
+adjective, plural	1	mabubulbol	mabulbol	*	*
+adjective, plural	1	mabuburok	maburok	*	*
+adjective, plural	1	mabubusisi	mabusisi	*	*
+adjective, plural	1	madadagim	madagim	*	*
+adjective, plural	1	madidiya	madiya	*	*
+adjective, plural	1	madudula	madula	*	*
+adjective, plural	1	magigigi	magigi	*	*
+adjective, plural	1	magigiting	magiting	*	*
+adjective, plural	1	magkakaano	magkaano	*	*
+adjective, plural	1	mahahalay	mahalay	*	*
+adjective, plural	1	mahahangin	mahangin	*	*
+adjective, plural	1	mahahapdi	mahapdi	*	*
+adjective, plural	1	mahaharot	maharot	*	*
+adjective, plural	1	mahihinahon	mahinahon	*	*
+adjective, plural	1	mahihinay	mahinay	*	*
+adjective, plural	1	mahihiwaga	mahiwaga	*	*
+adjective, plural	1	maiigi	maigi	*	*
+adjective, plural	1	maiimpok	maimpok	*	*
+adjective, plural	1	maiingay	maingay	*	*
+adjective, plural	1	maiitim	maitim	*	*
+adjective, plural	1	makakamandag	makamandag	*	*
+adjective, plural	1	makikipot	makipot	*	*
+adjective, plural	1	makukulit	makulit	*	*
+adjective, plural	1	makukunat	makunat	*	*
+adjective, plural	1	malalagkit	malagkit	*	*
+adjective, plural	1	malalagong	malagong	*	*
+adjective, plural	1	malalalin	malalin	*	*
+adjective, plural	1	malalamlam	malamlam	*	*
+adjective, plural	1	malalandi	malandi	*	*
+adjective, plural	1	malalangis	malangis	*	*
+adjective, plural	1	malalansa	malansa	*	*
+adjective, plural	1	malalaswa	malaswa	*	*
+adjective, plural	1	malilibag	malibag	*	*
+adjective, plural	1	maliligat	maligat	*	*
+adjective, plural	1	malilihim	malihim	*	*
+adjective, plural	1	maliliwanag	maliwanag	*	*
+adjective, plural	1	maliliyit	maliyit	*	*
+adjective, plural	1	malulumay	malumay	*	*
+adjective, plural	1	mapapagpatawad	mapagpatawad	*	*
+adjective, plural	1	mapapait	mapait	*	*
+adjective, plural	1	mapapamahiin	mapamahiin	*	*
+adjective, plural	1	mapaparaan	maparaan	*	*
+adjective, plural	1	mapaparas	maparas	*	*
+adjective, plural	1	mapeplema	maplema	*	*
+adjective, plural	1	mapipili	mapili	*	*
+adjective, plural	1	mapupunla	mapunla	*	*
+adjective, plural	1	mapupuno	mapuno	*	*
+adjective, plural	1	mapuputik	maputik	*	*
+adjective, plural	1	mararami	marami	*	*
+adjective, plural	1	maririlag	marilag	*	*
+adjective, plural	1	masasabi	masabi	*	*
+adjective, plural	1	masasagabal	masagabal	*	*
+adjective, plural	1	masasagal	masagal	*	*
+adjective, plural	1	masasakuna	masakuna	*	*
+adjective, plural	1	masasamyo	masamyo	*	*
+adjective, plural	1	masasaya	masaya	*	*
+adjective, plural	1	maseselan	maselan	*	*
+adjective, plural	1	masisigalot	masigalot	*	*
+adjective, plural	1	masisigid	masigid	*	*
+adjective, plural	1	masisigla	masigla	*	*
+adjective, plural	1	masisikap	masikap	*	*
+adjective, plural	1	masisirino	masirino	*	*
+adjective, plural	1	masisiyasat	masiyasat	*	*
+adjective, plural	1	matatabsing	matabsing	*	*
+adjective, plural	1	matatagumpay	matagumpay	*	*
+adjective, plural	1	matatalik	matalik	*	*
+adjective, plural	1	matatalim	matalim	*	*
+adjective, plural	1	matatam-is	matam-is	*	*
+adjective, plural	1	matatatag	matatag	*	*
+adjective, plural	1	matatayog	matayog	*	*
+adjective, plural	1	matatrabaho	matrabaho	*	*
+adjective, plural	1	matitigtig	matigtig	*	*
+adjective, plural	1	matitilos	matilos	*	*
+adjective, plural	1	matitimyas	matimyas	*	*
+adjective, plural	1	matitipid	matipid	*	*
+adjective, plural	1	matutubo	matubo	*	*
+adjective, plural	1	matutulungin	matulungin	*	*
+adjective, plural	1	mauusok	mausok	*	*
+adjective, plural	1	mauutak	mautak	*	*
+adjective, plural	1	mayayabong	mayabong	*	*

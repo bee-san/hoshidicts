@@ -1,0 +1,30 @@
+# Written for this pack (GPL-3.0-or-later): whole lookups against tests/dictionary/ (written for the pack). Its verbs, nouns and
+# adjectives have rules tags; its pronouns, adverbs, phrases and form-of rows have none, as in wiktionary-to-yomitan's dictionary.
+# category	valid	text	expression	matched (valid = 1: the first result; 0: not the first result)
+verbs	1	Kumakain ang bata.	kumain	Kumakain
+verbs	1	Nagluluto siya ng adobo.	magluto	Nagluluto
+verbs	1	nag-aaral siya	mag-aral	nag-aaral
+verbs	1	binili ko ito	bilhin	binili
+verbs	1	nakita ko siya	makita	nakita
+verbs	1	nakarating na sila	dating	nakarating
+verbs	0	nakarating na sila	rating	nakarating
+adjectives	1	Talagang maganda	talaga	Talagang
+adjectives	0	Talagang maganda	Talag	Talagang
+adjectives	1	napakaganda ng araw	maganda	napakaganda
+adjectives	1	magaganda sila	maganda	magaganda
+adjectives	1	kalaki	laki	kalaki
+nouns	1	nakakahiya naman	hiya	nakakahiya
+nouns	0	nakakahiya naman	makahiya	nakakahiya
+nouns	1	makakatulong ka	tulong	makakatulong
+nouns	0	makakatulong ka	katulong	makakatulong
+nouns	1	nakakatawa	tawa	nakakatawa
+nouns	1	baboy	baboy	baboy
+phrases	1	magandang umaga po	magandang umaga	magandang umaga
+phrases	1	araw-araw siyang	araw-araw	araw-araw
+phrases	1	paano ba iyan	paano	paano
+phrases	0	paano ba iyan	ano ba	paano ba
+contractions	1	Ako’y masaya	ako	Ako’y
+names	1	Pilipinong guro	Pilipino	Pilipinong
+spelling	1	pang̃alan niya	pangalan	pang̃alan
+script	1	ᜃᜓᜋᜁᜈ᜔	kumain	ᜃᜓᜋᜁᜈ᜔
+negatives	1	kasi si	kasi	kasi

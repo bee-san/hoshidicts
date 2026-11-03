@@ -204,6 +204,47 @@ for (const {transform, original, pack} of made) {
     }
 }
 
+// The sandwich rules of a transform that share their conditions and stem
+// constraints and form a full cross product of prefixes and suffixes are
+// written as one circumfix in the cross-product form (section 7.3), which
+// stands for the same rules.
+let grouped = 0;
+for (const transform of port.transforms) {
+    const out = [];
+    const groups = new Map();
+    for (const rule of transform.rules) {
+        if (rule.type !== 'circumfix') {
+            out.push(rule);
+            continue;
+        }
+        const {inflectedPrefix, deinflectedPrefix, inflectedSuffix, deinflectedSuffix, ...rest} = rule;
+        const key = JSON.stringify(rest);
+        if (!groups.has(key)) {
+            groups.set(key, {rest, pairs: [], at: out.length});
+            out.push(null);
+        }
+        groups.get(key).pairs.push([[inflectedPrefix, deinflectedPrefix], [inflectedSuffix, deinflectedSuffix]]);
+    }
+    for (const {rest, pairs, at} of groups.values()) {
+        const unique = (list) => [...new Map(list.map((x) => [JSON.stringify(x), x])).values()];
+        const prefixes = unique(pairs.map(([p]) => p));
+        const suffixes = unique(pairs.map(([, s]) => s));
+        const set = new Set(pairs.map((x) => JSON.stringify(x)));
+        const full = set.size === pairs.length && set.size === prefixes.length * suffixes.length &&
+            prefixes.every((p) => suffixes.every((x) => set.has(JSON.stringify([p, x]))));
+        if (full && pairs.length > 1) {
+            const {type, ...constraints} = rest;
+            out[at] = {type, prefixes, suffixes, ...constraints};
+            grouped += pairs.length;
+        } else {
+            out[at] = pairs.map(([[ip, dp], [is, ds]]) => ({type: rest.type, inflectedPrefix: ip, deinflectedPrefix: dp, inflectedSuffix: is, deinflectedSuffix: ds,
+                ...Object.fromEntries(Object.entries(rest).filter(([k]) => k !== 'type'))}));
+        }
+    }
+    transform.rules = out.flat();
+}
+console.log(`${grouped} circumfix rules written as cross products`);
+
 writeFileSync(file, formatTransforms(port));
 const total = port.transforms.reduce((n, t) => n + t.rules.length, 0);
 console.log(`Mapped ${mapped} todo rules into ${file}: ${port.transforms.length} transforms, ${total} rules; ${checked} probe texts agree with Yomitan, ${differences} are the listed u-at-the-start difference`);

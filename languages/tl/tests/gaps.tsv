@@ -1,0 +1,74 @@
+# Known gaps: run by the conformance test and counted, not enforced.
+# Hand-written rows (categories without ";" or ","; GPL-3.0-or-later): the -in infinitive of a completive or progressive,
+# which the rules do not rebuild (README.md, Known gaps); the root is reached instead (kinain -> kain).
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+aspect -in	1	kinain	kainin	*	*
+aspect -in	1	kinakain	kainin	*	*
+aspect -in	1	binasa	basahin	*	*
+aspect -in	1	binabasa	basahin	*	*
+aspect -in	1	ininom	inumin	*	*
+aspect -in	1	iniinom	inumin	*	*
+aspect -in	1	niluto	lutuin	*	*
+aspect -in	1	niluluto	lutuin	*	*
+aspect -in	1	nilakad	lakarin	*	*
+aspect -in	1	binili	bilhin	*	*
+aspect -in	1	binibili	bilhin	*	*
+aspect -in	1	kinuha	kunin	*	*
+aspect -in	1	ginawa	gawin	*	*
+aspect -in	1	ginagawa	gawin	*	*
+aspect -in	1	ginamit	gamitin	*	*
+aspect -in	1	tinukso	tuksuhin	*	*
+aspect -in	1	inaawit	awitin	*	*
+aspect -in	1	pinakain	pakainin	*	*
+aspect -in	1	pinapakain	pakainin	*	*
+# sampled rows of corpus.tsv's sources that the final rules do not reach (sources/build-corpus.py)
+V;PFV;PFOC	1	binalaan	babala	*	*
+V;IPFV;AGFOC	1	bumibista	bisita	*	*
+V;PFOC;LGSPEC1	1	diringinggin	dinig	*	*
+V;PFV;PFOC	1	inoohan	oo	*	*
+V;PFOC;LGSPEC1	1	ipapanganak	anak	*	*
+V;PFOC;LGSPEC1	1	kamumuhian	muhi	*	*
+V;PFOC;LGSPEC1	1	mamadaliin	dali	*	*
+V;AGFOC;LGSPEC1	1	mananalo	panalo	*	*
+V;AGFOC;LGSPEC1	1	mangangako	pangako	*	*
+V;PFOC;LGSPEC1	1	mapupunitpu	punit	*	*
+V;PFV;AGFOC	1	nagtadtad	tatad	*	*
+V;IPFV;AGFOC	1	nagtatadtad	tatad	*	*
+V;PFV;AGFOC	1	nangako	pangako	*	*
+V;PFOC;LGSPEC1	1	ooohan	oo	*	*
+V;PFV;PFOC	1	pinagtapan	takip	*	*
+V;IPFV;PFOC	1	pinapamalengke	palengke	*	*
+V;IPFV;PFOC	1	pinapanganak	anak	*	*
+V;PFOC;LGSPEC1	1	tatrabahuin	trabaho	*	*
+V;PFV;PFOC	1	tinadtad	tatad	*	*
+verb, contemplative	1	aayaw	mayaw	*	*
+verb, contemplative	1	babastuson	bastusin	*	*
+verb, completive	1	binuod	buurin	*	*
+verb, progressive	1	dinarama	damhin	*	*
+verb, contemplative	1	dudukwang	dukwangin	*	*
+verb, completive	1	inatake	atakihin	*	*
+verb, completive	1	iniba	ibhin	*	*
+verb, progressive	1	inuuod	uurin	*	*
+verb, completive	1	itinaggi	itanggi	*	*
+verb, progressive	1	minamaya-maya	may-in-may-in	*	*
+verb, progressive	1	naguiguing	maguing	*	*
+verb, progressive	1	nanasok	masok	*	*
+verb, progressive	1	napaooo	mapaoo	*	*
+verb, progressive	1	nililirip	libdin	*	*
+verb, completive	1	nilirip	ligdin	*	*
+verb, progressive	1	ninibig	mibig	*	*
+verb, completive	1	nulat	mulat	*	*
+verb, progressive	1	nunulat	mulat	*	*
+verb, contemplative	1	papanhik	manhik	*	*
+verb, contemplative	1	pepwersahan	pwersahan	*	*
+verb, contemplative	1	pepwersahin	pwersahin	*	*
+verb, progressive	1	pinahihiya	pahiy-in	*	*
+verb, progressive	1	pinoproblema	problemahin	*	*
+verb, contemplative	1	poprotektahan	protektahan	*	*
+verb, contemplative	1	sasayaw	sayawin	*	*
+verb, progressive	1	sinasalita	salit-in	*	*
+verb, completive	1	tinira	tiranin	*	*
+verb, progressive	1	tinitigib	tigbin	*	*
+verb, progressive	1	tinitira	tiranin	*	*
+verb, progressive	1	tsumitsibog	tsumibog	*	*
+verb, contemplative	1	uuli	muli	*	*

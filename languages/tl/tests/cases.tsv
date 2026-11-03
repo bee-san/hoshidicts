@@ -1,0 +1,265 @@
+# Written for this pack (GPL-3.0-or-later): aspect forms of each verb class, affixes to roots, the linker and
+# contractions, spelling variants, phrases, and negatives (valid = 0) that a wrong rule would produce.
+# The pack has no optional processor, transform or variant pass, so these rows run the same with every option on and with the defaults.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+aspect -um-	1	kumain	kain	*	*
+aspect -um-	1	kumakain	kumain	*	progressive
+aspect -um-	1	kakain	kumain	*	contemplative
+aspect -um-	1	uminom	inom	*	*
+aspect -um-	1	umiinom	uminom	*	progressive
+aspect -um-	1	iinom	uminom	*	contemplative
+aspect -um-	1	dumarating	dumating	*	progressive
+aspect -um-	1	darating	dumating	*	contemplative
+aspect -um-	1	tumatakbo	tumakbo	*	progressive
+aspect -um-	1	tatakbo	tumakbo	*	contemplative
+aspect -um-	1	ngumingiti	ngumiti	*	progressive
+aspect -um-	1	gumagawa	gumawa	*	progressive
+aspect -um-	1	pumupunta	pumunta	*	progressive
+aspect -um-	1	pupunta	pumunta	*	contemplative
+aspect -um-	1	bumibili	bumili	*	progressive
+aspect -um-	1	sumusulat	sumulat	*	progressive
+aspect -um-	1	umaalis	umalis	*	progressive
+aspect -um-	1	aalis	umalis	*	contemplative
+aspect mag-	1	nagluto	magluto	*	completive
+aspect mag-	1	nagluluto	magluto	*	progressive
+aspect mag-	1	magluluto	magluto	*	contemplative
+aspect mag-	1	nagbabasa	magbasa	*	progressive
+aspect mag-	1	nagtatrabaho	magtrabaho	*	progressive
+aspect mag-	1	nag-aral	mag-aral	*	completive
+aspect mag-	1	nag-aaral	mag-aral	*	progressive
+aspect mag-	1	mag-aaral	mag-aral	*	contemplative
+aspect mag-	1	nagdarasal	magdasal	*	progressive
+aspect mag-	1	nagplaplantsa	magplantsa	*	progressive
+aspect mag-	1	nagte-text	mag-text	*	progressive
+aspect mag-	1	nagsasalita	magsalita	*	progressive
+aspect ma-	1	natulog	matulog	*	completive
+aspect ma-	1	natutulog	matulog	*	progressive
+aspect ma-	1	matutulog	matulog	*	*
+aspect ma-	1	nakita	makita	*	completive
+aspect ma-	1	nakikita	makita	*	progressive
+aspect ma-	1	makikita	makita	*	*
+aspect ma-	1	naaalala	maalala	*	progressive
+aspect ma-	1	naiintindihan	maintindihan	*	progressive
+aspect ma-	1	nauunawaan	maunawaan	*	progressive
+aspect ma-	1	naramdaman	maramdaman	*	completive
+aspect mang-	1	namimili	mamili	*	progressive
+aspect mang-	1	nanonood	manood	*	progressive
+aspect mang-	1	nangingisda	mangisda	*	progressive
+aspect mang-	1	manggagamot	gamot	*	*
+aspect mang-	1	nanloloko	manloko	*	progressive
+aspect mang-	1	nandadaya	mandaya	*	progressive
+aspect -in	1	kinain	kain	*	completive
+aspect -in	1	kakainin	kainin	*	contemplative
+aspect -in	1	babasahin	basahin	*	contemplative
+aspect -in	1	iinumin	inumin	*	contemplative
+aspect -an	1	sinulatan	sulatan	*	completive
+aspect -an	1	sinusulatan	sulatan	*	progressive
+aspect -an	1	susulatan	sulatan	*	contemplative
+aspect -an	1	binigyan	bigyan	*	completive
+aspect -an	1	tiningnan	tingnan	*	completive
+aspect -an	1	binuksan	buksan	*	completive
+aspect -an	1	pinag-usapan	pag-usapan	*	completive
+aspect -an	1	pinag-uusapan	pag-usapan	*	progressive
+aspect -an	1	pinagtatawanan	pagtawanan	*	progressive
+aspect i-	1	isinulat	isulat	*	completive
+aspect i-	1	isinusulat	isulat	*	progressive
+aspect i-	1	isusulat	isulat	*	contemplative
+aspect i-	1	ibinigay	ibigay	*	completive
+aspect i-	1	ibinibigay	ibigay	*	progressive
+aspect i-	1	ibibigay	ibigay	*	contemplative
+aspect i-	1	iniluto	iluto	*	completive
+aspect i-	1	inilalagay	ilagay	*	progressive
+aspect i-	1	iniabot	iabot	*	completive
+aspect i-	1	ipinanganak	ipanganak	*	completive
+aspect i-	1	ipinagluluto	ipagluto	*	progressive
+aspect i-	1	ikinagalit	ikagalit	*	completive
+prefix reduplication	1	nakakakain	makakain	*	progressive
+prefix reduplication	1	nakikipag-usap	makipag-usap	*	progressive
+prefix reduplication	1	nagpapaluto	magpaluto	*	progressive
+prefix reduplication	1	makakakain	makakain	*	*
+abilitative	1	makapagluto	magluto	*	abilitative
+abilitative	1	nakapagluto	makapagluto	*	completive
+abilitative	1	maibigay	ibigay	*	abilitative
+abilitative	1	naibigay	maibigay	*	completive
+social	1	makipag-usap	mag-usap	*	social
+social	1	nakipag-usap	makipag-usap	*	completive
+social	1	makipaglaro	maglaro	*	social
+recently completed	1	kakakain	kain	*	*
+recently completed	1	kararating	dating	*	*
+recently completed	1	kaaalis	alis	*	*
+recently completed	1	kakaalis	alis	*	*
+recently completed	1	kasisigaw	sigaw	*	*
+affix to root	1	magluto	luto	*	*
+affix to root	1	mag-aral	aral	*	*
+affix to root	1	maganda	ganda	*	*
+affix to root	1	marami	dami	*	*
+affix to root	1	mamili	bili	*	*
+affix to root	1	manahi	tahi	*	*
+affix to root	1	mangisda	isda	*	*
+affix to root	1	makauwi	uwi	*	*
+affix to root	1	makisama	sama	*	*
+affix to root	1	magpaluto	luto	*	*
+affix to root	1	magkasakit	sakit	*	*
+affix to root	1	magpakabait	bait	*	*
+affix to root	1	isulat	sulat	*	*
+affix to root	1	ibigay	bigay	*	*
+affix to root	1	ipagluto	luto	*	*
+affix to root	1	ipaluto	luto	*	*
+affix to root	1	ikalima	lima	*	*
+affix to root	1	kainin	kain	*	*
+affix to root	1	basahin	basa	*	*
+affix to root	1	inumin	inom	*	*
+affix to root	1	lutuin	luto	*	*
+affix to root	1	sagutin	sagot	*	*
+affix to root	1	bilhin	bili	*	*
+affix to root	1	kunin	kuha	*	*
+affix to root	1	gawin	gawa	*	*
+affix to root	1	sundin	sunod	*	*
+affix to root	1	sulatan	sulat	*	*
+affix to root	1	puntahan	punta	*	*
+affix to root	1	tawanan	tawa	*	*
+affix to root	1	bigyan	bigay	*	*
+affix to root	1	buksan	bukas	*	*
+affix to root	1	tingnan	tingin	*	*
+affix to root	1	bayaran	bayad	*	*
+affix to root	1	sagutan	sagot	*	*
+affix to root	1	maunawaan	unawa	*	*
+affix to root	1	makalimutan	limot	*	*
+affix to root	1	magkamayan	kamay	*	*
+affix to root	1	pagalitan	galit	*	*
+affix to root	1	pag-usapan	usap	*	*
+affix to root	1	pagsabihin	sabi	*	*
+affix to root	1	pakainin	kain	*	*
+affix to root	1	patawarin	tawad	*	*
+affix to root	1	masaktan	sakit	*	*
+nouns and adjectives	1	pagkain	kain	*	*
+nouns and adjectives	1	pagbabasa	basa	*	*
+nouns and adjectives	1	pag-aaral	aral	*	*
+nouns and adjectives	1	pagkakamali	mali	*	*
+nouns and adjectives	1	pakikipag-usap	usap	*	*
+nouns and adjectives	1	kagandahan	ganda	*	*
+nouns and adjectives	1	kalungkutan	lungkot	*	*
+nouns and adjectives	1	kabutihan	buti	*	*
+nouns and adjectives	1	pakisara	sara	*	*
+nouns and adjectives	1	nakaupo	upo	*	*
+nouns and adjectives	1	nakakatawa	tawa	*	*
+nouns and adjectives	1	tagaluto	luto	*	*
+nouns and adjectives	1	taga-Maynila	Maynila	*	*
+nouns and adjectives	1	panulat	sulat	*	*
+nouns and adjectives	1	pambansa	bansa	*	*
+nouns and adjectives	1	mapagmahal	mahal	*	*
+nouns and adjectives	1	tig-isa	isa	*	*
+comparison	1	pinakamaganda	maganda	*	pinaka
+comparison	1	pinakamalaki	malaki	*	pinaka
+comparison	1	napakaganda	maganda	*	napaka
+comparison	1	napakalaki	malaki	*	napaka
+comparison	1	kasingganda	maganda	*	equative
+comparison	1	kasinlaki	malaki	*	equative
+comparison	1	kasimbilis	mabilis	*	equative
+comparison	1	singganda	maganda	*	equative
+plural adjective	1	magaganda	maganda	*	maReduplication
+plural adjective	1	malalaki	malaki	*	maReduplication
+plural adjective	1	matataas	mataas	*	maReduplication
+plural adjective	1	maliliit	maliit	*	maReduplication
+plural adjective	1	pinakamagaganda	maganda	*	*
+linker	1	magandang	maganda	*	linker
+linker	1	kaibigang	kaibigan	*	linker
+linker	1	isang	isa	*	linker
+linker	1	ibang	iba	*	linker
+linker	1	akong	ako	*	linker
+linker	1	siyang	siya	*	linker
+linker	1	walang	wala	*	linker
+linker	1	maraming	marami	*	linker
+linker	1	dalawang	dalawa	*	linker
+linker	1	noong	noon	*	linker
+linker	1	ngayong	ngayon	*	linker
+linker	1	kanyang	kanya	*	linker
+linker	1	ating	atin	*	linker
+linker	1	kong	ko	*	linker
+linker	1	mong	mo	*	linker
+linker	1	pong	po	*	linker
+linker	1	kang	ka	*	linker
+linker	1	pang	pa	*	linker
+linker	1	ring	rin	*	linker
+linker	1	pinakamagandang	maganda	*	*
+contraction	1	ako'y	ako	*	contractionAy
+contraction	1	ako’y	ako	*	contractionAy
+contraction	1	siya'y	siya	*	contractionAy
+contraction	1	isa't	isa	*	contractionAt
+contraction	1	iba't	iba	*	contractionAt
+contraction	1	ano'ng	ano	*	contractionAng
+contraction	1	sino'ng	sino	*	contractionAng
+contraction	1	subali't	subalit	*	apostropheSpelling
+contraction	1	datapuwa't	datapuwat	*	apostropheSpelling
+spelling	1	magaral	mag-aral	*	prefixHyphen
+spelling	1	nagaaral	mag-aral	*	*
+spelling	1	pagibig	pag-ibig	*	prefixHyphen
+spelling	1	nagiisa	mag-isa	*	*
+spelling	1	kumakáin	kumain	*	progressive
+spelling	1	magandá	maganda	*	
+spelling	1	Kumakain	kumain	*	progressive
+spelling	1	NAGLULUTO	magluto	*	progressive
+spelling	1	pang̃alan	pangalan	*	
+affix to root	1	katagal	tagal	*	ka
+affix to root	1	kalaki	laki	*	ka
+affix to root	1	karami	dami	*	ka
+affix to root	1	kapareho	pareho	*	ka
+affix to root	1	paligid	ligid	*	pa
+affix to root	1	pataas	taas	*	pa
+affix to root	1	parangal	dangal	*	pa
+affix to root	1	palatanong	tanong	*	pala
+affix to root	1	palabiro	biro	*	pala
+affix to root	1	nakarating	dating	*	naka
+affix to root	1	makarating	dating	*	maka
+affix to root	1	nakakarating	dating	*	nakaka
+affix to root	1	kakarating	dating	*	*
+affix to root	1	matutunan	matuto	*	locativeAn
+affix to root	1	natutunan	natuto	*	locativeAn
+affix to root	1	maghapunan	hapunan	*	mag
+affix to root	1	nagpasya	pasya	*	*
+affix to root	1	nakakatulong	tulong	*	*
+affix to root	1	makakatulong	tulong	*	*
+nouns and adjectives	1	pagiging	maging	*	gerund
+nouns and adjectives	1	pagkakaroon	magkaroon	*	gerund
+nouns and adjectives	1	pagkarating	dating	*	gerund
+nouns and adjectives	1	nakakahiya	hiya	*	nakaka
+aspect -in	1	ginamot	gamutin	*	inVerb
+aspect -in	1	sinabi	sabihin	*	inVerb
+aspect -in	1	binasa	basahin	*	inVerb
+aspect -in	1	ininom	inumin	*	inVerb
+aspect -in	1	niluto	lutuin	*	inVerb
+aspect -in	1	nilakad	lakarin	*	inVerb
+aspect -in	1	binili	bilhin	*	inVerb
+aspect -in	1	pinakain	pakainin	*	inVerb
+aspect -in	1	kinakain	kainin	*	inVerb|progressive
+aspect -in	1	binabasa	basahin	*	inVerb|progressive
+aspect -in	1	iniinom	inumin	*	inVerb|progressive
+aspect -in	1	niluluto	lutuin	*	inVerb|progressive
+aspect -in	1	pinapakain	pakainin	*	inVerb|progressive
+aspect -in	1	pinaplano	plano	*	progressive
+nouns and adjectives	1	madasalin	dasal	*	maIn
+negatives	0	ang	a	*	*
+negatives	0	lang	la	*	*
+negatives	0	nang	na	*	*
+negatives	0	sang	sa	*	*
+negatives	0	kasi	si	*	*
+negatives	0	kanya	nya	*	*
+negatives	0	ina	na	*	*
+negatives	0	isa	sa	*	*
+negatives	0	mama	ma	*	*
+negatives	0	papa	pa	*	*
+negatives	0	pala	la	*	*
+negatives	0	kaya	ya	*	*
+negatives	0	paano	ano	*	*
+negatives	0	baboy	boy	*	*
+negatives	0	titulo	tulo	*	*
+negatives	0	tutol	tol	*	*
+negatives	0	Talagang	Talag	*	*
+negatives	0	Basahin	Basa	*	*
+negatives	0	Kunin	Ko	*	*
+negatives	0	maghapunan	maghapon	*	*
+negatives	0	nagpasya	sya	*	*
+negatives	0	paano ba	ano ba	*	*
+negatives	0	pauna	una	*	*
+negatives	0	palala	la	*	*
+negatives	0	magasin	gas	*	*

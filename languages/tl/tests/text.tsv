@@ -1,0 +1,26 @@
+# Written for this pack (GPL-3.0-or-later): what the text processors of language.json make of an input.
+# category	valid	input	variant (valid = 1: among the variants; 0: not among them)
+case	1	Kumakain	kumakain
+case	1	Kumakain	Kumakain
+case	1	NAGLULUTO	nagluluto
+case	1	NAGLULUTO	Nagluluto
+case	1	maynila	Maynila
+case	0	kumakain	KUMAKAIN
+apostrophe	1	Ako’y	Ako'y
+apostrophe	1	Ako’y	ako'y
+apostrophe	0	Ako’y	Ako’y
+apostrophe	1	ʼdi	'di
+hyphen	1	mag‐aral	mag-aral
+hyphen	1	nag‑aaral	nag-aaral
+hyphen	0	mag‐aral	mag‐aral
+hyphen	0	mag—aral	mag-aral
+soft hyphen	1	kuma­kain	kumakain
+soft hyphen	0	kuma­kain	kuma­kain
+diacritics	1	magandá	maganda
+diacritics	1	magandá	magandá
+diacritics	1	binábasâ	binabasa
+diacritics	1	pang̃alan	pangalan
+diacritics	1	mang̃a	manga
+diacritics	1	Niño	Niño
+diacritics	1	Niño	Nino
+baybayin	1	ᜃᜓᜋᜁᜈ᜔	ᜃᜓᜋᜁᜈ᜔
