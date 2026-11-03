@@ -183,8 +183,208 @@ no Russian rules, so the own rules are also the union and the final set, and
 
 ## Measurements
 
-(being written)
+Every number below uses wty-ru-en as published, form-of rows included, with
+the pack's `lookup.untaggedTerms: "pass"`, unless a line says otherwise.
+They were measured with hoshidicts-cli and lookup drivers built from
+bee-san/hoshidicts#58 at 26158c1, which adds the field (its head 32812c9
+changes only `docs/languages.md`), GCC 14.3, Release; "filter" lines use
+main at b145feb, which reads every pack as `filter`.
+
+1. **`eval-language --dictionary`** (`sources/measure.py` commands below).
+   Yomitan has no Russian rules, so the own rules are also the union and the
+   final set; the pack has no optional processor, transform or variant
+   pass, so every file gives the same numbers with every option on and with
+   `# options: default` added (checked on copies with the line).
+
+   | File | Rows | Recall | Negatives passed | False candidates per row | First rank |
+   | --- | ---: | ---: | ---: | ---: | ---: |
+   | `corpus.tsv` + UniMorph rows of `gaps.tsv` (the sample) | 1,000 | 99.80% (998) | | 1.533 (filter: 0.780) | 95.0% (filter: 94.3%) |
+   | `cases.tsv` | 642 (425 positive, 217 negative) | 100% | 100% | 3.101 (filter: 1.558) | 80.2% (filter: 77.6%) |
+
+   - The first sample, of 1,420 rows with the same strata and seed, gave
+     99.65% (1,415) with the rules of that time; the sample was cut to 1,000
+     rows to keep `tests/` and `sources/` under 1 MB.
+   - False candidates count, as section 10.3 defines them, the texts the
+     dictionary's form-of references name as well as the rules' outputs.
+     Headwords with a definition that a rule itself reaches, other than the
+     row's lemma, are 0.073 per sample row: mostly the verb of a participle
+     whose UniMorph lemma is the participle (`усиленной` → усилить). The rest
+     come from wty-ru-en's references, such as its pronoun rows, which name
+     every personal pronoun (`её` → я, она, он, мы …).
+   - First rank: the misses are forms wty-ru-en lists as entries of their own
+     (`читал`, `читала`, `любимый`, `пишущий`, `меня`, `лучше`, whose glosses
+     name the lemma), adjectival nouns that are also adjectives (`столовой` →
+     столовый, `животного` → животный), and ties.
+   - Per rule (`--per-rule` on the sample and `cases.tsv`): 301 of the 1,332
+     rows recover a row no other rule reaches, none breaks a negative, and 29
+     add false candidates (59 in all) without recovering one, mostly
+     participle and -о adverb readings of adjectives (`допустимое` →
+     допустимо). They are kept: they make the participles and short forms.
+2. **Frequent forms** (`measure.py frequent`). Of the 10,000 most frequent
+   words of the subtitle list (130,234,308 tokens), 8,333 have form-of rows,
+   under their own spelling or with one е as ё, and the rules reach a lemma
+   those rows name for 6,204 (58,794,335 tokens). Looked up as a host does
+   (16 results, scan length 16, default options), the first result with a
+   definition is a lemma their own rows do not name for 4 words: 23,711
+   tokens, 0.040% of the reached words' tokens.
+   - `пришёл` (14,385): wty-ru-en's phrase `пришёл, увидел, победил` has the
+     reading `пришёл`, so it matches the word as written and comes first;
+   - `чертов` (4,343): the regular genitive plural reads it as `черт`, an
+     alternative spelling of чёрт; the adjective чёртов needs the ё variant
+     (one processor step);
+   - `вел` (3,310) → вести and `поешь` (1,673) → петь: the forms of `вёл`
+     and `поёшь` written with е. The words' own rows name велосипед (an
+     abbreviation) and поесть, which come later.
+
+   The first run of this judge found 7 such words; the fixes of the History
+   removed `мер` → мереть, `тел` → тло and `счете` → скать. A run before it
+   had also found `узнает`, `узнаем`, `узнаешь` and `узнаете` → узнавать
+   (23,411 tokens), which the -знавать fix removed.
+3. **Phrases** (`measure.py phrases`). In 40,000 Tatoeba sentences (seed
+   20261103), 26,779 hovers start at a preposition or не before a word (`в
+   доме`, `с матерью`, `не знаю`). The first result is the preposition or
+   не at 25,369 and a phrase the dictionary lists at 1,410 (`в самом деле`,
+   `не раз`, `на улице`); a rule reading over two words is first at none.
+   - The space guard is measured on the three texts below, with a scratch
+     copy whose rules lack `stemCharacters`: 59 positions change their first
+     result, mostly to wrong phrases (`а там` → а то, `на волю` → на воле,
+     `должно было` → должно быть, `и том` → и то), and 3 to a right one
+     (`так называемые` → так называемый, `с первого взгляду`).
+4. **Real text** (`measure.py text`). Every word of the three Wikisource
+   works, looked up from the word to the end of its sentence: 77,189
+   lookups, 74,821 with a result.
+   - Judged by script, where the word has form-of rows or is a headword
+     (72,556 positions): the first result with a definition is a lemma the
+     word's rows do not name at 25 positions (0.034%). The largest groups are
+     `Тише` → Тихон (3, a capitalised word read as the dative of Тиша, Тихон's
+     diminutive), `писано` → писаный (3, the adjective with one н), `вел` →
+     вести (3) and `сует`, `суете` → совать (3, суета's forms read as совать's
+     written with е).
+   - Not judged by script (2,266 positions: phrases, abbreviations, names and
+     words the dictionary lacks): a sample of 60 (seed 1) judged by hand has 5
+     wrong first results. Two are surnames the dictionary lacks read as
+     common nouns (`Корсакова` → корсак, `Хоботова` → хобот), one a compound
+     (`камер-лакей` → камера), one an old word (`снову` → снова), and one a
+     phrase out of context (`в свете` for "in society"). The other 55 are
+     right: 45 phrases the dictionary lists, names and abbreviations, and 10
+     words (`увидя` → увидеть, `медно-красным`, `по-старинному` →
+     старинный, `будет оставаться` → оставаться). That is about 190 wrong first results
+     among the 2,266, and about 0.3% of all positions with a result.
+   - Before the fixes of the History above, the script found 569 wrong first
+     results (0.78%) with `pos_filter_exempt` standing in for the field, and
+     78 (0.11%) with the field before the capital exclusions and the ё stems
+     of adjectives.
+5. **Performance** (section 13; the budgets are 1 ms p50, 50 ms load and 20 MB).
+   - Native `benchmark-lookup --languages languages --language ru` with
+     `sources/benchmark-words.txt` (82 hover texts from the three works), 6
+     passes with the first dropped, three runs at a machine load of 50:
+     p50 55.5-58.7 µs, p95 164.7-174.3 µs (filter: p50 46.2-47.8 µs, p95
+     112.8-116.4 µs).
+   - WebAssembly (Hachidori feat/multi-language 803f7b6e's prebuilt engines,
+     Node 22; they are built from hoshidicts b145feb, which has no
+     `untaggedTerms`, so these use the pack without the field):
+     `hdw_language_load` takes a median 10.2 ms single-thread and 10.8 ms
+     threaded over 10 fresh engines (`sources/wasm-load.mjs`), and the live
+     heap grows by 1,444,880 bytes; `hdw_lookup` on the 399 hover positions of
+     the 82 texts (Hachidori's `benchmark/node-lookup.mjs`, 6 passes) takes
+     p50 105 µs and p95 349 µs single-thread, p50 121 µs and p95 393 µs
+     threaded.
+   - The pack has no `pattern` rule or step.
+6. **Hachidori** (feat/multi-language 803f7b6e with this branch in
+   `third_party/hoshidicts`, `test/chrome-language-pack.mjs`, Chrome 152,
+   wty-ru-en): 16 / 16 checks pass with the pack without the field (the
+   engine predates it). Settings adds Russian beside Japanese and imports the
+   dictionary (2.1 s); 12 hovered words find their lemma first (`гуляли` →
+   гулять, `отца` → отец, `Дети` → ребёнок, `идет` → идти, `темном` →
+   тёмный, `Итак` → итак, `пойду` → пойти); the Anki note and the switch to
+   Japanese and back work.
+7. **Tests** (`language-conformance-test`, with the field): corpus.tsv 998 /
+   998, cases.tsv 642 / 642, text.tsv 36 / 36, lookup.tsv 47 / 47; gaps.tsv
+   0 / 3 (reported); classes.json agrees with the engine (10 classes, 1,118
+   fields, 2 steps). `tests/` and `sources/` hold 925,089 bytes.
+   `tools/check-yomitan.mjs`: 4 processors on about 1,950 inputs each, every
+   difference listed (`sources/yomitan-differences.tsv`), 0 unexplained.
+   - Mutation check (section 14 step 7, `sources/mutate.py`): removing one
+     kind of stem constraint (`stemMinLength`, `stemEndsWith`,
+     `stemNotStartsWith`, `stemNotStartsWithText`, `stemCharacters`) from the
+     rows of one transform gives 199 mutants, and each fails the conformance
+     test. The first run (210 mutants, 12 of them removing the ё stem
+     readings) had 200 survivors; the 189 `guard` rows of `cases.tsv` are the
+     wrong headword or text each constraint keeps out, the most frequent
+     word's first (`он` is not она, `Итак` is not Итака, `так сказал` is
+     not так сказать). The pack has no word list. The е → ё stem readings of
+     adjectives are rules, not constraints: their rows are tested by the ё
+     rows (`темном` → тёмный in `lookup.tsv`).
+
+Commands (from the repository root; `$C` is the directory of the inputs):
+
+```sh
+node languages/ru/sources/build-own.mjs && node tools/merge-transforms.mjs ru --force
+node languages/ru/sources/build-corpus.mjs $C/unimorph-rus/rus
+build/hoshidicts-cli eval-language ru <corpus.tsv + gaps.tsv> --dictionary $C/wty-ru-en [--per-rule]
+g++ -O2 -std=c++23 -Iinclude languages/ru/sources/lookup-batch.cpp -o build/lookup-batch-ru ...  # its header
+python3 languages/ru/sources/measure.py frequent --zip $C/wty-ru-en.zip --dict $C/wty-ru-en --freq $C/ru_50k.txt --batch build/lookup-batch-ru
+python3 languages/ru/sources/measure.py phrases --zip $C/wty-ru-en.zip --dict $C/wty-ru-en --tatoeba $C/rus_sentences.tsv.bz2 --batch build/lookup-batch-ru
+python3 languages/ru/sources/measure.py text --zip $C/wty-ru-en.zip --dict $C/wty-ru-en --batch build/lookup-batch-ru --text $C/texts/*.txt
+python3 languages/ru/sources/mutate.py --conformance build/language-conformance-test
+build/benchmark-lookup languages/ru/sources/benchmark-words.txt 6 --term $C/wty-ru-en --language ru --json
+node languages/ru/sources/wasm-load.mjs <hachidori checkout> languages/ru 10
+```
 
 ## Known gaps
 
-(being written)
+- **`gaps.tsv`** (3 rows, reported, not enforced):
+  - `телогических` → `теологический`: a misspelling in UniMorph rus;
+  - `внутренни` → `внутренний`: UniMorph lists short forms of soft
+    adjectives in -ний, which they do not have, so no rule reads -ни as -ний;
+  - `Толстого` → `Толстой` (hand-written): -ой adjective rules leave out
+    capitalised stems, so the rules no longer reach the surnames in -ой;
+    wty-ru-en's own form-of rows do (`lookup.tsv`).
+- **The field.** The pack needs `lookup.untaggedTerms` (hoshidicts#58).
+  Hachidori's engines at feat/multi-language 803f7b6e predate it and refuse
+  the pack with it ("unknown key"); with them, rule outputs never match
+  wiktionary-to-yomitan's Russian rows, and lookups reach a lemma only
+  through the form-of rows of the word as written.
+- **Words the dictionary lists twice.** `пришёл` shows wty-ru-en's phrase
+  `пришёл, увидел, победил`, whose reading is `пришёл`, before прийти;
+  `читал`, `читала`, `любимый`, `пишущий` and `меня` are entries of their
+  own (their glosses name the lemma) and come first (Measurements 1).
+- **Wrong first results that remain**, in the three texts (25 judged by
+  script, about 190 estimated among the positions the script cannot judge):
+  - capitalised words read through a name's form at no processor step,
+    such as `Тише` → Тихон (3); surnames the dictionary lacks read as the
+    noun they come from, such as `Хоботова` → хобот (19 positions, 10 words,
+    the decapitalised reading);
+  - е written for ё where both spellings are words: `вел` (вёл, вести),
+    `поешь` (поёшь, петь, before поесть), `сует` and `суете` (суёт, совать,
+    before суета), `чертов` (чёртов);
+  - `писано` → писаный (the adjective with one н comes before the
+    participle писанный), `остер` → остро, `обе` → Обь, `канту` → Канто;
+  - compounds the dictionary lacks (`камер-лакей`: `камер` is read as камера)
+    and old words (`снову` → снова).
+- **One word at a time.** Rules change the last word of a phrase only and
+  never cross a space (`stemCharacters`), so phrases the dictionary lists in
+  another form are not reached (`так называемые` → так называемый, 3
+  positions in the texts), nor are compounds whose two parts both inflect
+  (`государства-доноры`). The analytic future (`буду читать`) is read
+  as буду → быть and читать separately, unless the dictionary lists the
+  phrase.
+- **Not deinflected by rules**: diminutives, augmentatives and other
+  derivations (`собачка`), aspect pairs (`прочитать` and `читать`) and
+  -ость nouns. wiktionary-to-yomitan's form-of rows name their base words
+  (`собачка` → собака, "diminutive"), and lookups follow them.
+- **Writing forms out.** Verbs and nouns whose stem has one letter are
+  written out, with their prefixed verbs by suffix rules (`дал`, `отдала`,
+  `пил`, `допил`); a short stem that the lists miss is not reached through a
+  regular ending. The fleeting vowel is written as patterns of the letters
+  around it (`отец`, `день`, `кусок`, `любовь`, `угол`, `ветер`, `ковёр`,
+  `кашель`), with the few nouns that fit no pattern written out (`рот`,
+  `лоб`, `лёд`, `ложь`); 47 of 47 such nouns tested while writing this README
+  are reached, but a noun whose letters fit no pattern is not.
+- **The -о adverbs.** A neuter adjective in -ое (`робкое`, `допустимое`) is
+  also read by the masculine prepositional rule (`столе` → стол) as the
+  adverb in -о (робко, допустимо), after the adjective: a false candidate,
+  not a first result.
+- **Homographs** are listed in the order the ranking keys leave them
+  (docs/languages.md 9.6): `стали` (стать, сталь), `дома` (дом, дома), `тем`
+  (тот, тема), `уже` (уже, уж), `для` (для, длить), `три` (три, тереть).

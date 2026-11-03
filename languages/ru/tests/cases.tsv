@@ -20,6 +20,11 @@ fleeting	1	сна	сон	n	*
 fleeting	1	льда	лёд	n	*
 fleeting	1	лаптя	лапоть	n	*
 fleeting	1	огня	огонь	n	*
+fleeting	1	ковра	ковёр	n	*
+fleeting	1	кашля	кашель	n	*
+fleeting	1	свёкра	свёкор	n	*
+genitive-plural	1	свадеб	свадьба	n	*
+plural-only	1	денег	деньги	n	*
 genitive-plural	1	ошибок	ошибка	n	*
 genitive-plural	1	ручек	ручка	n	*
 genitive-plural	1	копеек	копейка	n	*
