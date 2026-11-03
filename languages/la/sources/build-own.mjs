@@ -108,13 +108,37 @@ function add(slotId, rule) {
     if (!entry.slots.includes(slotId)) { entry.slots.push(slotId); }
 }
 
-// Suffix rules never take a stem with a space or punctuation in it: a lookup
-// tries prefixes of several words (section 9.2), and an ending must belong to
-// the last word, not to a word followed by a short one.
-const WORD = '{word}';
+// A lookup tries prefixes of several words (section 9.2), and a suffix rule's
+// stem is everything before its ending. An ending of one or two letters must
+// not take a stem with a space, or it fires on a word followed by a short one
+// (in eō read as in eus); a longer ending can, which lets the last word of a
+// two-word headword inflect (senātūs cōnsultī → senātūs cōnsultum).
+const WORD = '[^ ]';
 
 function sfx(slotId, inflected, deinflected, conditionsIn, conditionsOut, extra = {}) {
-    add(slotId, {type: 'suffix', inflected, deinflected, conditionsIn, conditionsOut, stemCharacters: WORD, ...extra});
+    const guard = [...inflected].length <= 2 && !inflected.includes(' ') ? {stemCharacters: WORD} : {};
+    add(slotId, {type: 'suffix', inflected, deinflected, conditionsIn, conditionsOut, ...guard, ...extra});
+}
+
+// Families of compounds written as one cross-product circumfix per form: the
+// prefixes that take the form, before it with nothing between (stemCharacters
+// "[]" allows only an empty stem), so abest, adest, deest and prōdest are one
+// rule whose prefixes are ab, ad, dē and prōd.
+const FAMILIES = new Map();
+function familyForm(slotId, prefix, lemmaPrefix, form, lemmaSuffix, conditionsIn, conditionsOut) {
+    const key = JSON.stringify([slotId, form, lemmaSuffix, conditionsIn, conditionsOut]);
+    let entry = FAMILIES.get(key);
+    if (entry === undefined) {
+        entry = {slotId, form, lemmaSuffix, conditionsIn, conditionsOut, prefixes: []};
+        FAMILIES.set(key, entry);
+    }
+    if (!entry.prefixes.some(([a, b]) => a === prefix && b === lemmaPrefix)) { entry.prefixes.push([prefix, lemmaPrefix]); }
+}
+function flushFamilies() {
+    for (const {slotId, form, lemmaSuffix, conditionsIn, conditionsOut, prefixes} of FAMILIES.values()) {
+        add(slotId, {type: 'circumfix', prefixes, suffixes: [[form, lemmaSuffix]], conditionsIn, conditionsOut, stemCharacters: '[]'});
+    }
+    FAMILIES.clear();
 }
 
 function whole(slotId, inflected, deinflected, conditionsIn, conditionsOut) {
@@ -143,6 +167,10 @@ const PERSON_TEXT = {
 // A verb ending needs a root of two letters (st-at, ag-it), so that short
 // words are not read as verbs (e-at, d-at; dō is written out below).
 const MIN = {stemMinLength: 2};
+// A third conjugation root ends in a consonant or u (reg-, statu-): meam,
+// deam and ream are not forms of meō, deō and reō.
+const THIRD_ROOT = {stemMinLength: 2, stemNotEndsWith: '[aeio]'};
+const minFor = (c) => (c === '3' ? THIRD_ROOT : MIN);
 const VB = ['v'];
 
 const ACTIVE = ['m', 's', 't', 'mus', 'tis', 'nt'];
@@ -216,8 +244,8 @@ for (const [id, name, text, voice, table] of FINITE) {
             const cell = table[c][i];
             if (cell === null) { continue; }
             for (const ending of alts(cell)) {
-                sfx(slotId, ending, LEMMA[c], [], VB, MIN);
-                if (voice === 'pass') { sfx(slotId, ending, DEPONENT[c], [], VB, MIN); }
+                sfx(slotId, ending, LEMMA[c], [], VB, minFor(c));
+                if (voice === 'pass') { sfx(slotId, ending, DEPONENT[c], [], VB, minFor(c)); }
             }
         }
     });
@@ -252,7 +280,7 @@ for (const [id, name, text, table, voice] of NONFINITE) {
             // The passive infinitive of the third conjugation is the root and -ī
             // (regī, sequī); a root ending in a, e, i or o is not a third
             // conjugation root (meī is not meō, deī is not deō).
-            const extra = (id === 'inf-pass' && ending === 'i') ? {...MIN, stemNotEndsWith: '[aeio]'} : MIN;
+            const extra = minFor(c);
             sfx(slotId, ending, LEMMA[c], [], VB, extra);
             if (voice !== 'act') { sfx(slotId, ending, DEPONENT[c], [], VB, extra); }
         }
@@ -309,10 +337,12 @@ sfx('inf-perf', 'isse', 'i', [], VPF, MIN);
 const CONTRACTED = [
     // [slot, contracted ending, full first person singular, constraints]
     ...[['perf-2s', 'asti'], ['perf-2p', 'astis'], ['perf-3p', 'arunt'], ['plupf-1s', 'aram'], ['plupf-2s', 'aras'], ['plupf-3s', 'arat'],
-        ['plupf-1p', 'aramus'], ['plupf-2p', 'aratis'], ['plupf-3p', 'arant'], ['perf-subj-1s', 'arim'], ['perf-subj-3p', 'arint'],
+        ['plupf-1p', 'aramus'], ['plupf-2p', 'aratis'], ['plupf-3p', 'arant'], ['perf-subj-1s', 'arim'], ['perf-subj-3s', 'arit'],
+        ['futpf-3s', 'arit'], ['perf-subj-1p', 'arimus'], ['futpf-1p', 'arimus'], ['perf-subj-2p', 'aritis'], ['futpf-2p', 'aritis'], ['perf-subj-3p', 'arint'],
+        ['futpf-3p', 'arint'],
         ['plupf-subj-1s', 'assem'], ['plupf-subj-2s', 'asses'], ['plupf-subj-3s', 'asset'], ['plupf-subj-1p', 'assemus'],
         ['plupf-subj-2p', 'assetis'], ['plupf-subj-3p', 'assent'], ['inf-perf', 'asse']].map(([s, e]) => [s, e, 'avi', MIN]),
-    ...[['perf-2s', 'isti'], ['perf-2p', 'istis'], ['inf-perf', 'isse'], ['plupf-subj-1s', 'issem'], ['plupf-subj-2s', 'isses'],
+    ...[['perf-3p', 'irunt'], ['perf-2s', 'isti'], ['perf-2p', 'istis'], ['inf-perf', 'isse'], ['plupf-subj-1s', 'issem'], ['plupf-subj-2s', 'isses'],
         ['plupf-subj-3s', 'isset'], ['plupf-subj-1p', 'issemus'], ['plupf-subj-2p', 'issetis'], ['plupf-subj-3p', 'issent']].map(([s, e]) => [s, e, 'ivi', MIN]),
     // -ōvī only in the compounds of nōscō (cognōstī, agnōrunt, ignōsse), whose
     // root ends in n; nōscō itself is written out below.
@@ -337,10 +367,17 @@ for (const form of ['nosti', 'nostis', 'norunt', 'noram', 'noras', 'norat', 'nor
 }
 
 // The first person singular perfect read as its verb: regular stems.
-slot('perf-stem', 'perfect stem', 'The first person singular perfect (-ī) read as its verb: amāvī → amō, monuī → moneō, dēlēvī → dēleō, audīvī and audiī → audiō, coluī → colō, rapuī → rapiō, and perfects with the root of the present (dēfendī → dēfendō, vīdī → videō, fūgī → fugiō); the stems that are not regular come from a table (rēxī → regō, fēcī → faciō, tulī → ferō).');
+slot('perf-stem', 'perfect stem', 'The first person singular perfect (-ī) read as its verb: amāvī → amō, monuī → moneō, dēlēvī → dēleō, audīvī and audiī → audiō, coluī → colō, rapuī → rapiō, statuī → statuō, convaluī → convalēscō, and perfects with the root of the present (dēfendī → dēfendō, vertī → vertō, solvī → solvō); the stems that are not regular come from a table (rēxī → regō, fēcī → faciō, vīdī → videō, fūgī → fugiō, tulī → ferō).');
+// Perfects with the root of the present are read by the cluster that ends
+// the root (dēfendī, vertī, solvī, statuī, verrī, vellī, bibī); a rule for any
+// -ī would read fūgī, sēdī and dedī as fugō, sēdō and dēdō, which are other
+// verbs (fugiō, sedeō and dō are in the table). potuī is possum's, not pōtō's.
 for (const [ending, lemma, extra] of [['avi', 'o', MIN], ['ivi', 'io', MIN], ['ii', 'io', MIN], ['evi', 'eo', MIN], ['ui', 'eo', MIN],
-                                      ['ui', 'o', MIN], ['ui', 'io', MIN], ['i', 'o', {stemMinLength: 3}], ['i', 'eo', {stemMinLength: 3}],
-                                      ['i', 'io', {stemMinLength: 3}]]) {
+                                      ['ui', 'o', {...MIN, stemNotStartsWithText: 'pot'}], ['ui', 'io', MIN], ['ui', 'uo', {stemMinLength: 1}],
+                                      ['ndi', 'ndo', {stemMinLength: 1}], ['rti', 'rto', {stemMinLength: 1}], ['lvi', 'lvo', {stemMinLength: 1}],
+                                      ['rri', 'rro', {stemMinLength: 1}], ['lli', 'llo', {stemMinLength: 1}], ['bibi', 'bibo', {}],
+                                      ['di', 'do', {stemMinLength: 2, stemNotEndsWith: '[ei]'}], ['ssivi', 'sso', {stemMinLength: 1}],
+                                      ['ui', 'esco', MIN], ['ui', 'isco', MIN], ['avi', 'asco', MIN], ['evi', 'esco', MIN], ['ivi', 'isco', MIN]]) {
     sfx('perf-stem', ending, lemma, VPF_IN, VB, extra);
 }
 
@@ -350,14 +387,22 @@ slot('ptc-fut', 'future participle', 'Future active participle: amātūrus, moni
 slot('supine', 'supine', 'Supine in -um (purpose after verbs of motion): amātum, monitum, audītum, rēctum.');
 slot('supine-abl', 'supine in -ū', 'Supine in -ū (after adjectives): amātū, dictū, factū, vīsū.');
 
-function participles(stem, lemma, extra, {perfect = true, future = true} = {}) {
+function participles(stem, lemma, extra, {perfect = true, future = true, all = true} = {}) {
     if (perfect) {
         sfx('ptc-perf', `${stem}us`, lemma, PARTICIPLE_IN, VB, extra);
-        sfx('supine', `${stem}um`, lemma, [], VB, extra);
-        sfx('supine-abl', `${stem}u`, lemma, [], VB, extra);
+        if (all) {
+            sfx('supine', `${stem}um`, lemma, [], VB, extra);
+            sfx('supine-abl', `${stem}u`, lemma, [], VB, extra);
+        }
     }
-    if (future) { sfx('ptc-fut', `${stem}urus`, lemma, PARTICIPLE_IN, VB, extra); }
+    if (future && all) { sfx('ptc-fut', `${stem}urus`, lemma, PARTICIPLE_IN, VB, extra); }
 }
+// The future participle and the supine of the verbs in the stem table below
+// are read through the perfect participle's form (ductūrus → ductus → dūcō,
+// dictū → dictus → dīcō); the supine in -um is the participle's neuter.
+slot('ptc-fut-stem', 'future participle', 'Future active participle, read through the perfect participle it is made from: ductūrus → ductus, factūrus → factus.');
+sfx('ptc-fut-stem', 'urus', 'us', PARTICIPLE_IN, ['ptc'], {stemMinLength: 3});
+sfx('supine-abl', 'u', 'us', [], ['ptc'], {stemMinLength: 3});
 // Regular: -ātus (1st), -itus and -ētus (2nd), -ītus (4th), -ūtus (statuō,
 // solvō, volvō).
 for (const [stem, lemma] of [['at', 'o'], ['at', 'or'], ['it', 'eo'], ['it', 'eor'], ['et', 'eo'], ['it', 'io'], ['it', 'ior'], ['ut', 'uo'], ['ut', 'vo']]) {
@@ -460,6 +505,8 @@ disco didici -
 divido divisi divisus
 duco duxi ductus
 edo edi esus
++edo edi esus|estus
++mordeo mordi morsus
 emo emi emptus
 +imo emi emptus
 como compsi comptus
@@ -479,6 +526,7 @@ gero gessi gestus
 gigno genui genitus
 iacio ieci iactus
 +icio ieci iectus
++iicio ieci iectus
 lego legi lectus
 +ligo legi lectus
 +ligo lexi lectus
@@ -506,7 +554,7 @@ pendo pependi pensus
 +pendo pendi pensus
 peto petivi|petii petitus
 pingo pinxi pictus
-pono posui positus
+pono posui|posivi positus
 posco poposci -
 +posco poposci -
 premo pressi pressus
@@ -522,7 +570,10 @@ surgo surrexi surrectus
 +surgo surrexi surrectus
 pergo perrexi perrectus
 rumpo rupi ruptus
-scindo scidi scissus
+scindo scidi|scicidi scissus
+carpo carpsi carptus
++cerpo cerpsi cerptus
+stinguo stinxi stinctus
 scribo scripsi scriptus
 sero sevi satus
 +sero sevi situs
@@ -554,6 +605,7 @@ verto verti versus
 vinco vici victus
 vivo vixi - fap:victurus
 fugio fugi - fap:fugiturus
+fodio fodi fossus
 facio feci factus
 +ficio feci fectus
 quatio - quassus
@@ -616,9 +668,15 @@ saepio saepsi saeptus
 salio salui saltus
 +silio silui sultus
 sepelio sepelivi sepultus
++fercio fersi fertus
++cumbo cubui cubitus
++sido sedi|sidi sessus
++scisco scivi scitus
+reor - ratus
+for - fatus
 amicio amicui amictus
-sequor - secutus
-loquor - locutus
+sequor - secutus|sequutus
+loquor - locutus|loquutus
 queror - questus
 fruor - fructus|fruitus fap:fruiturus
 fungor - functus
@@ -645,12 +703,10 @@ orior - ortus fap:oriturus
 metior - mensus
 experior - expertus
 opperior - oppertus
-amplector - amplexus
-complector - complexus
++plector - plexus
 tueor - tuitus|tutus
 fateor - fassus
 +fiteor - fessus
-reor - ratus
 misereor - misertus
 assentior - assensus
 odi - - fap:osurus
@@ -672,7 +728,7 @@ for (const line of PRINCIPAL_PARTS.trim().split('\n')) {
     const future = rest.find((r) => r.startsWith('fap:'))?.slice(4);
     for (const supine of supines === '-' ? [] : alts(supines)) {
         if (!supine.endsWith('us')) { throw new Error(`${line}: a perfect participle ends in -us`); }
-        participles(supine.slice(0, -2), lemma, extra, {future: future === undefined});
+        participles(supine.slice(0, -2), lemma, extra, {all: false});
     }
     if (future !== undefined) { sfx('ptc-fut', future, lemma, PARTICIPLE_IN, VB, extra); }
 }
@@ -686,7 +742,7 @@ for (const [lemma, perfects, supines] of [
     ['transfero', 'transtuli', 'translatus|tralatus'], ['suffero', 'sustuli', 'sublatus'],
 ]) {
     for (const perfect of alts(perfects)) { sfx('perf-stem', perfect, lemma, VPF_IN, VB); }
-    for (const supine of alts(supines)) { participles(supine.slice(0, -2), lemma, {}); }
+    for (const supine of alts(supines)) { participles(supine.slice(0, -2), lemma, {}, {all: false}); }
 }
 // The imperatives dīc, dūc, fac (and their compounds ēdūc, indīc).
 for (const [form, lemma, kind] of [['dic', 'dico', 'suffix'], ['duc', 'duco', 'suffix'], ['fac', 'facio', 'whole']]) {
@@ -747,15 +803,27 @@ function prefixed(table, prefix) {
     }
     return out;
 }
-paradigm('sum', SUM);
-for (const [lemma, prefix] of [
+for (const [lemma, prefix] of [['sum', {e: '', s: '', f: ''}],
     ['absum', {e: 'ab', s: 'ab', f: 'a|ab'}], ['adsum', {e: 'ad', s: 'ad|as', f: 'ad|af'}], ['assum', {e: 'ad', s: 'as', f: 'af'}],
     ['desum', {e: 'de', s: 'de', f: 'de'}], ['insum', {e: 'in', s: 'in', f: 'in'}], ['intersum', {e: 'inter', s: 'inter', f: 'inter'}],
     ['obsum', {e: 'ob', s: 'ob', f: 'ob|of'}], ['praesum', {e: 'prae', s: 'prae', f: 'prae'}], ['prosum', {e: 'prod', s: 'pro', f: 'pro'}],
     ['subsum', {e: 'sub', s: 'sub', f: 'sub'}], ['supersum', {e: 'super', s: 'super', f: 'super'}],
 ]) {
-    paradigm(lemma, prefixed(SUM, prefix));
+    const lemmaPrefix = lemma.slice(0, -3);
+    for (const [key, cells] of Object.entries(SUM)) {
+        const forms = typeof cells === 'string' ? [[key, cells]] : cells.map((c, i) => [IMPERATIVE_PERSONS[key]?.[i] ?? `${key}-${PERSONS[i]}`, c]);
+        for (const [slotId, cell] of forms) {
+            if (cell === null) { continue; }
+            for (const form of alts(cell)) {
+                const letter = form.startsWith('e') ? 'e' : form.startsWith('f') ? 'f' : 's';
+                for (const p of alts(prefix[letter])) {
+                    if (p + form !== lemma) { familyForm(slotId, p, lemmaPrefix, form, 'sum', [], VB); }
+                }
+            }
+        }
+    }
 }
+flushFamilies();
 // possum: pot- before e, pos- before s; possem and posse are its own.
 paradigm('possum', {
     pres: ['possum', 'potes', 'potest', 'possumus', 'potestis', 'possunt'],
@@ -783,7 +851,6 @@ const EO = {
     'fut-pass': [null, null, 'ibitur', null, null, 'ibuntur'],
     'subj-pass': [null, null, 'eatur', null, null, 'eantur'],
     'impf-subj-pass': [null, null, 'iretur', null, null, 'irentur'],
-    'ptc-pres': 'iens|euntis|eunti|euntem|eunte|euntes|euntium|euntibus|euntia',
     'gerund-gen': 'eundi',
     'gerund-dat': 'eundo',
     'gerund-acc': 'eundum',
@@ -793,8 +860,8 @@ const EO_PERFECT_CONTRACTED = {
     'perf-2s': 'isti', 'perf-2p': 'istis', 'inf-perf': 'isse', 'plupf-subj-1s': 'issem', 'plupf-subj-2s': 'isses', 'plupf-subj-3s': 'isset',
     'plupf-subj-1p': 'issemus', 'plupf-subj-2p': 'issetis', 'plupf-subj-3p': 'issent',
 };
-for (const prefix of ['', 'ab', 'ad', 'ante', 'circum', 'co', 'ex', 'in', 'inter', 'intro', 'ob', 'per', 'prae', 'praeter', 'prod', 'red',
-                      'sub', 'trans', 'qu', 'nequ']) {
+for (const prefix of ['', 'ab', 'ad', 'ante', 'circum', 'co', 'deper', 'ex', 'in', 'inter', 'intro', 'ob', 'per', 'post', 'prae', 'praeter', 'prod', 'red',
+                      'sub', 'subter', 'trans', 'qu', 'nequ']) {
     const lemma = `${prefix}eo`;
     const table = {};
     for (const [key, cells] of Object.entries(EO)) {
@@ -810,12 +877,19 @@ for (const prefix of ['', 'ab', 'ad', 'ante', 'circum', 'co', 'ex', 'in', 'inter
         // Simple eō: is and it are also the pronoun is and id's neighbour;
         // ī, ītur are kept (the dictionary has them as forms of eō too).
     }
-    paradigm(lemma, table);
-    for (const perfect of [`${prefix}ii`, `${prefix}ivi`]) { whole('perf-stem', perfect, lemma, VPF_IN, VB); }
+    for (const [key, cells] of Object.entries(table)) {
+        const forms = typeof cells === 'string' ? [[key, cells]] : cells.map((c, i) => [IMPERATIVE_PERSONS[key]?.[i] ?? `${key}-${PERSONS[i]}`, c]);
+        for (const [slotId, cell] of forms) {
+            if (cell === null) { continue; }
+            for (const form of alts(cell)) { familyForm(slotId, prefix, prefix, form.slice(prefix.length), 'eo', [], VB); }
+        }
+    }
+    for (const perfect of ['ii', 'ivi']) { familyForm('perf-stem', prefix, prefix, perfect, 'eo', VPF_IN, VB); }
     if (prefix !== '') {
-        for (const [slotId, ending] of Object.entries(EO_PERFECT_CONTRACTED)) { whole(slotId, prefix + ending, `${prefix}ii`, [], VPF); }
+        for (const [slotId, ending] of Object.entries(EO_PERFECT_CONTRACTED)) { familyForm(slotId, prefix, prefix, ending, 'ii', [], VPF); }
     }
 }
+flushFamilies();
 // The perfect of eō itself (iērunt, iit, iisse): its stem i- is shorter than
 // the endings above take.
 for (const [id, , , endings] of PERFECT) {
@@ -824,6 +898,12 @@ for (const [id, , , endings] of PERFECT) {
     });
 }
 whole('inf-perf', 'iisse', 'ii', [], VPF);
+// eō's supine and participles (itum, itūrus), whose root is shorter than
+// the regular rules take; dō's gerundive (dandus).
+for (const [slotId, form] of [['supine', 'itum'], ['supine-abl', 'itu'], ['ptc-perf', 'itus'], ['ptc-fut', 'iturus']]) {
+    whole(slotId, form, 'eo', slotId.startsWith('ptc') ? PARTICIPLE_IN : PARTICIPLE_IN, VB);
+}
+whole('gerundive', 'dandus', 'do', PARTICIPLE_IN, VB);
 // The gerundive of eō's compounds (adeundus, praetereundus).
 sfx('gerundive', 'eundus', 'eo', PARTICIPLE_IN, VB);
 
@@ -877,18 +957,19 @@ paradigm('fio', {
 // dō: a first conjugation verb with the root d- (the endings above need two
 // letters) and a short a (damus, dare). circumdō goes the same way.
 for (const root of ['d', 'circumd']) {
-    const lemma = `${root}o`;
-    const table = {};
+    const add1 = (slotId, ending) => familyForm(slotId, root, root, ending, 'o', [], VB);
     for (const [id, , , voice, cells] of FINITE) {
-        table[id] = cells[1].map((c) => (c === null ? null : alts(c).map((e) => root + e).join('|')));
-        if (voice === 'pass') { table[id][0] = alts(cells[1][0]).map((e) => root + e).join('|'); }
+        cells[1].forEach((c, i) => {
+            if (c === null && !(voice === 'pass' && i === 0)) { return; }
+            for (const e of alts(c ?? cells[1][0])) { add1(`${id}-${PERSONS[i]}`, e); }
+        });
     }
-    paradigm(lemma, table);
     for (const [id, , , cells] of NONFINITE) {
-        for (const ending of alts(cells[1])) { whole(id, root + ending, lemma, [], VB); }
+        for (const ending of alts(cells[1])) { add1(id, ending); }
     }
-    for (const ending of ['ans', 'antis', 'anti', 'antem', 'ante', 'antes', 'antium', 'antibus', 'antia']) { whole('ptc-pres', root + ending, lemma, [], VB); }
+    for (const ending of ['ans', 'antis', 'anti', 'antem', 'ante', 'antes', 'antium', 'antibus', 'antia']) { add1('ptc-pres', ending); }
 }
+flushFamilies();
 // inquam, aiō, the imperative of meminī, and the impersonal verbs, whose
 // dictionary form is the third person singular (licet, oportet).
 paradigm('inquam', {
@@ -906,13 +987,35 @@ paradigm('aio', {
     subj: [null, 'aias', 'aiat', null, null, 'aiant'],
 });
 paradigm('memini', {'imp-fut': ['memento', 'mementote', null]});
+// for (fārī), a first conjugation deponent with the root f-.
+paradigm('for', {
+    'pres-pass': [null, 'faris|fare', 'fatur', 'famur', 'famini', 'fantur'],
+    'fut-pass': ['fabor', 'faberis', 'fabitur', 'fabimur', 'fabimini', 'fabuntur'],
+    'impf-subj-pass': ['farer', 'fareris', 'faretur', 'faremur', 'faremini', 'farentur'],
+    'inf-pass': 'fari',
+    'ptc-pres': 'fans|fantis|fanti|fantem|fante|fantes|fantium|fantibus',
+    'gerund-gen': 'fandi',
+    'gerund-dat': 'fando',
+    'gerund-acc': 'fandum',
+});
+// reor: a second conjugation deponent whose root r- is shorter than the
+// endings above take.
+paradigm('reor', {
+    'pres-pass': [null, 'reris|rere', 'retur', 'remur', 'remini', 'rentur'],
+    'impf-pass': ['rebar', 'rebaris|rebare', 'rebatur', 'rebamur', 'rebamini', 'rebantur'],
+    'fut-pass': ['rebor', 'reberis', 'rebitur', 'rebimur', 'rebimini', 'rebuntur'],
+    'subj-pass': ['rear', 'rearis', 'reatur', 'reamur', 'reamini', 'reantur'],
+    'impf-subj-pass': ['rerer', 'rereris', 'reretur', 'reremur', 'reremini', 'rerentur'],
+    'inf-pass': 'reri',
+});
 for (const lemma of ['licet', 'oportet', 'decet', 'dedecet', 'libet', 'lubet', 'piget', 'pudet', 'taedet', 'paenitet', 'poenitet', 'miseret']) {
     const root = lemma.slice(0, -2);
     for (const [slotId, ending] of [['impf-3s', 'ebat'], ['fut-3s', 'ebit'], ['subj-3s', 'eat'], ['impf-subj-3s', 'eret'], ['inf', 'ere'],
                                     ['perf-3s', 'uit'], ['plupf-3s', 'uerat'], ['futpf-3s', 'uerit'], ['plupf-subj-3s', 'uisset'], ['inf-perf', 'uisse']]) {
-        whole(slotId, root + ending, lemma, [], VB);
+        familyForm(slotId, root, root, ending, 'et', [], VB);
     }
 }
+flushFamilies();
 
 // --- Nouns ----------------------------------------------------------------------------
 const N1 = ['n1s'];
@@ -944,25 +1047,40 @@ declension('n', 'ius', '', {'gen-sg': 'i', 'voc-sg': 'i'}, N2, NOUN_MIN);
 declension('n', 'um', '', {'gen-sg': 'i', 'dat-sg': 'o', 'abl-sg': 'o', 'nom-pl': 'a', 'gen-pl': 'orum', 'dat-pl': 'is', 'acc-pl': 'a'}, N2, NOUN_MIN);
 declension('n', 'ium', '', {'gen-sg': 'i'}, N2, NOUN_MIN);
 declension('n', 'er', 'r', {'gen-sg': 'i', 'dat-sg': 'o', 'acc-sg': 'um', 'abl-sg': 'o', 'nom-pl': 'i', 'gen-pl': 'orum', 'dat-pl': 'is', 'acc-pl': 'os'}, N2, {stemMinLength: 1});
-// Stems that are the nominative (puer, vir; consul, sōl, labor, carcer,
-// animal, exemplar): second and third declension endings after l or r.
+// Stems that are the nominative: second declension puer, gener, vir (after
+// -er and -ir only, so that labōrō is not a form of labor), and third
+// declension cōnsul, sōl, labor, carcer, animal, exemplar (after l or r).
+for (const [final, min] of [['er', 2], ['ir', 1]]) {
+    declension('n', final, final, {'gen-sg': 'i', 'dat-sg': 'o', 'acc-sg': 'um', 'abl-sg': 'o', 'nom-pl': 'i', 'gen-pl': 'orum', 'dat-pl': 'is', 'acc-pl': 'os'}, N2, {stemMinLength: min});
+}
 const LR = {stemMinLength: 2, stemEndsWith: '[lr]'};
-declension('n', '', '', {'gen-sg': 'i|is', 'dat-sg': 'o|i', 'acc-sg': 'um|em', 'abl-sg': 'o|e|i', 'nom-pl': 'i|es|ia', 'gen-pl': 'orum|um|ium', 'dat-pl': 'is|ibus', 'acc-pl': 'os|es'}, ['n2s', 'n3s'], LR);
+declension('n', '', '', {'gen-sg': 'is', 'dat-sg': 'i', 'acc-sg': 'em', 'abl-sg': 'e|i', 'nom-pl': 'es|ia', 'gen-pl': 'um|ium', 'dat-pl': 'ibus', 'acc-pl': 'es'}, N3, LR);
+// Third-declension stems in -en that are the nominative (splēn, rēn, liēn).
+declension('n', '', '', {'gen-sg': 'is', 'dat-sg': 'i', 'acc-sg': 'em', 'abl-sg': 'e', 'nom-pl': 'es', 'gen-pl': 'um|ium', 'dat-pl': 'ibus'}, N3, {stemMinLength: 3, stemEndsWith: '[n]'});
 // Third declension: the nominative from the stem (cīvitās, cīvitātis; legiō,
 // legiōnis; homō, hominis; pater, patris; rēx, rēgis; nox, noctis; pēs, pedis;
 // mīles, mīlitis; mōns, montis; urbs, urbis; prīnceps, prīncipis ...).
 const THIRD = {'gen-sg': 'is', 'dat-sg': 'i', 'acc-sg': 'em', 'abl-sg': 'e', 'nom-pl': 'es', 'gen-pl': 'um|ium', 'dat-pl': 'ibus', 'acc-pl': 'es'};
-const THIRD_MIN = {stemMinLength: 1};
-for (const [nominative, stem] of [['as', 'at'], ['us', 'ut'], ['o', 'on'], ['o', 'in'], ['en', 'in'], ['os', 'or'], ['er', 'r'], ['x', 'c'], ['ex', 'ic'],
+// A stem of two letters before the stem ending (rē-gis, pe-dis, no-ctis), so
+// that pōne is not po with -ōne; ars and ops are written out.
+const THIRD_MIN = {stemMinLength: 2};
+// Nouns in -ō, -inis have d, g, m, b or l before it (ōrdō, virgō, homō,
+// turbō, Apollō); dominī and vīcīnī are not domō and vīcō.
+for (const ending of Object.values(THIRD).flatMap(alts)) {
+    sfx(`n-${Object.entries(THIRD).find(([, e]) => alts(e).includes(ending))[0]}`, `in${ending}`, 'o', [], N3,
+        {stemMinLength: 1, stemEndsWith: '[bdglm]', stemNotStartsWithText: 'dom'});
+}
+for (const [nominative, stem] of [['as', 'at'], ['us', 'ut'], ['o', 'on'], ['on', 'on'], ['on', 'ont'], ['as', 'ant'], ['us', 'od'], ['en', 'in'], ['os', 'or'], ['er', 'r'], ['x', 'c'], ['ex', 'ic'],
                                   ['x', 'g'], ['x', 'ct'], ['s', 'd'], ['es', 'id'], ['es', 'it'], ['es', 'et'], ['os', 'ot'], ['ns', 'nt'], ['rs', 'rt'],
-                                  ['eps', 'ip'], ['ps', 'p'], ['bs', 'b'], ['l', 'll'], ['s', 'ss'], ['guis', 'guin']]) {
+                                  ['eps', 'ip'], ['ps', 'p'], ['bs', 'b'], ['l', 'll'], ['guis', 'guin']]) {
     declension('n', nominative, stem, THIRD, N3, THIRD_MIN);
 }
 // Neuters: corpus, corporis; genus, generis; nōmen, nōminis; rōbur, rōboris;
 // poēma, poēmatis; mare, maris (i-stem).
 const THIRD_NEUTER = {'gen-sg': 'is', 'dat-sg': 'i', 'abl-sg': 'e', 'nom-pl': 'a', 'gen-pl': 'um', 'dat-pl': 'ibus', 'acc-pl': 'a'};
 for (const [nominative, stem] of [['us', 'or'], ['us', 'er'], ['en', 'in'], ['ur', 'or'], ['ma', 'mat']]) {
-    declension('n', nominative, stem, THIRD_NEUTER, N3, NOUN_MIN);
+    // cētera (the rest) is not a form of cētus (whale)
+    declension('n', nominative, stem, THIRD_NEUTER, N3, stem === 'er' ? {...NOUN_MIN, stemNotStartsWithText: 'cet'} : NOUN_MIN);
 }
 declension('n', 'e', '', {'gen-sg': 'is', 'dat-sg': 'i', 'abl-sg': 'i', 'nom-pl': 'ia', 'gen-pl': 'ium', 'dat-pl': 'ibus', 'acc-pl': 'ia'}, N3, NOUN_MIN);
 // i-stems whose nominative is -is or -ēs: cīvis, cīvem, turrim; nūbēs, nūbis.
@@ -973,6 +1091,13 @@ declension('n', 'us', '', {'dat-sg': 'ui', 'abl-sg': 'u', 'gen-pl': 'uum', 'dat-
 declension('n', 'u', '', {'gen-sg': 'us', 'nom-pl': 'ua', 'gen-pl': 'uum', 'dat-pl': 'ibus', 'acc-pl': 'ua'}, N4, NOUN_MIN);
 // Fifth declension: rēs, reī, rem, rē, rērum, rēbus; diēs.
 declension('n', 'es', '', {'gen-sg': 'ei', 'dat-sg': 'ei', 'acc-sg': 'em', 'abl-sg': 'e', 'gen-pl': 'erum', 'dat-pl': 'ebus'}, N5, {stemMinLength: 1});
+// Greek nouns: second declension in -os and -on (cynoglossos, maldacon),
+// first declension in -ē (hecatombē, hecatombēn).
+declension('n', 'os', '', {'gen-sg': 'i', 'dat-sg': 'o', 'acc-sg': 'on|um', 'abl-sg': 'o', 'nom-pl': 'i', 'gen-pl': 'orum', 'dat-pl': 'is', 'acc-pl': 'os'}, N2, {stemMinLength: 3});
+declension('n', 'on', '', {'gen-sg': 'i', 'dat-sg': 'o', 'abl-sg': 'o', 'nom-pl': 'a', 'gen-pl': 'orum'}, N2, {stemMinLength: 3});
+declension('n', 'e', '', {'gen-sg': 'es', 'acc-sg': 'en'}, N1, {stemMinLength: 3});
+// Greek third declension in -is, genitive -eōs (genesis, geneseōs; basis).
+declension('n', 'is', '', {'gen-sg': 'eos', 'acc-sg': 'in'}, N3, {stemMinLength: 3});
 // Plural-only nouns, whose dictionary form is the nominative plural: īnsidiae,
 // līberī, castra, moenia, maiōrēs.
 declension('n', 'ae', '', {'gen-pl': 'arum', 'dat-pl': 'is', 'acc-pl': 'as'}, ['n1p'], NOUN_MIN);
@@ -992,9 +1117,12 @@ for (const [lemma, table] of [
     ['deus', {'gen-sg': 'dei', 'dat-sg': 'deo', 'acc-sg': 'deum', 'abl-sg': 'deo', 'nom-pl': 'di|dii|dei', 'gen-pl': 'deorum|deum|divum', 'dat-pl': 'dis|diis|deis', 'acc-pl': 'deos'}],
     ['os', {'gen-sg': 'oris|ossis', 'dat-sg': 'ori|ossi', 'abl-sg': 'ore|osse', 'nom-pl': 'ora|ossa', 'gen-pl': 'orum|ossium', 'dat-pl': 'oribus|ossibus'}],
     ['mos', {'gen-sg': 'moris', 'dat-sg': 'mori', 'acc-sg': 'morem', 'abl-sg': 'more', 'nom-pl': 'mores', 'gen-pl': 'morum', 'dat-pl': 'moribus'}],
+    ['ars', {'gen-sg': 'artis', 'dat-sg': 'arti', 'acc-sg': 'artem', 'abl-sg': 'arte', 'nom-pl': 'artes', 'gen-pl': 'artium', 'dat-pl': 'artibus'}],
+    ['ops', {'gen-sg': 'opis', 'acc-sg': 'opem', 'abl-sg': 'ope', 'nom-pl': 'opes', 'gen-pl': 'opum', 'dat-pl': 'opibus'}],
+    ['as', {'gen-sg': 'assis', 'dat-sg': 'assi', 'acc-sg': 'assem', 'abl-sg': 'asse', 'nom-pl': 'asses', 'gen-pl': 'assium', 'dat-pl': 'assibus'}],
     ['vas', {'gen-sg': 'vasis', 'dat-sg': 'vasi', 'abl-sg': 'vase', 'nom-pl': 'vasa', 'gen-pl': 'vasorum', 'dat-pl': 'vasis'}],
     ['caput', {'gen-sg': 'capitis', 'dat-sg': 'capiti', 'abl-sg': 'capite', 'nom-pl': 'capita', 'gen-pl': 'capitum', 'dat-pl': 'capitibus'}],
-    ['ius', {'gen-sg': 'iuris', 'dat-sg': 'iuri', 'abl-sg': 'iure', 'nom-pl': 'iura', 'gen-pl': 'iurum', 'dat-pl': 'iuribus'}],
+    ['ius', {'gen-sg': 'iuris', 'dat-sg': 'iuri', 'abl-sg': 'iure', 'nom-pl': 'iura', 'gen-pl': 'iurum|iurium', 'dat-pl': 'iuribus'}],
     ['rus', {'gen-sg': 'ruris', 'dat-sg': 'ruri', 'abl-sg': 'rure', 'nom-pl': 'rura', 'dat-pl': 'ruribus', loc: 'ruri'}],
     ['tellus', {'gen-sg': 'telluris', 'dat-sg': 'telluri', 'acc-sg': 'tellurem', 'abl-sg': 'tellure'}],
     ['crus', {'gen-sg': 'cruris', 'dat-sg': 'cruri', 'abl-sg': 'crure', 'nom-pl': 'crura', 'gen-pl': 'crurum', 'dat-pl': 'cruribus'}],
@@ -1008,6 +1136,7 @@ for (const [lemma, table] of [
     ['supellex', {'gen-sg': 'supellectilis', 'dat-sg': 'supellectili', 'acc-sg': 'supellectilem', 'abl-sg': 'supellectile|supellectili'}],
     ['hiems', {'gen-sg': 'hiemis', 'dat-sg': 'hiemi', 'acc-sg': 'hiemem', 'abl-sg': 'hieme', 'nom-pl': 'hiemes', 'gen-pl': 'hiemum', 'dat-pl': 'hiemibus'}],
     ['humus', {loc: 'humi'}],
+    ['sus', {'acc-sg': 'suem', 'nom-pl': 'sues', 'dat-pl': 'suibus|subus'}],
 ]) {
     for (const [caseId, forms] of Object.entries(table)) {
         for (const form of alts(forms)) { whole(`n-${caseId}`, form, lemma, [], N); }
@@ -1063,8 +1192,9 @@ for (const ending of ['is', ...ADJ3_REGULAR]) {
     sfx(`adj3-${ending}`, ending, '', [], ADJ3, {stemMinLength: 2, stemEndsWith: '[lr]'});
 }
 for (const [nominative, stem, conditionsOut] of [['x', 'c', ADJ3], ['ex', 'ic', ADJ3], ['ns', 'nt', ADJ3_PTC], ['rs', 'rt', ADJ3], ['es', 'it', ADJ3],
-                                                 ['es', 'et', ADJ3], ['os', 'ot', ADJ3], ['us', 'er', ADJ3], ['eps', 'ipit', ADJ3]]) {
-    for (const ending of ADJ3_CONSONANT) { sfx(`adj3-${ending}`, stem + ending, nominative, [], conditionsOut, {stemMinLength: 1}); }
+                                                 ['es', 'et', ADJ3], ['os', 'ot', ADJ3], ['us', 'er', ADJ3], ['eps', 'ipit', ADJ3], ['s', 'd', ADJ3],
+                                                 ['as', 'at', ADJ3]]) {
+    for (const ending of ADJ3_CONSONANT) { sfx(`adj3-${ending}`, stem + ending, nominative, [], conditionsOut, {stemMinLength: 2}); }
 }
 // The comparative declines like a consonant stem (altiōrem, altiōra, altius).
 const CMP = ['cmp', 'adj3'];
@@ -1075,11 +1205,12 @@ for (const lemma of ['unus', 'solus', 'totus']) { whole('adj3-is', `${lemma.slic
 slot('comparative', 'comparative', 'Comparative degree: altior → altus, fortior → fortis, pulchrior → pulcher, fēlīcior → fēlīx, sapientior → sapiēns; melior → bonus, peior → malus, maior → magnus, minor → parvus, plūs → multus.');
 slot('superlative', 'superlative', 'Superlative degree: altissimus → altus, fortissimus → fortis, fēlīcissimus → fēlīx, pulcherrimus → pulcher, facillimus → facilis; optimus → bonus, pessimus → malus, maximus → magnus, minimus → parvus, plūrimus → multus.');
 for (const [inflected, deinflected, extra] of [['ior', 'us', {}], ['ior', 'is', {}], ['ior', '', {stemEndsWith: '[r]'}], ['rior', 'er', {}],
-                                              ['cior', 'x', {}], ['ntior', 'ns', {}], ['rtior', 'rs', {}]]) {
+                                              ['cior', 'x', {}], ['ntior', 'ns', {}], ['rtior', 'rs', {}],
+                                              ['etior', 'es', {}], ['itior', 'es', {}]]) {
     sfx('comparative', inflected, deinflected, ['cmp'], ADJ, {stemMinLength: 2, ...extra});
 }
 for (const [inflected, deinflected] of [['issimus', 'us'], ['issimus', 'is'], ['cissimus', 'x'], ['ntissimus', 'ns'], ['rtissimus', 'rs'],
-                                        ['errimus', 'er'], ['illimus', 'ilis']]) {
+                                        ['errimus', 'er'], ['illimus', 'ilis'], ['issumus', 'us'], ['issumus', 'is'], ['errumus', 'er'], ['illumus', 'ilis']]) {
     sfx('superlative', inflected, deinflected, ADJ, ADJ, {stemMinLength: 2});
 }
 for (const [form, lemma, slotId] of [
@@ -1090,7 +1221,10 @@ for (const [form, lemma, slotId] of [
     ['optimus', 'bonus', 'superlative'], ['pessimus', 'malus', 'superlative'], ['maximus', 'magnus', 'superlative'], ['minimus', 'parvus', 'superlative'],
     ['plurimus', 'multus', 'superlative'], ['summus', 'superus', 'superlative'], ['supremus', 'superus', 'superlative'], ['infimus', 'inferus', 'superlative'],
     ['imus', 'inferus', 'superlative'], ['postremus', 'posterus', 'superlative'], ['extremus', 'exterus', 'superlative'], ['veterrimus', 'vetus', 'superlative'],
-    ['ditissimus', 'dives', 'superlative'], ['maturrimus', 'maturus', 'superlative'],
+    ['ditissimus', 'dives', 'superlative'], ['maturrimus', 'maturus', 'superlative'], ['vetustior', 'vetus', 'comparative'],
+    ['vetustissimus', 'vetus', 'superlative'], ['optumus', 'bonus', 'superlative'], ['pessumus', 'malus', 'superlative'],
+    ['maxumus', 'magnus', 'superlative'], ['minumus', 'parvus', 'superlative'], ['plurumus', 'multus', 'superlative'],
+    ['extimus', 'exterus', 'superlative'], ['extremus', 'exter', 'superlative'], ['extimus', 'exter', 'superlative'], ['ditior', 'dis', 'comparative'], ['ditissimus', 'dis', 'superlative'],
 ]) {
     whole(slotId, form, lemma, slotId === 'comparative' ? ['cmp'] : ADJ, ADJ);
 }
@@ -1108,6 +1242,11 @@ for (const [form, lemma] of [['bene', 'bonus'], ['male', 'malus'], ['melius', 'b
     whole('adverb', form, lemma, [], ADJ);
 }
 
+// The present participle of eō and its compounds declines with eunt-
+// (iēns, euntis; rediēns, redeuntis), which these rules bring to -iēns.
+for (const ending of ['is', 'i', 'em', 'e', 'es', 'ium', 'ibus', 'ia']) { sfx(`adj3-${ending}`, `eunt${ending}`, 'iens', [], ['adj3', 'ptc', 'v']); }
+sfx('ptc-pres', 'iens', 'eo', ['ptc'], VB);
+
 // --- Proper names -----------------------------------------------------------------------
 // Dictionaries give proper names no part of speech, so these rules have no
 // conditions (section 7.2) and apply only to a capitalised word: Rōmam →
@@ -1121,8 +1260,14 @@ declension('name', 'ae', '', {'gen-pl': 'arum'}, [], NAME);
 declension('name', 'us', '', {'gen-sg': 'i', 'dat-sg': 'o', 'acc-sg': 'um', 'abl-sg': 'o', 'voc-sg': 'e'}, [], NAME);
 declension('name', 'ius', '', {'gen-sg': 'i', 'voc-sg': 'i'}, [], NAME);
 declension('name', 'um', '', {'gen-sg': 'i', 'dat-sg': 'o', 'abl-sg': 'o'}, [], NAME);
-declension('name', 'i', '', {'gen-pl': 'orum', 'acc-pl': 'os'}, [], NAME);
+declension('name', 'i', '', {'gen-pl': 'orum'}, [], NAME);
 declension('name', 'er', 'r', {'gen-sg': 'i', 'dat-sg': 'o', 'acc-sg': 'um', 'abl-sg': 'o'}, [], NAME);
+declension('name', 'os', '', {'acc-sg': 'on'}, [], NAME);
+// No name rule makes an ending another name rule removes: their outputs have
+// no conditions, so every rule applies to them again. Greek names in -ē
+// (Mytilēnē, Mytilēnēs), the dative of names in -os and the accusative plural
+// are left to dictionaries' form-of rows (with them, Rōmae → Rōme → Rōmēs →
+// ... gave 218 deinflections for Rōmae, and Cicerōnis 283).
 const NAME_THIRD = {'gen-sg': 'is', 'dat-sg': 'i', 'acc-sg': 'em', 'abl-sg': 'e'};
 declension('name', '', '', NAME_THIRD, [], {...NAME, stemEndsWith: '[lr]'});
 // No name rule makes a word in -is: its output has no conditions, so every
@@ -1168,8 +1313,19 @@ pronoun('nos', {Gen: 'nostri|nostrum', Dat: 'nobis', Abl: 'nobis'});
 pronoun('tu', {gen: 'tui', dat: 'tibi', acc: 'te|tete', abl: 'te'});
 pronoun('vos', {Gen: 'vestri|vestrum|vostrum', Dat: 'vobis', Abl: 'vobis'});
 pronoun('sui', {dat: 'sibi', acc: 'se|sese', abl: 'se|sese'});
-pronoun('is', {nom: 'is/ea/id', gen: 'eius|eiius', dat: 'ei', acc: 'eum/eam/id', abl: 'eo/ea/eo',
-               Nom: 'ei|ii|i/eae/ea', Gen: 'eorum/earum/eorum', Dat: 'eis|iis|is', Acc: 'eos/eas/ea', Abl: 'eis|iis|is'});
+const IS = {nom: 'is/ea/id', gen: 'eius|eiius', dat: 'ei', acc: 'eum/eam/id', abl: 'eo/ea/eo',
+            Nom: 'ei|ii|i/eae/ea', Gen: 'eorum/earum/eorum', Dat: 'eis|iis|is', Acc: 'eos/eas/ea', Abl: 'eis|iis|is'};
+pronoun('is', IS);
+// Dictionaries also have ea and id as headwords of their own (eius names is,
+// ea and id); their forms are the feminine and neuter ones.
+for (const [lemma, gender] of [['ea', 1], ['id', 2]]) {
+    const cells = {};
+    for (const [key, value] of Object.entries(IS)) {
+        const parts = value.split('/');
+        cells[key] = parts.length === 3 ? parts[gender] : value;
+    }
+    pronoun(lemma, cells);
+}
 pronoun('hic', {nom: 'hic/haec/hoc', gen: 'huius|huiusce', dat: 'huic', acc: 'hunc/hanc/hoc', abl: 'hoc/hac/hoc',
                 Nom: 'hi/hae/haec', Gen: 'horum/harum/horum', Dat: 'his', Acc: 'hos|hosce/has|hasce/haec', Abl: 'his'});
 for (const stem of ['ill', 'ist']) {
@@ -1200,6 +1356,9 @@ compoundPronoun('quisquam', {nom: 'quis/quae/quid|quic', gen: 'cuius', dat: 'cui
 compoundPronoun('quivis', QUI, 'vis', {nom: 'qui/quae/quod|quid', acc: 'quem/quam/quod|quid'});
 compoundPronoun('quilibet', QUI, 'libet', {nom: 'qui/quae/quod|quid', acc: 'quem/quam/quod|quid'});
 compoundPronoun('quicumque', QUI, 'cumque');
+compoundPronoun('quispiam', QUI, 'piam', {nom: 'quis/quae/quod|quid', acc: 'quem/quam/quod|quid'});
+pronoun('unusquisque', {nom: 'unusquisque/unaquaeque/unumquodque|unumquidque', gen: 'uniuscuiusque', dat: 'unicuique',
+                        acc: 'unumquemque/unamquamque/unumquodque|unumquidque', abl: 'unoquoque/unaquaque/unoquoque'});
 compoundPronoun('quicunque', QUI, 'cunque');
 // aliquis: the prefix ali- before every form (alicuius, aliquem)
 for (const [key, value] of Object.entries({nom: 'aliquis/aliqua|aliquae/aliquid|aliquod', gen: 'alicuius', dat: 'alicui', acc: 'aliquem/aliquam/aliquid|aliquod',
@@ -1244,7 +1403,17 @@ slot('ve', '-ve', 'The enclitic -ve, "or": plūsve minusve.');
 slot('cum', '-cum', 'cum written after a personal or relative pronoun: mēcum, tēcum, nōbīscum, quōcum.');
 slot('met', '-met', 'The emphatic -met: egomet, mihimet, sēmet.');
 slot('nam', '-nam', 'The emphatic -nam of questions: quisnam, quidnam, ubinam.');
-for (const [id, ending] of [['que', 'que'], ['ne', 'ne'], ['ve', 've']]) { sfx(id, ending, '', [], [], {stemMinLength: 2}); }
+// -que takes any word of two letters or more (atque, neque, itaque are also
+// words of their own). -ne needs three, so that sine, bene, mane and pone are
+// not si, be, ma and po with -ne (tune and mēne are written out), and not
+// after a, so that Rōmāne (vocative) is not Rōma with -ne. -ve follows
+// a case ending in -s, -m, -d or -t (plūsve, diemve, aliudve), so that salvē,
+// suāve, cavē and vīve are not sal, sua, ca and vī with -ve.
+sfx('que', 'que', '', [], [], {stemMinLength: 2});
+sfx('ne', 'ne', '', [], [], {stemMinLength: 3, stemNotEndsWith: '[a]'});
+sfx('ve', 've', '', [], [], {stemMinLength: 3, stemEndsWith: '[dmst]'});
+whole('ne', 'tune', 'tu', [], []);
+whole('ne', 'mene', 'me', [], []);
 for (const [form, base] of [['mecum', 'me'], ['tecum', 'te'], ['secum', 'se'], ['nobiscum', 'nobis'], ['vobiscum', 'vobis'], ['quocum', 'quo'],
                             ['quacum', 'qua'], ['quicum', 'qui'], ['quibuscum', 'quibus']]) {
     whole('cum', form, base, [], []);
@@ -1268,8 +1437,8 @@ const ESSE = ['sum', 'es', 'est', 'sumus', 'estis', 'sunt', 'eram', 'eras', 'era
               'eritis', 'erunt', 'sim', 'sis', 'sit', 'simus', 'sitis', 'sint', 'essem', 'esses', 'esset', 'essemus', 'essetis', 'essent', 'forem',
               'fores', 'foret', 'forent', 'esse', 'fore', 'fui', 'fuisti', 'fuit', 'fuimus', 'fuistis', 'fuerunt', 'fuere', 'fueram', 'fueras', 'fuerat',
               'fueramus', 'fueratis', 'fuerant', 'fuero', 'fueris', 'fuerit', 'fuerimus', 'fueritis', 'fuerint', 'fuerim', 'fuissem', 'fuisses',
-              'fuisset', 'fuissemus', 'fuissetis', 'fuissent', 'fuisse'];
-slot('esse', '+ esse', 'A participle or gerundive with a form of esse: amātus est, hortātī sunt, amātūrus esse, dēlenda est, laudandum erat.');
+              'fuisset', 'fuissemus', 'fuissetis', 'fuissent', 'fuisse', 'iri'];
+slot('esse', '+ esse', 'A participle or gerundive with a form of esse: amātus est, hortātī sunt, amātūrus esse, dēlenda est, laudandum erat; and the supine with īrī, the future passive infinitive (amātum īrī).');
 for (const form of ESSE) { sfx('esse', ` ${form}`, '', [], ['aux'], {stemMinLength: 3}); }
 for (const [ending, slotId] of [['a', 'adj-a'], ['um', 'adj-um'], ['i', 'adj-i'], ['ae', 'adj-ae'], ['os', 'adj-os'], ['as', 'adj-as']]) {
     sfx(slotId, ending, 'us', ['aux'], ['ptc'], {stemMinLength: 3});
@@ -1284,8 +1453,11 @@ function buildTransforms() {
         let transform = groups.get(id);
         if (transform === undefined) {
             const parts = slots.map((s) => SLOTS.get(s));
-            transform = {id, name: parts.map((p) => p.name).join(' / '), description: [...new Set(parts.map((p) => p.description))].join(' '),
-                         source: 'own', rules: []};
+            // A rule several forms share is described by its first form's
+            // description and the names of the others.
+            const description = parts.length === 1 ? parts[0].description
+                : `${parts[0].description} Also: ${parts.slice(1).map((p) => p.name).join('; ')}.`;
+            transform = {id, name: parts.map((p) => p.name).join(' / '), description, source: 'own', rules: []};
             groups.set(id, transform);
         }
         transform.rules.push(entry.rule);

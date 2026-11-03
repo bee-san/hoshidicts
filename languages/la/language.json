@@ -9,10 +9,11 @@
   "direction": "ltr",
   "classes": {
     "letter": "[A-Za-z\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u024F\\u1E00-\\u1EFF]",
-    "word": "[{letter}\\p{M}\\p{Nd}]"
+    "mark": "[\\u0300-\\u036F\\u1DC0-\\u1DFF]",
+    "word": "[{letter}{mark}0-9]"
   },
   "text": {
-    "pattern": "[{letter}\\p{M}]",
+    "pattern": "[{letter}{mark}]",
     "scanStart": "word",
     "segmentation": "spaces",
     "wordCharacters": "{word}",

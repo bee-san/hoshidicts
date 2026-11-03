@@ -1,0 +1,10 @@
+{
+  "title": "hoshidicts la test dictionary",
+  "format": 3,
+  "revision": "1",
+  "sequenced": false,
+  "author": "hoshidicts",
+  "description": "A tiny Latin dictionary for languages/la/tests/lookup.tsv, written for the pack. Its rules column is tagged as wiktionary-to-yomitan's Latin dictionaries tag theirs: pronouns, prepositions, conjunctions and names have none.",
+  "sourceLanguage": "la",
+  "targetLanguage": "en"
+}
