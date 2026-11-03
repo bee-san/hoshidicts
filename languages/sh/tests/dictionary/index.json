@@ -1,0 +1,10 @@
+{
+  "title": "sh pack test dictionary",
+  "format": 3,
+  "revision": "1",
+  "sequenced": true,
+  "author": "hoshidicts",
+  "description": "A tiny Serbo-Croatian dictionary written for the sh pack's lookup tests (no third-party data).",
+  "sourceLanguage": "sh",
+  "targetLanguage": "en"
+}

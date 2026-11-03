@@ -17,7 +17,7 @@
     "id": "removeAccentMarks",
     "name": "Remove accent marks",
     "variants": [
-      [{"normalize": "NFD"}, {"pattern": "({accentBase})[\\u0300-\\u036F]+", "replace": "$1", "global": true}, {"normalize": "NFC"}]
+      [{"normalize": "NFD"}, {"pattern": "([aeiouAEIOUrRаеиоуАЕИОУрР])[\\u0300-\\u036F]+", "replace": "$1", "global": true}, {"normalize": "NFC"}]
     ]
   },
   {

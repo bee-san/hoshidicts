@@ -1,0 +1,49 @@
+# Hand-written for this pack (no third-party data): whole lookups against tests/dictionary/ (category, valid, text, expression, matched).
+# category	valid	text	expression	matched
+noun	1	kućama smo se vratili	kuća	kućama
+noun	1	gradovima Srbije	grad	gradovima
+noun	1	starcu je bilo hladno	starac	starcu
+noun	1	poslom je zauzet	posao	poslom
+noun	1	djeci treba mira	dijete	djeci
+noun	1	ljudima se sviđa	čovjek	ljudima
+noun	1	imena su ista	ime	imena
+noun	1	vojnici su otišli	vojnik	vojnici
+noun	1	radošću je dočekao	radost	radošću
+noun	1	ruci mu je dao	ruka	ruci
+verb	1	čitao je knjigu	čitati	čitao
+verb	1	pišem pismo	pisati	pišem
+verb	1	vidjela sam ga	vidjeti	vidjela
+verb	1	videla sam ga	videti	videla
+verb	1	došli smo kasno	doći	došli
+verb	1	rekao mi je	reći	rekao
+verb	1	kupujem kruh	kupovati	kupujem
+verb	1	krenuli su	krenuti	krenuli
+verb	1	možeš li doći	moći	možeš
+verb	1	nisam znao	biti	nisam
+verb	1	radit ću sutra	raditi	radit ću
+verb	1	radiću sutra	raditi	radiću
+verb	1	doći ću sutra	doći	doći ću
+verb	1	jedem ribu	jesti	jedem
+adjective	1	dobrog čovjeka	dobar	dobrog
+adjective	1	najljepša je	lijep	najljepša
+adjective	1	većeg grada	velik	većeg
+adjective	1	srpskom jeziku	srpski	srpskom
+pronoun	1	njemu je rekao	on	njemu
+pronoun	1	tog dana	taj	tog
+form-of	1	radim	raditi	radim
+form-of	1	kuću je kupio	kuća	kuću
+script	1	кућама смо се вратили	kuća	кућама
+script	1	куће су велике	кућа	куће
+script	1	читао је	čitati	читао
+case	1	Kućama	kuća	Kućama
+accent marks	1	kȕćama	kuća	kȕćama
+diacritics	1	kucama smo se vratili	kuća	kucama
+diacritics	1	citao je	čitati	citao
+apostrophe	1	rek'o je	reći	rek'o
+apostrophe	1	rek’o je	reći	rek’o
+hyphen	1	pet-šest dana	pet-šest	pet-šest
+hyphen	1	pet-sedam dana	pet	pet
+phrase	1	kod kuće sam	kod kuće	kod kuće
+phrase	0	kod kuće sam	kuća	kod kuće
+short word	1	sat je	sat	sat
+short word	1	pet dana	pet	pet
