@@ -101,14 +101,15 @@
         "num": "Numeral",
         "det": "Determiner",
         "name": "Proper noun",
-        "phrase": "Phrase"
+        "phrase": "Phrase",
+        "r": "Root"
       }
     },
     "frequencySamples": null,
     "recommendedDictionaries": [
       {
         "name": "wty-aii-en (wiktionary-to-yomitan)",
-        "url": "https://github.com/yomidevs/wiktionary-to-yomitan",
+        "url": "https://yomidevs.github.io/wiktionary-to-yomitan/download/",
         "description": "Assyrian Neo-Aramaic to English definitions from Wiktionary, with the inflected forms of its declension and conjugation tables.",
         "licence": "CC BY-SA 4.0"
       }
@@ -125,7 +126,7 @@
         "glossary": ["to go"],
         "definitionTags": "v",
         "matched": "ܐ݇ܙܝܼܠ ܠܹܗ",
-        "trace": ["past (he, she)"]
+        "trace": ["third-person singular masculine past"]
       },
       "character": null
     }
