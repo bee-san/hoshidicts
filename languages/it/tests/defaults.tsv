@@ -416,6 +416,13 @@ pronominal-participle	1	pentito	pentirsi	v	participle-pronominal|participle
 pronominal-participle	1	accorto	accorgersi	v	participle-pronominal|participle
 pronominal-participle	1	misurantesi	misurarsi	v	participle-present
 infinitive	1	parlarmi	parlare	v	infinitive|clitic-mi
+infinitive	0	parli	pare	*	*
+infinitive	0	farlo	farre	*	*
+infinitive	0	parlarne	parlarre	*	*
+infinitive	0	orlo	orre	*	*
+infinitive	0	burlo	burre	*	*
+infinitive	0	parlo	parre	*	*
+infinitive	0	parlo	pare	*	*
 infinitive	1	vederti	vedere	v	infinitive|clitic-ti
 infinitive	1	lavarsi	lavare	v	infinitive|clitic-si
 infinitive	1	aiutarci	aiutare	v	infinitive|clitic-ci
@@ -489,6 +496,9 @@ imperative-clitic	0	alzami	alzarsi	*	*
 imperative-clitic	0	alziamovi	alzarsi	*	*
 imperative-clitic	0	alzatemi	alzarsi	*	*
 imperative-clitic	0	dalla	da'	*	*
+imperative-clitic	0	quello	quel	*	*
+imperative-clitic	0	ami	a	*	*
+imperative-clitic	0	modo di farsi	modo di far	*	*
 imperative-clitic	0	stalla	sta'	*	*
 imperative-clitic	0	dagli	da'	*	*
 imperative-clitic	0	valle	va'	*	*
@@ -538,7 +548,13 @@ pronominal	1	si sta	starsi	v	pronominal|present-lui|proclitic
 pronominal	1	ci amiamo	amarsi	v	pronominal|present-noi|proclitic
 pronominal	1	si unisce	unirsi	v	pronominal|present-lui|proclitic
 pronominal	1	si usa	usarsi	v	pronominal|present-lui|proclitic
+pronominal	1	ti preoccupare	preoccuparsi	v	pronominal|proclitic
+pronominal	0	ti pre occupare	pre occuparsi	*	*
+pronominal	1	ti muovere	muoversi	v	pronominal|proclitic
+pronominal	0	mi lasciare	lasciarsi	*	*
 pronominal	0	mi lava	lavarsi	*	*
+pronominal	0	ti lavi le mani	lavi le manarsi	*	*
+pronominal	1	si bea	bearsi	v	pronominal|present-lui|proclitic
 pronominal	0	ti amo	amarsi	*	*
 pronominal	0	mi dica	dirsi	*	*
 pronominal	0	mi baci	baciarsi	*	*
@@ -586,6 +602,7 @@ plural	1	mura	muro	n	plural
 plural	1	begli	bello	adj	plural
 plural	1	quei	quello	adj	plural
 plural	0	a casa	a caso	*	*
+plural	0	bis	bi	*	*
 plural	0	se ne	se no	*	*
 plural	0	Ieri	Iero	*	*
 feminine	1	rossa	rosso	adj	feminine
@@ -595,6 +612,12 @@ feminine	1	poetessa	poeta	n	feminine
 feminine	1	padrona	padrone	n	feminine
 feminine	1	infermiera	infermiere	n	feminine
 feminine	1	signora	signore	n	feminine
+feminine	0	ora	ore	*	*
+feminine	0	buona	buone	*	*
+feminine	0	stessa	sta	*	*
+feminine	0	fiera	fiere	*	*
+feminine	0	essa	e	*	*
+feminine	0	messa	me	*	*
 feminine	1	attrici	attore	n	feminine|plural
 feminine	1	studentesse	studente	n	feminine|plural
 feminine	1	rosse	rosso	adj	feminine-plural
@@ -608,6 +631,10 @@ superlative	1	lunghissimi	lungo	adj	superlative
 superlative	1	bianchissime	bianco	adj	superlative
 superlative	1	vecchissimo	vecchio	adj	superlative
 superlative	1	benissimo	bene	adv	superlative
+superlative	0	dolcissima	dolco	*	*
+superlative	0	tristissimo	tristo	*	*
+superlative	1	dolcissima	dolce	adj	superlative
+superlative	1	dolcificatissimo	dolcificato	adj	superlative
 adverb	1	lentamente	lento	adj	adverb
 adverb	1	fortemente	forte	adj	adverb
 adverb	1	facilmente	facile	adj	adverb
@@ -623,6 +650,14 @@ stems	0	sala	salire	*	*
 stems	0	vena	venire	*	*
 stems	0	mora	morire	*	*
 stems	0	credette	credare	*	*
+stems	0	assistette	assistare	*	*
+stems	0	contrastette	contrastare	*	*
+stems	0	Rido	Ridere	*	*
+stems	0	Alta	Altare	*	*
+pronominal	0	si affaccia	affarsi	*	*
+pronominal	1	si affaccia	affacciarsi	v	pronominal|present-lui|proclitic
+pronominal	1	si sopraffà	sopraffarsi	v	pronominal|present-lui|proclitic
+fare	1	sopraffatto	sopraffare	v	participle
 elision	1	l'amico	amico	*	
 elision	1	dell'acqua	acqua	*	
 elision	1	un'amica	amica	*	

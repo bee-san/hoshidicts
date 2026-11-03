@@ -5,6 +5,16 @@
     python3 measure.py freq     <wty zip> <imported dict> <it_50k.txt> [--top N] [--languages DIR] [--out FILE]
     python3 measure.py text     <wty zip> <imported dict> <pg*.txt>... [--languages DIR] [--out FILE] [--sample N]
     python3 measure.py pronouns <wty zip> <imported dict> <ita_sentences.tsv(.bz2)> [--languages DIR] [--out FILE]
+    python3 measure.py eval     <imported dict> [--languages DIR] [--per-rule FILE]
+
+eval: hoshidicts-cli eval-language for the own rules (sources/own.json),
+Yomitan's (none for Italian: the pack's conditions with no transform), their
+union (tools/merge-transforms.mjs --out) and the final set (transforms.json),
+on tests/corpus.tsv with tests/gaps.tsv, tests/cases.tsv and
+tests/defaults.tsv, each with the pack's defaults (first line
+`# options: default`) and with every option on (the same rows without it).
+With --per-rule, the final set's --per-rule JSON on corpus + gaps + cases +
+defaults is written to FILE.
 
 Lookups run through build/lookup-batch-it (sources/lookup-batch.cpp) with the
 pack's defaults, as a host's hover does. The judge reads the published
@@ -248,7 +258,7 @@ def classify(word, nxt, f, rows):
         good |= acceptable(word + "'", rows) | acceptable_any(nxt, rows)
     if f["expression"] in good:
         return "right"
-    if not f["trace"] and f["matched"] != word and f["expression"].lower() in {v.lower() for v in judge_variants(f["matched"])}:
+    if not f["trace"] and f["matched"] != word and f["expression"].lower() in {v.lower() for v in judge_variants(f["matched"]) | judge_variants(f["matched"] + "'")}:
         return "phrase entry"
     if "pronominal" in f["trace"]:
         words = f["matched"].replace("\u2019", "'").replace("'", "' ").split()
@@ -389,6 +399,65 @@ def cmd_pronouns(args):
     write(lines, out_file)
 
 
+def run_eval(languages, code, tsv, transforms, dictionary, per_rule=False):
+    cli = os.path.join(REPO, "build", "hoshidicts-cli")
+    cmd = [cli, "--languages", languages, "eval-language", code, tsv, "--transforms", transforms, "--dictionary", dictionary]
+    if per_rule:
+        cmd.append("--per-rule")
+    out = subprocess.run(cmd, capture_output=True, text=True, check=True)
+    return json.loads(out.stdout)
+
+
+def tsv_rows(path):
+    return [line for line in open(path, encoding="utf-8").read().splitlines() if line and not line.startswith("#")]
+
+
+def cmd_eval(args):
+    import tempfile
+    languages = option(args, "--languages", os.path.join(REPO, "languages"))
+    per_rule_file = option(args, "--per-rule", None)
+    (dictionary,) = args
+    pack = os.path.join(languages, "it")
+    tests = os.path.join(pack, "tests")
+    work = tempfile.mkdtemp(prefix="it-eval-")
+    final = os.path.join(pack, "transforms.json")
+    own = os.path.join(pack, "sources", "own.json")
+    yomitan = os.path.join(work, "yomitan-none.json")
+    with open(final, encoding="utf-8") as f:
+        conditions = json.load(f)["conditions"]
+    with open(yomitan, "w", encoding="utf-8") as f:
+        json.dump({"schema": 1, "conditions": conditions, "transforms": []}, f)
+    union = os.path.join(work, "union.json")
+    subprocess.run(["node", os.path.join(REPO, "tools", "merge-transforms.mjs"), "it", "--languages", languages, "--out", union],
+                   check=True, capture_output=True)
+    files = {
+        "corpus + gaps": tsv_rows(os.path.join(tests, "corpus.tsv")) + tsv_rows(os.path.join(tests, "gaps.tsv")),
+        "cases": tsv_rows(os.path.join(tests, "cases.tsv")),
+        "defaults": tsv_rows(os.path.join(tests, "defaults.tsv")),
+    }
+    lines = ["set\tfile\toptions\trows\trecall\tnegatives passed\tfalse candidates\tfirst rank"]
+    for name, rows in files.items():
+        for mode in ("default", "all"):
+            path = os.path.join(work, f"{name.replace(' ', '').replace('+', '-')}-{mode}.tsv")
+            with open(path, "w", encoding="utf-8") as f:
+                if mode == "default":
+                    f.write("# options: default\n")
+                f.write("# category\tvalid\tsource\tterm\trule\treasons\n" + "\n".join(rows) + "\n")
+            for label, transforms in (("own", own), ("Yomitan (none)", yomitan), ("union", union), ("final", final)):
+                r = run_eval(languages, "it", path, transforms, dictionary)
+                neg = "-" if not r.get("negatives") else f"{r['negativesPassed']:.4f}"
+                lines.append(f"{label}\t{name}\t{mode}\t{r['rows']}\t{r['recall']:.4f}\t{neg}\t{r['falseCandidates']:.4f}\t{r['firstRank']:.4f}")
+    if per_rule_file:
+        path = os.path.join(work, "all-default.tsv")
+        with open(path, "w", encoding="utf-8") as f:
+            f.write("# options: default\n# category\tvalid\tsource\tterm\trule\treasons\n")
+            f.write("\n".join(files["corpus + gaps"] + files["defaults"]) + "\n")
+        r = run_eval(languages, "it", path, final, dictionary, per_rule=True)
+        with open(per_rule_file, "w", encoding="utf-8") as f:
+            json.dump(r, f, ensure_ascii=False, indent=1)
+    write(lines, None)
+
+
 def write(lines, out_file):
     text = "\n".join(lines) + "\n"
     if out_file:
@@ -399,4 +468,4 @@ def write(lines, out_file):
 
 if __name__ == "__main__":
     command, rest = sys.argv[1], sys.argv[2:]
-    {"freq": cmd_freq, "text": cmd_text, "pronouns": cmd_pronouns}[command](rest)
+    {"freq": cmd_freq, "text": cmd_text, "pronouns": cmd_pronouns, "eval": cmd_eval}[command](rest)

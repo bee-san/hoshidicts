@@ -1,4 +1,6 @@
-# Source: written for this pack (GPL-3.0-or-later), except the four rows of the category yomitan, from Yomitan's test/language/italian-processors.test.js at d3c54c10264673eca0d66b970ef74cd5c8b048e3 (GPL-3.0-or-later, Copyright (C) 2025-2026 Yomitan Authors). Every optional processor is on.
+# options: default
+# Source: written for this pack (GPL-3.0-or-later), except the four rows of the category yomitan, from Yomitan's test/language/italian-processors.test.js at d3c54c10264673eca0d66b970ef74cd5c8b048e3 (GPL-3.0-or-later, Copyright (C) 2025-2026 Yomitan Authors).
+# The optional addFinalAccent processor is off here; tests/cases.tsv has the rows that need it.
 # category	valid	input	variant
 yomitan	1	dell'Italia	Italia
 yomitan	1	nell'Italia	Italia
@@ -38,8 +40,7 @@ diacritics	0	sè stesso	se stesso
 chè	1	perchè	perché
 chè	1	poichè	poiché
 chè	1	benchè	benché
-accent	1	citta	città
-accent	1	puo	può
-accent	1	perche	perché
-accent	1	cosi	così
-accent	1	parlo	parlò
+elision	0	pezzo d'oro	pezzo oro
+elision	0	una bell'idea	una idea
+accent	0	citta	città
+accent	0	parlo	parlò
