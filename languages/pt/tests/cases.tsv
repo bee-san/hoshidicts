@@ -612,3 +612,5 @@ negatives	0	alguem	algar	*	*
 negatives	0	sida	sido	*	*
 exclusions keep	1	alegue	alegar	v	subjunctive-eu-ele
 exclusions keep	1	siderúrgica	siderúrgico	adj	feminine
+negatives	0	sao	sair	*	*
+negatives	0	cao	cair	*	*

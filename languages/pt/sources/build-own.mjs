@@ -254,7 +254,9 @@ for (const conj of ['ar', 'er', 'ir']) {
                 verb(slot, `gu${ending}`, 'gar');
                 verb(slot, `c${ending}`, 'çar');
             } else if (conj !== 'ar' && /^[ao]/u.test(ending)) {
-                verb(slot, ending, conj, {stemNotEndsWith: '[cg]'});
+                // Not after a either: the -air verbs keep their i (saio, caia), so
+                // sao and caa are not sair and cair.
+                verb(slot, ending, conj, {stemNotEndsWith: '[acg]'});
                 if (conj === 'er') { verb(slot, `ç${ending}`, 'cer'); }
                 verb(slot, `j${ending}`, `g${conj}`, {stemMinLength: 1});   // aja, ajo (agir), protejo
                 // erguer (erga) is the only common -guer verb: aluga is alugar, not the noun aluguer.

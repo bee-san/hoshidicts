@@ -161,8 +161,9 @@ yomitan, 0 both"). No Yomitan rule is left out, because there is none.
     Tatoeba while the constraint covered only the shortest endings;
   - a verb stem has at least two letters (`de`, `se` and `me` are not dar,
     ser and "mer"); an -ar ending in e never follows c or g, and an -er or -ir
-    ending in a or o never follows c or g (`rege` is not regar, `vaga` not
-    vagir, `peca` not pecer);
+    ending in a or o never follows c, g or a (`rege` is not regar, `vaga` not
+    vagir, `peca` not pecer, and `sao`, São written without its accent, not
+    sair, whose forms keep their i: saio);
   - `esta`, `estas`, `este`, `estes` and `esto` are not estar, whose forms are
     `está`, `estás`, `esteja`, `estou`; longer stems keep their readings
     (`estuda`, `estimas`, `estudo`);
@@ -387,11 +388,11 @@ Checks:
   compare; `decapitalize` and `capitalizeFirstLetter` agree with Yomitan's on
   2,165 inputs each, with no listed difference.
 - Mutation checks (section 14 step 7, `sources/mutations.py <build dir>
-  <scratch dir>`): 52 edits of a scratch copy, each removing or loosening one
+  <scratch dir>`): 53 edits of a scratch copy, each removing or loosening one
   stem constraint, exclusion, word-list part, processor or scanning setting
   (every one of the Rule provenance list, the NFKC, diaeresis and case
   processors, the hyphen, `searchResolution`), regenerated with its own
-  `tests/classes.json` and run through the conformance test: all 52 fail
+  `tests/classes.json` and run through the conformance test: all 53 fail
   it.
 - Hachidori (`test/chrome-language-pack.mjs` in Chrome 152, feat/multi-language
   803f7b6e with this pack in `third_party/hoshidicts` on #58's engine and the
