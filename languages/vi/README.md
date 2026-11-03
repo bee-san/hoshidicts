@@ -27,17 +27,19 @@ found comes first. Hyphens separate words, as in the other packs.
     *se sẽ* (gently) gives *khẽ*, of which it is a form.
   - `reduplication`: a two-word expression said twice: *đi đi lại lại* →
     *đi lại*, *lôi tha lôi thôi* → *lôi thôi*, *lề mà lề mề* → *lề mề*
-    (but not *học và học viên*: *và* is *and*).
+    (but not *học và học viên*, *kim là kim loại* or *thứ ba thứ bảy*: *và*,
+    *là* and *ba* are words of their own there).
 
 The pack has no optional processor, transform or setting. Its rules carry no
 conditions: Vietnamese has no inflection classes for them to track, every rule
 shortens the text so chains end, and the recommended dictionary has no part
 of speech in its `rules` column (0 of 76,689 rows; wty-vi-vi 0 of 44,885), so
-a rule output with conditions would find nothing in it. `lookup.untaggedTerms`
-is `pass`, as section 4.4 recommends for such dictionaries; with rules
-without conditions it changes no result (eval-language gives the same
-numbers with `filter`, and both texts of Measurements 4 the same first
-results).
+a rule output with conditions would find nothing in it.
+`lookup.untaggedTerms` keeps its default: the pack has no dictionary-form
+condition, so `pass` would change no result (eval-language gives the same
+numbers, and both texts of Measurements 4 the same first results, with it
+set), and Hachidori's engines at feat/multi-language 803f7b6e predate the
+key and refuse a pack that has it.
 
 ## Sources and licences
 
@@ -110,7 +112,7 @@ Vietnamese rules, so the union of `sources/own.json` and Yomitan's rules
 - `partialReduplication`: 82 `wholeWord` rules, one per form of the 78
   listed words (a word in ngã gives two: *se sẽ*, *sè sẽ*).
 - `reduplication`: 67 `pattern` rules with one pattern,
-  `^([^ ]+) (?:\1( [^ ]+)\2|(?!và )([bcdđghklmnpqrstvx]*)[aà] \1( \3[^ bcdđghklmnpqrstvx][^ ]*))$`,
+  `^([^ ]+) (?:\1( [^ ]+)\2|(?!(?:và|là|ba) )([bcdđghklmnpqrstvx]*)[aà] \1( \3[^ bcdđghklmnpqrstvx][^ ]*))$`,
   each anchored on one letter a syllable can end with.
 
 The processors are 6 `own` (`normalizeUnicode`, `replaceEth`,
@@ -118,7 +120,7 @@ The processors are 6 `own` (`normalizeUnicode`, `replaceEth`,
 `both` (`decapitalize` and `capitalizeFirstLetter`: written for the pack, and
 the same steps as Yomitan's) and 1 `yomitan` (`normalizeDiacritics`). No
 Yomitan processor is left out; `tools/check-yomitan.mjs` compares all three
-with Yomitan's own on 1,237, 1,237 and 1,206 inputs and finds no difference.
+with Yomitan's own on 1,258, 1,258 and 1,227 inputs and finds no difference.
 
 The first commit of the pack, `vi: own rules` (5a12101), has the own rules
 as written before Yomitan's file was read. These changed after measuring:
@@ -134,7 +136,7 @@ as written before Yomitan's file was read. These changed after measuring:
 - the four reduplication transforms became one pattern: the shapes *X X*
   and *A B B*, and leading words before a reduplication (*đỏ chon chót*),
   were dropped; the four-syllable shape repeats the whole onset and refuses
-  *và*.
+  *và*, *là* and *ba*.
 
 `sources/history.mjs` measures each of these on both texts of Measurements
 4: it adds a removed rule or processor back to the final pack, or takes a
@@ -147,7 +149,7 @@ kept one out, and `judge-real.py` judges every first result that differs
 | Add back *X X* → *X* | 76 / 6 | 42 / 0 | 34 / 6 |
 | Add back the first commit's whole reduplication (*X X*, *A B B*) | 98 / 8 | 48 / 0 | 50 / 8 |
 | Add back `capitalizeWords` | 73 / 36 | 31 / 25 | 42 / 11 |
-| Take out the capitalised variant of `hyphensToSpaces` | 2 / 1,185 | 2 / 750 | 0 / 435, and 35 find nothing |
+| Take out the capitalised variant of `hyphensToSpaces` | 2 / 1,185 | 2 / 812 | 0 / 373, and 35 find nothing |
 | Take out `toneMarks` | 9 / 2 | 9 / 2 shorter | 0 / 0 |
 
 - **Partial reduplication by pattern** read two words as one: *cho chó*
@@ -167,8 +169,8 @@ kept one out, and `judge-real.py` judges every first result that differs
   as, → the province *Cao Bằng* ×7; *Sư tử* → *Sư Tử* ×5 and *Văn hóa* →
   *Văn Hóa* ×4 at the start of a sentence). Its useful part, capitalising
   the words of a hyphenated name, is the second variant of
-  `hyphensToSpaces`: without it, *Nghệ-an* shows *nghệ* (turmeric) ×73 and
-  *Bình-định* *bình định* (to pacify) ×59.
+  `hyphensToSpaces`: without it, *Nghệ-an* shows *nghệ* (turmeric) ×73,
+  *Giao-chỉ* *giao* ×43 and *Lạng-sơn* *lạng* ×29.
 - **`toneMarks`** reaches the longer word at 11 places
   (*cứu hỏa* → *cứu hoả* ×7, *Mèo già hóa cáo*), because Yomitan's
   `normalizeDiacritics` changes only the first syllable it can; its keys
@@ -177,8 +179,7 @@ kept one out, and `judge-real.py` judges every first result that differs
 
 ## Measurements
 
-All with wty-vi-en as published, form-of rows included, at hoshidicts 6a65eac
-(the same with 0a73e5e, which adds `untaggedTerms`)
+All with wty-vi-en as published, form-of rows included, at hoshidicts 0a73e5e
 (GCC 14.3, Release). The pack has no optional feature, so every file gives
 the same numbers with every option on and with `# options: default`
 (`sources/measure-eval.sh` runs both).
@@ -190,9 +191,9 @@ the same numbers with every option on and with `# options: default`
 
    | Set | Sample recall | False candidates | First rank | cases.tsv positives | negatives | false candidates | first rank |
    | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-   | Own | 60.7% (607) | 0.154 | 75.9% | 97.4% | 100% | 0.233 | 85.3% |
+   | Own | 60.7% (607) | 0.153 | 75.9% | 97.4% | 100% | 0.233 | 85.3% |
    | Yomitan | 10.4% (104) | 0.108 | 75.6% | 6.9% | 100% | 0.362 | 28.4% |
-   | Union = final | 60.7% (607) | 0.154 | 75.9% | 100% | 100% | 0.560 | 87.9% |
+   | Union = final | 60.7% (607) | 0.153 | 75.9% | 100% | 100% | 0.560 | 87.9% |
 
    By kind of sample row (`sources/sample-kinds.py`; final / Yomitan): i/y
    342 / 0 of 357; hyphens 103
@@ -206,7 +207,7 @@ the same numbers with every option on and with `# options: default`
    a right form: a syllable's Hán-Nôm characters (*đỏ* → 𣠶) and the nouns a
    classifier counts (a row of *người* names 37 nouns). Per rule on the
    sample: `partialReduplication` recovers 13 rows and adds 3 false
-   candidates, `reduplication` 0 and 5 (four-syllable forms whose row names
+   candidates, `reduplication` 0 and 4 (four-syllable forms whose row names
    another spelling of the long form, such as *hổn hà hổn hển*); on
    `cases.tsv` 84 and 22, 10 and 0. No rule breaks a negative.
 2. **Frequent forms** (`sources/measure-frequent.py`): of the 10,000 most
@@ -220,9 +221,9 @@ the same numbers with every option on and with `# options: default`
    every Tatoeba position whose first result comes through a pack rule was
    judged by hand: 7 positions, all right (*đi đi lại lại*, *lén lén lút
    lút*, *lề mà lề mề* ×2, *vớ va vớ vẩn*, *khất kha khất khưởng*, *dinh
-   dính*). With the first own rules, the same positions had 53 wrong partial
-   reduplications, 35 wrong readings of two equal words and 18 of a word
-   repeated after a phrase (Rule provenance).
+   dính*). With the first own rules the positions where they fire had 53
+   wrong partial reduplications and 50 wrong readings of a repeated word
+   (*X X* and *A B B*; Rule provenance, `history.mjs`).
 4. **Real text** (`sources/make-hovers.py`, `sources/lookup-batch.cpp`,
    `sources/judge-real.py` with `sources/judgements.tsv`): every word of
    *Việt Nam sử lược* Quyển I (78,249 lookups) and of Tatoeba (284,843),
@@ -235,19 +236,22 @@ the same numbers with every option on and with `# options: default`
      letters and capitals of the matched text once marks and hyphens are
      set aside (*thế-kỷ* → *thế kỉ*, *tòa nhà* → *toà nhà*, *lúa mỳ* → *lúa
      mì*, *kỷ* → *kỉ* where Yomitan's processors give the Han character 己);
-   - all the others, 1,811 and 82, were judged by hand: 77 and 3 are wrong.
+   - all the others, 1,811 and 82, were judged by hand: 139 and 3 are
+     wrong. A pair can be judged per place (`judgements.tsv`'s fifth
+     column): *Thái-bình* is the province in most places and the word
+     *thái bình* (peace) in a poem.
 
-   So 80 of 363,092 lookups (0.022%) show a wrong first result that the
-   pack's processors and rules cause, against 4,458 they make right. Nearly
-   all are older text's hyphenated names and titles that the capitalised
-   variant of `hyphensToSpaces` reads as another name, or a capital lowered
-   reads as a common word: *BÌNH-ĐỊNH* (of the title *Bình-định-vương*) →
-   *bình định* ×9, *Đại-lý* (the kingdom of Dali) → *đại lí* (agent) ×7,
-   *tôn-thất* (royal kin) → the clan *Tôn Thất* ×7, *Kinh-đô* (the capital)
-   → *Kinh Đô* (Kyoto) ×5, the title *Quan-sát-sứ* → *quan sát* (to
-   observe) ×3; in Tatoeba *Ðường* and *Ðức* at the start of a sentence, and
-   the typo *kì kỳ*. Without that variant 435 first results of
-   *Việt Nam sử lược* are wrong instead (Rule provenance).
+   So 142 of 363,092 lookups (0.039%) show a wrong first result that the
+   pack's processors and rules cause, against 4,396 they make right. Nearly
+   all are older text's hyphenated names, titles and eras read as another
+   name or a common word: Lê Lợi's title *Bình-định-vương* → the province
+   *Bình Định* ×58, *Bồ-đề* (a place) → *bồ đề* (bodhi) ×8, *Đại-lý* (the
+   kingdom of Dali) → *đại lí* (agent) ×7, *tôn-thất* (royal kin) → the
+   clan *Tôn Thất* ×7, *Kinh-đô* (the capital) → *Kinh Đô* (Kyoto) ×5, the
+   era *Thuận-thiên* → the sword *Thuận Thiên* ×4; in Tatoeba *Ðường* and
+   *Ðức* at the start of a sentence, and the typo *kì kỳ*. Without the
+   capitalised variant of `hyphensToSpaces` 373 first results of *Việt Nam
+   sử lược* are wrong instead (Rule provenance).
 
    A seeded random sample of 50 positions of each text, judged by hand
    (`sources/sample-firsts.py`, `sources/sample-judgements.tsv`), has 3
@@ -257,8 +261,9 @@ the same numbers with every option on and with `# options: default`
 
    At the start of a sentence, the capitalised text as written can match a
    name or letter entry with no processor step, ahead of the common word
-   with one: at 1,757 of Tatoeba's 32,544 sentence starts the first card is
-   such an entry while the lowercase word is a headword (*Anh* 592, *Người*
+   with one: at 1,757 of Tatoeba's 32,544 sentence starts
+   (`sources/sentence-starts.py`) the first card is such an entry while the
+   lowercase word is a headword (*Anh* 592, *Người*
    143, *Ông* 131, *Mẹ* 130, *Ở* 128, *Các* 126). Yomitan's processors show
    the same card at all of them. A processor cannot reorder results; see
    Known gaps.
@@ -279,26 +284,33 @@ the same numbers with every option on and with `# options: default`
      539 hovers of the same texts, 6 passes, load about 45): `hdw_lookup`
      p50 174 µs and p95 397 µs threaded, p50 162 µs and p95 383 µs
      single-thread.
-   - Pack load (`sources/wasm-load.mjs`, 10 fresh engines each):
-     `hdw_language_load` median 7.34 ms single-thread and 7.72 ms threaded
-     (budget 50 ms); live heap +315,176 bytes (budget 20 MB).
-6. **Hachidori** (feat/multi-language 803f7b6e with this pack in
-   `third_party/hoshidicts`, `node scripts/sync-languages.mjs`,
-   `test/chrome-language-pack.mjs`, Chrome 152, wty-vi-en): 18 / 18 checks
+   - Pack load (`sources/wasm-load.mjs`, the engines of Hachidori
+     feat/multi-language 803f7b6e, 10 fresh engines each):
+     `hdw_language_load` median 6.97 ms single-thread and 7.14 ms threaded
+     (budget 50 ms); live heap +326,032 bytes (budget 20 MB). The 67
+     `pattern` rules take 175,304 bytes of it and 0.7 ms (the pack without
+     them: +150,728 bytes, 6.31 ms).
+6. **Hachidori** (feat/multi-language 803f7b6e and its prebuilt engines,
+   this pack in `third_party/hoshidicts`, `node scripts/sync-languages.mjs`,
+   `test/chrome-language-pack.mjs`, Chrome 152, wty-vi-en): 21 / 21 checks
    pass. Settings adds Vietnamese beside Japanese and imports the dictionary;
-   fourteen hovered words find their headword first (*đo đỏ* → *đỏ*, *đi đi
-   lại lại* → *đi lại*, *tòa nhà* → *toà nhà*, *Hồng-bàng* → *Hồng Bàng*,
-   *Ðà Nẵng* → *Đà Nẵng*, *Nước Mỹ* → *nước Mĩ*, *se sẽ* → *khẽ*, and
-   *sang* in *chuyển sang sáng tác* stays *sang*); the Anki note and the
+   seventeen hovered words find their headword first (*đo đỏ* → *đỏ*, *đi
+   đi lại lại* → *đi lại*, *tòa nhà* → *toà nhà*, *Hồng-bàng* → *Hồng Bàng*,
+   *Ðà Nẵng* → *Đà Nẵng*, *Nước Mỹ* → *nước Mĩ*, *se sẽ* → *khẽ*, *kỳ* →
+   *kì*, and *sang* in *chuyển sang sáng tác*, *kim* in *kim là kim loại*
+   and *Thứ ba* in *Thứ ba thứ bảy* stay themselves); the Anki note and the
    switch to Japanese and back work.
 7. **Conformance** (`language-conformance-test`): corpus.tsv 607 / 607,
-   cases.tsv 157 / 157, text.tsv 84 / 84, lookup.tsv 29 / 29; gaps.tsv 0 /
+   cases.tsv 163 / 163, text.tsv 98 / 98, lookup.tsv 31 / 31; gaps.tsv 0 /
    393 (reported); classes.json agrees with the engine (2 classes, 2 fields,
-   3 steps, 3,618 outputs). `sources/mutate.mjs` makes 113 mutations: it
-   removes each exclusion, constraint, processor, listed word and key the
-   tests should pin in turn, and changes the scan settings; a test fails for
-   all but one, which makes the same variants in more steps (*Mĩ và* →
-   *mĩ và* → *mỹ và* → *Mỹ và* without the capitalised start key).
+   3 steps). `sources/mutate.mjs` makes 121 mutations: it removes each
+   exclusion, constraint, processor, listed word and group of keys the tests
+   should pin in turn, and changes the scan settings and `traceSelection`; a
+   test fails for all but one, which makes the same variants in more steps
+   (*Mĩ và* → *mĩ và* → *mỹ và* → *Mỹ và* without the capitalised start
+   key). The second audit's other surviving mutations, three processor
+   orders, `replaceEth` after `decapitalize` and the *qùy* keep keys, give
+   the same output on all 363,092 lookups of Measurements 4.
 
 The commands: `node languages/vi/sources/build-own.mjs && node
 languages/vi/sources/build-pack.mjs` writes the pack;
@@ -306,7 +318,9 @@ languages/vi/sources/build-pack.mjs` writes the pack;
 table of 1; `measure-frequent.py` (its header has the arguments) 2;
 `make-hovers.py`, `lookup-batch-vi` (built as the header of
 `lookup-batch.cpp` says), `judge-real.py` and `sample-firsts.py` 3 and 4;
-`history.mjs` the table of Rule provenance; `compare-first.py` compares
+`history.mjs` the table of Rule provenance (it fetches PR #56's head for
+the first commit when a clone lacks it), `sentence-starts.py` the
+sentence-start count; `compare-first.py` compares
 any two runs; `wasm-load.mjs` and the commands above 5; `mutate.mjs` 7.
 
 ## Known gaps
@@ -317,10 +331,10 @@ any two runs; `wasm-load.mjs` and the commands above 5; `mutate.mjs` 7.
   entry with no processor step, and the common word needs one. Yomitan's
   processors do the same; fixing it needs the host to say that the word
   starts a sentence (a framework matter).
-- **Names in older text read wrongly** (Measurements 4): 77 places of *Việt
-  Nam sử lược*, such as *Kinh-đô* → *Kinh Đô* (Kyoto) ×5, *Đại-lý* → *đại
-  lí* ×7 and *tôn-thất* → *Tôn Thất* ×7. Without the capitalised variant of
-  `hyphensToSpaces` there would be 435.
+- **Names in older text read wrongly** (Measurements 4): 139 places of
+  *Việt Nam sử lược*, such as *Bình-định-vương* → the province *Bình Định*
+  ×58, *Bồ-đề* → *bồ đề* ×8 and *Kinh-đô* → *Kinh Đô* (Kyoto) ×5. Without
+  the capitalised variant of `hyphensToSpaces` there would be 373.
 - **Lexicalised reduplicatives** (*bạn bè*, *rộng rãi*, *sắc sảo*, *bươm
   bướm*): 172 of the 185 reduplication rows of the sample. They are words of
   their own, which dictionaries list, and a rule for them would read
@@ -334,8 +348,10 @@ any two runs; `wasm-load.mjs` and the commands above 5; `mutate.mjs` 7.
   *Bến Tre Trẻ* (*tre trẻ*), *kỳ giông giống như lươn* (*giông giống*),
   *cam sành sạch bệnh* (*sành sạch*), *dâu quả dài dại* and *bóng trăng
   trắng ngà*. In 10.5 million words of running text the first audit read
-  every such place, and each was a reduplicative. *lờn lợt* finds nothing
-  in wty-vi-en, which has no *lợt*.
+  every such place, and each was a reduplicative. *đẹp mà đẹp mắt* would
+  read as *đẹp mắt*: the four-syllable shape keeps *mà*, which *lề mà lề
+  mề* needs. The rule's *lợt* is not in wty-vi-en, so a lookup of *lờn lợt*
+  shows *nhờn* (the Central form of *lờn*).
 - **Another tone or vowel mark** (*mầu* / *màu*, *giầy* / *giày*, hỏi and ngã
   confused): 132 sample rows. No processor makes them, because the same
   change turns *tây* into *tay* and *nghĩ* into *nghỉ*.
@@ -354,5 +370,3 @@ any two runs; `wasm-load.mjs` and the commands above 5; `mutate.mjs` 7.
 - `normalizeDiacritics` changes only the first syllable it can in a text
   (Yomitan's behaviour); `toneMarks` covers *oa*, *oe* and *uy* in every
   syllable, but not other misplaced marks after the first.
-- `traceSelection` is `shortest`, as the contract recommends; no test can
-  observe it.
