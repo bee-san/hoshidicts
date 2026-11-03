@@ -1266,7 +1266,8 @@
       "source": "own",
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["če", "k"], ["že", "g"], ["še", "h"], ["če", "c"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["če", "ac"], ["če", "ak"], ["o", "a"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["če", "ac"], ["če", "ak"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
+        {"type": "suffix", "inflected": "o", "deinflected": "a", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "{consonant}"}
       ]
     },
     {

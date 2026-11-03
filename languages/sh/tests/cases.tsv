@@ -448,7 +448,6 @@ noun, feminine	1	igala	igla	n	*
 noun, feminine	1	pjesama	pjesma	n	*
 noun, feminine	1	ovaca	ovca	n	*
 noun, feminine	1	sluge	sluga	n	*
-noun, feminine	1	Marijo	Marija	n	*
 noun, feminine	1	stvari	stvar	n	*
 noun, feminine	1	stvarima	stvar	n	*
 noun, feminine	1	stvarju	stvar	n	*
@@ -854,6 +853,8 @@ closed lists	1	nikom	niko	pron	pron-dat-loc
 closed lists	1	nekom	netko	pron	pron-dat-loc
 closed lists	1	uništenje	uništiti	v	*
 closed lists	1	zaposlenja	zaposliti	v	*
+negatives	0	Dobro	Dobra	*	*
+negatives	0	Nadamo	Nada	*	*
 # --- One example of each transform, written by sources/build-own.mjs --cases (hand-written examples, no third-party data) ---
 rule example	1	sam	biti	v	*
 rule example	1	si	biti	v	*

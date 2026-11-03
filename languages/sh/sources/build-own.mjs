@@ -245,7 +245,12 @@ for (const [ending, tags] of [['i', ['nom./voc. pl.']], ['a', ['gen. pl.']], ['i
 sfx('noun', 'e', 'a', ['gen. sg.', 'nom./acc./voc. pl.'], [['žene', 'žena'], ['kuće', 'kuća'], ['knjige', 'knjiga'], ['sluge', 'sluga']], {end: C});
 sfx('noun', 'i', 'a', ['dat./loc. sg.', 'gen. pl.'], [['ženi', 'žena'], ['kući', 'kuća'], ['majki', 'majka']], {end: C});
 sfx('noun', 'u', 'a', ['acc. sg.', 'gen. pl.'], [['ženu', 'žena'], ['kuću', 'kuća'], ['ruku', 'ruka']], {end: C});
-sfx('noun', 'o', 'a', ['voc. sg.'], [['ženo', 'žena'], ['Marijo', 'Marija']], {end: C});
+// Not on a capitalised word: the sentence-initial Dobro, Mirno and Nadamo
+// are not vocatives of the names Dobra, Mirna and Nada, which then rank
+// first because the text as written needs no processor step (the lower-case
+// variant reads them as dobro, mirno, nadati). Vocatives of names (Marijo)
+// are lost with it.
+sfx('noun', 'o', 'a', ['voc. sg.'], [['ženo', 'žena'], ['sestro', 'sestra']], {end: C, lower: true});
 sfx('noun', 'om', 'a', ['ins. sg.'], [['ženom', 'žena'], ['kućom', 'kuća']], {end: C});
 sfx('noun', 'ama', 'a', ['dat./loc./ins. pl.'], [['ženama', 'žena'], ['kućama', 'kuća']], {end: C});
 // Dative and locative with k/g/h → c/z/s: ruka → ruci, noga → nozi.
@@ -988,7 +993,7 @@ function ruleOf(spec) {
         // is not read as an l-participle (→ Kati → the name Kata) and Gospodo
         // not as an adjective (→ Gospod); its lower-case variant, which the
         // decapitalize processor gives, is.
-        rule.stemCharacters = rule.conditionsOut.some((c) => c === 'v' || c === 'adj' || c === 'cmp') ? '{lowerStem}' : '{stem}';
+        rule.stemCharacters = opts.lower || rule.conditionsOut.some((c) => c === 'v' || c === 'adj' || c === 'cmp') ? '{lowerStem}' : '{stem}';
         if (opts.end) { rule.stemEndsWith = opts.end; }
         if (opts.notEnd) { rule.stemNotEndsWith = opts.notEnd; }
         if (opts.notStartText) { rule.stemNotStartsWithText = opts.notStartText; }

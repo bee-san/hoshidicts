@@ -94,6 +94,7 @@ MUTATIONS = [
     ('no space guard ({stem})', drop_key('stemCharacters', '{stem}')),
     ('no space and capital guard ({lowerStem})', drop_key('stemCharacters', '{lowerStem}')),
     ('capital guard only a space guard ({lowerStem} → {stem})', set_key('stemCharacters', '{lowerStem}', '{stem}')),
+    ('vocative o → a: capital guard removed', lambda t, lang: sum(1 for tr, r in rules(t) if tr['id'] == 'n-voc-sg' and r.get('inflected') == 'o' and r.get('deinflected') == 'a' and r.update(stemCharacters='{stem}') is None)),
     ('minimum stems one shorter', lower_min()),
     ('stemEndsWith {consonant} removed', drop_key('stemEndsWith', '{consonant}')),
     ('stemEndsWith {palatal} removed', drop_key('stemEndsWith', '{palatal}')),

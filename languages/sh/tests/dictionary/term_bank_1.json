@@ -54,5 +54,7 @@
   ["куће", "", "non-lemma", "", 0, [["кућа", ["genitive singular"]]], 53, ""],
   ["kao", "", "conj", "", 0, ["as, like"], 54, ""],
   ["Kata", "", "name", "n", 0, ["a female given name"], 55, ""],
-  ["Kati", "", "non-lemma", "", 0, [["Kata", ["dative/locative singular"]]], 56, ""]
+  ["Kati", "", "non-lemma", "", 0, [["Kata", ["dative/locative singular"]]], 56, ""],
+  ["dobro", "", "adv", "", 0, ["well, good"], 57, ""],
+  ["Dobra", "", "name", "n", 0, ["a town"], 58, ""]
 ]

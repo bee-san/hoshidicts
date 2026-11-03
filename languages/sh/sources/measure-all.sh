@@ -20,7 +20,9 @@ mkdir -p "$OUT"
 P=languages/sh/sources
 DICTS=("$CACHE/dict/wty-sh-en")
 [ -n "${TAGGED:-}" ] && DICTS+=("$TAGGED")
-(cat languages/sh/tests/corpus.tsv; grep -v '^#' languages/sh/tests/gaps.tsv) > "$OUT/sample.tsv"
+# The sample: corpus.tsv and the UniMorph rows of gaps.tsv (their category is
+# a UniMorph tag, with ';'); the hand-written gaps are not part of it.
+(cat languages/sh/tests/corpus.tsv; grep -v '^#' languages/sh/tests/gaps.tsv | awk -F'\t' '$1 ~ /;/') > "$OUT/sample.tsv"
 (echo '# options: default'; cat "$OUT/sample.tsv") > "$OUT/sample-default.tsv"
 (echo '# options: default'; cat languages/sh/tests/cases.tsv) > "$OUT/cases-default.tsv"
 python3 -c "
