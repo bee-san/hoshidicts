@@ -28,8 +28,13 @@ import {dirname, join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {formatTransforms} from '../../../tools/lib/json.mjs';
 
+// `v` has Yomitan's definition (subconditions pv, iv, cv), which the merge
+// tool requires of a condition both rule files define (section 14 step 5).
 const conditions = {
-    v: {name: 'Verb', isDictionaryForm: true},
+    v: {name: 'Verb', isDictionaryForm: true, subConditions: ['pv', 'iv', 'cv']},
+    pv: {name: 'Perfect Verb (no affixes)', isDictionaryForm: true},
+    iv: {name: 'Imperfect Verb (no affixes)', isDictionaryForm: true},
+    cv: {name: 'Command Verb (no affixes)', isDictionaryForm: true},
     n: {name: 'Noun', isDictionaryForm: true},
     vf: {name: 'Verb form with its person affixes', isDictionaryForm: false},
 };

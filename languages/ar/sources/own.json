@@ -3,6 +3,19 @@
   "conditions": {
     "v": {
       "name": "Verb",
+      "isDictionaryForm": true,
+      "subConditions": ["pv", "iv", "cv"]
+    },
+    "pv": {
+      "name": "Perfect Verb (no affixes)",
+      "isDictionaryForm": true
+    },
+    "iv": {
+      "name": "Imperfect Verb (no affixes)",
+      "isDictionaryForm": true
+    },
+    "cv": {
+      "name": "Command Verb (no affixes)",
       "isDictionaryForm": true
     },
     "n": {
