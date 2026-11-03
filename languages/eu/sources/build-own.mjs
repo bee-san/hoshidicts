@@ -60,7 +60,14 @@ const conditions = {
     v: {name: 'Verb', isDictionaryForm: true},
     sg: {name: 'Declined form without its ending (singular or indefinite)', isDictionaryForm: false},
     pl: {name: 'Declined form without its ending (plural)', isDictionaryForm: false},
-    fin: {name: 'Finite verb form without a suffix or prefix', isDictionaryForm: false},
+    sub: {name: 'Finite verb form without its relative -n or complementizer -la', isDictionaryForm: false},
+    pfx: {name: 'Finite verb form without a prefix (ba-, bait-, ez-) or a familiar ending', isDictionaryForm: false},
+    // What an indicative, potential or conditional form is read from besides
+    // the text as written: a form a suffix or prefix rule left, or one a case
+    // rule left (sg, pl), since a past form is its own relative (zenean,
+    // when it was: zen + -ean).
+    dep: {name: 'Finite, subordinated or declined form', isDictionaryForm: false, subConditions: ['sub', 'pfx', 'sg', 'pl']},
+    fin: {name: 'Finite, subordinated or prefixed form', isDictionaryForm: false, subConditions: ['sub', 'pfx']},
 };
 
 // --- Collection -------------------------------------------------------------
@@ -69,7 +76,7 @@ const byId = new Map();
 
 function transform(id, name, description) {
     if (byId.has(id)) { return byId.get(id); }
-    const t = {id, name, description, source: 'own', rules: []};
+    const t = description === undefined ? {id, name, source: 'own', rules: []} : {id, name, description, source: 'own', rules: []};
     t.keys = new Set();
     transforms.push(t);
     byId.set(id, t);
@@ -103,11 +110,11 @@ const NUMBERS = {sg: 'singular', pl: 'plural', indef: 'indefinite', prox: 'proxi
 const CASES = [
     {id: 'abs', name: 'absolutive', v: true,
         sg: [['a', 'a']], pl: [['ak', 'ak']], prox: [['ok', 'ok']]},
-    {id: 'erg', name: 'ergative', v: true,
+    {id: 'erg', name: 'ergative', v: ['sg', 'pl'],
         sg: [['ak', 'ak']], pl: [['ek', 'ek']], indef: [['k', 'ek']], prox: [['ok', 'ok']]},
-    {id: 'dat', name: 'dative', v: true,
+    {id: 'dat', name: 'dative',
         sg: [['ari', 'ari']], pl: [['ei', 'ei']], indef: [['ri', 'i']], prox: [['oi', 'oi']]},
-    {id: 'gen', name: 'genitive', v: true, stacker: true,
+    {id: 'gen', name: 'genitive', stacker: true,
         sg: [['aren', 'aren']], pl: [['en', 'en']], indef: [['ren', 'en']], prox: [['on', 'on']]},
     {id: 'com', name: 'comitative',
         sg: [['arekin', 'arekin']], pl: [['ekin', 'ekin']], indef: [['rekin', 'ekin']], prox: [['okin', 'okin']]},
@@ -156,7 +163,9 @@ function stemRules(vEnding, cEnding) {
         if (vEnding.startsWith('a')) {
             if (vEnding.length > 1) { rules.push({inflected: vEnding.slice(1), deinflected: '', stemEndsWith: A}); }
         } else {
-            rules.push({inflected: vEnding, deinflected: 'a', stemEndsWith: CONSONANT});
+            // A stem in -a loses it before an ending in e- or o- (alaba -
+            // alabek, txikoria - txikoriekin, plutokrazia - plutokrazioi).
+            rules.push({inflected: vEnding, deinflected: 'a'});
         }
     } else {
         rules.push({inflected: vEnding, deinflected: '', stemEndsWith: VOWEL});
@@ -185,19 +194,22 @@ function declension() {
                         groups.set(key, g);
                     }
                     g.readings.push([c, number]);
-                    if (c.v) { g.pos.add('v'); }
+                    // A participle takes the article and a few cases: ikusia
+                    // (seen), eginak, esanez (saying), ikusirik (having seen).
+                    if (c.v === true || (Array.isArray(c.v) && c.v.includes(number))) { g.pos.add('v'); }
                     if (c.adv) { g.pos.add('adv'); }
                 }
             }
         }
     }
-    // An -a stem rule that repeats a vowel-stem rule (alabari is both dative
-    // singular and indefinite) joins it.
+    // An -a stem rule that repeats a vowel-stem rule with the same parts of
+    // speech (alabari is both dative singular and indefinite) joins it.
     for (const [key, g] of groups) {
         if (g.stemEndsWith !== A) { continue; }
         const vowelKey = JSON.stringify([g.inflected, g.deinflected, VOWEL, g.conditionsIn]);
         const v = groups.get(vowelKey);
-        if (v !== undefined) {
+        const samePos = v !== undefined && v.pos.size === g.pos.size && [...g.pos].every((p) => v.pos.has(p));
+        if (samePos) {
             v.readings.push(...g.readings);
             for (const p of g.pos) { v.pos.add(p); }
             groups.delete(key);
@@ -243,11 +255,14 @@ function animate() {
         ['gana', 'allative (animate)', 'gizonarengana'],
         ['ganaino', 'terminative (animate)', 'gizonarenganaino'],
         ['ganantz', 'directive (animate)', 'gizonarenganantz'],
+        ['ganako', 'destinative (animate)', 'gizonarenganako, towards the man'],
     ];
     for (const [ending, name, example] of cases) {
         const id = `animate-${ending}`;
         transform(id, name, `Local case of a person or animal, attached to the genitive: -${ending} (${example}).`);
-        add(id, {type: 'suffix', inflected: ending, deinflected: '', conditionsIn: [], conditionsOut: ['sg'],
+        // -ganako is an adjective of its own and takes the article (gizonarenganakoa).
+        const conditionsIn = ending === 'ganako' ? ['sg', 'pl'] : [];
+        add(id, {type: 'suffix', inflected: ending, deinflected: '', conditionsIn, conditionsOut: ['sg'],
             stemMinLength: 2, stemEndsWith: '[n]'});
     }
 }
@@ -281,8 +296,9 @@ function degree() {
 // (gaurko, hortik), and -go and -dik after -n (hemengo, hemendik, oraindik).
 function adverbs() {
     transform('adverb-ki', 'adverb (-ki)', 'Adverb of manner made from an adjective with -ki: ederki (finely, well) from eder.');
+    // euskalki (a Basque dialect) is euskal + the noun suffix -ki, not an adverb.
     add('adverb-ki', {type: 'suffix', inflected: 'ki', deinflected: '', conditionsIn: [], conditionsOut: ['adj'], stemMinLength: 3,
-        stemEndsWith: '[abdeghilnorstuxz]'});
+        stemEndsWith: '[abdeghilnorstuxz]', stemNotStartsWithText: 'euskal'});
     transform('adverb-ko', 'locative genitive (-ko) of an adverb', 'Adverbs take -ko with no -e- after a consonant, and -go after -n: gaurko (today\'s), atzoko, hemengo, oraingo.');
     add('adverb-ko', {type: 'suffix', inflected: 'ko', deinflected: '', conditionsIn: ['sg', 'pl'], conditionsOut: ['adv', 'sg'], stemMinLength: 2,
         stemEndsWith: '[lrsxz]'});
@@ -323,6 +339,7 @@ const PARTICIPLE_STEMS = [
     ['tz', 'ri', '[r]'],
     ['st', 'si', null],
     ['st', 'tsi', null],
+    ['st', 'stu', null],
     ['zt', 'zi', null],
     ['zt', 'tzi', null],
     ['zt', 'ztu', null],
@@ -340,9 +357,32 @@ function nonFinite() {
         add('verbal-noun', {type: 'suffix', inflected: stem + 'e', deinflected: participle, conditionsIn: ['sg', 'pl'], conditionsOut: ['v'],
             stemMinLength: 1, ...constraint});
     }
-    transform('future', 'future participle', 'Future (prospective) participle, -ko, or -go after -n: ikusiko (will see), etorriko, egingo, joango. With an auxiliary it makes the future (ikusiko dut, I will see it).');
+    // The radical (short form) is the participle without -tu, -du or -i, as
+    // written before the subjunctive, potential and imperative auxiliaries
+    // (ikus dezagun, har ezazu, ezin naiz joan / ezin da jar).
+    transform('radical', 'radical (short form)', 'Radical of a verb, the participle without -tu, -du, -i or -ri, used before the subjunctive, potential and imperative auxiliaries: ikus (ikus dezagun, let us see), har ezazu (take it), jar, itzul, konpon, joka.');
+    add('radical', {type: 'suffix', inflected: '', deinflected: 'tu', conditionsIn: [], conditionsOut: ['v'], stemMinLength: 3, stemEndsWith: '[aeiou]'});
+    add('radical', {type: 'suffix', inflected: '', deinflected: 'tu', conditionsIn: [], conditionsOut: ['v'], stemMinLength: 3, stemEndsWith: '[rsz]'});
+    add('radical', {type: 'suffix', inflected: '', deinflected: 'du', conditionsIn: [], conditionsOut: ['v'], stemMinLength: 3, stemEndsWith: '[lnr]'});
+    add('radical', {type: 'suffix', inflected: '', deinflected: 'i', conditionsIn: [], conditionsOut: ['v'], stemMinLength: 3, stemEndsWith: '[lsxz]'});
+    add('radical', {type: 'suffix', inflected: '', deinflected: 'ri', conditionsIn: [], conditionsOut: ['v'], stemMinLength: 3, stemEndsWith: '[r]'});
+    add('radical', {type: 'suffix', inflected: '', deinflected: 'u', conditionsIn: [], conditionsOut: ['v'], stemMinLength: 5, stemEndsWith: '[t]'});
+    // The subjunctive, potential and imperative forms of the auxiliaries
+    // are built on the roots *edin and *ezan; dictionaries describe them
+    // under izan and *edun (ukan), and wiktionary-to-yomitan has only a stub
+    // for edin and no entry for ezan.
+    transform('auxiliary-root', 'auxiliary', 'The verb an auxiliary root belongs to: *edin is izan\'s (nadin, daiteke), *ezan is *edun\'s (dezan, dezake, ezazu).');
+    add('auxiliary-root', {type: 'wholeWord', inflected: 'edin', deinflected: 'izan', conditionsIn: ['v'], conditionsOut: ['v']});
+    add('auxiliary-root', {type: 'wholeWord', inflected: 'ezan', deinflected: 'edun', conditionsIn: ['v'], conditionsOut: ['v']});
+    transform('compound', 'compound verb', 'The first word of a compound verb cited with izan, written apart from its auxiliary: uste (uste izan, to think), nahi (nahi izan, to want), maite (maite izan, to love).');
+    for (const w of COMPOUND_VERBS) {
+        add('compound', {type: 'wholeWord', inflected: w, deinflected: `${w} izan`, conditionsIn: [], conditionsOut: ['v']});
+    }
+    transform('future', 'future participle', 'Future (prospective) participle, -ko, or -go after -n (-en after -n and -l in the east: eginen): ikusiko (will see), etorriko, egingo, joango. With an auxiliary it makes the future (ikusiko dut, I will see it).');
     add('future', {type: 'suffix', inflected: 'ko', deinflected: '', conditionsIn: [], conditionsOut: ['v'], stemMinLength: 2, stemEndsWith: '[aeioul]'});
     add('future', {type: 'suffix', inflected: 'go', deinflected: '', conditionsIn: [], conditionsOut: ['v'], stemMinLength: 2, stemEndsWith: '[n]'});
+    // Navarrese and Lapurdian, and Batua beside -go: -en after -n and -l (eginen, hilen).
+    add('future', {type: 'suffix', inflected: 'en', deinflected: '', conditionsIn: [], conditionsOut: ['v'], stemMinLength: 2, stemEndsWith: '[nl]'});
     transform('resultative', 'resultative participle (-ta, -da)', 'Participle of a state or a completed action, -ta, or -da after -n and -l: ikusita (having seen), nekatuta (tired), eginda (done), hilda (dead).');
     add('resultative', {type: 'suffix', inflected: 'ta', deinflected: '', conditionsIn: [], conditionsOut: ['v'], stemMinLength: 2, stemEndsWith: VOWEL});
     add('resultative', {type: 'suffix', inflected: 'da', deinflected: '', conditionsIn: [], conditionsOut: ['v'], stemMinLength: 2, stemEndsWith: '[ln]'});
@@ -403,11 +443,15 @@ function closedClasses() {
     for (const [id, name] of Object.entries(CLOSED_CASES)) {
         transform(`closed-${id}`, name, `The ${name} of a pronoun, demonstrative or interrogative, whose stem changes: nik (I), honek (this one), horretan (in that), zertan (in what).`);
     }
+    // Only the endings that are declined again (the genitive, -ko and -rako:
+    // nirea, horretakoa, zertarakoa) take a text a case rule left; the other
+    // oblique forms are read only as written (zerion is not zeri + -on).
+    const STACKING = new Set(['gen', 'loc', 'des']);
     const IN = ['sg', 'pl'];
     for (const [lemma, cases] of Object.entries(CLOSED)) {
         for (const [caseId, forms] of Object.entries(cases)) {
             for (const form of forms.split(' ')) {
-                add(`closed-${caseId}`, {type: 'wholeWord', inflected: form, deinflected: lemma, conditionsIn: IN, conditionsOut: []});
+                add(`closed-${caseId}`, {type: 'wholeWord', inflected: form, deinflected: lemma, conditionsIn: STACKING.has(caseId) ? IN : [], conditionsOut: []});
             }
         }
     }
@@ -459,7 +503,18 @@ const TENSES = {
 // Finite forms reach their verb from the text as written, from a form a
 // suffix or prefix rule left (fin), and from a form a case rule left (sg,
 // pl): zenean (when it was) - zen - izan.
-const FIN_IN = ['fin', 'sg', 'pl'];
+const FIN_IN = ['dep'];
+// What each tense's forms take: an imperative is never subordinated or
+// prefixed (so bezala, like, is not beza + -la); a hypothetical form takes
+// only a prefix (balitz, bailitzateke); a subjunctive only the relative or
+// complementizer (dadin, dezala); the others both, and a case rule's output
+// where the form ends in -n.
+function finiteIn(tense, form) {
+    if (tense === 'imp') { return []; }
+    if (tense === 'hyp') { return ['pfx']; }
+    if (tense === 'subj' || tense === 'subjpast') { return ['sub']; }
+    return form.endsWith('n') ? FIN_IN : ['fin'];
+}
 
 function personList(spec) {
     // "1s:naiz 2f:haiz,hintz" -> [['1s', ['naiz']], ['2f', ['haiz', 'hintz']]]
@@ -508,31 +563,60 @@ function paradigm(p) {
         const id = [cell.tense, cell.abs && `a${cell.abs}`, cell.dat && `d${cell.dat}`, cell.erg && `e${cell.erg}`].filter(Boolean).join('-');
         let entry = cellsById.get(id);
         if (entry === undefined) {
-            entry = {cell, examples: [], rules: []};
+            entry = {cell, rules: [], compound: []};
             cellsById.set(id, entry);
         }
         for (const form of cell.forms) {
-            entry.examples.push(`${form} (${p.lemmas.join(', ')})`);
+            // A case ending follows a finite form only through the relative
+            // -n, and a past form ends in it (zen, zuen: zenean, zirenak), so
+            // only forms in -n take a text a case rule left; biz (let it be)
+            // is not read in bizi (biz + -i).
+            const conditionsIn = finiteIn(cell.tense, form);
             for (const lemma of p.lemmas) {
-                entry.rules.push({type: 'wholeWord', inflected: form, deinflected: lemma, conditionsIn: FIN_IN, conditionsOut: ['v']});
+                entry.rules.push({type: 'wholeWord', inflected: form, deinflected: lemma, conditionsIn, conditionsOut: ['v']});
+            }
+            if (p.compound && COMPOUND_TENSES.has(cell.tense)) {
+                entry.compound.push(form);
             }
         }
     }
 }
 
 function finiteTransforms() {
-    for (const [id, {cell, examples, rules}] of cellsById) {
+    for (const [id, {cell, rules, compound}] of cellsById) {
         const roles = [];
-        const described = [];
-        if (cell.abs !== null) { roles.push(PERSON[cell.abs].abs); described.push(`nor (absolutive) ${PERSON[cell.abs].abs}`); }
-        if (cell.dat !== null) { roles.push(PERSON[cell.dat].dat); described.push(`nori (dative) ${PERSON[cell.dat].dat}`); }
-        if (cell.erg !== null) { roles.push(PERSON[cell.erg].erg); described.push(`nork (ergative) ${PERSON[cell.erg].erg}`); }
-        const [name, long] = TENSES[cell.tense];
-        const unique = examples.filter((x, i) => examples.indexOf(x) === i);
-        transform(id, `${name} (${roles.join(', ')})`, `${long}, ${described.join(', ')}: ${unique.join(', ')}.`);
+        if (cell.abs !== null) { roles.push(PERSON[cell.abs].abs); }
+        if (cell.dat !== null) { roles.push(PERSON[cell.dat].dat); }
+        if (cell.erg !== null) { roles.push(PERSON[cell.erg].erg); }
+        const [name] = TENSES[cell.tense];
+        // The name gives the tense and the persons by their pronouns in the
+        // case of their role (hura absolutive, niri dative, zuk ergative).
+        // These transforms have no description, so the file stays small
+        // (docs/languages.md section 3); the README explains the names.
+        transform(id, `${name} (${roles.join(', ')})`, undefined);
         for (const rule of rules) { add(id, rule); }
+        // Compound verbs cited with izan (uste izan, to think; nahi izan, to
+        // want; maite izan, to love) are written as their first word and
+        // the auxiliary: uste dut, nahi nuke, maite zaitut, bizi naiz. The
+        // first word is the prefix, the auxiliary the suffix, and nothing
+        // may come between them (an empty stem: [] has no members).
+        // The first word is any one word (stemCharacters), so a dictionary
+        // decides which compounds exist; gauza izan (to be able) is left out,
+        // since gauza da is more often "it is a thing".
+        for (const form of compound) {
+            add(id, {type: 'suffix', inflected: ' ' + form, deinflected: ' izan', conditionsIn: finiteIn(cell.tense, form),
+                conditionsOut: ['v'], stemMinLength: 2, stemCharacters: '[^ ]', stemNotStartsWithText: 'gauza'});
+        }
     }
 }
+
+// The first words of compound verbs cited with izan that dictionaries list
+// (wiktionary-to-yomitan has each as "<word> izan"), for the word written
+// apart from its auxiliary (ez dut uste). gauza izan and gisa izan are left
+// out: gauza da is more often "it is a thing".
+const COMPOUND_VERBS = ['uste', 'nahi', 'maite', 'bizi', 'beldur', 'ari', 'balio', 'gai', 'opa', 'presa'];
+// The tenses whose auxiliary forms also read as a compound verb's.
+const COMPOUND_TENSES = new Set(['present', 'past', 'cond', 'condpast', 'hyp', 'allo', 'allopast']);
 
 // Synthetic verbs: the verbs with finite forms of their own. They come before
 // the auxiliaries, so where a form is both (dakit: jakin "I know" and the
@@ -544,6 +628,8 @@ const SYNTHETIC = [
         imp: '2f:hago 2s:zaude 2p:zaudete 3s:bego 3p:beude',
         hyp: '1s:nengo 2f:hengo 3s:lego 1p:geunde 2s:zeunde 2p:zeundete 3p:leude',
         cond: '1s:nengoke 2f:hengoke 3s:legoke 1p:geundeke 2s:zeundeke 2p:zeundekete 3p:leudeke',
+        allo: '1s:nagok,nagon 3s:zagok,zagon 1p:gaudek 3p:zaudek',
+        allopast: '1s:nengoan,nengonan 3s:zegoan,zegonan 3p:zeudean,zeudenan',
     }},
     {key: 'egon-dat', lemmas: ['egon'], about: 'egon with a dative (to correspond, to belong to)', roles: 'nor-nori', tenses: {
         present: {'3s': '1s:dagokit 2f:dagokik 3s:dagokio 1p:dagokigu 2s:dagokizu 2p:dagokizue 3p:dagokie',
@@ -556,9 +642,11 @@ const SYNTHETIC = [
         past: '1s:nindoan 2f:hindoan 3s:zihoan 1p:gindoazen 2s:zindoazen 2p:zindoazten 3p:zihoazen',
         imp: '1p:goazen 2f:hoa 2s:zoaz 2p:zoazte 3s:bihoa 3p:bihoaz',
         hyp: '1s:nindoa 2f:hindoa 3s:lihoa 1p:gindoaz 2s:zindoaz 2p:zindoazte 3p:lihoaz',
+        allo: '1s:noak 3s:zoak',
     }},
     {key: 'joan-dat', lemmas: ['joan'], about: 'joan with a dative (to go to, to concern)', roles: 'nor-nori', tenses: {
-        present: {'3s': '1s:doakit 3s:doakio 1p:doakigu 2s:doakizu 3p:doakie', '3p': '1s:doazkit 3s:doazkio 2s:doazkizu 3p:doazkie'},
+        present: {'3s': '1s:doakit 3s:doakio 1p:doakigu 2s:doakizu 3p:doakie', '3p': '1s:doazkit 3s:doazkio 2s:doazkizu 3p:doazkie',
+            '1s': '3s:noakio 2s:noakizu 3p:noakie'},
     }},
     {key: 'etorri', lemmas: ['etorri'], about: 'etorri (to come)', roles: 'nor', tenses: {
         present: '1s:nator 2f:hator 3s:dator 1p:gatoz 2s:zatoz 2p:zatozte 3p:datoz',
@@ -576,6 +664,9 @@ const SYNTHETIC = [
         past: '1s:nenbilen 2f:henbilen 3s:zebilen 1p:genbiltzan 2s:zenbiltzan 2p:zenbiltzaten 3p:zebiltzan',
         imp: '2f:habil 2s:zabiltza 2p:zabiltzate 3s:bebil 3p:bebiltza',
     }},
+    {key: 'ibili-dat', lemmas: ['ibili'], about: 'ibili with a dative (to go around for, to happen to)', roles: 'nor-nori', tenses: {
+        present: {'3s': '1s:dabilkit 3s:dabilkio 1p:dabilkigu 2s:dabilkizu 2p:dabilkizue 3p:dabilkie'},
+    }},
     {key: 'etzan', lemmas: ['etzan'], about: 'etzan (to lie; datza, to consist in)', roles: 'nor', tenses: {
         present: '1s:natza 2f:hatza 3s:datza 1p:gautza 2s:zautza 2p:zautzate 3p:dautza',
         past: '1s:netzan 2f:hetzan 3s:zetzan',
@@ -588,6 +679,7 @@ const SYNTHETIC = [
         hyp: {'3s': '1s:neki 2f:heki 3s:leki 1p:geneki 2s:zeneki 2p:zenekite 3p:lekite'},
         cond: {'3s': '1s:nekike 3s:lekike 1p:genekike 2s:zenekike 3p:lekikete'},
         imp: {'3s': '2f:jakik 2s:jakizu 2p:jakizue 3s:beki 3p:bekite'},
+        allo: {'3s': '1s:zakiat,zakinat'},
     }},
     {key: 'eduki', lemmas: ['eduki'], about: 'eduki (to have, to hold)', roles: 'nor-nork', tenses: {
         present: {'3s': '1s:daukat 2f:daukak 3s:dauka 1p:daukagu 2s:daukazu 2p:daukazue 3p:daukate',
@@ -597,19 +689,55 @@ const SYNTHETIC = [
         hyp: {'3s': '1s:neuka 3s:leuka 1p:geneuka 2s:zeneuka 3p:leukate'},
         imp: {'3s': '3s:beuka 3p:beukate', '3p': '3s:beuzka 3p:beuzkate'},
     }},
+    {key: 'eduki-persons', lemmas: ['eduki'], about: 'eduki (to have, to hold) with a first or second person object', roles: 'nor-nork', tenses: {
+        present: {'1s': '2f:naukak 3s:nauka 2s:naukazu 2p:naukazue 3p:naukate',
+            '1p': '2f:gauzkak 3s:gauzka 2s:gauzkazu 2p:gauzkazue 3p:gauzkate',
+            '2s': '1s:zauzkat 3s:zauzka 1p:zauzkagu 3p:zauzkate',
+            '2p': '1s:zauzkatet 3s:zauzkate 1p:zauzkategu 3p:zauzkatete',
+            '2f': '1s:haukat 3s:hauka 1p:haukagu 3p:haukate'},
+    }},
     {key: 'ekarri', lemmas: ['ekarri'], about: 'ekarri (to bring)', roles: 'nor-nork', tenses: {
         present: {'3s': '1s:dakart 2f:dakark 3s:dakar 1p:dakargu 2s:dakarzu 2p:dakarzue 3p:dakarte',
             '3p': '1s:dakartzat 2f:dakartzak 3s:dakartza 1p:dakartzagu 2s:dakartzazu 2p:dakartzazue 3p:dakartzate'},
         past: {'3s': '1s:nekarren 2f:hekarren 3s:zekarren 1p:genekarren 2s:zenekarren 2p:zenekarten 3p:zekarten',
             '3p': '1s:nekartzan 2f:hekartzan 3s:zekartzan 1p:genekartzan 2s:zenekartzan 2p:zenekartzaten 3p:zekartzaten'},
-        imp: {'3s': '3s:bekar 3p:bekarte'},
+        imp: {'3s': '2f:ekark 2s:ekarzu 2p:ekarzue 3s:bekar 3p:bekarte', '3p': '2f:ekartzak 2s:ekartzazu 2p:ekartzazue',
+            '1s': '2s:nakarzu 2p:nakarzue'},
+    }},
+    {key: 'ekarri-persons', lemmas: ['ekarri'], about: 'ekarri (to bring) with a first or second person object', roles: 'nor-nork', tenses: {
+        present: {'1s': '2f:nakark 3s:nakar 2s:nakarzu 2p:nakarzue 3p:nakarte',
+            '1p': '2f:gakartzak 3s:gakartza 2s:gakartzazu 2p:gakartzazue 3p:gakartzate',
+            '2s': '1s:zakartzat 3s:zakartza 1p:zakartzagu 3p:zakartzate',
+            '2f': '1s:hakart 3s:hakar 1p:hakargu 3p:hakarte'},
+    }},
+    {key: 'ekarri-dat', lemmas: ['ekarri'], about: 'ekarri with a dative (to bring it to)', roles: 'nor-nori-nork', tenses: {
+        present: {'3s': {'3s': '1s:dakarkiot 3s:dakarkio 1p:dakarkiogu 2s:dakarkiozu 2p:dakarkiozue 3p:dakarkiote',
+            '1s': '3s:dakarkit 2s:dakarkidazu 2p:dakarkidazue 3p:dakarkidate', '2s': '1s:dakarkizut 3s:dakarkizu 1p:dakarkizugu 3p:dakarkizute',
+            '2p': '1s:dakarkizuet 3s:dakarkizue 1p:dakarkizuegu 3p:dakarkizuete', '1p': '3s:dakarkigu 2s:dakarkiguzu 3p:dakarkigute',
+            '3p': '1s:dakarkiet 3s:dakarkie 1p:dakarkiegu 2s:dakarkiezu 3p:dakarkiete'}},
+        imp: {'3s': {'3s': '2s:ekarriozu 2p:ekarriozue', '1s': '2f:ekardak 2s:ekardazu 2p:ekardazue', '1p': '2s:ekarguzu', '3p': '2s:ekarriezu'},
+            '3p': {'3s': '2s:ekarzkiozu', '1s': '2s:ekarzkidazu', '1p': '2s:ekarzkiguzu', '3p': '2s:ekarzkiezu'}},
+        past: {'3s': {'3s': '1s:nekarkion 3s:zekarkion 1p:genekarkion 2s:zenekarkion 3p:zekarkioten',
+            '1s': '3s:zekarkidan 3p:zekarkidaten', '2s': '1s:nekarkizun 3s:zekarkizun', '1p': '3s:zekarkigun', '3p': '3s:zekarkien'}},
     }},
     {key: 'eraman', lemmas: ['eraman'], about: 'eraman (to carry, to take; with a time, to have spent)', roles: 'nor-nork', tenses: {
         present: {'3s': '1s:daramat 2f:daramak 3s:darama 1p:daramagu 2s:daramazu 2p:daramazue 3p:daramate',
             '3p': '1s:daramatzat 2f:daramatzak 3s:daramatza 1p:daramatzagu 2s:daramatzazu 2p:daramatzazue 3p:daramatzate'},
         past: {'3s': '1s:neraman 2f:heraman 3s:zeraman 1p:generaman 2s:zeneraman 2p:zeneramaten 3p:zeramaten',
             '3p': '1s:neramatzan 2f:heramatzan 3s:zeramatzan 1p:generamatzan 2s:zeneramatzan 2p:zeneramatzaten 3p:zeramatzaten'},
-        imp: {'3s': '3s:berama 3p:beramate'},
+        imp: {'3s': '2f:eramak 2s:eramazu 2p:eramazue 3s:berama 3p:beramate', '3p': '2f:eramatzak 2s:eramatzazu 2p:eramatzazue',
+            '1s': '2f:naramak 2s:naramazu 2p:naramazue'},
+    }},
+    {key: 'eraman-persons', lemmas: ['eraman'], about: 'eraman (to carry, to take) with a first or second person object', roles: 'nor-nork', tenses: {
+        present: {'1s': '2f:naramak 3s:narama 2s:naramazu 2p:naramazue 3p:naramate',
+            '1p': '2f:garamatzak 3s:garamatza 2s:garamatzazu 2p:garamatzazue 3p:garamatzate',
+            '2s': '1s:zaramatzat 3s:zaramatza 1p:zaramatzagu 3p:zaramatzate',
+            '2f': '1s:haramat 3s:harama 1p:haramagu 3p:haramate'},
+    }},
+    {key: 'eraman-dat', lemmas: ['eraman'], about: 'eraman with a dative (to take it to)', roles: 'nor-nori-nork', tenses: {
+        present: {'3s': {'3s': '1s:daramakiot 3s:daramakio 1p:daramakiogu 2s:daramakiozu 2p:daramakiozue 3p:daramakiote',
+            '1s': '3s:daramakit 2s:daramakidazu 3p:daramakidate', '2s': '1s:daramakizut 3s:daramakizu 1p:daramakizugu 3p:daramakizute',
+            '1p': '3s:daramakigu 2s:daramakiguzu 3p:daramakigute', '3p': '1s:daramakiet 3s:daramakie 1p:daramakiegu 2s:daramakiezu 3p:daramakiete'}},
     }},
     {key: 'erabili', lemmas: ['erabili'], about: 'erabili (to use)', roles: 'nor-nork', tenses: {
         present: {'3s': '1s:darabilt 2f:darabilk 3s:darabil 1p:darabilgu 2s:darabilzu 2p:darabilzue 3p:darabilte',
@@ -619,9 +747,14 @@ const SYNTHETIC = [
     }},
     {key: 'esan', lemmas: ['esan'], about: 'esan (to say)', roles: 'nor-nork', tenses: {
         present: {'3s': '1s:diot 2f:diok 3s:dio 1p:diogu 2s:diozu 2p:diozue 3p:diote'},
+        imp: {'3s': '2f:esak 2s:esazu 2p:esazue'},
         past: {'3s': '1s:nioen 2f:hioen 3s:zioen 1p:genioen 2s:zenioen 2p:zenioten 3p:zioten'},
     }},
     {key: 'esan-dat', lemmas: ['esan'], about: 'esan with a dative (to say to, to tell)', roles: 'nor-nori-nork', tenses: {
+        present: {'3s': {'3s': '1s:diotsot 3s:diotso 1p:diotsogu 2s:diotsozu 2p:diotsozue 3p:diotsote',
+            '3p': '1s:diotset 3s:diotse 1p:diotsegu 2s:diotsezu 2p:diotsezue 3p:diotsete',
+            '2s': '1s:diotsut 3s:diotsu 1p:diotsugu 3p:diotsute', '2p': '1s:diotsuet 3s:diotsue 1p:diotsuegu 3p:diotsuete',
+            '1p': '3s:diosku 2s:dioskuzu 3p:dioskute'}},
         imp: {'3s': {'3s': '2f:esaiok 2s:esaiozu 2p:esaiozue', '1s': '2f:esadak 2s:esadazu 2p:esadazue',
             '1p': '2f:esaguk 2s:esaguzu 2p:esaguzue', '3p': '2f:esaiek 2s:esaiezu 2p:esaiezue'}},
     }},
@@ -633,7 +766,7 @@ const SYNTHETIC = [
         imp: {'3s': '2f:egik 2s:egizu 2p:egizue'},
     }},
     {key: 'egin-dat', lemmas: ['egin'], about: 'egin with a dative (to do for, to do to)', roles: 'nor-nori-nork', tenses: {
-        imp: {'3s': {'3s': '2s:egiozu 2p:egiozue', '1s': '2s:egidazu 2p:egidazue', '1p': '2s:egiguzu', '3p': '2s:egiezu'}},
+        imp: {'3s': {'3s': '2s:egiozu 2p:egiozue', '1s': '2f:egidak 2s:egidazu 2p:egidazue', '1p': '2s:egiguzu', '3p': '2s:egiezu'}},
     }},
     {key: 'iruditu', lemmas: ['iruditu'], about: 'iruditu (to seem, to look like)', roles: 'nork', tenses: {
         present: '1s:dirudit 2f:dirudik 3s:dirudi 1p:dirudigu 2s:dirudizu 2p:dirudizue 3p:dirudite',
@@ -648,12 +781,29 @@ const SYNTHETIC = [
         past: '1s:nihardun 3s:zihardun 1p:genihardun 2s:zenihardun 3p:ziharduten',
     }},
     {key: 'iritzi', lemmas: ['iritzi'], about: 'iritzi (to consider, to think of), with the thing thought of in the dative', roles: 'nor-nori-nork', tenses: {
-        present: {'3s': {'3s': '1s:deritzot 2f:deritzok 3s:deritzo 1p:deritzogu 2s:deritzozu 2p:deritzozue 3p:deritzote'}},
+        present: {'3s': {'3s': '1s:deritzot,deritzat 2f:deritzok 3s:deritzo,deritza 1p:deritzogu,deritzagu 2s:deritzozu 2p:deritzozue 3p:deritzote',
+            '3p': '1s:deritzet 3s:deritze 1p:deritzegu 2s:deritzezu 3p:deritzete'}},
         past: {'3s': {'3s': '1s:neritzon 3s:zeritzon 1p:generitzon 2s:zeneritzon 3p:zeritzoten'}},
+    }},
+    {key: 'jario', lemmas: ['jario'], about: 'jario (to flow, to drip from), with the source in the dative', roles: 'nor-nori', tenses: {
+        present: {'3s': '1s:darit 3s:dario 1p:darigu 2s:darizu 2p:darizue 3p:darie'},
+        past: {'3s': '1s:zeridan 3s:zerion 3p:zerien'},
+    }},
+    {key: 'egin-present', lemmas: ['egin'], about: 'egin (to do), its literary synthetic present', roles: 'nor-nork', tenses: {
+        present: {'3s': '1s:dagit 2f:dagik 3s:dagi 1p:dagigu 2s:dagizu 2p:dagizue 3p:dagite'},
     }},
     {key: 'ikusi', lemmas: ['ikusi'], about: 'ikusi (to see), its literary synthetic forms', roles: 'nor-nork', tenses: {
         present: {'3s': '1s:dakusat 2f:dakusak 3s:dakusa 1p:dakusagu 2s:dakusazu 2p:dakusazue 3p:dakusate'},
         past: {'3s': '1s:nekusan 2f:hekusan 3s:zekusan 1p:genekusan 2s:zenekusan 2p:zenekusaten 3p:zekusaten'},
+    }},
+    {key: 'entzun-imp', lemmas: ['entzun'], about: 'entzun (to listen)', roles: 'nor-nork', tenses: {
+        imp: {'3s': '2s:entzuzu 2p:entzuzue'},
+    }},
+    {key: 'entzun-dat', lemmas: ['entzun'], about: 'entzun with a dative (to listen to)', roles: 'nor-nori-nork', tenses: {
+        imp: {'3s': {'1s': '2f:entzudak 2s:entzudazu 2p:entzudazue'}},
+    }},
+    {key: 'eutsi-dat', lemmas: ['eutsi'], about: 'eutsi with a dative (to hold on to)', roles: 'nor-nori-nork', tenses: {
+        imp: {'3s': {'3s': '2f:eutsiok 2s:eutsiozu 2p:eutsiozue'}},
     }},
     {key: 'entzun', lemmas: ['entzun'], about: 'entzun (to hear), its literary synthetic forms', roles: 'nor-nork', tenses: {
         present: {'3s': '1s:dantzut 2f:dantzuk 3s:dantzu 1p:dantzugu 2s:dantzuzu 2p:dantzuzue 3p:dantzute'},
@@ -669,9 +819,11 @@ const SYNTHETIC = [
 // A few familiar (hi) forms that are also common words are left out: hau
 // (this) as "he has you", zain (waiting) as "it is to you (f.)", and the
 // feminine dion, didan and digun, which are also the -n forms of dio, dit
-// and digu.
+// and digu. det, dezu, degu and dezue (dut, duzu, dugu, duzue) and genduen,
+// zenduen and zenduten (genuen, zenuen, zenuten) are Gipuzkoan forms that
+// older literature writes (Txomin Agirre's Garoa).
 const AUXILIARIES = [
-    {key: 'izan', lemmas: ['izan'], about: 'izan (to be), the intransitive auxiliary', roles: 'nor', tenses: {
+    {key: 'izan', lemmas: ['izan'], compound: true, about: 'izan (to be), the intransitive auxiliary', roles: 'nor', tenses: {
         present: '1s:naiz 2f:haiz 3s:da 1p:gara 2s:zara 2p:zarete 3p:dira',
         past: '1s:nintzen 2f:hintzen 3s:zen 1p:ginen 2s:zinen 2p:zineten 3p:ziren',
         cond: '1s:nintzateke 2f:hintzateke 3s:litzateke 1p:ginateke 2s:zinateke 2p:zinatekete 3p:lirateke',
@@ -679,10 +831,14 @@ const AUXILIARIES = [
         hyp: '1s:nintz 2f:hintz 3s:litz,bailitzan 1p:gina 2s:zina 2p:zinete 3p:lira',
         pot: '1s:naizateke 2f:haizateke 3s:dateke 1p:garateke 2s:zarateke 2p:zaratekete 3p:dirateke',
         imp: '3s:biz 3p:bira',
+    }},
+    // The familiar forms of izan are built on the root of *edun (duk, zuan),
+    // and UniMorph lists them under edun, so they reach both.
+    {key: 'izan-allo', lemmas: ['izan', 'edun'], about: 'izan (to be) in familiar speech to a friend', roles: 'nor', tenses: {
         allo: '1s:nauk,naun 3s:duk,dun 1p:gaituk,gaitun 3p:dituk,ditun',
         allopast: '1s:ninduan,nindunan 3s:zuan,zunan 1p:gintuan,gintunan 3p:zituan,zitunan',
     }},
-    {key: 'edin', lemmas: ['edin', 'izan'], about: '*edin, the root of the intransitive auxiliary\'s subjunctive, potential and imperative', roles: 'nor', tenses: {
+    {key: 'edin', lemmas: ['edin'], about: '*edin, the root of the intransitive auxiliary\'s subjunctive, potential and imperative', roles: 'nor', tenses: {
         pot: '1s:naiteke 2f:haiteke 3s:daiteke 1p:gaitezke 2s:zaitezke 2p:zaitezkete 3p:daitezke',
         pothyp: '1s:ninteke 2f:hinteke 3s:liteke 1p:gintezke 2s:zintezke 2p:zintezkete 3p:litezke',
         potpast: '1s:nintekeen 2f:hintekeen 3s:zitekeen 1p:gintezkeen 2s:zintezkeen 2p:zintezketen 3p:zitezkeen',
@@ -691,11 +847,11 @@ const AUXILIARIES = [
         hyp: '1s:nendi 2f:hendi 3s:ledi 1p:gintez 2s:zintez 2p:zintezte 3p:litez',
         imp: '2f:hadi 2s:zaitez 2p:zaitezte 3s:bedi 3p:bitez',
     }},
-    {key: 'ukan', lemmas: ['edun'], about: '*edun (ukan), the transitive auxiliary and "to have"', roles: 'nor-nork', tenses: {
+    {key: 'ukan', lemmas: ['edun'], compound: true, about: '*edun (ukan), the transitive auxiliary and "to have"', roles: 'nor-nork', tenses: {
         present: {
             '1s': '2f:nauk,naun 3s:nau 2s:nauzu 2p:nauzue 3p:naute',
             '2f': '1s:haut 1p:haugu 3p:haute',
-            '3s': '1s:dut 2f:duk,dun 3s:du 1p:dugu 2s:duzu 2p:duzue 3p:dute',
+            '3s': '1s:dut,det 2f:duk,dun 3s:du 1p:dugu,degu 2s:duzu,dezu 2p:duzue,dezue 3p:dute',
             '1p': '2f:gaituk,gaitun 3s:gaitu 2s:gaituzu 2p:gaituzue 3p:gaituzte',
             '2s': '1s:zaitut 3s:zaitu 1p:zaitugu 3p:zaituzte',
             '2p': '1s:zaituztet 3s:zaituzte 1p:zaituztegu 3p:zaituztete',
@@ -704,7 +860,7 @@ const AUXILIARIES = [
         past: {
             '1s': '2f:ninduan,nindunan 3s:ninduen 2s:ninduzun 2p:ninduzuen 3p:ninduten',
             '2f': '1s:hindudan 3s:hinduen 1p:hindugun 3p:hinduten',
-            '3s': '1s:nuen 2f:huen 3s:zuen 1p:genuen 2s:zenuen 2p:zenuten 3p:zuten',
+            '3s': '1s:nuen 2f:huen 3s:zuen 1p:genuen,genduen 2s:zenuen,zenduen 2p:zenuten,zenduten 3p:zuten',
             '1p': '2f:gintuan,gintunan 3s:gintuen 2s:gintuzun 2p:gintuzuen 3p:gintuzten',
             '2s': '1s:zintudan 3s:zintuen 1p:zintugun 3p:zintuzten',
             '2p': '1s:zintuztedan 3s:zintuzten 1p:zintuztegun 3p:zintuzteten',
@@ -732,9 +888,11 @@ const AUXILIARIES = [
             '2s': '1s:zintut 3s:zintu 1p:zintugu 3p:zintuzte',
             '3p': '1s:nitu 2f:hitu 3s:litu 1p:genitu 2s:zenitu 2p:zenituzte 3p:lituzte',
         },
-        allo: {'3s': '1s:diat,dinat 3s:dik,din 1p:diagu,dinagu 3p:ditek,diten'},
+        pot: {'3s': '1s:duket 2f:dukek 3s:duke 1p:dukegu 2s:dukezu 2p:dukezue 3p:dukete',
+            '3p': '1s:dituket 3s:dituke 1p:ditukegu 2s:ditukezu 3p:ditukete'},
+        allo: {'3s': '1s:diat,dinat 3s:dik,din 1p:diagu,dinagu 3p:ditek,diten', '3p': '1s:ditiat,ditinat 3s:ditik,ditin 1p:ditiagu,ditinagu 3p:ditiztek,ditizten'},
     }},
-    {key: 'ezan', lemmas: ['ezan', 'edun'], about: '*ezan, the root of the transitive auxiliary\'s subjunctive, potential and imperative', roles: 'nor-nork', tenses: {
+    {key: 'ezan', lemmas: ['ezan'], about: '*ezan, the root of the transitive auxiliary\'s subjunctive, potential and imperative', roles: 'nor-nork', tenses: {
         pot: {
             '1s': '2f:nazakek 3s:nazake 2s:nazakezu 2p:nazakezue 3p:nazakete',
             '2f': '1s:hazaket 3s:hazake 1p:hazakegu 3p:hazakete',
@@ -786,11 +944,24 @@ const AUXILIARIES = [
             '3p': '1s:nitza 3s:litza 1p:genitza 2s:zenitza 2p:zenitzate 3p:litzate',
         },
         imp: {
-            '1s': '2f:nazak 2s:nazazu 2p:nazazue',
-            '3s': '2f:ezak 2s:ezazu 2p:ezazue 3s:beza 3p:bezate',
-            '1p': '2f:gaitzak 2s:gaitzazu 2p:gaitzazue',
-            '3p': '2f:itzak 2s:itzazu 2p:itzazue 3s:bitza 3p:bitzate',
+            '1s': '2f:nazak,nazan 2s:nazazu 2p:nazazue',
+            '3s': '2f:ezak,ezan 2s:ezazu 2p:ezazue 3s:beza 3p:bezate',
+            '1p': '2f:gaitzak,gaitzan 2s:gaitzazu 2p:gaitzazue',
+            '3p': '2f:itzak,itzan 2s:itzazu 2p:itzazue 3s:bitza 3p:bitzate',
         },
+    }},
+    {key: 'ukan-allo', lemmas: ['edun'], about: '*edun (ukan) in familiar speech to a friend', roles: 'nor-nork', tenses: {
+        allopast: {'3s': '1s:nian,ninan 3s:zian,zinan 1p:genian,geninan 3p:ziaten,zinaten',
+            '3p': '1s:nitian,nitinan 3s:zitian,zitinan 1p:genitian,genitinan 3p:zitiztean,zitiztenan'},
+    }},
+    // The feminine forms that are also a common past or relative form (zidan,
+    // zion, zaidan, zaion) are left out, so those keep their usual reading.
+    {key: 'ukan-dat-allo', lemmas: ['edun'], about: '*edun with a dative in familiar speech to a friend', roles: 'nor-nori-nork', tenses: {
+        allo: {'3s': {'1s': '3s:zidak 3p:zidatek', '3s': '1s:zioat,zionat 3s:ziok 1p:zioagu,zionagu 3p:ziotek',
+            '1p': '3s:ziguk 3p:zigutek', '3p': '1s:zieat,zienat 3s:ziek 1p:zieagu,zienagu 3p:zietek'}},
+    }},
+    {key: 'izan-dat-allo', lemmas: ['izan'], about: 'izan with a dative in familiar speech to a friend', roles: 'nor-nori', tenses: {
+        allo: {'3s': '1s:zaidak 3s:zaiok 1p:zaiguk 3p:zaiek', '3p': '1s:zaizkidak 3s:zaizkiok 3p:zaizkiek'},
     }},
     {key: 'izan-dat', lemmas: ['izan'], about: 'izan with a dative (nor-nori: it is to me, it happens to me)', roles: 'nor-nori', tenses: {
         present: {
@@ -817,7 +988,7 @@ const AUXILIARIES = [
             '3p': '1s:litzaizkit 3s:litzaizkio 1p:litzaizkigu 2s:litzaizkizu 3p:litzaizkie',
         },
     }},
-    {key: 'edin-dat', lemmas: ['edin', 'izan'], about: '*edin with a dative (nor-nori), the subjunctive and potential of izan with a dative', roles: 'nor-nori', tenses: {
+    {key: 'edin-dat', lemmas: ['edin'], about: '*edin with a dative (nor-nori), the subjunctive and potential of izan with a dative', roles: 'nor-nori', tenses: {
         pot: {
             '3s': '1s:dakidake 3s:dakioke 1p:dakiguke 2s:dakizuke 2p:dakizueke 3p:dakieke',
             '3p': '1s:dakizkidake 3s:dakizkioke 1p:dakizkiguke 2s:dakizkizuke 2p:dakizkizueke 3p:dakizkieke',
@@ -834,7 +1005,7 @@ const AUXILIARIES = [
 
 // nor-nori-nork: the absolutive is hura (3s) or haiek (3p, with -zki-).
 AUXILIARIES.push(
-    {key: 'ukan-dat', lemmas: ['edun'], about: '*edun (ukan) with a dative (nor-nori-nork: I give it to you, he tells me)', roles: 'nor-nori-nork', tenses: {
+    {key: 'ukan-dat', lemmas: ['edun'], compound: true, about: '*edun (ukan) with a dative (nor-nori-nork: I give it to you, he tells me)', roles: 'nor-nori-nork', tenses: {
         present: {
             '3s': {
                 '1s': '2f:didak 3s:dit 2s:didazu 2p:didazue 3p:didate',
@@ -900,7 +1071,7 @@ AUXILIARIES.push(
             },
         },
     }},
-    {key: 'ezan-dat', lemmas: ['ezan', 'edun'], about: '*ezan with a dative (nor-nori-nork), the subjunctive, potential and imperative of *edun with a dative', roles: 'nor-nori-nork', tenses: {
+    {key: 'ezan-dat', lemmas: ['ezan'], about: '*ezan with a dative (nor-nori-nork), the subjunctive, potential and imperative of *edun with a dative', roles: 'nor-nori-nork', tenses: {
         pot: {
             '3s': {
                 '1s': '2f:diezadakek 3s:diezadake 2s:diezadakezu 2p:diezadakezue 3p:diezadakete',
@@ -990,15 +1161,15 @@ AUXILIARIES.push(
 function subordination() {
     const IN = ['sg', 'pl'];
     transform('relative', '-n (relative, subjunctive)', 'Relative or subordinate -(e)n on a finite verb: den (that is), duen (that has), dudan, nagoen, datorren; also the subjunctive (nadin, dezan) and indirect questions.');
-    const rel = (rule) => add('relative', {type: 'suffix', conditionsIn: IN, conditionsOut: ['fin'], ...rule});
+    const rel = (rule) => add('relative', {type: 'suffix', conditionsIn: IN, conditionsOut: ['sub'], ...rule});
     rel({inflected: 'en', deinflected: '', stemMinLength: 2});
     rel({inflected: 'n', deinflected: '', stemMinLength: 2, stemEndsWith: VOWEL});
     rel({inflected: 'en', deinflected: 'a', stemMinLength: 2});
     rel({inflected: 'dan', deinflected: 't', stemMinLength: 1});
     rel({inflected: 'rren', deinflected: 'r', stemMinLength: 2});
-    add('relative', {type: 'wholeWord', inflected: 'den', deinflected: 'da', conditionsIn: ['sg'], conditionsOut: ['fin']});
+    add('relative', {type: 'wholeWord', inflected: 'den', deinflected: 'da', conditionsIn: ['sg'], conditionsOut: ['sub']});
     transform('complementizer', '-(e)la (that)', 'Complementizer -(e)la on a finite verb: dela (that it is), duela, dudala, naizela, zela (that it was); with -ko, because (delako), and -rik, while (delarik).');
-    const comp = (rule) => add('complementizer', {type: 'suffix', conditionsIn: IN, conditionsOut: ['fin'], ...rule});
+    const comp = (rule) => add('complementizer', {type: 'suffix', conditionsIn: IN, conditionsOut: ['sub'], ...rule});
     comp({inflected: 'la', deinflected: '', stemMinLength: 2, stemEndsWith: VOWEL});
     comp({inflected: 'ela', deinflected: '', stemMinLength: 2});
     comp({inflected: 'ela', deinflected: 'a', stemMinLength: 1});
@@ -1013,14 +1184,29 @@ function subordination() {
 // (not) joins the verb the same way (ezta, isn't it; ezpada, if not).
 function prefixes() {
     transform('ba', 'ba- (if; affirmative)', 'ba- on a finite verb: the condition of a hypothesis (bada, if it is; balitz, if it were) or an affirmative stress (badakit, I do know).');
-    add('ba', {type: 'prefix', inflected: 'ba', deinflected: '', conditionsIn: ['fin'], conditionsOut: ['fin'], stemMinLength: 2, stemStartsWith: '[dglnhz]'});
+    add('ba', {type: 'prefix', inflected: 'ba', deinflected: '', conditionsIn: ['fin'], conditionsOut: ['pfx'], stemMinLength: 2, stemStartsWith: '[dglnhz]'});
     transform('bait', 'bait- (because, since)', 'bait- on a finite verb: because, since (baita, since it is; baitu, bainaiz, baikara, baitzen).');
     for (const [inflected, deinflected, starts] of [['bait', 'd', VOWEL], ['bait', '', '[z]'], ['bain', 'n', VOWEL], ['baik', 'g', VOWEL], ['bail', 'l', VOWEL]]) {
-        add('bait', {type: 'prefix', inflected, deinflected, conditionsIn: ['fin'], conditionsOut: ['fin'], stemMinLength: 1, stemStartsWith: starts});
+        add('bait', {type: 'prefix', inflected, deinflected, conditionsIn: ['fin'], conditionsOut: ['pfx'], stemMinLength: 1, stemStartsWith: starts});
     }
+    // Familiar speech to a friend (hika) marks the listener on the verb: -k
+    // to a man (gaitezkek, nintekek, noakiok), and for a third-person form
+    // z- for d- as well (dago - zagok, dabiltza - zabiltzak); the past
+    // takes -an for -en (nekien - nekian, zegoen - zegoan). Western and
+    // older writing has -an for -en in the same forms without the familiar
+    // meaning (zan, zuan, zegoan for zen, zuen, zegoen), so that rule names
+    // both. The forms -n (to a woman) adds are those of the relative.
+    transform('familiar', 'familiar (hika, to a man)', 'Familiar speech to a male friend: -k on the verb (gaitezkek, noakiok), with z- for d- (zagok, zabiltzak).');
+    // Only forms whose absolutive or ergative is not the listener take it: a
+    // first person (n-, g-) or a hypothetical third person (l-).
+    add('familiar', {type: 'suffix', inflected: 'k', deinflected: '', conditionsIn: [], conditionsOut: ['pfx'], stemMinLength: 3, stemStartsWith: '[gln]'});
+    add('familiar', {type: 'circumfix', inflectedPrefix: 'z', deinflectedPrefix: 'd', inflectedSuffix: 'k', deinflectedSuffix: '', conditionsIn: [],
+        conditionsOut: ['pfx'], stemMinLength: 2, stemStartsWith: VOWEL});
+    transform('past-an', '-an for -en (familiar or western past)', 'A past form with -an for -en: familiar speech to a man (nekian, zegoan) and western and older writing (zan, zuan, zegoan for zen, zuen, zegoen).');
+    add('past-an', {type: 'suffix', inflected: 'an', deinflected: 'en', conditionsIn: ['fin'], conditionsOut: ['pfx'], stemMinLength: 1, stemStartsWith: '[ghlnz]'});
     transform('ez', 'ez- (not) joined to the verb', 'ez (not) written with the verb, as in speech: ezta (= ez da, isn\'t it), ezpada (= ez bada, if not), ezkara (= ez gara).');
-    for (const [inflected, deinflected] of [['ezt', 'd'], ['ezp', 'b'], ['ezk', 'g']]) {
-        add('ez', {type: 'prefix', inflected, deinflected, conditionsIn: [], conditionsOut: ['fin'], stemMinLength: 1, stemStartsWith: VOWEL});
+    for (const [inflected, deinflected] of [['ezt', 'd'], ['ezp', 'b'], ['ezk', 'g'], ['etz', 'z']]) {
+        add('ez', {type: 'prefix', inflected, deinflected, conditionsIn: [], conditionsOut: ['pfx'], stemMinLength: 1, stemStartsWith: VOWEL});
     }
 }
 
