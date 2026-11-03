@@ -376,13 +376,13 @@ given, it is labelled "without the field".
      wty-pt-en imported and paged). Hachidori's prebuilt runtimes on
      feat/multi-language 803f7b6e are built from hoshidicts b145feb, which
      refuses `untaggedTerms`, so the three runtimes were rebuilt with
-     Emscripten 6.0.9 from that checkout's `wasm/` and this pack on #58's
-     engine (32812c9), as `wasm/build.sh` does at `--parallel 8`:
-     - `hdw_language_load`: median 12.6 ms single-thread and 14.1 ms
-       threaded over 10 fresh engines; live heap +1,876,440 and +1,876,520
+     Emscripten 6.0.9 from that checkout's `wasm/` and this branch (main with
+     #58 and this pack), as `wasm/build.sh` does at `--parallel 8`:
+     - `hdw_language_load`: median 12.5 ms single-thread and 14.3 ms
+       threaded over 10 fresh engines; live heap +1,898,504 and +1,898,744
        bytes. The budgets are 50 ms and 20 MB;
-     - `hdw_lookup`: p50 0.088 ms and p95 0.185 ms single-thread, p50 0.094
-       ms and p95 0.186 ms threaded; 123 results in a pass, as natively.
+     - `hdw_lookup`: p50 0.092 ms and p95 0.193 ms single-thread, p50 0.103
+       ms and p95 0.198 ms threaded; 123 results in a pass, as natively.
      - Without the field, on the prebuilt b145feb runtimes: load 12.8 and
        13.6 ms, heap +1,874,136 and +1,874,448 bytes, `hdw_lookup` p50
        0.082 and 0.092 ms, p95 0.159 and 0.175 ms, 103 results.
@@ -417,10 +417,10 @@ Checks:
   `tests/classes.json` and run through the conformance test: all 53 fail
   it.
 - Hachidori (`test/chrome-language-pack.mjs` in Chrome 152, feat/multi-language
-  803f7b6e with this pack in `third_party/hoshidicts` on #58's engine and the
-  runtimes rebuilt from it, wty-pt-en): 16 / 16 checks pass. Settings adds
-  Portuguese beside Japanese and imports the dictionary (572,340 terms, 1.1
-  s); twelve hovered words find their lemma first, traced by the pack's
+  803f7b6e with this branch in `third_party/hoshidicts` and the runtimes
+  rebuilt from it, wty-pt-en): 16 / 16 checks pass. Settings adds Portuguese
+  beside Japanese and imports the dictionary (572,340 terms, 1.0 s); twelve
+  hovered words find their lemma first, traced by the pack's
   transforms (`falava` → falar `imperfect (eu/ele)`, `pôs` → pôr `preterite
   (ele)`, `leões` → leão `plural`, `soubesse` → saber `imperfect subjunctive
   (eu/ele)`, `lembrava-se` → lembrar); the Anki note and the switch to
