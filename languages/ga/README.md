@@ -181,7 +181,8 @@ Yomitan rule.
 
 ## Measurements
 
-hoshidicts at 0a73e5e (GCC 14.3, Release), wty-ga-en 2026.10.22 as published
+hoshidicts at 0a73e5e (GCC 14.3, Release; main 7c854db adds only the ko and zh
+packs), wty-ga-en 2026.10.22 as published
 (form-of rows included), imported by `hoshidicts-cli import`. The pack has
 one optional processor, `addMissingFada` (the `missingFada` setting), so each
 number is given with every option on and with the defaults.
