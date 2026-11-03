@@ -1258,7 +1258,10 @@ for (const [inflected, deinflected, out, min] of [
 // found before any ending, reaches the reading they nearly always have
 // first; the other stays second (soli: solo, then sole). The words were
 // judged by hand among those whose first lemma's citation form is at least
-// 10 times rarer than another lemma their rows name (README, Measurements).
+// 10 times rarer than another lemma their rows name, and among the 306 of
+// the top 10,000 whose first result changes when the verb slots come first
+// (README, Measurements): the verbs below are the ones whose bare form is
+// nearly always the verb (serve, credi, continua, ami, scherzi).
 const PREFERRED = [
     ['plural', NOMINAL, [
         ['soli', 'solo'], ['armi', 'arma'], ['conti', 'conto'], ['regali', 'regalo'], ['messi', 'messo'], ['calci', 'calcio'],
@@ -1266,13 +1269,26 @@ const PREFERRED = [
         ['stronzate', 'stronzata'], ['cazzate', 'cazzata'], ['discorsi', 'discorso'], ['armati', 'armato'],
         ['alleati', 'alleato'], ['privati', 'privato'], ['arrabbiati', 'arrabbiato'], ['sbagliati', 'sbagliato'],
         ['innamorati', 'innamorato'], ['bloccati', 'bloccato'], ['fregati', 'fregato'], ['collegati', 'collegato'],
+        ['vari', 'vario'], ['saluti', 'saluto'],
     ]],
     ['feminine-plural', ['adj'], [
         ['vere', 'vero'], ['private', 'privato'], ['armate', 'armato'], ['complicate', 'complicato'], ['sbagliate', 'sbagliato'],
     ]],
     ['present-io', ['v'], [['domando', 'domandare']]],
-    ['present-tu', ['v'], [['torni', 'tornare'], ['spegni', 'spegnere']]],
-    ['present-lui', ['v'], [['pare', 'parere'], ['accade', 'accadere'], ['indovina', 'indovinare'], ['supera', 'superare'], ['vende', 'vendere']]],
+    ['present-tu', ['v'], [
+        ['torni', 'tornare'], ['spegni', 'spegnere'], ['credi', 'credere'], ['ami', 'amare'], ['ascolti', 'ascoltare'],
+        ['cerchi', 'cercare'], ['scherzi', 'scherzare'], ['manchi', 'mancare'], ['fidi', 'fidare'], ['menti', 'mentire'],
+        ['paghi', 'pagare'], ['perdoni', 'perdonare'], ['tocchi', 'toccare'], ['dimentichi', 'dimenticare'], ['osi', 'osare'],
+        ['accetti', 'accettare'], ['compri', 'comprare'], ['accompagni', 'accompagnare'], ['vendi', 'vendere'],
+        ['puzzi', 'puzzare'], ['figuri', 'figurare'], ['temi', 'temere'], ['presti', 'prestare'], ['fumi', 'fumare'],
+        ['sali', 'salire'], ['aspetti', 'aspettare'],
+    ]],
+    ['present-lui', ['v'], [
+        ['pare', 'parere'], ['accade', 'accadere'], ['indovina', 'indovinare'], ['supera', 'superare'], ['vende', 'vendere'],
+        ['serve', 'servire'], ['continua', 'continuare'], ['vive', 'vivere'], ['usa', 'usare'], ['merita', 'meritare'],
+        ['dimentica', 'dimenticare'], ['compra', 'comprare'], ['riporta', 'riportare'], ['incontra', 'incontrare'],
+        ['teme', 'temere'], ['osa', 'osare'], ['bacia', 'baciare'], ['cola', 'colare'], ['accosta', 'accostare'],
+    ]],
     ['subjunctive-sg', ['v'], [['accada', 'accadere'], ['riposi', 'riposare']]],
     // comperò and comperai, the past historic of comperare, an older
     // spelling of comprare that wty-it-en gives only as a form-of row: read

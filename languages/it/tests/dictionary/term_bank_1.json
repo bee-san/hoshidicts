@@ -66,5 +66,9 @@
   ["il", "", "artic", "", 0, ["the"], 65, ""],
   ["I", "", "char", "", 0, ["the letter I"], 66, ""],
   ["i", "", "non-lemma", "", 0, [["I", ["lowercase"]]], 67, ""],
-  ["i", "", "non-lemma", "", 0, [["il", ["plural masculine"]]], 68, ""]
+  ["i", "", "non-lemma", "", 0, [["il", ["plural masculine"]]], 68, ""],
+  ["credere", "", "v", "", 0, ["to believe"], 69, ""],
+  ["credo", "", "n masc", "", 0, ["creed"], 70, ""],
+  ["credi", "", "non-lemma", "", 0, [["credere", ["second-person singular present indicative"]]], 71, ""],
+  ["credi", "", "non-lemma", "", 0, [["credo", ["plural"]]], 72, ""]
 ]
