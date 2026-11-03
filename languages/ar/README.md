@@ -238,7 +238,7 @@ compatible part of speech.
 
 ## Measurements
 
-All numbers use hoshidicts at this branch's head on main 1fed676 (GCC 14.3,
+All numbers use hoshidicts at this branch's head (on main 1fed676, rebased onto 90022a8 with no change to the engine; GCC 14.3,
 Release) and wty-ar-en as published, form-of rows included. The scripts are
 in `sources/`, run from the repository root.
 
@@ -375,7 +375,7 @@ in `sources/`, run from the repository root.
      356, text.tsv 34 / 34, lookup.tsv 39 / 39; gaps.tsv 0 / 116 (reported).
    - `tests/classes.json` agrees with the engine (4 classes, 564 fields, 2
      steps).
-   - `tools/check-yomitan.mjs`: 10,172 inputs, 154,906 Yomitan results, 0
+   - `tools/check-yomitan.mjs`: 10,199 inputs, 155,132 Yomitan results, 0
      unexplained. The processors `normalizeUnicode`,
      `removeArabicScriptDiacritics`, `removeTatweel` and
      `convertAlifMaqsuraToYaa` agree; `addHamzaTop` and `addHamzaBottom` are
