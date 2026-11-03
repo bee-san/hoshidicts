@@ -1,0 +1,719 @@
+# Source: written for this pack (GPL-3.0-or-later), no third-party data. Expected traces are this pack's transform ids, newest first; * is any trace.
+# The pack has no optional processor or transform, so these rows run the same with every option on and with the defaults.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+present	1	parle	parler	v	present-1s-3s
+present	1	parles	parler	v	present-2s
+present	1	parlons	parler	v	present-1p
+present	1	parlez	parler	v	present-2p
+present	1	parlent	parler	v	present-3p
+present	1	finis	finir	v	present-1s-2s
+present	1	finit	finir	v	present-3s
+present	1	finissons	finir	v	present-1p
+present	1	finissent	finir	v	present-3p
+imperfect	1	parlais	parler	v	imperfect-1s-2s
+imperfect	1	parlait	parler	v	imperfect-3s
+imperfect	1	parlions	parler	v	imperfect-1p
+imperfect	1	parliez	parler	v	imperfect-2p
+imperfect	1	parlaient	parler	v	imperfect-3p
+imperfect	1	finissait	finir	v	imperfect-3s
+simple past	1	parlai	parler	v	simple-past-1s
+simple past	1	parlas	parler	v	simple-past-2s
+simple past	1	parla	parler	v	simple-past-3s
+simple past	1	parlâmes	parler	v	simple-past-1p
+simple past	1	parlâtes	parler	v	simple-past-2p
+simple past	1	parlèrent	parler	v	simple-past-3p
+simple past	1	finîmes	finir	v	simple-past-1p
+simple past	1	vinrent	venir	v	simple-past-3p
+simple past	1	prit	prendre	v	simple-past-3s
+simple past	1	fut	être	v	simple-past-3s
+future	1	parlerai	parler	v	future-1s
+future	1	parleras	parler	v	future-2s
+future	1	parlera	parler	v	future-3s
+future	1	parlerons	parler	v	future-1p
+future	1	parlerez	parler	v	future-2p
+future	1	parleront	parler	v	future-3p
+conditional	1	parlerais	parler	v	conditional-1s-2s
+conditional	1	parlerait	parler	v	conditional-3s
+conditional	1	parlerions	parler	v	conditional-1p
+conditional	1	parleriez	parler	v	conditional-2p
+conditional	1	parleraient	parler	v	conditional-3p
+subjunctive	1	finisse	finir	v	*
+subjunctive	1	finisses	finir	v	*
+subjunctive	1	vienne	venir	v	subjunctive-1s-3s
+subjunctive	1	viennes	venir	v	subjunctive-2s
+subjunctive	1	venions	venir	v	*
+subjunctive	1	veniez	venir	v	*
+subjunctive	1	viennent	venir	v	*
+subjunctive	1	aie	avoir	v	subjunctive-1s
+subjunctive	1	aies	avoir	v	subjunctive-2s
+subjunctive	1	ait	avoir	v	subjunctive-3s
+subjunctive	1	sois	être	v	subjunctive-1s-2s
+subjunctive	1	soit	être	v	subjunctive-3s
+subjunctive	1	fasse	faire	v	subjunctive-1s-3s
+subjunctive	1	puisse	pouvoir	v	subjunctive-1s-3s
+subjunctive	1	sache	savoir	v	subjunctive-1s-3s
+subjunctive	1	veuille	vouloir	v	subjunctive-1s-3s
+subjunctive	1	aille	aller	v	subjunctive-1s-3s
+subjunctive	1	faille	falloir	v	subjunctive-3s
+imperfect subjunctive	1	parlasse	parler	v	imperfect-subjunctive-1s
+imperfect subjunctive	1	parlasses	parler	v	imperfect-subjunctive-2s
+imperfect subjunctive	1	parlât	parler	v	imperfect-subjunctive-3s
+imperfect subjunctive	1	parlassions	parler	v	imperfect-subjunctive-1p
+imperfect subjunctive	1	parlassiez	parler	v	imperfect-subjunctive-2p
+imperfect subjunctive	1	parlassent	parler	v	imperfect-subjunctive-3p
+imperfect subjunctive	1	fût	être	v	imperfect-subjunctive-3s
+imperfect subjunctive	1	eût	avoir	v	imperfect-subjunctive-3s
+imperfect subjunctive	1	vînt	venir	v	imperfect-subjunctive-3s
+imperative	1	parle	parler	v	*
+imperative	1	sois	être	v	*
+imperative	1	soyons	être	v	*
+imperative	1	soyez	être	v	*
+imperative	1	ayez	avoir	v	*
+imperative	1	sachez	savoir	v	*
+imperative	1	veuillez	vouloir	v	*
+imperative	1	dites	dire	v	*
+imperative	1	faites	faire	v	*
+participles	1	parlant	parler	v	present-participle
+participles	1	finissant	finir	v	present-participle
+participles	1	ayant	avoir	v	present-participle
+participles	1	étant	être	v	present-participle
+participles	1	sachant	savoir	v	present-participle
+participles	1	parlé	parler	v	past-participle
+participles	1	parlée	parler	v	past-participle-f
+participles	1	parlés	parler	v	*
+participles	1	parlées	parler	v	*
+participles	1	fini	finir	v	past-participle
+participles	1	finie	finir	v	past-participle-f
+participles	1	pris	prendre	v	*
+participles	1	prise	prendre	v	past-participle-f
+participles	1	prises	prendre	v	past-participle-fp
+participles	1	été	être	v	past-participle
+participles	1	eue	avoir	v	past-participle-f
+participles	1	dû	devoir	v	past-participle
+participles	1	due	devoir	v	past-participle-f
+participles	1	mort	mourir	v	past-participle
+participles	1	morte	mourir	v	past-participle-f
+participles	1	né	naître	v	past-participle
+participles	1	née	naître	v	past-participle-f
+participles	1	assis	asseoir	v	*
+participles	1	ouvert	ouvrir	v	past-participle
+participles	1	offerte	offrir	v	past-participle-f
+participles	1	souffert	souffrir	v	past-participle
+participles	1	découverts	découvrir	v	past-participle-mp
+participles	1	créée	créer	v	past-participle-f
+participles	1	créées	créer	v	past-participle-fp
+être	1	suis	être	v	present-1s
+être	1	es	être	v	present-2s
+être	1	est	être	v	present-3s
+être	1	sommes	être	v	present-1p
+être	1	êtes	être	v	present-2p
+être	1	sont	être	v	present-3p
+être	1	étais	être	v	imperfect-1s-2s
+être	1	étaient	être	v	imperfect-3p
+être	1	serai	être	v	future-1s
+être	1	seraient	être	v	conditional-3p
+avoir	1	ai	avoir	v	present-1s
+avoir	1	as	avoir	v	present-2s
+avoir	1	a	avoir	v	present-3s
+avoir	1	avons	avoir	v	present-1p
+avoir	1	ont	avoir	v	present-3p
+avoir	1	avait	avoir	v	imperfect-3s
+avoir	1	eut	avoir	v	simple-past-3s
+avoir	1	aura	avoir	v	future-3s
+avoir	1	aurait	avoir	v	conditional-3s
+avoir	1	eussent	avoir	v	imperfect-subjunctive-3p
+aller	1	vais	aller	v	present-1s
+aller	1	vas	aller	v	present-2s
+aller	1	va	aller	v	present-3s
+aller	1	allons	aller	v	*
+aller	1	vont	aller	v	present-3p
+aller	1	irai	aller	v	future-1s
+aller	1	irait	aller	v	conditional-3s
+aller	1	allé	aller	v	past-participle
+aller	1	allée	aller	v	past-participle-f
+faire	1	fais	faire	v	present-1s-2s
+faire	1	fait	faire	v	*
+faire	1	faisons	faire	v	present-1p
+faire	1	faites	faire	v	*
+faire	1	font	faire	v	present-3p
+faire	1	ferai	faire	v	future-1s
+faire	1	faisant	faire	v	present-participle
+faire	1	satisfait	satisfaire	v	*
+faire	1	défaites	défaire	v	*
+dire	1	dis	dire	v	*
+dire	1	dit	dire	v	*
+dire	1	disons	dire	v	present-1p
+dire	1	disent	dire	v	*
+dire	1	dira	dire	v	future-3s
+dire	1	interdisez	interdire	v	*
+dire	1	redites	redire	v	*
+venir	1	viens	venir	v	present-1s-2s
+venir	1	vient	venir	v	present-3s
+venir	1	venons	venir	v	present-1p
+venir	1	viendrai	venir	v	future-1s
+venir	1	venu	venir	v	past-participle
+venir	1	venue	venir	v	past-participle-f
+venir	1	devient	devenir	v	present-3s
+venir	1	souviens	souvenir	v	*
+venir	1	tiens	tenir	v	*
+venir	1	obtient	obtenir	v	present-3s
+venir	1	retiendra	retenir	v	future-3s
+prendre	1	prends	prendre	v	present-1s-2s
+prendre	1	prend	prendre	v	present-3s
+prendre	1	prenons	prendre	v	present-1p
+prendre	1	prennent	prendre	v	*
+prendre	1	prendra	prendre	v	future-3s
+prendre	1	prenne	prendre	v	subjunctive-1s-3s
+prendre	1	comprend	comprendre	v	present-3s
+prendre	1	apprenons	apprendre	v	present-1p
+prendre	1	surprise	surprendre	v	past-participle-f
+mettre	1	mets	mettre	v	*
+mettre	1	met	mettre	v	present-3s
+mettre	1	mettons	mettre	v	present-1p
+mettre	1	mit	mettre	v	simple-past-3s
+mettre	1	mise	mettre	v	past-participle-f
+mettre	1	permet	permettre	v	present-3s
+mettre	1	promis	promettre	v	*
+voir	1	vois	voir	v	*
+voir	1	voit	voir	v	present-3s
+voir	1	voyons	voir	v	*
+voir	1	voient	voir	v	*
+voir	1	vit	voir	v	simple-past-3s
+voir	1	verra	voir	v	future-3s
+voir	1	vu	voir	v	past-participle
+voir	1	vue	voir	v	past-participle-f
+voir	1	revoit	revoir	v	present-3s
+voir	1	prévoira	prévoir	v	future-3s
+voir	1	pourvut	pourvoir	v	simple-past-3s
+pouvoir	1	peux	pouvoir	v	present-1s-2s
+pouvoir	1	peut	pouvoir	v	present-3s
+pouvoir	1	pouvons	pouvoir	v	present-1p
+pouvoir	1	peuvent	pouvoir	v	present-3p
+pouvoir	1	puis	pouvoir	v	present-1s
+pouvoir	1	pourra	pouvoir	v	future-3s
+pouvoir	1	pu	pouvoir	v	past-participle
+vouloir	1	veux	vouloir	v	*
+vouloir	1	veut	vouloir	v	present-3s
+vouloir	1	veulent	vouloir	v	present-3p
+vouloir	1	voudrait	vouloir	v	conditional-3s
+vouloir	1	voulu	vouloir	v	past-participle
+savoir	1	sais	savoir	v	*
+savoir	1	sait	savoir	v	present-3s
+savoir	1	savent	savoir	v	present-3p
+savoir	1	saura	savoir	v	future-3s
+savoir	1	su	savoir	v	past-participle
+devoir	1	dois	devoir	v	*
+devoir	1	doit	devoir	v	present-3s
+devoir	1	doivent	devoir	v	*
+devoir	1	devra	devoir	v	future-3s
+croire	1	crois	croire	v	*
+croire	1	croit	croire	v	present-3s
+croire	1	croyons	croire	v	*
+croire	1	croient	croire	v	*
+croire	1	crut	croire	v	simple-past-3s
+croire	1	cru	croire	v	past-participle
+boire	1	bois	boire	v	*
+boire	1	buvons	boire	v	*
+boire	1	boivent	boire	v	*
+boire	1	but	boire	v	simple-past-3s
+boire	1	bu	boire	v	past-participle
+connaître	1	connais	connaître	v	*
+connaître	1	connaît	connaître	v	present-3s
+connaître	1	connait	connaître	v	present-3s
+connaître	1	connaissons	connaître	v	*
+connaître	1	connut	connaître	v	simple-past-3s
+connaître	1	connaîtra	connaître	v	future-3s
+connaître	1	connaitra	connaître	v	future-3s
+connaître	1	connu	connaître	v	past-participle
+connaître	1	reconnaît	reconnaître	v	present-3s
+connaître	1	paraît	paraître	v	present-3s
+connaître	1	parait	paraître	v	present-3s
+connaître	1	disparu	disparaître	v	past-participle
+connaître	1	naquit	naître	v	simple-past-3s
+connaître	1	croît	croître	v	present-3s
+connaître	1	accru	accroître	v	past-participle
+connaître	1	décrut	décroître	v	simple-past-3s
+third group	1	vis	vivre	v	*
+third group	1	vécut	vivre	v	simple-past-3s
+third group	1	vécu	vivre	v	past-participle
+third group	1	survit	survivre	v	present-3s
+third group	1	lis	lire	v	*
+third group	1	lisons	lire	v	*
+third group	1	lut	lire	v	simple-past-3s
+third group	1	lu	lire	v	past-participle
+third group	1	relu	relire	v	past-participle
+third group	1	élu	élire	v	past-participle
+third group	1	écris	écrire	v	*
+third group	1	écrivons	écrire	v	*
+third group	1	écrivit	écrire	v	simple-past-3s
+third group	1	écrit	écrire	v	*
+third group	1	décrit	décrire	v	*
+third group	1	inscrite	inscrire	v	past-participle-f
+third group	1	pars	partir	v	*
+third group	1	part	partir	v	present-3s
+third group	1	partons	partir	v	*
+third group	1	partira	partir	v	future-3s
+third group	1	partie	partir	v	*
+third group	1	sors	sortir	v	*
+third group	1	dort	dormir	v	present-3s
+third group	1	endort	endormir	v	present-3s
+third group	1	sert	servir	v	present-3s
+third group	1	sent	sentir	v	present-3s
+third group	1	ressent	ressentir	v	present-3s
+third group	1	ment	mentir	v	present-3s
+third group	1	ouvre	ouvrir	v	*
+third group	1	ouvrons	ouvrir	v	*
+third group	1	ouvrit	ouvrir	v	simple-past-3s
+third group	1	offre	offrir	v	*
+third group	1	cueille	cueillir	v	*
+third group	1	cueillera	cueillir	v	future-3s
+third group	1	accueille	accueillir	v	*
+third group	1	assaille	assaillir	v	*
+third group	1	cours	courir	v	*
+third group	1	court	courir	v	present-3s
+third group	1	courra	courir	v	future-3s
+third group	1	parcourt	parcourir	v	present-3s
+third group	1	meurt	mourir	v	present-3s
+third group	1	meurent	mourir	v	*
+third group	1	mourut	mourir	v	simple-past-3s
+third group	1	mourra	mourir	v	future-3s
+third group	1	fuit	fuir	v	*
+third group	1	fuyons	fuir	v	*
+third group	1	fuient	fuir	v	*
+third group	1	reçois	recevoir	v	*
+third group	1	reçoit	recevoir	v	present-3s
+third group	1	reçoivent	recevoir	v	*
+third group	1	reçut	recevoir	v	simple-past-3s
+third group	1	recevra	recevoir	v	future-3s
+third group	1	reçu	recevoir	v	past-participle
+third group	1	aperçoit	apercevoir	v	present-3s
+third group	1	déçue	décevoir	v	past-participle-f
+third group	1	vaut	valoir	v	present-3s
+third group	1	vaudra	valoir	v	future-3s
+third group	1	vaille	valoir	v	*
+third group	1	faut	falloir	v	present-3s
+third group	1	fallait	falloir	v	imperfect-3s
+third group	1	faudra	falloir	v	future-3s
+third group	1	fallu	falloir	v	past-participle
+third group	1	pleut	pleuvoir	v	present-3s
+third group	1	pleuvait	pleuvoir	v	imperfect-3s
+third group	1	assieds	asseoir	v	*
+third group	1	assied	asseoir	v	present-3s
+third group	1	asseyons	asseoir	v	*
+third group	1	assoit	asseoir	v	present-3s
+third group	1	assiéra	asseoir	v	future-3s
+third group	1	crains	craindre	v	*
+third group	1	craint	craindre	v	*
+third group	1	craignons	craindre	v	*
+third group	1	craignait	craindre	v	imperfect-3s
+third group	1	plaint	plaindre	v	*
+third group	1	peint	peindre	v	*
+third group	1	éteint	éteindre	v	*
+third group	1	joint	joindre	v	*
+third group	1	rejoignons	rejoindre	v	*
+third group	1	oint	oindre	v	*
+third group	1	conduit	conduire	v	*
+third group	1	conduisons	conduire	v	*
+third group	1	construit	construire	v	*
+third group	1	détruite	détruire	v	past-participle-f
+third group	1	produisait	produire	v	imperfect-3s
+third group	1	traduira	traduire	v	future-3s
+third group	1	nui	nuire	v	past-participle
+third group	1	rends	rendre	v	*
+third group	1	rend	rendre	v	present-3s
+third group	1	rendons	rendre	v	*
+third group	1	rendu	rendre	v	past-participle
+third group	1	attend	attendre	v	present-3s
+third group	1	vendue	vendre	v	past-participle-f
+third group	1	perdu	perdre	v	past-participle
+third group	1	répond	répondre	v	present-3s
+third group	1	répand	répandre	v	present-3s
+third group	1	mordu	mordre	v	past-participle
+third group	1	bat	battre	v	present-3s
+third group	1	battu	battre	v	past-participle
+third group	1	combat	combattre	v	present-3s
+third group	1	rompt	rompre	v	present-3s
+third group	1	interrompu	interrompre	v	past-participle
+third group	1	vainc	vaincre	v	present-3s
+third group	1	vainquons	vaincre	v	*
+third group	1	convaincu	convaincre	v	past-participle
+third group	1	plaît	plaire	v	present-3s
+third group	1	plait	plaire	v	present-3s
+third group	1	plut	plaire	v	*
+third group	1	tais	taire	v	*
+third group	1	tait	taire	v	present-3s
+third group	1	suit	suivre	v	present-3s
+third group	1	suivons	suivre	v	*
+third group	1	suivi	suivre	v	past-participle
+third group	1	poursuit	poursuivre	v	present-3s
+third group	1	ris	rire	v	*
+third group	1	rions	rire	v	*
+third group	1	sourit	sourire	v	*
+third group	1	conclut	conclure	v	*
+third group	1	exclu	exclure	v	past-participle
+third group	1	incluse	inclure	v	past-participle-f
+third group	1	résout	résoudre	v	present-3s
+third group	1	résolvons	résoudre	v	*
+third group	1	résolu	résoudre	v	past-participle
+third group	1	dissous	dissoudre	v	*
+third group	1	absoute	absoudre	v	past-participle-f
+third group	1	cousons	coudre	v	*
+third group	1	cousu	coudre	v	past-participle
+third group	1	moulu	moudre	v	past-participle
+third group	1	suffit	suffire	v	*
+third group	1	suffisait	suffire	v	imperfect-3s
+third group	1	confit	confire	v	*
+third group	1	acquiert	acquérir	v	present-3s
+third group	1	acquièrent	acquérir	v	*
+third group	1	acquis	acquérir	v	*
+third group	1	conquise	conquérir	v	past-participle-f
+third group	1	vêt	vêtir	v	present-3s
+third group	1	revêtu	revêtir	v	past-participle
+third group	1	bout	bouillir	v	present-3s
+third group	1	bouillait	bouillir	v	imperfect-3s
+third group	1	hais	haïr	v	*
+third group	1	hait	haïr	v	present-3s
+third group	1	haïssons	haïr	v	*
+third group	1	haï	haïr	v	past-participle
+third group	1	meut	mouvoir	v	present-3s
+third group	1	ému	émouvoir	v	past-participle
+third group	1	émue	émouvoir	v	past-participle-f
+third group	1	promus	promouvoir	v	*
+third group	1	extrait	extraire	v	*
+third group	1	distrait	distraire	v	*
+third group	1	trayons	traire	v	*
+third group	1	maudit	maudire	v	*
+third group	1	maudissons	maudire	v	*
+third group	1	sursoit	surseoir	v	present-3s
+third group	1	clos	clore	v	*
+third group	1	éclose	éclore	v	past-participle-f
+third group	1	frit	frire	v	*
+third group	1	déchu	déchoir	v	past-participle
+third group	1	échéant	échoir	v	present-participle
+third group	1	fous	foutre	v	*
+third group	1	foutu	foutre	v	past-participle
+third group	1	paît	paître	v	present-3s
+third group	1	repaît	repaître	v	present-3s
+spelling	1	commençons	commencer	v	*
+spelling	1	plaçait	placer	v	imperfect-3s
+spelling	1	reçûmes	recevoir	v	simple-past-1p
+spelling	1	mangeons	manger	v	*
+spelling	1	nageait	nager	v	imperfect-3s
+spelling	1	lève	lever	v	*
+spelling	1	lèvera	lever	v	future-3s
+spelling	1	lèveraient	lever	v	conditional-3p
+spelling	1	achète	acheter	v	*
+spelling	1	achèterons	acheter	v	future-1p
+spelling	1	mène	mener	v	*
+spelling	1	pèse	peser	v	*
+spelling	1	cède	céder	v	*
+spelling	1	cédera	céder	v	future-3s
+spelling	1	cèdera	céder	v	future-3s
+spelling	1	espère	espérer	v	*
+spelling	1	préfères	préférer	v	*
+spelling	1	répète	répéter	v	*
+spelling	1	célèbre	célébrer	v	*
+spelling	1	sèche	sécher	v	*
+spelling	1	règle	régler	v	*
+spelling	1	protège	protéger	v	*
+spelling	1	protégeons	protéger	v	*
+spelling	1	dépèce	dépecer	v	*
+spelling	1	dépeçons	dépecer	v	*
+spelling	1	appelle	appeler	v	*
+spelling	1	appellera	appeler	v	future-3s
+spelling	1	appelons	appeler	v	*
+spelling	1	jette	jeter	v	*
+spelling	1	jetterai	jeter	v	future-1s
+spelling	1	rejette	rejeter	v	*
+spelling	1	étincelle	étinceler	v	*
+spelling	1	étincèle	étinceler	v	*
+spelling	1	gèle	geler	v	*
+spelling	1	emploie	employer	v	*
+spelling	1	nettoie	nettoyer	v	*
+spelling	1	nettoierai	nettoyer	v	future-1s
+spelling	1	essuie	essuyer	v	*
+spelling	1	paie	payer	v	*
+spelling	1	paye	payer	v	*
+spelling	1	paierai	payer	v	future-1s
+spelling	1	envoie	envoyer	v	*
+spelling	1	enverra	envoyer	v	future-3s
+spelling	1	renverrait	renvoyer	v	conditional-3s
+spelling	1	crée	créer	v	*
+spelling	1	criions	crier	v	*
+spelling	1	ramasse	ramasser	v	*
+spelling	1	tracasses	tracasser	v	*
+spelling	1	ramassions	ramasser	v	*
+imperative pronouns	1	donne-moi	donner	v	imperative-2s|imperative-pronoun
+imperative pronouns	1	dis-le-lui	dire	v	imperative-2s|imperative-pronoun
+imperative pronouns	1	rends-la	rendre	v	*
+imperative pronouns	1	allons-y	aller	v	*
+imperative pronouns	1	vas-y	aller	v	imperative-2s|imperative-pronoun
+imperative pronouns	1	prends-en	prendre	v	*
+imperative pronouns	1	parles-en	parler	v	imperative-2s|imperative-pronoun
+imperative pronouns	1	donne-m'en	donner	v	*
+imperative pronouns	1	donnez-nous	donner	v	imperative-2p|hyphen-nous-vous
+imperative pronouns	1	asseyez-vous	asseoir	v	*
+imperative pronouns	1	rendez-les-leur	rendre	v	*
+reflexive imperative	1	lève-toi	se lever	v	imperative-2s|reflexive-imperative
+reflexive imperative	1	assieds-toi	s'asseoir	v	imperative-2s|reflexive-imperative
+reflexive imperative	1	tais-toi	se taire	v	*
+reflexive imperative	1	souviens-toi	se souvenir	v	*
+reflexive imperative	1	habille-toi	s'habiller	v	*
+reflexive imperative	1	va-t'en	s'en aller	v	imperative-2s|reflexive-imperative
+reflexive imperative	1	va-t’en	s'en aller	v	*
+reflexive imperative	1	allons-nous-en	s'en aller	v	*
+reflexive imperative	1	allez-vous-en	s'en aller	v	*
+inverted subject	1	parle-t-il	parler	v	present-1s-3s|inverted-subject
+inverted subject	1	a-t-il	avoir	v	present-3s|inverted-subject
+inverted subject	1	va-t-elle	aller	v	*
+inverted subject	1	dit-il	dire	v	*
+inverted subject	1	dit-on	dire	v	*
+inverted subject	1	est-ce	être	v	present-3s|inverted-subject
+inverted subject	1	suis-je	être	v	present-1s|inverted-subject
+inverted subject	1	puis-je	pouvoir	v	present-1s|inverted-subject
+inverted subject	1	sais-tu	savoir	v	*
+inverted subject	1	pouvez-vous	pouvoir	v	present-2p|hyphen-nous-vous
+inverted subject	1	sommes-nous	être	v	*
+inverted subject	1	viendra-t-on	venir	v	*
+inverted subject	1	sont-ils	être	v	*
+inverted subject	1	ont-elles	avoir	v	*
+inverted subject	1	répondit-elle	répondre	v	*
+pronominal	1	me lève	se lever	v	pronominal|present-1s-3s
+pronominal	1	te lèves	se lever	v	pronominal|present-2s
+pronominal	1	se lève	se lever	v	present-1s-3s
+pronominal	1	m'appelle	s'appeler	v	pronominal|present-1s-3s
+pronominal	1	t'appelles	s'appeler	v	pronominal|present-2s
+pronominal	1	s'appelle	s'appeler	v	present-1s-3s
+pronominal	1	me souviens	se souvenir	v	pronominal|present-1s-2s
+pronominal	1	te souviendras	se souvenir	v	*
+pronominal	1	m'en vais	s'en aller	v	pronominal|present-1s
+pronominal	1	t'en vas	s'en aller	v	pronominal|present-2s
+pronominal	1	s'en va	s'en aller	v	present-3s
+pronominal	1	me tais	se taire	v	*
+pronominal	1	me lever	se lever	v	pronominal
+pronominal	1	m'asseoir	s'asseoir	v	pronominal
+pronominal	1	me sentais	se sentir	v	*
+pronominal	1	m'habillerai	s'habiller	v	*
+pronominal	1	te dépêches	se dépêcher	v	*
+pronominal	1	m'ennuyais	s'ennuyer	v	*
+elision	1	l'homme	homme	*	elision
+elision	1	l’homme	homme	*	elision
+elision	1	l'école	école	*	elision
+elision	1	d'eau	eau	*	elision
+elision	1	d'autres	autre	*	plural|elision
+elision	1	j'ai	avoir	v	present-1s|elision
+elision	1	j’ai	avoir	v	present-1s|elision
+elision	1	j'aime	aimer	v	*
+elision	1	qu'il	il	*	elision
+elision	1	n'est	être	v	present-3s|elision
+elision	1	c'est	être	v	present-3s|elision
+elision	1	c'était	être	v	imperfect-3s|elision
+elision	1	s'est	être	v	present-3s|elision
+elision	1	t'aime	aimer	v	*
+elision	1	m'aime	aimer	v	*
+elision	1	l'aime	aimer	v	*
+elision	1	s'élève	élever	v	*
+elision	1	s'amusant	amuser	v	present-participle|elision
+elision	1	jusqu'ici	ici	*	elision
+elision	1	lorsqu'il	il	*	elision
+elision	1	puisqu'elle	elle	*	elision
+elision	1	quoiqu'il	il	*	elision
+elision	1	presqu'île	île	*	elision
+elision	1	ç'a	avoir	v	*
+elided form	1	l	l'	*	elided-form
+elided form	1	l	le	*	elided-form
+elided form	1	l	la	*	elided-form
+elided form	1	d	d'	*	elided-form
+elided form	1	d	de	*	elided-form
+elided form	1	j	je	*	elided-form
+elided form	1	qu	que	*	elided-form
+elided form	1	jusqu	jusque	*	elided-form
+elided form	1	s	si	*	elided-form
+elided form	1	n	ne	*	elided-form
+elided form	1	c	ce	*	elided-form
+elided form	1	m	me	*	elided-form
+elided form	1	t	te	*	elided-form
+elided form	1	lorsqu	lorsque	*	elided-form
+elided form	1	ç	ça	*	elided-form
+demonstrative	1	jour-là	jour	n	demonstrative
+demonstrative	1	fois-ci	fois	n	demonstrative
+nouns	1	livres	livre	n	plural
+nouns	1	chevaux	cheval	n	plural
+nouns	1	journaux	journal	n	plural
+nouns	1	travaux	travail	n	plural
+nouns	1	jeux	jeu	n	plural
+nouns	1	bijoux	bijou	n	plural
+nouns	1	eaux	eau	n	plural
+nouns	1	bateaux	bateau	n	plural
+nouns	1	tuyaux	tuyau	n	plural
+nouns	1	yeux	œil	n	plural
+nouns	1	cieux	ciel	n	plural
+nouns	1	aïeux	aïeul	n	plural
+nouns	1	messieurs	monsieur	n	plural
+nouns	1	mesdames	madame	n	plural
+nouns	1	mesdemoiselles	mademoiselle	n	plural
+nouns	1	messeigneurs	monseigneur	n	plural
+nouns	1	bonshommes	bonhomme	n	plural
+nouns	1	gentilshommes	gentilhomme	n	plural
+nouns	1	élèves	élève	n	plural
+nouns	1	armées	armée	n	plural
+nouns	1	boutons	bouton	n	plural
+nouns	1	trompettes	trompette	n	plural
+nouns	1	chapelles	chapelle	n	plural
+nouns	1	joies	joie	n	plural
+nouns	1	baies	baie	n	plural
+nouns	1	pluies	pluie	n	plural
+nouns	1	nations	nation	n	plural
+nouns	1	partis	parti	n	plural
+nouns	1	revenus	revenu	n	plural
+nouns	1	cafés	café	n	plural
+nouns	1	après-midis	après-midi	n	plural
+feminine nouns	1	joueuse	joueur	n	feminine-noun
+feminine nouns	1	actrice	acteur	n	feminine-noun
+feminine nouns	1	pécheresse	pécheur	n	feminine-noun
+feminine nouns	1	jardinière	jardinier	n	feminine-noun
+feminine nouns	1	musicienne	musicien	n	feminine-noun
+feminine nouns	1	veuve	veuf	n	feminine-noun
+feminine nouns	1	joueuses	joueur	n	feminine-noun|plural
+adjectives	1	grande	grand	adj	feminine
+adjectives	1	grandes	grand	adj	feminine|plural
+adjectives	1	grands	grand	adj	plural
+adjectives	1	première	premier	adj	feminine
+adjectives	1	complète	complet	adj	feminine
+adjectives	1	muette	muet	adj	feminine
+adjectives	1	cruelle	cruel	adj	feminine
+adjectives	1	pareille	pareil	adj	feminine
+adjectives	1	ancienne	ancien	adj	feminine
+adjectives	1	bonne	bon	adj	feminine
+adjectives	1	paysanne	paysan	adj	feminine
+adjectives	1	nulle	nul	adj	*
+adjectives	1	gentille	gentil	adj	feminine
+adjectives	1	grosse	gros	adj	feminine
+adjectives	1	active	actif	adj	feminine
+adjectives	1	brève	bref	adj	feminine
+adjectives	1	heureuse	heureux	adj	feminine
+adjectives	1	trompeuse	trompeur	adj	feminine
+adjectives	1	jalouse	jaloux	adj	feminine
+adjectives	1	andalouse	andalou	adj	feminine
+adjectives	1	créatrice	créateur	adj	feminine
+adjectives	1	blanche	blanc	adj	feminine
+adjectives	1	sèche	sec	adj	feminine
+adjectives	1	publique	public	adj	feminine
+adjectives	1	grecque	grec	adj	feminine
+adjectives	1	longue	long	adj	feminine
+adjectives	1	maligne	malin	adj	feminine
+adjectives	1	bénignes	bénin	adj	feminine|plural
+adjectives	1	folle	fou	adj	feminine
+adjectives	1	molle	mol	adj	feminine
+adjectives	1	belle	beau	adj	feminine
+adjectives	1	belle	bel	adj	feminine
+adjectives	1	nouvelle	nouveau	adj	feminine
+adjectives	1	vieille	vieux	adj	feminine
+adjectives	1	fraîche	frais	adj	feminine
+adjectives	1	fraiche	frais	adj	feminine
+adjectives	1	favorite	favori	adj	feminine
+adjectives	1	aiguë	aigu	adj	feminine
+adjectives	1	aigüe	aigu	adj	feminine
+adjectives	1	douce	doux	adj	feminine
+adjectives	1	rousse	roux	adj	feminine
+adjectives	1	fausse	faux	adj	feminine
+adjectives	1	expresse	exprès	adj	feminine
+adjectives	1	nationaux	national	adj	plural
+adjectives	1	beaux	beau	adj	plural
+adjectives	1	nouveaux	nouveau	adj	plural
+adjectives	1	bleues	bleu	adj	feminine|plural
+adjectives	1	richissime	riche	adj	feminine
+adjectives	1	grandissimes	grand	adj	feminine|plural
+adverbs	1	vraiment	vrai	adj	adverb
+adverbs	1	lentement	lent	adj	feminine|adverb
+adverbs	1	heureusement	heureux	adj	feminine|adverb
+adverbs	1	couramment	courant	adj	adverb
+adverbs	1	évidemment	évident	adj	adverb
+adverbs	1	précisément	précis	adj	feminine|adverb
+adverbs	1	énormément	énorme	adj	adverb
+adverbs	1	assidûment	assidu	adj	adverb
+adverbs	1	gentiment	gentil	adj	adverb
+adverbs	1	brièvement	bref	adj	adverb
+adverbs	1	poliment	poli	adj	adverb
+adverbs	1	impunément	impuni	adj	adverb
+determiners	1	toute	tout	*	determiner
+determiners	1	toutes	tout	*	determiner
+determiners	1	tous	tout	*	determiner
+determiners	1	quelques	quelque	*	determiner
+determiners	1	aucune	aucun	*	determiner
+determiners	1	quelle	quel	*	determiner
+determiners	1	laquelle	lequel	*	determiner
+determiners	1	auxquels	auquel	*	determiner
+determiners	1	desquelles	duquel	*	determiner
+determiners	1	cette	ce	*	determiner
+determiners	1	ces	ce	*	determiner
+determiners	1	mes	mon	*	determiner
+determiners	1	ta	ton	*	determiner
+determiners	1	ses	son	*	determiner
+determiners	1	nos	notre	*	determiner
+determiners	1	vos	votre	*	determiner
+determiners	1	leurs	leur	*	determiner
+determiners	1	les	le	*	determiner
+determiners	1	une	un	*	determiner
+determiners	1	ceux	celui	*	determiner
+determiners	1	millions	million	*	determiner
+determiners	1	milliards	milliard	*	determiner
+determiners	1	quatre-vingts	quatre-vingt	*	*
+spellings	1	coeurs	cœur	n	plural
+spellings	1	soeur	sœur	*	
+spellings	1	oeuvres	œuvre	n	plural
+spellings	1	voeux	vœu	n	plural
+spellings	1	aujourd’hui	aujourd'hui	*	
+case	1	Parle	parler	v	*
+case	1	LÈVE	lever	v	*
+case	1	Messieurs	monsieur	n	plural
+negatives	0	me suis	se suivre	*	*
+negatives	0	te suis	se suivre	*	*
+negatives	0	me dit	se dire	*	*
+negatives	0	te dit	se dire	*	*
+negatives	0	me fait	se faire	*	*
+negatives	0	m'a	s'avoir	*	*
+negatives	0	me va	s'aller	*	*
+negatives	0	me va	se aller	*	*
+negatives	0	nous parlons	se parler	*	*
+negatives	0	vous parlez	se parler	*	*
+negatives	0	voyez-vous	se voir	*	*
+negatives	0	dites-vous	se dire	*	*
+negatives	0	donne-moi	se donner	*	*
+negatives	0	donne	don	n	*
+negatives	0	abandonne	abandon	n	*
+negatives	0	fonctionne	fonction	n	*
+negatives	0	chante	chant	n	*
+negatives	0	plante	plant	n	*
+negatives	0	présente	présent	n	*
+negatives	0	porte	port	n	*
+negatives	0	mère	mer	n	*
+negatives	0	ravis	ravoir	*	*
+negatives	0	avis	avoir	*	*
+negatives	0	devis	devoir	*	*
+negatives	0	rentrait	rentraire	*	*
+negatives	0	montrait	montraire	*	*
+negatives	0	retraites	retraire	*	*
+negatives	0	écrie	écrire	*	*
+negatives	0	écriant	écrire	*	*
+negatives	0	remue	remouvoir	*	*
+negatives	0	mue	mouvoir	*	*
+negatives	0	tue	taire	*	*
+negatives	0	tues	taire	*	*
+negatives	0	crut	croître	*	*
+negatives	0	absolue	absoudre	*	*
+negatives	0	saigne	sain	*	*
+negatives	0	s'élève	élève	n	*
+negatives	0	m'inquiète	inquiet	*	*
+negatives	0	s'amusant	amusant	adj	*
+negatives	0	va	ver	*	*
+negatives	0	des	der	*	*
+negatives	0	mes	mer	*	*
+negatives	0	aux	al	*	*
+negatives	0	eux	eu	*	*
+negatives	0	la	ler	*	*
+negatives	0	vie	vir	*	*
+negatives	0	elle	el	*	*
+negatives	0	elle	eler	*	*
+negatives	0	que	c	*	*
+negatives	0	lève-toi	lever	*	*
