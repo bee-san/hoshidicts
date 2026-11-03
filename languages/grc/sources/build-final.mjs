@@ -16,6 +16,8 @@
 //   transforms of the same form (CATEGORY);
 // - the Yomitan rules of LEFT_OUT, for the measurements of README.md.
 //
+// A repeated Yomitan rule in KEEP stays as well: it reaches texts the own rule's stem minimum leaves out.
+//
 // Yomitan's other rules stay, `source: "yomitan"`, in their transforms after
 // the own ones. They read the text without diacritics (λυεις, ανθρωπω), which
 // the own rules leave to the dictionary's form-of rows.
@@ -72,6 +74,9 @@ const CATEGORY = {
 const LEFT_OUT = {
   'nominalization ος→εω': 'a derivation: reads -ος nouns and adjectives as -έω verbs (φίλος → φιλέω, καλός → καλέω, οἶκος → οἰκέω)',
 };
+// Yomitan rules kept although an own rule makes the same deinflection, for a measured gain: the own rule's stem
+// minimum leaves out a one-letter stem (ᾦων → ᾦον).
+const KEEP = new Set(['genitive plural ων→ον']);
 
 const leaves = (conditions, name) => {
   const c = conditions[name];
@@ -85,6 +90,7 @@ const pairsOf = (r) => (r.type === 'suffix' ? [[r.inflected, r.deinflected]]
   : r.type === 'circumfix' && r.prefixes.length === 1 && r.prefixes[0][0] === '' && r.prefixes[0][1] === '' ? r.suffixes : []);
 
 const both = new Set(); // `${transform index}/${rule index}/${pair index}`
+const names = new Set(); // LEFT_OUT and KEEP entries that name a rule
 const kept = new Map(); // Yomitan transform id -> its kept rules
 const rows = [];
 let matched = 0;
@@ -107,10 +113,16 @@ for (const t of yomitan.transforms) {
       });
     });
     const name = `${t.id} ${y.inflected}→${y.deinflected}`;
+    if ((LEFT_OUT[name] || KEEP.has(name)) && !names.has(name)) names.add(name);
     let fate;
     if (found.size > 0) {
       ++matched;
       fate = [...found].join(' ');
+      if (KEEP.has(name)) {
+        fate += ' (kept)';
+        if (!kept.has(t.id)) kept.set(t.id, {...t, rules: []});
+        kept.get(t.id).rules.push(y);
+      }
     } else if (LEFT_OUT[name]) {
       fate = 'left out';
       leftOut.push({transform: t.id, rule: y, reason: LEFT_OUT[name]});
@@ -189,8 +201,9 @@ writeFileSync(testFile, test.flatMap((line) => {
   return [cells.join('\t')];
 }).join('\n'));
 
+for (const name of [...Object.keys(LEFT_OUT), ...KEEP]) if (!names.has(name)) throw new Error(`no Yomitan rule ${name}`);
 const count = (source) => transforms.reduce((n, t) => n + t.rules.filter((r) => (r.source ?? t.source) === source)
   .reduce((m, r) => m + (r.type === 'circumfix' ? r.prefixes.length * r.suffixes.length : 1), 0), 0);
 console.log(`grc: union ${union.transforms.length} transforms, ${unionRules} rule rows; final ${transforms.length} transforms: ` +
   `${count('own')} own, ${count('both')} both, ${count('yomitan')} yomitan rules; ${matched} of ${rows.length} Yomitan rules repeat an own rule, ` +
-  `${rows.filter((r) => r[3] === 'kept').length} kept, ${leftOut.length} left out; yomitan.tsv: ${negatives} rows made negatives`);
+  `${rows.filter((r) => r[3].endsWith('kept') || r[3].endsWith('(kept)')).length} kept, ${leftOut.length} left out; yomitan.tsv: ${negatives} rows made negatives`);

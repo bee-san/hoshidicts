@@ -1,10 +1,9 @@
 # Source: 1000 pairs sampled with seed 1 by sources/build-corpus.py from UniMorph grc (CC BY-SA 3.0, the UniMorph
 # contributors, from English Wiktionary) and the Perseus Ancient Greek Dependency Treebank 2.1 (CC BY-SA 3.0 US,
-# the Perseus Digital Library, Tufts University); README.md has the revisions. The 101 rows the rules do not reach (README.md, "Known gaps").
+# the Perseus Digital Library, Tufts University); README.md has the revisions. The 100 rows the rules do not reach (README.md, "Known gaps").
 # category	valid	source	term	rule	reasons
 um-noun	1	διαίτης	δίαιτα	n	*
 um-noun	1	χαλαζῶν	χάλαζα	n	*
-um-noun	1	ᾦων	ᾦον	n	*
 um-noun	1	ὀργυίᾳ	ὄργυια	n	*
 um-noun	1	σκάτα	σκῶρ	n	*
 um-noun	1	σινάπεων	σίναπι	n	*

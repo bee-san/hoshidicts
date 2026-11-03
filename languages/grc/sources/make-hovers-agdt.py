@@ -9,7 +9,8 @@ Each sentence of the treebank is written out as running text: words joined
 by spaces, punctuation attached to the word before it. For every word token
 the hover text is the sentence from that word to its end, as a host passes it
 to a word lookup. Writes <out>/hover.tsv: hover text, the word as written, the
-treebank's lemma (trailing sense digits removed) and its part-of-speech tag.
+treebank's lemma (trailing sense digits removed), its part-of-speech tag, and
+the lemma and tag of the word before it in the sentence (- for none).
 
 The treebank writes an elided word's apostrophe as a combining comma above
 after the final consonant (δ̓, ἀλλ̓); that is changed to U+2019, as printed
@@ -53,11 +54,18 @@ for path in paths:
                 text += ' '
             starts.append((len(text), form, lemma, pos, is_punct))
             text += form
+        previous = ('-', '-')
         for start, form, lemma, pos, is_punct in starts:
-            if is_punct or not lemma or not re.search('[\u0370-\u03ff\u1f00-\u1fff]', form):
+            if is_punct:
+                previous = ('-', '-')
+                continue
+            if not lemma or not re.search('[\u0370-\u03ff\u1f00-\u1fff]', form):
+                previous = ('-', '-')
                 continue
             hover = text[start:]
-            rows.append((hover, form, nfc(re.sub(r'\d+$', '', lemma)), pos))
+            gold = nfc(re.sub(r'\d+$', '', lemma))
+            rows.append((hover, form, gold, pos, previous[0], previous[1]))
+            previous = (gold, pos)
 with open(f'{out_dir}/hover.tsv', 'w', encoding='utf-8') as f:
     for r in rows:
         f.write('\t'.join(x.replace('\t', ' ') for x in r) + '\n')

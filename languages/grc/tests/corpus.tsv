@@ -1,6 +1,6 @@
 # Source: 1000 pairs sampled with seed 1 by sources/build-corpus.py from UniMorph grc (CC BY-SA 3.0, the UniMorph
 # contributors, from English Wiktionary) and the Perseus Ancient Greek Dependency Treebank 2.1 (CC BY-SA 3.0 US,
-# the Perseus Digital Library, Tufts University); README.md has the revisions. The 899 rows the rules reach; the others are in gaps.tsv.
+# the Perseus Digital Library, Tufts University); README.md has the revisions. The 900 rows the rules reach; the others are in gaps.tsv.
 # category	valid	source	term	rule	reasons
 um-noun	1	αὐλητάς	αὐλητής	n	*
 um-noun	1	Λιγύων	Λίγυς	n	*
@@ -158,6 +158,7 @@ um-noun	1	ἀγγείου	ἀγγεῖον	n	*
 um-noun	1	ψωλαί	ψωλή	n	*
 um-noun	1	ἀρθμώ	ἀρθμός	n	*
 um-noun	1	ὀξυτονήσεως	ὀξυτόνησις	n	*
+um-noun	1	ᾦων	ᾦον	n	*
 um-noun	1	ἀλφίτῳ	ἄλφιτον	n	*
 um-noun	1	στόχοι	στόχος	n	*
 um-noun	1	πλανητῶν	πλανήτης	n	*
