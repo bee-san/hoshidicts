@@ -420,8 +420,8 @@ pack's defaults unless `--options`); its build command is in its header.
      them with the option on, among readings of one root (*saluta* →
      *saluti*, not *saluto*). The order of *-ej-*, *-aĵ-*, *-ig-*, *-iĝ-*,
      *-ist-*, *-ul-* and the kept *-ujo* has `lookup.tsv` rows.
-   - `tools/check-yomitan.mjs`: 2,926 inputs, 5,847 Yomitan results, 0
-     differences; both processors agree with Yomitan's on 1,886 inputs each.
+   - `tools/check-yomitan.mjs`: 3,528 inputs, 6,944 Yomitan results, 0
+     differences; both processors agree with Yomitan's on 2,235 inputs each.
    - Hachidori (feat/multi-language d7e82b0c with this branch in
      `third_party/hoshidicts`, `test/chrome-language-pack.mjs`, Chrome 152,
      wty-eo-en): 16/16 checks pass. Settings adds Esperanto beside Japanese
