@@ -11,7 +11,8 @@
 #
 # Writes <out dir>/*.txt: eval-table (eval-language for the own, Yomitan,
 # union and final rules on every test file, with every option on and with the
-# defaults), frequent, phrases, real, yomitan, order, traces (sources/measure.py), bench
+# defaults), untagged (lookup.untaggedTerms filter against pass), frequent,
+# phrases, real, yomitan, order, traces (sources/measure.py), bench
 # (benchmark-lookup, 3 runs), wasm (sources/wasm-bench.mjs) and mutations
 # (sources/mutations.py).
 set -euo pipefail
@@ -37,6 +38,41 @@ for rs in own:$P/sources/own.json yomitan:$P/sources/yomitan.json union:$OUT/uni
     echo "${rs%%:*} $file $($CLI eval-language sq "$OUT/$file.tsv" --transforms "${rs#*:}" --dictionary "$DICT_DIR" | tail -1)" >> "$OUT/eval-table.txt"
   done
 done
+
+# lookup.untaggedTerms (docs/languages.md 9.4, section 14 step 5): the
+# dictionary's rows without part-of-speech tags, counted by their first
+# definition tag, and eval-language on every test file with the pack as
+# written (filter, the default) and with a copy set to pass.
+python3 - "$DICT_ZIP" > "$OUT/untagged.txt" <<'PY'
+import collections, json, sys, zipfile
+rows = untagged = forms = 0
+by_tag = collections.Counter()
+with zipfile.ZipFile(sys.argv[1]) as z:
+    for name in z.namelist():
+        if name.startswith('term_bank'):
+            for r in json.loads(z.read(name)):
+                rows += 1
+                if not r[3].strip():
+                    untagged += 1
+                    by_tag[(r[2].split() or ['(none)'])[0]] += 1
+                    forms += any(isinstance(d, list) for d in r[5])
+print(f'{rows} rows, {untagged} with an empty rules column ({100 * untagged / rows:.1f}%), {forms} of them form-of rows')
+print('by first definition tag: ' + ', '.join(f'{t} {n}' for t, n in by_tag.most_common()))
+PY
+rm -rf "$OUT/lang-pass" && mkdir -p "$OUT/lang-pass" && cp -r $P "$OUT/lang-pass/sq"
+python3 - "$OUT/lang-pass/sq/language.json" <<'PY'
+import json, sys
+p = sys.argv[1]; d = json.load(open(p, encoding='utf-8'))
+d['lookup']['untaggedTerms'] = 'pass'
+json.dump(d, open(p, 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
+PY
+for file in sample sample-def cases cases-def defaults defaults-def yomitan yomitan-def; do
+  for mode in filter pass; do
+    langs=languages; [ $mode = pass ] && langs="$OUT/lang-pass"
+    echo "$mode $file $($CLI --languages "$langs" eval-language sq "$OUT/$file.tsv" --dictionary "$DICT_DIR" | tail -1)" >> "$OUT/untagged.txt"
+  done
+done
+rm -rf "$OUT/lang-pass"
 
 python3 $P/sources/measure.py frequent "$DICT_ZIP" "$DICT_DIR" "$FREQ" "$UNIMORPH" > "$OUT/frequent.txt"
 python3 $P/sources/measure.py phrases "$DICT_ZIP" "$DICT_DIR" "$UNIMORPH" "$TATOEBA" > "$OUT/phrases.txt"
