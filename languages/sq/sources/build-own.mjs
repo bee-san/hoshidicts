@@ -63,6 +63,10 @@ const conditions = {
 // `të mira` are never read through their last word (section 14 step 2).
 const ONE_WORD = '[^ ]';
 const CONSONANT = '{consonant}';
+// A verb stem that takes a consonant ending never ends in j: the j of punoj,
+// laj and hyj belongs to the first person (punoni, hyni), so hyjni and
+// punojmë are not hyj + -ni or punoj + -më.
+const VC = '{verbConsonant}';
 const VOWEL = '{vowel}';
 
 // --- Transforms -------------------------------------------------------------------
@@ -166,7 +170,7 @@ suffix('n-def-sg-m', 'i', '', [], N, {stemMinLength: 2, stemEndsWith: '[ao]'});
 suffix('n-def-sg-m', 'u', '', [], N, {stemMinLength: 2, stemEndsWith: '[kgheia]'});
 suffix('n-def-sg-m', 'ri', '', [], N, {stemMinLength: 2, stemEndsWith: '[uyieaë]'});
 suffix('n-def-sg-m', 'oi', 'ua', [], N, {stemMinLength: 1});
-suffix('n-def-sg-m', 'mi', 'ëm', [], N, {stemMinLength: 2, stemEndsWith: CONSONANT});
+suffix('n-def-sg-m', 'mi', 'ëm', [], N, {stemMinLength: 2, stemEndsWith: '[zs]'});
 suffix('n-def-sg-m', 'ni', '', [], N, {stemMinLength: 2, stemEndsWith: '[youe]'});
 
 transform('n-def-acc-m', 'definite accusative (masculine)',
@@ -180,7 +184,7 @@ suffix('n-def-acc-m', 'në', '', [], N, {stemMinLength: 2, stemEndsWith: '[a]'})
 suffix('n-def-acc-m', 'un', '', [], N, {stemMinLength: 2, stemEndsWith: '[kgheia]'});
 suffix('n-def-acc-m', 'rin', '', [], N, {stemMinLength: 2, stemEndsWith: '[uyieaë]'});
 suffix('n-def-acc-m', 'oin', 'ua', [], N, {stemMinLength: 1});
-suffix('n-def-acc-m', 'min', 'ëm', [], N, {stemMinLength: 2, stemEndsWith: CONSONANT});
+suffix('n-def-acc-m', 'min', 'ëm', [], N, {stemMinLength: 2, stemEndsWith: '[zs]'});
 suffix('n-def-acc-m', 'nin', '', [], N, {stemMinLength: 2, stemEndsWith: '[youe]'});
 
 transform('n-def-obl-m', 'definite genitive/dative/ablative (masculine)',
@@ -193,7 +197,7 @@ suffix('n-def-obl-m', 'it', '', [], N, {stemMinLength: 2, stemEndsWith: '[ao]'})
 suffix('n-def-obl-m', 'ut', '', [], N, {stemMinLength: 2, stemEndsWith: '[kgheia]'});
 suffix('n-def-obl-m', 'rit', '', [], N, {stemMinLength: 2, stemEndsWith: '[uyieaë]'});
 suffix('n-def-obl-m', 'oit', 'ua', [], N, {stemMinLength: 1});
-suffix('n-def-obl-m', 'mit', 'ëm', [], N, {stemMinLength: 2, stemEndsWith: CONSONANT});
+suffix('n-def-obl-m', 'mit', 'ëm', [], N, {stemMinLength: 2, stemEndsWith: '[zs]'});
 suffix('n-def-obl-m', 'nit', '', [], N, {stemMinLength: 2, stemEndsWith: '[youe]'});
 
 transform('n-def-nom-f', 'definite (feminine)',
@@ -205,8 +209,6 @@ suffix('n-def-nom-f', 'la', 'ël', [], N, {stemMinLength: 1, stemEndsWith: CONSO
 suffix('n-def-nom-f', 'a', '', [], N, {stemMinLength: 2, stemEndsWith: '[i]'});
 suffix('n-def-nom-f', 'ja', 'e', [], N, {stemMinLength: 2, stemEndsWith: CONSONANT});
 suffix('n-def-nom-f', 'a', 'e', [], N, {stemMinLength: 2, stemEndsWith: '[ji]'});
-suffix('n-def-nom-f', 'a', 'e', [], N, {stemMinLength: 2, stemEndsWith: CONSONANT});
-suffix('n-def-nom-f', 'ja', '', [], N, {stemMinLength: 2, stemEndsWith: CONSONANT});
 suffix('n-def-nom-f', 'a', '', [], N, {stemMinLength: 2, stemEndsWith: CONSONANT});
 suffix('n-def-nom-f', 'ja', '', [], N, {stemMinLength: 2, stemEndsWith: VOWEL});
 
@@ -245,7 +247,8 @@ suffix('n-indef-obl-f', 'je', '', [], N, {stemMinLength: 2, stemEndsWith: VOWEL}
 // indefinite ablative (malesh, miqsh), -ish after s, z and r (nxënësish).
 transform('n-def-pl', 'definite plural',
     'Plural definite nominative or accusative (male → malet, vajza → vajzat, miq → miqtë, shtëpi → shtëpitë, njerëz → njerëzit).');
-suffix('n-def-pl', 't', '', [], NPL_OUT, {stemMinLength: 2, stemEndsWith: '[eaëjrou]'});
+suffix('n-def-pl', 't', '', [], NPL_OUT, {stemMinLength: 2, stemEndsWith: '[eaëjou]'});
+suffix('n-def-pl', 't', '', [], NPL_OUT, {stemMinLength: 4, stemEndsWith: '[r]'});
 suffix('n-def-pl', 'të', '', [], NPL_OUT, {stemMinLength: 2});
 suffix('n-def-pl', 'it', '', [], NPL_OUT, {stemMinLength: 2, stemEndsWith: '[szr]'});
 
@@ -271,7 +274,7 @@ for (const [inflected, deinflected, extra] of [
     ['ra', 'ër', {stemMinLength: 1, stemEndsWith: CONSONANT}],
     ['rra', 'ërr', {stemMinLength: 1, stemEndsWith: CONSONANT}],
     ['la', 'ël', {stemMinLength: 1, stemEndsWith: CONSONANT}],
-    ['ra', '', {stemMinLength: 2}],
+    ['ra', '', {stemMinLength: 3}],
     ['ër', '', {stemMinLength: 2, stemEndsWith: CONSONANT}],
     ['q', 'k', {stemMinLength: 1}],
     ['qe', 'k', {stemMinLength: 1}],
@@ -289,7 +292,7 @@ for (const [inflected, deinflected, extra] of [
     ['një', '', {stemMinLength: 2}],
     ['uj', 'ull', {stemMinLength: 1}],
     ['aj', 'all', {stemMinLength: 2}],
-    ['j', 'll', {stemMinLength: 2, stemEndsWith: '[e]'}],
+    ['j', 'll', {stemMinLength: 3, stemEndsWith: '[e]'}],
     ['je', 'll', {stemMinLength: 2, stemEndsWith: '[iy]'}],
     ['uj', 'ul', {stemMinLength: 1}],
     ['llarë', '', {stemMinLength: 2}],
@@ -539,23 +542,23 @@ suffix('pres-2sg', 'n', 'j', SB, V, {stemMinLength: 1, stemEndsWith: VJ});
 suffix('pres-1pl', 'jmë', 'j', SB, V, {stemMinLength: 1, stemEndsWith: VJ});
 suffix('pres-2pl', 'ni', 'j', ['v_sbjv', 'v_imp'], V, {stemMinLength: 1, stemEndsWith: VJ});
 suffix('pres-3pl', 'jnë', 'j', SB, V, {stemMinLength: 1, stemEndsWith: VJ});
-suffix('pres-2sg', 'et', 'es', SB, V, {stemMinLength: 2, stemEndsWith: CONSONANT});
-suffix('pres-2sg', 'et', 'as', SB, V, {stemMinLength: 2, stemEndsWith: CONSONANT});
-suffix('pres-1pl', 'im', '', SB, V, {stemMinLength: 2, stemEndsWith: CONSONANT});
-suffix('pres-2pl', 'ni', '', ['v_sbjv', 'v_imp'], V, {stemMinLength: 2, stemEndsWith: CONSONANT});
-suffix('pres-3pl', 'in', '', SB, V, {stemMinLength: 2, stemEndsWith: CONSONANT});
+suffix('pres-2sg', 'et', 'es', SB, V, {stemMinLength: 2, stemEndsWith: VC});
+suffix('pres-2sg', 'et', 'as', SB, V, {stemMinLength: 2, stemEndsWith: VC});
+suffix('pres-1pl', 'im', '', SB, V, {stemMinLength: 2, stemEndsWith: VC});
+suffix('pres-2pl', 'ni', '', ['v_sbjv', 'v_imp'], V, {stemMinLength: 2, stemEndsWith: VC});
+suffix('pres-3pl', 'in', '', SB, V, {stemMinLength: 2, stemEndsWith: VC});
 
 // Imperfect.
 for (const [p, vowelEnd, consEnd] of [['1sg', 'ja', 'ja'], ['2sg', 'je', 'je'], ['3sg', 'nte', 'te'], ['1pl', 'nim', 'nim'], ['2pl', 'nit', 'nit'], ['3pl', 'nin', 'nin']]) {
     suffix(`impf-${p}`, vowelEnd, 'j', SB, V, {stemMinLength: 1, stemEndsWith: VJ});
-    suffix(`impf-${p}`, consEnd, '', SB, V, {stemMinLength: 2, stemEndsWith: CONSONANT});
+    suffix(`impf-${p}`, consEnd, '', SB, V, {stemMinLength: 2, stemEndsWith: VC});
 }
 
 // Subjunctive (the persons that differ from the present indicative).
 suffix('sbjv-2sg', 'sh', 'j', SB, V, {stemMinLength: 1, stemEndsWith: VJ});
 suffix('sbjv-3sg', 'jë', 'j', SB, V, {stemMinLength: 1, stemEndsWith: VJ});
-suffix('sbjv-2sg', 'ësh', '', SB, V, {stemMinLength: 2, stemEndsWith: CONSONANT});
-suffix('sbjv-3sg', 'ë', '', SB, V, {stemMinLength: 2, stemEndsWith: CONSONANT});
+suffix('sbjv-2sg', 'ësh', '', SB, V, {stemMinLength: 2, stemEndsWith: VC});
+suffix('sbjv-3sg', 'ë', '', SB, V, {stemMinLength: 2, stemEndsWith: VC});
 
 // Optative: vowel stems take -f- (punofsha, kthefsha, lafsha, bëfsha; -uaj
 // verbs have o: shkrofsha), consonant stems none (hapsha, haptë).
@@ -596,7 +599,7 @@ for (const rules of Object.values(aorist)) {
 }
 // Consonant stems: hapa, hape, hapi (preku after k, g, h), hapëm, hapët, hapën.
 for (const [p, end, extra] of [['1sg', 'a', {}], ['2sg', 'e', {}], ['3sg', 'i', {}], ['3sg', 'u', {stemEndsWith: '[kgh]'}], ['1pl', 'ëm', {}], ['2pl', 'ët', {}], ['3pl', 'ën', {}]]) {
-    suffix(`aor-${p}`, end, '', AO, V, {stemMinLength: 2, stemEndsWith: CONSONANT, ...extra});
+    suffix(`aor-${p}`, end, '', AO, V, {stemMinLength: 2, stemEndsWith: VC, ...extra});
 }
 
 // Non-active aorist, third person singular: the aorist stem after u (u
@@ -621,7 +624,7 @@ suffix('imp-2sg', 'yr', 'yj', IMP, V, {stemMinLength: 1});
 for (const [inflected, deinflected, extra] of [
     ['uar', 'oj', {}], ['uar', 'uaj', {}], ['jtur', 'j', {stemEndsWith: VOWEL}], ['ier', 'iej', {}], ['tur', 's', {stemMinLength: 2}],
     ['yer', 'ej', {}], ['yer', 'yej', {}], ['erë', 'ej', {}], ['irë', 'ij', {}], ['yrë', 'yj', {}], ['arë', 'aj', {}], ['ërë', 'ëj', {}],
-    ['ur', '', {stemMinLength: 2, stemEndsWith: CONSONANT}],
+    ['ur', '', {stemMinLength: 2, stemEndsWith: VC}],
     ['ë', '', {stemMinLength: 2, stemEndsWith: '[lr]'}],
 ]) {
     suffix('ptcp', inflected, deinflected, PT, V, {stemMinLength: 1, ...extra});
@@ -635,7 +638,7 @@ const admirativeEndings = [['adm-pres', ['kam', 'ke', 'ka', 'kemi', 'keni', 'kan
 for (const [id, ends] of admirativeEndings) {
     for (const end of ends) {
         suffix(id, end, 'r', AO, PT_OUT, {stemMinLength: 2, stemEndsWith: '[ae]'});
-        suffix(id, end, 'ur', AO, PT_OUT, {stemMinLength: 2, stemEndsWith: CONSONANT});
+        suffix(id, end, 'ur', AO, PT_OUT, {stemMinLength: 2, stemEndsWith: VC});
         suffix(id, end, 'rë', AO, PT_OUT, {stemMinLength: 1, stemEndsWith: '[aeiyë]'});
         suffix(id, end, 'ë', AO, PT_OUT, {stemMinLength: 2, stemEndsWith: '[nlr]'});
         suffix(id, `ë${end}`, 'ur', AO, PT_OUT, {stemMinLength: 2, stemEndsWith: '[kg]'});
@@ -645,20 +648,25 @@ for (const [id, ends] of admirativeEndings) {
 // Non-active present and imperfect, to the active verb (punohet → punoj,
 // hapet → hap, shkruhet → shkruaj, kthehet → kthej) ...
 for (const [p, vowelEnd, consEnd] of [['1sg', 'hem', 'em'], ['2sg', 'hesh', 'esh'], ['3sg', 'het', 'et'], ['1pl', 'hemi', 'emi'], ['2pl', 'heni', 'eni'], ['3pl', 'hen', 'en']]) {
+    // The mediopassive verb first, where a dictionary lists it (largohet → largohem before largoj).
+    if (p !== '1sg') { suffix(`np-pres-${p}`, vowelEnd, 'hem', SB, V, {stemMinLength: 1, stemEndsWith: VJ}); }
     suffix(`np-pres-${p}`, vowelEnd, 'j', SB, V, {stemMinLength: 1, stemEndsWith: VJ});
     suffix(`np-pres-${p}`, `u${vowelEnd}`, 'uaj', SB, V, {stemMinLength: 1});
-    suffix(`np-pres-${p}`, consEnd, '', SB, V, {stemMinLength: 2, stemEndsWith: CONSONANT});
+    suffix(`np-pres-${p}`, consEnd, '', SB, V, {stemMinLength: 2, stemEndsWith: VC});
 }
 for (const [p, vowelEnd, consEnd] of [['1sg', 'hesha', 'esha'], ['2sg', 'heshe', 'eshe'], ['3sg', 'hej', 'ej'], ['1pl', 'heshim', 'eshim'], ['2pl', 'heshit', 'eshit'], ['3pl', 'heshin', 'eshin']]) {
+    suffix(`np-impf-${p}`, vowelEnd, 'hem', SB, V, {stemMinLength: 1, stemEndsWith: VJ});
     suffix(`np-impf-${p}`, vowelEnd, 'j', SB, V, {stemMinLength: 1, stemEndsWith: VJ});
     suffix(`np-impf-${p}`, `u${vowelEnd}`, 'uaj', SB, V, {stemMinLength: 1});
-    suffix(`np-impf-${p}`, consEnd, '', SB, V, {stemMinLength: 2, stemEndsWith: CONSONANT});
+    suffix(`np-impf-${p}`, consEnd, '', SB, V, {stemMinLength: 2, stemEndsWith: VC});
 }
+suffix('np-imp-2sg', 'hu', 'hem', IMP, V, {stemMinLength: 1, stemEndsWith: VJ});
 suffix('np-imp-2sg', 'hu', 'j', IMP, V, {stemMinLength: 1, stemEndsWith: VJ});
 suffix('np-imp-2sg', 'uhu', 'uaj', IMP, V, {stemMinLength: 1});
-suffix('np-imp-2sg', 'u', '', IMP, V, {stemMinLength: 2, stemEndsWith: CONSONANT});
+suffix('np-imp-2sg', 'u', '', IMP, V, {stemMinLength: 2, stemEndsWith: VC});
+suffix('np-imp-2pl', 'huni', 'hem', IMP, V, {stemMinLength: 1, stemEndsWith: VJ});
 suffix('np-imp-2pl', 'huni', 'j', IMP, V, {stemMinLength: 1, stemEndsWith: VJ});
-suffix('np-imp-2pl', 'uni', '', IMP, V, {stemMinLength: 2, stemEndsWith: CONSONANT});
+suffix('np-imp-2pl', 'uni', '', IMP, V, {stemMinLength: 2, stemEndsWith: VC});
 // ... and to the mediopassive verb a dictionary lists (largohet → largohem,
 // duket → dukem, lutej → lutem, ulu → ulem): the -hem verbs are the -em
 // endings after h.
@@ -667,7 +675,7 @@ for (const [id, end] of [
     ['np-impf-1sg', 'esha'], ['np-impf-2sg', 'eshe'], ['np-impf-3sg', 'ej'], ['np-impf-1pl', 'eshim'], ['np-impf-2pl', 'eshit'], ['np-impf-3pl', 'eshin'],
     ['np-imp-2sg', 'u'], ['np-imp-2pl', 'uni'],
 ]) {
-    suffix(id, end, 'em', id.startsWith('np-imp-') ? IMP : SB, V, {stemMinLength: 2, stemEndsWith: CONSONANT});
+    suffix(id, end, 'em', id.startsWith('np-imp-') ? IMP : SB, V, {stemMinLength: 2, stemEndsWith: VC});
 }
 
 // Pronouns attached to an imperative: e (it, him, her), i (to him, her,
@@ -683,6 +691,12 @@ suffix('cl-i', 'i', '', [], IMP_OUT, {stemMinLength: 2, stemEndsWith: CONSONANT}
 suffix('cl-i', 'ji', '', [], IMP_OUT, {stemMinLength: 2, stemEndsWith: '[aeoiuyë]'});
 suffix('cl-i', 'ini', 'ni', [], IMP_OUT, {stemMinLength: 2, stemEndsWith: CONSONANT});
 suffix('cl-i', 'jini', 'ni', [], IMP_OUT, {stemMinLength: 2, stemEndsWith: '[aeoiuyë]'});
+for (const [form, lemma] of [['jepe', 'jap'], ['lëre', 'lë'], ['vëre', 'vë'], ['zëre', 'zë'], ['thuaje', 'them'], ['sille', 'sjell'], ['hidhe', 'hedh'], ['hiqe', 'heq'], ['bjere', 'bie'], ['shihe', 'shoh'], ['prite', 'pres']]) {
+    whole('cl-e', form, lemma, [], V);
+}
+for (const [form, lemma] of [['jepi', 'jap'], ['thuaji', 'them'], ['lëri', 'lë'], ['vëri', 'vë'], ['silli', 'sjell'], ['hiqi', 'heq']]) {
+    whole('cl-i', form, lemma, [], V);
+}
 transform('cl-me', '+më (me)', 'The pronoun më attached to an imperative (jepmë → jep, tregomë → trego, thuamë → thuaj).');
 suffix('cl-me', 'më', '', [], IMP_OUT, {stemMinLength: 2, stemEndsWith: CONSONANT});
 suffix('cl-me', 'më', '', [], IMP_OUT, {stemMinLength: 2, stemEndsWith: '[o]'});

@@ -359,3 +359,18 @@ negatives	0	punon	punoj	v	impf-3sg
 negatives	0	shkon	shkoj	v	aor-3pl
 negatives	0	ka ardhur	ardhem	v	*
 negatives	0	kam lodhur	lodhem	v	*
+negatives	0	hyjni	hyj	v	*
+negatives	0	hej	hell	n	*
+negatives	0	lart	lar	n	*
+negatives	0	mira	mi	n	*
+negatives	0	pra	pre	n	*
+negatives	0	vetmi	vetëm	n	*
+negatives	0	matja	mat	n	*
+negatives	0	krim	krej	v	*
+imperative clitic	1	lëre	lë	v	cl-e
+imperative clitic	1	jepe	jap	v	cl-e
+verbal noun	1	bashkim	bashkoj	v	vn
+verbal noun	1	mashtrimi	mashtroj	v	vn|n-def-sg-m
+verbal noun	1	kthim	kthej	v	vn
+noun	1	qiejt	qiell	n	n-pl|n-def-pl
+noun	1	çakajve	çakall	n	n-pl|n-obl-pl
