@@ -129,6 +129,7 @@ MUTANTS = {
     'dative plural first': move(lambda i: i == 'n-dat-pl', last=False),
     'vocative first': move(lambda i: i == 'n-voc-sg', last=False),
     'names after adjectives': move(lambda i: i.startswith('name-')),
+    'nouns before adjectives': move(lambda i: i.startswith(('n-', 'pron-')), last=False),
 }
 MUTANTS['longer stems of the exclusions'] = drop_rules(lambda tr, r: 'stemStartsWithText' in r)
 for stem in ('nav', 'argent', 'patri', 'mens', 'bell', 'suppl', 'cop', 'ac', 'la', 'arm', 'fo', 'can', 'imp'):

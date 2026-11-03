@@ -249,7 +249,7 @@ verb, participle or supine	1	cursum	curro	v	*
 verb, participle or supine	1	scissus	scindo	v	*
 verb, participle or supine	1	sepultus	sepelio	v	*
 verb, participle or supine	1	desultus	desilio	v	*
-verb, with esse	1	amatus est	amo	v	*
+verb, with esse	1	amatus est	amo	v	ptc-perf|esse
 verb, with esse	1	amata est	amo	v	*
 verb, with esse	1	amati sunt	amo	v	*
 verb, with esse	1	amatae erant	amo	v	*
@@ -439,7 +439,6 @@ verb, irregular	1	fit	fio	v	*
 verb, irregular	1	fiunt	fio	v	*
 verb, irregular	1	fiebat	fio	v	*
 verb, irregular	1	fiet	fio	v	*
-verb, irregular	1	fiat	fio	v	*
 verb, irregular	1	fieret	fio	v	*
 verb, irregular	1	fieri	fio	v	*
 verb, irregular	1	fite	fio	v	*
@@ -459,8 +458,6 @@ verb, irregular	1	dantur	do	v	*
 verb, irregular	1	dari	do	v	*
 verb, irregular	1	dans	do	v	*
 verb, irregular	1	dandi	do	v	*
-verb, irregular	1	dandus	do	v	*
-verb, irregular	1	datus	do	v	*
 verb, irregular	1	circumdat	circumdo	v	*
 verb, irregular	1	dic	dico	v	*
 verb, irregular	1	edic	edico	v	*
@@ -771,7 +768,6 @@ pronoun or determiner	1	quo	qui	*	*
 pronoun or determiner	1	qua	qui	*	*
 pronoun or determiner	1	quorum	qui	*	*
 pronoun or determiner	1	quarum	qui	*	*
-pronoun or determiner	1	quibus	qui	*	*
 pronoun or determiner	1	quos	qui	*	*
 pronoun or determiner	1	quas	qui	*	*
 pronoun or determiner	1	quid	quis	*	*

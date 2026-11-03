@@ -82,5 +82,13 @@
   ["impetus", "impetus", "n", "n", 0, ["attack"], 81, ""],
   ["impes", "impes", "n", "n", 0, ["violence"], 82, ""],
   ["Gallia", "Gallia", "name", "", 0, ["Gaul"], 83, ""],
-  ["Gallius", "Gallius", "adj", "adj", 0, ["Gallic"], 84, ""]
+  ["Gallius", "Gallius", "adj", "adj", 0, ["Gallic"], 84, ""],
+  ["patria", "patria", "n", "n", 0, ["fatherland"], 85, ""],
+  ["patrius", "patrius", "adj", "adj", 0, ["of a father"], 86, ""],
+  ["linea", "līnea", "n", "n", 0, ["line"], 87, ""],
+  ["lineus", "līneus", "adj", "adj", 0, ["of flax"], 88, ""],
+  ["eligo", "ēligō", "v", "v", 0, ["to choose"], 89, ""],
+  ["elego", "ēlēgō", "v", "v", 0, ["to bequeath away"], 90, ""],
+  ["summus", "summus", "adj", "adj", 0, ["highest"], 91, ""],
+  ["summum", "summum", "n", "n", 0, ["top"], 92, ""]
 ]

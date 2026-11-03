@@ -388,6 +388,10 @@
       [33, 55295],
       [57344, 1114111]
     ],
+    "transforms[14].rules[0].stemNotStartsWith": [
+      [108, 109],
+      [112, 112]
+    ],
     "transforms[14].rules[1].stemCharacters": [
       [0, 31],
       [33, 55295],
@@ -412,10 +416,39 @@
       [33, 55295],
       [57344, 1114111]
     ],
+    "transforms[14].rules[5].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[14].rules[6].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[14].rules[7].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[14].rules[8].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[14].rules[9].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[15].rules[0].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
+    ],
+    "transforms[15].rules[0].stemNotStartsWith": [
+      [108, 109],
+      [112, 112]
     ],
     "transforms[15].rules[1].stemCharacters": [
       [0, 31],
@@ -426,6 +459,31 @@
       [114, 114]
     ],
     "transforms[15].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[15].rules[4].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[15].rules[5].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[15].rules[6].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[15].rules[7].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[15].rules[8].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
@@ -4560,7 +4618,6 @@
         ["fiunt", "fiunt"],
         ["fiebat", "fiebat"],
         ["fiet", "fiet"],
-        ["fiat", "fiat"],
         ["fieret", "fieret"],
         ["fieri", "fieri"],
         ["fite", "fite"],
@@ -4580,8 +4637,6 @@
         ["dari", "dari"],
         ["dans", "dans"],
         ["dandi", "dandi"],
-        ["dandus", "dandus"],
-        ["datus", "datus"],
         ["circumdat", "circumdat"],
         ["dic", "dic"],
         ["edic", "edic"],
@@ -4888,7 +4943,6 @@
         ["qua", "qua"],
         ["quorum", "quorum"],
         ["quarum", "quarum"],
-        ["quibus", "quibus"],
         ["quos", "quos"],
         ["quas", "quas"],
         ["quid", "quid"],
@@ -5296,6 +5350,9 @@
         ["lacum", "lacum"],
         ["armorum", "armorum"],
         ["impetum", "impetum"],
+        ["patriam", "patriam"],
+        ["lineam", "lineam"],
+        ["summo", "summo"],
         ["Arma virumque canō, Trōiae quī prīmus ab ōrīs Ītaliam vēnit.", "arma virumque canō, trōiae quī prīmus ab ōrīs ītaliam vēnit."]
       ]
     },
@@ -6406,7 +6463,6 @@
         ["fiunt", "Fiunt"],
         ["fiebat", "Fiebat"],
         ["fiet", "Fiet"],
-        ["fiat", "Fiat"],
         ["fieret", "Fieret"],
         ["fieri", "Fieri"],
         ["fite", "Fite"],
@@ -6426,8 +6482,6 @@
         ["dari", "Dari"],
         ["dans", "Dans"],
         ["dandi", "Dandi"],
-        ["dandus", "Dandus"],
-        ["datus", "Datus"],
         ["circumdat", "Circumdat"],
         ["dic", "Dic"],
         ["edic", "Edic"],
@@ -6734,7 +6788,6 @@
         ["qua", "Qua"],
         ["quorum", "Quorum"],
         ["quarum", "Quarum"],
-        ["quibus", "Quibus"],
         ["quos", "Quos"],
         ["quas", "Quas"],
         ["quid", "Quid"],
@@ -7142,6 +7195,9 @@
         ["lacum", "Lacum"],
         ["armorum", "Armorum"],
         ["impetum", "Impetum"],
+        ["patriam", "Patriam"],
+        ["lineam", "Lineam"],
+        ["summo", "Summo"],
         ["Arma virumque canō, Trōiae quī prīmus ab ōrīs Ītaliam vēnit.", "Arma virumque canō, Trōiae quī prīmus ab ōrīs Ītaliam vēnit."]
       ]
     }

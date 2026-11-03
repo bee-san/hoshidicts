@@ -6,46 +6,19 @@
     python3 measure.py freq <out.tsv> <pg*.txt>...
     python3 measure.py hovers <out.txt> (<pg*.txt> | --tatoeba <lat_sentences.tsv>)...
     python3 measure.py judge <headwords.pickle> <hover.txt> <lookups.jsonl> --transforms <transforms.json> [--freq <freq.tsv>] [--top N] [--show N]
-        [--reach <hoshidicts-cli> [--languages <dir>] [--corpus <tsv>,...]] [--kinds 1] [--sample N --sample-out <file> [--seed S]]
+        [--homographs <tsv>] [--reach <cli> [--languages <dir>] [--corpus <tsv>,...]] [--kinds 1]
+        [--sample N --sample-out <file> [--sample-of ambiguous] [--seed S]] [--ambiguous-out <file>]
     python3 measure.py first <corpus.tsv> <lookups.jsonl>
 
-headwords reads a Yomitan dictionary's term banks and keeps, for every term,
-whether it has a row with definitions (a lemma) and the lemmas its form-of
-rows name ([term, [rules]] definitions, docs/languages.md 9.10).
-
-freq counts the words of Project Gutenberg ebooks (the text between the
-*** START and *** END lines): a frequency list of word forms, the forms that
-differ only in case counted together under their most frequent spelling.
-
-hovers writes, for every word of the texts, the text from that word to the
-end of its sentence, as a host passes it to a lookup (one per line); with
---tatoeba, the sentences of a Tatoeba export (id, lang, text). Sentences end
-after . ! ? or ; and a space.
-
-judge --reach <cli> keeps only the hovered words whose lemma a rule reaches:
-a lemma their form-of rows (or --corpus rows, tests/*.tsv) name is among the
-deinflections of a preprocessed variant of the word (hoshidicts-cli
-preprocess and deinflect, every option on). judge --kinds 1 also counts, for
-each kind of position, the lookups and the right and wrong first results:
-"esse" (a rule reads several words: a participle or gerundive and a form of
-esse), "enclitic" (the dictionary lacks the word but has it without -que,
--ne or -ve), "pronoun" and "form of esse" (the word's own lemma is one of
-PRONOUNS or sum).
-
-first counts, for the rows of a corpus whose sources were looked up whole
-(lookup-batch with scan length 64), where the row's lemma is among the
-results of the whole source: first, after another term, or not at all.
-
-judge reads the hovers and the answers of lookup-batch (languages/en/sources/
-lookup-batch.cpp: one JSON line per hover, results in lookup order) and
-judges each first result. The hovered word's keys are the word as written,
-lowercased, without macrons, with j written i, and without an enclitic -que,
--ne or -ve. The first result is right when its expression is a key that is a
-lemma, or a lemma a key's form-of rows name, or for a match of several words
-(a participle and esse) a lemma the first word's form-of rows name; it is
-wrong when some key has rows and it is none of those; otherwise it cannot be
-judged by script. With --freq, the hovers are the --top most frequent words
-of the list (each alone), and counts are also weighted by their frequency.
+headwords keeps each term's parts of speech (rows with definitions) and the
+lemmas its form-of rows name, with their kind (ref_kind). freq counts the words
+of Project Gutenberg ebooks under their most frequent spelling. hovers writes,
+for every word, the text to the end of its sentence (one per line), from
+ebooks or a Tatoeba export. judge judges the first result of each answer of
+languages/en/sources/lookup-batch.cpp as README.md, Measurements, says;
+--reach keeps the words whose lemma a rule reaches, --kinds counts enclitic,
+esse, pronoun and esse-form positions, --sample draws positions to judge by
+hand, --freq weights by frequency. first breaks first rank down for a corpus.
 """
 import collections
 import json
@@ -303,11 +276,9 @@ def judge(args):
             # that word, or a lemma it is a form of, is also a noun or adjective.
             first_keys = keys_of(matched.split(' ')[0])
             own, right, count = readings(first_keys, lemma, refs)
-            right -= own - {t for x in own for t, k in refs.get(x, ()) if k == 'parent'}
+            right = {x for x in right if 'v' in lemma.get(x, ()) or any(t == x and k == 'parent' for y in own for t, k in refs.get(y, ()))}
             count = 2 if any(nominal(x) for x in set(first_keys) | own) else 1
         found = expression in right or plain(expression) in right
-        # The word's own headword, as written, is its own entry whatever else
-        # its rows name (modo the adverb, also the ablative of modus).
         # The word's own headword, as written, is its own entry whatever else
         # its rows name (modo the adverb, also the ablative of modus).
         as_written = ' ' not in matched and expression in keys and expression in lemma

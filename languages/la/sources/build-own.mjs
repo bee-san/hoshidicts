@@ -124,14 +124,24 @@ const WORD = '[^ ]';
 // either; adjectives keep it for the proper adjectives (Rōmāna → Rōmānus).
 const LOWER_WORD = '[^ A-Z]';
 
-// Leaves out one stem exactly: the rule takes no stem that starts with it,
-// and a copy takes the longer stems that do (perītus is not pereō's, but
-// perterritus is perterreō's).
-function exceptStem(slotIds, rule, stem) {
-    rule.stemNotStartsWithText = stem;
-    const longer = {...rule, stemStartsWithText: stem, stemMinLength: Math.max(rule.stemMinLength ?? 0, [...stem].length + 1)};
-    delete longer.stemNotStartsWithText;
-    for (const slotId of slotIds) { add(slotId, longer); }
+// Leaves out stems exactly: the rule takes no stem that starts with one of
+// them, and copies take the longer stems that do (perītus is not pereō's,
+// but perterritus is perterreō's). Several stems (with different first
+// letters) split the rule by the stem's first letter.
+function exceptStems(slotIds, rule, stems) {
+    const base = {...rule};
+    const copy = (extra) => { for (const slotId of slotIds) { add(slotId, {...base, ...extra}); } };
+    const longer = (stem) => copy({stemStartsWithText: stem, stemMinLength: Math.max(rule.stemMinLength ?? 0, [...stem].length + 1)});
+    if (stems.length === 1) {
+        rule.stemNotStartsWithText = stems[0];
+        longer(stems[0]);
+        return;
+    }
+    rule.stemNotStartsWith = `[${stems.map((stem) => stem[0]).join('')}]`;
+    for (const stem of stems) {
+        copy({stemStartsWithText: stem[0], stemNotStartsWithText: stem});
+        longer(stem);
+    }
 }
 
 function sfx(slotId, inflected, deinflected, conditionsIn, conditionsOut, extra = {}) {
@@ -575,9 +585,9 @@ gigno genui genitus
 iacio ieci iactus
 +icio ieci iectus min:1
 +iicio ieci iectus min:1
-lego legi lectus
 +ligo legi lectus min:1
 +ligo lexi lectus min:1
+lego legi lectus
 +lego lexi lectus
 linquo liqui -
 +linquo liqui lictus
@@ -1561,8 +1571,8 @@ function buildTransforms() {
 for (const [slotId, inflected, deinflected, conditionsOut, stem] of [
     ['adj-i', 'i', 'us', ['adj12', 'ptc', 'v'], 'nav'],        // nāvī: nāvis, not nāvus
     ['adj-o', 'o', 'us', ['adj12', 'ptc', 'v'], 'argent'],     // argentō: argentum, not argentus
-    ['adj-am', 'am', 'us', ['adj12', 'ptc', 'v'], 'mens'],     // mēnsam: mēnsa, not mēnsus
-    ['adj-ae', 'ae', 'us', ['adj12', 'ptc', 'v'], 'patri'],    // patriae
+    ['adj-am', 'am', 'us', ['adj12', 'ptc', 'v'], 'mens|patri|line'], // mēnsam: mēnsa, not mēnsus; patriam, līneam
+    ['adj-ae', 'ae', 'us', ['adj12', 'ptc', 'v'], 'patri|mens|line'], // patriae, mēnsae, līneae
     ['adj-a', 'a', 'us', ['adj12', 'ptc', 'v'], 'bell'],       // bella: bellum, not bellus
     ['adj-as', 'as', 'us', ['adj12', 'ptc', 'v'], 'mens'],     // mēnsās: mēnsa, not mēnsus
     ['inf', 'ere', 'eo', ['v'], 'can'],                        // canere: canō, not caneō
@@ -1583,7 +1593,7 @@ for (const [slotId, inflected, deinflected, conditionsOut, stem] of [
     const matches = [...RULES.values()].filter(({rule, slots}) => slots.includes(slotId) && rule.inflected === inflected
         && rule.deinflected === deinflected && rule.conditionsIn.length === 0 && JSON.stringify(rule.conditionsOut) === JSON.stringify(conditionsOut));
     if (matches.length !== 1) { throw new Error(`${slotId} ${inflected} → ${deinflected}: ${matches.length} rules`); }
-    exceptStem(matches[0].slots, matches[0].rule, stem);
+    exceptStems(matches[0].slots, matches[0].rule, stem.split('|'));
 }
 
 const transforms = buildTransforms();
