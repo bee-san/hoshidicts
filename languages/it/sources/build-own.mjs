@@ -46,7 +46,6 @@ const conditions = {
     imp_noi: {name: 'Imperative (noi) with ci before it', isDictionaryForm: false},
     imp_voi: {name: 'Imperative (voi) with vi before it', isDictionaryForm: false},
     ger: {name: 'Gerund without its pronouns', isDictionaryForm: false},
-    ptcp: {name: 'Infinitive read from a past participle', isDictionaryForm: false},
     refl: {name: 'A verb after a pronoun, the pronoun marked with a +', isDictionaryForm: false},
     clinf: {name: 'Infinitive without its final e, before an attached pronoun', isDictionaryForm: false},
     p1s: {name: 'First person singular (agrees with mi)', isDictionaryForm: false},
@@ -223,9 +222,7 @@ const IN = {
     gerund: ['ger'],
 };
 const inFor = (slot) => IN[slot] ?? [];
-// A past participle's infinitive also has ptcp, which the pronominal
-// participle rule reads (pentito → pentire → pentirsi).
-const outFor = (slot) => ['v', ...(slot === 'participle' ? ['ptcp'] : [])];
+const outFor = () => ['v'];
 const SHORT = {p1s: 'short_p1s', p2s: 'short_p2s', p3: 'short_p3', p1p: 'short_p1p', p2p: 'short_p2p'};
 // The slots a pronoun the clitic rules moved (+) can stand before: the
 // gerund and the imperatives (dicendosi → si+dicendo, alzati → ti+alza).
@@ -812,16 +809,33 @@ for (const {lemma, mode, minStem = 0, forms: table} of IRREGULAR) {
 for (const [inflected, deinflected] of [['antesi', 'arsi'], ['antisi', 'arsi'], ['entesi', 'ersi'], ['entisi', 'ersi'], ['entesi', 'irsi'], ['entisi', 'irsi']]) {
     verb('participle-present', inflected, deinflected);
 }
-// The past participle of a pronominal verb, one step after its infinitive
-// (pentito → pentire → pentirsi, accorto → accorgere → accorgersi).
-transform('participle-pronominal', 'past participle (-rsi verb)', 'The past participle of a pronominal verb, looked up in its -rsi form: pentito → pentirsi, accorto → accorgersi, vergognata → vergognarsi.');
+// The regular past participle of a pronominal verb, looked up in its -rsi
+// form (pentito → pentirsi, vergognata → vergognarsi, inginocchiati →
+// inginocchiarsi). It reads the participle's ending itself, so an infinitive
+// (alzare) never gives the -rsi verb (alzarsi). The strong participles are
+// left to the dictionary's form-of entries (accorto → accorgersi).
 // comperare is an old spelling of comprare that wty-it-en lists only as a
 // reference to it, so comperato reached comperarsi before comprare (23 of the
 // rule's 26 wrong first results in 752,265 lookups of five Gutenberg texts
 // and Tatoeba); the stem is left out.
-for (const [inflected, deinflected] of [['are', 'arsi'], ['ere', 'ersi'], ['ire', 'irsi'], ['rre', 'rsi']]) {
-    for (const split of inflected === 'are' ? [{stemNotStartsWith: '[c]'}, {stemStartsWith: '[c]', stemNotStartsWithText: 'comper'}] : [{}]) {
-        suffix('participle-pronominal', inflected, deinflected, ['ptcp'], ['v'], {stemMinLength: 2, ...split});
+transform('participle-pronominal', 'past participle (-rsi verb)', 'The past participle of a pronominal verb, looked up in its -rsi form: pentito → pentirsi, vergognata → vergognarsi, inginocchiati → inginocchiarsi.');
+for (const [vowel, cls] of [['a', 'are'], ['u', 'ere'], ['i', 'ire']]) {
+    for (const tail of ['o', 'a', 'i', 'e']) {
+        const splits = cls === 'are' ? [{stemNotStartsWith: '[c]'}, {stemStartsWith: '[c]', stemNotStartsWithText: 'comper'}] : [{}];
+        for (const split of splits) {
+            suffix('participle-pronominal', `${vowel}t${tail}`, cls.replace(/e$/u, 'si'), [], ['v'], {stemMinLength: 2, stemCharacters: '{lower}', ...split});
+        }
+    }
+}
+
+// The strong participles of the irregular tables also give the -rsi verb,
+// with the same stems (messo → mettersi, permesso → permettersi, accorto →
+// accorgersi, posto → porsi).
+for (const {lemma, mode, minStem = 0, forms: table} of IRREGULAR) {
+    if (mode !== 'compound' || table.participle === undefined) { continue; }
+    const reflexive = lemma.replace(/r?re$/u, 'rsi');
+    for (const form of table.participle) {
+        suffix('participle-pronominal', form, reflexive, [], ['v'], {stemCharacters: '{lower}', ...(minStem > 0 ? {stemMinLength: minStem} : {})});
     }
 }
 
@@ -993,10 +1007,14 @@ function pronominal(prefixes, tail, conditionsIn) {
 // ci amiamo, si unisce, si usa). Their compounds keep them (si rifà).
 const SHORT_VERBS = [['fare', 'far'], ['dare', 'dar'], ['dire', 'dir'], ['bere', 'ber']];
 const SHORT_STEMS = [['stare', 'star'], ['amare', 'amar'], ['unire', 'unir'], ['usare', 'usar'], ['beare', 'bear']];
+// A reflexive pronoun before stare is not stare's -rsi verb (si sta bene is
+// impersonal, mi sto preparando is prepararsi, read below), so stare gives
+// no starsi; starci and starsene stay (ci sta, se ne stava).
 function shortPronominal(prefixes, tail, persons) {
     add('pronominal', {type: 'circumfix', prefixes: prefixes.map((p) => [p, '']), suffixes: SHORT_VERBS.map(([v, b]) => [v, b + tail]),
         conditionsIn: persons.map((p) => SHORT[p]), conditionsOut: ['v']});
-    add('pronominal', {type: 'circumfix', prefixes: prefixes.map((p) => [p, '']), suffixes: SHORT_STEMS.map(([v, b]) => [v, b + tail]),
+    const stems = tail === 'si' ? SHORT_STEMS.filter(([v]) => v !== 'stare') : SHORT_STEMS;
+    add('pronominal', {type: 'circumfix', prefixes: prefixes.map((p) => [p, '']), suffixes: stems.map(([v, b]) => [v, b + tail]),
         conditionsIn: persons, conditionsOut: ['v']});
 }
 for (const [pronoun, person] of Object.entries(PERSON)) {
@@ -1060,11 +1078,54 @@ for (const form of ['ho', 'hai', 'ha', 'abbiamo', 'avete', 'hanno', ...sixOn('av
 for (const [text, lemma] of [['se ne va', 'andarsene'], ['te ne vai', 'andarsene'], ['se ne vada', 'andarsene']]) {
     whole('pronominal', text, lemma, [], ['v']);
 }
+// --- Clitic climbing --------------------------------------------------------------------
+// A pronoun written before stare that belongs to the gerund after it (the
+// progressive: mi sto preparando, si sta divertendo, ci stiamo avvicinando,
+// se ne sta andando), or before a modal that belongs to the infinitive after
+// it (mi devo alzare, ti puoi sedere, me ne voglio andare). When the pronoun
+// agrees with the person of stare or of the modal, these rules drop that
+// verb and keep the pronoun before the other one, which the gerund rules and
+// the rule below read as the -rsi verb (prepararsi, divertirsi, alzarsi,
+// andarsene). A pronoun that does not agree is an object (mi sta guardando,
+// he is watching me; mi devi aiutare, you must help me), and gets no -rsi
+// verb. A lone si before a modal is mostly impersonal (si può fare, si deve
+// dire), so only its pairs take a modal (se ne deve andare).
+transform('climbing', 'pronoun of the next verb', 'A pronoun before stare or a modal that belongs to the gerund or infinitive after it: ' +
+    'mi sto preparando → prepararsi, si sta divertendo → divertirsi, mi devo alzare → alzarsi, me ne voglio andare → andarsene.');
+const STARE_FORMS = {
+    p1s: ['sto', 'stavo', 'starò', 'starei', 'stessi'],
+    p2s: ['stai', 'stavi', 'starai', 'staresti', 'stessi'],
+    p3: ['sta', 'stanno', 'stava', 'stavano', 'starà', 'staranno', 'starebbe', 'starebbero', 'stia', 'stiano', 'stesse', 'stessero'],
+    p1p: ['stiamo', 'stavamo', 'staremo', 'staremmo', 'stessimo'],
+    p2p: ['state', 'stavate', 'starete', 'stareste', 'steste'],
+};
+const MODAL_FORMS = {
+    p1s: ['devo', 'debbo', 'dovevo', 'dovrò', 'dovrei', 'posso', 'potevo', 'potrò', 'potrei', 'voglio', 'volevo', 'vorrò', 'vorrei'],
+    p2s: ['devi', 'dovevi', 'dovrai', 'dovresti', 'puoi', 'potevi', 'potrai', 'potresti', 'vuoi', 'volevi', 'vorrai', 'vorresti'],
+    p3: ['deve', 'devono', 'doveva', 'dovevano', 'dovrà', 'dovranno', 'dovrebbe', 'dovrebbero', 'può', 'possono', 'poteva', 'potevano',
+        'potrà', 'potranno', 'potrebbe', 'potrebbero', 'vuole', 'vogliono', 'voleva', 'volevano', 'vorrà', 'vorranno', 'vorrebbe', 'vorrebbero'],
+    p1p: ['dobbiamo', 'dovevamo', 'dovremo', 'dovremmo', 'possiamo', 'potevamo', 'potremo', 'potremmo', 'vogliamo', 'volevamo', 'vorremo', 'vorremmo'],
+    p2p: ['dovete', 'dovevate', 'dovrete', 'dovreste', 'potete', 'potevate', 'potrete', 'potreste', 'volete', 'volevate', 'vorrete', 'vorreste'],
+};
+for (const [pronoun, person] of Object.entries(PERSON)) {
+    for (const mark of [`${pronoun}+`, `${BEFORE[pronoun]}+ne+`]) {
+        // The gerund rules after a mark read one word (forms above).
+        add('climbing', {type: 'circumfix', prefixes: STARE_FORMS[person].map((form) => [`${mark}${form} `, mark]),
+            suffixes: [['ando', 'ando'], ['endo', 'endo']], conditionsIn: ['refl'], conditionsOut: ['ger']});
+        if (mark === 'si+') { continue; }
+        add('climbing', {type: 'circumfix', prefixes: MODAL_FORMS[person].map((form) => [`${mark}${form} `, mark]),
+            suffixes: [['are', 'are'], ['ere', 'ere'], ['ire', 'ire'], ['rre', 'rre']], conditionsIn: ['refl'], conditionsOut: ['v'],
+            stemCharacters: '{lower}'});
+    }
+}
+
 // A pronoun the clitic rules moved before the verb (ti+alza → ti+alzare,
-// se+ne+andare): the verb rules give v, and the pronoun already agrees.
+// se+ne+andare), or that the clitic-climbing rules kept before the verb it
+// belongs to (mi+preparare): the verb rules give v, and the pronoun already
+// agrees.
 const MARKERS = [
-    [['si+', 'ti+', 'ci+', 'vi+'], 'si'],
-    ...DIRECT.map((d) => [['se', 'te', 'ce', 've'].map((p) => `${p}+${d}+`), `se${d}`]),
+    [['mi+', 'si+', 'ti+', 'ci+', 'vi+'], 'si'],
+    ...DIRECT.map((d) => [['me', 'se', 'te', 'ce', 've'].map((p) => `${p}+${d}+`), `se${d}`]),
 ];
 for (const [prefixes, tail] of MARKERS) {
     add('pronominal', {type: 'circumfix', prefixes: prefixes.map((p) => [p, '']),

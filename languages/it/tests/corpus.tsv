@@ -1,7 +1,7 @@
 # options: default
 # Source: UniMorph ita (https://github.com/unimorph/ita/blob/fa2cc6ce173643e748bd8f4162709365bdc98805/ita, sha256 6347bb15b3d2c3da), CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/), by the UniMorph contributors, from English Wiktionary: the verb rows (category: UniMorph tags; a space after an elided pronoun removed).
 # Source: kaikki.org's Italian dictionary (https://kaikki.org/dictionary/Italian/, extracted 2026-10-30 from enwiktionary 2026-10-01, sha256 edfb787898b80c6e), English Wiktionary content, CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/) and GFDL, by the Wiktionary contributors: the noun and adjective rows (category: part of speech and form tags).
-# 850 rows sampled with seed 1 by sources/build-corpus.mjs (360 verb, finite, 70 verb, gerund or participle, 150 verb with pronouns, 135 noun, plural, 15 noun, other gender, 120 adjective); the rows the pack's rules reach with its defaults are in corpus.tsv, the others in gaps.tsv.
+# 800 rows sampled with seed 1 by sources/build-corpus.mjs (340 verb, finite, 65 verb, gerund or participle, 140 verb with pronouns, 125 noun, plural, 15 noun, other gender, 115 adjective); the rows the pack's rules reach with its defaults are in corpus.tsv, the others in gaps.tsv.
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
 V;IND;PST;3;SG;IPFV	1	sconficcava	sconficcare	v	*
 V;COND;1;PL	1	disastreremmo	disastrare	v	*
@@ -343,26 +343,6 @@ V;IND;PST;2;SG;PFV	1	circuisti	circuire	v	*
 V;SBJV;PST;3;SG	1	autocontraesse	autocontrarre	v	*
 V;SBJV;PST;1;SG	1	rivestissi	rivestire	v	*
 V;IND;PRS;2;SG	1	programmi	programmare	v	*
-V;COND;2;PL	1	erodereste	erodere	v	*
-V;IND;PST;2;SG;IPFV	1	annichilivi	annichilire	v	*
-V;COND;3;PL	1	retrodaterebbero	retrodatare	v	*
-V;IND;PST;1;SG;PFV	1	sciabolai	sciabolare	v	*
-V;IND;PST;2;PL;PFV	1	denuclearizzaste	denuclearizzare	v	*
-V;IND;PST;1;SG;PFV	1	presidiai	presidiare	v	*
-V;SBJV;PST;3;PL	1	godronassero	godronare	v	*
-V;COND;3;SG	1	volterebbe	voltare	v	*
-V;IND;PRS;1;PL	1	dugliamo	dugliare	v	*
-V;IND;FUT;2;PL	1	vivanderete	vivandare	v	*
-V;IND;FUT;1;SG	1	inimicherò	inimicare	v	*
-V;SBJV;PST;3;PL	1	imprimessero	imprimere	v	*
-V;IND;PST;3;SG;PFV	1	oziò	oziare	v	*
-V;IND;PRS;2;SG	1	vanifichi	vanificare	v	*
-V;IND;PST;2;SG;IPFV	1	riassopivi	riassopire	v	*
-V;IND;PST;1;SG;IPFV	1	apponevo	apporre	v	*
-V;COND;3;SG	1	esporterebbe	esportare	v	*
-V;IND;PST;1;SG;PFV	1	vilificai	vilificare	v	*
-V;IND;PST;3;PL;PFV	1	tinsero	tingere	v	*
-V;IND;FUT;2;PL	1	cointeresserete	cointeressare	v	*
 V.PTCP;PRS	1	imbottante	imbottare	v	*
 V.PTCP;PRS	1	postsincronizzante	postsincronizzare	v	*
 V.PTCP;PST	1	biluxato	biluxare	v	*
@@ -428,11 +408,6 @@ V.PTCP;PRS	1	ricalcificante	ricalcificare	v	*
 V.PTCP;PRS	1	decompilante	decompilare	v	*
 V.PTCP;PST	1	estrapolato	estrapolare	v	*
 V.PTCP;PST	1	intrecciato	intrecciare	v	*
-V.CVB;PRS	1	ripolarizzando	ripolarizzare	v	*
-V.PTCP;PST	1	eclissato	eclissare	v	*
-V.PTCP;PST	1	riqualificato	riqualificare	v	*
-V.PTCP;PRS	1	impostante	impostare	v	*
-V.PTCP;PRS	1	bulinante	bulinare	v	*
 V;IND;PST;3;PL;PFV	1	si centuplicarono	centuplicarsi	v	*
 V;IND;FUT;2;PL	1	vi familiarizzerete	familiarizzarsi	v	*
 V.CVB;PRS	1	maturandosi	maturarsi	v	*
@@ -571,16 +546,6 @@ V;IND;PST;2;SG;PFV	1	ti giurasti	giurarsi	v	*
 V;IND;FUT;3;SG	1	si contornerà	contornarsi	v	*
 V;POS;IMP;2;SG	1	obbligati	obbligarsi	v	*
 V;IND;FUT;1;SG	1	mi estenderò	estendersi	v	*
-V;IND;PST;3;PL;IPFV	1	si assideravano	assiderarsi	v	*
-V;IND;PST;1;PL;IPFV	1	ci bruciavamo	bruciarsi	v	*
-V;IND;PST;3;PL;PFV	1	si denaturarono	denaturarsi	v	*
-V;IND;PST;1;SG;IPFV	1	mi appesantivo	appesantirsi	v	*
-V;IND;PST;1;SG;PFV	1	mi ridestai	ridestarsi	v	*
-V;IND;PST;1;SG;PFV	1	mi insospettii	insospettirsi	v	*
-V;IND;PST;1;SG;IPFV	1	mi raccomandavo	raccomandarsi	v	*
-V;SBJV;PST;1;SG	1	mi cercassi	cercarsi	v	*
-V.PTCP;PST	1	allietato	allietarsi	v	*
-V;POS;IMP;1;PL	1	scoloriamoci	scolorarsi	v	*
 noun:plural	1	calandrature	calandratura	n	*
 noun:plural	1	strozzamenti	strozzamento	n	*
 noun:plural	1	omopolimerizzazioni	omopolimerizzazione	n	*
@@ -706,16 +671,6 @@ noun:plural	1	scompaginature	scompaginatura	n	*
 noun:plural	1	gloriuzze	gloriuzza	n	*
 noun:plural	1	termoreattori	termoreattore	n	*
 noun:plural	1	camerlenghi	camerlengo	n	*
-noun:plural	1	proteinemie	proteinemia	n	*
-noun:plural	1	sproloqui	sproloquio	n	*
-noun:plural	1	sottodominanti	sottodominante	n	*
-noun:plural	1	riallacciamenti	riallacciamento	n	*
-noun:plural	1	reami	reame	n	*
-noun:plural	1	zonazioni	zonazione	n	*
-noun:plural	1	binomi	binomio	n	*
-noun:plural	1	coassicuratori	coassicuratore	n	*
-noun:plural	1	capovaccai	capovaccaio	n	*
-noun:plural	1	accattoni	accattone	n	*
 noun:feminine	1	tatuatrice	tatuatore	n	*
 noun:feminine	1	succhiatrice	succhiatore	n	*
 noun:feminine	1	attestatrice	attestatore	n	*
@@ -837,8 +792,3 @@ adj:feminine,plural	1	quadrilinee	quadrilineo	adj	*
 adj:feminine,plural	1	radiestesiche	radiestesico	adj	*
 adj:feminine,plural	1	opposte	opposto	adj	*
 adj:feminine	1	buggata	buggato	adj	*
-adj:masculine,plural	1	eterometaboli	eterometabolo	adj	*
-adj:feminine,plural	1	neuromotorie	neuromotorio	adj	*
-adj:masculine,plural	1	cramponati	cramponato	adj	*
-adj:feminine	1	oligoemica	oligoemico	adj	*
-adj:feminine	1	pericolosa	pericoloso	adj	*

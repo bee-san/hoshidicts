@@ -3,7 +3,7 @@
 # Hand-written rows (categories without ";" or ":"): written for this pack, no third-party data.
 # Source: UniMorph ita (https://github.com/unimorph/ita/blob/fa2cc6ce173643e748bd8f4162709365bdc98805/ita, sha256 6347bb15b3d2c3da), CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/), by the UniMorph contributors, from English Wiktionary: the verb rows (category: UniMorph tags; a space after an elided pronoun removed).
 # Source: kaikki.org's Italian dictionary (https://kaikki.org/dictionary/Italian/, extracted 2026-10-30 from enwiktionary 2026-10-01, sha256 edfb787898b80c6e), English Wiktionary content, CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/) and GFDL, by the Wiktionary contributors: the noun and adjective rows (category: part of speech and form tags).
-# 850 rows sampled with seed 1 by sources/build-corpus.mjs (360 verb, finite, 70 verb, gerund or participle, 150 verb with pronouns, 135 noun, plural, 15 noun, other gender, 120 adjective); the rows the pack's rules reach with its defaults are in corpus.tsv, the others in gaps.tsv.
+# 800 rows sampled with seed 1 by sources/build-corpus.mjs (340 verb, finite, 65 verb, gerund or participle, 140 verb with pronouns, 125 noun, plural, 15 noun, other gender, 115 adjective); the rows the pack's rules reach with its defaults are in corpus.tsv, the others in gaps.tsv.
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
 V;SBJV;PRS;1;SG	1	mi prolunghi	prolungarsi	v	*
 V;SBJV;PRS;1;SG	1	mi invigorisca	invigorirsi	v	*

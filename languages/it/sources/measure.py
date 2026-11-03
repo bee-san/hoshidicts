@@ -377,6 +377,7 @@ def cmd_pronouns(args):
     groups = collections.Counter()
     examples = {}
     unconfirmed = []
+    pronominal = []
     for hover, pronoun, res in zip(hovers, pronouns, results):
         f = first(res)
         if f is None:
@@ -400,6 +401,8 @@ def cmd_pronouns(args):
         examples.setdefault(key, hover[:60])
         if verdict == "not confirmed":
             unconfirmed.append((hover, f))
+        if verdict == "pronominal":
+            pronominal.append((hover, f))
     lines = [f"{len(hovers)} places; " + ", ".join(f"{k}: {v}" for k, v in tally.most_common())]
     lines.append("not confirmed first results over the phrase, largest groups:")
     for (verdict, matched, expression), c in groups.most_common():
@@ -408,6 +411,9 @@ def cmd_pronouns(args):
     random.seed(20261103)
     lines.append(f"random sample of {min(sample, len(unconfirmed))} not confirmed places (judge by hand):")
     for hover, f in random.sample(unconfirmed, min(sample, len(unconfirmed))):
+        lines.append(f"  {describe(f)}\t{hover[:70]}")
+    lines.append(f"random sample of {min(sample, len(pronominal))} -rsi readings (judge by hand):")
+    for hover, f in random.sample(pronominal, min(sample, len(pronominal))):
         lines.append(f"  {describe(f)}\t{hover[:70]}")
     write(lines, out_file)
 

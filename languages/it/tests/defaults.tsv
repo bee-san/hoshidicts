@@ -422,11 +422,17 @@ strong	1	esistito	esistere	v	participle
 strong	1	assistito	assistere	v	participle
 strong	1	ascose	ascondere	v	preterite-lui
 strong	1	corrisposto	corrispondere	v	participle
-pronominal-participle	1	pentito	pentirsi	v	participle-pronominal|participle
-pronominal-participle	1	accorto	accorgersi	v	participle-pronominal|participle
+pronominal-participle	1	pentito	pentirsi	v	participle-pronominal
+pronominal-participle	0	alzare	alzarsi	*	*
+pronominal-participle	0	tuta	tersi	*	*
+pronominal-participle	0	data	darsi	*	*
+pronominal-participle	1	accorto	accorgersi	v	participle-pronominal
+pronominal-participle	1	permessa	permettersi	v	participle-pronominal
 pronominal-participle	1	misurantesi	misurarsi	v	participle-present
-pronominal-participle	1	inginocchiata	inginocchiarsi	v	participle-pronominal|participle
-pronominal-participle	1	calcolato	calcolarsi	v	participle-pronominal|participle
+pronominal-participle	1	inginocchiata	inginocchiarsi	v	participle-pronominal
+pronominal-participle	1	pentiti	pentirsi	v	participle-pronominal
+pronominal-participle	1	abbattute	abbattersi	v	participle-pronominal
+pronominal-participle	1	calcolato	calcolarsi	v	participle-pronominal
 pronominal-participle	0	comperato	comperarsi	*	*
 infinitive	1	parlarmi	parlare	v	infinitive|clitic-mi
 infinitive	0	parli	pare	*	*
@@ -557,13 +563,33 @@ pronominal	1	mi dico	dirsi	v	pronominal|present-io|proclitic
 pronominal	1	si dà	darsi	v	pronominal|present-lui|proclitic
 pronominal	1	me la bevo	bersela	v	pronominal|present-io|proclitic
 pronominal	1	si rifà	rifarsi	v	pronominal|present-lui|proclitic
-pronominal	1	si sta	starsi	v	pronominal|present-lui|proclitic
 pronominal	1	ci amiamo	amarsi	v	pronominal|present-noi|proclitic
 pronominal	1	si unisce	unirsi	v	pronominal|present-lui|proclitic
 pronominal	1	si usa	usarsi	v	pronominal|present-lui|proclitic
 pronominal	1	ti preoccupare	preoccuparsi	v	pronominal|proclitic
 pronominal	0	ti pre occupare	pre occuparsi	*	*
 pronominal	0	ti scorre	scorsi	*	*
+climbing	1	si sta divertendo	divertirsi	v	pronominal|gerund|climbing|proclitic
+climbing	1	mi sto preparando	prepararsi	v	pronominal|gerund|climbing|proclitic
+climbing	1	ti stai sbagliando	sbagliarsi	v	pronominal|gerund|climbing|proclitic
+climbing	1	ci stiamo avvicinando	avvicinarsi	v	pronominal|gerund|climbing|proclitic
+climbing	1	vi state preparando	prepararsi	v	pronominal|gerund|climbing|proclitic
+climbing	1	se ne sta andando	andarsene	v	pronominal|gerund|climbing|proclitic
+climbing	1	si sta facendo	farsi	v	pronominal|gerund|climbing|proclitic
+climbing	1	mi devo alzare	alzarsi	v	pronominal|climbing|proclitic
+climbing	1	ti puoi sedere	sedersi	v	pronominal|climbing|proclitic
+climbing	1	ci dobbiamo vedere	vedersi	v	pronominal|climbing|proclitic
+climbing	1	vi dovete preoccupare	preoccuparsi	v	pronominal|climbing|proclitic
+climbing	1	me ne voglio andare	andarsene	v	pronominal|climbing|proclitic
+climbing	1	se ne deve andare	andarsene	v	pronominal|climbing|proclitic
+climbing	1	mi devo porre	porsi	v	pronominal|climbing|proclitic
+climbing	0	mi sta guardando	guardarsi	*	*
+climbing	0	mi devi aiutare	aiutarsi	*	*
+climbing	0	si può fare	farsi	*	*
+climbing	0	mi devo presto alzare	presto alzarsi	*	*
+climbing	0	si sta	starsi	*	*
+climbing	1	se ne stava	starsene	v	pronominal|imperfect-lui|proclitic
+climbing	1	ci sta	starci	v	pronominal|present-lui|proclitic
 pronominal	0	ti pare	parsi	*	*
 pronominal	1	ti fare	farsi	v	pronominal|proclitic
 pronominal	0	se ne vola	volersene	*	*
