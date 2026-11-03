@@ -440,7 +440,8 @@ const PRESENT_PERSONS = [
     ['presentWe', 'present (we)', 'ن', 'we do', 'نكتب', ['رى']],
 ];
 // A sound verb with an object pronoun is also read in one step, as Yomitan
-// reads it: يمكنك is يمكن + ـك, never يمكن + ـكن + ـك (يم), which two pronoun
+// reads it (on al-Nazarat, Kalila wa Dimna and Tatoeba it puts the right
+// lemma first at 600 positions and a wrong one at 31): يمكنك is يمكن + ـك, never يمكن + ـكن + ـك (يم), which two pronoun
 // rules would make in as many steps (a pronoun rule's output has no
 // conditions, so that particles such as من in منه are found, and so it cannot
 // keep another pronoun rule from following).
@@ -449,7 +450,9 @@ for (const [id, name, p, gloss, example, see] of PRESENT_PERSONS) {
     transform(id, name, `The present tense "${gloss}", which is also its subjunctive and jussive: ${example} (كتب); يقول (قال), يدعو (دعا), يرمي (رمى), ينسى (نسي), يكرم (أكرم), يستخدم (استخدم), يصل (وصل), يرى (رأى). With an object pronoun in the same step: يمكنك, يعرفه.`, [
         ...presentRules(PRESENT[p], '', {defective: [['و', 'ا'], ['ي', 'ى'], ['ى', 'ي'], ['ى', 'ا']], hamza: [['أ', 'ئ']]}),
         ...seeRules(PRESENT[p], see),
-        cross(PRESENT[p], OBJECTS.map((pr) => [pr, ''])),
+        // Not after ي, و, ى or ا, where the verb is defective (يعطيه -> أعطى,
+        // يرميه -> رمى): its own rules read it with the pronoun rules.
+        cross(PRESENT[p], OBJECTS.map((pr) => [pr, '']), {extra: {stemNotEndsWith: '[يوىا]'}}),
     ]);
 }
 for (const [id, name, p, gloss, example] of [
