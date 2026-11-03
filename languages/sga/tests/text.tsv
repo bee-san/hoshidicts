@@ -6,14 +6,14 @@ middleDot	1	ní‧beir	ní·beir
 middleDot	1	ní∙beir	ní·beir
 middleDot	1	ní⋅beir	ní·beir
 middleDot	1	ní·beir	ní·beir
-decapitalize	1	Ní·charat	ní·charat
+decapitalize	1	Ní·carat	ní·carat
 decapitalize	1	CHENN	chenn
 capitalizeFirstLetter	1	érinn	Érinn
 capitalizeFirstLetter	1	hérinn	Hérinn
 removeAlphabeticDiacritics	1	ḟer	fer
 removeAlphabeticDiacritics	1	ṡúil	suil
 removeAlphabeticDiacritics	1	mná	mna
-removeAlphabeticDiacritics	1	ní·charat	ni·charat
+removeAlphabeticDiacritics	1	ní·carat	ni·carat
 aeLigature	1	dǽ	dáe
 aeLigature	1	æcni	aecni
 aeLigature	1	Ǽrinn	Áerinn
@@ -21,3 +21,6 @@ macronLength	1	bātar	bátar
 macronLength	1	Crūachnaib	crúachnaib
 macronLength	0	bātar	bātar
 macronLength	1	fǣbraib	fǽbraib
+macronLength	1	Lōeg	Lóeg
+macronLength	1	Cēin	Céin
+macronLength	1	īarum	íarum

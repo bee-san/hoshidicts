@@ -117,6 +117,9 @@
         "pref": "Prefix",
         "suf": "Suffix",
         "phrase": "Phrase",
+        "prep-phrase": "Prepositional phrase",
+        "abbv": "Abbreviation",
+        "intj": "Interjection",
         "masc": "Masculine",
         "fem": "Feminine",
         "neut": "Neuter"
@@ -134,16 +137,16 @@
     "sample": {
       "warmup": "caraid",
       "practice": {
-        "text": "Ní·charat ind ḟir in n-ech.",
-        "lookup": "Ní·charat"
+        "text": "Ní·carat ind ḟir in n-ech.",
+        "lookup": "Ní·carat"
       },
       "entry": {
         "expression": "caraid",
         "reading": "caraid",
         "glossary": ["to love"],
         "definitionTags": "v",
-        "matched": "Ní·charat",
-        "trace": ["conjunct particle", "lenition", "present", "absolute"]
+        "matched": "Ní·carat",
+        "trace": ["conjunct particle", "present", "absolute"]
       },
       "character": null
     }

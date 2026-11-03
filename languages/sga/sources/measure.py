@@ -16,10 +16,18 @@ scratch directory for rule-set copies and outputs. Commands:
             untaggedTerms values and both option modes, on the sample
             (corpus.tsv with gaps.tsv) and cases.tsv
   text      every word of the Táin, the Würzburg glosses and the UD
-            treebanks looked up as a host does, for every set
+            treebanks looked up as a host does, for every set; the Táin's
+            first results classed against the dictionary alone (no rules)
+  perrule   eval-language --per-rule for the union and the final set on the
+            sample, summed by transform (README.md, Rule provenance)
   frequent  the Würzburg glosses' word forms as a frequency list
   contexts  forms right after an article or a conjunct particle
-  judge     the readings judged by hand in sources/judged-tain.tsv
+  judge     the readings judged by hand in sources/judged-tain.tsv: every
+            Táin first result a rule puts in place of the dictionary's own,
+            the 70 most frequent where the dictionary alone has nothing, a
+            random sample of 100 of the other lookups of that class, and
+            every first result the union reaches through Yomitan's lenited
+  tally     the verdicts of sources/judged-tain.tsv counted by set
 
 Build build/hoshidicts-cli and build/lookup-batch-sga first (sources/lookup-batch.cpp).
 """
@@ -278,37 +286,56 @@ def rule_ids():
     return ids
 
 
+def first_results(args, name, texts, tag):
+    return [r['results'][0] if r['results'] else None for r in batch(args, name, texts, tag)]
+
+
+def tain_classes(args, name, tain, rules, base=None):
+    """The class of each Táin lookup's first result for one rule set,
+    against the first result of the dictionary alone (`norules`):
+    - nothing;
+    - the dictionary's reading: no rule in the trace (the text as written or
+      a form-of row of the text);
+    - a rule's reading the dictionary alone also puts first;
+    - a rule's reading that replaces the dictionary's own first result;
+    - a rule's reading where the dictionary alone has nothing."""
+    firsts = first_results(args, name, [h for _, h in tain], 'tain')
+    if base is None:
+        base = firsts
+    out = []
+    for first, alone in zip(firsts, base):
+        if first is None:
+            out.append(('nothing', first, alone))
+        elif not any(t in rules for t in first['trace']):
+            out.append(('the dictionary\'s reading', first, alone))
+        elif alone is not None and alone['expression'] == first['expression']:
+            out.append(('a rule, the dictionary alone puts it first', first, alone))
+        elif alone is not None:
+            out.append(('a rule, replaces the dictionary\'s first result', first, alone))
+        else:
+            out.append(('a rule, the dictionary alone has nothing', first, alone))
+    return out
+
+
 def text(args):
     _rows, lemmas, refs = load_dictionary(args.cache)
     rules = rule_ids()
     lemma_norm = {norm(l) for l in lemmas}
     summary = {}
-    # The Táin: judged by script where the dictionary names the lemma.
     tain = [h for line in tain_text(args.cache).split('\n') if line.strip() for h in hovers(line)]
+    base = first_results(args, 'norules', [h for _, h in tain], 'tain')
     for name in SETS:
-        results = batch(args, name, [h for _, h in tain], 'tain')
-        counts = collections.Counter()
+        classes = tain_classes(args, name, tain, rules, base)
+        counts = collections.Counter(c for c, _, _ in classes)
         groups = collections.Counter()
-        for (word, _), r in zip(tain, results):
-            if not r['results']:
-                counts['nothing'] += 1
-                continue
-            first = r['results'][0]
-            used = [t for t in first['trace'] if t in rules]
-            named = set()
-            for v in {first['matched'], first['matched'].lower(), strip_marks(first['matched'].lower())}:
-                named |= refs.get(v, set())
-            if not used:
-                counts['form-of row of the text' if first['trace'] else 'the text as written'] += 1
-            elif first['expression'] in named or norm(first['expression']) in {norm(x) for x in named}:
-                counts['a rule, confirmed by a form-of row of the text'] += 1
-            else:
-                counts['a rule, judged by hand'] += 1
+        for c, first, _ in classes:
+            if c.startswith('a rule, the dictionary alone has nothing') or c.startswith('a rule, replaces'):
+                used = [t for t in first['trace'] if t in rules]
                 groups[used[-1]] += 1
-        summary[f'tain {name}'] = {'lookups': len(tain), **counts, 'by rule (judged by hand)': dict(groups.most_common(12))}
+        summary[f'tain {name}'] = {'lookups': len(tain), **counts, 'by first rule (judged by hand)': dict(groups.most_common(12))}
     # Gold lemmas: the Würzburg glosses and UD.
     gold = gold_hovers(args.cache)
-    for name in SETS:
+    for name in SETS + ['filter-final']:
         results = batch(args, name, [g[1] for g in gold], 'gold')
         counts = collections.Counter()
         wrong_by_rule = collections.Counter()
@@ -335,6 +362,31 @@ def text(args):
         print(k, json.dumps(v, ensure_ascii=False))
     with open(os.path.join(args.work, 'text.json'), 'w', encoding='utf-8') as f:
         json.dump(summary, f, ensure_ascii=False, indent=1)
+
+
+def perrule(args):
+    """--per-rule on the sample for the union and the final set, summed by
+    transform: rows only it recovers, false candidates only it adds,
+    negatives of cases.tsv only it breaks."""
+    dictionary = os.path.join(args.cache, 'wty-sga-en')
+    files = os.path.join(args.work, 'eval')
+    for name in ['union', 'final']:
+        for base in ['sample', 'cases']:
+            path = os.path.join(files, f'{base}-{name}-a.tsv')
+            out = subprocess.run([CLI, '--languages', pack_dir(args, name), 'eval-language', 'sga', path, '--dictionary', dictionary, '--per-rule'],
+                                 capture_output=True, text=True, check=True)
+            result = json.loads(out.stdout)
+            sums = collections.defaultdict(lambda: [0, 0, 0])
+            for r in result['perRule']:
+                a = sums[r['transform']]
+                a[0] += r['recovers']
+                a[1] += r['falseCandidates']
+                a[2] += r['breaks']
+            recovering = sum(1 for r in result['perRule'] if r['recovers'] > 0)
+            print(f'{name} {base}: {recovering} rules recover a row only they reach; by transform (recovers, false candidates, breaks):')
+            for t, (rec, fc, br) in sorted(sums.items(), key=lambda kv: (-kv[1][1], kv[0])):
+                if rec or fc or br:
+                    print(f'  {t}\t{rec}\t{fc}\t{br}')
 
 
 def deinflect_reaches(args, name, words, lemmas_wanted):
@@ -431,59 +483,99 @@ def contexts(args):
 
 
 def judge(args):
-    """The readings judged by hand (sources/judged-tain.tsv): (1) a random
-    sample, seed 20261103, of 80 of the distinct first results the final set
-    reaches in the Táin through a rule without a form-of row of the text
-    naming them, and (2) every first result the union reaches through
-    Yomitan's `lenited`. Run `text` first."""
+    """The readings judged by hand in sources/judged-tain.tsv. Run `text`
+    first. Sets: `replaced` (every first result a rule puts in place of the
+    dictionary's own, by reading), `top` (the 70 most frequent readings where
+    the dictionary alone has nothing), `sample` (100 lookups drawn with seed
+    20261103 from the other lookups of that class, by position, so that a
+    reading is drawn as often as it occurs), `lenited` (every first result
+    the union reaches through Yomitan's lenited). For `replaced`, the column
+    after the dictionary's first result says whether a form-of row of the
+    text also names the rules' first result: then both are terms the
+    dictionary names, and their order is discovery order (the framework's
+    tie, README Known gaps)."""
     import random
-    _rows, _lemmas, refs = load_dictionary(args.cache)
     rules = rule_ids()
+    _rows, _lemmas, refs = load_dictionary(args.cache)
+    macron = str.maketrans('āēīōūǣĀĒĪŌŪǢ', 'áéíóúǽÁÉÍÓÚǼ')
+    def named(first):
+        w = first['matched']
+        forms = {w, w.lower(), w.translate(macron), w.lower().translate(macron)}
+        forms |= {strip_marks(x) for x in forms}
+        return first['expression'] in set().union(*[refs.get(x, set()) for x in forms])
     tain = [h for line in tain_text(args.cache).split('\n') if line.strip() for h in hovers(line)]
-    def readings(name, keep):
-        with open(os.path.join(args.work, 'lookups', f'tain-{name}.jsonl'), encoding='utf-8') as f:
-            results = [json.loads(l) for l in f]
-        found, count = {}, collections.Counter()
-        for (_word, h), r in zip(tain, results):
-            if not r['results']:
-                continue
-            first = r['results'][0]
-            if not keep(first):
-                continue
-            key = (first['matched'].lower(), first['expression'])
-            count[key] += 1
-            found.setdefault(key, (first['matched'], first['expression'], '|'.join(first['trace']), h[:70]))
-        return found, count
-    def not_confirmed(first):
-        if not any(t in rules for t in first['trace']):
-            return False
-        named = set()
-        for v in {first['matched'], first['matched'].lower(), strip_marks(first['matched'].lower())}:
-            named |= refs.get(v, set())
-        return not (first['expression'] in named or norm(first['expression']) in {norm(x) for x in named})
-    found, count = readings('final', not_confirmed)
+    base = first_results(args, 'norules', [h for _, h in tain], 'tain')
+    classes = tain_classes(args, 'final', tain, rules, base)
+    def key(first):
+        return (first['matched'].lower(), first['expression'])
+    def row(kind, i, count, first, alone, context):
+        tie = ('yes' if named(first) else 'no') if kind == 'replaced' else ''
+        return '\t'.join([kind, str(i), str(count), first['matched'], first['expression'], '|'.join(first['trace']),
+                          alone['expression'] if alone else '', tie, context[:70]])
+    replaced, nothing = collections.Counter(), collections.Counter()
+    seen = {}
+    positions = []
+    for (_w, h), (c, first, alone) in zip(tain, classes):
+        if c.startswith('a rule, replaces'):
+            replaced[key(first)] += 1
+            seen.setdefault(key(first), (first, alone, h))
+        elif c.startswith('a rule, the dictionary alone has nothing'):
+            nothing[key(first)] += 1
+            seen.setdefault(key(first), (first, alone, h))
+            positions.append(key(first))
+    print(f'# replaced: {sum(replaced.values())} lookups, {len(replaced)} readings')
+    for i, k in enumerate(sorted(replaced, key=lambda k: (-replaced[k], k)), 1):
+        print(row('replaced', i, replaced[k], *seen[k]))
+    top = sorted(nothing, key=lambda k: (-nothing[k], k))[:70]
+    print(f'# nothing: {sum(nothing.values())} lookups, {len(nothing)} readings; top 70 cover {sum(nothing[k] for k in top)}')
+    for i, k in enumerate(top, 1):
+        print(row('top', i, nothing[k], *seen[k]))
+    rest = [k for k in positions if k not in set(top)]
     random.seed(20261103)
-    sample = random.sample(sorted(found), 80)
-    print(f'# final: {sum(count.values())} positions, {len(found)} distinct readings; sample of 80')
-    for i, key in enumerate(sample, 1):
-        matched, expression, trace, context = found[key]
-        print(f'sample\t{i}\t{count[key]}\t{matched}\t{expression}\t{trace}\t{context}')
-    found, count = readings('union', lambda first: 'lenited' in first['trace'])
-    print(f'# union through lenited: {sum(count.values())} positions, {len(found)} distinct readings')
-    for i, key in enumerate(sorted(found, key=lambda k: (-count[k], k)), 1):
-        matched, expression, trace, context = found[key]
-        print(f'lenited\t{i}\t{count[key]}\t{matched}\t{expression}\t{trace}\t{context}')
+    drawn = collections.Counter(random.sample(rest, min(100, len(rest))))
+    print(f'# sample: 100 of the other {len(rest)} lookups, {len(drawn)} readings')
+    for i, k in enumerate(sorted(drawn, key=lambda k: (-drawn[k], k)), 1):
+        print(row('sample', i, drawn[k], *seen[k]))
+    # The union through lenited.
+    union = tain_classes(args, 'union', tain, rules, base)
+    lenited, lseen = collections.Counter(), {}
+    for (_w, h), (c, first, alone) in zip(tain, union):
+        if first is not None and 'lenited' in first['trace']:
+            lenited[key(first)] += 1
+            lseen.setdefault(key(first), (first, alone, h))
+    print(f'# lenited: {sum(lenited.values())} lookups, {len(lenited)} readings')
+    for i, k in enumerate(sorted(lenited, key=lambda k: (-lenited[k], k)), 1):
+        print(row('lenited', i, lenited[k], *lseen[k]))
+
+
+def tally(args):
+    """Counts of sources/judged-tain.tsv: per set, readings and lookups by
+    verdict; for `replaced`, also by form-of tie."""
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'judged-tain.tsv')
+    readings, lookups = collections.Counter(), collections.Counter()
+    with open(path, encoding='utf-8') as f:
+        for line in f:
+            if line.startswith('#'):
+                continue
+            kind, _i, n, _w, _first, _trace, _alone, tie, verdict = line.rstrip('\n').split('\t')[:9]
+            for key in [(kind, verdict)] + ([(kind + ' tie ' + tie, verdict)] if tie else []):
+                readings[key] += 1
+                lookups[key] += int(n)
+    for kind in sorted({k for k, _ in readings}):
+        out = {v: [readings[(kind, v)], lookups[(kind, v)]] for v in ('right', 'wrong', 'unsure')}
+        print(kind, json.dumps({'readings': sum(r for r, _ in out.values()), 'lookups': sum(l for _, l in out.values()),
+                                '[readings, lookups] by verdict': out}, ensure_ascii=False))
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('command', choices=['scratch', 'eval', 'text', 'frequent', 'contexts', 'judge'])
+    parser.add_argument('command', choices=['scratch', 'eval', 'text', 'perrule', 'frequent', 'contexts', 'judge', 'tally'])
     parser.add_argument('--cache', required=True)
     parser.add_argument('--work', required=True)
     args = parser.parse_args()
     check_inputs(args.cache)
     unzip_dictionary(args.cache)
-    {'scratch': scratch, 'eval': evaluate, 'text': text, 'frequent': frequent, 'contexts': contexts, 'judge': judge}[args.command](args)
+    {'scratch': scratch, 'eval': evaluate, 'text': text, 'perrule': perrule, 'frequent': frequent, 'contexts': contexts, 'judge': judge, 'tally': tally}[args.command](args)
 
 
 if __name__ == '__main__':

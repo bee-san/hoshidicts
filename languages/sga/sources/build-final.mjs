@@ -36,7 +36,7 @@ import {readFileSync} from 'node:fs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 // Yomitan transforms left out for measured harm (README.md, Rule provenance).
-const DROP = ['lenited'];
+const DROP = ['lenited', 'ǽ/æ for é'];
 // Single Yomitan rules left out: [transform id, rule index, reason].
 const DROP_RULES = [
     ['[IM] nasalized (Middle Irish)', 2, 'dt → d reads eclipsed t as d (dtech → dech, a headword "best"); eclipsed t is t'],

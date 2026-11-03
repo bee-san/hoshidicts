@@ -1,7 +1,7 @@
 # Source: written for this pack (GPL-3.0-or-later), against tests/dictionary/. The pack has no optional feature, so these lookups are as a host makes them by default.
 # category	valid	text	expression	matched
-verbal complex	1	Ní·charat ind ḟir in n-ech	caraid	Ní·charat
-verbal complex	1	ní·charat	caraid	ní·charat
+verbal complex	1	Ní·carat ind ḟir in n-ech	caraid	Ní·carat
+verbal complex	1	nom·charat	caraid	nom·charat
 verbal complex	1	do·berat a n-ech	dobeir	do·berat
 verbal complex	1	dom·beir in n-ech	dobeir	dom·beir
 verbal complex	1	ro·gab in tech	gaibid	ro·gab
@@ -39,9 +39,17 @@ case	1	Feraib	fer	Feraib
 case	1	MNÁ	ben	MNÁ
 word boundary	1	fer mór	fer	fer
 word boundary	1	in fer	in	in
-negatives	0	cara	caraid	cara
+negatives	0	dtech	dech	dtech
 negatives	0	naib	na	naib
 negatives	0	mbói	bó	mbói
 untagged	1	clochaib móraib	cloch	clochaib
 negatives	0	ferxyz	fer	fer
 negatives	0	ní·xyzat	ní	ní
+abbreviation	1	⁊ in fer	⁊	⁊
+word boundary	1	mór-ech	mór	mór
+dot	0	ní‧xyzat	ní	ní
+dot	0	ní∙xyzat	ní	ní
+dot	0	ní⋅xyzat	ní	ní
+dot	0	ní·xyzat	ní	ní
+dot	0	ní·xyzat	ní	ní
+lenition	1	ḟir in tige	fer	ḟir

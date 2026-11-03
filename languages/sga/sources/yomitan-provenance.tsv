@@ -4,8 +4,8 @@ nd for nn	0	suffix	nd	nn	kept
 cg for c	0	replace	cg	c	kept
 td for t	0	replace	td	t	kept
 pb for p	0	replace	pb	p	kept
-ǽ/æ for é	0	replace	ǽ	é	kept
-ǽ/æ for é	1	replace	æ	é	kept
+ǽ/æ for é	0	replace	ǽ	é	left out (measured harm)
+ǽ/æ for é	1	replace	æ	é	left out (measured harm)
 doubled vowel	0	replace	aa	á	kept
 doubled vowel	1	replace	ee	é	kept
 doubled vowel	2	replace	ii	í	kept

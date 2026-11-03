@@ -33,5 +33,8 @@
   ["Érinn", "", "name", "", 0, ["Ireland (dative, accusative)"], 32, ""],
   ["fir", "", "non-lemma", "", 0, [["fer", ["genitive singular"]]], 33, ""],
   ["cloch", "", "n fem", "", 0, ["stone"], 34, ""],
-  ["ní", "", "ptcl", "", 0, ["not (negative particle)"], 35, ""]
+  ["ní", "", "ptcl", "", 0, ["not (negative particle)"], 35, ""],
+  ["dech", "", "adj", "adj", 0, ["best"], 36, ""],
+  ["⁊", "", "conj", "", 0, ["and (abbreviation of ocus)"], 37, ""],
+  ["and", "", "adv", "", 0, ["there"], 38, ""]
 ]

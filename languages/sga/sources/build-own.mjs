@@ -51,6 +51,8 @@ const here = dirname(fileURLToPath(import.meta.url));
 //   only keeps the alternations from being applied to each other's output
 //   (cenn → cend → cenn …), which multiplied the deinflections of a word
 //   with several of them into the hundreds.
+// - fw: a function word a whole-word rule reached (a conjugated preposition,
+//   ní's Middle Irish nocho, cenae, os é). No rule takes it.
 // A text after a removed initial mutation has no conditions: it can be any
 // word, and every rule applies to it as to the text as written.
 const conditions = {
@@ -67,6 +69,7 @@ const conditions = {
     nom_pal: {name: 'Noun or adjective stem with a palatal final consonant (fir, maicc)', isDictionaryForm: false},
     nom_uinf: {name: 'Noun or adjective stem with u-infection (fiur, purt)', isDictionaryForm: false},
     spelt: {name: 'Spelling variant (any part of speech)', isDictionaryForm: false},
+    fw: {name: 'Function word: preposition, article, particle, conjunction, adverb, numeral', isDictionaryForm: true},
 };
 
 const NOMINAL = ['n_dict', 'adj_dict'];
@@ -160,7 +163,7 @@ add('hProthesis', 'h-prothesis',
 // conjunct form, written after a dot (ní·beir). An infixed pronoun stands
 // between the particle or the first preverb and the dot (nom·charat "they
 // love me", dom·beir "gives me"). After the dot the verb may be lenited or
-// nasalised (ní·charat, nod·n-ail). A compound verb in deuterotonic form is
+// nasalised (nom·charat, nod·n-ail); in Middle Irish also after ní (ní·charat). A compound verb in deuterotonic form is
 // its preverb, the dot and the conjunct form (do·beir), and its headword is
 // written without the dot (dobeir).
 
@@ -208,13 +211,13 @@ add('infixedPronoun', 'infixed pronoun',
         return pfx(`${a}·`, `${b}·`, ['v_conj'], ['v_conj'], {stemStartsWith: '[{letter}]'});
     }));
 
-// Lenition and nasalisation after the dot (ní·charat, ro·chan, nod·n-ail,
+// Lenition and nasalisation after the dot (nom·charat, ro·chan, nod·n-ail,
 // forsa·mmitter): the first dot's following letters made radical.
 const afterDot = [
     ['ch', 'c'], ['th', 't'], ['ph', 'p'], ['ḟ', 'f'], ['ṡ', 's'], ['ḃ', 'b'], ['ċ', 'c'], ['ḋ', 'd'], ['ġ', 'g'], ['ṁ', 'm'], ['ṗ', 'p'], ['ṫ', 't'],
 ];
 add('lenitionAfterDot', 'lenition',
-    'Lenited initial of the stressed part of a verbal complex (ní·charat → ní·carat, do·chuirethar → do·cuirethar).',
+    'Lenited initial of the stressed part of a verbal complex (no·charat → no·carat, do·chuirethar → do·cuirethar).',
     afterDot.map(([from, to]) => replace(`·${from}`, `·${to}`, ['v_conj'], ['v_conj'], {occurrence: 'first'})));
 add('lenitedFAfterDot', 'lenition',
     'Lenited f, which is silent, not written after the dot (fod·era → fod·fera, ro·itir → ro·fitir).',
@@ -406,16 +409,20 @@ add('absolute', 'absolute',
 // berait, beirid) are palatalised back.
 const plain = (extra = {}) => ({stemCharacters: LETTERS, stemMinLength: 2, ...extra});
 const absolute = {
-    'pres-1sg': ['1st singular present', 'First singular present indicative or subjunctive (caraim → caraid, léiciu → léicid, biru → beirid, gníu → gníid).',
-        [['aim', 'aid'], ['aimm', 'aid'], ['u', 'aid'], ['im', 'id'], ['imm', 'id'], ['iu', 'id'], ['u', 'id']]],
+    // The stem of a weak or strong verb ends in a consonant before the
+    // ending (car-aim, léic-iu, bir-u); `druim` "ridge" is not dru- + -im.
+    'pres-1sg': ['1st singular present', 'First singular present indicative or subjunctive (caraim → caraid, léiciu → léicid, biru → beirid).',
+        [['aim', 'aid'], ['aimm', 'aid'], ['u', 'aid'], ['im', 'id'], ['imm', 'id'], ['iu', 'id'], ['u', 'id']], {stemEndsWith: CONSONANT_CLASS}],
     'pres-2sg': ['2nd singular present', 'Second singular present indicative (carai → caraid, biri → beirid).',
         [['ai', 'aid'], ['i', 'id']], {stemMinLength: 3, stemEndsWith: CONSONANT_CLASS}],
     'pres-1pl': ['1st plural present', 'First plural present indicative (carmai → caraid, léicmi → léicid, bermai → beirid).',
         [['mai', 'aid'], ['mmai', 'aid'], ['ammai', 'aid'], ['mi', 'id'], ['mmi', 'id'], ['mai', 'id']]],
     'pres-2pl': ['2nd plural present', 'Second plural present indicative (carthae → caraid, léicthe → léicid, beirthe → beirid).',
         [['thae', 'aid'], ['the', 'id']]],
+    // As in the first singular, the stem ends in a consonant: `dóit`
+    // (plural of doe "upper arm") and `táit` are no verbs in -id.
     'pres-3pl': ['3rd plural present', 'Third plural present indicative or subjunctive (carait → caraid, léicit → léicid, berait → beirid).',
-        [['ait', 'aid'], ['it', 'id'], ['ait', 'id']]],
+        [['ait', 'aid'], ['it', 'id'], ['ait', 'id']], {stemEndsWith: CONSONANT_CLASS}],
     'rel-3sg': ['relative', 'Third singular relative (caras → caraid, léices → léicid, beres → beirid, gnís → gníid).',
         [['as', 'aid'], ['es', 'id'], ['s', 'id']]],
     'rel-pl': ['relative', 'First and third plural relative (carmae, cartae → caraid; léicme, léicte → léicid).',
@@ -467,17 +474,17 @@ const copula = [
     // negative and dependent forms
     'nít', 'níth', 'nítat', 'nidat', 'nídat', 'níta', 'nípu', 'nípo', 'níbu', 'níbo', 'níba', 'nípa', 'níptar', 'níbtar', 'nibtar', 'níbad', 'nípad', 'níbat', 'nípat',
     // subjunctive, past subjunctive, preterite, future
-    'ba', 'bá', 'bat', 'bad', 'bed', 'bid', 'bith', 'bit', 'bes', 'bas', 'betis', 'batar', 'robo', 'ropo', 'robu', 'ropu', 'rop', 'rob', 'robtar', 'roptar', 'ropad', 'robad',
+    'ba', 'bá', 'bat', 'bad', 'bed', 'bid', 'bith', 'bit', 'bes', 'bas', 'bus', 'betis', 'batar', 'robo', 'ropo', 'robu', 'ropu', 'rop', 'rob', 'robtar', 'roptar', 'ropad', 'robad',
 ];
 add('copula', 'copula',
     'A form of the copula is (am, it, níptar, bid, ropo → is).',
-    uniq(copula).map((w) => whole(w, 'is', ['v_conj'], VERB)));
+    uniq(copula).map((w) => whole(w, 'is', [], VERB)));
 const substantive = [
     'atá', 'atáa', 'ataat', 'atáat', 'ataam', 'atam', 'ataí', 'atai',
     'tá', '·tá', 'táa', '·táa', 'taat', '·taat', 'atáa', 'tó', '·tó', 'taam', '·taam', 'taíd', '·taíd',
     'fil', '·fil', 'file', 'filet', '·filet', 'filus', 'filis',
     'bíu', 'bíuu', 'biuu', 'bí', 'bíid', 'biid', 'bíit', 'bíd', 'bíth', 'bíthir', 'bís', 'bimmi', 'bímmi',
-    'boí', 'boi', '·boí', 'bói', 'bátar', '·bátar', 'batar', 'bammar', 'bámmar', 'robátar', 'roboí', 'robói',
+    'boí', 'boi', '·boí', 'bói', 'bái', '·bái', 'bátar', '·bátar', 'batar', 'bammar', 'bámmar', 'robátar', 'roboí', 'robói',
     'bia', 'bieid', 'bias', 'bieit', 'bethir', '·bia', '·biat', 'bïat',
     'beith', 'beit', 'beid', 'bed', 'beth', 'betis', '·beth', '·betis', '·bet', 'roib', '·roib', 'robae', '·robae',
 ];
@@ -506,7 +513,7 @@ const endings = {
     'n-stem': ['n-stem', 'Oblique cases of n-stems (déicsin, déicsen → déicsiu; toimten → toimtiu; léimmen → léimm; luamain, luamon → luam).',
         [['in', 'iu'], ['en', 'iu']], {stemMinLength: 3, stemEndsWith: CONSONANT_CLASS}],
     'mn-stem': ['n-stem', 'Oblique cases of the neuter n-stems in -m (léimmen, léimmenaib, léimmim → léimm; neimim → neim; luamain, luamon, luamnaib → luam).',
-        [['men', 'm'], ['mim', 'm'], ['menaib', 'm'], ['main', 'm'], ['mon', 'm'], ['mna', 'm'], ['mnaib', 'm'], ['mann', 'm'], ['manaib', 'm'], ['me', 'm']], {stemMinLength: 2}],
+        [['men', 'm'], ['mim', 'm'], ['menaib', 'm'], ['main', 'm'], ['mon', 'm'], ['mna', 'm'], ['mnaib', 'm'], ['mann', 'm'], ['manaib', 'm'], ['me', 'm']], {stemMinLength: 3}],
     'aid-stem': ['i-stem', 'Oblique cases of the i-stems in -aid (sercada, sercado, sercadaib → sercaid; búada → búaid).',
         [['ada', 'aid'], ['ado', 'aid'], ['adaib', 'aid'], ['adi', 'aid']], {stemMinLength: 2}],
     'dental-stem': ['dental stem', 'Oblique cases of the abstract nouns in -tu (slántad, slántaid → slántu; treodatad → treodatu).',
@@ -516,12 +523,20 @@ const endings = {
     'guttural-stem': ['guttural stem', 'Oblique cases of the k-stems cathair and nathair (cathrach, cathraig → cathair).',
         [['rach', 'air'], ['raig', 'air'], ['rchaib', 'air'], ['rachaib', 'air']], {stemMinLength: 3, stemEndsWith: '[h]'}],
 };
+// gilla "lad" is no plural or genitive: the dictionary has no entry for it,
+// and gill (a form of gell "pledge") would come first.
+const notPlural = {a: 'gill'};
 for (const [id, [name, description, list, extra = {}]] of Object.entries(endings)) {
     add(id, name, description, list.flatMap(([inflected, deinflected]) => {
-        const rules = [sfx(inflected, deinflected, [], NOMINAL, nom(extra))];
-        // The ending removed, the stem may still be palatal (túaithe →
-        // túaith → túath) or u-infected; the second step undoes it.
-        if (deinflected === '' && inflected !== 'aib' && inflected !== 'ib') {
+        const exclusion = (id === 'nom-pl' || id === 'gen-sg') && deinflected === '' && notPlural[inflected] !== undefined
+            ? {stemNotStartsWithText: notPlural[inflected]} : {};
+        const rules = [sfx(inflected, deinflected, [], NOMINAL, nom({...extra, ...exclusion}))];
+        // After an ending that starts with e or i the stem may still be
+        // palatal (túaithe → túaith → túath); the second step undoes it.
+        // Before a, o or u a consonant is not palatal, and e is raised to i
+        // only before u (firu, which acc-pl-raised reads), so `gilla` is
+        // not gell + -a.
+        if (deinflected === '' && /^[ei]/u.test(inflected) && inflected !== 'ib') {
             rules.push(sfx(inflected, '', [], ['nom_pal'], nom(extra)));
         }
         return rules;
@@ -573,12 +588,14 @@ add('acc-pl-raised', 'accusative plural',
 // Comparison of adjectives: comparative -iu, -u; superlative -em, -am;
 // equative -ithir, -idir; with the stem made palatal (siniu, sinem → sen;
 // mailliu → mall).
+// The comparative ending follows the adjective's final consonant: `síu`
+// "before" is not sí + -u.
 add('comparative', 'comparative',
     'Comparative of an adjective (bindiu → bind, ardu → ard, siniu → sen, mailliu → mall).',
     [
-        sfx('iu', '', [], ['adj_dict'], nom()),
-        sfx('u', '', [], ['adj_dict'], nom()),
-        sfx('iu', '', [], ['nom_pal'], nom()),
+        sfx('iu', '', [], ['adj_dict'], nom({stemEndsWith: CONSONANT_CLASS})),
+        sfx('u', '', [], ['adj_dict'], nom({stemEndsWith: CONSONANT_CLASS})),
+        sfx('iu', '', [], ['nom_pal'], nom({stemEndsWith: CONSONANT_CLASS})),
     ]);
 // Superlatives in -am (ardam) are left out: -am is also the first plural of
 // conjunct and imperative verbs (·cerdam, beram), which a real text has far
@@ -604,15 +621,21 @@ add('equative', 'equative',
 const irregularNouns = {
     'día': ['dé', 'dáe', 'dǽ', 'dee', 'déib', 'déi', 'dia', 'deo', 'dee'],
     'ben': ['mná', 'mnaí', 'mnai', 'ban', 'mnáib', 'mnaib', 'bein', 'mnaa'],
-    'bó': ['bóu', 'bou', 'baí', 'bai', 'bú', 'buaib', 'boin', 'bóib', 'báo'],
+    // Not bai: unmarked, the Táin's bái "was" (attá) is far more frequent.
+    'bó': ['bóu', 'bou', 'baí', 'bú', 'buaib', 'boin', 'bóib', 'báo'],
     'duine': ['dóini', 'doíni', 'dóine', 'doíne', 'dóinib', 'doínib', 'duini', 'dóenib'],
-    'cú': ['con', 'coin', 'conaib', 'cona', 'conu'],
+    'cú': ['coin', 'conaib', 'cona', 'conu'],
     'rí': ['ríg', 'ríga', 'rígu', 'rígaib', 'rig', 'riga'],
     'tech': ['taige', 'tige', 'tig', 'taig', 'tigi', 'tigib', 'tegdais'],
     'lá': ['laa', 'láa', 'lae', 'laithe', 'láithe', 'láib', 'laib', 'laithib'],
     'cara': ['carat', 'carait', 'cairde', 'cairdea', 'cairdib', 'carit'],
     'fili': ['filed', 'filid', 'fileda', 'filedaib', 'filedo'],
     'tene': ['tened', 'teneid', 'tenid'],
+    // mag "plain" (an s-stem): the genitive maige, which the dictionary
+    // keys as the adjective maige, and the later spelling maigi.
+    'mag': ['maigi'],
+    // dead "end": the dative díaid of i ndíaid "after".
+    'dead': ['díaid', 'diaid'],
 };
 add('irregularNoun', 'irregular noun',
     'A case form of an irregular noun (Dé → día, mná → ben, bóu → bó, dóini → duine, coin → cú, ríg → rí, taige → tech, laithe → lá).',
@@ -621,7 +644,55 @@ add('irregularNoun', 'irregular noun',
 // Words a text writes together that a dictionary lists apart.
 add('fused', 'spelling',
     'Words written together that dictionaries list apart (intan → in tan).',
-    [whole('intan', 'in tan', [], [])]);
+    [whole('intan', 'in tan', [], ['fw'])]);
+
+// Conjugated prepositions (Thurneysen §§ 432-439): a preposition with a
+// suffixed personal pronoun, read as the preposition. The dictionary keys
+// many of these as form-of rows, without length marks; texts write them
+// with marks (úaim), and some forms it lacks (leis, frim, remi). A
+// preposition with the possessive (triana "through his") is read the same
+// way. Each form maps to the dictionary's headword of the preposition.
+const prepositions = {
+    'a': ['ass', 'asum', 'essiut', 'essi', 'essib', 'esib', 'eissib'],
+    'ar': ['airium', 'airiut', 'airi', 'airthi', 'airiunn', 'airib', 'airriu', 'erum', 'erut', 'erunn', 'erib', 'erru'],
+    'co': ['cucum', 'cucut', 'cuci', 'cucai', 'cucunn', 'cucuib', 'cucu'],
+    'di': ['dím', 'dít', 'dín', 'dínn', 'díb', 'díib'],
+    'do': ['dom', 'dam', 'duit', 'dait', 'dún', 'dúib', 'duib', 'dóib', 'doib'],
+    'eter': ['etrom', 'etrum', 'etrut', 'etrunn', 'etruib', 'etarru'],
+    'fo': ['foum', 'fout', 'founn', 'foib'],
+    'for': ['form', 'fort', 'fair', 'foir', 'forrae', 'fornn', 'fuirib', 'forib', 'forru'],
+    'fri': ['frim', 'frimm', 'frium', 'frit', 'fritt', 'friut', 'fris', 'friss', 'frie', 'frinn', 'frib', 'friu'],
+    'imb': ['immum', 'immut', 'immunn', 'immib', 'impe', 'impu'],
+    'la': ['lim', 'limm', 'lium', 'lat', 'latt', 'leis', 'leiss', 'lee', 'linn', 'lib', 'leo', 'leu', 'lasa'],
+    'ó': ['úaim', 'úaimm', 'úait', 'úad', 'úadi', 'úaidi', 'úainn', 'úain', 'úaib', 'úadaib', 'úadib', 'uaim', 'uait', 'uad', 'uainn', 'uain', 'uaib', 'uadib'],
+    'oc': ['ocum', 'ocut', 'ocunn', 'occaib', 'occo'],
+    'ré': ['rium', 'riut', 'remi', 'rempe', 'riunn', 'remib'],
+    'tar': ['torum', 'torut', 'tairis', 'tairsi', 'torunn', 'toraib', 'tarru'],
+    'tri': ['trium', 'triut', 'triit', 'tree', 'triunn', 'triib', 'treu', 'treo', 'tria', 'triana'],
+    'úas': ['úasum', 'úasut', 'úaisi', 'úasunn', 'úasaib'],
+    'cen': ['cenum', 'cenut', 'cenunn', 'cenuib'],
+};
+add('prepositionalPronoun', 'conjugated preposition',
+    'A preposition with a suffixed pronoun or the possessive, read as the preposition (frim "to me" → fri, leis "with him" → la, úaim "from me" → ó, triana "through his" → tri).',
+    Object.entries(prepositions).flatMap(([head, forms]) => uniq(forms).map((f) => whole(f, head, [], ['fw']))));
+
+// Other function words in the spellings the texts have and the
+// dictionary does not key.
+add('functionWord', 'function word',
+    'A function word in a spelling the dictionary does not list: Middle Irish nocho for nícon "not", cena for cenae "besides", os é "and he", dond "to the", mesi for messe "I", nói and nái for noí "nine".',
+    [
+        whole('nocho', 'nícon', [], ['fw']), whole('nochon', 'nícon', [], ['fw']),
+        whole('cena', 'cene', [], ['fw']),
+        whole('ossé', 'os', [], ['fw']), whole('osse', 'os', [], ['fw']), whole('ossí', 'os', [], ['fw']),
+        whole('dond', 'in', [], ['fw']),
+        whole('mesi', 'messe', [], ['fw']), whole('messi', 'messe', [], ['fw']),
+        whole('nói', 'noí', [], ['fw']), whole('nái', 'noí', [], ['fw']),
+    ]);
+
+// A noun written without the length mark of its headword.
+add('unmarkedLength', 'spelling',
+    'A noun written without the length mark of its headword (liaig → líaig "physician").',
+    [whole('liaig', 'líaig', [], ['n_dict'])]);
 
 // ============================================================================
 // 4. Emphasising suffixes
@@ -661,7 +732,11 @@ add('spelling', 'spelling',
         replace('mm', 'mb', BEFORE_SPELT, SPELT, {occurrence: 'all', notAtStart: true}),
         sfx('c', 'cc', BEFORE_SPELT, SPELT, {stemMinLength: 2, stemCharacters: LETTERS, stemNotEndsWith: '[c]'}),
         sfx('t', 'tt', BEFORE_SPELT, SPELT, {stemMinLength: 2, stemCharacters: LETTERS, stemNotEndsWith: '[t]'}),
-        sfx('th', 'd', BEFORE_SPELT, SPELT, {stemMinLength: 3, stemCharacters: LETTERS}),
+        // Unstressed final -th for -d: only after a second syllable, so
+        // that stressed túaith, sceith, beith keep their t (as a plain
+        // suffix rule, túaith read as túaid and sceith as sceid).
+        {type: 'pattern', pattern: `^(.*${VOWEL_CLASS}[${CONSONANT}${CONSONANT.toUpperCase()}]+${VOWEL_CLASS}+)th$`,
+            replacement: '$1d', anchorSuffix: 'th', conditionsIn: BEFORE_SPELT, conditionsOut: SPELT},
         sfx('e', 'ae', BEFORE_SPELT, SPELT, {stemMinLength: 3, stemCharacters: LETTERS, stemNotEndsWith: LOWER_VOWEL_CLASS}),
         sfx('ae', 'e', BEFORE_SPELT, SPELT, {stemMinLength: 3, stemCharacters: LETTERS}),
     ]);
@@ -670,7 +745,7 @@ add('spelling', 'spelling',
 const emphaticHeads = ['som', 'sem', 'sa', 'se', 'su', 'so', 'siu', 'si', 'ni', 'sni'];
 add('emphaticAlone', 'emphasising suffix',
     'An emphasising suffix on its own, as a hover after the hyphen finds it: its headword has the hyphen (som → -som, sa → -sa).',
-    emphaticHeads.map((w) => whole(w, `-${w}`, [], [])));
+    emphaticHeads.map((w) => whole(w, `-${w}`, [], ['fw'])));
 
 // --- Output -------------------------------------------------------------------
 const out = {schema: 1, conditions, transforms};

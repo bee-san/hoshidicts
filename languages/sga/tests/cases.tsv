@@ -1,4 +1,4 @@
-# Source: written for this pack (GPL-3.0-or-later), no third-party data. Forms of the regular Old Irish paradigms (Thurneysen, A Grammar of Old Irish; Stifter, Sengoídelc). The pack has no optional processor or transform, so these rows run as a lookup does by default.
+# Source: written for this pack (GPL-3.0-or-later). The rows are single word forms and short phrases: forms of the regular Old Irish paradigms (Thurneysen, A Grammar of Old Irish; Stifter, Sengoídelc), forms checked against Wiktionary's inflection tables (kaikki.org, CC BY-SA 4.0), and words of the Táin (Strachan and O'Keeffe 1912, public domain) and the Würzburg glosses (CC BY 4.0) whose lookups the measurements showed to need a test (README.md, Measurements). No sentence, gloss or dictionary entry is copied. The pack has no optional processor or transform, so these rows run as a lookup does by default.
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
 lenition	1	chenn	cenn	*	lenition
 lenition	1	thech	tech	*	lenition
@@ -17,10 +17,10 @@ nasalization	1	nanmae	anmae	*	nasalizationNoHyphen
 hProthesis	1	hÉrinn	Érinn	*	hProthesis
 hProthesis	1	h-uile	uile	*	hProthesis
 hProthesis	1	huile	uile	*	hProthesis
-verbal complex	1	ní·charat	caraid	v	absolute|conj-pres|lenitionAfterDot|particle
+verbal complex	1	ní·carat	caraid	v	absolute|conj-pres|particle
+verbal complex	1	nom·charat	caraid	v	absolute|conj-pres|lenitionAfterDot|particle|infixedPronoun
 verbal complex	1	ní·beir	beirid	v	absolute|particle
 verbal complex	1	ro·gab	gaibid	v	*
-verbal complex	1	nom·charat	caraid	v	*
 verbal complex	1	nod·n-ail	ailid	v	*
 verbal complex	1	dom·beir	dobeir	v	deuterotonic|infixedPronoun
 verbal complex	1	do·chuirethar	docuirethar	v	deuterotonic|lenitionAfterDot
@@ -143,6 +143,10 @@ spelling	1	cend	cenn	*	spelling
 spelling	1	imb	imm	*	spelling
 spelling	1	mac	macc	*	spelling
 spelling	1	caraith	caraid	*	spelling
+spelling	1	cóiceth	cóiced	*	spelling
+constraint spelling	0	tūaith	túaid	*	*
+constraint spelling	0	sceith	sceid	*	*
+constraint spelling	0	Dauith	Dauid	*	*
 spelling	1	dorche	dorchae	*	spelling
 spelling	1	cendaib	cenn	*	*
 emphatic	1	labrad-sa	labrad	*	emphatic
@@ -150,7 +154,7 @@ emphatic	1	tuit-som	tuit	*	emphatic
 emphatic	1	as·berat-som	asbeir	v	*
 emphatic	1	som	-som	*	emphaticAlone
 emphatic	1	sa	-sa	*	emphaticAlone
-phrase	1	Ní·charat	caraid	v	*
+phrase	1	Ní·carat	caraid	v	*
 phrase	1	Ro·gab	gaibid	v	*
 phrase	1	CHENN	cenn	*	*
 # Negatives: wrong readings the constraints keep out.
@@ -165,13 +169,12 @@ negatives	0	dún	don	*	*
 negatives	0	ciam	cía	*	*
 negatives	0	nitat	níta	*	*
 negatives	0	beraid	bir	*	*
-negatives	0	daman	dam	*	*
 negatives	0	naib	aub	*	*
 verbal complex	1	dochuirethar	docuirethar	v	lenitionInCompound
 verbal complex	1	focheird	foceird	v	lenitionInCompound
 negatives	0	dochí	docí	*	*
 negatives	0	focheird in	foceird in	*	*
-verbal complex	1	dothǽt	dotét	v	ǽ/æ for é|lenitionInCompound
+verbal complex	1	dothǽt	dotét	v	tet|lenitionInCompound
 verbal complex	1	Dothéit	dotét	v	tet|lenitionInCompound
 copula	1	níth	is	v	copula
 conjunct	1	do·ṅgníat	dogní	v	*
@@ -250,7 +253,7 @@ constraint dat-pl	0	ɔsonaib	ɔson	*	*
 constraint nom-pl	0	ina	in	*	*
 constraint nom-pl	0	reliqua	reliqu	*	*
 constraint nom-pl	0	a·tá	a·t	*	*
-constraint gen-sg	0	ara	ar	*	*
+constraint gen-sg	0	hóre	ór	*	*
 constraint gen-sg	0	ndǽ	ndá	*	*
 constraint gen-sg	0	fod·era	fod·er	*	*
 constraint dat-sg-io	0	du	dae	*	*
@@ -285,7 +288,7 @@ constraint superlative	0	chóem	cho	*	*
 constraint superlative	0	as·indisem	as·innis	*	*
 constraint equative	0	aithir	a	*	*
 constraint equative	0	-igidir	-ig	*	*
-constraint spelling	0	maith	mad	*	*
+negatives	0	maith	mad	*	*
 constraint spelling	0	mmēit	mbeid	*	*
 constraint spelling	0	as·berat	as·beratt	*	*
 constraint spelling	0	inna	innaae	*	*
@@ -301,7 +304,6 @@ yomitan	1	comallnad	comalnad	*	doubled consonant
 yomitan	1	becg	bec	*	cg for c
 yomitan	1	sétd	sét	*	td for t
 yomitan	1	popbul	popul	*	pb for p
-yomitan	1	sǽt	sét	*	ǽ/æ for é
 yomitan	1	cland	clann	*	nd for nn
 yomitan	1	m-athair	athair	*	[IM] nasalized
 absolute	1	marbthai	marbaid	v	pret-pass
@@ -330,3 +332,59 @@ constraint conj-spelling	0	ad·n-aich	adn-aig	*	*
 constraint tet	0	for·téit	for·tét	*	*
 constraint emphatic	0	in fer-sa	in fer	*	*
 constraint emphatic	0	-sa	-	*	*
+# Conjugated prepositions and other function words (Thurneysen §§ 432-439).
+preposition	1	frim	fri	*	prepositionalPronoun
+preposition	1	leis	la	*	prepositionalPronoun
+preposition	1	leiss	la	*	prepositionalPronoun
+preposition	1	remi	ré	*	prepositionalPronoun
+preposition	1	úaim	ó	*	prepositionalPronoun
+preposition	1	ass	a	*	prepositionalPronoun
+preposition	1	latt	la	*	prepositionalPronoun
+preposition	1	duib	do	*	prepositionalPronoun
+preposition	1	triana	tri	*	prepositionalPronoun
+preposition	1	airi	ar	*	prepositionalPronoun
+function word	1	nocho	nícon	*	functionWord
+function word	1	chena	cene	*	functionWord|lenition
+function word	1	ossé	os	*	functionWord
+function word	1	dond	in	*	functionWord
+function word	1	nāi	noí	*	functionWord
+function word	1	nōi	noí	*	functionWord
+noun	1	liaig	líaig	n	unmarkedLength
+noun	1	Maigi	mag	n	irregularNoun
+noun	1	ndīaid	dead	n	irregularNoun|nasalization
+noun	1	carat	cara	n	irregularNoun
+substantive	1	mbāi	attá	v	substantive|nasalization
+copula	1	bus	is	v	copula
+# The verbal complex: particles and infixed pronouns the earlier rows did not cover.
+verbal complex	1	co·carat	caraid	v	*
+verbal complex	1	dia·carat	caraid	v	*
+verbal complex	1	atom·aig	adaig	v	*
+verbal complex	1	rom·charsat	caraid	v	*
+verbal complex	1	ros·gab	gaibid	v	*
+verbal complex	1	nícon·carat	caraid	v	*
+verbal complex	1	nád·carat	caraid	v	*
+mutation	1	n‑ech	ech	*	nasalization
+emphatic	1	labrad‑sa	labrad	*	emphatic
+# Readings the constraints of this revision keep out.
+negatives	0	Druim	druid	*	*
+negatives	0	nEmain	nem	*	*
+negatives	0	samain	sam	*	*
+negatives	0	síu	sí	*	*
+negatives	0	indīu	intí	*	*
+negatives	0	ǣs	és	*	*
+negatives	0	gǣ	gé	*	*
+constraint pres-1sg	0	no·guidimm	no·guidid	*	*
+constraint pres-2sg	0	do·gní	do·gnid	*	*
+constraint comparative	0	n-ardu	n-ard	*	*
+constraint comparative	0	du	d	*	*
+negatives	0	gilla	gill	*	*
+function word	1	osse	os	*	functionWord
+negatives	0	mbāi	bó	*	*
+preposition	1	lasa	la	*	prepositionalPronoun
+function word	1	mesi	messe	*	functionWord
+negatives	0	dōit	dóid	*	*
+negatives	0	tāit	táid	*	*
+constraint pres-3pl	0	for·canit	for·canid	*	*
+constraint spelling	0	mman	mban	*	*
+constraint spelling	0	ic	icc	*	*
+constraint doubled consonant	0	nnemain	nem	*	*
