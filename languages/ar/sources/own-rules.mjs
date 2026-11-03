@@ -140,6 +140,8 @@ transform('al', 'الـ (the)', 'The definite article الـ (al-, "the"): ال�
     // rules that end there and read ال as letters of the stem: الحق is الـ +
     // حق, not the imperative of لحق; الزمن is not of لزم.
     cross([['ال', '']], FINALS.map((c) => [c, c]), {min: 1, out: ['n', 'nd'], into: []}),
+    // الحين (now), before the imperative of لحى.
+    whole('الحين', 'حين', {out: ['n', 'nd'], into: []}),
 ]);
 transform('demonstrative', 'demonstrative', 'تلك is the feminine of ذلك ("that"), and لذا is لهذا ("therefore").', [
     whole('تلك', 'ذلك'),
@@ -193,6 +195,10 @@ for (const [id, name, p, gloss, example] of PRONOUNS) {
         suffix('ا' + p, 'ى', {into: V_IN, extra: NOT_AL}),
     ];
     if (p !== 'ني') {
+        // صوت (voice) before the rarer صوة that the feminine rule below reads
+        // (صوتك, صوته). Among the 20,000 most frequent words the other ت/ة
+        // pairs are قوة, فتاة (read right) and أنتي, whose own row names أنة.
+        rules.push(whole('صوت' + p, 'صوت'));
         // A noun: the feminine rule does not read مدرسته as مدرس, nor رأيته
         // ("I saw him") as رأي.
         rules.push(suffix('ت' + p, 'ة', {out: ['n'], extra: NOT_AL}));
@@ -511,10 +517,16 @@ const PRESENT_PERSONS = [
 const OBJECTS = ['ني', 'نا', 'ك', 'كما', 'كم', 'كن', 'ه', 'ها', 'هما', 'هم', 'هن'];
 // يمكن (it is possible) is أمكن, with or without a pronoun, not مكن (to be
 // strong); يهم (it matters) is همّ, not لم يهم of هام; أموت is مات.
+// Frequent form IV verbs whose form I the dictionary also lists, so that
+// the present reads as form IV (يحب, تحبني -> أحب; يخبرني -> أخبر; يعجبك
+// -> أعجب; تدرك -> أدرك; يصبح -> أصبح).
+const FORM_IV_PRESENT = ['حب', 'خبر', 'عجب', 'درك', 'صبح'];
+const formIV = (p) => FORM_IV_PRESENT.flatMap((stem) => ['', ...OBJECTS].map((pr) => [p + stem + pr, 'أ' + stem]));
 const LISTED_PRESENT = {
-    'ي': [['يمكن', 'أمكن'], ...OBJECTS.map((pr) => ['يمكن' + pr, 'أمكن']), ['يهم', 'هم']],
-    'ت': [['تمكن', 'أمكن'], ['تهم', 'هم']],
-    'أ': [['أموت', 'مات'], ['أيمكن', 'أمكن'], ...OBJECTS.map((pr) => ['أيمكن' + pr, 'أمكن'])],
+    'ن': formIV('ن'),
+    'ي': [...formIV('ي'), ['يمكن', 'أمكن'], ...OBJECTS.map((pr) => ['يمكن' + pr, 'أمكن']), ['يهم', 'هم'], ['يعنى', 'عنى'], ['يسمى', 'سمى'], ['يسكن', 'سكن']],
+    'ت': [...formIV('ت'), ['تمكن', 'أمكن'], ['تهم', 'هم'], ['تعنى', 'عنى'], ['تسمى', 'سمى']],
+    'أ': [['أموت', 'مات'], ['أعنى', 'عنى'], ['أيمكن', 'أمكن'], ...OBJECTS.map((pr) => ['أيمكن' + pr, 'أمكن'])],
 };
 for (const [id, name, p, gloss, example, see] of PRESENT_PERSONS) {
     transform(id, name, `The present tense "${gloss}", which is also its subjunctive and jussive: ${example} (كتب); يقول (قال), يدعو (دعا), يرمي (رمى), ينسى (نسي), يكرم (أكرم), يستخدم (استخدم), يصل (وصل), يرى (رأى). With an object pronoun in the same step: يمكنك, يعرفه.`, [
@@ -541,6 +553,8 @@ for (const [id, name, p, gloss, example] of [
 ]) {
     transform(id, name, `The short jussive "${gloss}" after لم, لا, لـ and in conditions, where a hollow, defective or doubled verb loses a letter or writes both consonants: ${example} (قال), يدع (دعا), يرم (رمى), ينس (نسي), يمدد (مد), يشأ (شاء), ير (رأى).`, [
         cross(PRESENT[p], [['', 'ا'], ['', 'ى'], ['', 'ي']]),
+        // نكن (لم نكن) is كان, before the past ناك of pastTheyF.
+        ...(p === 'ن' ? [whole('نكن', 'كان', {into: V_IN, out: V_OUT})] : []),
         cross(PRESENT[p], [['أ', 'اء'], ['ئ', 'اء']], {min: 1}),
         cross(PRESENT[p], RADICALS.map((c) => [c, 'ا' + c]), {min: 1}),
         cross(PRESENT[p], RADICALS.map((c) => [c + c, c]), {min: 1}),
@@ -577,6 +591,8 @@ for (const [id, name, p, gloss, example] of [
 transform('presentYouF', 'present (you f.)', 'The present tense ending تـين "you (one woman) do": تكتبين; تقولين (قال), تدعين (دعا), ترمين (رمى), تنسين (نسي), تقرئين (قرأ), ترين (رأى).', [
     ...presentRules(PRESENT['ت'], 'ين', {defective: [['ين', 'ا'], ['ين', 'ى'], ['ين', 'ي']], hamza: [['ئين', 'أ'], ['يئين', 'اء']]}),
     ...seeRules(PRESENT['ت'], ['رين']),
+    // تحبين is أحب, before the defective حبا of presentYouFPl.
+    whole('تحبين', 'أحب', {into: V_IN, out: V_OUT}),
 ]);
 transform('subjunctiveTheyTwo', 'subjunctive (they two)', 'The subjunctive and jussive ending يـا "they (two)": لن يكتبا; يقولا (قال), يدعوا (دعا), يرميا (رمى), يقرآ (قرأ).', [
     ...presentRules(PRESENT['ي'], 'ا', {defective: [['وا', 'ا'], ['يا', 'ى'], ['يا', 'ي'], ['يا', 'ا']], hamza: [['آ', 'أ']]}),
@@ -598,6 +614,8 @@ for (const [id, name, p, gloss, example] of [
 transform('subjunctiveYouF', 'subjunctive (you f.)', 'The subjunctive and jussive ending تـي "you (one woman)": لن تكتبي; تقولي (قال), تدعي (دعا), ترمي (رمى), تقرئي (قرأ), تري (رأى).', [
     ...presentRules(PRESENT['ت'], 'ي', {defective: [['ي', 'ا'], ['ي', 'ى']], hamza: [['ئي', 'أ'], ['يئي', 'اء']]}),
     ...seeRules(PRESENT['ت'], ['ري']),
+    // Before the defective present of أجدى and تصلى.
+    ...[['تجدي', 'وجد'], ['تتصلي', 'اتصل']].map(([i, d]) => whole(i, d, {into: V_IN, out: V_OUT})),
 ]);
 
 // The imperative. Form I starts with ا (اكتب); the other forms are spelled
@@ -633,7 +651,8 @@ function imperativeRules(ending, {defective = [], others = [], hollowShort = fal
     return rules;
 }
 transform('imperativeYou', 'imperative (you)', 'The imperative "do!" to one man: اكتب (كتب), قل (قال), ادع (دعا), ارم (رمى), انس (نسي), امدد (مد), قف (وقف), أعط (أعطى), اشتر (اشترى), كل (أكل), خذ (أخذ), مر (أمر), ر (رأى).', [
-    ...imperativeRules('', {defective: [['', 'ا'], ['', 'ى'], ['', 'ي']], hollowShort: true, others: [['', 'ى']]}),
+    // A verb in ي before one in ى: ابق is بقي; بقى is its informal spelling.
+    ...imperativeRules('', {defective: [['', 'ا'], ['', 'ي'], ['', 'ى']], hollowShort: true, others: [['', 'ى']]}),
     ...[['كل', 'أكل'], ['خذ', 'أخذ'], ['مر', 'أمر'], ['ر', SEE], ['ائت', 'أتى'], ['جئ', 'جاء']].map(([i, d]) => whole(i, d, {into: V_IN, out: V_OUT})),
     // العب (play!), which the dictionary also lists as الـ + عب.
     whole('العب', 'لعب', {into: V_IN, out: V_OUT}),
@@ -643,6 +662,9 @@ transform('imperativeYou', 'imperative (you)', 'The imperative "do!" to one man:
 transform('imperativeYouF', 'imperative (you f.)', 'The imperative "do!" to one woman, ending in ـي: اكتبي (كتب), قولي (قال), ادعي (دعا), ارمي (رمى), قفي (وقف), علمي (علم), أعطي (أعطى), كلي (أكل), ري (رأى).', [
     ...imperativeRules('ي', {defective: [['ي', 'ا'], ['ي', 'ى']], others: [['ي', '', 2], ['ي', 'ى']]}),
     ...[['كلي', 'أكل'], ['خذي', 'أخذ'], ['مري', 'أمر'], ['ري', SEE]].map(([i, d]) => whole(i, d, {into: V_IN, out: V_OUT})),
+    // Frequent form V and VI imperatives, which the subjunctive of form I
+    // (تعالي, "you (f.) rise") would read first.
+    ...[['تعالي', 'تعالى'], ['توقفي', 'توقف'], ['تفضلي', 'تفضل'], ['تحدثي', 'تحدث'], ['تمهلي', 'تمهل'], ['تحركي', 'تحرك'], ['تنفسي', 'تنفس'], ['تذكري', 'تذكر']].map(([i, d]) => whole(i, d, {into: V_IN, out: V_OUT})),
 ]);
 transform('imperativeYouTwo', 'imperative (you two)', 'The imperative "do!" to two people, ending in ـا: اكتبا (كتب), قولا (قال), ادعوا (دعا), ارميا (رمى).', [
     ...imperativeRules('ا', {defective: [['وا', 'ا'], ['يا', 'ى'], ['يا', 'ي']]}),
@@ -720,6 +742,13 @@ const PASSIVE_ENDINGS = [['', 'he'], ['ت', 'she'], ['تا', 'they f. two'], ['�
     transform('verbalNoun', 'verbal noun', 'The verbal noun of a derived verb read as the verb: تكليم (كلم), مساعدة (ساعد), إكرام (أكرم), إقامة (أقام), اجتماع (اجتمع), استخدام (استخدم), استقالة (استقال), انتهاء (انتهى). Off unless the derivedForms setting is on.', rules, {optional: true});
 }
 
+// ـي (my) after the verb transforms: lookups break a tie between two lemmas
+// the dictionary names by the order the rules found them (docs/languages.md
+// 9.6), and a verb never takes this pronoun, so تعني, تجري and ترتدي are read
+// as verbs (عنى, جرى, ارتدى) before تعن + ـي. On the 10,000 most frequent words
+// this fixed 37 first results and broke 12, which are written out above
+// (تعالي, توقفي, تفضلي).
+transforms.splice(transforms.findIndex((t) => t.id === 'pastPassive'), 0, ...transforms.splice(transforms.findIndex((t) => t.id === 'p1s'), 1));
 const descriptor = {schema: 1, conditions, transforms};
 const out = join(dirname(fileURLToPath(import.meta.url)), 'own.json');
 writeFileSync(out, formatTransforms(descriptor));
