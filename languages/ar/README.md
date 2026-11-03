@@ -535,9 +535,13 @@ in `sources/`, run from the repository root.
     لكان is لـ + كان).
 - **Wrong first results the dictionary makes** (Measurements 2-4; looked up
   with no rules, each is wrong too). The lead counts these as framework
-  issues for hachi-lang-engine-l (`formOfIgnore`, `confirmedOrder`, the
-  whole-word tie rule, the reading key). Counts are the subtitle list's tokens
-  and the positions in *al-Nazarat*, *Kalila* and Tatoeba:
+  issues, not held for this pack; hachi-lang-engine-l has accepted
+  `lookup.ownEntry: "afterReferences"` (a word's own form-of lemmas before its
+  own entry) and `lookup.confirmedOrder: "references"` (confirmed ties in the
+  bank order of the word's references). They would help where the word's rows
+  name the right lemma (أعرف → عرف, تكون → كان), not where only the rules
+  reach it (لك → لـ + ك). Counts are the subtitle list's tokens and the
+  positions in *al-Nazarat*, *Kalila* and Tatoeba:
   - The word is a headword itself, so its own entry comes first: لك (لـ + ك,
     shown as لك "lacquer"; 404,720 tokens; 138, 111 and 472 positions), لي
     (190, 102 and 635), لها (153, 79, 173), لهم (83, 31), فلا (182, 64), وقد
