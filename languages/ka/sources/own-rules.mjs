@@ -43,9 +43,10 @@ const here = dirname(fileURLToPath(import.meta.url));
 // (და-ძმას → და-ძმა) and no rule takes in punctuation. The stems of the noun
 // and clitic rules may also hold spaces (WORDS, set at the end of this file),
 // because a phrase inflects on its last word (დაბადების დღეზე → დაბადების
-// დღე, უცხო ენის → უცხო ენა); the genitive's are words only, so that
-// როგორ არის "how is" is not read as the phrase როგორ არა, and so are the
-// verb rules', whose person prefixes must not reach past the first word.
+// დღე, უცხო ენის → უცხო ენა; ბოლთას სცემდა → ბოლთას სცემს); the
+// genitive's are words only, so that როგორ არის "how is" is not read as the
+// phrase როგორ არა, and so are the stems of prefix and circumfix rules,
+// whose person prefixes and preverbs must not reach past the first word.
 const CONS = '[ბგდვზთკლმნპჟრსტფქღყშჩცძწჭხჯჰ]';
 const VSTEM = '[აეოუ]'; // vowels a noun stem can end in (-ი is the nominative ending)
 const LETTERS = '[{mkhedruli}\\-]';
@@ -183,7 +184,7 @@ transform('pl-archaic', 'archaic plural', 'Archaic (literary) plural: nominative
 
 transform('sync', 'syncope', 'The vowel a stem loses before an ending that starts with a vowel, put back (წყლის → წყალის, ქვეყნები → ქვეყანები, სოფლიდან → სოფელიდან).', [
     ...[['ის', ['gen'], ['gens']], ['ით', ['ins'], ['inss']], ['ად', ['advc'], ['advs']], ['ები', ['nom'], ['pls']]].flatMap(([ending, conditionIn, conditionOut]) =>
-        SYNCOPE.map(([reduced, full]) => suffix(reduced + ending, full + ending, conditionIn, conditionOut, {stemMinLength: 1, stemEndsWith: CONS}))),
+        SYNCOPE.map(([reduced, full]) => suffix(reduced + ending, full + ending, conditionIn, conditionOut, {stemEndsWith: CONS}))),
 ]);
 
 // --- The -ა extension of case endings ----------------------------------------
@@ -345,8 +346,11 @@ transform('pres-3pl', '3rd person plural', 'Third person plural of the present o
     suffix('იან', 'ის', VIN, VOUT, {stemMinLength: 2}),
     suffix('იან', 'ა', VIN, VOUT, {stemMinLength: 2, stemEndsWith: '[ბვ]'}),
 ]);
-transform('theme-12', '1st/2nd person theme', 'A first- or second-person theme (subject in the nominative) of a verb whose experiencer is in the dative: -ვარ, -ხარ, -ვართ, -ხართ for -ს (მიყვარხარ "I love you" → მიყვარს, მოგწონვარ → მოგწონს).', [
-    ...['ვარ', 'ხარ', 'ვართ', 'ხართ'].map((e) => suffix(e, 'ს', VIN, VOUT, {stemMinLength: 2, stemEndsWith: CONS})),
+// -ვარ, -ხარ, -ვართ, -ხართ are also the first- and second-person endings of
+// the verbs of motion in -დის (მივდივარ, მიდიხარ → მიდის).
+const CONS_I = '[ბგდვზთკლმნპჟრსტფქღყშჩცძწჭხჯჰი]';
+transform('theme-12', '1st/2nd person theme', 'A first- or second-person theme (subject in the nominative) of a verb whose experiencer is in the dative: -ვარ, -ხარ, -ვართ, -ხართ for -ს (მიყვარხარ "I love you" → მიყვარს, მოგწონვარ → მოგწონს), and the same endings of the verbs of motion (მიდიხარ → მიდის).', [
+    ...['ვარ', 'ხარ', 'ვართ', 'ხართ'].map((e) => suffix(e, 'ს', VIN, VOUT, {stemMinLength: 2, stemEndsWith: CONS_I})),
 ]);
 transform('impf', 'imperfect', 'Imperfect, and the conditional made from the future: -დი, -და, -დით, -დნენ (ვაკეთებდი → ვაკეთებს, წერდა → წერს, მოდიოდა → მოდის, იმალებოდა → იმალება).', [
     ...['დი', 'და', 'დით', 'დნენ'].map((e) => suffix(e, 'ს', VIN, VOUT, {stemMinLength: 2})),
@@ -408,26 +412,26 @@ transform('inv-pl', 'perfect, plural', 'The -თ of a plural subject in the perf
     suffix('ოთ', 'ო', VPERF, VPERF, {stemMinLength: 2}),
 ]);
 transform('inv-person', 'perfect, 1st/2nd person', 'A first- or second-person subject in the perfect series, marked like an indirect object (დამიწერია → დაუწერია, დამეწერა → დაეწერა).', [
-    circumfix(PV.flatMap((p) => ['მი', 'გი', 'გვი', 'ვუ'].map((m) => [p + m, p + 'უ'])), [['ია', 'ია']], VPERF, VPERF, {stemMinLength: 1, stemEndsWith: CONS}),
+    circumfix(PV.flatMap((p) => ['მი', 'გი', 'გვი', 'ვუ'].map((m) => [p + m, p + 'უ'])), [['ია', 'ია']], VPERF, VPERF, {stemMinLength: 1}),
     circumfix(PV.flatMap((p) => ['მე', 'გე', 'გვე'].map((m) => [p + m, p + 'ე'])), [['ა', 'ა'], ['ო', 'ო'], ['ს', 'ს']], VPERF, VPERF, {stemMinLength: 1}),
 ]);
 transform('perf', 'perfect', 'Perfect (evidential past), third person singular -უ-...-ია, made into the future (დაუწერია → დაწერს, გაუკეთებია → გააკეთებს, უთამაშია → ითამაშებს).', [
-    circumfix(PV.map((p) => [p + 'უ', p]), ['ს', 'ავს', 'ამს', 'ის', 'ებს'].map((t) => ['ია', t]), VPERF, VOUT, {stemMinLength: 1, stemEndsWith: CONS}),
-    circumfix(PV.map((p) => [p + 'უ', p + 'ა']), [['ია', 'ს'], ['ია', 'ობს'], ['ია', 'ებს']], VPERF, VOUT, {stemMinLength: 1, stemEndsWith: CONS}),
-    circumfix(PV.map((p) => [p + 'უ', p + 'უ']), [['ია', 'ს'], ['ია', 'ებს'], ['ია', 'ავს']], VPERF, VOUT, {stemMinLength: 1, stemEndsWith: CONS}),
-    circumfix(PV.map((p) => [p + 'უ', p + 'ი']), [['ია', 'ებს']], VPERF, VOUT, {stemMinLength: 1, stemEndsWith: CONS}),
+    circumfix(PV.map((p) => [p + 'უ', p]), ['ს', 'ავს', 'ამს', 'ის', 'ებს'].map((t) => ['ია', t]), VPERF, VOUT, {stemEndsWith: CONS}),
+    circumfix(PV.map((p) => [p + 'უ', p + 'ა']), [['ია', 'ს'], ['ია', 'ობს'], ['ია', 'ებს']], VPERF, VOUT, {stemEndsWith: CONS}),
+    circumfix(PV.map((p) => [p + 'უ', p + 'უ']), [['ია', 'ს'], ['ია', 'ებს'], ['ია', 'ავს']], VPERF, VOUT, {stemEndsWith: CONS}),
+    circumfix(PV.map((p) => [p + 'უ', p + 'ი']), [['ია', 'ებს']], VPERF, VOUT, {stemEndsWith: CONS}),
 ]);
 transform('pluperf', 'pluperfect', 'Pluperfect, third person singular -ე-...-ა (-ინა, -ო), made into the future (დაეწერა → დაწერს, გაეკეთებინა → გააკეთებს, გაეთბო → გაათბობს, ეთამაშა → ითამაშებს).', [
-    circumfix(PV.map((p) => [p + 'ე', p]), [...['ს', 'ავს', 'ამს', 'ის'].map((t) => ['ა', t]), ['ო', 'ებს'], ['ინა', 'ს']], VPERF, VOUT, {stemMinLength: 1, stemEndsWith: CONS}),
-    circumfix(PV.map((p) => [p + 'ე', p + 'ა']), [['ინა', 'ს'], ['ო', 'ობს']], VPERF, VOUT, {stemMinLength: 1, stemEndsWith: CONS}),
-    circumfix(PV.map((p) => [p + 'ე', p + 'უ']), [['ა', 'ებს'], ['ა', 'ს']], VPERF, VOUT, {stemMinLength: 1, stemEndsWith: CONS}),
-    circumfix(PV.map((p) => [p + 'ე', p + 'ი']), [['ა', 'ებს']], VPERF, VOUT, {stemMinLength: 1, stemEndsWith: CONS}),
+    circumfix(PV.map((p) => [p + 'ე', p]), [...['ს', 'ავს', 'ამს', 'ის'].map((t) => ['ა', t]), ['ო', 'ებს'], ['ინა', 'ს']], VPERF, VOUT, {stemEndsWith: CONS}),
+    circumfix(PV.map((p) => [p + 'ე', p + 'ა']), [['ინა', 'ს'], ['ო', 'ობს']], VPERF, VOUT, {stemEndsWith: CONS}),
+    circumfix(PV.map((p) => [p + 'ე', p + 'უ']), [['ა', 'ებს'], ['ა', 'ს']], VPERF, VOUT, {stemEndsWith: CONS}),
+    circumfix(PV.map((p) => [p + 'ე', p + 'ი']), [['ა', 'ებს']], VPERF, VOUT, {stemEndsWith: CONS}),
 ]);
 transform('perf-subj', 'perfect subjunctive', 'Perfect subjunctive, third person singular -ე-...-ოს (-ინოს, -ას), made into the future (დაეწეროს → დაწერს, გაეკეთებინოს → გააკეთებს).', [
-    circumfix(PV.map((p) => [p + 'ე', p]), [...['ს', 'ავს', 'ამს', 'ებს'].map((t) => ['ოს', t]), ['ას', 'ის'], ['ინოს', 'ს']], VPERF, VOUT, {stemMinLength: 1, stemEndsWith: CONS}),
-    circumfix(PV.map((p) => [p + 'ე', p + 'ა']), [['ინოს', 'ს'], ['ოს', 'ობს']], VPERF, VOUT, {stemMinLength: 1, stemEndsWith: CONS}),
-    circumfix(PV.map((p) => [p + 'ე', p + 'უ']), [['ას', 'ებს'], ['ოს', 'ს']], VPERF, VOUT, {stemMinLength: 1, stemEndsWith: CONS}),
-    circumfix(PV.map((p) => [p + 'ე', p + 'ი']), [['ოს', 'ებს']], VPERF, VOUT, {stemMinLength: 1, stemEndsWith: CONS}),
+    circumfix(PV.map((p) => [p + 'ე', p]), [...['ს', 'ავს', 'ამს', 'ებს'].map((t) => ['ოს', t]), ['ას', 'ის'], ['ინოს', 'ს']], VPERF, VOUT, {stemEndsWith: CONS}),
+    circumfix(PV.map((p) => [p + 'ე', p + 'ა']), [['ინოს', 'ს'], ['ოს', 'ობს']], VPERF, VOUT, {stemEndsWith: CONS}),
+    circumfix(PV.map((p) => [p + 'ე', p + 'უ']), [['ას', 'ებს'], ['ოს', 'ს']], VPERF, VOUT, {stemEndsWith: CONS}),
+    circumfix(PV.map((p) => [p + 'ე', p + 'ი']), [['ოს', 'ებს']], VPERF, VOUT, {stemEndsWith: CONS}),
 ]);
 // Intransitive (passive) verbs make the perfect series from the past
 // participle and the copula (დამალულა "it has hidden", დავმალულვარ "I
@@ -445,9 +449,7 @@ transform('ptcp-pass', 'past participle', 'The past participle of an intransitiv
 // Person markers at the front of the verb, after any preverb.
 // Without a preverb the rest of the word has at least four letters, and after
 // the one-letter preverb ა- five, so short words that start like a person
-// marker (ვისი, მისი, მათ) are left alone. After ა- an object marker before
-// the version vowel ი- is read by the მი- → უ- rule only (ამისი is the
-// genitive of ეს, not a verb ა-მ-ის-).
+// marker (ვისი, მისი, მათ, ამისი) are left alone.
 const personMin = (p) => (p === '' ? 4 : p.length === 1 ? 5 : 3);
 transform('subj-1', '1st person ვ-', 'The first-person subject marker ვ- (ვაკეთებ → აკეთებ, დავწერე → დაწერე), and before a verb with a third-person indirect object ს- or ჰ- (ვთხოვ → სთხოვ).', PV.flatMap((p) => [
     prefix(p + 'ვ', p, ['vs'], ['v', 'vp'], {stemMinLength: personMin(p)}),
@@ -456,7 +458,7 @@ transform('subj-1', '1st person ვ-', 'The first-person subject marker ვ- (�
 ]));
 function objectRules(marker, extra = {}) {
     return PV.flatMap((p) => [
-        prefix(p + marker, p, ['vs'], ['v', 'vp'], {stemMinLength: personMin(p), ...(p === '' ? extra : p === 'ა' ? {stemNotStartsWith: '[ი]'} : {})}),
+        prefix(p + marker, p, ['vs'], ['v', 'vp'], {stemMinLength: personMin(p), ...(p === '' ? extra : {})}),
         prefix(p + marker, p + 'ს', ['vs'], ['v', 'vp'], {stemMinLength: 3, stemStartsWith: '[დთტძცწჭჩჯზ]'}),
         prefix(p + marker, p + 'ჰ', ['vs'], ['v', 'vp'], {stemMinLength: 3, stemStartsWith: '[გკქყპფ]'}),
         prefix(p + marker + 'ი', p + 'უ', ['vs'], ['v', 'vp'], {stemMinLength: personMin(p) - 1}),
@@ -491,10 +493,11 @@ transform('pv', 'future → present', 'A preverb removed: the future made into t
 ]);
 
 // --- Phrases ------------------------------------------------------------------
-// The noun and clitic transforms whose stems may hold spaces (see WORDS).
+// The transforms whose suffix rules' stems may hold spaces (see WORDS).
 const PHRASE_TRANSFORMS = new Set(['erg', 'dat', 'ins', 'adv', 'voc', 'pl', 'pl-archaic', 'sync', 'ext',
     'pp-shi', 'pp-ze', 'pp-tan', 'pp-vit', 'pp-tvis', 'pp-gan', 'pp-ken', 'pp-admi', 'pp-ebr', 'pp-dan', 'pp-urt', 'pp-mde',
-    'cl-c', 'cl-ve', 'cl-gha', 'cop', 'quot', 'quot-1', 'quot-2']);
+    'cl-c', 'cl-ve', 'cl-gha', 'cop', 'quot', 'quot-1', 'quot-2',
+    'pres-2', 'pres-pl', 'pres-3pl', 'theme-12', 'impf', 'subj', 'aor', 'opt', 'inv-pl', 'perf-pass']);
 for (const t of transforms) {
     if (!PHRASE_TRANSFORMS.has(t.id)) { continue; }
     for (const rule of t.rules) {

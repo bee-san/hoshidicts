@@ -177,3 +177,148 @@ negative	0	ვისი	ისი	*	*
 negative	0	მესმის	მესამე	*	*
 negative	0	ამისი	აისი	*	*
 pronoun	1	ამისი	ეს	*	pron
+# Constraint rows (sources/constraint-rows.mjs, then checked by hand): each fails when the stem constraint its category names is deleted from that transform (docs/languages.md section 14 step 7). Sources with a Latin letter or a digit are built inputs, not words.
+constraint erg:stemMinLength	0	ამ	ა	*	*
+constraint erg:stemCharacters	0	Qბმა	Qბი	*	*
+constraint erg:stemEndsWith	0	აიმ	აი	*	*
+constraint dat:stemMinLength	0	ას	ა	*	*
+constraint dat:stemCharacters	0	Qბს	Qბი	*	*
+constraint gen:stemMinLength	0	ის	ა	*	*
+constraint gen:stemCharacters	0	როგორ არის	როგორ არა	*	*
+constraint gen:stemEndsWith	0	არს	არ	*	*
+constraint ins:stemMinLength	0	ით	ა	*	*
+constraint ins:stemCharacters	0	Qბით	Qბი	*	*
+constraint ins:stemEndsWith	0	დათ	და	*	*
+constraint adv:stemMinLength	0	ად	ა	*	*
+constraint adv:stemCharacters	0	Qბად	Qბი	*	*
+constraint adv:stemEndsWith	0	აიდო	აი	*	*
+constraint voc:stemMinLength	0	ავ	ა	*	*
+constraint voc:stemCharacters	0	Qბო	Qბი	*	*
+constraint voc:stemEndsWith	0	აივ	აი	*	*
+constraint pl:stemMinLength	0	ები	ა	*	*
+constraint pl:stemCharacters	0	Qბები	Qბი	*	*
+constraint pl:stemEndsWith	0	ეგების	ეგ	*	*
+constraint pl-archaic:stemMinLength	0	ათ	ა	*	*
+constraint pl-archaic:stemCharacters	0	Qბნი	Qბი	*	*
+constraint pl-archaic:stemEndsWith	0	ვანო	ვაი	*	*
+constraint sync:stemCharacters	0	Qბლის	Qბელის	*	*
+constraint sync:stemEndsWith	0	ბად	აბი	*	*
+constraint ext:stemMinLength	0	სა	ს	*	*
+constraint ext:stemCharacters	0	Qბსა	Qბს	*	*
+constraint ext:stemEndsWith	0	გინდა	გინდ	*	*
+constraint pp-shi:stemMinLength	0	ში	ს	*	*
+constraint pp-shi:stemCharacters	0	Qბში	Qბს	*	*
+constraint pp-shi:stemEndsWith	0	რომში	რომ	*	*
+constraint pp-ze:stemMinLength	0	ზე	ს	*	*
+constraint pp-ze:stemCharacters	0	Qბზე	Qბს	*	*
+constraint pp-ze:stemEndsWith	0	ჯერზე	ჯერ	*	*
+constraint pp-tan:stemMinLength	0	სთან	ს	*	*
+constraint pp-tan:stemCharacters	0	Qბთან	Qბს	*	*
+constraint pp-tan:stemEndsWith	0	შეთან	შე	*	*
+constraint pp-vit:stemMinLength	0	თივით	თს	*	*
+constraint pp-vit:stemCharacters	0	Qბივით	Qბს	*	*
+constraint pp-vit:stemEndsWith	0	იყავით	იყ	*	*
+constraint pp-tvis:stemMinLength	0	სთვის	ს	*	*
+constraint pp-tvis:stemCharacters	0	Qბთვის	Qბ	*	*
+constraint pp-gan:stemMinLength	0	სგან	ს	*	*
+constraint pp-gan:stemCharacters	0	Qბგან	Qბ	*	*
+constraint pp-ken:stemMinLength	0	ბკენ	ბ	*	*
+constraint pp-ken:stemCharacters	0	Qბკენ	Qბ	*	*
+constraint pp-admi:stemEndsWith	0	ბეადმი	ბე	*	*
+constraint pp-ebr:stemEndsWith	0	ცეცხლებრ	ცეცხლ	*	*
+constraint pp-dan:stemMinLength	0	ოდან	ოთ	*	*
+constraint pp-dan:stemCharacters	0	Qბიდან	Qბით	*	*
+constraint pp-dan:stemEndsWith	0	აქედან	აქეთ	*	*
+constraint pp-urt:stemEndsWith	0	გშურთ	გშ	*	*
+constraint pp-mde:stemMinLength	0	ამდე	ად	*	*
+constraint pp-mde:stemCharacters	0	Qბამდე	Qბად	*	*
+constraint pp-mde:stemEndsWith	0	აქმდე	აქდ	*	*
+constraint sup:stemMinLength	0	უბესი	ბე	*	*
+constraint sup:stemCharacters	0	უფრო უარესს	ფრო უარი	*	*
+constraint sup:stemEndsWith	0	უარეს	არ	*	*
+constraint moder:stemMinLength	0	მოპოებისა	პი	*	*
+constraint moder:stemCharacters	0	მოვა დრო	ვა დრი	*	*
+constraint moder:stemEndsWith	0	მოამბეო	ამბეი	*	*
+constraint attr:stemMinLength	0	კ	კი	*	*
+constraint attr:stemCharacters	0	ე არ	ე არი	*	*
+constraint attr:stemEndsWith	0	ესე	ესეი	*	*
+constraint cl-c:stemMinLength	0	ოც	ო	*	*
+constraint cl-c:stemCharacters	0	Qბც	Qბ	*	*
+constraint cl-c:stemEndsWith	0	შიაც	ში	*	*
+constraint cl-ve:stemMinLength	0	თვე	თ	*	*
+constraint cl-ve:stemCharacters	0	Qბვე	Qბ	*	*
+constraint cl-ve:stemEndsWith	0	ბეავე	ბე	*	*
+constraint cl-gha:stemMinLength	0	აღა	ა	*	*
+constraint cl-gha:stemCharacters	0	Qბღა	Qბ	*	*
+constraint cop:stemMinLength	0	აა	ა	*	*
+constraint cop:stemCharacters	0	Qბია	Qბი	*	*
+constraint cop:stemEndsWith	0	ღიაა	ღი	*	*
+constraint quot:stemMinLength	0	დო	დ	*	*
+constraint quot:stemCharacters	0	Qბაო	Qბა	*	*
+constraint quot-1:stemMinLength	0	ბმეთქი	ბ	*	*
+constraint quot-1:stemCharacters	0	Qბმეთქი	Qბ	*	*
+constraint quot-2:stemMinLength	0	ბთქო	ბ	*	*
+constraint quot-2:stemCharacters	0	Qბთქო	Qბ	*	*
+constraint pres-2:stemMinLength	0	დი	დის	*	*
+constraint pres-2:stemCharacters	0	Qბი	Qბის	*	*
+constraint pres-2:stemEndsWith	0	ალი	ალა	*	*
+constraint pres-1:stemMinLength	0	გვ	ვს	*	*
+constraint pres-1:stemCharacters	0	მე არ	ე არს	*	*
+constraint pres-1:stemEndsWith	0	იყო	იყოს	*	*
+constraint pres-1:stemStartsWith	0	გაბ	საბს	*	*
+constraint pres-pl:stemMinLength	0	თ	ს	*	*
+constraint pres-pl:stemCharacters	0	Qბთ	Qბს	*	*
+constraint pres-pl:stemEndsWith	0	მოდით	ოდა	*	*
+constraint pres-3pl:stemMinLength	0	ენ	ს	*	*
+constraint pres-3pl:stemCharacters	0	Qბენ	Qბს	*	*
+constraint pres-3pl:stemEndsWith	0	არიან	არა	*	*
+constraint theme-12:stemMinLength	0	გვარ	გს	*	*
+constraint theme-12:stemCharacters	0	Qბვარ	Qბს	*	*
+constraint theme-12:stemEndsWith	0	ვგავართ	ვგას	*	*
+constraint impf:stemMinLength	0	და	ს	*	*
+constraint impf:stemCharacters	0	Qბდი	Qბს	*	*
+constraint impf:stemEndsWith	0	დიოდა	დია	*	*
+constraint subj:stemMinLength	0	დე	ს	*	*
+constraint subj:stemCharacters	0	Qბდე	Qბს	*	*
+constraint subj:stemEndsWith	0	ემოდე	ემა	*	*
+constraint aor:stemMinLength	0	და	დებს	*	*
+constraint aor:stemCharacters	0	Qბე	Qბებს	*	*
+constraint aor:stemEndsWith	0	ვია	ვის	*	*
+constraint aor:stemNotEndsWith	0	განა	ანებებს	*	*
+constraint opt:stemMinLength	0	და	დის	*	*
+constraint opt:stemCharacters	0	Qბო	Qბებს	*	*
+constraint opt:stemEndsWith	0	რაო	რას	*	*
+constraint inv-pl:stemMinLength	0	ათ	ა	*	*
+constraint inv-pl:stemCharacters	0	Qბათ	Qბა	*	*
+constraint inv-pl:stemEndsWith	0	ბაივარ	ბაია	*	*
+constraint inv-person:stemMinLength	0	მეაა	ეა	*	*
+constraint inv-person:stemCharacters	0	მე ეს	ე ეს	*	*
+constraint perf:stemCharacters	0	უცხო სახლია	ცხო სახლს	*	*
+constraint perf:stemEndsWith	0	გირგოლაია	რგოლას	*	*
+constraint pluperf:stemCharacters	0	ეს მაგიდაა	ს მაგიდის	*	*
+constraint pluperf:stemEndsWith	0	ეა	ს	*	*
+constraint perf-subj:stemCharacters	0	ეს მას	ს მის	*	*
+constraint perf-subj:stemEndsWith	0	ეფხიას	ფხიის	*	*
+constraint perf-pass:stemMinLength	0	მილიყვნენ	მილი	*	*
+constraint perf-pass:stemCharacters	0	Qბულა	Qბული	*	*
+constraint ptcp-pass:stemMinLength	0	აგებულების	აგდება	*	*
+constraint ptcp-pass:stemCharacters	0	და ხილი	დაი ხება	*	*
+constraint ptcp-pass:stemEndsWith	0	ადრეულ	აიდრეება	*	*
+constraint subj-1:stemCharacters	0	ვარ დ	არ დ	*	*
+constraint subj-1:stemStartsWith	0	ვადა	სადა	*	*
+constraint obj-1:stemCharacters	0	მე არ	ე არ	*	*
+constraint obj-1:stemStartsWith	0	ამხა	ასხამს	*	*
+constraint obj-2:stemMinLength	0	გა	ა	*	*
+constraint obj-2:stemCharacters	0	გზა არ	ზა არ	*	*
+constraint obj-2:stemStartsWith	0	გაგა	საგა	*	*
+constraint obj-1pl:stemMinLength	0	გავი	ს	*	*
+constraint obj-1pl:stemCharacters	0	გვიან შენ	უან შენს	*	*
+constraint obj-1pl:stemStartsWith	0	გვარი	სარი	*	*
+constraint pv:stemCharacters	0	არა უშავს	რა უშავს	*	*
+constraint pv:stemNotStartsWith	0	აღმა	ღებავს	*	*
+constraint pp-admi:stemMinLength	0	სადმი	ს	*	*
+constraint pp-admi:stemCharacters	0	Qსადმი	Qს	*	*
+constraint pp-ebr:stemMinLength	0	სებრ	ს	*	*
+constraint pp-ebr:stemCharacters	0	Qსებრ	Qს	*	*
+constraint pp-urt:stemMinLength	0	თურთ	თ	*	*
+constraint pp-urt:stemCharacters	0	Qთურთ	Qთ	*	*
