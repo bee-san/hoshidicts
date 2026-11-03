@@ -109,8 +109,9 @@ const MUTATIONS = {
     'present of t stems (tet, test)': (t) => {
         for (const id of ['present-er', 'present-du']) { const x = byId(t, id); x.rules = x.rules.filter((r) => !(r.type === 'suffix' && ['tet', 'test'].includes(r.inflected) && r.deinflected === 'ten')); }
     },
-    'present-er: not gewart, gewar': (t) => { for (const r of byId(t, 'present-er').rules) { if (['gewart', 'gewar'].includes(r.stemNotStartsWithText)) { delete r.stemNotStartsWithText; } } },
-    'present-er: not zugehör': (t) => { for (const r of byId(t, 'present-er').rules) { if (r.stemNotStartsWithText === 'zugehör') { delete r.stemNotStartsWithText; } } },
+    'present (ich): not mein': (t) => { for (const r of byId(t, 'present-ich').rules) { if (r.stemNotStartsWithText === 'mein') { delete r.stemNotStartsWithText; } } },
+    'listed participles of verbs with a ge- homograph': (t) => { for (const r of rules(t, 'past-participle', (x) => x.type === 'circumfix')) { r.suffixes = r.suffixes.filter(([inflected]) => !['gewartet', 'gelobt', 'geleitet', 'angehört', 'zugehört'].includes(inflected)); } },
+    'listed imperative schalt': (t) => { for (const r of rules(t, 'imperative', (x) => x.type === 'circumfix')) { r.suffixes = r.suffixes.filter(([inflected]) => inflected !== 'schalt'); } },
     'listed present of schalten': (t) => { for (const id of ['present-er', 'present-du']) { for (const r of byId(t, id).rules) { if (r.suffixes !== undefined) { r.suffixes = r.suffixes.filter(([, lemma]) => lemma !== 'schalten'); } } } },
     'dropped e of -eren and -erem': (t) => { const x = byId(t, 'declined'); x.rules = x.rules.filter((r) => !(r.type === 'suffix' && ['ern', 'erm'].includes(r.inflected) && r.deinflected === 'er')); },
     'old spellings of listed verb forms': (t) => {

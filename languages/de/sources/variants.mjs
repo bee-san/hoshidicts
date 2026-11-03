@@ -8,6 +8,8 @@
 // Into <out dir>:
 // - final.json: transforms.json;
 // - own.json: sources/own.json;
+// - none.json: no transforms at all, so a lookup shows what the dictionary's
+//   rows and their form-of references give alone;
 // - final-plus-separated-prefix.json, final-plus-zu-infinitive.json: the
 //   final rules followed by that Yomitan transform (its id prefixed with
 //   `yomitan ` so that it does not clash with the own transform of the same
@@ -40,6 +42,7 @@ const write = (name, value) => {
 };
 write('final.json', final);
 write('own.json', read(join(here, 'own.json')));
+write('none.json', {schema: 1, conditions: final.conditions, transforms: []});
 for (const id of ['separated prefix', 'zu-infinitive']) {
     const added = yomitan.transforms.find((t) => t.id === id);
     write(`final-plus-${slug(id)}.json`, {...final, transforms: [...final.transforms, {...added, id: `yomitan ${id}`, source: 'yomitan'}]});

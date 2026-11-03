@@ -410,7 +410,9 @@ const LOWER = '{lower}';
 const MIN2 = {stemMinLength: 2, stemStartsWith: LOWER};
 const DTMN = {stemMinLength: 2, stemStartsWith: LOWER, stemEndsWith: '[dtmn]'};
 // present
-suffix('present-ich', 'e', 'en', FINITE_IN, VERB_OUT, MIN2);
+// meine is nearly always the possessive mein, which the dictionary reaches
+// only through its form-of row; the verb meinen keeps that row's reference.
+suffix('present-ich', 'e', 'en', FINITE_IN, VERB_OUT, {...MIN2, stemNotStartsWithText: 'mein'});
 suffix('present-ich', 'le', 'eln', FINITE_IN, VERB_OUT, MIN2);
 suffix('present-ich', 'ele', 'eln', FINITE_IN, VERB_OUT, MIN2);
 suffix('present-ich', 're', 'ern', FINITE_IN, VERB_OUT, MIN2);
@@ -421,16 +423,14 @@ suffix('present-du', 'st', 'en', FINITE_IN, VERB_OUT, {...MIN2, stemNotEndsWith:
 suffix('present-du', 'est', 'en', FINITE_IN, VERB_OUT, DTMN);
 suffix('present-du', 'elst', 'eln', FINITE_IN, VERB_OUT, MIN2);
 suffix('present-du', 'erst', 'ern', FINITE_IN, VERB_OUT, MIN2);
-// zugehört and gewartet are participles of zuhören and warten far more often
-// than the present of zugehören and of the archaic gewarten.
-suffix('present-er', 't', 'en', FINITE_IN, VERB_OUT, {...MIN2, stemNotStartsWithText: 'zugehör'});
-suffix('present-er', 'et', 'en', FINITE_IN, VERB_OUT, {...DTMN, stemNotStartsWithText: 'gewart'});
+suffix('present-er', 't', 'en', FINITE_IN, VERB_OUT, MIN2);
+suffix('present-er', 'et', 'en', FINITE_IN, VERB_OUT, DTMN);
 // The present of a verb whose stem ends in t (du kostest, er kostet) is spelled
 // like the past of a verb without the t (kosen: du kostest, ihr kostet). These
 // rules match those letters too, so the present, whose transforms come first,
 // is found first.
 suffix('present-du', 'test', 'ten', FINITE_IN, VERB_OUT, MIN2);
-suffix('present-er', 'tet', 'ten', FINITE_IN, VERB_OUT, {...MIN2, stemNotStartsWithText: 'gewar'});
+suffix('present-er', 'tet', 'ten', FINITE_IN, VERB_OUT, MIN2);
 suffix('present-er', 'elt', 'eln', FINITE_IN, VERB_OUT, MIN2);
 suffix('present-er', 'ert', 'ern', FINITE_IN, VERB_OUT, MIN2);
 // imperative without -e: not after d or t (warte!, arbeite! keep the -e,
@@ -479,6 +479,15 @@ suffix('past-participle', 'iet', 'ien', ['adj'], VERB_OUT, {stemStartsWith: LOWE
 for (const verb of ['bereiten', 'heißen', 'lassen', 'leiden', 'lieben', 'schicken', 'wetten']) {
     form('present-ich', verb.slice(0, -1), verb, FINITE_IN, VERB_OUT);
 }
+// Participles that are spelled like the present of a verb that starts with
+// ge- or a particle and ge- (gewartet: warten, or the archaic gewarten), and
+// are far more often the participle: listed, so they are found before the
+// present (er, ihr), whose ending is shorter.
+for (const [participle, verb] of [['gewartet', 'warten'], ['gelobt', 'loben'], ['geleitet', 'leiten'], ['angehört', 'anhören'], ['zugehört', 'zuhören']]) {
+    form('past-participle', participle, verb, ['adj'], VERB_OUT);
+}
+// schalt is the imperative of schalten more often than the past of schelten.
+form('imperative', 'schalt', 'schalten', FINITE_IN, VERB_OUT);
 // schelten's past (ihr schaltet, du schaltest) is spelled like the present of
 // the far more frequent schalten: schalten's forms are listed too, so that,
 // with the present before the past, schalten is found first.
@@ -680,7 +689,8 @@ suffix('declined', 'ere', 'er', [], ADJ_OUT, MIN2);  // bessere, sichere: presen
 // is found first. For participles of
 // common verbs (erklärte, versteckte, passierte) the past is as frequent as
 // the adjective in the texts of README.md, and the verb comes first.
-for (const adjective of ['bekannt', 'berühmt', 'bestimmt', 'doppelt', 'kompliziert', 'recht', 'verdammt', 'verfickt', 'verrückt']) {
+for (const adjective of ['bekannt', 'berühmt', 'bestimmt', 'bewaffnet', 'doppelt', 'kompliziert', 'recht', 'verdammt', 'verehrt', 'verfickt', 'verflucht',
+    'vereinigt', 'verrückt']) {
     for (const end of ['e', 'en', 'er', 'es', 'em']) { form('declined', `${adjective}${end}`, adjective, [], ADJ_OUT); }
 }
 // Older and literary texts drop the e of an ending after -er (einem ältern
@@ -762,10 +772,9 @@ noun('plural', 'n', '', PLURAL_IN, NOUN_OUT, {stemEndsWith: '[elr]'});
 noun('plural', 'en', '', PLURAL_IN, NOUN_OUT);
 noun('plural', 'innen', 'in', PLURAL_IN, NOUN_OUT);
 noun('plural', 's', '', PLURAL_IN, NOUN_OUT, {stemEndsWith: '[aeiouyäöü]'});
-noun('plural', 'nisse', 'nis', PLURAL_IN, NOUN_OUT);
 noun('plural', 'usse', 'us', PLURAL_IN, NOUN_OUT, {stemMinLength: 1});  // Busse
 noun('plural', 'asse', 'as', PLURAL_IN, NOUN_OUT, {stemMinLength: 1});  // Atlasse
-noun('plural', 'isse', 'is', PLURAL_IN, NOUN_OUT, {stemMinLength: 1});  // Kürbisse, Iltisse
+noun('plural', 'isse', 'is', PLURAL_IN, NOUN_OUT, {stemMinLength: 1});  // Kürbisse, Iltisse, Ergebnisse
 noun('plural', 'osse', 'os', PLURAL_IN, NOUN_OUT, {stemMinLength: 1});  // Rhinozerosse
 // Compounds of Bau and Saal (Neubauten, Hörsäle); the dictionary lists Bauten
 // and Säle themselves, and bauten alone is also bauen.

@@ -131,7 +131,9 @@
         "ptcpl": "Participle",
         "abbv": "Abbreviation",
         "contr": "Contraction",
-        "prep-phrase": "Prepositional phrase"
+        "prep-phrase": "Prepositional phrase",
+        "postp": "Postposition",
+        "char": "Character"
       }
     },
     "frequencySamples": null,

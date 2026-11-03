@@ -75,5 +75,12 @@
   ["zugehören", "", "v", "v", 0, ["to belong to"], 74, ""],
   ["dunkel", "", "adj", "adj", 0, ["dark"], 75, ""],
   ["dunkeln", "", "v", "v", 0, ["to darken"], 76, ""],
-  ["lieben", "", "v", "v", 0, ["to love"], 77, ""]
+  ["lieben", "", "v", "v", 0, ["to love"], 77, ""],
+  ["mein", "", "det", "", 0, ["my"], 78, ""],
+  ["meinen", "", "v", "v", 0, ["to mean, to think"], 79, ""],
+  ["loben", "", "v", "v", 0, ["to praise"], 80, ""],
+  ["geloben", "", "v", "v", 0, ["to vow"], 81, ""],
+  ["verflucht", "", "adj", "adj", 0, ["damned, cursed"], 82, ""],
+  ["verfluchen", "", "v", "v", 0, ["to curse"], 83, ""],
+  ["meine", "", "non-lemma", "", 0, [["mein", ["nominative feminine singular"]], ["meinen", ["first-person singular present"]]], 84, ""]
 ]

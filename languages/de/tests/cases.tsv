@@ -117,6 +117,7 @@ participles	1	gesammelt	sammeln	v	past-participle
 participles	1	gewandert	wandern	v	past-participle
 participles	1	eingekauft	einkaufen	v	past-participle
 participles	1	kennengelernt	kennenlernen	v	past-participle
+participles	1	gegengezeichnet	gegenzeichnen	v	past-participle
 participles	1	gekniet	knien	v	past-participle
 participles	1	gegangen	gehen	v	past-participle
 participles	1	gekommen	kommen	v	past-participle
@@ -193,6 +194,8 @@ nouns	1	Busse	Bus	n	plural
 nouns	1	Kürbisse	Kürbis	n	plural
 nouns	1	Museen	Museum	n	plural
 nouns	1	Themen	Thema	n	plural
+nouns	1	Zentren	Zentrum	n	plural
+nouns	1	Daten	Datum	n	plural
 nouns	1	Rhythmen	Rhythmus	n	plural
 nouns	1	Zyklen	Zyklus	n	plural
 nouns	1	Mythen	Mythos	n	plural
@@ -321,3 +324,7 @@ negatives	0	führt	fahren	*	*
 negatives	0	führst	fahren	*	*
 negatives	0	sehr best	sehr gut	*	*
 negatives	0	Elektrotechniker	Elektrotechnik	*	*
+negatives	0	Kinder	Kind	v	*
+negatives	0	anzurufen	anrufen	n	*
+negatives	0	geht	hen	*	past-participle
+negatives	0	gegengezeichnet	gengezeichnen	*	past-participle

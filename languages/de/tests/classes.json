@@ -2618,6 +2618,11 @@
       [224, 246],
       [248, 254]
     ],
+    "transforms[23].rules[37].stemEndsWith": [
+      [100, 100],
+      [107, 107],
+      [116, 116]
+    ],
     "transforms[23].rules[38].stemCharacters": [
       [45, 45],
       [48, 57],
@@ -2636,9 +2641,8 @@
       [248, 254]
     ],
     "transforms[23].rules[38].stemEndsWith": [
-      [100, 100],
-      [107, 107],
-      [116, 116]
+      [115, 115],
+      [120, 120]
     ],
     "transforms[23].rules[39].stemCharacters": [
       [45, 45],
@@ -2656,10 +2660,6 @@
       [97, 122],
       [224, 246],
       [248, 254]
-    ],
-    "transforms[23].rules[39].stemEndsWith": [
-      [115, 115],
-      [120, 120]
     ],
     "transforms[23].rules[40].stemCharacters": [
       [45, 45],
@@ -2712,6 +2712,11 @@
       [224, 246],
       [248, 254]
     ],
+    "transforms[23].rules[42].stemEndsWith": [
+      [108, 108],
+      [112, 112],
+      [122, 122]
+    ],
     "transforms[23].rules[43].stemCharacters": [
       [45, 45],
       [48, 57],
@@ -2728,11 +2733,6 @@
       [97, 122],
       [224, 246],
       [248, 254]
-    ],
-    "transforms[23].rules[43].stemEndsWith": [
-      [108, 108],
-      [112, 112],
-      [122, 122]
     ],
     "transforms[23].rules[44].stemCharacters": [
       [45, 45],
@@ -2764,23 +2764,6 @@
       [64256, 64262]
     ],
     "transforms[23].rules[45].stemStartsWith": [
-      [97, 122],
-      [224, 246],
-      [248, 254]
-    ],
-    "transforms[23].rules[46].stemCharacters": [
-      [45, 45],
-      [48, 57],
-      [65, 90],
-      [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [768, 879],
-      [7838, 7838],
-      [64256, 64262]
-    ],
-    "transforms[23].rules[46].stemStartsWith": [
       [97, 122],
       [224, 246],
       [248, 254]
@@ -4910,6 +4893,7 @@
         ["gewandert", "gewandert"],
         ["eingekauft", "eingekauft"],
         ["kennengelernt", "kennengelernt"],
+        ["gegengezeichnet", "gegengezeichnet"],
         ["gekniet", "gekniet"],
         ["gegangen", "gegangen"],
         ["gekommen", "gekommen"],
@@ -4985,6 +4969,8 @@
         ["Kürbisse", "kürbisse"],
         ["Museen", "museen"],
         ["Themen", "themen"],
+        ["Zentren", "zentren"],
+        ["Daten", "daten"],
         ["Rhythmen", "rhythmen"],
         ["Zyklen", "zyklen"],
         ["Mythen", "mythen"],
@@ -5103,6 +5089,7 @@
         ["führst", "führst"],
         ["sehr best", "sehr best"],
         ["Elektrotechniker", "elektrotechniker"],
+        ["geht", "geht"],
         ["räum den Tisch auf", "räum den tisch auf"],
         ["krankesten", "krankesten"],
         ["schwuligem", "schwuligem"],
@@ -5144,10 +5131,12 @@
         ["Ｈａｕｓ", "ｈａｕｓ"],
         ["Haus­tür", "haus­tür"],
         ["gibt’s", "gibt’s"],
+        ["gibtʼs", "gibtʼs"],
         ["ÜBER", "über"],
         ["Alles klar", "alles klar"],
         ["haus", "haus"],
         ["über", "über"],
+        ["iPhone", "iphone"],
         ["FRAU", "frau"],
         ["ÄRZTE", "ärzte"],
         ["STRASSE", "strasse"],
@@ -5184,6 +5173,10 @@
         ["gewartet.", "gewartet."],
         ["zugehört.", "zugehört."],
         ["schaltet das Licht", "schaltet das licht"],
+        ["meine Mutter", "meine mutter"],
+        ["gelobt.", "gelobt."],
+        ["schalt doch", "schalt doch"],
+        ["verfluchte Mist", "verfluchte mist"],
         ["Sie ist heute früh aufgestanden und hat ihre Freunde angerufen.", "sie ist heute früh aufgestanden und hat ihre freunde angerufen."],
         ["aufstehen", "aufstehen"]
       ]
@@ -7080,6 +7073,7 @@
         ["gewandert", "Gewandert"],
         ["eingekauft", "Eingekauft"],
         ["kennengelernt", "Kennengelernt"],
+        ["gegengezeichnet", "Gegengezeichnet"],
         ["gekniet", "Gekniet"],
         ["gegangen", "Gegangen"],
         ["gekommen", "Gekommen"],
@@ -7155,6 +7149,8 @@
         ["Kürbisse", "Kürbisse"],
         ["Museen", "Museen"],
         ["Themen", "Themen"],
+        ["Zentren", "Zentren"],
+        ["Daten", "Daten"],
         ["Rhythmen", "Rhythmen"],
         ["Zyklen", "Zyklen"],
         ["Mythen", "Mythen"],
@@ -7273,6 +7269,7 @@
         ["führst", "Führst"],
         ["sehr best", "Sehr best"],
         ["Elektrotechniker", "Elektrotechniker"],
+        ["geht", "Geht"],
         ["räum den Tisch auf", "Räum den Tisch auf"],
         ["krankesten", "Krankesten"],
         ["schwuligem", "Schwuligem"],
@@ -7314,10 +7311,12 @@
         ["Ｈａｕｓ", "Ｈａｕｓ"],
         ["Haus­tür", "Haus­tür"],
         ["gibt’s", "Gibt’s"],
+        ["gibtʼs", "Gibtʼs"],
         ["ÜBER", "ÜBER"],
         ["Alles klar", "Alles klar"],
         ["haus", "Haus"],
         ["über", "Über"],
+        ["iPhone", "IPhone"],
         ["FRAU", "FRAU"],
         ["ÄRZTE", "ÄRZTE"],
         ["STRASSE", "STRASSE"],
@@ -7354,6 +7353,10 @@
         ["gewartet.", "Gewartet."],
         ["zugehört.", "Zugehört."],
         ["schaltet das Licht", "Schaltet das Licht"],
+        ["meine Mutter", "Meine Mutter"],
+        ["gelobt.", "Gelobt."],
+        ["schalt doch", "Schalt doch"],
+        ["verfluchte Mist", "Verfluchte Mist"],
         ["Sie ist heute früh aufgestanden und hat ihre Freunde angerufen.", "Sie ist heute früh aufgestanden und hat ihre Freunde angerufen."],
         ["aufstehen", "Aufstehen"]
       ]
@@ -9250,6 +9253,7 @@
         ["gewandert", "gewandert"],
         ["eingekauft", "eingekauft"],
         ["kennengelernt", "kennengelernt"],
+        ["gegengezeichnet", "gegengezeichnet"],
         ["gekniet", "gekniet"],
         ["gegangen", "gegangen"],
         ["gekommen", "gekommen"],
@@ -9325,6 +9329,8 @@
         ["Kürbisse", "kürbisse"],
         ["Museen", "museen"],
         ["Themen", "themen"],
+        ["Zentren", "zentren"],
+        ["Daten", "daten"],
         ["Rhythmen", "rhythmen"],
         ["Zyklen", "zyklen"],
         ["Mythen", "mythen"],
@@ -9443,6 +9449,7 @@
         ["führst", "führst"],
         ["sehr best", "sehr best"],
         ["Elektrotechniker", "elektrotechniker"],
+        ["geht", "geht"],
         ["räum den Tisch auf", "räum den tisch auf"],
         ["krankesten", "krankesten"],
         ["schwuligem", "schwuligem"],
@@ -9484,10 +9491,12 @@
         ["Ｈａｕｓ", "ｈａｕｓ"],
         ["Haus­tür", "haus­tür"],
         ["gibt’s", "gibt’s"],
+        ["gibtʼs", "gibtʼs"],
         ["ÜBER", "über"],
         ["Alles klar", "alles klar"],
         ["haus", "haus"],
         ["über", "über"],
+        ["iPhone", "iphone"],
         ["FRAU", "frau"],
         ["ÄRZTE", "ärzte"],
         ["STRASSE", "strasse"],
@@ -9524,6 +9533,10 @@
         ["gewartet.", "gewartet."],
         ["zugehört.", "zugehört."],
         ["schaltet das Licht", "schaltet das licht"],
+        ["meine Mutter", "meine mutter"],
+        ["gelobt.", "gelobt."],
+        ["schalt doch", "schalt doch"],
+        ["verfluchte Mist", "verfluchte mist"],
         ["Sie ist heute früh aufgestanden und hat ihre Freunde angerufen.", "sie ist heute früh aufgestanden und hat ihre freunde angerufen."],
         ["aufstehen", "aufstehen"]
       ]
@@ -11420,6 +11433,7 @@
         ["gewandert", "Gewandert"],
         ["eingekauft", "Eingekauft"],
         ["kennengelernt", "Kennengelernt"],
+        ["gegengezeichnet", "Gegengezeichnet"],
         ["gekniet", "Gekniet"],
         ["gegangen", "Gegangen"],
         ["gekommen", "Gekommen"],
@@ -11495,6 +11509,8 @@
         ["Kürbisse", "Kürbisse"],
         ["Museen", "Museen"],
         ["Themen", "Themen"],
+        ["Zentren", "Zentren"],
+        ["Daten", "Daten"],
         ["Rhythmen", "Rhythmen"],
         ["Zyklen", "Zyklen"],
         ["Mythen", "Mythen"],
@@ -11613,6 +11629,7 @@
         ["führst", "Führst"],
         ["sehr best", "Sehr best"],
         ["Elektrotechniker", "Elektrotechniker"],
+        ["geht", "Geht"],
         ["räum den Tisch auf", "Räum den Tisch auf"],
         ["krankesten", "Krankesten"],
         ["schwuligem", "Schwuligem"],
@@ -11654,10 +11671,12 @@
         ["Ｈａｕｓ", "Ｈａｕｓ"],
         ["Haus­tür", "Haus­tür"],
         ["gibt’s", "Gibt’s"],
+        ["gibtʼs", "Gibtʼs"],
         ["ÜBER", "ÜBER"],
         ["Alles klar", "Alles klar"],
         ["haus", "Haus"],
         ["über", "Über"],
+        ["iPhone", "IPhone"],
         ["FRAU", "FRAU"],
         ["ÄRZTE", "ÄRZTE"],
         ["STRASSE", "STRASSE"],
@@ -11694,6 +11713,10 @@
         ["gewartet.", "Gewartet."],
         ["zugehört.", "Zugehört."],
         ["schaltet das Licht", "Schaltet das Licht"],
+        ["meine Mutter", "Meine Mutter"],
+        ["gelobt.", "Gelobt."],
+        ["schalt doch", "Schalt doch"],
+        ["verfluchte Mist", "Verfluchte Mist"],
         ["Sie ist heute früh aufgestanden und hat ihre Freunde angerufen.", "Sie ist heute früh aufgestanden und hat ihre Freunde angerufen."],
         ["aufstehen", "Aufstehen"]
       ]

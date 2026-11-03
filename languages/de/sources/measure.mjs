@@ -84,6 +84,8 @@
 // diff: the hovers of hovers-<name>.txt whose first result with a
 //   definition differs between two rule sets, grouped by word and the two
 //   results, most frequent first: what adding or removing rules changes.
+//   With --dump, every such position (hover, word, both results) is written
+//   to the file, for sources/hand-sample.py.
 // after: the Tatoeba hovers whose word is an article, pronoun, auxiliary or
 //   contraction and whose next word is one of the frequent words, judged as
 //   in text: whether the function word and the form after it are read as one.
@@ -341,6 +343,7 @@ if (mode === 'frequent') {
     const firstA = [];
     await lookups(a, Readable.from([`${hovers.join('\n')}\n`]), (i, results) => { firstA[i] = describe(results.find((r) => !r.formOf)); });
     const groups = new Map();
+    const changes = [];
     let changed = 0;
     await lookups(b, Readable.from([`${hovers.join('\n')}\n`]), (i, results) => {
         const second = describe(results.find((r) => !r.formOf));
@@ -348,7 +351,9 @@ if (mode === 'frequent') {
         ++changed;
         const key = `${words[i]}: ${firstA[i]} -> ${second}`;
         groups.set(key, (groups.get(key) ?? 0) + 1);
+        changes.push([name, words[i], firstA[i], second, hovers[i]].join('\t'));
     });
+    if (dump !== null) { writeFileSync(dump, changes.join('\n') + '\n'); }
     console.log(`${name}: ${hovers.length} hovers; the first result with a definition differs at ${changed} between ${a} and ${b}`);
     for (const [key, n] of [...groups].sort((x, y) => y[1] - x[1]).slice(0, show)) { console.log(`   ${n}\t${key}`); }
 } else if (mode === 'text' || mode === 'after') {
