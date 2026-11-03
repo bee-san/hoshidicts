@@ -8,8 +8,9 @@ why CC-CEDICT is recommended before wty-zh-en.
 
 For each Yomitan dictionary zip it reads every term bank and prints the term
 rows, the rows whose rules column (the part of speech the lookup filter reads)
-is not empty, and the rows whose definitions are all form-of references
-([term, [rules]]). Then, for the --top most frequent one-character Han words
+is not empty, the rows with an empty rules column grouped by their first
+definition tag (docs/languages.md 14 step 5), and the rows whose definitions
+are all form-of references ([term, [rules]]). Then, for the --top most frequent one-character Han words
 of the frequency list, how each dictionary has them: a row of their own with
 definitions, only form-of rows that reach the character's traditional form
 (the simplifiedToTraditional map of language.json), only form-of rows that
@@ -63,10 +64,13 @@ def main():
     for path in args.dictionary:
         total = tagged = form_of = 0
         own, targets = set(), collections.defaultdict(set)
+        untagged_by_tag = collections.Counter()
         for r in rows(path):
             total += 1
             if r[3].strip():
                 tagged += 1
+            else:
+                untagged_by_tag[(r[2].split() or ['(none)'])[0]] += 1
             references = [d for d in r[5] if isinstance(d, list)]
             only_references = bool(references) and len(references) == len(r[5])
             form_of += only_references
@@ -77,6 +81,8 @@ def main():
                     own.add(r[0])
         print(f'{os.path.basename(path)}: {total} term rows, {tagged} with a rules value, '
               f'{form_of} with only form-of references')
+        print('  rows without a rules value, by first definition tag: '
+              + ', '.join(f'{tag} {n}' for tag, n in untagged_by_tag.most_common(12)))
         groups = collections.defaultdict(list)
         for c in top:
             if c in own:

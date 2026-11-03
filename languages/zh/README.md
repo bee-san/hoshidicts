@@ -12,10 +12,11 @@ Lookups start at the hovered character and try every prefix of the text
 The recommended dictionary is CC-CEDICT for Yomitan, which lists every word
 under both its simplified and its traditional spelling. Neither CC-CEDICT nor
 wty-zh-en (wiktionary-to-yomitan) fills the `rules` (part-of-speech) column
-on any row, so the pack sets `lookup.untaggedTerms` to `pass` (docs/languages.md
-9.4): the rules keep their parts of speech (`v`, `adj`, `n`, `pron`, all
-dictionary forms), which decide which rules apply to a rule's output, and
-untagged terms still match them.
+on any row, so the pack sets `lookup.untaggedTerms` to `pass`
+(docs/languages.md 9.4 and 14 step 5; Measurements 1 gives both values). The
+rules keep their parts of speech (`v`, `adj`, `n`, `pron`, all dictionary
+forms), which decide which rules apply to a rule's output, and untagged terms
+still match them.
 
 CC-CEDICT is recommended before wty-zh-en, although both are CC BY-SA 4.0 and
 wty-zh-en is the wiktionary-to-yomitan dictionary, because wty-zh-en misses
@@ -115,7 +116,7 @@ processor), which finds 說 for 说.
 
 ## Rule provenance
 
-`transforms.json` has 16 transforms and 2,907 rules: 2,907 `own`, 0 `yomitan`,
+`transforms.json` has 16 transforms and 2,909 rules: 2,909 `own`, 0 `yomitan`,
 0 `both`. Yomitan has no Chinese transforms or transform tests
 (`tools/port-yomitan-transforms.mjs` prints "Yomitan has no
 ext/js/language/zh/*-transforms.js"). So there is no `sources/yomitan.json`,
@@ -139,7 +140,7 @@ The transforms, with the part of speech of their output:
 | `aNotA` | 502 | 好不好 → 好, 喜不喜欢 → 喜欢 | v, adj |
 | `aMeiA` | 252 | 有没有 → 有, 吃没吃饭 → 吃饭 | v |
 | `redupAA` | 454 | 看看 → 看, 慢慢 → 慢 | v, adj |
-| `redupAyiA` | 334 | 看一看 → 看, 點一點頭 → 點頭 | v |
+| `redupAyiA` | 336 | 看一看 → 看, 點一點頭 → 點頭 | v |
 | `redupAleA` | 334 | 看了看 → 看, 点了点头 → 点头 | v |
 | `redupAleyiA` | 44 | 想了一想 → 想 | v |
 | `redupAAB` | 127 | 散散步 → 散步 | v |
@@ -160,7 +161,9 @@ result on Tatoeba or in Lu Xun's stories was wrong (Measurements 3 and 4):
   looked up, so a rule that removed any doubled character or any 一 would turn
   天天下雨 into 天下 ("all under heaven") at a longer match than 天天. The
   reduplication and A-not-A rules are word lists: whole-word rules, and prefix
-  rules for A一A, A了A and the verb of AAB. The A-not-A forms of one-character
+  rules for A一A, A了A and the verb of AAB. A一A of 点 is a whole word or
+  点一点头 only, because 点一点 also ends 一点一点 "little by little"
+  (一点一点开始学 gave 点开). The A-not-A forms of one-character
   words are whole-word rules (会不会, 好不好), never prefixes, because a prefix
   rule turned 会不会同意 into 会同 ("to handle jointly").
 - **Separable compounds** are one `pattern` per object (`anchorSuffix`). A
@@ -172,11 +175,13 @@ result on Tatoeba or in Lu Xun's stories was wrong (Measurements 3 and 4):
     (做的事, 说过的话; but 生他的气, 服八年的刑);
   - 好, 小 and 白 may not follow the verb (做好事), and 时 may not start the
     insertions (离开时会);
-  - after 上 or 下, no numeral, measure word or demonstrative before 班, 课, 车,
-    站 or 节 (下一班, 下次课);
+  - after 上 or 下, no numeral, measure word, demonstrative or 头 before 班, 课,
+    车, 站 or 节 (下一班, 下次课, 赶上头班火车);
   - some verbs may not be followed by the character that makes another verb
     with them: 放下 (放下你的手 is not 放手), 握住 and 握着 (not 握手), 有点过头
-    (not 点头), and 打开 before any object of 打 (打开了车的雾灯 is not 打车);
+    (not 点头), 打开 before any object of 打 (打开了车的雾灯 is not 打车), and 点
+    as "o'clock": no 钟 after 点 and no 到 before 火 (七点钟的火车, 7点到了火车站
+    are not 点火);
   - an object that is a measure word may not follow a numeral, 多, 几 or 些
     (松了一口气, 过了这么多年);
   - some objects may not follow the characters that make another word with
@@ -205,7 +210,7 @@ result on Tatoeba or in Lu Xun's stories was wrong (Measurements 3 and 4):
   the potential rules changed nothing and is gone.
 - `sources/mutations.mjs` removes each stem constraint, exclusion, lookahead,
   list and group of entries from a copy of the pack and runs the conformance
-  test on it: 42 mutations, all killed.
+  test on it: 45 mutations, all killed.
 
 ## Measurements
 
@@ -220,30 +225,37 @@ with `lookup.untaggedTerms` `pass` as the pack has it.
    `sources/own.json` of the own-rules commit, before any measurement. The
    pack's only optional features are the two script conversions.
 
-   | Rules | File | Options | Rows | Recall | Negatives passed | False candidates | First rank |
+   | Rules | File | Options | Rows | Recall | Negatives passed | False candidates, pass / filter | First rank, pass / filter |
    | --- | --- | --- | ---: | ---: | ---: | ---: | ---: |
-   | final | corpus + gaps | defaults (as written) | 956 | 75.42% | – | 0.004 | 32.53% |
-   | final | corpus + gaps | all options | 956 | 75.52% | – | 0.788 | 32.53% |
-   | final | defaults.tsv | defaults (as written) | 217 | 100.00% | 100.00% | 0.015 | 75.38% |
-   | final | defaults.tsv | all options | 217 | 100.00% | 100.00% | 0.731 | 75.38% |
-   | final | cases.tsv | all options (as written) | 7 | 100.00% | – | 1.143 | 0.00% |
-   | final | cases.tsv | defaults | 7 | 0.00% | – | 1.000 | 0.00% |
-   | first own rules | corpus + gaps | defaults | 956 | 74.16% | – | 0.010 | 28.77% |
-   | first own rules | corpus + gaps | all options | 956 | 74.27% | – | 0.791 | 28.77% |
-   | first own rules | defaults.tsv | defaults | 217 | 94.62% | 25.29% | 0.023 | 69.23% |
-   | first own rules | defaults.tsv | all options | 217 | 94.62% | 25.29% | 0.723 | 69.23% |
+   | final | corpus + gaps | defaults (as written) | 956 | 75.42% | – | 0.004 / 0.000 | 32.53% / 18.51% |
+   | final | corpus + gaps | all options | 956 | 75.52% | – | 0.788 / 0.698 | 32.53% / 18.51% |
+   | final | defaults.tsv | defaults (as written) | 222 | 100.00% | 100.00% | 0.015 / 0.008 | 75.38% / 16.92% |
+   | final | defaults.tsv | all options | 222 | 100.00% | 100.00% | 0.731 / 0.200 | 75.38% / 16.92% |
+   | final | cases.tsv | all options (as written) | 7 | 100.00% | – | 1.143 / 0.143 | 0.00% / 0.00% |
+   | final | cases.tsv | defaults | 7 | 0.00% | – | 1.000 / 0.000 | 0.00% / 0.00% |
+   | first own rules | corpus + gaps | defaults | 956 | 74.16% | – | 0.010 / 0.010 | 28.77% / 28.77% |
+   | first own rules | corpus + gaps | all options | 956 | 74.27% | – | 0.791 / 0.791 | 28.77% / 28.77% |
+   | first own rules | defaults.tsv | defaults | 222 | 94.62% | 25.00% | 0.023 / 0.023 | 69.23% / 69.23% |
+   | first own rules | defaults.tsv | all options | 222 | 94.62% | 25.00% | 0.723 / 0.723 | 69.23% / 69.23% |
 
+   - `untaggedTerms` is `pass` because both dictionaries leave `rules` empty
+     on every row (`sources/check-dictionaries.py`): CC-CEDICT has no
+     definition tags at all, and wty-zh-en's untagged rows include all its
+     verbs, nouns and adjectives (first definition tag `non-lemma` 156,581,
+     `n` 90,172, `v` 34,198, `char` 19,999, `name` 19,112, `adj` 11,213, …).
+     Recall and negatives are the same under both values. `pass` ranks more
+     lemmas first on corpus + gaps (32.53% against 18.51%) and defaults.tsv
+     (75.38% against 16.92%), because under `filter` rule outputs find no
+     CC-CEDICT term; cases.tsv ranks none first either way. The first own
+     rules have no conditions, so both values give the same numbers.
+   - With wty-zh-en (`pass`), false candidates are 0.456 and first rank
+     24.37% on corpus + gaps, and 0.723 and 45.38% on defaults.tsv.
    - Recall over corpus + gaps by source: usage rows 45.2% (161 of 356),
      Wiktionary erhua 92.3% (277 of 300), CC-CEDICT erhua 94.3% (283 of 300).
-   - With `untaggedTerms: filter`, recall is the same. First rank drops to
-     18.51% (corpus + gaps) and 16.92% (defaults.tsv), because rule outputs
-     then find no CC-CEDICT term. With wty-zh-en (`pass`), false candidates
-     are 0.456 and first rank 24.37% on corpus + gaps, and 0.723 and 45.38%
-     on defaults.tsv.
    - First rank is low on corpus + gaps for two reasons. Many erhua sources
      are CC-CEDICT headwords themselves (一点儿, 玩儿), which rightly come first
-     as written, and the 235 gap rows do not reach their term at all. With every
-     option on, the conversions find each word again under its other
+     as written, and the 235 gap rows do not reach their term at all. With
+     every option on, the conversions find each word again under its other
      spelling, and each such entry counts as a false candidate (0.79 per
      row). CC-CEDICT needs no conversion, so the conversions are off by
      default.
@@ -252,7 +264,7 @@ with `lookup.untaggedTerms` `pass` as the pack has it.
      The false candidates are 2 each for erhua, aNotA and AA.
    - `--per-rule` on defaults.tsv: every transform recovers rows (separable
      43, aNotA 12, potentialNot 11, erhua 9, aMeiA 8, and 2 to 6 each for the
-     others) and none breaks one of the 87 negatives.
+     others) and none breaks one of the 92 negatives.
    - The cases.tsv rows need the conversions (说不说 → 說), so they fail with
      the defaults by design.
 2. **Frequent forms** (`sources/measure.py frequent`): each of the 10,000
@@ -269,31 +281,38 @@ with `lookup.untaggedTerms` `pass` as the pack has it.
      text.
 3. **Sentence corpus** (Tatoeba, 915,672 hovers, one per Han character, each
    from that character to the end of its sentence):
-   - `sources/measure.py compare`: the rules change the first result of 3,392
-     hovers (0.37%). 1,720 keep the lemma and only match more of the text
-     (朋友们, 试试, 能不能, 完不了). 1,672 give another lemma: separable 1,209,
+   - `sources/measure.py compare`: the rules change the first result of 3,390
+     hovers (0.37%). 1,721 keep the lemma and only match more of the text
+     (朋友们, 试试, 能不能, 完不了). 1,669 give another lemma: separable 1,207,
      potentialNot 182, aNotA 117, potentialDe 68, AABB 34, aMeiA 22, AAB 20,
-     and 20 from the other rules.
-   - A random sample of 150 of those 1,672 (seed 3, drawn on the final
-     rules) was judged by hand with the whole sentence: 141 right, 4 doubtful
-     and 5 wrong (3.3%). The wrong ones are 開一家藥房 → 開藥, 洗一下你的车 →
-     下车, 離不開她的車 → 開車, 房間有沒有空調 → 有空 and 说得通顺流畅 → 说通. The
-     doubtful ones are 解决不了 → 决 (twice, hovered in the middle of 解决),
-     能说得通 → 说通 ("makes sense") and 早上上學 → 上學 (hovered at the 上 of
-     早上).
+     and 19 from the other rules.
+   - Two samples of those 1,669 rows were judged by hand, each row with its
+     whole sentence:
+     - `sources/measure.py judge` gives the 150 rows whose hover text has the
+       smallest SHA-1. It reproduces from the final rules, and a rule change
+       that removes rows keeps the rest of it. 145 right, 4 doubtful, 1 wrong.
+     - A random sample of 150 (seed 3) was drawn before the exclusions for 点
+       as "o'clock", 一点一点 and 头班, which removed none of its rows: 141
+       right, 4 doubtful, 5 wrong.
+     - Together that is 283 distinct rows: 270 right, 7 doubtful and 6 wrong
+       (2.1%). The wrong ones are 開一家藥房 → 開藥, 洗一下你的车 → 下车,
+       離不開她的車 → 開車, 房間有沒有空調 → 有空, 说得通顺流畅 → 说通 and 忘记了她的账号
+       → 记账. The doubtful ones are 解决不了 → 决 (three times, hovered in the
+       middle of 解决), 说得通 → 说通 ("makes sense", three times) and 早上上學 →
+       上學 (hovered at the 上 of 早上).
    - Behind pronouns and auxiliary verbs (`sources/measure.py behind`).
      Chinese has no clitics or articles; the words that most often stand
      right before a hovered word are pronouns (我, 你, 他, 我们, 大家, 自己, …) and
      auxiliary verbs (会, 能, 要, 想, 可以, 应该, …). After a pronoun there are
      81,473 hovers; a rule gives the first result of 619 and another lemma
      than without rules for 438. After an auxiliary there are 26,837 hovers,
-     with 213 and 134. In the judged sample, 41 rows follow a pronoun, all
-     right. 10 follow an auxiliary: 8 right, 1 doubtful (能说得通 → 说通) and 1
-     wrong (要開一家藥房 → 開藥).
-   - An earlier sample of 150 (seed 2), drawn on the rules before the last
-     fixes, had 7 wrong. The last fixes removed 5 of them (放下你的手,
-     握住他的手, 有點過頭, 打开包装, 吃了豆腐); the other 2 are in Known gaps
-     (早上不来 → 上来, 晚上不下雪 → 上下).
+     with 213 and 134. Of the 283 judged rows, 78 follow a pronoun, all right.
+     20 follow an auxiliary: 18 right, 1 doubtful (能说得通 → 说通) and 1 wrong
+     (要開一家藥房 → 開藥).
+   - An earlier random sample of 150 (seed 2), drawn before the exclusions
+     for 放下, 握住, 有点过头, 打开 and 豆腐, had 7 wrong. Those exclusions fixed
+     5 of them (放下你的手, 握住他的手, 有點過頭, 打开包装, 吃了豆腐). The other 2
+     (早上不来 → 上来, 晚上不下雪 → 上下) are in Known gaps.
 4. **Real text**: Lu Xun's *吶喊* and *徬徨* looked up at each of their
    117,867 Han characters, the same way. 521 first results change (0.44%):
    225 keep the lemma, and 296 give another one (separable 222, potentialNot
@@ -307,29 +326,29 @@ with `lookup.untaggedTerms` `pass` as the pack has it.
    two words as one compound (過年過節, 走出後門, 說人話).
 5. **Performance** (section 13), with CC-CEDICT and 300 hover texts sampled
    with seed 1 from Tatoeba (200) and the two books (100). The machine's load
-   average was 47 to 56 during these runs.
+   average was about 42 to 46 during these runs.
    - Native `benchmark-lookup --languages languages --language zh`, 6 passes
-     with the first dropped (1,500 timed lookups per run): p50 31.7, 32.5
-     and 31.9 µs and p95 165.3, 164.3 and 166.2 µs in three runs. The budget
-     is 1 ms p50.
-   - Native pack load (`sources/load-time.cpp`): 12.4 to 14.1 ms after the
-     first, cold run (28.5 ms), with 5.1 MiB of heap. The 352 separable
-     patterns take about 7 ms and 4.2 MiB of that: a copy without them loads
-     in 5.3 to 5.4 ms with 0.93 MiB. Their character classes are written out,
-     because expanding a class reference in a pattern takes the engine about
-     0.1 ms, which made the pack load in about 50 ms.
+     with the first dropped (1,500 timed lookups per run): p50 30.8, 30.8 and
+     30.5 µs and p95 163.1, 159.4 and 163.0 µs in three runs. The budget is
+     1 ms p50.
+   - Native pack load (`sources/load-time.cpp`, five loads): 12.8 to 14.6 ms
+     after the first, cold load (34.1 ms), with 5.1 MiB of heap. The 352
+     separable patterns take about 8 ms and 4.2 MiB of that: a copy without
+     them loads in 5.2 to 6.3 ms with 0.94 MiB. Their character classes are
+     written out, because expanding a class reference in a pattern takes the
+     engine about 0.1 ms, which made the pack load in about 50 ms.
    - Hachidori's WebAssembly engine (feat/multi-language d7e82b0, built from
-     hoshidicts with lookup.untaggedTerms), `hdw_language_load` (`sources/wasm-load.mjs`,
-     10 fresh engines): median 27.7 ms threaded and 26.2 ms single-thread
-     (budget 50 ms), with 2,393,216 bytes of live heap after the load (budget
-     20 MB).
+     hoshidicts with lookup.untaggedTerms), `hdw_language_load`
+     (`sources/wasm-load.mjs`, 10 fresh engines): median 29.5 ms threaded and
+     29.0 ms single-thread (budget 50 ms), with 2,394,792 bytes of live heap
+     after the load (budget 20 MB).
    - `hdw_lookup` (Hachidori's `benchmark/node-lookup.mjs`, Node 22, 505
-     lookups made from the same 300 texts, 6 passes): p50 78.8 µs and p95
-     237.6 µs threaded; p50 73.3 µs and p95 230.3 µs single-thread.
+     lookups made from the same 300 texts, 6 passes): p50 79.6 µs and p95
+     239.0 µs threaded; p50 78.1 µs and p95 246.7 µs single-thread.
    - The real-Chrome pack check (`test/chrome-language-pack.mjs` in that
      checkout, with `sources/chrome-cases.tsv` and `CC-CEDICT.zip`) passes 16
-     of 16 checks in 8 s. These are the 12 lookups of the cases file (洗个澡 →
-     洗澡, 生我的气 → 生气, 点了点头 → 点头, …), the profile and import, the Anki
+     of 16 checks in 10 s. These are the 12 lookups of the cases file (洗个澡
+     → 洗澡, 生我的气 → 生气, 点了点头 → 点头, …), the profile and import, the Anki
      note and the switch to Japanese and back.
 6. **Commands** (from the repository root, with the cache files above):
 
@@ -358,8 +377,9 @@ with `lookup.untaggedTerms` `pass` as the pack has it.
    node languages/zh/sources/wasm-load.mjs <hachidori checkout> 10 hoshidicts-threaded   # and hoshidicts
    ```
 
-   The random samples of item 3 are `random.Random(seed).sample` over the
-   rows of `compare --out` whose two first results differ in lemma.
+   `python3 languages/zh/sources/measure.py judge --diffs tatoeba.tsv --text $C/cmn_sentences.tsv.bz2 --tatoeba`
+   prints the sample of item 3 with the text before each hover. The seeded
+   samples are `random.Random(seed).sample` over the same rows.
 
 ## Known gaps
 
@@ -375,14 +395,14 @@ with `lookup.untaggedTerms` `pass` as the pack has it.
   written.
 - **An object that starts a longer word**: a rule sees only the text up to
   the object, so it cannot tell the object from the start of a longer word.
-  In the judged samples this gave 開一家藥房 → 開藥, 有沒有空調 → 有空, 说得通顺 →
-  说通, 出一個國民 → 出國, 找不出什麼事情 → 出事, 動他的手指 → 動手 and 想得到手 → 想到:
-  3 of the 150 Tatoeba rows and 4 of the 296 Lu Xun rows.
+  In the judged rows this gave 開一家藥房 → 開藥, 有沒有空調 → 有空, 说得通顺 → 说通,
+  忘记了她的账号 → 记账, 出一個國民 → 出國, 找不出什麼事情 → 出事, 動他的手指 → 動手
+  and 想得到手 → 想到: 4 of the 283 Tatoeba rows and 4 of the 296 Lu Xun rows.
 - **A lookup that starts inside a word**: the rules read the rest of the text
   as if it started a word. Examples are 解决不了 hovered at 决 (→ 决), 早上不来 at
   上 (→ 上来), 晚上不下雪 at 上 (→ 上下), 離不開她的車 at 開 (→ 開車) and 洗一下你的车
-  at 下 (→ 下车). In the Tatoeba sample this is 2 of the 5 wrong rows and 3 of
-  the 4 doubtful ones.
+  at 下 (→ 下车). In the judged Tatoeba rows this is 3 of the 6 wrong ones
+  and 4 of the 7 doubtful ones.
 - **Script conversions with CC-CEDICT**: turned on, they show each word twice
   (说 and 說), which is why they are off. With wty-zh-en they are needed for
   single simplified characters (see the top of this file).
