@@ -533,3 +533,123 @@ negatives	0	найближча	ближчий	*	*
 negatives	0	ґ	ґо	*	*
 negatives	0	ґр	ґра	*	*
 negatives	0	см	сма	*	*
+# Negatives that fail when a stem constraint of the own rules is deleted (sources/mutate.py, docs/languages.md 14 step 7).
+constraint	0	та	то	*	*
+constraint	0	пса	псе	*	*
+constraint	0	ні	на	*	*
+constraint	0	не руці	не рука	*	*
+constraint	0	хаті	ха	*	*
+constraint	0	ну	на	*	*
+constraint	0	жнем	ждень	*	*
+constraint	0	не шею	не ша	*	*
+constraint	0	нею	на	*	*
+constraint	0	не	н	*	*
+constraint	0	две	два	*	*
+constraint	0	їж	їжжя	*	*
+constraint	0	грам	гор	*	*
+constraint	0	не рукам	не рука	*	*
+constraint	0	вам	ве	*	*
+constraint	0	ями	я	*	*
+constraint	0	на бетами	на бет	*	*
+constraint	0	нами	не	*	*
+constraint	0	злах	зел	*	*
+constraint	0	не бегах	не бег	*	*
+constraint	0	дах	де	*	*
+constraint	0	лі	ля	*	*
+constraint	0	не сні	не снь	*	*
+constraint	0	єрі	єрь	*	*
+constraint	0	цю	ця	*	*
+constraint	0	ям	я	*	*
+constraint	0	на шалям	на шаля	*	*
+constraint	0	та	т	*	*
+constraint	0	чия	чи	*	*
+constraint	0	ну	н	*	*
+constraint	0	ні	н	*	*
+constraint	0	які	яок	*	*
+constraint	0	рі	р	*	*
+constraint	0	не сні	не сень	*	*
+constraint	0	ані	аень	*	*
+constraint	0	чи	чо	*	*
+constraint	0	зои	зо	*	*
+constraint	0	єю	єй	*	*
+constraint	0	не шею	не шей	*	*
+constraint	0	бою	бо	*	*
+constraint	0	мені	м'я	*	*
+constraint	0	на утробою	на утробій	*	*
+constraint	0	ну	но	*	*
+constraint	0	цю	це	*	*
+constraint	0	не нашу	не наше	*	*
+constraint	0	всю	все	*	*
+constraint	0	че	чий	*	*
+constraint	0	ві	вий	*	*
+constraint	0	не сні	не сний	*	*
+constraint	0	не спокої	не спокий	*	*
+constraint	0	на всякому	на всякий	*	*
+constraint	0	не бій	не бий	*	*
+constraint	0	не им	не ий	*	*
+constraint	0	ку	кий	*	*
+constraint	0	палю	палій	*	*
+constraint	0	на ліґою	на ліґий	*	*
+constraint	0	не крім	не крий	*	*
+constraint	0	не якими	не який	*	*
+constraint	0	на амбітнім	на амбітній	*	*
+constraint	0	боюсь	битися	*	*
+constraint	0	на вчусь	на вчийсь	*	*
+constraint	0	повім	пів	*	*
+constraint	0	не слову	не слів	*	*
+constraint	0	на дряхліший	на дряхлий	*	*
+constraint	0	найбагатіший	багатій	*	*
+constraint	0	член	чити	*	*
+constraint	0	не лорен	не лорений	*	*
+constraint	0	найбільш	більо	*	*
+constraint	0	яти	ять	*	*
+constraint	0	не дозволяти	не дозволять	*	*
+constraint	0	вужчу	вужчати	*	*
+constraint	0	на п'єш	на пити	*	*
+constraint	0	живеш	живати	*	*
+constraint	0	ніде	ніти	*	*
+constraint	0	живе	живати	*	*
+constraint	0	не им	не ити	*	*
+constraint	0	живем	живати	*	*
+constraint	0	щите	щати	*	*
+constraint	0	не спите	не спати	*	*
+constraint	0	живете	живати	*	*
+constraint	0	чуть	тати	*	*
+constraint	0	не чуть	не кати	*	*
+constraint	0	живуть	живати	*	*
+constraint	0	на хтітиму	на хтіти	*	*
+constraint	0	на житимеш	на жити	*	*
+constraint	0	на їбтиме	на їбти	*	*
+constraint	0	на ритимемо	на рити	*	*
+constraint	0	на акатимете	на акати	*	*
+constraint	0	на включатимуть	на включати	*	*
+constraint	0	г	гнути	*	*
+constraint	0	зв	зти	*	*
+constraint	0	на кула	на кусти	*	*
+constraint	0	намокла	намікти	*	*
+constraint	0	гнулося	гтися	*	*
+constraint	0	не скло	не скнути	*	*
+constraint	0	тяглось	тягстися	*	*
+constraint	0	злись	знутися	*	*
+constraint	0	злись	зстися	*	*
+constraint	0	діди	діти	*	*
+constraint	0	брь	брити	*	*
+constraint	0	дім	діти	*	*
+constraint	0	слідімо	сліти	*	*
+constraint	0	живім	живати	*	*
+constraint	0	важчім	важчати	*	*
+constraint	0	на корте	на корити	*	*
+constraint	0	живіте	живати	*	*
+constraint	0	бряжчіть	бряжчати	*	*
+constraint	0	на кишачи	на кишити	*	*
+constraint	0	маючи	мавати	*	*
+constraint	0	на каравши	на карасти	*	*
+constraint	0	жену	жити	*	*
+constraint	0	не язнений	не язнити	*	*
+constraint	0	стену	ссти	*	*
+constraint	0	не злий	не знути	*	*
+constraint	0	милі	минути	*	*
+constraint	0	не вбито	не вбити	*	*
+constraint	0	суждено	сужсти	*	*
+constraint	0	не сеть	не сети	*	*
+constraint	0	месть	мести	*	*

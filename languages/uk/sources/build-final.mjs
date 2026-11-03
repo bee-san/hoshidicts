@@ -90,9 +90,9 @@ const removalKey = (id, rule) => {
     return `${id}\t${inflected}\t${deinflected}`;
 };
 
-// Yomitan's rules without the removed ones, written back in the compact
-// form sources/map-yomitan.mjs uses (cross products of the rules that
-// differ only in their affixes).
+// Yomitan's rules without the removed ones, written back as cross products
+// of the rules that differ only in their affixes (sources/yomitan.json keeps
+// its rules with a minimum stem of two single, for the differential check).
 function compact(rules) {
     const groups = new Map();
     const out = [];
@@ -103,12 +103,11 @@ function compact(rules) {
             pair = [rule.inflected, rule.deinflected];
             const {type: _t, inflected: _i, deinflected: _d, ...others} = rule;
             rest = {...others, stemCharacters: '[]'};
-        } else if (rule.type === 'suffix' && rule.inflected !== '' && (rule.stemMinLength ?? 0) <= 1) {
+        } else if (rule.type === 'suffix' && rule.inflected !== '') {
             pair = [rule.inflected, rule.deinflected];
             const {type: _t, inflected: _i, deinflected: _d, ...others} = rule;
             rest = others;
-        } else if (rule.type === 'circumfix' && rule.inflectedPrefix === '' && rule.deinflectedPrefix === '' && rule.inflectedSuffix !== ''
-            && ((rule.stemMinLength ?? 0) <= 1 || rule.stemCharacters === '[]')) {
+        } else if (rule.type === 'circumfix' && rule.inflectedPrefix === '' && rule.deinflectedPrefix === '' && rule.inflectedSuffix !== '') {
             pair = [rule.inflectedSuffix, rule.deinflectedSuffix];
             const {type: _t, inflectedPrefix: _a, deinflectedPrefix: _b, inflectedSuffix: _c, deinflectedSuffix: _d, ...others} = rule;
             rest = others;
@@ -171,19 +170,27 @@ for (const transform of union.transforms) {
                 rules.push({...plain, source: 'both'});
                 both += singles.length;
             } else if (rule.type === 'circumfix' && rule.suffixes !== undefined && rule.prefixes.length === 1) {
-                // Consecutive runs of own and shared pairs, in the pairs'
-                // order: rules that match at one place apply in file order,
-                // which decides ties between their terms (section 9.6).
-                let run = null;
+                // The pairs only this pack has and the pairs Yomitan also makes go
+                // into separate rules, as few as possible. Rules that match at
+                // one place apply in file order, which decides ties between
+                // their terms (section 9.6), so two pairs with the same
+                // inflected ending keep their order: a pair joins the first
+                // rule of its kind that comes no earlier than every rule
+                // holding its ending.
+                const groups = [];
                 rule.suffixes.forEach((pair, i) => {
                     const shared = agrees(singles[i]);
-                    if (run === null || run.shared !== shared) {
-                        run = {shared, rule: {...plain, suffixes: [], ...(shared ? {source: 'both'} : {})}};
-                        rules.push(run.rule);
+                    const last = groups.reduce((m, g, gi) => (g.endings.has(pair[0]) ? gi : m), -1);
+                    let group = groups.find((g, gi) => gi >= last && g.shared === shared);
+                    if (!group) {
+                        group = {shared, endings: new Set(), rule: {...plain, suffixes: [], ...(shared ? {source: 'both'} : {})}};
+                        groups.push(group);
                     }
-                    run.rule.suffixes.push(pair);
+                    group.endings.add(pair[0]);
+                    group.rule.suffixes.push(pair);
                     if (shared) { ++both; }
                 });
+                rules.push(...groups.map((g) => g.rule));
             } else {
                 rules.push(plain);
             }

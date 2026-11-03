@@ -23,12 +23,13 @@
 //   a `suffix` with an empty ending, `stemContains` a vowel and
 //   `stemEndsWith` a consonant.
 //
-// Then, in every transform, suffix rules without a minimum stem above one
-// that differ only in their two affixes are written as one cross-product
-// circumfix with an empty prefix (section 7.3): the same rules in fewer
-// bytes, which keeps sources/ and tests/ under 1 MB (section 3). Rules with
-// a minimum stem of two stay single suffix rules, so the differential check
-// still probes them with stems at their minimum and one below it.
+// Then, in every transform, the suffix rules and whole words that differ
+// only in their two affixes are written as one cross-product circumfix with
+// an empty prefix (section 7.3; a whole word's stem is empty, stemCharacters
+// []): the same rules in fewer bytes, which keeps sources/ and tests/ under
+// 1 MB (section 3). The differential check probes a cross product's pairs
+// with stems of one and three letters, on both sides of Yomitan's minimum
+// stem of two.
 //
 // C is Yomitan's consonant list бвгґджзклмнпрстфхцчшщ (the pack's
 // {consonant}) and V its vowel list (the pack's {vowel}). None of these rules
@@ -144,7 +145,7 @@ function compact(rules) {
             groups.get(key).suffixes.push([inflected, deinflected]);
             continue;
         }
-        if (rule.type !== 'suffix' || rule.inflected === '' || (rule.stemMinLength ?? 0) > 1) { out.push(rule); continue; }
+        if (rule.type !== 'suffix' || rule.inflected === '') { out.push(rule); continue; }
         const {type: _type, inflected, deinflected, ...rest} = rule;
         const key = JSON.stringify(Object.keys(rest).sort().map((k) => [k, rest[k]]));
         if (!groups.has(key)) {
