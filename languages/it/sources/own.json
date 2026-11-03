@@ -1011,7 +1011,9 @@
       "description": "The past participle of a pronominal verb, looked up in its -rsi form: pentito → pentirsi, accorto → accorgersi, vergognata → vergognarsi.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["are", "arsi"], ["ere", "ersi"], ["ire", "irsi"], ["rre", "rsi"]], "conditionsIn": ["ptcp"], "conditionsOut": ["v"], "stemMinLength": 2}
+        {"type": "suffix", "inflected": "are", "deinflected": "arsi", "conditionsIn": ["ptcp"], "conditionsOut": ["v"], "stemMinLength": 2, "stemNotStartsWith": "[c]"},
+        {"type": "suffix", "inflected": "are", "deinflected": "arsi", "conditionsIn": ["ptcp"], "conditionsOut": ["v"], "stemMinLength": 2, "stemStartsWith": "[c]", "stemNotStartsWithText": "comper"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ere", "ersi"], ["ire", "irsi"], ["rre", "rsi"]], "conditionsIn": ["ptcp"], "conditionsOut": ["v"], "stemMinLength": 2}
       ]
     },
     {

@@ -815,8 +815,14 @@ for (const [inflected, deinflected] of [['antesi', 'arsi'], ['antisi', 'arsi'], 
 // The past participle of a pronominal verb, one step after its infinitive
 // (pentito → pentire → pentirsi, accorto → accorgere → accorgersi).
 transform('participle-pronominal', 'past participle (-rsi verb)', 'The past participle of a pronominal verb, looked up in its -rsi form: pentito → pentirsi, accorto → accorgersi, vergognata → vergognarsi.');
+// comperare is an old spelling of comprare that wty-it-en lists only as a
+// reference to it, so comperato reached comperarsi before comprare (23 of the
+// rule's 26 wrong first results in 752,265 lookups of five Gutenberg texts
+// and Tatoeba); the stem is left out.
 for (const [inflected, deinflected] of [['are', 'arsi'], ['ere', 'ersi'], ['ire', 'irsi'], ['rre', 'rsi']]) {
-    suffix('participle-pronominal', inflected, deinflected, ['ptcp'], ['v'], {stemMinLength: 2});
+    for (const split of inflected === 'are' ? [{stemNotStartsWith: '[c]'}, {stemStartsWith: '[c]', stemNotStartsWithText: 'comper'}] : [{}]) {
+        suffix('participle-pronominal', inflected, deinflected, ['ptcp'], ['v'], {stemMinLength: 2, ...split});
+    }
 }
 
 // --- Enclitic pronouns -------------------------------------------------------------------

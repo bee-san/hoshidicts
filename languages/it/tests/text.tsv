@@ -20,7 +20,9 @@ elision	1	c'è	è
 elision	1	m'alzo	alzo
 elision	1	po	po'
 elision	1	l	l'
-elision	1	L	l'
+elision	0	L	L'
+elision	0	V	V'
+elision	1	V	V
 elision	1	dov	dov'
 elision	0	po	po
 elision	0	da	da'

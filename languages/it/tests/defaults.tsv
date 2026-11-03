@@ -425,6 +425,9 @@ strong	1	corrisposto	corrispondere	v	participle
 pronominal-participle	1	pentito	pentirsi	v	participle-pronominal|participle
 pronominal-participle	1	accorto	accorgersi	v	participle-pronominal|participle
 pronominal-participle	1	misurantesi	misurarsi	v	participle-present
+pronominal-participle	1	inginocchiata	inginocchiarsi	v	participle-pronominal|participle
+pronominal-participle	1	calcolato	calcolarsi	v	participle-pronominal|participle
+pronominal-participle	0	comperato	comperarsi	*	*
 infinitive	1	parlarmi	parlare	v	infinitive|clitic-mi
 infinitive	0	parli	pare	*	*
 infinitive	0	farlo	farre	*	*
@@ -676,4 +679,5 @@ elision	1	bell'idea	idea	*
 elision	1	l’amico	amico	*	
 elision	1	c'erano	essere	v	imperfect-loro
 elision	1	po	po'	*	
-elision	1	L	l'	*	
+elision	0	L	l'	*	*
+elision	0	V	v'	*	*

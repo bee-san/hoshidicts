@@ -60,7 +60,7 @@
         "id": "addElisionApostrophe",
         "name": "Add the apostrophe of an elided word",
         "keepInput": false,
-        "variants": [[{"pattern": "^(.* )?([Ll]|[Gg]l|[Dd]ell|[Aa]ll|[Dd]all|[Nn]ell|[Ss]ull|[Cc]oll|[Qq]uest|[Qq]uell|[Bb]ell|[Ss]ant|[Gg]rand|[Mm]ezz|[Tt]utt|[Nn]ient|[Ss]enz|[Aa]nch|[Cc]om|[Cc]os|[Dd]ov|[Qq]uand|[Dd]ev|[Ss]ott|[Cc]|[Dd]|[Nn]|[Ss]|[Mm]|[Tt]|[Vv]|[Pp]o|[Mm]o|[Bb]e|[Tt]o)$", "replace": "$1$2'"}]]
+        "variants": [[{"pattern": "^(.* )?(l|gl|dell|all|dall|nell|sull|coll|quest|quell|bell|sant|grand|mezz|tutt|nient|senz|anch|com|cos|dov|quand|dev|sott|c|d|n|s|m|t|v|po|mo|be|to)$", "replace": "$1$2'"}]]
       },
       {
         "id": "acuteFinalE",
