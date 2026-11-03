@@ -1,0 +1,7 @@
+{
+  "title": "hoshidicts Korean test",
+  "revision": "1",
+  "format": 3,
+  "author": "hoshidicts",
+  "description": "A tiny Korean-English dictionary for languages/ko/tests/lookup.tsv, written for hoshidicts (GPL-3.0-or-later). Part-of-speech tags as kty-ko-en writes them. The entry spelled in jamo (ㅁㅓㄱㄷㅏ) is found only if the postprocessor kept the jamo form it joins."
+}
