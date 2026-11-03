@@ -424,6 +424,9 @@ function presentRules(prefixes, ending, {defective = [], hamza = [], hollow = tr
     // positions and a wrong one at none.
     if (hollow) {
         const hollowPrefixes = prefixes.filter(([, d]) => d === '' || d === 'أ' || d === 'ا');
+        // I (أُرِيد): the أ of form IV, which the sound rules leave out because
+        // there it gives the word back (أكرم), returns here (أريدك -> أراد).
+        if (prefixes[0][0] === 'أ') { hollowPrefixes.push(['أ', 'أ']); }
         rules.push(cross(hollowPrefixes, hollowEndings(ending).filter(([i]) => i.startsWith('و')), {min: 1}));
         rules.push(cross([...hollowPrefixes].sort((a, b) => (a[1] === 'أ' ? 0 : 1) - (b[1] === 'أ' ? 0 : 1)), hollowEndings(ending).filter(([i]) => i.startsWith('ي')), {min: 1}));
     }

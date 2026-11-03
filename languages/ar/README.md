@@ -238,7 +238,170 @@ compatible part of speech.
 
 ## Measurements
 
-TBD
+All numbers use hoshidicts at this branch's head on main 1fed676 (GCC 14.3,
+Release) and wty-ar-en as published, form-of rows included. The scripts are
+in `sources/`, run from the repository root.
+
+1. **`eval-language --dictionary`** (`python3 languages/ar/sources/measure.py
+   sets <imported wty-ar-en>`). Each file is run with every option on and with
+   the defaults, as written and with its options line added or removed. The
+   final set is `sources/own.json` with provenance marks, so its numbers are
+   the own set's.
+
+   | Rule set | File | Options | Recall | Negatives passed | False candidates | First rank |
+   | --- | --- | --- | ---: | ---: | ---: | ---: |
+   | final (= own) | corpus.tsv + gaps.tsv (1,496) | all on | **92.25%** | - | 1.728 | 80.48% |
+   | final (= own) | corpus.tsv + gaps.tsv | defaults | 87.37% | - | 1.418 | 80.68% |
+   | Yomitan | corpus.tsv + gaps.tsv | all on | 67.91% | - | 1.210 | 78.61% |
+   | Yomitan | corpus.tsv + gaps.tsv | defaults | 67.45% | - | 1.206 | 78.54% |
+   | union | corpus.tsv + gaps.tsv | all on | 92.31% | - | 1.758 | 78.94% |
+   | union | corpus.tsv + gaps.tsv | defaults | 87.43% | - | 1.448 | 79.14% |
+   | final | cases.tsv (461) | all on | 100% | 100% | 3.371 | 77.40% |
+   | final | cases.tsv | defaults | 89.43% | 100% | 3.069 | 76.66% |
+   | Yomitan | cases.tsv | all on | 3.44% | 85.19% | 2.152 | 61.43% |
+   | union | cases.tsv | all on | 100% | 85.19% | 3.570 | 71.25% |
+   | final | defaults.tsv (19) | defaults | 100% | 100% | 2.571 | 85.71% |
+   | final | yomitan.tsv (356) | all on | 100% | 100% | 2.782 | 90.04% |
+   | Yomitan | yomitan.tsv | all on | 100% | 100% | 1.525 | 82.76% |
+   | union | yomitan.tsv | all on | 100% | 100% | 3.042 | 84.29% |
+
+   - Recall counts deinflections only. With the defaults, the optional
+     `brokenPlural`, `participle` and `verbalNoun` transforms are off, and the
+     sample's broken plurals and derived forms are found in a lookup through
+     wty-ar-en's form-of rows instead; this is why it falls to 87.37%. On the
+     37,538-row dev pool, the final rules' recall is 93.84%, with 1.627 false
+     candidates per row and first rank 83.86%.
+   - False candidates are distinct deinflected texts per row that are
+     wty-ar-en headwords passing the part-of-speech filter, other than the
+     source and the lemma. Most are other real words of the same letters:
+     unvowelled Arabic spells many words alike (كتب is "books" and "he
+     wrote").
+   - First rank is the share of rows whose whole-word lookup puts the
+     UniMorph lemma first. Of the 292 sample rows where it does not (every
+     option on):
+     - 106 have a lemma with no entry with definitions in wty-ar-en, such as a
+       verbal noun whose rows only name its verb (التغسيل → غسل);
+     - 100 have another reading of the same letters first (صفتا: صفة before
+       صفا; حددتما: حد before حدد);
+     - 70 have a form that is a headword itself (ربت, خلت, أنام);
+     - 16 have a lemma first that the form's own rows name (أبتا → أب).
+   - `measure.py sets` prints the full table, with every option state.
+2. **Frequent forms** (`measure.py frequent <wty-ar-en.zip> <imported>
+   ar_50k.txt`). Of the 10,000 most frequent entries of the subtitle list,
+   9,215 are Arabic words; 4,266 of them (34.8% of the list's tokens) are words
+   whose own lemma a rule reaches. A word's own lemmas are the targets of its
+   form-of rows, followed one more step where the target has no definitions
+   (العثور → عثور → عثر), and the word itself when it has definitions. Looked
+   up alone, as a host does:
+   - 2 show another lemma first: انس and انسي (3,926 occurrences, 0.003% of
+     the list's tokens) give نسى before نسي. Both verbs are named by the
+     dictionary's rows (نسّى through the processor variant أنس), and they tie
+     on every key (Known gaps).
+   - Yomitan's rules: 0 of the 3,798 words they reach (27.3% of the tokens).
+   - The union: 8 of 4,274.
+3. **Clitics and pronouns in a sentence corpus**. Arabic writes its
+   proclitics and pronouns together with the word, so `measure.py text`
+   judges every position of Tatoeba's 68,708 Arabic sentences (306,356 words,
+   each looked up with the rest of its sentence).
+   - Words the dictionary lists: 249,504 judged, 30 (0.01%) with a wrong first
+     result.
+   - Words it does not list, judged by the lemmas of every way of writing them
+     as proclitics (و ف ب ك ل س ال لل) + a listed word + a pronoun
+     (والكتاب, بقلمه, سيكتبونها): 41,294 judged, 777 wrong (1.88%).
+   - The largest groups:
+     - بطريقة → بطريق (52) and بطلاقة → طلاق (17): the feminine ending removed
+       where بـ + طريقة was meant; equal traces.
+     - كين → كان (24): the passive of كان read for a name.
+     - أريدك → راد (23): form I first in the jussive-shaped present.
+     - الي → إلى (16) and الان → لان (15): informal spellings.
+     - لياني → لي (15): a name.
+4. **Real text** (`measure.py text`, every word looked up with the rest of
+   its sentence; the first result is judged by script when it matches the
+   whole word and the word or its split has entries).
+   - *al-Nazarat*: 88,419 positions, 84,650 judged by script, 338 wrong
+     (0.40%). Of the 61,465 positions whose word wty-ar-en lists, 19 are
+     wrong; of the 23,185 with proclitics or a pronoun, 319 are.
+   - *Kalila wa Dimna*: 44,208 judged, 155 wrong (0.35%).
+   - Tatoeba: 290,798 judged, 807 wrong (0.28%).
+   - The same with Yomitan's rules: 1.61%, 1.66% and 0.72%.
+   - In *al-Nazarat*, 1,719 positions could not be judged by script (words
+     the dictionary has no entry for, or a first result longer than the
+     word). A random sample of 60 of them (seed 1), judged by hand: 26 right,
+     13 a participle shown as its verb through the dictionary's own form-of
+     row (مبتسما → ابتسم; right by the dictionary's own reference), and 21
+     wrong. Most of the wrong ones are rare words the dictionary lacks, read
+     as a short root (فولتير → تر, سحتوت → سح, لواعج → عج). Counting those
+     at the sample's rate, about 1.1% of all positions with a result show a
+     wrong first result.
+   - The largest groups by script are ties between two one-step readings:
+     ويطفئ → طفئ (4), ورائي → وراء (4, right as a word but not the
+     preposition's own lemma), فيخيل → خال (4), جفنيه → جف (3), برأيه →
+     برأ (4, *Kalila*).
+5. **Performance** (host load 35-41 on 64 cores, so these are upper bounds).
+   - Native `benchmark-lookup --languages languages --language ar --term
+     <imported wty-ar-en>` on the 135 texts of `sources/benchmark-words.txt`
+     (each word of 20 sentences written for the pack, with the rest of its
+     sentence), 6 passes, the first dropped, three runs: p50 84.1-86.1 µs, p95
+     233.4-239.4 µs. The budget is 1 ms p50.
+   - Native pack load (`sources/pack-load.cpp`): `LanguageRegistry::add`
+     median 4.9-5.2 ms over 50 runs, three runs; the registry holds
+     6,690,400 bytes of heap. The 13,823 rules are mostly cross products,
+     indexed by their endings.
+   - WebAssembly, Hachidori feat/multi-language 803f7b6 engines (built from
+     hoshidicts b145feb), Node 22:
+     - `sources/wasm-load.mjs`, 10 fresh engines each: `hdw_language_load`
+       median 12.06 ms single-thread and 12.58 ms threaded; live heap
+       +3,296,664 bytes. The budgets are 50 ms and 20 MB.
+     - `benchmark/node-lookup.mjs` with `HACHIDORI_LOOKUP_LANGUAGE=ar` on the
+       same 20 sentences (135 hovers, 6 passes): `hdw_lookup` p50 204 µs and
+       p95 529 µs single-thread, p50 214 µs and p95 535 µs threaded.
+   - The pack has no `pattern` rule, so no pattern heap.
+6. **Hachidori** (feat/multi-language 803f7b6 with this branch in
+   `third_party/hoshidicts` and `node scripts/sync-languages.mjs`;
+   `test/chrome-language-pack.mjs`, Chrome 152, wty-ar-en): 17 / 17 checks
+   pass.
+   - Settings adds Arabic beside Japanese and imports the dictionary
+     (1,019,773 terms, 1.3 s).
+   - Thirteen hovered words find their headword first, with their traces:
+     واستعرتُ → استعار (و, past), سيكتبون → كتب, بالقلم → قلم, مفاتيحنا →
+     مفتاح, تساعديني → ساعد, ليستخدمه → استخدم, رأيتهم → رأى, كِتَابَهُ →
+     كتاب and others.
+   - The Anki note and the switch to Japanese and back work.
+   - `test/node-smoke-languages.mjs` loads the pack in all three runtimes.
+7. **Conformance and checks**:
+   - `language-conformance-test`: corpus.tsv 1,380 / 1,380, cases.tsv 461 /
+     461, defaults.tsv 19 / 19 (with the pack's defaults), yomitan.tsv 356 /
+     356, text.tsv 34 / 34, lookup.tsv 38 / 38; gaps.tsv 0 / 116 (reported).
+   - `tests/classes.json` agrees with the engine (4 classes, 564 fields, 2
+     steps).
+   - `tools/check-yomitan.mjs`: 10,172 inputs, 154,906 Yomitan results, 0
+     unexplained. The processors `normalizeUnicode`,
+     `removeArabicScriptDiacritics`, `removeTatweel` and
+     `convertAlifMaqsuraToYaa` agree; `addHamzaTop` and `addHamzaBottom` are
+     the two listed differences.
+   - `sources/ablate.py`: removing each of 14 constraints, exclusions and
+     conditions in turn makes the conformance test fail.
+   - `tests/` and `sources/` hold about 870 KB.
+8. **Commands**:
+
+   ```sh
+   cmake -S . -B build -DHOSHIDICTS_LANGUAGE_TESTS=ON -DHOSHIDICTS_CLI=ON -DHOSHIDICTS_BENCHMARK=ON && cmake --build build --parallel 8
+   node languages/ar/sources/own-rules.mjs && node languages/ar/sources/build-final.mjs
+   node tools/port-yomitan-transforms.mjs <yomitan> ar --force && node languages/ar/sources/map-yomitan.mjs <yomitan>
+   python3 languages/ar/sources/sample-corpus.py <unimorph>/ara <dir> <wty-ar-en.zip>
+   python3 languages/ar/sources/split-corpus.py <dir>/sample.tsv
+   g++ -O2 -std=c++23 -Iinclude languages/ar/sources/lookup-batch.cpp -o build/lookup-batch-ar <the libraries the file names>
+   python3 languages/ar/sources/measure.py sets <imported wty-ar-en>
+   python3 languages/ar/sources/measure.py frequent <wty-ar-en.zip> <imported wty-ar-en> ar_50k.txt
+   python3 languages/ar/sources/measure.py text <wty-ar-en.zip> <imported wty-ar-en> <text file>
+   python3 languages/ar/sources/benchmark-words.py
+   build/benchmark-lookup languages/ar/sources/benchmark-words.txt 6 --term <imported wty-ar-en> --languages languages --language ar --json
+   python3 languages/ar/sources/ablate.py
+   ```
+
+   `measure.py text` and `frequent` take `--languages <dir>` for a scratch
+   copy of the pack with another rule file, which is how the Yomitan and union
+   numbers were measured.
 
 ## Known gaps
 
