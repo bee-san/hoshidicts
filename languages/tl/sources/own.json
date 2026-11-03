@@ -60,8 +60,8 @@
       "description": "Linker: -ng after a vowel, -g after n, joins a word to the word it modifies (magandang umaga, kaibigang tapat, gusto kong).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ng", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemEndsWith": "[aeiou]", "stemMinLength": 3},
-        {"type": "suffix", "inflected": "ng", "deinflected": "n", "conditionsIn": [], "conditionsOut": [], "stemEndsWith": "[aeiou]", "stemMinLength": 3},
+        {"type": "suffix", "inflected": "ng", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemEndsWith": "[aeiou]", "stemCharacters": "[^ ]", "stemMinLength": 3},
+        {"type": "suffix", "inflected": "ng", "deinflected": "n", "conditionsIn": [], "conditionsOut": [], "stemEndsWith": "[aeiou]", "stemCharacters": "[^ ]", "stemMinLength": 3},
         {"type": "wholeWord", "inflected": "kong", "deinflected": "ko", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "mong", "deinflected": "mo", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "pong", "deinflected": "po", "conditionsIn": [], "conditionsOut": []},
@@ -74,7 +74,23 @@
         {"type": "wholeWord", "inflected": "yung", "deinflected": "yun", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "nung", "deinflected": "nun", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "yang", "deinflected": "yan", "conditionsIn": [], "conditionsOut": []},
-        {"type": "wholeWord", "inflected": "yong", "deinflected": "yon", "conditionsIn": [], "conditionsOut": []}
+        {"type": "wholeWord", "inflected": "yong", "deinflected": "yon", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "noong", "deinflected": "noon", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "naming", "deinflected": "namin", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "saang", "deinflected": "saan", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "kanang", "deinflected": "kanan", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "pangunahing", "deinflected": "pangunahin", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "hapong", "deinflected": "hapon", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "bayang", "deinflected": "bayan", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "araling", "deinflected": "aralin", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "labang", "deinflected": "laban", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "usapang", "deinflected": "usapan", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "kainang", "deinflected": "kainan", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "tuwirang", "deinflected": "tuwiran", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^(.* [^ ]*[^ ][^ ][aeiou])ng$", "replacement": "$1", "anchorSuffix": "ng", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^(.* [^ ]*[^ ][^ ][aeiou])ng$", "replacement": "$1n", "anchorSuffix": "ng", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^(.* (?:ko|mo|po|ka|ba|pa|to))ng$", "replacement": "$1", "anchorSuffix": "ng", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^(.* (?:ri|di|yu|nu|ya|yo))ng$", "replacement": "$1n", "anchorSuffix": "ng", "conditionsIn": [], "conditionsOut": []}
       ]
     },
     {
@@ -199,11 +215,6 @@
         {"type": "prefix", "inflected": "pangi", "deinflected": "pang-i", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2},
         {"type": "prefix", "inflected": "pango", "deinflected": "pang-o", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2},
         {"type": "prefix", "inflected": "pangu", "deinflected": "pang-u", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "taga", "deinflected": "tag-a", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "tage", "deinflected": "tag-e", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "tagi", "deinflected": "tag-i", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "tago", "deinflected": "tag-o", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "tagu", "deinflected": "tag-u", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2},
         {"type": "prefix", "inflected": "maipaga", "deinflected": "maipag-a", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2},
         {"type": "prefix", "inflected": "maipage", "deinflected": "maipag-e", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2},
         {"type": "prefix", "inflected": "maipagi", "deinflected": "maipag-i", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2},
@@ -421,19 +432,6 @@
         {"type": "prefix", "inflected": "nagkador", "deinflected": "magkad", "conditionsIn": [], "conditionsOut": ["v_m"], "stemStartsWith": "[o]", "stemMinLength": 2},
         {"type": "prefix", "inflected": "nagkauu", "deinflected": "magkau", "conditionsIn": [], "conditionsOut": ["v_m"], "stemMinLength": 2},
         {"type": "prefix", "inflected": "nagkadur", "deinflected": "magkad", "conditionsIn": [], "conditionsOut": ["v_m"], "stemStartsWith": "[u]", "stemMinLength": 2},
-        {"type": "pattern", "pattern": "^nagsi(ng|[bkdghlmnprstwycfjvz])([aeiou])\\1([lrwy]?)\\2(?=.)", "replacement": "magsi$1$3$2", "anchorPrefix": "nagsi", "conditionsIn": [], "conditionsOut": ["v_m"]},
-        {"type": "pattern", "pattern": "^nagsi(ng|[bkdghlmnprstwycfjvz])([lrwy])([aeiou])\\1\\2\\3(?=.)", "replacement": "magsi$1$2$3", "anchorPrefix": "nagsi", "conditionsIn": [], "conditionsOut": ["v_m"]},
-        {"type": "pattern", "pattern": "^nagsi(ng|[bkdghlmnprstwycfjvz])([aeiou])-\\1(?=..)", "replacement": "magsi-$1", "anchorPrefix": "nagsi", "conditionsIn": [], "conditionsOut": ["v_m"]},
-        {"type": "prefix", "inflected": "nagsiaa", "deinflected": "magsia", "conditionsIn": [], "conditionsOut": ["v_m"], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "nagsidar", "deinflected": "magsid", "conditionsIn": [], "conditionsOut": ["v_m"], "stemStartsWith": "[a]", "stemMinLength": 2},
-        {"type": "prefix", "inflected": "nagsiee", "deinflected": "magsie", "conditionsIn": [], "conditionsOut": ["v_m"], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "nagsider", "deinflected": "magsid", "conditionsIn": [], "conditionsOut": ["v_m"], "stemStartsWith": "[e]", "stemMinLength": 2},
-        {"type": "prefix", "inflected": "nagsiii", "deinflected": "magsii", "conditionsIn": [], "conditionsOut": ["v_m"], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "nagsidir", "deinflected": "magsid", "conditionsIn": [], "conditionsOut": ["v_m"], "stemStartsWith": "[i]", "stemMinLength": 2},
-        {"type": "prefix", "inflected": "nagsioo", "deinflected": "magsio", "conditionsIn": [], "conditionsOut": ["v_m"], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "nagsidor", "deinflected": "magsid", "conditionsIn": [], "conditionsOut": ["v_m"], "stemStartsWith": "[o]", "stemMinLength": 2},
-        {"type": "prefix", "inflected": "nagsiuu", "deinflected": "magsiu", "conditionsIn": [], "conditionsOut": ["v_m"], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "nagsidur", "deinflected": "magsid", "conditionsIn": [], "conditionsOut": ["v_m"], "stemStartsWith": "[u]", "stemMinLength": 2},
         {"type": "pattern", "pattern": "^nai(ng|[bkdghlmnprstwycfjvz])([aeiou])\\1([lrwy]?)\\2(?=.)", "replacement": "mai$1$3$2", "anchorPrefix": "nai", "conditionsIn": [], "conditionsOut": ["v_m"]},
         {"type": "pattern", "pattern": "^nai(ng|[bkdghlmnprstwycfjvz])([lrwy])([aeiou])\\1\\2\\3(?=.)", "replacement": "mai$1$2$3", "anchorPrefix": "nai", "conditionsIn": [], "conditionsOut": ["v_m"]},
         {"type": "pattern", "pattern": "^nai(ng|[bkdghlmnprstwycfjvz])([aeiou])-\\1(?=..)", "replacement": "mai-$1", "anchorPrefix": "nai", "conditionsIn": [], "conditionsOut": ["v_m"]},
@@ -560,19 +558,14 @@
         {"type": "prefix", "inflected": "nagpapa", "deinflected": "magpa", "conditionsIn": [], "conditionsOut": ["v_m"], "stemMinLength": 2},
         {"type": "prefix", "inflected": "nagpapa", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 3},
         {"type": "prefix", "inflected": "napapa", "deinflected": "mapa", "conditionsIn": [], "conditionsOut": ["v_m"], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "napapa", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 3},
         {"type": "prefix", "inflected": "nagkaka", "deinflected": "magka", "conditionsIn": [], "conditionsOut": ["v_m"], "stemMinLength": 2},
         {"type": "prefix", "inflected": "nagkaka", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 3},
-        {"type": "prefix", "inflected": "nagsisi", "deinflected": "magsi", "conditionsIn": [], "conditionsOut": ["v_m"], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "nagsisi", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 3},
         {"type": "prefix", "inflected": "nakakapag", "deinflected": "makapag", "conditionsIn": [], "conditionsOut": ["v_m"], "stemMinLength": 2},
         {"type": "prefix", "inflected": "nakakapag", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 3},
         {"type": "prefix", "inflected": "nakikipag", "deinflected": "makipag", "conditionsIn": [], "conditionsOut": ["v_m"], "stemMinLength": 2},
         {"type": "prefix", "inflected": "nakikipag", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 3},
         {"type": "prefix", "inflected": "nagpapaka", "deinflected": "magpaka", "conditionsIn": [], "conditionsOut": ["v_m"], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "nagpapaka", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 3},
         {"type": "prefix", "inflected": "naiipa", "deinflected": "maipa", "conditionsIn": [], "conditionsOut": ["v_m"], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "naiipa", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 3},
         {"type": "prefix", "inflected": "bumab", "deinflected": "bum", "conditionsIn": [], "conditionsOut": ["v_um"], "stemStartsWithText": "a", "stemMinLength": 2},
         {"type": "prefix", "inflected": "bumeb", "deinflected": "bum", "conditionsIn": [], "conditionsOut": ["v_um"], "stemStartsWithText": "e", "stemMinLength": 2},
         {"type": "prefix", "inflected": "bumib", "deinflected": "bum", "conditionsIn": [], "conditionsOut": ["v_um"], "stemStartsWithText": "i", "stemMinLength": 2},
@@ -1182,19 +1175,6 @@
         {"type": "prefix", "inflected": "magkador", "deinflected": "magkad", "conditionsIn": [], "conditionsOut": ["v_m"], "stemStartsWith": "[o]", "stemMinLength": 2},
         {"type": "prefix", "inflected": "magkauu", "deinflected": "magkau", "conditionsIn": [], "conditionsOut": ["v_m"], "stemMinLength": 2},
         {"type": "prefix", "inflected": "magkadur", "deinflected": "magkad", "conditionsIn": [], "conditionsOut": ["v_m"], "stemStartsWith": "[u]", "stemMinLength": 2},
-        {"type": "pattern", "pattern": "^magsi(ng|[bkdghlmnprstwycfjvz])([aeiou])\\1([lrwy]?)\\2(?=.)", "replacement": "magsi$1$3$2", "anchorPrefix": "magsi", "conditionsIn": [], "conditionsOut": ["v_m"]},
-        {"type": "pattern", "pattern": "^magsi(ng|[bkdghlmnprstwycfjvz])([lrwy])([aeiou])\\1\\2\\3(?=.)", "replacement": "magsi$1$2$3", "anchorPrefix": "magsi", "conditionsIn": [], "conditionsOut": ["v_m"]},
-        {"type": "pattern", "pattern": "^magsi(ng|[bkdghlmnprstwycfjvz])([aeiou])-\\1(?=..)", "replacement": "magsi-$1", "anchorPrefix": "magsi", "conditionsIn": [], "conditionsOut": ["v_m"]},
-        {"type": "prefix", "inflected": "magsiaa", "deinflected": "magsia", "conditionsIn": [], "conditionsOut": ["v_m"], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "magsidar", "deinflected": "magsid", "conditionsIn": [], "conditionsOut": ["v_m"], "stemStartsWith": "[a]", "stemMinLength": 2},
-        {"type": "prefix", "inflected": "magsiee", "deinflected": "magsie", "conditionsIn": [], "conditionsOut": ["v_m"], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "magsider", "deinflected": "magsid", "conditionsIn": [], "conditionsOut": ["v_m"], "stemStartsWith": "[e]", "stemMinLength": 2},
-        {"type": "prefix", "inflected": "magsiii", "deinflected": "magsii", "conditionsIn": [], "conditionsOut": ["v_m"], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "magsidir", "deinflected": "magsid", "conditionsIn": [], "conditionsOut": ["v_m"], "stemStartsWith": "[i]", "stemMinLength": 2},
-        {"type": "prefix", "inflected": "magsioo", "deinflected": "magsio", "conditionsIn": [], "conditionsOut": ["v_m"], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "magsidor", "deinflected": "magsid", "conditionsIn": [], "conditionsOut": ["v_m"], "stemStartsWith": "[o]", "stemMinLength": 2},
-        {"type": "prefix", "inflected": "magsiuu", "deinflected": "magsiu", "conditionsIn": [], "conditionsOut": ["v_m"], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "magsidur", "deinflected": "magsid", "conditionsIn": [], "conditionsOut": ["v_m"], "stemStartsWith": "[u]", "stemMinLength": 2},
         {"type": "pattern", "pattern": "^mai(ng|[bkdghlmnprstwycfjvz])([aeiou])\\1([lrwy]?)\\2(?=.)", "replacement": "mai$1$3$2", "anchorPrefix": "mai", "conditionsIn": [], "conditionsOut": ["v_m"]},
         {"type": "pattern", "pattern": "^mai(ng|[bkdghlmnprstwycfjvz])([lrwy])([aeiou])\\1\\2\\3(?=.)", "replacement": "mai$1$2$3", "anchorPrefix": "mai", "conditionsIn": [], "conditionsOut": ["v_m"]},
         {"type": "pattern", "pattern": "^mai(ng|[bkdghlmnprstwycfjvz])([aeiou])-\\1(?=..)", "replacement": "mai-$1", "anchorPrefix": "mai", "conditionsIn": [], "conditionsOut": ["v_m"]},
@@ -1321,19 +1301,14 @@
         {"type": "prefix", "inflected": "magpapa", "deinflected": "magpa", "conditionsIn": [], "conditionsOut": ["v_m"], "stemMinLength": 2},
         {"type": "prefix", "inflected": "magpapa", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 3},
         {"type": "prefix", "inflected": "mapapa", "deinflected": "mapa", "conditionsIn": [], "conditionsOut": ["v_m"], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "mapapa", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 3},
         {"type": "prefix", "inflected": "magkaka", "deinflected": "magka", "conditionsIn": [], "conditionsOut": ["v_m"], "stemMinLength": 2},
         {"type": "prefix", "inflected": "magkaka", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 3},
-        {"type": "prefix", "inflected": "magsisi", "deinflected": "magsi", "conditionsIn": [], "conditionsOut": ["v_m"], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "magsisi", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 3},
         {"type": "prefix", "inflected": "makakapag", "deinflected": "makapag", "conditionsIn": [], "conditionsOut": ["v_m"], "stemMinLength": 2},
         {"type": "prefix", "inflected": "makakapag", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 3},
         {"type": "prefix", "inflected": "makikipag", "deinflected": "makipag", "conditionsIn": [], "conditionsOut": ["v_m"], "stemMinLength": 2},
         {"type": "prefix", "inflected": "makikipag", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 3},
         {"type": "prefix", "inflected": "magpapaka", "deinflected": "magpaka", "conditionsIn": [], "conditionsOut": ["v_m"], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "magpapaka", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 3},
         {"type": "prefix", "inflected": "maiipa", "deinflected": "maipa", "conditionsIn": [], "conditionsOut": ["v_m"], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "maiipa", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 3},
         {"type": "prefix", "inflected": "bab", "deinflected": "bum", "conditionsIn": [], "conditionsOut": ["v_um"], "stemStartsWithText": "a", "stemMinLength": 2},
         {"type": "prefix", "inflected": "beb", "deinflected": "bum", "conditionsIn": [], "conditionsOut": ["v_um"], "stemStartsWithText": "e", "stemMinLength": 2},
         {"type": "prefix", "inflected": "bib", "deinflected": "bum", "conditionsIn": [], "conditionsOut": ["v_um"], "stemStartsWithText": "i", "stemMinLength": 2},
@@ -1817,27 +1792,27 @@
       "description": "Actor focus -um-, after the first consonant of the root or before a vowel (kumain → kain, sumulat → sulat, uminom → inom).",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "bum", "deinflected": "b", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
-        {"type": "prefix", "inflected": "kum", "deinflected": "k", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
-        {"type": "prefix", "inflected": "dum", "deinflected": "d", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
-        {"type": "prefix", "inflected": "gum", "deinflected": "g", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
-        {"type": "prefix", "inflected": "hum", "deinflected": "h", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
-        {"type": "prefix", "inflected": "lum", "deinflected": "l", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
-        {"type": "prefix", "inflected": "mum", "deinflected": "m", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
-        {"type": "prefix", "inflected": "num", "deinflected": "n", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
-        {"type": "prefix", "inflected": "ngum", "deinflected": "ng", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
-        {"type": "prefix", "inflected": "pum", "deinflected": "p", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
-        {"type": "prefix", "inflected": "rum", "deinflected": "r", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
-        {"type": "prefix", "inflected": "sum", "deinflected": "s", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
-        {"type": "prefix", "inflected": "tum", "deinflected": "t", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
-        {"type": "prefix", "inflected": "wum", "deinflected": "w", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
-        {"type": "prefix", "inflected": "yum", "deinflected": "y", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
-        {"type": "prefix", "inflected": "cum", "deinflected": "c", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
-        {"type": "prefix", "inflected": "fum", "deinflected": "f", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
-        {"type": "prefix", "inflected": "jum", "deinflected": "j", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
-        {"type": "prefix", "inflected": "vum", "deinflected": "v", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
-        {"type": "prefix", "inflected": "zum", "deinflected": "z", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
-        {"type": "prefix", "inflected": "um", "deinflected": "", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeiou]", "stemMinLength": 3}
+        {"type": "prefix", "inflected": "bum", "deinflected": "b", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
+        {"type": "prefix", "inflected": "kum", "deinflected": "k", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
+        {"type": "prefix", "inflected": "dum", "deinflected": "d", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
+        {"type": "prefix", "inflected": "gum", "deinflected": "g", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
+        {"type": "prefix", "inflected": "hum", "deinflected": "h", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
+        {"type": "prefix", "inflected": "lum", "deinflected": "l", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
+        {"type": "prefix", "inflected": "mum", "deinflected": "m", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
+        {"type": "prefix", "inflected": "num", "deinflected": "n", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
+        {"type": "prefix", "inflected": "ngum", "deinflected": "ng", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
+        {"type": "prefix", "inflected": "pum", "deinflected": "p", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
+        {"type": "prefix", "inflected": "rum", "deinflected": "r", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
+        {"type": "prefix", "inflected": "sum", "deinflected": "s", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
+        {"type": "prefix", "inflected": "tum", "deinflected": "t", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
+        {"type": "prefix", "inflected": "wum", "deinflected": "w", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
+        {"type": "prefix", "inflected": "yum", "deinflected": "y", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
+        {"type": "prefix", "inflected": "cum", "deinflected": "c", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
+        {"type": "prefix", "inflected": "fum", "deinflected": "f", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
+        {"type": "prefix", "inflected": "jum", "deinflected": "j", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
+        {"type": "prefix", "inflected": "vum", "deinflected": "v", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
+        {"type": "prefix", "inflected": "zum", "deinflected": "z", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[aeioulrwy]", "stemMinLength": 3},
+        {"type": "prefix", "inflected": "um", "deinflected": "", "conditionsIn": ["v_um"], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[aeiou]", "stemMinLength": 3}
       ]
     },
     {
@@ -1851,14 +1826,25 @@
       ]
     },
     {
+      "id": "magsi",
+      "name": "magsi-",
+      "description": "Plural actor (magsikain → kain, nagsialis → alis, magsipagluto → magluto).",
+      "source": "own",
+      "rules": [
+        {"type": "pattern", "pattern": "^magsipag-(?=..)", "replacement": "mag-", "anchorPrefix": "mag", "conditionsIn": ["v_m"], "conditionsOut": ["v_m"]},
+        {"type": "pattern", "pattern": "^magsipag(?=...)", "replacement": "mag", "anchorPrefix": "mag", "conditionsIn": ["v_m"], "conditionsOut": ["v_m"]},
+        {"type": "pattern", "pattern": "^magsi(?=...)", "replacement": "", "anchorPrefix": "mag", "conditionsIn": ["v_m"], "conditionsOut": ["n", "adj", "v_root"]}
+      ]
+    },
+    {
       "id": "ma",
       "name": "ma-",
       "description": "ma- adjectives and verbs (maganda → ganda, matulog → tulog), with d → r (marami → dami).",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "ma", "deinflected": "", "conditionsIn": ["v_m", "adj_ma", "v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 3},
-        {"type": "prefix", "inflected": "ma-", "deinflected": "", "conditionsIn": ["v_m", "adj_ma", "v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2},
-        {"type": "prefix", "inflected": "mar", "deinflected": "d", "conditionsIn": ["v_m", "adj_ma", "v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeiou]", "stemMinLength": 2}
+        {"type": "prefix", "inflected": "ma", "deinflected": "", "conditionsIn": ["v_m", "adj_ma", "v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemMinLength": 3},
+        {"type": "prefix", "inflected": "ma-", "deinflected": "", "conditionsIn": ["v_m", "adj_ma", "v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "prefix", "inflected": "mar", "deinflected": "d", "conditionsIn": ["v_m", "adj_ma", "v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemStartsWith": "[aeiou]", "stemMinLength": 2}
       ]
     },
     {
@@ -1935,17 +1921,6 @@
       ]
     },
     {
-      "id": "magsi",
-      "name": "magsi-",
-      "description": "Plural actor (magsialis → alis, magsipagluto → magluto).",
-      "source": "own",
-      "rules": [
-        {"type": "prefix", "inflected": "magsi", "deinflected": "", "conditionsIn": ["v_m"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 3},
-        {"type": "prefix", "inflected": "magsipag", "deinflected": "mag", "conditionsIn": ["v_m"], "conditionsOut": ["v_m"], "stemMinLength": 3},
-        {"type": "prefix", "inflected": "magsipag-", "deinflected": "mag-", "conditionsIn": ["v_m"], "conditionsOut": ["v_m"], "stemMinLength": 2}
-      ]
-    },
-    {
       "id": "magpaka",
       "name": "magpaka-",
       "description": "Making an effort to be (magpakabait → bait).",
@@ -1984,7 +1959,7 @@
       "source": "own",
       "rules": [
         {"type": "prefix", "inflected": "ipar", "deinflected": "d", "conditionsIn": ["v_i"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeiou]", "stemMinLength": 2},
-        {"type": "prefix", "inflected": "ipa", "deinflected": "", "conditionsIn": ["v_i"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 3},
+        {"type": "prefix", "inflected": "ipa", "deinflected": "", "conditionsIn": ["v_i"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 3, "stemCharacters": "[^ ]"},
         {"type": "prefix", "inflected": "ipa-", "deinflected": "", "conditionsIn": ["v_i"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2}
       ]
     },
@@ -2026,10 +2001,10 @@
       "description": "ma- with -an: ability or chance, locative focus (maunawaan → unawa, matandaan → tanda), with d → r (maramdaman → damdam).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["ma", ""]], "suffixes": [["an", ""], ["han", ""], ["nan", ""]], "conditionsIn": ["v_m"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 3},
+        {"type": "circumfix", "prefixes": [["ma", ""]], "suffixes": [["an", ""], ["han", ""], ["nan", ""], ["ran", "d"]], "conditionsIn": ["v_m"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 3},
         {"type": "circumfix", "prefixes": [["ma", ""]], "suffixes": [["an", ""]], "conditionsIn": ["v_m"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2, "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyz]", "betweenMinLength": 1}},
-        {"type": "circumfix", "prefixes": [["ma", ""]], "suffixes": [["uan", "o"], ["uhan", "o"]], "conditionsIn": ["v_m"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2},
-        {"type": "circumfix", "prefixes": [["mar", "d"]], "suffixes": [["an", ""], ["han", ""], ["nan", ""], ["uan", "o"], ["uhan", "o"]], "conditionsIn": ["v_m"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2, "stemStartsWith": "[aeiou]"}
+        {"type": "circumfix", "prefixes": [["ma", ""]], "suffixes": [["uan", "o"], ["uhan", "o"], ["unan", "o"]], "conditionsIn": ["v_m"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2},
+        {"type": "circumfix", "prefixes": [["mar", "d"]], "suffixes": [["an", ""], ["han", ""], ["nan", ""], ["ran", "d"], ["uan", "o"], ["uhan", "o"], ["unan", "o"]], "conditionsIn": ["v_m"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2, "stemStartsWith": "[aeiou]"}
       ]
     },
     {
@@ -2038,9 +2013,9 @@
       "description": "maka- with -an: ability or chance, locative focus (makalimutan → limot, makaabutan → abot).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["maka", ""]], "suffixes": [["an", ""], ["han", ""], ["nan", ""]], "conditionsIn": ["v_m"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 3},
+        {"type": "circumfix", "prefixes": [["maka", ""]], "suffixes": [["an", ""], ["han", ""], ["nan", ""], ["ran", "d"]], "conditionsIn": ["v_m"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 3},
         {"type": "circumfix", "prefixes": [["maka", ""]], "suffixes": [["an", ""]], "conditionsIn": ["v_m"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2, "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyz]", "betweenMinLength": 1}},
-        {"type": "circumfix", "prefixes": [["maka", ""]], "suffixes": [["uan", "o"], ["uhan", "o"]], "conditionsIn": ["v_m"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2}
+        {"type": "circumfix", "prefixes": [["maka", ""]], "suffixes": [["uan", "o"], ["uhan", "o"], ["unan", "o"]], "conditionsIn": ["v_m"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2}
       ]
     },
     {
@@ -2049,15 +2024,15 @@
       "description": "Object focus -in, -hin after a vowel, with u for the o of the last syllable (kainin → kain, basahin → basa, inumin → inom, lutuin → luto), and the verbs whose root loses a vowel (bilhin → bili, kunin → kuha).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "in", "deinflected": "", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemMinLength": 3},
-        {"type": "suffix", "inflected": "hin", "deinflected": "", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemEndsWith": "[aeiou]", "stemMinLength": 3},
-        {"type": "suffix", "inflected": "in", "deinflected": "", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemMinLength": 3, "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyz]", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "uin", "deinflected": "o", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "uhin", "deinflected": "o", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "nin", "deinflected": "", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemEndsWith": "[aeiou]", "stemMinLength": 3},
-        {"type": "suffix", "inflected": "unin", "deinflected": "o", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "rin", "deinflected": "d", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemEndsWith": "[aeiou]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "urin", "deinflected": "od", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "in", "deinflected": "", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemCharacters": "[^ ]", "stemMinLength": 3},
+        {"type": "suffix", "inflected": "hin", "deinflected": "", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemCharacters": "[^ ]", "stemEndsWith": "[aeiou]", "stemMinLength": 3},
+        {"type": "suffix", "inflected": "in", "deinflected": "", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemCharacters": "[^ ]", "stemMinLength": 3, "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyz]", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "uin", "deinflected": "o", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "uhin", "deinflected": "o", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "nin", "deinflected": "", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemCharacters": "[^ ]", "stemEndsWith": "[aeiou]", "stemMinLength": 3},
+        {"type": "suffix", "inflected": "unin", "deinflected": "o", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "rin", "deinflected": "d", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemCharacters": "[^ ]", "stemEndsWith": "[aeiou]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "urin", "deinflected": "od", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemCharacters": "[^ ]", "stemMinLength": 2},
         {"type": "wholeWord", "inflected": "bilhin", "deinflected": "bili", "conditionsIn": ["v_sfx", "n"], "conditionsOut": ["n", "adj", "v_root"]},
         {"type": "wholeWord", "inflected": "dalhin", "deinflected": "dala", "conditionsIn": ["v_sfx", "n"], "conditionsOut": ["n", "adj", "v_root"]},
         {"type": "wholeWord", "inflected": "kunin", "deinflected": "kuha", "conditionsIn": ["v_sfx", "n"], "conditionsOut": ["n", "adj", "v_root"]},
@@ -2076,15 +2051,15 @@
       "description": "Locative or directional focus -an, -han or -nan after a vowel, with u for the o of the last syllable (sulatan → sulat, puntahan → punta, tawanan → tawa, sagutan → sagot), d → r (bayaran → bayad), and the verbs whose root loses a vowel (bigyan → bigay, buksan → bukas).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "an", "deinflected": "", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemMinLength": 3, "stemNotStartsWithText": "mag"},
-        {"type": "suffix", "inflected": "han", "deinflected": "", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemEndsWith": "[aeiou]", "stemMinLength": 3},
-        {"type": "suffix", "inflected": "nan", "deinflected": "", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemEndsWith": "[aeiou]", "stemMinLength": 3},
-        {"type": "suffix", "inflected": "an", "deinflected": "", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemMinLength": 3, "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyz]", "betweenMinLength": 1}, "stemNotStartsWithText": "mag"},
-        {"type": "suffix", "inflected": "uan", "deinflected": "o", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "uhan", "deinflected": "o", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "unan", "deinflected": "o", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ran", "deinflected": "d", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemEndsWith": "[aeiou]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "uran", "deinflected": "od", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "an", "deinflected": "", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemCharacters": "[^ ]", "stemMinLength": 3, "stemNotStartsWithText": "mag"},
+        {"type": "suffix", "inflected": "han", "deinflected": "", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemCharacters": "[^ ]", "stemEndsWith": "[aeiou]", "stemMinLength": 3},
+        {"type": "suffix", "inflected": "nan", "deinflected": "", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemCharacters": "[^ ]", "stemEndsWith": "[aeiou]", "stemMinLength": 3},
+        {"type": "suffix", "inflected": "an", "deinflected": "", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemCharacters": "[^ ]", "stemMinLength": 3, "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyz]", "betweenMinLength": 1}, "stemNotStartsWithText": "mag"},
+        {"type": "suffix", "inflected": "uan", "deinflected": "o", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "uhan", "deinflected": "o", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "unan", "deinflected": "o", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ran", "deinflected": "d", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemCharacters": "[^ ]", "stemEndsWith": "[aeiou]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "uran", "deinflected": "od", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemNotStartsWith": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]", "stemCharacters": "[^ ]", "stemMinLength": 2},
         {"type": "wholeWord", "inflected": "tingnan", "deinflected": "tingin", "conditionsIn": ["v_sfx", "n"], "conditionsOut": ["n", "adj", "v_root"]},
         {"type": "wholeWord", "inflected": "bigyan", "deinflected": "bigay", "conditionsIn": ["v_sfx", "n"], "conditionsOut": ["n", "adj", "v_root"]},
         {"type": "wholeWord", "inflected": "buksan", "deinflected": "bukas", "conditionsIn": ["v_sfx", "n"], "conditionsOut": ["n", "adj", "v_root"]},
@@ -2114,11 +2089,12 @@
     {
       "id": "maIn",
       "name": "ma- -in",
-      "description": "Adjectives with ma- and -in: given to (madasalin → dasal, matiisin → tiis, madamdamin → damdam).",
+      "description": "Adjectives with ma- and -in: given to (madasalin → dasal, matiisin → tiis, madamdamin → damdam, maramdamin → damdam).",
       "source": "own",
       "rules": [
         {"type": "circumfix", "prefixes": [["ma", ""]], "suffixes": [["in", ""], ["hin", ""], ["rin", "d"]], "conditionsIn": ["v_m"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 4},
-        {"type": "circumfix", "prefixes": [["ma", ""]], "suffixes": [["in", ""]], "conditionsIn": ["v_m"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 4, "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyz]", "betweenMinLength": 1}}
+        {"type": "circumfix", "prefixes": [["ma", ""]], "suffixes": [["in", ""]], "conditionsIn": ["v_m"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 4, "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyz]", "betweenMinLength": 1}},
+        {"type": "circumfix", "prefixes": [["mar", "d"]], "suffixes": [["in", ""], ["hin", ""], ["rin", "d"]], "conditionsIn": ["v_m"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 3, "stemStartsWith": "[aeiou]"}
       ]
     },
     {
@@ -2127,9 +2103,9 @@
       "description": "Causative pa- with -an (pagalitan → galit, paniwalaan → niwala), and pakinggan → kinig.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["pa", ""]], "suffixes": [["an", ""], ["han", ""], ["nan", ""]], "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 3},
+        {"type": "circumfix", "prefixes": [["pa", ""]], "suffixes": [["an", ""], ["han", ""], ["nan", ""], ["ran", "d"]], "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 3},
         {"type": "circumfix", "prefixes": [["pa", ""]], "suffixes": [["an", ""]], "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2, "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyz]", "betweenMinLength": 1}},
-        {"type": "circumfix", "prefixes": [["pa", ""]], "suffixes": [["uan", "o"], ["uhan", "o"]], "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2},
+        {"type": "circumfix", "prefixes": [["pa", ""]], "suffixes": [["uan", "o"], ["uhan", "o"], ["unan", "o"]], "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2},
         {"type": "wholeWord", "inflected": "pakinggan", "deinflected": "kinig", "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"]}
       ]
     },
@@ -2139,9 +2115,9 @@
       "description": "pag- with -an: locative focus of a mag- verb (pag-usapan → usap, pagsabihan → sabi).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["pag", ""], ["pag-", ""]], "suffixes": [["an", ""], ["han", ""], ["nan", ""]], "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2},
+        {"type": "circumfix", "prefixes": [["pag", ""], ["pag-", ""]], "suffixes": [["an", ""], ["han", ""], ["nan", ""], ["ran", "d"]], "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2},
         {"type": "circumfix", "prefixes": [["pag", ""], ["pag-", ""]], "suffixes": [["an", ""]], "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2, "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyz]", "betweenMinLength": 1}},
-        {"type": "circumfix", "prefixes": [["pag", ""], ["pag-", ""]], "suffixes": [["uan", "o"], ["uhan", "o"]], "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2}
+        {"type": "circumfix", "prefixes": [["pag", ""], ["pag-", ""]], "suffixes": [["uan", "o"], ["uhan", "o"], ["unan", "o"]], "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2}
       ]
     },
     {
@@ -2152,7 +2128,7 @@
       "rules": [
         {"type": "circumfix", "prefixes": [["pag", ""], ["pag-", ""]], "suffixes": [["in", ""], ["hin", ""], ["rin", "d"]], "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2},
         {"type": "circumfix", "prefixes": [["pag", ""], ["pag-", ""]], "suffixes": [["in", ""]], "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2, "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyz]", "betweenMinLength": 1}},
-        {"type": "circumfix", "prefixes": [["pag", ""], ["pag-", ""]], "suffixes": [["uin", "o"], ["uhin", "o"]], "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2}
+        {"type": "circumfix", "prefixes": [["pag", ""], ["pag-", ""]], "suffixes": [["uin", "o"], ["uhin", "o"], ["unin", "o"]], "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2}
       ]
     },
     {
@@ -2163,7 +2139,7 @@
       "rules": [
         {"type": "circumfix", "prefixes": [["pa", ""]], "suffixes": [["in", ""], ["hin", ""], ["rin", "d"]], "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 3},
         {"type": "circumfix", "prefixes": [["pa", ""]], "suffixes": [["in", ""]], "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2, "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyz]", "betweenMinLength": 1}},
-        {"type": "circumfix", "prefixes": [["pa", ""]], "suffixes": [["uin", "o"], ["uhin", "o"]], "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2}
+        {"type": "circumfix", "prefixes": [["pa", ""]], "suffixes": [["uin", "o"], ["uhin", "o"], ["unin", "o"]], "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2}
       ]
     },
     {
@@ -2172,9 +2148,9 @@
       "description": "Abstract and collective nouns with ka- and -an, and ka- -an verbs (kagandahan → ganda, kalayaan → laya, kalungkutan → lungkot, kamuhian → muhi).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["ka", ""]], "suffixes": [["an", ""], ["han", ""], ["nan", ""]], "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 4},
+        {"type": "circumfix", "prefixes": [["ka", ""]], "suffixes": [["an", ""], ["han", ""], ["nan", ""], ["ran", "d"]], "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 4},
         {"type": "circumfix", "prefixes": [["ka", ""]], "suffixes": [["an", ""]], "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2, "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "[bcdfghjklmnpqrstvwxyz]", "betweenMinLength": 1}},
-        {"type": "circumfix", "prefixes": [["ka", ""]], "suffixes": [["uan", "o"], ["uhan", "o"]], "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2}
+        {"type": "circumfix", "prefixes": [["ka", ""]], "suffixes": [["uan", "o"], ["uhan", "o"], ["unan", "o"]], "conditionsIn": ["v_sfx"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2}
       ]
     },
     {
@@ -2284,12 +2260,12 @@
         {"type": "prefix", "inflected": "pang", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeioughkmnwy]", "stemMinLength": 3},
         {"type": "prefix", "inflected": "pang-", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2},
         {"type": "prefix", "inflected": "pam", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[bp]", "stemMinLength": 3},
-        {"type": "prefix", "inflected": "pam", "deinflected": "b", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeiou]", "stemMinLength": 3},
-        {"type": "prefix", "inflected": "pam", "deinflected": "p", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeiou]", "stemMinLength": 3},
+        {"type": "prefix", "inflected": "pam", "deinflected": "b", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeiou]", "stemMinLength": 4},
+        {"type": "prefix", "inflected": "pam", "deinflected": "p", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeiou]", "stemMinLength": 4},
         {"type": "prefix", "inflected": "pan", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[dlrst]", "stemMinLength": 3},
-        {"type": "prefix", "inflected": "pan", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeiou]", "stemMinLength": 3},
-        {"type": "prefix", "inflected": "pan", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeiou]", "stemMinLength": 3},
-        {"type": "prefix", "inflected": "pan", "deinflected": "t", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeiou]", "stemMinLength": 3}
+        {"type": "prefix", "inflected": "pan", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeiou]", "stemMinLength": 4},
+        {"type": "prefix", "inflected": "pan", "deinflected": "s", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeiou]", "stemMinLength": 4},
+        {"type": "prefix", "inflected": "pan", "deinflected": "t", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeiou]", "stemMinLength": 4}
       ]
     },
     {
@@ -2340,6 +2316,16 @@
       "rules": [
         {"type": "prefix", "inflected": "palar", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeiou]", "stemCharacters": "[^ ]", "stemMinLength": 3},
         {"type": "prefix", "inflected": "pala", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemCharacters": "[^ ]", "stemMinLength": 4}
+      ]
+    },
+    {
+      "id": "tag",
+      "name": "tag-",
+      "description": "Seasons and times (tag-init → init, tag-ulan → ulan, tagsibol → sibol).",
+      "source": "own",
+      "rules": [
+        {"type": "prefix", "inflected": "tag-", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2},
+        {"type": "prefix", "inflected": "tag", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[bcdfghjklmnpqrstvwxyzñ]", "stemMinLength": 4}
       ]
     }
   ]

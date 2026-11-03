@@ -23,6 +23,7 @@
 import {readFileSync, writeFileSync} from 'node:fs';
 import {dirname, join} from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {isMain} from '../../../tools/lib/cli.mjs';
 import {formatTransforms} from '../../../tools/lib/json.mjs';
 import {mergeTransforms} from '../../../tools/merge-transforms.mjs';
 
@@ -49,99 +50,108 @@ export const REMOVED = {
     'ma-...-in': 'magasin -> gas, mafin -> f, Makasin -> kas first (33 positions) against 6 right; the own ma- -in needs a root of four letters',
     'magpa-': 'nagpasya -> sya and magpasa -> sa first (no minimum root)',
     'pagka-': 'pagkakaroon -> doon first; the own rules give magkaroon, and pagkarating -> dating',
+    'tag-': 'tagalog -> alog first (16 positions in the Gutenberg texts); the own tag- needs the hyphen before a vowel',
+    'magsi-': 'magsi- + root collides with mag- + a root in si- (magsikap -> kap, magsimula -> mula, nagsisipilyo -> pilyo); the own magsi- is tried after mag-',
+    'magma-': 'magmahal. -> hal. first at the end of a sentence (4 Tatoeba positions) and magmasa -> sa; the own rules read its right forms through mag- and the contemplative',
+    'pa-...-an': 'stems of one letter: papuan -> pu, padaan -> da, paman -> m first; the own pa- -an needs three letters',
+    'makapang-': 'makapangahas -> ahas first at 12 of its 17 Gutenberg positions; the own maka- then pang- read the right ones in two steps',
 };
 
-const union = mergeTransforms(own, yomitan).transforms;
+export function buildFinal() {
+    const union = mergeTransforms(own, yomitan).transforms;
 
-// Rule identity for step 2: type and affixes.
-const keysOf = (rule) => {
-    switch (rule.type) {
-        case 'prefix':
-        case 'suffix':
-        case 'wholeWord':
-        case 'replace':
-            return [`${rule.type}\u0000${rule.inflected}\u0000${rule.deinflected}`];
-        case 'circumfix': {
-            const prefixes = rule.prefixes ?? [[rule.inflectedPrefix, rule.deinflectedPrefix]];
-            const suffixes = rule.suffixes ?? [[rule.inflectedSuffix, rule.deinflectedSuffix]];
-            const change = rule.stemChange ? JSON.stringify(rule.stemChange.from) + rule.stemChange.to : '';
-            return prefixes.flatMap(([ip, dp]) => suffixes.map(([is, ds]) => `circumfix\u0000${ip}\u0000${dp}\u0000${is}\u0000${ds}\u0000${change}`));
+    // Rule identity for step 2: type and affixes.
+    const keysOf = (rule) => {
+        switch (rule.type) {
+            case 'prefix':
+            case 'suffix':
+            case 'wholeWord':
+            case 'replace':
+                return [`${rule.type}\u0000${rule.inflected}\u0000${rule.deinflected}`];
+            case 'circumfix': {
+                const prefixes = rule.prefixes ?? [[rule.inflectedPrefix, rule.deinflectedPrefix]];
+                const suffixes = rule.suffixes ?? [[rule.inflectedSuffix, rule.deinflectedSuffix]];
+                const change = rule.stemChange ? JSON.stringify(rule.stemChange.from) + rule.stemChange.to : '';
+                return prefixes.flatMap(([ip, dp]) => suffixes.map(([is, ds]) => `circumfix\u0000${ip}\u0000${dp}\u0000${is}\u0000${ds}\u0000${change}`));
+            }
+            default:
+                return [];
         }
-        default:
-            return [];
+    };
+    const ownKeys = new Map();
+    for (const transform of union.transforms) {
+        if (transform.source === 'yomitan') { continue; }
+        transform.rules.forEach((rule) => {
+            for (const key of keysOf(rule)) {
+                if (!ownKeys.has(key)) { ownKeys.set(key, rule); }
+            }
+        });
     }
-};
-const ownKeys = new Map();
-for (const transform of union.transforms) {
-    if (transform.source === 'yomitan') { continue; }
-    transform.rules.forEach((rule) => {
-        for (const key of keysOf(rule)) {
-            if (!ownKeys.has(key)) { ownKeys.set(key, rule); }
-        }
-    });
-}
 
-const ownTransforms = [];
-const yomitanTransforms = [];
-let both = 0;
-let duplicates = 0;
-let removedRules = 0;
-for (const transform of union.transforms) {
-    if (transform.source !== 'yomitan') {
-        ownTransforms.push(transform);
-        continue;
-    }
-    if (transform.id in REMOVED) {
-        removedRules += transform.rules.length;
-        continue;
-    }
-    const rules = [];
-    for (const rule of transform.rules) {
-        const keys = keysOf(rule);
-        const matches = keys.length > 0 && keys.every((key) => ownKeys.has(key));
-        if (!matches) {
-            rules.push(rule);
+    const ownTransforms = [];
+    const yomitanTransforms = [];
+    let both = 0;
+    let duplicates = 0;
+    let removedRules = 0;
+    for (const transform of union.transforms) {
+        if (transform.source !== 'yomitan') {
+            ownTransforms.push(transform);
             continue;
         }
-        ++duplicates;
-        for (const key of keys) {
-            const mine = ownKeys.get(key);
-            if (mine.source !== 'both') {
-                mine.source = 'both';
-                ++both;
+        if (transform.id in REMOVED) {
+            removedRules += transform.rules.length;
+            continue;
+        }
+        const rules = [];
+        for (const rule of transform.rules) {
+            const keys = keysOf(rule);
+            const matches = keys.length > 0 && keys.every((key) => ownKeys.has(key));
+            if (!matches) {
+                rules.push(rule);
+                continue;
+            }
+            ++duplicates;
+            for (const key of keys) {
+                const mine = ownKeys.get(key);
+                if (mine.source !== 'both') {
+                    mine.source = 'both';
+                    ++both;
+                }
             }
         }
+        if (rules.length > 0) { yomitanTransforms.push({...transform, rules}); }
     }
-    if (rules.length > 0) { yomitanTransforms.push({...transform, rules}); }
+
+    // A transform whose rules are all `both` says so itself.
+    for (const transform of ownTransforms) {
+        const sources = new Set(transform.rules.map((r) => r.source ?? transform.source));
+        if (sources.size === 1 && sources.has('both')) {
+            transform.source = 'both';
+            for (const rule of transform.rules) { delete rule.source; }
+        }
+    }
+
+    const final = {schema: 1, conditions: union.conditions, wordLists: union.wordLists ?? {}, transforms: [...ownTransforms, ...yomitanTransforms]};
+    writeFileSync(join(pack, 'transforms.json'), formatTransforms(final));
+
+    const count = (pred) => final.transforms.reduce((n, t) => n + t.rules.filter((r) => pred(r.source ?? t.source)).length, 0);
+    console.log(`transforms.json: ${final.transforms.length} transforms, ${count(() => true)} rules ` +
+        `(${count((s) => s === 'own')} own, ${count((s) => s === 'yomitan')} yomitan, ${count((s) => s === 'both')} both); ` +
+        `${duplicates} Yomitan rules are own rules too (${both} own rules marked both), ${removedRules} rules of ${Object.keys(REMOVED).length} Yomitan transforms removed`);
+
+    // Step 5: tests/yomitan.tsv.
+    const ids = new Set(final.transforms.map((t) => t.id));
+    const tsv = join(pack, 'tests', 'yomitan.tsv');
+    let changed = 0;
+    const lines = readFileSync(tsv, 'utf8').split('\n').map((line) => {
+        const cells = line.split('\t');
+        if (line.startsWith('#') || cells.length !== 6 || cells[5] === '*') { return line; }
+        if (cells[5].split('|').every((id) => ids.has(id))) { return line; }
+        ++changed;
+        return [...cells.slice(0, 5), '*'].join('\t');
+    });
+    writeFileSync(tsv, lines.join('\n'));
+    console.log(`tests/yomitan.tsv: ${changed} rows given the reasons * (their Yomitan transform is not in the final set)`);
 }
 
-// A transform whose rules are all `both` says so itself.
-for (const transform of ownTransforms) {
-    const sources = new Set(transform.rules.map((r) => r.source ?? transform.source));
-    if (sources.size === 1 && sources.has('both')) {
-        transform.source = 'both';
-        for (const rule of transform.rules) { delete rule.source; }
-    }
-}
-
-const final = {schema: 1, conditions: union.conditions, wordLists: union.wordLists ?? {}, transforms: [...ownTransforms, ...yomitanTransforms]};
-writeFileSync(join(pack, 'transforms.json'), formatTransforms(final));
-
-const count = (pred) => final.transforms.reduce((n, t) => n + t.rules.filter((r) => pred(r.source ?? t.source)).length, 0);
-console.log(`transforms.json: ${final.transforms.length} transforms, ${count(() => true)} rules ` +
-    `(${count((s) => s === 'own')} own, ${count((s) => s === 'yomitan')} yomitan, ${count((s) => s === 'both')} both); ` +
-    `${duplicates} Yomitan rules are own rules too (${both} own rules marked both), ${removedRules} rules of ${Object.keys(REMOVED).length} Yomitan transforms removed`);
-
-// Step 5: tests/yomitan.tsv.
-const ids = new Set(final.transforms.map((t) => t.id));
-const tsv = join(pack, 'tests', 'yomitan.tsv');
-let changed = 0;
-const lines = readFileSync(tsv, 'utf8').split('\n').map((line) => {
-    const cells = line.split('\t');
-    if (line.startsWith('#') || cells.length !== 6 || cells[5] === '*') { return line; }
-    if (cells[5].split('|').every((id) => ids.has(id))) { return line; }
-    ++changed;
-    return [...cells.slice(0, 5), '*'].join('\t');
-});
-writeFileSync(tsv, lines.join('\n'));
-console.log(`tests/yomitan.tsv: ${changed} rows given the reasons * (their Yomitan transform is not in the final set)`);
+if (isMain(import.meta.url)) { buildFinal(); }

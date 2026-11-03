@@ -182,6 +182,9 @@ linker	1	kang	ka	*	linker
 linker	1	pang	pa	*	linker
 linker	1	ring	rin	*	linker
 linker	1	pinakamagandang	maganda	*	*
+linker	1	noong	noon	*	linker
+linker	1	naming	namin	*	linker
+linker	1	unang	una	*	linker
 contraction	1	ako'y	ako	*	contractionAy
 contraction	1	ako’y	ako	*	contractionAy
 contraction	1	siya'y	siya	*	contractionAy
@@ -238,6 +241,20 @@ aspect -in	1	niluluto	lutuin	*	inVerb|progressive
 aspect -in	1	pinapakain	pakainin	*	inVerb|progressive
 aspect -in	1	pinaplano	plano	*	progressive
 nouns and adjectives	1	madasalin	dasal	*	maIn
+linker	1	alam mong	alam mo	*	linker
+linker	1	may ilang	may ilan	*	linker
+linker	1	ano bang	ano ba	*	linker
+nouns and adjectives	1	tag-init	init	*	tag
+nouns and adjectives	1	taglamig	lamig	*	tag
+prefix reduplication	1	nagsisipilyo	magsipilyo	*	progressive
+affix to root	1	magsikain	kain	*	magsi
+affix to root	1	nagsialis	alis	*	*
+affix to root	1	magsipagluto	magluto	*	magsi
+affix to root	1	malakaran	lakad	*	maAn
+affix to root	1	malutunan	luto	*	maAn
+nouns and adjectives	1	maramdamin	damdam	*	maIn
+nouns and adjectives	1	pamutol	putol	*	pang
+nouns and adjectives	1	pamuli	muli	*	pa
 negatives	0	ang	a	*	*
 negatives	0	lang	la	*	*
 negatives	0	nang	na	*	*
@@ -263,3 +280,12 @@ negatives	0	paano ba	ano ba	*	*
 negatives	0	pauna	una	*	*
 negatives	0	palala	la	*	*
 negatives	0	magasin	gas	*	*
+negatives	0	ka nang	ka nan	*	*
+negatives	0	naman ang	naman an	*	*
+negatives	0	tagalog	alog	*	*
+negatives	0	magaling sa	galing sa	*	*
+negatives	0	marahil sa	dahil sa	*	*
+negatives	0	ipaalam mo	alam mo	*	*
+negatives	0	gumaling sa	galing sa	*	*
+negatives	0	tungkol saan	tungkol sa	*	*
+negatives	0	pamuli	buli	*	*

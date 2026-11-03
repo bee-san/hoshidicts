@@ -37,6 +37,13 @@
   ["kasi", "", "conj", "", 0, ["because"], 36, ""],
   ["baboy", "", "n", "n", 0, ["pig"], 37, ""],
   ["boy", "", "n", "n", 0, ["a houseboy (an entry a wrong reading of baboy would reach)"], 38, ""],
-  ["nakita", "", "non-lemma", "", 0, [["makita", ["completive"]]], 39, ""],
-  ["ᜃᜓᜋᜁᜈ᜔", "", "non-lemma", "", 0, [["kumain", ["Baybayin"]]], 40, ""]
+  ["noon", "", "adv", "", 0, ["then; at that time"], 39, ""],
+  ["noo", "", "n", "n", 0, ["forehead (an entry a wrong reading of noong would reach)"], 40, ""],
+  ["magsimula", "", "v", "v", 0, ["to begin"], 41, ""],
+  ["simula", "", "n", "n", 0, ["beginning"], 42, ""],
+  ["mula", "", "prep", "", 0, ["from (an entry a wrong reading of magsimula would reach)"], 43, ""],
+  ["sipilyo", "", "n", "n", 0, ["toothbrush"], 44, ""],
+  ["pilyo", "", "adj", "adj", 0, ["naughty (an entry a wrong reading of nagsisipilyo would reach)"], 45, ""],
+  ["nakita", "", "non-lemma", "", 0, [["makita", ["completive"]]], 46, ""],
+  ["ᜃᜓᜋᜁᜈ᜔", "", "non-lemma", "", 0, [["kumain", ["Baybayin"]]], 47, ""]
 ]

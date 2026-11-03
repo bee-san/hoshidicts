@@ -116,6 +116,10 @@ const whole = (inflected, deinflected, [conditionsIn, conditionsOut]) => ({
 const pattern = (anchorPrefix, source, replacement, [conditionsIn, conditionsOut]) => ({
     type: 'pattern', pattern: source, replacement, anchorPrefix, conditionsIn, conditionsOut,
 });
+// The same anchored on a literal suffix.
+const pattern2 = (anchorSuffix, source, replacement, [conditionsIn, conditionsOut]) => ({
+    type: 'pattern', pattern: source, replacement, anchorSuffix, conditionsIn, conditionsOut,
+});
 const circumfix = (prefixes, suffixes, extra, [conditionsIn, conditionsOut]) => ({
     type: 'circumfix', prefixes, suffixes, conditionsIn, conditionsOut, stemMinLength: 3, ...extra,
 });
@@ -137,7 +141,6 @@ const M_PREFIXES = [
     {m: 'magpa', final: false},
     {m: 'mapa', final: false},
     {m: 'magka', final: false},
-    {m: 'magsi', final: false},
     {m: 'mai', final: false},
     {m: 'maipa', final: false},
     {m: 'maipag', final: true},
@@ -157,7 +160,7 @@ const realisOf = (m) => `n${m.slice(1)}`;
 // root's: makakain (maka- + ka-), nakikipag-usap, nagpapaluto.
 const PREFIX_REDUPLICATION = [
     ['makaka', 'maka'], ['makiki', 'maki'], ['magpapa', 'magpa'], ['mapapa', 'mapa'], ['magkaka', 'magka'],
-    ['magsisi', 'magsi'], ['makakapag', 'makapag'], ['makikipag', 'makipag'], ['magpapaka', 'magpaka'],
+    ['makakapag', 'makapag'], ['makikipag', 'makipag'], ['magpapaka', 'magpaka'],
     ['maiipa', 'maipa'],
 ];
 
@@ -208,6 +211,19 @@ function rootReduplicationRules(before, to, toVowel, io) {
     return rules;
 }
 
+// u for the o of the last syllable before a final consonant (inumin ->
+// inom, sagutan -> sagot).
+const U_TO_O = {from: ['u'], to: 'o', occurrence: 'last', between: '[bcdfghjklmnpqrstvwxyz]', betweenMinLength: 1};
+// A capitalised word is a name or the start of a sentence; its decapitalised
+// variant is deinflected too, so these rules leave it out: Talagang is not
+// Talag + -an (a name), but talaga.
+// The stem is one word, too (section 14: count the space): tungkol saan is
+// not tungkol sa + -an.
+const LOWER = {stemNotStartsWith: '[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]', stemCharacters: '[^ ]'};
+// Prefix rules whose reading of a phrase is mostly another phrase: magaling
+// sa is not ma- + galing sa (from), ipaalam mo not ipa- + alam mo.
+const ONE = {stemCharacters: '[^ ]'};
+
 const transforms = [];
 const add = (id, name, description, rules) => transforms.push({id, name, description, source: 'own', rules});
 
@@ -218,10 +234,24 @@ const add = (id, name, description, rules) => transforms.push({id, name, descrip
 // are words of their own (lamang, nang, isang), not la, na and sa.
 const SHORT_LINKED = [['kong', 'ko'], ['mong', 'mo'], ['pong', 'po'], ['kang', 'ka'], ['bang', 'ba'], ['pang', 'pa'],
     ['tong', 'to'], ['ring', 'rin'], ['ding', 'din'], ['yung', 'yun'], ['nung', 'nun'], ['yang', 'yan'], ['yong', 'yon']];
+// Words that end in n and take -g, where the word without its n is also a
+// headword that -ng would reach first: noong is noon (then), not noo
+// (forehead); naming is namin, not nami.
+const N_LINKED = ['noon', 'namin', 'saan', 'kanan', 'pangunahin', 'hapon', 'bayan', 'aralin', 'laban', 'usapan', 'kainan', 'tuwiran'];
+// In a phrase, the last word's stem needs three letters too, or must be one
+// of the short words: alam mong -> alam mo and may ilang -> may ilan, but
+// ka nang is not ka nan, whose dictionary row names the affix ka- -an.
+const SHORT_VOWEL = SHORT_LINKED.filter(([, word]) => !word.endsWith('n')).map(([, word]) => word);
+const SHORT_N = SHORT_LINKED.filter(([, word]) => word.endsWith('n')).map(([, word]) => word.slice(0, -1));
 add('linker', '-ng', 'Linker: -ng after a vowel, -g after n, joins a word to the word it modifies (magandang umaga, kaibigang tapat, gusto kong).', [
-    suffix('ng', '', {stemEndsWith: VOWEL, stemMinLength: 3}, ANY),
-    suffix('ng', 'n', {stemEndsWith: VOWEL, stemMinLength: 3}, ANY),
+    suffix('ng', '', {stemEndsWith: VOWEL, stemCharacters: '[^ ]', stemMinLength: 3}, ANY),
+    suffix('ng', 'n', {stemEndsWith: VOWEL, stemCharacters: '[^ ]', stemMinLength: 3}, ANY),
     ...SHORT_LINKED.map(([form, word]) => whole(form, word, ANY)),
+    ...N_LINKED.map((word) => whole(`${word}g`, word, ANY)),
+    pattern2('ng', `^(.* [^ ]*[^ ][^ ]${VOWEL})ng$`, '$1', ANY),
+    pattern2('ng', `^(.* [^ ]*[^ ][^ ]${VOWEL})ng$`, '$1n', ANY),
+    pattern2('ng', `^(.* (?:${SHORT_VOWEL.join('|')}))ng$`, '$1', ANY),
+    pattern2('ng', `^(.* (?:${SHORT_N.join('|')}))ng$`, '$1n', ANY),
 ]);
 add('contractionAy', "'y", "ay written as 'y after a vowel (ako'y, siya'y).", [
     suffix("'y", '', {stemEndsWith: VOWEL, stemMinLength: 2}, ANY),
@@ -240,8 +270,9 @@ add('apostropheSpelling', "'t spelling", "Older spellings of conjunctions with a
 // Ortograpiyang Pambansa writes a hyphen between a prefix that ends in a
 // consonant and a root that starts with a vowel (mag-aral, pag-ibig,
 // nag-iisa). Older and informal text leaves it out.
+// Not tag-: tagalog is not tag-alog.
 const HYPHEN_PREFIXES = ['mag', 'nag', 'pag', 'ipag', 'ipinag', 'pinag', 'makapag', 'nakapag', 'makipag', 'nakipag',
-    'nakikipag', 'makikipag', 'pakikipag', 'mang', 'nang', 'pang', 'tag', 'maipag', 'naipag'];
+    'nakikipag', 'makikipag', 'pakikipag', 'mang', 'nang', 'pang', 'maipag', 'naipag'];
 add('prefixHyphen', 'hyphen', 'The hyphen between a prefix ending in a consonant and a root starting with a vowel, left out (magaral → mag-aral, pagibig → pag-ibig).',
     HYPHEN_PREFIXES.flatMap((p) => VOWELS.map((v) => prefix(`${p}${v}`, `${p}-${v}`, {stemMinLength: 2}, ANY))));
 
@@ -277,11 +308,13 @@ const progressive = [];
 for (const {m, final} of M_PREFIXES) {
     progressive.push(...reduplicationRules(realisOf(m), m, final, M));
 }
+// The prefixes whose copied syllable also reads straight to the root
+// (nakakatulong -> tulong, which wins over maka- + katulong); not magsi-,
+// whose copy collides with roots in si- (nagsisipilyo is magsipilyo).
+const TO_ROOT = new Set(['makaka', 'makiki', 'magpapa', 'magkaka', 'makakapag', 'makikipag']);
 for (const [m, to] of PREFIX_REDUPLICATION) {
     progressive.push(prefix(realisOf(m), to, {stemMinLength: 2}, M));
-    // And the root (nakakatulong -> tulong), which wins over the prefix
-    // alone (maka- + katulong).
-    progressive.push(prefix(realisOf(m), '', {stemMinLength: 3}, [[], ROOT]));
+    if (TO_ROOT.has(m)) { progressive.push(prefix(realisOf(m), '', {stemMinLength: 3}, [[], ROOT])); }
 }
 // -um-: C + um + V + C... -> C + um (kumakain -> kumain).
 for (const c of CONSONANTS) {
@@ -360,7 +393,7 @@ for (const {m, final} of M_PREFIXES) {
 }
 for (const [m, to] of PREFIX_REDUPLICATION) {
     contemplative.push(prefix(m, to, {stemMinLength: 2}, M));
-    contemplative.push(prefix(m, '', {stemMinLength: 3}, [[], ROOT]));
+    if (TO_ROOT.has(m)) { contemplative.push(prefix(m, '', {stemMinLength: 3}, [[], ROOT])); }
 }
 // -um-: C + V + C... -> C + um (kakain -> kumain, darating -> dumating).
 contemplative.push(...rootReduplicationRules('', (c) => `${c}um`, (v) => `um${v}`, UM));
@@ -412,8 +445,8 @@ add('social', 'social', 'Doing something with others: makipag- of a mag- verb (m
 // --- Affixes -> root ---------------------------------------------------------
 const FROM_M = [['v_m'], ROOT];
 add('um', '-um-', 'Actor focus -um-, after the first consonant of the root or before a vowel (kumain → kain, sumulat → sulat, uminom → inom).', [
-    ...CONSONANTS.map((c) => prefix(`${c}um`, c, {stemStartsWith: AFTER_FIRST, stemMinLength: 3}, [['v_um'], ROOT])),
-    prefix('um', '', {stemStartsWith: VOWEL, stemMinLength: 3}, [['v_um'], ROOT]),
+    ...CONSONANTS.map((c) => prefix(`${c}um`, c, {...ONE, stemStartsWith: AFTER_FIRST, stemMinLength: 3}, [['v_um'], ROOT])),
+    prefix('um', '', {...ONE, stemStartsWith: VOWEL, stemMinLength: 3}, [['v_um'], ROOT]),
 ]);
 // The root of a mag- verb may be a ma- adjective (magmadali -> madali), and
 // -an may follow as a second step: the reciprocal (magkamayan -> kamayan ->
@@ -423,10 +456,18 @@ add('mag', 'mag-', 'Actor focus mag- (magluto → luto, mag-aral → aral, magma
     prefix('mag', '', {stemStartsWith: CONSONANT, stemMinLength: 3}, FROM_MAG),
     prefix('mag-', '', {stemMinLength: 2}, FROM_MAG),
 ]);
+// magsi- (plural actor) is a pattern anchored on mag, so that it is tried
+// after the mag- rules above: magsimula is mag- + simula before magsi- +
+// mula, and magsikain is magsi- + kain because sikain is no word.
+add('magsi', 'magsi-', 'Plural actor (magsikain → kain, nagsialis → alis, magsipagluto → magluto).', [
+    pattern('mag', '^magsipag-(?=..)', 'mag-', [['v_m'], ['v_m']]),
+    pattern('mag', '^magsipag(?=...)', 'mag', [['v_m'], ['v_m']]),
+    pattern('mag', '^magsi(?=...)', '', FROM_M),
+]);
 add('ma', 'ma-', 'ma- adjectives and verbs (maganda → ganda, matulog → tulog), with d → r (marami → dami).', [
-    prefix('ma', '', {stemMinLength: 3}, [['v_m', 'adj_ma', 'v_sfx'], ROOT]),
-    prefix('ma-', '', {stemMinLength: 2}, [['v_m', 'adj_ma', 'v_sfx'], ROOT]),
-    prefix('mar', 'd', {stemStartsWith: VOWEL, stemMinLength: 2}, [['v_m', 'adj_ma', 'v_sfx'], ROOT]),
+    prefix('ma', '', {...ONE, stemMinLength: 3}, [['v_m', 'adj_ma', 'v_sfx'], ROOT]),
+    prefix('ma-', '', {...ONE, stemMinLength: 2}, [['v_m', 'adj_ma', 'v_sfx'], ROOT]),
+    prefix('mar', 'd', {...ONE, stemStartsWith: VOWEL, stemMinLength: 2}, [['v_m', 'adj_ma', 'v_sfx'], ROOT]),
 ]);
 add('mang', 'mang-', 'Actor focus mang-, which merges with the root\'s first consonant: mam- for b and p (mamili → bili, pili), man- for d, s and t (manahi → tahi), mang- for k and the vowels (mangisda → isda).', [
     prefix('mang', '', {stemMinLength: 3}, FROM_M),
@@ -453,27 +494,15 @@ simplePrefix('maki', 'maki-', 'Joining others, actor focus (makikain → kain).'
 simplePrefix('magpa', 'magpa-', 'Causative, actor focus (magpaluto → luto).', 'magpa', FROM_M, {stemMinLength: 4});
 simplePrefix('mapa', 'mapa-', 'Involuntary action (mapaiyak → iyak).', 'mapa', FROM_M, {stemMinLength: 4});
 simplePrefix('magka', 'magka-', 'Coming to have (magkasakit → sakit).', 'magka', FROM_M);
-add('magsi', 'magsi-', 'Plural actor (magsialis → alis, magsipagluto → magluto).', [
-    prefix('magsi', '', {stemMinLength: 3}, FROM_M),
-    prefix('magsipag', 'mag', {stemMinLength: 3}, [['v_m'], ['v_m']]),
-    prefix('magsipag-', 'mag-', {stemMinLength: 2}, [['v_m'], ['v_m']]),
-]);
 simplePrefix('magpaka', 'magpaka-', 'Making an effort to be (magpakabait → bait).', 'magpaka', FROM_M);
 const FROM_I = [['v_i'], ROOT];
 simplePrefix('i', 'i-', 'Conveyance or benefactive focus (isulat → sulat, ibigay → bigay, iabot → abot).', 'i', FROM_I);
 simplePrefix('ipag', 'ipag-', 'Benefactive focus of a mag- verb (ipagluto → luto).', 'ipag', FROM_I, {stemStartsWith: CONSONANT});
-simplePrefix('ipa', 'ipa-', 'Causative, object focus (ipaluto → luto).', 'ipa', FROM_I);
+simplePrefix('ipa', 'ipa-', 'Causative, object focus (ipaluto → luto).', 'ipa', FROM_I, ONE);
 simplePrefix('ika', 'ika-', 'Reason focus, and ordinal numbers (ikagalit → galit, ikalima → lima).', 'ika', FROM_I);
 
 const FINAL_CONSONANTS = ['b', 'k', 'd', 'g', 'l', 'm', 'n', 'ng', 'p', 'r', 's', 't', 'w', 'y'];
 const FROM_SFX = [['v_sfx'], ROOT];
-// u for the o of the last syllable before a final consonant (inumin ->
-// inom, sagutan -> sagot).
-const U_TO_O = {from: ['u'], to: 'o', occurrence: 'last', between: '[bcdfghjklmnpqrstvwxyz]', betweenMinLength: 1};
-// A capitalised word is a name or the start of a sentence; its decapitalised
-// variant is deinflected too, so these rules leave it out: Talagang is not
-// Talag + -an (a name), but talaga.
-const LOWER = {stemNotStartsWith: '[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]'};
 // Common verbs whose root loses a vowel before -in or -an.
 // A whole word, so they may also follow a root that another rule left
 // (masaktan -> saktan -> sakit).
@@ -485,7 +514,7 @@ const SYNCOPE_AN = [['tingin', 'tingnan'], ['bigay', 'bigyan'], ['bukas', 'buksa
     ['dating', 'datnan'], ['tira', 'tirhan'], ['puno', 'punan'], ['lagay', 'lagyan'], ['dinig', 'dinggan'], ['sakay', 'sakyan'],
     ['takip', 'takpan'], ['sakit', 'saktan'], ['laba', 'labhan'], ['masid', 'masdan'], ['kamit', 'kamtan'], ['higa', 'higan'],
     ['tanggap', 'tanggapan']];
-const SUFFIXES_AN = [['an', ''], ['han', ''], ['nan', '']];
+const SUFFIXES_AN = [['an', ''], ['han', ''], ['nan', ''], ['ran', 'd']];
 const SUFFIXES_IN = [['in', ''], ['hin', ''], ['rin', 'd']];
 
 // The completive of an -in verb drops the suffix (kinain from kainin). The
@@ -515,7 +544,7 @@ add('inVerb', '-in verb', 'The -in infinitive of a completive, which drops the s
 ]);
 // The u -> o of a final syllable: the final o itself (lutuan -> luto), and
 // an o before consonants by the stem change (kalungkutan -> lungkot).
-const SUFFIXES_O = (ending) => [[`u${ending}`, 'o'], [`uh${ending}`, 'o']];
+const SUFFIXES_O = (ending) => [[`u${ending}`, 'o'], [`uh${ending}`, 'o'], [`un${ending}`, 'o']];
 const circumfixes = (prefixes, suffixes, ending, io, minimum = 3) => [
     circumfix(prefixes, suffixes, {stemMinLength: minimum}, io),
     circumfix(prefixes, [[ending, '']], {stemMinLength: 2, stemChange: U_TO_O}, io),
@@ -558,9 +587,10 @@ add('locativeAn', '-an', 'Locative or directional focus -an, -han or -nan after 
 // Added after Yomitan's rules were read: adjectives with ma- and -in
 // (madamdamin, matiisin). A root of four letters: magasin (magazine) is not
 // ma- + gas + -in.
-add('maIn', 'ma- -in', 'Adjectives with ma- and -in: given to (madasalin → dasal, matiisin → tiis, madamdamin → damdam).', [
+add('maIn', 'ma- -in', 'Adjectives with ma- and -in: given to (madasalin → dasal, matiisin → tiis, madamdamin → damdam, maramdamin → damdam).', [
     circumfix([['ma', '']], SUFFIXES_IN, {stemMinLength: 4}, FROM_M),
     circumfix([['ma', '']], [['in', '']], {stemMinLength: 4, stemChange: U_TO_O}, FROM_M),
+    circumfix([['mar', 'd']], SUFFIXES_IN, {stemStartsWith: VOWEL, stemMinLength: 3}, FROM_M),
 ]);
 add('paAn', 'pa- -an', 'Causative pa- with -an (pagalitan → galit, paniwalaan → niwala), and pakinggan → kinig.', [
     ...circumfixes([['pa', '']], SUFFIXES_AN, 'an', FROM_SFX),
@@ -621,12 +651,15 @@ add('pang', 'pang-', 'pang- for an instrument or purpose, which merges with the 
     prefix('pang', '', {stemStartsWith: '[aeioughkmnwy]', stemMinLength: 3}, RAW_ROOT),
     prefix('pang-', '', {stemMinLength: 2}, RAW_ROOT),
     prefix('pam', '', {stemStartsWith: '[bp]', stemMinLength: 3}, RAW_ROOT),
-    prefix('pam', 'b', {stemStartsWith: VOWEL, stemMinLength: 3}, RAW_ROOT),
-    prefix('pam', 'p', {stemStartsWith: VOWEL, stemMinLength: 3}, RAW_ROOT),
+    // A root's first consonant merged into the prefix: the rest of the root
+    // has four letters (panulat -> sulat, pamutol -> putol), so pamuli is pa-
+    // + muli, not pang- + buli.
+    prefix('pam', 'b', {stemStartsWith: VOWEL, stemMinLength: 4}, RAW_ROOT),
+    prefix('pam', 'p', {stemStartsWith: VOWEL, stemMinLength: 4}, RAW_ROOT),
     prefix('pan', '', {stemStartsWith: '[dlrst]', stemMinLength: 3}, RAW_ROOT),
-    prefix('pan', 'd', {stemStartsWith: VOWEL, stemMinLength: 3}, RAW_ROOT),
-    prefix('pan', 's', {stemStartsWith: VOWEL, stemMinLength: 3}, RAW_ROOT),
-    prefix('pan', 't', {stemStartsWith: VOWEL, stemMinLength: 3}, RAW_ROOT),
+    prefix('pan', 'd', {stemStartsWith: VOWEL, stemMinLength: 4}, RAW_ROOT),
+    prefix('pan', 's', {stemStartsWith: VOWEL, stemMinLength: 4}, RAW_ROOT),
+    prefix('pan', 't', {stemStartsWith: VOWEL, stemMinLength: 4}, RAW_ROOT),
 ]);
 add('mapag', 'mapag-', 'Inclined to (mapagmahal → mahal), and mapag- verbs (mapagtanto → tanto).', [
     prefix('mapag', '', {stemStartsWith: CONSONANT, stemMinLength: 3}, FROM_M),
@@ -647,6 +680,13 @@ const rootPrefix = (id, name, description, p, minimum) => add(id, name, descript
 rootPrefix('ka', 'ka-', 'ka- with an adjective root, in gaano ka- and kay ka- (gaano katagal → tagal, kalaki → laki, karami → dami), and fellow (kapareho → pareho).', 'ka', 4);
 rootPrefix('pa', 'pa-', 'pa- for a direction or manner, and nouns (paligid → ligid, pataas → taas, papuri → puri, parangal → dangal).', 'pa', 4);
 rootPrefix('pala', 'pala-', 'Fond of, inclined to (palatanong → tanong, palabiro → biro).', 'pala', 4);
+// Seasons: tag- with a hyphen before a vowel (tag-init, tag-ulan), and
+// before a consonant (tagsibol, taglamig). Not before a vowel without the
+// hyphen: tagalog is not tag- + alog.
+add('tag', 'tag-', 'Seasons and times (tag-init → init, tag-ulan → ulan, tagsibol → sibol).', [
+    prefix('tag-', '', {stemMinLength: 2}, RAW_ROOT),
+    prefix('tag', '', {stemStartsWith: CONSONANT, stemMinLength: 4}, RAW_ROOT),
+]);
 
 const out = {schema: 1, conditions, wordLists: {}, transforms};
 const file = join(here, 'own.json');

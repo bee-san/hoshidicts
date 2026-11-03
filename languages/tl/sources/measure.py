@@ -21,16 +21,25 @@ Commands:
   alone. A word's lemmas are the terms its form-of rows name and the lemmas
   corpus.tsv and gaps.tsv give for it. "Reached" words are those whose lemma
   a rule reaches (a deinflection with a trace). The first result is right when
-  it is the word itself (its own entry) or one of its lemmas. A first result
-  that a rule made (a trace without dictionary steps) and that is neither is
-  listed as "rule first, not named": right or wrong is judged by hand
-  (--show prints them).
+  it is the word itself (its own entry) or one of its lemmas. The other words
+  whose first result is a rule reading other than the linker's or a
+  contraction's are counted and listed (--show) to judge by hand.
 - tatoeba: every word position of Tatoeba's Tagalog sentences, looked up as
-  the text from the word to the end of its sentence. Positions are split by
-  the word before them (a marker, pronoun or particle, or other); first
-  results are judged as in frequent, and multiword first results that a rule
-  made are listed.
+  the text from the word to the end of its sentence. The first result is the
+  text as written or a term a form-of row names for it; or a rule reading
+  whose term a form-of row of the matched text names (or corpus.tsv gives);
+  or a reading of the linker or a contraction only (akong -> ako), which
+  leaves the word itself; or another rule reading, split by the word before
+  the position (a marker, pronoun or particle). --show lists the largest
+  groups of other readings and the multiword ones, --sample N a random sample
+  of them (seed 1) to judge by hand.
 - text: the same for Project Gutenberg texts (--texts pg47629.txt,...).
+- traces: for the sampled rows of corpus.tsv and gaps.tsv whose aspect is
+  known, the share whose shortest trace to the lemma names it.
+- sentences: the words of sources/sentences.tsv, each looked up as the text
+  from it to the end of its sentence; the first result must be the lemma the
+  file gives. --dump writes those texts, one per line (the input of
+  benchmark-lookup).
 """
 
 import argparse
@@ -200,7 +209,7 @@ def cmd_frequent(args, sets):
     words, counts = frequent_words(args)
     total = sum(counts)
     print(f'{len(words)} words, {total} tokens; {sum(1 for w in words if lemmas.get(norm(w)))} have a lemma named by a form-of row or the corpus')
-    print('| Rule set | Words a rule reaches | Their tokens | Wrong first (words) | Wrong first (share of tokens) | Rule first, not named (words) |')
+    print('| Rule set | Words a rule reaches | Their tokens | Wrong first (words) | Wrong first (share of tokens) | Other rule readings first (words) |')
     print('| --- | ---: | ---: | ---: | ---: | ---: |')
     listed = {}
     for set_name, transforms in sets.items():
@@ -219,13 +228,13 @@ def cmd_frequent(args, sets):
                 if verdict not in ('own entry', 'right lemma'):
                     wrong += 1
                     wrong_tokens += count
-            if verdict == 'rule, not named':
+            if first and classify(first, lemmas) == 'other rule reading':
                 unnamed.append((count, word, first['expression'], [t for t, _ in first['trace']]))
         listed[set_name] = unnamed
         print(f'| {set_name} | {reached} | {100 * reached_tokens / total:.2f}% | {wrong} | {100 * wrong_tokens / total:.3f}% | {len(unnamed)} |')
     if args.show:
         for set_name, unnamed in listed.items():
-            print(f'\n{set_name}: rule first, not named ({len(unnamed)}):')
+            print(f'\n{set_name}: other rule readings first ({len(unnamed)}):')
             for count, word, expression, trace in sorted(unnamed, reverse=True)[:args.show]:
                 print(f'  {count}\t{word}\t{expression}\t{"|".join(trace)}')
 
@@ -262,6 +271,23 @@ def hovers(sentences):
     return out
 
 
+GRAMMAR = {'linker', 'contractionAy', 'contractionAt', 'contractionAng', 'apostropheSpelling'}
+
+
+def classify(first, lemmas):
+    """own entry / named lemma / linker or contraction / other rule reading."""
+    trace = first['trace']
+    rule_steps = [t for t, from_dictionary in trace if not from_dictionary]
+    if not rule_steps:
+        return 'own entry or dictionary'
+    verdict = judge(first['matched'], first, lemmas.get(norm(first['matched']), set()))
+    if verdict in ('own entry', 'right lemma'):
+        return 'named lemma'
+    if set(rule_steps) <= GRAMMAR:
+        return 'linker or contraction'
+    return 'other rule reading'
+
+
 def cmd_positions(args, sets, sentences, label):
     lemmas, _ = dictionary_lemmas(Path(args.cache) / 'wty-tl-en.zip')
     for word, extra in corpus_lemmas().items():
@@ -269,10 +295,9 @@ def cmd_positions(args, sets, sentences, label):
     positions = hovers(sentences)
     texts = [h for h, _, _ in positions]
     print(f'{label}: {len(sentences)} sentences, {len(positions)} positions')
-    print('| Rule set | Positions found | First result a rule made | of those, not named by a form-of row | Multiword, made by a rule | Not named, after a marker / pronoun / particle |')
-    print('| --- | ---: | ---: | ---: | ---: | ---: |')
+    print('| Rule set | Positions found | First result as written or by a form-of row | A lemma a form-of row names | Linker or contraction only | Other rule reading | of which multiword | Other, after a marker / pronoun / particle |')
+    print('| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |')
     listed = {}
-    rng = random.Random(1)
     for set_name, transforms in sets.items():
         answers = run_batch(transforms, args.dictionary, texts)
         if args.dump:
@@ -280,7 +305,9 @@ def cmd_positions(args, sets, sentences, label):
                 for (text, word, previous), a in zip(positions, answers):
                     f.write(json.dumps({'word': word, 'previous': previous, 'text': text, 'results': a['results'][:3]},
                                        ensure_ascii=False) + '\n')
-        found = by_rule = unnamed = multi = 0
+        found = 0
+        kinds = collections.Counter()
+        multi = 0
         after = collections.Counter()
         items = []
         for (text, word, previous), a in zip(positions, answers):
@@ -288,36 +315,111 @@ def cmd_positions(args, sets, sentences, label):
                 continue
             found += 1
             first = a['results'][0]
-            trace = first['trace']
-            if not trace or all(d for _, d in trace):
-                continue
-            by_rule += 1
-            matched = first['matched']
-            if ' ' in matched:
-                multi += 1
-            verdict = judge(matched, first, lemmas.get(norm(matched), set()))
-            if verdict == 'rule, not named':
-                unnamed += 1
+            kind = classify(first, lemmas)
+            kinds[kind] += 1
+            if kind == 'other rule reading':
+                multi += ' ' in first['matched']
                 after[GROUP_OF.get(norm(previous), 'other')] += 1
-                items.append((matched, first['expression'], '|'.join(t for t, _ in trace), text[:60]))
+                items.append((first['matched'], first['expression'], '|'.join(t for t, _ in first['trace']), text[:60]))
         listed[set_name] = items
-        print(f"| {set_name} | {found} | {by_rule} | {unnamed} | {multi} | {after['marker']} / {after['pronoun']} / {after['particle']} |")
+        print(f"| {set_name} | {found} | {kinds['own entry or dictionary']} | {kinds['named lemma']} | {kinds['linker or contraction']} | "
+              f"{kinds['other rule reading']} | {multi} | {after['marker']} / {after['pronoun']} / {after['particle']} |")
     if args.show:
         for set_name, items in listed.items():
             groups = collections.Counter((m.lower(), e) for m, e, _, _ in items)
-            print(f'\n{set_name}: not named by a form-of row, by (matched, expression), most frequent first:')
+            print(f'\n{set_name}: other rule readings by (matched, expression), most frequent first:')
             for (m, e), c in groups.most_common(args.show):
                 trace = next(t for mm, ee, t, _ in items if mm.lower() == m and ee == e)
                 print(f'  {c}\t{m}\t{e}\t{trace}')
+            multis = collections.Counter((m.lower(), e) for m, e, _, _ in items if ' ' in m)
+            print(f'\n{set_name}: multiword other rule readings ({sum(multis.values())}):')
+            for (m, e), c in multis.most_common(args.show):
+                print(f'  {c}\t{m}\t{e}')
             if args.sample:
-                print(f'\n{set_name}: a random sample of {args.sample} of those positions (seed 1):')
+                rng = random.Random(1)
+                print(f'\n{set_name}: a random sample of {args.sample} other rule readings (seed 1), for judging by hand:')
                 for item in rng.sample(items, min(args.sample, len(items))):
                     print('  ' + '\t'.join(item))
 
 
+ASPECTS = {'PFV': 'completive', 'IPFV': 'progressive', 'LGSPEC1': 'contemplative',
+           'verb, completive': 'completive', 'verb, progressive': 'progressive', 'verb, contemplative': 'contemplative'}
+
+
+def cmd_traces(args, sets):
+    """Trace quality: for the sampled rows whose aspect is known, the share whose
+    shortest trace to the lemma names it. A completive of an -um- verb is its
+    infinitive (kumain), so rows whose form starts like an -um- infinitive
+    (C + um, or um + vowel) count only for the other aspects."""
+    rows = []
+    lines = (PACK / 'tests' / 'corpus.tsv').read_text(encoding='utf-8').splitlines()
+    lines += (PACK / 'tests' / 'gaps.tsv').read_text(encoding='utf-8').splitlines()
+    for line in lines:
+        cells = line.split('\t')
+        if line.startswith('#') or len(cells) != 6:
+            continue
+        feature = next((ASPECTS[f] for f in ASPECTS if f in cells[0].split(';') or f == cells[0]), None)
+        if feature is None:
+            continue
+        um = re.match(r'^(?:[bcdfghjklmnprstwy]|ng)um[aeiou]|^um[aeiou]', cells[2]) is not None
+        if feature == 'completive' and um:
+            continue
+        rows.append((cells[2], cells[3], feature))
+    print(f'{len(rows)} sampled rows with a completive, progressive or contemplative feature (the completive of -um- verbs left out)')
+    print('| Rule set | Rows reached | Shortest trace names the aspect |')
+    print('| --- | ---: | ---: |')
+    for set_name, transforms in sets.items():
+        answers = run_deinflect(transforms, [r[0] for r in rows])
+        reached = named = 0
+        for (form, lemma, aspect), a in zip(rows, answers):
+            paths = [r['trace'] for r in a['results'] if r['text'] == lemma]
+            if not paths:
+                continue
+            reached += 1
+            named += aspect in min(paths, key=len)
+        print(f'| {set_name} | {reached} | {named} ({100 * named / max(reached, 1):.1f}%) |')
+
+
+def sentence_rows():
+    rows = []
+    for line in (PACK / 'sources' / 'sentences.tsv').read_text(encoding='utf-8').splitlines():
+        if line.startswith('#') or not line.strip():
+            continue
+        sentence, word, lemma = line.split('\t')
+        rows.append((sentence, word, lemma, sentence[sentence.index(word):]))
+    return rows
+
+
+def cmd_sentences(args, sets):
+    rows = sentence_rows()
+    if args.dump:
+        Path(args.dump).write_text('\n'.join(h for _, _, _, h in rows) + '\n', encoding='utf-8')
+    for set_name, transforms in sets.items():
+        answers = run_batch(transforms, args.dictionary, [h for _, _, _, h in rows])
+        right = own = 0
+        lines = []
+        for (sentence, word, lemma, hover), a in zip(rows, answers):
+            first = a['results'][0] if a['results'] else None
+            ok = first is not None and norm(first['expression']) == norm(lemma)
+            # The word's own entry first (wty-tl-en defines many aspect forms
+            # as "progressive aspect of kumain"), with the lemma after it.
+            entry = (first is not None and not ok and norm(first['expression']) == norm(word)
+                     and any(norm(r['expression']) == norm(lemma) for r in a['results'][1:]))
+            right += ok
+            own += entry
+            got = f"{first['expression']} ({first['matched']}; {' > '.join(t for t, _ in first['trace']) or 'as written'})" if first else 'nothing'
+            second = ', '.join(r['expression'] for r in a['results'][1:4])
+            lines.append(f"| {word} | {lemma} | {got} | {second} | {'yes' if ok else 'own entry, then the lemma' if entry else 'no'} |")
+        print(f'\n{set_name}: the expected entry first for {right} of {len(rows)} words, the word\'s own entry first and the expected one after it for {own}\n')
+        if args.show:
+            print('| Word | Expected | First result (matched; trace) | Next results | Expected first |')
+            print('| --- | --- | --- | --- | --- |')
+            print('\n'.join(lines))
+
+
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('command', choices=['eval', 'frequent', 'tatoeba', 'text'])
+    parser.add_argument('command', choices=['eval', 'frequent', 'tatoeba', 'text', 'sentences', 'traces'])
     parser.add_argument('--cache', required=True)
     parser.add_argument('--dictionary', required=True)
     parser.add_argument('--work', default=None)
@@ -334,6 +436,10 @@ def main():
         cmd_eval(args, sets)
     elif args.command == 'frequent':
         cmd_frequent(args, sets)
+    elif args.command == 'traces':
+        cmd_traces(args, sets)
+    elif args.command == 'sentences':
+        cmd_sentences(args, sets)
     elif args.command == 'tatoeba':
         cmd_positions(args, sets, sentences_tatoeba(args), 'Tatoeba')
     else:

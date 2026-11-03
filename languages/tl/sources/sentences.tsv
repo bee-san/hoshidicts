@@ -1,0 +1,69 @@
+# Written for this pack (GPL-3.0-or-later): sentences with an inflected word, for the real-use lookups of README.md
+# (Measurements) and the Hachidori pack check. Columns: sentence, the word a reader hovers, and the entry a learner wants
+# first from wiktionary-to-yomitan's wty-tl-en: the infinitive where it has one, else the root, or the set phrase.
+# sentence	word	lemma
+Kumakain ang mga bata ng mansanas sa kusina.	Kumakain	kumain
+Nagluluto ang nanay ko ng adobo para sa hapunan.	Nagluluto	magluto
+Bukas ay magluluto kami ng sinigang.	magluluto	magluto
+Nagbabasa siya ng libro tuwing gabi.	Nagbabasa	magbasa
+Binasa ko na ang sulat na ipinadala mo.	Binasa	basahin
+Ipinadala ng kapatid ko ang pera kahapon.	Ipinadala	ipadala
+Nag-aaral ang kapatid ko ng medisina sa Maynila.	Nag-aaral	mag-aral
+Natutulog pa ang sanggol sa duyan.	Natutulog	matulog
+Matutulog na ako dahil pagod na pagod ako.	Matutulog	matulog
+Nakita ko si Ana sa palengke kaninang umaga.	Nakita	makita
+Hindi ko pa nakikita ang bagong bahay nila.	nakikita	makita
+Uminom ka muna ng tubig bago umalis.	Uminom	uminom
+Iniinom niya ang gamot tatlong beses isang araw.	Iniinom	inumin
+Kinain ng aso ang tinapay sa mesa.	Kinain	kainin
+Kinakain ng mga ibon ang mga buto.	Kinakain	kainin
+Sinulatan niya ang kanyang lola noong Pasko.	Sinulatan	sulatan
+Isinulat ko ang pangalan mo sa papel.	Isinulat	isulat
+Ibinigay niya sa akin ang susi ng kotse.	Ibinigay	ibigay
+Bibilhin namin ang bahay na iyon sa susunod na taon.	Bibilhin	bilhin
+Binili ng tatay ang bagong sapatos.	Binili	bilhin
+Pumupunta kami sa simbahan tuwing Linggo.	Pumupunta	pumunta
+Darating ang bisita mamayang hapon.	Darating	dumating
+Dumating na ba ang bus?	Dumating	dumating
+Tumatakbo ang mga bata sa parke.	Tumatakbo	tumakbo
+Naglalaro ang mga bata sa labas ng bahay.	Naglalaro	maglaro
+Nagtatrabaho ang kuya ko sa isang bangko.	Nagtatrabaho	magtrabaho
+Pinag-uusapan nila ang darating na halalan.	Pinag-uusapan	pag-usapan
+Nakikipag-usap siya sa kanyang guro.	Nakikipag-usap	makipag-usap
+Pinakamaganda ang tanawin sa bundok.	Pinakamaganda	maganda
+Napakaganda ng mga bulaklak sa hardin.	Napakaganda	maganda
+Magaganda ang mga damit na binili mo.	Magaganda	maganda
+Malalaki ang mga isda sa ilog.	Malalaki	malaki
+Kasingganda ng kanyang ina ang batang babae.	Kasingganda	maganda
+Magandang umaga po sa inyong lahat.	Magandang	magandang umaga
+Maraming salamat sa tulong mo.	Maraming	maraming salamat
+Ako'y masaya na nandito ka.	Ako'y	ako
+Ang bahay nila'y malapit sa dagat.	nila'y	nila
+Nakakatawa ang kuwento ng lolo ko.	Nakakatawa	tawa
+Nakakahiya ang ginawa niya kahapon.	Nakakahiya	hiya
+Gaano katagal ang biyahe papuntang Baguio?	katagal	tagal
+Kakarating lang namin galing sa probinsya.	Kakarating	dating
+Nakarating na sila sa paliparan.	Nakarating	dating
+Makakatulong ito sa iyong pag-aaral.	Makakatulong	tulong
+Ang pag-aaral ng wika ay mahalaga.	pag-aaral	aral
+Ang kagandahan ng lugar ay nakakabighani.	kagandahan	ganda
+Naiintindihan mo ba ang sinasabi ko?	Naiintindihan	maintindihan
+Nauunawaan ko na ang problema.	Nauunawaan	unawa
+Hindi ko maalala ang pangalan niya.	maalala	alala
+Naaalala mo pa ba ang ating unang pagkikita?	Naaalala	alala
+Tinanong ako ng pulis kung saan ako nakatira.	Tinanong	tanungin
+Tinatawag siya ng kanyang ina.	Tinatawag	tawag
+Ginagawa ko ang aking takdang-aralin.	Ginagawa	gawin
+Ginawa niya ang lahat para sa pamilya.	Ginawa	gawin
+Kinuha ng bata ang laruan sa kahon.	Kinuha	kunin
+Hinahanap ko ang aking salamin.	Hinahanap	hanapin
+Nahanap mo na ba ang susi?	Nahanap	hanap
+Nagsisinungaling siya sa atin.	Nagsisinungaling	magsinungaling
+Pinapakain niya ang mga manok tuwing umaga.	Pinapakain	pakainin
+Nagpapasalamat kami sa inyong pagdalo.	Nagpapasalamat	salamat
+Ipinanganak siya sa Cebu noong 1990.	Ipinanganak	manganak
+Sumasayaw ang mga dalaga sa pista.	Sumasayaw	sumayaw
+Umaawit ang koro sa simbahan.	Umaawit	umawit
+Pupunta tayo sa dagat sa Sabado.	Pupunta	pumunta
+Nagkita kami sa harap ng sinehan.	Nagkita	kita
+Nagmamadali siyang umalis ng bahay.	Nagmamadali	magmadali
