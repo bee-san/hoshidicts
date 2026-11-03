@@ -4,7 +4,7 @@
   "revision": "1",
   "sequenced": true,
   "author": "hoshidicts",
-  "description": "A tiny Serbo-Croatian dictionary written for the sh pack's lookup tests (no third-party data).",
+  "description": "A tiny Serbo-Croatian dictionary written for the sh pack's lookup tests (no third-party data). Like wty-sh-en, it leaves the rules column empty.",
   "sourceLanguage": "sh",
   "targetLanguage": "en"
 }

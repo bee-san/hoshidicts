@@ -197,6 +197,7 @@ MUTATIONS = [
     ('pronoun time removed', drop_whole({'time'})),
     ('processor: Cyrillic Џ → D', processor_map('cyrillicToLatin', 'Џ', 'D')),
     ('wordInternal null (the apostrophe separates words)', word_internal_null),
+    ('untaggedTerms filter (the untagged dictionary meets no rule)', lambda t, lang: (lang['lookup'].update(untaggedTerms='filter'), 1)[1]),
     ('rename transform id ptcp-past-masc-sg', rename('ptcp-past-masc-sg')),
     ('rename transform id n-dat-loc-sg-voc-sg', rename('n-dat-loc-sg-voc-sg')),
 ]

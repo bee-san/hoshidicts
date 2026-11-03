@@ -5,7 +5,7 @@
 // imports a dictionary into one engine (in-memory storage, entries and index
 // paged as Hachidori loads a large dictionary) and times hdw_lookup on texts:
 //
-//   node languages/sh/sources/wasm-measure.mjs <hachidori checkout> <dictionary.zip> [texts] [instances]
+//   node languages/sh/sources/wasm-measure.mjs <hachidori checkout> <dictionary.zip> [texts] [instances] [pack dir]
 //
 // texts defaults to sources/benchmark-words.txt (one text per line, each the
 // rest of a sentence from an inflected word); each is looked up in 6 passes
@@ -16,13 +16,13 @@ import {fileURLToPath} from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const pack = dirname(here);
-const [root, zip, textsFile = join(here, 'benchmark-words.txt'), n = '10'] = process.argv.slice(2);
+const [root, zip, textsFile = join(here, 'benchmark-words.txt'), n = '10', packDir = pack] = process.argv.slice(2);
 if (root === undefined || zip === undefined) {
     console.error('usage: node wasm-measure.mjs <hachidori checkout> <dictionary.zip> [texts] [instances]');
     process.exit(2);
 }
-const languageJson = readFileSync(join(pack, 'language.json'), 'utf8');
-const transformsJson = readFileSync(join(pack, 'transforms.json'), 'utf8');
+const languageJson = readFileSync(join(packDir, 'language.json'), 'utf8');
+const transformsJson = readFileSync(join(packDir, 'transforms.json'), 'utf8');
 const texts = readFileSync(textsFile, 'utf8').split('\n').filter((l) => l.trim() !== '');
 const quantile = (xs, f) => {
     const s = [...xs].sort((a, b) => a - b);
