@@ -1,0 +1,7 @@
+# GPL-3.0-or-later; Copyright (C) 2023-2026 Yomitan Authors; 2020-2022 Yomichan Authors
+# https://github.com/yomidevs/yomitan/blob/d3c54c10264673eca0d66b970ef74cd5c8b048e3/test/language/irish-transforms.test.js
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+nouns	1	dtriail	triail	n	eclipsis
+nouns	1	ngairdín	gairdín	n	eclipsis
+nouns	1	ndualgas	dualgas	n	eclipsis
+invalid nouns	0	nualgas	dualgas	n	eclipsis

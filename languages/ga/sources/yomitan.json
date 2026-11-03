@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "conditions": {
+    "v": {
+      "name": "Verb",
+      "isDictionaryForm": true,
+      "subConditions": ["v_phr"]
+    },
+    "v_phr": {
+      "name": "Phrasal verb",
+      "isDictionaryForm": true
+    },
+    "n": {
+      "name": "Noun",
+      "isDictionaryForm": true,
+      "subConditions": ["np", "ns"]
+    },
+    "np": {
+      "name": "Noun plural",
+      "isDictionaryForm": true
+    },
+    "ns": {
+      "name": "Noun singular",
+      "isDictionaryForm": true
+    },
+    "adj": {
+      "name": "Adjective",
+      "isDictionaryForm": true
+    },
+    "adv": {
+      "name": "Adverb",
+      "isDictionaryForm": true
+    }
+  },
+  "transforms": [
+    {
+      "id": "eclipsis",
+      "name": "eclipsis",
+      "description": "eclipsis form of a noun",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "mb", "deinflected": "b", "conditionsIn": ["n"], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "gc", "deinflected": "c", "conditionsIn": ["n"], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "nd", "deinflected": "d", "conditionsIn": ["n"], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "bhf", "deinflected": "f", "conditionsIn": ["n"], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "ng", "deinflected": "g", "conditionsIn": ["n"], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "bp", "deinflected": "p", "conditionsIn": ["n"], "conditionsOut": ["n"]},
+        {"type": "prefix", "inflected": "dt", "deinflected": "t", "conditionsIn": ["n"], "conditionsOut": ["n"]}
+      ]
+    }
+  ]
+}
