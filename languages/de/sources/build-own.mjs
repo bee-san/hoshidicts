@@ -704,7 +704,10 @@ for (const [from, to] of UMLAUTS) {
     const extra = {stemMinLength: 1, stemChange: umlaut(from, to)};
     noun('plural', 'e', '', PLURAL_IN, NOUN_OUT, extra);
     noun('plural', 'er', '', PLURAL_IN, NOUN_OUT, extra);
-    for (const end of ['er', 'el', 'en']) {  // Mütter, Äpfel, Gärten
+    // Mütter, Äpfel, Gärten; no noun in -auer, -auel or -auen has an umlaut
+    // plural (Bauern, Mauern), so äu is not changed before these endings.
+    if (from === 'äu') { continue; }
+    for (const end of ['er', 'el', 'en']) {
         noun('plural', end, end, PLURAL_IN, NOUN_OUT, extra);
     }
 }

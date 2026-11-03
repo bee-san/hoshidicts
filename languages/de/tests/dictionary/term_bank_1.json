@@ -51,5 +51,12 @@
   ["kündigen", "", "v", "v", 0, ["to give notice"], 50, ""],
   ["hindern", "", "v", "v", 0, ["to hinder"], 51, ""],
   ["hoch", "", "adj", "adj", 0, ["high"], 52, ""],
-  ["ander", "", "adj", "adj", 0, ["other"], 53, ""]
+  ["ander", "", "adj", "adj", 0, ["other"], 53, ""],
+  ["anlächeln", "", "v", "v", 0, ["to smile at"], 54, ""],
+  ["lächeln", "", "v", "v", 0, ["to smile"], 55, ""],
+  ["Gut", "", "n", "n", 0, ["estate; goods"], 56, ""],
+  ["letzte", "", "adj", "adj", 0, ["last"], 57, ""],
+  ["Letzt", "", "n", "n", 0, ["(only in zu guter Letzt) end"], 58, ""],
+  ["anlächelnd", "", "non-lemma", "v", 0, [["anlächeln", ["present participle"]]], 59, ""],
+  ["gehört", "", "non-lemma", "v", 0, [["gehören", ["third-person singular present"]], ["hören", ["past participle"]]], 60, ""]
 ]

@@ -174,6 +174,11 @@ nouns	1	Leuten	Leute	n	dative-plural
 nouns	1	Bäume	Baum	n	plural
 nouns	1	Mütter	Mutter	n	plural
 nouns	1	Äpfel	Apfel	n	plural
+nouns	1	Väter	Vater	n	plural
+nouns	1	Töchter	Tochter	n	plural
+nouns	1	Brüder	Bruder	n	plural
+nouns	1	Vögel	Vogel	n	plural
+nouns	1	Mäuse	Maus	n	plural
 nouns	1	Äpfeln	Apfel	n	plural|dative-plural
 nouns	1	Gärten	Garten	n	plural
 nouns	1	Öfen	Ofen	n	plural
@@ -187,6 +192,11 @@ nouns	1	Busse	Bus	n	plural
 nouns	1	Kürbisse	Kürbis	n	plural
 nouns	1	Museen	Museum	n	plural
 nouns	1	Themen	Thema	n	plural
+nouns	1	Rhythmen	Rhythmus	n	plural
+nouns	1	Zyklen	Zyklus	n	plural
+nouns	1	Mythen	Mythos	n	plural
+nouns	1	Kosmen	Kosmos	n	plural
+nouns	1	Viren	Virus	n	plural
 nouns	1	Risiken	Risiko	n	plural
 nouns	1	Krisen	Krise	n	plural
 nouns	1	Materialien	Material	n	plural
@@ -294,3 +304,15 @@ negatives	0	aufschiebe	aufschauen	*	*
 negatives	0	verlässt	verlesen	*	*
 negatives	0	der Hand hin.	hindern	*	*
 negatives	0	die Hand hin.	hindien	*	*
+negatives	0	machest	machen	v	present-du
+negatives	0	machet	machen	v	present-er
+negatives	0	Kunde	Kunden	v	*
+negatives	0	frei	freien	v	*
+negatives	0	kommt an	ankommen	*	*
+negatives	0	Lohn	Loh	*	*
+negatives	0	Mädchenhaare	Madchenhaar	*	*
+negatives	0	Mann	Man	*	*
+negatives	0	hab'	Hab	*	*
+negatives	0	weisst	weis	*	*
+negatives	0	machest	mach	*	*
+negatives	0	ehre	eher	*	*

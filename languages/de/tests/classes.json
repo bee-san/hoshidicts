@@ -2177,14 +2177,10 @@
       [224, 246],
       [248, 254]
     ],
-    "transforms[23].rules[19].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 116],
-      [118, 120],
-      [122, 122],
-      [223, 223]
+    "transforms[23].rules[19].stemEndsWith": [
+      [101, 101],
+      [108, 108],
+      [114, 114]
     ],
     "transforms[23].rules[20].stemCharacters": [
       [45, 45],
@@ -2203,15 +2199,6 @@
       [224, 246],
       [248, 254]
     ],
-    "transforms[23].rules[20].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 116],
-      [118, 120],
-      [122, 122],
-      [223, 223]
-    ],
     "transforms[23].rules[21].stemCharacters": [
       [45, 45],
       [48, 57],
@@ -2228,15 +2215,6 @@
       [97, 122],
       [224, 246],
       [248, 254]
-    ],
-    "transforms[23].rules[21].stemChange.between": [
-      [98, 100],
-      [102, 104],
-      [106, 110],
-      [112, 116],
-      [118, 120],
-      [122, 122],
-      [223, 223]
     ],
     "transforms[23].rules[22].stemCharacters": [
       [45, 45],
@@ -2256,9 +2234,15 @@
       [248, 254]
     ],
     "transforms[23].rules[22].stemEndsWith": [
+      [97, 97],
       [101, 101],
-      [108, 108],
-      [114, 114]
+      [105, 105],
+      [111, 111],
+      [117, 117],
+      [121, 121],
+      [228, 228],
+      [246, 246],
+      [252, 252]
     ],
     "transforms[23].rules[23].stemCharacters": [
       [45, 45],
@@ -2310,17 +2294,6 @@
       [97, 122],
       [224, 246],
       [248, 254]
-    ],
-    "transforms[23].rules[25].stemEndsWith": [
-      [97, 97],
-      [101, 101],
-      [105, 105],
-      [111, 111],
-      [117, 117],
-      [121, 121],
-      [228, 228],
-      [246, 246],
-      [252, 252]
     ],
     "transforms[23].rules[26].stemCharacters": [
       [45, 45],
@@ -2543,6 +2516,11 @@
       [224, 246],
       [248, 254]
     ],
+    "transforms[23].rules[38].stemEndsWith": [
+      [100, 100],
+      [107, 107],
+      [116, 116]
+    ],
     "transforms[23].rules[39].stemCharacters": [
       [45, 45],
       [48, 57],
@@ -2559,6 +2537,10 @@
       [97, 122],
       [224, 246],
       [248, 254]
+    ],
+    "transforms[23].rules[39].stemEndsWith": [
+      [115, 115],
+      [120, 120]
     ],
     "transforms[23].rules[40].stemCharacters": [
       [45, 45],
@@ -2594,11 +2576,6 @@
       [224, 246],
       [248, 254]
     ],
-    "transforms[23].rules[41].stemEndsWith": [
-      [100, 100],
-      [107, 107],
-      [116, 116]
-    ],
     "transforms[23].rules[42].stemCharacters": [
       [45, 45],
       [48, 57],
@@ -2616,10 +2593,6 @@
       [224, 246],
       [248, 254]
     ],
-    "transforms[23].rules[42].stemEndsWith": [
-      [115, 115],
-      [120, 120]
-    ],
     "transforms[23].rules[43].stemCharacters": [
       [45, 45],
       [48, 57],
@@ -2636,6 +2609,11 @@
       [97, 122],
       [224, 246],
       [248, 254]
+    ],
+    "transforms[23].rules[43].stemEndsWith": [
+      [108, 108],
+      [112, 112],
+      [122, 122]
     ],
     "transforms[23].rules[44].stemCharacters": [
       [45, 45],
@@ -2684,62 +2662,6 @@
       [64256, 64262]
     ],
     "transforms[23].rules[46].stemStartsWith": [
-      [97, 122],
-      [224, 246],
-      [248, 254]
-    ],
-    "transforms[23].rules[46].stemEndsWith": [
-      [108, 108],
-      [112, 112],
-      [122, 122]
-    ],
-    "transforms[23].rules[47].stemCharacters": [
-      [45, 45],
-      [48, 57],
-      [65, 90],
-      [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [768, 879],
-      [7838, 7838],
-      [64256, 64262]
-    ],
-    "transforms[23].rules[47].stemStartsWith": [
-      [97, 122],
-      [224, 246],
-      [248, 254]
-    ],
-    "transforms[23].rules[48].stemCharacters": [
-      [45, 45],
-      [48, 57],
-      [65, 90],
-      [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [768, 879],
-      [7838, 7838],
-      [64256, 64262]
-    ],
-    "transforms[23].rules[48].stemStartsWith": [
-      [97, 122],
-      [224, 246],
-      [248, 254]
-    ],
-    "transforms[23].rules[49].stemCharacters": [
-      [45, 45],
-      [48, 57],
-      [65, 90],
-      [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [768, 879],
-      [7838, 7838],
-      [64256, 64262]
-    ],
-    "transforms[23].rules[49].stemStartsWith": [
       [97, 122],
       [224, 246],
       [248, 254]
@@ -4926,6 +4848,10 @@
         ["Bäume", "bäume"],
         ["Mütter", "mütter"],
         ["Äpfel", "äpfel"],
+        ["Väter", "väter"],
+        ["Töchter", "töchter"],
+        ["Brüder", "brüder"],
+        ["Mäuse", "mäuse"],
         ["Äpfeln", "äpfeln"],
         ["Gärten", "gärten"],
         ["Öfen", "öfen"],
@@ -4939,6 +4865,11 @@
         ["Kürbisse", "kürbisse"],
         ["Museen", "museen"],
         ["Themen", "themen"],
+        ["Rhythmen", "rhythmen"],
+        ["Zyklen", "zyklen"],
+        ["Mythen", "mythen"],
+        ["Kosmen", "kosmen"],
+        ["Viren", "viren"],
         ["Risiken", "risiken"],
         ["Krisen", "krisen"],
         ["Materialien", "materialien"],
@@ -5039,6 +4970,15 @@
         ["verlässt", "verlässt"],
         ["der Hand hin.", "der hand hin."],
         ["die Hand hin.", "die hand hin."],
+        ["machet", "machet"],
+        ["Kunde", "kunde"],
+        ["frei", "frei"],
+        ["kommt an", "kommt an"],
+        ["Lohn", "lohn"],
+        ["Mädchenhaare", "mädchenhaare"],
+        ["Mann", "mann"],
+        ["hab'", "hab'"],
+        ["ehre", "ehre"],
         ["räum den Tisch auf", "räum den tisch auf"],
         ["krankesten", "krankesten"],
         ["schwuligem", "schwuligem"],
@@ -5108,6 +5048,9 @@
         ["FRAU GRUBACH", "frau grubach"],
         ["KÜNDIGUNG DES ADVOKATEN", "kündigung des advokaten"],
         ["höhern Beamten", "höhern beamten"],
+        ["gute Laune", "gute laune"],
+        ["letzten Sommer", "letzten sommer"],
+        ["gehört das?", "gehört das?"],
         ["Sie ist heute früh aufgestanden und hat ihre Freunde angerufen.", "sie ist heute früh aufgestanden und hat ihre freunde angerufen."],
         ["aufstehen", "aufstehen"]
       ]
@@ -7061,6 +7004,10 @@
         ["Bäume", "Bäume"],
         ["Mütter", "Mütter"],
         ["Äpfel", "Äpfel"],
+        ["Väter", "Väter"],
+        ["Töchter", "Töchter"],
+        ["Brüder", "Brüder"],
+        ["Mäuse", "Mäuse"],
         ["Äpfeln", "Äpfeln"],
         ["Gärten", "Gärten"],
         ["Öfen", "Öfen"],
@@ -7074,6 +7021,11 @@
         ["Kürbisse", "Kürbisse"],
         ["Museen", "Museen"],
         ["Themen", "Themen"],
+        ["Rhythmen", "Rhythmen"],
+        ["Zyklen", "Zyklen"],
+        ["Mythen", "Mythen"],
+        ["Kosmen", "Kosmen"],
+        ["Viren", "Viren"],
         ["Risiken", "Risiken"],
         ["Krisen", "Krisen"],
         ["Materialien", "Materialien"],
@@ -7174,6 +7126,15 @@
         ["verlässt", "Verlässt"],
         ["der Hand hin.", "Der Hand hin."],
         ["die Hand hin.", "Die Hand hin."],
+        ["machet", "Machet"],
+        ["Kunde", "Kunde"],
+        ["frei", "Frei"],
+        ["kommt an", "Kommt an"],
+        ["Lohn", "Lohn"],
+        ["Mädchenhaare", "Mädchenhaare"],
+        ["Mann", "Mann"],
+        ["hab'", "Hab'"],
+        ["ehre", "Ehre"],
         ["räum den Tisch auf", "Räum den Tisch auf"],
         ["krankesten", "Krankesten"],
         ["schwuligem", "Schwuligem"],
@@ -7243,6 +7204,9 @@
         ["FRAU GRUBACH", "FRAU GRUBACH"],
         ["KÜNDIGUNG DES ADVOKATEN", "KÜNDIGUNG DES ADVOKATEN"],
         ["höhern Beamten", "Höhern Beamten"],
+        ["gute Laune", "Gute Laune"],
+        ["letzten Sommer", "Letzten Sommer"],
+        ["gehört das?", "Gehört das?"],
         ["Sie ist heute früh aufgestanden und hat ihre Freunde angerufen.", "Sie ist heute früh aufgestanden und hat ihre Freunde angerufen."],
         ["aufstehen", "Aufstehen"]
       ]
@@ -9196,6 +9160,10 @@
         ["Bäume", "bäume"],
         ["Mütter", "mütter"],
         ["Äpfel", "äpfel"],
+        ["Väter", "väter"],
+        ["Töchter", "töchter"],
+        ["Brüder", "brüder"],
+        ["Mäuse", "mäuse"],
         ["Äpfeln", "äpfeln"],
         ["Gärten", "gärten"],
         ["Öfen", "öfen"],
@@ -9209,6 +9177,11 @@
         ["Kürbisse", "kürbisse"],
         ["Museen", "museen"],
         ["Themen", "themen"],
+        ["Rhythmen", "rhythmen"],
+        ["Zyklen", "zyklen"],
+        ["Mythen", "mythen"],
+        ["Kosmen", "kosmen"],
+        ["Viren", "viren"],
         ["Risiken", "risiken"],
         ["Krisen", "krisen"],
         ["Materialien", "materialien"],
@@ -9309,6 +9282,15 @@
         ["verlässt", "verlässt"],
         ["der Hand hin.", "der hand hin."],
         ["die Hand hin.", "die hand hin."],
+        ["machet", "machet"],
+        ["Kunde", "kunde"],
+        ["frei", "frei"],
+        ["kommt an", "kommt an"],
+        ["Lohn", "lohn"],
+        ["Mädchenhaare", "mädchenhaare"],
+        ["Mann", "mann"],
+        ["hab'", "hab'"],
+        ["ehre", "ehre"],
         ["räum den Tisch auf", "räum den tisch auf"],
         ["krankesten", "krankesten"],
         ["schwuligem", "schwuligem"],
@@ -9378,6 +9360,9 @@
         ["FRAU GRUBACH", "frau grubach"],
         ["KÜNDIGUNG DES ADVOKATEN", "kündigung des advokaten"],
         ["höhern Beamten", "höhern beamten"],
+        ["gute Laune", "gute laune"],
+        ["letzten Sommer", "letzten sommer"],
+        ["gehört das?", "gehört das?"],
         ["Sie ist heute früh aufgestanden und hat ihre Freunde angerufen.", "sie ist heute früh aufgestanden und hat ihre freunde angerufen."],
         ["aufstehen", "aufstehen"]
       ]
@@ -11331,6 +11316,10 @@
         ["Bäume", "Bäume"],
         ["Mütter", "Mütter"],
         ["Äpfel", "Äpfel"],
+        ["Väter", "Väter"],
+        ["Töchter", "Töchter"],
+        ["Brüder", "Brüder"],
+        ["Mäuse", "Mäuse"],
         ["Äpfeln", "Äpfeln"],
         ["Gärten", "Gärten"],
         ["Öfen", "Öfen"],
@@ -11344,6 +11333,11 @@
         ["Kürbisse", "Kürbisse"],
         ["Museen", "Museen"],
         ["Themen", "Themen"],
+        ["Rhythmen", "Rhythmen"],
+        ["Zyklen", "Zyklen"],
+        ["Mythen", "Mythen"],
+        ["Kosmen", "Kosmen"],
+        ["Viren", "Viren"],
         ["Risiken", "Risiken"],
         ["Krisen", "Krisen"],
         ["Materialien", "Materialien"],
@@ -11444,6 +11438,15 @@
         ["verlässt", "Verlässt"],
         ["der Hand hin.", "Der Hand hin."],
         ["die Hand hin.", "Die Hand hin."],
+        ["machet", "Machet"],
+        ["Kunde", "Kunde"],
+        ["frei", "Frei"],
+        ["kommt an", "Kommt an"],
+        ["Lohn", "Lohn"],
+        ["Mädchenhaare", "Mädchenhaare"],
+        ["Mann", "Mann"],
+        ["hab'", "Hab'"],
+        ["ehre", "Ehre"],
         ["räum den Tisch auf", "Räum den Tisch auf"],
         ["krankesten", "Krankesten"],
         ["schwuligem", "Schwuligem"],
@@ -11513,6 +11516,9 @@
         ["FRAU GRUBACH", "FRAU GRUBACH"],
         ["KÜNDIGUNG DES ADVOKATEN", "KÜNDIGUNG DES ADVOKATEN"],
         ["höhern Beamten", "Höhern Beamten"],
+        ["gute Laune", "Gute Laune"],
+        ["letzten Sommer", "Letzten Sommer"],
+        ["gehört das?", "Gehört das?"],
         ["Sie ist heute früh aufgestanden und hat ihre Freunde angerufen.", "Sie ist heute früh aufgestanden und hat ihre Freunde angerufen."],
         ["aufstehen", "Aufstehen"]
       ]
