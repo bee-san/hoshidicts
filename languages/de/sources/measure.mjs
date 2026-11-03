@@ -77,9 +77,9 @@
 //   (two or more letters), looked up with the pack and with a copy of the
 //   pack without the capitalizeWord processor; prints the first results
 //   with a definition that differ.
-// separated: the dictionary's form-of rows of a verb form and a separable
-//   particle that name a verb starting with that particle (ging zu ->
-//   zugehen), and, in the four texts, the clauses that start with such a
+// separated: the two-word forms, a verb form and a separable particle, whose
+//   form-of references name a verb starting with that particle (ging zu ->
+//   zugehen), counted as forms and as references, and, in the four texts, the clauses that start with such a
 //   verb form and end with its particle: how many fit in 16 code points.
 // diff: the hovers of hovers-<name>.txt whose first result with a
 //   definition differs between two rule sets, grouped by word and the two
@@ -238,19 +238,12 @@ if (mode === 'frequent') {
     const all = lines(join(inputs, 'frequent.tsv'));
     const words = all.map(([, count, cased]) => [cased, count]);
     const total = all.reduce((n, [, c]) => n + Number(c), 0);
+    // The whole list (50,000 words, measure-inputs.py's frequency-full.tsv)
+    // gives the lemma frequencies.
     const counts = new Map();
-    for (const line of readFileSync(join(dirname(inputs), 'inputs', 'frequent.tsv'), 'utf8').split('\n')) {
-        const [word, count] = line.split('\t');
+    for (const [word, count] of lines(join(inputs, 'frequency-full.tsv'))) {
         if (word) { counts.set(word, Number(count)); }
     }
-    // The whole list (50,000 words) gives the lemma frequencies, when it is there.
-    const fullList = join(inputs, 'frequency-full.tsv');
-    try {
-        for (const line of readFileSync(fullList, 'utf8').split('\n')) {
-            const [word, count] = line.split(' ');
-            if (word) { counts.set(word, Number(count)); }
-        }
-    } catch { /* only the 10,000 words */ }
     const frequency = (expression) => counts.get(lower(expression)) ?? 0;
     for (const file of rest) {
         let flagged = 0, flaggedTokens = 0;
@@ -306,13 +299,15 @@ if (mode === 'frequent') {
     for (const [key, n] of [...changes].sort((a, b) => b[1] - a[1])) { console.log(`   ${n}\t${key}`); }
 } else if (mode === 'separated') {
     const separatedRows = new Map();  // "form particle" -> lemma
+    let references = 0;
     for (const [form, lemma, rules = ''] of lines(join(inputs, 'redirects.tsv'))) {
         const parts = form.split(' ');
         if (parts.length === 2 && PARTICLES.has(parts[1]) && rules.split(' ').includes('v') && lemma.startsWith(parts[1])) {
             separatedRows.set(form, lemma);
+            ++references;
         }
     }
-    console.log(`${separatedRows.size} form-of rows of a verb form and a separable particle that name a verb starting with the particle`);
+    console.log(`${separatedRows.size} two-word forms, a verb form and a separable particle, whose form-of references (${references}) name a verb starting with the particle`);
     const end = /[.!?,;:…]/u;
     let total = 0, fit = 0;
     for (const name of ['tatoeba', 'pg69327', 'pg22367', 'pg5323']) {

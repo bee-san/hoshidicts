@@ -22,7 +22,9 @@ Writes into <out dir>:
   its sentence, as a host passes it to a lookup, and the word itself;
   hovers-frequent.txt and words-frequent.txt hold the 10,000 frequent words
   as German writes them (frequent.tsv's third column), one per line, so that
-  `measure.mjs diff` compares rule sets on them too.
+  `measure.mjs diff` compares rule sets on them too;
+- frequency-full.tsv: the whole frequency list (word and count, tab
+  separated), from which `measure.mjs rare` takes the frequency of a lemma.
 
 A book's text is the part between its *** START and *** END lines, split into
 paragraphs at blank lines and into sentences after . ! ? or … (with any
@@ -112,6 +114,11 @@ with open(frequency, encoding='utf-8') as f, open(join(out_dir, 'frequent.tsv'),
         else:
             cased = word
         out.write(f'{word}\t{count}\t{cased}\n')
+with open(frequency, encoding='utf-8') as f, open(join(out_dir, 'frequency-full.tsv'), 'w', encoding='utf-8') as out:
+    for line in f:
+        parts = line.split()
+        if len(parts) == 2:
+            out.write(f'{parts[0]}\t{parts[1]}\n')
 with open(join(out_dir, 'frequent.tsv'), encoding='utf-8') as f:
     cased_words = [line.rstrip('\n').split('\t')[2] for line in f]
 for name in ('hovers-frequent.txt', 'words-frequent.txt'):
