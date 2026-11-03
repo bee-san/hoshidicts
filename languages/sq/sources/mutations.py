@@ -24,7 +24,7 @@ ROOT = os.getcwd()
 PACK = os.path.join(ROOT, 'languages', 'sq')
 CONSTRAINTS = ['stemCharacters', 'stemMinLength', 'stemEndsWith', 'stemNotEndsWith', 'stemStartsWith',
                'stemNotStartsWith', 'stemContains', 'stemStartsWithText', 'stemNotStartsWithText']
-WHOLE_WORD_VERBS = {'jam', 'kam', 'ha', 'pi', 'di', 'rri', 'fle', 'lë', 'vë', 'zë', 'bie', 'dua', 'vete'}
+WHOLE_WORD_VERBS = {'jam', 'kam', 'ha', 'pi', 'di', 'rri', 'fle', 'lë', 'vë', 'zë', 'nxë', 'përzë', 'kundërvë', 'bashkëvë', 'bie', 'dua', 'vete'}
 
 
 def write_json(path, data):

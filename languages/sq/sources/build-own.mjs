@@ -132,7 +132,7 @@ function circumfix(id, prefixes, suffixes, conditionsIn, conditionsOut, extra = 
 // di, rri, fle, lë, vë, zë, bie, dua, vete) have endings that end many other
 // words (dalësh is not da- + lësh), and almost no compounds: their forms are
 // whole words.
-const WHOLE_WORD_VERBS = new Set(['jam', 'kam', 'ha', 'pi', 'di', 'rri', 'fle', 'lë', 'vë', 'zë', 'bie', 'dua', 'vete']);
+const WHOLE_WORD_VERBS = new Set(['jam', 'kam', 'ha', 'pi', 'di', 'rri', 'fle', 'lë', 'vë', 'zë', 'nxë', 'përzë', 'kundërvë', 'bashkëvë', 'bie', 'dua', 'vete']);
 function irregular(id, forms, lemma, conditionsIn, conditionsOut = ['v']) {
     for (const form of forms) {
         if ([...form].length >= 4 && !WHOLE_WORD_VERBS.has(lemma)) {
@@ -867,6 +867,12 @@ for (const [lemma, i, aor, ptcp, imp] of [
     ['lë', 'li', ['lashë', 'le', 'la', 'lamë', 'latë', 'lanë'], 'lënë', 'lër'],
     ['vë', 'vi', ['vura', 'vure', 'vuri', 'vumë', 'vutë', 'vunë'], 'vënë', 'vër'],
     ['zë', 'zi', ['zura', 'zure', 'zuri', 'zumë', 'zutë', 'zunë'], 'zënë', 'zër'],
+    // nxë (learn) and the compounds of vë and zë, which Yomitan's rules reach
+    // and the whole-word forms of vë and zë do not.
+    ['nxë', 'nxi', ['nxura', 'nxure', 'nxuri', 'nxumë', 'nxutë', 'nxunë'], 'nxënë', 'nxër'],
+    ['përzë', 'përzi', ['përzura', 'përzure', 'përzuri', 'përzumë', 'përzutë', 'përzunë'], 'përzënë', 'përzër'],
+    ['kundërvë', 'kundërvi', ['kundërvura', 'kundërvure', 'kundërvuri', 'kundërvumë', 'kundërvutë', 'kundërvunë'], 'kundërvënë', 'kundërvër'],
+    ['bashkëvë', 'bashkëvi', ['bashkëvura', 'bashkëvure', 'bashkëvuri', 'bashkëvumë', 'bashkëvutë', 'bashkëvunë'], 'bashkëvënë', 'bashkëvër'],
 ]) {
     const s = lemma;
     verb(lemma, {
@@ -877,7 +883,7 @@ for (const [lemma, i, aor, ptcp, imp] of [
         'ptcp': ptcp, 'imp-2sg': imp,
         'np-pres-1sg': `${i}hem`, 'np-pres-2sg': `${i}hesh`, 'np-pres-3sg': `${i}het`, 'np-pres-1pl': `${i}hemi`, 'np-pres-2pl': `${i}heni`, 'np-pres-3pl': `${i}hen`,
         'np-impf-3sg': `${i}hej`, 'np-impf-3pl': `${i}heshin`,
-        'np-aor-3sg': {lë: 'la', vë: 'vu', zë: 'zu'}[lemma],
+        'np-aor-3sg': {lë: 'la', vë: 'vu', zë: 'zu', nxë: 'nxu', përzë: 'përzu', kundërvë: 'kundërvu', bashkëvë: 'bashkëvu'}[lemma],
     });
 }
 verb('bie', {

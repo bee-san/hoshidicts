@@ -637,3 +637,6 @@ negatives (constructed: cl-na stemCharacters)	0	e dotna	e dot	*	*
 negatives (constructed: cl-na stemMinLength)	0	bna	b	*	*
 negatives (constraint)	0	u hap	hapj	*	*
 negatives (constraint)	0	u bë	bëem	*	*
+present	1	nxëmë	nxë	v	pres-1pl
+present	1	përzënë	përzë	v	pres-3pl
+aorist	1	kundërvuri	kundërvë	v	aor-3sg
