@@ -216,9 +216,10 @@ file is measured with every option on and with the defaults.
 
    - The final set is the own set with provenance marks, so its numbers are
      the own set's.
-   - The union reaches two more sample rows than the final set (`thithëës`
-     and `mendjve`, UniMorph misspellings of `thithës` and `mendjeve`) and
-     breaks 156 negatives.
+   - The union reaches two more sample rows than the final set, `ikinim`
+     and `ikiët`: UniMorph errors that give iki a vowel stem, which
+     Yomitan's `nim` → `` and `ët` → `` reach because they have no stem
+     class. It breaks 156 negatives.
    - `cases.tsv` holds text without ë and ç, which only the optional
      processor reads, so with the defaults no rule set reaches it.
    - With every option on, the processor writes ë for e and so passes 4
