@@ -287,3 +287,59 @@ negatives	0	바라야만	바르다	*	*
 negatives	0	바랐자	바르다	*	*
 negatives	0	자라야겠어요	자르다	*	*
 negatives	0	자랐었다	자르다	*	*
+plain stems	1	하곤	하다	v	*
+plain stems	1	가곤	가다	v	*
+plain stems	1	하고자	하다	v	*
+plain stems	1	하듯이	하다	v	*
+plain stems	1	하되	하다	v	*
+plain stems	1	가는가	가다	v	*
+plain stems	1	하더라도	하다	v	*
+plain stems	1	보고도	보다	v	*
+plain stems	1	가다가는	가다	v	*
+plain stems	1	오려나	오다	v	*
+plain stems	1	하려는	하다	v	*
+plain stems	1	보려던	보다	v	*
+plain stems	1	건강하려면	건강하다	adj	*
+honorific	1	가시겠거니	가다	v	*
+-(으)ㅂ시오	1	마십시오	마시다	v	*
+-(으)세요	1	마세요	말다	v	-(으)세요
+negatives	0	바라야	바르다	*	*
+negatives	0	감기로	감다	*	*
+negatives	0	사고는	사다	*	*
+negatives	0	물건만	물다	*	*
+negatives	0	바라야지	발다	*	*
+negatives	0	바랐자	발다	*	*
+plain stems	1	먹곤	먹다	v	*
+plain stems	1	하곤 했다	하다	v	*
+plain stems	1	가고는 했다	가다	v	*
+plain stems	1	먹고도	먹다	v	*
+plain stems	1	읽고자	읽다	v	*
+plain stems	1	먹더라도	먹다	v	*
+plain stems	1	힘들더라도	힘들다	adj	*
+plain stems	1	하듯	하다	v	*
+plain stems	1	바뀌듯이	바뀌다	v	*
+plain stems	1	먹으되	먹다	v	*
+plain stems	1	먹는가	먹다	v	*
+plain stems	1	좋은가	좋다	adj	*
+plain stems	1	큰가	크다	adj	*
+plain stems	1	먹다가는	먹다	v	*
+plain stems	1	알게끔	알다	v	*
+plain stems	1	가더군	가다	v	*
+plain stems	1	먹더구나	먹다	v	*
+plain stems	1	가더니만	가다	v	*
+plain stems	1	가느니	가다	v	*
+plain stems	1	하거니와	하다	v	*
+plain stems	1	하고말고	하다	v	*
+plain stems	1	좋구먼	좋다	adj	*
+plain stems	1	갈지라도	가다	v	*
+plain stems	1	먹을지언정	먹다	v	*
+plain stems	1	간다더라	가다	v	*
+plain stems	1	가니깐	가다	v	*
+plain stems	1	먹으려	먹다	v	*
+plain stems	1	간답니다	가다	v	*
+plain stems	1	먹는답니다	먹다	v	*
+plain stems	1	하던가	하다	v	*
+plain stems	1	가던지	가다	v	*
+plain stems	1	좋던가	좋다	adj	*
+plain stems	1	가데요	가다	v	*
+plain stems	1	하던걸	하다	v	*

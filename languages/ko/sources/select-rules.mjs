@@ -7,71 +7,46 @@
 //   node languages/ko/sources/select-rules.mjs --unimorph <unimorph kor file> --terms <directory of the extracted kty-ko-en.zip> --sentences <Tatoeba kor_sentences.tsv> [--cli build/hoshidicts-cli] [--write-sets <dir>]
 //
 // --write-sets also writes the measurement sets into <dir> (unimorph.tsv,
-// cases.tsv, yomitan.tsv, nouns.tsv, chains.tsv, sentences.tsv and
-// tokens.tsv), for measuring the rule sets on exactly these rows.
+// cases.tsv, yomitan.tsv, nouns.tsv, chains.tsv, plain.tsv, sentences.tsv
+// and tokens.tsv), for measuring the rule sets on exactly these rows.
 //
-// Measurement sets (written to a temporary directory, never committed):
-//   - every V/ADJ form -> lemma pair of UniMorph Korean that is plain Hangul
-//     (191,146 pairs at 35bbecb);
-//   - tests/cases.tsv and tests/yomitan.tsv with `reasons` relaxed to `*` in
-//     their valid rows, since own and Yomitan rules give different traces for
-//     the same lemma;
-//   - 75,000 noun + particle rows (3,000 nouns, pronouns and names of the
-//     dictionary, of at most three syllables, each with 25 particles and
-//     copula forms, such as 학교에서 -> 학교, seeded), and the prefixes of
-//     those words that end inside the particle (학교에), which a lookup also
-//     tries: any other headword a rule reaches from them is a false candidate.
-//     Nouns are reached by shortening, not by rules, so these rows count only
-//     false candidates, never recoveries or recall;
-//   - Yomitan's endings after the pre-final endings they combine with: for
-//     every Yomitan rule that removes an ending and leaves a bare stem marked
-//     p (after -았/었-), f (-겠-), eusi (-(으)시-) or do (-더-), the stems of a
-//     few verbs and adjectives in that form (먹었, 됐, 그랬, 가셨; 먹겠; 받으시;
-//     먹더, written for this script) followed by the ending, where the result
-//     is whole syllables (먹었 + 으나 = 먹었으나 -> 먹다, 됐 + 건만 = 됐건만 -> 되다).
-//     Yomitan reaches these through a chain of two or three of its rules; the
-//     own rules know only some of the endings, so these rows keep the chains;
-//   - every Korean word of Tatoeba's Korean sentences (CC BY 2.0 FR) whose
-//     lemma is unambiguous: a headword of the dictionary, a form with one
-//     lemma in UniMorph, or a noun + particle (12,852 words of 20,469 in the
-//     2026-11-02 export). Like the nouns, these rows count only false
-//     candidates.
-// The dictionary is kty-ko-en as published: its term banks are packed into a
-// stored ZIP unchanged and imported. Its form-of rows (a glossary of only
-// [lemma, [inflection]] references) are imported as terms without a part of
-// speech, as hoshidicts does today; they never label a word in the sets.
+// Measurement sets (written to a temporary directory, never committed; the
+// README's Rule provenance and Measurements describe each):
+//   - every V/ADJ pair of UniMorph Korean that is plain Hangul;
+//   - tests/cases.tsv and tests/yomitan.tsv, valid rows' `reasons` relaxed to
+//     `*` (own and Yomitan rules give different traces for the same lemma);
+//   - 75,000 noun + particle rows (학교에서 -> 학교) and their prefixes that end
+//     inside the particle; they count only false candidates;
+//   - Yomitan's endings after a stem marked p, f, eusi or do (먹었으나 -> 먹다,
+//     됐건만 -> 되다): the chain set;
+//   - Yomitan's endings after plain stems (가곤 -> 가다, 먹으려 -> 먹다), without
+//     -기로, -고는 and -건만, written for the README only: as a guard it keeps
+//     rules that misread common words (-(으)리 reads 메리 as 메다, -건 이건 as
+//     이다, -(으)ㄹ라 몰라 as 모다), so tests/cases.tsv's plain-stem rows keep the
+//     endings a learner meets instead;
+//   - the Tatoeba words with one lemma (false candidates only), and the same
+//     once per occurrence (tokens.tsv, first rank only).
+// The dictionary is kty-ko-en as published (its form-of rows are terms
+// without a part of speech, as hoshidicts imports them today).
 //
-// Each round runs `hoshidicts-cli eval-language --per-rule --dictionary` on
-// the sets with the union of sources/own.json and sources/yomitan.json minus
-// the rules removed so far, and removes every Yomitan rule that recovers no
-// row (every row it helps has another path) but adds a false candidate or
-// breaks a negative. Own rules are never removed. A round that would lower
-// recall on any set is undone rule by rule. It stops when no rule qualifies.
-// A negative that several paths break gives no single rule the blame, so a
-// phase replays the deinflections of every negative still broken and
-// removes the Yomitan rules on those paths that recover no row.
-// Next, a Yomitan rule that equals an own rule (type, affixes and input
-// conditions) except that the own rule constrains the stem (`stemEndsWith`)
-// adds only readings at stems the own rules refuse: Yomitan's ㅡ-dropping
-// ㅏㄷㅏㄱㅏ -> ㅡㄷㅏ reads 바라다가 as 바르다, its ㅗ contraction ㅏㄷㅏㄱㅏ -> ㄷㅏ
-// reads 자라다가 as 잘다. These copies go together (sources/final-rules.mjs
-// finds them again, so removed-rules.tsv says so in one line); if that would
-// lower recall, the script stops and names the rows, for the own rules to be
-// fixed.
-// A last phase looks at ranking: a lookup ranks the readings of a word by
-// trace length, so a false candidate reached in as few steps as the lemma
-// ties with it. For each valid row of the UniMorph, cases and Yomitan sets
-// where that happens with the candidate set but not with sources/own.json
-// alone, the Yomitan rules on the short paths to the false candidate that
-// recover no row are candidates (Yomitan's one-step -(으)셔요 ties 마셔요 -> 마다
-// with 마셔요 -> 마시다, where own rules take two steps to 마다). Removing one can
-// also make another word's lemma lose the first place (마세요 -> 말다 when
-// -(으)세요's ㅅㅔㅇㅛ -> ㄹ다 goes), so each candidate is removed only when the
-// number of valid rows whose lemma a lookup ranks first goes up and no recall
-// drops. That count uses a copy of the dictionary without its form-of rows
-// (which come first today whatever the rules), over UniMorph, the cases,
-// Yomitan's test, the chain set and the Tatoeba words counted once per
-// occurrence (tokens.tsv).
+// The phases, in order:
+//   1. copies: every Yomitan rule that equals an own rule (type, affixes,
+//      input conditions) but has no stem constraint where the own rule has
+//      `stemEndsWith`, and gives no output condition the own rule lacks
+//      (바라야 -> 바르다, 바랐자 -> 발다). They go together; sources/final-rules.mjs
+//      finds them again, so removed-rules.tsv says so in one line. If that
+//      lowers recall, the script stops and names the rows.
+//   2. rounds of `eval-language --per-rule`: every Yomitan rule that recovers
+//      no row but adds a false candidate or breaks a negative goes; a round
+//      that lowers recall on any set is undone rule by rule.
+//   3. negatives several paths break: the Yomitan rules on those paths that
+//      recover no row go.
+//   4. ties: a Yomitan rule on a path to a false candidate as short as the
+//      lemma's, where the own rules alone have no such tie, goes only if the
+//      number of valid rows whose lemma a lookup ranks first goes up and no
+//      recall drops (counted without form-of rows, over UniMorph, the cases,
+//      Yomitan's test, the chain set and tokens.tsv).
+// Own rules are never removed.
 
 import {spawnSync} from 'node:child_process';
 import {mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync} from 'node:fs';
@@ -189,6 +164,9 @@ function mulberry32(seed) {
 
 // Sets whose rows count only false candidates (section comment at the top).
 const FALSE_CANDIDATES_ONLY = new Set(['nouns', 'sentences']);
+// Sets the removal rounds do not measure: tokens.tsv only counts first rank,
+// plain.tsv is written for the README's numbers.
+const MEASUREMENT_ONLY = new Set(['tokens', 'plain']);
 
 const PARTICLES = [['이', '가'], ['을', '를'], ['은', '는'], ['의', '의'], ['에', '에'], ['에서', '에서'], ['에게', '에게'], ['도', '도'], ['만', '만'],
     ['으로', '로'], ['과', '와'], ['이나', '나'], ['이야', '야'], ['이라면', '라면'], ['이라고', '라고'], ['처럼', '처럼'], ['마다', '마다'], ['까지', '까지'],
@@ -243,6 +221,7 @@ function measurementSets(options, work, tags) {
     }
     sets.nouns.push(...prefixes);
     sets.chains = chainRows();
+    sets.plain = plainRows();
     const silver = silverWords(options.sentences, options.unimorph, tags);
     sets.sentences = silver.lines;
     sets.tokens = silver.weighted;
@@ -310,6 +289,69 @@ function chainRows() {
                     seen.add(`${word}\t${lemma}`);
                     lines.push([`${t.id} after ${condition}`, 1, word, lemma, '*', '*'].join('\t'));
                 }
+            }
+        }
+    }
+    return lines;
+}
+
+// Plain stems before Yomitan's endings: [stem class, part of speech, lemma].
+const PLAIN_STEMS = [
+    ['vowel', 'v', '가다'], ['vowel', 'v', '보다'], ['vowel', 'v', '배우다'], ['vowel', 'v', '바꾸다'], ['vowel', 'v', '만나다'], ['vowel', 'v', '기다리다'],
+    ['vowel', 'adj', '예쁘다'], ['vowel', 'adj', '피곤하다'],
+    ['consonant', 'v', '먹다'], ['consonant', 'v', '받다'], ['consonant', 'v', '읽다'], ['consonant', 'v', '찾다'], ['consonant', 'adj', '좋다'], ['consonant', 'adj', '작다'],
+    ['lieul', 'v', '살다'], ['lieul', 'v', '만들다'], ['lieul', 'v', '알다'], ['lieul', 'adj', '길다'],
+];
+// Endings whose plain-stem rules read a noun with a particle as a verb, ahead
+// of the noun (감기로 -> 감다, 사고는 -> 사다, 물건만 -> 물다).
+const PLAIN_LEFT_OUT = new Set(['-기로', '-고는', '-건만']);
+const JAMO_CONSONANT = /^[\u3131-\u314E]/u;
+
+/** Yomitan's endings after plain stems, as whole syllables. */
+function plainRows() {
+    const yomitan = JSON.parse(readFileSync(join(here, 'yomitan.json'), 'utf8'));
+    const lines = ['# Yomitan endings after plain verb and adjective stems (measurement only)'];
+    const seen = new Set();
+    for (const t of yomitan.transforms) {
+        if (PLAIN_LEFT_OUT.has(t.id)) { continue; }
+        const plain = t.rules.filter((r) => r.type === 'suffix' && r.conditionsIn.length === 0 && r.deinflected === 'ㄷㅏ' && JAMO_CONSONANT.test(r.inflected));
+        const overlaps = (a, b) => a.conditionsOut.some((c) => b.conditionsOut.includes(c));
+        for (const rule of plain) {
+            const x = rule.inflected;
+            // A -(으)- or -스- variant (ㅇㅡㄹㅕ, ㅅㅡㅂㄴㅣㄷㅏ, ㄴㅡㄴㄷㅏ) is for consonant stems
+            // when the same ending also has the bare variant (ㄹㅕ, ㅂㄴㅣㄷㅏ, ㄴㄷㅏ), which
+            // is then for vowel stems.
+            const consonantOnly = x.startsWith('ㅇㅡ') || plain.some((r) => r !== rule && overlaps(r, rule) && /^[ㅅㄴ]ㅡ/u.test(x) && x.slice(2) === r.inflected);
+            const vowelOnly = plain.some((r) => r !== rule && overlaps(r, rule) && /^[ㅇㅅㄴ]ㅡ/u.test(r.inflected) && r.inflected.slice(2) === x);
+            const harmony = /^ㅇ[ㅏㅓ]/u.test(x);
+            // The -아/어 ending with 아/어 merged into a stem's ㅏ, ㅓ, ㅕ, ㅐ or ㅔ (가 + 아도
+            // = 가도, 가 + 았자 = 갔자), when the ending also has ㅇㅏ/ㅇㅓ + this rule's text.
+            const contracted = plain.some((r) => r !== rule && overlaps(r, rule) && (r.inflected === `ㅇㅓ${x}` || r.inflected === `ㅇㅏ${x}`));
+            for (const [kind, pos, lemma] of PLAIN_STEMS) {
+                if (!rule.conditionsOut.includes(pos)) { continue; }
+                const stem = jamo(lemma.slice(0, -1));
+                if (contracted) {
+                    if (kind !== 'vowel' || !/[ㅏㅓㅕㅐㅔ]$/u.test(stem) || stem.endsWith('ㅎㅏ')) { continue; }
+                } else if (harmony) {
+                    // -아/어 endings: 받아, 먹어, 살아, 만들어.
+                    if (kind === 'vowel' || (x[1] === 'ㅏ') !== /[ㅏㅗ][^ㅏ-ㅣ]*$/u.test(stem)) { continue; }
+                } else if (x.startsWith('ㅇ')) {
+                    if (!x.startsWith('ㅇㅡ') || kind !== 'consonant') { continue; }
+                } else if (consonantOnly) {
+                    if (kind !== 'consonant') { continue; }
+                } else if (vowelOnly) {
+                    if (kind === 'consonant' || (kind === 'lieul' && /^[ㄴㅂㅅ]/u.test(x))) { continue; }
+                } else if (kind === 'lieul' && /^[ㄴㅂㅅ]/u.test(x)) {
+                    continue;
+                }
+                const word = assemble(stem + x);
+                if (!/^[\uAC00-\uD7A3]+$/u.test(word) || jamo(word) !== stem + x || seen.has(`${word}\t${lemma}`)) { continue; }
+                // The stem's syllables stay as they are, except that the last one
+                // may take the ending's first consonant as its final (가 + ㄴ가 = 간가).
+                const base = lemma.slice(0, -1);
+                if (!word.startsWith(base.slice(0, -1)) || jamo(word).slice(0, stem.length) !== stem) { continue; }
+                seen.add(`${word}\t${lemma}`);
+                lines.push([`${t.id} plain ${kind}`, 1, word, lemma, pos, '*'].join('\t'));
             }
         }
     }
@@ -388,7 +430,7 @@ function measure(options, work, files, dictionary, removed) {
     }
     const recall = {};
     for (const [name, setFile] of Object.entries(files)) {
-        if (name === 'tokens') { continue; }
+        if (MEASUREMENT_ONLY.has(name)) { continue; }
         const result = evaluate(options.cli, file, setFile, dictionary);
         recall[name] = {recall: result.recall, negativesPassed: result.negativesPassed, falseCandidates: result.falseCandidates, firstRank: result.firstRank};
         for (const p of result.perRule) {
@@ -611,6 +653,20 @@ function main() {
         const removed = [];
         let current = measure(options, work, files, dictionary, removed);
         const start = current.recall;
+        // First the Yomitan copies of stem-constrained own rules: a test of the
+        // rules themselves, before anything measured.
+        const beforeCopies = join(work, 'before-copies.json');
+        writeFileSync(beforeCopies, readFileSync(join(work, 'candidate.json')));
+        const copies = unconstrainedCopies(current);
+        const trial = measure(options, work, files, dictionary, copies);
+        const lost = lowered(current.recall, trial.recall);
+        if (lost.length > 0) {
+            const rows = lostRows(options, files, lost, beforeCopies, join(work, 'candidate.json'));
+            throw new Error(`leaving out the ${copies.length} Yomitan copies of stem-constrained own rules loses rows the own rules should reach:\n${rows.join('\n')}`);
+        }
+        removed.push(...copies);
+        current = trial;
+        console.log(`copies: removed ${copies.length} Yomitan rules that copy a stem-constrained own rule without its constraint`);
         for (let round = 1; ; ++round) {
             const candidates = current.rules.filter((r) => r.source === 'yomitan' && r.recovers === 0 && (r.falseCandidates > 0 || r.breaks > 0));
             if (candidates.length === 0) { break; }
@@ -656,20 +712,6 @@ function main() {
         }
         removed.push(...accepted);
         console.log(`negatives: removed ${accepted.length} Yomitan rules on the paths of broken negatives (${removed.length} in all)`);
-        // Yomitan copies of stem-constrained own rules.
-        current = measure(options, work, files, dictionary, removed);
-        const beforeCopies = join(work, 'before-copies.json');
-        writeFileSync(beforeCopies, readFileSync(join(work, 'candidate.json')));
-        const copies = unconstrainedCopies(current);
-        const trial = measure(options, work, files, dictionary, [...removed, ...copies]);
-        const lost = lowered(current.recall, trial.recall);
-        if (lost.length > 0) {
-            const rows = lostRows(options, files, lost, beforeCopies, join(work, 'candidate.json'));
-            throw new Error(`leaving out the ${copies.length} Yomitan copies of stem-constrained own rules loses rows the own rules should reach:\n${rows.join('\n')}`);
-        }
-        removed.push(...copies);
-        current = trial;
-        console.log(`copies: removed ${copies.length} Yomitan rules that copy a stem-constrained own rule without its constraint (${removed.length} in all)`);
         // Ranking: rules that tie a false candidate with the lemma, removed one
         // at a time while the first-rank count goes up and no recall drops.
         const entries = publishedDictionary(resolve(options.terms), work, options.cli, {entriesOnly: true}).dir;
@@ -716,4 +758,4 @@ function main() {
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) { main(); }
-export {chainRows, ruleKey};
+export {chainRows, plainRows, ruleKey};

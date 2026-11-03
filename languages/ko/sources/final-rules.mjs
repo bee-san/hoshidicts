@@ -82,13 +82,19 @@ function copyKey(rule) {
 /**
  * A test for the rules that equal a rule of `own` (type, affixes and input
  * conditions) except that the own rule constrains the stem (`stemEndsWith`)
- * and they constrain nothing: all they add are readings at stems the own
- * rules refuse (바라다가 -> 바르다 by Yomitan's ㅡ-dropping, 자라다가 -> 잘다 by its
- * ㅗ contraction).
+ * and they constrain nothing, where the own rule gives every output condition
+ * they give: all they add are readings at stems the own rules refuse
+ * (바라야 -> 바르다 by Yomitan's ㅡ-dropping, 바라야지 -> 발다 by its ㅗ contraction).
  */
 export function copiesOf(own) {
-    const keys = new Set(own.transforms.flatMap((t) => t.rules).filter((r) => r.stemEndsWith !== undefined).map(copyKey));
-    return (rule) => rule.stemEndsWith === undefined && rule.stemNotEndsWith === undefined && rule.stemMinLength === undefined && keys.has(copyKey(rule));
+    const outputs = new Map();
+    for (const r of own.transforms.flatMap((t) => t.rules).filter((x) => x.stemEndsWith !== undefined)) {
+        const list = outputs.get(copyKey(r)) ?? [];
+        list.push(new Set(r.conditionsOut));
+        outputs.set(copyKey(r), list);
+    }
+    return (rule) => rule.stemEndsWith === undefined && rule.stemNotEndsWith === undefined && rule.stemMinLength === undefined
+        && (outputs.get(copyKey(rule)) ?? []).some((out) => rule.conditionsOut.every((c) => out.has(c)));
 }
 
 /** The line of sources/removed-rules.tsv that leaves the copies out too. */

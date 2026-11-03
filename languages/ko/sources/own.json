@@ -1447,6 +1447,24 @@
       ]
     },
     {
+      "id": "-(으)려는",
+      "name": "-(으)려는/-(으)려던",
+      "description": "Adnominal -(으)려는, -(으)려던: intending to (-(으)려고 하는, -(으)려고 하던).",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "ㄹㅕㄴㅡㄴ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "-시"], "stemMinLength": 2, "stemEndsWith": "[\\u314F-\\u3163ㄹ]"},
+        {"type": "suffix", "inflected": "ㅇㅡㄹㅕㄴㅡㄴ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "-시"], "stemMinLength": 2, "stemEndsWith": "[\\u3131-\\u3138\\u313A-\\u314E]"},
+        {"type": "suffix", "inflected": "ㅇㅜㄹㅕㄴㅡㄴ", "deinflected": "ㅂㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "-시"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "ㄹㅇㅡㄹㅕㄴㅡㄴ", "deinflected": "ㄷㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "-시"], "stemMinLength": 1, "stemEndsWith": "{vowel}"},
+        {"type": "suffix", "inflected": "ㅇㅡㄹㅕㄴㅡㄴ", "deinflected": "ㅅㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "-시"], "stemMinLength": 1, "stemEndsWith": "{vowel}"},
+        {"type": "suffix", "inflected": "ㄹㅕㄷㅓㄴ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "-시"], "stemMinLength": 2, "stemEndsWith": "[\\u314F-\\u3163ㄹ]"},
+        {"type": "suffix", "inflected": "ㅇㅡㄹㅕㄷㅓㄴ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "-시"], "stemMinLength": 2, "stemEndsWith": "[\\u3131-\\u3138\\u313A-\\u314E]"},
+        {"type": "suffix", "inflected": "ㅇㅜㄹㅕㄷㅓㄴ", "deinflected": "ㅂㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "-시"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "ㄹㅇㅡㄹㅕㄷㅓㄴ", "deinflected": "ㄷㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "-시"], "stemMinLength": 1, "stemEndsWith": "{vowel}"},
+        {"type": "suffix", "inflected": "ㅇㅡㄹㅕㄷㅓㄴ", "deinflected": "ㅅㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "-시"], "stemMinLength": 1, "stemEndsWith": "{vowel}"}
+      ]
+    },
+    {
       "id": "-(으/느)ㄴ지",
       "name": "-는지/-(으)ㄴ지",
       "description": "Connective -는지, -(으)ㄴ지: whether, what; -(으)ㄴ지 after a verb: since (time).",

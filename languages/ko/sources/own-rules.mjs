@@ -380,6 +380,9 @@ transform('-(으)면서', '-(으)면서', 'Connective -(으)면서: while.', [eu
 transform('-(으)며', '-(으)며', 'Connective -(으)며: and, while (written style).', [eu('며', PAST)]);
 transform('-(으)러', '-(으)러', 'Connective -(으)러: in order to (with a verb of motion).', [eu('러', VERB_HON)]);
 transform('-(으)려고', '-(으)려고', 'Connective -(으)려고: intending to.', [eu('려고', VERB_HON), eu('려면', VERB_HON)]);
+// -(으)려고 하는/하던 contracted (가려는 사람, 하려던 일); neither rule set had it (added
+// after the own-rules commit).
+transform('-(으)려는', '-(으)려는/-(으)려던', 'Adnominal -(으)려는, -(으)려던: intending to (-(으)려고 하는, -(으)려고 하던).', [eu('려는', VERB_HON), eu('려던', VERB_HON)]);
 transform('-(으/느)ㄴ지', '-는지/-(으)ㄴ지', 'Connective -는지, -(으)ㄴ지: whether, what; -(으)ㄴ지 after a verb: since (time).', [neun('는지', ALL), eu('ㄴ지', HON)]);
 transform('-(으)ㄹ지', '-(으)ㄹ지', 'Connective -(으)ㄹ지: whether ... will.', [eu('ㄹ지', PAST)]);
 transform('-게', '-게', 'Ending -게: adverb (so that, -ly); before 되다 and 하다.', [direct('게', HON)]);
