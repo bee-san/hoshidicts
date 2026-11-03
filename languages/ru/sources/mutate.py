@@ -26,7 +26,7 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..')
 PACK = os.path.join(ROOT, 'languages', 'ru')
 # stemChange is left out: in this pack it only marks the rows that read a stem's
 # last е as ё, which are rules, not constraints (README.md, Measurements).
-KEYS = ['stemMinLength', 'stemEndsWith', 'stemNotStartsWith', 'stemNotStartsWithText', 'stemCharacters']
+KEYS = ['stemMinLength', 'stemEndsWith', 'stemNotStartsWith', 'stemNotStartsWithText', 'stemNotEndsWith', 'stemCharacters']
 
 
 def mutants(transforms):

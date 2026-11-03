@@ -1,5 +1,5 @@
 # Source: written for this pack (GPL-3.0-or-later), no third-party data. Expected traces are this pack's transform ids, newest first (* means any trace).
-# The pack has no optional processor, transform or variant pass, so this file and defaults.tsv run the same rules; rows are split by what they test.
+# The pack has no optional processor, transform or variant pass, so every option on and the defaults run the same rules (there is no defaults.tsv).
 # Rows of category guard are negatives that fail without one stem constraint each (sources/mutate.py, README.md Measurements).
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
 fleeting	1	отца	отец	n	noun-fleeting|noun-gen.sg+nom.pl
@@ -683,3 +683,39 @@ present	1	поклянётся	поклясться	v	*
 guard	0	помни	помять	*	*
 short-adjective	1	прав	правый	adj	adj-short.m
 short-adjective	1	сер	серый	adj	adj-short.m
+guard	0	почтёшь	почесть	*	verb-pres.2sg
+guard	0	почтёт	почесть	*	verb-pres.3sg
+guard	0	почтём	почесть	*	verb-pres.1pl
+guard	0	почтёте	почесть	*	verb-pres.2pl
+guard	0	почтут	почесть	*	verb-pres.3pl
+guard	0	почла	почесть	*	verb-past.f
+guard	0	почло	почесть	*	verb-past.n
+guard	0	почли	почесть	*	verb-past.pl
+guard	0	почти	почесть	*	verb-imp.2sg
+guard	0	почтите	почесть	*	verb-imp.2pl
+guard	0	почтя	почесть	*	verb-ger.pres
+guard	0	почётший	почесть	*	verb-ptcp.past.act
+guard	0	спавший	спасть	*	verb-ptcp.past.act
+guard	0	спала	спасть	*	verb-past.f
+guard	0	спало	спасть	*	verb-past.n
+guard	0	спали	спасть	*	verb-past.pl
+guard	0	минет	минуть	*	verb-pres.3sg
+guard	0	минете	минуть	*	verb-pres.2pl
+guard	0	мини	минуть	*	verb-imp.2sg
+guard	0	миньте	минуть	*	verb-imp.2pl
+guard	0	танцуешь	танцовать	*	*
+guard	0	танцуем	танцовать	*	*
+guard	0	танцуй	танцовать	*	*
+guard	0	танцуйте	танцовать	*	*
+guard	0	танцующий	танцовать	*	*
+guard	0	пересчешь	перестать	*	*
+guard	0	пересчем	перестать	*	*
+guard	0	пересчь	перестать	*	*
+guard	0	пересчьте	перестать	*	*
+guard	0	пересчущий	перестать	*	*
+guard	0	пересчет	перестать	*	*
+guard	0	спав	спасть	*	*
+guard	0	нет	нуть	*	*
+guard	0	дает	дать	*	verb-pres.3sg
+guard	0	тете	сти	*	*
+guard	0	ищете	итать	*	*

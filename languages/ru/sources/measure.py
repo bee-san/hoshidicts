@@ -372,6 +372,28 @@ def text(a):
         print(f'  {word}\t{matched}\t{expr}\t{trace}\t{hover[:60]}')
 
 
+def compare(a):
+    """How many positions of the texts change their first result with a definition
+    between two copies of the pack (--languages and --other), and the largest
+    groups: the measurement of a constraint by removing it (a copy without
+    stemCharacters, for example)."""
+    positions = []
+    for path in a.text:
+        positions += hovers(open(path, encoding='utf-8').read())
+    texts = [h for _, h in positions]
+    first = lambda o: (lambda f: (f['expression'], f['matched']) if f else None)(first_with_definition(o['results']))
+    base = lookups(a.batch, a.languages, a.dict, texts, False)
+    other = lookups(a.batch, a.other, a.dict, texts, False)
+    changes = collections.Counter()
+    for (word, _), x, y in zip(positions, base, other):
+        fx, fy = first(x), first(y)
+        if fx != fy:
+            changes[(fy[1] if fy else None, fx[0] if fx else None, fy[0] if fy else None)] += 1
+    print(json.dumps({'lookups': len(positions), 'changed': sum(changes.values())}, ensure_ascii=False))
+    for (matched, was, now), c in changes.most_common(a.show):
+        print(f'  {c}\t{matched}\t{was} -> {now}')
+
+
 FUNCTION_WORDS = ['в', 'во', 'на', 'с', 'со', 'к', 'ко', 'о', 'об', 'обо', 'по', 'за', 'из', 'от', 'у', 'до', 'для', 'без', 'под', 'над', 'при', 'про', 'через', 'не', 'ни']
 
 
@@ -447,7 +469,16 @@ def main():
     ph.add_argument('--sentences', type=int, default=40000)
     ph.add_argument('--seed', type=int, default=20261103)
     ph.add_argument('--show', type=int, default=30)
+    cp = sub.add_parser('compare')
+    cp.add_argument('--dict', required=True)
+    cp.add_argument('--batch', required=True)
+    cp.add_argument('--languages', default=f'{ROOT}/languages')
+    cp.add_argument('--other', required=True)
+    cp.add_argument('--text', nargs='+', required=True)
+    cp.add_argument('--show', type=int, default=30)
     a = p.parse_args()
+    if a.cmd == 'compare':
+        compare(a)
     if a.cmd == 'phrases':
         phrases(a)
     if a.cmd == 'frequent':
