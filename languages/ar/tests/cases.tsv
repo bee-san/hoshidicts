@@ -439,3 +439,25 @@ informal spelling	1	حتي	حتى	*
 informal spelling	1	إلي	إلى	*	
 informal spelling	1	لغه	لغة	*	
 informal spelling	1	مدرسه	مدرسة	n	
+negative short stem	0	وبين	وب	*	*
+negative short stem	0	لكان	لك	*	*
+negative short stem	0	فلن	فل	v	*
+negative short stem	0	بأن	باء	v	*
+negative noun ending	0	سيكون	ساك	v	*
+negative noun ending	0	ليكون	لاك	v	*
+negative broken plural	0	العناء	العين	*	*
+negative defective object	0	يعطيه	عطي	v	presentHe
+negative defective object	0	يرميه	رمي	v	presentHe
+negative feminine	0	مدرستهم	مدرس	*	feminine|p3mp
+object pronoun	1	يمكنك	مكن	v	presentHe
+object pronoun	1	يعطيه	أعطى	v	*
+five nouns	1	أبيه	أب	n	fiveNouns
+five nouns	1	وأبوه	أب	n	fiveNouns
+five nouns	1	أخوك	أخ	n	fiveNouns
+five nouns	1	الأخوان	أخ	n	fiveNouns|al
+defective noun	1	القاضي	قاض	n	defectiveNoun|al
+defective noun	1	صافيان	صاف	n	defectiveNoun|dual
+negative defective noun	0	العربي	عرب	*	defectiveNoun|al
+negative spelling	0	كرسيي	كرسي	*	p1s
+negative spelling	0	فتاةا	فتاة	*	accusative
+negative spelling	0	عصاا	عصا	*	accusative
