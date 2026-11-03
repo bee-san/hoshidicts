@@ -1,0 +1,132 @@
+{
+  "schema": 1,
+  "code": "aii",
+  "iso639_3": "aii",
+  "name": "Assyrian Neo-Aramaic",
+  "nativeName": "ܣܘܪܝܬ",
+  "bcp47": "aii",
+  "scripts": ["Syrc"],
+  "direction": "rtl",
+  "classes": {
+    "letter": "[\\u0710\\u0712-\\u072F\\u074D-\\u074F]",
+    "syriacMark": "[\\u0303\\u0304\\u0307\\u0308\\u0323\\u032E\\u0330\\u0331\\u0711\\u0730-\\u074A]",
+    "joiner": "[\\u00AD\\u0640\\u200C\\u200D\\u2060\\uFEFF]",
+    "word": "[{letter}\\p{M}\\p{Nd}{joiner}]",
+    "stem": "[{letter}\\p{M}]"
+  },
+  "text": {
+    "pattern": "[{letter}{syriacMark}{joiner}]",
+    "scanStart": "word",
+    "segmentation": "spaces",
+    "wordCharacters": "{word}",
+    "wordInternal": null,
+    "sentence": {
+      "terminators": [".", "!", "?", "\u061F", "\u0700", "\u0701", "\u0702", "\u2026"],
+      "quotePairs": [["\u00AB", "\u00BB"], ["\u201C", "\u201D"], ["\"", "\""], ["(", ")"], ["[", "]"]]
+    },
+    "highlightBreaks": {
+      "sentenceEnd": [".", "!", "?", "\u061F", "\u0700", "\u0701", "\u0702", "\u2026"],
+      "clauseEnd": [",", "\u060C", ":", "\u061B", "\u0703", "\u0704", "\u0705", "\u0706", "\u0707", "\u0708", "\u0709"]
+    },
+    "lineJoiner": " "
+  },
+  "lookup": {
+    "searchResolution": "word",
+    "preprocessors": [
+      {
+        "id": "normalizeSyriac",
+        "name": "Normalise Syriac text",
+        "keepInput": false,
+        "variants": [[{"normalize": "NFC"}, {"strip": "[{joiner}\\u0711]"}]]
+      },
+      {
+        "id": "removeSyriacVowelMarks",
+        "name": "Remove vowel points and other marks",
+        "variants": [[{"strip": "{syriacMark}"}]]
+      }
+    ],
+    "postprocessors": [],
+    "readingNormalizer": null,
+    "transforms": "transforms.json",
+    "traceSelection": "shortest",
+    "formOf": "follow",
+    "functionWords": [],
+    "variantPasses": []
+  },
+  "capabilities": {
+    "readings": "none",
+    "ruby": null,
+    "pitchAccent": false,
+    "characterView": null,
+    "wordHighlighting": true
+  },
+  "presentation": {
+    "typography": {
+      "fontFamily": "\"Noto Sans Syriac Eastern\", \"East Syriac Adiabene\", \"Noto Sans Syriac\", serif",
+      "wordBreak": null,
+      "lineBreak": null,
+      "joinedScript": true
+    },
+    "labels": {},
+    "displayTransforms": {}
+  },
+  "settings": [
+    {
+      "id": "olderSpellings",
+      "type": "boolean",
+      "default": false,
+      "label": "Older spellings",
+      "description": "Also read verbs written as the Urmia Bible of 1893 and some informal writing spell them: the L-suffix joined to the verb (ܦܪܸܫܠܹܐ, he separated) and the Stem II past without ܡ (ܬܘܼܪܸܨܠܹܐ, he made). Off by default, because many nouns end in the same letters.",
+      "group": "lookup",
+      "effect": {"transforms": ["lJoined", "pastBaseUrmia"]}
+    }
+  ],
+  "host": {
+    "ttsLanguage": "aii",
+    "audioLanguage": "aii",
+    "anki": {
+      "noteTypeFamilies": [],
+      "fieldAliases": {},
+      "partOfSpeechLabels": {
+        "n": "Noun",
+        "v": "Verb",
+        "adj": "Adjective",
+        "adv": "Adverb",
+        "prep": "Preposition",
+        "pron": "Pronoun",
+        "conj": "Conjunction",
+        "ptcl": "Particle",
+        "intj": "Interjection",
+        "num": "Numeral",
+        "det": "Determiner",
+        "name": "Proper noun",
+        "phrase": "Phrase"
+      }
+    },
+    "frequencySamples": null,
+    "recommendedDictionaries": [
+      {
+        "name": "wty-aii-en (wiktionary-to-yomitan)",
+        "url": "https://github.com/yomidevs/wiktionary-to-yomitan",
+        "description": "Assyrian Neo-Aramaic to English definitions from Wiktionary, with the inflected forms of its declension and conjugation tables.",
+        "licence": "CC BY-SA 4.0"
+      }
+    ],
+    "sample": {
+      "warmup": "ܟܬ݂ܵܒ݂ܵܐ",
+      "practice": {
+        "text": "ܟܲܠܒܵܐ ܢܒ݂ܝܼܚ ܠܹܗ ܟܠ ܠܲܝܠܹܐ.",
+        "lookup": "ܢܒ݂ܝܼܚ"
+      },
+      "entry": {
+        "expression": "ܢܒܚ",
+        "reading": "ܢܒܚ",
+        "glossary": ["to bark, yelp"],
+        "definitionTags": "v",
+        "matched": "ܢܒ݂ܝܼܚ ܠܹܗ",
+        "trace": ["third-person singular masculine past"]
+      },
+      "character": null
+    }
+  }
+}
