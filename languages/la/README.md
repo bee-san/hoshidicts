@@ -240,22 +240,22 @@ its union of the two files has 222 transforms and 3,171 rules (3,163 `own`,
     (reported to the framework).
 - **How the rules changed**, with the wrong first results as the measurement
   of the time counted them:
-  - acc414a: the own rules, written before Yomitan's file was ported.
-  - b33beb9: the port; the own conditions became Yomitan's (`v` without
+  - 784d9f4: the own rules, written before Yomitan's file was ported.
+  - 441a9bb: the port; the own conditions became Yomitan's (`v` without
     parts, `n` and `adj` with declension and number parts), which the merge
     tool needs.
-  - 5448b3e: fixes the corpus showed: Greek nouns and names, -en stems,
+  - 563d26d: fixes the corpus showed: Greek nouns and names, -en stems,
     inchoative and -ssīvī perfects, contracted -ārit and -īrunt, reor and for,
     ea and id as headwords; constraints for sine, salvē, dominī, potuī, meam,
     labōrō and cētera; condition-free name rules after the *Rōmam* loop;
     families of compounds as circumfixes.
-  - 6e9db52: name rules restricted, 271 → 106 wrong in the books;
-  - f00fd7b: adjective transforms before noun transforms on ties, 106 → 96;
-  - c074378: capital guards, constraints on participles before esse,
+  - e60f59e: name rules restricted, 271 → 106 wrong in the books;
+  - 07a690c: adjective transforms before noun transforms on ties, 106 → 96;
+  - 83dae8e: capital guards, constraints on participles before esse,
     exclusions, 388 → 198 in Tatoeba;
-  - ed1652f: the enclitics as a processor, plural names removed: 8 of the
+  - f3e122e: the enclitics as a processor, plural names removed: 8 of the
     10,000 frequent words, 70 in the books and 152 in Tatoeba.
-  - 025ac01 and d19eac1, after the first audit: the esse constraints, the
+  - a5dd27b and d2c03ad, after the first audit: the esse constraints, the
     rare readings left to the dictionary and the transform order above, and
     a stricter judge. With that judge, the head the first audit saw
     (29cb6f1) shows a wrong first result for 50 of the 10,000 words (7,673
@@ -264,7 +264,8 @@ its union of the two files has 222 transforms and 3,171 rules (3,163 `own`,
 
 ## Measurements
 
-hoshidicts at d19eac1 (this branch on 0a73e5e), GCC 14.3, Release; wty-la-en
+The pack at d2c03ad (this branch on 1fed676; the engine is the same since
+0a73e5e), GCC 14.3, Release; wty-la-en
 imported by `hoshidicts-cli import`, as published. The sample is the 700 rows
 of `corpus.tsv` and `gaps.tsv` together. Section 6 gives the commands.
 
@@ -422,7 +423,8 @@ judged by hand too.
      - Live heap after the load: +1,337,088 bytes single-thread, +1,337,048
        threaded (`hdw_memory_stats`).
    - Hachidori (`test/chrome-language-pack.mjs`, feat/multi-language 803f7b6e
-     with this branch at d19eac1 in `third_party/hoshidicts`, Chrome
+     with this branch at d19eac1, d2c03ad before the rebase onto 1fed676, in
+     `third_party/hoshidicts`, Chrome
      152.0.7977.75): 26 of 26 checks pass. Settings adds Latin beside Japanese
      and imports wty-la-en (1,977,517 terms, 2.5 s); 22 hovered words find
      their lemma first with their trace (*virumque* → vir, *dūxit* → duco,
