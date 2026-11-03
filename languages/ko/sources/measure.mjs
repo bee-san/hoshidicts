@@ -36,11 +36,15 @@ const HANGUL = /[\uAC00-\uD7A3]+/gu;
 
 const INFLECTION = /indicative|interrogative|imperative|hortative|causative|conditional|noun-from-verb|determiner|adnominal|assertive|contrastive|conjunctive|sequential|motive|connective|infinitive|passive|verbal noun|polite|past|future|present/;
 
+// Words with an entry tagged n, pron or name (filled by references), for the noun + particle test of judge().
+const nouns = new Set();
 /** Each expression's lemmas, as its form-of references with an inflection name them. */
 function references(termsDir) {
     const lemmas = new Map();
     for (const name of readdirSync(termsDir).filter((n) => /^term_bank_\d+\.json$/.test(n))) {
         for (const row of JSON.parse(readFileSync(join(termsDir, name), 'utf8'))) {
+            const glossary = Array.isArray(row[5]) ? row[5] : [];
+            if (!(glossary.length > 0 && glossary.every(Array.isArray)) && (row[3] ?? '').split(' ').some((t) => ['n', 'pron', 'name'].includes(t))) { nouns.add(row[0]); }
             for (const g of Array.isArray(row[5]) ? row[5] : []) {
                 if (Array.isArray(g) && typeof g[0] === 'string' && g[0] !== '' && Array.isArray(g[1]) && g[1].some((r) => INFLECTION.test(r))) {
                     const set = lemmas.get(row[0]) ?? new Set();
@@ -59,19 +63,38 @@ function lookup(texts) {
     return run.stdout.split('\n').filter(Boolean).map((l) => JSON.parse(l).results.find((r) => !r.formOf) ?? null);
 }
 
+// Hand verdicts (sources/judged.tsv): word (its own entry first) or word>lemma -> OK, M, C or W.
+const verdicts = new Map(readFileSync(join(here, 'judged.tsv'), 'utf8').split('\n').filter((l) => /^[A-Z]+\t/.test(l))
+    .flatMap((l) => { const [v, keys] = l.split('\t'); return keys.split(' ').map((k) => [k, v]); }));
 /**
- * right: a lemma of the word; own: the word's own entry; phrase: an entry of several words that begins with
- * the word (캐나다 사람, 안 돼요, 어쩔 수 없다 for 어쩔 수 없었지); wrong: anything else; none: no result.
+ * right: a lemma of the word, unless judged wrong (wrong lemma) or right only by context (context), or a lemma that
+ * needs a verdict and has none (lemma unjudged); own OK, own M, own W, own unjudged: the word's own entry with its
+ * hand verdict; phrase: an entry of several words that begins with the word (안 돼요, 어쩔 수 없다 for 어쩔 수
+ * 없었지); wrong: anything else; none: no result.
  */
-function judge(first, word, lemmas) {
+const PARTICLES = new Set('이 가 을 를 은 는 의 에 에서 에게 께 도 만 으로 로 과 와 이나 나 처럼 까지 부터 한테 랑 이랑 보다 라도 요 들 들이 들을 들은 들의 들도 에는 에도 에서는 이다 다 이야 야'.split(' '));
+const noun = (w) => { for (let i = w.length - 1; i >= 1; --i) { if (nouns.has(w.slice(0, i)) && PARTICLES.has(w.slice(i))) { return w.slice(0, i); } } return null; };
+// A lemma shown first needs a hand verdict (judged.tsv's header) for these words; without one it is 'lemma unjudged'.
+const needsVerdict = (w, shown, refs) => (refs.get(w)?.size ?? 0) >= 2 || wholeWord.get(w)?.has(shown) === false
+    || (/다$/.test(shown) && ![null, shown].includes(noun(w)));
+function judge(first, word, lemmas, refs) {
     if (first === null) { return 'none'; }
-    if (lemmas.has(first.expression)) { return 'right'; }
-    if (first.expression === word) { return 'own'; }
+    if (lemmas.has(first.expression)) {
+        const v = verdicts.get(`${word}>${first.expression}`);
+        return v ? {OK: 'right', W: 'wrong lemma', C: 'context'}[v] : needsVerdict(word, first.expression, refs) ? 'lemma unjudged' : 'right';
+    }
+    if (first.expression === word) { return `own ${verdicts.get(word) ?? 'unjudged'}`; }
     return first.expression.startsWith(`${word} `) ? 'phrase' : 'wrong';
 }
+const ORDER = ['right', 'own OK', 'phrase', 'own M', 'context', 'lemma unjudged', 'own unjudged', 'own W', 'wrong lemma', 'wrong', 'none'];
+const WRONG = new Set(['own W', 'wrong lemma', 'wrong']);
 
 const pct = (n, d) => `${(100 * n / d).toFixed(2)}%`;
 const transformsFile = JSON.parse(readFileSync(join(here, '..', 'transforms.json'), 'utf8'));
+const wholeWord = new Map();
+for (const r of transformsFile.transforms.flatMap((t) => t.rules).filter((r) => r.type === 'wholeWord')) {
+    wholeWord.set(assemble(r.inflected), (wholeWord.get(assemble(r.inflected)) ?? new Set()).add(assemble(r.deinflected)));
+}
 const show = (first) => (first === null ? '-' : `${first.expression}@${first.matched}${first.trace.length ? ` [${first.trace.join(' > ')}]` : ''}`);
 
 function unimorphLemmas(file) {
@@ -102,16 +125,18 @@ function frequent(file) {
     const rows = list.filter(([w], i) => [...lemmasOf(w)].some((l) => reached[i].has(l)));
     const firsts = lookup(rows.map(([w]) => w));
     const tokens = list.reduce((s, [, c]) => s + c, 0);
-    const sum = {right: [0, 0], own: [0, 0], phrase: [0, 0], wrong: [0, 0], none: [0, 0]};
+    const sum = new Map(ORDER.map((k) => [k, [0, 0]]));
     const wrong = [];
     rows.forEach(([w, c], i) => {
-        const verdict = judge(firsts[i], w, lemmasOf(w));
-        sum[verdict][0] += 1;
-        sum[verdict][1] += c;
-        if (verdict === 'wrong' || verdict === 'none') { wrong.push(`${w} (${c}): ${show(firsts[i])}; lemmas ${[...lemmasOf(w)].join(', ')}`); }
+        const verdict = judge(firsts[i], w, lemmasOf(w), refs);
+        sum.get(verdict)[0] += 1;
+        sum.get(verdict)[1] += c;
+        if (WRONG.has(verdict) || verdict === 'none') { wrong.push(`${w} (${c}, ${verdict}): ${show(firsts[i])}`); }
     });
     console.log(`${list.length} words, ${tokens} tokens; a rule reaches a lemma of ${rows.length} (${pct(rows.reduce((s, [, c]) => s + c, 0), tokens)} of the tokens)`);
-    for (const [k, [words, t]] of Object.entries(sum)) { console.log(`  ${k}: ${words} words, ${pct(t, tokens)} of the tokens`); }
+    for (const [k, [words, t]] of sum) { console.log(`  ${k}: ${words} words, ${pct(t, tokens)} of the tokens`); }
+    const bad = [...sum].filter(([k]) => WRONG.has(k)).reduce((a, [, [w, t]]) => [a[0] + w, a[1] + t], [0, 0]);
+    console.log(`  wrong in all: ${bad[0]} words, ${pct(bad[1], tokens)} of the tokens`);
     for (const line of wrong.slice(0, Number(option('--show', '40')))) { console.log(`  ${line}`); }
 }
 
@@ -130,18 +155,18 @@ function positionsOf(sentences) {
 
 function report(name, items, refs) {
     const firsts = lookup(items.map(([t]) => t));
-    const sum = {right: 0, own: 0, phrase: 0, wrong: 0, none: 0};
+    const sum = new Map(ORDER.map((k) => [k, 0]));
     let judged = 0;
     const rest = [];
     const wrongBy = new Map();
     items.forEach(([, w], i) => {
         const lemmas = refs.get(w);
-        if (!lemmas) { if (firsts[i] !== null) { rest.push(i); } else { sum.none += 1; } return; }
+        if (!lemmas) { if (firsts[i] !== null) { rest.push(i); } else { sum.set('none', sum.get('none') + 1); } return; }
         ++judged;
-        const verdict = judge(firsts[i], w, lemmas);
-        sum[verdict] += 1;
-        if (verdict === 'wrong') {
-            const key = firsts[i].trace[0] ?? '(no rule)';
+        const verdict = judge(firsts[i], w, lemmas, refs);
+        sum.set(verdict, sum.get(verdict) + 1);
+        if (WRONG.has(verdict)) {
+            const key = verdict === 'wrong' ? firsts[i].trace[0] ?? '(no rule)' : verdict;
             const group = wrongBy.get(key) ?? {n: 0, examples: new Map()};
             group.n += 1;
             const e = `${w}: ${show(firsts[i])}`;
@@ -149,10 +174,12 @@ function report(name, items, refs) {
             wrongBy.set(key, group);
         }
     });
-    console.log(`${name}: ${items.length} positions, ${items.length - sum.none} find something; form-of rows name the word's lemmas at ${judged}:`
-        + ` right ${sum.right}, own entry ${sum.own}, phrase entry ${sum.phrase}, wrong ${sum.wrong} (${pct(sum.wrong, judged)}), nothing ${judged - sum.right - sum.own - sum.phrase - sum.wrong}`);
+    const bad = [...sum].filter(([k]) => WRONG.has(k)).reduce((a, [, n]) => a + n, 0);
+    console.log(`${name}: ${items.length} positions, ${items.length - sum.get('none')} find something; form-of rows name the word's lemmas at ${judged}: `
+        + `${[...sum].filter(([k]) => k !== 'none').map(([k, n]) => `${k} ${n}`).join(', ')}, nothing ${judged - [...sum].filter(([k]) => k !== 'none').reduce((a, [, n]) => a + n, 0)}; `
+        + `wrong in all ${bad} (${pct(bad, judged)})`);
     for (const [k, g] of [...wrongBy].sort((a, b) => b[1].n - a[1].n).slice(0, 8)) {
-        console.log(`  wrong, first rule ${k}: ${g.n}; ${[...g.examples].sort((a, b) => b[1] - a[1]).slice(0, Number(option('--examples', '6'))).map(([e, c]) => `${e} ${c}`).join('; ')}`);
+        console.log(`  wrong, ${k}: ${g.n}; ${[...g.examples].sort((a, b) => b[1] - a[1]).slice(0, Number(option('--examples', '6'))).map(([e, c]) => `${e} ${c}`).join('; ')}`);
     }
     // First results read across a space (docs/languages.md 14, step 5): through a spaced ending (않을 거야),
     // as a phrase entry deinflected on its last word (마음에 들어), through a dictionary reference (줄 수), or

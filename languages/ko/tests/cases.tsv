@@ -409,3 +409,13 @@ particle	1	무엇을	무엇	*	particle
 particle	1	누구도	누구	*	particle
 plain stems	1	주거니	주다	v	*
 plain stems	1	치리만큼	치다	v	*
+alternation	1	그랬어요	그러다	v	*
+alternation	1	그래서	그러다	v	*
+alternation	1	저래	저러다	v	*
+alternation	1	저랬어	저러다	v	*
+negatives	0	가려	갈다	*	*
+negatives	0	주려	줄다	*	*
+negatives	0	걸려 있다	걸다	*	*
+negatives	0	내려 왔다	내다	*	*
+negatives	0	알려 주세요	알다	*	*
+negatives	0	열려 있다	열다	*	*

@@ -328,5 +328,20 @@
     ["to hope"],
     33,
     ""
+  ],
+  [
+    "봤어요",
+    "",
+    "non-lemma",
+    "",
+    0,
+    [
+      [
+        "보다",
+        ["informal past indicative polite"]
+      ]
+    ],
+    34,
+    ""
   ]
 ]

@@ -13,9 +13,10 @@ Scanning follows `docs/languages.md` 14.1: the scan starts at the cursor,
 every prefix is looked up (`searchResolution: "character"`) and spaces
 separate words. Particles are written together with the noun (학교에서), and
 nouns have no rules: the lookup reaches 학교 by shortening the scan. The one
-exception is a closed list of personal pronouns with a particle (나는, 그는,
-우리를), which get the whole word. Headwords are not split across lines
-(`wordBreak: "keep-all"`).
+exception is a closed list of personal pronouns with a particle (너를, 그의,
+너한테), which get the whole word; where kty-ko-en's own row for the word names
+a verb, that verb still comes first (그는 → 글다; Known gaps). Headwords are not
+split across lines (`wordBreak: "keep-all"`).
 
 ## Sources and licences
 
@@ -52,9 +53,14 @@ exception is a closed list of personal pronouns with a particle (나는, 그는,
     personal pronouns with a particle;
   - no constraint that Hangul text cannot tell apart: a `stemMinLength`
     beside a `stemEndsWith` (a stem that ends in a class is not empty, and
-    holds a whole syllable), and the vowel check of the ㄷ- and ㅅ-irregular
-    and ㄹ-dropping rules after -(으)-. The own rules give the same text and
-    conditions for 331,848 words without them.
+    holds a whole syllable); the vowel check of the ㄷ-irregular rules (in
+    -(으)- endings, -아/어 endings and -(으)ㅂ시오); the checks of the -(느)ㄴ다 ㄴ
+    rules; the consonant check of the ㅒ/ㅖ ㅎ-irregular rows; the minimum of
+    the ㅕ → ㅣ contraction (마셔 → 마시다; a vowel jamo always follows an
+    initial); the minimums of 십시오 and 무십시오; and -(으)ㅂ시오's ㅣ rule, merged
+    into its vowel rule. The ㅅ-irregular and ㄹ-dropping rules keep their
+    vowel check. The own rules give the same text and conditions for 331,848
+    words without them, except that the bare 무십시오 also gives 무시다.
 - `sources/yomitan.json`: written by `tools/port-yomitan-transforms.mjs` from
   [Yomitan](https://github.com/yomidevs/yomitan/blob/d3c54c10264673eca0d66b970ef74cd5c8b048e3/ext/js/language/ko/korean-transforms.js)
   `ext/js/language/ko/korean-transforms.js` at d3c54c1, GPL-3.0-or-later,
@@ -88,13 +94,16 @@ exception is a closed list of personal pronouns with a particle (나는, 그는,
   the one row the final rules fail is in `tests/gaps.tsv`.
 - `tests/cases.tsv`, `tests/text.tsv`, `tests/lookup.tsv`, `tests/dictionary/`,
   `sources/benchmark-words.txt`, `sources/real-use.tsv`,
-  `sources/chrome-cases.tsv` and `sources/measure.mjs`: written for
+  `sources/chrome-cases.tsv`, `sources/measure.mjs`, `sources/judged.tsv`
+  (the hand verdicts the measurements below use) and `sources/prose-pages.tsv`
+  (the pages of the prose below): written for
   hoshidicts (GPL-3.0-or-later). The last rows of `tests/cases.tsv` fail when
   a stem constraint or word-list group of the own rules is taken out; some of
   their sources are built forms, not words (가습니다, 삷시오). The
-  tiny dictionary's 33 entries are written for it, tagged as kty-ko-en tags
+  tiny dictionary's 34 rows are written for it, tagged as kty-ko-en tags
   them; one is spelled in jamo (ㅁㅓㄱㄷㅏ), so a lookup that kept the
-  unjoined form would find it.
+  unjoined form would find it, and one is a form-of row as kty-ko-en writes
+  them (봤어요 → 보다).
 - Measurement data, not committed:
   - kty-ko-en (below) and UniMorph kor;
   - the 15,947 Korean sentences of [Tatoeba](https://tatoeba.org/)
@@ -104,11 +113,13 @@ exception is a closed list of personal pronouns with a particle (나는, 그는,
     [FrequencyWords](https://github.com/hermitdave/FrequencyWords) at 525f9b5
     (OpenSubtitles 2018; sha256 `8d00401b…d99d`; content CC BY-SA 4.0);
   - prose of 현진건 (1900-1943, public domain) from
-    [ko.wikisource](https://ko.wikisource.org/wiki/저자:현진건): the 24 of his
-    pages that pass a screen for repeated lines (vandalism), hanja and old
-    jamo, fetched 2026-11-03 at their current revisions, 61,688 words (sha256
-    of the joined text `da2badfe…54d6`). The largest is 첫날밤, his 1925
-    translation of Turgenev.
+    [ko.wikisource](https://ko.wikisource.org/wiki/저자:현진건): the 24 pages
+    linked from his author page whose wikitext, fetched 2026-11-03, repeats
+    no line more than three times (a screen for vandalism) and has fewer than
+    50 hanja and no old jamo. `sources/prose-pages.tsv` lists them with their
+    revision ids; the text is their wikitext without templates, tags and link
+    markup, joined in title order: 61,688 words, sha256 `da2badfe…54d6`. The
+    largest is 첫날밤, his 1925 translation of Turgenev.
 
 ## Rule provenance
 
@@ -156,8 +167,10 @@ exception is a closed list of personal pronouns with a particle (나는, 그는,
     바라야지 → 발다), -(으)라's ㄹㅏ → 다 after ㄹ (몰라 → 몰다), -(으)시 without the
     own stem checks (들으시고 → 들다, which is 듣다), -았/었's ㅐㅆ → ㅣ다 after any
     stem (그랬어요 → 그리다), endings read with an empty stem (어요 → 다), and
-    -(으)- alternations without a vowel or consonant check.
-    `sources/final-rules.mjs` finds them by that test, and one line of
+    -(으)- alternations without a vowel or consonant check. 57 copies have
+    their own twin in another transform, so their readings stay but change
+    label: the connective -(으)나 of 자나 깨나 and 보나 마나 is now shown as
+    `-나요`. `sources/final-rules.mjs` finds them by that test, and one line of
     `sources/removed-rules.tsv` says to. They go first and together; had
     that lowered recall on any set, `select-rules.mjs` would stop and name
     the rows, so that the own rules are fixed (it did for 마십시오 → 마시다).
@@ -165,7 +178,7 @@ exception is a closed list of personal pronouns with a particle (나는, 그는,
     where no own rule has the same input conditions (the own `-아/어지다` takes
     adjectives only);
   - 335 rules that recover no row (every row they help has another path) but
-    add false candidates, 1,171 in all, listed in `sources/removed-rules.tsv`
+    add false candidates, 1,172 in all, listed in `sources/removed-rules.tsv`
     (transform id, the rule's affixes and conditions, the false candidates it
     adds, and a note on the negative it breaks or the tie it makes): 11 of the
     33 bare-stem rules of `어간` (우리 → 우리다, 감 → 감다), `-(으)리` after a noun
@@ -184,8 +197,8 @@ exception is a closed list of personal pronouns with a particle (나는, 그는,
     and 자시다 take (-아/어요). Each is removed only if
     the number of valid rows whose lemma a lookup ranks first goes up,
     counted with kty-ko-en as published over UniMorph, the cases, Yomitan's
-    test, the chain set and the Tatoeba words once per occurrence: 250,054
-    for the union, 251,530 after the steps above, 251,539 for the final set.
+    test, the chain set and the Tatoeba words once per occurrence: 250,055
+    for the union, 251,531 after the steps above, 251,540 for the final set.
     The other 9 are kept. So is `-(으)세요`'s ㅅㅔㅇㅛ → ㄹ다: removing it, as an
     earlier version of the script did, lowers the count and makes 마세요 rank
     마다 before 말다 (a cases row pins it).
@@ -250,10 +263,10 @@ no optional processor, transform or variant pass, so with the options line
 |  | Yomitan | 100.00% |  | 0.0538 | 98.34% |
 |  | union | 100.00% |  | 0.0555 | 98.32% |
 |  | **final** | **57.73%** |  | **0.0406** | 81.13% |
-| `tests/cases.tsv` (293; 114 negatives) | own | 78.84% | 100.00% | 0.2491 | 75.09% |
-|  | Yomitan | 80.55% | 25.44% | 0.3276 | 80.55% |
-|  | union | 100.00% | 25.44% | 0.3447 | 83.96% |
-|  | **final** | **100.00%** | **100.00%** | **0.2628** | 84.30% |
+| `tests/cases.tsv` (297; 120 negatives) | own | 79.12% | 100.00% | 0.2593 | 74.41% |
+|  | Yomitan | 79.46% | 27.50% | 0.3535 | 79.46% |
+|  | union | 100.00% | 27.50% | 0.3704 | 83.16% |
+|  | **final** | **100.00%** | **100.00%** | **0.2727** | 83.50% |
 | Yomitan's test (608; 8 negatives) | own | 98.03% | 87.50% | 0.2928 | 88.65% |
 |  | Yomitan | 100.00% | 100.00% | 0.3405 | 90.13% |
 |  | union | 100.00% | 87.50% | 0.3454 | 90.30% |
@@ -299,84 +312,134 @@ no optional processor, transform or variant pass, so with the options line
 The lookups below (`sources/measure.mjs`; `languages/en/sources/lookup-batch.cpp`
 built as its header says) look the text up as a host's hover does: from the
 word to the end of its sentence, 16 results, scan length 16, default
-options. The first result with a definition is judged against the lemmas
-the word's own kty-ko-en form-of references name with an inflection among
-their rules (not only `hangeul`, `hanja`, `eumhun` or a romanization): right
-when it is one of them, the word's own entry when it is the word itself, a
-phrase entry when it is an entry of several words that begins with the word
-(캐나다 사람, 안 돼요, 어쩔 수 없다 for 어쩔 수 없었지), wrong otherwise.
+options. The first result with a definition is judged:
+- against the lemmas the word's own kty-ko-en form-of references name with
+  an inflection among their rules (not only `hangeul`, `hanja`, `eumhun` or
+  a romanization): one of them is right, unless judged by hand below;
+- by hand (`sources/judged.tsv`) where the script cannot tell: the word's
+  own entry shown first (OK when the card's first sense is the word as the
+  text uses it, M when that sense is further down or the word's uses are
+  split, W when the card has no sense of the use: 가자 "Gaza"), and a lemma
+  of the references shown first for a word that splits as a noun or pronoun
+  with a particle, whose references name two or more lemmas, or that the
+  pack's whole-word rules give another lemma (W when it is not the word as
+  the text uses it: 그는 → 글다, 마셨어요 → 마다; C when it is right or wrong by
+  context: 들어 → 듣다 or 들다). The hand verdicts cover such words with 100
+  tokens or more among the frequent words or 2 positions or more in
+  Tatoeba: 270 own entries (151 OK, 59 M, 60 W), 134 noun or pronoun +
+  particle words (83 OK, 13 C, 38 W), 94 words with several lemmas (54 OK,
+  27 C, 13 W) and 5 whole-word words (W). A lemma shown first for a word of
+  these kinds that has no verdict is counted as not judged, not as right;
+- an entry of several words that begins with the word is a phrase entry
+  (안 돼요, 어쩔 수 없다 for 어쩔 수 없었지); anything else is wrong.
+
+Wrong counts the hand verdicts W and the script's wrong results; the own
+entries judged M and the lemmas judged C are counted apart, as neither.
 
 - **Frequent forms** (`measure.mjs frequent`): of the 10,000 most frequent
   words of `ko_50k.txt` (4,271,725 tokens), a rule reaches a lemma of 2,625,
   36.31% of the tokens (lemmas from their form-of references and UniMorph).
-  For 2,331 (20.49% of the tokens) the first result is that lemma, for 289
-  (15.81%) the word's own entry (그래, 하지만, 다른), and for 1 another word:
-  드립니다 → 드립 (kty-ko-en has 드리다 only as a form-of target, Known gaps).
-  For 4 forms of 드리다 there is no result with a definition.
+  - Right: the lemma for 2,213 words (18.73% of the tokens), the word's own
+    entry judged OK for 139 (9.73%: 그래, 하지만, 있어, 나는 "topic-marked form
+    of 나").
+  - **Wrong: 101 words, 2.89% of the tokens.** 53 are own entries without the
+    sense of the use (1.68%): 할 (a list of hanja; 할 수 있다), 마 ("jinx, yam";
+    하지 마), 위해 ("harm"), 좋아요 ("(social media) like"), 가자 ("Gaza"), 보고
+    ("report"; 보고 싶어), 갈, 하면, 볼, 가는 (of 가늘다), 알, 가요 ("song"), 지난
+    ("Jinan"). 47 are a lemma of the references that is not the word's use
+    (1.20%; Known gaps): before a whole-word rule 10 (36,976 tokens: 걸 →
+    걸다, 그는 → 글다, 우리는 → 우리다, 그를 → 그르다, 여긴 → 여기다, 나를 → 나르다),
+    마다 for 마세요, 마십시오, 마시는 and 마셨어 (2,212), a noun or pronoun with a
+    particle 29 (11,195: 왜요 → 외다, 길을 → 긷다, 집을 → 집다, 삶을 → 삶다), and
+    긴 → 기다, 물러서 → 무르다, 거친 → 거치다, 길어 → 긷다 (1,002). And 드립니다 →
+    드립.
+  - Neither: own entries with the sense further down for 59 (4.32%: 내
+    "stream" before "my", 안 "inside" before "not", 해, 날), lemmas right by
+    context for 33 (0.49%: 들어 → 듣다, 나와 → 나오다), and words not judged
+    (under 100 tokens and under 2 Tatoeba positions): 38 own entries and 38
+    lemmas (0.07% each). For 4 forms of 드리다 there is no result with a
+    definition.
 - **The forms behind pronouns and 안/못** (`measure.mjs positions`): Korean has
   no articles, clitics or auxiliaries in front of a verb, so the words that
   can stand there are the pronouns (with or without a particle) and the
   negators 안 and 못. Of Tatoeba's 69,969 word positions, 7,152 follow one of
-  them; at the 1,952 whose references name a lemma the first result is right
-  for 1,382, the word's own entry for 566 and wrong for 4 (0.20%, all
-  `eumhun`, below). No rule changes the word in front: of 6,000 phrases of
-  10 pronouns and negators with the 600 most frequent words of `ko_50k.txt`
+  them; at the 1,952 whose references name a lemma the first result is
+  right for 1,524 (1,267 lemmas, 257 own entries), wrong for 189 (9.68%:
+  할 42, 그를 → 그르다 29, 나를 → 나르다 15, 지난 11, 위해 10), M or C for 230, not
+  judged for 9. No rule changes the word in front: of 6,000 phrases of 10
+  pronouns and negators with the 600 most frequent words of `ko_50k.txt`
   (나는 몰라, 안 먹었어요), every deinflection keeps the front word as written,
   and rows of `tests/lookup.tsv` check both lookups (안 자러 가요 → 안, 자러 안
   가요 → 자다). A lookup from the pronoun or negator itself (7,178) reads past
   it 15 times: kty-ko-en's entries 안 돼요 (10), 제2차 세계 대전 (3) and 저는
   한국 사람이에요 (1), and its `eumhun` row 날 비 → 비 for 날 비웃지마 (1).
 - **Real text** (`measure.mjs positions`, `measure.mjs text`):
-  - Tatoeba, 69,969 positions: 67,853 find something; at the 23,556 whose
-    references name a lemma the first result is right for 16,141, the
-    word's own entry for 7,339, a phrase entry for 29 and wrong for 39
-    (0.17%). 37 of the 39 are kty-ko-en's `eumhun` rows (줄 수, 갈 거, 받을 수,
-    한 일), which a lookup follows to a syllable (Known gaps); the others are
-    드립니다 and 나을 거야 → 나다.
-  - 현진건's prose (61,688 positions): 61,159 find something; at the 16,094
-    whose references name a lemma the first result is right for 11,575, the
-    word's own entry for 4,463, a phrase entry for 12 and wrong for 38
-    (0.24%): `eumhun` rows 26 (한 일 14), the dialect spelling 맨들고/맨든 of
-    만들다 6, and `-(으)려 하다` read at a word in -려 6. Five of those six are
-    right and the judge is wrong: 알려 한다, 울려 하여도, 들려 할, 끌려 하였다 and
+  - Tatoeba, 69,969 positions: 67,853 find something. At the 23,556 whose
+    references name a lemma the first result is right for 19,360 (14,478
+    lemmas, 4,853 own entries, 29 phrase entries) and **wrong for 2,183
+    (9.27%)**: a lemma of the references that is not the word's use 1,335
+    (before a whole-word rule 1,078: 그는 → 글다 534, 우리는 → 우리다 237, 걸 → 걸다
+    146, 나를 → 나르다 72, 그를 → 그르다 65; a noun or pronoun with a particle
+    171: 길을 → 긷다 19, 물을 → 묻다 15, 집을 → 집다 15; 마다 64: 마세요 46; others
+    22: 긴 → 기다 15), own entries without the sense 809 (할 178, 마 75, 위해 60,
+    보고 47, 가는 40, 안다 36, 지난 35), the `eumhun` rows 37 (줄 수 → 수 8, 갈 거 →
+    거 6), and 2 others (드립니다, 나을 거야 → 나다); all in Known gaps. M or C:
+    1,864; not judged: 141; no result with a definition: 8.
+  - 현진건's prose (61,688 positions): 61,159 find something. At the 16,094
+    whose references name a lemma the first result is right for 12,980
+    (10,409 lemmas, 2,559 own entries, 12 phrase entries) and wrong for 1,215
+    (7.55%): a lemma of the references 636 (before a whole-word rule 406:
+    그는 → 글다 279, 나를 → 나르다 60; a noun with a particle 210: 이는 → 이다 36,
+    길을 → 긷다 30; 마다 9; others 11), own entries without the sense 541 (할
+    134, 보고 69, 하면 36), the `eumhun` rows 26 (한 일 14), the dialect
+    spelling 맨들고/맨든 of 만들다 6, and `-(으)려 하다` read at a word in -려 6. Five of
+    those six are in fact right: 알려 한다, 울려 하여도, 들려 할, 끌려 하였다 and
     걸려 하던 (전화를) are 알다, 울다, 들다, 끌다 and 걸다 + -(으)려 하다, while the
-    word's references name the passives 알리다, 울리다, 들리다, 끌리다 and 걸리다.
-    The sixth, 벌려 하품을 → 벌다, is 벌리다 + -어 (Known gaps).
+    word's references name the passives. The sixth, 벌려 하품을 → 벌다, is
+    벌리다 + -어 (Known gaps). M or C: 1,367; not judged (words rare in Tatoeba
+    and the frequency list): 526; no result with a definition: 6.
   - Of the 45,071 positions of the prose that find something but have no
     form-of reference to judge by, a seeded sample of 60 judged by hand
     (`reports/hachi-lang-ko/measure/text-sample-judged.tsv` outside the
     pack): 45 right, 9 words kty-ko-en lacks (비위, 그편, 집무, 첫날밤, 여지없다,
-    the old spellings 정갱이 and 아츰), 3 homograph entries (이원 for 이 원 "two
-    won", 일이 for 일 + 이 twice), 2 the name 한경, and 1 wrong: 진토록 → 진, the
-    old -토록 (진(盡)하다 + -도록), which no rule set reads. A first draw of the
-    sample found 주거니 (-거니) and 치리만큼 (-(으)리만큼) unread; rows of
-    `tests/cases.tsv` now keep them, and both are right in this draw.
+    the old spellings 정갱이 and 아츰), 3 wrong homograph entries (이원 for 이 원
+    "two won", 일이 for 일 + 이 twice), 2 the name 한경, and 1 wrong: 진토록 → 진,
+    the old -토록 (진(盡)하다 + -도록), which no rule set reads. So 4 of the 60
+    are wrong. A first draw of the sample found 주거니 (-거니) and 치리만큼
+    (-(으)리만큼) unread; rows of `tests/cases.tsv` now keep them, and both are
+    right in this draw.
   - Read across a space, as section 14 asks to count: of Tatoeba's first
-    results, 301 through Yomitan's spaced endings (않을 거야 → 않다, 있을 것이다 →
-    있다), 31 a phrase entry deinflected on its last word (마음에 들어 → 마음에
-    들다) and 84 through a reference (the `eumhun` rows, 마음에 들었어); none
-    another way, so no rule reads a word followed by a short word as another
-    word. In the prose: 86, 12, 53 and none.
+    results, 301 come through a spaced ending (않을 거야 → 않다, 있을 것이다 →
+    있다), 31 are a phrase entry deinflected on its last word (마음에 들어 →
+    마음에 들다) and 84 come through a reference (the `eumhun` rows, 마음에
+    들었어). The spaced endings include ties of their own, judged as above:
+    말 거야 → 마다 before 말다 (1; in the prose 말 것이다, 8), and `-(으)려 하다`
+    can read into the next word when the scan cuts it (Known gaps). No other
+    rule reads a word followed by a short word as another word. In the
+    prose: 86, 12, 53.
 - Trace quality, on UniMorph's 136,107 finite rows (lemma, form, tags): the
-  shortest trace to the lemma, which a lookup shows, has a past step exactly
-  when the tags say PST, -겠 exactly when they say FUT, and -(으)시- exactly
-  when they say ELEV, for 99.91% of the 135,414 rows the rules reach. The
-  rest are rows whose tags do not fit the form (계시겠다 tagged as an
-  imperative).
-- `language-conformance-test`: corpus.tsv 1,314 / 1,314, cases.tsv 407 /
-  407, yomitan.tsv 615 / 615, text.tsv 16 / 16, lookup.tsv 34 / 34, gaps.tsv
+  shortest trace the rules give to the lemma has a past step exactly when
+  the tags say PST, -겠 exactly when they say FUT, and -(으)시- exactly when
+  they say ELEV, for 99.91% of the 135,414 rows the rules reach. The rest
+  are rows whose tags do not fit the form (계시겠다 tagged as an imperative).
+  Where kty-ko-en lists the form, a lookup shows the reference's trace
+  instead, because it takes one step: 봤어요 → 보다 [informal past indicative
+  polite] (`host.sample`).
+- `language-conformance-test`: corpus.tsv 1,314 / 1,314, cases.tsv 417 /
+  417, yomitan.tsv 615 / 615, text.tsv 16 / 16, lookup.tsv 35 / 35, gaps.tsv
   0 / 1 (reported); classes.json agrees with the engine (7 classes, 557
-  fields, no steps); 440 of the 3,029 rules are exercised by a passing row.
-  `tests/` and `sources/` hold 987,265 bytes. Taking out any of 84 of the 87
+  fields, no steps); 446 of the 3,029 rules are exercised by a passing row.
+  `tests/` and `sources/` hold 997,486 bytes. Taking out any of 87 of the 90
   stem constraints, exclusions and word-list groups of
-  `sources/own-rules.mjs` fails the test; the other three (`vowelStem:
-  false` at -(으)냐, -(으)니 and -(으)냐고) only keep out a rule that `direct()`
-  writes with more conditions.
+  `sources/own-rules.mjs` (each of the alternation verbs 그러다, 이러다, 저러다
+  and 어쩌다 counted as its own group) fails the test; the other three
+  (`vowelStem: false` at -(으)냐, -(으)니 and -(으)냐고) only keep out a rule that
+  `direct()` writes with more conditions.
 - `tools/check-yomitan.mjs`, with Yomitan d3c54c1's `ext/lib/hangul-js.js`
   built by `tools/yomitan-libs/` (hangul-js 0.2.6, esbuild 0.25.1; sha256
-  `90190300…9f62`): 13,768 inputs, 117,201 Yomitan results, 13,741 listed
+  `90190300…9f62`): 13,780 inputs, 117,225 Yomitan results, 13,753 listed
   differences (all the `-로라` defect), 0 unexplained; processors
-  `disassembleHangul` and `reassembleHangul` 2,302 inputs each, 0
+  `disassembleHangul` and `reassembleHangul` 2,319 inputs each, 0
   unexplained.
 - **Real use**: the 40 inflected words of `sources/real-use.tsv`, each looked
   up from the word to the end of its sentence: the expected lemma is the
@@ -416,38 +479,62 @@ phrase entry when it is an entry of several words that begins with the word
   label as a row whose references name the syllable (`["줄 수", ...,
   [["수", ["eumhun"]], ...]]`; 3,297 rows). A lookup follows it, so the label
   read over two words comes first: 줄 수 있어 → 수, 갈 거야 → 거, 받을 수 → 수,
-  한 일 → 일. These are 37 of the 39 wrong first results in Tatoeba and 26 of
-  the 38 in the prose (above). The pack cannot choose which references a
-  lookup follows; `reports/hachi-lang-questions.md` has a note for the
-  framework.
-- **Ties.** A lookup orders readings of equal trace length by when it found
-  them, and kty-ko-en has no frequencies. With references followed, the
-  word's own references come first among equals: 갑니다, 갈게 and 갈까요 give 가다
-  before 갈다, 줄게, 줄래 and 주세요 주다 before 줄다. Where the references do not
-  decide, the other reading can come first: 사세요 gives 사다 before 살다, 마세요
-  마다 before 말다 (`-(으)세요`'s ㅅㅔㅇㅛ → ㄹ다 gives 말다 in one step, and a
-  cases row keeps it), 걸 (= 것을, 146 Tatoeba positions) 걸다 [-(으)ㄹ] before 것,
-  and 썼다 쓰다 before the dialect verb 써다. 건 gives kty-ko-en's own 건 ("past
-  determinative of 걸다") first. Both readings are Korean, and both are listed.
+  한 일 → 일; 37 wrong first results in Tatoeba and 26 in the prose (above).
+  The lead accepted a framework field for this, `lookup.formOfIgnore` (a list
+  of reference rule names whose rows are not followed); the pack will list
+  `eumhun` once it is on main, and be measured again.
+- **A dictionary-named verb before the pack's whole-word rule.** Where
+  kty-ko-en's rows for the word name a verb (for 그는, only 글다), that verb is
+  confirmed by the dictionary and ties with the pack's one-step whole-word
+  rule, so it comes first and the pronoun, 것 or 말다 second (Tatoeba
+  positions; tokens in `ko_50k.txt`): 그는 → 글다 (534; 5,842), 우리는 → 우리다 (237;
+  4,862), 걸 → 걸다 (146; 12,262; 걸 is 것을 at 145 of the 146), 나를 → 나르다 (72;
+  2,730), 그를 → 그르다 (65; 3,333), 마라 → 마다 (8; 631), 우릴 → 우리다 (7; 2,641), 여긴
+  and 여길 → 여기다 (6; 3,792), 마요 → 마다 (3; 883). That is 1,078 of the 2,183
+  wrong Tatoeba results and 406 of the 1,215 in the prose. 나와 → 나오다 (21;
+  1,966) is right or wrong by context. Yomitan's own rules give the same
+  first results through the same lookup. The framework's lead decided on
+  2026-11-03 to change the framework: in `follow` packs a result reached through a `wholeWord` rule for the
+  exact matched text will rank above a dictionary-confirmed one on a tie.
+  Until that is on main these counts stand; then the pack is measured again.
+- **Ties between lemmas the references name.** A lookup orders readings of
+  equal trace length by when it found them, and kty-ko-en has no
+  frequencies. Where a word's rows name several verbs, each is confirmed in
+  one step and discovery order decides: 마세요 → 마다 "to smash" (46; 1,735)
+  before 말다, the forms of 마시다 → 마다 (마십시오, 마셨어요, 마셨어, 마시는, 마십니다,
+  마십니까, 마신, 마시니까: 19 positions, 603 tokens; 마신 and 마시니까, one
+  position each, are not judged), 말 거야 → 마다 (1; in the prose 말 것이다, 8),
+  긴 → 기다 (15; 459) before 길다, 물러서 → 무르다 (2; 361), 거친 → 거치다 (1; 116):
+  64 + 22 wrong Tatoeba results, 9 + 11 in the prose. The lead's change
+  above does not reach these. Other ties are right by context or put the
+  right word first: 갑니다, 갈게 and 갈까요 give 가다 before 갈다, 줄게 and 주세요
+  주다 before 줄다, 사세요 사다 before 살다, 들어 and 들었다 듣다 before 들다. Both
+  readings are listed in every case.
 - **Pronouns with a particle.** An entry for the exact word comes first:
   kty-ko-en's 나의 ("a traditional practice in Jeju-do"), 나랑 ("(Yukjin)
-  country, nation") and its "topic-marked form of 나" entry for 나는. Three
-  tie with a verb, which comes first: 우리는 → 우리다 (-는), 나를 → 나르다 (-(으)ㄹ),
-  나와 → 나오다 (-아/어); the pronoun is second. 이를 (= 이것을), which is not in the
-  list, gives 이르다 [-(으)ㄹ] first.
+  country, nation") and its "topic-marked form of 나" entry for 나는. The
+  verbs that come before 그는, 우리는, 그를, 나를 and 우릴 are above.
 - **Endings after a plain stem.** -기로, -고는 and -건만 are not read after a
-  plain stem: their rules read a noun with 로, 는 or 만 as a verb. So 가기로
-  했다 finds 가다 only at 가기 (-기), and 가건만 not at all. The bare -(으)려 is
-  not read after a vowel stem (가려 alone; -(으)려 하다 is), because the rule
-  also reads 걸려, 내려 (걸리다, 내리다) as 걸다, 내다; nor are -(으)려는 and
-  -(으)려던 (하려는 → 하): such a rule reads 고려 + 는 as 고다. Yomitan's literary,
-  archaic and colloquial endings whose rules add false candidates are not
-  read either (the plain set above), among them -(으)라니까 (가라니까), -(으)리라
-  (하리라), -고야 (먹고야) and -(으)려다가 (죽이려다가); the rules of the first
-  three read 나라니까, 자리라 and 사고야 as verbs.
+  plain stem: their rules read a noun with 로, 는 or 만 as a verb. So 가기로 했다
+  finds 가다 only at 가기 (-기), and 가건만 not at all. The bare -(으)려 is not read
+  after a vowel stem (가려 alone; -(으)려 하다 is), because the rule also reads
+  걸려, 내려 (걸리다, 내리다) as 걸다, 내다; nor are -(으)려는 and -(으)려던 (하려는 → 하, 보려는 → 보):
+  such a rule reads 고려 + 는 as 고다. 12 Tatoeba positions and 50 of the prose
+  are words in -려는 or -려던. Yomitan's literary, archaic and colloquial
+  endings whose rules add false candidates are not read either (the plain
+  set above), among them -(으)라니까 (가라니까), -(으)리라 (하리라), -고야 (먹고야) and -(으)려다가
+  (죽이려다가); the rules of the first three read 나라니까, 자리라 and 사고야 as verbs.
 - **Rules kept for the cases that also misread.** 따듯하다 → 따다 [-듯],
   신고는 하셨습니까 → 신다 [-고는 하다], 조리되었다는 → 조리다 [-(으)되], 잘려나가고 →
-  잘다 [-(으)려나]; and `-(으)려 하다` reads 벌려 하품을 as 벌다 (it is 벌리다 + -어).
+  잘다 [-(으)려나].
+- **`-(으)려 하다` across a space.** A lookup tries every prefix of the text,
+  and the rules read a prefix that ends inside the next word as a form of 하다:
+  내려 하늘이 gives 내다 at 내려 하 [어간 > -(으)려 하다], 걸려 하나도 걸다 at 걸려
+  하나 [-나요 > …], 들려 할머니가 들다 at 들려 할 (16 of 19 such sentences,
+  where the verb is 내리다, 걸리다, 들리다). In the prose, 벌려 하품을 → 벌다 (it is
+  벌리다 + -어) is the one such first result; Tatoeba has none. Cases rows
+  keep the whole phrases (걸려 있다, 내려 왔다, 알려 주세요, 열려 있다) from reading
+  the active verb.
 - **Nouns are not deinflected.** Particles are reached by shortening the
   scan, so a result shows the noun without the particle's meaning. 707 of the
   75,000 noun + particle words (0.94%) give another first result with a
@@ -455,8 +542,13 @@ phrase entry when it is an entry of several words that begins with the word
   너는: 너는), for 506 a rule reads noun and particle as a verb form (벌까지:
   벌까 → 벌다 by -(으)ㄹ까; 줄기에 → 줄다 by -기에; 다시는 → 달다), and for 10 a
   form-of reference does (메이다 → 메다). Some of these readings are right:
-  the generated 접어 + 도 is 접다 + -어도. In Tatoeba, common nouns with 을 give a
-  verb first too: 길을 → 긷다, 물을 → 묻다, 집을 → 집다 [-(으)ㄹ].
+  the generated 접어 + 도 is 접다 + -어도. In real text the same happens where
+  kty-ko-en lists the noun + particle as a verb form: 길을 → 긷다 (19 Tatoeba
+  positions), 물을 → 묻다 (15), 집을 → 집다 (15), 집은 (11), 때는 → 때다 (11), 개는
+  → 개다 (10), 숨을 → 숨다 (9), 다시는 → 달다 (8), 왜요 → 외다 (1; 1,521 tokens):
+  171 wrong Tatoeba results and 210 in the prose (이는 → 이다 36, 길을 30, 이를 →
+  이르다 26), counted above. The lead's whole-word change does not reach
+  these, since the pack has no rule for nouns.
 - **Irregular stems without a lexicon.** The ㄷ-, ㅂ- and ㅅ-irregular rules
   also apply to regular stems that look the same (달아요 → 닫다 before 달다,
   굴을 → 굳다 beside 굴), and the 르-irregular rule to 러-irregular adjectives
@@ -484,4 +576,8 @@ phrase entry when it is an entry of several words that begins with the word
 - **Not pinned by a test.** `traceSelection: "shortest"` decides which trace a
   result shows, and the test files compare only lemmas and matched text
   (`docs/languages.md` 12.2), so changing it to `"first"` passes them. Nor
-  are three `vowelStem: false` options (above).
+  are three `vowelStem: false` options (above), the own -겠 completer for
+  `f` (a Yomitan rule gives the same reading, and also `ida`), or ㅂ among
+  the initials before which the own rules drop ㄹ (a Yomitan rule gives 삽시다
+  → 살다). `formOf: "follow"` is pinned by a form-of row of the tiny
+  dictionary (봤어요 → 보다, `tests/lookup.tsv`).
