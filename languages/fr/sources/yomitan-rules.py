@@ -157,13 +157,14 @@ for w in cand_words:
 with open(a.out + '.tsv', 'w', encoding='utf-8') as f:
     f.write('# Yomitan rules (sources/yomitan.json) that add a reading the own rules lack, written by sources/yomitan-rules.py; every other Yomitan rule adds none.\n')
     f.write('# decision: keep when the rule adds more right readings than false ones, else drop; sources/yomitan-harm.py then changes keep to drop-first (a false add is the first result of its word) or drop-negative (it fails a negative of tests/cases.tsv); sources/build-final.mjs keeps only keep.\n')
-    f.write('# transform\tindex\tinflected\tdeinflected\tright adds\tfalse adds\tdecision\texamples (right; false)\n')
+    f.write('# transform\tindex\tinflected\tdeinflected\tright adds\tfalse adds\tdecision\texamples (right ; false) for kept rules, and the harm found for drop-first and drop-negative\n')
     for k, (tid, i, inf, de, cout) in enumerate(rules):
         s = stats[k]
         if not s['right'] and not s['false']:
             continue
         decision = 'keep' if len(s['right']) > len(s['false']) else 'drop'
-        examples = ' '.join(s['right'][:2]) + ' ; ' + ' '.join(s['false'][:2])
+        # One example a side for a kept rule (the harm check may still drop it).
+        examples = (s['right'][0] if s['right'] else '') + ' ; ' + (s['false'][0] if s['false'] else '') if decision == 'keep' else ''
         f.write(f"{tid}\t{i}\t{inf}\t{de}\t{len(s['right'])}\t{len(s['false'])}\t{decision}\t{examples.strip()}\n")
 # Every false add, for the harm check (yomitan-harm.py).
 with open(a.out + '-false.tsv', 'w', encoding='utf-8') as f:

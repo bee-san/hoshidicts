@@ -49,18 +49,20 @@
       "description": "An elided article, pronoun or conjunction before a word, removed: l'homme → homme, d'eau → eau, j'ai → ai, qu'il → il, n'est → est.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "l'", "deinflected": "", "conditionsIn": [], "conditionsOut": []},
+        {"type": "prefix", "inflected": "l'", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemNotStartsWith": "[ey]"},
+        {"type": "prefix", "inflected": "l'", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "[e]", "stemNotStartsWithText": "en ", "stemCharacters": "[^+]"},
+        {"type": "prefix", "inflected": "l'", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "[y]", "stemNotStartsWithText": "y ", "stemCharacters": "[^+]"},
         {"type": "prefix", "inflected": "d'", "deinflected": "", "conditionsIn": [], "conditionsOut": []},
         {"type": "prefix", "inflected": "j'", "deinflected": "", "conditionsIn": [], "conditionsOut": ["vcl"]},
         {"type": "prefix", "inflected": "m'", "deinflected": "", "conditionsIn": [], "conditionsOut": ["vcl"], "stemNotStartsWith": "[ey]"},
-        {"type": "prefix", "inflected": "m'", "deinflected": "", "conditionsIn": [], "conditionsOut": ["vcl"], "stemStartsWith": "[e]", "stemNotStartsWithText": "en "},
-        {"type": "prefix", "inflected": "m'", "deinflected": "", "conditionsIn": [], "conditionsOut": ["vcl"], "stemStartsWith": "[y]", "stemNotStartsWithText": "y "},
+        {"type": "prefix", "inflected": "m'", "deinflected": "", "conditionsIn": [], "conditionsOut": ["vcl"], "stemStartsWith": "[e]", "stemNotStartsWithText": "en ", "stemCharacters": "[^+]"},
+        {"type": "prefix", "inflected": "m'", "deinflected": "", "conditionsIn": [], "conditionsOut": ["vcl"], "stemStartsWith": "[y]", "stemNotStartsWithText": "y ", "stemCharacters": "[^+]"},
         {"type": "prefix", "inflected": "t'", "deinflected": "", "conditionsIn": [], "conditionsOut": ["vcl"], "stemNotStartsWith": "[ey]"},
-        {"type": "prefix", "inflected": "t'", "deinflected": "", "conditionsIn": [], "conditionsOut": ["vcl"], "stemStartsWith": "[e]", "stemNotStartsWithText": "en "},
-        {"type": "prefix", "inflected": "t'", "deinflected": "", "conditionsIn": [], "conditionsOut": ["vcl"], "stemStartsWith": "[y]", "stemNotStartsWithText": "y "},
+        {"type": "prefix", "inflected": "t'", "deinflected": "", "conditionsIn": [], "conditionsOut": ["vcl"], "stemStartsWith": "[e]", "stemNotStartsWithText": "en ", "stemCharacters": "[^+]"},
+        {"type": "prefix", "inflected": "t'", "deinflected": "", "conditionsIn": [], "conditionsOut": ["vcl"], "stemStartsWith": "[y]", "stemNotStartsWithText": "y ", "stemCharacters": "[^+]"},
         {"type": "prefix", "inflected": "s'", "deinflected": "", "conditionsIn": [], "conditionsOut": ["vcl"], "stemNotStartsWith": "[ey]"},
-        {"type": "prefix", "inflected": "s'", "deinflected": "", "conditionsIn": [], "conditionsOut": ["vcl"], "stemStartsWith": "[e]", "stemNotStartsWithText": "en "},
-        {"type": "prefix", "inflected": "s'", "deinflected": "", "conditionsIn": [], "conditionsOut": ["vcl"], "stemStartsWith": "[y]", "stemNotStartsWithText": "y "},
+        {"type": "prefix", "inflected": "s'", "deinflected": "", "conditionsIn": [], "conditionsOut": ["vcl"], "stemStartsWith": "[e]", "stemNotStartsWithText": "en ", "stemCharacters": "[^+]"},
+        {"type": "prefix", "inflected": "s'", "deinflected": "", "conditionsIn": [], "conditionsOut": ["vcl"], "stemStartsWith": "[y]", "stemNotStartsWithText": "y ", "stemCharacters": "[^+]"},
         {"type": "prefix", "inflected": "n'", "deinflected": "", "conditionsIn": [], "conditionsOut": ["vcl"]},
         {"type": "prefix", "inflected": "c'", "deinflected": "", "conditionsIn": [], "conditionsOut": ["vcl"]},
         {"type": "prefix", "inflected": "ç'", "deinflected": "", "conditionsIn": [], "conditionsOut": ["vcl"]},
@@ -118,11 +120,11 @@
       "description": "An affirmative imperative with a reflexive pronoun after it, read as the pronominal verb: lève-toi → se lève, assieds-toi → s'assieds, va-t'en → s'en va.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "inflectedPrefix": "", "deinflectedPrefix": "se ", "inflectedSuffix": "-toi", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["imp"], "stemNotStartsWith": "{vowel}"},
+        {"type": "circumfix", "inflectedPrefix": "", "deinflectedPrefix": "se+", "inflectedSuffix": "-toi", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["imp"], "stemNotStartsWith": "{vowel}"},
         {"type": "circumfix", "inflectedPrefix": "", "deinflectedPrefix": "s'", "inflectedSuffix": "-toi", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["imp"], "stemStartsWith": "{elidable}"},
-        {"type": "circumfix", "inflectedPrefix": "", "deinflectedPrefix": "s'en ", "inflectedSuffix": "-t'en", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["imp"]},
-        {"type": "circumfix", "inflectedPrefix": "", "deinflectedPrefix": "s'en ", "inflectedSuffix": "-nous-en", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["imp"]},
-        {"type": "circumfix", "inflectedPrefix": "", "deinflectedPrefix": "s'en ", "inflectedSuffix": "-vous-en", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["imp"]}
+        {"type": "circumfix", "inflectedPrefix": "", "deinflectedPrefix": "s'en+", "inflectedSuffix": "-t'en", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["imp"]},
+        {"type": "circumfix", "inflectedPrefix": "", "deinflectedPrefix": "s'en+", "inflectedSuffix": "-nous-en", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["imp"]},
+        {"type": "circumfix", "inflectedPrefix": "", "deinflectedPrefix": "s'en+", "inflectedSuffix": "-vous-en", "deinflectedSuffix": "", "conditionsIn": [], "conditionsOut": ["imp"]}
       ]
     },
     {
@@ -206,14 +208,14 @@
       "description": "Present indicative, tu: parles (parler), es (être), as (avoir).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "asses", "deinflected": "asser", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p2s"]},
+        {"type": "suffix", "inflected": "asses", "deinflected": "asser", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p2s"], "stemCharacters": "{notSpace}"},
         {"type": "suffix", "inflected": "es", "deinflected": "être", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p2s"], "stemNotStartsWith": "[emst]", "stemNotEndsWith": "{letter}", "source": "both"},
         {"type": "suffix", "inflected": "as", "deinflected": "avoir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p2s"], "stemNotStartsWith": "[y]", "stemNotEndsWith": "{letter}", "source": "both"},
         {"type": "suffix", "inflected": "vas", "deinflected": "aller", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p2s"], "stemNotEndsWith": "{letter}", "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["vres", "vrir"], ["fres", "frir"], ["ueilles", "ueillir"], ["ailles", "aillir"], ["elles", "eler"], ["ettes", "eter"], ["oies", "oyer"], ["uies", "uyer"], ["aies", "ayer"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p2s"], "stemMinLength": 1, "source": "both"},
-        {"type": "suffix", "inflected": "es", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p2s"], "stemMinLength": 2, "source": "both"},
-        {"type": "suffix", "inflected": "es", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p2s"], "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
-        {"type": "suffix", "inflected": "es", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p2s"], "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
+        {"type": "suffix", "inflected": "es", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p2s"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"},
+        {"type": "suffix", "inflected": "es", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p2s"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
+        {"type": "suffix", "inflected": "es", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p2s"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
       ]
     },
     {
@@ -258,7 +260,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["croît", "croître"], ["croit", "croître"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["clut", "clure"], ["crit", "crire"], ["uit", "uire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1, "source": "both"},
         {"type": "suffix", "inflected": "veut", "deinflected": "vouloir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "suffix", "inflected": "it", "deinflected": "ir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "source": "both"}
+        {"type": "suffix", "inflected": "it", "deinflected": "ir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"}
       ]
     },
     {
@@ -298,7 +300,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["trais", "traire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s", "p2s"], "stemNotEndsWith": "{letter}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["crois", "croire"], ["ris", "rire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s", "p2s"], "stemNotEndsWith": "{letter}", "source": "both"},
         {"type": "suffix", "inflected": "veux", "deinflected": "vouloir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s", "p2s"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "suffix", "inflected": "is", "deinflected": "ir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s", "p2s"], "stemMinLength": 2, "source": "both"}
+        {"type": "suffix", "inflected": "is", "deinflected": "ir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s", "p2s"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"}
       ]
     },
     {
@@ -307,11 +309,11 @@
       "description": "Present indicative, je and il: parle (parler).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "asse", "deinflected": "asser", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s"]},
+        {"type": "suffix", "inflected": "asse", "deinflected": "asser", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s"], "stemCharacters": "{notSpace}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["vre", "vrir"], ["fre", "frir"], ["ueille", "ueillir"], ["aille", "aillir"], ["elle", "eler"], ["ette", "eter"], ["oie", "oyer"], ["uie", "uyer"], ["aie", "ayer"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s"], "stemMinLength": 1, "source": "both"},
-        {"type": "suffix", "inflected": "e", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s"], "stemMinLength": 2, "source": "both"},
-        {"type": "suffix", "inflected": "e", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s"], "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
-        {"type": "suffix", "inflected": "e", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s"], "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
+        {"type": "suffix", "inflected": "e", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"},
+        {"type": "suffix", "inflected": "e", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
+        {"type": "suffix", "inflected": "e", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
       ]
     },
     {
@@ -349,7 +351,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["trayons", "traire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["croyons", "croire"], ["rions", "rire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}", "source": "both"},
         {"type": "suffix", "inflected": "voulons", "deinflected": "vouloir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ons", "er"], ["issons", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "source": "both"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ons", "er"], ["issons", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"}
       ]
     },
     {
@@ -388,7 +390,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["trayez", "traire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["croyez", "croire"], ["riez", "rire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}", "source": "both"},
         {"type": "suffix", "inflected": "voulez", "deinflected": "vouloir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ez", "er"], ["issez", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "source": "both"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ez", "er"], ["issez", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"}
       ]
     },
     {
@@ -397,7 +399,13 @@
       "description": "Present indicative, ils: parlent (parler), finissent (finir), prennent (prendre).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["assent", "asser"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "assent", "deinflected": "asser", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}"},
+        {"type": "suffix", "inflected": "sont", "deinflected": "être", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[emst]", "stemNotEndsWith": "{letter}", "source": "both"},
+        {"type": "suffix", "inflected": "ont", "deinflected": "avoir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[y]", "stemNotEndsWith": "{letter}", "source": "both"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["vont", "aller"], ["voient", "voir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}", "source": "both"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["traient", "traire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["croient", "croire"], ["rient", "rire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}", "source": "both"},
+        {"type": "suffix", "inflected": "font", "deinflected": "faire", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[l]", "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["disent", "dire"], ["maudissent", "maudire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["viennent", "venir"], ["tiennent", "tenir"], ["partent", "partir"], ["sortent", "sortir"], ["sentent", "sentir"], ["mentent", "mentir"], ["repentent", "repentir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"]},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["dorment", "dormir"], ["servent", "servir"], ["bouillent", "bouillir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "source": "both"},
@@ -420,20 +428,14 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["suivent", "suivre"], ["vivent", "vivre"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"]},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["lisent", "lire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["sourient", "sourire"], ["suffisent", "suffire"], ["confisent", "confire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "sont", "deinflected": "être", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[emst]", "stemNotEndsWith": "{letter}", "source": "both"},
-        {"type": "suffix", "inflected": "ont", "deinflected": "avoir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[y]", "stemNotEndsWith": "{letter}", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["vont", "aller"], ["voient", "voir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["traient", "traire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["croient", "croire"], ["rient", "rire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}", "source": "both"},
-        {"type": "suffix", "inflected": "font", "deinflected": "faire", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[l]", "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uièrent", "uérir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["vrent", "vrir"], ["frent", "frir"], ["ueillent", "ueillir"], ["aillent", "aillir"], ["çoivent", "cevoir"], ["endent", "endre"], ["andent", "andre"], ["ondent", "ondre"], ["erdent", "erdre"], ["ordent", "ordre"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1, "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ompent", "ompre"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aignent", "aindre"], ["eignent", "eindre"], ["cluent", "clure"], ["crivent", "crire"], ["uisent", "uire"], ["ellent", "eler"], ["ettent", "eter"], ["oient", "oyer"], ["uient", "uyer"], ["aient", "ayer"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1, "source": "both"},
         {"type": "suffix", "inflected": "veulent", "deinflected": "vouloir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ent", "er"], ["issent", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "source": "both"},
-        {"type": "suffix", "inflected": "ent", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
-        {"type": "suffix", "inflected": "ent", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ent", "er"], ["issent", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"},
+        {"type": "suffix", "inflected": "ent", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
+        {"type": "suffix", "inflected": "ent", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
       ]
     },
     {
@@ -476,7 +478,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ompait", "ompre"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aignait", "aindre"], ["eignait", "eindre"], ["cluait", "clure"], ["crivait", "crire"], ["uisait", "uire"], ["çait", "cer"], ["geait", "ger"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1, "source": "both"},
         {"type": "suffix", "inflected": "voulait", "deinflected": "vouloir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ait", "er"], ["issait", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "source": "both"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ait", "er"], ["issait", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"}
       ]
     },
     {
@@ -518,7 +520,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["trayais", "traire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s", "p2s"], "stemNotEndsWith": "{letter}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["croyais", "croire"], ["riais", "rire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s", "p2s"], "stemNotEndsWith": "{letter}", "source": "both"},
         {"type": "suffix", "inflected": "voulais", "deinflected": "vouloir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s", "p2s"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ais", "er"], ["issais", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s", "p2s"], "stemMinLength": 2, "source": "both"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ais", "er"], ["issais", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s", "p2s"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"}
       ]
     },
     {
@@ -527,7 +529,10 @@
       "description": "Imperfect indicative (imparfait), nous: parlions (parler), finissions (finir), prenions (prendre).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["assions", "asser"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "assions", "deinflected": "asser", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}"},
+        {"type": "suffix", "inflected": "étions", "deinflected": "être", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[emst]", "stemNotEndsWith": "{letter}", "source": "both"},
+        {"type": "suffix", "inflected": "avions", "deinflected": "avoir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[y]", "stemNotEndsWith": "{letter}", "source": "both"},
+        {"type": "suffix", "inflected": "faisions", "deinflected": "faire", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[l]", "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["disions", "dire"], ["maudissions", "maudire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["venions", "venir"], ["tenions", "tenir"], ["partions", "partir"], ["sortions", "sortir"], ["sentions", "sentir"], ["mentions", "mentir"], ["repentions", "repentir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"]},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["dormions", "dormir"], ["servions", "servir"], ["bouillions", "bouillir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "source": "both"},
@@ -548,9 +553,6 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["suivions", "suivre"], ["vivions", "vivre"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"]},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["lisions", "lire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["souriions", "sourire"], ["suffisions", "suffire"], ["confisions", "confire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "étions", "deinflected": "être", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[emst]", "stemNotEndsWith": "{letter}", "source": "both"},
-        {"type": "suffix", "inflected": "avions", "deinflected": "avoir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[y]", "stemNotEndsWith": "{letter}", "source": "both"},
-        {"type": "suffix", "inflected": "faisions", "deinflected": "faire", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[l]", "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uérions", "uérir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["vrions", "vrir"], ["frions", "frir"], ["ueillions", "ueillir"], ["aillions", "aillir"], ["cevions", "cevoir"], ["endions", "endre"], ["andions", "andre"], ["ondions", "ondre"], ["erdions", "erdre"], ["ordions", "ordre"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1, "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ompions", "ompre"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1},
@@ -561,7 +563,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["trayions", "traire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["croyions", "croire"], ["riions", "rire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}", "source": "both"},
         {"type": "suffix", "inflected": "voulions", "deinflected": "vouloir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ions", "er"], ["issions", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "source": "both"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ions", "er"], ["issions", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"}
       ]
     },
     {
@@ -570,7 +572,10 @@
       "description": "Imperfect indicative (imparfait), vous: parliez (parler), finissiez (finir), preniez (prendre).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["assiez", "asser"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "assiez", "deinflected": "asser", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}"},
+        {"type": "suffix", "inflected": "étiez", "deinflected": "être", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[emst]", "stemNotEndsWith": "{letter}", "source": "both"},
+        {"type": "suffix", "inflected": "aviez", "deinflected": "avoir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[y]", "stemNotEndsWith": "{letter}", "source": "both"},
+        {"type": "suffix", "inflected": "faisiez", "deinflected": "faire", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[l]", "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["disiez", "dire"], ["maudissiez", "maudire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["veniez", "venir"], ["teniez", "tenir"], ["partiez", "partir"], ["sortiez", "sortir"], ["sentiez", "sentir"], ["mentiez", "mentir"], ["repentiez", "repentir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"]},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["dormiez", "dormir"], ["serviez", "servir"], ["bouilliez", "bouillir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "source": "both"},
@@ -591,9 +596,6 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["suiviez", "suivre"], ["viviez", "vivre"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"]},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["lisiez", "lire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["souriiez", "sourire"], ["suffisiez", "suffire"], ["confisiez", "confire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "étiez", "deinflected": "être", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[emst]", "stemNotEndsWith": "{letter}", "source": "both"},
-        {"type": "suffix", "inflected": "aviez", "deinflected": "avoir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[y]", "stemNotEndsWith": "{letter}", "source": "both"},
-        {"type": "suffix", "inflected": "faisiez", "deinflected": "faire", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[l]", "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uériez", "uérir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["vriez", "vrir"], ["friez", "frir"], ["ueilliez", "ueillir"], ["ailliez", "aillir"], ["ceviez", "cevoir"], ["endiez", "endre"], ["andiez", "andre"], ["ondiez", "ondre"], ["erdiez", "erdre"], ["ordiez", "ordre"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1, "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ompiez", "ompre"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1},
@@ -604,7 +606,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["trayiez", "traire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["croyiez", "croire"], ["riiez", "rire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}", "source": "both"},
         {"type": "suffix", "inflected": "vouliez", "deinflected": "vouloir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["iez", "er"], ["issiez", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "source": "both"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["iez", "er"], ["issiez", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"}
       ]
     },
     {
@@ -644,7 +646,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["trayaient", "traire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["croyaient", "croire"], ["riaient", "rire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}", "source": "both"},
         {"type": "suffix", "inflected": "voulaient", "deinflected": "vouloir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aient", "er"], ["issaient", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "source": "both"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aient", "er"], ["issaient", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"}
       ]
     },
     {
@@ -655,7 +657,7 @@
       "rules": [
         {"type": "suffix", "inflected": "trayai", "deinflected": "traire", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s"], "stemNotEndsWith": "{letter}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["abstrayai", "abstraire"], ["distrayai", "distraire"], ["extrayai", "extraire"], ["soustrayai", "soustraire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s"]},
-        {"type": "suffix", "inflected": "ai", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s"], "stemMinLength": 2, "source": "both"},
+        {"type": "suffix", "inflected": "ai", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["çai", "cer"], ["geai", "ger"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s"], "stemMinLength": 1, "source": "both"}
       ]
     },
@@ -667,7 +669,7 @@
       "rules": [
         {"type": "suffix", "inflected": "trayas", "deinflected": "traire", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p2s"], "stemNotEndsWith": "{letter}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["abstrayas", "abstraire"], ["distrayas", "distraire"], ["extrayas", "extraire"], ["soustrayas", "soustraire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p2s"]},
-        {"type": "suffix", "inflected": "as", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p2s"], "stemMinLength": 2, "source": "both"},
+        {"type": "suffix", "inflected": "as", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p2s"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ças", "cer"], ["geas", "ger"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p2s"], "stemMinLength": 1, "source": "both"}
       ]
     },
@@ -709,7 +711,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["crivit", "crire"], ["uisit", "uire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ça", "cer"], ["gea", "ger"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1, "source": "both"},
         {"type": "suffix", "inflected": "voulut", "deinflected": "vouloir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["a", "er"], ["it", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "source": "both"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["a", "er"], ["it", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"}
       ]
     },
     {
@@ -746,7 +748,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["crivis", "crire"], ["uisis", "uire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s", "p2s"], "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["vis", "voir"], ["crus", "croire"], ["ris", "rire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s", "p2s"], "stemNotEndsWith": "{letter}", "source": "both"},
         {"type": "suffix", "inflected": "voulus", "deinflected": "vouloir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s", "p2s"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "suffix", "inflected": "is", "deinflected": "ir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s", "p2s"], "stemMinLength": 2, "source": "both"}
+        {"type": "suffix", "inflected": "is", "deinflected": "ir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s", "p2s"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"}
       ]
     },
     {
@@ -790,7 +792,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["trayâmes", "traire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["crûmes", "croire"], ["rîmes", "rire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}", "source": "both"},
         {"type": "suffix", "inflected": "voulûmes", "deinflected": "vouloir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["âmes", "er"], ["îmes", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "source": "both"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["âmes", "er"], ["îmes", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"}
       ]
     },
     {
@@ -834,7 +836,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["trayâtes", "traire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["crûtes", "croire"], ["rîtes", "rire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}", "source": "both"},
         {"type": "suffix", "inflected": "voulûtes", "deinflected": "vouloir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["âtes", "er"], ["îtes", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "source": "both"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["âtes", "er"], ["îtes", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"}
       ]
     },
     {
@@ -881,7 +883,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["trayèrent", "traire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["crurent", "croire"], ["rirent", "rire"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}", "source": "both"},
         {"type": "suffix", "inflected": "voulurent", "deinflected": "vouloir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["èrent", "er"], ["irent", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "source": "both"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["èrent", "er"], ["irent", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"}
       ]
     },
     {
@@ -930,9 +932,9 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["etterai", "eter"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s"], "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["oierai", "oyer"], ["uierai", "uyer"], ["aierai", "ayer"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s"], "stemMinLength": 1, "source": "both"},
         {"type": "suffix", "inflected": "voudrai", "deinflected": "vouloir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["erai", "er"], ["irai", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s"], "stemMinLength": 2, "source": "both"},
-        {"type": "suffix", "inflected": "erai", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s"], "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
-        {"type": "suffix", "inflected": "erai", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s"], "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["erai", "er"], ["irai", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"},
+        {"type": "suffix", "inflected": "erai", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
+        {"type": "suffix", "inflected": "erai", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
       ]
     },
     {
@@ -981,9 +983,9 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ompras", "ompre"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p2s"], "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aindras", "aindre"], ["eindras", "eindre"], ["cluras", "clure"], ["criras", "crire"], ["uiras", "uire"], ["elleras", "eler"], ["etteras", "eter"], ["oieras", "oyer"], ["uieras", "uyer"], ["aieras", "ayer"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p2s"], "stemMinLength": 1, "source": "both"},
         {"type": "suffix", "inflected": "voudras", "deinflected": "vouloir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p2s"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["eras", "er"], ["iras", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p2s"], "stemMinLength": 2, "source": "both"},
-        {"type": "suffix", "inflected": "eras", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p2s"], "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
-        {"type": "suffix", "inflected": "eras", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p2s"], "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["eras", "er"], ["iras", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p2s"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"},
+        {"type": "suffix", "inflected": "eras", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p2s"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
+        {"type": "suffix", "inflected": "eras", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p2s"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
       ]
     },
     {
@@ -1029,9 +1031,9 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ompra", "ompre"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aindra", "aindre"], ["eindra", "eindre"], ["clura", "clure"], ["crira", "crire"], ["uira", "uire"], ["ellera", "eler"], ["ettera", "eter"], ["oiera", "oyer"], ["uiera", "uyer"], ["aiera", "ayer"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1, "source": "both"},
         {"type": "suffix", "inflected": "voudra", "deinflected": "vouloir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["era", "er"], ["ira", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "source": "both"},
-        {"type": "suffix", "inflected": "era", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
-        {"type": "suffix", "inflected": "era", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["era", "er"], ["ira", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"},
+        {"type": "suffix", "inflected": "era", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
+        {"type": "suffix", "inflected": "era", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
       ]
     },
     {
@@ -1078,9 +1080,9 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["omprons", "ompre"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aindrons", "aindre"], ["eindrons", "eindre"], ["clurons", "clure"], ["crirons", "crire"], ["uirons", "uire"], ["ellerons", "eler"], ["etterons", "eter"], ["oierons", "oyer"], ["uierons", "uyer"], ["aierons", "ayer"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1, "source": "both"},
         {"type": "suffix", "inflected": "voudrons", "deinflected": "vouloir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["erons", "er"], ["irons", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "source": "both"},
-        {"type": "suffix", "inflected": "erons", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
-        {"type": "suffix", "inflected": "erons", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["erons", "er"], ["irons", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"},
+        {"type": "suffix", "inflected": "erons", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
+        {"type": "suffix", "inflected": "erons", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
       ]
     },
     {
@@ -1127,9 +1129,9 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["omprez", "ompre"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aindrez", "aindre"], ["eindrez", "eindre"], ["clurez", "clure"], ["crirez", "crire"], ["uirez", "uire"], ["ellerez", "eler"], ["etterez", "eter"], ["oierez", "oyer"], ["uierez", "uyer"], ["aierez", "ayer"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1, "source": "both"},
         {"type": "suffix", "inflected": "voudrez", "deinflected": "vouloir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["erez", "er"], ["irez", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "source": "both"},
-        {"type": "suffix", "inflected": "erez", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
-        {"type": "suffix", "inflected": "erez", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["erez", "er"], ["irez", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"},
+        {"type": "suffix", "inflected": "erez", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
+        {"type": "suffix", "inflected": "erez", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
       ]
     },
     {
@@ -1176,9 +1178,9 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ompront", "ompre"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aindront", "aindre"], ["eindront", "eindre"], ["cluront", "clure"], ["criront", "crire"], ["uiront", "uire"], ["elleront", "eler"], ["etteront", "eter"], ["oieront", "oyer"], ["uieront", "uyer"], ["aieront", "ayer"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1, "source": "both"},
         {"type": "suffix", "inflected": "voudront", "deinflected": "vouloir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["eront", "er"], ["iront", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "source": "both"},
-        {"type": "suffix", "inflected": "eront", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
-        {"type": "suffix", "inflected": "eront", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["eront", "er"], ["iront", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"},
+        {"type": "suffix", "inflected": "eront", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
+        {"type": "suffix", "inflected": "eront", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
       ]
     },
     {
@@ -1227,9 +1229,9 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uierait", "uyer"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aierait", "ayer"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1, "source": "both"},
         {"type": "suffix", "inflected": "voudrait", "deinflected": "vouloir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["erait", "er"], ["irait", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "source": "both"},
-        {"type": "suffix", "inflected": "erait", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
-        {"type": "suffix", "inflected": "erait", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["erait", "er"], ["irait", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"},
+        {"type": "suffix", "inflected": "erait", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
+        {"type": "suffix", "inflected": "erait", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
       ]
     },
     {
@@ -1279,9 +1281,9 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uierais", "uyer"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s", "p2s"], "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aierais", "ayer"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s", "p2s"], "stemMinLength": 1, "source": "both"},
         {"type": "suffix", "inflected": "voudrais", "deinflected": "vouloir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s", "p2s"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["erais", "er"], ["irais", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s", "p2s"], "stemMinLength": 2, "source": "both"},
-        {"type": "suffix", "inflected": "erais", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s", "p2s"], "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
-        {"type": "suffix", "inflected": "erais", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s", "p2s"], "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["erais", "er"], ["irais", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s", "p2s"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"},
+        {"type": "suffix", "inflected": "erais", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s", "p2s"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
+        {"type": "suffix", "inflected": "erais", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v", "p1s", "p2s"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
       ]
     },
     {
@@ -1329,9 +1331,9 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uierions", "uyer"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aierions", "ayer"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1, "source": "both"},
         {"type": "suffix", "inflected": "voudrions", "deinflected": "vouloir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["erions", "er"], ["irions", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "source": "both"},
-        {"type": "suffix", "inflected": "erions", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
-        {"type": "suffix", "inflected": "erions", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["erions", "er"], ["irions", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"},
+        {"type": "suffix", "inflected": "erions", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
+        {"type": "suffix", "inflected": "erions", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
       ]
     },
     {
@@ -1379,9 +1381,9 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uieriez", "uyer"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aieriez", "ayer"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1, "source": "both"},
         {"type": "suffix", "inflected": "voudriez", "deinflected": "vouloir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["eriez", "er"], ["iriez", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "source": "both"},
-        {"type": "suffix", "inflected": "eriez", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
-        {"type": "suffix", "inflected": "eriez", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["eriez", "er"], ["iriez", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"},
+        {"type": "suffix", "inflected": "eriez", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
+        {"type": "suffix", "inflected": "eriez", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
       ]
     },
     {
@@ -1431,9 +1433,9 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uieraient", "uyer"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aieraient", "ayer"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 1, "source": "both"},
         {"type": "suffix", "inflected": "voudraient", "deinflected": "vouloir", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["eraient", "er"], ["iraient", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "source": "both"},
-        {"type": "suffix", "inflected": "eraient", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
-        {"type": "suffix", "inflected": "eraient", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["eraient", "er"], ["iraient", "ir"]], "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"},
+        {"type": "suffix", "inflected": "eraient", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
+        {"type": "suffix", "inflected": "eraient", "deinflected": "er", "conditionsIn": ["fin", "vcl"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
       ]
     },
     {
@@ -1451,19 +1453,20 @@
       "description": "Present subjunctive, tu: parles (parler), finisses (finir), prennes (prendre).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["asses", "asser"], ["dises", "dire"], ["maudisses", "maudire"], ["viennes", "venir"], ["tiennes", "tenir"], ["partes", "partir"], ["sortes", "sortir"], ["sentes", "sentir"], ["mentes", "mentir"], ["repentes", "repentir"], ["dormes", "dormir"], ["serves", "servir"], ["bouilles", "bouillir"], ["vêtes", "vêtir"], ["coures", "courir"], ["meures", "mourir"], ["fuies", "fuir"], ["haïsses", "haïr"], ["revoies", "revoir"], ["entrevoies", "entrevoir"], ["prévoies", "prévoir"], ["pourvoies", "pourvoir"], ["dépourvoies", "dépourvoir"], ["doives", "devoir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p2s"]},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["puisses", "pouvoir"], ["saches", "savoir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p2s"], "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["vailles", "valoir"], ["vales", "valoir"], ["asseyes", "asseoir"], ["assoies", "asseoir"], ["sursoies", "surseoir"], ["closes", "clore"], ["déchoies", "déchoir"], ["foutes", "foutre"], ["meuves", "mouvoir"], ["émeuves", "émouvoir"], ["promeuves", "promouvoir"], ["prennes", "prendre"], ["mettes", "mettre"], ["battes", "battre"], ["vainques", "vaincre"], ["oignes", "oindre"], ["abstraies", "abstraire"], ["distraies", "distraire"], ["extraies", "extraire"], ["soustraies", "soustraire"], ["plaises", "plaire"], ["taises", "taire"], ["connaisses", "connaître"], ["paraisses", "paraître"], ["naisses", "naître"], ["paisses", "paître"], ["croisses", "croître"], ["boives", "boire"], ["résolves", "résoudre"], ["dissolves", "dissoudre"], ["absolves", "absoudre"], ["couses", "coudre"], ["moules", "moudre"], ["suives", "suivre"], ["vives", "vivre"], ["lises", "lire"], ["souries", "sourire"], ["suffises", "suffire"], ["confises", "confire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p2s"]},
+        {"type": "suffix", "inflected": "asses", "deinflected": "asser", "conditionsIn": ["vcl"], "conditionsOut": ["v", "p2s"], "stemCharacters": "{notSpace}"},
         {"type": "suffix", "inflected": "aies", "deinflected": "avoir", "conditionsIn": ["vcl"], "conditionsOut": ["v", "p2s"], "stemNotStartsWith": "[y]", "stemNotEndsWith": "{letter}", "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ailles", "aller"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p2s"], "stemNotEndsWith": "{letter}", "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["voies", "voir"], ["traies", "traire"], ["croies", "croire"], ["ries", "rire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p2s"], "stemNotEndsWith": "{letter}"},
         {"type": "suffix", "inflected": "fasses", "deinflected": "faire", "conditionsIn": ["vcl"], "conditionsOut": ["v", "p2s"], "stemNotStartsWith": "[l]", "source": "both"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["dises", "dire"], ["maudisses", "maudire"], ["viennes", "venir"], ["tiennes", "tenir"], ["partes", "partir"], ["sortes", "sortir"], ["sentes", "sentir"], ["mentes", "mentir"], ["repentes", "repentir"], ["dormes", "dormir"], ["serves", "servir"], ["bouilles", "bouillir"], ["vêtes", "vêtir"], ["coures", "courir"], ["meures", "mourir"], ["fuies", "fuir"], ["haïsses", "haïr"], ["revoies", "revoir"], ["entrevoies", "entrevoir"], ["prévoies", "prévoir"], ["pourvoies", "pourvoir"], ["dépourvoies", "dépourvoir"], ["doives", "devoir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p2s"]},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["puisses", "pouvoir"], ["saches", "savoir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p2s"], "source": "both"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["vailles", "valoir"], ["vales", "valoir"], ["asseyes", "asseoir"], ["assoies", "asseoir"], ["sursoies", "surseoir"], ["closes", "clore"], ["déchoies", "déchoir"], ["foutes", "foutre"], ["meuves", "mouvoir"], ["émeuves", "émouvoir"], ["promeuves", "promouvoir"], ["prennes", "prendre"], ["mettes", "mettre"], ["battes", "battre"], ["vainques", "vaincre"], ["oignes", "oindre"], ["abstraies", "abstraire"], ["distraies", "distraire"], ["extraies", "extraire"], ["soustraies", "soustraire"], ["plaises", "plaire"], ["taises", "taire"], ["connaisses", "connaître"], ["paraisses", "paraître"], ["naisses", "naître"], ["paisses", "paître"], ["croisses", "croître"], ["boives", "boire"], ["résolves", "résoudre"], ["dissolves", "dissoudre"], ["absolves", "absoudre"], ["couses", "coudre"], ["moules", "moudre"], ["suives", "suivre"], ["vives", "vivre"], ["lises", "lire"], ["souries", "sourire"], ["suffises", "suffire"], ["confises", "confire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p2s"]},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uières", "uérir"], ["vres", "vrir"], ["fres", "frir"], ["ueilles", "ueillir"], ["ailles", "aillir"], ["çoives", "cevoir"], ["endes", "endre"], ["andes", "andre"], ["ondes", "ondre"], ["erdes", "erdre"], ["ordes", "ordre"], ["ompes", "ompre"], ["aignes", "aindre"], ["eignes", "eindre"], ["clues", "clure"], ["crives", "crire"], ["uises", "uire"], ["elles", "eler"], ["ettes", "eter"], ["oies", "oyer"], ["uies", "uyer"], ["aies", "ayer"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p2s"], "stemMinLength": 1},
         {"type": "suffix", "inflected": "veuilles", "deinflected": "vouloir", "conditionsIn": ["vcl"], "conditionsOut": ["v", "p2s"], "stemNotStartsWith": "[e]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["es", "er"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p2s"], "stemMinLength": 2, "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["isses", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p2s"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "es", "deinflected": "er", "conditionsIn": ["vcl"], "conditionsOut": ["v", "p2s"], "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
-        {"type": "suffix", "inflected": "es", "deinflected": "er", "conditionsIn": ["vcl"], "conditionsOut": ["v", "p2s"], "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["es", "er"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p2s"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["isses", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p2s"], "stemMinLength": 2, "stemCharacters": "{notSpace}"},
+        {"type": "suffix", "inflected": "es", "deinflected": "er", "conditionsIn": ["vcl"], "conditionsOut": ["v", "p2s"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
+        {"type": "suffix", "inflected": "es", "deinflected": "er", "conditionsIn": ["vcl"], "conditionsOut": ["v", "p2s"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
       ]
     },
     {
@@ -1492,18 +1495,19 @@
       "description": "Present subjunctive, je and il: parle (parler), finisse (finir), prenne (prendre).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["asse", "asser"], ["dise", "dire"], ["maudisse", "maudire"], ["vienne", "venir"], ["tienne", "tenir"], ["parte", "partir"], ["sorte", "sortir"], ["sente", "sentir"], ["mente", "mentir"], ["repente", "repentir"], ["dorme", "dormir"], ["serve", "servir"], ["bouille", "bouillir"], ["vête", "vêtir"], ["coure", "courir"], ["meure", "mourir"], ["fuie", "fuir"], ["haïsse", "haïr"], ["revoie", "revoir"], ["entrevoie", "entrevoir"], ["prévoie", "prévoir"], ["pourvoie", "pourvoir"], ["dépourvoie", "dépourvoir"], ["doive", "devoir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p1s"]},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["puisse", "pouvoir"], ["sache", "savoir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p1s"], "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["vaille", "valoir"], ["vale", "valoir"], ["asseye", "asseoir"], ["assoie", "asseoir"], ["sursoie", "surseoir"], ["close", "clore"], ["déchoie", "déchoir"], ["foute", "foutre"], ["meuve", "mouvoir"], ["émeuve", "émouvoir"], ["promeuve", "promouvoir"], ["prenne", "prendre"], ["mette", "mettre"], ["batte", "battre"], ["vainque", "vaincre"], ["oigne", "oindre"], ["abstraie", "abstraire"], ["distraie", "distraire"], ["extraie", "extraire"], ["soustraie", "soustraire"], ["plaise", "plaire"], ["taise", "taire"], ["connaisse", "connaître"], ["paraisse", "paraître"], ["naisse", "naître"], ["paisse", "paître"], ["croisse", "croître"], ["boive", "boire"], ["résolve", "résoudre"], ["dissolve", "dissoudre"], ["absolve", "absoudre"], ["couse", "coudre"], ["moule", "moudre"], ["suive", "suivre"], ["vive", "vivre"], ["lise", "lire"], ["sourie", "sourire"], ["suffise", "suffire"], ["confise", "confire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p1s"]},
+        {"type": "suffix", "inflected": "asse", "deinflected": "asser", "conditionsIn": ["vcl"], "conditionsOut": ["v", "p1s"], "stemCharacters": "{notSpace}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aille", "aller"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p1s"], "stemNotEndsWith": "{letter}", "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["voie", "voir"], ["traie", "traire"], ["croie", "croire"], ["rie", "rire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p1s"], "stemNotEndsWith": "{letter}"},
         {"type": "suffix", "inflected": "fasse", "deinflected": "faire", "conditionsIn": ["vcl"], "conditionsOut": ["v", "p1s"], "stemNotStartsWith": "[l]", "source": "both"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["dise", "dire"], ["maudisse", "maudire"], ["vienne", "venir"], ["tienne", "tenir"], ["parte", "partir"], ["sorte", "sortir"], ["sente", "sentir"], ["mente", "mentir"], ["repente", "repentir"], ["dorme", "dormir"], ["serve", "servir"], ["bouille", "bouillir"], ["vête", "vêtir"], ["coure", "courir"], ["meure", "mourir"], ["fuie", "fuir"], ["haïsse", "haïr"], ["revoie", "revoir"], ["entrevoie", "entrevoir"], ["prévoie", "prévoir"], ["pourvoie", "pourvoir"], ["dépourvoie", "dépourvoir"], ["doive", "devoir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p1s"]},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["puisse", "pouvoir"], ["sache", "savoir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p1s"], "source": "both"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["vaille", "valoir"], ["vale", "valoir"], ["asseye", "asseoir"], ["assoie", "asseoir"], ["sursoie", "surseoir"], ["close", "clore"], ["déchoie", "déchoir"], ["foute", "foutre"], ["meuve", "mouvoir"], ["émeuve", "émouvoir"], ["promeuve", "promouvoir"], ["prenne", "prendre"], ["mette", "mettre"], ["batte", "battre"], ["vainque", "vaincre"], ["oigne", "oindre"], ["abstraie", "abstraire"], ["distraie", "distraire"], ["extraie", "extraire"], ["soustraie", "soustraire"], ["plaise", "plaire"], ["taise", "taire"], ["connaisse", "connaître"], ["paraisse", "paraître"], ["naisse", "naître"], ["paisse", "paître"], ["croisse", "croître"], ["boive", "boire"], ["résolve", "résoudre"], ["dissolve", "dissoudre"], ["absolve", "absoudre"], ["couse", "coudre"], ["moule", "moudre"], ["suive", "suivre"], ["vive", "vivre"], ["lise", "lire"], ["sourie", "sourire"], ["suffise", "suffire"], ["confise", "confire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p1s"]},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uière", "uérir"], ["vre", "vrir"], ["fre", "frir"], ["ueille", "ueillir"], ["aille", "aillir"], ["çoive", "cevoir"], ["ende", "endre"], ["ande", "andre"], ["onde", "ondre"], ["erde", "erdre"], ["orde", "ordre"], ["ompe", "ompre"], ["aigne", "aindre"], ["eigne", "eindre"], ["clue", "clure"], ["crive", "crire"], ["uise", "uire"], ["elle", "eler"], ["ette", "eter"], ["oie", "oyer"], ["uie", "uyer"], ["aie", "ayer"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p1s"], "stemMinLength": 1},
         {"type": "suffix", "inflected": "veuille", "deinflected": "vouloir", "conditionsIn": ["vcl"], "conditionsOut": ["v", "p1s"], "stemNotStartsWith": "[e]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["e", "er"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p1s"], "stemMinLength": 2, "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["isse", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p1s"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "e", "deinflected": "er", "conditionsIn": ["vcl"], "conditionsOut": ["v", "p1s"], "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
-        {"type": "suffix", "inflected": "e", "deinflected": "er", "conditionsIn": ["vcl"], "conditionsOut": ["v", "p1s"], "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["e", "er"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p1s"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["isse", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p1s"], "stemMinLength": 2, "stemCharacters": "{notSpace}"},
+        {"type": "suffix", "inflected": "e", "deinflected": "er", "conditionsIn": ["vcl"], "conditionsOut": ["v", "p1s"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
+        {"type": "suffix", "inflected": "e", "deinflected": "er", "conditionsIn": ["vcl"], "conditionsOut": ["v", "p1s"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
       ]
     },
     {
@@ -1512,17 +1516,18 @@
       "description": "Present subjunctive, nous: parlions (parler), finissions (finir), prenions (prendre).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["assions", "asser"], ["disions", "dire"], ["maudissions", "maudire"], ["venions", "venir"], ["tenions", "tenir"], ["partions", "partir"], ["sortions", "sortir"], ["sentions", "sentir"], ["mentions", "mentir"], ["repentions", "repentir"], ["dormions", "dormir"], ["servions", "servir"], ["bouillions", "bouillir"], ["vêtions", "vêtir"], ["courions", "courir"], ["mourions", "mourir"], ["fuyions", "fuir"], ["haïssions", "haïr"], ["revoyions", "revoir"], ["entrevoyions", "entrevoir"], ["prévoyions", "prévoir"], ["pourvoyions", "pourvoir"], ["dépourvoyions", "dépourvoir"], ["devions", "devoir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"]},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["puissions", "pouvoir"], ["sachions", "savoir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["valions", "valoir"], ["asseyions", "asseoir"], ["assoyions", "asseoir"], ["sursoyions", "surseoir"], ["closions", "clore"], ["déchoyions", "déchoir"], ["foutions", "foutre"], ["mouvions", "mouvoir"], ["émouvions", "émouvoir"], ["promouvions", "promouvoir"], ["prenions", "prendre"], ["mettions", "mettre"], ["battions", "battre"], ["vainquions", "vaincre"], ["oignions", "oindre"], ["abstrayions", "abstraire"], ["distrayions", "distraire"], ["extrayions", "extraire"], ["soustrayions", "soustraire"], ["plaisions", "plaire"], ["taisions", "taire"], ["connaissions", "connaître"], ["paraissions", "paraître"], ["naissions", "naître"], ["paissions", "paître"], ["croissions", "croître"], ["buvions", "boire"], ["résolvions", "résoudre"], ["dissolvions", "dissoudre"], ["absolvions", "absoudre"], ["cousions", "coudre"], ["moulions", "moudre"], ["suivions", "suivre"], ["vivions", "vivre"], ["lisions", "lire"], ["souriions", "sourire"], ["suffisions", "suffire"], ["confisions", "confire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "assions", "deinflected": "asser", "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}"},
         {"type": "suffix", "inflected": "soyons", "deinflected": "être", "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[emst]", "stemNotEndsWith": "{letter}", "source": "both"},
         {"type": "suffix", "inflected": "ayons", "deinflected": "avoir", "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[y]", "stemNotEndsWith": "{letter}", "source": "both"},
         {"type": "suffix", "inflected": "fassions", "deinflected": "faire", "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[l]", "source": "both"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["disions", "dire"], ["maudissions", "maudire"], ["venions", "venir"], ["tenions", "tenir"], ["partions", "partir"], ["sortions", "sortir"], ["sentions", "sentir"], ["mentions", "mentir"], ["repentions", "repentir"], ["dormions", "dormir"], ["servions", "servir"], ["bouillions", "bouillir"], ["vêtions", "vêtir"], ["courions", "courir"], ["mourions", "mourir"], ["fuyions", "fuir"], ["haïssions", "haïr"], ["revoyions", "revoir"], ["entrevoyions", "entrevoir"], ["prévoyions", "prévoir"], ["pourvoyions", "pourvoir"], ["dépourvoyions", "dépourvoir"], ["devions", "devoir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"]},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["puissions", "pouvoir"], ["sachions", "savoir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "source": "both"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["valions", "valoir"], ["asseyions", "asseoir"], ["assoyions", "asseoir"], ["sursoyions", "surseoir"], ["closions", "clore"], ["déchoyions", "déchoir"], ["foutions", "foutre"], ["mouvions", "mouvoir"], ["émouvions", "émouvoir"], ["promouvions", "promouvoir"], ["prenions", "prendre"], ["mettions", "mettre"], ["battions", "battre"], ["vainquions", "vaincre"], ["oignions", "oindre"], ["abstrayions", "abstraire"], ["distrayions", "distraire"], ["extrayions", "extraire"], ["soustrayions", "soustraire"], ["plaisions", "plaire"], ["taisions", "taire"], ["connaissions", "connaître"], ["paraissions", "paraître"], ["naissions", "naître"], ["paissions", "paître"], ["croissions", "croître"], ["buvions", "boire"], ["résolvions", "résoudre"], ["dissolvions", "dissoudre"], ["absolvions", "absoudre"], ["cousions", "coudre"], ["moulions", "moudre"], ["suivions", "suivre"], ["vivions", "vivre"], ["lisions", "lire"], ["souriions", "sourire"], ["suffisions", "suffire"], ["confisions", "confire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"]},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uérions", "uérir"], ["vrions", "vrir"], ["frions", "frir"], ["ueillions", "ueillir"], ["aillions", "aillir"], ["cevions", "cevoir"], ["endions", "endre"], ["andions", "andre"], ["ondions", "ondre"], ["erdions", "erdre"], ["ordions", "ordre"], ["ompions", "ompre"], ["aignions", "aindre"], ["eignions", "eindre"], ["cluions", "clure"], ["crivions", "crire"], ["uisions", "uire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["voyions", "voir"], ["trayions", "traire"], ["croyions", "croire"], ["riions", "rire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}"},
         {"type": "suffix", "inflected": "voulions", "deinflected": "vouloir", "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ions", "er"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["issions", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ions", "er"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["issions", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}"}
       ]
     },
     {
@@ -1531,17 +1536,18 @@
       "description": "Present subjunctive, vous: parliez (parler), finissiez (finir), preniez (prendre).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["assiez", "asser"], ["disiez", "dire"], ["maudissiez", "maudire"], ["veniez", "venir"], ["teniez", "tenir"], ["partiez", "partir"], ["sortiez", "sortir"], ["sentiez", "sentir"], ["mentiez", "mentir"], ["repentiez", "repentir"], ["dormiez", "dormir"], ["serviez", "servir"], ["bouilliez", "bouillir"], ["vêtiez", "vêtir"], ["couriez", "courir"], ["mouriez", "mourir"], ["fuyiez", "fuir"], ["haïssiez", "haïr"], ["revoyiez", "revoir"], ["entrevoyiez", "entrevoir"], ["prévoyiez", "prévoir"], ["pourvoyiez", "pourvoir"], ["dépourvoyiez", "dépourvoir"], ["deviez", "devoir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"]},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["puissiez", "pouvoir"], ["sachiez", "savoir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["valiez", "valoir"], ["asseyiez", "asseoir"], ["assoyiez", "asseoir"], ["sursoyiez", "surseoir"], ["closiez", "clore"], ["déchoyiez", "déchoir"], ["foutiez", "foutre"], ["mouviez", "mouvoir"], ["émouviez", "émouvoir"], ["promouviez", "promouvoir"], ["preniez", "prendre"], ["mettiez", "mettre"], ["battiez", "battre"], ["vainquiez", "vaincre"], ["oigniez", "oindre"], ["abstrayiez", "abstraire"], ["distrayiez", "distraire"], ["extrayiez", "extraire"], ["soustrayiez", "soustraire"], ["plaisiez", "plaire"], ["taisiez", "taire"], ["connaissiez", "connaître"], ["paraissiez", "paraître"], ["naissiez", "naître"], ["paissiez", "paître"], ["croissiez", "croître"], ["buviez", "boire"], ["résolviez", "résoudre"], ["dissolviez", "dissoudre"], ["absolviez", "absoudre"], ["cousiez", "coudre"], ["mouliez", "moudre"], ["suiviez", "suivre"], ["viviez", "vivre"], ["lisiez", "lire"], ["souriiez", "sourire"], ["suffisiez", "suffire"], ["confisiez", "confire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "assiez", "deinflected": "asser", "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}"},
         {"type": "suffix", "inflected": "soyez", "deinflected": "être", "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[emst]", "stemNotEndsWith": "{letter}", "source": "both"},
         {"type": "suffix", "inflected": "ayez", "deinflected": "avoir", "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[y]", "stemNotEndsWith": "{letter}", "source": "both"},
         {"type": "suffix", "inflected": "fassiez", "deinflected": "faire", "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[l]", "source": "both"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["disiez", "dire"], ["maudissiez", "maudire"], ["veniez", "venir"], ["teniez", "tenir"], ["partiez", "partir"], ["sortiez", "sortir"], ["sentiez", "sentir"], ["mentiez", "mentir"], ["repentiez", "repentir"], ["dormiez", "dormir"], ["serviez", "servir"], ["bouilliez", "bouillir"], ["vêtiez", "vêtir"], ["couriez", "courir"], ["mouriez", "mourir"], ["fuyiez", "fuir"], ["haïssiez", "haïr"], ["revoyiez", "revoir"], ["entrevoyiez", "entrevoir"], ["prévoyiez", "prévoir"], ["pourvoyiez", "pourvoir"], ["dépourvoyiez", "dépourvoir"], ["deviez", "devoir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"]},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["puissiez", "pouvoir"], ["sachiez", "savoir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "source": "both"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["valiez", "valoir"], ["asseyiez", "asseoir"], ["assoyiez", "asseoir"], ["sursoyiez", "surseoir"], ["closiez", "clore"], ["déchoyiez", "déchoir"], ["foutiez", "foutre"], ["mouviez", "mouvoir"], ["émouviez", "émouvoir"], ["promouviez", "promouvoir"], ["preniez", "prendre"], ["mettiez", "mettre"], ["battiez", "battre"], ["vainquiez", "vaincre"], ["oigniez", "oindre"], ["abstrayiez", "abstraire"], ["distrayiez", "distraire"], ["extrayiez", "extraire"], ["soustrayiez", "soustraire"], ["plaisiez", "plaire"], ["taisiez", "taire"], ["connaissiez", "connaître"], ["paraissiez", "paraître"], ["naissiez", "naître"], ["paissiez", "paître"], ["croissiez", "croître"], ["buviez", "boire"], ["résolviez", "résoudre"], ["dissolviez", "dissoudre"], ["absolviez", "absoudre"], ["cousiez", "coudre"], ["mouliez", "moudre"], ["suiviez", "suivre"], ["viviez", "vivre"], ["lisiez", "lire"], ["souriiez", "sourire"], ["suffisiez", "suffire"], ["confisiez", "confire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"]},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uériez", "uérir"], ["vriez", "vrir"], ["friez", "frir"], ["ueilliez", "ueillir"], ["ailliez", "aillir"], ["ceviez", "cevoir"], ["endiez", "endre"], ["andiez", "andre"], ["ondiez", "ondre"], ["erdiez", "erdre"], ["ordiez", "ordre"], ["ompiez", "ompre"], ["aigniez", "aindre"], ["eigniez", "eindre"], ["cluiez", "clure"], ["criviez", "crire"], ["uisiez", "uire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["voyiez", "voir"], ["trayiez", "traire"], ["croyiez", "croire"], ["riiez", "rire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}"},
         {"type": "suffix", "inflected": "vouliez", "deinflected": "vouloir", "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["iez", "er"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["issiez", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["iez", "er"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["issiez", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}"}
       ]
     },
     {
@@ -1550,20 +1556,21 @@
       "description": "Present subjunctive, ils: parlent (parler), finissent (finir), prennent (prendre).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["assent", "asser"], ["disent", "dire"], ["maudissent", "maudire"], ["viennent", "venir"], ["tiennent", "tenir"], ["partent", "partir"], ["sortent", "sortir"], ["sentent", "sentir"], ["mentent", "mentir"], ["repentent", "repentir"], ["dorment", "dormir"], ["servent", "servir"], ["bouillent", "bouillir"], ["vêtent", "vêtir"], ["courent", "courir"], ["meurent", "mourir"], ["fuient", "fuir"], ["haïssent", "haïr"], ["revoient", "revoir"], ["entrevoient", "entrevoir"], ["prévoient", "prévoir"], ["pourvoient", "pourvoir"], ["dépourvoient", "dépourvoir"], ["doivent", "devoir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"]},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["puissent", "pouvoir"], ["sachent", "savoir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["vaillent", "valoir"], ["valent", "valoir"], ["pleuvent", "pleuvoir"], ["asseyent", "asseoir"], ["assoient", "asseoir"], ["sursoient", "surseoir"], ["closent", "clore"], ["déchoient", "déchoir"], ["foutent", "foutre"], ["meuvent", "mouvoir"], ["émeuvent", "émouvoir"], ["promeuvent", "promouvoir"], ["prennent", "prendre"], ["mettent", "mettre"], ["battent", "battre"], ["vainquent", "vaincre"], ["oignent", "oindre"], ["abstraient", "abstraire"], ["distraient", "distraire"], ["extraient", "extraire"], ["soustraient", "soustraire"], ["plaisent", "plaire"], ["taisent", "taire"], ["connaissent", "connaître"], ["paraissent", "paraître"], ["naissent", "naître"], ["paissent", "paître"], ["croissent", "croître"], ["boivent", "boire"], ["résolvent", "résoudre"], ["dissolvent", "dissoudre"], ["absolvent", "absoudre"], ["cousent", "coudre"], ["moulent", "moudre"], ["suivent", "suivre"], ["vivent", "vivre"], ["lisent", "lire"], ["sourient", "sourire"], ["suffisent", "suffire"], ["confisent", "confire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "assent", "deinflected": "asser", "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}"},
         {"type": "suffix", "inflected": "soient", "deinflected": "être", "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[emst]", "stemNotEndsWith": "{letter}", "source": "both"},
         {"type": "suffix", "inflected": "aient", "deinflected": "avoir", "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[y]", "stemNotEndsWith": "{letter}", "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aillent", "aller"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}", "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["voient", "voir"], ["traient", "traire"], ["croient", "croire"], ["rient", "rire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}"},
         {"type": "suffix", "inflected": "fassent", "deinflected": "faire", "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[l]", "source": "both"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["disent", "dire"], ["maudissent", "maudire"], ["viennent", "venir"], ["tiennent", "tenir"], ["partent", "partir"], ["sortent", "sortir"], ["sentent", "sentir"], ["mentent", "mentir"], ["repentent", "repentir"], ["dorment", "dormir"], ["servent", "servir"], ["bouillent", "bouillir"], ["vêtent", "vêtir"], ["courent", "courir"], ["meurent", "mourir"], ["fuient", "fuir"], ["haïssent", "haïr"], ["revoient", "revoir"], ["entrevoient", "entrevoir"], ["prévoient", "prévoir"], ["pourvoient", "pourvoir"], ["dépourvoient", "dépourvoir"], ["doivent", "devoir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"]},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["puissent", "pouvoir"], ["sachent", "savoir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "source": "both"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["vaillent", "valoir"], ["valent", "valoir"], ["pleuvent", "pleuvoir"], ["asseyent", "asseoir"], ["assoient", "asseoir"], ["sursoient", "surseoir"], ["closent", "clore"], ["déchoient", "déchoir"], ["foutent", "foutre"], ["meuvent", "mouvoir"], ["émeuvent", "émouvoir"], ["promeuvent", "promouvoir"], ["prennent", "prendre"], ["mettent", "mettre"], ["battent", "battre"], ["vainquent", "vaincre"], ["oignent", "oindre"], ["abstraient", "abstraire"], ["distraient", "distraire"], ["extraient", "extraire"], ["soustraient", "soustraire"], ["plaisent", "plaire"], ["taisent", "taire"], ["connaissent", "connaître"], ["paraissent", "paraître"], ["naissent", "naître"], ["paissent", "paître"], ["croissent", "croître"], ["boivent", "boire"], ["résolvent", "résoudre"], ["dissolvent", "dissoudre"], ["absolvent", "absoudre"], ["cousent", "coudre"], ["moulent", "moudre"], ["suivent", "suivre"], ["vivent", "vivre"], ["lisent", "lire"], ["sourient", "sourire"], ["suffisent", "suffire"], ["confisent", "confire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"]},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uièrent", "uérir"], ["vrent", "vrir"], ["frent", "frir"], ["ueillent", "ueillir"], ["aillent", "aillir"], ["çoivent", "cevoir"], ["endent", "endre"], ["andent", "andre"], ["ondent", "ondre"], ["erdent", "erdre"], ["ordent", "ordre"], ["ompent", "ompre"], ["aignent", "aindre"], ["eignent", "eindre"], ["cluent", "clure"], ["crivent", "crire"], ["uisent", "uire"], ["ellent", "eler"], ["ettent", "eter"], ["oient", "oyer"], ["uient", "uyer"], ["aient", "ayer"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "suffix", "inflected": "veuillent", "deinflected": "vouloir", "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ent", "er"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["issent", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ent", "deinflected": "er", "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
-        {"type": "suffix", "inflected": "ent", "deinflected": "er", "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ent", "er"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["issent", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}"},
+        {"type": "suffix", "inflected": "ent", "deinflected": "er", "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
+        {"type": "suffix", "inflected": "ent", "deinflected": "er", "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
       ]
     },
     {
@@ -1579,7 +1586,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uisse", "uérir"], ["vrisse", "vrir"], ["frisse", "frir"], ["ueillisse", "ueillir"], ["aillisse", "aillir"], ["çusse", "cevoir"], ["endisse", "endre"], ["andisse", "andre"], ["ondisse", "ondre"], ["erdisse", "erdre"], ["ordisse", "ordre"], ["ompisse", "ompre"], ["aignisse", "aindre"], ["eignisse", "eindre"], ["crusse", "croître"], ["clusse", "clure"], ["crivisse", "crire"], ["uisisse", "uire"], ["çasse", "cer"], ["geasse", "ger"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p1s"], "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["visse", "voir"], ["trayasse", "traire"], ["crusse", "croire"], ["risse", "rire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p1s"], "stemNotEndsWith": "{letter}"},
         {"type": "suffix", "inflected": "voulusse", "deinflected": "vouloir", "conditionsIn": ["vcl"], "conditionsOut": ["v", "p1s"], "stemNotStartsWith": "[e]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["asse", "er"], ["isse", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p1s"], "stemMinLength": 2}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["asse", "er"], ["isse", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p1s"], "stemMinLength": 2, "stemCharacters": "{notSpace}"}
       ]
     },
     {
@@ -1595,7 +1602,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uisses", "uérir"], ["vrisses", "vrir"], ["frisses", "frir"], ["ueillisses", "ueillir"], ["aillisses", "aillir"], ["çusses", "cevoir"], ["endisses", "endre"], ["andisses", "andre"], ["ondisses", "ondre"], ["erdisses", "erdre"], ["ordisses", "ordre"], ["ompisses", "ompre"], ["aignisses", "aindre"], ["eignisses", "eindre"], ["crusses", "croître"], ["clusses", "clure"], ["crivisses", "crire"], ["uisisses", "uire"], ["çasses", "cer"], ["geasses", "ger"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p2s"], "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["visses", "voir"], ["trayasses", "traire"], ["crusses", "croire"], ["risses", "rire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p2s"], "stemNotEndsWith": "{letter}"},
         {"type": "suffix", "inflected": "voulusses", "deinflected": "vouloir", "conditionsIn": ["vcl"], "conditionsOut": ["v", "p2s"], "stemNotStartsWith": "[e]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["asses", "er"], ["isses", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p2s"], "stemMinLength": 2}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["asses", "er"], ["isses", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v", "p2s"], "stemMinLength": 2, "stemCharacters": "{notSpace}"}
       ]
     },
     {
@@ -1610,7 +1617,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["dît", "dire"], ["maudît", "maudire"], ["vînt", "venir"], ["tînt", "tenir"], ["partît", "partir"], ["sortît", "sortir"], ["sentît", "sentir"], ["mentît", "mentir"], ["repentît", "repentir"], ["dormît", "dormir"], ["servît", "servir"], ["bouillît", "bouillir"], ["vêtît", "vêtir"], ["courût", "courir"], ["mourût", "mourir"], ["fuît", "fuir"], ["haït", "haïr"], ["revît", "revoir"], ["entrevît", "entrevoir"], ["prévît", "prévoir"], ["pourvût", "pourvoir"], ["dépourvût", "dépourvoir"], ["dût", "devoir"], ["pût", "pouvoir"], ["sût", "savoir"], ["valût", "valoir"], ["fallût", "falloir"], ["plût", "pleuvoir"], ["assît", "asseoir"], ["sursît", "surseoir"], ["déchût", "déchoir"], ["mût", "mouvoir"], ["émût", "émouvoir"], ["promût", "promouvoir"], ["prît", "prendre"], ["mît", "mettre"], ["battît", "battre"], ["vainquît", "vaincre"], ["oignît", "oindre"], ["abstrayât", "abstraire"], ["distrayât", "distraire"], ["extrayât", "extraire"], ["soustrayât", "soustraire"], ["plût", "plaire"], ["tût", "taire"], ["connût", "connaître"], ["parût", "paraître"], ["naquît", "naître"], ["pût", "paître"], ["crût", "croître"], ["bût", "boire"], ["résolût", "résoudre"], ["dissolût", "dissoudre"], ["absolût", "absoudre"], ["cousît", "coudre"], ["moulût", "moudre"], ["suivît", "suivre"], ["vécût", "vivre"], ["lût", "lire"], ["sourît", "sourire"], ["suffît", "suffire"], ["confît", "confire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"]},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uît", "uérir"], ["vrît", "vrir"], ["frît", "frir"], ["ueillît", "ueillir"], ["aillît", "aillir"], ["çût", "cevoir"], ["endît", "endre"], ["andît", "andre"], ["ondît", "ondre"], ["erdît", "erdre"], ["ordît", "ordre"], ["ompît", "ompre"], ["aignît", "aindre"], ["eignît", "eindre"], ["crût", "croître"], ["clût", "clure"], ["crivît", "crire"], ["uisît", "uire"], ["çât", "cer"], ["geât", "ger"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "suffix", "inflected": "voulût", "deinflected": "vouloir", "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ât", "er"], ["ît", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ât", "er"], ["ît", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}"}
       ]
     },
     {
@@ -1626,7 +1633,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uissions", "uérir"], ["vrissions", "vrir"], ["frissions", "frir"], ["ueillissions", "ueillir"], ["aillissions", "aillir"], ["çussions", "cevoir"], ["endissions", "endre"], ["andissions", "andre"], ["ondissions", "ondre"], ["erdissions", "erdre"], ["ordissions", "ordre"], ["ompissions", "ompre"], ["aignissions", "aindre"], ["eignissions", "eindre"], ["crussions", "croître"], ["clussions", "clure"], ["crivissions", "crire"], ["uisissions", "uire"], ["çassions", "cer"], ["geassions", "ger"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["vissions", "voir"], ["trayassions", "traire"], ["crussions", "croire"], ["rissions", "rire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}"},
         {"type": "suffix", "inflected": "voulussions", "deinflected": "vouloir", "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["assions", "er"], ["issions", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["assions", "er"], ["issions", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}"}
       ]
     },
     {
@@ -1642,7 +1649,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uissiez", "uérir"], ["vrissiez", "vrir"], ["frissiez", "frir"], ["ueillissiez", "ueillir"], ["aillissiez", "aillir"], ["çussiez", "cevoir"], ["endissiez", "endre"], ["andissiez", "andre"], ["ondissiez", "ondre"], ["erdissiez", "erdre"], ["ordissiez", "ordre"], ["ompissiez", "ompre"], ["aignissiez", "aindre"], ["eignissiez", "eindre"], ["crussiez", "croître"], ["clussiez", "clure"], ["crivissiez", "crire"], ["uisissiez", "uire"], ["çassiez", "cer"], ["geassiez", "ger"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["vissiez", "voir"], ["trayassiez", "traire"], ["crussiez", "croire"], ["rissiez", "rire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}"},
         {"type": "suffix", "inflected": "voulussiez", "deinflected": "vouloir", "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["assiez", "er"], ["issiez", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["assiez", "er"], ["issiez", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}"}
       ]
     },
     {
@@ -1658,7 +1665,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uissent", "uérir"], ["vrissent", "vrir"], ["frissent", "frir"], ["ueillissent", "ueillir"], ["aillissent", "aillir"], ["çussent", "cevoir"], ["endissent", "endre"], ["andissent", "andre"], ["ondissent", "ondre"], ["erdissent", "erdre"], ["ordissent", "ordre"], ["ompissent", "ompre"], ["aignissent", "aindre"], ["eignissent", "eindre"], ["crussent", "croître"], ["clussent", "clure"], ["crivissent", "crire"], ["uisissent", "uire"], ["çassent", "cer"], ["geassent", "ger"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["vissent", "voir"], ["trayassent", "traire"], ["crussent", "croire"], ["rissent", "rire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}"},
         {"type": "suffix", "inflected": "voulussent", "deinflected": "vouloir", "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["assent", "er"], ["issent", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["assent", "er"], ["issent", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}"}
       ]
     },
     {
@@ -1667,7 +1674,15 @@
       "description": "Imperative, tu: parle (parler), parles (parler), finis (finir).",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["asse", "asser"]], "conditionsIn": ["imp"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "asse", "deinflected": "asser", "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}"},
+        {"type": "suffix", "inflected": "sois", "deinflected": "être", "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemNotStartsWith": "[emst]", "stemNotEndsWith": "{letter}", "source": "both"},
+        {"type": "suffix", "inflected": "aie", "deinflected": "avoir", "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemNotStartsWith": "[y]", "stemNotEndsWith": "{letter}", "source": "both"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["va", "aller"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}", "source": "both"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["vas", "aller"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["vois", "voir"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}", "source": "both"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["trais", "traire"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["crois", "croire"], ["ris", "rire"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}", "source": "both"},
+        {"type": "suffix", "inflected": "fais", "deinflected": "faire", "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemNotStartsWith": "[l]", "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["dis", "dire"], ["maudis", "maudire"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["viens", "venir"], ["tiens", "tenir"], ["pars", "partir"], ["sors", "sortir"], ["sens", "sentir"], ["mens", "mentir"], ["repens", "repentir"]], "conditionsIn": ["imp"], "conditionsOut": ["v"]},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["dors", "dormir"], ["sers", "servir"], ["bous", "bouillir"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "source": "both"},
@@ -1690,14 +1705,6 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["suis", "suivre"], ["vis", "vivre"]], "conditionsIn": ["imp"], "conditionsOut": ["v"]},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["lis", "lire"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["souris", "sourire"], ["suffis", "suffire"], ["confis", "confire"]], "conditionsIn": ["imp"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "sois", "deinflected": "être", "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemNotStartsWith": "[emst]", "stemNotEndsWith": "{letter}", "source": "both"},
-        {"type": "suffix", "inflected": "aie", "deinflected": "avoir", "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemNotStartsWith": "[y]", "stemNotEndsWith": "{letter}", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["va", "aller"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["vas", "aller"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["vois", "voir"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["trais", "traire"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["crois", "croire"], ["ris", "rire"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}", "source": "both"},
-        {"type": "suffix", "inflected": "fais", "deinflected": "faire", "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemNotStartsWith": "[l]", "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uiers", "uérir"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["vre", "vrir"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemMinLength": 1, "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["vres", "vrir"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemMinLength": 1},
@@ -1722,11 +1729,11 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aie", "ayer"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemMinLength": 1, "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aies", "ayer"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["veuille", "vouloir"], ["veux", "vouloir"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["e", "er"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemMinLength": 2, "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["es", "er"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemMinLength": 2},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["is", "ir"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemMinLength": 2, "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["e", "er"], ["es", "er"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["e", "er"], ["es", "er"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["e", "er"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["es", "er"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["is", "ir"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["e", "er"], ["es", "er"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "e", "occurrence": "last"}},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["e", "er"], ["es", "er"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemCharacters": "{notSpace}", "stemChange": {"from": ["è"], "to": "é", "occurrence": "last"}}
       ]
     },
     {
@@ -1769,7 +1776,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["croyons", "croire"], ["rions", "rire"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}", "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["veuillons", "vouloir"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["voulons", "vouloir"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ons", "er"], ["issons", "ir"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemMinLength": 2, "source": "both"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ons", "er"], ["issons", "ir"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"}
       ]
     },
     {
@@ -1810,7 +1817,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["trayez", "traire"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["croyez", "croire"], ["riez", "rire"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemNotEndsWith": "{letter}", "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["veuillez", "vouloir"], ["voulez", "vouloir"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ez", "er"], ["issez", "ir"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemMinLength": 2, "source": "both"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ez", "er"], ["issez", "ir"]], "conditionsIn": ["imp"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "source": "both"}
       ]
     },
     {
@@ -1832,7 +1839,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uérant", "uérir"], ["vrant", "vrir"], ["frant", "frir"], ["ueillant", "ueillir"], ["aillant", "aillir"], ["cevant", "cevoir"], ["endant", "endre"], ["andant", "andre"], ["ondant", "ondre"], ["erdant", "erdre"], ["ordant", "ordre"], ["ompant", "ompre"], ["aignant", "aindre"], ["eignant", "eindre"], ["cluant", "clure"], ["crivant", "crire"], ["uisant", "uire"], ["çant", "cer"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 1, "stemNotStartsWithText": "en "},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["geant", "ger"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 1, "stemNotStartsWithText": "en ", "source": "both"},
         {"type": "suffix", "inflected": "voulant", "deinflected": "vouloir", "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]", "stemNotStartsWithText": "en "},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ant", "er"], ["issant", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemNotStartsWithText": "en ", "source": "both"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ant", "er"], ["issant", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}", "stemNotStartsWithText": "en ", "source": "both"}
       ]
     },
     {
@@ -1847,7 +1854,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["dit", "dire"], ["maudit", "maudire"], ["venu", "venir"], ["tenu", "tenir"], ["parti", "partir"], ["sorti", "sortir"], ["senti", "sentir"], ["menti", "mentir"], ["repenti", "repentir"], ["dormi", "dormir"], ["servi", "servir"], ["bouilli", "bouillir"], ["vêtu", "vêtir"], ["couru", "courir"], ["mort", "mourir"], ["fui", "fuir"], ["haï", "haïr"], ["revu", "revoir"], ["entrevu", "entrevoir"], ["prévu", "prévoir"], ["pourvu", "pourvoir"], ["dépourvu", "dépourvoir"], ["dû", "devoir"], ["pu", "pouvoir"], ["su", "savoir"], ["valu", "valoir"], ["fallu", "falloir"], ["plu", "pleuvoir"], ["assis", "asseoir"], ["sursis", "surseoir"], ["clos", "clore"], ["frit", "frire"], ["déchu", "déchoir"], ["échu", "échoir"], ["foutu", "foutre"], ["mû", "mouvoir"], ["ému", "émouvoir"], ["promu", "promouvoir"], ["pris", "prendre"], ["mis", "mettre"], ["battu", "battre"], ["vaincu", "vaincre"], ["oint", "oindre"], ["abstrait", "abstraire"], ["distrait", "distraire"], ["extrait", "extraire"], ["soustrait", "soustraire"], ["plu", "plaire"], ["tu", "taire"], ["connu", "connaître"], ["paru", "paraître"], ["né", "naître"], ["pu", "paître"], ["crû", "croître"], ["bu", "boire"], ["résolu", "résoudre"], ["dissous", "dissoudre"], ["absous", "absoudre"], ["cousu", "coudre"], ["moulu", "moudre"], ["suivi", "suivre"], ["vécu", "vivre"], ["lu", "lire"], ["souri", "sourire"], ["suffi", "suffire"], ["confit", "confire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"]},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uis", "uérir"], ["vert", "vrir"], ["fert", "frir"], ["ueilli", "ueillir"], ["ailli", "aillir"], ["çu", "cevoir"], ["endu", "endre"], ["andu", "andre"], ["ondu", "ondre"], ["erdu", "erdre"], ["ordu", "ordre"], ["ompu", "ompre"], ["aint", "aindre"], ["eint", "eindre"], ["cru", "croître"], ["clu", "clure"], ["clus", "clure"], ["crit", "crire"], ["uit", "uire"], ["ui", "uire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "suffix", "inflected": "voulu", "deinflected": "vouloir", "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["é", "er"], ["i", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["é", "er"], ["i", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}"}
       ]
     },
     {
@@ -1861,7 +1868,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["dite", "dire"], ["maudite", "maudire"], ["venue", "venir"], ["tenue", "tenir"], ["partie", "partir"], ["sortie", "sortir"], ["sentie", "sentir"], ["mentie", "mentir"], ["repentie", "repentir"], ["dormie", "dormir"], ["servie", "servir"], ["bouillie", "bouillir"], ["vêtue", "vêtir"], ["courue", "courir"], ["morte", "mourir"], ["fuie", "fuir"], ["haïe", "haïr"], ["revue", "revoir"], ["entrevue", "entrevoir"], ["prévue", "prévoir"], ["pourvue", "pourvoir"], ["dépourvue", "dépourvoir"], ["due", "devoir"], ["sue", "savoir"], ["value", "valoir"], ["assise", "asseoir"], ["sursise", "surseoir"], ["close", "clore"], ["frite", "frire"], ["déchue", "déchoir"], ["échue", "échoir"], ["foutue", "foutre"], ["émue", "émouvoir"], ["promue", "promouvoir"], ["prise", "prendre"], ["mise", "mettre"], ["battue", "battre"], ["vaincue", "vaincre"], ["ointe", "oindre"], ["abstraite", "abstraire"], ["distraite", "distraire"], ["extraite", "extraire"], ["soustraite", "soustraire"], ["connue", "connaître"], ["parue", "paraître"], ["née", "naître"], ["crue", "croître"], ["bue", "boire"], ["résolue", "résoudre"], ["dissoute", "dissoudre"], ["absoute", "absoudre"], ["cousue", "coudre"], ["moulue", "moudre"], ["suivie", "suivre"], ["vécue", "vivre"], ["lue", "lire"], ["confite", "confire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"]},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uise", "uérir"], ["verte", "vrir"], ["ferte", "frir"], ["ueillie", "ueillir"], ["aillie", "aillir"], ["çue", "cevoir"], ["endue", "endre"], ["andue", "andre"], ["ondue", "ondre"], ["erdue", "erdre"], ["ordue", "ordre"], ["ompue", "ompre"], ["ainte", "aindre"], ["einte", "eindre"], ["crue", "croître"], ["clue", "clure"], ["cluse", "clure"], ["crite", "crire"], ["uite", "uire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "suffix", "inflected": "voulue", "deinflected": "vouloir", "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ée", "er"], ["ie", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ée", "er"], ["ie", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}"}
       ]
     },
     {
@@ -1875,7 +1882,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["dits", "dire"], ["maudits", "maudire"], ["venus", "venir"], ["tenus", "tenir"], ["partis", "partir"], ["sortis", "sortir"], ["sentis", "sentir"], ["mentis", "mentir"], ["repentis", "repentir"], ["dormis", "dormir"], ["servis", "servir"], ["bouillis", "bouillir"], ["vêtus", "vêtir"], ["courus", "courir"], ["morts", "mourir"], ["fuis", "fuir"], ["haïs", "haïr"], ["revus", "revoir"], ["entrevus", "entrevoir"], ["prévus", "prévoir"], ["pourvus", "pourvoir"], ["dépourvus", "dépourvoir"], ["dus", "devoir"], ["sus", "savoir"], ["valus", "valoir"], ["assis", "asseoir"], ["sursis", "surseoir"], ["clos", "clore"], ["frits", "frire"], ["déchus", "déchoir"], ["échus", "échoir"], ["foutus", "foutre"], ["émus", "émouvoir"], ["promus", "promouvoir"], ["pris", "prendre"], ["mis", "mettre"], ["battus", "battre"], ["vaincus", "vaincre"], ["oints", "oindre"], ["abstraits", "abstraire"], ["distraits", "distraire"], ["extraits", "extraire"], ["soustraits", "soustraire"], ["tus", "taire"], ["connus", "connaître"], ["parus", "paraître"], ["nés", "naître"], ["crus", "croître"], ["bus", "boire"], ["résolus", "résoudre"], ["dissous", "dissoudre"], ["absous", "absoudre"], ["cousus", "coudre"], ["moulus", "moudre"], ["suivis", "suivre"], ["vécus", "vivre"], ["lus", "lire"], ["confits", "confire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"]},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uis", "uérir"], ["verts", "vrir"], ["ferts", "frir"], ["ueillis", "ueillir"], ["aillis", "aillir"], ["çus", "cevoir"], ["endus", "endre"], ["andus", "andre"], ["ondus", "ondre"], ["erdus", "erdre"], ["ordus", "ordre"], ["ompus", "ompre"], ["aints", "aindre"], ["eints", "eindre"], ["crus", "croître"], ["clus", "clure"], ["crits", "crire"], ["uits", "uire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "suffix", "inflected": "voulus", "deinflected": "vouloir", "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["és", "er"], ["is", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["és", "er"], ["is", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}"}
       ]
     },
     {
@@ -1889,7 +1896,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["dites", "dire"], ["maudites", "maudire"], ["venues", "venir"], ["tenues", "tenir"], ["parties", "partir"], ["sorties", "sortir"], ["senties", "sentir"], ["menties", "mentir"], ["repenties", "repentir"], ["dormies", "dormir"], ["servies", "servir"], ["bouillies", "bouillir"], ["vêtues", "vêtir"], ["courues", "courir"], ["mortes", "mourir"], ["fuies", "fuir"], ["haïes", "haïr"], ["revues", "revoir"], ["entrevues", "entrevoir"], ["prévues", "prévoir"], ["pourvues", "pourvoir"], ["dépourvues", "dépourvoir"], ["dues", "devoir"], ["sues", "savoir"], ["values", "valoir"], ["assises", "asseoir"], ["sursises", "surseoir"], ["closes", "clore"], ["frites", "frire"], ["déchues", "déchoir"], ["échues", "échoir"], ["foutues", "foutre"], ["émues", "émouvoir"], ["promues", "promouvoir"], ["prises", "prendre"], ["mises", "mettre"], ["battues", "battre"], ["vaincues", "vaincre"], ["ointes", "oindre"], ["abstraites", "abstraire"], ["distraites", "distraire"], ["extraites", "extraire"], ["soustraites", "soustraire"], ["connues", "connaître"], ["parues", "paraître"], ["nées", "naître"], ["crues", "croître"], ["bues", "boire"], ["résolues", "résoudre"], ["dissoutes", "dissoudre"], ["absoutes", "absoudre"], ["cousues", "coudre"], ["moulues", "moudre"], ["suivies", "suivre"], ["vécues", "vivre"], ["lues", "lire"], ["confites", "confire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"]},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uises", "uérir"], ["vertes", "vrir"], ["fertes", "frir"], ["ueillies", "ueillir"], ["aillies", "aillir"], ["çues", "cevoir"], ["endues", "endre"], ["andues", "andre"], ["ondues", "ondre"], ["erdues", "erdre"], ["ordues", "ordre"], ["ompues", "ompre"], ["aintes", "aindre"], ["eintes", "eindre"], ["crues", "croître"], ["clues", "clure"], ["cluses", "clure"], ["crites", "crire"], ["uites", "uire"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "suffix", "inflected": "voulues", "deinflected": "vouloir", "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemNotStartsWith": "[e]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ées", "er"], ["ies", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ées", "er"], ["ies", "ir"]], "conditionsIn": ["vcl"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{notSpace}"}
       ]
     },
     {
@@ -1898,12 +1905,14 @@
       "description": "A verb with a reflexive pronoun of its person before it, looked up with se: je me lève → se lever, tu t'appelles → s'appeler, je m'en vais → s'en aller.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["me ", "se "]], "suffixes": [["er", "er"], ["ir", "ir"], ["re", "re"]], "conditionsIn": ["p1s"], "conditionsOut": ["v"], "stemCharacters": "{letter}", "stemNotStartsWithText": "suiv"},
+        {"type": "circumfix", "prefixes": [["me ", "se "], ["me+", "se "]], "suffixes": [["er", "er"], ["ir", "ir"], ["re", "re"]], "conditionsIn": ["p1s"], "conditionsOut": ["v"], "stemCharacters": "{letter}", "stemNotStartsWithText": "suiv"},
         {"type": "circumfix", "prefixes": [["m'", "s'"]], "suffixes": [["er", "er"], ["ir", "ir"], ["re", "re"]], "conditionsIn": ["p1s"], "conditionsOut": ["v"], "stemCharacters": "{letter}"},
-        {"type": "circumfix", "prefixes": [["m'en ", "s'en "]], "suffixes": [["er", "er"], ["ir", "ir"], ["re", "re"]], "conditionsIn": ["p1s"], "conditionsOut": ["v"], "stemCharacters": "{letter}"},
-        {"type": "circumfix", "prefixes": [["te ", "se "]], "suffixes": [["er", "er"], ["ir", "ir"], ["re", "re"]], "conditionsIn": ["p2s"], "conditionsOut": ["v"], "stemCharacters": "{letter}", "stemNotStartsWithText": "suiv"},
+        {"type": "circumfix", "prefixes": [["m'en ", "s'en "], ["m'en+", "s'en "]], "suffixes": [["er", "er"], ["ir", "ir"], ["re", "re"]], "conditionsIn": ["p1s"], "conditionsOut": ["v"], "stemCharacters": "{letter}"},
+        {"type": "circumfix", "prefixes": [["m'y ", "s'y "], ["m'y+", "s'y "]], "suffixes": [["er", "er"], ["ir", "ir"], ["re", "re"]], "conditionsIn": ["p1s"], "conditionsOut": ["v"], "stemCharacters": "{letter}"},
+        {"type": "circumfix", "prefixes": [["te ", "se "], ["te+", "se "]], "suffixes": [["er", "er"], ["ir", "ir"], ["re", "re"]], "conditionsIn": ["p2s"], "conditionsOut": ["v"], "stemCharacters": "{letter}", "stemNotStartsWithText": "suiv"},
         {"type": "circumfix", "prefixes": [["t'", "s'"]], "suffixes": [["er", "er"], ["ir", "ir"], ["re", "re"]], "conditionsIn": ["p2s"], "conditionsOut": ["v"], "stemCharacters": "{letter}"},
-        {"type": "circumfix", "prefixes": [["t'en ", "s'en "]], "suffixes": [["er", "er"], ["ir", "ir"], ["re", "re"]], "conditionsIn": ["p2s"], "conditionsOut": ["v"], "stemCharacters": "{letter}"}
+        {"type": "circumfix", "prefixes": [["t'en ", "s'en "], ["t'en+", "s'en "]], "suffixes": [["er", "er"], ["ir", "ir"], ["re", "re"]], "conditionsIn": ["p2s"], "conditionsOut": ["v"], "stemCharacters": "{letter}"},
+        {"type": "circumfix", "prefixes": [["t'y ", "s'y "], ["t'y+", "s'y "]], "suffixes": [["er", "er"], ["ir", "ir"], ["re", "re"]], "conditionsIn": ["p2s"], "conditionsOut": ["v"], "stemCharacters": "{letter}"}
       ]
     },
     {

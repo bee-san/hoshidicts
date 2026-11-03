@@ -35,3 +35,15 @@ negatives	0	l’homme	lʼhomme
 negatives	0	cœur	coeur
 negatives	0	école	ecole
 negatives	0	homme	l'homme
+join pronoun	1	me parle	me+parle
+join pronoun	1	Se lève	se+lève
+join pronoun	1	s'en moque	s'en+moque
+join pronoun	1	s’en moque	s'en+moque
+join pronoun	1	m'y attendais	m'y+attendais
+join pronoun	1	me parle	me parle
+negatives	0	la parle	la+parle
+negatives	0	en jette	en+jette
+join pronoun	1	y allait	y+allait
+join pronoun	1	n'y allait	n'y+allait
+negatives	0	l'y allait	l'y+allait
+negatives	0	je me parle	je me+parle

@@ -773,3 +773,19 @@ yomitan rules	1	attrairait	attraire	v	Conditional
 yomitan rules	1	connoissait	connoître	v	imperfect indicative
 yomitan rules	1	connoîtrai	connoître	v	future
 yomitan rules	1	occis	occire	v	*
+pronominal	1	me parle	se parler	v	pronominal|present-1s-3s
+pronominal	1	te dépêches	se dépêcher	v	pronominal|present-2s
+pronominal	1	m'en doute	s'en douter	v	pronominal|present-1s-3s
+pronominal	1	m'y attendais	s'y attendre	v	*
+pronominal	1	se moque	se moquer	v	present-1s-3s
+phrases	1	y allait	y aller	v	imperfect-3s
+phrases	1	n'y allait	y aller	v	imperfect-3s|elision
+phrases	1	j'y allais	y aller	v	imperfect-1s-2s|elision
+phrases	1	s'en moque	s'en moquer	v	present-1s-3s
+negatives	0	prendre chez	prendre cher	*	*
+negatives	0	le cherchions	le chercher	*	*
+negatives	0	la boucle	la boucler	*	*
+negatives	0	l'y avait	y avoir	*	*
+negatives	0	l'y allait	y aller	*	*
+negatives	0	s'en moque	en moquer	*	*
+negatives	0	en jetât	en jeter	*	*

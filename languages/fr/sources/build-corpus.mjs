@@ -36,19 +36,19 @@ const STRATA = [
     // Imperatives are left out: every French imperative is spelt as a
     // present or subjunctive form, which the sample already has (one row per
     // form); tests/cases.tsv tests them.
-    ['verb, present', 110, (t) => t[0] === 'V' && has(t, 'IND', 'PRS')],
-    ['verb, imperfect', 70, (t) => t[0] === 'V' && has(t, 'IND', 'PST', 'IPFV')],
-    ['verb, simple past', 80, (t) => t[0] === 'V' && has(t, 'IND', 'PST', 'PFV')],
-    ['verb, future', 70, (t) => t[0] === 'V' && has(t, 'IND', 'FUT')],
-    ['verb, conditional', 60, (t) => t[0] === 'V' && has(t, 'COND')],
-    ['verb, present subjunctive', 80, (t) => t[0] === 'V' && has(t, 'SBJV', 'PRS')],
-    ['verb, imperfect subjunctive', 50, (t) => t[0] === 'V' && has(t, 'SBJV', 'PST')],
-    ['verb, present participle', 40, (t) => t[0] === 'V' && has(t, 'V.PTCP', 'PRS')],
-    ['verb, past participle', 60, (t) => t[0] === 'V' && has(t, 'V.PTCP', 'PST')],
-    ['verb, past participle agreeing', 70, (t) => t[0] === 'V.PTCP' && !has(t, 'MASC', 'SG')],
-    ['noun, plural', 150, (t) => t[0] === 'N' && has(t, 'PL')],
-    ['noun, feminine singular', 30, (t) => t[0] === 'N' && has(t, 'FEM', 'SG')],
-    ['adjective', 130, (t) => t[0] === 'ADJ'],
+    ['verb, present', 88, (t) => t[0] === 'V' && has(t, 'IND', 'PRS')],
+    ['verb, imperfect', 56, (t) => t[0] === 'V' && has(t, 'IND', 'PST', 'IPFV')],
+    ['verb, simple past', 64, (t) => t[0] === 'V' && has(t, 'IND', 'PST', 'PFV')],
+    ['verb, future', 56, (t) => t[0] === 'V' && has(t, 'IND', 'FUT')],
+    ['verb, conditional', 48, (t) => t[0] === 'V' && has(t, 'COND')],
+    ['verb, present subjunctive', 64, (t) => t[0] === 'V' && has(t, 'SBJV', 'PRS')],
+    ['verb, imperfect subjunctive', 40, (t) => t[0] === 'V' && has(t, 'SBJV', 'PST')],
+    ['verb, present participle', 32, (t) => t[0] === 'V' && has(t, 'V.PTCP', 'PRS')],
+    ['verb, past participle', 48, (t) => t[0] === 'V' && has(t, 'V.PTCP', 'PST')],
+    ['verb, past participle agreeing', 56, (t) => t[0] === 'V.PTCP' && !has(t, 'MASC', 'SG')],
+    ['noun, plural', 120, (t) => t[0] === 'N' && has(t, 'PL')],
+    ['noun, feminine singular', 24, (t) => t[0] === 'N' && has(t, 'FEM', 'SG')],
+    ['adjective', 104, (t) => t[0] === 'ADJ'],
 ];
 const POS = {N: 'n', V: 'v', 'V.PTCP': 'v', ADJ: 'adj'};
 const WORD = /^[a-zàâäæçéèêëîïôöœùûüÿ]+$/u;

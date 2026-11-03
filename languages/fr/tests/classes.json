@@ -120,34 +120,84 @@
       [768, 879],
       [64256, 64262]
     ],
-    "transforms[0].rules[3].stemNotStartsWith": [
+    "transforms[0].rules[0].stemNotStartsWith": [
       [101, 101],
       [121, 121]
     ],
-    "transforms[0].rules[4].stemStartsWith": [
+    "transforms[0].rules[1].stemCharacters": [
+      [0, 42],
+      [44, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[0].rules[1].stemStartsWith": [
       [101, 101]
     ],
-    "transforms[0].rules[5].stemStartsWith": [
+    "transforms[0].rules[2].stemCharacters": [
+      [0, 42],
+      [44, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[0].rules[2].stemStartsWith": [
       [121, 121]
     ],
-    "transforms[0].rules[6].stemNotStartsWith": [
+    "transforms[0].rules[5].stemNotStartsWith": [
       [101, 101],
       [121, 121]
+    ],
+    "transforms[0].rules[6].stemCharacters": [
+      [0, 42],
+      [44, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[0].rules[6].stemStartsWith": [
+      [101, 101]
+    ],
+    "transforms[0].rules[7].stemCharacters": [
+      [0, 42],
+      [44, 55295],
+      [57344, 1114111]
     ],
     "transforms[0].rules[7].stemStartsWith": [
-      [101, 101]
-    ],
-    "transforms[0].rules[8].stemStartsWith": [
       [121, 121]
     ],
-    "transforms[0].rules[9].stemNotStartsWith": [
+    "transforms[0].rules[8].stemNotStartsWith": [
       [101, 101],
       [121, 121]
     ],
-    "transforms[0].rules[10].stemStartsWith": [
+    "transforms[0].rules[9].stemCharacters": [
+      [0, 42],
+      [44, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[0].rules[9].stemStartsWith": [
       [101, 101]
     ],
-    "transforms[0].rules[11].stemStartsWith": [
+    "transforms[0].rules[10].stemCharacters": [
+      [0, 42],
+      [44, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[0].rules[10].stemStartsWith": [
+      [121, 121]
+    ],
+    "transforms[0].rules[11].stemNotStartsWith": [
+      [101, 101],
+      [121, 121]
+    ],
+    "transforms[0].rules[12].stemCharacters": [
+      [0, 42],
+      [44, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[0].rules[12].stemStartsWith": [
+      [101, 101]
+    ],
+    "transforms[0].rules[13].stemCharacters": [
+      [0, 42],
+      [44, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[0].rules[13].stemStartsWith": [
       [121, 121]
     ],
     "transforms[2].rules[0].stemNotStartsWith": [
@@ -319,6 +369,11 @@
       [248, 591],
       [64256, 64262]
     ],
+    "transforms[9].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[9].rules[1].stemNotStartsWith": [
       [101, 101],
       [109, 109],
@@ -350,6 +405,21 @@
       [216, 246],
       [248, 591],
       [64256, 64262]
+    ],
+    "transforms[9].rules[5].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[9].rules[6].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[9].rules[7].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
     ],
     "transforms[10].rules[0].stemNotStartsWith": [
       [101, 101],
@@ -394,6 +464,11 @@
     "transforms[10].rules[35].stemNotStartsWith": [
       [101, 101]
     ],
+    "transforms[10].rules[36].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[11].rules[0].stemNotStartsWith": [
       [108, 108]
     ],
@@ -423,6 +498,31 @@
     ],
     "transforms[11].rules[30].stemNotStartsWith": [
       [101, 101]
+    ],
+    "transforms[11].rules[31].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[12].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[12].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[12].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[12].rules[4].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
     ],
     "transforms[13].rules[0].stemNotStartsWith": [
       [101, 101],
@@ -478,6 +578,11 @@
     "transforms[13].rules[28].stemNotStartsWith": [
       [101, 101]
     ],
+    "transforms[13].rules[29].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[14].rules[0].stemNotStartsWith": [
       [101, 101],
       [109, 109],
@@ -532,12 +637,22 @@
     "transforms[14].rules[29].stemNotStartsWith": [
       [101, 101]
     ],
-    "transforms[15].rules[23].stemNotStartsWith": [
+    "transforms[14].rules[30].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[15].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[15].rules[1].stemNotStartsWith": [
       [101, 101],
       [109, 109],
       [115, 116]
     ],
-    "transforms[15].rules[23].stemNotEndsWith": [
+    "transforms[15].rules[1].stemNotEndsWith": [
       [65, 90],
       [97, 122],
       [192, 214],
@@ -545,10 +660,10 @@
       [248, 591],
       [64256, 64262]
     ],
-    "transforms[15].rules[24].stemNotStartsWith": [
+    "transforms[15].rules[2].stemNotStartsWith": [
       [121, 121]
     ],
-    "transforms[15].rules[24].stemNotEndsWith": [
+    "transforms[15].rules[2].stemNotEndsWith": [
       [65, 90],
       [97, 122],
       [192, 214],
@@ -556,7 +671,7 @@
       [248, 591],
       [64256, 64262]
     ],
-    "transforms[15].rules[25].stemNotEndsWith": [
+    "transforms[15].rules[3].stemNotEndsWith": [
       [65, 90],
       [97, 122],
       [192, 214],
@@ -564,7 +679,7 @@
       [248, 591],
       [64256, 64262]
     ],
-    "transforms[15].rules[26].stemNotEndsWith": [
+    "transforms[15].rules[4].stemNotEndsWith": [
       [65, 90],
       [97, 122],
       [192, 214],
@@ -572,7 +687,7 @@
       [248, 591],
       [64256, 64262]
     ],
-    "transforms[15].rules[27].stemNotEndsWith": [
+    "transforms[15].rules[5].stemNotEndsWith": [
       [65, 90],
       [97, 122],
       [192, 214],
@@ -580,11 +695,26 @@
       [248, 591],
       [64256, 64262]
     ],
-    "transforms[15].rules[28].stemNotStartsWith": [
+    "transforms[15].rules[6].stemNotStartsWith": [
       [108, 108]
     ],
     "transforms[15].rules[33].stemNotStartsWith": [
       [101, 101]
+    ],
+    "transforms[15].rules[34].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[15].rules[35].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[15].rules[36].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
     ],
     "transforms[16].rules[0].stemNotStartsWith": [
       [101, 101],
@@ -628,6 +758,11 @@
     ],
     "transforms[16].rules[33].stemNotStartsWith": [
       [101, 101]
+    ],
+    "transforms[16].rules[34].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
     ],
     "transforms[17].rules[0].stemNotStartsWith": [
       [101, 101],
@@ -683,12 +818,22 @@
     "transforms[17].rules[32].stemNotStartsWith": [
       [101, 101]
     ],
-    "transforms[18].rules[21].stemNotStartsWith": [
+    "transforms[17].rules[33].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[18].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[18].rules[1].stemNotStartsWith": [
       [101, 101],
       [109, 109],
       [115, 116]
     ],
-    "transforms[18].rules[21].stemNotEndsWith": [
+    "transforms[18].rules[1].stemNotEndsWith": [
       [65, 90],
       [97, 122],
       [192, 214],
@@ -696,10 +841,10 @@
       [248, 591],
       [64256, 64262]
     ],
-    "transforms[18].rules[22].stemNotStartsWith": [
+    "transforms[18].rules[2].stemNotStartsWith": [
       [121, 121]
     ],
-    "transforms[18].rules[22].stemNotEndsWith": [
+    "transforms[18].rules[2].stemNotEndsWith": [
       [65, 90],
       [97, 122],
       [192, 214],
@@ -707,7 +852,7 @@
       [248, 591],
       [64256, 64262]
     ],
-    "transforms[18].rules[23].stemNotStartsWith": [
+    "transforms[18].rules[3].stemNotStartsWith": [
       [108, 108]
     ],
     "transforms[18].rules[30].stemNotEndsWith": [
@@ -737,12 +882,22 @@
     "transforms[18].rules[33].stemNotStartsWith": [
       [101, 101]
     ],
-    "transforms[19].rules[21].stemNotStartsWith": [
+    "transforms[18].rules[34].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[19].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[19].rules[1].stemNotStartsWith": [
       [101, 101],
       [109, 109],
       [115, 116]
     ],
-    "transforms[19].rules[21].stemNotEndsWith": [
+    "transforms[19].rules[1].stemNotEndsWith": [
       [65, 90],
       [97, 122],
       [192, 214],
@@ -750,10 +905,10 @@
       [248, 591],
       [64256, 64262]
     ],
-    "transforms[19].rules[22].stemNotStartsWith": [
+    "transforms[19].rules[2].stemNotStartsWith": [
       [121, 121]
     ],
-    "transforms[19].rules[22].stemNotEndsWith": [
+    "transforms[19].rules[2].stemNotEndsWith": [
       [65, 90],
       [97, 122],
       [192, 214],
@@ -761,7 +916,7 @@
       [248, 591],
       [64256, 64262]
     ],
-    "transforms[19].rules[23].stemNotStartsWith": [
+    "transforms[19].rules[3].stemNotStartsWith": [
       [108, 108]
     ],
     "transforms[19].rules[30].stemNotEndsWith": [
@@ -790,6 +945,11 @@
     ],
     "transforms[19].rules[33].stemNotStartsWith": [
       [101, 101]
+    ],
+    "transforms[19].rules[34].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
     ],
     "transforms[20].rules[0].stemNotStartsWith": [
       [101, 101],
@@ -845,6 +1005,11 @@
     "transforms[20].rules[30].stemNotStartsWith": [
       [101, 101]
     ],
+    "transforms[20].rules[31].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[21].rules[0].stemNotEndsWith": [
       [65, 90],
       [97, 122],
@@ -853,6 +1018,11 @@
       [248, 591],
       [64256, 64262]
     ],
+    "transforms[21].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[22].rules[0].stemNotEndsWith": [
       [65, 90],
       [97, 122],
@@ -860,6 +1030,11 @@
       [216, 246],
       [248, 591],
       [64256, 64262]
+    ],
+    "transforms[22].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
     ],
     "transforms[23].rules[0].stemNotStartsWith": [
       [101, 101],
@@ -904,6 +1079,11 @@
     "transforms[23].rules[31].stemNotStartsWith": [
       [101, 101]
     ],
+    "transforms[23].rules[32].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[24].rules[0].stemNotStartsWith": [
       [101, 101],
       [109, 109],
@@ -941,6 +1121,11 @@
     ],
     "transforms[24].rules[27].stemNotStartsWith": [
       [101, 101]
+    ],
+    "transforms[24].rules[28].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
     ],
     "transforms[25].rules[0].stemNotStartsWith": [
       [101, 101],
@@ -996,6 +1181,11 @@
     "transforms[25].rules[34].stemNotStartsWith": [
       [101, 101]
     ],
+    "transforms[25].rules[35].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[26].rules[0].stemNotStartsWith": [
       [101, 101],
       [109, 109],
@@ -1049,6 +1239,11 @@
     ],
     "transforms[26].rules[34].stemNotStartsWith": [
       [101, 101]
+    ],
+    "transforms[26].rules[35].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
     ],
     "transforms[27].rules[0].stemNotStartsWith": [
       [101, 101],
@@ -1104,6 +1299,11 @@
     "transforms[27].rules[37].stemNotStartsWith": [
       [101, 101]
     ],
+    "transforms[27].rules[38].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[28].rules[0].stemNotStartsWith": [
       [101, 101],
       [109, 109],
@@ -1157,6 +1357,21 @@
     ],
     "transforms[28].rules[39].stemNotStartsWith": [
       [101, 101]
+    ],
+    "transforms[28].rules[40].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[28].rules[41].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[28].rules[42].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
     ],
     "transforms[29].rules[0].stemNotStartsWith": [
       [101, 101],
@@ -1212,6 +1427,21 @@
     "transforms[29].rules[39].stemNotStartsWith": [
       [101, 101]
     ],
+    "transforms[29].rules[40].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[29].rules[41].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[29].rules[42].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[30].rules[0].stemNotStartsWith": [
       [101, 101],
       [109, 109],
@@ -1254,6 +1484,21 @@
     ],
     "transforms[30].rules[36].stemNotStartsWith": [
       [101, 101]
+    ],
+    "transforms[30].rules[37].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[30].rules[38].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[30].rules[39].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
     ],
     "transforms[31].rules[0].stemNotStartsWith": [
       [101, 101],
@@ -1309,6 +1554,21 @@
     "transforms[31].rules[37].stemNotStartsWith": [
       [101, 101]
     ],
+    "transforms[31].rules[38].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[31].rules[39].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[31].rules[40].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[32].rules[0].stemNotStartsWith": [
       [101, 101],
       [109, 109],
@@ -1362,6 +1622,21 @@
     ],
     "transforms[32].rules[37].stemNotStartsWith": [
       [101, 101]
+    ],
+    "transforms[32].rules[38].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[32].rules[39].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[32].rules[40].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
     ],
     "transforms[33].rules[0].stemNotStartsWith": [
       [101, 101],
@@ -1417,6 +1692,21 @@
     "transforms[33].rules[37].stemNotStartsWith": [
       [101, 101]
     ],
+    "transforms[33].rules[38].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[33].rules[39].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[33].rules[40].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[34].rules[0].stemNotStartsWith": [
       [101, 101],
       [109, 109],
@@ -1459,6 +1749,21 @@
     ],
     "transforms[34].rules[39].stemNotStartsWith": [
       [101, 101]
+    ],
+    "transforms[34].rules[40].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[34].rules[41].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[34].rules[42].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
     ],
     "transforms[35].rules[0].stemNotStartsWith": [
       [101, 101],
@@ -1514,6 +1819,21 @@
     "transforms[35].rules[40].stemNotStartsWith": [
       [101, 101]
     ],
+    "transforms[35].rules[41].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[35].rules[42].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[35].rules[43].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[36].rules[0].stemNotStartsWith": [
       [101, 101],
       [109, 109],
@@ -1567,6 +1887,21 @@
     ],
     "transforms[36].rules[38].stemNotStartsWith": [
       [101, 101]
+    ],
+    "transforms[36].rules[39].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[36].rules[40].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[36].rules[41].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
     ],
     "transforms[37].rules[0].stemNotStartsWith": [
       [101, 101],
@@ -1622,6 +1957,21 @@
     "transforms[37].rules[38].stemNotStartsWith": [
       [101, 101]
     ],
+    "transforms[37].rules[39].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[37].rules[40].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[37].rules[41].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[38].rules[0].stemNotStartsWith": [
       [101, 101],
       [109, 109],
@@ -1676,6 +2026,21 @@
     "transforms[38].rules[40].stemNotStartsWith": [
       [101, 101]
     ],
+    "transforms[38].rules[41].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[38].rules[42].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[38].rules[43].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[39].rules[0].stemNotStartsWith": [
       [121, 121]
     ],
@@ -1687,8 +2052,29 @@
       [248, 591],
       [64256, 64262]
     ],
-    "transforms[40].rules[3].stemNotStartsWith": [
+    "transforms[40].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[40].rules[1].stemNotStartsWith": [
       [121, 121]
+    ],
+    "transforms[40].rules[1].stemNotEndsWith": [
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [64256, 64262]
+    ],
+    "transforms[40].rules[2].stemNotEndsWith": [
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [64256, 64262]
     ],
     "transforms[40].rules[3].stemNotEndsWith": [
       [65, 90],
@@ -1698,27 +2084,31 @@
       [248, 591],
       [64256, 64262]
     ],
-    "transforms[40].rules[4].stemNotEndsWith": [
-      [65, 90],
-      [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
-    ],
-    "transforms[40].rules[5].stemNotEndsWith": [
-      [65, 90],
-      [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
-    ],
-    "transforms[40].rules[6].stemNotStartsWith": [
+    "transforms[40].rules[4].stemNotStartsWith": [
       [108, 108]
     ],
-    "transforms[40].rules[8].stemNotStartsWith": [
+    "transforms[40].rules[9].stemNotStartsWith": [
       [101, 101]
+    ],
+    "transforms[40].rules[10].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[40].rules[11].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[40].rules[12].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[40].rules[13].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
     ],
     "transforms[41].rules[0].stemNotStartsWith": [
       [101, 101],
@@ -1754,7 +2144,12 @@
       [248, 591],
       [64256, 64262]
     ],
-    "transforms[43].rules[3].stemNotEndsWith": [
+    "transforms[43].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[1].stemNotEndsWith": [
       [65, 90],
       [97, 122],
       [192, 214],
@@ -1762,7 +2157,7 @@
       [248, 591],
       [64256, 64262]
     ],
-    "transforms[43].rules[4].stemNotEndsWith": [
+    "transforms[43].rules[2].stemNotEndsWith": [
       [65, 90],
       [97, 122],
       [192, 214],
@@ -1770,18 +2165,96 @@
       [248, 591],
       [64256, 64262]
     ],
-    "transforms[43].rules[5].stemNotStartsWith": [
+    "transforms[43].rules[3].stemNotStartsWith": [
       [108, 108]
     ],
-    "transforms[43].rules[7].stemNotStartsWith": [
+    "transforms[43].rules[8].stemNotStartsWith": [
       [101, 101]
+    ],
+    "transforms[43].rules[9].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[10].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[11].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[12].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[44].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[44].rules[1].stemNotStartsWith": [
+      [101, 101],
+      [109, 109],
+      [115, 116]
+    ],
+    "transforms[44].rules[1].stemNotEndsWith": [
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [64256, 64262]
+    ],
+    "transforms[44].rules[2].stemNotStartsWith": [
+      [121, 121]
+    ],
+    "transforms[44].rules[2].stemNotEndsWith": [
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [64256, 64262]
     ],
     "transforms[44].rules[3].stemNotStartsWith": [
+      [108, 108]
+    ],
+    "transforms[44].rules[8].stemNotEndsWith": [
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [64256, 64262]
+    ],
+    "transforms[44].rules[9].stemNotStartsWith": [
+      [101, 101]
+    ],
+    "transforms[44].rules[10].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[44].rules[11].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[1].stemNotStartsWith": [
       [101, 101],
       [109, 109],
       [115, 116]
     ],
-    "transforms[44].rules[3].stemNotEndsWith": [
+    "transforms[45].rules[1].stemNotEndsWith": [
       [65, 90],
       [97, 122],
       [192, 214],
@@ -1789,59 +2262,21 @@
       [248, 591],
       [64256, 64262]
     ],
-    "transforms[44].rules[4].stemNotStartsWith": [
+    "transforms[45].rules[2].stemNotStartsWith": [
       [121, 121]
     ],
-    "transforms[44].rules[4].stemNotEndsWith": [
+    "transforms[45].rules[2].stemNotEndsWith": [
       [65, 90],
       [97, 122],
       [192, 214],
       [216, 246],
       [248, 591],
       [64256, 64262]
-    ],
-    "transforms[44].rules[5].stemNotStartsWith": [
-      [108, 108]
-    ],
-    "transforms[44].rules[7].stemNotEndsWith": [
-      [65, 90],
-      [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
-    ],
-    "transforms[44].rules[8].stemNotStartsWith": [
-      [101, 101]
     ],
     "transforms[45].rules[3].stemNotStartsWith": [
-      [101, 101],
-      [109, 109],
-      [115, 116]
-    ],
-    "transforms[45].rules[3].stemNotEndsWith": [
-      [65, 90],
-      [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
-    ],
-    "transforms[45].rules[4].stemNotStartsWith": [
-      [121, 121]
-    ],
-    "transforms[45].rules[4].stemNotEndsWith": [
-      [65, 90],
-      [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
-    ],
-    "transforms[45].rules[5].stemNotStartsWith": [
       [108, 108]
     ],
-    "transforms[45].rules[7].stemNotEndsWith": [
+    "transforms[45].rules[8].stemNotEndsWith": [
       [65, 90],
       [97, 122],
       [192, 214],
@@ -1849,13 +2284,47 @@
       [248, 591],
       [64256, 64262]
     ],
-    "transforms[45].rules[8].stemNotStartsWith": [
+    "transforms[45].rules[9].stemNotStartsWith": [
       [101, 101]
     ],
-    "transforms[46].rules[3].stemNotStartsWith": [
+    "transforms[45].rules[10].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[11].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[46].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[46].rules[1].stemNotStartsWith": [
       [101, 101],
       [109, 109],
       [115, 116]
+    ],
+    "transforms[46].rules[1].stemNotEndsWith": [
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [64256, 64262]
+    ],
+    "transforms[46].rules[2].stemNotStartsWith": [
+      [121, 121]
+    ],
+    "transforms[46].rules[2].stemNotEndsWith": [
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [64256, 64262]
     ],
     "transforms[46].rules[3].stemNotEndsWith": [
       [65, 90],
@@ -1865,9 +2334,6 @@
       [248, 591],
       [64256, 64262]
     ],
-    "transforms[46].rules[4].stemNotStartsWith": [
-      [121, 121]
-    ],
     "transforms[46].rules[4].stemNotEndsWith": [
       [65, 90],
       [97, 122],
@@ -1876,27 +2342,31 @@
       [248, 591],
       [64256, 64262]
     ],
-    "transforms[46].rules[5].stemNotEndsWith": [
-      [65, 90],
-      [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
-    ],
-    "transforms[46].rules[6].stemNotEndsWith": [
-      [65, 90],
-      [97, 122],
-      [192, 214],
-      [216, 246],
-      [248, 591],
-      [64256, 64262]
-    ],
-    "transforms[46].rules[7].stemNotStartsWith": [
+    "transforms[46].rules[5].stemNotStartsWith": [
       [108, 108]
     ],
-    "transforms[46].rules[9].stemNotStartsWith": [
+    "transforms[46].rules[10].stemNotStartsWith": [
       [101, 101]
+    ],
+    "transforms[46].rules[11].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[46].rules[12].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[46].rules[13].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[46].rules[14].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
     ],
     "transforms[47].rules[0].stemNotStartsWith": [
       [101, 101],
@@ -1936,6 +2406,11 @@
     "transforms[47].rules[6].stemNotStartsWith": [
       [101, 101]
     ],
+    "transforms[47].rules[7].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[48].rules[0].stemNotStartsWith": [
       [101, 101],
       [109, 109],
@@ -1974,6 +2449,11 @@
     "transforms[48].rules[6].stemNotStartsWith": [
       [101, 101]
     ],
+    "transforms[48].rules[7].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[49].rules[0].stemNotStartsWith": [
       [101, 101],
       [109, 109],
@@ -2000,6 +2480,11 @@
     ],
     "transforms[49].rules[5].stemNotStartsWith": [
       [101, 101]
+    ],
+    "transforms[49].rules[6].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
     ],
     "transforms[50].rules[0].stemNotStartsWith": [
       [101, 101],
@@ -2039,6 +2524,11 @@
     "transforms[50].rules[6].stemNotStartsWith": [
       [101, 101]
     ],
+    "transforms[50].rules[7].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[51].rules[0].stemNotStartsWith": [
       [101, 101],
       [109, 109],
@@ -2076,6 +2566,11 @@
     ],
     "transforms[51].rules[6].stemNotStartsWith": [
       [101, 101]
+    ],
+    "transforms[51].rules[7].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
     ],
     "transforms[52].rules[0].stemNotStartsWith": [
       [101, 101],
@@ -2115,12 +2610,22 @@
     "transforms[52].rules[6].stemNotStartsWith": [
       [101, 101]
     ],
-    "transforms[53].rules[23].stemNotStartsWith": [
+    "transforms[52].rules[7].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[53].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[53].rules[1].stemNotStartsWith": [
       [101, 101],
       [109, 109],
       [115, 116]
     ],
-    "transforms[53].rules[23].stemNotEndsWith": [
+    "transforms[53].rules[1].stemNotEndsWith": [
       [65, 90],
       [97, 122],
       [192, 214],
@@ -2128,10 +2633,10 @@
       [248, 591],
       [64256, 64262]
     ],
-    "transforms[53].rules[24].stemNotStartsWith": [
+    "transforms[53].rules[2].stemNotStartsWith": [
       [121, 121]
     ],
-    "transforms[53].rules[24].stemNotEndsWith": [
+    "transforms[53].rules[2].stemNotEndsWith": [
       [65, 90],
       [97, 122],
       [192, 214],
@@ -2139,7 +2644,7 @@
       [248, 591],
       [64256, 64262]
     ],
-    "transforms[53].rules[25].stemNotEndsWith": [
+    "transforms[53].rules[3].stemNotEndsWith": [
       [65, 90],
       [97, 122],
       [192, 214],
@@ -2147,7 +2652,7 @@
       [248, 591],
       [64256, 64262]
     ],
-    "transforms[53].rules[26].stemNotEndsWith": [
+    "transforms[53].rules[4].stemNotEndsWith": [
       [65, 90],
       [97, 122],
       [192, 214],
@@ -2155,7 +2660,7 @@
       [248, 591],
       [64256, 64262]
     ],
-    "transforms[53].rules[27].stemNotEndsWith": [
+    "transforms[53].rules[5].stemNotEndsWith": [
       [65, 90],
       [97, 122],
       [192, 214],
@@ -2163,7 +2668,7 @@
       [248, 591],
       [64256, 64262]
     ],
-    "transforms[53].rules[28].stemNotEndsWith": [
+    "transforms[53].rules[6].stemNotEndsWith": [
       [65, 90],
       [97, 122],
       [192, 214],
@@ -2171,7 +2676,7 @@
       [248, 591],
       [64256, 64262]
     ],
-    "transforms[53].rules[29].stemNotEndsWith": [
+    "transforms[53].rules[7].stemNotEndsWith": [
       [65, 90],
       [97, 122],
       [192, 214],
@@ -2179,11 +2684,36 @@
       [248, 591],
       [64256, 64262]
     ],
-    "transforms[53].rules[30].stemNotStartsWith": [
+    "transforms[53].rules[8].stemNotStartsWith": [
       [108, 108]
     ],
     "transforms[53].rules[54].stemNotStartsWith": [
       [101, 101]
+    ],
+    "transforms[53].rules[55].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[53].rules[56].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[53].rules[57].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[53].rules[58].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[53].rules[59].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
     ],
     "transforms[54].rules[0].stemNotStartsWith": [
       [101, 101],
@@ -2242,6 +2772,11 @@
     "transforms[54].rules[33].stemNotStartsWith": [
       [101, 101]
     ],
+    "transforms[54].rules[34].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[55].rules[0].stemNotStartsWith": [
       [101, 101],
       [109, 109],
@@ -2296,6 +2831,11 @@
     "transforms[55].rules[31].stemNotStartsWith": [
       [101, 101]
     ],
+    "transforms[55].rules[32].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[56].rules[0].stemNotStartsWith": [
       [101, 101],
       [109, 109],
@@ -2331,6 +2871,11 @@
     "transforms[56].rules[12].stemNotStartsWith": [
       [101, 101]
     ],
+    "transforms[56].rules[13].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[57].rules[0].stemNotStartsWith": [
       [101, 101],
       [109, 109],
@@ -2358,6 +2903,11 @@
     "transforms[57].rules[5].stemNotStartsWith": [
       [101, 101]
     ],
+    "transforms[57].rules[6].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[58].rules[0].stemNotEndsWith": [
       [65, 90],
       [97, 122],
@@ -2371,6 +2921,11 @@
     ],
     "transforms[58].rules[4].stemNotStartsWith": [
       [101, 101]
+    ],
+    "transforms[58].rules[5].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
     ],
     "transforms[59].rules[0].stemNotEndsWith": [
       [65, 90],
@@ -2386,6 +2941,11 @@
     "transforms[59].rules[4].stemNotStartsWith": [
       [101, 101]
     ],
+    "transforms[59].rules[5].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[60].rules[0].stemNotEndsWith": [
       [65, 90],
       [97, 122],
@@ -2399,6 +2959,11 @@
     ],
     "transforms[60].rules[4].stemNotStartsWith": [
       [101, 101]
+    ],
+    "transforms[60].rules[5].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
     ],
     "transforms[61].rules[0].stemCharacters": [
       [65, 90],
@@ -2441,6 +3006,22 @@
       [64256, 64262]
     ],
     "transforms[61].rules[5].stemCharacters": [
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [64256, 64262]
+    ],
+    "transforms[61].rules[6].stemCharacters": [
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [64256, 64262]
+    ],
+    "transforms[61].rules[7].stemCharacters": [
       [65, 90],
       [97, 122],
       [192, 214],
@@ -2533,17 +3114,6 @@
         ["aimez", "aimez"],
         ["impressionnent", "impressionnent"],
         ["étendez", "étendez"],
-        ["plaisantent", "plaisantent"],
-        ["pissent", "pissent"],
-        ["trichons", "trichons"],
-        ["creusent", "creusent"],
-        ["crie", "crie"],
-        ["réfléchit", "réfléchit"],
-        ["reproduisons", "reproduisons"],
-        ["attaquons", "attaquons"],
-        ["représentent", "représentent"],
-        ["critiquent", "critiquent"],
-        ["attrapes", "attrapes"],
         ["confectionnons", "confectionnons"],
         ["supent", "supent"],
         ["vêlons", "vêlons"],
@@ -2588,17 +3158,6 @@
         ["courbaturez", "courbaturez"],
         ["racinent", "racinent"],
         ["prépositionnent", "prépositionnent"],
-        ["renverse", "renverse"],
-        ["absentes", "absentes"],
-        ["refourguez", "refourguez"],
-        ["cadmiez", "cadmiez"],
-        ["goupillez", "goupillez"],
-        ["yaourtent", "yaourtent"],
-        ["expédions", "expédions"],
-        ["réaffirme", "réaffirme"],
-        ["dédoublent", "dédoublent"],
-        ["approchons", "approchons"],
-        ["aimante", "aimante"],
         ["accédiez", "accédiez"],
         ["éloignaient", "éloignaient"],
         ["détestaient", "détestaient"],
@@ -2627,13 +3186,6 @@
         ["rendaient", "rendaient"],
         ["retardaient", "retardaient"],
         ["réalisaient", "réalisaient"],
-        ["poursuiviez", "poursuiviez"],
-        ["débrouillais", "débrouillais"],
-        ["provoquions", "provoquions"],
-        ["devenions", "devenions"],
-        ["effondrait", "effondrait"],
-        ["envolais", "envolais"],
-        ["traversais", "traversais"],
         ["pourrissais", "pourrissais"],
         ["examinions", "examinions"],
         ["désunissaient", "désunissaient"],
@@ -2662,13 +3214,6 @@
         ["croissions", "croissions"],
         ["déparlaient", "déparlaient"],
         ["kaolinisions", "kaolinisions"],
-        ["hébergeais", "hébergeais"],
-        ["tuait", "tuait"],
-        ["désorientais", "désorientais"],
-        ["ceignaient", "ceignaient"],
-        ["empalaient", "empalaient"],
-        ["devisiez", "devisiez"],
-        ["empailliez", "empailliez"],
         ["traitas", "traitas"],
         ["fonctionnâtes", "fonctionnâtes"],
         ["hiai", "hiai"],
@@ -2701,14 +3246,6 @@
         ["imaginâtes", "imaginâtes"],
         ["perdirent", "perdirent"],
         ["évitèrent", "évitèrent"],
-        ["confessa", "confessa"],
-        ["violas", "violas"],
-        ["saluâmes", "saluâmes"],
-        ["veilla", "veilla"],
-        ["développèrent", "développèrent"],
-        ["peignirent", "peignirent"],
-        ["attendîtes", "attendîtes"],
-        ["repérèrent", "repérèrent"],
         ["déflatas", "déflatas"],
         ["renommâtes", "renommâtes"],
         ["permutâtes", "permutâtes"],
@@ -2741,14 +3278,6 @@
         ["responsabilisai", "responsabilisai"],
         ["jammèrent", "jammèrent"],
         ["saoulâtes", "saoulâtes"],
-        ["externalisèrent", "externalisèrent"],
-        ["quintuplas", "quintuplas"],
-        ["bissâtes", "bissâtes"],
-        ["aplatîmes", "aplatîmes"],
-        ["entas", "entas"],
-        ["homicidâtes", "homicidâtes"],
-        ["jacquetâmes", "jacquetâmes"],
-        ["entreposèrent", "entreposèrent"],
         ["fixerai", "fixerai"],
         ["poursuivra", "poursuivra"],
         ["repèrera", "repèrera"],
@@ -2777,13 +3306,6 @@
         ["créerons", "créerons"],
         ["reconstruiras", "reconstruiras"],
         ["coucherons", "coucherons"],
-        ["emballera", "emballera"],
-        ["douterons", "douterons"],
-        ["durerai", "durerai"],
-        ["évitera", "évitera"],
-        ["dérangerez", "dérangerez"],
-        ["manquera", "manquera"],
-        ["débarquerai", "débarquerai"],
         ["tintinnabuleras", "tintinnabuleras"],
         ["restructurerai", "restructurerai"],
         ["fricoterez", "fricoterez"],
@@ -2811,13 +3333,6 @@
         ["potasserai", "potasserai"],
         ["bourseras", "bourseras"],
         ["dynamiteras", "dynamiteras"],
-        ["missionnera", "missionnera"],
-        ["couronneront", "couronneront"],
-        ["remiseras", "remiseras"],
-        ["délogera", "délogera"],
-        ["diplômeras", "diplômeras"],
-        ["centupleras", "centupleras"],
-        ["déshériteront", "déshériteront"],
         ["cuiraient", "cuiraient"],
         ["tendriez", "tendriez"],
         ["localiserions", "localiserions"],
@@ -2842,12 +3357,6 @@
         ["chaufferaient", "chaufferaient"],
         ["surprendriez", "surprendriez"],
         ["éviterions", "éviterions"],
-        ["économiseriez", "économiseriez"],
-        ["assumerais", "assumerais"],
-        ["lirait", "lirait"],
-        ["pourriez", "pourriez"],
-        ["goûteraient", "goûteraient"],
-        ["apporteraient", "apporteraient"],
         ["pétocherions", "pétocherions"],
         ["détonerions", "détonerions"],
         ["shampouineraient", "shampouineraient"],
@@ -2872,12 +3381,6 @@
         ["épargnerait", "épargnerait"],
         ["détromperais", "détromperais"],
         ["codirigerais", "codirigerais"],
-        ["inclinerait", "inclinerait"],
-        ["morcelleriez", "morcelleriez"],
-        ["colmaterait", "colmaterait"],
-        ["finirais", "finirais"],
-        ["plairais", "plairais"],
-        ["cracherions", "cracherions"],
         ["promettes", "promettes"],
         ["punisses", "punisses"],
         ["satisfassent", "satisfassent"],
@@ -2910,14 +3413,6 @@
         ["déçoive", "déçoive"],
         ["ralentisses", "ralentisses"],
         ["refasses", "refasses"],
-        ["satisfassiez", "satisfassiez"],
-        ["boives", "boives"],
-        ["réagisse", "réagisse"],
-        ["satisfasses", "satisfasses"],
-        ["descende", "descende"],
-        ["pende", "pende"],
-        ["vieillisse", "vieillisse"],
-        ["guérisse", "guérisse"],
         ["ravisse", "ravisse"],
         ["languisse", "languisse"],
         ["émeuve", "émeuve"],
@@ -2946,14 +3441,6 @@
         ["manuscrives", "manuscrives"],
         ["démente", "démente"],
         ["sursoies", "sursoies"],
-        ["retraduises", "retraduises"],
-        ["méconnaisse", "méconnaisse"],
-        ["combatte", "combatte"],
-        ["alanguisses", "alanguisses"],
-        ["redise", "redise"],
-        ["apprenne", "apprenne"],
-        ["pressentes", "pressentes"],
-        ["rebâtisse", "rebâtisse"],
         ["entrassent", "entrassent"],
         ["rachetasse", "rachetasse"],
         ["soulevassions", "soulevassions"],
@@ -2974,11 +3461,6 @@
         ["allumassions", "allumassions"],
         ["procurât", "procurât"],
         ["couvrissiez", "couvrissiez"],
-        ["emportât", "emportât"],
-        ["poignardassiez", "poignardassiez"],
-        ["raccrochassent", "raccrochassent"],
-        ["bouchasse", "bouchasse"],
-        ["chauffassiez", "chauffassiez"],
         ["chiquassent", "chiquassent"],
         ["transvasât", "transvasât"],
         ["espérantisât", "espérantisât"],
@@ -2998,10 +3480,6 @@
         ["talochassions", "talochassions"],
         ["internasses", "internasses"],
         ["évangélisasses", "évangélisasses"],
-        ["pétillasses", "pétillasses"],
-        ["prioritisassions", "prioritisassions"],
-        ["carnavalisassiez", "carnavalisassiez"],
-        ["emboutassiez", "emboutassiez"],
         ["allongeant", "allongeant"],
         ["donnant", "donnant"],
         ["souriant", "souriant"],
@@ -3018,10 +3496,6 @@
         ["partageant", "partageant"],
         ["pardonnant", "pardonnant"],
         ["dansant", "dansant"],
-        ["semant", "semant"],
-        ["respirant", "respirant"],
-        ["retenant", "retenant"],
-        ["attrapant", "attrapant"],
         ["dactylographiant", "dactylographiant"],
         ["mathématisant", "mathématisant"],
         ["claironnant", "claironnant"],
@@ -3037,10 +3511,6 @@
         ["patientant", "patientant"],
         ["éclatant", "éclatant"],
         ["pratiquant", "pratiquant"],
-        ["interjetant", "interjetant"],
-        ["battant", "battant"],
-        ["intoxiquant", "intoxiquant"],
-        ["paquant", "paquant"],
         ["sacrifié", "sacrifié"],
         ["vexé", "vexé"],
         ["poussé", "poussé"],
@@ -3065,12 +3535,6 @@
         ["divorcé", "divorcé"],
         ["vidé", "vidé"],
         ["piqué", "piqué"],
-        ["accédé", "accédé"],
-        ["semé", "semé"],
-        ["rendu", "rendu"],
-        ["allé", "allé"],
-        ["cuisiné", "cuisiné"],
-        ["allumé", "allumé"],
         ["résidé", "résidé"],
         ["surexcité", "surexcité"],
         ["alloti", "alloti"],
@@ -3095,12 +3559,6 @@
         ["aboyé", "aboyé"],
         ["interpénétré", "interpénétré"],
         ["rappelé", "rappelé"],
-        ["ablutionné", "ablutionné"],
-        ["admonesté", "admonesté"],
-        ["éclipsé", "éclipsé"],
-        ["transclus", "transclus"],
-        ["décimalisé", "décimalisé"],
-        ["bousillé", "bousillé"],
         ["grimpée", "grimpée"],
         ["gagnés", "gagnés"],
         ["votés", "votés"],
@@ -3129,13 +3587,6 @@
         ["mentionnées", "mentionnées"],
         ["pissées", "pissées"],
         ["suggérées", "suggérées"],
-        ["endormies", "endormies"],
-        ["humiliés", "humiliés"],
-        ["réussie", "réussie"],
-        ["coupées", "coupées"],
-        ["collés", "collés"],
-        ["doutés", "doutés"],
-        ["témoignés", "témoignés"],
         ["hæsitée", "hæsitée"],
         ["francisée", "francisée"],
         ["relavée", "relavée"],
@@ -3164,13 +3615,6 @@
         ["flexibilisés", "flexibilisés"],
         ["liquidée", "liquidée"],
         ["résultées", "résultées"],
-        ["peuplés", "peuplés"],
-        ["carnavalisées", "carnavalisées"],
-        ["resservie", "resservie"],
-        ["scrollés", "scrollés"],
-        ["effiloqués", "effiloqués"],
-        ["exorée", "exorée"],
-        ["craquée", "craquée"],
         ["novembres", "novembres"],
         ["cracks", "cracks"],
         ["becs", "becs"],
@@ -3231,21 +3675,6 @@
         ["leçons", "leçons"],
         ["parts", "parts"],
         ["chantiers", "chantiers"],
-        ["notes", "notes"],
-        ["genoux", "genoux"],
-        ["amours", "amours"],
-        ["homicides", "homicides"],
-        ["pratiques", "pratiques"],
-        ["campagnes", "campagnes"],
-        ["filles", "filles"],
-        ["jans", "jans"],
-        ["bingos", "bingos"],
-        ["plafonds", "plafonds"],
-        ["réductions", "réductions"],
-        ["belles", "belles"],
-        ["réceptions", "réceptions"],
-        ["imposteurs", "imposteurs"],
-        ["bandits", "bandits"],
         ["midinettes", "midinettes"],
         ["sansonnets", "sansonnets"],
         ["aminobenzènes", "aminobenzènes"],
@@ -3305,21 +3734,6 @@
         ["tildes", "tildes"],
         ["localisatrices", "localisatrices"],
         ["cosmogonies", "cosmogonies"],
-        ["inconstitutionnalités", "inconstitutionnalités"],
-        ["plugs", "plugs"],
-        ["olives", "olives"],
-        ["aoutats", "aoutats"],
-        ["glucuroconjugaisons", "glucuroconjugaisons"],
-        ["diffamateurs", "diffamateurs"],
-        ["brouilleurs", "brouilleurs"],
-        ["zombis", "zombis"],
-        ["héliothérapies", "héliothérapies"],
-        ["gargotiers", "gargotiers"],
-        ["privilégiées", "privilégiées"],
-        ["encensements", "encensements"],
-        ["crapaudines", "crapaudines"],
-        ["diœceses", "diœceses"],
-        ["marbrés", "marbrés"],
         ["serviteuse", "serviteuse"],
         ["meurtrière", "meurtrière"],
         ["citoyenne", "citoyenne"],
@@ -3388,18 +3802,6 @@
         ["supérieure", "supérieure"],
         ["immenses", "immenses"],
         ["tendue", "tendue"],
-        ["personnelles", "personnelles"],
-        ["féminines", "féminines"],
-        ["nerveuses", "nerveuses"],
-        ["protecteurs", "protecteurs"],
-        ["sujets", "sujets"],
-        ["embarrassantes", "embarrassantes"],
-        ["musicale", "musicale"],
-        ["suffisante", "suffisante"],
-        ["paranoïaques", "paranoïaques"],
-        ["élégants", "élégants"],
-        ["prétentieuse", "prétentieuse"],
-        ["condamnées", "condamnées"],
         ["flambants", "flambants"],
         ["pompeuse", "pompeuse"],
         ["ghanéennes", "ghanéennes"],
@@ -3452,19 +3854,6 @@
         ["inesgales", "inesgales"],
         ["turque", "turque"],
         ["ligamenteuses", "ligamenteuses"],
-        ["hyaloïdes", "hyaloïdes"],
-        ["téléphobes", "téléphobes"],
-        ["répertoriée", "répertoriée"],
-        ["romains", "romains"],
-        ["poissards", "poissards"],
-        ["plate", "plate"],
-        ["aguimpés", "aguimpés"],
-        ["questionnables", "questionnables"],
-        ["bressans", "bressans"],
-        ["ricaines", "ricaines"],
-        ["autarciques", "autarciques"],
-        ["hideuse", "hideuse"],
-        ["thonière", "thonière"],
         ["parle", "parle"],
         ["parles", "parles"],
         ["parlons", "parlons"],
@@ -3584,6 +3973,7 @@
         ["vont", "vont"],
         ["irai", "irai"],
         ["irait", "irait"],
+        ["allé", "allé"],
         ["allée", "allée"],
         ["fais", "fais"],
         ["fait", "fait"],
@@ -3773,6 +4163,7 @@
         ["rends", "rends"],
         ["rend", "rend"],
         ["rendons", "rendons"],
+        ["rendu", "rendu"],
         ["attend", "attend"],
         ["vendue", "vendue"],
         ["perdu", "perdu"],
@@ -4199,28 +4590,34 @@
         ["connoissait", "connoissait"],
         ["connoîtrai", "connoîtrai"],
         ["occis", "occis"],
+        ["me parle", "me parle"],
+        ["m'en doute", "m'en doute"],
+        ["m'y attendais", "m'y attendais"],
+        ["se moque", "se moque"],
+        ["y allait", "y allait"],
+        ["n'y allait", "n'y allait"],
+        ["j'y allais", "j'y allais"],
+        ["s'en moque", "s'en moque"],
+        ["prendre chez", "prendre chez"],
+        ["le cherchions", "le cherchions"],
+        ["la boucle", "la boucle"],
+        ["l'y avait", "l'y avait"],
+        ["l'y allait", "l'y allait"],
+        ["en jetât", "en jetât"],
         ["repaitront", "repaitront"],
         ["naisses", "naisses"],
         ["accroisses", "accroisses"],
         ["connaisse", "connaisse"],
         ["connoisses", "connoisses"],
         ["décrût", "décrût"],
-        ["comparussiez", "comparussiez"],
         ["accroissant", "accroissant"],
         ["coincée", "coincée"],
         ["copine", "copine"],
         ["jument", "jument"],
         ["sœurette", "sœurette"],
-        ["remplaçante", "remplaçante"],
-        ["mortelle", "mortelle"],
-        ["candidate", "candidate"],
         ["dalleuse", "dalleuse"],
         ["broussarde", "broussarde"],
         ["chèvre", "chèvre"],
-        ["surveillante", "surveillante"],
-        ["vainqueure", "vainqueure"],
-        ["souricelle", "souricelle"],
-        ["sures", "sures"],
         ["PARLE", "parle"],
         ["ÉCOLE", "école"],
         ["ŒUVRE", "œuvre"],
@@ -4243,6 +4640,11 @@
         ["coefficient", "coefficient"],
         ["cœur", "cœur"],
         ["homme", "homme"],
+        ["Se lève", "se lève"],
+        ["s’en moque", "s’en moque"],
+        ["la parle", "la parle"],
+        ["en jette", "en jette"],
+        ["je me parle", "je me parle"],
         ["homme est là", "homme est là"],
         ["l’homme est là", "l’homme est là"],
         ["l'homme est là", "l'homme est là"],
@@ -4279,6 +4681,11 @@
         ["y ai pensé", "y ai pensé"],
         ["porte-le ici", "porte-le ici"],
         ["porte-t-il", "porte-t-il"],
+        ["s'en moque bien", "s'en moque bien"],
+        ["y allait souvent", "y allait souvent"],
+        ["prendre chez elle", "prendre chez elle"],
+        ["le cherchions partout", "le cherchions partout"],
+        ["la bouclait", "la bouclait"],
         ["Elles finissaient leurs devoirs avant le dîner.", "elles finissaient leurs devoirs avant le dîner."],
         ["finissaient", "finissaient"],
         ["finir", "finir"]
@@ -4332,17 +4739,6 @@
         ["aimez", "Aimez"],
         ["impressionnent", "Impressionnent"],
         ["étendez", "Étendez"],
-        ["plaisantent", "Plaisantent"],
-        ["pissent", "Pissent"],
-        ["trichons", "Trichons"],
-        ["creusent", "Creusent"],
-        ["crie", "Crie"],
-        ["réfléchit", "Réfléchit"],
-        ["reproduisons", "Reproduisons"],
-        ["attaquons", "Attaquons"],
-        ["représentent", "Représentent"],
-        ["critiquent", "Critiquent"],
-        ["attrapes", "Attrapes"],
         ["confectionnons", "Confectionnons"],
         ["supent", "Supent"],
         ["vêlons", "Vêlons"],
@@ -4387,17 +4783,6 @@
         ["courbaturez", "Courbaturez"],
         ["racinent", "Racinent"],
         ["prépositionnent", "Prépositionnent"],
-        ["renverse", "Renverse"],
-        ["absentes", "Absentes"],
-        ["refourguez", "Refourguez"],
-        ["cadmiez", "Cadmiez"],
-        ["goupillez", "Goupillez"],
-        ["yaourtent", "Yaourtent"],
-        ["expédions", "Expédions"],
-        ["réaffirme", "Réaffirme"],
-        ["dédoublent", "Dédoublent"],
-        ["approchons", "Approchons"],
-        ["aimante", "Aimante"],
         ["accédiez", "Accédiez"],
         ["éloignaient", "Éloignaient"],
         ["détestaient", "Détestaient"],
@@ -4426,13 +4811,6 @@
         ["rendaient", "Rendaient"],
         ["retardaient", "Retardaient"],
         ["réalisaient", "Réalisaient"],
-        ["poursuiviez", "Poursuiviez"],
-        ["débrouillais", "Débrouillais"],
-        ["provoquions", "Provoquions"],
-        ["devenions", "Devenions"],
-        ["effondrait", "Effondrait"],
-        ["envolais", "Envolais"],
-        ["traversais", "Traversais"],
         ["pourrissais", "Pourrissais"],
         ["examinions", "Examinions"],
         ["désunissaient", "Désunissaient"],
@@ -4461,13 +4839,6 @@
         ["croissions", "Croissions"],
         ["déparlaient", "Déparlaient"],
         ["kaolinisions", "Kaolinisions"],
-        ["hébergeais", "Hébergeais"],
-        ["tuait", "Tuait"],
-        ["désorientais", "Désorientais"],
-        ["ceignaient", "Ceignaient"],
-        ["empalaient", "Empalaient"],
-        ["devisiez", "Devisiez"],
-        ["empailliez", "Empailliez"],
         ["traitas", "Traitas"],
         ["fonctionnâtes", "Fonctionnâtes"],
         ["hiai", "Hiai"],
@@ -4500,14 +4871,6 @@
         ["imaginâtes", "Imaginâtes"],
         ["perdirent", "Perdirent"],
         ["évitèrent", "Évitèrent"],
-        ["confessa", "Confessa"],
-        ["violas", "Violas"],
-        ["saluâmes", "Saluâmes"],
-        ["veilla", "Veilla"],
-        ["développèrent", "Développèrent"],
-        ["peignirent", "Peignirent"],
-        ["attendîtes", "Attendîtes"],
-        ["repérèrent", "Repérèrent"],
         ["déflatas", "Déflatas"],
         ["renommâtes", "Renommâtes"],
         ["permutâtes", "Permutâtes"],
@@ -4540,14 +4903,6 @@
         ["responsabilisai", "Responsabilisai"],
         ["jammèrent", "Jammèrent"],
         ["saoulâtes", "Saoulâtes"],
-        ["externalisèrent", "Externalisèrent"],
-        ["quintuplas", "Quintuplas"],
-        ["bissâtes", "Bissâtes"],
-        ["aplatîmes", "Aplatîmes"],
-        ["entas", "Entas"],
-        ["homicidâtes", "Homicidâtes"],
-        ["jacquetâmes", "Jacquetâmes"],
-        ["entreposèrent", "Entreposèrent"],
         ["fixerai", "Fixerai"],
         ["poursuivra", "Poursuivra"],
         ["repèrera", "Repèrera"],
@@ -4576,13 +4931,6 @@
         ["créerons", "Créerons"],
         ["reconstruiras", "Reconstruiras"],
         ["coucherons", "Coucherons"],
-        ["emballera", "Emballera"],
-        ["douterons", "Douterons"],
-        ["durerai", "Durerai"],
-        ["évitera", "Évitera"],
-        ["dérangerez", "Dérangerez"],
-        ["manquera", "Manquera"],
-        ["débarquerai", "Débarquerai"],
         ["tintinnabuleras", "Tintinnabuleras"],
         ["restructurerai", "Restructurerai"],
         ["fricoterez", "Fricoterez"],
@@ -4610,13 +4958,6 @@
         ["potasserai", "Potasserai"],
         ["bourseras", "Bourseras"],
         ["dynamiteras", "Dynamiteras"],
-        ["missionnera", "Missionnera"],
-        ["couronneront", "Couronneront"],
-        ["remiseras", "Remiseras"],
-        ["délogera", "Délogera"],
-        ["diplômeras", "Diplômeras"],
-        ["centupleras", "Centupleras"],
-        ["déshériteront", "Déshériteront"],
         ["cuiraient", "Cuiraient"],
         ["tendriez", "Tendriez"],
         ["localiserions", "Localiserions"],
@@ -4641,12 +4982,6 @@
         ["chaufferaient", "Chaufferaient"],
         ["surprendriez", "Surprendriez"],
         ["éviterions", "Éviterions"],
-        ["économiseriez", "Économiseriez"],
-        ["assumerais", "Assumerais"],
-        ["lirait", "Lirait"],
-        ["pourriez", "Pourriez"],
-        ["goûteraient", "Goûteraient"],
-        ["apporteraient", "Apporteraient"],
         ["pétocherions", "Pétocherions"],
         ["détonerions", "Détonerions"],
         ["shampouineraient", "Shampouineraient"],
@@ -4671,12 +5006,6 @@
         ["épargnerait", "Épargnerait"],
         ["détromperais", "Détromperais"],
         ["codirigerais", "Codirigerais"],
-        ["inclinerait", "Inclinerait"],
-        ["morcelleriez", "Morcelleriez"],
-        ["colmaterait", "Colmaterait"],
-        ["finirais", "Finirais"],
-        ["plairais", "Plairais"],
-        ["cracherions", "Cracherions"],
         ["promettes", "Promettes"],
         ["punisses", "Punisses"],
         ["satisfassent", "Satisfassent"],
@@ -4709,14 +5038,6 @@
         ["déçoive", "Déçoive"],
         ["ralentisses", "Ralentisses"],
         ["refasses", "Refasses"],
-        ["satisfassiez", "Satisfassiez"],
-        ["boives", "Boives"],
-        ["réagisse", "Réagisse"],
-        ["satisfasses", "Satisfasses"],
-        ["descende", "Descende"],
-        ["pende", "Pende"],
-        ["vieillisse", "Vieillisse"],
-        ["guérisse", "Guérisse"],
         ["ravisse", "Ravisse"],
         ["languisse", "Languisse"],
         ["émeuve", "Émeuve"],
@@ -4745,14 +5066,6 @@
         ["manuscrives", "Manuscrives"],
         ["démente", "Démente"],
         ["sursoies", "Sursoies"],
-        ["retraduises", "Retraduises"],
-        ["méconnaisse", "Méconnaisse"],
-        ["combatte", "Combatte"],
-        ["alanguisses", "Alanguisses"],
-        ["redise", "Redise"],
-        ["apprenne", "Apprenne"],
-        ["pressentes", "Pressentes"],
-        ["rebâtisse", "Rebâtisse"],
         ["entrassent", "Entrassent"],
         ["rachetasse", "Rachetasse"],
         ["soulevassions", "Soulevassions"],
@@ -4773,11 +5086,6 @@
         ["allumassions", "Allumassions"],
         ["procurât", "Procurât"],
         ["couvrissiez", "Couvrissiez"],
-        ["emportât", "Emportât"],
-        ["poignardassiez", "Poignardassiez"],
-        ["raccrochassent", "Raccrochassent"],
-        ["bouchasse", "Bouchasse"],
-        ["chauffassiez", "Chauffassiez"],
         ["chiquassent", "Chiquassent"],
         ["transvasât", "Transvasât"],
         ["espérantisât", "Espérantisât"],
@@ -4797,10 +5105,6 @@
         ["talochassions", "Talochassions"],
         ["internasses", "Internasses"],
         ["évangélisasses", "Évangélisasses"],
-        ["pétillasses", "Pétillasses"],
-        ["prioritisassions", "Prioritisassions"],
-        ["carnavalisassiez", "Carnavalisassiez"],
-        ["emboutassiez", "Emboutassiez"],
         ["allongeant", "Allongeant"],
         ["donnant", "Donnant"],
         ["souriant", "Souriant"],
@@ -4817,10 +5121,6 @@
         ["partageant", "Partageant"],
         ["pardonnant", "Pardonnant"],
         ["dansant", "Dansant"],
-        ["semant", "Semant"],
-        ["respirant", "Respirant"],
-        ["retenant", "Retenant"],
-        ["attrapant", "Attrapant"],
         ["dactylographiant", "Dactylographiant"],
         ["mathématisant", "Mathématisant"],
         ["claironnant", "Claironnant"],
@@ -4836,10 +5136,6 @@
         ["patientant", "Patientant"],
         ["éclatant", "Éclatant"],
         ["pratiquant", "Pratiquant"],
-        ["interjetant", "Interjetant"],
-        ["battant", "Battant"],
-        ["intoxiquant", "Intoxiquant"],
-        ["paquant", "Paquant"],
         ["sacrifié", "Sacrifié"],
         ["vexé", "Vexé"],
         ["poussé", "Poussé"],
@@ -4864,12 +5160,6 @@
         ["divorcé", "Divorcé"],
         ["vidé", "Vidé"],
         ["piqué", "Piqué"],
-        ["accédé", "Accédé"],
-        ["semé", "Semé"],
-        ["rendu", "Rendu"],
-        ["allé", "Allé"],
-        ["cuisiné", "Cuisiné"],
-        ["allumé", "Allumé"],
         ["résidé", "Résidé"],
         ["surexcité", "Surexcité"],
         ["alloti", "Alloti"],
@@ -4894,12 +5184,6 @@
         ["aboyé", "Aboyé"],
         ["interpénétré", "Interpénétré"],
         ["rappelé", "Rappelé"],
-        ["ablutionné", "Ablutionné"],
-        ["admonesté", "Admonesté"],
-        ["éclipsé", "Éclipsé"],
-        ["transclus", "Transclus"],
-        ["décimalisé", "Décimalisé"],
-        ["bousillé", "Bousillé"],
         ["grimpée", "Grimpée"],
         ["gagnés", "Gagnés"],
         ["votés", "Votés"],
@@ -4928,13 +5212,6 @@
         ["mentionnées", "Mentionnées"],
         ["pissées", "Pissées"],
         ["suggérées", "Suggérées"],
-        ["endormies", "Endormies"],
-        ["humiliés", "Humiliés"],
-        ["réussie", "Réussie"],
-        ["coupées", "Coupées"],
-        ["collés", "Collés"],
-        ["doutés", "Doutés"],
-        ["témoignés", "Témoignés"],
         ["hæsitée", "Hæsitée"],
         ["francisée", "Francisée"],
         ["relavée", "Relavée"],
@@ -4963,13 +5240,6 @@
         ["flexibilisés", "Flexibilisés"],
         ["liquidée", "Liquidée"],
         ["résultées", "Résultées"],
-        ["peuplés", "Peuplés"],
-        ["carnavalisées", "Carnavalisées"],
-        ["resservie", "Resservie"],
-        ["scrollés", "Scrollés"],
-        ["effiloqués", "Effiloqués"],
-        ["exorée", "Exorée"],
-        ["craquée", "Craquée"],
         ["novembres", "Novembres"],
         ["cracks", "Cracks"],
         ["becs", "Becs"],
@@ -5030,21 +5300,6 @@
         ["leçons", "Leçons"],
         ["parts", "Parts"],
         ["chantiers", "Chantiers"],
-        ["notes", "Notes"],
-        ["genoux", "Genoux"],
-        ["amours", "Amours"],
-        ["homicides", "Homicides"],
-        ["pratiques", "Pratiques"],
-        ["campagnes", "Campagnes"],
-        ["filles", "Filles"],
-        ["jans", "Jans"],
-        ["bingos", "Bingos"],
-        ["plafonds", "Plafonds"],
-        ["réductions", "Réductions"],
-        ["belles", "Belles"],
-        ["réceptions", "Réceptions"],
-        ["imposteurs", "Imposteurs"],
-        ["bandits", "Bandits"],
         ["midinettes", "Midinettes"],
         ["sansonnets", "Sansonnets"],
         ["aminobenzènes", "Aminobenzènes"],
@@ -5104,21 +5359,6 @@
         ["tildes", "Tildes"],
         ["localisatrices", "Localisatrices"],
         ["cosmogonies", "Cosmogonies"],
-        ["inconstitutionnalités", "Inconstitutionnalités"],
-        ["plugs", "Plugs"],
-        ["olives", "Olives"],
-        ["aoutats", "Aoutats"],
-        ["glucuroconjugaisons", "Glucuroconjugaisons"],
-        ["diffamateurs", "Diffamateurs"],
-        ["brouilleurs", "Brouilleurs"],
-        ["zombis", "Zombis"],
-        ["héliothérapies", "Héliothérapies"],
-        ["gargotiers", "Gargotiers"],
-        ["privilégiées", "Privilégiées"],
-        ["encensements", "Encensements"],
-        ["crapaudines", "Crapaudines"],
-        ["diœceses", "Diœceses"],
-        ["marbrés", "Marbrés"],
         ["serviteuse", "Serviteuse"],
         ["meurtrière", "Meurtrière"],
         ["citoyenne", "Citoyenne"],
@@ -5187,18 +5427,6 @@
         ["supérieure", "Supérieure"],
         ["immenses", "Immenses"],
         ["tendue", "Tendue"],
-        ["personnelles", "Personnelles"],
-        ["féminines", "Féminines"],
-        ["nerveuses", "Nerveuses"],
-        ["protecteurs", "Protecteurs"],
-        ["sujets", "Sujets"],
-        ["embarrassantes", "Embarrassantes"],
-        ["musicale", "Musicale"],
-        ["suffisante", "Suffisante"],
-        ["paranoïaques", "Paranoïaques"],
-        ["élégants", "Élégants"],
-        ["prétentieuse", "Prétentieuse"],
-        ["condamnées", "Condamnées"],
         ["flambants", "Flambants"],
         ["pompeuse", "Pompeuse"],
         ["ghanéennes", "Ghanéennes"],
@@ -5251,19 +5479,6 @@
         ["inesgales", "Inesgales"],
         ["turque", "Turque"],
         ["ligamenteuses", "Ligamenteuses"],
-        ["hyaloïdes", "Hyaloïdes"],
-        ["téléphobes", "Téléphobes"],
-        ["répertoriée", "Répertoriée"],
-        ["romains", "Romains"],
-        ["poissards", "Poissards"],
-        ["plate", "Plate"],
-        ["aguimpés", "Aguimpés"],
-        ["questionnables", "Questionnables"],
-        ["bressans", "Bressans"],
-        ["ricaines", "Ricaines"],
-        ["autarciques", "Autarciques"],
-        ["hideuse", "Hideuse"],
-        ["thonière", "Thonière"],
         ["parle", "Parle"],
         ["parles", "Parles"],
         ["parlons", "Parlons"],
@@ -5383,6 +5598,7 @@
         ["vont", "Vont"],
         ["irai", "Irai"],
         ["irait", "Irait"],
+        ["allé", "Allé"],
         ["allée", "Allée"],
         ["fais", "Fais"],
         ["fait", "Fait"],
@@ -5572,6 +5788,7 @@
         ["rends", "Rends"],
         ["rend", "Rend"],
         ["rendons", "Rendons"],
+        ["rendu", "Rendu"],
         ["attend", "Attend"],
         ["vendue", "Vendue"],
         ["perdu", "Perdu"],
@@ -5998,28 +6215,34 @@
         ["connoissait", "Connoissait"],
         ["connoîtrai", "Connoîtrai"],
         ["occis", "Occis"],
+        ["me parle", "Me parle"],
+        ["m'en doute", "M'en doute"],
+        ["m'y attendais", "M'y attendais"],
+        ["se moque", "Se moque"],
+        ["y allait", "Y allait"],
+        ["n'y allait", "N'y allait"],
+        ["j'y allais", "J'y allais"],
+        ["s'en moque", "S'en moque"],
+        ["prendre chez", "Prendre chez"],
+        ["le cherchions", "Le cherchions"],
+        ["la boucle", "La boucle"],
+        ["l'y avait", "L'y avait"],
+        ["l'y allait", "L'y allait"],
+        ["en jetât", "En jetât"],
         ["repaitront", "Repaitront"],
         ["naisses", "Naisses"],
         ["accroisses", "Accroisses"],
         ["connaisse", "Connaisse"],
         ["connoisses", "Connoisses"],
         ["décrût", "Décrût"],
-        ["comparussiez", "Comparussiez"],
         ["accroissant", "Accroissant"],
         ["coincée", "Coincée"],
         ["copine", "Copine"],
         ["jument", "Jument"],
         ["sœurette", "Sœurette"],
-        ["remplaçante", "Remplaçante"],
-        ["mortelle", "Mortelle"],
-        ["candidate", "Candidate"],
         ["dalleuse", "Dalleuse"],
         ["broussarde", "Broussarde"],
         ["chèvre", "Chèvre"],
-        ["surveillante", "Surveillante"],
-        ["vainqueure", "Vainqueure"],
-        ["souricelle", "Souricelle"],
-        ["sures", "Sures"],
         ["PARLE", "PARLE"],
         ["ÉCOLE", "ÉCOLE"],
         ["ŒUVRE", "ŒUVRE"],
@@ -6042,6 +6265,11 @@
         ["coefficient", "Coefficient"],
         ["cœur", "Cœur"],
         ["homme", "Homme"],
+        ["Se lève", "Se lève"],
+        ["s’en moque", "S’en moque"],
+        ["la parle", "La parle"],
+        ["en jette", "En jette"],
+        ["je me parle", "Je me parle"],
         ["homme est là", "Homme est là"],
         ["l’homme est là", "L’homme est là"],
         ["l'homme est là", "L'homme est là"],
@@ -6078,6 +6306,11 @@
         ["y ai pensé", "Y ai pensé"],
         ["porte-le ici", "Porte-le ici"],
         ["porte-t-il", "Porte-t-il"],
+        ["s'en moque bien", "S'en moque bien"],
+        ["y allait souvent", "Y allait souvent"],
+        ["prendre chez elle", "Prendre chez elle"],
+        ["le cherchions partout", "Le cherchions partout"],
+        ["la bouclait", "La bouclait"],
         ["Elles finissaient leurs devoirs avant le dîner.", "Elles finissaient leurs devoirs avant le dîner."],
         ["finissaient", "Finissaient"],
         ["finir", "Finir"]

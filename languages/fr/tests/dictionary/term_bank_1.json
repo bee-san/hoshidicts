@@ -88,5 +88,18 @@
   ["sûr", "", "adj", "adj", 0, ["sure"], 87, ""],
   ["penser", "", "v", "v", 0, ["to think"], 88, ""],
   ["personne", "", "n", "n", 0, ["person"], 89, ""],
-  ["demain", "", "adv", "adv", 0, ["tomorrow"], 90, ""]
+  ["demain", "", "adv", "adv", 0, ["tomorrow"], 90, ""],
+  ["moquer", "", "v", "v", 0, ["to mock"], 91, ""],
+  ["s'en moquer", "", "v", "v", 0, ["not to care"], 92, ""],
+  ["souvent", "", "adv", "adv", 0, ["often"], 93, ""],
+  ["bien", "", "adv", "adv", 0, ["well"], 94, ""],
+  ["prendre", "", "v", "v", 0, ["to take"], 95, ""],
+  ["prendre cher", "", "v", "v", 0, ["to pay dearly"], 96, ""],
+  ["chez", "", "", "", 0, ["at the home of"], 97, ""],
+  ["elle", "", "", "", 0, ["she"], 98, ""],
+  ["chercher", "", "v", "v", 0, ["to look for"], 99, ""],
+  ["le chercher", "", "v", "v", 0, ["to be asking for it"], 100, ""],
+  ["partout", "", "adv", "adv", 0, ["everywhere"], 101, ""],
+  ["boucler", "", "v", "v", 0, ["to buckle"], 102, ""],
+  ["la boucler", "", "v", "v", 0, ["to shut up"], 103, ""]
 ]

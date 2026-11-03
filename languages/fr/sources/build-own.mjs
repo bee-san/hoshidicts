@@ -97,21 +97,24 @@ const ELIDED = [
 // and qu', d', jusqu' … come before any word.
 const BEFORE_VERB = new Set(['j', 'm', 't', 's', 'n', 'c', 'ç']);
 // Any word may follow the apostrophe, as in informal writing (j'suis,
-// t'sais). After m', t' and s', a following en or y belongs with them to a
-// pronominal verb (s'en revenait, s'y prend): the rule leaves those for the
-// whole text (s'en aller, s'y prendre), so that en revenait is not read as
-// the phrase en revenir. A stem constraint takes one text, so these rules
+// t'sais). After m', t', s' and l', a following en or y belongs with them to
+// a pronominal verb or an object (s'en revenait, s'y prend, je l'y ai vu):
+// the rule leaves those for the whole text (s'en aller, s'y prendre), so
+// that en revenait is not read as the phrase en revenir, nor l'y avait as y
+// avoir. A stem constraint takes one text, so these rules
 // are split by the stem's first letter.
-const CLITIC = new Set(['m', 't', 's']);
+const CLITIC = new Set(['m', 't', 's', 'l']);
 for (const [short] of ELIDED) {
     const out = BEFORE_VERB.has(short) ? ['vcl'] : [];
     if (!CLITIC.has(short)) {
         add('elision', prefix(`${short}'`, '', [], out));
         continue;
     }
+    // The preprocessor joinPronoun writes s'en moque as s'en+moque: the
+    // same pronouns, which the elision leaves (stemCharacters [^+]).
     add('elision', prefix(`${short}'`, '', [], out, {stemNotStartsWith: '[ey]'}));
-    add('elision', prefix(`${short}'`, '', [], out, {stemStartsWith: '[e]', stemNotStartsWithText: 'en '}));
-    add('elision', prefix(`${short}'`, '', [], out, {stemStartsWith: '[y]', stemNotStartsWithText: 'y '}));
+    add('elision', prefix(`${short}'`, '', [], out, {stemStartsWith: '[e]', stemNotStartsWithText: 'en ', stemCharacters: '[^+]'}));
+    add('elision', prefix(`${short}'`, '', [], out, {stemStartsWith: '[y]', stemNotStartsWithText: 'y ', stemCharacters: '[^+]'}));
 }
 transform('elided-form', 'elided form',
     'The word an apostrophe follows, read as its elided and full forms: l → l\', le, la; qu → qu\', que.');
@@ -127,14 +130,17 @@ for (const [short, full] of ELIDED) {
 // read through the imperative (imp) or the finite tenses (fin). -nous and
 // -vous can be either. A reflexive pronoun after an imperative gives the
 // pronominal verb: lève-toi → se lève → se lever, va-t'en → s'en va → s'en aller.
+// The pronoun is joined to the verb with +, as the preprocessor joinPronoun
+// joins it (se+lève), so that the regular endings, whose stem is one word,
+// read the verb; the postprocessor unjoinPronoun writes the space again.
 transform('reflexive-imperative', 'reflexive imperative',
     'An affirmative imperative with a reflexive pronoun after it, read as the pronominal verb: lève-toi → se lève, assieds-toi → s\'assieds, va-t\'en → s\'en va.');
-add('reflexive-imperative', {type: 'circumfix', inflectedPrefix: '', deinflectedPrefix: 'se ', inflectedSuffix: '-toi', deinflectedSuffix: '',
+add('reflexive-imperative', {type: 'circumfix', inflectedPrefix: '', deinflectedPrefix: 'se+', inflectedSuffix: '-toi', deinflectedSuffix: '',
     conditionsIn: [], conditionsOut: ['imp'], stemNotStartsWith: '{vowel}'});
 add('reflexive-imperative', {type: 'circumfix', inflectedPrefix: '', deinflectedPrefix: "s'", inflectedSuffix: '-toi', deinflectedSuffix: '',
     conditionsIn: [], conditionsOut: ['imp'], stemStartsWith: '{elidable}'});
 for (const p of ["-t'en", '-nous-en', '-vous-en']) {
-    add('reflexive-imperative', {type: 'circumfix', inflectedPrefix: '', deinflectedPrefix: "s'en ", inflectedSuffix: p, deinflectedSuffix: '',
+    add('reflexive-imperative', {type: 'circumfix', inflectedPrefix: '', deinflectedPrefix: "s'en+", inflectedSuffix: p, deinflectedSuffix: '',
         conditionsIn: [], conditionsOut: ['imp']});
 }
 transform('imperative-pronoun', 'imperative + pronoun',
@@ -672,6 +678,13 @@ for (const m of MODELS) {
         const extra = {};
         if (m.stem === 'word') {
             extra.stemMinLength = m.min ?? 1;
+            // The regular endings are short, and a lookup meets them at the
+            // end of texts of several words (prendre chez, le cherchions):
+            // their stem is one word, so that prendre chez is not read as
+            // prendre cher, nor le cherchions as le chercher. A reflexive
+            // pronoun before them is joined to the verb by the preprocessor
+            // joinPronoun (me parle → me+parle → se parler).
+            if (m.regular) { extra.stemCharacters = '{notSpace}'; }
         } else if (m.stem === 'alone') {
             extra.stemNotEndsWith = '{letter}';
         }
@@ -707,7 +720,7 @@ for (const [tense, persons, ending] of MUTE) {
     if (t.finite && persons.includes('2s')) { out.push('p2s'); }
     for (const to of ['e', 'é']) {
         verbRules.push([verbTransformId(tense, persons), suffix(ending, 'er', t.conditionsIn, out, {
-            stemChange: {from: ['è'], to, occurrence: 'last'},
+            stemCharacters: '{notSpace}', stemChange: {from: ['è'], to, occurrence: 'last'},
         })]);
     }
 }
@@ -727,7 +740,7 @@ for (const [tense, persons, ending] of [
     const out = ['v'];
     if (t.finite && persons.includes('1s')) { out.push('p1s'); }
     if (t.finite && persons.includes('2s')) { out.push('p2s'); }
-    verbRules.unshift([verbTransformId(tense, persons), suffix(`ass${ending}`, 'asser', t.conditionsIn, out)]);
+    verbRules.unshift([verbTransformId(tense, persons), suffix(`ass${ending}`, 'asser', t.conditionsIn, out, {stemCharacters: '{notSpace}'})]);
 }
 
 // A plural participle is often also the plural of a noun or adjective (les
@@ -787,11 +800,17 @@ transform('pronominal', 'pronominal',
     'A verb with a reflexive pronoun of its person before it, looked up with se: je me lève → se lever, tu t\'appelles → s\'appeler, je m\'en vais → s\'en aller.');
 const INFINITIVE_ENDINGS = [['er', 'er'], ['ir', 'ir'], ['re', 're']];
 for (const [pronoun, person] of [['me', 'p1s'], ['te', 'p2s']]) {
-    const circumfix = (inflectedPrefix, deinflectedPrefix, extra) => ({type: 'circumfix', prefixes: [[inflectedPrefix, deinflectedPrefix]],
+    // A pronoun before a space comes raw (me lève) or joined to the verb by
+    // the preprocessor joinPronoun (me+parle).
+    const circumfix = (inflectedPrefix, deinflectedPrefix, extra) => ({type: 'circumfix',
+        prefixes: inflectedPrefix.endsWith(' ')
+            ? [[inflectedPrefix, deinflectedPrefix], [`${inflectedPrefix.slice(0, -1)}+`, deinflectedPrefix]]
+            : [[inflectedPrefix, deinflectedPrefix]],
         suffixes: INFINITIVE_ENDINGS, conditionsIn: [person], conditionsOut: ['v'], stemCharacters: '{letter}', ...extra});
     add('pronominal', circumfix(`${pronoun} `, 'se ', {stemNotStartsWithText: 'suiv'}));
     add('pronominal', circumfix(`${pronoun[0]}'`, "s'", {}));
     add('pronominal', circumfix(`${pronoun[0]}'en `, "s'en ", {}));
+    add('pronominal', circumfix(`${pronoun[0]}'y `, "s'y ", {}));
 }
 
 // --- Nouns and adjectives -----------------------------------------------------------
