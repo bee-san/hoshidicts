@@ -380,3 +380,65 @@ Checks:
   first (`falava` → falar, `pôs` → pôr, `lembrava-se` → lembrar, `leões` →
   leão, `soubesse` → saber); the Anki note and the switch to Japanese and
   back work.
+
+## Known gaps
+
+- **Spellings older than the 1911 and 1945 reforms** cause almost every wrong
+  first result in real text: all 36 judged by form-of rows in the three novels
+  and 10 of the 14 wrong in the hand-checked sample. Without a written accent
+  the rules cannot tell which vowel carried it (`politicos` reads as a
+  present of politicar, `sitios` of sitiar, `bôa` of "bôer"), and wty-pt-en
+  writes many old spellings as references to a reference (`azas` → aza →
+  asa, `peccados` → peccado → pecado), which one hop does not reach
+  (docs/languages.md 16), so a regular verb reading comes first: `azas` →
+  azar, `familias` → familiar, `peccados` → pecar, `deviamos` → devir. The
+  old spellings the rules or the dictionary do reach keep their readings
+  (`sahia` → sahir, `capellinha` → capella, `technicos` → técnico,
+  `commercialmente` → comercial).
+- **Modern forms written without their accent** (`viamos` for víamos,
+  `saida` for saída) read as other words; the pack has no processor that adds
+  accents.
+- **Names, foreign words and Roman numerals** are read as Portuguese words
+  when they look like one: `Toni` → toner, `Elma` → elmo, `VII` → vir, the
+  French `DES` → de, `Roqueirinha` → roqueira.
+- **`gaps.tsv`** (38 rows the rules do not reach):
+  - UniMorph rows that are not standard forms: `requiser`, `requisermos` and
+    `requiseres` (requerer's preterite is regular: requeri), `reúnamos` and
+    `reúnais` (no accent: reunamos), `soubéram`, `valeval`, `respigemos`
+    (respiguemos);
+  - lemmas in older or variant spellings: `agüentar` (from `aguentar`), `oppôr`,
+    `decompôr`, `presupor`;
+  - mobiliar stressed on the stem (`mobília`, `mobílies`), and `luz` (luzir),
+    whose one-letter stem is shorter than the -uzir rule's minimum of two
+    (`luz` is far more often the noun light);
+  - wty-pt-en pairs that are not inflections: `padrastos` → "nadraste",
+    `senhoras` → senhor@, `sobrinha` → sobrinhe and `otome` → otaku (gender
+    terms), `cafetina` → cafetão;
+  - diminutives and superlatives in other suffixes: -ito (`barquito`,
+    `caracolito`), -ete and -eta (`diabrete`, `bosquete`, `roseta`), -ículo,
+    -ilha, -zeco, -olas, and -inha forms that drop a vowel (`meinha` → meia,
+    `historinha` → história, `saidinha` → saída, `bauzinho` → baú,
+    `kitizinho` → kit); `mijoníssimo` (mijão), `acérrimo` (acre), `dulcíssimo`
+    (doce) and `péssimo` → ruim (the rules give mau).
+- **Not deinflected at all:** augmentatives (-ão, -ona, -aço: wty-pt-en has
+  360 augmentative pairs, of which other rules reach 13), comparatives
+  (melhor, pior, maior, menor, which wty-pt-en lists as headwords), and other
+  derivations (-ito, -ete, -ura).
+- **Exclusions remove readings no Portuguese form has**, by design: conter,
+  prover, provir, reler and falir have no regular present, quer is not a verb,
+  afar and server are nouns, and the vir compounds have irregular imperfects.
+  `mear` is not written out (meio and meia are far more often half and sock),
+  so its forms are not reached.
+- **Without a part of speech** in the dictionary, the filter cannot drop a
+  reading of the wrong kind: `fitos` (the adjective fito) shows fitar,
+  `remoque` (a noun) shows remocar, and an adjectival participle shows its
+  verb first (`previstas` → prever). `untaggedTerms: "pass"` lets every rule's
+  output match these untagged rows; `vf` keeps verb forms with a removed
+  pronoun from matching nouns.
+- **Runtimes.** A host must run hoshidicts at or after #58 to load this pack:
+  older engines refuse `lookup.untaggedTerms` as an unknown key. Hachidori's
+  prebuilt WebAssembly at feat/multi-language 803f7b6e is built from b145feb,
+  before it.
+- **`traceSelection`** cannot be observed by a test (`lookup.tsv` compares a
+  result's expression and matched text, not its trace), so it is set as the
+  contract recommends (`shortest`).
