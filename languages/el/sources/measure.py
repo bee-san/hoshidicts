@@ -6,6 +6,8 @@
 #   python3 languages/el/sources/measure.py hovers <text file> [--sentences tsv] > hovers.txt
 #   python3 languages/el/sources/measure.py judge <wty-el-en JSON banks dir> <hovers.txt> <lookups.jsonl> [--sample N]
 #   python3 languages/el/sources/measure.py phrases <wty-el-en JSON banks dir> <hovers.txt> <lookups.jsonl>
+#   python3 languages/el/sources/measure.py traces <corpus.tsv> <deinflections.jsonl>
+#   python3 languages/el/sources/measure.py unimorph <unimorph ell file> <hoshidicts-cli> <languages dir>
 #
 # lookups.jsonl is the output of languages/en/sources/lookup-batch.cpp (built
 # against this checkout) on the words or hover texts, one line each:
@@ -23,6 +25,18 @@
 # whether the first result reads past it (a phrase of the dictionary, or a
 # wrong reading of the two words); after it, the judge's verdict on the word,
 # by the function word before it.
+# unimorph: recall over every one-word form of UniMorph ell (each form of a
+# cell, without θα, να and the auxiliaries, as build-corpus.mjs reads them):
+# the share of (form, lemma) pairs whose lemma is among the deinflections of
+# a preprocessed variant of the form, by part of speech.
+# frequent also counts the words whose lemma a rule reaches (a deinflection
+# of a preprocessed variant of the word is a lemma its form-of rows name)
+# when given --cli <hoshidicts-cli> --languages <dir>.
+# traces: for each verb row of the corpus, the trace a lookup keeps
+# (traceSelection "shortest": the fewest steps among the deinflections that
+# reach the lemma) and whether its first transform names the row's UniMorph
+# tense and aspect, and its person and number. deinflections.jsonl is
+# `hoshidicts-cli deinflect el --stdin --all-options` on the corpus sources.
 # judge: the first result with a definition at each hover position, judged by
 # script where the hovered word's form-of rows name its lemmas; the rest are
 # counted as unjudged and a random sample of them is printed for review.
@@ -83,9 +97,21 @@ def right_lemmas(word, refs, defined):
     return named
 
 
-def frequent(freq_file, banks, lookups):
+def deinflect_variants(cli, languages, words, options=()):
+    """word -> set of texts its preprocessed variants deinflect to."""
+    import subprocess
+    run = lambda cmd, inputs: [json.loads(l) for l in subprocess.run([cli, '--languages', languages] + cmd, input='\n'.join(inputs) + '\n',
+                                                                      capture_output=True, text=True, check=True).stdout.splitlines()]
+    pre = {d['input']: [v['text'] for v in d['variants']] for d in run(['preprocess', 'el', '--stdin', *options], words)}
+    texts = sorted({t for v in pre.values() for t in v})
+    de = {d['input']: {r['text'] for r in d['results'][1:]} for d in run(['deinflect', 'el', '--stdin', *options], texts)}
+    return {w: set().union(*(de[t] for t in pre[w])) for w in words}
+
+
+def frequent(freq_file, banks, lookups, cli=None, languages=None):
     defined, refs = load_dictionary(banks)
     words = [line.split() for line in open(freq_file, encoding='utf-8')][:10000]
+    reached_by_rule = deinflect_variants(cli, languages, [w for w, _ in words]) if cli else None
     results = [json.loads(line) for line in open(lookups, encoding='utf-8')]
     assert len(results) == len(words)
     total = sum(int(c) for _, c in words)
@@ -100,6 +126,13 @@ def frequent(freq_file, banks, lookups):
         counts['reached'] += 1
         tokens['reached'] += count
         right = right_lemmas(word, refs, defined)
+        if reached_by_rule is not None and reached_by_rule[word] & right:
+            counts['ruleReached'] += 1
+            tokens['ruleReached'] += count
+            first_r = first_defined(answer['results'])
+            if first_r is not None and first_r['expression'] not in right:
+                counts['ruleReachedWrong'] += 1
+                tokens['ruleReachedWrong'] += count
         first = first_defined(answer['results'])
         if first is None:
             kind = 'empty'
@@ -111,7 +144,8 @@ def frequent(freq_file, banks, lookups):
             wrong_list.append((count, word, first['expression'], '/'.join(first['trace']), sorted(right)[:3]))
         counts[kind] += 1
         tokens[kind] += count
-    print(json.dumps({'words': len(words), **counts, 'reachedTokenShare': tokens['reached'] / total,
+    print(json.dumps({'words': len(words), **counts, 'ruleReachedTokenShare': tokens['ruleReached'] / total,
+                      'ruleReachedWrongTokenShare': tokens['ruleReachedWrong'] / total, 'reachedTokenShare': tokens['reached'] / total,
                       'wrongTokenShare': tokens['wrong'] / total, 'emptyTokenShare': tokens['empty'] / total}, ensure_ascii=False))
     print('--- wrong first card (count, word, first, trace, right lemmas)')
     for item in sorted(wrong_list, reverse=True):
@@ -234,12 +268,84 @@ def phrases(banks, hover_file, lookups):
         print(f'{n}\t{p0} {w}\t{e}\t{t}')
 
 
+def unimorph(file, cli, languages):
+    dropped = set('θα να ας έχω έχεις έχει έχουμε έχετε έχουν είχα είχες είχε είχαμε είχατε είχαν'.split())
+    word = re.compile(r'^[\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03CE]+$')
+    pairs = []
+    seen = set()
+    for line in open(file, encoding='utf-8'):
+        parts = line.rstrip('\n').split('\t')
+        if len(parts) != 3 or not word.match(parts[0]):
+            continue
+        lemma, cell, tag = parts
+        for part in cell.split(','):
+            ws = [w for w in re.sub(r'[/\d]', ' ', part.replace('\u00a0', ' ')).split() if w not in dropped]
+            if len(ws) == 1 and ws[0] != lemma and word.match(ws[0]) and (ws[0], lemma, tag[0]) not in seen:
+                seen.add((ws[0], lemma, tag[0]))
+                pairs.append((ws[0], lemma, tag.split(';')[0]))
+    reached = deinflect_variants(cli, languages, sorted({f for f, _, _ in pairs}), ('--all-options',))
+    by = collections.defaultdict(lambda: [0, 0])
+    for form, lemma, pos in pairs:
+        by[pos][0] += lemma in reached[form] or lemma == form
+        by[pos][1] += 1
+    total = sum(v[1] for v in by.values())
+    print(json.dumps({'pairs': total, 'recall': sum(v[0] for v in by.values()) / total, **{k: v[0] / v[1] for k, v in by.items()}, 'counts': dict(by)}))
+
+
+def tense_of(tags, passive):
+    t = set(tags)
+    if 'IMP' in t:
+        return 'imperative'
+    if 'PTCP' in t:
+        return 'gerund'
+    if 'IPFV' in t and 'PST' in t:
+        return 'imperfect'
+    if 'IPFV' in t:
+        return 'present'
+    if 'PFV' in t and 'PST' in t:
+        return 'aorist'
+    if 'PFV' in t:
+        return 'dependent'
+    return None
+
+
+def traces(corpus, deinflections):
+    rows = [l.rstrip('\n').split('\t') for l in open(corpus, encoding='utf-8') if l.strip() and not l.startswith('#')]
+    results = {json.loads(l)['input']: json.loads(l)['results'] for l in open(deinflections, encoding='utf-8')}
+    counts = collections.Counter()
+    for tag, valid, source, term, rule, _ in rows:
+        tags = tag.split(';')
+        if tags[0] != 'V':
+            continue
+        reach = [r for r in results.get(source, []) if r['text'] == term and (not r['conditions'] or 'v' in r['conditions'])]
+        if not reach:
+            continue
+        best = min(reach, key=lambda r: len(r['trace']))
+        ids = [t for t in best['trace'] if t not in ('accent', 'internal-augment', 'old-augment', 'movable-n', 'ξανα-')]
+        counts['reached'] += 1
+        tense = tense_of(tags, False)
+        first = ids[0] if ids else ''
+        if tense and tense in first:
+            counts['tense'] += 1
+        person = next((f'{p}{n.lower()}' for p in '123' for n in ('SG', 'PL') if p in tags and n in tags), None)
+        if person:
+            counts['finite'] += 1
+            if first.endswith(person):
+                counts['person'] += 1
+    print(json.dumps(counts))
+
+
 if __name__ == '__main__':
     cmd = sys.argv[1]
     if cmd == 'frequent':
-        frequent(*sys.argv[2:5])
+        opt = lambda name: sys.argv[sys.argv.index(name) + 1] if name in sys.argv else None
+        frequent(*sys.argv[2:5], cli=opt('--cli'), languages=opt('--languages'))
+    elif cmd == 'unimorph':
+        unimorph(*sys.argv[2:5])
     elif cmd == 'hovers':
         hovers(sys.argv[2], '--sentences' in sys.argv)
+    elif cmd == 'traces':
+        traces(sys.argv[2], sys.argv[3])
     elif cmd == 'phrases':
         phrases(sys.argv[2], sys.argv[3], sys.argv[4])
     elif cmd == 'judge':

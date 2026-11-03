@@ -169,6 +169,12 @@
         "url": "https://yomidevs.github.io/wiktionary-to-yomitan/download/",
         "description": "Modern Greek words with English definitions from English Wiktionary, with inflected forms.",
         "licence": "CC BY-SA 4.0"
+      },
+      {
+        "name": "Wiktionary Greek-Greek (wiktionary-to-yomitan)",
+        "url": "https://yomidevs.github.io/wiktionary-to-yomitan/download/",
+        "description": "Modern Greek words with Greek definitions from Greek Wiktionary.",
+        "licence": "CC BY-SA 4.0"
       }
     ],
     "sample": {
