@@ -167,6 +167,7 @@ negatives	0	下一班	下班	*	*
 negatives	0	下次课	下课	*	*
 negatives	0	下一节课	下课	*	*
 negatives	0	上一次课	上课	*	*
+negatives	0	上头班	上班	*	*
 # 本 is not one of the insertions: a measure word with its own noun (这本书) is an ordinary object.
 negatives	0	读这本书	读书	*	*
 negatives	0	看了那本书	看书	*	*
@@ -180,7 +181,8 @@ negatives	0	有人事	有事	*	*
 negatives	0	做什么工	做工	*	*
 negatives	0	随着时	随时	*	*
 # A verb that makes another verb with the next character does not take the object: 放下 (put down),
-# 握住 and 握着 (hold), 有点过头 (a bit overdone), 打开 (open). 豆腐 follows only a possessor.
+# 握住 and 握着 (hold), 有点过头 (a bit overdone), 打开 (open); 点 as "o'clock" (七点钟的火车, 7点到了火车站).
+# 豆腐 follows only a possessor.
 negatives	0	放下你的手	放手	*	*
 negatives	0	握住他的手	握手	*	*
 negatives	0	握著我的手	握手	*	*
@@ -188,6 +190,9 @@ negatives	0	點過頭	點頭	*	*
 negatives	0	打开包	打包	*	*
 negatives	0	吃了豆腐	吃豆腐	*	*
 negatives	0	打開了車	打車	*	*
+negatives	0	点钟的火	点火	*	*
+negatives	0	點鐘的頭	點頭	*	*
+negatives	0	点到了火	点火	*	*
 # 度 is not a separable verb: 度过假期 is 度过 + 假期, not 度假.
 negatives	0	度过假	度假	*	*
 # Potential forms: not after adverbs, pronouns and nouns of time.
@@ -233,6 +238,7 @@ negatives	0	天天	天	*	*
 negatives	0	人人	人	*	*
 negatives	0	常常	常	*	*
 negatives	0	刚刚好	刚好	*	*
+negatives	0	點一點開	點開	*	*
 negatives	0	毛毛虫	毛虫	*	*
 negatives	0	星星	星	*	*
 negatives	0	妈妈	妈	*	*

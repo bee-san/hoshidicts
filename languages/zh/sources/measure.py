@@ -32,6 +32,14 @@ is not the word itself.
 sample: a seeded random sample of hover texts from each file, the input of
 benchmark-lookup (the README's speed numbers).
 
+judge: the sample of Measurement 3 for judging by hand. Of the rows of a
+compare --out file whose two first results differ in lemma, the --n whose
+hover text has the smallest SHA-1, each with the text before the hover in
+its sentence (from --text, read as hovers does). The sample does not depend
+on the other rows, so a rule change that removes rows keeps the rest of it.
+
+    python3 languages/zh/sources/measure.py judge --diffs tatoeba.tsv --text cmn_sentences.tsv.bz2 --tatoeba [--n 150]
+
 percentiles: p50 and p95 of benchmark-lookup --json output (one file per
 run), over every pass but the first, nearest rank.
 
@@ -51,7 +59,7 @@ latter with the word before them, for judging.
 the part-of-speech filter, which is what lookup.untaggedTerms "pass" gives
 for dictionaries without rules tags.
 """
-import argparse, bz2, collections, json, os, random, re, shutil, subprocess, sys, tempfile
+import argparse, bz2, collections, csv, hashlib, json, os, random, re, shutil, subprocess, sys, tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PACK = os.path.dirname(HERE)
@@ -161,6 +169,27 @@ def gutenberg_lines(text):
 def cmd_hovers(args):
     for h in hovers(text_lines(args.text, args.tatoeba, args.gutenberg)):
         print(h)
+
+
+def cmd_judge(args):
+    with open(args.diffs, encoding='utf-8') as f:
+        rows = list(csv.reader(f, delimiter='\t', quoting=csv.QUOTE_NONE))[1:]
+    # The diff rows are in hover order: pair each with the text before it.
+    contexts = hovers(text_lines(args.text, args.tatoeba, args.gutenberg), context=True)
+    paired = []
+    for row in rows:
+        for before, text in contexts:
+            if text == row[1]:
+                paired.append((before, row))
+                break
+    if len(paired) != len(rows):
+        sys.exit(f'{args.diffs}: only {len(paired)} of {len(rows)} rows are hovers of {args.text}')
+    changed = [(i, b, r) for i, (b, r) in enumerate(paired) if r[2] != r[4]]
+    changed.sort(key=lambda x: (hashlib.sha1(x[2][1].encode('utf-8')).hexdigest(), x[0]))
+    print('transform\tbefore\thover\tbase first\twith first\twith matched')
+    for _, before, r in changed[:args.n]:
+        print('\t'.join([r[0], before[-8:], r[1][:24], r[2], r[4], r[5]]))
+    print(f'{min(args.n, len(changed))} of {len(changed)} rows whose lemma differs', file=sys.stderr)
 
 
 def cmd_percentiles(args):
@@ -292,6 +321,12 @@ def main():
     p.add_argument('text')
     p.add_argument('--tatoeba', action='store_true')
     p.add_argument('--gutenberg', action='store_true')
+    p = sub.add_parser('judge')
+    p.add_argument('--diffs', required=True)
+    p.add_argument('--text', required=True)
+    p.add_argument('--tatoeba', action='store_true')
+    p.add_argument('--gutenberg', action='store_true')
+    p.add_argument('--n', type=int, default=150)
     p = sub.add_parser('percentiles')
     p.add_argument('files', nargs='+')
     p = sub.add_parser('sample')
@@ -320,7 +355,7 @@ def main():
             p.add_argument('--show', type=int, default=40)
     args = parser.parse_args()
     {'hovers': cmd_hovers, 'sample': cmd_sample, 'compare': cmd_compare, 'frequent': cmd_frequent,
-     'behind': cmd_behind, 'percentiles': cmd_percentiles}[args.command](args)
+     'behind': cmd_behind, 'percentiles': cmd_percentiles, 'judge': cmd_judge}[args.command](args)
 
 
 if __name__ == '__main__':

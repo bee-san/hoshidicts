@@ -33,6 +33,11 @@ const rulesOf = (t, id) => t.transforms.find((x) => x.id === id).rules;
 /** Removes the characters of `chars` from a class string "[...]". */
 const without = (cls, chars) => cls.replace(/^\[|\]$/gu, '').split('').filter((c) => !chars.includes(c)).join('');
 const separable = (t, edit) => { for (const r of rulesOf(t, 'separable')) { r.pattern = edit(r.pattern, r); } };
+// Removes characters from the verb lookaheads (?![...]) of a pattern, and a lookahead left empty.
+const allowAfterVerb = (p, chars) => p.replace(/\(\?!\[([^\]]*)\]\)/gu, (m, cls) => {
+    const rest = [...cls].filter((c) => !chars.includes(c)).join('');
+    return rest ? `(?![${rest}])` : '';
+});
 
 const mutations = {
     // erhua: its exclusion class and each group of it.
@@ -48,6 +53,7 @@ const mutations = {
     'aNotA: prefix instead of whole word': (t) => { for (const r of rulesOf(t, 'aNotA')) { if ([...r.inflected].length === 3) { r.type = 'prefix'; } } },
     'aMeiA: prefix instead of whole word': (t) => { for (const r of rulesOf(t, 'aMeiA')) { if ([...r.inflected].length === 3) { r.type = 'prefix'; } } },
     'redupAyiA: whole word instead of prefix': (t) => { for (const r of rulesOf(t, 'redupAyiA')) { r.type = 'wholeWord'; } },
+    'redupAyiA: 点 as a prefix rule (一点一点开始)': (t) => { for (const r of rulesOf(t, 'redupAyiA')) { if (/^[点點]一[点點]$/u.test(r.inflected)) { r.type = 'prefix'; } } },
     // separable: each lookahead and each insertion restriction.
     'separable: 的 right after the verb': (t) => separable(t, (p) => p.replace('(?!.(?:的|', '(?!.(?:')),
     'separable: adjective of a longer noun': (t) => separable(t, (p) => p.replace(/\|\[好小白\]/u, '')),
@@ -62,10 +68,12 @@ const mutations = {
     'separable: 把 before 手': (t) => separable(t, (p, r) => (r.anchorSuffix === '手' ? p.replace(/\{0,5\}\[[^\]]*\](?=手\$$)/u, '{1,6}') : p)),
     'separable: 下 before 字, 这 那 个 before 地': (t) => separable(t, (p, r) => (['字', '地'].includes(r.anchorSuffix) ? p.replace(/\{0,5\}\[[^\]]*\](?=(?:字|地)\$$)/u, '{1,6}') : p)),
     'separable: 豆腐 only after a possessor': (t) => separable(t, (p, r) => (r.anchorSuffix === '豆腐' ? p.replace(/\{0,5\}\[[^\]]*\](?=豆腐\$$)/u, '{1,6}') : p)),
-    'separable: 下 after 放 (放下你的手)': (t) => separable(t, (p) => p.replaceAll('(?![下])', '')),
-    'separable: 住 着 after 握 (握住他的手)': (t) => separable(t, (p) => p.replaceAll('(?![住着著])', '')),
-    'separable: 过 after 点 (有点过头)': (t) => separable(t, (p) => p.replaceAll('(?![过過])', '')),
-    'separable: 开 after 打 (打开了车)': (t) => separable(t, (p) => p.replaceAll('(?![开開])', '')),
+    'separable: 下 after 放 (放下你的手)': (t) => separable(t, (p, r) => (r.anchorSuffix === '手' ? allowAfterVerb(p, '下') : p)),
+    'separable: 住 着 after 握 (握住他的手)': (t) => separable(t, (p, r) => (r.anchorSuffix === '手' ? allowAfterVerb(p, '住着著') : p)),
+    'separable: 过 after 点 (有点过头)': (t) => separable(t, (p, r) => (['头', '頭'].includes(r.anchorSuffix) ? allowAfterVerb(p, '过過') : p)),
+    'separable: 开 after 打 (打开了车)': (t) => separable(t, (p) => allowAfterVerb(p, '开開')),
+    'separable: 到 after 点 before 火 (7点到了火车站)': (t) => separable(t, (p, r) => (r.anchorSuffix === '火' ? allowAfterVerb(p, '到') : p)),
+    'separable: 钟 after 点 (七点钟的火车)': (t) => separable(t, (p) => allowAfterVerb(p, '钟鐘鍾')),
     'separable: no 很 in the insertions': (t) => separable(t, (p) => p.replaceAll('很', '')),
     'separable: 度 as a verb of 假 (度过假期)': (t) => separable(t, (p, r) => (r.anchorSuffix === '假' ? p.replace(/\(((?:[\u4E00-\u9FFF]\|?)+)\)/u, (m, v) => `(${v}|度)`) : p)),
     // potential forms: exclusions, groups, the separate 明白/清楚 rules, 会.

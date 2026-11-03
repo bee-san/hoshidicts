@@ -336,8 +336,13 @@ transforms.push(transform('aMeiA', 'A-not-A question (没)', 'A question that re
 transforms.push(transform('redupAA', 'reduplication AA', 'A reduplicated verb (to do a little, to try) or adjective: 看看 → 看, 慢慢 → 慢.',
     charForms([...ACTION_VERBS, ...ADJECTIVES]).map((a) => whole(`${a}${a}`, a, VA))));
 
+// 点一点 is also the end of 一点一点 "little by little" (一点一点开始学), so 点
+// takes A一A only alone or before 头 (点一点头 → 点头).
+const DIAN_HEAD = new Map([['点', '头'], ['點', '頭']]);
 transforms.push(transform('redupAyiA', 'reduplication A一A', 'A verb reduplicated with 一 between, to do a little: 看一看 → 看, 想一想 → 想.',
-    charForms(ACTION_VERBS).map((a) => prefix(`${a}一${a}`, a, V))));
+    charForms(ACTION_VERBS).flatMap((a) => (DIAN_HEAD.has(a)
+        ? [whole(`${a}一${a}`, a, V), prefix(`${a}一${a}${DIAN_HEAD.get(a)}`, `${a}${DIAN_HEAD.get(a)}`, V)]
+        : [prefix(`${a}一${a}`, a, V)]))));
 
 transforms.push(transform('redupAleA', 'reduplication A了A', 'A verb reduplicated with 了 between, done briefly: 看了看 → 看, 点了点头 → 点头.',
     charForms(ACTION_VERBS).map((a) => prefix(`${a}了${a}`, a, V))));
@@ -420,22 +425,25 @@ const NOT_BEFORE = new Map([
 // 吃她的豆腐; 吃了豆腐 and 吃不了热豆腐 are about tofu.
 const ONLY_AFTER = new Map(spellings('豆腐').map((o) => [o, t('我你您他她们咱的人家')]));
 // Verbs that do not take their object when these characters follow them,
-// because with them they make another verb: 放下你的手 (put down), 握住他的手
-// and 握着我的手 (hold), 有点过头 (a bit overdone), and 打开 (open) before every
-// object of 打 (打开了车的雾灯, 打开工具箱); measured on Tatoeba. A key is a
-// compound or a verb.
+// because with them they make another word: 放下你的手 (put down), 握住他的手
+// and 握着我的手 (hold), 有点过头 (a bit overdone), 打开 (open) before every
+// object of 打 (打开了车的雾灯, 打开工具箱), and 点 as "o'clock" (七点钟的火车,
+// 7点到了火车站); measured on Tatoeba. A key is a compound or a verb; a
+// compound takes both its own characters and its verb's.
 const VERB_NOT_BEFORE = new Map([
     ['放手', t('下')],
     ['握手', t('住着')],
     ['点头', t('过')],
+    ['点火', t('到')],
     ['打', t('开')],
+    ['点', t('钟')],
 ]);
-const verbNotBefore = (word) => VERB_NOT_BEFORE.get(word) ?? VERB_NOT_BEFORE.get([...word][0]);
+const verbNotBefore = (word) => [...new Set([...(VERB_NOT_BEFORE.get(word) ?? ''), ...(VERB_NOT_BEFORE.get([...word][0]) ?? '')])].join('');
 const ADJ = `[${t('好小白')}]`;
 const OTHER_DE = `[^的]*[^${t('我你您他她它咱谁们己家人年天月周时钟头个次')}的]的`;
 // 时 does not start the insertions (离开时会, but 开了两个小时会).
 const COMMON = `的|${ADJ}|[${t('时')}]|${OTHER_DE}`;
-const NEXT = `[${t('一二两三四五六七八九十几个次回场这那')}0-9\\uFF10-\\uFF19]`;
+const NEXT = `[${t('一二两三四五六七八九十几个次回场这那头')}0-9\\uFF10-\\uFF19]`;
 // Every verb is one character, so the lookahead all verbs share is written
 // once, after the first character: ^(?!.(?:...)).
 // A key is the kind, or the kind and the characters that may not follow the
