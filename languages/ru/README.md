@@ -145,8 +145,8 @@ no Russian rules, so the own rules are also the union and the final set, and
   - the imperative in -ь needs three letters (`весь` and `три` were весить
     and тереть, every plural in -и an imperative in -ичь);
   - -знавать is read only with ё (`узнаёт`): written with е, `узнает`,
-    `знаешь` and `знает` are узнать and знать (466,129 occurrences in the
-    subtitle list), which the regular rules read;
+    `знаешь` and `знает` are узнать and знать (56 such forms, 466,129
+    occurrences in the subtitle list), which the regular rules read;
   - the ч, ж, ш and щ of the consonant-change classes need two letters before
     them (`счете` was скать);
   - the masculine past in -ёл and -ёс needs the letter of an -ести verb before
@@ -160,8 +160,9 @@ no Russian rules, so the own rules are also the union and the final set, and
   fewer steps first (docs/languages.md 9.6), so a reading of the capitalised
   word that lands on a name came first. Zero endings, comparatives,
   superlatives and -ой adjectives leave out stems that start with a capital,
-  as no name takes them: `Итак` was Итака, `Вас` Вася, `Наше` Наха, `Милая`
-  Мила and `Никого` Ника (35 positions in the three texts; 0 now). The
+  as no name takes them: `Итак` was Итака, `Вас` Вася, `Лет` Лета, `Наше`
+  Наха, `Милая` Мила and `Никого` Ника (35 positions in the three texts; 0
+  now). The
   surnames in -ой keep their oblique forms through wty-ru-en's own form-of rows
   (`Толстого` → `Толстой`, `tests/lookup.tsv`), not through the rules.
 - **History.** The first commit of this pack, `ru: own rules`, has the own
