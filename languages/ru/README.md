@@ -71,7 +71,7 @@ conditions name a dictionary form. Without it, a form a rule reaches
 
 ## Rule provenance
 
-`transforms.json` has 114 transforms and 4,272 rules, all `own`: Yomitan has
+`transforms.json` has 114 transforms and 4,310 rules, all `own`: Yomitan has
 no Russian rules, so the own rules are also the union and the final set, and
 `tools/merge-transforms.mjs ru` writes `transforms.json` from
 `sources/own.json` alone. No rule was removed from it.
@@ -79,11 +79,11 @@ no Russian rules, so the own rules are also the union and the final set, and
 - **Rows.** Suffix rules of one transform that differ only in their endings
   are written as one cross-product row: a `circumfix` whose only prefix is
   empty, with the endings as its `suffixes` (docs/languages.md 7.3). The
-  engine expands the 1,329 rows into the 4,272 rules when the pack loads, and
+  engine expands the 1,335 rows into the 4,310 rules when the pack loads, and
   the expanded rules give the same deinflections as separate suffix rules (0
   differences on 10,671 inputs: the corpus, the cases and every word of
-  *Дуэль*). The rows keep `tests/` and `sources/` under 1 MB (952 KB) and
-  `tests/classes.json` at 328 KB.
+  *Дуэль*). The rows keep `tests/` and `sources/` under 1 MB (927 KB) and
+  `tests/classes.json` at 298 KB.
 - **Transforms name forms.** Rules whose ending stands for the same set of
   forms make one transform, and its name lists them, so a trace says every
   form an ending can be: `книги` is `genitive singular, nominative plural`,
@@ -199,7 +199,7 @@ main at b145feb, which reads every pack as `filter`.
    | File | Rows | Recall | Negatives passed | False candidates per row | First rank |
    | --- | ---: | ---: | ---: | ---: | ---: |
    | `corpus.tsv` + UniMorph rows of `gaps.tsv` (the sample) | 1,000 | 99.80% (998) | | 1.533 (filter: 0.780) | 95.0% (filter: 94.3%) |
-   | `cases.tsv` | 642 (425 positive, 217 negative) | 100% | 100% | 3.101 (filter: 1.558) | 80.2% (filter: 77.6%) |
+   | `cases.tsv` | 647 (430 positive, 217 negative) | 100% | 100% | 3.079 (filter: 1.547) | 80.5% (filter: 77.9%) |
 
    - The first sample, of 1,420 rows with the same strata and seed, gave
      99.65% (1,415) with the rules of that time; the sample was cut to 1,000
@@ -215,7 +215,7 @@ main at b145feb, which reads every pack as `filter`.
      (`читал`, `читала`, `любимый`, `пишущий`, `меня`, `лучше`, whose glosses
      name the lemma), adjectival nouns that are also adjectives (`столовой` →
      столовый, `животного` → животный), and ties.
-   - Per rule (`--per-rule` on the sample and `cases.tsv`): 301 of the 1,332
+   - Per rule (`--per-rule` on the sample and `cases.tsv`): 303 of the 1,335
      rows recover a row no other rule reaches, none breaks a negative, and 29
      add false candidates (59 in all) without recovering one, mostly
      participle and -о adverb readings of adjectives (`допустимое` →
@@ -223,7 +223,7 @@ main at b145feb, which reads every pack as `filter`.
 2. **Frequent forms** (`measure.py frequent`). Of the 10,000 most frequent
    words of the subtitle list (130,234,308 tokens), 8,333 have form-of rows,
    under their own spelling or with one е as ё, and the rules reach a lemma
-   those rows name for 6,204 (58,794,335 tokens). Looked up as a host does
+   those rows name for 6,206 (58,828,609 tokens). Looked up as a host does
    (16 results, scan length 16, default options), the first result with a
    definition is a lemma their own rows do not name for 4 words: 23,711
    tokens, 0.040% of the reached words' tokens.
@@ -252,24 +252,26 @@ main at b145feb, which reads every pack as `filter`.
      (`так называемые` → так называемый, `с первого взгляду`).
 4. **Real text** (`measure.py text`). Every word of the three Wikisource
    works, looked up from the word to the end of its sentence: 77,189
-   lookups, 74,821 with a result.
+   lookups, 74,822 with a result.
    - Judged by script, where the word has form-of rows or is a headword
      (72,556 positions): the first result with a definition is a lemma the
-     word's rows do not name at 25 positions (0.034%). The largest groups are
+     word's rows do not name at 23 positions (0.032%). The largest groups are
      `Тише` → Тихон (3, a capitalised word read as the dative of Тиша, Тихон's
      diminutive), `писано` → писаный (3, the adjective with one н), `вел` →
      вести (3) and `сует`, `суете` → совать (3, суета's forms read as совать's
      written with е).
    - Not judged by script (2,266 positions: phrases, abbreviations, names and
-     words the dictionary lacks): a sample of 60 (seed 1) judged by hand has 5
-     wrong first results. Two are surnames the dictionary lacks read as
-     common nouns (`Корсакова` → корсак, `Хоботова` → хобот), one a compound
-     (`камер-лакей` → камера), one an old word (`снову` → снова), and one a
-     phrase out of context (`в свете` for "in society"). The other 55 are
-     right: 45 phrases the dictionary lists, names and abbreviations, and 10
-     words (`увидя` → увидеть, `медно-красным`, `по-старинному` →
-     старинный, `будет оставаться` → оставаться). That is about 190 wrong first results
-     among the 2,266, and about 0.3% of all positions with a result.
+     words the dictionary lacks): a sample of 60 (seed 1) judged by hand has 4
+     wrong first results: a surname the dictionary lacks read as a common
+     noun (`Корсакова` → корсак), a noun it lacks read through another
+     noun's form (`купчихи` → купчая, through купчих), a compound
+     (`камер-лакей`: `камер` read as камера) and an old word (`снову` →
+     снова). The other 56 are right: 50 phrases the dictionary lists, names
+     and abbreviations (`за здоровье`, `из угла в угол`, `головной боли` →
+     головная боль, `Пугачев` → Пугачёв), and 6 words (`увидя` → увидеть,
+     `пожалованному` → пожаловать, `по-старинному` → старинный). That is about
+     150 wrong first results among the 2,266, and about 0.2% of all positions
+     with a result.
    - Before the fixes of the History above, the script found 569 wrong first
      results (0.78%) with `pos_filter_exempt` standing in for the field, and
      78 (0.11%) with the field before the capital exclusions and the ё stems
@@ -299,16 +301,16 @@ main at b145feb, which reads every pack as `filter`.
    тёмный, `Итак` → итак, `пойду` → пойти); the Anki note and the switch to
    Japanese and back work.
 7. **Tests** (`language-conformance-test`, with the field): corpus.tsv 998 /
-   998, cases.tsv 642 / 642, text.tsv 36 / 36, lookup.tsv 47 / 47; gaps.tsv
-   0 / 3 (reported); classes.json agrees with the engine (10 classes, 1,118
-   fields, 2 steps). `tests/` and `sources/` hold 925,089 bytes.
+   998, cases.tsv 647 / 647, text.tsv 36 / 36, lookup.tsv 47 / 47; gaps.tsv
+   0 / 3 (reported); classes.json agrees with the engine (10 classes, 1,124
+   fields, 2 steps). `tests/` and `sources/` hold 927,117 bytes.
    `tools/check-yomitan.mjs`: 4 processors on about 1,950 inputs each, every
    difference listed (`sources/yomitan-differences.tsv`), 0 unexplained.
    - Mutation check (section 14 step 7, `sources/mutate.py`): removing one
      kind of stem constraint (`stemMinLength`, `stemEndsWith`,
      `stemNotStartsWith`, `stemNotStartsWithText`, `stemCharacters`) from the
      rows of one transform gives 199 mutants, and each fails the conformance
-     test. The first run (210 mutants, 12 of them removing the ё stem
+     test (the transforms changed since were checked again). The first run (210 mutants, 12 of them removing the ё stem
      readings) had 200 survivors; the 189 `guard` rows of `cases.tsv` are the
      wrong headword or text each constraint keeps out, the most frequent
      word's first (`он` is not она, `Итак` is not Итака, `так сказал` is
@@ -349,8 +351,8 @@ node languages/ru/sources/wasm-load.mjs <hachidori checkout> languages/ru 10
   `пришёл, увидел, победил`, whose reading is `пришёл`, before прийти;
   `читал`, `читала`, `любимый`, `пишущий` and `меня` are entries of their
   own (their glosses name the lemma) and come first (Measurements 1).
-- **Wrong first results that remain**, in the three texts (25 judged by
-  script, about 190 estimated among the positions the script cannot judge):
+- **Wrong first results that remain**, in the three texts (23 judged by
+  script, about 150 estimated among the positions the script cannot judge):
   - capitalised words read through a name's form at no processor step,
     such as `Тише` → Тихон (3); surnames the dictionary lacks read as the
     noun they come from, such as `Хоботова` → хобот (19 positions, 10 words,
@@ -360,8 +362,8 @@ node languages/ru/sources/wasm-load.mjs <hachidori checkout> languages/ru 10
     before суета), `чертов` (чёртов);
   - `писано` → писаный (the adjective with one н comes before the
     participle писанный), `остер` → остро, `обе` → Обь, `канту` → Канто;
-  - compounds the dictionary lacks (`камер-лакей`: `камер` is read as камера)
-    and old words (`снову` → снова).
+  - compounds and nouns the dictionary lacks (`камер-лакей`: `камер` is read
+    as камера; `купчихи` → купчая) and old words (`снову` → снова).
 - **One word at a time.** Rules change the last word of a phrase only and
   never cross a space (`stemCharacters`), so phrases the dictionary lists in
   another form are not reached (`так называемые` → так называемый, 3

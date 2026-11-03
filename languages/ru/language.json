@@ -5,9 +5,7 @@
   "name": "Russian",
   "nativeName": "Русский",
   "bcp47": "ru",
-  "scripts": [
-    "Cyrl"
-  ],
+  "scripts": ["Cyrl"],
   "direction": "ltr",
   "classes": {
     "letter": "[\\u0410-\\u044F\\u0401\\u0451]",
@@ -28,34 +26,8 @@
     "wordCharacters": "{word}",
     "wordInternal": null,
     "sentence": {
-      "terminators": [
-        ".",
-        "!",
-        "?",
-        "…"
-      ],
-      "quotePairs": [
-        [
-          "«",
-          "»"
-        ],
-        [
-          "„",
-          "“"
-        ],
-        [
-          "“",
-          "”"
-        ],
-        [
-          "\"",
-          "\""
-        ],
-        [
-          "(",
-          ")"
-        ]
-      ]
+      "terminators": [".", "!", "?", "…"],
+      "quotePairs": [["«", "»"], ["„", "“"], ["“", "”"], ["\"", "\""], ["(", ")"]]
     },
     "highlightBreaks": null,
     "lineJoiner": " "
@@ -67,147 +39,40 @@
         "id": "decapitalize",
         "name": "Decapitalize text",
         "variants": [
-          [
-            {
-              "case": "lower"
-            }
-          ]
+          [{"case": "lower"}]
         ]
       },
       {
         "id": "capitalizeFirstLetter",
         "name": "Capitalize first letter",
         "variants": [
-          [
-            {
-              "case": "upperFirst"
-            }
-          ]
+          [{"case": "upperFirst"}]
         ]
       },
       {
         "id": "removeRussianDiacritics",
         "name": "Remove stress marks",
         "variants": [
-          [
-            {
-              "normalize": "NFD"
-            },
-            {
-              "strip": "[\\u0300\\u0301]"
-            },
-            {
-              "normalize": "NFC"
-            }
-          ]
+          [{"normalize": "NFD"}, {"strip": "[\\u0300\\u0301]"}, {"normalize": "NFC"}]
         ]
       },
       {
         "id": "modernSpelling",
         "name": "Pre-1918 spelling to modern spelling",
         "variants": [
-          [
-            {
-              "map": {
-                "ѣ": "е",
-                "Ѣ": "Е",
-                "і": "и",
-                "І": "И",
-                "ѳ": "ф",
-                "Ѳ": "Ф",
-                "ѵ": "и",
-                "Ѵ": "И"
-              }
-            },
-            {
-              "map": {
-                "ъ": ""
-              },
-              "at": "end"
-            }
-          ]
+          [{"map": {"ѣ": "е", "Ѣ": "Е", "і": "и", "І": "И", "ѳ": "ф", "Ѳ": "Ф", "ѵ": "и", "Ѵ": "И"}}, {"map": {"ъ": ""}, "at": "end"}]
         ]
       },
       {
         "id": "yoToE",
         "name": "Read ё as е, or one е as ё",
         "variants": [
-          [
-            {
-              "map": {
-                "ё": "е",
-                "Ё": "Е"
-              }
-            }
-          ],
-          [
-            {
-              "map": {
-                "е": "ё"
-              },
-              "at": "first"
-            }
-          ],
-          [
-            {
-              "map": {
-                "е": "\ue000"
-              },
-              "at": "first"
-            },
-            {
-              "map": {
-                "е": "ё"
-              },
-              "at": "first"
-            },
-            {
-              "map": {
-                "\ue000": "е"
-              }
-            }
-          ],
-          [
-            {
-              "map": {
-                "е": "\ue000"
-              },
-              "at": "first"
-            },
-            {
-              "map": {
-                "е": "\ue000"
-              },
-              "at": "first"
-            },
-            {
-              "map": {
-                "е": "ё"
-              },
-              "at": "first"
-            },
-            {
-              "map": {
-                "\ue000": "е"
-              }
-            }
-          ],
-          [
-            {
-              "map": {
-                "е": "ё"
-              },
-              "at": "last"
-            }
-          ],
-          [
-            {
-              "map": {
-                "Е": "Ё"
-              },
-              "at": "start"
-            }
-          ]
+          [{"map": {"ё": "е", "Ё": "Е"}}],
+          [{"map": {"е": "ё"}, "at": "first"}],
+          [{"map": {"е": "\ue000"}, "at": "first"}, {"map": {"е": "ё"}, "at": "first"}, {"map": {"\ue000": "е"}}],
+          [{"map": {"е": "\ue000"}, "at": "first"}, {"map": {"е": "\ue000"}, "at": "first"}, {"map": {"е": "ё"}, "at": "first"}, {"map": {"\ue000": "е"}}],
+          [{"map": {"е": "ё"}, "at": "last"}],
+          [{"map": {"Е": "Ё"}, "at": "start"}]
         ]
       }
     ],
@@ -245,9 +110,7 @@
     "anki": {
       "noteTypeFamilies": [],
       "fieldAliases": {
-        "pronunciation": [
-          "IPA"
-        ]
+        "pronunciation": ["IPA"]
       },
       "partOfSpeechLabels": {
         "n": "Noun",
@@ -279,30 +142,8 @@
       }
     },
     "frequencySamples": {
-      "common": [
-        "и",
-        "в",
-        "не",
-        "на",
-        "я",
-        "что",
-        "он",
-        "с",
-        "как",
-        "это"
-      ],
-      "rare": [
-        "кочерга",
-        "ухват",
-        "жёрнов",
-        "коромысло",
-        "палисадник",
-        "сундук",
-        "лучина",
-        "полынья",
-        "валежник",
-        "пустошь"
-      ]
+      "common": ["и", "в", "не", "на", "я", "что", "он", "с", "как", "это"],
+      "rare": ["кочерга", "ухват", "жёрнов", "коромысло", "палисадник", "сундук", "лучина", "полынья", "валежник", "пустошь"]
     },
     "recommendedDictionaries": [
       {
@@ -327,14 +168,10 @@
       "entry": {
         "expression": "гулять",
         "reading": "гуля́ть",
-        "glossary": [
-          "to walk, to stroll"
-        ],
+        "glossary": ["to walk, to stroll"],
         "definitionTags": "v impf",
         "matched": "гуляли",
-        "trace": [
-          "plural past"
-        ]
+        "trace": ["plural past"]
       },
       "character": null
     }
