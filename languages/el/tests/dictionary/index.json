@@ -1,0 +1,10 @@
+{
+  "title": "hoshidicts el test dictionary",
+  "format": 3,
+  "revision": "1",
+  "sequenced": false,
+  "author": "hoshidicts",
+  "description": "A tiny Modern Greek dictionary for languages/el/tests/lookup.tsv, written for the pack. Most of its nouns and adjectives carry the part-of-speech tags n and adj; άλλος and άλλο have none, as in wty-el-en, so lookup.tsv's άλλον row needs lookup.untaggedTerms pass; άθελα is there to come after θέλω for 'θελα. Its function words have none. Its form-of rows are written as wiktionary-to-yomitan writes them, with two of wty-el-en's traps: the strong pronouns' references to τα, and the plural article's reference to η, whose only row is the letter.",
+  "sourceLanguage": "el",
+  "targetLanguage": "en"
+}

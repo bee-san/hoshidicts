@@ -1,0 +1,10 @@
+# GPL-3.0-or-later; Copyright (C) 2026 Yomitan Authors
+# https://github.com/yomidevs/yomitan/blob/d3c54c10264673eca0d66b970ef74cd5c8b048e3/test/language/modern-greek-transforms.test.js
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+ξανα-	1	ξαναρώτησε	ρώτησε	v	ξανα-
+ξανα-	1	ξανανθίζω	ανθίζω	v	ξανα-
+ξανα-	1	ξανάβαλε	έβαλε	v	ξανα-
+ξανα-	1	ξανάρχισε	άρχισε	v	ξανα-
+ξανα-	1	ξανάπα	είπα	v	ξανα-
+ξανα-	1	ξαναπάς	πας	v	ξανα-
+ξανα-	1	ξαναλές	λες	v	ξανα-
