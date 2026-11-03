@@ -171,15 +171,24 @@ for (const transform of union.transforms) {
                 rules.push({...plain, source: 'both'});
                 both += singles.length;
             } else if (rule.type === 'circumfix' && rule.suffixes !== undefined && rule.prefixes.length === 1) {
-                const mine = rule.suffixes.filter((_, i) => !agrees(singles[i]));
-                const shared = rule.suffixes.filter((_, i) => agrees(singles[i]));
-                rules.push({...plain, suffixes: mine}, {...plain, suffixes: shared, source: 'both'});
-                both += shared.length;
+                // Consecutive runs of own and shared pairs, in the pairs'
+                // order: rules that match at one place apply in file order,
+                // which decides ties between their terms (section 9.6).
+                let run = null;
+                rule.suffixes.forEach((pair, i) => {
+                    const shared = agrees(singles[i]);
+                    if (run === null || run.shared !== shared) {
+                        run = {shared, rule: {...plain, suffixes: [], ...(shared ? {source: 'both'} : {})}};
+                        rules.push(run.rule);
+                    }
+                    run.rule.suffixes.push(pair);
+                    if (shared) { ++both; }
+                });
             } else {
                 rules.push(plain);
             }
         }
-        ownTransforms.push({...transform, source: 'own', rules: compact(rules.flatMap((r) => (r.suffixes?.length === 0 ? [] : [r])))});
+        ownTransforms.push({...transform, source: 'own', rules});
     } else {
         const rules = [];
         for (const rule of transform.rules.flatMap(expand)) {

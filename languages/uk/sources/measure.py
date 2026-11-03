@@ -26,7 +26,9 @@
 # that matches more than the hovered word (сила-силенна, з-під, див.) is
 # counted apart as 'phrase', not judged.
 # --verdicts <file> writes one line per lookup: word, verdict, first result,
-# the rules behind it. The personal
+# the rules behind it. rightByRules and wrongByRules count the judged first
+# results whose trace has a step of the pack's rules (the others come from
+# the word's own form-of rows alone). The personal
 # pronouns' rows in wty-uk-en name every personal pronoun (мене → я, ми,
 # він, ...), so for them the lemma is taken from PRONOUNS below.
 # --languages runs another copy of the pack (a rule set to compare).
@@ -141,6 +143,9 @@ def report(name, items, lemmas, targets, weights=None, show=25):
             VERDICTS.write(f"{word}\t{verdict}\t{first['expression'] if first else ''}\t{blame(first) if first else ''}\t{weight}\n")
         verdicts[verdict] += 1
         weighted[verdict] += weight
+        if verdict in ('right', 'wrong') and blame(first) != '(dictionary only)':
+            verdicts[verdict + 'ByRules'] += 1
+            weighted[verdict + 'ByRules'] += weight
         if verdict == 'wrong':
             key = blame(first)
             wrong[key] += weight
@@ -151,11 +156,12 @@ def report(name, items, lemmas, targets, weights=None, show=25):
             phrases[key] += weight
             if len(examples[key]) < 6:
                 examples[key].append(f"{first['matched']}→{first['expression']}")
-    total = sum(verdicts.values())
-    out = {'set': name, 'lookups': total, **{k: verdicts[k] for k in ('right', 'wrong', 'unknown', 'phrase', 'none')}}
+    total = sum(verdicts[k] for k in ('right', 'wrong', 'unknown', 'phrase', 'none'))
+    out = {'set': name, 'lookups': total, **{k: verdicts[k] for k in ('right', 'wrong', 'unknown', 'phrase', 'none', 'rightByRules', 'wrongByRules')}}
     if weights:
         tokens = sum(weights)
         out['wrongTokenShare'] = weighted['wrong'] / tokens
+        out['rightByRulesTokenShare'] = weighted['rightByRules'] / tokens
     judged = verdicts['right'] + verdicts['wrong']
     out['wrongRate'] = verdicts['wrong'] / judged if judged else None
     print(json.dumps(out, ensure_ascii=False))
