@@ -481,7 +481,7 @@ in `sources/`, run from the repository root.
      304, text.tsv 41 / 41, lookup.tsv 56 / 56; gaps.tsv 0 / 116 (reported).
    - `tests/classes.json` agrees with the engine (4 classes, 570 fields, 2
      steps).
-   - `tools/check-yomitan.mjs`: 10,260 inputs, 155,488 Yomitan results, 0
+   - `tools/check-yomitan.mjs`: 10,262 inputs, 155,496 Yomitan results, 0
      unexplained. The processors `normalizeUnicode`,
      `removeArabicScriptDiacritics`, `removeTatweel` and
      `convertAlifMaqsuraToYaa` agree; `addHamzaTop` and `addHamzaBottom` are
