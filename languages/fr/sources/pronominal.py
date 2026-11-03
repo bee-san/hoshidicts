@@ -11,7 +11,8 @@ than the pronoun. It agrees when the dictionary's form-of rows of the word
 after the pronoun (or of the matched text) name the verb without se with a
 first-person singular tag (alone or as in first/second-person singular)
 for me and m', second-person singular for te and t', or the infinitive (je
-vais me lever, m'en aller); it disagrees otherwise (il me dit -> se dire). Prints the counts and writes <prefix>-disagree.tsv.
+vais me lever, m'en aller, m'y prendre); it disagrees otherwise (il me dit ->
+se dire). Prints the counts and writes <prefix>-disagree.tsv.
 """
 import argparse, collections, json, os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -22,7 +23,7 @@ ap.add_argument('hover'); ap.add_argument('lookups'); ap.add_argument('zip')
 ap.add_argument('--index'); ap.add_argument('--out', default='pronominal')
 a = ap.parse_args()
 idx = build(a.zip, a.index or a.zip + '.index.json')
-START = re.compile(r"^(me|te|m'|t'|m\u2019|t\u2019)\s?(?:en )?([A-Za-z\u00C0-\u024F]+)", re.I)
+START = re.compile(r"^(me|te|m'|t'|m\u2019|t\u2019)\s?(?:en |y )?([A-Za-z\u00C0-\u024F]+)", re.I)
 PERSONS = re.compile(r'((?:first|second|third)(?:/(?:first|second|third))*)-person singular')
 REFLEXIVE = re.compile(r"^(?:s'en |se |s')")
 counts = collections.Counter()
@@ -48,7 +49,7 @@ with open(a.lookups, encoding='utf-8') as f:
                 persons = {x for m2 in PERSONS.finditer(t) for x in m2.group(1).split('/')}
                 if REFLEXIVE.sub('', target) == base and (person in persons or 'infinitive' in t):
                     ok = True
-        if word == base or base.endswith(' ' + word) or base == 'en ' + word:
+        if word == base or base.endswith(' ' + word) or base in ('en ' + word, 'y ' + word):
             ok = True
         counts['agrees' if ok else 'disagrees'] += 1
         if not ok:

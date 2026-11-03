@@ -99,38 +99,36 @@ def edit(transforms, fn):
 
 
 mutants = []
-M = lambda name, result: mutants.append((name, *result))
+M = lambda name, result, language=None: mutants.append((name, *result, language))
+
+
+def language_without_processor(pid):
+    def edit(lang):
+        for key in ('preprocessors', 'postprocessors'):
+            lang['lookup'][key] = [p for p in lang['lookup'][key] if p['id'] != pid]
+        return lang
+    return edit
 VERB = ['present', 'imperfect', 'simple-past', 'future', 'conditional', 'subjunctive', 'imperfect-subjunctive', 'imperative',
         'present-participle', 'past-participle']
 # Verb models: the minimum stem of the regular endings, the 'alone' stems
 # of être, avoir, aller and the listed verbs, and the en/y exclusions.
 for d in ['er', 'ir']:
     M(f'stemMinLength of the {d} endings', without(base, 'stemMinLength', ids=VERB, deinflected=d))
-for d in ['être', 'avoir', 'aller', 'voir', 'revoir', 'prévoir', 'croire', 'traire', 'extraire', 'rire', 'sourire', 'émouvoir', 'échoir']:
+for d in ['être', 'avoir', 'aller', 'voir', 'croire', 'traire', 'rire']:
     M(f'stemNotEndsWith {{letter}} of {d}', without(base, 'stemNotEndsWith', '{letter}', ids=VERB, deinflected=d))
 M('stemNotStartsWith [emst] of être', without(base, 'stemNotStartsWith', '[emst]', ids=VERB))
 M('stemNotStartsWith [e] of vouloir', without(base, 'stemNotStartsWith', '[e]', ids=VERB))
 M('stemNotStartsWith [y] of avoir', without(base, 'stemNotStartsWith', '[y]', ids=VERB))
 M('stemNotStartsWithText "en " of the present participle', without(base, 'stemNotStartsWithText', 'en ', ids=['present-participle']))
-M('stemMinLength of the -asser endings', without(base, 'stemMinLength', ids=VERB, deinflected='asser'))
 M('no è stem change', drop_rules(base, lambda t, r: 'stemChange' in r))
-def no_min_on_stem_change(t, r):
-    if 'stemChange' in r and 'stemMinLength' in r:
-        del r['stemMinLength']
-        return 1
-    return 0
-M('the è stem change without its minimum stem', edit(base, no_min_on_stem_change))
 # Nouns and adjectives.
 for tid in ['plural', 'feminine', 'feminine-noun', 'adverb']:
     M(f'stemCharacters {{notSpace}} of {tid}', without(base, 'stemCharacters', '{notSpace}', ids=[tid]))
     M(f'stemMinLength of {tid}', without(base, 'stemMinLength', ids=[tid]))
 M('stemNotEndsWith [sxz] of the plural', without(base, 'stemNotEndsWith', '[sxz]', ids=['plural']))
 # Clitics, elision, hyphens.
-M('stemStartsWith {elidable} of the elision', without(base, 'stemStartsWith', '{elidable}', ids=['elision']))
 M('the elision gives no vcl', edit(base, lambda t, r: (r.__setitem__('conditionsOut', []) or 1) if t['id'] == 'elision' and r['conditionsOut'] == ['vcl'] else 0))
 M('the verb rules do not take vcl', edit(base, lambda t, r: (r.__setitem__('conditionsIn', [c for c in r['conditionsIn'] if c != 'vcl']) or 1) if 'vcl' in r['conditionsIn'] else 0))
-for tid in ['imperative-pronoun', 'hyphen-nous-vous', 'inverted-subject', 'demonstrative', 'reflexive-imperative']:
-    M(f'stemEndsWith {{letter}} of {tid}', without(base, 'stemEndsWith', '{letter}', ids=[tid]))
 M('the imperative pronouns give no imp', edit(base, lambda t, r: (r.__setitem__('conditionsOut', []) or 1) if t['id'] == 'imperative-pronoun' else 0))
 M('the inverted subject gives no fin', edit(base, lambda t, r: (r.__setitem__('conditionsOut', []) or 1) if t['id'] == 'inverted-subject' else 0))
 M('stemNotStartsWith {vowel} of the reflexive imperative', without(base, 'stemNotStartsWith', '{vowel}', ids=['reflexive-imperative']))
@@ -142,10 +140,32 @@ M('stemNotStartsWith [l] of faire', without(base, 'stemNotStartsWith', '[l]', id
 M('the pronominal rule takes any person', edit(base, lambda t, r: (r.__setitem__('conditionsIn', ['v']) or 1) if t['id'] == 'pronominal' else 0))
 M('me and te take each other\'s person', edit(base, lambda t, r: (r.__setitem__('conditionsIn', ['p2s' if r['conditionsIn'] == ['p1s'] else 'p1s']) or 1) if t['id'] == 'pronominal' else 0))
 M('stemNotStartsWithText "suiv" of the pronominal rule', without(base, 'stemNotStartsWithText', 'suiv', ids=['pronominal']))
-M('stemNotStartsWith {vowel} of the pronominal rule', without(base, 'stemNotStartsWith', '{vowel}', ids=['pronominal']))
-M('stemStartsWith {elidable} of the pronominal rule', without(base, 'stemStartsWith', '{elidable}', ids=['pronominal']))
 M('stemCharacters {letter} of the pronominal rule', without(base, 'stemCharacters', '{letter}', ids=['pronominal']))
 M('the verb rules give no person', edit(base, lambda t, r: (r.__setitem__('conditionsOut', ['v']) or 1) if any(c in r['conditionsOut'] for c in ('p1s', 'p2s')) else 0))
+# One-word stems and joined pronouns.
+M('stemCharacters {notSpace} of every verb ending', without(base, 'stemCharacters', '{notSpace}', ids=VERB))
+def no_space_check_on_stem_change(t, r):
+    if 'stemChange' in r and r.get('stemCharacters') == '{notSpace}':
+        del r['stemCharacters']
+        return 1
+    return 0
+M('stemCharacters {notSpace} of the è stem change', edit(base, no_space_check_on_stem_change))
+M('stemCharacters {notSpace} of the -asser endings', without(base, 'stemCharacters', '{notSpace}', ids=VERB, deinflected='asser'))
+M('stemCharacters [^+] of the elision', without(base, 'stemCharacters', '[^+]', ids=['elision']))
+def no_joined_pronominal(t, r):
+    if t['id'] == 'pronominal' and len(r.get('prefixes', [])) > 1:
+        r['prefixes'] = r['prefixes'][:1]
+        return 1
+    return 0
+M('the pronominal rule takes no joined pronoun', edit(base, no_joined_pronominal))
+def unjoined_reflexive_imperative(t, r):
+    if t['id'] == 'reflexive-imperative' and r.get('deinflectedPrefix', '').endswith('+'):
+        r['deinflectedPrefix'] = r['deinflectedPrefix'][:-1] + ' '
+        return 1
+    return 0
+M('the reflexive imperative leaves a space', edit(base, unjoined_reflexive_imperative))
+M('no joinPronoun preprocessor', (base, 1), language_without_processor('joinPronoun'))
+M('no unjoinPronoun postprocessor', (base, 1), language_without_processor('unjoinPronoun'))
 # Written-out words.
 M('no determiner forms', drop_rules(base, lambda t, r: t['id'] == 'determiner'))
 M('no written-out plurals (yeux, messieurs)', drop_rules(base, lambda t, r: t['id'] == 'plural' and r['type'] == 'wholeWord'))
@@ -177,7 +197,7 @@ if a.compare:
     shutil.rmtree(final_root, ignore_errors=True)
     shutil.copytree(pack, os.path.join(final_root, 'fr'), ignore=shutil.ignore_patterns('sources', 'tests'))
     reference = {d: firsts(final_root, d) for d in dictionaries}
-for name, mutant, hit in mutants:
+for name, mutant, hit, language_edit in mutants:
     if a.only and a.only not in name:
         continue
     if survivors is not None and name not in survivors:
@@ -186,7 +206,8 @@ for name, mutant, hit in mutants:
         root = os.path.join(a.scratch, 'mutant-languages')
         shutil.rmtree(root, ignore_errors=True)
         os.makedirs(os.path.join(root, 'fr'))
-        shutil.copy(os.path.join(pack, 'language.json'), os.path.join(root, 'fr'))
+        lang = json.load(open(os.path.join(pack, 'language.json'), encoding='utf-8'))
+        json.dump(language_edit(lang) if language_edit else lang, open(os.path.join(root, 'fr', 'language.json'), 'w', encoding='utf-8'), ensure_ascii=False)
         with open(os.path.join(root, 'fr', 'transforms.json'), 'w', encoding='utf-8') as f:
             json.dump(mutant, f, ensure_ascii=False)
         changes = []
@@ -204,6 +225,10 @@ for name, mutant, hit in mutants:
     shutil.copytree(pack, os.path.join(root, 'fr'), ignore=shutil.ignore_patterns('sources'))
     with open(os.path.join(root, 'fr', 'transforms.json'), 'w', encoding='utf-8') as f:
         json.dump(mutant, f, ensure_ascii=False, indent=2)
+    if language_edit:
+        lang = json.load(open(os.path.join(pack, 'language.json'), encoding='utf-8'))
+        with open(os.path.join(root, 'fr', 'language.json'), 'w', encoding='utf-8') as f:
+            json.dump(language_edit(lang), f, ensure_ascii=False, indent=2)
     w = subprocess.run(['node', os.path.join(a.repo, 'tools', 'check-classes.mjs'), 'fr', '--write', '--languages', root], capture_output=True, text=True)
     if w.returncode != 0:
         print(f'ERROR\t{name}\tcheck-classes: {w.stderr.strip()[:200]}')
