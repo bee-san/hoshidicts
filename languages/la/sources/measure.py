@@ -6,7 +6,8 @@
     python3 measure.py freq <out.tsv> <pg*.txt>...
     python3 measure.py hovers <out.txt> (<pg*.txt> | --tatoeba <lat_sentences.tsv>)...
     python3 measure.py judge <headwords.pickle> <hover.txt> <lookups.jsonl> --transforms <transforms.json> [--freq <freq.tsv>] [--top N] [--show N]
-        [--sample N --sample-out <file> [--seed S]]
+        [--reach <hoshidicts-cli> [--languages <dir>] [--corpus <tsv>,...]] [--kinds 1] [--sample N --sample-out <file> [--seed S]]
+    python3 measure.py first <corpus.tsv> <lookups.jsonl>
 
 headwords reads a Yomitan dictionary's term banks and keeps, for every term,
 whether it has a row with definitions (a lemma) and the lemmas its form-of
@@ -30,6 +31,10 @@ each kind of position, the lookups and the right and wrong first results:
 esse), "enclitic" (the dictionary lacks the word but has it without -que,
 -ne or -ve), "pronoun" and "form of esse" (the word's own lemma is one of
 PRONOUNS or sum).
+
+first counts, for the rows of a corpus whose sources were looked up whole
+(lookup-batch with scan length 64), where the row's lemma is among the
+results of the whole source: first, after another term, or not at all.
 
 judge reads the hovers and the answers of lookup-batch (languages/en/sources/
 lookup-batch.cpp: one JSON line per hover, results in lookup order) and
@@ -274,6 +279,9 @@ def judge(args):
             totals['wrong tokens'] += weight
             for k in kind:
                 kinds[f'{k} wrong'] += 1
+            if any((r['expression'] in right or plain(r['expression']) in right) and r['matched'] == matched
+                   and len(r['trace']) == len(first['trace']) for r in results[1:]):
+                totals['wrong, a right lemma tied'] += 1
             group = first['trace'][0] if first['trace'] else '(as written)'
             wrong_groups[group] += 1
             if len(examples[group]) < 6:
@@ -291,6 +299,18 @@ def judge(args):
                 f.write(json.dumps({'text': text[:60], 'expression': first['expression'], 'matched': first['matched'], 'trace': first['trace']}, ensure_ascii=False) + '\n')
 
 
+def first(corpus, lookups):
+    rows = [line.rstrip('\n').split('\t') for line in open(corpus, encoding='utf-8') if not line.startswith('#')]
+    counts = collections.Counter()
+    for row, line in zip(rows, open(lookups, encoding='utf-8')):
+        answer = json.loads(line)
+        assert answer['text'] == row[2], (answer['text'], row[2])
+        found = [plain(r['expression']).lower() for r in answer['results'] if r['matched'] == row[2]]
+        counts['no result for the whole source' if not found else 'first' if found[0] == row[3].lower()
+               else 'after another term' if row[3].lower() in found else 'not among the results'] += 1
+    print(json.dumps(counts, sort_keys=True))
+
+
 if __name__ == '__main__':
     command, rest = sys.argv[1], sys.argv[2:]
     if command == 'headwords':
@@ -301,5 +321,7 @@ if __name__ == '__main__':
         hovers(rest[0], rest[1:])
     elif command == 'judge':
         judge(rest)
+    elif command == 'first':
+        first(*rest)
     else:
         sys.exit(__doc__)
