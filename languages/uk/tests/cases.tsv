@@ -424,6 +424,66 @@ stress marks	1	кни́ги	книга	n	*
 stress marks	1	ві́кна	вікно	n	*
 capitals	1	Читаю	читати	v	*
 capitals	1	НОВОГО	новий	adj	*
+genitive plural	1	чайок	чайка	n	*
+genitive plural	1	кальок	калька	n	*
+genitive plural	1	сонечок	сонечко	n	*
+genitive plural	1	колготок	колготки	n	*
+genitive plural	1	молитов	молитва	n	*
+genitive plural	1	церков	церква	n	*
+genitive plural	1	відносин	відносини	n	*
+genitive plural	1	суддів	суддя	n	*
+plural-only nouns	1	джунглів	джунглі	n	*
+plural-only nouns	1	грошам	гроші	n	*
+plural-only nouns	1	грошах	гроші	n	*
+plural-only nouns	1	ножицями	ножиці	n	*
+fleeting vowel	1	пальця	палець	n	*
+fleeting vowel	1	стільцем	стілець	n	*
+fleeting vowel	1	рубля	рубель	n	*
+fleeting vowel	1	кашлю	кашель	n	*
+fleeting vowel	1	вітре	вітер	n	*
+nouns in -ц	1	палацом	палац	n	*
+nouns in -ц	1	принци	принц	n	*
+nouns in -ц	1	палаці	палац	n	*
+irregular nouns	1	овець	вівця	n	*
+irregular nouns	1	четверга	четвер	n	*
+possessive adjectives	1	батькового	батьків	adj	*
+possessive adjectives	1	батьковій	батьків	adj	*
+possessive adjectives	1	сестриною	сестрин	adj	*
+possessive adjectives	1	маминої	мамин	adj	*
+indefinite pronouns	1	кого-небудь	хто-небудь	pron	*
+indefinite pronouns	1	когось	хтось	pron	*
+indefinite pronouns	1	кимсь	хтось	pron	*
+indefinite pronouns	1	чимось	щось	pron	*
+indefinite pronouns	1	будь-чого	будь-що	pron	*
+indefinite pronouns	1	абикого	абихто	pron	*
+indefinite pronouns	1	кожен	кожний	adj	*
+indefinite pronouns	1	жоден	жодний	pron	*
+indefinite pronouns	1	сього	сей	*	*
+indefinite pronouns	1	оцієї	оцей	*	*
+collective numerals	1	двома	двоє	num	*
+collective numerals	1	трьох	троє	num	*
+collective numerals	1	обох	обоє	num	*
+collective numerals	1	кількох	кілька	num	*
+collective numerals	1	багатьма	багато	num	*
+verbs	1	знайтись	знайтися	v	*
+verbs	1	тягне	тягти	v	*
+verbs	1	досягну	досягти	v	*
+verbs	1	тягніть	тягти	v	*
+verbs	1	гребу	гребти	v	*
+verbs	1	скубе	скубти	v	*
+verbs	1	ори	орати	v	*
+verbs	1	оре	орати	v	*
+verbs	1	полю	полоти	v	*
+verbs	1	поле	полоти	v	*
+verbs	1	узятий	узяти	v	*
+verbs	1	схудла	схуднути	v	*
+verbs	1	посталий	постати	v	*
+verbs	1	вимерлий	вимерти	v	*
+verbs	1	вирослий	вирости	v	*
+verbs	1	бийсь	битися	v	*
+verbs	1	відкрийсь	відкритися	v	*
+participles	1	литого	литий	v	*
+participles	1	прочитаною	прочитаний	v	*
 phrases	0	не знаю	не знати	*	*
 phrases	0	у місті	у місто	*	*
 phrases	0	я читаю	я читати	*	*
@@ -432,7 +492,6 @@ phrases	0	він же	він ж	*	*
 negatives	0	мить	мити	*	*
 negatives	0	наш	нашити	*	*
 negatives	0	коли	колоти	*	*
-negatives	0	поле	полоти	*	*
 negatives	0	водою	водій	*	*
 negatives	0	ним	нити	*	*
 negatives	0	білий	білити	*	*
@@ -452,3 +511,7 @@ negatives	0	чи	чати	*	*
 negatives	0	де	сти	*	*
 negatives	0	ти	сти	*	*
 negatives	0	ще	соко	*	*
+negatives	0	світова	світів	adj	*
+negatives	0	світових	світів	adj	*
+negatives	0	учителів	учителя	*	*
+negatives	0	любов	любва	*	*

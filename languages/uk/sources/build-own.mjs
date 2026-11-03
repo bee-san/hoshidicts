@@ -166,6 +166,12 @@ noun('', 'а', ['gen.pl'], {stemEndsWith: C}, 'книг → книга');
 noun('', 'а', ['gen.pl'], {stemEndsWith: C, stemChange: fromItoO}, 'ніг → нога');
 noun('', 'а', ['gen.pl'], {stemEndsWith: C, stemChange: fromItoJo}, 'сліз → сльоза');
 noun('ок', 'ка', ['gen.pl'], {stemEndsWith: C}, 'книжок → книжка');
+noun('ок', 'ка', ['gen.pl'], {stemEndsWith: '[й]'}, 'чайок → чайка');
+noun('ьок', 'ька', ['gen.pl'], {}, 'кальок → калька');
+noun('ок', 'ко', ['gen.pl'], {stemEndsWith: C}, 'сонечок → сонечко');
+noun('ок', 'ки', ['gen.pl'], {stemEndsWith: C}, 'колготок → колготки');
+noun('ов', 'ва', ['gen.pl'], {stemEndsWith: '[тк]', stemMinLength: 3}, 'молитов → молитва');
+noun('ин', 'ини', ['gen.pl'], {}, 'відносин → відносини');
 noun('ек', 'ка', ['gen.pl'], {stemEndsWith: C}, 'позичек → позичка');
 noun('ер', 'ра', ['gen.pl'], {stemEndsWith: C}, 'сестер → сестра');
 noun('ен', 'на', ['gen.pl'], {stemEndsWith: C}, 'весен → весна');
@@ -188,6 +194,7 @@ noun('ель', 'ля', ['gen.pl'], {stemEndsWith: C}, 'земель → земл
 noun('онь', 'ня', ['gen.pl'], {stemEndsWith: C}, 'кухонь → кухня');
 noun('ць', 'ця', ['gen.pl'], {}, 'вулиць → вулиця');
 noun('ям', 'я', ['dat.pl'], {}, 'землям → земля');
+noun('ів', 'я', ['gen.pl'], {stemEndsWith: '[д]', stemMinLength: 2}, 'суддів → суддя');
 noun('ями', 'я', ['ins.pl'], {}, 'землями → земля');
 noun('ях', 'я', ['loc.pl'], {}, 'землях → земля');
 // Soft group after a vowel (лінія, мрія, надія, зброя, шия).
@@ -209,6 +216,10 @@ nounAlt('еві', '', ['dat.sg', 'loc.sg'], {stemEndsWith: HUSH}, 'товари�
 nounAlt('і', '', ['loc.sg'], {stemEndsWith: '[бвґдзлмнпстф]'}, 'заводі → завод', 'столі → стіл');
 nounAlt('і', '', ['loc.sg', 'nom.pl'], {stemEndsWith: '[р]'}, 'лікарі → лікар', 'вечорі → вечір');
 nounAlt('і', '', ['loc.sg', 'nom.pl', 'gen.sg', 'dat.sg'], {stemEndsWith: HUSH}, 'товариші → товариш', 'ножі → ніж');
+for (const [ending, labels, example] of [['и', ['nom.pl'], 'палаци → палац'], ['ом', ['ins.sg'], 'палацом → палац'],
+    ['е', ['voc.sg'], 'принце → принц'], ['і', ['loc.sg'], 'палаці → палац']]) {
+    noun(ending, '', labels, {stemEndsWith: '[ц]', stemMinLength: 3}, example);
+}
 noun('зі', 'г', ['loc.sg'], {}, 'березі → берег');
 noun('сі', 'х', ['loc.sg'], {}, 'дусі → дух');
 nounAlt('ці', 'к', ['loc.sg'], {}, 'вовці → вовк', 'році → рік', toI0);
@@ -229,7 +240,7 @@ for (const [ending, labels] of [['а', ['gen.sg']], ['у', ['gen.sg', 'dat.sg', 
 // (учень, учня; день, дня), -онь (вогонь, вогню) and the roots вітер, бобер,
 // свекор, вугор, орел, осел, козел, котел, дятел, посол, сон, пес.
 const HARD_ENDINGS = [['а', ['gen.sg']], ['у', ['gen.sg', 'dat.sg', 'loc.sg', 'voc.sg']], ['ові', ['dat.sg', 'loc.sg']],
-    ['ом', ['ins.sg']], ['і', ['loc.sg']], ['и', ['nom.pl']], ['ів', ['gen.pl']], ['ам', ['dat.pl']], ['ами', ['ins.pl']], ['ах', ['loc.pl']]];
+    ['ом', ['ins.sg']], ['і', ['loc.sg']], ['е', ['voc.sg']], ['и', ['nom.pl']], ['ів', ['gen.pl']], ['ам', ['dat.pl']], ['ами', ['ins.pl']], ['ах', ['loc.pl']]];
 const SOFT_ENDINGS = [['я', ['gen.sg']], ['ю', ['gen.sg', 'dat.sg', 'voc.sg']], ['еві', ['dat.sg', 'loc.sg']], ['ем', ['ins.sg']],
     ['і', ['loc.sg', 'nom.pl']], ['ів', ['gen.pl']], ['ям', ['dat.pl']], ['ями', ['ins.pl']], ['ях', ['loc.pl']]];
 for (const [ending, labels] of HARD_ENDINGS) {
@@ -246,6 +257,8 @@ for (const [ending, labels] of SOFT_ENDINGS) {
 }
 for (const [ending, labels] of SOFT_ENDINGS) {
     noun('йц' + ending, 'єць', labels, {stemEndsWith: V}, ending === 'я' ? 'європейця → європеєць' : undefined);
+    noun('ьц' + ending, 'ець', labels, {stemEndsWith: C}, ending === 'я' ? 'пальця → палець' : undefined);
+    noun('л' + ending, 'ель', labels, {stemEndsWith: C}, ending === 'я' ? 'рубля → рубель' : undefined);
 }
 // The genitive singular -ости of the 1928 orthography, still written in
 // the diaspora and in older books (радости, суспільности).
@@ -381,6 +394,11 @@ noun('ам', 'и', ['dat.pl'], {stemEndsWith: C}, 'штанам → штани')
 noun('ами', 'и', ['ins.pl'], {stemEndsWith: C}, 'штанами → штани');
 noun('ах', 'и', ['loc.pl'], {stemEndsWith: C}, 'штанах → штани');
 noun('ей', 'і', ['gen.pl'], {stemEndsWith: C}, 'дверей → двері');
+noun('ів', 'і', ['gen.pl'], {stemEndsWith: C}, 'джунглів → джунглі');
+noun('ам', 'і', ['dat.pl'], {stemEndsWith: HUSH}, 'грошам → гроші');
+noun('ами', 'і', ['ins.pl'], {stemEndsWith: HUSH}, 'нутрощами → нутрощі');
+noun('ах', 'і', ['loc.pl'], {stemEndsWith: HUSH}, 'грошах → гроші');
+noun('ями', 'і', ['ins.pl'], {stemEndsWith: C}, 'ножицями → ножиці');
 noun('има', 'і', ['ins.pl'], {stemEndsWith: C}, 'дверима → двері');
 noun('ям', 'і', ['dat.pl'], {stemEndsWith: C}, 'дверям → двері');
 noun('ях', 'і', ['loc.pl'], {stemEndsWith: C}, 'дверях → двері');
@@ -391,7 +409,10 @@ for (const [lemmas, forms] of [[['людина', 'люди'], [['люди', ['no
     [['друг'], [['друзі', ['nom.pl']], ['друзів', ['gen.pl']], ['друзям', ['dat.pl']], ['друзями', ['ins.pl']], ['друзях', ['loc.pl']]]],
     [['небо'], [['небеса', ['nom.pl']], ['небес', ['gen.pl']], ['небесам', ['dat.pl']], ['небесами', ['ins.pl']], ['небесах', ['loc.pl']]]],
     [['чудо'], [['чудеса', ['nom.pl']], ['чудес', ['gen.pl']], ['чудесам', ['dat.pl']], ['чудесами', ['ins.pl']], ['чудесах', ['loc.pl']]]],
-    [['серце'], [['сердець', ['gen.pl']]]]]) {
+    [['серце'], [['сердець', ['gen.pl']]]],
+    [['вівця'], [['овець', ['gen.pl']]]],
+    [['четвер'], [['четверга', ['gen.sg']], ['четвергу', ['dat.sg', 'loc.sg']], ['четвергові', ['dat.sg', 'loc.sg']], ['четвергом', ['ins.sg']],
+        ['четверги', ['nom.pl']], ['четвергів', ['gen.pl']], ['четвергам', ['dat.pl']], ['четвергами', ['ins.pl']], ['четвергах', ['loc.pl']]]]]) {
     for (const lemma of lemmas) {
         for (const [form, labels] of forms) {
             if (form !== lemma) { noun(form, lemma, labels, {whole: true}, `${form} → ${lemma}`); }
@@ -433,13 +454,15 @@ ADJ_NAMES['adj.ins-loc.mn+dat.pl'] = 'instrumental/locative masculine/neuter sin
 for (const [id, name] of Object.entries(ADJ_NAMES)) {
     transform(id, name, `The ${name} form of an adjective, participle or adjectival pronoun.`);
 }
-// The output is also a noun (хворий, черговий) or a pronoun that declines as
-// an adjective (який, котрий, будь-який): wiktionary-to-yomitan tags them so.
+// The output is also a noun (хворий, черговий), a pronoun that declines as
+// an adjective (який, котрий, будь-який) or a participle, which
+// wiktionary-to-yomitan files under its verb (литий, прочитаний: v).
+const ADJ_OUT = ['adj', 'n', 'pron', 'v'];
 for (const [ending, id, , example] of ADJ_HARD) {
-    suffix(id, ending, 'ий', [], ['adj', 'n', 'pron'], {stemMinLength: 2}, example);
+    suffix(id, ending, 'ий', [], ADJ_OUT, {stemMinLength: 2}, example);
 }
 for (const [ending, id, example] of ADJ_SOFT) {
-    suffix(id, ending, 'ій', [], ['adj', 'n', 'pron'], {stemMinLength: 2, stemEndsWith: '[нт]'}, example);
+    suffix(id, ending, 'ій', [], ADJ_OUT, {stemMinLength: 2, stemEndsWith: '[нт]'}, example);
 }
 // Indefinite pronouns in -сь and -небудь, which decline as adjectives
 // (якийсь: якогось, якоюсь, якимось; який-небудь: якого-небудь).
@@ -451,6 +474,17 @@ for (const [ending, , , example] of ADJ_HARD) {
 }
 suffix('adj.indef', 'имсь', 'ийсь', [], [], {stemMinLength: 2});
 suffix('adj.indef', 'ихсь', 'ийсь', [], [], {stemMinLength: 2});
+// Possessive adjectives from personal nouns: батьків (батькового, батькову),
+// сестрин (сестриного, сестрину). -ова, -ових and -овими are left out: they
+// also end the far more frequent relational adjectives in -овий (світова,
+// світових), which would read as possessives of plural nouns (світів).
+transform('adj.poss', 'case form (possessive adjective)', 'A case form of a possessive adjective: батькового (батьків), сестриною (сестрин).');
+for (const ending of ['ового', 'овому', 'овим', 'ової', 'овій', 'ову', 'овою', 'ове', 'ові', 'овім']) {
+    suffix('adj.poss', ending, 'ів', [], ['adj'], {stemMinLength: 2}, ending === 'ового' ? 'батькового → батьків' : undefined);
+}
+for (const ending of ['иного', 'иному', 'иним', 'ина', 'иної', 'иній', 'ину', 'иною', 'ине', 'ині', 'иних', 'иними', 'иним']) {
+    suffix('adj.poss', ending, 'ин', [], ['adj'], {stemMinLength: 3}, ending === 'иного' ? 'сестриного → сестрин' : undefined);
+}
 transform('adj.cmp', 'comparative', 'Comparative degree of an adjective: новіший (новий), вищий (високий), кращий (гарний).');
 for (const [inflected, deinflected, opt, example] of [
     ['іший', 'ий', {stemMinLength: 2}, 'новіший → новий'], ['іший', 'ій', {stemMinLength: 2, stemEndsWith: '[н]'}, 'синіший → синій'],
@@ -562,6 +596,25 @@ for (const [lemma, tag, forms] of DECLINED_PRONOUNS) {
         }
     }
 }
+// Indefinite and negative pronouns made from хто and що: -небудь, -сь, -то,
+// будь-, казна-, хтозна-, аби- (кого-небудь, когось, кимсь, будь-кого,
+// абичим). Each form of хто and що with each affix.
+transform('pron.indef', 'case form (indefinite pronoun)', 'A case form of an indefinite pronoun: кого-небудь (хто-небудь), когось (хтось), будь-чого (будь-що).');
+for (const [lemma, forms] of [['хто', ['кого', 'кому', 'ким', 'кім']], ['що', ['чого', 'чому', 'чим', 'чім']]]) {
+    for (const form of forms) {
+        for (const affix of ['-небудь', '-то']) { whole('pron.indef', form + affix, lemma + affix, [], ['pron']); }
+        for (const variant of /[аеєиіїоуюя]$/u.test(form) ? [form + 'сь'] : [form + 'ось', form + 'сь']) { whole('pron.indef', variant, lemma + 'сь', [], ['pron']); }
+        for (const prefix of ['будь-', 'казна-', 'хтозна-', 'аби']) { whole('pron.indef', prefix + form, prefix + lemma, [], ['pron']); }
+    }
+}
+whole('pron.indef', 'кожен', 'кожний', [], ['adj', 'pron']);
+whole('pron.indef', 'жоден', 'жодний', [], ['adj', 'pron']);
+// сей and оцей, older forms of цей (Шевченко, Франко).
+for (const [lemma, stem] of [['сей', 'с'], ['оцей', 'оц']]) {
+    for (const ending of ['ього', 'ьому', 'им', 'я', 'ієї', 'ій', 'ю', 'ією', 'е', 'і', 'их', 'ими', 'ім']) {
+        whole('pron.indef', stem + ending, lemma, [], []);
+    }
+}
 // Numerals.
 transform('num.case', 'case form (numeral)', 'Oblique case of a cardinal numeral: двох (два), трьома (три), п\'яти (п\'ять), сорока (сорок).');
 const NUMERALS = [
@@ -576,6 +629,11 @@ NUMERALS.push(['обидва', ['обидві', 'обидвох', 'обидво�
     ['п\'ятсот', ['п\'ятисот', 'п\'ятистам', 'п\'ятьмастами', 'п\'ятистах']], ['шістсот', ['шестисот', 'шестистам', 'шістьмастами', 'шестистах']],
     ['сімсот', ['семисот', 'семистам', 'сімомастами', 'семистами', 'семистах']], ['вісімсот', ['восьмисот', 'восьмистам', 'вісьмомастами', 'восьмистами', 'восьмистах']],
     ['дев\'ятсот', ['дев\'ятисот', 'дев\'ятистам', 'дев\'ятьмастами', 'дев\'ятистах']]);
+// Collective numerals: двоє, троє, обоє, четверо (двох, трьома, обом).
+NUMERALS.push(['двоє', ['двох', 'двом', 'двома']], ['троє', ['трьох', 'трьом', 'трьома']], ['обоє', ['обох', 'обом', 'обома']],
+    ['четверо', ['чотирьох', 'чотирьом', 'чотирма', 'чотирьома']], ['кілька', ['кількох', 'кільком', 'кількома']],
+    ['декілька', ['декількох', 'декільком', 'декількома']], ['багато', ['багатьох', 'багатьом', 'багатьма']],
+    ['скільки', ['скількох', 'скільком', 'скількома']], ['стільки', ['стількох', 'стільком', 'стількома']]);
 for (const [lemma, forms] of NUMERALS) {
     for (const form of forms) { whole('num.case', form, lemma, [], ['num']); }
 }
@@ -688,7 +746,7 @@ verb('pstN', 'ло', 'ти', {}, 'std', 'читало → читати');
 verb('pstPl', 'ли', 'ти', {}, 'std', 'читали → читати');
 verb('advPst', 'вши', 'ти', {stemEndsWith: V}, 'adv', 'прочитавши → прочитати');
 verb('infVar', 'ть', 'ти', {stemEndsWith: V, stemMinLength: 3}, 'none', 'читать → читати');
-suffix('v.infVar', 'тись', 'тися', [], ['v'], {stemEndsWith: V}, 'сміятись → сміятися');
+suffix('v.infVar', 'тись', 'тися', [], ['v'], {}, 'сміятись → сміятися');
 suffix('v.infVar', 'ться', 'тися', [], ['v'], {stemEndsWith: V}, 'сміяться → сміятися');
 // Synthetic future: the infinitive and -му, -меш, -ме, -мемо, -мете, -муть.
 for (const [ending, id, kind] of [['тиму', 'fut1sg', 'std'], ['тимеш', 'fut2sg', 'std'], ['тиме', 'fut3sg', 'e3'], ['тимемо', 'fut1pl', 'std'],
@@ -712,7 +770,7 @@ for (const [ending, lemma, example] of PAST_CONSONANT) {
     verb('pstM', ending, lemma, opt, 'cons', example);
     verb('advPst', ending + 'ши', lemma, opt, 'adv');
 }
-for (const [consonant, lemma] of [['к', 'кнути'], ['х', 'хнути'], ['с', 'снути'], ['з', 'знути'], ['б', 'бнути'], ['г', 'гнути'], ['п', 'пнути']]) {
+for (const [consonant, lemma] of [['к', 'кнути'], ['х', 'хнути'], ['с', 'снути'], ['з', 'знути'], ['б', 'бнути'], ['г', 'гнути'], ['п', 'пнути'], ['д', 'днути']]) {
     verb('pstF', consonant + 'ла', lemma, {}, 'std', consonant === 'к' ? 'зникла → зникнути' : undefined);
     verb('pstN', consonant + 'ло', lemma, {}, 'std');
     verb('pstPl', consonant + 'ли', lemma, {}, 'std');
@@ -746,18 +804,17 @@ conjugation({inf: 'ити', prs: ["'ю", "'єш", "'є", "'ємо", "'єм", "'�
 conjugation({inf: 'бити', prs: ["іб'ю", "іб'єш", "іб'є", "іб'ємо", "іб'єм", "іб'єте", "іб'ють"], opt: {stemEndsWith: '[зд]'}, label: ["розіб'ю", 'розбити']});
 conjugation({inf: 'лити', prs: ['ллю', 'ллєш', 'ллє', 'ллємо', 'ллєм', 'ллєте', 'ллють'], opt: {stemMinLength: 0}, label: ['ллю', 'лити']});
 conjugation({inf: 'жити', prs: ['живу', 'живеш', 'живе', 'живемо', 'живем', 'живете', 'живуть'], imp: {'2sg': ['живи'], '1pl': ['живімо', 'живім'], '2pl': ['живіть']}, opt: {stemMinLength: 0}, label: ['живу', 'жити']});
-// The singular imperative -ий of бити, пити, лити, шити, мити and their
-// prefixed verbs: written out, because -ий also ends adjectives (білий).
-for (const root of ['бий', 'пий', 'лий', 'ший', 'мий', 'вий', 'рий']) {
-    for (const prefix of ['', 'ви', 'за', 'на', 'по', 'роз', 'від', 'при', 'пере', 'у', 'в', 'з', 'у', 'об', 'під', 'про', 'до']) {
-        const form = prefix + (prefix === 'роз' && root === 'бий' ? 'бий' : root);
-        const lemma = form.slice(0, -2) + 'ити';
-        add('v.imp2sg', {type: 'wholeWord', inflected: form, deinflected: lemma, conditionsIn: [], conditionsOut: ['v']}, form === 'пий' ? 'пий → пити' : undefined);
-        add('v.imp2sg', {type: 'wholeWord', inflected: form + 'ся', deinflected: lemma + 'ся', conditionsIn: [], conditionsOut: ['v']});
-    }
-}
-verb('imp2sg', 'крий', 'крити', {stemMinLength: 0}, 'std', 'відкрий → відкрити');
-verb('imp2sg', 'гний', 'гнити', {stemMinLength: 0}, 'std');
+// The singular imperative -ий of бити, пити, лити, шити, мити, вити, рити
+// and their prefixed verbs: written out, because -ий also ends adjectives
+// (білий). One cross product: a prefix (or none) and the imperative, with
+// nothing between them (stemCharacters [] allows only the empty stem).
+const IMP_PREFIXES = ['', 'ви', 'за', 'на', 'по', 'роз', 'від', 'при', 'пере', 'у', 'в', 'з', 'об', 'під', 'про', 'до'];
+const IMP_ROOTS = ['б', 'п', 'л', 'ш', 'м', 'в', 'р'];
+add('v.imp2sg', {type: 'circumfix', prefixes: IMP_PREFIXES.map((x) => [x, x]),
+    suffixes: IMP_ROOTS.flatMap((root) => [[root + 'ий', root + 'ити'], [root + 'ийся', root + 'итися'], [root + 'ийсь', root + 'итися']]),
+    conditionsIn: [], conditionsOut: ['v'], stemCharacters: '[]'}, 'пий → пити');
+verb('imp2sg', 'крий', 'крити', {stemMinLength: 0}, 'adv', 'відкрий → відкрити');
+verb('imp2sg', 'гний', 'гнити', {stemMinLength: 0}, 'adv');
 
 // First conjugation, infinitive stem in a consonant.
 conjugation({inf: 'сти', prs: ['су', 'сеш', 'се', 'семо', 'сем', 'сете', 'суть'], imp: {'2sg': ['си'], '1pl': ['сімо', 'сім'], '2pl': ['сіть']}, ptcp: ['сений'], label: ['несу', 'нести']});
@@ -777,7 +834,12 @@ conjugation({inf: 'вати', prs: ['ву', 'веш', 'ве', 'вемо', 'ве�
 conjugation({inf: 'звати', prs: ['зову', 'зовеш', 'зове', 'зовемо', 'зовем', 'зовете', 'зовуть'], opt: {stemMinLength: 0}, label: ['зову', 'звати']});
 conjugation({inf: 'ати', prs: ['ану', 'анеш', 'ане', 'анемо', 'анем', 'анете', 'ануть'], imp: {'2sg': ['ань'], '1pl': ['аньмо'], '2pl': ['аньте']}, opt: {stemEndsWith: '[т]'}, label: ['стану', 'стати']});
 conjugation({inf: 'нати', prs: ['ну', 'неш', 'не', 'немо', 'нем', 'нете', 'нуть'], imp: {'2sg': ['ни'], '1pl': ['німо', 'нім'], '2pl': ['ніть']}, opt: {stemEndsWith: '[г]'}, label: ['стогну', 'стогнати']});
-conjugation({inf: 'іти', prs: ['іну', 'інеш', 'іне', 'інемо', 'інем', 'інете', 'інуть'], imp: {'2sg': ['інь'], '1pl': ['іньмо'], '2pl': ['іньте']}, opt: {stemEndsWith: '[р]'}, label: ['зустріну', 'зустріти']});
+conjugation({inf: 'іти', prs: ['іну', 'інеш', 'іне', 'інемо', 'інем', 'інете', 'інуть'], imp: {'2sg': ['інь'], '1pl': ['іньмо'], '2pl': ['іньте']}, opt: {stemEndsWith: '[рд]'}, label: ['зустріну', 'зустріти']});
+conjugation({inf: 'гти', prs: ['гну', 'гнеш', 'гне', 'гнемо', 'гнем', 'гнете', 'гнуть'], imp: {'2sg': ['гни'], '1pl': ['гнімо', 'гнім'], '2pl': ['гніть']}, opt: {stemEndsWith: '[я]'}, label: ['тягну', 'тягти']});
+conjugation({inf: 'бти', prs: ['бу', 'беш', 'бе', 'бемо', 'бем', 'бете', 'буть'], imp: {'2sg': ['би'], '1pl': ['бімо', 'бім'], '2pl': ['біть']}, opt: {stemEndsWith: '[уе]'}, label: ['гребу', 'гребти']});
+conjugation({inf: 'орати', prs: ['орю', 'ореш', 'оре', 'оремо', 'орем', 'орете', 'орють'], imp: {'2sg': ['ори'], '1pl': ['орімо', 'орім'], '2pl': ['оріть']}, opt: {stemMinLength: 0}, label: ['орю', 'орати']});
+conjugation({inf: 'полоти', prs: ['полю', 'полеш', 'поле', 'полемо', 'полем', 'полете', 'полють'], ptcp: ['полотий'], opt: {stemMinLength: 0}, label: ['полю', 'полоти']});
+conjugation({inf: 'узяти', prs: [], ptcp: ['узятий'], opt: {stemMinLength: 0}});
 conjugation({inf: 'ікти', prs: ['очу', 'очеш', 'оче', 'очемо', 'очем', 'очете', 'очуть'], imp: {'2sg': ['оччи'], '1pl': [], '2pl': []}, opt: {stemEndsWith: '[л]'}, label: ['волочу', 'волікти']});
 for (const [ending, id] of [['окла', 'pstF'], ['окло', 'pstN'], ['окли', 'pstPl']]) { verb(id, ending, 'ікти', {stemEndsWith: '[л]'}, 'std'); }
 for (const [ending, id] of [['гнув', 'pstM'], ['гнула', 'pstF'], ['гнуло', 'pstN'], ['гнули', 'pstPl']]) {
@@ -882,7 +944,9 @@ verb('advPrs', 'ачи', 'ати', {stemEndsWith: HUSH, stemMinLength: 2}, 'adv'
 suffix('v.ptcpAct', 'ачий', 'ати', ['adj'], ['v'], {stemEndsWith: HUSH});
 // Past active participles in -лий (почервонілий, минулий, гнилий, зниклий).
 for (const [inflected, deinflected, opt, example] of [['ілий', 'іти', {stemMinLength: 2}, 'почервонілий → почервоніти'],
-    ['улий', 'ути', {stemMinLength: 2}, 'минулий → минути'], ['илий', 'ити', {stemMinLength: 2}, 'гнилий → гнити'],
+    ['улий', 'ути', {stemMinLength: 1}, 'минулий → минути'], ['илий', 'ити', {stemMinLength: 2}, 'гнилий → гнити'],
+    ['алий', 'ати', {stemMinLength: 2}, 'посталий → постати'], ['ерлий', 'ерти', {stemMinLength: 1}, 'вимерлий → вимерти'],
+    ['ослий', 'ости', {stemMinLength: 1}, 'вирослий → вирости'],
     ['лий', 'нути', {stemEndsWith: '[кгхзсбп]', stemMinLength: 2}, 'зниклий → зникнути']]) {
     suffix('v.ptcpAct', inflected, deinflected, ['adj'], ['v'], opt, example);
 }
@@ -973,6 +1037,7 @@ for (const id of order) {
     out.transforms.push({id: t.id, name: t.name, description, source: 'own', rules: compact(t.rules)});
 }
 writeFileSync(outFile, formatTransforms(out));
-const ruleCount = [...transforms.values()].reduce((n, t) => n + t.rules.length, 0);
+const expanded = (rule) => (rule.type === 'circumfix' && rule.suffixes ? rule.prefixes.length * rule.suffixes.length : 1);
+const ruleCount = out.transforms.reduce((n, t) => n + t.rules.reduce((m, r) => m + expanded(r), 0), 0);
 const lineCount = out.transforms.reduce((n, t) => n + t.rules.length, 0);
 console.error(`${outFile}: ${out.transforms.length} transforms, ${ruleCount} rules in ${lineCount} JSON rules`);
