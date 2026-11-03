@@ -50,12 +50,16 @@ end of its clause (`kommt morgen an.` → ankommen).
   rules reach are in `corpus.tsv` (1,764), the others in `gaps.tsv` (36).
 - `tests/cases.tsv`, `tests/text.tsv`, `tests/lookup.tsv`,
   `tests/dictionary/`, `sources/benchmark-words.txt`,
-  `sources/hand-judged.tsv`, `sources/frequent-judged.tsv` and the rest of
-  `language.json`: written for this pack (GPL-3.0-or-later). Four rows of
-  `lookup.tsv` quote fragments of two or three words of Kafka's *Der Prozess*
-  (`FRAU GRUBACH`, `KÜNDIGUNG DES ADVOKATEN`, `höhern Beamten`, `der Hand
-  hin.`; Project Gutenberg #69327, public domain), and `hand-judged.tsv` holds
-  short contexts of the measured texts. `sources/lookup-batch.cpp` is adapted
+  `sources/hand-judged.tsv`, `sources/changed-judged.tsv`,
+  `sources/frequent-judged.tsv` and the rest of `language.json`: written for
+  this pack (GPL-3.0-or-later). Four rows of `lookup.tsv` quote fragments of
+  two or three words of Kafka's *Der Prozess* (`FRAU GRUBACH`, `KÜNDIGUNG
+  DES ADVOKATEN`, `höhern Beamten`, `der Hand hin.`; Project Gutenberg
+  #69327, public domain). Each row of `hand-judged.tsv` and
+  `changed-judged.tsv` quotes the sentence it judges, from the hovered word
+  to the sentence's end: 80 from Tatoeba (CC BY 2.0 FR, by the Tatoeba
+  contributors, https://tatoeba.org) and 60 from the three Project Gutenberg
+  books below (public domain). `sources/lookup-batch.cpp` is adapted
   from `languages/en/sources/lookup-batch.cpp`.
 - Not committed, used for the measurements below:
   - the dictionary [wty-de-en](https://huggingface.co/datasets/daxida/wty-release/resolve/de7ed9cd558acce3423ccf6e17dc690f8a839bf2/latest/dict/de/en/wty-de-en.zip)
@@ -186,7 +190,7 @@ gehören, not Yomitan's participle reading hören; `lookup.tsv`).
     `decapitalize`, at one processor step. A word at the start of a sentence
     keeps its own reading in small letters first, because a lookup ranks
     fewer processor steps first: `Sagen Sie …` is sagen, not the plural of
-    Sage, and `Alles` is alles, not the genitive of All (`lookup.tsv`). The
+    Sage, and `Alles` is alles, not the genitive of All (`lookup.tsv`).
     With noun rules that read capitalized words, as the first version's did,
     a noun reading was the first result for 513 of the 5,954 frequent words
     written in small letters when they start a sentence (3.30% of the list's
@@ -205,9 +209,12 @@ gehören, not Yomitan's participle reading hören; `lookup.tsv`).
   multi-word dictionary entry (`zu Abend gegessen` → zu Abend essen, `recht
   hat` → Recht haben, `in Anspruch genommen` → in Anspruch nehmen), and on a
   phrase that is no entry they give nothing a lookup shows (`er ging` → `er
-  gehen`). Such idiom readings are a first result at about 320 of the
-  616,124 lookups of the Measurements, mostly right; a few are wrong (`Auto
-  fuhr gegen …` → Auto fahren, Known gaps). Other constraints, each with a
+  gehen`). Such idiom readings are the first result at 284 of the 616,124
+  lookups of the Measurements (in the dumps of `measure.mjs text`: a
+  multi-word headword matched through a rule of the pack other than the
+  separated prefix), mostly right (`geboren wurde` → geboren werden, `zu
+  Abend gegessen`, `Recht hat`); a few are wrong (`Auto fuhr gegen …` →
+  Auto fahren, Known gaps). Other constraints, each with a
   row of `cases.tsv` or `lookup.tsv` that fails without it
   (`sources/mutations.mjs`):
   - du -st and the superlative -st not after s, ß, x or z (`weisst` is not
@@ -215,7 +222,8 @@ gehören, not Yomitan's participle reading hören; `lookup.tsv`).
     present (`machest` and `machet` are the subjunctive I); the genitive and
     plural -s not after s, ß, x or z (`ass` is not As);
   - the bare imperative not after a vowel, d or t (`frei` is not freien), nor
-    for `schloß`, the spelling before 1996 of schloss; the present (ich) -e
+    for `schloß`, the spelling before 1996 of schloss, nor for `sehn`, which
+    is sehen, not sehnen's imperative; the present (ich) -e
     not for the stem mein (`meine` is the possessive mein, which the
     dictionary reaches through its form-of row, not meinen; the row still
     names meinen);
@@ -265,8 +273,10 @@ gehören, not Yomitan's participle reading hören; `lookup.tsv`).
     `erklärte`, `versteckte`, `passierte` …: 121 verb uses against 17
     adjective uses, `context-counts.py`), and the verb comes first;
   - the present (er, ihr) of a verb whose stem ends in t is written with the
-    t (`kostet`: kosten + -et, not kosen + -tet), and schalten's present is
-    listed before schelten's past (`schaltet`);
+    t (`kostet`: kosten + -et, not kosen + -tet), `koste` is listed as
+    kosten's present (ich), not the past of kosen (a general -te rule for
+    t-stems read `laute`, `fette`, `feste` and `weite` as verbs), and
+    schalten's present is listed before schelten's past (`schaltet`);
   - participles that are spelled like the present of a verb in ge- are
     listed (`gewartet` is warten, not the archaic gewarten; `gelobt`,
     `geleitet`, `angehört`, `zugehört`), and schalten's imperative `schalt`
@@ -276,7 +286,7 @@ gehören, not Yomitan's participle reading hören; `lookup.tsv`).
     likewise).
 
   The ties the pack cannot order are in Known gaps.
-- **History**: the first commit of this pack, `de: own rules` (711bd21), has
+- **History**: the first commit of this pack, `de: own rules` (cf51d22), has
   the own rules as written before Yomitan's file was read (29 transforms, 231
   rules, 4,444 with cross products expanded). Later commits changed them:
   - with the port of Yomitan's rules, the conditions both files have were
@@ -303,13 +313,14 @@ gehören, not Yomitan's participle reading hören; `lookup.tsv`).
 
 Every number is with wty-de-en as its release publishes it, form-of rows
 included, imported by `hoshidicts-cli import`, at hoshidicts 1fed676 with
-this pack (GCC 14.3, Release). Items 2 to 4 were measured at 6a65eac and
-again after the rebase on 1fed676 (#58 adds `lookup.untaggedTerms`), with
-identical output. The union is `tools/merge-transforms.mjs de --out`, which
-puts Yomitan's transforms first. The pack has no optional
-processor, transform or variant pass, so every number is the same with every
-option on and with the defaults; a copy of `cases.tsv` with the line
-`# options: default` added gives the same numbers as the file.
+this pack (GCC 14.3, Release); main 39cebbe adds only other packs. Items 2
+to 4 were measured at 6a65eac and again after the rebase on 1fed676 (#58
+adds `lookup.untaggedTerms`), with identical output. The union is
+`tools/merge-transforms.mjs de --out`, which puts Yomitan's transforms
+first. The pack has no optional processor, transform or variant pass, so
+every number is the same with every option on and with the defaults; copies
+of the sample and `cases.tsv` with the line `# options: default` added give
+the same numbers as the files.
 
 1. **eval-language** (`hoshidicts-cli eval-language de <file> --transforms
    <set> --dictionary <wty-de-en>`). The sample is the 1,800 UniMorph rows of
@@ -403,10 +414,11 @@ option on and with the defaults; a copy of `cases.tsv` with the line
    - **Rare homographs** (`measure.mjs rare`): 18 words show a rule's reading
      first whose lemma is at least 20 times rarer, as a word of the list,
      than another of the word's lemmas among its results (Yomitan's rules:
-     0). 15 of them show an equivalent lemma (`anderen` → ander before
+     0). 14 of them show an equivalent lemma (`anderen` → ander before
      anderer, `meisten` → meist before viel, the participle adjectives
-     `folgende`, `lebenden`, `Laufenden` before their verbs) and 3 are wrong:
-     `heut`, `draus` and `grosse`.
+     `folgende`, `lebenden`, `Laufenden` before their verbs), `loser` shows
+     lose before los, both possible, and 3 are wrong: `heut`, `draus` and
+     `grosse`.
 
    **At the start of a sentence** (`measure.mjs start`): the 5,954 of those
    words that German writes in small letters, looked up with a capital first
@@ -512,9 +524,9 @@ option on and with the defaults; a copy of `cases.tsv` with the line
    (0.08%) are wrong and unjudged, besides the 55 wrong single words, the
    rule-changed ones above (about 320) and the 3,711 particle verbs the
    dictionary's rows make (0.60%). An earlier sample of 60 (seed 2, with the
-   rules of 86776fa) found 14 wrong; its rule-made errors that a constraint
+   rules of d5d36de) found 14 wrong; its rule-made errors that a constraint
    could stop (`führt` → fahren, `sehr best…` → sehr gut, `Elektrotechniker`
-   → Elektrotechnik) were fixed in 24573e2.
+   → Elektrotechnik) were fixed in cc06097.
 5. **Trace quality** (`sources/trace-quality.mjs`): for the sample rows each
    set reaches, whether the trace a lookup shows (`traceSelection:
    "shortest"`) names the form the UniMorph tag gives (`past (wir, sie)` for
@@ -526,7 +538,7 @@ option on and with the defaults; a copy of `cases.tsv` with the line
 6. **Per rule** (`eval-language --per-rule` on the sample and `cases.tsv`,
    2,127 rows): 162 of the 231 rules recover a row no other rule reaches,
    none breaks a negative, and none adds false candidates without recovering
-   a row. With the rules of 86776fa five did: the äu umlaut before -er (since
+   a row. With the rules of d5d36de five did: the äu umlaut before -er (since
    removed), ä and ö before -er and the Latin -en for -us and -os, which now
    have rows (`Väter`, `Töchter`, `Rhythmen`, `Mythen`).
 7. **Checks**:
@@ -535,14 +547,14 @@ option on and with the defaults; a copy of `cases.tsv` with the line
      50 / 50; gaps.tsv 0 / 37 (reported); `classes.json` agrees with the
      engine (8 classes, 365 fields, 4 steps); 605 of the 4,922 rules (cross
      products expanded) are exercised by a passing row; the committed files
-     of `tests/` and `sources/` hold about 940,000 bytes
+     of `tests/` and `sources/` hold 944,129 bytes
      (`git ls-tree -r -l HEAD -- languages/de/tests languages/de/sources`);
    - the differential check (`tools/check-yomitan.mjs` with
      `build/hoshidicts-cli`): 5,116 inputs, 6,300 Yomitan results, no
      difference, so `sources/yomitan-differences.tsv` is not needed;
      `decapitalize` and `capitalizeFirstLetter` agree with Yomitan's on 2,211
      inputs each and `eszettPreprocessor` on 2,203;
-   - `ctest` (49 tests), `tools/check-classes.mjs --all` and `node --test
+   - `ctest` (52 tests), `tools/check-classes.mjs --all` and `node --test
      tools/test/` (115 tests here; CI runs more with the hangul-js bundle)
      pass;
    - mutations (`sources/mutations.mjs`): each of 57 changes to a scratch
@@ -699,7 +711,11 @@ option on and with the defaults; a copy of `cases.tsv` with the line
   -en of nouns in -e comes first.
 - **Names**: the plural and genitive rules read names the dictionary lacks
   (`Eddie` → Eddi, `Janes` → Jan, `Angeles` → Angel), mostly English names
-  in subtitles and Tatoeba.
+  in subtitles and Tatoeba: 67 of the 110 frequent words whose first lemma a
+  rule changes (153,781 tokens, `frequent-judged.tsv`).
+- **Nouns the subtitle list writes in small letters**: `legende` (Legende)
+  gives the present participle of legen, since the word as written needs
+  no processor step (2,482 tokens).
 - **Idioms through the listed verb forms**: `Auto fuhr gegen …` → the idiom
   Auto fahren, `… haben könnte.` → haben können (Rule provenance, Stem
   constraints).
