@@ -54,6 +54,7 @@ const conditions = {
     v_ptcp: {name: 'Participle after an auxiliary or duke, pa, për të', isDictionaryForm: false},
     adj_m: {name: 'Adjective after the article i', isDictionaryForm: false},
     adj_f: {name: 'Adjective, feminine singular (after e or së)', isDictionaryForm: false},
+    adj_fobl: {name: 'Adjective after së (feminine oblique)', isDictionaryForm: false},
     adj_pl: {name: 'Adjective after the article të (plural or oblique)', isDictionaryForm: false},
     adj_cmp: {name: 'Adjective or adverb after më (comparative)', isDictionaryForm: false},
 };
@@ -138,7 +139,10 @@ const WHOLE_WORD_VERBS = new Set(['jam', 'kam', 'ha', 'pi', 'di', 'rri', 'fle', 
 function irregular(id, forms, lemma, conditionsIn, conditionsOut = ['v']) {
     for (const form of forms) {
         if ([...form].length >= 4 && !WHOLE_WORD_VERBS.has(lemma)) {
-            add(id, {type: 'suffix', inflected: form, deinflected: lemma, conditionsIn, conditionsOut, stemCharacters: ONE_WORD});
+            // No space constraint: the stem before a whole form is a
+            // compound's prefix, and a phrase ending in one (e merr → e marr)
+            // spells no headword.
+            add(id, {type: 'suffix', inflected: form, deinflected: lemma, conditionsIn, conditionsOut});
         } else {
             whole(id, form, lemma, conditionsIn, conditionsOut);
         }
@@ -181,12 +185,12 @@ const NPL_OUT = ['n'];
 transform('n-def-sg-m', 'definite (masculine) / indefinite oblique',
     'Masculine singular: the definite nominative, or the indefinite genitive, dative or ablative (mal → mali, mik → miku, djalë → djali, libër → libri).');
 suffix('n-def-sg-m', 'i', '', [], N, {stemMinLength: 2, stemEndsWith: CONSONANT});
-suffix('n-def-sg-m', 'i', 'ë', [], N, {stemMinLength: 2, stemEndsWith: CONSONANT});
 suffix('n-def-sg-m', 'ri', 'ër', [], N, {stemMinLength: 1, stemEndsWith: CONSONANT});
 suffix('n-def-sg-m', 'rri', 'ërr', [], N, {stemMinLength: 1, stemEndsWith: CONSONANT});
 suffix('n-def-sg-m', 'i', '', [], N, {stemMinLength: 2, stemEndsWith: '[ao]'});
 suffix('n-def-sg-m', 'u', '', [], N, {stemMinLength: 2, stemEndsWith: '[kgheia]'});
-suffix('n-def-sg-m', 'ri', '', [], N, {stemMinLength: 2, stemEndsWith: '[uyieaë]'});
+suffix('n-def-sg-m', 'ri', '', [], N, {stemMinLength: 2, stemEndsWith: '[uyea]'});
+suffix('n-def-sg-m', 'ri', '', [], N, {stemMinLength: 4, stemEndsWith: '[i]'});
 suffix('n-def-sg-m', 'oi', 'ua', [], N, {stemMinLength: 1});
 suffix('n-def-sg-m', 'mi', 'ëm', [], N, {stemMinLength: 2, stemEndsWith: '[zs]'});
 suffix('n-def-sg-m', 'ni', '', [], N, {stemMinLength: 2, stemEndsWith: '[youe]'});
@@ -194,13 +198,13 @@ suffix('n-def-sg-m', 'ni', '', [], N, {stemMinLength: 2, stemEndsWith: '[youe]'}
 transform('n-def-acc-m', 'definite accusative (masculine)',
     'Masculine singular definite accusative (mal → malin, mik → mikun, djalë → djalin, libër → librin, vëlla → vëllanë).');
 suffix('n-def-acc-m', 'in', '', [], N, {stemMinLength: 2, stemEndsWith: CONSONANT});
-suffix('n-def-acc-m', 'in', 'ë', [], N, {stemMinLength: 2, stemEndsWith: CONSONANT});
 suffix('n-def-acc-m', 'rin', 'ër', [], N, {stemMinLength: 1, stemEndsWith: CONSONANT});
 suffix('n-def-acc-m', 'rrin', 'ërr', [], N, {stemMinLength: 1, stemEndsWith: CONSONANT});
 suffix('n-def-acc-m', 'in', '', [], N, {stemMinLength: 2, stemEndsWith: '[o]'});
 suffix('n-def-acc-m', 'në', '', [], N, {stemMinLength: 2, stemEndsWith: '[a]'});
 suffix('n-def-acc-m', 'un', '', [], N, {stemMinLength: 2, stemEndsWith: '[kgheia]'});
-suffix('n-def-acc-m', 'rin', '', [], N, {stemMinLength: 2, stemEndsWith: '[uyieaë]'});
+suffix('n-def-acc-m', 'rin', '', [], N, {stemMinLength: 2, stemEndsWith: '[uyea]'});
+suffix('n-def-acc-m', 'rin', '', [], N, {stemMinLength: 4, stemEndsWith: '[i]'});
 suffix('n-def-acc-m', 'oin', 'ua', [], N, {stemMinLength: 1});
 suffix('n-def-acc-m', 'min', 'ëm', [], N, {stemMinLength: 2, stemEndsWith: '[zs]'});
 suffix('n-def-acc-m', 'nin', '', [], N, {stemMinLength: 2, stemEndsWith: '[youe]'});
@@ -208,15 +212,31 @@ suffix('n-def-acc-m', 'nin', '', [], N, {stemMinLength: 2, stemEndsWith: '[youe]
 transform('n-def-obl-m', 'definite genitive/dative/ablative (masculine)',
     'Masculine singular definite genitive, dative or ablative (mal → malit, mik → mikut, djalë → djalit, libër → librit).');
 suffix('n-def-obl-m', 'it', '', [], N, {stemMinLength: 2, stemEndsWith: CONSONANT});
-suffix('n-def-obl-m', 'it', 'ë', [], N, {stemMinLength: 2, stemEndsWith: CONSONANT});
 suffix('n-def-obl-m', 'rit', 'ër', [], N, {stemMinLength: 1, stemEndsWith: CONSONANT});
 suffix('n-def-obl-m', 'rrit', 'ërr', [], N, {stemMinLength: 1, stemEndsWith: CONSONANT});
 suffix('n-def-obl-m', 'it', '', [], N, {stemMinLength: 2, stemEndsWith: '[ao]'});
 suffix('n-def-obl-m', 'ut', '', [], N, {stemMinLength: 2, stemEndsWith: '[kgheia]'});
-suffix('n-def-obl-m', 'rit', '', [], N, {stemMinLength: 2, stemEndsWith: '[uyieaë]'});
+suffix('n-def-obl-m', 'rit', '', [], N, {stemMinLength: 2, stemEndsWith: '[uyea]'});
+suffix('n-def-obl-m', 'rit', '', [], N, {stemMinLength: 4, stemEndsWith: '[i]'});
 suffix('n-def-obl-m', 'oit', 'ua', [], N, {stemMinLength: 1});
 suffix('n-def-obl-m', 'mit', 'ëm', [], N, {stemMinLength: 2, stemEndsWith: '[zs]'});
 suffix('n-def-obl-m', 'nit', '', [], N, {stemMinLength: 2, stemEndsWith: '[youe]'});
+
+// Masculine nouns in unstressed -ë drop it before -i, -in, -it (djalë →
+// djali, djalin, djalit). They are a closed set beside the 1,700 feminine
+// nouns in -ë, whose -in, -it forms do not exist, so a rule for every stem in
+// -ë read arrin as arrë and fermit as fermë; the common ones are listed. zë
+// (voice) takes -ri (zëri).
+for (const noun of ['djalë', 'kalë', 'lumë', 'ujë', 'gjumë', 'burrë', 'brumë', 'djathë', 'gjalpë', 'drithë', 'dhjamë',
+    'mjaltë', 'grurë', 'dyllë', 'ballë', 'vrerë', 'lëmë', 'atë', 'qirë']) {
+    const stem = noun.slice(0, -1);
+    suffix('n-def-sg-m', `${stem}i`, noun, [], N);
+    suffix('n-def-acc-m', `${stem}in`, noun, [], N);
+    suffix('n-def-obl-m', `${stem}it`, noun, [], N);
+}
+whole('n-def-sg-m', 'zëri', 'zë', [], N);
+whole('n-def-acc-m', 'zërin', 'zë', [], N);
+whole('n-def-obl-m', 'zërit', 'zë', [], N);
 
 transform('n-def-nom-f', 'definite (feminine)',
     'Feminine singular definite nominative (vajzë → vajza, motër → motra, shtëpi → shtëpia, lule → lulja, pyetje → pyetja, kala → kalaja).');
@@ -229,8 +249,7 @@ suffix('n-def-nom-f', 'la', 'ël', [], N, {stemMinLength: 1, stemEndsWith: CONSO
 suffix('n-def-nom-f', 'a', '', [], N, {stemMinLength: 3, stemEndsWith: '[i]'});
 suffix('n-def-nom-f', 'ja', 'e', [], N, {stemMinLength: 2, stemEndsWith: CONSONANT});
 suffix('n-def-nom-f', 'a', 'e', [], N, {stemMinLength: 2, stemEndsWith: '[ji]'});
-suffix('n-def-nom-f', 'a', '', [], N, {stemMinLength: 2, stemEndsWith: CONSONANT});
-suffix('n-def-nom-f', 'ja', '', [], N, {stemMinLength: 2, stemEndsWith: VOWEL});
+suffix('n-def-nom-f', 'ja', '', [], N, {stemMinLength: 2, stemEndsWith: '[aeouyë]'});
 
 transform('n-def-acc-f', 'definite accusative (feminine)',
     'Feminine singular definite accusative (vajzë → vajzën, lule → lulen, motër → motrën, shtëpi → shtëpinë, grua → gruan).');
@@ -289,8 +308,11 @@ transform('n-pl', 'plural',
 for (const [inflected, deinflected, extra] of [
     ['e', '', {stemMinLength: 2, stemEndsWith: CONSONANT}],
     ['ë', '', {stemMinLength: 2, stemEndsWith: CONSONANT}],
-    ['a', '', {stemMinLength: 2, stemEndsWith: CONSONANT}],
+    // The feminine plural in -a (kokë → koka) before the masculine one
+    // (gisht → gishta): where both are headwords (kokat: kokë, kok) the
+    // feminine is the common reading.
     ['a', 'ë', {stemMinLength: 2, stemEndsWith: CONSONANT}],
+    ['a', '', {stemMinLength: 2, stemEndsWith: CONSONANT}],
     ['ra', 'ër', {stemMinLength: 1, stemEndsWith: CONSONANT}],
     ['rra', 'ërr', {stemMinLength: 1, stemEndsWith: CONSONANT}],
     ['la', 'ël', {stemMinLength: 1, stemEndsWith: CONSONANT}],
@@ -326,6 +348,9 @@ for (const [plural, singular] of [
     ['djem', 'djalë'], ['kuaj', 'kalë'], ['duar', 'dorë'], ['dyer', 'derë'], ['net', 'natë'], ['netë', 'natë'],
     ['gra', 'grua'], ['njerëz', 'njeri'], ['desh', 'dash'], ['qe', 'ka'], ['vjet', 'vit'], ['etër', 'atë'],
     ['bij', 'bir'], ['thonj', 'thua'], ['dhen', 'dele'], ['rrathë', 'rreth'],
+    // The plural of a masculine noun in -ë, which the feminine definite -a
+    // would name otherwise.
+    ['burra', 'burrë'],
 ]) {
     if ([...plural].length >= 4) {
         suffix('n-pl', plural, singular, NPL, N);
@@ -350,14 +375,14 @@ suffix('vn', 'im', 'ej', ['ns'], ['v'], {stemMinLength: 3});
 // accusative), të (plural, and singular oblique cases), së (feminine oblique
 // after a definite noun). The comparative and superlative put më before the
 // article (më i mirë, më i miri).
-transform('cmp', 'comparative (më)', 'The comparative or superlative më before an adjective or adverb: më i mirë → mirë, më shpejt → shpejt.');
-prefix('cmp', 'më ', '', [], ['adj', 'adj_cmp'], {stemMinLength: 1});
+transform('cmp', 'comparative (më)', 'The comparative or superlative më before an adjective or adverb: më i mirë → mirë, më shpejt → shpejt, më vonë → vonë.');
+prefix('cmp', 'më ', '', [], ['adj', 'adv', 'adj_cmp'], {stemMinLength: 1});
 
 transform('art', 'adjective article (i/e/të/së)', 'The article an adjective takes: i mirë, e mirë, të mira, së madhe → mirë, madh.');
 prefix('art', 'i ', '', ['adj_cmp'], ['adj', 'adj_m'], {stemMinLength: 1});
 prefix('art', 'e ', '', ['adj_cmp'], ['adj', 'adj_f'], {stemMinLength: 1});
 prefix('art', 'të ', '', ['adj_cmp'], ['adj', 'adj_pl'], {stemMinLength: 1});
-prefix('art', 'së ', '', ['adj_cmp'], ['adj', 'adj_f'], {stemMinLength: 1});
+prefix('art', 'së ', '', ['adj_cmp'], ['adj', 'adj_f', 'adj_fobl'], {stemMinLength: 1});
 
 const A = ['adj'];
 transform('adj-f', 'feminine', 'Feminine singular, also the feminine plural of adjectives without an article (madh → madhe, keq → keqe, ndryshëm → ndryshme, shqiptar → shqiptare, zi → zezë).');
@@ -404,17 +429,18 @@ for (const end of ['u', 'un', 'ut']) {
 
 transform('adj-def-f', 'definite (feminine)', 'Feminine definite adjective (e mira, të mirën, të mirës → mirë; e madhja, të madhen → madh; e reja → ri).');
 suffix('adj-def-f', 'a', 'ë', ['adj_f', 'adj_pl'], A, {stemMinLength: 2, stemEndsWith: CONSONANT});
+suffix('adj-def-f', 'a', '', ['adj_f'], A, {stemMinLength: 2, stemEndsWith: CONSONANT});
 suffix('adj-def-f', 'ra', 'ër', ['adj_f', 'adj_pl'], A, {stemMinLength: 1, stemEndsWith: CONSONANT});
 suffix('adj-def-f', 'la', 'ël', ['adj_f', 'adj_pl'], A, {stemMinLength: 1, stemEndsWith: CONSONANT});
 suffix('adj-def-f', 'ja', 'e', ['adj_f', 'adj_pl'], ['adj', 'adj_f'], {stemMinLength: 2, stemEndsWith: CONSONANT});
 suffix('adj-def-f', 'n', '', ['adj_f', 'adj_pl'], ['adj', 'adj_f'], {stemMinLength: 2, stemEndsWith: '[ëe]'});
-// The oblique case (të mirës) is read only after e and së: after të the same
-// ending is far more often a genitive noun (të fizikës, të shtetit).
-suffix('adj-def-f', 's', '', ['adj_f'], ['adj', 'adj_f'], {stemMinLength: 2, stemEndsWith: '[ëe]'});
+// The oblique case (së mirës) is read only after së: after e and të the same
+// ending is far more often a genitive noun (e matematikës, të fizikës).
+suffix('adj-def-f', 's', '', ['adj_fobl'], ['adj', 'adj_f'], {stemMinLength: 2, stemEndsWith: '[ëe]'});
 suffix('adj-def-f', 'rën', 'ër', ['adj_f', 'adj_pl'], A, {stemMinLength: 1, stemEndsWith: CONSONANT});
-suffix('adj-def-f', 'rës', 'ër', ['adj_f'], A, {stemMinLength: 1, stemEndsWith: CONSONANT});
+suffix('adj-def-f', 'rës', 'ër', ['adj_fobl'], A, {stemMinLength: 1, stemEndsWith: CONSONANT});
 suffix('adj-def-f', 'lën', 'ël', ['adj_f', 'adj_pl'], A, {stemMinLength: 1, stemEndsWith: CONSONANT});
-suffix('adj-def-f', 'lës', 'ël', ['adj_f'], A, {stemMinLength: 1, stemEndsWith: CONSONANT});
+suffix('adj-def-f', 'lës', 'ël', ['adj_fobl'], A, {stemMinLength: 1, stemEndsWith: CONSONANT});
 whole('adj-def-f', 'reja', 'ri', ['adj_f'], A);
 
 transform('adj-def-pl', 'definite plural', 'Plural definite adjective (të mirët, të mirat, të mirëve, të mirave → mirë; të mëdhenjtë → madh).');
@@ -648,7 +674,10 @@ circumfix('np-aor-3sg', [['u ', '']], [['', 'j']], [], V, {stemMinLength: 1, ste
 
 // Imperative, second person singular: puno, kthe, fshi, shty (the -aj, -uaj
 // and bëj verbs and the consonant stems are their dictionary form).
-suffix('imp-2sg', '', 'j', IMP, V, {stemMinLength: 2, stemEndsWith: '[oei]'});
+// A stem of three letters for e and i, so vi (VI) is not vij, whose
+// imperative is eja; ço, shko keep o.
+suffix('imp-2sg', '', 'j', IMP, V, {stemMinLength: 2, stemEndsWith: '[o]'});
+suffix('imp-2sg', '', 'j', IMP, V, {stemMinLength: 3, stemEndsWith: '[ei]'});
 suffix('imp-2sg', 'yr', 'yj', IMP, V, {stemMinLength: 1});
 
 // Participle.
@@ -683,12 +712,14 @@ for (const [p, vowelEnd, consEnd] of [['1sg', 'hem', 'em'], ['2sg', 'hesh', 'esh
     if (p !== '1sg') { suffix(`np-pres-${p}`, vowelEnd, 'hem', SB, V, {stemMinLength: 1, stemEndsWith: VJ}); }
     suffix(`np-pres-${p}`, vowelEnd, 'j', SB, V, {stemMinLength: 1, stemEndsWith: VJ});
     suffix(`np-pres-${p}`, `u${vowelEnd}`, 'uaj', SB, V, {stemMinLength: 1});
+    suffix(`np-pres-${p}`, `y${vowelEnd}`, 'yej', SB, V, {stemMinLength: 1});
     suffix(`np-pres-${p}`, consEnd, '', SB, V, {stemMinLength: 2, stemEndsWith: VC});
 }
 for (const [p, vowelEnd, consEnd] of [['1sg', 'hesha', 'esha'], ['2sg', 'heshe', 'eshe'], ['3sg', 'hej', 'ej'], ['1pl', 'heshim', 'eshim'], ['2pl', 'heshit', 'eshit'], ['3pl', 'heshin', 'eshin']]) {
     suffix(`np-impf-${p}`, vowelEnd, 'hem', SB, V, {stemMinLength: 1, stemEndsWith: VJ});
     suffix(`np-impf-${p}`, vowelEnd, 'j', SB, V, {stemMinLength: 1, stemEndsWith: VJ});
     suffix(`np-impf-${p}`, `u${vowelEnd}`, 'uaj', SB, V, {stemMinLength: 1});
+    suffix(`np-impf-${p}`, `y${vowelEnd}`, 'yej', SB, V, {stemMinLength: 1});
     suffix(`np-impf-${p}`, consEnd, '', SB, V, {stemMinLength: 2, stemEndsWith: VC});
 }
 suffix('np-imp-2sg', 'hu', 'hem', IMP, V, {stemMinLength: 1, stemEndsWith: VJ});
@@ -847,7 +878,9 @@ verb('pi', {
 verb('di', {
     'pres-1pl': 'dimë', 'pres-2pl': 'dini', 'pres-3pl': 'dinë',
     'impf-1sg': 'dija', 'impf-2sg': 'dije', 'impf-3sg': 'dinte', 'impf-1pl': 'dinim', 'impf-2pl': 'dinit', 'impf-3pl': 'dinin',
-    'aor-1sg': 'dita', 'aor-2sg': 'dite', 'aor-3sg': 'diti', 'aor-1pl': 'ditëm', 'aor-2pl': 'ditët', 'aor-3pl': 'ditën',
+    // dita, ditët and ditën are also the definite forms of ditë (day), the
+    // reading in almost every text; wty-sq-en's own rows still give di.
+    'aor-2sg': 'dite', 'aor-3sg': 'diti', 'aor-1pl': 'ditëm',
     'sbjv-2sg': 'dish', 'sbjv-3sg': 'dijë',
     'opt-1sg': 'ditsha', 'opt-2sg': 'ditsh', 'opt-3sg': 'dittë', 'opt-1pl': 'ditshim', 'opt-2pl': 'ditshi ditshit', 'opt-3pl': 'ditshin',
     'ptcp': 'ditur',
@@ -1037,7 +1070,12 @@ verb('gjej', {
     'aor-1sg': 'gjeta', 'aor-2sg': 'gjete', 'aor-3sg': 'gjeti', 'aor-1pl': 'gjetëm', 'aor-2pl': 'gjetët', 'aor-3pl': 'gjetën',
     'ptcp': 'gjetur', 'np-aor-3sg': 'gjet',
 });
-verb('gjendem', {'np-pres-2sg': 'gjendesh', 'np-pres-3sg': 'gjendet', 'np-pres-3pl': 'gjenden', 'np-impf-3sg': 'gjendej'});
+// gjendem (to be located) is the non-active of gjej; a dictionary may list
+// only gjej.
+for (const lemma of ['gjendem', 'gjej']) {
+    verb(lemma, {'np-pres-1sg': 'gjendem', 'np-pres-2sg': 'gjendesh', 'np-pres-3sg': 'gjendet', 'np-pres-1pl': 'gjendemi', 'np-pres-2pl': 'gjendeni', 'np-pres-3pl': 'gjenden',
+        'np-impf-1sg': 'gjendesha', 'np-impf-3sg': 'gjendej', 'np-impf-3pl': 'gjendeshin'});
+}
 verb('ngre', {
     'pres-1pl': 'ngremë', 'pres-2pl': 'ngrini', 'pres-3pl': 'ngrenë',
     'impf-1sg': 'ngrija', 'impf-2sg': 'ngrije', 'impf-3sg': 'ngrinte', 'impf-1pl': 'ngrinim', 'impf-2pl': 'ngrinit', 'impf-3pl': 'ngrinin',
@@ -1059,6 +1097,7 @@ for (const [p, form] of [['1sg', 'u ngrita'], ['2sg', 'u ngrite'], ['1pl', 'u ng
 }
 verb('blej', {
     'pres-2pl': 'blini', 'imp-2sg': 'bli', 'ptcp': 'blerë',
+    'impf-1sg': 'blija', 'impf-2sg': 'blije', 'impf-3sg': 'blinte', 'impf-1pl': 'blinim', 'impf-2pl': 'blinit', 'impf-3pl': 'blinin',
     'np-pres-1sg': 'blihem', 'np-pres-2sg': 'blihesh', 'np-pres-3sg': 'blihet', 'np-pres-1pl': 'blihemi', 'np-pres-2pl': 'bliheni', 'np-pres-3pl': 'blihen',
     'np-impf-3sg': 'blihej', 'np-aor-3sg': 'ble',
 });
@@ -1074,7 +1113,14 @@ verb('duhet', {'np-impf-3sg': 'duhej'});
 for (const t of transforms) {
     if (t.rules.length === 0) { throw new Error(`transform ${t.id} has no rules`); }
 }
-const out = {schema: 1, conditions, transforms};
+// File order decides ties a dictionary's rows leave (docs/languages.md 9.6):
+// nouns (and the contractions) first, then verbs, then adjectives. Measured
+// on the Wikipedia texts and the frequent words: adjectives after verbs fix
+// dalin (dal, not dalë) and të mundur (mund) and lose të tretë (tretë);
+// verbs before nouns would lose toka (tokë) and more.
+const isAdjective = (t) => t.id.startsWith('adj-') || t.id === 'art' || t.id === 'cmp';
+const ordered = [...transforms.filter((t) => !isAdjective(t)), ...transforms.filter(isAdjective)];
+const out = {schema: 1, conditions, transforms: ordered};
 writeFileSync(join(here, 'own.json'), formatTransforms(out));
 const count = transforms.reduce((n, t) => n + t.rules.length, 0);
 console.log(`sq: ${transforms.length} transforms, ${count} rules in languages/sq/sources/own.json`);

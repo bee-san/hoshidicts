@@ -11,7 +11,8 @@
 // type, and the same ending replaced by the same text, either exactly or with
 // a common part in front (Yomitan's `va` → `j` is the own `ova` → `oj` on the
 // stems Yomitan's rule reaches; Yomitan's `hemi` → `hem` is the own `emi` →
-// `em` after h). sources/yomitan-provenance.tsv lists, for each Yomitan rule,
+// `em` after h), and it was in the first own-rules commit (LATER lists those
+// written after Yomitan's file was read). sources/yomitan-provenance.tsv lists, for each Yomitan rule,
 // the own rules that make its deinflection. tests/yomitan.tsv keeps Yomitan's
 // cases with `*` as reasons, since the final set has none of Yomitan's
 // transform ids; the own rules reach all 98 lemmas.
@@ -57,6 +58,19 @@ function same(a, b) {
     return long.deinflected === front + short.deinflected;
 }
 
+// Own rules written after Yomitan's file was read (their transform, ending
+// and replacement are not in the first own-rules commit, ffdf983): they are
+// not `both`, whatever Yomitan has (section 7.1: `both` is written
+// independently and also in Yomitan).
+const MASCULINE_E = ['djal', 'kal', 'lum', 'uj', 'gjum', 'burr', 'brum', 'djath', 'gjalp', 'drith', 'dhjam', 'mjalt', 'grur', 'dyll', 'ball', 'vrer', 'lëm', 'at', 'qir'];
+const LATER = new Set([
+    'n-def-sg-m\u0000oi\u0000ua', 'np-aor-3sg\u0000ye\u0000ej',
+    ...['np-pres-2sg:hesh', 'np-pres-3sg:het', 'np-pres-1pl:hemi', 'np-pres-2pl:heni', 'np-pres-3pl:hen',
+        'np-impf-1sg:hesha', 'np-impf-2sg:heshe', 'np-impf-3sg:hej', 'np-impf-1pl:heshim', 'np-impf-2pl:heshit', 'np-impf-3pl:heshin',
+        'np-imp-2sg:hu', 'np-imp-2pl:huni'].map((x) => { const [id, end] = x.split(':'); return `${id}\u0000${end}\u0000hem`; }),
+    ...MASCULINE_E.flatMap((stem) => [['n-def-sg-m', 'i'], ['n-def-acc-m', 'in'], ['n-def-obl-m', 'it']].map(([id, end]) => `${id}\u0000${stem}${end}\u0000${stem}ë`)),
+]);
+
 const rows = ['# Yomitan rule (transform, index, inflected → deinflected) and the own rules that make the same deinflection; written by sources/build-final.mjs', '# yomitan_transform\trule\tinflected\tdeinflected\town_rules'];
 const both = new Set();
 let paired = 0;
@@ -67,7 +81,7 @@ for (const t of yomitan.transforms) {
         for (const o of own.transforms) {
             if (!targets.has(o.id)) { continue; }
             o.rules.forEach((r, i) => {
-                if (same(rule, r)) {
+                if (same(rule, r) && !LATER.has(`${o.id}\u0000${r.inflected}\u0000${r.deinflected}`)) {
                     matches.push(`${o.id}[${i}] ${r.inflected} → ${r.deinflected}`);
                     both.add(`${o.id}\u0000${i}`);
                 }

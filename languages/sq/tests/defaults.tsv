@@ -441,6 +441,36 @@ negatives (constraint)	0	ramë	ra	v	*
 negatives (constraint)	0	kina	kam	v	*
 non-active	1	u shqetëso	shqetësohem	v	np-imp-2sg
 non-active	1	u kthe	kthehem	v	np-imp-2sg
+negatives (constraint)	0	u hap	hapj	*	*
+negatives (constraint)	0	u bë	bëem	*	*
+present	1	nxëmë	nxë	v	pres-1pl
+present	1	përzënë	përzë	v	pres-3pl
+aorist	1	kundërvuri	kundërvë	v	aor-3sg
+negatives	0	mia	mi	n	*
+non-active	1	largua	largohem	v	np-lemma
+non-active	1	u largova	largohem	v	np-lemma
+non-active	1	u ktheva	kthehem	v	np-lemma
+non-active	1	u shtriva	shtrihem	v	np-lemma
+non-active	1	u lava	lahem	v	np-lemma
+non-active	1	u largofsha	largohem	v	np-lemma
+non-active	1	u kthefsha	kthehem	v	np-lemma
+non-active	1	u ulsha	ulem	v	np-lemma
+non-active	1	u ulka	ulem	v	np-lemma
+non-active	1	u ul	ulem	v	np-lemma
+non-active	1	thyhet	thyej	v	np-pres-3sg
+non-active	1	gjendet	gjej	v	np-pres-3sg
+imperfect	1	blinin	blej	v	impf-3pl
+definite adjective	1	e bukura	bukur	adj	adj-def-f|art
+noun plural	1	burra	burrë	n	n-pl
+comparative	1	më vonë	vonë	adv	cmp
+negatives	0	kam punuar	punuar	v	*
+negatives	0	më mirë	mirë	n	*
+negatives	0	VI	vij	v	*
+negatives	0	e matematikës	matematik	adj	*
+negatives	0	arrin	arrë	n	*
+negatives	0	hija	hi	n	*
+negatives	0	urdhërin	urdhë	n	*
+negatives	0	miri	mi	n	*
 negatives (constructed: n-def-sg-m stemCharacters)	0	e doti	e dot	*	*
 negatives (constructed: n-def-sg-m stemMinLength)	0	bi	b	*	*
 negatives (constructed: n-def-sg-m stemEndsWith)	0	doei	doe	*	*
@@ -475,24 +505,6 @@ negatives (constructed: n-pl stemMinLength)	0	be	b	*	*
 negatives (constructed: n-pl stemEndsWith)	0	doae	doa	*	*
 negatives (constructed: vn stemCharacters)	0	e dotim	e dotoj	*	*
 negatives (constructed: vn stemMinLength)	0	dtim	dtoj	*	*
-negatives (constructed: adj-f stemCharacters)	0	e dote	e dot	*	*
-negatives (constructed: adj-f stemMinLength)	0	be	b	*	*
-negatives (constructed: adj-f stemEndsWith)	0	doae	doa	*	*
-negatives (constructed: adj-pl-f stemCharacters)	0	e dota	e dotë	*	*
-negatives (constructed: adj-pl-f stemMinLength)	0	ba	bë	*	*
-negatives (constructed: adj-pl-f stemEndsWith)	0	doaa	doaë	*	*
-negatives (constructed: adj-pl-m stemCharacters)	0	e dotë	e dot	*	*
-negatives (constructed: adj-pl-m stemMinLength)	0	bë	b	*	*
-negatives (constructed: adj-pl-m stemEndsWith)	0	doaë	doa	*	*
-negatives (constructed: adj-def-m stemCharacters)	0	e doti	e dot	*	*
-negatives (constructed: adj-def-m stemMinLength)	0	bi	b	*	*
-negatives (constructed: adj-def-m stemEndsWith)	0	doei	doe	*	*
-negatives (constructed: adj-def-f stemCharacters)	0	e dota	e dotë	*	*
-negatives (constructed: adj-def-f stemMinLength)	0	ba	bë	*	*
-negatives (constructed: adj-def-f stemEndsWith)	0	doaa	doaë	*	*
-negatives (constructed: adj-def-pl stemCharacters)	0	e dottë	e dot	*	*
-negatives (constructed: adj-def-pl stemMinLength)	0	at	a	*	*
-negatives (constructed: adj-def-pl stemEndsWith)	0	doit	doi	*	*
 negatives (constructed: np-lemma stemCharacters)	0	e dotua	e dotohem	*	*
 negatives (constructed: np-lemma stemMinLength)	0	ua	ohem	*	*
 negatives (constructed: pres-2sg stemCharacters)	0	e dotet	e dotes	*	*
@@ -509,6 +521,7 @@ negatives (constructed: pres-3pl stemMinLength)	0	bin	b	*	*
 negatives (constructed: pres-3pl stemEndsWith)	0	doujnë	douj	*	*
 negatives (constructed: impf-1sg stemCharacters)	0	e dotja	e dot	*	*
 negatives (constructed: impf-1sg stemMinLength)	0	bja	b	*	*
+negatives (constructed: impf-1sg stemEndsWith)	0	doija	doi	*	*
 negatives (constructed: impf-2sg stemCharacters)	0	e dotje	e dot	*	*
 negatives (constructed: impf-2sg stemMinLength)	0	bje	b	*	*
 negatives (constructed: impf-2sg stemEndsWith)	0	dojje	doj	*	*
@@ -567,7 +580,7 @@ negatives (constructed: opt-3pl stemCharacters)	0	e dotofshin	e dotuaj	*	*
 negatives (constructed: opt-3pl stemMinLength)	0	ofshin	uaj	*	*
 negatives (constructed: opt-3pl stemEndsWith)	0	doufshin	douj	*	*
 negatives (constructed: imp-2sg stemCharacters)	0	e dotyr	e dotyj	*	*
-negatives (constructed: imp-2sg stemMinLength)	0	e	ej	*	*
+negatives (constructed: imp-2sg stemMinLength)	0	o	oj	*	*
 negatives (constructed: imp-2sg stemEndsWith)	0	doa	doaj	*	*
 negatives (constructed: ptcp stemCharacters)	0	e dotuar	e dotoj	*	*
 negatives (constructed: ptcp stemMinLength)	0	uar	oj	*	*
@@ -581,7 +594,7 @@ negatives (constructed: np-pres-2sg stemEndsWith)	0	douhesh	douj	*	*
 negatives (constructed: np-pres-3sg stemCharacters)	0	e dothet	e dothem	*	*
 negatives (constructed: np-pres-3sg stemMinLength)	0	het	hem	*	*
 negatives (constructed: np-pres-3sg stemEndsWith)	0	douhet	douj	*	*
-negatives (constructed: np-pres-1pl stemCharacters)	0	e dothemi	e dothem	*	*
+negatives (constructed: np-pres-1pl stemCharacters)	0	e marhemi	e marhem	*	*
 negatives (constructed: np-pres-1pl stemMinLength)	0	uhemi	uaj	*	*
 negatives (constructed: np-pres-1pl stemEndsWith)	0	douhemi	douj	*	*
 negatives (constructed: np-pres-2pl stemCharacters)	0	e dotheni	e dothem	*	*
@@ -633,9 +646,22 @@ negatives (constructed: cl-me stemMinLength)	0	bmë	b	*	*
 negatives (constructed: cl-me stemEndsWith)	0	doamë	doa	*	*
 negatives (constructed: cl-na stemCharacters)	0	e dotna	e dot	*	*
 negatives (constructed: cl-na stemMinLength)	0	bna	b	*	*
-negatives (constraint)	0	u hap	hapj	*	*
-negatives (constraint)	0	u bë	bëem	*	*
-present	1	nxëmë	nxë	v	pres-1pl
-present	1	përzënë	përzë	v	pres-3pl
-aorist	1	kundërvuri	kundërvë	v	aor-3sg
-negatives	0	mia	mi	n	*
+negatives (constructed: adj-f stemCharacters)	0	e dote	e dot	*	*
+negatives (constructed: adj-f stemMinLength)	0	be	b	*	*
+negatives (constructed: adj-f stemEndsWith)	0	doae	doa	*	*
+negatives (constructed: adj-pl-f stemCharacters)	0	e dota	e dotë	*	*
+negatives (constructed: adj-pl-f stemMinLength)	0	ba	bë	*	*
+negatives (constructed: adj-pl-f stemEndsWith)	0	doaa	doaë	*	*
+negatives (constructed: adj-pl-m stemCharacters)	0	e dotë	e dot	*	*
+negatives (constructed: adj-pl-m stemMinLength)	0	bë	b	*	*
+negatives (constructed: adj-pl-m stemEndsWith)	0	doaë	doa	*	*
+negatives (constructed: adj-def-m stemCharacters)	0	e doti	e dot	*	*
+negatives (constructed: adj-def-m stemMinLength)	0	bi	b	*	*
+negatives (constructed: adj-def-m stemEndsWith)	0	doei	doe	*	*
+negatives (constructed: adj-def-f stemCharacters)	0	e dota	e dotë	*	*
+negatives (constructed: adj-def-f stemMinLength)	0	ba	bë	*	*
+negatives (constructed: adj-def-f stemEndsWith)	0	doaa	doaë	*	*
+negatives (constructed: adj-def-pl stemCharacters)	0	e dottë	e dot	*	*
+negatives (constructed: adj-def-pl stemMinLength)	0	at	a	*	*
+negatives (constructed: adj-def-pl stemEndsWith)	0	doit	doi	*	*
+noun	1	llaçi	llaç	n	n-def-sg-m
