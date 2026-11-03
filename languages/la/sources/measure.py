@@ -21,6 +21,16 @@ end of its sentence, as a host passes it to a lookup (one per line); with
 --tatoeba, the sentences of a Tatoeba export (id, lang, text). Sentences end
 after . ! ? or ; and a space.
 
+judge --reach <cli> keeps only the hovered words whose lemma a rule reaches:
+a lemma their form-of rows (or --corpus rows, tests/*.tsv) name is among the
+deinflections of a preprocessed variant of the word (hoshidicts-cli
+preprocess and deinflect, every option on). judge --kinds 1 also counts, for
+each kind of position, the lookups and the right and wrong first results:
+"esse" (a rule reads several words: a participle or gerundive and a form of
+esse), "enclitic" (the dictionary lacks the word but has it without -que,
+-ne or -ve), "pronoun" and "form of esse" (the word's own lemma is one of
+PRONOUNS or sum).
+
 judge reads the hovers and the answers of lookup-batch (languages/en/sources/
 lookup-batch.cpp: one JSON line per hover, results in lookup order) and
 judges each first result. The hovered word's keys are the word as written,
@@ -122,11 +132,11 @@ def hovers(out_path, args):
     print(f'{len(out)} hovers', file=sys.stderr)
 
 
-def keys_of(word):
+def keys_of(word, enclitics=True):
     word = word.replace('æ', 'ae').replace('Æ', 'Ae').replace('œ', 'oe').replace('Œ', 'Oe')
     base = plain(word).lower().replace('j', 'i')
     keys = [word, word.lower(), plain(word), base]
-    for enclitic in ('que', 'ne', 've'):
+    for enclitic in ('que', 'ne', 've') if enclitics else ():
         if base.endswith(enclitic) and len(base) > len(enclitic) + 1:
             keys.append(base[:-len(enclitic)])
     keys += [k[:1].upper() + k[1:] for k in keys]
@@ -134,6 +144,27 @@ def keys_of(word):
 
 
 RULE_IDS = set()
+PRONOUNS = {'ego', 'tu', 'sui', 'nos', 'vos', 'is', 'hic', 'ille', 'iste', 'ipse', 'idem', 'qui', 'quis'}
+
+
+def reach(cli, languages, hover_lines, lemma, form_of):
+    """The hovered words whose form-of lemma a rule's deinflection reaches."""
+    import subprocess
+    words = sorted({m.group(0) for line in hover_lines if (m := WORD.match(line))})
+    def run(command, inputs):
+        out = subprocess.run(command, input='\n'.join(inputs) + '\n', capture_output=True, text=True, check=True).stdout
+        return [json.loads(line) for line in out.splitlines()]
+    variants = {d['input']: [v['text'] for v in d['variants']]
+                for d in run([cli, '--languages', languages, 'preprocess', 'la', '--stdin', '--all-options'], words)}
+    texts = sorted({t for vs in variants.values() for t in vs})
+    found = {d['input']: {r['text'] for r in d['results'] if r['trace']}
+             for d in run([cli, '--languages', languages, 'deinflect', 'la', '--stdin', '--all-options'], texts)}
+    out = set()
+    for word in words:
+        lemmas = {x for k in keys_of(word) for x in form_of.get(k, set())}
+        if any(found[t] & lemmas for t in variants[word]):
+            out.add(word)
+    return out
 
 
 def judge(args):
@@ -143,6 +174,12 @@ def judge(args):
         if path:
             RULE_IDS.update(t['id'] for t in json.load(open(path, encoding='utf-8'))['transforms'])
     lemma, form_of = data['lemma'], data['formOf']
+    for path in opts0.get('--corpus', '').split(','):
+        for line in open(path, encoding='utf-8') if path else ():
+            row = line.rstrip('\n').split('\t')
+            if not line.startswith('#') and len(row) > 3 and row[1] == '1':
+                for k in {row[2], plain(row[2])}:
+                    form_of[k] = form_of.get(k, set()) | {row[3]}
     hover_lines = open(args[1], encoding='utf-8').read().split('\n')
     answers = [json.loads(line) for line in open(args[2], encoding='utf-8') if line.strip()]
     opts = dict(zip(args[3::2], args[4::2]))
@@ -156,6 +193,10 @@ def judge(args):
             if len(weights) >= top:
                 break
     show = int(opts.get('--show', '0'))
+    reached = None
+    if '--reach' in opts:
+        reached = reach(opts['--reach'], opts.get('--languages', 'languages'), hover_lines, lemma, form_of)
+    kinds = collections.Counter() if '--kinds' in opts else None
     totals = collections.Counter()
     wrong_groups = collections.Counter()
     examples = collections.defaultdict(list)
@@ -166,17 +207,33 @@ def judge(args):
         if m is None:
             continue
         word = m.group(0)
+        if reached is not None and word not in reached:
+            continue
         weight = weights.get(word, 0) if weights is not None else 1
         totals['lookups'] += 1
         totals['tokens'] += weight
         results = answer['results']
+        keys = keys_of(word)
+        known = [k for k in keys if k in lemma or k in form_of]
+        kind = []
+        if kinds is not None:
+            whole = [k for k in keys_of(word, enclitics=False) if k in lemma or k in form_of]
+            own = {k for k in whole if k in lemma} | {x for k in whole for x in form_of.get(k, set())}
+            if results and ' ' in results[0]['matched'] and 'esse' in results[0]['trace']:
+                kind.append('esse')
+            if not whole and known:
+                kind.append('enclitic')
+            if own & PRONOUNS:
+                kind.append('pronoun')
+            if 'sum' in own:
+                kind.append('form of esse')
+            for k in kind:
+                kinds[f'{k} lookups'] += 1
         if not results:
             totals['nothing'] += 1
             totals['nothing tokens'] += weight
             continue
         first = results[0]
-        keys = keys_of(word)
-        known = [k for k in keys if k in lemma or k in form_of]
         # Right: a key that is a lemma, or a lemma a key's form-of rows name,
         # directly or through one more form-of row (an alternative spelling,
         # a comparative or superlative: hæc → haec → hic).
@@ -210,14 +267,20 @@ def judge(args):
         if expression in right or plain(expression) in right:
             totals['right'] += 1
             totals['right tokens'] += weight
+            for k in kind:
+                kinds[f'{k} right'] += 1
         else:
             totals['wrong'] += 1
             totals['wrong tokens'] += weight
+            for k in kind:
+                kinds[f'{k} wrong'] += 1
             group = first['trace'][0] if first['trace'] else '(as written)'
             wrong_groups[group] += 1
             if len(examples[group]) < 6:
                 examples[group].append(f'{word} -> {expression} [{"<".join(first["trace"])}] matched "{first["matched"]}"')
     print(json.dumps(totals, sort_keys=True))
+    if kinds is not None:
+        print(json.dumps(kinds, sort_keys=True))
     for group, n in wrong_groups.most_common(show or 15):
         print(f'{n:6d}  {group}: {"; ".join(examples[group])}')
     if '--sample' in opts:

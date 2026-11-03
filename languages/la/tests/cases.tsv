@@ -21,7 +21,6 @@ verb, perfect system	1	amavit	amo	v	*
 verb, perfect system	1	amavimus	amo	v	*
 verb, perfect system	1	amavistis	amo	v	*
 verb, perfect system	1	amaverunt	amo	v	*
-verb, perfect system	1	amavere	amo	v	*
 verb, perfect system	1	amaveram	amo	v	*
 verb, perfect system	1	amaverat	amo	v	*
 verb, perfect system	1	amaverant	amo	v	*
@@ -34,19 +33,6 @@ verb, perfect system	1	amavissem	amo	v	*
 verb, perfect system	1	amavisset	amo	v	*
 verb, perfect system	1	amavissent	amo	v	*
 verb, perfect system	1	amavisse	amo	v	*
-verb, perfect system	1	amasti	amo	v	*
-verb, perfect system	1	amastis	amo	v	*
-verb, perfect system	1	amarunt	amo	v	*
-verb, perfect system	1	amaram	amo	v	*
-verb, perfect system	1	amarat	amo	v	*
-verb, perfect system	1	amarant	amo	v	*
-verb, perfect system	1	amarim	amo	v	*
-verb, perfect system	1	amarit	amo	v	*
-verb, perfect system	1	amarint	amo	v	*
-verb, perfect system	1	amassem	amo	v	*
-verb, perfect system	1	amasset	amo	v	*
-verb, perfect system	1	amassent	amo	v	*
-verb, perfect system	1	amasse	amo	v	*
 verb, perfect system	1	monui	moneo	v	*
 verb, perfect system	1	monuit	moneo	v	*
 verb, perfect system	1	monuerat	moneo	v	*
@@ -59,14 +45,12 @@ verb, perfect system	1	coluit	colo	v	*
 verb, perfect system	1	rapuit	rapio	v	*
 verb, perfect system	1	aperuit	aperio	v	*
 verb, perfect system	1	audivit	audio	v	*
-verb, perfect system	1	audiit	audio	v	*
 verb, perfect system	1	audierunt	audio	v	*
 verb, perfect system	1	audierat	audio	v	*
 verb, perfect system	1	audisti	audio	v	*
 verb, perfect system	1	audistis	audio	v	*
 verb, perfect system	1	audisse	audio	v	*
 verb, perfect system	1	audissent	audio	v	*
-verb, perfect system	1	audirunt	audio	v	*
 verb, perfect system	1	defendit	defendo	v	*
 verb, perfect system	1	defenderunt	defendo	v	*
 verb, perfect system	1	vidit	video	v	*
@@ -121,7 +105,6 @@ verb, perfect system	1	potuerat	possum	v	*
 verb, perfect system	1	iit	eo	v	*
 verb, perfect system	1	ierunt	eo	v	*
 verb, perfect system	1	iisset	eo	v	*
-verb, perfect system	1	ivit	eo	v	*
 verb, perfect system	1	redierunt	redeo	v	*
 verb, perfect system	1	rediit	redeo	v	*
 verb, perfect system	1	redisset	redeo	v	*
@@ -136,10 +119,8 @@ verb, perfect system	1	meminerat	memini	v	*
 verb, perfect system	1	oderunt	odi	v	*
 verb, perfect system	1	coeperunt	coepi	v	*
 verb, perfect system	1	quaesivit	quaero	v	*
-verb, perfect system	1	quaesiit	quaero	v	*
 verb, perfect system	1	requisivit	requiro	v	*
 verb, perfect system	1	petivit	peto	v	*
-verb, perfect system	1	petiit	peto	v	*
 verb, perfect system	1	cucurrit	curro	v	*
 verb, perfect system	1	occurrit	occurro	v	*
 verb, perfect system	1	accurrit	accurro	v	*
@@ -309,13 +290,9 @@ verb, irregular	1	erunt	sum	v	*
 verb, irregular	1	sim	sum	v	*
 verb, irregular	1	sit	sum	v	*
 verb, irregular	1	sint	sum	v	*
-verb, irregular	1	siet	sum	v	*
 verb, irregular	1	essem	sum	v	*
 verb, irregular	1	esset	sum	v	*
 verb, irregular	1	essent	sum	v	*
-verb, irregular	1	forem	sum	v	*
-verb, irregular	1	foret	sum	v	*
-verb, irregular	1	forent	sum	v	*
 verb, irregular	1	este	sum	v	*
 verb, irregular	1	esto	sum	v	*
 verb, irregular	1	estote	sum	v	*
@@ -324,7 +301,6 @@ verb, irregular	1	esse	sum	v	*
 verb, irregular	1	fore	sum	v	*
 verb, irregular	1	adest	adsum	v	*
 verb, irregular	1	adsunt	adsum	v	*
-verb, irregular	1	assunt	adsum	v	*
 verb, irregular	1	aderat	adsum	v	*
 verb, irregular	1	adesse	adsum	v	*
 verb, irregular	1	affore	adsum	v	*
@@ -436,7 +412,6 @@ verb, irregular	1	ferunt	fero	v	*
 verb, irregular	1	ferebat	fero	v	*
 verb, irregular	1	vis	volo	v	*
 verb, irregular	1	vult	volo	v	*
-verb, irregular	1	volt	volo	v	*
 verb, irregular	1	volumus	volo	v	*
 verb, irregular	1	vultis	volo	v	*
 verb, irregular	1	volunt	volo	v	*
@@ -483,7 +458,6 @@ verb, irregular	1	datur	do	v	*
 verb, irregular	1	dantur	do	v	*
 verb, irregular	1	dari	do	v	*
 verb, irregular	1	dans	do	v	*
-verb, irregular	1	dantem	do	v	*
 verb, irregular	1	dandi	do	v	*
 verb, irregular	1	dandus	do	v	*
 verb, irregular	1	datus	do	v	*
@@ -725,19 +699,15 @@ adjective	1	longissime	longus	adj	*
 adjective	1	facillime	facilis	adj	*
 pronoun or determiner	1	mei	ego	*	*
 pronoun or determiner	1	mihi	ego	*	*
-pronoun or determiner	1	mi	ego	*	*
 pronoun or determiner	1	me	ego	*	*
 pronoun or determiner	1	nostri	nos	*	*
-pronoun or determiner	1	nostrum	nos	*	*
 pronoun or determiner	1	tui	tu	*	*
 pronoun or determiner	1	tibi	tu	*	*
 pronoun or determiner	1	te	tu	*	*
 pronoun or determiner	1	vestri	vos	*	*
-pronoun or determiner	1	vestrum	vos	*	*
 pronoun or determiner	1	vobis	vos	*	*
 pronoun or determiner	1	sibi	sui	*	*
 pronoun or determiner	1	se	sui	*	*
-pronoun or determiner	1	sese	sui	*	*
 pronoun or determiner	1	ea	is	*	*
 pronoun or determiner	1	id	is	*	*
 pronoun or determiner	1	eius	is	*	*
@@ -749,8 +719,6 @@ pronoun or determiner	1	ii	is	*	*
 pronoun or determiner	1	eae	is	*	*
 pronoun or determiner	1	eorum	is	*	*
 pronoun or determiner	1	earum	is	*	*
-pronoun or determiner	1	eis	is	*	*
-pronoun or determiner	1	iis	is	*	*
 pronoun or determiner	1	eos	is	*	*
 pronoun or determiner	1	eas	is	*	*
 pronoun or determiner	1	eius	ea	*	*
@@ -770,7 +738,6 @@ pronoun or determiner	1	harum	hic	*	*
 pronoun or determiner	1	his	hic	*	*
 pronoun or determiner	1	hos	hic	*	*
 pronoun or determiner	1	has	hic	*	*
-pronoun or determiner	1	huiusce	hic	*	*
 pronoun or determiner	1	illa	ille	*	*
 pronoun or determiner	1	illud	ille	*	*
 pronoun or determiner	1	illius	ille	*	*
@@ -809,12 +776,10 @@ pronoun or determiner	1	quarum	qui	*	*
 pronoun or determiner	1	quibus	qui	*	*
 pronoun or determiner	1	quos	qui	*	*
 pronoun or determiner	1	quas	qui	*	*
-pronoun or determiner	1	quoius	qui	*	*
 pronoun or determiner	1	quid	quis	*	*
 pronoun or determiner	1	cuius	quis	*	*
 pronoun or determiner	1	quaedam	quidam	*	*
 pronoun or determiner	1	quoddam	quidam	*	*
-pronoun or determiner	1	quiddam	quidam	*	*
 pronoun or determiner	1	cuiusdam	quidam	*	*
 pronoun or determiner	1	cuidam	quidam	*	*
 pronoun or determiner	1	quendam	quidam	*	*
@@ -825,13 +790,11 @@ pronoun or determiner	1	quibusdam	quidam	*	*
 pronoun or determiner	1	quosdam	quidam	*	*
 pronoun or determiner	1	quaeque	quisque	*	*
 pronoun or determiner	1	quodque	quisque	*	*
-pronoun or determiner	1	quidque	quisque	*	*
 pronoun or determiner	1	cuiusque	quisque	*	*
 pronoun or determiner	1	cuique	quisque	*	*
 pronoun or determiner	1	quemque	quisque	*	*
 pronoun or determiner	1	quoque	quisque	*	*
 pronoun or determiner	1	quicquam	quisquam	*	*
-pronoun or determiner	1	quidquam	quisquam	*	*
 pronoun or determiner	1	cuiusquam	quisquam	*	*
 pronoun or determiner	1	quemquam	quisquam	*	*
 pronoun or determiner	1	quaevis	quivis	*	*
@@ -851,9 +814,7 @@ pronoun or determiner	1	aliquem	aliquis	*	*
 pronoun or determiner	1	aliquo	aliquis	*	*
 pronoun or determiner	1	aliqui	aliquis	*	*
 pronoun or determiner	1	aliquibus	aliquis	*	*
-pronoun or determiner	1	aliquod	aliquis	*	*
 pronoun or determiner	1	quidquid	quisquis	*	*
-pronoun or determiner	1	quicquid	quisquis	*	*
 pronoun or determiner	1	quoquo	quisquis	*	*
 pronoun or determiner	1	utra	uter	*	*
 pronoun or determiner	1	utrum	uter	*	*

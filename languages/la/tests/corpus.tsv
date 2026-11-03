@@ -1,5 +1,5 @@
 # Source: UniMorph lat (https://github.com/unimorph/lat/blob/050924c9f013e6aba4d7c87be243a1d79b6c5b10/lat, sha256 7aed5a2fd17c2947), CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/), by the UniMorph contributors, from English Wiktionary; and kaikki.org's Latin extract of English Wiktionary (2026-10-30, sha256 621efbea7ffcec74), CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/), by the Wiktionary contributors via wiktextract.
-# 1000 rows sampled with seed 1 by sources/build-corpus.mjs (strata: README.md); rows the rules reach are in corpus.tsv, the others in gaps.tsv. Terms are lemmas without macrons.
+# 950 rows sampled with seed 1 by sources/build-corpus.mjs (strata: README.md); rows the rules reach are in corpus.tsv, the others in gaps.tsv. Terms are lemmas without macrons.
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
 UniMorph N;ACC;SG	1	apiārium	apiarius	n	*
 UniMorph N;GEN;SG	1	hirundinis	hirundo	n	*
@@ -223,33 +223,6 @@ UniMorph N;ACC;SG	1	pērulam	perula	n	*
 UniMorph N;DAT;PL	1	hermūpoīs	hermupoa	n	*
 UniMorph N;NOM;PL	1	exercitātiōnēs	exercitatio	n	*
 UniMorph N;ABL;SG	1	occursātiōne	occursatio	n	*
-UniMorph N;DAT;PL	1	salūtātōriīs	salutatorium	n	*
-UniMorph N;MASC+FEM;ACC;SG	1	papȳrum	papyrus	n	*
-UniMorph N;GEN;SG	1	geneseōs	genesis	n	*
-UniMorph N;GEN;SG	1	abluviī	abluvium	n	*
-UniMorph N;GEN;PL	1	sphȳraenārum	sphyraena	n	*
-UniMorph N;DAT;PL	1	impudentiīs	impudentia	n	*
-UniMorph N;NOM;PL	1	exstirpātiōnēs	exstirpatio	n	*
-UniMorph N;DAT;SG	1	dialogō	dialogus	n	*
-UniMorph N;NOM;PL	1	tītillātiōnēs	titillatio	n	*
-UniMorph N;NOM;PL	1	sentīnae	sentina	n	*
-UniMorph N;GEN;PL	1	apsinthiōrum	apsinthium	n	*
-UniMorph N;NOM;PL	1	fermia	fermium	n	*
-UniMorph N;GEN;PL	1	decorum	decus	n	*
-UniMorph N;NOM;PL	1	maeremia	maeremium	n	*
-UniMorph N;ACC;PL	1	parenticīdās	parenticida	n	*
-UniMorph N;DAT;SG	1	masculētō	masculetum	n	*
-UniMorph N;GEN;PL	1	cicarōnum	cicaro	n	*
-UniMorph N;DAT;PL	1	tripodibus	tripus	n	*
-UniMorph N;GEN;SG	1	iāniculī	ianiculum	n	*
-UniMorph N;NOM;PL	1	rhēxēs	rhexis	n	*
-UniMorph N;DAT;SG	1	adversātrīcī	adversatrix	n	*
-UniMorph N;GEN;PL	1	praefigūrātiōnum	praefiguratio	n	*
-UniMorph N;DAT;SG	1	rēnī	ren	n	*
-UniMorph N;GEN;PL	1	ōtiōrum	otium	n	*
-UniMorph N;GEN;SG	1	corōnidis	coronis	n	*
-UniMorph N;DAT;SG	1	decalogō	decalogus	n	*
-UniMorph N;NOM;PL	1	extentiōnēs	extentio	n	*
 UniMorph PROPN;DAT;SG	1	Sepphōrī	Sepphoris	*	*
 UniMorph PROPN;ACC;SG	1	Esurem	Esuris	*	*
 UniMorph PROPN;ACC;SG	1	Urbānum	Urbanus	*	*
@@ -389,16 +362,6 @@ UniMorph ADJ;DAT;MASC;SG	1	Gadarēnō	Gadarenus	adj	*
 UniMorph ADJ;ABL;MASC+FEM+NEUT;SG	1	ēmendātiōre	emendatior	adj	*
 UniMorph ADJ;DAT;MASC;SG	1	californicō	californicus	adj	*
 UniMorph ADJ;ACC;FEM;PL	1	eurygnathās	eurygnathus	adj	*
-UniMorph ADJ;DAT;MASC+FEM+NEUT;PL	1	velutinīs	velutinus	adj	*
-UniMorph ADJ;ACC;MASC+FEM;SG	1	alpēstrem	alpestris	adj	*
-UniMorph ADJ;ACC;MASC+FEM;SG	1	crīminālem	criminalis	adj	*
-UniMorph ADJ;GEN;MASC;PL	1	frētōrum	fretus	adj	*
-UniMorph ADJ;ACC;FEM;PL	1	rhētoricōterās	rhetoricoterus	adj	*
-UniMorph ADJ;NOM;FEM;SG	1	nautica	nauticus	adj	*
-UniMorph ADJ;GEN;MASC;PL	1	palūdivagōrum	paludivagus	adj	*
-UniMorph ADJ;ACC;MASC;PL	1	bustuāriōs	bustuarius	adj	*
-UniMorph ADJ;DAT;MASC;SG	1	philologicō	philologicus	adj	*
-UniMorph ADJ;NOM;NEUT;SG	1	habilius	habilior	adj	*
 UniMorph V.PTCP;DAT;MASC;SG	1	pervigilātō	pervigilatus	v	*
 UniMorph V.PTCP;VOC;MASC;SG	1	pūblicande	publicandus	v	*
 UniMorph V.PTCP;DAT;MASC+FEM+NEUT;PL	1	jūdicātūrīs	iudicaturus	v	*
@@ -489,16 +452,6 @@ UniMorph V.PTCP;NOM;MASC;PL	1	interruptūrī	interrupturus	v	*
 UniMorph V.PTCP;ACC;FEM;PL	1	fraudātās	fraudatus	v	*
 UniMorph V.PTCP;DAT;MASC+FEM+NEUT;PL	1	dēstringendīs	destringendus	v	*
 UniMorph V.PTCP;ACC;FEM;PL	1	contrādīcendās	contradicendus	v	*
-UniMorph V.PTCP;ACC;FEM;PL	1	tergiversātās	tergiversatus	v	*
-UniMorph V.PTCP;NOM;MASC+FEM;PL	1	ecfutuentēs	ecfutuens	v	*
-UniMorph V.PTCP;NOM;NEUT;SG	1	sībilandum	sibilandus	v	*
-UniMorph V.PTCP;VOC;MASC;SG	1	explicāte	explicatus	v	*
-UniMorph V.PTCP;DAT;MASC;SG	1	scānsō	scansus	v	*
-UniMorph V.PTCP;ACC;FEM;PL	1	tōnsūrās	tonsurus	v	*
-UniMorph V.PTCP;DAT;MASC+FEM+NEUT;PL	1	circumsidentibus	circumsidens	v	*
-UniMorph V.PTCP;ACC;FEM;SG	1	addigitātam	addigitatus	v	*
-UniMorph V.PTCP;ACC;MASC+FEM;SG	1	rescīscentem	resciscens	v	*
-UniMorph V.PTCP;VOC;MASC;SG	1	allaudāte	allaudatus	v	*
 UniMorph V;SBJV;ACT;PRS;2;PL	1	ēvagēminī	evagor	v	*
 UniMorph V;IMP;ACT;FUT;3;PL	1	praefantor	praefor	v	*
 UniMorph V;IND;ACT;FUT;1;PL	1	cōnfitēbimur	confiteor	v	*

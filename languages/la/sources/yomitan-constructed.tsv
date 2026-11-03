@@ -1,0 +1,82 @@
+# Constructed for this pack (no third-party data): forms of ten common lemmas for each of Yomitan's eight Latin rules, to measure the rules left out (README.md, Rule provenance).
+# category	valid	source	term	rule	reasons
+plural i->us (noun)	1	domini	dominus	n	*
+plural i->us (noun)	1	amici	amicus	n	*
+plural i->us (noun)	1	servi	servus	n	*
+plural i->us (noun)	1	populi	populus	n	*
+plural i->us (noun)	1	anni	annus	n	*
+plural i->us (noun)	1	animi	animus	n	*
+plural i->us (noun)	1	equi	equus	n	*
+plural i->us (noun)	1	gladii	gladius	n	*
+plural i->us (noun)	1	filii	filius	n	*
+plural i->us (noun)	1	numeri	numerus	n	*
+plural i->us (adjective)	1	boni	bonus	adj	*
+plural i->us (adjective)	1	magni	magnus	adj	*
+plural i->us (adjective)	1	longi	longus	adj	*
+plural i->us (adjective)	1	alti	altus	adj	*
+plural i->us (adjective)	1	novi	novus	adj	*
+plural i->us (adjective)	1	multi	multus	adj	*
+plural i->us (adjective)	1	clari	clarus	adj	*
+plural i->us (adjective)	1	cari	carus	adj	*
+plural i->us (adjective)	1	mali	malus	adj	*
+plural i->us (adjective)	1	parvi	parvus	adj	*
+plural e-> (noun)	1	rosae	rosa	n	*
+plural e-> (noun)	1	puellae	puella	n	*
+plural e-> (noun)	1	insulae	insula	n	*
+plural e-> (noun)	1	viae	via	n	*
+plural e-> (noun)	1	terrae	terra	n	*
+plural e-> (noun)	1	aquae	aqua	n	*
+plural e-> (noun)	1	filiae	filia	n	*
+plural e-> (noun)	1	poetae	poeta	n	*
+plural e-> (noun)	1	nautae	nauta	n	*
+plural e-> (noun)	1	agricolae	agricola	n	*
+plural ae->a, feminine (adjective)	1	bonae	bonus	adj	*
+plural ae->a, feminine (adjective)	1	magnae	magnus	adj	*
+plural ae->a, feminine (adjective)	1	longae	longus	adj	*
+plural ae->a, feminine (adjective)	1	altae	altus	adj	*
+plural ae->a, feminine (adjective)	1	novae	novus	adj	*
+plural ae->a, feminine (adjective)	1	multae	multus	adj	*
+plural ae->a, feminine (adjective)	1	clarae	clarus	adj	*
+plural ae->a, feminine (adjective)	1	carae	carus	adj	*
+plural ae->a, feminine (adjective)	1	malae	malus	adj	*
+plural ae->a, feminine (adjective)	1	parvae	parvus	adj	*
+plural a->um, neuter (adjective)	1	bona	bonus	adj	*
+plural a->um, neuter (adjective)	1	magna	magnus	adj	*
+plural a->um, neuter (adjective)	1	longa	longus	adj	*
+plural a->um, neuter (adjective)	1	alta	altus	adj	*
+plural a->um, neuter (adjective)	1	nova	novus	adj	*
+plural a->um, neuter (adjective)	1	multa	multus	adj	*
+plural a->um, neuter (adjective)	1	clara	clarus	adj	*
+plural a->um, neuter (adjective)	1	cara	carus	adj	*
+plural a->um, neuter (adjective)	1	mala	malus	adj	*
+plural a->um, neuter (adjective)	1	parva	parvus	adj	*
+feminine a->us	1	bona	bonus	adj	*
+feminine a->us	1	magna	magnus	adj	*
+feminine a->us	1	longa	longus	adj	*
+feminine a->us	1	alta	altus	adj	*
+feminine a->us	1	nova	novus	adj	*
+feminine a->us	1	multa	multus	adj	*
+feminine a->us	1	clara	clarus	adj	*
+feminine a->us	1	cara	carus	adj	*
+feminine a->us	1	mala	malus	adj	*
+feminine a->us	1	parva	parvus	adj	*
+neuter um->us	1	bonum	bonus	adj	*
+neuter um->us	1	magnum	magnus	adj	*
+neuter um->us	1	longum	longus	adj	*
+neuter um->us	1	altum	altus	adj	*
+neuter um->us	1	novum	novus	adj	*
+neuter um->us	1	multum	multus	adj	*
+neuter um->us	1	clarum	clarus	adj	*
+neuter um->us	1	carum	carus	adj	*
+neuter um->us	1	malum	malus	adj	*
+neuter um->us	1	parvum	parvus	adj	*
+ablative o->um (noun)	1	bello	bellum	n	*
+ablative o->um (noun)	1	verbo	verbum	n	*
+ablative o->um (noun)	1	regno	regnum	n	*
+ablative o->um (noun)	1	templo	templum	n	*
+ablative o->um (noun)	1	oppido	oppidum	n	*
+ablative o->um (noun)	1	consilio	consilium	n	*
+ablative o->um (noun)	1	signo	signum	n	*
+ablative o->um (noun)	1	imperio	imperium	n	*
+ablative o->um (noun)	1	periculo	periculum	n	*
+ablative o->um (noun)	1	auxilio	auxilium	n	*

@@ -2,8 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Samples tests/corpus.tsv and the sampled rows of tests/gaps.tsv, and splits
 // the sample with hoshidicts-cli: rows the pack's rules reach go to
-// corpus.tsv, the others to gaps.tsv (docs/languages.md 12.2). Hand-written
-// rows already in gaps.tsv (categories that do not start with UniMorph or kaikki) are kept.
+// corpus.tsv, the others to gaps.tsv (docs/languages.md 12.2).
 //
 //   node languages/la/sources/build-corpus.mjs <unimorph lat file> <kaikki Latin jsonl.gz> [--cli <hoshidicts-cli>] [--transforms <file>] [--out <dir>]
 //
@@ -22,7 +21,7 @@
 
 import {spawnSync} from 'node:child_process';
 import {createHash} from 'node:crypto';
-import {createReadStream, existsSync, mkdirSync, readFileSync, writeFileSync} from 'node:fs';
+import {createReadStream, mkdirSync, readFileSync, writeFileSync} from 'node:fs';
 import {dirname, join, resolve} from 'node:path';
 import {createInterface} from 'node:readline';
 import {fileURLToPath} from 'node:url';
@@ -36,10 +35,10 @@ const SEED = 1;
 
 // Strata; within each, rows are drawn uniformly.
 const UNIMORPH_STRATA = [
-    ['noun', 260, (t) => t[0] === 'N'],
+    ['noun', 230, (t) => t[0] === 'N'],
     ['proper noun', 50, (t) => t[0] === 'PROPN'],
-    ['adjective', 120, (t) => t[0] === 'ADJ'],
-    ['participle', 100, (t) => t[0] === 'V.PTCP'],
+    ['adjective', 110, (t) => t[0] === 'ADJ'],
+    ['participle', 90, (t) => t[0] === 'V.PTCP'],
     ['verb, active', 150, (t) => t[0] === 'V' && t.includes('ACT') && !t.includes('NFIN') && !t.includes('V.MSDR') && !t.includes('V.PTCP')],
     ['verb, passive', 70, (t) => t[0] === 'V' && t.includes('PASS') && !t.includes('NFIN') && !t.includes('V.PTCP')],
     ['verb, infinitive, gerund, supine or participle', 40, (t) => t[0] === 'V' && (t.includes('NFIN') || t.includes('V.MSDR') || t.includes('V.PTCP'))],
@@ -189,11 +188,8 @@ const fail = sample.filter((row) => !passes(row));
 mkdirSync(outDir, {recursive: true});
 writeFileSync(join(outDir, 'corpus.tsv'), [...header, columns, ...pass.map((r) => r.join('\t'))].join('\n') + '\n');
 const gapsFile = join(outDir, 'gaps.tsv');
-const handRows = existsSync(gapsFile)
-    ? readFileSync(gapsFile, 'utf8').split('\n').filter((line) => line !== '' && !line.startsWith('#') && !/^(UniMorph|kaikki) /u.test(line))
-    : [];
-const gapsHeader = ['# Known gaps: run by the conformance test and counted, not enforced.', '# Hand-written rows (categories that do not start with UniMorph or kaikki): written for this pack, no third-party data.', ...header];
-writeFileSync(gapsFile, [...gapsHeader, columns, ...handRows, ...fail.map((r) => r.join('\t'))].join('\n') + '\n');
+const gapsHeader = ['# Known gaps: run by the conformance test and counted, not enforced.', ...header];
+writeFileSync(gapsFile, [...gapsHeader, columns, ...fail.map((r) => r.join('\t'))].join('\n') + '\n');
 const strata = [...UNIMORPH_STRATA.map(([name]) => name), ...KAIKKI_STRATA.map(([name]) => name)];
 const stratumOf = (row) => {
     const [source, feats] = row[0].split(' ');
