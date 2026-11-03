@@ -1,0 +1,84 @@
+# Hand-judged rule-changed first results of README.md (Measurements, real text): 80 of the positions where the first result with a definition
+# for the hovered word is another lemma with transforms.json than with no transforms, drawn by sources/changed-sample.py with seed 4.
+# Judged by the pack author (Claude Opus 5.5) by reading each sentence.
+# n	text	word	no rules	transforms.json	trace	context	verdict	why it is wrong
+1	tatoeba	hast	hasten	haben	present-du	hast, musst du es entbehren können.	right	
+2	tatoeba	benutzten	benutzt	benutzen	past-wir	benutzten einen Magneten im Naturwissenschaftsunterricht.	right	
+3	tatoeba	hast	hasten	haben	present-du	hast, hebe bitte die rechte Hand.	right	
+4	pg69327	lasse	lass	lassen	present-ich	lasse ich für den Schlußband der Nachlaßausgabe zurück, sie enthalten nichts für den Gang der Handlung Wesentliches.	right	
+5	pg5323	muß	Muss	müssen	present-modal	muß man sich ja zusammennehmen.	right	
+6	tatoeba	hast	hasten	haben	present-du	hast meinen Vater getötet und heute werde ich mich dafür rächen.	right	
+7	tatoeba	hast	hasten	haben	present-du	hast recht.	right	
+8	tatoeba	bewunderte	bewundert	bewundern	past	bewunderte seinen Mut und vertraute ihm.	right	
+9	tatoeba	verletzte	verletzt	verletzen	past	verletzte sich sein Bein.	right	
+10	pg22367	entfernten	entfernt	entfernen	past-wir	entfernten sich jetzt alle drei auf den Fußspitzen.	right	
+11	tatoeba	hast	hasten	haben	present-du	hast du keine Wahl, als es zu machen.	right	
+12	tatoeba	hast	hasten	haben	present-du	hast kein Fieber.	right	
+13	tatoeba	hast	hasten	haben	present-du	hast du telefoniert?	right	
+14	pg5323	hast	hasten	haben	present-du	hast du doch euer Leid heraufbeschworen.«	right	
+15	pg69327	verfolgte	verfolgt	verfolgen	past	verfolgte er doch die Pflegerin mit strengen Blicken, als sie jetzt zum Bett hinging, die Kerze auf das Nachttischchen s	right	
+16	tatoeba	hast	hasten	haben	present-du	hast, kannst du bei Tatoeba mitmachen.	right	
+17	tatoeba	hast	hasten	haben	present-du	hast, wirst du anfangen, dich zu fürchten.	right	
+18	tatoeba	helles	helle	hell	declined	helles, blasses Blau.	right	
+19	tatoeba	erklärte	erklärt	erklären	past	erklärte seine Theorie anhand von Bildern.	right	
+20	tatoeba	betrachtete	betrachtet	betrachten	past	betrachtete ihn im Spiegel.	right	
+21	tatoeba	liebe	lieb	lieben	present-ich	liebe.	right	
+22	tatoeba	überholte	überholt	überholen	past	überholte den Wagen.	right	
+23	tatoeba	liebe	lieb	lieben	present-ich	liebe Kinder. Deswegen bin ich Lehrer geworden.	right	
+24	tatoeba	erlangte	erlangt	erlangen	past	erlangte eine verantwortungsvolle Position in dem Unternehmen.	right	
+25	tatoeba	hast	hasten	haben	present-du	hast du das gemacht?	right	
+26	tatoeba	heiße	heiß	heißen	present-ich	heiße Tamako, und du?	right	
+27	tatoeba	hast	hasten	haben	present-du	hast du gekauft?	right	
+28	pg69327	bedeckte	bedeckt	bedecken	past	bedeckte Dach des Nachbarhauses.	wrong	bedeckte Dach: the adjective bedeckt
+29	tatoeba	hast	hasten	haben	present-du	hast du?	right	
+30	pg69327	verspäteten	verspätet	verspäten	past-wir	verspäteten vernünftigen Teilnahme.	wrong	verspäteten Teilnahme: the adjective verspätet
+31	pg69327	verabschiedete	verabschiedet	verabschieden	past	verabschiedete sich mit zwei Worten, sagte aber doch, während er den Hörer an seinen Platz hängte, halb zu sich, halb zu	right	
+32	pg5323	liebe	lieb	lieben	present-ich	liebe Geheimrätin, aber ich möchte mich doch einen Augenblick zurückziehen ...	wrong	liebe Geheimrätin: the adjective lieb
+33	tatoeba	erzeugte	erzeugt	erzeugen	past	erzeugte einen Verkehrsstau.	right	
+34	tatoeba	hast	hasten	haben	present-du	hast du New York besucht?	right	
+35	tatoeba	passierte	passiert	passieren	past	passierte.	right	
+36	pg5323	schicke	schick	schicken	present-ich	schicke Johanna.	right	
+37	tatoeba	beschleunigte	beschleunigt	beschleunigen	past	beschleunigte und überholte den Lastwagen.	right	
+38	tatoeba	Besiegten	besiegt	besiegen	past-wir	Besiegten!	wrong	den Besiegten: the adjective besiegt
+39	tatoeba	nachen	Nachen	Nacho	plural,genitive singular	nachen" gäbe, wäre "Nacht!" der Imperativ davon.	wrong	nachen (a made-up word in a quotation)
+40	tatoeba	hast	hasten	haben	present-du	hast du mir ja nie gesagt!	right	
+41	tatoeba	betrachtete	betrachtet	betrachten	past	betrachtete ihn als Feind.	right	
+42	tatoeba	führt	fahren	führen	present-er	führt nächste Woche Der Kaufmann von Venedig auf.	right	
+43	pg5323	muß	Muss	müssen	present-modal	muß.	right	
+44	tatoeba	hast	hasten	haben	present-du	hast du sie zum ersten Mal getroffen?	right	
+45	pg5323	muß	Muss	müssen	present-modal	muß dir nämlich sagen, meine süße Effi ...«, und sie nahm ihres Kindes beide Hände, »...	right	
+46	pg5323	muß	Muss	müssen	present-modal	muß ich Ihnen nachher eine Geschichte erzählen.«	right	
+47	tatoeba	hast	hasten	haben	present-du	hast.	right	
+48	pg5323	führt	fahren	führen	present-er	führt auch den Doktortitel, hat's aber nicht gern, wenn man ihn dabei nennt, das ärgere, so meint er, die richtigen Dokt	right	
+49	pg5323	liebe	lieb	lieben	present-ich	liebe Mama, das wäre nun also etwas gewesen, um in Kessin ein neues Leben beginnen zu können; er, der Major, hat auch ni	wrong	liebe Mama: the adjective lieb
+50	tatoeba	erklärte	erklärt	erklären	past	erklärte mir, wie man diesen Apparat benutzt.	right	
+51	tatoeba	heiße	heiß	heißen	present-ich	heiße Bad entspannte sie.	wrong	das heiße Bad: the adjective heiß
+52	tatoeba	überraschte	überrascht	überraschen	past	überraschte uns alle.	right	
+53	tatoeba	hast	hasten	haben	present-du	hast du das gemacht?	right	
+54	tatoeba	leide	leid	leiden	present-ich	leide unter Geldmangel.	right	
+55	tatoeba	hast	hasten	haben	present-du	hast, hilf mir bitte.	right	
+56	tatoeba	verletzte	verletzt	verletzen	past	verletzte ihren Stolz.	right	
+57	pg5323	zweier	zwei	Zwei	plural	zweier Herren gestanden hätte.	wrong	zweier Herren: the genitive of zwei
+58	tatoeba	hast	hasten	haben	present-du	hast.	right	
+59	pg5323	hast	hasten	haben	present-du	hast, dann geht es, dann ärgert man sich nicht mehr, dann lacht man über die großen Allüren und das gekräuselte Haar.	right	
+60	pg5323	liebe	lieb	lieben	present-ich	liebe Frau, darauf kommt es an, das ist das Wahre.	wrong	liebe Frau: the adjective lieb
+61	pg69327	erwähnten	erwähnt	erwähnen	past-wir	erwähnten Dame als eine Darstellung des stumpfsinnigsten Hochmuts sitzt?	wrong	der erwähnten Dame: the adjective erwähnt
+62	tatoeba	enttäuschte	enttäuscht	enttäuschen	past	enttäuschte uns.	right	
+63	tatoeba	muß	Muss	müssen	present-modal	muß Nick nach seiner neuen Adresse und Telefonnummer fragen, wenn ich ihn sehe.	right	
+64	pg5323	entfernte	entfernt	entfernen	past	entfernte Vettern von der Mutter Seite her, und vor allem hat er wohl Schwantikow und das Bellingsche Haus wiedersehen w	wrong	entfernte Vettern: the adjective entfernt
+65	tatoeba	heller	helle	hell	declined	heller als der Mond.	right	
+66	pg5323	muß	Muss	müssen	present-modal	muß es so nennen, wenn es auch sonderbar klingt ...	right	
+67	tatoeba	hast	hasten	haben	present-du	hast du die Box geöffnet?	right	
+68	tatoeba	hast	hasten	haben	present-du	hast die Wahl zwischen diesen und jenen.	right	
+69	pg69327	schloß	Schloss	schließen	past	schloß er das Fenster und ging in der Richtung zur Haupttreppe.	right	
+70	pg5323	beschäftigte	beschäftigt	beschäftigen	past	beschäftigte sich in ihren Gedanken abwechselnd mit dem kleinen Chinesen oben und mit Gieshübler, der noch immer nicht k	right	
+71	tatoeba	hast	hasten	haben	present-du	hast du mit meinem Kugelschreiber gemacht?	right	
+72	tatoeba	erklärte	erklärt	erklären	past	erklärte Mary, warum er zu spät zu ihrer Geburtstagsfeier kam.	right	
+73	tatoeba	hast	hasten	haben	present-du	hast du?	right	
+74	tatoeba	verdeckte	verdeckt	verdecken	past	verdeckte seinen Kummer mit einem Lächeln.	right	
+75	tatoeba	hast	hasten	haben	present-du	hast komische Vorstellungen von mir.	right	
+76	tatoeba	interessierte	interessiert	interessieren	past	interessierte sich für den Vorfall.	right	
+77	tatoeba	erklärte	erklärt	erklären	past	erklärte.	right	
+78	tatoeba	hast	hasten	haben	present-du	hast.	right	
+79	tatoeba	seins	seiner	Sein	genitive	seins.	wrong	seins is the possessive, not Sein
+80	tatoeba	hast	hasten	haben	present-du	hast.	right	
