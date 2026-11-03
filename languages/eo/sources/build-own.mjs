@@ -269,11 +269,17 @@ const SUFFIXES = [
     ['uj', '-uj- (container)', 'uj', 'o', 'o', 2, 'Container, tree or country: sukerujo (sugar bowl) → sukero, pomujo → pomo.'],
     ['ul', '-ul- (person)', 'ul', 'o', 'ao', 2, 'A person characterised by: junulo (young person) → juna, riĉulo → riĉa.'],
 ];
+// Stems a suffix rule leaves out, measured on the books of README.md:
+// bojaro (a boyar, the Russian noble: a loanword wty-eo-en lacks) is not a
+// group of barks (bojo), which it was at 345 places of Princo Serebrjanij.
+const EXCLUDED = {ar: 'boj'};
 for (const [id, name, affix, derived, bases, stemMinLength, description] of SUFFIXES) {
     transform(id, name, description);
     for (const d of derived) {
         for (const b of bases === '=' ? d : bases) {
-            suffix(id, `${affix}${d}`, b, [ENDING_CONDITION[d]], [ENDING_CONDITION[b]], stemMinLength, {stemNotStartsWith: UPPER});
+            const extra = {stemNotStartsWith: UPPER};
+            if (EXCLUDED[id]) { extra.stemNotStartsWithText = EXCLUDED[id]; }
+            suffix(id, `${affix}${d}`, b, [ENDING_CONDITION[d]], [ENDING_CONDITION[b]], stemMinLength, extra);
         }
     }
 }

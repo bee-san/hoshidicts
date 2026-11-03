@@ -352,7 +352,7 @@
       "description": "A collection: arbaro (forest) → arbo, vortaro (dictionary) → vorto.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "{upper}"}
+        {"type": "suffix", "inflected": "aro", "deinflected": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemNotStartsWith": "{upper}", "stemNotStartsWithText": "boj"}
       ]
     },
     {
