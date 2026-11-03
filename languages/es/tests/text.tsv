@@ -1,0 +1,26 @@
+# Source: written for this pack (GPL-3.0-or-later), no third-party data. Every optional processor is on.
+# category	valid	input	variant
+decapitalize	1	Hablo	hablo
+decapitalize	1	HABLO	hablo
+decapitalize	1	ÁRBOL	árbol
+decapitalize	1	ÑANDÚ	ñandú
+capitalize	1	madrid	Madrid
+capitalize	1	ávila	Ávila
+capitalize	1	ñu	Ñu
+keep input	1	Hablo	Hablo
+keep input	1	ESTA	ESTA
+unicode	1	está	está
+unicode	1	ﬁesta	fiesta
+unicode	1	ＨＯＬＡ	hola
+missing accents	1	cancion	canción
+missing accents	1	esta	está
+missing accents	1	esta	ésta
+missing accents	1	nino	niño
+missing accents	1	pinguino	pingüino
+missing accents	1	tambien	también
+missing accents	1	ESTA	Está
+negatives	0	hablo	HABLO
+negatives	0	Hablo	hABLO
+negatives	0	cancion	cancíón
+negatives	0	niño	nino
+negatives	0	canción	cancion

@@ -1,0 +1,624 @@
+# Every rule of sources/yomitan.json (Yomitan d3c54c1, GPL-3.0-or-later, Copyright (C) 2024-2026 Yomitan Authors) and the own rules of
+# transforms.json that make the same deinflection (marked source "both"), written by sources/build-final.mjs. "-": no own rule makes it;
+# README.md, "Rule provenance", says why those rules are not in transforms.json.
+# transform	rule	deinflection	own transforms with that deinflection
+plural	0	s → 	plural
+plural	1	es → 	plural
+plural	2	ces → z	plural
+plural	3	ases → ás	plural
+plural	4	eses → és	plural
+plural	5	ises → ís	plural
+plural	6	oses → ós	plural
+plural	7	uses → ús	plural
+plural	8	anes → án	plural
+plural	9	enes → én	plural
+plural	10	ines → ín	plural
+plural	11	ones → ón	plural
+plural	12	unes → ún	plural
+feminine adjective	0	a → o	feminine
+feminine adjective	1	a → 	-
+feminine adjective	2	ana → án	feminine
+feminine adjective	3	ena → én	-
+feminine adjective	4	ina → ín	feminine
+feminine adjective	5	ona → ón	feminine
+feminine adjective	6	asa → ás	-
+feminine adjective	7	esa → és	feminine
+feminine adjective	8	isa → ís	-
+feminine adjective	9	osa → ós	-
+present indicative	0	o → ar (ie → e)	present-yo
+present indicative	1	as → ar (ie → e)	present-tu
+present indicative	2	a → ar (ie → e)	present-el
+present indicative	3	an → ar (ie → e)	present-ellos
+present indicative	4	o → er (ie → e)	present-yo
+present indicative	5	es → er (ie → e)	present-tu
+present indicative	6	e → er (ie → e)	present-el
+present indicative	7	en → er (ie → e)	present-ellos
+present indicative	8	o → ir (ie → e)	present-yo
+present indicative	9	es → ir (ie → e)	present-tu
+present indicative	10	e → ir (ie → e)	present-el
+present indicative	11	en → ir (ie → e)	present-ellos
+present indicative	12	o → ar (jue → ju)	present-yo
+present indicative	13	as → ar (jue → ju)	present-tu
+present indicative	14	a → ar (jue → ju)	present-el
+present indicative	15	an → ar (jue → ju)	present-ellos
+present indicative	16	o → ar (ue → o)	present-yo
+present indicative	17	as → ar (ue → o)	present-tu
+present indicative	18	a → ar (ue → o)	present-el
+present indicative	19	an → ar (ue → o)	present-ellos
+present indicative	20	o → er (hue → o)	present-yo
+present indicative	21	es → er (hue → o)	present-tu
+present indicative	22	e → er (hue → o)	present-el
+present indicative	23	en → er (hue → o)	present-ellos
+present indicative	24	o → er (ue → o)	present-yo
+present indicative	25	es → er (ue → o)	present-tu
+present indicative	26	e → er (ue → o)	present-el
+present indicative	27	en → er (ue → o)	present-ellos
+present indicative	28	o → ir (ue → o)	-
+present indicative	29	es → ir (ue → o)	-
+present indicative	30	e → ir (ue → o)	-
+present indicative	31	en → ir (ue → o)	-
+present indicative	32	o → ir (i → e)	-
+present indicative	33	es → ir (i → e)	-
+present indicative	34	e → ir (i → e)	-
+present indicative	35	en → ir (i → e)	-
+present indicative	36	o → ar	present-yo
+present indicative	37	as → ar	present-tu
+present indicative	38	a → ar	present-el
+present indicative	39	amos → ar	present-nosotros
+present indicative	40	áis → ar	present-vosotros
+present indicative	41	an → ar	present-ellos
+present indicative	42	o → er	present-yo
+present indicative	43	es → er	present-tu
+present indicative	44	e → er	present-el
+present indicative	45	emos → er	present-nosotros
+present indicative	46	éis → er	present-vosotros
+present indicative	47	en → er	present-ellos
+present indicative	48	o → ir	present-yo
+present indicative	49	es → ir	present-tu
+present indicative	50	e → ir	present-el
+present indicative	51	imos → ir	present-nosotros
+present indicative	52	ís → ir	present-vosotros present-vos
+present indicative	53	en → ir	present-ellos
+present indicative	54	uyo → uir	present-yo
+present indicative	55	uyes → uir	present-tu
+present indicative	56	uye → uir	present-el
+present indicative	57	uyen → uir	present-ellos
+present indicative	58	tengo → tener	present-yo
+present indicative	59	tienes → tener	-
+present indicative	60	tiene → tener	-
+present indicative	61	tenemos → tener	-
+present indicative	62	tenéis → tener	-
+present indicative	63	tienen → tener	-
+present indicative	64	oigo → oír	present-yo
+present indicative	65	oyes → oír	present-tu
+present indicative	66	oye → oír	present-el
+present indicative	67	oímos → oír	present-nosotros
+present indicative	68	oís → oír	present-vosotros present-vos
+present indicative	69	oyen → oír	present-ellos
+present indicative	70	vengo → venir	present-yo
+present indicative	71	vienes → venir	-
+present indicative	72	viene → venir	-
+present indicative	73	venimos → venir	-
+present indicative	74	venís → venir	-
+present indicative	75	vienen → venir	-
+present indicative	76	go → guir	present-yo
+present indicative	77	jo → ger	present-yo
+present indicative	78	jo → gir	present-yo
+present indicative	79	aigo → aer	-
+present indicative	80	zco → cer	present-yo
+present indicative	81	zco → cir	present-yo
+present indicative	82	hago → hacer	present-yo
+present indicative	83	pongo → poner	present-yo
+present indicative	84	lgo → lir	-
+present indicative	85	lgo → ler	-
+present indicative	86	quepo → caber	present-yo
+present indicative	87	doy → dar	present-yo
+present indicative	88	sé → saber	present-yo
+present indicative	89	veo → ver	present-yo
+present indicative	90	soy → ser	present-yo
+present indicative	91	eres → ser	present-tu
+present indicative	92	es → ser	present-el
+present indicative	93	somos → ser	present-nosotros
+present indicative	94	sois → ser	present-vosotros
+present indicative	95	son → ser	present-ellos
+present indicative	96	estoy → estar	present-yo
+present indicative	97	estás → estar	present-tu
+present indicative	98	está → estar	present-el
+present indicative	99	estamos → estar	-
+present indicative	100	estáis → estar	-
+present indicative	101	están → estar	present-ellos
+present indicative	102	voy → ir	present-yo
+present indicative	103	vas → ir	present-tu present-vos
+present indicative	104	va → ir	present-el
+present indicative	105	vamos → ir	present-nosotros
+present indicative	106	vais → ir	present-vosotros
+present indicative	107	van → ir	present-ellos
+present indicative	108	he → haber	present-yo
+present indicative	109	has → haber	present-tu present-vos
+present indicative	110	ha → haber	present-el
+present indicative	111	hemos → haber	present-nosotros
+present indicative	112	habéis → haber	-
+present indicative	113	han → haber	present-ellos
+preterite	0	ió → ir (i → e)	preterite-el
+preterite	1	ieron → ir (i → e)	preterite-ellos
+preterite	2	ió → ir (u → o)	preterite-el
+preterite	3	ieron → ir (u → o)	preterite-ellos
+preterite	4	é → ar	preterite-yo
+preterite	5	aste → ar	preterite-tu
+preterite	6	ó → ar	preterite-el
+preterite	7	amos → ar	preterite-nosotros
+preterite	8	asteis → ar	preterite-vosotros
+preterite	9	aron → ar	preterite-ellos
+preterite	10	í → er	preterite-yo
+preterite	11	iste → er	preterite-tu
+preterite	12	ió → er	preterite-el
+preterite	13	imos → er	preterite-nosotros
+preterite	14	isteis → er	preterite-vosotros
+preterite	15	ieron → er	preterite-ellos
+preterite	16	í → ir	preterite-yo
+preterite	17	iste → ir	preterite-tu
+preterite	18	ió → ir	preterite-el
+preterite	19	imos → ir	preterite-nosotros
+preterite	20	isteis → ir	preterite-vosotros
+preterite	21	ieron → ir	preterite-ellos
+preterite	22	qué → car	preterite-yo
+preterite	23	gué → gar	preterite-yo
+preterite	24	cé → zar	preterite-yo
+preterite	25	í → uir	-
+preterite	26	fui → ser	preterite-yo
+preterite	27	fuiste → ser	preterite-tu
+preterite	28	fue → ser	preterite-el
+preterite	29	fuimos → ser	preterite-nosotros
+preterite	30	fuisteis → ser	preterite-vosotros
+preterite	31	fueron → ser	preterite-ellos
+preterite	32	fui → ir	preterite-yo
+preterite	33	fuiste → ir	preterite-tu
+preterite	34	fue → ir	preterite-el
+preterite	35	fuimos → ir	preterite-nosotros
+preterite	36	fuisteis → ir	preterite-vosotros
+preterite	37	fueron → ir	preterite-ellos
+preterite	38	di → dar	preterite-yo
+preterite	39	diste → dar	preterite-tu
+preterite	40	dio → dar	preterite-el
+preterite	41	dimos → dar	preterite-nosotros
+preterite	42	disteis → dar	preterite-vosotros
+preterite	43	dieron → dar	preterite-ellos
+preterite	44	hice → hacer	preterite-yo
+preterite	45	hiciste → hacer	preterite-tu
+preterite	46	hizo → hacer	preterite-el
+preterite	47	hicimos → hacer	preterite-nosotros
+preterite	48	hicisteis → hacer	preterite-vosotros
+preterite	49	hicieron → hacer	preterite-ellos
+preterite	50	puse → poner	preterite-yo
+preterite	51	pusiste → poner	preterite-tu
+preterite	52	puso → poner	preterite-el
+preterite	53	pusimos → poner	preterite-nosotros
+preterite	54	pusisteis → poner	preterite-vosotros
+preterite	55	pusieron → poner	preterite-ellos
+preterite	56	dije → decir	preterite-yo
+preterite	57	dijiste → decir	preterite-tu
+preterite	58	dijo → decir	preterite-el
+preterite	59	dijimos → decir	preterite-nosotros
+preterite	60	dijisteis → decir	preterite-vosotros
+preterite	61	dijeron → decir	preterite-ellos
+preterite	62	vine → venir	preterite-yo
+preterite	63	viniste → venir	preterite-tu
+preterite	64	vino → venir	preterite-el
+preterite	65	vinimos → venir	preterite-nosotros
+preterite	66	vinisteis → venir	preterite-vosotros
+preterite	67	vinieron → venir	preterite-ellos
+preterite	68	quise → querer	preterite-yo
+preterite	69	quisiste → querer	preterite-tu
+preterite	70	quiso → querer	preterite-el
+preterite	71	quisimos → querer	preterite-nosotros
+preterite	72	quisisteis → querer	preterite-vosotros
+preterite	73	quisieron → querer	preterite-ellos
+preterite	74	tuve → tener	preterite-yo
+preterite	75	tuviste → tener	preterite-tu
+preterite	76	tuvo → tener	preterite-el
+preterite	77	tuvimos → tener	preterite-nosotros
+preterite	78	tuvisteis → tener	preterite-vosotros
+preterite	79	tuvieron → tener	preterite-ellos
+preterite	80	pude → poder	preterite-yo
+preterite	81	pudiste → poder	preterite-tu
+preterite	82	pudo → poder	preterite-el
+preterite	83	pudimos → poder	preterite-nosotros
+preterite	84	pudisteis → poder	preterite-vosotros
+preterite	85	pudieron → poder	preterite-ellos
+preterite	86	supe → saber	preterite-yo
+preterite	87	supiste → saber	preterite-tu
+preterite	88	supo → saber	preterite-el
+preterite	89	supimos → saber	preterite-nosotros
+preterite	90	supisteis → saber	preterite-vosotros
+preterite	91	supieron → saber	preterite-ellos
+preterite	92	estuve → estar	preterite-yo
+preterite	93	estuviste → estar	preterite-tu
+preterite	94	estuvo → estar	preterite-el
+preterite	95	estuvimos → estar	preterite-nosotros
+preterite	96	estuvisteis → estar	preterite-vosotros
+preterite	97	estuvieron → estar	preterite-ellos
+preterite	98	anduve → andar	preterite-yo
+preterite	99	anduviste → andar	preterite-tu
+preterite	100	anduvo → andar	preterite-el
+preterite	101	anduvimos → andar	preterite-nosotros
+preterite	102	anduvisteis → andar	preterite-vosotros
+preterite	103	anduvieron → andar	preterite-ellos
+imperfect	0	aba → ar	imperfect-yo-el
+imperfect	1	abas → ar	imperfect-tu
+imperfect	2	aba → ar	imperfect-yo-el
+imperfect	3	ábamos → ar	imperfect-nosotros
+imperfect	4	abais → ar	imperfect-vosotros
+imperfect	5	aban → ar	imperfect-ellos
+imperfect	6	ía → er	imperfect-yo-el
+imperfect	7	ías → er	imperfect-tu
+imperfect	8	ía → er	imperfect-yo-el
+imperfect	9	íamos → er	imperfect-nosotros
+imperfect	10	íais → er	imperfect-vosotros
+imperfect	11	ían → er	imperfect-ellos
+imperfect	12	ía → ir	imperfect-yo-el
+imperfect	13	ías → ir	imperfect-tu
+imperfect	14	ía → ir	imperfect-yo-el
+imperfect	15	íamos → ir	imperfect-nosotros
+imperfect	16	íais → ir	imperfect-vosotros
+imperfect	17	ían → ir	imperfect-ellos
+imperfect	18	eía → ir	-
+imperfect	19	eías → ir	-
+imperfect	20	eía → ir	-
+imperfect	21	eíamos → ir	-
+imperfect	22	eíais → ir	-
+imperfect	23	eían → ir	-
+imperfect	24	era → ser	imperfect-yo-el
+imperfect	25	eras → ser	imperfect-tu
+imperfect	26	era → ser	imperfect-yo-el
+imperfect	27	éramos → ser	imperfect-nosotros
+imperfect	28	erais → ser	imperfect-vosotros
+imperfect	29	eran → ser	imperfect-ellos
+imperfect	30	iba → ir	imperfect-yo-el
+imperfect	31	ibas → ir	imperfect-tu
+imperfect	32	iba → ir	imperfect-yo-el
+imperfect	33	íbamos → ir	imperfect-nosotros
+imperfect	34	ibais → ir	imperfect-vosotros
+imperfect	35	iban → ir	imperfect-ellos
+imperfect	36	veía → ver	imperfect-yo-el
+imperfect	37	veías → ver	imperfect-tu
+imperfect	38	veía → ver	imperfect-yo-el
+imperfect	39	veíamos → ver	imperfect-nosotros
+imperfect	40	veíais → ver	imperfect-vosotros
+imperfect	41	veían → ver	imperfect-ellos
+progressive	0	iendo → ir (i → e)	gerund
+progressive	1	iendo → er (u → o)	-
+progressive	2	iendo → ir (u → o)	gerund
+progressive	3	ando → ar	gerund
+progressive	4	iendo → er	gerund
+progressive	5	iendo → ir	gerund
+progressive	6	ayendo → aer	-
+progressive	7	eyendo → eer	-
+progressive	8	uyendo → uir	gerund
+progressive	9	oyendo → oír	gerund
+progressive	10	yendo → ir	gerund
+imperative	0	a → ar (ie → e)	imperative-tu
+imperative	1	e → ar (ie → e)	imperative-usted
+imperative	2	en → ar (ie → e)	imperative-ustedes
+imperative	3	e → er (ie → e)	imperative-tu
+imperative	4	a → er (ie → e)	imperative-usted
+imperative	5	an → er (ie → e)	imperative-ustedes
+imperative	6	e → ir (ie → e)	imperative-tu
+imperative	7	a → ir (ie → e)	imperative-usted
+imperative	8	an → ir (ie → e)	imperative-ustedes
+imperative	9	a → ar (jue → ju)	imperative-tu
+imperative	10	ue → ar (jue → ju)	-
+imperative	11	uen → ar (jue → ju)	-
+imperative	12	a → ar (ue → o)	imperative-tu
+imperative	13	e → ar (ue → o)	imperative-usted
+imperative	14	en → ar (ue → o)	imperative-ustedes
+imperative	15	e → er (hue → o)	imperative-tu
+imperative	16	a → er (hue → o)	imperative-usted
+imperative	17	an → er (hue → o)	imperative-ustedes
+imperative	18	e → er (ue → o)	imperative-tu
+imperative	19	a → er (ue → o)	imperative-usted
+imperative	20	an → er (ue → o)	imperative-ustedes
+imperative	21	e → ir (ue → o)	-
+imperative	22	a → ir (ue → o)	-
+imperative	23	an → ir (ue → o)	-
+imperative	24	e → ir (i → e)	-
+imperative	25	a → ir (i → e)	-
+imperative	26	an → ir (i → e)	-
+imperative	27	a → ar	imperative-tu
+imperative	28	emos → ar	imperative-nosotros
+imperative	29	ad → ar	imperative-vosotros
+imperative	30	e → er	imperative-tu
+imperative	31	amos → ar	-
+imperative	32	ed → er	imperative-vosotros
+imperative	33	e → ir	imperative-tu
+imperative	34	amos → ar	-
+imperative	35	id → ir	imperative-vosotros
+imperative	36	diga → decir	imperative-usted
+imperative	37	sé → ser	imperative-tu
+imperative	38	ve → ir	imperative-tu
+imperative	39	ten → tener	imperative-tu
+imperative	40	ven → venir	imperative-tu
+imperative	41	haz → hacer	imperative-tu
+imperative	42	di → decir	imperative-tu
+imperative	43	pon → poner	imperative-tu
+imperative	44	sal → salir	imperative-tu
+imperative	45	es → ar	-
+imperative	46	emos → ar	imperative-nosotros
+imperative	47	éis → ar	-
+imperative	48	as → er	-
+imperative	49	amos → er	imperative-nosotros
+imperative	50	áis → er	-
+imperative	51	as → ir	-
+imperative	52	amos → ir	imperative-nosotros
+imperative	53	áis → ir	-
+conditional	0	ía → 	conditional-yo-el
+conditional	1	ías → 	conditional-tu
+conditional	2	ía → 	conditional-yo-el
+conditional	3	íamos → 	conditional-nosotros
+conditional	4	íais → 	conditional-vosotros
+conditional	5	ían → 	conditional-ellos
+conditional	6	diría → decir	conditional-yo-el
+conditional	7	dirías → decir	conditional-tu
+conditional	8	diría → decir	conditional-yo-el
+conditional	9	diríamos → decir	conditional-nosotros
+conditional	10	diríais → decir	conditional-vosotros
+conditional	11	dirían → decir	conditional-ellos
+conditional	12	haría → hacer	conditional-yo-el
+conditional	13	harías → hacer	conditional-tu
+conditional	14	haría → hacer	conditional-yo-el
+conditional	15	haríamos → hacer	conditional-nosotros
+conditional	16	haríais → hacer	conditional-vosotros
+conditional	17	harían → hacer	conditional-ellos
+conditional	18	pondría → poner	conditional-yo-el
+conditional	19	pondrías → poner	conditional-tu
+conditional	20	pondría → poner	conditional-yo-el
+conditional	21	pondríamos → poner	conditional-nosotros
+conditional	22	pondríais → poner	conditional-vosotros
+conditional	23	pondrían → poner	conditional-ellos
+conditional	24	saldría → salir	conditional-yo-el
+conditional	25	saldrías → salir	conditional-tu
+conditional	26	saldría → salir	conditional-yo-el
+conditional	27	saldríamos → salir	conditional-nosotros
+conditional	28	saldríais → salir	conditional-vosotros
+conditional	29	saldrían → salir	conditional-ellos
+conditional	30	tendría → tener	conditional-yo-el
+conditional	31	tendrías → tener	conditional-tu
+conditional	32	tendría → tener	conditional-yo-el
+conditional	33	tendríamos → tener	conditional-nosotros
+conditional	34	tendríais → tener	conditional-vosotros
+conditional	35	tendrían → tener	conditional-ellos
+conditional	36	vendría → venir	conditional-yo-el
+conditional	37	vendrías → venir	conditional-tu
+conditional	38	vendría → venir	conditional-yo-el
+conditional	39	vendríamos → venir	conditional-nosotros
+conditional	40	vendríais → venir	conditional-vosotros
+conditional	41	vendrían → venir	conditional-ellos
+conditional	42	querría → querer	conditional-yo-el
+conditional	43	querrías → querer	conditional-tu
+conditional	44	querría → querer	conditional-yo-el
+conditional	45	querríamos → querer	conditional-nosotros
+conditional	46	querríais → querer	conditional-vosotros
+conditional	47	querrían → querer	conditional-ellos
+conditional	48	podría → poder	conditional-yo-el
+conditional	49	podrías → poder	conditional-tu
+conditional	50	podría → poder	conditional-yo-el
+conditional	51	podríamos → poder	conditional-nosotros
+conditional	52	podríais → poder	conditional-vosotros
+conditional	53	podrían → poder	conditional-ellos
+conditional	54	sabría → saber	conditional-yo-el
+conditional	55	sabrías → saber	conditional-tu
+conditional	56	sabría → saber	conditional-yo-el
+conditional	57	sabríamos → saber	conditional-nosotros
+conditional	58	sabríais → saber	conditional-vosotros
+conditional	59	sabrían → saber	conditional-ellos
+future	0	é → 	future-yo
+future	1	ás → 	future-tu
+future	2	á → 	future-el
+future	3	emos → 	future-nosotros
+future	4	éis → 	future-vosotros
+future	5	án → 	future-ellos
+future	6	diré → decir	future-yo
+future	7	dirás → decir	future-tu
+future	8	dirá → decir	future-el
+future	9	diremos → decir	future-nosotros
+future	10	diréis → decir	future-vosotros
+future	11	dirán → decir	future-ellos
+future	12	haré → hacer	future-yo
+future	13	harás → hacer	future-tu
+future	14	hará → hacer	future-el
+future	15	haremos → hacer	future-nosotros
+future	16	haréis → hacer	future-vosotros
+future	17	harán → hacer	future-ellos
+future	18	pondré → poner	future-yo
+future	19	pondrás → poner	future-tu
+future	20	pondrá → poner	future-el
+future	21	pondremos → poner	future-nosotros
+future	22	pondréis → poner	future-vosotros
+future	23	pondrán → poner	future-ellos
+future	24	saldré → salir	future-yo
+future	25	saldrás → salir	future-tu
+future	26	saldrá → salir	future-el
+future	27	saldremos → salir	future-nosotros
+future	28	saldréis → salir	future-vosotros
+future	29	saldrán → salir	future-ellos
+future	30	tendré → tener	future-yo
+future	31	tendrás → tener	future-tu
+future	32	tendrá → tener	future-el
+future	33	tendremos → tener	future-nosotros
+future	34	tendréis → tener	future-vosotros
+future	35	tendrán → tener	future-ellos
+future	36	vendré → venir	future-yo
+future	37	vendrás → venir	future-tu
+future	38	vendrá → venir	future-el
+future	39	vendremos → venir	future-nosotros
+future	40	vendréis → venir	future-vosotros
+future	41	vendrán → venir	future-ellos
+present subjunctive	0	e → ar (ie → e)	subjunctive-yo-el
+present subjunctive	1	es → ar (ie → e)	subjunctive-tu
+present subjunctive	2	en → ar (ie → e)	subjunctive-ellos
+present subjunctive	3	a → er (ie → e)	subjunctive-yo-el
+present subjunctive	4	as → er (ie → e)	subjunctive-tu
+present subjunctive	5	an → er (ie → e)	subjunctive-ellos
+present subjunctive	6	a → ir (ie → e)	subjunctive-yo-el
+present subjunctive	7	as → ir (ie → e)	subjunctive-tu
+present subjunctive	8	an → ir (ie → e)	subjunctive-ellos
+present subjunctive	9	ue → ar (jue → ju)	-
+present subjunctive	10	ues → ar (jue → ju)	-
+present subjunctive	11	uen → ar (jue → ju)	-
+present subjunctive	12	e → ar (ue → o)	subjunctive-yo-el
+present subjunctive	13	es → ar (ue → o)	subjunctive-tu
+present subjunctive	14	en → ar (ue → o)	subjunctive-ellos
+present subjunctive	15	a → er (hue → o)	subjunctive-yo-el
+present subjunctive	16	as → er (hue → o)	subjunctive-tu
+present subjunctive	17	an → er (hue → o)	subjunctive-ellos
+present subjunctive	18	a → er (ue → o)	subjunctive-yo-el
+present subjunctive	19	as → er (ue → o)	subjunctive-tu
+present subjunctive	20	an → er (ue → o)	subjunctive-ellos
+present subjunctive	21	a → ir (ue → o)	-
+present subjunctive	22	as → ir (ue → o)	-
+present subjunctive	23	an → ir (ue → o)	-
+present subjunctive	24	a → ir (i → e)	-
+present subjunctive	25	as → ir (i → e)	-
+present subjunctive	26	an → ir (i → e)	-
+present subjunctive	27	e → ar	subjunctive-yo-el
+present subjunctive	28	es → ar	subjunctive-tu
+present subjunctive	29	e → ar	subjunctive-yo-el
+present subjunctive	30	emos → ar	subjunctive-nosotros
+present subjunctive	31	éis → ar	subjunctive-vosotros
+present subjunctive	32	en → ar	subjunctive-ellos
+present subjunctive	33	a → er	subjunctive-yo-el
+present subjunctive	34	as → er	subjunctive-tu
+present subjunctive	35	a → er	subjunctive-yo-el
+present subjunctive	36	amos → er	subjunctive-nosotros
+present subjunctive	37	áis → er	subjunctive-vosotros
+present subjunctive	38	an → er	subjunctive-ellos
+present subjunctive	39	a → ir	subjunctive-yo-el
+present subjunctive	40	as → ir	subjunctive-tu
+present subjunctive	41	a → ir	subjunctive-yo-el
+present subjunctive	42	amos → ir	subjunctive-nosotros
+present subjunctive	43	áis → ir	subjunctive-vosotros
+present subjunctive	44	an → ir	subjunctive-ellos
+present subjunctive	45	dé → dar	subjunctive-yo-el
+present subjunctive	46	des → dar	subjunctive-tu subjunctive-vos
+present subjunctive	47	dé → dar	subjunctive-yo-el
+present subjunctive	48	demos → dar	subjunctive-nosotros
+present subjunctive	49	deis → dar	subjunctive-vosotros
+present subjunctive	50	den → dar	subjunctive-ellos
+present subjunctive	51	esté → estar	subjunctive-yo-el
+present subjunctive	52	estés → estar	subjunctive-tu
+present subjunctive	53	esté → estar	subjunctive-yo-el
+present subjunctive	54	estemos → estar	-
+present subjunctive	55	estéis → estar	-
+present subjunctive	56	estén → estar	subjunctive-ellos
+present subjunctive	57	sea → ser	subjunctive-yo-el
+present subjunctive	58	seas → ser	subjunctive-tu
+present subjunctive	59	sea → ser	subjunctive-yo-el
+present subjunctive	60	seamos → ser	subjunctive-nosotros
+present subjunctive	61	seáis → ser	subjunctive-vosotros
+present subjunctive	62	sean → ser	subjunctive-ellos
+present subjunctive	63	vaya → ir	subjunctive-yo-el
+present subjunctive	64	vayas → ir	subjunctive-tu
+present subjunctive	65	vaya → ir	subjunctive-yo-el
+present subjunctive	66	vayamos → ir	subjunctive-nosotros
+present subjunctive	67	vayáis → ir	subjunctive-vosotros
+present subjunctive	68	vayan → ir	subjunctive-ellos
+present subjunctive	69	haya → haber	subjunctive-yo-el
+present subjunctive	70	hayas → haber	subjunctive-tu
+present subjunctive	71	haya → haber	subjunctive-yo-el
+present subjunctive	72	hayamos → haber	subjunctive-nosotros
+present subjunctive	73	hayáis → haber	subjunctive-vosotros
+present subjunctive	74	hayan → haber	subjunctive-ellos
+present subjunctive	75	sepa → saber	subjunctive-yo-el
+present subjunctive	76	sepas → saber	subjunctive-tu
+present subjunctive	77	sepa → saber	subjunctive-yo-el
+present subjunctive	78	sepamos → saber	subjunctive-nosotros
+present subjunctive	79	sepáis → saber	subjunctive-vosotros
+present subjunctive	80	sepan → saber	subjunctive-ellos
+imperfect subjunctive	0	ara → ar	subjunctive-ra-yo-el
+imperfect subjunctive	1	ase → ar	subjunctive-se-yo-el
+imperfect subjunctive	2	aras → ar	subjunctive-ra-tu
+imperfect subjunctive	3	ases → ar	subjunctive-se-tu
+imperfect subjunctive	4	ara → ar	subjunctive-ra-yo-el
+imperfect subjunctive	5	ase → ar	subjunctive-se-yo-el
+imperfect subjunctive	6	áramos → ar	subjunctive-ra-nosotros
+imperfect subjunctive	7	ásemos → ar	subjunctive-se-nosotros
+imperfect subjunctive	8	arais → ar	subjunctive-ra-vosotros
+imperfect subjunctive	9	aseis → ar	subjunctive-se-vosotros
+imperfect subjunctive	10	aran → ar	subjunctive-ra-ellos
+imperfect subjunctive	11	asen → ar	subjunctive-se-ellos
+imperfect subjunctive	12	iera → er	subjunctive-ra-yo-el
+imperfect subjunctive	13	iese → er	subjunctive-se-yo-el
+imperfect subjunctive	14	ieras → er	subjunctive-ra-tu
+imperfect subjunctive	15	ieses → er	subjunctive-se-tu
+imperfect subjunctive	16	iera → er	subjunctive-ra-yo-el
+imperfect subjunctive	17	iese → er	subjunctive-se-yo-el
+imperfect subjunctive	18	iéramos → er	subjunctive-ra-nosotros
+imperfect subjunctive	19	iésemos → er	subjunctive-se-nosotros
+imperfect subjunctive	20	ierais → er	subjunctive-ra-vosotros
+imperfect subjunctive	21	ieseis → er	subjunctive-se-vosotros
+imperfect subjunctive	22	ieran → er	subjunctive-ra-ellos
+imperfect subjunctive	23	iesen → er	subjunctive-se-ellos
+imperfect subjunctive	24	iera → ir	subjunctive-ra-yo-el
+imperfect subjunctive	25	iese → ir	subjunctive-se-yo-el
+imperfect subjunctive	26	ieras → ir	subjunctive-ra-tu
+imperfect subjunctive	27	ieses → ir	subjunctive-se-tu
+imperfect subjunctive	28	iera → ir	subjunctive-ra-yo-el
+imperfect subjunctive	29	iese → ir	subjunctive-se-yo-el
+imperfect subjunctive	30	iéramos → ir	subjunctive-ra-nosotros
+imperfect subjunctive	31	iésemos → ir	subjunctive-se-nosotros
+imperfect subjunctive	32	ierais → ir	subjunctive-ra-vosotros
+imperfect subjunctive	33	ieseis → ir	subjunctive-se-vosotros
+imperfect subjunctive	34	ieran → ir	subjunctive-ra-ellos
+imperfect subjunctive	35	iesen → ir	subjunctive-se-ellos
+imperfect subjunctive	36	fuera → ser	subjunctive-ra-yo-el
+imperfect subjunctive	37	fuese → ser	subjunctive-se-yo-el
+imperfect subjunctive	38	fueras → ser	subjunctive-ra-tu
+imperfect subjunctive	39	fueses → ser	subjunctive-se-tu
+imperfect subjunctive	40	fuera → ser	subjunctive-ra-yo-el
+imperfect subjunctive	41	fuese → ser	subjunctive-se-yo-el
+imperfect subjunctive	42	fuéramos → ser	subjunctive-ra-nosotros
+imperfect subjunctive	43	fuésemos → ser	subjunctive-se-nosotros
+imperfect subjunctive	44	fuerais → ser	subjunctive-ra-vosotros
+imperfect subjunctive	45	fueseis → ser	subjunctive-se-vosotros
+imperfect subjunctive	46	fueran → ser	subjunctive-ra-ellos
+imperfect subjunctive	47	fuesen → ser	subjunctive-se-ellos
+imperfect subjunctive	48	fuera → ir	subjunctive-ra-yo-el
+imperfect subjunctive	49	fuese → ir	subjunctive-se-yo-el
+imperfect subjunctive	50	fueras → ir	subjunctive-ra-tu
+imperfect subjunctive	51	fueses → ir	subjunctive-se-tu
+imperfect subjunctive	52	fuera → ir	subjunctive-ra-yo-el
+imperfect subjunctive	53	fuese → ir	subjunctive-se-yo-el
+imperfect subjunctive	54	fuéramos → ir	subjunctive-ra-nosotros
+imperfect subjunctive	55	fuésemos → ir	subjunctive-se-nosotros
+imperfect subjunctive	56	fuerais → ir	subjunctive-ra-vosotros
+imperfect subjunctive	57	fueseis → ir	subjunctive-se-vosotros
+imperfect subjunctive	58	fueran → ir	subjunctive-ra-ellos
+imperfect subjunctive	59	fuesen → ir	subjunctive-se-ellos
+participle	0	ado → ar	participle
+participle	1	ido → er	participle
+participle	2	ido → ir	participle
+participle	3	oído → oír	participle
+participle	4	dicho → decir	participle
+participle	5	escrito → escribir	-
+participle	6	hecho → hacer	participle
+participle	7	muerto → morir	participle
+participle	8	puesto → poner	participle
+participle	9	roto → romper	participle
+participle	10	visto → ver	participle
+participle	11	vuelto → volver	-
+reflexive	0	arse → ar	clitic-se
+reflexive	1	erse → er	clitic-se
+reflexive	2	irse → ir	clitic-se
+pronoun substitution	0	arme → arse	clitic-me
+pronoun substitution	1	arte → arse	clitic-te
+pronoun substitution	2	arnos → arse	-
+pronoun substitution	3	erme → erse	clitic-me
+pronoun substitution	4	erte → erse	clitic-te
+pronoun substitution	5	ernos → erse	clitic-nos
+pronoun substitution	6	irme → irse	clitic-me
+pronoun substitution	7	irte → irse	clitic-te
+pronoun substitution	8	irnos → irse	clitic-nos
+pronominal	0	^me +([A-Za-z0-9_]+)(ar|er|ir)(?![A-Za-z0-9_])	pronominal
+pronominal	1	^te +([A-Za-z0-9_]+)(ar|er|ir)(?![A-Za-z0-9_])	pronominal
+pronominal	2	^se +([A-Za-z0-9_]+)(ar|er|ir)(?![A-Za-z0-9_])	pronominal
+pronominal	3	^nos +([A-Za-z0-9_]+)(ar|er|ir)(?![A-Za-z0-9_])	pronominal
+pronominal	4	^os +([A-Za-z0-9_]+)(ar|er|ir)(?![A-Za-z0-9_])	pronominal
