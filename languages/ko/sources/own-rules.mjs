@@ -107,10 +107,15 @@ function adjectiveOutput(out) {
     return out.includes('adj') ? out.filter((c) => c !== 'v') : null;
 }
 
+// A stem that ends in a class is not empty, and in Hangul syllables it holds a
+// whole syllable when the ending starts with a consonant or the class has only
+// vowels (no syllable starts with a vowel), so stemMinLength 2 adds nothing then.
+const VOWELS_ONLY = /^(\{vowel\}|\[[\u314F-\u3163]+\])$/u;
 function suffix(inflected, deinflected, conditionsIn, conditionsOut, extra = {}) {
     const rule = {type: 'suffix', inflected, deinflected, conditionsIn, conditionsOut};
+    const implied = extra.stemEndsWith !== undefined && (extra.stemMinLength <= 1 || /^[\u3131-\u314E]/u.test(inflected) || VOWELS_ONLY.test(extra.stemEndsWith));
     for (const [key, value] of Object.entries(extra)) {
-        if (value !== undefined && !(key === 'stemMinLength' && value === 0)) { rule[key] = value; }
+        if (value !== undefined && !(key === 'stemMinLength' && (value === 0 || implied))) { rule[key] = value; }
     }
     return rule;
 }
