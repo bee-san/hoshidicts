@@ -13,10 +13,10 @@ The recommended dictionaries, wty-pt-en and wty-pt-pt, give no part of speech:
 wiktionary-to-yomitan fills the `rules` column only for the 16 languages of its
 rule table (`src/dict/rules/valid.rs` at 4b02478), and Portuguese is not one:
 all 572,340 rows of wty-pt-en and all 504,951 of wty-pt-pt leave it empty.
-The pack therefore sets `lookup.untaggedTerms` to `"pass"` (bee-san/hoshidicts#58): an
-untagged term matches a deinflection whose conditions include a dictionary
-form (`v`, `n` or `adj`), and not one that holds only the intermediate
-condition `vf` (Rule provenance). Without the field, no rule's output finds a
+The pack therefore sets `lookup.untaggedTerms` to `"pass"`
+(bee-san/hoshidicts#58): an untagged term matches a deinflection whose
+conditions include a dictionary form (`v`, `n`, `adj` or `adv`), and not one
+that holds only the intermediate condition `vf` (Rule provenance). Without the field, no rule's output finds a
 term of these dictionaries; only the dictionary's own form-of rows for the
 text as written are followed.
 
