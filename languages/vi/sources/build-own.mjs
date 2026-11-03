@@ -56,15 +56,16 @@ const LAST_LETTERS = [
 //   A A B B     → A B    đi đi lại lại → đi lại
 //   A Ca A CB   → A CB   lôi tha lôi thôi → lôi thôi, lề mà lề mề → lề mề
 //                        (C the whole onset of the second word, then a or à;
-//                        not và, and: học và học viên is two words)
+//                        not và, là or ba: học và học viên, kim là kim loại
+//                        and thứ ba thứ bảy are two words each side)
 // The whole text must have that shape. A single word said twice (xanh xanh,
 // đi đi) is not read: in Tatoeba and Việt Nam sử lược the text "X X" was a
-// reduplication at 44 places and two words at 41 (máy bay bay, the plane
+// reduplication at 42 places and two words at 40 (máy bay bay, the plane
 // flies; bằng chứng chứng minh), and either way it shows the word X, which a
 // lookup of X alone shows too; dictionaries list the common ones (xanh xanh).
 const ONSET_LETTERS = '[bcdđghklmnpqrstvx]';
 function wholeReduplication() {
-  const pattern = `^([^ ]+) (?:\\1( [^ ]+)\\2|(?!và )(${ONSET_LETTERS}*)[aà] \\1( \\3[^ ${ONSET_LETTERS.slice(1, -1)}][^ ]*))$`;
+  const pattern = `^([^ ]+) (?:\\1( [^ ]+)\\2|(?!(?:và|là|ba) )(${ONSET_LETTERS}*)[aà] \\1( \\3[^ ${ONSET_LETTERS.slice(1, -1)}][^ ]*))$`;
   return LAST_LETTERS.map((last) => ({
     type: 'pattern', pattern, replacement: '$1$2$4', anchorSuffix: last, conditionsIn: [], conditionsOut: [],
   }));

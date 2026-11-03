@@ -88,11 +88,37 @@ const mutations = {
   'hyphensToSpaces: no key -ấ': {language: (l) => { delete byId(l, 'hyphensToSpaces').variants[1][0].map['-ấ']; }},
   'hyphens inside words (wordInternal)': {language: (l) => { l.text.wordInternal = '[\\-]'; }},
   'character resolution': {language: (l) => { l.lookup.searchResolution = 'character'; }},
+  'traceSelection first': {language: (l) => { l.lookup.traceSelection = 'first'; }},
+  'four-syllable reduplication: là accepted': {transforms: (t) => {
+    for (const rule of t.transforms.find((x) => x.id === 'reduplication').rules) rule.pattern = rule.pattern.replace('(?:và|là|ba)', '(?:và|ba)');
+  }},
+  'four-syllable reduplication: ba accepted': {transforms: (t) => {
+    for (const rule of t.transforms.find((x) => x.id === 'reduplication').rules) rule.pattern = rule.pattern.replace('(?:và|là|ba)', '(?:và|là)');
+  }},
+  'four-syllable reduplication: và refused only before n': {transforms: (t) => {
+    for (const rule of t.transforms.find((x) => x.id === 'reduplication').rules) if (rule.anchorSuffix !== 'n') rule.pattern = rule.pattern.replace('(?:và|là|ba)', '(?:là|ba)');
+  }},
+  'alternateIY: no nh and ph keep keys': {language: (l) => {
+    for (const variant of byId(l, 'alternateIY').variants) {
+      const end = variant[2].map;
+      for (const key of Object.keys(end)) if (end[key] === key && /^(nh|ph|Nh|Ph)/.test(key)) delete end[key];
+    }
+  }},
+  'hyphensToSpaces: no keys for toned vowels and loan initials': {language: (l) => {
+    const map = byId(l, 'hyphensToSpaces').variants[1][0].map;
+    for (const key of Object.keys(map)) if (/^-[àảãạằẳẵặầẩẫậèẻẽẹềểễệìỉĩịòỏõọồổỗộờởỡợùủũụừửữựỳỷỹỵfjwz]/.test(key)) delete map[key];
+  }},
+  'hyphensToSpaces: capitalised variant without its last step': {language: (l) => { byId(l, 'hyphensToSpaces').variants[1].pop(); }},
+  'toneMarks: no ngã keys': {language: (l) => {
+    for (const variant of byId(l, 'toneMarks').variants) {
+      for (const step of variant) for (const key of Object.keys(step.map)) if (/[õũỹÕŨỸ]/.test(key) && !/^[qQ]/.test(key)) delete step.map[key];
+    }
+  }},
   'four-syllable reduplication: a sắc -a syllable': {transforms: (t) => {
     for (const rule of t.transforms.find((x) => x.id === 'reduplication').rules) rule.pattern = rule.pattern.replace('[aà]', '[aàá]');
   }},
   'four-syllable reduplication: và accepted': {transforms: (t) => {
-    for (const rule of t.transforms.find((x) => x.id === 'reduplication').rules) rule.pattern = rule.pattern.replace('(?!và )', '');
+    for (const rule of t.transforms.find((x) => x.id === 'reduplication').rules) rule.pattern = rule.pattern.replace('(?:và|là|ba)', '(?:là|ba)');
   }},
   'partial reduplication of khác keeps the final c': {transforms: (t) => {
     const rule = t.transforms.find((x) => x.id === 'partialReduplication').rules.find((r) => r.deinflected === 'khác');

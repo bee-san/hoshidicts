@@ -21,7 +21,13 @@ const pack = join(here, '..');
 const repo = join(pack, '..', '..');
 const [work, dictionary, ...hoverDirs] = process.argv.slice(2);
 if (!work || !dictionary || hoverDirs.length === 0) throw new Error('usage: history.mjs <work dir> <imported dictionary> <hover dir>...');
-const FIRST = '5a12101';  // vi: own rules
+const FIRST = '5a12101';  // vi: own rules, on PR #56's branch (squash-merged as 6a65eac)
+try {
+  execFileSync('git', ['-C', repo, 'cat-file', '-e', `${FIRST}^{commit}`], {stdio: 'ignore'});
+} catch {
+  // A fresh clone has no such commit: GitHub keeps it under the PR's head ref.
+  execFileSync('git', ['-C', repo, 'fetch', '-q', 'origin', 'refs/pull/56/head'], {stdio: 'inherit'});
+}
 const firstOwn = JSON.parse(execFileSync('git', ['-C', repo, 'show', `${FIRST}:languages/vi/sources/own.json`], {encoding: 'utf8'}));
 const firstProcessors = JSON.parse(execFileSync('git', ['-C', repo, 'show', `${FIRST}:languages/vi/sources/own-processors.json`], {encoding: 'utf8'}));
 

@@ -156,7 +156,7 @@ Hùng-vương	Hùng Vương	right	reviewed: the same word or name in another spe
 Ấn-độ	Ấn Độ	right	reviewed: the same word or name in another spelling or capitalisation
 CHIÊM-THÀNH	Chiêm Thành	right	reviewed: the same word or name in another spelling or capitalisation
 Lão-tử	Lão Tử	right	reviewed: the same word or name in another spelling or capitalisation
-BÌNH-ĐỊNH	bình định	wrong	the title Bình-định-vương, not bình định (to pacify)
+BÌNH-ĐỊNH	bình định	right	the title Bình-định-vương (the Pacifying King): bình định is what it says, as chỉ huy is for Chỉ-huy-sứ
 Hồng-bàng	Hồng Bàng	right	reviewed: the same word or name in another spelling or capitalisation
 Hà-tĩnh	Hà Tĩnh	right	reviewed: the same word or name in another spelling or capitalisation
 Lam-sơn	Lam Sơn	right	reviewed: the same word or name in another spelling or capitalisation
@@ -164,7 +164,7 @@ Hợp-phố	Hợp Phố	right	reviewed: the same word or name in another spellin
 Thành-tổ	Thành Tổ	right	reviewed: the same word or name in another spelling or capitalisation
 Tuyên-quang	Tuyên Quang	right	reviewed: the same word or name in another spelling or capitalisation
 Bồn-man	Bồn Man	right	reviewed: the same word or name in another spelling or capitalisation
-Bồ-đề	bồ đề	right	reviewed: the same word or name in another spelling or capitalisation
+Bồ-đề	bồ đề	wrong	Bồ-đề is a place by the Red River and a Cham king, not bodhi (re-audit m2)
 Ninh-bình	Ninh Bình	right	reviewed: the same word or name in another spelling or capitalisation
 Quảng-đông	Quảng Đông	right	reviewed: the same word or name in another spelling or capitalisation
 Khổng-tử	Khổng Tử	right	reviewed: the same word or name in another spelling or capitalisation
@@ -207,7 +207,7 @@ Xã-tắc	xã tắc	right	reviewed: the same word or name in another spelling or
 Hung-nô	Hung Nô	right	reviewed: the same word or name in another spelling or capitalisation
 Nhà Hồ	nhà Hồ	right	reviewed: the same word or name in another spelling or capitalisation
 Tể-tướng	tể tướng	right	reviewed: the same word or name in another spelling or capitalisation
-Thuận-thiên	Thuận Thiên	right	reviewed: the same word or name in another spelling or capitalisation
+Thuận-thiên	Thuận Thiên	wrong	the era name Thuận Thiên and a princess, not the sword (re-audit m2)
 Quân-sĩ	quân sĩ	right	reviewed: the same word or name in another spelling or capitalisation
 Phù-đổng Thiên-vương	Phù Đổng Thiên Vương	right	reviewed: the same word or name in another spelling or capitalisation
 Nhà Tống	nhà Tống	right	reviewed: the same word or name in another spelling or capitalisation
@@ -244,7 +244,7 @@ Mạnh-tử	Mạnh Tử	right	reviewed: the same word or name in another spellin
 Đông-kinh	Đông Kinh	right	reviewed: the same word or name in another spelling or capitalisation
 Nam-hán	Nam Hán	right	reviewed: the same word or name in another spelling or capitalisation
 BẮC-THUỘC	Bắc thuộc	right	reviewed: the same word or name in another spelling or capitalisation
-Quan-sát	quan sát	wrong	the title Quan-sát-sứ, not quan sát (to observe)
+Quan-sát	quan sát	right	the title Quan-sát-sứ: quan sát is what it says, as chỉ huy is for Chỉ-huy-sứ
 Binh-chế	binh chế	right	reviewed: the same word or name in another spelling or capitalisation
 Ôn-châu	Ôn Châu	right	reviewed: the same word or name in another spelling or capitalisation
 Quốc-tử-giám	Quốc Tử Giám	right	reviewed: the same word or name in another spelling or capitalisation
@@ -707,3 +707,9 @@ Hắc	hắc	wrong	a common word, or part of a name, for a hyphenated name
 Côn	côn	wrong	a common word, or part of a name, for a hyphenated name
 Sóc	sóc	wrong	a common word, or part of a name, for a hyphenated name
 GIAO	giao	wrong	a common word, or part of a name, for a hyphenated name
+# context-specific judgements: matched, expression, verdict, note, a piece of the hover text (re-audit m2)
+Bình-định	Bình Định	wrong	Lê Lợi's title Bình-định-vương, not the province named in 1799	Bình-định-vương
+Thái-bình	Thái Bình	wrong	thái bình (peace), the era name or the banquet, not the province	Thái-bình nghi nỗ lực
+Thái-bình	Thái Bình	wrong	thái bình (peace), the era name or the banquet, not the province	Thái-bình nên
+Thái-bình	Thái Bình	wrong	thái bình (peace), the era name or the banquet, not the province	Thái-bình nguyên-niên
+Thái-bình	Thái Bình	wrong	thái bình (peace), the era name or the banquet, not the province	Thái-bình, để hội

@@ -26,7 +26,7 @@ def main(path, count, seed):
         if d['text'][0].isascii() and not d['text'][0].isalpha():
             continue
         first = next((r for r in d['results'] if not r['formOf']), None)
-        print(f"{i}\t{d['text'][:38]}\t{first['expression'] if first else ''}\t{first['matched'] if first else ''}")
+        print(f"{i}\t{first['expression'] if first else ''}\t{first['matched'] if first else ''}")
         printed += 1
         if printed == int(count):
             break
