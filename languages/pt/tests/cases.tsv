@@ -67,6 +67,9 @@ regular verbs	1	partires	partir	v	personal-infinitive-tu
 regular verbs	1	parti	partir	v	imperative-vos
 regular verbs	1	partindo	partir	v	gerund
 regular verbs	1	partidos	partir	v	participle
+regular verbs	1	falásseis	falar	v	imperfect-subjunctive-vos
+regular verbs	1	partísseis	partir	v	imperfect-subjunctive-vos
+regular verbs	1	comerdes	comer	v	personal-infinitive-vos
 spelling changes	1	fiquei	ficar	v	preterite-eu
 spelling changes	1	fique	ficar	v	subjunctive-eu-ele
 spelling changes	1	cheguei	chegar	v	preterite-eu
@@ -333,6 +336,23 @@ irregular verbs	1	aceso	acender	v	participle
 irregular verbs	1	incluso	incluir	v	participle
 irregular verbs	1	imerso	imergir	v	participle
 irregular verbs	1	surpresa	surpreender	v	participle
+irregular verbs	1	despeço	despedir	v	present-eu
+irregular verbs	1	sorrio	sorrir	v	present-eu
+irregular verbs	1	releio	reler	v	present-eu
+irregular verbs	1	pressuponho	pressupor	v	present-eu
+irregular verbs	1	antevejo	antever	v	present-eu
+irregular verbs	1	advém	advir	v	present-ele
+irregular verbs	1	atém	ater	v	present-ele
+irregular verbs	1	descreio	descrer	v	present-eu
+irregular verbs	1	equivalho	equivaler	v	present-eu
+irregular verbs	1	entreouço	entreouvir	v	present-eu
+irregular verbs	1	malquis	malquerer	v	preterite-eu
+irregular verbs	1	desprovejo	desprover	v	present-eu
+irregular verbs	1	provejo	prover	v	present-eu
+irregular verbs	1	proveja	prover	v	subjunctive-eu-ele
+irregular verbs	1	provês	prover	v	present-tu
+irregular verbs	1	forem	ser	v	future-subjunctive-eles
+irregular verbs	1	fôramos	ser	v	pluperfect-nos
 colloquial	1	tô	estar	v	present-eu
 colloquial	1	tá	estar	v	present-ele
 colloquial	1	tamo	estar	v	present-nos
@@ -454,6 +474,20 @@ plural	1	guarda-chuvas	guarda-chuva	n	plural
 plural	1	obras-primas	obra-prima	n	plural|plural
 plural	1	bem-sucedidos	bem-sucedido	adj	plural
 plural	1	tartarugas-do-mar	tartaruga-do-mar	n	plural
+plural	1	soldados	soldado	n	plural
+plural	1	ideias	ideia	n	plural
+plural	1	mentiras	mentira	n	plural
+plural	1	ataques	ataque	n	plural
+plural	1	águas	água	n	plural
+plural	1	saudáveis	saudável	adj	plural
+plural	1	impostos	imposto	n	plural
+plural	1	apostas	aposta	n	plural
+plural	1	revistas	revista	n	plural
+plural	1	malditos	maldito	adj	plural
+plural	1	peças	peça	n	plural
+plural	1	verdes	verde	adj	plural
+plural	1	tais	tal	adj	plural
+plural	1	erradas	errado	adj	feminine|plural
 feminine	1	bonita	bonito	adj	feminine
 feminine	1	trabalhadora	trabalhador	adj	feminine
 feminine	1	portuguesa	português	adj	feminine
@@ -475,6 +509,16 @@ feminine	1	bonitas	bonito	adj	feminine|plural
 feminine	1	portuguesas	português	adj	feminine|plural
 feminine	1	boas	bom	adj	feminine
 feminine	1	estas	este	*	feminine
+feminine	1	sua	seu	*	feminine
+feminine	1	suas	seu	*	feminine
+feminine	1	amiga	amigo	n	feminine
+feminine	1	humana	humano	adj	feminine
+feminine	1	perfeita	perfeito	adj	feminine
+feminine	1	cansada	cansado	adj	feminine
+feminine	1	conhecida	conhecido	adj	feminine
+feminine	1	distraída	distraído	adj	feminine
+feminine	1	farta	farto	adj	feminine
+feminine	1	ladra	ladrão	n	feminine
 diminutive	1	gatinho	gato	n	diminutive
 diminutive	1	casinha	casa	n	diminutive
 diminutive	1	cafezinho	café	n	diminutive
@@ -506,6 +550,10 @@ superlative	1	péssimo	mau	adj	superlative
 superlative	1	grandíssimas	grande	adj	superlative
 superlative	1	normalíssimo	normal	adj	superlative
 superlative	1	seríssimo	sério	adj	superlative
+superlative	1	fidelíssimo	fiel	adj	superlative
+superlative	1	antiquíssimo	antigo	adj	superlative
+superlative	1	simplicíssimo	simples	adj	superlative
+superlative	1	nobilíssimo	nobre	adj	superlative
 -mente adverbs	1	rapidamente	rápido	adj	adverb
 -mente adverbs	1	facilmente	fácil	adj	adverb
 -mente adverbs	1	provavelmente	provável	adj	adverb
@@ -515,6 +563,7 @@ superlative	1	seríssimo	sério	adj	superlative
 -mente adverbs	1	possivelmente	possível	adj	adverb
 -mente adverbs	1	cristãmente	cristão	adj	adverb
 -mente adverbs	1	rapidissimamente	rápido	adj	superlative|adverb
+-mente adverbs	1	comumente	comum	adj	adverb
 negatives	0	esta	estar	*	*
 negatives	0	estas	estar	*	*
 negatives	0	este	estar	*	*
@@ -607,6 +656,7 @@ negatives	0	pass	pas	*	*
 negatives	0	mass	mas	*	*
 stem changes	1	ceias	cear	v	present-tu
 stem changes	1	geie	gear	v	subjunctive-eu-ele
+stem changes	1	agride	agredir	v	present-ele
 negatives	0	ei-lo	ei	*	*
 negatives	0	alguem	algar	*	*
 negatives	0	sida	sido	*	*
@@ -614,3 +664,5 @@ exclusions keep	1	alegue	alegar	v	subjunctive-eu-ele
 exclusions keep	1	siderúrgica	siderúrgico	adj	feminine
 negatives	0	sao	sair	*	*
 negatives	0	cao	cair	*	*
+negatives	0	Évora	Évoro	*	*
+negatives	0	Ângela	Ângelo	*	*

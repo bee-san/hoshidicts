@@ -16,6 +16,40 @@ ranking	1	segue em frente	seguir	segue
 ranking	0	segue em frente	segar	segue
 ranking	1	casas grandes	casa	casas
 ranking	0	casas grandes	casar	casas
+ranking	1	Sua casa é bonita	seu	Sua
+ranking	0	Sua casa é bonita	suar	Sua
+ranking	1	soldados marchavam	soldado	soldados
+ranking	0	soldados marchavam	soldar	soldados
+ranking	1	ideias novas	ideia	ideias
+ranking	0	ideias novas	idear	ideias
+ranking	1	ataques aéreos	ataque	ataques
+ranking	0	ataques aéreos	atacar	ataques
+ranking	1	impostos altos	imposto	impostos
+ranking	0	impostos altos	impor	impostos
+ranking	1	Pare com isso	parar	Pare
+ranking	0	Pare com isso	parir	Pare
+ranking	1	achas que sim	achar	achas
+ranking	0	achas que sim	acha	achas
+ranking	1	podem ir	poder	podem
+ranking	0	podem ir	podar	podem
+ranking	1	amiga dela	amigo	amiga
+ranking	0	amiga dela	amigar	amiga
+ranking	1	perfeita para mim	perfeito	perfeita
+ranking	0	perfeita para mim	perfazer	perfeita
+ranking	1	cansada demais	cansado	cansada
+ranking	0	cansada demais	cansar	cansada
+ranking	1	precisa de ajuda	precisar	precisa
+ranking	0	precisa de ajuda	preciso	precisa
+ranking	1	atende o telefone	atender	atende
+ranking	0	atende o telefone	ater	atende
+ranking	1	verdes e azuis	verde	verdes
+ranking	0	verdes e azuis	ver	verdes
+ranking	1	saudáveis demais	saudável	saudáveis
+ranking	0	saudáveis demais	saudar	saudáveis
+ranking	1	revistas antigas	revista	revistas
+ranking	0	revistas antigas	rever	revistas
+ranking	1	malditos sejam	maldito	malditos
+ranking	0	malditos sejam	maldizer	malditos
 pronouns	1	chama-se João	chamar	chama-se
 pronouns	0	chama-se João	chama	chama
 pronouns	1	deixa-me ir	deixar	deixa-me
@@ -47,6 +81,8 @@ pronouns	1	convida-os para jantar	convidar	convida-os
 pronouns	1	Aluga-se casa	alugar	Aluga-se
 pronouns	1	Compre-me pão	comprar	Compre-me
 pronouns	1	Fale-me de ti	falar	Fale-me
+pronouns	1	deixa-o ir	deixar	deixa-o
+pronouns	0	deixa-o ir	deixa	deixa-o
 names	1	Bentinho chegou	Bento	Bentinho
 names	1	Marinha de guerra	marinha	Marinha
 names	0	Marinha de guerra	Mara	Marinha

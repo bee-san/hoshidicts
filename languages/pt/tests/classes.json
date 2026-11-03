@@ -330,7 +330,7 @@
     "transforms[1].rules[28].stemCharacters": [],
     "transforms[1].rules[29].stemCharacters": [],
     "transforms[1].rules[30].stemCharacters": [],
-    "transforms[1].rules[31].stemCharacters": [
+    "transforms[1].rules[32].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 191],
@@ -599,7 +599,7 @@
     "transforms[2].rules[27].stemCharacters": [],
     "transforms[2].rules[28].stemCharacters": [],
     "transforms[2].rules[29].stemCharacters": [],
-    "transforms[2].rules[30].stemCharacters": [
+    "transforms[2].rules[36].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 191],
@@ -872,7 +872,7 @@
     "transforms[3].rules[31].stemCharacters": [],
     "transforms[3].rules[32].stemCharacters": [],
     "transforms[3].rules[33].stemCharacters": [],
-    "transforms[3].rules[34].stemCharacters": [
+    "transforms[3].rules[36].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 191],
@@ -3119,7 +3119,7 @@
     "transforms[34].rules[29].stemCharacters": [],
     "transforms[34].rules[30].stemCharacters": [],
     "transforms[34].rules[31].stemCharacters": [],
-    "transforms[34].rules[32].stemCharacters": [
+    "transforms[34].rules[35].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 191],
@@ -3127,7 +3127,7 @@
       [223, 55295],
       [57344, 1114111]
     ],
-    "transforms[34].rules[32].stemNotEndsWith": [
+    "transforms[34].rules[35].stemNotEndsWith": [
       [99, 99],
       [103, 103]
     ],
@@ -3372,7 +3372,7 @@
     "transforms[35].rules[29].stemCharacters": [],
     "transforms[35].rules[30].stemCharacters": [],
     "transforms[35].rules[31].stemCharacters": [],
-    "transforms[35].rules[32].stemCharacters": [
+    "transforms[35].rules[33].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 191],
@@ -3380,7 +3380,7 @@
       [223, 55295],
       [57344, 1114111]
     ],
-    "transforms[35].rules[32].stemNotEndsWith": [
+    "transforms[35].rules[33].stemNotEndsWith": [
       [99, 99],
       [103, 103]
     ],
@@ -4422,6 +4422,9 @@
       [223, 55295],
       [57344, 1114111]
     ],
+    "transforms[56].rules[0].stemNotStartsWith": [
+      [115, 115]
+    ],
     "transforms[56].rules[1].stemCharacters": [
       [0, 31],
       [33, 64],
@@ -4430,11 +4433,7 @@
       [223, 55295],
       [57344, 1114111]
     ],
-    "transforms[56].rules[1].stemNotStartsWith": [
-      [97, 97],
-      [99, 99],
-      [105, 105],
-      [112, 112],
+    "transforms[56].rules[1].stemStartsWith": [
       [115, 115]
     ],
     "transforms[56].rules[2].stemCharacters": [
@@ -4444,9 +4443,6 @@
       [215, 215],
       [223, 55295],
       [57344, 1114111]
-    ],
-    "transforms[56].rules[2].stemStartsWith": [
-      [99, 99]
     ],
     "transforms[56].rules[3].stemCharacters": [
       [0, 31],
@@ -4464,9 +4460,6 @@
       [223, 55295],
       [57344, 1114111]
     ],
-    "transforms[56].rules[4].stemStartsWith": [
-      [105, 105]
-    ],
     "transforms[56].rules[5].stemCharacters": [
       [0, 31],
       [33, 64],
@@ -4475,65 +4468,6 @@
       [223, 55295],
       [57344, 1114111]
     ],
-    "transforms[56].rules[5].stemStartsWith": [
-      [112, 112]
-    ],
-    "transforms[56].rules[6].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 191],
-      [215, 215],
-      [223, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[56].rules[6].stemStartsWith": [
-      [97, 97]
-    ],
-    "transforms[56].rules[7].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 191],
-      [215, 215],
-      [223, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[56].rules[7].stemStartsWith": [
-      [115, 115]
-    ],
-    "transforms[56].rules[8].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 191],
-      [215, 215],
-      [223, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[56].rules[8].stemNotEndsWith": [
-      [103, 103],
-      [113, 113]
-    ],
-    "transforms[56].rules[9].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 191],
-      [215, 215],
-      [223, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[56].rules[10].stemCharacters": [],
-    "transforms[56].rules[11].stemCharacters": [],
-    "transforms[56].rules[12].stemCharacters": [],
-    "transforms[56].rules[13].stemCharacters": [],
-    "transforms[56].rules[14].stemCharacters": [],
-    "transforms[56].rules[15].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 191],
-      [215, 215],
-      [223, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[56].rules[16].stemCharacters": [],
     "transforms[57].rules[0].stemCharacters": [
       [0, 31],
       [33, 64],
@@ -4541,9 +4475,6 @@
       [215, 215],
       [223, 55295],
       [57344, 1114111]
-    ],
-    "transforms[57].rules[0].stemNotStartsWith": [
-      [115, 115]
     ],
     "transforms[57].rules[1].stemCharacters": [
       [0, 31],
@@ -4553,7 +4484,11 @@
       [223, 55295],
       [57344, 1114111]
     ],
-    "transforms[57].rules[1].stemStartsWith": [
+    "transforms[57].rules[1].stemNotStartsWith": [
+      [97, 97],
+      [99, 99],
+      [105, 105],
+      [112, 112],
       [115, 115]
     ],
     "transforms[57].rules[2].stemCharacters": [
@@ -4563,6 +4498,9 @@
       [215, 215],
       [223, 55295],
       [57344, 1114111]
+    ],
+    "transforms[57].rules[2].stemStartsWith": [
+      [99, 99]
     ],
     "transforms[57].rules[3].stemCharacters": [
       [0, 31],
@@ -4580,6 +4518,9 @@
       [223, 55295],
       [57344, 1114111]
     ],
+    "transforms[57].rules[4].stemStartsWith": [
+      [105, 105]
+    ],
     "transforms[57].rules[5].stemCharacters": [
       [0, 31],
       [33, 64],
@@ -4588,6 +4529,65 @@
       [223, 55295],
       [57344, 1114111]
     ],
+    "transforms[57].rules[5].stemStartsWith": [
+      [112, 112]
+    ],
+    "transforms[57].rules[6].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 191],
+      [215, 215],
+      [223, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[57].rules[6].stemStartsWith": [
+      [97, 97]
+    ],
+    "transforms[57].rules[7].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 191],
+      [215, 215],
+      [223, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[57].rules[7].stemStartsWith": [
+      [115, 115]
+    ],
+    "transforms[57].rules[8].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 191],
+      [215, 215],
+      [223, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[57].rules[8].stemNotEndsWith": [
+      [103, 103],
+      [113, 113]
+    ],
+    "transforms[57].rules[9].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 191],
+      [215, 215],
+      [223, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[57].rules[10].stemCharacters": [],
+    "transforms[57].rules[11].stemCharacters": [],
+    "transforms[57].rules[12].stemCharacters": [],
+    "transforms[57].rules[13].stemCharacters": [],
+    "transforms[57].rules[14].stemCharacters": [],
+    "transforms[57].rules[15].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 191],
+      [215, 215],
+      [223, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[57].rules[16].stemCharacters": [],
     "transforms[58].rules[0].stemCharacters": [
       [0, 31],
       [33, 64],
@@ -5651,7 +5651,7 @@
       [216, 246],
       [248, 591]
     ],
-    "transforms[59].rules[98].stemCharacters": [
+    "transforms[59].rules[130].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 191],
@@ -7822,6 +7822,7 @@
         ["gostosíssimo", "gostosíssimo"],
         ["durabilíssimo", "durabilíssimo"],
         ["difidentíssimo", "difidentíssimo"],
+        ["dulcíssimo", "dulcíssimo"],
         ["brusquíssimo", "brusquíssimo"],
         ["pirosíssimo", "pirosíssimo"],
         ["peidorreiríssimo", "peidorreiríssimo"],
@@ -8014,6 +8015,9 @@
         ["parti", "parti"],
         ["partindo", "partindo"],
         ["partidos", "partidos"],
+        ["falásseis", "falásseis"],
+        ["partísseis", "partísseis"],
+        ["comerdes", "comerdes"],
         ["fiquei", "fiquei"],
         ["fique", "fique"],
         ["cheguei", "cheguei"],
@@ -8271,6 +8275,23 @@
         ["incluso", "incluso"],
         ["imerso", "imerso"],
         ["surpresa", "surpresa"],
+        ["despeço", "despeço"],
+        ["sorrio", "sorrio"],
+        ["releio", "releio"],
+        ["pressuponho", "pressuponho"],
+        ["antevejo", "antevejo"],
+        ["advém", "advém"],
+        ["atém", "atém"],
+        ["descreio", "descreio"],
+        ["equivalho", "equivalho"],
+        ["entreouço", "entreouço"],
+        ["malquis", "malquis"],
+        ["desprovejo", "desprovejo"],
+        ["provejo", "provejo"],
+        ["proveja", "proveja"],
+        ["provês", "provês"],
+        ["forem", "forem"],
+        ["fôramos", "fôramos"],
         ["tô", "tô"],
         ["tá", "tá"],
         ["tamo", "tamo"],
@@ -8390,6 +8411,20 @@
         ["obras-primas", "obras-primas"],
         ["bem-sucedidos", "bem-sucedidos"],
         ["tartarugas-do-mar", "tartarugas-do-mar"],
+        ["soldados", "soldados"],
+        ["ideias", "ideias"],
+        ["mentiras", "mentiras"],
+        ["ataques", "ataques"],
+        ["águas", "águas"],
+        ["saudáveis", "saudáveis"],
+        ["impostos", "impostos"],
+        ["apostas", "apostas"],
+        ["revistas", "revistas"],
+        ["malditos", "malditos"],
+        ["peças", "peças"],
+        ["verdes", "verdes"],
+        ["tais", "tais"],
+        ["erradas", "erradas"],
         ["bonita", "bonita"],
         ["trabalhadora", "trabalhadora"],
         ["portuguesa", "portuguesa"],
@@ -8410,6 +8445,16 @@
         ["portuguesas", "portuguesas"],
         ["boas", "boas"],
         ["estas", "estas"],
+        ["sua", "sua"],
+        ["suas", "suas"],
+        ["amiga", "amiga"],
+        ["humana", "humana"],
+        ["perfeita", "perfeita"],
+        ["cansada", "cansada"],
+        ["conhecida", "conhecida"],
+        ["distraída", "distraída"],
+        ["farta", "farta"],
+        ["ladra", "ladra"],
         ["gatinho", "gatinho"],
         ["casinha", "casinha"],
         ["cafezinho", "cafezinho"],
@@ -8439,6 +8484,10 @@
         ["grandíssimas", "grandíssimas"],
         ["normalíssimo", "normalíssimo"],
         ["seríssimo", "seríssimo"],
+        ["fidelíssimo", "fidelíssimo"],
+        ["antiquíssimo", "antiquíssimo"],
+        ["simplicíssimo", "simplicíssimo"],
+        ["nobilíssimo", "nobilíssimo"],
         ["rapidamente", "rapidamente"],
         ["facilmente", "facilmente"],
         ["provavelmente", "provavelmente"],
@@ -8447,6 +8496,7 @@
         ["cortesmente", "cortesmente"],
         ["possivelmente", "possivelmente"],
         ["cristãmente", "cristãmente"],
+        ["comumente", "comumente"],
         ["este", "este"],
         ["estes", "estes"],
         ["de", "de"],
@@ -8523,12 +8573,15 @@
         ["miss", "miss"],
         ["pass", "pass"],
         ["mass", "mass"],
+        ["agride", "agride"],
         ["alguem", "alguem"],
         ["sida", "sida"],
         ["alegue", "alegue"],
         ["siderúrgica", "siderúrgica"],
         ["sao", "sao"],
         ["cao", "cao"],
+        ["Évora", "évora"],
+        ["Ângela", "ângela"],
         ["respigemos", "respigemos"],
         ["requisermos", "requisermos"],
         ["reúnamos", "reúnamos"],
@@ -8564,7 +8617,6 @@
         ["historinha", "historinha"],
         ["mijoníssimo", "mijoníssimo"],
         ["acérrimo", "acérrimo"],
-        ["dulcíssimo", "dulcíssimo"],
         ["Falou", "falou"],
         ["FALOU", "falou"],
         ["ÁRVORE", "árvore"],
@@ -8577,6 +8629,8 @@
         ["ﬁz", "ﬁz"],
         ["Ｃasa", "ｃasa"],
         ["coração", "coração"],
+        ["coração", "coração"],
+        ["CORAÇÃO", "coração"],
         ["lingüiça", "lingüiça"],
         ["agüentar", "agüentar"],
         ["Ügo", "ügo"],
@@ -8594,6 +8648,23 @@
         ["pode ser", "pode ser"],
         ["segue em frente", "segue em frente"],
         ["casas grandes", "casas grandes"],
+        ["Sua casa é bonita", "sua casa é bonita"],
+        ["soldados marchavam", "soldados marchavam"],
+        ["ideias novas", "ideias novas"],
+        ["ataques aéreos", "ataques aéreos"],
+        ["impostos altos", "impostos altos"],
+        ["Pare com isso", "pare com isso"],
+        ["achas que sim", "achas que sim"],
+        ["podem ir", "podem ir"],
+        ["amiga dela", "amiga dela"],
+        ["perfeita para mim", "perfeita para mim"],
+        ["cansada demais", "cansada demais"],
+        ["precisa de ajuda", "precisa de ajuda"],
+        ["atende o telefone", "atende o telefone"],
+        ["verdes e azuis", "verdes e azuis"],
+        ["saudáveis demais", "saudáveis demais"],
+        ["revistas antigas", "revistas antigas"],
+        ["malditos sejam", "malditos sejam"],
         ["chama-se João", "chama-se joão"],
         ["deixa-me ir", "deixa-me ir"],
         ["fazê-lo agora", "fazê-lo agora"],
@@ -8620,6 +8691,7 @@
         ["Aluga-se casa", "aluga-se casa"],
         ["Compre-me pão", "compre-me pão"],
         ["Fale-me de ti", "fale-me de ti"],
+        ["deixa-o ir", "deixa-o ir"],
         ["Bentinho chegou", "bentinho chegou"],
         ["Marinha de guerra", "marinha de guerra"],
         ["rapazinhos da rua", "rapazinhos da rua"],
@@ -9971,6 +10043,7 @@
         ["gostosíssimo", "Gostosíssimo"],
         ["durabilíssimo", "Durabilíssimo"],
         ["difidentíssimo", "Difidentíssimo"],
+        ["dulcíssimo", "Dulcíssimo"],
         ["brusquíssimo", "Brusquíssimo"],
         ["pirosíssimo", "Pirosíssimo"],
         ["peidorreiríssimo", "Peidorreiríssimo"],
@@ -10163,6 +10236,9 @@
         ["parti", "Parti"],
         ["partindo", "Partindo"],
         ["partidos", "Partidos"],
+        ["falásseis", "Falásseis"],
+        ["partísseis", "Partísseis"],
+        ["comerdes", "Comerdes"],
         ["fiquei", "Fiquei"],
         ["fique", "Fique"],
         ["cheguei", "Cheguei"],
@@ -10420,6 +10496,23 @@
         ["incluso", "Incluso"],
         ["imerso", "Imerso"],
         ["surpresa", "Surpresa"],
+        ["despeço", "Despeço"],
+        ["sorrio", "Sorrio"],
+        ["releio", "Releio"],
+        ["pressuponho", "Pressuponho"],
+        ["antevejo", "Antevejo"],
+        ["advém", "Advém"],
+        ["atém", "Atém"],
+        ["descreio", "Descreio"],
+        ["equivalho", "Equivalho"],
+        ["entreouço", "Entreouço"],
+        ["malquis", "Malquis"],
+        ["desprovejo", "Desprovejo"],
+        ["provejo", "Provejo"],
+        ["proveja", "Proveja"],
+        ["provês", "Provês"],
+        ["forem", "Forem"],
+        ["fôramos", "Fôramos"],
         ["tô", "Tô"],
         ["tá", "Tá"],
         ["tamo", "Tamo"],
@@ -10539,6 +10632,20 @@
         ["obras-primas", "Obras-primas"],
         ["bem-sucedidos", "Bem-sucedidos"],
         ["tartarugas-do-mar", "Tartarugas-do-mar"],
+        ["soldados", "Soldados"],
+        ["ideias", "Ideias"],
+        ["mentiras", "Mentiras"],
+        ["ataques", "Ataques"],
+        ["águas", "Águas"],
+        ["saudáveis", "Saudáveis"],
+        ["impostos", "Impostos"],
+        ["apostas", "Apostas"],
+        ["revistas", "Revistas"],
+        ["malditos", "Malditos"],
+        ["peças", "Peças"],
+        ["verdes", "Verdes"],
+        ["tais", "Tais"],
+        ["erradas", "Erradas"],
         ["bonita", "Bonita"],
         ["trabalhadora", "Trabalhadora"],
         ["portuguesa", "Portuguesa"],
@@ -10559,6 +10666,16 @@
         ["portuguesas", "Portuguesas"],
         ["boas", "Boas"],
         ["estas", "Estas"],
+        ["sua", "Sua"],
+        ["suas", "Suas"],
+        ["amiga", "Amiga"],
+        ["humana", "Humana"],
+        ["perfeita", "Perfeita"],
+        ["cansada", "Cansada"],
+        ["conhecida", "Conhecida"],
+        ["distraída", "Distraída"],
+        ["farta", "Farta"],
+        ["ladra", "Ladra"],
         ["gatinho", "Gatinho"],
         ["casinha", "Casinha"],
         ["cafezinho", "Cafezinho"],
@@ -10588,6 +10705,10 @@
         ["grandíssimas", "Grandíssimas"],
         ["normalíssimo", "Normalíssimo"],
         ["seríssimo", "Seríssimo"],
+        ["fidelíssimo", "Fidelíssimo"],
+        ["antiquíssimo", "Antiquíssimo"],
+        ["simplicíssimo", "Simplicíssimo"],
+        ["nobilíssimo", "Nobilíssimo"],
         ["rapidamente", "Rapidamente"],
         ["facilmente", "Facilmente"],
         ["provavelmente", "Provavelmente"],
@@ -10596,6 +10717,7 @@
         ["cortesmente", "Cortesmente"],
         ["possivelmente", "Possivelmente"],
         ["cristãmente", "Cristãmente"],
+        ["comumente", "Comumente"],
         ["este", "Este"],
         ["estes", "Estes"],
         ["de", "De"],
@@ -10672,12 +10794,15 @@
         ["miss", "Miss"],
         ["pass", "Pass"],
         ["mass", "Mass"],
+        ["agride", "Agride"],
         ["alguem", "Alguem"],
         ["sida", "Sida"],
         ["alegue", "Alegue"],
         ["siderúrgica", "Siderúrgica"],
         ["sao", "Sao"],
         ["cao", "Cao"],
+        ["Évora", "Évora"],
+        ["Ângela", "Ângela"],
         ["respigemos", "Respigemos"],
         ["requisermos", "Requisermos"],
         ["reúnamos", "Reúnamos"],
@@ -10713,7 +10838,6 @@
         ["historinha", "Historinha"],
         ["mijoníssimo", "Mijoníssimo"],
         ["acérrimo", "Acérrimo"],
-        ["dulcíssimo", "Dulcíssimo"],
         ["Falou", "Falou"],
         ["FALOU", "FALOU"],
         ["ÁRVORE", "ÁRVORE"],
@@ -10726,6 +10850,8 @@
         ["ﬁz", "FIz"],
         ["Ｃasa", "Ｃasa"],
         ["coração", "Coração"],
+        ["coração", "Coração"],
+        ["CORAÇÃO", "CORAÇÃO"],
         ["lingüiça", "Lingüiça"],
         ["agüentar", "Agüentar"],
         ["Ügo", "Ügo"],
@@ -10743,6 +10869,23 @@
         ["pode ser", "Pode ser"],
         ["segue em frente", "Segue em frente"],
         ["casas grandes", "Casas grandes"],
+        ["Sua casa é bonita", "Sua casa é bonita"],
+        ["soldados marchavam", "Soldados marchavam"],
+        ["ideias novas", "Ideias novas"],
+        ["ataques aéreos", "Ataques aéreos"],
+        ["impostos altos", "Impostos altos"],
+        ["Pare com isso", "Pare com isso"],
+        ["achas que sim", "Achas que sim"],
+        ["podem ir", "Podem ir"],
+        ["amiga dela", "Amiga dela"],
+        ["perfeita para mim", "Perfeita para mim"],
+        ["cansada demais", "Cansada demais"],
+        ["precisa de ajuda", "Precisa de ajuda"],
+        ["atende o telefone", "Atende o telefone"],
+        ["verdes e azuis", "Verdes e azuis"],
+        ["saudáveis demais", "Saudáveis demais"],
+        ["revistas antigas", "Revistas antigas"],
+        ["malditos sejam", "Malditos sejam"],
         ["chama-se João", "Chama-se João"],
         ["deixa-me ir", "Deixa-me ir"],
         ["fazê-lo agora", "Fazê-lo agora"],
@@ -10769,6 +10912,7 @@
         ["Aluga-se casa", "Aluga-se casa"],
         ["Compre-me pão", "Compre-me pão"],
         ["Fale-me de ti", "Fale-me de ti"],
+        ["deixa-o ir", "Deixa-o ir"],
         ["Bentinho chegou", "Bentinho chegou"],
         ["Marinha de guerra", "Marinha de guerra"],
         ["rapazinhos da rua", "Rapazinhos da rua"],
