@@ -42,6 +42,8 @@ Commands:
             and every word followed by one, looked up from the word. Counts
             first results that match more than one word and are not a gold
             lemma of the matched text, by rule.
+  nothing   The --top most frequent words of --frequency looked up alone: how
+            many find nothing, and their share of the list's tokens.
   traces    tests/corpus.tsv: the share of rows whose shown trace (the
             shortest that reaches the lemma, as traceSelection "shortest"
             keeps) names the row's UniMorph case and number, or tense and
@@ -303,6 +305,16 @@ def cmd_clitics(args, d):
         print(f'  {n:>5}  {matched} -> {expression} ({rule})')
 
 
+def cmd_nothing(args, d):
+    words = frequent(args.frequency, args.top)
+    total = sum(c for _, c in words)
+    looked = lookup_batch(args, [w for w, _ in words])
+    none = sorted(((c, w) for (w, c), entry in zip(words, looked) if not entry['results']), reverse=True)
+    print(json.dumps({'words': len(words), 'nothing': len(none), 'nothingTokens': sum(c for c, _ in none),
+                      'shareOfTokens': round(sum(c for c, _ in none) / total, 5)}))
+    print('most frequent:', ' '.join(w for _, w in none[:args.show]))
+
+
 CASES = {'NOM': 'nom.', 'GEN': 'gen.', 'DAT': 'dat.', 'ACC': 'acc.', 'VOC': 'voc.', 'ESS': 'loc.', 'INS': 'ins.'}
 
 
@@ -360,7 +372,7 @@ def cmd_traces(args, d):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('command', choices=['frequent', 'text', 'clitics', 'traces'])
+    parser.add_argument('command', choices=['frequent', 'text', 'clitics', 'traces', 'nothing'])
     parser.add_argument('--zip', required=True)
     parser.add_argument('--dictionary', required=True)
     parser.add_argument('--languages', default=os.path.join(REPO, 'languages'))
@@ -375,7 +387,7 @@ def main():
     parser.add_argument('--show', type=int, default=40)
     args = parser.parse_args()
     d = Dictionary(args.zip)
-    {'frequent': cmd_frequent, 'text': cmd_text, 'clitics': cmd_clitics, 'traces': cmd_traces}[args.command](args, d)
+    {'frequent': cmd_frequent, 'text': cmd_text, 'clitics': cmd_clitics, 'traces': cmd_traces, 'nothing': cmd_nothing}[args.command](args, d)
 
 
 if __name__ == '__main__':
