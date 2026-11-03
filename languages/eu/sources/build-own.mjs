@@ -19,6 +19,8 @@
 //   definite singular and plural and the proximal plural (-ok), for stems in
 //   a vowel, in -a, in a consonant and in -r (lur, lurra), the animate local
 //   cases (-gan), and the endings that are declined again (-ko, -(r)en, -rako);
+//   after a consonant the endings take an -e- (gizonean, gizonek), which the
+//   transform descriptions leave out;
 // - comparative, superlative and excessive degree (-ago, -en, -egi) and the
 //   adverbs in -ki;
 // - the non-finite verb forms: imperfective participle (-t(z)en), future
@@ -112,8 +114,11 @@ const CASES = [
         sg: [['a', 'a']], pl: [['ak', 'ak']], prox: [['ok', 'ok']]},
     {id: 'erg', name: 'ergative', v: ['sg', 'pl'],
         sg: [['ak', 'ak']], pl: [['ek', 'ek']], indef: [['k', 'ek']], prox: [['ok', 'ok']]},
+    // The indefinite -i after a consonant only after l, n and t (bati,
+    // laguni, gizoni): after another consonant it reads ugari, hori and the
+    // participles in -i (ikusi, hasi) as datives.
     {id: 'dat', name: 'dative',
-        sg: [['ari', 'ari']], pl: [['ei', 'ei']], indef: [['ri', 'i']], prox: [['oi', 'oi']]},
+        sg: [['ari', 'ari']], pl: [['ei', 'ei']], indef: [['ri', 'i', '[lnt]']], prox: [['oi', 'oi']]},
     {id: 'gen', name: 'genitive', stacker: true,
         sg: [['aren', 'aren']], pl: [['en', 'en']], indef: [['ren', 'en']], prox: [['on', 'on']]},
     {id: 'com', name: 'comitative',
@@ -158,7 +163,7 @@ const CASES = [
 const startsWithVowel = (s) => /^[aeiou]/.test(s);
 
 // One reading per stem type: {inflected, deinflected, stemEndsWith}.
-function stemRules(vEnding, cEnding) {
+function stemRules(vEnding, cEnding, consonant = CONSONANT) {
     const rules = [];
     if (startsWithVowel(vEnding)) {
         rules.push({inflected: vEnding, deinflected: '', stemEndsWith: VOWEL_NOT_A});
@@ -172,7 +177,7 @@ function stemRules(vEnding, cEnding) {
     } else {
         rules.push({inflected: vEnding, deinflected: '', stemEndsWith: VOWEL});
     }
-    rules.push({inflected: cEnding, deinflected: '', stemEndsWith: CONSONANT});
+    rules.push({inflected: cEnding, deinflected: '', stemEndsWith: consonant});
     if (startsWithVowel(cEnding)) {
         rules.push({inflected: 'r' + cEnding, deinflected: '', stemEndsWith: R});
     }
@@ -186,8 +191,8 @@ function declension() {
     const groups = new Map();
     for (const c of CASES) {
         for (const number of Object.keys(NUMBERS)) {
-            for (const [vEnding, cEnding] of c[number] ?? []) {
-                for (const r of stemRules(vEnding, cEnding)) {
+            for (const [vEnding, cEnding, consonant] of c[number] ?? []) {
+                for (const r of stemRules(vEnding, cEnding, consonant)) {
                     const conditionsIn = c.stacker ? ['sg', 'pl'] : [];
                     const key = JSON.stringify([r.inflected, r.deinflected, r.stemEndsWith, conditionsIn]);
                     let g = groups.get(key);
@@ -235,7 +240,7 @@ function declension() {
         }
         const name = byCase.map(({c, numbers}) => `${c.name} ${numbers.map((n) => NUMBERS[n]).join(' or ')}`).join(', ');
         const examples = readings.map(([c, n]) => `-${(c[n] ?? [])[0][0]}`).filter((x, i, a) => a.indexOf(x) === i);
-        transform(id, name, `Noun or adjective in the ${name}. Ending: ${examples.join(', ')} after a vowel; the consonant forms take an -e- (gizonean, gizonek).`);
+        transform(id, name, `${name[0].toUpperCase()}${name.slice(1)} of a noun or adjective: ${examples.join(', ')}.`);
         const plural = readings.some(([c, n]) => (n === 'pl' || n === 'prox') && c.id !== 'ins');
         // Adverbs take a local ending with no -e- after a consonant (hortik,
         // gaurko; adverbs() below), so only a vowel-stem rule here gives one
@@ -311,7 +316,7 @@ function adverbs() {
     // Distributive -ka: ehunka (by hundreds), bakarka (one by one), taldeka
     // (in groups), oihuka (shouting).
     transform('adverb-ka', 'distributive (-ka)', 'Adverb made with -ka from a noun, adjective or numeral: ehunka (by hundreds), bakarka (one by one), taldeka (in groups), oihuka (shouting).');
-    add('adverb-ka', {type: 'suffix', inflected: 'ka', deinflected: '', conditionsIn: [], conditionsOut: ['n', 'adj', 'sg'], stemMinLength: 3,
+    add('adverb-ka', {type: 'suffix', inflected: 'ka', deinflected: '', conditionsIn: [], conditionsOut: ['n', 'adj', 'sg'], stemMinLength: 4,
         stemEndsWith: '[aeioulnrt]'});
     transform('adverb-tik', 'ablative of an adverb', 'Adverbs take -tik with no -e- after a consonant, and -dik after -n: hortik (from there), gaurtik, hemendik, handik.');
     add('adverb-tik', {type: 'suffix', inflected: 'tik', deinflected: '', conditionsIn: [], conditionsOut: ['adv'], stemMinLength: 2,
@@ -440,8 +445,12 @@ const CLOSED = {
         loc: 'horietako', abl: 'horietatik', all: 'horietara', ter: 'horietaraino', des: 'horietarako', aine: 'horiengan', aabl: 'horiengandik', aall: 'horiengana'},
     haiek: {dat: 'haiei', gen: 'haien', com: 'haiekin', ben: 'haientzat', mot: 'haiengatik', ins: 'haietaz', ine: 'haietan',
         loc: 'haietako', abl: 'haietatik', all: 'haietara', ter: 'haietaraino', des: 'haietarako', aine: 'haiengan', aabl: 'haiengandik', aall: 'haiengana'},
+    // bera (the same) has the oblique stem bere- in the local cases (une
+    // berean, at the same moment).
     bera: {erg: 'berak beraiek', dat: 'berari beraiei', gen: 'beraren beraien', com: 'berarekin beraiekin', ben: 'berarentzat beraientzat',
-        mot: 'berarengatik', aine: 'beragan berarengan'},
+        mot: 'berarengatik', aine: 'beragan berarengan', ine: 'berean', abl: 'beretik', all: 'berera', loc: 'bereko'},
+    edonor: {dat: 'edonori', erg: 'edonork'},
+    edozer: {dat: 'edozeri', erg: 'edozerk'},
     nor: {erg: 'nork', dat: 'nori', gen: 'noren', com: 'norekin', ben: 'norentzat', mot: 'norengatik', ins: 'noretaz', aine: 'norengan', aabl: 'norengandik', aall: 'norengana'},
     inor: {erg: 'inork', dat: 'inori', gen: 'inoren', com: 'inorekin', ben: 'inorentzat', mot: 'inorengatik', aine: 'inorengan'},
     zer: {erg: 'zerk', dat: 'zeri', gen: 'zeren', com: 'zerekin', ben: 'zerentzat', mot: 'zergatik', ins: 'zertaz zerez', ine: 'zertan',
@@ -548,6 +557,11 @@ function personList(spec) {
 // (present (hura, nik): dut, dakit, daukat), and its description lists the
 // forms.
 const cellsById = new Map();
+// The four rarest tense families with a dative (balitzaio, liezaioke,
+// ziezaiokeen, niokeen: about 220 of the subtitle list's 3.9 million tokens)
+// have one transform each, which names the tense but not the persons, so the
+// pack's tests stay within the 1 MB of section 3.
+const COARSE_DATIVE = new Set(['hyp', 'pothyp', 'potpast', 'condpast']);
 
 function paradigm(p) {
     const cells = [];
@@ -574,7 +588,9 @@ function paradigm(p) {
         }
     }
     for (const cell of cells) {
-        const id = [cell.tense, cell.abs && `a${cell.abs}`, cell.dat && `d${cell.dat}`, cell.erg && `e${cell.erg}`].filter(Boolean).join('-');
+        const coarse = cell.dat !== null && COARSE_DATIVE.has(cell.tense);
+        const id = coarse ? `${cell.tense}-dative`
+            : [cell.tense, cell.abs && `a${cell.abs}`, cell.dat && `d${cell.dat}`, cell.erg && `e${cell.erg}`].filter(Boolean).join('-');
         let entry = cellsById.get(id);
         if (entry === undefined) {
             entry = {cell, rules: [], compound: []};
@@ -603,6 +619,11 @@ function finiteTransforms() {
         if (cell.dat !== null) { roles.push(PERSON[cell.dat].dat); }
         if (cell.erg !== null) { roles.push(PERSON[cell.erg].erg); }
         const [name] = TENSES[cell.tense];
+        if (id.endsWith('-dative')) {
+            transform(id, `${name} (with a dative)`, `${TENSES[cell.tense][1]}, with a dative person (nori); the forms name the persons.`);
+            for (const rule of rules) { add(id, rule); }
+            continue;
+        }
         // The name gives the tense and the persons by their pronouns in the
         // case of their role (hura absolutive, niri dative, zuk ergative).
         // These transforms have no description, so the file stays small
@@ -840,9 +861,11 @@ const SYNTHETIC = [
 // A few familiar (hi) forms that are also common words are left out: hau
 // (this) as "he has you", zain (waiting) as "it is to you (f.)", and the
 // feminine dion, didan and digun, which are also the -n forms of dio, dit
-// and digu. det, dezu, degu and dezue (dut, duzu, dugu, duzue) and genduen,
-// zenduen and zenduten (genuen, zenuen, zenuten) are Gipuzkoan forms that
-// older literature writes (Txomin Agirre's Garoa).
+// and digu. det, dezu, degu and dezue (dut, duzu, dugu, duzue), genduen,
+// zenduen and zenduten (genuen, zenuen, zenuten), and zuan and zituan
+// (zuen, zituen) are Gipuzkoan forms that older literature writes (Txomin
+// Agirre's Garoa); zuan and zituan are also the familiar forms of zen and
+// ziren, which come after them.
 const AUXILIARIES = [
     {key: 'izan', lemmas: ['izan'], compound: true, about: 'izan (to be), the intransitive auxiliary', roles: 'nor', tenses: {
         present: '1s:naiz 2f:haiz 3s:da 1p:gara 2s:zara 2p:zarete 3p:dira',
@@ -881,11 +904,11 @@ const AUXILIARIES = [
         past: {
             '1s': '2f:ninduan,nindunan 3s:ninduen 2s:ninduzun 2p:ninduzuen 3p:ninduten',
             '2f': '1s:hindudan 3s:hinduen 1p:hindugun 3p:hinduten',
-            '3s': '1s:nuen 2f:huen 3s:zuen 1p:genuen,genduen 2s:zenuen,zenduen 2p:zenuten,zenduten 3p:zuten',
+            '3s': '1s:nuen 2f:huen 3s:zuen,zuan 1p:genuen,genduen 2s:zenuen,zenduen 2p:zenuten,zenduten 3p:zuten',
             '1p': '2f:gintuan,gintunan 3s:gintuen 2s:gintuzun 2p:gintuzuen 3p:gintuzten',
             '2s': '1s:zintudan 3s:zintuen 1p:zintugun 3p:zintuzten',
             '2p': '1s:zintuztedan 3s:zintuzten 1p:zintuztegun 3p:zintuzteten',
-            '3p': '1s:nituen 2f:hituen 3s:zituen 1p:genituen 2s:zenituen 2p:zenituzten 3p:zituzten',
+            '3p': '1s:nituen 2f:hituen 3s:zituen,zituan 1p:genituen 2s:zenituen 2p:zenituzten 3p:zituzten',
         },
         cond: {
             '1s': '3s:ninduke 2s:nindukezu 2p:nindukezue 3p:nindukete',

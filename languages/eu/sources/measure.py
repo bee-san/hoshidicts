@@ -45,7 +45,10 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(HERE)))
-WORD = re.compile(r"[A-Za-zÀ-ÖØ-öø-ɏ]+")
+# A word is a run of the pack's word characters (letters and digits); one
+# with a digit (1990ean, XX.) is a number, which no one looks up as a word,
+# and is left out.
+WORD = re.compile(r"[A-Za-zÀ-ÖØ-öø-ɏ0-9]+")
 
 
 def args_of(argv):
@@ -199,7 +202,8 @@ def positions(cache, corpus):
     out = []
     for s in sentences(cache, corpus):
         for m in WORD.finditer(s):
-            out.append((m.group(0), s[m.start():]))
+            if not any(c.isdigit() for c in m.group(0)):
+                out.append((m.group(0), s[m.start():]))
     return out
 
 

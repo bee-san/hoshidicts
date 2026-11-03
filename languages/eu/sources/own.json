@@ -177,7 +177,7 @@
     {
       "id": "abs-sg",
       "name": "absolutive singular",
-      "description": "Noun or adjective in the absolutive singular. Ending: -a after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Absolutive singular of a noun or adjective: -a.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "a", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v", "sg"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -188,7 +188,7 @@
     {
       "id": "abs-pl+erg-sg",
       "name": "absolutive plural, ergative singular",
-      "description": "Noun or adjective in the absolutive plural, ergative singular. Ending: -ak after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Absolutive plural, ergative singular of a noun or adjective: -ak.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ak", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -200,7 +200,7 @@
     {
       "id": "abs-prox+erg-prox",
       "name": "absolutive proximal plural, ergative proximal plural",
-      "description": "Noun or adjective in the absolutive proximal plural, ergative proximal plural. Ending: -ok after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Absolutive proximal plural, ergative proximal plural of a noun or adjective: -ok.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ok", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -212,7 +212,7 @@
     {
       "id": "erg-pl",
       "name": "ergative plural",
-      "description": "Noun or adjective in the ergative plural. Ending: -ek after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Ergative plural of a noun or adjective: -ek.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ek", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -222,7 +222,7 @@
     {
       "id": "erg-pl+erg-indef",
       "name": "ergative plural or indefinite",
-      "description": "Noun or adjective in the ergative plural or indefinite. Ending: -ek, -k after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Ergative plural or indefinite of a noun or adjective: -ek, -k.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ek", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v", "pl"], "stemMinLength": 2, "stemEndsWith": "[bcdfghjklmnpqrstvwxz\\u00F1]"},
@@ -232,7 +232,7 @@
     {
       "id": "erg-indef",
       "name": "ergative indefinite",
-      "description": "Noun or adjective in the ergative indefinite. Ending: -k after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Ergative indefinite of a noun or adjective: -k.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "k", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"}
@@ -241,7 +241,7 @@
     {
       "id": "dat-sg",
       "name": "dative singular",
-      "description": "Noun or adjective in the dative singular. Ending: -ari after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Dative singular of a noun or adjective: -ari.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ari", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "sg"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -252,7 +252,7 @@
     {
       "id": "dat-pl",
       "name": "dative plural",
-      "description": "Noun or adjective in the dative plural. Ending: -ei after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Dative plural of a noun or adjective: -ei.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ei", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -264,7 +264,7 @@
     {
       "id": "dat-sg+dat-indef",
       "name": "dative singular or indefinite",
-      "description": "Noun or adjective in the dative singular or indefinite. Ending: -ari, -ri after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Dative singular or indefinite of a noun or adjective: -ari, -ri.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ri", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"}
@@ -273,17 +273,17 @@
     {
       "id": "dat-indef",
       "name": "dative indefinite",
-      "description": "Noun or adjective in the dative indefinite. Ending: -ri after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Dative indefinite of a noun or adjective: -ri.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "i", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "sg"], "stemMinLength": 2, "stemEndsWith": "[bcdfghjklmnpqrstvwxz\\u00F1]"},
+        {"type": "suffix", "inflected": "i", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "sg"], "stemMinLength": 2, "stemEndsWith": "[lnt]"},
         {"type": "suffix", "inflected": "ri", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "sg"], "stemMinLength": 2, "stemEndsWith": "[r]"}
       ]
     },
     {
       "id": "dat-prox",
       "name": "dative proximal plural",
-      "description": "Noun or adjective in the dative proximal plural. Ending: -oi after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Dative proximal plural of a noun or adjective: -oi.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "oi", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -295,7 +295,7 @@
     {
       "id": "gen-sg",
       "name": "genitive singular",
-      "description": "Noun or adjective in the genitive singular. Ending: -aren after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Genitive singular of a noun or adjective: -aren.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "aren", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "sg"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -306,7 +306,7 @@
     {
       "id": "gen-pl",
       "name": "genitive plural",
-      "description": "Noun or adjective in the genitive plural. Ending: -en after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Genitive plural of a noun or adjective: -en.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "en", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -316,7 +316,7 @@
     {
       "id": "gen-pl+gen-indef",
       "name": "genitive plural or indefinite",
-      "description": "Noun or adjective in the genitive plural or indefinite. Ending: -en, -ren after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Genitive plural or indefinite of a noun or adjective: -en, -ren.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "en", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "pl"], "stemMinLength": 2, "stemEndsWith": "[bcdfghjklmnpqrstvwxz\\u00F1]"},
@@ -326,7 +326,7 @@
     {
       "id": "gen-sg+gen-indef",
       "name": "genitive singular or indefinite",
-      "description": "Noun or adjective in the genitive singular or indefinite. Ending: -aren, -ren after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Genitive singular or indefinite of a noun or adjective: -aren, -ren.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ren", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"}
@@ -335,7 +335,7 @@
     {
       "id": "gen-prox",
       "name": "genitive proximal plural",
-      "description": "Noun or adjective in the genitive proximal plural. Ending: -on after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Genitive proximal plural of a noun or adjective: -on.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "on", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -347,7 +347,7 @@
     {
       "id": "com-sg",
       "name": "comitative singular",
-      "description": "Noun or adjective in the comitative singular. Ending: -arekin after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Comitative singular of a noun or adjective: -arekin.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "arekin", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "sg"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -358,7 +358,7 @@
     {
       "id": "com-pl",
       "name": "comitative plural",
-      "description": "Noun or adjective in the comitative plural. Ending: -ekin after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Comitative plural of a noun or adjective: -ekin.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ekin", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -368,7 +368,7 @@
     {
       "id": "com-pl+com-indef",
       "name": "comitative plural or indefinite",
-      "description": "Noun or adjective in the comitative plural or indefinite. Ending: -ekin, -rekin after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Comitative plural or indefinite of a noun or adjective: -ekin, -rekin.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ekin", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "pl"], "stemMinLength": 2, "stemEndsWith": "[bcdfghjklmnpqrstvwxz\\u00F1]"},
@@ -378,7 +378,7 @@
     {
       "id": "com-sg+com-indef",
       "name": "comitative singular or indefinite",
-      "description": "Noun or adjective in the comitative singular or indefinite. Ending: -arekin, -rekin after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Comitative singular or indefinite of a noun or adjective: -arekin, -rekin.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "rekin", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"}
@@ -387,7 +387,7 @@
     {
       "id": "com-prox",
       "name": "comitative proximal plural",
-      "description": "Noun or adjective in the comitative proximal plural. Ending: -okin after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Comitative proximal plural of a noun or adjective: -okin.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "okin", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -399,7 +399,7 @@
     {
       "id": "ben-sg",
       "name": "benefactive singular",
-      "description": "Noun or adjective in the benefactive singular. Ending: -arentzat after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Benefactive singular of a noun or adjective: -arentzat.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "arentzat", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "sg"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -410,7 +410,7 @@
     {
       "id": "ben-pl",
       "name": "benefactive plural",
-      "description": "Noun or adjective in the benefactive plural. Ending: -entzat after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Benefactive plural of a noun or adjective: -entzat.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "entzat", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -420,7 +420,7 @@
     {
       "id": "ben-pl+ben-indef",
       "name": "benefactive plural or indefinite",
-      "description": "Noun or adjective in the benefactive plural or indefinite. Ending: -entzat, -rentzat after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Benefactive plural or indefinite of a noun or adjective: -entzat, -rentzat.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "entzat", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "pl"], "stemMinLength": 2, "stemEndsWith": "[bcdfghjklmnpqrstvwxz\\u00F1]"},
@@ -430,7 +430,7 @@
     {
       "id": "ben-sg+ben-indef",
       "name": "benefactive singular or indefinite",
-      "description": "Noun or adjective in the benefactive singular or indefinite. Ending: -arentzat, -rentzat after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Benefactive singular or indefinite of a noun or adjective: -arentzat, -rentzat.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "rentzat", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"}
@@ -439,7 +439,7 @@
     {
       "id": "ben-prox",
       "name": "benefactive proximal plural",
-      "description": "Noun or adjective in the benefactive proximal plural. Ending: -ontzat after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Benefactive proximal plural of a noun or adjective: -ontzat.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ontzat", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -451,7 +451,7 @@
     {
       "id": "mot-sg",
       "name": "motivative (because of) singular",
-      "description": "Noun or adjective in the motivative (because of) singular. Ending: -arengatik after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Motivative (because of) singular of a noun or adjective: -arengatik.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "arengatik", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "sg"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -465,7 +465,7 @@
     {
       "id": "mot-pl",
       "name": "motivative (because of) plural",
-      "description": "Noun or adjective in the motivative (because of) plural. Ending: -engatik after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Motivative (because of) plural of a noun or adjective: -engatik.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "engatik", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -475,7 +475,7 @@
     {
       "id": "mot-pl+mot-indef",
       "name": "motivative (because of) plural or indefinite",
-      "description": "Noun or adjective in the motivative (because of) plural or indefinite. Ending: -engatik, -rengatik after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Motivative (because of) plural or indefinite of a noun or adjective: -engatik, -rengatik.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "engatik", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "pl"], "stemMinLength": 2, "stemEndsWith": "[bcdfghjklmnpqrstvwxz\\u00F1]"},
@@ -485,7 +485,7 @@
     {
       "id": "mot-sg+mot-indef",
       "name": "motivative (because of) singular or indefinite",
-      "description": "Noun or adjective in the motivative (because of) singular or indefinite. Ending: -arengatik, -rengatik after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Motivative (because of) singular or indefinite of a noun or adjective: -arengatik, -rengatik.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "rengatik", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"},
@@ -495,7 +495,7 @@
     {
       "id": "mot-indef",
       "name": "motivative (because of) indefinite",
-      "description": "Noun or adjective in the motivative (because of) indefinite. Ending: -rengatik after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Motivative (because of) indefinite of a noun or adjective: -rengatik.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "egatik", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "sg"], "stemMinLength": 2, "stemEndsWith": "[bcdfghjklmnpqrstvwxz\\u00F1]"},
@@ -505,7 +505,7 @@
     {
       "id": "mot-prox",
       "name": "motivative (because of) proximal plural",
-      "description": "Noun or adjective in the motivative (because of) proximal plural. Ending: -ongatik after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Motivative (because of) proximal plural of a noun or adjective: -ongatik.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ongatik", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -517,7 +517,7 @@
     {
       "id": "ins-sg",
       "name": "instrumental singular",
-      "description": "Noun or adjective in the instrumental singular. Ending: -az after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Instrumental singular of a noun or adjective: -az.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "az", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v", "sg"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -528,7 +528,7 @@
     {
       "id": "ins-pl",
       "name": "instrumental plural",
-      "description": "Noun or adjective in the instrumental plural. Ending: -ez after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Instrumental plural of a noun or adjective: -ez.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ez", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v", "sg"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -538,7 +538,7 @@
     {
       "id": "ins-pl+ins-indef",
       "name": "instrumental plural or indefinite",
-      "description": "Noun or adjective in the instrumental plural or indefinite. Ending: -ez, -z after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Instrumental plural or indefinite of a noun or adjective: -ez, -z.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ez", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v", "sg"], "stemMinLength": 2, "stemEndsWith": "[bcdfghjklmnpqrstvwxz\\u00F1]"},
@@ -548,7 +548,7 @@
     {
       "id": "ins-sg+ins-indef",
       "name": "instrumental singular or indefinite",
-      "description": "Noun or adjective in the instrumental singular or indefinite. Ending: -az, -z after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Instrumental singular or indefinite of a noun or adjective: -az, -z.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "z", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"}
@@ -557,7 +557,7 @@
     {
       "id": "ins-prox",
       "name": "instrumental proximal plural",
-      "description": "Noun or adjective in the instrumental proximal plural. Ending: -otaz after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Instrumental proximal plural of a noun or adjective: -otaz.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "otaz", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v", "sg"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -569,7 +569,7 @@
     {
       "id": "ine-sg",
       "name": "inessive singular",
-      "description": "Noun or adjective in the inessive singular. Ending: -an after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Inessive singular of a noun or adjective: -an.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "an", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "adv", "sg"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -581,7 +581,7 @@
     {
       "id": "ine-pl",
       "name": "inessive plural",
-      "description": "Noun or adjective in the inessive plural. Ending: -etan after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Inessive plural of a noun or adjective: -etan.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "etan", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "adv", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -591,7 +591,7 @@
     {
       "id": "ine-pl+ine-indef",
       "name": "inessive plural or indefinite",
-      "description": "Noun or adjective in the inessive plural or indefinite. Ending: -etan, -tan after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Inessive plural or indefinite of a noun or adjective: -etan, -tan.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "etan", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "pl"], "stemMinLength": 2, "stemEndsWith": "[bcdfghjklmnpqrstvwxz\\u00F1]"},
@@ -601,7 +601,7 @@
     {
       "id": "ine-indef",
       "name": "inessive indefinite",
-      "description": "Noun or adjective in the inessive indefinite. Ending: -tan after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Inessive indefinite of a noun or adjective: -tan.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "tan", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "adv", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"}
@@ -610,7 +610,7 @@
     {
       "id": "ine-prox",
       "name": "inessive proximal plural",
-      "description": "Noun or adjective in the inessive proximal plural. Ending: -otan after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Inessive proximal plural of a noun or adjective: -otan.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "otan", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "adv", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -622,7 +622,7 @@
     {
       "id": "loc-sg",
       "name": "locative genitive (-ko) singular",
-      "description": "Noun or adjective in the locative genitive (-ko) singular. Ending: -ko after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Locative genitive (-ko) singular of a noun or adjective: -ko.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ko", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "adv", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"},
@@ -633,7 +633,7 @@
     {
       "id": "loc-pl",
       "name": "locative genitive (-ko) plural",
-      "description": "Noun or adjective in the locative genitive (-ko) plural. Ending: -etako after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Locative genitive (-ko) plural of a noun or adjective: -etako.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "etako", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "adv", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -643,7 +643,7 @@
     {
       "id": "loc-pl+loc-indef",
       "name": "locative genitive (-ko) plural or indefinite",
-      "description": "Noun or adjective in the locative genitive (-ko) plural or indefinite. Ending: -etako, -tako after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Locative genitive (-ko) plural or indefinite of a noun or adjective: -etako, -tako.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "etako", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "pl"], "stemMinLength": 2, "stemEndsWith": "[bcdfghjklmnpqrstvwxz\\u00F1]"},
@@ -653,7 +653,7 @@
     {
       "id": "loc-indef",
       "name": "locative genitive (-ko) indefinite",
-      "description": "Noun or adjective in the locative genitive (-ko) indefinite. Ending: -tako after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Locative genitive (-ko) indefinite of a noun or adjective: -tako.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "tako", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "adv", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"}
@@ -662,7 +662,7 @@
     {
       "id": "loc-prox",
       "name": "locative genitive (-ko) proximal plural",
-      "description": "Noun or adjective in the locative genitive (-ko) proximal plural. Ending: -otako after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Locative genitive (-ko) proximal plural of a noun or adjective: -otako.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "otako", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "adv", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -674,7 +674,7 @@
     {
       "id": "abl-sg",
       "name": "ablative singular",
-      "description": "Noun or adjective in the ablative singular. Ending: -tik after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Ablative singular of a noun or adjective: -tik.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "tik", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "adv", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"},
@@ -685,7 +685,7 @@
     {
       "id": "abl-pl",
       "name": "ablative plural",
-      "description": "Noun or adjective in the ablative plural. Ending: -etatik after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Ablative plural of a noun or adjective: -etatik.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "etatik", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "adv", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -695,7 +695,7 @@
     {
       "id": "abl-pl+abl-indef",
       "name": "ablative plural or indefinite",
-      "description": "Noun or adjective in the ablative plural or indefinite. Ending: -etatik, -tatik after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Ablative plural or indefinite of a noun or adjective: -etatik, -tatik.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "etatik", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "pl"], "stemMinLength": 2, "stemEndsWith": "[bcdfghjklmnpqrstvwxz\\u00F1]"},
@@ -705,7 +705,7 @@
     {
       "id": "abl-indef",
       "name": "ablative indefinite",
-      "description": "Noun or adjective in the ablative indefinite. Ending: -tatik after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Ablative indefinite of a noun or adjective: -tatik.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "tatik", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "adv", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"}
@@ -714,7 +714,7 @@
     {
       "id": "abl-prox",
       "name": "ablative proximal plural",
-      "description": "Noun or adjective in the ablative proximal plural. Ending: -otatik after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Ablative proximal plural of a noun or adjective: -otatik.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "otatik", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "adv", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -726,7 +726,7 @@
     {
       "id": "all-sg",
       "name": "allative singular",
-      "description": "Noun or adjective in the allative singular. Ending: -ra after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Allative singular of a noun or adjective: -ra.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ra", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "adv", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"},
@@ -737,7 +737,7 @@
     {
       "id": "all-pl",
       "name": "allative plural",
-      "description": "Noun or adjective in the allative plural. Ending: -etara after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Allative plural of a noun or adjective: -etara.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "etara", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "adv", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -747,7 +747,7 @@
     {
       "id": "all-pl+all-indef",
       "name": "allative plural or indefinite",
-      "description": "Noun or adjective in the allative plural or indefinite. Ending: -etara, -tara after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Allative plural or indefinite of a noun or adjective: -etara, -tara.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "etara", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "pl"], "stemMinLength": 2, "stemEndsWith": "[bcdfghjklmnpqrstvwxz\\u00F1]"},
@@ -757,7 +757,7 @@
     {
       "id": "all-indef",
       "name": "allative indefinite",
-      "description": "Noun or adjective in the allative indefinite. Ending: -tara after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Allative indefinite of a noun or adjective: -tara.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "tara", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "adv", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"}
@@ -766,7 +766,7 @@
     {
       "id": "all-prox",
       "name": "allative proximal plural",
-      "description": "Noun or adjective in the allative proximal plural. Ending: -otara after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Allative proximal plural of a noun or adjective: -otara.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "otara", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "adv", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -778,7 +778,7 @@
     {
       "id": "dir-sg",
       "name": "directive singular",
-      "description": "Noun or adjective in the directive singular. Ending: -rantz after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Directive singular of a noun or adjective: -rantz.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "rantz", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "adv", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"},
@@ -789,7 +789,7 @@
     {
       "id": "dir-pl",
       "name": "directive plural",
-      "description": "Noun or adjective in the directive plural. Ending: -etarantz after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Directive plural of a noun or adjective: -etarantz.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "etarantz", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "adv", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -799,7 +799,7 @@
     {
       "id": "dir-pl+dir-indef",
       "name": "directive plural or indefinite",
-      "description": "Noun or adjective in the directive plural or indefinite. Ending: -etarantz, -tarantz after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Directive plural or indefinite of a noun or adjective: -etarantz, -tarantz.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "etarantz", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "pl"], "stemMinLength": 2, "stemEndsWith": "[bcdfghjklmnpqrstvwxz\\u00F1]"},
@@ -809,7 +809,7 @@
     {
       "id": "dir-indef",
       "name": "directive indefinite",
-      "description": "Noun or adjective in the directive indefinite. Ending: -tarantz after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Directive indefinite of a noun or adjective: -tarantz.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "tarantz", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "adv", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"}
@@ -818,7 +818,7 @@
     {
       "id": "dir-prox",
       "name": "directive proximal plural",
-      "description": "Noun or adjective in the directive proximal plural. Ending: -otarantz after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Directive proximal plural of a noun or adjective: -otarantz.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "otarantz", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "adv", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -830,7 +830,7 @@
     {
       "id": "ter-sg",
       "name": "terminative singular",
-      "description": "Noun or adjective in the terminative singular. Ending: -raino after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Terminative singular of a noun or adjective: -raino.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "raino", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "adv", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"},
@@ -841,7 +841,7 @@
     {
       "id": "ter-pl",
       "name": "terminative plural",
-      "description": "Noun or adjective in the terminative plural. Ending: -etaraino after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Terminative plural of a noun or adjective: -etaraino.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "etaraino", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "adv", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -851,7 +851,7 @@
     {
       "id": "ter-pl+ter-indef",
       "name": "terminative plural or indefinite",
-      "description": "Noun or adjective in the terminative plural or indefinite. Ending: -etaraino, -taraino after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Terminative plural or indefinite of a noun or adjective: -etaraino, -taraino.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "etaraino", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "pl"], "stemMinLength": 2, "stemEndsWith": "[bcdfghjklmnpqrstvwxz\\u00F1]"},
@@ -861,7 +861,7 @@
     {
       "id": "ter-indef",
       "name": "terminative indefinite",
-      "description": "Noun or adjective in the terminative indefinite. Ending: -taraino after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Terminative indefinite of a noun or adjective: -taraino.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "taraino", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "adv", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"}
@@ -870,7 +870,7 @@
     {
       "id": "ter-prox",
       "name": "terminative proximal plural",
-      "description": "Noun or adjective in the terminative proximal plural. Ending: -otaraino after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Terminative proximal plural of a noun or adjective: -otaraino.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "otaraino", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "adv", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -882,7 +882,7 @@
     {
       "id": "des-sg",
       "name": "destinative singular",
-      "description": "Noun or adjective in the destinative singular. Ending: -rako after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Destinative singular of a noun or adjective: -rako.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "rako", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "adv", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"},
@@ -893,7 +893,7 @@
     {
       "id": "des-pl",
       "name": "destinative plural",
-      "description": "Noun or adjective in the destinative plural. Ending: -etarako after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Destinative plural of a noun or adjective: -etarako.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "etarako", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "adv", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -903,7 +903,7 @@
     {
       "id": "des-pl+des-indef",
       "name": "destinative plural or indefinite",
-      "description": "Noun or adjective in the destinative plural or indefinite. Ending: -etarako, -tarako after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Destinative plural or indefinite of a noun or adjective: -etarako, -tarako.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "etarako", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "pl"], "stemMinLength": 2, "stemEndsWith": "[bcdfghjklmnpqrstvwxz\\u00F1]"},
@@ -913,7 +913,7 @@
     {
       "id": "des-indef",
       "name": "destinative indefinite",
-      "description": "Noun or adjective in the destinative indefinite. Ending: -tarako after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Destinative indefinite of a noun or adjective: -tarako.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "tarako", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "adv", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"}
@@ -922,7 +922,7 @@
     {
       "id": "des-prox",
       "name": "destinative proximal plural",
-      "description": "Noun or adjective in the destinative proximal plural. Ending: -otarako after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Destinative proximal plural of a noun or adjective: -otarako.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "otarako", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "adv", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -934,7 +934,7 @@
     {
       "id": "ablko-sg",
       "name": "ablative + -ko singular",
-      "description": "Noun or adjective in the ablative + -ko singular. Ending: -tiko after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Ablative + -ko singular of a noun or adjective: -tiko.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "tiko", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "adv", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"},
@@ -945,7 +945,7 @@
     {
       "id": "ablko-pl",
       "name": "ablative + -ko plural",
-      "description": "Noun or adjective in the ablative + -ko plural. Ending: -etatiko after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Ablative + -ko plural of a noun or adjective: -etatiko.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "etatiko", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "adv", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -955,7 +955,7 @@
     {
       "id": "ablko-pl+ablko-indef",
       "name": "ablative + -ko plural or indefinite",
-      "description": "Noun or adjective in the ablative + -ko plural or indefinite. Ending: -etatiko, -tatiko after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Ablative + -ko plural or indefinite of a noun or adjective: -etatiko, -tatiko.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "etatiko", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "pl"], "stemMinLength": 2, "stemEndsWith": "[bcdfghjklmnpqrstvwxz\\u00F1]"},
@@ -965,7 +965,7 @@
     {
       "id": "ablko-indef",
       "name": "ablative + -ko indefinite",
-      "description": "Noun or adjective in the ablative + -ko indefinite. Ending: -tatiko after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Ablative + -ko indefinite of a noun or adjective: -tatiko.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "tatiko", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "adv", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"}
@@ -974,7 +974,7 @@
     {
       "id": "comko-sg",
       "name": "comitative + -ko singular",
-      "description": "Noun or adjective in the comitative + -ko singular. Ending: -arekiko after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Comitative + -ko singular of a noun or adjective: -arekiko.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "arekiko", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "sg"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -985,7 +985,7 @@
     {
       "id": "comko-pl",
       "name": "comitative + -ko plural",
-      "description": "Noun or adjective in the comitative + -ko plural. Ending: -ekiko after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Comitative + -ko plural of a noun or adjective: -ekiko.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ekiko", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -995,7 +995,7 @@
     {
       "id": "comko-pl+comko-indef",
       "name": "comitative + -ko plural or indefinite",
-      "description": "Noun or adjective in the comitative + -ko plural or indefinite. Ending: -ekiko, -rekiko after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Comitative + -ko plural or indefinite of a noun or adjective: -ekiko, -rekiko.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ekiko", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "pl"], "stemMinLength": 2, "stemEndsWith": "[bcdfghjklmnpqrstvwxz\\u00F1]"},
@@ -1005,7 +1005,7 @@
     {
       "id": "comko-sg+comko-indef",
       "name": "comitative + -ko singular or indefinite",
-      "description": "Noun or adjective in the comitative + -ko singular or indefinite. Ending: -arekiko, -rekiko after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Comitative + -ko singular or indefinite of a noun or adjective: -arekiko, -rekiko.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "rekiko", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"}
@@ -1014,7 +1014,7 @@
     {
       "id": "dirko-sg",
       "name": "directive + -ko singular",
-      "description": "Noun or adjective in the directive + -ko singular. Ending: -ranzko after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Directive + -ko singular of a noun or adjective: -ranzko.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "ranzko", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "adv", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"},
@@ -1025,7 +1025,7 @@
     {
       "id": "dirko-pl",
       "name": "directive + -ko plural",
-      "description": "Noun or adjective in the directive + -ko plural. Ending: -etaranzko after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Directive + -ko plural of a noun or adjective: -etaranzko.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "etaranzko", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "adv", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -1035,7 +1035,7 @@
     {
       "id": "dirko-pl+dirko-indef",
       "name": "directive + -ko plural or indefinite",
-      "description": "Noun or adjective in the directive + -ko plural or indefinite. Ending: -etaranzko, -taranzko after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Directive + -ko plural or indefinite of a noun or adjective: -etaranzko, -taranzko.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "etaranzko", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "pl"], "stemMinLength": 2, "stemEndsWith": "[bcdfghjklmnpqrstvwxz\\u00F1]"},
@@ -1045,7 +1045,7 @@
     {
       "id": "dirko-indef",
       "name": "directive + -ko indefinite",
-      "description": "Noun or adjective in the directive + -ko indefinite. Ending: -taranzko after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Directive + -ko indefinite of a noun or adjective: -taranzko.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "taranzko", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "adv", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"}
@@ -1054,7 +1054,7 @@
     {
       "id": "terko-sg",
       "name": "terminative + -ko singular",
-      "description": "Noun or adjective in the terminative + -ko singular. Ending: -rainoko after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Terminative + -ko singular of a noun or adjective: -rainoko.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "rainoko", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "adv", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"},
@@ -1065,7 +1065,7 @@
     {
       "id": "terko-pl",
       "name": "terminative + -ko plural",
-      "description": "Noun or adjective in the terminative + -ko plural. Ending: -etarainoko after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Terminative + -ko plural of a noun or adjective: -etarainoko.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "etarainoko", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "adv", "pl"], "stemMinLength": 2, "stemEndsWith": "[eiou]"},
@@ -1075,7 +1075,7 @@
     {
       "id": "terko-pl+terko-indef",
       "name": "terminative + -ko plural or indefinite",
-      "description": "Noun or adjective in the terminative + -ko plural or indefinite. Ending: -etarainoko, -tarainoko after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Terminative + -ko plural or indefinite of a noun or adjective: -etarainoko, -tarainoko.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "etarainoko", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "pl"], "stemMinLength": 2, "stemEndsWith": "[bcdfghjklmnpqrstvwxz\\u00F1]"},
@@ -1085,7 +1085,7 @@
     {
       "id": "terko-indef",
       "name": "terminative + -ko indefinite",
-      "description": "Noun or adjective in the terminative + -ko indefinite. Ending: -tarainoko after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Terminative + -ko indefinite of a noun or adjective: -tarainoko.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "tarainoko", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "adv", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"}
@@ -1094,7 +1094,7 @@
     {
       "id": "insko-indef",
       "name": "instrumental + -ko (made of, about) indefinite",
-      "description": "Noun or adjective in the instrumental + -ko (made of, about) indefinite. Ending: -zko after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Instrumental + -ko (made of, about) indefinite of a noun or adjective: -zko.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "zko", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"},
@@ -1105,7 +1105,7 @@
     {
       "id": "par-indef",
       "name": "partitive indefinite",
-      "description": "Noun or adjective in the partitive indefinite. Ending: -rik after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Partitive indefinite of a noun or adjective: -rik.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "rik", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"},
@@ -1116,7 +1116,7 @@
     {
       "id": "pro-indef",
       "name": "prolative indefinite",
-      "description": "Noun or adjective in the prolative indefinite. Ending: -tzat after a vowel; the consonant forms take an -e- (gizonean, gizonek).",
+      "description": "Prolative indefinite of a noun or adjective: -tzat.",
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "tzat", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"},
@@ -1202,7 +1202,7 @@
       "description": "Adverb made with -ka from a noun, adjective or numeral: ehunka (by hundreds), bakarka (one by one), taldeka (in groups), oihuka (shouting).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ka", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "sg"], "stemMinLength": 3, "stemEndsWith": "[aeioulnrt]"}
+        {"type": "suffix", "inflected": "ka", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "sg"], "stemMinLength": 4, "stemEndsWith": "[aeioulnrt]"}
       ]
     },
     {
@@ -1369,6 +1369,8 @@
         {"type": "wholeWord", "inflected": "hark", "deinflected": "hura", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "berak", "deinflected": "bera", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "beraiek", "deinflected": "bera", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "edonork", "deinflected": "edonor", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "edozerk", "deinflected": "edozer", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "nork", "deinflected": "nor", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "inork", "deinflected": "inor", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "zerk", "deinflected": "zer", "conditionsIn": [], "conditionsOut": []},
@@ -1401,6 +1403,8 @@
         {"type": "wholeWord", "inflected": "haiei", "deinflected": "haiek", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "berari", "deinflected": "bera", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "beraiei", "deinflected": "bera", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "edonori", "deinflected": "edonor", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "edozeri", "deinflected": "edozer", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "nori", "deinflected": "nor", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "inori", "deinflected": "inor", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "zeri", "deinflected": "zer", "conditionsIn": [], "conditionsOut": []},
@@ -1572,6 +1576,7 @@
         {"type": "wholeWord", "inflected": "hauetan", "deinflected": "hauek", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "horietan", "deinflected": "horiek", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "haietan", "deinflected": "haiek", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "berean", "deinflected": "bera", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "zertan", "deinflected": "zer", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "ezertan", "deinflected": "ezer", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "zeintzuetan", "deinflected": "zein", "conditionsIn": [], "conditionsOut": []},
@@ -1590,6 +1595,7 @@
         {"type": "wholeWord", "inflected": "hauetako", "deinflected": "hauek", "conditionsIn": ["sg", "pl"], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "horietako", "deinflected": "horiek", "conditionsIn": ["sg", "pl"], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "haietako", "deinflected": "haiek", "conditionsIn": ["sg", "pl"], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "bereko", "deinflected": "bera", "conditionsIn": ["sg", "pl"], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "zertako", "deinflected": "zer", "conditionsIn": ["sg", "pl"], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "ezertako", "deinflected": "ezer", "conditionsIn": ["sg", "pl"], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "batzuetako", "deinflected": "batzuk", "conditionsIn": ["sg", "pl"], "conditionsOut": []}
@@ -1607,6 +1613,7 @@
         {"type": "wholeWord", "inflected": "hauetatik", "deinflected": "hauek", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "horietatik", "deinflected": "horiek", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "haietatik", "deinflected": "haiek", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "beretik", "deinflected": "bera", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "zertatik", "deinflected": "zer", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "ezertatik", "deinflected": "ezer", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "batzuetatik", "deinflected": "batzuk", "conditionsIn": [], "conditionsOut": []}
@@ -1624,6 +1631,7 @@
         {"type": "wholeWord", "inflected": "hauetara", "deinflected": "hauek", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "horietara", "deinflected": "horiek", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "haietara", "deinflected": "haiek", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "berera", "deinflected": "bera", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "zertara", "deinflected": "zer", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "ezertara", "deinflected": "ezer", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "batzuetara", "deinflected": "batzuk", "conditionsIn": [], "conditionsOut": []}
@@ -2812,7 +2820,9 @@
         {"type": "wholeWord", "inflected": "zekusan", "deinflected": "ikusi", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "zentzuen", "deinflected": "entzun", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "zuen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": " zuen", "deinflected": " izan", "conditionsIn": ["dep"], "conditionsOut": ["v"], "stemMinLength": 2, "stemNotStartsWithText": "gauza"}
+        {"type": "wholeWord", "inflected": "zuan", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": " zuen", "deinflected": " izan", "conditionsIn": ["dep"], "conditionsOut": ["v"], "stemMinLength": 2, "stemNotStartsWithText": "gauza"},
+        {"type": "suffix", "inflected": " zuan", "deinflected": " izan", "conditionsIn": ["dep"], "conditionsOut": ["v"], "stemMinLength": 2, "stemNotStartsWithText": "gauza"}
       ]
     },
     {
@@ -2926,7 +2936,9 @@
         {"type": "wholeWord", "inflected": "zeramatzan", "deinflected": "eraman", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "zerabiltzan", "deinflected": "erabili", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "zituen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": " zituen", "deinflected": " izan", "conditionsIn": ["dep"], "conditionsOut": ["v"], "stemMinLength": 2, "stemNotStartsWithText": "gauza"}
+        {"type": "wholeWord", "inflected": "zituan", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": " zituen", "deinflected": " izan", "conditionsIn": ["dep"], "conditionsOut": ["v"], "stemMinLength": 2, "stemNotStartsWithText": "gauza"},
+        {"type": "suffix", "inflected": " zituan", "deinflected": " izan", "conditionsIn": ["dep"], "conditionsOut": ["v"], "stemMinLength": 2, "stemNotStartsWithText": "gauza"}
       ]
     },
     {
@@ -7503,90 +7515,21 @@
       ]
     },
     {
-      "id": "hyp-a3s-d1s",
-      "name": "hypothetical (hura, niri)",
+      "id": "hyp-dative",
+      "name": "hypothetical (with a dative)",
+      "description": "Hypothetical stem, the condition of a hypothesis, written after ba- (if) or bait-, with a dative person (nori); the forms name the persons.",
       "source": "own",
       "rules": [
-        {"type": "wholeWord", "inflected": "litzait", "deinflected": "izan", "conditionsIn": ["pfx"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "hyp-a3s-d3s",
-      "name": "hypothetical (hura, hari)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "litzaio", "deinflected": "izan", "conditionsIn": ["pfx"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "hyp-a3s-d1p",
-      "name": "hypothetical (hura, guri)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "litzaigu", "deinflected": "izan", "conditionsIn": ["pfx"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "hyp-a3s-d2s",
-      "name": "hypothetical (hura, zuri)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "litzaizu", "deinflected": "izan", "conditionsIn": ["pfx"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "hyp-a3s-d2p",
-      "name": "hypothetical (hura, zuei)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "litzaizue", "deinflected": "izan", "conditionsIn": ["pfx"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "hyp-a3s-d3p",
-      "name": "hypothetical (hura, haiei)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "litzaie", "deinflected": "izan", "conditionsIn": ["pfx"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "hyp-a3p-d1s",
-      "name": "hypothetical (haiek, niri)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "litzaizkit", "deinflected": "izan", "conditionsIn": ["pfx"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "hyp-a3p-d3s",
-      "name": "hypothetical (haiek, hari)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "litzaizkio", "deinflected": "izan", "conditionsIn": ["pfx"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "hyp-a3p-d1p",
-      "name": "hypothetical (haiek, guri)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "litzaizkigu", "deinflected": "izan", "conditionsIn": ["pfx"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "hyp-a3p-d2s",
-      "name": "hypothetical (haiek, zuri)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "litzaizkizu", "deinflected": "izan", "conditionsIn": ["pfx"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "hyp-a3p-d3p",
-      "name": "hypothetical (haiek, haiei)",
-      "source": "own",
-      "rules": [
+        {"type": "wholeWord", "inflected": "litzait", "deinflected": "izan", "conditionsIn": ["pfx"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "litzaio", "deinflected": "izan", "conditionsIn": ["pfx"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "litzaigu", "deinflected": "izan", "conditionsIn": ["pfx"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "litzaizu", "deinflected": "izan", "conditionsIn": ["pfx"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "litzaizue", "deinflected": "izan", "conditionsIn": ["pfx"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "litzaie", "deinflected": "izan", "conditionsIn": ["pfx"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "litzaizkit", "deinflected": "izan", "conditionsIn": ["pfx"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "litzaizkio", "deinflected": "izan", "conditionsIn": ["pfx"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "litzaizkigu", "deinflected": "izan", "conditionsIn": ["pfx"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "litzaizkizu", "deinflected": "izan", "conditionsIn": ["pfx"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "litzaizkie", "deinflected": "izan", "conditionsIn": ["pfx"], "conditionsOut": ["v"]}
       ]
     },
@@ -7687,51 +7630,42 @@
       ]
     },
     {
-      "id": "pothyp-a3s-d1s",
-      "name": "hypothetical potential (hura, niri)",
+      "id": "pothyp-dative",
+      "name": "hypothetical potential (with a dative)",
+      "description": "Hypothetical potential (could, might), with a dative person (nori); the forms name the persons.",
       "source": "own",
       "rules": [
-        {"type": "wholeWord", "inflected": "lekidake", "deinflected": "edin", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d3s",
-      "name": "hypothetical potential (hura, hari)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "lekioke", "deinflected": "edin", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d1p",
-      "name": "hypothetical potential (hura, guri)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "lekiguke", "deinflected": "edin", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d2s",
-      "name": "hypothetical potential (hura, zuri)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "lekizuke", "deinflected": "edin", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d2p",
-      "name": "hypothetical potential (hura, zuei)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "lekizueke", "deinflected": "edin", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d3p",
-      "name": "hypothetical potential (hura, haiei)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "lekieke", "deinflected": "edin", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
+        {"type": "wholeWord", "inflected": "lekidake", "deinflected": "edin", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "lekioke", "deinflected": "edin", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "lekiguke", "deinflected": "edin", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "lekizuke", "deinflected": "edin", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "lekizueke", "deinflected": "edin", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "lekieke", "deinflected": "edin", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "liezadake", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "zeniezadake", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "zeniezadakete", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "liezadakete", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "niezaioke", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "hiezaioke", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "liezaioke", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "geniezaioke", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "zeniezaioke", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "zeniezaiokete", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "liezaiokete", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "liezaguke", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "zeniezaguke", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "zeniezagukete", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "liezagukete", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "niezazuke", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "liezazuke", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "geniezazuke", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "liezazukete", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "niezaieke", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "liezaieke", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "geniezaieke", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "zeniezaieke", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "zeniezaiekete", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "liezaiekete", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -9252,146 +9186,28 @@
       ]
     },
     {
-      "id": "condpast-a3s-d1s-e3s",
-      "name": "past conditional (hura, niri, hark)",
+      "id": "condpast-dative",
+      "name": "past conditional (with a dative)",
+      "description": "Past conditional (would have), with a dative person (nori); the forms name the persons.",
       "source": "own",
       "rules": [
-        {"type": "wholeWord", "inflected": "zidakeen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "condpast-a3s-d1s-e2s",
-      "name": "past conditional (hura, niri, zuk)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "zenidakeen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "condpast-a3s-d1s-e3p",
-      "name": "past conditional (hura, niri, haiek)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "zidaketen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "condpast-a3s-d3s-e1s",
-      "name": "past conditional (hura, hari, nik)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "niokeen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "condpast-a3s-d3s-e3s",
-      "name": "past conditional (hura, hari, hark)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "ziokeen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "condpast-a3s-d3s-e1p",
-      "name": "past conditional (hura, hari, guk)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "geniokeen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "condpast-a3s-d3s-e2s",
-      "name": "past conditional (hura, hari, zuk)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "zeniokeen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "condpast-a3s-d3s-e2p",
-      "name": "past conditional (hura, hari, zuek)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "zenioketen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "condpast-a3s-d3s-e3p",
-      "name": "past conditional (hura, hari, haiek)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "zioketen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "condpast-a3s-d2s-e1s",
-      "name": "past conditional (hura, zuri, nik)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "nizukeen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "condpast-a3s-d2s-e3s",
-      "name": "past conditional (hura, zuri, hark)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "zizukeen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "condpast-a3s-d2s-e1p",
-      "name": "past conditional (hura, zuri, guk)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "genizukeen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "condpast-a3s-d2s-e3p",
-      "name": "past conditional (hura, zuri, haiek)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "zizuketen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "condpast-a3s-d3p-e1s",
-      "name": "past conditional (hura, haiei, nik)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "niekeen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "condpast-a3s-d3p-e3s",
-      "name": "past conditional (hura, haiei, hark)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "ziekeen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "condpast-a3s-d3p-e1p",
-      "name": "past conditional (hura, haiei, guk)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "geniekeen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "condpast-a3s-d3p-e2s",
-      "name": "past conditional (hura, haiei, zuk)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "zeniekeen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "condpast-a3s-d3p-e3p",
-      "name": "past conditional (hura, haiei, haiek)",
-      "source": "own",
-      "rules": [
+        {"type": "wholeWord", "inflected": "zidakeen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "zenidakeen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "zidaketen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "niokeen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "ziokeen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "geniokeen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "zeniokeen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "zenioketen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "zioketen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "nizukeen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "zizukeen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "genizukeen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "zizuketen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "niekeen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "ziekeen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "geniekeen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "zeniekeen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "zieketen", "deinflected": "edun", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
       ]
     },
@@ -9844,346 +9660,28 @@
       ]
     },
     {
-      "id": "pothyp-a3s-d1s-e3s",
-      "name": "hypothetical potential (hura, niri, hark)",
+      "id": "potpast-dative",
+      "name": "past potential (with a dative)",
+      "description": "Past potential (could have), with a dative person (nori); the forms name the persons.",
       "source": "own",
       "rules": [
-        {"type": "wholeWord", "inflected": "liezadake", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d1s-e2s",
-      "name": "hypothetical potential (hura, niri, zuk)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "zeniezadake", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d1s-e2p",
-      "name": "hypothetical potential (hura, niri, zuek)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "zeniezadakete", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d1s-e3p",
-      "name": "hypothetical potential (hura, niri, haiek)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "liezadakete", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d3s-e1s",
-      "name": "hypothetical potential (hura, hari, nik)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "niezaioke", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d3s-e2f",
-      "name": "hypothetical potential (hura, hari, hik)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "hiezaioke", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d3s-e3s",
-      "name": "hypothetical potential (hura, hari, hark)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "liezaioke", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d3s-e1p",
-      "name": "hypothetical potential (hura, hari, guk)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "geniezaioke", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d3s-e2s",
-      "name": "hypothetical potential (hura, hari, zuk)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "zeniezaioke", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d3s-e2p",
-      "name": "hypothetical potential (hura, hari, zuek)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "zeniezaiokete", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d3s-e3p",
-      "name": "hypothetical potential (hura, hari, haiek)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "liezaiokete", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d1p-e3s",
-      "name": "hypothetical potential (hura, guri, hark)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "liezaguke", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d1p-e2s",
-      "name": "hypothetical potential (hura, guri, zuk)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "zeniezaguke", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d1p-e2p",
-      "name": "hypothetical potential (hura, guri, zuek)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "zeniezagukete", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d1p-e3p",
-      "name": "hypothetical potential (hura, guri, haiek)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "liezagukete", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d2s-e1s",
-      "name": "hypothetical potential (hura, zuri, nik)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "niezazuke", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d2s-e3s",
-      "name": "hypothetical potential (hura, zuri, hark)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "liezazuke", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d2s-e1p",
-      "name": "hypothetical potential (hura, zuri, guk)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "geniezazuke", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d2s-e3p",
-      "name": "hypothetical potential (hura, zuri, haiek)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "liezazukete", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d3p-e1s",
-      "name": "hypothetical potential (hura, haiei, nik)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "niezaieke", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d3p-e3s",
-      "name": "hypothetical potential (hura, haiei, hark)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "liezaieke", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d3p-e1p",
-      "name": "hypothetical potential (hura, haiei, guk)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "geniezaieke", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d3p-e2s",
-      "name": "hypothetical potential (hura, haiei, zuk)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "zeniezaieke", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d3p-e2p",
-      "name": "hypothetical potential (hura, haiei, zuek)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "zeniezaiekete", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "pothyp-a3s-d3p-e3p",
-      "name": "hypothetical potential (hura, haiei, haiek)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "liezaiekete", "deinflected": "ezan", "conditionsIn": ["fin"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "potpast-a3s-d1s-e3s",
-      "name": "past potential (hura, niri, hark)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "ziezadakeen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "potpast-a3s-d1s-e2s",
-      "name": "past potential (hura, niri, zuk)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "zeniezadakeen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "potpast-a3s-d1s-e3p",
-      "name": "past potential (hura, niri, haiek)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "ziezadaketen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "potpast-a3s-d3s-e1s",
-      "name": "past potential (hura, hari, nik)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "niezaiokeen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "potpast-a3s-d3s-e3s",
-      "name": "past potential (hura, hari, hark)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "ziezaiokeen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "potpast-a3s-d3s-e1p",
-      "name": "past potential (hura, hari, guk)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "geniezaiokeen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "potpast-a3s-d3s-e2s",
-      "name": "past potential (hura, hari, zuk)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "zeniezaiokeen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "potpast-a3s-d3s-e2p",
-      "name": "past potential (hura, hari, zuek)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "zeniezaioketen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "potpast-a3s-d3s-e3p",
-      "name": "past potential (hura, hari, haiek)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "ziezaioketen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "potpast-a3s-d2s-e1s",
-      "name": "past potential (hura, zuri, nik)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "niezazukeen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "potpast-a3s-d2s-e3s",
-      "name": "past potential (hura, zuri, hark)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "ziezazukeen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "potpast-a3s-d2s-e1p",
-      "name": "past potential (hura, zuri, guk)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "geniezazukeen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "potpast-a3s-d2s-e3p",
-      "name": "past potential (hura, zuri, haiek)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "ziezazuketen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "potpast-a3s-d3p-e1s",
-      "name": "past potential (hura, haiei, nik)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "niezaiekeen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "potpast-a3s-d3p-e3s",
-      "name": "past potential (hura, haiei, hark)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "ziezaiekeen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "potpast-a3s-d3p-e1p",
-      "name": "past potential (hura, haiei, guk)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "geniezaiekeen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "potpast-a3s-d3p-e2s",
-      "name": "past potential (hura, haiei, zuk)",
-      "source": "own",
-      "rules": [
-        {"type": "wholeWord", "inflected": "zeniezaiekeen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "potpast-a3s-d3p-e3p",
-      "name": "past potential (hura, haiei, haiek)",
-      "source": "own",
-      "rules": [
+        {"type": "wholeWord", "inflected": "ziezadakeen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "zeniezadakeen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "ziezadaketen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "niezaiokeen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "ziezaiokeen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "geniezaiokeen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "zeniezaiokeen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "zeniezaioketen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "ziezaioketen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "niezazukeen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "ziezazukeen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "geniezazukeen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "ziezazuketen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "niezaiekeen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "ziezaiekeen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "geniezaiekeen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "zeniezaiekeen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "ziezaieketen", "deinflected": "ezan", "conditionsIn": ["dep"], "conditionsOut": ["v"]}
       ]
     },

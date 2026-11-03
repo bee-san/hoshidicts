@@ -4,7 +4,9 @@
 # one for each finite-verb transform no row of corpus.tsv exercises, written by sources/build-corpus.py; the reason is that transform.
 # one for each finite-verb transform no row of corpus.tsv exercises, written by sources/build-corpus.py; the reason is that transform.
 # one for each finite-verb transform no row of corpus.tsv exercises, written by sources/build-corpus.py; the reason is that transform.
-# UniMorph rows (categories with ";"): 721 rows from UniMorph eus (https://github.com/unimorph/eus/blob/256a35d915d4689e96e79cc9725e0518b8152db0/eus, sha256 b80f2538), CC BY-SA 3.0, by the UniMorph contributors,
+# one for each finite-verb transform no row of corpus.tsv exercises, written by sources/build-corpus.py; the reason is that transform.
+# one for each finite-verb transform no row of corpus.tsv exercises, written by sources/build-corpus.py; the reason is that transform.
+# UniMorph rows (categories with ";"): 654 rows from UniMorph eus (https://github.com/unimorph/eus/blob/256a35d915d4689e96e79cc9725e0518b8152db0/eus, sha256 b80f2538), CC BY-SA 3.0, by the UniMorph contributors,
 # one for each finite-verb transform no row of corpus.tsv exercises, written by sources/build-corpus.py; the reason is that transform.
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
 stacking	1	etxetatik	etxe	n	abl-indef
@@ -472,19 +474,6 @@ V;PAST;POT	1	hituzkeen	edun	v	condpast-a3p-e2f
 V;PAST;POT	1	zenituzketen	edun	v	condpast-a3p-e2p
 V;PAST;POT	1	zenituzkeen	edun	v	condpast-a3p-e2s
 V;PAST;POT	1	zituzketen	edun	v	condpast-a3p-e3p
-V;PAST;POT	1	zenidakeen	edun	v	condpast-a3s-d1s-e2s
-V;PAST;POT	1	zidakeen	edun	v	condpast-a3s-d1s-e3s
-V;PAST;POT	1	nizukeen	edun	v	condpast-a3s-d2s-e1s
-V;PAST;POT	1	zizukeen	edun	v	condpast-a3s-d2s-e3s
-V;PAST;POT	1	geniekeen	edun	v	condpast-a3s-d3p-e1p
-V;PAST;POT	1	niekeen	edun	v	condpast-a3s-d3p-e1s
-V;PAST;POT	1	zeniekeen	edun	v	condpast-a3s-d3p-e2s
-V;INFM;PRES;POT	1	zieketen	edun	v	condpast-a3s-d3p-e3p
-V;PAST;POT	1	ziekeen	edun	v	condpast-a3s-d3p-e3s
-V;PAST;POT	1	niokeen	edun	v	condpast-a3s-d3s-e1s
-V;PAST;POT	1	zenioketen	edun	v	condpast-a3s-d3s-e2p
-V;INFM;PRES;POT	1	zioketen	edun	v	condpast-a3s-d3s-e3p
-V;PAST;POT	1	ziokeen	edun	v	condpast-a3s-d3s-e3s
 V;PAST;POT	1	nukeen	edun	v	condpast-a3s-e1s
 V;PAST;POT	1	hukeen	edun	v	condpast-a3s-e2f
 V;PAST;POT	1	zenuketen	edun	v	condpast-a3s-e2p
@@ -508,11 +497,6 @@ V;HYP;IND	1	zintut	edun	v	hyp-a2s-e1s
 V;HYP;IND	1	zintzate	ezan	v	hyp-a2s-e3p
 V;HYP;IND	1	zintza	ezan	v	hyp-a2s-e3s
 V;HYP;IND	1	lira	izan	v	hyp-a3p
-V;HYP;IND	1	litzaizkigu	izan	v	hyp-a3p-d1p
-V;HYP;IND	1	litzaizkit	izan	v	hyp-a3p-d1s
-V;HYP;IND	1	litzaizkizu	izan	v	hyp-a3p-d2s
-V;HYP;IND	1	litzaizkie	izan	v	hyp-a3p-d3p
-V;HYP;IND	1	litzaizkio	izan	v	hyp-a3p-d3s
 V;HYP;IND	1	genitza	ezan	v	hyp-a3p-e1p
 V;HYP;IND	1	nitu	edun	v	hyp-a3p-e1s
 V;HYP;IND	1	hitu	edun	v	hyp-a3p-e2f
@@ -520,12 +504,6 @@ V;HYP;IND	1	zenitzate	ezan	v	hyp-a3p-e2p
 V;HYP;IND	1	zenitu	edun	v	hyp-a3p-e2s
 V;HYP;IND	1	lituzte	edun	v	hyp-a3p-e3p
 V;HYP;IND	1	litu	edun	v	hyp-a3p-e3s
-V;HYP;IND	1	litzaigu	izan	v	hyp-a3s-d1p
-V;HYP;IND	1	litzait	izan	v	hyp-a3s-d1s
-V;HYP;IND	1	litzaizue	izan	v	hyp-a3s-d2p
-V;HYP;IND	1	litzaizu	izan	v	hyp-a3s-d2s
-V;HYP;IND	1	litzaie	izan	v	hyp-a3s-d3p
-V;HYP;IND	1	litzaio	izan	v	hyp-a3s-d3s
 V;HYP;IND	1	genu	edun	v	hyp-a3s-e1p
 V;HYP;IND	1	neki	jakin	v	hyp-a3s-e1s
 V;HYP;IND	1	heza	ezan	v	hyp-a3s-e2f
@@ -533,6 +511,7 @@ V;HYP;IND	1	zenezate	ezan	v	hyp-a3s-e2p
 V;HYP;IND	1	zeneki	jakin	v	hyp-a3s-e2s
 V;HYP;IND	1	leukate	eduki	v	hyp-a3s-e3p
 V;HYP;IND	1	leza	ezan	v	hyp-a3s-e3s
+V;HYP;IND	1	litzaizue	izan	v	hyp-dative
 V;IMP	1	gaitzak	ezan	v	imp-a1p-e2f
 V;IMP	1	gaitzazue	ezan	v	imp-a1p-e2p
 V;PRES;IND	1	naramazue	eraman	v	imp-a1s-e2p
@@ -781,34 +760,6 @@ V;HYP;POT	1	zenitzakete	ezan	v	pothyp-a3p-e2p
 V;HYP;POT	1	litzakete	ezan	v	pothyp-a3p-e3p
 V;HYP;POT	1	litzake	ezan	v	pothyp-a3p-e3s
 V;HYP;POT	1	liteke	edin	v	pothyp-a3s
-V;HYP;POT	1	lekiguke	edin	v	pothyp-a3s-d1p
-V;HYP;POT	1	zeniezagukete	ezan	v	pothyp-a3s-d1p-e2p
-V;HYP;POT	1	zeniezaguke	ezan	v	pothyp-a3s-d1p-e2s
-V;HYP;POT	1	liezagukete	ezan	v	pothyp-a3s-d1p-e3p
-V;HYP;POT	1	liezaguke	ezan	v	pothyp-a3s-d1p-e3s
-V;HYP;POT	1	lekidake	edin	v	pothyp-a3s-d1s
-V;HYP;POT	1	zeniezadakete	ezan	v	pothyp-a3s-d1s-e2p
-V;HYP;POT	1	liezadakete	ezan	v	pothyp-a3s-d1s-e3p
-V;HYP;POT	1	liezadake	ezan	v	pothyp-a3s-d1s-e3s
-V;HYP;POT	1	lekizueke	edin	v	pothyp-a3s-d2p
-V;HYP;POT	1	lekizuke	edin	v	pothyp-a3s-d2s
-V;HYP;POT	1	geniezazuke	ezan	v	pothyp-a3s-d2s-e1p
-V;HYP;POT	1	liezazukete	ezan	v	pothyp-a3s-d2s-e3p
-V;HYP;POT	1	liezazuke	ezan	v	pothyp-a3s-d2s-e3s
-V;HYP;POT	1	lekieke	edin	v	pothyp-a3s-d3p
-V;HYP;POT	1	geniezaieke	ezan	v	pothyp-a3s-d3p-e1p
-V;HYP;POT	1	niezaieke	ezan	v	pothyp-a3s-d3p-e1s
-V;HYP;POT	1	zeniezaiekete	ezan	v	pothyp-a3s-d3p-e2p
-V;HYP;POT	1	zeniezaieke	ezan	v	pothyp-a3s-d3p-e2s
-V;HYP;POT	1	liezaiekete	ezan	v	pothyp-a3s-d3p-e3p
-V;HYP;POT	1	liezaieke	ezan	v	pothyp-a3s-d3p-e3s
-V;HYP;POT	1	lekioke	edin	v	pothyp-a3s-d3s
-V;HYP;POT	1	niezaioke	ezan	v	pothyp-a3s-d3s-e1s
-V;HYP;POT	1	hiezaioke	ezan	v	pothyp-a3s-d3s-e2f
-V;HYP;POT	1	zeniezaiokete	ezan	v	pothyp-a3s-d3s-e2p
-V;HYP;POT	1	zeniezaioke	ezan	v	pothyp-a3s-d3s-e2s
-V;HYP;POT	1	liezaiokete	ezan	v	pothyp-a3s-d3s-e3p
-V;HYP;POT	1	liezaioke	ezan	v	pothyp-a3s-d3s-e3s
 V;HYP;POT	1	hezake	ezan	v	pothyp-a3s-e2f
 V;HYP;POT	1	zenezakete	ezan	v	pothyp-a3s-e2p
 V;HYP;POT	1	zenezake	ezan	v	pothyp-a3s-e2s
@@ -837,22 +788,6 @@ V;PAST;POT	1	zenitzaketen	ezan	v	potpast-a3p-e2p
 V;INFM;PRES;POT	1	zitzaketen	ezan	v	potpast-a3p-e3p
 V;PAST;POT	1	zitzakeen	ezan	v	potpast-a3p-e3s
 V;PAST;POT	1	zitekeen	edin	v	potpast-a3s
-V;INFM;PRES;POT	1	ziezadaketen	ezan	v	potpast-a3s-d1s-e3p
-V;PAST;POT	1	ziezadakeen	ezan	v	potpast-a3s-d1s-e3s
-V;PAST;POT	1	geniezazukeen	ezan	v	potpast-a3s-d2s-e1p
-V;PAST;POT	1	niezazukeen	ezan	v	potpast-a3s-d2s-e1s
-V;PAST;POT	1	ziezazuketen	ezan	v	potpast-a3s-d2s-e3p
-V;PAST;POT	1	ziezazukeen	ezan	v	potpast-a3s-d2s-e3s
-V;PAST;POT	1	geniezaiekeen	ezan	v	potpast-a3s-d3p-e1p
-V;PAST;POT	1	niezaiekeen	ezan	v	potpast-a3s-d3p-e1s
-V;PAST;POT	1	zeniezaiekeen	ezan	v	potpast-a3s-d3p-e2s
-V;INFM;PRES;POT	1	ziezaieketen	ezan	v	potpast-a3s-d3p-e3p
-V;PAST;POT	1	ziezaiekeen	ezan	v	potpast-a3s-d3p-e3s
-V;PAST;POT	1	geniezaiokeen	ezan	v	potpast-a3s-d3s-e1p
-V;PAST;POT	1	niezaiokeen	ezan	v	potpast-a3s-d3s-e1s
-V;PAST;POT	1	zeniezaioketen	ezan	v	potpast-a3s-d3s-e2p
-V;PAST;POT	1	zeniezaiokeen	ezan	v	potpast-a3s-d3s-e2s
-V;PAST;POT	1	ziezaiokeen	ezan	v	potpast-a3s-d3s-e3s
 V;PAST;POT	1	hezakeen	ezan	v	potpast-a3s-e2f
 V;PAST;POT	1	zenezaketen	ezan	v	potpast-a3s-e2p
 V;PAST;POT	1	zenezakeen	ezan	v	potpast-a3s-e2s
