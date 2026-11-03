@@ -2446,6 +2446,7 @@
       "name": "pakiki-",
       "source": "yomitan",
       "rules": [
+        {"type": "pattern", "anchorPrefix": "pakiki", "pattern": "^pakiki([bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]*[aeiou])\\1", "replacement": "$1", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "prefix", "inflected": "pakikir", "deinflected": "d", "conditionsIn": [], "conditionsOut": ["n"]}
       ]
     },

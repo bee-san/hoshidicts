@@ -63,27 +63,31 @@ export const REMOVED = {
     'makapang-': 'makapangahas -> ahas first at 12 of its 17 Gutenberg positions; the own maka- reads it as maka- + pangahas, and makapanggamot as maka- + manggamot',
 };
 
-// Single Yomitan rules left out, by `<transform id> <inflected affix>`, with
-// their harm. Each is a prefix rule that an own rule makes with a stem
-// constraint; without the constraint it reads only wrong first results on
-// Tatoeba (T) and the two Gutenberg texts (G), measured with the pass copy.
-// The rest of each transform stays (Yomitan's pang- and mapag- stay whole:
-// they read pangdiyeta, mapagusisa).
+// Single Yomitan rules left out, by `<transform id> <inflected affix>` (see
+// ruleKey), with their harm. Each is a prefix rule that an own rule makes with
+// a stem constraint; added back to the final set, it changes these first
+// results on Tatoeba (T) and the two Gutenberg texts (G), all wrong but one
+// (sources/attribute-removed.py). The rest of each transform stays (Yomitan's
+// pang- and mapag- stay whole: they read pangdiyeta, mapagusisa).
 export const REMOVED_RULES = {
-    'mag- mag': 'a vowel after mag- without the hyphen: magubat -> ubat, magalak -> alak, magipit -> ipit (T 4, G 14)',
+    'mag- mag': 'a vowel after mag- without the hyphen: magubat -> ubat, mag-2 -> 2, magalak -> alak, magipit -> ipit (T 5, G 14)',
     'ipa- ipa': 'stems of two letters and phrases: ipasa -> sa, ipaalam mo -> alam mo (T 14)',
     'magka- magka': 'magkasing -> si (T 13)',
-    'maka- maka': 'makaya -> ya, makal -> l, makaw -> w (T 4, G 4)',
+    'maka- maka': 'makaya -> ya, makal -> l, makaw -> w (T 5, G 4)',
     'maka- makar': 'makar -> d (T 1)',
     'ika- ika': 'ikasang -> sa, ikama -> ma (T 3, G 1)',
-    'mang- mang': 'mango -> o (T 3)',
-    'naka- naka': 'nakama -> ma, nakay -> y, nakawang -> wa (T 2, G 1)',
-    'naka- nakar': 'nakar -> d (T 1, G 1)',
-    'kaka- kaka': 'kakae -> e (T 1)',
+    'mang- mang': 'mango -> o (T 3); manggaling sa -> galing sa (G 1, not wrong)',
+    'naka- naka': 'nakama -> ma, nakay -> y, nakawang -> wa (T 3, G 2)',
+    'naka- nakar': 'nakar -> d (G 1)',
+    'kaka- kaka': 'kakatingin ko -> sa tingin ko, kakalaban sa -> laban sa, kakae -> e (T 4)',
     'mapa- mapa': 'mapala -> la, mapag -> g, mapasa -> sa (T 1, G 9)',
     'pakiki- pakiki': 'pakikita -> ta (G 1)',
 };
-export const ruleKey = (transform, rule) => `${transform.id} ${rule.inflected ?? rule.inflectedPrefix ?? rule.anchorPrefix ?? ''}`;
+// A pattern rule is keyed by its pattern, so `pakiki- pakiki` names the prefix
+// rule and not also Yomitan's pakiki- + rep1 pattern.
+export const ruleKey = (transform, rule) => (rule.type === 'pattern'
+    ? `${transform.id} pattern ${rule.pattern}`
+    : `${transform.id} ${rule.inflected ?? rule.inflectedPrefix ?? ''}`);
 
 // Own rules added after Yomitan's rules were read, as constrained versions of
 // them (README.md, History): the transforms ka, pa, pala, tag and maIn

@@ -367,3 +367,16 @@ negatives	0	mapala	la	*	*
 negatives	0	makaya	ya	*	*
 negatives	0	magsimula	mula	*	*
 negatives	0	paningin ko	tingin ko	*	*
+one word	0	sa tingin	sa ting	*	*
+one word	0	makabili saan	bili sa	*	*
+one word	0	patungo saan	tungo sa	*	*
+one word	0	pagtulog saan	tulog sa	*	*
+one word	0	pagsabi sa akin	sabi sa ak	*	*
+one word	0	pabili sa akin	bili sa ak	*	*
+one word	0	kasama saan	sama sa	*	*
+one word	0	kasama ko	sama ko	*	*
+one word	0	palatanong ka	tanong ka	*	*
+one word	0	nagsilakad sila	lakad sila	*	*
+contraction	0	aklat'y	aklat	*	*
+contraction	0	a'y	a	*	*
+circumfix u to o	1	kalusugan	lusog	*	kaAn

@@ -23,11 +23,17 @@ Commands:
   alone. A word's lemmas are the terms its form-of rows name and the lemmas
   corpus.tsv and gaps.tsv give for it. "Reached" words are those whose lemma
   a rule reaches (a deinflection with a trace). The first result is right when
-  it is the word itself (its own entry) or one of its lemmas. The other words
+  it is the word itself (its own entry) or one of its lemmas, unless it is a
+  linked word read as another headword that sources/linked-judged.tsv judges
+  wrong (kayang -> kayan); those are also counted over all the words. The
+  other words
   whose first result is a rule reading other than the linker's or a
   contraction's are counted and listed (--show) to judge by hand.
 - tatoeba: every word position of Tatoeba's Tagalog sentences, looked up as
-  the text from the word to the end of its sentence. The first result is the
+  the text from the word to the end of its sentence. The first result is a
+  capitalised headword at a sentence start (wrong); or a linked word read as
+  another headword (pong -> pong for po + -ng; judged by group in
+  sources/linked-judged.tsv); or the
   text as written or a term a form-of row names for it; or a rule reading
   whose term a form-of row of the matched text names (or corpus.tsv gives);
   or a reading of the linker or a contraction only (akong -> ako), which
@@ -129,9 +135,36 @@ def written(text):
     return strip_marks(text).replace('’', "'")
 
 
+def gloss_text(definitions):
+    """The text of a row's definitions (strings and structured content)."""
+    out = []
+
+    def walk(node):
+        if isinstance(node, str):
+            out.append(node)
+        elif isinstance(node, list):
+            for child in node:
+                walk(child)
+        elif isinstance(node, dict) and 'content' in node:
+            walk(node['content'])
+
+    for definition in definitions:
+        if not (isinstance(definition, list) and len(definition) == 2 and isinstance(definition[0], str)):
+            walk(definition)
+    return ' '.join(out)
+
+
+# A row that describes its headword as a word with the linker: "ligatured form
+# of tayo", "From haba + -ng.", "From taon (“year”) + -g.", "combination of na
+# and -ng".
+LINKED_FORM = re.compile(r"ligatured form of \S|\bFrom (?:earlier )?\S+(?: \([^)]*\))? \+ -n?g\b|combination of \S+ and -ng")
+LINKED_FORMS = set()
+
+
 def dictionary_lemmas(zip_path):
     """Lemmas each headword's form-of rows name, and every headword as written
-    (without marks, letter case kept)."""
+    (without marks, letter case kept). Also fills LINKED_FORMS with the
+    headwords (normalised) that a row describes as a word with the linker."""
     lemmas = collections.defaultdict(set)
     defined = set()
     with zipfile.ZipFile(zip_path) as z:
@@ -143,7 +176,44 @@ def dictionary_lemmas(zip_path):
                 for ref in refs:
                     lemmas[norm(row[0])].add(norm(ref[0]))
                 defined.add(written(row[0]))
+                if LINKED_FORM.search(gloss_text(row[5])):
+                    LINKED_FORMS.add(written(row[0]))
     return lemmas, defined
+
+
+def linked_judgements():
+    """sources/linked-judged.tsv: (matched, expression) -> right / wrong."""
+    judged = {}
+    for line in (PACK / 'sources' / 'linked-judged.tsv').read_text(encoding='utf-8').splitlines():
+        cells = line.split('\t')
+        if line.startswith('#') or len(cells) < 3:
+            continue
+        judged[(cells[0], cells[1])] = cells[2]
+    return judged
+
+
+def linked_homograph(first, headwords):
+    """For a first result the other classes count as right: when the matched
+    text is one word ending in -ng whose spelling without -ng is a headword
+    (po for pong, ano for anong, kaya for kayang), and the first result is
+    neither that word nor a term a row describes as a word with the linker
+    (pong -> pong, a mahjong set; anong -> anonang through anong's form-of
+    row; kayang -> kayan), the group (matched, expression) to judge by hand
+    (sources/linked-judged.tsv). None otherwise."""
+    matched = norm(first['matched'])
+    if ' ' in matched or '-' in matched or len(matched) < 4 or not matched.endswith('ng'):
+        return None
+    lower = HEADWORDS_LOWER.get(id(headwords))
+    if lower is None:
+        lower = HEADWORDS_LOWER[id(headwords)] = {h.lower() for h in headwords}
+    if matched[:-2] not in lower or norm(first['expression']) == matched[:-2]:
+        return None
+    if written(first['expression']) in LINKED_FORMS:
+        return None
+    return (matched, written(first['expression']))
+
+
+HEADWORDS_LOWER = {}
 
 
 def corpus_lemmas():
@@ -236,21 +306,32 @@ def cmd_frequent(args, sets):
     words, counts = frequent_words(args)
     total = sum(counts)
     print(f'{len(words)} words, {total} tokens; {sum(1 for w in words if lemmas.get(norm(w)))} have a lemma named by a form-of row or the corpus')
-    print('| Rule set | Words a rule reaches | Their tokens | Wrong first (words) | Wrong first (share of tokens) | Other rule readings first (words) | Capitalised: a capitalised headword first |')
-    print('| --- | ---: | ---: | ---: | ---: | ---: | ---: |')
+    judged = linked_judgements()
+    print('| Rule set | Words a rule reaches | Their tokens | Wrong first (words) | Wrong first (share of tokens) | Other rule readings first (words) | Linked word read as another headword, judged wrong | Capitalised: a capitalised headword first, or a linked word read as another headword |')
+    print('| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |')
     listed = {}
     wrong_listed = {}
     cap_words = {}
+    linked_listed = {}
+
+    def linked_wrong(first):
+        return first is not None and judged.get(linked_homograph(first, headwords)) == 'wrong'
+
     for set_name, transforms in sets.items():
         deinflections = run_deinflect(transforms, [norm(w) for w in words])
         answers = run_batch(transforms, args.dictionary, words)
         reached = wrong = wrong_tokens = reached_tokens = 0
-        unnamed, wrong_words = [], []
+        unnamed, wrong_words, linked_words = [], [], []
         for word, count, d, a in zip(words, counts, deinflections, answers):
             named = lemmas.get(norm(word), set())
             hits = named and any(r['trace'] and norm(r['text']) in named for r in d['results'])
             first = a['results'][0] if a['results'] else None
             verdict = judge(word, first, named) if first else 'nothing'
+            # kayang -> kayan: a lemma kayang's form-of row names, but the word
+            # is kaya + -ng (sources/linked-judged.tsv).
+            if linked_wrong(first):
+                verdict = 'linked homograph'
+                linked_words.append((count, word, first['expression']))
             if hits:
                 reached += 1
                 reached_tokens += count
@@ -262,19 +343,27 @@ def cmd_frequent(args, sets):
                 unnamed.append((count, word, first['expression'], [t for t, _ in first['trace']]))
         listed[set_name] = unnamed
         wrong_listed[set_name] = wrong_words
-        # The same words written with a capital letter, as at a sentence start.
+        linked_listed[set_name] = linked_words
+        # The same words written with a capital letter, as at a sentence start
+        # (Isang, isa + -ng, is a name: a linked word, not a capital the
+        # capital rule sees, since isang is no headword).
         capitalised = run_batch(transforms, args.dictionary, [w[:1].upper() + w[1:] for w in words])
         caps = [(c, w, a['results'][0]['expression']) for w, c, a in zip(words, counts, capitalised)
-                if a['results'] and capital_at_start(a['results'][0], w[:1].upper() + w[1:], '', headwords)]
+                if a['results'] and (capital_at_start(a['results'][0], w[:1].upper() + w[1:], '', headwords)
+                                     or linked_wrong(a['results'][0]))]
         cap_words[set_name] = caps
         print(f'| {set_name} | {reached} | {100 * reached_tokens / total:.2f}% | {wrong} | {100 * wrong_tokens / total:.3f}% | {len(unnamed)} | '
+              f'{len(linked_words)} ({100 * sum(c for c, _, _ in linked_words) / total:.2f}% of tokens) | '
               f'{len(caps)} ({100 * sum(c for c, _, _ in caps) / total:.2f}% of tokens) |')
     if args.show:
         for set_name, wrong_words in wrong_listed.items():
             print(f'\n{set_name}: a rule reaches the lemma, the first result is not it ({len(wrong_words)}; - is nothing found):')
             print('  ' + ' | '.join(f'{c}:{w}->{e}' for c, w, e in sorted(wrong_words, reverse=True)[:args.show]))
+        for set_name, linked_words in linked_listed.items():
+            print(f'\n{set_name}: a linked word read as another headword, judged wrong ({len(linked_words)}):')
+            print('  ' + ' | '.join(f'{c}:{w}->{e}' for c, w, e in sorted(linked_words, reverse=True)[:args.show]))
         for set_name, caps in cap_words.items():
-            print(f'\n{set_name}: written with a capital, a capitalised headword first ({len(caps)}):')
+            print(f'\n{set_name}: written with a capital, a capitalised headword or a linked word read as another headword first ({len(caps)}):')
             print('  ' + ' | '.join(f'{c}:{w}->{e}' for c, w, e in sorted(caps, reverse=True)[:args.show]))
         for set_name, unnamed in listed.items():
             print(f'\n{set_name}: other rule readings first ({len(unnamed)}):')
@@ -339,10 +428,10 @@ def classify(first, lemmas, word=None, previous=None, headwords=None):
     trace = first['trace']
     rule_steps = [t for t, from_dictionary in trace if not from_dictionary]
     if not rule_steps:
-        return 'own entry or dictionary'
+        return 'linked homograph' if headwords is not None and linked_homograph(first, headwords) else 'own entry or dictionary'
     verdict = judge(first['matched'], first, lemmas.get(norm(first['matched']), set()))
     if verdict in ('own entry', 'right lemma'):
-        return 'named lemma'
+        return 'linked homograph' if headwords is not None and linked_homograph(first, headwords) else 'named lemma'
     if set(rule_steps) <= GRAMMAR:
         return 'linker, contraction or spelling'
     return 'other rule reading'
@@ -355,8 +444,9 @@ def cmd_positions(args, sets, sentences, label):
     positions = hovers(sentences)
     texts = [h for h, _, _ in positions]
     print(f'{label}: {len(sentences)} sentences, {len(positions)} positions')
-    print('| Rule set | Positions found | Capitalised headword at a sentence start | First result as written or by a form-of row | A lemma a form-of row names | Linker, contraction or hyphen only | Other rule reading | of which multiword | Other, after a marker / pronoun / particle |')
-    print('| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |')
+    judged = linked_judgements()
+    print('| Rule set | Positions found | Capitalised headword at a sentence start | Linked word read as another headword: wrong / right / not judged | First result as written or by a form-of row | A lemma a form-of row names | Linker, contraction or hyphen only | Other rule reading | of which multiword | Other, after a marker / pronoun / particle |')
+    print('| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |')
     listed = {}
     for set_name, transforms in sets.items():
         answers = run_batch(transforms, args.dictionary, texts)
@@ -371,6 +461,8 @@ def cmd_positions(args, sets, sentences, label):
         multi = 0
         after = collections.Counter()
         items, linkers = [], []
+        linked = collections.Counter()
+        linked_groups = collections.Counter()
         for (text, word, previous), a in zip(positions, answers):
             if not a['results']:
                 continue
@@ -380,20 +472,27 @@ def cmd_positions(args, sets, sentences, label):
             kinds[kind] += 1
             if kind == 'capital at sentence start':
                 capitals[(word, first['expression'])] += 1
+            if kind == 'linked homograph':
+                group = linked_homograph(first, headwords)
+                linked[judged.get(group, 'not judged')] += 1
+                linked_groups[group] += 1
             if kind == 'other rule reading':
                 multi += ' ' in first['matched']
                 after[GROUP_OF.get(norm(previous), 'other')] += 1
                 items.append((first['matched'], first['expression'], '|'.join(t for t, _ in first['trace']), text[:60]))
             if kind == 'linker, contraction or spelling':
                 linkers.append((first['matched'], first['expression'], '|'.join(t for t, _ in first['trace']), text[:60]))
-        listed[set_name] = (items, capitals, linkers)
-        print(f"| {set_name} | {found} | {kinds['capital at sentence start']} | {kinds['own entry or dictionary']} | {kinds['named lemma']} | "
+        listed[set_name] = (items, capitals, linkers, linked_groups)
+        print(f"| {set_name} | {found} | {kinds['capital at sentence start']} | {linked['wrong']} / {linked['right']} / {linked['not judged']} | {kinds['own entry or dictionary']} | {kinds['named lemma']} | "
               f"{kinds['linker, contraction or spelling']} | {kinds['other rule reading']} | {multi} | {after['marker']} / {after['pronoun']} / {after['particle']} |")
     if args.show:
-        for set_name, (items, capitals, linkers) in listed.items():
+        for set_name, (items, capitals, linkers, linked_groups) in listed.items():
             print(f'\n{set_name}: capitalised headwords at a sentence start, by (word, expression), most frequent first:')
             for (w, e), c in capitals.most_common(args.show):
                 print(f'  {c}\t{w}\t{e}')
+            print(f'\n{set_name}: linked words read as another headword, by (matched, expression), most frequent first, with the verdict of sources/linked-judged.tsv:')
+            for (w, e), c in linked_groups.most_common(args.show):
+                print(f"  {c}\t{w}\t{e}\t{judged.get((w, e), 'not judged')}")
             groups = collections.Counter((m.lower(), e) for m, e, _, _ in items)
             print(f'\n{set_name}: other rule readings by (matched, expression), most frequent first:')
             for (m, e), c in groups.most_common(args.show):

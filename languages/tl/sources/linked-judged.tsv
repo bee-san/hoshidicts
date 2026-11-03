@@ -1,0 +1,73 @@
+# Written for this pack (GPL-3.0-or-later). Groups of first results that sources/measure.py puts in the class "linked
+# word read as another headword": the matched text is one word ending in -ng whose spelling without -ng is a headword,
+# and the first result is neither that word nor a term a row describes as a word with the linker. Every group of 10 or
+# more positions in Tatoeba or in the two Gutenberg texts (final rules, untaggedTerms pass) is judged here by hand,
+# from six random contexts each (measure.py tatoeba / text --show) and wty-tl-en's glosses; smaller groups are counted
+# as not judged. "wrong" means the text means the word before -ng (or another word) and the first result is a
+# different term.
+# matched	expression	verdict	the text means
+pong	pong	wrong	po + -ng (pong: a mahjong set)
+bang	bang	wrong	ba + -ng (bang: a bang; an emphatic particle)
+kang	kang	wrong	ka + -ng (kang: a mahjong set)
+yaong	yaong	wrong	yaon + -g (yaong: a porcelain cup)
+anong	anonang	wrong	ano + -ng (anonang: a tree, through anong's form-of row)
+kayang	kayan	wrong	kaya + -ng (kayan: an awning, through kayang's form-of row)
+silang	silang	wrong	sila + -ng (silang: birth; a mountain pass)
+batang	batang	wrong	bata + -ng (batang: a log, Marinduque)
+isang	Isang	wrong	isa + -ng (Isang: a given name)
+parang	Parang	wrong	parang, like (Parang: a place), after a sentence end inside a Tatoeba entry
+mang	mang	wrong	man + -g, even (mang: a term of address)
+labing	labing	wrong	labing-, the -teen numerals (labing: a ravine, obsolete)
+pusong	pusong	wrong	puso + -ng (pusong: a clown)
+salang	salang	wrong	sala + -ng, fault (salang: putting a pot on the fire)
+bagang	bagang	wrong	baga + -ng, the particle (bagang: a molar)
+palang	palang	wrong	pala + -ng, the particle, in most contexts (palang: a bolo; pa lang)
+matabang	matabang	wrong	mataba + -ng, fat (matabang: bland)
+dalang	dalang	wrong	dala + -ng, carried (dalang: sparseness)
+islang	islang	wrong	isla + -ng (islang: slang)
+tabing	tabing	wrong	tabi + -ng, beside (tabing: a curtain)
+buwang	buwang	wrong	buwan + -g, month (buwang: capsizing, obsolete)
+balitang	balitang	wrong	balita + -ng, news (balitang: 1,000 square yards)
+tuyong	tuyong	wrong	tuyo + -ng, dry (tuyong: water added to a pot)
+makinang	makinang	wrong	makina + -ng, machine (makinang: brilliant)
+lilang	lilang	wrong	lila + -ng, purple (lilang: being blind)
+sakong	sakong	wrong	sako + -ng, sack (sakong: heel)
+totong	tutong	wrong	the name Totong (tutong: burnt rice)
+kung	kung	right	kung, if
+lang	lang	right	lang, only
+naging	naging	right	naging, the completive of maging (its own entry)
+nagiging	nagiging	right	nagiging, the progressive of maging (its own entry)
+bilang	bilang	right	bilang, as; number
+tulong	tulong	right	tulong, help
+kasing	sing-	right	kasing-, as ... as (sing-, the same prefix)
+kulang	kulang	right	kulang, lacking
+saging	saging	right	saging, banana
+gulong	gulong	right	gulong, wheel
+bulong	bulong	right	bulong, whisper
+payong	payong	right	payong, umbrella
+ilong	ilong	right	ilong, nose
+bawang	bawang	right	bawang, garlic
+gising	gising	right	gising, awake
+piling	piling	right	piling, side; company
+madalang	madalang	right	madalang, rarely
+tapang	tapang	right	tapang, courage
+timbang	timbang	right	timbang, weight
+sayang	sayang	right	sayang, a pity, in most contexts
+bubong	bubong	right	bubong, roof
+pating	pating	right	pating, shark
+hiling	hiling	right	hiling, request
+anang	anang	right	anang, said; according to
+kong	Kong	right	Kong of Hong Kong
+galang	galang	right	galang, respect; bracelet
+daing	daing	right	daing, dried fish; complaint
+gumulong	gumulong	right	gumulong, rolled (its own entry)
+piging	piging	right	piging, banquet
+larang	larang	right	larang, field
+ginang	Ginang	right	Ginang, Mrs.
+ginang	ginang	right	ginang, madam
+maong	maong	right	maong, denim
+bayong	bayong	right	bayong, a woven bag
+sulong	sulong	right	sulong, forward
+talong	talong	right	talong, eggplant
+halang	halang	right	halang, crosspiece
+daong	daong	right	daong, ship

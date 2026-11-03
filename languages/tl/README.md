@@ -35,7 +35,7 @@ Yomitan's behaviour.
 - `tests/yomitan.tsv`: Yomitan's
   [Tagalog transform test](https://github.com/yomidevs/yomitan/blob/d3c54c10264673eca0d66b970ef74cd5c8b048e3/test/language/tagalog-transforms.test.js),
   converted by `tools/port-yomitan-tests.mjs`; `sources/build-final.mjs`
-  set the reasons of the 5 rows whose Yomitan transform is not in the final
+  set the reasons of the 4 rows whose Yomitan transform is not in the final
   set to `*`. GPL-3.0-or-later, Copyright (C) 2024-2026 Yomitan Authors.
 - `tests/corpus.tsv` and `tests/gaps.tsv`: 1,799 pairs sampled with seed 1
   by `sources/build-corpus.py` from two sources:
@@ -84,8 +84,8 @@ Yomitan's behaviour.
 
 ## Rule provenance
 
-`transforms.json` has 91 transforms and 2,175 rules (3,388 with cross
-products expanded): 1,762 `own`, 346 `yomitan` and 67 `both`.
+`transforms.json` has 91 transforms and 2,176 rules (3,389 with cross
+products expanded): 1,762 `own`, 347 `yomitan` and 67 `both`.
 `sources/build-final.mjs` writes it from the union that
 `tools/merge-transforms.mjs` makes:
 
@@ -105,8 +105,10 @@ products expanded): 1,762 `own`, 346 `yomitan` and 67 `both`.
   versions of them, are marked `yomitan`, not `own` (28 rules): the
   transforms `ka`, `pa`, `pala`, `tag` and `maIn`, and the -unan, -unin,
   -ran → d and pagkar-/pagkakar- rules;
-- 19 Yomitan transforms (69 rules) and 12 single Yomitan rules are left
-  out, each for the harm in the tables below;
+- 19 Yomitan transforms (68 rules) and 12 single Yomitan rules are left
+  out, each for the harm in the tables below (a single rule is named by its
+  transform and affix, or by its pattern, so `pakiki- pakiki` leaves out
+  the prefix rule and keeps Yomitan's pakiki- + rep1 pattern);
 - the other Yomitan rules stay: affixes the own rules lack (`ipang-`,
   `tagapag-`, `tagapang-`, `magkanda-`, `nakakapang-`, `makipag-…-an`,
   `pang-…-an`, `papang-…-in`, the ordinals *ikalawa*, *ikatlo*,
@@ -156,21 +158,23 @@ tag- without the hyphen before a vowel. ³ Unassimilated forms such as
 maka- + *pangahas*, *manggamot*.
 
 **Single Yomitan rules left out.** Prefix rules that an own rule makes
-with a stem constraint; without it, each reads only wrong first results on
-Tatoeba (T) and the Gutenberg texts (G), measured as above. The rest of
-each transform stays. The final rules reach every form
-`sources/check-removed.mjs` builds from each of them.
+with a stem constraint. "First results" are the positions of Tatoeba (T)
+and the Gutenberg texts (G) whose first result changes when that rule
+alone is added back to the final set (`sources/attribute-removed.py`); all
+are wrong but one, marked. The rest of each transform stays. The final
+rules reach every form `sources/check-removed.mjs` builds from each of
+them.
 
-| Rule | First results it would change (all wrong) | Constructed forms reached |
+| Rule | First results it would change | Constructed forms reached |
 | --- | --- | ---: |
-| `mag-` *mag* | T 4, G 14: a vowel after mag- without the hyphen: *magubat* → *ubat*, *magalák* → *alak*, *magipít* → *ipit* | 10: 100% / 100% |
-| `ipa-` *ipa* | T 14: *ipasa* → *sa*, *ipaalam mo* → *alam mo* | 10: 100% / 100% |
+| `mag-` *mag* | T 5, G 14: a vowel after mag- without the hyphen: *magubat* → *ubat*, *mag-2* → *2*, *magalák* → *alak*, *magipít* → *ipit* | 10: 100% / 100% |
+| `ipa-` *ipa* | T 14: *ipaalam mo* → *alam mo* 9, *ipasa* → *sa* 5 | 10: 100% / 100% |
 | `magka-` *magka* | T 13: *magkasing* → *si* | 10: 100% / 100% |
 | `maka-` *maka*, *makar* | T 5, G 4: *makaya* → *ya*, *makaw* → *w*, *makar* → *d* | 15: 100% / 100% |
 | `ika-` *ika* | T 3, G 1: *ikasang* → *sa*, *ikama* → *ma* | 10: 100% / 100% |
-| `mang-` *mang* | T 3: *mango* → *o* | 10: 100% / 100% |
-| `naka-` *naka*, *nakar* | T 3, G 2: *nakama* → *ma*, *nakay* → *y* | 15: 100% / 100% |
-| `kaka-` *kaka* | T 1: *kakae* → *e* | 10: 100% / 100% |
+| `mang-` *mang* | T 3: *mango* → *o*; G 1: *manggaling sa* → *galing sa* (not wrong) | 10: 100% / 100% |
+| `naka-` *naka*, *nakar* | T 3, G 2: *nakama* → *ma*, *nakay* → *y*, *nakar* → *d* | 15: 100% / 100% |
+| `kaka-` *kaka* | T 4: *kakatingin ko* → *sa tingin ko* 2, *kakalaban sa* → *laban sa*, *kakae* → *e* | 10: 100% / 100% |
 | `mapa-` *mapa* | T 1, G 9: *mápalâ* → *la*, *mapag* → *g*, *mapasa* → *sa* | 10: 100% / 100% |
 | `pakiki-` *pakiki* | G 1: *pakikita* → *ta* | 10: 100% / 100% |
 
@@ -220,7 +224,8 @@ the conformance test; each makes a test fail, as named:
 - the linker needs a stem of three letters (*lang* is not *la*, `cases.tsv`)
   apart from 13 listed short words (*kong* → *ko*, *pong* → *po*); 12 words
   in -n take -g where the word without the n is also a headword (*noong* →
-  *noon*, not *noo*, `lookup.tsv`); in a phrase the last word follows the
+  *noon*, not *noo*; `lookup.tsv` ranks 7 of them, each taken out on its
+  own); in a phrase the last word follows the
   same rule (*alam mong* → *alam mo*, while *ka nang* is not *ka nan*, whose
   dictionary row names the affix *ka- -an*);
 - the copied syllable must match the root's first vowel (*baboy* is not
@@ -255,10 +260,22 @@ the conformance test; each makes a test fail, as named:
 - the prefix reduplication of maka-, maki-, magpa-, magka-, makapag- and
   makipag- also reads straight to the root (*makakatulong* → *tulong*, not
   maka- + *katulong*);
+- *'y* needs a vowel before it and a stem of two letters (*aklat'y* and
+  *a'y* are no contractions), ka- -an puts back the o of the last syllable
+  (*kalusugan* → *lusog*, `cases.tsv` with the trace `kaAn`), and `oldNg`
+  maps the capital G̃ too (*NG̃AYON*, `text.tsv`);
 - three orders: nakaka- before the aspect rules (*nakakahiya* → *hiya*
   before *makahiya*), ma- -an before -an (*matandaan* → *tanda* before
   *matanda*), magsi- after mag- (*nagsiklab* → *siklab* before *klab*,
   `lookup.tsv`).
+
+The one-word constraint is also taken out of each of the 17 transforms
+that have it on its own, and of magsi-'s patterns; each makes a
+`cases.tsv` row fail. Three orders make no test fail: Yomitan's transforms
+after the own ones, the linker last, and the completive after the
+progressive. They decide which trace a result keeps when two traces of the
+same length reach the same term; `lookup.tsv` checks the term and the
+matched text, and a `cases.tsv` row passes when any trace has its reasons.
 
 `traceSelection` is `shortest`, the contract's default and Yomitan's
 choice; with `first`, *magaling* reads as *aling* and *ipagamot* as *amot*
@@ -299,7 +316,12 @@ rules). Later commits changed them after measuring:
   version left out, among them pang- and mapag- (12 others are left out one
   by one, above), and the one-word, magsi- and first-letter constraints
   above;
-- after bee-san/hoshidicts#58 merged: `lookup.untaggedTerms` is `pass`.
+- after bee-san/hoshidicts#58 merged: `lookup.untaggedTerms` is `pass`;
+- after audit-hachi-lang-tl-b: a single removed Yomitan rule is named by
+  its pattern when it has one, so Yomitan's pakiki- + rep1 pattern is kept
+  (it changes no first result in Tatoeba or the Gutenberg texts); rows for
+  each one-word constraint, *'y*, ka- -an's o, `oldNg`'s G̃ and each listed
+  -g word.
 
 ## Measurements
 
@@ -324,12 +346,12 @@ file runs the same with every option on and with the defaults: a copy of
 same recall, false candidates and first rank (`eval-language` prints
 `"options":"default"` and the same numbers).
 
-| Rule set | Sample recall (1,799) | False candidates per row, pass / filter | First rank, pass / filter | `cases.tsv` positives (307) | `cases.tsv` negatives (58) | `yomitan.tsv` (14) |
+| Rule set | Sample recall (1,799) | False candidates per row, pass / filter | First rank, pass / filter | `cases.tsv` positives (308) | `cases.tsv` negatives (70) | `yomitan.tsv` (14) |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Own | 97.11% | 1.453 / 0.306 | 62.87% / 40.97% | 99.35% | 100% | 35.71% |
-| Yomitan | 6.78% | 0.526 / 0.311 | 43.19% / 40.97% | 18.24% | 34.48% | 100% |
-| Union | 97.22% | 1.470 / 0.311 | 62.92% / 40.97% | 100% | 32.76% | 100% |
-| Final | 97.22% | 1.464 / 0.311 | 63.04% / 40.97% | 100% | 100% | 100% |
+| Own | 97.11% | 1.453 / 0.306 | 62.87% / 40.97% | 99.35% | 100% | 28.57% |
+| Yomitan | 6.78% | 0.526 / 0.311 | 43.19% / 40.97% | 18.18% | 41.43% | 100% |
+| Union | 97.22% | 1.470 / 0.311 | 62.92% / 40.97% | 100% | 40.00% | 100% |
+| Final | 97.22% | 1.465 / 0.311 | 63.04% / 40.97% | 100% | 100% | 100% |
 
 - **Recall** by source (final): UniMorph 881 / 900 (97.89%, lemma = root),
   kaikki verb aspects 769 / 800 (96.12%, lemma = headword), adjective
@@ -347,48 +369,60 @@ same recall, false candidates and first rank (`eval-language` prints
   because Yomitan's `rep1` rules reach a root in one step without the
   aspect.
 - **Per rule** (`--per-rule`, final set, the sample and `cases.tsv` as one
-  file, pass): 364 rules recover a row, no rule breaks a negative, and 48
-  rules add false candidates (116 in all: 73 from own rules, 24 `both`, 19
+  file, pass): 365 rules recover a row, no rule breaks a negative, and 49
+  rules add false candidates (119 in all: 73 from own rules, 24 `both`, 22
   Yomitan) without recovering a row, mostly the reduplication rules of
   one consonant (*kok-* → *k-*, *ses-* → *s-*), the hyphen put back after
   a prefix (*nagi-* → *nag-i*) and the gerund *pag-*. They are kept: no
   measured first result is wrong because of them, and their families are
   what reaches the forms the corpus lacks.
 - **Differential check** (`tools/check-yomitan.mjs` with
-  `build/hoshidicts-cli`): 5,420 inputs, 22,200 Yomitan results, 30
+  `build/hoshidicts-cli`): 5,445 inputs, 22,250 Yomitan results, 30
   differences, all the one that `sources/yomitan-differences.tsv` lists (a
   `u` that starts a sandwich stem: *kaunran* → *onr*); the three processors
-  agree with Yomitan's on 2,151, 2,151 and 2,139 inputs.
+  agree with Yomitan's on 2,170, 2,170 and 2,158 inputs.
 
 **Frequent forms** (`sources/measure.py frequent`). Of the 10,000 most
 frequent words of the subtitle list (94,596 tokens), 1,798 have a lemma a
 form-of row of wty-tl-en or the corpus names, and a rule reaches it for 926
 (4.74% of the tokens). Each word is looked up alone; the first result is
-right when it is the word's own entry or such a lemma.
+right when it is the word's own entry or such a lemma, unless it is a
+linked word read as another headword that `sources/linked-judged.tsv`
+judges wrong (below).
 
 | Rule set | Words whose lemma a rule reaches | Wrong first, pass | Wrong first, filter |
 | --- | ---: | ---: | ---: |
-| Own | 921 | 11 | 72 |
+| Own | 921 | 12 | 73 |
 | Yomitan | 41 | 1 | 3 |
-| Union | 926 | 11 | 72 |
-| Final | 926 | 10 (21 tokens, 0.022%) | 72 (199 tokens, 0.210%) |
+| Union | 926 | 12 | 73 |
+| Final | 926 | 11 (42 tokens, 0.044%) | 73 (220 tokens, 0.233%) |
 
-With filter, 70 of the 72 find nothing at all: their
-infinitive comes only through conditioned rules (*sumigaw* → *sigaw*,
-*ginamit* → *gamitin*, *sumali* → *sali*). With pass the 10 left are
-*nag-aalala* and *nag-isip* (the infinitive *mag-alala*, *mag-isip* first,
-where the form-of rows name the root), *gagamitin* → *gagamit*, *ilalabas*
-→ *lalabas*, *titignan* and *tinignan* → *tingnan* (right, through the
-dictionary's spelling *tignan*), *sinisante* → *sesantehin*, *paniniwalaan*
-→ *paniniwala*, *nagsikap* → *sikap* and *kinukuhanan* → *kuha*.
+With filter, 70 of the 73 find nothing at all: their infinitive comes only
+through conditioned rules (*sumigaw* → *sigaw*, *ginamit* → *gamitin*,
+*sumali* → *sali*). With pass the 11 are *kayang* → *kayan* (an awning,
+through *kayang*'s form-of row, for *kaya* + -ng), *nag-aalala* and
+*nag-isip* (the infinitive *mag-alala*, *mag-isip* first, where the form-of
+rows name the root), *gagamitin* → *gagamit*, *ilalabas* → *lalabas*,
+*titignan* and *tinignan* → *tingnan* (right, through the dictionary's
+spelling *tignan*), *sinisante* → *sesantehin*, *paniniwalaan* →
+*paniniwala*, *nagsikap* → *sikap* and *kinukuhanan* → *kuha*.
 
-Written with a capital letter, as at the start of a sentence, 207 of the
-10,000 words (15.27% of the list's tokens) show a capitalised headword
-first with the final set, with pass and with filter (Yomitan's rules
-alone: 237 with pass, 209 with filter): *Ang* (a Chinese surname) for *ang*, *Ng* for
-*ng*, *Ko*, *Ka*, *May*, *O*, *Yan*, *Isa* (Jesus in Islam), *Salamat*,
-*Iba*. A few are right with the capital (*Diyos*, *Linggo*). Known gaps
-says why.
+Counted over all 10,000 words, as the capitals are below, 18 words show a
+linked word read as another headword that is judged wrong, with pass and
+with filter: 0.80% of the list's tokens (*anong* → *anonang* 259 tokens,
+*kang* 231, *bang* 136, *silang* 51, *kayang* → *kayan* 21, *batang* 16,
+*pong* 12, *mang* 9, *palang* 5 and 9 more with 1-3 tokens). *mang* is
+judged on the texts, where it is *man* + -g; in subtitles it is more often
+the term of address the dictionary gives.
+
+Written with a capital letter, as at the start of a sentence, 221 of the
+10,000 words (16.22% of the list's tokens) show a capitalised headword, or
+a linked word read as another headword, first with the final set, with
+pass and with filter (Yomitan's rules alone: 252 with pass, 224 with
+filter): *Ang* (a Chinese surname) for *ang*, *Ng* for *ng*, *Ko*, *Ka*,
+*Isang* (a given name) for *isang*, *May*, *O*, *Yan*, *anonang* for
+*Anong*, *Isa* (Jesus in Islam), *Salamat*, *Iba*. A few are right with
+the capital (*Diyos*, *Linggo*). Known gaps says why.
 
 **Phrases** (`sources/measure.py tatoeba`). Every word position of
 Tatoeba's 79,134 sentences, looked up as the text from the word to the end
@@ -398,6 +432,15 @@ after its letters). The first result is classed by script:
 - a capitalised headword at a sentence start whose lowercase spelling is a
   headword too (*Ang*, *May*): counted as wrong, though a few are right
   (*Diyos*);
+- a linked word read as another headword: the matched text is one word
+  ending in -ng whose spelling without -ng is a headword, and the first
+  result is neither that word nor a term a row describes as a word with
+  the linker ("ligatured form of …", "From … + -ng") — *pong* → *pong*, a
+  mahjong set, for *po* + -ng; *anong* → *anonang* through *anong*'s
+  form-of row. Every group of 10 or more positions in Tatoeba or the
+  Gutenberg texts is judged by hand in `sources/linked-judged.tsv` (27
+  wrong, 38 right, such as *kung*, *lang*, *naging*, *tulong*, *saging*);
+  the smaller groups are counted as not judged;
 - the text as written or a term a form-of row names for it: right;
 - a rule reading whose term the matched text's form-of rows (or the corpus)
   name: right;
@@ -405,28 +448,32 @@ after its letters). The first result is classed by script:
   the word itself: judged by hand on a random sample of 60 (seed 1);
 - any other rule reading: judged by hand on a random sample of 60 (seed 1).
 
-| Rule set | Found, pass / filter | Capital at a sentence start | As written or form-of | Lemma a form-of row names | Linker, contraction or hyphen only | Other rule readings (multiword) |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Own | 579,761 / 551,313 | 8,430 | 475,205 | 20,219 | 45,961 | 29,946 (111) |
-| Yomitan | 559,405 / 546,262 | 8,633 | 495,666 | 251 | 40,882 | 13,973 (160) |
-| Union | 580,370 / 551,384 | 8,596 | 474,784 | 20,216 | 45,846 | 30,928 (226) |
-| Final | 580,023 / 551,378 | 8,430 | 475,094 | 20,218 | 46,068 | 30,213 (111) |
+| Rule set | Found, pass / filter | Capital at a sentence start | Linked word read as another headword: wrong / right / not judged | As written or form-of | Lemma a form-of row names | Linker, contraction or hyphen only | Other rule readings (multiword) |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Own | 579,761 / 551,313 | 8,430 | 6,197 / 3,407 / 132 | 465,927 | 19,761 | 45,961 | 29,946 (111) |
+| Yomitan | 559,405 / 546,262 | 8,633 | 6,200 / 3,412 / 131 | 485,923 | 251 | 40,882 | 13,973 (160) |
+| Union | 580,370 / 551,384 | 8,596 | 6,197 / 3,398 / 130 | 465,517 | 19,758 | 45,846 | 30,928 (226) |
+| Final | 580,023 / 551,378 | 8,430 | 6,197 / 3,398 / 132 | 465,825 | 19,760 | 46,068 | 30,213 (111) |
 
-(Columns 3-7 with pass. With filter the final set has the same 8,430
-capitals, 47,188 linker, contraction or hyphen readings and
-no other rule reading.)
+(Columns 3-8 with pass. With filter the final set has the same 8,430
+capitals, 6,205 / 3,409 / 143 linked words, 47,188 linker, contraction or
+hyphen readings and no other rule reading.)
 
 - **Wrong first results, final set, pass.** The capitals: 8,430, of which
   *May* 3,268, *Ang* 3,085, *Isa* 402, *Baka* 290, *Parang* 245,
-  *Magaling* 136, *Malapit* 120. The other rule readings: 1 of the 60
-  sampled (seed 1) is wrong (*baba-baba* → *bababa*). A sample drawn the
-  same way before the last rule change (pang- without its hyphen takes one
-  word, which moved 2 readings), sharing 19 readings with it, had 4 wrong
-  (*Gagabayan* → *gagabay*, *Pinatong* → *tong*, *ipinagako* → *ako*,
-  *pagtatalong* → *talong*): 5 wrong of 101 readings in all, about 5%, or
-  about 1,500 of 30,213. The linker readings: 0 of 60 (seed 1) wrong. In
-  all about 9,900 of the 580,023 positions found (1.7%), more than four
-  fifths of them the capitals.
+  *Magaling* 136, *Malapit* 120. The linked words: 6,197, of which *pong*
+  1,787, *bang* 1,018, *kang* 633, *yaong* 592, *anong* → *anonang* 546,
+  *kayang* → *kayan* 451, *silang* 391, *batang* 234, *Isang* 186 and
+  *Parang* 95 (after a sentence end inside a Tatoeba entry); the word
+  without the linker is the second or third result. The other rule
+  readings: 1 of the 60 sampled (seed 1) is wrong (*baba-baba* →
+  *bababa*). A sample drawn the same way before pang- without its hyphen
+  took one word (which moved 2 readings), sharing 19 readings with it, had
+  4 wrong (*Gagabayan* → *gagabay*, *Pinatong* → *tong*, *ipinagako* →
+  *ako*, *pagtatalong* → *talong*): 5 wrong of 101 readings in all, about
+  5%, or about 1,500 of 30,213. The linker readings: 0 of 60 (seed 1)
+  wrong. In all about 16,100 of the 580,023 positions found (2.8%): the
+  capitals half of them, the linked words two fifths.
 - Of the other rule readings, 7,215 follow a marker (*ang*, *ng*, *sa*,
   *si*, *mga*, *ay*, *na*, ...), 2,007 a pronoun and 2,207 a particle.
 - Of the 111 multiword rule readings 5 are wrong (*inano ba* and *inaano
@@ -444,22 +491,25 @@ no other rule reading.)
 **Real text** (`sources/measure.py text`): the two Gutenberg texts, 8,386
 sentences and 154,145 positions, looked up and classed the same way.
 
-| Rule set | Found, pass / filter | Capital at a sentence start | As written or form-of | Lemma a form-of row names | Linker, contraction or hyphen only | Other rule readings (multiword) |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Own | 145,839 / 132,223 | 1,167 | 109,110 | 3,744 | 17,093 | 14,725 (45) |
-| Yomitan | 137,417 / 130,059 | 1,187 | 115,627 | 60 | 12,542 | 8,001 (58) |
-| Union | 146,501 / 132,263 | 1,183 | 108,768 | 3,737 | 17,109 | 15,704 (97) |
-| Final | 145,932 / 132,230 | 1,167 | 108,867 | 3,739 | 17,175 | 14,984 (50) |
+| Rule set | Found, pass / filter | Capital at a sentence start | Linked word read as another headword: wrong / right / not judged | As written or form-of | Lemma a form-of row names | Linker, contraction or hyphen only | Other rule readings (multiword) |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Own | 145,839 / 132,223 | 1,167 | 610 / 556 / 99 | 107,860 | 3,729 | 17,093 | 14,725 (45) |
+| Yomitan | 137,417 / 130,059 | 1,187 | 610 / 557 / 100 | 114,360 | 60 | 12,542 | 8,001 (58) |
+| Union | 146,501 / 132,263 | 1,183 | 609 / 555 / 99 | 107,520 | 3,722 | 17,109 | 15,704 (97) |
+| Final | 145,932 / 132,230 | 1,167 | 609 / 555 / 99 | 107,619 | 3,724 | 17,175 | 14,984 (50) |
 
 - **Wrong first results, final set, pass.** The capitals: 1,167 (*Ang*
-  874, *May* 70, *Oh* 37, *Tunay* 31). The other rule readings: 9 of 60
+  874, *May* 70, *Oh* 37, *Tunay* 31). The linked words: 609, of which
+  *Isang* 110, *mang* 93 (*man* + -g, as in *sino mang*), *kang* 43,
+  *yaong* 42, *silang* 41, *anong* → *anonang* 34, *bang* 32 and *labing*
+  30 (for *labing-*, the -teen numerals). The other rule readings: 9 of 60
   sampled (seed 1) are wrong (*ikatutuwâng* → *tuwang*, *patayang* →
   *taya*, *Katakátakáng* → *takatak*, *gagamitin* → *gagamit*, *katuturán*
   → *turan*, *umalí* → *ale*, *Mameng* → *bang*, *nang̃aglálarô* →
   *manlalaro*, *Kikoy--ang* → *kikoy*), about 2,250 of 14,984. The linker
   readings: 2 of 60 (seed 1; the name *Orang* → *ora*, and *diya’y* →
   *diya*, a jellyfish, for *diyan ay*), about 570 of 17,175. In all about
-  4,000 of the 145,932 positions found (2.7%).
+  4,600 of the 145,932 positions found (3.2%).
 - The largest groups of other rule readings are *Mameng* → *bang* (145,
   wrong: a name read as mang- with a merged b, *beng*, a spelling of
   *bang*), *nag-aaral* → *mag-aral* (127), *babaing* → *baba* (82, wrong:
@@ -515,6 +565,7 @@ section 14 says and the inputs in a cache directory `$C`:
 node languages/tl/sources/own-rules.mjs              # sources/own.json
 node tools/port-yomitan-transforms.mjs $YOMITAN tl --force
 node languages/tl/sources/map-yomitan.mjs $YOMITAN   # sources/yomitan.json
+node tools/port-yomitan-tests.mjs $YOMITAN tl        # tests/yomitan.tsv with Yomitan's reasons
 node languages/tl/sources/build-final.mjs            # transforms.json, tests/yomitan.tsv reasons
 python3 languages/tl/sources/build-corpus.py $C/unimorph-tgl/tgl $C/kaikki.org-dictionary-Tagalog.jsonl
 node tools/check-classes.mjs tl --write
@@ -528,6 +579,9 @@ for u in pass filter; do
     python3 languages/tl/sources/measure.py $c --cache $C --dictionary $C/wty-tl-en --untagged $u --show 100 --sample 60
   done
 done
+python3 languages/tl/sources/measure.py tatoeba --cache $C --dictionary $C/wty-tl-en --dump tat
+python3 languages/tl/sources/measure.py text --cache $C --dictionary $C/wty-tl-en --dump text
+python3 languages/tl/sources/attribute-removed.py tat text   # the removal tables' first results
 node languages/tl/sources/check-removed.mjs
 node languages/tl/sources/ablate.mjs
 python3 languages/tl/sources/measure.py positions > words.txt
@@ -564,13 +618,32 @@ the same way.
   sentence starts. Counts, with pass and with filter: 8,430 Tatoeba
   positions (1.5% of those found), 1,167 in the Gutenberg texts, and 207 of
   the 10,000 frequent words written with a capital (15.27% of the list's
-  tokens). The German pack has the same gap; a host flag for a scan at a
+  tokens; 221 and 16.22% with the linked words of the next entry, such as
+  *Isang*). The German pack has the same gap; a host flag for a scan at a
   sentence start is a follow-up.
+- **A word with the linker can read as another headword.** The linker -ng
+  (-g after n) joins a word to the next one, so it is on most phrases, and
+  for many frequent words the joined spelling is another headword of
+  wty-tl-en: *pong* (a mahjong set) for *po* + -ng, *bang* for *ba* + -ng,
+  *kang* for *ka* + -ng, *yaong* (a porcelain cup) for *yaon* + -g, *silang*
+  (birth) for *sila* + -ng, *batang* (a log) for *bata* + -ng, *Isang* (a
+  given name) for *isa* + -ng at a sentence start. The text as written
+  matches that row with no step and the linker reading has one, so the row
+  comes first (docs/languages.md 9.6); wty-tl-en's form-of rows *anong* →
+  *anonang* and *kayang* → *kayan* do the same through the dictionary. The
+  word without the linker is the second or third result. The pack cannot
+  reorder these: without the linker's -g rule, *kayang* still reads as
+  *kayan* through its form-of row. Counts, judged by group in
+  `sources/linked-judged.tsv`, with pass (filter): 6,197 (6,205) Tatoeba
+  positions, 1.1% of those found; 609 (614) in the Gutenberg texts; and 18
+  of the 10,000 frequent words, 0.80% of the list's tokens. A follow-up
+  that lets a pack ignore given form-of rows would fix *anong* and
+  *kayang*.
 - **The dictionary has no parts of speech.** With `pass` every row of
   wty-tl-en carries D, so the part-of-speech filter cannot tell a noun from
   a verb: a rule that makes a verb also reaches a noun spelled the same,
   and the false candidates per sample row rise from 0.311 with filter to
-  1.464. With filter a rule whose output has conditions finds nothing:
+  1.465. With filter a rule whose output has conditions finds nothing:
   28,645 Tatoeba positions and 70 of the 10,000 frequent words find nothing
   that pass finds. The rules keep their conditions, as section 14 asks, so
   a dictionary that tags its rows is filtered.

@@ -52,6 +52,27 @@ const MUTATIONS = [
     ['prefixes: first letter after the consonant any', (t, r) => own(t, r) && r.stemStartsWith === '[aeioulrwy]', drop('stemStartsWith')],
     ['d -> r: any vowel after it', (t, r) => own(t, r) && /^\[[aeiou]\]$/.test(r.stemStartsWith ?? ''), drop('stemStartsWith')],
     ['prefix reduplication: no straight-to-root rules', (t, r) => inT(['progressive', 'contemplative'])(t) && r.type === 'prefix' && r.deinflected === '' && /^[mn]ak|^[mn]agpap|^[mn]agkak/.test(r.inflected), null],
+    // The one-word constraint of each transform on its own (the mutation
+    // above takes them all out at once).
+    ...['objectIn', 'locativeAn', 'maAn', 'makaAn', 'paAn', 'pagAn', 'pagIn', 'paIn', 'kaAn', 'ka', 'pa', 'pala', 'mang', 'paki', 'gerund', 'recentlyCompleted', 'pang'].map((id) => [
+        `one word: ${id} stems may hold a space`, (t, r) => t.id === id && r.stemCharacters === '[^ ]', drop('stemCharacters')]),
+    ['one word: magsi- patterns may read into the next word', (t, r) => t.id === 'magsi' && r.type === 'pattern' && r.pattern.includes('(?![^ ]* )'),
+        (r) => ({...r, pattern: r.pattern.replace('(?![^ ]* )', '')})],
+    ["'y: after a consonant too", (t, r) => t.id === 'contractionAy', drop('stemEndsWith')],
+    ["'y: a stem of one letter", (t, r) => t.id === 'contractionAy', drop('stemMinLength')],
+    ['ka- -an: no u -> o', (t, r) => t.id === 'kaAn' && (r.stemChange !== undefined || JSON.stringify(r.suffixes ?? []).includes('"u')), null],
+    // Each word of the -g after n list on its own.
+    ...['noong', 'naming', 'saang', 'kanang', 'hapong', 'bayang', 'labang'].map((form) => [
+        `linker: no ${form} -> ${form.slice(0, -1)}`, (t, r) => t.id === 'linker' && r.type === 'wholeWord' && r.inflected === form, null]),
+];
+// Processor edits: [name, edit of language.json].
+const PROCESSORS = [
+    ['oldNg: G̃ kept', (language) => {
+        for (const p of language.lookup.preprocessors) {
+            if (p.id === 'oldNg') { for (const variant of p.variants) { for (const step of variant) { delete step.map?.['G̃']; } } }
+        }
+        return language;
+    }],
 ];
 const ORDER = [
     ['nakaka- after the aspect rules', (transforms) => {
@@ -74,11 +95,12 @@ const ORDER = [
     }],
 ];
 
-function run(name, transforms, changed) {
+function run(name, transforms, changed, language = null) {
     const dir = mkdtempSync(join(tmpdir(), 'tl-ablate-'));
     try {
         cpSync(pack, join(dir, 'tl'), {recursive: true});
         writeFileSync(join(dir, 'tl', 'transforms.json'), formatTransforms({...original, transforms}));
+        if (language !== null) { writeFileSync(join(dir, 'tl', 'language.json'), `${JSON.stringify(language, null, 2)}\n`); }
         execFileSync('node', [join(repo, 'tools', 'check-classes.mjs'), 'tl', '--write', '--languages', dir], {stdio: 'ignore'});
         const result = spawnSync(join(buildDir, 'language-conformance-test'), [join(dir, 'tl')], {encoding: 'utf8'});
         const fails = (result.stdout + result.stderr).split('\n').filter((l) => l.startsWith('FAIL'));
@@ -99,4 +121,7 @@ for (const [name, predicate, edit] of MUTATIONS) {
 }
 for (const [name, reorder] of ORDER) {
     run(name, reorder(structuredClone(original.transforms)), 'order');
+}
+for (const [name, edit] of PROCESSORS) {
+    run(name, original.transforms, 'processor', edit(JSON.parse(readFileSync(join(pack, 'language.json'), 'utf8'))));
 }

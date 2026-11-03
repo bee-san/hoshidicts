@@ -64,5 +64,17 @@
   ["ᜃᜓᜋᜁᜈ᜔", "", "non-lemma", "", 0, [["kumain", ["Baybayin"]]], 63, ""],
   ["ilang̃", "", "non-lemma", "", 0, [["ilang", ["alternative"]]], 64, ""],
   ["siklab", "", "n", "n", 0, ["a flare; a sudden outburst"], 65, ""],
-  ["klab", "", "n", "n", 0, ["a club (an association)"], 66, ""]
+  ["klab", "", "n", "n", 0, ["a club (an association)"], 66, ""],
+  ["saan", "", "pron", "", 0, ["where"], 67, ""],
+  ["saa", "", "n", "n", 0, ["a test row spelled like saang without its linker (an entry a wrong reading of saang would reach)"], 68, ""],
+  ["hapon", "", "n", "n", 0, ["afternoon"], 69, ""],
+  ["hapo", "", "adj", "adj", 0, ["exhausted (an entry a wrong reading of hapong would reach)"], 70, ""],
+  ["bayan", "", "n", "n", 0, ["town; country"], 71, ""],
+  ["baya", "", "n", "n", 0, ["berry (an entry a wrong reading of bayang would reach)"], 72, ""],
+  ["kanan", "", "adj", "adj", 0, ["right (of direction)"], 73, ""],
+  ["kana", "", "n", "n", 0, ["a test row spelled like kanang without its linker (an entry a wrong reading of kanang would reach)"], 74, ""],
+  ["laban", "", "n", "n", 0, ["fight; contest"], 75, ""],
+  ["laba", "", "n", "n", 0, ["laundry (an entry a wrong reading of labang would reach)"], 76, ""],
+  ["namin", "", "pron", "", 0, ["our (exclusive)"], 77, ""],
+  ["nami", "", "n", "n", 0, ["a test row spelled like naming without its linker (an entry a wrong reading of naming would reach)"], 78, ""]
 ]

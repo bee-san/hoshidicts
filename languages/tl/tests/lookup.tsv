@@ -52,3 +52,15 @@ verbs	1	nagsilang siya	silang	nagsilang
 verbs	0	nagsilang siya	lang	nagsilang
 verbs	1	nagsiklab ang apoy	siklab	nagsiklab
 verbs	0	nagsiklab ang apoy	klab	nagsiklab
+linker	1	saang bayan ka nakatira	saan	saang
+linker	0	saang bayan ka nakatira	saa	saang
+linker	1	hapong iyon	hapon	hapong
+linker	0	hapong iyon	hapo	hapong
+linker	1	bayang sinilangan	bayan	bayang
+linker	0	bayang sinilangan	baya	bayang
+linker	1	kanang kamay	kanan	kanang
+linker	0	kanang kamay	kana	kanang
+linker	1	labang iyon	laban	labang
+linker	0	labang iyon	laba	labang
+linker	1	naming bahay	namin	naming
+linker	0	naming bahay	nami	naming
