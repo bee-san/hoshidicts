@@ -12,8 +12,8 @@ word of `franco-brasileira` is still looked up alone.
 The recommended dictionaries, wty-pt-en and wty-pt-pt, give no part of speech:
 wiktionary-to-yomitan fills the `rules` column only for the 16 languages of its
 rule table (`src/dict/rules/valid.rs` at 4b02478), and Portuguese is not one:
-all 572,340 rows of wty-pt-en and all 504,951 of wty-pt-pt leave it empty. The pack
-therefore sets `lookup.untaggedTerms` to `"pass"` (bee-san/hoshidicts#58): an
+all 572,340 rows of wty-pt-en and all 504,951 of wty-pt-pt leave it empty.
+The pack therefore sets `lookup.untaggedTerms` to `"pass"` (bee-san/hoshidicts#58): an
 untagged term matches a deinflection whose conditions include a dictionary
 form (`v`, `n` or `adj`), and not one that holds only the intermediate
 condition `vf` (Rule provenance). Without the field, no rule's output finds a
@@ -142,8 +142,9 @@ yomitan, 0 both"). No Yomitan rule is left out, because there is none.
     `facílimo`, `paupérrimo`, `ótimo`, `rapidissimamente`); and -mente adverbs
     (`rapidamente`, `provavelmente`, `cortesmente`).
 - **Conditions.** `v`, `n`, `adj` and `adv` (only for `eis`, the target of
-  `ei-lo` and `eis-me`, which no rule takes further) are dictionary forms. `vf` is an
-  intermediate state, a verb form whose attached pronoun was removed: only
+  `ei-lo` and `eis-me`, which no rule takes further) are dictionary forms.
+  `vf` is an intermediate state, a verb form whose attached pronoun was
+  removed: only
   verb rules take it, so `chama-se` → `chama` (vf) → chamar (v) never shows
   the noun chama, and `deixa-me` never shows the noun deixa. A pronoun rule
   writes the infinitive directly where the form left is one (`dizer-lhe`,
@@ -187,9 +188,9 @@ yomitan, 0 both"). No Yomitan rule is left out, because there is none.
     A literal constraint takes one string, so each rule is split by the
     excluded stems' first letters; a copy keeps the longer stems only where
     wty-pt-en has a word with one (`contorcer`, `convergir`, `querer`,
-    `afastar`, `alegar`, `siderúrgico`). On 459,646 words (UniMorph por, both frequency lists and every
-    one-word headword of wty-pt-en) these exclusions remove no deinflection a
-    form-of row of the word names;
+    `afastar`, `alegar`, `siderúrgico`). On 459,646 words (UniMorph por, both
+    frequency lists and every one-word headword of wty-pt-en) these
+    exclusions remove no deinflection a form-of row of the word names;
   - -guer is only erguer, and the plain -er present endings do not follow u:
     `aluga` and `alugue` are alugar, not the noun aluguer; the u → o verbs are
     a closed list, so `compre` and `corte` are not cumprir and curtir;
@@ -219,8 +220,9 @@ yomitan, 0 both"). No Yomitan rule is left out, because there is none.
     459,646 words above, in the same order), which keeps `own.json` at
     316 KB although the rules grew (479 KB at e533611);
   - the stems without spaces or capitals, the pronoun stems without spaces,
-    the exact-stem exclusions, -guer, u → o, the names, -azinho and `esto`
-    came from the real-text, Tatoeba and frequent-word lookups of Measurements;
+    the exact-stem exclusions (`alguem`, `sida` among them), -guer, u → o, the
+    names, -azinho, `esto` and `sao` came from the real-text, Tatoeba and
+    frequent-word lookups of Measurements;
   - cear and gear, whose one-letter stems the -ear rules leave out.
 
 ## Measurements
@@ -288,9 +290,9 @@ is given, it is labelled "without the field".
    English words such as `adam` → adar, `rita` → rito, `have` → haver,
    `toni` → toner), and nothing for 1,072. In the European list: 4,907,
    4,120, 2 wrong (`anna`, and `deviamos`, devíamos without its accent, read
-   as vir), 12 and 959. Without the field, 5 (Brazilian) and 29
-   (European) of these words find nothing, mostly hyphenated forms of the
-   European list (`deixa-me`, `fazê-lo`).
+   as vir), 12 and 959. Without the field, 5 (Brazilian) and 29 (European)
+   of the reached words find nothing, mostly hyphenated forms of the European
+   list (`deixa-me`, `fazê-lo`).
 3. **Pronouns, articles and auxiliaries** (`sources/measure.py phrases`):
    Tatoeba's 445,567 Portuguese sentences, every place where one of these
    words is followed by another, looked up from the word and from the one
@@ -339,8 +341,8 @@ is given, it is labelled "without the field".
      to a reference (`azas` → aza → asa), which one hop does not reach, so the
      right lemma has no entry the lookup can show.
    - A hand check of 60 unjudged results drawn from the three novels and the
-     first article (seed 11): 42 right, 14 wrong and 4 related words. Of the wrong,
-     10 are spellings without the accents of the 1911 and 1945 reforms
+     first article (seed 11): 42 right, 14 wrong and 4 related words. Of the
+     wrong, 10 are spellings without the accents of the 1911 and 1945 reforms
      (`politicos`, `magnificos`, `sitios`, `visinho`, `cosinha`, `bôa`,
      `desdem`, `miudas`), 2 Roman numerals (`VII` → vir), 1 the French
      `DES` and 1 a place name. The related words are `fitos` (the adjective
