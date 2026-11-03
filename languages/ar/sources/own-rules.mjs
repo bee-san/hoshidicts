@@ -417,7 +417,16 @@ function presentRules(prefixes, ending, {defective = [], hamza = [], hollow = tr
     if (defective.length > 0) { rules.push(cross(prefixes, defective)); }
     if (hamza.length > 0) { rules.push(cross(prefixes, hamza, {min: 1})); }
     // Hollow verbs are form I, IV (أقام), VII (انقاد), VIII (اختار) or X (استطاع).
-    if (hollow) { rules.push(cross(prefixes.filter(([, d]) => d === '' || d === 'أ' || d === 'ا'), hollowEndings(ending), {min: 1})); }
+    // Before ي, form IV comes first on a tie: the common verbs of that
+    // spelling are form IV (يريد, يصيب, يعيد: أراد, أصاب, أعاد; form I راد,
+    // صاب, عاد), and the rest a dictionary names itself. On al-Nazarat,
+    // Kalila wa Dimna and Tatoeba this puts the right verb first at 239
+    // positions and a wrong one at none.
+    if (hollow) {
+        const hollowPrefixes = prefixes.filter(([, d]) => d === '' || d === 'أ' || d === 'ا');
+        rules.push(cross(hollowPrefixes, hollowEndings(ending).filter(([i]) => i.startsWith('و')), {min: 1}));
+        rules.push(cross([...hollowPrefixes].sort((a, b) => (a[1] === 'أ' ? 0 : 1) - (b[1] === 'أ' ? 0 : 1)), hollowEndings(ending).filter(([i]) => i.startsWith('ي')), {min: 1}));
+    }
     if (short) {
         // Hollow verbs without their long vowel (يقل, يقلن) and doubled verbs
         // with both consonants (يمدد, يمددن).

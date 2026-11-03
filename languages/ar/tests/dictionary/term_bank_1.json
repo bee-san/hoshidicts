@@ -52,5 +52,7 @@
   ["الكبيرة", "", "non-lemma", "", 0, [["كبير", ["definite feminine singular"]]], 51, ""],
   ["رجال", "", "non-lemma", "n", 0, [["رجل", ["plural"]]], 52, ""],
   ["كبيرة", "", "non-lemma", "", 0, [["كبير", ["feminine singular"]]], 53, ""],
-  ["جميلة", "", "non-lemma", "", 0, [["جميل", ["feminine singular"]]], 54, ""]
+  ["جميلة", "", "non-lemma", "", 0, [["جميل", ["feminine singular"]]], 54, ""],
+  ["راد", "رَادَ", "v", "v", 0, ["to explore"], 55, ""],
+  ["أراد", "أَرَادَ", "v", "v", 0, ["to want"], 56, ""]
 ]
