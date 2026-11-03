@@ -88,6 +88,13 @@ def spellings(text):
     return out
 
 
+def lemma_key(text):
+    """A lemma in Latin letters without accent marks, and without the page-split
+    suffix of wty-sh-en's "i/languages M to Z": the same lemma in either script
+    (рећи and reći) is one lemma."""
+    return strip_accents(to_latin(text)).split('/')[0]
+
+
 class Dictionary:
     def __init__(self, zip_path):
         self.lemmas = set()
@@ -129,7 +136,8 @@ class Dictionary:
         return out
 
     def right(self, expression, matched):
-        return expression in self.gold_of(matched) or strip_accents(expression) in self.gold_of(matched)
+        gold = self.gold_of(matched)
+        return expression in gold or lemma_key(expression) in {lemma_key(g) for g in gold}
 
 
 class LemmaFrequency:
@@ -149,15 +157,16 @@ class LemmaFrequency:
                     word, n = line.split()
                     gold = d.gold_of(word)
                     for lemma in gold:
-                        self.count[lemma] += int(n) / len(gold)
+                        self.count[lemma_key(lemma)] += int(n) / len(gold)
 
     def judge(self, first, others):
         """'right', 'wrong' or 'undecided' for the first lemma against the others."""
-        a = self.count[first]
-        best = max(others, key=lambda o: self.count[o])
-        if self.count[best] >= self.RATIO * max(a, 1):
+        count = lambda lemma: self.count[lemma_key(lemma)]
+        a = count(first)
+        best = max(others, key=count)
+        if count(best) >= self.RATIO * max(a, 1):
             return 'wrong', best
-        if all(a >= self.RATIO * max(self.count[o], 1) for o in others):
+        if all(a >= self.RATIO * max(count(o), 1) for o in others):
             return 'right', first
         return 'undecided', best
 
@@ -172,7 +181,7 @@ def ties(d, entry):
     if not d.right(first['expression'], first['matched']):
         return None
     others = sorted({r['expression'] for r in results[1:] if r['matched'] == first['matched']
-                     and r['expression'] != first['expression'] and d.right(r['expression'], r['matched'])})
+                     and lemma_key(r['expression']) != lemma_key(first['expression']) and d.right(r['expression'], r['matched'])})
     return others or None
 
 
@@ -284,7 +293,7 @@ def cmd_cyrlatin(args, d):
         if not a['results'] or not b['results']:
             continue
         fa, fb = a['results'][0], b['results'][0]
-        if to_latin(fa['expression']).lower() != to_latin(fb['expression']).lower() and to_latin(fa['matched']) == to_latin(fb['matched']):
+        if lemma_key(fa['expression']).lower() != lemma_key(fb['expression']).lower() and to_latin(fa['matched']) == to_latin(fb['matched']):
             differ.append((i, word, fa, fb, judge(d, a, word)[0]))
     print(json.dumps({'lookups': len(pairs), 'differ': len(differ), 'share': round(len(differ) / max(1, len(pairs)), 5),
                       'verdicts': dict(collections.Counter(x[4] for x in differ))}, ensure_ascii=False))
@@ -582,6 +591,11 @@ def cmd_nothing(args, d):
     print(json.dumps({'words': len(words), 'nothing': len(none), 'nothingTokens': sum(c for c, _ in none),
                       'shareOfTokens': round(sum(c for c, _ in none) / total, 5)}))
     print('most frequent:', ' '.join(w for _, w in none[:args.show]))
+    letters = sorted(((c, w, e['results'][0]['expression']) for (w, c), e in zip(words, looked)
+                      if e['results'] and e['results'][0]['expression'] in d.letters), reverse=True)
+    print(json.dumps({'letterFirst': len(letters), 'letterFirstTokens': sum(x[0] for x in letters),
+                      'letterFirstShare': round(sum(x[0] for x in letters) / total, 5)}))
+    print('a letter first:', ' '.join(f'{w}→{e} ({c})' for c, w, e in letters[:args.show]))
 
 
 CASES = {'NOM': 'nom.', 'GEN': 'gen.', 'DAT': 'dat.', 'ACC': 'acc.', 'VOC': 'voc.', 'ESS': 'loc.', 'INS': 'ins.'}
