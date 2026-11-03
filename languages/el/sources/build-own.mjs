@@ -97,6 +97,8 @@ function acc(s) {
 const stemLast = () => 'last';
 const stemSecond = () => 'ante';
 const LEFT = 'ante';
+// The rules that move the stem's accent left pass {keepsAccent: true}.
+const KEEPS = {keepsAccent: true};
 const KIND = {
     last: {v: 'v_acc', n: 'n_last', adj: 'adj_last'},
     ante: {n: 'n_ante', adj: 'adj_ante'},
@@ -149,6 +151,12 @@ function constraints(opts) {
 function suffix(id, inflected, deinflected, opts = {}) {
     const t = byId.get(id);
     if (t === undefined) { throw new Error(`no transform ${id}`); }
+    // A noun or adjective form of two syllables or more has its accent in the
+    // stem when its ending has none, so the rule needs one there: για, στα and
+    // μια are not γιος, στο and μιας.
+    if (opts.nominal && plain(inflected) === inflected && opts.stemContains === undefined && opts.chars === undefined) {
+        opts = {...opts, stemContains: ACCENTED};
+    }
     t.rules.push({
         type: 'suffix', inflected, deinflected,
         conditionsIn: opts.in ?? [], conditionsOut: opts.out ?? [],
@@ -193,6 +201,13 @@ function shared(id, pairs, then, opts = {}) {
             return kind;
         });
         steps = null;
+        // A rule that keeps the stem's accent and moves it left (ανθρώπου)
+        // writes the lemma's ending with an accent too (ανθρώπός), a form no
+        // word has; the accent step takes only such forms, so it never moves
+        // the accent of a word as written (κυρία is not κύρια).
+        if (then === 'ante' && opts.keepsAccent) {
+            suffixes = unique.map(([a, b]) => [a, acc(b)]);
+        }
     } else if (then !== null && then.final !== undefined) {
         const bare = plain(then.final);
         suffixes = unique.map(([a, b]) => {
@@ -297,6 +312,9 @@ const DEPENDENT_ENDINGS = {'1sg': ['ω'], '2sg': ['εις'], '3sg': ['ει'], '1
 // (ήθελα, ήξερα, ήπια) and in learned verbs that begin with ε or α
 // (ελπίζω/ήλπιζα, αγγέλλω/ήγγειλα).
 const AUGMENTS = [['έ', ''], ['ή', ''], ['ή', 'ε'], ['ή', 'α']];
+// The same without the accent, which text in capitals leaves out (ΕΓΡΑΨΑ →
+// εγραψα → γραφω → γράφω); the stem then has no accent either.
+const BARE_AUGMENTS = [['ε', ''], ['η', '']];
 
 const ACCENTED = '{accented}';
 
@@ -306,9 +324,13 @@ for (const [p, endings] of Object.entries(PRESENT_ENDINGS)) {
 // Imperfect: the stressed forms, with and without the augment, then the others.
 // Stems ending in a vowel add γ (άκουγα, έφταιγα, έκλαιγα).
 for (const [p, endings] of Object.entries(PAST_STRESSED)) {
-    const pairs = endings.flatMap((e) => [[e, 'ω'], ['γ' + e, 'ω'], ['αριζ' + e, 'αρω']]);
-    shared(`imperfect-${p}`, pairs, stemLast('ω'), {...VERB});
-    shared(`imperfect-${p}`, pairs, stemLast('ω'), {...VERB, prefixes: AUGMENTS, min: 1});
+    const pairs = endings.flatMap((e) => [[e, 'ω'], ['γ' + e, 'ω']]);
+    shared(`imperfect-${p}`, pairs, stemLast('ω'), {...VERB, stemContains: ACCENTED});
+    // After an internal augment the stem has no accent: υπήρχε → υπαρχε → υπάρχω.
+    shared(`imperfect-${p}`, pairs, stemLast('ω'), {...VERB, in: ['aug'], chars: '{unaccented}', min: 3});
+    // After the augment the stem has a vowel (έγραφα), so ήταν is not τω.
+    shared(`imperfect-${p}`, pairs, stemLast('ω'), {...VERB, prefixes: AUGMENTS, min: 1, stemContains: '{vowel}'});
+    shared(`imperfect-${p}`, pairs, stemLast('ω'), {...VERB, prefixes: BARE_AUGMENTS, min: 2, chars: '{unaccented}', stemContains: '{vowel}'});
 }
 for (const [p, endings] of Object.entries(PAST_KEEP)) {
     for (const e of endings) {
@@ -324,8 +346,8 @@ suffix('gerund', 'γοντας', 'ω', {...VERB, stemEndsWith: ACCENTED});
 // Regular sigmatic aorists, then asigmatic and irregular stems that compounds
 // share (κατάλαβα, απέφυγα, παρέμεινα).
 const PERFECTIVE = [
-    // -σ-: αγοράζω/αγόρασα, κλείνω/έκλεισα, πλάθω/έπλασα, ακούω/άκουσα, αρέσω/άρεσα; -άρω loans: παρκάρω/παρκάρισα
-    ['σ', 'ζ'], ['σ', 'ν'], ['σ', 'θ'], ['σ', ''], ['σ', 'σ'], ['αρισ', 'αρ'],
+    // -σ-: αγοράζω/αγόρασα, κλείνω/έκλεισα, πλάθω/έπλασα, ακούω/άκουσα, αρέσω/άρεσα; φταίνω/φτάσω
+    ['σ', 'ζ'], ['σ', 'ν'], ['σ', 'θ'], ['σ', ''], ['σ', 'σ'], ['ασ', 'αιν'],
     // -ψ-: γράφω/έγραψα, κόβω/έκοψα, λείπω/έλειψα, βλάπτω/έβλαψα, ανάβω, δουλεύω/δούλεψα, παύω/έπαψα, καίω/έκαψα
     ['ψ', 'φ'], ['ψ', 'β'], ['ψ', 'π'], ['ψ', 'πτ'], ['ψ', 'φτ'], ['εψ', 'ευ'], ['αψ', 'αυ'], ['αψ', 'αι'],
     // -ξ-: πλέκω/έπλεξα, τρέχω/έτρεξα, ανοίγω/άνοιξα, αλλάζω/άλλαξα, φυλάσσω, ψάχνω/έψαξα, σφίγγω/έσφιξα, φταίω/έφταιξα
@@ -347,11 +369,15 @@ const PERFECTIVE = [
 // may stand alone after the augment (έφυγα: έ + φυγ + α) or without it (φύγαμε).
 const IRREGULAR_STEMS = new Set(['φυγ', 'μειν', 'βαλ', 'βγαλ', 'λαβ', 'δωσ', 'θεσ', 'πεσ', 'μαθ', 'παθ', 'τυχ', 'πλυν', 'βηκ', 'φαγ', 'πι']);
 for (const [aor, pres, only] of PERFECTIVE) {
-    const min = IRREGULAR_STEMS.has(aor) ? 0 : 1;
+    // A stem before a consonant-only perfective ending has two letters or
+    // more (γράψω, κόψω), so έξω and άσε are not έχω and άνω.
+    const min = IRREGULAR_STEMS.has(aor) ? 0 : 2;
+    const vowelInStem = /[αεηιουω]/.test(aor) ? undefined : '{vowel}';
     const accentInStem = aor === acc(aor) ? ACCENTED : undefined;
     for (const [p, endings] of Object.entries(PAST_STRESSED)) {
-        shared(`aorist-${p}`, endings.map((e) => [aor + e, pres + 'ω']), stemLast('ω'), {...VERB, min: 1});
-        shared(`aorist-${p}`, endings.map((e) => [aor + e, pres + 'ω']), stemLast('ω'), {...VERB, prefixes: AUGMENTS, min});
+        shared(`aorist-${p}`, endings.map((e) => [aor + e, pres + 'ω']), stemLast('ω'), {...VERB, min: 2});
+        shared(`aorist-${p}`, endings.map((e) => [aor + e, pres + 'ω']), stemLast('ω'), {...VERB, prefixes: AUGMENTS, min: IRREGULAR_STEMS.has(aor) ? 0 : 1, stemContains: vowelInStem});
+        shared(`aorist-${p}`, endings.map((e) => [aor + e, pres + 'ω']), stemLast('ω'), {...VERB, prefixes: BARE_AUGMENTS, min: 2, chars: '{unaccented}', stemContains: vowelInStem});
     }
     const keep = (id, inflected, deinflected) => {
         if (inflected !== deinflected) { suffix(id, inflected, deinflected, {...VERB, min, stemContains: accentInStem}); }
@@ -395,8 +421,9 @@ for (const l of C2) {
         for (const e of endings) { suffix(`imperfect-${p}`, e, l, {...VERB, chars: '{unaccented}'}); }
     }
     suffix('gerund', 'ώντας', l, {...VERB, chars: '{unaccented}'});
-    // Imperfective imperative: αγάπα, βάστα, ξεψύχα (stressed before the ending).
-    shared('imperative-2sg', [['α', plain(l)]], finalAccent(l), {...VERB, stemContains: ACCENTED});
+    // Imperfective imperative: αγάπα, βάστα, ξεψύχα, ρώτα (stressed before the
+    // ending); a stem of three letters or more, so ένα is not ενώ.
+    shared('imperative-2sg', [['α', plain(l)]], finalAccent(l), {...VERB, stemContains: ACCENTED, min: 3});
 }
 
 // Perfective stems of conjugation II: αγαπώ/αγάπησα, γελώ/γέλασα, μπορώ/μπόρεσα,
@@ -416,7 +443,16 @@ for (const aor of C2_PERFECTIVE) {
         suffix('perfective-imperative-2pl', acc(aor) + 'τε', lemma, {...VERB, chars: '{unaccented}'});
     }
 }
-// Colloquial imperative of -εύω, -αύω verbs: σημαδεύτε, κλαδεύτε.
+// Loans in -άρω keep the accent on -άρ-: παρκάρω, παρκάριζα, παρκάρισα,
+// παρκαρίσαμε (θα παρκάρω is the present's form).
+for (const [id, e] of [['imperfect-1sg', 'άριζα'], ['imperfect-2sg', 'άριζες'], ['imperfect-3sg', 'άριζε'], ['imperfect-1pl', 'αρίζαμε'], ['imperfect-2pl', 'αρίζατε'],
+    ['imperfect-3pl', 'άριζαν'], ['imperfect-3pl', 'αρίζανε'], ['aorist-1sg', 'άρισα'], ['aorist-2sg', 'άρισες'], ['aorist-3sg', 'άρισε'], ['aorist-1pl', 'αρίσαμε'],
+    ['aorist-2pl', 'αρίσατε'], ['aorist-3pl', 'άρισαν'], ['aorist-3pl', 'αρίσανε'], ['perfective-imperative-2sg', 'άρισε'], ['perfective-imperative-2pl', 'αρίστε']]) {
+    suffix(id, e, 'άρω', {...VERB, chars: '{unaccented}'});
+}
+// Colloquial imperative of -εύω, -αύω verbs: σημαδεύτε, κλαδεύτε; of -φω
+// verbs: αλείφτε, γράφτε.
+suffix('perfective-imperative-2pl', 'φτε', 'φω', {...VERB, stemContains: ACCENTED});
 suffix('perfective-imperative-2pl', 'ύτε', 'ύω', {...VERB, stemEndsWith: '[εα]'});
 
 // Mediopassive of conjugation I. Every rule gives the active lemma (wty-el-en
@@ -463,7 +499,8 @@ for (const [aor, pres] of PASSIVE_PERFECTIVE) {
         for (const [p, endings] of Object.entries(PASSIVE_AORIST_KEEP)) {
             for (const end of endings) {
                 const vowelInStem = aor !== acc(aor);
-                suffix(`passive-aorist-${p}`, acc(aor) + end, (vowelInStem ? acc(pres) : pres) + l, {...VERB, stemContains: vowelInStem ? undefined : ACCENTED});
+                suffix(`passive-aorist-${p}`, acc(aor) + end, (vowelInStem ? acc(pres) : pres) + l,
+                    {...VERB, stemContains: vowelInStem ? undefined : ACCENTED, min: vowelInStem ? 0 : 2});
             }
         }
         for (const [p, endings] of Object.entries(PASSIVE_AORIST_MOVED)) {
@@ -487,7 +524,7 @@ for (const [aor, pres] of PASSIVE_PERFECTIVE.filter(([a]) => a.endsWith('θ'))) 
     }
 }
 // Passive imperative: ντύσου, ετοιμάσου, σκέψου, (θα) σταθείτε.
-for (const [aor, pres] of [['σ', 'ν'], ['σ', 'ζ'], ['ψ', 'φτ'], ['ψ', 'φ'], ['ξ', 'χ']]) {
+for (const [aor, pres] of [['σ', 'ν'], ['σ', 'ζ'], ['ψ', 'φτ'], ['ψ', 'φ'], ['ξ', 'χ'], ['ξ', 'γ'], ['ξ', 'κ'], ['ξ', 'ζ']]) {
     suffix('passive-imperative-2sg', aor + 'ου', pres + 'ομαι', {...VERB, stemContains: ACCENTED});
 }
 // απογοητέψου, ανιχνέψου (-εύομαι)
@@ -497,7 +534,8 @@ suffix('passive-imperative-2sg', 'έψου', 'εύομαι', {...VERB});
 const C2_PASSIVE = [
     // [lemma ending, present endings by person, imperfect endings by person, active lemmas]
     ['ιέμαι', {'2sg': ['ιέσαι'], '3sg': ['ιέται'], '1pl': ['ιόμαστε'], '2pl': ['ιέστε'], '3pl': ['ιούνται', 'ιόνται']},
-        {'1sg': ['ιόμουν', 'ιόμουνα'], '2sg': ['ιόσουν', 'ιόσουνα'], '3sg': ['ιόταν', 'ιότανε'], '1pl': ['ιόμασταν'], '2pl': ['ιόσασταν'], '3pl': ['ιόνταν', 'ιούνταν', 'ιόντουσαν']}, C2],
+        {'1sg': ['ιόμουν', 'ιόμουνα'], '2sg': ['ιόσουν', 'ιόσουνα'], '3sg': ['ιόταν', 'ιότανε'], '1pl': ['ιόμασταν'], '2pl': ['ιόσασταν'],
+            '3pl': ['ιόνταν', 'ιόντανε', 'ιούνταν', 'ιόντουσαν']}, C2],
     ['άμαι', {'2sg': ['άσαι'], '3sg': ['άται'], '1pl': ['όμαστε', 'ούμαστε'], '2pl': ['άστε', 'όσαστε'], '3pl': ['ούνται', 'όνται']},
         {'1sg': ['όμουν', 'όμουνα'], '2sg': ['όσουν', 'όσουνα'], '3sg': ['όταν', 'ότανε'], '1pl': ['όμασταν', 'ούμασταν'], '2pl': ['όσασταν'],
             '3pl': ['όνταν', 'όντανε', 'ούνταν', 'όντουσαν']}, []],
@@ -536,7 +574,7 @@ for (const [aor, lemmas] of C2_PASSIVE_PERFECTIVE) {
         }
     }
 }
-for (const [inf, l] of [['ήσου', 'άμαι'], ['ήσου', 'ούμαι'], ['ήσου', 'ιέμαι']]) {
+for (const [inf, l] of [['ήσου', 'άμαι'], ['ήσου', 'ούμαι'], ['ήσου', 'ιέμαι'], ['ήξου', 'ιέμαι'], ['άξου', 'ιέμαι']]) {
     suffix('passive-imperative-2sg', inf, l, {...VERB, chars: '{unaccented}'});
 }
 
@@ -574,6 +612,9 @@ for (const [inf, def] of INTERNAL_AUGMENTS) {
 }
 prefix('xana', 'ξανα', '', {min: 2});
 prefix('xana', 'ξανά', '', {min: 2});
+// A monosyllable loses its accent without the prefix: ξαναπώ → πω, ξαναδεί → δει.
+byId.get('xana').rules.push({type: 'prefix', inflected: 'ξανα', deinflected: '', conditionsIn: [], conditionsOut: [], stemMinLength: 2, stemCharacters: LETTERS,
+    then: [NFD, {strip: '[\\u0300-\\u036F]'}, NFC]});
 
 // Irregular verbs, written out.
 const IRREGULAR = [
@@ -678,7 +719,11 @@ const IRREGULAR = [
         ['dependent-1sg', 'ξεχάσω'], ['dependent-2sg', 'ξεχάσεις'], ['dependent-3sg', 'ξεχάσει'], ['dependent-1pl', 'ξεχάσουμε'], ['dependent-2pl', 'ξεχάσετε'], ['dependent-3pl', 'ξεχάσουν'],
         ['perfective-imperative-2pl', 'ξεχάστε'], ['passive-aorist-1sg', 'ξεχάστηκα'], ['passive-aorist-3sg', 'ξεχάστηκε'], ['passive-participle', 'ξεχασμένος']]
         .flatMap(([t, f]) => [[t, f, 'ξεχνάω'], [t, f, 'ξεχνώ']]),
-    ...[['aorist-1sg', 'πέρασα'], ['aorist-2sg', 'πέρασες'], ['aorist-3sg', 'πέρασε'], ['aorist-1pl', 'περάσαμε'], ['aorist-2pl', 'περάσατε'], ['aorist-3pl', 'πέρασαν'],
+    ...[['aorist-1sg', 'γύρισα'], ['aorist-2sg', 'γύρισες'], ['aorist-3sg', 'γύρισε'], ['aorist-1pl', 'γυρίσαμε'], ['aorist-2pl', 'γυρίσατε'], ['aorist-3pl', 'γύρισαν'],
+        ['aorist-3pl', 'γυρίσανε'], ['dependent-1sg', 'γυρίσω'], ['dependent-2sg', 'γυρίσεις'], ['dependent-3sg', 'γυρίσει'], ['dependent-1pl', 'γυρίσουμε'], ['dependent-2pl', 'γυρίσετε'],
+        ['dependent-3pl', 'γυρίσουν'], ['perfective-imperative-2sg', 'γύρισε'], ['perfective-imperative-2pl', 'γυρίστε']]
+        .flatMap(([t, f]) => [[t, f, 'γυρνάω'], [t, f, 'γυρνώ']]),
+    ...[['aorist-1sg', 'πέρασα'], ['aorist-2sg', 'πέρασες'], ['aorist-3sg', 'πέρασε'], ['aorist-1pl', 'περάσαμε'], ['aorist-2pl', 'περάσατε'], ['aorist-3pl', 'πέρασαν'], ['aorist-3pl', 'περάσανε'],
         ['dependent-1sg', 'περάσω'], ['dependent-2sg', 'περάσεις'], ['dependent-3sg', 'περάσει'], ['dependent-1pl', 'περάσουμε'], ['dependent-2pl', 'περάσετε'], ['dependent-3pl', 'περάσουν'],
         ['perfective-imperative-2pl', 'περάστε']]
         .flatMap(([t, f]) => [[t, f, 'περνάω'], [t, f, 'περνώ']]),
@@ -701,13 +746,11 @@ suffix('passive-dependent-3pl', 'ιδωθούν', 'βλέπομαι', {...VERB, 
 // Old spellings of the lemma: τρώγω (τρώω), λέγω (λέω).
 whole('present-1sg', 'τρώγω', 'τρώω', {out: ['v']});
 whole('present-1sg', 'λέγω', 'λέω', {out: ['v']});
-// The same irregular forms after a prefix, where they take the accent:
-// καταπιώ, ξαναδώ, ξαναβρείς, ξαναμπούμε, ξαναπείτε, ξαναφάω.
+// The perfective of πίνω after a prefix, where it takes the accent: καταπιώ,
+// καταπιείς. (The other monosyllables after ξανα- are the ξανα- rule's:
+// ξαναπώ → πω.)
 const COMPOUNDED = [
-    ['πίνω', 'πι', ['ώ', 'είς', 'εί', 'ούμε', 'είτε', 'ούν', 'ούνε']], ['βλέπω', 'δ', ['ώ', 'είς', 'εί', 'ούμε', 'είτε', 'ούν', 'ούνε']],
-    ['βρίσκω', 'βρ', ['ώ', 'είς', 'εί', 'ούμε', 'είτε', 'ούν', 'ούνε']], ['μπαίνω', 'μπ', ['ώ', 'είς', 'εί', 'ούμε', 'είτε', 'ούν', 'ούνε']],
-    ['βγαίνω', 'βγ', ['ώ', 'είς', 'εί', 'ούμε', 'είτε', 'ούν', 'ούνε']], ['λέω', 'π', ['ώ', 'είς', 'εί', 'ούμε', 'είτε', 'ούν', 'ούνε']],
-    ['τρώω', 'φ', ['άω', 'ας', 'άει', 'άμε', 'άτε', 'άνε']],
+    ['πίνω', 'πι', ['ώ', 'είς', 'εί', 'ούμε', 'είτε', 'ούν', 'ούνε']],
 ];
 for (const [lemma, stem, endings] of COMPOUNDED) {
     endings.forEach((e, i) => {
@@ -717,7 +760,7 @@ for (const [lemma, stem, endings] of COMPOUNDED) {
 }
 // -βαίνω compounds: ανέβηκα (ανεβαίνω), κατέβηκα; dependent ανέβω, κατέβεις.
 for (const [p, endings] of Object.entries({'1sg': ['ω'], '2sg': ['εις'], '3sg': ['ει'], '1pl': ['ούμε', 'ουμε'], '2pl': ['είτε', 'ετε'], '3pl': ['ουν', 'ούν', 'ουνε', 'ούνε']})) {
-    shared(`dependent-${p}`, endings.map((e) => ['β' + e, 'βαινω']), stemLast('ω'), {...VERB, stemEndsWith: '[έεμ]'});
+    shared(`dependent-${p}`, endings.map((e) => ['β' + e, 'βαινω']), stemLast('ω'), {...VERB, stemEndsWith: '[έεμαο]'});
 }
 shared('perfective-imperative-2sg', [['βα', 'βαινω']], stemLast('ω'), {...VERB, stemEndsWith: '[έε]'});
 
@@ -751,13 +794,13 @@ transform('diminutive', 'diminutive', 'Diminutive of a noun: σπιτάκι, π�
 
 // Nouns (`n`), nouns and adjectives (`n`, `adj`) and adjectives (`adj`); letters
 // only, stems of two letters or more.
-const N = {out: ['n']};
-const NA = {out: ['n', 'adj']};
-const A = {out: ['adj']};
+const N = {out: ['n'], nominal: true};
+const NA = {out: ['n', 'adj'], nominal: true};
+const A = {out: ['adj'], nominal: true};
 
 // Masculine and feminine -ος, and the masculine of adjectives in -ος.
 suffix('gen-sg', 'ου', 'ος', NA);
-shared('gen-sg', [['ου', 'ος']], LEFT, N);
+shared('gen-sg', [['ου', 'ος']], LEFT, {...N, ...KEEPS});
 suffix('gen-sg', 'ού', 'ός', NA);
 suffix('acc-sg', 'ο', 'ος', NA);
 suffix('acc-sg', 'ό', 'ός', NA);
@@ -766,20 +809,20 @@ suffix('voc-sg', 'έ', 'ός', NA);
 suffix('nom-pl', 'οι', 'ος', NA);
 suffix('nom-pl', 'οί', 'ός', NA);
 suffix('gen-pl', 'ων', 'ος', NA);
-shared('gen-pl', [['ων', 'ος']], LEFT, N);
+shared('gen-pl', [['ων', 'ος']], LEFT, {...N, ...KEEPS});
 suffix('gen-pl', 'ών', 'ός', NA);
 suffix('acc-pl', 'ους', 'ος', NA);
-shared('acc-pl', [['ους', 'ος']], LEFT, N);
+shared('acc-pl', [['ους', 'ος']], LEFT, {...N, ...KEEPS});
 suffix('acc-pl', 'ούς', 'ός', NA);
 
 // Neuter -ο: βιβλίο, βουνό, πρόσωπο.
 suffix('gen-sg', 'ου', 'ο', N);
-shared('gen-sg', [['ου', 'ο']], LEFT, N);
+shared('gen-sg', [['ου', 'ο']], LEFT, {...N, ...KEEPS});
 suffix('gen-sg', 'ού', 'ό', N);
 suffix('plural', 'α', 'ο', N);
 suffix('plural', 'ά', 'ό', N);
 suffix('gen-pl', 'ων', 'ο', N);
-shared('gen-pl', [['ων', 'ο']], LEFT, N);
+shared('gen-pl', [['ων', 'ο']], LEFT, {...N, ...KEEPS});
 suffix('gen-pl', 'ών', 'ό', N);
 
 // Neuter -ι: σπίτι, τραπέζι, παιδί.
@@ -787,7 +830,7 @@ shared('gen-sg', [['ιού', 'ι']], stemLast('ι'), N);
 suffix('gen-sg', 'ιού', 'ί', N);
 suffix('plural', 'ια', 'ι', N);
 suffix('plural', 'ιά', 'ί', N);
-shared('gen-pl', [['ιών', 'ι']], stemLast('ι'), N);
+shared('gen-pl', [['ιών', 'ι'], ['ίων', 'ι']], stemLast('ι'), N);
 suffix('gen-pl', 'ιών', 'ί', N);
 
 // Masculine -ας: πατέρας, άντρας, μήνας, γείτονας, ταμίας; -άς/-άδες: μπαμπάς, ψαράς.
@@ -796,7 +839,7 @@ suffix('obl-sg', 'ά', 'άς', N);
 suffix('plural', 'ες', 'ας', N);
 suffix('plural', 'άδες', 'άς', N);
 suffix('gen-pl', 'ων', 'ας', N);
-shared('gen-pl', [['ων', 'ας']], LEFT, N);
+shared('gen-pl', [['ων', 'ας']], LEFT, {...N, ...KEEPS});
 shared('gen-pl', [['ών', 'ας']], stemLast('ας'), N);
 suffix('gen-pl', 'ιών', 'ίας', N);
 suffix('gen-pl', 'άδων', 'άς', N);
@@ -833,7 +876,7 @@ suffix('plural', 'άδες', 'ά', N);
 shared('gen-pl', [['ών', 'α']], stemLast('α'), N);
 shared('gen-pl', [['ών', 'α']], stemSecond('α'), N);
 suffix('gen-pl', 'ων', 'α', N);
-shared('gen-pl', [['ων', 'α']], LEFT, N);
+shared('gen-pl', [['ων', 'α']], LEFT, {...N, ...KEEPS});
 suffix('gen-pl', 'ών', 'ά', N);
 suffix('gen-pl', 'ιών', 'ία', N);
 suffix('gen-pl', 'άδων', 'ά', N);
@@ -842,16 +885,16 @@ suffix('gen-pl', 'άδων', 'ά', N);
 suffix('gen-sg', 'ης', 'η', N);
 suffix('gen-sg', 'ής', 'ή', N);
 suffix('gen-sg', 'εως', 'η', N);
-shared('gen-sg', [['εως', 'η']], LEFT, N);
+shared('gen-sg', [['εως', 'η']], LEFT, {...N, ...KEEPS});
 suffix('plural', 'ες', 'η', N);
 suffix('plural', 'ές', 'ή', N);
 suffix('plural', 'εις', 'η', N);
-shared('plural', [['εις', 'η']], LEFT, N);
+shared('plural', [['εις', 'η']], LEFT, {...N, ...KEEPS});
 shared('gen-pl', [['ών', 'η']], stemLast('η'), N);
 suffix('gen-pl', 'ών', 'ή', N);
 suffix('gen-pl', 'εων', 'η', N);
 suffix('gen-pl', 'ων', 'η', N);
-shared('gen-pl', [['εων', 'η']], LEFT, N);
+shared('gen-pl', [['εων', 'η']], LEFT, {...N, ...KEEPS});
 
 // Feminine -ού/-ούδες: αλεπού.
 suffix('gen-sg', 'ούς', 'ού', N);
@@ -860,9 +903,9 @@ suffix('gen-pl', 'ούδων', 'ού', N);
 
 // Neuter -μα: γράμμα, όνομα, πρόβλημα; -ιμο: γράψιμο; -ας: κρέας, τέρας.
 suffix('gen-sg', 'ματος', 'μα', N);
-shared('gen-sg', [['ματος', 'μα']], LEFT, N);
+shared('gen-sg', [['ματος', 'μα']], LEFT, {...N, ...KEEPS});
 suffix('plural', 'ματα', 'μα', N);
-shared('plural', [['ματα', 'μα']], LEFT, N);
+shared('plural', [['ματα', 'μα']], LEFT, {...N, ...KEEPS});
 shared('gen-pl', [['μάτων', 'μα']], stemLast('α'), N);
 shared('gen-pl', [['μάτων', 'μα']], stemSecond('α'), N);
 shared('gen-sg', [['ίματος', 'ιμο']], stemSecond('ο'), N);
@@ -875,7 +918,7 @@ shared('gen-pl', [['άτων', 'ας']], stemLast('ας'), N);
 // Neuter -ος: έθνος, μέρος, λάθος, έδαφος. The genitive singular -ους is the
 // masculine accusative plural rule.
 suffix('plural', 'η', 'ος', N);
-shared('plural', [['η', 'ος']], LEFT, N);
+shared('plural', [['η', 'ος']], LEFT, {...N, ...KEEPS});
 shared('gen-pl', [['ών', 'ος']], stemLast('ος'), N);
 shared('gen-pl', [['ών', 'ος']], stemSecond('ος'), N);
 
@@ -890,6 +933,10 @@ suffix('gen-pl', 'όντων', 'όν', N);
 suffix('gen-sg', 'ότος', 'ός', N);
 suffix('plural', 'ότα', 'ός', N);
 suffix('gen-pl', 'ότων', 'ός', N);
+for (const [id, e] of [['feminine', 'ούσα'], ['feminine-gen-sg', 'ούσας'], ['feminine-pl', 'ούσες'], ['gen-pl', 'ουσών'], ['gen-sg', 'όντος'], ['plural', 'όντες'],
+    ['plural', 'όντα'], ['acc-sg', 'όντα'], ['gen-pl', 'όντων'], ['acc-sg', 'όν']]) {
+    suffix(id, e, 'ών', A);
+}
 suffix('feminine', 'ουσα', 'ων', A);
 suffix('feminine-gen-sg', 'ουσας', 'ων', A);
 suffix('feminine-pl', 'ουσες', 'ων', A);
@@ -908,7 +955,6 @@ suffix('feminine', 'ή', 'ός', A);
 suffix('feminine', 'α', 'ος', {...A, stemEndsWith: AFTER_VOWEL});
 suffix('feminine', 'ιά', 'ός', A);
 suffix('feminine', 'ιά', 'ύς', A);
-suffix('feminine', 'α', 'ης', A);
 suffix('feminine-gen-sg', 'ης', 'ος', A);
 suffix('feminine-gen-sg', 'ής', 'ός', A);
 suffix('feminine-gen-sg', 'ας', 'ος', {...A, stemEndsWith: AFTER_VOWEL});
@@ -964,22 +1010,20 @@ for (const [id, inf, lemmas] of [['comparative', 'ύτερος', ['ύς', 'ός'
     ['superlative', 'έστατος', ['ής']], ['comparative', 'ούστερος', ['ός']], ['superlative', 'ούστατος', ['ός']]]) {
     for (const l of lemmas) { suffix(id, inf, l, FROM_A); }
 }
-shared('comparative', [['ύτερος', 'ος']], stemLast('ος'), FROM_A);
 for (const [form, lemma] of [['χειρότερος', 'κακός'], ['καλύτερος', 'καλός'], ['περισσότερος', 'πολύς'], ['λιγότερος', 'λίγος'], ['μεγαλύτερος', 'μεγάλος'],
     ['άριστος', 'καλός'], ['κάκιστος', 'κακός'], ['ελάχιστος', 'λίγος'], ['μέγιστος', 'μεγάλος'], ['πλείστος', 'πολύς'], ['ελάσσων', 'μικρός']]) {
     whole(form.includes('τερ') || form === 'ελάσσων' ? 'comparative' : 'superlative', form, lemma, FROM_A);
 }
-// Diminutives: the text as scanned or the singular a noun rule made
-// (σπιτάκια → σπιτάκι → σπίτι): σπιτάκι (σπίτι), παιδάκι (παιδί), σκυλάκι
-// (σκύλος), γατάκι (γάτα), μωράκι (μωρό); γατούλα, κουκλίτσα.
-const FROM_N = {...N, in: ['n']};
-shared('diminutive', [['άκι', 'ι']], stemLast('ι'), FROM_N);
-suffix('diminutive', 'άκι', 'ί', FROM_N);
-shared('diminutive', [['άκι', 'ος']], stemLast('ος'), FROM_N);
-shared('diminutive', [['άκι', 'α']], stemLast('α'), FROM_N);
-shared('diminutive', [['άκι', 'ο']], stemLast('ο'), FROM_N);
-suffix('diminutive', 'άκι', 'ό', FROM_N);
-shared('diminutive', [['ούλα', 'α'], ['ίτσα', 'α']], stemLast('α'), FROM_N);
+// Diminutives, with their plural and genitive (σπιτάκι, σπιτάκια, σπιτακιού →
+// σπίτι; παιδάκι → παιδί; σκυλάκι → σκύλος; γατάκι → γάτα; μωράκι → μωρό;
+// γατούλα, κουκλίτσα → γάτα, κούκλα). They take the text as scanned only, so
+// a diminutive never follows another (κοριτσάκι is not κόρα).
+const DIM = ['άκι', 'άκια', 'ακιού', 'ακιών'];
+for (const lemma of ['ι', 'ος', 'α', 'ο']) {
+    shared('diminutive', DIM.map((e) => [e, lemma]), stemLast(lemma), N);
+}
+shared('diminutive', DIM.map((e) => [e, 'ί']).concat(DIM.map((e) => [e, 'ό'])), null, N);
+shared('diminutive', ['ούλα', 'ούλας', 'ούλες', 'ίτσα', 'ίτσας', 'ίτσες'].map((e) => [e, 'α']), stemLast('α'), N);
 
 // --- Elision and aphaeresis --------------------------------------------------------
 // A word whose final vowel is elided before another vowel ends in an
@@ -991,8 +1035,16 @@ transform('aphaeresis', 'aphaeresis', 'A dropped first vowel written as an apost
 for (const v of ['ε', 'α', 'ο', 'ι', 'ά', 'ό', 'έ', 'ί', 'αι', 'ού', 'ου']) {
     suffix('elision', '\'', v, {min: 1});
 }
-for (const v of ['έ', 'ε', 'εί', 'ει', 'ή', 'α', 'ό', 'ο']) {
+// The dropped vowel: έ (έρθει), εί (είναι), ή (ήθελα), ό (όλα), ά (άλλο),
+// and unaccented ε (εγώ, εκεί, εδώ, εμένα) and α (αυτός).
+for (const v of ['έ', 'ε', 'εί', 'ή', 'α', 'ά', 'ό']) {
     prefix('aphaeresis', '\'', v, {min: 1});
+}
+// An elided word written together with the next one (σ'αγαπώ, απ'το,
+// μ'αρέσει, γι'αυτό): the next word is looked up.
+transform('elided-proclitic', 'elided word before', 'A word whose last vowel is elided, written together with the next word: σ\'αγαπώ (σε αγαπώ), απ\'το (από το), μ\'αρέσει (με αρέσει), γι\'αυτό (για αυτό).');
+for (const w of ['σ\'', 'μ\'', 'τ\'', 'θ\'', 'ν\'', 'απ\'', 'γι\'', 'στ\'', 'κι\'']) {
+    prefix('elided-proclitic', w, '', {min: 2});
 }
 
 // --- Accent ----------------------------------------------------------------------------
@@ -1012,11 +1064,11 @@ const LEMMA_ENDINGS = {
 };
 const VOWEL_LETTERS = ['α', 'ε', 'η', 'ι', 'ο', 'υ', 'ω', 'ϊ', 'ϋ', 'Α', 'Ε', 'Η', 'Ι', 'Ο', 'Υ', 'Ω'];
 const identity = (pos) => LEMMA_ENDINGS[pos].map((e) => [e, e]);
-function accentRule(pos, kind, letter, change, extra) {
+function accentRule(pos, kind, letter, change, extra, suffixes = identity(pos)) {
     byId.get('accent').rules.push({
         type: 'circumfix',
         prefixes: [['', '']],
-        suffixes: identity(pos),
+        suffixes,
         conditionsIn: [KIND[kind][pos]],
         conditionsOut: [pos],
         stemMinLength: 2,
@@ -1050,11 +1102,12 @@ for (const pos of ['v', 'n', 'adj']) {
         // letter has the accent (αυγούστ-ος → αύγουστ-ος) also lets its first
         // letter through.
         const left = {stemContains: ACCENTED, then: REMOVE_LAST_ACCENT};
-        accentRule(pos, 'ante', letter, {occurrence: 'last', between: '[{consonant}{accented}]', betweenMinLength: 2}, left);
+        const marked = LEMMA_ENDINGS[pos].map((e) => [acc(e), e]);
+        accentRule(pos, 'ante', letter, {occurrence: 'last', between: '[{consonant}{accented}]', betweenMinLength: 2}, left, marked);
         // At least three letters, so that the digraph's own first letter is
         // not taken (συνελεύσ-η → συνέλευσ-η, not συνελέυσ-η; πετρελαί-ο →
         // πετρέλαι-ο).
-        accentRule(pos, 'ante', letter, {occurrence: 'last', between: '[{consonant}{accented}αεο]', betweenMinLength: 3}, {...left, stemContains: '[ίύΐΰ]'});
+        accentRule(pos, 'ante', letter, {occurrence: 'last', between: '[{consonant}{accented}αεο]', betweenMinLength: 3}, {...left, stemContains: '[ίύΐΰ]'}, marked);
     }
 }
 
