@@ -12,8 +12,6 @@
     "word": "[{letter}\\u0300-\\u036F0-9]",
     "vowel": "[aeiouyàâäæéèêëîïôöœùûüÿAEIOUYÀÂÄÆÉÈÊËÎÏÔÖŒÙÛÜŸ]",
     "elidable": "[{vowel}hH]",
-    "consonant": "[bcçdfghjklmnpqrstvwxz]",
-    "consonantOrU": "[{consonant}u]",
     "notSpace": "[^ ]"
   },
   "text": {

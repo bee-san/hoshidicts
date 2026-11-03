@@ -96,8 +96,22 @@ const ELIDED = [
 // Before a verb only: j', m', t', s', n', c' (and ç'). l' is also an article,
 // and qu', d', jusqu' … come before any word.
 const BEFORE_VERB = new Set(['j', 'm', 't', 's', 'n', 'c', 'ç']);
+// Any word may follow the apostrophe, as in informal writing (j'suis,
+// t'sais). After m', t' and s', a following en or y belongs with them to a
+// pronominal verb (s'en revenait, s'y prend): the rule leaves those for the
+// whole text (s'en aller, s'y prendre), so that en revenait is not read as
+// the phrase en revenir. A stem constraint takes one text, so these rules
+// are split by the stem's first letter.
+const CLITIC = new Set(['m', 't', 's']);
 for (const [short] of ELIDED) {
-    add('elision', prefix(`${short}'`, '', [], BEFORE_VERB.has(short) ? ['vcl'] : [], {stemStartsWith: '{elidable}'}));
+    const out = BEFORE_VERB.has(short) ? ['vcl'] : [];
+    if (!CLITIC.has(short)) {
+        add('elision', prefix(`${short}'`, '', [], out));
+        continue;
+    }
+    add('elision', prefix(`${short}'`, '', [], out, {stemNotStartsWith: '[ey]'}));
+    add('elision', prefix(`${short}'`, '', [], out, {stemStartsWith: '[e]', stemNotStartsWithText: 'en '}));
+    add('elision', prefix(`${short}'`, '', [], out, {stemStartsWith: '[y]', stemNotStartsWithText: 'y '}));
 }
 transform('elided-form', 'elided form',
     'The word an apostrophe follows, read as its elided and full forms: l → l\', le, la; qu → qu\', que.');
@@ -116,12 +130,12 @@ for (const [short, full] of ELIDED) {
 transform('reflexive-imperative', 'reflexive imperative',
     'An affirmative imperative with a reflexive pronoun after it, read as the pronominal verb: lève-toi → se lève, assieds-toi → s\'assieds, va-t\'en → s\'en va.');
 add('reflexive-imperative', {type: 'circumfix', inflectedPrefix: '', deinflectedPrefix: 'se ', inflectedSuffix: '-toi', deinflectedSuffix: '',
-    conditionsIn: [], conditionsOut: ['imp'], stemNotStartsWith: '{vowel}', stemEndsWith: '{letter}'});
+    conditionsIn: [], conditionsOut: ['imp'], stemNotStartsWith: '{vowel}'});
 add('reflexive-imperative', {type: 'circumfix', inflectedPrefix: '', deinflectedPrefix: "s'", inflectedSuffix: '-toi', deinflectedSuffix: '',
-    conditionsIn: [], conditionsOut: ['imp'], stemStartsWith: '{elidable}', stemEndsWith: '{letter}'});
+    conditionsIn: [], conditionsOut: ['imp'], stemStartsWith: '{elidable}'});
 for (const p of ["-t'en", '-nous-en', '-vous-en']) {
     add('reflexive-imperative', {type: 'circumfix', inflectedPrefix: '', deinflectedPrefix: "s'en ", inflectedSuffix: p, deinflectedSuffix: '',
-        conditionsIn: [], conditionsOut: ['imp'], stemEndsWith: '{letter}'});
+        conditionsIn: [], conditionsOut: ['imp']});
 }
 transform('imperative-pronoun', 'imperative + pronoun',
     'An affirmative imperative with the pronouns attached to it after a hyphen, removed: donne-moi → donne, dis-le-lui → dis, vas-y → vas.');
@@ -132,22 +146,22 @@ const IMPERATIVE_PRONOUNS = [
     '-nous-y', '-vous-y', '-les-y',
 ];
 for (const p of IMPERATIVE_PRONOUNS) {
-    add('imperative-pronoun', suffix(p, '', [], ['imp'], {stemEndsWith: '{letter}'}));
+    add('imperative-pronoun', suffix(p, '', [], ['imp']));
 }
 transform('hyphen-nous-vous', '-nous, -vous',
     'An imperative with nous or vous attached to it, or a verb with nous or vous as its inverted subject, the pronoun removed: asseyez-vous → asseyez, pouvez-vous → pouvez.');
 for (const p of ['-nous', '-vous']) {
-    add('hyphen-nous-vous', suffix(p, '', [], ['imp', 'fin'], {stemEndsWith: '{letter}'}));
+    add('hyphen-nous-vous', suffix(p, '', [], ['imp', 'fin']));
 }
 transform('inverted-subject', 'inverted subject',
     'A verb with its subject pronoun after it, as in questions and after quotations, removed: parle-t-il → parle, dit-elle → dit, est-ce → est, puis-je → puis.');
 for (const p of ['-je', '-tu', '-il', '-elle', '-on', '-ils', '-elles', '-t-il', '-t-elle', '-t-on', '-ce']) {
-    add('inverted-subject', suffix(p, '', [], ['fin'], {stemEndsWith: '{letter}'}));
+    add('inverted-subject', suffix(p, '', [], ['fin']));
 }
 transform('demonstrative', '-ci, -là',
     'A noun with the demonstrative -ci or -là after it, removed: ce jour-là → jour, cette fois-ci → fois.');
 for (const p of ['-ci', '-là']) {
-    add('demonstrative', suffix(p, '', [], ['n'], {stemEndsWith: '{letter}'}));
+    add('demonstrative', suffix(p, '', [], ['n']));
 }
 
 // --- Plural -------------------------------------------------------------------------
@@ -352,7 +366,10 @@ model('aller', 0, 'alone', {
     },
 });
 // faire and dire: written out from their stems; compounds keep 0.
-model('faire', 0, 'free', {
+// faire is not read after la, le, les or l': la faisait souffrir is not the
+// phrase la faire (23 first results in the measured texts, all wrong).
+// No compound of faire starts with l.
+model('faire', 0, 'free', {notAfter: '[l]',
     sg: [['fai', 's']], pl: 'fais', p3: [], ps: [['f', 'i']], fut: 'fer', sb: 'fass', sb2: 'fass', pp: 'fait',
     set: {present: {'1s': 'fais', '2s': 'fais', '3s': 'fait', '1p': 'faisons', '2p': 'faites', '3p': 'font'},
         imperative: {'2s': 'fais', '1p': 'faisons', '2p': 'faites'}},
@@ -403,7 +420,7 @@ for (const [v, fut, ps] of [['voir', 'verr', 'i'], ['revoir', 'reverr', 'i'], ['
     ['prévoir', 'prévoir', 'i'], ['pourvoir', 'pourvoir', 'u'], ['dépourvoir', 'dépourvoir', 'u']]) {
     const s = v.slice(0, -1);  // voi
     const y = `${s.slice(0, -1)}y`;  // voy
-    model(v, 0, 'alone', {sg: [[s, 's']], pl: y, p3: s, sb: s, sb2: y, ps: [[v.slice(0, -3), ps]], fut, pp: `${v.slice(0, -3)}u`});
+    model(v, 0, v === 'voir' ? 'alone' : 'free', {sg: [[s, 's']], pl: y, p3: s, sb: s, sb2: y, ps: [[v.slice(0, -3), ps]], fut, pp: `${v.slice(0, -3)}u`});
 }
 model('devoir', 0, 'free', {sg: [['doi', 's']], pl: 'dev', p3: 'doiv', ps: [['d', 'u']], fut: 'devr', pp: ['dû', 'due', 'dus', 'dues']});
 model('pouvoir', 0, 'free', {
@@ -442,7 +459,7 @@ model('clore', 0, 'free', {sg: [['clo', 's']], pl: 'clos', p3: 'clos', fut: 'clo
     set: {present: {'3s': ['clôt', 'clot']}}, imp: [['clos'], [], []]});
 model('frire', 0, 'free', {sg: [['fri', 's']], fut: 'frir', pp: 'frit', imp: [['fris'], [], []]});
 model('déchoir', 0, 'free', {sg: [['déchoi', 's']], pl: 'déchoy', p3: 'déchoi', ps: [['déch', 'u']], fut: 'déchoir', pp: 'déchu'});
-model('échoir', 0, 'alone', {set: {present: {'3s': 'échoit', '3p': 'échoient'}, future: {'3s': 'échoira'}, 'simple-past': {'3s': 'échut'},
+model('échoir', 0, 'free', {set: {present: {'3s': 'échoit', '3p': 'échoient'}, future: {'3s': 'échoira'}, 'simple-past': {'3s': 'échut'},
     'present-participle': {'-': 'échéant'}, 'past-participle': {'-': 'échu'}, 'past-participle-f': {'-': 'échue'},
     'past-participle-mp': {'-': 'échus'}, 'past-participle-fp': {'-': 'échues'}}});
 model('foutre', 0, 'free', {sg: [['fou', 's']], pl: 'fout', p3: 'fout', fut: 'foutr', pp: 'foutu'});
@@ -451,8 +468,8 @@ model('mouvoir', 0, 'free', {
 });
 // émouvoir and promouvoir: ému, émue, promus; listed, so that mue, mues and
 // remue (muer, remuer) are not read as mouvoir.
-model('émouvoir', 0, 'alone', {sg: [['émeu', 's']], pl: 'émouv', p3: 'émeuv', ps: [['ém', 'u']], fut: 'émouvr', pp: 'ému'});
-model('promouvoir', 0, 'alone', {sg: [['promeu', 's']], pl: 'promouv', p3: 'promeuv', ps: [['prom', 'u']], fut: 'promouvr', pp: 'promu'});
+model('émouvoir', 0, 'free', {sg: [['émeu', 's']], pl: 'émouv', p3: 'émeuv', ps: [['ém', 'u']], fut: 'émouvr', pp: 'ému'});
+model('promouvoir', 0, 'free', {sg: [['promeu', 's']], pl: 'promouv', p3: 'promeuv', ps: [['prom', 'u']], fut: 'promouvr', pp: 'promu'});
 
 // Third group, -re.
 model('prendre', 0, 'free', {sg: [['pren', 'ds']], pl: 'pren', p3: 'prenn', ps: [['pr', 'i']], fut: 'prendr', pp: 'pris'});
@@ -475,7 +492,7 @@ for (const [v, keep, stem] of [['craindre', 2, 'word'], ['peindre', 1, 'word'], 
 for (const v of ['traire', 'abstraire', 'distraire', 'extraire', 'soustraire']) {
     const s = v.slice(0, -2);  // trai
     const y = `${s.slice(0, -1)}y`;  // tray
-    model(v, 0, 'alone', {sg: [[s, 's']], pl: y, p3: s, sb: s, sb2: y, ps: [[y, 'a']], fut: `${v.slice(0, -1)}`, pp: `${s}t`});
+    model(v, 0, v === 'traire' ? 'alone' : 'free', {sg: [[s, 's']], pl: y, p3: s, sb: s, sb2: y, ps: [[y, 'a']], fut: `${v.slice(0, -1)}`, pp: `${s}t`});
 }
 model('plaire', 0, 'free', {sg: [['plai', 's']], pl: 'plais', p3: 'plais', ps: [['pl', 'u']], fut: 'plair', pp: 'plu', ppInvariable: true,
     // plaît; plait in the 1990 spelling.
@@ -532,7 +549,7 @@ model('lire', 0, 'free', {sg: [['li', 's']], pl: 'lis', p3: 'lis', ps: [['l', 'u
 // (s'écrier) as écrire.
 for (const v of ['rire', 'sourire']) {
     const s = v.slice(0, -2);  // ri
-    model(v, 0, 'alone', {sg: [[s, 's']], pl: s, p3: s, ps: [[v.slice(0, -3), 'i']], fut: v.slice(0, -1), pp: s, ppInvariable: true});
+    model(v, 0, v === 'rire' ? 'alone' : 'free', {sg: [[s, 's']], pl: s, p3: s, ps: [[v.slice(0, -3), 'i']], fut: v.slice(0, -1), pp: s, ppInvariable: true});
 }
 model('écrire', 1, 'word', {sg: [['écri', 's']], pl: 'écriv', p3: 'écriv', ps: [['écriv', 'i']], fut: 'écrir', pp: 'écrit'});
 model('suffire', 0, 'free', {sg: [['suffi', 's']], pl: 'suffis', p3: 'suffis', ps: [['suff', 'i']], fut: 'suffir', pp: 'suffi', ppInvariable: true});
@@ -671,8 +688,8 @@ for (const m of MODELS) {
 
 // The stem change of lever, mener, acheter (e → è) and céder, espérer,
 // régler, célébrer (é → è) before a silent e: lève, lèvera, cède, célèbre.
-// The è nearest the ending, with only consonants after it (and the u of gu
-// and qu: allègue, dissèque), becomes e or é
+// The è nearest the ending (in French spelling, è comes before a consonant
+// or the u of gu and qu: lève, allègue, dissèque) becomes e or é
 // (the dictionary decides which verb exists); the future of céder is cédera
 // (traditional) or cèdera (1990 spelling), and both read céder.
 const MUTE = [
@@ -690,8 +707,7 @@ for (const [tense, persons, ending] of MUTE) {
     if (t.finite && persons.includes('2s')) { out.push('p2s'); }
     for (const to of ['e', 'é']) {
         verbRules.push([verbTransformId(tense, persons), suffix(ending, 'er', t.conditionsIn, out, {
-            stemMinLength: 2,
-            stemChange: {from: ['è'], to, occurrence: 'last', between: '{consonantOrU}'},
+            stemChange: {from: ['è'], to, occurrence: 'last'},
         })]);
     }
 }
@@ -711,7 +727,7 @@ for (const [tense, persons, ending] of [
     const out = ['v'];
     if (t.finite && persons.includes('1s')) { out.push('p1s'); }
     if (t.finite && persons.includes('2s')) { out.push('p2s'); }
-    verbRules.unshift([verbTransformId(tense, persons), suffix(`ass${ending}`, 'asser', t.conditionsIn, out, {stemMinLength: 1})]);
+    verbRules.unshift([verbTransformId(tense, persons), suffix(`ass${ending}`, 'asser', t.conditionsIn, out)]);
 }
 
 // A plural participle is often also the plural of a noun or adjective (les
@@ -773,8 +789,8 @@ const INFINITIVE_ENDINGS = [['er', 'er'], ['ir', 'ir'], ['re', 're']];
 for (const [pronoun, person] of [['me', 'p1s'], ['te', 'p2s']]) {
     const circumfix = (inflectedPrefix, deinflectedPrefix, extra) => ({type: 'circumfix', prefixes: [[inflectedPrefix, deinflectedPrefix]],
         suffixes: INFINITIVE_ENDINGS, conditionsIn: [person], conditionsOut: ['v'], stemCharacters: '{letter}', ...extra});
-    add('pronominal', circumfix(`${pronoun} `, 'se ', {stemNotStartsWith: '{vowel}', stemNotStartsWithText: 'suiv'}));
-    add('pronominal', circumfix(`${pronoun[0]}'`, "s'", {stemStartsWith: '{elidable}'}));
+    add('pronominal', circumfix(`${pronoun} `, 'se ', {stemNotStartsWithText: 'suiv'}));
+    add('pronominal', circumfix(`${pronoun[0]}'`, "s'", {}));
     add('pronominal', circumfix(`${pronoun[0]}'en `, "s'en ", {}));
 }
 

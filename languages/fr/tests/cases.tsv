@@ -740,3 +740,25 @@ negatives	0	en revenant	en revenir	*	*
 negatives	0	en parlant	en parler	*	*
 negatives	0	miss	mis	n	*
 negatives	0	stress	stres	n	*
+elision	1	j'suis	être	v	present-1s|elision
+elision	1	t'sais	savoir	v	*
+negatives	0	ouest	ouêtre	*	*
+negatives	0	cailles	caller	*	*
+negatives	0	rayons	ravoir	*	*
+negatives	0	faire sa	faire savoir	*	*
+negatives	0	accru	accroire	*	*
+negatives	0	accrut	accroire	*	*
+negatives	0	de couleurs	de couleur	*	*
+negatives	0	sans une	sans un	*	*
+negatives	0	tout simplement	tout simple	*	*
+negatives	0	ciment	ci	*	*
+negatives	0	une joueuse	une joueur	*	*
+negatives	0	assieds-toi	se asseoir	*	*
+negatives	0	lève-toi	s'lever	*	*
+negatives	0	me rends compte	se rends compter	*	*
+negatives	0	s'en revenait	en revenir	*	*
+negatives	0	s'y passe	y passer	*	*
+negatives	0	la faisait	la faire	*	*
+negatives	0	le fait	le faire	*	*
+negatives	0	bière	bier	n	*
+negatives	0	vienne	vien	n	*
