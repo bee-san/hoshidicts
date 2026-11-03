@@ -41,6 +41,12 @@
         {"type": "wholeWord", "inflected": "ilin", "deinflected": "ili", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "onin", "deinflected": "oni", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "rin", "deinflected": "ri", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "ŝlin", "deinflected": "ŝli", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "iŝin", "deinflected": "iŝi", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "tiun ĉi", "deinflected": "tiu ĉi", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "tiujn ĉi", "deinflected": "tiuj ĉi", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "tion ĉi", "deinflected": "tio ĉi", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "ĉi tion", "deinflected": "ĉi tio", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "kiun", "deinflected": "kiu", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "kiujn", "deinflected": "kiuj", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "tiun", "deinflected": "tiu", "conditionsIn": [], "conditionsOut": []},
@@ -573,8 +579,8 @@
       "description": "Not: nejuna → juna, nekonata (unknown) → konata.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "inflectedPrefix": "ne", "deinflectedPrefix": "", "inflectedSuffix": "a", "deinflectedSuffix": "a", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 3, "stemCharacters": "[^ ]"},
-        {"type": "circumfix", "inflectedPrefix": "ne", "deinflectedPrefix": "", "inflectedSuffix": "e", "deinflectedSuffix": "e", "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 3, "stemCharacters": "[^ ]"}
+        {"type": "circumfix", "inflectedPrefix": "ne", "deinflectedPrefix": "", "inflectedSuffix": "a", "deinflectedSuffix": "a", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "[^ ]"},
+        {"type": "circumfix", "inflectedPrefix": "ne", "deinflectedPrefix": "", "inflectedSuffix": "e", "deinflectedSuffix": "e", "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "[^ ]"}
       ]
     },
     {
@@ -583,7 +589,7 @@
       "description": "Again or back: reveni (to come back) → veni, relegi → legi.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "inflectedPrefix": "re", "deinflectedPrefix": "", "inflectedSuffix": "i", "deinflectedSuffix": "i", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "[^ ]"}
+        {"type": "circumfix", "inflectedPrefix": "re", "deinflectedPrefix": "", "inflectedSuffix": "i", "deinflectedSuffix": "i", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]"}
       ]
     },
     {
@@ -791,7 +797,7 @@
       "description": "Both sexes together: gepatroj (parents) → patroj, gefratoj → fratoj.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "inflectedPrefix": "ge", "deinflectedPrefix": "", "inflectedSuffix": "o", "deinflectedSuffix": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[^ ]"}
+        {"type": "circumfix", "inflectedPrefix": "ge", "deinflectedPrefix": "", "inflectedSuffix": "o", "deinflectedSuffix": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]"}
       ]
     },
     {
@@ -800,8 +806,8 @@
       "description": "Primordial, of an earlier generation: praavo (great-grandfather) → avo, prahomo → homo.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "inflectedPrefix": "pra", "deinflectedPrefix": "", "inflectedSuffix": "o", "deinflectedSuffix": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[^ ]"},
-        {"type": "circumfix", "inflectedPrefix": "pra", "deinflectedPrefix": "", "inflectedSuffix": "a", "deinflectedSuffix": "a", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 3, "stemCharacters": "[^ ]"}
+        {"type": "circumfix", "inflectedPrefix": "pra", "deinflectedPrefix": "", "inflectedSuffix": "o", "deinflectedSuffix": "o", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]"},
+        {"type": "circumfix", "inflectedPrefix": "pra", "deinflectedPrefix": "", "inflectedSuffix": "a", "deinflectedSuffix": "a", "conditionsIn": ["adj"], "conditionsOut": ["adj"], "stemMinLength": 2, "stemCharacters": "[^ ]"}
       ]
     },
     {
@@ -810,7 +816,7 @@
       "description": "Wrongly: miskompreni (to misunderstand) → kompreni.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "inflectedPrefix": "mis", "deinflectedPrefix": "", "inflectedSuffix": "i", "deinflectedSuffix": "i", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "[^ ]"}
+        {"type": "circumfix", "inflectedPrefix": "mis", "deinflectedPrefix": "", "inflectedSuffix": "i", "deinflectedSuffix": "i", "conditionsIn": ["v"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]"}
       ]
     },
     {

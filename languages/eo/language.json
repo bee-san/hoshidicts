@@ -42,7 +42,7 @@
       {
         "id": "removeQuotes",
         "name": "Remove apostrophes used as quotation marks",
-        "variants": [[{"pattern": "^'+|'+$", "replace": "", "global": true}]]
+        "variants": [[{"pattern": "^'+", "replace": ""}, {"pattern": "([^']{2})'+$", "replace": "$1"}]]
       },
       {
         "id": "xSystem",

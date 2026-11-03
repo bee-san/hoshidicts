@@ -1,0 +1,13 @@
+# options: default
+# Hand-written for this pack (GPL-3.0-or-later): rows an optional processor or transform would pass anyway, run with the pack's defaults.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+word class	1	rigide	rigida	adj	adverbClass
+word class	1	kaŭze	kaŭzo	n	adverbClass
+word class	0	Marta	marto	*	*
+word class	0	lana	lano	*	*
+word class	0	flama	flamo	*	*
+x-system	1	sxin	ŝi	*	accusative
+x-system	1	mangxis	manĝi	v	past
+h-system	0	shin	ŝi	*	*
+h-system	0	flughaveno	fluĝaveno	*	*
+h-system	0	ankau	ankaŭ	*	*

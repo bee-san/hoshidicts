@@ -1,0 +1,201 @@
+# Hand-written for this pack (GPL-3.0-or-later). Runs with every option on (docs/languages.md 12.2).
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+verb	1	legas	legi	v	present
+verb	1	legis	legi	v	past
+verb	1	legos	legi	v	future
+verb	1	legus	legi	v	conditional
+verb	1	legu	legi	v	volitive
+verb	1	iras	iri	v	present
+verb	1	estis	esti	v	past
+verb	1	uzu	uzi	v	volitive
+participle	1	leganta	legi	v	anta
+participle	1	legantaj	legi	v	anta|plural
+participle	1	legantajn	legi	v	anta|plural|accusative
+participle	1	leganto	legi	v	anto
+participle	1	legantojn	legi	v	anto|plural|accusative
+participle	1	legante	legi	v	ante
+participle	1	leginta	legi	v	inta
+participle	1	leginto	legi	v	into
+participle	1	leginte	legi	v	inte
+participle	1	legonta	legi	v	onta
+participle	1	legonto	legi	v	onto
+participle	1	legonte	legi	v	onte
+participle	1	legata	legi	v	ata
+participle	1	legato	legi	v	ato
+participle	1	legate	legi	v	ate
+participle	1	legitan	legi	v	ita|accusative
+participle	1	legitoj	legi	v	ito|plural
+participle	1	legite	legi	v	ite
+participle	1	legota	legi	v	ota
+participle	1	legoto	legi	v	oto
+participle	1	legote	legi	v	ote
+declension	1	domojn	domo	n	plural|accusative
+declension	1	domon	domo	n	accusative
+declension	1	belajn	bela	adj	plural|accusative
+declension	1	belan	bela	adj	accusative
+declension	1	hejmen	hejme	adv	accusative
+declension	1	supren	supre	adv	accusative
+pronoun	1	min	mi	*	accusative
+pronoun	1	cin	ci	*	accusative
+pronoun	1	vin	vi	*	accusative
+pronoun	1	lin	li	*	accusative
+pronoun	1	ŝin	ŝi	*	accusative
+pronoun	1	ĝin	ĝi	*	accusative
+pronoun	1	sin	si	*	accusative
+pronoun	1	nin	ni	*	accusative
+pronoun	1	ilin	ili	*	accusative
+pronoun	1	onin	oni	*	accusative
+pronoun	1	rin	ri	*	accusative
+pronoun	1	ŝlin	ŝli	*	accusative
+pronoun	1	iŝin	iŝi	*	accusative
+pronoun	1	miajn	mia	*	plural|accusative
+pronoun	1	vian	via	*	accusative
+correlative	1	kiun	kiu	*	accusative
+correlative	1	kiujn	kiu	*	plural|accusative
+correlative	1	kiuj	kiu	*	plural
+correlative	1	tiun	tiu	*	accusative
+correlative	1	tiujn	tiu	*	plural|accusative
+correlative	1	ĉiun	ĉiu	*	accusative
+correlative	1	ĉiuj	ĉiu	*	plural
+correlative	1	iun	iu	*	accusative
+correlative	1	iujn	iu	*	plural|accusative
+correlative	1	iuj	iu	*	plural
+correlative	1	neniun	neniu	*	accusative
+correlative	1	neniujn	neniu	*	plural|accusative
+correlative	1	kion	kio	*	accusative
+correlative	1	ion	io	*	accusative
+correlative	1	nenion	nenio	*	accusative
+correlative	1	ian	ia	*	accusative
+correlative	1	iaj	ia	*	plural
+correlative	1	iajn	ia	*	plural|accusative
+correlative	1	tiajn	tia	*	plural|accusative
+correlative	1	kien	kie	*	accusative
+correlative	1	ien	ie	*	accusative
+correlative	1	unun	unu	*	accusative
+correlative	1	unujn	unu	*	plural|accusative
+correlative	1	tiun ĉi	tiu ĉi	*	accusative
+correlative	1	tiujn ĉi	tiuj ĉi	*	accusative
+correlative	1	tion ĉi	tio ĉi	*	accusative
+correlative	1	ĉi tion	ĉi tio	*	accusative
+elision	1	dank'	danko	n	elision
+elision	1	kor'	koro	n	elision
+elision	1	l'	la	*	elision
+elision	1	L'	la	*	elision
+elision	1	Tolstoj'n	Tolstoj	*	accusative
+elision	1	Basmanov'jn	Basmanov	*	plural|accusative
+suffix	1	kurado	kuri	v	ad
+suffix	1	venadis	veni	v	ad|past
+suffix	1	domaĉo	domo	n	aĉ
+suffix	1	manĝaĵo	manĝi	v	aĵ
+suffix	1	klubano	klubo	n	an
+suffix	1	arbaro	arbo	n	ar
+suffix	1	farebla	fari	v	ebl
+suffix	1	beleco	bela	adj	ec
+suffix	1	domego	domo	n	eg
+suffix	1	lernejo	lerni	v	ej
+suffix	1	laborema	labori	v	em
+suffix	1	pagenda	pagi	v	end
+suffix	1	urbestro	urbo	n	estr
+suffix	1	dometo	domo	n	et
+suffix	1	ekridetis	ekridi	v	et|past
+suffix	1	katido	kato	n	id
+suffix	1	purigi	pura	adj	ig
+suffix	1	ruĝiĝis	ruĝa	adj	iĝ|past
+suffix	1	tranĉilo	tranĉi	v	il
+suffix	1	kudristino	kudristo	n	in
+suffix	1	laŭdinda	laŭdi	v	ind
+suffix	1	dentisto	dento	n	ist
+suffix	1	sukerujo	sukero	n	uj
+suffix	1	junulo	juna	adj	ul
+suffix	1	fridujo	frida	adj	-ujo (adjective)
+suffix	1	lavujo	lavi	v	-ujo (verb)
+suffix	1	instruantino	instrui	v	anto|in
+word class	1	rapide	rapida	adj	adverbClass
+word class	1	kaŭze	kaŭzo	n	adverbClass
+word class	1	konsente	konsenti	v	adverbClass
+word class	1	lana	lano	n	otherWordClass
+word class	1	skriba	skribi	v	otherWordClass
+word class	1	eldiro	eldiri	v	otherWordClass
+prefix	1	malbona	bona	adj	mal
+prefix	1	malbonajn	bona	adj	mal|plural|accusative
+prefix	1	malfermis	fermi	v	mal|past
+prefix	1	malsupren	supre	adv	*
+prefix	1	nejuna	juna	adj	ne
+prefix	1	reveni	veni	v	re
+prefix	1	ekridi	ridi	v	ek
+prefix	1	disiri	iri	v	dis
+prefix	1	foriris	iri	v	for|past
+prefix	1	eliri	iri	v	el
+prefix	1	eniri	iri	v	en
+prefix	1	kunveni	veni	v	kun
+prefix	1	kunsento	sento	n	kun
+prefix	1	aliri	iri	v	al
+prefix	1	antaŭdiri	diri	v	antaŭ
+prefix	1	ĉeesti	esti	v	ĉe
+prefix	1	ĉirkaŭrigardi	rigardi	v	ĉirkaŭ
+prefix	1	defali	fali	v	de
+prefix	1	interŝanĝi	ŝanĝi	v	inter
+prefix	1	kontraŭstari	stari	v	kontraŭ
+prefix	1	perlabori	labori	v	per
+prefix	1	postlasi	lasi	v	post
+prefix	1	preterpasi	pasi	v	preter
+prefix	1	priskribi	skribi	v	pri
+prefix	1	subskribi	skribi	v	sub
+prefix	1	superŝuti	ŝuti	v	super
+prefix	1	surmeti	meti	v	sur
+prefix	1	travivi	vivi	v	tra
+prefix	1	transdoni	doni	v	trans
+prefix	1	gepatroj	patro	n	ge|plural
+prefix	1	praavo	avo	n	pra
+prefix	1	miskompreni	kompreni	v	mis
+prefix	1	senforta	forto	n	sen
+prefix	1	eksterlando	lando	*	ekster-
+prefix	1	ĵusvekita	veki	v	ita|ĵus-
+prefix	1	ekspiro	spiro	*	ek-
+prefix	1	eldiro	diro	*	el-
+prefix	1	dissendo	sendo	*	dis-
+prefix	1	foriro	iro	*	for-
+prefix	1	kunulo	ulo	*	kun-
+prefix	1	misuzo	uzo	*	mis-
+x-system	1	sxin	ŝi	*	accusative
+x-system	1	Cxiujn	ĉiu	*	plural|accusative
+h-system	1	shin	ŝi	*	accusative
+h-system	1	ankau	ankaŭ	*	
+h-system	1	chiuj	ĉiu	*	plural
+negatives	0	kaj	ka	*	*
+negatives	0	hoj	ho	*	*
+negatives	0	tuj	tu	*	*
+negatives	0	ajn	aj	*	*
+negatives	0	jen	je	*	*
+negatives	0	sen	se	*	*
+negatives	0	nun	nu	*	*
+negatives	0	kun	ku	*	*
+negatives	0	en	e	*	*
+negatives	0	ĝis	ĝii	*	*
+negatives	0	ĝis	ĝi	*	*
+negatives	0	nu	ni	*	*
+negatives	0	ĉu	ĉi	*	*
+negatives	0	du	di	*	*
+negatives	0	plu	pli	adv	*
+negatives	0	d'	do	*	*
+negatives	0	Sinjorino	Sinjoro	*	*
+negatives	0	Marta	Marto	*	*
+negatives	0	ekstera	a	*	*
+negatives	0	ĵuso	o	*	*
+negatives	0	eki	i	*	*
+negatives	0	elo	o	*	*
+negatives	0	dise	e	*	*
+negatives	0	disko	ko	*	*
+negatives	0	formi	mi	*	*
+negatives	0	forto	to	*	*
+negatives	0	fora	a	*	*
+negatives	0	kune	e	*	*
+negatives	0	mise	e	*	*
+negatives	0	ia	ii	*	*
+phrases	0	faras tion	faras tio	*	*
+phrases	0	la domojn	la domoj	*	*
+phrases	0	por ĉiuj	por ĉiu	*	*
+phrases	0	mi vidis	mi vidi	*	*
+phrases	0	li legas	li legi	*	*
+phrases	0	la belan	la bela	*	*
+phrases	0	vidis min	vidis mi	*	*

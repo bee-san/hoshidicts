@@ -105,9 +105,16 @@ suffix('accusative', 'ajn', 'aj', [], [], 2);
 // Adverb of place, direction (hejme → hejmen, supre → supren, kie → kien).
 // Two letters at least: jen (here is) and sen (without) are not je and se.
 suffix('accusative', 'en', 'e', [], [], 2);
-// The personal pronouns. ri is the gender-neutral pronoun some writers use.
-for (const pronoun of ['mi', 'ci', 'vi', 'li', 'ŝi', 'ĝi', 'si', 'ni', 'ili', 'oni', 'ri']) {
+// The personal pronouns, and the reform pronouns some writers use (ri for
+// anyone, ŝli and iŝi; added after the corpus sample had ŝlin).
+for (const pronoun of ['mi', 'ci', 'vi', 'li', 'ŝi', 'ĝi', 'si', 'ni', 'ili', 'oni', 'ri', 'ŝli', 'iŝi']) {
     whole('accusative', `${pronoun}n`, pronoun);
+}
+// The demonstratives with ĉi (this), whose declined forms dictionaries
+// list only in part (wty-eo-en has tiu ĉi, tiuj ĉi, tio ĉi and ĉi tio):
+// the stem rules never take a space, so these are whole phrases.
+for (const [form, base] of [['tiun ĉi', 'tiu ĉi'], ['tiujn ĉi', 'tiuj ĉi'], ['tion ĉi', 'tio ĉi'], ['ĉi tion', 'ĉi tio']]) {
+    whole('accusative', form, base);
 }
 // The correlatives in -u (kiu, tiu, iu, ĉiu, neniu): a whole-word list, since
 // a word in -un or -uj is otherwise no inflection (nun is not nu, kun is not
@@ -276,8 +283,8 @@ for (const [from, to] of [['a', 'o'], ['a', 'i'], ['o', 'i']]) {
 // [id, name, prefix, endings it is used with, stemMinLength, description]
 const PREFIXES = [
     ['mal', 'mal- (opposite)', 'mal', 'oaie', 2, 'The opposite: malbona (bad) → bona, malfermi (to open) → fermi, malsupren → supren.'],
-    ['ne', 'ne- (not)', 'ne', 'ae', 3, 'Not: nejuna → juna, nekonata (unknown) → konata.'],
-    ['re', 're- (again, back)', 're', 'i', 3, 'Again or back: reveni (to come back) → veni, relegi → legi.'],
+    ['ne', 'ne- (not)', 'ne', 'ae', 2, 'Not: nejuna → juna, nekonata (unknown) → konata.'],
+    ['re', 're- (again, back)', 're', 'i', 2, 'Again or back: reveni (to come back) → veni, relegi → legi.'],
     ['ek', 'ek- (beginning)', 'ek', 'i', 2, 'Beginning or sudden action: ekridi (to burst out laughing) → ridi, ekvidi → vidi.'],
     ['dis', 'dis- (apart)', 'dis', 'i', 2, 'Apart, in all directions: disiri (to part) → iri, disĵeti → ĵeti.'],
     ['for', 'for- (away)', 'for', 'i', 2, 'Away: foriri (to leave) → iri, forkuri → kuri.'],
@@ -300,9 +307,9 @@ const PREFIXES = [
     ['sur', 'sur- (on)', 'sur', 'i', 2, 'On: surmeti (to put on) → meti, surpaŝi → paŝi.'],
     ['tra', 'tra- (through)', 'tra', 'i', 2, 'Through: trabati (to pierce) → bati, travivi (to live through) → vivi.'],
     ['trans', 'trans- (across)', 'trans', 'i', 2, 'Across: transkuri (to run across) → kuri, transdoni (to hand over) → doni.'],
-    ['ge', 'ge- (both sexes)', 'ge', 'o', 3, 'Both sexes together: gepatroj (parents) → patroj, gefratoj → fratoj.'],
-    ['pra', 'pra- (primordial)', 'pra', 'oa', 3, 'Primordial, of an earlier generation: praavo (great-grandfather) → avo, prahomo → homo.'],
-    ['mis', 'mis- (wrongly)', 'mis', 'i', 3, 'Wrongly: miskompreni (to misunderstand) → kompreni.'],
+    ['ge', 'ge- (both sexes)', 'ge', 'o', 2, 'Both sexes together: gepatroj (parents) → patroj, gefratoj → fratoj.'],
+    ['pra', 'pra- (primordial)', 'pra', 'oa', 2, 'Primordial, of an earlier generation: praavo (great-grandfather) → avo, prahomo → homo.'],
+    ['mis', 'mis- (wrongly)', 'mis', 'i', 2, 'Wrongly: miskompreni (to misunderstand) → kompreni.'],
 ];
 for (const [id, name, prefix, endings, stemMinLength, description] of PREFIXES) {
     transform(id, name, description);

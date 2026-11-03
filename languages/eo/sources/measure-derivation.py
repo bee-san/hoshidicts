@@ -49,7 +49,7 @@ INFLECTION |= {f'{m}{e}' for m in ('ant', 'int', 'ont', 'at', 'it', 'ot') for e 
 FORMATION = {t['id']: t for t in pack_transforms['transforms'] if t['id'] not in INFLECTION}
 # The affix a transform removes, as an etymology names it: the suffix id
 # (et, eg, ...) or the prefix id (mal, ek, ...).
-PREFIX_IDS = {t['id'] for t in FORMATION.values() if any(r['type'] == 'circumfix' for r in t['rules'])}
+PREFIX_IDS = {t['id'] for t in FORMATION.values() if any(r['type'] in ('circumfix', 'prefix') for r in t['rules'])}
 
 pos_of = collections.defaultdict(set)
 for f in sorted(glob.glob(f'{json_dir}/term_bank_*.json')):
@@ -118,7 +118,11 @@ for line in out.splitlines():
         if r['conditions'] and not any(CONDITION_POS[c] in pos for c in r['conditions']):
             continue
         seen.add((tid, text))
-        verdict = names_affix(word, text, tid, tid in PREFIX_IDS)
+        # Yomitan's ids name the affix with hyphens and a word class
+        # (mis-, -ujo (verb)); the etymology names it without them.
+        affix = re.sub(r'[^a-zĉĝĥĵŝŭ]', '', tid.split(' ')[0])
+        prefix = tid in PREFIX_IDS or tid.endswith('-')
+        verdict = names_affix(word, text, affix, prefix)
         key = 'unknown' if verdict is None else ('right' if verdict else 'wrong')
         counts[tid][key] += 1
         if key == 'wrong':
