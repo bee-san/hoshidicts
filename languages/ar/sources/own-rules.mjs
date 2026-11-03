@@ -139,7 +139,10 @@ transform('al', 'الـ (the)', 'The definite article الـ (al-, "the"): ال�
     // Indexed at the word's last letter, so that it runs before the verb
     // rules that end there and read ال as letters of the stem: الحق is الـ +
     // حق, not the imperative of لحق; الزمن is not of لزم.
-    cross([['ال', '']], FINALS.map((c) => [c, c]), {min: 1, out: ['n', 'nd'], into: []}),
+    // Any characters between, as the plain prefix rule allowed, so that the
+    // first word of a phrase loses its article too (النشيد الوطني -> نشيد
+    // الوطني, a form of نشيد وطني).
+    {...cross([['ال', '']], FINALS.map((c) => [c, c]), {min: 1, out: ['n', 'nd'], into: []}), stemCharacters: undefined},
     // الحين (now), before the imperative of لحى.
     whole('الحين', 'حين', {out: ['n', 'nd'], into: []}),
 ]);
@@ -153,6 +156,9 @@ transform('hamzaOmitted', 'written without hamza', 'Frequent words written witho
         ['اخيرا', 'أخيرا'], ['احد', 'أحد'], ['احدا', 'أحد'], ['احدى', 'أحد'], ['اعلى', 'أعلى'], ['اوه', 'أوه'], ['امي', 'أم'],
         ['اريد', 'أراد'], ['اردت', 'أراد'], ['اراد', 'أراد'], ['اكون', 'كان'], ['اقول', 'قال'], ['اقوم', 'قام'], ['اعود', 'عاد'],
         ['اموت', 'مات'], ['احبك', 'أحب'], ['اصبحت', 'أصبح'], ['اخبرت', 'أخبر'], ['احضرت', 'أحضر'], ['ايتها', 'أيها'], ['اود', 'ود']].map(([i, d]) => whole(i, d)),
+]);
+transform('listedPlural', 'listed plural', 'أيدي (hands) is the plural of يد, before the verbs أيد and يدى that the dictionary also names. With a pronoun: أيديهم.', [
+    whole('أيدي', 'يد', {out: ['n', 'nd'], into: []}),
 ]);
 transform('definiteAdjective', 'الـ + adjective', 'A definite adjective whose spelling is also a rarer noun, read as the adjective: الكبيرة (the big, not "the great sin"), الأولى (the first), الكلاب (the dogs). wiktionary-to-yomitan leaves adjectives untagged, so the rule gives no part of speech.', [
     ...[['الكبيرة', 'كبير'], ['الصغيرة', 'صغير'], ['الأولى', 'أول'], ['السابقة', 'سابق'], ['التالية', 'تال'], ['السوداء', 'أسود'], ['الكلاب', 'كلب']].map(([i, d]) => whole(i, d)),
@@ -552,7 +558,8 @@ for (const [id, name, p, gloss, example] of [
     ['jussiveWe', 'jussive (we)', 'ن', 'we', 'لم نقل'],
 ]) {
     transform(id, name, `The short jussive "${gloss}" after لم, لا, لـ and in conditions, where a hollow, defective or doubled verb loses a letter or writes both consonants: ${example} (قال), يدع (دعا), يرم (رمى), ينس (نسي), يمدد (مد), يشأ (شاء), ير (رأى).`, [
-        cross(PRESENT[p], [['', 'ا'], ['', 'ى'], ['', 'ي']]),
+        // A verb in ي before one in ى, as in the imperative (تنس is نسي).
+        cross(PRESENT[p], [['', 'ا'], ['', 'ي'], ['', 'ى']]),
         // نكن (لم نكن) is كان, before the past ناك of pastTheyF.
         ...(p === 'ن' ? [whole('نكن', 'كان', {into: V_IN, out: V_OUT})] : []),
         cross(PRESENT[p], [['أ', 'اء'], ['ئ', 'اء']], {min: 1}),

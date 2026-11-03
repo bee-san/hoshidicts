@@ -472,3 +472,28 @@ la	0	لاعب	عب	*	la
 li + al, ل-initial noun	1	للعب	لعب	n	al|li
 imperative listed	1	العب	لعب	v	imperativeYou
 question + يمكن	1	أيمكننا	أمكن	v	presentI
+present	1	يجب	وجب	v	presentHe
+present	1	يمكن	أمكن	v	presentHe
+present	1	يمكنني	أمكن	v	presentHe
+present	1	يمكنه	أمكن	v	presentHe
+definite adjective	1	الأولى	أول	*	definiteAdjective
+past	1	نسيت	نسي	v	pastI
+pronoun particle	1	معنا	مع	*	p1p
+pronoun particle	1	منا	من	*	p1p
+proclitic	1	الحق	حق	n	al
+proclitic	1	الحظ	حظ	n	al
+proclitic	1	الحين	حين	n	al
+present	1	تجد	وجد	v	presentSheYou
+present	1	يضع	وضع	v	presentHe
+present	1	تضع	وضع	v	presentSheYou
+present	1	يقف	وقف	v	presentHe
+present	1	تقف	وقف	v	presentSheYou
+present	1	يسكن	سكن	v	presentHe
+listed plural	1	أيدي	يد	n	listedPlural
+listed plural	1	أيديهم	يد	n	listedPlural|p3mp
+jussive	1	نكن	كان	v	jussiveWe
+present	1	ترتدي	ارتدى	v	presentSheYou
+pronoun noun	1	صوته	صوت	*	p3ms
+present form IV	1	يحبني	أحب	v	presentHe
+present form IV	1	تخبرني	أخبر	v	presentSheYou
+present	1	يعنى	عنى	v	presentHe
