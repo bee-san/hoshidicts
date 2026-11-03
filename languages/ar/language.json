@@ -40,6 +40,10 @@
           "”"
         ],
         [
+          "”",
+          "“"
+        ],
+        [
           "\"",
           "\""
         ],
@@ -82,6 +86,20 @@
           [
             {
               "normalize": "NFKC"
+            }
+          ]
+        ]
+      },
+      {
+        "id": "daggerAlif",
+        "name": "Write the dagger alif as alif",
+        "variants": [
+          [
+            {
+              "map": {
+                "ٰ": "ا"
+              },
+              "at": "all"
             }
           ]
         ]

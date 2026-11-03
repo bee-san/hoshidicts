@@ -15,7 +15,8 @@ of speech); a form two tags spell the same keeps the first tag in file order.
 
 Writes <out dir>/sample.tsv (the strata below, seed 1, in the corpus format of
 docs/languages.md 12.2) and <out dir>/dev-pool.tsv (every other row, same
-format), which is never committed.
+format) and <out dir>/dev-subset.tsv (every tenth row of the pool), which are
+never committed.
 
 With a third argument, the path of wty-ar-en.zip, a row is kept only when a
 form-of row of that dictionary spells the form and names the lemma (its target
@@ -155,6 +156,9 @@ def main():
           '# %d rows sampled with seed 1 by sources/sample-corpus.py from the rows whose form wty-ar-en 2026.10.22 lists as a form of the lemma (README.md).\n' % len(sample))
     pool = sorted((name, key) for key, name in seen.items() if key not in taken)
     write(out_dir / 'dev-pool.tsv', pool, '# The rows not sampled (never committed).\n')
+    # The dev subset: every tenth row of the pool, in order (README.md, Rule
+    # provenance), for comparisons that run many lookups.
+    write(out_dir / 'dev-subset.tsv', pool[9::10], '# Every tenth row of dev-pool.tsv (never committed).\n')
     print('pairs', len(seen), 'dropped (rows not confirmed)', dropped, 'sample', len(sample), 'pool', len(pool))
     for name in STRATA:
         print('  %-36s %6d available, %4d sampled' % (name, len(by_stratum[name]), sum(1 for n, _ in sample if n == name)))

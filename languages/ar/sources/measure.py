@@ -481,6 +481,57 @@ def sets(args):
                     fmt(r['negativesPassed']), fmt(r.get('falseCandidates'), False), fmt(r.get('firstRank'))))
 
 
+def untagged(args):
+    """lookup.untaggedTerms: eval-language --dictionary on each test file with
+    the pack's default (filter) and with pass (a copy differing only by that
+    key), and a census of wty-ar-en's rows without part-of-speech rules
+    (docs/languages.md 14 step 5)."""
+    import shutil
+    import tempfile
+    zip_path, imported = args[:2]
+    languages = option(args, '--languages', 'languages')
+    pack = languages + '/ar'
+    tmp = tempfile.mkdtemp(prefix='ar-untagged-')
+    shutil.copytree(pack, tmp + '/ar')
+    d = json.load(open(tmp + '/ar/language.json', encoding='utf-8'))
+    d['lookup']['untaggedTerms'] = 'pass'
+    json.dump(d, open(tmp + '/ar/language.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=2)
+    sample = tmp + '/sample.tsv'
+    corpus = open(pack + '/tests/corpus.tsv', encoding='utf-8').read().splitlines()
+    gaps = [line for line in open(pack + '/tests/gaps.tsv', encoding='utf-8').read().splitlines() if not line.startswith('#')]
+    open(sample, 'w', encoding='utf-8').write('\n'.join(corpus + gaps) + '\n')
+    files = [('corpus.tsv + gaps.tsv', sample), ('cases.tsv', pack + '/tests/cases.tsv'),
+             ('defaults.tsv', pack + '/tests/defaults.tsv'), ('yomitan.tsv', pack + '/tests/yomitan.tsv')]
+    print('| File | Recall, filter -> pass | First rank, filter -> pass | False candidates, filter -> pass |')
+    print('| --- | --- | --- | --- |')
+    for label, path in files:
+        r = []
+        for langs in (languages, tmp):
+            cmd = ['build/hoshidicts-cli', '--languages', langs, 'eval-language', 'ar', path, '--dictionary', imported]
+            r.append(json.loads(subprocess.run(cmd, capture_output=True, text=True).stdout.strip().splitlines()[-1]))
+        pct = lambda v: '-' if v is None else '%.2f%%' % (100 * v)  # noqa: E731
+        print('| %s | %s -> %s | %s -> %s | %.3f -> %.3f |' % (
+            label, pct(r[0]['recall'] if r[0]['positives'] else None), pct(r[1]['recall'] if r[1]['positives'] else None),
+            pct(r[0]['firstRank']), pct(r[1]['firstRank']), r[0]['falseCandidates'], r[1]['falseCandidates']))
+    rows = empty = form_of = 0
+    tags = collections.Counter()
+    with zipfile.ZipFile(zip_path) as archive:
+        for name in archive.namelist():
+            if not name.startswith('term_bank'):
+                continue
+            for row in json.loads(archive.read(name)):
+                rows += 1
+                if row[3].strip():
+                    continue
+                empty += 1
+                if all(isinstance(x, list) and len(x) == 2 and isinstance(x[0], str) for x in row[5]):
+                    form_of += 1
+                else:
+                    tags[(row[2].split() or ['-'])[0]] += 1
+    print('\nwty-ar-en: %d rows, %d (%.2f%%) with empty rules, %d of them form-of rows; untagged lemma rows by first tag: %s' % (
+        rows, empty, 100 * empty / rows, form_of, ', '.join('%s %d' % kv for kv in tags.most_common(12))))
+
+
 if __name__ == '__main__':
     command, rest = sys.argv[1], sys.argv[2:]
-    {'frequent': frequent, 'text': text_measure, 'sets': sets}[command](rest)
+    {'frequent': frequent, 'text': text_measure, 'sets': sets, 'untagged': untagged}[command](rest)
