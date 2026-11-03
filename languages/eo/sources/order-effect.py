@@ -4,16 +4,19 @@
 # Measurements 6). Not run by any test. Run from the repository root:
 #
 #   python3 languages/eo/sources/order-effect.py <hover dir> <imported dict> <scratch dir>
-#       [--options <ids>] [--moves <a>:<b>,...]
+#       [--options <ids>] [--moves <a>:<b>,...] [--reverse <id>,...] [--no-swaps]
 #
 # Rules that match at one index node apply in file order (docs/languages.md
 # 7.4), so the order of the transforms can decide which of two results that
 # tie on every ranking key comes first. For every pair of adjacent
-# transforms of transforms.json swapped, and for every move <a>:<b> (a put
-# right after b), the words of the hover directory (make-hovers.py) are
-# deinflected with hoshidicts-cli, every option on, and the ordered results
-# (text, conditions, trace) compared with those of the committed order. The
-# hovers at words whose results change order are then looked up with the
+# transforms of transforms.json swapped (unless --no-swaps), for every move
+# <a>:<b> (a put right after b) and for every transform whose rules
+# --reverse puts in reverse order, every text a lookup deinflects for the
+# hovered words of the hover directory (make-hovers.py), that is every
+# variant `hoshidicts-cli preprocess` gives, is deinflected with
+# hoshidicts-cli, every option on, and the ordered results (text,
+# conditions, trace) compared with those of the committed order. The hovers
+# at words with a variant whose results change order are then looked up with the
 # batch tool (sources/lookup-batch.cpp), with the defaults or --options, and
 # their first results compared. Prints, per change: the words whose results
 # change order, the hovers whose first result changes, and examples.
@@ -38,6 +41,10 @@ def option(name):
 
 options = option('--options')
 moves = option('--moves')
+reverse = option('--reverse')
+swaps = '--no-swaps' not in args
+if not swaps:
+    args.remove('--no-swaps')
 hover_dir, imported, scratch = args
 repo = os.getcwd()
 pack = os.path.join(repo, 'languages', 'eo')
@@ -52,6 +59,11 @@ unique = sorted(set(words))
 at = collections.defaultdict(list)
 for i, word in enumerate(words):
     at[word].append(i)
+out = subprocess.run([cli, '--languages', os.path.join(repo, 'languages'), 'preprocess', 'eo', '--stdin',
+                      '--all-options'], input='\n'.join(unique) + '\n', capture_output=True, text=True,
+                     check=True).stdout
+variants = {word: [v['text'] for v in json.loads(line)['variants']] for word, line in zip(unique, out.splitlines())}
+texts = sorted({t for vs in variants.values() for t in vs})
 
 root = os.path.join(scratch, 'order-effect')
 shutil.rmtree(root, ignore_errors=True)
@@ -63,10 +75,10 @@ transforms_file = os.path.join(root, 'eo', 'transforms.json')
 def deinflect(transforms):
     json.dump(transforms, open(transforms_file, 'w', encoding='utf-8'), ensure_ascii=False)
     out = subprocess.run([cli, '--languages', os.path.join(repo, 'languages'), 'deinflect', 'eo', '--stdin',
-                          '--all-options', '--transforms', transforms_file], input='\n'.join(unique) + '\n',
+                          '--all-options', '--transforms', transforms_file], input='\n'.join(texts) + '\n',
                          capture_output=True, text=True, check=True).stdout
-    return [[(r['text'], tuple(r['conditions']), tuple(r['trace'])) for r in json.loads(line)['results']]
-            for line in out.splitlines()]
+    return {text: [(r['text'], tuple(r['conditions']), tuple(r['trace'])) for r in json.loads(line)['results']]
+            for text, line in zip(texts, out.splitlines())}
 
 
 def first_results(transforms, indices):
@@ -79,7 +91,7 @@ def first_results(transforms, indices):
 
 reference = deinflect(base)
 changes = []
-for i in range(len(ids) - 1):
+for i in range(len(ids) - 1 if swaps else 0):
     changes.append((f'{ids[i]} <-> {ids[i + 1]}', lambda d, i=i: d['transforms'].insert(i, d['transforms'].pop(i + 1))))
 for move in (moves.split(',') if moves else []):
     a, b = move.split(':')
@@ -89,14 +101,19 @@ for move in (moves.split(',') if moves else []):
         t = ts.pop([x['id'] for x in ts].index(a))
         ts.insert([x['id'] for x in ts].index(b) + 1, t)
     changes.append((f'{a} after {b}', edit))
+for tid in (reverse.split(',') if reverse else []):
+    def edit(d, tid=tid):
+        t = d['transforms'][ids.index(tid)]
+        t['rules'].reverse()
+    changes.append((f'rules of {tid} reversed', edit))
 
-print(f'{len(hovers)} hovers, {len(unique)} words; options: {options or "defaults"}')
+print(f'{len(hovers)} hovers, {len(unique)} words, {len(texts)} texts deinflected; options: {options or "defaults"}')
 same = []
 for name, edit in changes:
     mutant = json.loads(json.dumps(base))
     edit(mutant)
     results = deinflect(mutant)
-    moved = [w for w, a, b in zip(unique, reference, results) if a != b]
+    moved = [w for w in unique if any(reference[t] != results[t] for t in variants[w])]
     if not moved:
         same.append(name)
         continue

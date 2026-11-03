@@ -23,7 +23,8 @@
 # change of order keeps the deinflections and changes only their order, so
 # it is never EQUIVALENT: one that no test sees is SURVIVED.
 # [count] stops after that many mutations; --only <file> runs only the
-# mutations named in <file>, one name per line.
+# mutations named in <file>, one name per line; --failures prints every
+# failing line of a killed mutation, not only the first.
 import copy
 import json
 import os
@@ -197,6 +198,8 @@ def run(name, edit, edit_l, index):
         # copy still makes.
         status = 'EQUIVALENT'
     shutil.rmtree(root)
+    if every_failure:
+        return status, ' | '.join(failures)
     return status, (failures[0] if failures else '')
 
 
@@ -226,6 +229,9 @@ def deinflections(languages):
 BASE_DEINFLECTIONS = deinflections(os.path.join(repo, 'languages'))
 
 results = []
+every_failure = '--failures' in sys.argv
+if every_failure:
+    sys.argv.remove('--failures')
 only = None
 if '--only' in sys.argv:
     k = sys.argv.index('--only')
@@ -239,7 +245,7 @@ for i, (name, edit, edit_l) in enumerate(mutations()):
         continue
     status, detail = run(name, edit, edit_l, i)
     results.append((status, name, detail))
-    print(f'{status}\t{name}\t{detail[:160]}', flush=True)
+    print(f'{status}\t{name}\t{detail if every_failure else detail[:160]}', flush=True)
 killed = sum(1 for s, _, _ in results if s == 'KILLED')
 print(f'{len(results)} mutations: {killed} killed, {sum(1 for s, _, _ in results if s == "SURVIVED")} survived, '
       f'{sum(1 for s, _, _ in results if s == "EQUIVALENT")} equivalent, '
