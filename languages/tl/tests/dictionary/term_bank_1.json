@@ -62,5 +62,7 @@
   ["lang", "", "adv", "adv", 0, ["only (an entry a wrong reading of nagsilang would reach)"], 61, ""],
   ["nakita", "", "non-lemma", "", 0, [["makita", ["completive"]]], 62, ""],
   ["ᜃᜓᜋᜁᜈ᜔", "", "non-lemma", "", 0, [["kumain", ["Baybayin"]]], 63, ""],
-  ["ilang̃", "", "non-lemma", "", 0, [["ilang", ["alternative"]]], 64, ""]
+  ["ilang̃", "", "non-lemma", "", 0, [["ilang", ["alternative"]]], 64, ""],
+  ["siklab", "", "n", "n", 0, ["a flare; a sudden outburst"], 65, ""],
+  ["klab", "", "n", "n", 0, ["a club (an association)"], 66, ""]
 ]

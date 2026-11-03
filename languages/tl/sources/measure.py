@@ -32,14 +32,17 @@ Commands:
   leaves the word itself; or another rule reading, split by the word before
   the position (a marker, pronoun or particle). --show lists the largest
   groups of other readings and the multiword ones, --sample N a random sample
-  of them (seed 1) to judge by hand.
+  of them and one of the linker, contraction or hyphen readings (seed 1) to
+  judge by hand.
 - text: the same for Project Gutenberg texts (--texts pg47629.txt,...).
 - traces: for the sampled rows of corpus.tsv and gaps.tsv whose aspect is
   known, the share whose shortest trace to the lemma names it.
 - sentences: the words of sources/sentences.tsv, each looked up as the text
   from it to the end of its sentence; the first result must be the lemma the
-  file gives. --dump writes those texts, one per line (the input of
-  benchmark-lookup).
+  file gives. --dump writes those texts, one per line.
+- positions: every word position of sources/sentences.tsv, as the text from
+  the word to the end of its sentence, one per line (the word list of
+  benchmark-lookup; needs no --cache or --dictionary).
 """
 
 import argparse
@@ -215,12 +218,13 @@ def cmd_frequent(args, sets):
     print('| Rule set | Words a rule reaches | Their tokens | Wrong first (words) | Wrong first (share of tokens) | Other rule readings first (words) | Capitalised: a capitalised headword first |')
     print('| --- | ---: | ---: | ---: | ---: | ---: | ---: |')
     listed = {}
+    wrong_listed = {}
     cap_words = {}
     for set_name, transforms in sets.items():
         deinflections = run_deinflect(transforms, [norm(w) for w in words])
         answers = run_batch(transforms, args.dictionary, words)
         reached = wrong = wrong_tokens = reached_tokens = 0
-        unnamed = []
+        unnamed, wrong_words = [], []
         for word, count, d, a in zip(words, counts, deinflections, answers):
             named = lemmas.get(norm(word), set())
             hits = named and any(r['trace'] and norm(r['text']) in named for r in d['results'])
@@ -232,9 +236,11 @@ def cmd_frequent(args, sets):
                 if verdict not in ('own entry', 'right lemma'):
                     wrong += 1
                     wrong_tokens += count
+                    wrong_words.append((count, word, first['expression'] if first else '-'))
             if first and classify(first, lemmas) == 'other rule reading':
                 unnamed.append((count, word, first['expression'], [t for t, _ in first['trace']]))
         listed[set_name] = unnamed
+        wrong_listed[set_name] = wrong_words
         # The same words written with a capital letter, as at a sentence start.
         capitalised = run_batch(transforms, args.dictionary, [w[:1].upper() + w[1:] for w in words])
         caps = [(c, w, a['results'][0]['expression']) for w, c, a in zip(words, counts, capitalised)
@@ -243,6 +249,9 @@ def cmd_frequent(args, sets):
         print(f'| {set_name} | {reached} | {100 * reached_tokens / total:.2f}% | {wrong} | {100 * wrong_tokens / total:.3f}% | {len(unnamed)} | '
               f'{len(caps)} ({100 * sum(c for c, _, _ in caps) / total:.2f}% of tokens) |')
     if args.show:
+        for set_name, wrong_words in wrong_listed.items():
+            print(f'\n{set_name}: a rule reaches the lemma, the first result is not it ({len(wrong_words)}; - is nothing found):')
+            print('  ' + ' | '.join(f'{c}:{w}->{e}' for c, w, e in sorted(wrong_words, reverse=True)[:args.show]))
         for set_name, caps in cap_words.items():
             print(f'\n{set_name}: written with a capital, a capitalised headword first ({len(caps)}):')
             print('  ' + ' | '.join(f'{c}:{w}->{e}' for c, w, e in sorted(caps, reverse=True)[:args.show]))
@@ -340,7 +349,7 @@ def cmd_positions(args, sets, sentences, label):
         capitals = collections.Counter()
         multi = 0
         after = collections.Counter()
-        items = []
+        items, linkers = [], []
         for (text, word, previous), a in zip(positions, answers):
             if not a['results']:
                 continue
@@ -354,11 +363,13 @@ def cmd_positions(args, sets, sentences, label):
                 multi += ' ' in first['matched']
                 after[GROUP_OF.get(norm(previous), 'other')] += 1
                 items.append((first['matched'], first['expression'], '|'.join(t for t, _ in first['trace']), text[:60]))
-        listed[set_name] = (items, capitals)
+            if kind == 'linker, contraction or spelling':
+                linkers.append((first['matched'], first['expression'], '|'.join(t for t, _ in first['trace']), text[:60]))
+        listed[set_name] = (items, capitals, linkers)
         print(f"| {set_name} | {found} | {kinds['capital at sentence start']} | {kinds['own entry or dictionary']} | {kinds['named lemma']} | "
               f"{kinds['linker, contraction or spelling']} | {kinds['other rule reading']} | {multi} | {after['marker']} / {after['pronoun']} / {after['particle']} |")
     if args.show:
-        for set_name, (items, capitals) in listed.items():
+        for set_name, (items, capitals, linkers) in listed.items():
             print(f'\n{set_name}: capitalised headwords at a sentence start, by (word, expression), most frequent first:')
             for (w, e), c in capitals.most_common(args.show):
                 print(f'  {c}\t{w}\t{e}')
@@ -375,6 +386,10 @@ def cmd_positions(args, sets, sentences, label):
                 rng = random.Random(1)
                 print(f'\n{set_name}: a random sample of {args.sample} other rule readings (seed 1), for judging by hand:')
                 for item in rng.sample(items, min(args.sample, len(items))):
+                    print('  ' + '\t'.join(item))
+                rng = random.Random(1)
+                print(f'\n{set_name}: a random sample of {args.sample} linker, contraction or hyphen readings (seed 1), for judging by hand:')
+                for item in rng.sample(linkers, min(args.sample, len(linkers))):
                     print('  ' + '\t'.join(item))
 
 
@@ -426,6 +441,14 @@ def sentence_rows():
     return rows
 
 
+def cmd_positions_list(args):
+    """Every word position of sources/sentences.tsv, as the text from the word
+    to the end of its sentence: the word list of the lookup benchmarks."""
+    texts = [h for h, _, _ in hovers([sentence for sentence, _, _, _ in sentence_rows()])]
+    assert not any(',' in t for t in texts), 'benchmark-lookup reads a comma as a CSV separator'
+    print('\n'.join(texts))
+
+
 def cmd_sentences(args, sets):
     rows = sentence_rows()
     if args.dump:
@@ -455,9 +478,9 @@ def cmd_sentences(args, sets):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('command', choices=['eval', 'frequent', 'tatoeba', 'text', 'sentences', 'traces'])
-    parser.add_argument('--cache', required=True)
-    parser.add_argument('--dictionary', required=True)
+    parser.add_argument('command', choices=['eval', 'frequent', 'tatoeba', 'text', 'sentences', 'traces', 'positions'])
+    parser.add_argument('--cache')
+    parser.add_argument('--dictionary')
     parser.add_argument('--work', default=None)
     parser.add_argument('--sets', default='own,yomitan,union,final')
     parser.add_argument('--texts', default='pg47629.txt,pg46639.txt')
@@ -465,6 +488,11 @@ def main():
     parser.add_argument('--sample', type=int, default=0)
     parser.add_argument('--dump', default=None, help='write every position and its first three results to <dump>.<set>.jsonl')
     args = parser.parse_args()
+    if args.command == 'positions':
+        cmd_positions_list(args)
+        return
+    if not args.cache or not args.dictionary:
+        parser.error('--cache and --dictionary are required')
     work = args.work or tempfile.mkdtemp(prefix='tl-measure-')
     args.work = work
     sets = {k: v for k, v in rule_sets(work).items() if k in args.sets.split(',')}

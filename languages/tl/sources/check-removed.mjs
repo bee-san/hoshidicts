@@ -2,9 +2,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // The constructed-form check of README.md (Rule provenance; docs/languages.md
 // section 14 step 5, "Remove a rule only for measured harm"): for each Yomitan
-// transform sources/build-final.mjs leaves out, the forms its rules make from
-// common lemmas, and the share of them the final rules reach with and without
-// that transform. Not run by any test.
+// transform and each single Yomitan rule sources/build-final.mjs leaves out
+// (REMOVED, REMOVED_RULES), the forms its rules make from common lemmas, and
+// the share of them the final rules reach with and without it. Not run by any
+// test.
 //
 //   node languages/tl/sources/check-removed.mjs [--cli build/hoshidicts-cli]
 //
@@ -19,7 +20,7 @@ import {tmpdir} from 'node:os';
 import {dirname, join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {formatTransforms} from '../../../tools/lib/json.mjs';
-import {REMOVED} from './build-final.mjs';
+import {REMOVED, REMOVED_RULES, ruleKey} from './build-final.mjs';
 
 const pack = join(dirname(fileURLToPath(import.meta.url)), '..');
 const repo = join(pack, '..', '..');
@@ -79,4 +80,23 @@ for (const id of Object.keys(REMOVED)) {
     writeFileSync(withIt, formatTransforms({...final, transforms: [...final.transforms, {...transform, source: 'yomitan'}]}));
     const pct = (v) => `${(100 * v).toFixed(1)}%`;
     console.log(`| ${id} | ${pairs.length} | ${pct(recall(join(pack, 'transforms.json'), corpus))} | ${pct(recall(withIt, corpus))} |`);
+}
+
+console.log('\n| Yomitan rule | Constructed forms | Final rules | Final rules with it |');
+console.log('| --- | ---: | ---: | ---: |');
+for (const key of Object.keys(REMOVED_RULES)) {
+    const transform = yomitan.transforms.find((t) => t.rules.some((r) => ruleKey(t, r) === key));
+    const rule = transform.rules.find((r) => ruleKey(transform, r) === key);
+    const pairs = [...new Map(forms(rule).map((p) => [p.join('\t'), p])).values()];
+    if (pairs.length === 0) {
+        console.log(`| ${key} | 0 | - | - |`);
+        continue;
+    }
+    const corpus = join(dir, `rule-${key.replace(/[^a-z]/g, '_')}.tsv`);
+    writeFileSync(corpus, `# category\tvalid\tsource\tterm\trule\treasons\n${pairs.map(([f, l]) => `${transform.id}\t1\t${f}\t${l}\t*\t*`).join('\n')}\n`);
+    const withIt = join(dir, 'with-rule.json');
+    writeFileSync(withIt, formatTransforms({...final, transforms: [...final.transforms,
+        {...transform, id: `${transform.id} (removed rule)`, name: `${transform.name} (removed rule)`, source: 'yomitan', rules: [rule]}]}));
+    const pct = (v) => `${(100 * v).toFixed(1)}%`;
+    console.log(`| ${key} | ${pairs.length} | ${pct(recall(join(pack, 'transforms.json'), corpus))} | ${pct(recall(withIt, corpus))} |`);
 }

@@ -80,28 +80,36 @@ the dictionary as published, and with a labelled copy that reads it as
 
 ## Rule provenance
 
-`transforms.json` has 81 transforms and 2,143 rules (3,369 with cross
-products expanded): 1,812 `own`, 299 `yomitan` and 32 `both`.
+`transforms.json` has 91 transforms and 2,175 rules (3,388 with cross
+products expanded): 1,762 `own`, 346 `yomitan` and 67 `both`.
 `sources/build-final.mjs` writes it from the union that
 `tools/merge-transforms.mjs` makes:
 
 - the own transforms come first, then Yomitan's, so where both reach a term
   in the same number of steps the own trace is the one a lookup keeps;
-- a Yomitan rule that makes the deinflection an own rule makes (the same
-  rule type and affixes, whatever the conditions and stem constraints) is
-  left out and the own rule is marked `both`: 32 rules of `mag-`, `mang-`,
-  `maka-`, `maki-`, `magka-`, `mapa-`, `magpaka-`, `ipag-`, `ipa-`, `ika-`,
-  `naka-`, `nakaka-`, `taga-`, `pang-`, `mapag-`, `pag-`, `pagka-`, `kaka-`
-  (the own recently completed) and one contemplative rule;
-- 19 Yomitan transforms (68 rules) are left out, each for the harm in the
-  table below;
-- the other 299 Yomitan rules stay: affixes the own rules lack (`pang-`
-  before any consonant as in *pangdiyeta*, `ipang-`, `tagapag-`,
-  `tagapang-`, `magkanda-`, `pakiki-`, `nakakapang-`, `makipag-…-an`,
+- an own rule that makes a deinflection a Yomitan rule makes (the same rule
+  type and affixes) is marked `both`, whether the Yomitan rule stays or is
+  removed: 67 rules, for example the own `-in`, `-an`, `ma-`, `mag-`,
+  `mang-`, `i-`, `pag-` and the linker's `-ng`;
+- a Yomitan rule is left out as a copy only when an own rule accepts every
+  stem it accepts. No Yomitan rule passes that test: each own twin has a
+  stem constraint Yomitan's lacks, so Yomitan's rule stays unless it is
+  removed for harm (below). Yomitan's `pang-` (*pangdiyeta* → *diyeta*,
+  *pangsuporta* → *suporta*) and `mapag-` (*mapagusisa* → *usisa*) stay
+  this way;
+- the own rules written after Yomitan's rules were read, as constrained
+  versions of them, are marked `yomitan`, not `own` (28 rules): the
+  transforms `ka`, `pa`, `pala`, `tag` and `maIn`, and the -unan, -unin,
+  -ran → d and pagkar-/pagkakar- rules;
+- 19 Yomitan transforms (69 rules) and 12 single Yomitan rules are left
+  out, each for the harm in the tables below;
+- the other Yomitan rules stay: affixes the own rules lack (`ipang-`,
+  `tagapag-`, `tagapang-`, `magkanda-`, `nakakapang-`, `makipag-…-an`,
   `pang-…-an`, `papang-…-in`, the ordinals *ikalawa*, *ikatlo*,
-  *pangalawa*, *pangatlo*), its `rep1` rules (*magtatagal* → *tagal* in one
-  step), and its hyphen rule (*kapit-bahay* → *kapitbahay*, *paki-alam* →
-  *pakialam*).
+  *pangalawa*, *pangatlo*), pang- before any consonant, mapag-
+  before a vowel without the hyphen, its `rep1` rules (*magtatagal* →
+  *tagal* in one step), the prefixes the own rules have with a minimum
+  root, and its hyphen rule (*kapit-bahay* → *kapitbahay*).
 
 Yomitan's rules are affix-to-root rules with conditions `n`, `adj` and
 `num`; they name no aspect, so they reach 6.78% of the sample. The own
@@ -117,31 +125,49 @@ lemmas, with the share the final rules reach without it and with it.
 
 | Transform | Harm | First results it changes | Constructed forms reached |
 | --- | --- | --- | ---: |
-| `-an` | wrong first results only; the own -an reaches the right ones | T 401, G 199: *Talagang* → *Talag* 141, *Abenang* → *Abe* 86, *matandaan* → *matanda* 25 | 62: 100% / 100% |
-| `-in` | wrong first results only | T 303, G 79: *ring* → *d* 75, *Alin* → *Al* 59, *Kunin* → *Ko* 45 | 62: 100% / 100% |
-| `-ng` | breaks 4 negatives (*ang* → *a*, *lang* → *la*) | T 129, G 795: *maneng* → *ne* 447, *malalaking* → *lalaki* 44 | 10: 50% / 100%¹ |
+| `-an` | wrong first results only; the own -an reaches the right ones | T 401, G 158: *Talagang* → *Talag* 141, *Abenang* → *Abe* 86, *matandaan* → *matanda* 25 | 62: 100% / 100% |
+| `-in` | wrong first results only | T 303, G 60: *ring* → *d* 75, *Alin* → *Al* 59, *Kunin* → *Ko* 45 | 62: 100% / 100% |
+| `-ng` | breaks 4 negatives (*ang* → *a*, *lang* → *la*) | T 118, G 777: *maneng* → *ne* 447, *malalaking* → *lalaki* 44 | 10: 50% / 100%¹ |
 | `ma-` | breaks *mama* → *ma* | T 142, G 42: *mag* → *g* 86, *magaling sa* → *galing sa* 24 | 15: 100% / 100% |
-| `i-` | breaks *ina* → *na*, *isa* → *sa* | T 40, G 375: *íg* → *g* 141, *Io* → *o* 8 | 10: 100% / 100% |
+| `i-` | breaks *ina* → *na*, *isa* → *sa* | T 38, G 25: *Io* → *o* 8, *iya’y* → *ya* 6 | 10: 100% / 100% |
 | `ka-` | breaks *kasi* → *si*, *kaya* → *ya*, *kanya* → *nya*; the own ka- keeps its right readings | T 25, G 11: *kani* → *ni*, *katao po* → *tao po* | 15: 100% / 100% |
 | `pa-` | breaks *paano* → *ano*, *papa* → *pa*, *pala* → *la* | T 75, G 26: *paano ba* → *ano ba* 39, *pay* → *y* 12 | 15: 100% / 100% |
 | `pala-` | wrong first results only | T 5, G 5: *palala* → *la* | 15: 100% / 100% |
 | `mag-…-an` | mostly wrong first results | T 49, G 16: *maghapunan* → *hapo* 35, against 5 right | 24: 100% / 100% |
-| `pag-` | the reduplicated stem instead of the root | T 26, G 44: *pagbibigay* → *bibigay* 11 | 10: 100% / 100% |
+| `pag-` | the reduplicated stem instead of the root | T 28, G 47: *pagbibigay* → *bibigay* 11 | 10: 100% / 100% |
 | `pag-…-in` | wrong first results only | T 1, G 1: *pagyamanin* → *yama* | 24: 87.5% / 100% |
 | `ma-…-an` | wrong first results only | T 3, G 1: *Marian* → *di* | 29: 100% / 100% |
 | `ma-…-in` | wrong first results; the own ma- -in needs a root of four letters | T 33, G 1: *magasin* → *gas* 28 | 29: 75.9% / 100% |
 | `magpa-` | no minimum root | T 3: *magpasa* → *sa*; the own magpa- keeps *magpaamo* → *amo* | 15: 100% / 100% |
-| `tag-` | *tagalog* → *alog* | G 19 | 10: 80% / 100%² |
-| `magsi-` | collides with mag- + a root in si-; the own magsi- is tried after mag- | T 1, G 3 | 20: 90% / 100% |
+| `tag-` | *tagalog* → *alog* | T 1, G 19 | 10: 80% / 100%² |
+| `magsi-` | collides with mag- + a root in si-; the own magsi- is tried after mag- | T 9, G 3: *magsipilyo* → *pilyo* 8 | 20: 90% / 100% |
 | `magma-` | wrong first results only | T 4: *magmahal.* → *hal.* | 15: 100% / 100% |
 | `pa-…-an` | stems of one letter | T 2, G 1: *papuan* → *pu* | 29: 82.8% / 100% |
-| `makapang-` | *makapangahas* → *ahas* | G 17 (12 wrong, 4 right) | 34: 0% / 100%³ |
+| `makapang-` | *makapangahas* → *ahas* | T 1, G 17: 12 wrong (*makapangahas* → *ahas*), 6 right (*makapanggamot* → *gamot*) | 34: 0% / 100%³ |
 
 ¹ The forms the final rules miss are consonant-final lemmas with -ng
 (*sulatng*), which Tagalog writes *sulat na*. ² *tagaral*, *taginom*:
 tag- without the hyphen before a vowel. ³ Unassimilated forms such as
 *makapangkain*; the real ones (*makapangahas*, *makapanggamot*) are read as
 maka- + *pangahas*, *manggamot*.
+
+**Single Yomitan rules left out.** Prefix rules that an own rule makes
+with a stem constraint; without it, each reads only wrong first results on
+Tatoeba (T) and the Gutenberg texts (G), measured as above. The rest of
+each transform stays.
+
+| Rule | First results it would change (all wrong) |
+| --- | --- |
+| `mag-` *mag* | T 4, G 14: a vowel after mag- without the hyphen: *magubat* → *ubat*, *magalák* → *alak*, *magipít* → *ipit* |
+| `ipa-` *ipa* | T 14: *ipasa* → *sa*, *ipaalam mo* → *alam mo* |
+| `magka-` *magka* | T 13: *magkasing* → *si* |
+| `maka-` *maka*, *makar* | T 5, G 4: *makaya* → *ya*, *makaw* → *w*, *makar* → *d* |
+| `ika-` *ika* | T 3, G 1: *ikasang* → *sa*, *ikama* → *ma* |
+| `mang-` *mang* | T 3: *mango* → *o* |
+| `naka-` *naka*, *nakar* | T 3, G 2: *nakama* → *ma*, *nakay* → *y* |
+| `kaka-` *kaka* | T 1: *kakae* → *e* |
+| `mapa-` *mapa* | T 1, G 9: *mápalâ* → *la*, *mapag* → *g*, *mapasa* → *sa* |
+| `pakiki-` *pakiki* | G 1: *pakikita* → *ta* |
 
 **Own rules.** One transform per affix or aspect, so a trace names both
 (`progressive` then `mag`):
@@ -164,9 +190,10 @@ maka- + *pangahas*, *manggamot*.
   ipag-, ipa-, ika-, -in and -an (with u for the o of the last syllable,
   d → r, and verbs whose root loses a vowel: *bigyan* → *bigay*, *kunin* →
   *kuha*), the circumfixes ma- -an, maka- -an, pa- -an, pag- -an, pag- -in,
-  pa- -in, ka- -an and ma- -in, gerunds with pag-, pagka-, pagkaka-,
-  pagpapa-, pakiki- and pakikipag-, and paki-, naka-, nakaka-, taga-,
-  pang-, mapag-, tig-, tag-, ka-, pa- and pala-;
+  pa- -in and ka- -an, gerunds with pag-, pagka-, pagkaka-, pagpapa-,
+  pakiki- and pakikipag-, and paki-, naka-, nakaka-, taga-, pang-, mapag-
+  and tig-; and, written after Yomitan's rules were read and marked
+  `yomitan`, ma- -in, ka-, pa-, pala- and tag-;
 - adjectives: plural ma-CV- (*magaganda*), superlative pinaka-, intensive
   napaka-, equative kasing-/kasin-/kasim-;
 - the linker -ng after a vowel and -g after n, the contractions *'y*, *'t*
@@ -199,9 +226,17 @@ the conformance test; each makes a test fail, as named:
 - -in and -an never start a capitalised word (*Talagang* is not *Talag*, a
   name; the decapitalised variant gives *talaga*), and -an not after mag-
   (*maghapunan* is mag- + *hapunan*);
-- -in, -an, ma-, -um- and ipa- stay within one word (*tungkol saan* is not
-  *tungkol sa* + -an, *magaling sa* not ma- + *galing sa*, *ipaalam mo* not
-  ipa- + *alam mo*);
+- -in, -an, ma-, -um-, ipa-, mang-, paki-, pag-, kaka-, magsi- and the
+  circumfixes stay within one word (*tungkol saan* is not *tungkol sa* +
+  -an, *magaling sa* not ma- + *galing sa*, *nangako si* not mang- + *ako
+  si*, *pakialam mo* not paki- + *alam mo*, *kakatingin ko* not *tingin
+  ko*, *nasa unahan* not ma- + *sa una* + -an);
+- magsi- leaves out the roots *pilyo*, *gawa(n)* and *mula*, whose si- form
+  is a word (*magsipilyo* is mag- + *sipilyo*, *nagsisigawan* mag- +
+  *sigawan*, *magsimula* mag- + *simula*);
+- mag-, ipag- and -um- need a consonant, a consonant and a vowel after
+  them, without the hyphen (*maganda* is not mag- + *anda*, *ipagamot* not
+  *amot*, *umpisa* not *pisa*; `lookup.tsv` and `cases.tsv`);
 - magpa- and mapa- need a root of four letters after a consonant
   (*nagpasya* is mag- + *pasya*, *magpasa* is not magpa- + *sa*);
 - ka- and pa- need a root of four letters and one word (*kanya* is not
@@ -215,8 +250,12 @@ the conformance test; each makes a test fail, as named:
   maka- + *katulong*);
 - three orders: nakaka- before the aspect rules (*nakakahiya* → *hiya*
   before *makahiya*), ma- -an before -an (*matandaan* → *tanda* before
-  *matanda*), magsi- after mag- (*nagsisipilyo* → *sipilyo* before
-  *pilyo*).
+  *matanda*), magsi- after mag- (*nagsiklab* → *siklab* before *klab*,
+  `lookup.tsv`).
+
+`traceSelection` is `shortest`, the contract's default and Yomitan's
+choice; with `first`, *magaling* reads as *aling* and *ipagamot* as *amot*
+(`lookup.tsv`).
 
 **History.** The first commit of this pack, `tl: own rules`, has the own
 rules as written before Yomitan's file was read (49 transforms, 1,736
@@ -232,7 +271,7 @@ rules). Later commits changed them after measuring:
   orders;
 - d → r after every prefix that ends in a vowel (*nakarating* → *dating*,
   not *rating*); *pagiging* → *maging* and *pagkakaroon* → *magkaroon*;
-  -unan and -unin → o (*matutunan* → *matuto*);
+  -unan and -unin → o (*matutunan* → *tuto*, *matuto*);
 - the reciprocal mag- -an was dropped (*maghapunan* read as *hapon*): mag-
   now gives an -an word, which -an takes further (*magkamayan* →
   *kamayan* → *kamay*); magsi- moved after mag-;
@@ -242,7 +281,16 @@ rules). Later commits changed them after measuring:
 - a preprocessor reads the old *ng̃* as *ng* without keeping the input:
   wty-tl-en lists old spellings such as *ilang̃* as form-of rows, so the
   text as written (*kailang̃an*) reached *ilang* with fewer processor
-  steps than *kailangan*.
+  steps than *kailangan*;
+- mapag- gained the aspect forms (*napagtanto* → *mapagtanto*) and takes a
+  mapag- verb as well as an adjective; magsi- lost its own aspect and prefix
+  reduplication rules (magsi- is read after mag-, through mag-'s aspect);
+  the -in- cluster patterns were added (*pinaplano* → *plano*); -ran → d
+  joined the circumfix suffixes;
+- after audit-hachi-lang-tl: the stricter `both` test of
+  `sources/build-final.mjs`, which keeps Yomitan's pang- and mapag- and 30
+  more of its prefix rules (12 left out one by one, above), and the
+  one-word, magsi- and first-letter constraints above.
 
 ## Measurements
 
@@ -263,16 +311,17 @@ file runs the same with every option on and with the defaults: a copy of
 same recall, false candidates and first rank (`eval-language` prints
 `"options":"default"` and the same numbers).
 
-| Rule set | Sample recall (1,799) | False candidates per row, pass / published | First rank, pass / published | `cases.tsv` positives (262) | `cases.tsv` negatives (41) | `yomitan.tsv` (14) |
+| Rule set | Sample recall (1,799) | False candidates per row, pass / published | First rank, pass / published | `cases.tsv` positives (307) | `cases.tsv` negatives (57) | `yomitan.tsv` (14) |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Own | 97.11% | 1.458 / 0.306 | 62.87% / 40.97% | 100% | 100% | 35.71% |
-| Yomitan | 6.78% | 0.526 / 0.311 | 43.19% / 40.97% | 20.61% | 31.71% | 100% |
-| Union | 97.22% | 1.475 / 0.311 | 62.92% / 40.97% | 100% | 29.27% | 100% |
-| Final | 97.22% | 1.470 / 0.311 | 63.04% / 40.97% | 100% | 100% | 100% |
+| Own | 97.11% | 1.453 / 0.306 | 62.87% / 40.97% | 99.35% | 100% | 35.71% |
+| Yomitan | 6.78% | 0.526 / 0.311 | 43.19% / 40.97% | 18.24% | 33.33% | 100% |
+| Union | 97.22% | 1.470 / 0.311 | 62.92% / 40.97% | 100% | 31.58% | 100% |
+| Final | 97.22% | 1.464 / 0.311 | 63.04% / 40.97% | 100% | 100% | 100% |
 
 - **Recall** by source (final): UniMorph 881 / 900 (97.89%, lemma = root),
   kaikki verb aspects 769 / 800 (96.12%, lemma = headword), adjective
-  plurals 99 / 99.
+  plurals 99 / 99. The own rules miss two `cases.tsv` rows, the ordinals
+  *pangalawa* and *ikalawa*, which only Yomitan's rules give.
 - **First rank** is the share of sample rows whose full lookup shows the
   expected lemma first. For UniMorph rows that lemma is a root, which comes
   after the word's own entry or its infinitive, and with the published
@@ -284,16 +333,19 @@ same recall, false candidates and first rank (`eval-language` prints
   the final set; Yomitan's rules name it for none. The final set is lower
   because Yomitan's `rep1` rules reach a root in one step without the
   aspect.
-- **Per rule** (`--per-rule`, final set, sample and `cases.tsv`, pass): 342
-  rules recover a row, no rule breaks a negative, and 48 rules add false
-  candidates (119 in all) without recovering a row, 104 of them own, mostly
-  single consonants of the reduplication families and the gerund. They are
-  kept: no measured first result is wrong because of them, and their
-  families are what reaches the forms the corpus lacks.
+- **Per rule** (`--per-rule`, final set, the sample and `cases.tsv` as one
+  file, pass): 364 rules recover a row, no rule breaks a negative, and 48
+  rules add false candidates (116 in all: 73 from own rules, 24 `both`, 19
+  Yomitan) without recovering a row, mostly the reduplication rules of
+  one consonant (*kok-* → *k-*, *ses-* → *s-*), the hyphen put back after
+  a prefix (*nagi-* → *nag-i*) and the gerund *pag-*. They are kept: no
+  measured first result is wrong because of them, and their families are
+  what reaches the forms the corpus lacks.
 - **Differential check** (`tools/check-yomitan.mjs` with
-  `build/hoshidicts-cli`): 5,362 inputs, 21,715 Yomitan results and no
-  difference; the three processors agree with Yomitan's on 2,078, 2,078 and
-  2,066 inputs.
+  `build/hoshidicts-cli`): 5,419 inputs, 22,198 Yomitan results, 30
+  differences, all the one that `sources/yomitan-differences.tsv` lists (a
+  `u` that starts a sandwich stem: *kaunran* → *onr*); the three processors
+  agree with Yomitan's on 2,149, 2,149 and 2,137 inputs.
 
 **Frequent forms** (`sources/measure.py frequent`). Of the 10,000 most
 frequent words of the subtitle list (94,596 tokens), 1,798 have a lemma a
@@ -317,56 +369,85 @@ where the form-of rows name the root), *gagamitin* → *gagamit*, *ilalabas*
 dictionary's spelling *tignan*), *sinisante* → *sesantehin*, *paniniwalaan*
 → *paniniwala*, *nagsikap* → *sikap* and *kinukuhanan* → *kuha*.
 
+Written with a capital letter, as at the start of a sentence, 207 of the
+10,000 words (15.27% of the list's tokens) show a capitalised headword
+first with the final set and either dictionary (Yomitan's rules alone: 237
+with pass, 209 published): *Ang* (a Chinese surname) for *ang*, *Ng* for
+*ng*, *Ko*, *Ka*, *May*, *O*, *Yan*, *Isa* (Jesus in Islam), *Salamat*,
+*Iba*. A few are right with the capital (*Diyos*, *Linggo*). Known gaps
+says why.
+
 **Phrases** (`sources/measure.py tatoeba`). Every word position of
 Tatoeba's 79,134 sentences, looked up as the text from the word to the end
-of its sentence (609,626 positions). A first result is right by script when
-it is the text as written, a term a form-of row names for it, or a rule
-reading whose term the matched text's form-of rows name; a reading of the
-linker, a contraction or the hyphen alone leaves the word itself; the
-other rule readings were judged by hand on a random sample of 60 (seed 1).
+of its sentence (609,575 positions; a word includes the combining marks
+after its letters). The first result is classed by script:
 
-| Rule set | Found, pass / published | As written or form-of | Lemma a form-of row names | Linker, contraction or hyphen only | Other rule readings (multiword) |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Own | 579,793 / 551,345 | 483,622 | 20,196 | 45,999 | 29,976 (147) |
-| Yomitan | 559,439 / 546,295 | 504,128 | 251 | 40,919 | 14,141 (160) |
-| Union | 580,404 / 551,417 | 483,197 | 20,193 | 45,884 | 31,130 (257) |
-| Final | 579,916 / 551,410 | 483,511 | 20,195 | 46,106 | 30,104 (147) |
+- a capitalised headword at a sentence start whose lowercase spelling is a
+  headword too (*Ang*, *May*): counted as wrong, though a few are right
+  (*Diyos*);
+- the text as written or a term a form-of row names for it: right;
+- a rule reading whose term the matched text's form-of rows (or the corpus)
+  name: right;
+- a reading of the linker, a contraction or the hyphen alone, which leaves
+  the word itself: judged by hand on a random sample of 60 (seed 1);
+- any other rule reading: judged by hand on a random sample of 60 (seed 1).
 
-(Columns 3-6 with pass. With the published dictionary the final set has
-47,228 linker, contraction or hyphen readings and no other rule reading.)
+| Rule set | Found, pass / published | Capital at a sentence start | As written or form-of | Lemma a form-of row names | Linker, contraction or hyphen only | Other rule readings (multiword) |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Own | 579,761 / 551,313 | 8,430 | 475,203 | 20,219 | 45,961 | 29,948 (113) |
+| Yomitan | 559,405 / 546,262 | 8,633 | 495,666 | 251 | 40,882 | 13,973 (160) |
+| Union | 580,370 / 551,384 | 8,596 | 474,782 | 20,216 | 45,846 | 30,930 (228) |
+| Final | 580,023 / 551,378 | 8,430 | 475,092 | 20,218 | 46,068 | 30,215 (113) |
 
-- Of the final set's other rule readings, 7,218 follow a marker (*ang*,
-  *ng*, *sa*, *si*, *mga*, *ay*, *na*, ...), 2,008 a pronoun and 2,206 a
-  particle. In the sample 3 of 60 are wrong (*Namitas* → *bitas* for
-  *pitas*, *Nanganganib* → *anib*, *mabibili* → *bibili*); in a sample of 60
-  linker readings, 1 (*Punong* → *Puno*, a name, for *puno*). That puts the
-  wrong first results at about 2,300 of the 579,916 found positions (0.4%).
-- Of the 147 multiword rule readings, about 10 are wrong (*nangako si* →
-  *ako si* 4, *paningin ko* and *kakatingin ko* → *sa tingin ko* 4,
-  *pakialam mo* → *alam mo* 1); the rest are set phrases (*sinabi nila* →
-  *sabi nila* 15, *nanggaling sa* → *galing sa* 12, *mag-alas dos* →
-  *alas-dos* 12).
-- Before the fixes of the history above, the largest wrong groups were
-  *Talagang* → *Talag* (141), *Abenang* → *Abe* (86), *ka nang* → *ka- -an*
-  (110), *naman ang* → *pang- -an* (58) and *paano ba* → *ano ba* (39);
-  none of them is left.
+(Columns 3-7 with pass. With the published dictionary the final set has
+the same 8,430 capitals, 47,188 linker, contraction or hyphen readings and
+no other rule reading.)
+
+- **Wrong first results, final set, pass.** The capitals: 8,430, of which
+  *May* 3,268, *Ang* 3,085, *Isa* 402, *Baka* 290, *Parang* 245,
+  *Magaling* 136, *Malapit* 120. The other rule readings: 4 of the 60
+  sampled (seed 1) are wrong (*Gagabayan* → *gagabay*, *Pinatong* → *tong*,
+  *ipinagako* → *ako*, *pagtatalong* → *talong*), about 2,000 of 30,215.
+  The linker readings: 0 of 60 (seed 1) wrong. In all about 10,400 of the
+  580,023 positions found (1.8%), four fifths of them the capitals.
+- Of the other rule readings, 7,217 follow a marker (*ang*, *ng*, *sa*,
+  *si*, *mga*, *ay*, *na*, ...), 2,007 a pronoun and 2,207 a particle.
+- Of the 113 multiword rule readings 10 are wrong (*naging tao* and
+  *magiging tao* → *magintao* 3, *paningin ko* and *pinatingin ko* → *sa
+  tingin ko* 3, *inano ba* and *inaano ba* → *ano ba* 2, *inamin na* →
+  *amin na* 1, *pangako si* → *ako si* 1); the rest are set phrases
+  (*sinabi nila* → *sabi nila* 15, *mag-alas dos* → *alas-dos* 12,
+  *maliliit na bagay* → *maliit na bagay* 7).
+- Before the fixes of the history above, the largest wrong groups of rule
+  readings were *Talagang* → *Talag* (141), *Abenang* → *Abe* (86), *ka
+  nang* → *ka- -an* (110), *naman ang* → *pang- -an* (58), *paano ba* →
+  *ano ba* (39), *magsipilyo* → *pilyo* (16) and *nangako si* → *ako si*
+  (4); none of them is left.
 
 **Real text** (`sources/measure.py text`): the two Gutenberg texts, 8,386
-sentences and 161,937 positions, looked up the same way.
+sentences and 154,145 positions, looked up and classed the same way.
 
-| Rule set | Found, pass / published | As written or form-of | Lemma a form-of row names | Linker, contraction or hyphen only | Other rule readings (multiword) |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| Own | 151,461 / 137,649 | 115,579 | 3,736 | 17,214 | 14,932 (58) |
-| Yomitan | 143,358 / 135,598 | 122,095 | 60 | 12,657 | 8,546 (58) |
-| Union | 152,506 / 137,804 | 115,204 | 3,729 | 17,248 | 16,325 (106) |
-| Final | 151,524 / 137,662 | 115,327 | 3,731 | 17,305 | 15,161 (61) |
+| Rule set | Found, pass / published | Capital at a sentence start | As written or form-of | Lemma a form-of row names | Linker, contraction or hyphen only | Other rule readings (multiword) |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Own | 145,839 / 132,223 | 1,167 | 109,110 | 3,744 | 17,093 | 14,725 (46) |
+| Yomitan | 137,417 / 130,059 | 1,187 | 115,627 | 60 | 12,542 | 8,001 (58) |
+| Union | 146,501 / 132,263 | 1,183 | 108,768 | 3,737 | 17,109 | 15,704 (98) |
+| Final | 145,932 / 132,230 | 1,167 | 108,867 | 3,739 | 17,175 | 14,984 (51) |
 
-- In a random sample of 60 of the final set's other rule readings 7 are
-  wrong, and none in a sample of 60 linker readings: about 1,800 wrong first
-  results among 151,524 positions (1.2%). The largest groups are the name
-  *Mameng* → *bang* (145, through mam- + *beng*, a spelling of *bang*),
-  *babaing* → *baba* (82; the old spelling of *babaeng*), *paparonin* →
-  *paparo*, *nálarawan* → *laraw* and *makahulugáng* → *hulog*.
+- **Wrong first results, final set, pass.** The capitals: 1,167 (*Ang*
+  874, *May* 70, *Oh* 37, *Tunay* 31). The other rule readings: 9 of 60
+  sampled (seed 1) are wrong (*ikatutuwâng* → *tuwang*, *patayang* →
+  *taya*, *Katakátakáng* → *takatak*, *gagamitin* → *gagamit*, *katuturán*
+  → *turan*, *umalí* → *ale*, *Mameng* → *bang*, *nang̃aglálarô* →
+  *manlalaro*, *Kikoy--ang* → *kikoy*), about 2,250 of 14,984. The linker
+  readings: 2 of 60 (seed 1; the name *Orang* → *ora*, and *diya’y* →
+  *diya*, a jellyfish, for *diyan ay*), about 570 of 17,175. In all about
+  4,000 of the 145,932 positions found (2.7%).
+- The largest groups of other rule readings are *Mameng* → *bang* (145,
+  wrong: a name read as mang- with a merged b, *beng*, a spelling of
+  *bang*), *nag-aaral* → *mag-aral* (127), *babaing* → *baba* (82, wrong:
+  the old spelling of *babaeng*), *mangyayaring* → *mangyari* (59) and
+  *makaraig* → *daig* (51).
 - The old spelling is read through the processors: accents and the *ng̃*
   are removed; *c* and *qu* (Rizal's *Noli*, Gutenberg 20228) are not
   mapped to *k*.
@@ -383,25 +464,26 @@ the published dictionary, 37 and 10, and nothing at all for 16 (*Nakarating*,
 `third_party/hoshidicts`, `test/chrome-language-pack.mjs` with
 `HACHIDORI_CASES=languages/tl/sources/chrome-cases.tsv`, Chrome 152,
 wty-tl-en as published): 14 passed, 0 failed (adding Tagalog beside
-Japanese, the import of 124,921 terms in 0.6 s, 10 cases such as
-*Nagluluto* → *magluto* [progressive] and *Ako'y* → *ako* ['y], the Anki
-note, and the switch to Japanese and back).
+Japanese, the import of 124,921 terms, 10 cases such as *Nagluluto* →
+*magluto* [progressive] and *Ako'y* → *ako* ['y], the Anki note, and the
+switch to Japanese and back).
 
-**Performance** (host load 41-60 on 64 cores, so upper bounds):
+**Performance** (host load 45-56 on 64 cores, so upper bounds):
 
 - native `benchmark-lookup --languages languages --language tl` with
-  wty-tl-en on the 412 word positions of the 65 sentences, each from the
+  wty-tl-en on the 421 word positions of the 65 sentences, each from the
   word to the end of its sentence, 6 passes with the first dropped, three
-  runs: p50 30.4-32.5 µs, p95 74.4-78.4 µs (budget 1 ms p50);
+  runs: p50 31.3-31.4 µs, p95 78.4-79.7 µs (budget 1 ms p50);
 - Hachidori's WebAssembly (feat/multi-language 803f7b6 prebuilt engines,
-  Node 22, `benchmark/node-lookup.mjs`, the 421 word positions that harness
+  Node 22, `benchmark/node-lookup.mjs`, the 430 word positions that harness
   finds in the same sentences, 6 passes): `hdw_lookup` single-thread p50
-  88.3 µs, p95 213.5 µs; threaded p50 96.8 µs, p95 230.5 µs;
+  87.1 µs, p95 210.6 µs; threaded p50 99.4 µs, p95 232.3 µs;
 - pack load (`sources/wasm-load.mjs`, 10 fresh engines): `hdw_language_load`
-  median 14.9 ms single-thread and 16.0 ms threaded, live heap +1,261,896
-  bytes; natively `LanguageRegistry::add` takes 3.8 ms (median of 50) and
-  the registry holds 2,448,976 bytes. Budgets 50 ms and 20 MB;
-- 188 `pattern` rules: they add 284,920 bytes of heap and 2.8 ms of load in
+  median 15.3 ms single-thread and 16.5 ms threaded, live heap +1,278,040
+  bytes; natively (`sources/load-native.cpp`) `LanguageRegistry::add`
+  takes 4.3-4.4 ms (median of 50, three runs) and the registry holds
+  2,474,576 bytes. Budgets 50 ms and 20 MB;
+- 187 `pattern` rules: they add 286,168 bytes of heap and 2.6 ms of load in
   WebAssembly (the same measurement without them).
 
 **Commands.** From the repository root, with `build/` configured as
@@ -414,7 +496,7 @@ node languages/tl/sources/map-yomitan.mjs $YOMITAN   # sources/yomitan.json
 node languages/tl/sources/build-final.mjs            # transforms.json, tests/yomitan.tsv reasons
 python3 languages/tl/sources/build-corpus.py $C/unimorph-tgl/tgl $C/kaikki.org-dictionary-Tagalog.jsonl
 node tools/check-classes.mjs tl --write
-build/hoshidicts-cli import $C/wty-tl-en.zip $C
+build/hoshidicts-cli import $C/wty-tl-en.zip         # writes $C/wty-tl-en/ beside the zip
 g++ -O2 -std=c++23 -Iinclude languages/tl/sources/lookup-batch.cpp -o build/tl-lookup-batch \
   build/libhoshidicts.a build/external/zstd/build/cmake/lib/libzstd.a \
   build/external/libdeflate/libdeflate.a build/external/utf8proc/libutf8proc.a \
@@ -424,45 +506,82 @@ for c in eval frequent tatoeba text traces sentences; do
 done
 node languages/tl/sources/check-removed.mjs
 node languages/tl/sources/ablate.mjs
-build/benchmark-lookup words.txt 6 --languages languages --language tl --term $C/wty-tl-en
+python3 languages/tl/sources/measure.py positions > words.txt
+build/benchmark-lookup words.txt 6 --languages languages --language tl --term $C/wty-tl-en --json
+g++ -O2 -std=c++23 -Iinclude languages/tl/sources/load-native.cpp -o build/tl-load-native \
+  build/libhoshidicts.a build/external/zstd/build/cmake/lib/libzstd.a \
+  build/external/libdeflate/libdeflate.a build/external/utf8proc/libutf8proc.a \
+  build/liblzokay.a build/libgumbo.a
+build/tl-load-native languages/tl
 node languages/tl/sources/wasm-load.mjs <hachidori checkout>
 ```
 
-The labelled pass copy is wty-tl-en.zip with `n adj num v` written into the
-`rules` column of every term row and the title changed, imported the same
-way.
+`hoshidicts-cli import` writes the imported directory beside the zip, so
+import a copy in another directory when the cache is shared. The labelled
+pass copy is wty-tl-en.zip with `n adj num v` written into the `rules`
+column of every term row and the title changed, imported the same way.
 
 ## Known gaps
 
+- **A capitalised headword comes first at the start of a sentence.**
+  wty-tl-en has capitalised rows for many common words: *Ang* (a Chinese
+  surname), *May* (a given name, and the abbreviation of *Mayo*), *Isa*
+  (Jesus in Islam), *Baka* (the surah al-Baqara), *Parang* (a place),
+  *Magaling*, *Malapit* and *Salamat* (surnames).
+  The text as written matches such a row with no processor step, and the
+  common word needs `decapitalize`, one step, which ranks after it
+  (docs/languages.md 9.6). The pack cannot change this: `decapitalize` is
+  Yomitan's processor and keeps its input, as check-yomitan requires, and a
+  processor that dropped the capital would also turn *Hapon* (Japan) into
+  *hapon* (afternoon) and *Linggo* (Sunday) into *linggo* (week) inside a
+  sentence: after another word, 3,753 Tatoeba positions show a capitalised
+  headword first (*Hapon* 313, *Diyos* 142, *Lunes* 111, *Linggo* 59).
+  Only the host knows where a sentence starts.
+  Counts, either dictionary: 8,430 Tatoeba positions (1.5% of those found),
+  1,167 in the Gutenberg texts, and 207 of the 10,000 frequent words written
+  with a capital (15.27% of the list's tokens). The German pack has the
+  same gap; a host flag for a scan at a sentence start is a follow-up.
 - **The dictionary has no parts of speech.** Until the pack can say
   `"untaggedTerms": "pass"` (bee-san/hoshidicts#58), a rule whose output has
-  conditions finds nothing in wty-tl-en: 28,506 Tatoeba positions find
+  conditions finds nothing in wty-tl-en: 28,645 Tatoeba positions find
   nothing that pass finds, 70 of the 10,000 frequent words find nothing,
   and the -um-, -in-, mag- and aspect readings this pack exists for reach a
   lemma only where a form-of row names it. The rules keep their conditions,
   as section 14 asks.
 - Names and loanwords the dictionary lacks are read as inflected words:
   *Mameng* → *bang* (145 Gutenberg positions), *Narita* → *dita*, *parking*
-  → *park*; a capitalised word with the linker can reach a name before the
-  common word (*Punong* → *Puno* before *puno*, *Habang* → *Haba* before
-  *habang*), because the text as written has fewer processor steps.
+  → *park*, *Leoning* → *leon*; a capitalised word with the linker can reach
+  a name before the common word (*Punong* → *Puno* before *puno*, *Habang* →
+  *Haba* before *habang*).
 - A prefix reading can be shorter than the linker's: *nakakatuwang* →
-  *tuwang* (one step) before *tuwa* (two), *pagkakasalang* → *salang*
-  before *sala*.
+  *tuwang* (one step) before *tuwa* (two), *pagtatalong* → *talong*,
+  *ikatutuwâng* → *tuwang*, *pagkakasalang* → *salang* before *sala*.
+- A contemplative stem that is a headword of its own comes before the root:
+  *gagamitin* → *gagamit* (19 Tatoeba and 4 Gutenberg positions),
+  *gagabayan* → *gagabay* (3 Tatoeba).
 - Merged consonants are ambiguous: *paminsan* → *pinsan* (43 Tatoeba
   positions; *paminsan-minsan* is no headword), *namitas* → *bitas* for
   *pitas*.
+- Readings with the same steps and trace length keep the order the
+  deinflector finds them in: *Pinatong* gives *tong* before *patong*, both
+  one completive step.
+- pang- reads into the next word where the dictionary has the phrase:
+  *pangako si* → *ako si* (1 Tatoeba position).
+- The Gutenberg texts write a dash as `--`, and Yomitan's hyphen rule
+  removes one hyphen at a time, so *paano--ang* is read as one word,
+  *paano* with -an and the linker (209 Gutenberg positions with pass, 31
+  published; none in Tatoeba). The term is the first word's, but the match
+  and the trace are wrong.
 - Old spellings: *babaing* (*babaeng*) → *baba* (82 Gutenberg positions);
   *c* and *qu* are not read as *k*.
-- The -in infinitive is not rebuilt from the contemplative of vowel-initial
-  roots or reduplicated prefixes where the dictionary has no form-of row,
-  and 50 sampled forms are in `gaps.tsv`: irregular and archaic forms
-  (*diringinggin*, *nanganga-ilangan*), typos of the source (*bumibista*,
-  *mapupunitpu*), and stems the rules leave out (*tinadtad* → *tatad*,
-  whose root has a d → r only in some forms).
-- Ties between readings of the same length are left in discovery order:
-  *maghapunan* gives *hapunan* before *hapon*, but *magsimula* and
-  *nagsisipilyo* also show *mula* and *pilyo* after the right root.
+- 50 sampled forms are in `gaps.tsv` (19 UniMorph, 31 kaikki): -in
+  infinitives whose stem changes in ways the rules do not model
+  (*inatake* → *atakihin*, *iniba* → *ibhin*, *dinarama* → *damhin*),
+  lemmas of the sources that are not the dictionary's (*tinadtad* →
+  *tatad*, where the rules give wty-tl-en's *tadtad*; *sinasalita* →
+  *salit-in*), typos and old spellings (*bumibista*, *mapupunitpu*,
+  *naguiguing*) and irregular forms (*diringinggin* → *dinig*, *nangako*
+  → *pangako*, *ipapanganak* → *anak*).
 - Trace names: Yomitan's `rep1` rules reach the root of a reduplicated form
   in one step and name no aspect (trace quality 89.4% against 92.8% for the
   own rules alone).
