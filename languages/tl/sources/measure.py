@@ -52,6 +52,7 @@ import json
 import os
 import random
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -63,6 +64,9 @@ PACK = Path(__file__).resolve().parent.parent
 REPO = PACK.parent.parent
 CLI = REPO / 'build' / 'hoshidicts-cli'
 BATCH = REPO / 'build' / 'tl-lookup-batch'
+# The languages directory every command loads the pack from: the checkout's,
+# or with --untagged a copy of the pack with that lookup.untaggedTerms.
+LANGUAGES = REPO / 'languages'
 
 # Words that come before a noun or verb phrase: markers, the plural mga,
 # pronouns, enclitic particles and the linker-carrying function words.
@@ -89,6 +93,21 @@ def strip_marks(text):
 
 def norm(text):
     return strip_marks(text).lower().replace('’', "'")
+
+
+def untagged_pack(work, value):
+    """A languages directory holding a copy of the pack whose
+    lookup.untaggedTerms is <value> (docs/languages.md section 14 step 5
+    reports both values)."""
+    root = Path(work) / f'languages-{value}'
+    if root.exists():
+        shutil.rmtree(root)
+    (root / 'tl').mkdir(parents=True)
+    shutil.copy(PACK / 'transforms.json', root / 'tl' / 'transforms.json')
+    descriptor = json.loads((PACK / 'language.json').read_text(encoding='utf-8'))
+    descriptor['lookup']['untaggedTerms'] = value
+    (root / 'tl' / 'language.json').write_text(json.dumps(descriptor, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    return root
 
 
 def rule_sets(work):
@@ -142,7 +161,7 @@ def run_batch(transforms, dictionary, texts):
         name = f.name
     try:
         with open(name, encoding='utf-8') as stdin:
-            out = subprocess.run([str(BATCH), str(REPO / 'languages'), 'tl', str(dictionary), '--transforms', str(transforms)],
+            out = subprocess.run([str(BATCH), str(LANGUAGES), 'tl', str(dictionary), '--transforms', str(transforms)],
                                  stdin=stdin, capture_output=True, text=True, check=True).stdout
     finally:
         os.unlink(name)
@@ -152,7 +171,7 @@ def run_batch(transforms, dictionary, texts):
 
 
 def run_deinflect(transforms, words):
-    out = subprocess.run([str(CLI), '--languages', str(REPO / 'languages'), 'deinflect', 'tl', '--stdin', '--transforms', str(transforms)],
+    out = subprocess.run([str(CLI), '--languages', str(LANGUAGES), 'deinflect', 'tl', '--stdin', '--transforms', str(transforms)],
                          input='\n'.join(words) + '\n', capture_output=True, text=True, check=True).stdout
     answers = [json.loads(line) for line in out.splitlines()]
     assert len(answers) == len(words)
@@ -183,7 +202,7 @@ def cmd_eval(args, sets):
     print('| --- | --- | ---: | ---: | ---: | ---: | ---: |')
     for set_name, transforms in sets.items():
         for file_name, path in files.items():
-            out = subprocess.run([str(CLI), '--languages', str(REPO / 'languages'), 'eval-language', 'tl', str(path),
+            out = subprocess.run([str(CLI), '--languages', str(LANGUAGES), 'eval-language', 'tl', str(path),
                                   '--transforms', str(transforms), '--dictionary', str(args.dictionary)],
                                  capture_output=True, text=True)
             if out.returncode != 0:
@@ -487,6 +506,8 @@ def main():
     parser.add_argument('--show', type=int, default=0)
     parser.add_argument('--sample', type=int, default=0)
     parser.add_argument('--dump', default=None, help='write every position and its first three results to <dump>.<set>.jsonl')
+    parser.add_argument('--untagged', choices=['filter', 'pass'], default=None,
+                        help="lookup.untaggedTerms for the run (default: the pack's own, pass)")
     args = parser.parse_args()
     if args.command == 'positions':
         cmd_positions_list(args)
@@ -495,6 +516,9 @@ def main():
         parser.error('--cache and --dictionary are required')
     work = args.work or tempfile.mkdtemp(prefix='tl-measure-')
     args.work = work
+    if args.untagged:
+        global LANGUAGES
+        LANGUAGES = untagged_pack(work, args.untagged)
     sets = {k: v for k, v in rule_sets(work).items() if k in args.sets.split(',')}
     if args.command == 'eval':
         cmd_eval(args, sets)
