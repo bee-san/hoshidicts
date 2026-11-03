@@ -38,7 +38,7 @@ for text in ('tatoeba', 'pg69327', 'pg22367', 'pg5323'):
                 continue
             if not any(step in ids for step in b.group(3).split(',')):
                 continue
-            changed.append([name, word, a.group(1), b.group(1), b.group(3), hover[:120]])
+            changed.append([name, word, a.group(1), b.group(1), b.group(3), hover[:99]])
 print(f'{len(changed)} positions where a rule of the pack changes the first lemma of the hovered word', file=sys.stderr)
 random.seed(seed)
 for i, row in enumerate(random.sample(changed, min(size, len(changed))), 1):

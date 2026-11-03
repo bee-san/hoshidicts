@@ -5,7 +5,7 @@
 1	tatoeba	hast	hasten	haben	present-du	hast, musst du es entbehren können.	right	
 2	tatoeba	benutzten	benutzt	benutzen	past-wir	benutzten einen Magneten im Naturwissenschaftsunterricht.	right	
 3	tatoeba	hast	hasten	haben	present-du	hast, hebe bitte die rechte Hand.	right	
-4	pg69327	lasse	lass	lassen	present-ich	lasse ich für den Schlußband der Nachlaßausgabe zurück, sie enthalten nichts für den Gang der Handlung Wesentliches.	right	
+4	pg69327	lasse	lass	lassen	present-ich	lasse ich für den Schlußband der Nachlaßausgabe zurück, sie enthalten nichts für den Gang der Handl	right	
 5	pg5323	muß	Muss	müssen	present-modal	muß man sich ja zusammennehmen.	right	
 6	tatoeba	hast	hasten	haben	present-du	hast meinen Vater getötet und heute werde ich mich dafür rächen.	right	
 7	tatoeba	hast	hasten	haben	present-du	hast recht.	right	
@@ -16,7 +16,7 @@
 12	tatoeba	hast	hasten	haben	present-du	hast kein Fieber.	right	
 13	tatoeba	hast	hasten	haben	present-du	hast du telefoniert?	right	
 14	pg5323	hast	hasten	haben	present-du	hast du doch euer Leid heraufbeschworen.«	right	
-15	pg69327	verfolgte	verfolgt	verfolgen	past	verfolgte er doch die Pflegerin mit strengen Blicken, als sie jetzt zum Bett hinging, die Kerze auf das Nachttischchen s	right	
+15	pg69327	verfolgte	verfolgt	verfolgen	past	verfolgte er doch die Pflegerin mit strengen Blicken, als sie jetzt zum Bett hinging, die Kerze auf	right	
 16	tatoeba	hast	hasten	haben	present-du	hast, kannst du bei Tatoeba mitmachen.	right	
 17	tatoeba	hast	hasten	haben	present-du	hast, wirst du anfangen, dich zu fürchten.	right	
 18	tatoeba	helles	helle	hell	declined	helles, blasses Blau.	right	
@@ -32,7 +32,7 @@
 28	pg69327	bedeckte	bedeckt	bedecken	past	bedeckte Dach des Nachbarhauses.	wrong	bedeckte Dach: the adjective bedeckt
 29	tatoeba	hast	hasten	haben	present-du	hast du?	right	
 30	pg69327	verspäteten	verspätet	verspäten	past-wir	verspäteten vernünftigen Teilnahme.	wrong	verspäteten Teilnahme: the adjective verspätet
-31	pg69327	verabschiedete	verabschiedet	verabschieden	past	verabschiedete sich mit zwei Worten, sagte aber doch, während er den Hörer an seinen Platz hängte, halb zu sich, halb zu	right	
+31	pg69327	verabschiedete	verabschiedet	verabschieden	past	verabschiedete sich mit zwei Worten, sagte aber doch, während er den Hörer an seinen Platz hängte, 	right	
 32	pg5323	liebe	lieb	lieben	present-ich	liebe Geheimrätin, aber ich möchte mich doch einen Augenblick zurückziehen ...	wrong	liebe Geheimrätin: the adjective lieb
 33	tatoeba	erzeugte	erzeugt	erzeugen	past	erzeugte einen Verkehrsstau.	right	
 34	tatoeba	hast	hasten	haben	present-du	hast du New York besucht?	right	
@@ -49,8 +49,8 @@
 45	pg5323	muß	Muss	müssen	present-modal	muß dir nämlich sagen, meine süße Effi ...«, und sie nahm ihres Kindes beide Hände, »...	right	
 46	pg5323	muß	Muss	müssen	present-modal	muß ich Ihnen nachher eine Geschichte erzählen.«	right	
 47	tatoeba	hast	hasten	haben	present-du	hast.	right	
-48	pg5323	führt	fahren	führen	present-er	führt auch den Doktortitel, hat's aber nicht gern, wenn man ihn dabei nennt, das ärgere, so meint er, die richtigen Dokt	right	
-49	pg5323	liebe	lieb	lieben	present-ich	liebe Mama, das wäre nun also etwas gewesen, um in Kessin ein neues Leben beginnen zu können; er, der Major, hat auch ni	wrong	liebe Mama: the adjective lieb
+48	pg5323	führt	fahren	führen	present-er	führt auch den Doktortitel, hat's aber nicht gern, wenn man ihn dabei nennt, das ärgere, so meint e	right	
+49	pg5323	liebe	lieb	lieben	present-ich	liebe Mama, das wäre nun also etwas gewesen, um in Kessin ein neues Leben beginnen zu können; er, d	wrong	liebe Mama: the adjective lieb
 50	tatoeba	erklärte	erklärt	erklären	past	erklärte mir, wie man diesen Apparat benutzt.	right	
 51	tatoeba	heiße	heiß	heißen	present-ich	heiße Bad entspannte sie.	wrong	das heiße Bad: the adjective heiß
 52	tatoeba	überraschte	überrascht	überraschen	past	überraschte uns alle.	right	
@@ -60,18 +60,18 @@
 56	tatoeba	verletzte	verletzt	verletzen	past	verletzte ihren Stolz.	right	
 57	pg5323	zweier	zwei	Zwei	plural	zweier Herren gestanden hätte.	wrong	zweier Herren: the genitive of zwei
 58	tatoeba	hast	hasten	haben	present-du	hast.	right	
-59	pg5323	hast	hasten	haben	present-du	hast, dann geht es, dann ärgert man sich nicht mehr, dann lacht man über die großen Allüren und das gekräuselte Haar.	right	
+59	pg5323	hast	hasten	haben	present-du	hast, dann geht es, dann ärgert man sich nicht mehr, dann lacht man über die großen Allüren und das	right	
 60	pg5323	liebe	lieb	lieben	present-ich	liebe Frau, darauf kommt es an, das ist das Wahre.	wrong	liebe Frau: the adjective lieb
 61	pg69327	erwähnten	erwähnt	erwähnen	past-wir	erwähnten Dame als eine Darstellung des stumpfsinnigsten Hochmuts sitzt?	wrong	der erwähnten Dame: the adjective erwähnt
 62	tatoeba	enttäuschte	enttäuscht	enttäuschen	past	enttäuschte uns.	right	
 63	tatoeba	muß	Muss	müssen	present-modal	muß Nick nach seiner neuen Adresse und Telefonnummer fragen, wenn ich ihn sehe.	right	
-64	pg5323	entfernte	entfernt	entfernen	past	entfernte Vettern von der Mutter Seite her, und vor allem hat er wohl Schwantikow und das Bellingsche Haus wiedersehen w	wrong	entfernte Vettern: the adjective entfernt
+64	pg5323	entfernte	entfernt	entfernen	past	entfernte Vettern von der Mutter Seite her, und vor allem hat er wohl Schwantikow und das Bellingsc	wrong	entfernte Vettern: the adjective entfernt
 65	tatoeba	heller	helle	hell	declined	heller als der Mond.	right	
 66	pg5323	muß	Muss	müssen	present-modal	muß es so nennen, wenn es auch sonderbar klingt ...	right	
 67	tatoeba	hast	hasten	haben	present-du	hast du die Box geöffnet?	right	
 68	tatoeba	hast	hasten	haben	present-du	hast die Wahl zwischen diesen und jenen.	right	
 69	pg69327	schloß	Schloss	schließen	past	schloß er das Fenster und ging in der Richtung zur Haupttreppe.	right	
-70	pg5323	beschäftigte	beschäftigt	beschäftigen	past	beschäftigte sich in ihren Gedanken abwechselnd mit dem kleinen Chinesen oben und mit Gieshübler, der noch immer nicht k	right	
+70	pg5323	beschäftigte	beschäftigt	beschäftigen	past	beschäftigte sich in ihren Gedanken abwechselnd mit dem kleinen Chinesen oben und mit Gieshübler, d	right	
 71	tatoeba	hast	hasten	haben	present-du	hast du mit meinem Kugelschreiber gemacht?	right	
 72	tatoeba	erklärte	erklärt	erklären	past	erklärte Mary, warum er zu spät zu ihrer Geburtstagsfeier kam.	right	
 73	tatoeba	hast	hasten	haben	present-du	hast du?	right	

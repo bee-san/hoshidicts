@@ -55,11 +55,12 @@ end of its clause (`kommt morgen an.` → ankommen).
   this pack (GPL-3.0-or-later). Four rows of `lookup.tsv` quote fragments of
   two or three words of Kafka's *Der Prozess* (`FRAU GRUBACH`, `KÜNDIGUNG
   DES ADVOKATEN`, `höhern Beamten`, `der Hand hin.`; Project Gutenberg
-  #69327, public domain). Each row of `hand-judged.tsv` and
-  `changed-judged.tsv` quotes the sentence it judges, from the hovered word
-  to the sentence's end: 80 from Tatoeba (CC BY 2.0 FR, by the Tatoeba
-  contributors, https://tatoeba.org) and 60 from the three Project Gutenberg
-  books below (public domain). `sources/lookup-batch.cpp` is adapted
+  #69327, public domain). Each row of `changed-judged.tsv` quotes the
+  sentence it judges, from the hovered word, in at most 99 characters: 57
+  from Tatoeba (CC BY 2.0 FR, by the Tatoeba contributors,
+  https://tatoeba.org) and 23 from the three Project Gutenberg books below
+  (public domain). `hand-judged.tsv` gives the text each of its 60 lookups
+  matched (23 in Tatoeba, 37 in the books). `sources/lookup-batch.cpp` is adapted
   from `languages/en/sources/lookup-batch.cpp`.
 - Not committed, used for the measurements below:
   - the dictionary [wty-de-en](https://huggingface.co/datasets/daxida/wty-release/resolve/de7ed9cd558acce3423ccf6e17dc690f8a839bf2/latest/dict/de/en/wty-de-en.zip)
@@ -317,10 +318,10 @@ this pack (GCC 14.3, Release); main 39cebbe adds only other packs. Items 2
 to 4 were measured at 6a65eac and again after the rebase on 1fed676 (#58
 adds `lookup.untaggedTerms`), with identical output. The union is
 `tools/merge-transforms.mjs de --out`, which puts Yomitan's transforms
-first. The pack has no optional processor, transform or variant pass, so
-every number is the same with every option on and with the defaults; copies
-of the sample and `cases.tsv` with the line `# options: default` added give
-the same numbers as the files.
+first. The pack has no optional processor, transform or variant pass, so it
+has no `defaults.tsv`, and every number is the same with every option on and
+with the defaults; copies of the sample and `cases.tsv` with the line
+`# options: default` added give the same numbers as the files.
 
 1. **eval-language** (`hoshidicts-cli eval-language de <file> --transforms
    <set> --dictionary <wty-de-en>`). The sample is the 1,800 UniMorph rows of
@@ -547,7 +548,7 @@ the same numbers as the files.
      50 / 50; gaps.tsv 0 / 37 (reported); `classes.json` agrees with the
      engine (8 classes, 365 fields, 4 steps); 605 of the 4,922 rules (cross
      products expanded) are exercised by a passing row; the committed files
-     of `tests/` and `sources/` hold 944,129 bytes
+     of `tests/` and `sources/` hold 943,966 bytes
      (`git ls-tree -r -l HEAD -- languages/de/tests languages/de/sources`);
    - the differential check (`tools/check-yomitan.mjs` with
      `build/hoshidicts-cli`): 5,116 inputs, 6,300 Yomitan results, no
