@@ -69,6 +69,11 @@ neuter in -я	1	питань	питання	n	*
 neuter in -я	1	знанням	знання	n	*
 neuter in -я	1	обличчю	обличчя	n	*
 neuter in -е	1	полів	поле	n	*
+neuter in -е	1	полю	поле	n	*
+neuter in -е	1	морю	море	n	*
+neuter in -е	1	прізвищу	прізвище	n	*
+neuter in -о	1	вікну	вікно	n	*
+neuter in -о	1	місту	місто	n	*
 neuter in -е	1	морем	море	n	*
 neuter in -е	1	місць	місце	n	*
 neuter in -е	1	плечима	плече	n	*
@@ -103,7 +108,10 @@ adjectives	1	хворого	хворий	n	*
 adjectives	1	будь-якого	будь-який	adj	*
 comparison	1	новіший	новий	adj	*
 comparison	1	новішого	новий	adj	*
-comparison	1	найкращого	кращий	adj	*
+comparison	1	найкращого	добрий	adj	*
+comparison	1	найближча	близький	adj	*
+comparison	1	найменшим	малий	adj	*
+comparison	1	найдорожче	дорого	adv	*
 comparison	1	кращий	добрий	adj	*
 comparison	1	вищий	високий	adj	*
 comparison	1	нижчий	низький	adj	*
@@ -515,3 +523,10 @@ negatives	0	світова	світів	adj	*
 negatives	0	світових	світів	adj	*
 negatives	0	учителів	учителя	*	*
 negatives	0	любов	любва	*	*
+negatives	0	дідуся	дітися	*	*
+negatives	0	дорожчим	дорожчати	*	*
+negatives	0	сильнішу	сильнішати	*	*
+negatives	0	найближча	ближчий	*	*
+negatives	0	ґ	ґо	*	*
+negatives	0	ґр	ґра	*	*
+negatives	0	см	сма	*	*

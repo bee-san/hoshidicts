@@ -131,6 +131,19 @@ function compact(rules) {
     const groups = new Map();
     const out = [];
     for (const rule of rules) {
+        if (rule.type === 'wholeWord') {
+            // A whole word is the empty-prefix cross product whose stem is
+            // empty (stemCharacters []): the same rule, one pair in a list.
+            const {type: _type, inflected, deinflected, ...rest} = rule;
+            const key = JSON.stringify(['wholeWord', Object.keys(rest).sort().map((k) => [k, rest[k]])]);
+            if (!groups.has(key)) {
+                const group = {type: 'circumfix', prefixes: [['', '']], suffixes: [], ...rest, stemCharacters: '[]'};
+                groups.set(key, group);
+                out.push(group);
+            }
+            groups.get(key).suffixes.push([inflected, deinflected]);
+            continue;
+        }
         if (rule.type !== 'suffix' || rule.inflected === '' || (rule.stemMinLength ?? 0) > 1) { out.push(rule); continue; }
         const {type: _type, inflected, deinflected, ...rest} = rule;
         const key = JSON.stringify(Object.keys(rest).sort().map((k) => [k, rest[k]]));
@@ -142,6 +155,10 @@ function compact(rules) {
         groups.get(key).suffixes.push([inflected, deinflected]);
     }
     return out.map((rule) => {
+        if (rule.type === 'circumfix' && rule.stemCharacters === '[]' && rule.suffixes?.length === 1 && rule.prefixes?.length === 1 && rule.prefixes[0][0] === '') {
+            const {type: _t, prefixes: _p, suffixes: [[inflected, deinflected]], stemCharacters: _s, ...rest} = rule;
+            return {type: 'wholeWord', inflected, deinflected, ...rest};
+        }
         if (rule.type !== 'circumfix' || rule.suffixes === undefined || rule.suffixes.length > 1 || rule.prefixes[0][0] !== '') { return rule; }
         const {type: _type, prefixes: _prefixes, suffixes: [[inflected, deinflected]], ...rest} = rule;
         return {type: 'suffix', inflected, deinflected, ...rest};

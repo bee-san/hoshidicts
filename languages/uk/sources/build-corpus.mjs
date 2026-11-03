@@ -8,6 +8,10 @@
 // (categories that do not start with a part of speech and ":") are kept.
 //
 //   node languages/uk/sources/build-corpus.mjs <kaikki.org-dictionary-Ukrainian.jsonl.gz> [--cli <hoshidicts-cli>] [--transforms <file>] [--out <dir>]
+//   node languages/uk/sources/build-corpus.mjs <kaikki.org-dictionary-Ukrainian.jsonl.gz> --all <file.tsv>
+//
+// --all writes every eligible form instead (no sampling, no split): the
+// measurement set of README.md, which is not committed.
 //
 // The file is https://kaikki.org/dictionary/Ukrainian/kaikki.org-dictionary-Ukrainian.jsonl.gz
 // as downloaded on 2026-11-03 (English Wiktionary dump of 2026-10-01; sha256
@@ -29,16 +33,16 @@ const POS = {noun: 'n', verb: 'v', adj: 'adj', num: 'num', det: '*'};
 // Strata by kind of form; within each, rows are drawn uniformly.
 const has = (tags, ...names) => names.some((n) => tags.includes(n));
 const STRATA = [
-    ['verb, present or future', 250, (p, t, lemma) => p === 'verb' && !lemma.endsWith('ся') && has(t, 'present', 'future') && !has(t, 'adverbial', 'passive', 'active')],
-    ['verb, past', 120, (p, t, lemma) => p === 'verb' && !lemma.endsWith('ся') && has(t, 'past') && !has(t, 'adverbial', 'passive', 'active')],
-    ['verb, imperative', 90, (p, t, lemma) => p === 'verb' && !lemma.endsWith('ся') && has(t, 'imperative')],
-    ['verb, participle or infinitive', 100, (p, t, lemma) => p === 'verb' && !lemma.endsWith('ся') && has(t, 'adverbial', 'passive', 'active', 'infinitive')],
-    ['reflexive verb', 140, (p, t, lemma) => p === 'verb' && lemma.endsWith('ся')],
-    ['noun, singular', 260, (p, t) => p === 'noun' && has(t, 'singular')],
-    ['noun, plural', 260, (p, t) => p === 'noun' && has(t, 'plural')],
-    ['adjective', 240, (p, t) => p === 'adj' && !has(t, 'comparative', 'superlative')],
-    ['adjective, comparative or superlative', 25, (p, t) => p === 'adj' && has(t, 'comparative', 'superlative')],
-    ['numeral or determiner', 30, (p) => p === 'num' || p === 'det'],
+    ['verb, present or future', 170, (p, t, lemma) => p === 'verb' && !lemma.endsWith('ся') && has(t, 'present', 'future') && !has(t, 'adverbial', 'passive', 'active')],
+    ['verb, past', 80, (p, t, lemma) => p === 'verb' && !lemma.endsWith('ся') && has(t, 'past') && !has(t, 'adverbial', 'passive', 'active')],
+    ['verb, imperative', 60, (p, t, lemma) => p === 'verb' && !lemma.endsWith('ся') && has(t, 'imperative')],
+    ['verb, participle or infinitive', 70, (p, t, lemma) => p === 'verb' && !lemma.endsWith('ся') && has(t, 'adverbial', 'passive', 'active', 'infinitive')],
+    ['reflexive verb', 90, (p, t, lemma) => p === 'verb' && lemma.endsWith('ся')],
+    ['noun, singular', 170, (p, t) => p === 'noun' && has(t, 'singular')],
+    ['noun, plural', 170, (p, t) => p === 'noun' && has(t, 'plural')],
+    ['adjective', 160, (p, t) => p === 'adj' && !has(t, 'comparative', 'superlative')],
+    ['adjective, comparative or superlative', 15, (p, t) => p === 'adj' && has(t, 'comparative', 'superlative')],
+    ['numeral or determiner', 15, (p) => p === 'num' || p === 'det'],
 ];
 // Forms of a table: one word of Ukrainian letters, with or without
 // apostrophes and hyphens, that differs from its lemma.
@@ -46,6 +50,11 @@ const WORD = /^[а-щьюяєіїґ][а-щьюяєіїґ'\-]*$/u;
 const SKIP_TAGS = new Set(['romanization', 'canonical', 'table-tags', 'inflection-template', 'class', 'error-unrecognized-form',
     'error-unknown-tag', 'dated', 'dialectal', 'archaic', 'obsolete', 'rare', 'alternative', 'nonstandard', 'colloquial', 'poetic',
     'adjective', 'relational', 'diminutive', 'augmentative', 'adverb', 'abstract-noun', 'feminine-noun', 'endearing']);
+// Short names of the tags, for the category column.
+const SHORT = {'first-person': '1', 'second-person': '2', 'third-person': '3', singular: 'sg', plural: 'pl', nominative: 'nom', genitive: 'gen',
+    dative: 'dat', accusative: 'acc', instrumental: 'ins', locative: 'loc', vocative: 'voc', masculine: 'm', feminine: 'f', neuter: 'n',
+    present: 'prs', future: 'fut', past: 'pst', imperative: 'imp', infinitive: 'inf', adverbial: 'adv', passive: 'pass', active: 'act',
+    comparative: 'cmp', superlative: 'sup', possessive: 'poss', impersonal: 'impers', reflexive: 'refl'};
 const CASE_OR_FORM = ['nominative', 'genitive', 'dative', 'accusative', 'instrumental', 'locative', 'vocative', 'present', 'future', 'past',
     'imperative', 'infinitive', 'adverbial', 'passive', 'active', 'comparative', 'superlative'];
 
@@ -101,9 +110,17 @@ for (const line of gunzipSync(data).toString('utf8').split('\n')) {
         const key = `${text}\t${lemma}\t${pos}`;
         if (seen.has(key)) { continue; }
         seen.add(key);
-        const category = `${pos}:${[...tags].filter((t) => !['imperfective', 'perfective', 'animate', 'inanimate'].includes(t)).sort().join(',')}`;
+        const category = `${POS[pos] === '*' ? 'det' : POS[pos]}:${[...tags].filter((t) => !['imperfective', 'perfective', 'animate', 'inanimate'].includes(t)).sort().map((t) => SHORT[t] ?? t).join(',')}`;
         pools[s].push([category, '1', text, lemma, POS[pos], '*']);
     }
+}
+const allIndex = args.indexOf('--all');
+if (allIndex >= 0) {
+    const rows = pools.flat();
+    writeFileSync(resolve(args[allIndex + 1]), [`# Every eligible form of ${file} (sha256 ${SHA256.slice(0, 16)}): measurement set, not committed.`,
+        '# category\tvalid\tsource\tterm\trule\treasons', ...rows.map((r) => r.join('\t'))].join('\n') + '\n');
+    console.log(JSON.stringify({all: rows.length}));
+    process.exit(0);
 }
 const random = mulberry32(SEED);
 const sample = [];
@@ -154,15 +171,12 @@ const fail = sample.filter((row) => !passes(row));
 mkdirSync(outDir, {recursive: true});
 writeFileSync(join(outDir, 'corpus.tsv'), [...header, columns, ...pass.map((r) => r.join('\t'))].join('\n') + '\n');
 const gapsFile = join(outDir, 'gaps.tsv');
-const isSampled = (category) => /^(noun|verb|adj|num|det):/u.test(category);
+const isSampled = (category) => /^(n|v|adj|num|det):/u.test(category);
 const handRows = existsSync(gapsFile)
     ? readFileSync(gapsFile, 'utf8').split('\n').filter((line) => line !== '' && !line.startsWith('#') && !isSampled(line.split('\t')[0]))
     : [];
 const gapsHeader = ['# Known gaps: run by the conformance test and counted, not enforced.', '# Hand-written rows (categories without a part of speech and ":"): written for this pack, no third-party data.', ...header];
 writeFileSync(gapsFile, [...gapsHeader, columns, ...handRows, ...fail.map((r) => r.join('\t'))].join('\n') + '\n');
-const byStratum = (rows) => Object.fromEntries(STRATA.map(([name, , test]) => [name, rows.filter((r) => {
-    const [pos, tags] = r[0].split(':');
-    return test(pos, tags.split(','), r[3]);
-}).length]));
+const byStratum = (rows) => Object.fromEntries(STRATA.map(([name], s) => [name, rows.filter((r) => pools[s].includes(r)).length]));
 console.log(JSON.stringify({sampled: sample.length, pools: Object.fromEntries(STRATA.map(([name], s) => [name, pools[s].length])), corpus: pass.length, gaps: fail.length,
     recall: pass.length / sample.length, reached: byStratum(pass), missed: byStratum(fail)}));

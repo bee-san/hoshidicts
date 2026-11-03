@@ -78,12 +78,12 @@ const CONSTRAINTS = ['stemMinLength', 'stemCharacters', 'stemEndsWith', 'stemNot
 /**
  * A suffix rule. `opt` may give stemMinLength (default 1), stemEndsWith,
  * stemNotEndsWith, stemChange and the other constraints; stemCharacters is
- * always {stemChar}.
+ * {stemChar} unless opt names another class.
  */
 function suffix(id, inflected, deinflected, conditionsIn, conditionsOut, opt = {}, example = undefined) {
     const rule = {type: 'suffix', inflected, deinflected, conditionsIn, conditionsOut};
     const minimum = opt.stemMinLength ?? 1;
-    const full = {...opt, stemMinLength: minimum > 0 ? minimum : undefined, stemCharacters: STEM};
+    const full = {...opt, stemMinLength: minimum > 0 ? minimum : undefined, stemCharacters: opt.stemCharacters ?? STEM};
     for (const key of CONSTRAINTS) {
         if (full[key] !== undefined) { rule[key] = full[key]; }
     }
@@ -162,9 +162,9 @@ noun('сі', 'ха', ['dat.sg', 'loc.sg'], {}, 'мусі → муха');
 noun('у', 'а', ['acc.sg'], {stemEndsWith: C}, 'воду → вода');
 noun('ою', 'а', ['ins.sg'], {stemEndsWith: HARD}, 'водою → вода');
 noun('о', 'а', ['voc.sg'], {stemEndsWith: HARD}, 'мамо → мама');
-noun('', 'а', ['gen.pl'], {stemEndsWith: C}, 'книг → книга');
-noun('', 'а', ['gen.pl'], {stemEndsWith: C, stemChange: fromItoO}, 'ніг → нога');
-noun('', 'а', ['gen.pl'], {stemEndsWith: C, stemChange: fromItoJo}, 'сліз → сльоза');
+noun('', 'а', ['gen.pl'], {stemContains: V, stemEndsWith: C}, 'книг → книга');
+noun('', 'а', ['gen.pl'], {stemContains: V, stemEndsWith: C, stemChange: fromItoO}, 'ніг → нога');
+noun('', 'а', ['gen.pl'], {stemContains: V, stemEndsWith: C, stemChange: fromItoJo}, 'сліз → сльоза');
 noun('ок', 'ка', ['gen.pl'], {stemEndsWith: C}, 'книжок → книжка');
 noun('ок', 'ка', ['gen.pl'], {stemEndsWith: '[й]'}, 'чайок → чайка');
 noun('ьок', 'ька', ['gen.pl'], {}, 'кальок → калька');
@@ -187,7 +187,7 @@ noun('і', 'я', ['gen.sg', 'dat.sg', 'loc.sg', 'nom.pl'], {stemEndsWith: C}, '�
 noun('ю', 'я', ['acc.sg'], {}, 'землю → земля');
 noun('ею', 'я', ['ins.sg'], {stemEndsWith: C}, 'землею → земля');
 noun('е', 'я', ['voc.sg'], {stemEndsWith: C}, 'земле → земля');
-noun('ь', 'я', ['gen.pl'], {stemEndsWith: SOFT}, 'неділь → неділя');
+noun('ь', 'я', ['gen.pl'], {stemEndsWith: '[лтдсзц]'}, 'неділь → неділя');
 noun('ень', 'ня', ['gen.pl'], {stemEndsWith: C}, 'пісень → пісня');
 noun('ень', 'ьня', ['gen.pl'], {stemEndsWith: '[л]'}, 'спалень → спальня');
 noun('ель', 'ля', ['gen.pl'], {stemEndsWith: C}, 'земель → земля');
@@ -318,9 +318,9 @@ noun('сі', 'хо', ['loc.sg'], {}, 'вусі → вухо');
 noun('е', 'о', ['voc.sg'], {stemEndsWith: C}, 'Петре → Петро');
 noun('и', 'о', ['nom.pl'], {stemEndsWith: C}, 'батьки → батько');
 noun('ів', 'о', ['gen.pl'], {stemEndsWith: C}, 'батьків → батько');
-noun('', 'о', ['gen.pl'], {stemEndsWith: C}, 'міст → місто');
-noun('', 'о', ['gen.pl'], {stemEndsWith: C, stemChange: fromItoO}, 'слів → слово');
-noun('', 'о', ['gen.pl'], {stemEndsWith: C, stemChange: fromItoE}, 'сіл → село');
+noun('', 'о', ['gen.pl'], {stemContains: V, stemEndsWith: C}, 'міст → місто');
+noun('', 'о', ['gen.pl'], {stemContains: V, stemEndsWith: C, stemChange: fromItoO}, 'слів → слово');
+noun('', 'о', ['gen.pl'], {stemContains: V, stemEndsWith: C, stemChange: fromItoE}, 'сіл → село');
 noun('он', 'но', ['gen.pl'], {stemEndsWith: C}, 'вікон → вікно');
 noun('ер', 'ро', ['gen.pl'], {stemEndsWith: C}, 'відер → відро');
 noun('ел', 'ло', ['gen.pl'], {stemEndsWith: C}, 'весел → весло');
@@ -340,7 +340,7 @@ noun('ях', 'е', ['loc.pl'], {stemEndsWith: '[лрц]'}, 'полях → по�
 noun('а', 'е', ['gen.sg', 'nom.pl'], {stemEndsWith: HUSH}, 'прізвища → прізвище');
 noun('у', 'е', ['dat.sg'], {stemEndsWith: HUSH}, 'прізвищу → прізвище');
 noun('і', 'е', ['loc.sg', 'nom.pl'], {stemEndsWith: HUSH}, 'плечі → плече');
-noun('', 'е', ['gen.pl'], {stemEndsWith: HUSH}, 'прізвищ → прізвище');
+noun('', 'е', ['gen.pl'], {stemContains: V, stemEndsWith: HUSH}, 'прізвищ → прізвище');
 noun('ей', 'е', ['gen.pl'], {stemEndsWith: HUSH}, 'плечей → плече');
 noun('ам', 'е', ['dat.pl'], {stemEndsWith: HUSH}, 'прізвищам → прізвище');
 noun('ами', 'е', ['ins.pl'], {stemEndsWith: HUSH}, 'прізвищами → прізвище');
@@ -486,24 +486,33 @@ for (const ending of ['иного', 'иному', 'иним', 'ина', 'ино�
     suffix('adj.poss', ending, 'ин', [], ['adj'], {stemMinLength: 3}, ending === 'иного' ? 'сестриного → сестрин' : undefined);
 }
 transform('adj.cmp', 'comparative', 'Comparative degree of an adjective: новіший (новий), вищий (високий), кращий (гарний).');
-for (const [inflected, deinflected, opt, example] of [
+const ADJ_CMP = [
     ['іший', 'ий', {stemMinLength: 2}, 'новіший → новий'], ['іший', 'ій', {stemMinLength: 2, stemEndsWith: '[н]'}, 'синіший → синій'],
-    ['ший', 'ий', {stemMinLength: 2, stemEndsWith: '[дтр]'}, 'молодший → молодий'], ['ший', 'кий', {stemMinLength: 2, stemEndsWith: C}, 'легший → легкий'],
+    ['ший', 'ий', {stemMinLength: 2, stemEndsWith: '[бвдтр]'}, 'молодший → молодий'], ['ший', 'кий', {stemMinLength: 2, stemEndsWith: C}, 'легший → легкий'],
     ['кший', 'кий', {stemMinLength: 2}, "м'якший → м'який"], ['ший', 'окий', {stemMinLength: 2, stemEndsWith: C}, 'ширший → широкий'],
     ['ший', 'гий', {stemMinLength: 2, stemEndsWith: C}, 'довший → довгий'], ['щий', 'сокий', {stemMinLength: 1}, 'вищий → високий'],
     ['жчий', 'зький', {stemMinLength: 1}, 'нижчий → низький'], ['жчий', 'гий', {stemMinLength: 2}, 'дорожчий → дорогий'],
     ['жчий', 'жий', {stemMinLength: 2}, 'дужчий → дужий'], ['чий', 'кий', {stemMinLength: 2, stemEndsWith: '[ж]'}, 'важчий → важкий'],
-    ['льший', 'лекий', {stemMinLength: 2}, 'дальший → далекий'], ['щий', 'стий', {stemMinLength: 2}, 'товщий → товстий']]) {
+    ['льший', 'лекий', {stemMinLength: 2}, 'дальший → далекий'], ['щий', 'стий', {stemMinLength: 2}, 'товщий → товстий']];
+for (const [inflected, deinflected, opt, example] of ADJ_CMP) {
     suffix('adj.cmp', inflected, deinflected, ['adj'], ['adj'], opt, example);
 }
-for (const [form, lemmas] of [['кращий', ['гарний', 'добрий', 'хороший']], ['гірший', ['поганий', 'лихий']], ['більший', ['великий']], ['менший', ['малий', 'маленький']]]) {
+const ADJ_SUPPLETIVE = [['кращий', ['гарний', 'добрий', 'хороший']], ['ліпший', ['добрий']], ['гірший', ['поганий', 'лихий']], ['більший', ['великий']], ['менший', ['малий', 'маленький']]];
+for (const [form, lemmas] of ADJ_SUPPLETIVE) {
     for (const lemma of lemmas) { add('adj.cmp', {type: 'wholeWord', inflected: form, deinflected: lemma, conditionsIn: ['adj'], conditionsOut: ['adj']}, `${form} → ${lemma}`); }
 }
-transform('adj.sup', 'superlative', 'Superlative degree: най- (якнай-, щонай-) before the comparative: найновіший, найкращий, якнайшвидше.');
-for (const prefix of ['най', 'якнай', 'щонай']) {
-    for (const end of ['ший', 'щий', 'чий']) {
-        add('adj.sup', {type: 'circumfix', inflectedPrefix: prefix, deinflectedPrefix: '', inflectedSuffix: end, deinflectedSuffix: end,
-            stemMinLength: 1, stemCharacters: STEM, conditionsIn: ['adj'], conditionsOut: ['adj']}, prefix === 'най' && end === 'ший' ? 'найновіший → новіший' : undefined);
+// The superlative is най- (якнай-, щонай-) before the comparative; it goes to
+// the positive in one step (найближчий → близький), as dictionaries name it,
+// so a comparative headword (ближчий) does not come before the positive.
+transform('adj.sup', 'superlative', 'Superlative degree of an adjective: найновіший (новий), найближчий (близький), якнайшвидший (швидкий), найкращий (добрий).');
+const SUP_PREFIXES = ['най', 'якнай', 'щонай'].map((x) => [x, '']);
+for (const [inflected, deinflected, opt] of ADJ_CMP) {
+    add('adj.sup', {type: 'circumfix', prefixes: SUP_PREFIXES, suffixes: [[inflected, deinflected]], conditionsIn: ['adj'], conditionsOut: ['adj'],
+        stemMinLength: opt.stemMinLength, stemCharacters: STEM, ...(opt.stemEndsWith ? {stemEndsWith: opt.stemEndsWith} : {})}, inflected === 'іший' && deinflected === 'ий' ? 'найновіший → новий' : undefined);
+}
+for (const [form, lemmas] of ADJ_SUPPLETIVE) {
+    for (const prefix of ['най', 'якнай', 'щонай']) {
+        for (const lemma of lemmas) { add('adj.sup', {type: 'wholeWord', inflected: prefix + form, deinflected: lemma, conditionsIn: ['adj'], conditionsOut: ['adj']}); }
     }
 }
 transform('adj.short', 'short form', 'Short masculine form of an adjective: повен (повний), зелен (зелений), рад (радий).');
@@ -513,22 +522,27 @@ for (const [form, lemma] of [['рад', 'радий'], ['здоров', 'здо�
     add('adj.short', {type: 'wholeWord', inflected: form, deinflected: lemma, conditionsIn: [], conditionsOut: ['adj']}, `${form} → ${lemma}`);
 }
 transform('adv.cmp', 'comparative', 'Comparative degree of an adverb: швидше (швидко), вище (високо), краще (добре).');
-for (const [inflected, deinflected, opt, example] of [
+const ADV_CMP = [
     ['іше', 'о', {stemMinLength: 2}, 'частіше → часто'], ['ше', 'ко', {stemMinLength: 2}, 'швидше → швидко'],
     ['ше', 'о', {stemMinLength: 2, stemEndsWith: '[дтрх]'}, 'тихше → тихо'], ['ше', 'око', {stemMinLength: 2}, 'ширше → широко'],
     ['ше', 'го', {stemMinLength: 2}, 'довше → довго'], ['ще', 'соко', {stemMinLength: 1}, 'вище → високо'],
     ['жче', 'зько', {stemMinLength: 1}, 'нижче → низько'], ['жче', 'го', {stemMinLength: 2}, 'дорожче → дорого'],
-    ['че', 'ко', {stemMinLength: 2, stemEndsWith: '[ж]'}, 'важче → важко']]) {
+    ['че', 'ко', {stemMinLength: 2, stemEndsWith: '[ж]'}, 'важче → важко']];
+for (const [inflected, deinflected, opt, example] of ADV_CMP) {
     suffix('adv.cmp', inflected, deinflected, ['adv'], ['adv'], opt, example);
 }
-for (const [form, lemmas] of [['краще', ['добре', 'гарно']], ['гірше', ['погано']], ['більше', ['багато']], ['менше', ['мало']], ['далі', ['далеко']]]) {
+const ADV_SUPPLETIVE = [['краще', ['добре', 'гарно']], ['гірше', ['погано']], ['більше', ['багато']], ['менше', ['мало']], ['далі', ['далеко']]];
+for (const [form, lemmas] of ADV_SUPPLETIVE) {
     for (const lemma of lemmas) { add('adv.cmp', {type: 'wholeWord', inflected: form, deinflected: lemma, conditionsIn: ['adv'], conditionsOut: ['adv']}, `${form} → ${lemma}`); }
 }
-transform('adv.sup', 'superlative', 'Superlative degree of an adverb: найшвидше, якнайкраще.');
-for (const prefix of ['най', 'якнай', 'щонай']) {
-    for (const end of ['ше', 'ще', 'че']) {
-        add('adv.sup', {type: 'circumfix', inflectedPrefix: prefix, deinflectedPrefix: '', inflectedSuffix: end, deinflectedSuffix: end,
-            stemMinLength: 1, stemCharacters: STEM, conditionsIn: ['adv'], conditionsOut: ['adv']}, prefix === 'най' && end === 'ше' ? 'найшвидше → швидше' : undefined);
+transform('adv.sup', 'superlative', 'Superlative degree of an adverb: найшвидше (швидко), якнайкраще (добре).');
+for (const [inflected, deinflected, opt] of ADV_CMP) {
+    add('adv.sup', {type: 'circumfix', prefixes: SUP_PREFIXES, suffixes: [[inflected, deinflected]], conditionsIn: ['adv'], conditionsOut: ['adv'],
+        stemMinLength: opt.stemMinLength, stemCharacters: STEM, ...(opt.stemEndsWith ? {stemEndsWith: opt.stemEndsWith} : {})}, inflected === 'ше' && deinflected === 'ко' ? 'найшвидше → швидко' : undefined);
+}
+for (const [form, lemmas] of ADV_SUPPLETIVE) {
+    for (const prefix of ['най', 'якнай', 'щонай']) {
+        for (const lemma of lemmas) { add('adv.sup', {type: 'wholeWord', inflected: prefix + form, deinflected: lemma, conditionsIn: ['adv'], conditionsOut: ['adv']}); }
     }
 }
 
@@ -541,8 +555,8 @@ function pronoun(id, name, lemma, forms, conditionsOut = ['pron']) {
 const PRONOUNS = [
     ['я', {'gen-acc': ['мене'], 'dat-loc': ['мені'], ins: ['мною']}],
     ['ти', {'gen-acc': ['тебе'], 'dat-loc': ['тобі'], ins: ['тобою']}],
-    ['він', {'gen-acc': ['його', 'нього'], dat: ['йому'], ins: ['ним'], loc: ['ньому']}],
-    ['воно', {'gen-acc': ['його', 'нього'], dat: ['йому'], ins: ['ним'], loc: ['ньому']}],
+    ['він', {'gen-acc': ['його', 'нього'], dat: ['йому'], ins: ['ним'], loc: ['ньому', 'нім']}],
+    ['воно', {'gen-acc': ['його', 'нього'], dat: ['йому'], ins: ['ним'], loc: ['ньому', 'нім']}],
     ['вона', {'gen-acc': ['її', 'неї'], 'dat-loc': ['їй', 'ній'], ins: ['нею']}],
     ['ми', {'gen-acc-loc': ['нас'], dat: ['нам'], ins: ['нами']}],
     ['ви', {'gen-acc-loc': ['вас'], dat: ['вам'], ins: ['вами']}],
@@ -779,13 +793,14 @@ for (const [ending, lemma] of [['ла', 'сти'], ['ло', 'сти'], ['ли', 
     const id = ending === 'ла' ? 'pstF' : ending === 'ло' ? 'pstN' : 'pstPl';
     verb(id, ending, lemma, {stemEndsWith: V}, 'std', ending === 'ла' ? 'вела → вести' : undefined);
 }
-for (const [stem, lemma] of [['ішов', 'іти'], ['йшов', 'йти']]) {
-    verb('pstM', stem, lemma, {stemMinLength: 0}, 'cons', stem === 'йшов' ? 'прийшов → прийти' : undefined);
-    verb('advPst', stem + 'ши', lemma, {stemMinLength: 0}, 'adv');
+for (const [stem, lemma, extra] of [['ішов', 'іти', {stemCharacters: '[п]'}], ['йшов', 'йти', {}]]) {
+    const opt = {stemMinLength: 0, ...extra};
+    verb('pstM', stem, lemma, opt, 'cons', stem === 'йшов' ? 'прийшов → прийти' : undefined);
+    verb('advPst', stem + 'ши', lemma, opt, 'adv');
     const base = stem.slice(0, -2);
-    verb('pstF', base + 'ла', lemma, {stemMinLength: 0}, 'std');
-    verb('pstN', base + 'ло', lemma, {stemMinLength: 0}, 'std');
-    verb('pstPl', base + 'ли', lemma, {stemMinLength: 0}, 'std');
+    verb('pstF', base + 'ла', lemma, opt, 'std');
+    verb('pstN', base + 'ло', lemma, opt, 'std');
+    verb('pstPl', base + 'ли', lemma, opt, 'std');
 }
 
 // First conjugation, infinitive stem in a vowel.
@@ -862,7 +877,9 @@ conjugation({inf: 'бути', prs: ['буду', 'будеш', 'буде', 'бу�
 whole('v.be', 'є', 'бути', [], ['v']);
 conjugation({inf: 'їхати', prs: ['їду', 'їдеш', 'їде', 'їдемо', 'їдем', 'їдете', 'їдуть'], imp: {'2sg': ['їдь'], '1pl': ['їдьмо'], '2pl': ['їдьте']}, opt: {stemMinLength: 0}, label: ['їду', 'їхати']});
 conjugation({inf: 'йти', prs: ['йду', 'йдеш', 'йде', 'йдемо', 'йдем', 'йдете', 'йдуть'], imp: {'2sg': ['йди'], '1pl': ['йдімо', 'йдім'], '2pl': ['йдіть']}, ptcp: ['йдений'], opt: {stemMinLength: 0}, label: ['прийду', 'прийти']});
-conjugation({inf: 'іти', prs: ['іду', 'ідеш', 'іде', 'ідемо', 'ідем', 'ідете', 'ідуть'], imp: {'2sg': ['іди'], '1pl': ['ідімо', 'ідім'], '2pl': ['ідіть']}, opt: {stemMinLength: 0}, label: ['піду', 'піти']});
+// іти keeps its і only bare or after п (іду, піду); after every other
+// prefix it is й (прийду, вийду, зійду), which the йти rules read.
+conjugation({inf: 'іти', prs: ['іду', 'ідеш', 'іде', 'ідемо', 'ідем', 'ідете', 'ідуть'], imp: {'2sg': ['іди'], '1pl': ['ідімо', 'ідім'], '2pl': ['ідіть']}, opt: {stemMinLength: 0, stemCharacters: '[п]'}, label: ['піду', 'піти']});
 conjugation({inf: 'їсти', prs: ['їм', 'їси', 'їсть', 'їмо', null, 'їсте', 'їдять'], imp: {'2sg': ['їж'], '1pl': ['їжмо'], '2pl': ['їжте']}, opt: {stemMinLength: 0}, label: ["з'їм", "з'їсти"]});
 conjugation({inf: 'дати', prs: ['дам', 'даси', 'дасть', 'дамо', null, 'дасте', 'дадуть'], opt: {stemMinLength: 0}, label: ['продам', 'продати']});
 conjugation({inf: 'вісти', prs: ['вім', 'віси', 'вість', 'вімо', null, 'вісте', 'відять'], label: ['відповім', 'відповісти']});
@@ -935,13 +952,19 @@ suffix('v.impers', 'єно', 'їти', [], ['v'], {stemEndsWith: '[ео]'});
 for (const [ending, id] of [['ю', 'prs1sg'], ['їш', 'prs2sg'], ['їть', 'prs3sg'], ['їмо', 'prs1pl'], ['їте', 'prs2pl'], ['ять', 'prs3pl']]) {
     verb(id, ending, 'їти', {stemEndsWith: '[ео]', stemMinLength: 2}, 'std', ending === 'ю' ? 'клею → клеїти' : undefined);
 }
-// -ати after ж ч ш щ (лежати, кричати, мовчати).
-for (const [ending, id] of [['у', 'prs1sg'], ['иш', 'prs2sg'], ['ить', 'prs3sg'], ['имо', 'prs1pl'], ['им', 'prs1pl'], ['ите', 'prs2pl'], ['ать', 'prs3pl'],
-    ['и', 'imp2sg'], ['імо', 'imp1pl'], ['ім', 'imp1pl'], ['іть', 'imp2pl']]) {
-    verb(id, ending, 'ати', {stemEndsWith: HUSH, stemMinLength: 2}, ending.endsWith('м') && ending.length <= 2 ? 'cons' : 'std', ending === 'у' ? 'лежу → лежати' : undefined);
+// Second conjugation -ати after ж, ч, щ (лежати, кричати, пищати). No verb
+// of the class ends its stem in ш, and ч after ж is a comparative adjective
+// (дорожчим, дорожчу), so the consonant is written in the ending and ч
+// excludes a ж before it.
+for (const x of ['ж', 'ч', 'щ']) {
+    const opt = {stemMinLength: 1, ...(x === 'ч' ? {stemNotEndsWith: '[ж]'} : {})};
+    for (const [ending, id] of [['у', 'prs1sg'], ['иш', 'prs2sg'], ['ить', 'prs3sg'], ['имо', 'prs1pl'], ['им', 'prs1pl'], ['ите', 'prs2pl'], ['ать', 'prs3pl'],
+        ['и', 'imp2sg'], ['імо', 'imp1pl'], ['ім', 'imp1pl'], ['іть', 'imp2pl']]) {
+        verb(id, x + ending, x + 'ати', opt, ending === 'им' || ending === 'ім' ? 'cons' : 'std', x === 'ж' && ending === 'у' ? 'лежу → лежати' : undefined);
+    }
+    verb('advPrs', x + 'ачи', x + 'ати', opt, 'adv');
+    suffix('v.ptcpAct', x + 'ачий', x + 'ати', ['adj'], ['v'], opt);
 }
-verb('advPrs', 'ачи', 'ати', {stemEndsWith: HUSH, stemMinLength: 2}, 'adv');
-suffix('v.ptcpAct', 'ачий', 'ати', ['adj'], ['v'], {stemEndsWith: HUSH});
 // Past active participles in -лий (почервонілий, минулий, гнилий, зниклий).
 for (const [inflected, deinflected, opt, example] of [['ілий', 'іти', {stemMinLength: 2}, 'почервонілий → почервоніти'],
     ['улий', 'ути', {stemMinLength: 1}, 'минулий → минути'], ['илий', 'ити', {stemMinLength: 2}, 'гнилий → гнити'],
@@ -978,9 +1001,16 @@ for (const consonant of 'лнтдзсц') {
 }
 
 // ---------------------------------------------------------------------------
-// Noun transforms, now that every declension has added its rules.
+// Noun transforms, now that every declension has added its rules. A rule
+// whose ending is one letter needs two letters of stem: the words of two
+// letters are function words (на, но, ті, ця), so на is not the vocative of
+// но, nor ть the genitive of ті. Rules that list their stem (сну, пса,
+// матері) keep their own minimum.
 const nounIds = new Map();
 for (const entry of nominal.values()) {
+    if ([...entry.inflected].length === 1 && !entry.opt.whole && (entry.opt.stemMinLength ?? 1) < 2) {
+        entry.opt = {...entry.opt, stemMinLength: 2};
+    }
     const labels = CASE_ORDER.filter((c) => entry.labels.has(c));
     const id = `noun.${labels.join('+')}`;
     if (!nounIds.has(id)) {
@@ -1008,6 +1038,19 @@ function compact(rules) {
     const groups = new Map();
     const out = [];
     for (const rule of rules) {
+        if (rule.type === 'wholeWord') {
+            // A whole word is the empty-prefix cross product whose stem is
+            // empty (stemCharacters []): the same rule, one pair in a list.
+            const {type: _type, inflected, deinflected, ...rest} = rule;
+            const key = JSON.stringify(['wholeWord', Object.keys(rest).sort().map((k) => [k, rest[k]])]);
+            if (!groups.has(key)) {
+                const group = {type: 'circumfix', prefixes: [['', '']], suffixes: [], ...rest, stemCharacters: '[]'};
+                groups.set(key, group);
+                out.push(group);
+            }
+            groups.get(key).suffixes.push([inflected, deinflected]);
+            continue;
+        }
         if (rule.type !== 'suffix' || rule.inflected === '') { out.push(rule); continue; }
         const {inflected, deinflected, type: _type, ...rest} = rule;
         const key = JSON.stringify(Object.keys(rest).sort().map((k) => [k, rest[k]]));
@@ -1019,7 +1062,12 @@ function compact(rules) {
         groups.get(key).suffixes.push([inflected, deinflected]);
     }
     return out.map((rule) => {
-        if (rule.type !== 'circumfix' || rule.suffixes === undefined || rule.suffixes.length > 1) { return rule; }
+        if (rule.type === 'circumfix' && rule.stemCharacters === '[]' && rule.suffixes?.length === 1 && rule.prefixes?.length === 1 && rule.prefixes[0][0] === '') {
+            const {type: _t, prefixes: _p, suffixes: [[inflected, deinflected]], stemCharacters: _s, ...rest} = rule;
+            return {type: 'wholeWord', inflected, deinflected, ...rest};
+        }
+        if (rule.type !== 'circumfix' || rule.suffixes === undefined || rule.suffixes.length > 1
+            || rule.prefixes.length !== 1 || rule.prefixes[0][0] !== '' || rule.prefixes[0][1] !== '') { return rule; }
         const {prefixes: _p, suffixes: [[inflected, deinflected]], type: _type, ...rest} = rule;
         return {type: 'suffix', inflected, deinflected, ...rest};
     });
