@@ -413,7 +413,8 @@ int main() {
           R"(["銃五","freq",{"reading":"じゅうご","frequency":{"value":12000,"displayValue":"12000"}}],)"
           R"(["日本","freq",{"reading":"にほん","frequency":{"value":200,"displayValue":"200"}}],)"
           R"(["日本","freq",{"reading":"にっぽん","frequency":{"value":4000,"displayValue":"4000"}}],)"
-          R"(["日本","freq",{"value":300,"displayValue":"300"}]])"},
+          R"(["日本","freq",{"value":300,"displayValue":"300"}],)"
+          R"(["日","freq",{"value":50,"displayValue":"50"}]])"},
          // A kanji frequency is not a term frequency.
          {"kanji_meta_bank_1.json", R"([["鰯","freq",{"value":2000,"displayValue":"2000"}]])"}});
     const std::string pitch = import_dict(
@@ -546,7 +547,8 @@ int main() {
     // On: a shorter match counts too. Only a row reads 日本 as にっぽん, so on
     // 日本語 it comes after the terms with glossaries that read 日本 and before
     // the shorter 日. It has にっぽん's row and the row without a reading;
-    // 日本/にほん keeps its own and that one, which adds no 日本/日本.
+    // 日本/にほん keeps its own and that one, which adds no 日本/日本. 日's only
+    // row has no reading and 日 is defined, so it is 日/ひ's and adds no 日/日.
     const auto nihongo_off = find("日本語", {});
     check(same(nihongo_off, {"日本語/にほんご", "日本/にほん", "日/ひ"}),
           "日本語, off: expected [日本語/にほんご, 日本/にほん, 日/ひ], got " + join(nihongo_off));
@@ -566,6 +568,8 @@ int main() {
       check(same(values(nihongo[2].term), {"meta-frequency:4000", "meta-frequency:300"}),
             "日本/にっぽん, on: expected にっぽん's row and the one without a reading, got " +
                 join(values(nihongo[2].term)));
+      check(same(values(nihongo[3].term), {"meta-frequency:50"}),
+            "日/ひ, on: expected the row without a reading, got " + join(values(nihongo[3].term)));
     }
     const auto nihongo_capped = terms(lookup.lookup("日本語", 2, 16, on));
     check(same(nihongo_capped, {"日本語/にほんご", "日本/にほん"}),

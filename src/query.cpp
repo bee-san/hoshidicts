@@ -766,9 +766,10 @@ void DictionaryQuery::collect_pitches(std::string_view expression, std::string_v
   }
 }
 
-std::vector<std::string> DictionaryQuery::metadata_readings(std::string_view expression, BlobPins& pins) const {
+std::vector<std::string> DictionaryQuery::metadata_readings(std::string_view expression, BlobPins& pins,
+                                                            bool& reading_less) const {
   std::vector<std::string> readings;
-  bool reading_less = false;
+  reading_less = false;
   const auto add = [&](std::string& reading) {
     if (reading.empty()) {
       reading_less = true;
@@ -822,9 +823,6 @@ std::vector<std::string> DictionaryQuery::metadata_readings(std::string_view exp
       add(parsed.reading);
     }
   });
-  if (readings.empty() && reading_less) {
-    readings.emplace_back(expression);
-  }
   return readings;
 }
 
