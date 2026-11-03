@@ -5038,6 +5038,9 @@
       [4304, 4346],
       [4348, 4351]
     ],
+    "transforms[50].rules[5].stemNotStartsWith": [
+      [4312, 4312]
+    ],
     "transforms[50].rules[6].stemCharacters": [
       [4304, 4346],
       [4348, 4351]
@@ -5720,6 +5723,9 @@
     "transforms[51].rules[5].stemCharacters": [
       [4304, 4346],
       [4348, 4351]
+    ],
+    "transforms[51].rules[5].stemNotStartsWith": [
+      [4312, 4312]
     ],
     "transforms[51].rules[6].stemCharacters": [
       [4304, 4346],
@@ -6410,6 +6416,9 @@
     "transforms[52].rules[5].stemCharacters": [
       [4304, 4346],
       [4348, 4351]
+    ],
+    "transforms[52].rules[5].stemNotStartsWith": [
+      [4312, 4312]
     ],
     "transforms[52].rules[6].stemCharacters": [
       [4304, 4346],

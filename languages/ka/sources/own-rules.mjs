@@ -291,10 +291,10 @@ const PRONOUN_FORMS = {
     'შენ': ['შენთვის', 'შენზე', 'შენთან', 'შენგან', 'შენში', 'შენკენ', 'შენსავით', 'შენამდე'],
     'ჩვენ': ['ჩვენთვის', 'ჩვენზე', 'ჩვენთან', 'ჩვენგან', 'ჩვენში', 'ჩვენკენ', 'ჩვენსავით', 'ჩვენამდე'],
     'თქვენ': ['თქვენთვის', 'თქვენზე', 'თქვენთან', 'თქვენგან', 'თქვენში', 'თქვენკენ', 'თქვენსავით', 'თქვენამდე'],
-    'ის': ['მას', 'მან', 'მისთვის', 'მასზე', 'მასთან', 'მისგან', 'მასში', 'მისკენ', 'მასავით', 'იმას', 'იმან', 'იმის', 'იმით', 'იმად', 'იმ', 'იმისთვის', 'იმაზე', 'იმასთან', 'იმისგან', 'იმაში', 'იმისკენ', 'იმასავით', 'იმათ'],
+    'ის': ['მას', 'მან', 'მისთვის', 'მასზე', 'მასთან', 'მისგან', 'მასში', 'მისკენ', 'მასავით', 'იმას', 'იმან', 'იმის', 'იმისი', 'იმისა', 'იმით', 'იმად', 'იმ', 'იმისთვის', 'იმაზე', 'იმასთან', 'იმისგან', 'იმაში', 'იმისკენ', 'იმასავით', 'იმათ'],
     'ისინი': ['მათ', 'მათთვის', 'მათზე', 'მათთან', 'მათგან', 'მათში', 'მათკენ', 'მათსავით'],
-    'ეს': ['ამას', 'ამან', 'ამის', 'ამით', 'ამად', 'ამ', 'ამისთვის', 'ამაზე', 'ამასთან', 'ამისგან', 'ამაში', 'ამისკენ', 'ამასავით', 'ამათ', 'ესენი'],
-    'ეგ': ['მაგას', 'მაგან', 'მაგის', 'მაგით', 'მაგ', 'მაგისთვის', 'მაგაზე', 'მაგასთან', 'მაგაში', 'მაგათ', 'ეგენი'],
+    'ეს': ['ამას', 'ამან', 'ამის', 'ამისი', 'ამისა', 'ამით', 'ამად', 'ამ', 'ამისთვის', 'ამაზე', 'ამასთან', 'ამისგან', 'ამაში', 'ამისკენ', 'ამასავით', 'ამათ', 'ესენი'],
+    'ეგ': ['მაგას', 'მაგან', 'მაგის', 'მაგისი', 'მაგით', 'მაგ', 'მაგისთვის', 'მაგაზე', 'მაგასთან', 'მაგაში', 'მაგათ', 'ეგენი'],
     'ვინ': ['ვის', 'ვისთვის', 'ვისზე', 'ვისთან', 'ვისგან', 'ვისკენ'],
     'რა': ['რას', 'რამ', 'რის', 'რით', 'რად', 'რისთვის', 'რაზე', 'რასთან', 'რისგან', 'რაში', 'რისკენ'],
 };
@@ -440,7 +440,9 @@ transform('ptcp-pass', 'past participle', 'The past participle of an intransitiv
 // Person markers at the front of the verb, after any preverb.
 // Without a preverb the rest of the word has at least four letters, and after
 // the one-letter preverb ა- five, so short words that start like a person
-// marker (ვისი, მისი, მათ, ამისი) are left alone.
+// marker (ვისი, მისი, მათ) are left alone. After ა- an object marker before
+// the version vowel ი- is read by the მი- → უ- rule only (ამისი is the
+// genitive of ეს, not a verb ა-მ-ის-).
 const personMin = (p) => (p === '' ? 4 : p.length === 1 ? 5 : 3);
 transform('subj-1', '1st person ვ-', 'The first-person subject marker ვ- (ვაკეთებ → აკეთებ, დავწერე → დაწერე), and before a verb with a third-person indirect object ს- or ჰ- (ვთხოვ → სთხოვ).', PV.flatMap((p) => [
     prefix(p + 'ვ', p, ['vs'], ['v', 'vp'], {stemMinLength: personMin(p)}),
@@ -449,7 +451,7 @@ transform('subj-1', '1st person ვ-', 'The first-person subject marker ვ- (�
 ]));
 function objectRules(marker, extra = {}) {
     return PV.flatMap((p) => [
-        prefix(p + marker, p, ['vs'], ['v', 'vp'], {stemMinLength: personMin(p), ...(p === '' ? extra : {})}),
+        prefix(p + marker, p, ['vs'], ['v', 'vp'], {stemMinLength: personMin(p), ...(p === '' ? extra : p === 'ა' ? {stemNotStartsWith: '[ი]'} : {})}),
         prefix(p + marker, p + 'ს', ['vs'], ['v', 'vp'], {stemMinLength: 3, stemStartsWith: '[დთტძცწჭჩჯზ]'}),
         prefix(p + marker, p + 'ჰ', ['vs'], ['v', 'vp'], {stemMinLength: 3, stemStartsWith: '[გკქყპფ]'}),
         prefix(p + marker + 'ი', p + 'უ', ['vs'], ['v', 'vp'], {stemMinLength: personMin(p) - 1}),
@@ -479,7 +481,7 @@ transform('pv', 'future → present', 'A preverb removed: the future made into t
     ...PREVERBS.map((p) => circumfix([[p, '']], [['ს', 'ს']], VF_IN, VF, {stemMinLength: 3, stemEndsWith: '[ბვმრნლფ]', ...longerPreverb(p)})),
     ...PREVERBS.map((p) => circumfix([[p, '']], [['ის', 'ის']], VF_IN, VF, {stemMinLength: 2, stemEndsWith: CONS, ...longerPreverb(p)})),
     ...PREVERBS.map((p) => circumfix([[p, '']], [['ება', 'ება'], ['ობა', 'ობა'], ['ევა', 'ევა']], VF_IN, VF, {stemMinLength: 2, ...longerPreverb(p)})),
-    circumfix([['ი', '']], [['ებს', 'ობს'], ['ებს', 'ავს'], ['ებს', 'ეობს'], ['ებს', 'ებს'], ['ებს', 'ს'], ['ებს', 'ის'], ['ავებს', 'ავს'], ['ავებს', 'აობს'], ['ის', 'ობს']], VF_IN, VF, {stemMinLength: 2}),
+    circumfix([['ი', '']], [['ებს', 'ობს'], ['ებს', 'ავს'], ['ებს', 'ეობს'], ['ებს', 'ებს'], ['ებს', 'ს'], ['ებს', 'ის'], ['ავებს', 'ავს'], ['ავებს', 'აობს'], ['ის', 'ობს']], VF_IN, VF, {stemMinLength: 3}),
     circumfix([['ი', 'ი']], [['ებს', 'ის']], VF_IN, VF, {stemMinLength: 2}),
 ]);
 
