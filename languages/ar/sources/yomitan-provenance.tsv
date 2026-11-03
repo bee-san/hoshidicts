@@ -627,7 +627,7 @@ IVPref-nHn	29	-	30/30
 CVPref	0	wa	10/10
 CVPref	1	fa	10/10
 CVPref	2	imperativeYou	10/10
-CVPref	3	brokenPlural,wa	20/20
+CVPref	3	wa	20/20
 CVPref	4	fa	20/20
 CVSuff	0	imperativeYouF,p1s,p1sObj	20/20
 CVSuff	1	accusative,p1p,pastTheyTwo,pastWe	20/20

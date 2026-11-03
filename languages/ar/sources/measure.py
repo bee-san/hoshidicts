@@ -175,17 +175,15 @@ def variants_of(words, languages):
 
 def judge(word, targets, lemma, variants=None):
     """The word's own lemmas, or, for a word the dictionary does not list, those
-    of a spelling the default preprocessors make (الى -> إلى), or else the
-    lemmas of every way of writing it as proclitics + a listed word + a
-    pronoun; and whether such a split was needed. None when nothing works."""
+    of the spellings the default preprocessors make (الى -> إلى) and of every
+    way of writing it as proclitics + a listed word + a pronoun (وعلى -> على);
+    and whether the word was not listed. None when nothing is found."""
     own = own_lemmas(word, targets, lemma)
     if own:
         return own, False
-    for spelling in (variants or {}).get(word, ()):
-        own |= own_lemmas(spelling, targets, lemma)
-    if own:
-        return own, False
     found = set()
+    for spelling in (variants or {}).get(word, ()):
+        found |= own_lemmas(spelling, targets, lemma)
     for prefix in PROCLITICS:
         if not word.startswith(prefix):
             continue

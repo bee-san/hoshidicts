@@ -282,9 +282,9 @@ transform('pluralFem', 'plural (ـات)', 'The feminine sound plural ending ـا
         cross([['', '']], CONS.map((c) => [c + 'اء', 'ي' + c]), {into: N_IN, out: ['n'], extra: NOT_AL}),
         // مفاعل -> مفعل, مفعلة: مكاتب, مشاكل, ملابس.
         cross([['م', 'م']], [['', ''], ['', 'ة']], {min: 3, into: N_IN, out: ['n'], extra: {...NOT_AL, stemChange: DROP_ALIF(2)}}),
-        // فواعل -> فاعل, فاعلة: شوارع, هواتف, قواعد, نوافذ.
-        suffix('', '', {min: 4, into: N_IN, out: ['n'], extra: {...NOT_AL, stemChange: {from: ['وا'], to: 'ا', occurrence: 'last', between: STEM, betweenMinLength: 2}}}),
-        suffix('', 'ة', {min: 4, into: N_IN, out: ['n'], extra: {...NOT_AL, stemChange: {from: ['وا'], to: 'ا', occurrence: 'last', between: STEM, betweenMinLength: 2}}}),
+        // فواعل -> فاعل, فاعلة: شوارع, هواتف, قواعد, نوافذ (a letter before وا:
+        // وابن is و + ابن).
+        cross(CONS.map((c) => [c + 'وا', c + 'ا']), [['', ''], ['', 'ة']], {into: N_IN, out: ['n'], extra: NOT_AL}),
         // فعائل -> فعيلة, فعالة, فعيل: رسائل, حقائق, نتائج, وسائل.
         suffixes(CONS.flatMap((c) => [['ائ' + c, 'ي' + c + 'ة'], ['ائ' + c, 'ا' + c + 'ة'], ['ائ' + c, 'ي' + c]]), {into: N_IN, out: ['n'], extra: NOT_AL}),
         // تفاعيل -> تفعيل: تفاصيل, تقارير, تكاليف.

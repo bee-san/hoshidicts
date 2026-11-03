@@ -890,15 +890,7 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[28].rules[3].stemChange.between": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
     "transforms[28].rules[4].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[28].rules[4].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -906,19 +898,15 @@
       [1569, 1594],
       [1601, 1610]
     ],
+    "transforms[28].rules[5].stemChange.between": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
     "transforms[28].rules[6].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[28].rules[6].stemChange.between": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[28].rules[7].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[28].rules[7].stemNotEndsWith": [
+    "transforms[28].rules[6].stemNotEndsWith": [
       [1608, 1608],
       [1610, 1610]
     ],
