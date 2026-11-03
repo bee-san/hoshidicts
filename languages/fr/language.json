@@ -146,16 +146,16 @@
     "sample": {
       "warmup": "parlant",
       "practice": {
-        "text": "Nous sommes partis tôt et nous avons pris le premier train.",
-        "lookup": "partis"
+        "text": "Elles finissaient leurs devoirs avant le dîner.",
+        "lookup": "finissaient"
       },
       "entry": {
-        "expression": "partir",
-        "reading": "partir",
-        "glossary": ["to leave, to depart"],
+        "expression": "finir",
+        "reading": "finir",
+        "glossary": ["to finish"],
         "definitionTags": "v",
-        "matched": "partis",
-        "trace": ["past participle (plural)"]
+        "matched": "finissaient",
+        "trace": ["imperfect (ils)"]
       },
       "character": null
     }

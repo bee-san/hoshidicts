@@ -4279,8 +4279,9 @@
         ["y ai pensé", "y ai pensé"],
         ["porte-le ici", "porte-le ici"],
         ["porte-t-il", "porte-t-il"],
-        ["Nous sommes partis tôt et nous avons pris le premier train.", "nous sommes partis tôt et nous avons pris le premier train."],
-        ["partir", "partir"]
+        ["Elles finissaient leurs devoirs avant le dîner.", "elles finissaient leurs devoirs avant le dîner."],
+        ["finissaient", "finissaient"],
+        ["finir", "finir"]
       ]
     },
     {
@@ -6077,8 +6078,9 @@
         ["y ai pensé", "Y ai pensé"],
         ["porte-le ici", "Porte-le ici"],
         ["porte-t-il", "Porte-t-il"],
-        ["Nous sommes partis tôt et nous avons pris le premier train.", "Nous sommes partis tôt et nous avons pris le premier train."],
-        ["partir", "Partir"]
+        ["Elles finissaient leurs devoirs avant le dîner.", "Elles finissaient leurs devoirs avant le dîner."],
+        ["finissaient", "Finissaient"],
+        ["finir", "Finir"]
       ]
     }
   ]
