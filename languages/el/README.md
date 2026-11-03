@@ -46,8 +46,8 @@ apostrophe of an elided word belongs to the word (`απ'`, `'ρθει`,
 - `tests/cases.tsv`, `tests/defaults.tsv`, `tests/text.tsv`,
   `tests/lookup.tsv`, `tests/dictionary/`, `sources/benchmark-words.txt`,
   `sources/hachidori-cases.tsv`, `sources/measure.py`, `sources/mutate.py`,
-  `sources/tag-dictionary.py`, `sources/wasm-load.mjs` and the rest of
-  `language.json`: written for this pack (GPL-3.0-or-later).
+  `sources/wasm-load.mjs` and the rest of `language.json`: written for this
+  pack (GPL-3.0-or-later).
 - Not committed, used for the measurements below:
   - the dictionary wty-el-en,
     [`wty-el-en.zip`](https://huggingface.co/datasets/daxida/wty-release/resolve/main/latest/dict/el/en/wty-el-en.zip)
@@ -60,10 +60,6 @@ apostrophe of an elided word belongs to the word (`απ'`, `'ρθει`,
     inflected forms. wty-el-el (Greek definitions from Greek Wiktionary,
     2,369,751 rows) is also listed in `language.json`; nothing here is
     measured with it.
-  - `wty-el-en-tagged`, a measurement copy of wty-el-en in which the 152,478
-    rows with an empty part-of-speech column carry `v n adj`. That is what
-    `lookup.untaggedTerms: "pass"` (bee-san/hoshidicts#58, not yet on main)
-    will make of those rows for this pack. Every number from it is labelled.
   - the 50,000-word Greek subtitle list `el_50k.txt` of
     [FrequencyWords](https://github.com/hermitdave/FrequencyWords) at 525f9b5
     (sha256 `7ec8f6de…978c`), content CC BY-SA 4.0;
@@ -77,8 +73,8 @@ apostrophe of an elided word belongs to the word (`απ'`, `'ρθει`,
 
 `transforms.json` is the union of `sources/own.json` and
 `sources/yomitan.json` written by `node tools/merge-transforms.mjs el
---force`; no rule was removed from it. It has 81 transforms and 1,117 rule
-entries, 6,110 rules with the cross products expanded: 6,104 `own`, 6
+--force`; no rule was removed from it. It has 82 transforms and 1,133 rule
+entries, 6,133 rules with the cross products expanded: 6,127 `own`, 6
 `yomitan`, none `both`.
 
 - **Yomitan's rules**: the transform `ξανα-` (six prefix rules). All six are
@@ -110,6 +106,12 @@ entries, 6,110 rules with the cross products expanded: 6,104 `own`, 6
     case endings only; comparatives and superlatives, participles and
     diminutives as chains from the masculine an adjective rule makes
     (ψηλότερης → ψηλότερος → ψηλός);
+  - older spellings (katharevousa), which the 1890-1910 texts measured
+    below use: the accusative in -ν (`καιρόν` → καιρός, `κεφαλήν` →
+    κεφαλή, `ημέραν`, `θέσιν` → θέση, `μεγάλην` → μεγάλος), the nominative in
+    -ις and the neuter in -ον (transform `older-ending`: `φύσις` → φύση,
+    `όπλον` → όπλο), `είταν` and `είμουν` (ήταν, ήμουν), `είχον` and the
+    mediopassive -ουνταν (`βρίσκουνταν` → βρίσκομαι);
   - elision and aphaeresis (`απ'`, `κ'` → και, `'ρθει` → έρθει, `'ς` →
     εις), elided words written together with the next one (`σ'αγαπώ`), a
     closing single quote after a vowel (`καλά'` → καλά: the apostrophe is a
@@ -136,7 +138,8 @@ entries, 6,110 rules with the cross products expanded: 6,104 `own`, 6
   `adj`; `aug` marks a past form whose internal augment was removed, which
   only verb rules take. A rule of a declension takes only the text as
   scanned, so declensions do not chain except through the transforms named
-  above.
+  above. A rule's output can still be an untagged form-of row of the
+  dictionary, whose reference a lookup follows (Known gaps).
 - **Stem constraints**, each with a row that fails without it
   (`sources/mutate.py`, below):
   - stems are lowercase Greek letters (no space, apostrophe or digit); verb
@@ -153,7 +156,10 @@ entries, 6,110 rules with the cross products expanded: 6,104 `own`, 6
     ποιώ); the accent moves left only for the forms the rules mark (`κυρία`
     is not κύρια);
   - exclusions: `μέρες` is not μέρη or μέρος, `αυτιά` is not αυτός or
-    αυτής;
+    αυτής, `πάλιν` is not πάλη (it is πάλι, written out in `movable-n`);
+  - the older -ιν and -ις need σ, ξ, ψ, λ, μ, τ or χ before them (`θέσιν`,
+    `πόλιν`, `δύναμις`; `ύστερις` is not ύστερη), and the older feminine -άν
+    a ρ (`μικράν` → μικρός; `καλάν` is not καλός);
   - an elided word ends in a consonant before its apostrophe, and the
     general elision rule takes stems of two letters (the one-letter elided
     words are written out), so `καλά'` is not καλάι and `κ'` not κα;
@@ -170,15 +176,37 @@ entries, 6,110 rules with the cross products expanded: 6,104 `own`, 6
   sample, lowercase stems for verbs and adjectives, elided function words,
   one-syllable words and older spellings. `el: audit fixes: pronoun and
   article forms, closing quotes, strict judge` answers the first audit.
+  `el: lookup.untaggedTerms "pass"` sets the field once #58 was on main,
+  and `el: older spellings (…)` adds the katharevousa endings and puts the
+  feminine before the plural, both measured with it.
 
 ## Measurements
 
-hoshidicts b145feb with this branch, GCC 14.3 Release, wty-el-en imported by
-`hoshidicts-cli import`. Every number uses the published dictionary unless
-it says `tagged`.
+hoshidicts 0a73e5e with this branch (main is now 1fed676, which adds only
+`languages/ko/`), GCC 14.3 Release, wty-el-en as published, imported by
+`hoshidicts-cli import`. Every number is for the pack as shipped, with
+`lookup.untaggedTerms: "pass"`, unless it says `filter`: the same pack with
+`"filter"`.
+
+**`lookup.untaggedTerms` is `pass`** (docs/languages.md 9.4 and 14 step 5).
+wty-el-en gives a part of speech only to verbs: its `rules` column is `v`
+on 142,141 rows and empty on 152,478. The empty rows are all its nouns,
+adjectives and names, which the noun and adjective rules produce. Of the
+26,023 untagged rows with definitions, the first definition tag is `n` on
+15,565, `adj` on 5,923, `name` on 2,145, `adv` on 1,088, and an interjection,
+phrase, numeral, affix, pronoun or other tag on the other 1,302; 4,684 of the
+4,685 tagged rows with definitions are verbs. 126,455 of its 263,911 form-of
+rows are untagged. With `filter` the part-of-speech filter drops every noun
+and adjective a rule reaches; with `pass` an untagged row carries `v`, `n`
+and `adj`. The rules keep their conditions. Both values were measured on
+every test file (item 1), and `pass` ranks more lemmas first. Before #58
+merged, a copy of wty-el-en with `v n adj` written on its untagged rows
+stood in for `pass`; it orders some equal readings differently from `pass`
+(580 of 454,884 first cards), so every number here was measured again with
+the published dictionary.
 
 1. **`eval-language --dictionary`** on the 1,000-row sample (`corpus.tsv`
-   and `gaps.tsv`), `cases.tsv` (344 positives, 58 negatives),
+   and `gaps.tsv`), `cases.tsv` (359 positives, 62 negatives),
    `defaults.tsv` (11 and 6) and `yomitan.tsv` (7), with every option on;
    the copy of each file with the other options line gives the second
    false-candidate figure (the optional `addMissingAccent` processor is the
@@ -189,36 +217,50 @@ it says `tagged`.
 
    | Rule set | Sample recall | False candidates (all / default) | First rank | cases.tsv | defaults.tsv | yomitan.tsv |
    | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-   | Own | 98.4% | 0.540 / 0.538 | 68.2% | 344/344, 58/58 | 11/11, 6/6 | 3/7 |
-   | Yomitan | 0% | 0.260 / 0.260 | 67.1% | 5/344, 58/58 | 2/11, 6/6 | 7/7 |
-   | Union = final | 98.4% | 0.540 / 0.538 | 68.2% | 344/344, 58/58 | 11/11, 6/6 | 7/7 |
-   | Final, tagged | 98.4% | 0.624 / 0.619 | 68.3% | 344/344, 58/58 | 11/11, 6/6 | 7/7 |
+   | Own | 98.4% | 0.624 / 0.619 | 68.3% | 359/359, 62/62 | 11/11, 6/6 | 3/7 |
+   | Yomitan | 0% | 0.260 / 0.260 | 67.1% | 5/359, 62/62 | 2/11, 6/6 | 7/7 |
+   | Union = final | 98.4% | 0.624 / 0.619 | 68.3% | 359/359, 62/62 | 11/11, 6/6 | 7/7 |
+   | Final, `filter` | 98.4% | 0.540 / 0.538 | 68.2% | 359/359, 62/62 | 11/11, 6/6 | 7/7 |
+
+   First rank and false candidates (every option on) of the final rules on
+   each file, `pass` / `filter`; recall and negatives are the same:
+
+   | File | First rank | False candidates |
+   | --- | ---: | ---: |
+   | sample (1,000) | 68.3% / 68.2% | 0.624 / 0.540 |
+   | `cases.tsv` (359) | 78.0% / 74.9% | 0.774 / 0.638 |
+   | `defaults.tsv` (11) | 100% / 54.5% | 0.091 / 0 |
+   | `yomitan.tsv` (7) | 57.1% / 57.1% | 1.714 / 1.714 |
 
    - `defaults.tsv` read with every option on passes 4 of its 6 negatives:
      `addMissingAccent` writes `ενά` and `κυρίά`, which the rules read as
      ενώ and κύρια. These rows test the rules, so they run with the
      defaults (docs/languages.md 12.2).
    - False candidates count the other headwords of wty-el-en that a row's
-     deinflections reach (`measure.py falsecands` gives eval-language's
-     0.540 and 0.624 and lists them). Of the 540: 400 are the same verb in
-     the other voice or conjugation, which wty-el-en lists apart (the active
-     beside a mediopassive, `κουραστεί` → κουράζω; the -ώ beside the -άω
-     form, `τηλεφωνήστε` → τηλεφωνώ); 79 are variants the dictionary links
-     to the lemma (`αναγγείλαμε` → αναγγέλλω, `γύρισες` → γυρίζω); 44 are
-     forms of another headword (`βάσταξε` → βαστάζω); 8 are the same word
-     with another accent or a capital (`απόστολε` → Απόστολος); 9 are other
-     words (`πληρώσεις` → πλήρωση, `άκουσα` → άκων). Tagged: 628, the same
-     kinds.
+     deinflections reach (`measure.py falsecands`, which reads the pack's
+     `untaggedTerms`, gives eval-language's 0.624 and lists them). Of the
+     624: 400 are the same verb in the other voice or conjugation, which
+     wty-el-en lists apart (the active beside a mediopassive, `κουραστεί`
+     → κουράζω; the -ώ beside the -άω form, `τηλεφωνήστε` → τηλεφωνώ); 142
+     are variants the dictionary links to the lemma (`αναγγείλαμε` →
+     αναγγέλλω, `μετανάστες` → μετανάστρια); 49 are forms of another
+     headword (`βάσταξε` → βαστάζω); 16 are the same word with another
+     accent or a capital (`απόστολε` → Απόστολος); 17 are other words
+     (`πληρώσεις` → πλήρωση, `ένωσες` → ένωση). With `filter` there are
+     540 (400, 79, 44, 8 and 9): the 84 that `pass` adds are mostly the
+     other gender or spelling the dictionary links to a noun (`Κροάτη` →
+     Κροάτισσα, `σπάγκου` → σπάγγος) and nouns beside verb forms
+     (`τρυπούσα` → τρύπα).
    - **First rank** is 68% (`measure.py firstrank` on lookups of the sample
-     sources). Of the 318 other rows, 214 name a lemma that wty-el-en has
+     sources). Of the 317 other rows, 214 name a lemma that wty-el-en has
      only as a form of another headword (UniMorph's `νικώ` and `-ομαι`
-     verbs are forms of `νικάω` and of the active in the dictionary), 77
+     verbs are forms of `νικάω` and of the active in the dictionary), 78
      come after the other lemma the dictionary's own form-of row names
-     (`ορίζεσαι` → ορίζω before ορίζομαι), 21 after another reading, and 6
+     (`ορίζεσαι` → ορίζω before ορίζομαι), 22 after another reading, and 3
      find nothing or not the lemma.
    - Over every one-word form of UniMorph ell (89,999 pairs,
      `measure.py unimorph`), recall is 97.3%: nouns 97.8%, verbs 96.0%,
-     adjectives 98.4%.
+     adjectives 98.5%.
    - **Trace quality** (`measure.py traces`): of the 637 verb rows of the
      sample whose lemma is reached, the trace a lookup keeps names the
      UniMorph tense in 599 (94.0%) and the person in 587 of the 610 finite
@@ -226,13 +268,13 @@ it says `tagged`.
      the 3rd singular aorist (`άφησε`), and present and perfective
      non-past share forms (`λιώνουνε`).
    - **Per rule** (`--per-rule`, final set, the sample, `cases.tsv` and
-     `yomitan.tsv`, 1,409 rows): 357 rules recover a row no other rule
-     reaches; 9 add false candidates without recovering one (23 in all:
-     three aphaeresis vowels, the article forms `του` and `το` → ο in rows
-     whose lemma is the form itself, one elision, one internal augment, one
-     imperfect and one aorist rule) and none breaks a negative. They are
-     kept: their forms are real (`'θελα` → ήθελα, 24 times in Tatoeba), and
-     removing a rule needs measured harm.
+     `yomitan.tsv`, 1,428 rows): 367 rules recover a row no other rule
+     reaches; 12 add false candidates without recovering one (29 in all:
+     four aphaeresis vowels, the article forms `του` and `το` → ο in rows
+     whose lemma is the form itself, two adjective accent rules, one
+     elision, one internal augment, `ήσαν` → είμαι and one aorist rule) and
+     none breaks a negative. They are kept: their forms are real (`'θελα` →
+     ήθελα, 24 times in Tatoeba), and removing a rule needs measured harm.
    The judge of 2-4 (`measure.py`, `verdict`) counts a first card as right
    only when it is the word's own lemma (docs/languages.md 14 step 5): the
    lemmas the word's form-of rows name, or the word itself where it has
@@ -243,102 +285,111 @@ it says `tagged`.
    lemma they are forms of, count as wrong first.
 2. **Frequent forms** (`measure.py frequent`). Of the 10,000 most frequent
    words of the subtitle list, 5,807 (55.5% of its tokens) have a form-of
-   row in wty-el-en naming a lemma, and the rules reach that lemma for 5,333
-   (43.6% of the tokens). Looked up as a host does, the first card with a
-   definition is wrong for 13 words (1.54% of the tokens), and all but two
+   row in wty-el-en naming a lemma, and the rules reach that lemma for 5,338
+   (43.8% of the tokens). Looked up as a host does, the first card with a
+   definition is wrong for 12 words (1.54% of the tokens), and all but one
    are the dictionary's own rows, which rank first because they match the
    word as written: `η` shows the letter eta (2,577,653 occurrences, 1.49%
    of the tokens alone); the one-letter `σ`, `ν`, `τ`, `θ`, `ι`, `β`, `γ`
    and `π`, elided words the subtitle list splits from the next word, show
-   their letter; `παιδιά` and `πας` show their homographs. The other two
-   are `κυριακή` → Κυριακή (Sunday, through `capitalizeFirstLetter`; its
-   form-of row names κυριακός) and `υψηλότατε` → Υψηλότατος (the title).
-   37 words (0.21%) show no card with a definition: their form-of rows name
-   a form that is itself only a reference (`μέρες` → μέρα → ημέρα), and a
-   lookup follows one hop (docs/languages.md 16). Tagged: 12 wrong (1.54%),
-   6 without a card. Of the 300 most frequent words, 290 are right with
-   both dictionaries, 5 wrong (`η`, `σ`, `παιδιά`, `πας`, `ν`) and 5
-   without a card (`΄`, `ό`, `απο`; `ειναι` and `οτι` find είναι and ότι
-   with the tagged copy).
+   their letter; `παιδιά` and `πας` show their homographs. The other is
+   `κυριακή` → Κυριακή (Sunday, through `capitalizeFirstLetter`; its
+   form-of row names κυριακός). 6 words (0.08% of the tokens) show no card
+   with a definition: their form-of rows name a form that is itself only a
+   reference (`υποτίθεται` → υποτίθεμαι, `ελήφθη` → λήφθηκε), and a lookup
+   follows one hop (docs/languages.md 16). With `filter`: 13 wrong (1.54%;
+   also `υψηλότατε` → the title Υψηλότατος) and 37 without a card (0.21%;
+   `μέρες` → μέρα → ημέρα). Of the 300 most frequent words (`measure.py
+   top`), 290 are right, 5 wrong (`η`, `σ`, `παιδιά`, `πας`, `ν`), 3
+   without a card (`΄`, `ό`, `απο`), and `ειναι` and `οτι`, written without
+   their accent, find είναι and ότι, which the judge leaves to hand; with
+   `filter` those two find nothing.
 3. **Behind function words** (`measure.py phrases`, Tatoeba, 249,890
    positions). At the 77,987 positions that start at an article, clitic,
    particle, preposition or auxiliary, the first result reads past it at
    1,231: phrases wty-el-en lists (`δεν ξέρω`, `τα λέμε`, `θα είναι` →
-   είμαι). At the 73,343 positions after one, 63,933 first results are
-   right and 318 wrong: `τα παιδιά` 181 and `στα παιδιά` 9 (the homograph),
-   `να πας` 46, `θα πας` 22 and `μην πας` 5, and `η` after a verb (the
-   letter). Tagged: 64,117 right, 320 wrong, the same groups.
+   είμαι). At the 73,343 positions after one, 64,117 first results are
+   right and 320 wrong: `τα παιδιά` 181 and `στα παιδιά` 9 (the homograph),
+   `να πας` 46, `θα πας` 22, `μην πας` 5 and `δεν πας` 4, and `η` after a
+   word (`έχει η`, the letter). With `filter`: 63,933 right, 318 wrong, the
+   same groups.
 4. **Real text** (`measure.py hovers` and `judge`, every word looked up from
-   it to the end of its sentence; percentages of the judged positions):
+   it to the end of its sentence; percentages of the judged positions;
+   the other positions read a longer phrase first):
 
-   | Text | Positions | Right | Wrong | Unjudged | Nothing | Wrong, tagged |
+   | Text | Positions | Right | Wrong | Unjudged | Nothing | Wrong with `filter` |
    | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-   | Tatoeba | 249,890 | 227,355 | 7,022 (3.00%) | 3,680 | 9,297 | 7,029 (2.99%) |
-   | Karkavitsas, *Διηγήματα* | 53,392 | 34,895 | 798 (2.24%) | 2,810 | 14,762 | 797 (2.22%) |
-   | Delta, *Παραμύθι χωρίς όνομα* | 38,370 | 33,972 | 591 (1.71%) | 625 | 2,971 | 600 (1.73%) |
-   | Eftaliotis, *Ιστορία της Ρωμιοσύνης* | 103,232 | 82,875 | 1,332 (1.58%) | 2,572 | 16,178 | 1,349 (1.59%) |
+   | Tatoeba | 249,890 | 227,800 | 7,029 (2.99%) | 4,090 | 8,435 | 7,022 (3.00%) |
+   | Karkavitsas, *Διηγήματα* | 53,392 | 35,052 | 797 (2.22%) | 6,820 | 10,596 | 798 (2.24%) |
+   | Delta, *Παραμύθι χωρίς όνομα* | 38,370 | 34,094 | 600 (1.73%) | 842 | 2,623 | 591 (1.71%) |
+   | Eftaliotis, *Ιστορία της Ρωμιοσύνης* | 103,232 | 83,305 | 1,349 (1.59%) | 4,187 | 14,116 | 1,332 (1.58%) |
 
    - Nearly all wrong first results are the dictionary's own rows, which no
      rule can rank above: they match the word as written with no processor
-     step and no trace. In Tatoeba 6,994 of the 7,022 are sentence-initial
+     step and no trace. In Tatoeba 6,994 of the 7,029 are sentence-initial
      `Ο` (the letter omicron, 4,640), `η` (the letter eta, 1,971), `παιδιά`
-     (283) and `πας` (100); 27 are one-letter words and one is `κυριακή`.
-     In Karkavitsas 771 of 798 are those four and 24 one-letter words; 3
-     are `δράκοντα` → the name Δράκων. In Delta 586 of 591 and in
-     Eftaliotis 1,228 of 1,332 are those four (Eftaliotis has 98 more
-     one-letter words, elisions written without the apostrophe). With the
-     tagged copy a few names the dictionary capitalises come first too
-     (`άγιας` → Άγια 8 and `βασιλείου` → Βασίλειος 7 in Eftaliotis,
-     `παρών` → Πάρης 8 in Delta).
+     (283) and `πας` (100); 27 are one-letter words, and the other 8 are
+     names and words the dictionary capitalises or spells as another
+     headword (`βασιλείου` → Βασίλειος, `υψηλούς` → υψηλό, `κυριακή`). In
+     Karkavitsas 771 of 797 are those four and 24 one-letter words. In
+     Delta 586 of 600 are those four; 8 are `παρών` → Πάρης. In Eftaliotis
+     1,228 of 1,349 are those four, 98 one-letter words (elisions written
+     without the apostrophe), and 15 are `άγιας` → Άγια and `βασιλείου` →
+     Βασίλειος. With `filter` the wrong counts differ by at most 17, and
+     6,338 more positions find nothing, 4,034 of them in Karkavitsas.
    - Sentence-initial `Η` (2,233 Tatoeba positions) shows a card whose
      first gloss is the letter and whose third is the article; it is not
      counted wrong.
    - A random sample of 60 of the unjudged first results in Karkavitsas
-     (`judge --sample 60`, seed 1), judged by hand: 57 right (elided words,
-     the older augment and movable -ν, participles), 3 wrong (`εύρεν` →
-     εύρος where it means βρίσκω, `εξήγαγεν` → εξηγώ where it is εξάγω,
-     `θαυμαστάς` → θαυμάζω where it is the plural of θαυμαστής).
+     (`judge --sample 60`, seed 1), judged by hand: 57 right (older
+     accusatives such as `καιρόν`, `ζωήν`, `κεφαλήν`, elided words, the
+     older augment and movable -ν), 3 wrong (`κόμην` twice → the noble
+     title κόμης, where it is κόμη "hair", which wty-el-en has only as a
+     form of κόμης; `κλίνων` → κλίνη "bed", where it is the participle of
+     κλίνω).
 5. **Performance** (docs/languages.md 13; the pack has no `pattern` rule,
    and its processors one `pattern` step, Yomitan's `removeDoubleAcuteAccents`):
    - native `benchmark-lookup sources/benchmark-words.txt 6 --term
      wty-el-en --languages languages --language el` (60 texts from
-     sentences, first pass dropped, three runs at machine load 38-45):
-     final p50 56-58 µs, p95 91-96 µs; own rules p50 54-59 µs, p95 88-98
-     µs; Yomitan's rules p50 29-30 µs, p95 42-43 µs. Budget 1 ms p50.
-   - WebAssembly (Hachidori feat/multi-language 803f7b6 prebuilt engines,
-     Node 22, `sources/wasm-load.mjs`, 10 fresh engines):
-     `hdw_language_load` median 11.3 ms single-thread and 12.1 ms threaded;
-     live heap +1,905,864 and +1,906,112 bytes. Budgets 50 ms and 20 MB.
+     sentences, first pass dropped, three runs at machine load 42-46):
+     final p50 59-64 µs, p95 97-102 µs; own rules p50 59-60 µs, p95 94-97
+     µs; Yomitan's rules p50 31-32 µs, p95 45-47 µs. Budget 1 ms p50.
+   - WebAssembly (Hachidori feat/multi-language 803f7b6, its single-thread
+     and threaded engines rebuilt with emsdk from this branch, since the
+     prebuilt ones come from hoshidicts b145feb and refuse
+     `lookup.untaggedTerms`; Node 22, `sources/wasm-load.mjs`, 10 fresh
+     engines): `hdw_language_load` median 11.9 ms single-thread and 13.1 ms
+     threaded; live heap +1,921,400 and +1,921,232 bytes. Budgets 50 ms
+     and 20 MB.
    - `hdw_lookup` (Hachidori `benchmark/node-lookup.mjs` with
      `HACHIDORI_LOOKUP_LANGUAGE=el` on the same texts, 201 hovers, 6
-     passes): p50 96 µs and p95 307 µs single-thread, p50 105 µs and p95
-     301 µs threaded.
+     passes): p50 110 µs and p95 343 µs single-thread, p50 111 µs and p95
+     335 µs threaded.
 6. **Hachidori** (feat/multi-language 803f7b6 with this branch in
-   `third_party/hoshidicts`, `test/chrome-language-pack.mjs`, Chrome 152,
-   wty-el-en, `sources/hachidori-cases.tsv`): 15 of 16 checks pass. Settings adds Greek beside Japanese and
-   imports the dictionary (294,619 terms, 0.8 s); 11 of 12 hovered words
-   find the expected headword first with their traces. For `κατάλαβα` and
-   `καλύτερη` the expected headword is the dictionary's own entry for the
-   form (κατάλαβα, "first-person singular simple past of καταλαβαίνω";
-   καλύτερος, "better, comparative of καλός"), which comes before the
-   lemma the rules reach. Among the others: `Αγοράσαμε` → αγοράζω
-   (`aorist (1st pl)`), `κοιμήθηκε` → κοιμάμαι, `θαλασσών` → θάλασσα. The
-   Anki note and the switch to Japanese and back work.
-   `σπιτάκια` finds nothing: the rules reach σπίτι, whose row has no part
-   of speech in wty-el-en, so the filter drops it until
-   `untaggedTerms: "pass"` is set (Known gaps).
+   `third_party/hoshidicts` and the engines of item 5,
+   `test/chrome-language-pack.mjs`, Chrome 152, wty-el-en,
+   `sources/hachidori-cases.tsv`): all 16 checks pass. Settings adds Greek
+   beside Japanese and imports the dictionary (294,619 terms, 0.9 s); the
+   12 hovered words find the expected headword first with their traces.
+   For `κατάλαβα` and `καλύτερη` the expected headword is the dictionary's
+   own entry for the form (κατάλαβα, "first-person singular simple past of
+   καταλαβαίνω"; καλύτερος, "better, comparative of καλός"), which comes
+   before the lemma the rules reach. Among the others: `Αγοράσαμε` →
+   αγοράζω (`aorist (1st pl)`), `κοιμήθηκε` → κοιμάμαι, `θαλασσών` →
+   θάλασσα, `σπιτάκια` → σπίτι (`diminutive`, `accent`; with `filter` it
+   finds nothing). The Anki note and the switch to Japanese and back work.
 7. **Checks**: `language-conformance-test languages/el` conforms
-   (corpus 984/984, cases 402/402, defaults 17/17, yomitan 7/7, text 30/30,
+   (corpus 984/984, cases 421/421, defaults 17/17, yomitan 7/7, text 30/30,
    lookup 52/52, gaps 0/16 reported); `tools/check-classes.mjs el` matches;
    `tools/check-yomitan.mjs el` compares the rules and three processors
-   with 0 differences. `sources/mutate.py` makes 40 edits of a scratch copy
+   with 0 differences. `sources/mutate.py` makes 43 edits of a scratch copy
    (each stem constraint, exclusion and rule group removed or loosened in
    turn, and four of `language.json`: either polytonic variant, the
    apostrophe processor, the apostrophe as a word character), and a test
    fails for every one. The `lookup.tsv` rows `αυτό`, `οι` and `μένα` run
    against test-dictionary rows that have wty-el-en's τα and η references,
    so they fail when the written-out pronoun and article forms are removed.
-   `tests/` and `sources/` hold 923,281 bytes (`git ls-tree -r -l HEAD
+   `tests/` and `sources/` hold 936,550 bytes (`git ls-tree -r -l HEAD
    languages/el/tests languages/el/sources`).
 8. **Commands**:
 
@@ -351,20 +402,24 @@ it says `tagged`.
    python3 languages/el/sources/measure.py unimorph <unimorph ell file> build/hoshidicts-cli languages
    build/lookup-batch languages el <wty-el-en> < words.txt > lookups.jsonl     # languages/en/sources/lookup-batch.cpp
    python3 languages/el/sources/measure.py frequent el_50k.txt <wty-el-en JSON banks> lookups.jsonl --cli build/hoshidicts-cli --languages languages
+   python3 languages/el/sources/measure.py top el_50k.txt <wty-el-en JSON banks> lookups.jsonl 300
    python3 languages/el/sources/measure.py hovers pg31446.txt > hovers.txt     # --sentences for Tatoeba's TSV
    python3 languages/el/sources/measure.py judge <wty-el-en JSON banks> hovers.txt lookups.jsonl --sample 60
    python3 languages/el/sources/measure.py phrases <wty-el-en JSON banks> hovers.txt lookups.jsonl
+   python3 languages/el/sources/measure.py ties <wty-el-en JSON banks> hovers.txt lookups.jsonl
    python3 languages/el/sources/measure.py traces <corpus.tsv> <deinflections.jsonl>
-   python3 languages/el/sources/measure.py falsecands <wty-el-en JSON banks> <corpus+gaps.tsv> build/hoshidicts-cli languages [--tagged]
+   python3 languages/el/sources/measure.py falsecands <wty-el-en JSON banks> <corpus+gaps.tsv> build/hoshidicts-cli languages
    python3 languages/el/sources/measure.py firstrank <wty-el-en JSON banks> <corpus+gaps rows> <lookups of their sources, lookup-batch … 16 64>
    python3 languages/el/sources/measure.py yomitan-conditions sources/yomitan.json sources/own.json > yomitan-for-eval.json
    python3 languages/el/sources/measure.py capital-words el_50k.txt > capitals.txt
    python3 languages/el/sources/measure.py capital-rows el_50k.txt <wty-el-en JSON banks> lookups.jsonl [--defaults] > capitals.tsv
    python3 languages/el/sources/mutate.py build <scratch dir>
    node languages/el/sources/wasm-load.mjs <hachidori checkout>
-   python3 languages/el/sources/tag-dictionary.py wty-el-en.zip wty-el-en-tagged.zip
    HACHIDORI_LANGUAGE=el HACHIDORI_DICTIONARY=wty-el-en.zip HACHIDORI_CASES=languages/el/sources/hachidori-cases.tsv node test/chrome-language-pack.mjs   # in Hachidori
    ```
+
+   The `filter` figures run the same commands on a copy of the pack whose
+   `language.json` says `"untaggedTerms": "filter"`.
 
 ## Known gaps
 
@@ -380,26 +435,38 @@ it says `tagged`.
     (`σ`, `ν`, `τ`, `θ` in the subtitle list), show their letter: 8 of the
     10,000 frequent words, 27 Tatoeba positions;
   - `παιδιά` shows "childish play" before the plural of παιδί (283 Tatoeba
-    positions) and `πας` the archaic "every" before πάω (100).
-- **Untagged dictionary rows.** wty-el-en gives a part of speech only to
-  verbs, so with the published dictionary a noun or adjective the rules
-  reach is dropped by the part-of-speech filter; most inflected forms still
-  have their own form-of row. `lookup.untaggedTerms: "pass"`
-  (bee-san/hoshidicts#58) fixes it, and the `tagged` numbers above measure
-  it; the pack sets the field once it is on main. Hachidori needs engines
-  built after #58 to load the pack then.
+    positions) and `πας` the archaic "every" before πάω (100);
+  - `φοράν` shows φοράω (the dictionary's row for the archaic plural "they
+    wear") before φορά, the older accusative of "time" that the 10
+    Karkavitsas positions mean.
+- **Hachidori's engines.** Hachidori feat/multi-language 803f7b6 ships
+  engines built from hoshidicts b145feb, which reject this pack
+  (`lookup.untaggedTerms` is an unknown key there). The pack loads once
+  Hachidori's engines are built from hoshidicts 0a73e5e or later, as
+  Measurements 5-6 did.
+- **Chains through form-of rows.** Under `pass` a rule's output can be an
+  untagged form-of row of another form, and a lookup follows its reference
+  (docs/languages.md 9.10). The lemma is then usually right but the trace
+  names two forms: `σοβαράς` → σοβαρά, "nominative/accusative/vocative
+  plural neuter" of σοβαρός. 542 of the 409,114 first cards of the four
+  texts have a rule's inflection and then the dictionary's; some show
+  another word (`ποτές` → ποτό, 19 Eftaliotis positions; `ακούση` → άκων,
+  14 in Karkavitsas and Eftaliotis). With `filter` the noun and adjective rows have no tag, so only verb
+  forms chain this way.
 - **Verb and noun readings that tie.** Where a form is both a verb and a
   noun the dictionary lists, the verb reading comes first: the verb rules
-  come first in `transforms.json`, and with the tagged copy both readings
-  have one trace step. In Tatoeba 390 first cards are a verb with a noun of
-  the same form after it (760 tagged): `πάτε` → πηγαίνω before πάτος,
-  `άσε` → αφήνω before άσος, `εξετάσεις` → εξετάζω before εξέταση (35),
-  `απαντήσεις` → απαντάω (27), `μέτρα` → μετράω before μέτρο (16), `θέσεις`
-  → θέτω (15); in Karkavitsas 50 (95 tagged), `κινήσεις` → κινάω (11). Most
-  are real homographs that context decides (`θα απαντήσεις` is the verb).
-  Moving the noun transforms first changes 87 tagged first cards, all from
-  a verb to a noun, most of them `μέτρα` (59). With the published
-  dictionary `μεγάλη` shows the formal μέγας before μεγάλος.
+  come first in `transforms.json`, and both readings have one trace step.
+  In Tatoeba 764 first cards are a verb with a noun of the same form after
+  it (`measure.py ties`; 390 with `filter`): `είδε` → βλέπω before είδος
+  (60), `πάτε` → πηγαίνω before πάτος (51), `άσε` → αφήνω before άσος (37),
+  `εξετάσεις` → εξετάζω before εξέταση (35); in Karkavitsas 107 (50),
+  `είδε` (24), `κινήσεις` → κινάω (11). Most are real homographs that
+  context decides (`θα απαντήσεις` is the verb), and many verb readings are
+  the dictionary's own rows (`είδε`), which no order of the rules changes.
+  Moving the noun transforms before the verb transforms changes 82 first
+  cards of the four texts, all from a verb to a noun: `μέτρα` 59 (the noun
+  is the likelier reading), `βοηθά` 9 (the verb is; βοηθός has no such
+  form, but the dictionary does not tag it as a noun) and 14 others.
 - `gaps.tsv` (16 rows): irregular stems not in the tables (`εφεύραμε` →
   εφευρίσκω, `κατασχέσουν` → κατάσχω, `πόλαβε` → προλαβαίνω, `σύρουνε` →
   σέρνω), the variant lemmas ακούγω and καίγω (`άκουσα`, `έκαψε`, `κάψτε`),
@@ -412,24 +479,30 @@ it says `tagged`.
 - **Two trace steps** for a reading whose accent moves (`aorist (1st sg)`,
   `accent`), and a homograph shows the reading of the first transform
   (`άφησε`: aorist rather than imperative).
-- **One hop** of form-of references: 37 of the 10,000 frequent words (0.21%
-  of the tokens) show no card, as `μέρες` → μέρα → ημέρα.
+- **One hop** of form-of references: 6 of the 10,000 frequent words (0.08%
+  of the tokens) show no card, as `υποτίθεται` → υποτίθεμαι → υποθέτω.
 - **Capitals.** Text in capitals without accents needs the `missingAccents`
-  setting. Of the 7,899 frequent words whose first card is right in
+  setting. Of the 7,931 frequent words whose first card is right in
   lowercase, written in capitals (`ΘΑΛΑΣΣΑ`; `measure.py capital-rows`,
-  eval-language's firstRank) 14.2% are right first with the pack's defaults
-  (48.3% tagged) and 94.6% with `missingAccents` (95.2% tagged). Without
-  it, the rules accent only the stem, so words stressed on the ending find
-  nothing (`ΟΔΟΣ`, `ΚΑΡΔΙΑ`), and a few find another word (`ΔΟΥΛΕΙΑ` →
-  δουλεία "slavery" before δουλειά). `κυριακή` shows Κυριακή (Sunday); a
-  common word written with a capital can still reach a name the dictionary
-  capitalises through the noun endings names take (`Βασιλείου` →
-  Βασίλειος, tagged).
-- **Older text**: the katharevousa-tinged spelling of 19th-century prose
-  (accusatives in -ν such as `κεφαλήν`, `ημέραν`; `ολίγον`) is not
-  deinflected, and wty-el-en lists few such words. The older augment, the
-  movable -ν and `είνε` are read; the movable -ν also reaches other words
-  (`εύρεν` → εύρος, 7 Karkavitsas positions tagged).
+  eval-language's firstRank) 48.3% are right first with the pack's defaults
+  and 95.2% with `missingAccents` (`filter`: 14.2% and 94.6% of 7,899).
+  Without it, the rules accent only the stem, so words stressed on the
+  ending find nothing (`ΟΔΟΣ`, `ΚΑΡΔΙΑ`), and a few find another word
+  (`ΔΟΥΛΕΙΑ` → δουλεία "slavery" before δουλειά). `κυριακή` shows Κυριακή
+  (Sunday); a common word written with a capital can still reach a name
+  the dictionary capitalises through the noun endings names take
+  (`Βασιλείου` → Βασίλειος).
+- **Older text.** The katharevousa accusative in -ν, the nominative in -ις,
+  the neuter in -ον, the older augment, the movable -ν, `είνε`, `είταν`
+  and -ουνταν are read; most positions that find nothing in the older
+  texts are words wty-el-en does not list: names (`Σμάλτω`, `Ιουστινιανός`),
+  learned function words (`υπό` 123 times in Karkavitsas, `ωσεί`, `ότε`,
+  `όστις`), dialect spellings (`τότες` 374 times in Eftaliotis, `τονέ`,
+  `πάλε`, `τόρα`), and katharevousa forms of words the dictionary has only
+  in their modern form (`χείρας`, `ηδύνατο`, `παιδία`). The -ων participle
+  is not deinflected (`κλίνων` → κλίνη "bed"), nor other katharevousa verb
+  endings (`ήκουον`, `ηρώτησεν`); the movable -ν also reaches other words
+  (`εύρεν` → εύρος).
 - **No ranking signal** among readings of equal length and trace: wty-el-en
   has no frequencies, so `ορίζεσαι` lists ορίζω before ορίζομαι.
 - `addMissingAccent` (setting `missingAccents`, off by default) adds one

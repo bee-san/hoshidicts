@@ -14,6 +14,8 @@
 #   python3 languages/el/sources/measure.py capitals <el_50k.txt> <wty-el-en JSON banks dir> <lookups of the words> <lookups of capitals.txt>
 #   python3 languages/el/sources/measure.py capital-rows <el_50k.txt> <wty-el-en JSON banks dir> <lookups of the words> [--defaults] > capitals.tsv
 #   python3 languages/el/sources/measure.py yomitan-conditions <sources/yomitan.json> <sources/own.json> > yomitan-for-eval.json
+#   python3 languages/el/sources/measure.py top <el_50k.txt> <wty-el-en JSON banks dir> <lookups.jsonl> 300
+#   python3 languages/el/sources/measure.py ties <wty-el-en JSON banks dir> <hovers.txt> <lookups.jsonl>
 #
 # lookups.jsonl is the output of languages/en/sources/lookup-batch.cpp (built
 # against this checkout) on the words or hover texts, one line each:
@@ -66,7 +68,7 @@
 # counted as unjudged, and a random sample of them (seed 1) is printed for
 # review by hand.
 
-import bz2, collections, glob, json, random, re, sys, unicodedata
+import bz2, collections, glob, json, os, random, re, sys, unicodedata
 
 GREEK = r"[\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03CE\u1F00-\u1FFF]"
 # A word as a host's word scan finds it: letters and the apostrophes in and
@@ -219,6 +221,58 @@ def frequent(freq_file, banks, lookups, cli=None, languages=None):
     print('--- no card with a definition')
     for item in sorted(empty_list, reverse=True)[:40]:
         print('\t'.join(str(x) for x in item))
+
+
+def top(freq_file, banks, lookups, n):
+    # The first n words of the frequency list, every one of them (frequent
+    # counts only those with a form-of row): right or wrong as judge says, no
+    # card, or unjudged (another headword than the word, which the dictionary
+    # does not name as its lemma: listed to be judged by hand). lookups are
+    # those of the whole list.
+    defined, refs = load_dictionary(banks)
+    words = [line.split()[0] for line in open(freq_file, encoding='utf-8')][:n]
+    results = [json.loads(line) for line in open(lookups, encoding='utf-8')][:n]
+    counts = collections.Counter()
+    listed = collections.defaultdict(list)
+    for word, answer in zip(words, results):
+        first = first_defined(answer['results'])
+        if first is None:
+            kind = 'empty'
+        else:
+            kind = verdict(word, first, refs, defined)
+            if kind == 'unjudged' and first['expression'] == word:
+                kind = 'right'
+        counts[kind] += 1
+        if kind != 'right':
+            listed[kind + 'Words'].append(word if first is None else f"{word} → {first['expression']}")
+    print(json.dumps({'words': len(words), **counts, **listed}, ensure_ascii=False))
+
+
+def ties(banks, hovers_file, lookups):
+    # First cards that are a verb the rules reach, over the whole word, with a
+    # noun of the same matched text after them (part of speech: the first
+    # definition tag of the headword's rows with definitions).
+    defined, refs = load_dictionary(banks)
+    pos = collections.defaultdict(set)
+    for path in sorted(glob.glob(os.path.join(banks, 'term_bank_*.json'))):
+        for row in json.load(open(path, encoding='utf-8')):
+            if any(not is_ref(d) for d in row[5]):
+                pos[row[0]].add((row[2].split() or [''])[0])
+    pairs = collections.Counter()
+    for text, line in zip(open(hovers_file, encoding='utf-8'), open(lookups, encoding='utf-8')):
+        m = WORD.match(text.rstrip('\n'))
+        found = [r for r in json.loads(line)['results'] if not r['formOf']]
+        if m is None or len(found) < 2:
+            continue
+        first = found[0]
+        if 'v' not in pos.get(first['expression'], set()) or not first['trace'] or first['matched'].lower() != m.group(0).lower():
+            continue
+        nouns = [r for r in found[1:] if 'n' in pos.get(r['expression'], set()) and r['matched'] == first['matched']]
+        if nouns:
+            pairs[(m.group(0).lower(), first['expression'], nouns[0]['expression'])] += 1
+    print(json.dumps({'verbFirstNounAfter': sum(pairs.values())}))
+    for (word, verb, noun), count in pairs.most_common(20):
+        print(f'{count}\t{word}\t{verb}\t{noun}')
 
 
 def hovers(text_file, sentences_tsv=False):
@@ -542,6 +596,10 @@ if __name__ == '__main__':
         yomitan_conditions(*sys.argv[2:4])
     elif cmd == 'falsecands':
         falsecands(*sys.argv[2:6], tagged='--tagged' in sys.argv)
+    elif cmd == 'top':
+        top(sys.argv[2], sys.argv[3], sys.argv[4], int(sys.argv[5]))
+    elif cmd == 'ties':
+        ties(sys.argv[2], sys.argv[3], sys.argv[4])
     elif cmd == 'unimorph':
         unimorph(*sys.argv[2:5])
     elif cmd == 'hovers':
