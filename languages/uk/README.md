@@ -415,7 +415,10 @@ identical).
      Japanese and back work.
 7. **Commands and scripts.** `sources/build-own.mjs` writes `own.json`;
    `tools/port-yomitan-transforms.mjs` and `sources/map-yomitan.mjs` write
-   `yomitan.json`; `sources/build-corpus.mjs <kaikki file>` writes
+   `yomitan.json` (both as `tools/lib/json.mjs` formats rule files, each rule
+   on one line, except that the affix pairs of a cross product are written
+   without spaces, `["зі","га"]`, which keeps `tests/` and `sources/` under
+   1 MB; `transforms.json` is exactly `tools/lib/json.mjs` output); `sources/build-corpus.mjs <kaikki file>` writes
    `corpus.tsv` and `gaps.tsv`, and with `--all <file>` the measurement set;
    `sources/select-removals.py <measurement set> <imported wty-uk-en>` writes
    `yomitan-removed.tsv`; `sources/build-final.mjs` writes `transforms.json`;
