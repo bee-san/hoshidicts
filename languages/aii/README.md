@@ -66,9 +66,9 @@ written.
   rows and kaikki.org's tables; its constructed negatives at the end pin
   the stem, pattern and condition constraints (Measurements, mutations).
 - `sources/build-corpus.py`, `measure.py`, `measure-examples.py`,
-  `measure-urmia.py`, `eval-table.py`, `mutations.py`, `tag-dictionary.py`,
-  `lookup-batch.cpp`, `load-bench.cpp` and `wasm-load.mjs`: the
-  measurements below, written for this pack.
+  `measure-urmia.py`, `measure-gaps.py`, `eval-table.py`, `mutations.py`,
+  `tag-dictionary.py`, `lookup-batch.cpp`, `load-bench.cpp` and
+  `wasm-load.mjs`: the measurements below, written for this pack.
 - `host.recommendedDictionaries`: wty-aii-en from
   [wiktionary-to-yomitan](https://github.com/yomidevs/wiktionary-to-yomitan)
   (wty), the only Yomitan-format Assyrian Neo-Aramaic dictionary there is
@@ -142,10 +142,10 @@ written.
 
 ## Rule provenance
 
-All 64 transforms and 1,369 rules are `own` (no `yomitan` or `both`
-rules: Yomitan has none for the language). By type: 737 `suffix`, 540
-`wholeWord`, 54 `pattern`, 29 `prefix`, 9 `circumfix` (cross products; the
-pack loads them as 1,675 rules). Two transforms are optional (`lJoined`,
+All 64 transforms and 1,382 rules are `own` (no `yomitan` or `both`
+rules: Yomitan has none for the language). By type: 737 `suffix`, 549
+`wholeWord`, 58 `pattern`, 29 `prefix`, 9 `circumfix` (cross products; the
+pack loads them as 1,688 rules). Two transforms are optional (`lJoined`,
 `pastBaseUrmia`).
 
 - **Conditions.** `v` (with `v_l`, a verb without its L-suffix; `v_s`, a
@@ -169,12 +169,13 @@ pack loads them as 1,675 rules). Two transforms are optional (`lJoined`,
   subject endings (`3fs` … `1p`, also the passive past on the past base),
   with the ܐ → ܝ of verbs in -ē as patterns limited to verb-shaped stems
   (two letters, or ܡ and two to four), pointed patterns for the Stem I and
-  hollow non-past (C ā C C + ending, read without removing the points;
-  their last radical is not ܝ, and four words that are not verbs are kept
-  out of them, Known gaps), the past with the L-suffix's ܠ assimilated
-  after ܪ and ܠ (`pastContracted`, pointed patterns: ܐ݇ܡܝܼܪܹܗ, he said,
-  for ܐ݇ܡܝܼܪ ܠܹܗ, and the Urmia ܐ݇ܡܸܪܹܐ; the Urmia ܐ݇ܘܸܪܹܐ, he entered,
-  is ܥܒܪ), the past bases (Stem I ܝ before
+  hollow non-past (C ā C C + ending, read without removing the points,
+  with the Urmia and colloquial -in and -it of the first and second person
+  masculine, ܦܵܝܫܸܢ, I remain; their last radical is not ܝ, and four words
+  that are not verbs are kept out of them, Known gaps), the past with the
+  L-suffix's ܠ assimilated after ܪ and ܠ (`pastContracted`, pointed
+  patterns: ܐ݇ܡܝܼܪܹܗ, he said, for ܐ݇ܡܝܼܪ ܠܹܗ, and the Urmia ܐ݇ܡܸܪܹܐ; the
+  Urmia ܐ݇ܘܸܪܹܐ, he entered, is ܥܒܪ), the past bases (Stem I ܝ before
   the last radical; hollow ܝ for ܐ; Stems II, III and quadriliterals ܘ
   after ܡ or after the first radical; ܡܬ- verbs ܘ before the last
   radical), passive participles, imperatives (Stem I and
@@ -188,11 +189,13 @@ pack loads them as 1,675 rules). Two transforms are optional (`lJoined`,
   -āṯā, -yāṯā and the absolute -īn, the feminine in -tā and -ānīṯā, the
   construct state, and 175 written-out forms of nouns with plural or
   possessive stems of their own (ܒܵܬܹ̈ܐ, ܒ̈ܢܵܬ݂ܵܐ, ܢܸܫܹ̈ܐ, ܐܸܒ̈ܢܹܐ, ܒܲܪ,
-  ܐܲܒ݂ܘܼܢ, ܫܸܢܹ̈ܐ …). **Prepositions** with pronoun suffixes (303
-  written-out forms of 37 prepositions, ܐܝܼܬ݂ ܒ-, ܠܲܝܬ ܒ-). **Spelling
-  variants** (`spelling`) for three closed-class words whose wty-aii-en row
-  refers to a pointed form that no row has: ܬܪܵܝ (two, Urmia, pointed only)
-  → ܬܪܝܢ, ܡܵܐܐ (hundred) → ܐܡܐܐ, ܐܘܦ (also) → ܐܦ.
+  ܐܲܒ݂ܘܼܢ, ܫܸܢܹ̈ܐ …). **Prepositions** with pronoun suffixes (311
+  written-out forms of 37 prepositions, with the Urmia ܒܹܝܠ-, between, and
+  ܒܝܼܵܝ, in me; ܐܝܼܬ݂ ܒ-, ܠܲܝܬ ܒ-). **Spelling variants** (`spelling`) for
+  closed-class words the dictionary refers to a pointed form that no row
+  has, or does not list: ܬܪܵܝ (two, Urmia, pointed only) → ܬܪܝܢ, ܡܵܐܐ
+  (hundred) → ܐܡܐܐ, ܐܘܦ (also) → ܐܦ, and the Urmia Bible's ܐܸܕܝܘܼ ܝܘܿܡܵܐ
+  (this day) → ܐܕܝܘܡ (today).
 - **Revisions after the "own rules" commit**, each measured on the dev pool
   and the 3,217 example hovers (Measurements):
   - the Stem III imperative pattern takes a stem of two to four letters,
@@ -213,34 +216,42 @@ pack loads them as 1,675 rules). Two transforms are optional (`lJoined`,
   - `k-` no longer requires a letter after ܟܐ (the vowel there is the
     verb's) and the consonant-final possessive and plural take a stem in ܐ
     (ܦܪܸܙܠܵܐܗܘܿܢ); dev recall 96.88% → 97.02%.
-- **Revisions after the first audit**, measured on the Urmia text with the
-  tagged copy against the rules it audited (56d0f53); none changes a
-  number of the dev pool, and the pointed example hovers gain 4 and lose 1
-  (2,710 → 2,713; the loss is ܕܥܒ݂ܝܼܪܹܗ, Known gaps):
+- **Revisions after the audits** (bee-san/hoshidicts#59), measured on the
+  Urmia text with the tagged copy against the rules the first audit judged
+  (56d0f53). None changes a number of the dev pool; the pointed example
+  hovers gain 4 and lose 2 (2,710 → 2,712: ܕܥܒ݂ܝܼܪܹܗ and the idiom ܐܵܡܪܸܬ,
+  Known gaps). Of the 45,406 Urmia hovers, 2,016 show another first entry
+  (`sources/measure-gaps.py` and the commands below give every count):
   - the strong and hollow pointed patterns no longer take ܝ as the last
     radical (ܐܵܕܝܵܐ, now, was the verb ܐܕܝ), and four words are kept out of
-    the pattern that read them as a verb: ܡܵܪܝܵܐ (the Lord, read as the
-    feminine of a verb ܡܪܐ, which is the noun lord: 648 hovers with its
-    proclitics), ܐܵܢܝܼ (they, in the Urmia spelling, read as ܐܢܐ, I: 29),
-    ܐܵܡܹܝܢ (amen, read as ܐܡܐ, mother: 2) and ܗܵܕܟ݂ܵܐ (thus); ܒܡܪܝܐ (in the
-    Lord) is no gerund;
+    the pattern that read them as a verb, with any marks between their
+    letters: ܡܵܪܝܵܐ (the Lord, read as the feminine of a verb ܡܪܐ, which is
+    the noun lord: 648 hovers with its proclitics), ܐܵܢܝܼ (they, in the
+    Urmia spelling, read as ܐܢܐ, I: 29), ܐܵܡܹܝܢ (amen, read as ܐܡܐ,
+    mother: 2) and ܗܵܕܟ݂ܵܐ (thus); ܒܡܪܝܐ (in the Lord) is no gerund. 680
+    hovers;
   - the pointed -ē pattern of the second person feminine reads ܕܵܪܝܲܬܝ, as
-    Wiktionary's tables spell 91 of their 92 such forms of Stem I verbs (it
-    read only ܕܵܪܝܵܬܝ, the spelling of ܐܵܬ݂ܝܵܬܝ, you come, which it still
-    reads);
-  - the contracted past (`pastContracted`): 1,143 hovers now find their
-    first entry through it, 956 of them a different lemma than before
-    (ܘܐ݇ܡܸܪܹܐ, and he said, 525 hovers: ܐܡܪ, to say, not ܐܡܪܐ, lamb).
-    Its second radical is not ܘ, and the Urmia ܐ݇ܘܸܪܹܐ, ܐ݇ܘܸܪܘܿܢ (he, they
-    entered) have a rule of their own that gives ܥܒܪ (37 hovers): the
-    general pattern read them as ܐܘܪ, which wty-aii-en has only as Ur, the
-    city;
-  - the spelling variants: 224 hovers (ܬܪܵܝ 140, now ܬܪܝܢ, two, not ܬܪܐ,
-    to soak; ܡܵܐܐ 83), and with the published dictionary the same 224, from
-    no entry.
+    kaikki's conjugation tables spell the form for 91 of their 92 Stem I
+    verbs in -ē (the other is ܐܵܬ݂ܝܵܬܝ, you come, which a pattern of its own
+    still reads);
+  - the contracted past (`pastContracted`): 1,143 hovers find their first
+    entry through it, 956 of them another lemma than before (ܘܐ݇ܡܸܪܹܐ, and he
+    said, 525 hovers: ܐܡܪ, to say, not ܐܡܪܐ, lamb). Its second radical is
+    not ܘ, and the Urmia ܐ݇ܘܸܪܹܐ, ܐ݇ܘܸܪܘܿܢ (he, they entered) have a rule of
+    their own that gives ܥܒܪ (37 hovers): the general pattern read them as
+    ܐܘܪ, which wty-aii-en has only as Ur, the city;
+  - the spelling variants: 264 hovers (ܬܪܵܝ 140, now ܬܪܝܢ, two, not ܬܪܐ,
+    to soak; ܡܵܐܐ 83; ܐܸܕܝܘܼ ܝܘܿܡܵܐ 40, before read as ܐܕܝܐ, now), with the
+    published dictionary too, where they had no entry;
+  - the Urmia ܒܹܝܠ- and ܒܝܼܵܝ: 68 hovers (ܒܝܼܵܝ, in me, 22, before ܒܐܝ,
+    bye-bye; ܒܹܝܠܝܼ, between me, 17, before ܒܝܠ, Jupiter);
+  - the -in and -it endings: 48 hovers (ܘܐܵܡܪܸܬ and ܐܵܡܪܸܬ, you say, 15,
+    before ܐܡܪܬ, it seems; ܦܵܝܫܸܢ, I remain, 7, before ܦܝܫ).
 
-  Judged by hand, every changed hover is right now except ܘܒܟܸܠܘܿܢ (and in
-  all of them, 1 hover: ܒܟܠ), which was wrong before as well.
+  Judged by hand, the first entry of each of the 2,016 hovers is right now
+  except ܘܒܟܸܠܘܿܢ (and in all of them, 1 hover: ܒܟܠ), which was wrong
+  before as well. With the published dictionary 264 hovers change, all
+  through the spelling variants and all right.
 - **Tried and rejected**, measured with the tagged copy:
   - possessive transforms before the subject endings (so a noun reading
     wins ties): dev unpointed first results +1.0 point, example hovers −0.6
@@ -337,25 +348,25 @@ The pack's own rules are also the union and the final set.
      | pointed, as written | 71.9% (79.6%), no result 491 | **84.3%** (93.3%), no result 52 |
      | unpointed | 56.4% (57.0%), no result 1,154 | **87.2%** (92.6%), no result 60 |
 
-     With the tagged copy, of the 452 pointed hovers with a wrong first
+     With the tagged copy, of the 453 pointed hovers with a wrong first
      result, 274 show a form-of row of the dictionary first (ܛܵܒ݂ܵܐ →
      ܛܒܬܐ, goodness, where the example's entry is ܛܒܐ, good: both are right
      analyses of the letters), 96 the word as written (an idiom or
      multiword entry such as ܐܝܼܕ݂ܘܼ̈ܟ݂ ܠܵܐ ܡܵܪܥܝܼܢ݇, or the copula before a
-     gerund) and the rest are
-     one-step rule readings, none over 13 (`3fs`: ܒܓ̰ܵܪܹܐ → ܒܓܪ). Of the
+     gerund) and the rest are one-step rule readings, none over 13 (`3fs`:
+     ܒܓ̰ܵܪܹܐ → ܒܓܪ). Of the
      351 unpointed ones, 177 are the word as written (an unpointed word is
      often several words) and no rule has more than 12.
    - *The Urmia Bible* (every one of the 45,406 words hovered with the
-     rest of its sentence): with the tagged copy, 8,812 hovers find no
+     rest of its sentence): with the tagged copy, 8,793 hovers find no
      entry (the 1893 spelling, the joined L-suffix, names) and, of the
      7,619 judged by script, 194 (2.55%) have a wrong first entry: 164 the
      word as written (the numerals, and phrase entries such as ܪܘܼܚܵܐ
      ܕܩܘܼܕܫܵܐ, the Holy Spirit, which are right) and 12 the past particle
      (ܚܘܵܪܵܐ ܗ݇ܘܵܐ → ܚܘܪܐ, white, where the row names ܚܘܪ, to be white).
-     With the published dictionary 18,419 find no entry and 379 of the
+     With the published dictionary 18,379 find no entry and 379 of the
      judged (4.97%) are wrong. With `olderSpellings` on (tagged copy),
-     5,967 find no entry and 198 of the judged are wrong.
+     5,948 find no entry and 198 of the judged are wrong.
      The script judges a hover only when wty-aii-en has a form-of row for
      the word as written, so it does not see the 37,787 others, among them
      every headword: ܡܵܪܝܵܐ (the Lord, the third most frequent word) has no
@@ -380,29 +391,29 @@ The pack's own rules are also the union and the final set.
      ܡܲܠܟܬ݂ܵܐ → ܡܠܟܐ, as the feminine of king); unpointed misses include
      ܨܝܡܝ (they fast, or my fast) and ܐܪܝܡ (raise!, or ܐܪܡ).
 
-5. **Performance** (host load 42 on 64 cores).
+5. **Performance** (host load 38-45 on 64 cores).
    - Native `benchmark-lookup --languages languages --language aii` on the
      120 texts of `sources/benchmark-texts.txt` (the 60 hovers of the
      sentences, pointed and unpointed), 21 passes, the first dropped, three
-     runs: published p50 14.0-14.2 µs, p95 32.4-33.1 µs; tagged copy p50
-     15.8-16.0 µs, p95 34.6-34.8 µs (budget 1 ms p50).
+     runs: published p50 14.2-14.5 µs, p95 32.7-33.2 µs; tagged copy p50
+     16.2-16.3 µs, p95 35.0-35.5 µs (budget 1 ms p50).
    - Hachidori's WebAssembly (`benchmark/node-lookup.mjs` of
      feat/multi-language 803f7b6, its vendored runtimes, Node 22,
      `HACHIDORI_LOOKUP_LANGUAGE=aii`, the 206 words of the 26 sentences,
-     pointed and unpointed, 11 passes): threaded p50 59.6 µs, p95 152.6 µs
-     (published), 88.4 / 193.7 µs (tagged); single-thread 51.5 / 141.1 µs
-     and 79.1 / 180.7 µs. The dictionary imports in 0.28 s (threaded).
-   - Pack load: natively `LanguageRegistry::add` takes 2.69-2.77 ms (median
+     pointed and unpointed, 11 passes): threaded p50 57.6 µs, p95 150.0 µs
+     (published), 90.4 / 198.2 µs (tagged); single-thread 54.1 / 143.0 µs
+     and 80.8 / 186.8 µs. The dictionary imports in 0.27-0.30 s (threaded).
+   - Pack load: natively `LanguageRegistry::add` takes 2.90-2.99 ms (median
      of 50, three runs; `sources/load-bench.cpp`) and the registry holds
-     1,232,640 bytes of heap. In WebAssembly (`sources/wasm-load.mjs`, 10
-     fresh engines) the first `hdw_language_load` takes 10.4 ms
-     single-thread and 10.8 ms threaded (medians), a second one 5.8 and
-     6.2 ms, and the allocator's live bytes grow by 760,304 and 760,352
+     1,259,568 bytes of heap. In WebAssembly (`sources/wasm-load.mjs`, 10
+     fresh engines) the first `hdw_language_load` takes 10.5 ms
+     single-thread and 10.6 ms threaded (medians), a second one 6.1 and
+     6.3 ms, and the allocator's live bytes grow by 781,384 and 781,424
      bytes. Budgets 50 ms and 20 MB.
-   - 54 `pattern` rules (the pointed Stem I and hollow non-past, the -ē
+   - 58 `pattern` rules (the pointed Stem I and hollow non-past, the -ē
      endings, the contracted past, the Stem III imperative, the gerund,
-     ܬܪܵܝ): without them the native load takes 1.53-1.55 ms and the
-     registry 1,007,232 bytes, so they cost about 1.2 ms and 225 KB.
+     ܬܪܵܝ): without them the native load takes 1.52 ms and the registry
+     1,010,304 bytes, so they cost about 1.4 ms and 250 KB.
 
 6. **Hachidori in Chrome.** `test/chrome-language-pack.mjs` on
    bee-san/hachidori feat/multi-language 803f7b6 with
@@ -417,24 +428,27 @@ The pack's own rules are also the union and the final set.
    No WebAssembly rebuild was needed. A Syriac font has to be on the
    system: without one the pages and the popup show no Syriac glyphs.
 
-7. **Mutations** (section 14 step 7, `sources/mutations.py`): 206 edits of
+7. **Mutations** (section 14 step 7, `sources/mutations.py`): 227 edits of
    `transforms.json` and `language.json` in scratch copies, plus the
    identity: each stem constraint of each transform deleted, each minimum
    lowered, the patterns loosened (any vowel, ܝ as middle or last radical,
    any middle letter of the hollow pattern, each constraint of the
    contracted past, among them ܘ as its second radical, ܬܪܵܝ unpointed),
-   the words kept out of the patterns
-   let in, single pointed patterns removed, ܐ added back as a last
-   radical, the conditions dropped or opened, the optional transforms made
-   required, transforms moved (the subject endings after the possessives,
-   3p after poss1s, the past base after the endings, the Stem II
-   imperative before the nouns, and four more below), character
-   resolution, and the setting without one of its transforms. Every one
-   fails the conformance test except the identity and nine:
-   - the minimums of `pastBaseMt` and `infinitiveM` (deleted or lowered),
-     which change no deinflection of 166,240 words (the dev pool, the Urmia
-     Bible and every word of the examples, pointed and unpointed: other
-     rules give the same texts);
+   the words kept out of the patterns let in, one at a time or all, or
+   matched only exactly; each pointed pattern of the verbs in -ē removed
+   alone, and other pointed patterns by ending; ܐ added back as a last
+   radical; the conditions dropped or opened, and the conditions
+   `spelling` and `pastContracted` give changed; the optional transforms
+   made required; transforms moved (the subject endings after the
+   possessives, 3p after poss1s, the past base after the endings, the
+   Stem II imperative before the nouns, and four more below); character
+   resolution; and the setting without one of its transforms. Every one
+   fails the conformance test except the identity and seven:
+   - two pointed patterns of the verbs in -ē, those of the second person
+     feminine in -yāt (ܐܵܬ݂ܝܵܬܝ) and of the second person plural
+     (ܕܵܪܲܝܬܘܿܢ): without either, the same forms are read through the
+     unpointed rules, and no first entry or trace changes in the dev pool,
+     the examples, the Urmia text or the Incubator articles below;
    - four moves that the engine's order makes equivalent: the trie finds
      the longest suffix first and prefix rules after suffix rules (section
      7.4), so the file order counts only between rules at one trie node.
@@ -447,12 +461,24 @@ The pack's own rules are also the union and the final set.
      option on or with the defaults, never through a setting, so no row
      can see a setting's list of transforms.
 
+   The minimums of `pastBaseMt` and `infinitiveM` give the same
+   deinflected texts with and without them, but other traces, and so
+   other first entries (tagged copy). Without that of `infinitiveM`, 11
+   pointed dev rows change, 10 of them for the worse (ܡܓܲܘܢܵܐ, she colours,
+   → ܡܓܢ, for nothing); 3 Urmia hovers and 2 example hovers get better
+   (ܡܲܬܘܼܒܹܐ, putting, → ܡܬܒ, to put, instead of ܡܬܘܒ, to repent;
+   ܠܡܲܦܘܼܩܹܐ, to bring out, → ܡܦܩ), and 1 Urmia hover worse (ܡܸܗܘܵܝܵܐ →
+   ܡܗܐ, what?). Without that of `pastBaseMt`, 1 dev row gets worse
+   (ܡܬܲܘܒ݂ܵܐ, she repents, → ܡܬܒ) and the same 3 ܡܲܬܘܼܒܹܐ hovers better.
+   Both minimums stay, and lookup.tsv rows pin them (ܡܓܲܘܢܵܐ, ܡܬܲܘܒ݂ܵܐ);
+   Known gaps gives the infinitives they cost.
+
 8. **Conformance and checks**: `language-conformance-test languages/aii`
    conforms: corpus.tsv 1,642/1,642 and defaults.tsv 14/14 with the pack's
-   defaults, cases.tsv 401/401, text.tsv 22/22, lookup.tsv 46/46, gaps.tsv
-   0/35 (reported); 430 of the 1,675 rules are exercised by a passing row.
+   defaults, cases.tsv 401/401, text.tsv 22/22, lookup.tsv 65/65, gaps.tsv
+   0/35 (reported); 430 of the 1,688 rules are exercised by a passing row.
    `tools/check-yomitan.mjs aii`: no `sources/yomitan.json`, rules not
-   compared; `removeSyriacScriptDiacritics` agrees with Yomitan's on 2,185
+   compared; `removeSyriacScriptDiacritics` agrees with Yomitan's on 2,204
    inputs, 0 differences. `tools/check-classes.mjs aii` matches.
 
 Commands (from the repository root, `C` the directory with the downloads
@@ -469,6 +495,8 @@ python3 languages/aii/sources/measure.py firstrank dev.tsv --dictionary "$C/wty-
 python3 languages/aii/sources/measure-examples.py $C/kaikki-aii.jsonl "$C/wty-aii-en (tagged)" [--unpointed] --report 15
 python3 languages/aii/sources/measure-urmia.py $C/urmia-1893 $C/wty-aii-en.zip "$C/wty-aii-en (tagged)" [--options lJoined,pastBaseUrmia] \
   --sample 60 --sample-out sample.jsonl
+python3 languages/aii/sources/measure-gaps.py $C/urmia-1893 $C/wty-aii-en.zip "$C/wty-aii-en" "$C/wty-aii-en (tagged)" \
+  $C/kaikki-aii.jsonl --dev dev.tsv --report 45
 python3 languages/aii/sources/mutations.py /tmp/aii-mutations
 build/benchmark-lookup languages/aii/sources/benchmark-texts.txt 21 --term "$C/wty-aii-en" --languages languages --language aii --json
 build/aii-load-bench languages 50; node languages/aii/sources/wasm-load.mjs <hachidori checkout> 10
@@ -493,7 +521,9 @@ say.
   one-step suffix reading of the whole word, and the suffix reading comes
   first: the trie finds suffix rules before prefix rules (section 7.4), so
   no order of the transforms changes it. In the Urmia text (tagged copy),
-  471 hovers of 66 words have such a tie. Judged by hand, 248 are right
+  472 hovers of 67 words have such a tie (`sources/measure-gaps.py` gives
+  this count and the others below, each with its definition). Judged by
+  hand, 249 are right
   (ܒܹܐܡܵܪܵܐ, saying, 187; ܒܢܵܬܹ̈ܐ, daughters, 19; ܒܸܥܒ̣ܵܕܵܐ, doing, 15) and
   223 wrong (ܕܝܼܗ݇ܘܵܐ, that was, → ܕܝܗ, 31; ܕܐܵܢܵܐ, that I, → ܕܐܢ, to
   judge, 29; ܕܡ̈ܝܼܵܐ, of the water, → ܕܡܐ, blood, 20 in two spellings;
@@ -515,9 +545,22 @@ say.
   matches until the pack sets `untaggedTerms: "pass"`.
 - **Two readings of one lemma keep the trace found first.** With the
   tagged copy the lemma comes first through the rules for 74,357 unpointed
-  dev-pool rows; for 1,314 (1.8%), noun or adjective forms, the trace
+  dev-pool rows; for 1,315 (1.8%), noun or adjective forms, the trace
   names only a verb ending, mostly 3p (1,123: ܐܒܝ, my father, → ܐܒܐ with
   -ī, they). The lemma is right; the popup shows the verb ending.
+- **A verb reading finds a noun or a name.** With "pass" every row
+  carries every condition, so a rule's verb reading matches any term of
+  those letters. 535 first entries of the Urmia text (tagged copy) come
+  through a verb rule to a lemma that has no verb row in wty-aii-en. Many
+  are the right word with a verb trace (ܒܵܒ̇ܝܼ, my father, → ܒܒܐ, the item
+  above); the largest wrong groups are ܕܣܝܼܢܲܝ, of Sinai, → ܣܝܢ, a pagan
+  idol (12 hovers; no row has Sinai), ܘܒܟܹܠܹܐ, and he wept, → ܒܟܠ (10; a
+  joined L-suffix, with the setting off), ܫܹܝܡ, Shem, → ܫܐܡ, the Levant
+  (10 with its ܕ- form), ܒܟ̇ܠܵܝ, in all, → ܒܟܠ (10 with its ܘ- form),
+  ܪܵܙܝܼ, was content, → ܡܪܙܐ, riverbank (6; no row has ܪܙܐ), and
+  ܕܝܵܦܝܵܢܹ̈ܐ, of the bakers, → ܝܦܢ, Japan (5). The groups of this kind
+  that rules could read are read now: ܐܸܕܝܘܼ ܝܘܿܡܵܐ, ܒܝܼܵܝ and ܒܹܝܠ- (Rule
+  provenance).
 - **The word as written comes first.** An unpointed word that is itself a
   headword shows that headword before any reading the rules make, as it
   should when the word is meant (177 of the unpointed example hovers had
@@ -526,19 +569,29 @@ say.
   reads the word as written, with no processor step, so its verb reading
   comes before the word's own headword, and with `untaggedTerms: "pass"`
   it finds a term of those letters whatever its part of speech. Of
-  kaikki's 5,706 pointed citation forms, 15 are read this way as another
+  kaikki's 5,706 pointed citation forms, 17 are read this way as another
   lemma, after a proclitic or not. The three whose lemma wty-aii-en has no
   verb for are kept out of the patterns (ܡܵܪܝܵܐ, the Lord; ܗܵܕܟ݂ܵܐ, thus;
-  ܐܵܡܹܝܢ, amen), with the Urmia ܐܵܢܝܼ (they). The other 12 are read as a
+  ܐܵܡܹܝܢ, amen), with the Urmia ܐܵܢܝܼ (they). The other 14 are read as a
   verb the dictionary has: some as the verb the headword is a form of
   (ܡܵܨܹܝܬ, you can, as ܡܨܐ: 28 words of the examples; ܒܸܥܒ݂ܵܪܵܐ, crossing,
-  as ܥܒܪ), some wrongly (ܝܵܘܢܵܐ, dove, as ܝܘܢ: 7 Urmia hovers with its
+  as ܥܒܪ; the idioms ܐܵܡܪܸܢ, I mean, and ܐܵܡܪܸܬ, it seems, as ܐܡܪ, to
+  say), some wrongly (ܝܵܘܢܵܐ, dove, as ܝܘܢ: 7 Urmia hovers with its
   proclitic forms; ܠܩܵܕ݇ܡܵܐ, forward, as ܩܕܡ; ܕܥܒ݂ܝܼܪܹܗ, last, as ܕ- and
-  the contracted past of ܥܒܪ: 4 words of the examples, the one example
-  hover the revision after the first audit lost). The strong pattern also
-  reads agent nouns as the non-past (ܣܵܦܪܵܐ, scribe, as ܣܦܪ), and the
-  contracted past reads ܕ- before a noun of the shape CiCā as a past
-  (ܕܓܸܠܵܐ, of grass, as ܕܓܠ, to have sight; no Urmia hover).
+  the contracted past of ܥܒܪ: 4 words of the examples). These include the
+  two example hovers the revisions after the audits lost (ܕܥܒ݂ܝܼܪܹܗ, and
+  ܐܵܡܪܸܬ in ܐܵܡܪܸܬ ܝܼܠܹܗ, it seems that he is). The strong pattern also
+  reads agent nouns as the non-past (ܣܵܦܪܵܐ, scribe, as ܣܦܪ). Of the forms
+  of Wiktionary's tables, 123 have a shape the contracted past reads,
+  alone or after ܕ-, ܒ- or ܠ-, and it reads 16 of them as another
+  headword, which a lookup then shows first (ܕܓܸܠܵܐ, of grass, as ܕܓܠ, to
+  have sight; ܒܒܸܠܵܐ as ܒܒܠ, Babylon; ܠܥܝܼܠܹܗ as ܠܥܠ, above); none of
+  them occurs in the Urmia text or the Incubator articles.
+- **Stem III infinitives with a root of two letters after ܡ** (ܡܲܬܘܼܒܹܐ,
+  putting, 3 Urmia hovers; ܠܡܲܦܘܼܩܹܐ, to bring out, and ܡܲܩܘܼܦܹܐ, 2 example
+  hovers) are read as other verbs (ܡܬܘܒ, to repent): the infinitive rule
+  takes three letters after ܡ, which keeps 10 dev rows of verbs of four
+  letters right (Measurements, mutations).
 - **Urmia (1893) spellings.** The Urmia Bible writes ܥܒܪ (to enter) as it
   is spoken, with ܐܘܪ; apart from the contracted past (ܐ݇ܘܸܪܹܐ, above),
   these forms read as ܐܘܪ, Ur, the city, with the tagged copy (34 hovers:
@@ -572,9 +625,9 @@ say.
   radical (ܐܲܚܲܘ → ܡܚܐ) and two irregular adjectives (ܛܵܒ݂ܲܝ̈ → ܛܒ). In
   the dev pool, 2,652 of 89,080 rows (2.98%) are not reached, mostly the
   same classes (657 absolute singular and 623 absolute plural rows).
-- **Equivalent mutants** (Measurements, mutations): the minimums of
-  `pastBaseMt` and `infinitiveM` change no deinflection of 166,240 words,
-  four transform moves change no first result (or only a trace), and no
-  test file can turn a setting on, so no row can pin them.
+- **Equivalent mutants** (Measurements, mutations): two pointed patterns
+  of the verbs in -ē and four transform moves change no first result on
+  the measured texts (one move changes only a trace), and no test file
+  can turn a setting on, so no row can pin them.
 - **Multiword lemmas** of the dictionary (ܕܪܐ ܒܠܐ, to pay attention) are
   reached only when the phrase is written as the entry writes it.

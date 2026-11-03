@@ -302,6 +302,11 @@ const POINTED = [
     ['1s', '\u0739\u0722'],
     ['1s', '\u0735\u0722'],
     ['1p', '\u0732\u071A'],
+    // The Urmia Bible and colloquial writing spell the first person
+    // masculine and the second person masculine with zlama, -in and -it
+    // (ܦܵܝܫܸܢ, I remain; ܐܵܡܪܸܬ, you say).
+    ['1s', '\u0738\u0722'],
+    ['2ms', '\u0738\u072C'],
 ];
 const esc = (s) => [...s].map((ch) => `\\u${ch.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')}`).join('');
 // A pattern reads the pointed word as written, so its reading needs no
@@ -323,7 +328,12 @@ const NOT_VERBS = {
     '1s': ['ܐܵܡܹܝܢ'],        // amen (ܐܡܝܢ), not I ... (ܐܡܐ, mother)
     '3fs strong': ['ܗܵܕܟ݂ܵܐ'],  // thus (ܗܕܟܐ), not she ... (ܗܕܟ)
 };
-const notWords = (key) => (NOT_VERBS[key] ? `(?!${NOT_VERBS[key].map((w) => esc(w.normalize('NFC'))).join('|')})` : '');
+// Each word is matched with any of the marks N between its letters and
+// vowels, as the patterns themselves allow them (ܗܵܕܟ̣ܵܐ with a dot below,
+// ܗܵܕܟܵܐ without rukkakha).
+const N_MARKS = /[\u0303\u0307\u0308\u0323\u032E\u0330\u0740-\u0742\u0747]/gu;
+const tolerant = (w) => [...w.normalize('NFC').replace(N_MARKS, '')].map((ch) => esc(ch) + N).join('');
+const notWords = (key) => (NOT_VERBS[key] ? `(?!(?:${NOT_VERBS[key].map(tolerant).join('|')}))` : '');
 for (const [id, ending] of POINTED) {
     // Stem I: C ā C C + ending (ܦܵܬ݂ܚܵܐ, ܦܵܬ݂ܚܝܼ, ܦܵܬ݂ܚܹܬ, ...).
     rule(id, {type: 'pattern', pattern: `^${notWords(`${id} strong`)}${C}${N}${A}${N}${C2}${N}${C3}${N}${esc(ending)}$`, replacement: '$1$2$3', anchorSuffix: ending, conditionsIn: ANY, conditionsOut: VERB});
@@ -584,9 +594,11 @@ for (const [lemma, stem] of [['ܐܒܐ', 'ܐܒܘ'], ['ܐܚܐ', 'ܐܚܘ']]) {
 // (also; its row names ܐܵܦ). These are the ones the measured texts use at
 // least 80 times (README, Known gaps). ܬܪܵܝ is read only pointed: unpointed,
 // ܒܬܪܝ is also ܒܵܬ݇ܪܝܼ (after me), which a proclitic would read as ܒ- + two.
-transform('spelling', 'spelling variant', 'A spelling of a numeral or particle that the dictionary refers to a pointed form it has no row for: ܬܪܵܝ (two) for ܬܪܹܝܢ, ܡܵܐܐ (hundred) for ܐܸܡܐܵܐ, ܐܘܦ (also) for ܐܵܦ.');
+// The Urmia Bible writes today in two words, ܐܸܕܝܘܼ ܝܘܿܡܵܐ (this day), which
+// no row has (39 hovers, which the Stem I imperative read as ܐܕܝܐ, now).
+transform('spelling', 'spelling variant', 'A spelling of a numeral or particle that the dictionary refers to a pointed form it has no row for, or does not list: ܬܪܵܝ (two) for ܬܪܹܝܢ, ܡܵܐܐ (hundred) for ܐܸܡܐܵܐ, ܐܘܦ (also) for ܐܵܦ, ܐܸܕܝܘܼ ܝܘܿܡܵܐ (this day) for ܐܸܕܝܘܿܡ (today).');
 rule('spelling', {type: 'pattern', pattern: `^\\u072C${N}\\u072A${N}\\u0735${N}\\u071D$`, replacement: 'ܬܪܝܢ', anchorSuffix: 'ܝ', conditionsIn: ANY, conditionsOut: []});
-for (const [form, lemma] of [['ܡܐܐ', 'ܐܡܐܐ'], ['ܐܘܦ', 'ܐܦ']]) {
+for (const [form, lemma] of [['ܡܐܐ', 'ܐܡܐܐ'], ['ܐܘܦ', 'ܐܦ'], ['ܐܕܝܘ ܝܘܡܐ', 'ܐܕܝܘܡ']]) {
     rule('spelling', {type: 'wholeWord', inflected: form, deinflected: lemma, conditionsIn: ANY, conditionsOut: []});
 }
 
@@ -608,6 +620,8 @@ const PREPOSITIONS = [
     ['ܒܬܪ', 'ܒܬܪ', SINGULAR_SET],
     ['ܬܚܘܬ', 'ܬܚܘܬ', SINGULAR_SET],
     ['ܒܝܢ', 'ܒܝܢ', SINGULAR_SET],
+    // The Urmia Bible writes ܒܹܝܠ- (ܒܹܝܠܝܼ ܘܒܹܝܠܘܼܟ, between me and you).
+    ['ܒܝܢ', 'ܒܝܠ', SINGULAR_SET],
     ['ܓܢܒ', 'ܓܢܒ', SINGULAR_SET],
     ['ܒܝܕ', 'ܒܝܕ', SINGULAR_SET],
     ['ܕܝܠ', 'ܕܝܠ', SINGULAR_SET],
@@ -622,7 +636,8 @@ const PREPOSITIONS = [
     ['ܡܛܠ', 'ܡܛܠܬ', SINGULAR_SET],
     ['ܟܣ', 'ܟܣܠ', SINGULAR_SET],
     ['ܒ-', 'ܒ', SINGULAR_SET],
-    ['ܒ-', 'ܒܝ', ['ܘܟ', 'ܟܝ', 'ܗ', 'ܢ', 'ܘܟܘܢ', 'ܗܘܢ']],
+    // ܒܝܼܵܝ (in me) is the Urmia spelling of ܒܝܼ.
+    ['ܒ-', 'ܒܝ', ['ܝ', 'ܘܟ', 'ܟܝ', 'ܗ', 'ܢ', 'ܘܟܘܢ', 'ܗܘܢ']],
     ['ܠ-', 'ܠ', SINGULAR_SET],
     // ܐܸܠ- is ܠ- with a prosthetic vowel (ܐܸܠܹܗ or ܐܸܠܘܼܗܝ, to him), frequent in
     // the Urmia Bible; ܕܝ- is ܕ- with a pronoun (ܕܝܼܗ, his).

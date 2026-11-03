@@ -102,13 +102,71 @@ def mutations(t):
         for tt in x['transforms']:
             for r in tt['rules']:
                 if r['type'] == 'pattern':
-                    r['pattern'] = re.sub(r'\(\?![^)]*\)', '', r['pattern'])
+                    r['pattern'] = re.sub(r'\(\?!\(\?:.*?\)\)', '', r['pattern'])
+                    r['pattern'] = re.sub(r'\(\?![^()]*\)', '', r['pattern'])
     out.append(('pointed:noExclusions', no_exclusions))
+
+    # Each excluded word let in alone (its lookahead alternative removed),
+    # and the exclusions matched exactly instead of with any marks between
+    # the letters.
+    import re as _re
+    N_RE = '[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*'
+
+    def lookaheads(pattern):
+        return _re.findall(r'\(\?!\(\?:(.*?)\)\)', pattern)
+    words = []
+    for tt in t['transforms']:
+        for r in tt['rules']:
+            if r['type'] == 'pattern':
+                for alts in lookaheads(r['pattern']):
+                    for a in alts.split('|'):
+                        if a not in words:
+                            words.append(a)
+    for a in words:
+        name = ''.join(chr(int(h, 16)) for h in _re.findall(r'\\u(07[12][0-9A-F])', a.replace(N_RE, '')))
+        def drop_word(x, a=a):
+            for tt in x['transforms']:
+                for r in tt['rules']:
+                    if r['type'] == 'pattern':
+                        for alts in lookaheads(r['pattern']):
+                            rest = [b for b in alts.split('|') if b != a]
+                            new = f'(?!(?:{"|".join(rest)}))' if rest else ''
+                            r['pattern'] = r['pattern'].replace(f'(?!(?:{alts}))', new)
+        out.append((f'pointed:letIn-{name}', drop_word))
+
+    def exact(x):
+        for tt in x['transforms']:
+            for r in tt['rules']:
+                if r['type'] == 'pattern':
+                    for alts in lookaheads(r['pattern']):
+                        new = '|'.join(b.replace(N_RE, '') for b in alts.split('|'))
+                        r['pattern'] = r['pattern'].replace(f'(?!(?:{alts}))', f'(?!(?:{new}))')
+    out.append(('pointed:exactExclusions', exact))
+
+    # Each pointed pattern of the verbs in -ē removed alone.
+    for tid, end in (('3fs', '\u071D\u0735\u0710'), ('3p', '\u071D\u073C'), ('2ms', '\u0739\u071D\u072C'), ('2fs', '\u071D\u0732\u072C\u071D'),
+                     ('2fs', '\u071D\u0735\u072C\u071D'), ('2p', '\u0732\u071D\u072C\u0718\u073F\u0722'), ('1s', '\u0739\u071D\u0722'),
+                     ('1s', '\u071D\u0732\u0722'), ('1p', '\u0739\u071D\u071A')):
+        def drop_weak(x, tid=tid, end=end):
+            for tt in x['transforms']:
+                if tt['id'] == tid:
+                    tt['rules'] = [r for r in tt['rules'] if not (r['type'] == 'pattern' and r.get('anchorSuffix') == end and r.get('replacement') == '$1$2ܐ')]
+        out.append((f'pointed:weak{tid}-{"".join(chr(ord(c)) for c in end)}Removed', drop_weak))
+
+    # The conditions the new transforms give.
+    for tid, cond in (('spelling', ['n_f']), ('spelling', ['v_f']), ('pastContracted', []), ('pastContracted', ['v_l'])):
+        def set_out(x, tid=tid, cond=cond):
+            for tt in x['transforms']:
+                if tt['id'] == tid:
+                    for r in tt['rules']:
+                        r['conditionsOut'] = list(cond)
+        out.append((f'{tid}:conditionsOut[{",".join(cond)}]', set_out))
 
     # The pointed patterns of one ending removed: the -ē feminine (ܕܵܪܝܵܐ) and
     # the first person singular (ܐܵܡܪܹܢ).
     for name, tid, anchors in (('weak3fs', '3fs', ('\u071D\u0735\u0710',)),
-                               ('1s', '1s', ('\u0739\u0722', '\u0735\u0722', '\u0739\u071D\u0722', '\u071D\u0732\u0722'))):
+                               ('1s', '1s', ('\u0739\u0722', '\u0735\u0722', '\u0738\u0722', '\u0739\u071D\u0722', '\u071D\u0732\u0722')),
+                               ('zlama1s', '1s', ('\u0738\u0722',)), ('zlama2ms', '2ms', ('\u0738\u072C',))):
         def drop(x, tid=tid, anchors=anchors):
             for tt in x['transforms']:
                 if tt['id'] == tid:
@@ -191,7 +249,12 @@ def mutations(t):
         for tt in x['transforms']:
             for r in tt['rules']:
                 if r['type'] == 'pattern' and '\\u0735' in r['pattern'] and r['pattern'].count('\\u0735') >= 1:
-                    r['pattern'] = r['pattern'].replace('*\\u0735[', '*[\\u0730-\\u073F][', 1)
+                    # After the lookahead of the excluded words, if any.
+                    head, body = '', r['pattern']
+                    if body.startswith('^(?!(?:'):
+                        end = body.index('))') + 2
+                        head, body = body[:end], body[end:]
+                    r['pattern'] = head + body.replace('*\\u0735[', '*[\\u0730-\\u073F][', 1)
     out.append(('pointed:anyVowel', any_vowel))
     # The Stem I gerund: a stem of any length.
     def gerund_any(x):
