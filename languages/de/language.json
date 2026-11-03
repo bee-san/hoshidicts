@@ -1,0 +1,170 @@
+{
+  "schema": 1,
+  "code": "de",
+  "iso639_3": "deu",
+  "name": "German",
+  "nativeName": "Deutsch",
+  "bcp47": "de",
+  "scripts": ["Latn"],
+  "direction": "ltr",
+  "classes": {
+    "letter": "[A-Za-z\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u024F\\u1E9E\\uFB00-\\uFB06]",
+    "word": "[{letter}\\u0300-\\u036F0-9]",
+    "stemChar": "[{letter}\\u0300-\\u036F0-9\\-]",
+    "upper": "[A-Z\\u00C0-\\u00D6\\u00D8-\\u00DE]",
+    "lower": "[a-z\\u00DF-\\u00F6\\u00F8-\\u00FF]",
+    "consonant": "[bcdfghjklmnpqrstvwxzß]",
+    "vowel": "[aeiouyäöü]"
+  },
+  "text": {
+    "pattern": "[{letter}\\u0300-\\u036F]",
+    "scanStart": "cursor",
+    "segmentation": "spaces",
+    "wordCharacters": "{word}",
+    "wordInternal": null,
+    "sentence": {
+      "terminators": [".", "!", "?", "…"],
+      "quotePairs": [["„", "“"], ["»", "«"], ["«", "»"], ["‚", "‘"], ["›", "‹"], ["“", "”"], ["\"", "\""], ["(", ")"]]
+    },
+    "highlightBreaks": null,
+    "lineJoiner": " "
+  },
+  "lookup": {
+    "searchResolution": "character",
+    "preprocessors": [
+      {
+        "id": "normalizeUnicode",
+        "name": "Normalize Unicode (NFKC)",
+        "variants": [[{"normalize": "NFKC"}]]
+      },
+      {
+        "id": "removeSoftHyphens",
+        "name": "Remove soft hyphens",
+        "variants": [[{"strip": "[\\u00AD]"}]]
+      },
+      {
+        "id": "normalizeApostrophes",
+        "name": "Typographic apostrophe to '",
+        "variants": [[{"map": {"’": "'", "ʼ": "'"}}]]
+      },
+      {
+        "id": "decapitalize",
+        "name": "Decapitalize text",
+        "variants": [[{"case": "lower"}]]
+      },
+      {
+        "id": "capitalizeFirstLetter",
+        "name": "Capitalize first letter",
+        "variants": [[{"case": "upperFirst"}]]
+      },
+      {
+        "id": "eszettToSs",
+        "name": "ß written as ss (spelling before 1996: daß → dass)",
+        "variants": [[{"alternatives": {"ß": ["ss"]}, "limit": 16}]]
+      },
+      {
+        "id": "ssToEszett",
+        "name": "ss written as ß (Swiss spelling: Strasse → Straße)",
+        "optional": true,
+        "variants": [[{"alternatives": {"ss": ["ß"]}, "limit": 16}]]
+      }
+    ],
+    "postprocessors": [],
+    "readingNormalizer": null,
+    "transforms": "transforms.json",
+    "traceSelection": "shortest",
+    "formOf": "follow",
+    "functionWords": [],
+    "variantPasses": []
+  },
+  "capabilities": {
+    "readings": "none",
+    "ruby": null,
+    "pitchAccent": false,
+    "characterView": null,
+    "wordHighlighting": true
+  },
+  "presentation": {
+    "typography": {
+      "fontFamily": null,
+      "wordBreak": null,
+      "lineBreak": null,
+      "joinedScript": false
+    },
+    "labels": {},
+    "displayTransforms": {}
+  },
+  "settings": [
+    {
+      "id": "swissSpelling",
+      "type": "boolean",
+      "default": false,
+      "label": "Swiss spelling (ss for ß)",
+      "description": "Also look words up with ss read as ß, as Swiss and Liechtenstein German write them (Strasse → Straße, heisst → heißt, gross → groß). Adds less likely readings (Masse → Maße) and makes lookups slower.",
+      "group": "lookup",
+      "effect": {"preprocessor": "ssToEszett"}
+    }
+  ],
+  "host": {
+    "ttsLanguage": "de-DE",
+    "audioLanguage": "de",
+    "anki": {
+      "noteTypeFamilies": [],
+      "fieldAliases": {"phonetic-transcriptions": ["IPA"]},
+      "partOfSpeechLabels": {
+        "v": "Verb",
+        "vt": "Transitive verb",
+        "vi": "Intransitive verb",
+        "vr": "Reflexive verb",
+        "vdt": "Ditransitive verb",
+        "n": "Noun",
+        "adj": "Adjective",
+        "adv": "Adverb",
+        "pron": "Pronoun",
+        "prep": "Preposition",
+        "conj": "Conjunction",
+        "intj": "Interjection",
+        "artic": "Article",
+        "det": "Determiner",
+        "num": "Numeral",
+        "name": "Proper noun",
+        "prop-n": "Proper noun",
+        "surn": "Surname",
+        "phrase": "Phrase",
+        "prov": "Proverb",
+        "pref": "Prefix",
+        "suf": "Suffix",
+        "ptcl": "Particle",
+        "ptcpl": "Participle",
+        "abbv": "Abbreviation",
+        "contr": "Contraction",
+        "prep-phrase": "Prepositional phrase"
+      }
+    },
+    "frequencySamples": null,
+    "recommendedDictionaries": [
+      {
+        "name": "Wiktionary German-English (wiktionary-to-yomitan)",
+        "url": "https://yomidevs.github.io/wiktionary-to-yomitan/download/",
+        "description": "German words with English definitions from English Wiktionary, with inflected forms.",
+        "licence": "CC BY-SA 4.0"
+      }
+    ],
+    "sample": {
+      "warmup": "ging",
+      "practice": {
+        "text": "Sie ist heute früh aufgestanden und hat ihre Freunde angerufen.",
+        "lookup": "aufgestanden"
+      },
+      "entry": {
+        "expression": "aufstehen",
+        "reading": "aufstehen",
+        "glossary": ["to get up, to stand up"],
+        "definitionTags": "v",
+        "matched": "aufgestanden",
+        "trace": ["past participle"]
+      },
+      "character": null
+    }
+  }
+}
