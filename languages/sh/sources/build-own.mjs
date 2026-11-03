@@ -1103,10 +1103,11 @@ for (const spec of specs) {
 // already makes that reading: the trace stays the same and no reading is
 // added. The words are those of the 10,000 most frequent words of
 // FrequencyWords hr_50k and sr_50k whose first result was another lemma
-// the word's form-of rows name, judged by the pack author (the dominant
-// reading in ordinary text; words whose readings are both common are left
-// out), and a few found in the judged samples of the real texts (teče,
-// stupi, jezeru, rešeno). [word, lemma, ...more lemmas]
+// the word's form-of rows name, judged by this pack's auditor (hr,
+// sources/judged-ties-hr.tsv) and its author (sr): the dominant reading in
+// ordinary text; words whose readings are both common are left out. A few
+// more were found in the judged samples of the real texts (teče, stupi,
+// jezeru, rešeno). [word, lemma, ...more lemmas]
 const PREFER = [
     // verb forms read as nouns or adjectives
     ['nema', 'nemati'], ['izgleda', 'izgledati'], ['čeka', 'čekati'], ['pada', 'padati'], ['hoda', 'hodati'],

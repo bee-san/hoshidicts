@@ -361,6 +361,7 @@ def cmd_clitics(args, d):
     counts = collections.Counter()
     longer = collections.Counter()
     by_clitic = collections.Counter()
+    alone = collections.Counter()
     for (clitic, rest), entry in zip(places, looked):
         if not entry['results']:
             counts['nothing'] += 1
@@ -368,7 +369,13 @@ def cmd_clitics(args, d):
         first = entry['results'][0]
         multi = ' ' in first['matched']
         if not multi:
-            counts['the word alone, right' if d.right(first['expression'], first['matched']) else 'the word alone, other'] += 1
+            if d.right(first['expression'], first['matched']):
+                counts['the word alone, right'] += 1
+            elif d.gold_of(first['matched']):
+                counts['the word alone, wrong'] += 1
+                alone[(first['matched'], first['expression'], rule_of(first))] += 1
+            else:
+                counts['the word alone, unjudged'] += 1
         elif d.right(first['expression'], first['matched']):
             counts['a longer text, its gold lemma'] += 1
         elif d.gold_of(first['matched']):
@@ -382,6 +389,9 @@ def cmd_clitics(args, d):
     print(json.dumps({'places': len(places), **counts}))
     print('places (clitic, or _ before a clitic) of a longer first result that is not a gold lemma:', by_clitic.most_common(12))
     for (matched, expression, rule), n in longer.most_common(args.show):
+        print(f'  {n:>5}  {matched} -> {expression} ({rule})')
+    print('the word alone, wrong (the most frequent):')
+    for (matched, expression, rule), n in alone.most_common(args.show):
         print(f'  {n:>5}  {matched} -> {expression} ({rule})')
 
 
