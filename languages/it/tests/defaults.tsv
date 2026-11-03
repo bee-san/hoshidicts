@@ -422,17 +422,18 @@ strong	1	esistito	esistere	v	participle
 strong	1	assistito	assistere	v	participle
 strong	1	ascose	ascondere	v	preterite-lui
 strong	1	corrisposto	corrispondere	v	participle
-pronominal-participle	1	pentito	pentirsi	v	participle-pronominal
+pronominal-participle	1	pentito	pentirsi	v	participle-pronominal|participle
 pronominal-participle	0	alzare	alzarsi	*	*
 pronominal-participle	0	tuta	tersi	*	*
+pronominal-participle	0	fiume pentito	fiume pentirsi	*	*
 pronominal-participle	0	data	darsi	*	*
-pronominal-participle	1	accorto	accorgersi	v	participle-pronominal
-pronominal-participle	1	permessa	permettersi	v	participle-pronominal
+pronominal-participle	1	accorto	accorgersi	v	participle-pronominal|participle
+pronominal-participle	1	permessa	permettersi	v	participle-pronominal|participle
 pronominal-participle	1	misurantesi	misurarsi	v	participle-present
-pronominal-participle	1	inginocchiata	inginocchiarsi	v	participle-pronominal
-pronominal-participle	1	pentiti	pentirsi	v	participle-pronominal
-pronominal-participle	1	abbattute	abbattersi	v	participle-pronominal
-pronominal-participle	1	calcolato	calcolarsi	v	participle-pronominal
+pronominal-participle	1	inginocchiata	inginocchiarsi	v	participle-pronominal|participle
+pronominal-participle	1	pentiti	pentirsi	v	participle-pronominal|participle
+pronominal-participle	1	abbattute	abbattersi	v	participle-pronominal|participle
+pronominal-participle	1	calcolato	calcolarsi	v	participle-pronominal|participle
 pronominal-participle	0	comperato	comperarsi	*	*
 infinitive	1	parlarmi	parlare	v	infinitive|clitic-mi
 infinitive	0	parli	pare	*	*

@@ -47,6 +47,7 @@ const conditions = {
     imp_voi: {name: 'Imperative (voi) with vi before it', isDictionaryForm: false},
     ger: {name: 'Gerund without its pronouns', isDictionaryForm: false},
     refl: {name: 'A verb after a pronoun, the pronoun marked with a +', isDictionaryForm: false},
+    ptcp: {name: 'Infinitive of a past participle, marked with a %, for the -rsi verb', isDictionaryForm: false},
     clinf: {name: 'Infinitive without its final e, before an attached pronoun', isDictionaryForm: false},
     p1s: {name: 'First person singular (agrees with mi)', isDictionaryForm: false},
     p2s: {name: 'Second person singular (agrees with ti)', isDictionaryForm: false},
@@ -809,35 +810,36 @@ for (const {lemma, mode, minStem = 0, forms: table} of IRREGULAR) {
 for (const [inflected, deinflected] of [['antesi', 'arsi'], ['antisi', 'arsi'], ['entesi', 'ersi'], ['entisi', 'ersi'], ['entesi', 'irsi'], ['entisi', 'irsi']]) {
     verb('participle-present', inflected, deinflected);
 }
-// The regular past participle of a pronominal verb, looked up in its -rsi
-// form (pentito → pentirsi, vergognata → vergognarsi, inginocchiati →
-// inginocchiarsi). It reads the participle's ending itself, so an infinitive
-// (alzare) never gives the -rsi verb (alzarsi). The strong participles are
-// left to the dictionary's form-of entries (accorto → accorgersi).
+// The past participle of a pronominal verb, looked up in its -rsi form, one
+// step after the infinitive (pentito → pentire → pentirsi, inginocchiata →
+// inginocchiare → inginocchiarsi, messo → mettere → mettersi). The participle
+// rules below write that infinitive with a % before it, which no text or
+// dictionary has, and the -rsi rule reads only such a text: so an infinitive
+// as written (alzare, mi devo alzare) never gives the -rsi verb, and a
+// dictionary's one-step reading of the same word comes first (alzati is
+// traced as the imperative wty-it-en names, not as a participle).
 // comperare is an old spelling of comprare that wty-it-en lists only as a
 // reference to it, so comperato reached comperarsi before comprare (23 of the
 // rule's 26 wrong first results in 752,265 lookups of five Gutenberg texts
 // and Tatoeba); the stem is left out.
 transform('participle-pronominal', 'past participle (-rsi verb)', 'The past participle of a pronominal verb, looked up in its -rsi form: pentito → pentirsi, vergognata → vergognarsi, inginocchiati → inginocchiarsi.');
+const PTCP_MARK = '%';
+const marked = (inflected, deinflected, extra) => add('participle', {type: 'circumfix', inflectedPrefix: '', deinflectedPrefix: PTCP_MARK,
+    inflectedSuffix: inflected, deinflectedSuffix: deinflected, conditionsIn: [], conditionsOut: ['ptcp'], stemCharacters: '{lower}', ...extra});
 for (const [vowel, cls] of [['a', 'are'], ['u', 'ere'], ['i', 'ire']]) {
     for (const tail of ['o', 'a', 'i', 'e']) {
         const splits = cls === 'are' ? [{stemNotStartsWith: '[c]'}, {stemStartsWith: '[c]', stemNotStartsWithText: 'comper'}] : [{}];
-        for (const split of splits) {
-            suffix('participle-pronominal', `${vowel}t${tail}`, cls.replace(/e$/u, 'si'), [], ['v'], {stemMinLength: 2, stemCharacters: '{lower}', ...split});
-        }
+        for (const split of splits) { marked(`${vowel}t${tail}`, cls, {stemMinLength: 2, ...split}); }
     }
 }
-
-// The strong participles of the irregular tables also give the -rsi verb,
-// with the same stems (messo → mettersi, permesso → permettersi, accorto →
-// accorgersi, posto → porsi).
+// The strong participles of the irregular tables, with the same stems
+// (messo, permesso, accorto, posto).
 for (const {lemma, mode, minStem = 0, forms: table} of IRREGULAR) {
     if (mode !== 'compound' || table.participle === undefined) { continue; }
-    const reflexive = lemma.replace(/r?re$/u, 'rsi');
-    for (const form of table.participle) {
-        suffix('participle-pronominal', form, reflexive, [], ['v'], {stemCharacters: '{lower}', ...(minStem > 0 ? {stemMinLength: minStem} : {})});
-    }
+    for (const form of table.participle) { marked(form, lemma, minStem > 0 ? {stemMinLength: minStem} : {}); }
 }
+add('participle-pronominal', {type: 'circumfix', prefixes: [[PTCP_MARK, '']],
+    suffixes: [['are', 'arsi'], ['ere', 'ersi'], ['ire', 'irsi'], ['rre', 'rsi']], conditionsIn: ['ptcp'], conditionsOut: ['v']});
 
 // --- Enclitic pronouns -------------------------------------------------------------------
 // Pronouns written after an infinitive (which loses its final e: farlo,

@@ -3811,38 +3811,33 @@
       [223, 246],
       [248, 255]
     ],
-    "transforms[45].rules[0].stemCharacters": [
+    "transforms[44].rules[5].stemCharacters": [
       [97, 122],
       [223, 246],
       [248, 255]
     ],
-    "transforms[45].rules[0].stemNotStartsWith": [
+    "transforms[44].rules[5].stemNotStartsWith": [
       [99, 99]
     ],
-    "transforms[45].rules[1].stemCharacters": [
+    "transforms[44].rules[6].stemCharacters": [
       [97, 122],
       [223, 246],
       [248, 255]
     ],
-    "transforms[45].rules[1].stemStartsWith": [
+    "transforms[44].rules[6].stemStartsWith": [
       [99, 99]
     ],
-    "transforms[45].rules[2].stemCharacters": [
+    "transforms[44].rules[7].stemCharacters": [
       [97, 122],
       [223, 246],
       [248, 255]
     ],
-    "transforms[45].rules[3].stemCharacters": [
+    "transforms[44].rules[8].stemCharacters": [
       [97, 122],
       [223, 246],
       [248, 255]
     ],
-    "transforms[45].rules[4].stemCharacters": [
-      [97, 122],
-      [223, 246],
-      [248, 255]
-    ],
-    "transforms[45].rules[5].stemCharacters": [
+    "transforms[44].rules[9].stemCharacters": [
       [97, 122],
       [223, 246],
       [248, 255]
@@ -6714,6 +6709,7 @@
         ["pentito", "pentito"],
         ["alzare", "alzare"],
         ["tuta", "tuta"],
+        ["fiume pentito", "fiume pentito"],
         ["data", "data"],
         ["accorto", "accorto"],
         ["permessa", "permessa"],
@@ -8279,6 +8275,7 @@
         ["pentito", "pentito"],
         ["alzare", "alzare"],
         ["tuta", "tuta"],
+        ["fiume pentito", "fiume pentito"],
         ["data", "data"],
         ["accorto", "accorto"],
         ["permessa", "permessa"],
@@ -9844,6 +9841,7 @@
         ["pentito", "Pentito"],
         ["alzare", "Alzare"],
         ["tuta", "Tuta"],
+        ["fiume pentito", "Fiume pentito"],
         ["data", "Data"],
         ["accorto", "Accorto"],
         ["permessa", "Permessa"],
@@ -11409,6 +11407,7 @@
         ["pentito", "pentito"],
         ["alzare", "alzare"],
         ["tuta", "tuta"],
+        ["fiume pentito", "fiume pentito"],
         ["data", "data"],
         ["accorto", "accorto"],
         ["permessa", "permessa"],
@@ -12974,6 +12973,7 @@
         ["pentito", "pentito"],
         ["alzare", "alzare"],
         ["tuta", "tuta"],
+        ["fiume pentito", "fiume pentito"],
         ["data", "data"],
         ["accorto", "accorto"],
         ["permessa", "permessa"],
