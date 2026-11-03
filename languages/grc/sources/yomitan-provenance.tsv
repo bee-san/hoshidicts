@@ -1,0 +1,59 @@
+# Every rule of sources/yomitan.json (Yomitan d3c54c1, GPL-3.0-or-later, Copyright (C) 2025-2026 Yomitan Authors) and what transforms.json
+# does with it, written by sources/build-final.mjs: the own transforms whose rule makes the same deinflection (marked source "both"), "kept"
+# (source "yomitan") or "left out" (README.md, "Rule provenance").
+# transform	rule	deinflection	in transforms.json
+2nd person singular present active indicative	0	εις → ω (v)	ind-act-2sg
+2nd person singular present active indicative	1	εις → εω (v)	ind-act-2sg
+3rd person singular present active indicative	0	ει → ω (v)	ind-act-3sg
+3rd person singular present active indicative	1	ει → εω (v)	ind-act-3sg
+1st person plural present active indicative	0	ομεν → ω (v)	ind-act-1pl
+2nd person plural present active indicative	0	ετε → ω (v)	ind-act-2pl
+3rd person plural present active indicative	0	ουσι → ω (v)	ind-act-3pl
+3rd person plural present active indicative	1	ουσιν → ω (v)	ind-act-3pl
+2nd person singular present middle indicative	0	ῃ → ομαι (v)	ind-mid-2sg
+2nd person singular present middle indicative	1	ει → ομαι (v)	ind-mid-2sg
+3rd person singular present middle indicative	0	εται → ομαι (v)	ind-mid-3sg
+1st person plural present middle indicative	0	ομεθα → ομαι (v)	ind-mid-1pl
+2nd person plural present middle indicative	0	εσθε → ομαι (v)	ind-mid-2pl
+3rd person plural present middle indicative	0	ονται → ομαι (v)	ind-mid-3pl
+genitive singular	0	ου → ος (n)	gen-sg
+genitive singular	1	ας → α (n)	gen-sg
+genitive singular	2	ου → ας (n)	gen-sg
+genitive singular	3	ου → ον (n)	gen-sg
+genitive singular	4	ης → η (n)	gen-sg
+dative singular	0	ω → ος (n)	kept
+dative singular	1	α → ας (n)	kept
+dative singular	2	ω → ον (n)	kept
+accusative singular	0	ον → ος (n)	acc-sg
+accusative singular	1	αν → α (n)	acc-sg
+accusative singular	2	αν → ας (n)	acc-sg
+accusative singular	3	ην → η (n)	acc-sg
+vocative singular	0	ε → ος (n)	voc-sg
+vocative singular	1	α → ας (n)	voc-sg
+vocative singular	2	η → η (n)	kept
+nominative plural	0	οι → ος (n)	nom-pl
+nominative plural	1	αι → α (n)	nom-pl
+nominative plural	2	αι → ας (n)	nom-pl
+nominative plural	3	α → ον (n)	na-pl
+nominative plural	4	αι → η (n)	nom-pl
+genitive plural	0	ων → ος (n)	gen-pl
+genitive plural	1	ων → α (n)	gen-pl
+genitive plural	2	ων → ας (n)	gen-pl
+genitive plural	3	ων → ον (n)	gen-pl
+genitive plural	4	ων → η (n)	gen-pl
+dative plural	0	οις → ος (n)	dat-pl
+dative plural	1	αις → α (n)	dat-pl
+dative plural	2	αις → ας (n)	dat-pl
+dative plural	3	οις → ον (n)	dat-pl
+dative plural	4	αις → η (n)	dat-pl
+accusative plural	0	ους → ος (n)	acc-pl
+accusative plural	1	ας → α (n)	acc-pl
+accusative plural	2	α → ον (n)	na-pl
+accusative plural	3	ας → η (n)	acc-pl
+vocative plural	0	οι → ος (n)	nom-pl
+vocative plural	1	αι → α (n)	nom-pl
+vocative plural	2	αι → ας (n)	nom-pl
+vocative plural	3	α → ον (n)	na-pl
+vocative plural	4	αι → η (n)	nom-pl
+accusative singular masculine	0	ον → ος (adj)	acc-sg
+nominalization	0	ος → εω (v)	left out

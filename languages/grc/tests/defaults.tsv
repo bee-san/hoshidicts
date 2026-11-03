@@ -1,0 +1,8 @@
+# options: default
+# Hand-written: the Doric transform and the capital-letter processor are off here.
+# category	valid	source	term	rule	reasons
+default	1	δίκης	δίκη	n	*
+default	1	Ἀθηναίων	Ἀθηναῖος	*	*
+default	1	ψυχῆς	ψυχή	n	*
+default	0	δίκαν	δίκη	n	*
+default	0	ἀθηναίων	Ἀθηναῖος	*	*
