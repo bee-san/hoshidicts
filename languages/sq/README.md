@@ -263,7 +263,7 @@ deinflection marked `both`.
 ## Measurements
 
 Every number below is reproduced by `sources/measure-all.sh` (it lists the
-commands) at hoshidicts 87a6587 (GCC 14.3, Release), with wty-sq-en as
+commands) at hoshidicts dbeb57b (GCC 14.3, Release), with wty-sq-en as
 published, imported by `hoshidicts-cli import`, form-of rows included, and
 `lookup.formOf` `follow`. The sample is the 1,000 UniMorph rows of
 `corpus.tsv` and `gaps.tsv` together. The pack's one optional feature is the
@@ -388,8 +388,8 @@ file is measured with every option on and with the defaults.
    hand, or 0.5% of all of them (95% interval about 0.2% to 1.3%). The
    audit's own sample of 60 had 54 right; its wrong ones are in Known gaps,
    or fixed (`e matematikës` no longer gives the adjective `matematik`).
-   The sample was drawn from the lookups judged by hand at d6a3d43, before
-   the audits. Lookups whose first result the audit fixes changed have
+   The sample was drawn before the audits, from the lookups judged by hand
+   at the head the first audit reviewed (d6a3d43). Lookups whose first result the audit fixes changed have
    joined that set since: the largest are the comparatives (`më vonë` →
    `vonë` 87, `më shumë` 65, `më pas` 49), where `më` itself had counted as
    right by script, and `gjendet` → `gjej` (44), which found nothing; the 25
@@ -406,23 +406,23 @@ file is measured with every option on and with the defaults.
    and 18 more feminine nouns, and the masculine `ajra` → `ajër`).
 6. **Lookup speed** (`benchmark-lookup --languages languages --language sq`,
    wty-sq-en mapped): the 70 texts of `sources/benchmark-words.txt` in 6
-   passes, the first dropped, three runs at machine load about 50. The
+   passes, the first dropped, three runs at machine load about 45. The
    budget is 1 ms p50.
 
    | Rule set | p50 | p95 |
    | --- | ---: | ---: |
-   | Final | 17.8-18.3 µs | 30.6-33.1 µs |
-   | Union | 23.9-26.6 µs | 39.6-53.8 µs |
-   | Yomitan's rules | 14.5-14.9 µs | 22.9-23.7 µs |
+   | Final | 17.6-17.8 µs | 30.4-32.7 µs |
+   | Union | 22.5-22.8 µs | 37.6-38.7 µs |
+   | Yomitan's rules | 14.1-14.3 µs | 21.9-22.5 µs |
 7. **WebAssembly** (`sources/wasm-bench.mjs`, Hachidori feat/multi-language
    d7e82b0 prebuilt engines, Node 22, the same texts, dictionary paged).
    The budgets are 50 ms and 20 MB, and the pack has no `pattern` rule.
-   - `hdw_language_load` of this pack: median 9.3 ms single-thread and 10.3
-     ms threaded, over 10 fresh engines (8.4-17.1 ms).
+   - `hdw_language_load` of this pack: median 9.4 ms single-thread and 10.3
+     ms threaded, over 10 fresh engines (8.2-14.7 ms).
    - Live heap: +960,480 bytes after the load single-thread, +963,120
      threaded (mallinfo, `hdw_memory_stats`).
-   - `hdw_lookup`: p50 0.058 ms and p95 0.160 ms single-thread; p50 0.069
-     ms and p95 0.183 ms threaded.
+   - `hdw_lookup`: p50 0.060 ms and p95 0.163 ms single-thread; p50 0.074
+     ms and p95 0.206 ms threaded.
 8. **Hachidori in Chrome** (feat/multi-language d7e82b0 with this branch in
    `third_party/hoshidicts`, `test/chrome-language-pack.mjs`, Chrome 152,
    wty-sq-en): 49 / 49 checks pass. Settings adds Albanian beside Japanese
