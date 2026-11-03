@@ -23,10 +23,12 @@ Each is looked up alone; the script counts the words, and their share of the
 list's tokens, whose first result is not one of the word's own lemmas.
 
 text: every word of a text, looked up as a host does: the text from the word
-to the end of its sentence. Positions whose word has form-of rows or a row
-with definitions are judged by script as above; a random sample (seed 1) of
-the other positions with a result is printed for judging by hand. Words that
-start with a proclitic (و ف ب ك ل ال لل س) are also counted on their own.
+to the end of its sentence. Positions whose first result matches the whole
+word are judged by script: a word wty-ar-en lists by its own lemmas, a word it
+does not list (وكتابه) by the lemmas of every way of writing it as proclitics
+(و ف ب ك ل س ال لل and their chains) + a listed word + a pronoun, any of which
+counts as right. A random sample (seed 1) of the other positions with a
+result is printed for judging by hand.
 """
 import collections
 import json
@@ -138,32 +140,53 @@ def positions(text):
     return out
 
 
-SPLITS = ['وبال', 'وكال', 'فبال', 'فكال', 'وال', 'فال', 'بال', 'كال', 'ولل', 'فلل', 'لل', 'ال',
-          'وب', 'وك', 'ول', 'فب', 'فك', 'فل', 'وس', 'فس', 'و', 'ف', 'ب', 'ك', 'ل', 'س']
+PROCLITICS = ['', 'و', 'ف', 'ب', 'ك', 'ل', 'س', 'وب', 'وك', 'ول', 'وس', 'فب', 'فك', 'فل', 'فس',
+              'ال', 'وال', 'فال', 'بال', 'كال', 'وبال', 'وكال', 'فبال', 'فكال', 'لل', 'ولل', 'فلل']
+PRONOUNS = ['', 'ي', 'ني', 'نا', 'ك', 'كما', 'كم', 'كن', 'ه', 'ها', 'هما', 'هم', 'هن']
+
+
+def bases(stem, pronoun):
+    """The spellings a word may have without its pronoun: ة written ت, ى
+    written ا or ي (معناه, عليه) or merged with the pronoun ي (إليّ), and a
+    verb's ـوا without its alif (كتبوه)."""
+    out = [stem]
+    if pronoun:
+        if stem.endswith('ت'):
+            out.append(stem[:-1] + 'ة')
+        if stem.endswith('ا') or stem.endswith('ي'):
+            out.append(stem[:-1] + 'ى')
+        if stem.endswith('و'):
+            out.append(stem + 'ا')
+        if stem.endswith('تمو'):
+            out.append(stem[:-1])
+        if pronoun == 'ي':
+            # ى and the pronoun ي are written as one ي (إليّ, عليّ, لديّ).
+            out.append(stem + 'ى')
+    return out
 
 
 def judge(word, targets, lemma):
-    """The word's own lemmas, or those of the word without its proclitics
-    (for a word the dictionary does not list), and whether proclitics were
-    removed; None when neither has an entry."""
+    """The word's own lemmas, or, for a word the dictionary does not list, the
+    lemmas of every way of writing it as proclitics + a listed word + a
+    pronoun; and whether such a split was needed. None when neither works."""
     own = own_lemmas(word, targets, lemma)
     if own:
         return own, False
-    for prefix in SPLITS:
-        if not word.startswith(prefix) or len(word) - len(prefix) < 2:
+    found = set()
+    for prefix in PROCLITICS:
+        if not word.startswith(prefix):
             continue
-        rest = word[len(prefix):]
-        bases = [rest]
-        if prefix.endswith('لل'):
-            bases = ['ال' + rest, rest]
-        elif prefix.endswith('ال'):
-            bases = ['ال' + rest, rest]
-        found = set()
-        for base in bases:
-            found |= own_lemmas(base, targets, lemma)
-        if found:
-            return found, True
-    return None, False
+        for pronoun in PRONOUNS:
+            if not word.endswith(pronoun) or len(word) - len(prefix) - len(pronoun) < 1 or (prefix == '' and pronoun == ''):
+                continue
+            stem = word[len(prefix):len(word) - len(pronoun)]
+            if prefix.endswith('لل'):
+                stem = 'ال' + stem
+            for base in bases(stem, pronoun):
+                found |= own_lemmas(base, targets, lemma)
+                if prefix.endswith('ال') or prefix.endswith('لل'):
+                    found |= own_lemmas(base[2:] if base.startswith('ال') else base, targets, lemma)
+    return (found, True) if found else (None, False)
 
 
 def text_measure(args):
@@ -196,7 +219,7 @@ def text_measure(args):
     print('positions %d, without a result %d' % (len(pos), counts['no result']))
     print('judged by script %d (first result matching the whole word): wrong %d (%.2f%%)' % (judged, bad, 100 * bad / max(judged, 1)))
     print('  words wty-ar-en lists: %d, wrong %d (%.2f%%)' % (counts['listed judged'], counts['listed wrong'], 100 * counts['listed wrong'] / max(counts['listed judged'], 1)))
-    print('  words it does not list, judged by the word without its proclitics: %d, wrong %d (%.2f%%)' % (
+    print('  words it does not list, judged by their proclitic + word + pronoun splits: %d, wrong %d (%.2f%%)' % (
         counts['clitic judged'], counts['clitic wrong'], 100 * counts['clitic wrong'] / max(counts['clitic judged'], 1)))
     for (word, got, trace), n in wrong.most_common(40):
         print('  %4d  %s -> %s {%s}' % (n, word, got, trace))
