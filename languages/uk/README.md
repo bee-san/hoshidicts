@@ -418,7 +418,7 @@ identical).
      голові, погані, банку, говори, од or видимо. The other homograph rules
      have no row each; the measurements show them (0 wrong frequent
      words).
-   - Hachidori (feat/multi-language d7e82b0c with this branch at ee3b68b in
+   - Hachidori (feat/multi-language d7e82b0c with this branch at d975c2a in
      `third_party/hoshidicts`, `node scripts/sync-languages.mjs`,
      `test/chrome-language-pack.mjs`, Chrome 152, wty-uk-en): 14 of 14 checks
      pass. Settings adds Ukrainian beside Japanese and imports the dictionary
