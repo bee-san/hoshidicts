@@ -54,9 +54,9 @@
 // (section 9.4); the pack's lookup.untaggedTerms lets untagged terms pass.
 //
 // No suffix rule's stem contains a space (`stemCharacters: {stem}`, every
-// character but the space), so no rule reads a phrase as one word (section
-// 14 step 2: "count the space in stem constraints"); short endings need a
-// stem of two letters or more.
+// character but the space; {lowerStem} also leaves out capitals), so no rule
+// reads a phrase as one word (section 14 step 2: "count the space in stem
+// constraints"); short endings need a stem of two letters or more.
 
 import {readFileSync, writeFileSync} from 'node:fs';
 import {dirname, join} from 'node:path';
@@ -461,40 +461,35 @@ prefix('comparative', 'naj', '', ['superlative'], [['najnoviji', 'nov'], ['najbo
 // one whose naj- was removed (cmp).
 const CMP = {in: ['adj', 'cmp']};
 sfx('comparative', 'iji', '', ['comparative'], [['noviji', 'nov'], ['stariji', 'star'], ['najstariji', 'star']], {end: C, ...CMP});
+// The -iji comparatives of adjectives with a fleeting a (važan → važniji,
+// koristan → korisniji, mudar → mudriji) and of definite-only adjectives
+// (zapadni → zapadniji).
 for (const [form, lemma, examples, opts] of [
-    ['plji', 'p', [['skuplji', 'skup']], {}],
-    ['blji', 'b', [['grublji', 'grub']], {}],
-    ['nji', 'n', [['crnji', 'crn']], {}],
-    ['nji', 'nak', [['tanji', 'tanak']], {}],
-    ['ži', 'z', [['brži', 'brz']], {}],
-    ['ži', 'g', [['draži', 'drag'], ['duži', 'dug'], ['stroži', 'strog']], {}],
-    ['ži', 'zak', [['niži', 'nizak'], ['bliži', 'blizak'], ['uži', 'uzak']], {min: 1}],
-    ['ži', 'žak', [['teži', 'težak']], {min: 1}],
-    ['ši', 'h', [['tiši', 'tih']], {}],
-    ['ši', 'sok', [['viši', 'visok']], {min: 1}],
-    ['kši', 'k', [['lakši', 'lak'], ['mekši', 'mek']], {min: 1}],
-    ['pši', 'p', [['lepši', 'lep']], {}],
-    ['pši', 'p', [['ljepši', 'lijep']], {change: {from: ['je'], to: 'ije', occurrence: 'last'}}],
-    ['đi', 'd', [['mlađi', 'mlad'], ['tvrđi', 'tvrd']], {}],
-    ['đi', 'dak', [['slađi', 'sladak'], ['ređi', 'redak']], {}],
-    ['ći', 't', [['žući', 'žut'], ['ljući', 'ljut']], {}],
-    ['ći', 'tak', [['kraći', 'kratak']], {}],
-    ['šći', 'st', [['gušći', 'gust'], ['češći', 'čest']], {min: 1}],
-    ['či', 'k', [['jači', 'jak']], {min: 1}],
-    ['blji', 'bok', [['dublji', 'dubok']], {}],
-    ['iri', 'irok', [['širi', 'širok']], {min: 1}],
-    // The fleeting a of the lemma drops before -iji: važan → važniji,
-    // koristan → korisniji, mudar → mudriji; a definite-only adjective
-    // keeps its -i: zapadni → zapadniji.
     ['niji', 'an', [['važniji', 'važan'], ['sretniji', 'sretan'], ['popularniji', 'popularan']], {end: C}],
     ['sniji', 'stan', [['korisniji', 'koristan'], ['časniji', 'častan']], {min: 1}],
     ['riji', 'ar', [['mudriji', 'mudar'], ['hrabriji', 'hrabar']], {end: C}],
     ['iji', 'i', [['zapadniji', 'zapadni'], ['sjeverniji', 'sjeverni']], {end: C}],
-    ['lji', 'lek', [['dalji', 'dalek']], {}],
 ]) {
     sfx('comparative', form, lemma, ['comparative'], examples, {...opts, ...CMP});
 }
-for (const [form, lemmas] of [['bolji', ['dobar']], ['gori', ['zao', 'loš']], ['veći', ['velik']], ['manji', ['malen', 'mal']], ['dulji', ['dug']], ['rjeđi', ['rijedak']]]) {
+// The comparatives with -ji and a consonant change (jotation: brz → brži,
+// mlad → mlađi, žut → žući, skup → skuplji) belong to a closed set of
+// mostly short adjectives, so they are written out, ijekavian and ekavian
+// (ljepši and lepši); a suffix rule per change would also read verb forms
+// as comparatives (znači → znak, drži → držak, vraći → vrat). Their
+// superlatives are naj- before them (najmlađi → mlađi → mlad), and their
+// cases are read by the adjective rules (mlađeg → mlađi).
+for (const [form, lemmas] of [
+    ['bolji', ['dobar']], ['gori', ['zao', 'loš']], ['veći', ['velik']], ['manji', ['malen', 'mal']], ['dulji', ['dug']], ['duži', ['dug']],
+    ['skuplji', ['skup']], ['grublji', ['grub']], ['gluplji', ['glup']], ['tuplji', ['tup']], ['dublji', ['dubok']], ['plići', ['plitak']],
+    ['crnji', ['crn']], ['tanji', ['tanak']], ['brži', ['brz']], ['draži', ['drag']], ['stroži', ['strog']], ['blaži', ['blag']],
+    ['niži', ['nizak']], ['bliži', ['blizak']], ['uži', ['uzak']], ['teži', ['težak']], ['tiši', ['tih']], ['viši', ['visok']],
+    ['suši', ['suh']], ['gluši', ['gluh']], ['lakši', ['lak']], ['mekši', ['mek']], ['ljepši', ['lijep']], ['lepši', ['lep']],
+    ['mlađi', ['mlad']], ['tvrđi', ['tvrd']], ['slađi', ['sladak']], ['glađi', ['gladak']], ['rjeđi', ['rijedak']], ['ređi', ['redak']],
+    ['žući', ['žut']], ['ljući', ['ljut']], ['krući', ['krut']], ['kraći', ['kratak']], ['žešći', ['žestok']], ['gušći', ['gust']],
+    ['češći', ['čest']], ['jači', ['jak']], ['širi', ['širok']], ['dalji', ['dalek']], ['deblji', ['debeo']], ['bjelji', ['bijel']],
+    ['belji', ['beo']],
+]) {
     for (const lemma of lemmas) { whole('comparative', form, lemma, ['comparative'], [[form, lemma]], CMP); }
 }
 
@@ -511,10 +506,10 @@ for (const [lemmas, forms, tags] of [
     [['sebe'], ['se'], ['gen./acc.']], [['sebe'], ['sebi', 'si'], ['dat./loc.']], [['sebe'], ['sobom'], ['ins.']],
     [['tko', 'ko'], ['koga', 'kog'], ['gen./acc.']], [['tko', 'ko'], ['kome', 'komu', 'kom'], ['dat./loc.']], [['tko', 'ko'], ['kim', 'kime'], ['ins.']],
     [['što', 'šta'], ['čega', 'čeg'], ['gen.']], [['što', 'šta'], ['čemu', 'čem'], ['dat./loc.']], [['što', 'šta'], ['čim', 'čime'], ['ins.']],
-    [['nitko', 'niko'], ['nikoga', 'nikog'], ['gen./acc.']], [['nitko', 'niko'], ['nikome', 'nikomu'], ['dat./loc.']], [['nitko', 'niko'], ['nikim'], ['ins.']],
-    [['netko', 'neko'], ['nekoga', 'nekog'], ['gen./acc.']], [['netko', 'neko'], ['nekome', 'nekomu'], ['dat./loc.']],
-    [['ništa'], ['ničega', 'ničeg'], ['gen.']], [['ništa'], ['ničemu'], ['dat./loc.']], [['ništa'], ['ničim'], ['ins.']],
-    [['nešto'], ['nečega', 'nečeg'], ['gen.']], [['nešto'], ['nečemu'], ['dat./loc.']], [['nešto'], ['nečim'], ['ins.']],
+    [['nitko', 'niko'], ['nikoga', 'nikog'], ['gen./acc.']], [['nitko', 'niko'], ['nikome', 'nikomu', 'nikom'], ['dat./loc.']], [['nitko', 'niko'], ['nikim'], ['ins.']],
+    [['netko', 'neko'], ['nekoga', 'nekog'], ['gen./acc.']], [['netko', 'neko'], ['nekome', 'nekomu', 'nekom'], ['dat./loc.']], [['netko', 'neko'], ['nekim'], ['ins.']],
+    [['ništa'], ['ničega', 'ničeg'], ['gen.']], [['ništa'], ['ničemu', 'ničem'], ['dat./loc.']], [['ništa'], ['ničim'], ['ins.']],
+    [['nešto'], ['nečega', 'nečeg'], ['gen.']], [['nešto'], ['nečemu', 'nečem'], ['dat./loc.']], [['nešto'], ['nečim'], ['ins.']],
     [['sav'], ['sva'], ['fem. nom. sg.', 'neut. nom./acc. pl.']], [['sav'], ['sve'], ['neut. nom./acc. sg.', 'fem. gen. sg.', 'acc. pl.']],
     [['sav'], ['svi'], ['masc. nom. pl.']], [['sav'], ['svu'], ['fem. acc. sg.']], [['sav'], ['svega', 'sveg'], ['masc./neut. gen. sg.']],
     [['sav'], ['svemu', 'svem', 'svom', 'svome'], ['masc./neut. dat./loc. sg.']], [['sav'], ['svim', 'svime'], ['masc./neut. ins. sg.', 'dat./loc./ins. pl.']],
@@ -976,7 +971,12 @@ function ruleOf(spec) {
     if (spec.type === 'suffix' || spec.type === 'prefix') {
         const min = opts.min ?? 2;
         if (min > 0) { rule.stemMinLength = min; }
-        rule.stemCharacters = '{stem}';
+        // Verbs and adjectives are written in lower case, so their rules do
+        // not read a capitalised word (lowerStem): the sentence-initial Kao
+        // is not read as an l-participle (→ Kati → the name Kata) and Gospodo
+        // not as an adjective (→ Gospod); its lower-case variant, which the
+        // decapitalize processor gives, is.
+        rule.stemCharacters = rule.conditionsOut.some((c) => c === 'v' || c === 'adj' || c === 'cmp') ? '{lowerStem}' : '{stem}';
         if (opts.end) { rule.stemEndsWith = opts.end; }
         if (opts.notEnd) { rule.stemNotEndsWith = opts.notEnd; }
         if (opts.notStartText) { rule.stemNotStartsWithText = opts.notStartText; }
@@ -1041,6 +1041,41 @@ const DESCRIPTIONS = {
     'irregular-verb': 'Irregular verb form',
 };
 
+/**
+ * Suffix rules of one transform that differ only in their ending pair are
+ * written as one circumfix row in the cross-product form (section 7.3) with
+ * an empty prefix: `{"type": "circumfix", "prefixes": [["", ""]],
+ * "suffixes": [["am", "ati"], ["aš", "ati"], ...]}` stands for the suffix
+ * rules `am` → `ati`, `aš` → `ati`, ... with the row's conditions and stem
+ * constraints. The engine expands them when the pack loads; the file and
+ * tests/classes.json, which lists each row's stem classes, stay small.
+ */
+function compact(rules) {
+    const out = [];
+    const rows = new Map();
+    for (const rule of rules) {
+        if (rule.type !== 'suffix') {
+            out.push(rule);
+            continue;
+        }
+        const {type: _type, inflected, deinflected, ...rest} = rule;
+        const signature = JSON.stringify(rest);
+        const row = rows.get(signature);
+        if (row === undefined) {
+            const entry = {rule, pairs: [[inflected, deinflected]], rest};
+            rows.set(signature, entry);
+            out.push(entry);
+        } else {
+            row.pairs.push([inflected, deinflected]);
+        }
+    }
+    return out.map((item) => {
+        if (item.pairs === undefined) { return item; }
+        if (item.pairs.length === 1) { return item.rule; }
+        return {type: 'circumfix', prefixes: [['', '']], suffixes: item.pairs, ...item.rest};
+    });
+}
+
 const groups = [...byTags.values()].sort((a, b) => GROUP_ORDER.indexOf(a.group) - GROUP_ORDER.indexOf(b.group));
 const transforms = [];
 const usedIds = new Set();
@@ -1062,7 +1097,7 @@ for (const g of groups) {
             exampleRows.push([id, toCyrillic(form), lemma]);
         }
     }
-    transforms.push({id, name, description: `${DESCRIPTIONS[g.group]}: ${name}${shown ? ` (${shown})` : ''}.`, source: 'own', rules});
+    transforms.push({id, name, description: `${DESCRIPTIONS[g.group]}: ${name}${shown ? ` (${shown})` : ''}.`, source: 'own', rules: compact(rules)});
 }
 
 const own = {schema: 1, conditions, transforms};
@@ -1090,5 +1125,6 @@ if (casesAt !== -1) {
 if (process.argv.includes('--transforms')) {
     writeFileSync(join(pack, 'transforms.json'), formatTransforms(own));
 }
-const ruleCount = transforms.reduce((n, t) => n + t.rules.length, 0);
-console.log(`own.json: ${transforms.length} transforms, ${ruleCount} rules; ${exampleRows.length} examples`);
+const rows = transforms.reduce((n, t) => n + t.rules.length, 0);
+const ruleCount = transforms.reduce((n, t) => n + t.rules.reduce((m, r) => m + (r.suffixes ? r.suffixes.length * r.prefixes.length : 1), 0), 0);
+console.log(`own.json: ${transforms.length} transforms, ${ruleCount} rules in ${rows} rows; ${exampleRows.length} examples`);

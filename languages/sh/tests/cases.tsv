@@ -808,6 +808,12 @@ negatives	0	nije	niti	*	*
 negatives	0	kasnije	kasniti	*	*
 negatives	0	ranije	raniti	*	*
 negatives	0	prije	priti	*	*
+negatives	0	Kao	Kati	*	*
+negatives	0	Gospodo	Gospod	*	*
+negatives	0	Mirno	Miran	*	*
+negatives	0	Rekao	Reći	*	*
+negatives	0	Vidim	Vid	*	*
+negatives	0	Dobrog	Dobar	*	*
 # --- One example of each transform, written by sources/build-own.mjs --cases (hand-written examples, no third-party data) ---
 rule example	1	sam	biti	v	*
 rule example	1	si	biti	v	*

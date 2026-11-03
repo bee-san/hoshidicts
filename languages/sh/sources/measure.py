@@ -1,0 +1,375 @@
+#!/usr/bin/env python3
+# SPDX-License-Identifier: GPL-3.0-or-later
+"""The measurements of README.md that need data this repository does not hold.
+
+    python3 languages/sh/sources/measure.py <command> --zip wty-sh-en.zip --dictionary <imported dir> [options]
+
+--zip is the published dictionary (read for its headwords and form-of rows),
+--dictionary the same dictionary imported by `hoshidicts-cli import` (or the
+labelled copy of sources/tag-all-rows.py imported). Lookups run through
+build/lookup-batch (languages/en/sources/lookup-batch.cpp built as its header
+says): Lookup::lookup with no language options, 16 results, scan length 16,
+as a host's hover does.
+
+A text's gold lemmas are the lemmas the form-of rows of the text name, and
+of its lower-case, capitalised, Latin (for Cyrillic) and accent-stripped
+spellings; a text that is itself a headword with definitions names itself.
+wty-sh-en writes many references with accent marks (davati → dȁti) and to
+lemmas that are themselves only references (daje → davati → dȁti), so a
+gold lemma is also the accent-stripped spelling and what up to two more
+references of a reference-only lemma name.
+A first result is right when its expression is a gold lemma of the matched
+text (a lookup's first result may match several words, such as the
+dictionary's `vidio sam`).
+
+Commands:
+
+  frequent  The --top most frequent words of --frequency (FrequencyWords
+            lines "word count"). A rule reaches a word when a gold lemma of
+            it is among its deinflections with at least one rule, after the
+            pack's processors. For those words: how many show a wrong first
+            result, and their share of the list's tokens; the wrong ones are
+            listed with the rule of the first result (--show).
+  text      Every word of a plain-text file (--text), looked up with the text
+            from the word to the end of its sentence. First results whose
+            matched text has gold lemmas are judged by script; a random
+            sample (--sample, seed 1) of the others is written to --out for
+            judging by hand. Groups the wrong ones by the transforms of their
+            trace.
+  clitics   Tatoeba sentences (--tatoeba, one or more of srp/hrv/bos
+            *_sentences.tsv.bz2): every place where a clitic, auxiliary or
+            short pronoun is followed by a word, looked up from the clitic.
+            Counts first results that match more than the clitic and are not
+            a gold lemma of the matched text, by rule.
+  traces    tests/corpus.tsv: the share of rows whose shown trace (the
+            shortest that reaches the lemma, as traceSelection "shortest"
+            keeps) names the row's UniMorph case and number, or tense and
+            person.
+
+--languages loads the packs of another directory (another version of the
+pack, for comparisons). --cli and --batch are build/hoshidicts-cli and
+build/lookup-batch.
+"""
+import argparse, bz2, collections, json, os, random, re, subprocess, sys, unicodedata, zipfile
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+PACK = os.path.dirname(HERE)
+REPO = os.path.dirname(os.path.dirname(PACK))
+
+CYR = dict(zip('АБВГДЂЕЖЗИЈКЛМНОПРСТЋУФХЦЧШабвгдђежзијклмнопрстћуфхцчш',
+               'ABVGDĐEŽZIJKLMNOPRSTĆUFHCČŠabvgdđežzijklmnoprstćufhcčš'))
+CYR.update({'Љ': 'Lj', 'Њ': 'Nj', 'Џ': 'Dž', 'љ': 'lj', 'њ': 'nj', 'џ': 'dž'})
+
+
+def to_latin(text):
+    return unicodedata.normalize('NFC', ''.join(CYR.get(c, c) for c in unicodedata.normalize('NFD', text)))
+
+
+def strip_accents(text):
+    """Yomitan's removeSerboCroatianAccentMarks: one mark after a vowel or r."""
+    return unicodedata.normalize('NFC', re.sub(r'([aeiourAEIOURаеиоуАЕИОУрР])[\u0300-\u036F]', r'\1', unicodedata.normalize('NFD', text)))
+
+
+def spellings(text):
+    out = {text}
+    for t in list(out):
+        out |= {t.lower(), t[:1].upper() + t[1:], to_latin(t), to_latin(t).lower(), strip_accents(t), strip_accents(t).lower()}
+    return out
+
+
+class Dictionary:
+    def __init__(self, zip_path):
+        self.lemmas = set()
+        self.gold = collections.defaultdict(set)
+        with zipfile.ZipFile(zip_path) as z:
+            for name in sorted(n for n in z.namelist() if re.fullmatch(r'term_bank_\d+\.json', n)):
+                for row in json.loads(z.read(name)):
+                    refs = [d for d in row[5] if isinstance(d, list) and len(d) == 2 and isinstance(d[0], str) and d[0]]
+                    if refs:
+                        self.gold[row[0]].update(r[0] for r in refs)
+                    if len(refs) < len(row[5]):
+                        self.lemmas.add(row[0])
+
+    def gold_of(self, text):
+        out = set()
+        for t in spellings(text):
+            out |= self.gold.get(t, set())
+            if t in self.lemmas:
+                out.add(t)
+        out |= {strip_accents(g) for g in out}
+        # A lemma that is itself only references (an aspect partner such as
+        # davati, a spelling such as dvije) names the lemma it points to:
+        # follow up to two more references.
+        for _ in range(2):
+            more = set()
+            for g in out:
+                if g not in self.lemmas:
+                    more |= self.gold.get(g, set())
+            more |= {strip_accents(g) for g in more}
+            if more <= out:
+                break
+            out |= more
+        return out
+
+    def right(self, expression, matched):
+        return expression in self.gold_of(matched) or strip_accents(expression) in self.gold_of(matched)
+
+
+def lookup_batch(args, texts):
+    batch = args.batch or os.path.join(REPO, 'build', 'lookup-batch')
+    result = subprocess.run([batch, args.languages, 'sh', args.dictionary], input='\n'.join(texts) + '\n',
+                            capture_output=True, text=True, check=True)
+    return [json.loads(line) for line in result.stdout.splitlines()]
+
+
+def cli(args, command, texts, *extra):
+    binary = args.cli or os.path.join(REPO, 'build', 'hoshidicts-cli')
+    result = subprocess.run([binary, '--languages', args.languages, command, 'sh', '--stdin', *extra],
+                            input='\n'.join(texts) + '\n', capture_output=True, text=True, check=True)
+    return [json.loads(line) for line in result.stdout.splitlines()]
+
+
+def deinflections(args, words):
+    """For each word: (text, conditions, trace) of every deinflection of every processor variant."""
+    variants = cli(args, 'preprocess', words, '--all-options')
+    every = sorted({v['text'] for d in variants for v in d['variants']})
+    by_text = {d['input']: d['results'] for d in cli(args, 'deinflect', every, '--all-options')}
+    return [[(r['text'], r['conditions'], r['trace']) for v in d['variants'] for r in by_text.get(v['text'], [])] for d in variants]
+
+
+def frequent(path, n):
+    words = []
+    with open(path, encoding='utf-8') as f:
+        for line in f:
+            word, count = line.split()
+            words.append((word, int(count)))
+            if len(words) >= n:
+                break
+    return words
+
+
+def rule_of(result):
+    """The transform that first changed the text (the last one of the trace)."""
+    return result['trace'][-1] if result['trace'] else '(as written)'
+
+
+def cmd_frequent(args, d):
+    words = frequent(args.frequency, args.top)
+    total = sum(c for _, c in words)
+    reached = []
+    for (word, count), results in zip(words, deinflections(args, [w for w, _ in words])):
+        gold = d.gold_of(word) - {word}
+        if any(text in gold and trace for text, _, trace in results):
+            reached.append((word, count))
+    looked = lookup_batch(args, [w for w, _ in reached])
+    wrong, above = [], 0
+    for (word, count), entry in zip(reached, looked):
+        results = entry['results']
+        if not results:
+            wrong.append((count, word, '(nothing)', '', ''))
+            continue
+        first = results[0]
+        if not d.right(first['expression'], first['matched']):
+            wrong.append((count, word, first['expression'], first['matched'], rule_of(first)))
+        rank = next((i for i, r in enumerate(results) if d.right(r['expression'], r['matched'])), None)
+        if rank is not None and rank > 0 and not d.right(results[0]['expression'], results[0]['matched']):
+            above += 1
+    wrong.sort(reverse=True)
+    reached_tokens = sum(c for _, c in reached)
+    wrong_tokens = sum(w[0] for w in wrong)
+    print(json.dumps({'words': len(words), 'tokens': total, 'reached': len(reached), 'reachedTokens': reached_tokens,
+                      'wrongFirst': len(wrong), 'wrongFirstTokens': wrong_tokens,
+                      'wrongFirstShareOfListTokens': round(wrong_tokens / total, 5), 'wrongAboveRight': above}))
+    by_rule = collections.Counter(w[4] for w in wrong)
+    print('rules of the wrong first results:', by_rule.most_common(15))
+    for count, word, expression, matched, rule in wrong[:args.show]:
+        print(f'  {count:>9}  {word} -> {expression} ({matched}; {rule})')
+
+
+SENTENCE_END = re.compile(r'[.!?…]+')
+WORD = re.compile(r"[A-Za-zÀ-ÖØ-öø-ɏЀ-ӿ\u0300-\u036F]+(?:['’][A-Za-zÀ-ÖØ-öø-ɏЀ-ӿ]+)*")
+
+
+def hovers(text):
+    """(word, text from the word to the end of its sentence) for every word."""
+    for paragraph in re.split(r'\n\s*\n', text):
+        paragraph = ' '.join(paragraph.split())
+        for sentence in re.split(r'(?<=[.!?…])\s+', paragraph):
+            for m in WORD.finditer(sentence):
+                rest = sentence[m.start():]
+                end = SENTENCE_END.search(rest)
+                yield m.group(0), rest[:end.end()] if end else rest
+
+
+def judge(d, entry, word):
+    """right, wrong or unjudged (no gold lemma for the matched text), and the first result."""
+    if not entry['results']:
+        return 'nothing', None
+    first = entry['results'][0]
+    gold = d.gold_of(first['matched'])
+    if not gold:
+        return 'unjudged', first
+    return ('right' if d.right(first['expression'], first['matched']) else 'wrong'), first
+
+
+def cmd_text(args, d):
+    with open(args.text, encoding='utf-8') as f:
+        pairs = list(hovers(f.read()))
+    looked = lookup_batch(args, [rest for _, rest in pairs])
+    counts = collections.Counter()
+    wrong = collections.Counter()
+    by_rule = collections.Counter()
+    unjudged = []
+    for (word, rest), entry in zip(pairs, looked):
+        verdict, first = judge(d, entry, word)
+        counts[verdict] += 1
+        if verdict == 'wrong':
+            wrong[(first['matched'], first['expression'], rule_of(first))] += 1
+            by_rule[rule_of(first)] += 1
+        elif verdict == 'unjudged':
+            unjudged.append((word, rest, first))
+    print(json.dumps({'lookups': len(pairs), **counts, 'wrongRate': round(counts['wrong'] / max(1, len(pairs)), 5)}))
+    print('rules of the wrong first results:', by_rule.most_common(12))
+    for (matched, expression, rule), n in wrong.most_common(args.show):
+        print(f'  {n:>5}  {matched} -> {expression} ({rule})')
+    unjudged_by_rule = collections.Counter(rule_of(f) for _, _, f in unjudged)
+    print('unjudged first results by rule:', unjudged_by_rule.most_common(10))
+    if args.out:
+        rng = random.Random(1)
+        sample = rng.sample(unjudged, min(args.sample, len(unjudged)))
+        with open(args.out, 'w', encoding='utf-8') as f:
+            f.write('# word\ttext\tmatched\texpression\ttrace\tjudgement (fill in: right, wrong)\n')
+            for word, rest, first in sample:
+                f.write(f"{word}\t{rest[:60]}\t{first['matched']}\t{first['expression']}\t{'|'.join(first['trace'])}\t\n")
+        print(f'{len(sample)} unjudged first results sampled to {args.out}')
+
+
+CLITICS = ('se', 'si', 'je', 'sam', 'smo', 'ste', 'su', 'ću', 'ćeš', 'će', 'ćemo', 'ćete', 'bih', 'bi', 'bismo', 'biste',
+           'mi', 'ti', 'mu', 'joj', 'nam', 'vam', 'im', 'me', 'te', 'ga', 'ju', 'nas', 'vas', 'ih', 'li', 'ne', 'ni', 'da',
+           'ja', 'on', 'ona', 'ono', 'oni', 'one', 'vi')
+
+
+def tatoeba(paths):
+    for path in paths:
+        with bz2.open(path, 'rt', encoding='utf-8') as f:
+            for line in f:
+                parts = line.rstrip('\n').split('\t')
+                if len(parts) >= 3:
+                    yield parts[2]
+
+
+def cmd_clitics(args, d):
+    places = []
+    for sentence in tatoeba(args.tatoeba):
+        words = list(WORD.finditer(sentence))
+        for i, m in enumerate(words[:-1]):
+            clitic = to_latin(m.group(0)).lower()
+            if clitic in CLITICS:
+                rest = sentence[m.start():]
+                end = SENTENCE_END.search(rest)
+                places.append((clitic, rest[:end.end()] if end else rest))
+    looked = lookup_batch(args, [rest for _, rest in places])
+    counts = collections.Counter()
+    longer = collections.Counter()
+    by_clitic = collections.Counter()
+    for (clitic, rest), entry in zip(places, looked):
+        if not entry['results']:
+            counts['nothing'] += 1
+            continue
+        first = entry['results'][0]
+        multi = ' ' in first['matched']
+        if not multi:
+            counts['the clitic alone, right' if d.right(first['expression'], first['matched']) else 'the clitic alone, other'] += 1
+        elif d.right(first['expression'], first['matched']):
+            counts['a longer text, its gold lemma'] += 1
+        elif d.gold_of(first['matched']):
+            counts['a longer text, wrong'] += 1
+            longer[(first['matched'], first['expression'], rule_of(first))] += 1
+            by_clitic[clitic] += 1
+        else:
+            counts['a longer text, unjudged'] += 1
+            longer[(first['matched'], first['expression'], rule_of(first))] += 1
+            by_clitic[clitic] += 1
+    print(json.dumps({'places': len(places), **counts}))
+    print('clitics before a longer first result that is not a gold lemma:', by_clitic.most_common(12))
+    for (matched, expression, rule), n in longer.most_common(args.show):
+        print(f'  {n:>5}  {matched} -> {expression} ({rule})')
+
+
+CASES = {'NOM': 'nom.', 'GEN': 'gen.', 'DAT': 'dat.', 'ACC': 'acc.', 'VOC': 'voc.', 'ESS': 'loc.', 'INS': 'ins.'}
+
+
+def names(tags, name):
+    t = tags.split(';')
+    name = name.lower()
+    if t[0] in ('N', 'ADJ'):
+        case = next((CASES[x] for x in t if x in CASES), None)
+        number = 'pl.' if 'PL' in t else 'sg.'
+        if 'CMPR' in t or 'SPRL' in t:
+            return ('comparative' in name or 'superlative' in name)
+        return case is not None and any(case in part and number in part for part in re.split(r', ', name)) or (case is None)
+    if t[0] == 'V' and 'PRS' in t:
+        person = next(x for x in t if x in ('1', '2', '3')) + ('sg' if 'SG' in t else 'pl')
+        return f'present {person}' in name or (person == '3pl' and 'present 3pl' in name)
+    if t[0] == 'V' and 'IMP' in t:
+        return 'imperative' in name
+    if t[0] == 'V' and ('PROG' in t or 'LGSPEC2' in t):
+        return 'imperfect' in name
+    if t[0] == 'V' and 'FUT' in t:
+        return 'future' in name
+    if t[0] == 'V.PTCP':
+        return ('passive' in name) if 'PASS' in t else ('l-participle' in name)
+    return False
+
+
+def cmd_traces(args, d):
+    with open(os.path.join(args.languages, 'sh', 'transforms.json'), encoding='utf-8') as f:
+        transform_names = {t['id']: t['name'] for t in json.load(f)['transforms']}
+    rows = [line.rstrip('\n').split('\t') for line in open(os.path.join(args.languages, 'sh', 'tests', 'corpus.tsv'), encoding='utf-8')
+            if not line.startswith('#')]
+    found = deinflections(args, [r[2] for r in rows])
+    kinds = collections.Counter()
+    good = collections.Counter()
+    misses = collections.defaultdict(list)
+    for row, results in zip(rows, found):
+        tags, source, lemma, pos = row[0], row[2], row[3], row[4]
+        paths = [trace for text, conditions, trace in results if text == lemma and trace and (not conditions or pos in conditions)]
+        if not paths:
+            continue
+        trace = min(paths, key=len)
+        kind = tags.split(';')[0] + (';' + tags.split(';')[1] if tags.startswith('V;') else '')
+        kinds[kind] += 1
+        # The trace's first step is the inflection of the source.
+        if names(tags, transform_names.get(trace[0], '')):
+            good[kind] += 1
+        else:
+            misses[kind].append((source, lemma, transform_names.get(trace[0], trace[0])))
+    total = sum(kinds.values())
+    print(json.dumps({'rows': total, 'named': sum(good.values()), 'share': round(sum(good.values()) / max(1, total), 4),
+                      'byKind': {k: f'{good[k]}/{n}' for k, n in sorted(kinds.items())}}, ensure_ascii=False))
+    for kind, items in misses.items():
+        print(kind, items[:args.show])
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument('command', choices=['frequent', 'text', 'clitics', 'traces'])
+    parser.add_argument('--zip', required=True)
+    parser.add_argument('--dictionary', required=True)
+    parser.add_argument('--languages', default=os.path.join(REPO, 'languages'))
+    parser.add_argument('--cli')
+    parser.add_argument('--batch')
+    parser.add_argument('--frequency')
+    parser.add_argument('--top', type=int, default=10000)
+    parser.add_argument('--text')
+    parser.add_argument('--tatoeba', nargs='+')
+    parser.add_argument('--sample', type=int, default=60)
+    parser.add_argument('--out')
+    parser.add_argument('--show', type=int, default=40)
+    args = parser.parse_args()
+    d = Dictionary(args.zip)
+    {'frequent': cmd_frequent, 'text': cmd_text, 'clitics': cmd_clitics, 'traces': cmd_traces}[args.command](args, d)
+
+
+if __name__ == '__main__':
+    main()
