@@ -114,10 +114,25 @@ const REMOVE_LAST_ACCENT = [NFD, {map: {'\u0301': ''}, at: 'last'}, NFC];
 
 // --- Rule builders ---------------------------------------------------------------
 
-// Stems are Greek letters only (no space, apostrophe or digit), so that a rule
+// Stems are Greek letters only: no space, apostrophe or digit, so that a rule
 // never reads the last word of a phrase (docs/languages.md 14, "Count the
-// space").
+// space"). Noun rules also take capitals, for proper nouns (Αυγούστου →
+// Αύγουστος, Ελλάδας → Ελλάδα); verb and adjective rules take lowercase
+// letters only, since no verb or adjective is written with a capital: a word
+// that starts a sentence reaches them through the decapitalize processor.
+// Read as written, such a word reached proper nouns that then came first,
+// with fewer processor steps than the word itself (Διά → Διός → Ζευς, Άδικα
+// → Άδης, Πέτρα → Πέτρος).
 const LETTERS = '{greek}';
+const NAME_LETTERS = '{greekAll}';
+// The endings names and nationality nouns take, which may follow a capital:
+// -ος (Γιώργου, Γιώργο, Γιώργε; Καναδέζοι, Καναδέζους), -ας and -ης
+// (Λουκά, Γιάννη), the genitive of -α and -η (Μαρίας, Ελένης) and the plural
+// of -α (Καναδέζες). Neuter, diminutive and other plural endings read a
+// capitalised common word as a name: Πέτρα is not Πέτρος, Ελληνικά not
+// Ελληνικό, Σάμη not Σάμος, Μήνες not Μήνης.
+const NAME_PAIRS = new Set(['ου ος', 'ο ος', 'ε ος', 'οι ος', 'ων ος', 'ους ος', 'α ας', 'η ης', 'ας α', 'ης η', 'ες α', 'ες η', 'ων α', 'ων η']);
+const namePair = (inflected, deinflected) => NAME_PAIRS.has(`${plain(inflected)} ${plain(deinflected)}`);
 
 const transforms = [];
 const byId = new Map();
@@ -133,7 +148,7 @@ function transform(id, name, description) {
 function constraints(opts) {
     const out = {};
     out.stemMinLength = opts.min ?? 2;
-    out.stemCharacters = opts.chars ?? LETTERS;
+    out.stemCharacters = opts.chars ?? (opts.names && opts.namePairs ? NAME_LETTERS : LETTERS);
     for (const key of ['stemContains', 'stemStartsWith', 'stemEndsWith', 'stemNotStartsWith', 'stemNotEndsWith', 'stemNotStartsWithText', 'stemStartsWithText']) {
         if (opts[key] !== undefined) { out[key] = opts[key]; }
     }
@@ -160,7 +175,7 @@ function suffix(id, inflected, deinflected, opts = {}) {
     t.rules.push({
         type: 'suffix', inflected, deinflected,
         conditionsIn: opts.in ?? [], conditionsOut: opts.out ?? [],
-        ...constraints(opts),
+        ...constraints({...opts, namePairs: namePair(inflected, deinflected)}),
     });
 }
 
@@ -233,7 +248,7 @@ function shared(id, pairs, then, opts = {}) {
         prefixes: opts.prefixes ?? [['', '']],
         suffixes,
         conditionsIn: opts.in ?? [], conditionsOut: out,
-        ...constraints({...opts, ...more}),
+        ...constraints({...opts, ...more, namePairs: unique.every(([a, b]) => namePair(a, b))}),
     };
     if (steps !== null) { rule.then = steps; }
     t.rules.push(rule);
@@ -804,8 +819,8 @@ transform('diminutive', 'diminutive', 'Diminutive of a noun: σπιτάκι, π�
 
 // Nouns (`n`), nouns and adjectives (`n`, `adj`) and adjectives (`adj`); letters
 // only, stems of two letters or more.
-const N = {out: ['n'], nominal: true};
-const NA = {out: ['n', 'adj'], nominal: true};
+const N = {out: ['n'], nominal: true, names: true};
+const NA = {out: ['n', 'adj'], nominal: true, names: true};
 const A = {out: ['adj'], nominal: true};
 
 // Masculine and feminine -ος, and the masculine of adjectives in -ος.
@@ -896,7 +911,9 @@ suffix('gen-sg', 'ης', 'η', N);
 suffix('gen-sg', 'ής', 'ή', N);
 suffix('gen-sg', 'εως', 'η', N);
 shared('gen-sg', [['εως', 'η']], LEFT, {...N, ...KEEPS});
-suffix('plural', 'ες', 'η', N);
+// μέρες is the plural of μέρα: no feminine noun μέρη exists, and μέρη is the
+// plural of μέρος.
+suffix('plural', 'ες', 'η', {...N, stemNotStartsWithText: 'μέρ'});
 suffix('plural', 'ές', 'ή', N);
 suffix('plural', 'εις', 'η', N);
 shared('plural', [['εις', 'η']], LEFT, {...N, ...KEEPS});
@@ -963,14 +980,17 @@ const AFTER_VOWEL = '{vowel}';
 suffix('feminine', 'η', 'ος', A);
 suffix('feminine', 'ή', 'ός', A);
 suffix('feminine', 'α', 'ος', {...A, stemEndsWith: AFTER_VOWEL});
-suffix('feminine', 'ιά', 'ός', A);
+// αυτιά is the plural of αυτί, not a form of the pronoun αυτός.
+suffix('feminine', 'ιά', 'ός', {...A, stemNotStartsWithText: 'αυτ'});
 suffix('feminine', 'ιά', 'ύς', A);
 suffix('feminine-gen-sg', 'ης', 'ος', A);
 suffix('feminine-gen-sg', 'ής', 'ός', A);
 suffix('feminine-gen-sg', 'ας', 'ος', {...A, stemEndsWith: AFTER_VOWEL});
 suffix('feminine-gen-sg', 'ιάς', 'ός', A);
 suffix('feminine-gen-sg', 'ιάς', 'ύς', A);
-suffix('feminine-pl', 'ες', 'ος', A);
+// μέρες is the plural of μέρα; μέρος is a neuter noun, which a dictionary
+// without parts of speech cannot tell from an adjective.
+suffix('feminine-pl', 'ες', 'ος', {...A, stemNotStartsWithText: 'μέρ'});
 suffix('feminine-pl', 'ές', 'ός', A);
 suffix('feminine-pl', 'ιές', 'ός', A);
 suffix('feminine-pl', 'ιές', 'ύς', A);
@@ -1082,12 +1102,14 @@ function accentRule(pos, kind, letter, change, extra, suffixes = identity(pos)) 
         conditionsIn: [KIND[kind][pos]],
         conditionsOut: [pos],
         stemMinLength: 2,
-        stemCharacters: LETTERS,
+        stemCharacters: '{greekAll}',
         ...extra,
         stemChange: {from: [letter], to: ACUTE[letter], ...change},
     });
 }
-const CLEAN = {stemCharacters: '{unaccented}'};
+// The accent step also reads capitals: a name written without its accent
+// (ΑΘΗΝΑ → Αθηνα → Αθήνα).
+const CLEAN = {stemCharacters: '{unaccentedAll}'};
 for (const pos of ['v', 'n', 'adj']) {
     for (const letter of VOWEL_LETTERS) {
         // last: the last vowel of the stem, followed only by consonants
