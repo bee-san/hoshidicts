@@ -9,10 +9,11 @@ is part of a word. Baybayin letters count as letters: wiktionary-to-yomitan's
 dictionary lists 31,360 Baybayin spellings as form-of rows of their Latin
 headwords, and no rule deinflects Baybayin.
 
-The pack's dictionary leaves the part-of-speech column empty (below), so
-until `lookup.untaggedTerms` reaches main every number is given twice: with
-the dictionary as published, and with a labelled copy that reads it as
-`"untaggedTerms": "pass"` will.
+The pack's dictionary leaves the part-of-speech column empty on every row
+(below), so the pack sets `lookup.untaggedTerms` to `pass` and keeps the
+conditions on its rules. Every number is given for both values (docs/
+languages.md section 14, step 5): `pass`, the pack's, and `filter`,
+Yomitan's behaviour.
 
 ## Sources and licences
 
@@ -63,7 +64,10 @@ the dictionary as published, and with a labelled copy that reads it as
     124,921 term rows), CC BY-SA 4.0 (Wiktionary through kaikki.org). It is
     the recommended dictionary: there is no wty-tl-tl, and no other
     Yomitan-format Tagalog dictionary with a known licence. Its `rules`
-    column is empty on every row; 91,298 rows are only form-of references;
+    column is empty on every row; by first definition tag: `non-lemma`
+    91,298 (rows that are only form-of references), `n` 18,436, `adj` 4,901,
+    `name` 4,858, `v` 3,632, `intj` 393, `adv` 371, `num` 219, and 1,013
+    in 18 smaller groups and 22 rows without a tag;
   - the subtitle frequency list `tl_full.txt` of
     [FrequencyWords](https://github.com/hermitdave/FrequencyWords) at 525f9b5
     (content/2018/tl, 10,665 words, 94,596 tokens in its first 10,000 words,
@@ -119,7 +123,7 @@ infixes -um- and -in-, the linker and the contractions.
 **Yomitan transforms left out.** "First results" are the positions of
 Tatoeba (T) and the two Gutenberg texts (G) where the union's first result
 differs from the final set's because of that transform, read with the
-labelled copy of wty-tl-en (Measurements). "Constructed forms" are forms
+pack's `untaggedTerms: pass` (Measurements). "Constructed forms" are forms
 `sources/check-removed.mjs` builds from the transform's rules and common
 lemmas, with the share the final rules reach without it and with it.
 
@@ -288,22 +292,28 @@ rules). Later commits changed them after measuring:
   the -in- cluster patterns were added (*pinaplano* → *plano*); -ran → d
   joined the circumfix suffixes;
 - after audit-hachi-lang-tl: the stricter `both` test of
-  `sources/build-final.mjs`, which keeps Yomitan's pang- and mapag- and 30
-  more of its prefix rules (12 left out one by one, above), and the
-  one-word, magsi- and first-letter constraints above.
+  `sources/build-final.mjs`, which keeps 20 Yomitan rules the first
+  version left out, among them pang- and mapag- (12 others are left out one
+  by one, above), and the one-word, magsi- and first-letter constraints
+  above;
+- after bee-san/hoshidicts#58 merged: `lookup.untaggedTerms` is `pass`.
 
 ## Measurements
 
-`hoshidicts-cli eval-language` at hoshidicts b145feb (GCC 14.3, Release),
-`--transforms` for each rule set, `--dictionary` the imported wty-tl-en.
-"Published" is the dictionary as wiktionary-to-yomitan releases it.
-"Pass" is a copy whose every row has the `rules` value `n adj num v`, which
-gives each term the dictionary-form mask D that `"untaggedTerms": "pass"`
-(bee-san/hoshidicts#58) gives an untagged row; it is labelled and not the
-published dictionary. Under the published dictionary a deinflection with
-conditions matches no term (docs/languages.md 9.4), so only the text as
-written, the processors, the linker, the contractions, the hyphen and the
-dictionary's form-of rows find anything.
+`hoshidicts-cli eval-language` at hoshidicts 0a73e5e (GCC 14.3, Release),
+`--transforms` for each rule set, `--dictionary` wty-tl-en as published,
+imported. "Pass" is the pack as committed, `"untaggedTerms": "pass"`: every
+row of wty-tl-en carries D, the dictionary-form conditions, and matches
+every deinflection whose conditions overlap it. "Filter" is the same pack
+with `"untaggedTerms": "filter"` (`sources/measure.py --untagged filter`),
+Yomitan's behaviour: a deinflection with conditions matches no term (docs/
+languages.md 9.4), so only the text as written, the processors, the
+linker, the contractions, the hyphen and the dictionary's form-of rows find
+anything. Pass ranks more lemmas first (63.04% of the sample against
+40.97%), so the pack keeps it. Before bee-san/hoshidicts#58 merged, these
+numbers were measured with a labelled copy of wty-tl-en whose every row had
+the `rules` value `n adj num v`; on every test file it gives the same
+numbers as pass.
 
 The pack has no optional processor, transform or variant pass, so every
 file runs the same with every option on and with the defaults: a copy of
@@ -311,7 +321,7 @@ file runs the same with every option on and with the defaults: a copy of
 same recall, false candidates and first rank (`eval-language` prints
 `"options":"default"` and the same numbers).
 
-| Rule set | Sample recall (1,799) | False candidates per row, pass / published | First rank, pass / published | `cases.tsv` positives (307) | `cases.tsv` negatives (57) | `yomitan.tsv` (14) |
+| Rule set | Sample recall (1,799) | False candidates per row, pass / filter | First rank, pass / filter | `cases.tsv` positives (307) | `cases.tsv` negatives (57) | `yomitan.tsv` (14) |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | Own | 97.11% | 1.453 / 0.306 | 62.87% / 40.97% | 99.35% | 100% | 35.71% |
 | Yomitan | 6.78% | 0.526 / 0.311 | 43.19% / 40.97% | 18.24% | 33.33% | 100% |
@@ -324,8 +334,8 @@ same recall, false candidates and first rank (`eval-language` prints
   *pangalawa* and *ikalawa*, which only Yomitan's rules give.
 - **First rank** is the share of sample rows whose full lookup shows the
   expected lemma first. For UniMorph rows that lemma is a root, which comes
-  after the word's own entry or its infinitive, and with the published
-  dictionary only form-of rows reach a lemma.
+  after the word's own entry or its infinitive, and with filter only
+  form-of rows reach a lemma.
 - **Trace quality** (`sources/measure.py traces`): of the 1,647 sampled rows
   with a completive, progressive or contemplative feature (completives of
   -um- verbs, which equal the infinitive, left out), the shortest trace to
@@ -345,7 +355,7 @@ same recall, false candidates and first rank (`eval-language` prints
   `build/hoshidicts-cli`): 5,419 inputs, 22,198 Yomitan results, 30
   differences, all the one that `sources/yomitan-differences.tsv` lists (a
   `u` that starts a sandwich stem: *kaunran* → *onr*); the three processors
-  agree with Yomitan's on 2,149, 2,149 and 2,137 inputs.
+  agree with Yomitan's on 2,150, 2,150 and 2,138 inputs.
 
 **Frequent forms** (`sources/measure.py frequent`). Of the 10,000 most
 frequent words of the subtitle list (94,596 tokens), 1,798 have a lemma a
@@ -353,14 +363,14 @@ form-of row of wty-tl-en or the corpus names, and a rule reaches it for 926
 (4.74% of the tokens). Each word is looked up alone; the first result is
 right when it is the word's own entry or such a lemma.
 
-| Rule set | Words whose lemma a rule reaches | Wrong first, pass | Wrong first, published |
+| Rule set | Words whose lemma a rule reaches | Wrong first, pass | Wrong first, filter |
 | --- | ---: | ---: | ---: |
 | Own | 921 | 11 | 72 |
 | Yomitan | 41 | 1 | 3 |
 | Union | 926 | 11 | 72 |
 | Final | 926 | 10 (21 tokens, 0.022%) | 72 (199 tokens, 0.210%) |
 
-With the published dictionary 70 of the 72 find nothing at all: their
+With filter, 70 of the 72 find nothing at all: their
 infinitive comes only through conditioned rules (*sumigaw* → *sigaw*,
 *ginamit* → *gamitin*, *sumali* → *sali*). With pass the 10 left are
 *nag-aalala* and *nag-isip* (the infinitive *mag-alala*, *mag-isip* first,
@@ -371,8 +381,8 @@ dictionary's spelling *tignan*), *sinisante* → *sesantehin*, *paniniwalaan*
 
 Written with a capital letter, as at the start of a sentence, 207 of the
 10,000 words (15.27% of the list's tokens) show a capitalised headword
-first with the final set and either dictionary (Yomitan's rules alone: 237
-with pass, 209 published): *Ang* (a Chinese surname) for *ang*, *Ng* for
+first with the final set, with pass and with filter (Yomitan's rules
+alone: 237 with pass, 209 with filter): *Ang* (a Chinese surname) for *ang*, *Ng* for
 *ng*, *Ko*, *Ka*, *May*, *O*, *Yan*, *Isa* (Jesus in Islam), *Salamat*,
 *Iba*. A few are right with the capital (*Diyos*, *Linggo*). Known gaps
 says why.
@@ -392,15 +402,15 @@ after its letters). The first result is classed by script:
   the word itself: judged by hand on a random sample of 60 (seed 1);
 - any other rule reading: judged by hand on a random sample of 60 (seed 1).
 
-| Rule set | Found, pass / published | Capital at a sentence start | As written or form-of | Lemma a form-of row names | Linker, contraction or hyphen only | Other rule readings (multiword) |
+| Rule set | Found, pass / filter | Capital at a sentence start | As written or form-of | Lemma a form-of row names | Linker, contraction or hyphen only | Other rule readings (multiword) |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | Own | 579,761 / 551,313 | 8,430 | 475,203 | 20,219 | 45,961 | 29,948 (113) |
 | Yomitan | 559,405 / 546,262 | 8,633 | 495,666 | 251 | 40,882 | 13,973 (160) |
 | Union | 580,370 / 551,384 | 8,596 | 474,782 | 20,216 | 45,846 | 30,930 (228) |
 | Final | 580,023 / 551,378 | 8,430 | 475,092 | 20,218 | 46,068 | 30,215 (113) |
 
-(Columns 3-7 with pass. With the published dictionary the final set has
-the same 8,430 capitals, 47,188 linker, contraction or hyphen readings and
+(Columns 3-7 with pass. With filter the final set has the same 8,430
+capitals, 47,188 linker, contraction or hyphen readings and
 no other rule reading.)
 
 - **Wrong first results, final set, pass.** The capitals: 8,430, of which
@@ -427,7 +437,7 @@ no other rule reading.)
 **Real text** (`sources/measure.py text`): the two Gutenberg texts, 8,386
 sentences and 154,145 positions, looked up and classed the same way.
 
-| Rule set | Found, pass / published | Capital at a sentence start | As written or form-of | Lemma a form-of row names | Linker, contraction or hyphen only | Other rule readings (multiword) |
+| Rule set | Found, pass / filter | Capital at a sentence start | As written or form-of | Lemma a form-of row names | Linker, contraction or hyphen only | Other rule readings (multiword) |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | Own | 145,839 / 132,223 | 1,167 | 109,110 | 3,744 | 17,093 | 14,725 (46) |
 | Yomitan | 137,417 / 130,059 | 1,187 | 115,627 | 60 | 12,542 | 8,001 (58) |
@@ -457,33 +467,38 @@ sentences and 154,145 positions, looked up and classed the same way.
 sentence. With pass the expected entry is the first result for 53 and
 comes right after the word's own entry for the other 12 (wty-tl-en defines
 many aspect forms, such as *kumakain* "progressive aspect of kumain"); with
-the published dictionary, 37 and 10, and nothing at all for 16 (*Nakarating*,
-*katagal*, *Napakaganda*).
+filter, 37 and 10, and nothing at all for 16 (*Nakarating*, *katagal*,
+*Napakaganda*).
 
 **Hachidori** (feat/multi-language 803f7b6 with this branch in
-`third_party/hoshidicts`, `test/chrome-language-pack.mjs` with
+`third_party/hoshidicts`, its three WebAssembly runtimes rebuilt from it
+with `wasm/build.sh` and emsdk 6.0.9, since the prebuilt ones predate
+`untaggedTerms`; `test/chrome-language-pack.mjs` with
 `HACHIDORI_CASES=languages/tl/sources/chrome-cases.tsv`, Chrome 152,
 wty-tl-en as published): 14 passed, 0 failed (adding Tagalog beside
 Japanese, the import of 124,921 terms, 10 cases such as *Nagluluto* →
 *magluto* [progressive] and *Ako'y* → *ako* ['y], the Anki note, and the
-switch to Japanese and back).
+switch to Japanese and back). The popup for *Nagluluto* shows *magluto*
+and then *luto*, which only `pass` reaches.
 
-**Performance** (host load 45-56 on 64 cores, so upper bounds):
+**Performance** (with `pass`; host load 49-52 on 64 cores, so upper
+bounds):
 
 - native `benchmark-lookup --languages languages --language tl` with
   wty-tl-en on the 421 word positions of the 65 sentences, each from the
-  word to the end of its sentence, 6 passes with the first dropped, three
-  runs: p50 31.3-31.4 µs, p95 78.4-79.7 µs (budget 1 ms p50);
-- Hachidori's WebAssembly (feat/multi-language 803f7b6 prebuilt engines,
-  Node 22, `benchmark/node-lookup.mjs`, the 430 word positions that harness
-  finds in the same sentences, 6 passes): `hdw_lookup` single-thread p50
-  87.1 µs, p95 210.6 µs; threaded p50 99.4 µs, p95 232.3 µs;
+  word to the end of its sentence (`measure.py positions`), 6 passes with
+  the first dropped, three runs: p50 32.5-35.0 µs, p95 84.7-89.5 µs (budget
+  1 ms p50);
+- Hachidori's WebAssembly (the rebuilt runtimes, Node 22,
+  `benchmark/node-lookup.mjs`, the 430 word positions that harness finds in
+  the same sentences, 6 passes): `hdw_lookup` single-thread p50 94.5 µs,
+  p95 251.3 µs; threaded p50 111.8 µs, p95 300.1 µs;
 - pack load (`sources/wasm-load.mjs`, 10 fresh engines): `hdw_language_load`
-  median 15.3 ms single-thread and 16.5 ms threaded, live heap +1,278,040
+  median 15.9 ms single-thread and 16.3 ms threaded, live heap +1,278,376
   bytes; natively (`sources/load-native.cpp`) `LanguageRegistry::add`
-  takes 4.3-4.4 ms (median of 50, three runs) and the registry holds
+  takes 3.9-4.1 ms (median of 50, three runs) and the registry holds
   2,474,576 bytes. Budgets 50 ms and 20 MB;
-- 187 `pattern` rules: they add 286,168 bytes of heap and 2.6 ms of load in
+- 187 `pattern` rules: they add 286,600 bytes of heap and 2.8 ms of load in
   WebAssembly (the same measurement without them).
 
 **Commands.** From the repository root, with `build/` configured as
@@ -501,8 +516,10 @@ g++ -O2 -std=c++23 -Iinclude languages/tl/sources/lookup-batch.cpp -o build/tl-l
   build/libhoshidicts.a build/external/zstd/build/cmake/lib/libzstd.a \
   build/external/libdeflate/libdeflate.a build/external/utf8proc/libutf8proc.a \
   build/liblzokay.a build/libgumbo.a
-for c in eval frequent tatoeba text traces sentences; do
-  python3 languages/tl/sources/measure.py $c --cache $C --dictionary $C/wty-tl-en --show 100 --sample 60
+for u in pass filter; do
+  for c in eval frequent tatoeba text traces sentences; do
+    python3 languages/tl/sources/measure.py $c --cache $C --dictionary $C/wty-tl-en --untagged $u --show 100 --sample 60
+  done
 done
 node languages/tl/sources/check-removed.mjs
 node languages/tl/sources/ablate.mjs
@@ -518,8 +535,9 @@ node languages/tl/sources/wasm-load.mjs <hachidori checkout>
 
 `hoshidicts-cli import` writes the imported directory beside the zip, so
 import a copy in another directory when the cache is shared. The labelled
-pass copy is wty-tl-en.zip with `n adj num v` written into the `rules`
-column of every term row and the title changed, imported the same way.
+copy used before #58 merged is wty-tl-en.zip with `n adj num v` written
+into the `rules` column of every term row and the title changed, imported
+the same way.
 
 ## Known gaps
 
@@ -541,13 +559,14 @@ column of every term row and the title changed, imported the same way.
   1,167 in the Gutenberg texts, and 207 of the 10,000 frequent words written
   with a capital (15.27% of the list's tokens). The German pack has the
   same gap; a host flag for a scan at a sentence start is a follow-up.
-- **The dictionary has no parts of speech.** Until the pack can say
-  `"untaggedTerms": "pass"` (bee-san/hoshidicts#58), a rule whose output has
-  conditions finds nothing in wty-tl-en: 28,645 Tatoeba positions find
-  nothing that pass finds, 70 of the 10,000 frequent words find nothing,
-  and the -um-, -in-, mag- and aspect readings this pack exists for reach a
-  lemma only where a form-of row names it. The rules keep their conditions,
-  as section 14 asks.
+- **The dictionary has no parts of speech.** With `pass` every row of
+  wty-tl-en carries D, so the part-of-speech filter cannot tell a noun from
+  a verb: a rule that makes a verb also reaches a noun spelled the same,
+  and the false candidates per sample row rise from 0.311 with filter to
+  1.464. With filter a rule whose output has conditions finds nothing:
+  28,645 Tatoeba positions and 70 of the 10,000 frequent words find nothing
+  that pass finds. The rules keep their conditions, as section 14 asks, so
+  a dictionary that tags its rows is filtered.
 - Names and loanwords the dictionary lacks are read as inflected words:
   *Mameng* → *bang* (145 Gutenberg positions), *Narita* → *dita*, *parking*
   → *park*, *Leoning* → *leon*; a capitalised word with the linker can reach
@@ -570,7 +589,7 @@ column of every term row and the title changed, imported the same way.
 - The Gutenberg texts write a dash as `--`, and Yomitan's hyphen rule
   removes one hyphen at a time, so *paano--ang* is read as one word,
   *paano* with -an and the linker (209 Gutenberg positions with pass, 31
-  published; none in Tatoeba). The term is the first word's, but the match
+  with filter; none in Tatoeba). The term is the first word's, but the match
   and the trace are wrong.
 - Old spellings: *babaing* (*babaeng*) → *baba* (82 Gutenberg positions);
   *c* and *qu* are not read as *k*.

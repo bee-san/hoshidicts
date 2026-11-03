@@ -5,8 +5,10 @@
     python3 languages/tl/sources/measure.py <command> --cache <dir> --dictionary <imported dir> [options]
 
 <dir> holds the inputs README.md lists (wty-tl-en.zip, tl_full.txt,
-tgl_sentences.tsv.bz2, gutenberg/pg*.txt); <imported dir> is wty-tl-en (or a
-labelled copy) imported by `hoshidicts-cli import`. Every command looks
+tgl_sentences.tsv.bz2, gutenberg/pg*.txt); <imported dir> is wty-tl-en
+imported by `hoshidicts-cli import`. --untagged filter|pass runs the pack
+with that lookup.untaggedTerms (a copy in --work); without it the pack's
+own, pass, applies. Every command looks
 words up as a host does, with build/tl-lookup-batch (sources/lookup-batch.cpp:
 16 results, scan length 16, no language options), and runs every rule set:
 own (sources/own.json), yomitan (sources/yomitan.json), union (the merge
