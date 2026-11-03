@@ -181,7 +181,7 @@ const passes = ([, , source, term, rule]) => {
 
 const header = [
     `# Source: UniMorph lat (https://github.com/unimorph/lat/blob/${UNIMORPH_COMMIT}/lat, sha256 ${UNIMORPH_SHA256.slice(0, 16)}), CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/), by the UniMorph contributors, from English Wiktionary; and kaikki.org's Latin extract of English Wiktionary (2026-10-30, sha256 ${KAIKKI_SHA256.slice(0, 16)}), CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/), by the Wiktionary contributors via wiktextract.`,
-    `# ${sample.length} rows sampled with seed ${SEED} by sources/build-corpus.mjs (UniMorph: ${UNIMORPH_STRATA.map(([name, quota]) => `${quota} ${name}`).join(', ')}; kaikki: ${KAIKKI_STRATA.map(([name, quota]) => `${quota} ${name}`).join(', ')}); the rows the pack's rules reach are in corpus.tsv, the others in gaps.tsv. Terms are the lemmas without macrons, as dictionaries write headwords.`,
+    `# ${sample.length} rows sampled with seed ${SEED} by sources/build-corpus.mjs (strata: README.md); rows the rules reach are in corpus.tsv, the others in gaps.tsv. Terms are lemmas without macrons.`,
 ];
 const columns = '# category\tvalid\tsource\tterm\trule\treasons (forward order, | separated; * means any)';
 const pass = sample.filter(passes);

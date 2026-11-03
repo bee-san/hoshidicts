@@ -114,9 +114,17 @@ function add(slotId, rule) {
 // (in eō read as in eus); a longer ending can, which lets the last word of a
 // two-word headword inflect (senātūs cōnsultī → senātūs cōnsultum).
 const WORD = '[^ ]';
+// A word that begins a sentence is capitalised, and a lookup tries it as
+// written before it decapitalises it (one processor step), so a rule that
+// reads the capitalised word reaches a capitalised headword before the
+// lowercase lemma: Mane (in the morning) read as Mānēs, Dīves as a form of
+// Deus. Short noun and verb endings therefore take no capital in their stem
+// either; adjectives keep it for the proper adjectives (Rōmāna → Rōmānus).
+const LOWER_WORD = '[^ A-Z]';
 
 function sfx(slotId, inflected, deinflected, conditionsIn, conditionsOut, extra = {}) {
-    const guard = [...inflected].length <= 2 && !inflected.includes(' ') ? {stemCharacters: WORD} : {};
+    const nominalOrVerb = conditionsOut.some((c) => c === 'v' || c === 'n' || /^n[1-5]/u.test(c)) && !conditionsOut.some((c) => c.startsWith('adj'));
+    const guard = [...inflected].length <= 2 && !inflected.includes(' ') ? {stemCharacters: nominalOrVerb ? LOWER_WORD : WORD} : {};
     add(slotId, {type: 'suffix', inflected, deinflected, conditionsIn, conditionsOut, ...guard, ...extra});
 }
 
@@ -372,8 +380,11 @@ slot('perf-stem', 'perfect stem', 'The first person singular perfect (-ī) read 
 // the root (dēfendī, vertī, solvī, statuī, verrī, vellī, bibī); a rule for any
 // -ī would read fūgī, sēdī and dedī as fugō, sēdō and dēdō, which are other
 // verbs (fugiō, sedeō and dō are in the table). potuī is possum's, not pōtō's.
+// -uī → -uō comes before -iō and -ō: a tie is ordered by discovery, and
+// annuī, statuī and expuī are annuō, statuō and expuō, not annō, statō and
+// expiō.
 for (const [ending, lemma, extra] of [['avi', 'o', MIN], ['ivi', 'io', MIN], ['ii', 'io', MIN], ['evi', 'eo', MIN], ['ui', 'eo', MIN],
-                                      ['ui', 'o', {...MIN, stemNotStartsWithText: 'pot'}], ['ui', 'io', MIN], ['ui', 'uo', {stemMinLength: 1}],
+                                      ['ui', 'uo', {stemMinLength: 1}], ['ui', 'o', {...MIN, stemNotStartsWithText: 'pot'}], ['ui', 'io', MIN],
                                       ['ndi', 'ndo', {stemMinLength: 1}], ['rti', 'rto', {stemMinLength: 1}], ['lvi', 'lvo', {stemMinLength: 1}],
                                       ['rri', 'rro', {stemMinLength: 1}], ['lli', 'llo', {stemMinLength: 1}], ['bibi', 'bibo', {}],
                                       ['di', 'do', {stemMinLength: 2, stemNotEndsWith: '[ei]'}], ['ssivi', 'sso', {stemMinLength: 1}],
@@ -403,10 +414,12 @@ function participles(stem, lemma, extra, {perfect = true, future = true, all = t
 slot('ptc-fut-stem', 'future participle', 'Future active participle, read through the perfect participle it is made from: ductūrus → ductus, factūrus → factus.');
 sfx('ptc-fut-stem', 'urus', 'us', PARTICIPLE_IN, ['ptc'], {stemMinLength: 3});
 sfx('supine-abl', 'u', 'us', [], ['ptc'], {stemMinLength: 3});
-// Regular: -ātus (1st), -itus and -ētus (2nd), -ītus (4th), -ūtus (statuō,
-// solvō, volvō).
-for (const [stem, lemma] of [['at', 'o'], ['at', 'or'], ['it', 'eo'], ['it', 'eor'], ['et', 'eo'], ['it', 'io'], ['it', 'ior'], ['ut', 'uo'], ['ut', 'vo']]) {
-    participles(stem, lemma, MIN);
+// Regular: -ātus (1st), -ītus (4th), -itus and -ētus (2nd), -ūtus (statuō,
+// and solvō, volvō after l). The order decides ties: furātus is furor's
+// before furō's, audītus audiō's before audeō's.
+for (const [stem, lemma, extra] of [['at', 'or', MIN], ['at', 'o', MIN], ['it', 'io', MIN], ['it', 'ior', MIN], ['it', 'eo', MIN], ['it', 'eor', MIN],
+                                    ['et', 'eo', MIN], ['ut', 'uo', MIN], ['ut', 'vo', {...MIN, stemEndsWith: '[l]'}]]) {
+    participles(stem, lemma, extra);
 }
 
 // The stems that are not regular: dictionary form, perfect (first person
@@ -419,7 +432,7 @@ for (const [stem, lemma] of [['at', 'o'], ['at', 'or'], ['it', 'eo'], ['it', 'eo
 // prefix. Perfect forms of three letters (ēgī, ēmī) are whole words.
 const PRINCIPAL_PARTS = `
 do dedi datus fap:daturus
-+do didi ditus
++do didi ditus min:1
 sto steti - fap:staturus
 +sto stiti -
 iuvo iuvi iutus fap:iuvaturus
@@ -525,21 +538,21 @@ fundo fudi fusus
 gero gessi gestus
 gigno genui genitus
 iacio ieci iactus
-+icio ieci iectus
-+iicio ieci iectus
++icio ieci iectus min:1
++iicio ieci iectus min:1
 lego legi lectus
-+ligo legi lectus
-+ligo lexi lectus
++ligo legi lectus min:1
++ligo lexi lectus min:1
 +lego lexi lectus
 linquo liqui -
 +linquo liqui lictus
 ludo lusi lusus
 laedo laesi laesus
-+lido lisi lisus
++lido lisi lisus min:1
 mergo mersi mersus
 mitto misi missus
 nosco novi notus
-+gnosco gnovi gnitus
++gnosco gnovi gnitus min:1
 occulo - occultus
 pando pandi passus|pansus
 pango pepigi pactus
@@ -563,9 +576,9 @@ quaero quaesivi|quaesii quaesitus
 +quiro quisivi|quisii quisitus
 quiesco quievi quietus
 rapio - raptus
-+ripio ripui reptus
++ripio ripui reptus min:1
 rego rexi rectus
-+rigo rexi rectus
++rigo rexi rectus min:1
 surgo surrexi surrectus
 +surgo surrexi surrectus
 pergo perrexi perrectus
@@ -610,10 +623,11 @@ facio feci factus
 +ficio feci fectus
 quatio - quassus
 +cutio cussi cussus
-+spicio spexi spectus
++spicio spexi spectus min:1
 +licio lexi lectus
 elicio elicui elicitus
-uro ussi ustus
+uro ussi ustus not:abcdefghijklmnopqrstuvwxyz
++uro ussi ustus not:abcfghijklmopqrstuvwyz
 comburo combussi combustus
 contemno contempsi contemptus
 ico ici ictus
@@ -637,14 +651,14 @@ tundo tutudi tunsus|tusus
 +tundo tudi tusus
 ungo unxi unctus
 unguo unxi unctus
-+vado vasi vasus
++vado vasi vasus min:1
 viso visi visus
 verro verri versus
 percello perculi perculsus
 accendo accendi accensus
 incendo incendi incensus
 scando scandi scansus
-+scendo scendi scensus
++scendo scendi scensus min:1
 mando mandi mansus
 defendo defendi defensus
 offendo offendi offensus
@@ -671,7 +685,7 @@ sepelio sepelivi sepultus
 +fercio fersi fertus
 +cumbo cubui cubitus
 +sido sedi|sidi sessus
-+scisco scivi scitus
++scisco scivi scitus min:1
 reor - ratus
 for - fatus
 amicio amicui amictus
@@ -682,12 +696,12 @@ fruor - fructus|fruitus fap:fruiturus
 fungor - functus
 labor - lapsus
 nitor - nisus|nixus
-utor - usus
+utor - usus not:acdefghijklmnopqrstuvwxyz
 patior - passus
 +petior - pessus
 morior - mortuus fap:moriturus
 gradior - gressus
-+gredior - gressus
++gredior - gressus min:1
 nascor - natus fap:nasciturus
 proficiscor - profectus
 obliviscor - oblitus
@@ -699,7 +713,7 @@ irascor - iratus
 comminiscor - commentus
 expergiscor - experrectus
 ordior - orsus
-orior - ortus fap:oriturus
+orior - ortus fap:oriturus not:hmpst
 metior - mensus
 experior - expertus
 opperior - oppertus
@@ -716,8 +730,14 @@ coepi - coeptus
 for (const line of PRINCIPAL_PARTS.trim().split('\n')) {
     const compound = line.startsWith('+');
     const [lemma, perfects, supines, ...rest] = (compound ? line.slice(1) : line).trim().split(/\s+/);
-    // The parts of a + line need a prefix before them (cōnfēcī, not fēcī).
-    const extra = compound ? {stemMinLength: 1} : {};
+    // The parts of a + line need a prefix before them (cōnfēcī, not fēcī), of
+    // two letters (regī is not rigō, as exēgī is exigō) unless the line says
+    // min:1, for the compounds with ē- (ēligō, ēiciō, ērigō, ēripiō).
+    const extra = compound ? {stemMinLength: rest.includes('min:1') ? 1 : 2} : {};
+    // not:<letters>: the participle's rules take no stem ending in them
+    // (hortus is not h + ortus, custōs and iūstus not c and i + ūstus).
+    const not = rest.find((r) => r.startsWith('not:'))?.slice(4);
+    const participleExtra = not === undefined ? extra : {...extra, stemNotEndsWith: `[${not}]`};
     for (const perfect of perfects === '-' ? [] : alts(perfects)) {
         if (!compound && perfect.length <= 3) {
             whole('perf-stem', perfect, lemma, VPF_IN, VB);
@@ -728,7 +748,7 @@ for (const line of PRINCIPAL_PARTS.trim().split('\n')) {
     const future = rest.find((r) => r.startsWith('fap:'))?.slice(4);
     for (const supine of supines === '-' ? [] : alts(supines)) {
         if (!supine.endsWith('us')) { throw new Error(`${line}: a perfect participle ends in -us`); }
-        participles(supine.slice(0, -2), lemma, extra, {all: false});
+        participles(supine.slice(0, -2), lemma, participleExtra, {all: false});
     }
     if (future !== undefined) { sfx('ptc-fut', future, lemma, PARTICIPLE_IN, VB, extra); }
 }
@@ -1272,7 +1292,10 @@ declension('name', '', '', {'gen-sg': 'is', 'acc-sg': 'em'}, [], {...NAME, stemE
 // Rōmae → Rōme → Rōmēs → ... gave 218 deinflections for Rōmae; a rule that
 // makes -is from -e did not stop at all).
 const NAME_THIRD = {'gen-sg': 'is', 'dat-sg': 'i', 'acc-sg': 'em', 'abl-sg': 'e'};
-for (const [nominative, stem] of [['o', 'on'], ['o', 'in'], ['us', 'er'], ['es', 'er'], ['rs', 'rt'], ['as', 'ant'], ['as', 'ad']]) {
+// Not the stems in -er- (Venus, Veneris; Cerēs): with them, the infinitives
+// Vidēre and Crēdere and the ablative Opere at the start of a sentence were
+// read as names Vidus, Crēs and Opus. Those names come from form-of rows.
+for (const [nominative, stem] of [['o', 'on'], ['o', 'in'], ['rs', 'rt'], ['as', 'ant'], ['as', 'ad']]) {
     declension('name', nominative, stem, NAME_THIRD, [], {stemMinLength: 1, stemStartsWith: '[A-Z]'});
 }
 for (const [lemma, forms] of [['Iuppiter', 'Iovis|Iovi|Iovem|Iove|Iupiter'], ['Iesus', 'Iesu|Iesum'], ['Iuno', 'Iunonis|Iunoni|Iunonem|Iunone']]) {
@@ -1438,8 +1461,16 @@ const ESSE = ['sum', 'es', 'est', 'sumus', 'estis', 'sunt', 'eram', 'eras', 'era
               'fuisset', 'fuissemus', 'fuissetis', 'fuissent', 'fuisse', 'iri'];
 slot('esse', '+ esse', 'A participle or gerundive with a form of esse: amātus est, hortātī sunt, amātūrus esse, dēlenda est, laudandum erat; and the supine with īrī, the future passive infinitive (amātum īrī).');
 for (const form of ESSE) { sfx('esse', ` ${form}`, '', [], ['aux'], {stemMinLength: 3}); }
+// The participle before esse ends its stem in t, s or x (amāt-a, vīs-um,
+// fix-ī) or nd (dēlend-a); the future participle's in r (futūr-um esse,
+// factūr-ī sunt), only in the masculine and neuter, since -ūra and -ūrae are
+// mostly nouns (nātūrae sunt, cūra est). The stem has no capital: Mūsa sum
+// is not a participle.
 for (const [ending, slotId] of [['a', 'adj-a'], ['um', 'adj-um'], ['i', 'adj-i'], ['ae', 'adj-ae'], ['os', 'adj-os'], ['as', 'adj-as']]) {
-    sfx(slotId, ending, 'us', ['aux'], ['ptc'], {stemMinLength: 3});
+    sfx(slotId, ending, 'us', ['aux'], ['ptc'], {stemMinLength: 3, stemCharacters: '[^ A-Z]', stemEndsWith: '[dstx]'});
+    if (['um', 'i', 'os'].includes(ending)) {
+        sfx(slotId, ending, 'us', ['aux'], ['ptc'], {stemMinLength: 3, stemCharacters: '[^ A-Z]', stemEndsWith: '[r]'});
+    }
 }
 
 // --- Output -------------------------------------------------------------------------------

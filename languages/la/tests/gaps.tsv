@@ -1,10 +1,19 @@
 # Known gaps: run by the conformance test and counted, not enforced.
 # Hand-written rows (categories that do not start with UniMorph or kaikki): written for this pack, no third-party data.
 # Source: UniMorph lat (https://github.com/unimorph/lat/blob/050924c9f013e6aba4d7c87be243a1d79b6c5b10/lat, sha256 7aed5a2fd17c2947), CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/), by the UniMorph contributors, from English Wiktionary; and kaikki.org's Latin extract of English Wiktionary (2026-10-30, sha256 621efbea7ffcec74), CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/), by the Wiktionary contributors via wiktextract.
-# 1000 rows sampled with seed 1 by sources/build-corpus.mjs (UniMorph: 260 noun, 50 proper noun, 120 adjective, 100 participle, 150 verb, active, 70 verb, passive, 40 verb, infinitive, gerund, supine or participle; kaikki: 160 verb, perfect system, 25 adjective, comparison, 25 pronoun or determiner); the rows the pack's rules reach are in corpus.tsv, the others in gaps.tsv. Terms are the lemmas without macrons, as dictionaries write headwords.
+# 1000 rows sampled with seed 1 by sources/build-corpus.mjs (strata: README.md); rows the rules reach are in corpus.tsv, the others in gaps.tsv. Terms are lemmas without macrons.
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+proper name (dictionaries’ form-of rows)	1	Iuli	Iulius	*	*
+proper name (dictionaries’ form-of rows)	1	Pompei	Pompeius	*	*
+proper name (dictionaries’ form-of rows)	1	Lati	Latium	*	*
+proper name (dictionaries’ form-of rows)	1	Latio	Latium	*	*
+proper name (dictionaries’ form-of rows)	1	Cereris	Ceres	*	*
+proper name (dictionaries’ form-of rows)	1	Herculis	Hercules	*	*
+proper name (dictionaries’ form-of rows)	1	Herculem	Hercules	*	*
+proper name (dictionaries’ form-of rows)	1	Achilli	Achilles	*	*
 UniMorph N;NOM;PL	1	fasciculī arcuātī	fasciculus arcuatus	n	*
 UniMorph N;GEN;PL	1	galaxiārum	galaxias	n	*
+UniMorph N;NOM;PL	1	Mārpōrēs	Marpor	n	*
 UniMorph N;DAT;PL	1	accentibus gravibus	accentus gravis	n	*
 UniMorph N;ACC;SG	1	firmam burgī	firma burgi	n	*
 UniMorph N;GEN;PL	1	Rhodanī pōtōrum	Rhodani potor	n	*
@@ -13,8 +22,26 @@ UniMorph N;GEN;SG	1	neī	neon	n	*
 UniMorph N;ACC;SG	1	notam Tīrōniānam	nota Tironiana	n	*
 UniMorph N;ACC;PL	1	genitīvōs absolūtōs	genitivus absolutus	n	*
 UniMorph N;ABL;SG	1	acūtō accentū	acutus accentus	n	*
+UniMorph PROPN;GEN;SG	1	Cemenelī	Cemenelium	*	*
+UniMorph PROPN;GEN;SG	1	Gegānī	Geganius	*	*
+UniMorph PROPN;DAT;SG	1	Bagdadō	Bagdadum	*	*
 UniMorph PROPN;ABL;SG	1	Saocorā	Saocoras	*	*
+UniMorph PROPN;GEN;SG	1	Sollī	Sollius	*	*
+UniMorph PROPN;DAT;PL	1	Verāgrīs	Veragri	*	*
+UniMorph PROPN;DAT;PL	1	Obilīs	Obilae	*	*
+UniMorph PROPN;ACC;PL	1	Naevazās	Naevazae	*	*
+UniMorph PROPN;GEN;SG	1	Arnēs	Arne	*	*
+UniMorph PROPN;GEN;SG	1	Cercetī	Cercetius	*	*
+UniMorph PROPN;ACC;PL	1	Theodorās	Theodora	*	*
+UniMorph PROPN;DAT;SG	1	Bēthlehēmō	Bethlehemum	*	*
+UniMorph PROPN;GEN;SG	1	Tampī	Tampius	*	*
+UniMorph PROPN;ACC;SG	1	Pallēnēn	Pallene	*	*
+UniMorph PROPN;DAT;SG	1	Agathoclī	Agathocles	*	*
+UniMorph PROPN;GEN;SG	1	Campodūnī	Campodunum	*	*
+UniMorph PROPN;GEN;SG	1	Quartīnī	Quartinius	*	*
 UniMorph PROPN;GEN;SG	1	Brūnōnis vīcī	Brunonis vicus	*	*
+UniMorph PROPN;GEN;SG	1	Dūrocortorī	Durocortorum	*	*
+UniMorph PROPN;ABL;SG	1	Corde	Cordes	*	*
 UniMorph V;SBJV;PASS;PRS;3;SG	1	excalfīat	excalfacio	v	*
 UniMorph V;IMP;PASS;FUT;2;SG	1	excalfītō	excalfacio	v	*
 UniMorph V;V.MSDR;ACC;LGSPEC1	1	obsolefactum	obsolefio	v	*
