@@ -12,6 +12,7 @@
     "upper": "[\\u0386\\u0388-\\u038A\\u038C\\u038E\\u038F\\u0391-\\u03A1\\u03A3-\\u03AB\\u03DC\\u1F08-\\u1F0F\\u1F18-\\u1F1D\\u1F28-\\u1F2F\\u1F38-\\u1F3F\\u1F48-\\u1F4D\\u1F59\\u1F5B\\u1F5D\\u1F5F\\u1F68-\\u1F6F\\u1F88-\\u1F8F\\u1F98-\\u1F9F\\u1FA8-\\u1FAF\\u1FB8-\\u1FBA\\u1FBC\\u1FC8\\u1FCA\\u1FCC\\u1FD8-\\u1FDA\\u1FE8-\\u1FEA\\u1FEC\\u1FF8\\u1FFA\\u1FFC]",
     "mark": "[\\u0300-\\u036F]",
     "accent": "[\\u0300\\u0301\\u0342]",
+    "unaccented": "[\\u0391-\\u03A1\\u03A3-\\u03AB\\u03B1-\\u03CB\\u03DC\\u03DD\\u1F00\\u1F01\\u1F08\\u1F09\\u1F10\\u1F11\\u1F18\\u1F19\\u1F20\\u1F21\\u1F28\\u1F29\\u1F30\\u1F31\\u1F38\\u1F39\\u1F40\\u1F41\\u1F48\\u1F49\\u1F50\\u1F51\\u1F59\\u1F60\\u1F61\\u1F68\\u1F69\\u1F80\\u1F81\\u1F88\\u1F89\\u1F90\\u1F91\\u1F98\\u1F99\\u1FA0\\u1FA1\\u1FA8\\u1FA9\\u1FB0\\u1FB1\\u1FB3\\u1FB8\\u1FB9\\u1FBC\\u1FC3\\u1FCC\\u1FD0\\u1FD1\\u1FD8\\u1FD9\\u1FE0\\u1FE1\\u1FE4\\u1FE5\\u1FE8\\u1FE9\\u1FEC\\u1FF3\\u1FFC]",
     "apostrophe": "['\\u02BC\\u1FBD\\u1FBF\\u2019]",
     "word": "[{letter}{mark}{apostrophe}]"
   },
@@ -232,6 +233,17 @@
       "effect": {
         "transforms": ["doric-alpha"]
       }
+    },
+    {
+      "id": "duals",
+      "type": "boolean",
+      "default": false,
+      "label": "Dual nouns and adjectives",
+      "description": "Also read the nominative, accusative and vocative dual of nouns and adjectives (ἵππω, χώρα, φύλακε → ἵππος, χώρα, φύλαξ). It is off because those endings are also those of common singular and verb forms (μάθω, ἔλαβε), which it would read as nouns.",
+      "group": "lookup",
+      "effect": {
+        "transforms": ["nav-du"]
+      }
     }
   ],
   "host": {
@@ -287,8 +299,8 @@
       },
       "entry": {
         "expression": "ἀρχή",
-        "reading": "ᾰ̓ρχή",
-        "glossary": ["beginning, origin"],
+        "reading": "ἀρχή",
+        "glossary": ["beginning; power, office"],
         "definitionTags": "n",
         "matched": "ἀρχῇ",
         "trace": ["dative singular"]

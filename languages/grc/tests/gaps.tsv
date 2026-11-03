@@ -1,6 +1,6 @@
 # Source: 1000 pairs sampled with seed 1 by sources/build-corpus.py from UniMorph grc (CC BY-SA 3.0, the UniMorph
 # contributors, from English Wiktionary) and the Perseus Ancient Greek Dependency Treebank 2.1 (CC BY-SA 3.0 US,
-# the Perseus Digital Library, Tufts University); README.md has the revisions. The 100 rows the rules do not reach (README.md, "Known gaps").
+# the Perseus Digital Library, Tufts University); README.md has the revisions. The 99 rows the rules do not reach (README.md, "Known gaps").
 # category	valid	source	term	rule	reasons
 um-noun	1	διαίτης	δίαιτα	n	*
 um-noun	1	χαλαζῶν	χάλαζα	n	*
@@ -97,7 +97,6 @@ agdt-noun	1	ματρόπολιν	μητρόπολις	n	*
 agdt-noun	1	φῶθ’	φώς	n	*
 agdt-adj	1	ἀμφοτέροιιν	ἀμφότερος	*	*
 agdt-adj	1	Σαμίου	Σάμος	*	*
-agdt-adj	1	φίλᾷ	φίλος	adj	*
 agdt-pronoun	1	τοῦπερ	ὅσπερ	*	*
 agdt-adverb	1	λέκτρονδ’	λέκτρον	*	*
 agdt-adverb	1	κεῖσ’	ἐκεῖσε	*	*

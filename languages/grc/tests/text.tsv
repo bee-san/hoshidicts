@@ -1,0 +1,19 @@
+# Source: written for this pack (GPL-3.0-or-later), no third-party data. Every optional processor is on.
+# category	valid	input	variant
+letterForms	1	λόγοϲ	λόγος
+letterForms	1	λογοσ	λογος
+normalize	1	λόγος	λόγος
+apostrophe	1	δ’	δ'
+apostrophe	1	δ'	δ’
+grave	1	καλὸς	καλός
+removeAccents	1	κᾱλός	καλος
+removeAccents	1	ἄνθρωπος	ἀνθρωπος
+removeAlphabeticDiacritics	1	ἄνθρωπος	ανθρωπος
+decapitalize	1	ΛΟΓΟΣ	λογος
+decapitalize	1	Ἀθηναῖοι	ἀθηναῖοι
+capitalizeFirstLetter	1	ἀθηναῖοι	Ἀθηναῖοι
+convertLatinToGreek	1	logos	λογος
+convertLatinToGreek	1	philos	φιλος
+removeAccents	0	λόγος	λογοσ
+grave	0	καλὸς	καλὸς
+removeAccents	1	ἄκᾱνθα	ἀκανθα

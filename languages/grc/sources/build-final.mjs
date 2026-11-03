@@ -73,6 +73,8 @@ const CATEGORY = {
 // Yomitan rules removed for measured harm (README.md, "Rule provenance").
 const LEFT_OUT = {
   'nominalization ος→εω': 'a derivation: reads -ος nouns and adjectives as -έω verbs (φίλος → φιλέω, καλός → καλέω, οἶκος → οἰκέω)',
+  'dative singular ω→ον': 'recovers no corpus row and adds a false candidate; in real text it makes 5 first results wrong (ἴτω → ἴτον) and 1 right',
+  'dative singular ω→ος': 'recovers no corpus row; in real text it makes 1 first result wrong (μάθω → μάθος) and none right',
 };
 // Yomitan rules kept although an own rule makes the same deinflection, for a measured gain: the own rule's stem
 // minimum leaves out a one-letter stem (ᾦων → ᾦον).

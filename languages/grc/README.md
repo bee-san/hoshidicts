@@ -30,7 +30,7 @@ wty-grc-en keys without diacritics.
   converted by `tools/port-yomitan-tests.mjs`, then rewritten by
   `sources/build-final.mjs` (reasons `*`; the two nominalization rows are
   negatives). GPL-3.0-or-later, Copyright (C) 2025-2026 Yomitan Authors.
-- `tests/corpus.tsv` (900 rows) and `tests/gaps.tsv` (100 rows): 1,000
+- `tests/corpus.tsv` (901 rows) and `tests/gaps.tsv` (99 rows): 1,000
   form → lemma pairs sampled with seed 1 by `sources/build-corpus.py`, split by
   `sources/split-corpus.py` into the rows the final rules reach and the
   others:
@@ -44,9 +44,9 @@ wty-grc-en keys without diacritics.
     Tufts University, with the annotators each file names.
 
   A row is kept only when its lemma is a wty-grc-en headword.
-- `tests/cases.tsv` and `tests/defaults.tsv`: written for this pack
-  (GPL-3.0-or-later). The sample text of `language.json` is John 1:1 (public
-  domain).
+- `tests/cases.tsv`, `tests/defaults.tsv` and `tests/text.tsv`: written for
+  this pack (GPL-3.0-or-later). `language.json`'s sample is John 1:1 (public
+  domain) with a gloss written for the pack.
 - `tests/classes.json`: written by `tools/check-classes.mjs`.
 - `sources/benchmark-words.txt`: 60 texts of at most six words from an
   inflected word of the treebank (CC BY-SA 3.0 US, as above), sampled with
@@ -71,14 +71,14 @@ wty-grc-en keys without diacritics.
 
 ## Rule provenance
 
-`transforms.json` has 243 transforms and 14,238 rules
+`transforms.json` has 244 transforms and 14,224 rules
 (`sources/build-final.mjs`):
 
 | source | transforms | rules |
 | --- | ---: | ---: |
-| `own` | 240 | 14,189 |
+| `own` | 241 | 14,177 |
 | `both` (rules marked in own transforms) | 0 | 44 |
-| `yomitan` | 3 | 5 |
+| `yomitan` | 3 | 3 |
 
 - **`both`**: 50 of Yomitan's 55 rules make a deinflection an own rule makes:
   the same ending replaced by the same text, on a text without conditions,
@@ -87,39 +87,48 @@ wty-grc-en keys without diacritics.
   `gen-sg` for "genitive singular"). The 44 own rules they repeat are marked
   `both` (several Yomitan rules repeat the same own rule: its vocative plural
   is its nominative plural), and 49 of the 50 Yomitan copies are left out:
-  the own rule reads the same text, with a trace that names the form. `sources/yomitan-provenance.tsv` lists every Yomitan
-  rule with the own transforms that repeat it.
-- **Yomitan rules kept** (5): the dative singular `ω` → `ος`, `α` → `ας` and
-  `ω` → `ον` and the vocative singular `η` → `η`, which no own rule makes
-  (the own rules write the iota subscript, `ῳ` → `ος`), and the genitive
-  plural `ων` → `ον`, which an own rule makes on stems of two letters or more:
-  Yomitan's reaches `ᾦων` → `ᾦον`, a corpus row. The dative `ω` → `ον` adds
-  one false candidate on the corpus and recovers nothing, but without it one
-  real-text first result stops being the treebank's lemma (`μαντηίῳ`:
-  `μαντεῖον` becomes `μαντεῖος`), so it stays.
-- **Yomitan rule left out** (1): nominalization `ος` → `εω` (verb), a
-  derivation: it reads every -ος noun and adjective as an -έω verb. In the
-  union it breaks 4 negatives of `cases.tsv` (`φίλος` → `φιλέω`, `καλός` →
-  `καλέω`, `οἶκος` → `οἰκέω`, `λόγος` → `λογέω`) and adds 2 false
-  candidates there; on the corpus it recovers nothing. In real text, 326 of
-  the 75,172 lookups list a result through it, 1 of them first, and none is
-  the treebank's lemma (`Κῦρος` → `κύρω`, `τέλος` → `τελέω`). Its two rows of
-  `tests/yomitan.tsv` (`γεωργος` → `γεωργεω`, `πονος` → `πονεω`) are negatives.
-- **Leaving out the 49 repeated rules and nominalization** (union →
-  final): corpus first rank 0.901 → 0.899 (2 rows); `cases.tsv` negatives
-  passed 60/70 → 70/70 (the union breaks the 4 above and 6 through repeated
-  rules that have no stem minimum: `τοῦ` → `τός`, `ἄν` → `α`, `αἱ` → `η`,
-  `ὧν` → `η`, `αἷς` → `η`, `ἅς` → `η`; Yomitan's genitive `ου` → `ας` adds a
-  false candidate there); in real text 83 of the 75,172 first results change,
-  43 becoming the treebank's lemma, 32 ceasing to be it and 8 neither; lookup
-  p50 0.775 → 0.72 ms.
+  the own rule reads the same text, with a trace that names the form.
+  `sources/yomitan-provenance.tsv` lists every Yomitan rule with the own
+  transforms that repeat it.
+- **Yomitan rules kept** (3), each measured in the final set with and
+  without it (`eval-language --per-rule` on the corpus, `cases.tsv` and
+  `yomitan.tsv`; `measure.py compare` on the 75,172 real-text lookups):
+  - the genitive plural `ων` → `ον`, which an own rule makes on stems of two
+    letters or more: Yomitan's reaches `ᾦων` → `ᾦον`, a corpus row;
+  - the dative singular `α` → `ας` and the vocative singular `η` → `η`,
+    which no own rule makes: they change no corpus row, no case and no
+    real-text first result.
+- **Yomitan rules left out** (3):
+  - nominalization `ος` → `εω` (verb), a derivation that reads every -ος
+    noun and adjective as an -έω verb. In the union it breaks 4 negatives of
+    `cases.tsv` (`φίλος` → `φιλέω`, `καλός` → `καλέω`, `λόγος` → `λογέω`,
+    `οἶκος` → `οἰκέω`), adds 5 false candidates there and recovers nothing.
+    In real text 328 lookups list a result through it, 1 of them first, and
+    none is the treebank's lemma (`Κῦρος` → `κύρω`). Its two rows of
+    `tests/yomitan.tsv` (`γεωργος` → `γεωργεω`, `πονος` → `πονεω`) are
+    negatives;
+  - the dative singular `ω` → `ον`: it recovers no corpus row and adds a
+    false candidate; added to the final set it makes 5 real-text first
+    results wrong (`ἴτω` → `ἴτον`, `ἴω` → `ἴον`) and 1 right (`μαντηίῳ` →
+    `μαντεῖον`);
+  - the dative singular `ω` → `ος`: it recovers no corpus row; added to the
+    final set it makes 1 real-text first result wrong (`μάθω` → `μάθος`) and
+    none right.
+- **The 49 repeated rules and the three above, left out together** (union →
+  final): corpus recall 0.901 and first rank 0.901 in both; `cases.tsv`
+  negatives passed 61/71 → 71/71 (the union breaks the 4 above and 6
+  through repeated rules that have no stem minimum: `τοῦ` → `τός`, `ἄν` →
+  `α`, `αἱ` → `η`, `ὧν` → `η`, `αἷς` → `η`, `ἅς` → `η`; Yomitan's genitive
+  `ου` → `ας` adds a false candidate there); in real text 106 of the
+  75,172 first results change, 58 becoming the treebank's lemma, 36 ceasing
+  to be it and 12 neither; lookup p50 810-847 → 787-837 µs.
 
 ### Own rules
 
 - **Text first.** `normalizeUnicode` (NFC), `normalizeLetterForms` (lunate
-  sigma and letter symbols; a final σ → ς), `normalizeApostrophes`
-  (U+2019 and ASCII, both kept as variants), `graveToAcute`, then the
-  variants `decapitalize`, `capitalizeFirstLetter` (optional, setting
+  sigma and letter symbols; a final σ → ς), `normalizeApostrophes` (U+2019
+  and ASCII, both kept as variants), `graveToAcute`, then the variants
+  `decapitalize`, `capitalizeFirstLetter` (optional, setting
   `capitalizedNames`), `removeAccents` (acute, grave, circumflex, macron,
   breve; breathings and subscripts stay), `removeAlphabeticDiacritics` and
   `convertLatinToGreek`.
@@ -131,31 +140,44 @@ wty-grc-en keys without diacritics.
   none: for verbs (`-ω`, `-ομαι`) one rule per ending marks the ending, puts
   an acute on the text's last vowel and writes the ending back (λυω → λύω,
   βουλομαι → βούλομαι); for nouns and adjectives the last syllable (θεός,
-  ψυχή), the penult (χώρα, μοῖρα) and, for twelve endings, the antepenult
-  (ἄνθρωπος, ὄνομα, ἀλήθεια; `pattern` rules).
+  ψυχή), the penult (λόγος, χώρα, δῶρον, μοῖρα) and, for twelve endings,
+  the antepenult (ἄνθρωπος, ὄνομα, ἀλήθεια; `pattern` rules). Only a stem
+  without an accent takes one (the class `unaccented`).
 - **Verbs**: thematic, contract and athematic endings by tense, mood and
   person; augment and reduplication as conditions (`aug`, `red`, `augred`)
   that the stem transforms (`augment`, `reduplication`, `aorist`, `future`,
   `perfect`, `aorist-passive`) take off, with preverbs; the principal parts of
-  about 120 irregular verbs; εἰμί, εἶμι, φημί, οἶδα, κεῖμαι, δύναμαι,
-  δίδωμι, τίθημι, ἵστημι, ἵημι, δείκνυμι and their compounds form by form.
+  122 irregular verbs; εἰμί, εἶμι, φημί, οἶδα, κεῖμαι, δύναμαι, δίδωμι,
+  τίθημι, ἵστημι, ἵημι, δείκνυμι and their compounds form by form.
 - **Nouns and adjectives**: case endings of the three declensions with Epic
   and Ionic forms, the feminine and neuter of adjectives, comparison, adverbs
-  in -ως, and the irregular nouns.
+  in -ως, and the irregular nouns. The nominative, accusative and vocative
+  dual (`nav-du`) is optional (setting `duals`): its endings are those of
+  common singular and verb forms (μάθω, ἔλαβε, which it read as μάθος and
+  ἔλλοψ).
 - **Closed classes**: the article, pronouns, numerals and irregular
   adjectives as whole words; a form of four letters or more is a suffix rule,
-  which also reads it after crasis.
-- **Clitics and spelling**: elision (restored with and without accents),
-  elided prepositions and particles, crasis (κἀγώ, τοὔνομα, χὠ), the
-  enclitic's second accent (`enclitic-accent`: ἄνθρωπός τις), -γε and -περ,
-  ξυν- for συν-, -ττ-/-σσ-, γιν- for γιγν-, and the optional Doric ᾱ for η
-  (setting `doricAlpha`).
-- **Stem constraints.** `sources/mutate.py` removes each of the 55 stem
+  which also reads it after crasis. A comparative or superlative that is a
+  dictionary form of its own reads as it (`ἀμείνονος` → ἀμείνων, `πλείους`
+  → πλείων, `μεγίστη` → μέγιστος), another as its positive (`καλλίονα` →
+  καλός).
+- **Clitics and spelling**: elision (restored with and without accents;
+  θ’, φ’, χ’, χθ’ and φθ’ before a rough breathing), elided prepositions and
+  particles, crasis (κἀγώ, τοὔνομα, χὠ), the enclitic's second accent
+  (`enclitic-accent`: ἄνθρωπός τις), `ποτε` → ποτέ, -περ, ξυν- for συν-,
+  -ττ-/-σσ-, γιν- for γιγν-, and the optional Doric ᾱ for η (setting
+  `doricAlpha`).
+- **Order.** Among equal readings the one a rule finds first comes first
+  (Measurements 4), so the order of the rules is a choice: the second
+  declension before the first (`φίλων` → φίλος, not φίλη), the accusative
+  plural before the genitive singular (the trace of `λόγους` is `acc-pl`),
+  and a middle form's -ομαι lemma before its -ω lemma (`ἕποντο` → ἕπομαι).
+- **Stem constraints.** `sources/mutate.py` removes each of the 56 stem
   constraints of the final set (a transform's `stemMinLength`,
   `stemCharacters`, `stemContains`, ...) in a copy; every removal breaks a
-  row (52 `constraint` negatives of `cases.tsv`). The check found three
-  constraints that only blocked right readings (`ξύν` → `σύν`, `κοὐ` →
-  `οὐ`, `χὠ` → `ὁ`) or changed nothing (`unaugmented`); they were removed.
+  row (`constraint` negatives of `cases.tsv`). Four constraints that only
+  blocked right readings (`ξύν` → `σύν`, `κοὐ` → `οὐ`, `χὠ` → `ὁ`, `ὅσπερ`
+  → `ὅς`) or changed nothing (`unaugmented`) were removed.
 
 ### History
 
@@ -172,10 +194,11 @@ text and the benchmark:
   then one marked-ending rule per ending (20 KB); with single prefix rules
   the lookup p50 went from 1.65 to 0.72 ms;
 - each rule's twin without any diacritic (for text without diacritics)
-  became a twin without accents: dropping the diacritic-free twins changed
-  the verdict of 71 of 32,637 real-text first results (36 became the
-  treebank lemma, 28 stopped being it, 7 stayed wrong) and saved 47 KB; wty-grc-en's form-of rows
-  read diacritic-free text;
+  became a twin without accents. Before 5c2f04b, on the 32,637 hovers of
+  Thucydides 1, Lysias 1 and 14 and the *Euthyphro*, dropping the
+  diacritic-free twins changed the verdict of 71 first results (36 became the
+  treebank lemma, 28 stopped being it, 7 stayed wrong) and saved 47 KB;
+  wty-grc-en's form-of rows read diacritic-free text;
 - closed-class forms of four letters or more became suffix rules, except
   those that end another closed form (`κεῖνος` in `ἐκεῖνος`, a loop that
   crashed the deinflector);
@@ -194,14 +217,41 @@ text and the benchmark:
   -οια, -υρα, -αινα, -σσα, -ττα, -σις, the comparative of -εις adjectives,
   plural lemmas (χίλιοι, τριακόσιοι), γίνομαι, -περ after a one-letter
   relative, πρου- without its coronis;
-- the forms of μέγας and πολύς have their own transform,
-  `irregular-adjective`, instead of `pronoun`.
+- after the first audit (reports/audit-hachi-lang-grc.md, db93a6a), against
+  the same pack without rules (`measure.py rules`; frequent-form tokens the
+  rules turn from right to wrong 3,290 → 2,333, real-text lookups 630 →
+  481): the second declension before the first; `ποτε` → ποτέ; δύναμαι's
+  and ἐπίσταμαι's augmented forms with their accent (`ἐδύνατο`); the dual
+  optional; no σ-stem accusative -η → -ης (`ἔτη` → ἔτης) and only -ῶν for the
+  σ-stem genitive plural (`μένων` → μένος); `ὅ` and `ἥ` out of the article
+  (they are the relative); no -γε after any word (`ἔφυγε` → φύω; ἔγωγε,
+  σύγε stay pronoun forms); no -όω imperfect and imperative in -ου
+  (`πολέμου` → πολεμόω); comparatives and superlatives to their own
+  dictionary forms (`πλείους` → πλείων); the penult accent of -ος and -ον;
+  -ομαι before -ω; the accusative plural before the genitive singular;
+  χθ’ and φθ’; the forms of μέγας and πολύς in their own transform,
+  `irregular-adjective`.
 
 ## Measurements
 
 All with wty-grc-en as published (form-of rows included), on one machine
-(GCC 14.3 Release, load average about 42). `D` is the imported dictionary
-(`build/hoshidicts-cli import wty-grc-en.zip`).
+(GCC 14.3 Release, load average 42-47). `D` is the imported dictionary
+(`build/hoshidicts-cli import wty-grc-en.zip`). A lookup is a host's hover:
+the text from the word to the end of its sentence, 16 results, scan length
+16, default options.
+
+**The judge** (`sources/measure.py`). Every token is judged against its own
+treebank lemma (sense digits removed):
+
+- *right*: the first result is the lemma;
+- *variant*: the same word written otherwise (accents, vowel-length marks
+  or capitals; not another breathing, which makes another word: οἷος,
+  οἶος), or the dictionary's entry for the word as written whose
+  definition names the lemma or says it is the word elided (`δ'` "apocopic
+  form of δέ");
+- *wrong*: another lemma, or the word's own entry for another word (`τῷ`
+  "then", `τῇ` "here" for the article; `αὐτοῦ` "there" for αὐτός); "listed"
+  when the lemma is among the 16 results.
 
 ### 1. Rule sets
 
@@ -213,32 +263,32 @@ passed / false candidates per positive row / first rank:
 
 | file | options | own (`sources/own.json`) | Yomitan (`sources/yomitan.json`) | union | final |
 | --- | --- | --- | --- | --- | --- |
-| corpus+gaps (1,000) | all | 0.899 / – / 0.768 / 0.898 | 0.100 / – / 0.344 / 0.780 | 0.900 / – / 0.769 / 0.901 | **0.900** / – / 0.769 / 0.899 |
-| corpus+gaps | default | 0.899 / – / 0.751 / 0.898 | 0.100 / – / 0.332 / 0.781 | 0.900 / – / 0.752 / 0.901 | 0.900 / – / 0.752 / 0.899 |
-| cases (463) | all | 1.000 / 1.000 / 1.394 / 0.850 | 0.015 / 0.929 / 0.631 / 0.697 | 1.000 / 0.857 / 1.405 / 0.850 | 1.000 / 1.000 / 1.397 / 0.850 |
-| cases | default | 0.995 / 1.000 / 1.359 / 0.850 | 0.015 / 0.929 / 0.595 / 0.697 | 0.995 / 0.857 / 1.369 / 0.850 | 0.995 / 1.000 / 1.361 / 0.850 |
+| corpus+gaps (1,000) | all | 0.900 / – / 0.769 / 0.900 | 0.100 / – / 0.344 / 0.780 | 0.901 / – / 0.770 / 0.901 | **0.901** / – / 0.769 / 0.901 |
+| corpus+gaps | default | 0.874 / – / 0.740 / 0.900 | 0.100 / – / 0.332 / 0.781 | 0.888 / – / 0.742 / 0.900 | 0.875 / – / 0.740 / 0.901 |
+| cases (503) | all | 1.000 / 1.000 / 1.458 / 0.861 | 0.014 / 0.930 / 0.681 / 0.715 | 1.000 / 0.859 / 1.475 / 0.861 | 1.000 / 1.000 / 1.461 / 0.861 |
+| cases | default | 0.984 / 1.000 / 1.377 / 0.861 | 0.014 / 0.930 / 0.641 / 0.715 | 0.984 / 0.859 / 1.398 / 0.861 | 0.984 / 1.000 / 1.380 / 0.861 |
 | yomitan (59) | all | 1.000 / 1.000 / 2.491 / 0.088 | 1.000 / 0.000 / 1.895 / 0.088 | 1.000 / 0.000 / 2.491 / 0.088 | 1.000 / 1.000 / 2.491 / 0.088 |
-| yomitan | default | 1.000 / 1.000 / 2.368 / 0.088 | 1.000 / 0.000 / 1.772 / 0.088 | 1.000 / 0.000 / 2.368 / 0.088 | 1.000 / 1.000 / 2.368 / 0.088 |
-| defaults (5) | default | 1.000 / 1.000 / 2.667 / 1.000 | 0.333 / 1.000 / 2.000 / 1.000 | 1.000 / 1.000 / 2.667 / 1.000 | 1.000 / 1.000 / 2.667 / 1.000 |
+| yomitan | default | 0.965 / 1.000 / 2.368 / 0.088 | 1.000 / 0.000 / 1.772 / 0.088 | 1.000 / 0.000 / 2.368 / 0.088 | 0.965 / 1.000 / 2.368 / 0.088 |
+| defaults (6) | default | 1.000 / 1.000 / 2.667 / 1.000 | 0.333 / 1.000 / 2.000 / 1.000 | 1.000 / 1.000 / 2.667 / 1.000 | 1.000 / 1.000 / 2.667 / 1.000 |
 | defaults | all | 1.000 / 0.000 / 3.333 / 1.000 | 0.333 / 1.000 / 2.667 / 1.000 | 1.000 / 0.000 / 3.333 / 1.000 | 1.000 / 0.000 / 3.333 / 1.000 |
 
-The final recall over corpus and gaps is 900 / 1,000 = **0.900**. Yomitan's
-test is written without diacritics, which wty-grc-en has only for form-of
-rows, so its first rank is low for every set. `defaults.tsv` with every
-option on fails its negatives by design: the Doric option reads `δίκαν` as
-`δίκη` and `capitalizedNames` reads `ἀθηναίων` as `Ἀθηναῖος`.
+The final recall over corpus and gaps is 901 / 1,000 = **0.901** with every
+option on; with the defaults it is 0.875, because 26 UniMorph duals need the
+optional `duals`. Yomitan's test is written without diacritics, which
+wty-grc-en has only for form-of rows, so its first rank is low for every set;
+two of its rows are duals. `defaults.tsv` with every option on fails its
+negatives by design: `doricAlpha` reads `δίκαν` as `δίκη`, `capitalizedNames`
+reads `ἀθηναίων` as `Ἀθηναῖος`, and `duals` reads `ἔλαβε` as `ἔλαψ`.
 
 ### 2. Frequent forms
 
 `python3 languages/grc/sources/measure.py frequent <treebank texts> --dictionary $D`.
 Of the 10,000 most frequent forms of the treebank (368,718 words), a rule
-reaches a treebank lemma of 8,483 (276,856 words, 75.1%). Their first result
-(16 results, scan length 16, default options, as a hover) is the treebank's
-lemma for 7,161 forms, the same letters with other diacritics for 115, the
-dictionary's own entry for the form for 557 (`ἐμέ`, `ὤν`, `οὐδέν`), another
-lemma for 513 (6.05%; 355 of them list the treebank's lemma lower), and
-nothing for 137. The 513 forms are 14,028 words, **3.80%** of the list's
-words; the largest groups are in Known gaps.
+reaches a treebank lemma of 8,705 (283,843 words, 77.0%). Their tokens,
+each judged against its own lemma: right 214,031 (75.4%), variant 34,150
+(12.0%), wrong with the lemma listed 27,113 (9.6%), wrong 7,186 (2.5%),
+nothing 1,363 (0.5%). The wrong first results are 34,299 words, **9.30%** of
+the list's words; the largest groups are in Known gaps.
 
 ### 3. Words after an article, pronoun, particle or εἰμί
 
@@ -246,79 +296,91 @@ words; the largest groups are in Known gaps.
 the treebank tags as an article, a pronoun, a particle (or οὐ, μή, ἄν) or
 a form of εἰμί:
 
-| previous word | lookups | treebank lemma | other diacritics | own entry | wrong first | nothing |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| article | 7,809 | 6,322 | 200 | 265 | 660 (8.5%) | 362 |
-| pronoun | 5,263 | 4,038 | 67 | 501 | 428 (8.1%) | 229 |
-| particle | 3,393 | 2,462 | 66 | 384 | 301 (8.9%) | 180 |
-| εἰμί | 1,099 | 845 | 17 | 79 | 97 (8.8%) | 61 |
+| previous word | lookups | right | variant | wrong first | nothing |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| article | 7,809 | 6,357 | 290 | 806 (10.3%) | 356 |
+| pronoun | 5,263 | 4,048 | 400 | 587 (11.2%) | 228 |
+| particle | 3,393 | 2,473 | 298 | 443 (13.1%) | 179 |
+| εἰμί | 1,099 | 847 | 41 | 150 (13.6%) | 61 |
 
 A lookup starts at the hovered word, so the word before it changes nothing;
 the word after it can, through a phrase headword (`οὐχ ἥκιστα`). The
-clitic, elision and whole-word rules do not fire after a space (`λόγος γε`,
-`λόγος δέῃ` and `λόγος ’` are negatives of `cases.tsv`).
+clitic, elision and whole-word rules do not fire after a space (`λόγος
+περ`, `λόγος δέῃ` and `λόγος ’` are negatives of `cases.tsv`).
 
 ### 4. Real text
 
 `python3 languages/grc/sources/make-hovers-agdt.py <out> <the seven files>`
-writes 75,172 hovers (the text from each word to the end of its sentence)
-with the treebank's lemma; `measure.py text <out>/hover.tsv --sample 60`
-looks each up as a host does and judges the first result by script:
+writes 75,172 hovers with the treebank's lemma; `measure.py text
+<out>/hover.tsv --sample 60` looks each up and judges the first result:
 
 | first result | lookups | share |
 | --- | ---: | ---: |
-| the treebank's lemma | 58,248 | 77.5% |
-| the same letters, other diacritics (`Ἀθηναῖος` / `ἀθηναῖος`) | 1,173 | 1.6% |
-| the dictionary's entry for the word as written (`δ'`, `αὐτοῦ` the adverb, `ἐπειδή`) | 5,461 | 7.3% |
-| another lemma, the treebank's lower in the list | 4,334 | 5.8% |
-| another lemma, the treebank's not in the 16 | 2,710 | 3.6% |
-| nothing | 3,246 | 4.3% |
+| right | 58,388 | 77.7% |
+| variant | 3,718 | 4.9% |
+| wrong, the treebank's lemma lower in the list | 6,367 | 8.5% |
+| wrong, the treebank's lemma not in the 16 | 3,465 | 4.6% |
+| nothing | 3,234 | 4.3% |
 
-The wrong first results, 7,044 (9.4%), by the trace of the first result:
-`pronoun` 1,102 (`οἱ` → `οὗ` for the article, 542), the dictionary's
-"genitive singular" 626 (`τοῦ` → `-κτόνος`, 557), `as written` 731,
-"third-person plural future imperfective active" 256 (`εἶναι` → `εἶμαι`),
-"dative plural" 240 (`τοῖς` → `-κτόνος`, 234), `article` 166 (`τὰ` → `ὁ`
-where the treebank has the relative), `gen-pl` 161, the dictionary's
-"vocative singular masculine" 113 (`σε` → `σός`), `gen-sg` 100, `nom-pl`
-100, `acc-sg` 98 (`ἔλεγον` → `ἔλεγος`).
+The wrong first results, 9,832 (13.1%), by the trace of the first result:
+the word's own entry (`as written`) 3,399 (`τῷ` 344, `τῇ` 283 for the
+article; `ἐν` 159, which the treebank's Herodotus lemmatizes as εἰς),
+`pronoun` 1,120 (`οἱ` → `οὗ` for the article, 542), the dictionary's
+"genitive singular" 638 (`τοῦ` → `-κτόνος`, 557), "third-person plural
+future imperfective active" 256 (`εἶναι` → `εἶμαι`), "dative plural" 241
+(`τοῖς` → `-κτόνος`, 234), `gen-pl` 158, `article` 148 (`τὰ` → `ὁ` where the
+treebank has the relative), "nominative/vocative plural masculine" 99 (`σοι`
+→ `σός`), `acc-sg` 95 (`ἔλεγον` → `ἔλεγος`).
+
+**Rules against the dictionary alone** (`measure.py rules`: the same pack
+without rules, its processors and wty-grc-en's form-of rows only). The rules
+make 5,817 real-text lookups right that the dictionary alone gets wrong, and
+481 (0.64%) wrong that it gets right; for the frequent forms 13,937 and 2,333
+words (0.63%). Among equal readings the engine puts the term found first
+first, and a rule finds its term before the dictionary's references are
+followed (`docs/languages.md` 9.6, 9.10), so a rule that reaches a rarer
+word reorders the dictionary's equals. The largest groups are in Known gaps.
+
+**Traces** (`measure.py traces`): of the 8,101 right first results whose
+first step is a case, the case and number agree with the treebank's tag for
+7,571; the 530 others are mostly neuter nominatives labelled accusative
+(`ὅσιον`, `δίκαιον`) and ambiguous forms.
 
 **By hand**, the 60 wrong first results the script samples with seed 1:
 
-- 20 are the dictionary's lemma for the form under its own conventions
-  (`μείζους` → `μείζων`, `ὑμῖν` → `ὑμεῖς`, `ἰδών` → `ὁράω`, `εἴρητο` →
-  `λέγω`, `ἐμίσγετο` → `μίσγω`; the treebank's `δόξω` → `δοξόω` is an error,
-  the pack's `δοκέω` right);
-- 20 are a right reading of an ambiguous form, not the one in context (`οἱ`
-  → `οὗ` ×5, `πολέμου` → `πολεμόω`, `ἱεροῦ` → `ἱερός`, `ἐμοῦ` → `ἐμός`,
-  `χρυσῶν` → `χρυσός`, `παρείς` → `πείρω`);
-- 14 are dictionary defects: form-of rows from the article column of
-  adjective tables (`τοῦ`/`τοῖς` → `-κτόνος` ×8, `τὴν` → `παῖς`), Modern
-  Greek rows (`εἶναι`, `ὄντας` → `εἶμαι` ×4) and one reference to another
-  reference (`ἦρχε` → `ἦρχεν`);
-- 6 are wrong readings the rules make (`ἰχθύων` → `ἰχθύα`, `ἀπεχθής` →
-  `ἀπέχω`, `ζῶσαν` → `ζώννυμι`, `πλούτει` → `πλοῦτος`, `λήθοι` → `λῆθος`,
-  `νῆ’` → `νέομαι`): about 10% of the wrong first results, 0.9% of the
-  lookups.
+- 23 are the dictionary's lemma or entry for the form under its own
+  conventions, or treebank conventions and errors (`ἡμᾶς`, `ὅσα`, `οὐδέν`
+  as entries of their own; `βιασθῶσι` → βιάζομαι, `ἐκτῆσθαι` → κτάομαι,
+  `ἐν` → εἰς, `δὲ` → οὐδέ);
+- 3 are the same word spelled otherwise (`πλώϊμος`, `ληΐζομαι`);
+- 17 are the dictionary's order: the article and pronoun ties (`τοῦ`,
+  `τοῖς` → `-κτόνος` ×7, `οἱ` → `οὗ` ×6, `εἶναι` → `εἶμαι`, `σε`, `σοῦ` →
+  `σός`) and own entries of homographs (`τῷ` "then", `τῇ` "here");
+- 10 are a right reading of an ambiguous form, not the one in context
+  (`ἐμοῦ` → ἐμός, `πλέον` → πλέω, `αὐτοῦ` the adverb, `χαλκῷ` → χαλκός,
+  `ἴσθ’` → ἴστε);
+- 7 are wrong readings the rules make (`τυράννων` → τυραννέω, `ἀφίῃ` →
+  ἀφία, `ἀδίκων` → ἀδίκη, `Τέλλον` → τέλλω, `Κολοφωνίους` → κολοφών,
+  `Ἅιδου` → Αἰδώς, `σκοτόεν` → σκοτόω).
 
 ### 5. Performance
 
 - **Native lookups** (`build/benchmark-lookup languages/grc/sources/benchmark-words.txt 6 --languages languages --language grc --term $D --json`,
-  the 60 texts in 6 passes, the first dropped, three runs): p50 708-733 µs,
-  p95 2.42-2.48 ms. The budget is 1 ms p50. The union's p50 is 775 µs.
+  the 60 texts in 6 passes, the first dropped, three runs): p50 787-837 µs,
+  p95 2.36-2.44 ms. The budget is 1 ms p50. The union's p50 is 810-847 µs.
 - **WebAssembly** (`node languages/grc/sources/wasm.mjs <hachidori> $D 10`,
   Hachidori feat/multi-language 803f7b6e's prebuilt engines, Node 22, the
   dictionary paged):
-  - `hdw_language_load`: median 26.7 ms single-thread and 28.7 ms threaded
+  - `hdw_language_load`: median 27.8 ms single-thread and 29.4 ms threaded
     over 10 fresh engines (budget 50 ms);
-  - live heap after the load: +4,148,064 bytes (budget 20 MB);
-  - `hdw_lookup` on the 60 texts: p50 1.22 ms and p95 4.33 ms
-    single-thread, p50 1.37 ms and p95 4.88 ms threaded.
+  - live heap after the load: +4,166,712 bytes (budget 20 MB);
+  - `hdw_lookup` on the 60 texts: p50 1.46 ms and p95 4.47 ms
+    single-thread, p50 1.58 ms and p95 4.73 ms threaded.
 - **Patterns**: 18 `pattern` rules, 12 in `accent` (antepenult) and 6 in
-  `reduplication-preverb`; they take 93,848 bytes of the heap (the load
-  without them: +4,054,216 bytes). No processor has a pattern.
-- `tests/` and `sources/` hold 942,225 bytes; the largest TSV is
-  `corpus.tsv` with 900 rows.
+  `reduplication-preverb`; they take 94,424 bytes of the heap (the load
+  without them: +4,072,288 bytes). No processor has a pattern.
+- `tests/` and `sources/` hold SIZE_TOTAL bytes; the largest TSV is
+  `corpus.tsv` with 901 rows.
 
 ### 6. Commands and checks
 
@@ -341,6 +403,8 @@ python3 languages/grc/sources/make-hovers-agdt.py out agdt/tlg0003.tlg001.perseu
 python3 languages/grc/sources/measure.py text out/hover.tsv --dictionary $D --sample 60
 python3 languages/grc/sources/measure.py behind out/hover.tsv --dictionary $D
 python3 languages/grc/sources/measure.py frequent agdt --dictionary $D
+python3 languages/grc/sources/measure.py rules out/hover.tsv --dictionary $D     # and with agdt for the frequent forms
+python3 languages/grc/sources/measure.py traces out/hover.tsv --dictionary $D
 python3 languages/grc/sources/measure.py compare out/hover.tsv --dictionary $D --other <languages dir with union.json> --trace nominalization
 python3 languages/grc/sources/measure.py benchmark out/hover.tsv --dictionary $D   # writes benchmark-words.txt
 # speed
@@ -353,31 +417,38 @@ node tools/check-yomitan.mjs <yomitan checkout> grc
 python3 languages/grc/sources/mutate.py <scratch dir>
 ```
 
-- **Conformance** (`language-conformance-test languages/grc`): 243
-  transforms, 14,238 rules, 9 preprocessors; `classes.json` agrees (6
-  classes, 104 fields, no step); `yomitan.tsv` 59/59, `corpus.tsv` 900/900,
-  `cases.tsv` 463/463, `defaults.tsv` 5/5 with the defaults, `gaps.tsv`
-  0/100; every own and both transform has a passing row (1,843 of the 14,238
-  rules are exercised). The full `ctest` passes, 42 of 42.
-- **Differential check** (`tools/check-yomitan.mjs`): rules 2,596 inputs,
-  5,855 Yomitan results, 0 differences; processors `decapitalize` (4,900
-  inputs), `capitalizeFirstLetter` (5,295), `removeAlphabeticDiacritics`
-  (2,005), `convertLatinToGreek` (2,537), 98 listed differences, 0
+- **Conformance** (`language-conformance-test languages/grc`): 244
+  transforms, 14,224 rules, 9 preprocessors; `classes.json` agrees (7
+  classes, 109 fields, no step); `yomitan.tsv` 59/59, `corpus.tsv` 901/901,
+  `cases.tsv` 503/503, `defaults.tsv` 6/6 with the defaults, `text.tsv`
+  17/17, `gaps.tsv` 0/99; every own and both transform has a passing row
+  (1,848 of the 14,224 rules are exercised). The full `ctest` passes, CTEST.
+- **Traces in the tests.** The 37 `trace` rows of `cases.tsv` give their
+  reasons (`λόγους` → λόγος `acc-pl`, `ἔλυσα` → λύω
+  `accent|augment|aorist|ind-act-1sg`, `δίκα` → δίκη `doric-alpha`), so a
+  renamed transform or a lost path fails a test.
+- **Differential check** (`tools/check-yomitan.mjs`): rules 2,621 inputs,
+  5,902 Yomitan results, 0 differences; processors `decapitalize` (4,928
+  inputs), `capitalizeFirstLetter` (5,323), `removeAlphabeticDiacritics`
+  (2,033), `convertLatinToGreek` (2,565), 98 listed differences, 0
   unexplained. `sources/yomitan-differences.tsv` lists the listed ones: a
   capital sigma with no letter before it (`Σ.` gives `ς.` here, `σ.` in
   JavaScript, whose Final_Sigma also skips apostrophes and full stops).
-- **Mutation check** (`sources/mutate.py`): 0 of 55 constraint removals
-  pass every test.
+- **Mutation checks.** `sources/mutate.py`: 0 of 56 constraint removals
+  pass every test. The first audit's 53 mutations (its `mymutate.mjs`):
+  47 fail a test; of the 6 that pass, three change a processor step that
+  another processor repeats (NFC, the final-sigma map, the diacritic strip,
+  which `check-yomitan` also catches), two remove a pair another pair
+  repeats (`θω` → `ω` of `aorist-passive`, `ξυν` → `συν` beside `ξυ` →
+  `συ`), and one removes the -γε rule, which no longer exists.
 - **Hachidori** (feat/multi-language 803f7b6e with this branch in
   `third_party/hoshidicts`, `node scripts/sync-languages.mjs`, then
   `node test/chrome-language-pack.mjs` with wty-grc-en.zip and 11 cases of
-  real sentences): 15 checks pass, among them ξυνέγραψε → συγγράφω,
-  ἄειδε → ἀείδω, ἔπεμψαν → πέμπω, γένοιτ’ → γίγνομαι, the Anki note and the
-  switch to Japanese and back.
+  real sentences): HACHIDORI_RESULT.
 
 ## Known gaps
 
-- **Forms the rules do not reach**, the 100 rows of `gaps.tsv`:
+- **Forms the rules do not reach**, the 99 rows of `gaps.tsv`:
   - 31 Epic and Ionic verb forms: unaugmented and thematic forms of
     irregular verbs (`δίδον`, `τίθεντο`, `ἴδεν`, `κίχον`, `λέκτο`, `ἤια`),
     iteratives in -σκε (`ἀποκρύπτασκε`), infinitives in -έμεν (`εἰπέμεν`),
@@ -393,40 +464,66 @@ python3 languages/grc/sources/mutate.py <scratch dir>
   - 4 nouns whose accent goes back before a diphthong or -ζα, -τρια
     (`διαίτης` → `δίαιτα`, `χαλαζῶν` → `χάλαζα`) and 4 with irregular stems
     (`σκάτα` → `σκῶρ`, `ἅλα` → `ἅλς`);
-  - 9 treebank nouns and 3 adjectives: Epic stems (`Θέμιστα`, `θώων`),
-    crasis and elision the rules do not have (`ὦναξ`, `φῶθ’`), Doric
-    `ματρόπολιν`, the dual `ἀμφοτέροιιν`, and spellings or lemmas of the
-    treebank (`ἔθνἐ`, `Σαμίου` → `Σάμος`);
+  - 9 treebank nouns and 2 adjectives: Epic stems (`Θέμιστα`, `θώων`),
+    crasis the rules do not have (`ὦναξ`), Doric `ματρόπολιν`, the dual
+    `ἀμφοτέροιιν`, and spellings or lemmas of the treebank (`ἔθνἐ`, `Σαμίου`
+    → `Σάμος`);
   - 2 UniMorph forms without their breathing (`ουτιδανόν`), 1 pronoun
     (`τοῦπερ` → `ὅσπερ`), 2 adverbs (`λέκτρονδ’`, `κεῖσ’`), 1 numeral
     (`τρισκαίδεκα` → `τρεισκαίδεκα`).
+- **Wrong first results the rules cause** (`measure.py rules`, frequent-form
+  words / real-text lookups where the dictionary alone puts the right lemma
+  first): genitive plurals read as another word (`ἄγων` → ἄγος 55 / 6,
+  `βοῶν` → βοή 45, `ἀνέμων` → ἀνέμη 36, `ὀρέων` → ὀρεύς 28 / 7, `ἀδίκων` →
+  ἀδίκη 4), the feminine of an adjective read as a noun (`φίλην`, `φίλῃ`,
+  `φίλαι`, `φίλας` → φίλη 106, `ἰδίαν`, `ἰδίας` → ἰδία 48), augmented and
+  third-person verb forms read as nouns (`ἔλεγον`, `ἔλεγε` → ἔλεγος 45 / 32,
+  `μένει` → μένος 32, `ἄγει` → ἄγος 23 / 5, `μάθε` → μάθος 6), `ἐμοῦ` →
+  ἐμός 102 / 25, `ἕνα` → ἕνος 49, `ἔτη` → ἔτης (vocative) 32 / 7, `Δελφούς`
+  and its cases → Δελφός 23 / 43, the aorist of ὁράω as ὁράω where wty-grc-en
+  has εἶδον (`ἴδον`, `ἰδεῖν`, `ἰδέσθαι` 171), `ἵκοντο`, `ἵκετο` → ἵκω 91,
+  and the enclitic accent reaching a variant entry (`φώνησέν` → φώνησεν 35).
+  Each needs the right word to be found by a rule before the other or a
+  constraint that tells the forms apart; the rules have neither.
 - **The article loses ties.** When two lemmas tie on matched length,
   processor steps, trace length and confirmation, the engine prefers a term
   whose reading is its expression. wty-grc-en gives ὁ the reading `ὁ •` and
   most lemmas with long vowels a reading with length marks (`εἰμῐ́`, `σῠ́`),
   while the targets of its defective form-of rows have no reading. So, with
   this pack's rules or without them, `τοῦ` and `τοῖς` show `-κτόνος` first
-  (801 real-text lookups; 3,509 words of the frequent forms), `εἶναι` shows
-  `εἶμαι` (256; 721 words), `σε` and `σοι` show the possessive `σός` (140;
-  831 words) and `οἱ` shows the pronoun `οὗ` before the article (653, of
-  which 542 are the article). A frequency dictionary would order them; the
-  pack cannot.
+  (801 real-text lookups; 3,469 words of the frequent forms), `εἶναι` shows
+  `εἶμαι` (256; 721 words), `σε` and `σοι` show the possessive `σός` (168;
+  1,152 words) and `οἱ` shows the pronoun `οὗ` before the article (653, of
+  which 542 are the article). Other rows of wty-grc-en win the same way:
+  `εἶσι` → εἶμαι, `εἶεν` → φοβέω, `ἧς` → εἷς, `ἰών` → ἐγώ. A frequency
+  dictionary would order them; the pack cannot.
+- **The word's own entry for another word** comes first, with no rule and
+  no processor step, which no rule can outrank: `τῷ` "then" (344 real-text
+  lookups; 1,349 frequent-form words), `τῇ` "here; there" (283; 904),
+  `αὐτοῦ` "here, there" for αὐτός, `τάδε` "on this account" and `τόδε`
+  "hither" for ὅδε, `οἷα` and `οἵα` → οἶος "alone" for οἷος.
 - **Ambiguous forms** keep the engine's order: `πολέμου` is also πολεμόω's
-  imperative and `ἐμοῦ` ἐμός's genitive; `φίλων` gives `φίλη` before
-  `φίλος` (97 words of the frequent forms).
-- **Rule errors** in real text, by the hand sample: about 6 of 60 wrong
-  first results (0.9% of lookups), such as `πλούτει` → `πλοῦτος` (the
-  dative -ει of neuter -ος nouns) and `ἰχθύων` → `ἰχθύα`.
-- **Part of speech in the accent transform.** The accent rules give `n` and
-  `adj` whatever they read, so a feminine adjective's form can reach a
-  masculine noun: `ἀρχῇ` → `ἀρχός` (after `ἀρχή`, which comes first).
+  imperative and `ἐμοῦ` ἐμός's genitive; `τύχῃ` is τύχη's dative and
+  τυγχάνω's subjunctive.
+- **Part of speech.** The accent rules give `n` and `adj` whatever they
+  read, so a feminine adjective's form can reach a masculine noun: `ἀρχῇ` →
+  `ἀρχός` (after `ἀρχή`, which comes first). Words that wty-grc-en lists with
+  no part of speech (οἷος) are not reached by the case rules, whose outputs
+  carry `n` or `adj`.
 - **Text without diacritics** is read by the rules whose endings have none
   (most of them, Yomitan's among them) and by the dictionary's
   diacritic-free form-of rows; rules with a breathing or a subscript in the
   stem or ending do not read it, and the accent transform cannot restore a
-  breathing. Text without accents but with breathings is read by every rule.
+  breathing. Text without accents but with breathings is read by the rules
+  and the accent transform, the penult of -ος and -ον included (`ἐργου` →
+  ἔργον).
+- **Iota adscript** (`λόγωι`, `τιμῆι`, capitals `ΤΩΙ`) is not read as the
+  subscript.
+- **A closing single quotation mark** U+2019 after a word (‘λόγος’) is read
+  as an elision mark, so the word finds nothing.
 - **Options**: `capitalizedNames` (a name written in lower case) doubles a
-  lookup's work and is off; `doricAlpha` (δίκα → δίκη) is off. Proper names
-  have no rules; they are found when the dictionary lists the form.
+  lookup's work and is off; `doricAlpha` (δίκα → δίκη) and `duals` are off.
+  Proper names have no rules; they are found when the dictionary lists the
+  form.
 - **Elision** is restored only after a stem with an accent or breathing, so
   an elided word without diacritics (`γενοιτ’`) is not read.

@@ -2,7 +2,7 @@
 # https://github.com/yomidevs/yomitan/blob/d3c54c10264673eca0d66b970ef74cd5c8b048e3/test/language/ancient-greek-transforms.test.js
 # Converted by tools/port-yomitan-tests.mjs; sources/build-final.mjs then sets the reasons column to * (any trace): the final rules reach
 # these lemmas through this pack's own transforms, whose ids are not Yomitan's. A row whose rule the final set leaves out is a negative
-# (valid 0): nominalization ος → εω (README.md, "Rule provenance").
+# (valid 0): dative singular ω → ος, dative singular ω → ον, nominalization ος → εω (README.md, "Rule provenance").
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
 verbs	1	λύεις	λύω	v	*
 verbs	1	λύει	λύω	v	*

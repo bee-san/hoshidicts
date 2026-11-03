@@ -167,7 +167,7 @@ function buildAccentTransform() {
   // (λυω → λύω, λειπω → λείπω, ἀγω → ἄγω, σῳζω → σῴζω, βουλομαι → βούλομαι; the last vowel of a diphthong
   // carries it: παιδεύω, ἀκούω). The rule puts a mark for the ending, an acute on the text's last vowel, then the
   // ending back: one rule for every stem. Only a stem without an accent takes one.
-  const NO_ACCENT = charClass([...LETTERS.plainVowels, ...LETTERS.consonants]);
+  const NO_ACCENT = '{unaccented}';
   const ACUTE = Object.fromEntries([...PLAIN_TARGETS, ...DIAERESIS_TARGETS, ...BREATHING_TARGETS, ...SUBSCRIPT_TARGETS].map((v) => [v, acute(v)]));
   const LONG = [...'αηιυω', ...'ἀἁἠἡἰἱὐὑὠὡ', ...SUBSCRIPT_TARGETS];
   const CIRCUMFLEX = Object.fromEntries(LONG.map((v) => [v, NFC(v + '\u0342')]));
@@ -211,11 +211,11 @@ function buildAccentTransform() {
   // The penult, for the first declension and the commonest third-declension endings (χωρῶν → χώρα, διαίτης,
   // ῥητόρων → ῥήτωρ, δαιμόνων → δαίμων): an acute on the last vowel of the stem; a circumflex too where a long
   // vowel may stand before a short last syllable.
-  for (const ending of ['α', 'η', 'ης', 'ας', 'ων', 'ωρ', 'υς', 'ις']) {
+  for (const ending of ['α', 'η', 'ης', 'ας', 'ων', 'ωρ', 'υς', 'ις', 'ος', 'ον']) {
     onLastVowel(ending, ACUTE, ['n', 'adj'], {stemMinLength: 1});
   }
-  // A circumflex where a long vowel stands before a short last syllable (χώρα, but μοῖρα, γλῶσσα, ῥῆσις).
-  for (const ending of ['α', 'ας']) onLastVowel(ending, CIRCUMFLEX, ['n', 'adj'], {stemMinLength: 1});
+  // A circumflex where a long vowel stands before a short last syllable (χώρα, but μοῖρα, γλῶσσα, ῥῆσις, δῶρον).
+  for (const ending of ['α', 'ας', 'ος', 'ον']) onLastVowel(ending, CIRCUMFLEX, ['n', 'adj'], {stemMinLength: 1});
   void PV;
 }
 
@@ -223,7 +223,10 @@ function buildAccentTransform() {
 // Nominal declension
 // ---------------------------------------------------------------------------
 
+// The order is the order of the transforms, which decides between equal traces: the accusative plural -ους of
+// the second declension is commoner than the genitive singular -ους of σ-stems (λόγους, γένους).
 const CASES = {
+  'acc-pl': ['accusative plural', 'Accusative plural: -ους, -ας, -εις, -ῦς.'],
   'gen-sg': ['genitive singular', 'Genitive singular: -ου, -ης, -ας, -ος, -εως, -ους; Epic and Ionic -οιο, -αο, -εω, -ηος.'],
   'dat-sg': ['dative singular', 'Dative singular: -ῳ, -ῃ, -ᾳ, -ι, -ει.'],
   'acc-sg': ['accusative singular', 'Accusative singular: -ον, -ην, -αν, -α, -ν, -η.'],
@@ -231,7 +234,6 @@ const CASES = {
   'nom-pl': ['nominative plural', 'Nominative and vocative plural: -οι, -αι, -ες, -εις, -η.'],
   'gen-pl': ['genitive plural', 'Genitive plural: -ων; Epic and Ionic -άων, -έων.'],
   'dat-pl': ['dative plural', 'Dative plural: -οις, -αις, -σι(ν); Epic and Ionic -οισι(ν), -ῃσι(ν), -εσσι(ν).'],
-  'acc-pl': ['accusative plural', 'Accusative plural: -ους, -ας, -εις, -ῦς.'],
   'na-pl': ['nominative/accusative plural', 'Nominative, accusative and vocative plural of neuters: -α, -η.'],
   'nav-du': ['nominative/accusative/vocative dual', 'Dual: -ω, -α, -ε, -η, -ει.'],
   'gd-du': ['genitive/dative dual', 'Genitive and dative dual: -οιν, -αιν, -οῖν.'],
@@ -300,6 +302,28 @@ function nominalBoth(id, ending, lemma, opts = {}) {
 
 function buildNominal() {
   caseTransforms();
+  // The nominative, accusative and vocative dual (ἵππω, χώρα, φύλακε) has the endings of common singular and verb
+  // forms (μάθω, ἔλαβε): optional, the setting duals.
+  byId.get('nav-du').optional = true;
+
+  // Second declension first: where a -ων, -ου or -ην form reads as both -ος and -η, the -ος word is the commoner
+  // (φίλων: φίλος before φίλη), and a rule's reading found first comes first among equals (README.md).
+  // Second declension: -ος (λόγος, ἄνθρωπος, θεός), neuter -ον (δῶρον, ἔργον).
+  const second = [
+    ['ου', 'gen-sg'], ['οιο', 'gen-sg'], ['οο', 'gen-sg'], ['ῳ', 'dat-sg'], ['ον', 'acc-sg'], ['ε', 'voc-sg'],
+    ['οι', 'nom-pl'], ['ων', 'gen-pl'], ['οις', 'dat-pl'], ['οισι', 'dat-pl'], ['οισιν', 'dat-pl'], ['ους', 'acc-pl'],
+    ['ω', 'nav-du'], ['οιν', 'gd-du'], ['οφι', 'epic-phi'], ['οφιν', 'epic-phi'],
+  ];
+  for (const [e, c] of second) nominalBoth(c, e, 'ος');
+  const secondNeut = [['ου', 'gen-sg'], ['οιο', 'gen-sg'], ['ῳ', 'dat-sg'], ['α', 'na-pl'], ['ων', 'gen-pl'], ['οις', 'dat-pl'],
+    ['οισι', 'dat-pl'], ['οισιν', 'dat-pl'], ['ω', 'nav-du'], ['οιν', 'gd-du']];
+  for (const [e, c] of secondNeut) nominalBoth(c, e, 'ον', {ultima: e === 'α' ? 'short' : undefined, out: c === 'na-pl' ? ['n', 'adj', 'neu'] : NA});
+  for (const [e, c] of [['οῦ', 'gen-sg'], ['ῷ', 'dat-sg'], ['όν', 'acc-sg'], ['έ', 'voc-sg'], ['οί', 'nom-pl'], ['ῶν', 'gen-pl'], ['οῖς', 'dat-pl'], ['οῖσι', 'dat-pl'], ['οῖσιν', 'dat-pl'], ['ούς', 'acc-pl'], ['ώ', 'nav-du'], ['οῖν', 'gd-du'], ['οῖο', 'gen-sg']]) literal(c, e, 'ός', NA);
+  for (const [e, c] of [['οῦ', 'gen-sg'], ['ῷ', 'dat-sg'], ['ά', 'na-pl'], ['ῶν', 'gen-pl'], ['οῖς', 'dat-pl'], ['ώ', 'nav-du'], ['οῖν', 'gd-du']]) literal(c, e, 'όν', NA);
+  // Attic second declension (νεώς, λεώς, λαγώς) and contracted -οῦς, -οῦν (νοῦς, πλοῦς, ὀστοῦν).
+  for (const [e, c] of [['ω', 'gen-sg'], ['ῳ', 'dat-sg'], ['ων', 'acc-sg'], ['ῳ', 'nom-pl'], ['ων', 'gen-pl'], ['ῳς', 'dat-pl'], ['ως', 'acc-pl']]) nominalBoth(c, e, 'ως', {recede: false});
+  for (const [e, c] of [['οῦ', 'gen-sg'], ['ῷ', 'dat-sg'], ['οῦν', 'acc-sg'], ['οῖ', 'nom-pl'], ['ῶν', 'gen-pl'], ['οῖς', 'dat-pl'], ['οῦς', 'acc-pl']]) literal(c, e, 'οῦς', NA);
+  for (const [e, c] of [['οῦ', 'gen-sg'], ['ῷ', 'dat-sg'], ['ᾶ', 'na-pl'], ['ῶν', 'gen-pl'], ['οῖς', 'dat-pl']]) literal(c, e, 'οῦν', NA);
 
   // First declension: -η (τιμή, γνώμη), -α (χώρα, θάλαττα, μοῦσα), masculine -ης (πολίτης), -ας (νεανίας).
   const firstFem = [
@@ -337,23 +361,6 @@ function buildNominal() {
   for (const [e, c] of [['ᾶς', 'gen-sg'], ['ᾷ', 'dat-sg'], ['άν', 'acc-sg'], ['αί', 'nom-pl'], ['ῶν', 'gen-pl'], ['αῖς', 'dat-pl'], ['άς', 'acc-pl']]) literal(c, e, 'ά', NAF);
   for (const [e, c] of [['οῦ', 'gen-sg'], ['ῇ', 'dat-sg'], ['ήν', 'acc-sg'], ['ά', 'voc-sg'], ['αί', 'nom-pl'], ['ῶν', 'gen-pl'], ['αῖς', 'dat-pl'], ['άς', 'acc-pl']]) literal(c, e, 'ής', NA);
 
-  // Second declension: -ος (λόγος, ἄνθρωπος, θεός), neuter -ον (δῶρον, ἔργον).
-  const second = [
-    ['ου', 'gen-sg'], ['οιο', 'gen-sg'], ['οο', 'gen-sg'], ['ῳ', 'dat-sg'], ['ον', 'acc-sg'], ['ε', 'voc-sg'],
-    ['οι', 'nom-pl'], ['ων', 'gen-pl'], ['οις', 'dat-pl'], ['οισι', 'dat-pl'], ['οισιν', 'dat-pl'], ['ους', 'acc-pl'],
-    ['ω', 'nav-du'], ['οιν', 'gd-du'], ['οφι', 'epic-phi'], ['οφιν', 'epic-phi'],
-  ];
-  for (const [e, c] of second) nominalBoth(c, e, 'ος');
-  const secondNeut = [['ου', 'gen-sg'], ['οιο', 'gen-sg'], ['ῳ', 'dat-sg'], ['α', 'na-pl'], ['ων', 'gen-pl'], ['οις', 'dat-pl'],
-    ['οισι', 'dat-pl'], ['οισιν', 'dat-pl'], ['ω', 'nav-du'], ['οιν', 'gd-du']];
-  for (const [e, c] of secondNeut) nominalBoth(c, e, 'ον', {ultima: e === 'α' ? 'short' : undefined, out: c === 'na-pl' ? ['n', 'adj', 'neu'] : NA});
-  for (const [e, c] of [['οῦ', 'gen-sg'], ['ῷ', 'dat-sg'], ['όν', 'acc-sg'], ['έ', 'voc-sg'], ['οί', 'nom-pl'], ['ῶν', 'gen-pl'], ['οῖς', 'dat-pl'], ['οῖσι', 'dat-pl'], ['οῖσιν', 'dat-pl'], ['ούς', 'acc-pl'], ['ώ', 'nav-du'], ['οῖν', 'gd-du'], ['οῖο', 'gen-sg']]) literal(c, e, 'ός', NA);
-  for (const [e, c] of [['οῦ', 'gen-sg'], ['ῷ', 'dat-sg'], ['ά', 'na-pl'], ['ῶν', 'gen-pl'], ['οῖς', 'dat-pl'], ['ώ', 'nav-du'], ['οῖν', 'gd-du']]) literal(c, e, 'όν', NA);
-  // Attic second declension (νεώς, λεώς, λαγώς) and contracted -οῦς, -οῦν (νοῦς, πλοῦς, ὀστοῦν).
-  for (const [e, c] of [['ω', 'gen-sg'], ['ῳ', 'dat-sg'], ['ων', 'acc-sg'], ['ῳ', 'nom-pl'], ['ων', 'gen-pl'], ['ῳς', 'dat-pl'], ['ως', 'acc-pl']]) nominalBoth(c, e, 'ως', {recede: false});
-  for (const [e, c] of [['οῦ', 'gen-sg'], ['ῷ', 'dat-sg'], ['οῦν', 'acc-sg'], ['οῖ', 'nom-pl'], ['ῶν', 'gen-pl'], ['οῖς', 'dat-pl'], ['οῦς', 'acc-pl']]) literal(c, e, 'οῦς', NA);
-  for (const [e, c] of [['οῦ', 'gen-sg'], ['ῷ', 'dat-sg'], ['ᾶ', 'na-pl'], ['ῶν', 'gen-pl'], ['οῖς', 'dat-pl']]) literal(c, e, 'οῦν', NA);
-
   // Third declension: [stem end, nominative ending, dative plural]. Neuters have -α in the plural.
   const third = [
     ['κ', 'ξ', 'ξι'], ['γ', 'ξ', 'ξι'], ['χ', 'ξ', 'ξι'], ['κτ', 'ξ', 'ξι'], ['γγ', 'γξ', 'γξι'],
@@ -387,14 +394,20 @@ function buildNominal() {
   for (const [e, c] of [['ω', 'acc-sg'], ['ους', 'nom-pl'], ['ους', 'acc-pl'], ['ω', 'na-pl']]) nominal(c, e, 'ων', ADJ, {recede: true});
 
   // σ-stems: neuter -ος (γένος, γένους), masculine and adjective -ης (Σωκράτης, ἀληθής, τριήρης).
+  // The Attic genitive plural is -ῶν (γενῶν), below: a stem-accented -ων is a participle (μένων) or another word.
   const sStemNeut = [['ους', 'gen-sg'], ['εος', 'gen-sg'], ['ευς', 'gen-sg'], ['ει', 'dat-sg'], ['εϊ', 'dat-sg'], ['η', 'na-pl'], ['εα', 'na-pl'],
-    ['ων', 'gen-pl'], ['εων', 'gen-pl'], ['εσι', 'dat-pl'], ['εσιν', 'dat-pl'], ['εσσι', 'dat-pl'], ['εσσιν', 'dat-pl'], ['ει', 'nav-du'], ['οιν', 'gd-du'], ['εοιν', 'gd-du'], ['εσφι', 'epic-phi'], ['εσφιν', 'epic-phi']];
+    ['εων', 'gen-pl'], ['εσι', 'dat-pl'], ['εσιν', 'dat-pl'], ['εσσι', 'dat-pl'], ['εσσιν', 'dat-pl'], ['ει', 'nav-du'], ['οιν', 'gd-du'], ['εοιν', 'gd-du'], ['εσφι', 'epic-phi'], ['εσφιν', 'epic-phi']];
   for (const [e, c] of sStemNeut) nominalBoth(c, e, 'ος', {recede: true});
-  const sStemMasc = [['ους', 'gen-sg'], ['εος', 'gen-sg'], ['ευς', 'gen-sg'], ['ει', 'dat-sg'], ['εϊ', 'dat-sg'], ['η', 'acc-sg'], ['ην', 'acc-sg'], ['εα', 'acc-sg'],
+  suffix('gen-pl', 'ῶν', 'ος', [], NA, {stem: {stemMinLength: 2}, then: THEN_STRIP_ACCENTS, writtenOnly: true});
+  // The accusative -η of a barytone -ης (Σωκράτη) is left to the dictionary: it is also the plural of neuter -ος (ἔτη).
+  const sStemMasc = [['ους', 'gen-sg'], ['εος', 'gen-sg'], ['ευς', 'gen-sg'], ['ει', 'dat-sg'], ['εϊ', 'dat-sg'], ['ην', 'acc-sg'], ['εα', 'acc-sg'],
     ['ες', 'voc-sg'], ['εις', 'nom-pl'], ['εες', 'nom-pl'], ['ων', 'gen-pl'], ['εων', 'gen-pl'], ['εσι', 'dat-pl'], ['εσιν', 'dat-pl'],
     ['εσσι', 'dat-pl'], ['εσσιν', 'dat-pl'], ['εις', 'acc-pl'], ['εας', 'acc-pl'], ['η', 'na-pl'], ['εα', 'na-pl'], ['ει', 'nav-du'], ['οιν', 'gd-du']];
   for (const [e, c] of sStemMasc) nominalBoth(c, e, 'ης', {out: c === 'na-pl' ? ['n', 'adj', 'neu'] : NA});
-  for (const [e, c] of [['οῦς', 'gen-sg'], ['εῖ', 'dat-sg'], ['ῆ', 'acc-sg'], ['εῖς', 'nom-pl'], ['ῶν', 'gen-pl'], ['έσι', 'dat-pl'], ['έσιν', 'dat-pl'], ['εῖς', 'acc-pl'], ['ῆ', 'na-pl'], ['ές', 'voc-sg']]) literal(c, e, 'ής', NA);
+  // Oxytone -ής (ἀληθοῦς, ἀληθῆ). The accusative and neuter plural -ῆ only as written: without the accent the
+  // ending is that of ἔτη, the plural of ἔτος, which the twin read as ἔτης.
+  for (const [e, c] of [['οῦς', 'gen-sg'], ['εῖ', 'dat-sg'], ['εῖς', 'nom-pl'], ['ῶν', 'gen-pl'], ['έσι', 'dat-pl'], ['έσιν', 'dat-pl'], ['εῖς', 'acc-pl'], ['ές', 'voc-sg']]) literal(c, e, 'ής', NA);
+  for (const c of ['acc-sg', 'na-pl']) suffix(c, 'ῆ', 'ής', [], NA, {stem: {stemMinLength: 2}, writtenOnly: true});
   // -κλῆς names (Περικλῆς, Περικλέους) and αἰδώς, ἠχώ (οι-stems).
   for (const [e, c] of [['έους', 'gen-sg'], ['εῖ', 'dat-sg'], ['έα', 'acc-sg'], ['εις', 'voc-sg'], ['ῆος', 'gen-sg'], ['ῆι', 'dat-sg'], ['ῆα', 'acc-sg']]) literal(c, e, 'ῆς', NA);
   for (const [e, c] of [['οῦς', 'gen-sg'], ['οῖ', 'dat-sg'], ['ῶ', 'acc-sg'], ['όος', 'gen-sg']]) { literal(c, e, 'ώς', NA); literal(c, e, 'ώ', NA); }
@@ -520,7 +533,7 @@ function endingSet(prefixId, label, endings, conditionsOut, voice, opts = {}) {
   for (const [ending, person, eopts] of endings) {
     const id = `${prefixId}-${person}`;
     verbTransform(id, `${label} ${PERSONS[person] ?? person}`, opts.description ?? `${label}, ${PERSONS[person] ?? person}.`);
-    const lemmas = voice === 'mid' ? (opts.lemmas ?? ['ω', 'ομαι']) : (opts.lemmas ?? ['ω']);
+    const lemmas = voice === 'mid' ? (opts.lemmas ?? ['ομαι', 'ω']) : (opts.lemmas ?? ['ω']);
     for (const lemma of lemmas) verbEnding(id, ending, lemma, conditionsOut, {...opts, ...(eopts ?? {})});
   }
 }
@@ -572,8 +585,8 @@ function thematicEndings() {
     ['ου', '2sg'], ['εο', '2sg'], ['ευ', '2sg'], ['εσθω', '3sg'], ['εσθε', '2pl'], ['εσθων', '3pl'], ['εσθωσαν', '3pl'], ['εσθον', '2du'],
   ], OUT_IMP, 'mid');
   verbTransform('inf-mid', 'infinitive middle/passive', 'Infinitive middle and passive: -εσθαι.');
-  for (const lemma of ['ω', 'ομαι']) verbEnding('inf-mid', 'εσθαι', lemma, OUT_INF, {ultima: 'short'});
-  for (const lemma of ['ω', 'ομαι']) verbEnding('inf-mid', 'έσθαι', lemma, ['aor2']);
+  for (const lemma of ['ομαι', 'ω']) verbEnding('inf-mid', 'εσθαι', lemma, OUT_INF, {ultima: 'short'});
+  for (const lemma of ['ομαι', 'ω']) verbEnding('inf-mid', 'έσθαι', lemma, ['aor2']);
 }
 
 const PTC_CASES = {
@@ -616,14 +629,14 @@ function participles() {
     ['ουσῶν', 'gen-pl', 'f'], ['ούσαις', 'dat-pl', 'f'], ['ούσας', 'acc-pl', 'f'], ['όν', 'nom-sg', 'n'], ['όντε', 'du'], ['όντοιν', 'du'], ['όντεσσι', 'dat-pl'], ['όντεσσιν', 'dat-pl'],
   ], ['ω'], ['aor2']);
   // Present, future and second aorist middle/passive (λυόμενος, λυσόμενος, λαβόμενος).
-  participle('ptc-mid', 'middle/passive participle', MENOS('ομεν'), ['ω', 'ομαι'], OUT_PTC);
+  participle('ptc-mid', 'middle/passive participle', MENOS('ομεν'), ['ομαι', 'ω'], OUT_PTC);
   // First aorist active and middle (λύσας, λυσάμενος), on the σ-stem.
   participle('ptc-act', 'active participle', [
     ['ας', 'nom-sg'], ['αντος', 'gen-sg'], ['αντι', 'dat-sg'], ['αντα', 'acc-sg'], ['αντες', 'nom-pl'], ['αντων', 'gen-pl'], ['ασι', 'dat-pl'], ['ασιν', 'dat-pl'],
     ['αντας', 'acc-pl'], ['αντε', 'du'], ['ασα', 'nom-sg', 'f'], ['ασης', 'gen-sg', 'f'], ['ασῃ', 'dat-sg', 'f'], ['ασαν', 'acc-sg', 'f'], ['ασαι', 'nom-pl', 'f'],
     ['ασῶν', 'gen-pl', 'f'], ['ασαις', 'dat-pl', 'f'], ['ασας', 'acc-pl', 'f', 'long'], ['αν', 'nom-sg', 'n'], ['αντα', 'nom-pl', 'n'],
   ], ['ω'], ['aor']);
-  participle('ptc-mid', 'middle/passive participle', MENOS('αμεν'), ['ω', 'ομαι'], ['aor']);
+  participle('ptc-mid', 'middle/passive participle', MENOS('αμεν'), ['ομαι', 'ω'], ['aor']);
   // Aorist passive (λυθείς, γραφείς), on the passive stem.
   participle('ptc-pass', 'aorist passive participle', [
     ['είς', 'nom-sg'], ['έντος', 'gen-sg'], ['έντι', 'dat-sg'], ['έντα', 'acc-sg'], ['έντες', 'nom-pl'], ['έντων', 'gen-pl'], ['εῖσι', 'dat-pl'], ['εῖσιν', 'dat-pl'],
@@ -660,7 +673,7 @@ function tenseEndings() {
   endingSet('opt-mid', 'optative middle', [['αιμην', '1sg'], ['αιο', '2sg'], ['αιτο', '3sg'], ['αιμεθα', '1pl'], ['αισθε', '2pl'], ['αιντο', '3pl']], ['aor'], 'mid');
   endingSet('imp-mid', 'imperative middle', [['αι', '2sg', {ultima: 'short'}], ['ασθω', '3sg'], ['ασθε', '2pl'], ['ασθων', '3pl']], ['aor'], 'mid');
   verbTransform('inf-mid', 'infinitive middle/passive', 'Infinitive middle and passive.');
-  for (const lemma of ['ω', 'ομαι']) verbEnding('inf-mid', 'ασθαι', lemma, ['aor'], {ultima: 'short'});
+  for (const lemma of ['ομαι', 'ω']) verbEnding('inf-mid', 'ασθαι', lemma, ['aor'], {ultima: 'short'});
   // Aorist passive (ἐλύθην, ἐγράφην) on the passive stem.
   endingSet('ind-pass', 'indicative passive', [
     ['ην', '1sg'], ['ης', '2sg'], ['η', '3sg'], ['ημεν', '1pl'], ['ητε', '2pl'], ['ησαν', '3pl'], ['ητον', '2du'], ['ητην', '3du'], ['εν', '3pl'],
@@ -686,8 +699,8 @@ function tenseEndings() {
   endingSet('ind-mid', 'indicative middle/passive', [
     ['μην', '1sg'], ['σο', '2sg'], ['το', '3sg'], ['μεθα', '1pl'], ['σθε', '2pl'], ['ντο', '3pl'],
   ], ['plpm'], 'mid');
-  for (const lemma of ['ω', 'ομαι']) verbEnding('inf-mid', 'σθαι', lemma, ['pmp'], {ultima: 'short'});
-  participle('ptc-pfm', 'perfect middle/passive participle', MENOS('μέν').map(([e, c, g]) => [e, c, g]), ['ω', 'ομαι'], ['pmp']);
+  for (const lemma of ['ομαι', 'ω']) verbEnding('inf-mid', 'σθαι', lemma, ['pmp'], {ultima: 'short'});
+  participle('ptc-pfm', 'perfect middle/passive participle', MENOS('μέν').map(([e, c, g]) => [e, c, g]), ['ομαι', 'ω'], ['pmp']);
   // Perfect middle of consonant stems: the ending merges with the stem's consonant (γέγραμμαι, γέγραψαι, γέγραπται).
   const merged = [
     // [ending, person, consonants of the present stem]
@@ -701,12 +714,12 @@ function tenseEndings() {
     const [ending, person, tense] = spec.split(':');
     const id = `ind-mid-${person}`;
     verbTransform(id, `indicative middle/passive ${PERSONS[person]}`, `indicative middle/passive, ${PERSONS[person]}.`);
-    for (const c of cons) for (const lemma of ['ω', 'ομαι']) {
+    for (const c of cons) for (const lemma of ['ομαι', 'ω']) {
       verbEnding(id, ending, c + lemma, [tense === 'plpm' ? 'augred' : 'red'], {ultima: /(αι)$/u.test(ending) ? 'short' : undefined});
     }
   }
   for (const [ending, cons] of [['φθαι', ['π', 'β', 'φ', 'πτ', 'μπ']], ['χθαι', ['κ', 'γ', 'χ', 'ττ', 'σσ', 'γγ']], ['σθαι', ['θ', 'δ', 'ζ', 'τ']], ['λθαι', ['λλ', 'λ']], ['ρθαι', ['ρ']]]) {
-    for (const c of cons) for (const lemma of ['ω', 'ομαι']) verbEnding('inf-mid', ending, c + lemma, ['red'], {ultima: 'short'});
+    for (const c of cons) for (const lemma of ['ομαι', 'ω']) verbEnding('inf-mid', ending, c + lemma, ['red'], {ultima: 'short'});
   }
   for (const [stem, cons, deponent] of [['μμέν', ['π', 'β', 'φ', 'πτ', 'μπ'], false], ['γμέν', ['κ', 'γ', 'χ', 'ττ', 'σσ'], true], ['σμέν', ['θ', 'δ', 'ζ', ''], true], ['λμέν', ['λλ'], false], ['ρμέν', ['ρ'], false]]) {
     participle('ptc-pfm', 'perfect middle/passive participle', MENOS(stem), cons.flatMap((c) => deponent ? [c + 'ω', c + 'ομαι'] : [c + 'ω']), ['red']);
@@ -751,12 +764,14 @@ function contractEndings() {
       midimp: [['ῶ', '2sg'], ['άσθω', '3sg'], ['ᾶσθε', '2pl'], ['άσθων', '3pl']],
       midinf: 'ᾶσθαι', midptc: 'ωμεν',
     },
+    // -όω without the imperfect 3rd singular and the imperative 2nd singular in -ου (ἐδήλου, δήλου; the
+    // dictionary has them): the ending is the genitive -ου, and πολέμου, δικαίου showed πολεμόω, δικαιόω first.
     'όω': {
       ind: [['ῶ', '1sg'], ['οῖς', '2sg'], ['οῖ', '3sg'], ['οῦμεν', '1pl'], ['οῦτε', '2pl'], ['οῦσι', '3pl'], ['οῦσιν', '3pl']],
-      sec: [['ουν', '1sg'], ['ους', '2sg'], ['ου', '3sg'], ['οῦμεν', '1pl'], ['οῦτε', '2pl'], ['ουν', '3pl']],
+      sec: [['ουν', '1sg'], ['ους', '2sg'], ['οῦμεν', '1pl'], ['οῦτε', '2pl'], ['ουν', '3pl']],
       subj: [['οῖς', '2sg'], ['οῖ', '3sg'], ['ῶμεν', '1pl'], ['ῶτε', '2pl'], ['ῶσι', '3pl'], ['ῶσιν', '3pl']],
       opt: [['οίην', '1sg'], ['οίης', '2sg'], ['οίη', '3sg'], ['οῖμεν', '1pl'], ['οῖτε', '2pl'], ['οῖεν', '3pl']],
-      imp: [['ου', '2sg'], ['ούτω', '3sg'], ['οῦτε', '2pl'], ['ούντων', '3pl']],
+      imp: [['ούτω', '3sg'], ['οῦτε', '2pl'], ['ούντων', '3pl']],
       inf: [['οῦν', '']],
       ptc: [['ῶν', 'nom-sg'], ['οῦντος', 'gen-sg'], ['οῦντι', 'dat-sg'], ['οῦντα', 'acc-sg'], ['οῦντες', 'nom-pl'], ['ούντων', 'gen-pl'], ['οῦσι', 'dat-pl'], ['οῦσιν', 'dat-pl'],
         ['οῦντας', 'acc-pl'], ['οῦσα', 'nom-sg', 'f'], ['ούσης', 'gen-sg', 'f'], ['ούσῃ', 'dat-sg', 'f'], ['οῦσαν', 'acc-sg', 'f'], ['οῦσαι', 'nom-pl', 'f'], ['ουσῶν', 'gen-pl', 'f'],
@@ -1295,9 +1310,12 @@ function buildAthematic() {
     const out = [];
     for (const f of forms) out.push(NFC(stem + f));
     // ἐδυνάμην, ἠδυνάμην; ἠπιστάμην
-    const aug = lemma === 'δύναμαι' ? ['ἐδυν', 'ἠδυν'] : ['ἠπιστ'];
+    // An ending without an accent takes the recessive one on the stem (ἐδύνατο, ἠπίστατο).
+    const aug = lemma === 'δύναμαι' ? [['ἐδυν', 'ἐδύν'], ['ἠδυν', 'ἠδύν']] : [['ἠπιστ', 'ἠπίστ']];
     const past = [];
-    for (const a of aug) for (const f of ['άμην', 'ω', 'ασο', 'ατο', 'άμεθα', 'ασθε', 'αντο', 'ήθην', 'ήθης', 'ήθη', 'ήθημεν', 'ήθησαν', 'ήθητε']) past.push(NFC(a + f));
+    for (const [a, accented] of aug) {
+      for (const f of ['άμην', 'ω', 'ασο', 'ατο', 'άμεθα', 'ασθε', 'αντο', 'ήθην', 'ήθης', 'ήθη', 'ήθημεν', 'ήθησαν', 'ήθητε']) past.push(NFC((hasAccent(f) ? a : accented) + f));
+    }
     athematic(lemma, [['ath-mid', ...out.filter((f) => !/ήθ/u.test(f) || /ηθ[εῆῶ]/u.test(f)), ...menosParticiple(stem + 'αμεν')], ['ath-impf', ...past], ['ath-pass', ...out.filter((f) => /ήθη/u.test(f))]]);
   }
   // δίδωμι, τίθημι, ἵστημι, ἵημι, δείκνυμι.
@@ -1446,11 +1464,23 @@ function buildAthematicCompounds() {
 
 const PENDING_CLOSED = [];
 
+// Comparatives and superlatives that are dictionary forms of their own (ἀμείνων, ἄριστος, πλείων): a form of
+// one reads as it, the others as the positive. Attic -ττ- forms read as the -σσ- word (κρείττων → κρείσσων).
+const COMPARISON_LEMMAS = [
+  [/^αμειν/u, 'ἀμείνων'], [/^βελτιστ/u, 'βέλτιστος'], [/^βελτι/u, 'βελτίων'], [/^κρει(ττ|σσ)/u, 'κρείσσων'], [/^αριστ/u, 'ἄριστος'],
+  [/^κρατιστ/u, 'κράτιστος'], [/^χειριστ/u, 'χείριστος'], [/^χειρ/u, 'χείρων'], [/^ηκιστ/u, 'ἥκιστος'], [/^η(ττ|σσ)/u, 'ἥσσων'],
+  [/^μεγιστ/u, 'μέγιστος'], [/^με[ι]?ζ/u, 'μείζων'], [/^πλειστ/u, 'πλεῖστος'], [/^πλε/u, 'πλείων'], [/^ελαχιστ/u, 'ἐλάχιστος'],
+  [/^ελα(ττ|σσ)/u, 'ἐλάσσων'], [/^μει/u, 'μείων'], [/^θα(ττ|σσ)/u, 'θάσσων'],
+];
+
 function closed(tid, name, description, lemma, forms, opts = {}) {
   transform(tid, name, description);
   for (const f of forms) {
     if (!f || NFC(f) === NFC(lemma)) continue;
-    PENDING_CLOSED.push([tid, NFC(f), NFC(lemma), opts]);
+    const own = tid === 'comparison' ? COMPARISON_LEMMAS.find(([re]) => re.test(stripAll(f))) : undefined;
+    const target = own ? own[1] : lemma;
+    if (NFC(f) === NFC(target)) continue;
+    PENDING_CLOSED.push([tid, NFC(f), NFC(target), opts]);
   }
 }
 
@@ -1472,7 +1502,7 @@ function flushClosed() {
 
 function buildClosedClasses() {
   const D = 'Forms of the article, pronouns and numerals, which have paradigms of their own.';
-  closed('article', 'article', 'The definite article ὁ, ἡ, τό.', 'ὁ', ['ἡ', 'τό', 'τοῦ', 'τῆς', 'τῷ', 'τῇ', 'τόν', 'τήν', 'οἱ', 'αἱ', 'τά', 'τῶν', 'τοῖς', 'ταῖς', 'τούς', 'τάς', 'τώ', 'τοῖν', 'ταῖν', 'τοῖσι', 'τοῖσιν', 'τῇσι', 'τῇσιν', 'τοί', 'ταί', 'τοῖο', 'τάων', 'τᾶς', 'τᾷ', 'τάν', 'ἁ', 'ὅ', 'ἥ'], {whole: true});
+  closed('article', 'article', 'The definite article ὁ, ἡ, τό.', 'ὁ', ['ἡ', 'τό', 'τοῦ', 'τῆς', 'τῷ', 'τῇ', 'τόν', 'τήν', 'οἱ', 'αἱ', 'τά', 'τῶν', 'τοῖς', 'ταῖς', 'τούς', 'τάς', 'τώ', 'τοῖν', 'ταῖν', 'τοῖσι', 'τοῖσιν', 'τῇσι', 'τῇσιν', 'τοί', 'ταί', 'τοῖο', 'τάων', 'τᾶς', 'τᾷ', 'τάν', 'ἁ'], {whole: true});
   closed('pronoun', 'pronoun', D, 'ἐγώ', ['ἐμοῦ', 'μου', 'ἐμοί', 'μοι', 'ἐμέ', 'με', 'ἐμεῖο', 'ἐμέο', 'ἐμεῦ', 'μευ', 'ἐμέθεν', 'ἔγωγε', 'ἔμοιγε', 'ἔμεγε', 'ἐγών', 'μοί', 'μέ', 'μού', 'γώ', 'γὼ', 'νῶ', 'νῷν', 'νῶι', 'νῶϊ', 'νῶιν', 'νῶϊν']);
   closed('pronoun', 'pronoun', D, 'σφεῖς', ['σφῶν', 'σφίσι', 'σφίσιν', 'σφᾶς', 'σφέας', 'σφεας', 'σφέων', 'σφε', 'σφι', 'σφιν', 'σφώ', 'σφῶϊ', 'σφῶι', 'σφῷν', 'σφωε', 'σφωϊν', 'σφέα', 'σφεα']);
   closed('pronoun', 'pronoun', D, 'ἡμεῖς', ['ἡμῶν', 'ἡμῖν', 'ἡμᾶς', 'ἡμέων', 'ἡμεῖων', 'ἡμῖν', 'ἧμιν', 'ἡμέας', 'ἄμμες', 'ἄμμι', 'ἄμμε', 'νῶ', 'νῷν', 'νῶι', 'νῶϊ']);
@@ -1543,7 +1573,7 @@ function buildClosedClasses() {
   // Irregular adjectives and comparisons.
   closed('irregular-adjective', 'irregular adjective', 'Forms of μέγας and πολύς, whose stems change.', 'μέγας', ['μεγάλη', 'μέγα', 'μεγάλου', 'μεγάλης', 'μεγάλῳ', 'μεγάλῃ', 'μέγαν', 'μεγάλην', 'μεγάλοι', 'μεγάλαι', 'μεγάλα', 'μεγάλων', 'μεγάλοις', 'μεγάλαις', 'μεγάλους', 'μεγάλας', 'μεγάλω', 'μεγάλοισι', 'μεγάλοισιν', 'μεγάλῃσι', 'μεγάλῃσιν', 'μεγάλοιο', 'μεγάλης', 'μεγάλην'], {out: ['adj']});
   closed('irregular-adjective', 'irregular adjective', '', 'πολύς', ['πολλή', 'πολύ', 'πολλοῦ', 'πολλῆς', 'πολλῷ', 'πολλῇ', 'πολύν', 'πολλήν', 'πολλοί', 'πολλαί', 'πολλά', 'πολλῶν', 'πολλοῖς', 'πολλαῖς', 'πολλούς', 'πολλάς', 'πουλύς', 'πουλύ', 'πολέος', 'πολέες', 'πολέας', 'πολέων', 'πολέσι', 'πολέσσι', 'πολέεσσι', 'πολλοῖσι', 'πολλοῖσιν', 'πολλῇσι', 'πολλῇσιν', 'πολλόν', 'πολλός', 'πολλά', 'πολέα', 'πουλύν'], {out: ['adj']});
-  closed('comparison', 'comparison', 'Irregular comparatives and superlatives (ἀμείνων, βελτίων, κρείττων, ἄριστος → ἀγαθός; μείζων, μέγιστος → μέγας; πλείων, πλεῖστος → πολύς).', 'ἀγαθός',
+  closed('comparison', 'comparison', 'Irregular comparatives and superlatives: a form of one the dictionary lists reads as it (ἀμείνονος → ἀμείνων, πλείους → πλείων, μεγίστη → μέγιστος), another as the positive (καλλίονα → καλός).', 'ἀγαθός',
     ['ἀμείνων', 'ἄμεινον', 'ἀμείνονος', 'ἀμείνονι', 'ἀμείνονα', 'ἀμείνω', 'ἀμείνονες', 'ἀμείνους', 'ἀμεινόνων', 'ἀμείνοσι', 'βελτίων', 'βέλτιον', 'βελτίονος', 'βελτίονα', 'βελτίω', 'βελτίονες', 'βελτίους', 'βελτιόνων', 'κρείττων', 'κρεῖττον', 'κρείττονος', 'κρείττονα', 'κρείττω', 'κρείττονες', 'κρείττους', 'κρειττόνων', 'κρείσσων', 'κρεῖσσον', 'κρείσσονος', 'κρείσσονα', 'κρείσσω', 'κρείσσονες', 'κρείσσους',
       'ἄριστος', 'ἀρίστη', 'ἄριστον', 'ἀρίστου', 'ἀρίστης', 'ἀρίστῳ', 'ἄριστοι', 'ἄρισται', 'ἄριστα', 'ἀρίστων', 'ἀρίστοις', 'ἀρίστους', 'βέλτιστος', 'βελτίστη', 'βέλτιστον', 'βέλτιστοι', 'βέλτιστα', 'βελτίστου', 'κράτιστος', 'κρατίστη', 'κράτιστον', 'κράτιστοι', 'κράτιστα', 'κρατίστου', 'κρατίστων', 'λῴων', 'λῷστος', 'ἀρείων', 'φέρτερος', 'φέρτατος', 'φέριστος'], {out: ['adj']});
   closed('comparison', 'comparison', '', 'κακός', ['κακίων', 'κάκιον', 'κακίονος', 'κακίονα', 'κακίω', 'κακίονες', 'κακίους', 'κάκιστος', 'κακίστη', 'κάκιστον', 'κάκιστοι', 'κάκιστα', 'κακίστου', 'κακίστων', 'χείρων', 'χεῖρον', 'χείρονος', 'χείρονα', 'χείρω', 'χείρονες', 'χείρους', 'χειρόνων', 'χείριστος', 'χειρίστη', 'χείριστον', 'χείριστα', 'ἥττων', 'ἧττον', 'ἥττονος', 'ἥττονα', 'ἥττω', 'ἥττονες', 'ἥττους', 'ἥσσων', 'ἧσσον', 'ἥσσονος', 'ἥσσονα', 'ἥσσονες', 'ἥκιστα', 'ἥκιστος'], {out: ['adj']});
@@ -1584,7 +1614,7 @@ function buildClitics() {
       // The same without the accents, for the rules that read the unaccented stem (γένοιτ’ → γενοιτο → γίγνομαι).
       add('elision', {type: 'suffix', inflected: apo, deinflected: v, conditionsIn: [], conditionsOut: [], stemContains: ACC, stemNotEndsWith: '[\\u0020]', then: THEN_STRIP_ACCENTS});
 
-      for (const [asp, plain] of [['θ', 'τ'], ['φ', 'π'], ['χ', 'κ']]) {
+      for (const [asp, plain] of [['θ', 'τ'], ['φ', 'π'], ['χ', 'κ'], ['χθ', 'κτ'], ['φθ', 'πτ']]) {
         add('elision', {type: 'suffix', inflected: asp + apo, deinflected: plain + v, conditionsIn: [], conditionsOut: [], stemContains: MARKED});
 
       }
@@ -1620,10 +1650,15 @@ function buildClitics() {
       add('enclitic-accent', {type: 'suffix', inflected: acute(v) + f, deinflected: v + f, conditionsIn: [], conditionsOut: [], stemContains: ACC});
     }
   }
-  transform('enclitic-particle', 'enclitic particle', 'A particle written onto the word before it: -γε, -περ (ἔμοιγε, οὗπερ, ἧσπερ, ἐπείπερ).');
-  for (const [e, l] of [['γε', ''], ['γ’', ''], ['περ', ''], ['σπερ', 'ς'], ['σγε', 'ς']]) {
-    // -περ also after a one-letter relative (ἅπερ, ὅπερ, ᾗπερ).
-    add('enclitic-particle', {type: 'suffix', inflected: e, deinflected: l, conditionsIn: [], conditionsOut: [], stemMinLength: e === 'περ' ? 1 : 2, stemNotEndsWith: '[\\u0020]'});
+  // An enclitic the text writes without the accent its dictionary form has (ποτε → ποτέ): found by a rule, it
+  // comes before what a longer chain makes of the same text (the vocative ποτός of ποτε).
+  transform('enclitic', 'enclitic', 'An enclitic as its dictionary form writes it: ποτε → ποτέ.');
+  whole('enclitic', 'ποτε', 'ποτέ', [], [], {writtenOnly: true});
+  transform('enclitic-particle', 'enclitic particle', 'The particle -περ written onto the word before it (οὗπερ, ἧσπερ, ἐπείπερ, ὅσπερ).');
+  // Not -γε after any word: ἔφυγε, ἐπέλεγε are verbs (ἔγωγε, ἔμοιγε, σύγε are pronoun forms).
+  for (const [e, l] of [['περ', ''], ['σπερ', 'ς'], ['σγε', 'ς']]) {
+    // Also after a one-letter relative (ἅπερ, ὅπερ, ᾗπερ, ὅσπερ → ὅς).
+    add('enclitic-particle', {type: 'suffix', inflected: e, deinflected: l, conditionsIn: [], conditionsOut: [], stemMinLength: 1, stemNotEndsWith: '[\\u0020]'});
   }
 }
 

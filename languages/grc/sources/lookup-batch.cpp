@@ -11,9 +11,11 @@
 //
 // Each input line is looked up with Lookup::lookup (default 16 results, scan
 // length 16, no language options: what a host's hover does) and answered with
-// one JSON line: {"text", "results": [{"expression", "matched", "trace": [ids],
-// "formOf"}]}. formOf is true when every glossary of the result has the
-// definition tag non-lemma (a form-of row of kaikki- or wiktionary-to-yomitan).
+// one JSON line: {"text", "results": [{"expression", "reading", "matched",
+// "trace": [ids], "formOf", "gloss"}]}. formOf is true when every glossary of
+// the result has the definition tag non-lemma (a form-of row of kaikki- or
+// wiktionary-to-yomitan); gloss is the text of the first glossary (its JSON's
+// string values joined by spaces), at most 600 bytes.
 
 #include <fstream>
 #include <iostream>
@@ -47,6 +49,37 @@ std::string quote(const std::string& s) {
     }
   }
   return out + "\"";
+}
+
+// The strings of a glossary's JSON, joined by spaces (the words a reader sees).
+std::string gloss_text(const std::string& json) {
+  std::string out;
+  bool in = false, escape = false, key = false;
+  std::string cur;
+  for (size_t i = 0; i < json.size() && out.size() < 600; ++i) {
+    const char c = json[i];
+    if (!in) {
+      if (c == '"') { in = true; cur.clear(); }
+      continue;
+    }
+    if (escape) { cur += c; escape = false; continue; }
+    if (c == '\\') { escape = true; continue; }
+    if (c == '"') {
+      in = false;
+      size_t j = i + 1;
+      while (j < json.size() && json[j] == ' ') ++j;
+      key = j < json.size() && json[j] == ':';
+      if (!key && !cur.empty()) { if (!out.empty()) out += ' '; out += cur; }
+      continue;
+    }
+    cur += c;
+  }
+  if (out.size() > 600) {
+    size_t cut = 600;
+    while (cut > 0 && (static_cast<unsigned char>(out[cut]) & 0xC0) == 0x80) --cut;
+    out.resize(cut);
+  }
+  return out;
 }
 
 bool form_of(const TermResult& term) {
@@ -91,8 +124,10 @@ int main(int argc, char** argv) {
     for (size_t i = 0; i < results.size(); ++i) {
       const auto& r = results[i];
       if (i) out += ",";
-      out += "{\"expression\":" + quote(r.term.expression) + ",\"matched\":" + quote(r.matched) +
-             ",\"formOf\":" + (form_of(r.term) ? "true" : "false") + ",\"trace\":[";
+      out += "{\"expression\":" + quote(r.term.expression) + ",\"reading\":" + quote(r.term.reading) +
+             ",\"matched\":" + quote(r.matched) + ",\"formOf\":" + (form_of(r.term) ? "true" : "false") +
+             ",\"gloss\":" + quote(r.term.glossaries.empty() ? std::string() : gloss_text(r.term.glossaries.front().glossary)) +
+             ",\"trace\":[";
       for (size_t j = 0; j < r.trace.size(); ++j) {
         if (j) out += ",";
         out += quote(r.trace[j].id);
