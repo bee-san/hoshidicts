@@ -39,12 +39,17 @@ const here = dirname(fileURLToPath(import.meta.url));
 
 // --- Letters ------------------------------------------------------------------
 // The 28 consonants and 5 vowels of the modern alphabet. Stems consist of
-// Mkhedruli letters only ({mkhedruli} in language.json), so no rule reaches
-// across a space into the word before.
+// Mkhedruli letters and hyphens, so a hyphenated compound inflects
+// (და-ძმას → და-ძმა) and no rule takes in punctuation. The stems of the noun
+// and clitic rules may also hold spaces (WORDS, set at the end of this file),
+// because a phrase inflects on its last word (დაბადების დღეზე → დაბადების
+// დღე, უცხო ენის → უცხო ენა); the genitive's are words only, so that
+// როგორ არის "how is" is not read as the phrase როგორ არა, and so are the
+// verb rules', whose person prefixes must not reach past the first word.
 const CONS = '[ბგდვზთკლმნპჟრსტფქღყშჩცძწჭხჯჰ]';
-const VOW = '[აეიოუ]';
 const VSTEM = '[აეოუ]'; // vowels a noun stem can end in (-ი is the nominative ending)
-const LETTERS = '{mkhedruli}';
+const LETTERS = '[{mkhedruli}\\-]';
+const WORDS = '[{mkhedruli}\\- ]';
 
 // --- Conditions ---------------------------------------------------------------
 // n, adj, pron and v are the parts of speech dictionaries tag terms with.
@@ -484,6 +489,18 @@ transform('pv', 'future → present', 'A preverb removed: the future made into t
     circumfix([['ი', '']], [['ებს', 'ობს'], ['ებს', 'ავს'], ['ებს', 'ეობს'], ['ებს', 'ებს'], ['ებს', 'ს'], ['ებს', 'ის'], ['ავებს', 'ავს'], ['ავებს', 'აობს'], ['ის', 'ობს']], VF_IN, VF, {stemMinLength: 3}),
     circumfix([['ი', 'ი']], [['ებს', 'ის']], VF_IN, VF, {stemMinLength: 2}),
 ]);
+
+// --- Phrases ------------------------------------------------------------------
+// The noun and clitic transforms whose stems may hold spaces (see WORDS).
+const PHRASE_TRANSFORMS = new Set(['erg', 'dat', 'ins', 'adv', 'voc', 'pl', 'pl-archaic', 'sync', 'ext',
+    'pp-shi', 'pp-ze', 'pp-tan', 'pp-vit', 'pp-tvis', 'pp-gan', 'pp-ken', 'pp-admi', 'pp-ebr', 'pp-dan', 'pp-urt', 'pp-mde',
+    'cl-c', 'cl-ve', 'cl-gha', 'cop', 'quot', 'quot-1', 'quot-2']);
+for (const t of transforms) {
+    if (!PHRASE_TRANSFORMS.has(t.id)) { continue; }
+    for (const rule of t.rules) {
+        if (rule.type === 'suffix' && rule.stemCharacters === LETTERS) { rule.stemCharacters = WORDS; }
+    }
+}
 
 // --- Output -------------------------------------------------------------------
 const own = {schema: 1, conditions, transforms};
