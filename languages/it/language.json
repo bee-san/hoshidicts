@@ -110,6 +110,7 @@
     "transforms": "transforms.json",
     "traceSelection": "shortest",
     "formOf": "follow",
+    "untaggedTerms": "pass",
     "functionWords": [],
     "variantPasses": []
   },
@@ -136,7 +137,7 @@
       "type": "boolean",
       "default": false,
       "label": "Text without accents",
-      "description": "Also look words up with an accent on the last vowel, for text that leaves it out or writes an apostrophe instead (citta → città, perche' → perché, puo → può). Adds less likely readings and makes lookups slower.",
+      "description": "Also look words up with an accent on the last vowel, for text that leaves it out (puo → può, piu → più). A reading of the word as written still comes first (citta shows citta before città, fara shows faro before fare). Adds less likely readings and makes lookups slower.",
       "group": "lookup",
       "effect": {"preprocessor": "addFinalAccent"}
     }
@@ -168,6 +169,7 @@
         "pref": "Prefix",
         "suf": "Suffix",
         "ptcpl": "Participle",
+        "ptcl": "Particle",
         "char": "Character",
         "abbv": "Abbreviation",
         "contr": "Contraction",

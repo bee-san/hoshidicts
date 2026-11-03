@@ -44,12 +44,12 @@ const PLAIN = /(are|ere|ire|rre)$/u;
 
 // Strata by kind of form; within each, rows are drawn uniformly.
 const STRATA = [
-    ['verb, finite', 340, 'unimorph', (r) => r.plain && r.word && /;(IND|SBJV|COND|IMP)(;|$)/u.test(r.tags)],
-    ['verb, gerund or participle', 65, 'unimorph', (r) => r.plain && r.word && /^V\.(CVB|PTCP)/u.test(r.tags)],
-    ['verb with pronouns', 140, 'unimorph', (r) => !r.plain],
-    ['noun, plural', 125, 'kaikki', (r) => r.pos === 'n' && r.tags.includes('plural')],
+    ['verb, finite', 300, 'unimorph', (r) => r.plain && r.word && /;(IND|SBJV|COND|IMP)(;|$)/u.test(r.tags)],
+    ['verb, gerund or participle', 55, 'unimorph', (r) => r.plain && r.word && /^V\.(CVB|PTCP)/u.test(r.tags)],
+    ['verb with pronouns', 120, 'unimorph', (r) => !r.plain],
+    ['noun, plural', 110, 'kaikki', (r) => r.pos === 'n' && r.tags.includes('plural')],
     ['noun, other gender', 15, 'kaikki', (r) => r.pos === 'n' && !r.tags.includes('plural')],
-    ['adjective', 115, 'kaikki', (r) => r.pos === 'adj'],
+    ['adjective', 100, 'kaikki', (r) => r.pos === 'adj'],
 ];
 // kaikki form tags that do not make an ordinary inflected form of the lemma.
 const SKIP_TAGS = new Set(['table-tags', 'inflection-template', 'romanization', 'archaic', 'obsolete', 'dated', 'alternative',

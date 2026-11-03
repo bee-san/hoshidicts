@@ -209,6 +209,7 @@ fare	1	soddisfanno	soddisfare	v	present-loro
 fare	1	contraffatto	contraffare	v	participle
 fare	0	affaccia	affare	*	*
 fare	0	affatto	affare	*	*
+fare	0	affatto	affarsi	*	*
 dire	1	dico	dire	v	present-io
 dire	1	dici	dire	v	present-tu
 dire	1	dice	dire	v	present-lui
@@ -422,6 +423,55 @@ strong	1	esistito	esistere	v	participle
 strong	1	assistito	assistere	v	participle
 strong	1	ascose	ascondere	v	preterite-lui
 strong	1	corrisposto	corrispondere	v	participle
+strong	1	rese	rendere	v	preterite-lui
+strong	1	scese	scendere	v	preterite-lui
+strong	1	accese	accendere	v	preterite-lui
+strong	1	offese	offendere	v	preterite-lui
+strong	1	tese	tendere	v	preterite-lui
+strong	1	appese	appendere	v	preterite-lui
+strong	1	dipese	dipendere	v	preterite-lui
+strong	1	espanse	espandere	v	preterite-lui
+strong	1	rise	ridere	v	preterite-lui
+strong	1	uccise	uccidere	v	preterite-lui
+strong	1	decise	decidere	v	preterite-lui
+strong	1	chiuse	chiudere	v	preterite-lui
+strong	1	escluse	escludere	v	preterite-lui
+strong	1	incluse	includere	v	preterite-lui
+strong	1	alluse	alludere	v	preterite-lui
+strong	1	accluse	accludere	v	preterite-lui
+strong	1	precluse	precludere	v	preterite-lui
+strong	1	dissuase	dissuadere	v	preterite-lui
+strong	1	evase	evadere	v	preterite-lui
+strong	1	rase	radere	v	preterite-lui
+strong	1	rose	rodere	v	preterite-lui
+strong	1	fuse	fondere	v	preterite-lui
+strong	1	resse	reggere	v	preterite-lui
+strong	1	protesse	proteggere	v	preterite-lui
+strong	1	distrusse	distruggere	v	preterite-lui
+strong	1	eresse	erigere	v	preterite-lui
+strong	1	pianse	piangere	v	preterite-lui
+strong	1	spinse	spingere	v	preterite-lui
+strong	1	finse	fingere	v	preterite-lui
+strong	1	cinse	cingere	v	preterite-lui
+strong	1	tinse	tingere	v	preterite-lui
+strong	1	porse	porgere	v	preterite-lui
+strong	1	emerse	emergere	v	preterite-lui
+strong	1	immerse	immergere	v	preterite-lui
+strong	1	sparse	spargere	v	preterite-lui
+strong	1	vinse	vincere	v	preterite-lui
+strong	1	percosse	percuotere	v	preterite-lui
+strong	1	sciolse	sciogliere	v	preterite-lui
+strong	1	arse	ardere	v	preterite-lui
+strong	1	espulse	espellere	v	preterite-lui
+strong	1	annesse	annettere	v	preterite-lui
+strong	1	crebbe	crescere	v	preterite-lui
+strong	1	cadde	cadere	v	preterite-lui
+strong	1	concesse	concedere	v	preterite-lui
+strong	1	risolse	risolvere	v	preterite-lui
+strong	1	assolse	assolvere	v	preterite-lui
+strong	1	lese	ledere	v	preterite-lui
+strong	1	elise	elidere	v	preterite-lui
+strong	1	coperse	coprire	v	preterite-lui
 pronominal-participle	1	pentito	pentirsi	v	participle-pronominal|participle
 pronominal-participle	0	alzare	alzarsi	*	*
 pronominal-participle	0	tuta	tersi	*	*
@@ -597,6 +647,15 @@ pronominal	0	se ne vola	volersene	*	*
 pronominal	1	ti muovere	muoversi	v	pronominal|proclitic
 pronominal	0	mi lasciare	lasciarsi	*	*
 pronominal	0	mi lava	lavarsi	*	*
+pronominal	0	ti piaccia	piacersi	*	*
+pronominal	0	ti dica	dirsi	*	*
+pronominal	0	ti dia	darsi	*	*
+pronominal	1	te ne vada	andarsene	v	pronominal|subjunctive-sg|proclitic
+pronominal	1	si lavi	lavarsi	v	pronominal|subjunctive-sg|proclitic
+pronominal	0	ci siamo	esserci	*	*
+pronominal	0	ci vede	vedersi	*	*
+pronominal	1	si distrae	distrarsi	v	pronominal|present-lui|proclitic
+pronominal	0	si mostrasse	mostrarsi	*	pronominal|preterite-lui|proclitic
 pronominal	0	ti lavi le mani	lavi le manarsi	*	*
 pronominal	1	si bea	bearsi	v	pronominal|present-lui|proclitic
 pronominal	0	ti amo	amarsi	*	*
@@ -646,6 +705,11 @@ plural	1	mura	muro	n	plural
 plural	1	begli	bello	adj	plural
 plural	1	quei	quello	adj	plural
 plural	0	a casa	a caso	*	*
+plural	0	di	do	*	*
+plural	0	si	so	*	*
+plural	0	me	ma	*	*
+plural	1	stessi	stesso	adj	plural
+plural	0	stessi	stare	*	*
 plural	0	bis	bi	*	*
 plural	0	se ne	se no	*	*
 plural	0	Ieri	Iero	*	*
@@ -657,6 +721,8 @@ feminine	1	padrona	padrone	n	feminine
 feminine	1	infermiera	infermiere	n	feminine
 feminine	1	signora	signore	n	feminine
 feminine	0	ora	ore	*	*
+feminine	0	la	lo	*	*
+feminine	0	casa	caso	n	*
 feminine	0	buona	buone	*	*
 feminine	0	stessa	sta	*	*
 feminine	0	fiera	fiere	*	*
@@ -694,6 +760,11 @@ stems	0	sala	salire	*	*
 stems	0	vena	venire	*	*
 stems	0	mora	morire	*	*
 stems	0	credette	credare	*	*
+stems	1	comprerò	comprare	v	future-io
+stems	0	impedisse	impedire	*	preterite-lui
+stems	1	impedisse	impedire	v	subjunctive-imperfect-lui
+stems	1	predisse	predire	v	preterite-lui
+stems	1	benedisse	benedire	v	preterite-lui
 stems	0	assistette	assistare	*	*
 stems	0	contrastette	contrastare	*	*
 stems	0	Rido	Ridere	*	*

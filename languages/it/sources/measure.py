@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """The real-use measurements of README.md (Measurements 2-4). Not run by any test.
 
-    python3 measure.py freq     <wty zip> <imported dict> <it_50k.txt> [--top N] [--languages DIR] [--out FILE]
-    python3 measure.py text     <wty zip> <imported dict> <pg*.txt>... [--languages DIR] [--out FILE] [--sample N]
+    python3 measure.py freq     <wty zip> <imported dict> <it_50k.txt> [--top N] [--languages DIR] [--against DIR] [--out FILE]
+    python3 measure.py text     <wty zip> <imported dict> <pg*.txt>... [--languages DIR] [--out FILE] [--sample N] [--freq it_50k.txt]
     python3 measure.py pronouns <wty zip> <imported dict> <ita_sentences.tsv(.bz2)> [--languages DIR] [--out FILE]
     python3 measure.py eval     <imported dict> [--languages DIR] [--per-rule FILE]
     python3 measure.py bench    <imported dict> [--languages DIR] [--runs N] [--passes N]
@@ -44,6 +44,19 @@ defaults), looked up alone; wrong when the first result is neither.
 text: every word of the texts, looked up with the rest of its sentence;
 judged where the hovered word has rows in the dictionary, and the rest
 counted as unjudged (a random sample of them is written for judging by hand).
+The texts are read in the order of their file names, so the random samples
+do not depend on the order they are named in.
+
+Where a word's rows name several lemmas (figli: figlio and figliare), any of
+them is "right" by the rows, so freq and, with --freq, text also count the
+first results that are a named lemma whose citation form is at least 10 times
+rarer in the frequency list than another named lemma (figliare for figlio):
+the frequency proxy hachi-lang-it's first audit used for the dominant
+reading. With --against DIR, freq also looks the words up with the pack in
+DIR (such as a copy with untaggedTerms "filter") and counts the first results
+that differ, those whose lemma's citation form is at least 10 times rarer
+than the other pack's first lemma, and those 10 times more frequent: the
+audit's own comparison, with citation forms counted in the whole list.
 
 pronouns: the places in Tatoeba's sentences where a clitic or reflexive
 pronoun (mi, ti, si, ci, vi, me, te, se, ce, ve, lo, la, li, le, gli, ne, and
@@ -190,6 +203,36 @@ def acceptable_any(text, rows):
     return good
 
 
+FREQ_FILE = None
+FREQ = {}
+
+
+def load_frequencies(path):
+    """Counts of the frequency list, for judging which of several named lemmas dominates."""
+    global FREQ_FILE
+    if path and path != FREQ_FILE:
+        FREQ.clear()
+        for line in open(path, encoding="utf-8"):
+            w, c = line.rstrip("\n").rsplit(" ", 1)
+            FREQ[w] = FREQ.get(w, 0) + int(c)
+        FREQ_FILE = path
+
+
+def rarer_named(expression, named, word):
+    """The named lemma a first result hides: another lemma the word's rows name whose citation form is at
+    least 10 times more frequent in the frequency list (the auditor's proxy for the dominant reading:
+    figli shows figliare where figlio is 18 times more frequent), or None. A first result that is the
+    word's own entry is never flagged, and the word itself is not one of the lemmas compared."""
+    words = {word, word.lower()}
+    if expression in words or expression.lower() in words:
+        return None
+    mine = FREQ.get(expression, 0)
+    best = max(((FREQ.get(lemma, 0), lemma) for lemma in named if lemma != expression and lemma not in words), default=(0, None))
+    if best[1] is not None and best[0] > 0 and best[0] >= 10 * max(mine, 1):
+        return best[1]
+    return None
+
+
 def first(result):
     return result["results"][0] if result["results"] else None
 
@@ -201,8 +244,10 @@ def describe(r):
 def cmd_freq(args):
     top = int(option(args, "--top", "10000"))
     languages = option(args, "--languages", os.path.join(REPO, "languages"))
+    against = option(args, "--against", None)
     out_file = option(args, "--out", None)
     wty, dictionary, freq_file = args
+    freq_file_full = freq_file
     rows = read_dictionary(wty)
     words, counts = [], {}
     for line in open(freq_file, encoding="utf-8"):
@@ -214,7 +259,9 @@ def cmd_freq(args):
     total_tokens = sum(counts.values())
     reached = deinflect(words, languages)
     eligible = [w for w in words if (rows.get(w, {}) or {}).get("refs") and (rows[w]["refs"] & reached.get(w, set()))]
-    results = lookup(eligible, dictionary, languages)
+    every = lookup(words, dictionary, languages)
+    by_word = dict(zip(words, every))
+    results = [by_word[w] for w in eligible]
     wrong = []
     for w, res in zip(eligible, results):
         f = first(res)
@@ -222,13 +269,51 @@ def cmd_freq(args):
             wrong.append((w, f))
     eligible_tokens = sum(counts[w] for w in eligible)
     wrong_tokens = sum(counts[w] for w, _ in wrong)
+    # Every word of the list: is the first result a named lemma 10 times rarer than another named one?
+    load_frequencies(freq_file_full)
+    rarer = []
+    for w, res in zip(words, every):
+        f = first(res)
+        if f is None:
+            continue
+        named = acceptable(w, rows)
+        if f["expression"] in named:
+            hidden = rarer_named(f["expression"], named, w)
+            if hidden is not None:
+                rarer.append((w, f, hidden))
+    rarer_tokens = sum(counts[w] for w, _, _ in rarer)
     lines = [f"top {top} words ({total_tokens} tokens); a rule reaches a lemma their form-of rows name: {len(eligible)} words, "
              f"{eligible_tokens / total_tokens:.2%} of the tokens",
              f"wrong first result: {len(wrong)} words ({len(wrong) / max(1, len(eligible)):.2%}), "
              f"{wrong_tokens} tokens = {wrong_tokens / total_tokens:.3%} of the list's tokens, "
              f"{wrong_tokens / max(1, eligible_tokens):.3%} of the reached words' tokens"]
+    lines.append(f"first result a named lemma 10 times rarer than another the word's rows name: {len(rarer)} words, "
+                 f"{rarer_tokens} tokens = {rarer_tokens / total_tokens:.3%} of the list's tokens")
+    compared = []
+    if against is not None:
+        differ, worse, better = [], [], []
+        for w, mine, theirs in zip(words, every, lookup(words, dictionary, against)):
+            fm, ft = first(mine), first(theirs)
+            if fm is None or ft is None or fm["expression"] == ft["expression"]:
+                continue
+            differ.append(w)
+            cm, ct = FREQ.get(fm["expression"], 0), FREQ.get(ft["expression"], 0)
+            if ct >= 10 * max(cm, 1):
+                worse.append((w, fm, ft))
+            elif cm >= 10 * max(ct, 1):
+                better.append((w, fm, ft))
+        tok = lambda xs: sum(counts[x[0]] for x in xs) / total_tokens
+        lines.append(f"against {os.path.basename(os.path.normpath(against))}: {len(differ)} first results differ; this pack's lemma "
+                     f"10 times rarer: {len(worse)} words ({tok(worse):.3%} of the list's tokens); 10 times more frequent: "
+                     f"{len(better)} words ({tok(better):.3%})")
+        for label, xs in (("rarer than", worse), ("more frequent than", better)):
+            for w, fm, ft in sorted(xs, key=lambda x: -counts[x[0]]):
+                compared.append(f"  {label}\t{w}\t{counts[w]}\t{describe(fm)}\t{describe(ft)}")
+    for w, f, hidden in sorted(rarer, key=lambda x: -counts[x[0]]):
+        lines.append(f"  rarer\t{w}\t{counts[w]}\t{describe(f)}\tinstead of {hidden} ({FREQ.get(hidden, 0)} vs {FREQ.get(f['expression'], 0)})")
     for w, f in sorted(wrong, key=lambda x: -counts[x[0]]):
         lines.append(f"  {w}\t{counts[w]}\t{describe(f) if f else 'no result'}\tright: {', '.join(sorted(acceptable(w, rows)))}")
+    lines += compared
     write(lines, out_file)
 
 
@@ -293,6 +378,8 @@ def judge_lookups(hovers, words, nexts, rows, dictionary, languages):
     unjudged = []
     pronominal = []
     unconfirmed = []
+    rarer = collections.Counter()
+    rarer_items = []
     examples = collections.defaultdict(list)
     for hover, word, nxt, res in zip(hovers, words, nexts, results):
         f = first(res)
@@ -306,6 +393,12 @@ def judge_lookups(hovers, words, nexts, rows, dictionary, languages):
             continue
         verdict = classify(word, nxt, f, rows)
         tally[verdict] += 1
+        if verdict == "right" and FREQ:
+            hidden = rarer_named(f["expression"], acceptable_any(word, rows) | acceptable_any(f["matched"], rows), word)
+            if hidden is not None:
+                tally["rarer named lemma"] += 1
+                rarer[(word.lower(), f["expression"], hidden)] += 1
+                rarer_items.append((hover, word, f, hidden))
         if verdict == "pronominal":
             pronominal.append((hover, word, f))
         if verdict == "not confirmed":
@@ -316,26 +409,37 @@ def judge_lookups(hovers, words, nexts, rows, dictionary, languages):
             wrong_rules[rule] += 1
             if len(examples[key]) < 2:
                 examples[key].append(hover[:60])
-    return tally, wrong, wrong_rules, unjudged, examples, pronominal, unconfirmed
+    return tally, wrong, wrong_rules, unjudged, examples, pronominal, unconfirmed, rarer, rarer_items
 
 
 def cmd_text(args):
     languages = option(args, "--languages", os.path.join(REPO, "languages"))
     out_file = option(args, "--out", None)
     sample = int(option(args, "--sample", "60"))
+    load_frequencies(option(args, "--freq", None))
     wty, dictionary, *paths = args
     rows = read_dictionary(wty)
-    hovers, words, nexts = hovers_from_texts(paths)
-    tally, wrong, wrong_rules, unjudged, examples, pronominal, unconfirmed = judge_lookups(hovers, words, nexts, rows, dictionary, languages)
+    # Sorted, so the random samples do not depend on the order the texts are named in.
+    hovers, words, nexts = hovers_from_texts(sorted(paths, key=os.path.basename))
+    tally, wrong, wrong_rules, unjudged, examples, pronominal, unconfirmed, rarer, rarer_items = judge_lookups(hovers, words, nexts, rows, dictionary, languages)
     judged = tally["right"] + tally["not confirmed"] + tally["pronominal"] + tally["phrase entry"]
     lines = [f"{len(hovers)} lookups: {judged} judged by script: {tally['right']} right, {tally['pronominal']} -rsi verbs of the verb's lemma, "
              f"{tally['phrase entry']} phrase entries, {tally['not confirmed']} not confirmed ({tally['not confirmed'] / max(1, judged):.3%}); "
              f"{tally['unjudged']} unjudged (the word has no row), {tally['no result']} no result",
+             f"of the right ones, {tally['rarer named lemma']} show a named lemma 10 times rarer than another the rows name"
+             + (" (no --freq list given)" if not FREQ else ""),
              "not confirmed first results by the first rule of their trace:"]
     lines += [f"  {rule}\t{n}" for rule, n in wrong_rules.most_common()]
     lines.append("largest groups (word, first result, trace):")
     for (word, expression, trace), n in wrong.most_common(80):
         lines.append(f"  {n}\t{word} -> {expression} [{trace}]\t{' | '.join(examples[(word, expression, trace)])}")
+    lines.append("named lemmas 10 times rarer than another, largest groups (word, first result, the more frequent one):")
+    for (word, expression, hidden), n in rarer.most_common(40):
+        lines.append(f"  {n}\t{word} -> {expression}\tinstead of {hidden}")
+    random.seed(20261103)
+    lines.append(f"random sample of {min(sample, len(rarer_items))} of those (judge by hand):")
+    for hover, word, f, hidden in random.sample(rarer_items, min(sample, len(rarer_items))):
+        lines.append(f"  {word}\t{describe(f)}\tinstead of {hidden}\t{hover[:70]}")
     random.seed(20261103)
     lines.append(f"random sample of {min(sample, len(unjudged))} unjudged lookups (judge by hand):")
     for hover, word, f in random.sample(unjudged, min(sample, len(unjudged))):

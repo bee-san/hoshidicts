@@ -22,7 +22,8 @@ REPO = os.path.normpath(os.path.join(HERE, "..", "..", ".."))
 OWN = "sources/build-own.mjs"
 LANG = "language.json"
 
-# name, file, text to find, replacement
+# name, file, text to find, replacement (or a tuple of texts and a tuple of
+# replacements, applied in order)
 MUTATIONS = [
     ("min-stem-1", OWN, "const MIN_STEM = 2;", "const MIN_STEM = 1;"),
     ("plain-are-cg", OWN, "const PLAIN_ARE = {stemNotEndsWith: '[cg]'};", "const PLAIN_ARE = {};"),
@@ -50,13 +51,37 @@ MUTATIONS = [
     ("negative-imperative-min-3", OWN, "conditionsIn: ['refl'], conditionsOut: ['v'], ...VERB_STEM, stemCharacters: '{lower}'});", "conditionsIn: ['refl'], conditionsOut: ['v'], stemCharacters: '{lower}'});"),
     ("pronominal-orre-p", OWN, "[['orre', 'or'], [{stemCharacters: '[p]', stemMinLength: 1}, {stemMinLength: 3}]],", "[['orre', 'or'], [{stemMinLength: 1}]],"),
     ("pronominal-urre-3", OWN, "[['urre', 'ur'], [{stemMinLength: 3}]],", "[['urre', 'ur'], [{stemMinLength: 1}]],"),
-    ("pronominal-arre-tr", OWN, "[['arre', 'ar'], [{stemCharacters: '[rt]', stemMinLength: 2}, {stemMinLength: 4}]],", "[['arre', 'ar'], [{stemMinLength: 1}]],"),
-    ("pronominal-exclude-rid", OWN, "const PRONOMINAL_EXCLUDED = {are: 'rid', ere: 'vol'};", "const PRONOMINAL_EXCLUDED = {ere: 'vol'};"),
-    ("pronominal-exclude-vol", OWN, "const PRONOMINAL_EXCLUDED = {are: 'rid', ere: 'vol'};", "const PRONOMINAL_EXCLUDED = {are: 'rid'};"),
+    ("pronominal-trarre-list", OWN, "suffixes: TRARRE_VERBS.map((v) => [v, v.replace(/rre$/u, 'r') + tail]),\n        conditionsIn, conditionsOut: ['v'], stemCharacters: '[]'});",
+     "suffixes: [['arre', 'ar' + tail]],\n        conditionsIn, conditionsOut: ['v'], stemMinLength: 1});"),
+    ("pronominal-exclude-rid", OWN, "const PRONOMINAL_EXCLUDED = {are: ['rid'], ere: ['vol']};", "const PRONOMINAL_EXCLUDED = {ere: ['vol']};"),
+    ("pronominal-exclude-vol", OWN, "const PRONOMINAL_EXCLUDED = {are: ['rid'], ere: ['vol']};", "const PRONOMINAL_EXCLUDED = {are: ['rid']};"),
     ("pronominal-short-conditions", OWN, "conditionsIn: persons.map((p) => SHORT[p]), conditionsOut: ['v']});",
      "conditionsIn: persons, conditionsOut: ['v']});"),
-    ("subjunctive-mi", OWN, "Present subjunctive, singular (che io, tu, lui, lei; also the Lei imperative): parli, tema, dorma, finisca.', ['p2s', 'p3'],",
-     "Present subjunctive, singular (che io, tu, lui, lei; also the Lei imperative): parli, tema, dorma, finisca.', ['p1s', 'p2s', 'p3'],"),
+    ("subjunctive-mi", OWN, "Present subjunctive, singular (che io, tu, lui, lei; also the Lei imperative): parli, tema, dorma, finisca.', ['p3'],",
+     "Present subjunctive, singular (che io, tu, lui, lei; also the Lei imperative): parli, tema, dorma, finisca.', ['p1s', 'p3'],"),
+    ("subjunctive-ti", OWN, "Present subjunctive, singular (che io, tu, lui, lei; also the Lei imperative): parli, tema, dorma, finisca.', ['p3'],",
+     "Present subjunctive, singular (che io, tu, lui, lei; also the Lei imperative): parli, tema, dorma, finisca.', ['p2s', 'p3'],"),
+    ("subjunctive-te-pairs", OWN, "const PAIR_PERSONS = {'subjunctive-sg': [['p2s', 'te+']]};", "const PAIR_PERSONS = {};"),
+    ("esserci-ci-siamo", OWN, "'ci fosse', 'ci fossero', 'ci sei', 'ci siete']],", "'ci fosse', 'ci fossero', 'ci siamo', 'ci sei', 'ci siete']],"),
+    ("cela-after-persons", OWN,
+     ("pronominal(['ce+la+'], 'cela', ANY_PERSON);\nshortPronominal(['ce+la+'], 'cela', ANY_PERSON);\n",
+      "for (const [prefix, tail] of [['ci+', 'ci'], ['ce+ne+', 'cene']]) {"),
+     ("", "for (const [prefix, tail] of [['ci+', 'ci'], ['ce+ne+', 'cene'], ['ce+la+', 'cela']]) {")),
+    ("ci-any-person-rsi", OWN, "pronominal(['ce+la+'], 'cela', ANY_PERSON);\n", "pronominal(['ce+la+'], 'cela', ANY_PERSON);\npronominal(['ci+'], 'si', ANY_PERSON);\n"),
+    ("dire-past-anywhere", OWN, "{lemma: 'dire', mode: ['bene', 'male', 'pre', 'contrad', 'ri', 'dis', 'inter', 'in'], forms: {", "{lemma: 'dire', mode: 'compound', forms: {"),
+    ("stare-stessi", OWN, "...subjImpf(null, null, 'stessimo', 'steste', 'stessero'),", "...subjImpf('stessi', 'stesse', 'stessimo', 'steste', 'stessero'),"),
+    ("nominal-after-verbs", OWN,
+     "for (const [id, name, description] of NOMINAL_FIRST) { transform(id, name, description); }\nfor (const [id, name, description] of SLOTS) { transform(id, name, description); }",
+     "for (const [id, name, description] of SLOTS) { transform(id, name, description); }\nfor (const [id, name, description] of NOMINAL_FIRST) { transform(id, name, description); }"),
+    ("plural-i-o-first", OWN, "    ['i', 'e', NOMINAL], ['i', 'o', NOMINAL], ['e', 'a', NOMINAL], ['i', 'a', NOMINAL],",
+     "    ['i', 'o', NOMINAL], ['i', 'e', NOMINAL], ['e', 'a', NOMINAL], ['i', 'a', NOMINAL],"),
+    ("preferred-readings", OWN, "    for (const [word, lemma] of pairs) { whole(id, word, lemma, [], out); }", ""),
+    ("plural-min-2", OWN, "    suffix('plural', inflected, deinflected, [], out, {stemMinLength: 2, ...ONE_WORD});",
+     "    suffix('plural', inflected, deinflected, [], out, {stemMinLength: 1, ...ONE_WORD});"),
+    ("feminine-min-2", OWN, "suffix('feminine', 'a', 'o', [], ['adj'], {stemMinLength: 2, ...ONE_WORD});", "suffix('feminine', 'a', 'o', [], ['adj'], {stemMinLength: 1, ...ONE_WORD});"),
+    ("feminine-adjective-only", OWN, "suffix('feminine', 'a', 'o', [], ['adj'], {stemMinLength: 2, ...ONE_WORD});", "suffix('feminine', 'a', 'o', [], ['adj', 'n'], {stemMinLength: 2, ...ONE_WORD});"),
+    ("fare-split-participle", OWN, "        for (const split of SPLITS[lemma] ?? [{}]) { marked(form, lemma, {...(minStem > 0 ? {stemMinLength: minStem} : {}), ...split}); }",
+     "        marked(form, lemma, minStem > 0 ? {stemMinLength: minStem} : {});"),
     ("infinitive-orre-p", OWN, "['or', 'orre', {stemEndsWith: '[p]'}]", "['or', 'orre', {}]"),
     ("infinitive-urre-d", OWN, "['ur', 'urre', {stemEndsWith: '[d]'}]", "['ur', 'urre', {}]"),
     ("infinitive-arre-r", OWN, "['ar', 'arre', {stemEndsWith: '[r]'}]", "['ar', 'arre', {}]"),
@@ -105,6 +130,8 @@ MUTATIONS = [
     ("no-acute-che", LANG, '"variants": [[{"map": {"ch\\u00E8": "ch\\u00E9"}, "at": "end"}]]', '"variants": [[{"map": {"ch\\u00E8": "ch\\u00E8"}, "at": "end"}]]'),
     ("apostrophe-unnormalized", LANG, '"variants": [[{"map": {"\\u2019": "\'", "\\u02BC": "\'"}}]]', '"variants": [[{"map": {"\\u02BC": "\'"}}]]'),
     ("nfkc-to-nfc", LANG, '"variants": [[{"normalize": "NFKC"}]]', '"variants": [[{"normalize": "NFC"}]]'),
+    ("form-of-as-term", LANG, '"formOf": "follow"', '"formOf": "asTerm"'),
+    ("untagged-filter", LANG, '"untaggedTerms": "pass"', '"untaggedTerms": "filter"'),
 ]
 
 
@@ -129,10 +156,13 @@ def main():
         shutil.copytree(os.path.join(REPO, "languages", "it"), pack)
         path = os.path.join(pack, file)
         text = open(path, encoding="utf-8").read()
-        if old not in text:
+        olds, news = (old, new) if isinstance(old, tuple) else ((old,), (new,))
+        if any(o not in text for o in olds):
             print(f"{name}\tNOT APPLIED (text not found)")
             continue
-        open(path, "w", encoding="utf-8").write(text.replace(old, new))
+        for o, n in zip(olds, news):
+            text = text.replace(o, n)
+        open(path, "w", encoding="utf-8").write(text)
         build = run(["node", os.path.join(pack, "sources", "build-own.mjs")])
         if build.returncode != 0:
             print(f"{name}\tBUILD FAILED {build.stderr.strip().splitlines()[-1] if build.stderr else ''}")

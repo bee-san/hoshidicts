@@ -1,4 +1,4 @@
-# Source: written for this pack (GPL-3.0-or-later), against tests/dictionary/. Every optional processor is on.
+# Source: written for this pack (GPL-3.0-or-later), against tests/dictionary/, whose rows have no part-of-speech tags (as wty-it-en). Every optional processor is on.
 # category	valid	text	expression	matched
 inflection	1	Parlavano di te	parlare	Parlavano
 inflection	1	ho parlato con lei	avere	ho
@@ -32,5 +32,14 @@ words	0	Già fatto	Gia	Già
 words	1	è poi vero	è	è
 words	0	è poi vero	e poi	è poi
 words	1	casette bianche	casetta	casette
-words	0	casette bianche	casera	casette
 words	1	anglo-americano	anglo	anglo
+homograph	1	chiavi di casa	chiave	chiavi
+homograph	0	chiavi di casa	chiavare	chiavi
+formof	1	entrambe le mani	entrambi	entrambe
+pronominal	1	ti piaccia il regalo	ti	ti
+pronominal	0	ti piaccia il regalo	piacersi	ti piaccia
+homograph	1	cani e gatti	cane	cani
+homograph	1	soli in casa	solo	soli
+homograph	1	pare giusto	parere	pare
+homograph	1	armati fino ai denti	armato	armati
+pronominal	1	ce la faremo	farcela	ce la faremo

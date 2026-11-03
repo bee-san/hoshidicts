@@ -172,11 +172,12 @@ const SLOTS = [
         {are: ['ereste'], ere: ['ereste'], ire: ['ireste']}],
     ['conditional-loro', 'conditional (loro)', 'Present conditional, third person plural (loro): parlerebbero, temerebbero, dormirebbero.', ['p3'],
         {are: ['erebbero'], ere: ['erebbero'], ire: ['irebbero']}],
-    // A reflexive pronoun before the present subjunctive agrees with tu and
-    // lui (che tu ti lavi, si accomodi), not with io: mi dica, mi ami and mi
-    // salvi are tell me, you love me and save me, far more often than che io
-    // mi dica.
-    ['subjunctive-sg', 'present subjunctive (io, tu, lui)', 'Present subjunctive, singular (che io, tu, lui, lei; also the Lei imperative): parli, tema, dorma, finisca.', ['p2s', 'p3'],
+    // A pronoun before the present subjunctive singular agrees only with lui
+    // and Lei (si accomodi, che si lavi): the form is also io's and tu's, and
+    // mi and ti before it are objects far more often than reflexives (mi dica,
+    // ti piaccia, ti dia: 133 of 177 ti places in Tatoeba). tu's pairs te ne
+    // and te la still agree (che te ne vada), through PAIR_PERSONS below.
+    ['subjunctive-sg', 'present subjunctive (io, tu, lui)', 'Present subjunctive, singular (che io, tu, lui, lei; also the Lei imperative): parli, tema, dorma, finisca.', ['p3'],
         {are: ['i'], ere: ['a'], ire: ['a'], isc: ['isca']}],
     ['subjunctive-noi', 'present subjunctive (noi)', 'Present subjunctive, first person plural (che noi): parliamo, temiamo, dormiamo, finiamo.', ['p1p'],
         {are: ['iamo'], ere: ['iamo'], ire: ['iamo']}],
@@ -208,6 +209,20 @@ const SLOTS = [
         {are: ['ato', 'ata', 'ati', 'ate'], ere: ['uto', 'uta', 'uti', 'ute'], ire: ['ito', 'ita', 'iti', 'ite']}],
 ];
 const PERSONS = new Map(SLOTS.map(([id, , , persons]) => [id, persons]));
+// The noun and adjective transforms come first in the file: where a word's own
+// rows name a noun and a verb (figli: figlio and figliare; chiavi: chiave and
+// chiavare), both readings take one step and are dictionary-confirmed, so they
+// tie, and ties go to the reading found first, which rule order decides
+// (docs/languages.md 7.1, 7.4, 9.6). The noun is the reading a learner usually
+// needs (hachi-lang-it's first audit, MAJOR-1).
+const NOMINAL_FIRST = [
+    ['plural', 'plural', 'Plural of a noun or adjective: libri, case, cani, problemi, amiche, parchi, amici, arance, figli.'],
+    ['feminine', 'feminine', 'Feminine singular of an adjective, or of a noun for a person: rossa, attrice, studentessa, padrona.'],
+    ['feminine-plural', 'feminine plural', 'Feminine plural of an adjective: rosse, bianche, lunghe, lisce.'],
+    ['superlative', 'superlative', 'Absolute superlative (-issimo): bellissimo, grandissima, lunghissimi, velocissime.'],
+    ['adverb', 'adverb (-mente)', 'Adverb formed from an adjective with -mente: lentamente, fortemente, facilmente, regolarmente.'],
+];
+for (const [id, name, description] of NOMINAL_FIRST) { transform(id, name, description); }
 for (const [id, name, description] of SLOTS) { transform(id, name, description); }
 
 // The conditions each slot reads. An imperative whose pronouns were removed
@@ -225,6 +240,9 @@ const IN = {
 const inFor = (slot) => IN[slot] ?? [];
 const outFor = () => ['v'];
 const SHORT = {p1s: 'short_p1s', p2s: 'short_p2s', p3: 'short_p3', p1p: 'short_p1p', p2p: 'short_p2p'};
+// Persons a slot agrees with only after a pronoun pair (te ne, te la): the
+// present subjunctive singular after te ne is tu's (che te ne vada).
+const PAIR_PERSONS = {'subjunctive-sg': [['p2s', 'te+']]};
 // The slots a pronoun the clitic rules moved (+) can stand before: the
 // gerund and the imperatives (dicendosi → si+dicendo, alzati → ti+alza).
 const MARKED = new Set(['gerund', 'imperative-tu', 'imperative-noi', 'imperative-voi']);
@@ -251,6 +269,9 @@ function forms(slot, inflected, deinflected, extra, short, split = {}) {
     const marked = {...extra, stemContains: '[+]', stemCharacters: '[{lower}+]'};
     if (persons.length > 0) {
         suffix(slot, inflected, deinflected, ['refl'], short ? persons.map((p) => SHORT[p]) : persons, marked);
+    }
+    for (const [person, pair] of PAIR_PERSONS[slot] ?? []) {
+        suffix(slot, inflected, deinflected, ['refl'], [short ? SHORT[person] : person], {...marked, stemStartsWithText: pair});
     }
     if (MARKED.has(slot)) {
         suffix(slot, inflected, deinflected, inFor(slot), ['v'], marked);
@@ -476,12 +497,15 @@ const IRREGULAR = [
         ...imp('dai', 'diamo', 'date'),
         ...participle('dato'),
     }},
+    // stessi and stesse are left out: they are nearly always stesso's plurals
+    // (gli stessi, le stesse), which the plural rule reads; wty-it-en's rows
+    // still name stare for them.
     {lemma: 'stare', mode: ['ri', 'sotto', 'sovra', 'sopra'], forms: {
         ...tense('present', ['sto', 'stai', 'sta', null, null, 'stanno']),
         ...tense('preterite', ['stetti', 'stesti', 'stette', 'stemmo', 'steste', 'stettero']),
         ...future('star'),
         ...subj('stia', 'stiamo', 'stiate', 'stiano'),
-        ...subjImpf('stessi', 'stesse', 'stessimo', 'steste', 'stessero'),
+        ...subjImpf(null, null, 'stessimo', 'steste', 'stessero'),
         ...imp('stai', null, null),
     }},
     // fare: the short forms with the prefixes of its compounds; the longer
@@ -502,10 +526,17 @@ const IRREGULAR = [
         'participle-present': ['facente', 'facenti'],
         ...participle('fatto'),
     }},
+    // dire's past historic is read only with the prefixes of its compounds:
+    // at the end of any word, -dissi, -disse and -dissero would also be the
+    // imperfect subjunctive of -dire verbs (impedisse, tradisse, spedisse),
+    // and the trace would name the wrong tense.
+    {lemma: 'dire', mode: ['bene', 'male', 'pre', 'contrad', 'ri', 'dis', 'inter', 'in'], forms: {
+        ...tense('preterite', ['dissi', null, 'disse', null, null, 'dissero']),
+    }},
     {lemma: 'dire', mode: 'compound', forms: {
         ...tense('present', ['dico', 'dici', 'dice', 'diciamo', 'dite', 'dicono']),
         ...tense('imperfect', sixOn('dic', IMPF_E)),
-        ...tense('preterite', ['dissi', 'dicesti', 'disse', 'dicemmo', 'diceste', 'dissero']),
+        ...tense('preterite', [null, 'dicesti', null, 'dicemmo', 'diceste', null]),
         ...future('dir'),
         ...subj('dica', 'diciamo', 'diciate', 'dicano'),
         ...subjImpf(...sixOn('dic', SUBJ_IMPF_E)),
@@ -836,7 +867,9 @@ for (const [vowel, cls] of [['a', 'are'], ['u', 'ere'], ['i', 'ire']]) {
 // (messo, permesso, accorto, posto).
 for (const {lemma, mode, minStem = 0, forms: table} of IRREGULAR) {
     if (mode !== 'compound' || table.participle === undefined) { continue; }
-    for (const form of table.participle) { marked(form, lemma, minStem > 0 ? {stemMinLength: minStem} : {}); }
+    for (const form of table.participle) {
+        for (const split of SPLITS[lemma] ?? [{}]) { marked(form, lemma, {...(minStem > 0 ? {stemMinLength: minStem} : {}), ...split}); }
+    }
 }
 add('participle-pronominal', {type: 'circumfix', prefixes: [[PTCP_MARK, '']],
     suffixes: [['are', 'arsi'], ['ere', 'ersi'], ['ire', 'irsi'], ['rre', 'rsi']], conditionsIn: ['ptcp'], conditionsOut: ['v']});
@@ -974,23 +1007,28 @@ for (const pronoun of Object.keys(PERSON)) {
 // more (si pose, si espose; mi sposi is not sp + orre, sporsi), three or more
 // (si conduce, si riduce), tr alone or four or more (si trae, si distrae).
 const VERB_STEM = {stemMinLength: 3};
+// -arre takes only the compounds of trarre, written out: a -trare verb's
+// imperfect subjunctive also reads as a trarre compound (mostrasse as
+// mos + trasse), whose -arsi form would be the -trare verb's with a wrong
+// trace.
+const TRARRE_VERBS = ['trarre', 'attrarre', 'astrarre', 'contrarre', 'detrarre', 'distrarre', 'estrarre', 'protrarre', 'ritrarre', 'sottrarre'];
 const CLASSES = [
     [['are', 'ar'], ['ere', 'er'], ['ire', 'ir']],
     [['orre', 'or'], [{stemCharacters: '[p]', stemMinLength: 1}, {stemMinLength: 3}]],
     [['urre', 'ur'], [{stemMinLength: 3}]],
-    [['arre', 'ar'], [{stemCharacters: '[rt]', stemMinLength: 2}, {stemMinLength: 4}]],
 ];
 // The regular endings read a few stems of verbs that conjugate otherwise
 // (sections above): after a pronoun, volere and ridare give no -rsi verb
 // through them (si vola and se ne vola are volare, ti ridi is ridere), and
 // volere's own forms are whole words, so it gives none at all; volerci and
 // volercene are written out below (ci vuole, ce ne vuole).
-const PRONOMINAL_EXCLUDED = {are: 'rid', ere: 'vol'};
+const PRONOMINAL_EXCLUDED = {are: ['rid'], ere: ['vol']};
 function pronominal(prefixes, tail, conditionsIn) {
     for (const [e, b] of CLASSES[0]) {
-        const stem = PRONOMINAL_EXCLUDED[e];
-        const splits = stem === undefined ? [{}] : [{stemNotStartsWith: `[${stem[0]}]`},
-            {stemStartsWith: `[${stem[0]}]`, stemNotStartsWithText: stem}, {stemStartsWithText: stem, stemMinLength: [...stem].length + 1}];
+        const stems = PRONOMINAL_EXCLUDED[e] ?? [];
+        const splits = stems.length === 0 ? [{}] : [{stemNotStartsWith: `[${stems.map((x) => x[0]).join('')}]`},
+            ...stems.flatMap((stem) => [{stemStartsWith: `[${stem[0]}]`, stemNotStartsWithText: stem},
+                {stemStartsWithText: stem, stemMinLength: [...stem].length + 1}])];
         for (const split of splits) {
             add('pronominal', {type: 'circumfix', prefixes: prefixes.map((p) => [p, '']), suffixes: [[e, b + tail]],
                 conditionsIn, conditionsOut: ['v'], ...VERB_STEM, ...split});
@@ -1002,6 +1040,8 @@ function pronominal(prefixes, tail, conditionsIn) {
                 conditionsIn, conditionsOut: ['v'], ...constraint});
         }
     }
+    add('pronominal', {type: 'circumfix', prefixes: prefixes.map((p) => [p, '']), suffixes: TRARRE_VERBS.map((v) => [v, v.replace(/rre$/u, 'r') + tail]),
+        conditionsIn, conditionsOut: ['v'], stemCharacters: '[]'});
 }
 // Verbs whose stem has fewer than three letters are written out: fare, dare,
 // dire and bere, from their written-out forms (short_*: si fa, si dice, me
@@ -1019,6 +1059,11 @@ function shortPronominal(prefixes, tail, persons) {
     add('pronominal', {type: 'circumfix', prefixes: prefixes.map((p) => [p, '']), suffixes: stems.map(([v, b]) => [v, b + tail]),
         conditionsIn: persons, conditionsOut: ['v']});
 }
+// ce la + any person first: ce la faremo and ce la facciamo are farcela far
+// more often than farsela (35 Tatoeba places), and the -sela readings of the
+// other persons (me la cavo, te la prendi) have no -cela rival.
+pronominal(['ce+la+'], 'cela', ANY_PERSON);
+shortPronominal(['ce+la+'], 'cela', ANY_PERSON);
 for (const [pronoun, person] of Object.entries(PERSON)) {
     // mi lavo, ti lavi, si lava, ci laviamo, vi lavate (lavarsi).
     pronominal([pronoun + '+'], 'si', [person]);
@@ -1045,22 +1090,26 @@ for (const [[e, b], constraints] of CLASSES.slice(1)) {
             conditionsIn: ['refl'], conditionsOut: ['v'], stemCharacters: '{lower}', ...constraint});
     }
 }
+add('pronominal', {type: 'circumfix', prefixes: [['ti+', '']], suffixes: TRARRE_VERBS.map((v) => [v, v.replace(/rre$/u, 'rsi')]),
+    conditionsIn: ['refl'], conditionsOut: ['v'], stemCharacters: '[]'});
 add('pronominal', {type: 'circumfix', prefixes: [['ti+', '']], suffixes: [...SHORT_VERBS, ...SHORT_STEMS].map(([v, b]) => [v, b + 'si']),
     conditionsIn: ['refl'], conditionsOut: ['v'], stemCharacters: '[]'});
 // ci, ce ne and ce la before any person: esserci, volerci, metterci,
 // entrarci, pensarci (ci vuole, ci metto, c'entra, ci penso),
 // volercene, andarcene (ce ne vuole), farcela, cavarcela (ce la faccio).
-for (const [prefix, tail] of [['ci+', 'ci'], ['ce+ne+', 'cene'], ['ce+la+', 'cela']]) {
+for (const [prefix, tail] of [['ci+', 'ci'], ['ce+ne+', 'cene']]) {
     pronominal([prefix], tail, ANY_PERSON);
     shortPronominal([prefix], tail, ANY_PERSON);
 }
 // essere and volere are read only as whole words (si è and si vuole are not
 // essersi and volersi), so their third persons after ci are written out:
 // c'è, ci sono, c'era, ci sarà (esserci); ci vuole, ci vogliono, ci vorrà
-// (volerci); ce ne vuole (volercene).
+// (volerci); ce ne vuole (volercene). ci siamo is left to the dictionary,
+// whose row names essersi first: it is mostly the reflexive compound past
+// (ci siamo sposati, ci siamo divertiti), 896 of its 1,068 Tatoeba places.
 for (const [lemma, forms] of [
     ['esserci', ["c'è", 'ci sono', "c'era", "c'erano", 'ci sarà', 'ci saranno', 'ci sarebbe', 'ci sarebbero', 'ci fu', 'ci furono',
-        'ci sia', 'ci siano', 'ci fosse', 'ci fossero', 'ci siamo', 'ci sei', 'ci siete']],
+        'ci sia', 'ci siano', 'ci fosse', 'ci fossero', 'ci sei', 'ci siete']],
     ['volerci', ['ci vuole', 'ci vogliono', 'ci voleva', 'ci volevano', 'ci vorrà', 'ci vorranno', 'ci vorrebbe', 'ci vorrebbero',
         'ci volle', 'ci vollero', 'ci voglia', 'ci vogliano', 'ci volesse', 'ci volessero']],
     ['volercene', ['ce ne vuole', 'ce ne vogliono', 'ce ne voleva', 'ce ne volevano', 'ce ne vorrà', 'ce ne vorrebbe', 'ce ne volle']],
@@ -1131,16 +1180,12 @@ const MARKERS = [
 ];
 for (const [prefixes, tail] of MARKERS) {
     add('pronominal', {type: 'circumfix', prefixes: prefixes.map((p) => [p, '']),
-        suffixes: [...CLASSES[0], CLASSES[1][0], CLASSES[2][0], CLASSES[3][0]].map(([e, b]) => [e, b + tail]),
+        suffixes: [...CLASSES[0], CLASSES[1][0], CLASSES[2][0], ['arre', 'ar']].map(([e, b]) => [e, b + tail]),
         conditionsIn: ['v'], conditionsOut: ['v']});
 }
 
 // --- Nouns and adjectives ------------------------------------------------------------------
-transform('plural', 'plural', 'Plural of a noun or adjective: libri, case, cani, problemi, amiche, parchi, amici, arance, figli.');
-transform('feminine', 'feminine', 'Feminine singular of an adjective, or of a noun for a person: rossa, attrice, studentessa, padrona.');
-transform('feminine-plural', 'feminine plural', 'Feminine plural of an adjective: rosse, bianche, lunghe, lisce.');
-transform('superlative', 'superlative', 'Absolute superlative (-issimo): bellissimo, grandissima, lunghissimi, velocissime.');
-transform('adverb', 'adverb (-mente)', 'Adverb formed from an adjective with -mente: lentamente, fortemente, facilmente, regolarmente.');
+// The transforms of this section are created first (NOMINAL_FIRST, above).
 
 const NOMINAL = ['n', 'adj'];
 // Noun and adjective rules read one word, so the last word of a phrase is not
@@ -1152,8 +1197,11 @@ const ONE_WORD = {stemCharacters: '{lower}'};
 // after a consonant (arance, spiagge), and the unstressed -io (figli,
 // occhi). The stem is two letters or more, so short function words are not
 // plurals (dei, lei, noi, mai).
+// For -i, the -e singular is tried before the -o one: where a word's rows name
+// both (cani: cane and the archaic adjective cano; mesi: mese and meso), the
+// -e noun is the frequent one far more often than not in it_50k.
 for (const [inflected, deinflected, out] of [
-    ['i', 'o', NOMINAL], ['e', 'a', NOMINAL], ['i', 'e', NOMINAL], ['i', 'a', NOMINAL],
+    ['i', 'e', NOMINAL], ['i', 'o', NOMINAL], ['e', 'a', NOMINAL], ['i', 'a', NOMINAL],
     ['chi', 'co', NOMINAL], ['ghi', 'go', NOMINAL], ['che', 'ca', NOMINAL], ['ghe', 'ga', NOMINAL],
     ['chi', 'ca', ['n']], ['ghi', 'ga', ['n']], ['ci', 'co', NOMINAL], ['gi', 'go', NOMINAL],
     ['ce', 'cia', NOMINAL], ['ge', 'gia', NOMINAL], ['i', 'io', NOMINAL],
@@ -1172,6 +1220,7 @@ for (const [plural, singular] of [
     ['sopracciglia', 'sopracciglio'], ['lenzuola', 'lenzuolo'], ['mura', 'muro'], ['urla', 'urlo'], ['grida', 'grido'],
     ['corna', 'corno'], ['membra', 'membro'], ['fondamenta', 'fondamento'], ['budella', 'budello'], ['miglia', 'miglio'],
     ['calcagna', 'calcagno'], ['cervella', 'cervello'], ['fusa', 'fuso'], ['gesta', 'gesto'], ['risa', 'riso'],
+    ['orecchie', 'orecchio'],
 ]) {
     whole('plural', plural, singular, [], ['n']);
 }
@@ -1196,6 +1245,43 @@ for (const [inflected, deinflected, out, min] of [
     ['e', 'o', ['adj'], 2], ['che', 'co', ['adj'], 2], ['ghe', 'go', ['adj'], 2], ['ce', 'cio', ['adj'], 2], ['ge', 'gio', ['adj'], 2],
 ]) {
     suffix('feminine-plural', inflected, deinflected, [], out, {stemMinLength: min, ...ONE_WORD});
+}
+// Preferred readings. Where a word's rows name two lemmas that the rules
+// reach with traces of one length, the lookup shows first the one it found
+// first (docs/languages.md 9.6): the one through the longer ending, or, for
+// one ending, through the transform and rule that come first in this file.
+// That order shows the frequent reading first for most such words: the
+// noun and adjective transforms come first (figli is figlio before
+// figliare), and -i is -e before -o (cani is cane before cano). For these
+// words of it_50k's top 10,000 it does not, and a whole-word rule, which is
+// found before any ending, reaches the reading they nearly always have
+// first; the other stays second (soli: solo, then sole). The words were
+// judged by hand among those whose first lemma's citation form is at least
+// 10 times rarer than another lemma their rows name (README, Measurements).
+const PREFERRED = [
+    ['plural', NOMINAL, [
+        ['soli', 'solo'], ['armi', 'arma'], ['conti', 'conto'], ['regali', 'regalo'], ['messi', 'messo'], ['calci', 'calcio'],
+        ['rischi', 'rischio'], ['omicidi', 'omicidio'], ['sacrifici', 'sacrificio'], ['decenni', 'decennio'],
+        ['stronzate', 'stronzata'], ['cazzate', 'cazzata'], ['discorsi', 'discorso'], ['armati', 'armato'],
+        ['alleati', 'alleato'], ['privati', 'privato'], ['arrabbiati', 'arrabbiato'], ['sbagliati', 'sbagliato'],
+        ['innamorati', 'innamorato'], ['bloccati', 'bloccato'], ['fregati', 'fregato'], ['collegati', 'collegato'],
+    ]],
+    ['feminine-plural', ['adj'], [
+        ['vere', 'vero'], ['private', 'privato'], ['armate', 'armato'], ['complicate', 'complicato'], ['sbagliate', 'sbagliato'],
+    ]],
+    ['present-io', ['v'], [['domando', 'domandare']]],
+    ['present-tu', ['v'], [['torni', 'tornare'], ['spegni', 'spegnere']]],
+    ['present-lui', ['v'], [['pare', 'parere'], ['accade', 'accadere'], ['indovina', 'indovinare'], ['supera', 'superare'], ['vende', 'vendere']]],
+    ['subjunctive-sg', ['v'], [['accada', 'accadere'], ['riposi', 'riposare']]],
+    // comperò and comperai, the past historic of comperare, an older
+    // spelling of comprare that wty-it-en gives only as a form-of row: read
+    // as comprare's, they come before compare (godfather) through the future
+    // and conditional endings (comp + erò).
+    ['preterite-io', ['v'], [['comperai', 'comprare']]],
+    ['preterite-lui', ['v'], [['comperò', 'comprare']]],
+];
+for (const [id, out, pairs] of PREFERRED) {
+    for (const [word, lemma] of pairs) { whole(id, word, lemma, [], out); }
 }
 // Superlatives in -issimo, -issima, -issimi, -issime of adjectives and
 // adverbs in -o, -e and -io (bellissimo, grandissimo, benissimo,
