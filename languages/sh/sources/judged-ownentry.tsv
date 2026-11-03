@@ -1,0 +1,34 @@
+# The judgement of audit-hachi-lang-sh-b (2026-11-03, written for this pack, GPL-3.0-or-later): words whose
+# first result is their own headword (an empty trace) while no lemma row of that entry has the sense of the
+# word's dominant use; the right lemma comes later, through a rule or a reference. Read from the entries of
+# the 700 most frequent such words of FrequencyWords hr_50k and the most frequent sr_50k ones the hr list
+# lacks. Column 3 names the lists that count the word strictly: radi, može, stara and luda have a second
+# common use, and video is mostly the noun in Croatian. measure.py ownentry reads it.
+# word	dominant lemma(s)	strict in	what the first entry says
+bilo	biti	hr sr	pulse, heartbeat; crest; the particle "be it"
+može	moći	-	(interjection) OK, all right
+kada	kad	hr sr	bathtub
+imam	imati	hr sr	imam (Muslim cleric)
+toga	taj	hr sr	toga, gown
+radi	raditi	-	(preposition) for the sake of
+jeste	biti	hr sr	(Montenegrin) emphatic yes
+mora	morati	hr sr	nightmare creature; mora (phonology); morra
+tim	taj	hr sr	team
+radio	raditi	hr sr	radio
+žele	željeti	hr sr	jelly
+sina	sin	hr sr	(Chakavian) shadow, shade
+bile	biti	hr sr	(regional adverb) moreover, even
+nova	nov	hr sr	nova (astronomy)
+stara	star	-	old woman; mum
+luda	lud	-	madman; jester
+rata	rat	hr sr	instalment
+živa	živ	hr sr	mercury
+mlada	mlad	hr sr	bride
+pita	pitati	hr sr	pie
+pali	paliti|pasti	hr sr	Pali (language)
+duga	dug	hr sr	rainbow
+smio	smjeti	hr sr	brave, bold
+jela	jesti|jelo	hr sr	fir
+puca	pucati	hr sr	(Kajkavian) girl
+kuca	kucati|kuća	hr sr	doggy
+video	videti|vidjeti	sr	video

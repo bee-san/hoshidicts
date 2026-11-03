@@ -72,12 +72,13 @@ print('per rule:', len(r), 'rows;', sum(1 for x in r if x['recovers'] > 0), 'rec
       echo "nothing $f: $(python3 $P/measure.py nothing --languages "$LANGS" --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --frequency "$CACHE/${f}_50k.txt" --show 20)"
     done
     for t in zlatarevo-zlato sr-gutenberg; do
-      echo "text $t: $(python3 $P/measure.py text --languages "$LANGS" --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --text "$CACHE/texts/$t.txt" --out "$OUT/unjudged-$i-$t.tsv" --sample 60 --show 40)"
+      echo "text $t: $(python3 $P/measure.py text --languages "$LANGS" --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --text "$CACHE/texts/$t.txt" --out "$OUT/unjudged-$i-$t.tsv" --own-out "$OUT/ownentry-$i-$t.tsv" --sample 60 --show 40)"
       echo "ties $t: $(python3 $P/measure.py ties --languages "$LANGS" --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --text "$CACHE/texts/$t.txt" --lemma-lists "$CACHE/hr_50k.txt" "$CACHE/sr_50k.txt" --show 30)"
       echo "tiesample $t: $(python3 $P/measure.py tiesample --languages "$LANGS" --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --text "$CACHE/texts/$t.txt" --out "$OUT/ties-$i-$t.tsv" --sample 60)"
     done
     for f in hr sr; do
       echo "ties $f: $(python3 $P/measure.py ties --languages "$LANGS" --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --frequency "$CACHE/${f}_50k.txt" --lemma-lists "$CACHE/hr_50k.txt" "$CACHE/sr_50k.txt" --show 40)"
+      echo "ownentry $f: $(python3 $P/measure.py ownentry --languages "$LANGS" --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --frequency "$CACHE/${f}_50k.txt")"
       [ "$f" = hr ] && echo "judged hr: $(python3 $P/measure.py judged --languages "$LANGS" --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --frequency "$CACHE/hr_50k.txt")"
       echo "nogold $f: $(python3 $P/measure.py nogold --languages "$LANGS" --zip "$CACHE/wty-sh-en.zip" --dictionary "$d" --frequency "$CACHE/${f}_50k.txt" --out "$OUT/nogold-$i-$f.tsv" --sample 60)"
     done

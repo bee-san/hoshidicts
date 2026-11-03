@@ -1135,20 +1135,26 @@ const PREFER = [
     ['tela', 'telo'], ['pravila', 'pravilo'], ['krila', 'krilo'], ['svetla', 'svetlo'], ['jezera', 'jezero'],
     ['pogleda', 'pogledati'], ['sjeti', 'sjetiti'], ['seti', 'setiti'], ['pjeva', 'pjevati'], ['peva', 'pevati'], ['vara', 'varati'],
     ['puši', 'pušiti'], ['naprave', 'napraviti'], ['znače', 'značiti'], ['pleše', 'plesati'], ['slijede', 'slijediti'],
-    ['obrati', 'obratiti'], ['žali', 'žaliti'], ['rodi', 'roditi'], ['uda', 'udati'], ['jure', 'juriti'], ['ostave', 'ostaviti'],
+    ['obrati', 'obratiti'], ['žali', 'žaliti'], ['rodi', 'roditi'], ['jure', 'juriti'], ['ostave', 'ostaviti'],
     ['zahvali', 'zahvaliti'], ['stave', 'staviti'], ['ispravi', 'ispraviti'], ['obavesti', 'obavestiti'], ['napiše', 'napisati'],
     ['dobiću', 'dobiti'], ['kiše', 'kiša'], ['kiši', 'kiša'], ['duši', 'duša'], ['liste', 'lista'], ['bravu', 'brava'],
-    ['pade', 'pasti'], ['puše', 'puhati', 'pušiti'], ['teče', 'teći'], ['stupi', 'stupiti'],
+    ['puše', 'puhati', 'pušiti'], ['teče', 'teći'], ['stupi', 'stupiti'],
     ['jezeru', 'jezero'], ['jezerom', 'jezero'], ['jezerima', 'jezero'],
     ['rešen', 'rešiti'], ['rešeno', 'rešiti'], ['rešeni', 'rešiti'], ['rešene', 'rešiti'],
+    // Ties judged by audit-hachi-lang-sh-b beyond sources/judged-ties-hr.tsv.
+    ['goriva', 'gorivo'], ['listi', 'lista'], ['točku', 'točka'], ['glumi', 'glumiti'], ['klase', 'klasa'], ['ranu', 'rana'],
+    ['sjede', 'sjediti'], ['sedim', 'sedeti'], ['telu', 'telo'], ['telom', 'telo'], ['ume', 'umeti'], ['vili', 'vila'],
+    ['vere', 'vera'], ['veru', 'vera'], ['smete', 'smeti'], ['smela', 'smeti'], ['supu', 'supa'], ['odela', 'odelo'],
+    ['odelu', 'odelo'], ['trku', 'trka'], ['tetke', 'tetka'], ['sede', 'sedeti'],
     // adjectives and pronouns: nouns come first (GROUP_ORDER), so the
     // frequent adjectives whose forms are also forms of a rare noun are
     // written out (drugi, svaki, nov; the nouns drug, svak, nova).
-    ['stare', 'star:adj'], ['sretni', 'sretan'], ['nekima', 'neki'],
-    ...['a', 'e', 'o', 'u', 'og', 'oga', 'om', 'ome', 'omu', 'oj', 'im', 'ima', 'ih'].flatMap((e) => [[`drug${e}`, 'drugi'], [`svak${e}`, 'svaki']]),
+    ['sretni', 'sretan'], ['nekima', 'neki'],
+    // (svako is a headword of its own, which comes first anyway.)
+    ...['a', 'e', 'o', 'u', 'og', 'oga', 'om', 'ome', 'omu', 'oj', 'im', 'ima', 'ih'].flatMap((e) => (e === 'o' ? [[`drug${e}`, 'drugi']] : [[`drug${e}`, 'drugi'], [`svak${e}`, 'svaki']])),
     // A lemma written lemma:adj is read by the adjective rules, where a noun
     // rule also makes it (stare → star, nove → nov).
-    ['novo', 'nov:adj'], ['novu', 'nov:adj'], ['nove', 'nov:adj'], ['novom', 'nov:adj'], ['novoj', 'nov:adj'],
+    ['novo', 'nov:adj'], ['novu', 'nov:adj'], ['nove', 'nov:adj'], ['novom', 'nov:adj'], 
     ['vojne', 'vojni:adj'], ['vojnu', 'vojni:adj'], ['pete', 'peti:adj'],
 ];
 
@@ -1170,7 +1176,11 @@ function oneStep(rule, word) {
     if (rule.stemNotStartsWithText !== undefined && stem.startsWith(rule.stemNotStartsWithText)) { return null; }
     return stem + rule.deinflected;
 }
-for (const [word, ...readings] of PREFER) {
+// --no-prefer <file>: writes the rules without these whole-word rules to
+// <file> only (sources/prefer-tests.py compares the lookups both ways).
+const noPreferAt = process.argv.indexOf('--no-prefer');
+let preferRules = 0;
+for (const [word, ...readings] of noPreferAt === -1 ? PREFER : []) {
     for (const reading of readings) {
         const [lemma, as] = reading.split(':');
         const groups = as === 'adj' ? ['adjective', 'comparative'] : null;
@@ -1179,7 +1189,7 @@ for (const [word, ...readings] of PREFER) {
         const spec = {group: entry.group, type: 'wholeWord', inflected: word, deinflected: lemma, tags: entry.tags, examples: [[word, lemma]],
             opts: {out: ruleOf(entry.spec).conditionsOut}};
         const k = key(ruleOf(spec));
-        if (!merged.has(k)) { merged.set(k, {spec, tags: [...entry.tags], examples: [[word, lemma]], group: entry.group}); }
+        if (!merged.has(k)) { merged.set(k, {spec, tags: [...entry.tags], examples: [[word, lemma]], group: entry.group}); preferRules += 1; }
     }
 }
 
@@ -1279,7 +1289,16 @@ for (const g of groups) {
 }
 
 const own = {schema: 1, conditions, transforms};
+if (noPreferAt !== -1) {
+    writeFileSync(process.argv[noPreferAt + 1], formatTransforms(own));
+    process.exit(0);
+}
 writeFileSync(join(here, 'own.json'), formatTransforms(own));
+// --prefer-list <file>: the PREFER words as `word<TAB>lemma|lemma`.
+const preferListAt = process.argv.indexOf('--prefer-list');
+if (preferListAt !== -1) {
+    writeFileSync(process.argv[preferListAt + 1], `${PREFER.map(([w, ...l]) => `${w}\t${l.map((x) => x.split(':')[0]).join('|')}`).join('\n')}\n`);
+}
 // --examples <file>: every example as `transform<TAB>form<TAB>lemma`, for
 // checking the rules (sources/check-examples.mjs) and building tests/cases.tsv.
 const examplesAt = process.argv.indexOf('--examples');
@@ -1306,4 +1325,4 @@ if (process.argv.includes('--transforms')) {
 }
 const rows = transforms.reduce((n, t) => n + t.rules.length, 0);
 const ruleCount = transforms.reduce((n, t) => n + t.rules.reduce((m, r) => m + (r.suffixes ? r.suffixes.length * r.prefixes.length : 1), 0), 0);
-console.log(`own.json: ${transforms.length} transforms, ${ruleCount} rules in ${rows} rows; ${exampleRows.length} examples`);
+console.log(`own.json: ${transforms.length} transforms, ${ruleCount} rules in ${rows} rows; ${exampleRows.length} examples; PREFER: ${PREFER.length} words, ${preferRules} whole-word rules`);

@@ -893,6 +893,8 @@ audit fixes	1	pojeo	pojesti	v	*
 negatives	0	dao	dasti	*	*
 negatives	0	posla	posti	*	*
 negatives	0	dela	desti	*	*
+# The -ad collectives are a closed list (sources/build-own.mjs): pozadi (behind) is not a collective of a noun poze.
+negatives	0	pozadi	poze	*	*
 # --- One example of each transform, written by sources/build-own.mjs --cases (hand-written examples, no third-party data) ---
 rule example	1	sam	biti	v	v-irr-present-1sg
 rule example	1	si	biti	v	v-irr-present-2sg

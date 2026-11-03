@@ -236,6 +236,34 @@ def cmd_judged(args, d):
     print('wrong: ' + ' '.join(f'{w}→{f} (not {l}, {c})' for c, w, f, l in sorted(wrong, reverse=True)[:args.show]))
 
 
+def cmd_ownentry(args, d):
+    """The --top words of --frequency whose first result is their own entry while
+    their form-of rows name another lemma that the lookup lists later, and those
+    the hand-judged list (--judged-own, sources/judged-ownentry.tsv) calls wrong:
+    all of them, and strictly (the words whose column 3 names the list)."""
+    words = frequent(args.frequency, args.top)
+    total = sum(c for _, c in words)
+    found = []
+    for (word, count), entry in zip(words, lookup_batch(args, [w for w, _ in words])):
+        later = own_entry_later(d, entry)
+        if later and entry['results'][0]['matched'] == word:
+            found.append((count, word, later))
+    judged = {}
+    for line in open(args.judged_own, encoding='utf-8'):
+        if line.strip() and not line.startswith('#'):
+            word, lemmas, strict = line.rstrip('\n').split('\t')[:3]
+            judged[word] = (lemmas.split('|'), strict.split())
+    name = os.path.basename(args.frequency).split('_')[0]
+    wrong = [(c, w, l) for c, w, l in found if w in judged]
+    strict = [x for x in wrong if name in judged[x[1]][1]]
+    share = lambda xs: round(sum(x[0] for x in xs) / total, 5)
+    print(json.dumps({'words': len(words), 'ownEntryFirst': len(found), 'ownEntryTokens': sum(x[0] for x in found),
+                      'ownEntryShare': share(found), 'judgedWrong': len(wrong), 'judgedWrongTokens': sum(x[0] for x in wrong),
+                      'judgedWrongShare': share(wrong), 'strictWrong': len(strict), 'strictWrongTokens': sum(x[0] for x in strict),
+                      'strictWrongShare': share(strict)}))
+    print('judged wrong: ' + ' '.join(f'{w}→{w} (for {"/".join(judged[w][0])}, {c})' for c, w, _ in sorted(wrong, reverse=True)))
+
+
 def cmd_frequent(args, d):
     words = frequent(args.frequency, args.top)
     total = sum(c for _, c in words)
@@ -284,15 +312,38 @@ def hovers(text):
                 yield m.group(0), rest[:end.end()] if end else rest
 
 
+def own_entry_later(d, entry):
+    """For a first result with an empty trace (the matched text's own entry: no
+    rule, no reference), the other lemmas the matched text's form-of rows name
+    that the lookup lists later. Such a first result can be a homograph with
+    an unrelated meaning (kada "bathtub" before kad "when"), which the form-of
+    rows cannot show: it is judged by hand, not counted right."""
+    results = entry['results']
+    if not results or results[0]['trace']:
+        return []
+    first = results[0]
+    named = set()
+    for t in spellings(first['matched']):
+        named |= d.gold.get(t, set())
+    named |= {strip_accents(g) for g in named}
+    named -= {first['expression'], first['matched']}
+    return list(dict.fromkeys(r['expression'] for r in results[1:] if r['matched'] == first['matched']
+                              and (r['expression'] in named or strip_accents(r['expression']) in named)))
+
+
 def judge(d, entry, word):
-    """right, wrong or unjudged (no gold lemma for the matched text), and the first result."""
+    """right, wrong, own entry (right by script, but the own entry of a word whose
+    form-of rows name another lemma, listed later), or unjudged (no gold lemma for
+    the matched text), and the first result."""
     if not entry['results']:
         return 'nothing', None
     first = entry['results'][0]
     gold = d.gold_of(first['matched'])
     if not gold:
         return 'unjudged', first
-    return ('right' if d.right(first['expression'], first['matched']) else 'wrong'), first
+    if not d.right(first['expression'], first['matched']):
+        return 'wrong', first
+    return ('own entry' if own_entry_later(d, entry) else 'right'), first
 
 
 def cmd_text(args, d):
@@ -303,9 +354,13 @@ def cmd_text(args, d):
     wrong = collections.Counter()
     by_rule = collections.Counter()
     unjudged = []
+    own = []
     for (word, rest), entry in zip(pairs, looked):
         verdict, first = judge(d, entry, word)
         counts[verdict] += 1
+        later = own_entry_later(d, entry)
+        if later:
+            own.append((word, rest, first['expression'], later))
         if verdict == 'wrong':
             wrong[(first['matched'], first['expression'], rule_of(first))] += 1
             by_rule[rule_of(first)] += 1
@@ -325,6 +380,21 @@ def cmd_text(args, d):
             for word, rest, first in sample:
                 f.write(f"{word}\t{rest[:60]}\t{first['matched']}\t{first['expression']}\t{'|'.join(first['trace'])}\t\n")
         print(f'{len(sample)} unjudged first results sampled to {args.out}')
+    if args.own_out:
+        # Every position whose first result is the own entry while the form-of
+        # rows name a lemma listed later, a random sample for judging in context.
+        rng = random.Random(1)
+        sample = rng.sample(own, min(args.sample, len(own)))
+        with open(args.text, encoding='utf-8') as f:
+            flat = ' '.join(f.read().split())
+        with open(args.own_out, 'w', encoding='utf-8') as f:
+            f.write('# word\ttext\tfirst (own entry)\tlater named lemmas\tcontext\tjudgement (fill in: right, wrong)\n')
+            for word, rest, expression, later in sample:
+                snippet = ' '.join(rest.split())
+                h = flat.find(snippet)
+                context = (flat[max(0, h - 80):h] + '[[' + word + ']]' + flat[h + len(word):h + 40]) if h >= 0 else rest[:80]
+                f.write(f"{word}\t{rest[:60]}\t{expression}\t{' '.join(later)}\t…{context}…\t\n")
+        print(f'{len(own)} own-entry first results ({len(sample)} sampled to {args.own_out})')
 
 
 CLITICS = ('se', 'si', 'je', 'sam', 'smo', 'ste', 'su', 'ću', 'ćeš', 'će', 'ćemo', 'ćete', 'bih', 'bi', 'bismo', 'biste',
@@ -370,7 +440,7 @@ def cmd_clitics(args, d):
         multi = ' ' in first['matched']
         if not multi:
             if d.right(first['expression'], first['matched']):
-                counts['the word alone, right'] += 1
+                counts['the word alone, own entry' if own_entry_later(d, entry) else 'the word alone, right'] += 1
             elif d.gold_of(first['matched']):
                 counts['the word alone, wrong'] += 1
                 alone[(first['matched'], first['expression'], rule_of(first))] += 1
@@ -579,7 +649,7 @@ def cmd_tiesample(args, d):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('command', choices=['frequent', 'text', 'clitics', 'traces', 'nothing', 'ties', 'compare', 'nogold', 'tiesample', 'judged'])
+    parser.add_argument('command', choices=['frequent', 'text', 'clitics', 'traces', 'nothing', 'ties', 'compare', 'nogold', 'tiesample', 'judged', 'ownentry'])
     parser.add_argument('--zip', required=True)
     parser.add_argument('--dictionary', required=True)
     parser.add_argument('--languages', default=os.path.join(REPO, 'languages'))
@@ -593,13 +663,15 @@ def main():
     parser.add_argument('--out')
     parser.add_argument('--show', type=int, default=40)
     parser.add_argument('--judged', default=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'judged-ties-hr.tsv'))
+    parser.add_argument('--judged-own', default=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'judged-ownentry.tsv'))
+    parser.add_argument('--own-out', help='text: write a sample of the own-entry first results here')
     parser.add_argument('--other', help='another languages directory, for compare')
     parser.add_argument('--lemma-lists', nargs='+', help='frequency lists for the lemma frequency of ties (default: --frequency)')
     args = parser.parse_args()
     d = Dictionary(args.zip)
     with open(os.path.join(args.languages, 'sh', 'transforms.json'), encoding='utf-8') as f:
         PACK_IDS.update(t['id'] for t in json.load(f)['transforms'])
-    {'judged': cmd_judged, 'compare': cmd_compare, 'nogold': cmd_nogold, 'tiesample': cmd_tiesample, 'ties': cmd_ties, 'frequent': cmd_frequent, 'text': cmd_text, 'clitics': cmd_clitics, 'traces': cmd_traces, 'nothing': cmd_nothing}[args.command](args, d)
+    {'ownentry': cmd_ownentry, 'judged': cmd_judged, 'compare': cmd_compare, 'nogold': cmd_nogold, 'tiesample': cmd_tiesample, 'ties': cmd_ties, 'frequent': cmd_frequent, 'text': cmd_text, 'clitics': cmd_clitics, 'traces': cmd_traces, 'nothing': cmd_nothing}[args.command](args, d)
 
 
 if __name__ == '__main__':

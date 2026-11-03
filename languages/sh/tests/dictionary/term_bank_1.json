@@ -50,7 +50,7 @@
   ["pet-šest", "", "num", "", 0, ["five or six"], 49, ""],
   ["kod kuće", "", "phrase", "", 0, ["at home"], 50, ""],
   ["kuću", "", "non-lemma", "", 0, [["kuća", ["accusative singular"]]], 51, ""],
-  ["radim", "", "non-lemma", "", 0, [["raditi", ["first-person singular present"]]], 52, ""],
+  ["radiš", "", "non-lemma", "", 0, [["raditi", ["second-person singular present"]]], 52, ""],
   ["куће", "", "non-lemma", "", 0, [["кућа", ["genitive singular"]]], 53, ""],
   ["kao", "", "conj", "", 0, ["as, like"], 54, ""],
   ["Kata", "", "name", "", 0, ["a female given name"], 55, ""],

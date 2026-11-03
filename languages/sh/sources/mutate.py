@@ -192,6 +192,8 @@ MUTATIONS = [
     ('passive bačen → baciti removed', drop_rules(lambda tr, r: r.get('inflected') == 'bačen' or ['bačen', 'baciti'] in r.get('suffixes', []))),
     ('noun and adjective lemmas of 2 letters', lambda t, lang: sum(1 for tr, r in rules(t) if r.get('stemMinLength') == 3 and r.get('deinflected', '') == '' and r.update(stemMinLength=2) is None)),
     ('preferred readings removed', drop_rules(lambda tr, r: r['type'] == 'wholeWord' and r['inflected'] in PREFERRED)),
+    ('one preferred reading removed (radim → raditi)', drop_rules(lambda tr, r: r['type'] == 'wholeWord' and r['inflected'] == 'radim' and r['deinflected'] == 'raditi')),
+    ('-ad collectives widened to suffix rules', lambda t, lang: add_rule('n-collective-plural-gen-dat-loc-ins', {'type': 'suffix', 'inflected': 'adi', 'deinflected': 'e', 'conditionsIn': [], 'conditionsOut': ['n'], 'stemMinLength': 2})(t, lang) + add_rule('n-collective-plural', {'type': 'suffix', 'inflected': 'ad', 'deinflected': 'e', 'conditionsIn': [], 'conditionsOut': ['n'], 'stemMinLength': 2})(t, lang)),
     ('otići written out removed', drop_rules(lambda tr, r: r['type'] == 'wholeWord' and r['deinflected'] == 'otići')),
     ('cio written out removed', drop_rules(lambda tr, r: r['type'] == 'wholeWord' and r['deinflected'] == 'cio')),
     ('pronoun time removed', drop_whole({'time'})),
