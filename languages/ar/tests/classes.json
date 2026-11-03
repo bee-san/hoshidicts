@@ -645,96 +645,52 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[19].rules[0].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[19].rules[1].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[19].rules[2].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
+    "transforms[19].rules[0].stemCharacters": [],
+    "transforms[19].rules[1].stemCharacters": [],
     "transforms[20].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
-    ],
-    "transforms[20].rules[0].stemNotEndsWith": [
-      [1575, 1575],
-      [1577, 1577],
-      [1609, 1609]
     ],
     "transforms[20].rules[1].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[21].rules[0].stemCharacters": [
+    "transforms[20].rules[2].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[21].rules[1].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[21].rules[2].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[21].rules[3].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[21].rules[4].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[21].rules[5].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[21].rules[6].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[21].rules[7].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[21].rules[8].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
+    "transforms[21].rules[0].stemCharacters": [],
     "transforms[22].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
+    ],
+    "transforms[22].rules[0].stemStartsWith": [
+      [1576, 1576],
+      [1601, 1601],
+      [1603, 1604],
+      [1608, 1608]
+    ],
+    "transforms[22].rules[0].stemNotEndsWith": [
+      [1575, 1575],
+      [1577, 1577],
+      [1609, 1609]
     ],
     "transforms[22].rules[1].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
+    "transforms[22].rules[1].stemNotStartsWith": [
+      [1576, 1576],
+      [1601, 1601],
+      [1603, 1604],
+      [1608, 1608]
+    ],
+    "transforms[22].rules[1].stemNotEndsWith": [
+      [1575, 1575],
+      [1577, 1577],
+      [1609, 1609]
+    ],
     "transforms[22].rules[2].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[22].rules[3].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[22].rules[4].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[22].rules[5].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[22].rules[6].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[22].rules[7].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -742,7 +698,51 @@
       [1569, 1594],
       [1601, 1610]
     ],
+    "transforms[23].rules[0].stemStartsWith": [
+      [1576, 1576],
+      [1601, 1601],
+      [1603, 1604],
+      [1608, 1608]
+    ],
     "transforms[23].rules[1].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[23].rules[1].stemNotStartsWith": [
+      [1576, 1576],
+      [1601, 1601],
+      [1603, 1604],
+      [1608, 1608]
+    ],
+    "transforms[23].rules[2].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[23].rules[3].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[23].rules[4].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[23].rules[5].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[23].rules[6].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[23].rules[7].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[23].rules[8].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[23].rules[9].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -750,89 +750,77 @@
       [1569, 1594],
       [1601, 1610]
     ],
+    "transforms[24].rules[0].stemStartsWith": [
+      [1576, 1576],
+      [1601, 1601],
+      [1603, 1604],
+      [1608, 1608]
+    ],
+    "transforms[24].rules[1].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[24].rules[1].stemNotStartsWith": [
+      [1576, 1576],
+      [1601, 1601],
+      [1603, 1604],
+      [1608, 1608]
+    ],
+    "transforms[24].rules[2].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[24].rules[3].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[24].rules[4].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[24].rules[5].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[24].rules[6].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[24].rules[7].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[24].rules[8].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
     "transforms[25].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
+    ],
+    "transforms[25].rules[0].stemStartsWith": [
+      [1576, 1576],
+      [1601, 1601],
+      [1603, 1604],
+      [1608, 1608]
     ],
     "transforms[25].rules[1].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
+    "transforms[25].rules[1].stemNotStartsWith": [
+      [1576, 1576],
+      [1601, 1601],
+      [1603, 1604],
+      [1608, 1608]
+    ],
     "transforms[25].rules[2].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[25].rules[3].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[25].rules[4].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[25].rules[5].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[25].rules[6].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
     "transforms[26].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
-    ],
-    "transforms[26].rules[0].stemNotEndsWith": [
-      [1608, 1608],
-      [1610, 1610]
-    ],
-    "transforms[26].rules[1].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[26].rules[2].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[26].rules[2].stemChange.between": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[26].rules[3].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[26].rules[3].stemChange.between": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[26].rules[4].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[26].rules[4].stemChange.between": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[26].rules[5].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[26].rules[6].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[26].rules[6].stemChange.between": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[26].rules[7].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[26].rules[7].stemNotEndsWith": [
-      [1608, 1608],
-      [1610, 1610]
     ],
     "transforms[27].rules[0].stemCharacters": [
       [1569, 1594],
@@ -842,9 +830,21 @@
       [1569, 1594],
       [1601, 1610]
     ],
+    "transforms[27].rules[1].stemStartsWith": [
+      [1576, 1576],
+      [1601, 1601],
+      [1603, 1604],
+      [1608, 1608]
+    ],
     "transforms[27].rules[2].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
+    ],
+    "transforms[27].rules[2].stemNotStartsWith": [
+      [1576, 1576],
+      [1601, 1601],
+      [1603, 1604],
+      [1608, 1608]
     ],
     "transforms[27].rules[3].stemCharacters": [
       [1569, 1594],
@@ -866,17 +866,13 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[27].rules[8].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[27].rules[9].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
     "transforms[28].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
+    ],
+    "transforms[28].rules[0].stemNotEndsWith": [
+      [1608, 1608],
+      [1610, 1610]
     ],
     "transforms[28].rules[1].stemCharacters": [
       [1569, 1594],
@@ -886,9 +882,45 @@
       [1569, 1594],
       [1601, 1610]
     ],
+    "transforms[28].rules[2].stemChange.between": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
     "transforms[28].rules[3].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
+    ],
+    "transforms[28].rules[3].stemChange.between": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[28].rules[4].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[28].rules[4].stemChange.between": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[28].rules[5].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[28].rules[6].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[28].rules[6].stemChange.between": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[28].rules[7].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[28].rules[7].stemNotEndsWith": [
+      [1608, 1608],
+      [1610, 1610]
     ],
     "transforms[29].rules[0].stemCharacters": [
       [1569, 1594],
@@ -899,6 +931,34 @@
       [1601, 1610]
     ],
     "transforms[29].rules[2].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[29].rules[3].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[29].rules[4].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[29].rules[5].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[29].rules[6].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[29].rules[7].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[29].rules[8].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[29].rules[9].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -918,18 +978,6 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[30].rules[4].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[30].rules[5].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[30].rules[6].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
     "transforms[31].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -939,26 +987,6 @@
       [1601, 1610]
     ],
     "transforms[31].rules[2].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[31].rules[3].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[31].rules[4].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[31].rules[5].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[31].rules[6].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[31].rules[7].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -987,14 +1015,6 @@
       [1601, 1610]
     ],
     "transforms[32].rules[6].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[32].rules[7].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[32].rules[8].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -1027,10 +1047,6 @@
       [1601, 1610]
     ],
     "transforms[33].rules[7].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[33].rules[8].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -1142,74 +1158,6 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[36].rules[9].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[36].rules[10].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[36].rules[11].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[36].rules[12].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[36].rules[13].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[36].rules[14].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[36].rules[15].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[36].rules[16].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[36].rules[17].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[36].rules[18].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[36].rules[19].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[36].rules[20].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[36].rules[21].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[36].rules[22].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[36].rules[23].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[36].rules[24].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[36].rules[25].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
     "transforms[37].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -1218,15 +1166,7 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[37].rules[1].stemChange.between": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
     "transforms[37].rules[2].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[37].rules[2].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -1242,7 +1182,18 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[37].rules[6].stemCharacters": [],
+    "transforms[37].rules[6].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[37].rules[7].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[37].rules[8].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
     "transforms[38].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -1251,15 +1202,7 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[38].rules[1].stemChange.between": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
     "transforms[38].rules[2].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[38].rules[2].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -1275,7 +1218,94 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[38].rules[6].stemCharacters": [],
+    "transforms[38].rules[6].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[38].rules[7].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[38].rules[8].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[38].rules[9].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[38].rules[10].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[38].rules[11].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[38].rules[12].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[38].rules[13].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[38].rules[14].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[38].rules[15].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[38].rules[16].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[38].rules[17].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[38].rules[18].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[38].rules[19].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[38].rules[20].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[38].rules[21].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[38].rules[22].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[38].rules[23].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[38].rules[24].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[38].rules[25].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[38].rules[26].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[38].rules[27].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
     "transforms[39].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -1350,7 +1380,15 @@
       [1569, 1594],
       [1601, 1610]
     ],
+    "transforms[41].rules[1].stemChange.between": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
     "transforms[41].rules[2].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[41].rules[2].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -1358,7 +1396,15 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[41].rules[4].stemCharacters": [],
+    "transforms[41].rules[4].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[41].rules[5].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[41].rules[6].stemCharacters": [],
     "transforms[42].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -1367,7 +1413,15 @@
       [1569, 1594],
       [1601, 1610]
     ],
+    "transforms[42].rules[1].stemChange.between": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
     "transforms[42].rules[2].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[42].rules[2].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -1375,7 +1429,15 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[42].rules[4].stemCharacters": [],
+    "transforms[42].rules[4].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[42].rules[5].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[42].rules[6].stemCharacters": [],
     "transforms[43].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -1418,15 +1480,7 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[45].rules[1].stemChange.between": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
     "transforms[45].rules[2].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[45].rules[2].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -1434,15 +1488,7 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[45].rules[4].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[45].rules[5].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[45].rules[6].stemCharacters": [],
+    "transforms[45].rules[4].stemCharacters": [],
     "transforms[46].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -1451,15 +1497,7 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[46].rules[1].stemChange.between": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
     "transforms[46].rules[2].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[46].rules[2].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -1467,15 +1505,7 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[46].rules[4].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[46].rules[5].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[46].rules[6].stemCharacters": [],
+    "transforms[46].rules[4].stemCharacters": [],
     "transforms[47].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -1574,11 +1604,7 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[49].rules[6].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[49].rules[7].stemCharacters": [],
+    "transforms[49].rules[6].stemCharacters": [],
     "transforms[50].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -1611,11 +1637,7 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[50].rules[6].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[50].rules[7].stemCharacters": [],
+    "transforms[50].rules[6].stemCharacters": [],
     "transforms[51].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -1648,7 +1670,11 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[51].rules[6].stemCharacters": [],
+    "transforms[51].rules[6].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[51].rules[7].stemCharacters": [],
     "transforms[52].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -1681,7 +1707,11 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[52].rules[6].stemCharacters": [],
+    "transforms[52].rules[6].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[52].rules[7].stemCharacters": [],
     "transforms[53].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -1838,27 +1868,15 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[57].rules[3].stemChange.between": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
     "transforms[57].rules[4].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[57].rules[5].stemCharacters": [],
-    "transforms[57].rules[6].stemCharacters": [
+    "transforms[57].rules[5].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[57].rules[7].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[57].rules[8].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
+    "transforms[57].rules[6].stemCharacters": [],
     "transforms[58].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -1883,27 +1901,15 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[58].rules[3].stemChange.between": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
     "transforms[58].rules[4].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[58].rules[5].stemCharacters": [],
-    "transforms[58].rules[6].stemCharacters": [
+    "transforms[58].rules[5].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[58].rules[7].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[58].rules[8].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
+    "transforms[58].rules[6].stemCharacters": [],
     "transforms[59].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -1938,6 +1944,14 @@
     ],
     "transforms[59].rules[5].stemCharacters": [],
     "transforms[59].rules[6].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[59].rules[7].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[59].rules[8].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -1978,6 +1992,14 @@
       [1569, 1594],
       [1601, 1610]
     ],
+    "transforms[60].rules[7].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[60].rules[8].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
     "transforms[61].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -2015,19 +2037,23 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[61].rules[7].stemCharacters": [
+    "transforms[62].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[62].rules[0].stemStartsWith": [
+    "transforms[62].rules[1].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[62].rules[1].stemStartsWith": [
+    "transforms[62].rules[1].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[62].rules[2].stemStartsWith": [
+    "transforms[62].rules[2].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[62].rules[2].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -2035,31 +2061,16 @@
       [1569, 1594],
       [1601, 1610]
     ],
+    "transforms[62].rules[3].stemChange.between": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
     "transforms[62].rules[4].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[62].rules[5].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
+    "transforms[62].rules[5].stemCharacters": [],
     "transforms[62].rules[6].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[62].rules[7].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[62].rules[8].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[62].rules[9].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[62].rules[10].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -2071,7 +2082,15 @@
       [1569, 1594],
       [1601, 1610]
     ],
+    "transforms[63].rules[1].stemChange.between": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
     "transforms[63].rules[2].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[63].rules[2].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -2079,14 +2098,15 @@
       [1569, 1594],
       [1601, 1610]
     ],
+    "transforms[63].rules[3].stemChange.between": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
     "transforms[63].rules[4].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[63].rules[5].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
+    "transforms[63].rules[5].stemCharacters": [],
     "transforms[63].rules[6].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -2095,7 +2115,87 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[63].rules[8].stemCharacters": [
+    "transforms[64].rules[0].stemStartsWith": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[64].rules[1].stemStartsWith": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[64].rules[2].stemStartsWith": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[64].rules[3].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[64].rules[4].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[64].rules[5].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[64].rules[6].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[64].rules[7].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[64].rules[8].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[64].rules[9].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[64].rules[10].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[65].rules[0].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[65].rules[1].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[65].rules[2].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[65].rules[3].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[65].rules[4].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[65].rules[5].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[65].rules[6].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[65].rules[7].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[65].rules[8].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[65].rules[9].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ]
@@ -2814,7 +2914,6 @@
         ["تطفأن", "تطفأن"],
         ["نجهز", "نجهز"],
         ["تنامين", "تنامين"],
-        ["تضوئون", "تضوئون"],
         ["تنتهون", "تنتهون"],
         ["ألغي", "ألغي"],
         ["أمحو", "أمحو"],
@@ -3207,12 +3306,10 @@
         ["إطعام", "إطعام"],
         ["تنسية", "تنسية"],
         ["انصراف", "أنصراف"],
-        ["دراية", "دراية"],
         ["اشتهار", "أشتهار"],
         ["افتعال", "أفتعال"],
         ["استعراب", "أستعراب"],
         ["استخدام", "أستخدام"],
-        ["وسوسة", "وسوسة"],
         ["اعتمال", "أعتمال"],
         ["مشاهرة", "مشاهرة"],
         ["ازدهار", "أزدهار"],
@@ -3316,6 +3413,7 @@
         ["الاخرنماس", "الأخرنماس"],
         ["التثنية", "التثنية"],
         ["الإحساس", "الإحساس"],
+        ["القاضي", "القاضي"],
         ["المميل", "المميل"],
         ["الاغتلام", "الأغتلام"],
         ["الجامعة", "الجامعة"],
@@ -3338,6 +3436,7 @@
         ["الذراع", "الذراع"],
         ["الصومالية", "الصومالية"],
         ["المصادرة", "المصادرة"],
+        ["الماشي", "الماشي"],
         ["المنافرة", "المنافرة"],
         ["القيدودة", "القيدودة"],
         ["الرئة", "الرئة"],
@@ -3377,7 +3476,6 @@
         ["خردلا", "خردلا"],
         ["شكرانا", "شكرانا"],
         ["إحمادا", "إحمادا"],
-        ["لبا", "لبا"],
         ["ترقيما", "ترقيما"],
         ["اجتهادا", "أجتهادا"],
         ["تخديشا", "تخديشا"],
@@ -3618,7 +3716,6 @@
         ["فواكه", "فواكه"],
         ["جلابيات", "جلابيات"],
         ["حوافر", "حوافر"],
-        ["مواعز", "مواعز"],
         ["قواعد", "قواعد"],
         ["طريفات", "طريفات"],
         ["نوريات", "نوريات"],
@@ -3674,6 +3771,7 @@
         ["المشهود", "المشهود"],
         ["الرفيعة", "الرفيعة"],
         ["الخفيض", "الخفيض"],
+        ["الفانية", "الفانية"],
         ["الفرحان", "الفرحان"],
         ["الشجيعة", "الشجيعة"],
         ["المتفوقة", "المتفوقة"],
@@ -3735,7 +3833,6 @@
         ["سريعا", "سريعا"],
         ["مستحيلة", "مستحيلة"],
         ["نقدية", "نقدية"],
-        ["متربيا", "متربيا"],
         ["المربكين", "المربكين"],
         ["أضيقان", "أضيقان"],
         ["الاقتصاديتين", "الأقتصاديتين"],
@@ -3789,7 +3886,6 @@
         ["خارجيات", "خارجيات"],
         ["فلسطينيون", "فلسطينيون"],
         ["جاذبات", "جاذبات"],
-        ["المساويات", "المساويات"],
         ["الفارغات", "الفارغات"],
         ["مكلفات", "مكلفات"],
         ["المستثنيات", "المستثنيات"],
@@ -4239,6 +4335,7 @@
         ["حوققنا", "حوققنا"],
         ["نودينا", "نودينا"],
         ["صفين", "صفين"],
+        ["تضوئون", "تضوئون"],
         ["يوقنون", "يوقنون"],
         ["تؤتم", "تؤتم"],
         ["تؤضن", "تؤضن"],
@@ -4251,13 +4348,14 @@
         ["سائل", "سائل"],
         ["مملوء", "مملوء"],
         ["محيى", "محيى"],
+        ["دراية", "دراية"],
         ["اتساخ", "أتساخ"],
+        ["وسوسة", "وسوسة"],
         ["زحير", "زحير"],
         ["استئمان", "أستئمان"],
         ["صغو", "صغو"],
         ["استحمام", "أستحمام"],
-        ["القاضي", "القاضي"],
-        ["الماشي", "الماشي"],
+        ["لبا", "لبا"],
         ["ذا", "ذا"],
         ["ذي", "ذي"],
         ["كامرتان", "كأمرتان"],
@@ -4309,6 +4407,7 @@
         ["قيما", "قيما"],
         ["أصحاب", "أصحاب"],
         ["نماذج", "نماذج"],
+        ["مواعز", "مواعز"],
         ["أسسا", "أسسا"],
         ["رخصا", "رخصا"],
         ["زلازل", "زلازل"],
@@ -4324,16 +4423,17 @@
         ["ضبابا", "ضبابا"],
         ["مزامير", "مزامير"],
         ["أيورا", "أيورا"],
-        ["الفانية", "الفانية"],
         ["الجفى", "الجفى"],
         ["المتوفاة", "المتوفاة"],
         ["جرداء", "جرداء"],
         ["دكناء", "دكناء"],
         ["صماء", "صماء"],
         ["طرشاء", "طرشاء"],
+        ["متربيا", "متربيا"],
         ["الشفيين", "الشفيين"],
         ["قصويين", "قصويين"],
         ["شقر", "شقر"],
+        ["المساويات", "المساويات"],
         ["الأشداء", "الأشداء"],
         ["الجذبيات", "الجذبيات"],
         ["الشذاذ", "الشذاذ"],
@@ -5120,7 +5220,6 @@
         ["تطفأن", "تطفأن"],
         ["نجهز", "نجهز"],
         ["تنامين", "تنامين"],
-        ["تضوئون", "تضوئون"],
         ["تنتهون", "تنتهون"],
         ["ألغي", "ألغي"],
         ["أمحو", "أمحو"],
@@ -5513,12 +5612,10 @@
         ["إطعام", "إطعام"],
         ["تنسية", "تنسية"],
         ["انصراف", "إنصراف"],
-        ["دراية", "دراية"],
         ["اشتهار", "إشتهار"],
         ["افتعال", "إفتعال"],
         ["استعراب", "إستعراب"],
         ["استخدام", "إستخدام"],
-        ["وسوسة", "وسوسة"],
         ["اعتمال", "إعتمال"],
         ["مشاهرة", "مشاهرة"],
         ["ازدهار", "إزدهار"],
@@ -5622,6 +5719,7 @@
         ["الاخرنماس", "الإخرنماس"],
         ["التثنية", "التثنية"],
         ["الإحساس", "الإحساس"],
+        ["القاضي", "القاضي"],
         ["المميل", "المميل"],
         ["الاغتلام", "الإغتلام"],
         ["الجامعة", "الجامعة"],
@@ -5644,6 +5742,7 @@
         ["الذراع", "الذراع"],
         ["الصومالية", "الصومالية"],
         ["المصادرة", "المصادرة"],
+        ["الماشي", "الماشي"],
         ["المنافرة", "المنافرة"],
         ["القيدودة", "القيدودة"],
         ["الرئة", "الرئة"],
@@ -5683,7 +5782,6 @@
         ["خردلا", "خردلا"],
         ["شكرانا", "شكرانا"],
         ["إحمادا", "إحمادا"],
-        ["لبا", "لبا"],
         ["ترقيما", "ترقيما"],
         ["اجتهادا", "إجتهادا"],
         ["تخديشا", "تخديشا"],
@@ -5924,7 +6022,6 @@
         ["فواكه", "فواكه"],
         ["جلابيات", "جلابيات"],
         ["حوافر", "حوافر"],
-        ["مواعز", "مواعز"],
         ["قواعد", "قواعد"],
         ["طريفات", "طريفات"],
         ["نوريات", "نوريات"],
@@ -5980,6 +6077,7 @@
         ["المشهود", "المشهود"],
         ["الرفيعة", "الرفيعة"],
         ["الخفيض", "الخفيض"],
+        ["الفانية", "الفانية"],
         ["الفرحان", "الفرحان"],
         ["الشجيعة", "الشجيعة"],
         ["المتفوقة", "المتفوقة"],
@@ -6041,7 +6139,6 @@
         ["سريعا", "سريعا"],
         ["مستحيلة", "مستحيلة"],
         ["نقدية", "نقدية"],
-        ["متربيا", "متربيا"],
         ["المربكين", "المربكين"],
         ["أضيقان", "أضيقان"],
         ["الاقتصاديتين", "الإقتصاديتين"],
@@ -6095,7 +6192,6 @@
         ["خارجيات", "خارجيات"],
         ["فلسطينيون", "فلسطينيون"],
         ["جاذبات", "جاذبات"],
-        ["المساويات", "المساويات"],
         ["الفارغات", "الفارغات"],
         ["مكلفات", "مكلفات"],
         ["المستثنيات", "المستثنيات"],
@@ -6545,6 +6641,7 @@
         ["حوققنا", "حوققنا"],
         ["نودينا", "نودينا"],
         ["صفين", "صفين"],
+        ["تضوئون", "تضوئون"],
         ["يوقنون", "يوقنون"],
         ["تؤتم", "تؤتم"],
         ["تؤضن", "تؤضن"],
@@ -6557,13 +6654,14 @@
         ["سائل", "سائل"],
         ["مملوء", "مملوء"],
         ["محيى", "محيى"],
+        ["دراية", "دراية"],
         ["اتساخ", "إتساخ"],
+        ["وسوسة", "وسوسة"],
         ["زحير", "زحير"],
         ["استئمان", "إستئمان"],
         ["صغو", "صغو"],
         ["استحمام", "إستحمام"],
-        ["القاضي", "القاضي"],
-        ["الماشي", "الماشي"],
+        ["لبا", "لبا"],
         ["ذا", "ذا"],
         ["ذي", "ذي"],
         ["كامرتان", "كإمرتان"],
@@ -6615,6 +6713,7 @@
         ["قيما", "قيما"],
         ["أصحاب", "أصحاب"],
         ["نماذج", "نماذج"],
+        ["مواعز", "مواعز"],
         ["أسسا", "أسسا"],
         ["رخصا", "رخصا"],
         ["زلازل", "زلازل"],
@@ -6630,16 +6729,17 @@
         ["ضبابا", "ضبابا"],
         ["مزامير", "مزامير"],
         ["أيورا", "أيورا"],
-        ["الفانية", "الفانية"],
         ["الجفى", "الجفى"],
         ["المتوفاة", "المتوفاة"],
         ["جرداء", "جرداء"],
         ["دكناء", "دكناء"],
         ["صماء", "صماء"],
         ["طرشاء", "طرشاء"],
+        ["متربيا", "متربيا"],
         ["الشفيين", "الشفيين"],
         ["قصويين", "قصويين"],
         ["شقر", "شقر"],
+        ["المساويات", "المساويات"],
         ["الأشداء", "الأشداء"],
         ["الجذبيات", "الجذبيات"],
         ["الشذاذ", "الشذاذ"],
@@ -7426,7 +7526,6 @@
         ["تطفأن", "تطفأن"],
         ["نجهز", "نجهز"],
         ["تنامين", "تنامين"],
-        ["تضوئون", "تضوئون"],
         ["تنتهون", "تنتهون"],
         ["ألغي", "ألغي"],
         ["أمحو", "أمحو"],
@@ -7819,12 +7918,10 @@
         ["إطعام", "إطعام"],
         ["تنسية", "تنسية"],
         ["انصراف", "آنصراف"],
-        ["دراية", "دراية"],
         ["اشتهار", "آشتهار"],
         ["افتعال", "آفتعال"],
         ["استعراب", "آستعراب"],
         ["استخدام", "آستخدام"],
-        ["وسوسة", "وسوسة"],
         ["اعتمال", "آعتمال"],
         ["مشاهرة", "مشاهرة"],
         ["ازدهار", "آزدهار"],
@@ -7928,6 +8025,7 @@
         ["الاخرنماس", "الآخرنماس"],
         ["التثنية", "التثنية"],
         ["الإحساس", "الإحساس"],
+        ["القاضي", "القاضي"],
         ["المميل", "المميل"],
         ["الاغتلام", "الآغتلام"],
         ["الجامعة", "الجامعة"],
@@ -7950,6 +8048,7 @@
         ["الذراع", "الذراع"],
         ["الصومالية", "الصومالية"],
         ["المصادرة", "المصادرة"],
+        ["الماشي", "الماشي"],
         ["المنافرة", "المنافرة"],
         ["القيدودة", "القيدودة"],
         ["الرئة", "الرئة"],
@@ -7989,7 +8088,6 @@
         ["خردلا", "خردلا"],
         ["شكرانا", "شكرانا"],
         ["إحمادا", "إحمادا"],
-        ["لبا", "لبا"],
         ["ترقيما", "ترقيما"],
         ["اجتهادا", "آجتهادا"],
         ["تخديشا", "تخديشا"],
@@ -8230,7 +8328,6 @@
         ["فواكه", "فواكه"],
         ["جلابيات", "جلابيات"],
         ["حوافر", "حوافر"],
-        ["مواعز", "مواعز"],
         ["قواعد", "قواعد"],
         ["طريفات", "طريفات"],
         ["نوريات", "نوريات"],
@@ -8286,6 +8383,7 @@
         ["المشهود", "المشهود"],
         ["الرفيعة", "الرفيعة"],
         ["الخفيض", "الخفيض"],
+        ["الفانية", "الفانية"],
         ["الفرحان", "الفرحان"],
         ["الشجيعة", "الشجيعة"],
         ["المتفوقة", "المتفوقة"],
@@ -8347,7 +8445,6 @@
         ["سريعا", "سريعا"],
         ["مستحيلة", "مستحيلة"],
         ["نقدية", "نقدية"],
-        ["متربيا", "متربيا"],
         ["المربكين", "المربكين"],
         ["أضيقان", "أضيقان"],
         ["الاقتصاديتين", "الآقتصاديتين"],
@@ -8401,7 +8498,6 @@
         ["خارجيات", "خارجيات"],
         ["فلسطينيون", "فلسطينيون"],
         ["جاذبات", "جاذبات"],
-        ["المساويات", "المساويات"],
         ["الفارغات", "الفارغات"],
         ["مكلفات", "مكلفات"],
         ["المستثنيات", "المستثنيات"],
@@ -8851,6 +8947,7 @@
         ["حوققنا", "حوققنا"],
         ["نودينا", "نودينا"],
         ["صفين", "صفين"],
+        ["تضوئون", "تضوئون"],
         ["يوقنون", "يوقنون"],
         ["تؤتم", "تؤتم"],
         ["تؤضن", "تؤضن"],
@@ -8863,13 +8960,14 @@
         ["سائل", "سائل"],
         ["مملوء", "مملوء"],
         ["محيى", "محيى"],
+        ["دراية", "دراية"],
         ["اتساخ", "آتساخ"],
+        ["وسوسة", "وسوسة"],
         ["زحير", "زحير"],
         ["استئمان", "آستئمان"],
         ["صغو", "صغو"],
         ["استحمام", "آستحمام"],
-        ["القاضي", "القاضي"],
-        ["الماشي", "الماشي"],
+        ["لبا", "لبا"],
         ["ذا", "ذا"],
         ["ذي", "ذي"],
         ["كامرتان", "كآمرتان"],
@@ -8921,6 +9019,7 @@
         ["قيما", "قيما"],
         ["أصحاب", "أصحاب"],
         ["نماذج", "نماذج"],
+        ["مواعز", "مواعز"],
         ["أسسا", "أسسا"],
         ["رخصا", "رخصا"],
         ["زلازل", "زلازل"],
@@ -8936,16 +9035,17 @@
         ["ضبابا", "ضبابا"],
         ["مزامير", "مزامير"],
         ["أيورا", "أيورا"],
-        ["الفانية", "الفانية"],
         ["الجفى", "الجفى"],
         ["المتوفاة", "المتوفاة"],
         ["جرداء", "جرداء"],
         ["دكناء", "دكناء"],
         ["صماء", "صماء"],
         ["طرشاء", "طرشاء"],
+        ["متربيا", "متربيا"],
         ["الشفيين", "الشفيين"],
         ["قصويين", "قصويين"],
         ["شقر", "شقر"],
+        ["المساويات", "المساويات"],
         ["الأشداء", "الأشداء"],
         ["الجذبيات", "الجذبيات"],
         ["الشذاذ", "الشذاذ"],

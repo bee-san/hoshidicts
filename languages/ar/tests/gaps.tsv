@@ -9,6 +9,7 @@ verb perfect passive	1	سوويت	ساوى	v	*
 verb perfect passive	1	حوققنا	حاق	v	*
 verb perfect passive	1	نودينا	نادى	v	*
 verb perfect passive	1	صفين	صفا	v	*
+verb imperfect indicative active	1	تضوئون	ضاء	v	*
 verb imperfect indicative active	1	يوقنون	أيقن	v	*
 verb imperfect indicative passive	1	تؤتم	ائتم	v	*
 verb imperfect indicative passive	1	تؤضن	آض	v	*
@@ -21,13 +22,14 @@ verb participle	1	مسئم	أسأم	v	*
 verb participle	1	سائل	سأل	v	*
 verb participle	1	مملوء	ملأ	v	*
 verb participle	1	محيى	حيا	v	*
+verbal noun	1	دراية	درى	v	*
 verbal noun	1	اتساخ	اتسخ	v	*
+verbal noun	1	وسوسة	وسوس	v	*
 verbal noun	1	زحير	زحر	v	*
 verbal noun	1	استئمان	استأمن	v	*
 verbal noun	1	صغو	صغا	v	*
 verbal noun	1	استحمام	استحم	v	*
-noun singular definite	1	القاضي	قاض	n	*
-noun singular definite	1	الماشي	ماش	n	*
+noun singular indefinite	1	لبا	لب	n	*
 noun singular construct	1	ذا	ذو	n	*
 noun singular construct	1	ذي	ذو	n	*
 noun dual	1	كامرتان	كامرا	n	*
@@ -80,6 +82,7 @@ noun plural indefinite	1	أناجر	أنجر	n	*
 noun plural indefinite	1	قيما	قيمة	n	*
 noun plural indefinite	1	أصحاب	صاحب	n	*
 noun plural indefinite	1	نماذج	نموذج	n	*
+noun plural indefinite	1	مواعز	معزة	n	*
 noun plural indefinite	1	أسسا	أساس	n	*
 noun plural indefinite	1	رخصا	رخصة	n	*
 noun plural indefinite	1	زلازل	زلزال	n	*
@@ -95,16 +98,17 @@ noun plural indefinite	1	حمقا	حمقاء	n	*
 noun plural indefinite	1	ضبابا	ضب	n	*
 noun plural indefinite	1	مزامير	مزمار	n	*
 noun plural indefinite	1	أيورا	أير	n	*
-adjective singular definite	1	الفانية	فان	*	*
 adjective singular definite	1	الجفى	أجف	*	*
 adjective singular definite	1	المتوفاة	متوفى	*	*
 adjective singular indefinite	1	جرداء	أجرد	*	*
 adjective singular indefinite	1	دكناء	أدكن	*	*
 adjective singular indefinite	1	صماء	أصم	*	*
 adjective singular indefinite	1	طرشاء	أطرش	*	*
+adjective singular indefinite	1	متربيا	مترب	*	*
 adjective dual	1	الشفيين	أشف	*	*
 adjective dual	1	قصويين	أقصى	*	*
 adjective plural	1	شقر	أشقر	*	*
+adjective plural	1	المساويات	مساو	*	*
 adjective plural	1	الأشداء	شديد	*	*
 adjective plural	1	الجذبيات	أجذب	*	*
 adjective plural	1	الشذاذ	شاذ	*	*

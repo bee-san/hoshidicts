@@ -37,6 +37,7 @@ const conditions = {
     cv: {name: 'Command Verb (no affixes)', isDictionaryForm: true},
     n: {name: 'Noun', isDictionaryForm: true},
     vf: {name: 'Verb form with its person affixes', isDictionaryForm: false},
+    nd: {name: 'Noun after the article or a noun ending', isDictionaryForm: false},
 };
 
 // Letters that can be a root consonant, for the rules that name one.
@@ -45,9 +46,18 @@ const STEM = '{base}';
 
 const V_IN = ['vf'];
 const V_OUT = ['v'];
-// Noun endings also follow الـ, whose output is a noun; construct endings,
-// the pronouns and the accusative ـًا never do.
-const N_IN = ['n'];
+// Noun endings also follow الـ, which gives nd beside n; construct endings,
+// the pronouns and the accusative ـًا never do. A broken plural gives n
+// alone, so no sound-plural ending is read after it (والهناء is not a plural
+// of a plural).
+const N_IN = ['nd'];
+// A stem that starts with a proclitic letter (و ف ب ك ل) needs three letters
+// for an ending with nothing in its place: وبين is و + بين, not a dual of وب,
+// and لكان is لـ + كان, not a dual of لك.
+const SHORT = (inflected, deinflected, options = {}) => [
+    suffix(inflected, deinflected, {...options, min: 3, extra: {...(options.extra ?? {}), stemStartsWith: '[وفبكل]'}}),
+    suffix(inflected, deinflected, {...options, min: 2, extra: {...(options.extra ?? {}), stemNotStartsWith: '[وفبكل]'}}),
+];
 const NOT_AL = {stemNotStartsWithText: 'ال'};
 
 function suffix(inflected, deinflected, {min = 2, out = [], into = [], extra = {}} = {}) {
@@ -113,7 +123,7 @@ transform('al', 'الـ (the)', 'The definite article الـ (al-, "the"): ال�
     // A noun: a pronoun or the accusative ـًا never follows الـ, so those
     // rules do not take its output. Definite adjectives and names are found
     // through the dictionary's own rows for them (الكبيرة, القاهرة).
-    prefix('ال', '', {out: ['n']}),
+    prefix('ال', '', {out: ['n', 'nd']}),
 ]);
 transform('sa', 'سـ (will)', 'The future prefix سَ (sa-, "will") before a present-tense verb: سيكتب is سـ + يكتب, سأذهب is سـ + أذهب.', [
     prefix('س', '', {min: 3, out: ['v', 'vf'], extra: {stemStartsWith: '[يتنأآ]'}}),
@@ -177,53 +187,76 @@ for (const [id, name, p, gloss, example] of PRONOUNS) {
 }
 
 // --------------------------------------------------------- nouns and adjectives
+// The endings give a noun: wiktionary-to-yomitan tags nouns (n) and leaves
+// adjectives untagged, but lists nearly every inflected adjective as a form-of
+// row (كبيرة, الكبيرات), which the text as written reaches. A noun ending
+// gives no verb either: سيكون is not a dual or plural of سيك read as a verb.
+// The five nouns أب, أخ, حم, ذو and فو write their case before a pronoun or
+// a following word: أبوه, أباه, أبيه; أخوك, أخاك, أخيك. Spelled out, with
+// the proclitics before them, so that one step reaches the noun (وأبوه).
+{
+    const nouns = [['أب', 'أب'], ['أخ', 'أخ'], ['حم', 'حم']];
+    const clitics = ['', 'و', 'ف', 'ب', 'ل', 'ك', 'وب', 'ول', 'فب', 'فل'];
+    const pronouns = ['', 'ه', 'ها', 'هما', 'هم', 'هن', 'ك', 'كما', 'كم', 'كن', 'نا'];
+    transform('fiveNouns', 'أبو, أخو (five nouns)', 'The nouns أب (father), أخ (brother) and حم (father-in-law) write their case as a long vowel before a pronoun or the word they belong to: أبوه, أباه, أبيه (his father); أخوك, أخاك, أخيك (your brother); أبو بكر. With و, ف, بـ, لـ and كـ before them: وأبوه, لأخيه. Their dual keeps the و: أبوان (parents), أخوين.', [
+        cross(clitics.flatMap((c) => nouns.map(([i, d]) => [c + i, d])), ['و', 'ا', 'ي'].flatMap((v) => pronouns.map((pr) => [v + pr, ''])), {min: 0, into: N_IN, out: ['n'], extra: {stemCharacters: '[]'}}),
+        // The dual: أبوان (parents), أخوين; after الـ too (الأخوان).
+        cross(nouns, ['وان', 'وين', 'وا', 'وي'].map((e) => [e, '']), {min: 0, into: N_IN, out: ['n'], extra: {stemCharacters: '[]'}}),
+    ]);
+}
 transform('feminine', 'feminine (ـة)', 'The feminine ending ـة of an adjective or a noun for a person: كبيرة is كبير + ـة, عربية is عربي + ـة, الكبيرة is الكبير + ـة.', [
-    // Only on the word as written and after the proclitics, dual and plural
-    // endings: a noun before a pronoun (مدرسته) keeps its ة.
-    suffix('ة', ''),
-    suffix('ئة', 'ء'),
-    {type: 'circumfix', inflectedPrefix: 'ال', deinflectedPrefix: 'ال', inflectedSuffix: 'ة', deinflectedSuffix: '', conditionsIn: [], conditionsOut: [], stemMinLength: 2, stemCharacters: STEM},
+    // On the word as written, after الـ and after the dual and plural endings
+    // (كبيرتان, الكبيرة); a noun before a pronoun (مدرسته) keeps its ة.
+    suffix('ة', '', {into: N_IN, out: ['n', 'nd']}),
+    suffix('ئة', 'ء', {into: N_IN, out: ['n', 'nd']}),
+    {type: 'circumfix', inflectedPrefix: 'ال', deinflectedPrefix: 'ال', inflectedSuffix: 'ة', deinflectedSuffix: '', conditionsIn: [], conditionsOut: ['n', 'nd'], stemMinLength: 2, stemCharacters: STEM},
+]);
+transform('defectiveNoun', 'noun in ـٍ (ي)', 'A noun or adjective of the pattern فاعٍ (قاضٍ, ماشٍ, صافٍ, ثانٍ) writes its ي back after الـ and before an ending: القاضي, الماشي, صافيان, صافية, ماشيين.', [
+    // Only after الـ or an ending (a word written with a final ي is read as
+    // the pronoun ي), and only in the pattern فاعٍ, spelled out letter by
+    // letter: the ي of a relative adjective (العربي, المصري) is not removed.
+    cross(RADICALS.map((c) => [c + 'ا', c + 'ا']), RADICALS.map((c) => [c + 'ي', c]), {min: 0, into: N_IN, out: ['n'], extra: {stemCharacters: '[]'}}),
 ]);
 transform('accusative', 'accusative (ـًا)', 'The indefinite accusative ending ـًا, written with an alif: كتابًا (كتابا), شكرًا, شيئًا (شيئا, from شيء). Words that end in ة, ى or ا take no alif.', [
-    suffix('ا', '', {extra: {...NOT_AL, stemNotEndsWith: '[اةى]'}}),
-    suffix('ئا', 'ء', {extra: NOT_AL}),
+    ...SHORT('ا', '', {out: ['n', 'nd'], extra: {...NOT_AL, stemNotEndsWith: '[اةى]'}}),
+    suffix('ئا', 'ء', {out: ['n', 'nd'], extra: NOT_AL}),
 ]);
 transform('dual', 'dual (ـان)', 'The dual ending ـان (nominative), and ـتا of a word in ة before the word it belongs to: كتابان is two of كتاب, مدرستان and مدرستا of مدرسة, مستشفيان of مستشفى, عصوان of عصا, صحراوان of صحراء.', [
-    suffix('ان', '', {into: N_IN}),
-    suffix('تان', 'ة', {into: N_IN}),
-    suffix('يان', 'ى', {into: N_IN}),
-    suffix('وان', 'ا', {into: N_IN}),
-    suffix('اوان', 'اء', {into: N_IN}),
-    suffix('آن', 'أ', {into: N_IN}),
-    suffix('ئان', 'ء', {into: N_IN}),
-    suffix('آن', 'ء', {into: N_IN}),
-    suffix('تا', 'ة', {extra: NOT_AL}),
+    ...SHORT('ان', '', {out: ['n', 'nd'], into: N_IN}),
+    suffix('تان', 'ة', {out: ['n', 'nd'], into: N_IN}),
+    suffix('يان', 'ى', {out: ['n', 'nd'], into: N_IN}),
+    suffix('وان', 'ا', {out: ['n', 'nd'], into: N_IN}),
+    suffix('اوان', 'اء', {out: ['n', 'nd'], into: N_IN}),
+    suffix('آن', 'أ', {out: ['n', 'nd'], into: N_IN}),
+    suffix('ئان', 'ء', {out: ['n', 'nd'], into: N_IN}),
+    suffix('آن', 'ء', {out: ['n', 'nd'], into: N_IN}),
+    suffix('تا', 'ة', {out: ['n', 'nd'], extra: NOT_AL}),
 ]);
 transform('oblique', 'dual or plural (ـين)', 'The ending ـين, the dual (ـَيْن) or the masculine plural (ـِين) after a preposition or as an object: كتابين is two of كتاب, معلمين is معلم in the plural, مدرستين is two of مدرسة, عربيين is عربي in the dual or plural.', [
-    suffix('ين', '', {into: N_IN}),
-    suffix('تين', 'ة', {into: N_IN}),
-    suffix('يين', 'ى', {into: N_IN}),
-    suffix('وين', 'ا', {into: N_IN}),
-    suffix('اوين', 'اء', {into: N_IN}),
-    suffix('ئين', 'ء', {into: N_IN}),
-    suffix('أين', 'ء', {into: N_IN}),
-    suffix('أين', 'أ', {into: N_IN}),
+    ...SHORT('ين', '', {out: ['n', 'nd'], into: N_IN}),
+    suffix('تين', 'ة', {out: ['n', 'nd'], into: N_IN}),
+    suffix('يين', 'ى', {out: ['n', 'nd'], into: N_IN}),
+    suffix('وين', 'ا', {out: ['n', 'nd'], into: N_IN}),
+    suffix('اوين', 'اء', {out: ['n', 'nd'], into: N_IN}),
+    suffix('ئين', 'ء', {out: ['n', 'nd'], into: N_IN}),
+    suffix('أين', 'ء', {out: ['n', 'nd'], into: N_IN}),
+    suffix('أين', 'أ', {out: ['n', 'nd'], into: N_IN}),
 ]);
 transform('pluralMasc', 'plural (ـون)', 'The masculine sound plural ending ـون (nominative): معلمون is معلم in the plural.', [
-    suffix('ون', '', {into: N_IN}),
-    suffix('ئون', 'ء', {into: N_IN}),
+    ...SHORT('ون', '', {out: ['n', 'nd'], into: N_IN}),
+    suffix('ئون', 'ء', {out: ['n', 'nd'], into: N_IN}),
 ]);
 transform('construct', 'construct (ـو)', 'The ending ـو of a masculine plural before the word it belongs to (معلمو المدرسة, "the school\'s teachers"), and of أبو and أخو.', [
     suffix('و', '', {out: ['n'], extra: NOT_AL}),
 ]);
 transform('pluralFem', 'plural (ـات)', 'The feminine sound plural ending ـات: معلمات is معلمة in the plural, سيارات of سيارة, امتحانات of امتحان, مستشفيات of مستشفى, سنوات of سنة, سماوات of سماء, منشآت of منشأة.', [
-    suffix('ات', 'ة', {into: N_IN}),
-    suffix('ات', '', {into: N_IN}),
-    suffix('يات', 'ى', {into: N_IN}),
-    suffix('وات', 'ة', {into: N_IN}),
-    suffix('اوات', 'اء', {into: N_IN}),
-    suffix('آت', 'أة', {into: N_IN}),
-    suffix('ئات', 'ء', {into: N_IN}),
+    suffix('ات', 'ة', {out: ['n', 'nd'], into: N_IN}),
+    ...SHORT('ات', '', {out: ['n', 'nd'], into: N_IN}),
+    suffix('يات', 'ى', {out: ['n', 'nd'], into: N_IN}),
+    suffix('وات', 'ة', {out: ['n', 'nd'], into: N_IN}),
+    suffix('اوات', 'اء', {out: ['n', 'nd'], into: N_IN}),
+    suffix('آت', 'أة', {out: ['n', 'nd'], into: N_IN}),
+    suffix('ئات', 'ء', {out: ['n', 'nd'], into: N_IN}),
 ]);
 // The comparative's feminine فُعلى (كبرى) and plural أفاعل (أكابر) are not
 // rules: written as a cross product of first letters, their output (أكبر)
@@ -291,7 +324,9 @@ function pastRules(ending, {defectiveA = [], defectiveY = [], defectiveI = [], h
     for (const [i, d, m = 1] of hamza) { rules.push(suffix(i, d, {min: m, into: V_IN, out: V_OUT})); }
     if (consonant) {
         // Hollow with a final hamza: أضأت -> أضاء, استأت -> استاء.
-        rules.push(suffix('أ' + ending, 'اء', {min: 1, into: V_IN, out: V_OUT}));
+        // Form I spells these ئ or ؤ (شئت, بؤت), so the stem has two letters:
+        // بأن is بـ + أن, not باء, and شأن is a noun.
+        rules.push(suffix('أ' + ending, 'اء', {min: 2, into: V_IN, out: V_OUT}));
         // Hollow: the ا of the dictionary form returns before the last consonant.
         rules.push(suffixes(RADICALS.map((c) => [c + ending, 'ا' + c]), {min: 1, into: V_IN, out: V_OUT}));
         // Doubled: both consonants are written.
@@ -363,6 +398,7 @@ const PASSIVE_ENDINGS = [['', 'he'], ['ت', 'she'], ['تا', 'they f. two'], ['�
     // Defective: رمي -> رمى, دعي -> دعا, أعطي -> أعطى; دعيت -> دعا.
     rules.push(suffix('ي', 'ى', {into: V_IN, out: V_OUT}), suffix('ي', 'ا', {into: V_IN, out: V_OUT}));
     rules.push(suffix('يت', 'ا', {into: V_IN, out: V_OUT}), suffix('يا', 'ا', {into: V_IN, out: V_OUT}));
+    rules.push(suffix('يتا', 'ى', {into: V_IN, out: V_OUT}), suffix('يتا', 'ا', {into: V_IN, out: V_OUT}));
     // Form III and VI: كوتب -> كاتب, تقوبل -> تقابل.
     const formThree = [];
     for (const c of RADICALS) { formThree.push([c + 'و', c + 'ا'], ['ت' + c + 'و', 'ت' + c + 'ا']); }
@@ -440,11 +476,11 @@ for (const [id, name, p, gloss, example] of [
 }
 const BOTH = [...PRESENT['ي'], ...PRESENT['ت']];
 transform('presentTheyTwo', 'present (they two)', 'The present tense ending يـان "they (two) do": يكتبان; يقولان (قال), يدعوان (دعا), يرميان (رمى), ينسيان (نسي), يقرآن (قرأ).', [
-    ...presentRules(PRESENT['ي'], 'ان', {defective: [['وان', 'ا'], ['يان', 'ى'], ['يان', 'ي']], hamza: [['آن', 'أ'], ['يئان', 'اء']]}),
+    ...presentRules(PRESENT['ي'], 'ان', {defective: [['وان', 'ا'], ['يان', 'ى'], ['يان', 'ي'], ['يان', 'ا']], hamza: [['آن', 'أ'], ['يئان', 'اء']]}),
     ...seeRules(PRESENT['ي'], ['ريان']),
 ]);
 transform('presentYouTwo', 'present (you two, they f. two)', 'The present tense ending تـان "you (two) do, they (two women) do": تكتبان; تقولان (قال), تدعوان (دعا), ترميان (رمى).', [
-    ...presentRules(PRESENT['ت'], 'ان', {defective: [['وان', 'ا'], ['يان', 'ى'], ['يان', 'ي']], hamza: [['آن', 'أ'], ['يئان', 'اء']]}),
+    ...presentRules(PRESENT['ت'], 'ان', {defective: [['وان', 'ا'], ['يان', 'ى'], ['يان', 'ي'], ['يان', 'ا']], hamza: [['آن', 'أ'], ['يئان', 'اء']]}),
     ...seeRules(PRESENT['ت'], ['ريان']),
 ]);
 for (const [id, name, p, gloss, example] of [
@@ -461,7 +497,7 @@ for (const [id, name, p, gloss, example] of [
     ['presentYouFPl', 'present (you f. pl.)', 'ت', 'you (women) do', 'تكتبن'],
 ]) {
     transform(id, name, `The present tense ending ${p}ـن "${gloss}": ${example}; يقلن (قال), يمددن (مد), يدعون (دعا), يرمين (رمى), ينسين (نسي), يرين (رأى).`, [
-        ...presentRules(PRESENT[p], 'ن', {defective: [['ون', 'ا'], ['ين', 'ى'], ['ين', 'ي']], hamza: [['ئن', 'اء']], hollow: false, short: true}),
+        ...presentRules(PRESENT[p], 'ن', {defective: [['ون', 'ا'], ['ين', 'ى'], ['ين', 'ي'], ['ين', 'ا']], hamza: [['ئن', 'اء']], hollow: false, short: true}),
         ...seeRules(PRESENT[p], ['رين']),
     ]);
 }
@@ -470,11 +506,11 @@ transform('presentYouF', 'present (you f.)', 'The present tense ending تـين 
     ...seeRules(PRESENT['ت'], ['رين']),
 ]);
 transform('subjunctiveTheyTwo', 'subjunctive (they two)', 'The subjunctive and jussive ending يـا "they (two)": لن يكتبا; يقولا (قال), يدعوا (دعا), يرميا (رمى), يقرآ (قرأ).', [
-    ...presentRules(PRESENT['ي'], 'ا', {defective: [['وا', 'ا'], ['يا', 'ى'], ['يا', 'ي']], hamza: [['آ', 'أ']]}),
+    ...presentRules(PRESENT['ي'], 'ا', {defective: [['وا', 'ا'], ['يا', 'ى'], ['يا', 'ي'], ['يا', 'ا']], hamza: [['آ', 'أ']]}),
     ...seeRules(PRESENT['ي'], ['ريا']),
 ]);
 transform('subjunctiveYouTwo', 'subjunctive (you two, they f. two)', 'The subjunctive and jussive ending تـا "you (two), they (two women)": لن تكتبا; تقولا (قال), تدعوا (دعا), ترميا (رمى).', [
-    ...presentRules(PRESENT['ت'], 'ا', {defective: [['وا', 'ا'], ['يا', 'ى'], ['يا', 'ي']], hamza: [['آ', 'أ']]}),
+    ...presentRules(PRESENT['ت'], 'ا', {defective: [['وا', 'ا'], ['يا', 'ى'], ['يا', 'ي'], ['يا', 'ا']], hamza: [['آ', 'أ']]}),
     ...seeRules(PRESENT['ت'], ['ريا']),
 ]);
 for (const [id, name, p, gloss, example] of [
@@ -562,8 +598,9 @@ transform('imperativeYouFPl', 'imperative (you f. pl.)', 'The imperative "do!" t
     // II تفعيل, تفعية: تكليم -> كلم, تسمية -> سمى.
     rules.push(cross([['ت', '']], RADICALS.map((c) => ['ي' + c, c]), {into: N_IN}));
     rules.push(cross([['ت', '']], [['ية', 'ى']], {into: N_IN}));
-    // III مفاعلة: مساعدة -> ساعد.
-    rules.push(cross([['م', '']], [['ة', '']], {min: 3, into: []}));
+    // III مفاعلة: مساعدة -> ساعد; of a verb in ى: مباراة -> بارى, ملاقاة -> لاقى.
+    rules.push(cross([['م', '']], [['ة', '']], {min: 3, into: N_IN}));
+    rules.push(cross([['م', '']], [['اة', 'ى']], {min: 3, into: N_IN}));
     // IV إفعال, إفالة, إفعاء: إكرام -> أكرم, إقامة -> أقام, إعطاء -> أعطى.
     rules.push(cross([['إ', 'أ']], RADICALS.map((c) => ['ا' + c, c]), {into: N_IN}));
     rules.push(cross([['إ', 'أ']], RADICALS.map((c) => ['ا' + c + 'ة', 'ا' + c]), {min: 1, into: []}));

@@ -368,7 +368,6 @@ verb imperfect indicative active	1	يخضاران	اخضار	v	*
 verb imperfect indicative active	1	تطفأن	طفأ	v	*
 verb imperfect indicative active	1	نجهز	جهز	v	*
 verb imperfect indicative active	1	تنامين	نام	v	*
-verb imperfect indicative active	1	تضوئون	ضاء	v	*
 verb imperfect indicative active	1	تنتهون	انتهى	v	*
 verb imperfect indicative active	1	ألغي	ألغى	v	*
 verb imperfect indicative active	1	أمحو	محا	v	*
@@ -761,12 +760,10 @@ verbal noun	1	اشتراك	اشترك	v	*
 verbal noun	1	إطعام	أطعم	v	*
 verbal noun	1	تنسية	نسى	v	*
 verbal noun	1	انصراف	انصرف	v	*
-verbal noun	1	دراية	درى	v	*
 verbal noun	1	اشتهار	اشتهر	v	*
 verbal noun	1	افتعال	افتعل	v	*
 verbal noun	1	استعراب	استعرب	v	*
 verbal noun	1	استخدام	استخدم	v	*
-verbal noun	1	وسوسة	وسوس	v	*
 verbal noun	1	اعتمال	اعتمل	v	*
 verbal noun	1	مشاهرة	شاهر	v	*
 verbal noun	1	ازدهار	ازدهر	v	*
@@ -870,6 +867,7 @@ noun singular definite	1	الضجاع	ضجاع	n	*
 noun singular definite	1	الاخرنماس	اخرنماس	n	*
 noun singular definite	1	التثنية	تثنية	n	*
 noun singular definite	1	الإحساس	إحساس	n	*
+noun singular definite	1	القاضي	قاض	n	*
 noun singular definite	1	المميل	مميل	n	*
 noun singular definite	1	الاغتلام	اغتلام	n	*
 noun singular definite	1	الجامعة	جامعة	n	*
@@ -892,6 +890,7 @@ noun singular definite	1	البوسة	بوسة	n	*
 noun singular definite	1	الذراع	ذراع	n	*
 noun singular definite	1	الصومالية	صومالية	n	*
 noun singular definite	1	المصادرة	مصادرة	n	*
+noun singular definite	1	الماشي	ماش	n	*
 noun singular definite	1	المنافرة	منافرة	n	*
 noun singular definite	1	القيدودة	قيدودة	n	*
 noun singular definite	1	الرئة	رئة	n	*
@@ -931,7 +930,6 @@ noun singular indefinite	1	استحماما	استحمام	n	*
 noun singular indefinite	1	خردلا	خردل	n	*
 noun singular indefinite	1	شكرانا	شكران	n	*
 noun singular indefinite	1	إحمادا	إحماد	n	*
-noun singular indefinite	1	لبا	لب	n	*
 noun singular indefinite	1	ترقيما	ترقيم	n	*
 noun singular indefinite	1	اجتهادا	اجتهاد	n	*
 noun singular indefinite	1	تخديشا	تخديش	n	*
@@ -1172,7 +1170,6 @@ noun plural indefinite	1	مدونات	مدونة	n	*
 noun plural indefinite	1	فواكه	فاكهة	n	*
 noun plural indefinite	1	جلابيات	جلابية	n	*
 noun plural indefinite	1	حوافر	حافر	n	*
-noun plural indefinite	1	مواعز	معزة	n	*
 noun plural indefinite	1	قواعد	قاعدة	n	*
 noun plural indefinite	1	طريفات	طريفة	n	*
 noun plural indefinite	1	نوريات	نورية	n	*
@@ -1228,6 +1225,7 @@ adjective singular definite	1	الغليظة	غليظ	*	*
 adjective singular definite	1	المشهود	مشهود	*	*
 adjective singular definite	1	الرفيعة	رفيع	*	*
 adjective singular definite	1	الخفيض	خفيض	*	*
+adjective singular definite	1	الفانية	فان	*	*
 adjective singular definite	1	الفرحان	فرحان	*	*
 adjective singular definite	1	الشجيعة	شجيع	*	*
 adjective singular definite	1	المتفوقة	متفوق	*	*
@@ -1289,7 +1287,6 @@ adjective singular indefinite	1	مشهودا	مشهود	*	*
 adjective singular indefinite	1	سريعا	سريع	*	*
 adjective singular indefinite	1	مستحيلة	مستحيل	*	*
 adjective singular indefinite	1	نقدية	نقدي	*	*
-adjective singular indefinite	1	متربيا	مترب	*	*
 adjective dual	1	المربكين	مربك	*	*
 adjective dual	1	أضيقان	أضيق	*	*
 adjective dual	1	الاقتصاديتين	اقتصادي	*	*
@@ -1343,7 +1340,6 @@ adjective plural	1	متأكدون	متأكد	*	*
 adjective plural	1	خارجيات	خارجي	*	*
 adjective plural	1	فلسطينيون	فلسطيني	*	*
 adjective plural	1	جاذبات	جاذب	*	*
-adjective plural	1	المساويات	مساو	*	*
 adjective plural	1	الفارغات	فارغ	*	*
 adjective plural	1	مكلفات	مكلف	*	*
 adjective plural	1	المستثنيات	مستثنى	*	*
