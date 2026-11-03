@@ -15,13 +15,21 @@
 # phrases: every word of the sentences that follows a preposition, a
 #   particle, a conjunction, a pronoun or a form of бути, looked up from
 #   that word with the rest of the sentence; reported together and by kind.
-# A lookup's first result is judged by the hovered word's own rows in the
-# dictionary: right when it is the word itself (a headword with
-# definitions), a lemma one of the word's form-of rows names, or a lemma the
-# rows of that lemma name in turn (вмію → вміти → уміти, секундочку →
-# секундочка → секунда: the named form is itself only a reference); wrong
-# when the word has rows and the result is none of these; unknown when the
-# dictionary has no row for the word (README: a hand-judged sample). A
+# A lookup's first result is judged against the lemma the hovered word
+# means. A word labelled in sources/homographs.tsv (the frequent words whose
+# rows name two or more lemmas) means the lemmas its label lists. Otherwise
+# the candidates are the word itself when it is a headword with
+# definitions, each lemma one of the word's form-of rows names, and the
+# lemma the rows of that lemma name in turn (вмію → вміти → уміти,
+# секундочку → секундочка → секунда: the named form is itself only a
+# reference). When the rows name two or more lemmas, only the one most
+# frequent in the frequency list (--frequencies, the list itself for
+# words) counts, with the word itself (a frequency proxy for the lemma the
+# word means; README: a hand-judged sample). Right when the result is a
+# lemma the word means; wrong when the word has rows and the result is
+# not; unknown when the dictionary has no row for the word. The summary
+# line counts the judged lookups by what judged them (byLabel, byProxy,
+# byRows) and the wrong ones the same way. A
 # comparative in -ше is also the adverb's comparative (міцніше: міцно),
 # which wty-uk-en lists only as the adjective's neuter (міцніший), so the
 # adverb is right when its adjective is (міцн-о, міцн-ий). A first result
@@ -34,6 +42,8 @@
 # pronouns' rows in wty-uk-en name every personal pronoun (мене → я, ми,
 # він, ...), so for them the lemma is taken from PRONOUNS below.
 # --languages runs another copy of the pack (a rule set to compare).
+# --frequencies <file> gives the frequency list for the proxy in text and
+# phrases mode.
 
 import collections, glob, json, os, re, subprocess, sys, unicodedata
 
@@ -64,6 +74,19 @@ FUNCTION_GROUPS = {
     'бути': ['буду', 'будеш', 'буде', 'будемо', 'будете', 'будуть', 'був', 'була', 'було', 'були'],
 }
 FUNCTION = {w: group for group, words in FUNCTION_GROUPS.items() for w in words}
+LABELS = {}
+for line in open(os.path.join(HERE, 'homographs.tsv'), encoding='utf-8'):
+    if line.strip() and not line.startswith('#'):
+        word, label = line.rstrip('\n').split('\t')
+        LABELS[word] = set(label.split(','))
+FREQUENCIES = {}
+
+
+def load_frequencies(path):
+    for line in open(path, encoding='utf-8'):
+        parts = line.split()
+        if len(parts) == 2:
+            FREQUENCIES.setdefault(parts[0], int(parts[1]))
 
 
 def norm(text):
@@ -103,30 +126,51 @@ def lookups(texts, languages, dictionary):
     return [json.loads(line) for line in proc.stdout.splitlines()]
 
 
-def judge(word, answer, lemmas, targets):
-    """(verdict, first result) for one hovered word."""
-    results = answer['results']
-    if not results:
-        return 'none', None
-    first = results[0]
-    if len(norm(first['matched'])) > len(norm(word)):
-        return 'phrase', first
-    right = set()
+def meant(word, lemmas, targets):
+    """(the lemmas the hovered word means, what decided them)."""
     for w in keys(word):
-        right |= PRONOUN_LEMMAS.get(w, set())
-        if not PRONOUN_LEMMAS.get(w):
-            named = set(targets.get(w, ()))
-            right |= named | {t for n in named for t in targets.get(n, ())}
+        if w.lower() in LABELS:
+            return LABELS[w.lower()], 'label'
+    right, how = set(), 'rows'
+    for w in keys(word):
+        if PRONOUN_LEMMAS.get(w):
+            right |= PRONOUN_LEMMAS[w]
+            continue
+        # One group per lemma a row names, with the lemmas a reference-only
+        # form leads to (вміти → уміти).
+        groups = [{n} | ({t for t in targets.get(n, ())} if n not in lemmas else set()) for n in sorted(targets.get(w, ()))]
+        groups = [g for g in groups if g & lemmas] or groups
+        distinct = {frozenset(g & lemmas) or frozenset(g) for g in groups}
+        if len(distinct) > 1 and FREQUENCIES:
+            score = lambda g: max(FREQUENCIES.get(x, 0) for x in g)
+            best = max(score(g) for g in groups)
+            if best > 0:
+                groups = [g for g in groups if score(g) == best]
+                how = 'proxy'
+        for g in groups:
+            right |= g | {t for n in g for t in targets.get(n, ())}
         if w in lemmas:
             right.add(w)
+    return right, how
+
+
+def judge(word, answer, lemmas, targets):
+    """(verdict, first result, what judged it) for one hovered word."""
+    results = answer['results']
+    if not results:
+        return 'none', None, None
+    first = results[0]
+    if len(norm(first['matched'])) > len(norm(word)):
+        return 'phrase', first, None
+    right, how = meant(word, lemmas, targets)
     if not right:
-        return 'unknown', first
+        return 'unknown', first, None
     expression = norm(first['expression'])
     if expression in right:
-        return 'right', first
+        return 'right', first, how
     if expression.endswith('о') and norm(word).lower().endswith(('ше', 'ще', 'че')) and any(expression[:-1] + e in right for e in ('ий', 'ій')):
-        return 'right', first
-    return 'wrong', first
+        return 'right', first, how
+    return 'wrong', first, how
 
 
 def reached(words, languages, lemmas, targets):
@@ -167,12 +211,16 @@ def report(name, items, lemmas, targets, weights=None, show=25):
     phrases = collections.Counter()
     examples = collections.defaultdict(list)
     for i, (word, answer) in enumerate(items):
-        verdict, first = judge(word, answer, lemmas, targets)
+        verdict, first, how = judge(word, answer, lemmas, targets)
         weight = weights[i] if weights else 1
         if VERDICTS is not None:
-            VERDICTS.write(f"{word}\t{verdict}\t{first['expression'] if first else ''}\t{blame(first) if first else ''}\t{weight}\n")
+            VERDICTS.write(f"{word}\t{verdict}\t{first['expression'] if first else ''}\t{blame(first) if first else ''}\t{weight}\t{how or ''}\n")
         verdicts[verdict] += 1
         weighted[verdict] += weight
+        if how:
+            verdicts['by' + how.capitalize()] += 1
+            if verdict == 'wrong':
+                verdicts['wrongBy' + how.capitalize()] += 1
         if verdict in ('right', 'wrong') and blame(first) != '(dictionary only)':
             verdicts[verdict + 'ByRules'] += 1
             weighted[verdict + 'ByRules'] += weight
@@ -187,7 +235,8 @@ def report(name, items, lemmas, targets, weights=None, show=25):
             if len(examples[key]) < 6:
                 examples[key].append(f"{first['matched']}→{first['expression']}")
     total = sum(verdicts[k] for k in ('right', 'wrong', 'unknown', 'phrase', 'none'))
-    out = {'set': name, 'lookups': total, **{k: verdicts[k] for k in ('right', 'wrong', 'unknown', 'phrase', 'none', 'rightByRules', 'wrongByRules')}}
+    out = {'set': name, 'lookups': total, **{k: verdicts[k] for k in ('right', 'wrong', 'unknown', 'phrase', 'none', 'rightByRules', 'wrongByRules',
+                                                              'byLabel', 'wrongByLabel', 'byProxy', 'wrongByProxy', 'byRows', 'wrongByRows')}}
     if weights:
         tokens = sum(weights)
         out['wrongTokenShare'] = weighted['wrong'] / tokens
@@ -223,9 +272,14 @@ def main():
         i = args.index('--verdicts')
         VERDICTS = open(args[i + 1], 'w', encoding='utf-8')
         del args[i:i + 2]
+    if '--frequencies' in args:
+        i = args.index('--frequencies')
+        load_frequencies(args[i + 1])
+        del args[i:i + 2]
     mode, json_dir, dictionary, *files = args
     lemmas, targets = load_rows(json_dir)
     if mode == 'words':
+        load_frequencies(files[0])
         words, counts = [], []
         for line in open(files[0], encoding='utf-8'):
             parts = line.split()

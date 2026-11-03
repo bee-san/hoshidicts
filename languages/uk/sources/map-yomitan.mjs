@@ -167,5 +167,13 @@ function compact(rules) {
 }
 for (const transform of port.transforms) { transform.rules = compact(transform.rules); }
 
-writeFileSync(file, formatTransforms(port));
+// The affix pairs of a cross product are written without spaces
+// (["зі","га"]), which keeps sources/ and tests/ under 1 MB
+// (docs/languages.md, section 3); everything else is formatted as
+// tools/lib/json.mjs formats pack files.
+function compactPairs(text) {
+    return text.replace(/("(?:prefixes|suffixes)": )(\[\[.*?\]\])(?=[,}])/gu,
+        (_, key, pairs) => key + pairs.replaceAll('", "', '","').replaceAll('], [', '],['));
+}
+writeFileSync(file, compactPairs(formatTransforms(port)));
 console.error(`${file}: mapped ${mapped} todo rules`);

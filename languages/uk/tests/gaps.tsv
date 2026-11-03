@@ -4,6 +4,8 @@
 # https://kaikki.org/dictionary/Ukrainian/, dump of 2026-10-01, sha256 2b8074025c192314), CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/), by the Wiktionary contributors. Stress marks removed.
 # 1000 rows sampled with seed 1 by sources/build-corpus.mjs (170 verb, present or future, 80 verb, past, 60 verb, imperative, 70 verb, participle or infinitive, 90 reflexive verb, 170 noun, singular, 170 noun, plural, 160 adjective, 15 adjective, comparative or superlative, 15 numeral or determiner); the rows the pack's rules reach are in corpus.tsv, the others in gaps.tsv.
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+valid readings blocked	1	бряжчу	бряжчати	v	*
+valid readings blocked	1	єрі	єрь	n	*
 v:imp,2,sg	1	клепли	клепати	v	*
 v:pass,pst	1	забито	впісятись	v	*
 n:dat,sg	1	мерцеві	мрець	n	*

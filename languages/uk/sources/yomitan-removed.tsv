@@ -2,9 +2,9 @@
 # reason: breaks (a negative), fc (more than three false candidates per row recovered), fc only (false candidates, nothing recovered).
 # transform	inflected	deinflected	rule	recovers	falseCandidates	breaks	reason
 accusative	ю	ій	min 2; in  out adj	2	16	0	fc, round 1
-active participle	ачий	ати	in adj out v	0	323	0	fc only, round 1
+active participle	ачий	ати	in adj out v	0	323	1	breaks, round 1
 active participle	лий	ти	in adj out v	7	246	2	breaks, round 1
-adverbial participle	ачись	атися	in  out v	0	2	0	fc only, round 1
+adverbial participle	ачись	атися	in  out v	0	2	1	breaks, round 1
 adverbial participle	ачися	атися	in  out v	0	2	0	fc only, round 1
 adverbial participle	жачи	гти	in  out v	0	2	0	fc only, round 1
 comparative	ш	ше	min 2; in  out adv	0	2	0	fc only, round 1
@@ -44,10 +44,10 @@ genitive	ів	я	min 1; in  out n	28	11	1	breaks, round 1
 imperative	ви	ти	in  out v	0	16	0	fc only, round 1
 imperative	віть	ти	in  out v	0	2	0	fc only, round 1
 imperative	ж	зати	min 2; in  out v	0	2	0	fc only, round 1
-imperative	и	ати	min 2; in  out v	11	225	0	fc, round 1
+imperative	и	ати	min 2; in  out v	11	225	1	breaks, round 1
 imperative	и	ти	min 2; in  out v	9	40	0	fc, round 2
 imperative	й	ти	min 2; in  out v	5	4	4	breaks, round 1
-imperative	те	ити	in  out v	0	13	0	fc only, round 1
+imperative	те	ити	in  out v	0	13	1	breaks, round 1
 imperative	ім	ати	in  out v	11	91	2	breaks, round 1
 imperative	імо	ати	in  out v	11	66	0	fc, round 1
 imperative	іть	ати	in  out v	11	73	1	breaks, round 1
@@ -90,14 +90,14 @@ present	имо	ати	in  out v	2	71	0	fc, round 1
 present	имо	ити	in  out v	0	1	0	fc only, round 1
 present	имось	атися	in  out v	0	5	0	fc only, round 1
 present	имося	атися	in  out v	0	5	0	fc only, round 1
-present	ите	ати	in  out v	2	74	1	breaks, round 1
+present	ите	ати	in  out v	2	74	2	breaks, round 1
 present	итесь	атися	in  out v	0	5	0	fc only, round 1
 present	итеся	атися	in  out v	0	5	0	fc only, round 1
-present	ить	ати	in  out v	2	79	0	fc, round 1
+present	ить	ати	in  out v	2	79	1	breaks, round 1
 present	ить	ити	in  out v	9	5	1	breaks, round 1
 present	ить	іти	in  out v	0	4	0	fc only, round 1
 present	иться	атися	in  out v	0	9	0	fc only, round 1
-present	иш	ати	in  out v	2	75	0	fc, round 1
+present	иш	ати	in  out v	2	75	1	breaks, round 1
 present	иш	іти	in  out v	0	1	1	breaks, round 1
 present	ишся	атися	in  out v	0	7	0	fc only, round 1
 present	не	ати	in  out v	2	95	0	fc, round 1
@@ -151,7 +151,7 @@ substantivised neuter	іншим	інше	in  out adj	0	1	0	fc only, round 1
 substantivised neuter	іншого	інше	in  out adj	0	1	0	fc only, round 1
 substantivised neuter	іншому	інше	in  out adj	0	1	0	fc only, round 1
 substantivised neuter	іншім	інше	in  out adj	0	1	0	fc only, round 1
-superlative	най		in adj out adj	1	200	1	breaks, round 1
-superlative	най		in adv out adv	0	16	0	fc only, round 1
+superlative	най		in adj out adj	1	200	2	breaks, round 1
+superlative	най		in adv out adv	0	16	1	breaks, round 1
 truncated stem	а	ати	min 2; in  out v	2	100	0	fc, round 1
 verbal noun	ття	ти	in  out v	0	1	0	fc only, round 1

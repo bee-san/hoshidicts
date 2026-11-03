@@ -960,14 +960,18 @@ for (const [ending, id] of [['ю', 'prs1sg'], ['їш', 'prs2sg'], ['їть', 'pr
     verb(id, ending, 'їти', {stemEndsWith: '[еоа]', stemMinLength: 2}, 'std', ending === 'ю' ? 'клею → клеїти' : undefined);
 }
 // Second conjugation -ати after ж, ч, щ (лежати, кричати, пищати). No verb
-// of the class ends its stem in ш, and ч after ж is a comparative adjective
-// (дорожчим, дорожчу), so the consonant is written in the ending and ч
-// excludes a ж before it.
+// of the class ends its stem in ш, so the consonant is written in the
+// ending. -жчу, -жчим and -жчім are also forms of comparative adjectives
+// (дорожчу, дорожчим, дорожчім), so those three endings exclude a ж before
+// ч; the others reach the few verbs in -жчати (бряжчить, дзижчать), which
+// no adjective form spells.
+const COMPARATIVE_ENDINGS = new Set(['у', 'им', 'ім']);
 for (const x of ['ж', 'ч', 'щ']) {
-    const opt = {stemMinLength: 1, ...(x === 'ч' ? {stemNotEndsWith: '[ж]'} : {})};
+    const opt = {stemMinLength: 1};
     for (const [ending, id] of [['у', 'prs1sg'], ['иш', 'prs2sg'], ['ить', 'prs3sg'], ['имо', 'prs1pl'], ['им', 'prs1pl'], ['ите', 'prs2pl'], ['ать', 'prs3pl'],
         ['и', 'imp2sg'], ['імо', 'imp1pl'], ['ім', 'imp1pl'], ['іть', 'imp2pl']]) {
-        verb(id, x + ending, x + 'ати', opt, ending === 'им' || ending === 'ім' ? 'cons' : 'std', x === 'ж' && ending === 'у' ? 'лежу → лежати' : undefined);
+        const own = x === 'ч' && COMPARATIVE_ENDINGS.has(ending) ? {...opt, stemNotEndsWith: '[ж]'} : opt;
+        verb(id, x + ending, x + 'ати', own, ending === 'им' || ending === 'ім' ? 'cons' : 'std', x === 'ж' && ending === 'у' ? 'лежу → лежати' : undefined);
     }
     verb('advPrs', x + 'ачи', x + 'ати', opt, 'adv');
     suffix('v.ptcpAct', x + 'ачий', x + 'ати', ['adj'], ['v'], opt);
@@ -1005,6 +1009,54 @@ for (const consonant of 'бвжлмнпрчшщ') {
 for (const consonant of 'лнтдзсц') {
     verb('imp2pl', consonant + 'ьте', consonant + 'ити', {}, 'std', consonant === 'л' ? 'дозвольте → дозволити' : undefined);
     verb('imp1pl', consonant + 'ьмо', consonant + 'ити', {}, 'std');
+}
+
+// ---------------------------------------------------------------------------
+// Frequent homographs. When a word is a form of two lemmas, the rules reach
+// both with one step, and the dictionary names both, the lookup puts first
+// the term it found first (docs/languages.md 9.6). A whole-word rule is found
+// before every suffix rule, so these words get the lemma a reader usually
+// means first: року is рік before рок, голові голова before гол, погані
+// поганий before погань. The words are those of sources/homographs.tsv
+// (frequent words whose rows name two or more lemmas) whose first result was
+// another lemma; the other lemma stays in the list, one place lower.
+const HOMOGRAPHS = {
+    'noun.gen.sg+dat.sg+loc.sg+voc.sg': [['року', 'рік'], ['приводу', 'привід'], ['нападу', 'напад'], ['туалету', 'туалет'], ['пилу', 'пил'],
+        ['сміху', 'сміх']],
+    'noun.ins.sg': [['роком', 'рік']],
+    'noun.gen.sg+nom.pl': [['правила', 'правило'], ['пекла', 'пекло'], ['мети', 'мета'], ['крила', 'крило'], ['діла', 'діло'], ['стріли', 'стріла']],
+    'noun.dat.sg+loc.sg': [['голові', 'голова']],
+    'noun.gen.sg+dat.sg+voc.sg': [['чаю', 'чай'], ['краю', 'край']],
+    'noun.acc.sg': [['душу', 'душа'], ['перерву', 'перерва']],
+    'noun.gen.pl': [['прав', 'право'], ['миль', 'миля'], ['ліків', 'ліки']],
+    'noun.loc.sg+nom.pl': [['німці', 'німець'], ['американці', 'американець']],
+    'noun.dat.sg+acc.sg': [['волю', 'воля'], ['статтю', 'стаття']],
+    'noun.loc.sg': [['залі', 'зал'], ['селі', 'село'], ['туалеті', 'туалет'], ['роті', 'рот']],
+    'noun.loc.pl': [['ролях', 'роль']],
+    'noun.nom.pl': [['напади', 'напад'], ['трупи', 'труп']],
+    'noun.dat.pl': [['копам', 'коп']],
+    'noun.dat.sg+loc.sg+voc.sg': [['колу', 'коло']],
+    'adj.pl': [['готові', 'готовий'], ['погані', 'поганий'], ['різні', 'різний'], ['раді', 'радий'], ['добрі', 'добрий'], ['чудові', 'чудовий'],
+        ['праві', 'правий'], ['білі', 'білий'], ['військові', 'військовий'], ['божевільні', 'божевільний'], ['дорослі', 'дорослий'],
+        ['хворі', 'хворий'], ['золоті', 'золотий'], ['зелені', 'зелений'], ['повні', 'повний'], ['сірі', 'сірий'], ['голі', 'голий'],
+        ['сині', 'синій'], ['теплі', 'теплий'], ['грубі', 'грубий'], ['здорові', 'здоровий']],
+    'adj.n': [['погане', 'поганий'], ['ціле', 'цілий'], ['повне', 'повний'], ['біле', 'білий'], ['дурне', 'дурний']],
+    'adj.acc.f': [['добру', 'добрий'], ['білу', 'білий']],
+    'v.imp2sg': [['говори', 'говорити'], ['поговори', 'поговорити'], ['ходи', 'ходити'], ['лови', 'ловити']],
+    'v.pstM': [['стався', 'статися'], ['встав', 'встати'], ['розумів', 'розуміти']],
+    // од is the older form of від (Kotsiubynsky writes it 430 times), and
+    // the genitive plural of ода.
+    'alt.od': [['од', 'від']],
+};
+transform('alt.od', 'older form (од)', 'The older and dialect form од of the preposition від: од хати (від хати).');
+for (const [id, pairs] of Object.entries(HOMOGRAPHS)) {
+    for (const [form, lemma] of pairs) {
+        if (id.startsWith('noun.')) {
+            noun(form, lemma, id.slice('noun.'.length).split('+'), {whole: true}, `${form} → ${lemma}`);
+        } else {
+            whole(id, form, lemma, [], id.startsWith('adj.') ? ADJ_OUT : id.startsWith('v.') ? ['v'] : []);
+        }
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -1091,7 +1143,15 @@ for (const id of order) {
     }
     out.transforms.push({id: t.id, name: t.name, description, source: 'own', rules: compact(t.rules)});
 }
-writeFileSync(outFile, formatTransforms(out));
+// The affix pairs of a cross product are written without spaces
+// (["зі","га"]), which keeps sources/ and tests/ under 1 MB
+// (docs/languages.md, section 3); everything else is formatted as
+// tools/lib/json.mjs formats pack files.
+function compactPairs(text) {
+    return text.replace(/("(?:prefixes|suffixes)": )(\[\[.*?\]\])(?=[,}])/gu,
+        (_, key, pairs) => key + pairs.replaceAll('", "', '","').replaceAll('], [', '],['));
+}
+writeFileSync(outFile, compactPairs(formatTransforms(out)));
 const expanded = (rule) => (rule.type === 'circumfix' && rule.suffixes ? rule.prefixes.length * rule.suffixes.length : 1);
 const ruleCount = out.transforms.reduce((n, t) => n + t.rules.reduce((m, r) => m + expanded(r), 0), 0);
 const lineCount = out.transforms.reduce((n, t) => n + t.rules.length, 0);

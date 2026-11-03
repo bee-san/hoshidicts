@@ -1,6 +1,6 @@
 # Hand-written for this pack (GPL-3.0-or-later): tricky forms, phrases and negatives (words that must not reach a wrong lemma).
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
-alternation	1	стола	стіл	n	*
+alternation	1	стола	стіл	n	noun.gen.sg
 alternation	1	кота	кіт	n	*
 alternation	1	ножем	ніж	n	*
 alternation	1	вечора	вечір	n	*
@@ -9,7 +9,7 @@ alternation	1	коней	кінь	n	*
 alternation	1	льоду	лід	n	*
 alternation	1	ночі	ніч	n	*
 alternation	1	печі	піч	n	*
-alternation	1	солі	сіль	n	*
+alternation	1	солі	сіль	n	noun.gen.sg+dat.sg+loc.sg+nom.pl
 alternation	1	осені	осінь	n	*
 alternation	1	радості	радість	n	*
 alternation	1	ніг	нога	n	*
@@ -21,7 +21,7 @@ alternation	1	сліз	сльоза	n	*
 alternation	1	бою	бій	n	*
 alternation	1	покою	покій	n	*
 alternation	1	році	рік	n	*
-mutation	1	нозі	нога	n	*
+mutation	1	нозі	нога	n	noun.dat.sg+loc.sg
 mutation	1	руці	рука	n	*
 mutation	1	книзі	книга	n	*
 mutation	1	мусі	муха	n	*
@@ -336,11 +336,11 @@ future	1	нестиму	нести	v	*
 reflexive	1	сміюся	сміятися	v	*
 reflexive	1	сміюсь	сміятися	v	*
 reflexive	1	смієшся	сміятися	v	*
-reflexive	1	сміється	сміятися	v	*
+reflexive	1	сміється	сміятися	v	v.prs3sg
 reflexive	1	сміємося	сміятися	v	*
 reflexive	1	смієтесь	сміятися	v	*
 reflexive	1	сміються	сміятися	v	*
-reflexive	1	сміявся	сміятися	v	*
+reflexive	1	сміявся	сміятися	v	v.pstM
 reflexive	1	сміялася	сміятися	v	*
 reflexive	1	сміялись	сміятися	v	*
 reflexive	1	смійся	сміятися	v	*
@@ -563,7 +563,6 @@ constraint	0	не бегах	не бег	*	*
 constraint	0	дах	де	*	*
 constraint	0	лі	ля	*	*
 constraint	0	не сні	не снь	*	*
-constraint	0	єрі	єрь	*	*
 constraint	0	цю	ця	*	*
 constraint	0	ям	я	*	*
 constraint	0	на шалям	на шаля	*	*
@@ -646,7 +645,6 @@ constraint	0	живім	живати	*	*
 constraint	0	важчім	важчати	*	*
 constraint	0	на корте	на корити	*	*
 constraint	0	живіте	живати	*	*
-constraint	0	бряжчіть	бряжчати	*	*
 constraint	0	на кишачи	на кишити	*	*
 constraint	0	маючи	мавати	*	*
 constraint	0	на каравши	на карасти	*	*
@@ -684,3 +682,58 @@ constraint	0	живу	живати	*	*
 constraint	0	лиш	літи	*	*
 constraint	0	рено	рити	*	*
 constraint	0	лише	лио	*	*
+# Rows for the constraints a deletion left untested (sources/mutate.py --suggest): readings a deletion removes, and readings it adds.
+alternation	1	ковшеві	ківш	n	*
+alternation	1	льодові	лід	n	*
+alternation	1	столам	стіл	n	*
+alternation	1	котам	кіт	n	*
+alternation	1	льодами	лід	n	*
+alternation	1	льодах	лід	n	*
+alternation	1	вертольота	вертоліт	n	*
+alternation	1	кольорові	колір	n	*
+constraint	0	пся	псій	n	*
+constraint	0	ллє	ллій	n	*
+constraint	0	роді	родій	n	*
+constraint	0	всього	всій	n	*
+constraint	0	яої	яий	n	*
+constraint	0	більої	білій	n	*
+constraint	0	чому	чий	n	*
+constraint	0	усьому	усій	n	*
+constraint	0	вій	вий	n	*
+constraint	0	чим	чий	n	*
+constraint	0	бою	бий	n	*
+constraint	0	кім	кий	n	*
+constraint	0	них	ний	n	*
+constraint	0	всіх	всій	n	*
+constraint	0	ними	ний	n	*
+constraint	0	псіми	псій	n	*
+constraint	0	тім	тій	n	*
+constraint	0	крім	крій	n	*
+constraint	0	найще	сокий	*	*
+constraint	0	найна бший	на бгий	*	*
+constraint	0	найбше	бо	*	*
+constraint	0	найна бше	на бго	*	*
+constraint	0	глась	гнутися	*	*
+constraint	0	бте	бити	*	*
+constraint	0	дячи	діти	*	*
+constraint	0	гши	гнути	*	*
+# Rows whose reasons name an own transform: they pass only while that own rule reaches the form, where a Yomitan rule
+# also reaches it (docs/languages.md 12.2), so deleting the own rule's stem change or constraint fails them.
+alternation	1	коте	кіт	n	noun.voc.sg
+alternation	1	двору	двір	n	noun.gen.sg+dat.sg+loc.sg+voc.sg
+alternation	1	вечорі	вечір	n	noun.loc.sg+nom.pl
+alternation	1	болю	біль	n	noun.gen.sg+dat.sg+voc.sg
+vowel class	1	клеїв	клеїти	v	v.pstM
+second conjugation	1	бряжчить	бряжчати	v	v.prs3sg
+homographs	1	од	від	*	alt.od
+constraint	0	шоу	шоа	*	noun.acc.sg
+constraint	0	шоу	шо	*	noun.gen.sg+dat.sg+loc.sg+voc.sg
+constraint	0	шоу	шоо	*	noun.dat.sg+loc.sg+voc.sg
+constraint	0	куцьою	куцій	*	adj.ins.f
+constraint	0	бвши	бти	*	v.advPst
+constraint	0	тиму	ти	*	v.fut1sg
+constraint	0	тимеш	ти	*	v.fut2sg
+constraint	0	тиме	ти	*	v.fut3sg
+constraint	0	тимемо	ти	*	v.fut1pl
+constraint	0	тимете	ти	*	v.fut2pl
+constraint	0	тимуть	ти	*	v.fut3pl
