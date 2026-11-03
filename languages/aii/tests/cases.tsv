@@ -1,5 +1,6 @@
 # Source: written for this pack (GPL-3.0-or-later), from the grammar of the standard literary language; spellings checked
-# against the forms of Wiktionary's tables (wty-aii-en and kaikki.org, README.md). Every optional transform is on.
+# against the forms of Wiktionary's tables (wty-aii-en and kaikki.org, README.md). The constructed negatives at the end pin
+# each stem constraint (sources/mutations.py). Every optional transform is on.
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
 # --- past (Stem I, one step) ---
 past	1	ܦܬ݂ܝܼܚ ܠܝܼ	ܦܬܚ	*	past1s
@@ -259,3 +260,130 @@ weak root	0	ܚܙܝܵܐ	ܚܙܐܐ	*	*
 proclitic	0	ܒܸܬ	ܬ	*	*
 proclitic	0	ܒܸܦܬ݂ܵܚܵܐ	ܸܦܬ݂ܵܚܵܐ	*	*
 proclitic	0	ܘܐ	ܐ	*	*
+# --- negatives: each transform keeps its stem minimum and reads one word (constructed forms) ---
+stem minimum (l1s)	0	ܟ ܠܝ	ܟ	*	*
+one word (l1s)	0	ܗܢܐ ܦܬܚ ܠܝ	ܗܢܐ ܦܬܚ	*	*
+stem minimum (l2ms)	0	ܟ ܠܘܟ	ܟ	*	*
+one word (l2ms)	0	ܗܢܐ ܦܬܚ ܠܘܟ	ܗܢܐ ܦܬܚ	*	*
+stem minimum (l2fs)	0	ܟ ܠܟܝ	ܟ	*	*
+one word (l2fs)	0	ܗܢܐ ܦܬܚ ܠܟܝ	ܗܢܐ ܦܬܚ	*	*
+stem minimum (l3s)	0	ܟ ܠܗ	ܟ	*	*
+one word (l3s)	0	ܗܢܐ ܦܬܚ ܠܗ	ܗܢܐ ܦܬܚ	*	*
+stem minimum (l1p)	0	ܟ ܠܢ	ܟ	*	*
+one word (l1p)	0	ܗܢܐ ܦܬܚ ܠܢ	ܗܢܐ ܦܬܚ	*	*
+stem minimum (l2p)	0	ܟ ܠܘܟܘܢ	ܟ	*	*
+one word (l2p)	0	ܗܢܐ ܦܬܚ ܠܘܟܘܢ	ܗܢܐ ܦܬܚ	*	*
+stem minimum (l3p)	0	ܟ ܠܗܘܢ	ܟ	*	*
+one word (l3p)	0	ܗܢܐ ܦܬܚ ܠܗܘܢ	ܗܢܐ ܦܬܚ	*	*
+stem minimum (past1s)	0	ܟܝܒ ܠܝ	ܟܒ	*	*
+one word (past1s)	0	ܗܢܐ ܦܬܚܝܒ ܠܝ	ܗܢܐ ܦܬܚܒ	*	*
+stem minimum (past2ms)	0	ܟܝܒ ܠܘܟ	ܟܒ	*	*
+one word (past2ms)	0	ܗܢܐ ܦܬܚܝܒ ܠܘܟ	ܗܢܐ ܦܬܚܒ	*	*
+stem minimum (past2fs)	0	ܟܝܒ ܠܟܝ	ܟܒ	*	*
+one word (past2fs)	0	ܗܢܐ ܦܬܚܝܒ ܠܟܝ	ܗܢܐ ܦܬܚܒ	*	*
+stem minimum (past3s)	0	ܟܝܒ ܠܗ	ܟܒ	*	*
+one word (past3s)	0	ܗܢܐ ܦܬܚܝܒ ܠܗ	ܗܢܐ ܦܬܚܒ	*	*
+stem minimum (past1p)	0	ܟܝܒ ܠܢ	ܟܒ	*	*
+one word (past1p)	0	ܗܢܐ ܦܬܚܝܒ ܠܢ	ܗܢܐ ܦܬܚܒ	*	*
+stem minimum (past2p)	0	ܟܝܒ ܠܘܟܘܢ	ܟܒ	*	*
+one word (past2p)	0	ܗܢܐ ܦܬܚܝܒ ܠܘܟܘܢ	ܗܢܐ ܦܬܚܒ	*	*
+stem minimum (past3p)	0	ܟܝܒ ܠܗܘܢ	ܟܒ	*	*
+one word (past3p)	0	ܗܢܐ ܦܬܚܝܒ ܠܗܘܢ	ܗܢܐ ܦܬܚܒ	*	*
+stem minimum (lJoined)	0	ܟܠܝ	ܟ	*	*
+one word (lJoined)	0	ܗܢܐ ܦܬܚܠܝ	ܗܢܐ ܦܬܚ	*	*
+stem minimum (pastBase)	0	ܟܝܒ	ܟܒ	*	*
+one word (pastBase)	0	ܗܢܐ ܦܬܚܝܒ	ܗܢܐ ܦܬܚܒ	*	*
+stem minimum (hollow)	0	ܝܒ	ܐܒ	*	*
+one word (hollow)	0	ܗܢܐ ܦܬܚܝܒ	ܗܢܐ ܦܬܚܐܒ	*	*
+one word (pastBaseM)	0	ܡܘܬܚ ܗܢܐ	ܡܬܚ ܗܢܐ	*	*
+stem minimum (pastBaseM)	0	ܡܘܟ	ܡܟ	*	*
+one word (pastBaseUrmia)	0	ܐܘܬܚܐ ܗܢܠܝ	ܡܐܬܚܐ ܗܢ	*	*
+stem minimum (pastBaseUrmia)	0	ܐܘܟܠܝ	ܡܐܟ	*	*
+one word (pastBaseMt)	0	ܗܢܐ ܦܬܚܘܒ	ܗܢܐ ܦܬܚܒ	*	*
+stem minimum (3fs)	0	ܟܬܐ	ܟܬ	*	*
+one word (3fs)	0	ܗܢܐ ܦܬܚܐ	ܗܢܐ ܦܬܚ	*	*
+stem minimum (3p)	0	ܟܬܝ	ܟܬ	*	*
+one word (3p)	0	ܗܢܐ ܦܬܚܝ	ܗܢܐ ܦܬܚ	*	*
+stem minimum (2ms)	0	ܟܬܬ	ܟܬ	*	*
+one word (2ms)	0	ܗܢܐ ܦܬܚܬ	ܗܢܐ ܦܬܚ	*	*
+stem minimum (2fs)	0	ܟܬܬܝ	ܟܬ	*	*
+one word (2fs)	0	ܗܢܐ ܦܬܚܬܝ	ܗܢܐ ܦܬܚ	*	*
+stem minimum (2p)	0	ܟܬܝܬܘܢ	ܟܬ	*	*
+one word (2p)	0	ܗܢܐ ܦܬܚܝܬܘܢ	ܗܢܐ ܦܬܚ	*	*
+stem minimum (1s)	0	ܟܬܢ	ܟܬ	*	*
+one word (1s)	0	ܗܢܐ ܦܬܚܢ	ܗܢܐ ܦܬܚ	*	*
+stem minimum (1p)	0	ܟܬܚ	ܟܬ	*	*
+one word (1p)	0	ܗܢܐ ܦܬܚܚ	ܗܢܐ ܦܬܚ	*	*
+stem minimum (passiveParticiple)	0	ܟܝܒܐ	ܟܒ	*	*
+one word (passiveParticiple)	0	ܗܢܐ ܦܬܚܝܒܐ	ܗܢܐ ܦܬܚܒ	*	*
+one word (passiveParticipleM)	0	ܡܘܬܚܐ ܗܢܐ	ܡܬܚܐ ܗܢ	*	*
+stem minimum (passiveParticipleM)	0	ܡܘܐ	ܡ	*	*
+stem minimum (imperative)	0	ܟܘܒ	ܟܒ	*	*
+one word (imperative)	0	ܗܢܐ ܦܬܚܘܒ	ܗܢܐ ܦܬܚܐܒ	*	*
+stem minimum (verbalNounM)	0	ܟܬܢܘܬܐ	ܟܬ	*	*
+one word (verbalNounM)	0	ܗܢܐ ܦܬܚܢܘܬܐ	ܗܢܐ ܦܬܚ	*	*
+stem minimum (infinitiveM)	0	ܟܬܘܒܐ	ܟܬܒ	*	*
+one word (infinitiveM)	0	ܗܢܐ ܦܬܚܘܒܐ	ܗܢܐ ܦܬܚܒ	*	*
+one word (gerund)	0	ܒܬܚܐ ܗܢܐ	ܬܚܐ ܗܢ	*	*
+stem minimum (gerund)	0	ܒܟܬܐ	ܟܬ	*	*
+stem minimum (wa)	0	ܟ ܗܘܐ	ܟ	*	*
+one word (wa)	0	ܗܢܐ ܦܬܚ ܗܘܐ	ܗܢܐ ܦܬܚ	*	*
+one word (poss1s)	0	ܗܢܐ ܦܬܚܝ	ܗܢܐ ܦܬܚܐ	*	*
+stem minimum (poss2ms)	0	ܟܘܟ	ܟܐ	*	*
+one word (poss2ms)	0	ܗܢܐ ܦܬܚܘܟ	ܗܢܐ ܦܬܚܐ	*	*
+stem minimum (poss2fs)	0	ܟܟܝ	ܟܐ	*	*
+one word (poss2fs)	0	ܗܢܐ ܦܬܚܟܝ	ܗܢܐ ܦܬܚܐ	*	*
+stem minimum (poss3s)	0	ܟܗ	ܟܐ	*	*
+one word (poss3s)	0	ܗܢܐ ܦܬܚܗ	ܗܢܐ ܦܬܚܐ	*	*
+stem minimum (poss1p)	0	ܟܢ	ܟܐ	*	*
+one word (poss1p)	0	ܗܢܐ ܦܬܚܢ	ܗܢܐ ܦܬܚܐ	*	*
+stem minimum (poss2p)	0	ܟܘܟܘܢ	ܟܐ	*	*
+one word (poss2p)	0	ܗܢܐ ܦܬܚܘܟܘܢ	ܗܢܐ ܦܬܚܐ	*	*
+stem minimum (poss3p)	0	ܟܗܘܢ	ܟܐ	*	*
+one word (poss3p)	0	ܗܢܐ ܦܬܚܗܘܢ	ܗܢܐ ܦܬܚܐ	*	*
+stem minimum (pluralAne)	0	ܟܢܐ	ܟܐ	*	*
+one word (pluralAne)	0	ܗܢܐ ܦܬܚܢܐ	ܗܢܐ ܦܬܚܐ	*	*
+stem minimum (pluralWata)	0	ܟܘܬܐ	ܟܐ	*	*
+one word (pluralWata)	0	ܗܢܐ ܦܬܚܘܬܐ	ܗܢܐ ܦܬܚܐ	*	*
+stem minimum (feminine)	0	ܟܬܐ	ܟܐ	*	*
+one word (feminine)	0	ܗܢܐ ܦܬܚܬܐ	ܗܢܐ ܦܬܚܐ	*	*
+stem minimum (pluralYata)	0	ܟܝܬܐ	ܟܬܐ	*	*
+one word (pluralYata)	0	ܗܢܐ ܦܬܚܝܬܐ	ܗܢܐ ܦܬܚܬܐ	*	*
+stem minimum (absolutePlural)	0	ܟܝܢ	ܟܐ	*	*
+one word (absolutePlural)	0	ܗܢܐ ܦܬܚܝܢ	ܗܢܐ ܦܬܚܐ	*	*
+stem minimum (construct)	0	ܟ	ܟܐ	*	*
+one word (construct)	0	ܗܢܐ ܦܬܚ	ܗܢܐ ܦܬܚܐ	*	*
+one word (possessiveC)	0	ܗܢܐ ܦܬܚܘܟ	ܗܢܐ ܦܬܚ	*	*
+stem minimum (pluralC)	0	ܟܬܒܬܐ	ܟܬܒ	*	*
+one word (pluralC)	0	ܗܢܐ ܦܬܚܬܐ	ܗܢܐ ܦܬܚ	*	*
+one word (imperativeII)	0	ܬܚܐ ܗܢ	ܡܬܚܐ ܗܢ	*	*
+stem minimum (imperativeII)	0	ܟܬ	ܡܟܬ	*	*
+# --- negatives: a proclitic's vowel stays with it ---
+proclitic vowel	0	ܘܲܪܕܵܐ	ܲܪܕܵܐ	*	*
+proclitic vowel	0	ܕܲܪܵܐ	ܲܪܵܐ	*	*
+proclitic vowel	0	ܠܲܝܠܵܐ	ܲܝܠܵܐ	*	*
+proclitic vowel	0	ܒܕܵܪܵܐ	ܵܪܵܐ	*	*
+proclitic minimum	0	ܠܵܐ	ܐ	*	*
+proclitic minimum	0	ܕܝ	ܝ	*	*
+proclitic minimum	0	ܒܕܐ	ܐ	*	*
+proclitic minimum	0	ܟܐܢ	ܐܢ	*	*
+# --- negatives: the stem shapes of verbs ---
+ܡܬ- verbs only	0	ܙܲܕܝܼܩܘܼܬ݂ܵܐ	ܙܕܝܩܬ	*	*
+Stems II and III only	0	ܗܲܝܡܵܢܘܼܬ݂ܵܐ	ܗܝܡ	*	*
+Stem III imperative length	0	ܐܲܡܪܝܼܟܵܐ	ܡܡܪܝܟܐ	*	*
+no -ā after -ā	0	ܟܲܠܒܵܐ	ܟܠܒܐܐ	*	*
+no Stem II imperative in -ā	0	ܟܲܠܒܵܐ	ܡܟܠܒܐ	*	*
+joined L-suffix after ܐ	0	ܚܙܐܠܗ	ܚܙܐܐ	*	*
+L-suffix after a verb only	0	ܟܲܠܒܹܗ ܠܹܗ	ܟܠܒܐ	*	*
+# --- negatives: the ܡ- verb shapes read one word, with their minimum stems ---
+one word (pastBaseMt)	0	ܡܬܚܙܐ ܟܬܘܒ	ܡܬܚܙܐ ܟܬܒ	*	*
+one word (verbalNounM)	0	ܡܢ ܟܬܒܢܘܬܐ	ܡܢ ܟܬܒ	*	*
+one word (verbalNounM)	0	ܟܘܬܚܐ ܗܢܐ	ܡܟܬܚܐ ܗܢ	*	*
+stem minimum (verbalNounM)	0	ܡܟܢܘܬܐ	ܡܟ	*	*
+stem minimum (verbalNounM)	0	ܟܘܟܐ	ܡܟܟ	*	*
+stem minimum (verbalNounM)	0	ܟܘܝܐ	ܡܟܐ	*	*
+one word (infinitiveM)	0	ܡܢ ܟܬܘܒܐ	ܡܢ ܟܬܒ	*	*
+stem minimum (poss1s)	0	ܢܝ	ܢܐ	*	*
+stem minimum (poss1s)	0	ܫܝ	ܫܐ	*	*
+stem minimum (possessiveC)	0	ܟܬܒܗܘܢ	ܟܬܒ	*	*
+stem minimum (possessiveC)	0	ܟܬܒܘܟܘܢ	ܟܬܒ	*	*

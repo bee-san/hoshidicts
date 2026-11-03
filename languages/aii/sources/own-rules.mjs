@@ -121,7 +121,9 @@ proclitic('w-', 'ܘ- (and)', 'The conjunction ܘ- (w-, and), written together wi
 proclitic('d-', 'ܕ- (of, that)', 'The proclitic ܕ- (d-): of (the genitive), that, which (relative and subordinating), written together with the next word.', 'ܕ', '');
 proclitic('b-', 'ܒ- (in, with)', 'The preposition ܒ- (b-, in, with, by), written together with the next word; before an infinitive it makes the gerund of the progressive (ܝܠܹܗ ܒܡܲܪܝܘܿܡܹܐ, he is raising).', 'ܒ', '');
 proclitic('l-', 'ܠ- (to, for)', 'The preposition ܠ- (l-, to, for; also the marker of a definite object), written together with the next word.', 'ܠ', '');
-proclitic('k-', 'ܟ- (indicative)', 'The indicative particle ܟܹܐ (kē) written together with a verb that starts with ܐ (ܟܐܵܙܹܠ, he goes).', 'ܟܐ', 'ܐ');
+// The vowel after ܟܐ is the verb's (ܟܐܵܙܹܠ: ܐܵ), so the stem may start with it.
+transform('k-', 'ܟ- (indicative)', 'The indicative particle ܟܹܐ (kē) written together with a verb that starts with ܐ (ܟܐܵܙܹܠ, he goes).');
+rule('k-', {type: 'prefix', inflected: 'ܟܐ', deinflected: 'ܐ', conditionsIn: ANY, conditionsOut: [], stemMinLength: 2});
 proclitic('bd-', 'ܒܕ- (future)', 'The future particle ܒܸܬ (bit), shortened to ܒܕ- and written together with the verb (ܒܕܐܵܙܹܠ, he will go).', 'ܒܕ', '');
 
 // --- L-suffixes -------------------------------------------------------------------
@@ -447,14 +449,15 @@ rule('construct', {type: 'suffix', inflected: '', deinflected: 'ܐ', conditionsI
 
 // Nouns that end in a consonant, mostly loanwords (ܐܵܐܲܪ, air; ܐܲܘܛܘܿܒܘܼܣ,
 // bus), add the possessive suffixes to the whole word (ܐܲܘܛܘܿܒܘܼܣܹܗ, his
-// bus) and make their plural with -ē or -āṯā (ܐܲܘܛܘܿܒܘܼ̈ܣܵܬ݂ܵܐ). A stem of
-// three letters is a verb root as often as a noun, so these need four.
+// bus) and make their plural with -ē or -āṯā (ܐܲܘܛܘܿܒܘܼ̈ܣܵܬ݂ܵܐ); so do a few
+// nouns that keep their -ā (ܦܪܸܙܠܵܐܗܘܿܢ, their iron). A stem of three letters
+// is a verb root as often as a noun, so these need four.
 transform('possessiveC', 'possessive (consonant-final noun)', 'A possessive suffix on a noun that ends in a consonant, mostly a loanword (ܐܲܘܛܘܿܒܘܼܣܹܗ, his bus, from ܐܲܘܛܘܿܒܘܼܣ).');
 for (const ending of ['ܝ', 'ܘܟ', 'ܟܝ', 'ܗ', 'ܢ', 'ܘܟܘܢ', 'ܗܘܢ', 'ܘܗܝ', 'ܘܗ', 'ܝܗܘܢ']) {
-    suffix('possessiveC', ending, '', ANY, ['n_f'], {minStem: 4, stemNotEndsWith: '[ܐ]'});
+    suffix('possessiveC', ending, '', ANY, ['n_f'], {minStem: 4});
 }
 transform('pluralC', 'plural (consonant-final noun)', 'The plural in -āṯā of a noun that ends in a consonant (ܐܲܘܛܘܿܒܘܼ̈ܣܵܬ݂ܵܐ, buses, from ܐܲܘܛܘܿܒܘܼܣ).');
-suffix('pluralC', 'ܬܐ', '', NOUN_STEM, ['n_f'], {minStem: 4, stemNotEndsWith: '[ܐ]'});
+suffix('pluralC', 'ܬܐ', '', NOUN_STEM, ['n_f'], {minStem: 4});
 
 // Nouns with plural or possessive stems of their own, written out: ܒܲܝܬܵܐ,
 // house: ܒܵܬܹ̈ܐ, ܒܵܬܲܝ̈ (my houses); ܒܪܵܬ݂ܵܐ, daughter: ܒ̈ܢܵܬ݂ܵܐ;

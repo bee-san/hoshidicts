@@ -1198,11 +1198,6 @@
       [1810, 1839],
       [1869, 1871]
     ],
-    "transforms[4].rules[0].stemStartsWith": [
-      [1808, 1808],
-      [1810, 1839],
-      [1869, 1871]
-    ],
     "transforms[5].rules[0].stemStartsWith": [
       [1808, 1808],
       [1810, 1839],
@@ -5080,88 +5075,55 @@
       [1810, 1839],
       [1869, 1871]
     ],
-    "transforms[54].rules[0].stemNotEndsWith": [
-      [1808, 1808]
-    ],
     "transforms[54].rules[1].stemCharacters": [
       [1808, 1808],
       [1810, 1839],
       [1869, 1871]
-    ],
-    "transforms[54].rules[1].stemNotEndsWith": [
-      [1808, 1808]
     ],
     "transforms[54].rules[2].stemCharacters": [
       [1808, 1808],
       [1810, 1839],
       [1869, 1871]
     ],
-    "transforms[54].rules[2].stemNotEndsWith": [
-      [1808, 1808]
-    ],
     "transforms[54].rules[3].stemCharacters": [
       [1808, 1808],
       [1810, 1839],
       [1869, 1871]
-    ],
-    "transforms[54].rules[3].stemNotEndsWith": [
-      [1808, 1808]
     ],
     "transforms[54].rules[4].stemCharacters": [
       [1808, 1808],
       [1810, 1839],
       [1869, 1871]
     ],
-    "transforms[54].rules[4].stemNotEndsWith": [
-      [1808, 1808]
-    ],
     "transforms[54].rules[5].stemCharacters": [
       [1808, 1808],
       [1810, 1839],
       [1869, 1871]
-    ],
-    "transforms[54].rules[5].stemNotEndsWith": [
-      [1808, 1808]
     ],
     "transforms[54].rules[6].stemCharacters": [
       [1808, 1808],
       [1810, 1839],
       [1869, 1871]
     ],
-    "transforms[54].rules[6].stemNotEndsWith": [
-      [1808, 1808]
-    ],
     "transforms[54].rules[7].stemCharacters": [
       [1808, 1808],
       [1810, 1839],
       [1869, 1871]
-    ],
-    "transforms[54].rules[7].stemNotEndsWith": [
-      [1808, 1808]
     ],
     "transforms[54].rules[8].stemCharacters": [
       [1808, 1808],
       [1810, 1839],
       [1869, 1871]
     ],
-    "transforms[54].rules[8].stemNotEndsWith": [
-      [1808, 1808]
-    ],
     "transforms[54].rules[9].stemCharacters": [
       [1808, 1808],
       [1810, 1839],
       [1869, 1871]
     ],
-    "transforms[54].rules[9].stemNotEndsWith": [
-      [1808, 1808]
-    ],
     "transforms[55].rules[0].stemCharacters": [
       [1808, 1808],
       [1810, 1839],
       [1869, 1871]
-    ],
-    "transforms[55].rules[0].stemNotEndsWith": [
-      [1808, 1808]
     ],
     "transforms[59].rules[0].stemCharacters": [
       [1808, 1808],

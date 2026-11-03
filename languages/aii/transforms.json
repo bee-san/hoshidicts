@@ -83,7 +83,7 @@
       "description": "The indicative particle ܟܹܐ (kē) written together with a verb that starts with ܐ (ܟܐܵܙܹܠ, he goes).",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "ܟܐ", "deinflected": "ܐ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemStartsWith": "{letter}"}
+        {"type": "prefix", "inflected": "ܟܐ", "deinflected": "ܐ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2}
       ]
     },
     {
@@ -1275,16 +1275,16 @@
       "description": "A possessive suffix on a noun that ends in a consonant, mostly a loanword (ܐܲܘܛܘܿܒܘܼܣܹܗ, his bus, from ܐܲܘܛܘܿܒܘܼܣ).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ܝ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_f"], "stemMinLength": 4, "stemCharacters": "{letter}", "stemNotEndsWith": "[ܐ]"},
-        {"type": "suffix", "inflected": "ܘܟ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_f"], "stemMinLength": 4, "stemCharacters": "{letter}", "stemNotEndsWith": "[ܐ]"},
-        {"type": "suffix", "inflected": "ܟܝ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_f"], "stemMinLength": 4, "stemCharacters": "{letter}", "stemNotEndsWith": "[ܐ]"},
-        {"type": "suffix", "inflected": "ܗ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_f"], "stemMinLength": 4, "stemCharacters": "{letter}", "stemNotEndsWith": "[ܐ]"},
-        {"type": "suffix", "inflected": "ܢ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_f"], "stemMinLength": 4, "stemCharacters": "{letter}", "stemNotEndsWith": "[ܐ]"},
-        {"type": "suffix", "inflected": "ܘܟܘܢ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_f"], "stemMinLength": 4, "stemCharacters": "{letter}", "stemNotEndsWith": "[ܐ]"},
-        {"type": "suffix", "inflected": "ܗܘܢ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_f"], "stemMinLength": 4, "stemCharacters": "{letter}", "stemNotEndsWith": "[ܐ]"},
-        {"type": "suffix", "inflected": "ܘܗܝ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_f"], "stemMinLength": 4, "stemCharacters": "{letter}", "stemNotEndsWith": "[ܐ]"},
-        {"type": "suffix", "inflected": "ܘܗ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_f"], "stemMinLength": 4, "stemCharacters": "{letter}", "stemNotEndsWith": "[ܐ]"},
-        {"type": "suffix", "inflected": "ܝܗܘܢ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_f"], "stemMinLength": 4, "stemCharacters": "{letter}", "stemNotEndsWith": "[ܐ]"}
+        {"type": "suffix", "inflected": "ܝ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_f"], "stemMinLength": 4, "stemCharacters": "{letter}"},
+        {"type": "suffix", "inflected": "ܘܟ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_f"], "stemMinLength": 4, "stemCharacters": "{letter}"},
+        {"type": "suffix", "inflected": "ܟܝ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_f"], "stemMinLength": 4, "stemCharacters": "{letter}"},
+        {"type": "suffix", "inflected": "ܗ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_f"], "stemMinLength": 4, "stemCharacters": "{letter}"},
+        {"type": "suffix", "inflected": "ܢ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_f"], "stemMinLength": 4, "stemCharacters": "{letter}"},
+        {"type": "suffix", "inflected": "ܘܟܘܢ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_f"], "stemMinLength": 4, "stemCharacters": "{letter}"},
+        {"type": "suffix", "inflected": "ܗܘܢ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_f"], "stemMinLength": 4, "stemCharacters": "{letter}"},
+        {"type": "suffix", "inflected": "ܘܗܝ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_f"], "stemMinLength": 4, "stemCharacters": "{letter}"},
+        {"type": "suffix", "inflected": "ܘܗ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_f"], "stemMinLength": 4, "stemCharacters": "{letter}"},
+        {"type": "suffix", "inflected": "ܝܗܘܢ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n_f"], "stemMinLength": 4, "stemCharacters": "{letter}"}
       ]
     },
     {
@@ -1293,7 +1293,7 @@
       "description": "The plural in -āṯā of a noun that ends in a consonant (ܐܲܘܛܘܿܒܘܼ̈ܣܵܬ݂ܵܐ, buses, from ܐܲܘܛܘܿܒܘܼܣ).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ܬܐ", "deinflected": "", "conditionsIn": ["n_p"], "conditionsOut": ["n_f"], "stemMinLength": 4, "stemCharacters": "{letter}", "stemNotEndsWith": "[ܐ]"}
+        {"type": "suffix", "inflected": "ܬܐ", "deinflected": "", "conditionsIn": ["n_p"], "conditionsOut": ["n_f"], "stemMinLength": 4, "stemCharacters": "{letter}"}
       ]
     },
     {
