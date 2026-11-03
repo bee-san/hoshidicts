@@ -10,6 +10,7 @@
   "classes": {
     "letter": "[\\u0710\\u0712-\\u072F\\u074D-\\u074F]",
     "syriacMark": "[\\u0303\\u0304\\u0307\\u0308\\u0323\\u032E\\u0330\\u0331\\u0711\\u0730-\\u074A]",
+    "yomitanDiacritic": "[\\u0303\\u0304\\u0307\\u0308\\u0323\\u032E\\u0330\\u0331\\u0730-\\u074A]",
     "joiner": "[\\u00AD\\u0640\\u200C\\u200D\\u2060\\uFEFF]",
     "word": "[{letter}\\p{M}\\p{Nd}{joiner}]",
     "stem": "[{letter}\\p{M}]"
@@ -40,9 +41,9 @@
         "variants": [[{"normalize": "NFC"}, {"strip": "[{joiner}\\u0711]"}]]
       },
       {
-        "id": "removeSyriacVowelMarks",
-        "name": "Remove vowel points and other marks",
-        "variants": [[{"strip": "{syriacMark}"}]]
+        "id": "removeSyriacScriptDiacritics",
+        "name": "Remove diacritics",
+        "variants": [[{"strip": "{yomitanDiacritic}"}]]
       }
     ],
     "postprocessors": [],
