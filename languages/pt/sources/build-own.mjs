@@ -839,6 +839,7 @@ for (const [inflected, deinflected] of [
     ['vistos', 'visto'], ['vistas', 'vista'], ['ditos', 'dito'],              // imprevistos, revistas, malditos
     ['arias', 'aria'],                                                        // secretarias (the -ar conditional's -arias)
     ['ises', 'ise'],                                                          // crises (not cris + es)
+    ['ces', 'ce'],                                                            // alces, alicerces (the -çar subjunctive's -ces)
 ]) {
     nominal('plural', inflected, deinflected, [], NA, {stemMinLength: 1});
 }
@@ -991,10 +992,11 @@ for (const [slot, form, lemma] of [
     ['feminine', 'violenta', 'violento'], ['feminine', 'fresca', 'fresco'], ['feminine', 'serena', 'sereno'], ['feminine', 'externa', 'externo'],
     ['feminine', 'interna', 'interno'], ['feminine', 'cega', 'cego'], ['feminine', 'assassina', 'assassino'],
     // and the rest of wty-pt-en's 274 words in -a whose rows name both an -o
-    // adjective or noun and an -ar verb, where the masculine plural is more
-    // frequent in the two lists than the verb's infinitive, preterite,
-    // gerund and imperfect together (retrata, dana and ultima left out, and
-    // four the lists do not have).
+    // adjective or noun and an -ar verb's present (measure.py homographs),
+    // read one by one: the adjective first where it is the common reading
+    // (vasta, complexa, digna, deserta, indigna), the verb where the verb is
+    // as common or more (precisa, segura, completa, dura, limpa, ativa, and
+    // dana, retrata, ultima).
     ['feminine', 'grega', 'grego'], ['feminine', 'estreita', 'estreito'], ['feminine', 'vasta', 'vasto'], ['feminine', 'complexa', 'complexo'],
     ['feminine', 'digna', 'digno'], ['feminine', 'plana', 'plano'], ['feminine', 'amarga', 'amargo'], ['feminine', 'madura', 'maduro'],
     ['feminine', 'inquieta', 'inquieto'], ['feminine', 'sujeita', 'sujeito'], ['feminine', 'enferma', 'enfermo'], ['feminine', 'atenta', 'atento'],
@@ -1002,7 +1004,18 @@ for (const [slot, form, lemma] of [
     ['feminine', 'descalça', 'descalço'], ['feminine', 'desonesta', 'desonesto'], ['feminine', 'devota', 'devoto'], ['feminine', 'candidata', 'candidato'],
     ['feminine', 'imunda', 'imundo'], ['feminine', 'inativa', 'inativo'], ['feminine', 'adjetiva', 'adjetivo'], ['feminine', 'chula', 'chulo'],
     ['feminine', 'malandra', 'malandro'], ['feminine', 'mendiga', 'mendigo'], ['feminine', 'peregrina', 'peregrino'], ['feminine', 'lacaia', 'lacaio'],
-    ['feminine', 'calva', 'calvo'], ['feminine', 'tipa', 'tipo'],
+    ['feminine', 'calva', 'calvo'], ['feminine', 'tipa', 'tipo'], ['feminine', 'deserta', 'deserto'], ['feminine', 'indigna', 'indigno'],
+    ['feminine', 'pasma', 'pasmo'], ['feminine', 'turva', 'turvo'], ['feminine', 'compacta', 'compacto'], ['feminine', 'subjetiva', 'subjetivo'],
+    ['feminine', 'interdita', 'interdito'], ['feminine', 'avessa', 'avesso'], ['feminine', 'caduca', 'caduco'], ['feminine', 'desnuda', 'desnudo'],
+    ['feminine', 'fecunda', 'fecundo'], ['feminine', 'gaiata', 'gaiato'], ['feminine', 'gatuna', 'gatuno'], ['feminine', 'lassa', 'lasso'],
+    ['feminine', 'seleta', 'seleto'], ['feminine', 'selecta', 'selecto'], ['feminine', 'sobeja', 'sobejo'], ['feminine', 'substantiva', 'substantivo'],
+    ['feminine', 'ufana', 'ufano'], ['feminine', 'blasfema', 'blasfemo'], ['feminine', 'brejeira', 'brejeiro'], ['feminine', 'agourenta', 'agourento'],
+    ['feminine', 'adjectiva', 'adjectivo'], ['feminine', 'effectiva', 'effectivo'], ['feminine', 'extranha', 'extranho'], ['feminine', 'acerba', 'acerbo'],
+    // The same with the accent of the stem (ambiguar: ambígua), and with
+    // another masculine (mestre, like ladrão).
+    ['feminine', 'ambígua', 'ambíguo'], ['feminine', 'mestra', 'mestre'],
+    // and of an -ear verb (alhear: alheia).
+    ['feminine', 'alheia', 'alheio'],
     // A feminine read as the subjunctive of an -ir verb (surda as surdir).
     ['feminine', 'surda', 'surdo'],
     ['feminine', 'ladra', 'ladrão'], ['feminine', 'ladras', 'ladrão'],
@@ -1010,9 +1023,10 @@ for (const [slot, form, lemma] of [
     ['feminine', 'perfeita', 'perfeito'], ['feminine', 'perfeitas', 'perfeito'], ['feminine', 'maldita', 'maldito'], ['feminine', 'malditas', 'maldito'],
     // and as fartar's short participle (farta, fed up).
     ['feminine', 'farta', 'farto'], ['feminine', 'fartas', 'farto'],
-    // A plural read as an irregular verb form (pedir's peças, ver's verdes),
-    // and tais, whose -ais needs a longer stem (mais is not a plural of mal).
-    ['plural', 'peças', 'peça'], ['plural', 'verdes', 'verde'], ['plural', 'tais', 'tal'],
+    // A plural read as an irregular verb form (pedir's peças, ver's verdes,
+    // cear's ceias), and tais, whose -ais needs a longer stem (mais is not a
+    // plural of mal).
+    ['plural', 'peças', 'peça'], ['plural', 'verdes', 'verde'], ['plural', 'tais', 'tal'], ['plural', 'ceias', 'ceia'],
     // A common verb's form read as a rare verb's of the same stem, because the
     // present comes before the subjunctive: the -ar subjunctive as the -ir
     // present (pare as parir, chore as chorir), the -er and -ir subjunctive as
@@ -1029,6 +1043,15 @@ for (const [slot, form, lemma] of [
     ['present-eu', 'prendo', 'prender'], ['subjunctive-eles', 'prendam', 'prender'],
     ['present-eu', 'rendo', 'render'], ['subjunctive-eles', 'rendam', 'render'],
     ['present-eu', 'tremo', 'tremer'], ['subjunctive-eles', 'vendam', 'vender'],
+    // and criar and desviar read as the imperfect of crer and desver (-ia is
+    // longer than -a).
+    ['present-ele', 'cria', 'criar'], ['present-tu', 'crias', 'criar'], ['present-eles', 'criam', 'criar'],
+    ['present-ele', 'desvia', 'desviar'], ['present-tu', 'desvias', 'desviar'], ['present-eles', 'desviam', 'desviar'],
+    // and those found in the texts and Tatoeba sentences of the measurements:
+    // delirar as the pluperfect of delir, render-se and assentar-se as the
+    // present of rendar and assentir (renda-se, assente-se).
+    ['present-ele', 'delira', 'delirar'], ['present-tu', 'deliras', 'delirar'],
+    ['subjunctive-eu-ele', 'renda', 'render'], ['subjunctive-eu-ele', 'assente', 'assentar'],
     // atender read as ater (atende as the imperative of vós, atendo as the
     // gerund) or as the rare atendar (atendam as its present).
     ['present-eu', 'atendo', 'atender'], ['present-tu', 'atendes', 'atender'], ['present-ele', 'atende', 'atender'],
@@ -1036,10 +1059,10 @@ for (const [slot, form, lemma] of [
     ['subjunctive-vos', 'atendais', 'atender'], ['subjunctive-eles', 'atendam', 'atender'],
     // agradar read as the participle of agrar, and validar as the feminine
     // of valido (a favourite; the feminine's -ida rule is longer).
-    ['present-ele', 'agrada', 'agradar'], ['present-ele', 'valida', 'validar'],
+    ['present-ele', 'agrada', 'agradar'], ['present-tu', 'agradas', 'agradar'], ['present-ele', 'valida', 'validar'],
     // European tu forms read as the plural of a rare noun (achas as acha, a billet).
     ['present-tu', 'achas', 'achar'], ['present-tu', 'percebes', 'perceber'], ['present-tu', 'andas', 'andar'],
-    ['present-tu', 'deixas', 'deixar'], ['present-tu', 'amas', 'amar'],
+    ['present-tu', 'deixas', 'deixar'], ['present-tu', 'amas', 'amar'], ['subjunctive-tu', 'cases', 'casar'],
 ]) {
     const verbSlot = !['feminine', 'plural'].includes(slot);
     add(slot, {type: 'wholeWord', inflected: form, deinflected: lemma,
