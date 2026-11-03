@@ -113,9 +113,10 @@ gehören, not Yomitan's participle reading hören; `lookup.tsv`).
     rule makes all their deinflections. Because they need no ending, they also
     read `dazu ist` as `da ist` and `einzu…` as `ein…`: added to the final
     rules (`sources/variants.mjs`, `measure.mjs diff`), they change the first
-    result at 5 positions of the Tatoeba sample and *Der Prozess* (`dazu ist`
-    and `dazu war` → da sein, `einzuhängen`, `einzubohren` and `einzurammen`
-    → einen), all wrong, and give no reading the final rules lack.
+    result at 12 positions of the four texts (`dazu ist` and `dazu war` → da
+    sein, `einzuhängen`, `einzubohren` and `einzurammen` → einen,
+    `heimzusteuern` → heimsen), all wrong, and give no reading the final
+    rules lack.
 - **Yomitan rules kept**: 12, in five transforms the own rules lack.
   `nominalization` (-ung → -en), `-bar`, `negative` (un-) and `-heit`
   (-heit, -keit) read derived words whole, and `past participle` (`ge…t` →
@@ -189,8 +190,8 @@ gehören, not Yomitan's participle reading hören; `lookup.tsv`).
     With noun rules that read capitalized words, as the first version's did,
     a noun reading was the first result for 513 of the 5,954 frequent words
     written in small letters when they start a sentence (3.30% of the list's
-    tokens; `measure.mjs start`); now 19 (0.02%), all English names of the
-    subtitle list (Eddie → Eddi).
+    tokens; `measure.mjs start`); now 19 (0.02%), nearly all English names
+    of the subtitle list (Eddie → Eddi).
   - `capitalizeWord`, a processor of this pack, reads a word written in
     capitals as a noun at one step (`FRAU` → Frau, `KÜNDIGUNG` → Kündigung).
     On the 224 words in capitals of the four texts it changes the first
@@ -301,10 +302,8 @@ gehören, not Yomitan's participle reading hören; `lookup.tsv`).
 ## Measurements
 
 Every number is with wty-de-en as its release publishes it, form-of rows
-included, imported by `hoshidicts-cli import`, at hoshidicts 23cd5a3 with
-this pack (GCC 14.3, Release). After the rebase on b145feb (#54, which
-changes how dictionaries are opened), items 1 to 4 were measured again and
-are identical; the timings of item 8 are given for both. The union is `tools/merge-transforms.mjs de
+included, imported by `hoshidicts-cli import`, at hoshidicts 6a65eac with
+this pack (GCC 14.3, Release). The union is `tools/merge-transforms.mjs de
 --out`, which puts Yomitan's transforms first. The pack has no optional
 processor, transform or variant pass, so every number is the same with every
 option on and with the defaults; a copy of `cases.tsv` with the line
@@ -317,12 +316,12 @@ option on and with the defaults; a copy of `cases.tsv` with the line
    and with any trace (`*`). False candidates are per row, first rank is the
    share of rows whose full lookup shows the lemma first.
 
-   | Rule set | Sample recall | False candidates | First rank | cases.tsv: 274 positives | 46 negatives | Yomitan's test, its traces / any trace |
+   | Rule set | Sample recall | False candidates | First rank | cases.tsv: 277 positives | 50 negatives | Yomitan's test, its traces / any trace |
    | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-   | Own (`sources/own.json`) | 98.00% (1,764) | 0.144 | 94.44% | 97.08% | 100% | 1 / 4 |
-   | Yomitan (`sources/yomitan.json`) | 5.00% (90) | 0.074 | 94.00% | 5.47% | 91.3% | 14 / 14 |
-   | Union | 98.00% (1,764) | 0.158 | 94.44% | 100% | 91.3% | 14 / 14 |
-   | Final (`transforms.json`) | **98.00% (1,764)** | 0.158 | 94.44% | 100% | 100% | 13 / 13 |
+   | Own (`sources/own.json`) | 98.00% (1,764) | 0.144 | 94.50% | 97.11% | 100% | 1 / 4 |
+   | Yomitan (`sources/yomitan.json`) | 5.00% (90) | 0.074 | 94.00% | 5.42% | 92.0% | 14 / 14 |
+   | Union | 98.00% (1,764) | 0.158 | 94.50% | 100% | 92.0% | 14 / 14 |
+   | Final (`transforms.json`) | **98.00% (1,764)** | 0.158 | 94.50% | 100% | 100% | 13 / 13 |
 
    - Yomitan's rules reach only participles and zu-infinitives; first rank is
      high for every set because wty-de-en has a form-of row for nearly every
@@ -335,28 +334,57 @@ option on and with the defaults; a copy of `cases.tsv` with the line
      `räum den Tisch auf` → `räum auf`, the two-word output of Yomitan's
      separated-prefix rule (the own rule gives aufräumen for `räum den Tisch
      auf.`, `cases.tsv`).
-2. **Frequent forms** (`sources/measure.mjs frequent`). The 10,000 most
-   frequent words of the subtitle list (143,832,234 tokens), each in the case
-   Tatoeba writes it inside a sentence, looked up whole. A rule reaches the
-   lemma of a word when a result for the whole word with a definition is one
-   of its lemmas (its form-of rows and UniMorph name them) and has a rule of
-   the pack in its trace.
+2. **Frequent forms**: the 10,000 most frequent words of the subtitle list
+   (143,832,234 tokens), each in the case Tatoeba writes it inside a
+   sentence, looked up whole, judged three ways.
+   - **By the dictionary's lemmas** (`sources/measure.mjs frequent`): a rule
+     reaches the lemma of a word when a result for the whole word with a
+     definition is one of its lemmas (its form-of rows and UniMorph name
+     them) and has a rule of the pack in its trace; the first entry is wrong
+     when it is none of them. This judge counts any lemma the dictionary names
+     as right, also the rare one of a homograph (audit-hachi-lang-de MAJOR 2:
+     `meine` → meinen passed it), so it is followed by the two below.
 
-   | Rule set | Words a rule reaches (share of tokens) | Wrong first entry with a definition | A wrong rule reading before the lemma |
-   | --- | ---: | ---: | ---: |
-   | Own | 3,489 (26.93%) | 1 (0.00%) | 0 |
-   | Yomitan | 281 (0.71%) | 0 | 0 |
-   | Union | 3,489 (26.93%) | 1 (0.00%) | 0 |
-   | Final | 3,489 (26.93%) | 1 (0.00%) | 0 |
+     | Rule set | Words a rule reaches (share of tokens) | Wrong first entry with a definition | A wrong rule reading before the lemma |
+     | --- | ---: | ---: | ---: |
+     | Own | 3,488 (26.63%) | 1 (0.00%) | 0 |
+     | Yomitan | 281 (0.71%) | 0 | 0 |
+     | Union | 3,488 (26.63%) | 1 (0.00%) | 0 |
+     | Final | 3,488 (26.63%) | 1 (0.00%) | 0 |
 
-   The one word is `ass` (800 tokens): its first entry is the noun Ass (ace),
-   before essen, whose past it is in Swiss spelling.
+     The one word is `ass` (800 tokens): its first entry is the noun Ass
+     (ace), before essen, whose past it is in Swiss spelling.
+   - **Against the dictionary alone, by hand** (`measure.mjs diff frequent
+     none.json final.json`, `none.json` from `sources/variants.mjs`; verdicts
+     in `sources/frequent-judged.tsv`): 110 words show another first lemma
+     through a rule of the pack than with no rules at all. 26 are right where
+     the dictionary alone is wrong (590,812 tokens: `hast` → haben, not
+     hasten; `führt` → führen, not fahren; `muß` → müssen; `passierte` →
+     passieren), 9 are mixed, with both readings common (`liebe` lieben or
+     lieb, `heiße`, `lasse`, `verletzte`; 149,274 tokens), 67 are English
+     names and words of the subtitles, wrong either way (`eddie` → Eddi;
+     153,781 tokens), and **8 are wrong** (13,819 tokens, 0.01% of the
+     list's): `legende` → legen (the list writes Legende in small letters),
+     `heut` → heuen, `grade` → Grad, `draus` →
+     Drau, `oberste` and `obersten` → Oberst, `grosse` → Gros, `dreier` →
+     Drei (Known gaps). At 1bf5ea1 the first audit judged 66 of 103 such
+     words wrong (684,537 tokens, 0.48%), among them `meine` → meinen,
+     `letzten` → letzen, `schöne` → schönen, `kostet` → kosen and
+     `gewartet` → gewarten; Rule provenance says how they were fixed.
+   - **Rare homographs** (`measure.mjs rare`): 18 words show a rule's reading
+     first whose lemma is at least 20 times rarer, as a word of the list,
+     than another of the word's lemmas among its results (Yomitan's rules:
+     0). 15 of them show an equivalent lemma (`anderen` → ander before
+     anderer, `meisten` → meist before viel, the participle adjectives
+     `folgende`, `lebenden`, `Laufenden` before their verbs) and 3 are wrong:
+     `heut`, `draus` and `grosse`.
 
    **At the start of a sentence** (`measure.mjs start`): the 5,954 of those
    words that German writes in small letters, looked up with a capital first
    letter. A rule's wrong reading is the first entry for 19 (0.02% of the
-   list's tokens) with the final rules, all English names of the subtitles
-   (Eddie → Eddi, Jake → Yak), and for none with Yomitan's. For 871 (23.53%)
+   list's tokens) with the final rules: 17 English names of the subtitles
+   (Eddie → Eddi, Jake → Yak), `One` → on and `Versprech` → versprechen
+   (arguably right). Yomitan's rules give none. For 871 (23.53%)
    with every rule set, the first entry is the capitalized word's own row
    (Ich, the ego; Es; Haben, credit) or form-of row (Danke → Dank), which a
    lookup reaches without a processor step; Known gaps.
@@ -408,7 +436,7 @@ option on and with the defaults; a copy of `cases.tsv` with the line
    - The final set's largest groups of wrong single words are noun readings
      of words in small letters (`zehnten` → Zehnt, `zweier` → Zwei, `oberste`
      → Oberst, `grade` → Grad; 28 in Tatoeba) and `seins` → Sein (5).
-   - The particle verbs come from wty-de-en's 43,447 form-of rows of
+   - The particle verbs come from wty-de-en's form-of rows of
      separated forms (`hat da` → dahaben, `ging zu` → zugehen, `zeigte auf` →
      aufzeigen), which match the verb and a following preposition or adverb
      before the clause ends; Yomitan's rules show them too (0.43-0.55%).
@@ -429,12 +457,35 @@ option on and with the defaults; a copy of `cases.tsv` with the line
      Lieb…` of `hat Liebeskummer` → lieb haben);
    - 1 through `capitalizeWord` (`DES` → the note Des).
 
+   **Against the dictionary alone** (`measure.mjs diff <text> none.json
+   final.json --dump`, `sources/changed-sample.py`, verdicts in
+   `sources/changed-judged.tsv`): the script above counts a homograph's other
+   lemma as right, so the positions where a rule of the pack makes the first
+   result of the hovered word another lemma than the dictionary alone gives
+   are judged by hand. There are 2,134 of them in the 616,124 lookups. Of a
+   random sample of 80 (seed 4), 12 are wrong (15%, so about 320 positions,
+   0.05% of the lookups):
+   - 5 participle adjectives after a determiner read as the past of their
+     verb (`die entfernten Dinge` → entfernen, `der erwähnten Dame`, `den
+     Besiegten`, `bedeckte Dach`, `verspäteten Teilnahme`); for these verbs
+     the past is the more frequent use (Rule provenance, Homographs);
+   - 4 uses of `liebe` and `heiße` as the adjective (`liebe Mama`, `das
+     heiße Bad`), whose verb reading the pack lists first;
+   - 2 noun readings of a lowercase word (`zweier Herren` → Zwei, `seins` →
+     Sein) and one made-up word (`nachen`).
+
+   The 68 right ones are mostly `hast` → haben (the dictionary alone gives
+   hasten), `muß` → müssen and verbs in the past (`erklärte`, `verletzte
+   sich`, `passierte`). At 1bf5ea1 the first audit counted 5,062 such
+   positions and judged 43 of 80 wrong (about 2,700, 0.44%).
+
    With the script's counts, about 490 of the final set's 616,124 lookups
-   (0.08%) are wrong and unjudged, besides the 55 wrong single words and the
-   3,711 particle verbs the dictionary's rows make (0.60%). An earlier sample
-   of 60 (seed 2, with the rules of 07b0107) found 14 wrong; its rule-made
-   errors that a constraint could stop (`führt` → fahren, `sehr best…` →
-   sehr gut, `Elektrotechniker` → Elektrotechnik) were fixed in 8960166.
+   (0.08%) are wrong and unjudged, besides the 55 wrong single words, the
+   rule-changed ones above (about 320) and the 3,711 particle verbs the
+   dictionary's rows make (0.60%). An earlier sample of 60 (seed 2, with the
+   rules of 07b0107) found 14 wrong; its rule-made errors that a constraint
+   could stop (`führt` → fahren, `sehr best…` → sehr gut, `Elektrotechniker`
+   → Elektrotechnik) were fixed in 8960166.
 5. **Trace quality** (`sources/trace-quality.mjs`): for the sample rows each
    set reaches, whether the trace a lookup shows (`traceSelection:
    "shortest"`) names the form the UniMorph tag gives (`past (wir, sie)` for
@@ -470,42 +521,43 @@ option on and with the defaults; a copy of `cases.tsv` with the line
 8. **Lookup speed** (`benchmark-lookup --languages <copy> --language de`,
    wty-de-en mapped): the 80 texts of `sources/benchmark-words.txt`, each the
    rest of a sentence from an inflected word, in 6 passes with the first
-   dropped, three runs at machine load about 24. The budget is 1 ms p50.
+   dropped, three runs at machine load about 36-44. The budget is 1 ms p50.
    Character resolution looks up every prefix of the scan, which costs more
    than the word resolution of the English and Spanish packs.
 
-   | Rule set | p50 | p95 | p50, b145feb, load about 44 | p95, b145feb |
-   | --- | ---: | ---: | ---: | ---: |
-   | Final | 108-110 µs | 256-257 µs | 122-125 µs | 269-282 µs |
-   | Union | 111-113 µs | 264-268 µs | 124-129 µs | 291-304 µs |
-   | Yomitan's rules | 87-88 µs | 194-198 µs | 96-103 µs | 220-234 µs |
-   | Own rules | 107 µs | 247-250 µs | 115-121 µs | 263-272 µs |
+   | Rule set | p50 | p95 |
+   | --- | ---: | ---: |
+   | Final | 117-132 µs | 267-305 µs |
+   | Union | 127-132 µs | 300-311 µs |
+   | Yomitan's rules | 91-97 µs | 206-223 µs |
+   | Own rules | 120-133 µs | 269-311 µs |
 9. **WebAssembly** (Hachidori feat/multi-language d7e82b0, its prebuilt
    engines in Node 22). The budgets are 50 ms and 20 MB.
    - `hdw_lookup` (`benchmark/node-lookup.mjs` with
      `HACHIDORI_LOOKUP_LANGUAGE=de` on the same texts: 396 hovers, one per
      word, 6 passes, with the scan window Hachidori's content script
-     collects): p50 224 µs and p95 453 µs single-thread, p50 257 µs and p95
-     556 µs threaded.
+     collects, at machine load about 40): p50 241 µs and p95 497 µs
+     single-thread, p50 258 µs and p95 552 µs threaded.
    - `hdw_language_load` of this pack (`sources/wasm-load.mjs`, 10 fresh
-     engines): median 10.7 ms single-thread and 11.1 ms threaded; live heap
-     +1,969,848 bytes after the load.
+     engines): median 10.6 ms single-thread and 12.0 ms threaded; live heap
+     +2,006,768 bytes after the load.
    - The pack has 9 `pattern` rules (the separated prefix, one per clause
-     end). Without them the load takes about 0.6 ms less and the heap grows
-     by 248,280 bytes less.
-10. **Hachidori** (feat/multi-language d7e82b0 with this branch at 885fb90,
-    whose `language.json` and `transforms.json` are this pull request's, in
-    `third_party/hoshidicts`, then `node scripts/sync-languages.mjs`;
-    `test/chrome-language-pack.mjs`, Chrome 152, wty-de-en): 14 of 14 checks
-    pass, as before the rebase.
+     end). Without them the heap grows by 248,984 bytes less, and the load
+     time is the same within noise.
+10. **Hachidori** (feat/multi-language d7e82b0 with this branch's pack files
+    in `third_party/hoshidicts`, then `node scripts/sync-languages.mjs`;
+    `test/chrome-language-pack.mjs`, Chrome 152, wty-de-en): 20 of 20 checks
+    pass.
     - Settings adds German beside Japanese and imports the dictionary
       (602,286 terms, 1.0 s).
-    - Ten hovered words find their lemma first, with their traces:
+    - Sixteen hovered words find their lemma first, with their traces:
       `aufgestanden` → aufstehen, `kommt` (in `Er kommt morgen an.`) →
       ankommen [separated prefix, present (er, ihr)], `Hör` (in `Hör endlich
       auf!`) → aufhören, `mußte` → müssen, `Kindern` → Kind, `schönsten` →
       schön, `gingen` → gehen, `älteren` → alt, `angerufen` → anrufen, `las` →
-      lesen.
+      lesen, and the first audit's cases `Meine` → mein, `kostet` → kosten,
+      `gewartet` → warten, `schöne` → schön, `letzten` → letzte, `liebe` (in
+      `Ich liebe dich.`) → lieben.
     - The Anki note and the switch to Japanese and back work.
 11. **Commands**:
 
@@ -554,7 +606,9 @@ option on and with the defaults; a copy of `cases.tsv` with the line
     → As, whose stem has one letter.
 - **Particle verbs from the dictionary's rows**: wty-de-en has form-of rows
   for the separated forms of its separable verbs (`ging zu` → zugehen, `hat
-  da` → dahaben; 43,447 rows of a verb form and a particle). A lookup reads the longest text it finds, so where
+  da` → dahaben; 43,447 rows of a verb form and a separable particle, tagged
+  v, that name a verb starting with the particle, `measure.mjs separated`;
+  43,853 without the v tag). A lookup reads the longest text it finds, so where
   the verb is followed by a preposition or adverb with the same spelling, the
   particle verb comes first: 3,711 first results in the four texts (0.60% of
   the lookups, 0.40-0.66% per text), with every rule set (0.34-0.55% with
@@ -573,19 +627,37 @@ option on and with the defaults; a copy of `cases.tsv` with the line
   With a scan length of 40, the right several-word readings of *Der Prozess*
   rise from 1,654 to 1,917, the particle verbs of the dictionary's rows fall
   from 381 to 355, and the rule's wrong readings rise from 0 to 2.
-- **Homographs of a verb form and a participle**: `gehört` is gehören's
-  present and hören's participle, and both rules reach it with one step; the
-  present comes first, because its transform comes first. In Tatoeba 124 of
-  its 236 occurrences follow an auxiliary, where it is hören's. The same holds
-  for `gehorcht` (gehorchen, horchen) and `zugehört` (zugehören, zuhören).
-- **Noun readings of words in small letters**: the noun rules read every word
-  in small letters, so a lowercase adjective, numeral or adverb can tie with
-  a noun of the same spelling, and the rule's reading comes first: `zehnten`
-  → Zehnt, `zweier` → Zwei, `oberste` → Oberst, `grade` → Grad, `seins` →
-  Sein, `draus` → Drau (34 first results in Tatoeba, 18 in the books).
+- **Homographs the pack cannot order** (docs/languages.md 9.6, a framework
+  issue hachi-lang-lead accepted for a later framework pull request on
+  2026-11-03): when both readings of a word are dictionary-confirmed and tie
+  on matched length, steps and trace length, the one the lookup finds first
+  comes first. The rules decide that order (Rule provenance, Homographs)
+  except here:
+  - noun readings of a lowercase word whose noun is confirmed through the
+    capitalized spelling's own row (`zehnten` → Zehnt, `zweier` and `dreier`
+    → Zwei and Drei, `oberste` → Oberst, `grade` → Grad, `seins` → Sein,
+    `draus` → Drau, `grosse` → Gros; 34 first results in Tatoeba and 18 in
+    the books, and 6 of the 8 wrong frequent words of Measurements 2). The
+    planned `lookup.confirmedOrder: "references"` orders such ties by the
+    matched text's own references, which name the adjective, numeral or
+    adverb;
+  - `heut` → heuen (to make hay) before heute: the rules reach heuen and its
+    row is confirmed; excluding the stem would also lose `heult` (heulen).
+- **Homographs of common verbs and adjectives**: where the pack orders a
+  homograph by the more frequent reading, the other reading is second:
+  `liebe Mama` and `das heiße Bad` show lieben and heißen, and participle
+  adjectives after a determiner show the past of their verb (`die entfernten
+  Dinge` → entfernen, `den Besiegten`); 9 of the 12 wrong positions of the
+  rule-changed sample (Measurements 4). `gehört` shows gehören before hören
+  (in Tatoeba 124 of its 236 occurrences follow an auxiliary, where it is
+  hören's), and `Zwecken` shows Zwecke (tacks) before Zweck, since the plural
+  -en of nouns in -e comes first.
 - **Names**: the plural and genitive rules read names the dictionary lacks
   (`Eddie` → Eddi, `Janes` → Jan, `Angeles` → Angel), mostly English names
   in subtitles and Tatoeba.
+- **Idioms through the listed verb forms**: `Auto fuhr gegen …` → the idiom
+  Auto fahren, `… haben könnte.` → haben können (Rule provenance, Stem
+  constraints).
 - **The dictionary's abbreviations and phrases** win by length: `so.` →
   So. (Sunday) and `komm.` → Komm. at the end of a sentence, `z.` → Z.,
   `alter Mann` → the mining term Alter Mann, `ein Paar` → ein paar, and the
