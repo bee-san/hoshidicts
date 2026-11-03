@@ -617,7 +617,9 @@
         {"type": "suffix", "inflected": "ܠܗܘܢ", "deinflected": "ܐ", "conditionsIn": [], "conditionsOut": ["v_l"], "stemMinLength": 2, "stemCharacters": "{letter}", "stemNotEndsWith": "[ܐ]"},
         {"type": "suffix", "inflected": "ܠܐ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v_l"], "stemMinLength": 2, "stemCharacters": "{letter}", "stemNotEndsWith": "[ܐ]"},
         {"type": "suffix", "inflected": "ܠܐ", "deinflected": "ܐ", "conditionsIn": [], "conditionsOut": ["v_l"], "stemMinLength": 2, "stemCharacters": "{letter}", "stemNotEndsWith": "[ܐ]"},
-        {"type": "suffix", "inflected": "ܠܟܘܢ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v_l"], "stemMinLength": 2, "stemCharacters": "{letter}"}
+        {"type": "suffix", "inflected": "ܠܟܘܢ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v_l"], "stemMinLength": 2, "stemCharacters": "{letter}"},
+        {"type": "suffix", "inflected": "ܠܘܢ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v_l"], "stemMinLength": 2, "stemCharacters": "{letter}"},
+        {"type": "suffix", "inflected": "ܠܘܢ", "deinflected": "ܐ", "conditionsIn": [], "conditionsOut": ["v_l"], "stemMinLength": 2, "stemCharacters": "{letter}", "stemNotEndsWith": "[ܐ]"}
       ]
     },
     {
@@ -716,7 +718,7 @@
       "source": "own",
       "optional": true,
       "rules": [
-        {"type": "circumfix", "prefixes": [["ܐܘ", "ܡܐ"], ["ܒܘ", "ܡܒ"], ["ܓܘ", "ܡܓ"], ["ܕܘ", "ܡܕ"], ["ܗܘ", "ܡܗ"], ["ܘܘ", "ܡܘ"], ["ܙܘ", "ܡܙ"], ["ܚܘ", "ܡܚ"], ["ܛܘ", "ܡܛ"], ["ܝܘ", "ܡܝ"], ["ܟܘ", "ܡܟ"], ["ܠܘ", "ܡܠ"], ["ܡܘ", "ܡܡ"], ["ܢܘ", "ܡܢ"], ["ܣܘ", "ܡܣ"], ["ܥܘ", "ܡܥ"], ["ܦܘ", "ܡܦ"], ["ܨܘ", "ܡܨ"], ["ܩܘ", "ܡܩ"], ["ܪܘ", "ܡܪ"], ["ܫܘ", "ܡܫ"], ["ܬܘ", "ܡܬ"]], "suffixes": [["ܠܝ", ""], ["ܠܘܟ", ""], ["ܠܟܝ", ""], ["ܠܗ", ""], ["ܠܢ", ""], ["ܠܘܟܘܢ", ""], ["ܠܗܘܢ", ""], ["ܠܐ", ""], ["ܠܟܘܢ", ""]], "conditionsIn": [], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"}
+        {"type": "circumfix", "prefixes": [["ܐܘ", "ܡܐ"], ["ܒܘ", "ܡܒ"], ["ܓܘ", "ܡܓ"], ["ܕܘ", "ܡܕ"], ["ܗܘ", "ܡܗ"], ["ܘܘ", "ܡܘ"], ["ܙܘ", "ܡܙ"], ["ܚܘ", "ܡܚ"], ["ܛܘ", "ܡܛ"], ["ܝܘ", "ܡܝ"], ["ܟܘ", "ܡܟ"], ["ܠܘ", "ܡܠ"], ["ܡܘ", "ܡܡ"], ["ܢܘ", "ܡܢ"], ["ܣܘ", "ܡܣ"], ["ܥܘ", "ܡܥ"], ["ܦܘ", "ܡܦ"], ["ܨܘ", "ܡܨ"], ["ܩܘ", "ܡܩ"], ["ܪܘ", "ܡܪ"], ["ܫܘ", "ܡܫ"], ["ܬܘ", "ܡܬ"]], "suffixes": [["ܠܝ", ""], ["ܠܘܟ", ""], ["ܠܟܝ", ""], ["ܠܗ", ""], ["ܠܢ", ""], ["ܠܘܟܘܢ", ""], ["ܠܗܘܢ", ""], ["ܠܐ", ""], ["ܠܟܘܢ", ""], ["ܠܘܢ", ""]], "conditionsIn": [], "conditionsOut": ["v_f"], "stemMinLength": 2, "stemCharacters": "{letter}"}
       ]
     },
     {

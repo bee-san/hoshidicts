@@ -260,6 +260,8 @@ weak root	0	ܚܙܝܵܐ	ܚܙܐܐ	*	*
 proclitic	0	ܒܸܬ	ܬ	*	*
 proclitic	0	ܒܸܦܬ݂ܵܚܵܐ	ܸܦܬ݂ܵܚܵܐ	*	*
 proclitic	0	ܘܐ	ܐ	*	*
+L-suffix joined (optional)	1	ܘܗ݇ܘܹܠܘܿܢ	ܗܘܐ	*	lJoined|w-
+L-suffix joined (optional)	1	ܐ݇ܬܹܠܘܿܢ	ܐܬܐ	*	lJoined
 # --- negatives: each transform keeps its stem minimum and reads one word (constructed forms) ---
 stem minimum (l1s)	0	ܟ ܠܝ	ܟ	*	*
 one word (l1s)	0	ܗܢܐ ܦܬܚ ܠܝ	ܗܢܐ ܦܬܚ	*	*

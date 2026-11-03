@@ -3250,6 +3250,19 @@
       [1810, 1839],
       [1869, 1871]
     ],
+    "transforms[20].rules[17].stemCharacters": [
+      [1808, 1808],
+      [1810, 1839],
+      [1869, 1871]
+    ],
+    "transforms[20].rules[18].stemCharacters": [
+      [1808, 1808],
+      [1810, 1839],
+      [1869, 1871]
+    ],
+    "transforms[20].rules[18].stemNotEndsWith": [
+      [1808, 1808]
+    ],
     "transforms[21].rules[0].stemCharacters": [
       [1808, 1808],
       [1810, 1839],

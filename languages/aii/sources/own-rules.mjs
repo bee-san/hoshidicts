@@ -172,7 +172,8 @@ for (const [id, letters, , meaning] of L_SUFFIXES) {
 
 // Joined to the verb (ܦܬ݂ܝܼܚܠܹܗ). The Urmia Bible of 1893 and informal
 // writing do this (in the Urmia Bible the third person masculine is ܠܹܐ:
-// ܦܪܸܫܠܹܐ, he separated; ܚܙܹܠܹܐ, he saw, where a verb in -ē drops its ܐ).
+// ܦܪܸܫܠܹܐ, he separated; ܚܙܹܠܹܐ, he saw, where a verb in -ē drops its ܐ;
+// the third person plural ܠܘܿܢ).
 // Off by default: many nouns end in the same letters (ܚܲܝܠܵܐ, strength;
 // ܚܲܝܠܹܗ, his strength), and the standard spelling writes the L-suffix as
 // a word of its own.
@@ -184,6 +185,10 @@ for (const [, letters] of L_SUFFIXES) {
 suffix('lJoined', 'ܠܐ', '', ANY, ['v_l'], {stemNotEndsWith: '[ܐ]'});
 suffix('lJoined', 'ܠܐ', 'ܐ', ANY, ['v_l'], {stemNotEndsWith: '[ܐ]'});
 suffix('lJoined', 'ܠܟܘܢ', '', ANY, ['v_l']);
+// The Urmia Bible's third person plural is ܠܘܿܢ (ܐ݇ܬܹܠܘܿܢ, they came; ܫܩܸܠܘܿܢ,
+// they took).
+suffix('lJoined', 'ܠܘܢ', '', ANY, ['v_l']);
+suffix('lJoined', 'ܠܘܢ', 'ܐ', ANY, ['v_l'], {stemNotEndsWith: '[ܐ]'});
 
 // --- Stem alternations ----------------------------------------------------------
 // After an L-suffix or a subject ending was removed, or in a bare word. They
@@ -220,7 +225,7 @@ for (const c of LETTERS) {
 // starts like it (ܛܘܼܪܵܐ, mountain) is not read as ܡ + root (ܡܛܪܐ, rain).
 transform('pastBaseUrmia', 'past (Stem II, Urmia)', 'The past of a Stem II verb written without ܡ and with the L-suffix joined, as the Urmia Bible of 1893 writes it (ܬܘܼܪܸܨܠܹܐ, he made, from ܡܬܲܪܸܨ).', {optional: true});
 rule('pastBaseUrmia', {type: 'circumfix', prefixes: LETTERS.map((c) => [`${c}ܘ`, `ܡ${c}`]),
-    suffixes: [...L_SUFFIXES.map(([, letters]) => [letters, '']), ['ܠܐ', ''], ['ܠܟܘܢ', '']],
+    suffixes: [...L_SUFFIXES.map(([, letters]) => [letters, '']), ['ܠܐ', ''], ['ܠܟܘܢ', ''], ['ܠܘܢ', '']],
     conditionsIn: ANY, conditionsOut: VERB, stemMinLength: 2, stemCharacters: LETTER});
 // Reflexive-passive verbs in ܡܬ- (ܡܸܬ݂ܟܬ݂ܹܒ݂, to be written) put ܘ before
 // the last radical in the passive past and the participle (ܡܸܬ݂ܟܬ݂ܘܼܒ݂ܸܢ, I
