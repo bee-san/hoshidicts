@@ -314,6 +314,8 @@ personTransforms('passive-dependent', 'passive dependent', 'Mediopassive perfect
     '1sg': '(θα) γραφτώ, αγαπηθώ', '2sg': 'γραφτείς', '3sg': 'γραφτεί', '1pl': 'γραφτούμε', '2pl': 'γραφτείτε', '3pl': 'γραφτούν, γραφτούνε'});
 transform('passive-imperative-2sg', 'passive imperative (2nd sg)', 'Mediopassive imperative, second person singular: ντύσου, σκέψου, θυμήσου.');
 transform('passive-participle', 'passive participle', 'Perfect passive participle, as an adjective in -μένος: γραμμένος, αγορασμένος, αγαπημένος.');
+transform('old-augment', 'augment ε- (older spelling)', 'The augment ε- written before a stressed stem, as older and formal texts do: εφώναξε (φώναξε), εψιθύρισε, εκάθισε.');
+transform('movable-n', '-ν (movable nu)', 'The final ν that older texts add to the third person singular of the past: είπεν (είπε), είχεν, έλεγεν, εφώναξεν.');
 transform('internal-augment', 'internal augment', 'Past form of a compound verb with the augment ε inside it: επέστρεψα (επιστρέφω), κατέστρεψα, παρέδωσα, συνέλαβα.');
 transform('ξανα-', 'ξανα-', 'The prefix ξανα- (again): ξαναγράφω, ξανάγραψα → γράφω.');
 
@@ -550,8 +552,10 @@ for (const [aor, pres] of PASSIVE_PERFECTIVE) {
 for (const [aor, pres] of PASSIVE_PERFECTIVE.filter(([a]) => a.endsWith('θ'))) {
     for (const [l] of PASSIVE_LEMMAS) {
         const vowelInStem = aor !== acc(aor);
+        // Without the augment the stem has two syllables (ιδρύθη, εκλέχθη);
+        // a shorter one takes it (εστάθη), so Στάθη is not στάζω.
         for (const [p, end] of [['3sg', 'η'], ['3pl', 'ησαν']]) {
-            suffix(`passive-aorist-${p}`, acc(aor) + end, (vowelInStem ? acc(pres) : pres) + l, {...VERB, stemContains: vowelInStem ? undefined : ACCENTED});
+            suffix(`passive-aorist-${p}`, acc(aor) + end, (vowelInStem ? acc(pres) : pres) + l, {...VERB, stemContains: vowelInStem ? undefined : ACCENTED, min: 4});
         }
     }
 }
@@ -642,6 +646,10 @@ const INTERNAL_AUGMENTS = [
 for (const [inf, def] of INTERNAL_AUGMENTS) {
     prefix('internal-augment', inf, def, {out: ['aug'], min: 2});
 }
+// εφώναξε → φώναξε [aug] → φωνάζω: only past-tense verb rules take the output.
+prefix('old-augment', 'ε', '', {out: ['aug'], min: 3, stemContains: ACCENTED});
+// είπεν → είπε; the accent is in the stem, so μηδέν and ουδέν are not read.
+suffix('movable-n', 'εν', 'ε', {min: 2, stemContains: ACCENTED});
 prefix('ξανα-', 'ξανα', '', {min: 2});
 prefix('ξανα-', 'ξανά', '', {min: 2});
 // A monosyllable loses its accent without the prefix: ξαναπώ → πω, ξαναδεί → δει.
@@ -651,7 +659,7 @@ byId.get('ξανα-').rules.push({type: 'prefix', inflected: 'ξανα', deinfle
 // Irregular verbs, written out.
 const IRREGULAR = [
     // [transform id, form, lemma]
-    ...[['present-1sg', 'είμαι'], ['present-2sg', 'είσαι'], ['present-3sg', 'είναι'], ['present-1pl', 'είμαστε'], ['present-2pl', 'είστε'], ['present-2pl', 'είσαστε'],
+    ...[['present-1sg', 'είμαι'], ['present-2sg', 'είσαι'], ['present-3sg', 'είναι'], ['present-3sg', 'είνε'], ['present-1pl', 'είμαστε'], ['present-2pl', 'είστε'], ['present-2pl', 'είσαστε'],
         ['imperfect-1sg', 'ήμουν'], ['imperfect-1sg', 'ήμουνα'], ['imperfect-2sg', 'ήσουν'], ['imperfect-2sg', 'ήσουνα'], ['imperfect-3sg', 'ήταν'], ['imperfect-3sg', 'ήτανε'],
         ['imperfect-1pl', 'ήμασταν'], ['imperfect-1pl', 'ήμαστε'], ['imperfect-2pl', 'ήσασταν'], ['imperfect-2pl', 'ήσαστε'], ['imperfect-3pl', 'ήσαν'], ['imperfect-3pl', 'ήσανε'],
         ['gerund', 'όντας']].map(([t, f]) => [t, f, 'είμαι']),
@@ -1088,6 +1096,7 @@ for (const v of ['ε', 'α', 'ο', 'ι', 'ά', 'ό', 'έ', 'ί', 'αι', 'ού',
 // them as ας and ήσαν.
 whole('aphaeresis', '\'ς', 'εις');
 whole('aphaeresis', '\'σαν', 'σαν');
+whole('aphaeresis', '\'νε', 'είναι');
 // The dropped vowel: έ (έρθει), εί (είναι), ή (ήθελα), ό (όλα), ά (άλλο),
 // and unaccented ε (εγώ, εκεί, εδώ, εμένα) and α (αυτός).
 for (const v of ['έ', 'ε', 'εί', 'ή', 'α', 'ά', 'ό']) {
