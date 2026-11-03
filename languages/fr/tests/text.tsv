@@ -43,7 +43,7 @@ join pronoun	1	m'y attendais	m'y+attendais
 join pronoun	1	me parle	me parle
 negatives	0	la parle	la+parle
 negatives	0	en jette	en+jette
-join pronoun	1	y allait	y+allait
-join pronoun	1	n'y allait	n'y+allait
 negatives	0	l'y allait	l'y+allait
 negatives	0	je me parle	je me+parle
+negatives	0	y allait	y+allait
+negatives	0	n'y allait	n'y+allait

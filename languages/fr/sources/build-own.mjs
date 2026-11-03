@@ -87,15 +87,19 @@ const whole = (inflected, deinflected, conditionsIn, conditionsOut) =>
 // elided and full forms (l → l', le, la). The preprocessor straightApostrophe
 // turns ’ into ', so the rules are written with '.
 transform('elision', 'elided word',
-    'An elided article, pronoun or conjunction before a word, removed: l\'homme → homme, d\'eau → eau, j\'ai → ai, qu\'il → il, n\'est → est.');
+    'An elided article, pronoun, de, ne or que before a word, removed: l\'homme → homme, d\'eau → eau, j\'ai → ai, qu\'il → il, n\'est → est.');
 const ELIDED = [
     ['l', ['le', 'la']], ['d', ['de']], ['j', ['je']], ['m', ['me']], ['t', ['te']], ['s', ['se', 'si']],
     ['n', ['ne']], ['c', ['ce']], ['ç', ['ça']], ['qu', ['que']], ['jusqu', ['jusque']], ['lorsqu', ['lorsque']],
     ['puisqu', ['puisque']], ['quoiqu', ['quoique']], ['presqu', ['presque']],
 ];
 // Before a verb only: j', m', t', s', n', c' (and ç'). l' is also an article,
-// and qu', d', jusqu' … come before any word.
+// and qu' and d' come before any word. The conjunctions and adverbs jusqu',
+// lorsqu', puisqu', quoiqu' and presqu' are not removed: a lookup from them
+// is for them (lorsqu'il → lorsque, not il; jusqu'à la → jusqu'à, not à
+// la), and the elided-form rules below read them.
 const BEFORE_VERB = new Set(['j', 'm', 't', 's', 'n', 'c', 'ç']);
+const KEPT = new Set(['jusqu', 'lorsqu', 'puisqu', 'quoiqu', 'presqu']);
 // Any word may follow the apostrophe, as in informal writing (j'suis,
 // t'sais). After m', t', s' and l', a following en or y belongs with them to
 // a pronominal verb or an object (s'en revenait, s'y prend, je l'y ai vu):
@@ -105,6 +109,7 @@ const BEFORE_VERB = new Set(['j', 'm', 't', 's', 'n', 'c', 'ç']);
 // are split by the stem's first letter.
 const CLITIC = new Set(['m', 't', 's', 'l']);
 for (const [short] of ELIDED) {
+    if (KEPT.has(short)) { continue; }
     const out = BEFORE_VERB.has(short) ? ['vcl'] : [];
     if (!CLITIC.has(short)) {
         add('elision', prefix(`${short}'`, '', [], out));
@@ -363,8 +368,12 @@ model('avoir', 0, 'alone', {notAfter: '[y]', notAfterPersons: ['1s', '2s', '1p',
         'past-participle-fp': {'-': 'eues'},
     },
 });
+// aller keeps every form, also those the regular endings read (allons,
+// allait), with its stem constraint: so they follow y and s'en, as the
+// dictionaries' phrases y aller and s'en aller need (nous y allions, il s'en
+// allait).
 model('aller', 0, 'alone', {
-    firstGroup: true,
+    firstGroup: true, keepRegular: true,
     sg: [], pl: 'all', p3: [], ps: [['all', 'a']], fut: 'ir', sb: 'aill', sb2: 'all', pp: 'allé',
     set: {
         present: {'1s': 'vais', '2s': 'vas', '3s': 'va', '1p': 'allons', '2p': 'allez', '3p': 'vont'},
@@ -667,7 +676,7 @@ for (const m of MODELS) {
     const deinflected = inf.slice(m.keep);
     for (const {tense, form, persons} of cellsByForm(par)) {
         if (!form.startsWith(inf.slice(0, m.keep))) { throw new Error(`${inf}: ${form} does not start with ${inf.slice(0, m.keep)}`); }
-        if (!m.regular && m.firstGroup && regularReads(form, inf)) { continue; }
+        if (!m.regular && m.firstGroup && !m.keepRegular && regularReads(form, inf)) { continue; }
         const inflected = form.slice(m.keep);
         const t = TENSE.get(tense);
         const set = PERSON_SETS.find((s) => s.join() === persons.join());

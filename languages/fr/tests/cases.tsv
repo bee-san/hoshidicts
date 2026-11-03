@@ -525,11 +525,6 @@ elision	1	m'aime	aimer	v	*
 elision	1	l'aime	aimer	v	*
 elision	1	s'élève	élever	v	*
 elision	1	s'amusant	amuser	v	present-participle|elision
-elision	1	jusqu'ici	ici	*	elision
-elision	1	lorsqu'il	il	*	elision
-elision	1	puisqu'elle	elle	*	elision
-elision	1	quoiqu'il	il	*	elision
-elision	1	presqu'île	île	*	elision
 elision	1	ç'a	avoir	v	*
 elided form	1	l	l'	*	elided-form
 elided form	1	l	le	*	elided-form
@@ -792,3 +787,13 @@ negatives	0	en jetât	en jeter	*	*
 negatives	0	me la ramener	se la ramener	*	*
 negatives	0	la ramène	la ramener	*	*
 negatives	0	la ramasse	la ramasser	*	*
+negatives	0	jusqu'à la	à la	*	*
+negatives	0	jusqu'ici	ici	*	*
+negatives	0	lorsqu'il	il	*	*
+negatives	0	puisqu'elle	elle	*	*
+negatives	0	quoiqu'il	il	*	*
+negatives	0	presqu'île	île	*	*
+negatives	0	y passerai	y passer	*	*
+negatives	0	y resta	y rester	*	*
+phrases	1	y allions	y aller	v	imperfect-1p
+phrases	1	s'en allait	s'en aller	v	imperfect-3s

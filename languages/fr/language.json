@@ -62,8 +62,8 @@
       },
       {
         "id": "joinPronoun",
-        "name": "Join a pronoun to the verb after it",
-        "variants": [[{"map": {"me ": "me+", "te ": "te+", "se ": "se+", "m'en ": "m'en+", "t'en ": "t'en+", "s'en ": "s'en+", "m'y ": "m'y+", "t'y ": "t'y+", "s'y ": "s'y+", "y ": "y+", "j'y ": "j'y+", "n'y ": "n'y+"}, "at": "start"}]]
+        "name": "Join a reflexive pronoun to the verb after it",
+        "variants": [[{"map": {"me ": "me+", "te ": "te+", "se ": "se+", "m'en ": "m'en+", "t'en ": "t'en+", "s'en ": "s'en+", "m'y ": "m'y+", "t'y ": "t'y+", "s'y ": "s'y+"}, "at": "start"}]]
       }
     ],
     "postprocessors": [
@@ -71,7 +71,7 @@
         "id": "unjoinPronoun",
         "name": "Space after a joined pronoun",
         "keepInput": false,
-        "variants": [[{"map": {"+": " "}}]]
+        "variants": [[{"map": {"me+": "me ", "te+": "te ", "se+": "se ", "m'en+": "m'en ", "t'en+": "t'en ", "s'en+": "s'en ", "m'y+": "m'y ", "t'y+": "t'y ", "s'y+": "s'y "}, "at": "start"}]]
       },
       {
         "id": "typographicApostrophe",
