@@ -13,8 +13,10 @@ The rules are written in Latin letters. The `cyrillicToLatin` preprocessor
 gives every Cyrillic text its Latin spelling, so `кућама` reaches `kuća`,
 and the Cyrillic form itself still finds the Cyrillic entries of the
 dictionary (`кућама` → `кућа`), which wiktionary-to-yomitan writes for most
-words. `lookup.untaggedTerms` is `pass`: the recommended dictionary has no
-part-of-speech tags (Measurements).
+words. The recommended dictionary has no part-of-speech tags, so the pack
+needs `lookup.untaggedTerms: "pass"` (hoshidicts #58; Measurements).
+`language.json` gets the field when #58 is on main, whose engine does not yet
+accept the key.
 
 ## Sources and licences
 
@@ -81,7 +83,7 @@ part-of-speech tags (Measurements).
 ## Rule provenance
 
 `transforms.json` has 179 transforms and 1,955 rules, all `own`, written in
-694 rows: the suffix rules of a transform that differ only in their ending
+695 rows: the suffix rules of a transform that differ only in their ending
 are one `circumfix` row in the cross-product form with an empty prefix
 (section 7.3), which the engine expands when the pack loads. There are no
 `yomitan` or `both` rules: Yomitan d3c54c1 has no Serbo-Croatian transforms
@@ -163,18 +165,21 @@ rules is the own set, and it is the final set.
   - the per-root classes and exclusions listed above, each after a frequent
     word showed a wrong lemma;
   - the capital guard (Measurements, real text);
-  - the cross-product rows, which keep `tests/` and `sources/` under 1 MB;
-  - `lookup.untaggedTerms: "pass"` once hoshidicts #58 added it.
+  - the cross-product rows, which keep `tests/` and `sources/` under 1 MB.
 
 ## Measurements
 
-hoshidicts at main with #58 (`lookup.untaggedTerms`), GCC 14.3, Release;
-wty-sh-en as published, imported by `hoshidicts-cli import`. Every number
-comes from `sources/measure-all.sh` (`CACHE=<inputs> bash
+hoshidicts main b145feb with #58 (`lookup.untaggedTerms`, 32812c9) merged
+locally, GCC 14.3, Release; the rules at bf8e379; wty-sh-en as published,
+imported by `hoshidicts-cli import`. Every number comes from
+`sources/measure-all.sh` (`CACHE=<inputs> bash
 languages/sh/sources/measure-all.sh`), which runs `eval-language`,
 `sources/measure.py`, `sources/mutate.py`, `benchmark-lookup` and
 `sources/wasm-measure.mjs`; `build/lookup-batch` is
-`languages/en/sources/lookup-batch.cpp` built as its header says.
+`languages/en/sources/lookup-batch.cpp` built as its header says. The
+outputs are in `reports/hachi-lang-sh-evidence/measure-pass-bf8e379/` (with
+`"untaggedTerms": "pass"` added to a copy of `language.json`) and
+`measure-filter-bf8e379/` (without it).
 
 **The dictionary has no part-of-speech tags.** wty-sh-en leaves the `rules`
 column empty on all 987,099 rows (wiktionary-to-yomitan writes it only for
@@ -184,10 +189,13 @@ rule of this pack would find nothing; only the text as written, its
 processor variants and the dictionary's form-of rows would. With `"pass"`,
 an untagged row carries every dictionary-form condition (D), so the rules
 reach the dictionary and still keep their conditions for chaining. The
-numbers marked "filter" were measured before #58, with the same rules.
+numbers marked "filter" are those of the pack without the field, which is
+what hoshidicts main gives before #58. A copy of wty-sh-en whose rows all
+carry the four dictionary-form tags (`sources/tag-all-rows.py`, labelled)
+gives exactly the "pass" numbers on main without #58 (`measure-filter-bf8e379/measure-2.txt`).
 
 1. **eval-language** on the 1,000 sampled rows (`corpus.tsv` + `gaps.tsv`)
-   and on `cases.tsv` (967 positives, 65 negatives). The pack has no
+   and on `cases.tsv` (966 positives, 67 negatives). The pack has no
    optional processor, transform or pass, so every file gives the same
    numbers with every option on and with the defaults (a copy with
    `# options: default` added). "Processors only" is the pack with no rules
@@ -195,21 +203,21 @@ numbers marked "filter" were measured before #58, with the same rules.
 
    | Rule set | Sample recall | False candidates per row (pass / filter) | First rank (pass / filter) | cases.tsv recall | cases.tsv negatives |
    | --- | ---: | ---: | ---: | ---: | ---: |
-   | Own = union = final (`sources/own.json`, `transforms.json`) | 98.2% (982) | 0.389 / 0.058 | 93.0% / 79.2% | 967 / 967 | 65 / 65 |
-   | Processors only (Yomitan has no transforms) | 1.3% (13) | 0.058 / 0.058 | 79.2% / 79.2% | 7 / 967 | 65 / 65 |
+   | Own = union = final (`sources/own.json`, `transforms.json`) | 98.2% (982) | 0.387 / 0.058 | 93.0% / 79.2% | 966 / 966 | 67 / 67 |
+   | Processors only (Yomitan has no transforms) | 1.3% (13) | 0.058 / 0.058 | 79.2% / 79.2% | 7 / 966 | 67 / 67 |
 
    - Without the rules, 79.2% of the sample still ranks first through the
      dictionary's form-of rows. The rules add 13.8 points with `pass`, for
      forms the dictionary lists without a working reference (below) or not at
      all.
-   - **Per rule** (`--per-rule`, sample and `cases.tsv`, pass): 415 of the
-     694 rows recover a row no other rule reaches, none breaks a negative,
+   - **Per rule** (`--per-rule`, sample and `cases.tsv`, pass): 416 of the
+     695 rows recover a row no other rule reaches, none breaks a negative,
      and 12 add false candidates (15 in all) without recovering a row. These
      are second readings of pronoun forms (`njega` → `ono` beside `on`, `kog`
      → `koji` beside `tko`) and one -ati present rule; they are kept.
 2. **Frequent forms** (`measure.py frequent`): the 10,000 most frequent
-   words of each subtitle list. A rule reaches 5,388 hr words (110,789,563
-   tokens) and 5,778 sr words; a word counts when a lemma its form-of rows
+   words of each subtitle list. A rule reaches 5,383 hr words (110,753,167
+   tokens) and 5,774 sr words; a word counts when a lemma its form-of rows
    name, after accent marks are removed and through up to two more
    references, is among its deinflections.
 
@@ -236,7 +244,7 @@ numbers marked "filter" were measured before #58, with the same rules.
    bos sentences have 157,634 places where a clitic, auxiliary or short
    pronoun (`se`, `je`, `sam`, `ću`, `bi`, `mi`, `ga`, `li`, ...) follows or
    precedes a word, looked up from the clitic and from the word before it.
-   - The first result is the hovered word's own entry at 148,317 places and a
+   - The first result is the hovered word's own entry at 148,369 places and a
      longer text with a lemma its form-of rows name (`vidio sam` → `vidjeti`,
      `radit ću` → `raditi`) at 4,236.
    - A longer first result that is not such a lemma: 42 places. 12 are
@@ -248,19 +256,19 @@ numbers marked "filter" were measured before #58, with the same rules.
 
    | Text | Lookups | First result right by script | Wrong by script | Not judged by script | Nothing |
    | --- | ---: | ---: | ---: | ---: | ---: |
-   | *Zlatarevo zlato* | 79,137 | 67,579 | 152 (0.19%) | 3,237 | 8,169 |
+   | *Zlatarevo zlato* | 79,137 | 67,625 | 106 (0.13%) | 3,237 | 8,169 |
    | Gutenberg sr | 70,938 | 60,372 | 22 (0.03%) | 3,876 | 6,668 |
 
    - A result is judged by script when the matched text has form-of rows or
      an entry; a random sample of 60 of the others per text (seed 1) was
      judged by reading the text (`reports/hachi-lang-sh-evidence/measure-pass/judged-*.tsv`):
-     48 and 47 right. Counting the sample's share, about 800 (1.0%) and 860
+     48 and 47 right. Counting the sample's share, about 750 (0.95%) and 860
      (1.2%) first results are wrong.
    - The largest groups of wrong results by script are capitalised sentence
-     starts read as a proper noun through a noun rule (`Dobro` → `Dobra`,
-     `Toga` → `Togo`, `Nikad` → `Nika`, `Nisu` → `Niš`), which rank first
-     because the as-written text needs no processor step. Some are right in
-     context and counted wrong (`Marka` → `Marko`, `Gospo` → `Gospa`).
+     starts read as a proper noun through a noun rule (`Toga` → `Togo`,
+     `Nikad` → `Nika`, `Nisu` → `Niš`), which rank first because the
+     as-written text needs no processor step. Some are right in context and
+     counted wrong (`Marka`, the genitive of the name `Marko`).
    - In the hand-judged samples the wrong ones are words the dictionary does
      not have, read as another word (`kravice` → `kraviti` through the
      diacritics processor, `tokama` → `tok`, `mise` → `miš`), Latin words,
@@ -268,31 +276,39 @@ numbers marked "filter" were measured before #58, with the same rules.
      the 13).
    - With the filter (before #58) the texts find nothing at 11,360 and 10,164
      positions: the rules find something at 3,191 and 3,496 more.
-   - The capital guard took the wrong results by script in *Zlatarevo zlato*
-     from 217 to 152.
+   - The capital guards took the wrong results by script in *Zlatarevo
+     zlato* from 217 to 152 (verb, adjective and comparative rules) and to
+     106 (the vocative `o` → `a`, which also changes 85 first results among
+     Tatoeba's 66,215 capitalised hovers, 76 for the better: `Dobro` →
+     `dobro` 57 times, `Nadamo` → `nadati`; `Tokijo` now gives `tok`). The
+     same guard on the neuter genitive `a` → `o` was measured and left out:
+     it would lose the cases of masculine names in -o (`Marka`, `Darka`).
 5. **Trace names** (`measure.py traces`): for 948 of the 969 reached corpus
    rows (97.8%), the trace a lookup shows names the row's UniMorph case and
    number, or tense and person.
 6. **Performance** (section 13), the 70 texts of
    `sources/benchmark-words.txt`, 6 passes with the first dropped:
    - native `benchmark-lookup --languages languages --language sh`,
-     wty-sh-en mapped, three runs at machine load about 40: p50 84-93 µs,
-     p95 134-159 µs (with the filter: p50 74-79 µs). Without the diacritics
-     processor p50 is about 20 µs lower. The budget is 1 ms p50;
+     wty-sh-en mapped, three runs at machine load about 40: p50 83-86 µs,
+     p95 133-140 µs (with the filter: p50 72-78 µs, p95 120-128 µs). Without
+     the diacritics processor p50 is about 20 µs lower. The budget is 1 ms
+     p50;
    - WebAssembly (`sources/wasm-measure.mjs`, Hachidori feat/multi-language
      803f7b6's prebuilt engines, Node 22, the pack without `untaggedTerms`,
-     which those engines predate): `hdw_language_load` median 6.1 ms
-     single-thread and 6.7 ms threaded over 10 fresh engines, live heap
-     +679 KB; `hdw_lookup` p50 0.155 ms and p95 0.263 ms single-thread,
-     0.158 ms and 0.273 ms threaded, with wty-sh-en paged. Budgets 50 ms and
-     20 MB. The pack has 10 `pattern` rules, the future written apart.
+     which those engines predate): `hdw_language_load` median 6.0 ms
+     single-thread and 6.4 ms threaded over 10 fresh engines, live heap
+     +680 KB; `hdw_lookup` p50 0.149 ms and p95 0.253 ms single-thread,
+     0.172 ms and 0.306 ms threaded, with wty-sh-en paged (filter: 66 of the
+     70 texts find something; with the labelled copy, 70). Budgets 50 ms
+     and 20 MB. The pack has 10 `pattern` rules, the future written apart.
 7. **Tests.** `language-conformance-test languages/sh`: corpus.tsv 982 / 982,
-   cases.tsv 1,032 / 1,032, text.tsv 37 / 37, lookup.tsv 49 / 49, gaps.tsv
-   0 / 18; classes.json agrees (14 classes, 371 fields, 3 steps). `node
-   tools/check-yomitan.mjs` compares the four Yomitan processors on 1,925 to
-   2,781 inputs each: 0 differences. `sources/mutate.py` removes each stem
-   constraint and exclusion in a scratch copy (29 mutations); every one makes
-   the conformance test fail. `tests/` and `sources/` hold about 700 KB.
+   cases.tsv 1,033 / 1,033, text.tsv 37 / 37, lookup.tsv 50 / 50, gaps.tsv
+   0 / 19 (18 UniMorph rows and `Marijo`); classes.json agrees (14 classes,
+   373 fields, 3 steps). `node tools/check-yomitan.mjs` compares the four
+   Yomitan processors on 1,964 to 2,820 inputs each: 0 differences.
+   `sources/mutate.py` removes each stem constraint and exclusion in a
+   scratch copy (30 mutations); every one makes the conformance test fail.
+   `tests/` and `sources/` hold 705,669 bytes.
 8. **Hachidori** (feat/multi-language 803f7b6 with this branch in
    `third_party/hoshidicts`, `test/chrome-language-pack.mjs`, Chrome 152,
    wty-sh-en): 14 / 14 checks pass. Settings adds Serbo-Croatian beside
@@ -314,23 +330,27 @@ numbers marked "filter" were measured before #58, with the same rules.
   framework (`reports/hachi-lang-questions.md`, 2026-11-03).
 - **Capitalised words and proper nouns.** A capitalised word is looked up
   as written before its lower-case variant, and a noun rule can read it as
-  a proper noun that ranks first: `Dobro` → `Dobra` (29 of the 152 wrong
-  results by script in *Zlatarevo zlato*), `Toga` → `Togo`, `Nisu` → `Niš`.
-  Verb, adjective and comparative rules do not read capitalised text, which
-  also leaves the two capitalised adjectives of wty-sh-en, `Zemljin` and
-  `Gospodnji`, without their case forms.
+  a proper noun that ranks first: `Toga` → `Togo`, `Nikad` → `Nika`,
+  `Nisu` → `Niš` (most of the 106 wrong results by script in *Zlatarevo
+  zlato*). Verb, adjective and comparative rules and the vocative `o` → `a`
+  do not read capitalised text, which leaves the vocatives of feminine
+  names (`Marijo` → `Marija`, in `gaps.tsv`) and the case forms of the two
+  capitalised adjectives of wty-sh-en, `Zemljin` and `Gospodnji`.
 - **Words the dictionary lacks** are often read as another word: in the
   hand-judged samples, 12 of 60 and 13 of 60 such first results are wrong
   (names, Latin words, diminutives such as `kravice`, `kesica`).
 - **No part-of-speech filtering.** With an untagged dictionary every rule
   output passes the filter, so an adjective ending can reach a noun
-  (`ulazim` → `ulaz`) and false candidates are 0.389 per sampled row.
+  (`ulazim` → `ulaz`) and false candidates are 0.387 per sampled row.
+- **Until `untaggedTerms` is set** (hoshidicts #58), the rules find no term
+  of wty-sh-en: the published dictionary's form-of rows answer alone, and
+  1,942 of the hr 10,000 words find nothing.
 - **The diacritics processor** (Yomitan's, on by default as in Yomitan)
   reads text without diacritics (it recovers 87 of the hr 10,000 words and
   320 of the bs 10,000, `zasto` → `zašto`, `cu` → `ću`), and in text with
   diacritics it adds readings: `posao je` → `poći` (12 places in Tatoeba),
   `mise` → `miš`.
-- **Not reached** (`gaps.tsv`, 18 rows): UniMorph rows with a lemma of
+- **Not reached** (`gaps.tsv`, 18 UniMorph rows): rows with a lemma of
   another number or spelling (`sinaps` → `sinapsa`, `drvodele` →
   `drvodelja`), irregular plurals (`pojasevi`, `praočevi`), and forms such
   as `potaći ću` → `potaknuti`, `takla` → `taknuti`, `tonjaste` → `tonuti`.
