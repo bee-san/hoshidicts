@@ -6842,6 +6842,11 @@
         ["gumaling sa", "gumaling sa"],
         ["tungkol saan", "tungkol saan"],
         ["magpasa", "magpasa"],
+        ["mandarin", "mandarin"],
+        ["durog", "durog"],
+        ["palapag", "palapag"],
+        ["palaboy", "palaboy"],
+        ["tindahan", "tindahan"],
         ["binalaan", "binalaan"],
         ["bumibista", "bumibista"],
         ["diringinggin", "diringinggin"],
@@ -6921,6 +6926,7 @@
         ["nagsimula ang klase", "nagsimula ang klase"],
         ["nagsisipilyo ako", "nagsisipilyo ako"],
         ["kailang̃an ko", "kailang̃an ko"],
+        ["matandaan mo", "matandaan mo"],
         ["Nagluluto ang nanay ko ng adobo para sa hapunan.", "nagluluto ang nanay ko ng adobo para sa hapunan."],
         ["Nagluluto", "nagluluto"]
       ]
@@ -8888,6 +8894,11 @@
         ["gumaling sa", "Gumaling sa"],
         ["tungkol saan", "Tungkol saan"],
         ["magpasa", "Magpasa"],
+        ["mandarin", "Mandarin"],
+        ["durog", "Durog"],
+        ["palapag", "Palapag"],
+        ["palaboy", "Palaboy"],
+        ["tindahan", "Tindahan"],
         ["binalaan", "Binalaan"],
         ["bumibista", "Bumibista"],
         ["diringinggin", "Diringinggin"],
@@ -8967,6 +8978,7 @@
         ["nagsimula ang klase", "Nagsimula ang klase"],
         ["nagsisipilyo ako", "Nagsisipilyo ako"],
         ["kailang̃an ko", "Kailang̃an ko"],
+        ["matandaan mo", "Matandaan mo"],
         ["Nagluluto ang nanay ko ng adobo para sa hapunan.", "Nagluluto ang nanay ko ng adobo para sa hapunan."],
         ["Nagluluto", "Nagluluto"]
       ]

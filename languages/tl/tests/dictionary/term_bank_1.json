@@ -11,7 +11,7 @@
   ["talaga", "", "adv", "", 0, ["really"], 10, ""],
   ["Talag", "", "name", "n", 0, ["a surname (an entry a wrong reading of Talagang would reach)"], 11, ""],
   ["hiya", "", "n", "n", 0, ["shame; embarrassment"], 12, ""],
-  ["makahiya", "", "n", "n", 0, ["Mimosa pudica (an entry a less likely reading of nakakahiya would reach)"], 13, ""],
+  ["makahiya", "", "n", "n v", 0, ["Mimosa pudica; also tagged as a verb here, so that a reading of nakakahiya through the aspect rules would reach it"], 13, ""],
   ["tulong", "", "n", "n", 0, ["help"], 14, ""],
   ["katulong", "", "n", "n", 0, ["helper (an entry a wrong reading of makakatulong would reach)"], 15, ""],
   ["dumating", "", "v", "v", 0, ["to arrive"], 16, ""],
@@ -46,7 +46,9 @@
   ["pilyo", "", "adj", "adj", 0, ["naughty (an entry a wrong reading of nagsisipilyo would reach)"], 45, ""],
   ["kailangan", "", "n", "n", 0, ["need"], 46, ""],
   ["ilang", "", "adj", "adj", 0, ["a few (an entry a wrong reading of kailang̃an would reach)"], 47, ""],
-  ["nakita", "", "non-lemma", "", 0, [["makita", ["completive"]]], 48, ""],
-  ["ᜃᜓᜋᜁᜈ᜔", "", "non-lemma", "", 0, [["kumain", ["Baybayin"]]], 49, ""],
-  ["ilang̃", "", "non-lemma", "", 0, [["ilang", ["alternative"]]], 50, ""]
+  ["tanda", "", "n", "n", 0, ["sign; age"], 48, ""],
+  ["matanda", "", "adj", "adj", 0, ["old (an entry a wrong reading of matandaan would reach)"], 49, ""],
+  ["nakita", "", "non-lemma", "", 0, [["makita", ["completive"]]], 50, ""],
+  ["ᜃᜓᜋᜁᜈ᜔", "", "non-lemma", "", 0, [["kumain", ["Baybayin"]]], 51, ""],
+  ["ilang̃", "", "non-lemma", "", 0, [["ilang", ["alternative"]]], 52, ""]
 ]
