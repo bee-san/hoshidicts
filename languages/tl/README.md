@@ -538,24 +538,24 @@ Japanese, the import of 124,921 terms, 10 cases such as *Nagluluto* →
 switch to Japanese and back). The popup for *Nagluluto* shows *magluto*
 and then *luto*, which only `pass` reaches.
 
-**Performance** (with `pass`; host load 44-48 on 64 cores, so upper
+**Performance** (with `pass`; host load 70-194 on 64 cores, so upper
 bounds):
 
 - native `benchmark-lookup --languages languages --language tl` with
   wty-tl-en on the 421 word positions of the 65 sentences, each from the
   word to the end of its sentence (`measure.py positions`), 6 passes with
-  the first dropped, three runs: p50 32.6-33.3 µs, p95 84.5-86.9 µs (budget
+  the first dropped, three runs: p50 33.2-35.1 µs, p95 86.2-91.7 µs (budget
   1 ms p50);
 - Hachidori's WebAssembly (the rebuilt runtimes, Node 22,
   `benchmark/node-lookup.mjs`, the 430 word positions that harness finds in
-  the same sentences, 6 passes): `hdw_lookup` single-thread p50 94.5 µs,
-  p95 256.1 µs; threaded p50 107.5 µs, p95 280.8 µs;
+  the same sentences, 6 passes): `hdw_lookup` single-thread p50 98.6 µs,
+  p95 275.6 µs; threaded p50 113.1 µs, p95 290.8 µs;
 - pack load (`sources/wasm-load.mjs`, 10 fresh engines): `hdw_language_load`
-  median 15.5 ms single-thread and 16.2 ms threaded, live heap +1,279,704
+  median 16.1 ms single-thread and 17.2 ms threaded, live heap +1,280,640
   bytes; natively (`sources/load-native.cpp`) `LanguageRegistry::add`
-  takes 3.9-4.1 ms (median of 50, three runs) and the registry holds
-  2,475,728 bytes. Budgets 50 ms and 20 MB;
-- 187 `pattern` rules: they add 286,632 bytes of heap and 2.9 ms of load in
+  takes 4.2-4.4 ms (median of 50, three runs) and the registry holds
+  2,479,120 bytes. Budgets 50 ms and 20 MB;
+- 188 `pattern` rules: they add 287,568 bytes of heap and 3.1 ms of load in
   WebAssembly (the same measurement without them).
 
 **Commands.** From the repository root, with `build/` configured as
