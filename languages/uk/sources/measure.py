@@ -133,6 +133,8 @@ def meant(word, lemmas, targets):
             return LABELS[w.lower()], 'label'
     right, how = set(), 'rows'
     for w in keys(word):
+        if w in lemmas:
+            right.add(w)
         if PRONOUN_LEMMAS.get(w):
             right |= PRONOUN_LEMMAS[w]
             continue
@@ -149,8 +151,6 @@ def meant(word, lemmas, targets):
                 how = 'proxy'
         for g in groups:
             right |= g | {t for n in g for t in targets.get(n, ())}
-        if w in lemmas:
-            right.add(w)
     return right, how
 
 
