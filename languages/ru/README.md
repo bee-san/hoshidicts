@@ -216,10 +216,11 @@ no Russian rules, so the own rules are also the union and the final set, and
     (`пересчете` → пересчёт, not перестать);
   - деньги's oblique forms are written out (`деньгами`, not деньга);
   - the fleeting dative and locative in -у leave out stems in к (`коробку`,
-    `пушку`, `бочку` → коробка, пушка, бочка, not коробок, пушок, бочок). Of
-    the 1,325 UniMorph datives in -ку the rules no longer reach, 1,275 still
-    find their -ок noun through wty-ru-en's own rows (`куску` → кусок),
-    1,254 of them first; the sample row `коньку` → конёк moved to `gaps.tsv`;
+    `пушку`, `бочку` → коробка, пушка, бочка, not коробок, пушок, бочок). The
+    rules no longer reach 326 of UniMorph's 1,325 datives in -ку; a lookup
+    still finds the -ок noun for 306 of them through wty-ru-en's own rows
+    (`куску` → кусок), 288 first. The sample row `коньку` → конёк moved to
+    `gaps.tsv`;
   - orders tried and kept out, because they made more words wrong than
     right: adjectives before nouns in every form (40 better, 6 worse, and
     many noun readings such as `тайны` moved to the adjective), the
@@ -440,45 +441,88 @@ node languages/ru/sources/wasm-load.mjs <hachidori checkout> languages/ru 10
 
 ## Known gaps
 
-- **`gaps.tsv`** (3 rows, reported, not enforced):
+- **Ties the rules cannot break** (Measurements 2 and 4: 38 of the 10,000
+  frequent words, 763,283 tokens, and 420 of the 72,556 judged positions of
+  the three texts). A word's own form-of rows name two lemmas, both reach
+  the word at one step and the same trace length, both are
+  dictionary-confirmed, and the comparator's last keys decide
+  (docs/languages.md 9.6): "written form equals reading", which a
+  monosyllable without a stress mark always wins, then discovery order. A
+  rule adds a step, so it cannot outrank either. With every rule removed
+  the same words are wrong. Reported to the framework
+  (reports/hachi-lang-questions.md, 2026-11-03); a frequency dictionary
+  separates most of them, since its key comes first.
+  - the third-person and reflexive pronouns: wty-ru-en's rows for `ей`,
+    `ней`, `них`, `неё`, `ними`, `ими`, `ею`, `собой` and `собою` name every
+    personal pronoun, and я comes first (440,952 tokens; 279 positions);
+  - `лет` → лёт before год and лето (102,100; 58 positions), `дела`, `дел` →
+    деть before дело (69,299; 19), `пару`, `пары`, `паре` → пар before пара
+    (45,460), `готов` → гот before готовый (38,243; 10), the forms of стена →
+    стен (13,815; 20), `песни` → песнь, `плачу` → плач, `веди` → В (the
+    letter's old name), `выпей`, `выпью` → выпь, `шли` → слать before идти,
+    `полон` → плен, `воле` → вол, `бегу` → бег, `передам` → перёд, `задам` →
+    зад, `стекла` → стечь, `суки` → сук, `детки` → ребёночек, `коме` → ком,
+    `прессе`, `прессы` → пресс and `плату` → плат;
+  - `пришёл` shows wty-ru-en's phrase `пришёл, увидел, победил`, whose
+    reading is `пришёл`, before прийти (14,385);
+  - `читал`, `читала`, `любимый`, `пишущий` and `меня` are entries of their
+    own (their glosses name the lemma) and come first; that is right, but
+    `eval-language`'s first rank counts them as misses (Measurements 1).
+- **Ties the rules cause that remain** (16 frequent words, 46,002 tokens; 50
+  positions of the three texts). Each comes from a rare homonym that
+  wty-ru-en lists and a rule reaches as early as the right lemma; the
+  orders that would fix them move more words the wrong way (History):
+  - `душе` → душ (5,641; the dictionary alone gives дух, also wrong),
+    `убийцу`, `убийц` → убиец (6,828), `ванной` → ванный (4,432), `сучка` →
+    сучок (4,093), `карьеру` → карьер (3,114), `воздухе` → воздуха (2,711),
+    `лагере` → лагер (2,392), `методы` → метода (1,703), `носки` → носка
+    (1,558), `десятки` → десятка (1,473), `спорю` → спороть (1,533; спороть's
+    first person is спорю too), `двоим` → двоить (1,198);
+  - е written for ё where both spellings are words: `чертов` → черт, an
+    alternative of чёрт (4,343), `вел` → вести (3,310; the word's own rows
+    name велосипед, an abbreviation), `поешь` → петь (1,673; поёшь), `сует`
+    and `суете` → совать (суёт);
+  - capitalised words read through a name's form at no processor step:
+    `Тише` → Тихон (3), `Обе` → Обь, `Тюрем` → Тюр, `Канту` → Канто; names
+    the dictionary lacks read as the noun they come from: `Хоботова` → хобот
+    (19 positions, 10 words), and фон Корен of *Дуэль* → корить (106
+    positions: Корен and Корена are read as the short participle of корить
+    after the decapitalize step);
+  - `писано` → писаный (the adjective with one н), `замученные` → замутить,
+    `кленов` → кленовый; compounds and nouns the dictionary lacks
+    (`камер-лакей` → камера, `купчихи` → купчая) and old words (`снову` →
+    снова).
+- **Traces** (the lemma is right, the trace names another form): `чтоб` →
+  чтобы "genitive plural", `покое` → покой and `кое` → кой "nominative/
+  accusative neuter" (the adjective reading of a -ой noun, which comes
+  before the noun cases), `герою`, `покою`, `слою` → "instrumental
+  feminine" for the same reason, `такова` → таков "genitive singular".
+- **`gaps.tsv`** (4 rows, reported, not enforced):
+  - `коньку` → `конёк`: the fleeting dative in -у leaves out stems in к
+    (History); wty-ru-en's own row gives конёк in a lookup;
   - `телогических` → `теологический`: a misspelling in UniMorph rus;
   - `внутренни` → `внутренний`: UniMorph lists short forms of soft
-    adjectives in -ний, which they do not have, so no rule reads -ни as -ний;
+    adjectives in -ний, which they do not have;
   - `Толстого` → `Толстой` (hand-written): -ой adjective rules leave out
-    capitalised stems, so the rules no longer reach the surnames in -ой;
-    wty-ru-en's own form-of rows do (`lookup.tsv`).
+    capitalised stems; wty-ru-en's own form-of rows give it (`lookup.tsv`).
+- **What the rules miss**: 1.31% of the 295,660 eligible UniMorph rows
+  (Measurements 1), most among imperatives (3.44%) and short adjectives
+  (2.74%), and 326 datives in -ку of -ок nouns (`ботинку` → ботинок), 306 of
+  which a lookup still finds through wty-ru-en's rows. A reading of a rare verb or noun that collides
+  with a frequent word is left out by name (`спасть`, `минуть`, `кутить`,
+  `почесть`, `мять`'s imperative `помни`), so their own forms lose that
+  reading too.
 - **The field.** The pack needs `lookup.untaggedTerms` (hoshidicts#58).
   Engines built before it refuse the pack ("unknown key"), as Hachidori's
   prebuilt engines at feat/multi-language 803f7b6e do; without the field,
   rule outputs never match wiktionary-to-yomitan's Russian rows, and lookups
   reach a lemma only through the form-of rows of the word as written.
-- **Words the dictionary lists twice.** `пришёл` shows wty-ru-en's phrase
-  `пришёл, увидел, победил`, whose reading is `пришёл`, before прийти;
-  `читал`, `читала`, `любимый`, `пишущий` and `меня` are entries of their
-  own (their glosses name the lemma) and come first (Measurements 1).
-- **Wrong first results that remain**, in the three texts (23 judged by
-  script, about 150 estimated among the positions the script cannot judge):
-  - capitalised words read through a name's form at no processor step:
-    `Тише` → Тихон (3), `Обе` → Обь and `Тюрем` → Тюр at the start of a
-    sentence, and `Канту` → Канто for the philosopher, whom wty-ru-en does not
-    list; surnames the dictionary lacks read as the noun they come from, such
-    as `Хоботова` → хобот (19 positions, 10 words, the decapitalised reading);
-  - е written for ё where both spellings are words: `вел` (вёл, вести),
-    `поешь` (поёшь, петь, before поесть), `сует` and `суете` (суёт, совать,
-    before суета), `чертов` (чёртов);
-  - `писано` → писаный (the adjective with one н comes before the
-    participle писанный), `замученные` → замутить (the participle of замутить
-    and замучить is spelt the same), `кленов` → кленовый (the short-form rule, at no
-    processor step, before клён's genitive plural, which needs the ё variant);
-  - compounds and nouns the dictionary lacks (`камер-лакей`: `камер` is read
-    as камера; `купчихи` → купчая) and old words (`снову` → снова).
 - **One word at a time.** Rules change the last word of a phrase only and
   never cross a space (`stemCharacters`), so phrases the dictionary lists in
-  another form are not reached (`так называемые` → так называемый, 3
-  positions in the texts), nor are compounds whose two parts both inflect
-  (`государства-доноры`). The analytic future (`буду читать`) is read
-  as буду → быть and читать separately, unless the dictionary lists the
-  phrase.
+  another form are not reached (`так называемые` → так называемый), nor are
+  compounds whose two parts both inflect (`государства-доноры`). The
+  analytic future (`буду читать`) is read as буду → быть and читать
+  separately, unless the dictionary lists the phrase.
 - **Not deinflected by rules**: diminutives, augmentatives and other
   derivations (`собачка`), aspect pairs (`прочитать` and `читать`) and
   -ость nouns. wiktionary-to-yomitan's form-of rows name their base words
@@ -487,14 +531,13 @@ node languages/ru/sources/wasm-load.mjs <hachidori checkout> languages/ru 10
   written out, with their prefixed verbs by suffix rules (`дал`, `отдала`,
   `пил`, `допил`); a short stem that the lists miss is not reached through a
   regular ending. The fleeting vowel is written as patterns of the letters
-  around it (`отец`, `день`, `кусок`, `любовь`, `угол`, `ветер`, `ковёр`,
-  `кашель`), with the few nouns that fit no pattern written out (`рот`,
-  `лоб`, `лёд`, `ложь`); 47 of 47 such nouns tested while writing this README
-  are reached, but a noun whose letters fit no pattern is not.
-- **The -о adverbs.** A neuter adjective in -ое (`робкое`, `допустимое`) is
-  also read by the masculine prepositional rule (`столе` → стол) as the
-  adverb in -о (робко, допустимо), after the adjective: a false candidate,
-  not a first result.
+  around it, with the few nouns that fit no pattern written out (`рот`,
+  `лоб`, `лёд`, `ложь`).
+- **Tests that cannot see a setting.** Marking `fl` a dictionary form
+  changes only readings that are not words (`днй`), and `traceSelection`
+  and `searchResolution` change no first result of the tests. The negative
+  `душа` ↛ душить keeps out a real but rare reading (душа́, the adverbial
+  participle of душить), which `gerExclude: 'душ'` removes on purpose.
 - **Homographs** are listed in the order the ranking keys leave them
   (docs/languages.md 9.6): `стали` (стать, сталь), `дома` (дом, дома), `тем`
   (тот, тема), `уже` (уже, уж), `для` (для, длить), `три` (три, тереть).
