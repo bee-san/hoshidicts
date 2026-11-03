@@ -227,7 +227,7 @@ const SEPARABLE = words(`
     发牢骚 发芽 接吻 鼓掌 拍戏 上台 下台 上岗 下岗 退休 入伍 参军 掌权 用心 用功
     吃苦头 拍马屁 吹牛 吹牛皮 走后门 开夜车 泼冷水 碰钉子 打哈欠 打喷嚏 打瞌睡 打官司
     打仗 打车 打包 打卡 打雷 打猎 打坐 打气 打盹 摔跤 着急 随便 吃豆腐 放鸽子 冒泡 死心
-    受欢迎 圆梦 岔气 惹祸 闯祸 打钩 托福 点赞 落地 要脸 赔不是 走运 超车 致辞 出丑
+    受欢迎 圆梦 岔气 惹祸 闯祸 打钩 托福 点赞 落地 赔不是 走运 超车 致辞 出丑
     出差 出院 住校 道谢 拜师 帮倒忙 伤脑筋 开小差 开绿灯 开后门 走弯路 走过场
     凑热闹 唱反调 绕圈子 兜圈子 打圆场 下功夫 费工夫 花工夫 碰运气 交白卷 拖后腿 泄气
     吃闭门羹 发电报 打电报`);
@@ -404,8 +404,7 @@ const MEASURE_OBJECTS = new Set(t('口门年天次场顿把张本头节份件首
 // Characters that may not stand right before an object, because with it they
 // make another word or a measure word with its noun (见下面, 见过大场面, 碰那面
 // 镜子, 路上开车, 搬回家, 完成回家作业, 动门把手, 写下字母, 落到那个地步, 吃不了
-// 热豆腐, 要把脸探出去, 出了差错, 上过大学), measured on Tatoeba and Lu Xun's
-// stories.
+// 热豆腐, 出了差错, 上过大学), measured on Tatoeba and Lu Xun's stories.
 const NOT_BEFORE = new Map([
     ...spellings('面').map((o) => [o, t('这那上下场')]),
     ...spellings('车').map((o) => [o, t('开上下')]),
@@ -414,7 +413,6 @@ const NOT_BEFORE = new Map([
     ...spellings('字').map((o) => [o, t('下')]),
     ...spellings('地').map((o) => [o, t('这那个')]),
     ...spellings('豆腐').map((o) => [o, t('热')]),
-    ...spellings('脸').map((o) => [o, t('把')]),
     ...spellings('差').map((o) => [o, t('了')]),
     ...spellings('学').map((o) => [o, t('大小中')]),
 ]);

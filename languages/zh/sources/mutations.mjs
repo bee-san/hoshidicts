@@ -52,7 +52,7 @@ const mutations = {
     'separable: 的 right after the verb': (t) => separable(t, (p) => p.replace('(?!.(?:的|', '(?!.(?:')),
     'separable: adjective of a longer noun': (t) => separable(t, (p) => p.replace(/\|\[好小白\]/u, '')),
     'separable: 时 starting the insertions': (t) => separable(t, (p) => p.replace(/\|\[时時\]/u, '')),
-    'separable: 把 before 脸, 了 before 差, 大 小 中 before 学': (t) => separable(t, (p, r) => (['脸', '臉', '差', '学', '學'].includes(r.anchorSuffix) ? p.replace(/\{0,5\}\[[^\]]*\](?=(?:脸|臉|差|学|學)\$$)/u, '{1,6}') : p)),
+    'separable: 了 before 差, 大 小 中 before 学': (t) => separable(t, (p, r) => (['差', '学', '學'].includes(r.anchorSuffix) ? p.replace(/\{0,5\}\[[^\]]*\](?=(?:差|学|學)\$$)/u, '{1,6}') : p)),
     'separable: 的 after a non-possessor': (t) => separable(t, (p) => p.replace(/\|\[\^的\]\*\[\^[^\]]*\]的\)\)/u, '))')),
     'separable: next/last after 上 and 下': (t) => separable(t, (p) => p.replace(/\(\?!\[一二两兩[^\]]*\]\|/gu, '(?!').replace(/\(\?!\[一二两兩[^\]]*\]\)/gu, '')),
     'separable: measure-word objects after numerals': (t) => separable(t, (p, r) => (['口', '门', '門', '年'].includes(r.anchorSuffix) ? p.replace(/\{0,5\}\[[^\]]*\](?=[^\]]*$)/u, '{1,6}') : p)),
