@@ -92,7 +92,7 @@ exception is a closed list of personal pronouns with a particle (나는, 그는,
   hoshidicts (GPL-3.0-or-later). The last rows of `tests/cases.tsv` fail when
   a stem constraint or word-list group of the own rules is taken out; some of
   their sources are built forms, not words (가습니다, 삷시오). The
-  tiny dictionary's 29 entries are written for it, tagged as kty-ko-en tags
+  tiny dictionary's 33 entries are written for it, tagged as kty-ko-en tags
   them; one is spelled in jamo (ㅁㅓㄱㄷㅏ), so a lookup that kept the
   unjoined form would find it.
 - Measurement data, not committed:
@@ -319,8 +319,12 @@ phrase entry when it is an entry of several words that begins with the word
   negators 안 and 못. Of Tatoeba's 69,969 word positions, 7,152 follow one of
   them; at the 1,952 whose references name a lemma the first result is right
   for 1,382, the word's own entry for 566 and wrong for 4 (0.20%, all
-  `eumhun`, below). A lookup from the pronoun or negator itself (7,178) reads
-  past it 15 times: kty-ko-en's entries 안 돼요 (10), 제2차 세계 대전 (3) and 저는
+  `eumhun`, below). No rule changes the word in front: of 6,000 phrases of
+  10 pronouns and negators with the 600 most frequent words of `ko_50k.txt`
+  (나는 몰라, 안 먹었어요), every deinflection keeps the front word as written,
+  and rows of `tests/lookup.tsv` check both lookups (안 자러 가요 → 안, 자러 안
+  가요 → 자다). A lookup from the pronoun or negator itself (7,178) reads past
+  it 15 times: kty-ko-en's entries 안 돼요 (10), 제2차 세계 대전 (3) and 저는
   한국 사람이에요 (1), and its `eumhun` row 날 비 → 비 for 날 비웃지마 (1).
 - **Real text** (`measure.mjs positions`, `measure.mjs text`):
   - Tatoeba, 69,969 positions: 67,853 find something; at the 23,556 whose
@@ -360,10 +364,10 @@ phrase entry when it is an entry of several words that begins with the word
   rest are rows whose tags do not fit the form (계시겠다 tagged as an
   imperative).
 - `language-conformance-test`: corpus.tsv 1,314 / 1,314, cases.tsv 407 /
-  407, yomitan.tsv 615 / 615, text.tsv 16 / 16, lookup.tsv 26 / 26, gaps.tsv
+  407, yomitan.tsv 615 / 615, text.tsv 16 / 16, lookup.tsv 34 / 34, gaps.tsv
   0 / 1 (reported); classes.json agrees with the engine (7 classes, 557
   fields, no steps); 440 of the 3,029 rules are exercised by a passing row.
-  `tests/` and `sources/` hold 986,383 bytes. Taking out any of 84 of the 87
+  `tests/` and `sources/` hold 987,265 bytes. Taking out any of 84 of the 87
   stem constraints, exclusions and word-list groups of
   `sources/own-rules.mjs` fails the test; the other three (`vowelStem:
   false` at -(으)냐, -(으)니 and -(으)냐고) only keep out a rule that `direct()`

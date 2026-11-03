@@ -27,3 +27,13 @@ negatives	0	들은 이야기	들다	들은
 negatives	0	나아요	나다	나아요
 negatives	0	학교에서	학교	학교에서
 postprocessor	0	먹었어요	ㅁㅓㄱㄷㅏ	먹었어요
+# The forms behind a pronoun or a negator (docs/languages.md 14, step 4): Korean writes them as separate words, so the
+# lookup from the pronoun or negator shows it, and the form keeps its own reading when looked up after it.
+phrases	1	안 먹었어요	안	안
+phrases	1	못 가요	못	못
+phrases	1	나는 몰라요	나	나는
+phrases	1	안 자러 가요	안	안
+phrases	1	나는 바라요	나	나는
+phrases	1	자러 안 가요	자다	자러
+phrases	1	바라요 안	바라다	바라요
+phrases	1	몰라 나는	모르다	몰라
