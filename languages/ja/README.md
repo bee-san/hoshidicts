@@ -91,3 +91,9 @@ it with that code, kept in `tests/reference/` (`docs/languages.md`, sections
 - `traceSelection` is `first`: a term keeps the first deinflection that reached
   it at its longest matched length, as before, where Yomitan keeps the
   shortest.
+- `formOf` is `asTerm`: a row whose definitions are `[term, [rules]]` form-of
+  references is an ordinary term with its glossary as stored, as before, where
+  Yomitan follows the references (`docs/languages.md` 9.10). Jitendex has
+  138,071 such rows (of 436,555), each a visible "⟶" redirect glossary beside
+  one reference. Switching to `follow` is the owner's decision; it would also
+  break ties every ranking key leaves by discovery order (9.6).

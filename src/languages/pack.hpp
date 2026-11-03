@@ -20,6 +20,9 @@ namespace hoshidicts::lang {
 
 enum class Resolution : unsigned char { Character, Word };
 enum class TraceSelection : unsigned char { Shortest, First };
+// lookup.formOf (section 9.10): follow a dictionary's form-of references to
+// their terms, as Yomitan does, or read such a row as an ordinary term.
+enum class FormOf : unsigned char { Follow, AsTerm };
 
 // A trace step: a transform, or a variant pass.
 struct TraceStep {
@@ -61,6 +64,7 @@ struct PackData {
   std::optional<StepList> reading_normalizer;
   std::vector<std::pair<std::string, StepList>> display_transforms;
   TraceSelection trace_selection = TraceSelection::Shortest;
+  FormOf form_of = FormOf::Follow;
   std::vector<std::string> function_words;
   std::vector<VariantPass> variant_passes;
   std::unique_ptr<TransformSet> transforms;  // null when lookup.transforms is null

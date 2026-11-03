@@ -1,0 +1,6 @@
+[
+  ["stride", "", "v", "v", 0, ["to walk with long steps"], 1, ""],
+  ["walk", "", "v", "v", 0, ["(lemmas) to walk"], 2, ""],
+  ["podar", "", "v", "v", 0, ["(lemmas) to prune"], 3, ""],
+  ["poder", "", "v", "v", 0, ["(lemmas) to be able to"], 4, ""]
+]

@@ -45,6 +45,24 @@ void each_token(std::string_view str, F&& f) {
   }
 }
 
+// A form-of reference of a row a deinflection found, followed as a
+// deinflection of its own (docs/languages.md, section 9.10): the
+// deinflection's matched text, processor steps and trace, then one step per
+// rule of the reference, reaching the term `text`.
+struct Followed {
+  size_t matched_len;
+  const Deinflection* base;
+  uint32_t index;
+  int steps;
+  std::string text;
+  // The reference's rules: the lookup's followed_rules[first_rule, first_rule + rule_count).
+  uint32_t first_rule;
+  uint32_t rule_count;
+  // A row of the matched text itself names the term (the deinflection has no
+  // trace), so it is dictionary-confirmed (section 9.6).
+  bool confirms;
+};
+
 struct Candidate {
   size_t matched_len;
   // The deinflection: element `index` of the list whose data is `base`
@@ -64,8 +82,20 @@ struct Candidate {
   // chain and starts after every term dictionary, in the order its reading was
   // found (DictionaryQuery::metadata_readings).
   size_t dict_rank = SIZE_MAX;
+  // The form-of reference that reached the term after the deinflection (then
+  // `form` is its text), or null.
+  const Followed* reference = nullptr;
+  // The longest matched length at which a form-of reference of a row of the
+  // matched text itself reached the term, whichever trace the candidate
+  // keeps, or 0.
+  size_t confirmed_len = 0;
 
   const Deinflection& deinflection() const { return base[index]; }
+  // The trace length: the deinflection's, plus the reference's rules.
+  uint32_t depth() const { return deinflection().depth + (reference != nullptr ? reference->rule_count : 0); }
+  // Dictionary-confirmed (section 9.6): a form-of reference of a row of the
+  // matched text reached the term.
+  bool confirmed() const { return confirmed_len == matched_len; }
 };
 
 uint64_t key_hash(std::string_view expression, std::string_view reading) {
@@ -195,6 +225,9 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   }
   const DictionaryQuery::ReadingNormalizer* normalizer = normalizer_storage ? &*normalizer_storage : nullptr;
   const bool shortest = pack.trace_selection == lang::TraceSelection::Shortest;
+  // lookup.formOf (section 9.10): the rows' form-of references are followed,
+  // and a row that is only references is never a term.
+  const bool follow = pack.form_of == lang::FormOf::Follow;
 
   // Holds what the raw terms below read of paged dictionaries until the kept
   // results are materialized, so it outlives term_store.
@@ -206,6 +239,15 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   // Postprocessed forms the candidates look at (only with postprocessors;
   // a deque allocates even when empty, so it is made on first use).
   std::unique_ptr<std::deque<std::string>> forms;
+  // The form-of references to follow, in the order the rows naming them were
+  // found (made on first use, as `forms`), and their rules.
+  std::unique_ptr<std::deque<Followed>> followed;
+  size_t followed_done = 0;
+  std::vector<std::string> followed_rules;
+  std::vector<FormOfReference> references;
+  // The form-of rows of the query running now (reused).
+  std::vector<RawFormOfRow> form_of_rows;
+  std::vector<RawFormOfRow>* const form_of_out = follow ? &form_of_rows : nullptr;
 
   size_t text_len = utf8::distance(lookup_string.begin(), lookup_string.end());
 
@@ -266,9 +308,10 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   // Merges the terms of one deinflection of a prefix's variant into the
   // candidates, keeping each term's longest matched form (and, with the
   // `shortest` trace selection, its fewest steps and shortest trace there).
-  // A new candidate's dict_rank starts at `rank`.
+  // A new candidate's dict_rank starts at `rank`. `reference` is the form-of
+  // reference that reached the terms after the deinflection, or null.
   auto add_terms = [&](size_t matched_len, const Deinflection* base, uint32_t di, const std::string* form, int steps,
-                       RawTerms&& terms, size_t rank) {
+                       RawTerms&& terms, size_t rank, const Followed* reference = nullptr) {
     const auto store_index = static_cast<uint32_t>(term_store.size());
     for (auto& term : terms.terms) {
       const std::string_view key = reading_key(terms, term);
@@ -277,9 +320,11 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
       if (existing != nullptr) {
         bool better = matched_len > existing->matched_len;
         if (!better && shortest && matched_len == existing->matched_len) {
-          const uint32_t depth = base[di].depth;
-          const uint32_t existing_depth = existing->deinflection().depth;
-          better = steps < existing->steps || (steps == existing->steps && depth < existing_depth);
+          const uint32_t depth = base[di].depth + (reference != nullptr ? reference->rule_count : 0);
+          better = steps < existing->steps || (steps == existing->steps && depth < existing->depth());
+        }
+        if (reference != nullptr && reference->confirms) {
+          existing->confirmed_len = std::max(existing->confirmed_len, matched_len);
         }
         if (better) {
           existing->matched_len = matched_len;
@@ -289,6 +334,7 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
           existing->term = &term;
           existing->store_index = store_index;
           existing->steps = steps;
+          existing->reference = reference;
         }
       } else {
         index.try_emplace(h, static_cast<uint32_t>(candidates.size()));
@@ -299,7 +345,9 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
                                        .term = &term,
                                        .store_index = store_index,
                                        .steps = steps,
-                                       .dict_rank = rank});
+                                       .dict_rank = rank,
+                                       .reference = reference,
+                                       .confirmed_len = reference != nullptr && reference->confirms ? matched_len : 0});
       }
     }
     term_store.push_back(std::move(terms));
@@ -325,6 +373,45 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     });
   };
 
+  // The filter for one row: a form-of reference is followed only when the
+  // row naming it passes for the deinflection that found it, as Yomitan
+  // follows the references of the entries its filter kept.
+  const auto row_passes = [&](uint32_t conditions, const std::string* dict_name, std::string_view rules) {
+    if (conditions == 0 || transforms == nullptr) {
+      return true;
+    }
+    if (!exempt.empty() && std::ranges::find(exempt, dict_name) != exempt.end()) {
+      return true;
+    }
+    uint32_t dict_conditions = 0;
+    each_token(rules, [&](std::string_view tag) { dict_conditions |= transforms->dictionary_form_bits(tag); });
+    return (dict_conditions & conditions) != 0;
+  };
+
+  const auto note_references = [&](size_t matched_len, const Deinflection* base, uint32_t di, int steps) {
+    for (const RawFormOfRow& row : form_of_rows) {
+      if (!row_passes(base[di].conditions, row.dict_name, row.rules)) {
+        continue;
+      }
+      references.clear();
+      DictionaryQuery::read_form_of(row, pins, references);
+      for (auto& reference : references) {
+        if (!followed) {
+          followed = std::make_unique<std::deque<Followed>>();
+        }
+        followed->push_back(Followed{.matched_len = matched_len,
+                                     .base = base,
+                                     .index = di,
+                                     .steps = steps,
+                                     .text = std::move(reference.form_of),
+                                     .first_rule = static_cast<uint32_t>(followed_rules.size()),
+                                     .rule_count = static_cast<uint32_t>(reference.rules.size()),
+                                     .confirms = base[di].depth == 0});
+        std::ranges::move(reference.rules, std::back_inserter(followed_rules));
+      }
+    }
+  };
+
   const auto collect_metadata = [&](RawTerms& terms) {
     for (auto& term : terms.terms) {
       if (term.merged != UINT32_MAX) {
@@ -348,10 +435,32 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   auto merge = [&](size_t matched_len, const Deinflection* base, uint32_t di, const std::string& form, int steps) {
     // Most deinflected forms name no entry of their part of speech; read
     // the frequencies and pitches of only the terms the filter keeps.
-    auto terms = query_.query_raw(form, pins, selection, false, normalizer);
+    form_of_rows.clear();
+    auto terms = query_.query_raw(form, pins, selection, false, normalizer, form_of_out);
+    if (!form_of_rows.empty()) {
+      note_references(matched_len, base, di, steps);
+    }
     filter_by_pos(terms, base[di].conditions);
     collect_metadata(terms);
     add_terms(matched_len, base, di, &form, steps, std::move(terms), SIZE_MAX);
+  };
+
+  // Follows the form-of references noted since the last call, each as a
+  // deinflection to its text with no conditions (Yomitan's
+  // _getDictionaryDeinflections). One hop: the references of the rows they
+  // reach are not followed.
+  const auto follow_noted = [&]() {
+    if (!followed) {
+      return;
+    }
+    for (; followed_done < followed->size(); ++followed_done) {
+      const Followed& reference = (*followed)[followed_done];
+      form_of_rows.clear();
+      auto terms = query_.query_raw(reference.text, pins, selection, false, normalizer, &form_of_rows);
+      collect_metadata(terms);
+      add_terms(reference.matched_len, reference.base, reference.index, &reference.text, reference.steps,
+                std::move(terms), SIZE_MAX, &reference);
+    }
   };
 
   // Merges a deinflection, through the pack's postprocessors when it has any
@@ -505,6 +614,11 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
     }
   }
 
+  // The references the rows of the scan named, followed after every
+  // deinflection of the scan, as Yomitan adds its dictionary deinflections
+  // after the algorithm's (section 9.10).
+  follow_noted();
+
   // Variant passes (NekoPara's cat speech, LookupOptions::neko_speech): a
   // pass's reading counts only for a prefix longer than every ordinary match,
   // long keys included, so it can only add a term or lengthen one; every
@@ -547,6 +661,9 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
       }
     }
   }
+
+  // The references the rows the passes found named.
+  follow_noted();
 
   // Terms only frequency and pitch dictionaries have
   // (LookupOptions::metadata_only_terms). A frequency or pitch row has no part
@@ -677,7 +794,11 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
   };
 
   const size_t retained_count = std::min(candidates.size(), static_cast<size_t>(max_results));
-  auto less = [frequency_dictionary, frequency_descending, primary_reading, &matches_primary_reading](
+  // Ties every key leaves go to the candidate found first (section 9.6),
+  // except for a pack that reads form-of rows as terms (Japanese), whose ties
+  // keep the order they have always had (the parity tests pin it).
+  const bool discovery_order = follow;
+  auto less = [frequency_dictionary, frequency_descending, primary_reading, discovery_order, &matches_primary_reading](
                   const Candidate& a, const Candidate& b) {
     if (!primary_reading.empty()) {
       const bool primary_a = matches_primary_reading(a);
@@ -697,10 +818,16 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
       return steps_a < steps_b;
     }
 
-    auto trace_len_a = a.deinflection().depth;
-    auto trace_len_b = b.deinflection().depth;
+    auto trace_len_a = a.depth();
+    auto trace_len_b = b.depth();
     if (trace_len_a != trace_len_b) {
       return trace_len_a < trace_len_b;
+    }
+
+    // A lemma the dictionary itself names as a form of the matched text comes
+    // before one only the rules propose (puedo: poder before podar).
+    if (a.confirmed() != b.confirmed()) {
+      return a.confirmed();
     }
 
     auto match_a = a.term->expression == *a.form;
@@ -736,7 +863,11 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
 
     auto a_reading_expr_match = a.term->expression == a.term->reading;
     auto b_reading_expr_match = b.term->expression == b.term->reading;
-    return a_reading_expr_match > b_reading_expr_match;
+    if (a_reading_expr_match != b_reading_expr_match) {
+      return a_reading_expr_match > b_reading_expr_match;
+    }
+    // Candidates are elements of one vector, in the order they were found.
+    return discovery_order && &a < &b;
   };
 
   const auto by_key = [&](uint32_t ia, uint32_t ib) { return key_less(*candidates[ia].term, *candidates[ib].term); };
@@ -781,10 +912,17 @@ std::vector<LookupResult> Lookup::lookup_impl(const std::string& lookup_string, 
       }
     }
     std::vector<TransformGroup> trace;
-    trace.reserve(steps.size());
+    trace.reserve(steps.size() + (c.reference != nullptr ? c.reference->rule_count : 0));
     for (auto it = steps.rbegin(); it != steps.rend(); ++it) {
       const auto& step = pack.trace_steps[*it];
       trace.push_back(TransformGroup{.name = step.name, .description = step.description, .id = step.id});
+    }
+    // A form-of reference's rules follow, as the dictionary names them.
+    if (c.reference != nullptr) {
+      for (uint32_t k = 0; k < c.reference->rule_count; ++k) {
+        const std::string& rule = followed_rules[c.reference->first_rule + k];
+        trace.push_back(TransformGroup{.name = rule, .description = {}, .id = rule, .from_dictionary = true});
+      }
     }
     return trace;
   };

@@ -1,0 +1,84 @@
+{
+  "schema": 1,
+  "code": "fo",
+  "iso639_3": "zzz",
+  "name": "Form-of references",
+  "nativeName": "Form-of references",
+  "bcp47": "zz",
+  "scripts": ["Latn"],
+  "direction": "ltr",
+  "classes": {
+    "letter": "[A-Za-z\\u00C0-\\u00FF]"
+  },
+  "text": {
+    "pattern": "{letter}",
+    "scanStart": "word",
+    "segmentation": "spaces",
+    "wordCharacters": "{letter}",
+    "wordInternal": null,
+    "sentence": {
+      "terminators": ["."],
+      "quotePairs": []
+    },
+    "highlightBreaks": null,
+    "lineJoiner": " "
+  },
+  "lookup": {
+    "searchResolution": "word",
+    "preprocessors": [
+      {"id": "decapitalize", "name": "Decapitalize text", "variants": [[{"case": "lower"}]]}
+    ],
+    "postprocessors": [],
+    "readingNormalizer": null,
+    "transforms": "transforms.json",
+    "traceSelection": "shortest",
+    "formOf": "follow",
+    "functionWords": [],
+    "variantPasses": []
+  },
+  "capabilities": {
+    "readings": "none",
+    "ruby": null,
+    "pitchAccent": false,
+    "characterView": null,
+    "wordHighlighting": true
+  },
+  "presentation": {
+    "typography": {
+      "fontFamily": null,
+      "wordBreak": null,
+      "lineBreak": null,
+      "joinedScript": false
+    },
+    "labels": {},
+    "displayTransforms": {}
+  },
+  "settings": [],
+  "host": {
+    "ttsLanguage": "zz",
+    "audioLanguage": "zz",
+    "anki": {
+      "noteTypeFamilies": [],
+      "fieldAliases": {},
+      "partOfSpeechLabels": {}
+    },
+    "frequencySamples": null,
+    "recommendedDictionaries": [],
+    "sample": {
+      "warmup": "walked",
+      "practice": {
+        "text": "She walked home.",
+        "lookup": "walked"
+      },
+      "entry": {
+        "expression": "walk",
+        "reading": "walk",
+        "glossary": ["to move on foot"],
+        "definitionTags": "v",
+        "matched": "walked",
+        "trace": ["past"]
+      },
+      "character": null
+    }
+  }
+}

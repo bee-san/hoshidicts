@@ -534,7 +534,8 @@ RawTerms DictionaryQuery::query_raw(const std::string& expression, BlobPins& pin
 }
 
 RawTerms DictionaryQuery::query_raw(const std::string& expression, BlobPins& pins, const Selection& selection,
-                                    bool with_metadata, const ReadingNormalizer* normalizer) const {
+                                    bool with_metadata, const ReadingNormalizer* normalizer,
+                                    std::vector<RawFormOfRow>* form_of_rows) const {
   RawTerms raw;
   if (normalizer != nullptr) {
     raw.normalized = std::make_unique<NormalizedReadings>();
@@ -602,8 +603,15 @@ RawTerms DictionaryQuery::query_raw(const std::string& expression, BlobPins& pin
         auto term_tag_size = read_value<uint8_t>(blob);
         std::string_view term_tags = blob.str(term_tag_size);
 
+        // The form-of slot (src/json/form_of.hpp): no entry for a row
+        // without form-of references, otherwise the flag, one entry with an
+        // empty formOf whose rule count says whether the row also has other
+        // definitions. Read only for a pack that follows references.
+        bool form_of = false;
+        bool only_references = false;
         if (data->version >= 2) {
           auto redirect_count = read_value<uint32_t>(blob);
+          const bool flagged = form_of_rows != nullptr && data->version >= 3;
           for (uint32_t r = 0; r < redirect_count; r++) {
             auto form_of_len = read_value<uint32_t>(blob);
             blob.skip(form_of_len);
@@ -612,6 +620,21 @@ RawTerms DictionaryQuery::query_raw(const std::string& expression, BlobPins& pin
               auto rule_len = read_value<uint32_t>(blob);
               blob.skip(rule_len);
             }
+            if (flagged && form_of_len == 0) {
+              form_of = true;
+              only_references = rule_count == form_of_slot::only_references;
+            }
+          }
+        }
+        if (form_of) {
+          form_of_rows->push_back(RawFormOfRow{.dict_name = &name,
+                                                  .rules = rules,
+                                                  .blobs = &data->blobs,
+                                                  .compressed_offset = glossary_offset,
+                                                  .compressed_size = glossary_size,
+                                                  .zstd_dict = data->zstd_dict});
+          if (only_references) {
+            continue;
           }
         }
 
@@ -632,7 +655,8 @@ RawTerms DictionaryQuery::query_raw(const std::string& expression, BlobPins& pin
                                              .compressed_offset = glossary_offset,
                                              .compressed_size = glossary_size,
                                              .zstd_dict = data->zstd_dict,
-                                             .next = UINT32_MAX});
+                                             .next = UINT32_MAX,
+                                             .drop_form_of = form_of});
 
         RawTerm* term = find_term(expr, reading);
         if (term == nullptr) {
@@ -710,6 +734,7 @@ TermResult DictionaryQuery::build_term(const RawTerms& raw, RawTerm& term, BlobP
     entry.compressed_size = g.compressed_size;
     entry.zstd_dict = g.zstd_dict;
     entry.score = g.score;
+    entry.drop_form_of = g.drop_form_of;
   }
   // Dictionary order takes precedence over score. Within each dictionary,
   // higher-scored definitions come first, with original order kept for ties.
@@ -1119,7 +1144,15 @@ std::string DictionaryQuery::decompress_glossary(const void* data, size_t size, 
 void DictionaryQuery::materialize(TermResult& term) const {
   for (auto& g : term.glossaries) {
     g.glossary = decompress_glossary(g.compressed_data, g.compressed_size, g.zstd_dict);
+    if (g.drop_form_of) {
+      g.glossary = yomitan_parser::without_form_of(g.glossary);
+    }
   }
+}
+
+void DictionaryQuery::read_form_of(const RawFormOfRow& row, BlobPins& pins, std::vector<FormOfReference>& out) {
+  const uint8_t* compressed = row.blobs->range(row.compressed_offset, row.compressed_size, pins);
+  yomitan_parser::read_form_of(decompress_glossary(compressed, row.compressed_size, row.zstd_dict), out);
 }
 
 std::vector<char> DictionaryQuery::get_media_file(const std::string& dict_name, const std::string& media_path) const {

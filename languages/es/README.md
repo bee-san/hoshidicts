@@ -347,7 +347,10 @@ Real text and lookup order, with the default options:
     the preterite one.
 - **First rank** is 0 for every set. wty-es-en has a form-of entry for almost
   every inflected form (`comimos`: "first-person plural preterite of comer"),
-  found without deinflection, so it comes first.
+  found without deinflection, so it came first. These numbers predate
+  bee-san/hoshidicts#53, since which lookups follow form-of references
+  (`lookup.formOf` is `"follow"`) and the row no longer appears; they are to
+  be measured again.
 - **Per rule** (`--per-rule` on the final set, sample and `cases.tsv`):
   - 435 rules recover rows no other rule reaches, and no rule breaks a
     negative.
@@ -443,8 +446,8 @@ Real text and lookup order, with the default options:
   - unaccented forms: `continua` → `continuar` (whose form is `continúa`) and
     `ordenes` → `orden` (whose plural is `órdenes`).
 
-  A framework change in progress (hachi-lang-engine-f) ranks first, on such
-  ties, the lemma a dictionary's form-of entries name.
+  Since bee-san/hoshidicts#53 lookups rank first, on such ties, the lemma a
+  dictionary's form-of entries name.
 - The stems left out lose rare readings with them: `pueblo` is not read as
   poblar, `viento` as ventar, `fase` and `fan` as far, `sida` as ser
   (wty-es-en lists it as the feminine participle, which ser does not use;

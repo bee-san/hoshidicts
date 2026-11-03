@@ -14,6 +14,8 @@ Imports a Yomitan `.zip` dictionary file or an MDict `.mdx` dictionary into a cu
 
 The format is detected from the file contents, not the extension.
 
+A term bank row whose definitions hold form-of references (`[term, [rules]]`, as wiktionary-to-yomitan dictionaries write them) is flagged in its record; the references stay in the glossary. Packs whose `lookup.formOf` is `follow` read them through the flag (`docs/languages.md` 9.10), so a dictionary imported before the flag existed must be imported again for its references to be followed. A dictionary without such rows imports byte for byte as before.
+
 #### MDX / MDD import
 
 An `.mdx` file is imported directly, without an intermediate Yomitan archive: its entries are converted to Yomitan term banks of 10,000 rows as they are read, so memory use is bounded by the bank size, not the dictionary. The conversion follows [manabitan](https://github.com/ManabiIO/manabitan)'s MDX importer so the result renders the same way.
@@ -126,6 +128,8 @@ Follows a parsing strategy similar to Yomitan. Substrings of `lookup_string` are
 Keys longer than `scan_length` are still found when `scan_length` is at least 8 and `lookup_string` is long enough to contain them: the importer records every key longer than 16 code points by its first eight code points in `scan.idx`, and when the input begins like such a key the scan extends to that key's length plus eight code points for an inflected ending. Inputs that do not begin like a long key keep the cost of `scan_length`. `DictionaryQuery::max_long_key_length()` returns the longest such key across the loaded term dictionaries so a caller can size `lookup_string`. Dictionaries imported before `scan.idx` existed simply never extend.
 
 Results are filtered by part-of-speech tags defined in dictionaries, or added directly if none are present. The results are sorted by matched length first, then by preprocessing steps, then deinflection trace length and finally by frequency.
+
+A pack whose `lookup.formOf` is `follow` (every pack but Japanese) follows form-of references as Yomitan does: `walked` with `[["walk", ["simple past"]]]` gives `walk` with the trace step `simple past` (`TransformGroup::from_dictionary`), a row that is only references never appears, and a term the dictionary names ranks before one only the rules reach on equal length, steps and trace length (`docs/languages.md` 9.6 and 9.10).
 
 `LookupOptions::neko_speech` (off by default) also reads NekoPara's cat speech (`deinflect_neko_speech`). A cat-speech reading counts only where it matches a longer part of `lookup_string` than every ordinary one, long keys included, and then comes first (after any `primary_reading` results, which sort before matched length): `できにゃい` finds `出来る` over the whole word, and `そんにゃ` finds `そんな`. A term found both ways is listed once, under the longer match. Every other ordinary result is kept, but since cat speech takes the first places, a list capped by `max_results` can lose the last of them. `lookup_dictionary` judges this within its one dictionary. Off, the results are exactly those without the option. The option is meant for NekoPara-style text; on other text with `にゃ` or `ニャ` it also reads, wherever that reaches further than the dictionary's own words:
 

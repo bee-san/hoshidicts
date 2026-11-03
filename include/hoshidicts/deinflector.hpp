@@ -20,6 +20,10 @@ struct TransformGroup {
   // ids are the names; the cat-speech step's id is its variant pass,
   // nekoSpeech.
   std::string id;
+  // A step a dictionary's form-of reference names (docs/languages.md,
+  // section 9.10): its id and name are the rule as the dictionary writes it,
+  // and it has no description.
+  bool from_dictionary = false;
 };
 
 struct DeinflectionResult {

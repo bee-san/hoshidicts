@@ -48,6 +48,10 @@ struct GlossaryEntry {
   uint32_t compressed_size = 0;
   const ZSTD_DDict_s* zstd_dict = nullptr;
   double score = 0;
+  // Set by a lookup whose pack follows form-of references (docs/languages.md,
+  // section 9.10) for a row that also has them: `glossary` is then the row's
+  // definitions without its [term, [rules]] items.
+  bool drop_form_of = false;
 };
 
 struct FrequencyEntry {
@@ -96,7 +100,10 @@ struct KanjiResult {
 
 struct RawTerm;
 struct RawTerms;
+struct RawFormOfRow;
+struct FormOfReference;
 struct BlobPins;
+struct QueryAccess;
 
 namespace memory {
 class page_cache;
@@ -217,6 +224,8 @@ class DictionaryQuery {
 
  private:
   friend class Lookup;
+  // hoshidicts-cli's eval-language reads raw terms (src/query_internal.hpp).
+  friend struct QueryAccess;
   std::string last_error_;
   struct DictionaryData;
   struct Dictionary;
@@ -252,11 +261,18 @@ class DictionaryQuery {
   // at, are views into the dictionaries' files: they stay valid while `pins`,
   // which holds what they read of paged files, lives.
   // Without `with_metadata`, the caller collects the frequencies and pitches
-  // of only the terms it keeps.
+  // of only the terms it keeps. With `form_of_rows` (a pack's formOf is
+  // "follow", docs/languages.md section 9.10), the rows whose definitions
+  // hold form-of references are appended to it, and a row that is only
+  // references is not a term.
   RawTerms query_raw(const std::string& expression, BlobPins& pins,
                      const std::string* term_dictionary_path = nullptr, bool with_metadata = true) const;
   RawTerms query_raw(const std::string& expression, BlobPins& pins, const Selection& selection, bool with_metadata,
-                     const ReadingNormalizer* normalizer = nullptr) const;
+                     const ReadingNormalizer* normalizer = nullptr,
+                     std::vector<RawFormOfRow>* form_of_rows = nullptr) const;
+  // The form-of references of a row query_raw listed in form_of_rows, read
+  // from its glossary, appended to `out`.
+  static void read_form_of(const RawFormOfRow& row, BlobPins& pins, std::vector<FormOfReference>& out);
   TermResult build_term(const RawTerms& raw, RawTerm& term, BlobPins& pins) const;
   void collect_frequencies(std::string_view expression, std::string_view reading,
                            std::vector<FrequencyEntry>& out, BlobPins& pins) const;

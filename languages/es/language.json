@@ -70,6 +70,7 @@
     "readingNormalizer": null,
     "transforms": "transforms.json",
     "traceSelection": "shortest",
+    "formOf": "follow",
     "functionWords": [],
     "variantPasses": []
   },
