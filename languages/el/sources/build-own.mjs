@@ -16,18 +16,26 @@
 // syllables, so an ending of a different length can move the accent of the
 // stem: άνθρωπος, ανθρώπου; αγοράζω, αγόρασα, αγοράσαμε; έγραψα, γράψαμε.
 // A rule whose output has the accent where its input had it is a plain
-// suffix rule (KEEP). Where the accent moves, the rule's `then` steps put it
-// back (section 6.2, on the NFD form, where the accent is U+0301):
-//   - stemLast(E): strip every accent, then accent the last vowel before the
-//     lemma ending E (αγορασ-α → αγοραζω → αγοράζω, a verb's lemma is stressed
-//     on its stem's last syllable);
-//   - stemSecond(E): the same one vowel earlier (θαλασσ-ών → θάλασσα);
-//   - left: move the accent one vowel to the left (ανθρώπου → άνθρωπου);
-//   - final(map): strip every accent, then accent the lemma's ending
-//     (αγάπησα → αγαπαω → αγαπάω).
-// A rule with `then` sits in a circumfix whose prefix is empty (or the
-// augment), in the cross-product form, so that one set of steps is compiled
-// for many endings (section 7.3).
+// suffix rule. Where the accent moves, the rule writes the ending and an
+// internal condition that says where the accent goes, and the `accent`
+// transform at the end of the file puts it there with a stem change (one rule
+// per vowel letter; docs/languages.md 7.3):
+//   - last (v_acc, n_last, adj_last): on the last vowel of the stem before the
+//     lemma's ending (αγόρασα → αγόραζω → αγοράζω; γραφτήκαμε → γραφω → γράφω;
+//     ωρών → ωρα → ώρα); an accent left in the stem is removed;
+//   - ante (n_ante, adj_ante): on the vowel before the stem's last vowel
+//     (θαλασσών → θαλασσα → θάλασσα; ομορφότερος → ομορφος → όμορφος;
+//     ανθρώπου → ανθρώπος → άνθρωπος, the accent of the stem removed). A stem
+//     change cannot count vowels, so this takes the last vowel letter with at
+//     least two, and the last with at least three, letters after it: one of
+//     them is the right one unless the stem ends in a long cluster
+//     (νηφαλι-ος, θαλασσ-α).
+// So a reading whose accent moved has two steps in its trace, the inflection
+// and `accent`. Conjugation II puts the lemma's accent on its ending
+// (αγάπησα → αγαπάω), which the rule writes; its `then` step removes the
+// accent of the stem. No rule has a `pattern` step: tests/classes.json
+// records every such step on every corpus string (section 12.1), which per
+// rule would far exceed the 1 MB that tests/ and sources/ may hold.
 //
 // Conditions. Verb rules write `v`, noun rules `n`, adjective rules `adj`
 // (both where a form is either: δρόμου, καλού). The rules of a declension take
@@ -53,12 +61,17 @@ const conditions = {
     n: {name: 'Noun', isDictionaryForm: true},
     adj: {name: 'Adjective', isDictionaryForm: true},
     aug: {name: 'Past form without its internal augment', isDictionaryForm: false},
+    v_acc: {name: 'Verb, accent on the last vowel of the stem', isDictionaryForm: false},
+    n_last: {name: 'Noun, accent on the last vowel of the stem', isDictionaryForm: false},
+    n_ante: {name: 'Noun, accent on the vowel before the last vowel of the stem', isDictionaryForm: false},
+    adj_last: {name: 'Adjective, accent on the last vowel of the stem', isDictionaryForm: false},
+    adj_ante: {name: 'Adjective, accent on the vowel before the last vowel of the stem', isDictionaryForm: false},
 };
 
 // --- Accents ------------------------------------------------------------------
 
 const VOWELS = 'αεηιουω';
-const ACUTE = {α: 'ά', ε: 'έ', η: 'ή', ι: 'ί', ο: 'ό', υ: 'ύ', ω: 'ώ', ϊ: 'ΐ', ϋ: 'ΰ'};
+const ACUTE = {α: 'ά', ε: 'έ', η: 'ή', ι: 'ί', ο: 'ό', υ: 'ύ', ω: 'ώ', ϊ: 'ΐ', ϋ: 'ΰ', Α: 'Ά', Ε: 'Έ', Η: 'Ή', Ι: 'Ί', Ο: 'Ό', Υ: 'Ύ', Ω: 'Ώ'};
 const PLAIN = Object.fromEntries(Object.entries(ACUTE).map(([k, v]) => [v, k]));
 const isVowel = (c) => VOWELS.includes(c) || c in PLAIN || c === 'ϊ' || c === 'ϋ';
 
@@ -79,41 +92,30 @@ function acc(s) {
     return s;
 }
 
-// The then-step lists. The patterns run on NFD text, where an accent is
-// U+0301 after its vowel and a diaeresis U+0308.
-const V = '[αεηιουωΑΕΗΙΟΥΩ]';
-const C = '[^αεηιουωΑΕΗΙΟΥΩ\\u0301\\u0308]';
+// Where a rule's accent goes (see the header): the kind, which shared()
+// turns into the internal condition of each part of speech the rule writes.
+const stemLast = () => 'last';
+const stemSecond = () => 'ante';
+const LEFT = 'ante';
+const KIND = {
+    last: {v: 'v_acc', n: 'n_last', adj: 'adj_last'},
+    ante: {n: 'n_ante', adj: 'adj_ante'},
+};
+/** The rule writes the lemma's ending with its accent; the stem's accent is removed. */
+const finalAccent = (accented) => ({final: accented});
+
 const NFD = {normalize: 'NFD'};
 const NFC = {normalize: 'NFC'};
-const STRIP = {strip: '[\\u0301]'};
-
-/** Accent on the last vowel before the lemma ending `ending` (which has no accent). */
-function stemLast(ending) {
-    return [NFD, STRIP, {pattern: `(${V}\\u0308?)(${C}*${ending})$`, replace: '$1\u0301$2'}, NFC];
-}
-
-// One vowel (a syllable's nucleus): a digraph or a single vowel letter, so
-// that δημοσί-ευ-μα and ποί-η-μα count their syllables right.
-const NUCLEUS = `(?:αι|ει|οι|ου|αυ|ευ|${V}\\u0308?)`;
-
-/** Accent on the vowel before the last vowel before `ending`. */
-function stemSecond(ending) {
-    return [NFD, STRIP, {pattern: `(${V}\\u0308?)(${C}*${NUCLEUS}${C}*${ending})$`, replace: '$1\u0301$2'}, NFC];
-}
-
-/** The accent moved one vowel to the left. */
-const LEFT = [NFD, {pattern: `(${V}\\u0308?)(${C}*${NUCLEUS})\\u0301`, replace: '$1\u0301$2'}, NFC];
-
-/** Every accent stripped, then the lemma ending written with its accent (άω, ώ, ιέμαι). */
-function finalAccent(accented) {
-    return [NFD, STRIP, NFC, {map: {[plain(accented)]: accented}, at: 'end'}];
-}
+// On the NFD form, where an accent is U+0301 after its vowel.
+const REMOVE_FIRST_ACCENT = [NFD, {map: {'\u0301': ''}, at: 'first'}, NFC];
+const REMOVE_LAST_ACCENT = [NFD, {map: {'\u0301': ''}, at: 'last'}, NFC];
 
 // --- Rule builders ---------------------------------------------------------------
 
-// Stems are letters only (no space, apostrophe or digit), so that a rule never
-// reads the last word of a phrase (docs/languages.md 14, "Count the space").
-const LETTERS = '{letter}';
+// Stems are Greek letters only (no space, apostrophe or digit), so that a rule
+// never reads the last word of a phrase (docs/languages.md 14, "Count the
+// space").
+const LETTERS = '{greek}';
 
 const transforms = [];
 const byId = new Map();
@@ -180,14 +182,40 @@ function shared(id, pairs, then, opts = {}) {
         seen.add(key);
         return true;
     });
+    let out = opts.out ?? [];
+    let suffixes = unique;
+    let steps = then;
+    let more = {};
+    if (typeof then === 'string') {
+        out = out.map((c) => {
+            const kind = KIND[then][c];
+            if (kind === undefined) { throw new Error(`${id}: no ${then} accent for ${c}`); }
+            return kind;
+        });
+        steps = null;
+    } else if (then !== null && then.final !== undefined) {
+        const bare = plain(then.final);
+        suffixes = unique.map(([a, b]) => {
+            if (!b.endsWith(bare)) { throw new Error(`${id}: ${b} does not end with ${bare}`); }
+            return [a, b.slice(0, b.length - bare.length) + then.final];
+        });
+        // A stem without an accent (after an internal augment, απέκτησα →
+        // αποκτησα) takes the ending as it is.
+        if (opts.stemContains === undefined) {
+            t.rules.push({type: 'circumfix', prefixes: opts.prefixes ?? [['', '']], suffixes, conditionsIn: opts.in ?? [], conditionsOut: out,
+                ...constraints({...opts, chars: '{unaccented}'})});
+        }
+        steps = REMOVE_FIRST_ACCENT;
+        more = {stemContains: ACCENTED};
+    }
     const rule = {
         type: 'circumfix',
         prefixes: opts.prefixes ?? [['', '']],
-        suffixes: unique,
-        conditionsIn: opts.in ?? [], conditionsOut: opts.out ?? [],
-        ...constraints(opts),
+        suffixes,
+        conditionsIn: opts.in ?? [], conditionsOut: out,
+        ...constraints({...opts, ...more}),
     };
-    if (then !== null) { rule.then = then; }
+    if (steps !== null) { rule.then = steps; }
     t.rules.push(rule);
 }
 
@@ -965,6 +993,69 @@ for (const v of ['ε', 'α', 'ο', 'ι', 'ά', 'ό', 'έ', 'ί', 'αι', 'ού',
 }
 for (const v of ['έ', 'ε', 'εί', 'ει', 'ή', 'α', 'ό', 'ο']) {
     prefix('aphaeresis', '\'', v, {min: 1});
+}
+
+// --- Accent ----------------------------------------------------------------------------
+// The second step of a reading whose accent moved (see the header). Each rule
+// takes the lemma's ending as its suffix, unchanged, and accents one vowel
+// letter of the stem with a stem change; a digraph (αι, ει, οι, ου, αυ, ευ)
+// takes the accent on its second letter, which is the letter the change
+// finds. These rules also apply to text as scanned (conditions 0, section
+// 7.2), where they give a word written without its accent its accented forms
+// (ΘΑΛΑΣΣΑ → θαλασσα → θάλασσα).
+transform('accent', 'accent', 'The accent written where the dictionary form has it. Greek moves the accent when an ending adds or removes a syllable: '
+    + 'αγόρασα → αγοράζω, γραφτήκαμε → γράφω, ανθρώπου → άνθρωπος, θαλασσών → θάλασσα, ομορφότερος → όμορφος.');
+const LEMMA_ENDINGS = {
+    v: ['ω', 'ομαι'],
+    n: ['ος', 'ο', 'α', 'η', 'ι', 'ας', 'ης', 'ον', 'ων'],
+    adj: ['ος', 'ης', 'ων'],
+};
+const VOWEL_LETTERS = ['α', 'ε', 'η', 'ι', 'ο', 'υ', 'ω', 'ϊ', 'ϋ', 'Α', 'Ε', 'Η', 'Ι', 'Ο', 'Υ', 'Ω'];
+const identity = (pos) => LEMMA_ENDINGS[pos].map((e) => [e, e]);
+function accentRule(pos, kind, letter, change, extra) {
+    byId.get('accent').rules.push({
+        type: 'circumfix',
+        prefixes: [['', '']],
+        suffixes: identity(pos),
+        conditionsIn: [KIND[kind][pos]],
+        conditionsOut: [pos],
+        stemMinLength: 2,
+        stemCharacters: LETTERS,
+        ...extra,
+        stemChange: {from: [letter], to: ACUTE[letter], ...change},
+    });
+}
+const CLEAN = {stemCharacters: '{unaccented}'};
+for (const pos of ['v', 'n', 'adj']) {
+    for (const letter of VOWEL_LETTERS) {
+        // last: the last vowel of the stem, followed only by consonants
+        // (αγοραζ-ω → αγοράζ-ω, ωρ-α → ώρ-α, ακου-ω → ακού-ω).
+        const last = {occurrence: 'last', between: '{consonant}', betweenMinLength: 0};
+        accentRule(pos, 'last', letter, last, CLEAN);
+        if (pos === 'v') {
+            // The accent a stressed past form left in the stem is removed:
+            // αγόραζ-ω → αγόράζ-ω → αγοράζ-ω.
+            accentRule(pos, 'last', letter, last, {stemContains: ACCENTED, then: REMOVE_FIRST_ACCENT});
+            continue;
+        }
+        // ante: in a stem without an accent, the last vowel letter with two,
+        // or three, letters or more after it (νηφαλι-ος → νηφάλι-ος, θαλασσ-α
+        // → θάλασσ-α); in one with an accent, the vowel before it, whose
+        // accent is then removed (ανθρώπ-ος → άνθρώπ-ος → άνθρωπ-ος).
+        for (const minimum of [2, 3]) {
+            accentRule(pos, 'ante', letter, {occurrence: 'last', between: '{greek}', betweenMinLength: minimum}, CLEAN);
+        }
+        // With the stem's accent on its last vowel, only consonants and that
+        // accent may follow the vowel that takes it; a digraph whose second
+        // letter has the accent (αυγούστ-ος → αύγουστ-ος) also lets its first
+        // letter through.
+        const left = {stemContains: ACCENTED, then: REMOVE_LAST_ACCENT};
+        accentRule(pos, 'ante', letter, {occurrence: 'last', between: '[{consonant}{accented}]', betweenMinLength: 2}, left);
+        // At least three letters, so that the digraph's own first letter is
+        // not taken (συνελεύσ-η → συνέλευσ-η, not συνελέυσ-η; πετρελαί-ο →
+        // πετρέλαι-ο).
+        accentRule(pos, 'ante', letter, {occurrence: 'last', between: '[{consonant}{accented}αεο]', betweenMinLength: 3}, {...left, stemContains: '[ίύΐΰ]'});
+    }
 }
 
 // --- Output -------------------------------------------------------------------------
