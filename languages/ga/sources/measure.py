@@ -78,26 +78,56 @@ def gloss_text(node):
     return ''
 
 
-def read_banks(path):
-    """Form-of targets of wty-ga-en's rows, with the targets of its "eclipsed
-    form of X" entries, and its lemma headwords, from its term banks."""
-    form_of = collections.defaultdict(set)
-    lemmas = set()
-    for bank in sorted(glob.glob(os.path.join(path, 'term_bank_*.json'))):
-        for row in json.load(open(bank, encoding='utf-8')):
-            definitions = row[5]
-            references = [d for d in definitions if isinstance(d, list) and len(d) == 2 and isinstance(d[0], str) and d[0]]
-            if references:
-                for target, _rules in references:
-                    form_of[row[0]].add(target)
-            entries = [d for d in definitions if not isinstance(d, list)]
-            if entries:
-                lemmas.add(row[0])
-                for d in entries:
-                    m = MUTATION_GLOSS.match(gloss_text(d.get('content') if isinstance(d, dict) else d).strip())
+class Banks:
+    """What wty-ga-en says about each headword, from its term banks:
+
+    form_of[h]   the targets of h's form-of references, as written (one hop);
+    glosses[h]   the gloss texts of h's rows with definitions (what h's card shows);
+    cards[h]     the X of h's "eclipsed / lenited / t-prothesized form of X" glosses;
+    card_only    the headwords every gloss of which is such a mutation-form gloss;
+    headwords    the headwords with a definition, and the first part of each
+                 Wiktionary page title written as a headword (i/languages A to L → i).
+    """
+
+    def __init__(self, path):
+        self.form_of = collections.defaultdict(set)
+        self.glosses = collections.defaultdict(list)
+        self.cards = collections.defaultdict(set)
+        card_glosses = collections.Counter()
+        all_glosses = collections.Counter()
+        self.headwords = set()
+        for bank in sorted(glob.glob(os.path.join(path, 'term_bank_*.json'))):
+            for row in json.load(open(bank, encoding='utf-8')):
+                head = row[0]
+                for d in row[5]:
+                    if isinstance(d, list):
+                        if len(d) == 2 and isinstance(d[0], str) and d[0]:
+                            self.form_of[head].add(d[0])
+                        continue
+                    text = gloss_text(d.get('content') if isinstance(d, dict) else d).strip()
+                    self.glosses[head].append(text)
+                    self.headwords.add(head)
+                    self.headwords.add(page(head))
+                    all_glosses[head] += 1
+                    m = MUTATION_GLOSS.match(text)
                     if m:
-                        form_of[row[0]].add(m.group(1).rstrip('.,;'))
-    return form_of, lemmas
+                        self.cards[head].add(m.group(1).rstrip('.,;'))
+                        card_glosses[head] += 1
+        self.card_only = {h for h, n in card_glosses.items() if n == all_glosses[h]}
+
+    def names(self, head, lemma):
+        """Whether head's card names lemma: a gloss of one of head's rows with
+        definitions has lemma as a word. A lookup shows these glosses; head's
+        form-of references are not on the card (formOf follow drops them from it
+        and shows their targets as results of their own)."""
+        word = re.compile(r'(?<![\w-])' + re.escape(page(lemma)) + r'(?![\w-])')
+        return any(word.search(g) for g in self.glosses.get(head, ()))
+
+
+def read_banks(path):
+    """Form-of targets (one hop, as written) and lemma headwords of wty-ga-en."""
+    banks = Banks(path)
+    return banks.form_of, banks.headwords
 
 
 def read_conllu(paths):
@@ -231,59 +261,72 @@ def frequency_list(path, top):
     return [(spelling[k], n) for k, n in merged.most_common(top)], sum(counts.values())
 
 
+class Gold(dict):
+    """The lemma UD Irish-IDT gives each form most often: as written (baile → baile,
+    Baile → Baile in Baile Átha Cliath), else in lower case."""
+
+    def __init__(self, sentences):
+        super().__init__()
+        exact = collections.defaultdict(collections.Counter)
+        lower = collections.defaultdict(collections.Counter)
+        for _text, tokens in sentences:
+            for form, lemma, _upos, _start in tokens:
+                exact[form][lemma] += 1
+                lower[form.lower()][lemma] += 1
+        self.exact = {f: c.most_common(1)[0][0] for f, c in exact.items()}
+        self.update({f: c.most_common(1)[0][0] for f, c in lower.items()})
+
+    def of(self, word):
+        return self.exact.get(word) or self.get(word.lower())
+
+
 def gold_lemmas(sentences):
-    """The lemma UD Irish-IDT gives each form most often (forms compared in lower case)."""
-    by_form = collections.defaultdict(collections.Counter)
-    for _text, tokens in sentences:
-        for form, lemma, _upos, _start in tokens:
-            by_form[form.lower()][lemma] += 1
-    return {form: c.most_common(1)[0][0] for form, c in by_form.items()}
+    return Gold(sentences)
 
 
 MUTATIONS = {'lenition', 'eclipsis', 'h-prefix', 't-prefix', 'elision'}
 
 
+def page(head):
+    """A Wiktionary page title written as a headword (wty-ga-en's i/languages A to L
+    for the preposition i) stands for its first part."""
+    return head.split('/')[0] if '/' in head[1:] else head
+
+
 def same(a, b):
-    """Two headwords are the same word: equal ignoring case, or a Wiktionary
-    page title such as wty-ga-en's `i/languages A to L` for the preposition i."""
-    a, b = a.lower(), b.lower()
-    return a == b or a.split('/')[0] == b or b.split('/')[0] == a
+    """Two headwords are the same word: equal as written (case counts: I is the
+    letter, i the preposition), or one is a page title of the other."""
+    return page(a) == page(b)
 
 
-def named_lemmas(form_of, form):
-    """What wty-ga-en's form-of rows say a form is a form of, two references deep
-    (bhaineann → baineann (lenited) → bain), as written and in lower case."""
-    out = set()
-    frontier = {form, form.lower()}
-    for _ in range(2):
-        nxt = set()
-        for f in frontier:
-            for target in form_of.get(f, ()):
-                if target not in out:
-                    out.add(target)
-                    nxt.add(target)
-        frontier = nxt
-    return out
+def lower_first(s):
+    return s[:1].lower() + s[1:]
 
 
 class Judge:
-    """Classifies a lookup's first result with a definition (README, Measurements):
+    """Classifies a lookup's first result with a definition (README, Measurements).
+    Headwords are compared as written; references are followed one hop, as written.
 
-    right-entry      the word's own entry: the word itself, or the word with only its
-                     initial mutation or elided particle removed by the pack (bhíonn → bíonn);
-    right-lemma      the expected lemma (UD Irish-IDT's for the treebank; for the frequency
-                     list, the treebank's most frequent lemma of the word, else a lemma the
-                     word's form-of rows name);
-    right-named      the expected lemma has no entry in wty-ga-en, and the first result is a
-                     lemma the word's form-of rows name (curtha → cuir, where the treebank's
-                     lemma is the verbal adjective curtha);
-    form-entry       not the lemma, but the dictionary's own entry for a form of it, whose
-                     form-of rows or "eclipsed form of" gloss name the expected lemma
-                     (dtagraítear → dtagair "eclipsed form of tagair"; domsa → dom "to me");
+    right-lemma      the expected lemma: UD Irish-IDT's for the treebank; for the frequency
+                     list, the treebank's most frequent lemma of the word or a lemma the
+                     word's form-of rows name;
+    right-entry      the word's own entry (the word as written, or with a small first letter
+                     at the start of a sentence, or with only its mutation removed by a pack
+                     rule) whose card names the expected lemma (a gloss, a reference or a
+                     mutation-form gloss of it names it: bhíonn → bíonn "habitual present of bí");
+    right-named      the expected lemma has no entry in wty-ga-en, and the first result is what
+                     the word's or the lemma's own form-of rows name (curtha → cuir, where the
+                     treebank's lemma is the verbal adjective curtha);
+    form-entry       a mutation-form card ("eclipsed form of X"): the dictionary's own entry
+                     for the mutated word, which names X but defines nothing. It is neither
+                     right nor wrong; row['card'] says whether X is the expected lemma
+                     (gcathair → cathair) or another word (bhfuil → fuil, where the word
+                     is bí; mbeidh → beidh, itself a form of bí);
     wrong            another headword, with a trace step of a pack rule;
     wrong-missing    the same where wty-ga-en has no entry for the expected lemma;
-    wrong-reference  another headword reached by the dictionary alone: an exact match of
-                     another spelling, or a form-of reference without a pack rule;
+    wrong-reference  another headword reached by the dictionary alone: the exact match of
+                     another word or of a capitalised entry (Ní, the surname prefix, at the
+                     start of a sentence), or a form-of reference without a pack rule;
     multiword        the first result matched more than the word (go léir);
     none             no result.
 
@@ -292,28 +335,40 @@ class Judge:
     """
 
     def __init__(self, args):
-        self.form_of, headwords = read_banks(os.path.join(args.cache, 'wty-ga-en-banks'))
-        self.headwords = {h.lower() for h in headwords}
+        self.banks = Banks(os.path.join(args.cache, 'wty-ga-en-banks'))
+        self.form_of = self.banks.form_of
+        self.headwords = self.banks.headwords
         self.ids = transform_ids(args)
+
+    def missing(self, expected):
+        return not any(page(e) in self.headwords for e in expected)
 
     def __call__(self, row, first, expected):
         if first is None:
             return 'none'
         if len(first['matched']) > len(row['form']):
             return 'multiword'
-        steps = [s for s, d in zip(first['trace'], first.get('dictionary', [False] * len(first['trace']))) if not d]
-        dictionary_steps = len(first['trace']) - len(steps)
+        flags = first.get('dictionary', [False] * len(first['trace']))
+        steps = [s for s, d in zip(first['trace'], flags) if not d]
+        rule = any(s in self.ids for s in steps)
         expression = first['expression']
-        if same(expression, row['form']) or (steps and not dictionary_steps and set(steps) <= MUTATIONS):
-            return 'right-entry'
+        form = row['form']
         if any(same(expression, e) for e in expected):
             return 'right-lemma'
-        missing = not any(e.lower() in self.headwords for e in expected)
-        if missing and any(same(expression, n) for n in named_lemmas(self.form_of, row['form'])):
-            return 'right-named'
-        if any(same(n, e) for n in named_lemmas(self.form_of, expression) for e in expected):
+        banks = self.banks
+        if expression in banks.card_only:
+            row['card'] = 'names the lemma' if any(same(t, e) for t in banks.cards[expression] for e in expected) else 'names another word'
             return 'form-entry'
-        if not any(s in self.ids for s in steps):
+        own = expression in (form, lower_first(form)) or (steps and not any(flags) and set(steps) <= MUTATIONS)
+        if own and any(banks.names(expression, e) for e in expected):
+            return 'right-entry'
+        missing = self.missing(expected)
+        if missing:
+            named = set(banks.form_of.get(form, ())) | set(banks.form_of.get(lower_first(form), ()))
+            named |= {t for e in expected for t in banks.form_of.get(e, ())}
+            if any(same(expression, n) for n in named):
+                return 'right-named'
+        if not rule:
             return 'wrong-reference'
         return 'wrong-missing' if missing else 'wrong'
 
@@ -321,10 +376,17 @@ class Judge:
 def summarise(rows, weight=None):
     total = collections.Counter()
     tokens = collections.Counter()
+    cards = collections.Counter()
+    reference = collections.Counter()
     for row in rows:
         total[row['verdict']] += 1
         tokens[row['verdict']] += weight(row) if weight else 1
-    return {'rows': len(rows), 'by verdict': dict(total), **({'tokens by verdict': dict(tokens)} if weight else {})}
+        if row['verdict'] == 'form-entry':
+            cards[row.get('card')] += weight(row) if weight else 1
+        if row['verdict'] == 'wrong-reference':
+            reference[f"{row['form']} → {row['first']}"] += weight(row) if weight else 1
+    return {'rows': len(rows), 'by verdict': dict(total), **({'tokens by verdict': dict(tokens)} if weight else {}),
+            'form-entry cards': dict(cards), 'wrong-reference, largest': dict(reference.most_common(25))}
 
 
 def write_wrong(out, name, rows, key):
@@ -511,6 +573,19 @@ def wrong_summary(rows, ids, weight=lambda r: 1):
     return dict(by_transform.most_common(20))
 
 
+def expected_lemmas(judge_row, gold, word):
+    """The lemma a frequency-list or Tatoeba word is judged against: the lemma UD
+    Irish-IDT gives it most often when the treebank has the word (baile → baile,
+    cinn → ceann); otherwise what its form-of rows name, and the word itself when
+    it has an entry of its own (a word read alone has no context to choose)."""
+    if gold.of(word):
+        return [gold.of(word)]
+    out = set(judge_row.form_of.get(word, ())) | set(judge_row.form_of.get(word.lower(), ()))
+    if word in judge_row.headwords:
+        out.add(word)
+    return sorted(out)
+
+
 def cmd_frequent(args):
     judge_row = Judge(args)
     sentences = read_conllu(sorted(glob.glob(os.path.join(args.cache, 'ud-irish-idt', '*.conllu'))))
@@ -520,17 +595,19 @@ def cmd_frequent(args):
     reached_by = deinflections(args, sorted({v for w, _ in words for v in variants[w]}))
     rows = []
     for word, n in words:
-        # A word's lemmas: what its form-of rows name, and its usual lemma in UD Irish-IDT.
+        # The word counts when a rule reaches one of its lemmas: what its form-of
+        # rows name, or its usual lemma in UD Irish-IDT, other than the word itself.
         lemmas = set(judge_row.form_of.get(word, ())) | set(judge_row.form_of.get(word.lower(), ()))
-        if word.lower() in gold:
-            lemmas.add(gold[word.lower()])
+        if gold.of(word):
+            lemmas.add(gold.of(word))
         lemmas.discard(word)
         reached = {t for v in variants[word] for t in reached_by[v] if t != v}
-        if not {l.lower() for l in lemmas} & {t.lower() for t in reached}:
+        if not any(same(l, r) for l in lemmas for r in reached):
             continue
-        rows.append({'form': word, 'count': n, 'lemmas': sorted(lemmas)})
-    judge_answers(rows, run_batch(args, [r['form'] for r in rows]), judge_row, lambda r: set(r['lemmas']))
-    wrong = write_wrong(args.out, 'frequent-wrong.tsv', rows, lambda r: (r['form'], ','.join(r['lemmas']), r['first'], r['trace']))
+        rows.append({'form': word, 'count': n, 'lemmas': sorted(lemmas), 'expected': expected_lemmas(judge_row, gold, word)})
+    judge_answers(rows, run_batch(args, [r['form'] for r in rows]), judge_row, lambda r: set(r['expected']))
+    wrong = write_wrong(args.out, 'frequent-wrong.tsv', [dict(r, verdict='wrong' if r['verdict'] in WRONG else r['verdict']) for r in rows],
+                        lambda r: (r['form'], ','.join(r['expected']), r['first'], r['trace']))
     in_list = sum(n for _, n in words)
     weight = lambda r: r['count']
     summary = {'list': len(words), 'list tokens': in_list, 'wiki tokens': tokens, 'reached': len(rows),
@@ -583,6 +660,7 @@ def cmd_particles(args):
     sentences = read_conllu(sorted(glob.glob(os.path.join(args.cache, 'ud-irish-idt', '*.conllu'))))
     rows = hovers(sentences, lambda prev, form: prev in PARTICLES)
     judge_answers(rows, run_batch(args, [r['text'] for r in rows]), judge_row, lambda r: {r['lemma']})
+    gold = gold_lemmas(sentences)
     tatoeba = []
     with bz2.open(os.path.join(args.cache, 'gle_sentences.tsv.bz2'), 'rt', encoding='utf-8') as f:
         for line in f:
@@ -592,7 +670,7 @@ def cmd_particles(args):
                 prev, word = words[i - 1].group(0).lower(), words[i].group(0)
                 lemmas = judge_row.form_of.get(word) or judge_row.form_of.get(word.lower())
                 if prev in PARTICLES and lemmas:
-                    tatoeba.append({'form': word, 'prev': prev, 'text': text[words[i].start():], 'lemmas': sorted(lemmas)})
+                    tatoeba.append({'form': word, 'prev': prev, 'text': text[words[i].start():], 'lemmas': expected_lemmas(judge_row, gold, word)})
     judge_answers(tatoeba, run_batch(args, [r['text'] for r in tatoeba]), judge_row, lambda r: set(r['lemmas']))
     by_particle = {}
     for p in PARTICLES:

@@ -72,6 +72,7 @@ const NO_SPACE = '[^ ]';                 // a stem of one word
 const CONSONANT = '{consonant}';         // [bcdfghlmnprst]
 const BROAD_VOWEL = '{broadVowel}';      // [aouáóú]
 const AFTER_MUTATION = '{afterMutation}';  // what follows the h of lenition or an eclipsed consonant
+const AFTER_CAPITAL_MUTATION = '{afterCapitalMutation}';  // the same after a capital prefix, capitals too (i mBÁC)
 const LOWER_VOWEL = '{lowerVowel}';
 const UPPER_VOWEL = '{upperVowel}';
 const VOWEL = '{vowel}';
@@ -156,7 +157,7 @@ transform('past', 'past', 'Past tense of the irregular verbs: chonaic, chuaigh, 
 transform('lenition', 'lenition', 'Lenition (séimhiú): h after the first consonant, after mo, do, a (his), ní, má, the article (an bhean), in compounds and on adjectives after a feminine noun: bhean → bean, chat → cat, shráid → sráid, Shasana → Sasana.');
 for (const [inflected, deinflected] of LENITED) {
     prefix('lenition', inflected, deinflected, [], {stemStartsWith: AFTER_MUTATION});
-    prefix('lenition', upper(inflected), upper(deinflected), [], {stemStartsWith: AFTER_MUTATION});
+    prefix('lenition', upper(inflected), upper(deinflected), [], {stemStartsWith: AFTER_CAPITAL_MUTATION});
 }
 // The Munster past forms in -(e)as and -(a)is are read with their lenited
 // initial or past d' (mholas, d'ólais): as plain endings they read the -as
@@ -177,7 +178,7 @@ for (const [inflected, deinflected] of ECLIPSED) {
     prefix('eclipsis', inflected, deinflected, [], {stemStartsWith: AFTER_MUTATION});
     // nGaillimh, mBaile, bhFrainc: the eclipsing letters stay lowercase.
     const capital = inflected.slice(0, -1) + inflected.slice(-1).toUpperCase();
-    prefix('eclipsis', capital, upper(deinflected), [], {stemStartsWith: AFTER_MUTATION});
+    prefix('eclipsis', capital, upper(deinflected), [], {stemStartsWith: AFTER_CAPITAL_MUTATION});
 }
 prefix('eclipsis', 'n-', '', [], {stemStartsWith: LOWER_VOWEL});
 prefix('eclipsis', 'n', '', [], {stemStartsWith: UPPER_VOWEL});
@@ -194,7 +195,9 @@ add('eclipsis', {type: 'prefix', inflected: 'n', deinflected: '', conditionsIn: 
 transform('h-prefix', 'h before a vowel', 'h before a vowel after na (na hoíche), a (her: a hathair), le, go, chomh, ní (copula) and the ordinals: hoíche → oíche, hÉireann → Éireann, hathair → athair.');
 prefix('h-prefix', 'h', '', [], {stemStartsWith: VOWEL});
 prefix('h-prefix', 'h-', '', [], {stemStartsWith: VOWEL});
-add('h-prefix', {type: 'prefix', inflected: 'h', deinflected: '', conditionsIn: [], conditionsOut: LOWER_OUT, stemStartsWith: UPPER_VOWEL, then: LOWER_FIRST});
+// No lower-cased output here: h before a small vowel is written without a
+// hyphen, so decapitalize already reaches the small word (hInse → hinse →
+// inse); the output only saved a processor step, which no test could see.
 
 transform('t-prefix', 't before a vowel or s', 't- before a vowel of a masculine noun after the article (an t-uisce, an tUachtarán, an tAire) and t before s after an (an tsráid, an tsúil): t-uisce → uisce, tUachtarán → Uachtarán, tAire → aire, tsráid → sráid.');
 prefix('t-prefix', 't-', '', [], {stemStartsWith: LOWER_VOWEL});
@@ -207,6 +210,8 @@ transform('elision', 'elided particle', 'd\', m\' and b\' before a vowel or fh: 
 for (const particle of ['d\'', 'm\'', 'b\'', 'dh\'']) {
     prefix('elision', particle, '', [], {stemStartsWith: VOWEL});
     prefix('elision', `${particle}fh`, 'f', [], {stemStartsWith: AFTER_MUTATION});
+    // Before a capital, as in party and place names: d'Fhianna Fáil, d'Fhine Gael.
+    prefix('elision', `${particle}Fh`, 'F', [], {stemStartsWith: AFTER_MUTATION});
 }
 // The past d' before the Munster -(e)as and -(a)is forms (d'ólas, d'fhágais).
 add('elision', {type: 'prefix', inflected: 'd\'', deinflected: '', conditionsIn: ['lenited'], conditionsOut: ['v'], stemStartsWith: VOWEL});
@@ -264,6 +269,8 @@ const VERB_ENDINGS = [
         ['ais'], ['is'], ['aís'], ['ís'], ['is'], [], ['ís']],
     ['past-1pl', 'past 1pl', 'Past tense, first person plural: mholamar, bhriseamar, cheannaíomar, d\'éiríomar, bhuamar, léamar, shuíomar.',
         ['amar'], ['eamar'], ['aíomar'], ['íomar'], ['mar'], ['amar'], ['íomar']],
+    ['past-1pl-munster', 'past 1pl (Munster)', 'Past tense, first person plural, Munster synthetic form: mholamair, bhriseamair, cheannaíomair, d\'ólamair.',
+        ['amair'], ['eamair'], ['aíomair'], ['íomair'], ['mair'], ['amair'], ['íomair']],
     ['past-2pl-munster', 'past 2pl (Munster)', 'Past tense, second person plural, Munster synthetic form: mholabhair, bhriseabhair, cheannaíobhair.',
         ['abhair'], ['eabhair'], ['aíobhair'], ['íobhair'], ['bhair'], ['abhair'], ['íobhair']],
     ['past-3pl-munster', 'past 3pl (Munster)', 'Past tense, third person plural, Munster synthetic form: mholadar, bhriseadar, cheannaíodar.',
@@ -331,7 +338,7 @@ const VOWEL_START = /^[aeiouáéíóúf]/;
 // the lenited initial or the d' of the past (mholas, bhrisis, d'ólais,
 // d'fhágas): as plain endings they read the -as nouns and their genitives
 // as verbs (beartas → beart, cleachtais → cleacht, fearas → fear).
-const LENITED_ONLY = new Set(['past-1sg-munster', 'past-2sg-munster']);
+const LENITED_ONLY = new Set(['past-1sg-munster', 'past-2sg-munster', 'past-1pl-munster']);
 // The initial is kept (identity prefix pairs); the twins remove it.
 const PAST_INITIALS = [...LENITED.map(([i]) => [i, i]), ['d\'', 'd\''], ['d\'fh', 'd\'fh']];
 function lenitedEndings(id, pairs, conditionsOut, constraints = {}) {
@@ -373,8 +380,15 @@ function verbEndings(id, b1, s1, b2, s2, bua, le, su) {
     endings(id, s2.map((e) => [e, '']), V, {stemMinLength: 3, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
     // Monosyllables in -igh: buaigh, meáigh, léigh, suigh, and after a
     // consonant only (ligh, figh, nigh, dligh) the endings of suigh.
+    // With the lenited initial kept as a prefix (the Munster -as, -ais and
+    // -amair forms) the stem must still hold a consonant, so these forms of
+    // the monosyllables whose initial is the lenited one are not read (bhuais,
+    // bhás): wty-ga-en's rows name their verbs, and as rules they put báigh
+    // before bás for bhás (1,174 tokens of the frequency list).
     endings(id, [...BUA_VOWELS.flatMap((v) => bua.map((e) => [v + e, `${v}igh`])), ...le.map((e) => [`é${e}`, 'éigh']), ...su.map((e) => [`u${e}`, 'uigh'])], V,
         {stemMinLength: 1, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
+    // ligh, figh, nigh: the stem is the verb's consonant, never empty (bhíos is
+    // bí, not bigh; fhís is fís, not figh).
     endings(id, su.map((e) => [e, 'igh']), V, {stemMinLength: 1, stemCharacters: CONSONANT});
 }
 
@@ -390,8 +404,10 @@ transform('verbal-adjective', 'verbal adjective', 'Verbal adjective (past partic
     endings('verbal-adjective', [['te', 'th'], ['ta', 'th'], ['fa', 'bh'], ['fa', 'mh']], V, {stemMinLength: 1, stemCharacters: NO_SPACE, stemEndsWith: VOWEL});
     endings('verbal-adjective', [['aithe', 'aigh'], ['ithe', 'igh']], V, {stemMinLength: 2, stemCharacters: NO_SPACE});
     endings('verbal-adjective', [['aithe', 'igh']], V, {stemMinLength: 3, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
+    // No stem-end constraint: wty-ga-en has buartha (buair) and rialta (riail)
+    // after a vowel, and no wrong reading of real text needs one.
     endings('verbal-adjective', [['artha', 'air'], ['anta', 'ain'], ['alta', 'ail'], ['eartha', 'ir'], ['eanta', 'in'], ['ste', 'is'],
-        ['ánta', 'áin'], ['últa', 'úil'], ['ólta', 'óil']], V, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
+        ['ánta', 'áin'], ['últa', 'úil'], ['ólta', 'óil']], V, {stemMinLength: 2, stemCharacters: NO_SPACE});
     // A broad ending after a slender stem broadens it: tochais → tochasta,
     // loisc → loiscthe but adhlaic → adhlactha.
     endings('verbal-adjective', [['sta', 'is'], ['ctha', 'ic']], V, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: '[a]'});
@@ -428,6 +444,7 @@ const IRREGULAR_VERBS = {
         'past-1sg-munster': ['bhíos', 'rabhas'],
         'past-2sg-munster': ['bhís', 'rabhais'],
         'past-1pl': ['bhíomar', 'rabhamar'],
+        'past-1pl-munster': ['bhíomair', 'rabhamair'],
         'past-2pl-munster': ['bhíobhair', 'rabhabhair'],
         'past-3pl-munster': ['bhíodar', 'rabhadar'],
         'adh': ['bhíothas', 'rabhthas', 'bíodh'],
@@ -461,6 +478,7 @@ const IRREGULAR_VERBS = {
         'past-1sg-munster': ['dúras'],
         'past-2sg-munster': ['dúrais'],
         'past-1pl': ['dúramar'],
+        'past-1pl-munster': ['dúramair'],
         'past-2pl-munster': ['dúrabhair'],
         'past-3pl-munster': ['dúradar'],
         'adh': ['dúradh', 'deireadh', 'abradh'],
@@ -490,6 +508,7 @@ const IRREGULAR_VERBS = {
         'past-1sg-munster': ['rugas'],
         'past-2sg-munster': ['rugais'],
         'past-1pl': ['rugamar'],
+        'past-1pl-munster': ['rugamair'],
         'past-2pl-munster': ['rugabhair'],
         'past-3pl-munster': ['rugadar'],
         'adh': ['rugadh'],
@@ -510,6 +529,7 @@ const IRREGULAR_VERBS = {
         'past-1sg-munster': ['chualas'],
         'past-2sg-munster': ['chualais'],
         'past-1pl': ['chualamar'],
+        'past-1pl-munster': ['chualamair'],
         'past-2pl-munster': ['chualabhair'],
         'past-3pl-munster': ['chualadar'],
         'adh': ['chualathas', 'chualadh'],
@@ -520,6 +540,7 @@ const IRREGULAR_VERBS = {
         'past-1sg-munster': ['rinneas', 'dearnas'],
         'past-2sg-munster': ['rinnis', 'dearnais'],
         'past-1pl': ['rinneamar', 'dearnamar'],
+        'past-1pl-munster': ['rinneamair', 'dearnamair'],
         'past-2pl-munster': ['rinneabhair', 'dearnabhair'],
         'past-3pl-munster': ['rinneadar', 'dearnadar'],
         'adh': ['rinneadh', 'dearnadh'],
@@ -529,6 +550,7 @@ const IRREGULAR_VERBS = {
         'past-1sg-munster': ['fuaireas'],
         'past-2sg-munster': ['fuairis'],
         'past-1pl': ['fuaireamar'],
+        'past-1pl-munster': ['fuaireamair'],
         'past-2pl-munster': ['fuaireabhair'],
         'past-3pl-munster': ['fuaireadar'],
         'adh': ['fuarthas'],
@@ -551,6 +573,7 @@ const IRREGULAR_VERBS = {
         'past-1sg-munster': ['chonac', 'facas'],
         'past-2sg-munster': ['chonaicís', 'facais'],
         'past-1pl': ['chonaiceamar', 'facamar'],
+        'past-1pl-munster': ['chonaiceamair', 'facamair'],
         'past-2pl-munster': ['chonaiceabhair', 'facabhair'],
         'past-3pl-munster': ['chonaiceadar', 'facadar'],
         'adh': ['chonacthas', 'facthas'],
@@ -587,6 +610,7 @@ const IRREGULAR_VERBS = {
         'past-1sg-munster': ['thánag', 'thángas'],
         'past-2sg-munster': ['thángais'],
         'past-1pl': ['thángamar'],
+        'past-1pl-munster': ['thángamair'],
         'past-2pl-munster': ['thángabhair'],
         'past-3pl-munster': ['thángadar'],
         'adh': ['thángthas', 'thángathas'],
@@ -598,6 +622,7 @@ const IRREGULAR_VERBS = {
         'past-1sg-munster': ['chuas', 'deachas'],
         'past-2sg-munster': ['chuais', 'deachais'],
         'past-1pl': ['chuamar', 'deachamar'],
+        'past-1pl-munster': ['chuamair', 'deachamair'],
         'past-2pl-munster': ['chuabhair', 'deachabhair'],
         'past-3pl-munster': ['chuadar', 'deachadar'],
         'adh': ['chuathas', 'deachthas', 'deachathas'],
@@ -640,7 +665,7 @@ const IRREGULAR_VERBAL_NOUNS = [
 const IRREGULAR_STEMS = [
     // lemma, stem, ending tables (the ids of VERB_ENDINGS whose b1 endings it takes)
     ['tabhair', 'tug', ['present-1sg', 'present', 'present-1pl', 'present-autonomous', 'present-3pl-munster', 'past-1sg-munster', 'past-2sg-munster',
-        'past-1pl', 'past-2pl-munster', 'past-3pl-munster', 'adh', 'habitual-1sg', 'habitual-2sg', 'habitual-1pl', 'habitual-3pl', 'habitual-autonomous',
+        'past-1pl', 'past-1pl-munster', 'past-2pl-munster', 'past-3pl-munster', 'adh', 'habitual-1sg', 'habitual-2sg', 'habitual-1pl', 'habitual-3pl', 'habitual-autonomous',
         'imperative-2pl', 'subjunctive']],
     ['tabhair', 'tabhar', ['future', 'future-1pl', 'future-autonomous', 'future-1sg-munster', 'future-3pl-munster', 'conditional', 'conditional-1sg',
         'conditional-2sg', 'conditional-1pl', 'conditional-3pl', 'conditional-autonomous']],
@@ -701,8 +726,15 @@ transform('genitive', 'genitive', 'Genitive singular of the second to fifth decl
     // beorach) are written out: as rules they read -(e)ach adjectives as the
     // genitive of a noun (réigiúnach → réigiúin, séasúrach → séasúir).
     for (const [form, lemma] of [['traenach', 'traein'], ['beorach', 'beoir'], ['corónach', 'coróin']]) { whole('genitive', form, lemma, N); }
-    endings('genitive', [['rach', 'air'], ['reach', 'ir'], ['ar', 'air'], ['ár', 'áir'], ['an', 'ain'], ['ann', 'ainn'], ['an', 'a'], ['ag', 'aig']], N,
+    endings('genitive', [['reach', 'ir'], ['ár', 'áir'], ['an', 'ain'], ['ann', 'ainn'], ['an', 'a'], ['ag', 'aig']], N,
         {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
+    // -rach → -air leaves out the stem seacht-: seachtrach is the adjective
+    // (external), which wty-ga-en lacks, not the genitive of seachtair.
+    endings('genitive', [['rach', 'air']], N, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT, stemNotStartsWithText: 'seacht'});
+    // -ar → -air after h or m: the -athair and -áthair nouns and seamair,
+    // all 15 such genitives of wty-ga-en; after other letters it read names
+    // such as Obar (Obar Dheathain) as obair.
+    endings('genitive', [['ar', 'air']], N, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: '[hm]'});
     // The genitive of a verbal noun is its verbal adjective: an athraithe,
     // an mholta, an chinnte, na briste.
     endings('genitive', [['aithe', 'ú'], ['ithe', 'iú'], ['ta', 'adh'], ['tha', 'adh'], ['te', 'eadh'], ['the', 'eadh']], N,
@@ -712,10 +744,14 @@ transform('genitive', 'genitive', 'Genitive singular of the second to fifth decl
     // foghlaim → foghlama.
     endings('genitive', [['ála', 'áil'], ['úla', 'úil'], ['óla', 'óil'], ['ama', 'aim']], N, {stemMinLength: 2, stemCharacters: NO_SPACE});
     endings('genitive', [['anta', 'aint']], N, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
-    endings('genitive', [['ann', ''], ['ún', 'ú'], ['ad', 'a'], ['ead', 'e']], N, {stemMinLength: 3, stemCharacters: NO_SPACE});
+    // -ann → '' is written out: as a rule it gave present verbs in -ann the
+    // trace genitive (déanann → déan "dean") and read síleann as Síle; it
+    // reached 4 of wty-ga-en's pairs (Éireann, hÉireann, cuisleann, díleann).
+    endings('genitive', [['ún', 'ú'], ['ad', 'a'], ['ead', 'e']], N, {stemMinLength: 3, stemCharacters: NO_SPACE});
     for (const [form, lemma] of [['tí', 'teach'], ['lae', 'lá'], ['Dé', 'Dia'], ['dí', 'deoch'], ['mara', 'muir'], ['fola', 'fuil'], ['meala', 'mil'],
         ['olla', 'olann'], ['scine', 'scian'], ['sléibhe', 'sliabh'], ['leapa', 'leaba'], ['talún', 'talamh'], ['míosa', 'mí'], ['oibre', 'obair'],
-        ['coda', 'cuid'], ['Éirinn', 'Éire'], ['iníne', 'iníon'], ['mic', 'mac'], ['buachalla', 'buachaill'], ['bó', 'bó'], ['cnoic', 'cnoc']]) {
+        ['coda', 'cuid'], ['Éirinn', 'Éire'], ['iníne', 'iníon'], ['mic', 'mac'], ['buachalla', 'buachaill'], ['bó', 'bó'], ['cnoic', 'cnoc'],
+        ['Éireann', 'Éire'], ['Albann', 'Alba'], ['cuisleann', 'cuisle'], ['díleann', 'díle']]) {
         if (form !== lemma) { whole('genitive', form, lemma, N); }
     }
 }
@@ -838,13 +874,13 @@ const PREPOSITIONAL_PRONOUNS = {
     'um': ['umam', 'umat', 'uime', 'uimpi', 'umainn', 'umaibh', 'umpu'],
 };
 const PERSONS = [
-    ['pp-1sg', 'with me (1sg)', 'Prepositional pronoun, first person singular: agam, orm, liom, dom, uaim, fúm.'],
-    ['pp-2sg', 'with you (2sg)', 'Prepositional pronoun, second person singular: agat, ort, leat, duit, uait, fút.'],
-    ['pp-3sg-masc', 'with him (3sg m.)', 'Prepositional pronoun, third person singular masculine: aige, air, leis, dó, uaidh, ann.'],
-    ['pp-3sg-fem', 'with her (3sg f.)', 'Prepositional pronoun, third person singular feminine: aici, uirthi, léi, di, uaithi, inti.'],
-    ['pp-1pl', 'with us (1pl)', 'Prepositional pronoun, first person plural: againn, orainn, linn, dúinn, uainn, fúinn.'],
-    ['pp-2pl', 'with you (2pl)', 'Prepositional pronoun, second person plural: agaibh, oraibh, libh, daoibh, uaibh, fúibh.'],
-    ['pp-3pl', 'with them (3pl)', 'Prepositional pronoun, third person plural: acu, orthu, leo, dóibh, uathu, fúthu.'],
+    ['pp-1sg', 'prepositional pronoun 1sg', 'Prepositional pronoun, first person singular: agam, orm, liom, dom, uaim, fúm.'],
+    ['pp-2sg', 'prepositional pronoun 2sg', 'Prepositional pronoun, second person singular: agat, ort, leat, duit, uait, fút.'],
+    ['pp-3sg-masc', 'prepositional pronoun 3sg m.', 'Prepositional pronoun, third person singular masculine: aige, air, leis, dó, uaidh, ann.'],
+    ['pp-3sg-fem', 'prepositional pronoun 3sg f.', 'Prepositional pronoun, third person singular feminine: aici, uirthi, léi, di, uaithi, inti.'],
+    ['pp-1pl', 'prepositional pronoun 1pl', 'Prepositional pronoun, first person plural: againn, orainn, linn, dúinn, uainn, fúinn.'],
+    ['pp-2pl', 'prepositional pronoun 2pl', 'Prepositional pronoun, second person plural: agaibh, oraibh, libh, daoibh, uaibh, fúibh.'],
+    ['pp-3pl', 'prepositional pronoun 3pl', 'Prepositional pronoun, third person plural: acu, orthu, leo, dóibh, uathu, fúthu.'],
 ];
 for (const [id, name, description] of PERSONS) { transform(id, name, description); }
 for (const [preposition, forms] of Object.entries(PREPOSITIONAL_PRONOUNS)) {
@@ -858,7 +894,8 @@ for (const [preposition, forms] of Object.entries(PREPOSITIONAL_PRONOUNS)) {
         const slender = /[eéií][^aeiouáéíóú]*$/.test(form);
         const ending = person === 4 && form.endsWith('nn') ? 'e'
             : person === 2 || person === 6 ? (slender ? 'sean' : 'san') : (slender ? 'se' : 'sa');
-        whole('emphatic', form + ending, form, []);
+        // One s where the form ends in s: leis → leisean, thairis → thairisean.
+        whole('emphatic', (form.endsWith('s') && ending.startsWith('s') ? form.slice(0, -1) : form) + ending, form, []);
     });
 }
 

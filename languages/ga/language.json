@@ -16,6 +16,7 @@
     "broadVowel": "[aouáóú]",
     "consonant": "[bcdfghlmnprst]",
     "afterMutation": "[aeiouáéíóúlnr]",
+    "afterCapitalMutation": "[aeiouáéíóúlnrAEIOUÁÉÍÓÚLNR]",
     "beforeVerbalNounT": "[glnr]"
   },
   "text": {
@@ -166,7 +167,7 @@
         "glossary": ["to buy"],
         "definitionTags": "v",
         "matched": "Cheannaigh",
-        "trace": ["past"]
+        "trace": ["lenition"]
       },
       "character": null
     }

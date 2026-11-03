@@ -1,4 +1,4 @@
-# Source: written for this pack (GPL-3.0-or-later), no third-party data. Expected traces are this pack's transform ids, newest first.
+# Source: written for this pack (GPL-3.0-or-later). The sources of some constraint-* rows are single words or two-word phrases that occur in the Irish Wikipedia (CC BY-SA 4.0) or UD Irish-IDT (CC BY-SA 3.0); no text is copied. Expected traces are this pack's transform ids, newest first.
 # Test files run with every optional processor on (addMissingFada), so the negatives leave out words that processor reads as another word; those are in defaults.tsv.
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
 lenition	1	bhean	bean	n	lenition
@@ -272,7 +272,7 @@ prepositional	1	díobh	de	*	pp-3pl
 copula	1	ba	is	*	copula
 copula	1	níorbh	is	*	copula
 copula	1	gurb	is	*	copula
-negatives	0	mhaith	maith	v	past
+trace pin	0	mhaith	maith	v	past
 negatives	0	beartas	beart	*	*
 negatives	0	cleachtais	cleacht	*	*
 negatives	0	brainse	bran	*	*
@@ -304,7 +304,38 @@ noun	1	éisc	iasc	n	slender
 noun	1	ionadaithe	ionadaí	n	plural
 noun	1	tíortha	tír	n	plural
 noun	1	thíortha	tír	n	plural|lenition
-# Constraint rows: each fails when one stem constraint of the named transform is deleted (sources/README: Measurements, mutations). Most sources are words of the Irish Wikipedia or UD Irish-IDT; the rest are built from the rule's ending.
+past	1	chuireamair	cuir	v	lenition|past-1pl-munster
+past	1	mholamair	mol	v	lenition|past-1pl-munster
+past	1	d'ólamair	ól	v	elision|past-1pl-munster
+past	1	bhíomair	bí	v	past-1pl-munster
+past	1	chuamair	téigh	v	past-1pl-munster
+past	1	thugamair	tabhair	v	past-1pl-munster|lenition
+elision	1	d'Fhianna	Fianna	*	elision
+elision	1	m'Fhéile	Féile	*	elision
+elision	1	dh'imigh	imigh	v	elision
+elision	1	dh'fhág	fág	v	elision
+emphatic	1	leisean	le	*	pp-3sg-masc|emphatic
+emphatic	1	thairisean	thar	*	pp-3sg-masc|emphatic
+noun	1	Éireann	Éire	*	genitive
+noun	1	Albann	Alba	*	genitive
+noun	1	cuisleann	cuisle	n	genitive
+noun	1	athar	athair	n	genitive
+noun	1	seamar	seamair	n	genitive
+noun	1	cathrach	cathair	n	genitive
+present	1	déanann	déan	v	present
+negatives	0	déanann	déan	*	genitive
+negatives	0	síleann	Síle	*	*
+negatives	0	leissean	le	*	*
+negatives	0	Obar	obair	*	*
+negatives	0	seachtrach	seachtair	*	*
+negatives	0	sheamair	se	*	*
+past	1	ghlaois	glaoigh	v	lenition|past-2sg-munster
+eclipsis	1	mBÁC	BÁC	*	eclipsis
+lenition	1	BhÁC	BÁC	*	lenition
+verbal-adjective	1	buartha	buair	v	verbal-adjective
+trace pin	0	bhás	báigh	v	lenition|past-1sg-munster
+trace pin	0	bháis	báigh	v	lenition|past-2sg-munster
+# Constraint rows: each fails when one stem constraint of the named transform is deleted (README.md, Measurements 6). Most sources are words or two-word phrases of the Irish Wikipedia or UD Irish-IDT; the rest are built from the rule's ending.
 constraint-eclipsis	0	n-Éces	Éces	*	*
 constraint-h-prefix	0	hd	d	*	*
 constraint-t-prefix	0	t-chealla	ceall	n	*
@@ -382,7 +413,6 @@ constraint-present-3pl-munster	0	Bríd	Br	v	*
 constraint-present-3pl-munster	0	chur tríd	chur trigh	v	*
 constraint-past-1sg-munster	0	bhlas	bl	v	*
 constraint-past-1sg-munster	0	bheith níos	beith n	v	*
-constraint-past-1sg-munster	0	bhás	báigh	v	*
 constraint-past-1sg-munster	0	bhíos	bigh	v	*
 constraint-past-1sg-munster	0	cheannas	ceainn	v	*
 constraint-past-1sg-munster	0	bhabalaíos	babail	v	*
@@ -571,3 +601,135 @@ constraint-verbal-noun	0	feiceáil	feice	v	*
 constraint-verbal-noun	0	ant	an	v	*
 constraint-verbal-noun	0	churadh	cuir	v	*
 constraint-verbal-noun	0	last	las	v	*
+constraint-lenition	0	Bh	B	*	*
+constraint-lenition	0	Dh	D	*	*
+constraint-lenition	0	Fh	F	*	*
+constraint-lenition	0	Gh	G	*	*
+constraint-lenition	0	Mh	M	*	*
+constraint-lenition	0	Ph	P	*	*
+constraint-lenition	0	sh	s	*	*
+constraint-lenition	0	th	t	*	*
+constraint-lenition	0	dh'	d'	*	*
+constraint-eclipsis	0	mb'fhéidir	b'fhéidir	*	*
+constraint-eclipsis	0	gC	C	*	*
+constraint-eclipsis	0	bhF	F	*	*
+constraint-eclipsis	0	ng	g	*	*
+constraint-elision	0	d'fhág	fhág	*	*
+constraint-plural	0	ndaoine	nduine	n	*
+constraint-genitive	0	te	t	n	*
+constraint-genitive	0	arae	ara	n	*
+constraint-genitive	0	tabhairt aire	tabhairt ar	*	*
+constraint-genitive	0	gan	ga	n	*
+constraint-genitive	0	curach	cuair	n	*
+constraint-genitive	0	har	hair	n	*
+constraint-present	0	lúbann	lúib	v	*
+constraint-present	0	bunaíonn	buain	v	*
+constraint-present	0	labhraíonn	labhra	v	*
+constraint-present-autonomous	0	tógtar	tóig	v	*
+constraint-present-autonomous	0	bunaítear	buain	v	*
+constraint-present-autonomous	0	labhraítear	labhra	v	*
+constraint-past-1sg-munster	0	chuireas	cuire	v	*
+constraint-past-1pl	0	rinneamar	rinne	v	*
+constraint-past-3pl-munster	0	thógadar	tóig	v	*
+constraint-adh	0	cuireadh	cuire	v	*
+constraint-adh	0	tógadh	tóig	v	*
+constraint-adh	0	diúltaíodh	diúlta	v	*
+constraint-future	0	glaofaidh	glao	v	*
+constraint-future-1pl	0	tógfaimid	tóig	v	*
+constraint-future-autonomous	0	bunófar	buain	v	*
+constraint-conditional	0	luífeadh	luí	v	*
+constraint-conditional-autonomous	0	sáfaí	sá	v	*
+constraint-habitual-autonomous	0	hataí	hat	v	*
+constraint-habitual-autonomous	0	labhraítí	labhra	v	*
+constraint-subjunctive	0	tráma	tráim	v	*
+constraint-subjunctive	0	cróga	cróig	v	*
+constraint-verbal-adjective	0	nithe	nigh	v	*
+constraint-verbal-noun	0	lú	ligh	v	*
+constraint-verbal-noun	0	báú	báigh	v	*
+constraint-past-1pl-munster	0	bhaíomair	bhaigh	*	*
+constraint-past-1pl-munster	0	bhaalaíomair	bhaaail	*	*
+constraint-past-1pl-munster	0	bhálamair	bháil	*	*
+constraint-past-1pl-munster	0	bhabamair	bhaib	*	*
+constraint-past-1pl-munster	0	bhabalaíomair	bhabail	*	*
+constraint-past-1pl-munster	0	bhris molamair	bris mol	*	*
+constraint-adj-e	0	be	b	*	*
+constraint-adj-e	0	bhe	b	*	*
+constraint-verbal-noun	0	baint	b	*	*
+constraint-verbal-noun	0	beacht	b	*	*
+constraint-adh	0	baisteadh	baiste	*	*
+constraint-adh	0	bhfilleadh	bhfille	*	*
+constraint-genitive	0	ban	ba	*	*
+constraint-genitive	0	ban	bain	*	*
+constraint-present	0	beann	b	*	*
+constraint-present	0	ceann	c	*	*
+constraint-subjunctive	0	bhí	b	*	*
+constraint-subjunctive	0	bí	b	*	*
+constraint-present	0	aontaíonn	aonta	*	*
+constraint-present	0	fhreagraíonn	freagra	*	*
+constraint-present-autonomous	0	dtagraítear	tagra	*	*
+constraint-present-autonomous	0	fhostaítear	fosta	*	*
+constraint-present-2sg-munster	0	d'fhir	f	*	*
+constraint-present-2sg-munster	0	dtir	t	*	*
+constraint-adh	0	aontaíodh	aonta	*	*
+constraint-adh	0	fógraíodh	fógra	*	*
+constraint-past-1sg-munster	0	bhuaileas	buaile	*	*
+constraint-past-1sg-munster	0	chruinneas	cruinne	*	*
+constraint-adh	0	Bhíodh	Bh	*	*
+constraint-adh	0	bhíodh	b	*	*
+constraint-verbal-noun	0	thusa	tigh	v	*
+constraint-present	0	bhíonn	b	*	*
+constraint-present	0	bhíonn	bh	*	*
+constraint-verbal-adjective	0	dtithe	tigh	v	*
+constraint-present-1pl	0	bhímid	b	*	*
+constraint-present-1pl	0	bhímid	bh	*	*
+constraint-present-3pl-munster	0	did	d	*	*
+constraint-present-3pl-munster	0	fhaid	f	*	*
+constraint-future	0	breofaidh	breo	*	*
+constraint-conditional-autonomous	0	léifí	léi	*	*
+constraint-conditional-autonomous	0	ndófaí	dó	*	*
+constraint-subjunctive	0	Ginéive	Ginéiv	*	*
+constraint-subjunctive	0	analaí	anail	*	*
+constraint-subjunctive	0	gealaí	gil	*	*
+constraint-eclipsis	0	mb'	b'	*	*
+constraint-elision	0	d'fhir	fh	*	*
+constraint-past-1pl	0	bhfuaireamar	fuaire	*	*
+constraint-past-1pl	0	itheamar	ithe	*	*
+constraint-adh	0	bacadh	baic	*	*
+constraint-adh	0	magadh	maig	*	*
+constraint-conditional	0	imeochadh	im	*	*
+constraint-conditional	0	n-imeodh	im	*	*
+constraint-verbal-noun	0	ghráú	gráigh	*	*
+constraint-verbal-noun	0	tráú	tráigh	*	*
+constraint-verbal-noun	0	ngoradh	goir	*	*
+constraint-plural	0	neacha	n	*	*
+constraint-adj-plural	0	dhea	de	*	*
+constraint-present	0	bhunaíonn	buain	*	*
+constraint-present-autonomous	0	bhunaítear	buain	*	*
+constraint-past-1sg-munster	0	chóras	chóir	*	*
+constraint-past-1sg-munster	0	chóras	cóir	*	*
+constraint-past-1sg-munster	0	mhíníos	mín	*	*
+constraint-past-1sg-munster	0	bhfeacaíos	bhfeaca	*	*
+constraint-past-2sg-munster	0	chórais	chóir	*	*
+constraint-past-2sg-munster	0	chórais	cóir	*	*
+constraint-past-1pl	0	Bhíomar	Bh	*	*
+constraint-past-2pl-munster	0	leabhair	le	*	*
+constraint-past-3pl-munster	0	fheadar	f	*	*
+constraint-future-autonomous	0	mbunófar	buain	*	*
+constraint-future-2sg-munster	0	deoir	d	*	*
+constraint-conditional-autonomous	0	ndófaí	daigh	*	*
+constraint-habitual-1pl	0	mbímis	b	*	*
+constraint-habitual-1pl	0	mbímis	mb	*	*
+constraint-habitual-autonomous	0	dtí	d	*	*
+constraint-eclipsis	0	mB	B	*	*
+constraint-genitive	0	brach	bair	n	*
+constraint-adj-e	0	cle	ceal	adj	*
+constraint-slender	0	i gcomhair	i gcomhar	*	*
+constraint-slender	0	a chloig	a chlog	*	*
+constraint-slender	0	mo shúil	mo shúl	*	*
+constraint-present	0	shníonn	sin	v	*
+constraint-present-autonomous	0	bítear	b	v	*
+constraint-present-autonomous	0	lítear	l	v	*
+constraint-future-3pl-munster	0	seoid	s	v	*
+constraint-habitual-autonomous	0	dtí	dt	v	*
+constraint-subjunctive	0	úra	úir	v	*
+constraint-subjunctive	0	ainrialaí	ainriail	v	*

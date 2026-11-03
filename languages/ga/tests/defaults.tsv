@@ -16,3 +16,9 @@ constraint-plural	0	céanna	cé	n	*
 constraint-present-autonomous	0	caitear	caigh	v	*
 constraint-habitual-2sg	0	abiteá	abigh	v	*
 constraint-habitual-autonomous	0	cleití	cleigh	v	*
+constraint-present-1sg	0	uaim	uaigh	*	*
+constraint-present-1sg	0	uaimse	uaigh	*	*
+constraint-present-2sg-munster	0	huair	uaigh	*	*
+constraint-present-2sg-munster	0	uair	uaigh	*	*
+constraint-habitual-1sg	0	uainn	uaigh	*	*
+constraint-habitual-1sg	0	uainne	uaigh	*	*

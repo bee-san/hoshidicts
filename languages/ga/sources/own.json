@@ -66,23 +66,23 @@
       "source": "own",
       "rules": [
         {"type": "prefix", "inflected": "bh", "deinflected": "b", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
-        {"type": "prefix", "inflected": "Bh", "deinflected": "B", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
+        {"type": "prefix", "inflected": "Bh", "deinflected": "B", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterCapitalMutation}"},
         {"type": "prefix", "inflected": "ch", "deinflected": "c", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
-        {"type": "prefix", "inflected": "Ch", "deinflected": "C", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
+        {"type": "prefix", "inflected": "Ch", "deinflected": "C", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterCapitalMutation}"},
         {"type": "prefix", "inflected": "dh", "deinflected": "d", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
-        {"type": "prefix", "inflected": "Dh", "deinflected": "D", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
+        {"type": "prefix", "inflected": "Dh", "deinflected": "D", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterCapitalMutation}"},
         {"type": "prefix", "inflected": "fh", "deinflected": "f", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
-        {"type": "prefix", "inflected": "Fh", "deinflected": "F", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
+        {"type": "prefix", "inflected": "Fh", "deinflected": "F", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterCapitalMutation}"},
         {"type": "prefix", "inflected": "gh", "deinflected": "g", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
-        {"type": "prefix", "inflected": "Gh", "deinflected": "G", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
+        {"type": "prefix", "inflected": "Gh", "deinflected": "G", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterCapitalMutation}"},
         {"type": "prefix", "inflected": "mh", "deinflected": "m", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
-        {"type": "prefix", "inflected": "Mh", "deinflected": "M", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
+        {"type": "prefix", "inflected": "Mh", "deinflected": "M", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterCapitalMutation}"},
         {"type": "prefix", "inflected": "ph", "deinflected": "p", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
-        {"type": "prefix", "inflected": "Ph", "deinflected": "P", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
+        {"type": "prefix", "inflected": "Ph", "deinflected": "P", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterCapitalMutation}"},
         {"type": "prefix", "inflected": "sh", "deinflected": "s", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
-        {"type": "prefix", "inflected": "Sh", "deinflected": "S", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
+        {"type": "prefix", "inflected": "Sh", "deinflected": "S", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterCapitalMutation}"},
         {"type": "prefix", "inflected": "th", "deinflected": "t", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
-        {"type": "prefix", "inflected": "Th", "deinflected": "T", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
+        {"type": "prefix", "inflected": "Th", "deinflected": "T", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterCapitalMutation}"},
         {"type": "prefix", "inflected": "bh", "deinflected": "b", "conditionsIn": ["lenited"], "conditionsOut": ["v"], "stemStartsWith": "{afterMutation}"},
         {"type": "prefix", "inflected": "Bh", "deinflected": "B", "conditionsIn": ["lenited"], "conditionsOut": ["v"], "stemStartsWith": "{afterMutation}"},
         {"type": "prefix", "inflected": "ch", "deinflected": "c", "conditionsIn": ["lenited"], "conditionsOut": ["v"], "stemStartsWith": "{afterMutation}"},
@@ -110,19 +110,19 @@
       "source": "own",
       "rules": [
         {"type": "prefix", "inflected": "mb", "deinflected": "b", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
-        {"type": "prefix", "inflected": "mB", "deinflected": "B", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
+        {"type": "prefix", "inflected": "mB", "deinflected": "B", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterCapitalMutation}"},
         {"type": "prefix", "inflected": "gc", "deinflected": "c", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
-        {"type": "prefix", "inflected": "gC", "deinflected": "C", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
+        {"type": "prefix", "inflected": "gC", "deinflected": "C", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterCapitalMutation}"},
         {"type": "prefix", "inflected": "nd", "deinflected": "d", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
-        {"type": "prefix", "inflected": "nD", "deinflected": "D", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
+        {"type": "prefix", "inflected": "nD", "deinflected": "D", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterCapitalMutation}"},
         {"type": "prefix", "inflected": "bhf", "deinflected": "f", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
-        {"type": "prefix", "inflected": "bhF", "deinflected": "F", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
+        {"type": "prefix", "inflected": "bhF", "deinflected": "F", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterCapitalMutation}"},
         {"type": "prefix", "inflected": "ng", "deinflected": "g", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
-        {"type": "prefix", "inflected": "nG", "deinflected": "G", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
+        {"type": "prefix", "inflected": "nG", "deinflected": "G", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterCapitalMutation}"},
         {"type": "prefix", "inflected": "bp", "deinflected": "p", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
-        {"type": "prefix", "inflected": "bP", "deinflected": "P", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
+        {"type": "prefix", "inflected": "bP", "deinflected": "P", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterCapitalMutation}"},
         {"type": "prefix", "inflected": "dt", "deinflected": "t", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
-        {"type": "prefix", "inflected": "dT", "deinflected": "T", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
+        {"type": "prefix", "inflected": "dT", "deinflected": "T", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterCapitalMutation}"},
         {"type": "prefix", "inflected": "n-", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{lowerVowel}"},
         {"type": "prefix", "inflected": "n", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{upperVowel}"},
         {"type": "prefix", "inflected": "n", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "v", "adj", "adv"], "stemStartsWith": "{upperVowel}", "then": [{"case": "lowerFirst"}]}
@@ -135,8 +135,7 @@
       "source": "own",
       "rules": [
         {"type": "prefix", "inflected": "h", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{vowel}"},
-        {"type": "prefix", "inflected": "h-", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{vowel}"},
-        {"type": "prefix", "inflected": "h", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "v", "adj", "adv"], "stemStartsWith": "{upperVowel}", "then": [{"case": "lowerFirst"}]}
+        {"type": "prefix", "inflected": "h-", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{vowel}"}
       ]
     },
     {
@@ -160,12 +159,16 @@
       "rules": [
         {"type": "prefix", "inflected": "d'", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{vowel}"},
         {"type": "prefix", "inflected": "d'fh", "deinflected": "f", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
+        {"type": "prefix", "inflected": "d'Fh", "deinflected": "F", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
         {"type": "prefix", "inflected": "m'", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{vowel}"},
         {"type": "prefix", "inflected": "m'fh", "deinflected": "f", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
+        {"type": "prefix", "inflected": "m'Fh", "deinflected": "F", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
         {"type": "prefix", "inflected": "b'", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{vowel}"},
         {"type": "prefix", "inflected": "b'fh", "deinflected": "f", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
+        {"type": "prefix", "inflected": "b'Fh", "deinflected": "F", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
         {"type": "prefix", "inflected": "dh'", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{vowel}"},
         {"type": "prefix", "inflected": "dh'fh", "deinflected": "f", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
+        {"type": "prefix", "inflected": "dh'Fh", "deinflected": "F", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
         {"type": "prefix", "inflected": "d'", "deinflected": "", "conditionsIn": ["lenited"], "conditionsOut": ["v"], "stemStartsWith": "{vowel}"},
         {"type": "prefix", "inflected": "d'fh", "deinflected": "f", "conditionsIn": ["lenited"], "conditionsOut": ["v"], "stemStartsWith": "{afterMutation}"}
       ]
@@ -244,7 +247,7 @@
         {"type": "wholeWord", "inflected": "eatarthusan", "deinflected": "eatarthu", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "liomsa", "deinflected": "liom", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "leatsa", "deinflected": "leat", "conditionsIn": [], "conditionsOut": []},
-        {"type": "wholeWord", "inflected": "leissean", "deinflected": "leis", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "leisean", "deinflected": "leis", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "léise", "deinflected": "léi", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "linne", "deinflected": "linn", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "libhse", "deinflected": "libh", "conditionsIn": [], "conditionsOut": []},
@@ -265,7 +268,7 @@
         {"type": "wholeWord", "inflected": "rompusan", "deinflected": "rompu", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "tharamsa", "deinflected": "tharam", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "tharatsa", "deinflected": "tharat", "conditionsIn": [], "conditionsOut": []},
-        {"type": "wholeWord", "inflected": "thairissean", "deinflected": "thairis", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "thairisean", "deinflected": "thairis", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "thairstise", "deinflected": "thairsti", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "tharainne", "deinflected": "tharainn", "conditionsIn": [], "conditionsOut": []},
         {"type": "wholeWord", "inflected": "tharaibhse", "deinflected": "tharaibh", "conditionsIn": [], "conditionsOut": []},
@@ -471,12 +474,14 @@
         {"type": "wholeWord", "inflected": "traenach", "deinflected": "traein", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "beorach", "deinflected": "beoir", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "corónach", "deinflected": "coróin", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["rach", "air"], ["reach", "ir"], ["ar", "air"], ["ár", "áir"], ["an", "ain"], ["ann", "ainn"], ["an", "a"], ["ag", "aig"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemEndsWith": "{consonant}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["reach", "ir"], ["ár", "áir"], ["an", "ain"], ["ann", "ainn"], ["an", "a"], ["ag", "aig"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemEndsWith": "{consonant}"},
+        {"type": "suffix", "inflected": "rach", "deinflected": "air", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemEndsWith": "{consonant}", "stemNotStartsWithText": "seacht"},
+        {"type": "suffix", "inflected": "ar", "deinflected": "air", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemEndsWith": "[hm]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aithe", "ú"], ["ithe", "iú"], ["ta", "adh"], ["tha", "adh"], ["te", "eadh"], ["the", "eadh"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemEndsWith": "{consonant}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["fa", "bh"], ["fa", "mh"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemEndsWith": "{vowel}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ála", "áil"], ["úla", "úil"], ["óla", "óil"], ["ama", "aim"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "anta", "deinflected": "aint", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemEndsWith": "{consonant}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ann", ""], ["ún", "ú"], ["ad", "a"], ["ead", "e"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[^ ]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ún", "ú"], ["ad", "a"], ["ead", "e"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 3, "stemCharacters": "[^ ]"},
         {"type": "wholeWord", "inflected": "tí", "deinflected": "teach", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "lae", "deinflected": "lá", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "Dé", "deinflected": "Dia", "conditionsIn": [], "conditionsOut": ["n"]},
@@ -496,7 +501,11 @@
         {"type": "wholeWord", "inflected": "iníne", "deinflected": "iníon", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "mic", "deinflected": "mac", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "wholeWord", "inflected": "buachalla", "deinflected": "buachaill", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "cnoic", "deinflected": "cnoc", "conditionsIn": [], "conditionsOut": ["n"]}
+        {"type": "wholeWord", "inflected": "cnoic", "deinflected": "cnoc", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "Éireann", "deinflected": "Éire", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "Albann", "deinflected": "Alba", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "cuisleann", "deinflected": "cuisle", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "díleann", "deinflected": "díle", "conditionsIn": [], "conditionsOut": ["n"]}
       ]
     },
     {
@@ -779,6 +788,41 @@
         {"type": "wholeWord", "inflected": "deachamar", "deinflected": "téigh", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "níomar", "deinflected": "nigh", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "tugamar", "deinflected": "tabhair", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "past-1pl-munster",
+      "name": "past 1pl (Munster)",
+      "description": "Past tense, first person plural, Munster synthetic form: mholamair, bhriseamair, cheannaíomair, d'ólamair.",
+      "source": "own",
+      "rules": [
+        {"type": "circumfix", "prefixes": [["bh", "bh"], ["ch", "ch"], ["dh", "dh"], ["fh", "fh"], ["gh", "gh"], ["mh", "mh"], ["ph", "ph"], ["sh", "sh"], ["th", "th"], ["d'", "d'"], ["d'fh", "d'fh"]], "suffixes": [["amair", ""], ["eamair", ""]], "conditionsIn": [], "conditionsOut": ["lenited"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemEndsWith": "{consonant}"},
+        {"type": "circumfix", "prefixes": [["bh", "bh"], ["ch", "ch"], ["dh", "dh"], ["fh", "fh"], ["gh", "gh"], ["mh", "mh"], ["ph", "ph"], ["sh", "sh"], ["th", "th"], ["d'", "d'"], ["d'fh", "d'fh"]], "suffixes": [["álamair", "áil"], ["ólamair", "óil"], ["úlamair", "úil"], ["ánamair", "áin"]], "conditionsIn": [], "conditionsOut": ["lenited"], "stemMinLength": 1, "stemCharacters": "[^ ]"},
+        {"type": "circumfix", "prefixes": [["bh", "bh"], ["ch", "ch"], ["dh", "dh"], ["fh", "fh"], ["gh", "gh"], ["mh", "mh"], ["ph", "ph"], ["sh", "sh"], ["th", "th"], ["d'", "d'"], ["d'fh", "d'fh"]], "suffixes": [["amair", ""]], "conditionsIn": [], "conditionsOut": ["lenited"], "stemMinLength": 5, "stemCharacters": "[^ ]", "stemEndsWith": "{consonant}", "stemChange": {"from": ["a"], "to": "ai", "occurrence": "last", "between": "{consonant}"}},
+        {"type": "circumfix", "prefixes": [["bh", "bh"], ["ch", "ch"], ["dh", "dh"], ["fh", "fh"], ["gh", "gh"], ["mh", "mh"], ["ph", "ph"], ["sh", "sh"], ["th", "th"], ["d'", "d'"], ["d'fh", "d'fh"]], "suffixes": [["amair", ""]], "conditionsIn": [], "conditionsOut": ["lenited"], "stemMinLength": 5, "stemCharacters": "[^ ]", "stemEndsWith": "{consonant}", "stemChange": {"from": ["á"], "to": "ái", "occurrence": "last", "between": "{consonant}"}},
+        {"type": "circumfix", "prefixes": [["bh", "bh"], ["ch", "ch"], ["dh", "dh"], ["fh", "fh"], ["gh", "gh"], ["mh", "mh"], ["ph", "ph"], ["sh", "sh"], ["th", "th"], ["d'", "d'"], ["d'fh", "d'fh"]], "suffixes": [["amair", ""]], "conditionsIn": [], "conditionsOut": ["lenited"], "stemMinLength": 5, "stemCharacters": "[^ ]", "stemEndsWith": "{consonant}", "stemChange": {"from": ["ó"], "to": "ói", "occurrence": "last", "between": "{consonant}"}},
+        {"type": "circumfix", "prefixes": [["bh", "bh"], ["ch", "ch"], ["dh", "dh"], ["fh", "fh"], ["gh", "gh"], ["mh", "mh"], ["ph", "ph"], ["sh", "sh"], ["th", "th"], ["d'", "d'"], ["d'fh", "d'fh"]], "suffixes": [["amair", ""]], "conditionsIn": [], "conditionsOut": ["lenited"], "stemMinLength": 5, "stemCharacters": "[^ ]", "stemEndsWith": "{consonant}", "stemChange": {"from": ["ú"], "to": "úi", "occurrence": "last", "between": "{consonant}"}},
+        {"type": "circumfix", "prefixes": [["bh", "bh"], ["ch", "ch"], ["dh", "dh"], ["fh", "fh"], ["gh", "gh"], ["mh", "mh"], ["ph", "ph"], ["sh", "sh"], ["th", "th"], ["d'", "d'"], ["d'fh", "d'fh"]], "suffixes": [["aíomair", "aigh"], ["íomair", "igh"]], "conditionsIn": [], "conditionsOut": ["lenited"], "stemMinLength": 2, "stemCharacters": "[^ ]"},
+        {"type": "circumfix", "prefixes": [["bh", "bh"], ["ch", "ch"], ["dh", "dh"], ["fh", "fh"], ["gh", "gh"], ["mh", "mh"], ["ph", "ph"], ["sh", "sh"], ["th", "th"], ["d'", "d'"], ["d'fh", "d'fh"]], "suffixes": [["aíomair", "igh"]], "conditionsIn": [], "conditionsOut": ["lenited"], "stemMinLength": 3, "stemCharacters": "[^ ]", "stemEndsWith": "{consonant}"},
+        {"type": "circumfix", "prefixes": [["bh", "bh"], ["ch", "ch"], ["dh", "dh"], ["fh", "fh"], ["gh", "gh"], ["mh", "mh"], ["ph", "ph"], ["sh", "sh"], ["th", "th"], ["d'", "d'"], ["d'fh", "d'fh"]], "suffixes": [["laíomair", "ail"], ["naíomair", "ain"], ["raíomair", "air"], ["líomair", "il"], ["níomair", "in"], ["ríomair", "ir"], ["síomair", "is"]], "conditionsIn": [], "conditionsOut": ["lenited"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemEndsWith": "{consonant}"},
+        {"type": "circumfix", "prefixes": [["bh", "bh"], ["ch", "ch"], ["dh", "dh"], ["fh", "fh"], ["gh", "gh"], ["mh", "mh"], ["ph", "ph"], ["sh", "sh"], ["th", "th"], ["d'", "d'"], ["d'fh", "d'fh"]], "suffixes": [["alaíomair", "ail"], ["anaíomair", "ain"], ["araíomair", "air"], ["ealaíomair", "il"], ["eanaíomair", "in"], ["earaíomair", "ir"]], "conditionsIn": [], "conditionsOut": ["lenited"], "stemMinLength": 3, "stemCharacters": "[^ ]", "stemEndsWith": "{consonant}"},
+        {"type": "circumfix", "prefixes": [["bh", "bh"], ["ch", "ch"], ["dh", "dh"], ["fh", "fh"], ["gh", "gh"], ["mh", "mh"], ["ph", "ph"], ["sh", "sh"], ["th", "th"], ["d'", "d'"], ["d'fh", "d'fh"]], "suffixes": [["íomair", ""]], "conditionsIn": [], "conditionsOut": ["lenited"], "stemMinLength": 3, "stemCharacters": "[^ ]", "stemEndsWith": "{consonant}"},
+        {"type": "circumfix", "prefixes": [["bh", "bh"], ["ch", "ch"], ["dh", "dh"], ["fh", "fh"], ["gh", "gh"], ["mh", "mh"], ["ph", "ph"], ["sh", "sh"], ["th", "th"], ["d'", "d'"], ["d'fh", "d'fh"]], "suffixes": [["uamair", "uaigh"], ["aomair", "aoigh"], ["ómair", "óigh"], ["úmair", "úigh"], ["ámair", "áigh"], ["eámair", "eáigh"], ["éamair", "éigh"], ["uíomair", "uigh"]], "conditionsIn": [], "conditionsOut": ["lenited"], "stemCharacters": "[^ ]", "stemEndsWith": "{consonant}"},
+        {"type": "circumfix", "prefixes": [["bh", "bh"], ["ch", "ch"], ["dh", "dh"], ["fh", "fh"], ["gh", "gh"], ["mh", "mh"], ["ph", "ph"], ["sh", "sh"], ["th", "th"], ["d'", "d'"], ["d'fh", "d'fh"]], "suffixes": [["íomair", "igh"]], "conditionsIn": [], "conditionsOut": ["lenited"], "stemMinLength": 1, "stemCharacters": "{consonant}"},
+        {"type": "wholeWord", "inflected": "bhíomair", "deinflected": "bí", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "rabhamair", "deinflected": "bí", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "dúramair", "deinflected": "abair", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "rugamair", "deinflected": "beir", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "chualamair", "deinflected": "clois", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "rinneamair", "deinflected": "déan", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "dearnamair", "deinflected": "déan", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "fuaireamair", "deinflected": "faigh", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "chonaiceamair", "deinflected": "feic", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "facamair", "deinflected": "feic", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "thángamair", "deinflected": "tar", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "chuamair", "deinflected": "téigh", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "deachamair", "deinflected": "téigh", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "tugamair", "deinflected": "tabhair", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -1477,7 +1521,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["te", "th"], ["ta", "th"], ["fa", "bh"], ["fa", "mh"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemEndsWith": "{vowel}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aithe", "aigh"], ["ithe", "igh"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "aithe", "deinflected": "igh", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "[^ ]", "stemEndsWith": "{consonant}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["artha", "air"], ["anta", "ain"], ["alta", "ail"], ["eartha", "ir"], ["eanta", "in"], ["ste", "is"], ["ánta", "áin"], ["últa", "úil"], ["ólta", "óil"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemEndsWith": "{consonant}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["artha", "air"], ["anta", "ain"], ["alta", "ail"], ["eartha", "ir"], ["eanta", "in"], ["ste", "is"], ["ánta", "áin"], ["últa", "úil"], ["ólta", "óil"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["sta", "is"], ["ctha", "ic"]], "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemEndsWith": "[a]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uaite", "uaigh"], ["aoite", "aoigh"], ["óite", "óigh"], ["úite", "úigh"], ["áite", "áigh"], ["eáite", "eáigh"], ["éite", "éigh"], ["uite", "uigh"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemEndsWith": "{consonant}"},
         {"type": "wholeWord", "inflected": "ráite", "deinflected": "abair", "conditionsIn": [], "conditionsOut": ["v"]},
@@ -1543,7 +1587,7 @@
     },
     {
       "id": "pp-1sg",
-      "name": "with me (1sg)",
+      "name": "prepositional pronoun 1sg",
       "description": "Prepositional pronoun, first person singular: agam, orm, liom, dom, uaim, fúm.",
       "source": "own",
       "rules": [
@@ -1565,7 +1609,7 @@
     },
     {
       "id": "pp-2sg",
-      "name": "with you (2sg)",
+      "name": "prepositional pronoun 2sg",
       "description": "Prepositional pronoun, second person singular: agat, ort, leat, duit, uait, fút.",
       "source": "own",
       "rules": [
@@ -1587,7 +1631,7 @@
     },
     {
       "id": "pp-3sg-masc",
-      "name": "with him (3sg m.)",
+      "name": "prepositional pronoun 3sg m.",
       "description": "Prepositional pronoun, third person singular masculine: aige, air, leis, dó, uaidh, ann.",
       "source": "own",
       "rules": [
@@ -1606,7 +1650,7 @@
     },
     {
       "id": "pp-3sg-fem",
-      "name": "with her (3sg f.)",
+      "name": "prepositional pronoun 3sg f.",
       "description": "Prepositional pronoun, third person singular feminine: aici, uirthi, léi, di, uaithi, inti.",
       "source": "own",
       "rules": [
@@ -1628,7 +1672,7 @@
     },
     {
       "id": "pp-1pl",
-      "name": "with us (1pl)",
+      "name": "prepositional pronoun 1pl",
       "description": "Prepositional pronoun, first person plural: againn, orainn, linn, dúinn, uainn, fúinn.",
       "source": "own",
       "rules": [
@@ -1651,7 +1695,7 @@
     },
     {
       "id": "pp-2pl",
-      "name": "with you (2pl)",
+      "name": "prepositional pronoun 2pl",
       "description": "Prepositional pronoun, second person plural: agaibh, oraibh, libh, daoibh, uaibh, fúibh.",
       "source": "own",
       "rules": [
@@ -1674,7 +1718,7 @@
     },
     {
       "id": "pp-3pl",
-      "name": "with them (3pl)",
+      "name": "prepositional pronoun 3pl",
       "description": "Prepositional pronoun, third person plural: acu, orthu, leo, dóibh, uathu, fúthu.",
       "source": "own",
       "rules": [
