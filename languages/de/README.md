@@ -276,7 +276,7 @@ gehören, not Yomitan's participle reading hören; `lookup.tsv`).
     likewise).
 
   The ties the pack cannot order are in Known gaps.
-- **History**: the first commit of this pack, `de: own rules` (8aec8ab), has
+- **History**: the first commit of this pack, `de: own rules` (711bd21), has
   the own rules as written before Yomitan's file was read (29 transforms, 231
   rules, 4,444 with cross products expanded). Later commits changed them:
   - with the port of Yomitan's rules, the conditions both files have were
@@ -483,9 +483,9 @@ option on and with the defaults; a copy of `cases.tsv` with the line
    (0.08%) are wrong and unjudged, besides the 55 wrong single words, the
    rule-changed ones above (about 320) and the 3,711 particle verbs the
    dictionary's rows make (0.60%). An earlier sample of 60 (seed 2, with the
-   rules of 07b0107) found 14 wrong; its rule-made errors that a constraint
+   rules of 86776fa) found 14 wrong; its rule-made errors that a constraint
    could stop (`führt` → fahren, `sehr best…` → sehr gut, `Elektrotechniker`
-   → Elektrotechnik) were fixed in 8960166.
+   → Elektrotechnik) were fixed in 24573e2.
 5. **Trace quality** (`sources/trace-quality.mjs`): for the sample rows each
    set reaches, whether the trace a lookup shows (`traceSelection:
    "shortest"`) names the form the UniMorph tag gives (`past (wir, sie)` for
@@ -497,7 +497,7 @@ option on and with the defaults; a copy of `cases.tsv` with the line
 6. **Per rule** (`eval-language --per-rule` on the sample and `cases.tsv`,
    2,127 rows): 162 of the 231 rules recover a row no other rule reaches,
    none breaks a negative, and none adds false candidates without recovering
-   a row. With the rules of 07b0107 five did: the äu umlaut before -er (since
+   a row. With the rules of 86776fa five did: the äu umlaut before -er (since
    removed), ä and ö before -er and the Latin -en for -us and -os, which now
    have rows (`Väter`, `Töchter`, `Rhythmen`, `Mythen`).
 7. **Checks**:
