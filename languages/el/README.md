@@ -45,8 +45,9 @@ apostrophe of an elided word belongs to the word (`απ'`, `'ρθει`,
   their lemma.
 - `tests/cases.tsv`, `tests/defaults.tsv`, `tests/text.tsv`,
   `tests/lookup.tsv`, `tests/dictionary/`, `sources/benchmark-words.txt`,
-  `sources/measure.py`, `sources/mutate.py`, `sources/wasm-load.mjs` and the
-  rest of `language.json`: written for this pack (GPL-3.0-or-later).
+  `sources/hachidori-cases.tsv`, `sources/measure.py`, `sources/mutate.py`,
+  `sources/tag-dictionary.py`, `sources/wasm-load.mjs` and the rest of
+  `language.json`: written for this pack (GPL-3.0-or-later).
 - Not committed, used for the measurements below:
   - the dictionary wty-el-en,
     [`wty-el-en.zip`](https://huggingface.co/datasets/daxida/wty-release/resolve/main/latest/dict/el/en/wty-el-en.zip)
@@ -259,7 +260,7 @@ it says `tagged`.
      245 µs threaded.
 6. **Hachidori** (feat/multi-language 803f7b6 with this branch in
    `third_party/hoshidicts`, `test/chrome-language-pack.mjs`, Chrome 152,
-   wty-el-en): 15 of 16 checks pass. Settings adds Greek beside Japanese and
+   wty-el-en, `sources/hachidori-cases.tsv`): 15 of 16 checks pass. Settings adds Greek beside Japanese and
    imports the dictionary (294,619 terms, 0.8 s); 11 of 12 hovered words
    find the expected headword first with their traces (`Αγοράσαμε` →
    αγοράζω `aorist (1st pl)`, `κοιμήθηκε` → κοιμάμαι, `θαλασσών` →
@@ -271,7 +272,7 @@ it says `tagged`.
    (corpus 984/984, cases 380/380, defaults 15/15, yomitan 7/7, text 30/30,
    lookup 49/49, gaps 0/16 reported); `tools/check-classes.mjs el` matches;
    `tools/check-yomitan.mjs el` compares 2,381 inputs and three processors
-   with 0 differences. `tests/` and `sources/` hold 935,535 bytes.
+   with 0 differences. `tests/` and `sources/` hold 938,471 bytes.
    `sources/mutate.py` makes 25 edits of a scratch copy (each stem
    constraint, exclusion and rule group removed or loosened in turn), and a
    test fails for every one.
@@ -292,6 +293,8 @@ it says `tagged`.
    python3 languages/el/sources/measure.py traces <corpus.tsv> <deinflections.jsonl>
    python3 languages/el/sources/mutate.py build <scratch dir>
    node languages/el/sources/wasm-load.mjs <hachidori checkout>
+   python3 languages/el/sources/tag-dictionary.py wty-el-en.zip wty-el-en-tagged.zip
+   HACHIDORI_LANGUAGE=el HACHIDORI_DICTIONARY=wty-el-en.zip HACHIDORI_CASES=languages/el/sources/hachidori-cases.tsv node test/chrome-language-pack.mjs   # in Hachidori
    ```
 
 ## Known gaps
