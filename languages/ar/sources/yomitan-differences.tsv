@@ -1,0 +1,3 @@
+# kind	id	side	input	text	conditions	reason
+processor	addHamzaTop	yomitan	*	*	*	Yomitan puts a hamza on the first alif anywhere in the word (كان -> كأن, كتاب -> كتأب, الكتاب -> ألكتاب). The pack's addHamzaToFirstAlif changes only an alif that starts the word and is not the article (اكبر -> أكبر, إكبر, آكبر), and hamzaAfterPrefix one after ال or a one-letter proclitic (والامر -> والأمر). On 3,753 dev rows of UniMorph ara with wty-ar-en, recall is the same (94.03%) and false candidates per row fall from 2.444 to 2.332.
+processor	addHamzaBottom	yomitan	*	*	*	As addHamzaTop, with hamza below (اسلام -> إسلام): the pack's addHamzaToFirstAlif gives both seats and the madda as variants of one processor.

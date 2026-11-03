@@ -137,37 +137,21 @@
         ]
       },
       {
-        "id": "addHamzaTop",
-        "name": "Add Hamza to top of Alif",
+        "id": "addHamzaToFirstAlif",
+        "name": "Add hamza or madda to a first alif",
         "variants": [
           [
             {
-              "map": {
-                "ا": "أ"
-              },
-              "at": "first"
+              "pattern": "^ا(?!ل[ء-ي]{2})",
+              "replace": "أ"
             }
-          ]
-        ]
-      },
-      {
-        "id": "addHamzaBottom",
-        "name": "Add Hamza to bottom of Alif",
-        "variants": [
+          ],
           [
             {
-              "map": {
-                "ا": "إ"
-              },
-              "at": "first"
+              "pattern": "^ا(?!ل[ء-ي]{2})",
+              "replace": "إ"
             }
-          ]
-        ]
-      },
-      {
-        "id": "addMaddaTop",
-        "name": "Add madda to a first alif",
-        "variants": [
+          ],
           [
             {
               "pattern": "^ا(?!ل[ء-ي]{2})",

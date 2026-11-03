@@ -1,0 +1,434 @@
+# Source: written for this pack (GPL-3.0-or-later), no third-party data. Every optional processor and transform is on. Expected traces are this pack's transform ids, newest first.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+proclitic	1	وكتب	كتب	v	wa
+proclitic	1	فقال	قال	v	fa
+proclitic	1	بقلم	قلم	n	bi
+proclitic	1	كبحر	بحر	n	ka
+proclitic	1	لمحمد	محمد	*	li
+proclitic	1	الكتاب	كتاب	n	al
+proclitic	1	والكتاب	كتاب	n	al|wa
+proclitic	1	فالبيت	بيت	n	al|fa
+proclitic	1	بالقلم	قلم	n	al|bi
+proclitic	1	كالبحر	بحر	n	al|ka
+proclitic	1	وبالقلم	قلم	n	al|bi|wa
+proclitic	1	للبيت	بيت	n	al|li
+proclitic	1	وللبيت	بيت	n	al|li|wa
+proclitic	1	لليل	ليل	n	al|li
+proclitic	1	للغة	لغة	n	al|li
+proclitic	1	والمدرسة	مدرسة	n	al|wa
+proclitic	1	فبالتأكيد	تأكيد	n	al|bi|fa
+proclitic	1	وهو	هو	*	wa
+proclitic	1	فهي	هي	*	fa
+proclitic	1	وأنا	أنا	*	wa
+proclitic	1	ولكن	لكن	*	wa
+proclitic	1	وإن	إن	*	wa
+proclitic	1	فإن	إن	*	fa
+proclitic	1	وفي	في	*	wa
+proclitic	1	وعلى	على	*	wa
+proclitic	1	ولم	لم	*	wa
+proclitic	1	فلا	لا	*	fa
+proclitic	1	وما	ما	*	wa
+proclitic	1	وكان	كان	v	wa
+proclitic	1	ومحمد	محمد	*	wa
+proclitic	1	والقاهرة	القاهرة	*	wa
+proclitic	1	بالله	الله	*	bi
+proclitic	1	لله	الله	*	li
+proclitic	1	والله	الله	*	wa
+proclitic	1	كذلك	ذلك	*	ka
+proclitic	1	لذلك	ذلك	*	li
+proclitic	1	بذلك	ذلك	*	bi
+proclitic	1	بهذا	هذا	*	bi
+proclitic	1	لهذا	هذا	*	li
+proclitic	1	وهذه	هذه	*	wa
+proclitic	1	لأن	أن	*	li
+proclitic	1	بأن	أن	*	bi
+proclitic	1	كأن	أن	*	ka
+future	1	سيكتب	كتب	v	presentHe|sa
+future	1	سأذهب	ذهب	v	presentI|sa
+future	1	سنرى	رأى	v	presentWe|sa
+future	1	ستكون	كان	v	presentSheYou|sa
+future	1	سيقولون	قال	v	presentThey|sa
+future	1	وسيكتب	كتب	v	presentHe|sa|wa
+future	1	فسنعود	عاد	v	presentWe|sa|fa
+pronoun noun	1	كتابي	كتاب	n	p1s
+pronoun noun	1	كتابك	كتاب	n	p2s
+pronoun noun	1	كتابه	كتاب	n	p3ms
+pronoun noun	1	كتابها	كتاب	n	p3fs
+pronoun noun	1	كتابنا	كتاب	n	p1p
+pronoun noun	1	كتابكم	كتاب	n	p2mp
+pronoun noun	1	كتابكما	كتاب	n	p2d
+pronoun noun	1	كتابكن	كتاب	n	p2fp
+pronoun noun	1	كتابهم	كتاب	n	p3mp
+pronoun noun	1	كتابهما	كتاب	n	p3d
+pronoun noun	1	كتابهن	كتاب	n	p3fp
+pronoun noun	1	مدرستي	مدرسة	n	p1s
+pronoun noun	1	مدرسته	مدرسة	n	p3ms
+pronoun noun	1	سيارتها	سيارة	n	p3fs
+pronoun noun	1	معناه	معنى	*	p3ms
+pronoun noun	1	مستشفاها	مستشفى	n	p3fs
+pronoun noun	1	سماؤه	سماء	n	p3ms
+pronoun noun	1	سمائه	سماء	n	p3ms
+pronoun noun	1	وكتابه	كتاب	n	p3ms|wa
+pronoun noun	1	بكتابه	كتاب	n	p3ms|bi
+pronoun noun	1	لكتابهم	كتاب	n	p3mp|li
+pronoun noun	1	ومدرستي	مدرسة	n	p1s|wa
+pronoun noun	1	أطفاله	طفل	n	brokenPlural|p3ms
+pronoun noun	1	أصدقائي	أصدقاء	*	p1s
+pronoun particle	1	عليه	على	*	p3ms
+pronoun particle	1	عليها	على	*	p3fs
+pronoun particle	1	علينا	على	*	p1p
+pronoun particle	1	عليكم	على	*	p2mp
+pronoun particle	1	علي	على	*	p1s
+pronoun particle	1	إليه	إلى	*	p3ms
+pronoun particle	1	اليه	إلى	*	p3ms
+pronoun particle	1	إليك	إلى	*	p2s
+pronoun particle	1	لديه	لدى	*	p3ms
+pronoun particle	1	لدينا	لدى	*	p1p
+pronoun particle	1	لديك	لدى	*	p2s
+pronoun particle	1	به	ب	*	p3ms
+pronoun particle	1	بها	ب	*	p3fs
+pronoun particle	1	بي	ب	*	p1s
+pronoun particle	1	له	ل	*	p3ms
+pronoun particle	1	لها	ل	*	p3fs
+pronoun particle	1	لنا	ل	*	p1p
+pronoun particle	1	لي	ل	*	p1s
+pronoun particle	1	لهم	ل	*	p3mp
+pronoun particle	1	منه	من	*	p3ms
+pronoun particle	1	منها	من	*	p3fs
+pronoun particle	1	منهم	من	*	p3mp
+pronoun particle	1	عنه	عن	*	p3ms
+pronoun particle	1	عنها	عن	*	p3fs
+pronoun particle	1	فيه	في	*	p3ms
+pronoun particle	1	فيها	في	*	p3fs
+pronoun particle	1	فيهم	في	*	p3mp
+pronoun particle	1	معه	مع	*	p3ms
+pronoun particle	1	معها	مع	*	p3fs
+pronoun particle	1	معك	مع	*	p2s
+pronoun particle	1	معي	مع	*	p1s
+pronoun particle	1	عنده	عند	*	p3ms
+pronoun particle	1	عندي	عند	*	p1s
+pronoun particle	1	بينهم	بين	*	p3mp
+pronoun particle	1	إنه	إن	*	p3ms
+pronoun particle	1	إنها	إن	*	p3fs
+pronoun particle	1	أنه	أن	*	p3ms
+pronoun particle	1	لأنه	لأن	*	p3ms
+pronoun particle	1	إنني	إن	*	p1sObj
+pronoun particle	1	لكنه	لكن	*	p3ms
+pronoun particle	1	نفسه	نفس	n	p3ms
+pronoun particle	1	وعليه	على	*	p3ms|wa
+pronoun particle	1	فيكم	في	*	p2mp
+pronoun verb	1	كتبه	كتب	v	p3ms
+pronoun verb	1	كتبها	كتب	v	p3fs
+pronoun verb	1	علمني	علم	v	p1sObj
+pronoun verb	1	كتبوه	كتب	v	pastThey|p3ms
+pronoun verb	1	كتبتموه	كتب	v	pastYouPl|p3ms
+pronoun verb	1	رأيته	رأى	v	pastI|p3ms
+pronoun verb	1	أعطيته	أعطى	v	pastI|p3ms
+pronoun verb	1	رماه	رمى	v	p3ms
+pronoun verb	1	أعطاها	أعطى	v	p3fs
+pronoun verb	1	يعرفه	عرف	v	presentHe|p3ms
+pronoun verb	1	يعرفونه	عرف	v	presentThey|p3ms
+pronoun verb	1	أخبرني	أخبر	v	p1sObj
+pronoun verb	1	سيكتبونها	كتب	v	presentThey|sa|p3fs
+pronoun verb	1	فأخبرته	أخبر	v	pastI|fa|p3ms
+pronoun verb	1	اعطني	أعطى	v	*
+pronoun verb	1	قرآه	قرأ	v	*
+noun ending	1	كتابا	كتاب	n	accusative
+noun ending	1	شيئا	شيء	n	accusative
+noun ending	1	كبيرة	كبير	*	feminine
+noun ending	1	مدرسة	مدرس	n	feminine
+noun ending	1	الكبيرة	كبير	*	*
+noun ending	1	والجديدة	جديد	*	*
+noun ending	1	بريئة	بريء	*	feminine
+noun ending	1	كتابان	كتاب	n	dual
+noun ending	1	كتابين	كتاب	n	oblique
+noun ending	1	مدرستان	مدرسة	n	dual
+noun ending	1	مدرستين	مدرسة	n	oblique
+noun ending	1	مدرستا	مدرسة	n	dual
+noun ending	1	مستشفيان	مستشفى	n	dual
+noun ending	1	عصوان	عصا	n	dual
+noun ending	1	صحراوان	صحراء	n	dual
+noun ending	1	جزآن	جزء	n	*
+noun ending	1	الكتابان	كتاب	n	dual|al
+noun ending	1	بالكتابين	كتاب	n	oblique|al|bi
+noun ending	1	معلمون	معلم	n	pluralMasc
+noun ending	1	معلمين	معلم	n	oblique
+noun ending	1	المعلمون	معلم	n	pluralMasc|al
+noun ending	1	للمعلمين	معلم	n	oblique|al|li
+noun ending	1	معلمو	معلم	n	construct
+noun ending	1	معلمات	معلمة	n	pluralFem
+noun ending	1	سيارات	سيارة	n	pluralFem
+noun ending	1	امتحانات	امتحان	n	pluralFem
+noun ending	1	مستشفيات	مستشفى	n	pluralFem
+noun ending	1	سنوات	سنة	n	pluralFem
+noun ending	1	سماوات	سماء	n	pluralFem
+noun ending	1	منشآت	منشأة	n	pluralFem
+noun ending	1	والسيارات	سيارة	n	pluralFem|al|wa
+noun ending	1	سياراتهم	سيارة	n	pluralFem|p3mp
+noun ending	1	معلميه	معلم	n	*
+noun ending	1	كتابيه	كتاب	n	*
+noun ending	1	كتاباه	كتاب	n	*
+broken plural	1	أطفال	طفل	n	brokenPlural
+broken plural	1	الأطفال	طفل	n	brokenPlural|al
+broken plural	1	أعمال	عمل	n	brokenPlural
+broken plural	1	أخبار	خبر	n	brokenPlural
+broken plural	1	وزراء	وزير	n	brokenPlural
+broken plural	1	الفقراء	فقير	n	*
+broken plural	1	مكاتب	مكتب	n	brokenPlural
+broken plural	1	مشاكل	مشكلة	n	brokenPlural
+broken plural	1	ملابس	ملبس	n	brokenPlural
+broken plural	1	شوارع	شارع	n	brokenPlural
+broken plural	1	قواعد	قاعدة	n	brokenPlural
+broken plural	1	هواتف	هاتف	n	brokenPlural
+broken plural	1	رسائل	رسالة	n	brokenPlural
+broken plural	1	حقائق	حقيقة	n	brokenPlural
+broken plural	1	نتائج	نتيجة	n	brokenPlural
+broken plural	1	تفاصيل	تفصيل	n	brokenPlural
+broken plural	1	تقارير	تقرير	n	brokenPlural
+broken plural	1	أسلحة	سلاح	n	brokenPlural
+broken plural	1	أجهزة	جهاز	n	brokenPlural
+broken plural	1	أطفالهم	طفل	n	brokenPlural|p3mp
+past sound	1	كتبت	كتب	v	pastI
+past sound	1	كتبنا	كتب	v	pastWe
+past sound	1	كتبتم	كتب	v	pastYouPl
+past sound	1	كتبتما	كتب	v	pastYouTwo
+past sound	1	كتبتن	كتب	v	pastYouFPl
+past sound	1	كتبوا	كتب	v	pastThey
+past sound	1	كتبا	كتب	v	pastTheyTwo
+past sound	1	كتبتا	كتب	v	pastTheyTwoF
+past sound	1	كتبن	كتب	v	pastTheyF
+past sound	1	استخدمت	استخدم	v	pastI
+past sound	1	اجتمعوا	اجتمع	v	pastThey
+past sound	1	تعلمنا	تعلم	v	pastWe
+past sound	1	انكسرت	انكسر	v	pastI
+past sound	1	ساعدتم	ساعد	v	pastYouPl
+past sound	1	أكرمنا	أكرم	v	pastWe
+past sound	1	سكتنا	سكت	v	pastWe
+past sound	1	سكنا	سكن	v	pastWe
+past sound	1	سكتم	سكت	v	pastYouPl
+past hollow	1	قلت	قال	v	pastI
+past hollow	1	قلنا	قال	v	pastWe
+past hollow	1	قلتم	قال	v	pastYouPl
+past hollow	1	قلن	قال	v	pastTheyF
+past hollow	1	قالت	قال	v	pastI
+past hollow	1	قالوا	قال	v	pastThey
+past hollow	1	كنت	كان	v	pastI
+past hollow	1	كنا	كان	v	pastWe
+past hollow	1	كانوا	كان	v	pastThey
+past hollow	1	بعت	باع	v	pastI
+past hollow	1	نمت	نام	v	pastI
+past hollow	1	أقمت	أقام	v	pastI
+past hollow	1	اخترنا	اختار	v	pastWe
+past hollow	1	استطعت	استطاع	v	pastI
+past hollow	1	استطعنا	استطاع	v	pastWe
+past hollow	1	أردت	أراد	v	pastI
+past hollow	1	مت	مات	v	pastI
+past hollow	1	أضأت	أضاء	v	pastI
+past defective	1	دعوت	دعا	v	pastI
+past defective	1	دعونا	دعا	v	pastWe
+past defective	1	دعوا	دعا	v	pastThey
+past defective	1	دعت	دعا	v	pastI
+past defective	1	رميت	رمى	v	pastI
+past defective	1	رمينا	رمى	v	pastWe
+past defective	1	رموا	رمى	v	pastThey
+past defective	1	رمت	رمى	v	pastI
+past defective	1	اشتريت	اشترى	v	pastI
+past defective	1	أعطيتم	أعطى	v	pastYouPl
+past defective	1	انتهينا	انتهى	v	pastWe
+past defective	1	نسوا	نسي	v	pastThey
+past defective	1	بقوا	بقي	v	pastThey
+past doubled	1	مددت	مد	v	pastI
+past doubled	1	ظننت	ظن	v	pastI
+past doubled	1	أحببت	أحب	v	pastI
+past doubled	1	استمررنا	استمر	v	pastWe
+past doubled	1	مددن	مد	v	pastTheyF
+past hamza	1	قرأت	قرأ	v	pastI
+past hamza	1	قرؤوا	قرأ	v	pastThey
+past hamza	1	قرآ	قرأ	v	pastTheyTwo
+past hamza	1	جاؤوا	جاء	v	pastThey
+past hamza	1	جئت	جاء	v	pastI
+past hamza	1	سألت	سأل	v	pastI
+past irregular	1	لست	ليس	v	pastI
+past irregular	1	لسنا	ليس	v	pastWe
+past irregular	1	لستم	ليس	v	pastYouPl
+past irregular	1	رأيت	رأى	v	pastI
+passive	1	قيل	قال	v	pastPassive
+passive	1	أقيم	أقام	v	pastPassive
+passive	1	اختير	اختار	v	pastPassive
+passive	1	سئل	سأل	v	pastPassive
+passive	1	رمي	رمى	v	pastPassive
+passive	1	دعي	دعا	v	pastPassive
+passive	1	أعطي	أعطى	v	pastPassive
+passive	1	كوتب	كاتب	v	pastPassive
+passive	1	قيلت	قال	v	pastPassive
+passive	1	أنبئت	أنبأ	v	pastPassive
+passive	1	أضيئت	أضاء	v	pastPassive
+present	1	يكتب	كتب	v	presentHe
+present	1	تكتب	كتب	v	presentSheYou
+present	1	أكتب	كتب	v	presentI
+present	1	نكتب	كتب	v	presentWe
+present	1	يكتبون	كتب	v	presentThey
+present	1	تكتبون	كتب	v	presentYouPl
+present	1	يكتبان	كتب	v	presentTheyTwo
+present	1	تكتبان	كتب	v	presentYouTwo
+present	1	تكتبين	كتب	v	presentYouF
+present	1	يكتبن	كتب	v	presentTheyF
+present	1	تكتبن	كتب	v	presentYouFPl
+present	1	يستخدم	استخدم	v	presentHe
+present	1	يكرم	أكرم	v	presentHe
+present	1	نجتمع	اجتمع	v	presentWe
+present	1	يتعلمون	تعلم	v	presentThey
+present	1	يساعد	ساعد	v	presentHe
+present	1	يصل	وصل	v	presentHe
+present	1	يجد	وجد	v	presentHe
+present	1	يؤكد	أكد	v	presentHe
+present	1	يؤمن	آمن	v	presentHe
+present	1	آكل	أكل	v	presentI
+present	1	يأتمر	ائتمر	v	presentHe
+present hollow	1	يقول	قال	v	presentHe
+present hollow	1	تقولين	قال	v	presentYouF
+present hollow	1	يقولون	قال	v	presentThey
+present hollow	1	يبيع	باع	v	presentHe
+present hollow	1	ينام	نام	v	presentHe
+present hollow	1	يقيم	أقام	v	presentHe
+present hollow	1	يستطيع	استطاع	v	presentHe
+present hollow	1	يستطيعون	استطاع	v	presentThey
+present hollow	1	يكون	كان	v	presentHe
+present hollow	1	يقلن	قال	v	presentTheyF
+present hollow	1	يريد	أراد	v	presentHe
+present hollow	1	نريد	أراد	v	presentWe
+present defective	1	يدعو	دعا	v	presentHe
+present defective	1	يدعون	دعا	v	presentThey
+present defective	1	يرمي	رمى	v	presentHe
+present defective	1	يرمون	رمى	v	presentThey
+present defective	1	ترمين	رمى	v	presentYouF
+present defective	1	ينسى	نسي	v	presentHe
+present defective	1	يشتري	اشترى	v	presentHe
+present defective	1	يعطي	أعطى	v	presentHe
+present defective	1	ينتهي	انتهى	v	presentHe
+present defective	1	يبقى	بقي	v	presentHe
+present hamza	1	يقرأ	قرأ	v	presentHe
+present hamza	1	يقرؤون	قرأ	v	presentThey
+present hamza	1	يبتدئ	ابتدأ	v	presentHe
+present hamza	1	يبدأ	بدأ	v	presentHe
+present hamza	1	يسأل	سأل	v	presentHe
+present hamza	1	يجيء	جاء	v	presentHe
+present doubled	1	يمد	مد	v	presentHe
+present doubled	1	يحب	أحب	v	presentHe
+present doubled	1	يمددن	مد	v	presentTheyF
+present irregular	1	يرى	رأى	v	presentHe
+present irregular	1	نرى	رأى	v	presentWe
+present irregular	1	يرون	رأى	v	presentThey
+subjunctive	1	يكتبوا	كتب	v	subjunctiveThey
+subjunctive	1	تكتبوا	كتب	v	subjunctiveYouPl
+subjunctive	1	يكتبا	كتب	v	subjunctiveTheyTwo
+subjunctive	1	تكتبي	كتب	v	subjunctiveYouF
+subjunctive	1	يقولوا	قال	v	subjunctiveThey
+subjunctive	1	يروا	رأى	v	subjunctiveThey
+subjunctive	1	يكونوا	كان	v	subjunctiveThey
+jussive	1	يقل	قال	v	jussiveHe
+jussive	1	تقل	قال	v	jussiveSheYou
+jussive	1	أقل	قال	v	jussiveI
+jussive	1	نقل	قال	v	jussiveWe
+jussive	1	يكن	كان	v	jussiveHe
+jussive	1	يدع	دعا	v	jussiveHe
+jussive	1	يرم	رمى	v	jussiveHe
+jussive	1	ينس	نسي	v	jussiveHe
+jussive	1	يمدد	مد	v	jussiveHe
+jussive	1	يشأ	شاء	v	jussiveHe
+jussive	1	ير	رأى	v	jussiveHe
+jussive	1	يستطع	استطاع	v	jussiveHe
+imperative	1	اكتب	كتب	v	imperativeYou
+imperative	1	اكتبي	كتب	v	imperativeYouF
+imperative	1	اكتبا	كتب	v	imperativeYouTwo
+imperative	1	اكتبوا	كتب	v	imperativeYouPl
+imperative	1	اكتبن	كتب	v	imperativeYouFPl
+imperative	1	قل	قال	v	imperativeYou
+imperative	1	قولي	قال	v	imperativeYouF
+imperative	1	قولوا	قال	v	imperativeYouPl
+imperative	1	ادع	دعا	v	imperativeYou
+imperative	1	ارم	رمى	v	imperativeYou
+imperative	1	انس	نسي	v	imperativeYou
+imperative	1	امدد	مد	v	imperativeYou
+imperative	1	قف	وقف	v	imperativeYou
+imperative	1	ضع	وضع	v	imperativeYou
+imperative	1	صلوا	وصل	v	imperativeYouPl
+imperative	1	كل	أكل	v	imperativeYou
+imperative	1	خذ	أخذ	v	imperativeYou
+imperative	1	خذوا	أخذ	v	imperativeYouPl
+imperative	1	مر	أمر	v	imperativeYou
+imperative	1	علم	علم	v	*
+imperative	1	علمي	علم	v	imperativeYouF
+imperative	1	ساعدوا	ساعد	v	*
+imperative	1	أعط	أعطى	v	imperativeYou
+imperative	1	أعطني	أعطى	v	*
+imperative	1	اشتر	اشترى	v	imperativeYou
+imperative	1	استخدموا	استخدم	v	*
+imperative	1	اقرأ	قرأ	v	imperativeYou
+imperative	1	ابدئي	بدأ	v	imperativeYouF
+clitic verb	1	لنذهب	ذهب	v	presentWe|li
+clitic verb	1	ليكتب	كتب	v	presentHe|li
+clitic verb	1	ولم	لم	*	wa
+clitic verb	1	فلنذهب	ذهب	v	presentWe|li|fa
+clitic verb	1	وقالوا	قال	v	pastThey|wa
+clitic verb	1	فقالت	قال	v	pastI|fa
+clitic verb	1	ولقد	لقد	*	wa
+clitic verb	1	فكتبوها	كتب	v	*
+participle	1	كاتب	كتب	v	participle
+participle	1	مكتوب	كتب	v	participle
+participle	1	قائل	قال	v	participle
+participle	1	مستخدم	استخدم	v	participle
+participle	1	مقيم	أقام	v	participle
+participle	1	مرمي	رمى	v	participle
+participle	1	مدعو	دعا	v	participle
+participle	1	المستخدمين	استخدم	v	*
+verbal noun	1	استخدام	استخدم	v	verbalNoun
+verbal noun	1	اجتماع	اجتمع	v	verbalNoun
+verbal noun	1	إكرام	أكرم	v	verbalNoun
+verbal noun	1	إقامة	أقام	v	verbalNoun
+verbal noun	1	استقالة	استقال	v	verbalNoun
+verbal noun	1	انتهاء	انتهى	v	verbalNoun
+verbal noun	1	تكليم	كلم	v	verbalNoun
+verbal noun	1	تسمية	سمى	v	verbalNoun
+verbal noun	1	مساعدة	ساعد	v	verbalNoun
+verbal noun	1	إعطاء	أعطى	v	verbalNoun
+negative space	0	ذهب الولدان	ذهب الولد	*	*
+negative space	0	في البيوت	في البيت	*	*
+negative space	0	هذا كتابه	هذا كتاب	*	*
+negative space	0	أنا وهو	أنا هو	*	*
+negative space	0	كل الكتاب	كل كتاب	*	*
+negative hollow	0	بيوتهم	اتهم	*	*
+negative hollow	0	بيوت	بات	*	*
+negative hollow	0	يوسف	اسف	*	*
+negative hollow	0	يوم	ام	*	*
+negative al	0	الكتابها	كتاب	*	*
+negative al	0	الولدا	ولد	*	*
+negative al	0	المعلمو	معلم	*	*
+negative al	0	الأبدا	أبد	*	*
+negative al	0	المدرستا	مدرسة	*	*
+negative al	0	الأستاذي	أستاذ	*	*
+negative li	0	للليل	ليل	*	*
+negative li	0	للليل	الليل	*	*
+negative sa	0	سحاب	حاب	*	*
+negative sa	0	سكت	كت	*	*
+negative sa	0	سمعت	معت	*	*
+negative pronoun noun	0	مدرسته	مدرس	n	*
+negative pronoun noun	0	رأيته	رأي	n	*
+negative pronoun noun	0	سيارتها	سيار	n	*
+negative broken plural	0	أبواب	بوب	*	*
+negative broken plural	0	أموال	مول	*	*
+negative broken plural	0	أيام	يم	*	*
+negative broken plural	0	أجيال	جيل	*	*
+negative broken plural	0	أنواع	نوع	*	*
+negative broken plural	0	أدوية	دواء	*	*
+negative broken plural	0	كبار	كبير	*	*
+negative broken plural	0	خروج	خرج	n	*
+negative broken plural	0	مكان	مكن	n	*
+negative broken plural	0	ليلة	لايل	n	*
+negative verb	0	كتاب	كتب	v	*
+negative verb	0	قلب	قال	v	*
+negative verb	0	قلبي	قال	v	*
+negative assimilated	0	قط	وقط	v	*
+negative assimilated	0	كم	وكم	v	*
+negative assimilated	0	من	ومن	v	*
+negative li	0	لليل	ليل	*	li

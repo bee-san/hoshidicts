@@ -188,6 +188,7 @@ transform('dual', 'dual (ـان)', 'The dual ending ـان (nominative), and ـ�
     suffix('اوان', 'اء', {into: N_IN}),
     suffix('آن', 'أ', {into: N_IN}),
     suffix('ئان', 'ء', {into: N_IN}),
+    suffix('آن', 'ء', {into: N_IN}),
     suffix('تا', 'ة', {extra: NOT_AL}),
 ]);
 transform('oblique', 'dual or plural (ـين)', 'The ending ـين, the dual (ـَيْن) or the masculine plural (ـِين) after a preposition or as an object: كتابين is two of كتاب, معلمين is معلم in the plural, مدرستين is two of مدرسة, عربيين is عربي in the dual or plural.', [
@@ -197,6 +198,8 @@ transform('oblique', 'dual or plural (ـين)', 'The ending ـين, the dual (ـ
     suffix('وين', 'ا', {into: N_IN}),
     suffix('اوين', 'اء', {into: N_IN}),
     suffix('ئين', 'ء', {into: N_IN}),
+    suffix('أين', 'ء', {into: N_IN}),
+    suffix('أين', 'أ', {into: N_IN}),
 ]);
 transform('pluralMasc', 'plural (ـون)', 'The masculine sound plural ending ـون (nominative): معلمون is معلم in the plural.', [
     suffix('ون', '', {into: N_IN}),

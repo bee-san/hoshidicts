@@ -415,6 +415,7 @@
         {"type": "suffix", "inflected": "اوان", "deinflected": "اء", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
         {"type": "suffix", "inflected": "آن", "deinflected": "أ", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
         {"type": "suffix", "inflected": "ئان", "deinflected": "ء", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "آن", "deinflected": "ء", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
         {"type": "suffix", "inflected": "تا", "deinflected": "ة", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"}
       ]
     },
@@ -429,7 +430,9 @@
         {"type": "suffix", "inflected": "يين", "deinflected": "ى", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
         {"type": "suffix", "inflected": "وين", "deinflected": "ا", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
         {"type": "suffix", "inflected": "اوين", "deinflected": "اء", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
-        {"type": "suffix", "inflected": "ئين", "deinflected": "ء", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"}
+        {"type": "suffix", "inflected": "ئين", "deinflected": "ء", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "أين", "deinflected": "ء", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"},
+        {"type": "suffix", "inflected": "أين", "deinflected": "أ", "conditionsIn": ["n"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}"}
       ]
     },
     {

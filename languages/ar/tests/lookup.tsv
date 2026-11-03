@@ -1,0 +1,38 @@
+# Source: written for this pack (GPL-3.0-or-later), against tests/dictionary/. Every optional processor is on.
+# category	valid	text	expression	matched
+clitics	1	وقال الرجل	قال	وقال
+clitics	1	فذهبت إلى المدرسة	ذهب	فذهبت
+clitics	1	بالقلم الجديد	قلم	بالقلم
+clitics	1	للمدرسة الجديدة	مدرسة	للمدرسة
+clitics	1	والسيارات الجديدة	سيارة	والسيارات
+clitics	1	وهو هنا	هو	وهو
+clitics	1	ومحمد في البيت	محمد	ومحمد
+future	1	سيكتبونها غدا	كتب	سيكتبونها
+pronouns	1	عليه أن يذهب	على	عليه
+pronouns	1	مدرستي جميلة	مدرسة	مدرستي
+pronouns	1	رأيته أمس	رأى	رأيته
+pronouns	1	أعطيته الكتاب	أعطى	أعطيته
+pronouns	1	خذه الآن	أخذ	خذه
+pronouns	1	يعرفونه جيدا	عرف	يعرفونه
+pronouns	0	رأيته أمس	رأي	رأيته
+verbs	1	قل الحق	قال	قل
+verbs	1	استخدموا الحاسوب	استخدم	استخدموا
+verbs	1	يستطيعون أن يلعبوا	استطاع	يستطيعون
+verbs	1	ادع محمدا	دعا	ادع
+verbs	1	مددت يدي	مد	مددت
+verbs	1	قف هنا	وقف	قف
+verbs	1	كانوا هنا	كان	كانوا
+verbs	1	لم يقرأ الكتاب	لم	لم
+verbs	1	يقرأ الكتاب	قرأ	يقرأ
+verbs	1	تنس شيئا	نسي	تنس
+nouns	1	الكتاب الجديد	كتاب	الكتاب
+nouns	1	أطفالهم في المدرسة	طفل	أطفالهم
+nouns	1	بيوتهم كبيرة	بيت	بيوتهم
+nouns	1	أبوابهم مفتوحة	باب	أبوابهم
+nouns	1	الرجال هنا	رجل	الرجال
+nouns	1	كتابين جديدين	كتاب	كتابين
+nouns	1	المعلمون في المدرسة	معلم	المعلمون
+nouns	0	بيوتهم كبيرة	اتهم	بيوتهم
+adjectives	1	الكبيرة	كبير	الكبيرة
+adjectives	1	كبيرة	كبير	كبيرة
+adjectives	1	جميلة جدا	جميل	جميلة

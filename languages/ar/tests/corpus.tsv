@@ -1,6 +1,1389 @@
-# Source: describe the source, its licence and attribution here and in README.md.
+# Source: UniMorph ara (https://github.com/unimorph/ara), commit e9b7521ab75e3a7da6f996a428031164993e6f19, file ara
+# (sha256 01663d08dbc6bb2a4207749cb4c000926c72c7cf9ec3faa8521e4cb5e9d690f1), CC BY-SA 3.0, by the UniMorph contributors, from English Wiktionary.
+# 1496 rows sampled with seed 1 by sources/sample-corpus.py from the rows whose form wty-ar-en 2026.10.22 lists as a form of the lemma (README.md).
+# The rows of the sample the final rules reach; the others are in gaps.tsv (sources/split-corpus.py).
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
-nouns	1	books	book	n	plural
-verbs	1	walked	walk	v	past
-verbs	1	went	go	v	past
-negatives	0	red	r	*	*
+verb perfect active	1	ازدهرنا	ازدهر	v	*
+verb perfect active	1	نامت	نام	v	*
+verb perfect active	1	ابتدأتا	ابتدأ	v	*
+verb perfect active	1	افتكرت	افتكر	v	*
+verb perfect active	1	اخضوضعتم	اخضوضع	v	*
+verb perfect active	1	ضايقوا	ضايق	v	*
+verb perfect active	1	سألن	سأل	v	*
+verb perfect active	1	شاهروا	شاهر	v	*
+verb perfect active	1	حاوطتن	حاوط	v	*
+verb perfect active	1	استمررتم	استمر	v	*
+verb perfect active	1	احتملت	احتمل	v	*
+verb perfect active	1	صفتا	صفا	v	*
+verb perfect active	1	أضافتا	أضاف	v	*
+verb perfect active	1	حميت	حمى	v	*
+verb perfect active	1	ربت	ربى	v	*
+verb perfect active	1	أبهمتن	أبهم	v	*
+verb perfect active	1	زدتن	زاد	v	*
+verb perfect active	1	اكتتبوا	اكتتب	v	*
+verb perfect active	1	اسلنطعنا	اسلنطع	v	*
+verb perfect active	1	والت	والى	v	*
+verb perfect active	1	احمررتن	احمر	v	*
+verb perfect active	1	اهتممتن	اهتم	v	*
+verb perfect active	1	أطعموا	أطعم	v	*
+verb perfect active	1	أشرت	أشار	v	*
+verb perfect active	1	أصبنا	أصاب	v	*
+verb perfect active	1	قرآ	قرأ	v	*
+verb perfect active	1	أحوجت	أحوج	v	*
+verb perfect active	1	حددتما	حدد	v	*
+verb perfect active	1	استنرتم	استنار	v	*
+verb perfect active	1	دندنتما	دندن	v	*
+verb perfect active	1	أضعتن	أضاع	v	*
+verb perfect active	1	فتشوا	فتش	v	*
+verb perfect active	1	استهزأتما	استهزأ	v	*
+verb perfect active	1	رضيتا	رضي	v	*
+verb perfect active	1	ضعتما	ضاع	v	*
+verb perfect active	1	كفيت	كفى	v	*
+verb perfect active	1	اشتغلتن	اشتغل	v	*
+verb perfect active	1	تسلتا	تسلى	v	*
+verb perfect active	1	اشتركوا	اشترك	v	*
+verb perfect active	1	استنفرت	استنفر	v	*
+verb perfect active	1	سعلتم	سعل	v	*
+verb perfect active	1	انحرفت	انحرف	v	*
+verb perfect active	1	أشارتا	أشار	v	*
+verb perfect active	1	دفأتما	دفأ	v	*
+verb perfect active	1	لعقتا	لعق	v	*
+verb perfect active	1	احقوقفتم	احقوقف	v	*
+verb perfect active	1	استعمرنا	استعمر	v	*
+verb perfect active	1	انصرفوا	انصرف	v	*
+verb perfect active	1	اذلوليتن	اذلولى	v	*
+verb perfect active	1	بصرتم	بصر	v	*
+verb perfect active	1	طالتا	طال	v	*
+verb perfect active	1	طلتن	طال	v	*
+verb perfect active	1	استقالت	استقال	v	*
+verb perfect active	1	انفردنا	انفرد	v	*
+verb perfect active	1	انتفختما	انتفخ	v	*
+verb perfect active	1	هندسوا	هندس	v	*
+verb perfect active	1	طارحتم	طارح	v	*
+verb perfect active	1	طفئتن	طفأ	v	*
+verb perfect active	1	حوقلتما	حوقل	v	*
+verb perfect active	1	واصلتن	واصل	v	*
+verb perfect active	1	أغرمتا	أغرم	v	*
+verb perfect active	1	صانوا	صان	v	*
+verb perfect active	1	اطمأنت	اطمأن	v	*
+verb perfect active	1	خلت	خلا	v	*
+verb perfect active	1	درين	درى	v	*
+verb perfect active	1	استضأتن	استضاء	v	*
+verb perfect active	1	جاورتا	جاور	v	*
+verb perfect active	1	كاثرت	كاثر	v	*
+verb perfect active	1	جمهرتن	جمهر	v	*
+verb perfect active	1	احتربتم	احترب	v	*
+verb perfect active	1	رغبتا	رغب	v	*
+verb perfect active	1	طهرتن	طهر	v	*
+verb perfect active	1	اختلطت	اختلط	v	*
+verb perfect active	1	استرجلتن	استرجل	v	*
+verb perfect active	1	غرغروا	غرغر	v	*
+verb perfect active	1	حوقلتم	حوقل	v	*
+verb perfect active	1	جرؤتم	جرؤ	v	*
+verb perfect active	1	صنتم	صان	v	*
+verb perfect active	1	أضفتن	أضاف	v	*
+verb perfect active	1	شاركتن	شارك	v	*
+verb perfect active	1	ألهمتما	ألهم	v	*
+verb perfect active	1	انقرضتما	انقرض	v	*
+verb perfect active	1	وطئتم	وطئ	v	*
+verb perfect active	1	نكنا	ناك	v	*
+verb perfect active	1	حوقلنا	حوقل	v	*
+verb perfect active	1	استشهدتم	استشهد	v	*
+verb perfect active	1	استسلمتم	استسلم	v	*
+verb perfect active	1	طاولتما	طاول	v	*
+verb perfect active	1	استيقظتن	استيقظ	v	*
+verb perfect active	1	أدمنا	أدمن	v	*
+verb perfect active	1	استكبرتن	استكبر	v	*
+verb perfect active	1	قاموا	قام	v	*
+verb perfect active	1	قهقهتما	قهقه	v	*
+verb perfect active	1	اشتططتما	اشتط	v	*
+verb perfect active	1	خلتا	خلا	v	*
+verb perfect active	1	عذبتا	عذب	v	*
+verb perfect active	1	ترجمت	ترجم	v	*
+verb perfect active	1	نكحن	نكح	v	*
+verb perfect active	1	تلفزتم	تلفز	v	*
+verb perfect active	1	سعتا	سعى	v	*
+verb perfect active	1	اكفهررت	اكفهر	v	*
+verb perfect active	1	قهقهتا	قهقه	v	*
+verb perfect active	1	أثارت	أثار	v	*
+verb perfect active	1	حطتم	حاط	v	*
+verb perfect active	1	عاكسنا	عاكس	v	*
+verb perfect active	1	ارجحنتا	ارجحن	v	*
+verb perfect active	1	غذوتما	غذا	v	*
+verb perfect active	1	مشيا	مشى	v	*
+verb perfect active	1	استلقيتم	استلقى	v	*
+verb perfect active	1	ذقت	ذاق	v	*
+verb perfect active	1	أودعوا	أودع	v	*
+verb perfect active	1	صحبن	صحب	v	*
+verb perfect active	1	جابوا	جاب	v	*
+verb perfect active	1	ناولتم	ناول	v	*
+verb perfect active	1	لاحظوا	لاحظ	v	*
+verb perfect active	1	استكتبت	استكتب	v	*
+verb perfect active	1	طفئتا	طفئ	v	*
+verb perfect active	1	درت	درى	v	*
+verb perfect active	1	صرت	صار	v	*
+verb perfect active	1	تهتما	تاه	v	*
+verb perfect active	1	تسليتن	تسلى	v	*
+verb perfect active	1	أبتا	أبى	v	*
+verb perfect active	1	قامت	قام	v	*
+verb perfect active	1	قاومتما	قاوم	v	*
+verb perfect active	1	بستم	باس	v	*
+verb perfect active	1	سخرت	سخر	v	*
+verb perfect active	1	أضاعوا	أضاع	v	*
+verb perfect active	1	اشتجرتن	اشتجر	v	*
+verb perfect active	1	استظهرت	استظهر	v	*
+verb perfect active	1	كافأن	كافأ	v	*
+verb perfect active	1	هددتما	هدد	v	*
+verb perfect active	1	استعددتما	استعد	v	*
+verb perfect active	1	احتفلتن	احتفل	v	*
+verb perfect active	1	كالمتا	كالم	v	*
+verb perfect active	1	افتكرتم	افتكر	v	*
+verb perfect active	1	أعرتن	أعار	v	*
+verb perfect active	1	ابيضضنا	ابيض	v	*
+verb perfect active	1	اجلعدتا	اجلعد	v	*
+verb perfect active	1	أربكتن	أربك	v	*
+verb perfect active	1	ساعدتما	ساعد	v	*
+verb perfect active	1	أذعتن	أذاع	v	*
+verb perfect active	1	انتصرت	انتصر	v	*
+verb perfect active	1	اعتنيتن	اعتنى	v	*
+verb perfect active	1	اكتشفتن	اكتشف	v	*
+verb perfect active	1	اختلفنا	اختلف	v	*
+verb perfect active	1	استعلمتم	استعلم	v	*
+verb perfect active	1	ترجمنا	ترجم	v	*
+verb perfect active	1	انحرفنا	انحرف	v	*
+verb perfect active	1	ابلاججنا	ابلاج	v	*
+verb perfect active	1	استسروا	استسر	v	*
+verb perfect active	1	استدرتم	استدار	v	*
+verb perfect active	1	افتكرتا	افتكر	v	*
+verb perfect active	1	فتشتن	فتش	v	*
+verb perfect active	1	استسقيتن	استسقى	v	*
+verb perfect active	1	التمستن	التمس	v	*
+verb perfect active	1	انشغفتن	انشغف	v	*
+verb perfect active	1	سالوا	سال	v	*
+verb perfect active	1	باركنا	بارك	v	*
+verb perfect active	1	ضفتن	ضاف	v	*
+verb perfect active	1	شفيتن	شفى	v	*
+verb perfect active	1	اخشوشبتا	اخشوشب	v	*
+verb perfect active	1	أشععت	أشع	v	*
+verb perfect active	1	انكتبتما	انكتب	v	*
+verb perfect active	1	حكون	حكا	v	*
+verb perfect active	1	تحاشيتم	تحاشى	v	*
+verb perfect active	1	دنا	دان	v	*
+verb perfect active	1	استفادتا	استفاد	v	*
+verb perfect active	1	اقتربوا	اقترب	v	*
+verb perfect active	1	اختلطوا	اختلط	v	*
+verb perfect active	1	افتعلتا	افتعل	v	*
+verb perfect active	1	ظللتما	ظلل	v	*
+verb perfect active	1	استمتعوا	استمتع	v	*
+verb perfect active	1	رانتا	ران	v	*
+verb perfect active	1	أسقيتم	أسقى	v	*
+verb perfect active	1	استوليتم	استولى	v	*
+verb perfect active	1	أرسلتم	أرسل	v	*
+verb perfect active	1	خالطتما	خالط	v	*
+verb perfect active	1	استثنت	استثنى	v	*
+verb perfect active	1	أفادت	أفاد	v	*
+verb perfect active	1	استدفأت	استدفأ	v	*
+verb perfect active	1	زرت	زار	v	*
+verb perfect active	1	طفت	طفا	v	*
+verb perfect active	1	رأت	رأى	v	*
+verb perfect active	1	قعدنا	قعد	v	*
+verb perfect active	1	استهدفتم	استهدف	v	*
+verb perfect active	1	علوتما	علا	v	*
+verb perfect active	1	ساءلا	ساءل	v	*
+verb perfect active	1	استوردوا	استورد	v	*
+verb perfect active	1	غنيتن	غنى	v	*
+verb perfect active	1	أعارا	أعار	v	*
+verb perfect active	1	حيتا	حيا	v	*
+verb perfect active	1	نفيت	نفى	v	*
+verb perfect active	1	بارتا	بارى	v	*
+verb perfect active	1	ذقتما	ذاق	v	*
+verb perfect active	1	أيقنوا	أيقن	v	*
+verb perfect active	1	انطفأتا	انطفأ	v	*
+verb perfect active	1	ارتزقتا	ارتزق	v	*
+verb perfect active	1	استمطروا	استمطر	v	*
+verb perfect active	1	أنبأت	أنبأ	v	*
+verb perfect active	1	انقادتا	انقاد	v	*
+verb perfect passive	1	استؤجرنا	استأجر	v	*
+verb perfect passive	1	استؤصلوا	استأصل	v	*
+verb perfect passive	1	روقبتا	راقب	v	*
+verb perfect passive	1	روجعتم	راجع	v	*
+verb perfect passive	1	ضيعتا	ضاع	v	*
+verb perfect passive	1	ملئن	ملأ	v	*
+verb perfect passive	1	دعينا	دعا	v	*
+verb perfect passive	1	بوركا	بارك	v	*
+verb perfect passive	1	أسئمت	أسأم	v	*
+verb perfect passive	1	مضي	مضى	v	*
+verb perfect passive	1	أهينتا	أهان	v	*
+verb perfect passive	1	حيط	حاط	v	*
+verb perfect passive	1	موثلنا	ماثل	v	*
+verb perfect passive	1	عوونتم	عاون	v	*
+verb perfect passive	1	جونستا	جانس	v	*
+verb perfect passive	1	نيكوا	ناك	v	*
+verb perfect passive	1	قومرن	قامر	v	*
+verb perfect passive	1	أهينت	أهان	v	*
+verb perfect passive	1	شيع	شاع	v	*
+verb perfect passive	1	حوربتم	حارب	v	*
+verb perfect passive	1	استقيلتا	استقال	v	*
+verb perfect passive	1	موزحتما	مازح	v	*
+verb perfect passive	1	طوولن	طاول	v	*
+verb perfect passive	1	حنئت	حنأ	v	*
+verb perfect passive	1	قوبلتا	قابل	v	*
+verb perfect passive	1	استنير	استنار	v	*
+verb perfect passive	1	روجع	راجع	v	*
+verb perfect passive	1	قوطعن	قاطع	v	*
+verb perfect passive	1	قورضنا	قارض	v	*
+verb perfect passive	1	أضئت	أضاء	v	*
+verb perfect passive	1	سئلتن	سأل	v	*
+verb perfect passive	1	نوولا	ناول	v	*
+verb perfect passive	1	صورعتا	صارع	v	*
+verb perfect passive	1	رئي	رأى	v	*
+verb imperfect indicative active	1	أختتن	اختتن	v	*
+verb imperfect indicative active	1	تحوقلان	حوقل	v	*
+verb imperfect indicative active	1	ترددن	ردد	v	*
+verb imperfect indicative active	1	تعترفان	اعترف	v	*
+verb imperfect indicative active	1	يهبطان	هبط	v	*
+verb imperfect indicative active	1	يجلنفعان	اجلنفع	v	*
+verb imperfect indicative active	1	ينبئان	أنبأ	v	*
+verb imperfect indicative active	1	تحاربون	حارب	v	*
+verb imperfect indicative active	1	تغرمين	أغرم	v	*
+verb imperfect indicative active	1	تهدرجون	هدرج	v	*
+verb imperfect indicative active	1	تزوران	زار	v	*
+verb imperfect indicative active	1	تستمسك	استمسك	v	*
+verb imperfect indicative active	1	يستلهمان	استلهم	v	*
+verb imperfect indicative active	1	تبهم	أبهم	v	*
+verb imperfect indicative active	1	تلعقين	لعق	v	*
+verb imperfect indicative active	1	يتلفز	تلفز	v	*
+verb imperfect indicative active	1	تفتعلون	افتعل	v	*
+verb imperfect indicative active	1	يسعلون	سعل	v	*
+verb imperfect indicative active	1	يبوحان	باح	v	*
+verb imperfect indicative active	1	نشير	أشار	v	*
+verb imperfect indicative active	1	يلتفت	التفت	v	*
+verb imperfect indicative active	1	يبطئون	بطأ	v	*
+verb imperfect indicative active	1	تستذكران	استذكر	v	*
+verb imperfect indicative active	1	أنام	نام	v	*
+verb imperfect indicative active	1	يعاقبان	عاقب	v	*
+verb imperfect indicative active	1	أستند	استند	v	*
+verb imperfect indicative active	1	تباليان	بالى	v	*
+verb imperfect indicative active	1	تجهزن	جهز	v	*
+verb imperfect indicative active	1	تخرنمسون	اخرنمس	v	*
+verb imperfect indicative active	1	تخرأ	خرئ	v	*
+verb imperfect indicative active	1	يتحاشون	تحاشى	v	*
+verb imperfect indicative active	1	تزور	زار	v	*
+verb imperfect indicative active	1	تستمعن	استمع	v	*
+verb imperfect indicative active	1	يقولان	قال	v	*
+verb imperfect indicative active	1	تعرن	أعار	v	*
+verb imperfect indicative active	1	يخوشون	خوش	v	*
+verb imperfect indicative active	1	ننتحل	انتحل	v	*
+verb imperfect indicative active	1	تستقرئان	استقرأ	v	*
+verb imperfect indicative active	1	تكاثران	كاثر	v	*
+verb imperfect indicative active	1	تغرمن	أغرم	v	*
+verb imperfect indicative active	1	تغنيان	غنى	v	*
+verb imperfect indicative active	1	تتلفنين	تلفن	v	*
+verb imperfect indicative active	1	تشتملان	اشتمل	v	*
+verb imperfect indicative active	1	تستذنب	استذنب	v	*
+verb imperfect indicative active	1	يدعون	ادعى	v	*
+verb imperfect indicative active	1	يناسبن	ناسب	v	*
+verb imperfect indicative active	1	يضللن	ضل	v	*
+verb imperfect indicative active	1	نضيع	ضيع	v	*
+verb imperfect indicative active	1	تحاربين	حارب	v	*
+verb imperfect indicative active	1	يحكي	حكى	v	*
+verb imperfect indicative active	1	يثابران	ثابر	v	*
+verb imperfect indicative active	1	يلحقن	ألحق	v	*
+verb imperfect indicative active	1	تترجمين	ترجم	v	*
+verb imperfect indicative active	1	تطفو	طفا	v	*
+verb imperfect indicative active	1	أستلهم	استلهم	v	*
+verb imperfect indicative active	1	تنصرفون	انصرف	v	*
+verb imperfect indicative active	1	أهنئ	هنأ	v	*
+verb imperfect indicative active	1	تلهمان	ألهم	v	*
+verb imperfect indicative active	1	ينتويان	انتوى	v	*
+verb imperfect indicative active	1	تحرران	حرر	v	*
+verb imperfect indicative active	1	تجتمعان	اجتمع	v	*
+verb imperfect indicative active	1	تغيبين	غاب	v	*
+verb imperfect indicative active	1	تتمنون	تمنى	v	*
+verb imperfect indicative active	1	يرببون	ربب	v	*
+verb imperfect indicative active	1	يخالطون	خالط	v	*
+verb imperfect indicative active	1	يناولون	ناول	v	*
+verb imperfect indicative active	1	تلتهمين	التهم	v	*
+verb imperfect indicative active	1	تأتيان	أتى	v	*
+verb imperfect indicative active	1	يحتسبن	احتسب	v	*
+verb imperfect indicative active	1	يتوبون	تاب	v	*
+verb imperfect indicative active	1	تستبدلان	استبدل	v	*
+verb imperfect indicative active	1	يحاربن	حارب	v	*
+verb imperfect indicative active	1	تباحث	باحث	v	*
+verb imperfect indicative active	1	تستمسكن	استمسك	v	*
+verb imperfect indicative active	1	تقهقهون	قهقه	v	*
+verb imperfect indicative active	1	تشيرين	أشار	v	*
+verb imperfect indicative active	1	يجهزن	جهز	v	*
+verb imperfect indicative active	1	يبوح	باح	v	*
+verb imperfect indicative active	1	تتمتمن	تمتم	v	*
+verb imperfect indicative active	1	نخروط	اخروط	v	*
+verb imperfect indicative active	1	تستيقظان	استيقظ	v	*
+verb imperfect indicative active	1	تتعالون	تعالى	v	*
+verb imperfect indicative active	1	ينتقمان	انتقم	v	*
+verb imperfect indicative active	1	أشيع	أشاع	v	*
+verb imperfect indicative active	1	تشيع	أشاع	v	*
+verb imperfect indicative active	1	أحارب	حارب	v	*
+verb imperfect indicative active	1	يرادون	راد	v	*
+verb imperfect indicative active	1	يستكتب	استكتب	v	*
+verb imperfect indicative active	1	أحدودب	احدودب	v	*
+verb imperfect indicative active	1	تبرمجن	برمج	v	*
+verb imperfect indicative active	1	تنفعل	انفعل	v	*
+verb imperfect indicative active	1	تتمنين	تمنى	v	*
+verb imperfect indicative active	1	ينجو	نجا	v	*
+verb imperfect indicative active	1	أستميت	استمات	v	*
+verb imperfect indicative active	1	تذلعب	اذلعب	v	*
+verb imperfect indicative active	1	تستسلمين	استسلم	v	*
+verb imperfect indicative active	1	ينتظم	انتظم	v	*
+verb imperfect indicative active	1	يخافان	خاف	v	*
+verb imperfect indicative active	1	تنكسرن	انكسر	v	*
+verb imperfect indicative active	1	تختارين	اختار	v	*
+verb imperfect indicative active	1	تتهيأن	تهيأ	v	*
+verb imperfect indicative active	1	نحاول	حاول	v	*
+verb imperfect indicative active	1	تخرطمين	خرطم	v	*
+verb imperfect indicative active	1	يستنفرن	استنفر	v	*
+verb imperfect indicative active	1	تستصبحون	استصبح	v	*
+verb imperfect indicative active	1	تخابرن	خابر	v	*
+verb imperfect indicative active	1	يفقسن	فقس	v	*
+verb imperfect indicative active	1	تتحدن	اتحد	v	*
+verb imperfect indicative active	1	تودع	أودع	v	*
+verb imperfect indicative active	1	تلحقان	ألحق	v	*
+verb imperfect indicative active	1	ينكربن	انكرب	v	*
+verb imperfect indicative active	1	يتصلون	اتصل	v	*
+verb imperfect indicative active	1	يوالون	والى	v	*
+verb imperfect indicative active	1	تشكون	شكا	v	*
+verb imperfect indicative active	1	تستقبحان	استقبح	v	*
+verb imperfect indicative active	1	يصيرون	صار	v	*
+verb imperfect indicative active	1	نستكتب	استكتب	v	*
+verb imperfect indicative active	1	تضيعان	ضاع	v	*
+verb imperfect indicative active	1	تتباءس	تباءس	v	*
+verb imperfect indicative active	1	تزدان	ازدان	v	*
+verb imperfect indicative active	1	يسترزق	استرزق	v	*
+verb imperfect indicative active	1	تطارحون	طارح	v	*
+verb imperfect indicative active	1	أستمطر	استمطر	v	*
+verb imperfect indicative active	1	أزحر	زحر	v	*
+verb imperfect indicative active	1	أجتهد	اجتهد	v	*
+verb imperfect indicative active	1	ينتفضون	انتفض	v	*
+verb imperfect indicative active	1	يعاونان	عاون	v	*
+verb imperfect indicative active	1	يخضاران	اخضار	v	*
+verb imperfect indicative active	1	تطفأن	طفأ	v	*
+verb imperfect indicative active	1	نجهز	جهز	v	*
+verb imperfect indicative active	1	تنامين	نام	v	*
+verb imperfect indicative active	1	تضوئون	ضاء	v	*
+verb imperfect indicative active	1	تنتهون	انتهى	v	*
+verb imperfect indicative active	1	ألغي	ألغى	v	*
+verb imperfect indicative active	1	أمحو	محا	v	*
+verb imperfect indicative active	1	تطارحن	طارح	v	*
+verb imperfect indicative active	1	يداورن	داور	v	*
+verb imperfect indicative active	1	نخالف	خالف	v	*
+verb imperfect indicative active	1	تتقنين	أتقن	v	*
+verb imperfect indicative active	1	تستعمرون	استعمر	v	*
+verb imperfect indicative active	1	تسئم	أسأم	v	*
+verb imperfect indicative active	1	ينتظران	انتظر	v	*
+verb imperfect indicative active	1	يرتجيان	ارتجى	v	*
+verb imperfect indicative active	1	يمكنون	أمكن	v	*
+verb imperfect indicative active	1	يسقون	أسقى	v	*
+verb imperfect indicative active	1	نستأذن	استأذن	v	*
+verb imperfect indicative active	1	يستعلم	استعلم	v	*
+verb imperfect indicative active	1	تقتتلين	اقتتل	v	*
+verb imperfect indicative active	1	تستقيمون	استقام	v	*
+verb imperfect indicative active	1	تدممان	دمم	v	*
+verb imperfect indicative active	1	يتسلين	تسلى	v	*
+verb imperfect indicative active	1	تزدانون	ازدان	v	*
+verb imperfect indicative active	1	تصيحون	صاح	v	*
+verb imperfect indicative active	1	ترثعنن	ارثعن	v	*
+verb imperfect indicative active	1	تستعجلين	استعجل	v	*
+verb imperfect indicative active	1	تقتنعين	اقتنع	v	*
+verb imperfect indicative active	1	تبأسن	بئس	v	*
+verb imperfect indicative active	1	تسقون	سقى	v	*
+verb imperfect indicative active	1	تبدأ	بدأ	v	*
+verb imperfect indicative active	1	يقتضب	اقتضب	v	*
+verb imperfect indicative active	1	نجانس	جانس	v	*
+verb imperfect indicative active	1	تبرزن	برز	v	*
+verb imperfect indicative active	1	يحتوين	احتوى	v	*
+verb imperfect indicative active	1	يستجنان	استجن	v	*
+verb imperfect indicative active	1	تغرمون	أغرم	v	*
+verb imperfect indicative active	1	تستجيرين	استجار	v	*
+verb imperfect indicative active	1	تناقشان	ناقش	v	*
+verb imperfect indicative active	1	تصيبون	أصاب	v	*
+verb imperfect indicative active	1	أستهزئ	استهزأ	v	*
+verb imperfect indicative active	1	تعتادون	اعتاد	v	*
+verb imperfect indicative active	1	تذاكرين	ذاكر	v	*
+verb imperfect indicative active	1	تطأ	وطئ	v	*
+verb imperfect indicative active	1	ينسحبان	انسحب	v	*
+verb imperfect indicative active	1	يحقوقف	احقوقف	v	*
+verb imperfect indicative active	1	تصطليان	اصطلى	v	*
+verb imperfect indicative active	1	تستعبدين	استعبد	v	*
+verb imperfect indicative active	1	تعوج	اعوج	v	*
+verb imperfect indicative active	1	تتترك	تترك	v	*
+verb imperfect indicative active	1	يتغديان	تغدى	v	*
+verb imperfect indicative active	1	يذلوليان	اذلولى	v	*
+verb imperfect indicative active	1	ينكشفون	انكشف	v	*
+verb imperfect indicative active	1	يخشوشبون	اخشوشب	v	*
+verb imperfect indicative active	1	تبرهن	برهن	v	*
+verb imperfect indicative active	1	تستظهرون	استظهر	v	*
+verb imperfect indicative active	1	تسبكرون	اسبكر	v	*
+verb imperfect indicative active	1	أخطأ	خطئ	v	*
+verb imperfect indicative active	1	ينمن	نام	v	*
+verb imperfect indicative active	1	تستطيع	استطاع	v	*
+verb imperfect indicative active	1	تنحرفين	انحرف	v	*
+verb imperfect indicative active	1	أنيك	ناك	v	*
+verb imperfect indicative active	1	أنقطع	انقطع	v	*
+verb imperfect indicative active	1	يعتمل	اعتمل	v	*
+verb imperfect indicative active	1	تأبين	أبى	v	*
+verb imperfect indicative active	1	أدحو	دحا	v	*
+verb imperfect indicative active	1	يسافرن	سافر	v	*
+verb imperfect indicative active	1	أجامل	جامل	v	*
+verb imperfect indicative active	1	تشتغلون	اشتغل	v	*
+verb imperfect indicative active	1	يقتبلون	اقتبل	v	*
+verb imperfect indicative active	1	ينزوون	انزوى	v	*
+verb imperfect indicative passive	1	تقتضى	اقتضى	v	*
+verb imperfect indicative passive	1	نعطى	أعطى	v	*
+verb imperfect indicative passive	1	نستنبأ	استنبأ	v	*
+verb imperfect indicative passive	1	تداران	أدار	v	*
+verb imperfect indicative passive	1	نفسى	فسا	v	*
+verb imperfect indicative passive	1	يغنى	غنى	v	*
+verb imperfect indicative passive	1	يقال	قال	v	*
+verb imperfect indicative passive	1	تغذى	غذا	v	*
+verb imperfect indicative passive	1	أمحى	محا	v	*
+verb imperfect indicative passive	1	نلاقى	لاقى	v	*
+verb imperfect indicative passive	1	يستثنى	استثنى	v	*
+verb imperfect indicative passive	1	تذاعون	أذاع	v	*
+verb imperfect indicative passive	1	تذرى	ذرا	v	*
+verb imperfect indicative passive	1	يغطى	غطى	v	*
+verb imperfect indicative passive	1	تحيا	حيا	v	*
+verb imperfect indicative passive	1	تحكين	حكا	v	*
+verb imperfect indicative passive	1	ينارون	أنار	v	*
+verb imperfect indicative passive	1	تعار	أعار	v	*
+verb imperfect indicative passive	1	تضاف	ضاف	v	*
+verb imperfect indicative passive	1	يشاعان	أشاع	v	*
+verb imperfect indicative passive	1	ننادى	نادى	v	*
+verb imperfect indicative passive	1	ينديان	ندا	v	*
+verb imperfect indicative passive	1	يدانان	دان	v	*
+verb imperfect indicative passive	1	تضاءان	أضاء	v	*
+verb imperfect indicative passive	1	تثاران	أثار	v	*
+verb imperfect indicative passive	1	تزارون	زار	v	*
+verb imperfect indicative passive	1	تحمى	حمى	v	*
+verb imperfect indicative passive	1	يصابون	أصاب	v	*
+verb imperfect indicative passive	1	أرجى	رجا	v	*
+verb imperfect indicative passive	1	يفاجأ	فاجأ	v	*
+verb imperfect indicative passive	1	تطال	طال	v	*
+verb imperfect indicative passive	1	يناران	أنار	v	*
+verb imperfect indicative passive	1	يذرين	ذرا	v	*
+verb imperfect indicative passive	1	يكافأ	كافأ	v	*
+verb imperfect indicative passive	1	يستضاء	استضاء	v	*
+verb imperfect indicative passive	1	يباسون	باس	v	*
+verb imperfect indicative passive	1	ينفين	نفا	v	*
+verb imperfect jussive active	1	يهد	هاد	v	*
+verb imperfect jussive active	1	تستتيبي	استتاب	v	*
+verb imperfect jussive active	1	ترتعدا	ارتعد	v	*
+verb imperfect jussive active	1	تضيفا	أضاف	v	*
+verb imperfect jussive active	1	نجع	جاع	v	*
+verb imperfect jussive active	1	يدع	دعا	v	*
+verb imperfect jussive active	1	تدعوا	ادعى	v	*
+verb imperfect jussive active	1	تأتما	ائتم	v	*
+verb imperfect jussive active	1	يناووا	ناوى	v	*
+verb imperfect jussive active	1	تستميتا	استمات	v	*
+verb imperfect jussive active	1	تستوردا	استورد	v	*
+verb imperfect jussive active	1	تبدوا	بدا	v	*
+verb imperfect jussive active	1	ينقادا	انقاد	v	*
+verb imperfect jussive active	1	نستضئ	استضاء	v	*
+verb imperfect jussive active	1	نتغد	تغدى	v	*
+verb imperfect jussive active	1	يرتدوا	ارتدى	v	*
+verb imperfect jussive active	1	تستنفرا	استنفر	v	*
+verb imperfect jussive active	1	يذر	ذرا	v	*
+verb imperfect jussive active	1	نذع	أذاع	v	*
+verb imperfect jussive active	1	يدعوا	دعا	v	*
+verb imperfect jussive active	1	نشق	شاق	v	*
+verb imperfect jussive active	1	أخف	أخفى	v	*
+verb imperfect jussive active	1	تنصفا	أنصف	v	*
+verb imperfect jussive active	1	تقاومي	قاوم	v	*
+verb imperfect jussive active	1	تراقبا	راقب	v	*
+verb imperfect jussive active	1	تسع	سعى	v	*
+verb imperfect jussive active	1	يبق	بقي	v	*
+verb imperfect jussive active	1	أستو	استوى	v	*
+verb imperfect jussive active	1	يقتضبا	اقتضب	v	*
+verb imperfect jussive active	1	تهددا	هدد	v	*
+verb imperfect jussive active	1	يستخدما	استخدم	v	*
+verb imperfect jussive active	1	أساو	ساوى	v	*
+verb imperfect jussive active	1	تبتعدا	ابتعد	v	*
+verb imperfect jussive active	1	يواصلا	واصل	v	*
+verb imperfect jussive active	1	تكتحلا	اكتحل	v	*
+verb imperfect jussive active	1	يستعملا	استعمل	v	*
+verb imperfect jussive active	1	تخالفي	خالف	v	*
+verb imperfect jussive active	1	يستول	استولى	v	*
+verb imperfect jussive active	1	تحط	حاط	v	*
+verb imperfect jussive active	1	تخامرا	خامر	v	*
+verb imperfect jussive active	1	تسعيا	سعى	v	*
+verb imperfect jussive active	1	تشيري	أشار	v	*
+verb imperfect jussive active	1	تنعقدي	انعقد	v	*
+verb imperfect jussive active	1	يستأمنا	استأمن	v	*
+verb imperfect jussive active	1	تنفطرا	انفطر	v	*
+verb imperfect jussive active	1	ترببا	ربب	v	*
+verb imperfect jussive active	1	يصطلوا	اصطلى	v	*
+verb imperfect jussive active	1	تتلفزي	تلفز	v	*
+verb imperfect jussive active	1	تستقبلي	استقبل	v	*
+verb imperfect jussive active	1	يبقوا	بقي	v	*
+verb imperfect jussive active	1	أجع	جاع	v	*
+verb imperfect jussive active	1	ترتزقا	ارتزق	v	*
+verb imperfect jussive active	1	يختمرا	اختمر	v	*
+verb imperfect jussive active	1	تعلني	أعلن	v	*
+verb imperfect jussive active	1	يثبطا	ثبط	v	*
+verb imperfect jussive active	1	يقل	قال	v	*
+verb imperfect jussive active	1	ندم	دام	v	*
+verb imperfect jussive active	1	ينم	نما	v	*
+verb imperfect jussive active	1	يفرنسا	فرنس	v	*
+verb imperfect jussive active	1	تستظهري	استظهر	v	*
+verb imperfect jussive active	1	تستكبري	استكبر	v	*
+verb imperfect jussive active	1	تعتن	اعتنى	v	*
+verb imperfect jussive active	1	يتغدوا	تغدى	v	*
+verb imperfect jussive active	1	ينه	أنهى	v	*
+verb imperfect jussive active	1	يباروا	بارى	v	*
+verb imperfect jussive active	1	تستطيلا	استطال	v	*
+verb imperfect jussive active	1	تنهوا	أنهى	v	*
+verb imperfect jussive active	1	تقارضا	قارض	v	*
+verb imperfect jussive active	1	يسئما	أسأم	v	*
+verb imperfect jussive active	1	يصر	صار	v	*
+verb imperfect jussive active	1	يكتربا	اكترب	v	*
+verb imperfect jussive active	1	تشكوا	شكا	v	*
+verb imperfect jussive active	1	تستسقوا	استسقى	v	*
+verb imperfect jussive active	1	تأت	أتى	v	*
+verb imperfect jussive active	1	تبوسا	باس	v	*
+verb imperfect jussive active	1	يحاوطا	حاوط	v	*
+verb imperfect jussive active	1	يقترحا	اقترح	v	*
+verb imperfect jussive active	1	تمتثلي	امتثل	v	*
+verb imperfect jussive active	1	تدففا	دفف	v	*
+verb imperfect jussive active	1	تستأنيا	استأنى	v	*
+verb imperfect jussive active	1	تعتمرا	اعتمر	v	*
+verb imperfect jussive active	1	تضيعي	ضيع	v	*
+verb imperfect jussive active	1	يوافوا	وافى	v	*
+verb imperfect jussive active	1	تضيفي	ضاف	v	*
+verb imperfect jussive active	1	يرش	رشا	v	*
+verb imperfect jussive active	1	تمشوا	مشى	v	*
+verb imperfect jussive active	1	تذروا	ذرا	v	*
+verb imperfect jussive active	1	نكف	كفى	v	*
+verb imperfect jussive active	1	يستويا	استوى	v	*
+verb imperfect jussive active	1	تتفرنسا	تفرنس	v	*
+verb imperfect jussive active	1	تحرنجما	احرنجم	v	*
+verb imperfect jussive active	1	يشفيا	شفى	v	*
+verb imperfect jussive active	1	يحتط	احتاط	v	*
+verb imperfect jussive active	1	يستدفئا	استدفأ	v	*
+verb imperfect jussive active	1	تناقشا	ناقش	v	*
+verb imperfect jussive active	1	ترتح	ارتاح	v	*
+verb imperfect jussive active	1	تدحي	دحا	v	*
+verb imperfect jussive active	1	تستني	استن	v	*
+verb imperfect jussive active	1	نبار	بارى	v	*
+verb imperfect jussive active	1	تسترزقا	استرزق	v	*
+verb imperfect jussive active	1	يستحملا	استحمل	v	*
+verb imperfect jussive active	1	تؤدي	أدى	v	*
+verb imperfect jussive active	1	ينفوا	نفى	v	*
+verb imperfect jussive active	1	تنسي	نسى	v	*
+verb imperfect jussive active	1	يفاجئا	فاجأ	v	*
+verb imperfect jussive active	1	تقم	قام	v	*
+verb imperfect jussive active	1	تنتفضي	انتفض	v	*
+verb imperfect jussive active	1	يحتلما	احتلم	v	*
+verb imperfect jussive active	1	تذر	ذرى	v	*
+verb imperfect jussive active	1	يذوقا	ذاق	v	*
+verb imperfect jussive active	1	أمت	أمات	v	*
+verb imperfect jussive active	1	يحووا	حوى	v	*
+verb imperfect jussive active	1	تتمن	تمنى	v	*
+verb imperfect jussive active	1	تستوليا	استولى	v	*
+verb imperfect jussive active	1	يعتن	اعتنى	v	*
+verb imperfect jussive active	1	تجاوري	جاور	v	*
+verb imperfect jussive active	1	تشاركي	شارك	v	*
+verb imperfect jussive active	1	تتعشي	تعشى	v	*
+verb imperfect jussive active	1	تختارا	اختار	v	*
+verb imperfect jussive active	1	يضئ	أضاء	v	*
+verb imperfect jussive passive	1	يفاضا	فاض	v	*
+verb imperfect jussive passive	1	يدحيا	دحا	v	*
+verb imperfect jussive passive	1	يرانا	ران	v	*
+verb imperfect jussive passive	1	يزارا	زار	v	*
+verb imperfect jussive passive	1	تباسي	باس	v	*
+verb imperfect jussive passive	1	تفسيا	فسا	v	*
+verb imperfect jussive passive	1	يقأ	قاء	v	*
+verb imperfect jussive passive	1	تسائي	ساء	v	*
+verb imperfect jussive passive	1	تضافا	ضاف	v	*
+verb imperfect jussive passive	1	يضاعا	ضاع	v	*
+verb imperfect jussive passive	1	تفادي	أفاد	v	*
+verb imperfect jussive passive	1	تطاعي	طاع	v	*
+verb imperfect jussive passive	1	تذاقا	ذاق	v	*
+verb imperfect jussive passive	1	يوق	وقى	v	*
+verb imperfect jussive passive	1	تصابا	أصاب	v	*
+verb imperfect jussive passive	1	تفاضي	فاض	v	*
+verb imperfect jussive passive	1	تحنيا	حنى	v	*
+verb imperfect jussive passive	1	يثارا	أثار	v	*
+verb imperfect jussive passive	1	تنارا	أنار	v	*
+verb imperative	1	استمنين	استمنى	v	*
+verb imperative	1	اذر	ذرى	v	*
+verb imperative	1	داورا	داور	v	*
+verb imperative	1	ادعي	دعا	v	*
+verb imperative	1	امتدي	امتد	v	*
+verb imperative	1	اقتصدي	اقتصد	v	*
+verb imperative	1	اصغ	صغا	v	*
+verb imperative	1	ثبطا	ثبط	v	*
+verb imperative	1	أحبطا	أحبط	v	*
+verb imperative	1	استفدن	استفاد	v	*
+verb imperative	1	سمين	سمى	v	*
+verb imperative	1	أعجمن	أعجم	v	*
+verb imperative	1	أمتن	أمات	v	*
+verb imperative	1	اشمئزي	اشمأز	v	*
+verb imperative	1	اعتمرا	اعتمر	v	*
+verb imperative	1	استلهمن	استلهم	v	*
+verb imperative	1	استسلما	استسلم	v	*
+verb imperative	1	اكتحلا	اكتحل	v	*
+verb imperative	1	استأصلن	استأصل	v	*
+verb imperative	1	استكتبي	استكتب	v	*
+verb imperative	1	افقسي	فقس	v	*
+verb imperative	1	انثنيا	انثنى	v	*
+verb imperative	1	اضطرا	اضطر	v	*
+verb imperative	1	صادرا	صادر	v	*
+verb imperative	1	استرجلن	استرجل	v	*
+verb imperative	1	بيعي	باع	v	*
+verb imperative	1	قلدي	قلد	v	*
+verb imperative	1	رافقي	رافق	v	*
+verb imperative	1	اذلعبي	اذلعب	v	*
+verb imperative	1	استمسكا	استمسك	v	*
+verb imperative	1	جاورا	جاور	v	*
+verb imperative	1	استلقوا	استلقى	v	*
+verb imperative	1	اكتتبا	اكتتب	v	*
+verb imperative	1	اخرنمسن	اخرنمس	v	*
+verb imperative	1	أفدن	أفاد	v	*
+verb imperative	1	أسبغي	أسبغ	v	*
+verb imperative	1	امتلكن	امتلك	v	*
+verb imperative	1	ارميا	رمى	v	*
+verb imperative	1	احتاجي	احتاج	v	*
+verb imperative	1	لاقوا	لاقى	v	*
+verb imperative	1	تمتمي	تمتم	v	*
+verb imperative	1	ماثلن	ماثل	v	*
+verb imperative	1	بيعا	باع	v	*
+verb imperative	1	انعقدي	انعقد	v	*
+verb imperative	1	أبهما	أبهم	v	*
+verb imperative	1	ارتبكن	ارتبك	v	*
+verb imperative	1	شاغلا	شاغل	v	*
+verb imperative	1	صحي	صحى	v	*
+verb imperative	1	بالي	بالى	v	*
+verb imperative	1	انتظري	انتظر	v	*
+verb imperative	1	حيوا	حيا	v	*
+verb imperative	1	انكسري	انكسر	v	*
+verb imperative	1	قمن	قام	v	*
+verb imperative	1	اخطئي	خطئ	v	*
+verb imperative	1	توها	تاه	v	*
+verb imperative	1	جانسا	جانس	v	*
+verb imperative	1	استكلبن	استكلب	v	*
+verb imperative	1	أجلدي	أجلد	v	*
+verb imperative	1	استقيما	استقام	v	*
+verb imperative	1	طارحي	طارح	v	*
+verb imperative	1	هنئي	هنأ	v	*
+verb imperative	1	دببا	دبب	v	*
+verb imperative	1	انتظمن	انتظم	v	*
+verb imperative	1	استرزقي	استرزق	v	*
+verb imperative	1	صحوا	صحى	v	*
+verb imperative	1	استقل	استقال	v	*
+verb imperative	1	تتركا	تترك	v	*
+verb imperative	1	أجلدن	أجلد	v	*
+verb imperative	1	حاربا	حارب	v	*
+verb imperative	1	ريا	رأى	v	*
+verb imperative	1	خلوا	خلى	v	*
+verb imperative	1	انقلبن	انقلب	v	*
+verb imperative	1	اجتهدي	اجتهد	v	*
+verb imperative	1	قهقهن	قهقه	v	*
+verb imperative	1	اصطليا	اصطلى	v	*
+verb imperative	1	التقين	التقى	v	*
+verb imperative	1	أعجما	أعجم	v	*
+verb imperative	1	خولن	خول	v	*
+verb imperative	1	استجنن	استجن	v	*
+verb imperative	1	حنئن	حنأ	v	*
+verb imperative	1	افتقرا	افتقر	v	*
+verb imperative	1	استضيفا	استضاف	v	*
+verb imperative	1	اجلعدا	اجلعد	v	*
+verb imperative	1	أربكن	أربك	v	*
+verb imperative	1	باشري	باشر	v	*
+verb imperative	1	اعوجي	اعوج	v	*
+verb imperative	1	دفئي	دفأ	v	*
+verb imperative	1	انتصرا	انتصر	v	*
+verb imperative	1	استتبن	استتاب	v	*
+verb imperative	1	طاوعن	طاوع	v	*
+verb imperative	1	اعتزمي	اعتزم	v	*
+verb imperative	1	قابلا	قابل	v	*
+verb imperative	1	استردي	استرد	v	*
+verb imperative	1	ظاهرن	ظاهر	v	*
+verb imperative	1	ناويا	ناوى	v	*
+verb imperative	1	ابتاعي	ابتاع	v	*
+verb imperative	1	افتكرا	افتكر	v	*
+verb imperative	1	احوين	حوى	v	*
+verb imperative	1	ربيا	ربى	v	*
+verb imperative	1	اجرمزي	اجرمز	v	*
+verb imperative	1	بطئي	بطأ	v	*
+verb imperative	1	اجتمعي	اجتمع	v	*
+verb imperative	1	شاغلن	شاغل	v	*
+verb imperative	1	أضيفا	أضاف	v	*
+verb imperative	1	استخدمي	استخدم	v	*
+verb imperative	1	نافسن	نافس	v	*
+verb imperative	1	استحي	استحيا	v	*
+verb imperative	1	احكين	حكى	v	*
+verb imperative	1	خالطي	خالط	v	*
+verb imperative	1	اقترحا	اقترح	v	*
+verb imperative	1	انتظرا	انتظر	v	*
+verb imperative	1	استمتعي	استمتع	v	*
+verb imperative	1	اشتغلا	اشتغل	v	*
+verb imperative	1	انقض	انقضى	v	*
+verb imperative	1	افتتحي	افتتح	v	*
+verb imperative	1	اجرؤا	جرؤ	v	*
+verb imperative	1	احتاجا	احتاج	v	*
+verb participle	1	ملفى	ألفى	v	*
+verb participle	1	مشترك	اشترك	v	*
+verb participle	1	مقتضب	اقتضب	v	*
+verb participle	1	مستلم	استلم	v	*
+verb participle	1	مسمى	سمى	v	*
+verb participle	1	مصون	صان	v	*
+verb participle	1	منتهى	انتهى	v	*
+verb participle	1	متفق	اتفق	v	*
+verb participle	1	مدري	درى	v	*
+verb participle	1	مقتتل	اقتتل	v	*
+verb participle	1	منتقم	انتقم	v	*
+verb participle	1	نائم	نام	v	*
+verb participle	1	مصوب	صوب	v	*
+verb participle	1	مختلف	اختلف	v	*
+verb participle	1	مزدان	ازدان	v	*
+verb participle	1	معلن	أعلن	v	*
+verb participle	1	منثن	انثنى	v	*
+verb participle	1	محتمل	احتمل	v	*
+verb participle	1	مستجار	استجار	v	*
+verb participle	1	مصير	صار	v	*
+verb participle	1	مستحق	استحق	v	*
+verb participle	1	متقى	اتقى	v	*
+verb participle	1	مستنسر	استنسر	v	*
+verb participle	1	مهان	أهان	v	*
+verb participle	1	معلو	علا	v	*
+verb participle	1	مربك	أربك	v	*
+verbal noun	1	استمساك	استمسك	v	*
+verbal noun	1	اعتراف	اعترف	v	*
+verbal noun	1	اشتراك	اشترك	v	*
+verbal noun	1	إطعام	أطعم	v	*
+verbal noun	1	تنسية	نسى	v	*
+verbal noun	1	انصراف	انصرف	v	*
+verbal noun	1	دراية	درى	v	*
+verbal noun	1	اشتهار	اشتهر	v	*
+verbal noun	1	افتعال	افتعل	v	*
+verbal noun	1	استعراب	استعرب	v	*
+verbal noun	1	استخدام	استخدم	v	*
+verbal noun	1	وسوسة	وسوس	v	*
+verbal noun	1	اعتمال	اعتمل	v	*
+verbal noun	1	مشاهرة	شاهر	v	*
+verbal noun	1	ازدهار	ازدهر	v	*
+noun singular definite	1	الانتساب	انتساب	n	*
+noun singular definite	1	الطبلة	طبلة	n	*
+noun singular definite	1	الرشاد	رشاد	n	*
+noun singular definite	1	الحطب	حطب	n	*
+noun singular definite	1	الشاش	شاش	n	*
+noun singular definite	1	التغسيل	تغسيل	n	*
+noun singular definite	1	الاستكفاف	استكفاف	n	*
+noun singular definite	1	التدميم	تدميم	n	*
+noun singular definite	1	الوالد	والد	n	*
+noun singular definite	1	الحزب	حزب	n	*
+noun singular definite	1	الإنشاء	إنشاء	n	*
+noun singular definite	1	الاسترزاق	استرزاق	n	*
+noun singular definite	1	التصعيد	تصعيد	n	*
+noun singular definite	1	السيدة	سيدة	n	*
+noun singular definite	1	الخبار	خبار	n	*
+noun singular definite	1	الفقوس	فقوس	n	*
+noun singular definite	1	الاستئناء	استئناء	n	*
+noun singular definite	1	التبصير	تبصير	n	*
+noun singular definite	1	الإشعار	إشعار	n	*
+noun singular definite	1	الإعمال	إعمال	n	*
+noun singular definite	1	المساية	مساية	n	*
+noun singular definite	1	الإثمد	إثمد	n	*
+noun singular definite	1	التسحير	تسحير	n	*
+noun singular definite	1	الوجوب	وجوب	n	*
+noun singular definite	1	الإذهاب	إذهاب	n	*
+noun singular definite	1	الفنان	فنان	n	*
+noun singular definite	1	الكثرة	كثرة	n	*
+noun singular definite	1	المعاكسة	معاكسة	n	*
+noun singular definite	1	الطحينة	طحينة	n	*
+noun singular definite	1	الدعوى	دعوى	n	*
+noun singular definite	1	النفاذ	نفاذ	n	*
+noun singular definite	1	الثبار	ثبار	n	*
+noun singular definite	1	الاستمطار	استمطار	n	*
+noun singular definite	1	الويكي	ويكي	n	*
+noun singular definite	1	البهار	بهار	n	*
+noun singular definite	1	الارتزاق	ارتزاق	n	*
+noun singular definite	1	التشجير	تشجير	n	*
+noun singular definite	1	الشابة	شابة	n	*
+noun singular definite	1	التطويع	تطويع	n	*
+noun singular definite	1	الفنطاس	فنطاس	n	*
+noun singular definite	1	الظهار	ظهار	n	*
+noun singular definite	1	السائح	سائح	n	*
+noun singular definite	1	البلاء	بلاء	n	*
+noun singular definite	1	التطبيل	تطبيل	n	*
+noun singular definite	1	التعريب	تعريب	n	*
+noun singular definite	1	الجرس	جرس	n	*
+noun singular definite	1	العضيض	عضيض	n	*
+noun singular definite	1	اللحظة	لحظة	n	*
+noun singular definite	1	المخابرة	مخابرة	n	*
+noun singular definite	1	السلسلة	سلسلة	n	*
+noun singular definite	1	الترفيع	ترفيع	n	*
+noun singular definite	1	العاطف	عاطف	n	*
+noun singular definite	1	التلويث	تلويث	n	*
+noun singular definite	1	الخلقة	خلقة	n	*
+noun singular definite	1	الفوتون	فوتون	n	*
+noun singular definite	1	المسألة	مسألة	n	*
+noun singular definite	1	الاستعمار	استعمار	n	*
+noun singular definite	1	التزبيد	تزبيد	n	*
+noun singular definite	1	الابليجاج	ابليجاج	n	*
+noun singular definite	1	الإشهار	إشهار	n	*
+noun singular definite	1	الأنتليجنسيا	أنتليجنسيا	n	*
+noun singular definite	1	الأذانة	أذانة	n	*
+noun singular definite	1	الغيمة	غيمة	n	*
+noun singular definite	1	الحيطة	حيطة	n	*
+noun singular definite	1	السراب	سراب	n	*
+noun singular definite	1	المخاط	مخاط	n	*
+noun singular definite	1	الجلابية	جلابية	n	*
+noun singular definite	1	التحرير	تحرير	n	*
+noun singular definite	1	الشاحنة	شاحنة	n	*
+noun singular definite	1	البروستات	بروستات	n	*
+noun singular definite	1	المواقعة	مواقعة	n	*
+noun singular definite	1	الببغاء	ببغاء	n	*
+noun singular definite	1	الإخافة	إخافة	n	*
+noun singular definite	1	الأنبوب	أنبوب	n	*
+noun singular definite	1	السكاف	سكاف	n	*
+noun singular definite	1	الانفراد	انفراد	n	*
+noun singular definite	1	النفوق	نفوق	n	*
+noun singular definite	1	الكيفية	كيفية	n	*
+noun singular definite	1	الإفقار	إفقار	n	*
+noun singular definite	1	المبنى	مبنى	n	*
+noun singular definite	1	الساندويتش	ساندويتش	n	*
+noun singular definite	1	التكميل	تكميل	n	*
+noun singular definite	1	الاغتصاب	اغتصاب	n	*
+noun singular definite	1	الاتباع	اتباع	n	*
+noun singular definite	1	العطول	عطول	n	*
+noun singular definite	1	الميلولة	ميلولة	n	*
+noun singular definite	1	الحراسة	حراسة	n	*
+noun singular definite	1	الأمير	أمير	n	*
+noun singular definite	1	الإرباك	إرباك	n	*
+noun singular definite	1	الكمول	كمول	n	*
+noun singular definite	1	الإكراه	إكراه	n	*
+noun singular definite	1	الكالسيوم	كالسيوم	n	*
+noun singular definite	1	الاعتمال	اعتمال	n	*
+noun singular definite	1	الإسماء	إسماء	n	*
+noun singular definite	1	الثاء	ثاء	n	*
+noun singular definite	1	الاستمرارية	استمرارية	n	*
+noun singular definite	1	الضجاع	ضجاع	n	*
+noun singular definite	1	الاخرنماس	اخرنماس	n	*
+noun singular definite	1	التثنية	تثنية	n	*
+noun singular definite	1	الإحساس	إحساس	n	*
+noun singular definite	1	المميل	مميل	n	*
+noun singular definite	1	الاغتلام	اغتلام	n	*
+noun singular definite	1	الجامعة	جامعة	n	*
+noun singular definite	1	الوسيلة	وسيلة	n	*
+noun singular definite	1	التجسيد	تجسيد	n	*
+noun singular definite	1	الطوفان	طوفان	n	*
+noun singular definite	1	السماء	سماء	n	*
+noun singular definite	1	الخلاقة	خلاقة	n	*
+noun singular definite	1	الملاعبة	ملاعبة	n	*
+noun singular definite	1	التهيؤ	تهيؤ	n	*
+noun singular definite	1	التمرير	تمرير	n	*
+noun singular definite	1	المنظار	منظار	n	*
+noun singular definite	1	الممال	ممال	n	*
+noun singular definite	1	التفريض	تفريض	n	*
+noun singular definite	1	التقديس	تقديس	n	*
+noun singular definite	1	الإكثار	إكثار	n	*
+noun singular definite	1	المراسلة	مراسلة	n	*
+noun singular definite	1	المرشح	مرشح	n	*
+noun singular definite	1	البوسة	بوسة	n	*
+noun singular definite	1	الذراع	ذراع	n	*
+noun singular definite	1	الصومالية	صومالية	n	*
+noun singular definite	1	المصادرة	مصادرة	n	*
+noun singular definite	1	المنافرة	منافرة	n	*
+noun singular definite	1	القيدودة	قيدودة	n	*
+noun singular definite	1	الرئة	رئة	n	*
+noun singular definite	1	الشهار	شهار	n	*
+noun singular definite	1	الكهربة	كهربة	n	*
+noun singular definite	1	التحنيء	تحنيء	n	*
+noun singular definite	1	الكمال	كمال	n	*
+noun singular definite	1	الصقر	صقر	n	*
+noun singular definite	1	النعناع	نعناع	n	*
+noun singular definite	1	الإهداف	إهداف	n	*
+noun singular definite	1	التهلكة	تهلكة	n	*
+noun singular definite	1	المطبخ	مطبخ	n	*
+noun singular definite	1	الإيجاب	إيجاب	n	*
+noun singular definite	1	التكحيل	تكحيل	n	*
+noun singular definite	1	البينونة	بينونة	n	*
+noun singular definite	1	الازدحام	ازدحام	n	*
+noun singular definite	1	البارود	بارود	n	*
+noun singular definite	1	الإقفال	إقفال	n	*
+noun singular definite	1	التخويش	تخويش	n	*
+noun singular definite	1	الصودا	صودا	n	*
+noun singular definite	1	الإشراك	إشراك	n	*
+noun singular definite	1	الإعجام	إعجام	n	*
+noun singular definite	1	المملكة	مملكة	n	*
+noun singular definite	1	الاخرواط	اخرواط	n	*
+noun singular definite	1	القفوز	قفوز	n	*
+noun singular definite	1	العنف	عنف	n	*
+noun singular indefinite	1	قرمزا	قرمز	n	*
+noun singular indefinite	1	ثباتا	ثبات	n	*
+noun singular indefinite	1	احرنجاما	احرنجام	n	*
+noun singular indefinite	1	تعشيقا	تعشيق	n	*
+noun singular indefinite	1	إسقاطا	إسقاط	n	*
+noun singular indefinite	1	استحفاظا	استحفاظ	n	*
+noun singular indefinite	1	مأكلا	مأكل	n	*
+noun singular indefinite	1	إرثا	إرث	n	*
+noun singular indefinite	1	شبتا	شبت	n	*
+noun singular indefinite	1	استحماما	استحمام	n	*
+noun singular indefinite	1	خردلا	خردل	n	*
+noun singular indefinite	1	شكرانا	شكران	n	*
+noun singular indefinite	1	إحمادا	إحماد	n	*
+noun singular indefinite	1	لبا	لب	n	*
+noun singular indefinite	1	ترقيما	ترقيم	n	*
+noun singular indefinite	1	اجتهادا	اجتهاد	n	*
+noun singular indefinite	1	تخديشا	تخديش	n	*
+noun singular indefinite	1	تفقيرا	تفقير	n	*
+noun singular indefinite	1	ابتساما	ابتسام	n	*
+noun singular indefinite	1	تضوؤا	تضوؤ	n	*
+noun singular indefinite	1	إرشادا	إرشاد	n	*
+noun singular indefinite	1	حرصا	حرص	n	*
+noun singular indefinite	1	إغراما	إغرام	n	*
+noun singular indefinite	1	تذبيحا	تذبيح	n	*
+noun singular indefinite	1	تعصيرا	تعصير	n	*
+noun singular indefinite	1	استذنابا	استذناب	n	*
+noun singular indefinite	1	تديينا	تديين	n	*
+noun singular indefinite	1	جوارا	جوار	n	*
+noun singular indefinite	1	ازدرادا	ازدراد	n	*
+noun singular indefinite	1	تطريبا	تطريب	n	*
+noun singular indefinite	1	احتراقا	احتراق	n	*
+noun singular indefinite	1	زنجبيلا	زنجبيل	n	*
+noun singular indefinite	1	تحكيما	تحكيم	n	*
+noun singular indefinite	1	قطوبا	قطوب	n	*
+noun singular indefinite	1	مكوثا	مكوث	n	*
+noun singular indefinite	1	بلاديوما	بلاديوم	n	*
+noun singular indefinite	1	تقضيبا	تقضيب	n	*
+noun singular indefinite	1	تكسيرا	تكسير	n	*
+noun singular indefinite	1	قودا	قود	n	*
+noun singular indefinite	1	حملانا	حملان	n	*
+noun singular indefinite	1	هبوطا	هبوط	n	*
+noun singular indefinite	1	علوا	علو	n	*
+noun singular indefinite	1	اختصارا	اختصار	n	*
+noun singular indefinite	1	استذكارا	استذكار	n	*
+noun singular indefinite	1	شيعانا	شيعان	n	*
+noun singular indefinite	1	لاجئا	لاجئ	n	*
+noun singular indefinite	1	ملحسا	ملحس	n	*
+noun singular indefinite	1	نلوفرا	نلوفر	n	*
+noun singular indefinite	1	كمبيوترا	كمبيوتر	n	*
+noun singular indefinite	1	مبيعا	مبيع	n	*
+noun singular indefinite	1	إدرارا	إدرار	n	*
+noun singular indefinite	1	تشويقا	تشويق	n	*
+noun singular indefinite	1	اشتهارا	اشتهار	n	*
+noun singular indefinite	1	بروكا	بروك	n	*
+noun singular indefinite	1	حفيلا	حفيل	n	*
+noun singular indefinite	1	كنيسا	كنيس	n	*
+noun singular indefinite	1	تفضيلا	تفضيل	n	*
+noun singular indefinite	1	احتياجا	احتياج	n	*
+noun singular indefinite	1	ذكارا	ذكار	n	*
+noun singular indefinite	1	تلويثا	تلويث	n	*
+noun singular construct	1	أخي	أخ	n	*
+noun singular construct	1	أخو	أخ	n	*
+noun singular construct	1	حمي	حم	n	*
+noun singular construct	1	حمو	حم	n	*
+noun dual	1	راعيتين	راعية	n	*
+noun dual	1	بساطي	بساط	n	*
+noun dual	1	ترابان	تراب	n	*
+noun dual	1	جهتين	جهة	n	*
+noun dual	1	الهديتين	هدية	n	*
+noun dual	1	تقسيمي	تقسيم	n	*
+noun dual	1	غالبتا	غالبة	n	*
+noun dual	1	طياران	طيار	n	*
+noun dual	1	أرنبي	أرنب	n	*
+noun dual	1	غلافي	غلاف	n	*
+noun dual	1	الدبلومان	دبلوم	n	*
+noun dual	1	السمتان	سمة	n	*
+noun dual	1	تحليلين	تحليل	n	*
+noun dual	1	تقصيران	تقصير	n	*
+noun dual	1	تلفزيونان	تلفزيون	n	*
+noun dual	1	كابوسا	كابوس	n	*
+noun dual	1	البارجتين	بارجة	n	*
+noun dual	1	سياحتي	سياحة	n	*
+noun dual	1	الوصيتان	وصية	n	*
+noun dual	1	صناعتي	صناعة	n	*
+noun dual	1	سيدان	سيد	n	*
+noun dual	1	حديدي	حديد	n	*
+noun dual	1	خالتا	خالة	n	*
+noun dual	1	البندقيتان	بندقية	n	*
+noun dual	1	كرتان	كرة	n	*
+noun dual	1	الإذنين	إذن	n	*
+noun dual	1	الرتبتان	رتبة	n	*
+noun dual	1	الأرنبين	أرنب	n	*
+noun dual	1	غريبتي	غريبة	n	*
+noun dual	1	طاولتا	طاولة	n	*
+noun dual	1	المقاطعتين	مقاطعة	n	*
+noun dual	1	المصنعان	مصنع	n	*
+noun dual	1	واقعتا	واقعة	n	*
+noun dual	1	كاتدرائيتي	كاتدرائية	n	*
+noun dual	1	جبهتان	جبهة	n	*
+noun dual	1	حالمان	حالم	n	*
+noun dual	1	مطرقتان	مطرقة	n	*
+noun dual	1	حصانين	حصان	n	*
+noun dual	1	دكانا	دكان	n	*
+noun dual	1	بندقيتان	بندقية	n	*
+noun dual	1	شعاري	شعار	n	*
+noun dual	1	ليلتي	ليلة	n	*
+noun dual	1	جحرين	جحر	n	*
+noun dual	1	فانوسين	فانوس	n	*
+noun dual	1	عاهرتي	عاهرة	n	*
+noun dual	1	الضرورتان	ضرورة	n	*
+noun dual	1	إقليمي	إقليم	n	*
+noun dual	1	السلسلتين	سلسلة	n	*
+noun dual	1	المغسلين	مغسل	n	*
+noun dual	1	نظارتين	نظارة	n	*
+noun dual	1	اللفافتين	لفافة	n	*
+noun dual	1	قفصا	قفص	n	*
+noun dual	1	الراكبان	راكب	n	*
+noun dual	1	الحملتين	حملة	n	*
+noun dual	1	الغبيتان	غبية	n	*
+noun dual	1	محلي	محل	n	*
+noun dual	1	الأستراليتان	أسترالية	n	*
+noun dual	1	الجناحان	جناح	n	*
+noun dual	1	فنلنديتي	فنلندية	n	*
+noun dual	1	نافذتين	نافذة	n	*
+noun dual	1	النايان	ناي	n	*
+noun dual	1	ياردتا	ياردة	n	*
+noun dual	1	الحذاءان	حذاء	n	*
+noun dual	1	القضيبين	قضيب	n	*
+noun dual	1	المواطنين	مواطن	n	*
+noun dual	1	الامتحانين	امتحان	n	*
+noun dual	1	مسألتا	مسألة	n	*
+noun dual	1	قيامتان	قيامة	n	*
+noun dual	1	غلاما	غلام	n	*
+noun dual	1	مصعدان	مصعد	n	*
+noun dual	1	البنطلونين	بنطلون	n	*
+noun dual	1	البرنامجان	برنامج	n	*
+noun dual	1	الكيبوتسان	كيبوتس	n	*
+noun dual	1	مطبخين	مطبخ	n	*
+noun dual	1	الطفلان	طفل	n	*
+noun dual	1	عشيرتا	عشيرة	n	*
+noun dual	1	زعيما	زعيم	n	*
+noun dual	1	إجازتي	إجازة	n	*
+noun dual	1	لبوتي	لبوة	n	*
+noun dual	1	حزمتي	حزمة	n	*
+noun dual	1	ضرسين	ضرس	n	*
+noun dual	1	وصيتا	وصية	n	*
+noun dual	1	امتحانا	امتحان	n	*
+noun dual	1	اللحافين	لحاف	n	*
+noun dual	1	القاضيين	قاض	n	*
+noun dual	1	ليلتان	ليلة	n	*
+noun dual	1	طبيبا	طبيب	n	*
+noun dual	1	المخرجين	مخرج	n	*
+noun dual	1	رغبتي	رغبة	n	*
+noun dual	1	سيارتان	سيارة	n	*
+noun dual	1	موضوعا	موضوع	n	*
+noun dual	1	حزامي	حزام	n	*
+noun dual	1	فنجانا	فنجان	n	*
+noun dual	1	الفائزتان	فائزة	n	*
+noun dual	1	صيدليتا	صيدلية	n	*
+noun dual	1	البرميلين	برميل	n	*
+noun dual	1	الملعقتين	ملعقة	n	*
+noun dual	1	دولتين	دولة	n	*
+noun dual	1	القافلتين	قافلة	n	*
+noun dual	1	أرمينيتين	أرمينية	n	*
+noun dual	1	فانوسي	فانوس	n	*
+noun dual	1	خالتان	خالة	n	*
+noun dual	1	عقربي	عقرب	n	*
+noun dual	1	ضرورتين	ضرورة	n	*
+noun dual	1	البطنين	بطن	n	*
+noun dual	1	دلفيني	دلفين	n	*
+noun dual	1	محاولتي	محاولة	n	*
+noun dual	1	عسكرا	عسكر	n	*
+noun dual	1	كتيبا	كتيب	n	*
+noun dual	1	كوبريان	كوبري	n	*
+noun dual	1	رغبتين	رغبة	n	*
+noun dual	1	استقبالا	استقبال	n	*
+noun dual	1	جنيهان	جنيه	n	*
+noun dual	1	شاهينا	شاهين	n	*
+noun dual	1	أدحوتا	أدحوة	n	*
+noun dual	1	الفاعلتان	فاعلة	n	*
+noun dual	1	بستانين	بستان	n	*
+noun dual	1	هدهدين	هدهد	n	*
+noun plural definite	1	الكنائس	كنيسة	n	*
+noun plural definite	1	الآلات	آلة	n	*
+noun plural definite	1	الطحالات	طحال	n	*
+noun plural definite	1	الأمكنة	مكان	n	*
+noun plural definite	1	المقابض	مقبض	n	*
+noun plural definite	1	الصفقات	صفقة	n	*
+noun plural definite	1	النظارات	نظارة	n	*
+noun plural definite	1	الحرابات	حراب	n	*
+noun plural definite	1	القطارات	قطار	n	*
+noun plural definite	1	العلاقات	علاقة	n	*
+noun plural definite	1	الظبيات	ظبية	n	*
+noun plural definite	1	الجرائم	جريمة	n	*
+noun plural definite	1	المفتون	مفت	n	*
+noun plural definite	1	الصناعات	صناعة	n	*
+noun plural definite	1	الراهبات	راهبة	n	*
+noun plural definite	1	الفجوات	فجوة	n	*
+noun plural definite	1	القادمات	قادمة	n	*
+noun plural definite	1	العواطف	عاطفة	n	*
+noun plural definite	1	الحالمون	حالم	n	*
+noun plural definite	1	الساحرات	ساحرة	n	*
+noun plural definite	1	الغبيات	غبية	n	*
+noun plural definite	1	الأيونات	أيون	n	*
+noun plural definite	1	الطيارون	طيار	n	*
+noun plural definite	1	المراسلات	مراسلة	n	*
+noun plural definite	1	الاحتلامات	احتلام	n	*
+noun plural definite	1	التقسيمات	تقسيم	n	*
+noun plural definite	1	الرفقاء	رفيق	n	*
+noun plural definite	1	المتكلمات	متكلمة	n	*
+noun plural definite	1	العضلات	عضلة	n	*
+noun plural definite	1	الأخمرة	خمار	n	*
+noun plural definite	1	الذكريات	ذكرى	n	*
+noun plural definite	1	الجرائد	جريدة	n	*
+noun plural definite	1	الوكلاء	وكيل	n	*
+noun plural definite	1	القهوات	قهوة	n	*
+noun plural definite	1	المحبون	محب	n	*
+noun plural definite	1	القيثارات	قيثارة	n	*
+noun plural definite	1	الوسائل	وسيلة	n	*
+noun plural definite	1	المنابر	منبر	n	*
+noun plural definite	1	الآفات	آفة	n	*
+noun plural definite	1	الدستوريات	دستورية	n	*
+noun plural definite	1	الثقافات	ثقافة	n	*
+noun plural definite	1	الثواني	ثانية	n	*
+noun plural definite	1	المصانع	مصنع	n	*
+noun plural definite	1	المسافات	مسافة	n	*
+noun plural definite	1	الدبلومات	دبلوم	n	*
+noun plural definite	1	المحاور	محور	n	*
+noun plural definite	1	المنافسات	منافسة	n	*
+noun plural definite	1	الشاحنات	شاحنة	n	*
+noun plural definite	1	المذاكرات	مذاكرة	n	*
+noun plural definite	1	الحوادث	حادثة	n	*
+noun plural definite	1	الأمراء	أمير	n	*
+noun plural definite	1	الإسرائيليات	إسرائيلية	n	*
+noun plural indefinite	1	أجلادا	جلد	n	*
+noun plural indefinite	1	ثروات	ثروة	n	*
+noun plural indefinite	1	رئات	رئة	n	*
+noun plural indefinite	1	عواصف	عاصفة	n	*
+noun plural indefinite	1	مقاهي	مقهى	n	*
+noun plural indefinite	1	قوابل	قابلة	n	*
+noun plural indefinite	1	كرات	كرة	n	*
+noun plural indefinite	1	مركبات	مركبة	n	*
+noun plural indefinite	1	قارئون	قارئ	n	*
+noun plural indefinite	1	قيامات	قيامة	n	*
+noun plural indefinite	1	أهراما	هرم	n	*
+noun plural indefinite	1	أعناب	عنب	n	*
+noun plural indefinite	1	حركات	حركة	n	*
+noun plural indefinite	1	بهلوانات	بهلوان	n	*
+noun plural indefinite	1	أحناك	حنك	n	*
+noun plural indefinite	1	أيونات	أيون	n	*
+noun plural indefinite	1	مدونات	مدونة	n	*
+noun plural indefinite	1	فواكه	فاكهة	n	*
+noun plural indefinite	1	جلابيات	جلابية	n	*
+noun plural indefinite	1	حوافر	حافر	n	*
+noun plural indefinite	1	مواعز	معزة	n	*
+noun plural indefinite	1	قواعد	قاعدة	n	*
+noun plural indefinite	1	طريفات	طريفة	n	*
+noun plural indefinite	1	نوريات	نورية	n	*
+noun plural indefinite	1	قهوات	قهوة	n	*
+noun plural indefinite	1	اعترافات	اعتراف	n	*
+noun plural indefinite	1	أسلحة	سلاح	n	*
+noun plural indefinite	1	انقلابات	انقلاب	n	*
+noun plural indefinite	1	لحظات	لحظة	n	*
+noun plural indefinite	1	سكافون	سكاف	n	*
+noun plural indefinite	1	مفتشون	مفتش	n	*
+noun plural indefinite	1	مطارات	مطار	n	*
+noun plural indefinite	1	استخدامات	استخدام	n	*
+noun plural indefinite	1	مدنيات	مدنية	n	*
+noun plural indefinite	1	إسرائيليات	إسرائيلية	n	*
+noun plural indefinite	1	بهارات	بهار	n	*
+noun plural indefinite	1	حبيبات	حبيبة	n	*
+noun plural indefinite	1	تلميذات	تلميذة	n	*
+noun plural indefinite	1	ممثلات	ممثلة	n	*
+noun plural indefinite	1	ذكريات	ذكرى	n	*
+noun plural indefinite	1	موسوعات	موسوعة	n	*
+noun plural indefinite	1	مشترون	مشتر	n	*
+noun plural indefinite	1	نشوات	نشوة	n	*
+noun plural indefinite	1	أبخرة	بخار	n	*
+noun plural indefinite	1	رسامات	رسامة	n	*
+noun plural construct	1	بياعو	بياع	n	*
+noun plural construct	1	موظفو	موظف	n	*
+noun plural construct	1	مفتي	مفت	n	*
+noun plural construct	1	متعهدو	متعهد	n	*
+noun plural construct	1	خياطو	خياط	n	*
+noun plural construct	1	قفالو	قفال	n	*
+noun plural construct	1	مبتدئو	مبتدئ	n	*
+noun plural construct	1	دركيو	دركي	n	*
+noun plural construct	1	محبو	محب	n	*
+noun plural construct	1	دجالو	دجال	n	*
+adjective singular definite	1	الطري	طري	*	*
+adjective singular definite	1	البطيء	بطيء	*	*
+adjective singular definite	1	البارزة	بارز	*	*
+adjective singular definite	1	الخشنة	خشن	*	*
+adjective singular definite	1	الجاف	جاف	*	*
+adjective singular definite	1	الطاجيكية	طاجيكي	*	*
+adjective singular definite	1	المؤقت	مؤقت	*	*
+adjective singular definite	1	المحددة	محدد	*	*
+adjective singular definite	1	المتفوق	متفوق	*	*
+adjective singular definite	1	الأعنف	أعنف	*	*
+adjective singular definite	1	القرمزي	قرمزي	*	*
+adjective singular definite	1	المثالية	مثالي	*	*
+adjective singular definite	1	الفضيل	فضيل	*	*
+adjective singular definite	1	البطيئة	بطيء	*	*
+adjective singular definite	1	الطنان	طنان	*	*
+adjective singular definite	1	الخفيفة	خفيف	*	*
+adjective singular definite	1	الداكن	داكن	*	*
+adjective singular definite	1	الغليظة	غليظ	*	*
+adjective singular definite	1	المشهود	مشهود	*	*
+adjective singular definite	1	الرفيعة	رفيع	*	*
+adjective singular definite	1	الخفيض	خفيض	*	*
+adjective singular definite	1	الفرحان	فرحان	*	*
+adjective singular definite	1	الشجيعة	شجيع	*	*
+adjective singular definite	1	المتفوقة	متفوق	*	*
+adjective singular definite	1	العنيد	عنيد	*	*
+adjective singular definite	1	الحقيق	حقيق	*	*
+adjective singular definite	1	السريع	سريع	*	*
+adjective singular definite	1	التونسية	تونسي	*	*
+adjective singular definite	1	المنوية	منوي	*	*
+adjective singular definite	1	الثامن	ثامن	*	*
+adjective singular definite	1	الممتلئ	ممتلئ	*	*
+adjective singular definite	1	المتحد	متحد	*	*
+adjective singular definite	1	المشمس	مشمس	*	*
+adjective singular definite	1	العريق	عريق	*	*
+adjective singular definite	1	القرير	قرير	*	*
+adjective singular definite	1	البليغ	بليغ	*	*
+adjective singular definite	1	الفريدة	فريد	*	*
+adjective singular indefinite	1	صدئا	صدئ	*	*
+adjective singular indefinite	1	متعمدة	متعمد	*	*
+adjective singular indefinite	1	مهاجمة	مهاجم	*	*
+adjective singular indefinite	1	مفضلا	مفضل	*	*
+adjective singular indefinite	1	شيطانية	شيطاني	*	*
+adjective singular indefinite	1	مشمئزة	مشمئز	*	*
+adjective singular indefinite	1	مادية	مادي	*	*
+adjective singular indefinite	1	كورية	كوري	*	*
+adjective singular indefinite	1	ثقافية	ثقافي	*	*
+adjective singular indefinite	1	جاهلا	جاهل	*	*
+adjective singular indefinite	1	جزيئيا	جزيئي	*	*
+adjective singular indefinite	1	ناعما	ناعم	*	*
+adjective singular indefinite	1	سابقا	سابق	*	*
+adjective singular indefinite	1	رتيبة	رتيب	*	*
+adjective singular indefinite	1	تحتانية	تحتاني	*	*
+adjective singular indefinite	1	مضيئا	مضيء	*	*
+adjective singular indefinite	1	مثاليا	مثالي	*	*
+adjective singular indefinite	1	ناقصا	ناقص	*	*
+adjective singular indefinite	1	اتفاقيا	اتفاقي	*	*
+adjective singular indefinite	1	مختونا	مختون	*	*
+adjective singular indefinite	1	حقيقة	حقيق	*	*
+adjective singular indefinite	1	منفصلا	منفصل	*	*
+adjective singular indefinite	1	ثانيا	ثان	*	*
+adjective singular indefinite	1	رجوليا	رجولي	*	*
+adjective singular indefinite	1	خفيفة	خفيف	*	*
+adjective singular indefinite	1	مبكرا	مبكر	*	*
+adjective singular indefinite	1	مدورة	مدور	*	*
+adjective singular indefinite	1	ملحونا	ملحون	*	*
+adjective singular indefinite	1	شفوية	شفوي	*	*
+adjective singular indefinite	1	فانية	فان	*	*
+adjective singular indefinite	1	صريحا	صريح	*	*
+adjective singular indefinite	1	أخيرا	أخير	*	*
+adjective singular indefinite	1	أمريكية	أمريكي	*	*
+adjective singular indefinite	1	شفهيا	شفهي	*	*
+adjective singular indefinite	1	مسيحانيا	مسيحاني	*	*
+adjective singular indefinite	1	ذهنية	ذهني	*	*
+adjective singular indefinite	1	تاسعة	تاسع	*	*
+adjective singular indefinite	1	وحيدة	وحيد	*	*
+adjective singular indefinite	1	رتيبا	رتيب	*	*
+adjective singular indefinite	1	سنويا	سنوي	*	*
+adjective singular indefinite	1	منصوبا	منصوب	*	*
+adjective singular indefinite	1	مشهودا	مشهود	*	*
+adjective singular indefinite	1	سريعا	سريع	*	*
+adjective singular indefinite	1	مستحيلة	مستحيل	*	*
+adjective singular indefinite	1	نقدية	نقدي	*	*
+adjective singular indefinite	1	متربيا	مترب	*	*
+adjective dual	1	المربكين	مربك	*	*
+adjective dual	1	أضيقان	أضيق	*	*
+adjective dual	1	الاقتصاديتين	اقتصادي	*	*
+adjective dual	1	القضيبيتان	قضيبي	*	*
+adjective dual	1	المبلولين	مبلول	*	*
+adjective dual	1	التحتانيتان	تحتاني	*	*
+adjective dual	1	الإبليسيان	إبليسي	*	*
+adjective dual	1	الشيطانيتان	شيطاني	*	*
+adjective dual	1	مقطوعتان	مقطوع	*	*
+adjective dual	1	التعبانان	تعبان	*	*
+adjective dual	1	كاملتين	كامل	*	*
+adjective dual	1	سابقين	سابق	*	*
+adjective dual	1	أمويان	أموي	*	*
+adjective dual	1	الأزليان	أزلي	*	*
+adjective dual	1	الأفخران	أفخر	*	*
+adjective dual	1	محظوظتان	محظوظ	*	*
+adjective dual	1	الأميزان	أميز	*	*
+adjective dual	1	الفاخرتين	فاخر	*	*
+adjective dual	1	الفلكيتين	فلكي	*	*
+adjective dual	1	العاشرين	عاشر	*	*
+adjective dual	1	حزينين	حزين	*	*
+adjective dual	1	أوسعين	أوسع	*	*
+adjective dual	1	المتواضعين	متواضع	*	*
+adjective dual	1	أفخرين	أفخر	*	*
+adjective dual	1	الأزهدان	أزهد	*	*
+adjective dual	1	التامين	تام	*	*
+adjective dual	1	المسفوحتان	مسفوح	*	*
+adjective dual	1	المحتملتان	محتمل	*	*
+adjective dual	1	مجيدتان	مجيد	*	*
+adjective dual	1	عقليان	عقلي	*	*
+adjective dual	1	ماديين	مادي	*	*
+adjective dual	1	الشجيرتان	شجير	*	*
+adjective dual	1	الأفلاطونيان	أفلاطوني	*	*
+adjective dual	1	القزيميتين	قزيمي	*	*
+adjective dual	1	العاميان	عامي	*	*
+adjective dual	1	أحليان	أحلى	*	*
+adjective dual	1	جزيئيتين	جزيئي	*	*
+adjective dual	1	القبيحتين	قبيح	*	*
+adjective plural	1	الجزائريون	جزائري	*	*
+adjective plural	1	النقديات	نقدي	*	*
+adjective plural	1	مملوءات	مملوء	*	*
+adjective plural	1	الحقراء	حقير	*	*
+adjective plural	1	مزعجون	مزعج	*	*
+adjective plural	1	المتواضعون	متواضع	*	*
+adjective plural	1	جهاديون	جهادي	*	*
+adjective plural	1	البنفسجيون	بنفسجي	*	*
+adjective plural	1	متميزون	متميز	*	*
+adjective plural	1	مشمسون	مشمس	*	*
+adjective plural	1	فخورات	فخور	*	*
+adjective plural	1	متأكدون	متأكد	*	*
+adjective plural	1	خارجيات	خارجي	*	*
+adjective plural	1	فلسطينيون	فلسطيني	*	*
+adjective plural	1	جاذبات	جاذب	*	*
+adjective plural	1	المساويات	مساو	*	*
+adjective plural	1	الفارغات	فارغ	*	*
+adjective plural	1	مكلفات	مكلف	*	*
+adjective plural	1	المستثنيات	مستثنى	*	*
+adjective plural	1	قضيبيون	قضيبي	*	*
+adjective plural	1	الخصيبات	خصيب	*	*
+adjective plural	1	مريحون	مريح	*	*
+adjective plural	1	عقليات	عقلي	*	*
+adjective plural	1	القريرات	قرير	*	*
+adjective plural	1	العنيدات	عنيد	*	*
+adjective plural	1	ذكيات	ذكي	*	*
+adjective plural	1	المثقفون	مثقف	*	*
+adjective plural	1	قريشيات	قريشي	*	*
+adjective plural	1	الليبراليون	ليبرالي	*	*
+adjective plural	1	قاريات	قاري	*	*
+adjective plural	1	المتواضعات	متواضع	*	*
+adjective plural	1	المتربون	مترب	*	*
+adjective plural	1	شفهيون	شفهي	*	*
+adjective plural	1	الحقيرات	حقير	*	*
+adjective plural	1	الثقافيات	ثقافي	*	*
+adjective plural	1	برتقاليون	برتقالي	*	*
+adjective plural	1	الأيوبيات	أيوبي	*	*
+adjective plural	1	ناقصات	ناقص	*	*
+adjective plural	1	قرشيون	قرشي	*	*
+adjective plural	1	الوطيئات	وطيء	*	*
+adjective plural	1	قرمزيات	قرمزي	*	*
+adjective plural	1	ليبراليون	ليبرالي	*	*
+adjective plural	1	مثقفون	مثقف	*	*
+adjective plural	1	أولمبيون	أولمبي	*	*
+adjective plural	1	مشغولات	مشغول	*	*
+adjective plural	1	المسفوحات	مسفوح	*	*
+adjective plural	1	زائفات	زائف	*	*
+adjective plural	1	الخصوصيات	خصوصي	*	*
+adjective plural	1	الإلهيون	إلهي	*	*
+adjective plural	1	مثاليات	مثالي	*	*
+adjective plural	1	العواقل	عاقل	*	*
+adjective plural	1	المناسبات	مناسب	*	*
+adjective plural	1	اليوميات	يومي	*	*
+adjective plural	1	المرهفون	مرهف	*	*
+adjective plural	1	السريانيات	سرياني	*	*
+adjective plural	1	الزمنيون	زمني	*	*
+adjective plural	1	تحسينيات	تحسيني	*	*
+adjective plural	1	رشداء	رشيد	*	*
+adjective plural	1	جواذب	جاذب	*	*

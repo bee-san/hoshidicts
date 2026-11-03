@@ -1,0 +1,16 @@
+# options: default
+# Source: written for this pack (GPL-3.0-or-later), no third-party data. Rows that an optional processor or transform would pass whatever the rules do: here they run with the pack's defaults.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+ta marbuta off	1	مدرسه	مدرس	n	p3ms
+ta marbuta off	1	كتابه	كتاب	n	p3ms
+ta marbuta off	0	الكتابه	كتاب	*	*
+ta marbuta off	0	مدرسه	مدرسة	*	*
+ta marbuta off	0	لغه	لغة	*	*
+derivation off	0	مستخدم	استخدم	*	*
+derivation off	0	كاتب	كتب	*	*
+derivation off	0	مكتوب	كتب	*	*
+derivation off	0	استخدام	استخدم	*	*
+derivation off	0	مدرسة	درس	*	*
+derivation off	0	إقامة	أقام	*	*
+derivation off	1	يستخدم	استخدم	v	presentHe
+derivation off	1	استخدمنا	استخدم	v	pastWe

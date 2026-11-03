@@ -1,0 +1,36 @@
+# Source: written for this pack (GPL-3.0-or-later), no third-party data. Every optional processor is on.
+# category	valid	input	variant
+vowel marks	1	كَتَبَ	كتب
+vowel marks	1	مَدْرَسَةٌ	مدرسة
+vowel marks	1	كَتَبَ	كَتَبَ
+quranic marks	1	قُلۡ	قل
+quranic marks	1	ٱلْحَمْدُ	الحمد
+presentation forms	1	ﻛﺘﺎﺏ	كتاب
+presentation forms	1	ﷲ	الله
+presentation forms	1	ﻻ	لا
+tatweel	1	كـتـاب	كتاب
+tatweel	1	جـمـيـل	جميل
+persian letters	1	کتاب	كتاب
+persian letters	1	یوم	يوم
+first alif	1	اكبر	أكبر
+first alif	1	اسلام	إسلام
+first alif	1	اخر	آخر
+first alif	0	الكتاب	ألكتاب
+first alif	0	الكتاب	إلكتاب
+first alif	0	كتاب	كتأب
+first alif	0	كان	كاأن
+alif after a proclitic	1	الان	الآن
+alif after a proclitic	1	والامر	والأمر
+alif after a proclitic	1	بالاسم	بالإسم
+alif after a proclitic	1	لاسباب	لأسباب
+alif after a proclitic	1	فان	فإن
+alif after a proclitic	1	واكبر	وأكبر
+final ya	1	فى	في
+final ya	1	علي	على
+final ya	1	الى	إلى
+final ya	1	مستشفي	مستشفى
+ta marbuta	1	لغه	لغة
+ta marbuta	1	مدرسه	مدرسة
+ta marbuta	1	مدرسه	مدرسه
+keep input	1	آمن	آمن
+keep input	1	الكتاب	الكتاب
