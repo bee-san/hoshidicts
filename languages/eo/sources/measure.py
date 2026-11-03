@@ -54,6 +54,19 @@ hoshidicts-cli or the batch lookup tool (sources/lookup-batch.cpp).
         to the end of its sentence, written as a hover directory (hover.txt,
         words.txt) and judged as `text` judges.
 
+    python3 measure.py xsystem <lookup-batch> <languages> <imported dict> <frequency list> [--top N]
+        [--show N] [--books <text>,<text>...] [--work <dir>]
+        Text in the x-system (cx for ĉ) and the h-system (ch for ĉ, u for ŭ)
+        against the same text in proper letters. The words of the N (10,000)
+        most frequent that have ĉ ĝ ĥ ĵ ŝ ŭ are written in each system and
+        looked up alone: x-system words with the defaults, h-system words
+        with the setting hSystem (and the proper words with it too). For each
+        book (Gutenberg plain text in the x-system), the hovers of
+        make-hovers.py are made from the text as written and from the text
+        with the x-system digraphs replaced, and the first results compared
+        at every hover. Prints the words or hovers whose first result
+        differs.
+
     python3 measure.py misses <lookup-batch> <languages> <imported dict> <file.tsv>
         The valid rows of a corpus whose term is not the first result of a
         lookup of the whole source with every option on (eval-language's
@@ -522,8 +535,102 @@ def command_misses(args):
         print(f'  {len(items)}\t{category}\t{"; ".join(items[:6])}')
 
 
+X_SYSTEM = {'ĉ': 'cx', 'ĝ': 'gx', 'ĥ': 'hx', 'ĵ': 'jx', 'ŝ': 'sx', 'ŭ': 'ux',
+            'Ĉ': 'Cx', 'Ĝ': 'Gx', 'Ĥ': 'Hx', 'Ĵ': 'Jx', 'Ŝ': 'Sx', 'Ŭ': 'Ux'}
+H_SYSTEM = {'ĉ': 'ch', 'ĝ': 'gh', 'ĥ': 'hh', 'ĵ': 'jh', 'ŝ': 'sh', 'ŭ': 'u',
+            'Ĉ': 'Ch', 'Ĝ': 'Gh', 'Ĥ': 'Hh', 'Ĵ': 'Jh', 'Ŝ': 'Sh', 'Ŭ': 'U'}
+DIGRAPH = re.compile('([cghjsuCGHJSU])([xX])')
+PROPER = {'c': 'ĉ', 'g': 'ĝ', 'h': 'ĥ', 'j': 'ĵ', 's': 'ŝ', 'u': 'ŭ'}
+
+
+def from_x_system(text):
+    """The text with every x-system digraph (cx, cX, Cx, CX ...) replaced by
+    its letter, as the pack's xSystem processor replaces it."""
+    def letter(m):
+        small = PROPER[m.group(1).lower()]
+        return small.upper() if m.group(1).isupper() else small
+    return DIGRAPH.sub(letter, text)
+
+
+def first_expression(result):
+    return result['results'][0]['expression'] if result['results'] else None
+
+
+def command_xsystem(args):
+    top = option(args, '--top', 10000, int)
+    show = option(args, '--show', 30, int)
+    books = option(args, '--books')
+    work = option(args, '--work')
+    tool, languages, imported, frequency_file = args
+    words, counts = [], {}
+    for line in open(frequency_file, encoding='utf-8'):
+        word, count = line.split()
+        words.append(word)
+        counts[word] = int(count)
+        if len(words) == top:
+            break
+    proper = [w for w in words if any(c in X_SYSTEM for c in w)]
+    tokens = sum(counts[w] for w in proper)
+    print(f'{len(proper)} of the {len(words)} most frequent words have ĉ ĝ ĥ ĵ ŝ ŭ ({tokens} tokens)')
+    for system, table, options in (('x-system', X_SYSTEM, None), ('h-system', H_SYSTEM, 'hSystem')):
+        written = [''.join(table.get(c, c) for c in w) for w in proper]
+        reference = batch(tool, languages, imported, proper, options)
+        looked = batch(tool, languages, imported, written, options)
+        differ = []
+        for word, text, a, b in zip(proper, written, reference, looked):
+            if first_expression(a) != first_expression(b):
+                second = [r['expression'] for r in b['results'][1:2]]
+                differ.append((counts[word], word, text, first_expression(b), first_expression(a),
+                               bool(second) and second[0] == first_expression(a)))
+        differ.sort(reverse=True)
+        print(f'{system}{" (setting hSystem)" if options else ""}: the first result differs from the word in proper '
+              f'letters for {len(differ)} words ({sum(d[0] for d in differ)} tokens); the proper first result is '
+              f'second for {sum(1 for d in differ if d[5])} of them')
+        for count, word, text, got, want, _ in differ[:show]:
+            print(f'  {count}	{text}	→ {got}	(proper {word} → {want})')
+    if not books:
+        return
+    import os
+    import tempfile
+    work = work or tempfile.mkdtemp()
+    here = os.path.dirname(os.path.abspath(__file__))
+    for path in books.split(','):
+        name = os.path.basename(path)
+        converted = os.path.join(work, f'{name}.proper.txt')
+        with open(converted, 'w', encoding='utf-8') as f:
+            f.write(from_x_system(open(path, encoding='utf-8', errors='replace').read()))
+        sides = []
+        for label, text in (('as written', path), ('proper', converted)):
+            out = os.path.join(work, f'{name}.{label.replace(" ", "-")}')
+            os.makedirs(out, exist_ok=True)
+            subprocess.run([sys.executable, os.path.join(here, 'make-hovers.py'), out, text], check=True,
+                           capture_output=True)
+            hovers = open(f'{out}/hover.txt', encoding='utf-8').read().split('\n')[:-1]
+            hovered = open(f'{out}/words.txt', encoding='utf-8').read().split('\n')[:-1]
+            sides.append((hovers, hovered))
+        (hovers, hovered), (hovers_p, hovered_p) = sides
+        if len(hovers) != len(hovers_p):
+            sys.exit(f'{name}: {len(hovers)} hovers as written, {len(hovers_p)} in proper letters')
+        a = batch(tool, languages, imported, hovers)
+        b = batch(tool, languages, imported, hovers_p)
+        x_words = [i for i, w in enumerate(hovered) if DIGRAPH.search(w)]
+        changed = collections.Counter()
+        other = 0
+        for i, (ra, rb) in enumerate(zip(a, b)):
+            if first_expression(ra) != first_expression(rb):
+                if DIGRAPH.search(hovered[i]):
+                    changed[(hovered[i], first_expression(ra), first_expression(rb))] += 1
+                else:
+                    other += 1
+        print(f'{name}: {len(hovers)} hovers, {len(x_words)} at words with an x-system digraph; the first result '
+              f'differs from the text in proper letters at {sum(changed.values())} of them and at {other} other hovers')
+        for (word, got, want), count in changed.most_common(show):
+            print(f'  {count}	{word}	→ {got}	(proper → {want})')
+
+
 COMMANDS = {'fc': command_fc, 'frequent': command_frequent, 'phrases': command_phrases, 'text': command_text,
-            'names': command_names, 'plurals': command_plurals, 'misses': command_misses}
+            'names': command_names, 'plurals': command_plurals, 'misses': command_misses,
+            'xsystem': command_xsystem}
 
 if __name__ == '__main__':
     if len(sys.argv) < 2 or sys.argv[1] not in COMMANDS:

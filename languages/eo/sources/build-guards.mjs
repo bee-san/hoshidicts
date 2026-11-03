@@ -20,7 +20,8 @@
 // - stemCharacters [^ ]: a stem with a space, "mi " before a suffix rule's
 //   form (mi legas must not give mi legi) and inside a circumfix's or
 //   prefix's stem (malmi bona must not give mi bona).
-// - stemMinLength n: a stem one letter shorter (ĝis must not give ĝii).
+// - stemMinLength n: a stem one letter shorter (ĝis must not give ĝii), and
+//   a positive row with a stem of exactly n letters.
 // - stemNotStartsWith with the class {upper}: the form with a capital stem,
 //   once with B and once with Ĉ (Dometo must not give Domo; Ĉapeloj must not
 //   give Ĉapelo).
@@ -128,6 +129,15 @@ for (const t of final.transforms) {
                 candidates.push(['guard: no space in the stem', '0', f, d, '*', '*']);
             }
         }
+        // A stem of exactly the minimum, which must still be read (so that a
+        // minimum raised by one fails a row): luado → lui, irejo → iri.
+        if (min >= 2 && !copy) {
+            const exact = stemFor(rule, min).slice(0, min);
+            if (exact.length === min) {
+                const [f, d] = make(exact);
+                candidates.push([`rule: ${t.id} (shortest stem)`, '1', f, d, out.length === 1 ? out[0] : '*', t.id]);
+            }
+        }
         // A stem one letter short; a split copy's start text is already as
         // long as that for the stems its minimum stops.
         if (min >= 1 && min - 1 >= start.length && !copy) {
@@ -177,8 +187,12 @@ for (const t of final.transforms) {
 // a negative's term is not among the deinflections of the source with a
 // condition its rule column accepts, and a positive's term is, with its
 // trace and a compatible condition.
+// A source with an x-system digraph never reaches the rules as written: the
+// processor xSystem replaces it.
+const XSYSTEM = /[cghjsuCGHJSU][xX]/;
 const seen = new Set();
 const unique = candidates.filter((row) => {
+    if (XSYSTEM.test(row[2])) { return false; }
     const key = row.join('\t');
     if (seen.has(key)) { return false; }
     seen.add(key);

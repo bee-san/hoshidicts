@@ -50,10 +50,6 @@ export function exclusionKey(transformId, rule) {
     return transformId === 'accusative' && rule.inflected === 'en' ? 'accusativeEn' : transformId;
 }
 
-// The letters a stem may continue with after a prefix where two excluded
-// stems branch and some of them are longer than one letter past it.
-const ALPHABET = [...'abcĉdefgĝhĥijĵklmnoprsŝtuŭvzqwxy'];
-
 function commonPrefix(words) {
     let p = words[0];
     for (const w of words) {
@@ -71,6 +67,11 @@ function commonPrefix(words) {
  * of stems, so no deinflection is made twice.
  */
 export function withoutStems(rule, stems) {
+    for (const field of ['stemStartsWithText', 'stemNotStartsWithText', 'stemEndsWith', 'stemNotEndsWith']) {
+        if (rule[field] !== undefined) {
+            throw new Error(`withoutStems: the rule already has ${field}, which a copy would replace`);
+        }
+    }
     const min = rule.stemMinLength ?? 0;
     const out = [];
     const firsts = [...new Set(stems.map((s) => s[0]))].sort();
@@ -101,23 +102,45 @@ export function withoutStems(rule, stems) {
             cover(q, rest);
             return;
         }
-        if (rest.every((s) => s.length === p.length + 1) && atLeast === 0) {
+        const letters = [...new Set(rest.map((s) => s[p.length]))].sort().join('');
+        if (rest.every((s) => s.length === p.length + 1) && atLeast === 0 && !letters.includes(p.at(-1))) {
             // p + one letter each: a stem that ends with one of those letters
-            // needs two letters after p, and every other stem is taken. The
-            // two copies take disjoint stems.
-            const letters = [...new Set(rest.map((s) => s[p.length]))].sort().join('');
+            // needs two letters after p, and every other stem is taken (p
+            // itself ends with none of them). The two copies take disjoint
+            // stems.
             push({stemStartsWithText: p, stemNotEndsWith: `[${letters}]`}, 0);
             push({stemStartsWithText: p, stemEndsWith: `[${letters}]`}, p.length + 2);
             return;
         }
-        for (const letter of ALPHABET) {
-            const under = rest.filter((s) => s.startsWith(p + letter));
-            if (under.length > 0) {
-                cover(p + letter, under);
-            } else {
-                push({stemStartsWithText: p + letter}, 0);
-            }
+        // The excluded stems branch after p: split the stems by their last
+        // letter. Stems that end with none of the excluded stems' last
+        // letters are all taken; for each such letter, the stems that end
+        // with it are taken except the excluded ones that do.
+        const lasts = [...new Set(rest.map((s) => s.at(-1)))].sort();
+        push({stemStartsWithText: p, stemNotEndsWith: `[${lasts.join('')}]`}, atLeast);
+        for (const last of lasts) {
+            coverEnding(p, rest.filter((s) => s.at(-1) === last), last, atLeast);
         }
+    };
+    // Every stem of at least atLeast letters that starts with p and ends with
+    // `last`, except the excluded ones (all longer than p, starting with p
+    // and ending with `last`).
+    const coverEnding = (p, excluded, last, atLeast) => {
+        const end = `[${last}]`;
+        const q = commonPrefix(excluded);
+        if (excluded.length === 1) {
+            push({stemStartsWithText: p, stemEndsWith: end, stemNotStartsWithText: q}, atLeast);
+            push({stemStartsWithText: q, stemEndsWith: end}, Math.max(atLeast, q.length + 1));
+            return;
+        }
+        if (q.length > p.length && !excluded.includes(q)) {
+            push({stemStartsWithText: p, stemEndsWith: end, stemNotStartsWithText: q}, atLeast);
+            coverEnding(q, excluded, last, atLeast);
+            return;
+        }
+        // Two excluded stems that end with the same letter and branch after
+        // p, or one that another continues: no pair of the list does.
+        throw new Error(`withoutStems: ${excluded.join(', ')} cannot be split exactly`);
     };
     for (const first of firsts) {
         cover(first, stems.filter((s) => s[0] === first));

@@ -49,7 +49,9 @@ capitalize	1	ĉu	Ĉu
 capitalize	1	ŝi	Ŝi
 capitalize	1	ĝi	Ĝi
 keep input	1	Ĉu	Ĉu
-keep input	1	CXU	CXU
+x-system	0	CXU	CXU
+x-system	0	malfelicxa	malfelicxa
+x-system	1	malfelicxa	malfeliĉa
 negatives	0	cxu	cxŭ
 negatives	0	ĉu	cxu
 negatives	0	ŝi	shi
@@ -64,3 +66,6 @@ elision	1	min'	mino
 elision	0	l'	lo
 elision	0	'Ĉu	Ĉo
 h-system	1	shanghighis	ŝanĝiĝis
+elision	1	am'	amo
+elision	0	de l'	de lo
+quotes	1	venos''	venos

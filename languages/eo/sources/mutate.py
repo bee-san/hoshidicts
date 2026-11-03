@@ -22,7 +22,8 @@
 # copy of a rule that loses a constraint the other copies still make. A
 # change of order keeps the deinflections and changes only their order, so
 # it is never EQUIVALENT: one that no test sees is SURVIVED.
-# [count] stops after that many mutations.
+# [count] stops after that many mutations; --only <file> runs only the
+# mutations named in <file>, one name per line.
 import copy
 import json
 import os
@@ -225,10 +226,17 @@ def deinflections(languages):
 BASE_DEINFLECTIONS = deinflections(os.path.join(repo, 'languages'))
 
 results = []
+only = None
+if '--only' in sys.argv:
+    k = sys.argv.index('--only')
+    only = {line.rstrip('\n') for line in open(sys.argv[k + 1], encoding='utf-8') if line.strip()}
+    del sys.argv[k:k + 2]
 limit = int(sys.argv[3]) if len(sys.argv) > 3 else None
 for i, (name, edit, edit_l) in enumerate(mutations()):
     if limit is not None and i >= limit:
         break
+    if only is not None and name not in only:
+        continue
     status, detail = run(name, edit, edit_l, i)
     results.append((status, name, detail))
     print(f'{status}\t{name}\t{detail[:160]}', flush=True)
