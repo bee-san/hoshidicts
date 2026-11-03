@@ -81,7 +81,8 @@ function add(id, rule) {
 }
 
 const NO_SPACE = '[^ ]';
-// The class `upper` of language.json: the capitals of the pack's letter class.
+// The class `upper` of language.json: the capitals of A-Z, Latin-1 and Latin
+// Extended-A (see UPPER below).
 const UPPER_CLASS = '{upper}';
 
 function suffix(id, inflected, deinflected, conditionsIn, conditionsOut, stemMinLength, extra = {}) {
