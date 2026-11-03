@@ -7,6 +7,7 @@
         [--base <languages dir>] [--with <languages dir>] [--exempt] [--out diffs.tsv]
     python3 languages/zh/sources/measure.py frequent --dictionary <imported> --frequency zh_cn_50k.txt [--top 10000]
         [--with <languages dir>] [--exempt]
+    python3 languages/zh/sources/measure.py sample --files hovers-a.txt hovers-b.txt --counts 200 100 [--seed 1]
 
 hovers: what a host looks up when the pointer is on each Han character of a
 text, scanStart "cursor": the text from that character to the end of its
@@ -28,11 +29,14 @@ the first result came through a rule (its trace is not empty). Prints those
 words and their share of the list's tokens, and the words whose first result
 is not the word itself.
 
+sample: a seeded random sample of hover texts from each file, the input of
+benchmark-lookup (the README's speed numbers).
+
 --exempt passes --exempt to zh-lookup-batch: every dictionary is exempt from
 the part-of-speech filter, which is what lookup.untaggedTerms "pass" gives
 for dictionaries without rules tags.
 """
-import argparse, collections, json, os, re, shutil, subprocess, sys, tempfile
+import argparse, collections, json, os, random, re, shutil, subprocess, sys, tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PACK = os.path.dirname(HERE)
@@ -127,6 +131,16 @@ def cmd_hovers(args):
             print(h)
 
 
+def cmd_sample(args):
+    """A seeded sample of hover texts, one per line (sample <n> <hovers file>...)."""
+    rng = random.Random(args.seed)
+    out = []
+    for path, n in zip(args.files, args.counts):
+        texts = [l.rstrip('\n') for l in open(path, encoding='utf-8') if l.strip()]
+        out += rng.sample(texts, n)
+    print('\n'.join(out))
+
+
 def cmd_compare(args):
     texts = [l.rstrip('\n') for l in open(args.hovers, encoding='utf-8') if l.strip()]
     base = args.base or no_rules_copy()
@@ -200,6 +214,10 @@ def main():
     p.add_argument('text')
     p.add_argument('--tatoeba', action='store_true')
     p.add_argument('--gutenberg', action='store_true')
+    p = sub.add_parser('sample')
+    p.add_argument('--files', nargs='+', required=True)
+    p.add_argument('--counts', nargs='+', type=int, required=True)
+    p.add_argument('--seed', type=int, default=1)
     for name in ('compare', 'frequent'):
         p = sub.add_parser(name)
         p.add_argument('--dictionary', required=True)
@@ -215,7 +233,7 @@ def main():
             p.add_argument('--top', type=int, default=10000)
             p.add_argument('--show', type=int, default=40)
     args = parser.parse_args()
-    {'hovers': cmd_hovers, 'compare': cmd_compare, 'frequent': cmd_frequent}[args.command](args)
+    {'hovers': cmd_hovers, 'sample': cmd_sample, 'compare': cmd_compare, 'frequent': cmd_frequent}[args.command](args)
 
 
 if __name__ == '__main__':

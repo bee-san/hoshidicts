@@ -286,7 +286,6 @@ const NOT_ERHUA = chars(`
 // whose 儿 ends the word, has no condition, so every rule applies to it
 // (聊聊天儿 → 聊聊天 → 聊天).
 
-const HAN = '[\\u3400-\\u4DBF\\u4E00-\\u9FFF\\uF900-\\uFAFF\\u{20000}-\\u{2FFFD}\\u{30000}-\\u{3FFFD}]';
 const conditions = {
     v: {name: 'Verb', isDictionaryForm: true},
     adj: {name: 'Adjective', isDictionaryForm: true},
@@ -295,7 +294,6 @@ const conditions = {
 };
 const cond = (conditionsIn, conditionsOut) => ({conditionsIn, conditionsOut});
 const charClass = (list) => `[${[...new Set(list.flatMap(forms))].join('')}]`;
-const stem = {stemMinLength: 1, stemCharacters: HAN};
 
 function transform(id, name, description, rules) {
     const seen = new Set();
@@ -319,7 +317,7 @@ const VA = cond([], ['v', 'adj']);
 const transforms = [];
 
 transforms.push(transform('plural', 'plural 们', 'The plural suffix 们 after a person or a pronoun: 朋友们 → 朋友.',
-    ['们', '們'].map((m) => suffix(m, '', cond([], ['n', 'pron']), stem))));
+    ['们', '們'].map((m) => suffix(m, '', cond([], ['n', 'pron']), {stemMinLength: 1}))));
 
 transforms.push(transform('erhua', 'erhua 儿', 'The retroflex suffix 儿 (erhua): 一点儿 → 一点, 玩儿 → 玩.',
     ['儿', '兒'].map((r) => suffix(r, '', cond([], []), {stemMinLength: 1, stemNotEndsWith: charClass(NOT_ERHUA)}))));
@@ -338,7 +336,7 @@ transforms.push(transform('redupAA', 'reduplication AA', 'A reduplicated verb (t
     charForms([...ACTION_VERBS, ...ADJECTIVES]).map((a) => whole(`${a}${a}`, a, VA))));
 
 transforms.push(transform('redupAyiA', 'reduplication A一A', 'A verb reduplicated with 一 between, to do a little: 看一看 → 看, 想一想 → 想.',
-    charForms(ACTION_VERBS).map((a) => whole(`${a}一${a}`, a, V))));
+    charForms(ACTION_VERBS).map((a) => prefix(`${a}一${a}`, a, V))));
 
 transforms.push(transform('redupAleA', 'reduplication A了A', 'A verb reduplicated with 了 between, done briefly: 看了看 → 看, 点了点头 → 点头.',
     charForms(ACTION_VERBS).map((a) => prefix(`${a}了${a}`, a, V))));
@@ -378,9 +376,10 @@ transforms.push(transform('redupAliAB', 'reduplication A里AB', 'A disyllabic ad
 // - 好, 小 and 白 right after the verb are an adjective of a longer noun or a
 //   complement (做好事, 上小学, 说白话), and so is 大 in 大学 (上大学);
 // - after 上 and 下, a numeral, a measure word or a demonstrative before 班,
-//   课, 车, 站 or 节 means "the next" or "the last" (下一班, 下次课, 上一站);
-// - a compositional compound (吃饭, 看书) is not separated by a demonstrative
-//   (读这本书 is a verb and its object).
+//   课, 车, 站 or 节 means "the next" or "the last" (下一班, 下次课, 上一站).
+// A first version also kept demonstratives out of compositional compounds
+// (读这本书); measured on Tatoeba and Lu Xun's stories, that only lost 54
+// right readings (写这封信 → 写信, 吃这种药 → 吃药), so it is gone.
 // An object that is also a measure word (口, 门, 年) may not follow a numeral
 // or 多, 几, 些 (松了一口气, 开了三门课, 过了这么多年).
 const t = (s) => [...new Set([...s.replace(/\s+/gu, '')].flatMap(forms))].join('');
@@ -410,14 +409,13 @@ const ADJ = `[${t('好小白')}]|${spellings('大学').join('|')}`;
 const OTHER_DE = `[^的]*[^${t('我你您他她它咱谁们己家人年天月周时钟头个次')}的]的`;
 const COMMON = `的|${ADJ}|${OTHER_DE}`;
 const NEXT = `[${t('一二两三四五六七八九十几个次回场这那')}0-9\\uFF10-\\uFF19]`;
-const DEMONSTRATIVE = `[^${t('这那')}]*[${t('这那')}]`;
 // Every verb is one character, so the lookahead all verbs share is written
 // once, after the first character: ^(?!.(?:...)).
 const AFTER = {
     separable: '',
-    compositional: `(?!${DEMONSTRATIVE})`,
+    compositional: '',
     separableUpDown: `(?!${NEXT})`,
-    compositionalUpDown: `(?!${NEXT}|${DEMONSTRATIVE})`,
+    compositionalUpDown: `(?!${NEXT})`,
 };
 const UP_DOWN = new Set(t('上下'));
 const SEQUENCE_OBJECTS = new Set(t('班课车站节'));
@@ -470,7 +468,7 @@ const potentialStart = (marker, excluded) => ({
 });
 const potential = (marker, excluded) => ({
     type: 'suffix', inflected: '', deinflected: '', ...cond(['v'], ['v']),
-    stemMinLength: 3, ...potentialStart(marker, excluded),
+    ...potentialStart(marker, excluded),
     stemChange: {from: [marker], to: '', occurrence: 'last', between: complementChars},
 });
 const twoPart = (marker, excluded) => [...TWO_PART].flatMap((c) => spellings(c).map((cs) => suffix(`${marker}${cs}`, cs, cond(['v'], ['v']), {stemMinLength: 1, ...potentialStart(marker, excluded)})));

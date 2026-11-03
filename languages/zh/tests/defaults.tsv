@@ -45,6 +45,8 @@ redupAA	1	聊聊	聊	*	redupAA
 redupAyiA	1	看一看	看	v	redupAyiA
 redupAyiA	1	想一想	想	*	redupAyiA
 redupAyiA	1	試一試	試	*	redupAyiA
+redupAyiA	1	點一點頭	點頭	*	redupAyiA
+redupAyiA	1	摇一摇头	摇头	*	redupAyiA
 redupAleA	1	看了看	看	*	redupAleA
 redupAleA	1	笑了笑	笑	*	redupAleA
 redupAleA	1	点了点头	点头	v	redupAleA
@@ -143,7 +145,7 @@ negatives	0	下一班	下班	*	*
 negatives	0	下次课	下课	*	*
 negatives	0	下一节课	下课	*	*
 negatives	0	上一次课	上课	*	*
-# A demonstrative before an ordinary noun: a verb and its object, not the compound.
+# 本 is not one of the insertions: a measure word with its own noun (这本书) is an ordinary object.
 negatives	0	读这本书	读书	*	*
 negatives	0	看了那本书	看书	*	*
 # An object that is a measure word does not follow a numeral, 多, 几 or 些.
