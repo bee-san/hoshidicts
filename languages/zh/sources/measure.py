@@ -32,11 +32,26 @@ is not the word itself.
 sample: a seeded random sample of hover texts from each file, the input of
 benchmark-lookup (the README's speed numbers).
 
+percentiles: p50 and p95 of benchmark-lookup --json output (one file per
+run), over every pass but the first, nearest rank.
+
+    python3 languages/zh/sources/measure.py percentiles bench.json [bench2.json ...]
+
+behind (Measurement 3): the hovers of a text that start right after a
+pronoun or an auxiliary verb (BEHIND below; the longest listed word that
+ends the text before the hover), looked up as compare does. Prints, per word
+class, the hovers, those whose first result came through a rule, and those
+whose first result is another lemma than without rules; --out writes the
+latter with the word before them, for judging.
+
+    python3 languages/zh/sources/measure.py behind --dictionary <imported> --text cmn_sentences.tsv.bz2 --tatoeba \
+        [--base <languages dir>] [--with <languages dir>] [--out behind.tsv]
+
 --exempt passes --exempt to zh-lookup-batch: every dictionary is exempt from
 the part-of-speech filter, which is what lookup.untaggedTerms "pass" gives
 for dictionaries without rules tags.
 """
-import argparse, collections, json, os, random, re, shutil, subprocess, sys, tempfile
+import argparse, bz2, collections, json, os, random, re, shutil, subprocess, sys, tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PACK = os.path.dirname(HERE)
@@ -47,16 +62,40 @@ HAN = re.compile(r'[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF\U00020000-\U0003FFFF
 END = set('。！？!?…\n')
 
 
-def hovers(lines, limit=32):
+def hovers(lines, limit=32, context=False):
     for line in lines:
         line = line.rstrip('\n')
+        start = 0
         for i, c in enumerate(line):
+            if c in END:
+                start = i + 1
             if not HAN.match(c):
                 continue
             j = i
             while j < len(line) and line[j] not in END and j - i < limit:
                 j += 1
-            yield line[i:j]
+            yield (line[start:i], line[i:j]) if context else line[i:j]
+
+
+# Measurement 3: the words a hover may start right after. Pronouns, and the
+# auxiliary (modal) verbs, in both scripts.
+BEHIND = {
+    'pronoun': '我 你 妳 您 他 她 它 我们 我們 你们 你們 妳們 他们 他們 她们 她們 它们 它們 咱 咱们 咱們 大家 自己',
+    'auxiliary': '会 會 能 能够 能夠 要 想 可以 应该 應該 应当 應當 必须 必須 得 愿意 願意 肯 敢 可能 打算 需要',
+}
+
+
+def open_text(path):
+    return bz2.open(path, 'rt', encoding='utf-8') if path.endswith('.bz2') else open(path, encoding='utf-8')
+
+
+def text_lines(path, tatoeba, gutenberg):
+    with open_text(path) as f:
+        if gutenberg:
+            return gutenberg_lines(f.read())
+        if tatoeba:
+            return [l.split('\t')[2] for l in f]
+        return list(f)
 
 
 def no_rules_copy():
@@ -120,15 +159,54 @@ def gutenberg_lines(text):
 
 
 def cmd_hovers(args):
-    with open(args.text, encoding='utf-8') as f:
-        if args.gutenberg:
-            lines = gutenberg_lines(f.read())
-        elif args.tatoeba:
-            lines = (l.split('\t')[2] for l in f)
-        else:
-            lines = f
-        for h in hovers(lines):
-            print(h)
+    for h in hovers(text_lines(args.text, args.tatoeba, args.gutenberg)):
+        print(h)
+
+
+def cmd_percentiles(args):
+    for path in args.files:
+        with open(path, encoding='utf-8') as f:
+            data = json.load(f)
+        xs = sorted(ms * 1000 for run in data['passes'][1:] for ms in run)
+        rank = lambda q: xs[min(len(xs) - 1, int(round(q / 100 * (len(xs) - 1))))]
+        print(f'{path}: {data["words"]} texts, {len(xs)} timed lookups, p50 {rank(50):.1f} µs, p95 {rank(95):.1f} µs')
+
+
+def cmd_behind(args):
+    words = {cls: sorted(ws.split(), key=len, reverse=True) for cls, ws in BEHIND.items()}
+    picked = []
+    for before, text in hovers(text_lines(args.text, args.tatoeba, args.gutenberg), context=True):
+        for cls, ws in words.items():
+            w = next((w for w in ws if before.endswith(w)), None)
+            if w:
+                picked.append((cls, w, text))
+                break
+    texts = [t for _, _, t in picked]
+    base = args.base or no_rules_copy()
+    with_dir = args.__dict__['with'] or os.path.join(REPO, 'languages')
+    a = lookup(base, args.dictionary, texts, args.exempt, options=args.options)
+    b = lookup(with_dir, args.dictionary, texts, args.exempt, options=args.options)
+    ids = rule_ids(with_dir)
+    stats = collections.defaultdict(collections.Counter)
+    rows = []
+    for (cls, w, text), ra, rb in zip(picked, a, b):
+        fa, fb = first(ra), first(rb)
+        stats[cls]['hovers'] += 1
+        if fb is not None and rules_of(fb, ids):
+            stats[cls]['through a rule'] += 1
+            if fa is None or fa['expression'] != fb['expression']:
+                stats[cls]['another lemma'] += 1
+                rows.append((cls, w, text, fa, fb))
+    for cls in BEHIND:
+        c = stats[cls]
+        print(f"behind {'an' if cls[0] in 'aeiou' else 'a'} {cls}: {c['hovers']} hovers; first result through a rule {c['through a rule']}, "
+              f"another lemma than without rules {c['another lemma']}")
+    if args.out:
+        with open(args.out, 'w', encoding='utf-8') as f:
+            f.write('class\tword before\thover\tbase first\twith first\twith matched\ttransforms\n')
+            for cls, w, text, fa, fb in rows:
+                f.write('\t'.join([cls, w, text, fa['expression'] if fa else '', fb['expression'], fb['matched'],
+                                   '|'.join(rules_of(fb, ids))]) + '\n')
 
 
 def cmd_sample(args):
@@ -214,11 +292,13 @@ def main():
     p.add_argument('text')
     p.add_argument('--tatoeba', action='store_true')
     p.add_argument('--gutenberg', action='store_true')
+    p = sub.add_parser('percentiles')
+    p.add_argument('files', nargs='+')
     p = sub.add_parser('sample')
     p.add_argument('--files', nargs='+', required=True)
     p.add_argument('--counts', nargs='+', type=int, required=True)
     p.add_argument('--seed', type=int, default=1)
-    for name in ('compare', 'frequent'):
+    for name in ('compare', 'frequent', 'behind'):
         p = sub.add_parser(name)
         p.add_argument('--dictionary', required=True)
         p.add_argument('--with')
@@ -228,12 +308,19 @@ def main():
             p.add_argument('--hovers', required=True)
             p.add_argument('--base')
             p.add_argument('--out')
+        elif name == 'behind':
+            p.add_argument('--text', required=True)
+            p.add_argument('--tatoeba', action='store_true')
+            p.add_argument('--gutenberg', action='store_true')
+            p.add_argument('--base')
+            p.add_argument('--out')
         else:
             p.add_argument('--frequency', required=True)
             p.add_argument('--top', type=int, default=10000)
             p.add_argument('--show', type=int, default=40)
     args = parser.parse_args()
-    {'hovers': cmd_hovers, 'sample': cmd_sample, 'compare': cmd_compare, 'frequent': cmd_frequent}[args.command](args)
+    {'hovers': cmd_hovers, 'sample': cmd_sample, 'compare': cmd_compare, 'frequent': cmd_frequent,
+     'behind': cmd_behind, 'percentiles': cmd_percentiles}[args.command](args)
 
 
 if __name__ == '__main__':

@@ -252,10 +252,11 @@ const HUI_VERBS = chars('学 教');
 // Characters after which 不C, 得C and 不了 do not make a potential form: the
 // adverbs, pronouns and nouns of time that came first through these rules on
 // Tatoeba and in Lu Xun's stories (都不会, 我不去, 我得去, 天不下, 再不见, 早不来,
-// 以不上), and the other adverbs that come before 不.
+// 以不上), the other adverbs that come before 不, and 生, which ends 学生 and
+// 长生 far more often than it takes a complement (学生不下五百人, 长生不死).
 const NOT_POTENTIAL = chars(`
     都 也 就 还 全 将 永 天 年 我 你 他 她 它 们 不 没 是 很 太 更 眼 再 早 以 面 从 决 绝 并 毫
-    仍 尚 亦 皆 均 竟 怎 何 岂 偏 总 只 已 曾 正 刚 又 才 可 一`);
+    仍 尚 亦 皆 均 竟 怎 何 岂 偏 总 只 已 曾 正 刚 又 才 可 一 生`);
 // Before 得 also the characters that form a word with it (变得, 觉得, 值得).
 const NOT_POTENTIAL_DE = chars(`${NOT_POTENTIAL.join('')} 变 经 显 值 免 使 懂 觉 舍 晓 落 难 取 获 赢 博`);
 // The verbs before 不了 (做不了, 去不了, 解决不了): only after a verb is 不了 the
@@ -403,8 +404,8 @@ const INSERTED_BEFORE_MEASURE = `[${WORD_CHARS}${NUMERALS}]{0,5}[${WORD_CHARS}]`
 const MEASURE_OBJECTS = new Set(t('口门年天次场顿把张本头节份件首支根盒包瓶期段番声眼步身个下'));
 // Characters that may not stand right before an object, because with it they
 // make another word or a measure word with its noun (见下面, 见过大场面, 碰那面
-// 镜子, 路上开车, 搬回家, 完成回家作业, 动门把手, 写下字母, 落到那个地步, 吃不了
-// 热豆腐, 出了差错, 上过大学), measured on Tatoeba and Lu Xun's stories.
+// 镜子, 路上开车, 搬回家, 完成回家作业, 动门把手, 写下字母, 落到那个地步, 出了差错,
+// 上过大学), measured on Tatoeba and Lu Xun's stories.
 const NOT_BEFORE = new Map([
     ...spellings('面').map((o) => [o, t('这那上下场')]),
     ...spellings('车').map((o) => [o, t('开上下')]),
@@ -412,10 +413,24 @@ const NOT_BEFORE = new Map([
     ...spellings('手').map((o) => [o, t('把')]),
     ...spellings('字').map((o) => [o, t('下')]),
     ...spellings('地').map((o) => [o, t('这那个')]),
-    ...spellings('豆腐').map((o) => [o, t('热')]),
     ...spellings('差').map((o) => [o, t('了')]),
     ...spellings('学').map((o) => [o, t('大小中')]),
 ]);
+// Objects that only follow a possessor: 吃豆腐 "take liberties with" is 吃我豆腐 or
+// 吃她的豆腐; 吃了豆腐 and 吃不了热豆腐 are about tofu.
+const ONLY_AFTER = new Map(spellings('豆腐').map((o) => [o, t('我你您他她们咱的人家')]));
+// Verbs that do not take their object when these characters follow them,
+// because with them they make another verb: 放下你的手 (put down), 握住他的手
+// and 握着我的手 (hold), 有点过头 (a bit overdone), and 打开 (open) before every
+// object of 打 (打开了车的雾灯, 打开工具箱); measured on Tatoeba. A key is a
+// compound or a verb.
+const VERB_NOT_BEFORE = new Map([
+    ['放手', t('下')],
+    ['握手', t('住着')],
+    ['点头', t('过')],
+    ['打', t('开')],
+]);
+const verbNotBefore = (word) => VERB_NOT_BEFORE.get(word) ?? VERB_NOT_BEFORE.get([...word][0]);
 const ADJ = `[${t('好小白')}]`;
 const OTHER_DE = `[^的]*[^${t('我你您他她它咱谁们己家人年天月周时钟头个次')}的]的`;
 // 时 does not start the insertions (离开时会, but 开了两个小时会).
@@ -423,12 +438,9 @@ const COMMON = `的|${ADJ}|[${t('时')}]|${OTHER_DE}`;
 const NEXT = `[${t('一二两三四五六七八九十几个次回场这那')}0-9\\uFF10-\\uFF19]`;
 // Every verb is one character, so the lookahead all verbs share is written
 // once, after the first character: ^(?!.(?:...)).
-const AFTER = {
-    separable: '',
-    compositional: '',
-    separableUpDown: `(?!${NEXT})`,
-    compositionalUpDown: `(?!${NEXT})`,
-};
+// A key is the kind, or the kind and the characters that may not follow the
+// verb (separable:下).
+const AFTER = (key) => (key.endsWith('UpDown') ? `(?!${NEXT})` : key.includes(':') ? `(?![${key.split(':')[1]}])` : '');
 const UP_DOWN = new Set(t('上下'));
 const SEQUENCE_OBJECTS = new Set(t('班课车站节'));
 const byObject = new Map();
@@ -437,7 +449,8 @@ for (const [kind, list] of [['separable', SEPARABLE], ['compositional', COMPOSIT
         for (const w of spellings(word)) {
             const [v, ...o] = [...w];
             const object = o.join('');
-            const key = UP_DOWN.has(v) && SEQUENCE_OBJECTS.has(object) ? `${kind}UpDown` : kind;
+            const key = UP_DOWN.has(v) && SEQUENCE_OBJECTS.has(object) ? `${kind}UpDown`
+                : verbNotBefore(word) ? `${kind}:${verbNotBefore(word)}` : kind;
             if (!byObject.has(object)) { byObject.set(object, new Map()); }
             const groups = byObject.get(object);
             if (!groups.has(key)) { groups.set(key, new Set()); }
@@ -447,6 +460,9 @@ for (const [kind, list] of [['separable', SEPARABLE], ['compositional', COMPOSIT
 }
 const escape = (s) => s.replace(/[\\^$.*+?()[\]{}|/]/gu, '\\$&');
 function insertedBefore(object) {
+    if (ONLY_AFTER.has(object)) {
+        return `[${WORD_CHARS}${NUMERALS}]{0,5}[${ONLY_AFTER.get(object)}]`;
+    }
     if (NOT_BEFORE.has(object)) {
         const last = [...WORD_CHARS].filter((c) => !NOT_BEFORE.get(object).includes(c)).join('');
         return `[${WORD_CHARS}${NUMERALS}]{0,5}[${last}${NUMERALS}]`;
@@ -456,7 +472,7 @@ function insertedBefore(object) {
 transforms.push(transform('separable', 'separated verb-object', 'A verb-object compound with words between the verb and its object: 洗了个澡 → 洗澡, 生他的气 → 生气.',
     [...byObject].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)).map(([object, groups]) => {
         const alternatives = [...groups].sort(([a], [b]) => (a < b ? -1 : 1))
-            .map(([key, verbs]) => `(${[...verbs].sort().map(escape).join('|')})${AFTER[key]}`);
+            .map(([key, verbs]) => `(${[...verbs].sort().map(escape).join('|')})${AFTER(key)}`);
         return {
             type: 'pattern',
             pattern: `^(?!.(?:${COMMON}))(?:${alternatives.join('|')})${insertedBefore(object)}${escape(object)}$`,
