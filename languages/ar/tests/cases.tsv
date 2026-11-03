@@ -496,3 +496,16 @@ pronoun noun	1	صوته	صوت	*	p3ms
 present form IV	1	يحبني	أحب	v	presentHe
 present form IV	1	تخبرني	أخبر	v	presentSheYou
 present	1	يعنى	عنى	v	presentHe
+negative proclitic	0	بي	ي	*	bi
+negative proclitic	0	وي	ي	*	wa
+negative proclitic	0	لي	ي	*	li
+negative proclitic	0	الف	ف	*	al
+negative proclitic	0	و٢٠٠٠	٢٠٠٠	*	wa
+negative future	0	سنة	نة	*	sa
+negative future	0	سيارة	يارة	n	sa
+pronoun verb	1	أعطيتيه	أعطيت	*	p3ms
+imperative	1	صل	وصل	v	imperativeYou
+imperative	1	ر	رأى	v	imperativeYou
+present	1	يعظ	وعظ	v	presentHe
+noun ending	1	عبئا	عبء	n	accusative
+negative one-step pronoun	0	يبيعه	بيع	v	presentHe

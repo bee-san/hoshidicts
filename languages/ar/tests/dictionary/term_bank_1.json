@@ -79,5 +79,10 @@
   ["يدى", "يَدَى", "v", "v", 0, ["to injure the hand"], 78, ""],
   ["ناك", "نَاكَ", "v", "v", 0, ["to have sex"], 79, ""],
   ["أول", "أَوَّل", "", "", 0, ["first"], 80, ""],
-  ["أولى", "أَوْلَى", "", "", 0, ["more deserving"], 81, ""]
+  ["أولى", "أَوْلَى", "", "", 0, ["more deserving"], 81, ""],
+  ["ترتدي", "", "non-lemma", "v", 0, [["ارتدى", ["third-person singular feminine non-past"]], ["ارتد", ["second-person singular feminine subjunctive"]]], 82, ""],
+  ["عن", "عَنَّ", "v", "v", 0, ["to present itself"], 83, ""],
+  ["عنى", "عَنَى", "v", "v", 0, ["to mean"], 84, ""],
+  ["تعن", "", "non-lemma", "v", 0, [["عن", ["second-person singular masculine jussive"]]], 85, ""],
+  ["تعني", "", "non-lemma", "v", 0, [["عن", ["second-person singular feminine subjunctive"]], ["عنى", ["third-person singular feminine non-past"]]], 86, ""]
 ]

@@ -34,3 +34,8 @@ ta marbuta	1	مدرسه	مدرسة
 ta marbuta	1	مدرسه	مدرسه
 keep input	1	آمن	آمن
 keep input	1	الكتاب	الكتاب
+processor order	1	آمن	آمن
+processor order	0	الْكِتَابُ	ألكتاب
+processor order	1	ٱكتب	أكتب
+alif maqsura	0	إلىه	إليه
+processor order	1	ﺍﻛﻞ	أكل

@@ -2,7 +2,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Removes each constraint and condition the pack relies on, one at a time, in a
 scratch copy of the pack, and checks that the conformance test then fails
-(docs/languages.md 14 step 7).
+(docs/languages.md 14 step 7). The rule edits change transforms.json, the
+processor edits language.json; the whole words checked are those of the
+frequent homographs, which tests/lookup.tsv pins by their first result.
 
     python3 languages/ar/sources/ablate.py [scratch dir]
 
@@ -65,6 +67,88 @@ def short_stems(t):
     return n
 
 
+def set_min(ids, old, new, kinds=('prefix', 'suffix', 'circumfix')):
+    def edit(t):
+        n = 0
+        for _, r in rules(t, ids):
+            if r.get('type') in kinds and r.get('stemMinLength', 0) == old:
+                r['stemMinLength'] = new
+                n += 1
+        return n
+    return edit
+
+
+def drop_whole(ids, words):
+    def edit(t):
+        n = 0
+        for x in t['transforms']:
+            if x['id'] in ids:
+                before = len(x['rules'])
+                x['rules'] = [r for r in x['rules'] if not (r.get('type') == 'wholeWord' and r['inflected'] in words)]
+                n += before - len(x['rules'])
+        return n
+    return edit
+
+
+def drop_suffix(ids, inflected, deinflected):
+    def edit(t):
+        n = 0
+        for x in t['transforms']:
+            if x['id'] in ids:
+                before = len(x['rules'])
+                x['rules'] = [r for r in x['rules'] if not (r.get('type') == 'suffix' and r.get('inflected') == inflected and r.get('deinflected') == deinflected)]
+                n += before - len(x['rules'])
+        return n
+    return edit
+
+
+def move_transform(tid, before):
+    def edit(t):
+        ids = [x['id'] for x in t['transforms']]
+        x = t['transforms'].pop(ids.index(tid))
+        t['transforms'].insert([y['id'] for y in t['transforms']].index(before), x)
+        return 1
+    return edit
+
+
+def processor_edit(change):
+    """An edit of language.json's preprocessors, marked for run()."""
+    change.language = True
+    return change
+
+
+@processor_edit
+def unicode_last(d):
+    p = d['lookup']['preprocessors']
+    p.append(p.pop([x['id'] for x in p].index('normalizeUnicode')))
+    return 1
+
+
+@processor_edit
+def hamza_first(d):
+    p = d['lookup']['preprocessors']
+    x = p.pop([y['id'] for y in p].index('addHamza'))
+    p.insert([y['id'] for y in p].index('removeArabicScriptDiacritics'), x)
+    return 1
+
+
+@processor_edit
+def letter_forms_late(d):
+    p = d['lookup']['preprocessors']
+    x = p.pop([y['id'] for y in p].index('arabicLetterForms'))
+    p.insert([y['id'] for y in p].index('addHamza') + 1, x)
+    return 1
+
+
+@processor_edit
+def maqsura_all(d):
+    for x in d['lookup']['preprocessors']:
+        if x['id'] == 'convertAlifMaqsuraToYaa':
+            x['variants'][0][0]['at'] = 'all'
+    return 1
+
+
+STRONG = r'[\u0621-\u0626\u0628-\u063A\u0641-\u0647]'  # the letters other than ا و ي ى (own-rules.mjs)
 PRONOUNS = {'p1s', 'p1sObj', 'p1p', 'p2s', 'p2d', 'p2mp', 'p2fp', 'p3ms', 'p3fs', 'p3d', 'p3mp', 'p3fp'}
 ENDINGS = {'feminine', 'accusative', 'dual', 'oblique', 'pluralMasc', 'pluralFem'}
 ABLATIONS = [
@@ -73,7 +157,6 @@ ABLATIONS = [
     ('لـ before ل', drop_key('stemNotStartsWith', '[ل]', {'li'})),
     ('short stems after و ف ب ك ل', short_stems),
     ('past endings on two-letter stems', past_min_two),
-    ('one-step object pronoun after a defective ending', drop_key('stemNotEndsWith', '[يوىا]', {'presentHe', 'presentSheYou', 'presentI', 'presentWe'})),
     ('stems of any characters (spaces)', drop_key('stemCharacters', '{base}')),
     ('noun endings give no conditions', set_out(ENDINGS, [])),
     ('الـ gives no conditions', set_out({'al'}, [])),
@@ -82,6 +165,21 @@ ABLATIONS = [
     ('sa: any next letter', drop_key('stemStartsWith', '[يتنأآ]', {'sa'})),
     ('ي pronoun after ي', drop_key('stemNotEndsWith', '[ي]', {'p1s'})),
     ('accusative after ة ى ا', drop_key('stemNotEndsWith', '[اةى]', {'accusative'})),
+    ('proclitics on one-letter stems', set_min({'wa', 'fa', 'bi', 'ka', 'li'}, 2, 1, ('prefix',))),
+    ('الـ on a word of one letter', set_min({'al'}, 1, 0, ('circumfix',))),
+    ('سـ on two-letter stems', set_min({'sa'}, 3, 2, ('prefix',))),
+    ('سـ gives no conditions', set_out({'sa'}, [])),
+    ('proclitics before any character (digits)', drop_key('stemStartsWith', '{base}', {'wa'})),
+    ('one-step object pronoun on weak stems', drop_key('stemCharacters', STRONG, {'presentHe', 'presentSheYou', 'presentI', 'presentWe'})),
+    ('form I imperative stems with long vowels', drop_key('stemCharacters', STRONG, {'imperativeYou'})),
+    ('ـتيه -> ـت', drop_suffix(PRONOUNS, 'تيه', 'ت')),
+    ('whole words: frequent homographs', drop_whole({'demonstrative', 'presentHe', 'presentSheYou', 'al', 'p1p', 'listedPlural', 'jussiveWe',
+                                                     'definiteAdjective', 'imperativeYou', 'p3ms'},
+                                                    {'تلك', 'يمكنك', 'يجب', 'الحين', 'معنا', 'أيدي', 'نكن', 'الأولى', 'ضع', 'صوته', 'يحب', 'صل', 'ر'})),
+    ('processors: normalizeUnicode last', unicode_last),
+    ('processors: addHamza before the diacritics', hamza_first),
+    ('processors: arabicLetterForms after addHamza', letter_forms_late),
+    ('processors: alif maqsura anywhere', maqsura_all),
 ]
 
 
@@ -90,9 +188,10 @@ def run(edit):
     if SCRATCH.exists():
         shutil.rmtree(SCRATCH)
     shutil.copytree(PACK, target)
-    t = json.loads((target / 'transforms.json').read_text(encoding='utf-8'))
+    name = 'language.json' if getattr(edit, 'language', False) else 'transforms.json'
+    t = json.loads((target / name).read_text(encoding='utf-8'))
     n = edit(t)
-    (target / 'transforms.json').write_text(json.dumps(t, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    (target / name).write_text(json.dumps(t, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     subprocess.run(['node', 'tools/check-classes.mjs', 'ar', '--write', '--languages', str(SCRATCH)], capture_output=True)
     out = subprocess.run(['build/language-conformance-test', str(target)], capture_output=True, text=True)
     fails = [line for line in out.stdout.splitlines() + out.stderr.splitlines() if line.startswith('FAIL')]
