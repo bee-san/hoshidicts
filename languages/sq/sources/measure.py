@@ -168,14 +168,24 @@ def cmd_yomitan(dictionary, freq, unimorph):
                     s['lost'].append(f"{w} → {r['text']}")
     print(f'{len(words)} words; {len(stats)} of {len(label)} Yomitan rules give a reading')
     total_lost = set()
+    provenance = {}
+    for line in open(os.path.join(PACK, 'sources', 'yomitan-provenance.tsv'), encoding='utf-8'):
+        if not line.startswith('#'):
+            cells = line.rstrip('\n').split('\t')
+            provenance[f'{cells[0]}#{cells[1]}'] = cells[4]
+    table = ['# Each Yomitan rule left out of transforms.json, applied alone to the words of `measure.py yomitan`: the words for which it gives a headword with a compatible part of speech, how many of those no final deinflection gives, examples, and the own rules that make its deinflection (sources/yomitan-provenance.tsv). Written by sources/measure.py yomitan.',
+             '# transform\trule\tinflected\tdeinflected\treadings\tfinal rules lack\texamples\town rules']
     for rid in label:
-        s = stats.get(rid)
-        if s is None:
-            continue
+        s = stats.get(rid, {'readings': 0, 'lost': []})
         lost = sorted(set(s['lost']))
         total_lost |= set(lost)
         print(f"{label[rid]}: {s['readings']} readings, {len(lost)} the final rules lack" + (f": {', '.join(lost[:25])}" if lost else ''))
+        tid, index = rid.split('#')
+        rule = next(t for t in data['transforms'] if t['id'] == tid)['rules'][int(index)]
+        table.append('\t'.join([tid, index, rule.get('inflected', ''), rule.get('deinflected', ''), str(s['readings']), str(len(lost)),
+                                ', '.join(lost[:8]) or '-', provenance.get(rid, '(none)')]))
     print(f'readings the final rules lack: {len(total_lost)}')
+    print('\n'.join(table))
 
 
 def lookup_batch(texts, dictionary_dir):

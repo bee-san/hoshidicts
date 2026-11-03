@@ -98,9 +98,10 @@ deinflection marked `both`.
   Yomitan's nominalization (`im` → `oj`, `im` → `ej`, `je` → ``).
 - **Yomitan rules left out**: all 94. On 117,771 words (the frequency
   list, the single-word forms of UniMorph sqi and of the dictionary's
-  form-of rows; `sources/measure.py yomitan`), each Yomitan rule applied
-  alone gives a headword with a compatible part of speech that no final
-  deinflection gives 767 times (798 before nxë and the compounds of vë and
+  form-of rows; `sources/measure.py yomitan`, which also prints a table of
+  the per-rule counts and examples), each Yomitan rule
+  applied alone gives a headword with a compatible part of speech that no
+  final deinflection gives 767 times (798 before nxë and the compounds of vë and
   zë were added). A random sample of 50 of the 798, judged by hand: 8 right
   (`lavdin` → `lavdi`, `fea` → `fe`, `magjin` → `magji`, `selin` → `seli`,
   `shtetast` → `shtetas`, `oficerja` → `oficer`, `nxëmë` → `nxë`, `përzëmë`
@@ -153,8 +154,8 @@ deinflection marked `both`.
   - minimum stems and final-letter classes: `hej` is not `hell`, `pra` is
     not `pre`, `lart` is not `lar`, `mira` is not `mi`, `vetmi` is not
     `vetëm`, `hyjni` is not `hyj` (a verb stem before a consonant ending
-    does not end in j; the digraphs gj and nj have twin rules, so
-    `përgjigjet` → `përgjigjem`);
+    does not end in j; the non-active endings have twin rules for the
+    digraphs gj and nj, so `përgjigjet` → `përgjigjem`);
   - the one-syllable verbs (jam, kam, ha, pi, di, rri, fle, lë, vë, zë,
     nxë, bie, dua, vete) have whole-word forms, so `dalësh` is not da- +
     `lësh`;
@@ -333,6 +334,9 @@ file is measured with every option on and with the defaults.
 - Informal spelling without ë and ç is read only with the
   `missingDiacritics` setting (`jane` → `jan`, `thash` → `thaj`, `bere`
   → `ber` without it); a dropped final ë (`pun` for `punë`) is not read.
+- The few active verbs whose stem ends in the digraph gj or nj (dergj,
+  gjegj, regj) are not read in their consonant-ending forms (`regjin`); the
+  non-active ones (përgjigjem, shmenjem) are.
 - Possessives with their article (`i imi`, `e mia`, `të mitë`) are read as
   adjectives (`i imi` → `imtë`).
 - The pronouns before a verb (`e di`, `më thuaj`, `ma jep`, `ju lutem`) are

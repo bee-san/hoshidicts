@@ -97,9 +97,11 @@ function suffix(id, inflected, deinflected, conditionsIn, conditionsOut, extra =
     const constraints = {stemCharacters: ONE_WORD, ...extra};
     if (constraints.stemCharacters === null) { delete constraints.stemCharacters; }
     add(id, {...rule, ...constraints});
-    // A verb stem that ends in the digraph gj or nj (përgjigjem, regj) ends in
-    // j too: the twin rules carry the digraph in the ending.
-    if (constraints.stemEndsWith === '{verbConsonant}') {
+    // A verb stem that ends in the digraph gj or nj (përgjigjem, shmenjem)
+    // ends in j too: the twin rules carry the digraph in the ending. Only the
+    // non-active endings have them; the active verbs in -gj and -nj (dergj,
+    // gjegj, regj) are rare and the twins would add 80 rules.
+    if (constraints.stemEndsWith === '{verbConsonant}' && id.startsWith('np-')) {
         for (const digraph of ['gj', 'nj']) {
             const {stemEndsWith: _drop, ...rest} = constraints;
             add(id, {...rule, inflected: digraph + inflected, deinflected: digraph + deinflected, ...rest, stemMinLength: Math.max(0, (rest.stemMinLength ?? 0) - 1)});

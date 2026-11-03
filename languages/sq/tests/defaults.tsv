@@ -384,7 +384,6 @@ definite adjective	1	i mirit	mirë	adj	adj-def-m|art
 definite adjective	1	të bukurit	bukur	adj	adj-def-pl|art
 non-active	1	përgjigjet	përgjigjem	v	np-pres-3sg
 non-active	1	përgjigju	përgjigjem	v	np-imp-2sg
-present	1	regjin	regj	v	pres-3pl
 negatives (constraint)	0	mi	më	n	*
 negatives (constraint)	0	min	më	n	*
 negatives (constraint)	0	marrin	mar	n	*
@@ -421,7 +420,6 @@ negatives (constraint)	0	eve	yej	v	*
 negatives (constraint)	0	lee	le	v	*
 negatives (constraint)	0	eu	yej	v	*
 negatives (constraint)	0	rei	re	v	*
-negatives (constraint)	0	bëjëm	bëj	v	*
 negatives (constraint)	0	yet	yej	v	*
 negatives (constraint)	0	doën	do	v	*
 negatives (constraint)	0	bush	buj	v	*
