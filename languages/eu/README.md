@@ -289,8 +289,8 @@ closed-class rules already reach.
      1,301 of 2,675 rules are exercised by a passing row. `tests/` and
      `sources/` hold 994,728 bytes.
    - Differential check (`tools/check-yomitan.mjs` with `build/hoshidicts-cli`):
-     2,785 inputs, 7,197 Yomitan results, 0 differences; both processors agree
-     with Yomitan's on 2,080 inputs.
+     2,730 inputs, 7,113 Yomitan results, 0 differences; both processors agree
+     with Yomitan's on 2,022 inputs.
    - Mutations (`sources/mutate.py`): 26 edits of the generator, each
      removing one constraint, exclusion or left-out form; every one fails the
      conformance test (the identity control passes).
