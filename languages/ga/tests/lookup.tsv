@@ -48,3 +48,7 @@ ranking	1	sheirbhísí poiblí	seirbhís	sheirbhísí
 ranking	0	sheirbhísí poiblí	seirbhíseach	sheirbhísí
 ranking	1	thábhachtaí fós	tábhachtach	thábhachtaí
 ranking	0	thábhachtaí fós	tábhacht	thábhachtaí
+order	1	daltaí scoile	dalta	daltaí
+order	0	daltaí scoile	daltach	daltaí
+order	1	gealaí ghlé	gealach	gealaí
+order	0	gealaí ghlé	gealaigh	gealaí

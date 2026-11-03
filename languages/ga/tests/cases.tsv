@@ -300,3 +300,270 @@ noun	1	litreacha	litir	n	plural
 negatives	0	seachtracha	seachtair	*	*
 negatives	0	sleachta	sleach	n	*
 negatives	0	tréimhseacha	tréimhs	*	*
+# Constraint rows: each fails when one stem constraint of the named transform is deleted (sources/README: Measurements, mutations). Most sources are words of the Irish Wikipedia or UD Irish-IDT; the rest are built from the rule's ending.
+constraint-eclipsis	0	n-Éces	Éces	*	*
+constraint-h-prefix	0	hd	d	*	*
+constraint-t-prefix	0	t-chealla	ceall	n	*
+constraint-elision	0	b'fhéidir	fhéidir	*	*
+constraint-elision	0	b'fh	f	*	*
+constraint-emphatic	0	adsa	ad	*	*
+constraint-emphatic	0	agus réimse	agus réim	*	*
+constraint-plural	0	dtí	t	n	*
+constraint-plural	0	a bhí	a bh	n	*
+constraint-plural	0	tonna	t	n	*
+constraint-plural	0	líneacha	lí	n	*
+constraint-plural	0	curacha	cuair	n	*
+constraint-plural	0	deartháireacha	deartháiir	n	*
+constraint-plural	0	foirceanta	foirc	n	*
+constraint-adj-e	0	bhí	beach	adj	*
+constraint-adj-e	0	a bhí	a bheach	adj	*
+constraint-adj-e	0	case	cais	adj	*
+constraint-adj-plural	0	ba	b	adj	*
+constraint-adj-plural	0	Bhaile Átha	Baile Áth	adj	*
+constraint-adj-plural	0	cura	cuair	adj	*
+constraint-plural-ai	0	maí	m	n	*
+constraint-plural-ai	0	Roinn Gnóthaí	Roinn Gnóth	n	*
+constraint-plural-ai	0	nuaí	nu	n	*
+constraint-noun-a	0	sa	s	n	*
+constraint-noun-a	0	Bhaile Átha	Baile Áth	n	*
+constraint-noun-a	0	día	dí	n	*
+constraint-slender	0	a bheith	a bheath	n	*
+constraint-slender	0	dtigh	teach	n	*
+constraint-genitive	0	bhí	beach	n	*
+constraint-genitive	0	a bhí	a bheach	n	*
+constraint-genitive	0	cuan	cuain	n	*
+constraint-genitive	0	grósaera	grósaeir	n	*
+constraint-genitive	0	Alfa	Albh	n	*
+constraint-genitive	0	rún	rú	n	*
+constraint-present-1sg	0	chaim	c	v	*
+constraint-present-1sg	0	Coimisinéirí Ioncaim	Coimisinéirí Ionc	v	*
+constraint-present-1sg	0	fhuaim	fhua	v	*
+constraint-present-1sg	0	álaim	áil	v	*
+constraint-present-1sg	0	Gradaim	Graid	v	*
+constraint-present-1sg	0	rím	r	v	*
+constraint-present-1sg	0	aím	aigh	v	*
+constraint-present	0	Bíonn	Bigh	v	*
+constraint-present	0	a bhaineann	a bhain	v	*
+constraint-present	0	chuireann	chuire	v	*
+constraint-present	0	ólann	óil	v	*
+constraint-present	0	gabhann	gaibh	v	*
+constraint-present	0	maraíonn	mair	v	*
+constraint-present-1pl	0	aímid	aigh	v	*
+constraint-present-1pl	0	a roghnaímid	a roghain	v	*
+constraint-present-1pl	0	táimid	tá	v	*
+constraint-present-1pl	0	álaimid	áil	v	*
+constraint-present-1pl	0	abaimid	aib	v	*
+constraint-present-1pl	0	abalaímid	abail	v	*
+constraint-present-1pl	0	a roghnaímid	a roghnaigh	v	*
+constraint-present-autonomous	0	lítear	ligh	v	*
+constraint-present-autonomous	0	dá dtagraítear	dá dtagair	v	*
+constraint-present-autonomous	0	glaotar	glao	v	*
+constraint-present-autonomous	0	Tugtar	Tugth	v	*
+constraint-present-autonomous	0	itear	igh	v	*
+constraint-present-autonomous	0	gabhtar	gaibh	v	*
+constraint-present-autonomous	0	maraítear	mair	v	*
+constraint-present-2sg-munster	0	Thír	Tigh	v	*
+constraint-present-2sg-munster	0	Is féidir	Is féid	v	*
+constraint-present-2sg-munster	0	bhfuair	bhfua	v	*
+constraint-present-2sg-munster	0	álair	áil	v	*
+constraint-present-2sg-munster	0	cathair	caith	v	*
+constraint-present-2sg-munster	0	Thír	Th	v	*
+constraint-present-2sg-munster	0	Sír	Sigh	v	*
+constraint-present-3pl-munster	0	bríd	bir	v	*
+constraint-present-3pl-munster	0	a leithéid	a leithéigh	v	*
+constraint-present-3pl-munster	0	bháid	bhá	v	*
+constraint-present-3pl-munster	0	álaid	áil	v	*
+constraint-present-3pl-munster	0	targaid	tairg	v	*
+constraint-present-3pl-munster	0	Bríd	Br	v	*
+constraint-present-3pl-munster	0	chur tríd	chur trigh	v	*
+constraint-past-1sg-munster	0	bhlas	bl	v	*
+constraint-past-1sg-munster	0	bheith níos	beith n	v	*
+constraint-past-1sg-munster	0	bhás	báigh	v	*
+constraint-past-1sg-munster	0	bhíos	bigh	v	*
+constraint-past-1sg-munster	0	cheannas	ceainn	v	*
+constraint-past-1sg-munster	0	bhabalaíos	babail	v	*
+constraint-past-1sg-munster	0	bhealach níos	bealach nigh	v	*
+constraint-past-2sg-munster	0	fhís	figh	v	*
+constraint-past-2sg-munster	0	chluiche ceannais	cluiche ceainn	v	*
+constraint-past-2sg-munster	0	bheartais	bearta	v	*
+constraint-past-2sg-munster	0	cheannais	ceainn	v	*
+constraint-past-2sg-munster	0	bhídís	bíd	v	*
+constraint-past-2sg-munster	0	chloig arís	cloig arigh	v	*
+constraint-past-1pl	0	lamar	l	v	*
+constraint-past-1pl	0	a chuamar	a chuaigh	v	*
+constraint-past-1pl	0	aalaíomar	aaail	v	*
+constraint-past-1pl	0	álamar	áil	v	*
+constraint-past-1pl	0	abamar	aib	v	*
+constraint-past-1pl	0	abalaíomar	abail	v	*
+constraint-past-1pl	0	aíomar	aigh	v	*
+constraint-past-2pl-munster	0	cabhair	c	v	*
+constraint-past-2pl-munster	0	Níor labhair	Níor l	v	*
+constraint-past-2pl-munster	0	hábhair	áigh	v	*
+constraint-past-2pl-munster	0	álabhair	áil	v	*
+constraint-past-2pl-munster	0	ababhair	aib	v	*
+constraint-past-2pl-munster	0	abalaíobhair	abail	v	*
+constraint-past-2pl-munster	0	aíobhair	aigh	v	*
+constraint-past-3pl-munster	0	dríodar	dir	v	*
+constraint-past-3pl-munster	0	Ach chuadar	Ach chuaigh	v	*
+constraint-past-3pl-munster	0	chuireadar	chuire	v	*
+constraint-past-3pl-munster	0	áladar	áil	v	*
+constraint-past-3pl-munster	0	ghabhadar	gaibh	v	*
+constraint-past-3pl-munster	0	bhíodar	b	v	*
+constraint-past-3pl-munster	0	a bhailíodar	a bhailigh	v	*
+constraint-adh	0	bheadh	b	v	*
+constraint-adh	0	a bheadh	a bh	v	*
+constraint-adh	0	bunaíodh	buain	v	*
+constraint-adh	0	áladh	áil	v	*
+constraint-adh	0	dhúnadh	dúin	v	*
+constraint-adh	0	maraíodh	mair	v	*
+constraint-adh	0	a bhíodh	a bhigh	v	*
+constraint-future	0	dheoidh	digh	v	*
+constraint-future	0	a thabharfaidh	a thabhair	v	*
+constraint-future	0	n-éireoidh	n-éiir	v	*
+constraint-future	0	álfaidh	áil	v	*
+constraint-future	0	Féadfaidh	Féaid	v	*
+constraint-future	0	dheoidh	d	v	*
+constraint-future	0	abífidh	abigh	v	*
+constraint-future-1pl	0	aeochaimid	aigh	v	*
+constraint-future-1pl	0	agus éisteoimid	agus éist	v	*
+constraint-future-1pl	0	aalóchaimid	aaail	v	*
+constraint-future-1pl	0	álfaimid	áil	v	*
+constraint-future-1pl	0	abfaimid	aib	v	*
+constraint-future-1pl	0	abalóchaimid	abail	v	*
+constraint-future-1pl	0	abífimid	abigh	v	*
+constraint-future-autonomous	0	Tóchar	Taigh	v	*
+constraint-future-autonomous	0	a chuirfear	a chuir	v	*
+constraint-future-autonomous	0	difear	di	v	*
+constraint-future-autonomous	0	álfar	áil	v	*
+constraint-future-autonomous	0	Féadfar	Féaid	v	*
+constraint-future-autonomous	0	gheofar	g	v	*
+constraint-future-autonomous	0	abífear	abigh	v	*
+constraint-future-1sg-munster	0	bhfód	faigh	v	*
+constraint-future-1sg-munster	0	an bhfód	an bhfaigh	v	*
+constraint-future-1sg-munster	0	MacLeod	MacL	v	*
+constraint-future-1sg-munster	0	álfad	áil	v	*
+constraint-future-1sg-munster	0	abfad	aib	v	*
+constraint-future-1sg-munster	0	bhfód	figh	v	*
+constraint-future-1sg-munster	0	abífead	abigh	v	*
+constraint-future-2sg-munster	0	chóir	caigh	v	*
+constraint-future-2sg-munster	0	Ba chóir	Ba chaigh	v	*
+constraint-future-2sg-munster	0	iriseoir	iriis	v	*
+constraint-future-2sg-munster	0	álfair	áil	v	*
+constraint-future-2sg-munster	0	affair	aif	v	*
+constraint-future-2sg-munster	0	fóir	figh	v	*
+constraint-future-2sg-munster	0	abífir	abigh	v	*
+constraint-future-3pl-munster	0	chóid	caigh	v	*
+constraint-future-3pl-munster	0	an Chóid	an Chaigh	v	*
+constraint-future-3pl-munster	0	Gearóid	Geaair	v	*
+constraint-future-3pl-munster	0	álfaid	áil	v	*
+constraint-future-3pl-munster	0	abfaid	aib	v	*
+constraint-future-3pl-munster	0	fhóid	fhigh	v	*
+constraint-future-3pl-munster	0	abífid	abigh	v	*
+constraint-future-relative-munster	0	fós	faigh	v	*
+constraint-future-relative-munster	0	an nós	an naigh	v	*
+constraint-future-relative-munster	0	phionós	phioain	v	*
+constraint-future-relative-munster	0	álfas	áil	v	*
+constraint-future-relative-munster	0	abfas	aib	v	*
+constraint-future-relative-munster	0	fós	figh	v	*
+constraint-future-relative-munster	0	abífeas	abigh	v	*
+constraint-conditional-1sg	0	Bhóinn	Baigh	v	*
+constraint-conditional-1sg	0	a gcuirfinn	a gcuir	v	*
+constraint-conditional-1sg	0	Eifinn	Ei	v	*
+constraint-conditional-1sg	0	álfainn	áil	v	*
+constraint-conditional-1sg	0	abfainn	aib	v	*
+constraint-conditional-1sg	0	Bhóinn	Bhigh	v	*
+constraint-conditional-1sg	0	abífinn	abigh	v	*
+constraint-conditional-2sg	0	aeochthá	aigh	v	*
+constraint-conditional-2sg	0	Dá bhfeicfeá	Dá bhfeic	v	*
+constraint-conditional-2sg	0	bheifeá	bei	v	*
+constraint-conditional-2sg	0	álfá	áil	v	*
+constraint-conditional-2sg	0	bhféadfá	féaid	v	*
+constraint-conditional-2sg	0	abalóchthá	abail	v	*
+constraint-conditional-2sg	0	abífeá	abigh	v	*
+constraint-conditional	0	dódh	daigh	v	*
+constraint-conditional	0	go bhféadfadh	go bhféad	v	*
+constraint-conditional	0	d'éireodh	d'éiir	v	*
+constraint-conditional	0	álfadh	áil	v	*
+constraint-conditional	0	dtógfadh	dtóig	v	*
+constraint-conditional	0	maródh	mair	v	*
+constraint-conditional	0	abífeadh	abigh	v	*
+constraint-conditional-1pl	0	aeochaimis	aigh	v	*
+constraint-conditional-1pl	0	an gcloisfimis	an gclois	v	*
+constraint-conditional-1pl	0	aalóchaimis	aaail	v	*
+constraint-conditional-1pl	0	álfaimis	áil	v	*
+constraint-conditional-1pl	0	abfaimis	aib	v	*
+constraint-conditional-1pl	0	abalóchaimis	abail	v	*
+constraint-conditional-1pl	0	abífimis	abigh	v	*
+constraint-conditional-3pl	0	aeochaidís	aigh	v	*
+constraint-conditional-3pl	0	a smúrfaidís	a smúir	v	*
+constraint-conditional-3pl	0	aalóchaidís	aaail	v	*
+constraint-conditional-3pl	0	álfaidís	áil	v	*
+constraint-conditional-3pl	0	bhféadfaidís	féaid	v	*
+constraint-conditional-3pl	0	abalóchaidís	abail	v	*
+constraint-conditional-3pl	0	abífidís	abigh	v	*
+constraint-conditional-autonomous	0	trófaí	tair	v	*
+constraint-conditional-autonomous	0	go bhféadfaí	go bhféad	v	*
+constraint-conditional-autonomous	0	mbunófaí	buain	v	*
+constraint-conditional-autonomous	0	álfaí	áil	v	*
+constraint-conditional-autonomous	0	dtógfaí	dtóig	v	*
+constraint-conditional-autonomous	0	marófaí	mair	v	*
+constraint-conditional-autonomous	0	abífí	abigh	v	*
+constraint-habitual-1sg	0	chinn	c	v	*
+constraint-habitual-1sg	0	chun cinn	chun c	v	*
+constraint-habitual-1sg	0	choinn	cho	v	*
+constraint-habitual-1sg	0	hálainn	áil	v	*
+constraint-habitual-1sg	0	arainn	air	v	*
+constraint-habitual-1sg	0	dínn	d	v	*
+constraint-habitual-1sg	0	a mbínn	a mbigh	v	*
+constraint-habitual-2sg	0	aíteá	aigh	v	*
+constraint-habitual-2sg	0	am atá	am ath	v	*
+constraint-habitual-2sg	0	Bogotá	Bogo	v	*
+constraint-habitual-2sg	0	tá	th	v	*
+constraint-habitual-2sg	0	iteá	igh	v	*
+constraint-habitual-2sg	0	abtá	aib	v	*
+constraint-habitual-2sg	0	abalaíteá	abail	v	*
+constraint-habitual-1pl	0	aímis	aigh	v	*
+constraint-habitual-1pl	0	an gcloisfimis	an gcloisf	v	*
+constraint-habitual-1pl	0	sáimis	sá	v	*
+constraint-habitual-1pl	0	álaimis	áil	v	*
+constraint-habitual-1pl	0	abaimis	aib	v	*
+constraint-habitual-1pl	0	abalaímis	abail	v	*
+constraint-habitual-3pl	0	aídís	aigh	v	*
+constraint-habitual-3pl	0	a smúrfaidís	a smúirf	v	*
+constraint-habitual-3pl	0	bhféadfaidís	bhféadfa	v	*
+constraint-habitual-3pl	0	álaidís	áil	v	*
+constraint-habitual-3pl	0	rachaidís	raich	v	*
+constraint-habitual-3pl	0	bhídís	b	v	*
+constraint-habitual-autonomous	0	bhítí	bigh	v	*
+constraint-habitual-autonomous	0	do pháistí	do pháis	v	*
+constraint-habitual-autonomous	0	bhítí	bhí	v	*
+constraint-habitual-autonomous	0	Tagairtí	Tagairth	v	*
+constraint-habitual-autonomous	0	ití	igh	v	*
+constraint-habitual-autonomous	0	babhtaí	baibh	v	*
+constraint-habitual-autonomous	0	bhítí	b	v	*
+constraint-imperative-2pl	0	laigí	l	v	*
+constraint-imperative-2pl	0	in oifigí	in oif	v	*
+constraint-imperative-2pl	0	cúigí	cú	v	*
+constraint-imperative-2pl	0	álaigí	áil	v	*
+constraint-imperative-2pl	0	bhfarraigí	fairr	v	*
+constraint-imperative-2pl	0	bígí	b	v	*
+constraint-imperative-2pl	0	agus bígí	agus bigh	v	*
+constraint-subjunctive	0	shlí	sil	v	*
+constraint-subjunctive	0	Bhaile Átha	Baile Áth	v	*
+constraint-subjunctive	0	déanaí	déana	v	*
+constraint-subjunctive	0	b'í	igh	v	*
+constraint-subjunctive	0	buama	buaim	v	*
+constraint-subjunctive	0	naí	nigh	v	*
+constraint-subjunctive	0	Lí	Ligh	v	*
+constraint-verbal-adjective	0	martha	mair	v	*
+constraint-verbal-adjective	0	go háirithe	go háirigh	v	*
+constraint-verbal-adjective	0	dlíthe	dlí	v	*
+constraint-verbal-adjective	0	Márta	Márth	v	*
+constraint-verbal-adjective	0	maithe	migh	v	*
+constraint-verbal-adjective	0	chósta	chóis	v	*
+constraint-verbal-noun	0	chú	caigh	v	*
+constraint-verbal-noun	0	a dhéanamh	a dhéan	v	*
+constraint-verbal-noun	0	feiceáil	feice	v	*
+constraint-verbal-noun	0	ant	an	v	*
+constraint-verbal-noun	0	churadh	cuir	v	*
+constraint-verbal-noun	0	last	las	v	*

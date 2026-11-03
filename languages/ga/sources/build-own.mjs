@@ -90,6 +90,11 @@ function transform(id, name, description) {
 function add(id, rule) {
     const t = byId.get(id);
     if (!t) { throw new Error(`unknown transform ${id}`); }
+    // A stem with a first or last letter in a class has at least one letter,
+    // and a stem change with a consonant after the vowel ends in a consonant:
+    // the constraints that would only repeat that are left out.
+    if (rule.stemMinLength === 1 && (rule.stemEndsWith || rule.stemStartsWith)) { delete rule.stemMinLength; }
+    if (rule.stemEndsWith === CONSONANT && rule.stemChange?.between === CONSONANT && !rule.inflected && rule.type === 'suffix') { delete rule.stemEndsWith; }
     const key = JSON.stringify(rule);
     if (seen.get(id).has(key)) { return; }
     seen.get(id).add(key);

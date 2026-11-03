@@ -39,5 +39,9 @@
   ["seirbhís", "", "n", "n", 0, ["service"], 38, ""],
   ["seirbhíseach", "", "n", "n", 0, ["servant"], 39, ""],
   ["tábhacht", "", "n", "n", 0, ["importance"], 40, ""],
-  ["tábhachtach", "", "adj", "adj", 0, ["important"], 41, ""]
+  ["tábhachtach", "", "adj", "adj", 0, ["important"], 41, ""],
+  ["dalta", "", "n", "n", 0, ["pupil, student"], 42, ""],
+  ["daltach", "", "adj", "adj", 0, ["pupil-like (stands for an -ach adjective beside a noun)"], 43, ""],
+  ["gealach", "", "n", "n", 0, ["moon"], 44, ""],
+  ["gealaigh", "", "v", "v", 0, ["to brighten, to whiten"], 45, ""]
 ]
