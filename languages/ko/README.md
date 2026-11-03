@@ -338,18 +338,21 @@ phrase entry when it is an entry of several words that begins with the word
     걸려 하던 (전화를) are 알다, 울다, 들다, 끌다 and 걸다 + -(으)려 하다, while the
     word's references name the passives 알리다, 울리다, 들리다, 끌리다 and 걸리다.
     The sixth, 벌려 하품을 → 벌다, is 벌리다 + -어 (Known gaps).
-  - Of the 45,068 positions of the prose that find something but have no
-    form-of reference to judge by, a seeded sample of 60 judged by hand:
-    42 right, 10 words kty-ko-en lacks (곱절, 그까짓, 비위, 고단하지), 2 the name
-    한경, 2 homograph entries (이원 for 이 원, 일이 for 일 + 이), 1 the colloquial
-    알구 (알고), 1 a rule (캄캄해진다 → 카다 [-(으)ㅁ]: kty-ko-en lacks 캄캄하다),
-    and 2 endings no rule read, 주거니 (-거니) and 치리만큼 (-(으)리만큼), which
-    rows of `tests/cases.tsv` now keep.
-  - Read across a space by a rule, as section 14 asks to count: 416 first
-    results in Tatoeba, nearly all Yomitan's spaced endings (않을 거야 → 않다,
-    있을 것이다 → 있다), kty-ko-en's phrase entries (마음에 들어 → 마음에 들다) and
-    the `eumhun` rows; no rule reads a word followed by a short word as
-    another word.
+  - Of the 45,071 positions of the prose that find something but have no
+    form-of reference to judge by, a seeded sample of 60 judged by hand
+    (`reports/hachi-lang-ko/measure/text-sample-judged.tsv` outside the
+    pack): 45 right, 9 words kty-ko-en lacks (비위, 그편, 집무, 첫날밤, 여지없다,
+    the old spellings 정갱이 and 아츰), 3 homograph entries (이원 for 이 원 "two
+    won", 일이 for 일 + 이 twice), 2 the name 한경, and 1 wrong: 진토록 → 진, the
+    old -토록 (진(盡)하다 + -도록), which no rule set reads. A first draw of the
+    sample found 주거니 (-거니) and 치리만큼 (-(으)리만큼) unread; rows of
+    `tests/cases.tsv` now keep them, and both are right in this draw.
+  - Read across a space, as section 14 asks to count: of Tatoeba's first
+    results, 301 through Yomitan's spaced endings (않을 거야 → 않다, 있을 것이다 →
+    있다), 31 a phrase entry deinflected on its last word (마음에 들어 → 마음에
+    들다) and 84 through a reference (the `eumhun` rows, 마음에 들었어); none
+    another way, so no rule reads a word followed by a short word as another
+    word. In the prose: 86, 12, 53 and none.
 - Trace quality, on UniMorph's 136,107 finite rows (lemma, form, tags): the
   shortest trace to the lemma, which a lookup shows, has a past step exactly
   when the tags say PST, -겠 exactly when they say FUT, and -(으)시- exactly
@@ -360,7 +363,7 @@ phrase entry when it is an entry of several words that begins with the word
   407, yomitan.tsv 615 / 615, text.tsv 16 / 16, lookup.tsv 26 / 26, gaps.tsv
   0 / 1 (reported); classes.json agrees with the engine (7 classes, 557
   fields, no steps); 440 of the 3,029 rules are exercised by a passing row.
-  `tests/` and `sources/` hold 985,282 bytes. Taking out any of 84 of the 87
+  `tests/` and `sources/` hold 986,383 bytes. Taking out any of 84 of the 87
   stem constraints, exclusions and word-list groups of
   `sources/own-rules.mjs` fails the test; the other three (`vowelStem:
   false` at -(으)냐, -(으)니 and -(으)냐고) only keep out a rule that `direct()`
@@ -470,7 +473,8 @@ phrase entry when it is an entry of several words that begins with the word
 - **Dictionary coverage.** kty-ko-en has 드리다 only as a form-of target, so
   드릴게요 finds 드릴 (drill), 드립니다 finds 드립, and 드리겠습니다, 드리고, 드려요
   and 드려 find no result with a definition: 5 of the 10,000 frequent words.
-  The dialect spelling 맨들고, 맨든 (만들다) finds 맨 (6 positions of the prose).
+  The dialect spelling 맨들고, 맨든 (만들다) finds 맨 (6 positions of the prose),
+  and the old contraction -토록 (진토록 for 진하도록) is read by no rule set.
 - **No hanja view.** Hanja words are looked up as written; kty-ko-en has
   them as form-of rows pointing to the Hangul word. `characterView` is null.
 - **Not pinned by a test.** `traceSelection: "shortest"` decides which trace a

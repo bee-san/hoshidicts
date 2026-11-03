@@ -71,6 +71,7 @@ function judge(first, word, lemmas) {
 }
 
 const pct = (n, d) => `${(100 * n / d).toFixed(2)}%`;
+const transformsFile = JSON.parse(readFileSync(join(here, '..', 'transforms.json'), 'utf8'));
 const show = (first) => (first === null ? '-' : `${first.expression}@${first.matched}${first.trace.length ? ` [${first.trace.join(' > ')}]` : ''}`);
 
 function unimorphLemmas(file) {
@@ -153,12 +154,24 @@ function report(name, items, refs) {
     for (const [k, g] of [...wrongBy].sort((a, b) => b[1].n - a[1].n).slice(0, 8)) {
         console.log(`  wrong, first rule ${k}: ${g.n}; ${[...g.examples].sort((a, b) => b[1] - a[1]).slice(0, Number(option('--examples', '6'))).map(([e, c]) => `${e} ${c}`).join('; ')}`);
     }
-    // A rule applied to a scanned prefix that spans a space (docs/languages.md 14, step 5).
-    const across = new Map();
+    // First results read across a space (docs/languages.md 14, step 5): through a spaced ending (않을 거야),
+    // as a phrase entry deinflected on its last word (마음에 들어), through a dictionary reference (줄 수), or
+    // otherwise: a rule that reads a word followed by a short word as another word, all of them listed.
+    const ids = new Set(transformsFile.transforms.map((t) => t.id));
+    const spaced = new Set(transformsFile.transforms.filter((t) => t.rules.some((r) => (r.inflected ?? '').includes(' '))).map((t) => t.id));
+    const across = {'spaced ending': new Map(), 'phrase entry': new Map(), reference: new Map(), other: new Map()};
     firsts.forEach((f) => {
-        if (f !== null && f.matched.includes(' ') && f.trace.length > 0) { const k = `${f.matched} -> ${f.expression} [${f.trace.join(' > ')}]`; across.set(k, (across.get(k) ?? 0) + 1); }
+        if (f === null || !f.matched.includes(' ') || f.trace.length === 0) { return; }
+        const kind = f.trace.some((id) => spaced.has(id)) ? 'spaced ending' : !ids.has(f.trace[0]) ? 'reference' : f.expression.includes(' ') ? 'phrase entry' : 'other';
+        const k = `${f.matched} -> ${f.expression} [${f.trace.join(' > ')}]`;
+        across[kind].set(k, (across[kind].get(k) ?? 0) + 1);
     });
-    console.log(`  first results a rule reads across a space: ${[...across.values()].reduce((a, b) => a + b, 0)}: ${[...across].sort((a, b) => b[1] - a[1]).slice(0, 25).map(([k, v]) => `${k} ${v}`).join('; ')}`);
+    const total = (m) => [...m.values()].reduce((a, b) => a + b, 0);
+    console.log(`  first results read across a space: ${Object.entries(across).map(([k, m]) => `${k} ${total(m)}`).join(', ')}`);
+    for (const [kind, m] of Object.entries(across)) {
+        const shown = kind === 'other' ? [...m] : [...m].sort((a, b) => b[1] - a[1]).slice(0, 6);
+        if (shown.length > 0) { console.log(`    ${kind}: ${shown.map(([k, v]) => `${k} ${v}`).join('; ')}`); }
+    }
     return {firsts, rest};
 }
 
