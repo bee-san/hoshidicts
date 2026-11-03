@@ -629,7 +629,7 @@
       "source": "own",
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["іше", "о"], ["ше", "ко"], ["ше", "око"], ["ше", "го"], ["жче", "го"]], "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "{stem}"},
-        {"type": "suffix", "inflected": "ше", "deinflected": "о", "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "[дтрх]"},
+        {"type": "suffix", "inflected": "ше", "deinflected": "о", "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "[бвдтрх]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ще", "соко"], ["жче", "зько"]], "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 1, "stemCharacters": "{stem}", "source": "both"},
         {"type": "suffix", "inflected": "че", "deinflected": "ко", "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "[жг]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["краще", "добре"], ["краще", "гарно"], ["гірше", "погано"], ["більше", "багато"], ["менше", "мало"], ["далі", "далеко"]], "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemCharacters": "[]"}
@@ -643,7 +643,7 @@
       "rules": [
         {"type": "circumfix", "prefixes": [["най", ""], ["якнай", ""], ["щонай", ""]], "suffixes": [["іше", "о"]], "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "{stem}"},
         {"type": "circumfix", "prefixes": [["най", ""], ["якнай", ""], ["щонай", ""]], "suffixes": [["ше", "ко"]], "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "{stem}"},
-        {"type": "circumfix", "prefixes": [["най", ""], ["якнай", ""], ["щонай", ""]], "suffixes": [["ше", "о"]], "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "[дтрх]"},
+        {"type": "circumfix", "prefixes": [["най", ""], ["якнай", ""], ["щонай", ""]], "suffixes": [["ше", "о"]], "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "[бвдтрх]"},
         {"type": "circumfix", "prefixes": [["най", ""], ["якнай", ""], ["щонай", ""]], "suffixes": [["ше", "око"]], "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "{stem}"},
         {"type": "circumfix", "prefixes": [["най", ""], ["якнай", ""], ["щонай", ""]], "suffixes": [["ше", "го"]], "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 2, "stemCharacters": "{stem}"},
         {"type": "circumfix", "prefixes": [["най", ""], ["якнай", ""], ["щонай", ""]], "suffixes": [["ще", "соко"]], "conditionsIn": ["adv"], "conditionsOut": ["adv"], "stemMinLength": 1, "stemCharacters": "{stem}"},

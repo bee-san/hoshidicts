@@ -524,7 +524,7 @@ for (const [form, lemma] of [['рад', 'радий'], ['здоров', 'здо�
 transform('adv.cmp', 'comparative', 'Comparative degree of an adverb: швидше (швидко), вище (високо), краще (добре).');
 const ADV_CMP = [
     ['іше', 'о', {stemMinLength: 2}, 'частіше → часто'], ['ше', 'ко', {stemMinLength: 2}, 'швидше → швидко'],
-    ['ше', 'о', {stemMinLength: 2, stemEndsWith: '[дтрх]'}, 'тихше → тихо'], ['ше', 'око', {stemMinLength: 2}, 'ширше → широко'],
+    ['ше', 'о', {stemMinLength: 2, stemEndsWith: '[бвдтрх]'}, 'тихше → тихо'], ['ше', 'око', {stemMinLength: 2}, 'ширше → широко'],
     ['ше', 'го', {stemMinLength: 2}, 'довше → довго'], ['ще', 'соко', {stemMinLength: 1}, 'вище → високо'],
     ['жче', 'зько', {stemMinLength: 1}, 'нижче → низько'], ['жче', 'го', {stemMinLength: 2}, 'дорожче → дорого'],
     ['че', 'ко', {stemMinLength: 2, stemEndsWith: '[жг]'}, 'важче → важко']];

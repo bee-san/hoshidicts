@@ -122,6 +122,8 @@ comparison	1	найшвидше	швидко	adv	*
 comparison	1	якнайкраще	добре	adv	*
 comparison	1	частіше	часто	adv	*
 comparison	1	легче	легко	adv	*
+comparison	1	дешевше	дешево	adv	*
+comparison	1	слабше	слабо	adv	*
 comparison	1	важче	важко	adv	*
 short adjectives	1	повен	повний	adj	*
 short adjectives	1	зелен	зелений	adj	*
@@ -675,3 +677,9 @@ constraint	0	еще	естий	*	*
 constraint	0	кpаще	кpасоко	*	*
 constraint	0	iз	iзнути	*	*
 constraint	0	кoли	кoти	*	*
+constraint	0	які	як	*	*
+constraint	0	член	члений	*	*
+constraint	0	найменше	мено	*	*
+constraint	0	живу	живати	*	*
+constraint	0	лиш	літи	*	*
+constraint	0	рено	рити	*	*
