@@ -114,7 +114,7 @@ The processors are 6 `own` (`normalizeUnicode`, `replaceEth`,
 `both` (`decapitalize` and `capitalizeFirstLetter`: written for the pack, and
 the same steps as Yomitan's) and 1 `yomitan` (`normalizeDiacritics`). No
 Yomitan processor is left out; `tools/check-yomitan.mjs` compares all three
-with Yomitan's own on 1,175, 1,175 and 1,144 inputs and finds no difference.
+with Yomitan's own on 1,237, 1,237 and 1,206 inputs and finds no difference.
 
 The first commit of the pack, `vi: own rules` (5a12101), has the own rules
 as written before Yomitan's file was read. These changed after measuring:
@@ -277,14 +277,15 @@ the same numbers with every option on and with `# options: default`
    - Pack load (`sources/wasm-load.mjs`, 10 fresh engines each):
      `hdw_language_load` median 7.34 ms single-thread and 7.72 ms threaded
      (budget 50 ms); live heap +315,176 bytes (budget 20 MB).
-6. **Hachidori** (feat/multi-language d7e82b0c with this branch in
+6. **Hachidori** (feat/multi-language 803f7b6e with this pack in
    `third_party/hoshidicts`, `node scripts/sync-languages.mjs`,
-   `test/chrome-language-pack.mjs`, Chrome 152, wty-vi-en): 16 / 16 checks
-   pass. Settings adds Vietnamese beside Japanese and imports the dictionary
-   (76,689 terms, 0.5 s); twelve hovered words find their headword first
-   (*đo đỏ* → *đỏ*, *đi đi lại lại* → *đi lại*, *tòa nhà* → *toà nhà*,
-   *Hồng-bàng* → *Hồng Bàng*, *Ðà Nẵng* → *Đà Nẵng*, *Nước Mỹ* → *nước Mĩ*);
-   the Anki note and the switch to Japanese and back work.
+   `test/chrome-language-pack.mjs`, Chrome 152, wty-vi-en): 18 / 18 checks
+   pass. Settings adds Vietnamese beside Japanese and imports the dictionary;
+   fourteen hovered words find their headword first (*đo đỏ* → *đỏ*, *đi đi
+   lại lại* → *đi lại*, *tòa nhà* → *toà nhà*, *Hồng-bàng* → *Hồng Bàng*,
+   *Ðà Nẵng* → *Đà Nẵng*, *Nước Mỹ* → *nước Mĩ*, *se sẽ* → *khẽ*, and
+   *sang* in *chuyển sang sáng tác* stays *sang*); the Anki note and the
+   switch to Japanese and back work.
 7. **Conformance** (`language-conformance-test`): corpus.tsv 607 / 607,
    cases.tsv 157 / 157, text.tsv 84 / 84, lookup.tsv 29 / 29; gaps.tsv 0 /
    393 (reported); classes.json agrees with the engine (2 classes, 2 fields,
