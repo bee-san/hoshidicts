@@ -185,9 +185,10 @@ wty-grc-en keys without diacritics.
 - **Stem constraints.** `sources/mutate.py` removes each of the 56 stem
   constraints of the final set (a transform's `stemMinLength`,
   `stemCharacters`, `stemContains`, ...) in a copy; every removal breaks a
-  row (`constraint` negatives of `cases.tsv`). Four constraints that only
-  blocked right readings (`ξύν` → `σύν`, `κοὐ` → `οὐ`, `χὠ` → `ὁ`, `ὅσπερ`
-  → `ὅς`) or changed nothing (`unaugmented`) were removed.
+  row (`constraint` negatives of `cases.tsv`). The stem minimums that only
+  blocked right readings (`ξύν` → `σύν`, `κοὐ` → `οὐ`, `χὠ` → `ὁ`) or changed
+  nothing (`unaugmented`) were removed, and that of -σπερ lowered to one
+  letter (`ὅσπερ` → `ὅς`).
 
 ### History
 
