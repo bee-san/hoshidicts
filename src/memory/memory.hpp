@@ -3,6 +3,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <filesystem>
+#include <string>
 
 namespace memory {
 struct mapped_file {
@@ -19,6 +20,23 @@ struct mapped_file {
 mapped_file map_rd(const std::filesystem::path& path);
 mapped_file map_rw(const std::filesystem::path& path, size_t file_size);
 void unmap(mapped_file mapping);
+
+// Reads all of a non-empty regular file into `out` with one read of the size
+// it has, where an std::ifstream refills a small buffer with a read each time.
+// Through WasmFS's OPFS backend every read of a read-only file is an
+// asynchronous round trip, so a 112 KB dict.zstd costs one instead of 56. The
+// file is opened read-only, as by the stream, and is not mapped: the classic
+// Emscripten FS writes a mapping back into its file when it is synced. As the
+// stream does, it reads on to the end of the file, past the size it was given
+// if the file is longer. A path that stat does not show as a non-empty regular
+// file is not opened, so a FIFO's writer is not let go for nothing. Under
+// WasmFS (HOSHIDICTS_WASMFS), which keeps no FIFOs and whose read-only OPFS
+// descriptor reads a snapshot of the size fstat gives, the open and the fstat
+// decide alone and the read stops at that size: there each stat or read is a
+// round trip. False, with `out` empty, when the path is not a non-empty regular
+// file (procfs sizes files with content as 0), cannot be opened or a read
+// fails.
+bool read_file(const std::filesystem::path& path, std::string& out);
 
 // A file kept open for positional reads, for data that is read on demand
 // instead of mapped. Under Emscripten mmap copies the whole file into linear
