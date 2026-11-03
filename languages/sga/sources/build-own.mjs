@@ -82,8 +82,9 @@ const CONSONANT_CLASS = `[${CONSONANT}]`;
 // rule never reads the words before a space (docs/languages.md 14 step 2) or
 // the pretonic part of a verbal complex.
 const LETTERS = '[{letter}\\u0300-\\u036F]';
-// A dotted stem: letters and the middle dot, at least one dot.
-const DOTTED = '[{letter}\\u0300-\\u036F\\u00B7]';
+// A dotted stem: letters, the abbreviation signs (ɔ for con) and the middle
+// dot, at least one dot.
+const DOTTED = '[{letter}{abbreviation}\\u0300-\\u036F\\u00B7]';
 const DOT = '[\\u00B7]';
 
 const sfx = (inflected, deinflected, conditionsIn, conditionsOut, extra = {}) =>
@@ -221,7 +222,7 @@ add('lenitedFAfterDot', 'lenition',
 add('nasalizationAfterDot', 'nasalization',
     'Nasalised initial of the stressed part of a verbal complex (nod·n-ail → nod·ail, ara·mberar → ara·berar, forsa·mmitter → forsa·mitter).',
     [
-        ['n-', ''], ['n\u2011', ''], ['mb', 'b'], ['nd', 'd'], ['ng', 'g'], ['mm', 'm'], ['ll', 'l'], ['nn', 'n'], ['rr', 'r'],
+        ['n-', ''], ['n\u2011', ''], ['mb', 'b'], ['nd', 'd'], ['ng', 'g'], ['mm', 'm'], ['ll', 'l'], ['nn', 'n'], ['rr', 'r'], ['ṅ', ''], ['ṁb', 'b'],
     ].map(([from, to]) => replace(`·${from}`, `·${to}`, ['v_conj'], ['v_conj'], {occurrence: 'first'})));
 
 // --- Conjunct endings ---------------------------------------------------------
@@ -300,8 +301,14 @@ for (const [id, [name, description]] of Object.entries(conjNames)) {
     }
     for (const [inflected, deinflected] of sConj[id] ?? []) {
         // ·benat → ·ben; ·berat → ·ber, which the palatal-stem step makes
-        // ·beir.
-        rules.push(sfx(inflected, deinflected, ['v_conj'], ['v_conj3', 'v_conj3u'], dotted({stemEndsWith: CONSONANT_CLASS})));
+        // ·beir. The stem may end in a vowel: the hiatus verbs (·gníat →
+        // ·gní, ad·ciam → ad·cí) and W1 and W2 endings these lists have and
+        // the W1 and W2 lists do not (ad·cosnaitis → ad·cosnai). The
+        // passive keeps a consonant before its ending: after a vowel its
+        // endings read deponents and other verbs (in·samlathar is not
+        // samlaid, ro·cloither is not cloid).
+        rules.push(sfx(inflected, deinflected, ['v_conj'], ['v_conj3', 'v_conj3u'],
+            dotted(id === 'conj-pass' ? {stemEndsWith: CONSONANT_CLASS} : {})));
     }
     add(id, name, description, rules);
 }
@@ -331,6 +338,12 @@ add('conj-pret3sg', 'preterite',
 add('conj-spelling', 'spelling',
     'Spelling of a conjunct third singular: final ch for g (ad·aich → ad·aig).',
     [sfx('ch', 'g', ['v_conj'], ['v_conj3'], dotted())]);
+// Compounds of téit "goes" write the third singular -tét, -théit and
+// -tǽt (do·tét, dothéit, dothǽt; headword dotét).
+add('tet', 'téit',
+    'Third singular of a compound of téit written -téit, -tǽt, -táet, -tóet (dotéit, dotǽt, dotáet → dotét).',
+    [['téit', 'tét'], ['tǽt', 'tét'], ['táet', 'tét'], ['tóet', 'tét'], ['taet', 'tét'], ['tæt', 'tét']].map(([from, to]) =>
+        sfx(from, to, ['v_dict'], VERB, {stemMinLength: 2, stemCharacters: LETTERS})));
 // The third singular of a strong verb has a palatal stem where other
 // persons do not (·berat, ·beir; ·gabat, ·gaib), and e is raised to i
 // before it (·dlegat, ·dlig; ·ebat, ·ib). Texts also write the third
@@ -338,7 +351,17 @@ add('conj-spelling', 'spelling',
 add('conj-palatal', 'palatal stem',
     'Third singular conjunct of a strong verb with its palatal stem (·ber → ·beir, ·gab → ·gaib, ·dleg → ·dlig; as·ber → as·beir).',
     [['e', 'ei'], ['a', 'ai'], ['o', 'oi'], ['u', 'ui'], ['e', 'i']].map(([from, to]) =>
-        sfx('', '', ['v_conj', 'v_conj3u'], ['v_conj3'], dotted({stemEndsWith: CONSONANT_CLASS, stemChange: palatalize(from, to)}))));
+        sfx('', '', ['v_conj', 'v_conj3u'], ['v_conj3'], dotted({stemChange: palatalize(from, to)}))));
+
+// Manuscripts and diplomatic editions write a compound verb without the
+// dot, and lenition of its stressed part is then inside the word
+// (dochuirethar for do·cuirethar, focheird for fo·ceird). The preverbs
+// that lenite are listed; the output is the headword.
+const lenitingPreverbs = ['do', 'du', 'fo', 'fu', 'ro', 'ru', 'di', 'imm', 'im', 'ar', 'for', 'fris', 'con', 'ad', 'at', 'as', 'in', 'tar'];
+add('lenitionInCompound', 'lenition',
+    'Lenited stressed part of a compound verb written without the dot (dochuirethar → docuirethar, focheird → foceird, dothǽt → dotǽt).',
+    lenitingPreverbs.flatMap((pv) => [['ch', 'c'], ['th', 't'], ['ph', 'p'], ['ḟ', 'f'], ['ṡ', 's']].map(([from, to]) =>
+        pfx(`${pv}${from}`, `${pv}${to}`, [], VERB, {stemMinLength: 2, stemCharacters: LETTERS}))));
 
 // --- From the conjunct form to the headword -------------------------------------
 // A compound verb's headword is its deuterotonic third singular without the
@@ -434,7 +457,7 @@ for (const [id, [name, description, list, extra = {}]] of Object.entries(absolut
 add('abs-palatal', 'palatal stem',
     'Third singular absolute of a strong verb with its palatal stem (berid → beirid, gabid → gaibid, dlegid → dligid).',
     [['e', 'ei'], ['i', 'ei'], ['a', 'ai'], ['e', 'i']].map(([from, to]) =>
-        sfx('id', 'id', ['v_absu'], VERB, plain({stemEndsWith: CONSONANT_CLASS, stemChange: palatalize(from, to)}))));
+        sfx('id', 'id', ['v_absu'], VERB, plain({stemChange: palatalize(from, to)}))));
 
 // --- The copula and the substantive verb --------------------------------------
 // Irregular forms, written out (is "is", attá "is, exists").
@@ -442,7 +465,7 @@ const copula = [
     // present
     'am', 'at', 'it', 'ammi', 'adib', 'as', 'ata', 'iss',
     // negative and dependent forms
-    'nít', 'nítat', 'nidat', 'nídat', 'níta', 'nípu', 'nípo', 'níbu', 'níbo', 'níba', 'nípa', 'níptar', 'níbtar', 'nibtar', 'níbad', 'nípad', 'níbat', 'nípat',
+    'nít', 'níth', 'nítat', 'nidat', 'nídat', 'níta', 'nípu', 'nípo', 'níbu', 'níbo', 'níba', 'nípa', 'níptar', 'níbtar', 'nibtar', 'níbad', 'nípad', 'níbat', 'nípat',
     // subjunctive, past subjunctive, preterite, future
     'ba', 'bá', 'bat', 'bad', 'bed', 'bid', 'bith', 'bit', 'bes', 'bas', 'betis', 'batar', 'robo', 'ropo', 'robu', 'ropu', 'rop', 'rob', 'robtar', 'roptar', 'ropad', 'robad',
 ];
@@ -513,7 +536,7 @@ const syncopeEndings = ['aib', 'ib', 'a', 'ae', 'ai', 'e', 'i', 'u', 'o'];
 add('syncope', 'syncope',
     'Case form of a noun whose second syllable lost its vowel before the ending (bríathraib, bríathra → bríathar; samlae → samail; lánamnae → lánamain; féchemna → féchem).',
     ['r', 'l', 'n', 'm'].flatMap((c) => ['a', 'ai', 'e'].flatMap((v) => syncopeEndings.map((e) =>
-        sfx(`${c}${e}`, `${v}${c}`, [], NOMINAL, nom({stemMinLength: 3, stemEndsWith: CONSONANT_CLASS}))))));
+        sfx(`${c}${e}`, `${v}${c}`, [], NOMINAL, nom({stemMinLength: 3}))))));
 
 // Palatal final consonants undone: the i written before them is removed, and
 // e raised to i is lowered again (fir → fer, cinn → cenn, maicc → macc, baill
@@ -526,8 +549,9 @@ const raised = 'bcdfglmnprst'.split('').map((c) => [`${c}i`, `${c}e`]);
 add('depalatalization', 'palatal stem',
     'Case form with a palatal final consonant: genitive singular and nominative plural of o-stems, dative and accusative singular of a-stems (fir → fer, maicc → macc, mainn → mann, puirt → port, brataig → bratach).',
     [
+        // The stem change's `between` makes the stem end in a consonant.
         ...[...depal, ...raised].map(([from, to]) => sfx('', '', ['nom_pal'], NOMINAL,
-            {stemCharacters: LETTERS, stemMinLength: 2, stemEndsWith: CONSONANT_CLASS, stemChange: {from: [from], to, occurrence: 'last', between: CONSONANT_CLASS}})),
+            {stemCharacters: LETTERS, stemMinLength: 2, stemChange: {from: [from], to, occurrence: 'last', between: CONSONANT_CLASS}})),
         sfx('aig', 'ach', ['nom_pal'], NOMINAL, nom()),
         sfx('ig', 'ech', ['nom_pal'], NOMINAL, nom()),
     ]);
@@ -538,13 +562,13 @@ add('depalatalization', 'palatal stem',
 add('uInfection', 'u-infection',
     'Case form with u-infection: dative singular of o-stems (fiur → fer, purt → port, maull → mall).',
     [['iu', 'e'], ['u', 'o'], ['au', 'a'], ['eu', 'e']].map(([from, to]) => sfx('', '', [], NOMINAL,
-        {stemCharacters: LETTERS, stemMinLength: 4, stemEndsWith: CONSONANT_CLASS, stemChange: {from: [from], to, occurrence: 'last', between: CONSONANT_CLASS}})));
+        {stemCharacters: LETTERS, stemMinLength: 4, stemChange: {from: [from], to, occurrence: 'last', between: CONSONANT_CLASS}})));
 
 // The accusative plural -u raises e to i (firu → fer).
 add('acc-pl-raised', 'accusative plural',
     'Accusative plural of o-stems with raised e (firu → fer, cinnu → cenn).',
     raised.map(([from, to]) => sfx('u', '', [], NOMINAL,
-        {stemCharacters: LETTERS, stemMinLength: 2, stemEndsWith: CONSONANT_CLASS, stemChange: {from: [from], to, occurrence: 'last', between: CONSONANT_CLASS}})));
+        {stemCharacters: LETTERS, stemChange: {from: [from], to, occurrence: 'last', between: CONSONANT_CLASS}})));
 
 // Comparison of adjectives: comparative -iu, -u; superlative -em, -am;
 // equative -ithir, -idir; with the stem made palatal (siniu, sinem → sen;

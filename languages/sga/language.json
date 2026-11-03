@@ -42,6 +42,12 @@
         "variants": [[{"map": {"\u2027": "\u00B7", "\u2219": "\u00B7", "\u22C5": "\u00B7"}}]]
       },
       {
+        "id": "macronLength",
+        "name": "Write a length mark as an acute (ā → á)",
+        "keepInput": false,
+        "variants": [[{"map": {"ā": "á", "ē": "é", "ī": "í", "ō": "ó", "ū": "ú", "ǣ": "ǽ", "Ā": "Á", "Ē": "É", "Ī": "Í", "Ō": "Ó", "Ū": "Ú", "Ǣ": "Ǽ"}}]]
+      },
+      {
         "id": "decapitalize",
         "name": "Decapitalize text",
         "variants": [[{"case": "lower"}]]
@@ -67,6 +73,7 @@
     "transforms": "transforms.json",
     "traceSelection": "shortest",
     "formOf": "follow",
+    "untaggedTerms": "pass",
     "functionWords": [],
     "variantPasses": []
   },

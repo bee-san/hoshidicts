@@ -7,8 +7,8 @@
 //
 // 1. The union of sources/own.json and sources/yomitan.json, as
 //    tools/merge-transforms.mjs makes it (Yomitan's transforms first).
-// 2. The Yomitan transforms of DROP (or --drop) are removed: README.md,
-//    "Rule provenance", gives the numbers for each.
+// 2. The Yomitan transforms of DROP (or --drop) and the rules of DROP_RULES
+//    are removed: README.md, "Rule provenance", gives the numbers for each.
 // 3. Yomitan's replace rules (tryAlternateOrthography) are kept with the
 //    conditions of the own spelling rules: conditionsIn the headword
 //    conditions (n_dict, adj_dict, v_dict) and conditionsOut ["spelt"],
@@ -37,6 +37,10 @@ import {readFileSync} from 'node:fs';
 const here = dirname(fileURLToPath(import.meta.url));
 // Yomitan transforms left out for measured harm (README.md, Rule provenance).
 const DROP = ['lenited'];
+// Single Yomitan rules left out: [transform id, rule index, reason].
+const DROP_RULES = [
+    ['[IM] nasalized (Middle Irish)', 2, 'dt → d reads eclipsed t as d (dtech → dech, a headword "best"); eclipsed t is t'],
+];
 const SPELT_IN = ['n_dict', 'adj_dict', 'v_dict'];
 const SPELT_OUT = ['spelt'];
 
@@ -98,7 +102,9 @@ for (const transform of yomitan.transforms) {
     transform.rules.forEach((rule, index) => {
         const matches = [...(ownByShape.get(shape(rule)) ?? []), ...prefixRepeats(rule)];
         for (const m of matches) { repeated.add(`${m.transform}\u0000${m.index}`); }
+        const dropped = DROP_RULES.find(([id, i]) => id === transform.id && i === index);
         const fate = drop.has(transform.id) ? 'left out (measured harm)'
+            : dropped !== undefined ? `left out: ${dropped[2]}`
             : matches.length > 0 ? `made by own ${matches.map((m) => `${m.transform}[${m.index}]`).join(', ')}`
                 : 'kept';
         provenance.push([transform.id, String(index), rule.type, rule.inflected ?? '', rule.deinflected ?? '', fate]);

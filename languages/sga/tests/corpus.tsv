@@ -250,6 +250,7 @@ kaikki n dative dual	1	locaib	loc	n	*
 kaikki n genitive	1	brithemon	brithem	n	*
 kaikki n nominative plural	1	bannáin	bannán	n	*
 kaikki n plural vocative	1	lésu	lés	n	*
+kaikki n nominative plural	1	imgabála	imgabáil	n	*
 kaikki n dative dual	1	beithib	beithe	n	*
 kaikki n plural vocative	1	liru	ler	n	*
 kaikki n dative dual	1	cluichib	cluiche	n	*
@@ -451,6 +452,7 @@ kaikki v active indicative plural present third-person	1	·fedat	feidid	v	*
 kaikki v active first-person indicative plural present	1	·scríbam	scríbaid	v	*
 kaikki v active indicative present singular third-person	1	·foí	foid	v	*
 kaikki v active preterite singular third-person	1	·sáid	sáidid	v	*
+kaikki v active indicative present singular	1	do·gníu	dogní	v	*
 kaikki v active preterite singular third-person	1	·fúach	fúachaid	v	*
 kaikki v indicative passive present singular	1	·scrútar	scrútaid	v	*
 kaikki v active indicative present singular third-person	1	do·fúarat	dofúarat	v	*

@@ -35,7 +35,7 @@ lenited (Middle Irish)	2	replace	dh	d	kept
 [IM] nasalized	4	prefix	m-		kept
 [IM] nasalized (Middle Irish)	0	prefix	gc	c	kept
 [IM] nasalized (Middle Irish)	1	prefix	bp	p	kept
-[IM] nasalized (Middle Irish)	2	prefix	dt	d	kept
+[IM] nasalized (Middle Irish)	2	prefix	dt	d	left out: dt → d reads eclipsed t as d (dtech → dech, a headword "best"); eclipsed t is t
 [IM] lenited	0	prefix	ch	c	made by own lenition[0]
 [IM] lenited	1	prefix	ph	p	made by own lenition[2]
 [IM] lenited	2	prefix	th	t	made by own lenition[1]

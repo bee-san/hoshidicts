@@ -4,7 +4,7 @@
   "revision": "1",
   "sequenced": false,
   "author": "hoshidicts",
-  "description": "A tiny Old Irish dictionary for languages/sga/tests/lookup.tsv, written for the pack. Lemma rows carry part-of-speech rules as a tagged dictionary writes them; in, -som, in tan and Érinn are untagged as wty-sga-en writes every row; fir is a form-of row.",
+  "description": "A tiny Old Irish dictionary for languages/sga/tests/lookup.tsv, written for the pack. Most lemma rows carry part-of-speech rules as a tagged dictionary writes them; in, ní, cloch, -som, in tan and Érinn are untagged, as wty-sga-en writes every row; fir is a form-of row.",
   "sourceLanguage": "sga",
   "targetLanguage": "en"
 }

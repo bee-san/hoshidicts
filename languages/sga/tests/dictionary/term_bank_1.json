@@ -31,5 +31,7 @@
   ["-som", "", "pron", "", 0, ["emphasising suffix: he, they"], 30, ""],
   ["in tan", "", "conj", "", 0, ["when"], 31, ""],
   ["Érinn", "", "name", "", 0, ["Ireland (dative, accusative)"], 32, ""],
-  ["fir", "", "non-lemma", "", 0, [["fer", ["genitive singular"]]], 33, ""]
+  ["fir", "", "non-lemma", "", 0, [["fer", ["genitive singular"]]], 33, ""],
+  ["cloch", "", "n fem", "", 0, ["stone"], 34, ""],
+  ["ní", "", "ptcl", "", 0, ["not (negative particle)"], 35, ""]
 ]

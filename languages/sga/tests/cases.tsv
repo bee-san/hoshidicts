@@ -167,3 +167,166 @@ negatives	0	nitat	níta	*	*
 negatives	0	beraid	bir	*	*
 negatives	0	daman	dam	*	*
 negatives	0	naib	aub	*	*
+verbal complex	1	dochuirethar	docuirethar	v	lenitionInCompound
+verbal complex	1	focheird	foceird	v	lenitionInCompound
+negatives	0	dochí	docí	*	*
+negatives	0	focheird in	foceird in	*	*
+verbal complex	1	dothǽt	dotét	v	ǽ/æ for é|lenitionInCompound
+verbal complex	1	Dothéit	dotét	v	tet|lenitionInCompound
+copula	1	níth	is	v	copula
+conjunct	1	do·ṅgníat	dogní	v	*
+conjunct	1	ad·cíam	adcí	v	*
+conjunct	1	aras·celatais	arcela	v	*
+conjunct	1	asid·roilliset	asroilli	v	*
+noun	1	rangabálae	rangabál	n	*
+negatives	0	in·samlathar	samlaid	*	*
+negatives	0	ro·cloither	cloid	*	*
+negatives	0	clárach	clár	*	*
+conjunct	1	ɔ·ríctar	conricc	v	*
+# Negatives for the stem constraints: each reading appears when the constraint is removed (sources/mutate.py).
+constraint nasalizationNoHyphen	0	na	a	*	*
+constraint nasalization	0	nd	d	*	*
+constraint lenition	0	th	t	*	*
+constraint hProthesis	0	hymn	ymn	*	*
+constraint particle	0	ara·	·	*	*
+constraint infixedPronoun	0	nom·	no·	*	*
+constraint conj-pres	0	ad·n-ellat	adn-el	*	*
+constraint conj-pass	0	muinter	muin	*	*
+constraint conj-pass	0	ad·n-aigder	adn-aigd	*	*
+constraint conj-ipf	0	dūnad	dún	*	*
+constraint conj-pret	0	fergus	ferg	*	*
+constraint conj-pret	0	ad·n-agais	adn-aga	*	*
+constraint conj-fut	0	nís·n-ulemairbfe	is·n-ulemairba	*	*
+constraint conj-fut	0	adfēt	adi	*	*
+constraint conj-cond	0	adfēd	adi	*	*
+constraint conj-subj	0	file	fili	*	*
+constraint conj-subj	0	ara·n-éigea	ara·n-egi	*	*
+constraint conj-1sg	0	seisiur	seiseir	*	*
+constraint conj-1sg	0	do·n-airissiur	don-airiseir	*	*
+constraint conj-dep	0	araid	arathar	*	*
+constraint conj-pret3sg	0	is	isa	*	*
+constraint conj-pret3sg	0	a·tá	a·taa	*	*
+constraint conj-spelling	0	lóech	lóeg	*	*
+constraint conj-palatal	0	for	foir	*	*
+constraint conj-palatal	0	as·mbeir	ais·beir	*	*
+constraint absolute	0	ro·car	cid	*	*
+constraint absolute	0	a·ta	táid	*	*
+constraint absolute	0	ara·n-ecatar	n-ecataraid	*	*
+constraint pres-1sg	0	cú	cid	*	*
+constraint pres-1sg	0	siu	-siaid	*	*
+constraint pres-2sg	0	ci	cid	*	*
+constraint pres-2sg	0	sní	-snid	*	*
+constraint pres-2sg	0	robāi	robáid	*	*
+constraint pres-1pl	0	immi	iid	*	*
+constraint pres-1pl	0	fo·daimi	fo·daiid	*	*
+constraint pres-2pl	0	the	id	*	*
+constraint pres-2pl	0	do·berthe	do·berid	*	*
+constraint pres-3pl	0	cit	cid	*	*
+constraint pres-3pl	0	for·téit	for·teid	*	*
+constraint rel-3sg	0	mes	mid	*	*
+constraint rel-3sg	0	do·bertis	do·bertiid	*	*
+constraint rel-pl	0	mmé	mid	*	*
+constraint rel-pl	0	ad·chotatæ	ad·chotaaid	*	*
+constraint pass-pres	0	fair	fid	*	*
+constraint pass-pres	0	ro·finnatar	ro·finaaid	*	*
+constraint pret-abs	0	fis	fid	*	*
+constraint pret-abs	0	duda·gnetis	duda·gnetid	*	*
+constraint pret-pass	0	hithe	iid	*	*
+constraint pret-pass	0	ara·rethi	ara·reid	*	*
+constraint fut-abs	0	fās	aid	*	*
+constraint fut-abs	0	ar·troídfe	ar·troidid	*	*
+constraint fut-abs	0	comaicsigfid	comacsigaid	*	*
+constraint imperative	0	cét	cid	*	*
+constraint imperative	0	as·berat	as·beraid	*	*
+constraint suffixed-pronoun	0	taí	aid	*	*
+constraint suffixed-pronoun	0	for·centai	for·cenaid	*	*
+constraint deponent	0	cur	caithir	*	*
+constraint deponent	0	as·biur	as·biaithir	*	*
+constraint abs-palatal	0	findabair	feindabid	*	*
+constraint abs-palatal	0	im·roimsid	im·roeimsid	*	*
+constraint dat-pl	0	foraib	fora	*	*
+constraint dat-pl	0	adib	ad	*	*
+constraint dat-pl	0	ɔsonaib	ɔson	*	*
+constraint nom-pl	0	ina	in	*	*
+constraint nom-pl	0	reliqua	reliqu	*	*
+constraint nom-pl	0	a·tá	a·t	*	*
+constraint gen-sg	0	ara	ar	*	*
+constraint gen-sg	0	ndǽ	ndá	*	*
+constraint gen-sg	0	fod·era	fod·er	*	*
+constraint dat-sg-io	0	du	dae	*	*
+constraint dat-sg-io	0	treu	tree	*	*
+constraint dat-sg-io	0	da·gníu	da·gnae	*	*
+constraint n-stem	0	sin	siu	*	*
+constraint n-stem	0	lasodain	lasodaiu	*	*
+constraint n-stem	0	fris·ben	fris·biu	*	*
+constraint mn-stem	0	imon	im	*	*
+constraint mn-stem	0	ad·ríme	ad·rim	*	*
+constraint aid-stem	0	fada	faid	*	*
+constraint aid-stem	0	ro·rádi	ro·raid	*	*
+constraint dental-stem	0	nertad	ertu	*	*
+constraint dental-stem	0	do·ratad	do·ratu	*	*
+constraint r-stem	0	thríb	thair	*	*
+constraint r-stem	0	imme·thecrathar	imbe·thecrathair	*	*
+constraint guttural-stem	0	thraig	thair	*	*
+constraint guttural-stem	0	imbārach	imbaair	*	*
+constraint guttural-stem	0	ro·dechraig	ro·dechair	*	*
+constraint syncope	0	fri	fer	*	*
+constraint syncope	0	do·gní	do·gain	*	*
+constraint depalatalization	0	dig	dech	*	*
+constraint depalatalization	0	ailill	alil	*	*
+constraint uInfection	0	fuil	foil	*	*
+constraint uInfection	0	da·uc	da·oc	*	*
+constraint acc-pl-raised	0	bidbadu	bedbad	*	*
+constraint acc-pl-raised	0	con·tibu	con·teb	*	*
+constraint comparative	0	áu	a	*	*
+constraint comparative	0	su	-s	*	*
+constraint superlative	0	arem	ar	*	*
+constraint superlative	0	chóem	cho	*	*
+constraint superlative	0	as·indisem	as·innis	*	*
+constraint equative	0	aithir	a	*	*
+constraint equative	0	-igidir	-ig	*	*
+constraint spelling	0	maith	mad	*	*
+constraint spelling	0	mmēit	mbeid	*	*
+constraint spelling	0	as·berat	as·beratt	*	*
+constraint spelling	0	inna	innaae	*	*
+constraint tet	0	tǽt	tétt	*	*
+# Yomitan's spelling and Middle Irish mutation rules.
+yomitan	1	gabaal	gabál	*	doubled vowel
+yomitan	1	ccach	cach	*	[IM] geminated
+yomitan	1	slegh	sleg	*	lenited (Middle Irish)
+yomitan	1	ghlas	glas	*	[IM] lenited (Middle Irish)
+yomitan	1	gcenn	cenn	*	[IM] nasalized (Middle Irish)
+yomitan	1	bpopul	popul	*	[IM] nasalized (Middle Irish)
+yomitan	1	comallnad	comalnad	*	doubled consonant
+yomitan	1	becg	bec	*	cg for c
+yomitan	1	sétd	sét	*	td for t
+yomitan	1	popbul	popul	*	pb for p
+yomitan	1	sǽt	sét	*	ǽ/æ for é
+yomitan	1	cland	clann	*	nd for nn
+yomitan	1	m-athair	athair	*	[IM] nasalized
+absolute	1	marbthai	marbaid	v	pret-pass
+negatives	0	dtech	dech	*	*
+constraint nasalizationNoHyphen	0	nrabadar	rabadar	*	*
+constraint conj-pass	0	·etar	·i	*	*
+constraint conj-ipf	0	ad·n-ágainn	adn-ag	*	*
+constraint conj-ipf	0	·tís	·	*	*
+constraint conj-pret	0	nád·ais	·a	*	*
+constraint conj-fut	0	in·fet	·i	*	*
+constraint conj-subj	0	ara·n-osailcea	ara·n-osailci	*	*
+constraint conj-dep	0	ad·n-águr	adn-agadar	*	*
+constraint conj-dep	0	·estar	edaraid	*	*
+constraint conj-pret3sg	0	ad·n-aig	adn-aiga	*	*
+constraint conj-palatal	0	ad·n-aigder	adn-aigdeir	*	*
+constraint deuterotonic	0	ním·thá	im	*	*
+constraint deuterotonic	0	as·ind	as	*	*
+# Constructed texts for constraints no measured word reaches.
+constraint conj-cond	0	·fainn	·a	*	*
+constraint conj-subj	0	·ae	·a	*	*
+constraint conj-1sg	0	·iur	·eir	*	*
+constraint conj-pret3sg	0	ro·	ro·a	*	*
+constraint conj-spelling	0	·ch	·g	*	*
+constraint conj-cond	0	ad·n-ágfainn	adn-ága	*	*
+constraint conj-spelling	0	ad·n-aich	adn-aig	*	*
+constraint tet	0	for·téit	for·tét	*	*
+constraint emphatic	0	in fer-sa	in fer	*	*
+constraint emphatic	0	-sa	-	*	*
