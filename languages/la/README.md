@@ -266,7 +266,7 @@ its union of the two files has 222 transforms and 3,207 rules (3,199 `own`,
     10,000 frequent words, 70 in the books and 152 in Tatoeba.
   - a5dd27b and d2c03ad, after the first audit: the esse constraints, the
     rare readings left to the dictionary and the transform order above, and
-    a stricter judge. 02e03c8 and 1639239, after the second: exclusions of
+    a stricter judge. aed0cc7 and efa303c, after the second: exclusions of
     the exact stem, the split rules, the -ligō order and the judge's esse
     fix. With the final judge, the head the first audit saw (29cb6f1) shows a
     wrong first result for 50 of the 10,000 words (7,673 tokens), at 986
@@ -276,7 +276,7 @@ its union of the two files has 222 transforms and 3,207 rules (3,199 `own`,
 
 ## Measurements
 
-The pack at 1639239 (this branch on 1fed676; the engine is the same since
+The pack at efa303c (this branch on 39cebbe; the engine is the same since
 0a73e5e), GCC 14.3, Release; wty-la-en
 imported by `hoshidicts-cli import`, as published. The sample is the 700 rows
 of `corpus.tsv` and `gaps.tsv` together. Section 6 gives the commands.
@@ -437,7 +437,8 @@ judged by hand too.
      - Live heap after the load: +1,350,544 bytes single-thread, +1,350,976
        threaded (`hdw_memory_stats`).
    - Hachidori (`test/chrome-language-pack.mjs`, feat/multi-language 803f7b6e
-     with this branch at 1639239 in `third_party/hoshidicts`, Chrome
+     with this branch at 1639239 (efa303c before the rebase onto 39cebbe) in
+     `third_party/hoshidicts`, Chrome
      152.0.7977.75): 31 of 31 checks pass. Settings adds Latin beside Japanese
      and imports wty-la-en (1,977,517 terms, 2.5 s); 27 hovered words find
      their lemma first with their trace (*virumque* → vir, *dūxit* → duco,
@@ -502,7 +503,7 @@ judged by hand too.
    - **Conformance** (`language-conformance-test`): `corpus.tsv` 658 / 658,
      `cases.tsv` 1,089 / 1,089, `yomitan.tsv` 7 / 7, `text.tsv` 40 / 40,
      `lookup.tsv` 67 / 67; `gaps.tsv` 0 / 42 (reported). `classes.json` agrees
-     with the engine (3 classes, 785 fields, 2 steps). 1,260 of the 5,195
+     with the engine (3 classes, 809 fields, 2 steps). 1,260 of the 5,195
      rules are exercised by a passing row. `tests/` and `sources/` hold
      999,892 bytes.
    - **Differential check** (`tools/check-yomitan.mjs`): 2,820 inputs and
