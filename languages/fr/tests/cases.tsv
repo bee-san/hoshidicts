@@ -233,6 +233,9 @@ connaître	1	naquit	naître	v	simple-past-3s
 connaître	1	croît	croître	v	present-3s
 connaître	1	accru	accroître	v	past-participle
 connaître	1	décrut	décroître	v	simple-past-3s
+connaître	1	accrois	accroître	v	*
+connaître	1	accroît	accroître	v	present-3s
+connaître	1	accroit	accroître	v	present-3s
 third group	1	vis	vivre	v	*
 third group	1	vécut	vivre	v	simple-past-3s
 third group	1	vécu	vivre	v	past-participle
@@ -416,6 +419,10 @@ spelling	1	célèbre	célébrer	v	*
 spelling	1	sèche	sécher	v	*
 spelling	1	règle	régler	v	*
 spelling	1	protège	protéger	v	*
+spelling	1	allègues	alléguer	v	present-2s
+spelling	1	délègue	déléguer	v	*
+spelling	1	dissèquent	disséquer	v	*
+spelling	1	hypothèque	hypothéquer	v	*
 spelling	1	protégeons	protéger	v	*
 spelling	1	dépèce	dépecer	v	*
 spelling	1	dépeçons	dépecer	v	*

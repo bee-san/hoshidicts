@@ -13,6 +13,7 @@
     "vowel": "[aeiouyàâäæéèêëîïôöœùûüÿAEIOUYÀÂÄÆÉÈÊËÎÏÔÖŒÙÛÜŸ]",
     "elidable": "[{vowel}hH]",
     "consonant": "[bcçdfghjklmnpqrstvwxz]",
+    "consonantOrU": "[{consonant}u]",
     "notSpace": "[^ ]"
   },
   "text": {

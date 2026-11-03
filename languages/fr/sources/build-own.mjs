@@ -488,7 +488,10 @@ model('croître', 0, 'free', {
 });
 // accroître and décroître: accrus, accrut, accru, without the circumflex of
 // croître. A letter must come before crus, so that crut is croire.
-model('accroître', 2, 'word', {ps: [['accr', 'u']], pp: 'accru', imp: null});
+model('accroître', 2, 'word', {ps: [['accr', 'u']], pp: 'accru', imp: null,
+    // j'accrois, il accroît (accroit in the 1990 spelling), without the
+    // circumflex of je croîs.
+    set: {present: {'1s': 'accrois', '2s': 'accrois', '3s': ['accroît', 'accroit']}, imperative: {'2s': 'accrois'}}});
 // croire has no compounds in use (accroire has only its infinitive), so
 // accrut, accru are accroître only.
 model('croire', 0, 'alone', {sg: [['croi', 's']], pl: 'croy', p3: 'croi', sb: 'croi', sb2: 'croy', ps: [['cr', 'u']], fut: 'croir', pp: 'cru'});
@@ -648,7 +651,8 @@ for (const m of MODELS) {
 
 // The stem change of lever, mener, acheter (e → è) and céder, espérer,
 // régler, célébrer (é → è) before a silent e: lève, lèvera, cède, célèbre.
-// The è nearest the ending, with only consonants after it, becomes e or é
+// The è nearest the ending, with only consonants after it (and the u of gu
+// and qu: allègue, dissèque), becomes e or é
 // (the dictionary decides which verb exists); the future of céder is cédera
 // (traditional) or cèdera (1990 spelling), and both read céder.
 const MUTE = [
@@ -667,7 +671,7 @@ for (const [tense, persons, ending] of MUTE) {
     for (const to of ['e', 'é']) {
         verbRules.push([verbTransformId(tense, persons), suffix(ending, 'er', t.conditionsIn, out, {
             stemMinLength: 2,
-            stemChange: {from: ['è'], to, occurrence: 'last', between: '{consonant}'},
+            stemChange: {from: ['è'], to, occurrence: 'last', between: '{consonantOrU}'},
         })]);
     }
 }
