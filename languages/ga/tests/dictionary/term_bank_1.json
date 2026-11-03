@@ -43,5 +43,7 @@
   ["dalta", "", "n", "n", 0, ["pupil, student"], 42, ""],
   ["daltach", "", "adj", "adj", 0, ["pupil-like (stands for an -ach adjective beside a noun)"], 43, ""],
   ["gealach", "", "n", "n", 0, ["moon"], 44, ""],
-  ["gealaigh", "", "v", "v", 0, ["to brighten, to whiten"], 45, ""]
+  ["gealaigh", "", "v", "v", 0, ["to brighten, to whiten"], 45, ""],
+  ["clós", "", "n", "n", 0, ["yard, enclosure"], 46, ""],
+  ["clóigh", "", "v", "v", 0, ["to print, to subdue"], 47, ""]
 ]

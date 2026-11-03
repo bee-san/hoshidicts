@@ -62,6 +62,9 @@ const conditions = {
     ns: {name: 'Noun singular', isDictionaryForm: true},
     adj: {name: 'Adjective', isDictionaryForm: true},
     adv: {name: 'Adverb', isDictionaryForm: true},
+    // A verb form whose lenition or past d' was removed, for the Munster
+    // -(e)as and -(a)is past forms only: no dictionary row carries it.
+    lenited: {name: 'Lenited verb form', isDictionaryForm: false},
 };
 
 // Classes of language.json used by the rules.
@@ -155,6 +158,19 @@ for (const [inflected, deinflected] of LENITED) {
     prefix('lenition', inflected, deinflected, [], {stemStartsWith: AFTER_MUTATION});
     prefix('lenition', upper(inflected), upper(deinflected), [], {stemStartsWith: AFTER_MUTATION});
 }
+// The Munster past forms in -(e)as and -(a)is are read with their lenited
+// initial or past d' (mholas, d'ólais): as plain endings they read the -as
+// nouns as verbs (beartas → beart). Their rules keep the initial and give the
+// intermediate condition `lenited`, which only these twins of the lenition and
+// d' rules take, so the reading takes two steps and a lenited noun of one step
+// comes first (chlós → clós, not clóigh; chumas → cumas, not cum). The twins
+// also apply to a text without conditions, where they repeat the texts of the
+// rules above with narrower conditions.
+for (const [inflected, deinflected] of LENITED) {
+    add('lenition', {type: 'prefix', inflected, deinflected, conditionsIn: ['lenited'], conditionsOut: ['v'], stemStartsWith: AFTER_MUTATION});
+    add('lenition', {type: 'prefix', inflected: upper(inflected), deinflected: upper(deinflected), conditionsIn: ['lenited'], conditionsOut: ['v'],
+        stemStartsWith: AFTER_MUTATION});
+}
 
 transform('eclipsis', 'eclipsis', 'Eclipsis (urú): a consonant before the first one, or n- before a vowel, after ár, bhur, a (their), i, go, an (interrogative), nach, dá and the article after prepositions: mbád → bád, gcathair → cathair, bhfuil → fuil, ndoras → doras, n-athair → athair, i nÉirinn → Éirinn, i mBaile Átha Cliath → Baile Átha Cliath.');
 for (const [inflected, deinflected] of ECLIPSED) {
@@ -192,6 +208,9 @@ for (const particle of ['d\'', 'm\'', 'b\'', 'dh\'']) {
     prefix('elision', particle, '', [], {stemStartsWith: VOWEL});
     prefix('elision', `${particle}fh`, 'f', [], {stemStartsWith: AFTER_MUTATION});
 }
+// The past d' before the Munster -(e)as and -(a)is forms (d'ólas, d'fhágais).
+add('elision', {type: 'prefix', inflected: 'd\'', deinflected: '', conditionsIn: ['lenited'], conditionsOut: ['v'], stemStartsWith: VOWEL});
+add('elision', {type: 'prefix', inflected: 'd\'fh', deinflected: 'f', conditionsIn: ['lenited'], conditionsOut: ['v'], stemStartsWith: AFTER_MUTATION});
 
 // The emphatic suffixes. -sa/-se/-san/-sean follow the vowel quality of the
 // word. On the prepositional pronouns they are written out below (agamsa,
@@ -313,13 +332,14 @@ const VOWEL_START = /^[aeiouáéíóúf]/;
 // d'fhágas): as plain endings they read the -as nouns and their genitives
 // as verbs (beartas → beart, cleachtais → cleacht, fearas → fear).
 const LENITED_ONLY = new Set(['past-1sg-munster', 'past-2sg-munster']);
-const PAST_INITIALS = [...LENITED, ['d\'', ''], ['d\'fh', 'f']];
+// The initial is kept (identity prefix pairs); the twins remove it.
+const PAST_INITIALS = [...LENITED.map(([i]) => [i, i]), ['d\'', 'd\''], ['d\'fh', 'd\'fh']];
 function lenitedEndings(id, pairs, conditionsOut, constraints = {}) {
     const unique = [...new Map(pairs.filter(([i]) => i !== '').map((p) => [p.join('\t'), p])).values()];
     if (unique.length === 0) { return; }
     const groups = EXPANDED ? unique.map((p) => [p]) : [unique];
     for (const suffixes of groups) {
-        add(id, {type: 'circumfix', prefixes: PAST_INITIALS, suffixes, conditionsIn: [], conditionsOut, ...constraints});
+        add(id, {type: 'circumfix', prefixes: PAST_INITIALS, suffixes, conditionsIn: [], conditionsOut: ['lenited'], ...constraints});
     }
 }
 
@@ -659,7 +679,7 @@ for (const [lemma, stem, ids] of IRREGULAR_STEMS) {
 // the plural of first-declension nouns, their vocative, and the genitive
 // singular masculine of adjectives (an fhir mhóir). -ach → -aigh and
 // -each → -igh likewise (Sasanach → Sasanaigh, coileach → coiligh).
-const SLENDER = [['ai', 'a'], ['ái', 'á'], ['oi', 'o'], ['ói', 'ó'], ['ui', 'u'], ['úi', 'ú'], ['ei', 'ea'], ['ei', 'e'], ['éi', 'éa'], ['i', 'ea'], ['i', 'io'], ['í', 'ío']];
+const SLENDER = [['ai', 'a'], ['ái', 'á'], ['oi', 'o'], ['ói', 'ó'], ['ui', 'u'], ['úi', 'ú'], ['ei', 'ea'], ['ei', 'e'], ['éi', 'ia'], ['éi', 'éa'], ['i', 'ea'], ['i', 'io'], ['í', 'ío']];
 const changeLast = (from, to) => ({from: [from], to, occurrence: 'last', between: CONSONANT});
 
 transform('slender', 'genitive / plural / vocative', 'Slender form of a first-declension noun or adjective: genitive singular (an bháid, an fhir, an Sasanaigh), plural (na báid, na fir, éin), vocative (a Sheáin, a fhir) and the genitive masculine of adjectives (an fhir mhóir): báid → bád, fir → fear, éin → éan, poist → post, Sasanaigh → Sasanach, Eiritréigh → Eiritréach.');
@@ -714,7 +734,7 @@ transform('plural', 'plural', 'Strong plurals: -(e)anna (scoileanna, amanna), -�
     // of -(e)ach adjectives as nouns (réigiúnacha → réigiún, straitéiseacha
     // → straitéis, leictreonacha → leictreon), which adj-plural reads right.
     endings('plural', [['anna', ''], ['eanna', ''], ['í', ''], ['í', 'e'], ['aí', 'a'], ['acha', 'a'],
-        ['ithe', 'í'], ['te', ''], ['te', 'e'], ['rí', 'ir'],
+        ['ithe', 'í'], ['aithe', 'aí'], ['te', ''], ['te', 'e'], ['rí', 'ir'],
         ['taí', 'adh'], ['thaí', 'adh'], ['tí', 'eadh'], ['uithe', 'ú'], ['úlacha', 'úil'], ['álacha', 'áil'], ['ánacha', 'áin'], ['ónacha', 'óin']], N,
     {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
     endings('plural', [['the', ''], ['nna', ''], ['ite', ''], ['thaí', ''], ['anta', '']], N, {stemMinLength: 1, stemCharacters: NO_SPACE, stemEndsWith: VOWEL});
@@ -750,7 +770,7 @@ transform('plural', 'plural', 'Strong plurals: -(e)anna (scoileanna, amanna), -�
         ['caoirigh', 'caora'], ['fiacla', 'fiacail'], ['doirse', 'doras'], ['soilse', 'solas'], ['bóithre', 'bóthar'], ['tailte', 'talamh'],
         ['aithreacha', 'athair'], ['máithreacha', 'máthair'], ['oibreacha', 'obair'], ['sceana', 'scian'], ['sléibhte', 'sliabh'],
         ['déithe', 'dia'], ['nithe', 'ní'], ['slite', 'slí'], ['deirfiúracha', 'deirfiúr'], ['uaire', 'uair'], ['cinn', 'ceann'],
-        ['guaillí', 'gualainn'], ['troithe', 'troigh'], ['foirne', 'foireann'], ['ranna', 'roinn'], ['ranna', 'rann']]) {
+        ['guaillí', 'gualainn'], ['troithe', 'troigh'], ['foirne', 'foireann'], ['ranna', 'roinn'], ['ranna', 'rann'], ['tíortha', 'tír']]) {
         whole('plural', form, lemma, N);
     }
 }

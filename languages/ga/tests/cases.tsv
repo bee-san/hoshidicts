@@ -97,9 +97,9 @@ present	1	deir	abair	v	present
 past	1	mholamar	mol	v	past-1pl|lenition
 past	1	cheannaíomar	ceannaigh	v	past-1pl|lenition
 past	1	d'imríomar	imir	v	past-1pl|elision
-past	1	mholas	mol	v	past-1sg-munster
-past	1	bhrisis	bris	v	past-2sg-munster
-past	1	d'ólais	ól	v	past-2sg-munster
+past	1	mholas	mol	v	lenition|past-1sg-munster
+past	1	bhrisis	bris	v	lenition|past-2sg-munster
+past	1	d'ólais	ól	v	elision|past-2sg-munster
 past	1	mholabhair	mol	v	past-2pl-munster|lenition
 past	1	mholadar	mol	v	past-3pl-munster|lenition
 past	1	leanas	lean	v	past-1sg-munster
@@ -300,6 +300,10 @@ noun	1	litreacha	litir	n	plural
 negatives	0	seachtracha	seachtair	*	*
 negatives	0	sleachta	sleach	n	*
 negatives	0	tréimhseacha	tréimhs	*	*
+noun	1	éisc	iasc	n	slender
+noun	1	ionadaithe	ionadaí	n	plural
+noun	1	tíortha	tír	n	plural
+noun	1	thíortha	tír	n	plural|lenition
 # Constraint rows: each fails when one stem constraint of the named transform is deleted (sources/README: Measurements, mutations). Most sources are words of the Irish Wikipedia or UD Irish-IDT; the rest are built from the rule's ending.
 constraint-eclipsis	0	n-Éces	Éces	*	*
 constraint-h-prefix	0	hd	d	*	*

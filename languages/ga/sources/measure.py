@@ -3,7 +3,7 @@
 """Measurements of README.md (Measurements 2-4) for the Irish pack.
 
 Not run by any test. It looks words up as a host does with
-languages/en/sources/lookup-batch.cpp (Lookup::lookup, 16 results, scan
+languages/ga/sources/lookup-batch.cpp (Lookup::lookup, 16 results, scan
 length 16, no language options) and judges the first result that has a
 definition:
 
@@ -227,22 +227,14 @@ def gold_lemmas(sentences):
     return {form: c.most_common(1)[0][0] for form, c in by_form.items()}
 
 
-def judge(first, form, lemmas, named=frozenset()):
-    """right-entry (the form's own entry) / right-lemma (the corpus lemma or
-    one of the form's lemmas) / right-named (a lemma only the dictionary's
-    form-of rows name) / multiword / none / wrong."""
-    if first is None:
-        return 'none'
-    if len(first['matched']) > len(form):
-        return 'multiword'
-    expression = first['expression'].lower()
-    if expression == form.lower():
-        return 'right-entry'
-    if expression in {l.lower() for l in lemmas}:
-        return 'right-lemma'
-    if expression in {l.lower() for l in named}:
-        return 'right-named'
-    return 'wrong'
+MUTATIONS = {'lenition', 'eclipsis', 'h-prefix', 't-prefix', 'elision'}
+
+
+def same(a, b):
+    """Two headwords are the same word: equal ignoring case, or a Wiktionary
+    page title such as wty-ga-en's `i/languages A to L` for the preposition i."""
+    a, b = a.lower(), b.lower()
+    return a == b or a.split('/')[0] == b or b.split('/')[0] == a
 
 
 def named_lemmas(form_of, form):
@@ -261,25 +253,29 @@ def named_lemmas(form_of, form):
     return out
 
 
-def rule_made(row, transform_ids):
-    """Whether a pack rule (not only a dictionary's form-of reference) made the first result."""
-    return any(step in transform_ids for step in row['trace'].split('|') if step)
-
-
 class Judge:
     """Classifies a lookup's first result with a definition (README, Measurements):
 
-    right-entry   the word's own entry (an exact match ranks first);
-    right-lemma   the expected lemma (the treebank's, or the word's form-of rows' for the frequency list);
-    right-named   a lemma the dictionary connects to the word: named by its form-of rows or by an
-                  "eclipsed form of X" entry, two references deep, or a word whose own form-of rows
-                  name the expected lemma;
-    wrong         a lemma a pack rule made, other than the above, where the expected lemma is a headword;
-    wrong-missing the same where the dictionary has no entry for the expected lemma;
-    wrong-reference  a wrong lemma no pack rule made (a dictionary reference or an exact match of
-                  another spelling);
-    multiword     the first result matched more than the word (an expression such as go léir);
-    none          no result.
+    right-entry      the word's own entry: the word itself, or the word with only its
+                     initial mutation or elided particle removed by the pack (bhíonn → bíonn);
+    right-lemma      the expected lemma (UD Irish-IDT's for the treebank; for the frequency
+                     list, the treebank's most frequent lemma of the word, else a lemma the
+                     word's form-of rows name);
+    right-named      the expected lemma has no entry in wty-ga-en, and the first result is a
+                     lemma the word's form-of rows name (curtha → cuir, where the treebank's
+                     lemma is the verbal adjective curtha);
+    form-entry       not the lemma, but the dictionary's own entry for a form of it, whose
+                     form-of rows or "eclipsed form of" gloss name the expected lemma
+                     (dtagraítear → dtagair "eclipsed form of tagair"; domsa → dom "to me");
+    wrong            another headword, with a trace step of a pack rule;
+    wrong-missing    the same where wty-ga-en has no entry for the expected lemma;
+    wrong-reference  another headword reached by the dictionary alone: an exact match of
+                     another spelling, or a form-of reference without a pack rule;
+    multiword        the first result matched more than the word (go léir);
+    none             no result.
+
+    Trace steps are a pack rule's unless lookup-batch-ga marks them as a form-of
+    reference's rule (wty-ga-en names its references lenition, genitive, ... too).
     """
 
     def __init__(self, args):
@@ -287,24 +283,26 @@ class Judge:
         self.headwords = {h.lower() for h in headwords}
         self.ids = transform_ids(args)
 
-    def named(self, form):
-        first = named_lemmas(self.form_of, form)
-        return first | {t for l in first for t in self.form_of.get(l, ())}
-
     def __call__(self, row, first, expected):
-        verdict = judge(first, row['form'], expected, self.named(row['form']))
-        if verdict != 'wrong':
-            return verdict
-        expected_lower = {e.lower() for e in expected}
-        if expected_lower & {t.lower() for t in self.form_of.get(first['expression'], ())}:
+        if first is None:
+            return 'none'
+        if len(first['matched']) > len(row['form']):
+            return 'multiword'
+        steps = [s for s, d in zip(first['trace'], first.get('dictionary', [False] * len(first['trace']))) if not d]
+        dictionary_steps = len(first['trace']) - len(steps)
+        expression = first['expression']
+        if same(expression, row['form']) or (steps and not dictionary_steps and set(steps) <= MUTATIONS):
+            return 'right-entry'
+        if any(same(expression, e) for e in expected):
+            return 'right-lemma'
+        missing = not any(e.lower() in self.headwords for e in expected)
+        if missing and any(same(expression, n) for n in named_lemmas(self.form_of, row['form'])):
             return 'right-named'
-        if first['expression'] in {t for e in expected for t in self.form_of.get(e, ())}:
-            return 'right-named'
-        if not rule_made(row, self.ids):
+        if any(same(n, e) for n in named_lemmas(self.form_of, expression) for e in expected):
+            return 'form-entry'
+        if not any(s in self.ids for s in steps):
             return 'wrong-reference'
-        if not expected_lower & self.headwords:
-            return 'wrong-missing'
-        return 'wrong'
+        return 'wrong-missing' if missing else 'wrong'
 
 
 def summarise(rows, weight=None):
@@ -428,12 +426,13 @@ def judge_answers(rows, answers, judge_row, expected_of):
         row['first'] = first['expression'] if first else ''
         row['matched'] = first['matched'] if first else ''
         row['trace'] = '|'.join(first['trace']) if first else ''
+        row['dictionary_steps'] = sum(first.get('dictionary', [])) if first else 0
         row['verdict'] = judge_row(row, first, expected_of(row))
         row['anywhere'] = any(r['expression'].lower() in {e.lower() for e in expected_of(row)} for r in answer['results'])
     return rows
 
 
-WRONG = ('wrong', 'wrong-missing', 'wrong-reference')
+WRONG = ('wrong', 'wrong-missing', 'wrong-reference')  # form-entry is reported apart
 
 
 def wrong_summary(rows, ids, weight=lambda r: 1):
@@ -545,7 +544,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('command', choices=['eval', 'dictpairs', 'frequent', 'realtext', 'particles'])
     parser.add_argument('--cache', required=True)
-    parser.add_argument('--batch', help='lookup-batch built from languages/en/sources/lookup-batch.cpp (frequent, realtext, particles)')
+    parser.add_argument('--batch', help='lookup-batch-ga built from languages/ga/sources/lookup-batch.cpp (frequent, realtext, particles)')
     here = os.path.dirname(os.path.abspath(__file__))
     root = os.path.abspath(os.path.join(here, '..', '..', '..'))
     parser.add_argument('--cli', default=os.path.join(root, 'build', 'hoshidicts-cli'))

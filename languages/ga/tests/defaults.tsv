@@ -12,7 +12,7 @@ defaults	1	D’ól	ól	v	elision
 defaults	1	tá	bí	v	present
 defaults	1	sé	sé	*	
 # Constraint rows that the optional addMissingFada processor would pass with every option on (a variant with í reaches the same text through another rule).
-constraint-plural	0	aontaithe	aontaí	n	*
+constraint-plural	0	céanna	cé	n	*
 constraint-present-autonomous	0	caitear	caigh	v	*
 constraint-habitual-2sg	0	abiteá	abigh	v	*
 constraint-habitual-autonomous	0	cleití	cleigh	v	*
