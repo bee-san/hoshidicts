@@ -191,17 +191,18 @@ compatible part of speech.
   - they add false candidates per row: 1.725 → 1.758 on the sample, 1.614 →
     1.651 on the dev subset, 3.435 → 3.647 on `cases.tsv` and 2.782 → 3.042
     on `yomitan.tsv`;
-  - they break 12 of the 61 negatives of `cases.tsv`: `NSuff-ath` reads
+  - in the conformance test, 14 of the 63 negatives of `cases.tsv` fail with
+    them: `NSuff-ath` reads
     مدرسته as مدرس, رأيته as رأي and سيارتها as سيار; `NSuff-An` reads ذهب
     الولدان as ذهب الولد and لكان as لك; `NSuff-h` هذا كتابه as هذا كتاب;
     `NSuff-ayn` وبين as وب; `PVSuff-n` فلن as فل; and the rules merged into
-    the own imperative and present read الان, اكون and ابدا as imperatives and
-    يبيعه as one present + pronoun step;
+    the own imperative and present read الان, اكون and ابدا as imperatives,
+    يبيعه as one present + pronoun step, and برأي as برأ (two rows);
   - looked up as a host does and judged as Measurements 2 describes, the
     first result is wrong at 6.13% of the judged positions of *al-Nazarat*,
-    7.00% of *Kalila wa Dimna*'s and 5.15% of Tatoeba's, against 3.79%, 4.69%
-    and 2.82% for the final rules; the rules make 1,538, 751 and 4,915 of
-    those wrong results, against 216, 89 and 494. Of the frequent words, 62
+    7.00% of *Kalila wa Dimna*'s and 5.15% of Tatoeba's, against 3.78%, 4.67%
+    and 2.81% for the final rules; the rules make 1,538, 751 and 4,915 of
+    those wrong results, against 211, 80 and 485. Of the frequent words, 62
     show a wrong first result (15 made by the rules), against 39 (0).
 
   One sample row, لبا → لب in `gaps.tsv`, is reached by the union and not
@@ -334,10 +335,10 @@ in `sources/`, run from the repository root.
    | Yomitan | corpus.tsv + gaps.tsv | defaults | 67.45% | - | 1.206 | 78.54% |
    | union | corpus.tsv + gaps.tsv | all on | 92.31% | - | 1.758 | 78.74% |
    | union | corpus.tsv + gaps.tsv | defaults | 87.43% | - | 1.448 | 78.88% |
-   | final | cases.tsv (509) | all on | 100% | 100% | 3.435 | 79.69% |
+   | final | cases.tsv (511) | all on | 100% | 100% | 3.435 | 79.69% |
    | final | cases.tsv | defaults | 90.40% | 100% | 3.154 | 79.24% |
-   | Yomitan | cases.tsv | all on | 3.12% | 86.89% | 2.248 | 59.38% |
-   | union | cases.tsv | all on | 100% | 86.89% | 3.647 | 73.88% |
+   | Yomitan | cases.tsv | all on | 3.12% | 87.30% | 2.248 | 59.38% |
+   | union | cases.tsv | all on | 100% | 87.30% | 3.647 | 73.88% |
    | final | defaults.tsv (19) | defaults | 100% | 100% | 2.571 | 85.71% |
    | final | yomitan.tsv (304) | all on | 100% | 100% | 2.782 | 89.66% |
    | Yomitan | yomitan.tsv | all on | 100% | 83.72% | 1.525 | 82.76% |
@@ -409,21 +410,23 @@ in `sources/`, run from the repository root.
 
    | Text | Positions | Judged | Wrong | By the rules | By the dictionary | Yomitan's rules | Union |
    | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-   | *al-Nazarat* | 87,910 | 84,177 | 3,191 (3.79%) | 216 (0.26%) | 2,975 | 6,502 (7.81%), 1,483 | 5,160 (6.13%), 1,538 |
-   | *Kalila wa Dimna* | 43,622 | 42,242 | 1,981 (4.69%) | 89 (0.21%) | 1,892 | 4,115 (9.87%), 721 | 2,959 (7.00%), 751 |
-   | Tatoeba | 306,356 | 290,607 | 8,187 (2.82%) | 494 (0.17%) | 7,693 | 18,572 (6.45%), 5,100 | 14,973 (5.15%), 4,915 |
+   | *al-Nazarat* | 87,910 | 84,177 | 3,186 (3.78%) | 211 (0.25%) | 2,975 | 6,502 (7.81%), 1,483 | 5,160 (6.13%), 1,538 |
+   | *Kalila wa Dimna* | 43,622 | 42,242 | 1,972 (4.67%) | 80 (0.19%) | 1,892 | 4,115 (9.87%), 721 | 2,959 (7.00%), 751 |
+   | Tatoeba | 306,356 | 290,607 | 8,178 (2.81%) | 485 (0.17%) | 7,693 | 18,572 (6.45%), 5,100 | 14,973 (5.15%), 4,915 |
+
+   The Yomitan and union columns give the wrong results and how many of them
+   their rules make.
 
    - By kind, for *al-Nazarat*, *Kalila* and Tatoeba: decided by hand 29,314,
      16,589 and 114,661 positions, wrong 9.06%, 10.64% and 6.18%; listed with
      one lemma 23,366, 10,312 and 100,800, wrong 0.07%, 0.08% and 0.11%;
      listed with several not decided by hand 11,406, 5,124 and 42,258 (any
      counts); not listed, by the clitic splits, 20,091, 10,217 and 32,888,
-     wrong 2.58%, 2.04% and 2.86%.
+     wrong 2.55%, 1.95% and 2.83%.
    - The rules' wrong results are mostly ties between one-step readings of
      rare words: والتي → والى (10 in *al-Nazarat*), بطريقة → بطريق (52 in
      Tatoeba; the feminine ending, where بـ + طريقة was meant), كين → كان
-     (24, a name), برأيه → برأ (4 in *Kalila*). The dictionary's are listed
-     in Known gaps.
+     (24, a name). The dictionary's are listed in Known gaps.
    - Hand samples (`sources/hand/`, drawn with seed 20261104 by `measure.py
      text --sample-out`, judged by me): of 40 judged positions of
      *al-Nazarat*, 5 are wrong by hand and 3 by script; the script counts
@@ -543,14 +546,14 @@ in `sources/`, run from the repository root.
     and لم يقل → قلا (100,043 tokens; 40 and 110 positions) to the reading
     key.
 - **Wrong first results the rules make**: none among the frequent words, and
-  216, 89 and 494 text positions (0.26%, 0.21% and 0.17% of those judged).
+  211, 80 and 485 text positions (0.25%, 0.19% and 0.17% of those judged).
   The largest groups are بطريقة → بطريق (52 in Tatoeba) and بطلاقة → طلاق
   (17): the feminine ending removed where بـ + a noun in ة was meant; كين →
-  كان (24) and لياني → لي (15), names; والتي → والى (10 and 4); برأيه,
-  برأيك and برأي → برأ (13 in all); لحياته → لحية (7) and الا → لأى (7).
+  كان (24) and لياني → لي (15), names; والتي → والى (10 and 4); لحياته →
+  لحية (7) and الا → لأى (7).
 - **Words the dictionary does not have** get the rules' or a shorter
   match's reading: names (Tom: توم → آم is 13 of the 40 unjudged positions of
-  the Tatoeba hand sample, and Tom occurs 3,174 times in its Arabic; also
+  the Tatoeba hand sample, and توم is 3,057 of its 306,356 words; also
   Maria, Linda, Pietro, Lucia, Bush) and rare words read as a root (كنانة →
   كن, فولتير → تر).
 - **Yomitan's 78 negatives not kept** (`sources/yomitan-tests-not-kept.tsv`):
