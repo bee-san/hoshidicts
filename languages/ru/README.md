@@ -283,24 +283,29 @@ main at b145feb, which reads every pack as `filter`.
      passes with the first dropped, three runs at a machine load of 50:
      p50 55.5-58.7 µs, p95 164.7-174.3 µs (filter: p50 46.2-47.8 µs, p95
      112.8-116.4 µs).
-   - WebAssembly (Hachidori feat/multi-language 803f7b6e's prebuilt engines,
-     Node 22; they are built from hoshidicts b145feb, which has no
-     `untaggedTerms`, so these use the pack without the field):
-     `hdw_language_load` takes a median 10.2 ms single-thread and 10.8 ms
+   - WebAssembly: Hachidori feat/multi-language 803f7b6e's engines, built
+     locally (`wasm/`, emsdk as its `docs/source-build.md` says, not
+     committed) with this branch on #58 in `third_party/hoshidicts`, Node 22.
+     `hdw_language_load` takes a median 10.4 ms single-thread and 11.0 ms
      threaded over 10 fresh engines (`sources/wasm-load.mjs`), and the live
-     heap grows by 1,444,880 bytes; `hdw_lookup` on the 399 hover positions of
-     the 82 texts (Hachidori's `benchmark/node-lookup.mjs`, 6 passes) takes
-     p50 105 µs and p95 349 µs single-thread, p50 121 µs and p95 393 µs
-     threaded.
+     heap grows by 1,449,680 bytes. `hdw_lookup` on the 399 hover positions
+     of the 82 texts (Hachidori's `benchmark/node-lookup.mjs`, 6 passes,
+     machine load 41) takes p50 126 µs and p95 427 µs single-thread, p50
+     136 µs and p95 442 µs threaded. The prebuilt engines of 803f7b6e predate
+     #58 and refuse the field; with the pack without it they load it in
+     10.2 ms and 10.8 ms (+1,444,880 bytes).
    - The pack has no `pattern` rule or step.
 6. **Hachidori** (feat/multi-language 803f7b6e with this branch in
-   `third_party/hoshidicts`, `test/chrome-language-pack.mjs`, Chrome 152,
-   wty-ru-en): 16 / 16 checks pass with the pack without the field (the
-   engine predates it). Settings adds Russian beside Japanese and imports the
-   dictionary (2.1 s); 12 hovered words find their lemma first (`гуляли` →
-   гулять, `отца` → отец, `Дети` → ребёнок, `идет` → идти, `темном` →
-   тёмный, `Итак` → итак, `пойду` → пойти); the Anki note and the switch to
-   Japanese and back work.
+   `third_party/hoshidicts` and the engines built from it, as above;
+   `test/chrome-language-pack.mjs`, Chrome 152, wty-ru-en): 16 / 16 checks
+   pass. Settings adds Russian beside Japanese and imports the dictionary
+   (1.8 s); 12 hovered words find their lemma first with the pack's traces
+   (`гуляли` → гулять "plural past", `отца` → отец, `Дети` → ребёнок, `идет`
+   → идти, `темном` → тёмный "prepositional masculine/neuter", `Итак` →
+   итак, `пойду` → пойти); the Anki note and the switch to Japanese and
+   back work. The same check with the prebuilt engines and the pack without
+   the field also passes 16 / 16, with traces from the dictionary's form-of
+   rows.
 7. **Tests** (`language-conformance-test`, with the field): corpus.tsv 998 /
    998, cases.tsv 647 / 647, text.tsv 36 / 36, lookup.tsv 47 / 47; gaps.tsv
    0 / 3 (reported); classes.json agrees with the engine (10 classes, 1,124
@@ -344,10 +349,10 @@ node languages/ru/sources/wasm-load.mjs <hachidori checkout> languages/ru 10
     capitalised stems, so the rules no longer reach the surnames in -ой;
     wty-ru-en's own form-of rows do (`lookup.tsv`).
 - **The field.** The pack needs `lookup.untaggedTerms` (hoshidicts#58).
-  Hachidori's engines at feat/multi-language 803f7b6e predate it and refuse
-  the pack with it ("unknown key"); with them, rule outputs never match
-  wiktionary-to-yomitan's Russian rows, and lookups reach a lemma only
-  through the form-of rows of the word as written.
+  Engines built before it refuse the pack ("unknown key"), as Hachidori's
+  prebuilt engines at feat/multi-language 803f7b6e do; without the field,
+  rule outputs never match wiktionary-to-yomitan's Russian rows, and lookups
+  reach a lemma only through the form-of rows of the word as written.
 - **Words the dictionary lists twice.** `пришёл` shows wty-ru-en's phrase
   `пришёл, увидел, победил`, whose reading is `пришёл`, before прийти;
   `читал`, `читала`, `любимый`, `пишущий` and `меня` are entries of their
