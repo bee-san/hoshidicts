@@ -346,12 +346,12 @@ pack's defaults unless `--options`); its build command is in its header.
      removed, and the optional processor and transform turned on by default,
      each in a scratch copy with its own `classes.json`. All 585 fail the
      conformance test.
-   - `tools/check-yomitan.mjs`: 197 inputs, 531 Yomitan results, 0
-     differences; both processors agree with Yomitan's on 59 inputs each.
+   - `tools/check-yomitan.mjs`: 2,926 inputs, 5,847 Yomitan results, 0
+     differences; both processors agree with Yomitan's on 1,886 inputs each.
    - Hachidori (feat/multi-language d7e82b0c with this branch in
      `third_party/hoshidicts`, `test/chrome-language-pack.mjs`, Chrome 152,
      wty-eo-en): 15/15 checks pass. Settings adds Esperanto beside Japanese
-     and imports the dictionary (317,333 terms, 0.8 s); eleven hovered words
+     and imports the dictionary (317,333 terms, about 1 s); eleven hovered words
      find their lemma first with their trace (*manĝis* → *manĝi*, *turnadis*
      → *turni*, *Kion* → *kio*, *ekridetis* → *ekridi*, *cxu* → *ĉu*,
      *sereneco* → *serena*); the Anki note and the switch to Japanese and
