@@ -1,0 +1,38 @@
+# Source: written for this pack (GPL-3.0-or-later), no third-party data. The pack has no optional processor.
+# category	valid	input	variant
+decapitalize	1	Книга	книга
+decapitalize	1	КНИГА	книга
+decapitalize	1	ЁЛКА	ёлка
+capitalize	1	москва	Москва
+capitalize	1	ёлкин	Ёлкин
+keep input	1	Книга	Книга
+keep input	1	книга	книга
+stress	1	кни́га	книга
+stress	1	моло́ко	молоко
+stress	1	лѐгкоатлети́ческий	легкоатлетический
+stress	1	ѐлка	елка
+stress	1	ѝ	и
+stress	1	Кни́га	книга
+stress	0	кни́га	книга́
+yo to e	1	ёлка	елка
+yo to e	1	Ёлка	Елка
+yo to e	1	идёт	идет
+yo to e	1	всё	все
+e to yo	1	елка	ёлка
+e to yo	1	идет	идёт
+e to yo	1	все	всё
+e to yo	1	перенес	перенёс
+e to yo	1	перенес	перёнес
+e to yo	1	Ежик	Ёжик
+e to yo	1	ежик	ёжик
+e to yo	0	перенес	пёрёнёс
+e to yo	1	пересчете	пересчёте
+e to yo	0	пересчете	пёрёсчёте
+e to yo	0	всё	ёсё
+old spelling	1	столъ	стол
+old spelling	1	мѣсто	место
+old spelling	1	Россія	Россия
+old spelling	1	Ѳеодоръ	Феодор
+old spelling	1	объявленіе	объявление
+old spelling	1	съѣлъ	съел
+old spelling	0	объявление	обявление
