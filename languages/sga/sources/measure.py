@@ -19,6 +19,7 @@ scratch directory for rule-set copies and outputs. Commands:
             treebanks looked up as a host does, for every set
   frequent  the Würzburg glosses' word forms as a frequency list
   contexts  forms right after an article or a conjunct particle
+  judge     the readings judged by hand in sources/judged-tain.tsv
 
 Build build/hoshidicts-cli and build/lookup-batch-sga first (sources/lookup-batch.cpp).
 """
@@ -429,15 +430,60 @@ def contexts(args):
         json.dump(summary, f, ensure_ascii=False, indent=1)
 
 
+def judge(args):
+    """The readings judged by hand (sources/judged-tain.tsv): (1) a random
+    sample, seed 20261103, of 80 of the distinct first results the final set
+    reaches in the Táin through a rule without a form-of row of the text
+    naming them, and (2) every first result the union reaches through
+    Yomitan's `lenited`. Run `text` first."""
+    import random
+    _rows, _lemmas, refs = load_dictionary(args.cache)
+    rules = rule_ids()
+    tain = [h for line in tain_text(args.cache).split('\n') if line.strip() for h in hovers(line)]
+    def readings(name, keep):
+        with open(os.path.join(args.work, 'lookups', f'tain-{name}.jsonl'), encoding='utf-8') as f:
+            results = [json.loads(l) for l in f]
+        found, count = {}, collections.Counter()
+        for (_word, h), r in zip(tain, results):
+            if not r['results']:
+                continue
+            first = r['results'][0]
+            if not keep(first):
+                continue
+            key = (first['matched'].lower(), first['expression'])
+            count[key] += 1
+            found.setdefault(key, (first['matched'], first['expression'], '|'.join(first['trace']), h[:70]))
+        return found, count
+    def not_confirmed(first):
+        if not any(t in rules for t in first['trace']):
+            return False
+        named = set()
+        for v in {first['matched'], first['matched'].lower(), strip_marks(first['matched'].lower())}:
+            named |= refs.get(v, set())
+        return not (first['expression'] in named or norm(first['expression']) in {norm(x) for x in named})
+    found, count = readings('final', not_confirmed)
+    random.seed(20261103)
+    sample = random.sample(sorted(found), 80)
+    print(f'# final: {sum(count.values())} positions, {len(found)} distinct readings; sample of 80')
+    for i, key in enumerate(sample, 1):
+        matched, expression, trace, context = found[key]
+        print(f'sample\t{i}\t{count[key]}\t{matched}\t{expression}\t{trace}\t{context}')
+    found, count = readings('union', lambda first: 'lenited' in first['trace'])
+    print(f'# union through lenited: {sum(count.values())} positions, {len(found)} distinct readings')
+    for i, key in enumerate(sorted(found, key=lambda k: (-count[k], k)), 1):
+        matched, expression, trace, context = found[key]
+        print(f'lenited\t{i}\t{count[key]}\t{matched}\t{expression}\t{trace}\t{context}')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('command', choices=['scratch', 'eval', 'text', 'frequent', 'contexts'])
+    parser.add_argument('command', choices=['scratch', 'eval', 'text', 'frequent', 'contexts', 'judge'])
     parser.add_argument('--cache', required=True)
     parser.add_argument('--work', required=True)
     args = parser.parse_args()
     check_inputs(args.cache)
     unzip_dictionary(args.cache)
-    {'scratch': scratch, 'eval': evaluate, 'text': text, 'frequent': frequent, 'contexts': contexts}[args.command](args)
+    {'scratch': scratch, 'eval': evaluate, 'text': text, 'frequent': frequent, 'contexts': contexts, 'judge': judge}[args.command](args)
 
 
 if __name__ == '__main__':
