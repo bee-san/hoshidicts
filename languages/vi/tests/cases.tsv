@@ -1,15 +1,9 @@
 # Hand-written for this pack (GPL-3.0-or-later): reduplicated forms, spelling variants and negatives.
 # The pack has no optional processor, transform or variant pass, so these rows give the same results with its defaults.
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
-reduplication	1	xanh xanh	xanh	*	reduplication
-reduplication	1	người người	người	*	reduplication
-reduplication	1	đi đi	đi	*	reduplication
-reduplication	1	từ từ	từ	*	reduplication
-reduplication	1	luôn luôn	luôn	*	reduplication
-reduplication	1	ầm ầm	ầm	*	reduplication
-reduplication	1	Xanh xanh	xanh	*	reduplication
-reduplication	1	ầm-ầm	ầm	*	reduplication
 reduplication	1	đi đi lại lại	đi lại	*	reduplication
+reduplication	1	Đi đi lại lại	đi lại	*	reduplication
+reduplication	1	đi-đi lại-lại	đi lại	*	reduplication
 reduplication	1	vội vội vàng vàng	vội vàng	*	reduplication
 reduplication	1	lén lén lút lút	lén lút	*	reduplication
 reduplication	1	lôi tha lôi thôi	lôi thôi	*	reduplication
@@ -29,6 +23,8 @@ partial	1	chầm chậm	chậm	*	partialReduplication
 partial	1	nhè nhẹ	nhẹ	*	partialReduplication
 partial	1	khe khẽ	khẽ	*	partialReduplication
 partial	1	se sẽ	sẽ	*	partialReduplication
+partial	1	sầm sẫm	sẫm	*	partialReduplication
+partial	1	nhăn nhẵn	nhẵn	*	partialReduplication
 partial	1	thâm thấp	thấp	*	partialReduplication
 partial	1	ngòn ngọt	ngọt	*	partialReduplication
 partial	1	chan chát	chát	*	partialReduplication
@@ -80,6 +76,9 @@ negatives	0	đu đủ	đủ	*	*
 negatives	0	ba bố	bố	*	*
 negatives	0	con cún	cún	*	*
 negatives	0	máy bay bay	máy bay	*	*
+negatives	0	năm năm	năm	*	*
+negatives	0	chứng chứng	chứng	*	*
+negatives	0	xanh xanh	xanh	*	*
 negatives	0	học sinh sinh	học sinh	*	*
 negatives	0	bằng chứng chứng	bằng chứng	*	*
 negatives	0	đi đi lại	đi lại	*	*

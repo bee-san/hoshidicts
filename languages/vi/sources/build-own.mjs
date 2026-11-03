@@ -50,18 +50,20 @@ const LAST_LETTERS = [
   'c', 'h', 'm', 'n', 'g', 'p', 't',
 ];
 
-// One pattern per last letter reads the three shapes in which a whole word
-// or expression is said twice (the anchor only lets the engine try it on
-// texts that end in that letter):
-//   X X         → X      xanh xanh → xanh, đi đi → đi
+// One pattern per last letter reads the two shapes in which a two-word
+// expression is said twice (the anchor only lets the engine try it on texts
+// that end in that letter):
 //   A A B B     → A B    đi đi lại lại → đi lại
 //   A Ca A CB   → A CB   lôi tha lôi thôi → lôi thôi, lề mà lề mề → lề mề
 //                        (C the onset of the second word, then a or à)
-// The whole text must have that shape: a word repeated after another word
-// (máy bay bay, the plane flies) is not read as one.
+// The whole text must have that shape. A single word said twice (xanh xanh,
+// đi đi) is not read: in Tatoeba and Việt Nam sử lược the text "X X" was a
+// reduplication at 51 places and two words at 41 (máy bay bay, the plane
+// flies; bằng chứng chứng minh), and either way it shows the word X, which a
+// lookup of X alone shows too; dictionaries list the common ones (xanh xanh).
 const ONSET_LETTERS = '[bcdđghklmnpqrstvx]';
 function wholeReduplication() {
-  const pattern = `^([^ ]+) (?:\\1|\\1( [^ ]+)\\2|(${ONSET_LETTERS}*)[aà] \\1( \\3[^ ]+))$`;
+  const pattern = `^([^ ]+) (?:\\1( [^ ]+)\\2|(${ONSET_LETTERS}*)[aà] \\1( \\3[^ ]+))$`;
   return LAST_LETTERS.map((last) => ({
     type: 'pattern', pattern, replacement: '$1$2$4', anchorSuffix: last, conditionsIn: [], conditionsOut: [],
   }));
@@ -127,7 +129,7 @@ export function ownRules() {
     transforms: [
       {
         id: 'reduplication', name: 'reduplication',
-        description: 'A word or two-word expression said twice: xanh xanh → xanh (bluish), người người → người (everyone), đi đi lại lại → đi lại (back and forth again and again), lôi tha lôi thôi → lôi thôi. It softens an adjective, repeats or prolongs an action, or makes a noun mean "every".',
+        description: 'A two-word expression said twice, each word repeated (đi đi lại lại → đi lại, back and forth again and again) or the first word repeated after a syllable in -a (lôi tha lôi thôi → lôi thôi, lề mà lề mề → lề mề). It stresses how long or how often something goes on.',
         source: 'own', rules: wholeReduplication(),
       },
       {

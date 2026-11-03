@@ -3,23 +3,28 @@
 # (https://kaikki.org/dictionary/Vietnamese/kaikki.org-dictionary-Vietnamese.jsonl, sha256 186cd0a6…d945,
 # downloaded 2026-11-03), CC BY-SA 4.0 and GFDL, by the Wiktionary contributors.
 # 1000 rows written by sources/build-corpus.py (every reduplication pair, a sample of spelling pairs with seed 1);
-# the rows the pack's rules and processors reach are in corpus.tsv (638), the others in gaps.tsv (362).
+# the rows the pack's rules and processors reach are in corpus.tsv (607), the others in gaps.tsv (393).
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+reduplication	1	ai ai	ai	*	*
 reduplication	1	ang áng	áng	*	*
 reduplication	1	anh ách	ách	*	*
 reduplication	1	anh ánh	ánh	*	*
+reduplication	1	bon bon	bon	*	*
 reduplication	1	bong bóng	bóng	*	*
+reduplication	1	bìm bìm	bìm	*	*
 reduplication	1	bô lô ba la	bô bô	*	*
 reduplication	1	bôm bốp	bốp	*	*
 reduplication	1	bơ vơ	bơ	*	*
 reduplication	1	bươm bướm	bướm	*	*
 reduplication	1	bạn bè	bạn	*	*
 reduplication	1	bồng bềnh	bềnh	*	*
+reduplication	1	cheo cheo	cheo	*	*
 reduplication	1	chiu chíu	chíu	*	*
 reduplication	1	chiền chiện	chiện	*	*
 reduplication	1	chon chót	chót	*	*
 reduplication	1	chong chóng	chóng	*	*
 reduplication	1	chuếnh choáng	choáng	*	*
+reduplication	1	chuồn chuồn	chuồn	*	*
 reduplication	1	chòng chọc	chọc	*	*
 reduplication	1	chói lói	chói	*	*
 reduplication	1	chôm chỉa	chôm	*	*
@@ -34,6 +39,9 @@ reduplication	1	cằn nhằn cử nhử	cằn nhằn	*	*
 reduplication	1	cỏn con	con	*	*
 reduplication	1	cồm cộm	cộm	*	*
 reduplication	1	cồng kềnh	kềnh	*	*
+reduplication	1	dài dài	dài	*	*
+reduplication	1	dành dành	dành	*	*
+reduplication	1	dần dần	dần	*	*
 reduplication	1	dắt díu	dắt	*	*
 reduplication	1	dễ dầu	dễ	*	*
 reduplication	1	dữ dằn	dữ	*	*
@@ -48,11 +56,16 @@ reduplication	1	hì hợm	hợm	*	*
 reduplication	1	hí hoáy	hoáy	*	*
 reduplication	1	hẩm hút	hẩm	*	*
 reduplication	1	hớt hải	hớt	*	*
+reduplication	1	không không	không	*	*
+reduplication	1	khăng khăng	khăng	*	*
 reduplication	1	khắt khe	khắt	*	*
 reduplication	1	kịch cỡm	kịch	*	*
+reduplication	1	le le	le	*	*
 reduplication	1	leo lẻo	lẻo	*	*
+reduplication	1	luôn luôn	luôn	*	*
 reduplication	1	luông luốc	luốc	*	*
 reduplication	1	là lạ	lạ	*	*
+reduplication	1	lâu lâu	lâu	*	*
 reduplication	1	lúc lắc	lắc	*	*
 reduplication	1	lơ là	lơ	*	*
 reduplication	1	lơ lớ	lơ	*	*
@@ -63,32 +76,40 @@ reduplication	1	lừa lọc	lừa	*	*
 reduplication	1	lử khử lừ khừ	lử khử	*	*
 reduplication	1	mon men	men	*	*
 reduplication	1	muồm muỗm	muỗm	*	*
+reduplication	1	mãi mãi	mãi	*	*
 reduplication	1	móm mém	móm	*	*
 reduplication	1	mơn man	mơn	*	*
 reduplication	1	mắc mỏ	mắc	*	*
 reduplication	1	mồn một	một	*	*
+reduplication	1	nao nao	nao	*	*
+reduplication	1	nghiêng nghiêng	nghiêng	*	*
 reduplication	1	nghí ngoáy	ngoáy	*	*
 reduplication	1	ngoan ngoãn	ngoan	*	*
+reduplication	1	ngày ngày	ngày	*	*
 reduplication	1	ngày nảy ngày nay	ngày nay	*	*
 reduplication	1	ngày xửa ngày xưa	ngày xưa	*	*
 reduplication	1	ngúc ngắc	ngúc	*	*
 reduplication	1	ngúc ngắc	ngắc	*	*
+reduplication	1	người người	người	*	*
 reduplication	1	ngất ngư	ngất	*	*
 reduplication	1	ngắc ngứ	ngắc	*	*
 reduplication	1	ngờ ngợ	ngờ	*	*
 reduplication	1	ngủng nghỉnh	nghỉnh	*	*
 reduplication	1	nhan nhản	nhản	*	*
 reduplication	1	nhem nhẻm	nhẻm	*	*
+reduplication	1	nhà nhà	nhà	*	*
 reduplication	1	nhẹ nhõm	nhẹ	*	*
 reduplication	1	nhền nhện	nhện	*	*
 reduplication	1	nhễu nhụa	nhễu	*	*
 reduplication	1	nâng niu	nâng	*	*
 reduplication	1	nô nức	nô	*	*
+reduplication	1	nơi nơi	nơi	*	*
 reduplication	1	nơm nớp	nớp	*	*
 reduplication	1	nằng nặc	nặc	*	*
 reduplication	1	oằn oại	oằn	*	*
 reduplication	1	phanh phui	phanh	*	*
 reduplication	1	phành phạch	phạch	*	*
+reduplication	1	phăng phăng	phăng	*	*
 reduplication	1	phẳng phiu	phẳng	*	*
 reduplication	1	quanh quất	quanh	*	*
 reduplication	1	quành quạch	quạch	*	*
@@ -96,14 +117,18 @@ reduplication	1	quần quật	quật	*	*
 reduplication	1	rin rít	rít	*	*
 reduplication	1	ru rú	rú	*	*
 reduplication	1	rung rinh	rung	*	*
+reduplication	1	rành rành	rành	*	*
 reduplication	1	rành rọt	rành	*	*
+reduplication	1	ròng ròng	ròng	*	*
 reduplication	1	rón rén	rén	*	*
 reduplication	1	rõ rệt	rõ	*	*
+reduplication	1	rầm rầm	rầm	*	*
 reduplication	1	rộng rãi	rộng	*	*
 reduplication	1	rờ rệt	rờ	*	*
 reduplication	1	rủ rỉ rù rì	rủ rỉ	*	*
 reduplication	1	san sát	sát	*	*
 reduplication	1	se sẻ	sẻ	*	*
+reduplication	1	sàn sàn	sàn	*	*
 reduplication	1	sát sao	sát	*	*
 reduplication	1	sát sạt	sát	*	*
 reduplication	1	sình sịch	sịch	*	*
@@ -122,6 +147,7 @@ reduplication	1	thoăn thoắt	thoắt	*	*
 reduplication	1	thui thủi	thủi	*	*
 reduplication	1	thòm thèm	thèm	*	*
 reduplication	1	thông thốc	thốc	*	*
+reduplication	1	thảy thảy	thảy	*	*
 reduplication	1	thấm thía	thấm	*	*
 reduplication	1	thắc thỏm	thắc	*	*
 reduplication	1	ti tỉ	tỉ	*	*
@@ -132,8 +158,10 @@ reduplication	1	trằn trọc	trằn	*	*
 reduplication	1	tuốt luốt	tuốt	*	*
 reduplication	1	tồm tộp	tộp	*	*
 reduplication	1	vân vê	vê	*	*
+reduplication	1	vên vên	vên	*	*
 reduplication	1	vằng vặc	vặc	*	*
 reduplication	1	xa lắc xa lơ	xa lắc	*	*
+reduplication	1	xa xa	xa	*	*
 reduplication	1	xa xôi	xa	*	*
 reduplication	1	xa xăm	xa	*	*
 reduplication	1	xao xác	xao	*	*
@@ -141,11 +169,14 @@ reduplication	1	xình xịch	xịch	*	*
 reduplication	1	ý kiến ý cò	ý kiến	*	*
 reduplication	1	đau đớn	đau	*	*
 reduplication	1	đom đóm	đóm	*	*
+reduplication	1	đêm đêm	đêm	*	*
+reduplication	1	đòng đòng	đòng	*	*
 reduplication	1	đòng đọc	đọc	*	*
 reduplication	1	đôm đốp	đốp	*	*
 reduplication	1	đỏng đảnh	đỏng	*	*
 reduplication	1	đồm độp	độp	*	*
 reduplication	1	ơn ớn	ớn	*	*
+reduplication	1	ầm ầm	ầm	*	*
 spelling	1	người Tầu	người Tàu	*	*
 spelling	1	cốc	cóc	*	*
 spelling	1	hổn hà hổn hển	hổn ha hổn hển	*	*

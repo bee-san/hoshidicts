@@ -2,52 +2,21 @@
 # (https://kaikki.org/dictionary/Vietnamese/kaikki.org-dictionary-Vietnamese.jsonl, sha256 186cd0a6…d945,
 # downloaded 2026-11-03), CC BY-SA 4.0 and GFDL, by the Wiktionary contributors.
 # 1000 rows written by sources/build-corpus.py (every reduplication pair, a sample of spelling pairs with seed 1);
-# the rows the pack's rules and processors reach are in corpus.tsv (638), the others in gaps.tsv (362).
+# the rows the pack's rules and processors reach are in corpus.tsv (607), the others in gaps.tsv (393).
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
-reduplication	1	ai ai	ai	*	*
-reduplication	1	bon bon	bon	*	*
-reduplication	1	bìm bìm	bìm	*	*
-reduplication	1	cheo cheo	cheo	*	*
-reduplication	1	chuồn chuồn	chuồn	*	*
 reduplication	1	chầm chậm	chậm	*	*
 reduplication	1	cuồn cuộn	cuộn	*	*
-reduplication	1	dài dài	dài	*	*
-reduplication	1	dành dành	dành	*	*
-reduplication	1	dần dần	dần	*	*
 reduplication	1	kha khá	khá	*	*
-reduplication	1	không không	không	*	*
-reduplication	1	khăng khăng	khăng	*	*
-reduplication	1	le le	le	*	*
-reduplication	1	luôn luôn	luôn	*	*
-reduplication	1	lâu lâu	lâu	*	*
-reduplication	1	mãi mãi	mãi	*	*
-reduplication	1	nao nao	nao	*	*
-reduplication	1	nghiêng nghiêng	nghiêng	*	*
-reduplication	1	ngày ngày	ngày	*	*
-reduplication	1	người người	người	*	*
 reduplication	1	ngồ ngộ	ngộ	*	*
 reduplication	1	nho nhỏ	nhỏ	*	*
-reduplication	1	nhà nhà	nhà	*	*
 reduplication	1	nhè nhẹ	nhẹ	*	*
-reduplication	1	nơi nơi	nơi	*	*
-reduplication	1	phăng phăng	phăng	*	*
-reduplication	1	rành rành	rành	*	*
-reduplication	1	ròng ròng	ròng	*	*
 reduplication	1	rười rượi	rượi	*	*
-reduplication	1	rầm rầm	rầm	*	*
-reduplication	1	sàn sàn	sàn	*	*
 reduplication	1	thoai thoải	thoải	*	*
 reduplication	1	thăm thẳm	thẳm	*	*
-reduplication	1	thảy thảy	thảy	*	*
 reduplication	1	tàm tạm	tạm	*	*
 reduplication	1	vun vút	vút	*	*
-reduplication	1	vên vên	vên	*	*
 reduplication	1	vời vợi	vợi	*	*
-reduplication	1	xa xa	xa	*	*
 reduplication	1	đo đỏ	đỏ	*	*
-reduplication	1	đêm đêm	đêm	*	*
-reduplication	1	đòng đòng	đòng	*	*
-reduplication	1	ầm ầm	ầm	*	*
 spelling	1	cổ địa lý học	cổ địa lí học	*	*
 spelling	1	giảng-dụ	giảng dụ	*	*
 spelling	1	lý lẽ	lí lẽ	*	*
