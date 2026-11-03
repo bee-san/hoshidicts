@@ -698,6 +698,7 @@ chain: input is adj	1	nemalbrsa	brsa	*	mal|ne
 guard: no space in the stem	0	malmi brsi	mi brsi	*	*
 guard: stem of 2 letters at least	0	malbi	bi	*	*
 guard: output is v	0	malbrsi	brsi	n	*
+guard: output is v	0	malbrsis	brsi	n	*
 chain: input is v	1	remalbrsi	brsi	*	mal|re
 guard: no space in the stem	0	malmi brse	mi brse	*	*
 guard: stem of 2 letters at least	0	malbe	be	*	*
@@ -714,25 +715,32 @@ chain: input is adv	1	nenebrse	brse	*	ne|ne
 guard: no space in the stem	0	remi brsi	mi brsi	*	*
 guard: stem of 2 letters at least	0	rebi	bi	*	*
 guard: output is v	0	rebrsi	brsi	n	*
+guard: output is v	0	rebrsis	brsi	n	*
 chain: input is v	1	rerebrsi	brsi	*	re|re
 guard: no space in the stem	0	ekmi brsi	mi brsi	*	*
 guard: stem of 2 letters at least	0	ekbi	bi	*	*
+guard: output is v	0	ekbrsis	brsi	n	*
 chain: input is v	1	reekbrsi	brsi	*	ek|re
 guard: no space in the stem	0	dismi brsi	mi brsi	*	*
 guard: stem of 2 letters at least	0	disbi	bi	*	*
+guard: output is v	0	disbrsis	brsi	n	*
 chain: input is v	1	redisbrsi	brsi	*	dis|re
 guard: no space in the stem	0	formi brsi	mi brsi	*	*
 guard: stem of 2 letters at least	0	forbi	bi	*	*
+guard: output is v	0	forbrsis	brsi	n	*
 chain: input is v	1	reforbrsi	brsi	*	for|re
 guard: no space in the stem	0	elmi brsi	mi brsi	*	*
 guard: stem of 2 letters at least	0	elbi	bi	*	*
+guard: output is v	0	elbrsis	brsi	n	*
 chain: input is v	1	reelbrsi	brsi	*	el|re
 guard: no space in the stem	0	enmi brsi	mi brsi	*	*
 guard: stem of 2 letters at least	0	enbi	bi	*	*
 guard: output is v	0	enbrsi	brsi	n	*
+guard: output is v	0	enbrsis	brsi	n	*
 chain: input is v	1	reenbrsi	brsi	*	en|re
 guard: no space in the stem	0	kunmi brsi	mi brsi	*	*
 guard: stem of 2 letters at least	0	kunbi	bi	*	*
+guard: output is v	0	kunbrsis	brsi	n	*
 chain: input is v	1	rekunbrsi	brsi	*	kun|re
 guard: no space in the stem	0	kunmi brso	mi brso	*	*
 guard: stem of 2 letters at least	0	kunbo	bo	*	*
@@ -740,66 +748,82 @@ chain: input is n	1	gekunbrso	brso	*	kun|ge
 guard: no space in the stem	0	almi brsi	mi brsi	*	*
 guard: stem of 2 letters at least	0	albi	bi	*	*
 guard: output is v	0	albrsi	brsi	n	*
+guard: output is v	0	albrsis	brsi	n	*
 chain: input is v	1	realbrsi	brsi	*	al|re
 guard: no space in the stem	0	antaŭmi brsi	mi brsi	*	*
 guard: stem of 2 letters at least	0	antaŭbi	bi	*	*
 guard: output is v	0	antaŭbrsi	brsi	n	*
+guard: output is v	0	antaŭbrsis	brsi	n	*
 chain: input is v	1	reantaŭbrsi	brsi	*	antaŭ|re
 guard: no space in the stem	0	ĉemi brsi	mi brsi	*	*
 guard: stem of 3 letters at least	0	ĉebri	bri	*	*
 guard: output is v	0	ĉebrsi	brsi	n	*
+guard: output is v	0	ĉebrsis	brsi	n	*
 chain: input is v	1	reĉebrsi	brsi	*	ĉe|re
 guard: no space in the stem	0	ĉirkaŭmi brsi	mi brsi	*	*
 guard: stem of 2 letters at least	0	ĉirkaŭbi	bi	*	*
 guard: output is v	0	ĉirkaŭbrsi	brsi	n	*
+guard: output is v	0	ĉirkaŭbrsis	brsi	n	*
 chain: input is v	1	reĉirkaŭbrsi	brsi	*	ĉirkaŭ|re
 guard: no space in the stem	0	demi brsi	mi brsi	*	*
 guard: stem of 3 letters at least	0	debri	bri	*	*
 guard: output is v	0	debrsi	brsi	n	*
+guard: output is v	0	debrsis	brsi	n	*
 chain: input is v	1	redebrsi	brsi	*	de|re
 guard: no space in the stem	0	intermi brsi	mi brsi	*	*
 guard: stem of 2 letters at least	0	interbi	bi	*	*
 guard: output is v	0	interbrsi	brsi	n	*
+guard: output is v	0	interbrsis	brsi	n	*
 chain: input is v	1	reinterbrsi	brsi	*	inter|re
 guard: no space in the stem	0	kontraŭmi brsi	mi brsi	*	*
 guard: stem of 2 letters at least	0	kontraŭbi	bi	*	*
 guard: output is v	0	kontraŭbrsi	brsi	n	*
+guard: output is v	0	kontraŭbrsis	brsi	n	*
 chain: input is v	1	rekontraŭbrsi	brsi	*	kontraŭ|re
 guard: no space in the stem	0	permi brsi	mi brsi	*	*
 guard: stem of 3 letters at least	0	perbri	bri	*	*
 guard: output is v	0	perbrsi	brsi	n	*
+guard: output is v	0	perbrsis	brsi	n	*
 chain: input is v	1	reperbrsi	brsi	*	per|re
 guard: no space in the stem	0	postmi brsi	mi brsi	*	*
 guard: stem of 2 letters at least	0	postbi	bi	*	*
 guard: output is v	0	postbrsi	brsi	n	*
+guard: output is v	0	postbrsis	brsi	n	*
 chain: input is v	1	repostbrsi	brsi	*	post|re
 guard: no space in the stem	0	pretermi brsi	mi brsi	*	*
 guard: stem of 2 letters at least	0	preterbi	bi	*	*
 guard: output is v	0	preterbrsi	brsi	n	*
+guard: output is v	0	preterbrsis	brsi	n	*
 chain: input is v	1	repreterbrsi	brsi	*	preter|re
 guard: no space in the stem	0	primi brsi	mi brsi	*	*
 guard: stem of 2 letters at least	0	pribi	bi	*	*
 guard: output is v	0	pribrsi	brsi	n	*
+guard: output is v	0	pribrsis	brsi	n	*
 chain: input is v	1	repribrsi	brsi	*	pri|re
 guard: no space in the stem	0	submi brsi	mi brsi	*	*
 guard: stem of 2 letters at least	0	subbi	bi	*	*
 guard: output is v	0	subbrsi	brsi	n	*
+guard: output is v	0	subbrsis	brsi	n	*
 chain: input is v	1	resubbrsi	brsi	*	sub|re
 guard: no space in the stem	0	supermi brsi	mi brsi	*	*
 guard: stem of 2 letters at least	0	superbi	bi	*	*
 guard: output is v	0	superbrsi	brsi	n	*
+guard: output is v	0	superbrsis	brsi	n	*
 chain: input is v	1	resuperbrsi	brsi	*	super|re
 guard: no space in the stem	0	surmi brsi	mi brsi	*	*
 guard: stem of 2 letters at least	0	surbi	bi	*	*
 guard: output is v	0	surbrsi	brsi	n	*
+guard: output is v	0	surbrsis	brsi	n	*
 chain: input is v	1	resurbrsi	brsi	*	sur|re
 guard: no space in the stem	0	trami brsi	mi brsi	*	*
 guard: stem of 2 letters at least	0	trabi	bi	*	*
 guard: output is v	0	trabrsi	brsi	n	*
+guard: output is v	0	trabrsis	brsi	n	*
 chain: input is v	1	retrabrsi	brsi	*	tra|re
 guard: no space in the stem	0	transmi brsi	mi brsi	*	*
 guard: stem of 2 letters at least	0	transbi	bi	*	*
 guard: output is v	0	transbrsi	brsi	n	*
+guard: output is v	0	transbrsis	brsi	n	*
 chain: input is v	1	retransbrsi	brsi	*	trans|re
 guard: no space in the stem	0	gemi brso	mi brso	*	*
 guard: stem of 2 letters at least	0	gebo	bo	*	*
@@ -815,6 +839,7 @@ guard: output is adj	0	prabrsa	brsa	n	*
 chain: input is adj	1	neprabrsa	brsa	*	pra|ne
 guard: no space in the stem	0	mismi brsi	mi brsi	*	*
 guard: stem of 2 letters at least	0	misbi	bi	*	*
+guard: output is v	0	misbrsis	brsi	n	*
 chain: input is v	1	remisbrsi	brsi	*	mis|re
 guard: no space in the stem	0	senmi brsa	mi brso	*	*
 guard: stem of 2 letters at least	0	senba	bo	*	*

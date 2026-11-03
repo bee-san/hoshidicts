@@ -23,7 +23,8 @@
 //
 // - conditionsOut: a negative row whose rule column names a part of speech
 //   the rule does not give (brsas → brsi is a verb, so not a noun), which
-//   fails when the rule's output loses its condition;
+//   fails when the rule's output loses its condition; for a verb prefix,
+//   also after the past ending (elbrsis);
 // - conditionsIn: a positive row with its trace, where the rule takes the
 //   output of a prefix rule that gives that condition (nebrsanta → ne →
 //   brsanta [adj] → -ant- → brsi), which fails when the rule loses its
@@ -101,6 +102,12 @@ for (const t of final.transforms) {
         if (out.length > 0) {
             const other = PARTS_OF_SPEECH.find((c) => !out.includes(c));
             candidates.push([`guard: output is ${out.join(' ')}`, '0', from, to, other, '*']);
+            // A verb prefix whose Yomitan twin gives the same text without a
+            // condition (el- for el) is told apart after a verb ending: in
+            // elbrsis only the own rule takes the output of the past rule.
+            if (rule.type === 'circumfix' && rule.inflectedSuffix === 'i') {
+                candidates.push([`guard: output is ${out.join(' ')}`, '0', `${from.slice(0, -1)}is`, to, other, '*']);
+            }
         }
         const into = rule.conditionsIn ?? [];
         if (into.length === 1 && FEEDERS[into[0]] && from.endsWith(FEEDERS[into[0]].ending)) {
