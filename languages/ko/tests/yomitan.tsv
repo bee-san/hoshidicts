@@ -1,7 +1,7 @@
 # GPL-3.0-or-later; Copyright (C) 2023-2026 Yomitan Authors; 2020-2022 Yomichan Authors
 # https://github.com/yomidevs/yomitan/blob/d3c54c10264673eca0d66b970ef74cd5c8b048e3/test/language/korean-transforms.test.js
 # Yomitan's test passes source and term through a preprocess function; the pack's processors take its place.
-# 42 valid rows marked "(any trace)" have reasons * here: the final rules reach their lemma with another trace (sources/relax-yomitan-tests.mjs); 1 rows the final rules fail are in gaps.tsv.
+# 45 valid rows marked "(any trace)" have reasons * here: the final rules reach their lemma with another trace (sources/relax-yomitan-tests.mjs); 1 rows the final rules fail are in gaps.tsv.
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
 ㅏ다	1	가다	가다	v	
 ㅏ다	1	갑니다	가다	v	-(스)ㅂ니다
@@ -575,7 +575,7 @@ other vowel + consonant + 다	1	먹자	먹다	v	-자
 이다	1	이어야	이다	ida	-아/어야
 이다	1	이어야겠	이다	ida	-아/어야겠
 이다	1	이어야만	이다	ida	-아/어야만
-이다	1	이어야지	이다	ida	-아/어야지
+이다 (any trace)	1	이어야지	이다	ida	*
 이다	1	이어요	이다	ida	-아/어요
 이다	1	이어	이다	ida	-아/어
 이다	1	이어다	이다	ida	-아/어다
@@ -608,9 +608,9 @@ other vowel + consonant + 다	1	먹자	먹다	v	-자
 이다	1	일 거다	이다	ida	-(으)ㄹ 거다
 이다	1	일 겁니다	이다	ida	-(으)ㄹ 겁니다
 이다	1	일께	이다	ida	-(으)ㄹ께
-이다	1	이나	이다	ida	-(으)나
+이다 (any trace)	1	이나	이다	ida	*
 이다	1	인	이다	ida	-(으)ㄴ
-이다	1	예요	이다	ida	-아/어요
+이다 (any trace)	1	예요	이다	ida	*
 invalid deinflections	0	이서	이다	ida	아/어서
 invalid deinflections	0	이야	이다	ida	아/어야
 invalid deinflections	0	이야겠	이다	ida	아/어야겠

@@ -80,15 +80,15 @@ function copyKey(rule) {
 }
 
 /**
- * A test for the rules that equal a rule of `own` (type, affixes and input
- * conditions) except that the own rule constrains the stem (`stemEndsWith`)
- * and they constrain nothing, where the own rule gives every output condition
- * they give: all they add are readings at stems the own rules refuse
- * (바라야 -> 바르다 by Yomitan's ㅡ-dropping, 바라야지 -> 발다 by its ㅗ contraction).
+ * A test for the rules that constrain nothing and equal a rule of `own` (type,
+ * affixes and input conditions) that gives every output condition they give:
+ * all they add are readings at stems the own rule refuses (바라야 -> 바르다 by
+ * Yomitan's ㅡ-dropping, 바라야지 -> 발다 by its ㅗ contraction, 나요 -> 다 with an
+ * empty stem), or nothing when the own rule constrains nothing either.
  */
 export function copiesOf(own) {
     const outputs = new Map();
-    for (const r of own.transforms.flatMap((t) => t.rules).filter((x) => x.stemEndsWith !== undefined)) {
+    for (const r of own.transforms.flatMap((t) => t.rules)) {
         const list = outputs.get(copyKey(r)) ?? [];
         list.push(new Set(r.conditionsOut));
         outputs.set(copyKey(r), list);

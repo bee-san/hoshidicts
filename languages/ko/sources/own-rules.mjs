@@ -107,15 +107,13 @@ function adjectiveOutput(out) {
     return out.includes('adj') ? out.filter((c) => c !== 'v') : null;
 }
 
-// A stem that ends in a class is not empty, and in Hangul syllables it holds a
-// whole syllable when the ending starts with a consonant or the class has only
-// vowels (no syllable starts with a vowel), so stemMinLength 2 adds nothing then.
-const VOWELS_ONLY = /^(\{vowel\}|\[[\u314F-\u3163]+\])$/u;
+// No stemMinLength beside stemEndsWith: a stem that ends in a class is not
+// empty, and in Hangul syllables it is a whole syllable when the ending starts
+// with a consonant or the class has only vowels (no syllable starts with one).
 function suffix(inflected, deinflected, conditionsIn, conditionsOut, extra = {}) {
     const rule = {type: 'suffix', inflected, deinflected, conditionsIn, conditionsOut};
-    const implied = extra.stemEndsWith !== undefined && (extra.stemMinLength <= 1 || /^[\u3131-\u314E]/u.test(inflected) || VOWELS_ONLY.test(extra.stemEndsWith));
     for (const [key, value] of Object.entries(extra)) {
-        if (value !== undefined && !(key === 'stemMinLength' && (value === 0 || implied))) { rule[key] = value; }
+        if (value !== undefined && !(key === 'stemMinLength' && value === 0)) { rule[key] = value; }
     }
     return rule;
 }
@@ -133,7 +131,7 @@ function direct(ending, out, {conditionsIn = [], deinflected = '다'} = {}) {
     const e = jamo(ending);
     const d = jamo(deinflected);
     const rules = [suffix(e, d, conditionsIn, out, {stemMinLength: 2})];
-    if (dropsLieul(e)) { rules.push(suffix(e, 'ㄹ' + d, conditionsIn, out, {stemMinLength: 1, stemEndsWith: VOWEL})); }
+    if (dropsLieul(e)) { rules.push(suffix(e, 'ㄹ' + d, conditionsIn, out, {stemEndsWith: VOWEL})); }
     return rules;
 }
 
@@ -160,20 +158,20 @@ function eu(ending, out, {conditionsIn = [], deinflected = '다', vowelStem = tr
     const adjOnly = adjectiveOutput(out);
     const rules = [];
     // 가 + 면, and 살 + 면 (the ㄹ stays before 면, 며, 러, 려).
-    if (vowelStem) { rules.push(suffix(e, d, conditionsIn, out, {stemMinLength: 2, stemEndsWith: drop || !lieulKeeps ? VOWEL : VOWEL_OR_LIEUL})); }
+    if (vowelStem) { rules.push(suffix(e, d, conditionsIn, out, {stemEndsWith: drop || !lieulKeeps ? VOWEL : VOWEL_OR_LIEUL})); }
     // 먹 + 으면.
-    rules.push(suffix('ㅇㅡ' + e, d, conditionsIn, out, {stemMinLength: 2, stemEndsWith: CONSONANT_NOT_LIEUL}));
+    rules.push(suffix('ㅇㅡ' + e, d, conditionsIn, out, {stemEndsWith: CONSONANT_NOT_LIEUL}));
     // 살 + ㄴ → 산, 살 + 니까 → 사니까 (with vowelStem false, the plain
     // ending's own rule already has it).
-    if (drop && vowelStem) { rules.push(suffix(e, 'ㄹ' + d, conditionsIn, out, {stemMinLength: 1, stemEndsWith: VOWEL})); }
+    if (drop && vowelStem) { rules.push(suffix(e, 'ㄹ' + d, conditionsIn, out, {stemEndsWith: VOWEL})); }
     // ㅂ: 춥 + 으면 → 추우면.
     rules.push(suffix('ㅇㅜ' + e, 'ㅂ' + d, conditionsIn, out, {stemMinLength: 1}));
     // ㄷ: 듣 + 으면 → 들으면.
-    rules.push(suffix('ㄹㅇㅡ' + e, 'ㄷ' + d, conditionsIn, out, {stemMinLength: 1, stemEndsWith: VOWEL}));
+    rules.push(suffix('ㄹㅇㅡ' + e, 'ㄷ' + d, conditionsIn, out));
     // ㅅ: 낫 + 으면 → 나으면.
-    rules.push(suffix('ㅇㅡ' + e, 'ㅅ' + d, conditionsIn, out, {stemMinLength: 1, stemEndsWith: VOWEL}));
+    rules.push(suffix('ㅇㅡ' + e, 'ㅅ' + d, conditionsIn, out, {stemEndsWith: VOWEL}));
     // ㅎ (adjectives): 그렇 + 으면 → 그러면, 빨갛 + 은 → 빨간.
-    if (adjOnly !== null) { rules.push(suffix(e, 'ㅎ' + d, conditionsIn, adjOnly, {stemMinLength: 2, stemEndsWith: '[ㅏㅓㅑㅕ]'})); }
+    if (adjOnly !== null) { rules.push(suffix(e, 'ㅎ' + d, conditionsIn, adjOnly, {stemEndsWith: '[ㅏㅓㅑㅕ]'})); }
     return rules;
 }
 
@@ -185,20 +183,20 @@ const A_FORMS = [
     ['ㅇㅓ', '', {stemMinLength: 2, stemNotEndsWith: '[ㅏㅓㅕㅡ]'}],
     ['ㅇㅏ', '', {stemMinLength: 2, stemNotEndsWith: '[ㅏㅓㅕㅡ]'}],
     // 가 + 아 → 가, 서 + 어 → 서, 켜 + 어 → 켜, 보내 + 어 → 보내, 세 + 어 → 세.
-    ['', '', {stemMinLength: 2, stemEndsWith: '[ㅏㅓㅕㅐㅔ]'}],
+    ['', '', {stemEndsWith: '[ㅏㅓㅕㅐㅔ]'}],
     // 보 + 아 → 봐, 오 + 아 → 와.
-    ['ㅏ', '', {stemMinLength: 2, stemEndsWith: '[ㅗ]'}],
+    ['ㅏ', '', {stemEndsWith: '[ㅗ]'}],
     // 주 + 어 → 줘, 배우 + 어 → 배워.
-    ['ㅓ', '', {stemMinLength: 2, stemEndsWith: '[ㅜ]'}],
+    ['ㅓ', '', {stemEndsWith: '[ㅜ]'}],
     // 마시 + 어 → 마셔, 지 + 어 → 져, 가시 + 어 → 가셔.
-    ['ㅕ', 'ㅣ', {stemMinLength: 1}],
+    ['ㅕ', 'ㅣ', {}],
     // 되 + 어 → 돼.
-    ['ㅐ', 'ㅣ', {stemMinLength: 2, stemEndsWith: '[ㅗ]'}],
+    ['ㅐ', 'ㅣ', {stemEndsWith: '[ㅗ]'}],
     // ㅡ drops: 쓰 + 어 → 써, 바쁘 + 아 → 바빠.
     // Not after ㄹ: 르 stems are 르- or 러-irregular (자르다 -> 잘라, 이르다 ->
     // 이르러), so 사러 is never 사르다; the few that drop ㅡ follow.
-    ['ㅓ', 'ㅡ', {stemMinLength: 1, stemEndsWith: CONSONANT_NOT_LIEUL}],
-    ['ㅏ', 'ㅡ', {stemMinLength: 1, stemEndsWith: CONSONANT_NOT_LIEUL}],
+    ['ㅓ', 'ㅡ', {stemEndsWith: CONSONANT_NOT_LIEUL}],
+    ['ㅏ', 'ㅡ', {stemEndsWith: CONSONANT_NOT_LIEUL}],
     // 르 stems that drop ㅡ: 따르다 (뒤따르다, 잇따르다) -> 따라, 치르다 -> 치러,
     // 들르다 -> 들러, 우러르다 -> 우러러, 다다르다 -> 다다라.
     ['ㄸㅏㄹㅏ', 'ㄸㅏㄹㅡ', {}],
@@ -208,26 +206,26 @@ const A_FORMS = [
     ['ㄷㅏㄷㅏㄹㅏ', 'ㄷㅏㄷㅏㄹㅡ', {}],
     // 르: 모르 + 아 → 몰라, 부르 + 어 → 불러; 라 after ㅏ or ㅗ, 러 after the
     // other vowels, so 살러 and 놀러 are not 사르다 and 노르다.
-    ['ㄹㄹㅏ', 'ㄹㅡ', {stemMinLength: 2, stemEndsWith: BRIGHT}],
-    ['ㄹㄹㅓ', 'ㄹㅡ', {stemMinLength: 2, stemEndsWith: DARK}],
+    ['ㄹㄹㅏ', 'ㄹㅡ', {stemEndsWith: BRIGHT}],
+    ['ㄹㄹㅓ', 'ㄹㅡ', {stemEndsWith: DARK}],
     // 러: 이르 + 어 → 이르러, 푸르 + 어 → 푸르러.
-    ['ㄹㅡㄹㅓ', 'ㄹㅡ', {stemMinLength: 2, stemEndsWith: VOWEL}],
+    ['ㄹㅡㄹㅓ', 'ㄹㅡ', {stemEndsWith: VOWEL}],
     // ㅂ: 춥 + 어 → 추워, 돕 + 아 → 도와.
     ['ㅇㅜㅓ', 'ㅂ', {stemMinLength: 1}],
     ['ㅇㅗㅏ', 'ㅂ', {stemMinLength: 1}],
     // ㄷ: 듣 + 어 → 들어, 깨닫 + 아 → 깨달아.
-    ['ㄹㅇㅓ', 'ㄷ', {stemMinLength: 1, stemEndsWith: VOWEL}],
-    ['ㄹㅇㅏ', 'ㄷ', {stemMinLength: 1, stemEndsWith: VOWEL}],
+    ['ㄹㅇㅓ', 'ㄷ', {}],
+    ['ㄹㅇㅏ', 'ㄷ', {}],
     // ㅅ: 짓 + 어 → 지어, 낫 + 아 → 나아.
-    ['ㅇㅓ', 'ㅅ', {stemMinLength: 1, stemEndsWith: VOWEL}],
-    ['ㅇㅏ', 'ㅅ', {stemMinLength: 1, stemEndsWith: VOWEL}],
+    ['ㅇㅓ', 'ㅅ', {stemEndsWith: VOWEL}],
+    ['ㅇㅏ', 'ㅅ', {stemEndsWith: VOWEL}],
     // ㅎ (adjectives): 그렇 + 어 → 그래, 빨갛 + 아 → 빨개, 하얗 + 아 → 하얘, 허옇 + 어 → 허예.
-    ['ㅐ', 'ㅓㅎ', {stemMinLength: 1, stemEndsWith: CONSONANT}, 'adj'],
-    ['ㅐ', 'ㅏㅎ', {stemMinLength: 1, stemEndsWith: CONSONANT}, 'adj'],
-    ['ㅒ', 'ㅑㅎ', {stemMinLength: 1, stemEndsWith: CONSONANT}, 'adj'],
-    ['ㅖ', 'ㅕㅎ', {stemMinLength: 1, stemEndsWith: CONSONANT}, 'adj'],
+    ['ㅐ', 'ㅓㅎ', {stemEndsWith: CONSONANT}, 'adj'],
+    ['ㅐ', 'ㅏㅎ', {stemEndsWith: CONSONANT}, 'adj'],
+    ['ㅒ', 'ㅑㅎ', {}, 'adj'],
+    ['ㅖ', 'ㅕㅎ', {}, 'adj'],
     // ㅓ ㅎ-irregular colour adjectives: 누렇 + 어 → 누레, 시꺼멓 + 어 → 시꺼메.
-    ['ㅔ', 'ㅓㅎ', {stemMinLength: 1, stemEndsWith: CONSONANT}, 'adj'],
+    ['ㅔ', 'ㅓㅎ', {stemEndsWith: CONSONANT}, 'adj'],
     // The verbs 그러다, 이러다, 저러다 and 어쩌다: 그러 + 어 → 그래.
     ['ㄱㅡㄹㅐ', 'ㄱㅡㄹㅓ', {}],
     ['ㅇㅣㄹㅐ', 'ㅇㅣㄹㅓ', {}],
@@ -266,14 +264,14 @@ transform('-아/어요', '-아/어요', 'Informal polite ending (해요체): sta
 transform('-아/어', '-아/어', 'Informal plain ending (해체): statement, question, command or suggestion.', [ah('', ALL), MALDA('마')]);
 // Formal polite (하십시오체).
 transform('-(스)ㅂ니다', '-(스)ㅂ니다', 'Formal polite statement (하십시오체).', [
-    suffix(jamo('습니다'), jamo('다'), [], ALL, {stemMinLength: 2, stemEndsWith: CONSONANT}),
-    suffix(jamo('ㅂ니다'), jamo('다'), [], ALL, {stemMinLength: 2, stemEndsWith: VOWEL}),
-    suffix(jamo('ㅂ니다'), jamo('ㄹ다'), [], ALL, {stemMinLength: 1, stemEndsWith: VOWEL}),
+    suffix(jamo('습니다'), jamo('다'), [], ALL, {stemEndsWith: CONSONANT}),
+    suffix(jamo('ㅂ니다'), jamo('다'), [], ALL, {stemEndsWith: VOWEL}),
+    suffix(jamo('ㅂ니다'), jamo('ㄹ다'), [], ALL, {stemEndsWith: VOWEL}),
 ]);
 transform('-(스)ㅂ니까', '-(스)ㅂ니까', 'Formal polite question (하십시오체).', [
-    suffix(jamo('습니까'), jamo('다'), [], ALL, {stemMinLength: 2, stemEndsWith: CONSONANT}),
-    suffix(jamo('ㅂ니까'), jamo('다'), [], ALL, {stemMinLength: 2, stemEndsWith: VOWEL}),
-    suffix(jamo('ㅂ니까'), jamo('ㄹ다'), [], ALL, {stemMinLength: 1, stemEndsWith: VOWEL}),
+    suffix(jamo('습니까'), jamo('다'), [], ALL, {stemEndsWith: CONSONANT}),
+    suffix(jamo('ㅂ니까'), jamo('다'), [], ALL, {stemEndsWith: VOWEL}),
+    suffix(jamo('ㅂ니까'), jamo('ㄹ다'), [], ALL, {stemEndsWith: VOWEL}),
 ]);
 // -(으)세요 is the honorific -(으)시- + -어요; the honorific verbs 계시다,
 // 주무시다, 드시다 and 잡수시다 have -시- in their dictionary form.
@@ -294,15 +292,14 @@ transform('-(으)십시오', '-(으)십시오', 'Formal honorific command (하�
     suffix(jamo('잡수십시오'), jamo('잡수시다'), [], PRED),
 ]);
 transform('-(으)ㅂ시오', '-(으)ㅂ시오', 'Formal command without -(으)시- (하십시오체, old-fashioned).', [
-    suffix(jamo('ㅂ시오'), jamo('다'), [], VERB_HON, {stemMinLength: 2, stemEndsWith: VOWEL, stemNotEndsWith: '[ㅣ]'}),
-    // 마시 + ㅂ시오 → 마십시오 too, beside honorific 가 + 십시오 → 가십시오.
-    suffix(jamo('ㅣㅂ시오'), jamo('ㅣ다'), [], VERB_HON, {stemMinLength: 1}),
-    suffix(jamo('읍시오'), jamo('다'), [], VERB_HON, {stemMinLength: 2, stemEndsWith: CONSONANT_NOT_LIEUL}),
-    suffix(jamo('ㅂ시오'), jamo('ㄹ다'), [], VERB_HON, {stemMinLength: 1, stemEndsWith: VOWEL}),
+    // 가 + ㅂ시오 → 갑시오, and 마시 + ㅂ시오 → 마십시오 beside honorific 가 + 십시오 → 가십시오.
+    suffix(jamo('ㅂ시오'), jamo('다'), [], VERB_HON, {stemEndsWith: VOWEL}),
+    suffix(jamo('읍시오'), jamo('다'), [], VERB_HON, {stemEndsWith: CONSONANT_NOT_LIEUL}),
+    suffix(jamo('ㅂ시오'), jamo('ㄹ다'), [], VERB_HON, {stemEndsWith: VOWEL}),
     // ㅂ, ㄷ and ㅅ irregular stems: 도웁시오, 들읍시오, 지읍시오.
     suffix('ㅇㅜ' + jamo('ㅂ시오'), 'ㅂ' + jamo('다'), [], VERB_HON, {stemMinLength: 1}),
-    suffix('ㄹ' + jamo('읍시오'), 'ㄷ' + jamo('다'), [], VERB_HON, {stemMinLength: 1, stemEndsWith: VOWEL}),
-    suffix(jamo('읍시오'), 'ㅅ' + jamo('다'), [], VERB_HON, {stemMinLength: 1, stemEndsWith: VOWEL}),
+    suffix('ㄹ' + jamo('읍시오'), 'ㄷ' + jamo('다'), [], VERB_HON),
+    suffix(jamo('읍시오'), 'ㅅ' + jamo('다'), [], VERB_HON, {stemEndsWith: VOWEL}),
 ]);
 transform('-(으)ㅂ시다', '-(으)ㅂ시다', 'Formal polite suggestion: let us (하십시오체).', [eu('ㅂ시다', VERB_HON)]);
 
@@ -330,9 +327,9 @@ transform('-(으)시', 'honorific', 'Honorific -(으)시-: respect for the subje
 
 // Plain (해라체) statements, questions, commands and suggestions.
 transform('-(느)ㄴ다', '-ㄴ/는다', 'Plain present statement of a verb (해라체).', [
-    suffix(jamo('ㄴ다'), jamo('다'), ['-다'], VERB_HON, {stemMinLength: 2, stemEndsWith: VOWEL}),
-    suffix(jamo('ㄴ다'), jamo('ㄹ다'), ['-다'], VERB_HON, {stemMinLength: 1, stemEndsWith: VOWEL}),
-    suffix(jamo('는다'), jamo('다'), ['-다'], VERB_HON, {stemMinLength: 2, stemEndsWith: CONSONANT}),
+    suffix(jamo('ㄴ다'), jamo('다'), ['-다'], VERB_HON),
+    suffix(jamo('ㄴ다'), jamo('ㄹ다'), ['-다'], VERB_HON),
+    suffix(jamo('는다'), jamo('다'), ['-다'], VERB_HON, {stemEndsWith: CONSONANT}),
 ]);
 transform('-느냐', '-느냐', 'Plain question (해라체).', [neun('느냐', ALL)]);
 transform('-(으)냐', '-(으)냐', 'Plain question, colloquial (해체/해라체).', [direct('냐', ALL), eu('냐', HON, {vowelStem: false})]);
@@ -352,8 +349,8 @@ transform('-군', '-군(요)', 'Exclamation: realising something.', [direct('군
 transform('-네', '-네(요)', 'Exclamation or mild statement.', [
     direct('네', ALL), direct('네요', ALL),
     // 그렇다 → 그러네(요) beside 그렇네(요).
-    suffix(jamo('네'), jamo('ㅎ다'), [], ['adj'], {stemMinLength: 2, stemEndsWith: '[ㅏㅓㅑㅕ]'}),
-    suffix(jamo('네요'), jamo('ㅎ다'), [], ['adj'], {stemMinLength: 2, stemEndsWith: '[ㅏㅓㅑㅕ]'}),
+    suffix(jamo('네'), jamo('ㅎ다'), [], ['adj'], {stemEndsWith: '[ㅏㅓㅑㅕ]'}),
+    suffix(jamo('네요'), jamo('ㅎ다'), [], ['adj'], {stemEndsWith: '[ㅏㅓㅑㅕ]'}),
 ]);
 transform('-지', '-지(요)', 'Ending -지: of course, isn\u2019t it; also before 않다 and 못하다.', [direct('지', ALL), direct('지요', ALL)]);
 transform('-죠', '-죠', 'Contraction of -지요.', [direct('죠', ALL)]);
@@ -443,20 +440,20 @@ transform('-어하다', '-아/어하다', 'Show a feeling (-아/어하다): 좋�
 // The copula 이다 and 아니다: 아니다 is an adjective, 이다 a particle.
 const COPULA = ['adj', 'particle', 'ida'];
 transform('-이에요', '-이에요/예요', 'Polite form of 이다 and 아니다 (해요체).', [
-    suffix(jamo('에요'), jamo('다'), [], COPULA, {stemMinLength: 2, stemEndsWith: '[ㅣ]'}),
+    suffix(jamo('에요'), jamo('다'), [], COPULA, {stemEndsWith: '[ㅣ]'}),
     suffix(jamo('예요'), jamo('이다'), [], COPULA),
 ]);
 transform('-야', '-(이)야', 'Plain form of 이다 and 아니다 (해체).', [
-    suffix(jamo('야'), jamo('다'), [], COPULA, {stemMinLength: 2, stemEndsWith: '[ㅣ]'}),
+    suffix(jamo('야'), jamo('다'), [], COPULA, {stemEndsWith: '[ㅣ]'}),
     suffix(jamo('야'), jamo('이다'), [], COPULA),
 ]);
 transform('-라서', '-(이)라서', 'Connective of 이다 and 아니다: because it is.', [
-    suffix(jamo('라서'), jamo('다'), [], COPULA, {stemMinLength: 2, stemEndsWith: '[ㅣ]'}),
+    suffix(jamo('라서'), jamo('다'), [], COPULA, {stemEndsWith: '[ㅣ]'}),
 ]);
 transform('-이라', '-(이)라', 'Connective of 이다 and 아니다: is (not) ... but; -(이)라면: if it is.', [
-    suffix(jamo('라'), jamo('다'), [], COPULA, {stemMinLength: 2, stemEndsWith: '[ㅣ]'}),
-    suffix(jamo('라면'), jamo('다'), [], COPULA, {stemMinLength: 2, stemEndsWith: '[ㅣ]'}),
-    suffix(jamo('란'), jamo('다'), [], COPULA, {stemMinLength: 2, stemEndsWith: '[ㅣ]'}),
+    suffix(jamo('라'), jamo('다'), [], COPULA, {stemEndsWith: '[ㅣ]'}),
+    suffix(jamo('라면'), jamo('다'), [], COPULA, {stemEndsWith: '[ㅣ]'}),
+    suffix(jamo('란'), jamo('다'), [], COPULA, {stemEndsWith: '[ㅣ]'}),
 ]);
 
 // Pronouns contracted with a particle, which character resolution cannot
