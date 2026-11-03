@@ -41,7 +41,10 @@ const conditions = {
 // lookup ranks the terms it finds first ahead on ties (docs/languages.md 7.4,
 // 9.6). So the transforms are declared here in the order that decides those
 // ties: plural before the verb forms (casas: casa before casar), the present
-// before the subjunctive (pode: poder before podar).
+// before the subjunctive (pode: poder before podar), the feminine before the
+// participle (cansada: cansado before cansar). Where the order picks a rare
+// homograph for a frequent word, a whole-word rule gives the common reading
+// first (Preferred readings, below).
 const transforms = [];
 const byId = new Map();
 const seen = new Set();
@@ -219,8 +222,8 @@ for (const [person, label, text] of IMPERATIVES) {
     transform(id, `imperative (${label})`, `${text}: ${examples(id)}.`);
 }
 transform('gerund', 'gerund', 'Gerund: falando, comendo, partindo.');
-transform('participle', 'past participle', 'Past participle, masculine or feminine, singular or plural: falado, comida, partidos, feitas.');
 transform('feminine', 'feminine', 'Feminine form of an adjective or of a noun for a person: bonita, trabalhadora, portuguesa, alemã, europeia, boa.');
+transform('participle', 'past participle', 'Past participle, masculine or feminine, singular or plural: falado, comida, partidos, feitas.');
 transform('diminutive', 'diminutive', 'Diminutive in -inho, -zinho: gatinho, casinha, pouquinho, cafezinho, florzinha, pãezinhos.');
 transform('superlative', 'superlative', 'Absolute superlative in -íssimo: lindíssimo, rapidíssima, felicíssimo, riquíssimos, facílimo.');
 transform('adverb', '-mente adverb', 'Adverb in -mente, looked up as its adjective: rapidamente → rápido, facilmente → fácil, provavelmente → provável.');
@@ -816,7 +819,27 @@ const NA = ['n', 'adj'];
 
 // Plural. Each rule names the vowel or consonant before the ending, so that
 // it shares its node with the verb endings (as, es) and comes first there:
-// casas → casa before casar.
+// casas → casa before casar. A lookup tries the longest matched ending first
+// (docs/languages.md 7.4), so a verb ending longer than the plural's (the
+// participle -ados, the -ear present -eias, the -ir pluperfect -iras) would
+// come first for a noun such as soldados, ideias or mentiras, which the
+// dictionary names as both. These plurals are written at those endings, so
+// the noun or adjective comes first there too: the plural of a participle is
+// an adjective or a passive (the compound tenses take the masculine
+// singular: tinha falado). The irregular participles of the compounds of
+// pôr, fazer, ver and dizer are written whole (impostos as impor), so their
+// plurals are written at the same endings: impostos, apostas, perfeitos,
+// revistas, malditos.
+for (const [inflected, deinflected] of [
+    ['ados', 'ado'], ['adas', 'ada'], ['idos', 'ido'], ['idas', 'ida'],      // soldados, piadas, sentidos, bebidas
+    ['eias', 'eia'], ['iras', 'ira'],                                         // ideias, mentiras
+    ['ques', 'que'], ['gues', 'gue'], ['guas', 'gua'], ['ças', 'ça'],         // ataques, águas, peças
+    ['áveis', 'ável'], ['íveis', 'ível'],                                     // saudáveis, possíveis
+    ['postos', 'posto'], ['postas', 'posta'], ['feitos', 'feito'],            // impostos, apostas, perfeitos
+    ['vistos', 'visto'], ['vistas', 'vista'], ['ditos', 'dito'],              // imprevistos, revistas, malditos
+]) {
+    nominal('plural', inflected, deinflected, [], NA, {stemMinLength: 1});
+}
 for (const vowel of ['a', 'e', 'i', 'o', 'u', 'á', 'é', 'ê', 'í', 'ó', 'ô', 'ú', 'ã']) {
     nominal('plural', `${vowel}s`, vowel, [], NA, {stemMinLength: 1});
 }
@@ -850,8 +873,18 @@ for (const [inflected, deinflected, stemMinLength] of [
     ['vó', 'vô', 1],                                          // avó, bisavó
     ['nhola', 'nhol', 1],                                     // espanhola
     ['íza', 'iz', 1],                                         // juíza
+    // A participle's feminine is an adjective or a passive, like its plural:
+    // at the participle's endings, and before it, the adjective comes first
+    // (cansada: cansado, then cansar).
+    ['ada', 'ado', 2], ['ida', 'ido', 2], ['ída', 'ído', 2],  // cansada, conhecida, distraída
 ]) {
     nominal('feminine', inflected, deinflected, ['adj'], NA, {stemMinLength});
+}
+// The possessives, which an -ar verb's present would otherwise read first
+// (sua as suar, to sweat).
+for (const [form, base] of [['sua', 'seu'], ['suas', 'seu'], ['tua', 'teu'], ['tuas', 'teu'], ['nossa', 'nosso'], ['nossas', 'nosso'],
+    ['vossa', 'vosso'], ['vossas', 'vosso'], ['minha', 'meu'], ['minhas', 'meu']]) {
+    add('feminine', {type: 'wholeWord', inflected: form, deinflected: base, conditionsIn: ['adj'], conditionsOut: NA});
 }
 for (const [form, base] of [['boa', 'bom'], ['boas', 'bom'], ['má', 'mau'], ['más', 'mau'], ['judia', 'judeu'], ['judias', 'judeu'],
     ['esta', 'este'], ['essa', 'esse'], ['aquela', 'aquele'], ['estas', 'este'], ['essas', 'esse'], ['aquelas', 'aquele']]) {
@@ -914,7 +947,10 @@ for (const ending of ['íssimo', 'íssima', 'íssimos', 'íssimas']) {
 }
 for (const [masculine, base] of [['paupérrimo', 'pobre'], ['celebérrimo', 'célebre'], ['libérrimo', 'livre'], ['misérrimo', 'mísero'],
     ['nigérrimo', 'negro'], ['aspérrimo', 'áspero'], ['macérrimo', 'magro'], ['integérrimo', 'íntegro'], ['salubérrimo', 'salubre'],
-    ['ótimo', 'bom'], ['péssimo', 'mau']]) {
+    ['ótimo', 'bom'], ['péssimo', 'mau'],
+    // The learned superlatives of the Latin stem: fiel, antigo, simples, nobre, doce, amigo, cruel, sábio.
+    ['fidelíssimo', 'fiel'], ['antiquíssimo', 'antigo'], ['simplicíssimo', 'simples'], ['nobilíssimo', 'nobre'], ['dulcíssimo', 'doce'],
+    ['amicíssimo', 'amigo'], ['crudelíssimo', 'cruel'], ['sapientíssimo', 'sábio']]) {
     const stem = masculine.slice(0, -1);
     for (const form of [masculine, `${stem}a`, `${stem}os`, `${stem}as`]) {
         add('superlative', {type: 'wholeWord', inflected: form, deinflected: base, conditionsIn: ['adj'], conditionsOut: ['adj']});
@@ -930,6 +966,50 @@ withAccents((extra) => nominal('adverb', 'mente', '', [], ['adj'], {stemMinLengt
 for (const [inflected, deinflected] of [['avelmente', 'ável'], ['ivelmente', 'ível'], ['ovelmente', 'óvel'], ['uvelmente', 'úvel'],
     ['istamente', 'ista'], ['ãmente', 'ão'], ['esmente', 'ês']]) {
     nominal('adverb', inflected, deinflected, [], ['adj'], {stemMinLength: 1});
+}
+// comum + mente, written with u since the 1990 agreement (comummente in Portugal).
+add('adverb', {type: 'wholeWord', inflected: 'comumente', deinflected: 'comum', conditionsIn: [], conditionsOut: ['adj']});
+add('adverb', {type: 'wholeWord', inflected: 'comummente', deinflected: 'comum', conditionsIn: [], conditionsOut: ['adj']});
+
+// --- Preferred readings -------------------------------------------------------------------
+// wty-pt-en's rows name both lemmas of a homograph (sua: seu and suar), and
+// tag no part of speech, so both readings tie and the rule order above
+// decides (docs/languages.md 9.6). For these frequent words it would put a
+// rare homograph first; a whole-word rule, which matches before any ending
+// (7.4), gives the common reading first, with the same trace as the rule
+// that also makes it. The other reading stays, after it. The words are those
+// of the 10,000 most frequent of either FrequencyWords list whose first
+// reading was judged a rare homograph by hand (the audit of #72 and the
+// `rare` judgement of sources/measure.py, each read).
+for (const [slot, form, lemma] of [
+    // A feminine read as the present of an -ar verb (amiga as amigar).
+    ['feminine', 'amiga', 'amigo'], ['feminine', 'humana', 'humano'], ['feminine', 'inteira', 'inteiro'], ['feminine', 'secreta', 'secreto'],
+    ['feminine', 'estranha', 'estranho'], ['feminine', 'fina', 'fino'], ['feminine', 'futura', 'futuro'], ['feminine', 'amarela', 'amarelo'],
+    ['feminine', 'violenta', 'violento'], ['feminine', 'fresca', 'fresco'], ['feminine', 'serena', 'sereno'], ['feminine', 'externa', 'externo'],
+    ['feminine', 'interna', 'interno'], ['feminine', 'cega', 'cego'], ['feminine', 'assassina', 'assassino'],
+    ['feminine', 'ladra', 'ladrão'], ['feminine', 'ladras', 'ladrão'],
+    // A feminine read as a compound's irregular participle (perfazer, maldizer).
+    ['feminine', 'perfeita', 'perfeito'], ['feminine', 'perfeitas', 'perfeito'], ['feminine', 'maldita', 'maldito'], ['feminine', 'malditas', 'maldito'],
+    // and as fartar's short participle (farta, fed up).
+    ['feminine', 'farta', 'farto'], ['feminine', 'fartas', 'farto'],
+    // A plural read as an irregular verb form (pedir's peças, ver's verdes),
+    // and tais, whose -ais needs a longer stem (mais is not a plural of mal).
+    ['plural', 'peças', 'peça'], ['plural', 'verdes', 'verde'], ['plural', 'tais', 'tal'],
+    // The -ar subjunctive read as the -ir present (pare as parir).
+    ['subjunctive-eu-ele', 'pare', 'parar'], ['subjunctive-eles', 'parem', 'parar'],
+    ['subjunctive-eu-ele', 'chore', 'chorar'], ['subjunctive-tu', 'chores', 'chorar'],
+    // atender read as ater (atende as the imperative of vós, atendo as the gerund).
+    ['present-eu', 'atendo', 'atender'], ['present-tu', 'atendes', 'atender'], ['present-ele', 'atende', 'atender'],
+    ['subjunctive-eu-ele', 'atenda', 'atender'],
+    // agradar read as the participle of agrar.
+    ['present-ele', 'agrada', 'agradar'],
+    // European tu forms read as the plural of a rare noun (achas as acha, a billet).
+    ['present-tu', 'achas', 'achar'], ['present-tu', 'percebes', 'perceber'], ['present-tu', 'andas', 'andar'],
+    ['present-tu', 'deixas', 'deixar'], ['present-tu', 'amas', 'amar'],
+]) {
+    const verbSlot = !['feminine', 'plural'].includes(slot);
+    add(slot, {type: 'wholeWord', inflected: form, deinflected: lemma,
+        conditionsIn: verbSlot ? ['vf'] : slot === 'feminine' ? ['adj'] : [], conditionsOut: verbSlot ? ['v'] : NA});
 }
 
 // --- Exclusions ---------------------------------------------------------------------------

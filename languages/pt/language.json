@@ -106,6 +106,8 @@
         "char": "Character",
         "ptcl": "Particle",
         "ptcpl": "Participle",
+        "abbv": "Abbreviation",
+        "contr": "Contraction",
         "det": "Determiner",
         "artic": "Article"
       }

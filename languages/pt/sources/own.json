@@ -29,11 +29,14 @@
       "description": "Plural of a noun or adjective: casas, flores, leões, pães, homens, animais, papéis, fáceis.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["as", "a"], ["es", "e"], ["is", "i"], ["os", "o"], ["us", "u"], ["ás", "á"], ["és", "é"], ["ês", "ê"], ["ís", "í"], ["ós", "ó"], ["ôs", "ô"], ["ús", "ú"], ["ãs", "ã"], ["ões", "ão"], ["ães", "ão"], ["res", "r"], ["zes", "z"], ["eses", "ês"], ["ases", "ás"], ["íses", "ís"], ["ns", "m"], ["éns", "ém"], ["éis", "el"], ["óis", "ol"], ["uis", "ul"]], "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ados", "ado"], ["adas", "ada"], ["idos", "ido"], ["idas", "ida"], ["eias", "eia"], ["iras", "ira"], ["ques", "que"], ["gues", "gue"], ["guas", "gua"], ["ças", "ça"], ["áveis", "ável"], ["íveis", "ível"], ["postos", "posto"], ["postas", "posta"], ["feitos", "feito"], ["vistos", "visto"], ["vistas", "vista"], ["ditos", "dito"], ["as", "a"], ["es", "e"], ["is", "i"], ["os", "o"], ["us", "u"], ["ás", "á"], ["és", "é"], ["ês", "ê"], ["ís", "í"], ["ós", "ó"], ["ôs", "ô"], ["ús", "ú"], ["ãs", "ã"], ["ões", "ão"], ["ães", "ão"], ["res", "r"], ["zes", "z"], ["eses", "ês"], ["ases", "ás"], ["íses", "ís"], ["ns", "m"], ["éns", "ém"], ["éis", "el"], ["óis", "ol"], ["uis", "ul"]], "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ses", "s"], ["ais", "al"], ["eis", "el"], ["eis", "il"], ["is", "il"], ["ns", "n"], ["ies", "y"], ["xes", "x"], ["nes", "n"]], "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "s", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "[bcdfgklnprtwy]"},
         {"type": "suffix", "inflected": "s", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj"], "stemMinLength": 2, "stemCharacters": "[A-Z]"},
-        {"type": "replace", "inflected": "s-", "deinflected": "-", "occurrence": "first", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+        {"type": "replace", "inflected": "s-", "deinflected": "-", "occurrence": "first", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "peças", "deinflected": "peça", "conditionsIn": [], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "verdes", "deinflected": "verde", "conditionsIn": [], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "tais", "deinflected": "tal", "conditionsIn": [], "conditionsOut": ["n", "adj"]}
       ]
     },
     {
@@ -73,6 +76,7 @@
         {"type": "circumfix", "prefixes": [["des", "des"], ["im", "im"], ["ex", "ex"], ["desim", "desim"], ["es", "es"]], "suffixes": [["peço", "pedir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["des", "des"]], "suffixes": [["provejo", "prover"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["sou", "ser"], ["vou", "ir"], ["estou", "estar"], ["tô", "estar"], ["tou", "estar"], ["tenho", "ter"], ["hei", "haver"], ["venho", "vir"], ["vejo", "ver"], ["dou", "dar"], ["faço", "fazer"], ["digo", "dizer"], ["trago", "trazer"], ["posso", "poder"], ["quero", "querer"], ["requeiro", "requerer"], ["sei", "saber"], ["caibo", "caber"], ["ponho", "pôr"], ["leio", "ler"], ["creio", "crer"], ["rio", "rir"], ["ceio", "cear"], ["geio", "gear"], ["pairo", "parir"], ["perco", "perder"], ["valho", "valer"], ["ouço", "ouvir"], ["oiço", "ouvir"], ["peço", "pedir"], ["meço", "medir"], ["provejo", "prover"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
+        {"type": "wholeWord", "inflected": "atendo", "deinflected": "atender", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "o", "deinflected": "ar", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 4, "stemCharacters": "{lowerStem}", "stemStartsWithText": "est"}
       ]
     },
@@ -112,6 +116,12 @@
         {"type": "circumfix", "prefixes": [["sor", "sor"]], "suffixes": [["ris", "rir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["des", "des"]], "suffixes": [["provês", "prover"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["és", "ser"], ["vais", "ir"], ["estás", "estar"], ["tás", "estar"], ["tens", "ter"], ["hás", "haver"], ["vens", "vir"], ["vês", "ver"], ["dás", "dar"], ["pões", "pôr"], ["lês", "ler"], ["crês", "crer"], ["ris", "rir"], ["ceias", "cear"], ["geias", "gear"], ["provês", "prover"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
+        {"type": "wholeWord", "inflected": "atendes", "deinflected": "atender", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "achas", "deinflected": "achar", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "percebes", "deinflected": "perceber", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "andas", "deinflected": "andar", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "deixas", "deinflected": "deixar", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "amas", "deinflected": "amar", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "as", "deinflected": "ar", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 4, "stemCharacters": "{lowerStem}", "stemStartsWithText": "est"}
       ]
     },
@@ -155,6 +165,8 @@
         {"type": "circumfix", "prefixes": [["a", "a"], ["com", "com"], ["des", "des"]], "suffixes": [["praz", "prazer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["des", "des"]], "suffixes": [["provê", "prover"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["é", "ser"], ["vai", "ir"], ["está", "estar"], ["tá", "estar"], ["tem", "ter"], ["há", "haver"], ["vem", "vir"], ["vê", "ver"], ["dá", "dar"], ["faz", "fazer"], ["diz", "dizer"], ["traz", "trazer"], ["quer", "querer"], ["requer", "requerer"], ["põe", "pôr"], ["lê", "ler"], ["crê", "crer"], ["ri", "rir"], ["ceia", "cear"], ["geia", "gear"], ["praz", "prazer"], ["jaz", "jazer"], ["provê", "prover"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
+        {"type": "wholeWord", "inflected": "atende", "deinflected": "atender", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "agrada", "deinflected": "agradar", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "a", "deinflected": "ar", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 4, "stemCharacters": "{lowerStem}", "stemStartsWithText": "est"}
       ]
     },
@@ -831,6 +843,9 @@
         {"type": "circumfix", "prefixes": [["des", "des"], ["im", "im"], ["ex", "ex"], ["desim", "desim"], ["es", "es"]], "suffixes": [["peça", "pedir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["des", "des"]], "suffixes": [["proveja", "prover"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["seja", "ser"], ["vá", "ir"], ["esteja", "estar"], ["tenha", "ter"], ["haja", "haver"], ["venha", "vir"], ["veja", "ver"], ["dê", "dar"], ["faça", "fazer"], ["diga", "dizer"], ["traga", "trazer"], ["possa", "poder"], ["queira", "querer"], ["requeira", "requerer"], ["saiba", "saber"], ["caiba", "caber"], ["ponha", "pôr"], ["leia", "ler"], ["creia", "crer"], ["ria", "rir"], ["ceie", "cear"], ["geie", "gear"], ["paira", "parir"], ["perca", "perder"], ["valha", "valer"], ["ouça", "ouvir"], ["oiça", "ouvir"], ["peça", "pedir"], ["meça", "medir"], ["proveja", "prover"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
+        {"type": "wholeWord", "inflected": "pare", "deinflected": "parar", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "chore", "deinflected": "chorar", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "atenda", "deinflected": "atender", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "e", "deinflected": "ar", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 4, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[cg]", "stemStartsWithText": "est"}
       ]
     },
@@ -872,6 +887,7 @@
         {"type": "circumfix", "prefixes": [["des", "des"], ["im", "im"], ["ex", "ex"], ["desim", "desim"], ["es", "es"]], "suffixes": [["peças", "pedir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["des", "des"]], "suffixes": [["provejas", "prover"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["sejas", "ser"], ["vás", "ir"], ["estejas", "estar"], ["tenhas", "ter"], ["hajas", "haver"], ["venhas", "vir"], ["vejas", "ver"], ["dês", "dar"], ["faças", "fazer"], ["digas", "dizer"], ["tragas", "trazer"], ["possas", "poder"], ["queiras", "querer"], ["requeiras", "requerer"], ["saibas", "saber"], ["caibas", "caber"], ["ponhas", "pôr"], ["leias", "ler"], ["creias", "crer"], ["rias", "rir"], ["ceies", "cear"], ["geies", "gear"], ["pairas", "parir"], ["percas", "perder"], ["valhas", "valer"], ["ouças", "ouvir"], ["oiças", "ouvir"], ["peças", "pedir"], ["meças", "medir"], ["provejas", "prover"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
+        {"type": "wholeWord", "inflected": "chores", "deinflected": "chorar", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "es", "deinflected": "ar", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 4, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[cg]", "stemStartsWithText": "est"}
       ]
     },
@@ -982,7 +998,8 @@
         {"type": "circumfix", "prefixes": [["entre", "entre"]], "suffixes": [["ouçam", "ouvir"], ["oiçam", "ouvir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["des", "des"], ["im", "im"], ["ex", "ex"], ["desim", "desim"], ["es", "es"]], "suffixes": [["peçam", "pedir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["des", "des"]], "suffixes": [["provejam", "prover"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["sejam", "ser"], ["vão", "ir"], ["estejam", "estar"], ["tenham", "ter"], ["hajam", "haver"], ["venham", "vir"], ["vejam", "ver"], ["deem", "dar"], ["dêem", "dar"], ["façam", "fazer"], ["digam", "dizer"], ["tragam", "trazer"], ["possam", "poder"], ["queiram", "querer"], ["requeiram", "requerer"], ["saibam", "saber"], ["caibam", "caber"], ["ponham", "pôr"], ["leiam", "ler"], ["creiam", "crer"], ["riam", "rir"], ["ceiem", "cear"], ["geiem", "gear"], ["pairam", "parir"], ["percam", "perder"], ["valham", "valer"], ["ouçam", "ouvir"], ["oiçam", "ouvir"], ["peçam", "pedir"], ["meçam", "medir"], ["provejam", "prover"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["sejam", "ser"], ["vão", "ir"], ["estejam", "estar"], ["tenham", "ter"], ["hajam", "haver"], ["venham", "vir"], ["vejam", "ver"], ["deem", "dar"], ["dêem", "dar"], ["façam", "fazer"], ["digam", "dizer"], ["tragam", "trazer"], ["possam", "poder"], ["queiram", "querer"], ["requeiram", "requerer"], ["saibam", "saber"], ["caibam", "caber"], ["ponham", "pôr"], ["leiam", "ler"], ["creiam", "crer"], ["riam", "rir"], ["ceiem", "cear"], ["geiem", "gear"], ["pairam", "parir"], ["percam", "perder"], ["valham", "valer"], ["ouçam", "ouvir"], ["oiçam", "ouvir"], ["peçam", "pedir"], ["meçam", "medir"], ["provejam", "prover"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
+        {"type": "wholeWord", "inflected": "parem", "deinflected": "parar", "conditionsIn": ["vf"], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -1290,6 +1307,65 @@
       ]
     },
     {
+      "id": "feminine",
+      "name": "feminine",
+      "description": "Feminine form of an adjective or of a noun for a person: bonita, trabalhadora, portuguesa, alemã, europeia, boa.",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "a", "deinflected": "o", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[s]"},
+        {"type": "suffix", "inflected": "a", "deinflected": "o", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWith": "[s]", "stemNotStartsWithText": "sid"},
+        {"type": "suffix", "inflected": "a", "deinflected": "o", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"], "stemMinLength": 4, "stemCharacters": "{lowerStem}", "stemStartsWithText": "sid"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ora", "or"], ["esa", "ês"], ["ã", "ão"], ["ona", "ão"], ["oa", "ão"], ["eia", "eu"], ["uma", "um"], ["ada", "ado"], ["ida", "ido"], ["ída", "ído"]], "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ua", "u"], ["triz", "tor"], ["atriz", "ador"], ["vó", "vô"], ["nhola", "nhol"], ["íza", "iz"]], "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "esa", "deinflected": "e", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"], "stemMinLength": 3, "stemCharacters": "{lowerStem}"},
+        {"type": "wholeWord", "inflected": "sua", "deinflected": "seu", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "suas", "deinflected": "seu", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "tua", "deinflected": "teu", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "tuas", "deinflected": "teu", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "nossa", "deinflected": "nosso", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "nossas", "deinflected": "nosso", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "vossa", "deinflected": "vosso", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "vossas", "deinflected": "vosso", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "minha", "deinflected": "meu", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "minhas", "deinflected": "meu", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "boa", "deinflected": "bom", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "boas", "deinflected": "bom", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "má", "deinflected": "mau", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "más", "deinflected": "mau", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "judia", "deinflected": "judeu", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "judias", "deinflected": "judeu", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "esta", "deinflected": "este", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "essa", "deinflected": "esse", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "aquela", "deinflected": "aquele", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "estas", "deinflected": "este", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "essas", "deinflected": "esse", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "aquelas", "deinflected": "aquele", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "amiga", "deinflected": "amigo", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "humana", "deinflected": "humano", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "inteira", "deinflected": "inteiro", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "secreta", "deinflected": "secreto", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "estranha", "deinflected": "estranho", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "fina", "deinflected": "fino", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "futura", "deinflected": "futuro", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "amarela", "deinflected": "amarelo", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "violenta", "deinflected": "violento", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "fresca", "deinflected": "fresco", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "serena", "deinflected": "sereno", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "externa", "deinflected": "externo", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "interna", "deinflected": "interno", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "cega", "deinflected": "cego", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "assassina", "deinflected": "assassino", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "ladra", "deinflected": "ladrão", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "ladras", "deinflected": "ladrão", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "perfeita", "deinflected": "perfeito", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "perfeitas", "deinflected": "perfeito", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "maldita", "deinflected": "maldito", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "malditas", "deinflected": "maldito", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "farta", "deinflected": "farto", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
+        {"type": "wholeWord", "inflected": "fartas", "deinflected": "farto", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
       "id": "participle",
       "name": "past participle",
       "description": "Past participle, masculine or feminine, singular or plural: falado, comida, partidos, feitas.",
@@ -1312,32 +1388,6 @@
         {"type": "circumfix", "prefixes": [["com", "com"], ["decom", "decom"], ["descom", "descom"], ["recom", "recom"], ["de", "de"], ["dis", "dis"], ["indis", "indis"], ["predis", "predis"], ["ex", "ex"], ["reex", "reex"], ["im", "im"], ["reim", "reim"], ["o", "o"], ["pro", "pro"], ["re", "re"], ["su", "su"], ["pressu", "pressu"], ["trans", "trans"], ["ante", "ante"], ["contra", "contra"], ["entre", "entre"], ["inter", "inter"], ["justa", "justa"], ["sobre", "sobre"], ["super", "super"], ["a", "a"], ["pos", "pos"], ["pre", "pre"]], "suffixes": [["posto", "por"], ["posta", "por"], ["postos", "por"], ["postas", "por"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aberto", "abrir"], ["aberta", "abrir"], ["abertos", "abrir"], ["abertas", "abrir"], ["coberto", "cobrir"], ["coberta", "cobrir"], ["cobertos", "cobrir"], ["cobertas", "cobrir"], ["eleito", "eleger"], ["eleita", "eleger"], ["eleitos", "eleger"], ["eleitas", "eleger"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 0, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["sido", "ser"], ["ido", "ir"], ["ida", "ir"], ["idos", "ir"], ["idas", "ir"], ["tido", "ter"], ["tida", "ter"], ["tidos", "ter"], ["tidas", "ter"], ["vindo", "vir"], ["vinda", "vir"], ["vindos", "vir"], ["vindas", "vir"], ["visto", "ver"], ["vista", "ver"], ["vistos", "ver"], ["vistas", "ver"], ["dado", "dar"], ["dada", "dar"], ["dados", "dar"], ["dadas", "dar"], ["feito", "fazer"], ["feita", "fazer"], ["feitos", "fazer"], ["feitas", "fazer"], ["dito", "dizer"], ["dita", "dizer"], ["ditos", "dizer"], ["ditas", "dizer"], ["posto", "pôr"], ["posta", "pôr"], ["postos", "pôr"], ["postas", "pôr"], ["lido", "ler"], ["lida", "ler"], ["lidos", "ler"], ["lidas", "ler"], ["rido", "rir"], ["rida", "rir"], ["ridos", "rir"], ["ridas", "rir"], ["ganho", "ganhar"], ["ganha", "ganhar"], ["ganhos", "ganhar"], ["ganhas", "ganhar"], ["gasto", "gastar"], ["gasta", "gastar"], ["gastos", "gastar"], ["gastas", "gastar"], ["pago", "pagar"], ["paga", "pagar"], ["pagos", "pagar"], ["pagas", "pagar"], ["aceito", "aceitar"], ["aceita", "aceitar"], ["aceitos", "aceitar"], ["aceitas", "aceitar"], ["aceite", "aceitar"], ["aceites", "aceitar"], ["entregue", "entregar"], ["entregues", "entregar"], ["morto", "morrer"], ["morto", "matar"], ["morta", "morrer"], ["morta", "matar"], ["mortos", "morrer"], ["mortos", "matar"], ["mortas", "morrer"], ["mortas", "matar"], ["preso", "prender"], ["presa", "prender"], ["presos", "prender"], ["presas", "prender"], ["solto", "soltar"], ["solta", "soltar"], ["soltos", "soltar"], ["soltas", "soltar"], ["eleito", "eleger"], ["eleita", "eleger"], ["eleitos", "eleger"], ["eleitas", "eleger"], ["impresso", "imprimir"], ["impressa", "imprimir"], ["impressos", "imprimir"], ["impressas", "imprimir"], ["aceso", "acender"], ["acesa", "acender"], ["acesos", "acender"], ["acesas", "acender"], ["limpo", "limpar"], ["limpa", "limpar"], ["limpos", "limpar"], ["limpas", "limpar"], ["salvo", "salvar"], ["salva", "salvar"], ["salvos", "salvar"], ["salvas", "salvar"], ["expresso", "exprimir"], ["expresso", "expressar"], ["expressa", "exprimir"], ["expressa", "expressar"], ["expressos", "exprimir"], ["expressos", "expressar"], ["expressas", "exprimir"], ["expressas", "expressar"], ["extinto", "extinguir"], ["extinta", "extinguir"], ["extintos", "extinguir"], ["extintas", "extinguir"], ["frito", "fritar"], ["frita", "fritar"], ["fritos", "fritar"], ["fritas", "fritar"], ["suspenso", "suspender"], ["suspensa", "suspender"], ["suspensos", "suspender"], ["suspensas", "suspender"], ["envolto", "envolver"], ["envolta", "envolver"], ["envoltos", "envolver"], ["envoltas", "envolver"], ["junto", "juntar"], ["junta", "juntar"], ["juntos", "juntar"], ["juntas", "juntar"], ["enxuto", "enxugar"], ["enxuta", "enxugar"], ["enxutos", "enxugar"], ["enxutas", "enxugar"], ["isento", "isentar"], ["isenta", "isentar"], ["isentos", "isentar"], ["isentas", "isentar"], ["omisso", "omitir"], ["omissa", "omitir"], ["omissos", "omitir"], ["omissas", "omitir"], ["tinto", "tingir"], ["tinta", "tingir"], ["tintos", "tingir"], ["tintas", "tingir"], ["farto", "fartar"], ["farta", "fartar"], ["fartos", "fartar"], ["fartas", "fartar"], ["roto", "romper"], ["rota", "romper"], ["rotos", "romper"], ["rotas", "romper"], ["expulso", "expulsar"], ["expulsa", "expulsar"], ["expulsos", "expulsar"], ["expulsas", "expulsar"], ["inserto", "inserir"], ["inserta", "inserir"], ["insertos", "inserir"], ["insertas", "inserir"], ["confuso", "confundir"], ["confusa", "confundir"], ["confusos", "confundir"], ["confusas", "confundir"], ["corrupto", "corromper"], ["corrupta", "corromper"], ["corruptos", "corromper"], ["corruptas", "corromper"], ["distinto", "distinguir"], ["distinta", "distinguir"], ["distintos", "distinguir"], ["distintas", "distinguir"], ["absorto", "absorver"], ["absorta", "absorver"], ["absortos", "absorver"], ["absortas", "absorver"], ["bento", "benzer"], ["benta", "benzer"], ["bentos", "benzer"], ["bentas", "benzer"], ["findo", "findar"], ["finda", "findar"], ["findos", "findar"], ["findas", "findar"], ["pego", "pegar"], ["pega", "pegar"], ["pegos", "pegar"], ["pegas", "pegar"], ["surpreso", "surpreender"], ["surpresa", "surpreender"], ["surpresos", "surpreender"], ["surpresas", "surpreender"], ["revolto", "revolver"], ["revolta", "revolver"], ["revoltos", "revolver"], ["revoltas", "revolver"], ["frito", "frigir"], ["frita", "frigir"], ["fritos", "frigir"], ["fritas", "frigir"], ["compresso", "comprimir"], ["compressa", "comprimir"], ["compressos", "comprimir"], ["compressas", "comprimir"], ["opresso", "oprimir"], ["opressa", "oprimir"], ["opressos", "oprimir"], ["opressas", "oprimir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"}
-      ]
-    },
-    {
-      "id": "feminine",
-      "name": "feminine",
-      "description": "Feminine form of an adjective or of a noun for a person: bonita, trabalhadora, portuguesa, alemã, europeia, boa.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "a", "deinflected": "o", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[s]"},
-        {"type": "suffix", "inflected": "a", "deinflected": "o", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWith": "[s]", "stemNotStartsWithText": "sid"},
-        {"type": "suffix", "inflected": "a", "deinflected": "o", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"], "stemMinLength": 4, "stemCharacters": "{lowerStem}", "stemStartsWithText": "sid"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ora", "or"], ["esa", "ês"], ["ã", "ão"], ["ona", "ão"], ["oa", "ão"], ["eia", "eu"], ["uma", "um"]], "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ua", "u"], ["triz", "tor"], ["atriz", "ador"], ["vó", "vô"], ["nhola", "nhol"], ["íza", "iz"]], "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
-        {"type": "suffix", "inflected": "esa", "deinflected": "e", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"], "stemMinLength": 3, "stemCharacters": "{lowerStem}"},
-        {"type": "wholeWord", "inflected": "boa", "deinflected": "bom", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
-        {"type": "wholeWord", "inflected": "boas", "deinflected": "bom", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
-        {"type": "wholeWord", "inflected": "má", "deinflected": "mau", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
-        {"type": "wholeWord", "inflected": "más", "deinflected": "mau", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
-        {"type": "wholeWord", "inflected": "judia", "deinflected": "judeu", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
-        {"type": "wholeWord", "inflected": "judias", "deinflected": "judeu", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
-        {"type": "wholeWord", "inflected": "esta", "deinflected": "este", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
-        {"type": "wholeWord", "inflected": "essa", "deinflected": "esse", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
-        {"type": "wholeWord", "inflected": "aquela", "deinflected": "aquele", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
-        {"type": "wholeWord", "inflected": "estas", "deinflected": "este", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
-        {"type": "wholeWord", "inflected": "essas", "deinflected": "esse", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]},
-        {"type": "wholeWord", "inflected": "aquelas", "deinflected": "aquele", "conditionsIn": ["adj"], "conditionsOut": ["n", "adj"]}
       ]
     },
     {
@@ -1474,6 +1524,38 @@
         {"type": "wholeWord", "inflected": "péssima", "deinflected": "mau", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
         {"type": "wholeWord", "inflected": "péssimos", "deinflected": "mau", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
         {"type": "wholeWord", "inflected": "péssimas", "deinflected": "mau", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "fidelíssimo", "deinflected": "fiel", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "fidelíssima", "deinflected": "fiel", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "fidelíssimos", "deinflected": "fiel", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "fidelíssimas", "deinflected": "fiel", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "antiquíssimo", "deinflected": "antigo", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "antiquíssima", "deinflected": "antigo", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "antiquíssimos", "deinflected": "antigo", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "antiquíssimas", "deinflected": "antigo", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "simplicíssimo", "deinflected": "simples", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "simplicíssima", "deinflected": "simples", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "simplicíssimos", "deinflected": "simples", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "simplicíssimas", "deinflected": "simples", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "nobilíssimo", "deinflected": "nobre", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "nobilíssima", "deinflected": "nobre", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "nobilíssimos", "deinflected": "nobre", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "nobilíssimas", "deinflected": "nobre", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "dulcíssimo", "deinflected": "doce", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "dulcíssima", "deinflected": "doce", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "dulcíssimos", "deinflected": "doce", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "dulcíssimas", "deinflected": "doce", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "amicíssimo", "deinflected": "amigo", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "amicíssima", "deinflected": "amigo", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "amicíssimos", "deinflected": "amigo", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "amicíssimas", "deinflected": "amigo", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "crudelíssimo", "deinflected": "cruel", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "crudelíssima", "deinflected": "cruel", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "crudelíssimos", "deinflected": "cruel", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "crudelíssimas", "deinflected": "cruel", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "sapientíssimo", "deinflected": "sábio", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "sapientíssima", "deinflected": "sábio", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "sapientíssimos", "deinflected": "sábio", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "sapientíssimas", "deinflected": "sábio", "conditionsIn": ["adj"], "conditionsOut": ["adj"]},
         {"type": "suffix", "inflected": "issimamente", "deinflected": "amente", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{lowerStem}"}
       ]
     },
@@ -1501,7 +1583,9 @@
         {"type": "suffix", "inflected": "mente", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[a]", "stemChange": {"from": ["o"], "to": "ó", "occurrence": "last", "between": "{letter}", "betweenMinLength": 2}},
         {"type": "suffix", "inflected": "mente", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[a]", "stemChange": {"from": ["o"], "to": "ô", "occurrence": "last", "between": "{letter}", "betweenMinLength": 2}},
         {"type": "suffix", "inflected": "mente", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[a]", "stemChange": {"from": ["u"], "to": "ú", "occurrence": "last", "between": "{letter}", "betweenMinLength": 2}},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["avelmente", "ável"], ["ivelmente", "ível"], ["ovelmente", "óvel"], ["uvelmente", "úvel"], ["istamente", "ista"], ["ãmente", "ão"], ["esmente", "ês"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["avelmente", "ável"], ["ivelmente", "ível"], ["ovelmente", "óvel"], ["uvelmente", "úvel"], ["istamente", "ista"], ["ãmente", "ão"], ["esmente", "ês"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "wholeWord", "inflected": "comumente", "deinflected": "comum", "conditionsIn": [], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "comummente", "deinflected": "comum", "conditionsIn": [], "conditionsOut": ["adj"]}
       ]
     },
     {
