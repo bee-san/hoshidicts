@@ -1,0 +1,172 @@
+{
+  "schema": 1,
+  "conditions": {
+    "v": {
+      "name": "Verb",
+      "isDictionaryForm": true,
+      "subConditions": ["vpast", "vpresent"]
+    },
+    "vpast": {
+      "name": "Verb, past tense",
+      "isDictionaryForm": false
+    },
+    "vpresent": {
+      "name": "Verb, present tense",
+      "isDictionaryForm": true
+    },
+    "n": {
+      "name": "Noun",
+      "isDictionaryForm": true,
+      "subConditions": ["np", "ns"]
+    },
+    "np": {
+      "name": "Noun plural",
+      "isDictionaryForm": false
+    },
+    "ns": {
+      "name": "Noun singular",
+      "isDictionaryForm": true
+    },
+    "adj": {
+      "name": "Adjective",
+      "isDictionaryForm": true
+    },
+    "adv": {
+      "name": "Adverb",
+      "isDictionaryForm": true
+    }
+  },
+  "transforms": [
+    {
+      "id": "plural",
+      "name": "plural",
+      "description": "plural form of a noun",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ס", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"]},
+        {"type": "suffix", "inflected": "ן", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"]},
+        {"type": "suffix", "inflected": "ים", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"]},
+        {"type": "suffix", "inflected": "ער", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"]},
+        {"type": "suffix", "inflected": "עך", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"]},
+        {"type": "suffix", "inflected": "ען", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"]},
+        {"type": "suffix", "inflected": "עס", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"]},
+        {"type": "suffix", "inflected": "ות", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"]},
+        {"type": "suffix", "inflected": "נס", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"]},
+        {"type": "suffix", "inflected": "ערען", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"]},
+        {"type": "suffix", "inflected": "ענעס", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"]},
+        {"type": "suffix", "inflected": "ענס", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"]},
+        {"type": "suffix", "inflected": "ערס", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"]},
+        {"type": "suffix", "inflected": "סער", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"]}
+      ]
+    },
+    {
+      "id": "umlaut_plural",
+      "name": "umlaut_plural",
+      "description": "plural form of a umlaut noun",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ער", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ע"], "to": "אַ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ער", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ע"], "to": "אָ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ער", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ע"], "to": "א", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ער", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ױ"], "to": "ע", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ער", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ײ"], "to": "ױ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ער", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["י"], "to": "ו", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "עס", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ע"], "to": "אַ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "עס", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ע"], "to": "אָ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "עס", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ע"], "to": "א", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "עס", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ױ"], "to": "ע", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "עס", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ײ"], "to": "ױ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "עס", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["י"], "to": "ו", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ים", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ע"], "to": "אַ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ים", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ע"], "to": "אָ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ים", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ע"], "to": "א", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ים", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ױ"], "to": "ע", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ים", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ײ"], "to": "ױ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ים", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["י"], "to": "ו", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ען", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ע"], "to": "אַ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ען", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ע"], "to": "אָ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ען", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ע"], "to": "א", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ען", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ױ"], "to": "ע", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ען", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ײ"], "to": "ױ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ען", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["י"], "to": "ו", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ן", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ע"], "to": "אַ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ן", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ע"], "to": "אָ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ן", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ע"], "to": "א", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ן", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ױ"], "to": "ע", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ן", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ײ"], "to": "ױ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ן", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["י"], "to": "ו", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ס", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ע"], "to": "אַ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ס", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ע"], "to": "אָ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ס", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ע"], "to": "א", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ס", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ױ"], "to": "ע", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ס", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ײ"], "to": "ױ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ס", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["י"], "to": "ו", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "עך", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ע"], "to": "אַ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "עך", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ע"], "to": "אָ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "עך", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ע"], "to": "א", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "עך", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ױ"], "to": "ע", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "עך", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ײ"], "to": "ױ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "עך", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["י"], "to": "ו", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ערס", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ע"], "to": "אַ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ערס", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ע"], "to": "אָ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ערס", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ע"], "to": "א", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ערס", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ױ"], "to": "ע", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ערס", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["ײ"], "to": "ױ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ערס", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemChange": {"from": ["י"], "to": "ו", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}}
+      ]
+    },
+    {
+      "id": "diminutive",
+      "name": "diminutive",
+      "description": "diminutive form of a noun",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "טשיק", "deinflected": "", "conditionsIn": ["n"], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "קע", "deinflected": "", "conditionsIn": ["n"], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "ל", "deinflected": "", "conditionsIn": ["n"], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "עלע", "deinflected": "", "conditionsIn": ["n"], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "diminutive_and_umlaut",
+      "name": "diminutive_and_umlaut",
+      "description": "diminutive form of a noun with stem umlaut",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ל", "deinflected": "", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemChange": {"from": ["ע"], "to": "אַ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ל", "deinflected": "", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemChange": {"from": ["ע"], "to": "אָ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ל", "deinflected": "", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemChange": {"from": ["ע"], "to": "א", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ל", "deinflected": "", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemChange": {"from": ["ױ"], "to": "ע", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ל", "deinflected": "", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemChange": {"from": ["ײ"], "to": "ױ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "ל", "deinflected": "", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemChange": {"from": ["י"], "to": "ו", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "עלע", "deinflected": "", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemChange": {"from": ["ע"], "to": "אַ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "עלע", "deinflected": "", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemChange": {"from": ["ע"], "to": "אָ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "עלע", "deinflected": "", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemChange": {"from": ["ע"], "to": "א", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "עלע", "deinflected": "", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemChange": {"from": ["ױ"], "to": "ע", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "עלע", "deinflected": "", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemChange": {"from": ["ײ"], "to": "ױ", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}},
+        {"type": "suffix", "inflected": "עלע", "deinflected": "", "conditionsIn": ["n"], "conditionsOut": ["n"], "stemChange": {"from": ["י"], "to": "ו", "occurrence": "last", "between": "[^\\u05E2\\u05F0\\u05D0\\uFB2E\\u05F1\\u05D5\\u05F2\\uFB1D\\uFB1F\\u05D9\\uFB2F]", "betweenMinLength": 0}}
+      ]
+    },
+    {
+      "id": "verb_present_singular_to_first_person",
+      "name": "verb_present_singular_to_first_person",
+      "description": "Turn the second and third person singular form to first person",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "סט", "deinflected": "", "conditionsIn": ["v"], "conditionsOut": ["vpresent"]},
+        {"type": "suffix", "inflected": "ט", "deinflected": "", "conditionsIn": ["v"], "conditionsOut": ["vpresent"]},
+        {"type": "suffix", "inflected": "נדיק", "deinflected": "", "conditionsIn": ["v"], "conditionsOut": ["vpresent"]}
+      ]
+    },
+    {
+      "id": "verb_present_plural_to_first_person",
+      "name": "verb_present_plural_to_first_person",
+      "description": "Turn the second plural form to first person plural form",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "טס", "deinflected": "נ", "conditionsIn": ["v"], "conditionsOut": ["vpresent"]},
+        {"type": "suffix", "inflected": "ט", "deinflected": "נ", "conditionsIn": ["v"], "conditionsOut": ["vpresent"]}
+      ]
+    }
+  ]
+}
