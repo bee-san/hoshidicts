@@ -1,0 +1,2 @@
+# kind	id	side	input	text	conditions	reason
+processor	removeUkrainianDiacritics	pack	/\u0300/	*	*	The pack also removes the grave accent (U+0300), which some texts and dictionaries use for secondary stress (мо̀ва); Yomitan removes only the acute (U+0301).

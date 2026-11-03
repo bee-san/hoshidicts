@@ -15,6 +15,15 @@ boundary (`word` / `word` / `spaces`, docs/languages.md 14.1). The apostrophe
   declensions, adjective declension and comparison, the two conjugations,
   the і ~ о/е alternation, fleeting vowels and consonant mutations). No text
   or table is copied from a grammar or dictionary.
+- `sources/yomitan.json`: Yomitan's Ukrainian rules,
+  [`ext/js/language/uk/ukrainian-transforms.js` at d3c54c1](https://github.com/yomidevs/yomitan/blob/d3c54c10264673eca0d66b970ef74cd5c8b048e3/ext/js/language/uk/ukrainian-transforms.js),
+  ported by `tools/port-yomitan-transforms.mjs`, with its 64 `todo` rules
+  mapped by `sources/map-yomitan.mjs`. GPL-3.0-or-later, Copyright (C) 2026
+  Yomitan Authors. The processors `decapitalize` and `capitalizeFirstLetter`
+  are Yomitan's `capitalizationPreprocessors`
+  (`ext/js/language/text-processors.js`), and `removeUkrainianDiacritics` and
+  `ukrainianApostropheVariants` are Yomitan's Ukrainian processors
+  (`ext/js/language/uk/ukrainian-text-preprocessors.js`), same licence.
 - `tests/corpus.tsv` and the rows of `tests/gaps.tsv` whose category starts
   with a part of speech: 1,515 pairs sampled with seed 1 by
   `sources/build-corpus.mjs` from English Wiktionary's Ukrainian declension

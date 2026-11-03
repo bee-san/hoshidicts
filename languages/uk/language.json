@@ -9,8 +9,8 @@
   "direction": "ltr",
   "classes": {
     "letter": "[\\u0400-\\u045F\\u0490\\u0491]",
-    "apostrophe": "['\\u2019\\u02BC`\\u00B4]",
-    "word": "[{letter}\\p{M}\\p{Nd}]",
+    "apostrophe": "['\\u2018\\u2019\\u02BC`\\u00B4]",
+    "word": "[{letter}\\u0300-\\u036F0-9]",
     "stemChar": "[{letter}{apostrophe}\\-]",
     "vowel": "[аеєиіїоуюя]",
     "vowelOrApostrophe": "[{vowel}{apostrophe}]",
@@ -21,7 +21,7 @@
     "softable": "[дтзсцлн]"
   },
   "text": {
-    "pattern": "[{letter}{apostrophe}\\p{M}]",
+    "pattern": "[{letter}{apostrophe}\\u0300-\\u036F]",
     "scanStart": "word",
     "segmentation": "spaces",
     "wordCharacters": "{word}",
@@ -37,17 +37,17 @@
     "searchResolution": "word",
     "preprocessors": [
       {
-        "id": "removeStressMarks",
+        "id": "removeUkrainianDiacritics",
         "name": "Remove stress marks",
-        "variants": [[{"normalize": "NFD"}, {"strip": "[\\u0300\\u0301]"}, {"normalize": "NFC"}]]
+        "variants": [[{"strip": "[\\u0300\\u0301]"}]]
       },
       {
-        "id": "normalizeApostrophe",
-        "name": "Write the apostrophe as dictionaries do",
+        "id": "ukrainianApostropheVariants",
+        "name": "Search for apostrophe variants",
         "variants": [
-          [{"map": {"’": "'", "ʼ": "'", "`": "'", "´": "'"}}],
-          [{"map": {"'": "’", "ʼ": "’", "`": "’", "´": "’"}}],
-          [{"map": {"'": "ʼ", "’": "ʼ", "`": "ʼ", "´": "ʼ"}}]
+          [{"map": {"‘": "'", "’": "'", "ʼ": "'", "`": "'", "´": "'"}}],
+          [{"map": {"'": "’", "‘": "’", "ʼ": "’", "`": "’", "´": "’"}}],
+          [{"map": {"'": "ʼ", "‘": "ʼ", "’": "ʼ", "`": "ʼ", "´": "ʼ"}}]
         ]
       },
       {
