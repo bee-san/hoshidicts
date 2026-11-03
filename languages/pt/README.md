@@ -336,15 +336,20 @@ is given, it is labelled "without the field".
      dropped, three runs at machine load 36-39: p50 21.5-23.8 µs, p95
      32.1-39.1 µs (without the field: 20.5-21.9 µs and 33.6-35.6 µs). The
      budget is 1 ms p50.
-   - WebAssembly (`sources/wasm-measure.mjs`, Hachidori's prebuilt engines of
-     feat/multi-language 803f7b6e, built from hoshidicts b145feb, which has no
-     `untaggedTerms`, so measured with the pack without the field; Node 22,
-     the same 74 texts, wty-pt-en imported and paged):
-     - `hdw_language_load`: median 12.8 ms single-thread and 13.6 ms
-       threaded over 10 fresh engines; live heap +1,874,136 and +1,874,448
+   - WebAssembly (`sources/wasm-measure.mjs`, Node 22, the same 74 texts,
+     wty-pt-en imported and paged). Hachidori's prebuilt runtimes on
+     feat/multi-language 803f7b6e are built from hoshidicts b145feb, which
+     refuses `untaggedTerms`, so the three runtimes were rebuilt with
+     Emscripten 6.0.9 from that checkout's `wasm/` and this pack on #58's
+     engine (32812c9), as `wasm/build.sh` does at `--parallel 8`:
+     - `hdw_language_load`: median 12.6 ms single-thread and 14.1 ms
+       threaded over 10 fresh engines; live heap +1,876,440 and +1,876,520
        bytes. The budgets are 50 ms and 20 MB;
-     - `hdw_lookup`: p50 0.082 ms and p95 0.159 ms single-thread, p50 0.092
-       ms and p95 0.175 ms threaded.
+     - `hdw_lookup`: p50 0.088 ms and p95 0.185 ms single-thread, p50 0.094
+       ms and p95 0.186 ms threaded; 123 results in a pass, as natively.
+     - Without the field, on the prebuilt b145feb runtimes: load 12.8 and
+       13.6 ms, heap +1,874,136 and +1,874,448 bytes, `hdw_lookup` p50
+       0.082 and 0.092 ms, p95 0.159 and 0.175 ms, 103 results.
    - The pack has no `pattern` rule.
 6. **Commands and scripts.** `node languages/pt/sources/build-own.mjs` and
    `node tools/merge-transforms.mjs pt --force` write the rules;
@@ -374,12 +379,16 @@ Checks:
   NFKC, diaeresis and case processors, the hyphen, `searchResolution`),
   regenerated and run through the conformance test: all 48 fail it.
 - Hachidori (`test/chrome-language-pack.mjs` in Chrome 152, feat/multi-language
-  803f7b6e with this branch in `third_party/hoshidicts`, wty-pt-en): 16 / 16
-  checks pass. Settings adds Portuguese beside Japanese and imports the
-  dictionary (572,340 terms, 1.0 s); twelve hovered words find their lemma
-  first (`falava` → falar, `pôs` → pôr, `lembrava-se` → lembrar, `leões` →
-  leão, `soubesse` → saber); the Anki note and the switch to Japanese and
-  back work.
+  803f7b6e with this pack in `third_party/hoshidicts` on #58's engine and the
+  runtimes rebuilt from it, wty-pt-en): 16 / 16 checks pass. Settings adds
+  Portuguese beside Japanese and imports the dictionary (572,340 terms, 1.1
+  s); twelve hovered words find their lemma first, traced by the pack's
+  transforms (`falava` → falar `imperfect (eu/ele)`, `pôs` → pôr `preterite
+  (ele)`, `leões` → leão `plural`, `soubesse` → saber `imperfect subjunctive
+  (eu/ele)`, `lembrava-se` → lembrar); the Anki note and the switch to
+  Japanese and back work. With the prebuilt b145feb runtimes and the pack
+  without the field, the same 16 checks pass, the traces coming from
+  wty-pt-en's form-of rows.
 
 ## Known gaps
 
