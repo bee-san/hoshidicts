@@ -437,7 +437,7 @@ judged by hand too.
      - Live heap after the load: +1,350,544 bytes single-thread, +1,350,976
        threaded (`hdw_memory_stats`).
    - Hachidori (`test/chrome-language-pack.mjs`, feat/multi-language 803f7b6e
-     with this branch at 1639239 (efa303c before the rebase onto 39cebbe) in
+     with this branch at 1639239 (efa303c after the rebase onto 39cebbe) in
      `third_party/hoshidicts`, Chrome
      152.0.7977.75): 31 of 31 checks pass. Settings adds Latin beside Japanese
      and imports wty-la-en (1,977,517 terms, 2.5 s); 27 hovered words find
