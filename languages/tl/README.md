@@ -325,7 +325,8 @@ rules). Later commits changed them after measuring:
 
 ## Measurements
 
-`hoshidicts-cli eval-language` at hoshidicts 0a73e5e (GCC 14.3, Release),
+`hoshidicts-cli eval-language` with the engine of hoshidicts 0a73e5e (main
+up to 39cebbe adds only other packs; GCC 14.3, Release),
 `--transforms` for each rule set, `--dictionary` wty-tl-en as published,
 imported. "Pass" is the pack as committed, `"untaggedTerms": "pass"`: every
 row of wty-tl-en carries D, the dictionary-form conditions, and matches
