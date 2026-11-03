@@ -1,18 +1,23 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""Measurements of README.md (Measurements 2-4) for the Irish pack.
+"""Measurements of README.md (Measurements 1-4) for the Irish pack.
 
-Not run by any test. It looks words up as a host does with
-languages/ga/sources/lookup-batch.cpp (Lookup::lookup, 16 results, scan
-length 16, no language options) and judges the first result that has a
-definition:
+Not run by any test. eval and dictpairs run hoshidicts-cli eval-language;
+frequent, realtext, particles and traces look words up as a host does with
+build/lookup-batch-ga (languages/ga/sources/lookup-batch.cpp: Lookup::lookup,
+16 results, scan length 16, no language options) and judge the first result
+that has a definition (class Judge):
 
-  python3 languages/ga/sources/measure.py frequent  --cache <dir> --batch <lookup-batch> [--languages <dir>] [--out <dir>]
-  python3 languages/ga/sources/measure.py realtext  --cache <dir> --batch <lookup-batch> [--languages <dir>] [--out <dir>]
-  python3 languages/ga/sources/measure.py particles --cache <dir> --batch <lookup-batch> [--languages <dir>] [--out <dir>]
+  python3 languages/ga/sources/measure.py eval      --cache <dir> [--languages <dir>] [--out <dir>]
+  python3 languages/ga/sources/measure.py dictpairs --cache <dir> [--out <dir>]
+  python3 languages/ga/sources/measure.py frequent  --cache <dir> --batch build/lookup-batch-ga [--languages <dir>] [--out <dir>]
+  python3 languages/ga/sources/measure.py realtext  --cache <dir> --batch build/lookup-batch-ga [--languages <dir>] [--out <dir>]
+  python3 languages/ga/sources/measure.py particles --cache <dir> --batch build/lookup-batch-ga [--languages <dir>] [--out <dir>]
+  python3 languages/ga/sources/measure.py traces    --cache <dir> --batch build/lookup-batch-ga [--languages <dir>]
 
-<cache> holds the inputs README.md names (Sources and licences), none of
-which is committed:
+--languages <dir> measures a scratch copy of the pack (another
+transforms.json, or untaggedTerms "pass"). <cache> holds the inputs README.md
+names (Sources and licences), none of which is committed:
 
   wty-ga-en/                      wty-ga-en 2026.10.22 imported by hoshidicts-cli import
   wty-ga-en-banks/                the same release unzipped (its term banks)
@@ -20,19 +25,27 @@ which is committed:
   ud-irish-idt/ga_idt-ud-{train,dev,test}.conllu
   gle_sentences.tsv.bz2           Tatoeba's Irish sentences
 
+eval: eval-language --dictionary on the sample (corpus.tsv with gaps.tsv),
+cases.tsv, defaults.tsv and yomitan.tsv, for the own, Yomitan, union and
+final rules, with every option on and with the pack's defaults.
+
+dictpairs: eval-language --per-rule on wty-ga-en's single-word form-of pairs.
+
 frequent: the 10,000 most frequent word forms of the Irish Wikipedia
 (articles, markup removed). A form's lemmas are those its wty-ga-en form-of
 rows name, and the lemma UD Irish-IDT gives it most often. A form counts
-when the pack's rules reach one of its lemmas from it; its first result is
-right when it is the form's own entry or one of its lemmas.
+when the pack's rules reach one of its lemmas from it.
 
 realtext: every word of UD Irish-IDT (4,910 sentences of news, fiction,
 web, legal and government text), looked up from the word to the end of its
 sentence and judged against the treebank's lemma.
 
-particles: the words of realtext and of Tatoeba's sentences that follow a
-particle, article, possessive or preposition that mutates them, by
-particle, judged as above (Tatoeba's words by their form-of rows).
+particles: the words of UD Irish-IDT and of Tatoeba's sentences that follow
+a particle, article, possessive or preposition that mutates them, by
+particle (Tatoeba's words judged by their form-of rows).
+
+traces: whether the trace shown for each verb row of the sample names its
+tense, mood or form.
 """
 
 import argparse
