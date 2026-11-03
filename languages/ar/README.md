@@ -154,8 +154,8 @@ compatible part of speech.
   - they break 4 negatives of `cases.tsv`: `NSuff-ath` reads مدرسته as مدرس,
     رأيته as رأي and سيارتها as سيار, and `NSuff-An` reads ذهب الولدان as
     ذهب الولد;
-  - looked up as a host does, the first result is wrong at 1.52% of the
-    judged positions of *al-Nazarat*, 0.72% of Tatoeba's and 1.65% of *Kalila
+  - looked up as a host does, the first result is wrong at 1.48% of the
+    judged positions of *al-Nazarat*, 0.66% of Tatoeba's and 1.56% of *Kalila
     wa Dimna*'s, against 0.39%, 0.26% and 0.34% for the final rules, and for 8
     of the frequent words against 2 (Measurements).
 
@@ -323,7 +323,8 @@ in `sources/`, run from the repository root.
      wrong; of the 23,185 with proclitics or a pronoun, 313 are.
    - *Kalila wa Dimna*: 44,208 judged, 149 wrong (0.34%).
    - Tatoeba: 290,798 judged, 754 wrong (0.26%).
-   - The same with Yomitan's rules: 1.61%, 1.66% and 0.72%.
+   - The same with Yomitan's rules: 1.61%, 1.66% and 0.72%; with the union,
+     1.48%, 1.56% and 0.66%.
    - In *al-Nazarat*, 1,719 positions could not be judged by script (words
      the dictionary has no entry for, or a first result longer than the
      word). A random sample of 60 of them (seed 1), judged by hand: 26 right,
@@ -337,31 +338,31 @@ in `sources/`, run from the repository root.
      ويطفئ → طفئ (4), ورائي → وراء (4, right as a word but not the
      preposition's own lemma), فيخيل → خال (4), جفنيه → جف (3), برأيه →
      برأ (4, *Kalila*).
-5. **Performance** (host load 35-41 on 64 cores, so these are upper bounds).
+5. **Performance** (host load 30-35 on 64 cores, so these are upper bounds).
    - Native `benchmark-lookup --languages languages --language ar --term
      <imported wty-ar-en>` on the 135 texts of `sources/benchmark-words.txt`
      (each word of 20 sentences written for the pack, with the rest of its
-     sentence), 6 passes, the first dropped, three runs: p50 84.1-86.1 µs, p95
-     233.4-239.4 µs. The budget is 1 ms p50.
+     sentence), 6 passes, the first dropped, three runs: p50 86.4-86.9 µs, p95
+     242.4-248.0 µs. The budget is 1 ms p50.
    - Native pack load (`sources/pack-load.cpp`): `LanguageRegistry::add`
-     median 4.9-5.2 ms over 50 runs, three runs; the registry holds
-     6,690,400 bytes of heap. The 13,889 rules are mostly cross products,
+     median 4.5-5.3 ms over 50 runs, three runs; the registry holds
+     6,781,904 bytes of heap. The 13,889 rules are mostly cross products,
      indexed by their endings.
    - WebAssembly, Hachidori feat/multi-language 803f7b6 engines (built from
      hoshidicts b145feb), Node 22:
      - `sources/wasm-load.mjs`, 10 fresh engines each: `hdw_language_load`
-       median 12.06 ms single-thread and 12.58 ms threaded; live heap
-       +3,296,664 bytes. The budgets are 50 ms and 20 MB.
+       median 11.95 ms single-thread and 13.12 ms threaded; live heap
+       +3,339,952 bytes. The budgets are 50 ms and 20 MB.
      - `benchmark/node-lookup.mjs` with `HACHIDORI_LOOKUP_LANGUAGE=ar` on the
-       same 20 sentences (135 hovers, 6 passes): `hdw_lookup` p50 204 µs and
-       p95 529 µs single-thread, p50 214 µs and p95 535 µs threaded.
+       same 20 sentences (135 hovers, 6 passes): `hdw_lookup` p50 227 µs and
+       p95 571 µs single-thread, p50 209 µs and p95 513 µs threaded.
    - The pack has no `pattern` rule, so no pattern heap.
 6. **Hachidori** (feat/multi-language 803f7b6 with this branch in
    `third_party/hoshidicts` and `node scripts/sync-languages.mjs`;
    `test/chrome-language-pack.mjs`, Chrome 152, wty-ar-en): 17 / 17 checks
    pass.
    - Settings adds Arabic beside Japanese and imports the dictionary
-     (1,019,773 terms, 1.3 s).
+     (1,019,773 terms, 1.4 s).
    - Thirteen hovered words find their headword first, with their traces:
      واستعرتُ → استعار (و, past), سيكتبون → كتب, بالقلم → قلم, مفاتيحنا →
      مفتاح, تساعديني → ساعد, ليستخدمه → استخدم, رأيتهم → رأى, كِتَابَهُ →
