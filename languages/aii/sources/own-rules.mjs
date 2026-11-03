@@ -350,12 +350,16 @@ for (const [id, ending] of [['3fs', '\u071D\u0735\u0710'], ['3p', '\u071D\u073C'
 // seyame (a plural: ܒܡܸ̈ܠܹܐ, in words), the first radical is not ܘ (the
 // conjunction: ܘܕܸܪܹܐ is ܘ- and ܕܸܪܹܐ, he returned; no root starts with
 // ܘ) and the second is not ܐ, so that a proclitic before ܐܸܠ- (to; ܕܐܸܠܝܼ,
-// that to me) or the copula ܐܝܼܠܹܗ (ܕܐܝܼܠܹܗ, that he is) is not a root.
+// that to me) or the copula ܐܝܼܠܹܗ (ܕܐܝܼܠܹܗ, that he is) is not a root,
+// nor ܘ: where it is spoken there, the dictionary writes the root with ܒ
+// (ܥܒܪ, to enter; ܓܒܪ, to marry; ܬܒܪ, to break). The Urmia Bible spells
+// the past of ܥܒܪ as it is spoken, ܐ݇ܘܸܪܹܐ (he entered), and a rule of its
+// own reads it.
 transform('pastContracted', 'past (assimilated L-suffix)', 'The past of a Stem I verb whose last radical is ܪ or ܠ, with the ܠ of the L-suffix assimilated: ܐ݇ܡܝܼܪܹܗ, he said (for ܐ݇ܡܝܼܪ ܠܹܗ), and in the Urmia Bible ܐ݇ܡܸܪܹܐ, he said; ܫܩܸܠܘܿܢ, they took.');
 {
     const NV = '[\\u0303\\u0307\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*';
     const R1 = '([\\u0710\\u0712-\\u0717\\u0719-\\u072C])';
-    const R2 = '([\\u0712-\\u072C])';
+    const R2 = '([\\u0712-\\u0717\\u0719-\\u072C])';
     const LAST = '([\\u072A\\u0720])';
     // Modern: the past base with ī (ܝܼ), then ēh (he) or āh (she).
     for (const ending of ['\u0739\u0717', '\u0735\u0717\u0307', '\u0735\u0717']) {
@@ -365,6 +369,8 @@ transform('pastContracted', 'past (assimilated L-suffix)', 'The past of a Stem I
     // ending: ē (he), ā (she), ōn (they), ī (I), ūk (you, m.), an (we).
     for (const ending of ['\u0739\u0710', '\u0735\u0710', '\u0718\u073F\u0722', '\u071D\u073C', '\u0718\u073C\u071F', '\u0732\u0722']) {
         rule('pastContracted', {type: 'pattern', pattern: `^${R1}${NV}${R2}${NV}\\u0738${NV}${LAST}${NV}${esc(ending)}$`, replacement: '$1$2$3', anchorSuffix: ending, conditionsIn: ANY, conditionsOut: VERB});
+        // ܐ݇ܘܸܪܹܐ, ܐ݇ܘܸܪܘܿܢ (he, they entered), the Urmia spelling of ܥܒܪ.
+        rule('pastContracted', {type: 'pattern', pattern: `^\\u0710${NV}\\u0718${NV}\\u0738${NV}\\u072A${NV}${esc(ending)}$`, replacement: 'ܥܒܪ', anchorSuffix: ending, conditionsIn: ANY, conditionsOut: VERB});
     }
 }
 

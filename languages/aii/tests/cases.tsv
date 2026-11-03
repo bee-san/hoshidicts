@@ -404,6 +404,8 @@ past (assimilated L-suffix, Urmia)	1	ܐ݇ܡܸܪܲܢ	ܐܡܪ	*	pastContracted
 past (assimilated L-suffix, Urmia)	1	ܫܩܸܠܹܐ	ܫܩܠ	*	pastContracted
 past (assimilated L-suffix, Urmia)	1	ܫܩܸܠܘܿܢ	ܫܩܠ	*	pastContracted
 past (assimilated L-suffix, Urmia)	1	ܘܐ݇ܡܸܪܹܐ	ܐܡܪ	*	pastContracted|w-
+past (assimilated L-suffix, Urmia spelling of ܥܒܪ)	1	ܐ݇ܘܸܪܹܐ	ܥܒܪ	*	pastContracted
+past (assimilated L-suffix, Urmia spelling of ܥܒܪ)	1	ܘܐܘܸܪܘܿܢ	ܥܒܪ	*	pastContracted|w-
 # --- spelling variants the dictionary refers to a pointed form it has no row for ---
 spelling variant	1	ܬܪܵܝ	ܬܪܝܢ	*	spelling
 spelling variant	1	ܘܬܪܵܝ	ܬܪܝܢ	*	spelling|w-
@@ -413,6 +415,7 @@ spelling variant	1	ܐܘܦ	ܐܦ	*	spelling
 pattern (pastContracted: a vowel on the first radical, his emir)	0	ܐܲܡܝܼܪܹܗ	ܐܡܪ	*	pastContracted
 pattern (pastContracted: seyame, a plural)	0	ܒܡܸ̈ܠܹܐ	ܒܡܠ	*	pastContracted
 pattern (pastContracted: ܘ is the conjunction, not a radical)	0	ܘܕܸܪܹܐ	ܘܕܪ	*	pastContracted
+pattern (pastContracted: ܘ is not the second radical; Ur is a city)	0	ܐ݇ܘܸܪܹܐ	ܐܘܪ	*	pastContracted
 pattern (pastContracted: ܐ as second radical, ܕ- + ܐܸܠܝܼ)	0	ܕܐܸܠܝܼ	ܕܐܠ	*	pastContracted
 pattern (pastContracted: ܐ as second radical, ܕ- + the copula)	0	ܕܐܝܼܠܹܗ	ܕܐܠ	*	pastContracted
 pattern (pastContracted: last radical ܪ or ܠ)	0	ܦܬ݂ܝܼܚܹܗ	ܦܬܚ	*	pastContracted
