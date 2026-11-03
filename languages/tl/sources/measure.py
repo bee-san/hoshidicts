@@ -271,7 +271,9 @@ def hovers(sentences):
     return out
 
 
-GRAMMAR = {'linker', 'contractionAy', 'contractionAt', 'contractionAng', 'apostropheSpelling'}
+# Readings that leave the word itself: the linker (own linker, Yomitan's -ng),
+# contractions, and the hyphen put back or taken out.
+GRAMMAR = {'linker', '-ng', 'contractionAy', 'contractionAt', 'contractionAng', 'apostropheSpelling', 'prefixHyphen', 'hyphenated'}
 
 
 def classify(first, lemmas):
@@ -284,7 +286,7 @@ def classify(first, lemmas):
     if verdict in ('own entry', 'right lemma'):
         return 'named lemma'
     if set(rule_steps) <= GRAMMAR:
-        return 'linker or contraction'
+        return 'linker, contraction or spelling'
     return 'other rule reading'
 
 
@@ -295,7 +297,7 @@ def cmd_positions(args, sets, sentences, label):
     positions = hovers(sentences)
     texts = [h for h, _, _ in positions]
     print(f'{label}: {len(sentences)} sentences, {len(positions)} positions')
-    print('| Rule set | Positions found | First result as written or by a form-of row | A lemma a form-of row names | Linker or contraction only | Other rule reading | of which multiword | Other, after a marker / pronoun / particle |')
+    print('| Rule set | Positions found | First result as written or by a form-of row | A lemma a form-of row names | Linker, contraction or hyphen only | Other rule reading | of which multiword | Other, after a marker / pronoun / particle |')
     print('| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |')
     listed = {}
     for set_name, transforms in sets.items():
@@ -322,7 +324,7 @@ def cmd_positions(args, sets, sentences, label):
                 after[GROUP_OF.get(norm(previous), 'other')] += 1
                 items.append((first['matched'], first['expression'], '|'.join(t for t, _ in first['trace']), text[:60]))
         listed[set_name] = items
-        print(f"| {set_name} | {found} | {kinds['own entry or dictionary']} | {kinds['named lemma']} | {kinds['linker or contraction']} | "
+        print(f"| {set_name} | {found} | {kinds['own entry or dictionary']} | {kinds['named lemma']} | {kinds['linker, contraction or spelling']} | "
               f"{kinds['other rule reading']} | {multi} | {after['marker']} / {after['pronoun']} / {after['particle']} |")
     if args.show:
         for set_name, items in listed.items():

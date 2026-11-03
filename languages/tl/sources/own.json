@@ -1890,11 +1890,12 @@
     {
       "id": "magpa",
       "name": "magpa-",
-      "description": "Causative, actor focus (magpaluto → luto).",
+      "description": "Causative, actor focus (magpaluto → luto, magpaamo → amo).",
       "source": "own",
       "rules": [
         {"type": "prefix", "inflected": "magpar", "deinflected": "d", "conditionsIn": ["v_m"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeiou]", "stemMinLength": 2},
-        {"type": "prefix", "inflected": "magpa", "deinflected": "", "conditionsIn": ["v_m"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 4},
+        {"type": "prefix", "inflected": "magpa", "deinflected": "", "conditionsIn": ["v_m"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeiou]", "stemMinLength": 3},
+        {"type": "prefix", "inflected": "magpa", "deinflected": "", "conditionsIn": ["v_m"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[bcdfghjklmnpqrstvwxyzñ]", "stemMinLength": 4},
         {"type": "prefix", "inflected": "magpa-", "deinflected": "", "conditionsIn": ["v_m"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2}
       ]
     },
@@ -1905,7 +1906,8 @@
       "source": "own",
       "rules": [
         {"type": "prefix", "inflected": "mapar", "deinflected": "d", "conditionsIn": ["v_m"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeiou]", "stemMinLength": 2},
-        {"type": "prefix", "inflected": "mapa", "deinflected": "", "conditionsIn": ["v_m"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 4},
+        {"type": "prefix", "inflected": "mapa", "deinflected": "", "conditionsIn": ["v_m"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[aeiou]", "stemMinLength": 3},
+        {"type": "prefix", "inflected": "mapa", "deinflected": "", "conditionsIn": ["v_m"], "conditionsOut": ["n", "adj", "v_root"], "stemStartsWith": "[bcdfghjklmnpqrstvwxyzñ]", "stemMinLength": 4},
         {"type": "prefix", "inflected": "mapa-", "deinflected": "", "conditionsIn": ["v_m"], "conditionsOut": ["n", "adj", "v_root"], "stemMinLength": 2}
       ]
     },

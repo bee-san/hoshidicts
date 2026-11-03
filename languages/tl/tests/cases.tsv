@@ -255,6 +255,7 @@ affix to root	1	malutunan	luto	*	maAn
 nouns and adjectives	1	maramdamin	damdam	*	maIn
 nouns and adjectives	1	pamutol	putol	*	pang
 nouns and adjectives	1	pamuli	muli	*	pa
+affix to root	1	magpaamo	amo	*	magpa
 negatives	0	ang	a	*	*
 negatives	0	lang	la	*	*
 negatives	0	nang	na	*	*
@@ -289,3 +290,4 @@ negatives	0	ipaalam mo	alam mo	*	*
 negatives	0	gumaling sa	galing sa	*	*
 negatives	0	tungkol saan	tungkol sa	*	*
 negatives	0	pamuli	buli	*	*
+negatives	0	magpasa	sa	*	*

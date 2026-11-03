@@ -2744,12 +2744,42 @@
       [111, 111],
       [117, 117]
     ],
+    "transforms[21].rules[1].stemStartsWith": [
+      [97, 97],
+      [101, 101],
+      [105, 105],
+      [111, 111],
+      [117, 117]
+    ],
+    "transforms[21].rules[2].stemStartsWith": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 116],
+      [118, 122],
+      [241, 241]
+    ],
     "transforms[22].rules[0].stemStartsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111],
       [117, 117]
+    ],
+    "transforms[22].rules[1].stemStartsWith": [
+      [97, 97],
+      [101, 101],
+      [105, 105],
+      [111, 111],
+      [117, 117]
+    ],
+    "transforms[22].rules[2].stemStartsWith": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 116],
+      [118, 122],
+      [241, 241]
     ],
     "transforms[23].rules[0].stemStartsWith": [
       [97, 97],
@@ -6776,6 +6806,7 @@
         ["maramdamin", "maramdamin"],
         ["pamutol", "pamutol"],
         ["pamuli", "pamuli"],
+        ["magpaamo", "magpaamo"],
         ["ang", "ang"],
         ["lang", "lang"],
         ["nang", "nang"],
@@ -6807,6 +6838,7 @@
         ["ipaalam mo", "ipaalam mo"],
         ["gumaling sa", "gumaling sa"],
         ["tungkol saan", "tungkol saan"],
+        ["magpasa", "magpasa"],
         ["kinuha", "kinuha"],
         ["ginawa", "ginawa"],
         ["tinukso", "tinukso"],
@@ -8818,6 +8850,7 @@
         ["maramdamin", "Maramdamin"],
         ["pamutol", "Pamutol"],
         ["pamuli", "Pamuli"],
+        ["magpaamo", "Magpaamo"],
         ["ang", "Ang"],
         ["lang", "Lang"],
         ["nang", "Nang"],
@@ -8849,6 +8882,7 @@
         ["ipaalam mo", "Ipaalam mo"],
         ["gumaling sa", "Gumaling sa"],
         ["tungkol saan", "Tungkol saan"],
+        ["magpasa", "Magpasa"],
         ["kinuha", "Kinuha"],
         ["ginawa", "Ginawa"],
         ["tinukso", "Tinukso"],

@@ -490,9 +490,16 @@ const simplePrefix = (id, name, description, p, io, extra = {}) => add(id, name,
 ]);
 simplePrefix('maka', 'maka-', 'Ability or chance, actor focus (makakain → kain, makauwi → uwi).', 'maka', FROM_M);
 simplePrefix('maki', 'maki-', 'Joining others, actor focus (makikain → kain).', 'maki', FROM_M);
-// A root of four letters: nagpasya is mag- + pasya, not magpa- + sya.
-simplePrefix('magpa', 'magpa-', 'Causative, actor focus (magpaluto → luto).', 'magpa', FROM_M, {stemMinLength: 4});
-simplePrefix('mapa', 'mapa-', 'Involuntary action (mapaiyak → iyak).', 'mapa', FROM_M, {stemMinLength: 4});
+// A root of four letters when it starts with a consonant: nagpasya is mag-
+// + pasya, not magpa- + sya; magpaamo and magpauna are magpa- + amo, una.
+const fourAfterConsonant = (id, name, description, p) => add(id, name, description, [
+    prefix(`${p}r`, 'd', {stemStartsWith: VOWEL, stemMinLength: 2}, FROM_M),
+    prefix(p, '', {stemStartsWith: VOWEL, stemMinLength: 3}, FROM_M),
+    prefix(p, '', {stemStartsWith: CONSONANT, stemMinLength: 4}, FROM_M),
+    prefix(`${p}-`, '', {stemMinLength: 2}, FROM_M),
+]);
+fourAfterConsonant('magpa', 'magpa-', 'Causative, actor focus (magpaluto → luto, magpaamo → amo).', 'magpa');
+fourAfterConsonant('mapa', 'mapa-', 'Involuntary action (mapaiyak → iyak).', 'mapa');
 simplePrefix('magka', 'magka-', 'Coming to have (magkasakit → sakit).', 'magka', FROM_M);
 simplePrefix('magpaka', 'magpaka-', 'Making an effort to be (magpakabait → bait).', 'magpaka', FROM_M);
 const FROM_I = [['v_i'], ROOT];
