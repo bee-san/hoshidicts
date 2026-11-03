@@ -45,5 +45,10 @@
   ["kanti", "", "v", "v", 0, ["to sing"], 0, ""],
   ["kanta", "", "adj", "adj", 0, ["(test) an adjective a verb rule must not reach"], 0, ""],
   ["sano", "", "n", "n", 0, ["health"], 0, ""],
-  ["sana", "", "adj", "adj", 0, ["healthy"], 0, ""]
+  ["sana", "", "adj", "adj", 0, ["healthy"], 0, ""],
+  ["sani", "", "v vi", "v", 0, ["to be healthy"], 0, ""],
+  ["malsana", "", "adj", "adj", 0, ["ill, sick"], 0, ""],
+  ["malsani", "", "adj vi", "adj", 0, ["(test) a row the -ig- verb condition must not show first"], 0, ""],
+  ["pesi", "", "v", "v", 0, ["to weigh"], 0, ""],
+  ["pesilo", "", "name", "", 0, ["(test) a row without part of speech"], 0, ""]
 ]
