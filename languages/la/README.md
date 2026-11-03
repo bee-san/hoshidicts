@@ -489,9 +489,9 @@ judged by hand too.
      with the engine (3 classes, 785 fields, 2 steps). 1,253 of the 5,159
      rules are exercised by a passing row. `tests/` and `sources/` hold
      989,107 bytes.
-   - **Differential check** (`tools/check-yomitan.mjs`): 3,200 inputs and
-     4,740 Yomitan results with no difference; the four processors agree with
-     Yomitan's on 2,069 to 2,856 inputs each.
+   - **Differential check** (`tools/check-yomitan.mjs`): 2,813 inputs and
+     4,178 Yomitan results with no difference; the four processors agree with
+     Yomitan's on 1,865 to 2,652 inputs each.
    - **Tests and traces.** Rows of `cases.tsv` give traces for the perfect
      (`perf-stem|perf-3s`), the genitive, the locative, the imperfect and the
      comparative, and `lookup.tsv` has rows that need form-of following, word
