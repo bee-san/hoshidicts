@@ -23,7 +23,8 @@ host's hover. A result is visible unless all its glossaries are form-of rows
 frequent: the list's first <top> words; a word counts as reached when a
 deinflection of it (hoshidicts-cli deinflect, next to lookup-batch) is in its
 L1. Reports how many reached words show a wrong lemma first, and their share
-of the list's tokens. text: every word of the texts, each looked up with the
+of the list's tokens; and the verdicts of the first result of every word,
+reached or not (allWords). text: every word of the texts, each looked up with the
 rest of its sentence (Project Gutenberg texts between the START and END
 lines). phrases: Tatoeba sentences, every place where a proclitic pronoun,
 article or auxiliary is followed by a word, looked up from the pronoun,
@@ -161,7 +162,14 @@ def frequent(args, judge):
     tokens = Counter()
     wrong = []
     above = []
+    every = Counter()
+    every_examples = {'wrong': [], 'unjudged': []}
     for w, n, answer in zip(words, counts, answers):
+        first = first_visible(answer)
+        verdict = judge.verdict(first) if first else 'nothing'
+        every[verdict] += 1
+        if verdict in every_examples:
+            every_examples[verdict].append((n, w, first['expression'], rule_of(first)))
         lemmas = judge.l1(w)
         if not lemmas or not (reached_by_rule.get(w, set()) & lemmas):
             continue
@@ -192,6 +200,9 @@ def frequent(args, judge):
         'wrongFirst': stats['wrong'], 'wrongFirstTokenShare': round(tokens['wrong'] / total_tokens, 5),
         'wrongAboveRight': stats['above'], 'wrongAboveRightTokenShare': round(tokens['above'] / total_tokens, 5),
         'wrongExamples': sorted(wrong, reverse=True)[:60], 'aboveExamples': sorted(above, reverse=True)[:60],
+        # The first visible result of every one of the words, reached or not.
+        'allWords': dict(every), 'allWrong': sorted(every_examples['wrong'], reverse=True)[:60],
+        'allUnjudged': sorted(every_examples['unjudged'], reverse=True)[:60],
     }
     return report
 

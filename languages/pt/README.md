@@ -274,12 +274,21 @@ is given, it is labelled "without the field".
    | List | Reached | Their share of the list's tokens | First visible: own entry / lemma | Wrong lemma first | Wrong lemma above the right one |
    | --- | ---: | ---: | ---: | ---: | ---: |
    | Brazilian (`pt_br_50k`) | 5,169 | 35.33% | 1,485 / 3,684 | 0 | 0 |
-   | European (`pt_50k`) | 5,416 | 34.91% | 1,395 / 4,021 | 0 | 0 |
+   | European (`pt_50k`) | 5,414 | 34.90% | 1,393 / 4,021 | 0 | 0 |
 
    "Own entry" is the word's own headword (`como`, `fala`), which a lookup
    shows first; wty-pt-en's form-of rows name the lemma of almost every
    frequent inflected word, and a term they confirm ranks first on ties
-   (docs/languages.md 9.6). Without the field, 5 (Brazilian) and 29
+   (docs/languages.md 9.6).
+
+   Every one of the 10,000 words, reached or not: in the Brazilian list the
+   first result with a definition is the word's own entry for 5,133, a lemma
+   its rows name for 3,779, wrong for 1 (`anna` → anno, the old spelling of
+   ano, for the name Anna), not judged for 15 (no form-of row: names and
+   English words such as `adam` → adar, `rita` → rito, `have` → haver,
+   `toni` → toner), and nothing for 1,072. In the European list: 4,907,
+   4,120, 2 wrong (`anna`, and `deviamos`, devíamos without its accent, read
+   as vir), 12 and 959. Without the field, 5 (Brazilian) and 29
    (European) of these words find nothing, mostly hyphenated forms of the
    European list (`deixa-me`, `fazê-lo`).
 3. **Pronouns, articles and auxiliaries** (`sources/measure.py phrases`):
