@@ -292,8 +292,10 @@ is given, it is labelled "without the field".
    | ir, ter, estar, ser, haver, poder, querer, dever (30 forms) | 445,380 | 279,657 | 164,939 | 1 | 85 | 698 |
    | verb forms with an attached pronoun | 21,546 | 386 | 21,077 | 0 | 17 | 66 |
 
-   - The two wrong lemmas are `encarga` (a verb) → the noun encargo, and
-     `fofinha` → fofa (fofinho is its own headword).
+   - The two wrong lemmas: `encarga` shows the noun encargo, because its row
+     names encargar, which wty-pt-en only refers to encarregar; `fofinha`
+     shows the noun fofa, because its row names fofinho, whose lemma fofo is a
+     second hop away (docs/languages.md 16).
    - A hand check of 60 unjudged results drawn from them (seed 11): 53 right,
      6 wrong (names read as words: `Toni` → toner, `Elma` → elmo, `Joko` →
      jóquer; the Asturian `moi`; `viamos`, víamos without its accent, read as
