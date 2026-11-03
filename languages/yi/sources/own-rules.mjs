@@ -98,6 +98,16 @@ function wholeWord(id, inflected, deinflected, conditionsIn, conditionsOut) {
     add(id, {type: 'wholeWord', inflected, deinflected, conditionsIn, conditionsOut});
 }
 
+// --- Unpointed spellings ------------------------------------------------------------------
+// Frequent unpointed words whose pointing variants tie and whose first variant is the rarer word
+// (README.md, Measurements): read as written, with no processor step, they come first.
+transform('unpointed', 'unpointed spelling',
+    'A frequent word written without its points, read as its usual pointed word: זאל → זאָל (should), דאך → דאָך.');
+const UNPOINTED_WORDS = [['זאל', 'זאָל'], ['דאך', 'דאָך'], ['וואך', 'וואָך'], ['וואכן', 'וואָכן'], ['שלאף', 'שלאָף'],
+    ['קאסטן', 'קאָסטן'], ['פאן', 'פֿאָן'], ['פארן', 'פֿאַרן'], ['אב', 'אָבֿ'], ['גלייך', 'גלײַך'],
+    // read as written, a rule would come first: פירער as a plural of פור, מיי as a form of מיינען
+    ['פירער', 'פֿירער'], ['מיי', 'מײַ'], ['שייכות', 'שײַכות']];
+
 // --- Verbs -------------------------------------------------------------------------------
 // The infinitive is the stem and -ן, or -ען after ם, ן, נג, נק, a consonant and ל
 // (syllabic l), and some vowels. A stem's last letters (`tail`, written as
@@ -110,7 +120,7 @@ const VERB_TAILS = [
     {tail: 'נג', inf: ['נגען']},
     {tail: 'נק', inf: ['נקען']},
     {tail: 'נ', inf: ['נען']},                                   // וווין → וווינען, לערן → לערנען
-    {tail: 'נ', inf: ['ענען'], c: {stemNotEndsWith: VOWEL_END}},  // syllabic n: צייכן → צייכענען
+    {tail: 'נ', inf: ['ענען'], c: {stemNotEndsWith: VOWEL_END, stemMinLength: 3}},  // syllabic n: צייכן → צייכענען
     {tail: FE, inf: [FE + 'ן']},
     {tail: 'צ', inf: ['צן']},
     {tail: 'ל', inf: ['לן'], c: {stemEndsWith: VOWEL_END}},       // שטעל → שטעלן
@@ -118,7 +128,7 @@ const VERB_TAILS = [
     // זע → זען, ראַטעווע → ראַטעווען; גנבֿע → גנבֿענען. Not after י, מ or נ: מיינע and נייע (unpointed
     // מײַנע, נײַע) are not forms of מיינען and נייען, whose stems are מיינ and ניי.
     {tail: 'ע', inf: ['ען'], c: {stemNotEndsWith: '[ימנ]'}},
-    {tail: 'ע', inf: ['ענען'], c: {stemMinLength: 2}},             // not זע → זענען
+    {tail: 'ע', inf: ['ענען'], c: {stemMinLength: 3}},             // גנבֿע → גנבֿענען; not זע → זענען, טרעט → טרענען
     {tail: 'יע', inf: ['יען'], c: {stemNotEndsWith: '[י]'}},        // נודיע → נודיען, אָטכאַיע → אָטכאַיען
     {tail: 'י' + HIRIQ, inf: ['י' + HIRIQ + 'ען']},               // בליִ → בליִען
     {tail: AY, inf: [AY + 'ען']},                                 // שרײַ → שרײַען
@@ -233,6 +243,13 @@ add('pastParticiple', {type: 'circumfix', prefixes: INSEPARABLE.map((p) => [p, p
     suffixes: STRONG.filter(([participle, infinitive]) => participle !== infinitive), conditionsIn: ['adj'], conditionsOut: ['v'],
     stemCharacters: '[]'});
 
+// Weak participles without גע: after an unstressed prefix (פֿאַרקויפֿט, דערציילט, באַצאָלט) and in verbs in
+// -ירן (שטודירט); also declined (פֿאַרקויפֿטע).
+for (const {c, pairs} of ppSuffixes.values()) {
+    add('pastParticiple', {type: 'circumfix', prefixes: INSEPARABLE.map((p) => [p, p]), suffixes: pairs, conditionsIn: ['adj'],
+        conditionsOut: ['v'], stemCharacters: ONE_WORD, stemMinLength: 1, ...c});
+}
+suffix('pastParticiple', 'ירט', 'ירן', ['adj'], ['v'], {stemMinLength: 2});
 // A weak participle of a stem in -נד takes -עט, also after an unstressed prefix: געלאַנדעט, פֿאַרלענדעט.
 suffix('pastParticiple', 'נדעט', 'נדן', ['adj'], ['v'], {stemMinLength: 2});
 
@@ -240,7 +257,7 @@ suffix('pastParticiple', 'נדעט', 'נדן', ['adj'], ['v'], {stemMinLength: 2
 suffix('presentParticiple', 'נדיק', 'ן', ['adj'], ['v'], {stemMinLength: 1});
 suffix('presentParticiple', 'לנדיק', 'לען', ['adj'], ['v'], {stemMinLength: 1, stemNotEndsWith: VOWEL_END}); // שמייכלנדיק
 // The plural of a verb in syllabic -ן: באַרעכענען → מיר באַרעכנען.
-suffix('1pl', 'נען', 'ענען', FINITE_IN, ['v'], {stemMinLength: 1, stemEndsWith: CONSONANT});
+suffix('1pl', 'נען', 'ענען', FINITE_IN, ['v'], {stemMinLength: 3, stemEndsWith: CONSONANT});
 suffix('presentParticiple', 'ייענדיק', 'יין', ['adj'], ['v']);
 suffix('presentParticiple', 'עענדיק', 'ען', ['adj'], ['v']);
 suffix('presentParticiple', AY + 'ענדיק', AY + 'ן', ['adj'], ['v']);
@@ -251,7 +268,10 @@ for (const p of PARTICLES) {
     prefix('zuInfinitive', m + 'צו', m, [], ['v'], {stemMinLength: 1});
     // Not after a participle, whose particle is written before it (אויפֿגעשטאַנען): געשטאַנען אויף is "stood on".
     // The verbs whose own stem starts with גע (געוווינען, געוויינען; kaikki lists no other with a particle) stay.
-    add('separable', {type: 'pattern', pattern: `^(?!גע(?!וווינ|וויינ))({word}+) ${p}$`, replacement: `${m}$1`, anchorSuffix: ' ' + p,
+    // Nor זאָג- or גיי- before צו: in text זאָגט צו and גייט צו are "says to" and "goes to" (17 of 20 places
+    // in the real texts), not צוזאָגן and צוגיין, which their participles and infinitives still reach.
+    const verbGuard = p === 'צו' ? '(?!זאָג|גיי)' : '';
+    add('separable', {type: 'pattern', pattern: `^(?!גע(?!וווינ|וויינ))${verbGuard}({word}+) ${p}$`, replacement: `${m}$1`, anchorSuffix: ' ' + p,
         conditionsIn: [], conditionsOut: ['v', 'v_sep']});
 }
 
@@ -487,6 +507,8 @@ for (const [comparative, superlative, positive] of [['בעסער', 'בעסט', '
     wholeWord('superlative', superlative, positive, ADJ, ADJ);
 }
 
+for (const [form, word] of UNPOINTED_WORDS) { wholeWord('unpointed', form, word, [], []); }
+
 // --- Output ------------------------------------------------------------------------------
 // These transforms need no minimum stem: without it no rule of theirs adds a
 // headword to the deinflections of 150,000 words and phrases of the real texts
@@ -494,6 +516,13 @@ for (const [comparative, superlative, positive] of [['בעסער', 'בעסט', '
 // letter or ending, which no headword is.
 for (const id of ['1pl', 'adjE', 'adjS', 'comparative', 'superlative']) {
     for (const rule of byId.get(id).rules) { delete rule.stemMinLength; }
+}
+// A plural with a changed vowel comes before the same ending without one, so a
+// tie between them goes to the vowel change: ווערטער is "words" (וואָרט) far more
+// often than a form of ווערט (worth) (22 places in the real texts).
+{
+    const plural = byId.get('plural');
+    plural.rules = [...plural.rules.filter((r) => r.stemChange), ...plural.rules.filter((r) => !r.stemChange)];
 }
 const out = {schema: 1, conditions, transforms: transforms.filter((t) => t.rules.length > 0)};
 const file = join(here, 'own.json');

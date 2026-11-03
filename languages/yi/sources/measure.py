@@ -8,12 +8,14 @@ directory and never committed (README.md, Sources and licences).
         with definitions, as rows for eval-language (what the dictionary
         says each inflected form is a form of)
     python3 languages/yi/sources/measure.py freq <cache> <languages dir> <out dir>
-        the 10,000 most frequent words of Yiddish Wikipedia, looked up
+        the 10,000 most frequent words of the YIVO-spelled Wikisource pages (frequency_pages), looked up
     python3 languages/yi/sources/measure.py text <cache> <languages dir> <out dir>
         every word of the real texts (texts.REAL_TEXT_PAGES), looked up from
         the word to the end of its sentence
     python3 languages/yi/sources/measure.py phrases <cache> <languages dir> <out dir>
         Tatoeba's words after a pronoun, clitic, article or auxiliary
+    python3 languages/yi/sources/measure.py wiki <cache> <languages dir> <out dir> [articles] [seed]
+        every word of random Yiddish Wikipedia articles (unpointed text), looked up
     python3 languages/yi/sources/measure.py tables <cache> <out dir>
         eval-language --dictionary for the own, Yomitan, union and final rules (the Measurements table)
 
@@ -66,6 +68,7 @@ def forms(cache, out):
 
 UNPOINTED = {}
 SPLIT = set()  # (phrase, lemma) of wty-yi-en rows that name a lemma the phrase does not contain
+AMBIGUOUS = set()  # words outside preferred-lemmas.tsv with an entry of their own and an inflection reference
 
 
 def lookup(languages, cache, lines):
@@ -83,24 +86,56 @@ def first_defined(results, heads):
     return None
 
 
+def load_preferred():
+    """sources/preferred-lemmas.tsv: {word: set of right lemmas}, decided by hand for frequent homographs."""
+    out = {}
+    with open(os.path.join(HERE, 'preferred-lemmas.tsv'), encoding='utf-8') as f:
+        for line in f:
+            if line.startswith('#') or not line.strip():
+                continue
+            word, lemmas, _ = line.rstrip('\n').split('\t')
+            out[word] = set(lemmas.split('|'))
+    return out
+
+
+PREFERRED = {}
+INFLECTION = {}  # texts.headwords(..., inflection_only=True), set by judge_all and freq
+
+
 def own_lemmas(word, heads):
-    """The lemmas the word's own form-of rows name, and the word itself when it is a lemma. A named
-    lemma whose rows are only references stands for the lemmas they name (wty-yi-en writes
-    בעסטער → בעסט → גוט and אידישער → אידיש → ייִדיש), one hop more."""
+    """The lemmas a first result at `word` may show (docs/languages.md 14 step 5: the lemma the word's
+    form-of rows name). In order: the hand-decided lemmas of sources/preferred-lemmas.tsv; the lemmas
+    the word's inflection references name, a named lemma whose rows are only references standing for
+    the lemmas they name (wty-yi-en writes בעסטער → בעסט → גוט); the word itself when it has a row with
+    definitions; the lemmas its other references (alternative spellings) name."""
+    if word in PREFERRED:
+        return set(PREFERRED[word])
+    defined = lambda w: any(d for _, _, d in heads.get(w, []))
     out = set()
-    for _, refs, defs in heads.get(word, []):
-        if defs:
-            out.add(word)
+    for _, refs, _ in INFLECTION.get(word, heads.get(word, [])):
         for lemma in refs:
-            if ' ' in word and ' ' in lemma and not set(lemma.split(' ')) & set(word.split(' ')):
+            if ' ' in word and ' ' in lemma and not shares_word(word, lemma):
                 SPLIT.add((word, lemma))
                 continue  # a row of a split table (מיר זענען → מסביר זײַן): not the phrase's lemma
-            rows = heads.get(lemma, [])
-            if any(d for _, _, d in rows):
+            if defined(lemma):
                 out.add(lemma)
-            for _, more, _ in rows:
-                out.update(m for m in more if any(d for _, _, d in heads.get(m, [])))
-    return out
+            elif lemma in heads:  # only references: the lemmas they name, spellings included (געקאָנט → קאָנען → קענען)
+                for _, more, _ in heads[lemma]:
+                    out.update(m for m in more if defined(m))
+    spellings = {lemma for _, refs, _ in heads.get(word, []) for lemma in refs if defined(lemma)} - out
+    if out and defined(word):
+        AMBIGUOUS.add(word)  # an entry of its own and an inflection of another lemma: right either way
+        return out | {word} | spellings
+    if out:
+        return out
+    if defined(word):
+        return {word} | spellings
+    return spellings
+
+
+def shares_word(phrase, lemma):
+    """Whether a word of the lemma begins like a word of the phrase (טשעפּן זיך and דו טשעפּעסט do)."""
+    return any(a[:3] == b[:3] for a in phrase.split(' ') for b in lemma.split(' '))
 
 
 def variants(languages, words):
@@ -136,6 +171,8 @@ def judge(word, matched, result, heads, spellings=None):
         return None
     expression = result['expression']
     same = expression in lemmas or bool(UNPOINTED.get(expression, set()) & lemmas)
+    if same and suffix == '' and matched in AMBIGUOUS:
+        return 'right-ambiguous'
     return ('right' if same else 'wrong') + suffix
 
 
@@ -156,6 +193,9 @@ def frequency_pages(cache):
 
 def freq(cache, languages, out):
     heads = texts.headwords(os.path.join(cache, 'wty-yi-en-json'))
+    INFLECTION.update(texts.headwords(os.path.join(cache, 'wty-yi-en-json'), inflection_only=True))
+    PREFERRED.update(load_preferred())
+    UNPOINTED.update(texts.unpointed_of(os.path.join(cache, 'wty-yi-en-json')))
     counts = collections.Counter()
     pages = []
     for title, revision, tokens in frequency_pages(cache):
@@ -165,7 +205,7 @@ def freq(cache, languages, out):
     top = [w for w, _ in counts.most_common(10000)]
     reach = deinflections(languages, top)
     checked = [(w, counts[w]) for w, r in zip(top, reach)
-               if any(lemma != w and lemma in r for _, refs, _ in heads.get(w, []) for lemma in refs)]
+               if any(lemma != w and lemma in r for _, refs, _ in INFLECTION.get(w, []) for lemma in refs)]
     results = lookup(languages, cache, [w for w, _ in checked])
     rows = []
     for (word, n), res in zip(checked, results):
@@ -195,15 +235,36 @@ def hovers(text):
         yield word, re.sub(r'\s+', ' ', line)[:200]
 
 
+RULE_IDS = set()
+
+
+def cause(result, verdict):
+    """Why a wrong first result came first: its matched text's own entry (exact match), a reference of
+    the dictionary only, a rule of the pack, or a split table (wrong-dictionary)."""
+    if verdict == 'wrong-dictionary':
+        return 'split table'
+    steps = result['trace']
+    if not steps:
+        return 'exact entry'
+    if not RULE_IDS & set(steps):
+        return 'dictionary reference'
+    return 'pack rule' + (' (unpointed variant)' if verdict.endswith('variant') else '')
+
+
 def judge_all(cache, languages, items, out, name):
     """Looks up (word, text) items and judges each first result; writes <out>/<name>.tsv."""
     heads = texts.headwords(os.path.join(cache, 'wty-yi-en-json'))
+    INFLECTION.update(texts.headwords(os.path.join(cache, 'wty-yi-en-json'), inflection_only=True))
+    PREFERRED.update(load_preferred())
     UNPOINTED.update(texts.unpointed_of(os.path.join(cache, 'wty-yi-en-json')))
+    with open(os.path.join(languages, 'yi', 'transforms.json'), encoding='utf-8') as f:
+        RULE_IDS.update(t['id'] for t in json.load(f)['transforms'])
     results = lookup(languages, cache, [t for _, t in items])
     matched = sorted({r[0]['matched'] for r in results if r} | {w for w, _ in items})
     spellings = variants(languages, matched)
     tally = collections.Counter()
     by_trace = collections.Counter()
+    by_cause = collections.Counter()
     rows = []
     for (word, line), res in zip(items, results):
         first = first_defined(res, heads)
@@ -212,12 +273,14 @@ def judge_all(cache, languages, items, out, name):
         trace = '|'.join(first['trace']) if first else ''
         if verdict.startswith('wrong'):
             by_trace[trace.split('|')[0] if trace else '(none)'] += 1
+            by_cause[cause(first, verdict)] += 1
         rows.append((verdict, word, first['matched'] if first else '', first['expression'] if first else '', trace, line))
     os.makedirs(out, exist_ok=True)
     with open(os.path.join(out, name + '.tsv'), 'w', encoding='utf-8') as f:
         for r in rows:
             f.write('\t'.join(r) + '\n')
-    print(json.dumps({'lookups': len(items), **tally, 'wrongByFirstStep': dict(by_trace.most_common(12))}, ensure_ascii=False))
+    print(json.dumps({'lookups': len(items), **tally, 'wrongByCause': dict(by_cause.most_common()),
+                      'wrongByFirstStep': dict(by_trace.most_common(12))}, ensure_ascii=False))
     return rows
 
 
@@ -307,9 +370,26 @@ def tables(cache, out):
             print(f"{label}\t{fname}\t{r['rows']}\t{fmt(r['recall'])}\t{fmt(r['negativesPassed'])}\t{fmt(r['falseCandidates'])}\t{fmt(r['firstRank'])}")
 
 
+def wiki(cache, languages, out, articles='300', seed='1'):
+    """Every word of `articles` random Yiddish Wikipedia articles of at least 100 words (mostly unpointed),
+    looked up from the word to the end of its sentence; writes <out>/wiki-hovers.txt for the timings."""
+    pages = [(t, page) for t, _, page in texts.dump_pages(os.path.join(cache, 'yiwiki-20261101-pages-articles.xml.bz2'))
+             if sum(1 for _ in texts.words(page)) >= 100]
+    rng = random.Random(int(seed))
+    items = []
+    for _, page in rng.sample(pages, int(articles)):
+        items.extend(hovers(page))
+    os.makedirs(out, exist_ok=True)
+    with open(os.path.join(out, 'wiki-hovers.txt'), 'w', encoding='utf-8') as f:
+        f.writelines(line + '\n' for _, line in items)
+    pointed = sum(1 for w, _ in items if re.search('[\u05B4-\u05BF\u05C1\u05C2]', w))
+    print(f'{len(items)} hovers, {pointed / len(items):.1%} of the words pointed')
+    judge_all(cache, languages, items, out, 'wiki')
+
+
 def main():
     command, *args = sys.argv[1:] or ['']
-    commands = {'forms': forms, 'freq': freq, 'text': text, 'phrases': phrases, 'tables': tables}
+    commands = {'forms': forms, 'freq': freq, 'text': text, 'phrases': phrases, 'tables': tables, 'wiki': wiki}
     if command not in commands:
         sys.exit(__doc__)
     commands[command](*args)

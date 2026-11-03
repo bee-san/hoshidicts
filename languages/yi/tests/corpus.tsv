@@ -1,4 +1,4 @@
-# Source: English Wiktionary's Yiddish inflection tables as extracted by kaikki.org (wiktextract 19f9a30, enwiktionary dump of 2026-10-01; kaikki.org-dictionary-Yiddish.jsonl, sha256 b3ec2901...921a), CC BY-SA 4.0 and GFDL, by the Wiktionary contributors. 1,000 rows sampled with seed 1 by sources/build-corpus.py; the 974 rows the final rules reach (the other 26 are in gaps.tsv).
+# Source: English Wiktionary's Yiddish inflection tables as extracted by kaikki.org (wiktextract 19f9a30, enwiktionary dump of 2026-10-01; kaikki.org-dictionary-Yiddish.jsonl, sha256 b3ec2901...921a), CC BY-SA 4.0 and GFDL, by the Wiktionary contributors. 1,000 rows sampled with seed 1 by sources/build-corpus.py; the 976 rows the final rules reach (the other 24 are in gaps.tsv).
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
 present-1sg	1	אַבסאָרביר	אַבסאָרבירן	v	*
 present-1sg	1	אַכל	אַכלען	v	*
@@ -208,6 +208,7 @@ present-3sg	1	שערט	שערן	v	*
 present-3sg	1	שפּריצט	שפּריצן	v	*
 present-3sg	1	שפּרײַזט	שפּרײַזן	v	*
 present-3sg	1	שרומפּט	שרומפּן	v	*
+present-pl	1	אַפּליקירטן	אַפּליקירן	v	*
 present-pl	1	באַרעכנען	באַרעכענען	v	*
 present-pl	1	באַשטייען	באַשטיין	v	*
 present-pl	1	גיבן	געבן	v	*
@@ -221,6 +222,7 @@ present-pl	1	טוען	טאָן	v	*
 present-pl	1	ירשנען	ירשענען	v	*
 present-pl	1	נייען	ניין	v	*
 present-pl	1	פֿאַרגיבן	פֿאַרגעבן	v	*
+present-pl	1	פֿאַרוויגטן	פֿאַרוויגן	v	*
 present-pl	1	פֿאַרשטייען	פֿאַרשטיין	v	*
 present-pl	1	פֿלעגן	פֿלעג	v	*
 present-pl	1	שטייען	שטיין	v	*

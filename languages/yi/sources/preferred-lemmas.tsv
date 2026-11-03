@@ -1,0 +1,176 @@
+# Hand-decided lemmas for frequent words whose wty-yi-en rows give several readings (measure.py's judge; README.md, Measurements).
+# Written for this pack (GPL-3.0-or-later) from the words' use in the measured texts. A first result is right only when it is one of the listed lemmas.
+# word	right lemmas (| separated)	why
+געווען	זײַן	been; "the past" is rare
+די	די	the article
+דער	דער	the article
+דאָס	דאָס	the article or pronoun
+האָב	האָבן	I have; "property" is rare
+עס	עס	the pronoun it; I eat is rare
+וועט	וועל	the future auxiliary; "bet" is rare
+געוואָרן	געוואָרן|ווערן	became (its own entry is the participle)
+געוואָלט	געוואָלט|וועלן	wanted (its own entry is the participle)
+געשריבן	געשריבן|שרײַבן	written (its own entry is the participle)
+מיין	מײַן|מיין	my (unpointed); I mean is rarer
+וועגן	וועגן	about, because of; the plurals of וועג and וואָגן are rarer
+וועלן	וועל	the future auxiliary far more often than to want
+איך וועל	וועל	the future auxiliary
+מיר וועלן	וועל	the future auxiliary
+זיי וועלן	וועל	the future auxiliary
+אַנדערע	אַנדער|אַנדערע	other(s)
+צי	צי	whether; I pull is rarer
+איינער	איינער|איין	one
+מאַכן	מאַכן	to make
+ווערט	ווערן	becomes; value and worthy are rarer
+נעמען	נעמען	to take
+גרויס	גרויס	big
+ביסל	ביסל	a bit
+ווערטער	וואָרט	words
+בעט	בעטן	asks (בעט אייך: please)
+מאַכט	מאַכן	makes; might and power are rarer
+הייסט	הייסן	is called, means
+אירע	איר|אירע	her, your
+אַרבעט	אַרבעט|אַרבעטן	work, the noun or the verb
+געהערט	הערן	heard
+זין	זין|זון	sense, or sons
+דריי	דרײַ|דריי	three (unpointed)
+אַלטער	אַלט|אַלטער	old
+גיי	גיין	go, I go
+קוק	קוק|קוקן	look, the noun or the verb
+טייל	טייל	part, some
+בעסער	גוט	better
+איינס	איינס|איין	one
+אייער	אײַער|אייער|איי	your (unpointed), or eggs
+ליב	ליב	dear, ליב האָבן
+ווייס	וויסן	I know; white is ווײַס
+הויך	הויך	high, loud
+איינע	איינע|איין	one
+עלטערן	עלטערן|עלטער	parents
+קריגן	קריגן|קריג	to get, or wars
+בעטן	בעטן	to ask
+שטיקל	שטיקל|שטיק	a piece
+הער	הערן|הער	hear, or Mr.
+טראַכט	טראַכטן	thinks
+זײַט	זײַן|זײַט	you are, or side
+עלטער	אַלט|עלטער	older, or age
+שלאָף	שלאָף|שלאָפֿן	sleep, the noun or the verb
+געריכט	געריכט|ריכטן	court, or aimed
+פֿאַרקערט	פֿאַרקערט|פֿאַרקערן	the other way round
+פֿיר	פֿיר	four
+האַלדז	האַלדז	neck
+ליבע	ליבע|ליב	love, or dear
+וויינען	וויינען	to cry
+מאַך	מאַך|מאַכן	move, or I make
+שטראָף	שטראָף|שטראָפֿן	punishment, or punish
+פֿאַרנומען	פֿאַרנומען|פֿאַרנעמען	busy, or occupied
+ניי	נײַ|ניי	new (unpointed)
+הייסן	הייסן	to be called
+געוויינט	וויינען|געוויינען|געוויינט	cried, or accustomed
+שמועסן	שמועסן|שמועס	to chat, or chats
+שפּילן	שפּילן|שפּיל	to play, or games
+שווערן	שווערן|שווער	to swear, or heavy
+באַזוכן	באַזוכן|באַזוך	to visit, or visits
+קריג	קריג|קריגן	war, or I get
+געוויין	געוויין|געוויינען	weeping
+שמייכל	שמייכל|שמייכלען	smile
+טיילן	טיילן|טייל	to divide, or parts
+געדויערט	דויערן|געדויערן	lasted
+פֿאַלן	פֿאַלן|פֿאַל	to fall, or cases
+גייען	גיין	go (plural); gay is rare
+גערן	גערן	gladly (wty-yi-en's only row is a reference to יערן)
+גלײַך	גלײַך	straight, immediately; I compare is rarer
+לידער	ליד	songs; leader is rare
+איך ווייס	איך ווייס|וויסן	its own entry or the lemma its form-of row names, by context
+קליידער	קליידער|קלייד	its own entry or the lemma its form-of row names, by context
+שיינע	שיין	beautiful; the name is rare
+ערגער	ערגער|שלעכט	its own entry or the lemma its form-of row names, by context
+חיות	חיות|חיה	its own entry or the lemma its form-of row names, by context
+געבענטשט	געבענטשט|בענטשן	its own entry or the lemma its form-of row names, by context
+ווײַטער	ווײַטער	further
+הויכן	הויך	high; to breathe is rare
+לענגער	לענגער|לאַנג	its own entry or the lemma its form-of row names, by context
+שטעל	שטעל|שטעלן	its own entry or the lemma its form-of row names, by context
+ייִדישן	ייִדיש	Yiddish, Jewish; to circumcise is rare
+גרעסער	גרעסער|גרויס	its own entry or the lemma its form-of row names, by context
+טראַכטן	טראַכטן	to think
+העלפֿט	העלפֿט|העלפֿן	its own entry or the lemma its form-of row names, by context
+שטילן	שטילן|שטיל	its own entry or the lemma its form-of row names, by context
+הייס	הייס|הייסן	its own entry or the lemma its form-of row names, by context
+אַרבעטן	אַרבעטן|אַרבעט	its own entry or the lemma its form-of row names, by context
+אַנטלאָפֿן	אַנטלאָפֿן|אַנטלויפֿן	its own entry or the lemma its form-of row names, by context
+באַדאַרף	באַדאַרף|באַדאַרפֿן	its own entry or the lemma its form-of row names, by context
+באַקן	באַקן|באַק	its own entry or the lemma its form-of row names, by context
+ענטפֿער	ענטפֿער|ענטפֿערן	its own entry or the lemma its form-of row names, by context
+ציין	ציין|צאָן	its own entry or the lemma its form-of row names, by context
+פֿאַרנעמען	פֿאַרנעמען	to occupy
+פֿאַרלוירן	פֿאַרלוירן|פֿאַרלירן	its own entry or the lemma its form-of row names, by context
+מאַמען	מאַמע	mother; to mother is rare
+פֿײַער	פֿײַער	fire
+וואָגן	וואָגן|וואָג	its own entry or the lemma its form-of row names, by context
+שפּיל	שפּיל|שפּילן	its own entry or the lemma its form-of row names, by context
+צעריסן	צעריסן|צערײַסן	its own entry or the lemma its form-of row names, by context
+אָנהייבן	אָנהייבן	to begin
+לינקער	לינקער|לינק	its own entry or the lemma its form-of row names, by context
+פֿריִער	פֿריִער|פֿרי	its own entry or the lemma its form-of row names, by context
+רעכטס	רעכטס|רעכט	its own entry or the lemma its form-of row names, by context
+שטיבל	שטיבל|שטוב	its own entry or the lemma its form-of row names, by context
+בוימל	בוימל|בוים	its own entry or the lemma its form-of row names, by context
+שטאַם	שטאַם|שטאַמען	its own entry or the lemma its form-of row names, by context
+פֿרעמדער	פֿרעמדער|פֿרעמד	its own entry or the lemma its form-of row names, by context
+ציגל	ציגל|ציג	its own entry or the lemma its form-of row names, by context
+פֿעטער	פֿעטער	uncle
+טעלער	טעלער	plates; valleys are rare
+ליבן	ליבן|ליב	its own entry or the lemma its form-of row names, by context
+איבעריקס	איבעריקס|איבעריק	its own entry or the lemma its form-of row names, by context
+צענטער	צענטער	center
+לינקס	לינקס|לינק	its own entry or the lemma its form-of row names, by context
+פּאַס	פּאַס|פּאַסן	its own entry or the lemma its form-of row names, by context
+אייבערשטער	אייבערשטער|אייבערשט	its own entry or the lemma its form-of row names, by context
+קוש	קוש|קושן	its own entry or the lemma its form-of row names, by context
+זאָרג	זאָרג|זאָרגן	its own entry or the lemma its form-of row names, by context
+איך הייס	איך הייס|הייסן	its own entry or the lemma its form-of row names, by context
+באַשטעלט	באַשטעלט|באַשטעלן	its own entry or the lemma its form-of row names, by context
+טראָפּן	טראָפּן|טראָפּ	its own entry or the lemma its form-of row names, by context
+הייל	הייל|היילן	its own entry or the lemma its form-of row names, by context
+פֿאַרקויפֿן	פֿאַרקויפֿן	to sell
+צעמישט	צעמישט|צעמישן	its own entry or the lemma its form-of row names, by context
+היגער	היגער|היג	its own entry or the lemma its form-of row names, by context
+דונערן	דונערן|דונער	its own entry or the lemma its form-of row names, by context
+שוועדן	שוועדן|שוועד	its own entry or the lemma its form-of row names, by context
+האַק	האַק|האַקן	its own entry or the lemma its form-of row names, by context
+מאָלן	מאָלן|מאָל	its own entry or the lemma its form-of row names, by context
+ברען	ברען|ברענען	its own entry or the lemma its form-of row names, by context
+שיידן	שיידן|שייד	its own entry or the lemma its form-of row names, by context
+שמיר	שמיר|שמירן	its own entry or the lemma its form-of row names, by context
+היילן	היילן|הייל	its own entry or the lemma its form-of row names, by context
+פּלאַן	פּלאַן	plan
+שרעקן	שרעקן|שרעק	its own entry or the lemma its form-of row names, by context
+דערצויגן	דערצויגן|דערציִען	its own entry or the lemma its form-of row names, by context
+גלוסט	גלוסט|גלוסטן	its own entry or the lemma its form-of row names, by context
+העלן	העלן|העל	its own entry or the lemma its form-of row names, by context
+ברייטער	ברייטער|ברייט	its own entry or the lemma its form-of row names, by context
+אַנטלויפֿן	אַנטלויפֿן	to escape
+שפּאַלטן	שפּאַלטן|שפּאַלט	its own entry or the lemma its form-of row names, by context
+רעדער	רעדער|ראָד	its own entry or the lemma its form-of row names, by context
+באַגער	באַגער|באַגערן	its own entry or the lemma its form-of row names, by context
+פֿאַרגאַנגען	פֿאַרגאַנגען|פֿאַרגיין	its own entry or the lemma its form-of row names, by context
+לײַכטער	לײַכטער|לײַכט	its own entry or the lemma its form-of row names, by context
+העק	העק|האַק	its own entry or the lemma its form-of row names, by context
+שטומען	שטומען|שטום	its own entry or the lemma its form-of row names, by context
+זאַלבן	זאַלבן|זאַלב	its own entry or the lemma its form-of row names, by context
+פֿאַרזאָרגט	פֿאַרזאָרגט|פֿאַרזאָרגן	its own entry or the lemma its form-of row names, by context
+שמעקן	שמעקן	to smell
+זאָרגן	זאָרגן|זאָרג	its own entry or the lemma its form-of row names, by context
+פֿאַרבונדן	פֿאַרבונדן|פֿאַרבינדן	its own entry or the lemma its form-of row names, by context
+קעניגן	קעניג	kings; to rule is rare
+פֿעטס	פֿעטס|פֿעט	its own entry or the lemma its form-of row names, by context
+שטראָמען	שטראָמען|שטראָם	its own entry or the lemma its form-of row names, by context
+באַרעכטיקט	באַרעכטיקט|באַרעכטיקן	its own entry or the lemma its form-of row names, by context
+פֿייגל	פֿייגל|פֿויגל	its own entry or the lemma its form-of row names, by context
+יאָגן	יאָגן	to chase
+זיסן	זיסן|זיס	its own entry or the lemma its form-of row names, by context
+ניס	ניס|נוס|ניסן	its own entry or the lemma its form-of row names, by context
+א	אַ	the article a, unpointed; the letter alef is rare
+ראַטן	ראָטן|ראַט	to advise (a spelling of ראָטן), or councils
+פילע	פֿיל	many (unpointed); fillet is rare
+פֿילע	פֿיל|פֿילע	many, or fillet

@@ -1,12 +1,10 @@
-# Source: English Wiktionary's Yiddish inflection tables as extracted by kaikki.org (wiktextract 19f9a30, enwiktionary dump of 2026-10-01; kaikki.org-dictionary-Yiddish.jsonl, sha256 b3ec2901...921a), CC BY-SA 4.0 and GFDL, by the Wiktionary contributors. 1,000 rows sampled with seed 1 by sources/build-corpus.py; the 26 rows the final rules do not reach (Known gaps in README.md).
+# Source: English Wiktionary's Yiddish inflection tables as extracted by kaikki.org (wiktextract 19f9a30, enwiktionary dump of 2026-10-01; kaikki.org-dictionary-Yiddish.jsonl, sha256 b3ec2901...921a), CC BY-SA 4.0 and GFDL, by the Wiktionary contributors. 1,000 rows sampled with seed 1 by sources/build-corpus.py; the 24 rows the final rules do not reach (Known gaps in README.md).
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
 present-1sg	1	קהל	קהלן	v	*
 present-3sg	1	בלעקט	בלעקען	v	*
 present-pl	1	אַדמיניסטירן	אַדמיניסטרירן	v	*
-present-pl	1	אַפּליקירטן	אַפּליקירן	v	*
 present-pl	1	אײַנפּלאַצירנען	אײַנפּלאַצירן	v	*
 present-pl	1	גייען	פֿאַרגיין	v	*
-present-pl	1	פֿאַרוויגטן	פֿאַרוויגן	v	*
 past-participle	1	אָןגערירן	אָנרירן	v	*
 past-participle	1	אײַןגעמאַכט	אײַנמאַכן	v	*
 past-participle	1	אײַןגעשטילט	אײַנשטילן	v	*

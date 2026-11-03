@@ -41,5 +41,11 @@
   ["סאָציאַל־דעמאָקראַטיש", "", "adj", "adj", 0, ["social democratic"], 40, ""],
   ["איז", "", "v", "v", 0, ["is"], 41, ""],
   ["געשריבן", "", "non-lemma", "v", 0, [["שרײַבן", ["past participle"]]], 42, ""],
-  ["מײַנע", "", "non-lemma", "", 0, [["מײַן", ["nominative/accusative feminine"]], ["מײַן", ["plural"]]], 43, ""]
+  ["מײַנע", "", "non-lemma", "", 0, [["מײַן", ["nominative/accusative feminine"]], ["מײַן", ["plural"]]], 43, ""],
+  ["וואָרט", "", "n", "n", 0, ["word"], 44, ""],
+  ["ווערט", "", "n", "n", 0, ["value, worth"], 45, ""],
+  ["זאַל", "", "n", "n", 0, ["hall"], 46, ""],
+  ["זאָל", "", "v", "v", 0, ["should (first or third person singular of זאָלן)"], 47, ""],
+  ["ד", "", "char", "", 0, ["the letter dalet"], 48, ""],
+  ["אָנהייב", "", "n", "n", 0, ["beginning"], 49, ""]
 ]

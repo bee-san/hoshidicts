@@ -299,3 +299,38 @@ irregular	1	מיר זענען	זײַן	v	1pl
 irregular	1	איר זענט	זײַן	v	3sg
 unpointed	1	ווו	וווּ	*	
 plural	0	אידען	אידעע	*	*
+separable	0	זאָגט צו	צוזאָגן	*	*
+separable	0	גייט צו	צוגיין	*	*
+separable	1	מאַכט צו	צומאַכן	v	3sg|separable
+separable	1	קוקסט צו	צוקוקן	v	2sg|separable
+unpointed	1	זאל	זאָל	v	unpointed
+unpointed	1	דאך	דאָך	*	unpointed
+unpointed	1	וואכן	וואָכן	*	unpointed
+unpointed	1	גלייך	גלײַך	*	unpointed
+irregular	1	ווייס	וויסן	v	stem
+irregular	1	ווילט	וועלן	v	3sg
+irregular	1	זיי זענען	זײַן	v	1pl
+plural	1	מיטער	מוטער	n	plural
+plural	1	חדשים	חודש	n	plural
+plural	1	לײַז	לויז	n	plural
+comparison	1	מער	פֿיל	adj	comparative
+comparison	1	נעענטער	נאָענט	adj	comparative
+comparison	1	נעענטסט	נאָענט	adj	superlative
+participle	1	געקומען	קומען	v	pastParticiple
+participle	1	געוווּסט	וויסן	v	pastParticiple
+participle	1	געבראַכט	ברענגען	v	pastParticiple
+participle	1	געוואָלט	וועלן	v	pastParticiple
+participle	1	געלעגן	ליגן	v	pastParticiple
+participle	1	דערגאַנגען	דערגיין	v	pastParticiple
+participle	1	אַנטלאָפֿן	אַנטלויפֿן	v	pastParticiple
+participle	1	אומגעקערט	אומקערן	v	pastParticiple
+participle	1	פֿירגעברענגט	פֿירברענגען	v	pastParticiple
+participle	1	אַוועקגעלייגט	אַוועקלייגן	v	pastParticiple
+participle	1	פֿאַרקויפֿט	פֿאַרקויפֿן	v	pastParticiple
+participle	1	דערציילטע	דערציילן	v	pastParticiple|adjE
+participle	1	שטודירטע	שטודירן	v	pastParticiple|adjE
+separable	1	גייט מיט	מיטגיין	v	3sg|separable
+participle	0	טרעט	טרענען	*	*
+participle	1	טרעט	טרעטן	v	stem
+unpointed	1	פירער	פֿירער	*	unpointed
+unpointed	1	מיי	מײַ	*	unpointed
