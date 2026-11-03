@@ -4,10 +4,12 @@
 
     python3 languages/aii/sources/mutations.py <scratch dir> [--only name,...]
 
-Each mutation edits a copy of languages/aii/transforms.json in
+Each mutation edits a copy of languages/aii/transforms.json (or, for the
+names starting with "language:", of language.json) in
 <scratch dir>/<name>/aii/: it deletes one stem constraint from every rule of
 one transform that has it, loosens one pattern, adds back a letter the rules
-leave out, or drops the conditions that keep chains short. For each, the
+leave out, drops a word a pattern keeps out, drops the conditions that keep
+chains short, or moves transforms in the file. For each, the
 script writes the copy's tests/classes.json (tools/check-classes.mjs
 --write) and runs build/language-conformance-test on it. A mutation that
 every test still passes is a "survivor": either a row is missing, or the
@@ -57,13 +59,132 @@ def mutations(t):
                     end = r['pattern'][r['pattern'].index(')') + 1:]
                     r['pattern'] = '^([\\u0710-\\u072C]{2,})' + end
     out.append(('weakStem:any', loose_weak))
-    # The strong pointed pattern: ܝ allowed as the middle radical.
+    # The strong pointed pattern: ܝ allowed as the middle radical; the strong
+    # and hollow ones: ܝ allowed as the last radical.
+    NO_YOD = '[\\u0710\\u0712-\\u071C\\u071E-\\u072C]'
+    ANY_C = '[\\u0710\\u0712-\\u072C]'
+
+    def strong(r):
+        return r['type'] == 'pattern' and r.get('replacement') == '$1$2$3' and r['pattern'].count(NO_YOD) == 2
+
+    def hollow(r):
+        return r['type'] == 'pattern' and r.get('replacement') == '$1ܐ$2' and NO_YOD in r['pattern']
+
     def middle_yod(x):
         for tt in x['transforms']:
             for r in tt['rules']:
-                if r['type'] == 'pattern':
-                    r['pattern'] = r['pattern'].replace('\\u071E-\\u072C', '\\u071D-\\u072C')
+                if strong(r):
+                    r['pattern'] = r['pattern'].replace(NO_YOD, ANY_C, 1)
     out.append(('pointed:middleYod', middle_yod))
+
+    def last_yod(x):
+        for tt in x['transforms']:
+            for r in tt['rules']:
+                if strong(r):
+                    i = r['pattern'].rindex(NO_YOD)
+                    r['pattern'] = r['pattern'][:i] + ANY_C + r['pattern'][i + len(NO_YOD):]
+                elif hollow(r):
+                    r['pattern'] = r['pattern'].replace(NO_YOD, ANY_C)
+    out.append(('pointed:lastYod', last_yod))
+
+    # The hollow pointed pattern: any middle letter instead of ܝ.
+    def hollow_any(x):
+        for tt in x['transforms']:
+            for r in tt['rules']:
+                if hollow(r):
+                    r['pattern'] = r['pattern'].replace('\\u071D', ANY_C, 1)
+    out.append(('pointed:hollowAnyMiddle', hollow_any))
+
+    # The words kept out of the pointed patterns and the gerund (NOT_VERBS in
+    # own-rules.mjs): none kept out.
+    def no_exclusions(x):
+        import re
+        for tt in x['transforms']:
+            for r in tt['rules']:
+                if r['type'] == 'pattern':
+                    r['pattern'] = re.sub(r'\(\?![^)]*\)', '', r['pattern'])
+    out.append(('pointed:noExclusions', no_exclusions))
+
+    # The pointed patterns of one ending removed: the -ē feminine (ܕܵܪܝܵܐ) and
+    # the first person singular (ܐܵܡܪܹܢ).
+    for name, tid, anchors in (('weak3fs', '3fs', ('\u071D\u0735\u0710',)),
+                               ('1s', '1s', ('\u0739\u0722', '\u0735\u0722', '\u0739\u071D\u0722', '\u071D\u0732\u0722'))):
+        def drop(x, tid=tid, anchors=anchors):
+            for tt in x['transforms']:
+                if tt['id'] == tid:
+                    tt['rules'] = [r for r in tt['rules'] if not (r['type'] == 'pattern' and r.get('anchorSuffix') in anchors)]
+        out.append((f'pointed:{name}Removed', drop))
+
+    # The Stem III imperative: a root of one letter.
+    def imp_one(x):
+        for tt in x['transforms']:
+            if tt['id'] == 'imperativeM':
+                for r in tt['rules']:
+                    if r['type'] == 'pattern':
+                        r['pattern'] = r['pattern'].replace('{2,4}?', '{1,4}?')
+    out.append(('imperativeM:oneLetter', imp_one))
+
+    # The contracted past: each constraint of its patterns loosened, or the
+    # transform removed.
+    NV = '[\\u0303\\u0307\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*'
+    for name, old, new, count in (
+            ('firstVowel', NV, '[\\u0303-\\u074A]*', 1),
+            ('firstWaw', '([\\u0710\\u0712-\\u0717\\u0719-\\u072C])', '([\\u0710\\u0712-\\u072C])', 1),
+            ('seyame', NV, NV.replace('\\u0303', '\\u0303\\u0308'), 99),
+            ('secondAlaph', '([\\u0712-\\u072C])', '([\\u0710\\u0712-\\u072C])', 1),
+            ('anyVowel', '\\u0738', '[\\u0730-\\u073F]', 1),
+            ('anyLast', '([\\u072A\\u0720])', '([\\u0710-\\u072C])', 1)):
+        def loosen(x, old=old, new=new, count=count):
+            for tt in x['transforms']:
+                if tt['id'] == 'pastContracted':
+                    for r in tt['rules']:
+                        r['pattern'] = r['pattern'].replace(old, new, count)
+        out.append((f'pastContracted:{name}', loosen))
+    for tid in ('pastContracted', 'spelling'):
+        def remove(x, tid=tid):
+            x['transforms'] = [tt for tt in x['transforms'] if tt['id'] != tid]
+        out.append((f'{tid}:removed', remove))
+    # ܬܪܵܝ read unpointed too.
+    def spelling_unpointed(x):
+        for tt in x['transforms']:
+            if tt['id'] == 'spelling':
+                tt['rules'] = [r for r in tt['rules'] if r['type'] != 'pattern']
+                tt['rules'].append({'type': 'wholeWord', 'inflected': 'ܬܪܝ', 'deinflected': 'ܬܪܝܢ', 'conditionsIn': [], 'conditionsOut': []})
+    out.append(('spelling:unpointed', spelling_unpointed))
+
+    # The possessive suffix of the first person gives no condition (a verb
+    # could take it).
+    def poss1s_open(x):
+        for tt in x['transforms']:
+            if tt['id'] == 'poss1s':
+                for r in tt['rules']:
+                    r['conditionsOut'] = []
+    out.append(('poss1s:noCondition', poss1s_open))
+
+    # Transform order (ties go to the reading found first, docs/languages.md
+    # 9.6; the trie finds the longest suffix first and prefix rules after
+    # suffix rules, 7.4, so only rules at one trie node depend on it).
+    def move(ids, after=None, before=None):
+        def edit(x):
+            ts = x['transforms']
+            moved = [tt for tt in ts if tt['id'] in ids]
+            rest = [tt for tt in ts if tt['id'] not in ids]
+            if after is not None:
+                j = next(i for i, tt in enumerate(rest) if tt['id'] == after) + 1
+            elif before is not None:
+                j = next(i for i, tt in enumerate(rest) if tt['id'] == before)
+            else:
+                j = len(rest)
+            x['transforms'] = rest[:j] + moved + rest[j:]
+        return edit
+    PERSON = ('3fs', '3p', '2ms', '2fs', '2p', '1s', '1p')
+    out.append(('order:endingsAfterPossessives', move(PERSON, after='poss3p')))
+    out.append(('order:3pAfterPoss1s', move(('3p',), after='poss1s')))
+    out.append(('order:pastBaseAfterEndings', move(('pastBase', 'hollow'), after='1p')))
+    out.append(('order:hollowBeforePastBase', move(('hollow',), before='pastBase')))
+    out.append(('order:constructBeforePoss1s', move(('construct',), before='poss1s')))
+    out.append(('order:participleBefore3fs', move(('passiveParticiple',), before='3fs')))
+    out.append(('order:procliticsLast', move(('w-', 'd-', 'b-', 'l-', 'k-', 'bd-'))))
     # The pointed patterns: any vowel instead of zqapha after the first radical.
     def any_vowel(x):
         for tt in x['transforms']:
@@ -127,6 +248,16 @@ def mutations(t):
                 if tt['id'] == tid:
                     tt.pop('optional', None)
         out.append((f'{tid}:notOptional', required))
+    # language.json: character resolution; the setting without one of its
+    # transforms.
+    def char_resolution(x):
+        x['lookup']['searchResolution'] = 'character'
+    out.append(('language:searchResolutionCharacter', char_resolution))
+
+    def setting_short(x):
+        for st in x['settings']:
+            st['effect']['transforms'] = [t for t in st['effect']['transforms'] if t != 'pastBaseUrmia']
+    out.append(('language:olderSpellingsWithoutUrmia', setting_short))
     # The Stem II imperative before the noun rules.
     def imp2_first(x):
         ts = x['transforms']
@@ -144,22 +275,24 @@ def main():
     ap.add_argument('--only')
     args = ap.parse_args()
     base = json.loads((PACK / 'transforms.json').read_text(encoding='utf-8'))
+    lang = json.loads((PACK / 'language.json').read_text(encoding='utf-8'))
     only = set(args.only.split(',')) if args.only else None
     survivors = []
     for name, edit in mutations(base):
         if only and name not in only:
             continue
+        file, original = ('language.json', lang) if name.startswith('language:') else ('transforms.json', base)
         safe = name.replace(':', '_').replace('/', '_')
         target = Path(args.scratch) / safe
         if target.exists():
             shutil.rmtree(target)
         shutil.copytree(PACK, target / 'aii')
-        t = copy.deepcopy(base)
+        t = copy.deepcopy(original)
         edit(t)
-        if name != 'identity' and t == base:
+        if name != 'identity' and t == original:
             print(f'{name}: no change (skipped)')
             continue
-        (target / 'aii' / 'transforms.json').write_text(json.dumps(t, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+        (target / 'aii' / file).write_text(json.dumps(t, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
         w = subprocess.run([NODE, str(ROOT / 'tools/check-classes.mjs'), 'aii', '--write', '--languages', str(target)],
                            capture_output=True, text=True)
         if w.returncode != 0:

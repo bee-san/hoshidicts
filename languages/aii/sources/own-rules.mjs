@@ -284,6 +284,12 @@ const C = '([\\u0710\\u0712-\\u072C])';
 // The middle radical of the strong pattern: not ܝ, which in this position is
 // a hollow verb's (ܨܵܝܡܵܐ, from ܨܵܐܹܡ).
 const C2 = '([\\u0710\\u0712-\\u071C\\u071E-\\u072C])';
+// The last radical of the strong and hollow patterns: not ܝ either. A verb
+// whose last radical is weak is a verb in -ē, which the patterns below read
+// (ܕܵܪܝܵܐ, she puts, is ܕܪܐ, not ܕܪܝ; ܐܵܕܝܵܐ, now, is no verb at all); of
+// wty-aii-en's three-letter verb headwords only ܣܓܝ ends in ܝ, and the
+// unpointed suffix rules reach it.
+const C3 = C2;
 const N = '[\\u0303\\u0307\\u0308\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*';
 const A = '\\u0735';  // zqapha, ā
 const POINTED = [
@@ -298,17 +304,68 @@ const POINTED = [
     ['1p', '\u0732\u071A'],
 ];
 const esc = (s) => [...s].map((ch) => `\\u${ch.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')}`).join('');
+// A pattern reads the pointed word as written, so its reading needs no
+// processor step and comes before the word's own headword, which needs its
+// points removed (docs/languages.md 9.6). That is the point of the patterns
+// (ܦܵܬ݂ܚܵܐ, she opens, before ܦܬܚܐ, opening), but a few frequent words of
+// these shapes are not verbs. The dictionary's rows have no part of speech
+// (lookup.untaggedTerms "pass" gives them every condition), so nothing else
+// keeps a pattern's verb reading from finding a noun of the same letters:
+// ܡܵܪܝܵܐ (the Lord) would be the feminine of a verb ܡܪܐ, which is the noun
+// "lord, master". These words are kept out of the one pattern that reads
+// them: the kaikki citation forms that a pattern reads as a lemma of which
+// wty-aii-en has no verb (3 of the 5,706 forms; the 8 others a pattern reads
+// as another lemma are read as a verb the dictionary has), and the Urmia
+// spelling ܐܵܢܝܼ of the pronoun "they" (README, Known gaps).
+const NOT_VERBS = {
+    '3fs': ['ܡܵܪܝܵܐ'],       // the Lord (ܡܪܝܐ), not she ... (ܡܪܐ, lord)
+    '3p': ['ܐܵܢܝܼ'],         // they (ܐܢܝ), not they ... (ܐܢܐ, I)
+    '1s': ['ܐܵܡܹܝܢ'],        // amen (ܐܡܝܢ), not I ... (ܐܡܐ, mother)
+    '3fs strong': ['ܗܵܕܟ݂ܵܐ'],  // thus (ܗܕܟܐ), not she ... (ܗܕܟ)
+};
+const notWords = (key) => (NOT_VERBS[key] ? `(?!${NOT_VERBS[key].map((w) => esc(w.normalize('NFC'))).join('|')})` : '');
 for (const [id, ending] of POINTED) {
     // Stem I: C ā C C + ending (ܦܵܬ݂ܚܵܐ, ܦܵܬ݂ܚܝܼ, ܦܵܬ݂ܚܹܬ, ...).
-    rule(id, {type: 'pattern', pattern: `^${C}${N}${A}${N}${C2}${N}${C}${N}${esc(ending)}$`, replacement: '$1$2$3', anchorSuffix: ending, conditionsIn: ANY, conditionsOut: VERB});
+    rule(id, {type: 'pattern', pattern: `^${notWords(`${id} strong`)}${C}${N}${A}${N}${C2}${N}${C3}${N}${esc(ending)}$`, replacement: '$1$2$3', anchorSuffix: ending, conditionsIn: ANY, conditionsOut: VERB});
     // Hollow verbs: C ā ܝ C + ending (ܨܵܝܡܵܐ, she fasts, from ܨܵܐܹܡ).
-    rule(id, {type: 'pattern', pattern: `^${C}${N}${A}${N}\\u071D${N}${C}${N}${esc(ending)}$`, replacement: '$1ܐ$2', anchorSuffix: ending, conditionsIn: ANY, conditionsOut: VERB});
+    rule(id, {type: 'pattern', pattern: `^${C}${N}${A}${N}\\u071D${N}${C3}${N}${esc(ending)}$`, replacement: '$1ܐ$2', anchorSuffix: ending, conditionsIn: ANY, conditionsOut: VERB});
 }
-// Verbs in -ē: C ā C + the endings with ܝ (ܕܵܪܝܵܐ, ܕܵܪܝܼ, ܕܵܪܹܝܬ, ܕܵܪܝܵܬܝ,
-// ܕܵܪܲܝܬܘܿܢ, ܕܵܪܹܝܢ, ܕܵܪܝܲܢ, ܕܵܪܹܝܚ).
-for (const [id, ending] of [['3fs', '\u071D\u0735\u0710'], ['3p', '\u071D\u073C'], ['2ms', '\u0739\u071D\u072C'], ['2fs', '\u071D\u0735\u072C\u071D'],
+// Verbs in -ē: C ā C + the endings with ܝ (ܕܵܪܝܵܐ, ܕܵܪܝܼ, ܕܵܪܹܝܬ, ܕܵܪܝܲܬܝ,
+// ܕܵܪܲܝܬܘܿܢ, ܕܵܪܹܝܢ, ܕܵܪܝܲܢ, ܕܵܪܹܝܚ, as Wiktionary's tables write them; the
+// second person feminine of ܐܵܬ݂ܹܐ, to come, is ܐܵܬ݂ܝܵܬܝ).
+for (const [id, ending] of [['3fs', '\u071D\u0735\u0710'], ['3p', '\u071D\u073C'], ['2ms', '\u0739\u071D\u072C'], ['2fs', '\u071D\u0732\u072C\u071D'], ['2fs', '\u071D\u0735\u072C\u071D'],
     ['2p', '\u0732\u071D\u072C\u0718\u073F\u0722'], ['1s', '\u0739\u071D\u0722'], ['1s', '\u071D\u0732\u0722'], ['1p', '\u0739\u071D\u071A']]) {
-    rule(id, {type: 'pattern', pattern: `^${C}${N}${A}${N}${C}${N}${esc(ending)}$`, replacement: '$1$2ܐ', anchorSuffix: ending, conditionsIn: ANY, conditionsOut: VERB});
+    const not = ending === '\u071D\u0735\u0710' ? notWords('3fs') : ending === '\u071D\u073C' ? notWords('3p') : ending === '\u0739\u071D\u0722' ? notWords('1s') : '';
+    rule(id, {type: 'pattern', pattern: `^${not}${C}${N}${A}${N}${C}${N}${esc(ending)}$`, replacement: '$1$2ܐ', anchorSuffix: ending, conditionsIn: ANY, conditionsOut: VERB});
+}
+
+// After a last radical ܪ or ܠ the ܠ of the L-suffix is assimilated and not
+// written. Modern prose and Wiktionary's examples write ܐ݇ܡܝܼܪܹܗ (he said)
+// and ܐ݇ܡܝܼܪܵܗ̇ (she said) for ܐ݇ܡܝܼܪ ܠܹܗ, ܐ݇ܡܝܼܪ ܠܵܗ̇; the Urmia Bible of
+// 1893 writes the past base with zlama and the L-suffix's vowel after the
+// radical (ܐ݇ܡܸܪܹܐ he said, ܐ݇ܡܸܪܵܐ she said, ܐ݇ܡܸܪܘܿܢ they said, ܫܩܸܠܹܐ he
+// took). These are pointed patterns of a Stem I verb: unpointed, the letters
+// are those of a noun (ܐܡܪܐ, lamb; ܐܡܝܪܗ, his emir). The first radical has
+// no vowel (a noun of this shape has one: ܐܲܡܝܼܪܹܗ, his emir), there is no
+// seyame (a plural: ܒܡܸ̈ܠܹܐ, in words), the first radical is not ܘ (the
+// conjunction: ܘܕܸܪܹܐ is ܘ- and ܕܸܪܹܐ, he returned; no root starts with
+// ܘ) and the second is not ܐ, so that a proclitic before ܐܸܠ- (to; ܕܐܸܠܝܼ,
+// that to me) or the copula ܐܝܼܠܹܗ (ܕܐܝܼܠܹܗ, that he is) is not a root.
+transform('pastContracted', 'past (assimilated L-suffix)', 'The past of a Stem I verb whose last radical is ܪ or ܠ, with the ܠ of the L-suffix assimilated: ܐ݇ܡܝܼܪܹܗ, he said (for ܐ݇ܡܝܼܪ ܠܹܗ), and in the Urmia Bible ܐ݇ܡܸܪܹܐ, he said; ܫܩܸܠܘܿܢ, they took.');
+{
+    const NV = '[\\u0303\\u0307\\u0323\\u032E\\u0330\\u0740-\\u0742\\u0747]*';
+    const R1 = '([\\u0710\\u0712-\\u0717\\u0719-\\u072C])';
+    const R2 = '([\\u0712-\\u072C])';
+    const LAST = '([\\u072A\\u0720])';
+    // Modern: the past base with ī (ܝܼ), then ēh (he) or āh (she).
+    for (const ending of ['\u0739\u0717', '\u0735\u0717\u0307', '\u0735\u0717']) {
+        rule('pastContracted', {type: 'pattern', pattern: `^${R1}${NV}${R2}${NV}\\u071D${NV}\\u073C${NV}${LAST}${NV}${esc(ending)}$`, replacement: '$1$2$3', anchorSuffix: ending, conditionsIn: ANY, conditionsOut: VERB});
+    }
+    // Urmia: zlama before the last radical, then the person's vowel and
+    // ending: ē (he), ā (she), ōn (they), ī (I), ūk (you, m.), an (we).
+    for (const ending of ['\u0739\u0710', '\u0735\u0710', '\u0718\u073F\u0722', '\u071D\u073C', '\u0718\u073C\u071F', '\u0732\u0722']) {
+        rule('pastContracted', {type: 'pattern', pattern: `^${R1}${NV}${R2}${NV}\\u0738${NV}${LAST}${NV}${esc(ending)}$`, replacement: '$1$2$3', anchorSuffix: ending, conditionsIn: ANY, conditionsOut: VERB});
+    }
 }
 
 // --- Participles, imperatives, infinitives ------------------------------------------
@@ -383,8 +440,10 @@ transform('gerund', 'gerund (ܒ- + infinitive)', 'The gerund, ܒ- with the infin
 // of that length: ܒ + a longer word in -ā is a noun after ܒ- (ܒܡܲܕܢܚܵܐ, in
 // the east), and Stems II and III make their gerund from the infinitive
 // (ܒܡܲܪܝܘܿܡܹܐ: ܒ- and infinitiveM).
-rule('gerund', {type: 'pattern', pattern: `^ܒ(${PL}{3})ܐ$`, replacement: '$1', anchorSuffix: 'ܐ', conditionsIn: ANY, conditionsOut: VSTEM});
-rule('gerund', {type: 'pattern', pattern: `^ܒ(${PL}{2})ܝܐ$`, replacement: '$1ܐ', anchorSuffix: 'ܝܐ', conditionsIn: ANY, conditionsOut: VERB});
+// ܒܡܪܝܐ is ܒ- and ܡܪܝܐ (in the Lord), not a gerund (ܡܪܐ is a noun, and ܡܪܝ
+// the title Mar; see NOT_VERBS above).
+rule('gerund', {type: 'pattern', pattern: `^ܒ(?!ܡܪܝܐ)(${PL}{3})ܐ$`, replacement: '$1', anchorSuffix: 'ܐ', conditionsIn: ANY, conditionsOut: VSTEM});
+rule('gerund', {type: 'pattern', pattern: `^ܒ(?!ܡܪܝܐ)(${PL}{2})ܝܐ$`, replacement: '$1ܐ', anchorSuffix: 'ܝܐ', conditionsIn: ANY, conditionsOut: VERB});
 
 // --- Past particle -----------------------------------------------------------------
 // ܗ݇ܘܵܐ (wā) after a verb, a participle or the copula makes the past of the
@@ -509,6 +568,20 @@ for (const [lemma, stem] of [['ܐܒܐ', 'ܐܒܘ'], ['ܐܚܐ', 'ܐܚܘ']]) {
     for (const ending of ['ܢ', 'ܟ', 'ܟܝ', 'ܗܝ', 'ܗ', 'ܟܘܢ', 'ܗܘܢ']) {
         irregular(stem + ending, lemma);
     }
+}
+
+// Closed-class words whose wty-aii-en row refers to a pointed form that no
+// row has (the engine looks a reference up as written, docs/languages.md
+// 9.10), so the lookup finds nothing for them, or a wrong reading: ܬܪܵܝ
+// (two, the Urmia spelling; its row names ܬܪܹܝܢ, and the 3p rule then reads
+// ܬܪܐ, to soak), ܡܵܐܐ (hundred; its row names ܐܸܡܐܵܐ) and the unpointed ܐܘܦ
+// (also; its row names ܐܵܦ). These are the ones the measured texts use at
+// least 80 times (README, Known gaps). ܬܪܵܝ is read only pointed: unpointed,
+// ܒܬܪܝ is also ܒܵܬ݇ܪܝܼ (after me), which a proclitic would read as ܒ- + two.
+transform('spelling', 'spelling variant', 'A spelling of a numeral or particle that the dictionary refers to a pointed form it has no row for: ܬܪܵܝ (two) for ܬܪܹܝܢ, ܡܵܐܐ (hundred) for ܐܸܡܐܵܐ, ܐܘܦ (also) for ܐܵܦ.');
+rule('spelling', {type: 'pattern', pattern: `^\\u072C${N}\\u072A${N}\\u0735${N}\\u071D$`, replacement: 'ܬܪܝܢ', anchorSuffix: 'ܝ', conditionsIn: ANY, conditionsOut: []});
+for (const [form, lemma] of [['ܡܐܐ', 'ܐܡܐܐ'], ['ܐܘܦ', 'ܐܦ']]) {
+    rule('spelling', {type: 'wholeWord', inflected: form, deinflected: lemma, conditionsIn: ANY, conditionsOut: []});
 }
 
 // --- Prepositions with pronoun suffixes ----------------------------------------------

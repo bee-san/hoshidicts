@@ -4,7 +4,7 @@
   "revision": "1",
   "sequenced": false,
   "author": "hoshidicts",
-  "description": "A tiny Assyrian Neo-Aramaic dictionary for languages/aii/tests/lookup.tsv, written for the pack. Its rows carry the pack's part-of-speech tags; ܒܵܬܹ̈ܐ is a form-of row, as wiktionary-to-yomitan writes them.",
+  "description": "A tiny Assyrian Neo-Aramaic dictionary for languages/aii/tests/lookup.tsv, written for the pack. Its rows carry the pack's part-of-speech tags; the rows tagged \"v n adj prep\" carry every condition, as an untagged wty-aii-en row does under lookup.untaggedTerms \"pass\". ܒܵܬܹ̈ܐ is a form-of row, as wiktionary-to-yomitan writes them.",
   "sourceLanguage": "aii",
   "targetLanguage": "en"
 }

@@ -1,6 +1,6 @@
 # Source: written for this pack (GPL-3.0-or-later), from the grammar of the standard literary language; spellings checked
 # against the forms of Wiktionary's tables (wty-aii-en and kaikki.org, README.md). The constructed negatives at the end pin
-# each stem constraint (sources/mutations.py). Every optional transform is on.
+# each stem, pattern and condition constraint (sources/mutations.py). Every optional transform is on.
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
 # --- past (Stem I, one step) ---
 past	1	ܦܬ݂ܝܼܚ ܠܝܼ	ܦܬܚ	*	past1s
@@ -389,3 +389,40 @@ stem minimum (poss1s)	0	ܢܝ	ܢܐ	*	*
 stem minimum (poss1s)	0	ܫܝ	ܫܐ	*	*
 stem minimum (possessiveC)	0	ܟܬܒܗܘܢ	ܟܬܒ	*	*
 stem minimum (possessiveC)	0	ܟܬܒܘܟܘܢ	ܟܬܒ	*	*
+# --- past with the L-suffix's ܠ assimilated (after ܪ or ܠ) ---
+past (assimilated L-suffix)	1	ܐ݇ܡܝܼܪܹܗ	ܐܡܪ	*	pastContracted
+past (assimilated L-suffix)	1	ܐ݇ܡܝܼܪܵܗ̇	ܐܡܪ	*	pastContracted
+past (assimilated L-suffix)	1	ܐ݇ܡܝܼܪܵܗ	ܐܡܪ	*	pastContracted
+past (assimilated L-suffix)	1	ܫܩܝܼܠܹܗ	ܫܩܠ	*	pastContracted
+past (assimilated L-suffix)	1	ܘܐ݇ܡܝܼܪܹܗ	ܐܡܪ	*	pastContracted|w-
+past (assimilated L-suffix, Urmia)	1	ܐ݇ܡܸܪܹܐ	ܐܡܪ	*	pastContracted
+past (assimilated L-suffix, Urmia)	1	ܐ݇ܡܸܪܵܐ	ܐܡܪ	*	pastContracted
+past (assimilated L-suffix, Urmia)	1	ܐ݇ܡܸܪܘܿܢ	ܐܡܪ	*	pastContracted
+past (assimilated L-suffix, Urmia)	1	ܐ݇ܡܸܪܝܼ	ܐܡܪ	*	pastContracted
+past (assimilated L-suffix, Urmia)	1	ܐ݇ܡܸܪܘܼܟ	ܐܡܪ	*	pastContracted
+past (assimilated L-suffix, Urmia)	1	ܐ݇ܡܸܪܲܢ	ܐܡܪ	*	pastContracted
+past (assimilated L-suffix, Urmia)	1	ܫܩܸܠܹܐ	ܫܩܠ	*	pastContracted
+past (assimilated L-suffix, Urmia)	1	ܫܩܸܠܘܿܢ	ܫܩܠ	*	pastContracted
+past (assimilated L-suffix, Urmia)	1	ܘܐ݇ܡܸܪܹܐ	ܐܡܪ	*	pastContracted|w-
+# --- spelling variants the dictionary refers to a pointed form it has no row for ---
+spelling variant	1	ܬܪܵܝ	ܬܪܝܢ	*	spelling
+spelling variant	1	ܘܬܪܵܝ	ܬܪܝܢ	*	spelling|w-
+spelling variant	1	ܡܵܐܐ	ܐܡܐܐ	*	spelling
+spelling variant	1	ܐܘܦ	ܐܦ	*	spelling
+# --- constructed negatives: the constraints of the patterns and conditions above ---
+pattern (pastContracted: a vowel on the first radical, his emir)	0	ܐܲܡܝܼܪܹܗ	ܐܡܪ	*	pastContracted
+pattern (pastContracted: seyame, a plural)	0	ܒܡܸ̈ܠܹܐ	ܒܡܠ	*	pastContracted
+pattern (pastContracted: ܘ is the conjunction, not a radical)	0	ܘܕܸܪܹܐ	ܘܕܪ	*	pastContracted
+pattern (pastContracted: ܐ as second radical, ܕ- + ܐܸܠܝܼ)	0	ܕܐܸܠܝܼ	ܕܐܠ	*	pastContracted
+pattern (pastContracted: ܐ as second radical, ܕ- + the copula)	0	ܕܐܝܼܠܹܗ	ܕܐܠ	*	pastContracted
+pattern (pastContracted: last radical ܪ or ܠ)	0	ܦܬ݂ܝܼܚܹܗ	ܦܬܚ	*	pastContracted
+pattern (pastContracted: zlama before the last radical)	0	ܐܡܲܪܹܐ	ܐܡܪ	*	pastContracted
+pattern (pastContracted: pointed only)	0	ܐܡܪܐ	ܐܡܪ	*	pastContracted
+pattern (pastContracted: pointed only)	0	ܐܡܝܪܗ	ܐܡܪ	*	pastContracted
+pattern (spelling: pointed only)	0	ܬܪܝ	ܬܪܝܢ	*	spelling
+pattern (spelling: ܒܵܬ݇ܪܝܼ, after me)	0	ܒܬܪܝ	ܬܪܝܢ	*	*
+pattern (gerund: ܒ- + ܡܪܝܐ, in the Lord)	0	ܒܡܪܝܐ	ܡܪܐ	*	gerund
+pattern (gerund: ܒ- + ܡܪܝܐ, in the Lord)	0	ܒܡܪܝܐ	ܡܪܝ	*	gerund
+pattern (3fs, hollow: middle ܝ)	0	ܦܵܬ݂ܚܵܐ	ܦܐܚ	*	3fs
+pattern (imperativeM: a root of two letters at least)	0	ܐܒܝ	ܡܒ	*	imperativeM
+conditions (poss1s: a noun, not a verb)	0	ܟܬܒܝ	ܟܬܒܐ	v	poss1s

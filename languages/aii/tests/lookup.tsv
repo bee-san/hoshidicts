@@ -1,12 +1,14 @@
 # Source: written for this pack (GPL-3.0-or-later), against tests/dictionary/ (hand-written rows). No optional transform
 # or processor is needed; every option is on.
 # category	valid	text	expression	matched
-past	1	ܦܬ݂ܝܼܚ ܠܝܼ ܬܲܪܥܵܐ	ܦܬܚ	ܦܬ݂ܝܼܚ ܠܝܼ
-past	1	ܦܬܝܚ ܠܝ ܬܪܥܐ	ܦܬܚ	ܦܬܝܚ ܠܝ
+past	1	ܦܬ݂ܝܼܚ ܠܝܼ ܟܬ݂ܵܒ݂ܵܐ	ܦܬܚ	ܦܬ݂ܝܼܚ ܠܝܼ
+past	1	ܦܬܝܚ ܠܝ ܟܬܒܐ	ܦܬܚ	ܦܬܝܚ ܠܝ
 past	1	ܢܒ݂ܝܼܚ ܠܹܗ ܥܲܠ ܓܲܒ݂ܪܵܐ	ܢܒܚ	ܢܒ݂ܝܼܚ ܠܹܗ
 past	1	ܐ݇ܙܝܼܠ ܠܹܗ ܠܒܲܝܬܵܐ	ܐܙܠ	ܐ݇ܙܝܼܠ ܠܹܗ
 past	1	ܕܪܹܐ ܠܗܘܿܢ ܟܬ݂ܵܒ݂ܵܐ	ܕܪܐ	ܕܪܹܐ ܠܗܘܿܢ
 past	1	ܡܘܼܪܝܸܡ ܠܹܗ ܬܲܪܥܵܐ	ܡܪܝܡ	ܡܘܼܪܝܸܡ ܠܹܗ
+past	1	ܘܐ݇ܡܸܪܹܐ ܠܡܲܠܟܵܐ	ܐܡܪ	ܘܐ݇ܡܸܪܹܐ
+past	1	ܐ݇ܡܝܼܪܹܗ ܡܲܠܟܵܐ	ܐܡܪ	ܐ݇ܡܝܼܪܹܗ
 non-past	1	ܟܵܬ݂ܒ݂ܝܼ ܟܬ݂ܵܒ݂ܵܐ	ܟܬܒ	ܟܵܬ݂ܒ݂ܝܼ
 non-past	1	ܨܵܝܡܵܐ ܟܠ ܝܲܘܡܵܐ	ܨܐܡ	ܨܵܝܡܵܐ
 gerund	1	ܒܸܦܬ݂ܵܚܵܐ ܬܲܪܥܵܐ	ܦܬܚ	ܒܸܦܬ݂ܵܚܵܐ
@@ -31,8 +33,17 @@ joiners	1	ܟܲܠ‍ܒܵܐ ܛܵܒ݂ܵܐ	ܟܠܒܐ	ܟܲܠ‍ܒܵܐ
 word boundary	1	ܟܠ ܠܲܝܠܹܐ	ܟܠ	ܟܠ
 word boundary	0	ܟܲܠܒܵܐ ܛܵܒ݂ܵܐ	ܟܠܒܐ	ܟܲܠܒܵܐ ܛܵܒ݂ܵܐ
 word boundary	0	ܒܲܝܬܵܐ ܪܲܒܵܐ	ܪܒܐ	ܒܲܝܬܵܐ ܪܲܒܵܐ
+word boundary	0	ܥܲܡܵܐ	ܥܡ	ܥܲܡܵ
 ranking	1	ܦܵܬ݂ܚܵܐ ܬܲܪܥܵܐ	ܦܬܚ	ܦܵܬ݂ܚܵܐ
 ranking	1	ܡܵܝܬܵܐ	ܡܐܬ	ܡܵܝܬܵܐ
 ranking	1	ܚܸܠܡܵܐ ܚܙܹܐ ܠܹܗ	ܚܠܡܐ	ܚܸܠܡܵܐ
 ranking	1	ܚܲܒ݂ܪܝܼ ܝܼܠܹܗ	ܚܒܪܐ	ܚܲܒ݂ܪܝܼ
 ranking	1	ܒܡܲܕܢܚܵܐ ܝܢܵܐ ܛܘܼܪ̈ܵܢܹܐ	ܡܕܢܚܐ	ܒܡܲܕܢܚܵܐ
+ranking	1	ܡܵܪܝܵܐ ܐܲܠܵܗܵܐ	ܡܪܝܐ	ܡܵܪܝܵܐ
+ranking	1	ܕܵܪܝܵܐ ܟܬ݂ܵܒ݂ܵܐ	ܕܪܐ	ܕܵܪܝܵܐ
+ranking	1	ܐܵܕܝܵܐ ܐ݇ܙܝܼܠ ܠܹܗ	ܐܕܝܐ	ܐܵܕܝܵܐ
+ranking	1	ܐܵܡܪܹܢ ܠܵܐ	ܐܡܪ	ܐܵܡܪܹܢ
+ranking	1	ܦܵܝܫܝܼ ܬܲܡܵܐ	ܦܐܫ	ܦܵܝܫܝܼ
+ranking	1	ܟܬܒܝ ܟܬܒܐ	ܟܬܒ	ܟܬܒܝ
+ranking	1	ܦܬܝܚ ܝܠܗ	ܦܬܚ	ܦܬܝܚ
+numeral	1	ܬܪܵܝ ܟܲܠܒܹ̈ܐ	ܬܪܝܢ	ܬܪܵܝ
