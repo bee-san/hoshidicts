@@ -55,7 +55,8 @@ const LAST_LETTERS = [
 // that end in that letter):
 //   A A B B     → A B    đi đi lại lại → đi lại
 //   A Ca A CB   → A CB   lôi tha lôi thôi → lôi thôi, lề mà lề mề → lề mề
-//                        (C the whole onset of the second word, then a or à)
+//                        (C the whole onset of the second word, then a or à;
+//                        not và, and: học và học viên is two words)
 // The whole text must have that shape. A single word said twice (xanh xanh,
 // đi đi) is not read: in Tatoeba and Việt Nam sử lược the text "X X" was a
 // reduplication at 44 places and two words at 41 (máy bay bay, the plane
@@ -63,7 +64,7 @@ const LAST_LETTERS = [
 // lookup of X alone shows too; dictionaries list the common ones (xanh xanh).
 const ONSET_LETTERS = '[bcdđghklmnpqrstvx]';
 function wholeReduplication() {
-  const pattern = `^([^ ]+) (?:\\1( [^ ]+)\\2|(${ONSET_LETTERS}*)[aà] \\1( \\3[^ ${ONSET_LETTERS.slice(1, -1)}][^ ]*))$`;
+  const pattern = `^([^ ]+) (?:\\1( [^ ]+)\\2|(?!và )(${ONSET_LETTERS}*)[aà] \\1( \\3[^ ${ONSET_LETTERS.slice(1, -1)}][^ ]*))$`;
   return LAST_LETTERS.map((last) => ({
     type: 'pattern', pattern, replacement: '$1$2$4', anchorSuffix: last, conditionsIn: [], conditionsOut: [],
   }));
@@ -76,19 +77,23 @@ function wholeReduplication() {
 // listed because the same shape is common between two words that are not a
 // reduplication: cho chó (feed the dog), cùng cũng, tôi tối (I ... tonight).
 // Not listed for that reason: tối (tôi tối), lạ (là lạ, which dictionaries
-// list), đủ (đu đủ is papaya).
+// list), đủ (đu đủ is papaya), sáng (sang sáng: chuyển sang sáng tác, to
+// switch to songwriting). ráp is not listed because dictionaries give it only
+// as the verb to fit (ram ráp, rough, is another sense). A pair [word, lemma]
+// names the headword when the word is spelt like another one: se sẽ (gently)
+// is a form of khẽ, and sẽ alone is the future particle.
 export const PARTIAL_BASES = [
   // colours and light
-  'đỏ', 'trắng', 'tím', 'xám', 'đục', 'nhạt', 'bạc', 'đậm', 'sẫm', 'lợt', 'sáng',
+  'đỏ', 'trắng', 'tím', 'xám', 'đục', 'nhạt', 'bạc', 'đậm', 'sẫm', 'lợt',
   // size and shape
   'nhỏ', 'bé', 'lớn', 'mỏng', 'thấp', 'ngắn', 'hẹp', 'méo', 'nhọn', 'dẹt', 'bẹt', 'béo', 'mập',
   // taste and smell
   'ngọt', 'mặn', 'đắng', 'chát', 'khét', 'thối', 'ngái', 'khắm',
   // temperature and touch
-  'mát', 'lạnh', 'ấm', 'nóng', 'rét', 'cứng', 'ướt', 'ẩm', 'nhẹ', 'nặng', 'lỏng', 'dẻo', 'nhám', 'ráp',
+  'mát', 'lạnh', 'ấm', 'nóng', 'rét', 'cứng', 'ướt', 'ẩm', 'nhẹ', 'nặng', 'lỏng', 'dẻo', 'nhám',
   'nhớt', 'dính', 'nhẵn',
   // manner, speed and sound
-  'chậm', 'khẽ', 'sẽ', 'lẹ', 'vút', 'vụt', 'cuộn', 'thẳm', 'biệt', 'hổi', 'rượi', 'vợi', 'thoải',
+  'chậm', 'khẽ', ['sẽ', 'khẽ'], 'lẹ', 'vút', 'vụt', 'cuộn', 'thẳm', 'biệt', 'hổi', 'rượi', 'vợi', 'thoải',
   // quality, likeness and feeling
   'đẹp', 'xấu', 'sạch', 'khá', 'tạm', 'khác', 'giống', 'dở', 'dại', 'ngộ', 'mệt', 'sợ', 'vắng', 'trẻ',
   'thích', 'nhớ', 'tức', 'ngượng',
@@ -112,11 +117,12 @@ export function levelled(syllable) {
 
 function partialReduplication() {
   const rules = [];
-  for (const base of PARTIAL_BASES) {
+  for (const entry of PARTIAL_BASES) {
+    const [base, lemma] = Array.isArray(entry) ? entry : [entry, entry];
     const forms = levelled(base);
     if (forms.length === 0) throw new Error(`${base} has no tone to level`);
     for (const form of forms) {
-      rules.push({type: 'wholeWord', inflected: `${form} ${base}`, deinflected: base, conditionsIn: [], conditionsOut: []});
+      rules.push({type: 'wholeWord', inflected: `${form} ${base}`, deinflected: lemma, conditionsIn: [], conditionsOut: []});
     }
   }
   return rules;

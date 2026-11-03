@@ -8,12 +8,14 @@ Both files are lookup-batch-vi runs over the same hovers, with Yomitan's
 processors alone and with this pack. Every hover whose first result with a
 definition differs is judged:
 
-- by script, "spelling": the final result's expression has the letters of the
-  matched text once marks, capitals and hyphens are set aside and y is read as
-  i (Hồng-bàng → Hồng Bàng, kỷ → kỉ, thủy-thổ → thuỷ thổ): the same word in
-  another spelling;
-- by hand, every hover whose result came through a reduplication rule, and a
-  seeded random sample of the rest. The hand judgements are in
+- by script, "spelling": the final result's expression has the letters and
+  capitals of the matched text once marks and hyphens are set aside and y is
+  read as i (kỷ → kỉ, thủy-thổ → thuỷ thổ): the same word in another
+  spelling. A result whose capitals differ (Hồng-bàng → Hồng Bàng, Kinh-đô →
+  Kinh Đô, Kyoto) may be a name shown for a common word, so it is judged by
+  hand;
+- by hand, every hover whose result came through a reduplication rule, and
+  the rest (all of them when sample size is at least their number). The hand judgements are in
   <judgements.tsv> (matched text, expression, verdict right|wrong, note),
   written for this pack; a judged pair applies to every hover with it.
 
@@ -30,7 +32,7 @@ PACK_RULES = {'reduplication', 'partialReduplication'}
 
 def key(text):
     letters = ''.join(c for c in unicodedata.normalize('NFD', text) if not unicodedata.combining(c))
-    return ' '.join(letters.lower().replace('y', 'i').replace('-', ' ').split())
+    return ' '.join(letters.replace('y', 'i').replace('Y', 'I').replace('-', ' ').split())
 
 
 def first(results):

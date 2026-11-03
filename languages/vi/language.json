@@ -1209,7 +1209,12 @@
         "name": "Name",
         "phrase": "Phrase",
         "prov": "Proverb",
-        "char": "Character"
+        "char": "Character",
+        "vt": "Transitive verb",
+        "vi": "Intransitive verb",
+        "det": "Determiner",
+        "pref": "Prefix",
+        "suf": "Suffix"
       }
     },
     "frequencySamples": {
