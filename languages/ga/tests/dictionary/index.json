@@ -1,0 +1,10 @@
+{
+  "title": "hoshidicts ga test dictionary",
+  "format": 3,
+  "revision": "1",
+  "sequenced": false,
+  "author": "hoshidicts",
+  "description": "A tiny Irish dictionary for languages/ga/tests/lookup.tsv, written for the pack. fuil, dearna and rinn stand for nouns that an irregular verb form looks like once its mutation or ending is removed; beartas and beart for an -as noun beside a shorter word.",
+  "sourceLanguage": "ga",
+  "targetLanguage": "en"
+}

@@ -1,0 +1,27 @@
+# Source: written for this pack (GPL-3.0-or-later), no third-party data. Every optional processor is on.
+# category	valid	input	variant
+decapitalize	1	Bhris	bhris
+decapitalize	1	ÉIRE	éire
+decapitalize	1	Ólann	ólann
+capitalize	1	éire	Éire
+capitalize	1	gaillimh	Gaillimh
+nfc	1	té	té
+apostrophe	1	d’ól	d'ól
+apostrophe	1	m‘athair	m'athair
+apostrophe	1	bʼfhéidir	b'fhéidir
+hyphen	1	t‐uisce	t-uisce
+hyphen	1	n‑athair	n-athair
+soft hyphen	1	ceann­aigh	ceannaigh
+soft hyphen	0	ceann­aigh	ceann­aigh
+gaelic type	1	ḃí	bhí
+gaelic type	1	Ċonaic	Chonaic
+gaelic type	1	ṫáinig	tháinig
+gaelic type	1	ṡráid	shráid
+gaelic type	1	ꞃꞅꞇ	rst
+gaelic type	1	⁊	agus
+fada	1	ta	tá
+fada	1	se	sé
+fada	1	Eire	Éire
+fada	1	Oige	Óige
+fada	1	ceannaionn	ceannaíonn
+fada	0	ta	tà

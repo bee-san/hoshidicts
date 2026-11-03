@@ -1,0 +1,13 @@
+# options: default
+# Source: written for this pack (GPL-3.0-or-later), no third-party data. Run with the pack's defaults: the optional addMissingFada processor is off, so a word written without its síneadh fada is not read as one with it.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+fada	0	ta	bí	*	*
+fada	0	se	sé	*	*
+fada	0	bhi	bí	*	*
+fada	0	Eireann	Éireann	*	*
+fada	0	ceannaionn	ceannaigh	*	*
+defaults	1	Bhí	bí	v	lenition
+defaults	1	Cheannaigh	ceannaigh	v	lenition
+defaults	1	D’ól	ól	v	elision
+defaults	1	tá	bí	v	present
+defaults	1	sé	sé	*	

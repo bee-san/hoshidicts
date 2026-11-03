@@ -74,7 +74,7 @@
         "id": "addMissingFada",
         "name": "Add a missing síneadh fada",
         "optional": true,
-        "variants": [[{"map": {"a": "á"}, "at": "first"}], [{"map": {"a": "á"}, "at": "last"}], [{"map": {"e": "é"}, "at": "first"}], [{"map": {"e": "é"}, "at": "last"}], [{"map": {"i": "í"}, "at": "first"}], [{"map": {"i": "í"}, "at": "last"}], [{"map": {"o": "ó"}, "at": "first"}], [{"map": {"o": "ó"}, "at": "last"}], [{"map": {"u": "ú"}, "at": "first"}], [{"map": {"u": "ú"}, "at": "last"}]]
+        "variants": [[{"map": {"a": "á", "A": "Á"}, "at": "first"}], [{"map": {"a": "á", "A": "Á"}, "at": "last"}], [{"map": {"e": "é", "E": "É"}, "at": "first"}], [{"map": {"e": "é", "E": "É"}, "at": "last"}], [{"map": {"i": "í", "I": "Í"}, "at": "first"}], [{"map": {"i": "í", "I": "Í"}, "at": "last"}], [{"map": {"o": "ó", "O": "Ó"}, "at": "first"}], [{"map": {"o": "ó", "O": "Ó"}, "at": "last"}], [{"map": {"u": "ú", "U": "Ú"}, "at": "first"}], [{"map": {"u": "ú", "U": "Ú"}, "at": "last"}]]
       }
     ],
     "postprocessors": [],

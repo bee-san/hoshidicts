@@ -46,9 +46,19 @@ const OUT = outIndex >= 0 ? args[outIndex + 1] : join(here, 'own.json');
 // `rules` column. Names, prepositions, pronouns and particles have none, so
 // rules that can reach them (mutations, prepositional pronouns, the copula)
 // give no conditions: a form without conditions matches every term.
+//
+// The first version of this file had v, n and adj without subconditions.
+// Once Yomitan's rules were read (step 3), v and n were given Yomitan's
+// definitions (v over v_phr, n over np and ns), which
+// tools/merge-transforms.mjs requires to be equal. A rule's `v` output and a
+// dictionary's `v` tag still stand for the same bits, so no deinflection or
+// lookup changes.
 const conditions = {
-    v: {name: 'Verb', isDictionaryForm: true},
-    n: {name: 'Noun', isDictionaryForm: true},
+    v: {name: 'Verb', isDictionaryForm: true, subConditions: ['v_phr']},
+    v_phr: {name: 'Phrasal verb', isDictionaryForm: true},
+    n: {name: 'Noun', isDictionaryForm: true, subConditions: ['np', 'ns']},
+    np: {name: 'Noun plural', isDictionaryForm: true},
+    ns: {name: 'Noun singular', isDictionaryForm: true},
     adj: {name: 'Adjective', isDictionaryForm: true},
 };
 
@@ -98,7 +108,7 @@ function whole(id, inflected, deinflected, conditionsOut) {
 
 // Several endings that share their constraints: one cross-product circumfix
 // with an empty prefix (section 7.3), or plain suffix rules with --expanded.
-function endings(id, pairs, conditionsOut, constraints = {}) {
+function plainEndings(id, pairs, conditionsOut, constraints = {}) {
     const unique = [];
     const keys = new Set();
     for (const [inflected, deinflected] of pairs) {
@@ -114,6 +124,7 @@ function endings(id, pairs, conditionsOut, constraints = {}) {
     }
     add(id, {type: 'circumfix', prefixes: [['', '']], suffixes: unique, conditionsIn: [], conditionsOut, ...constraints});
 }
+const endings = plainEndings;
 
 // --- Mutations ------------------------------------------------------------------
 // A mutation is the outermost change: the particle before the word causes it,
@@ -124,15 +135,13 @@ const LENITED = [['bh', 'b'], ['ch', 'c'], ['dh', 'd'], ['fh', 'f'], ['gh', 'g']
 const ECLIPSED = [['mb', 'b'], ['gc', 'c'], ['nd', 'd'], ['bhf', 'f'], ['ng', 'g'], ['bp', 'p'], ['dt', 't']];
 const upper = (s) => s[0].toUpperCase() + s.slice(1);
 
-// Verbs: a lenited stem without an ending, and d' before a vowel or fh, is the
-// past tense (bhris sé, d'ól sí, d'fhág siad). This transform comes first so
-// that a verb found this way is traced as past, not only as lenited.
-transform('past', 'past', 'Past tense: the stem lenited (bhris, cheannaigh, shiúil), or with d\' before a vowel or fh (d\'ól, d\'éirigh, d\'fhág). The irregular verbs have past forms of their own (chonaic, chuaigh, rinne, dúirt, fuair, tháinig, thug, rug, chuala, bhí; dependent faca, deachaigh, dearna, raibh).');
-for (const [inflected, deinflected] of LENITED) {
-    prefix('past', inflected, deinflected, ['v'], {stemStartsWith: AFTER_MUTATION});
-}
-prefix('past', 'd\'', '', ['v'], {stemStartsWith: LOWER_VOWEL});
-prefix('past', 'd\'fh', 'f', ['v'], {stemStartsWith: AFTER_MUTATION});
+// The regular past tense is the stem lenited (bhris sé), or with d' before a
+// vowel or fh (d'ól sí, d'fhág siad). The lenition and elision rules below
+// remove those, so `past` holds only the irregular past forms. A first
+// version had lenited-stem rules here too; they gave the same texts as
+// lenition with a `past` trace, which a lookup then showed for every lenited
+// word with a verb homograph (mhaith → maith "past", bheidh → beidh "past").
+transform('past', 'past', 'Past tense of the irregular verbs: chonaic, chuaigh, rinne, dúirt, fuair, tháinig, thug, rug, chuala, bhí, with the dependent forms faca, deachaigh, dearna, raibh. Regular verbs lenite the stem (bhris, cheannaigh, shiúil) or put d\' before a vowel or fh (d\'ól, d\'éirigh, d\'fhág), which lenition and the elided particle remove.');
 
 transform('lenition', 'lenition', 'Lenition (séimhiú): h after the first consonant, after mo, do, a (his), ní, má, the article (an bhean), in compounds and on adjectives after a feminine noun: bhean → bean, chat → cat, shráid → sráid, Shasana → Sasana.');
 for (const [inflected, deinflected] of LENITED) {
@@ -149,14 +158,20 @@ for (const [inflected, deinflected] of ECLIPSED) {
 }
 prefix('eclipsis', 'n-', '', [], {stemStartsWith: LOWER_VOWEL});
 prefix('eclipsis', 'n', '', [], {stemStartsWith: UPPER_VOWEL});
+// A capital after the prefix marks a name (nÉirinn) or a title (an tAire,
+// i nAontroim); dictionaries list titles in lower case, so both are given.
+const LOWER_FIRST = [{case: 'lowerFirst'}];
+add('eclipsis', {type: 'prefix', inflected: 'n', deinflected: '', conditionsIn: [], conditionsOut: [], stemStartsWith: UPPER_VOWEL, then: LOWER_FIRST});
 
 transform('h-prefix', 'h before a vowel', 'h before a vowel after na (na hoíche), a (her: a hathair), le, go, chomh, ní (copula) and the ordinals: hoíche → oíche, hÉireann → Éireann, hathair → athair.');
 prefix('h-prefix', 'h', '', [], {stemStartsWith: VOWEL});
 prefix('h-prefix', 'h-', '', [], {stemStartsWith: VOWEL});
+add('h-prefix', {type: 'prefix', inflected: 'h', deinflected: '', conditionsIn: [], conditionsOut: [], stemStartsWith: UPPER_VOWEL, then: LOWER_FIRST});
 
-transform('t-prefix', 't before a vowel or s', 't- before a vowel of a masculine noun after the article (an t-uisce, an tUachtarán) and t before s after an (an tsráid, an tsúil): t-uisce → uisce, tUachtarán → Uachtarán, tsráid → sráid.');
+transform('t-prefix', 't before a vowel or s', 't- before a vowel of a masculine noun after the article (an t-uisce, an tUachtarán, an tAire) and t before s after an (an tsráid, an tsúil): t-uisce → uisce, tUachtarán → Uachtarán, tAire → aire, tsráid → sráid.');
 prefix('t-prefix', 't-', '', [], {stemStartsWith: LOWER_VOWEL});
 prefix('t-prefix', 't', '', [], {stemStartsWith: UPPER_VOWEL});
+add('t-prefix', {type: 'prefix', inflected: 't', deinflected: '', conditionsIn: [], conditionsOut: [], stemStartsWith: UPPER_VOWEL, then: LOWER_FIRST});
 prefix('t-prefix', 'ts', 's', [], {stemStartsWith: AFTER_MUTATION});
 prefix('t-prefix', 'tS', 'S', [], {stemStartsWith: AFTER_MUTATION});
 
@@ -166,8 +181,15 @@ for (const particle of ['d\'', 'm\'', 'b\'', 'dh\'']) {
     prefix('elision', `${particle}fh`, 'f', [], {stemStartsWith: AFTER_MUTATION});
 }
 
-transform('emphatic', 'emphatic', 'Emphatic suffixes -sa, -se, -san, -sean and -ne on nouns after a possessive, prepositional pronouns and verbs, and the emphatic pronouns: mo theachsa → teach, agamsa → agam, molaimse → molaim, againne → againn, mise → mé, eisean → é.');
-endings('emphatic', [['sa', ''], ['se', ''], ['san', ''], ['sean', ''], ['nne', 'nn']], [], {stemMinLength: 2, stemCharacters: NO_SPACE});
+// The emphatic suffixes. -sa/-se/-san/-sean follow the vowel quality of the
+// word. On the prepositional pronouns they are written out below (agamsa,
+// leatsa, aigesean); otherwise they are read only after the synthetic verb
+// endings -m, -nn and -d (molaimse, mholfainnse, molfadsa), because a rule for
+// every word in -se read brainse as brain and stáitse as stáit. The first
+// person plural -ne is written out (a rule for every word in -nne read rinne
+// as rinn).
+transform('emphatic', 'emphatic', 'Emphatic suffixes -sa, -se, -san, -sean and -ne on prepositional pronouns and verbs, and the emphatic pronouns: agamsa → agam, againne → againn, aigesean → aige, molaimse → molaim, mholfainnse → mholfainn, mise → mé, eisean → é.');
+endings('emphatic', [['msa', 'm'], ['mse', 'm'], ['nnsa', 'nn'], ['nnse', 'nn'], ['dsa', 'd'], ['dse', 'd']], [], {stemMinLength: 2, stemCharacters: NO_SPACE});
 for (const [form, base] of [['mise', 'mé'], ['tusa', 'tú'], ['seisean', 'sé'], ['eisean', 'é'], ['sise', 'sí'], ['ise', 'í'],
     ['sinne', 'sinn'], ['sibhse', 'sibh'], ['siadsan', 'siad'], ['iadsan', 'iad']]) {
     whole('emphatic', form, base, []);
@@ -259,32 +281,69 @@ const VERB_ENDINGS = [
         ['a'], ['e'], ['aí'], ['í'], [''], [''], ['í']],
 ];
 
-const BUA_VOWELS = ['ua', 'ao', 'ó', 'ú', 'á'];
+const BUA_VOWELS = ['ua', 'ao', 'ó', 'ú', 'á', 'eá'];
 const SYNCOPE_BROAD = ['l', 'n', 'r'];
 const SYNCOPE_SLENDER = ['l', 'n', 'r', 's'];
 // First-conjugation verbs of more than one syllable whose ending broadens
 // before an ending that begins with a vowel or f: sábháil (sábhálann),
-// tionóil (tionólann), siúil (siúlann), taispeáin (taispeánann).
+// tionóil (tionólann), siúil (siúlann), taispeáin (taispeánann); before t
+// the -áin, -óil and -úil verbs broaden too (taispeántar, siúltar).
 const DEPALATALISED = [['ál', 'áil'], ['ól', 'óil'], ['úl', 'úil'], ['án', 'áin']];
+const DEPALATALISED_T = [['ól', 'óil'], ['úl', 'úil'], ['án', 'áin']];
+// Other first-conjugation verbs of two syllables broaden their last vowel
+// before every broad ending: adhlaic (adhlacann, d'adhlacamar), diúraic
+// (diúracfaidh), diongaibh (diongabhfaidh), tiomáin (thiomántaí).
+const BROADENING = [['a', 'ai'], ['á', 'ái'], ['ó', 'ói'], ['ú', 'úi']];
 const VOWEL_START = /^[aeiouáéíóúf]/;
+
+// The Munster synthetic past forms in -(e)as and -(a)is are read only with
+// the lenited initial or the d' of the past (mholas, bhrisis, d'ólais,
+// d'fhágas): as plain endings they read the -as nouns and their genitives
+// as verbs (beartas → beart, cleachtais → cleacht, fearas → fear).
+const LENITED_ONLY = new Set(['past-1sg-munster', 'past-2sg-munster']);
+const PAST_INITIALS = [...LENITED, ['d\'', ''], ['d\'fh', 'f']];
+function lenitedEndings(id, pairs, conditionsOut, constraints = {}) {
+    const unique = [...new Map(pairs.filter(([i]) => i !== '').map((p) => [p.join('\t'), p])).values()];
+    if (unique.length === 0) { return; }
+    const groups = EXPANDED ? unique.map((p) => [p]) : [unique];
+    for (const suffixes of groups) {
+        add(id, {type: 'circumfix', prefixes: PAST_INITIALS, suffixes, conditionsIn: [], conditionsOut, ...constraints});
+    }
+}
 
 function verbEndings(id, b1, s1, b2, s2, bua, le, su) {
     const V = ['v'];
+    const endings = LENITED_ONLY.has(id) ? lenitedEndings : plainEndings;
     // First conjugation: the ending is added to the dictionary form.
     endings(id, [...b1, ...s1].map((e) => [e, '']), V, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
-    // Stems in -th lose it before t: caith → caitear, caiteá, caití, caite.
+    // Stems in -th lose it before t (caith → caitear, caiteá, caití), and
+    // stems in -t take one t (docht → dochtar, dochtaí; tit → titear).
     endings(id, [...b1, ...s1].filter((e) => e.startsWith('t')).map((e) => [e, 'th']), V, {stemMinLength: 1, stemCharacters: NO_SPACE, stemEndsWith: VOWEL});
+    endings(id, [...b1, ...s1].filter((e) => e.startsWith('t')).map((e) => [e, 't']), V, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
     endings(id, b1.filter((e) => VOWEL_START.test(e)).flatMap((e) => DEPALATALISED.map(([s, lemma]) => [s + e, lemma])), V, {stemMinLength: 1, stemCharacters: NO_SPACE});
-    // Second conjugation in -aigh and -igh: the ending replaces it.
+    endings(id, b1.filter((e) => e.startsWith('t')).flatMap((e) => DEPALATALISED_T.map(([s, lemma]) => [s + e, lemma])), V, {stemMinLength: 1, stemCharacters: NO_SPACE});
+    for (const [from, to] of BROADENING) {
+        endings(id, b1.map((e) => [e, '']), V, {stemMinLength: 5, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT,
+            stemChange: {from: [from], to, occurrence: 'last', between: CONSONANT}});
+    }
+    // Second conjugation in -aigh and -igh: the ending replaces it. A few
+    // -igh verbs take the broad endings (uimhrigh → uimhraíonn).
     endings(id, [...b2.map((e) => [e, 'aigh']), ...s2.map((e) => [e, 'igh'])], V, {stemMinLength: 2, stemCharacters: NO_SPACE});
+    endings(id, b2.map((e) => [e, 'igh']), V, {stemMinLength: 3, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
     // Syncopated second conjugation: oscl+aíonn → oscail, imr+íonn → imir.
     endings(id, [...SYNCOPE_BROAD.flatMap((c) => b2.map((e) => [c + e, `ai${c}`])), ...SYNCOPE_SLENDER.flatMap((c) => s2.map((e) => [c + e, `i${c}`]))], V,
         {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
+    // Second conjugation that broadens without syncope: freastail →
+    // freastalaíonn, taistil → taistealaíonn.
+    endings(id, [...SYNCOPE_BROAD.flatMap((c) => b2.map((e) => [`a${c}${e}`, `ai${c}`])), ...SYNCOPE_BROAD.flatMap((c) => b2.map((e) => [`ea${c}${e}`, `i${c}`]))], V,
+        {stemMinLength: 3, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
     // Second conjugation ending in a consonant: foghlaimíonn → foghlaim.
     endings(id, s2.map((e) => [e, '']), V, {stemMinLength: 3, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
-    // Monosyllables in -igh.
+    // Monosyllables in -igh: buaigh, meáigh, léigh, suigh, and after a
+    // consonant only (ligh, figh, nigh, dligh) the endings of suigh.
     endings(id, [...BUA_VOWELS.flatMap((v) => bua.map((e) => [v + e, `${v}igh`])), ...le.map((e) => [`é${e}`, 'éigh']), ...su.map((e) => [`u${e}`, 'uigh'])], V,
         {stemMinLength: 1, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
+    endings(id, su.map((e) => [e, 'igh']), V, {stemMinLength: 1, stemCharacters: CONSONANT});
 }
 
 for (const [id, name, description, ...columns] of VERB_ENDINGS) {
@@ -298,17 +357,28 @@ transform('verbal-adjective', 'verbal adjective', 'Verbal adjective (past partic
     endings('verbal-adjective', [['ta', ''], ['tha', ''], ['te', ''], ['the', '']], V, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
     endings('verbal-adjective', [['te', 'th'], ['ta', 'th'], ['fa', 'bh'], ['fa', 'mh']], V, {stemMinLength: 1, stemCharacters: NO_SPACE, stemEndsWith: VOWEL});
     endings('verbal-adjective', [['aithe', 'aigh'], ['ithe', 'igh']], V, {stemMinLength: 2, stemCharacters: NO_SPACE});
+    endings('verbal-adjective', [['aithe', 'igh']], V, {stemMinLength: 3, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
     endings('verbal-adjective', [['artha', 'air'], ['anta', 'ain'], ['alta', 'ail'], ['eartha', 'ir'], ['eanta', 'in'], ['ste', 'is'],
         ['ánta', 'áin'], ['últa', 'úil'], ['ólta', 'óil']], V, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
+    // A broad ending after a slender stem broadens it: tochais → tochasta,
+    // loisc → loiscthe but adhlaic → adhlactha.
+    endings('verbal-adjective', [['sta', 'is'], ['ctha', 'ic']], V, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: '[a]'});
     endings('verbal-adjective', [...BUA_VOWELS.map((v) => [`${v}ite`, `${v}igh`]), ['éite', 'éigh'], ['uite', 'uigh']], V,
         {stemMinLength: 1, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
 }
 
-transform('verbal-noun', 'verbal noun', 'Verbal noun (ag + verbal noun is the progressive): fágáil, feiceáil, déanamh, caitheamh, fanacht, éisteacht, ceartú, míniú, ceannach, oscailt, imirt, labhairt, tarraingt; irregular rá, teacht, dul, fáil, tabhairt, bheith.');
+transform('verbal-noun', 'verbal noun', 'Verbal noun (ag + verbal noun is the progressive): fágáil, feiceáil, déanamh, caitheamh, fanacht, éisteacht, féachaint, leanúint, ceartú, míniú, ceannach, oscailt, imirt, labhairt, tarraingt; irregular rá, teacht, dul, fáil, tabhairt, bheith.');
 {
     const V = ['v'];
-    endings('verbal-noun', [['áil', ''], ['eáil', ''], ['amh', ''], ['eamh', ''], ['acht', ''], ['eacht', '']], V, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
+    endings('verbal-noun', [['áil', ''], ['eáil', ''], ['amh', ''], ['eamh', ''], ['acht', ''], ['eacht', ''], ['aint', ''], ['int', ''], ['úint', ''], ['iúint', '']], V,
+        {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
     endings('verbal-noun', [['ú', 'aigh'], ['iú', 'igh'], ['ach', 'aigh']], V, {stemMinLength: 2, stemCharacters: NO_SPACE});
+    endings('verbal-noun', [['ú', 'igh']], V, {stemMinLength: 3, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
+    // The -adh verbal noun of a slender stem that broadens: loisc → loscadh.
+    for (const [from, to] of [...BROADENING, ['o', 'oi'], ['u', 'ui']]) {
+        endings('verbal-noun', [['adh', '']], V, {stemMinLength: 4, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT,
+            stemChange: {from: [from], to, occurrence: 'last', between: CONSONANT}});
+    }
     suffix('verbal-noun', 't', '', V, {stemMinLength: 3, stemCharacters: NO_SPACE, stemEndsWith: '{beforeVerbalNounT}'});
 }
 
@@ -553,7 +623,17 @@ for (const [lemma, tenses] of Object.entries(IRREGULAR_VERBS)) {
         for (const form of forms) { whole(id, form, lemma, ['v']); }
     }
 }
+// The relative of the present in -(e)as after an initial that cannot be
+// lenited, which the lenited-only Munster rules do not read: mar a leanas
+// ("as follows").
+whole('past-1sg-munster', 'leanas', 'lean', ['v']);
 for (const [form, lemma] of IRREGULAR_VERBAL_NOUNS) { whole('verbal-noun', form, lemma, ['v']); }
+// Eclipsed dependent forms of bí and déan whose unmutated form is also a
+// noun (fuil "blood", dearna "palm"): written out, one step from the verb,
+// so that a dictionary without its own entry for them shows the verb first
+// (whole-word rules are found before the mutation rules, 7.4).
+whole('present', 'bhfuil', 'bí', ['v']);
+whole('past', 'ndearna', 'déan', ['v']);
 for (const [lemma, stem, ids] of IRREGULAR_STEMS) {
     for (const id of ids) {
         const row = VERB_ENDINGS.find((r) => r[0] === id);
@@ -567,14 +647,14 @@ for (const [lemma, stem, ids] of IRREGULAR_STEMS) {
 // the plural of first-declension nouns, their vocative, and the genitive
 // singular masculine of adjectives (an fhir mhóir). -ach → -aigh and
 // -each → -igh likewise (Sasanach → Sasanaigh, coileach → coiligh).
-const SLENDER = [['ai', 'a'], ['ái', 'á'], ['oi', 'o'], ['ói', 'ó'], ['ui', 'u'], ['úi', 'ú'], ['ei', 'ea'], ['ei', 'e'], ['éi', 'éa'], ['i', 'ea'], ['í', 'ío']];
+const SLENDER = [['ai', 'a'], ['ái', 'á'], ['oi', 'o'], ['ói', 'ó'], ['ui', 'u'], ['úi', 'ú'], ['ei', 'ea'], ['ei', 'e'], ['éi', 'éa'], ['i', 'ea'], ['i', 'io'], ['í', 'ío']];
 const changeLast = (from, to) => ({from: [from], to, occurrence: 'last', between: CONSONANT});
 
-transform('slender', 'genitive / plural / vocative', 'Slender form of a first-declension noun or adjective: genitive singular (an bháid, an fhir, an Sasanaigh), plural (na báid, na fir, éin), vocative (a Sheáin, a fhir) and the genitive masculine of adjectives (an fhir mhóir): báid → bád, fir → fear, éin → éan, poist → post, Sasanaigh → Sasanach.');
+transform('slender', 'genitive / plural / vocative', 'Slender form of a first-declension noun or adjective: genitive singular (an bháid, an fhir, an Sasanaigh), plural (na báid, na fir, éin), vocative (a Sheáin, a fhir) and the genitive masculine of adjectives (an fhir mhóir): báid → bád, fir → fear, éin → éan, poist → post, Sasanaigh → Sasanach, Eiritréigh → Eiritréach.');
 for (const [from, to] of SLENDER) {
     suffix('slender', '', '', ['n', 'adj'], {stemCharacters: NO_SPACE, stemEndsWith: CONSONANT, stemChange: changeLast(from, to)});
 }
-endings('slender', [['aigh', 'ach'], ['igh', 'each']], ['n', 'adj'], {stemMinLength: 2, stemCharacters: NO_SPACE});
+endings('slender', [['aigh', 'ach'], ['igh', 'each'], ['éigh', 'éach']], ['n', 'adj'], {stemMinLength: 2, stemCharacters: NO_SPACE});
 
 transform('genitive', 'genitive', 'Genitive singular of the second to fifth declensions: -e with a slender stem (sráide, bróige, coise, láimhe, gréine), -aí and -í for -ach and -each (gealaí, báistí), the broad endings of agent nouns (múinteora, dochtúra, búistéara, feola, bliana), -ach, -rach, -ar and -n (cathrach, traenach, athar, teangan, carad, Éireann), and the irregular nouns (tí, lae, mná, Dé, mara, fola).');
 {
@@ -584,9 +664,22 @@ transform('genitive', 'genitive', 'Genitive singular of the second to fifth decl
         suffix('genitive', 'e', '', N, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT, stemChange: changeLast(from, to)});
     }
     endings('genitive', [['aí', 'ach'], ['í', 'each'], ['éara', 'éir']], N, {stemMinLength: 2, stemCharacters: NO_SPACE});
-    endings('genitive', [['ra', 'ir'], ['la', 'il'], ['na', 'in'], ['nach', 'in'], ['lach', 'il'], ['rach', 'ir']], N, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: BROAD_VOWEL});
-    endings('genitive', [['rach', 'air'], ['each', ''], ['ar', 'air'], ['ár', 'áir'], ['an', 'ain'], ['ann', 'ainn'], ['an', 'a'], ['ag', 'aig']], N,
+    endings('genitive', [['ra', 'ir'], ['la', 'il'], ['na', 'in']], N, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: BROAD_VOWEL});
+    // -nach, -lach and -rach after a broad vowel (traein → traenach, beoir →
+    // beorach) are written out: as rules they read -(e)ach adjectives as the
+    // genitive of a noun (réigiúnach → réigiúin, séasúrach → séasúir).
+    for (const [form, lemma] of [['traenach', 'traein'], ['beorach', 'beoir'], ['corónach', 'coróin']]) { whole('genitive', form, lemma, N); }
+    endings('genitive', [['rach', 'air'], ['reach', 'ir'], ['ar', 'air'], ['ár', 'áir'], ['an', 'ain'], ['ann', 'ainn'], ['an', 'a'], ['ag', 'aig']], N,
         {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
+    // The genitive of a verbal noun is its verbal adjective: an athraithe,
+    // an mholta, an chinnte, na briste.
+    endings('genitive', [['aithe', 'ú'], ['ithe', 'iú'], ['ta', 'adh'], ['tha', 'adh'], ['te', 'eadh'], ['the', 'eadh']], N,
+        {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
+    endings('genitive', [['fa', 'bh'], ['fa', 'mh']], N, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: VOWEL});
+    // Verbal nouns in -áil, -úil, -óil and -aim: cothabháil → cothabhála,
+    // foghlaim → foghlama.
+    endings('genitive', [['ála', 'áil'], ['úla', 'úil'], ['óla', 'óil'], ['ama', 'aim']], N, {stemMinLength: 2, stemCharacters: NO_SPACE});
+    endings('genitive', [['anta', 'aint']], N, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
     endings('genitive', [['ann', ''], ['ún', 'ú'], ['ad', 'a'], ['ead', 'e']], N, {stemMinLength: 3, stemCharacters: NO_SPACE});
     for (const [form, lemma] of [['tí', 'teach'], ['lae', 'lá'], ['Dé', 'Dia'], ['dí', 'deoch'], ['mara', 'muir'], ['fola', 'fuil'], ['meala', 'mil'],
         ['olla', 'olann'], ['scine', 'scian'], ['sléibhe', 'sliabh'], ['leapa', 'leaba'], ['talún', 'talamh'], ['míosa', 'mí'], ['oibre', 'obair'],
@@ -595,38 +688,69 @@ transform('genitive', 'genitive', 'Genitive singular of the second to fifth decl
     }
 }
 
-transform('noun-a', 'plural / genitive', 'The ending -a: plural of many nouns (bróga, cosa, lámha, fuinneoga, úlla) and the genitive singular of the third declension (ama, srutha, locha, Gaeltachta).');
+transform('noun-a', 'plural / genitive', 'The ending -a: plural of many nouns (bróga, cosa, lámha, fuinneoga, úlla, tosca) and the genitive singular of the third declension (ama, srutha, locha, Gaeltachta, sleachta).');
 suffix('noun-a', 'a', '', ['n'], {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
+// A slender final consonant broadens before -a: toisc → tosca, sliocht → sleachta.
+for (const [from, to] of [['o', 'oi'], ['u', 'ui'], ['a', 'ai'], ['á', 'ái'], ['ó', 'ói'], ['ú', 'úi'], ['ea', 'io'], ['ea', 'ei']]) {
+    suffix('noun-a', 'a', '', ['n'], {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT, stemChange: changeLast(from, to)});
+}
 
-transform('plural', 'plural', 'Strong plurals: -(e)anna (scoileanna, amanna), -í (cailíní, múinteoirí, páistí), -aí (daltaí, rudaí), -(e)acha (teangacha, cathracha, litreacha), -te and -the (bailte, coillte, ríthe), -ta (scéalta), -anta (oícheanta, uaireanta), -nna (míonna), and the irregular plurals (mná, daoine, tithe, laethanta, cairde, ba).');
+transform('plural', 'plural', 'Strong plurals: -(e)anna (scoileanna, amanna), -í (cailíní, múinteoirí, páistí), -aí (daltaí, rudaí), -(e)acha (teangacha, cathracha, litreacha), -te and -the (bailte, coillte, ríthe), -ta (scéalta), -anta (oícheanta, uaireanta), -nna (míonna), -ite (sluaite), -uithe (athruithe), -taí and -tí of verbal nouns (moltaí, cinntí), and the irregular plurals (mná, daoine, tithe, laethanta, cairde, ba).');
 {
     const N = ['n'];
-    endings('plural', [['anna', ''], ['eanna', ''], ['í', ''], ['í', 'e'], ['aí', 'a'], ['aí', ''], ['acha', 'a'], ['eacha', ''], ['neacha', ''],
-        ['racha', 'air'], ['reacha', 'ir'], ['ithe', 'í'], ['te', ''], ['te', 'e'], ['ta', '']], N, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
-    endings('plural', [['the', ''], ['nna', '']], N, {stemMinLength: 1, stemCharacters: NO_SPACE, stemEndsWith: VOWEL});
-    endings('plural', [['anta', ''], ['eanta', '']], N, {stemMinLength: 2, stemCharacters: NO_SPACE});
+    // -eacha, -neacha and a bare -acha are left out: they read the plural
+    // of -(e)ach adjectives as nouns (réigiúnacha → réigiún, straitéiseacha
+    // → straitéis, leictreonacha → leictreon), which adj-plural reads right.
+    endings('plural', [['anna', ''], ['eanna', ''], ['í', ''], ['í', 'e'], ['aí', 'a'], ['aí', ''], ['acha', 'a'],
+        ['racha', 'air'], ['reacha', 'ir'], ['ithe', 'í'], ['te', ''], ['te', 'e'], ['ta', ''], ['rí', 'ir'],
+        ['taí', 'adh'], ['thaí', 'adh'], ['tí', 'eadh'], ['uithe', 'ú'], ['úlacha', 'úil'], ['álacha', 'áil'], ['ánacha', 'áin'], ['ónacha', 'óin']], N,
+    {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
+    endings('plural', [['the', ''], ['nna', ''], ['ite', ''], ['thaí', ''], ['anta', '']], N, {stemMinLength: 1, stemCharacters: NO_SPACE, stemEndsWith: VOWEL});
+    endings('plural', [['onna', '']], N, {stemMinLength: 1, stemCharacters: NO_SPACE, stemEndsWith: '[í]'});
+    // -eacha after l, m, n or r (foirm → foirmeacha, ceolchoirm →
+    // ceolchoirmeacha, muintir → muintireacha) and -neacha after m (ainm →
+    // ainmneacha); after other consonants -eacha is mostly the plural of an
+    // -each adjective (straitéiseacha).
+    endings('plural', [['eacha', '']], N, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: '[lmnr]'});
+    endings('plural', [['neacha', '']], N, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: '[m]'});
+    // Compounds of duine: seandaoine → seanduine, andaoine → anduine.
+    suffix('plural', 'daoine', 'duine', N, {stemMinLength: 2, stemCharacters: NO_SPACE});
+    // -eanta after r (uair → uaireanta); -anta after a vowel is above
+    // (oíche → oícheanta). After other consonants -anta is the genitive of an
+    // -aint verbal noun (cosaint → cosanta), not a plural (cosanta is not cos).
+    endings('plural', [['eanta', '']], N, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: '[r]'});
     for (const [form, lemma] of [['mná', 'bean'], ['ban', 'bean'], ['daoine', 'duine'], ['tithe', 'teach'], ['laethanta', 'lá'], ['ba', 'bó'],
         ['cairde', 'cara'], ['blianta', 'bliain'], ['bliana', 'bliain'], ['aibhneacha', 'abhainn'], ['leapacha', 'leaba'], ['uibheacha', 'ubh'],
         ['caoirigh', 'caora'], ['fiacla', 'fiacail'], ['doirse', 'doras'], ['soilse', 'solas'], ['bóithre', 'bóthar'], ['tailte', 'talamh'],
         ['aithreacha', 'athair'], ['máithreacha', 'máthair'], ['oibreacha', 'obair'], ['sceana', 'scian'], ['sléibhte', 'sliabh'],
-        ['déithe', 'dia'], ['nithe', 'ní'], ['slite', 'slí'], ['deirfiúracha', 'deirfiúr'], ['uaire', 'uair'], ['cinn', 'ceann']]) {
+        ['déithe', 'dia'], ['nithe', 'ní'], ['slite', 'slí'], ['deirfiúracha', 'deirfiúr'], ['uaire', 'uair'], ['cinn', 'ceann'],
+        ['guaillí', 'gualainn'], ['troithe', 'troigh'], ['foirne', 'foireann'], ['ranna', 'roinn'], ['ranna', 'rann']]) {
         whole('plural', form, lemma, N);
     }
 }
 
-transform('adj-plural', 'plural', 'Plural of an adjective: móra, beaga, deasa, tábhachtacha, díreacha.');
+transform('adj-plural', 'plural', 'Plural of an adjective: móra, beaga, deasa, tábhachtacha, díreacha; with syncope ramhra, folmha, socra, láidre.');
 endings('adj-plural', [['a', '']], ['adj'], {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
 endings('adj-plural', [['acha', 'ach'], ['eacha', 'each']], ['adj'], {stemMinLength: 2, stemCharacters: NO_SPACE});
+endings('adj-plural', [['ra', 'ar'], ['mha', 'amh'], ['ra', 'air'], ['re', 'ir']], ['adj'], {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
 
-transform('adj-e', 'comparative / plural / genitive feminine', 'An adjective in -e or -úla: the comparative and superlative (níos óige, is glaine), the genitive singular feminine (na mná óige) and, for slender stems, the plural (glice, maithe): óige → óg, glaine → glan, gile → geal, deise → deas, tábhachtaí → tábhachtach, dírí → díreach, suimiúla → suimiúil, láidre → láidir, deacra → deacair, milse → milis.');
+transform('adj-e', 'comparative / plural / genitive feminine', 'An adjective in -e or -úla: the comparative and superlative (níos óige, is glaine), the genitive singular feminine (na mná óige) and, for slender stems, the plural (glice, maithe): óige → óg, glaine → glan, gile → geal, mine → mion, deise → deas, tábhachtaí → tábhachtach, dírí → díreach, suimiúla → suimiúil, láidre → láidir, deacra → deacair, milse → milis.');
 {
     const A = ['adj'];
     suffix('adj-e', 'e', '', A, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
-    for (const [from, to] of [['ai', 'a'], ['ái', 'á'], ['oi', 'o'], ['ói', 'ó'], ['ui', 'u'], ['úi', 'ú'], ['ei', 'ea'], ['éi', 'éa'], ['i', 'ea'], ['í', 'ío']]) {
+    for (const [from, to] of [['ai', 'a'], ['ái', 'á'], ['oi', 'o'], ['ói', 'ó'], ['ui', 'u'], ['úi', 'ú'], ['ei', 'ea'], ['éi', 'éa'], ['i', 'ea'], ['i', 'io'], ['í', 'ío']]) {
         suffix('adj-e', 'e', '', A, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT, stemChange: changeLast(from, to)});
     }
     endings('adj-e', [['úla', 'úil'], ['aí', 'ach'], ['í', 'each']], A, {stemMinLength: 2, stemCharacters: NO_SPACE});
     endings('adj-e', [['re', 'ir'], ['ra', 'air'], ['se', 'is']], A, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
+    // Syncope: the vowel of the last syllable drops before -e (daingean →
+    // daingne, íseal → ísle), and a broad stem becomes slender (folamh →
+    // foilmhe, uasal → uaisle).
+    endings('adj-e', [['ne', 'ean'], ['le', 'eal'], ['re', 'ear']], A, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
+    for (const [from, to] of [['oi', 'o'], ['ai', 'a'], ['ui', 'u']]) {
+        endings('adj-e', [['mhe', 'amh'], ['le', 'al'], ['ne', 'an'], ['re', 'ar'], ['se', 'as']], A,
+            {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT, stemChange: changeLast(from, to)});
+    }
 }
 
 transform('comparative', 'comparative', 'Irregular comparatives and superlatives (níos mó, is fearr): mó → mór, lú → beag, fearr → maith, measa → olc, sine → sean, faide → fada, giorra → gearr, teo → te, fusa → furasta, túisce → luath, áille → álainn, ísle → íseal, uaisle → uasal.');
@@ -670,6 +794,15 @@ for (const [id, name, description] of PERSONS) { transform(id, name, description
 for (const [preposition, forms] of Object.entries(PREPOSITIONAL_PRONOUNS)) {
     forms.forEach((form, person) => {
         if (form !== '' && form !== preposition) { whole(PERSONS[person][0], form, preposition, []); }
+        if (form === '') { return; }
+        // Emphatic forms: -ne for the first person plural (againne, linne),
+        // -san/-sean for the third person masculine and plural, -sa/-se for
+        // the others, broad after a broad vowel or consonant (agamsa, acusan)
+        // and slender after a slender one (duitse, aigesean).
+        const slender = /[eéií][^aeiouáéíóú]*$/.test(form);
+        const ending = person === 4 && form.endsWith('nn') ? 'e'
+            : person === 2 || person === 6 ? (slender ? 'sean' : 'san') : (slender ? 'se' : 'sa');
+        whole('emphatic', form + ending, form, []);
     });
 }
 
@@ -677,7 +810,21 @@ transform('copula', 'copula', 'Forms of the copula is: ba (past and conditional)
 for (const form of ['ba', 'níorbh', 'arbh', 'gurbh', 'nárbh', 'cérbh', 'ab', 'gurb']) { whole('copula', form, 'is', []); }
 
 // --- Output ------------------------------------------------------------------------------
-const out = {schema: 1, conditions, transforms: transforms.filter((t) => t.rules.length > 0)};
+// Rules that match the same ending apply in file order, and with equal traces
+// the first one found names a result (traceSelection "shortest"). Noun and
+// adjective forms are far more frequent in text than the verb forms they
+// share endings with (faisnéise, the genitive of faisnéis, is also its
+// present subjunctive), so the nominal transforms come before the verb
+// endings; the mutations and the irregular forms keep their place first.
+const NOMINAL = ['adj-e', 'adj-plural', 'comparative', 'plural', 'noun-a', 'slender', 'genitive'];
+const group = (t) => (['past', 'lenition', 'eclipsis', 'h-prefix', 't-prefix', 'elision', 'emphatic'].includes(t.id) ? 0 : NOMINAL.includes(t.id) ? 1 : 2);
+// Within the nominal transforms: an adjective reading before a noun reading
+// of the same ending (thábhachtaí is tábhachtach, not a plural of
+// tábhacht), and a plural before a genitive (seirbhísí is the plural of
+// seirbhís, not the genitive of seirbhíseach).
+const rank = (t) => (NOMINAL.includes(t.id) ? NOMINAL.indexOf(t.id) : 0);
+const ordered = transforms.map((t, i) => [t, i]).sort(([a, i], [b, j]) => group(a) - group(b) || rank(a) - rank(b) || i - j).map(([t]) => t);
+const out = {schema: 1, conditions, transforms: ordered.filter((t) => t.rules.length > 0)};
 writeFileSync(OUT, formatTransforms(out));
 const rules = out.transforms.reduce((n, t) => n + t.rules.length, 0);
 const expanded = out.transforms.reduce((n, t) => n + t.rules.reduce((m, r) => m + (r.suffixes ? r.suffixes.length : 1), 0), 0);
