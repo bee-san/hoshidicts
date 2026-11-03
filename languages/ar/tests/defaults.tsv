@@ -14,3 +14,6 @@ derivation off	0	مدرسة	درس	*	*
 derivation off	0	إقامة	أقام	*	*
 derivation off	1	يستخدم	استخدم	v	presentHe
 derivation off	1	استخدمنا	استخدم	v	pastWe
+final ya off	0	حتي	حتى	n	*
+final ya off	1	إلي	إلى	*	p1s
+final ya off	1	يبقي	بقى	v	presentHe

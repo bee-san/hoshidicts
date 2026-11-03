@@ -236,26 +236,28 @@ transform('pluralFem', 'plural (ـات)', 'The feminine sound plural ending ـا
 // the dev pool and the 10,000 most frequent words of the subtitle list;
 // فُعول, فِعال and فَعَلة are left out because they read verbal nouns,
 // participles and singulars (خروج -> خرج, مكان -> مكن, ليلة -> لايل).
+// They do not read the article as stem letters (العناء is not العين); a
+// definite plural loses الـ first (الأطفال -> أطفال -> طفل).
 {
     const CONS = RADICALS;
     const DROP_ALIF = (min) => ({from: ['ا'], to: '', occurrence: 'last', between: STEM, betweenMinLength: min});
     transform('brokenPlural', 'plural (broken)', 'A broken plural whose pattern shows its singular: أطفال (طفل), وزراء (وزير), مكاتب (مكتب), مشاكل (مشكلة), شوارع (شارع), قواعد (قاعدة), رسائل (رسالة), حقائق (حقيقة), تفاصيل (تفصيل), أسلحة (سلاح).', [
         // أفعال -> فعل: أطفال, أخبار, أعمال, أولاد.
         // Not after a middle و or ي, whose singular has ا (أبواب: باب, not بوب).
-        cross([['أ', '']], CONS.map((c) => ['ا' + c, c]), {into: N_IN, out: ['n'], extra: {stemNotEndsWith: '[وي]'}}),
+        cross([['أ', '']], CONS.map((c) => ['ا' + c, c]), {into: N_IN, out: ['n'], extra: {...NOT_AL, stemNotEndsWith: '[وي]'}}),
         // فعلاء -> فعيل: وزراء, عملاء, غرباء, فقراء.
-        cross([['', '']], CONS.map((c) => [c + 'اء', 'ي' + c]), {into: N_IN, out: ['n']}),
+        cross([['', '']], CONS.map((c) => [c + 'اء', 'ي' + c]), {into: N_IN, out: ['n'], extra: NOT_AL}),
         // مفاعل -> مفعل, مفعلة: مكاتب, مشاكل, ملابس.
-        cross([['م', 'م']], [['', ''], ['', 'ة']], {min: 3, into: N_IN, out: ['n'], extra: {stemChange: DROP_ALIF(2)}}),
+        cross([['م', 'م']], [['', ''], ['', 'ة']], {min: 3, into: N_IN, out: ['n'], extra: {...NOT_AL, stemChange: DROP_ALIF(2)}}),
         // فواعل -> فاعل, فاعلة: شوارع, هواتف, قواعد, نوافذ.
-        suffix('', '', {min: 4, into: N_IN, out: ['n'], extra: {stemChange: {from: ['وا'], to: 'ا', occurrence: 'last', between: STEM, betweenMinLength: 2}}}),
-        suffix('', 'ة', {min: 4, into: N_IN, out: ['n'], extra: {stemChange: {from: ['وا'], to: 'ا', occurrence: 'last', between: STEM, betweenMinLength: 2}}}),
+        suffix('', '', {min: 4, into: N_IN, out: ['n'], extra: {...NOT_AL, stemChange: {from: ['وا'], to: 'ا', occurrence: 'last', between: STEM, betweenMinLength: 2}}}),
+        suffix('', 'ة', {min: 4, into: N_IN, out: ['n'], extra: {...NOT_AL, stemChange: {from: ['وا'], to: 'ا', occurrence: 'last', between: STEM, betweenMinLength: 2}}}),
         // فعائل -> فعيلة, فعالة, فعيل: رسائل, حقائق, نتائج, وسائل.
-        suffixes(CONS.flatMap((c) => [['ائ' + c, 'ي' + c + 'ة'], ['ائ' + c, 'ا' + c + 'ة'], ['ائ' + c, 'ي' + c]]), {into: N_IN, out: ['n']}),
+        suffixes(CONS.flatMap((c) => [['ائ' + c, 'ي' + c + 'ة'], ['ائ' + c, 'ا' + c + 'ة'], ['ائ' + c, 'ي' + c]]), {into: N_IN, out: ['n'], extra: NOT_AL}),
         // تفاعيل -> تفعيل: تفاصيل, تقارير, تكاليف.
-        cross([['ت', 'ت']], [['', '']], {min: 4, into: N_IN, out: ['n'], extra: {stemChange: DROP_ALIF(3)}}),
+        cross([['ت', 'ت']], [['', '']], {min: 4, into: N_IN, out: ['n'], extra: {...NOT_AL, stemChange: DROP_ALIF(3)}}),
         // أفعلة -> فعال: أسلحة, أجهزة, أطعمة.
-        cross([['أ', '']], CONS.map((c) => [c + 'ة', 'ا' + c]), {into: N_IN, out: ['n'], extra: {stemNotEndsWith: '[وي]'}}),
+        cross([['أ', '']], CONS.map((c) => [c + 'ة', 'ا' + c]), {into: N_IN, out: ['n'], extra: {...NOT_AL, stemNotEndsWith: '[وي]'}}),
     ]);
 }
 

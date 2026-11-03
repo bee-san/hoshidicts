@@ -177,6 +177,7 @@
       {
         "id": "convertYaaToAlifMaqsura",
         "name": "Convert final Yaa to Alif Maqsura",
+        "optional": true,
         "variants": [
           [
             {
@@ -271,10 +272,21 @@
       "type": "boolean",
       "default": false,
       "label": "Read a final ه as ة",
-      "description": "Informal writing often spells ة as ه (مدرسه for مدرسة). With this on, a word ending in ه is also looked up with ة, after the readings of ه as a pronoun.",
+      "description": "Informal writing often spells ة as ه (مدرسه for مدرسة). With this on, a word ending in ه is also looked up with ة, after its readings of ه as a pronoun.",
       "group": "lookup",
       "effect": {
         "preprocessor": "convertHaToTaMarbuta"
+      }
+    },
+    {
+      "id": "informalFinalYa",
+      "type": "boolean",
+      "default": false,
+      "label": "Read a final ي as ى",
+      "description": "Informal writing often spells a final ى as ي (حتي for حتى, إلي for إلى). With this on, a word ending in ي is also looked up with ى, after its readings as written (ي as \"my\" or a verb ending).",
+      "group": "lookup",
+      "effect": {
+        "preprocessor": "convertYaaToAlifMaqsura"
       }
     },
     {
