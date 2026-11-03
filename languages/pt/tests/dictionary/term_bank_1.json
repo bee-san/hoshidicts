@@ -66,5 +66,15 @@
   ["rapaz", "", "n masc", "", 0, ["boy"], 65, ""],
   ["rapa", "", "n fem", "", 0, ["scrapings"], 66, ""],
   ["franco", "", "adj", "", 0, ["frank; French"], 67, ""],
-  ["casaco", "", "n masc", "", 0, ["coat"], 68, ""]
+  ["casaco", "", "n masc", "", 0, ["coat"], 68, ""],
+  ["o que", "", "pron", "", 0, ["what"], 69, ""],
+  ["a gente", "", "pron", "", 0, ["we, us"], 70, ""],
+  ["gente", "", "n fem", "", 0, ["people"], 71, ""],
+  ["o", "", "artic", "", 0, ["the"], 72, ""],
+  ["a", "", "artic", "", 0, ["the"], 73, ""],
+  ["me", "", "pron", "", 0, ["me"], 74, ""],
+  ["valer a pena", "", "v", "", 0, ["to be worth it"], 75, ""],
+  ["valer", "", "v", "", 0, ["to be worth"], 76, ""],
+  ["valeu a pena", "", "non-lemma", "", 0, [["valer a pena", ["third-person singular indicative preterite"]]], 77, ""],
+  ["pena", "", "n fem", "", 0, ["feather; pity"], 78, ""]
 ]
