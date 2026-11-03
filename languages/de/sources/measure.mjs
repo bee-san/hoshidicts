@@ -3,7 +3,8 @@
 // The lookup measurements of README.md (Measurements). Not run by any test.
 // Each rule set is loaded from a temporary copy of the pack whose
 // transforms.json is that file, and looked up with sources/lookup-batch.cpp
-// as a host's hover does: 16 results, scan length 16, no language options.
+// as a host's hover does: 16 results, scan length 16 (--scan N changes it), no
+// language options.
 //
 //   node languages/de/sources/measure.mjs frequent <inputs dir> <unimorph deu> <dictionary> <transforms.json>... [--batch <lookup-batch>] [--show N]
 //   node languages/de/sources/measure.mjs text <inputs dir> <unimorph deu> <dictionary> <name> <transforms.json>... [--batch <lookup-batch>] [--dump <file>]
@@ -82,7 +83,9 @@ const option = (name, fallback) => (args.includes(name) ? args[args.indexOf(name
 const batch = option('--batch', 'build/lookup-batch-de');
 const show = Number(option('--show', '0'));
 const dump = option('--dump', null);
-const positional = args.filter((a, i) => !a.startsWith('--') && !['--batch', '--show', '--dump'].includes(args[i - 1]));
+// The scan length in code points (a host's setting; 16 by default, as Yomitan's).
+const scan = option('--scan', '16');
+const positional = args.filter((a, i) => !a.startsWith('--') && !['--batch', '--show', '--dump', '--scan'].includes(args[i - 1]));
 const [mode, inputs, unimorph, dictionary, ...rest] = positional;
 const lower = (s) => s.toLowerCase().replaceAll('\u2019', "'");
 const lines = (file) => readFileSync(file, 'utf8').split('\n').filter(Boolean).map((l) => l.split('\t'));
@@ -93,7 +96,7 @@ async function lookups(transformsFile, input, onAnswer) {
     try {
         cpSync(PACK, join(temp, 'de'), {recursive: true});
         writeFileSync(join(temp, 'de', 'transforms.json'), readFileSync(transformsFile));
-        const child = spawn(batch, [temp, 'de', dictionary, '16', '16'], {stdio: ['pipe', 'pipe', 'inherit']});
+        const child = spawn(batch, [temp, 'de', dictionary, '16', scan], {stdio: ['pipe', 'pipe', 'inherit']});
         input.pipe(child.stdin);
         let index = 0;
         for await (const line of createInterface({input: child.stdout, crlfDelay: Infinity})) {
