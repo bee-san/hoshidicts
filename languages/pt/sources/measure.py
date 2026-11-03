@@ -5,6 +5,7 @@
     python3 measure.py frequent <lookup-batch> <languages dir> <wty-pt-en.zip> <imported wty-pt-en> <FrequencyWords list> [--top 10000] [--out <file>]
     python3 measure.py text     <lookup-batch> <languages dir> <wty-pt-en.zip> <imported wty-pt-en> <text>... [--sample 60] [--out <file>]
     python3 measure.py phrases  <lookup-batch> <languages dir> <wty-pt-en.zip> <imported wty-pt-en> <por_sentences.tsv> [--out <file>]
+    python3 measure.py homographs <lookup-batch> <languages dir> <wty-pt-en.zip> <imported wty-pt-en> <FrequencyWords list>... [--out <file>]
 
 <lookup-batch> is languages/en/sources/lookup-batch.cpp built as its header
 says: Lookup::lookup with 16 results, scan length 16 and no options, as a
@@ -26,6 +27,9 @@ host's hover. A result is visible unless all its glossaries are form-of rows
   the lookup also lists, and the first lemma's citation form is at least ten
   times rarer in the frequency lists (--freq) than that other lemma's: `sua`
   shown as suar (to sweat) before seu. The frequent mode uses its own list.
+  An adjective that the dictionary also gives as the other lemma's past
+  participle is not counted against it (falada shown as falado, then falar):
+  the participle's feminine and plural are adjectives or passives.
 
 frequent: the list's first <top> words; a word counts as reached when a
 deinflection of it (hoshidicts-cli deinflect, next to lookup-batch) is in its
@@ -38,6 +42,14 @@ article or auxiliary is followed by a word, looked up from the pronoun,
 article or auxiliary and from the word after it (each with the rest of the
 sentence), reported by kind of word before; and every hyphenated verb form
 with a pronoun.
+
+homographs: the candidates of the preferred readings in build-own.mjs, with
+the first visible lemma of each. (a) Words in -a whose rows name an -o
+adjective or noun as its feminine and an -ar verb's present or imperative:
+the adjective's score is the frequency of the masculine plural (-os), the
+verb's that of its infinitive, -ou, -ando, -am, -ei and -ava forms, summed
+over the lists. (b) Forms whose rows name two verbs of one stem (unar and
+unir): flagged when the first is ten times rarer than the other.
 """
 import argparse
 import json
@@ -83,6 +95,19 @@ def load_dictionary(zip_path):
     return refs, lemmas
 
 
+def load_participles(zip_path):
+    """(form, verb) for each row that gives a form as a verb's past participle."""
+    z = zipfile.ZipFile(zip_path)
+    out = set()
+    for name in sorted(n for n in z.namelist() if n.startswith('term_bank')):
+        for row in json.loads(z.read(name)):
+            if 'non-lemma' in row[2].split():
+                for d in row[5]:
+                    if isinstance(d, list) and len(d) == 2 and any('participle' in why for why in d[1]):
+                        out.add((row[0], d[0]))
+    return out
+
+
 def norm(text):
     return unicodedata.normalize('NFKC', text).lower()
 
@@ -98,10 +123,11 @@ def read_freq(paths):
 
 
 class Judge:
-    def __init__(self, refs, lemmas, transform_ids=(), freq=None):
+    def __init__(self, refs, lemmas, transform_ids=(), freq=None, participles=()):
         self.refs, self.lemmas = refs, lemmas
         self.transform_ids = set(transform_ids)
         self.freq = freq or {}
+        self.participles = set(participles)
 
     def l1(self, text):
         out = set()
@@ -148,7 +174,8 @@ class Judge:
         if not self.freq or not any(t in self.transform_ids for t in result['trace']):
             return False
         named = self.l1(result['matched'])
-        others = {r['expression'] for r in answer['results'] if not r['formOf'] and r['expression'] != result['expression'] and r['expression'] in named}
+        others = {r['expression'] for r in answer['results'] if not r['formOf'] and r['expression'] != result['expression'] and r['expression'] in named
+                  and (result['expression'], r['expression']) not in self.participles}
         if not others:
             return False
         first = self.freq.get(norm(result['expression']), 0)
@@ -312,9 +339,59 @@ def phrases(args, judge):
         [judge_hovers(args, judge, enclitic, 'verb forms with an attached pronoun')]
 
 
+def load_reasons(zip_path):
+    """form -> {(lemma, reason)} from the form-of rows."""
+    z = zipfile.ZipFile(zip_path)
+    out = defaultdict(set)
+    for name in sorted(n for n in z.namelist() if n.startswith('term_bank')):
+        for row in json.loads(z.read(name)):
+            for d in row[5]:
+                if isinstance(d, list) and len(d) == 2 and isinstance(d[0], str):
+                    out[row[0]].add((d[0], ' '.join(d[1])))
+    return out
+
+
+def homographs(args, judge):
+    reasons = load_reasons(args.wty)
+    freq = read_freq(args.inputs)
+    feminine, verbs = {}, {}
+    for form, rows in reasons.items():
+        stem = form[:-1]
+        if form.endswith('a') and len(form) >= 4 \
+                and any(l == stem + 'o' and 'femin' in why for l, why in rows) \
+                and any(l == stem + 'ar' and ('present' in why or 'imperative' in why) for l, why in rows):
+            feminine[form] = stem
+        by_stem = defaultdict(set)
+        for lemma, _ in rows:
+            if len(lemma) > 3 and lemma[-2:] in ('ar', 'er', 'ir'):
+                by_stem[lemma[:-2]].add(lemma)
+        pair = next((sorted(v) for v in by_stem.values() if len(v) >= 2), None)
+        if pair:
+            verbs[form] = pair
+    words = sorted(set(feminine) | set(verbs))
+    firsts = {}
+    for answer in lookups(args.batch, args.languages, args.imported, words):
+        first = first_visible(answer)
+        firsts[answer['text']] = first['expression'] if first else None
+    a = []
+    for form, stem in feminine.items():
+        adjective = freq.get(stem + 'os', 0)
+        verb = sum(freq.get(stem + e, 0) for e in ('ar', 'ou', 'ando', 'am', 'ei', 'ava'))
+        a.append({'form': form, 'count': freq.get(form, 0), 'adjective': stem + 'o', 'adjectiveScore': adjective,
+                  'verb': stem + 'ar', 'verbScore': verb, 'proxy': 'adjective' if adjective > verb else 'verb', 'first': firsts.get(form)})
+    b = []
+    for form, pair in verbs.items():
+        first = firsts.get(form)
+        best = max(pair, key=lambda v: freq.get(v, 0))
+        rarer = first in pair and freq.get(best, 0) >= 10 * max(freq.get(first, 0), 1)
+        b.append({'form': form, 'count': freq.get(form, 0), 'verbs': {v: freq.get(v, 0) for v in pair}, 'first': first, 'rarerFirst': rarer})
+    key = lambda x: (-x['count'], x['form'])
+    return {'feminineOrPresent': sorted(a, key=key), 'twoVerbs': sorted(b, key=key)}
+
+
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('command', choices=['frequent', 'text', 'phrases'])
+    parser.add_argument('command', choices=['frequent', 'text', 'phrases', 'homographs'])
     parser.add_argument('batch')
     parser.add_argument('languages')
     parser.add_argument('wty')
@@ -328,8 +405,8 @@ def main():
     args = parser.parse_args()
     transform_ids = [t['id'] for t in json.loads((Path(args.languages) / 'pt' / 'transforms.json').read_text(encoding='utf-8'))['transforms']]
     freq_files = [args.inputs[0]] if args.command == 'frequent' else args.freq
-    judge = Judge(*load_dictionary(args.wty), transform_ids, read_freq(freq_files))
-    report = {'frequent': frequent, 'text': text, 'phrases': phrases}[args.command](args, judge)
+    judge = Judge(*load_dictionary(args.wty), transform_ids, read_freq(freq_files), load_participles(args.wty))
+    report = {'frequent': frequent, 'text': text, 'phrases': phrases, 'homographs': homographs}[args.command](args, judge)
     out = json.dumps(report, ensure_ascii=False, indent=1)
     if args.out:
         Path(args.out).write_text(out + '\n', encoding='utf-8')
