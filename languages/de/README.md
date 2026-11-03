@@ -80,8 +80,8 @@ end of its clause (`kommt morgen an.` → ankommen).
 
 ## Rule provenance
 
-`transforms.json` has 34 transforms and 230 rules, 4,920 with cross products
-expanded: 28 transforms and 213 rules (4,622 expanded) `own`, one transform
+`transforms.json` has 34 transforms and 231 rules, 4,922 with cross products
+expanded: 28 transforms and 214 rules (4,624 expanded) `own`, one transform
 and 5 rules (156) `both`, and 5 transforms and 12 rules (142) `yomitan`.
 `sources/build-final.mjs` writes it: `sources/own.json` followed by five of
 Yomitan's seven transforms. Yomitan's transforms come after the own ones, so
@@ -495,29 +495,39 @@ option on and with the defaults; a copy of `cases.tsv` with the line
    (33), participles without ge- (`verkauft`, `studiert`) as the present
    (er, ihr) (28).
 6. **Per rule** (`eval-language --per-rule` on the sample and `cases.tsv`,
-   2,120 rows): 163 of the 226 rules recover a row no other rule reaches, none
-   breaks a negative, and none adds false candidates without recovering a
-   row. With the rules of 07b0107 five did: the äu umlaut before -er (since
+   2,127 rows): 162 of the 231 rules recover a row no other rule reaches,
+   none breaks a negative, and none adds false candidates without recovering
+   a row. With the rules of 07b0107 five did: the äu umlaut before -er (since
    removed), ä and ö before -er and the Latin -en for -us and -os, which now
    have rows (`Väter`, `Töchter`, `Rhythmen`, `Mythen`).
 7. **Checks**:
    - conformance (`language-conformance-test`): corpus.tsv 1,764 / 1,764,
-     cases.tsv 320 / 320, yomitan.tsv 13 / 13, text.tsv 19 / 19, lookup.tsv
-     32 / 32; gaps.tsv 0 / 37 (reported); `classes.json` agrees with the
-     engine (8 classes, 354 fields, 4 steps); 596 of the 4,836 rules (cross
-     products expanded) are exercised by a passing row; `tests/` and
-     `sources/` hold 906,361 bytes;
+     cases.tsv 327 / 327, yomitan.tsv 13 / 13, text.tsv 21 / 21, lookup.tsv
+     50 / 50; gaps.tsv 0 / 37 (reported); `classes.json` agrees with the
+     engine (8 classes, 365 fields, 4 steps); 605 of the 4,922 rules (cross
+     products expanded) are exercised by a passing row; the committed files
+     of `tests/` and `sources/` hold about 940,000 bytes
+     (`git ls-tree -r -l HEAD -- languages/de/tests languages/de/sources`);
    - the differential check (`tools/check-yomitan.mjs` with
-     `build/hoshidicts-cli`): 5,107 inputs, 6,287 Yomitan results, no
+     `build/hoshidicts-cli`): 5,116 inputs, 6,300 Yomitan results, no
      difference, so `sources/yomitan-differences.tsv` is not needed;
-     `decapitalize` and `capitalizeFirstLetter` agree with Yomitan's on 2,187
-     inputs each and `eszettPreprocessor` on 2,179;
-   - `ctest` (42 tests), `tools/check-classes.mjs --all` and `node --test
-     tools/test/` (115 tests) pass;
-   - mutations (`sources/mutations.mjs`): each of 44 changes to a scratch
-     copy of the pack removes one stem constraint, exclusion, word list,
-     processor or ordering above, writes the copy's `classes.json` and runs
-     the conformance test on it. Every one makes a test fail.
+     `decapitalize` and `capitalizeFirstLetter` agree with Yomitan's on 2,211
+     inputs each and `eszettPreprocessor` on 2,203;
+   - `ctest` (43 tests), `tools/check-classes.mjs --all` and `node --test
+     tools/test/` (115 tests here; CI runs more with the hangul-js bundle)
+     pass;
+   - mutations (`sources/mutations.mjs`): each of 57 changes to a scratch
+     copy of the pack removes one stem constraint, exclusion, listed form,
+     word list, processor or ordering above, writes the copy's
+     `classes.json` and runs the conformance test on it. Every one makes a
+     test fail. Of the first audit's 104 further mutations
+     (`reports/audit-hachi-lang-de-evidence/tools/my-mutations.mjs`), 10
+     survive: one moves the adjective transforms first, where they now are;
+     removing verstehen's listed participle leaves `er` + `standen`, which
+     still reaches it; the others are choices no test can observe (`sep` as a
+     dictionary form, the order of transforms that never meet at one ending,
+     `traceSelection`, the trace names, the order of processors whose
+     variants are the same).
 8. **Lookup speed** (`benchmark-lookup --languages <copy> --language de`,
    wty-de-en mapped): the 80 texts of `sources/benchmark-words.txt`, each the
    rest of a sentence from an inflected word, in 6 passes with the first
