@@ -1,0 +1,189 @@
+{
+  "schema": 1,
+  "code": "eo",
+  "iso639_3": "epo",
+  "name": "Esperanto",
+  "nativeName": "Esperanto",
+  "bcp47": "eo",
+  "scripts": ["Latn"],
+  "direction": "ltr",
+  "classes": {
+    "letter": "[A-Za-z\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\\u024F]",
+    "apostrophe": "['\\u2019\\u02BC]",
+    "word": "[{letter}{apostrophe}\\p{M}\\p{Nd}]"
+  },
+  "text": {
+    "pattern": "[{letter}\\u0300-\\u036F]",
+    "scanStart": "word",
+    "segmentation": "spaces",
+    "wordCharacters": "{word}",
+    "wordInternal": null,
+    "sentence": {
+      "terminators": [".", "!", "?", "…"],
+      "quotePairs": [["„", "“"], ["“", "”"], ["«", "»"], ["\"", "\""], ["(", ")"]]
+    },
+    "highlightBreaks": null,
+    "lineJoiner": " "
+  },
+  "lookup": {
+    "searchResolution": "word",
+    "preprocessors": [
+      {
+        "id": "normalizeUnicode",
+        "name": "Compose diacritics (NFC)",
+        "keepInput": false,
+        "variants": [[{"normalize": "NFC"}]]
+      },
+      {
+        "id": "normalizeApostrophes",
+        "name": "Typographic apostrophes as '",
+        "variants": [[{"map": {"’": "'", "ʼ": "'"}}]]
+      },
+      {
+        "id": "removeQuotes",
+        "name": "Remove apostrophes used as quotation marks",
+        "variants": [[{"pattern": "^'+|'+$", "replace": "", "global": true}]]
+      },
+      {
+        "id": "xSystem",
+        "name": "x-system (cx → ĉ)",
+        "variants": [[{"map": {
+          "cx": "ĉ", "cX": "ĉ", "Cx": "Ĉ", "CX": "Ĉ",
+          "gx": "ĝ", "gX": "ĝ", "Gx": "Ĝ", "GX": "Ĝ",
+          "hx": "ĥ", "hX": "ĥ", "Hx": "Ĥ", "HX": "Ĥ",
+          "jx": "ĵ", "jX": "ĵ", "Jx": "Ĵ", "JX": "Ĵ",
+          "sx": "ŝ", "sX": "ŝ", "Sx": "Ŝ", "SX": "Ŝ",
+          "ux": "ŭ", "uX": "ŭ", "Ux": "Ŭ", "UX": "Ŭ"
+        }}]]
+      },
+      {
+        "id": "hSystem",
+        "name": "h-system (ch → ĉ, au → aŭ)",
+        "optional": true,
+        "variants": [[{"alternatives": {
+          "ch": ["ĉ"], "Ch": ["Ĉ"], "CH": ["Ĉ"],
+          "gh": ["ĝ"], "Gh": ["Ĝ"], "GH": ["Ĝ"],
+          "hh": ["ĥ"], "Hh": ["Ĥ"], "HH": ["Ĥ"],
+          "jh": ["ĵ"], "Jh": ["Ĵ"], "JH": ["Ĵ"],
+          "sh": ["ŝ"], "Sh": ["Ŝ"], "SH": ["Ŝ"],
+          "au": ["aŭ"], "Au": ["Aŭ"], "AU": ["AŬ"],
+          "eu": ["eŭ"], "Eu": ["Eŭ"], "EU": ["EŬ"]
+        }, "limit": 64}]]
+      },
+      {
+        "id": "decapitalize",
+        "name": "Decapitalize text",
+        "variants": [[{"case": "lower"}]]
+      },
+      {
+        "id": "capitalizeFirstLetter",
+        "name": "Capitalize first letter",
+        "variants": [[{"case": "upperFirst"}]]
+      }
+    ],
+    "postprocessors": [],
+    "readingNormalizer": null,
+    "transforms": "transforms.json",
+    "traceSelection": "shortest",
+    "formOf": "follow",
+    "functionWords": [],
+    "variantPasses": []
+  },
+  "capabilities": {
+    "readings": "none",
+    "ruby": null,
+    "pitchAccent": false,
+    "characterView": null,
+    "wordHighlighting": true
+  },
+  "presentation": {
+    "typography": {
+      "fontFamily": null,
+      "wordBreak": null,
+      "lineBreak": null,
+      "joinedScript": false
+    },
+    "labels": {},
+    "displayTransforms": {}
+  },
+  "settings": [
+    {
+      "id": "hSystem",
+      "type": "boolean",
+      "default": false,
+      "label": "Text in the h-system",
+      "description": "Also read ch, gh, hh, jh and sh as ĉ, ĝ, ĥ, ĵ and ŝ, and au and eu as aŭ and eŭ, for text typed without the accented letters in Zamenhof's h-system (ankau → ankaŭ, shi → ŝi). Adds less likely readings of words that really have these letters (flughaveno). The x-system (cx, sx, ux) is always read.",
+      "group": "lookup",
+      "effect": {"preprocessor": "hSystem"}
+    },
+    {
+      "id": "otherWordClasses",
+      "type": "boolean",
+      "default": false,
+      "label": "Adjectives and nouns of other roots",
+      "description": "Also look an adjective up as the noun or verb of its root, and a noun as its verb, when the dictionary does not list it (lana → lano, skriba → skribi, eldiro → eldiri). Adverbs are always looked up as their adjective, noun or verb. Names in -a are then read as nouns too (Marta → marto).",
+      "group": "lookup",
+      "effect": {"transforms": ["otherWordClass"]}
+    }
+  ],
+  "host": {
+    "ttsLanguage": "eo",
+    "audioLanguage": "eo",
+    "anki": {
+      "noteTypeFamilies": [],
+      "fieldAliases": {"phonetic-transcriptions": ["IPA"]},
+      "partOfSpeechLabels": {
+        "v": "Verb",
+        "vt": "Transitive verb",
+        "vi": "Intransitive verb",
+        "n": "Noun",
+        "adj": "Adjective",
+        "adv": "Adverb",
+        "pron": "Pronoun",
+        "det": "Determiner",
+        "prep": "Preposition",
+        "conj": "Conjunction",
+        "intj": "Interjection",
+        "artic": "Article",
+        "num": "Numeral",
+        "name": "Proper noun",
+        "phrase": "Phrase",
+        "prov": "Proverb",
+        "pref": "Prefix",
+        "suf": "Suffix",
+        "ptcl": "Particle",
+        "ptcpl": "Participle",
+        "char": "Character",
+        "abbv": "Abbreviation"
+      }
+    },
+    "frequencySamples": {
+      "common": ["la", "mi", "vi", "ne", "estas", "kaj", "ĉu", "de", "al", "ni"],
+      "rare": ["vesperto", "karoto", "formiko", "pinglo", "mevo", "lacerto", "morbilo", "hufumo", "melongeno", "vipuro"]
+    },
+    "recommendedDictionaries": [
+      {
+        "name": "Wiktionary Esperanto-English (wiktionary-to-yomitan)",
+        "url": "https://yomidevs.github.io/wiktionary-to-yomitan/download/",
+        "description": "Esperanto words with English definitions from English Wiktionary, with inflected forms.",
+        "licence": "CC BY-SA 4.0"
+      }
+    ],
+    "sample": {
+      "warmup": "legante",
+      "practice": {
+        "text": "Hieraŭ ni manĝis en malgranda restoracio apud la haveno.",
+        "lookup": "manĝis"
+      },
+      "entry": {
+        "expression": "manĝi",
+        "reading": "manĝi",
+        "glossary": ["to eat"],
+        "definitionTags": "v",
+        "matched": "manĝis",
+        "trace": ["past"]
+      },
+      "character": null
+    }
+  }
+}
