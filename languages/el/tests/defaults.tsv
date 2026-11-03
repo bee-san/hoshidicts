@@ -1,6 +1,7 @@
 # options: default
 # Source: written for this pack (GPL-3.0-or-later), no third-party data. Run with the pack's defaults: the optional addMissingAccent processor is off,
-# so these rows test the rules that read text in capitals or without accents (the bare augment, the accent step on text as scanned).
+# so these rows test what the rules read of text in capitals or without accents (the bare augment, the accent step on text as scanned)
+# and of polytonic text; README.md, Known gaps, says how much of such text they read.
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
 capitals	1	ΕΓΡΑΨΑ	γράφω	v	accent|aorist-1sg
 capitals	1	ΘΑΛΑΣΣΑ	θάλασσα	n	accent
