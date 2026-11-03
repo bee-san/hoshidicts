@@ -182,11 +182,17 @@ it says `tagged`.
      ενώ and κύρια. These rows test the rules, so they run with the
      defaults (docs/languages.md 12.2).
    - False candidates count the other headwords of wty-el-en that a row's
-     deinflections reach. Of 40 random sample rows, 7 have one, and each is
-     the dictionary's other headword for the same verb: the -ώ form of an
-     -άω verb (`τηλεφωνήστε` → τηλεφωνώ beside τηλεφωνάω), the active of a
-     mediopassive (`κουραστεί` → κουράζω) or a spelling variant
-     (`αναγγείλαμε` → αναγγέλλω).
+     deinflections reach (`measure.py falsecands` gives eval-language's
+     0.540 and 0.624 and lists them). Of the 540: 400 are the same verb in
+     the other voice or conjugation, which wty-el-en lists apart (the
+     active beside a mediopassive, `κουραστεί` → κουράζω; the -ώ beside the
+     -άω form, `τηλεφωνήστε` → τηλεφωνώ); 81 are variants the dictionary
+     links to the lemma (`αναγγείλαμε` → αναγγέλλω, `γύρισες` → γυρίζω); 44
+     are forms of another headword (`βάσταξε` → βαστάζω); 15 are other
+     words, most of them the capitalised or lowercase twin of the lemma
+     (`απόστολε` → Απόστολος, `ακαδημιών` → Ακαδημία) and three a different
+     word (`πληρώσεις` → πλήρωση, `άκουσα` → άκων, `χιόνιζε` → χιονίζει).
+     Tagged: 628, the same kinds.
    - **First rank** is 68%. Of the 318 other rows, 214 name a lemma that
      wty-el-en has only as a form of another headword (UniMorph's `νικώ`
      and `-ομαι` verbs are forms of `νικάω` and of the active in the
@@ -262,9 +268,13 @@ it says `tagged`.
    `third_party/hoshidicts`, `test/chrome-language-pack.mjs`, Chrome 152,
    wty-el-en, `sources/hachidori-cases.tsv`): 15 of 16 checks pass. Settings adds Greek beside Japanese and
    imports the dictionary (294,619 terms, 0.8 s); 11 of 12 hovered words
-   find the expected headword first with their traces (`Αγοράσαμε` →
-   αγοράζω `aorist (1st pl)`, `κοιμήθηκε` → κοιμάμαι, `θαλασσών` →
-   θάλασσα); the Anki note and the switch to Japanese and back work.
+   find the expected headword first with their traces. For `κατάλαβα` and
+   `καλύτερη` the expected headword is the dictionary's own entry for the
+   form (κατάλαβα, "first-person singular simple past of καταλαβαίνω";
+   καλύτερος, "better, comparative of καλός"), which comes before the
+   lemma the rules reach. Among the others: `Αγοράσαμε` → αγοράζω
+   (`aorist (1st pl)`), `κοιμήθηκε` → κοιμάμαι, `θαλασσών` → θάλασσα. The
+   Anki note and the switch to Japanese and back work.
    `σπιτάκια` finds nothing: the rules reach σπίτι, whose row has no part
    of speech in wty-el-en, so the filter drops it until
    `untaggedTerms: "pass"` is set (Known gaps).

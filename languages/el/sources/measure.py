@@ -8,6 +8,7 @@
 #   python3 languages/el/sources/measure.py phrases <wty-el-en JSON banks dir> <hovers.txt> <lookups.jsonl>
 #   python3 languages/el/sources/measure.py traces <corpus.tsv> <deinflections.jsonl>
 #   python3 languages/el/sources/measure.py unimorph <unimorph ell file> <hoshidicts-cli> <languages dir>
+#   python3 languages/el/sources/measure.py falsecands <wty-el-en JSON banks dir> <corpus.tsv> <hoshidicts-cli> <languages dir> [--tagged]
 #
 # lookups.jsonl is the output of languages/en/sources/lookup-batch.cpp (built
 # against this checkout) on the words or hover texts, one line each:
@@ -32,6 +33,14 @@
 # frequent also counts the words whose lemma a rule reaches (a deinflection
 # of a preprocessed variant of the word is a lemma its form-of rows name)
 # when given --cli <hoshidicts-cli> --languages <dir>.
+# falsecands: the false candidates of each valid row of a corpus file as
+# eval-language counts them (docs/languages.md 10.3, formOf "follow"): a
+# deinflected text whose row with definitions passes the part-of-speech
+# filter, or the text a passing form-of row of a deinflected text names when
+# that text has a row with definitions, other than the source and the
+# lemma. Every optional processor and transform is on. --tagged reads the
+# untagged rows as tagged "v n adj" (the wty-el-en-tagged copy). Prints the
+# mean, which must equal eval-language's falseCandidates, and the rows.
 # traces: for each verb row of the corpus, the trace a lookup keeps
 # (traceSelection "shortest": the fewest steps among the deinflections that
 # reach the lemma) and whether its first transform names the row's UniMorph
@@ -268,6 +277,45 @@ def phrases(banks, hover_file, lookups):
         print(f'{n}\t{p0} {w}\t{e}\t{t}')
 
 
+def falsecands(banks, corpus, cli, languages, tagged=False):
+    import subprocess
+    rows_of = collections.defaultdict(list)  # term -> [(tags, has definitions, referenced terms)]
+    for f in sorted(glob.glob(banks.rstrip('/') + '/term_bank_*.json')):
+        for row in json.load(open(f, encoding='utf-8')):
+            tags = row[3] if row[3] or not tagged else 'v n adj'
+            rows_of[row[0]].append((set(tags.split()), any(not is_ref(d) for d in row[5]), [d[0] for d in row[5] if is_ref(d)]))
+    bits = {'v', 'n', 'adj'}
+    passes = lambda tags, conditions: not conditions or bool(tags & bits & set(conditions))
+    rows = [l.rstrip('\n').split('\t') for l in open(corpus, encoding='utf-8') if l.strip() and not l.startswith('#')]
+    rows = [r for r in rows if r[1] == '1']
+    run = lambda cmd, inputs: [json.loads(l) for l in subprocess.run([cli, '--languages', languages] + cmd, input='\n'.join(inputs) + '\n',
+                                                                      capture_output=True, text=True, check=True).stdout.splitlines()]
+    pre = {d['input']: [v['text'] for v in d['variants']] for d in run(['preprocess', 'el', '--stdin', '--all-options'], sorted({r[2] for r in rows}))}
+    texts = sorted({t for v in pre.values() for t in v})
+    de = {d['input']: d['results'] for d in run(['deinflect', 'el', '--stdin', '--all-options'], texts)}
+    total = 0
+    listed = []
+    for _, _, source, term, _, _ in rows:
+        found = set()
+        for text in pre[source]:
+            for r in de[text]:
+                for tags, defined, refs in rows_of.get(r['text'], []):
+                    if not passes(tags, r['conditions']):
+                        continue
+                    if defined:
+                        found.add(r['text'])
+                    for ref in refs:
+                        if any(d for _, d, _ in rows_of.get(ref, [])):
+                            found.add(ref)
+        found -= {source, term}
+        total += len(found)
+        if found:
+            listed.append((source, term, sorted(found)))
+    print(json.dumps({'rows': len(rows), 'falseCandidates': total / len(rows), 'rowsWithOne': len(listed)}, ensure_ascii=False))
+    for source, term, found in listed:
+        print(f'{source}\t{term}\t{" ".join(found)}')
+
+
 def unimorph(file, cli, languages):
     dropped = set('θα να ας έχω έχεις έχει έχουμε έχετε έχουν είχα είχες είχε είχαμε είχατε είχαν'.split())
     word = re.compile(r'^[\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03CE]+$')
@@ -340,6 +388,8 @@ if __name__ == '__main__':
     if cmd == 'frequent':
         opt = lambda name: sys.argv[sys.argv.index(name) + 1] if name in sys.argv else None
         frequent(*sys.argv[2:5], cli=opt('--cli'), languages=opt('--languages'))
+    elif cmd == 'falsecands':
+        falsecands(*sys.argv[2:6], tagged='--tagged' in sys.argv)
     elif cmd == 'unimorph':
         unimorph(*sys.argv[2:5])
     elif cmd == 'hovers':
