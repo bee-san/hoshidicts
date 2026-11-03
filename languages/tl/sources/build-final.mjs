@@ -53,7 +53,7 @@ export const REMOVED = {
     'magsi-': 'magsi- + root collides with mag- + a root in si- (magsikap -> kap, magsimula -> mula, nagsisipilyo -> pilyo); the own magsi- is tried after mag-',
     'magma-': 'magmahal. -> hal. first at the end of a sentence (4 Tatoeba positions) and magmasa -> sa; the own rules read its right forms through mag- and the contemplative',
     'pa-...-an': 'stems of one letter: papuan -> pu, padaan -> da, paman -> m first; the own pa- -an needs three letters',
-    'makapang-': 'makapangahas -> ahas first at 12 of its 17 Gutenberg positions; the own maka- then pang- read the right ones in two steps',
+    'makapang-': 'makapangahas -> ahas first at 12 of its 17 Gutenberg positions; the own maka- reads it as maka- + pangahas, and makapanggamot as maka- + manggamot',
 };
 
 export function buildFinal() {
