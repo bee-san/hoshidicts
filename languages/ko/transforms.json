@@ -190,6 +190,17 @@
       ]
     },
     {
+      "id": "-거든",
+      "name": "-거든(요)",
+      "description": "Ending -거든(요): giving a reason; or connective \"if\".",
+      "source": "both",
+      "rules": [
+        {"type": "suffix", "inflected": "ㄱㅓㄷㅡㄴ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f", "eusi"], "source": "yomitan"},
+        {"type": "suffix", "inflected": "ㄱㅓㄷㅡㄴ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2, "source": "own"},
+        {"type": "suffix", "inflected": "ㄱㅓㄷㅡㄴㅇㅛ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2, "source": "own"}
+      ]
+    },
+    {
       "id": "-거들랑",
       "name": "-거들랑",
       "source": "yomitan",
@@ -295,6 +306,7 @@
       "source": "both",
       "rules": [
         {"type": "suffix", "inflected": "ㄱㅔㅆ", "deinflected": "ㄷㅏ", "conditionsIn": ["f"], "conditionsOut": ["v", "adj", "ida"], "source": "yomitan"},
+        {"type": "suffix", "inflected": "ㄱㅔㅆ", "deinflected": "", "conditionsIn": ["f"], "conditionsOut": ["p", "eusi"], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㄱㅔㅆㄷㅏ", "deinflected": "ㄷㅏ", "conditionsIn": ["-겠"], "conditionsOut": ["v", "adj", "-었", "-시"], "stemMinLength": 2, "source": "own"},
         {"type": "suffix", "inflected": "ㄱㅔㅆ", "deinflected": "ㄷㅏ", "conditionsIn": ["f"], "conditionsOut": ["v", "adj", "-었", "-시"], "stemMinLength": 2, "source": "own"}
       ]
@@ -401,6 +413,16 @@
       ]
     },
     {
+      "id": "-구나",
+      "name": "-구나",
+      "description": "Exclamation: realising something (해라체).",
+      "source": "both",
+      "rules": [
+        {"type": "suffix", "inflected": "ㄱㅜㄴㅏ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f", "eusi"], "source": "yomitan"},
+        {"type": "suffix", "inflected": "ㄱㅜㄴㅏ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2, "source": "own"}
+      ]
+    },
+    {
       "id": "-구려",
       "name": "-구려",
       "source": "yomitan",
@@ -439,6 +461,17 @@
       "source": "yomitan",
       "rules": [
         {"type": "suffix", "inflected": "ㄱㅜㅁㅕㄴ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f", "eusi"]}
+      ]
+    },
+    {
+      "id": "-군",
+      "name": "-군(요)",
+      "description": "Exclamation: realising something.",
+      "source": "both",
+      "rules": [
+        {"type": "suffix", "inflected": "ㄱㅜㄴ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f", "eusi"], "source": "yomitan"},
+        {"type": "suffix", "inflected": "ㄱㅜㄴ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2, "source": "own"},
+        {"type": "suffix", "inflected": "ㄱㅜㄴㅇㅛ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2, "source": "own"}
       ]
     },
     {
@@ -498,12 +531,21 @@
       ]
     },
     {
+      "id": "-길래",
+      "name": "-길래",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ㄱㅣㄹㄹㅐ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "eusi"]}
+      ]
+    },
+    {
       "id": "-(으)ㄹ",
       "name": "-(으)ㄹ",
       "description": "Adnominal -(으)ㄹ: future or prospective.",
       "source": "both",
       "rules": [
         {"type": "suffix", "inflected": "ㄹ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["eusi"], "source": "yomitan"},
+        {"type": "suffix", "inflected": "ㅇㅡㄹ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p"], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㄹ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-었", "-시"], "stemEndsWith": "{vowel}", "source": "own"},
         {"type": "suffix", "inflected": "ㅇㅡㄹ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-었", "-시"], "stemEndsWith": "[\\u3131-\\u3138\\u313A-\\u314E]", "source": "own"},
         {"type": "suffix", "inflected": "ㄹ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-었", "-시"], "stemEndsWith": "{vowel}", "source": "own"},
@@ -536,6 +578,7 @@
       "source": "both",
       "rules": [
         {"type": "suffix", "inflected": "ㄹㄱㅓㄹ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["eusi"], "source": "yomitan"},
+        {"type": "suffix", "inflected": "ㅇㅡㄹㄱㅓㄹ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p"], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㄹㄱㅓㄹ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-었", "-시"], "stemEndsWith": "{vowel}", "source": "own"},
         {"type": "suffix", "inflected": "ㅇㅡㄹㄱㅓㄹ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-었", "-시"], "stemEndsWith": "[\\u3131-\\u3138\\u313A-\\u314E]", "source": "own"},
         {"type": "suffix", "inflected": "ㄹㄱㅓㄹ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-었", "-시"], "stemEndsWith": "{vowel}", "source": "own"},
@@ -658,7 +701,8 @@
         {"type": "suffix", "inflected": "ㅇㅜㄴㅏ", "deinflected": "ㅂㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj"]},
         {"type": "suffix", "inflected": "ㅇㅡㄴㅏ", "deinflected": "ㅅㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj"]},
         {"type": "suffix", "inflected": "ㄹㅇㅡㄴㅏ", "deinflected": "ㄷㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj"]},
-        {"type": "suffix", "inflected": "ㅇㅡㄴㅏ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f"]}
+        {"type": "suffix", "inflected": "ㅇㅡㄴㅏ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f"]},
+        {"type": "suffix", "inflected": "ㄴㅏ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f", "eusi", "sao"]}
       ]
     },
     {
@@ -713,6 +757,7 @@
       "description": "Plain question, colloquial (해체/해라체).",
       "source": "both",
       "rules": [
+        {"type": "suffix", "inflected": "ㄴㅑ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f", "eusi"], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㅇㅡㄴㅑ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f", "eusi"], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㄴㅑ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2, "source": "own"},
         {"type": "suffix", "inflected": "ㄴㅑ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemEndsWith": "{vowel}", "source": "own"},
@@ -729,6 +774,7 @@
       "description": "Quoted question: asked whether ...",
       "source": "both",
       "rules": [
+        {"type": "suffix", "inflected": "ㄴㅑㄱㅗ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f", "eusi"], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㅇㅡㄴㅑㄱㅗ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f", "eusi"], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㄴㅑㄱㅗ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2, "source": "own"},
         {"type": "suffix", "inflected": "ㄴㅑㄱㅗ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemEndsWith": "{vowel}", "source": "own"},
@@ -747,6 +793,21 @@
         {"type": "suffix", "inflected": "ㄹㅇㅡㄴㅑㄱㅗ", "deinflected": "ㄷㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-시"], "source": "own"},
         {"type": "suffix", "inflected": "ㅇㅡㄴㅑㄱㅗ", "deinflected": "ㅅㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-시"], "stemEndsWith": "{vowel}", "source": "own"},
         {"type": "suffix", "inflected": "ㄴㅑㄱㅗ", "deinflected": "ㅎㄷㅏ", "conditionsIn": [], "conditionsOut": ["adj", "ida", "-시"], "stemEndsWith": "[ㅏㅓㅑㅕ]", "source": "own"}
+      ]
+    },
+    {
+      "id": "-네",
+      "name": "-네(요)",
+      "description": "Exclamation or mild statement.",
+      "source": "both",
+      "rules": [
+        {"type": "suffix", "inflected": "ㄴㅔ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f", "eusi"], "source": "yomitan"},
+        {"type": "suffix", "inflected": "ㄴㅔ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2, "source": "own"},
+        {"type": "suffix", "inflected": "ㄴㅔ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemEndsWith": "{vowel}", "source": "own"},
+        {"type": "suffix", "inflected": "ㄴㅔㅇㅛ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2, "source": "own"},
+        {"type": "suffix", "inflected": "ㄴㅔㅇㅛ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemEndsWith": "{vowel}", "source": "own"},
+        {"type": "suffix", "inflected": "ㄴㅔ", "deinflected": "ㅎㄷㅏ", "conditionsIn": [], "conditionsOut": ["adj"], "stemEndsWith": "[ㅏㅓㅑㅕ]", "source": "own"},
+        {"type": "suffix", "inflected": "ㄴㅔㅇㅛ", "deinflected": "ㅎㄷㅏ", "conditionsIn": [], "conditionsOut": ["adj"], "stemEndsWith": "[ㅏㅓㅑㅕ]", "source": "own"}
       ]
     },
     {
@@ -847,11 +908,25 @@
       ]
     },
     {
+      "id": "-느냐",
+      "name": "-느냐",
+      "description": "Plain question (해라체).",
+      "source": "both",
+      "rules": [
+        {"type": "suffix", "inflected": "ㄴㅡㄴㅑ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f", "eusi"], "source": "yomitan"},
+        {"type": "suffix", "inflected": "ㄴㅡㄴㅑ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "-겠", "-었", "-시"], "stemMinLength": 2, "source": "own"},
+        {"type": "suffix", "inflected": "ㄴㅡㄴㅑ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "-겠", "-었", "-시"], "stemEndsWith": "{vowel}", "source": "own"},
+        {"type": "suffix", "inflected": "ㅇㅣㅆㄴㅡㄴㅑ", "deinflected": "ㅇㅣㅆㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "-겠", "-었", "-시"], "source": "own"},
+        {"type": "suffix", "inflected": "ㅇㅓㅂㅅㄴㅡㄴㅑ", "deinflected": "ㅇㅓㅂㅅㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "-겠", "-었", "-시"], "source": "own"}
+      ]
+    },
+    {
       "id": "-느냐고",
       "name": "-느냐고",
       "source": "yomitan",
       "rules": [
-        {"type": "suffix", "inflected": "ㄴㅡㄴㅑㄱㅗ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj"]}
+        {"type": "suffix", "inflected": "ㄴㅡㄴㅑㄱㅗ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj"]},
+        {"type": "suffix", "inflected": "ㄴㅡㄴㅑㄱㅗ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f", "eusi"]}
       ]
     },
     {
@@ -974,6 +1049,7 @@
       "rules": [
         {"type": "suffix", "inflected": "ㅇㅡㄴㄱㅓㄹ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj"], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㄴㄱㅓㄹ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["eusi"], "source": "yomitan"},
+        {"type": "suffix", "inflected": "ㄴㅡㄴㄱㅓㄹ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f", "eusi"], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㅇㅓㅂㅅㄴㅡㄴㄱㅓㄹ", "deinflected": "없다", "conditionsIn": [], "conditionsOut": [], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㄴㅡㄴㄱㅓㄹ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "-겠", "-었", "-시"], "stemMinLength": 2, "source": "own"},
         {"type": "suffix", "inflected": "ㄴㅡㄴㄱㅓㄹ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "-겠", "-었", "-시"], "stemEndsWith": "{vowel}", "source": "own"},
@@ -1124,6 +1200,7 @@
         {"type": "suffix", "inflected": "ㄴㅡㄴㄷㅏㄱㅗ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㄴㄷㅏㄱㅗ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㄴㄷㅏㄱㅗ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["eusi"], "source": "yomitan"},
+        {"type": "suffix", "inflected": "ㄷㅏㄱㅗ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f", "eusi"], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㄷㅏㄱㅗ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시", "-다"], "stemMinLength": 2, "source": "own"},
         {"type": "suffix", "inflected": "ㄷㅏㄱㅗㅇㅛ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시", "-다"], "stemMinLength": 2, "source": "own"},
         {"type": "suffix", "inflected": "ㄷㅏㄴㅡㄴ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시", "-다"], "stemMinLength": 2, "source": "own"},
@@ -1181,7 +1258,8 @@
         {"type": "suffix", "inflected": "ㄴㄷㅏㄴㅣ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ㄴㅡㄴㄷㅏㄴㅣ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ㄴㄷㅏㄴㅣ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "ㄴㄷㅏㄴㅣ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["eusi"]}
+        {"type": "suffix", "inflected": "ㄴㄷㅏㄴㅣ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["eusi"]},
+        {"type": "suffix", "inflected": "ㄷㅏㄴㅣ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f", "eusi"]}
       ]
     },
     {
@@ -1239,7 +1317,8 @@
         {"type": "suffix", "inflected": "ㄴㄷㅏㅁㅕ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ㄴㅡㄴㄷㅏㅁㅕ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ㄴㄷㅏㅁㅕ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "ㄴㄷㅏㅁㅕ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["eusi"]}
+        {"type": "suffix", "inflected": "ㄴㄷㅏㅁㅕ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["eusi"]},
+        {"type": "suffix", "inflected": "ㄷㅏㅁㅕ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f", "eusi"]}
       ]
     },
     {
@@ -1250,7 +1329,8 @@
         {"type": "suffix", "inflected": "ㄴㄷㅏㅁㅕㄴ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ㄴㅡㄴㄷㅏㅁㅕㄴ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ㄴㄷㅏㅁㅕㄴ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "ㄴㄷㅏㅁㅕㄴ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["eusi"]}
+        {"type": "suffix", "inflected": "ㄴㄷㅏㅁㅕㄴ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["eusi"]},
+        {"type": "suffix", "inflected": "ㄷㅏㅁㅕㄴ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f", "eusi"]}
       ]
     },
     {
@@ -1261,7 +1341,8 @@
         {"type": "suffix", "inflected": "ㄴㄷㅏㅁㅕㄴㅅㅓ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ㄴㅡㄴㄷㅏㅁㅕㄴㅅㅓ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ㄴㄷㅏㅁㅕㄴㅅㅓ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "ㄴㄷㅏㅁㅕㄴㅅㅓ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["eusi"]}
+        {"type": "suffix", "inflected": "ㄴㄷㅏㅁㅕㄴㅅㅓ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["eusi"]},
+        {"type": "suffix", "inflected": "ㄷㅏㅁㅕㄴㅅㅓ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f", "eusi"]}
       ]
     },
     {
@@ -1307,7 +1388,8 @@
         {"type": "suffix", "inflected": "ㄴㄷㅏㄴㄷㅏ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ㄴㅡㄴㄷㅏㄴㄷㅏ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ㄴㄷㅏㄴㄷㅏ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "ㄴㄷㅏㄴㄷㅏ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["eusi"]}
+        {"type": "suffix", "inflected": "ㄴㄷㅏㄴㄷㅏ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["eusi"]},
+        {"type": "suffix", "inflected": "ㄷㅏㄴㄷㅏ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f", "eusi"]}
       ]
     },
     {
@@ -1362,7 +1444,8 @@
         {"type": "suffix", "inflected": "ㄴㄷㅐ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ㄴㅡㄴㄷㅐ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ㄴㄷㅐ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "suffix", "inflected": "ㄴㄷㅐ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["eusi"]}
+        {"type": "suffix", "inflected": "ㄴㄷㅐ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["eusi"]},
+        {"type": "suffix", "inflected": "ㄷㅐ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f", "eusi"]}
       ]
     },
     {
@@ -1374,6 +1457,7 @@
         {"type": "suffix", "inflected": "ㄴㅡㄴㄷㅐㅇㅛ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ㄴㄷㅐㅇㅛ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ㄴㄷㅐㅇㅛ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["eusi"]},
+        {"type": "suffix", "inflected": "ㄷㅐㅇㅛ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f", "eusi"]},
         {"type": "suffix", "inflected": "ㅇㅣㅆㄴㅡㄴㄷㅐㅇㅛ", "deinflected": "있다", "conditionsIn": [], "conditionsOut": []},
         {"type": "suffix", "inflected": "ㅇㅓㅂㅅㄴㅡㄴㄷㅐㅇㅛ", "deinflected": "없다", "conditionsIn": [], "conditionsOut": []}
       ]
@@ -1396,6 +1480,7 @@
       "source": "both",
       "rules": [
         {"type": "suffix", "inflected": "ㄴㄷㅔ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["eusi", "sao"], "source": "yomitan"},
+        {"type": "suffix", "inflected": "ㄴㅡㄴㄷㅔ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f", "eusi"], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㅇㅣㅆㄴㅡㄴㄷㅔ", "deinflected": "있다", "conditionsIn": [], "conditionsOut": [], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㅇㅓㅂㅅㄴㅡㄴㄷㅔ", "deinflected": "없다", "conditionsIn": [], "conditionsOut": [], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㄴㅡㄴㄷㅔ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "-겠", "-었", "-시"], "stemMinLength": 2, "source": "own"},
@@ -1472,6 +1557,7 @@
       "source": "both",
       "rules": [
         {"type": "suffix", "inflected": "ㄴㅈㅣ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["eusi"], "source": "yomitan"},
+        {"type": "suffix", "inflected": "ㄴㅡㄴㅈㅣ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f", "eusi"], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㅇㅣㅆㄴㅡㄴㅈㅣ", "deinflected": "있다", "conditionsIn": [], "conditionsOut": [], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㅇㅓㅂㅅㄴㅡㄴㅈㅣ", "deinflected": "없다", "conditionsIn": [], "conditionsOut": [], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㄴㅡㄴㅈㅣ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "-겠", "-었", "-시"], "stemMinLength": 2, "source": "own"},
@@ -1542,6 +1628,7 @@
       "source": "both",
       "rules": [
         {"type": "suffix", "inflected": "ㄴㅣㄲㅏ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["eusi"], "source": "yomitan"},
+        {"type": "suffix", "inflected": "ㅇㅡㄴㅣㄲㅏ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f"], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㄴㅣㄲㅏ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemEndsWith": "{vowel}", "source": "own"},
         {"type": "suffix", "inflected": "ㅇㅡㄴㅣㄲㅏ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemEndsWith": "[\\u3131-\\u3138\\u313A-\\u314E]", "source": "own"},
         {"type": "suffix", "inflected": "ㄴㅣㄲㅏ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemEndsWith": "{vowel}", "source": "own"},
@@ -1643,6 +1730,16 @@
         {"type": "suffix", "inflected": "ㄴㅣㅁㅏㄴㅋㅡㅁ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["eusi"]},
         {"type": "suffix", "inflected": "ㄴㅡㄴㅣㅁㅏㄴㅋㅡㅁ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["eusi"]},
         {"type": "suffix", "inflected": "ㅇㅡㄴㅣㅁㅏㄴㅋㅡㅁ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f"]}
+      ]
+    },
+    {
+      "id": "-다가",
+      "name": "-다가",
+      "description": "Connective -다가: while doing, and then.",
+      "source": "both",
+      "rules": [
+        {"type": "suffix", "inflected": "ㄷㅏㄱㅏ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "eusi"], "source": "yomitan"},
+        {"type": "suffix", "inflected": "ㄷㅏㄱㅏ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-었", "-시"], "stemMinLength": 2, "source": "own"}
       ]
     },
     {
@@ -1894,6 +1991,17 @@
       ]
     },
     {
+      "id": "-던데",
+      "name": "-던데(요)",
+      "description": "Retrospective background: I noticed that...",
+      "source": "both",
+      "rules": [
+        {"type": "suffix", "inflected": "ㄷㅓㄴㄷㅔ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f", "eusi"], "source": "yomitan"},
+        {"type": "suffix", "inflected": "ㄷㅓㄴㄷㅔ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2, "source": "own"},
+        {"type": "suffix", "inflected": "ㄷㅓㄴㄷㅔㅇㅛ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2, "source": "own"}
+      ]
+    },
+    {
       "id": "-던들",
       "name": "-던들",
       "source": "yomitan",
@@ -2058,6 +2166,22 @@
       ]
     },
     {
+      "id": "-든",
+      "name": "-든",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ㄷㅡㄴ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "eusi"]}
+      ]
+    },
+    {
+      "id": "-든가",
+      "name": "-든가",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ㄷㅡㄴㄱㅏ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "eusi"]}
+      ]
+    },
+    {
       "id": "-든걸",
       "name": "-든걸",
       "source": "yomitan",
@@ -2087,6 +2211,18 @@
       "source": "yomitan",
       "rules": [
         {"type": "suffix", "inflected": "ㄷㅡㄴㄷㅡㄹ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p"]}
+      ]
+    },
+    {
+      "id": "-든지",
+      "name": "-든지",
+      "description": "Connective -든지: whether ... or, any.",
+      "source": "both",
+      "rules": [
+        {"type": "suffix", "inflected": "ㄷㅡㄴㅈㅣ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "eusi"], "source": "yomitan"},
+        {"type": "suffix", "inflected": "ㄷㅡㄴㅈㅣ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-었", "-시"], "stemMinLength": 2, "source": "own"},
+        {"type": "suffix", "inflected": "ㄷㅡㄴㄱㅏ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-었", "-시"], "stemMinLength": 2, "source": "own"},
+        {"type": "suffix", "inflected": "ㄷㅡㄴ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-었", "-시"], "stemMinLength": 2, "source": "own"}
       ]
     },
     {
@@ -3506,6 +3642,7 @@
       "description": "Formal polite question (하십시오체).",
       "source": "both",
       "rules": [
+        {"type": "suffix", "inflected": "ㅅㅡㅂㄴㅣㄲㅏ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f"], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㅂㄴㅣㄲㅏ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["eusi"], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㅅㅡㅂㄴㅣㄲㅏ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemEndsWith": "{consonant}", "source": "own"},
         {"type": "suffix", "inflected": "ㅂㄴㅣㄲㅏ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemEndsWith": "{vowel}", "source": "own"},
@@ -3518,6 +3655,7 @@
       "description": "Formal polite statement (하십시오체).",
       "source": "both",
       "rules": [
+        {"type": "suffix", "inflected": "ㅅㅡㅂㄴㅣㄷㅏ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f"], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㅂㄴㅣㄷㅏ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["eusi"], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㅅㅡㅂㄴㅣㄷㅏ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemEndsWith": "{consonant}", "source": "own"},
         {"type": "suffix", "inflected": "ㅂㄴㅣㄷㅏ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemEndsWith": "{vowel}", "source": "own"},
@@ -3656,6 +3794,7 @@
       "source": "both",
       "rules": [
         {"type": "suffix", "inflected": "ㅇㅕ", "deinflected": "ㅇㅣㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida"], "source": "yomitan"},
+        {"type": "suffix", "inflected": "ㅇㅓ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f"], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㅇㅓ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2, "stemNotEndsWith": "[ㅏㅓㅕㅡ]", "source": "own"},
         {"type": "suffix", "inflected": "ㅇㅏ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2, "stemNotEndsWith": "[ㅏㅓㅕㅡ]", "source": "own"},
         {"type": "suffix", "inflected": "", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemEndsWith": "[ㅏㅓㅕㅐㅔ]", "source": "own"},
@@ -4216,6 +4355,7 @@
         {"type": "suffix", "inflected": "ㅏㅇㅛ", "deinflected": "ㅏㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj"], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㅓㅇㅛ", "deinflected": "ㅓㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj"], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㅇㅕㅇㅛ", "deinflected": "ㅇㅣㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida"], "source": "yomitan"},
+        {"type": "suffix", "inflected": "ㅇㅓㅇㅛ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f"], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㅇㅓㅇㅛ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2, "stemNotEndsWith": "[ㅏㅓㅕㅡ]", "source": "own"},
         {"type": "suffix", "inflected": "ㅇㅏㅇㅛ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2, "stemNotEndsWith": "[ㅏㅓㅕㅡ]", "source": "own"},
         {"type": "suffix", "inflected": "ㅇㅛ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemEndsWith": "[ㅏㅓㅕㅐㅔ]", "source": "own"},
@@ -4920,6 +5060,7 @@
       "source": "both",
       "rules": [
         {"type": "suffix", "inflected": "ㄹㄲㅏ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["eusi"], "source": "yomitan"},
+        {"type": "suffix", "inflected": "ㅇㅡㄹㄲㅏ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p"], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㄹㄲㅏ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-었", "-시"], "stemEndsWith": "{vowel}", "source": "own"},
         {"type": "suffix", "inflected": "ㅇㅡㄹㄲㅏ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-었", "-시"], "stemEndsWith": "[\\u3131-\\u3138\\u313A-\\u314E]", "source": "own"},
         {"type": "suffix", "inflected": "ㄹㄲㅏ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-었", "-시"], "stemEndsWith": "{vowel}", "source": "own"},
@@ -5466,6 +5607,7 @@
       "source": "both",
       "rules": [
         {"type": "suffix", "inflected": "ㄹㅈㅣ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["eusi"], "source": "yomitan"},
+        {"type": "suffix", "inflected": "ㅇㅡㄹㅈㅣ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p"], "source": "yomitan"},
         {"type": "suffix", "inflected": "ㄹㅈㅣ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-었", "-시"], "stemEndsWith": "{vowel}", "source": "own"},
         {"type": "suffix", "inflected": "ㅇㅡㄹㅈㅣ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-었", "-시"], "stemEndsWith": "[\\u3131-\\u3138\\u313A-\\u314E]", "source": "own"},
         {"type": "suffix", "inflected": "ㄹㅈㅣ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-었", "-시"], "stemEndsWith": "{vowel}", "source": "own"},
@@ -5838,6 +5980,27 @@
       ]
     },
     {
+      "id": "-죠",
+      "name": "-죠",
+      "description": "Contraction of -지요.",
+      "source": "both",
+      "rules": [
+        {"type": "suffix", "inflected": "ㅈㅛ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f", "eusi"], "source": "yomitan"},
+        {"type": "suffix", "inflected": "ㅈㅛ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2, "source": "own"}
+      ]
+    },
+    {
+      "id": "-지",
+      "name": "-지(요)",
+      "description": "Ending -지: of course, isn’t it; also before 않다 and 못하다.",
+      "source": "both",
+      "rules": [
+        {"type": "suffix", "inflected": "ㅈㅣ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f", "eusi"], "source": "yomitan"},
+        {"type": "suffix", "inflected": "ㅈㅣ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2, "source": "own"},
+        {"type": "suffix", "inflected": "ㅈㅣㅇㅛ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2, "source": "own"}
+      ]
+    },
+    {
       "id": "-지마는",
       "name": "-지마는",
       "source": "yomitan",
@@ -5853,6 +6016,14 @@
       "rules": [
         {"type": "suffix", "inflected": "ㅈㅣㅁㅏㄴㅅㅓㄷㅗ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida"]},
         {"type": "suffix", "inflected": "ㅈㅣㅁㅏㄴㅅㅓㄷㅗ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f"]}
+      ]
+    },
+    {
+      "id": "-지요",
+      "name": "-지요",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ㅈㅣㅇㅛ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["p", "f", "eusi"]}
       ]
     },
     {
@@ -5906,18 +6077,6 @@
       ]
     },
     {
-      "id": "-느냐",
-      "name": "-느냐",
-      "description": "Plain question (해라체).",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "ㄴㅡㄴㅑ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "-겠", "-었", "-시"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ㄴㅡㄴㅑ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "-겠", "-었", "-시"], "stemEndsWith": "{vowel}"},
-        {"type": "suffix", "inflected": "ㅇㅣㅆㄴㅡㄴㅑ", "deinflected": "ㅇㅣㅆㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "-겠", "-었", "-시"]},
-        {"type": "suffix", "inflected": "ㅇㅓㅂㅅㄴㅡㄴㅑ", "deinflected": "ㅇㅓㅂㅅㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "-겠", "-었", "-시"]}
-      ]
-    },
-    {
       "id": "-거라",
       "name": "-거라/-너라",
       "description": "Plain command of 가다 and 오다 (old-fashioned).",
@@ -5925,58 +6084,6 @@
       "rules": [
         {"type": "suffix", "inflected": "ㄱㅓㄹㅏ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2},
         {"type": "suffix", "inflected": "ㄴㅓㄹㅏ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2}
-      ]
-    },
-    {
-      "id": "-구나",
-      "name": "-구나",
-      "description": "Exclamation: realising something (해라체).",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "ㄱㅜㄴㅏ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2}
-      ]
-    },
-    {
-      "id": "-군",
-      "name": "-군(요)",
-      "description": "Exclamation: realising something.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "ㄱㅜㄴ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ㄱㅜㄴㅇㅛ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2}
-      ]
-    },
-    {
-      "id": "-네",
-      "name": "-네(요)",
-      "description": "Exclamation or mild statement.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "ㄴㅔ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ㄴㅔ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemEndsWith": "{vowel}"},
-        {"type": "suffix", "inflected": "ㄴㅔㅇㅛ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ㄴㅔㅇㅛ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemEndsWith": "{vowel}"},
-        {"type": "suffix", "inflected": "ㄴㅔ", "deinflected": "ㅎㄷㅏ", "conditionsIn": [], "conditionsOut": ["adj"], "stemEndsWith": "[ㅏㅓㅑㅕ]"},
-        {"type": "suffix", "inflected": "ㄴㅔㅇㅛ", "deinflected": "ㅎㄷㅏ", "conditionsIn": [], "conditionsOut": ["adj"], "stemEndsWith": "[ㅏㅓㅑㅕ]"}
-      ]
-    },
-    {
-      "id": "-지",
-      "name": "-지(요)",
-      "description": "Ending -지: of course, isn’t it; also before 않다 and 못하다.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "ㅈㅣ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ㅈㅣㅇㅛ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2}
-      ]
-    },
-    {
-      "id": "-죠",
-      "name": "-죠",
-      "description": "Contraction of -지요.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "ㅈㅛ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2}
       ]
     },
     {
@@ -5989,16 +6096,6 @@
         {"type": "suffix", "inflected": "ㄴㅏ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemEndsWith": "{vowel}"},
         {"type": "suffix", "inflected": "ㄴㅏㅇㅛ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2},
         {"type": "suffix", "inflected": "ㄴㅏㅇㅛ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemEndsWith": "{vowel}"}
-      ]
-    },
-    {
-      "id": "-거든",
-      "name": "-거든(요)",
-      "description": "Ending -거든(요): giving a reason; or connective \"if\".",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "ㄱㅓㄷㅡㄴ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ㄱㅓㄷㅡㄴㅇㅛ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2}
       ]
     },
     {
@@ -6021,16 +6118,6 @@
         {"type": "suffix", "inflected": "ㄷㅓㄹㅏㄱㅗ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2},
         {"type": "suffix", "inflected": "ㄷㅓㄹㅏㄱㅗㅇㅛ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2},
         {"type": "suffix", "inflected": "ㄷㅓㄱㅜㄴㅇㅛ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2}
-      ]
-    },
-    {
-      "id": "-던데",
-      "name": "-던데(요)",
-      "description": "Retrospective background: I noticed that...",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "ㄷㅓㄴㄷㅔ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ㄷㅓㄴㄷㅔㅇㅛ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-겠", "-었", "-시"], "stemMinLength": 2}
       ]
     },
     {
@@ -6152,26 +6239,6 @@
         {"type": "suffix", "inflected": "ㅇㅜㄹㅕ ㅎㅏㄷㅏ", "deinflected": "ㅂㄷㅏ", "conditionsIn": ["v"], "conditionsOut": ["v", "-시"], "stemMinLength": 1},
         {"type": "suffix", "inflected": "ㄹㅇㅡㄹㅕ ㅎㅏㄷㅏ", "deinflected": "ㄷㄷㅏ", "conditionsIn": ["v"], "conditionsOut": ["v", "-시"]},
         {"type": "suffix", "inflected": "ㅇㅡㄹㅕ ㅎㅏㄷㅏ", "deinflected": "ㅅㄷㅏ", "conditionsIn": ["v"], "conditionsOut": ["v", "-시"], "stemEndsWith": "{vowel}"}
-      ]
-    },
-    {
-      "id": "-든지",
-      "name": "-든지",
-      "description": "Connective -든지: whether ... or, any.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "ㄷㅡㄴㅈㅣ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-었", "-시"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ㄷㅡㄴㄱㅏ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-었", "-시"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ㄷㅡㄴ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-었", "-시"], "stemMinLength": 2}
-      ]
-    },
-    {
-      "id": "-다가",
-      "name": "-다가",
-      "description": "Connective -다가: while doing, and then.",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "ㄷㅏㄱㅏ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida", "-었", "-시"], "stemMinLength": 2}
       ]
     },
     {

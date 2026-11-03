@@ -1,6 +1,6 @@
 # Yomitan rules the final rule set leaves out, written by sources/select-rules.mjs; sources/final-rules.mjs applies them.
 # Each recovers no row of the measurement sets and adds false candidates, breaks a negative, or ties a false candidate with the lemma (README.md, Rule provenance).
-# copies: left out too, by sources/final-rules.mjs: every Yomitan rule that equals a stem-constrained own rule but for the constraint (405 rules at this run).
+# copies: left out too, by sources/final-rules.mjs: every Yomitan rule that equals a stem-constrained own rule but for the constraint (571 rules at this run).
 # None recovers a row. transform	inflected	deinflected	conditionsIn	conditionsOut	falseCandidates	note
 어간	ㅂ	ㅂㄷㅏ		v,adj	4	
 어간	ㄷ	ㄷㄷㅏ		v,adj	1	
@@ -17,7 +17,6 @@
 -거니	ㄱㅓㄴㅣ	ㄷㅏ		v,adj,ida	1	
 -거던	ㄱㅓㄷㅓㄴ	ㄷㅏ		v,adj,ida	1	
 -거드면	ㄱㅓㄷㅡㅁㅕㄴ	ㄷㅏ		v,adj,ida	1	
--거든	ㄱㅓㄷㅡㄴ			p,f,eusi	1	
 -거들랑	ㄱㅓㄷㅡㄹㄹㅏㅇ	ㄷㅏ		v,adj,ida	1	
 -건	ㄱㅓㄴ	ㄷㅏ		v,adj,ida	5	
 -건대	ㄱㅓㄴㄷㅐ	ㄷㅏ		v	1	
@@ -28,34 +27,24 @@
 -것마는	ㄱㅓㅅㅁㅏㄴㅡㄴ	ㄷㅏ		v,adj,ida	1	
 -게나	ㄱㅔㄴㅏ	ㄷㅏ		v	3	
 -게시리	ㄱㅔㅅㅣㄹㅣ	ㄷㅏ		v,adj	1	
--겠	ㄱㅔㅆ		f	p,eusi	1	
--고	ㄱㅗ			p,f,eusi,saob,euob,euo,sab,jaob,jab	9	
+-고	ㄱㅗ			p,f,eusi,saob,euob,euo,sab,jaob,jab	8	
 -고는	ㄱㅗㄴㅡㄴ	ㄷㅏ		v,adj	6	
 -고야	ㄱㅗㅇㅑ	ㄷㅏ		v	3	
 -고저	ㄱㅗㅈㅓ	ㄷㅏ		v	1	
 -관데	ㄱㅗㅏㄴㄷㅔ	ㄷㅏ		v,adj,ida	1	
--구나	ㄱㅜㄴㅏ			p,f,eusi	1	
 -구려	ㄱㅜㄹㅕ	ㄷㅏ		v,adj,ida	2	
 -구료	ㄱㅜㄹㅛ	ㄷㅏ		v,adj,ida	1	
 -구만	ㄱㅜㅁㅏㄴ	ㄷㅏ		v,adj,ida	6	
 -구면	ㄱㅜㅁㅕㄴ	ㄷㅏ		v,adj,ida	2	
--군	ㄱㅜㄴ			p,f,eusi	1	
 -기로	ㄱㅣㄹㅗ	ㄷㅏ		v,adj,ida	15	
--길래	ㄱㅣㄹㄹㅐ			p,eusi	1	
--(으)ㄹ	ㅇㅡㄹ			p	1	
--(으)ㄹ걸	ㅇㅡㄹㄱㅓㄹ			p	1	
 -(으)ㄹ 거예요	ㄹ ㄱㅓㅇㅖㅇㅛ	ㄹㄷㅏ		v,adj	1	
 -(으)나	ㄴㅏ	ㅎㄷㅏ		adj	4	
--(으)나	ㄴㅏ			p,f,eusi,sao	1	
 -나니	ㄴㅏㄴㅣ	ㄷㅏ		v	3	
 -(으)나마	ㄴㅏㅁㅏ	ㄷㅏ		v,adj,ida	2	
 -(으)나마	ㄴㅏㅁㅏ	ㄹㄷㅏ		v,adj	1	
 -나이까	ㄴㅏㅇㅣㄲㅏ	ㄷㅏ		v,adj	2	
 -나이다	ㄴㅏㅇㅣㄷㅏ	ㄷㅏ		v,adj	4	
 -남	ㄴㅏㅁ	ㄷㅏ		v	3	
--(으)냐	ㄴㅑ			p,f,eusi	1	
--(으)냐고	ㄴㅑㄱㅗ			p,f,eusi	1	
--네	ㄴㅔ			p,f,eusi	1	
 -노니	ㄴㅗㄴㅣ	ㄷㅏ		v	1	
 -노라면	ㄴㅗㄹㅏㅁㅕㄴ	ㄷㅏ		v	1	
 -(으)뇨	ㄴㅛ	ㄷㅏ		v,adj,ida	1	
@@ -64,12 +53,9 @@
 -누만	ㄴㅜㅁㅏㄴ	ㄷㅏ		v	1	
 -누먼	ㄴㅜㅁㅓㄴ	ㄷㅏ		v	1	
 -느냐	ㄴㅡㄴㅑ	ㄷㅏ		v,adj	1	
--느냐	ㄴㅡㄴㅑ			p,f,eusi	1	
--느냐고	ㄴㅡㄴㅑㄱㅗ			p,f,eusi	1	
 -느뇨	ㄴㅡㄴㅛ	ㄷㅏ		v,adj	1	
 -(으/느)ㄴ가	ㄴㄱㅏ	ㄹㄷㅏ		adj	2	
 -(으/느)ㄴ감	ㄴㅡㄴㄱㅏㅁ	ㄷㅏ		v	1	
--(으/느)ㄴ걸	ㄴㅡㄴㄱㅓㄹ			p,f,eusi	1	
 -(으/느)ㄴ고	ㄴㄱㅗ	ㄷㅏ		adj,ida	1	
 -(으/느)ㄴ고	ㄴㄱㅗ	ㄹㄷㅏ		adj	1	
 -(으/느)ㄴ고	ㄴㅡㄴㄱㅗ	ㄷㅏ		v	1	
@@ -80,24 +66,18 @@
 -는구면	ㄴㅡㄴㄱㅜㅁㅕㄴ	ㄷㅏ		v	1	
 -는궈니	ㄴㅡㄴㄱㅜㅓㄴㅣ	ㄷㅏ		v	1	
 -는과니	ㄴㅡㄴㄱㅗㅏㄴㅣ	ㄷㅏ		v	1	
--((느)ㄴ)다고	ㄷㅏㄱㅗ			p,f,eusi	1	
 -((느)ㄴ)다나	ㄴㄷㅏㄴㅏ	ㄷㅏ		v	1	
 -((느)ㄴ)다네	ㄴㄷㅏㄴㅔ	ㄷㅏ		v	1	
 -((느)ㄴ)다느니	ㄴㄷㅏㄴㅡㄴㅣ	ㄷㅏ		v	1	
--((느)ㄴ)다니	ㄷㅏㄴㅣ			p,f,eusi	1	
 -((느)ㄴ)다니까	ㄴㄷㅏㄴㅣㄲㅏ	ㄷㅏ		v	1	
 -((느)ㄴ)다니까	ㄴㄷㅏㄴㅣㄲㅏ	ㄹㄷㅏ		v	1	
 -((느)ㄴ)다더라	ㄴㄷㅏㄷㅓㄹㅏ	ㄹㄷㅏ		v	1	
 -((느)ㄴ)다마는	ㄴㄷㅏㅁㅏㄴㅡㄴ	ㄷㅏ		v,ida	1	
 -((느)ㄴ)다만	ㄴㄷㅏㅁㅏㄴ	ㄷㅏ		v,ida	1	
--((느)ㄴ)다며	ㄷㅏㅁㅕ			p,f,eusi	1	
--((느)ㄴ)다면	ㄷㅏㅁㅕㄴ			p,f,eusi	1	
--((느)ㄴ)다면서	ㄷㅏㅁㅕㄴㅅㅓ			p,f,eusi	1	
 -((느)ㄴ)다손	ㄴㄷㅏㅅㅗㄴ	ㄷㅏ		v	1	
 -((느)ㄴ)다오	ㄴㄷㅏㅇㅗ	ㄷㅏ		v	1	
 -((느)ㄴ)다오	ㄷㅏㅇㅗ	ㄷㅏ		v,adj	1	
 -((느)ㄴ)다지	ㄴㄷㅏㅈㅣ	ㄷㅏ		v	1	
--((느)ㄴ)단다	ㄷㅏㄴㄷㅏ			p,f,eusi	1	
 -((느)ㄴ)담	ㄴㄷㅏㅁ	ㄷㅏ		v	1	
 -((느)ㄴ)답니까	ㄴㄷㅏㅂㄴㅣㄲㅏ	ㄷㅏ		v	1	
 -((느)ㄴ)답니까	ㄴㄷㅏㅂㄴㅣㄲㅏ	ㄹㄷㅏ		v	1	
@@ -106,23 +86,18 @@
 -((느)ㄴ)답니다	ㄷㅏㅂㄴㅣㄷㅏ	ㄷㅏ		v,adj	2	
 -((느)ㄴ)답시고	ㄴㅡㄴㄷㅏㅂㅅㅣㄱㅗ	ㄷㅏ		v	1	
 -((느)ㄴ)답시고	ㄷㅏㅂㅅㅣㄱㅗ	ㄷㅏ		v,adj	1	
--((느)ㄴ)대	ㄷㅐ			p,f,eusi	1	
--((느)ㄴ)대요	ㄷㅐㅇㅛ			p,f,eusi	1	
 -((느)ㄴ)댄다	ㄴㄷㅐㄴㄷㅏ	ㄷㅏ		v	1	
 -((느)ㄴ)댄다	ㄷㅐㄴㄷㅏ	ㄷㅏ		v,adj	3	
--(으/느)ㄴ데	ㄴㅡㄴㄷㅔ			p,f,eusi	1	
 -(으/느)ㄴ뎁쇼	ㄴㅡㄴㄷㅔㅂㅅㅛ	ㄷㅏ		v	1	
 -(으/느)ㄴ바	ㄴㅂㅏ	ㄷㅏ		v,adj,ida	1	
 -(으/느)ㄴ바	ㄴㅡㄴㅂㅏ	ㄷㅏ		v	1	
 -(으/느)ㄴ바	ㅇㅡㄴㅂㅏ	ㄷㅏ		v,adj	1	
--(으/느)ㄴ지	ㄴㅡㄴㅈㅣ			p,f,eusi	1	
 -(으/느)ㄴ지고	ㄴㅈㅣㄱㅗ	ㄷㅏ		v,adj,ida	2	
 -(으/느)ㄴ지고	ㄴㅈㅣㄱㅗ	ㄹㄷㅏ		v,adj	4	
 -(으/느)ㄴ지고	ㄴㅡㄴㅈㅣㄱㅗ	ㄷㅏ		v	1	
 -(으/느)ㄴ지라	ㄴㅈㅣㄹㅏ	ㄷㅏ		v,adj,ida	4	
 -(으/느)ㄴ지라	ㄴㅈㅣㄹㅏ	ㄹㄷㅏ		v,adj	3	
 -(으/느)ㄴ지라	ㄴㅡㄴㅈㅣㄹㅏ	ㄷㅏ		v	1	
--(으)니까	ㅇㅡㄴㅣㄲㅏ			p,f	1	
 -(으)니까느루	ㄴㅣㄲㅏㄴㅡㄹㅜ	ㄷㅏ		v,adj,ida	1	
 -(으)니까는	ㄴㅣㄲㅏㄴㅡㄴ	ㄷㅏ		v,adj,ida	1	
 -(으)니깐	ㄴㅣㄲㅏㄴ	ㄹㄷㅏ		v,adj	1	
@@ -130,8 +105,7 @@
 -(으/느)니만치	ㄴㅡㄴㅣㅁㅏㄴㅊㅣ	ㄷㅏ		v,adj	1	
 -(으/느)니만큼	ㄴㅣㅁㅏㄴㅋㅡㅁ	ㄷㅏ		v,adj,ida	1	
 -(으/느)니만큼	ㄴㅡㄴㅣㅁㅏㄴㅋㅡㅁ	ㄷㅏ		v,adj	1	
--다	ㄷㅏ			p,f,eusi,ida	5	
--다가	ㄷㅏㄱㅏ			p,eusi	1	
+-다	ㄷㅏ			p,f,eusi,ida	4	
 -다마다	ㄷㅏㅁㅏㄷㅏ	ㄷㅏ		v,adj,ida	1	
 -단	ㄷㅏㄴ	ㄷㅏ		v,adj,ida	2	
 -더구려	ㄷㅓㄱㅜㄹㅕ	ㄷㅏ		v,adj,ida	1	
@@ -149,7 +123,6 @@
 -더이다	ㄷㅓㅇㅣㄷㅏ	ㄷㅏ		v,adj,ida	1	
 -던감	ㄷㅓㄴㄱㅏㅁ	ㄷㅏ		v,adj,ida	1	
 -던고	ㄷㅓㄴㄱㅗ	ㄷㅏ		v,adj,ida	1	
--던데	ㄷㅓㄴㄷㅔ			p,f,eusi	1	
 -던바	ㄷㅓㄴㅂㅏ	ㄷㅏ		v,adj,ida	1	
 -데	ㄷㅔ	ㄷㅏ		v,adj,ida	2	
 -도다	ㄷㅗㄷㅏ	ㄷㅏ		v,adj,ida	6	
@@ -163,12 +136,9 @@
 -드라	ㄷㅡㄹㅏ	ㄷㅏ		v,adj,ida	4	
 -드라도	ㄷㅡㄹㅏㄷㅗ	ㄷㅏ		v,adj,ida	1	
 -드래도	ㄷㅡㄹㅐㄷㅗ	ㄷㅏ		v,adj,ida	1	
--든	ㄷㅡㄴ			p,eusi	1	
--든가	ㄷㅡㄴㄱㅏ			p,eusi	1	
 -든걸	ㄷㅡㄴㄱㅓㄹ	ㄷㅏ		v,adj,ida	1	
 -든고	ㄷㅡㄴㄱㅗ	ㄷㅏ		v,adj,ida	1	
 -든데	ㄷㅡㄴㄷㅔ	ㄷㅏ		v,adj,ida	1	
--든지	ㄷㅡㄴㅈㅣ			p,eusi	1	
 -디	ㄷㅣ	ㄷㅏ		v,adj,ida	2	
 -(으)라	ㄹㅏ	ㄹㄷㅏ		v	20	
 -(으)라고	ㄹㅏㄱㅗ	ㄹㄷㅏ		v	14	
@@ -263,8 +233,6 @@
 -(스)ㅂ네	ㅂㄴㅔ	ㄷㅏ		v,adj,ida	2	
 -(스)ㅂ네	ㅂㄴㅔ	ㄹㄷㅏ		v,adj	1	
 -(스)ㅂ늰다	ㅂㄴㅡㅣㄴㄷㅏ	ㄷㅏ		v,adj,ida	1	
--(스)ㅂ니까	ㅅㅡㅂㄴㅣㄲㅏ			p,f	1	
--(스)ㅂ니다	ㅅㅡㅂㄴㅣㄷㅏ			p,f	1	
 -(스)ㅂ디까	ㅂㄷㅣㄲㅏ	ㄷㅏ		v,adj,ida	1	
 -(스)ㅂ디다	ㅂㄷㅣㄷㅏ	ㄷㅏ		v,adj,ida	1	
 -(스)ㅂ딘다	ㅂㄷㅣㄴㄷㅏ	ㄷㅏ		v,adj,ida	1	
@@ -273,7 +241,6 @@
 -(으)시	ㅅㅣ		eusi	saob,euob,jaob	8	
 -(으)십시오	ㅇㅡㅅㅣㅂㅅㅣㅇㅗ	ㄷㅏ		v	7	
 -(으)십시오	ㅇㅡㅅㅣㅂㅅㅣㅇㅗ	ㅅㄷㅏ		v	1	
--아/어	ㅇㅓ			p,f	1	
 -아/어다	ㅏㄷㅏ	ㄷㅏ		v,adj	15	
 -아/어다	ㅓㄷㅏ	ㄷㅏ		v,adj	2	
 -아/어다	ㅇㅏㄷㅏ	ㄷㅏ		v,adj	1	
@@ -283,13 +250,8 @@
 -아/어다	ㅇㅏㄷㅏ	ㅅㄷㅏ		v,adj	1	
 -아/어다	ㅇㅓㄷㅏ	ㅅㄷㅏ		v,adj	1	
 -아/어다	ㅐㄷㅏ	ㅣㄷㅏ		v,adj	8	
--아/어도	ㅇㅏㄷㅗ	ㄷㅏ		v,adj	0	
--아/어서	ㅇㅏㅅㅓ	ㄷㅏ		v,adj	0	
--아/어요	ㅇㅏㅇㅛ	ㄷㅏ		v,adj	0	
--아/어요	ㅇㅓㅇㅛ			p,f	2	
 -아/어지이다	ㅇㅓㅈㅣㅇㅣㄷㅏ	ㅅㄷㅏ		v,adj	1	
 -아/어지다	ㅓㅈㅣㄷㅏ	ㄷㅏ		v,adj	1	
--았/었	ㅇㅏㅆ	ㄷㅏ	p	v,adj	300	
 -언만	ㅇㅓㄴㅁㅏㄴ	ㄷㅏ		v,adj,ida	1	
 -(으)오	ㅇㅗ	ㄷㅏ	euo	v,adj	17	
 -(으)오	ㅇㅗ	ㄹㄷㅏ	euo	v,adj	6	
@@ -321,7 +283,6 @@
 -(으)ㄴ들	ㄴㄷㅡㄹ	ㄹㄷㅏ		v,adj	2	
 -(으)ㄴ즉	ㄴㅈㅡㄱ	ㄷㅏ		v,adj,ida	1	
 -(으)ㄴ즉슨	ㄴㅈㅡㄱㅅㅡㄴ	ㄷㅏ		v,adj,ida	1	
--(으)ㄹ까	ㅇㅡㄹㄲㅏ			p	1	
 -(으)ㄹ깝쇼	ㄹㄲㅏㅂㅅㅛ	ㄷㅏ		v,adj,ida	1	
 -(으)ㄹ꼬	ㄹㄲㅗ	ㄷㅏ		v,adj,ida	1	
 -(으)ㄹ라	ㄹㄹㅏ	ㄷㅏ		v,adj,ida	11	
@@ -357,7 +318,6 @@
 -(으)ㄹ쏜가	ㄹㅆㅗㄴㄱㅏ	ㄷㅏ		v,adj,ida	1	
 -(으)ㄹ이만큼	ㄹㅇㅣㅁㅏㄴㅋㅡㅁ	ㄷㅏ		v,adj,ida	1	
 -(으)ㄹ작시면	ㄹㅈㅏㄱㅅㅣㅁㅕㄴ	ㄷㅏ		v	1	
--(으)ㄹ지	ㅇㅡㄹㅈㅣ			p	1	
 -(으)ㄹ지나	ㄹㅈㅣㄴㅏ	ㄷㅏ		v,adj,ida	1	
 -(으)ㄹ지니	ㄹㅈㅣㄴㅣ	ㄷㅏ		v,adj,ida	1	
 -(으)ㄹ지니라	ㄹㅈㅣㄴㅣㄹㅏ	ㄷㅏ		v,adj,ida	1	
@@ -378,10 +338,7 @@
 -(으)ㅁ도	ㄹㅇㅡㅁㄷㅗ	ㄷㄷㅏ		v,adj	1	
 -(으)ㅁ에랴	ㅁㅇㅔㄹㅑ	ㄷㅏ		v,adj,ida	1	
 -잡	ㅈㅏㅂ	ㄷㅏ	jab	v	2	
--죠	ㅈㅛ			p,f,eusi	1	
--지	ㅈㅣ			p,f,eusi	1	
--지만	ㅈㅣㅁㅏㄴ			p,f,euo,euob	5	
--지요	ㅈㅣㅇㅛ			p,f,eusi	1	
+-지만	ㅈㅣㅁㅏㄴ			p,f,euo,euob	4	
 -아/어다	ㅏㄷㅏ	ㅡㄷㅏ		v,adj	0	breaks 나라다 -> 나르다 with other paths
 -아/어다	ㅓㄷㅏ	ㅡㄷㅏ		v,adj	0	breaks 이러다 -> 이르다 with other paths
 -(으)셔요	ㅅㅕㅇㅛ	ㄷㅏ		v,adj,ida	0	ties a false candidate with the lemma on 8 paths, as in 시장하셔요 -> 시장하시다
