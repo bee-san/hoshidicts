@@ -1,0 +1,3 @@
+# Deliberate differences between this pack and Yomitan's Ancient Greek processors at d3c54c1 (docs/languages.md 8.2), checked by tools/check-yomitan.mjs.
+# kind	id	side	input	text	conditions	reason
+processor	decapitalize	*	/(^|[^\p{L}])Σ|Σ['’.:·\u0387]\p{L}/	*	*	Final_Sigma: JavaScript's toLowerCase writes ς for a Σ with a cased letter before it and none after it, skipping apostrophes, full stops, colons and the ano teleia. The pack's map (sources/case-maps.mjs) writes ς for a Σ at the end of the text or before a space or punctuation mark, so a Σ with no letter before it (Σ, Σ., Σ ν) gives ς, and one before an apostrophe or full stop with a letter after it (νΣ.α) gives ς where JavaScript gives σ.

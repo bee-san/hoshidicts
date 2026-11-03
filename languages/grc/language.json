@@ -105,25 +105,6 @@
         ]
       },
       {
-        "id": "removeEncliticAccent",
-        "name": "Remove the accent an enclitic adds",
-        "variants": [
-          [
-            {
-              "normalize": "NFD"
-            },
-            {
-              "pattern": "([\\u0301\\u0342][\\u0370-\\u03FF\\u1F00-\\u1FFF\\u0300\\u0302-\\u0341\\u0343-\\u036F]*)\\u0301",
-              "replace": "$1",
-              "repeat": true
-            },
-            {
-              "normalize": "NFC"
-            }
-          ]
-        ]
-      },
-      {
         "id": "decapitalize",
         "name": "Decapitalize text",
         "variants": [

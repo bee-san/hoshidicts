@@ -406,3 +406,61 @@ verb	1	ἐνεγκεῖν	φέρω	v	*
 nominal	1	τριακοσίων	τριακόσιοι	*	*
 nominal	1	μυρίους	μύριοι	*	*
 negative	0	οἶκος	οἰκέω	v	*
+clitic	1	ἄνθρωπός	ἄνθρωπος	n	*
+clitic	1	σῶμά	σῶμα	n	*
+clitic	1	ἔχουσί	ἔχω	v	*
+spelling	1	ξύν	σύν	*	*
+clitic	1	κοὐ	οὐ	*	*
+clitic	1	χὠ	ὁ	*	*
+constraint	0	τῷ	τώς	*	*
+constraint	0	ἄν	α	*	*
+constraint	0	σῇ	σής	*	*
+constraint	0	αἱ	η	*	*
+constraint	0	ὧν	η	*	*
+constraint	0	αἷς	η	*	*
+constraint	0	ἅς	η	*	*
+constraint	0	ἡ	υ	*	*
+constraint	0	ἅ	η	*	*
+constraint	0	ταῖν	τῆ	*	*
+constraint	0	τηφι	τῆ	*	*
+constraint	0	ἡ	α	*	*
+constraint	0	ἁ	η	*	*
+constraint	0	χεῖρα	χήρ	*	*
+constraint	0	μέν	μείς	*	*
+constraint	0	ἕως	ἑός	*	*
+constraint	0	ἦκα	ἵημι	*	*
+constraint	0	ἤχθη	αγω	*	*
+constraint	0	ἔστω	ἵστημι	*	*
+constraint	0	ὦ	α	*	*
+constraint	0	ἔστ’	σω	*	*
+constraint	0	ὤμῳ	οράω	*	*
+constraint	0	ῳω	οιομαι	*	*
+constraint	0	κακὰ	κάτω	*	*
+constraint	0	ἴασι	ἵημι	*	*
+constraint	0	ιειν	ἵημι	*	*
+constraint	0	ἴω	ἵημι	*	*
+constraint	0	ιειη	ἵημι	*	*
+constraint	0	ιετω	ἵημι	*	*
+constraint	0	ἰέναι	ἵημι	*	*
+constraint	0	ἴεν	ἵημι	*	*
+constraint	0	ησω	ἵημι	*	*
+constraint	0	ὦ	ἵημι	*	*
+constraint	0	εἶκε	ἵημι	*	*
+constraint	0	ἴσαν	οιδα	*	*
+constraint	0	ιεται	ἵημι	*	*
+constraint	0	εθῃ	ἵημι	*	*
+constraint	0	ἐγὼ	εγἱημι	*	*
+constraint	0	φάτο	φαμαι	*	*
+constraint	0	ἐτῶν	ὁ	*	*
+constraint	0	εἴα	εεἷς	*	*
+constraint	0	λόγος δέῃ	λόγος δεῖ	*	*
+constraint	0	λόγος ὑί	λόγος ὗς	*	*
+constraint	0	λόγος πολλῶν	λόγος πολύς	*	*
+constraint	0	λόγος ῥᾴω	λόγος ῥᾴδιος	*	*
+constraint	0	ἔμ’	ἐμέω	*	*
+constraint	0	σέ	σῦς	*	*
+constraint	0	ἄγε	ἄ	*	*
+constraint	0	λόγος γε	λόγος 	*	*
+constraint	0	βῆ	βάίνω	*	*
+constraint	0	ὦ	ός	*	*
+constraint	0	λόγος ’	λόγος α	*	*

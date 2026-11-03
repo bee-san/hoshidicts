@@ -14,7 +14,7 @@ import {writeFileSync} from 'node:fs';
 import {dirname, join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {
-  NFC, NFD, stripAccents, stripAll, hasAccent, circumflexToAcute, acuteToCircumflex, nuclei, recessive,
+  NFC, NFD, stripAccents, stripAll, hasAccent, circumflexToAcute, nuclei, recessive,
   PLAIN_VOWEL_CLASS, ACCENTED_VOWEL_CLASS, CONSONANT_CLASS, LETTERS, charClass,
 } from './greek.mjs';
 
@@ -141,19 +141,11 @@ function accentVariants(ending) {
 const V = PLAIN_VOWEL_CLASS;
 const C = CONSONANT_CLASS;
 const ACC = ACCENTED_VOWEL_CLASS;
-// The vowel that carries a nucleus's accent: not a vowel that starts a diphthong.
-const T = `(?:[αεηοΑΕΗΟ](?![ιυἰἱὐὑ])|[υΥ](?![ιἰἱ])|[ιωϊϋἀἁἐἑἠἡἰἱὀὁὐὑὠὡᾳῃῳᾀᾁᾐᾑᾠᾡΙΩἈἉἘἙἨἩἸἹὈὉὙὨὩᾼῌῼᾈᾉᾘᾙᾨᾩᾰᾱῐῑῠῡ])`;
-// A long-capable carrier: not ε or ο.
-const TL = `(?:[αηΑΗ](?![ιυἰἱὐὑ])|[υΥ](?![ιἰἱ])|[ιωϊϋἀἁἠἡἰἱὐὑὠὡᾳῃῳᾀᾁᾐᾑᾠᾡΙΩἈἉἨἩἸἹὙὨὩᾼῌῼᾈᾉᾘᾙᾨᾩᾱῑῡ])`;
-const N = `(?:[αεηοΑΕΗΟ][ιυἰἱὐὑ]|[υΥ][ιἰἱ]|${V})`;
-// A short-capable final syllable: one of α ε ι ο υ, or final -αι, -οι.
-const SHORT_ULT = `(?:[αεοιυϊϋἀἁἐἑἰἱὀὁὐὑᾰῐῠ](?![ιυἰἱὐὑ])${C}*|[αο][ιἰ])$`;
 
 const PLAIN_TARGETS = [...'αεηιουω'];
 const BREATHING_TARGETS = [...'ἀἁἐἑἠἡἰἱὀὁὐὑὠὡ'];
 const SUBSCRIPT_TARGETS = [...'ᾳῃῳᾀᾐᾠ'];
 const DIAERESIS_TARGETS = [...'ϊϋ'];
-const SINGLE = [...'βγδζθκλμνξπρστφχψ'];
 // The stem end of athematic verbs before -ωμι, -ημι, -υμι, -αμαι, -ημαι, -ειμι.
 const ATHEMATIC_ACCENT = [
   ['ιδ', 'ωμι'], ['ιθ', 'ημι'], ['ἱστ', 'ημι'], ['ιστ', 'ημι'], ['ἱ', 'ημι'], ['ι', 'ημι'], ['ιμπλ', 'ημι'], ['ιμπρ', 'ημι'], ['ιφ', 'ημι'], ['ικν', 'υμι'], ['υγν', 'υμι'], ['ιγν', 'υμι'],
@@ -171,16 +163,22 @@ function buildAccentTransform() {
   // No stem constraint keeps out a text with an accent elsewhere: such a text takes a second accent and finds
   // nothing, which costs less than a class test on every text.
   const gate = {};
-  // Verbs: an acute on the last vowel of the stem, before -ω (the penult) and -ομαι (the antepenult): a stem
-  // change on that vowel, the consonants after it left as they are (λυω → λύω, λειπω → λείπω, ἀγω → ἄγω,
-  // σῳζω → σῴζω, βουλομαι → βούλομαι). The last vowel of a diphthong carries it (παιδεύω, ἀκούω, αἴρω).
-  // Lower-case consonants: a stem's consonants after its last vowel are never capitals.
-  const lastVowel = (v, to) => ({from: [v], to, occurrence: 'last', between: '[βγδζθκλμνξπρστφχψ]', betweenMinLength: 0});
-  for (const v of [...PLAIN_TARGETS, ...DIAERESIS_TARGETS, ...BREATHING_TARGETS, ...SUBSCRIPT_TARGETS]) {
-    for (const ending of ['ω', 'ομαι']) {
-      add('accent', {type: 'suffix', inflected: ending, deinflected: ending, conditionsIn: ['v'], conditionsOut: ['v'], stemChange: lastVowel(v, acute(v))});
-    }
-  }
+  // Verbs: an acute on the last vowel of the stem, before -ω (the penult) and -ομαι (the antepenult)
+  // (λυω → λύω, λειπω → λείπω, ἀγω → ἄγω, σῳζω → σῴζω, βουλομαι → βούλομαι; the last vowel of a diphthong
+  // carries it: παιδεύω, ἀκούω). The rule puts a mark for the ending, an acute on the text's last vowel, then the
+  // ending back: one rule for every stem. Only a stem without an accent takes one.
+  const NO_ACCENT = charClass([...LETTERS.plainVowels, ...LETTERS.consonants]);
+  const ACUTE = Object.fromEntries([...PLAIN_TARGETS, ...DIAERESIS_TARGETS, ...BREATHING_TARGETS, ...SUBSCRIPT_TARGETS].map((v) => [v, acute(v)]));
+  const LONG = [...'αηιυω', ...'ἀἁἠἡἰἱὐὑὠὡ', ...SUBSCRIPT_TARGETS];
+  const CIRCUMFLEX = Object.fromEntries(LONG.map((v) => [v, NFC(v + '\u0342')]));
+  // The mark, a private-use code point, never leaves the rule: its last step writes the ending back.
+  const onLastVowel = (ending, map, conditions, extra = {}) => {
+    const m = '\uE000';
+    add('accent', {type: 'suffix', inflected: ending, deinflected: m, conditionsIn: conditions, conditionsOut: conditions, stemCharacters: NO_ACCENT, ...extra,
+      then: [{map, at: 'last'}, {map: {[m]: ending}, at: 'end'}]});
+  };
+  onLastVowel('ω', ACUTE, ['v']);
+  onLastVowel('ομαι', ACUTE, ['v']);
   for (const [stem, ending] of ATHEMATIC_ACCENT) {
     const n = nuclei(stem);
     if (!n.length) continue;
@@ -214,13 +212,10 @@ function buildAccentTransform() {
   // ῥητόρων → ῥήτωρ, δαιμόνων → δαίμων): an acute on the last vowel of the stem; a circumflex too where a long
   // vowel may stand before a short last syllable.
   for (const ending of ['α', 'η', 'ης', 'ας', 'ων', 'ωρ', 'υς', 'ις']) {
-    const shortUlt = ['α', 'ας', 'υς', 'ις'].includes(ending);
-    for (const v of [...PLAIN_TARGETS, ...BREATHING_TARGETS]) {
-      const rule = {type: 'suffix', inflected: ending, deinflected: ending, conditionsIn: ['n', 'adj'], conditionsOut: ['n', 'adj'], stemMinLength: 1};
-      add('accent', {...rule, stemChange: lastVowel(v, acute(v))});
-      if (shortUlt && !/[εο]/u.test(NFD(v))) add('accent', {...rule, stemChange: lastVowel(v, NFC(v + '\u0342'))});
-    }
+    onLastVowel(ending, ACUTE, ['n', 'adj'], {stemMinLength: 1});
   }
+  // A circumflex where a long vowel stands before a short last syllable (χώρα, but μοῖρα, γλῶσσα, ῥῆσις).
+  for (const ending of ['α', 'ας']) onLastVowel(ending, CIRCUMFLEX, ['n', 'adj'], {stemMinLength: 1});
   void PV;
 }
 
@@ -292,7 +287,6 @@ function literal(id, ending, lemma, conditionsOut, opts = {}) {
 
 const NA = ['n', 'adj'];
 const ADJ = ['adj'];
-const NAMES = []; // proper names: wiktionary-to-yomitan gives them no part of speech
 
 /**
  * Nouns and adjectives. Proper names, which wiktionary-to-yomitan lists
@@ -961,7 +955,7 @@ function augmentRules() {
   emitAug('πρου', 'προ', ['aug'], ['v']);
   // Unaugmented: Homeric and Ionic past forms, and verbs whose augment cannot be seen.
   // Only aug → v: the rule also applies to the text as written (docs/languages.md 7.2), where it only adds the verb reading.
-  for (const tail of ['ω', 'μαι', 'μι']) add('unaugmented', {type: 'suffix', inflected: tail, deinflected: tail, conditionsIn: ['aug'], conditionsOut: ['v'], stemMinLength: 1});
+  for (const tail of ['ω', 'μαι', 'μι']) add('unaugmented', {type: 'suffix', inflected: tail, deinflected: tail, conditionsIn: ['aug'], conditionsOut: ['v']});
   // Reduplication.
   const redupConsonants = ['β', 'γ', 'δ', 'κ', 'λ', 'μ', 'ν', 'π', 'τ', 'σ'];
   const emitRed = (inflected, deinflected, cin, cout, opts = {}) => withAccents('reduplication', inflected, deinflected, cin, cout, opts);
@@ -1547,8 +1541,8 @@ function buildClosedClasses() {
   closed('irregular-noun', 'irregular noun', '', 'Ποσειδῶν', ['Ποσειδῶνος', 'Ποσειδῶνι', 'Ποσειδῶνα', 'Ποσειδῶ', 'Πόσειδον', 'Ποσειδάων', 'Ποσειδάωνος', 'Ποσειδάωνι', 'Ποσειδάωνα', 'Ποσειδέων']);
   closed('irregular-noun', 'irregular noun', '', 'Ἄρης', ['Ἄρεως', 'Ἄρεος', 'Ἄρει', 'Ἄρη', 'Ἄρην', 'Ἆρες', 'Ἄρηος', 'Ἄρηϊ', 'Ἄρηα', 'Ἄρηι']);
   // Irregular adjectives and comparisons.
-  closed('pronoun', 'irregular adjective', 'Forms of μέγας and πολύς, whose stems change.', 'μέγας', ['μεγάλη', 'μέγα', 'μεγάλου', 'μεγάλης', 'μεγάλῳ', 'μεγάλῃ', 'μέγαν', 'μεγάλην', 'μεγάλοι', 'μεγάλαι', 'μεγάλα', 'μεγάλων', 'μεγάλοις', 'μεγάλαις', 'μεγάλους', 'μεγάλας', 'μεγάλω', 'μεγάλοισι', 'μεγάλοισιν', 'μεγάλῃσι', 'μεγάλῃσιν', 'μεγάλοιο', 'μεγάλης', 'μεγάλην'], {out: ['adj']});
-  closed('pronoun', 'irregular adjective', '', 'πολύς', ['πολλή', 'πολύ', 'πολλοῦ', 'πολλῆς', 'πολλῷ', 'πολλῇ', 'πολύν', 'πολλήν', 'πολλοί', 'πολλαί', 'πολλά', 'πολλῶν', 'πολλοῖς', 'πολλαῖς', 'πολλούς', 'πολλάς', 'πουλύς', 'πουλύ', 'πολέος', 'πολέες', 'πολέας', 'πολέων', 'πολέσι', 'πολέσσι', 'πολέεσσι', 'πολλοῖσι', 'πολλοῖσιν', 'πολλῇσι', 'πολλῇσιν', 'πολλόν', 'πολλός', 'πολλά', 'πολέα', 'πουλύν'], {out: ['adj']});
+  closed('irregular-adjective', 'irregular adjective', 'Forms of μέγας and πολύς, whose stems change.', 'μέγας', ['μεγάλη', 'μέγα', 'μεγάλου', 'μεγάλης', 'μεγάλῳ', 'μεγάλῃ', 'μέγαν', 'μεγάλην', 'μεγάλοι', 'μεγάλαι', 'μεγάλα', 'μεγάλων', 'μεγάλοις', 'μεγάλαις', 'μεγάλους', 'μεγάλας', 'μεγάλω', 'μεγάλοισι', 'μεγάλοισιν', 'μεγάλῃσι', 'μεγάλῃσιν', 'μεγάλοιο', 'μεγάλης', 'μεγάλην'], {out: ['adj']});
+  closed('irregular-adjective', 'irregular adjective', '', 'πολύς', ['πολλή', 'πολύ', 'πολλοῦ', 'πολλῆς', 'πολλῷ', 'πολλῇ', 'πολύν', 'πολλήν', 'πολλοί', 'πολλαί', 'πολλά', 'πολλῶν', 'πολλοῖς', 'πολλαῖς', 'πολλούς', 'πολλάς', 'πουλύς', 'πουλύ', 'πολέος', 'πολέες', 'πολέας', 'πολέων', 'πολέσι', 'πολέσσι', 'πολέεσσι', 'πολλοῖσι', 'πολλοῖσιν', 'πολλῇσι', 'πολλῇσιν', 'πολλόν', 'πολλός', 'πολλά', 'πολέα', 'πουλύν'], {out: ['adj']});
   closed('comparison', 'comparison', 'Irregular comparatives and superlatives (ἀμείνων, βελτίων, κρείττων, ἄριστος → ἀγαθός; μείζων, μέγιστος → μέγας; πλείων, πλεῖστος → πολύς).', 'ἀγαθός',
     ['ἀμείνων', 'ἄμεινον', 'ἀμείνονος', 'ἀμείνονι', 'ἀμείνονα', 'ἀμείνω', 'ἀμείνονες', 'ἀμείνους', 'ἀμεινόνων', 'ἀμείνοσι', 'βελτίων', 'βέλτιον', 'βελτίονος', 'βελτίονα', 'βελτίω', 'βελτίονες', 'βελτίους', 'βελτιόνων', 'κρείττων', 'κρεῖττον', 'κρείττονος', 'κρείττονα', 'κρείττω', 'κρείττονες', 'κρείττους', 'κρειττόνων', 'κρείσσων', 'κρεῖσσον', 'κρείσσονος', 'κρείσσονα', 'κρείσσω', 'κρείσσονες', 'κρείσσους',
       'ἄριστος', 'ἀρίστη', 'ἄριστον', 'ἀρίστου', 'ἀρίστης', 'ἀρίστῳ', 'ἄριστοι', 'ἄρισται', 'ἄριστα', 'ἀρίστων', 'ἀρίστοις', 'ἀρίστους', 'βέλτιστος', 'βελτίστη', 'βέλτιστον', 'βέλτιστοι', 'βέλτιστα', 'βελτίστου', 'κράτιστος', 'κρατίστη', 'κράτιστον', 'κράτιστοι', 'κράτιστα', 'κρατίστου', 'κρατίστων', 'λῴων', 'λῷστος', 'ἀρείων', 'φέρτερος', 'φέρτατος', 'φέριστος'], {out: ['adj']});
@@ -1574,7 +1568,7 @@ function buildSpelling() {
   }
   transform('spelling', 'spelling', 'The older spelling ξυν- for συν- (Thucydides and tragedy: ξυμφορά, ξυνίημι).');
   for (const [a, b] of [['ξυν', 'συν'], ['ξυμ', 'συμ'], ['ξυγ', 'συγ'], ['ξυλ', 'συλ'], ['ξυσ', 'συσ'], ['ξυ', 'συ'], ['ξύν', 'σύν'], ['ξύμ', 'σύμ'], ['ξύγ', 'σύγ'], ['ξύλ', 'σύλ'], ['ξύ', 'σύ'], ['Ξυν', 'Συν'], ['Ξυμ', 'Συμ']]) {
-    prefix('spelling', a, b, [], [], {stem: {stemMinLength: 2}});
+    prefix('spelling', a, b, [], []);
   }
 
 }
@@ -1616,7 +1610,15 @@ function buildClitics() {
   ];
   for (const [a, b] of crasis) {
     if (a === 'ἁ') continue;
-    prefix('crasis', a, b, [], [], {stem: {stemMinLength: 1}, writtenOnly: true});
+    prefix('crasis', a, b, [], [], {writtenOnly: true});
+  }
+  // The acute an enclitic puts on the last syllable of the word before it, only where the word has its own accent
+  // before it (a word accented on the last syllable keeps its accent).
+  transform('enclitic-accent', 'enclitic accent', 'The second accent an enclitic gives the word before it (ἄνθρωπός τις, σῶμά τι, ἔχουσί τινες → ἄνθρωπος, σῶμα, ἔχουσι).');
+  for (const v of ['α', 'ε', 'η', 'ι', 'ο', 'υ', 'ω', 'ᾳ', 'ῃ', 'ῳ']) {
+    for (const f of ['', 'ς', 'ν', 'ρ', 'ξ', 'ψ']) {
+      add('enclitic-accent', {type: 'suffix', inflected: acute(v) + f, deinflected: v + f, conditionsIn: [], conditionsOut: [], stemContains: ACC});
+    }
   }
   transform('enclitic-particle', 'enclitic particle', 'A particle written onto the word before it: -γε, -περ (ἔμοιγε, οὗπερ, ἧσπερ, ἐπείπερ).');
   for (const [e, l] of [['γε', ''], ['γ’', ''], ['περ', ''], ['σπερ', 'ς'], ['σγε', 'ς']]) {
@@ -1663,13 +1665,18 @@ export function format(pack) {
 function compact(rules) {
   const groups = new Map();
   const order = [];
-  for (const r of rules) {
-    if (r.type !== 'suffix' && r.type !== 'prefix' && r.type !== 'wholeWord') {
+  for (let r of rules) {
+    if (r.type === 'wholeWord') {
+      // A whole word is a suffix whose stem is empty (no code point is in the class []): suffix rules are
+      // indexed by their endings, so the cross product below stays as fast as single rules.
+      r = {...r, type: 'suffix', stemCharacters: '[]'};
+    }
+    if (r.type !== 'suffix') {
       order.push({single: r});
       continue;
     }
     const {type, inflected, deinflected, ...shape} = r;
-    const key = `${type}\u0000${JSON.stringify(shape)}`;
+    const key = JSON.stringify(shape);
     if (!groups.has(key)) {
       const g = {type, shape, pairs: []};
       groups.set(key, g);
@@ -1681,11 +1688,9 @@ function compact(rules) {
     if (single) return single;
     if (group.pairs.length === 1) return {type: group.type, inflected: group.pairs[0][0], deinflected: group.pairs[0][1], ...group.shape};
     const {conditionsIn, conditionsOut, ...extra} = group.shape;
-    // A cross product with an empty other side is the same set of suffix (prefix) rules (docs/languages.md 7.3);
-    // whole words are prefixes whose stem must be empty (no code point is in the class []).
-    const [prefixes, suffixes] = group.type === 'suffix' ? [[['', '']], group.pairs] : [group.pairs, [['', '']]];
-    const empty = group.type === 'wholeWord' ? {stemCharacters: '[]'} : {};
-    return {type: 'circumfix', prefixes, suffixes, conditionsIn, conditionsOut, ...extra, ...empty};
+    // A cross product with no prefix is the same set of suffix rules (docs/languages.md 7.3). Prefix rules stay
+    // single: a cross product of prefixes alone is tried on every text, which made lookups 0.3 ms slower.
+    return {type: 'circumfix', prefixes: [['', '']], suffixes: group.pairs, conditionsIn, conditionsOut, ...extra};
   });
 }
 
@@ -1719,4 +1724,4 @@ if (import.meta.url === `file://${process.argv[1]}`) {
 export {conditions, transforms, transform, add, suffix, prefix, whole, accentVariants, buildAccentTransform, buildNominal, nominal, literal,
   thematicEndings, participles, tenseEndings, contractEndings, stemRules, augmentRules, verbEnding, BOTH,
   buildIrregular, buildAthematic, buildClosedClasses, buildClitics,
-  THEN_CIRC_TO_ACUTE, THEN_ACUTE_TO_CIRC, THEN_STRIP_ACCENTS, UPPER, NOT_SPACE, NA, ADJ, NAMES, here};
+  THEN_CIRC_TO_ACUTE, THEN_ACUTE_TO_CIRC, THEN_STRIP_ACCENTS, UPPER, NOT_SPACE, NA, ADJ, here};
