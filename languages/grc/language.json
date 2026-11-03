@@ -196,6 +196,18 @@
         ]
       },
       {
+        "id": "capitalizeFirstLetter",
+        "name": "Capitalize first letter",
+        "optional": true,
+        "variants": [
+          [
+            {
+              "case": "upperFirst"
+            }
+          ]
+        ]
+      },
+      {
         "id": "removeAccents",
         "name": "Remove accents",
         "variants": [
@@ -213,7 +225,7 @@
         ]
       },
       {
-        "id": "removeDiacritics",
+        "id": "removeAlphabeticDiacritics",
         "name": "Remove accents, breathings and other diacritics",
         "variants": [
           [
@@ -221,10 +233,73 @@
               "normalize": "NFD"
             },
             {
-              "strip": "{mark}"
+              "strip": "[\\u0300-\\u036F]"
+            }
+          ]
+        ]
+      },
+      {
+        "id": "convertLatinToGreek",
+        "name": "Convert Latin letters to Greek",
+        "variants": [
+          [
+            {
+              "normalize": "NFD"
             },
             {
-              "normalize": "NFC"
+              "strip": "[\\u0300-\\u036F]"
+            },
+            {
+              "map": {
+                "th": "θ",
+                "ph": "φ",
+                "ch": "χ",
+                "ps": "ψ",
+                "Th": "Θ",
+                "Ph": "Φ",
+                "Ch": "Χ",
+                "Ps": "Ψ",
+                "a": "α",
+                "b": "β",
+                "g": "γ",
+                "d": "δ",
+                "e": "ε",
+                "z": "ζ",
+                "i": "ι",
+                "k": "κ",
+                "l": "λ",
+                "m": "μ",
+                "n": "ν",
+                "x": "ξ",
+                "o": "ο",
+                "p": "π",
+                "r": "ρ",
+                "s": "σ",
+                "t": "τ",
+                "u": "υ",
+                "A": "Α",
+                "B": "Β",
+                "G": "Γ",
+                "D": "Δ",
+                "E": "Ε",
+                "Z": "Ζ",
+                "I": "Ι",
+                "K": "Κ",
+                "L": "Λ",
+                "M": "Μ",
+                "N": "Ν",
+                "X": "Ξ",
+                "O": "Ο",
+                "P": "Π",
+                "R": "Ρ",
+                "S": "Σ",
+                "T": "Τ",
+                "U": "Υ"
+              }
+            },
+            {
+              "pattern": "σ$",
+              "replace": "ς"
             }
           ]
         ]
@@ -256,6 +331,17 @@
     "displayTransforms": {}
   },
   "settings": [
+    {
+      "id": "capitalizedNames",
+      "type": "boolean",
+      "default": false,
+      "label": "Look up lowercase words with a capital",
+      "description": "Also look up a word written in lowercase as a capitalised dictionary entry (a name or an ethnic adjective that the text does not capitalise). It doubles the work of a lookup.",
+      "group": "lookup",
+      "effect": {
+        "preprocessor": "capitalizeFirstLetter"
+      }
+    },
     {
       "id": "doricAlpha",
       "type": "boolean",

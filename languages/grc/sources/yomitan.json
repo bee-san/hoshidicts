@@ -1,0 +1,221 @@
+{
+  "schema": 1,
+  "conditions": {
+    "v": {
+      "name": "Verb",
+      "isDictionaryForm": true
+    },
+    "n": {
+      "name": "Noun",
+      "isDictionaryForm": true
+    },
+    "adj": {
+      "name": "Adjective",
+      "isDictionaryForm": true
+    }
+  },
+  "transforms": [
+    {
+      "id": "2nd person singular present active indicative",
+      "name": "2nd person singular present active indicative",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "εις", "deinflected": "ω", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "εις", "deinflected": "εω", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "3rd person singular present active indicative",
+      "name": "3rd person singular present active indicative",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ει", "deinflected": "ω", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "ει", "deinflected": "εω", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "1st person plural present active indicative",
+      "name": "1st person plural present active indicative",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ομεν", "deinflected": "ω", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "2nd person plural present active indicative",
+      "name": "2nd person plural present active indicative",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ετε", "deinflected": "ω", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "3rd person plural present active indicative",
+      "name": "3rd person plural present active indicative",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ουσι", "deinflected": "ω", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "ουσιν", "deinflected": "ω", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "2nd person singular present middle indicative",
+      "name": "2nd person singular present middle indicative",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ῃ", "deinflected": "ομαι", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "ει", "deinflected": "ομαι", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "3rd person singular present middle indicative",
+      "name": "3rd person singular present middle indicative",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "εται", "deinflected": "ομαι", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "1st person plural present middle indicative",
+      "name": "1st person plural present middle indicative",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ομεθα", "deinflected": "ομαι", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "2nd person plural present middle indicative",
+      "name": "2nd person plural present middle indicative",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "εσθε", "deinflected": "ομαι", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "3rd person plural present middle indicative",
+      "name": "3rd person plural present middle indicative",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ονται", "deinflected": "ομαι", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "genitive singular",
+      "name": "genitive singular",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ου", "deinflected": "ος", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "ας", "deinflected": "α", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "ου", "deinflected": "ας", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "ου", "deinflected": "ον", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "ης", "deinflected": "η", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "dative singular",
+      "name": "dative singular",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ω", "deinflected": "ος", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "α", "deinflected": "ας", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "ω", "deinflected": "ον", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "accusative singular",
+      "name": "accusative singular",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ον", "deinflected": "ος", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "αν", "deinflected": "α", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "αν", "deinflected": "ας", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "ην", "deinflected": "η", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "vocative singular",
+      "name": "vocative singular",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ε", "deinflected": "ος", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "α", "deinflected": "ας", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "η", "deinflected": "η", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "nominative plural",
+      "name": "nominative plural",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "οι", "deinflected": "ος", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "αι", "deinflected": "α", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "αι", "deinflected": "ας", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "α", "deinflected": "ον", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "αι", "deinflected": "η", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "genitive plural",
+      "name": "genitive plural",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ων", "deinflected": "ος", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "ων", "deinflected": "α", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "ων", "deinflected": "ας", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "ων", "deinflected": "ον", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "ων", "deinflected": "η", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "dative plural",
+      "name": "dative plural",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "οις", "deinflected": "ος", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "αις", "deinflected": "α", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "αις", "deinflected": "ας", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "οις", "deinflected": "ον", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "αις", "deinflected": "η", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "accusative plural",
+      "name": "accusative plural",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ους", "deinflected": "ος", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "ας", "deinflected": "α", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "α", "deinflected": "ον", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "ας", "deinflected": "η", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "vocative plural",
+      "name": "vocative plural",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "οι", "deinflected": "ος", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "αι", "deinflected": "α", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "αι", "deinflected": "ας", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "α", "deinflected": "ον", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "suffix", "inflected": "αι", "deinflected": "η", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
+      "id": "accusative singular masculine",
+      "name": "accusative singular masculine",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ον", "deinflected": "ος", "conditionsIn": [], "conditionsOut": ["adj"]}
+      ]
+    },
+    {
+      "id": "nominalization",
+      "name": "nominalization",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ος", "deinflected": "εω", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    }
+  ]
+}

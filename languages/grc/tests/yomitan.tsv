@@ -1,0 +1,62 @@
+# GPL-3.0-or-later; Copyright (C) 2025-2026 Yomitan Authors
+# https://github.com/yomidevs/yomitan/blob/d3c54c10264673eca0d66b970ef74cd5c8b048e3/test/language/ancient-greek-transforms.test.js
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+verbs	1	λύεις	λύω	v	2nd person singular present active indicative
+verbs	1	λύει	λύω	v	3rd person singular present active indicative
+verbs	1	λύομεν	λύω	v	1st person plural present active indicative
+verbs	1	λύετε	λύω	v	2nd person plural present active indicative
+verbs	1	λύουσι	λύω	v	3rd person plural present active indicative
+verbs	1	λύουσιν	λύω	v	3rd person plural present active indicative
+verbs	1	φιλεις	φιλεω	v	2nd person singular present active indicative
+verbs	1	φιλει	φιλεω	v	3rd person singular present active indicative
+verbs	1	φιλεομεν	φιλεω	v	1st person plural present active indicative
+verbs	1	φιλεετε	φιλεω	v	2nd person plural present active indicative
+verbs	1	φιλεουσι	φιλεω	v	3rd person plural present active indicative
+verbs	1	φιλεουσιν	φιλεω	v	3rd person plural present active indicative
+verbs	1	δεχῃ	δεχομαι	v	2nd person singular present middle indicative
+verbs	1	δεχει	δεχομαι	v	2nd person singular present middle indicative
+verbs	1	δεχεται	δεχομαι	v	3rd person singular present middle indicative
+verbs	1	δεχομεθα	δεχομαι	v	1st person plural present middle indicative
+verbs	1	δεχεσθε	δεχομαι	v	2nd person plural present middle indicative
+verbs	1	δεχονται	δεχομαι	v	3rd person plural present middle indicative
+nouns	1	σκιας	σκια	n	genitive singular
+nouns	1	σκιαν	σκια	n	accusative singular
+nouns	1	σκιαι	σκια	n	nominative plural
+nouns	1	σκιων	σκια	n	genitive plural
+nouns	1	σκιαις	σκια	n	dative plural
+nouns	1	σκιας	σκια	n	accusative plural
+nouns	1	σκιαι	σκια	n	vocative plural
+nouns	1	φωνης	φωνη	n	genitive singular
+nouns	1	φωνην	φωνη	n	accusative singular
+nouns	1	φωναι	φωνη	n	nominative plural
+nouns	1	φωνων	φωνη	n	genitive plural
+nouns	1	φωναις	φωνη	n	dative plural
+nouns	1	φωνας	φωνη	n	accusative plural
+nouns	1	φωναι	φωνη	n	vocative plural
+nouns	1	νεανιου	νεανιας	n	genitive singular
+nouns	1	νεανια	νεανιας	n	dative singular
+nouns	1	νεανιαν	νεανιας	n	accusative singular
+nouns	1	νεανια	νεανιας	n	vocative singular
+nouns	1	νεανιαι	νεανιας	n	nominative plural
+nouns	1	νεανιων	νεανιας	n	genitive plural
+nouns	1	νεανιαις	νεανιας	n	dative plural
+nouns	1	νεανιαι	νεανιας	n	vocative plural
+nouns	1	ανθρωπου	ανθρωπος	n	genitive singular
+nouns	1	ανθρωπω	ανθρωπος	n	dative singular
+nouns	1	ανθρωπον	ανθρωπος	n	accusative singular
+nouns	1	ανθρωπε	ανθρωπος	n	vocative singular
+nouns	1	ανθρωποι	ανθρωπος	n	nominative plural
+nouns	1	ανθρωπων	ανθρωπος	n	genitive plural
+nouns	1	ανθρωποις	ανθρωπος	n	dative plural
+nouns	1	ανθρωπους	ανθρωπος	n	accusative plural
+nouns	1	ανθρωποι	ανθρωπος	n	vocative plural
+nouns	1	δωρου	δωρον	n	genitive singular
+nouns	1	δωρω	δωρον	n	dative singular
+nouns	1	δωρα	δωρον	n	nominative plural
+nouns	1	δωρων	δωρον	n	genitive plural
+nouns	1	δωροις	δωρον	n	dative plural
+nouns	1	δωρα	δωρον	n	accusative plural
+nouns	1	δωρα	δωρον	n	vocative plural
+nouns	1	γεωργος	γεωργεω	v	nominalization
+nouns	1	πονος	πονεω	v	nominalization
+adjectives	1	καλον	καλος	adj	accusative singular masculine
