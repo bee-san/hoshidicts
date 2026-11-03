@@ -226,9 +226,9 @@ const SEPARABLE = words(`
     回国 吃素 告状 报案 破案 作案 保密 告密 泄密 发财 发言 发誓 发呆 发疯 发愁 发脾气
     发牢骚 发芽 接吻 鼓掌 拍戏 上台 下台 上岗 下岗 退休 入伍 参军 掌权 用心 用功
     吃苦头 拍马屁 吹牛 吹牛皮 走后门 开夜车 泼冷水 碰钉子 打哈欠 打喷嚏 打瞌睡 打官司
-    打仗 打车 打包 打卡 打雷 打猎 打坐 打气 打盹 摔跤 着急 随便 吃豆腐 放鸽子 冒泡 死心 碰头
+    打仗 打车 打包 打卡 打雷 打猎 打坐 打气 打盹 摔跤 着急 随便 吃豆腐 放鸽子 冒泡 死心
     受欢迎 圆梦 岔气 惹祸 闯祸 打钩 托福 点赞 落地 要脸 赔不是 走运 超车 致辞 出丑
-    出差 出院 住校 问好 道谢 拜师 帮倒忙 伤脑筋 开小差 开绿灯 开后门 走弯路 走过场
+    出差 出院 住校 道谢 拜师 帮倒忙 伤脑筋 开小差 开绿灯 开后门 走弯路 走过场
     凑热闹 唱反调 绕圈子 兜圈子 打圆场 下功夫 费工夫 花工夫 碰运气 交白卷 拖后腿 泄气
     吃闭门羹 发电报 打电报`);
 const COMPOSITIONAL = words(`
@@ -403,8 +403,14 @@ const INSERTED_BEFORE_MEASURE = `[${WORD_CHARS}${NUMERALS}]{0,5}[${WORD_CHARS}]`
 const MEASURE_OBJECTS = new Set(t('口门年天次场顿把张本头节份件首支根盒包瓶期段番声眼步身个下'));
 // Characters that may not stand right before an object, because with it they
 // make another word or a measure word with its noun (见下面, 见过大场面, 碰那面
-// 镜子).
-const NOT_BEFORE = new Map([...spellings('面')].map((o) => [o, t('这那上下场')]));
+// 镜子, 路上开车, 搬回家, 完成回家作业, 动门把手), measured on Tatoeba and Lu
+// Xun's stories.
+const NOT_BEFORE = new Map([
+    ...spellings('面').map((o) => [o, t('这那上下场')]),
+    ...spellings('车').map((o) => [o, t('开上下')]),
+    ...spellings('家').map((o) => [o, t('回')]),
+    ...spellings('手').map((o) => [o, t('把')]),
+]);
 const ADJ = `[${t('好小白')}]|${spellings('大学').join('|')}`;
 const OTHER_DE = `[^的]*[^${t('我你您他她它咱谁们己家人年天月周时钟头个次')}的]的`;
 const COMMON = `的|${ADJ}|${OTHER_DE}`;

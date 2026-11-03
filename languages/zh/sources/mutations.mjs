@@ -55,6 +55,9 @@ const mutations = {
     'separable: next/last after 上 and 下': (t) => separable(t, (p) => p.replace(/\(\?!\[一二两兩[^\]]*\]\|/gu, '(?!').replace(/\(\?!\[一二两兩[^\]]*\]\)/gu, '')),
     'separable: measure-word objects after numerals': (t) => separable(t, (p, r) => (['口', '门', '門', '年'].includes(r.anchorSuffix) ? p.replace(/\{0,5\}\[[^\]]*\](?=[^\]]*$)/u, '{1,6}') : p)),
     'separable: 这 那 上 下 场 before 面': (t) => separable(t, (p, r) => (r.anchorSuffix === '面' ? p.replace(/\{0,5\}\[[^\]]*\](?=面\$$)/u, '{1,6}') : p)),
+    'separable: 开 上 下 before 车': (t) => separable(t, (p, r) => (['车', '車'].includes(r.anchorSuffix) ? p.replace(/\{0,5\}\[[^\]]*\](?=[车車]\$$)/u, '{1,6}') : p)),
+    'separable: 回 before 家': (t) => separable(t, (p, r) => (r.anchorSuffix === '家' ? p.replace(/\{0,5\}\[[^\]]*\](?=家\$$)/u, '{1,6}') : p)),
+    'separable: 把 before 手': (t) => separable(t, (p, r) => (r.anchorSuffix === '手' ? p.replace(/\{0,5\}\[[^\]]*\](?=手\$$)/u, '{1,6}') : p)),
     'separable: no 很 in the insertions': (t) => separable(t, (p) => p.replaceAll('很', '')),
     'separable: 度 as a verb of 假 (度过假期)': (t) => separable(t, (p, r) => (r.anchorSuffix === '假' ? p.replace(/\(((?:[\u4E00-\u9FFF]\|?)+)\)/u, (m, v) => `(${v}|度)`) : p)),
     // potential forms: exclusions, groups, the separate 明白/清楚 rules, 会.

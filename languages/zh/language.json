@@ -4864,6 +4864,7 @@
     "transforms": "transforms.json",
     "traceSelection": "shortest",
     "formOf": "follow",
+    "untaggedTerms": "pass",
     "functionWords": ["的", "了", "着", "著", "吗", "嗎", "呢", "吧", "啊", "呀", "嘛", "啦", "哦", "喔", "哇", "么", "麼"],
     "variantPasses": []
   },

@@ -136,6 +136,12 @@ negatives	0	點三十分的火	點火	*	*
 negatives	0	见下面	见面	*	*
 negatives	0	碰那面	碰面	*	*
 negatives	0	见过大场面	见面	*	*
+negatives	0	上开车	上车	*	*
+negatives	0	搬回家	搬家	*	*
+negatives	0	成回家	成家	*	*
+negatives	0	动门把手	动手	*	*
+negatives	0	问得好	问好	*	*
+negatives	0	碰我的头	碰头	*	*
 # An adjective right after the verb modifies a longer noun.
 negatives	0	上大学	上学	*	*
 negatives	0	上小学	上学	*	*
