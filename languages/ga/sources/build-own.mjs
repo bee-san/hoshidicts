@@ -52,7 +52,8 @@ const OUT = outIndex >= 0 ? args[outIndex + 1] : join(here, 'own.json');
 // definitions (v over v_phr, n over np and ns), which
 // tools/merge-transforms.mjs requires to be equal. A rule's `v` output and a
 // dictionary's `v` tag still stand for the same bits, so no deinflection or
-// lookup changes.
+// lookup changes. adv is Yomitan's too; only the lower-cased outputs of
+// the h, t and n prefixes give it.
 const conditions = {
     v: {name: 'Verb', isDictionaryForm: true, subConditions: ['v_phr']},
     v_phr: {name: 'Phrasal verb', isDictionaryForm: true},
@@ -60,6 +61,7 @@ const conditions = {
     np: {name: 'Noun plural', isDictionaryForm: true},
     ns: {name: 'Noun singular', isDictionaryForm: true},
     adj: {name: 'Adjective', isDictionaryForm: true},
+    adv: {name: 'Adverb', isDictionaryForm: true},
 };
 
 // Classes of language.json used by the rules.
@@ -160,18 +162,23 @@ prefix('eclipsis', 'n-', '', [], {stemStartsWith: LOWER_VOWEL});
 prefix('eclipsis', 'n', '', [], {stemStartsWith: UPPER_VOWEL});
 // A capital after the prefix marks a name (nÉirinn) or a title (an tAire,
 // i nAontroim); dictionaries list titles in lower case, so both are given.
+// The lower-cased output is a dictionary form of any tagged part of speech
+// and no rule takes it further. Lenition and eclipsis have no such output: on
+// the Irish Wikipedia's frequent words it put corcaí (marshes) before
+// Corcaigh for Chorcaí (1,826 tokens) while fixing Fhéile (666; Known gaps).
 const LOWER_FIRST = [{case: 'lowerFirst'}];
-add('eclipsis', {type: 'prefix', inflected: 'n', deinflected: '', conditionsIn: [], conditionsOut: [], stemStartsWith: UPPER_VOWEL, then: LOWER_FIRST});
+const LOWER_OUT = ['n', 'v', 'adj', 'adv'];
+add('eclipsis', {type: 'prefix', inflected: 'n', deinflected: '', conditionsIn: [], conditionsOut: LOWER_OUT, stemStartsWith: UPPER_VOWEL, then: LOWER_FIRST});
 
 transform('h-prefix', 'h before a vowel', 'h before a vowel after na (na hoíche), a (her: a hathair), le, go, chomh, ní (copula) and the ordinals: hoíche → oíche, hÉireann → Éireann, hathair → athair.');
 prefix('h-prefix', 'h', '', [], {stemStartsWith: VOWEL});
 prefix('h-prefix', 'h-', '', [], {stemStartsWith: VOWEL});
-add('h-prefix', {type: 'prefix', inflected: 'h', deinflected: '', conditionsIn: [], conditionsOut: [], stemStartsWith: UPPER_VOWEL, then: LOWER_FIRST});
+add('h-prefix', {type: 'prefix', inflected: 'h', deinflected: '', conditionsIn: [], conditionsOut: LOWER_OUT, stemStartsWith: UPPER_VOWEL, then: LOWER_FIRST});
 
 transform('t-prefix', 't before a vowel or s', 't- before a vowel of a masculine noun after the article (an t-uisce, an tUachtarán, an tAire) and t before s after an (an tsráid, an tsúil): t-uisce → uisce, tUachtarán → Uachtarán, tAire → aire, tsráid → sráid.');
 prefix('t-prefix', 't-', '', [], {stemStartsWith: LOWER_VOWEL});
 prefix('t-prefix', 't', '', [], {stemStartsWith: UPPER_VOWEL});
-add('t-prefix', {type: 'prefix', inflected: 't', deinflected: '', conditionsIn: [], conditionsOut: [], stemStartsWith: UPPER_VOWEL, then: LOWER_FIRST});
+add('t-prefix', {type: 'prefix', inflected: 't', deinflected: '', conditionsIn: [], conditionsOut: LOWER_OUT, stemStartsWith: UPPER_VOWEL, then: LOWER_FIRST});
 prefix('t-prefix', 'ts', 's', [], {stemStartsWith: AFTER_MUTATION});
 prefix('t-prefix', 'tS', 'S', [], {stemStartsWith: AFTER_MUTATION});
 
@@ -701,8 +708,8 @@ transform('plural', 'plural', 'Strong plurals: -(e)anna (scoileanna, amanna), -�
     // -eacha, -neacha and a bare -acha are left out: they read the plural
     // of -(e)ach adjectives as nouns (réigiúnacha → réigiún, straitéiseacha
     // → straitéis, leictreonacha → leictreon), which adj-plural reads right.
-    endings('plural', [['anna', ''], ['eanna', ''], ['í', ''], ['í', 'e'], ['aí', 'a'], ['aí', ''], ['acha', 'a'],
-        ['racha', 'air'], ['reacha', 'ir'], ['ithe', 'í'], ['te', ''], ['te', 'e'], ['ta', ''], ['rí', 'ir'],
+    endings('plural', [['anna', ''], ['eanna', ''], ['í', ''], ['í', 'e'], ['aí', 'a'], ['acha', 'a'],
+        ['ithe', 'í'], ['te', ''], ['te', 'e'], ['rí', 'ir'],
         ['taí', 'adh'], ['thaí', 'adh'], ['tí', 'eadh'], ['uithe', 'ú'], ['úlacha', 'úil'], ['álacha', 'áil'], ['ánacha', 'áin'], ['ónacha', 'óin']], N,
     {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
     endings('plural', [['the', ''], ['nna', ''], ['ite', ''], ['thaí', ''], ['anta', '']], N, {stemMinLength: 1, stemCharacters: NO_SPACE, stemEndsWith: VOWEL});
@@ -713,6 +720,20 @@ transform('plural', 'plural', 'Strong plurals: -(e)anna (scoileanna, amanna), -�
     // -each adjective (straitéiseacha).
     endings('plural', [['eacha', '']], N, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: '[lmnr]'});
     endings('plural', [['neacha', '']], N, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: '[m]'});
+    // -ta after d, l, n or s (scéal → scéalta, ceol → ceolta, rón → rónta):
+    // all 103 such plurals of wty-ga-en; after other consonants -ta is a
+    // verbal adjective or a genitive.
+    endings('plural', [['ta', '']], N, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: '[dlns]'});
+    // Syncopated -air and -ir nouns: cathair → cathracha, máthair →
+    // máthracha, litir → litreacha. wty-ga-en's 39 such plurals have c, h, s
+    // or t before -racha and d, f, g, h or t before -reacha; after other
+    // letters they would read other words as -air and -ir nouns.
+    // The stem seacht- is left out: seachtracha is the plural of the adjective
+    // seachtrach (external), which wty-ga-en lacks, and the rule then led to
+    // seachtair, a form of seachtar (seven people): 9,181 tokens of the
+    // Irish Wikipedia's 10,000 most frequent words (Naisc sheachtracha).
+    endings('plural', [['racha', 'air']], N, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: '[chst]', stemNotStartsWithText: 'seacht'});
+    endings('plural', [['reacha', 'ir']], N, {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: '[dfght]'});
     // Compounds of duine: seandaoine → seanduine, andaoine → anduine.
     suffix('plural', 'daoine', 'duine', N, {stemMinLength: 2, stemCharacters: NO_SPACE});
     // -eanta after r (uair → uaireanta); -anta after a vowel is above
@@ -728,6 +749,14 @@ transform('plural', 'plural', 'Strong plurals: -(e)anna (scoileanna, amanna), -�
         whole('plural', form, lemma, N);
     }
 }
+
+// The plural in -aí of a noun without a final vowel (rud → rudaí) is its own
+// transform, ordered after the adjective forms: the same ending is the
+// comparative of -ach adjectives (níos tábhachtaí → tábhachtach, not
+// tábhacht). The other plurals come before the adjective forms (daltaí →
+// dalta, not daltach; acmhainní → acmhainn, not acmhainneach).
+transform('plural-ai', 'plural', 'Plural in -aí of a noun ending in a consonant: rudaí → rud.');
+endings('plural-ai', [['aí', '']], ['n'], {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
 
 transform('adj-plural', 'plural', 'Plural of an adjective: móra, beaga, deasa, tábhachtacha, díreacha; with syncope ramhra, folmha, socra, láidre.');
 endings('adj-plural', [['a', '']], ['adj'], {stemMinLength: 2, stemCharacters: NO_SPACE, stemEndsWith: CONSONANT});
@@ -816,12 +845,12 @@ for (const form of ['ba', 'níorbh', 'arbh', 'gurbh', 'nárbh', 'cérbh', 'ab', 
 // share endings with (faisnéise, the genitive of faisnéis, is also its
 // present subjunctive), so the nominal transforms come before the verb
 // endings; the mutations and the irregular forms keep their place first.
-const NOMINAL = ['adj-e', 'adj-plural', 'comparative', 'plural', 'noun-a', 'slender', 'genitive'];
+const NOMINAL = ['plural', 'adj-e', 'adj-plural', 'comparative', 'plural-ai', 'noun-a', 'slender', 'genitive'];
 const group = (t) => (['past', 'lenition', 'eclipsis', 'h-prefix', 't-prefix', 'elision', 'emphatic'].includes(t.id) ? 0 : NOMINAL.includes(t.id) ? 1 : 2);
-// Within the nominal transforms: an adjective reading before a noun reading
-// of the same ending (thábhachtaí is tábhachtach, not a plural of
-// tábhacht), and a plural before a genitive (seirbhísí is the plural of
-// seirbhís, not the genitive of seirbhíseach).
+// Within the nominal transforms: a plural before the adjective forms and a
+// genitive (daltaí is the plural of dalta, not daltach; seirbhísí of
+// seirbhís, not the genitive of seirbhíseach), except the -aí plural of a
+// noun without a final vowel, which comes after the adjective forms.
 const rank = (t) => (NOMINAL.includes(t.id) ? NOMINAL.indexOf(t.id) : 0);
 const ordered = transforms.map((t, i) => [t, i]).sort(([a, i], [b, j]) => group(a) - group(b) || rank(a) - rank(b) || i - j).map(([t]) => t);
 const out = {schema: 1, conditions, transforms: ordered.filter((t) => t.rules.length > 0)};

@@ -293,3 +293,10 @@ fada	1	ta	bí	v	present
 fada	1	Eireann	Éireann	*	
 fada	1	bhi	bí	v	lenition
 fada	1	ceannaionn	ceannaigh	v	present
+noun	1	rudaí	rud	n	plural-ai
+noun	1	scéalta	scéal	n	plural
+noun	1	saltracha	saltair	n	plural
+noun	1	litreacha	litir	n	plural
+negatives	0	seachtracha	seachtair	*	*
+negatives	0	sleachta	sleach	n	*
+negatives	0	tréimhseacha	tréimhs	*	*

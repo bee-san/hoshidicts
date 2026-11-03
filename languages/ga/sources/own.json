@@ -26,6 +26,10 @@
     "adj": {
       "name": "Adjective",
       "isDictionaryForm": true
+    },
+    "adv": {
+      "name": "Adverb",
+      "isDictionaryForm": true
     }
   },
   "transforms": [
@@ -99,7 +103,7 @@
         {"type": "prefix", "inflected": "dT", "deinflected": "T", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
         {"type": "prefix", "inflected": "n-", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{lowerVowel}"},
         {"type": "prefix", "inflected": "n", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{upperVowel}"},
-        {"type": "prefix", "inflected": "n", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{upperVowel}", "then": [{"case": "lowerFirst"}]}
+        {"type": "prefix", "inflected": "n", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "v", "adj", "adv"], "stemStartsWith": "{upperVowel}", "then": [{"case": "lowerFirst"}]}
       ]
     },
     {
@@ -110,7 +114,7 @@
       "rules": [
         {"type": "prefix", "inflected": "h", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{vowel}"},
         {"type": "prefix", "inflected": "h-", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{vowel}"},
-        {"type": "prefix", "inflected": "h", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{upperVowel}", "then": [{"case": "lowerFirst"}]}
+        {"type": "prefix", "inflected": "h", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "v", "adj", "adv"], "stemStartsWith": "{upperVowel}", "then": [{"case": "lowerFirst"}]}
       ]
     },
     {
@@ -121,7 +125,7 @@
       "rules": [
         {"type": "prefix", "inflected": "t-", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{lowerVowel}"},
         {"type": "prefix", "inflected": "t", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{upperVowel}"},
-        {"type": "prefix", "inflected": "t", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{upperVowel}", "then": [{"case": "lowerFirst"}]},
+        {"type": "prefix", "inflected": "t", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "v", "adj", "adv"], "stemStartsWith": "{upperVowel}", "then": [{"case": "lowerFirst"}]},
         {"type": "prefix", "inflected": "ts", "deinflected": "s", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"},
         {"type": "prefix", "inflected": "tS", "deinflected": "S", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "{afterMutation}"}
       ]
@@ -259,6 +263,58 @@
       ]
     },
     {
+      "id": "plural",
+      "name": "plural",
+      "description": "Strong plurals: -(e)anna (scoileanna, amanna), -í (cailíní, múinteoirí, páistí), -aí (daltaí, rudaí), -(e)acha (teangacha, cathracha, litreacha), -te and -the (bailte, coillte, ríthe), -ta (scéalta), -anta (oícheanta, uaireanta), -nna (míonna), -ite (sluaite), -uithe (athruithe), -taí and -tí of verbal nouns (moltaí, cinntí), and the irregular plurals (mná, daoine, tithe, laethanta, cairde, ba).",
+      "source": "own",
+      "rules": [
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["anna", ""], ["eanna", ""], ["í", ""], ["í", "e"], ["aí", "a"], ["acha", "a"], ["ithe", "í"], ["te", ""], ["te", "e"], ["rí", "ir"], ["taí", "adh"], ["thaí", "adh"], ["tí", "eadh"], ["uithe", "ú"], ["úlacha", "úil"], ["álacha", "áil"], ["ánacha", "áin"], ["ónacha", "óin"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemEndsWith": "{consonant}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["the", ""], ["nna", ""], ["ite", ""], ["thaí", ""], ["anta", ""]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[^ ]", "stemEndsWith": "{vowel}"},
+        {"type": "suffix", "inflected": "onna", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[^ ]", "stemEndsWith": "[í]"},
+        {"type": "suffix", "inflected": "eacha", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemEndsWith": "[lmnr]"},
+        {"type": "suffix", "inflected": "neacha", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemEndsWith": "[m]"},
+        {"type": "suffix", "inflected": "ta", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemEndsWith": "[dlns]"},
+        {"type": "suffix", "inflected": "racha", "deinflected": "air", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemEndsWith": "[chst]", "stemNotStartsWithText": "seacht"},
+        {"type": "suffix", "inflected": "reacha", "deinflected": "ir", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemEndsWith": "[dfght]"},
+        {"type": "suffix", "inflected": "daoine", "deinflected": "duine", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]"},
+        {"type": "suffix", "inflected": "eanta", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemEndsWith": "[r]"},
+        {"type": "wholeWord", "inflected": "mná", "deinflected": "bean", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "ban", "deinflected": "bean", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "daoine", "deinflected": "duine", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "tithe", "deinflected": "teach", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "laethanta", "deinflected": "lá", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "ba", "deinflected": "bó", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "cairde", "deinflected": "cara", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "blianta", "deinflected": "bliain", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "bliana", "deinflected": "bliain", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "aibhneacha", "deinflected": "abhainn", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "leapacha", "deinflected": "leaba", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "uibheacha", "deinflected": "ubh", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "caoirigh", "deinflected": "caora", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "fiacla", "deinflected": "fiacail", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "doirse", "deinflected": "doras", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "soilse", "deinflected": "solas", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "bóithre", "deinflected": "bóthar", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "tailte", "deinflected": "talamh", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "aithreacha", "deinflected": "athair", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "máithreacha", "deinflected": "máthair", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "oibreacha", "deinflected": "obair", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "sceana", "deinflected": "scian", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "sléibhte", "deinflected": "sliabh", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "déithe", "deinflected": "dia", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "nithe", "deinflected": "ní", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "slite", "deinflected": "slí", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "deirfiúracha", "deinflected": "deirfiúr", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "uaire", "deinflected": "uair", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "cinn", "deinflected": "ceann", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "guaillí", "deinflected": "gualainn", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "troithe", "deinflected": "troigh", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "foirne", "deinflected": "foireann", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "ranna", "deinflected": "roinn", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "ranna", "deinflected": "rann", "conditionsIn": [], "conditionsOut": ["n"]}
+      ]
+    },
+    {
       "id": "adj-e",
       "name": "comparative / plural / genitive feminine",
       "description": "An adjective in -e or -úla: the comparative and superlative (níos óige, is glaine), the genitive singular feminine (na mná óige) and, for slender stems, the plural (glice, maithe): óige → óg, glaine → glan, gile → geal, mine → mion, deise → deas, tábhachtaí → tábhachtach, dírí → díreach, suimiúla → suimiúil, láidre → láidir, deacra → deacair, milse → milis.",
@@ -323,52 +379,12 @@
       ]
     },
     {
-      "id": "plural",
+      "id": "plural-ai",
       "name": "plural",
-      "description": "Strong plurals: -(e)anna (scoileanna, amanna), -í (cailíní, múinteoirí, páistí), -aí (daltaí, rudaí), -(e)acha (teangacha, cathracha, litreacha), -te and -the (bailte, coillte, ríthe), -ta (scéalta), -anta (oícheanta, uaireanta), -nna (míonna), -ite (sluaite), -uithe (athruithe), -taí and -tí of verbal nouns (moltaí, cinntí), and the irregular plurals (mná, daoine, tithe, laethanta, cairde, ba).",
+      "description": "Plural in -aí of a noun ending in a consonant: rudaí → rud.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["anna", ""], ["eanna", ""], ["í", ""], ["í", "e"], ["aí", "a"], ["aí", ""], ["acha", "a"], ["racha", "air"], ["reacha", "ir"], ["ithe", "í"], ["te", ""], ["te", "e"], ["ta", ""], ["rí", "ir"], ["taí", "adh"], ["thaí", "adh"], ["tí", "eadh"], ["uithe", "ú"], ["úlacha", "úil"], ["álacha", "áil"], ["ánacha", "áin"], ["ónacha", "óin"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemEndsWith": "{consonant}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["the", ""], ["nna", ""], ["ite", ""], ["thaí", ""], ["anta", ""]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[^ ]", "stemEndsWith": "{vowel}"},
-        {"type": "suffix", "inflected": "onna", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "[^ ]", "stemEndsWith": "[í]"},
-        {"type": "suffix", "inflected": "eacha", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemEndsWith": "[lmnr]"},
-        {"type": "suffix", "inflected": "neacha", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemEndsWith": "[m]"},
-        {"type": "suffix", "inflected": "daoine", "deinflected": "duine", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]"},
-        {"type": "suffix", "inflected": "eanta", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemEndsWith": "[r]"},
-        {"type": "wholeWord", "inflected": "mná", "deinflected": "bean", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "ban", "deinflected": "bean", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "daoine", "deinflected": "duine", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "tithe", "deinflected": "teach", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "laethanta", "deinflected": "lá", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "ba", "deinflected": "bó", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "cairde", "deinflected": "cara", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "blianta", "deinflected": "bliain", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "bliana", "deinflected": "bliain", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "aibhneacha", "deinflected": "abhainn", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "leapacha", "deinflected": "leaba", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "uibheacha", "deinflected": "ubh", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "caoirigh", "deinflected": "caora", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "fiacla", "deinflected": "fiacail", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "doirse", "deinflected": "doras", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "soilse", "deinflected": "solas", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "bóithre", "deinflected": "bóthar", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "tailte", "deinflected": "talamh", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "aithreacha", "deinflected": "athair", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "máithreacha", "deinflected": "máthair", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "oibreacha", "deinflected": "obair", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "sceana", "deinflected": "scian", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "sléibhte", "deinflected": "sliabh", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "déithe", "deinflected": "dia", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "nithe", "deinflected": "ní", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "slite", "deinflected": "slí", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "deirfiúracha", "deinflected": "deirfiúr", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "uaire", "deinflected": "uair", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "cinn", "deinflected": "ceann", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "guaillí", "deinflected": "gualainn", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "troithe", "deinflected": "troigh", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "foirne", "deinflected": "foireann", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "ranna", "deinflected": "roinn", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "ranna", "deinflected": "rann", "conditionsIn": [], "conditionsOut": ["n"]}
+        {"type": "suffix", "inflected": "aí", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "[^ ]", "stemEndsWith": "{consonant}"}
       ]
     },
     {

@@ -337,7 +337,7 @@ def cmd_eval(args):
     and with the pack's defaults (each file once without and once with the
     `# options: default` line)."""
     import tempfile
-    root = os.path.abspath(os.path.join(args.languages, '..'))
+    root = args.root
     pack = os.path.join(args.languages, 'ga')
     tmp = tempfile.mkdtemp(prefix='ga-eval-')
     union = os.path.join(tmp, 'union.json')
@@ -398,10 +398,10 @@ def cmd_dictpairs(args):
                     pairs.setdefault((form, d[0], pos if pos in ('v', 'n', 'adj') else '*'), '/'.join(d[1]))
     corpus = os.path.join(args.out, 'dictpairs.tsv')
     with open(corpus, 'w', encoding='utf-8') as f:
-        f.write('# wty-ga-en form-of rows (form → target), single words; not committed.\n')
+        f.write('# options: default\n# wty-ga-en form-of rows (form → target), single words; not committed.\n')
         for (form, target, pos), label in sorted(pairs.items()):
             f.write(f'{label.replace(chr(9), " ")}\t1\t{form}\t{target}\t{pos}\t*\n')
-    root = os.path.abspath(os.path.join(args.languages, '..'))
+    root = args.root
     expanded = os.path.join(tmp, 'expanded.json')
     subprocess.run([args.node, os.path.join(args.languages, 'ga', 'sources', 'build-own.mjs'), '--expanded', '--out', expanded],
                    check=True, capture_output=True, text=True, cwd=root)
@@ -555,6 +555,7 @@ def main():
     parser.add_argument('--out', default='.')
     args = parser.parse_args()
     args.languages = os.path.abspath(args.languages)
+    args.root = root
     os.makedirs(args.out, exist_ok=True)
     if args.command not in ('eval', 'dictpairs') and not args.batch:
         parser.error(f'{args.command} needs --batch')
