@@ -104,7 +104,6 @@ adjectives	1	нових	новий	adj	*
 adjectives	1	синього	синій	adj	*
 adjectives	1	синю	синій	adj	*
 adjectives	1	третього	третій	adj	*
-adjectives	1	хворого	хворий	n	*
 adjectives	1	будь-якого	будь-який	adj	*
 comparison	1	новіший	новий	adj	*
 comparison	1	новішого	новий	adj	*
@@ -187,7 +186,6 @@ first conjugation	1	даю	давати	v	*
 first conjugation	1	встаєш	вставати	v	*
 first conjugation	1	продає	продавати	v	*
 first conjugation	1	знає	знати	v	*
-first conjugation	1	відіграєш	відігравати	v	*
 first conjugation	1	крикне	крикнути	v	*
 first conjugation	1	поверну	повернути	v	*
 first conjugation	1	чую	чути	v	*
@@ -376,7 +374,6 @@ imperative	1	дозвольте	дозволити	v	*
 imperative	1	перевірте	перевірити	v	*
 imperative	1	повір	повірити	v	*
 imperative	1	залиш	залишити	v	*
-imperative	1	познач	позначити	v	*
 imperative	1	постав	поставити	v	*
 imperative	1	кинь	кинути	v	*
 imperative	1	гляньте	глянути	v	*
@@ -570,10 +567,8 @@ constraint	0	та	т	*	*
 constraint	0	чия	чи	*	*
 constraint	0	ну	н	*	*
 constraint	0	ні	н	*	*
-constraint	0	які	яок	*	*
 constraint	0	рі	р	*	*
 constraint	0	не сні	не сень	*	*
-constraint	0	ані	аень	*	*
 constraint	0	чи	чо	*	*
 constraint	0	зои	зо	*	*
 constraint	0	єю	єй	*	*
@@ -604,9 +599,7 @@ constraint	0	повім	пів	*	*
 constraint	0	не слову	не слів	*	*
 constraint	0	на дряхліший	на дряхлий	*	*
 constraint	0	найбагатіший	багатій	*	*
-constraint	0	член	чити	*	*
 constraint	0	не лорен	не лорений	*	*
-constraint	0	найбільш	більо	*	*
 constraint	0	яти	ять	*	*
 constraint	0	не дозволяти	не дозволять	*	*
 constraint	0	вужчу	вужчати	*	*
@@ -663,7 +656,6 @@ constraint	0	йoму	йoма	*	*
 constraint	0	tак	tака	*	*
 constraint	0	знaю	знaя	*	*
 constraint	0	мeня	мeнь	*	*
-constraint	0	йoму	йoм	*	*
 constraint	0	oни	oн	*	*
 constraint	0	йoму	йoмо	*	*
 constraint	0	мeня	мeній	*	*
@@ -693,7 +685,6 @@ alternation	1	вертольота	вертоліт	n	*
 alternation	1	кольорові	колір	n	*
 constraint	0	пся	псій	n	*
 constraint	0	ллє	ллій	n	*
-constraint	0	роді	родій	n	*
 constraint	0	всього	всій	n	*
 constraint	0	яої	яий	n	*
 constraint	0	більої	білій	n	*
@@ -726,6 +717,7 @@ alternation	1	болю	біль	n	noun.gen.sg+dat.sg+voc.sg
 vowel class	1	клеїв	клеїти	v	v.pstM
 second conjugation	1	бряжчить	бряжчати	v	v.prs3sg
 homographs	1	од	від	*	alt.od
+homographs	1	видимо	видимий	adj	adv.pos
 constraint	0	шоу	шоа	*	noun.acc.sg
 constraint	0	шоу	шо	*	noun.gen.sg+dat.sg+loc.sg+voc.sg
 constraint	0	шоу	шоо	*	noun.dat.sg+loc.sg+voc.sg

@@ -87,7 +87,7 @@ present	дуть	дати	in  out v	2	14	0	fc, round 1
 present	жать	гти	in  out v	0	3	0	fc only, round 1
 present	же	гти	in  out v	0	0	1	breaks, round 1
 present	жить	гти	in  out v	0	2	0	fc only, round 1
-present	имо	ати	in  out v	0	71	0	fc only, round 1
+present	имо	ати	in  out v	0	73	0	fc only, round 1
 present	имо	ити	in  out v	0	1	0	fc only, round 1
 present	имось	атися	in  out v	0	5	0	fc only, round 1
 present	имося	атися	in  out v	0	5	0	fc only, round 1

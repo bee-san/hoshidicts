@@ -16,27 +16,27 @@
 #   particle, a conjunction, a pronoun or a form of бути, looked up from
 #   that word with the rest of the sentence; reported together and by kind.
 # A lookup's first result is judged against the lemma the hovered word
-# means. A word labelled in sources/homographs.tsv (the frequent words whose
+# means. A word labelled in sources/homographs.tsv (frequent words whose
 # rows name two or more lemmas) means the lemmas its label lists. Otherwise
-# the candidates are the word itself when it is a headword with
-# definitions, each lemma one of the word's form-of rows names, and the
-# lemma the rows of that lemma name in turn (вмію → вміти → уміти,
-# секундочку → секундочка → секунда: the named form is itself only a
-# reference). When the rows name two or more lemmas, only the one most
-# frequent in the frequency list (--frequencies, the list itself for
-# words) counts, with the word itself (a frequency proxy for the lemma the
-# word means; README: a hand-judged sample). Right when the result is a
-# lemma the word means; wrong when the word has rows and the result is
-# not; unknown when the dictionary has no row for the word. The summary
-# line counts the judged lookups by what judged them (byLabel, byProxy,
-# byRows) and the wrong ones the same way. A
-# comparative in -ше is also the adverb's comparative (міцніше: міцно),
-# which wty-uk-en lists only as the adjective's neuter (міцніший), so the
-# adverb is right when its adjective is (міцн-о, міцн-ий). A first result
-# that matches more than the hovered word (сила-силенна, з-під, див.) is
-# counted apart as 'phrase', not judged.
+# the candidates are the word itself when it is a headword with definitions,
+# each lemma one of the word's form-of rows names, and the lemma the rows of
+# that lemma name in turn (вмію → вміти → уміти, секундочку → секундочка →
+# секунда: the named form is itself only a reference). When the rows name
+# two or more lemmas, only the one most frequent in the frequency list
+# counts (--frequencies; in words mode the list itself), a verb's doublets
+# in -Xнути and -Xти counting as one, besides the word itself: a frequency
+# proxy for the lemma the word means (README: a hand-judged sample). Right
+# when the result is a lemma the word means; wrong when the word has rows
+# and the result is not; unknown when the dictionary has no row for the
+# word. The summary line counts the judged lookups by what judged them
+# (byLabel, byProxy, byRows) and the wrong ones the same way. A comparative
+# in -ше is also the adverb's comparative (міцніше: міцно), which wty-uk-en
+# lists only as the adjective's neuter (міцніший), so the adverb is right
+# when its adjective is (міцн-о, міцн-ий). A first result that matches more
+# than the hovered word (сила-силенна, з-під, див.) is counted apart as
+# 'phrase', not judged.
 # --verdicts <file> writes one line per lookup: word, verdict, first result,
-# the rules behind it. rightByRules and wrongByRules count the judged first
+# the rules behind it, its weight and what judged it. rightByRules and wrongByRules count the judged first
 # results whose trace has a step of the pack's rules (the others come from
 # the word's own form-of rows alone). The personal
 # pronouns' rows in wty-uk-en name every personal pronoun (мене → я, ми,
@@ -74,6 +74,7 @@ FUNCTION_GROUPS = {
     'бути': ['буду', 'будеш', 'буде', 'будемо', 'будете', 'будуть', 'був', 'була', 'було', 'були'],
 }
 FUNCTION = {w: group for group, words in FUNCTION_GROUPS.items() for w in words}
+DOUBLET = re.compile(r'([гкхзс])нути(ся)?$')
 LABELS = {}
 for line in open(os.path.join(HERE, 'homographs.tsv'), encoding='utf-8'):
     if line.strip() and not line.startswith('#'):
@@ -142,6 +143,13 @@ def meant(word, lemmas, targets):
         # form leads to (вміти → уміти).
         groups = [{n} | ({t for t in targets.get(n, ())} if n not in lemmas else set()) for n in sorted(targets.get(w, ()))]
         groups = [g for g in groups if g & lemmas] or groups
+        # Doublets of one verb (досягти, досягнути; вдягти, вдягнути) are
+        # one lemma.
+        merged = {}
+        for g in groups:
+            key = frozenset(DOUBLET.sub(r'\1ти\2', x) for x in g)
+            merged[key] = merged.get(key, set()) | g
+        groups = list(merged.values())
         distinct = {frozenset(g & lemmas) or frozenset(g) for g in groups}
         if len(distinct) > 1 and FREQUENCIES:
             score = lambda g: max(FREQUENCIES.get(x, 0) for x in g)

@@ -93,8 +93,8 @@ function suffix(id, inflected, deinflected, conditionsIn, conditionsOut, opt = {
     add(id, rule, example);
 }
 
-function whole(id, inflected, deinflected, conditionsIn, conditionsOut) {
-    add(id, {type: 'wholeWord', inflected, deinflected, conditionsIn, conditionsOut}, `${inflected} → ${deinflected}`);
+function whole(id, inflected, deinflected, conditionsIn, conditionsOut, example = `${inflected} → ${deinflected}`) {
+    add(id, {type: 'wholeWord', inflected, deinflected, conditionsIn, conditionsOut}, example);
 }
 
 // The і of a closed final syllable is о or е where the syllable opens (стіл,
@@ -1021,40 +1021,53 @@ for (const consonant of 'лнтдзсц') {
 // (frequent words whose rows name two or more lemmas) whose first result was
 // another lemma; the other lemma stays in the list, one place lower.
 const HOMOGRAPHS = {
-    'noun.gen.sg+dat.sg+loc.sg+voc.sg': [['року', 'рік'], ['приводу', 'привід'], ['нападу', 'напад'], ['туалету', 'туалет'], ['пилу', 'пил'],
+    'noun.gen.sg+dat.sg+loc.sg+voc.sg': [['зросту', 'зріст'], ['року', 'рік'], ['приводу', 'привід'], ['нападу', 'напад'], ['туалету', 'туалет'], ['пилу', 'пил'],
         ['сміху', 'сміх']],
-    'noun.ins.sg': [['роком', 'рік']],
+    'noun.ins.sg': [['літом', 'літо'], ['роком', 'рік']],
     'noun.gen.sg+nom.pl': [['правила', 'правило'], ['пекла', 'пекло'], ['мети', 'мета'], ['крила', 'крило'], ['діла', 'діло'], ['стріли', 'стріла']],
     'noun.dat.sg+loc.sg': [['голові', 'голова']],
     'noun.gen.sg+dat.sg+voc.sg': [['чаю', 'чай'], ['краю', 'край']],
     'noun.acc.sg': [['душу', 'душа'], ['перерву', 'перерва']],
-    'noun.gen.pl': [['прав', 'право'], ['миль', 'миля'], ['ліків', 'ліки']],
-    'noun.loc.sg+nom.pl': [['німці', 'німець'], ['американці', 'американець']],
+    'noun.gen.pl': [['сіл', 'село'], ['прав', 'право'], ['миль', 'миля'], ['ліків', 'ліки']],
+    'noun.loc.sg+nom.pl': [['мирі', 'мир'], ['німці', 'німець'], ['американці', 'американець']],
     'noun.dat.sg+acc.sg': [['волю', 'воля'], ['статтю', 'стаття']],
-    'noun.loc.sg': [['залі', 'зал'], ['селі', 'село'], ['туалеті', 'туалет'], ['роті', 'рот']],
+    'noun.loc.sg': [['тесті', 'тест'], ['ході', 'хід'], ['залі', 'зал'], ['селі', 'село'], ['туалеті', 'туалет'], ['роті', 'рот']],
     'noun.loc.pl': [['ролях', 'роль']],
-    'noun.nom.pl': [['напади', 'напад'], ['трупи', 'труп']],
-    'noun.dat.pl': [['копам', 'коп']],
+    'noun.nom.pl': [['вози', 'віз'], ['вічі', 'око'], ['напади', 'напад'], ['трупи', 'труп']],
+    'noun.dat.pl': [['волам', 'віл'], ['копам', 'коп']],
     'noun.dat.sg+loc.sg+voc.sg': [['колу', 'коло']],
-    'adj.pl': [['готові', 'готовий'], ['погані', 'поганий'], ['різні', 'різний'], ['раді', 'радий'], ['добрі', 'добрий'], ['чудові', 'чудовий'],
+    'noun.dat.sg': [['морю', 'море']],
+    'noun.gen.sg': [['вола', 'віл'], ['діда', 'дід']],
+    'noun.ins.pl': [['волами', 'віл']],
+    'noun.gen.sg+dat.sg+loc.sg+nom.pl': [['бурі', 'буря']],
+    'adj.pl': [['гнилі', 'гнилий'], ['складні', 'складний'], ['ситі', 'ситий'], ['босі', 'босий'], ['лісові', 'лісовий'], ['люті', 'лютий'], ['рідні', 'рідний'], ['ранні', 'ранній'],
+        ['готові', 'готовий'], ['погані', 'поганий'], ['різні', 'різний'], ['раді', 'радий'], ['добрі', 'добрий'], ['чудові', 'чудовий'],
         ['праві', 'правий'], ['білі', 'білий'], ['військові', 'військовий'], ['божевільні', 'божевільний'], ['дорослі', 'дорослий'],
         ['хворі', 'хворий'], ['золоті', 'золотий'], ['зелені', 'зелений'], ['повні', 'повний'], ['сірі', 'сірий'], ['голі', 'голий'],
         ['сині', 'синій'], ['теплі', 'теплий'], ['грубі', 'грубий'], ['здорові', 'здоровий']],
-    'adj.n': [['погане', 'поганий'], ['ціле', 'цілий'], ['повне', 'повний'], ['біле', 'білий'], ['дурне', 'дурний']],
-    'adj.acc.f': [['добру', 'добрий'], ['білу', 'білий']],
-    'v.imp2sg': [['говори', 'говорити'], ['поговори', 'поговорити'], ['ходи', 'ходити'], ['лови', 'ловити']],
-    'v.pstM': [['стався', 'статися'], ['встав', 'встати'], ['розумів', 'розуміти']],
+    'adj.n': [['молоде', 'молодий'], ['зелене', 'зелений'], ['рідне', 'рідний'], ['складне', 'складний'], ['голе', 'голий'], ['погане', 'поганий'],
+        ['ціле', 'цілий'], ['повне', 'повний'], ['біле', 'білий'], ['дурне', 'дурний']],
+    'adj.acc.f': [['ворожу', 'ворожий'], ['довгу', 'довгий'], ['грубу', 'грубий'], ['сіру', 'сірий'], ['солодку', 'солодкий'], ['добру', 'добрий'], ['білу', 'білий']],
+    'adj.ins.f': [['грубою', 'грубий'], ['солодкою', 'солодкий'], ['політичною', 'політичний']],
+    'adj.f': [['сита', 'ситий']],
+    'v.imp2sg': [['пали', 'палити'], ['буди', 'будити'], ['плати', 'платити'], ['говори', 'говорити'], ['поговори', 'поговорити'], ['ходи', 'ходити'], ['лови', 'ловити']],
+    'v.pstM': [['перестав', 'перестати'], ['білів', 'біліти'], ['стався', 'статися'], ['встав', 'встати'], ['розумів', 'розуміти']],
+    // видимо (apparently) is the adverb of видимий, as wiktionary-to-yomitan
+    // files it, and the 1st person plural of the archaic видіти.
+    'adv.pos': [['видимо', 'видимий']],
     // од is the older form of від (Kotsiubynsky writes it 430 times), and
     // the genitive plural of ода.
     'alt.od': [['од', 'від']],
 };
+transform('adv.pos', 'adverb', 'An adverb in -о that the dictionary files under its adjective: видимо (видимий).');
 transform('alt.od', 'older form (од)', 'The older and dialect form од of the preposition від: од хати (від хати).');
 for (const [id, pairs] of Object.entries(HOMOGRAPHS)) {
     for (const [form, lemma] of pairs) {
+        // No example: a transform's description shows its regular endings.
         if (id.startsWith('noun.')) {
-            noun(form, lemma, id.slice('noun.'.length).split('+'), {whole: true}, `${form} → ${lemma}`);
+            noun(form, lemma, id.slice('noun.'.length).split('+'), {whole: true});
         } else {
-            whole(id, form, lemma, [], id.startsWith('adj.') ? ADJ_OUT : id.startsWith('v.') ? ['v'] : []);
+            whole(id, form, lemma, [], id.startsWith('adj.') ? ADJ_OUT : id.startsWith('v.') ? ['v'] : id.startsWith('adv.') ? ['adj'] : [], null);
         }
     }
 }
