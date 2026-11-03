@@ -253,9 +253,8 @@ rules: the own file's 346 and Yomitan's 24) is measured beside it below.
 
 ## Measurements
 
-All numbers are measured at 78cf7cd, whose rules, processors, tests and
-scripts the head keeps (later commits change only this README and a comment
-in `sources/build-own.mjs`), with
+All numbers are measured at 444ab36, this branch on main 39cebbe (the head
+changes only this README after it), with
 wty-eo-en as published (form-of rows included), with hoshidicts-cli and
 `sources/lookup-batch.cpp` built from this tree (GCC 14.3, Release).
 `lookup-batch` looks texts up as a host does (16 results, scan length 16, the
@@ -324,6 +323,18 @@ pack's defaults unless `--options`); its build command is in its header.
    - **Per rule** (`--per-rule`, final set): no rule breaks a negative of the
      sample with `cases.tsv` (every option on) or of `defaults.tsv` (the
      defaults).
+   - **Terms without part-of-speech tags** (docs/languages.md 9.4 and 14
+     step 5). wty-eo-en leaves `rules` empty on 4,289 of its 317,333 rows
+     (1.4%): 2,167 form-of rows, 1,358 names, 129 phrases, and numbers,
+     affixes, interjections, letters and function words. None is a whole
+     part of speech the rules produce (*n*, *v*, *adj*, *adv*), so the pack
+     keeps the default, `untaggedTerms: filter`. With `pass`, the final set
+     ranks no more lemmas first (the sample, `defaults.tsv` and `yomitan.tsv`
+     the same, `cases.tsv` 53.4% against 53.8%), and its false candidates
+     rise: the sample 0.614 → 0.633 with every option on and 0.430 → 0.441
+     with the defaults, `cases.tsv` 0.452 → 0.476 and 0.288 → 0.303,
+     `yomitan.tsv` 0.750 → 0.875 and 0.417 → 0.500; `defaults.tsv` is
+     unchanged. Recall is the same everywhere.
 2. **Frequent forms** (`sources/measure.py frequent`). The 10,000 most
    frequent words of the frequency list (369,915 of its 403,882 tokens), each
    looked up alone. 4,532 have a form-of row that names a lemma. For the
@@ -425,24 +436,24 @@ pack's defaults unless `--options`); its build command is in its header.
    - Native `build/benchmark-lookup languages/eo/sources/benchmark-words.txt
      6 --term <wty-eo-en> --languages <dir> --language eo --json` on 80 texts
      written for the pack (the rest of a sentence from an inflected word), the
-     first of 6 passes dropped, three runs at machine load about 40
+     first of 6 passes dropped, three runs at machine load about 39-43
      (`sources/bench-summary.py`). Budget: 1 ms p50. At load 37-41 the final
      set gave p50 27.8-28.4 µs and p95 37.0-38.6 µs before the exclusions.
 
      | Rule set | p50 | p95 |
      | --- | ---: | ---: |
-     | Final | 36.2-37.2 µs | 49.3-50.5 µs |
-     | Own | 35.8-36.5 µs | 49.1-50.4 µs |
-     | Yomitan's | 34.3-34.6 µs | 49.4-49.8 µs |
-     | Union | 41.8-42.9 µs | 61.8-62.8 µs |
+     | Final | 36.8-37.8 µs | 50.3-52.1 µs |
+     | Own | 35.5-36.6 µs | 49.2-50.6 µs |
+     | Yomitan's | 33.3-36.4 µs | 48.2-54.7 µs |
+     | Union | 42.5-42.7 µs | 62.2-63.9 µs |
    - WebAssembly, Hachidori feat/multi-language 803f7b6e's prebuilt engines in
      Node 22.23.1 (`benchmark/node-lookup.mjs` with
      `HACHIDORI_LOOKUP_LANGUAGE=eo`, the same 80 texts as 413 hover
      positions, 6 passes, wty-eo-en imported into MEMFS, two runs, load about
-     30-35): `hdw_lookup` p50 73.1-73.9 µs and p95 112.8-117.3 µs threaded,
-     p50 62.9-63.2 µs and p95 102.2-102.3 µs single-thread.
+     42-49): `hdw_lookup` p50 73.0-74.7 µs and p95 116.8-117.8 µs threaded,
+     p50 67.8-70.2 µs and p95 108.3-111.3 µs single-thread.
    - Pack load (`sources/pack-load.mjs`, ten fresh engines each):
-     `hdw_language_load` median 6.94 ms single-thread and 7.17 ms threaded
+     `hdw_language_load` median 6.88 ms single-thread and 7.32 ms threaded
      (budget 50 ms); live heap +302,368 and +301,840 bytes (budget 20 MB).
 6. **Tests and checks.**
    - `language-conformance-test` (`ctest -R language-eo`): corpus.tsv 999/999,
