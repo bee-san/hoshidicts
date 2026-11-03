@@ -139,8 +139,10 @@ writeFileSync(join(here, 'yomitan-provenance.tsv'),
     '# Each rule of sources/yomitan.json (transform id, index in its rules) and the own transforms that make one of its deinflections on probe words (sources/build-final.mjs), or - when none does.\n' +
     '# transform\trule\town transforms (one step)\toutputs the own rules reach (any steps)/outputs\n' + provenance.map((row) => row.join('\t')).join('\n') + '\n');
 
-// tests/yomitan.tsv: valid rows take reasons `*`. Yomitan's negatives that
-// the final rules do not reject move to sources/yomitan-tests-not-kept.tsv
+// tests/yomitan.tsv: every row takes reasons `*`, since Yomitan's transform
+// ids are not the final rules' (a negative that names them cannot fail).
+// Yomitan's negatives that the final rules reach move to
+// sources/yomitan-tests-not-kept.tsv
 // (README.md, Known gaps): a subject and an object of the same person
 // (علمناني, أضربني, ادرسك) and لـ before an indicative (ليجلسون). The own
 // pronoun and proclitic rules give no conditions, so that particles and
@@ -176,7 +178,7 @@ function reaches(rows) {
 const lines = readFileSync(tsv, 'utf8').split('\n');
 const negatives = lines.filter((line) => !line.startsWith('#') && line !== '' && line.split('\t')[1] === '0').map((line) => line.split('\t'));
 const reached = reaches(negatives);
-const dropped = new Set(negatives.filter((row, i) => reached[i] && row[5] === '*').map((row) => row.join('\t')));
+const dropped = new Set(negatives.filter((row, i) => reached[i]).map((row) => row.join('\t')));
 const kept = [];
 for (const line of lines) {
     if (line.startsWith('#') || line === '') {
@@ -185,7 +187,7 @@ for (const line of lines) {
     }
     if (dropped.has(line)) { continue; }
     const cells = line.split('\t');
-    if (cells[1] === '1') { cells[5] = '*'; }
+    cells[5] = '*';
     kept.push(cells.join('\t'));
 }
 writeFileSync(tsv, kept.join('\n'));

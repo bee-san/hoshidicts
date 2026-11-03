@@ -195,7 +195,10 @@ const PRONOUNS = [
 for (const [id, name, p, gloss, example] of PRONOUNS) {
     // A pronoun also follows the future prefix: سيكتبونه is سـ + يكتبون + ـه.
     const rules = [
-        suffix(p, '', {into: V_IN, extra: NOT_AL}),
+        // ـي not after ي: the dual and plural's oblique ـي takes it as one ي
+        // (ولديّ, not ولديي; Yomitan's test marks ولديي invalid), which leaves
+        // a nisba noun's كرسيي (كرسيّ + ي) unread.
+        suffix(p, '', {into: V_IN, extra: p === 'ي' ? {...NOT_AL, stemNotEndsWith: '[ي]'} : NOT_AL}),
         suffix('ؤ' + p, 'ء', {extra: NOT_AL}), suffix('ئ' + p, 'ء', {extra: NOT_AL}),
         suffix('ؤ' + p, 'أ', {extra: NOT_AL}), suffix('ئ' + p, 'أ', {extra: NOT_AL}),
         suffix('ا' + p, 'ى', {into: V_IN, extra: NOT_AL}),

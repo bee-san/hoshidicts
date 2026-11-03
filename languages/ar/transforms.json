@@ -1588,7 +1588,7 @@
       "description": "The attached pronoun ـي (my (and me after a preposition)): كتابي is كتاب + ـي, مني is من + ـي.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ي", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال", "source": "both"},
+        {"type": "suffix", "inflected": "ي", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال", "stemNotEndsWith": "[ي]", "source": "both"},
         {"type": "suffix", "inflected": "ؤي", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
         {"type": "suffix", "inflected": "ئي", "deinflected": "ء", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},
         {"type": "suffix", "inflected": "ؤي", "deinflected": "أ", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemCharacters": "{base}", "stemNotStartsWithText": "ال"},

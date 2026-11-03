@@ -27,10 +27,7 @@ noun prefixes	1	فللبيت	بيت	n	*
 noun prefixes	1	لليل	ليل	n	*
 noun prefixes	1	ولليل	ليل	n	*
 noun prefixes	1	فلليل	ليل	n	*
-noun invalid prefixes	0	للليل	ليل	n	NPref-Lil
-noun invalid chains	0	بوبيت	بيت	n	NPref-Wa|NPref-Bi
-noun invalid chains	0	كببيت	بيت	n	NPref-Bi|NPref-Ka
-noun invalid chains	0	كلبيت	بيت	n	NPref-Li|NPref-Ka
+noun invalid prefixes	0	للليل	ليل	n	*
 singular noun suffixes	1	كتابه	كتاب	n	*
 singular noun suffixes	1	كتابها	كتاب	n	*
 singular noun suffixes	1	كتابهما	كتاب	n	*
@@ -51,21 +48,13 @@ singular noun suffixes	1	زوجتك	زوجة	n	*
 singular noun suffixes	1	زوجتي	زوجة	n	*
 singular noun suffixes	1	أبدا	أبد	n	*
 singular noun suffixes	1	وأبدا	أبد	n	*
-singular noun invalid suffixes	0	الكتابه	كتاب	n	NPref-Al|NSuff-h
-singular noun invalid suffixes	0	بالكتابه	كتاب	n	NPref-BiAl|NSuff-h
-singular noun invalid suffixes	0	كالكتابه	كتاب	n	NPref-KaAl|NSuff-h
-singular noun invalid suffixes	0	للكتابه	كتاب	n	NPref-Lil|NSuff-h
-singular noun invalid suffixes	0	للسانه	لسان	n	NPref-LiAl|NSuff-h
-singular noun invalid suffixes	0	الزوجته	زوجة	n	NPref-Al
-singular noun invalid suffixes	0	للؤلؤته	لؤلؤة	n	NPref-LiAl
-singular noun invalid suffixes	0	بأبدا	أبد	n	NPref-Bi|NSuff-AF
-singular noun invalid suffixes	0	كأبدا	أبد	n	NPref-Ka|NSuff-AF
-singular noun invalid suffixes	0	لأبدا	أبد	n	NPref-Li|NSuff-AF
-singular noun invalid suffixes	0	الأبدا	أبد	n	NPref-Al|NSuff-AF
-singular noun invalid suffixes	0	بالأبدا	أبد	n	NPref-BiAl|NSuff-AF
-singular noun invalid suffixes	0	كالأبدا	أبد	n	NPref-KaAl|NSuff-AF
-singular noun invalid suffixes	0	للأبدا	أبد	n	NPref-Lil|NSuff-AF
-singular noun invalid suffixes	0	للاحقا	لاحق	n	NPref-LiAl|NSuff-AF
+singular noun invalid suffixes	0	الزوجته	زوجة	n	*
+singular noun invalid suffixes	0	للؤلؤته	لؤلؤة	n	*
+singular noun invalid suffixes	0	الأبدا	أبد	n	*
+singular noun invalid suffixes	0	بالأبدا	أبد	n	*
+singular noun invalid suffixes	0	كالأبدا	أبد	n	*
+singular noun invalid suffixes	0	للأبدا	أبد	n	*
+singular noun invalid suffixes	0	للاحقا	لاحق	n	*
 dual noun suffixes	1	ولدان	ولد	n	*
 dual noun suffixes	1	مطفآن	مطفأ	n	*
 dual noun suffixes	1	الولدان	ولد	n	*
@@ -115,44 +104,24 @@ dual noun suffixes	1	زوجتينا	زوجة	n	*
 dual noun suffixes	1	بزوجتيه	زوجة	n	*
 dual noun suffixes	1	كزوجتيه	زوجة	n	*
 dual noun suffixes	1	لزوجتيه	زوجة	n	*
-dual noun invalid suffixes	0	بولدان	ولد	n	NPref-Bi|NSuff-An
-dual noun invalid suffixes	0	كولدان	ولد	n	NPref-Ka|NSuff-An
-dual noun invalid suffixes	0	بالولدان	ولد	n	NPref-BiAl|NSuff-An
-dual noun invalid suffixes	0	كالولدان	ولد	n	NPref-KaAl|NSuff-An
-dual noun invalid suffixes	0	للولدان	ولد	n	NPref-Lil|NSuff-An
-dual noun invalid suffixes	0	لليلان	ليل	n	NPref-LiAl|NSuff-An
-dual noun invalid suffixes	0	بولداه	ولد	n	NPref-Bi|NSuff-Ah
-dual noun invalid suffixes	0	كولداه	ولد	n	NPref-Ka|NSuff-Ah
-dual noun invalid suffixes	0	الولداه	ولد	n	NPref-Al|NSuff-Ah
-dual noun invalid suffixes	0	بالولداه	ولد	n	NPref-BiAl|NSuff-Ah
-dual noun invalid suffixes	0	كالولداه	ولد	n	NPref-KaAl|NSuff-Ah
-dual noun invalid suffixes	0	للولداه	ولد	n	NPref-Lil|NSuff-Ah
-dual noun invalid suffixes	0	لليلاه	ليل	n	NPref-LiAl|NSuff-Ah
-dual noun invalid suffixes	0	ولديي	ولد	n	NSuff-ayh
-dual noun invalid suffixes	0	الولديه	ولد	n	NPref-Al|NSuff-ayh
-dual noun invalid suffixes	0	بالولديه	ولد	n	NPref-BiAl|NSuff-ayh
-dual noun invalid suffixes	0	كالولديه	ولد	n	NPref-KaAl|NSuff-ayh
-dual noun invalid suffixes	0	للولديه	ولد	n	NPref-Lil|NSuff-ayh
-dual noun invalid suffixes	0	لليليه	ليل	n	NPref-LiAl|NSuff-ayh
-dual noun invalid suffixes	0	بزوجتان	زوجة	n	NPref-Bi|NSuff-atAn
-dual noun invalid suffixes	0	كزوجتان	زوجة	n	NPref-Ka|NSuff-atAn
-dual noun invalid suffixes	0	بالزوجتان	زوجة	n	NPref-BiAl|NSuff-atAn
-dual noun invalid suffixes	0	كالزوجتان	زوجة	n	NPref-KaAl|NSuff-atAn
-dual noun invalid suffixes	0	للزوجتان	زوجة	n	NPref-Lil|NSuff-atAn
-dual noun invalid suffixes	0	للهجتان	لهجة	n	NPref-LiAl|NSuff-atAn
-dual noun invalid suffixes	0	بزوجتاه	زوجة	n	NPref-Bi|NSuff-atAh
-dual noun invalid suffixes	0	كزوجتاه	زوجة	n	NPref-Ka|NSuff-atAh
-dual noun invalid suffixes	0	الزوجتاه	زوجة	n	NPref-Al|NSuff-atAh
-dual noun invalid suffixes	0	بالزوجتاه	زوجة	n	NPref-BiAl|NSuff-atAh
-dual noun invalid suffixes	0	كالزوجتاه	زوجة	n	NPref-KaAl|NSuff-atAh
-dual noun invalid suffixes	0	للزوجتاه	زوجة	n	NPref-Lil|NSuff-atAh
-dual noun invalid suffixes	0	للهجتاه	لهجة	n	NPref-LiAl|NSuff-atAh
-dual noun invalid suffixes	0	زوجتيي	زوجة	n	NSuff-tayh
-dual noun invalid suffixes	0	الزوجتيه	زوجة	n	NPref-Al|NSuff-tayh
-dual noun invalid suffixes	0	بالزوجتيه	زوجة	n	NPref-BiAl|NSuff-tayh
-dual noun invalid suffixes	0	كالزوجتيه	زوجة	n	NPref-KaAl|NSuff-tayh
-dual noun invalid suffixes	0	للزوجتيه	زوجة	n	NPref-Lil|NSuff-tayh
-dual noun invalid suffixes	0	للهجتيه	لهجة	n	NPref-LiAl|NSuff-tayh
+dual noun invalid suffixes	0	الولداه	ولد	n	*
+dual noun invalid suffixes	0	بالولداه	ولد	n	*
+dual noun invalid suffixes	0	كالولداه	ولد	n	*
+dual noun invalid suffixes	0	للولداه	ولد	n	*
+dual noun invalid suffixes	0	لليلاه	ليل	n	*
+dual noun invalid suffixes	0	ولديي	ولد	n	*
+dual noun invalid suffixes	0	الولديه	ولد	n	*
+dual noun invalid suffixes	0	الزوجتاه	زوجة	n	*
+dual noun invalid suffixes	0	بالزوجتاه	زوجة	n	*
+dual noun invalid suffixes	0	كالزوجتاه	زوجة	n	*
+dual noun invalid suffixes	0	للزوجتاه	زوجة	n	*
+dual noun invalid suffixes	0	للهجتاه	لهجة	n	*
+dual noun invalid suffixes	0	زوجتيي	زوجة	n	*
+dual noun invalid suffixes	0	الزوجتيه	زوجة	n	*
+dual noun invalid suffixes	0	بالزوجتيه	زوجة	n	*
+dual noun invalid suffixes	0	كالزوجتيه	زوجة	n	*
+dual noun invalid suffixes	0	للزوجتيه	زوجة	n	*
+dual noun invalid suffixes	0	للهجتيه	لهجة	n	*
 plural noun suffixes	1	مسلمات	مسلم	n	*
 plural noun suffixes	1	مطفآت	مطفأ	n	*
 plural noun suffixes	1	مسلمات	مسلمة	n	*
@@ -195,30 +164,14 @@ plural noun suffixes	1	مسلمينا	مسلم	n	*
 plural noun suffixes	1	بمسلميه	مسلم	n	*
 plural noun suffixes	1	كمسلميه	مسلم	n	*
 plural noun suffixes	1	لمسلميه	مسلم	n	*
-plural noun invalid suffixes	0	المسلماته	مسلمة	n	NPref-Al|NSuff-Ath
-plural noun invalid suffixes	0	بالمسلماته	مسلمة	n	NPref-BiAl|NSuff-Ath
-plural noun invalid suffixes	0	كالمسلماته	مسلمة	n	NPref-KaAl|NSuff-Ath
-plural noun invalid suffixes	0	المسلماته	مسلمة	n	NPref-Lil|NSuff-Ath
-plural noun invalid suffixes	0	للغاته	لغة	n	NPref-LiAl|NSuff-Ath
-plural noun invalid suffixes	0	بمسلمون	مسلم	n	NPref-Bi|NSuff-wn
-plural noun invalid suffixes	0	كمسلمون	مسلم	n	NPref-Ka|NSuff-wn
-plural noun invalid suffixes	0	بالمسلمون	مسلم	n	NPref-BiAl|NSuff-wn
-plural noun invalid suffixes	0	كالمسلمون	مسلم	n	NPref-KaAl|NSuff-wn
-plural noun invalid suffixes	0	للمسلمون	مسلم	n	NPref-Lil|NSuff-wn
-plural noun invalid suffixes	0	للبنانيون	لبناني	n	NPref-LiAl|NSuff-wn
-plural noun invalid suffixes	0	بمسلموه	مسلم	n	NPref-Bi|NSuff-wh
-plural noun invalid suffixes	0	كمسلموه	مسلم	n	NPref-Ka|NSuff-wh
-plural noun invalid suffixes	0	المسلموه	مسلم	n	NPref-Al|NSuff-wh
-plural noun invalid suffixes	0	بالمسلموه	مسلم	n	NPref-BiAl|NSuff-wh
-plural noun invalid suffixes	0	كالمسلموه	مسلم	n	NPref-KaAl|NSuff-wh
-plural noun invalid suffixes	0	للمسلموه	مسلم	n	NPref-Lil|NSuff-wh
-plural noun invalid suffixes	0	للبنانيوه	لبناني	n	NPref-LiAl|NSuff-wh
-plural noun invalid suffixes	0	مسلميي	مسلم	n	NSuff-iyh
-plural noun invalid suffixes	0	المسلميه	مسلم	n	NPref-Al|NSuff-iyh
-plural noun invalid suffixes	0	بالمسلميه	مسلم	n	NPref-BiAl|NSuff-iyh
-plural noun invalid suffixes	0	كالمسلميه	مسلم	n	NPref-KaAl|NSuff-iyh
-plural noun invalid suffixes	0	للمسلميه	مسلم	n	NPref-Lil|NSuff-iyh
-plural noun invalid suffixes	0	للبنانييه	لبناني	n	NPref-LiAl|NSuff-iyh
+plural noun invalid suffixes	0	المسلموه	مسلم	n	*
+plural noun invalid suffixes	0	بالمسلموه	مسلم	n	*
+plural noun invalid suffixes	0	كالمسلموه	مسلم	n	*
+plural noun invalid suffixes	0	للمسلموه	مسلم	n	*
+plural noun invalid suffixes	0	للبنانيوه	لبناني	n	*
+plural noun invalid suffixes	0	مسلميي	مسلم	n	*
+plural noun invalid suffixes	0	المسلميه	مسلم	n	*
+plural noun invalid suffixes	0	للبنانييه	لبناني	n	*
 perfect verb conjunction (and)	1	وذهب	ذهب	pv	*
 perfect verb conjunction (and)	1	فذهب	ذهب	pv	*
 perfect verb result clause particle (would have)	1	لفعل	فعل	pv	*
@@ -266,13 +219,10 @@ perfect verb invalid attached direct object pronouns	0	علمتموك	علم	pv	
 perfect verb invalid attached direct object pronouns	0	علمتموكما	علم	pv	*
 perfect verb invalid attached direct object pronouns	0	علمتموكم	علم	pv	*
 perfect verb invalid attached direct object pronouns	0	علمتموكن	علم	pv	*
-perfect verb invalid chains	0	ووسمع	سمع	pv	Pref-Wa|Pref-Wa
-perfect verb invalid chains	0	فوسمع	سمع	pv	Pref-Wa|Pref-Wa
-perfect verb invalid chains	0	وفسمع	سمع	pv	Pref-Wa|Pref-Wa
-perfect verb invalid chains	0	سمعتت	سمع	pv	PVSuff-t|PVSuff-t
-perfect verb invalid chains	0	سمعتتم	سمع	pv	PVSuff-t|PVSuff-t
-perfect verb invalid chains	0	سمعتمن	سمع	pv	PVSuff-t|PVSuff-n
-perfect verb invalid chains	0	سمعنتم	سمع	pv	PVSuff-n|PVSuff-t
+perfect verb invalid chains	0	سمعتت	سمع	pv	*
+perfect verb invalid chains	0	سمعتتم	سمع	pv	*
+perfect verb invalid chains	0	سمعتمن	سمع	pv	*
+perfect verb invalid chains	0	سمعنتم	سمع	pv	*
 regular imperfect verb	1	أجلس	جلس	iv	*
 regular imperfect verb	1	تجلس	جلس	iv	*
 regular imperfect verb	1	تجلسين	جلس	iv	*
@@ -336,8 +286,6 @@ imperfect verb with assimilated أ + ا = آ	1	يقرآ	قرأ	iv	*
 imperfect verb with assimilated أ + ا = آ	1	يقرآنه	قرأ	iv	*
 imperfect verb with assimilated أ + ا = آ	1	يقرآه	قرأ	iv	*
 imperfect verb with assimilated أ + ا = آ	1	ليقرآ	قرأ	iv	*
-imperfect verb invalid attached direct object pronouns	0	تضربك	ضرب	iv	IVPref-Anta
-imperfect verb invalid attached direct object pronouns	0	تضربانك	ضرب	iv	IVPref-Antma
 imperfect verb invalid chains	0	سليجلس	جلس	iv	*
 regluar command verb	1	ادرس	درس	cv	*
 regluar command verb	1	ادرسي	درس	cv	*
