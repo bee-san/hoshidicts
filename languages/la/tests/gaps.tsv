@@ -11,6 +11,8 @@ proper name (dictionaries’ form-of rows)	1	Cereris	Ceres	*	*
 proper name (dictionaries’ form-of rows)	1	Herculis	Hercules	*	*
 proper name (dictionaries’ form-of rows)	1	Herculem	Hercules	*	*
 proper name (dictionaries’ form-of rows)	1	Achilli	Achilles	*	*
+adjective (form-of rows)	1	praegnatem	praegnas	adj	*
+adjective (form-of rows)	1	lanipedes	lanipes	adj	*
 UniMorph N;NOM;PL	1	fasciculī arcuātī	fasciculus arcuatus	n	*
 UniMorph N;GEN;PL	1	galaxiārum	galaxias	n	*
 UniMorph N;NOM;PL	1	Mārpōrēs	Marpor	n	*
@@ -33,6 +35,7 @@ UniMorph PROPN;ACC;PL	1	Naevazās	Naevazae	*	*
 UniMorph PROPN;GEN;SG	1	Arnēs	Arne	*	*
 UniMorph PROPN;GEN;SG	1	Cercetī	Cercetius	*	*
 UniMorph PROPN;ACC;PL	1	Theodorās	Theodora	*	*
+UniMorph PROPN;ABL;SG	1	Solomōne	Solomon	*	*
 UniMorph PROPN;DAT;SG	1	Bēthlehēmō	Bethlehemum	*	*
 UniMorph PROPN;GEN;SG	1	Tampī	Tampius	*	*
 UniMorph PROPN;ACC;SG	1	Pallēnēn	Pallene	*	*
@@ -46,6 +49,7 @@ UniMorph V;SBJV;PASS;PRS;3;SG	1	excalfīat	excalfacio	v	*
 UniMorph V;IMP;PASS;FUT;2;SG	1	excalfītō	excalfacio	v	*
 UniMorph V;V.MSDR;ACC;LGSPEC1	1	obsolefactum	obsolefio	v	*
 UniMorph V;V.PTCP;PASS;FUT	1	connītundus	connitor	v	*
+kaikki V;ACT;SBJV;PLPF;1;SG	1	internecuissem	interneco	v	*
 kaikki V;ACT;IND;PLPF;1;SG	1	adolēram	adolesco	v	*
 kaikki V;ACT;IND;PLPF;3;SG	1	ēmulserat	emulgeo	v	*
 kaikki V;ACT;IND;PRF;3;PL	1	Sūtrium iēre	Sutrium eo	v	*

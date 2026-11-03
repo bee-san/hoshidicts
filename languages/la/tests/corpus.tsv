@@ -268,7 +268,6 @@ UniMorph PROPN;GEN;PL	1	Agandeōrum	Agandei	*	*
 UniMorph PROPN;GEN;SG	1	Ausoniī	Ausonius	*	*
 UniMorph PROPN;ACC;SG	1	Cnōssum	Cnossus	*	*
 UniMorph PROPN;GEN;SG	1	Saeprī	Saeprus	*	*
-UniMorph PROPN;ABL;SG	1	Solomōne	Solomon	*	*
 UniMorph PROPN;GEN;SG	1	Vigorniae	Vigornia	*	*
 UniMorph PROPN;GEN;SG	1	Termētis	Termes	*	*
 UniMorph PROPN;DAT;SG	1	Chrȳsalō	Chrysalus	*	*
@@ -767,7 +766,6 @@ kaikki V;ACT;IND;PRF;3;PL	1	saepsērunt	saepio	v	*
 kaikki V;ACT;IND;PRF;2;SG	1	trānsiistī	transeo	v	*
 kaikki V;ACT;IND;PLPF;2;PL	1	praelēgāverātis	praelego	v	*
 kaikki V;ACT;IND;PRF;1;PL	1	amāricāvimus	amarico	v	*
-kaikki V;ACT;SBJV;PLPF;1;SG	1	internecuissem	interneco	v	*
 kaikki V;ACT;SBJV;PLPF;3;PL	1	eschadissent	eschado	v	*
 kaikki V;ACT;SBJV;PLPF;2;SG	1	inussissēs	inuro	v	*
 kaikki V;ACT;IND;PRF;1;PL	1	obstrūsimus	obstrudo	v	*

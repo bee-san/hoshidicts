@@ -57,6 +57,11 @@
         "id": "capitalizeFirstLetter",
         "name": "Capitalize first letter",
         "variants": [[{"case": "upperFirst"}]]
+      },
+      {
+        "id": "enclitics",
+        "name": "Remove -que, -ne or -ve",
+        "variants": [[{"map": {"aque": "a", "bque": "b", "cque": "c", "dque": "d", "eque": "e", "fque": "f", "gque": "g", "hque": "h", "ique": "i", "jque": "j", "kque": "k", "lque": "l", "mque": "m", "nque": "n", "oque": "o", "pque": "p", "qque": "q", "rque": "r", "sque": "s", "tque": "t", "uque": "u", "vque": "v", "wque": "w", "xque": "x", "yque": "y", "zque": "z"}, "at": "end"}], [{"map": {"ane": "a", "bne": "b", "cne": "c", "dne": "d", "ene": "e", "fne": "f", "gne": "g", "hne": "h", "ine": "i", "jne": "j", "kne": "k", "lne": "l", "mne": "m", "nne": "n", "one": "o", "pne": "p", "qne": "q", "rne": "r", "sne": "s", "tne": "t", "une": "u", "vne": "v", "wne": "w", "xne": "x", "yne": "y", "zne": "z"}, "at": "end"}], [{"map": {"ave": "a", "bve": "b", "cve": "c", "dve": "d", "eve": "e", "fve": "f", "gve": "g", "hve": "h", "ive": "i", "jve": "j", "kve": "k", "lve": "l", "mve": "m", "nve": "n", "ove": "o", "pve": "p", "qve": "q", "rve": "r", "sve": "s", "tve": "t", "uve": "u", "vve": "v", "wve": "w", "xve": "x", "yve": "y", "zve": "z"}, "at": "end"}]]
       }
     ],
     "postprocessors": [],
@@ -147,7 +152,7 @@
         "glossary": ["man", "husband"],
         "definitionTags": "n",
         "matched": "virumque",
-        "trace": ["-que", "accusative singular"]
+        "trace": ["accusative singular"]
       },
       "character": null
     }

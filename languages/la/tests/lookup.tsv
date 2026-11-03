@@ -33,3 +33,11 @@ word	1	virumque” canō	vir	virumque
 word	1	Graeco-Rōmānus	Graecus	Graeco
 word	1	ab ōrīs	ab	ab
 word	1	ōrīs	ora	ōrīs
+enclitic	1	bene dixit	bene	bene
+enclitic	0	bene dixit	be	bene
+enclitic	1	salve, amice	salve	salve
+enclitic	1	Romane, memento	Romanus	Romane
+enclitic	0	Romane, memento	Roma	Romane
+enclitic	1	pone tergum	pone	pone
+enclitic	1	estne verum	sum	estne
+enclitic	1	sive vir	sive	sive

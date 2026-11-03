@@ -40,5 +40,18 @@
   ["Graecus", "Graecus", "adj decl-1 decl-2", "adj", 0, ["Greek"], 39, ""],
   ["Lavinia", "Lāvīnia", "name decl-1 fem", "", 0, ["Lavinia"], 40, ""],
   ["Lavinius", "Lāvīnius", "adj decl-1 decl-2", "adj", 0, ["Lavinian"], 41, ""],
-  ["quis", "quis", "pron", "", 0, ["who?"], 42, ""]
+  ["quis", "quis", "pron", "", 0, ["who?"], 42, ""],
+  ["bene", "bene", "adv", "adv", 0, ["well"], 43, ""],
+  ["be", "be", "n", "n", 0, ["the letter b"], 44, ""],
+  ["salve", "salvē", "intj", "", 0, ["hello"], 45, ""],
+  ["sal", "sal", "n", "n", 0, ["salt"], 46, ""],
+  ["Roma", "Rōma", "name", "", 0, ["Rome"], 47, ""],
+  ["pone", "pōne", "adv", "adv", 0, ["behind"], 48, ""],
+  ["sive", "sīve", "conj", "", 0, ["or if"], 49, ""],
+  ["memini", "meminī", "v", "v", 0, ["to remember"], 50, ""],
+  ["tergum", "tergum", "n", "n", 0, ["back"], 51, ""],
+  ["amicus", "amīcus", "n", "n", 0, ["friend"], 52, ""],
+  ["verus", "vērus", "adj", "adj", 0, ["true"], 53, ""],
+  ["verum", "vērum", "n", "n", 0, ["truth"], 54, ""],
+  ["dico", "dīcō", "v", "v", 0, ["to say"], 55, ""]
 ]

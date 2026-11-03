@@ -123,8 +123,17 @@ const WORD = '[^ ]';
 const LOWER_WORD = '[^ A-Z]';
 
 function sfx(slotId, inflected, deinflected, conditionsIn, conditionsOut, extra = {}) {
-    const nominalOrVerb = conditionsOut.some((c) => c === 'v' || c === 'n' || /^n[1-5]/u.test(c)) && !conditionsOut.some((c) => c.startsWith('adj'));
-    const guard = [...inflected].length <= 2 && !inflected.includes(' ') ? {stemCharacters: nominalOrVerb ? LOWER_WORD : WORD} : {};
+    const adjective = conditionsOut.some((c) => c.startsWith('adj'));
+    const noun = !adjective && conditionsOut.some((c) => c === 'n' || /^n[1-5]/u.test(c));
+    // A common noun's or a verb's endings of three letters or fewer take no
+    // capital in their stem (names have rules of their own; Crēdisne was read
+    // as Crēs, Annuit as annō);
+    // adjectives keep it for the proper adjectives (Rōmāna). A longer verb
+    // ending may take a stem with a space, which reaches idioms such as
+    // grātiās agere and certiōrem facere (grātiās agunt → grātiās agō).
+    const length = [...inflected].length;
+    const verb = !adjective && conditionsOut.some((c) => c === 'v' || c === 'vpf');
+    const guard = (noun || verb) && length <= 3 ? {stemCharacters: LOWER_WORD} : length <= 2 && !inflected.includes(' ') ? {stemCharacters: WORD} : {};
     add(slotId, {type: 'suffix', inflected, deinflected, conditionsIn, conditionsOut, ...guard, ...extra});
 }
 
@@ -382,9 +391,12 @@ slot('perf-stem', 'perfect stem', 'The first person singular perfect (-ī) read 
 // verbs (fugiō, sedeō and dō are in the table). potuī is possum's, not pōtō's.
 // -uī → -uō comes before -iō and -ō: a tie is ordered by discovery, and
 // annuī, statuī and expuī are annuō, statuō and expuō, not annō, statō and
-// expiō.
+// expiō. -uī → -ō only after l, m, p, r or x, as in coluī, gemuī, strepuī,
+// seruī and texuī (annuī is not annō; potuī is possum's). The -iō verbs
+// with -uī (rapiō, sapiō, aperiō, saliō) are in the table, so that expuī is
+// not expiō.
 for (const [ending, lemma, extra] of [['avi', 'o', MIN], ['ivi', 'io', MIN], ['ii', 'io', MIN], ['evi', 'eo', MIN], ['ui', 'eo', MIN],
-                                      ['ui', 'uo', {stemMinLength: 1}], ['ui', 'o', {...MIN, stemNotStartsWithText: 'pot'}], ['ui', 'io', MIN],
+                                      ['ui', 'uo', {stemMinLength: 1}], ['ui', 'o', {...MIN, stemEndsWith: '[lmprx]'}],
                                       ['ndi', 'ndo', {stemMinLength: 1}], ['rti', 'rto', {stemMinLength: 1}], ['lvi', 'lvo', {stemMinLength: 1}],
                                       ['rri', 'rro', {stemMinLength: 1}], ['lli', 'llo', {stemMinLength: 1}], ['bibi', 'bibo', {}],
                                       ['di', 'do', {stemMinLength: 2, stemNotEndsWith: '[ei]'}], ['ssivi', 'sso', {stemMinLength: 1}],
@@ -575,7 +587,8 @@ premo pressi pressus
 quaero quaesivi|quaesii quaesitus
 +quiro quisivi|quisii quisitus
 quiesco quievi quietus
-rapio - raptus
+rapio rapui raptus
+sapio sapui -
 +ripio ripui reptus min:1
 rego rexi rectus
 +rigo rexi rectus min:1
@@ -626,7 +639,7 @@ quatio - quassus
 +spicio spexi spectus min:1
 +licio lexi lectus
 elicio elicui elicitus
-uro ussi ustus not:abcdefghijklmnopqrstuvwxyz
+uro ussi ustus not:abcdefghijklmnopqrstuvwxyz perf:whole
 +uro ussi ustus not:abcfghijklmopqrstuvwyz
 comburo combussi combustus
 contemno contempsi contemptus
@@ -738,8 +751,10 @@ for (const line of PRINCIPAL_PARTS.trim().split('\n')) {
     // (hortus is not h + ortus, custōs and iūstus not c and i + ūstus).
     const not = rest.find((r) => r.startsWith('not:'))?.slice(4);
     const participleExtra = not === undefined ? extra : {...extra, stemNotEndsWith: `[${not}]`};
+    // perf:whole: the perfect is a whole word (ussī is ūrō's, but iussī is
+    // iubeō's).
     for (const perfect of perfects === '-' ? [] : alts(perfects)) {
-        if (!compound && perfect.length <= 3) {
+        if (!compound && (perfect.length <= 3 || rest.includes('perf:whole'))) {
             whole('perf-stem', perfect, lemma, VPF_IN, VB);
         } else {
             sfx('perf-stem', perfect, lemma, VPF_IN, VB, extra);
@@ -1212,8 +1227,7 @@ for (const ending of ['is', ...ADJ3_REGULAR]) {
     sfx(`adj3-${ending}`, ending, '', [], ADJ3, {stemMinLength: 2, stemEndsWith: '[lr]'});
 }
 for (const [nominative, stem, conditionsOut] of [['x', 'c', ADJ3], ['ex', 'ic', ADJ3], ['ns', 'nt', ADJ3_PTC], ['rs', 'rt', ADJ3], ['es', 'it', ADJ3],
-                                                 ['es', 'et', ADJ3], ['os', 'ot', ADJ3], ['us', 'er', ADJ3], ['eps', 'ipit', ADJ3], ['s', 'd', ADJ3],
-                                                 ['as', 'at', ADJ3]]) {
+                                                 ['es', 'et', ADJ3], ['os', 'ot', ADJ3], ['us', 'er', ADJ3], ['eps', 'ipit', ADJ3]]) {
     for (const ending of ADJ3_CONSONANT) { sfx(`adj3-${ending}`, stem + ending, nominative, [], conditionsOut, {stemMinLength: 2}); }
 }
 // The comparative declines like a consonant stem (altiōrem, altiōra, altius).
@@ -1285,6 +1299,9 @@ for (const [id, name] of CASE_SLOTS) { slot(`name-${id}`, name, `Proper name, ${
 declension('name', 'a', '', {'gen-sg': 'ae', 'dat-sg': 'ae', 'acc-sg': 'am', loc: 'ae'}, [], NAME);
 declension('name', 'as', '', {'gen-sg': 'ae', 'dat-sg': 'ae', 'acc-sg': 'am|an'}, [], NAME);
 declension('name', 'es', '', {'acc-sg': 'en'}, [], NAME);
+// No plural names: Deōrum, Stellārum and Terrārum at the start of a sentence
+// were read as names Deus, Stella and Terra (Helvētiōrum and Belgārum come
+// from form-of rows).
 declension('name', 'os', '', {'acc-sg': 'on'}, [], NAME);
 declension('name', '', '', {'gen-sg': 'is', 'acc-sg': 'em'}, [], {...NAME, stemEndsWith: '[lr]'});
 // No name rule makes an ending another name rule removes: their outputs have
@@ -1416,25 +1433,13 @@ pronoun('tres', {Nom: 'tres/tres/tria', Gen: 'trium', Dat: 'tribus', Acc: 'tres|
 pronoun('mille', {Nom: 'milia|millia', Gen: 'milium|millium', Dat: 'milibus|millibus', Acc: 'milia|millia', Abl: 'milibus|millibus'});
 
 // --- Enclitics -----------------------------------------------------------------------------
-// -que (and), -ne (question), -ve (or) are written onto any word; the word
-// before them is read with every rule (virumque → virum → vir).
-slot('que', '-que', 'The enclitic -que, "and": virumque, senātus populusque.');
-slot('ne', '-ne', 'The enclitic -ne, which asks a question: vidēsne, estne.');
-slot('ve', '-ve', 'The enclitic -ve, "or": plūsve minusve.');
 slot('cum', '-cum', 'cum written after a personal or relative pronoun: mēcum, tēcum, nōbīscum, quōcum.');
 slot('met', '-met', 'The emphatic -met: egomet, mihimet, sēmet.');
 slot('nam', '-nam', 'The emphatic -nam of questions: quisnam, quidnam, ubinam.');
-// -que takes any word of two letters or more (atque, neque, itaque are also
-// words of their own). -ne needs three, so that sine, bene, mane and pone are
-// not si, be, ma and po with -ne (tune and mēne are written out), and not
-// after a, so that Rōmāne (vocative) is not Rōma with -ne. -ve follows
-// a case ending in -s, -m, -d or -t (plūsve, diemve, aliudve), so that salvē,
-// suāve, cavē and vīve are not sal, sua, ca and vī with -ve.
-sfx('que', 'que', '', [], [], {stemMinLength: 2});
-sfx('ne', 'ne', '', [], [], {stemMinLength: 3, stemNotEndsWith: '[a]'});
-sfx('ve', 've', '', [], [], {stemMinLength: 3, stemEndsWith: '[dmst]'});
-whole('ne', 'tune', 'tu', [], []);
-whole('ne', 'mene', 'me', [], []);
+// -que, -ne and -ve are removed by the pack's enclitic processor
+// (language.json), not by rules: a word without its enclitic is then a text
+// as written, whose own form-of row confirms its lemma (section 9.6), so
+// pedibusque reads as pēs, not as the plural pedēs, as pedibus does.
 for (const [form, base] of [['mecum', 'me'], ['tecum', 'te'], ['secum', 'se'], ['nobiscum', 'nobis'], ['vobiscum', 'vobis'], ['quocum', 'quo'],
                             ['quacum', 'qua'], ['quicum', 'qui'], ['quibuscum', 'quibus']]) {
     whole('cum', form, base, [], []);

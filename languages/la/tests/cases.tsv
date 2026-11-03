@@ -1,175 +1,20 @@
 # Hand-written for this pack (GPL-3.0-or-later): forms of every conjugation, declension and irregular paradigm the rules cover,
 # the enclitics, spelling variants and wrong lemmas the rules must not give (valid = 0).
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
-verb, present system	1	amat	amo	v	*
 verb, present system	1	amamus	amo	v	*
-verb, present system	1	amant	amo	v	*
-verb, present system	1	amabat	amo	v	*
-verb, present system	1	amabunt	amo	v	*
-verb, present system	1	amet	amo	v	*
-verb, present system	1	amarent	amo	v	*
-verb, present system	1	ama	amo	v	*
-verb, present system	1	amate	amo	v	*
-verb, present system	1	amato	amo	v	*
-verb, present system	1	amanto	amo	v	*
-verb, present system	1	amatote	amo	v	*
 verb, present system	1	amare	amo	v	*
-verb, present system	1	amandi	amo	v	*
-verb, present system	1	amando	amo	v	*
-verb, present system	1	amandum	amo	v	*
-verb, present system	1	amans	amo	v	*
-verb, present system	1	amantem	amo	v	*
-verb, present system	1	amandus	amo	v	*
-verb, present system	1	amandae	amo	v	*
 verb, present system	1	amatur	amo	v	*
-verb, present system	1	amabatur	amo	v	*
 verb, present system	1	amabitur	amo	v	*
-verb, present system	1	ametur	amo	v	*
-verb, present system	1	amaretur	amo	v	*
-verb, present system	1	amari	amo	v	*
-verb, present system	1	amarier	amo	v	*
-verb, present system	1	amaris	amo	v	*
 verb, present system	1	amabaris	amo	v	*
 verb, present system	1	amabere	amo	v	*
-verb, present system	1	amator	amo	v	*
 verb, present system	1	amantor	amo	v	*
 verb, present system	1	amamini	amo	v	*
-verb, present system	1	monet	moneo	v	*
-verb, present system	1	monent	moneo	v	*
-verb, present system	1	monebat	moneo	v	*
-verb, present system	1	monebit	moneo	v	*
-verb, present system	1	moneat	moneo	v	*
-verb, present system	1	moneret	moneo	v	*
-verb, present system	1	mone	moneo	v	*
-verb, present system	1	monete	moneo	v	*
-verb, present system	1	moneto	moneo	v	*
-verb, present system	1	monento	moneo	v	*
-verb, present system	1	monere	moneo	v	*
-verb, present system	1	monetur	moneo	v	*
-verb, present system	1	monebatur	moneo	v	*
-verb, present system	1	monebitur	moneo	v	*
-verb, present system	1	moneatur	moneo	v	*
-verb, present system	1	moneretur	moneo	v	*
-verb, present system	1	moneri	moneo	v	*
-verb, present system	1	monerier	moneo	v	*
-verb, present system	1	monens	moneo	v	*
-verb, present system	1	monendi	moneo	v	*
-verb, present system	1	monendus	moneo	v	*
-verb, present system	1	monetor	moneo	v	*
-verb, present system	1	monentor	moneo	v	*
-verb, present system	1	regit	rego	v	*
-verb, present system	1	regunt	rego	v	*
-verb, present system	1	regebat	rego	v	*
-verb, present system	1	reget	rego	v	*
 verb, present system	1	regam	rego	v	*
-verb, present system	1	regat	rego	v	*
-verb, present system	1	regeret	rego	v	*
-verb, present system	1	rege	rego	v	*
-verb, present system	1	regite	rego	v	*
-verb, present system	1	regito	rego	v	*
-verb, present system	1	regunto	rego	v	*
 verb, present system	1	regere	rego	v	*
-verb, present system	1	regitur	rego	v	*
-verb, present system	1	reguntur	rego	v	*
-verb, present system	1	regebatur	rego	v	*
-verb, present system	1	regetur	rego	v	*
-verb, present system	1	regatur	rego	v	*
-verb, present system	1	regeretur	rego	v	*
-verb, present system	1	regi	rego	v	*
-verb, present system	1	regens	rego	v	*
-verb, present system	1	regendi	rego	v	*
-verb, present system	1	regendus	rego	v	*
-verb, present system	1	regitor	rego	v	*
-verb, present system	1	reguntor	rego	v	*
-verb, present system	1	capit	capio	v	*
-verb, present system	1	capiunt	capio	v	*
-verb, present system	1	capiebat	capio	v	*
-verb, present system	1	capiet	capio	v	*
-verb, present system	1	capiat	capio	v	*
-verb, present system	1	caperet	capio	v	*
-verb, present system	1	cape	capio	v	*
-verb, present system	1	capite	capio	v	*
-verb, present system	1	capito	capio	v	*
-verb, present system	1	capiunto	capio	v	*
-verb, present system	1	capere	capio	v	*
-verb, present system	1	capitur	capio	v	*
-verb, present system	1	capiuntur	capio	v	*
-verb, present system	1	capiebatur	capio	v	*
-verb, present system	1	capietur	capio	v	*
-verb, present system	1	capiatur	capio	v	*
-verb, present system	1	caperetur	capio	v	*
 verb, present system	1	capi	capio	v	*
-verb, present system	1	capiens	capio	v	*
-verb, present system	1	capiendi	capio	v	*
-verb, present system	1	capiundi	capio	v	*
-verb, present system	1	capiendus	capio	v	*
-verb, present system	1	capiundus	capio	v	*
-verb, present system	1	audit	audio	v	*
-verb, present system	1	audiunt	audio	v	*
-verb, present system	1	audiebat	audio	v	*
-verb, present system	1	audiet	audio	v	*
-verb, present system	1	audiat	audio	v	*
-verb, present system	1	audiret	audio	v	*
-verb, present system	1	audi	audio	v	*
-verb, present system	1	audite	audio	v	*
-verb, present system	1	audito	audio	v	*
-verb, present system	1	audiunto	audio	v	*
-verb, present system	1	audire	audio	v	*
-verb, present system	1	auditur	audio	v	*
-verb, present system	1	audiuntur	audio	v	*
-verb, present system	1	audiebatur	audio	v	*
-verb, present system	1	audietur	audio	v	*
-verb, present system	1	audiatur	audio	v	*
-verb, present system	1	audiretur	audio	v	*
-verb, present system	1	audiri	audio	v	*
-verb, present system	1	audirier	audio	v	*
-verb, present system	1	audiens	audio	v	*
-verb, present system	1	audiendi	audio	v	*
-verb, present system	1	audiendus	audio	v	*
-verb, present system	1	hortatur	hortor	v	*
 verb, present system	1	hortantur	hortor	v	*
-verb, present system	1	hortabatur	hortor	v	*
-verb, present system	1	hortabitur	hortor	v	*
-verb, present system	1	hortetur	hortor	v	*
-verb, present system	1	hortaretur	hortor	v	*
-verb, present system	1	hortari	hortor	v	*
 verb, present system	1	hortare	hortor	v	*
-verb, present system	1	hortamini	hortor	v	*
-verb, present system	1	hortans	hortor	v	*
-verb, present system	1	hortandi	hortor	v	*
-verb, present system	1	hortandus	hortor	v	*
-verb, present system	1	hortaturus	hortor	v	*
-verb, present system	1	veretur	vereor	v	*
-verb, present system	1	verebatur	vereor	v	*
-verb, present system	1	vereri	vereor	v	*
-verb, present system	1	veritus	vereor	v	*
-verb, present system	1	verens	vereor	v	*
-verb, present system	1	sequitur	sequor	v	*
-verb, present system	1	sequuntur	sequor	v	*
-verb, present system	1	sequebatur	sequor	v	*
-verb, present system	1	sequetur	sequor	v	*
-verb, present system	1	sequatur	sequor	v	*
-verb, present system	1	sequeretur	sequor	v	*
-verb, present system	1	sequi	sequor	v	*
 verb, present system	1	sequere	sequor	v	*
-verb, present system	1	sequens	sequor	v	*
-verb, present system	1	sequendi	sequor	v	*
-verb, present system	1	secutus	sequor	v	*
-verb, present system	1	secuturus	sequor	v	*
-verb, present system	1	sequutus	sequor	v	*
-verb, present system	1	patitur	patior	v	*
-verb, present system	1	patiuntur	patior	v	*
-verb, present system	1	patiebatur	patior	v	*
-verb, present system	1	pati	patior	v	*
-verb, present system	1	patiens	patior	v	*
-verb, present system	1	passus	patior	v	*
-verb, present system	1	largitur	largior	v	*
-verb, present system	1	largiuntur	largior	v	*
-verb, present system	1	largiri	largior	v	*
-verb, present system	1	largitus	largior	v	*
-verb, present system	1	potitur	potior	v	*
-verb, present system	1	potiretur	potior	v	*
-verb, present system	1	potitus	potior	v	*
 verb, perfect system	1	amavi	amo	v	*
 verb, perfect system	1	amavisti	amo	v	*
 verb, perfect system	1	amavit	amo	v	*
@@ -859,7 +704,6 @@ noun	1	hecatomben	hecatombe	n	*
 noun	1	basin	basis	n	*
 noun	1	artemonem	artemon	n	*
 noun	1	elephantis	elephas	n	*
-noun	1	praegnatem	praegnas	adj	*
 adjective	1	bonae	bonus	adj	*
 adjective	1	bona	bonus	adj	*
 adjective	1	bonam	bonus	adj	*
@@ -907,7 +751,6 @@ adjective	1	veteris	vetus	adj	*
 adjective	1	vetera	vetus	adj	*
 adjective	1	veterum	vetus	adj	*
 adjective	1	praecipitem	praeceps	adj	*
-adjective	1	lanipedes	lanipes	adj	*
 adjective	1	pauperis	pauper	adj	*
 adjective	1	paris	par	adj	*
 adjective	1	memorem	memor	adj	*
@@ -1331,17 +1174,6 @@ verb, perfect system	1	suffoderat	suffodio	v	*
 verb, participle or supine	1	effossus	effodio	v	*
 verb, present system	1	amabamus	amo	v	*
 verb, present system	1	amaremur	amo	v	*
-verb, present system	1	regebamus	rego	v	*
-verb, present system	1	hortaremur	hortor	v	*
-negative	0	sine	si	*	*
-negative	0	bene	be	*	*
-negative	0	mane	ma	*	*
-negative	0	pone	po	*	*
-negative	0	Romane	Roma	*	*
-negative	0	salve	sal	*	*
-negative	0	suave	sua	*	*
-negative	0	cave	ca	*	*
-negative	0	vive	vi	*	*
 negative	0	domini	domo	n	*
 negative	0	vicini	vico	n	*
 negative	0	potui	poto	v	*

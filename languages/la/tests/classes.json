@@ -316,11 +316,6 @@
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[12].rules[12].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
-    ],
     "transforms[13].rules[0].stemCharacters": [
       [0, 31],
       [33, 55295],
@@ -355,11 +350,6 @@
       [114, 114]
     ],
     "transforms[14].rules[3].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[14].rules[12].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
@@ -414,11 +404,6 @@
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[20].rules[9].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
-    ],
     "transforms[23].rules[2].stemEndsWith": [
       [114, 114]
     ],
@@ -429,6 +414,12 @@
       [57344, 1114111]
     ],
     "transforms[26].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[26].rules[1].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
@@ -458,6 +449,42 @@
       [100, 100],
       [103, 103],
       [108, 109]
+    ],
+    "transforms[26].rules[16].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[26].rules[17].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[26].rules[19].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[26].rules[21].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[26].rules[29].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[26].rules[30].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
     ],
     "transforms[26].rules[33].stemCharacters": [
       [0, 31],
@@ -517,6 +544,12 @@
       [108, 108],
       [114, 114]
     ],
+    "transforms[27].rules[7].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[27].rules[7].stemEndsWith": [
       [108, 108],
       [114, 114]
@@ -529,6 +562,12 @@
     ],
     "transforms[27].rules[8].stemEndsWith": [
       [110, 110]
+    ],
+    "transforms[27].rules[9].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
     ],
     "transforms[27].rules[9].stemEndsWith": [
       [110, 110]
@@ -545,7 +584,61 @@
       [103, 103],
       [108, 109]
     ],
+    "transforms[27].rules[30].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[27].rules[32].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[27].rules[36].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[27].rules[40].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[27].rules[56].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[27].rules[58].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[27].rules[68].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[27].rules[69].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[27].rules[70].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[27].rules[71].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
@@ -557,7 +650,31 @@
       [91, 55295],
       [57344, 1114111]
     ],
+    "transforms[27].rules[73].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[27].rules[74].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[27].rules[81].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[27].rules[82].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[27].rules[83].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
@@ -576,6 +693,12 @@
       [57344, 1114111]
     ],
     "transforms[28].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[28].rules[4].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
@@ -630,6 +753,12 @@
       [91, 55295],
       [57344, 1114111]
     ],
+    "transforms[29].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[29].rules[5].stemCharacters": [
       [0, 31],
       [33, 64],
@@ -654,6 +783,18 @@
       [91, 55295],
       [57344, 1114111]
     ],
+    "transforms[30].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[30].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[30].rules[4].stemCharacters": [
       [0, 31],
       [33, 64],
@@ -673,6 +814,18 @@
       [57344, 1114111]
     ],
     "transforms[31].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[31].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[31].rules[4].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
@@ -767,6 +920,42 @@
       [103, 103],
       [108, 109]
     ],
+    "transforms[35].rules[14].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[35].rules[15].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[35].rules[17].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[35].rules[19].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[35].rules[27].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[35].rules[28].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[35].rules[35].stemCharacters": [
       [0, 31],
       [33, 64],
@@ -791,6 +980,12 @@
       [91, 55295],
       [57344, 1114111]
     ],
+    "transforms[35].rules[39].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[36].rules[0].stemCharacters": [
       [0, 31],
       [33, 64],
@@ -806,6 +1001,66 @@
     "transforms[36].rules[1].stemEndsWith": [
       [108, 108],
       [114, 114]
+    ],
+    "transforms[36].rules[11].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[36].rules[12].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[36].rules[14].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[36].rules[16].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[36].rules[24].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[36].rules[25].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[36].rules[28].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[36].rules[29].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[36].rules[30].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[36].rules[31].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
     ],
     "transforms[36].rules[33].stemCharacters": [
       [0, 31],
@@ -844,11 +1099,59 @@
     "transforms[37].rules[1].stemEndsWith": [
       [110, 110]
     ],
+    "transforms[37].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[37].rules[2].stemEndsWith": [
       [98, 98],
       [100, 100],
       [103, 103],
       [108, 109]
+    ],
+    "transforms[37].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[37].rules[4].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[37].rules[5].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[37].rules[6].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[37].rules[9].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[37].rules[10].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[37].rules[11].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
     ],
     "transforms[37].rules[12].stemCharacters": [
       [0, 31],
@@ -862,13 +1165,67 @@
       [91, 55295],
       [57344, 1114111]
     ],
+    "transforms[37].rules[14].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[37].rules[15].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
+    "transforms[37].rules[16].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[37].rules[17].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[37].rules[18].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[37].rules[19].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[37].rules[20].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[37].rules[21].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[37].rules[22].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[37].rules[23].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[37].rules[24].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
@@ -881,6 +1238,30 @@
       [57344, 1114111]
     ],
     "transforms[37].rules[26].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[37].rules[27].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[37].rules[29].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[37].rules[30].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[37].rules[31].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
@@ -950,11 +1331,59 @@
     "transforms[39].rules[0].stemEndsWith": [
       [110, 110]
     ],
+    "transforms[39].rules[1].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[39].rules[1].stemEndsWith": [
       [98, 98],
       [100, 100],
       [103, 103],
       [108, 109]
+    ],
+    "transforms[39].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[39].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[39].rules[4].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[39].rules[5].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[39].rules[8].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[39].rules[9].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[39].rules[10].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
     ],
     "transforms[39].rules[11].stemCharacters": [
       [0, 31],
@@ -968,13 +1397,67 @@
       [91, 55295],
       [57344, 1114111]
     ],
+    "transforms[39].rules[13].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[39].rules[14].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
+    "transforms[39].rules[15].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[39].rules[16].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[39].rules[17].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[39].rules[18].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[39].rules[19].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[39].rules[20].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[39].rules[21].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[39].rules[22].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[39].rules[23].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
@@ -987,6 +1470,30 @@
       [57344, 1114111]
     ],
     "transforms[39].rules[25].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[39].rules[26].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[39].rules[28].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[39].rules[29].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[39].rules[30].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
@@ -1247,6 +1754,24 @@
     "transforms[97].rules[4].stemCharacters": [],
     "transforms[97].rules[6].stemCharacters": [],
     "transforms[97].rules[12].stemCharacters": [],
+    "transforms[98].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[98].rules[1].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[98].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[98].rules[2].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -1311,6 +1836,18 @@
     "transforms[104].rules[4].stemCharacters": [],
     "transforms[104].rules[6].stemCharacters": [],
     "transforms[104].rules[8].stemCharacters": [],
+    "transforms[105].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[105].rules[1].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[105].rules[2].stemCharacters": [],
     "transforms[105].rules[4].stemCharacters": [],
     "transforms[105].rules[5].stemCharacters": [],
@@ -1326,6 +1863,12 @@
       [105, 105],
       [111, 111]
     ],
+    "transforms[106].rules[1].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[107].rules[2].stemCharacters": [
       [0, 31],
       [33, 64],
@@ -1337,6 +1880,12 @@
       [101, 101],
       [105, 105],
       [111, 111]
+    ],
+    "transforms[107].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
     ],
     "transforms[107].rules[4].stemCharacters": [],
     "transforms[107].rules[6].stemCharacters": [],
@@ -1352,6 +1901,12 @@
       [101, 101],
       [105, 105],
       [111, 111]
+    ],
+    "transforms[108].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
     ],
     "transforms[108].rules[4].stemCharacters": [],
     "transforms[108].rules[6].stemCharacters": [],
@@ -1375,6 +1930,12 @@
     "transforms[110].rules[4].stemCharacters": [],
     "transforms[110].rules[6].stemCharacters": [],
     "transforms[110].rules[8].stemCharacters": [],
+    "transforms[111].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[111].rules[2].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -1390,11 +1951,23 @@
       [91, 55295],
       [57344, 1114111]
     ],
+    "transforms[112].rules[1].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[112].rules[2].stemCharacters": [],
     "transforms[112].rules[3].stemCharacters": [],
     "transforms[112].rules[5].stemCharacters": [],
     "transforms[112].rules[9].stemCharacters": [],
     "transforms[113].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[113].rules[1].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
@@ -1412,11 +1985,23 @@
       [105, 105],
       [111, 111]
     ],
+    "transforms[113].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[113].rules[4].stemCharacters": [],
     "transforms[113].rules[5].stemCharacters": [],
     "transforms[113].rules[7].stemCharacters": [],
     "transforms[113].rules[12].stemCharacters": [],
     "transforms[114].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[114].rules[1].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
@@ -1433,6 +2018,12 @@
       [101, 101],
       [105, 105],
       [111, 111]
+    ],
+    "transforms[114].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
     ],
     "transforms[114].rules[4].stemCharacters": [],
     "transforms[114].rules[5].stemCharacters": [],
@@ -1457,6 +2048,18 @@
     "transforms[116].rules[4].stemCharacters": [],
     "transforms[116].rules[6].stemCharacters": [],
     "transforms[116].rules[11].stemCharacters": [],
+    "transforms[117].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[117].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[117].rules[2].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -1534,6 +2137,12 @@
       [91, 55295],
       [57344, 1114111]
     ],
+    "transforms[124].rules[1].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[124].rules[2].stemCharacters": [
       [0, 31],
       [33, 64],
@@ -1546,9 +2155,63 @@
       [105, 105],
       [111, 111]
     ],
+    "transforms[124].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[124].rules[4].stemCharacters": [],
     "transforms[125].rules[9].stemCharacters": [],
+    "transforms[126].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[126].rules[1].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[126].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[126].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[126].rules[5].stemCharacters": [],
+    "transforms[127].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[127].rules[1].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[127].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[127].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[128].rules[0].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -1561,11 +2224,23 @@
       [105, 105],
       [111, 111]
     ],
+    "transforms[129].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[129].rules[0].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
+    ],
+    "transforms[130].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
     ],
     "transforms[130].rules[0].stemNotEndsWith": [
       [97, 97],
@@ -1745,6 +2420,18 @@
       [105, 105],
       [111, 111]
     ],
+    "transforms[142].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[142].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[143].rules[12].stemCharacters": [],
     "transforms[143].rules[13].stemCharacters": [],
     "transforms[144].rules[4].stemNotEndsWith": [
@@ -1813,7 +2500,31 @@
       [91, 55295],
       [57344, 1114111]
     ],
+    "transforms[148].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[148].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[148].rules[4].stemCharacters": [],
+    "transforms[149].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[149].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[149].rules[8].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -1826,11 +2537,23 @@
       [105, 105],
       [111, 111]
     ],
+    "transforms[149].rules[10].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[149].rules[10].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
+    ],
+    "transforms[149].rules[11].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
     ],
     "transforms[149].rules[11].stemNotEndsWith": [
       [97, 97],
@@ -2017,9 +2740,45 @@
       [91, 55295],
       [57344, 1114111]
     ],
+    "transforms[160].rules[4].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[160].rules[5].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[160].rules[7].stemCharacters": [],
+    "transforms[160].rules[8].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[160].rules[11].stemCharacters": [],
     "transforms[161].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[162].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[162].rules[1].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[162].rules[2].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
@@ -2031,14 +2790,44 @@
       [105, 105],
       [111, 111]
     ],
+    "transforms[162].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[162].rules[4].stemCharacters": [],
     "transforms[162].rules[5].stemCharacters": [],
     "transforms[162].rules[9].stemCharacters": [],
+    "transforms[163].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[163].rules[1].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[163].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[163].rules[2].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
+    ],
+    "transforms[163].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
     ],
     "transforms[163].rules[4].stemCharacters": [],
     "transforms[163].rules[5].stemCharacters": [],
@@ -2087,6 +2876,30 @@
       [111, 111]
     ],
     "transforms[167].rules[8].stemCharacters": [],
+    "transforms[168].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[168].rules[1].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[168].rules[4].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[168].rules[5].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[168].rules[8].stemCharacters": [
       [0, 31],
       [33, 64],
@@ -2112,6 +2925,18 @@
       [111, 111]
     ],
     "transforms[168].rules[10].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[168].rules[11].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[168].rules[12].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
@@ -2162,6 +2987,42 @@
     ],
     "transforms[171].rules[10].stemCharacters": [],
     "transforms[171].rules[11].stemCharacters": [],
+    "transforms[172].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[172].rules[1].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[172].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[172].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[172].rules[4].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[172].rules[5].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[172].rules[8].stemCharacters": [],
     "transforms[172].rules[9].stemCharacters": [],
     "transforms[172].rules[10].stemCharacters": [],
@@ -2192,6 +3053,12 @@
       [108, 108]
     ],
     "transforms[177].rules[6].stemCharacters": [],
+    "transforms[178].rules[1].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[178].rules[4].stemEndsWith": [
       [110, 110]
     ],
@@ -2213,6 +3080,12 @@
     ],
     "transforms[184].rules[2].stemEndsWith": [
       [110, 110]
+    ],
+    "transforms[185].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
     ],
     "transforms[192].rules[3].stemEndsWith": [
       [110, 110]
@@ -2265,7 +3138,25 @@
     ],
     "transforms[198].rules[6].stemCharacters": [],
     "transforms[198].rules[8].stemCharacters": [],
+    "transforms[201].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[201].rules[1].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[201].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[201].rules[3].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
@@ -2289,21 +3180,57 @@
       [91, 55295],
       [57344, 1114111]
     ],
+    "transforms[201].rules[6].stemEndsWith": [
+      [108, 109],
+      [112, 112],
+      [114, 114],
+      [120, 120]
+    ],
     "transforms[201].rules[7].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[201].rules[14].stemCharacters": [
+    "transforms[201].rules[8].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[201].rules[14].stemNotEndsWith": [
+    "transforms[201].rules[9].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[201].rules[10].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[201].rules[11].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[201].rules[13].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[201].rules[13].stemNotEndsWith": [
       [101, 101],
       [105, 105]
+    ],
+    "transforms[201].rules[15].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
     ],
     "transforms[201].rules[16].stemCharacters": [
       [0, 31],
@@ -2317,11 +3244,107 @@
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[201].rules[289].stemCharacters": [],
+    "transforms[201].rules[18].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[201].rules[19].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[201].rules[69].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[201].rules[70].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[201].rules[94].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[201].rules[97].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[201].rules[284].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[201].rules[290].stemCharacters": [],
+    "transforms[201].rules[291].stemCharacters": [],
     "transforms[203].rules[0].stemCharacters": [
       [0, 31],
       [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[203].rules[1].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[203].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[203].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[203].rules[4].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[203].rules[5].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[203].rules[6].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[203].rules[7].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[203].rules[8].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[203].rules[9].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
       [57344, 1114111]
     ],
     "transforms[203].rules[9].stemEndsWith": [
@@ -2361,25 +3384,7 @@
     "transforms[208].rules[7].stemCharacters": [],
     "transforms[209].rules[0].stemCharacters": [],
     "transforms[210].rules[0].stemCharacters": [],
-    "transforms[213].rules[0].stemCharacters": [],
-    "transforms[215].rules[0].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[215].rules[0].stemNotEndsWith": [
-      [97, 97]
-    ],
-    "transforms[216].rules[0].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[216].rules[0].stemEndsWith": [
-      [100, 100],
-      [109, 109],
-      [115, 116]
-    ]
+    "transforms[213].rules[0].stemCharacters": []
   },
   "steps": [
     {
@@ -2660,7 +3665,6 @@
         ["Ausoniī", "ausoniī"],
         ["Cnōssum", "cnōssum"],
         ["Saeprī", "saeprī"],
-        ["Solomōne", "solomōne"],
         ["Vigorniae", "vigorniae"],
         ["Termētis", "termētis"],
         ["Chrȳsalō", "chrȳsalō"],
@@ -3159,7 +4163,6 @@
         ["trānsiistī", "trānsiistī"],
         ["praelēgāverātis", "praelēgāverātis"],
         ["amāricāvimus", "amāricāvimus"],
-        ["internecuissem", "internecuissem"],
         ["eschadissent", "eschadissent"],
         ["inussissēs", "inussissēs"],
         ["obstrūsimus", "obstrūsimus"],
@@ -3338,175 +4341,20 @@
         ["illum", "illum"],
         ["nēminī", "nēminī"],
         ["ecquōs", "ecquōs"],
-        ["amat", "amat"],
         ["amamus", "amamus"],
-        ["amant", "amant"],
-        ["amabat", "amabat"],
-        ["amabunt", "amabunt"],
-        ["amet", "amet"],
-        ["amarent", "amarent"],
-        ["ama", "ama"],
-        ["amate", "amate"],
-        ["amato", "amato"],
-        ["amanto", "amanto"],
-        ["amatote", "amatote"],
         ["amare", "amare"],
-        ["amandi", "amandi"],
-        ["amando", "amando"],
-        ["amandum", "amandum"],
-        ["amans", "amans"],
-        ["amantem", "amantem"],
-        ["amandus", "amandus"],
-        ["amandae", "amandae"],
         ["amatur", "amatur"],
-        ["amabatur", "amabatur"],
         ["amabitur", "amabitur"],
-        ["ametur", "ametur"],
-        ["amaretur", "amaretur"],
-        ["amari", "amari"],
-        ["amarier", "amarier"],
-        ["amaris", "amaris"],
         ["amabaris", "amabaris"],
         ["amabere", "amabere"],
-        ["amator", "amator"],
         ["amantor", "amantor"],
         ["amamini", "amamini"],
-        ["monet", "monet"],
-        ["monent", "monent"],
-        ["monebat", "monebat"],
-        ["monebit", "monebit"],
-        ["moneat", "moneat"],
-        ["moneret", "moneret"],
-        ["mone", "mone"],
-        ["monete", "monete"],
-        ["moneto", "moneto"],
-        ["monento", "monento"],
-        ["monere", "monere"],
-        ["monetur", "monetur"],
-        ["monebatur", "monebatur"],
-        ["monebitur", "monebitur"],
-        ["moneatur", "moneatur"],
-        ["moneretur", "moneretur"],
-        ["moneri", "moneri"],
-        ["monerier", "monerier"],
-        ["monens", "monens"],
-        ["monendi", "monendi"],
-        ["monendus", "monendus"],
-        ["monetor", "monetor"],
-        ["monentor", "monentor"],
-        ["regit", "regit"],
-        ["regunt", "regunt"],
-        ["regebat", "regebat"],
-        ["reget", "reget"],
         ["regam", "regam"],
-        ["regat", "regat"],
-        ["regeret", "regeret"],
-        ["rege", "rege"],
-        ["regite", "regite"],
-        ["regito", "regito"],
-        ["regunto", "regunto"],
         ["regere", "regere"],
-        ["regitur", "regitur"],
-        ["reguntur", "reguntur"],
-        ["regebatur", "regebatur"],
-        ["regetur", "regetur"],
-        ["regatur", "regatur"],
-        ["regeretur", "regeretur"],
-        ["regi", "regi"],
-        ["regens", "regens"],
-        ["regendi", "regendi"],
-        ["regendus", "regendus"],
-        ["regitor", "regitor"],
-        ["reguntor", "reguntor"],
-        ["capit", "capit"],
-        ["capiunt", "capiunt"],
-        ["capiebat", "capiebat"],
-        ["capiet", "capiet"],
-        ["capiat", "capiat"],
-        ["caperet", "caperet"],
-        ["cape", "cape"],
-        ["capite", "capite"],
-        ["capito", "capito"],
-        ["capiunto", "capiunto"],
-        ["capere", "capere"],
-        ["capitur", "capitur"],
-        ["capiuntur", "capiuntur"],
-        ["capiebatur", "capiebatur"],
-        ["capietur", "capietur"],
-        ["capiatur", "capiatur"],
-        ["caperetur", "caperetur"],
         ["capi", "capi"],
-        ["capiens", "capiens"],
-        ["capiendi", "capiendi"],
-        ["capiundi", "capiundi"],
-        ["capiendus", "capiendus"],
-        ["capiundus", "capiundus"],
-        ["audit", "audit"],
-        ["audiunt", "audiunt"],
-        ["audiebat", "audiebat"],
-        ["audiet", "audiet"],
-        ["audiat", "audiat"],
-        ["audiret", "audiret"],
-        ["audi", "audi"],
-        ["audite", "audite"],
-        ["audito", "audito"],
-        ["audiunto", "audiunto"],
-        ["audire", "audire"],
-        ["auditur", "auditur"],
-        ["audiuntur", "audiuntur"],
-        ["audiebatur", "audiebatur"],
-        ["audietur", "audietur"],
-        ["audiatur", "audiatur"],
-        ["audiretur", "audiretur"],
-        ["audiri", "audiri"],
-        ["audirier", "audirier"],
-        ["audiens", "audiens"],
-        ["audiendi", "audiendi"],
-        ["audiendus", "audiendus"],
-        ["hortatur", "hortatur"],
         ["hortantur", "hortantur"],
-        ["hortabatur", "hortabatur"],
-        ["hortabitur", "hortabitur"],
-        ["hortetur", "hortetur"],
-        ["hortaretur", "hortaretur"],
-        ["hortari", "hortari"],
         ["hortare", "hortare"],
-        ["hortamini", "hortamini"],
-        ["hortans", "hortans"],
-        ["hortandi", "hortandi"],
-        ["hortandus", "hortandus"],
-        ["hortaturus", "hortaturus"],
-        ["veretur", "veretur"],
-        ["verebatur", "verebatur"],
-        ["vereri", "vereri"],
-        ["veritus", "veritus"],
-        ["verens", "verens"],
-        ["sequitur", "sequitur"],
-        ["sequuntur", "sequuntur"],
-        ["sequebatur", "sequebatur"],
-        ["sequetur", "sequetur"],
-        ["sequatur", "sequatur"],
-        ["sequeretur", "sequeretur"],
-        ["sequi", "sequi"],
         ["sequere", "sequere"],
-        ["sequens", "sequens"],
-        ["sequendi", "sequendi"],
-        ["secutus", "secutus"],
-        ["secuturus", "secuturus"],
-        ["sequutus", "sequutus"],
-        ["patitur", "patitur"],
-        ["patiuntur", "patiuntur"],
-        ["patiebatur", "patiebatur"],
-        ["pati", "pati"],
-        ["patiens", "patiens"],
-        ["passus", "passus"],
-        ["largitur", "largitur"],
-        ["largiuntur", "largiuntur"],
-        ["largiri", "largiri"],
-        ["largitus", "largitus"],
-        ["potitur", "potitur"],
-        ["potiretur", "potiretur"],
-        ["potitus", "potitus"],
         ["amavi", "amavi"],
         ["amavisti", "amavisti"],
         ["amavit", "amavit"],
@@ -4196,7 +5044,6 @@
         ["basin", "basin"],
         ["artemonem", "artemonem"],
         ["elephantis", "elephantis"],
-        ["praegnatem", "praegnatem"],
         ["bonae", "bonae"],
         ["bona", "bona"],
         ["bonam", "bonam"],
@@ -4244,7 +5091,6 @@
         ["vetera", "vetera"],
         ["veterum", "veterum"],
         ["praecipitem", "praecipitem"],
-        ["lanipedes", "lanipedes"],
         ["pauperis", "pauperis"],
         ["paris", "paris"],
         ["memorem", "memorem"],
@@ -4659,16 +5505,6 @@
         ["effossus", "effossus"],
         ["amabamus", "amabamus"],
         ["amaremur", "amaremur"],
-        ["regebamus", "regebamus"],
-        ["hortaremur", "hortaremur"],
-        ["sine", "sine"],
-        ["mane", "mane"],
-        ["pone", "pone"],
-        ["Romane", "romane"],
-        ["salve", "salve"],
-        ["suave", "suave"],
-        ["cave", "cave"],
-        ["vive", "vive"],
         ["vicini", "vicini"],
         ["potui", "potui"],
         ["meam", "meam"],
@@ -4688,6 +5524,8 @@
         ["Herculis", "herculis"],
         ["Herculem", "herculem"],
         ["Achilli", "achilli"],
+        ["praegnatem", "praegnatem"],
+        ["lanipedes", "lanipedes"],
         ["fasciculī arcuātī", "fasciculī arcuātī"],
         ["galaxiārum", "galaxiārum"],
         ["Mārpōrēs", "mārpōrēs"],
@@ -4710,6 +5548,7 @@
         ["Arnēs", "arnēs"],
         ["Cercetī", "cercetī"],
         ["Theodorās", "theodorās"],
+        ["Solomōne", "solomōne"],
         ["Bēthlehēmō", "bēthlehēmō"],
         ["Tampī", "tampī"],
         ["Pallēnēn", "pallēnēn"],
@@ -4723,6 +5562,7 @@
         ["excalfītō", "excalfītō"],
         ["obsolefactum", "obsolefactum"],
         ["connītundus", "connītundus"],
+        ["internecuissem", "internecuissem"],
         ["adolēram", "adolēram"],
         ["ēmulserat", "ēmulserat"],
         ["Sūtrium iēre", "sūtrium iēre"],
@@ -4753,6 +5593,7 @@
         ["Amor", "amor"],
         ["vir", "vir"],
         ["iam", "iam"],
+        ["amat", "amat"],
         ["sum", "sum"],
         ["virumque canō", "virumque canō"],
         ["arma virumque canō", "arma virumque canō"],
@@ -4785,6 +5626,12 @@
         ["Graeco-Rōmānus", "graeco-rōmānus"],
         ["ab ōrīs", "ab ōrīs"],
         ["ōrīs", "ōrīs"],
+        ["bene dixit", "bene dixit"],
+        ["salve, amice", "salve, amice"],
+        ["Romane, memento", "romane, memento"],
+        ["pone tergum", "pone tergum"],
+        ["estne verum", "estne verum"],
+        ["sive vir", "sive vir"],
         ["Arma virumque canō, Trōiae quī prīmus ab ōrīs Ītaliam vēnit.", "arma virumque canō, trōiae quī prīmus ab ōrīs ītaliam vēnit."]
       ]
     },
@@ -5066,7 +5913,6 @@
         ["Ausoniī", "Ausoniī"],
         ["Cnōssum", "Cnōssum"],
         ["Saeprī", "Saeprī"],
-        ["Solomōne", "Solomōne"],
         ["Vigorniae", "Vigorniae"],
         ["Termētis", "Termētis"],
         ["Chrȳsalō", "Chrȳsalō"],
@@ -5565,7 +6411,6 @@
         ["trānsiistī", "Trānsiistī"],
         ["praelēgāverātis", "Praelēgāverātis"],
         ["amāricāvimus", "Amāricāvimus"],
-        ["internecuissem", "Internecuissem"],
         ["eschadissent", "Eschadissent"],
         ["inussissēs", "Inussissēs"],
         ["obstrūsimus", "Obstrūsimus"],
@@ -5744,175 +6589,20 @@
         ["illum", "Illum"],
         ["nēminī", "Nēminī"],
         ["ecquōs", "Ecquōs"],
-        ["amat", "Amat"],
         ["amamus", "Amamus"],
-        ["amant", "Amant"],
-        ["amabat", "Amabat"],
-        ["amabunt", "Amabunt"],
-        ["amet", "Amet"],
-        ["amarent", "Amarent"],
-        ["ama", "Ama"],
-        ["amate", "Amate"],
-        ["amato", "Amato"],
-        ["amanto", "Amanto"],
-        ["amatote", "Amatote"],
         ["amare", "Amare"],
-        ["amandi", "Amandi"],
-        ["amando", "Amando"],
-        ["amandum", "Amandum"],
-        ["amans", "Amans"],
-        ["amantem", "Amantem"],
-        ["amandus", "Amandus"],
-        ["amandae", "Amandae"],
         ["amatur", "Amatur"],
-        ["amabatur", "Amabatur"],
         ["amabitur", "Amabitur"],
-        ["ametur", "Ametur"],
-        ["amaretur", "Amaretur"],
-        ["amari", "Amari"],
-        ["amarier", "Amarier"],
-        ["amaris", "Amaris"],
         ["amabaris", "Amabaris"],
         ["amabere", "Amabere"],
-        ["amator", "Amator"],
         ["amantor", "Amantor"],
         ["amamini", "Amamini"],
-        ["monet", "Monet"],
-        ["monent", "Monent"],
-        ["monebat", "Monebat"],
-        ["monebit", "Monebit"],
-        ["moneat", "Moneat"],
-        ["moneret", "Moneret"],
-        ["mone", "Mone"],
-        ["monete", "Monete"],
-        ["moneto", "Moneto"],
-        ["monento", "Monento"],
-        ["monere", "Monere"],
-        ["monetur", "Monetur"],
-        ["monebatur", "Monebatur"],
-        ["monebitur", "Monebitur"],
-        ["moneatur", "Moneatur"],
-        ["moneretur", "Moneretur"],
-        ["moneri", "Moneri"],
-        ["monerier", "Monerier"],
-        ["monens", "Monens"],
-        ["monendi", "Monendi"],
-        ["monendus", "Monendus"],
-        ["monetor", "Monetor"],
-        ["monentor", "Monentor"],
-        ["regit", "Regit"],
-        ["regunt", "Regunt"],
-        ["regebat", "Regebat"],
-        ["reget", "Reget"],
         ["regam", "Regam"],
-        ["regat", "Regat"],
-        ["regeret", "Regeret"],
-        ["rege", "Rege"],
-        ["regite", "Regite"],
-        ["regito", "Regito"],
-        ["regunto", "Regunto"],
         ["regere", "Regere"],
-        ["regitur", "Regitur"],
-        ["reguntur", "Reguntur"],
-        ["regebatur", "Regebatur"],
-        ["regetur", "Regetur"],
-        ["regatur", "Regatur"],
-        ["regeretur", "Regeretur"],
-        ["regi", "Regi"],
-        ["regens", "Regens"],
-        ["regendi", "Regendi"],
-        ["regendus", "Regendus"],
-        ["regitor", "Regitor"],
-        ["reguntor", "Reguntor"],
-        ["capit", "Capit"],
-        ["capiunt", "Capiunt"],
-        ["capiebat", "Capiebat"],
-        ["capiet", "Capiet"],
-        ["capiat", "Capiat"],
-        ["caperet", "Caperet"],
-        ["cape", "Cape"],
-        ["capite", "Capite"],
-        ["capito", "Capito"],
-        ["capiunto", "Capiunto"],
-        ["capere", "Capere"],
-        ["capitur", "Capitur"],
-        ["capiuntur", "Capiuntur"],
-        ["capiebatur", "Capiebatur"],
-        ["capietur", "Capietur"],
-        ["capiatur", "Capiatur"],
-        ["caperetur", "Caperetur"],
         ["capi", "Capi"],
-        ["capiens", "Capiens"],
-        ["capiendi", "Capiendi"],
-        ["capiundi", "Capiundi"],
-        ["capiendus", "Capiendus"],
-        ["capiundus", "Capiundus"],
-        ["audit", "Audit"],
-        ["audiunt", "Audiunt"],
-        ["audiebat", "Audiebat"],
-        ["audiet", "Audiet"],
-        ["audiat", "Audiat"],
-        ["audiret", "Audiret"],
-        ["audi", "Audi"],
-        ["audite", "Audite"],
-        ["audito", "Audito"],
-        ["audiunto", "Audiunto"],
-        ["audire", "Audire"],
-        ["auditur", "Auditur"],
-        ["audiuntur", "Audiuntur"],
-        ["audiebatur", "Audiebatur"],
-        ["audietur", "Audietur"],
-        ["audiatur", "Audiatur"],
-        ["audiretur", "Audiretur"],
-        ["audiri", "Audiri"],
-        ["audirier", "Audirier"],
-        ["audiens", "Audiens"],
-        ["audiendi", "Audiendi"],
-        ["audiendus", "Audiendus"],
-        ["hortatur", "Hortatur"],
         ["hortantur", "Hortantur"],
-        ["hortabatur", "Hortabatur"],
-        ["hortabitur", "Hortabitur"],
-        ["hortetur", "Hortetur"],
-        ["hortaretur", "Hortaretur"],
-        ["hortari", "Hortari"],
         ["hortare", "Hortare"],
-        ["hortamini", "Hortamini"],
-        ["hortans", "Hortans"],
-        ["hortandi", "Hortandi"],
-        ["hortandus", "Hortandus"],
-        ["hortaturus", "Hortaturus"],
-        ["veretur", "Veretur"],
-        ["verebatur", "Verebatur"],
-        ["vereri", "Vereri"],
-        ["veritus", "Veritus"],
-        ["verens", "Verens"],
-        ["sequitur", "Sequitur"],
-        ["sequuntur", "Sequuntur"],
-        ["sequebatur", "Sequebatur"],
-        ["sequetur", "Sequetur"],
-        ["sequatur", "Sequatur"],
-        ["sequeretur", "Sequeretur"],
-        ["sequi", "Sequi"],
         ["sequere", "Sequere"],
-        ["sequens", "Sequens"],
-        ["sequendi", "Sequendi"],
-        ["secutus", "Secutus"],
-        ["secuturus", "Secuturus"],
-        ["sequutus", "Sequutus"],
-        ["patitur", "Patitur"],
-        ["patiuntur", "Patiuntur"],
-        ["patiebatur", "Patiebatur"],
-        ["pati", "Pati"],
-        ["patiens", "Patiens"],
-        ["passus", "Passus"],
-        ["largitur", "Largitur"],
-        ["largiuntur", "Largiuntur"],
-        ["largiri", "Largiri"],
-        ["largitus", "Largitus"],
-        ["potitur", "Potitur"],
-        ["potiretur", "Potiretur"],
-        ["potitus", "Potitus"],
         ["amavi", "Amavi"],
         ["amavisti", "Amavisti"],
         ["amavit", "Amavit"],
@@ -6602,7 +7292,6 @@
         ["basin", "Basin"],
         ["artemonem", "Artemonem"],
         ["elephantis", "Elephantis"],
-        ["praegnatem", "Praegnatem"],
         ["bonae", "Bonae"],
         ["bona", "Bona"],
         ["bonam", "Bonam"],
@@ -6650,7 +7339,6 @@
         ["vetera", "Vetera"],
         ["veterum", "Veterum"],
         ["praecipitem", "Praecipitem"],
-        ["lanipedes", "Lanipedes"],
         ["pauperis", "Pauperis"],
         ["paris", "Paris"],
         ["memorem", "Memorem"],
@@ -7065,16 +7753,6 @@
         ["effossus", "Effossus"],
         ["amabamus", "Amabamus"],
         ["amaremur", "Amaremur"],
-        ["regebamus", "Regebamus"],
-        ["hortaremur", "Hortaremur"],
-        ["sine", "Sine"],
-        ["mane", "Mane"],
-        ["pone", "Pone"],
-        ["Romane", "Romane"],
-        ["salve", "Salve"],
-        ["suave", "Suave"],
-        ["cave", "Cave"],
-        ["vive", "Vive"],
         ["vicini", "Vicini"],
         ["potui", "Potui"],
         ["meam", "Meam"],
@@ -7094,6 +7772,8 @@
         ["Herculis", "Herculis"],
         ["Herculem", "Herculem"],
         ["Achilli", "Achilli"],
+        ["praegnatem", "Praegnatem"],
+        ["lanipedes", "Lanipedes"],
         ["fasciculī arcuātī", "Fasciculī arcuātī"],
         ["galaxiārum", "Galaxiārum"],
         ["Mārpōrēs", "Mārpōrēs"],
@@ -7116,6 +7796,7 @@
         ["Arnēs", "Arnēs"],
         ["Cercetī", "Cercetī"],
         ["Theodorās", "Theodorās"],
+        ["Solomōne", "Solomōne"],
         ["Bēthlehēmō", "Bēthlehēmō"],
         ["Tampī", "Tampī"],
         ["Pallēnēn", "Pallēnēn"],
@@ -7129,6 +7810,7 @@
         ["excalfītō", "Excalfītō"],
         ["obsolefactum", "Obsolefactum"],
         ["connītundus", "Connītundus"],
+        ["internecuissem", "Internecuissem"],
         ["adolēram", "Adolēram"],
         ["ēmulserat", "Ēmulserat"],
         ["Sūtrium iēre", "Sūtrium iēre"],
@@ -7159,6 +7841,7 @@
         ["Amor", "Amor"],
         ["vir", "Vir"],
         ["iam", "Iam"],
+        ["amat", "Amat"],
         ["sum", "Sum"],
         ["virumque canō", "Virumque canō"],
         ["arma virumque canō", "Arma virumque canō"],
@@ -7191,6 +7874,12 @@
         ["Graeco-Rōmānus", "Graeco-Rōmānus"],
         ["ab ōrīs", "Ab ōrīs"],
         ["ōrīs", "Ōrīs"],
+        ["bene dixit", "Bene dixit"],
+        ["salve, amice", "Salve, amice"],
+        ["Romane, memento", "Romane, memento"],
+        ["pone tergum", "Pone tergum"],
+        ["estne verum", "Estne verum"],
+        ["sive vir", "Sive vir"],
         ["Arma virumque canō, Trōiae quī prīmus ab ōrīs Ītaliam vēnit.", "Arma virumque canō, Trōiae quī prīmus ab ōrīs Ītaliam vēnit."]
       ]
     }
