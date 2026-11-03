@@ -1048,10 +1048,12 @@ for (const [slot, form, lemma] of [
     ['present-ele', 'cria', 'criar'], ['present-tu', 'crias', 'criar'], ['present-eles', 'criam', 'criar'],
     ['present-ele', 'desvia', 'desviar'], ['present-tu', 'desvias', 'desviar'], ['present-eles', 'desviam', 'desviar'],
     // and those found in the texts and Tatoeba sentences of the measurements:
-    // delirar as the pluperfect of delir, render-se and assentar-se as the
-    // present of rendar and assentir (renda-se, assente-se).
+    // delirar as the pluperfect of delir; render-se, assentar-se and
+    // viver as the present or preterite of rendar, assentir, vivar and
+    // atendar (renda-se, assente-se, viva-a, rendei-vos, atendei-nos).
     ['present-ele', 'delira', 'delirar'], ['present-tu', 'deliras', 'delirar'],
     ['subjunctive-eu-ele', 'renda', 'render'], ['subjunctive-eu-ele', 'assente', 'assentar'],
+    ['subjunctive-eu-ele', 'viva', 'viver'], ['imperative-vos', 'rendei', 'render'], ['imperative-vos', 'atendei', 'atender'],
     // atender read as ater (atende as the imperative of vós, atendo as the
     // gerund) or as the rare atendar (atendam as its present).
     ['present-eu', 'atendo', 'atender'], ['present-tu', 'atendes', 'atender'], ['present-ele', 'atende', 'atender'],

@@ -865,6 +865,7 @@
         {"type": "wholeWord", "inflected": "una", "deinflected": "unir", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "renda", "deinflected": "render", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "assente", "deinflected": "assentar", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "viva", "deinflected": "viver", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "atenda", "deinflected": "atender", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "e", "deinflected": "ar", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 4, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[cg]", "stemStartsWithText": "est"}
       ]
@@ -1325,7 +1326,9 @@
         {"type": "circumfix", "prefixes": [["des", "des"]], "suffixes": [["crede", "crer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["sor", "sor"]], "suffixes": [["ride", "rir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["des", "des"]], "suffixes": [["provede", "prover"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["sede", "ser"], ["ide", "ir"], ["estai", "estar"], ["tende", "ter"], ["havei", "haver"], ["vinde", "vir"], ["vede", "ver"], ["dai", "dar"], ["ponde", "pôr"], ["lede", "ler"], ["crede", "crer"], ["ride", "rir"], ["provede", "prover"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["sede", "ser"], ["ide", "ir"], ["estai", "estar"], ["tende", "ter"], ["havei", "haver"], ["vinde", "vir"], ["vede", "ver"], ["dai", "dar"], ["ponde", "pôr"], ["lede", "ler"], ["crede", "crer"], ["ride", "rir"], ["provede", "prover"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
+        {"type": "wholeWord", "inflected": "rendei", "deinflected": "render", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "atendei", "deinflected": "atender", "conditionsIn": ["vf"], "conditionsOut": ["v"]}
       ]
     },
     {

@@ -3119,7 +3119,7 @@
     "transforms[34].rules[29].stemCharacters": [],
     "transforms[34].rules[30].stemCharacters": [],
     "transforms[34].rules[31].stemCharacters": [],
-    "transforms[34].rules[41].stemCharacters": [
+    "transforms[34].rules[42].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 191],
@@ -3127,7 +3127,7 @@
       [223, 55295],
       [57344, 1114111]
     ],
-    "transforms[34].rules[41].stemNotEndsWith": [
+    "transforms[34].rules[42].stemNotEndsWith": [
       [99, 99],
       [103, 103]
     ],
