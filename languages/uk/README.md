@@ -325,11 +325,12 @@ identical).
    | Kotsiubynsky, vol. 2 | 127,968 | 111,879 | 31 | 2,223 | 389 | 13,446 |
    | Franko, *Захар Беркут* | 50,957 | 44,192 | 16 | 984 | 153 | 5,612 |
 
-   - The 47 wrong first results are ties the homograph rules leave, by the
-     frequency proxy (соли → солити, застав → застати, віє → віяти,
+   - The 47 wrong first results are 42 ties the homograph rules leave, by
+     the frequency proxy (соли → солити, застав → застати, віє → віяти,
      проходи → прохід), оріхів → Оріхів (3: оріх is only a reference to
-     горіх, Known gaps) and свистячі → свистіти (wty-uk-en files свистячий
-     under свистати).
+     горіх, Known gaps), свистячі → свистіти (wty-uk-en files свистячий
+     under свистати) and a sentence-initial Рад → Рада (the council) for
+     радий.
    - The proxy judges 2,527 lookups whose word has no hand label and whose
      first result is not the word itself. By hand, a random sample of 60
      (seed 2030) has 53 right first results and 7 wrong where the proxy
@@ -403,7 +404,7 @@ identical).
      the mutant breaks (шоу → шо, куцьою → куцій, тиму → ти: the synthetic
      future needs a stem, бвши → бти). Six negatives no deletion needed were
      removed, and three positives that repeated rows of `corpus.tsv`.
-   - Hachidori (feat/multi-language d7e82b0c with this branch at 2498eaf in
+   - Hachidori (feat/multi-language d7e82b0c with this branch at ee3b68b in
      `third_party/hoshidicts`, `node scripts/sync-languages.mjs`,
      `test/chrome-language-pack.mjs`, Chrome 152, wty-uk-en): 14 of 14 checks
      pass. Settings adds Ukrainian beside Japanese and imports the dictionary
