@@ -92,7 +92,7 @@ no Russian rules, so the own rules are also the union and the final set, and
   the expanded rules give the same deinflections as separate suffix rules (0
   differences on 10,671 inputs: the corpus, the cases and every word of
   *Дуэль*; the auditor found the same on 141,788 inputs). The rows keep
-  `tests/` and `sources/` under 1 MB (982 KB) and `tests/classes.json` at
+  `tests/` and `sources/` under 1 MB (988 KB) and `tests/classes.json` at
   308 KB.
 - **Transforms name forms.** Rules whose ending stands for the same set of
   forms make one transform, and its name lists them, so a trace says every
@@ -249,7 +249,7 @@ numbers. "filter" lines use a scratch copy of the pack with the field set to
    | File | Rows | Recall | Negatives passed | False candidates per row | First rank |
    | --- | ---: | ---: | ---: | ---: | ---: |
    | `corpus.tsv` + UniMorph rows of `gaps.tsv` (the sample) | 1,000 | 99.70% (997) | | 1.532 (filter: 0.780) | 95.0% (filter: 94.3%) |
-   | `cases.tsv` | 681 (452 positive, 229 negative) | 100% | 100% | 3.122 (filter: 1.564) | 81.2% (filter: 77.9%) |
+   | `cases.tsv` | 723 (452 positive, 271 negative) | 100% | 100% | 3.122 (filter: 1.564) | 81.2% (filter: 77.9%) |
 
    - Over every UniMorph rus row that `sources/build-corpus.mjs` admits
      (295,660 rows; `sources/unimorph-recall.py`), the rules reach 98.69%:
@@ -394,16 +394,18 @@ numbers. "filter" lines use a scratch copy of the pack with the field set to
    the field also passes 16 / 16, with traces from the dictionary's form-of
    rows.
 7. **Tests** (`language-conformance-test`): corpus.tsv 997 / 997, cases.tsv
-   681 / 681, text.tsv 38 / 38, lookup.tsv 56 / 56; gaps.tsv 0 / 4
+   723 / 723, text.tsv 38 / 38, lookup.tsv 56 / 56; gaps.tsv 0 / 4
    (reported); classes.json agrees with the engine (10 classes, 1,197
-   fields, 2 steps). `tests/` and `sources/` hold 981,677 bytes.
+   fields, 2 steps). `tests/` and `sources/` hold 988,496 bytes.
    `tools/check-yomitan.mjs`: 4 processors on about 1,720 inputs each, every
    difference listed (`sources/yomitan-differences.tsv`), 0 unexplained.
    - Mutation check (section 14 step 7, `sources/mutate.py`): removing one
      kind of stem constraint (`stemMinLength`, `stemEndsWith`,
      `stemNotStartsWith`, `stemNotStartsWithText`, `stemNotEndsWith`,
      `stemCharacters`) from the rows of one transform; every mutant fails the
-     conformance test. The `guard` rows of `cases.tsv` (201) are the wrong
+     conformance test, except one: `verb-ptcp.pres.act` without
+     `stemNotStartsWithText`, whose only effect is a reading of a non-word
+     (`почтущий`). The `guard` rows of `cases.tsv` (243) are the wrong
      headword or text each constraint keeps out, the most frequent word's
      first (`он` is not она, `Итак` is not Итака, `так сказал` is not так
      сказать), and those for the collisions this README names (`тел`, `Лет`,
