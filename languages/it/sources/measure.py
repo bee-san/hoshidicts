@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """The real-use measurements of README.md (Measurements 2-4). Not run by any test.
 
-    python3 measure.py freq     <wty zip> <imported dict> <it_50k.txt> [--top N] [--languages DIR] [--against DIR] [--out FILE]
+    python3 measure.py freq     <wty zip> <imported dict> <it_50k.txt> [--top N] [--from N] [--languages DIR] [--against DIR] [--out FILE]
     python3 measure.py text     <wty zip> <imported dict> <pg*.txt>... [--languages DIR] [--out FILE] [--sample N] [--freq it_50k.txt]
     python3 measure.py pronouns <wty zip> <imported dict> <ita_sentences.tsv(.bz2)> [--languages DIR] [--out FILE]
     python3 measure.py eval     <imported dict> [--languages DIR] [--per-rule FILE]
@@ -58,6 +58,13 @@ DIR (such as a copy with untaggedTerms "filter") and counts the first results
 that differ, those whose lemma's citation form is at least 10 times rarer
 than the other pack's first lemma, and those 10 times more frequent: the
 audit's own comparison, with citation forms counted in the whole list.
+With --from N, freq reads the words of ranks N+1 to --top only (a range the
+preferred readings were not chosen on: --from 10000 --top 50000).
+
+freq and text also count the first results over the word alone in four
+classes of ties that README.md's Known gaps lists (tie_class below), and text
+writes a random sample of 20 of each, with the words before the hovered one,
+for judging by hand.
 
 pronouns: the places in Tatoeba's sentences where a clitic or reflexive
 pronoun (mi, ti, si, ci, vi, me, te, se, ce, ve, lo, la, li, le, gli, ne, and
@@ -246,6 +253,34 @@ def rarer_named(expression, word, rows):
     return None
 
 
+TIE_CLASSES = ("feminine noun before the adjective", "-e noun before the -o adjective",
+               "-rsi imperative before the participle", "capital letter at a sentence start")
+
+
+def tie_class(word, f, rows):
+    """The class of a first result over the hovered word alone, among the ties README.md's Known gaps
+    counts, or None: a feminine noun shown for a feminine plural whose rows also name the -o adjective
+    (nuove: nuova, not nuovo); an -e noun for an -i plural whose rows also name the -o adjective (morti:
+    morte, not morto); an -rsi verb through a one-step trace (the dictionary's imperative row) for a word
+    in -ati, -iti, -uti (condannati: condannarsi, not condannato); a capital letter's own entry for that
+    letter (E, A, I, O starting a sentence)."""
+    if f is None or f["matched"] != word:
+        return None
+    w, e = word.lower(), f["expression"]
+    if len(word) == 1 and word.isupper() and e == word:
+        return TIE_CLASSES[3]
+    named = referenced(word, rows)
+    if w.endswith("e") and f["trace"] == ["plural"]:
+        stem = w[:-2] if w.endswith(("che", "ghe")) else w[:-1]
+        if e == stem + "a" and stem + "o" in named:
+            return TIE_CLASSES[0]
+    if w.endswith("i") and f["trace"] == ["plural"] and e == w[:-1] + "e" and w[:-1] + "o" in named:
+        return TIE_CLASSES[1]
+    if re.search(r"[aiu]ti$", w) and e.endswith("rsi") and len(f["trace"]) == 1:
+        return TIE_CLASSES[2]
+    return None
+
+
 def first(result):
     return result["results"][0] if result["results"] else None
 
@@ -256,6 +291,7 @@ def describe(r):
 
 def cmd_freq(args):
     top = int(option(args, "--top", "10000"))
+    start = int(option(args, "--from", "0"))
     languages = option(args, "--languages", os.path.join(REPO, "languages"))
     against = option(args, "--against", None)
     out_file = option(args, "--out", None)
@@ -269,6 +305,8 @@ def cmd_freq(args):
         counts[w] = int(c)
         if len(words) >= top:
             break
+    words = words[start:]
+    counts = {w: counts[w] for w in words}
     total_tokens = sum(counts.values())
     reached = deinflect(words, languages)
     eligible = [w for w in words if (rows.get(w, {}) or {}).get("refs") and (rows[w]["refs"] & reached.get(w, set()))]
@@ -293,7 +331,8 @@ def cmd_freq(args):
         if hidden is not None:
             rarer.append((w, f, hidden))
     rarer_tokens = sum(counts[w] for w, _, _ in rarer)
-    lines = [f"top {top} words ({total_tokens} tokens); a rule reaches a lemma their form-of rows name: {len(eligible)} words, "
+    span = f"top {top} words" if start == 0 else f"words {start + 1}-{top}"
+    lines = [f"{span} ({total_tokens} tokens); a rule reaches a lemma their form-of rows name: {len(eligible)} words, "
              f"{eligible_tokens / total_tokens:.2%} of the tokens",
              f"wrong first result: {len(wrong)} words ({len(wrong) / max(1, len(eligible)):.2%}), "
              f"{wrong_tokens} tokens = {wrong_tokens / total_tokens:.3%} of the list's tokens, "
@@ -301,9 +340,11 @@ def cmd_freq(args):
     lines.append(f"first result a named lemma 10 times rarer than another the word's rows name: {len(rarer)} words, "
                  f"{rarer_tokens} tokens = {rarer_tokens / total_tokens:.3%} of the list's tokens")
     compared = []
+    their_first = {}
     if against is not None:
         differ, worse, better = [], [], []
         for w, mine, theirs in zip(words, every, lookup(words, dictionary, against)):
+            their_first[w] = first(theirs)
             fm, ft = first(mine), first(theirs)
             if fm is None or ft is None or fm["expression"] == ft["expression"]:
                 continue
@@ -325,12 +366,30 @@ def cmd_freq(args):
     for w, f in sorted(wrong, key=lambda x: -counts[x[0]]):
         lines.append(f"  {w}\t{counts[w]}\t{describe(f) if f else 'no result'}\tright: {', '.join(sorted(acceptable(w, rows)))}")
     lines += compared
+    ties = collections.defaultdict(list)
+    for w, res in zip(words, every):
+        c = tie_class(w, first(res), rows)
+        if c is not None:
+            ties[c].append(w)
+    for c in TIE_CLASSES[:3]:
+        ws = sorted(ties.get(c, []), key=lambda x: -counts[x])
+        lines.append(f"tie class {c}: {len(ws)} words, {sum(counts[w] for w in ws) / total_tokens:.3%} of the tokens: "
+                     + ", ".join(f"{w} ({counts[w]})" for w in ws))
+        if against is not None:
+            other = [w for w in ws if their_first.get(w) and their_first[w]["expression"] != first(by_word[w])["expression"]]
+            lines.append(f"  of which {os.path.basename(os.path.normpath(against))} shows another lemma first: {len(other)} words, "
+                         f"{sum(counts[w] for w in other) / total_tokens:.3%} of the tokens: "
+                         + ", ".join(f"{w} -> {their_first[w]['expression']}" for w in other))
     write(lines, out_file)
+
+
+LEFTS = []  # the 40 characters before each hovered word, for the tie samples
 
 
 def hovers_from_texts(paths):
     """(hover text, hovered word, the word after an apostrophe or None) for every word."""
     hovers, words, nexts = [], [], []
+    LEFTS.clear()
     for path in paths:
         text = open(path, encoding="utf-8", errors="replace").read()
         start = text.find("*** START")
@@ -343,6 +402,7 @@ def hovers_from_texts(paths):
             flat = " ".join(paragraph.split())
             for sentence in SENTENCE_END.split(flat):
                 for m in WORD.finditer(sentence):
+                    LEFTS.append(sentence[max(0, m.start() - 40):m.start()])
                     hovers.append(sentence[m.start():])
                     words.append(m.group(0))
                     after = sentence[m.end():m.end() + 1]
@@ -381,6 +441,9 @@ def classify(word, nxt, f, rows):
     return "not confirmed"
 
 
+TIES = []  # (class, hover index, word, first result) of the last judge_lookups
+
+
 def judge_lookups(hovers, words, nexts, rows, dictionary, languages):
     results = lookup(hovers, dictionary, languages)
     tally = collections.Counter()
@@ -392,11 +455,15 @@ def judge_lookups(hovers, words, nexts, rows, dictionary, languages):
     rarer = collections.Counter()
     rarer_items = []
     examples = collections.defaultdict(list)
-    for hover, word, nxt, res in zip(hovers, words, nexts, results):
+    TIES.clear()
+    for i, (hover, word, nxt, res) in enumerate(zip(hovers, words, nexts, results)):
         f = first(res)
         if f is None:
             tally["no result"] += 1
             continue
+        c = tie_class(word, f, rows)
+        if c is not None:
+            TIES.append((c, i, word, f))
         known = acceptable_any(word, rows) or (nxt is not None and (acceptable_any(nxt, rows) or acceptable(word + "'", rows)))
         if not known and f["matched"] == word:
             tally["unjudged"] += 1
@@ -461,6 +528,18 @@ def cmd_text(args):
     lines.append(f"random sample of {min(sample, len(unconfirmed))} not confirmed lookups (judge by hand):")
     for hover, word, f in random.sample(unconfirmed, min(sample, len(unconfirmed))):
         lines.append(f"  {word}\t{describe(f)}\t{hover[:70]}")
+    lines.append("first results over the word alone in the tie classes of README.md's Known gaps (lookups, words):")
+    for c in TIE_CLASSES:
+        items = [t for t in TIES if t[0] == c]
+        per_word = collections.Counter(t[2].lower() for t in items)
+        lines.append(f"  {c}: {len(items)} ({len(items) / len(hovers):.3%} of the lookups), {len(per_word)} words: "
+                     + ", ".join(f"{w} {n}" for w, n in per_word.most_common(15)))
+    for c in TIE_CLASSES:
+        items = [t for t in TIES if t[0] == c]
+        random.seed(20261103)
+        lines.append(f"random sample of {min(20, len(items))} of the class {c} (judge by hand):")
+        for _, i, word, f in random.sample(items, min(20, len(items))):
+            lines.append(f"  {word}\t{describe(f)}\t…{LEFTS[i]}[{hovers[i][:50]}]")
     write(lines, out_file)
 
 

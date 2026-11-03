@@ -1200,8 +1200,13 @@ const ONE_WORD = {stemCharacters: '{lower}'};
 // For -i, the -e singular is tried before the -o one: where a word's rows name
 // both (cani: cane and the archaic adjective cano; mesi: mese and meso), the
 // -e noun is the frequent one far more often than not in it_50k.
+// -ati is also read as the plural of -ato through an ending longer than the
+// enclitic -ti, so that the participle or adjective is found before the
+// reflexive imperative where a word's rows name both (condannati: condannato,
+// not condannarsi; informati, destinati); the frequent imperatives of
+// it_50k's top 10,000 are preferred readings below (alzati, fermati).
 for (const [inflected, deinflected, out] of [
-    ['i', 'e', NOMINAL], ['i', 'o', NOMINAL], ['e', 'a', NOMINAL], ['i', 'a', NOMINAL],
+    ['ati', 'ato', NOMINAL], ['i', 'e', NOMINAL], ['i', 'o', NOMINAL], ['e', 'a', NOMINAL], ['i', 'a', NOMINAL],
     ['chi', 'co', NOMINAL], ['ghi', 'go', NOMINAL], ['che', 'ca', NOMINAL], ['ghe', 'ga', NOMINAL],
     ['chi', 'ca', ['n']], ['ghi', 'ga', ['n']], ['ci', 'co', NOMINAL], ['gi', 'go', NOMINAL],
     ['ce', 'cia', NOMINAL], ['ge', 'gia', NOMINAL], ['i', 'io', NOMINAL],
@@ -1257,31 +1262,43 @@ for (const [inflected, deinflected, out, min] of [
 // words of it_50k's top 10,000 it does not, and a whole-word rule, which is
 // found before any ending, reaches the reading they nearly always have
 // first; the other stays second (soli: solo, then sole). The words were
-// judged by hand among those whose first lemma's citation form is at least
-// 10 times rarer than another lemma their rows name, and among the 306 of
-// the top 10,000 whose first result changes when the verb slots come first
-// (README, Measurements): the verbs below are the ones whose bare form is
-// nearly always the verb (serve, credi, continua, ami, scherzi).
+// judged by hand among those of the top 10,000 whose first lemma's citation
+// form is at least 10 times rarer than another lemma their rows name, the
+// 316 whose first result changes when the verb slots come first, and the 52
+// that change when the feminine plural comes before the plural (README,
+// Measurements 2): the verbs below are the ones whose bare form is nearly
+// always the verb (serve, credi, continua, ami); a word used both ways keeps
+// the noun (ricordi, aspetti, scherzi). The feminine plurals are adjectives
+// whose feminine singular is also a rarer noun (nuove: nuovo, not nuova
+// "news"; piccole: piccolo, not piccola "a small beer"), and morti, lenti
+// and corti are morto, lento and corto rather than morte, lente and corte.
 const PREFERRED = [
     ['plural', NOMINAL, [
         ['soli', 'solo'], ['armi', 'arma'], ['conti', 'conto'], ['regali', 'regalo'], ['messi', 'messo'], ['calci', 'calcio'],
         ['rischi', 'rischio'], ['omicidi', 'omicidio'], ['sacrifici', 'sacrificio'], ['decenni', 'decennio'],
-        ['stronzate', 'stronzata'], ['cazzate', 'cazzata'], ['discorsi', 'discorso'], ['armati', 'armato'],
-        ['alleati', 'alleato'], ['privati', 'privato'], ['arrabbiati', 'arrabbiato'], ['sbagliati', 'sbagliato'],
-        ['innamorati', 'innamorato'], ['bloccati', 'bloccato'], ['fregati', 'fregato'], ['collegati', 'collegato'],
-        ['vari', 'vario'], ['saluti', 'saluto'],
+        ['stronzate', 'stronzata'], ['cazzate', 'cazzata'], ['discorsi', 'discorso'],
+        ['vari', 'vario'], ['saluti', 'saluto'], ['temi', 'tema'], ['morti', 'morto'], ['lenti', 'lento'], ['corti', 'corto'],
     ]],
     ['feminine-plural', ['adj'], [
         ['vere', 'vero'], ['private', 'privato'], ['armate', 'armato'], ['complicate', 'complicato'], ['sbagliate', 'sbagliato'],
+        ['belle', 'bello'], ['nuove', 'nuovo'], ['piccole', 'piccolo'], ['fatte', 'fatto'], ['brutte', 'brutto'],
+        ['vecchie', 'vecchio'], ['prime', 'primo'], ['giuste', 'giusto'], ['lunghe', 'lungo'], ['piene', 'pieno'],
+        ['grosse', 'grosso'], ['uniche', 'unico'], ['bianche', 'bianco'], ['scomparse', 'scomparso'], ['segrete', 'segreto'],
+        ['americane', 'americano'], ['strette', 'stretto'], ['chiare', 'chiaro'], ['sicure', 'sicuro'], ['basse', 'basso'],
     ]],
     ['present-io', ['v'], [['domando', 'domandare']]],
+    // Reflexive imperatives in -ati that the -ati plural rule above would put
+    // after the participle (Alzati! Fidati! Figurati!).
+    ['imperative-tu', ['v'], [
+        ['alzati', 'alzarsi'], ['fidati', 'fidarsi'], ['svegliati', 'svegliarsi'], ['figurati', 'figurarsi'],
+        ['spostati', 'spostarsi'], ['riposati', 'riposarsi'],
+    ]],
     ['present-tu', ['v'], [
         ['torni', 'tornare'], ['spegni', 'spegnere'], ['credi', 'credere'], ['ami', 'amare'], ['ascolti', 'ascoltare'],
-        ['cerchi', 'cercare'], ['scherzi', 'scherzare'], ['manchi', 'mancare'], ['fidi', 'fidare'], ['menti', 'mentire'],
+        ['cerchi', 'cercare'], ['manchi', 'mancare'], ['fidi', 'fidare'], ['menti', 'mentire'],
         ['paghi', 'pagare'], ['perdoni', 'perdonare'], ['tocchi', 'toccare'], ['dimentichi', 'dimenticare'], ['osi', 'osare'],
         ['accetti', 'accettare'], ['compri', 'comprare'], ['accompagni', 'accompagnare'], ['vendi', 'vendere'],
-        ['puzzi', 'puzzare'], ['figuri', 'figurare'], ['temi', 'temere'], ['presti', 'prestare'], ['fumi', 'fumare'],
-        ['sali', 'salire'], ['aspetti', 'aspettare'],
+        ['puzzi', 'puzzare'], ['figuri', 'figurare'], ['presti', 'prestare'], ['fumi', 'fumare'], ['sali', 'salire'],
     ]],
     ['present-lui', ['v'], [
         ['pare', 'parere'], ['accade', 'accadere'], ['indovina', 'indovinare'], ['supera', 'superare'], ['vende', 'vendere'],
