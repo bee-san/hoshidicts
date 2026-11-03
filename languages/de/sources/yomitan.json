@@ -1,0 +1,225 @@
+{
+  "schema": 1,
+  "conditions": {
+    "v": {
+      "name": "Verb",
+      "isDictionaryForm": true,
+      "subConditions": ["vw", "vst"]
+    },
+    "vw": {
+      "name": "Weak verb",
+      "isDictionaryForm": true
+    },
+    "vst": {
+      "name": "Strong verb",
+      "isDictionaryForm": true
+    },
+    "n": {
+      "name": "Noun",
+      "isDictionaryForm": true
+    },
+    "adj": {
+      "name": "Adjective",
+      "isDictionaryForm": true
+    }
+  },
+  "transforms": [
+    {
+      "id": "nominalization",
+      "name": "nominalization",
+      "description": "Noun formed from a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ung", "deinflected": "en", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "lung", "deinflected": "eln", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "rung", "deinflected": "rn", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "-bar",
+      "name": "-bar",
+      "description": "-able adjective from a verb",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "bar", "deinflected": "en", "conditionsIn": ["adj"], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "bar", "deinflected": "n", "conditionsIn": ["adj"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "negative",
+      "name": "negative",
+      "description": "Negation",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "un", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj"]}
+      ]
+    },
+    {
+      "id": "past participle",
+      "name": "past participle",
+      "source": "yomitan",
+      "rules": [
+        {"type": "circumfix", "inflectedPrefix": "ge", "deinflectedPrefix": "", "inflectedSuffix": "t", "deinflectedSuffix": "n", "conditionsIn": [], "conditionsOut": ["vw"], "stemMinLength": 1, "stemCharacters": "[a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]"},
+        {"type": "circumfix", "inflectedPrefix": "ge", "deinflectedPrefix": "", "inflectedSuffix": "t", "deinflectedSuffix": "en", "conditionsIn": [], "conditionsOut": ["vw"], "stemMinLength": 1, "stemCharacters": "[a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]"},
+        {"type": "circumfix", "prefixes": [["abge", "ab"], ["ange", "an"], ["aufge", "auf"], ["ausge", "aus"], ["auseinanderge", "auseinander"], ["beige", "bei"], ["dage", "da"], ["dabeige", "dabei"], ["darge", "dar"], ["darange", "daran"], ["dazwischenge", "dazwischen"], ["durchge", "durch"], ["einge", "ein"], ["emporge", "empor"], ["entgegenge", "entgegen"], ["entlangge", "entlang"], ["entzweige", "entzwei"], ["fehlge", "fehl"], ["fernge", "fern"], ["festge", "fest"], ["fortge", "fort"], ["freige", "frei"], ["gegenüberge", "gegenüber"], ["gleichge", "gleich"], ["heimge", "heim"], ["herge", "her"], ["herabge", "herab"], ["herange", "heran"], ["heraufge", "herauf"], ["herausge", "heraus"], ["herbeige", "herbei"], ["hereinge", "herein"], ["herüberge", "herüber"], ["herumge", "herum"], ["herunterge", "herunter"], ["hervorge", "hervor"], ["hinge", "hin"], ["hinabge", "hinab"], ["hinaufge", "hinauf"], ["hinausge", "hinaus"], ["hineinge", "hinein"], ["hinterherge", "hinterher"], ["hinunterge", "hinunter"], ["hinwegge", "hinweg"], ["hinzuge", "hinzu"], ["hochge", "hoch"], ["losge", "los"], ["mitge", "mit"], ["nachge", "nach"], ["nebenherge", "nebenher"], ["niederge", "nieder"], ["stattge", "statt"], ["umge", "um"], ["vorge", "vor"], ["vorange", "voran"], ["vorausge", "voraus"], ["vorbeige", "vorbei"], ["vorüberge", "vorüber"], ["vorwegge", "vorweg"], ["wegge", "weg"], ["weiterge", "weiter"], ["wiederge", "wieder"], ["zuge", "zu"], ["zurechtge", "zurecht"], ["zurückge", "zurück"], ["zusammenge", "zusammen"]], "suffixes": [["t", "n"]], "conditionsIn": [], "conditionsOut": ["vw"], "stemMinLength": 1, "stemCharacters": "[a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]"},
+        {"type": "circumfix", "prefixes": [["abge", "ab"], ["ange", "an"], ["aufge", "auf"], ["ausge", "aus"], ["auseinanderge", "auseinander"], ["beige", "bei"], ["dage", "da"], ["dabeige", "dabei"], ["darge", "dar"], ["darange", "daran"], ["dazwischenge", "dazwischen"], ["durchge", "durch"], ["einge", "ein"], ["emporge", "empor"], ["entgegenge", "entgegen"], ["entlangge", "entlang"], ["entzweige", "entzwei"], ["fehlge", "fehl"], ["fernge", "fern"], ["festge", "fest"], ["fortge", "fort"], ["freige", "frei"], ["gegenüberge", "gegenüber"], ["gleichge", "gleich"], ["heimge", "heim"], ["herge", "her"], ["herabge", "herab"], ["herange", "heran"], ["heraufge", "herauf"], ["herausge", "heraus"], ["herbeige", "herbei"], ["hereinge", "herein"], ["herüberge", "herüber"], ["herumge", "herum"], ["herunterge", "herunter"], ["hervorge", "hervor"], ["hinge", "hin"], ["hinabge", "hinab"], ["hinaufge", "hinauf"], ["hinausge", "hinaus"], ["hineinge", "hinein"], ["hinterherge", "hinterher"], ["hinunterge", "hinunter"], ["hinwegge", "hinweg"], ["hinzuge", "hinzu"], ["hochge", "hoch"], ["losge", "los"], ["mitge", "mit"], ["nachge", "nach"], ["nebenherge", "nebenher"], ["niederge", "nieder"], ["stattge", "statt"], ["umge", "um"], ["vorge", "vor"], ["vorange", "voran"], ["vorausge", "voraus"], ["vorbeige", "vorbei"], ["vorüberge", "vorüber"], ["vorwegge", "vorweg"], ["wegge", "weg"], ["weiterge", "weiter"], ["wiederge", "wieder"], ["zuge", "zu"], ["zurechtge", "zurecht"], ["zurückge", "zurück"], ["zusammenge", "zusammen"]], "suffixes": [["t", "en"]], "conditionsIn": [], "conditionsOut": ["vw"], "stemMinLength": 1, "stemCharacters": "[a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]"}
+      ]
+    },
+    {
+      "id": "separated prefix",
+      "name": "separated prefix",
+      "source": "yomitan",
+      "rules": [
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ ab$", "replacement": "$1 ab", "anchorSuffix": " ab", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ an$", "replacement": "$1 an", "anchorSuffix": " an", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ auf$", "replacement": "$1 auf", "anchorSuffix": " auf", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ aus$", "replacement": "$1 aus", "anchorSuffix": " aus", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ auseinander$", "replacement": "$1 auseinander", "anchorSuffix": " auseinander", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ bei$", "replacement": "$1 bei", "anchorSuffix": " bei", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ da$", "replacement": "$1 da", "anchorSuffix": " da", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ dabei$", "replacement": "$1 dabei", "anchorSuffix": " dabei", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ dar$", "replacement": "$1 dar", "anchorSuffix": " dar", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ daran$", "replacement": "$1 daran", "anchorSuffix": " daran", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ dazwischen$", "replacement": "$1 dazwischen", "anchorSuffix": " dazwischen", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ durch$", "replacement": "$1 durch", "anchorSuffix": " durch", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ ein$", "replacement": "$1 ein", "anchorSuffix": " ein", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ empor$", "replacement": "$1 empor", "anchorSuffix": " empor", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ entgegen$", "replacement": "$1 entgegen", "anchorSuffix": " entgegen", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ entlang$", "replacement": "$1 entlang", "anchorSuffix": " entlang", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ entzwei$", "replacement": "$1 entzwei", "anchorSuffix": " entzwei", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ fehl$", "replacement": "$1 fehl", "anchorSuffix": " fehl", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ fern$", "replacement": "$1 fern", "anchorSuffix": " fern", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ fest$", "replacement": "$1 fest", "anchorSuffix": " fest", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ fort$", "replacement": "$1 fort", "anchorSuffix": " fort", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ frei$", "replacement": "$1 frei", "anchorSuffix": " frei", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ gegenüber$", "replacement": "$1 gegenüber", "anchorSuffix": " gegenüber", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ gleich$", "replacement": "$1 gleich", "anchorSuffix": " gleich", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ heim$", "replacement": "$1 heim", "anchorSuffix": " heim", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ her$", "replacement": "$1 her", "anchorSuffix": " her", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ herab$", "replacement": "$1 herab", "anchorSuffix": " herab", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ heran$", "replacement": "$1 heran", "anchorSuffix": " heran", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ herauf$", "replacement": "$1 herauf", "anchorSuffix": " herauf", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ heraus$", "replacement": "$1 heraus", "anchorSuffix": " heraus", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ herbei$", "replacement": "$1 herbei", "anchorSuffix": " herbei", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ herein$", "replacement": "$1 herein", "anchorSuffix": " herein", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ herüber$", "replacement": "$1 herüber", "anchorSuffix": " herüber", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ herum$", "replacement": "$1 herum", "anchorSuffix": " herum", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ herunter$", "replacement": "$1 herunter", "anchorSuffix": " herunter", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ hervor$", "replacement": "$1 hervor", "anchorSuffix": " hervor", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ hin$", "replacement": "$1 hin", "anchorSuffix": " hin", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ hinab$", "replacement": "$1 hinab", "anchorSuffix": " hinab", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ hinauf$", "replacement": "$1 hinauf", "anchorSuffix": " hinauf", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ hinaus$", "replacement": "$1 hinaus", "anchorSuffix": " hinaus", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ hinein$", "replacement": "$1 hinein", "anchorSuffix": " hinein", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ hinterher$", "replacement": "$1 hinterher", "anchorSuffix": " hinterher", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ hinunter$", "replacement": "$1 hinunter", "anchorSuffix": " hinunter", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ hinweg$", "replacement": "$1 hinweg", "anchorSuffix": " hinweg", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ hinzu$", "replacement": "$1 hinzu", "anchorSuffix": " hinzu", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ hoch$", "replacement": "$1 hoch", "anchorSuffix": " hoch", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ los$", "replacement": "$1 los", "anchorSuffix": " los", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ mit$", "replacement": "$1 mit", "anchorSuffix": " mit", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ nach$", "replacement": "$1 nach", "anchorSuffix": " nach", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ nebenher$", "replacement": "$1 nebenher", "anchorSuffix": " nebenher", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ nieder$", "replacement": "$1 nieder", "anchorSuffix": " nieder", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ statt$", "replacement": "$1 statt", "anchorSuffix": " statt", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ um$", "replacement": "$1 um", "anchorSuffix": " um", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ vor$", "replacement": "$1 vor", "anchorSuffix": " vor", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ voran$", "replacement": "$1 voran", "anchorSuffix": " voran", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ voraus$", "replacement": "$1 voraus", "anchorSuffix": " voraus", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ vorbei$", "replacement": "$1 vorbei", "anchorSuffix": " vorbei", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ vorüber$", "replacement": "$1 vorüber", "anchorSuffix": " vorüber", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ vorweg$", "replacement": "$1 vorweg", "anchorSuffix": " vorweg", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ weg$", "replacement": "$1 weg", "anchorSuffix": " weg", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ weiter$", "replacement": "$1 weiter", "anchorSuffix": " weiter", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ wieder$", "replacement": "$1 wieder", "anchorSuffix": " wieder", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ zu$", "replacement": "$1 zu", "anchorSuffix": " zu", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ zurecht$", "replacement": "$1 zurecht", "anchorSuffix": " zurecht", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ zurück$", "replacement": "$1 zurück", "anchorSuffix": " zurück", "conditionsIn": [], "conditionsOut": []},
+        {"type": "pattern", "pattern": "^([a-zA-Z\\u00E4\\u00F6\\u00FC\\u00DF\\u00C4\\u00D6\\u00DC\\u1E9E]+) .+ zusammen$", "replacement": "$1 zusammen", "anchorSuffix": " zusammen", "conditionsIn": [], "conditionsOut": []}
+      ]
+    },
+    {
+      "id": "zu-infinitive",
+      "name": "zu-infinitive",
+      "source": "yomitan",
+      "rules": [
+        {"type": "prefix", "inflected": "abzu", "deinflected": "ab", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "anzu", "deinflected": "an", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "aufzu", "deinflected": "auf", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "auszu", "deinflected": "aus", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "auseinanderzu", "deinflected": "auseinander", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "beizu", "deinflected": "bei", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "dazu", "deinflected": "da", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "dabeizu", "deinflected": "dabei", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "darzu", "deinflected": "dar", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "daranzu", "deinflected": "daran", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "dazwischenzu", "deinflected": "dazwischen", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "durchzu", "deinflected": "durch", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "einzu", "deinflected": "ein", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "emporzu", "deinflected": "empor", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "entgegenzu", "deinflected": "entgegen", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "entlangzu", "deinflected": "entlang", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "entzweizu", "deinflected": "entzwei", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "fehlzu", "deinflected": "fehl", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "fernzu", "deinflected": "fern", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "festzu", "deinflected": "fest", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "fortzu", "deinflected": "fort", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "freizu", "deinflected": "frei", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "gegenüberzu", "deinflected": "gegenüber", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "gleichzu", "deinflected": "gleich", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "heimzu", "deinflected": "heim", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "herzu", "deinflected": "her", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "herabzu", "deinflected": "herab", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "heranzu", "deinflected": "heran", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "heraufzu", "deinflected": "herauf", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "herauszu", "deinflected": "heraus", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "herbeizu", "deinflected": "herbei", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "hereinzu", "deinflected": "herein", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "herüberzu", "deinflected": "herüber", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "herumzu", "deinflected": "herum", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "herunterzu", "deinflected": "herunter", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "hervorzu", "deinflected": "hervor", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "hinzu", "deinflected": "hin", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "hinabzu", "deinflected": "hinab", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "hinaufzu", "deinflected": "hinauf", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "hinauszu", "deinflected": "hinaus", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "hineinzu", "deinflected": "hinein", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "hinterherzu", "deinflected": "hinterher", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "hinunterzu", "deinflected": "hinunter", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "hinwegzu", "deinflected": "hinweg", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "hinzuzu", "deinflected": "hinzu", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "hochzu", "deinflected": "hoch", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "loszu", "deinflected": "los", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "mitzu", "deinflected": "mit", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "nachzu", "deinflected": "nach", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "nebenherzu", "deinflected": "nebenher", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "niederzu", "deinflected": "nieder", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "stattzu", "deinflected": "statt", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "umzu", "deinflected": "um", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "vorzu", "deinflected": "vor", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "voranzu", "deinflected": "voran", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "vorauszu", "deinflected": "voraus", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "vorbeizu", "deinflected": "vorbei", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "vorüberzu", "deinflected": "vorüber", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "vorwegzu", "deinflected": "vorweg", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "wegzu", "deinflected": "weg", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "weiterzu", "deinflected": "weiter", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "wiederzu", "deinflected": "wieder", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "zuzu", "deinflected": "zu", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "zurechtzu", "deinflected": "zurecht", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "zurückzu", "deinflected": "zurück", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "prefix", "inflected": "zusammenzu", "deinflected": "zusammen", "conditionsIn": [], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "-heit",
+      "name": "-heit",
+      "description": "1. Converts an adjective into a noun and usually denotes an abstract quality of the adjectival root. It is often equivalent to the English suffixes -ness, -th, -ty, -dom:\n\t schön (“beautiful”) + -heit → Schönheit (“beauty”)\n\t neu (“new”) + -heit → Neuheit (“novelty”)\n2. Converts concrete nouns into abstract nouns:\n\t Kind (“child”) + -heit → Kindheit (“childhood”)\n\t Christ (“Christian”) + -heit → Christenheit (“Christendom”)\n",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "heit", "deinflected": "", "conditionsIn": ["n"], "conditionsOut": ["adj", "n"]},
+        {"type": "suffix", "inflected": "keit", "deinflected": "", "conditionsIn": ["n"], "conditionsOut": ["adj", "n"]}
+      ]
+    }
+  ]
+}

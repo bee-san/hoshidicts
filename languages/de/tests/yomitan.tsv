@@ -1,0 +1,17 @@
+# GPL-3.0-or-later; Copyright (C) 2023-2026 Yomitan Authors; 2020-2022 Yomichan Authors
+# https://github.com/yomidevs/yomitan/blob/d3c54c10264673eca0d66b970ef74cd5c8b048e3/test/language/german-transforms.test.js
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+nominalization	1	reinigung	reinigen	v	nominalization
+nominalization	1	säuberung	säubern	v	nominalization
+nominalization	1	entwicklung	entwickeln	v	nominalization
+-bar	1	essbar	essen	v	-bar
+-bar	1	lieferbar	liefern	v	-bar
+negative	1	unmöglich	möglich	adj	negative
+past participle	1	geschnitzt	schnitzen	v	past participle
+past participle	1	gescheitert	scheitern	v	past participle
+past participle	1	dargestellt	darstellen	v	past participle
+separated prefix	1	räum den Tisch auf	räum auf	v	separated prefix
+zu-infinitive	1	aufzuräumen	aufräumen	v	zu-infinitive
+-heit	1	wahrheit	wahr	adj	-heit
+-heit	1	Kindheit	Kind	n	-heit
+-heit	1	anwendbarkeit	anwenden	v	-bar|-heit

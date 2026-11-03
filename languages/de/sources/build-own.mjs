@@ -28,16 +28,24 @@ const here = dirname(fileURLToPath(import.meta.url));
 // v, n and adj are the part-of-speech tags German Yomitan dictionaries put in
 // their `rules` column (wiktionary-to-yomitan writes exactly these three).
 // sep marks a finite verb whose separated particle was put back in front of
-// it (kommt ... an -> ankommt); only the rules for finite forms take it. ns
-// and np are a noun read as singular or plural, so that a dative plural
-// (Kindern -> Kinder) goes on to the plural rules and a singular does not.
+// it (kommt ... an -> ankommt); only the rules for finite forms take it. np
+// is a plural noun whose dative -n was removed (Kindern -> Kinder), which the
+// plural rules read again (Kinder -> Kind).
+//
+// The first version of this file had v without subconditions and n with the
+// subconditions ns and np. Once Yomitan's rules were read (step 3), the
+// conditions both files have were given Yomitan's definitions (v with the
+// subconditions vw and vst, n without subconditions), which
+// tools/merge-transforms.mjs requires to be equal; that changes no
+// deinflection of these rules.
 const conditions = {
-    v: {name: 'Verb', isDictionaryForm: true},
-    sep: {name: 'Finite verb with its separated particle put back', isDictionaryForm: false},
-    n: {name: 'Noun', isDictionaryForm: true, subConditions: ['ns', 'np']},
-    ns: {name: 'Noun, singular', isDictionaryForm: false},
-    np: {name: 'Noun, plural', isDictionaryForm: false},
+    v: {name: 'Verb', isDictionaryForm: true, subConditions: ['vw', 'vst']},
+    vw: {name: 'Weak verb', isDictionaryForm: true},
+    vst: {name: 'Strong verb', isDictionaryForm: true},
+    n: {name: 'Noun', isDictionaryForm: true},
     adj: {name: 'Adjective', isDictionaryForm: true},
+    sep: {name: 'Finite verb with its separated particle put back', isDictionaryForm: false},
+    np: {name: 'Plural noun without its dative -n', isDictionaryForm: false},
 };
 
 // Every stem is one word: letters, digits, combining marks and hyphens
@@ -569,7 +577,7 @@ transform('dative-plural', 'dative plural',
 const UMLAUTS = [['äu', 'au'], ['ä', 'a'], ['ö', 'o'], ['ü', 'u'], ['Äu', 'Au'], ['Ä', 'A'], ['Ö', 'O'], ['Ü', 'U']];
 const umlaut = (from, to) => ({from: [from], to, occurrence: 'last', between: '{consonant}', betweenMinLength: 1});
 const PLURAL_IN = ['np'];
-const NOUN_OUT = ['ns'];
+const NOUN_OUT = ['n'];
 const NOUN = {stemMinLength: 2, stemStartsWith: UPPER};
 suffix('plural', 'e', '', PLURAL_IN, NOUN_OUT, NOUN);
 suffix('plural', 'er', '', PLURAL_IN, NOUN_OUT, NOUN);
@@ -608,7 +616,7 @@ suffix('genitive', 'ens', 'e', [], [], CAPITAL);
 suffix('genitive', 'ens', '', [], [], CAPITAL);
 suffix('genitive', "'", '', [], [], {...CAPITAL, stemEndsWith: '[sßxz]'});
 suffix('plural-s', 's', '', PLURAL_IN, NOUN_OUT, {...NOUN, stemEndsWith: '{consonant}'});
-suffix('dative-plural', 'n', '', [], ['np'], {...NOUN, stemEndsWith: '[elr]'});
+suffix('dative-plural', 'n', '', [], ['n', 'np'], {...NOUN, stemEndsWith: '[elr]'});
 
 // --- Adjectives ----------------------------------------------------------------------
 transform('declined', 'declined',

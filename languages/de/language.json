@@ -58,15 +58,12 @@
         "variants": [[{"case": "upperFirst"}]]
       },
       {
-        "id": "eszettToSs",
-        "name": "ß written as ss (spelling before 1996: daß → dass)",
-        "variants": [[{"alternatives": {"ß": ["ss"]}, "limit": 16}]]
-      },
-      {
-        "id": "ssToEszett",
-        "name": "ss written as ß (Swiss spelling: Strasse → Straße)",
-        "optional": true,
-        "variants": [[{"alternatives": {"ss": ["ß"]}, "limit": 16}]]
+        "id": "eszettPreprocessor",
+        "name": "Convert \"ß\" to \"ss\"",
+        "variants": [
+          [{"map": {"ẞ": "SS", "ß": "ss"}}],
+          [{"map": {"SS": "ẞ", "ss": "ß"}}]
+        ]
       }
     ],
     "postprocessors": [],
@@ -94,17 +91,7 @@
     "labels": {},
     "displayTransforms": {}
   },
-  "settings": [
-    {
-      "id": "swissSpelling",
-      "type": "boolean",
-      "default": false,
-      "label": "Swiss spelling (ss for ß)",
-      "description": "Also look words up with ss read as ß, as Swiss and Liechtenstein German write them (Strasse → Straße, heisst → heißt, gross → groß). Adds less likely readings (Masse → Maße) and makes lookups slower.",
-      "group": "lookup",
-      "effect": {"preprocessor": "ssToEszett"}
-    }
-  ],
+  "settings": [],
   "host": {
     "ttsLanguage": "de-DE",
     "audioLanguage": "de",

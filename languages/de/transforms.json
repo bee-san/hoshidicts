@@ -3,28 +3,32 @@
   "conditions": {
     "v": {
       "name": "Verb",
+      "isDictionaryForm": true,
+      "subConditions": ["vw", "vst"]
+    },
+    "vw": {
+      "name": "Weak verb",
+      "isDictionaryForm": true
+    },
+    "vst": {
+      "name": "Strong verb",
+      "isDictionaryForm": true
+    },
+    "n": {
+      "name": "Noun",
+      "isDictionaryForm": true
+    },
+    "adj": {
+      "name": "Adjective",
       "isDictionaryForm": true
     },
     "sep": {
       "name": "Finite verb with its separated particle put back",
       "isDictionaryForm": false
     },
-    "n": {
-      "name": "Noun",
-      "isDictionaryForm": true,
-      "subConditions": ["ns", "np"]
-    },
-    "ns": {
-      "name": "Noun, singular",
-      "isDictionaryForm": false
-    },
     "np": {
-      "name": "Noun, plural",
+      "name": "Plural noun without its dative -n",
       "isDictionaryForm": false
-    },
-    "adj": {
-      "name": "Adjective",
-      "isDictionaryForm": true
     }
   },
   "transforms": [
@@ -301,75 +305,75 @@
       "description": "Plural of a noun (Tage, Bäume, Kinder, Häuser, Mütter, Äpfel, Blumen, Frauen, Lehrerinnen, Autos, Ergebnisse, Museen, Themen).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["äu"], "to": "au", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["äu"], "to": "au", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "er", "deinflected": "er", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["äu"], "to": "au", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "el", "deinflected": "el", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["äu"], "to": "au", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "en", "deinflected": "en", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["äu"], "to": "au", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ä"], "to": "a", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ä"], "to": "a", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "er", "deinflected": "er", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ä"], "to": "a", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "el", "deinflected": "el", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ä"], "to": "a", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "en", "deinflected": "en", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ä"], "to": "a", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ö"], "to": "o", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ö"], "to": "o", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "er", "deinflected": "er", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ö"], "to": "o", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "el", "deinflected": "el", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ö"], "to": "o", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "en", "deinflected": "en", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ö"], "to": "o", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ü"], "to": "u", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ü"], "to": "u", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "er", "deinflected": "er", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ü"], "to": "u", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "el", "deinflected": "el", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ü"], "to": "u", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "en", "deinflected": "en", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ü"], "to": "u", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Äu"], "to": "Au", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Äu"], "to": "Au", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "er", "deinflected": "er", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Äu"], "to": "Au", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "el", "deinflected": "el", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Äu"], "to": "Au", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "en", "deinflected": "en", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Äu"], "to": "Au", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ä"], "to": "A", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ä"], "to": "A", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "er", "deinflected": "er", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ä"], "to": "A", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "el", "deinflected": "el", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ä"], "to": "A", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "en", "deinflected": "en", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ä"], "to": "A", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ö"], "to": "O", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ö"], "to": "O", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "er", "deinflected": "er", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ö"], "to": "O", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "el", "deinflected": "el", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ö"], "to": "O", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "en", "deinflected": "en", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ö"], "to": "O", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ü"], "to": "U", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ü"], "to": "U", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "er", "deinflected": "er", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ü"], "to": "U", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "el", "deinflected": "el", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ü"], "to": "U", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "en", "deinflected": "en", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ü"], "to": "U", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
-        {"type": "suffix", "inflected": "n", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{upper}", "stemEndsWith": "[elr]"},
-        {"type": "suffix", "inflected": "en", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "innen", "deinflected": "in", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "s", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{upper}", "stemEndsWith": "[aeiouyäöü]"},
-        {"type": "suffix", "inflected": "nisse", "deinflected": "nis", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "usse", "deinflected": "us", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "asse", "deinflected": "as", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "isse", "deinflected": "is", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "osse", "deinflected": "os", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "en", "deinflected": "um", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "een", "deinflected": "eum", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "ien", "deinflected": "ium", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "ien", "deinflected": "ion", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "en", "deinflected": "a", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "en", "deinflected": "us", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "en", "deinflected": "os", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "een", "deinflected": "us", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "en", "deinflected": "o", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "en", "deinflected": "is", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "a", "deinflected": "um", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "a", "deinflected": "on", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "ata", "deinflected": "a", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "ien", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "i", "deinflected": "o", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "izes", "deinflected": "ix", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
-        {"type": "suffix", "inflected": "izes", "deinflected": "ex", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["Bauten", "Bau"], ["bauten", "bau"]], "conditionsIn": ["np"], "conditionsOut": ["ns"]}
+        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{upper}"},
+        {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{upper}"},
+        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["äu"], "to": "au", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["äu"], "to": "au", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "er", "deinflected": "er", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["äu"], "to": "au", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "el", "deinflected": "el", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["äu"], "to": "au", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "en", "deinflected": "en", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["äu"], "to": "au", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ä"], "to": "a", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ä"], "to": "a", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "er", "deinflected": "er", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ä"], "to": "a", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "el", "deinflected": "el", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ä"], "to": "a", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "en", "deinflected": "en", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ä"], "to": "a", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ö"], "to": "o", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ö"], "to": "o", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "er", "deinflected": "er", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ö"], "to": "o", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "el", "deinflected": "el", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ö"], "to": "o", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "en", "deinflected": "en", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ö"], "to": "o", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ü"], "to": "u", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ü"], "to": "u", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "er", "deinflected": "er", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ü"], "to": "u", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "el", "deinflected": "el", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ü"], "to": "u", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "en", "deinflected": "en", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["ü"], "to": "u", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Äu"], "to": "Au", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Äu"], "to": "Au", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "er", "deinflected": "er", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Äu"], "to": "Au", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "el", "deinflected": "el", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Äu"], "to": "Au", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "en", "deinflected": "en", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Äu"], "to": "Au", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ä"], "to": "A", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ä"], "to": "A", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "er", "deinflected": "er", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ä"], "to": "A", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "el", "deinflected": "el", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ä"], "to": "A", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "en", "deinflected": "en", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ä"], "to": "A", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ö"], "to": "O", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ö"], "to": "O", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "er", "deinflected": "er", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ö"], "to": "O", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "el", "deinflected": "el", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ö"], "to": "O", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "en", "deinflected": "en", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ö"], "to": "O", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ü"], "to": "U", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "er", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ü"], "to": "U", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "er", "deinflected": "er", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ü"], "to": "U", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "el", "deinflected": "el", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ü"], "to": "U", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "en", "deinflected": "en", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 1, "stemStartsWith": "{upper}", "stemChange": {"from": ["Ü"], "to": "U", "occurrence": "last", "between": "{consonant}", "betweenMinLength": 1}},
+        {"type": "suffix", "inflected": "n", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{upper}", "stemEndsWith": "[elr]"},
+        {"type": "suffix", "inflected": "en", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{upper}"},
+        {"type": "suffix", "inflected": "innen", "deinflected": "in", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{upper}"},
+        {"type": "suffix", "inflected": "s", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{upper}", "stemEndsWith": "[aeiouyäöü]"},
+        {"type": "suffix", "inflected": "nisse", "deinflected": "nis", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{upper}"},
+        {"type": "suffix", "inflected": "usse", "deinflected": "us", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{upper}"},
+        {"type": "suffix", "inflected": "asse", "deinflected": "as", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{upper}"},
+        {"type": "suffix", "inflected": "isse", "deinflected": "is", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{upper}"},
+        {"type": "suffix", "inflected": "osse", "deinflected": "os", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{upper}"},
+        {"type": "suffix", "inflected": "en", "deinflected": "um", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
+        {"type": "suffix", "inflected": "een", "deinflected": "eum", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
+        {"type": "suffix", "inflected": "ien", "deinflected": "ium", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
+        {"type": "suffix", "inflected": "ien", "deinflected": "ion", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
+        {"type": "suffix", "inflected": "en", "deinflected": "a", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
+        {"type": "suffix", "inflected": "en", "deinflected": "us", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
+        {"type": "suffix", "inflected": "en", "deinflected": "os", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
+        {"type": "suffix", "inflected": "een", "deinflected": "us", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
+        {"type": "suffix", "inflected": "en", "deinflected": "o", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
+        {"type": "suffix", "inflected": "en", "deinflected": "is", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
+        {"type": "suffix", "inflected": "a", "deinflected": "um", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
+        {"type": "suffix", "inflected": "a", "deinflected": "on", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
+        {"type": "suffix", "inflected": "ata", "deinflected": "a", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
+        {"type": "suffix", "inflected": "ien", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
+        {"type": "suffix", "inflected": "i", "deinflected": "o", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
+        {"type": "suffix", "inflected": "izes", "deinflected": "ix", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
+        {"type": "suffix", "inflected": "izes", "deinflected": "ex", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 3, "stemStartsWith": "{upper}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["Bauten", "Bau"], ["bauten", "bau"]], "conditionsIn": ["np"], "conditionsOut": ["n"]}
       ]
     },
     {
@@ -391,7 +395,7 @@
       "description": "Plural in -s of a noun that ends in a consonant (Hotels, Jobs, Teams).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "s", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{upper}", "stemEndsWith": "{consonant}"}
+        {"type": "suffix", "inflected": "s", "deinflected": "", "conditionsIn": ["np"], "conditionsOut": ["n"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{upper}", "stemEndsWith": "{consonant}"}
       ]
     },
     {
@@ -400,7 +404,7 @@
       "description": "Dative plural, the plural with -n added (den Tagen, den Kindern, den Äpfeln).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "n", "deinflected": "", "conditionsIn": [], "conditionsOut": ["np"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{upper}", "stemEndsWith": "[elr]"}
+        {"type": "suffix", "inflected": "n", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "np"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{upper}", "stemEndsWith": "[elr]"}
       ]
     },
     {
