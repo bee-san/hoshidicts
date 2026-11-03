@@ -117,7 +117,7 @@ lemmas, with the share the final rules reach without it and with it.
 
 | Transform | Harm | First results it changes | Constructed forms reached |
 | --- | --- | --- | ---: |
-| `-an` | wrong first results only; the own -an reaches the right ones | T 401, G 197: *Talagang* → *Talag* 141, *Abenang* → *Abe* 86, *matandaan* → *matanda* 25 | 62: 100% / 100% |
+| `-an` | wrong first results only; the own -an reaches the right ones | T 401, G 199: *Talagang* → *Talag* 141, *Abenang* → *Abe* 86, *matandaan* → *matanda* 25 | 62: 100% / 100% |
 | `-in` | wrong first results only | T 303, G 79: *ring* → *d* 75, *Alin* → *Al* 59, *Kunin* → *Ko* 45 | 62: 100% / 100% |
 | `-ng` | breaks 4 negatives (*ang* → *a*, *lang* → *la*) | T 129, G 795: *maneng* → *ne* 447, *malalaking* → *lalaki* 44 | 10: 50% / 100%¹ |
 | `ma-` | breaks *mama* → *ma* | T 142, G 42: *mag* → *g* 86, *magaling sa* → *galing sa* 24 | 15: 100% / 100% |
@@ -130,7 +130,7 @@ lemmas, with the share the final rules reach without it and with it.
 | `pag-…-in` | wrong first results only | T 1, G 1: *pagyamanin* → *yama* | 24: 87.5% / 100% |
 | `ma-…-an` | wrong first results only | T 3, G 1: *Marian* → *di* | 29: 100% / 100% |
 | `ma-…-in` | wrong first results; the own ma- -in needs a root of four letters | T 33, G 1: *magasin* → *gas* 28 | 29: 75.9% / 100% |
-| `magpa-` | no minimum root | T 13: *magpasa* → *sa*; the own magpa- keeps *magpaamo* → *amo* | 15: 100% / 100% |
+| `magpa-` | no minimum root | T 3: *magpasa* → *sa*; the own magpa- keeps *magpaamo* → *amo* | 15: 100% / 100% |
 | `tag-` | *tagalog* → *alog* | G 19 | 10: 80% / 100%² |
 | `magsi-` | collides with mag- + a root in si-; the own magsi- is tried after mag- | T 1, G 3 | 20: 90% / 100% |
 | `magma-` | wrong first results only | T 4: *magmahal.* → *hal.* | 15: 100% / 100% |
@@ -386,21 +386,21 @@ Japanese, the import of 124,921 terms in 0.8 s, 10 cases such as
 *Nagluluto* → *magluto* [progressive] and *Ako'y* → *ako* ['y], the Anki
 note, and the switch to Japanese and back).
 
-**Performance** (host load 45-60 on 64 cores, so upper bounds):
+**Performance** (host load 41-60 on 64 cores, so upper bounds):
 
 - native `benchmark-lookup --languages languages --language tl` with
-  wty-tl-en on the 412 word positions of the 65 sentences, 6 passes with the
-  first dropped, three runs: p50 21.7-22.1 µs, p95 54.4-56.9 µs (budget
-  1 ms p50);
+  wty-tl-en on the 412 word positions of the 65 sentences, each from the
+  word to the end of its sentence, 6 passes with the first dropped, three
+  runs: p50 30.4-32.5 µs, p95 74.4-78.4 µs (budget 1 ms p50);
 - Hachidori's WebAssembly (feat/multi-language 803f7b6 prebuilt engines,
-  Node 22, `benchmark/node-lookup.mjs`, the 421 word positions the harness
+  Node 22, `benchmark/node-lookup.mjs`, the 421 word positions that harness
   finds in the same sentences, 6 passes): `hdw_lookup` single-thread p50
-  70.7 µs, p95 162.4 µs; threaded p50 74.4 µs, p95 170.5 µs;
+  88.3 µs, p95 213.5 µs; threaded p50 96.8 µs, p95 230.5 µs;
 - pack load (`sources/wasm-load.mjs`, 10 fresh engines): `hdw_language_load`
-  median 16.6 ms single-thread and 18.8 ms threaded, live heap +1,268,512
-  bytes; natively `LanguageRegistry::add` takes 4.3 ms (median of 50) and
-  the registry holds 2,469,696 bytes. Budgets 50 ms and 20 MB;
-- 188 `pattern` rules: they add 286,568 bytes of heap and 2.5 ms of load in
+  median 14.9 ms single-thread and 16.0 ms threaded, live heap +1,261,896
+  bytes; natively `LanguageRegistry::add` takes 3.8 ms (median of 50) and
+  the registry holds 2,448,976 bytes. Budgets 50 ms and 20 MB;
+- 188 `pattern` rules: they add 284,920 bytes of heap and 2.8 ms of load in
   WebAssembly (the same measurement without them).
 
 **Commands.** From the repository root, with `build/` configured as
