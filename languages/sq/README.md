@@ -259,7 +259,7 @@ deinflection marked `both`.
 ## Measurements
 
 Every number below is reproduced by `sources/measure-all.sh` (it lists the
-commands) at hoshidicts b313b51 (GCC 14.3, Release), with wty-sq-en as
+commands) at hoshidicts 94b588c (GCC 14.3, Release), with wty-sq-en as
 published, imported by `hoshidicts-cli import`, form-of rows included, and
 `lookup.formOf` `follow`. The sample is the 1,000 UniMorph rows of
 `corpus.tsv` and `gaps.tsv` together. The pack's one optional feature is the
@@ -294,6 +294,17 @@ file is measured with every option on and with the defaults.
      negatives fail (`me` → `më`, `be` → `bë`); with any trace, two
      rows that name a trace (`punon` not as an imperfect, `shkon` not as an
      aorist) also count as failing.
+   - `lookup.untaggedTerms` (`untagged.txt`): wty-sq-en leaves the `rules`
+     column empty on 7,638 of its 220,164 rows (3.5%): 4,338 form-of rows,
+     2,662 names and a few hundred function words, numerals and affixes
+     (`char`, `intj`, `num`, `pron`, `suf`, `prep`); no row whose first
+     tag is `n`, `v`, `adj` or `adv` is untagged. So the pack keeps the
+     default, `filter`, and does not write the field (Hachidori's engines
+     at d7e82b0 predate it and reject the key). With `pass`, every test file
+     ranks the same lemmas first and has more false candidates: the sample
+     0.300 against 0.275 (0.285 / 0.263 with the defaults), cases.tsv 0.556
+     / 0.222, defaults.tsv 0.773 / 0.657, yomitan.tsv 0.102 / 0.092;
+     recall and negatives are the same.
 2. **Frequent forms** (`sources/measure.py frequent`): of the 10,000 most
    frequent words of the subtitle list, the rules reach the lemma that the
    word's form-of rows or UniMorph sqi name for 3,748 (26.2% of the list's
@@ -387,23 +398,23 @@ file is measured with every option on and with the defaults.
    and 18 more feminine nouns, and the masculine `ajra` → `ajër`).
 6. **Lookup speed** (`benchmark-lookup --languages languages --language sq`,
    wty-sq-en mapped): the 70 texts of `sources/benchmark-words.txt` in 6
-   passes, the first dropped, three runs at machine load about 30. The
+   passes, the first dropped, three runs at machine load about 15. The
    budget is 1 ms p50.
 
    | Rule set | p50 | p95 |
    | --- | ---: | ---: |
-   | Final | 17.5-17.6 µs | 29.7-30.2 µs |
-   | Union | 22.6-23.0 µs | 37.5-40.9 µs |
-   | Yomitan's rules | 13.9-14.2 µs | 21.9-22.3 µs |
+   | Final | 17.6 µs | 30.1-31.5 µs |
+   | Union | 22.2-22.6 µs | 37.5-37.9 µs |
+   | Yomitan's rules | 14.0-14.1 µs | 22.1-22.2 µs |
 7. **WebAssembly** (`sources/wasm-bench.mjs`, Hachidori feat/multi-language
    d7e82b0 prebuilt engines, Node 22, the same texts, dictionary paged).
    The budgets are 50 ms and 20 MB, and the pack has no `pattern` rule.
-   - `hdw_language_load` of this pack: median 8.8 ms single-thread and 9.5
-     ms threaded, over 10 fresh engines (8.0-14.3 ms).
+   - `hdw_language_load` of this pack: median 9.1 ms single-thread and 9.4
+     ms threaded, over 10 fresh engines (8.2-13.6 ms).
    - Live heap: +960,216 bytes after the load single-thread, +960,336
      threaded (mallinfo, `hdw_memory_stats`).
-   - `hdw_lookup`: p50 0.054 ms and p95 0.151 ms single-thread; p50 0.058
-     ms and p95 0.147 ms threaded.
+   - `hdw_lookup`: p50 0.051 ms and p95 0.145 ms single-thread; p50 0.057
+     ms and p95 0.144 ms threaded.
 8. **Hachidori in Chrome** (feat/multi-language d7e82b0 with this branch in
    `third_party/hoshidicts`, `test/chrome-language-pack.mjs`, Chrome 152,
    wty-sq-en): 35 / 35 checks pass. Settings adds Albanian beside Japanese
