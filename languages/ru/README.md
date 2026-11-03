@@ -33,15 +33,15 @@ conditions name a dictionary form. Without it, a form a rule reaches
   Copyright (C) 2024-2026 Yomitan Authors. `sources/yomitan-differences.tsv`
   lists where they differ, and why. `modernSpelling` is the pack's own.
 - `tests/corpus.tsv` and the rows of `tests/gaps.tsv` whose category is a
-  UniMorph tag: 1,420 pairs sampled with seed 1 by `sources/build-corpus.mjs`
+  UniMorph tag: 1,000 pairs sampled with seed 1 by `sources/build-corpus.mjs`
   from [UniMorph rus](https://github.com/unimorph/rus/blob/50dcabfd0a04bd4d187ffb0d5cdd54af94863dec/rus)
   at 50dcabf (file `rus`, sha256 `6c13f849…dc880`), CC BY-SA 3.0, by the
-  UniMorph contributors (data from Wiktionary): 250 nouns in a singular case,
-  250 plural nouns, 220 long and 60 short adjective forms, 220 present or
-  future, 150 past and 80 imperative verb forms, 120 participles and 70
+  UniMorph contributors (data from Wiktionary): 175 nouns in a singular case,
+  175 plural nouns, 155 long and 45 short adjective forms, 155 present or
+  future, 105 past and 55 imperative verb forms, 85 participles and 50
   adverbial participles, one-word forms of Russian letters that differ from
   their lemma, one row per form, lemma and part of speech. Rows the rules
-  reach are in `corpus.tsv` (1,415), the others in `gaps.tsv` (5).
+  reach are in `corpus.tsv` (998), the others in `gaps.tsv` (2).
 - `tests/cases.tsv`, `tests/text.tsv`, `tests/lookup.tsv`,
   `tests/dictionary/`, the hand-written row of `tests/gaps.tsv`, every file
   in `sources/` and the rest of `language.json`: written for this pack
@@ -140,8 +140,9 @@ no Russian rules, so the own rules are also the union and the final set, and
   nouns whose stem is shorter are written out (`дал`, `пил`, `жил`, `был`,
   `мыл`, `умер`, `тёр`, `рта`, `льда`). The measured collisions they remove:
   - `он`, `ты`, `мы` and `сам` were the genitive plurals of она/оно, т, мыть
-    and с; `дело`, `мало`, `сила` and `тело` were the pasts of деть, мать,
-    сить and теть; `мер` and `тел` were мереть and тло;
+    and с; `мало`, `сила` and `тело` were the pasts of мать, сить and теть;
+    `мер` and `тел` were мереть and тло (`дело` stays the past of деть, which
+    is written out, after the noun дело);
   - the imperative in -ь needs three letters (`весь` and `три` were весить
     and тереть, every plural in -и an imperative in -ичь);
   - -знавать is read only with ё (`узнаёт`): written with е, `узнает`,
@@ -162,9 +163,10 @@ no Russian rules, so the own rules are also the union and the final set, and
   superlatives and -ой adjectives leave out stems that start with a capital,
   as no name takes them: `Итак` was Итака, `Вас` Вася, `Лет` Лета, `Наше`
   Наха, `Милая` Мила and `Никого` Ника (35 positions in the three texts; 0
-  now). The
-  surnames in -ой keep their oblique forms through wty-ru-en's own form-of rows
-  (`Толстого` → `Толстой`, `tests/lookup.tsv`), not through the rules.
+  now). The surnames in -ой keep their oblique forms through wty-ru-en's own
+  form-of rows (`Толстого` → `Толстой`, `tests/lookup.tsv`), not through the
+  rules; the other adjectival surnames keep their rules (`Достоевского` →
+  `Достоевский`).
 - **History.** The first commit of this pack, `ru: own rules`, has the own
   rules as written before Yomitan's Russian files were read (109 transforms,
   3,367 rules). Later commits changed them after measuring:
@@ -180,7 +182,11 @@ no Russian rules, so the own rules are also the union and the final set, and
     stem constraints, the capital exclusions and the е → ё stem reading
     above, and the -честь verbs;
   - adverbs of manner with по- were added after the hand-judged sample of
-    the texts (`по-старинному`).
+    the texts (`по-старинному`), and the -стичь verbs after the corpus
+    (`достигнет` → достичь, not only достигнуть);
+  - the search for the mutation check's rows and a list of fleeting-vowel
+    nouns found the rest: `колец`, `крылец`, `тюрем`, `свадеб`, `денег`,
+    `ковра`, `кашля`, `свёкра`, `секвойе`, `карими`, `остёр`, `господу`.
 
 ## Measurements
 
@@ -310,14 +316,14 @@ main at b145feb, which reads every pack as `filter`.
    998, cases.tsv 647 / 647, text.tsv 36 / 36, lookup.tsv 47 / 47; gaps.tsv
    0 / 3 (reported); classes.json agrees with the engine (10 classes, 1,124
    fields, 2 steps). `tests/` and `sources/` hold 927,117 bytes.
-   `tools/check-yomitan.mjs`: 4 processors on about 1,950 inputs each, every
+   `tools/check-yomitan.mjs`: 4 processors on about 1,720 inputs each, every
    difference listed (`sources/yomitan-differences.tsv`), 0 unexplained.
    - Mutation check (section 14 step 7, `sources/mutate.py`): removing one
      kind of stem constraint (`stemMinLength`, `stemEndsWith`,
      `stemNotStartsWith`, `stemNotStartsWithText`, `stemCharacters`) from the
      rows of one transform gives 199 mutants, and each fails the conformance
-     test (the transforms changed since were checked again). The first run (210 mutants, 12 of them removing the ё stem
-     readings) had 200 survivors; the 189 `guard` rows of `cases.tsv` are the
+     test (the transforms changed since were checked again). The first run
+     (210 mutants, 12 of them removing the ё stem readings) had 200 survivors; the 189 `guard` rows of `cases.tsv` are the
      wrong headword or text each constraint keeps out, the most frequent
      word's first (`он` is not она, `Итак` is not Итака, `так сказал` is
      not так сказать). The pack has no word list. The е → ё stem readings of
@@ -359,15 +365,18 @@ node languages/ru/sources/wasm-load.mjs <hachidori checkout> languages/ru 10
   own (their glosses name the lemma) and come first (Measurements 1).
 - **Wrong first results that remain**, in the three texts (23 judged by
   script, about 150 estimated among the positions the script cannot judge):
-  - capitalised words read through a name's form at no processor step,
-    such as `Тише` → Тихон (3); surnames the dictionary lacks read as the
-    noun they come from, such as `Хоботова` → хобот (19 positions, 10 words,
-    the decapitalised reading);
+  - capitalised words read through a name's form at no processor step:
+    `Тише` → Тихон (3), `Обе` → Обь and `Тюрем` → Тюр at the start of a
+    sentence, and `Канту` → Канто for the philosopher, whom wty-ru-en does not
+    list; surnames the dictionary lacks read as the noun they come from, such
+    as `Хоботова` → хобот (19 positions, 10 words, the decapitalised reading);
   - е written for ё where both spellings are words: `вел` (вёл, вести),
     `поешь` (поёшь, петь, before поесть), `сует` and `суете` (суёт, совать,
     before суета), `чертов` (чёртов);
   - `писано` → писаный (the adjective with one н comes before the
-    participle писанный), `остер` → остро, `обе` → Обь, `канту` → Канто;
+    participle писанный), `замученные` → замутить (the participle of замутить
+    and замучить is spelt the same), `кленов` → кленовый (the short-form rule, at no
+    processor step, before клён's genitive plural, which needs the ё variant);
   - compounds and nouns the dictionary lacks (`камер-лакей`: `камер` is read
     as камера; `купчихи` → купчая) and old words (`снову` → снова).
 - **One word at a time.** Rules change the last word of a phrase only and
