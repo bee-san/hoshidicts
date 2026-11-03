@@ -50,7 +50,9 @@ const mutations = {
     'redupAyiA: whole word instead of prefix': (t) => { for (const r of rulesOf(t, 'redupAyiA')) { r.type = 'wholeWord'; } },
     // separable: each lookahead and each insertion restriction.
     'separable: 的 right after the verb': (t) => separable(t, (p) => p.replace('(?!.(?:的|', '(?!.(?:')),
-    'separable: adjective of a longer noun': (t) => separable(t, (p) => p.replace(/\|\[好小白\]\|大学\|大學/u, '')),
+    'separable: adjective of a longer noun': (t) => separable(t, (p) => p.replace(/\|\[好小白\]/u, '')),
+    'separable: 时 starting the insertions': (t) => separable(t, (p) => p.replace(/\|\[时時\]/u, '')),
+    'separable: 把 before 脸, 了 before 差, 大 小 中 before 学': (t) => separable(t, (p, r) => (['脸', '臉', '差', '学', '學'].includes(r.anchorSuffix) ? p.replace(/\{0,5\}\[[^\]]*\](?=(?:脸|臉|差|学|學)\$$)/u, '{1,6}') : p)),
     'separable: 的 after a non-possessor': (t) => separable(t, (p) => p.replace(/\|\[\^的\]\*\[\^[^\]]*\]的\)\)/u, '))')),
     'separable: next/last after 上 and 下': (t) => separable(t, (p) => p.replace(/\(\?!\[一二两兩[^\]]*\]\|/gu, '(?!').replace(/\(\?!\[一二两兩[^\]]*\]\)/gu, '')),
     'separable: measure-word objects after numerals': (t) => separable(t, (p, r) => (['口', '门', '門', '年'].includes(r.anchorSuffix) ? p.replace(/\{0,5\}\[[^\]]*\](?=[^\]]*$)/u, '{1,6}') : p)),
@@ -71,7 +73,7 @@ const mutations = {
 // Groups of the named exclusion classes in language.json.
 const classMutations = {
     'zhNotPotential: no pronouns': ['zhNotPotential', '我你妳他她它牠们們'],
-    'zhNotPotential: no adverbs': ['zhNotPotential', '都也就还還全将將永再早以从決决绝絕并並毫仍尚亦皆均竟怎何岂豈偏总總只已曾正刚剛又才可很太更'],
+    'zhNotPotential: no adverbs': ['zhNotPotential', '都也就还還全将將永再早以从決决绝絕并並毫仍尚亦皆均竟怎何岂豈偏总總只已曾正刚剛又才可很太更一'],
     'zhNotPotential: no nouns of time and 眼': ['zhNotPotential', '天年眼面'],
     'zhNotPotential: no 不 and 得': ['zhNotPotential', '不得'],
     'zhNotPotentialDe: no 变 经 (变得, 经得)': ['zhNotPotentialDe', '变變经經'],

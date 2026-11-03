@@ -105,6 +105,8 @@ separable	1	服八年的刑	服刑	*	separable
 separable	1	下大雨	下雨	*	separable
 separable	1	发大财	发财	*	separable
 separable	1	上个厕所	上厕所	*	separable
+separable	1	出了趟差	出差	*	separable
+separable	1	开了两个小时会	开会	*	separable
 separable	1	伤了很多人的心	伤心	*	separable
 potentialNot	1	看不见	看见	v	potentialNot
 potentialNot	1	看不見	看見	*	potentialNot
@@ -145,6 +147,12 @@ negatives	0	碰我的头	碰头	*	*
 negatives	0	写下字	写字	*	*
 negatives	0	落到他那个地	落地	*	*
 negatives	0	吃不了热豆腐	吃豆腐	*	*
+negatives	0	要把脸	要脸	*	*
+negatives	0	出了差	出差	*	*
+negatives	0	上過大學	上學	*	*
+negatives	0	開時會	開會	*	*
+negatives	0	一不来	一来	*	*
+negatives	0	鬆了口	鬆口	*	*
 # An adjective right after the verb modifies a longer noun.
 negatives	0	上大学	上学	*	*
 negatives	0	上小学	上学	*	*

@@ -215,7 +215,7 @@ const SEPARABLE = words(`
     省钱 出事 办事 闹事 惹事 下雨 下雪 刮风 吹风 上当 开玩笑 打招呼 打交道 出主意
     拿主意 打主意 占便宜 吃醋 吃亏 吃苦 受苦 吃惊 受惊 受罪 犯罪 赔罪 遭罪 点头
     摇头 带头 低头 回头 磕头 抬头 剃头 皱眉 耸肩 眨眼 睁眼 闭眼 瞪眼 张嘴 闭嘴
-    插嘴 还嘴 顶嘴 亲嘴 斗嘴 拌嘴 开口 张口 漱口 改口 松口 打球 踢球 下棋 打牌
+    插嘴 还嘴 顶嘴 亲嘴 斗嘴 拌嘴 开口 张口 漱口 改口 打球 踢球 下棋 打牌
     看戏 演戏 唱戏 念书 教书 签字 识字 打字 串门 搬家 成家 过年 拜年 过节 喂奶
     断奶 敬酒 讲价 砍价 涨价 降价 投票 检票 退票 上网 挂号 对号 排号 合影 破例 举例
     表态 服刑 判刑 付款 存款 取款 贷款 结账 算账 记账 买单 埋单 下单 出力 用力
@@ -255,7 +255,7 @@ const HUI_VERBS = chars('学 教');
 // 以不上), and the other adverbs that come before 不.
 const NOT_POTENTIAL = chars(`
     都 也 就 还 全 将 永 天 年 我 你 他 她 它 们 不 没 是 很 太 更 眼 再 早 以 面 从 决 绝 并 毫
-    仍 尚 亦 皆 均 竟 怎 何 岂 偏 总 只 已 曾 正 刚 又 才 可`);
+    仍 尚 亦 皆 均 竟 怎 何 岂 偏 总 只 已 曾 正 刚 又 才 可 一`);
 // Before 得 also the characters that form a word with it (变得, 觉得, 值得).
 const NOT_POTENTIAL_DE = chars(`${NOT_POTENTIAL.join('')} 变 经 显 值 免 使 懂 觉 舍 晓 落 难 取 获 赢 博`);
 // The verbs before 不了 (做不了, 去不了, 解决不了): only after a verb is 不了 the
@@ -374,7 +374,7 @@ transforms.push(transform('redupAliAB', 'reduplication A里AB', 'A disyllabic ad
 //   点三十分的火车); after a possessor or a duration it does not (生他的气,
 //   服八年的刑, 睡了两个小时的觉);
 // - 好, 小 and 白 right after the verb are an adjective of a longer noun or a
-//   complement (做好事, 上小学, 说白话), and so is 大 in 大学 (上大学);
+//   complement (做好事, 说白话);
 // - after 上 and 下, a numeral, a measure word or a demonstrative before 班,
 //   课, 车, 站 or 节 means "the next" or "the last" (下一班, 下次课, 上一站).
 // A first version also kept demonstratives out of compositional compounds
@@ -404,7 +404,8 @@ const MEASURE_OBJECTS = new Set(t('口门年天次场顿把张本头节份件首
 // Characters that may not stand right before an object, because with it they
 // make another word or a measure word with its noun (见下面, 见过大场面, 碰那面
 // 镜子, 路上开车, 搬回家, 完成回家作业, 动门把手, 写下字母, 落到那个地步, 吃不了
-// 热豆腐), measured on Tatoeba and Lu Xun's stories.
+// 热豆腐, 要把脸探出去, 出了差错, 上过大学), measured on Tatoeba and Lu Xun's
+// stories.
 const NOT_BEFORE = new Map([
     ...spellings('面').map((o) => [o, t('这那上下场')]),
     ...spellings('车').map((o) => [o, t('开上下')]),
@@ -413,10 +414,14 @@ const NOT_BEFORE = new Map([
     ...spellings('字').map((o) => [o, t('下')]),
     ...spellings('地').map((o) => [o, t('这那个')]),
     ...spellings('豆腐').map((o) => [o, t('热')]),
+    ...spellings('脸').map((o) => [o, t('把')]),
+    ...spellings('差').map((o) => [o, t('了')]),
+    ...spellings('学').map((o) => [o, t('大小中')]),
 ]);
-const ADJ = `[${t('好小白')}]|${spellings('大学').join('|')}`;
+const ADJ = `[${t('好小白')}]`;
 const OTHER_DE = `[^的]*[^${t('我你您他她它咱谁们己家人年天月周时钟头个次')}的]的`;
-const COMMON = `的|${ADJ}|${OTHER_DE}`;
+// 时 does not start the insertions (离开时会, but 开了两个小时会).
+const COMMON = `的|${ADJ}|[${t('时')}]|${OTHER_DE}`;
 const NEXT = `[${t('一二两三四五六七八九十几个次回场这那')}0-9\\uFF10-\\uFF19]`;
 // Every verb is one character, so the lookahead all verbs share is written
 // once, after the first character: ^(?!.(?:...)).
