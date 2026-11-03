@@ -144,130 +144,22 @@
     "transforms[4].rules[2].stemNotStartsWith": [
       [1604, 1604]
     ],
-    "transforms[5].rules[0].stemStartsWith": [
+    "transforms[5].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[6].rules[0].stemStartsWith": [
+    "transforms[9].rules[0].stemStartsWith": [
       [1570, 1571],
       [1578, 1578],
       [1606, 1606],
       [1610, 1610]
     ],
-    "transforms[7].rules[0].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[7].rules[0].stemNotEndsWith": [
-      [1610, 1610]
-    ],
-    "transforms[7].rules[1].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[7].rules[2].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[7].rules[3].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[7].rules[4].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[7].rules[5].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[7].rules[6].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[8].rules[0].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[8].rules[1].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[8].rules[2].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[8].rules[3].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[8].rules[4].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[8].rules[5].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[8].rules[6].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[8].rules[7].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[8].rules[8].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[9].rules[0].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[9].rules[1].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[9].rules[2].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[9].rules[3].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[9].rules[4].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[9].rules[5].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[9].rules[6].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[9].rules[7].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[9].rules[8].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[9].rules[9].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[9].rules[10].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
     "transforms[10].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
+    ],
+    "transforms[10].rules[0].stemNotEndsWith": [
+      [1610, 1610]
     ],
     "transforms[10].rules[1].stemCharacters": [
       [1569, 1594],
@@ -290,18 +182,6 @@
       [1601, 1610]
     ],
     "transforms[10].rules[6].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[10].rules[7].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[10].rules[8].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[10].rules[9].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -338,10 +218,6 @@
       [1601, 1610]
     ],
     "transforms[11].rules[8].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[11].rules[9].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -382,6 +258,10 @@
       [1601, 1610]
     ],
     "transforms[12].rules[9].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[12].rules[10].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -465,10 +345,6 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[14].rules[10].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
     "transforms[15].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -509,10 +385,6 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[15].rules[10].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
     "transforms[16].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -550,10 +422,6 @@
       [1601, 1610]
     ],
     "transforms[16].rules[9].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[16].rules[10].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -645,8 +513,50 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[19].rules[0].stemCharacters": [],
-    "transforms[19].rules[1].stemCharacters": [],
+    "transforms[19].rules[0].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[19].rules[1].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[19].rules[2].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[19].rules[3].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[19].rules[4].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[19].rules[5].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[19].rules[6].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[19].rules[7].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[19].rules[8].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[19].rules[9].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[19].rules[10].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
     "transforms[20].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -659,141 +569,97 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[21].rules[0].stemCharacters": [],
-    "transforms[22].rules[0].stemCharacters": [
+    "transforms[20].rules[3].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[22].rules[0].stemStartsWith": [
-      [1576, 1576],
-      [1601, 1601],
-      [1603, 1604],
-      [1608, 1608]
-    ],
-    "transforms[22].rules[0].stemNotEndsWith": [
-      [1575, 1575],
-      [1577, 1577],
-      [1609, 1609]
-    ],
-    "transforms[22].rules[1].stemCharacters": [
+    "transforms[20].rules[4].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[22].rules[1].stemNotStartsWith": [
-      [1576, 1576],
-      [1601, 1601],
-      [1603, 1604],
-      [1608, 1608]
-    ],
-    "transforms[22].rules[1].stemNotEndsWith": [
-      [1575, 1575],
-      [1577, 1577],
-      [1609, 1609]
-    ],
-    "transforms[22].rules[2].stemCharacters": [
+    "transforms[20].rules[5].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
+    "transforms[20].rules[6].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[20].rules[7].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[20].rules[8].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[20].rules[9].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[20].rules[10].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[21].rules[0].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[21].rules[1].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[21].rules[2].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[21].rules[3].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[21].rules[4].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[21].rules[5].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[21].rules[6].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[21].rules[7].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[21].rules[8].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[21].rules[9].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[21].rules[10].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[22].rules[0].stemCharacters": [],
+    "transforms[22].rules[1].stemCharacters": [],
     "transforms[23].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
-    ],
-    "transforms[23].rules[0].stemStartsWith": [
-      [1576, 1576],
-      [1601, 1601],
-      [1603, 1604],
-      [1608, 1608]
     ],
     "transforms[23].rules[1].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[23].rules[1].stemNotStartsWith": [
-      [1576, 1576],
-      [1601, 1601],
-      [1603, 1604],
-      [1608, 1608]
-    ],
     "transforms[23].rules[2].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[23].rules[3].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[23].rules[4].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[23].rules[5].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[23].rules[6].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[23].rules[7].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[23].rules[8].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[23].rules[9].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[24].rules[0].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[24].rules[0].stemStartsWith": [
-      [1576, 1576],
-      [1601, 1601],
-      [1603, 1604],
-      [1608, 1608]
-    ],
-    "transforms[24].rules[1].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[24].rules[1].stemNotStartsWith": [
-      [1576, 1576],
-      [1601, 1601],
-      [1603, 1604],
-      [1608, 1608]
-    ],
-    "transforms[24].rules[2].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[24].rules[3].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[24].rules[4].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[24].rules[5].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[24].rules[6].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[24].rules[7].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[24].rules[8].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
+    "transforms[24].rules[0].stemCharacters": [],
     "transforms[25].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -803,6 +669,11 @@
       [1601, 1601],
       [1603, 1604],
       [1608, 1608]
+    ],
+    "transforms[25].rules[0].stemNotEndsWith": [
+      [1575, 1575],
+      [1577, 1577],
+      [1609, 1609]
     ],
     "transforms[25].rules[1].stemCharacters": [
       [1569, 1594],
@@ -814,7 +685,20 @@
       [1603, 1604],
       [1608, 1608]
     ],
+    "transforms[25].rules[1].stemNotEndsWith": [
+      [1575, 1575],
+      [1577, 1577],
+      [1609, 1609]
+    ],
     "transforms[25].rules[2].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[25].rules[3].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[25].rules[4].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -822,15 +706,69 @@
       [1569, 1594],
       [1601, 1610]
     ],
+    "transforms[26].rules[0].stemStartsWith": [
+      [1576, 1576],
+      [1601, 1601],
+      [1603, 1604],
+      [1608, 1608]
+    ],
+    "transforms[26].rules[1].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[26].rules[1].stemNotStartsWith": [
+      [1576, 1576],
+      [1601, 1601],
+      [1603, 1604],
+      [1608, 1608]
+    ],
+    "transforms[26].rules[2].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[26].rules[3].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[26].rules[4].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[26].rules[5].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[26].rules[6].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[26].rules[7].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[26].rules[8].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[26].rules[9].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
     "transforms[27].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
+    ],
+    "transforms[27].rules[0].stemStartsWith": [
+      [1576, 1576],
+      [1601, 1601],
+      [1603, 1604],
+      [1608, 1608]
     ],
     "transforms[27].rules[1].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[27].rules[1].stemStartsWith": [
+    "transforms[27].rules[1].stemNotStartsWith": [
       [1576, 1576],
       [1601, 1601],
       [1603, 1604],
@@ -839,12 +777,6 @@
     "transforms[27].rules[2].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
-    ],
-    "transforms[27].rules[2].stemNotStartsWith": [
-      [1576, 1576],
-      [1601, 1601],
-      [1603, 1604],
-      [1608, 1608]
     ],
     "transforms[27].rules[3].stemCharacters": [
       [1569, 1594],
@@ -866,87 +798,35 @@
       [1569, 1594],
       [1601, 1610]
     ],
+    "transforms[27].rules[8].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
     "transforms[28].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[28].rules[0].stemNotEndsWith": [
-      [1608, 1608],
-      [1610, 1610]
+    "transforms[28].rules[0].stemStartsWith": [
+      [1576, 1576],
+      [1601, 1601],
+      [1603, 1604],
+      [1608, 1608]
     ],
     "transforms[28].rules[1].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
+    "transforms[28].rules[1].stemNotStartsWith": [
+      [1576, 1576],
+      [1601, 1601],
+      [1603, 1604],
+      [1608, 1608]
+    ],
     "transforms[28].rules[2].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[28].rules[2].stemChange.between": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[28].rules[3].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[28].rules[4].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[28].rules[5].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[28].rules[5].stemChange.between": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[28].rules[6].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[28].rules[6].stemNotEndsWith": [
-      [1608, 1608],
-      [1610, 1610]
-    ],
     "transforms[29].rules[0].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[29].rules[1].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[29].rules[2].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[29].rules[3].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[29].rules[4].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[29].rules[5].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[29].rules[6].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[29].rules[7].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[29].rules[8].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[29].rules[9].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -958,17 +838,49 @@
       [1569, 1594],
       [1601, 1610]
     ],
+    "transforms[30].rules[1].stemStartsWith": [
+      [1576, 1576],
+      [1601, 1601],
+      [1603, 1604],
+      [1608, 1608]
+    ],
     "transforms[30].rules[2].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
+    "transforms[30].rules[2].stemNotStartsWith": [
+      [1576, 1576],
+      [1601, 1601],
+      [1603, 1604],
+      [1608, 1608]
+    ],
     "transforms[30].rules[3].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[30].rules[4].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[30].rules[5].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[30].rules[6].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[30].rules[7].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
     "transforms[31].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
+    ],
+    "transforms[31].rules[0].stemNotEndsWith": [
+      [1608, 1608],
+      [1610, 1610]
     ],
     "transforms[31].rules[1].stemCharacters": [
       [1569, 1594],
@@ -977,6 +889,34 @@
     "transforms[31].rules[2].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
+    ],
+    "transforms[31].rules[2].stemChange.between": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[31].rules[3].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[31].rules[4].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[31].rules[5].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[31].rules[5].stemChange.between": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[31].rules[6].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[31].rules[6].stemNotEndsWith": [
+      [1608, 1608],
+      [1610, 1610]
     ],
     "transforms[32].rules[0].stemCharacters": [
       [1569, 1594],
@@ -1006,6 +946,22 @@
       [1569, 1594],
       [1601, 1610]
     ],
+    "transforms[32].rules[7].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[32].rules[8].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[32].rules[9].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[32].rules[10].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
     "transforms[33].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -1026,18 +982,6 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[33].rules[5].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[33].rules[6].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[33].rules[7].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
     "transforms[34].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -1047,30 +991,6 @@
       [1601, 1610]
     ],
     "transforms[34].rules[2].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[34].rules[3].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[34].rules[4].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[34].rules[5].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[34].rules[6].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[34].rules[7].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[34].rules[8].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -1099,14 +1019,6 @@
       [1601, 1610]
     ],
     "transforms[35].rules[6].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[35].rules[7].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[35].rules[8].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -1182,6 +1094,10 @@
       [1569, 1594],
       [1601, 1610]
     ],
+    "transforms[37].rules[9].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
     "transforms[38].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -1190,15 +1106,7 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[38].rules[1].stemChange.between": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
     "transforms[38].rules[2].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[38].rules[2].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -1218,14 +1126,17 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[38].rules[7].stemCharacters": [],
+    "transforms[38].rules[7].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
     "transforms[38].rules[8].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[38].rules[8].stemNotEndsWith": [
-      [1575, 1575],
-      [1608, 1610]
+    "transforms[38].rules[9].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
     ],
     "transforms[39].rules[0].stemCharacters": [
       [1569, 1594],
@@ -1235,15 +1146,7 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[39].rules[1].stemChange.between": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
     "transforms[39].rules[2].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[39].rules[2].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -1263,14 +1166,17 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[39].rules[7].stemCharacters": [],
+    "transforms[39].rules[7].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
     "transforms[39].rules[8].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[39].rules[8].stemNotEndsWith": [
-      [1575, 1575],
-      [1608, 1610]
+    "transforms[39].rules[9].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
     ],
     "transforms[40].rules[0].stemCharacters": [
       [1569, 1594],
@@ -1280,15 +1186,7 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[40].rules[1].stemChange.between": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
     "transforms[40].rules[2].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[40].rules[2].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -1308,111 +1206,186 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[40].rules[7].stemCharacters": [],
+    "transforms[40].rules[7].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
     "transforms[40].rules[8].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[40].rules[8].stemNotEndsWith": [
-      [1575, 1575],
-      [1608, 1610]
+    "transforms[40].rules[9].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
     ],
     "transforms[41].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[41].rules[1].stemCharacters": [
+    "transforms[41].rules[17].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[41].rules[1].stemChange.between": [
+    "transforms[41].rules[17].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[41].rules[2].stemCharacters": [
+    "transforms[41].rules[18].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[41].rules[2].stemChange.between": [
+    "transforms[41].rules[18].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[41].rules[3].stemCharacters": [
+    "transforms[41].rules[19].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[41].rules[4].stemCharacters": [
+    "transforms[41].rules[20].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[41].rules[5].stemCharacters": [
+    "transforms[41].rules[21].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[41].rules[6].stemCharacters": [
+    "transforms[41].rules[22].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[41].rules[7].stemCharacters": [],
-    "transforms[41].rules[8].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[41].rules[8].stemNotEndsWith": [
-      [1575, 1575],
-      [1608, 1610]
+    "transforms[41].rules[23].stemCharacters": [],
+    "transforms[41].rules[24].stemCharacters": [
+      [1569, 1574],
+      [1576, 1594],
+      [1601, 1607]
     ],
     "transforms[42].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[42].rules[1].stemCharacters": [
+    "transforms[42].rules[17].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[42].rules[2].stemCharacters": [
+    "transforms[42].rules[17].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[42].rules[3].stemCharacters": [
+    "transforms[42].rules[18].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[42].rules[4].stemCharacters": [],
+    "transforms[42].rules[18].stemChange.between": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[42].rules[19].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[42].rules[20].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[42].rules[21].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[42].rules[22].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[42].rules[23].stemCharacters": [],
+    "transforms[42].rules[24].stemCharacters": [
+      [1569, 1574],
+      [1576, 1594],
+      [1601, 1607]
+    ],
     "transforms[43].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[43].rules[1].stemCharacters": [
+    "transforms[43].rules[17].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[43].rules[2].stemCharacters": [
+    "transforms[43].rules[17].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[43].rules[3].stemCharacters": [
+    "transforms[43].rules[18].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[43].rules[4].stemCharacters": [],
+    "transforms[43].rules[18].stemChange.between": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[43].rules[19].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[43].rules[20].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[43].rules[21].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[43].rules[22].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[43].rules[23].stemCharacters": [],
+    "transforms[43].rules[24].stemCharacters": [
+      [1569, 1574],
+      [1576, 1594],
+      [1601, 1607]
+    ],
     "transforms[44].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[44].rules[1].stemCharacters": [
+    "transforms[44].rules[17].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[44].rules[2].stemCharacters": [
+    "transforms[44].rules[17].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[44].rules[3].stemCharacters": [
+    "transforms[44].rules[18].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[44].rules[4].stemCharacters": [],
+    "transforms[44].rules[18].stemChange.between": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[44].rules[19].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[44].rules[20].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[44].rules[21].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[44].rules[22].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[44].rules[23].stemCharacters": [],
+    "transforms[44].rules[24].stemCharacters": [
+      [1569, 1574],
+      [1576, 1594],
+      [1601, 1607]
+    ],
     "transforms[45].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -1438,15 +1411,7 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[46].rules[1].stemChange.between": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
     "transforms[46].rules[2].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[46].rules[2].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -1454,19 +1419,7 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[46].rules[4].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[46].rules[5].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[46].rules[6].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[46].rules[7].stemCharacters": [],
+    "transforms[46].rules[4].stemCharacters": [],
     "transforms[47].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -1475,15 +1428,7 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[47].rules[1].stemChange.between": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
     "transforms[47].rules[2].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[47].rules[2].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -1491,19 +1436,7 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[47].rules[4].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[47].rules[5].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[47].rules[6].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[47].rules[7].stemCharacters": [],
+    "transforms[47].rules[4].stemCharacters": [],
     "transforms[48].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -1512,15 +1445,7 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[48].rules[1].stemChange.between": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
     "transforms[48].rules[2].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[48].rules[2].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -1528,19 +1453,7 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[48].rules[4].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[48].rules[5].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[48].rules[6].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[48].rules[7].stemCharacters": [],
+    "transforms[48].rules[4].stemCharacters": [],
     "transforms[49].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -1898,27 +1811,19 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[58].rules[3].stemChange.between": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
     "transforms[58].rules[4].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[58].rules[5].stemCharacters": [],
+    "transforms[58].rules[5].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
     "transforms[58].rules[6].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[58].rules[7].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[58].rules[8].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
+    "transforms[58].rules[7].stemCharacters": [],
     "transforms[59].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -1943,27 +1848,19 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[59].rules[3].stemChange.between": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
     "transforms[59].rules[4].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[59].rules[5].stemCharacters": [],
+    "transforms[59].rules[5].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
     "transforms[59].rules[6].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[59].rules[7].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[59].rules[8].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
+    "transforms[59].rules[7].stemCharacters": [],
     "transforms[60].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
@@ -1988,34 +1885,37 @@
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[60].rules[3].stemChange.between": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
     "transforms[60].rules[4].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[60].rules[5].stemCharacters": [],
+    "transforms[60].rules[5].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
     "transforms[60].rules[6].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
+    "transforms[60].rules[7].stemCharacters": [],
     "transforms[61].rules[0].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
+      [1569, 1574],
+      [1576, 1594],
+      [1601, 1607]
     ],
     "transforms[61].rules[1].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
+      [1569, 1574],
+      [1576, 1594],
+      [1601, 1607]
     ],
     "transforms[61].rules[1].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
     "transforms[61].rules[2].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
+      [1569, 1574],
+      [1576, 1594],
+      [1601, 1607]
     ],
     "transforms[61].rules[2].stemChange.between": [
       [1569, 1594],
@@ -2030,29 +1930,42 @@
       [1601, 1610]
     ],
     "transforms[61].rules[4].stemCharacters": [
+      [1569, 1574],
+      [1576, 1594],
+      [1601, 1608],
+      [1610, 1610]
+    ],
+    "transforms[61].rules[25].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[61].rules[5].stemCharacters": [],
-    "transforms[61].rules[6].stemCharacters": [
+    "transforms[61].rules[26].stemCharacters": [
+      [1569, 1574],
+      [1576, 1594],
+      [1601, 1607]
+    ],
+    "transforms[61].rules[27].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
     "transforms[62].rules[0].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
+      [1569, 1574],
+      [1576, 1594],
+      [1601, 1607]
     ],
     "transforms[62].rules[1].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
+      [1569, 1574],
+      [1576, 1594],
+      [1601, 1607]
     ],
     "transforms[62].rules[1].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
     "transforms[62].rules[2].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
+      [1569, 1574],
+      [1576, 1594],
+      [1601, 1607]
     ],
     "transforms[62].rules[2].stemChange.between": [
       [1569, 1594],
@@ -2067,27 +1980,43 @@
       [1601, 1610]
     ],
     "transforms[62].rules[4].stemCharacters": [
+      [1569, 1574],
+      [1576, 1594],
+      [1601, 1608],
+      [1610, 1610]
+    ],
+    "transforms[62].rules[25].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[62].rules[5].stemCharacters": [],
-    "transforms[62].rules[6].stemCharacters": [
+    "transforms[62].rules[26].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[62].rules[7].stemCharacters": [
+    "transforms[62].rules[27].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
     "transforms[63].rules[0].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
+      [1569, 1574],
+      [1576, 1594],
+      [1601, 1607]
     ],
     "transforms[63].rules[1].stemCharacters": [
+      [1569, 1574],
+      [1576, 1594],
+      [1601, 1607]
+    ],
+    "transforms[63].rules[1].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
     "transforms[63].rules[2].stemCharacters": [
+      [1569, 1574],
+      [1576, 1594],
+      [1601, 1607]
+    ],
+    "transforms[63].rules[2].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -2095,111 +2024,40 @@
       [1569, 1594],
       [1601, 1610]
     ],
+    "transforms[63].rules[3].stemChange.between": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
     "transforms[63].rules[4].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[63].rules[5].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[63].rules[6].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[63].rules[7].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[63].rules[8].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[63].rules[9].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[63].rules[10].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[63].rules[11].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[63].rules[12].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[63].rules[13].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[63].rules[14].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[63].rules[15].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[63].rules[16].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[63].rules[17].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[63].rules[18].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[63].rules[19].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[63].rules[20].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[63].rules[21].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[63].rules[22].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[63].rules[23].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[63].rules[24].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
+      [1569, 1574],
+      [1576, 1594],
+      [1601, 1608],
+      [1610, 1610]
     ],
     "transforms[63].rules[25].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[63].rules[26].stemCharacters": [
+    "transforms[64].rules[0].stemCharacters": [
+      [1569, 1574],
+      [1576, 1594],
+      [1601, 1607]
+    ],
+    "transforms[64].rules[1].stemCharacters": [
+      [1569, 1574],
+      [1576, 1594],
+      [1601, 1607]
+    ],
+    "transforms[64].rules[1].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[63].rules[27].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
+    "transforms[64].rules[2].stemCharacters": [
+      [1569, 1574],
+      [1576, 1594],
+      [1601, 1607]
     ],
-    "transforms[64].rules[0].stemStartsWith": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[64].rules[1].stemStartsWith": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[64].rules[2].stemStartsWith": [
+    "transforms[64].rules[2].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -2207,43 +2065,40 @@
       [1569, 1594],
       [1601, 1610]
     ],
+    "transforms[64].rules[3].stemChange.between": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
     "transforms[64].rules[4].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
+      [1569, 1574],
+      [1576, 1594],
+      [1601, 1608],
+      [1610, 1610]
     ],
-    "transforms[64].rules[5].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[64].rules[6].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[64].rules[7].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[64].rules[8].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[64].rules[9].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
-    ],
-    "transforms[64].rules[10].stemCharacters": [
+    "transforms[64].rules[25].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
     "transforms[65].rules[0].stemCharacters": [
-      [1569, 1594],
-      [1601, 1610]
+      [1569, 1574],
+      [1576, 1594],
+      [1601, 1607]
     ],
     "transforms[65].rules[1].stemCharacters": [
+      [1569, 1574],
+      [1576, 1594],
+      [1601, 1607]
+    ],
+    "transforms[65].rules[1].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
     "transforms[65].rules[2].stemCharacters": [
+      [1569, 1574],
+      [1576, 1594],
+      [1601, 1607]
+    ],
+    "transforms[65].rules[2].stemChange.between": [
       [1569, 1594],
       [1601, 1610]
     ],
@@ -2251,27 +2106,218 @@
       [1569, 1594],
       [1601, 1610]
     ],
+    "transforms[65].rules[3].stemChange.between": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
     "transforms[65].rules[4].stemCharacters": [
+      [1569, 1574],
+      [1576, 1594],
+      [1601, 1608],
+      [1610, 1610]
+    ],
+    "transforms[65].rules[25].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[65].rules[5].stemCharacters": [
+    "transforms[65].rules[26].stemCharacters": [
+      [1569, 1574],
+      [1576, 1594],
+      [1601, 1607]
+    ],
+    "transforms[66].rules[0].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[65].rules[6].stemCharacters": [
+    "transforms[66].rules[1].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[65].rules[7].stemCharacters": [
+    "transforms[66].rules[2].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[65].rules[8].stemCharacters": [
+    "transforms[66].rules[3].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ],
-    "transforms[65].rules[9].stemCharacters": [
+    "transforms[66].rules[4].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[66].rules[5].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[66].rules[6].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[66].rules[7].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[66].rules[8].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[66].rules[9].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[66].rules[10].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[66].rules[11].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[66].rules[12].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[66].rules[13].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[66].rules[14].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[66].rules[15].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[66].rules[16].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[66].rules[17].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[66].rules[18].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[66].rules[19].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[66].rules[20].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[66].rules[21].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[66].rules[22].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[66].rules[23].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[66].rules[24].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[66].rules[25].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[66].rules[26].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[66].rules[27].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[67].rules[0].stemStartsWith": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[67].rules[1].stemStartsWith": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[67].rules[2].stemStartsWith": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[67].rules[3].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[67].rules[4].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[67].rules[5].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[67].rules[6].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[67].rules[7].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[67].rules[8].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[67].rules[9].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[67].rules[10].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[68].rules[0].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[68].rules[1].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[68].rules[2].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[68].rules[3].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[68].rules[4].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[68].rules[5].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[68].rules[6].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[68].rules[7].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[68].rules[8].stemCharacters": [
+      [1569, 1594],
+      [1601, 1610]
+    ],
+    "transforms[68].rules[9].stemCharacters": [
       [1569, 1594],
       [1601, 1610]
     ]
@@ -4422,6 +4468,13 @@
         ["كرسيي", "كرسيي"],
         ["فتاةا", "فتاةا"],
         ["عصاا", "عصاا"],
+        ["تلك", "تلك"],
+        ["لذا", "لذا"],
+        ["اين", "أين"],
+        ["الان", "الأن"],
+        ["اريد", "أريد"],
+        ["اكون", "أكون"],
+        ["ابدا", "أبدا"],
         ["استخدمنا", "أستخدمنا"],
         ["يبقي", "يبقي"],
         ["أصحابه", "أصحابه"],
@@ -4555,7 +4608,6 @@
         ["اسلام", "أسلام"],
         ["اخر", "أخر"],
         ["كان", "كأن"],
-        ["الان", "الأن"],
         ["والامر", "والأمر"],
         ["بالاسم", "بالأسم"],
         ["لاسباب", "لأسباب"],
@@ -6751,6 +6803,13 @@
         ["كرسيي", "كرسيي"],
         ["فتاةا", "فتاةا"],
         ["عصاا", "عصاا"],
+        ["تلك", "تلك"],
+        ["لذا", "لذا"],
+        ["اين", "إين"],
+        ["الان", "الإن"],
+        ["اريد", "إريد"],
+        ["اكون", "إكون"],
+        ["ابدا", "إبدا"],
         ["استخدمنا", "إستخدمنا"],
         ["يبقي", "يبقي"],
         ["أصحابه", "أصحابه"],
@@ -6884,7 +6943,6 @@
         ["اسلام", "إسلام"],
         ["اخر", "إخر"],
         ["كان", "كإن"],
-        ["الان", "الإن"],
         ["والامر", "والإمر"],
         ["بالاسم", "بالإسم"],
         ["لاسباب", "لإسباب"],

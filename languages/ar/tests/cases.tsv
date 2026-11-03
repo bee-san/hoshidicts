@@ -461,3 +461,12 @@ negative defective noun	0	العربي	عرب	*	defectiveNoun|al
 negative spelling	0	كرسيي	كرسي	*	p1s
 negative spelling	0	فتاةا	فتاة	*	accusative
 negative spelling	0	عصاا	عصا	*	accusative
+demonstrative	1	تلك	ذلك	*	demonstrative
+demonstrative	1	لذا	لهذا	*	demonstrative
+hamza omitted	1	اين	أين	*	hamzaOmitted
+hamza omitted	1	الان	الآن	*	hamzaOmitted
+hamza omitted	1	اريد	أراد	*	hamzaOmitted
+definite adjective	1	الكبيرة	كبير	*	definiteAdjective
+negative imperative	0	الان	لان	v	imperativeYou
+negative imperative	0	اكون	كون	v	imperativeYou
+negative imperative	0	ابدا	بدا	v	imperativeYou

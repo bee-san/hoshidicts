@@ -42,7 +42,16 @@ const conditions = {
 
 // Letters that can be a root consonant, for the rules that name one.
 const RADICALS = [...'ءأإآؤئبتثجحخدذرزسشصضطظعغفقكلمنهوي'];
+// Every letter a word can end in. A rule that spells its last letter out
+// (c -> c) is indexed at that letter, so at that node it runs in file order
+// with the other one-letter endings, ahead of rules with an empty ending.
+const FINALS = [...RADICALS, 'ا', 'ى', 'ة'];
 const STEM = '{base}';
+// The letters other than ا, و, ي and ى: a stem of them is a sound verb's.
+const STRONG = '[\\u0621-\\u0626\\u0628-\\u063A\\u0641-\\u0647]';
+// The letters other than ا and ى (a defective verb's stem may have و or ي:
+// احو, اطو).
+const NO_ALIF = '[\\u0621-\\u0626\\u0628-\\u063A\\u0641-\\u0648\\u064A]';
 
 const V_IN = ['vf'];
 const V_OUT = ['v'];
@@ -123,7 +132,24 @@ transform('al', 'الـ (the)', 'The definite article الـ (al-, "the"): ال�
     // A noun: a pronoun or the accusative ـًا never follows الـ, so those
     // rules do not take its output. Definite adjectives and names are found
     // through the dictionary's own rows for them (الكبيرة, القاهرة).
-    prefix('ال', '', {out: ['n', 'nd']}),
+    // Indexed at the word's last letter, so that it runs before the verb
+    // rules that end there and read ال as letters of the stem: الحق is الـ +
+    // حق, not the imperative of لحق; الزمن is not of لزم.
+    cross([['ال', '']], FINALS.map((c) => [c, c]), {min: 1, out: ['n', 'nd'], into: []}),
+]);
+transform('demonstrative', 'demonstrative', 'تلك is the feminine of ذلك ("that"), and لذا is لهذا ("therefore").', [
+    whole('تلك', 'ذلك'),
+    whole('لذا', 'لهذا'),
+]);
+transform('hamzaOmitted', 'written without hamza', 'Frequent words written without their hamza, as informal text does (اين for أين, اجل for أجل). The processors add the hamza to any word, but a rule that reads the word as written ranks before that (docs/languages.md 9.6), so these are listed.', [
+    ...[['اين', 'أين'], ['اول', 'أول'], ['اجل', 'أجل'], ['اخر', 'آخر'], ['ابدا', 'أبدا'], ['الان', 'الآن'], ['انك', 'أن'], ['اننا', 'أن'],
+        ['اني', 'أن'], ['انتي', 'أنت'], ['انتما', 'أنتما'], ['الم', 'ألم'], ['امل', 'أمل'], ['اكيد', 'أكيد'], ['احيانا', 'أحيانا'],
+        ['اخيرا', 'أخيرا'], ['احد', 'أحد'], ['احدا', 'أحد'], ['احدى', 'أحد'], ['اعلى', 'أعلى'], ['اوه', 'أوه'], ['امي', 'أم'],
+        ['اريد', 'أراد'], ['اردت', 'أراد'], ['اراد', 'أراد'], ['اكون', 'كان'], ['اقول', 'قال'], ['اقوم', 'قام'], ['اعود', 'عاد'],
+        ['اموت', 'مات'], ['احبك', 'أحب'], ['اصبحت', 'أصبح'], ['اخبرت', 'أخبر'], ['احضرت', 'أحضر'], ['ايتها', 'أيها'], ['اود', 'ود']].map(([i, d]) => whole(i, d)),
+]);
+transform('definiteAdjective', 'الـ + adjective', 'A definite adjective whose spelling is also a rarer noun, read as the adjective: الكبيرة (the big, not "the great sin"), الأولى (the first), الكلاب (the dogs). wiktionary-to-yomitan leaves adjectives untagged, so the rule gives no part of speech.', [
+    ...[['الكبيرة', 'كبير'], ['الصغيرة', 'صغير'], ['الأولى', 'أول'], ['السابقة', 'سابق'], ['التالية', 'تال'], ['السوداء', 'أسود'], ['الكلاب', 'كلب']].map(([i, d]) => whole(i, d)),
 ]);
 transform('sa', 'سـ (will)', 'The future prefix سَ (sa-, "will") before a present-tense verb: سيكتب is سـ + يكتب, سأذهب is سـ + أذهب.', [
     prefix('س', '', {min: 3, out: ['v', 'vf'], extra: {stemStartsWith: '[يتنأآ]'}}),
@@ -177,6 +203,10 @@ for (const [id, name, p, gloss, example] of PRONOUNS) {
             rules.push(suffix('تي' + p, 'ت', {out: ['v', 'vf']}));
         }
     }
+    if (p === 'نا') {
+        // مع, من and عن with ـنا, before the hollow past (معنا is not ماع).
+        rules.push(whole('معنا', 'مع'), whole('منا', 'من'), whole('عنا', 'عن'));
+    }
     if (p !== 'ني') {
         rules.push(whole('ب' + p, 'ب'), whole('ل' + p, 'ل'));
         for (const [stem, lemma] of [['علي', 'على'], ['إلي', 'إلى'], ['الي', 'إلى'], ['لدي', 'لدى']]) {
@@ -220,6 +250,10 @@ transform('defectiveNoun', 'noun in ـٍ (ي)', 'A noun or adjective of the patt
 transform('accusative', 'accusative (ـًا)', 'The indefinite accusative ending ـًا, written with an alif: كتابًا (كتابا), شكرًا, شيئًا (شيئا, from شيء). Words that end in ة, ى or ا take no alif.', [
     ...SHORT('ا', '', {out: ['n', 'nd'], extra: {...NOT_AL, stemNotEndsWith: '[اةى]'}}),
     suffix('ئا', 'ء', {out: ['n', 'nd'], extra: NOT_AL}),
+    // Spelled out where a verb ending ends the same way, so that the noun is
+    // read first: شيئا is شيء (not the passive of شاء), وقتا is وقت (not وقى).
+    suffix('يئا', 'يء', {min: 1, out: ['n', 'nd'], extra: NOT_AL}),
+    suffix('تا', 'ت', {out: ['n', 'nd'], extra: NOT_AL}),
 ]);
 transform('dual', 'dual (ـان)', 'The dual ending ـان (nominative), and ـتا of a word in ة before the word it belongs to: كتابان is two of كتاب, مدرستان and مدرستا of مدرسة, مستشفيان of مستشفى, عصوان of عصا, صحراوان of صحراء.', [
     ...SHORT('ان', '', {out: ['n', 'nd'], into: N_IN}),
@@ -327,6 +361,9 @@ function pastRules(ending, {defectiveA = [], defectiveY = [], defectiveI = [], h
     // ف + لن); before ت it may be "she" (مدت).
     const rules = [suffix(ending, '', {min, into: V_IN, out: V_OUT})];
     for (const [i, d] of defectiveA) { rules.push(suffix(i, d, {into: V_IN, out: V_OUT})); }
+    // A verb in ي (نسي: نسيت) before one in ى (رمى: رميت) at the same ending,
+    // as the plain ending reads it: نسيت is نسي, not نسّى.
+    for (const [i] of defectiveY) { if (i.startsWith('ي')) { rules.push(suffix(i, 'ي', {min: 2, into: V_IN, out: V_OUT})); } }
     for (const [i, d] of defectiveY) { rules.push(suffix(i, d, {into: V_IN, out: V_OUT})); }
     for (const [i, d] of defectiveI) { rules.push(suffix(i, d, {into: V_IN, out: V_OUT})); }
     for (const [i, d, m = 1] of hamza) { rules.push(suffix(i, d, {min: m, into: V_IN, out: V_OUT})); }
@@ -408,9 +445,19 @@ const PRESENT = {
 
 // The endings of each person, and the dictionary-form ending each gives for
 // the kinds of root (sound, ا, ى, ي, hamza, جاء).
+// The present stems of the frequent verbs like وجد (يجد, تضع, أصل, نقف).
+const ASSIMILATED_PRESENT = ['جد', 'ضع', 'صل', 'قف', 'قع', 'دع', 'جب', 'ثق', 'لد', 'رث', 'زن', 'سع', 'صف', 'هب', 'فد', 'قظ'];
 function hollowEndings(ending) { return hollow(ending); }
 function presentRules(prefixes, ending, {defective = [], hamza = [], hollow = true, short = false} = {}) {
     const rules = [cross(prefixes, [[ending, '']])];
+    // The common verbs like وجد, written as whole words with no ending, so
+    // that they are read before the hollow jussive (يجد is وجد, not لم يجد of
+    // جاد). A rule for every such stem would also read يكن, يعد and يرد (لم
+    // يكن, لم يعد, لم يرد) as وكن, وعد and ورد.
+    if (ending === '') {
+        const p = prefixes[0][0];
+        for (const stem of ASSIMILATED_PRESENT) { rules.push(whole(p + stem, 'و' + stem, {into: V_IN, out: V_OUT})); }
+    }
     const plain = prefixes.filter(([, d]) => d === '' || d === 'أ' || d === 'ا');
     rules.push(cross(plain, [[ending, '']], {extra: {stemChange: SEAT_TO_ALIF}}));
     rules.push(cross(plain, [[ending, '']], {extra: {stemChange: SEAT_TO_YA}}));
@@ -458,13 +505,28 @@ const PRESENT_PERSONS = [
 // conditions, so that particles such as من in منه are found, and so it cannot
 // keep another pronoun rule from following).
 const OBJECTS = ['ني', 'نا', 'ك', 'كما', 'كم', 'كن', 'ه', 'ها', 'هما', 'هم', 'هن'];
+// يمكن (it is possible) is أمكن, with or without a pronoun, not مكن (to be
+// strong); يهم (it matters) is همّ, not لم يهم of هام; أموت is مات.
+const LISTED_PRESENT = {
+    'ي': [['يمكن', 'أمكن'], ...OBJECTS.map((pr) => ['يمكن' + pr, 'أمكن']), ['يهم', 'هم']],
+    'ت': [['تمكن', 'أمكن'], ['تهم', 'هم']],
+    'أ': [['أموت', 'مات']],
+};
 for (const [id, name, p, gloss, example, see] of PRESENT_PERSONS) {
     transform(id, name, `The present tense "${gloss}", which is also its subjunctive and jussive: ${example} (كتب); يقول (قال), يدعو (دعا), يرمي (رمى), ينسى (نسي), يكرم (أكرم), يستخدم (استخدم), يصل (وصل), يرى (رأى). With an object pronoun in the same step: يمكنك, يعرفه.`, [
         ...presentRules(PRESENT[p], '', {defective: [['و', 'ا'], ['ي', 'ى'], ['ى', 'ي'], ['ى', 'ا']], hamza: [['أ', 'ئ']]}),
         ...seeRules(PRESENT[p], see),
         // Not after ي, و, ى or ا, where the verb is defective (يعطيه -> أعطى,
         // يرميه -> رمى): its own rules read it with the pronoun rules.
-        cross(PRESENT[p], OBJECTS.map((pr) => [pr, '']), {extra: {stemNotEndsWith: '[يوىا]'}}),
+        // Only stems without و, ي, ى or ا: a hollow or defective verb is read by
+        // its own rules and the pronoun rule (يزوره -> زار, يعطيه -> أعطى). A
+        // first person takes no first-person object (أعطني is the imperative
+        // of أعطى, not أ + عط + ني).
+        cross(PRESENT[p], OBJECTS.filter((pr) => !((p === 'أ' || p === 'ن') && (pr === 'ني' || pr === 'نا'))).map((pr) => [pr, '']),
+            {extra: {stemCharacters: STRONG}}),
+        // Frequent words whose ordinary reading the rules would otherwise put
+        // after a rarer one the dictionary also names.
+        ...(LISTED_PRESENT[p] ?? []).map(([i, d]) => whole(i, d, {into: V_IN, out: V_OUT})),
     ]);
 }
 for (const [id, name, p, gloss, example] of [
@@ -546,15 +608,20 @@ const FORM_I = [['ا', '']];
 const ASSIMILATED = ['قف', 'ضع', 'دع', 'صل', 'جد', 'عد', 'زن', 'هب', 'صف', 'رث', 'ثق', 'لد', 'قع', 'سع', 'فد', 'سم', 'طأ', 'زع', 'رد', 'صم']
     .map((stem) => [stem, 'و' + stem]);
 function imperativeRules(ending, {defective = [], others = [], hollowShort = false, assimilated = true} = {}) {
-    const rules = [cross(FORM_I, [[ending, '']], {min: 3})];
-    rules.push(cross(FORM_I, [[ending, '']], {min: 3, extra: {stemChange: SEAT_TO_ALIF}}));
-    rules.push(cross(FORM_I, [[ending, '']], {min: 3, extra: {stemChange: SEAT_TO_YA}}));
+    // A form I imperative's stem has no long vowel (اكتب, ادع, اقرأ), so a stem
+    // with ا, و or ي is not read as one: الان, اين, اول and اكون are words
+    // written without their hamza (الآن, أين, أول, أكون).
+    const rules = [cross(FORM_I, [[ending, '']], {min: 3, extra: {stemCharacters: STRONG}})];
+    rules.push(cross(FORM_I, [[ending, '']], {min: 3, extra: {stemCharacters: STRONG, stemChange: SEAT_TO_ALIF}}));
+    rules.push(cross(FORM_I, [[ending, '']], {min: 3, extra: {stemCharacters: STRONG, stemChange: SEAT_TO_YA}}));
     rules.push(suffix(ending, '', {min: 3, into: V_IN, out: V_OUT, extra: {stemChange: SEAT_TO_ALIF}}));
-    if (defective.length > 0) { rules.push(cross(FORM_I, defective)); }
-    if (assimilated) { rules.push(cross(ASSIMILATED, [[ending, '']], {min: 0, extra: {stemCharacters: '[]'}})); }
+    if (defective.length > 0) { rules.push(cross(FORM_I, defective, {extra: {stemCharacters: NO_ALIF}})); }
+    // Whole words, so that they are read before the hollow imperative (ضع is
+    // وضع, not ضاع).
+    if (assimilated) { for (const [i, d] of ASSIMILATED) { rules.push(whole(i + ending, d, {into: V_IN, out: V_OUT})); } }
     if (hollowShort) {
         rules.push(suffixes(RADICALS.map((c) => [c + ending, 'ا' + c]), {min: 1, into: V_IN, out: V_OUT}));
-        rules.push(cross(FORM_I, RADICALS.map((c) => [c + c + ending, c]), {min: 1}));
+        rules.push(cross(FORM_I, RADICALS.map((c) => [c + c + ending, c]), {min: 1, extra: {stemCharacters: STRONG}}));
     } else {
         rules.push(suffixes(hollow(ending), {min: 1, into: V_IN, out: V_OUT}));
     }
@@ -564,6 +631,8 @@ function imperativeRules(ending, {defective = [], others = [], hollowShort = fal
 transform('imperativeYou', 'imperative (you)', 'The imperative "do!" to one man: اكتب (كتب), قل (قال), ادع (دعا), ارم (رمى), انس (نسي), امدد (مد), قف (وقف), أعط (أعطى), اشتر (اشترى), كل (أكل), خذ (أخذ), مر (أمر), ر (رأى).', [
     ...imperativeRules('', {defective: [['', 'ا'], ['', 'ى'], ['', 'ي']], hollowShort: true, others: [['', 'ى']]}),
     ...[['كل', 'أكل'], ['خذ', 'أخذ'], ['مر', 'أمر'], ['ر', SEE], ['ائت', 'أتى'], ['جئ', 'جاء']].map(([i, d]) => whole(i, d, {into: V_IN, out: V_OUT})),
+    // أعطِ (give!) with an object pronoun, before أ + عط + ني.
+    ...['أعطني', 'أعطه', 'أعطها', 'أعطنا', 'أعطهم'].map((i) => whole(i, 'أعطى', {into: V_IN, out: V_OUT})),
 ]);
 transform('imperativeYouF', 'imperative (you f.)', 'The imperative "do!" to one woman, ending in ـي: اكتبي (كتب), قولي (قال), ادعي (دعا), ارمي (رمى), قفي (وقف), علمي (علم), أعطي (أعطى), كلي (أكل), ري (رأى).', [
     ...imperativeRules('ي', {defective: [['ي', 'ا'], ['ي', 'ى']], others: [['ي', '', 2], ['ي', 'ى']]}),
