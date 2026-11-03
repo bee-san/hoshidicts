@@ -258,6 +258,22 @@
         ]
       },
       {
+        "id": "normalizeDiacritics",
+        "name": "Normalize diacritics",
+        "variants": [
+          [
+            {
+              "builtin": "vi.toneMarksOld"
+            }
+          ],
+          [
+            {
+              "builtin": "vi.toneMarksNew"
+            }
+          ]
+        ]
+      },
+      {
         "id": "alternateIY",
         "name": "Alternate i and y (kĩ / kỹ)",
         "variants": [

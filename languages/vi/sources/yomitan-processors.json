@@ -1,0 +1,17 @@
+[
+  {
+    "id": "decapitalize",
+    "name": "Decapitalize text",
+    "variants": [[{"case": "lower"}]]
+  },
+  {
+    "id": "capitalizeFirstLetter",
+    "name": "Capitalize first letter",
+    "variants": [[{"case": "upperFirst"}]]
+  },
+  {
+    "id": "normalizeDiacritics",
+    "name": "Normalize diacritics",
+    "variants": [[{"builtin": "vi.toneMarksOld"}], [{"builtin": "vi.toneMarksNew"}]]
+  }
+]
