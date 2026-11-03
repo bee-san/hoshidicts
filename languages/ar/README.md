@@ -128,9 +128,9 @@ conjugate verbs of every root type. So وسيكتبونها gives كتب, بال
 
 ## Rule provenance
 
-`transforms.json` has 66 transforms, 563 JSON rules and 13,823 rules once
-cross products expand: 13,232 `own` and 591 `both` (87 JSON rules), and no
-`yomitan` rule. By type, 13,473 are `circumfix` (cross products of person
+`transforms.json` has 66 transforms, 577 JSON rules and 13,889 rules once
+cross products expand: 13,298 `own` and 591 `both` (87 JSON rules), and no
+`yomitan` rule. By type, 13,539 are `circumfix` (cross products of person
 prefixes and endings, or of an empty prefix and a list of endings), 248
 `suffix`, 90 `wholeWord` and 12 `prefix`; there is no `pattern` rule.
 `sources/build-final.mjs` writes it: `sources/own.json` with each own rule
@@ -156,7 +156,7 @@ compatible part of speech.
     ذهب الولد;
   - looked up as a host does, the first result is wrong at 1.52% of the
     judged positions of *al-Nazarat*, 0.72% of Tatoeba's and 1.65% of *Kalila
-    wa Dimna*'s, against 0.44%, 0.33% and 0.43% for the final rules, and for 8
+    wa Dimna*'s, against 0.39%, 0.26% and 0.34% for the final rules, and for 8
     of the frequent words against 2 (Measurements).
 
   One sample row, لبا → لب in `gaps.tsv`, is reached by the union and not
@@ -307,22 +307,22 @@ in `sources/`, run from the repository root.
      result.
    - Words it does not list, judged by the lemmas of every way of writing them
      as proclitics (و ف ب ك ل س ال لل) + a listed word + a pronoun
-     (والكتاب, بقلمه, سيكتبونها): 41,294 judged, 777 wrong (1.88%).
+     (والكتاب, بقلمه, سيكتبونها): 41,294 judged, 724 wrong (1.75%).
    - The largest groups:
      - بطريقة → بطريق (52) and بطلاقة → طلاق (17): the feminine ending removed
        where بـ + طريقة was meant; equal traces.
      - كين → كان (24): the passive of كان read for a name.
-     - أريدك → راد (23): form I first in the jussive-shaped present.
-     - الي → إلى (16) and الان → لان (15): informal spellings.
+     - الي → إلى (16), الان → لان (15), اين → ونى (14) and ابدا → بدا (14):
+       informal spellings without hamza, read as other words.
      - لياني → لي (15): a name.
 4. **Real text** (`measure.py text`, every word looked up with the rest of
    its sentence; the first result is judged by script when it matches the
    whole word and the word or its split has entries).
-   - *al-Nazarat*: 88,419 positions, 84,650 judged by script, 338 wrong
-     (0.40%). Of the 61,465 positions whose word wty-ar-en lists, 19 are
-     wrong; of the 23,185 with proclitics or a pronoun, 319 are.
-   - *Kalila wa Dimna*: 44,208 judged, 155 wrong (0.35%).
-   - Tatoeba: 290,798 judged, 807 wrong (0.28%).
+   - *al-Nazarat*: 88,419 positions, 84,650 judged by script, 332 wrong
+     (0.39%). Of the 61,465 positions whose word wty-ar-en lists, 19 are
+     wrong; of the 23,185 with proclitics or a pronoun, 313 are.
+   - *Kalila wa Dimna*: 44,208 judged, 149 wrong (0.34%).
+   - Tatoeba: 290,798 judged, 754 wrong (0.26%).
    - The same with Yomitan's rules: 1.61%, 1.66% and 0.72%.
    - In *al-Nazarat*, 1,719 positions could not be judged by script (words
      the dictionary has no entry for, or a first result longer than the
@@ -331,8 +331,8 @@ in `sources/`, run from the repository root.
      row (مبتسما → ابتسم; right by the dictionary's own reference), and 21
      wrong. Most of the wrong ones are rare words the dictionary lacks, read
      as a short root (فولتير → تر, سحتوت → سح, لواعج → عج). Counting those
-     at the sample's rate, about 1.1% of all positions with a result show a
-     wrong first result.
+     at the sample's rate, about 1.1% of all 86,369 positions with a result
+     show a wrong first result.
    - The largest groups by script are ties between two one-step readings:
      ويطفئ → طفئ (4), ورائي → وراء (4, right as a word but not the
      preposition's own lemma), فيخيل → خال (4), جفنيه → جف (3), برأيه →
@@ -345,7 +345,7 @@ in `sources/`, run from the repository root.
      233.4-239.4 µs. The budget is 1 ms p50.
    - Native pack load (`sources/pack-load.cpp`): `LanguageRegistry::add`
      median 4.9-5.2 ms over 50 runs, three runs; the registry holds
-     6,690,400 bytes of heap. The 13,823 rules are mostly cross products,
+     6,690,400 bytes of heap. The 13,889 rules are mostly cross products,
      indexed by their endings.
    - WebAssembly, Hachidori feat/multi-language 803f7b6 engines (built from
      hoshidicts b145feb), Node 22:
@@ -371,7 +371,7 @@ in `sources/`, run from the repository root.
 7. **Conformance and checks**:
    - `language-conformance-test`: corpus.tsv 1,380 / 1,380, cases.tsv 461 /
      461, defaults.tsv 19 / 19 (with the pack's defaults), yomitan.tsv 356 /
-     356, text.tsv 34 / 34, lookup.tsv 38 / 38; gaps.tsv 0 / 116 (reported).
+     356, text.tsv 34 / 34, lookup.tsv 39 / 39; gaps.tsv 0 / 116 (reported).
    - `tests/classes.json` agrees with the engine (4 classes, 564 fields, 2
      steps).
    - `tools/check-yomitan.mjs`: 10,172 inputs, 154,906 Yomitan results, 0
@@ -405,4 +405,66 @@ in `sources/`, run from the repository root.
 
 ## Known gaps
 
-TBD
+- **`gaps.tsv`: 116 of the 1,496 sample rows** (7.75%):
+  - 76 broken plurals (القضاة → قاض, المحاريب → محراب, الطقوس → طقس). The
+    rules read none with the defaults and only seven patterns with the
+    `brokenPlurals` setting. wty-ar-en lists them as form-of rows of their
+    singular, so a lookup finds them anyway: the gap is in deinflection, not
+    in what a user sees with the recommended dictionary.
+  - 11 verbal nouns and participles of forms the optional transforms do not
+    read (دراية → درى, وسوسة → وسوس, مملوء → ملأ).
+  - 17 rare verb forms: passives of form III and VI with ي (نوديتن → نادى,
+    تحوشيتن → تحاشى); a doubled hollow verb (حوققنا → حاق); hamza after و
+    (يؤوون → أوى); and imperatives of two letters (سم → سمى, نس → نسى).
+  - 12 others: the comparative's feminine فعلاء (جرداء → أجرد), ذا and ذي as
+    ذو, and لبا → لب (the accusative needs three letters after ل, so that
+    لكان is لـ + كان).
+- **Ties the pack cannot break** (section 9.6). When two lemmas tie on
+  matched length, steps and trace length, and both or neither are named by
+  the matched text's own form-of rows, discovery order decides.
+  - انس and انسي (3,926 occurrences in the subtitle list) show نسّى before
+    نسي. The row of انس names نسي, and the row of أنس, its processor variant,
+    names نسّى, so both are confirmed. This is the framework issue the lead
+    accepted for a later framework PR (`lookup.confirmedOrder`, hachi-lang-engine-l).
+  - Most wrong first results by script in the texts are ties between two
+    one-step readings of the same letters: بطريقة → بطريق (the feminine) and
+    not بـ + طريقة (52 in Tatoeba), يده → دهي (the jussive of دهي, which
+    wty-ar-en lists) before يد + ـه, ويطفئ → طفئ, جفنيه → جف.
+- **Yomitan's 26 negatives not kept** (`sources/yomitan-tests-not-kept.tsv`):
+  - 23 have a subject and an object pronoun of the same person (علمناني,
+    أضربني, ادرسك);
+  - 3 have لـ before an indicative (ليجلسون).
+
+  The own pronoun and proclitic rules give no conditions, so that the
+  particles, adjectives and names wiktionary-to-yomitan leaves untagged are
+  found after them (إنه, منه, لمحمد). A conjugation rule can then follow
+  any of them. Yomitan's own proclitics give `n`, so in Yomitan وهو, ومحمد and
+  إنه find nothing in wty-ar-en (its untagged rows fail its part-of-speech
+  filter). The same holds for Yomitan's invalid chains that the own rules
+  accept: بوبيت, كلبيت (proclitics in any order), ووسمع (و twice) and بولدان
+  (بـ before a nominative dual).
+- **Words the dictionary does not have** get the rules' readings: rare
+  words, names and loanwords are read as a short root (فولتير → تر, سحتوت →
+  سح, كين → كان). This is 21 of 60 hand-judged positions in *al-Nazarat*
+  that the script could not judge (Measurements 4).
+- **Adjectives** are untagged in wty-ar-en, and the noun endings give `n`,
+  so an inflected adjective is found through the dictionary's own form-of
+  rows (كبيرة → كبير). With a dictionary that lists adjectives without such
+  rows, كبيرة finds only the noun readings of كبيرة. Setting
+  `lookup.untaggedTerms` to `pass` would read them, at 2.297 → 2.737 false
+  candidates per sample row (measured before the noun endings gave `n`).
+- **Participles and verbal nouns** are shown as their verb when the
+  dictionary's own row for the word says only that (مبتسما → ابتسم, العثور
+  → عثر). The optional transforms read the others.
+- **Informal spellings**: a final ه for ة (مدرسه) and ي for ى (حتي, الي)
+  are read only with the `informalTaMarbuta` and `informalFinalYa` settings.
+  A word without its hamza is read only at the start of the word or after
+  الـ or a one-letter proclitic (اكبر, والامر); inside the word (مسئول for
+  مسؤول, شئ for شيء) it is read only where the dictionary lists the spelling.
+  Without a madda variant, الان is read as the imperative لِن (لان, 15 in
+  Tatoeba).
+- **Spaces**: a rule never reads across a space, so a multiword entry is
+  found only when the scanned text spells it as the dictionary does (رأس
+  مال, من حيث), not with an inflected word inside (رؤوس أموال).
+- **Dialects**: the rules are for Modern Standard Arabic; dialect forms
+  (Egyptian بيكتب, Levantine عم يكتب) are not read.
