@@ -220,9 +220,6 @@
       [223, 246],
       [248, 255]
     ],
-    "transforms[0].rules[6].stemEndsWith": [
-      [101, 101]
-    ],
     "transforms[0].rules[7].stemCharacters": [
       [45, 45],
       [48, 57],
@@ -293,9 +290,6 @@
       [97, 122],
       [223, 246],
       [248, 255]
-    ],
-    "transforms[0].rules[10].stemEndsWith": [
-      [101, 101]
     ],
     "transforms[0].rules[11].stemCharacters": [
       [45, 45],
@@ -368,9 +362,6 @@
       [223, 246],
       [248, 255]
     ],
-    "transforms[0].rules[14].stemEndsWith": [
-      [101, 101]
-    ],
     "transforms[0].rules[15].stemCharacters": [
       [45, 45],
       [48, 57],
@@ -441,9 +432,6 @@
       [97, 122],
       [223, 246],
       [248, 255]
-    ],
-    "transforms[0].rules[18].stemEndsWith": [
-      [101, 101]
     ],
     "transforms[0].rules[19].stemCharacters": [
       [45, 45],
@@ -5196,6 +5184,7 @@
         ["verfluchte Mist", "verfluchte mist"],
         ["Stunden später", "stunden später"],
         ["Reisen bilden.", "reisen bilden."],
+        ["bösen Wolf", "bösen wolf"],
         ["Sie ist heute früh aufgestanden und hat ihre Freunde angerufen.", "sie ist heute früh aufgestanden und hat ihre freunde angerufen."],
         ["aufstehen", "aufstehen"]
       ]
@@ -7378,6 +7367,7 @@
         ["verfluchte Mist", "Verfluchte Mist"],
         ["Stunden später", "Stunden später"],
         ["Reisen bilden.", "Reisen bilden."],
+        ["bösen Wolf", "Bösen Wolf"],
         ["Sie ist heute früh aufgestanden und hat ihre Freunde angerufen.", "Sie ist heute früh aufgestanden und hat ihre Freunde angerufen."],
         ["aufstehen", "Aufstehen"]
       ]
@@ -9560,6 +9550,7 @@
         ["verfluchte Mist", "verfluchte mist"],
         ["Stunden später", "stunden später"],
         ["Reisen bilden.", "reisen bilden."],
+        ["bösen Wolf", "bösen wolf"],
         ["Sie ist heute früh aufgestanden und hat ihre Freunde angerufen.", "sie ist heute früh aufgestanden und hat ihre freunde angerufen."],
         ["aufstehen", "aufstehen"]
       ]
@@ -11742,6 +11733,7 @@
         ["verfluchte Mist", "Verfluchte Mist"],
         ["Stunden später", "Stunden später"],
         ["Reisen bilden.", "Reisen bilden."],
+        ["bösen Wolf", "Bösen Wolf"],
         ["Sie ist heute früh aufgestanden und hat ihre Freunde angerufen.", "Sie ist heute früh aufgestanden und hat ihre Freunde angerufen."],
         ["aufstehen", "Aufstehen"]
       ]

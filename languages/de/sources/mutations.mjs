@@ -75,6 +75,7 @@ const MUTATIONS = {
     'zu-infinitive: particle list emptied but an': (t) => { for (const r of rules(t, 'zu-infinitive', (x) => x.type === 'circumfix')) { r.prefixes = [['anzu', 'an']]; } },
     'nouns read in small letters': (t) => { for (const x of t.transforms) { for (const r of x.rules) { if (r.stemStartsWith === '{lowerInitial}') { r.stemStartsWith = '{upper}'; } } } },
     'nouns get their capital letter back': (t) => { for (const x of t.transforms) { for (const r of x.rules) { if (r.then !== undefined) { delete r.then; } } } },
+    'e-adjective endings written with the e': (t) => { for (const r of rules(t, 'declined', (x) => x.type === 'suffix' && x.deinflected === 'e' && ['en', 'er', 'es', 'em'].includes(x.inflected))) { r.inflected = r.inflected.slice(1); r.deinflected = ''; r.stemEndsWith = '[e]'; } },
     'plural en -> e before en': (t) => { const x = byId(t, 'plural'); x.rules = x.rules.filter((r) => !(r.type === 'suffix' && r.inflected === 'en' && r.deinflected === 'e')); },
     'plural n only after e l r': (t) => { for (const r of rules(t, 'plural', suffixRule('n', ''))) { delete r.stemEndsWith; } },
     'plural s only after a vowel': (t) => { for (const r of rules(t, 'plural', suffixRule('s', ''))) { delete r.stemEndsWith; } },

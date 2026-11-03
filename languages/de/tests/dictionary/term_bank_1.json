@@ -86,5 +86,7 @@
   ["Stunde", "", "n", "n", 0, ["hour"], 85, ""],
   ["Stund", "", "n", "n", 0, ["(archaic) hour"], 86, ""],
   ["Reise", "", "n", "n", 0, ["journey"], 87, ""],
-  ["Reis", "", "n", "n", 0, ["rice"], 88, ""]
+  ["Reis", "", "n", "n", 0, ["rice"], 88, ""],
+  ["böse", "", "adj", "adj", 0, ["evil, angry"], 89, ""],
+  ["Böse", "", "n", "n", 0, ["evil one"], 90, ""]
 ]

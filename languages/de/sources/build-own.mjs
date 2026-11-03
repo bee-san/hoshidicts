@@ -672,7 +672,11 @@ for (const end of ['e', 'en', 'er', 'es', 'em']) {
     suffix('declined', `r${end}`, 'er', [], ADJ_OUT, {...MIN2, stemEndsWith: '[u]'});  // teure -> teuer
     form('declined', `hoh${end}`, 'hoch', [], ADJ_OUT);
     if (end !== 'e') {
-        suffix('declined', end.slice(1), '', [], ADJ_OUT, {...MIN2, stemMinLength: 3, stemEndsWith: '[e]'});  // leisen -> leise
+        // An adjective that ends in e (leise, böse): the ending is written with
+        // that e, so that it matches the same letters as the noun plural -en of a
+        // noun in -e and, coming first, is found first (bösen is böse, not the
+        // plural of Böse).
+        suffix('declined', end, 'e', [], ADJ_OUT, MIN2);  // leisen -> leise
     }
 }
 // An adjective in -te or -er with its ending is spelled like a verb form whose
