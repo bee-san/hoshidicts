@@ -30,13 +30,12 @@ const here = dirname(fileURLToPath(import.meta.url));
 // They have Yomitan's definitions, which tools/merge-transforms.mjs requires
 // of a condition both files have. vcl is what an elided pronoun before a
 // verb leaves (s'élève → élève, j'ai → ai): the word after j', m', t', s',
-// n' and c' is a verb, so only the verb rules read it, and it matches no
-// dictionary term itself (élève is élever there, never the noun élève). The
-// verb rules take vcl and not v, so a verb they reach is not read again.
-// p1s and p2s mark a verb form of the first or second person singular, which
-// a reflexive pronoun before it must agree with to make a pronominal verb
-// (je me lève → se lever, tu te lèves → se lever; il me dit is not se dire,
-// because dit is not a first person form). imp and fin are what a pronoun
+// n' and c' is a verb, so only the verb rules read it (and the infinitive
+// rule: m'aider → aider), and it matches no dictionary term itself (élève is
+// élever there, never the noun élève). The verb rules take vcl and not v, so
+// a verb they reach is not read again.
+// A reflexive pronoun agrees with the person of the verb after it through a
+// mark on the pronoun, not a condition (see personThen). imp and fin are what a pronoun
 // after a hyphen leaves: an imperative (donne-moi → donne) or a finite verb
 // whose subject was inverted (parle-t-il → parle). No dictionary term carries
 // them, so a text with only these conditions never matches.
@@ -45,9 +44,10 @@ const conditions = {
     vcl: {name: 'Verb after an elided pronoun (j\', m\', t\', s\', n\', c\')', isDictionaryForm: false},
     n: {name: 'Noun', isDictionaryForm: true},
     adj: {name: 'Adjective', isDictionaryForm: true},
-    p1s: {name: 'First person singular (agrees with me)', isDictionaryForm: false},
-    p2s: {name: 'Second person singular (agrees with te)', isDictionaryForm: false},
     imp: {name: 'Imperative before a hyphenated pronoun', isDictionaryForm: false},
+    // No rule gives raw, so a rule that takes only raw applies only to the
+    // scanned text itself (whose conditions are 0, which every rule takes).
+    raw: {name: 'The scanned text itself (no rule gives this)', isDictionaryForm: false},
     fin: {name: 'Finite verb before an inverted subject', isDictionaryForm: false},
 };
 
@@ -111,15 +111,21 @@ const CLITIC = new Set(['m', 't', 's', 'l']);
 for (const [short] of ELIDED) {
     if (KEPT.has(short)) { continue; }
     const out = BEFORE_VERB.has(short) ? ['vcl'] : [];
+    // qu' is not removed before à: a lookup from qu' then read the phrase
+    // after it (qu'à la condition → à la, qu'à moi-même → à moi: 58 first
+    // results in the measured texts, most of them wrong).
+    if (short === 'qu') {
+        add('elision', prefix(`${short}'`, '', [], out, {stemNotStartsWith: '[à]'}));
+        add('elision', prefix(`${short}'`, '', [], out, {stemStartsWith: '[à]', stemNotStartsWithText: 'à '}));
+        continue;
+    }
     if (!CLITIC.has(short)) {
         add('elision', prefix(`${short}'`, '', [], out));
         continue;
     }
-    // The preprocessor joinPronoun writes s'en moque as s'en+moque: the
-    // same pronouns, which the elision leaves (stemCharacters [^+]).
     add('elision', prefix(`${short}'`, '', [], out, {stemNotStartsWith: '[ey]'}));
-    add('elision', prefix(`${short}'`, '', [], out, {stemStartsWith: '[e]', stemNotStartsWithText: 'en ', stemCharacters: '[^+]'}));
-    add('elision', prefix(`${short}'`, '', [], out, {stemStartsWith: '[y]', stemNotStartsWithText: 'y ', stemCharacters: '[^+]'}));
+    add('elision', prefix(`${short}'`, '', [], out, {stemStartsWith: '[e]', stemNotStartsWithText: 'en '}));
+    add('elision', prefix(`${short}'`, '', [], out, {stemStartsWith: '[y]', stemNotStartsWithText: 'y '}));
 }
 transform('elided-form', 'elided form',
     'The word an apostrophe follows, read as its elided and full forms: l → l\', le, la; qu → qu\', que.');
@@ -200,6 +206,31 @@ for (const [inflected, deinflected] of [['aux', 'au'], ['eux', 'eu'], ['œux', '
 for (const [inflected, deinflected] of [['yeux', 'œil'], ['cieux', 'ciel'], ['aïeux', 'aïeul'], ['messieurs', 'monsieur'], ['mesdames', 'madame'],
     ['mesdemoiselles', 'mademoiselle'], ['messeigneurs', 'monseigneur'], ['bonshommes', 'bonhomme'], ['gentilshommes', 'gentilhomme']]) {
     add('plural', whole(inflected, deinflected, [], ['n']));
+}
+
+// --- Verbs: the person of a joined pronoun -------------------------------------------
+// A rule for a first person singular form marks a me, m', m'en or m'y at the
+// start of the text as agreeing with it (me lève → me*lever, m'appelle →
+// m'*appeler), a rule for a second person singular form a te, t', t'en or
+// t'y, whether the preprocessor joinPronoun joined the pronoun to the verb
+// (me+lève) or not; and the pronominal rule reads only marked pronouns. So a
+// pronoun before a form of its person gives the pronominal verb (je me lève
+// → se lever, tu t'appelles → s'appeler), a pronoun before an infinitive
+// gives none (il va m'appeler, je vais te prendre: an object there as often
+// as a reflexive pronoun), and nor does one before another person (il me
+// dit). The postprocessor unjoinPronoun writes the space back.
+// A pronoun before a space is marked where joinPronoun joined it; an elided
+// m' or t' is not joined, and is marked as it is.
+const MARKS = {
+    '1s': [['me+', 'me*'], ["m'en+", "m'en*"], ["m'y+", "m'y*"], ["m'", "m'*"]],
+    '2s': [['te+', 'te*'], ["t'en+", "t'en*"], ["t'y+", "t'y*"], ["t'", "t'*"]],
+};
+function personThen(finite, persons) {
+    const map = {};
+    for (const person of ['1s', '2s']) {
+        if (finite && persons.includes(person)) { for (const [from, to] of MARKS[person]) { map[from] = to; } }
+    }
+    return Object.keys(map).length === 0 ? {} : {then: [{map, at: 'start'}]};
 }
 
 // --- Verbs: paradigms ---------------------------------------------------------------
@@ -524,8 +555,9 @@ for (const [v, pp] of [['connaître', 'connu'], ['paraître', 'paru']]) {
 }
 model('naître', 0, 'free', {sg: [['nai', 's']], pl: 'naiss', p3: 'naiss', ps: [['naqu', 'i']], fut: ['naîtr', 'naitr'], pp: 'né',
     set: {present: {'3s': ['naît', 'nait']}}});
-// paître and repaître (no simple past for paître; repaître: repus, repu).
-model('paître', 0, 'free', {sg: [['pai', 's']], pl: 'paiss', p3: 'paiss', ps: [['p', 'u']], fut: ['paîtr', 'paitr'], pp: 'pu', ppInvariable: true,
+// paître and repaître: paître has no simple past; repaître's is repus.
+model('repaître', 0, 'alone', {ps: [['rep', 'u']], imp: null});
+model('paître', 0, 'free', {sg: [['pai', 's']], pl: 'paiss', p3: 'paiss', fut: ['paîtr', 'paitr'], pp: 'pu', ppInvariable: true,
     set: {present: {'3s': ['paît', 'pait']}}});
 model('croître', 0, 'free', {
     sg: [['croî', 's']], pl: 'croiss', p3: 'croiss', fut: ['croîtr', 'croitr'], pp: ['crû', 'crue', 'crus', 'crues'],
@@ -682,8 +714,6 @@ for (const m of MODELS) {
         const set = PERSON_SETS.find((s) => s.join() === persons.join());
         if (set === undefined) { throw new Error(`${inf} ${tense} ${form}: no transform for ${persons.join(',')}`); }
         const out = ['v'];
-        if (t.finite && persons.includes('1s')) { out.push('p1s'); }
-        if (t.finite && persons.includes('2s')) { out.push('p2s'); }
         const extra = {};
         if (m.stem === 'word') {
             extra.stemMinLength = m.min ?? 1;
@@ -701,6 +731,7 @@ for (const m of MODELS) {
         // voulant), not a form of a phrase with en (en revenir, en vouloir).
         if (tense === 'present-participle') { extra.stemNotStartsWithText = 'en '; }
         if (inflected === '' && Object.keys(extra).length === 0) { throw new Error(`${inf}: empty ending without a constraint`); }
+        Object.assign(extra, personThen(t.finite, persons));
         if (m.notAfter !== undefined && (m.notAfterPersons === undefined || persons.every((p) => m.notAfterPersons.includes(p)))) {
             extra.stemNotStartsWith = m.notAfter;
         }
@@ -725,11 +756,9 @@ const MUTE = [
 for (const [tense, persons, ending] of MUTE) {
     const t = TENSE.get(tense);
     const out = ['v'];
-    if (t.finite && persons.includes('1s')) { out.push('p1s'); }
-    if (t.finite && persons.includes('2s')) { out.push('p2s'); }
     for (const to of ['e', 'é']) {
         verbRules.push([verbTransformId(tense, persons), suffix(ending, 'er', t.conditionsIn, out, {
-            stemCharacters: '{notSpace}', stemChange: {from: ['è'], to, occurrence: 'last'},
+            stemCharacters: '{notSpace}', stemChange: {from: ['è'], to, occurrence: 'last'}, ...personThen(t.finite, persons),
         })]);
     }
 }
@@ -747,9 +776,7 @@ for (const [tense, persons, ending] of [
     ['subjunctive', ['1p'], 'ions'], ['subjunctive', ['2p'], 'iez']]) {
     const t = TENSE.get(tense);
     const out = ['v'];
-    if (t.finite && persons.includes('1s')) { out.push('p1s'); }
-    if (t.finite && persons.includes('2s')) { out.push('p2s'); }
-    verbRules.unshift([verbTransformId(tense, persons), suffix(`ass${ending}`, 'asser', t.conditionsIn, out, {stemCharacters: '{notSpace}'})]);
+    verbRules.unshift([verbTransformId(tense, persons), suffix(`ass${ending}`, 'asser', t.conditionsIn, out, {stemCharacters: '{notSpace}', ...personThen(t.finite, persons)})]);
 }
 
 // A plural participle is often also the plural of a noun or adjective (les
@@ -796,30 +823,46 @@ for (const [tense] of TENSES) {
 
 // --- Pronominal verbs ---------------------------------------------------------------
 // A reflexive pronoun before a verb of its person gives the pronominal verb,
-// which dictionaries list with se: je me lève → me lever → se lever, tu
+// which dictionaries list with se: je me lève → me*lever → se lever, tu
 // t'appelles → s'appeler, je m'en vais → s'en aller. se itself needs no rule
-// (se lève → se lever). The rule takes an infinitive, which the tense rules
-// give with the person of the form (p1s, p2s), so a form of another person
-// is never read: il me dit is not se dire. An infinitive written after the
-// pronoun (je vais me lever) has no person and is read too. me and te are
-// also object pronouns (il me parle, je te vois); the dictionary decides
-// those: a pronominal verb it does not list is never a result. je me suis
-// and je te suis are être and suivre, never se suivre.
+// (se lève → se+lever → se lever). The rule takes an infinitive whose
+// pronoun a rule of its person marked (see personThen), so a form of
+// another person is never read (il me dit is not se dire), nor an
+// infinitive after the pronoun (il va m'appeler is not s'appeler; in
+// Tatoeba such readings were wrong more often than right). A form that is
+// first and third person (il me parle) or first and second (tu me prends)
+// still reads as pronominal: the subject before the pronoun is not in the
+// text. Two exceptions, measured on Tatoeba: prendre (tu me prends pour un
+// idiot is not se prendre; that reading was wrong 37 times and right 15),
+// and suivre (je me suis, je te suis are être and suivre). m'en, t'en, m'y
+// and t'y before an infinitive (je vais m'en aller, je vais m'y prendre) do
+// give the pronominal verb, except être (m'en être pris is not s'en être):
+// those rows take only the scanned text itself (condition raw).
 transform('pronominal', 'pronominal',
     'A verb with a reflexive pronoun of its person before it, looked up with se: je me lève → se lever, tu t\'appelles → s\'appeler, je m\'en vais → s\'en aller.');
 const INFINITIVE_ENDINGS = [['er', 'er'], ['ir', 'ir'], ['re', 're']];
-for (const [pronoun, person] of [['me', 'p1s'], ['te', 'p2s']]) {
-    // A pronoun before a space comes raw (me lève) or joined to the verb by
-    // the preprocessor joinPronoun (me+parle).
-    const circumfix = (inflectedPrefix, deinflectedPrefix, extra) => ({type: 'circumfix',
-        prefixes: inflectedPrefix.endsWith(' ')
-            ? [[inflectedPrefix, deinflectedPrefix], [`${inflectedPrefix.slice(0, -1)}+`, deinflectedPrefix]]
-            : [[inflectedPrefix, deinflectedPrefix]],
-        suffixes: INFINITIVE_ENDINGS, conditionsIn: [person], conditionsOut: ['v'], stemCharacters: '{letter}', ...extra});
-    add('pronominal', circumfix(`${pronoun} `, 'se ', {stemNotStartsWithText: 'suiv'}));
-    add('pronominal', circumfix(`${pronoun[0]}'`, "s'", {}));
-    add('pronominal', circumfix(`${pronoun[0]}'en `, "s'en ", {}));
-    add('pronominal', circumfix(`${pronoun[0]}'y `, "s'y ", {}));
+for (const pronoun of ['me', 'te']) {
+    const circumfix = (inflectedPrefix, deinflectedPrefix, extra) => ({type: 'circumfix', prefixes: [[inflectedPrefix, deinflectedPrefix]],
+        suffixes: INFINITIVE_ENDINGS, conditionsIn: ['v'], conditionsOut: ['v'], stemCharacters: '{letter}', ...extra});
+    add('pronominal', circumfix(`${pronoun}*`, 'se ', {stemNotStartsWith: '[ps]'}));
+    add('pronominal', circumfix(`${pronoun}*`, 'se ', {stemStartsWith: '[p]', stemNotStartsWithText: 'pren'}));
+    add('pronominal', circumfix(`${pronoun}*`, 'se ', {stemStartsWith: '[s]', stemNotStartsWithText: 'suiv'}));
+    add('pronominal', circumfix(`${pronoun[0]}'*`, "s'", {}));
+    add('pronominal', circumfix(`${pronoun[0]}'en*`, "s'en ", {}));
+    add('pronominal', circumfix(`${pronoun[0]}'y*`, "s'y ", {}));
+    for (const [joined, out] of [[`${pronoun[0]}'en+`, "s'en "], [`${pronoun[0]}'y+`, "s'y "]]) {
+        add('pronominal', {...circumfix(joined, out, {stemNotStartsWithText: 'êt'}), conditionsIn: ['raw']});
+    }
+}
+
+// --- Infinitive after an elided pronoun -------------------------------------------
+// After m', t' and s' (and j', n', c'), the elision leaves a verb (vcl), which
+// the conjugation rules read; an infinitive needs none, and this rule reads
+// it as the verb: m'aider → aider, t'appeler → appeler, s'asseoir → asseoir.
+transform('infinitive', 'infinitive',
+    'An infinitive after an elided pronoun, read as the verb: m\'aider → aider, t\'appeler → appeler, s\'asseoir → asseoir.');
+for (const ending of ['er', 'ir', 'ïr', 're']) {
+    add('infinitive', suffix(ending, ending, ['vcl'], ['v'], {stemCharacters: '{notSpace}', stemMinLength: 1}));
 }
 
 // --- Nouns and adjectives -----------------------------------------------------------
@@ -882,7 +925,7 @@ for (const [lemma, forms] of [
 // the same order at each ending, in a file small enough for sources/
 // (section 3). A row keeps the place of its first rule.
 const CONSTRAINTS = ['stemMinLength', 'stemCharacters', 'stemContains', 'stemStartsWith', 'stemEndsWith', 'stemNotStartsWith',
-    'stemNotEndsWith', 'stemStartsWithText', 'stemNotStartsWithText', 'stemChange'];
+    'stemNotEndsWith', 'stemStartsWithText', 'stemNotStartsWithText', 'stemChange', 'then'];
 function compact(rules) {
     const out = [];
     const rows = new Map();

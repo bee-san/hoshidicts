@@ -501,8 +501,6 @@ phrases	1	y vais	y aller	v	present-1s
 phrases	1	s'en allant	s'en aller	v	present-participle
 pronominal	1	s'en va	s'en aller	v	present-3s
 pronominal	1	me tais	se taire	v	*
-pronominal	1	me lever	se lever	v	pronominal
-pronominal	1	m'asseoir	s'asseoir	v	pronominal
 pronominal	1	me sentais	se sentir	v	*
 pronominal	1	m'habillerai	s'habiller	v	*
 pronominal	1	te dépêches	se dépêcher	v	*
@@ -797,3 +795,36 @@ negatives	0	y passerai	y passer	*	*
 negatives	0	y resta	y rester	*	*
 phrases	1	y allions	y aller	v	imperfect-1p
 phrases	1	s'en allait	s'en aller	v	imperfect-3s
+negatives	0	me lever	se lever	*	*
+negatives	0	m'appeler	s'appeler	*	*
+negatives	0	te prendre	se prendre	*	*
+negatives	0	il me dit	se dire	*	*
+negatives	0	te lève	se lever	*	*
+negatives	0	me lèves	se lever	*	*
+negatives	0	te parle	se parler	*	*
+negatives	0	me la prends	se la prendre	*	*
+simple past	1	fus	être	v	simple-past-1s-2s
+simple past	1	vins	venir	v	simple-past-1s-2s
+simple past	1	fis	faire	v	simple-past-1s-2s
+simple past	1	pus	pouvoir	v	simple-past-1s-2s
+subjunctive	1	fassions	faire	v	subjunctive-1p
+subjunctive	1	puissions	pouvoir	v	subjunctive-1p
+subjunctive	1	sachions	savoir	v	subjunctive-1p
+yomitan rules	1	oyez	ouïr	v	imperative present
+yomitan rules	1	ouït	ouïr	v	Preterite
+yomitan rules	1	solvant	soudre	v	present participle
+yomitan rules	1	haies	havoir	v	present subjunctive
+infinitive	1	m'aider	aider	v	infinitive|elision
+infinitive	1	t'appeler	appeler	v	infinitive|elision
+infinitive	1	s'asseoir	asseoir	v	infinitive|elision
+pronominal	1	m'en aller	s'en aller	v	pronominal
+pronominal	1	t'y prendre	s'y prendre	v	pronominal
+negatives	0	me prends	se prendre	*	*
+negatives	0	te prends	se prendre	*	*
+negatives	0	te tire	se tire	*	*
+negatives	0	te tire	se tirer	*	*
+negatives	0	m'en être	s'en être	*	*
+negatives	0	put	paître	*	*
+negatives	0	pus	paître	*	*
+negatives	0	qu'à la	à la	*	*
+negatives	0	qu'à moi	à moi	*	*

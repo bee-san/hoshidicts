@@ -101,5 +101,13 @@
   ["le chercher", "", "v", "v", 0, ["to be asking for it"], 100, ""],
   ["partout", "", "adv", "adv", 0, ["everywhere"], 101, ""],
   ["boucler", "", "v", "v", 0, ["to buckle"], 102, ""],
-  ["la boucler", "", "v", "v", 0, ["to shut up"], 103, ""]
+  ["la boucler", "", "v", "v", 0, ["to shut up"], 103, ""],
+  ["se prendre", "", "v", "v", 0, ["to get caught; to receive (something unpleasant)"], 104, ""],
+  ["à demain", "", "", "", 0, ["see you tomorrow"], 105, ""],
+  ["jusqu'à", "", "", "", 0, ["until, up to"], 106, ""],
+  ["huit", "", "", "", 0, ["eight"], 107, ""],
+  ["heure", "", "n", "n", 0, ["hour"], 108, ""],
+  ["pour", "", "", "", 0, ["for"], 109, ""],
+  ["un", "", "", "", 0, ["a"], 110, ""],
+  ["idiot", "", "n", "n", 0, ["idiot"], 111, ""]
 ]

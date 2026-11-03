@@ -16,8 +16,13 @@ is not a form-of row) is judged by the dictionary's own rows:
 - its matched text is longer (l'homme, me souviens, dis-moi, parle-t-il):
   when the dictionary has rows for the matched text, right when the
   expression is one of its lemmas, else wrong; when it has none (a reading
-  the rules made), right when the expression, without a reflexive se, s' or
-  s'en, is a lemma of one of the matched words, else unjudged.
+  the rules made), right when the expression is a lemma of one of the
+  matched words, else unjudged;
+- left unjudged in any case: a verb with se, s', s'en or s'y after me, te,
+  m' or t' (whether the pronoun is reflexive depends on the subject before
+  it, which the text does not have), and a first result whose matched text
+  is an elided word alone (m in m'aider) where the text goes on after the
+  apostrophe.
 
 Unjudged results are left to a hand sample. Writes <prefix>-wrong.tsv and
 <prefix>-unjudged.tsv and prints one JSON object.
@@ -64,7 +69,12 @@ with open(a.lookups, encoding='utf-8') as f:
         counts['lookups with a result'] += 1
         e, m = norm(first['expression']), first['matched']
         trace = '|'.join(first['trace'])
-        if m.lower() == word.lower():
+        text = norm(d['text'])
+        if REFLEXIVE.match(e) and re.match(r"^(?:me |te |m'|t')", norm(m).lower()):
+            kind = 'unjudged'
+        elif re.fullmatch(r"(?i)(?:l|d|j|m|t|s|n|c|qu)", m) and text[len(m):len(m) + 1] == "'" and len(text) > len(m) + 1:
+            kind = 'unjudged'
+        elif m.lower() == word.lower():
             ls = {norm(x) for x in own(word)}
             if not ls:
                 kind = 'unjudged'
@@ -72,15 +82,13 @@ with open(a.lookups, encoding='utf-8') as f:
                 kind = 'right' if e in ls or e.lower() in {x.lower() for x in ls} else 'wrong'
         elif has_rows(m):
             ls = {norm(x).lower() for x in own(m)}
-            bare = REFLEXIVE.sub('', e).lower()
-            kind = 'right' if e.lower() in ls or bare in ls else 'wrong'
+            kind = 'right' if e.lower() in ls else 'wrong'
         else:
             parts = [p for p in re.split(r"[ '\u2019\-]+", m) if p]
             ls = set()
             for p in parts:
                 ls |= {norm(x).lower() for x in own(p)}
-            bare = REFLEXIVE.sub('', e).lower()
-            kind = 'right' if bare in ls or e.lower() in ls else 'unjudged'
+            kind = 'right' if e.lower() in ls else 'unjudged'
         counts[kind] += 1
         if classes is not None:
             by_class[classes[i]][kind] += 1

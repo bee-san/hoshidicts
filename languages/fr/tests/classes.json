@@ -124,18 +124,8 @@
       [101, 101],
       [121, 121]
     ],
-    "transforms[0].rules[1].stemCharacters": [
-      [0, 42],
-      [44, 55295],
-      [57344, 1114111]
-    ],
     "transforms[0].rules[1].stemStartsWith": [
       [101, 101]
-    ],
-    "transforms[0].rules[2].stemCharacters": [
-      [0, 42],
-      [44, 55295],
-      [57344, 1114111]
     ],
     "transforms[0].rules[2].stemStartsWith": [
       [121, 121]
@@ -144,18 +134,8 @@
       [101, 101],
       [121, 121]
     ],
-    "transforms[0].rules[6].stemCharacters": [
-      [0, 42],
-      [44, 55295],
-      [57344, 1114111]
-    ],
     "transforms[0].rules[6].stemStartsWith": [
       [101, 101]
-    ],
-    "transforms[0].rules[7].stemCharacters": [
-      [0, 42],
-      [44, 55295],
-      [57344, 1114111]
     ],
     "transforms[0].rules[7].stemStartsWith": [
       [121, 121]
@@ -164,18 +144,8 @@
       [101, 101],
       [121, 121]
     ],
-    "transforms[0].rules[9].stemCharacters": [
-      [0, 42],
-      [44, 55295],
-      [57344, 1114111]
-    ],
     "transforms[0].rules[9].stemStartsWith": [
       [101, 101]
-    ],
-    "transforms[0].rules[10].stemCharacters": [
-      [0, 42],
-      [44, 55295],
-      [57344, 1114111]
     ],
     "transforms[0].rules[10].stemStartsWith": [
       [121, 121]
@@ -184,21 +154,17 @@
       [101, 101],
       [121, 121]
     ],
-    "transforms[0].rules[12].stemCharacters": [
-      [0, 42],
-      [44, 55295],
-      [57344, 1114111]
-    ],
     "transforms[0].rules[12].stemStartsWith": [
       [101, 101]
     ],
-    "transforms[0].rules[13].stemCharacters": [
-      [0, 42],
-      [44, 55295],
-      [57344, 1114111]
-    ],
     "transforms[0].rules[13].stemStartsWith": [
       [121, 121]
+    ],
+    "transforms[0].rules[17].stemNotStartsWith": [
+      [224, 224]
+    ],
+    "transforms[0].rules[18].stemStartsWith": [
+      [224, 224]
     ],
     "transforms[2].rules[0].stemNotStartsWith": [
       [65, 65],
@@ -1151,10 +1117,26 @@
       [248, 591],
       [64256, 64262]
     ],
-    "transforms[24].rules[27].stemNotStartsWith": [
+    "transforms[24].rules[27].stemNotEndsWith": [
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [64256, 64262]
+    ],
+    "transforms[24].rules[28].stemNotEndsWith": [
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [64256, 64262]
+    ],
+    "transforms[24].rules[29].stemNotStartsWith": [
       [101, 101]
     ],
-    "transforms[24].rules[28].stemCharacters": [
+    "transforms[24].rules[30].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
@@ -3037,6 +3019,10 @@
       [248, 591],
       [64256, 64262]
     ],
+    "transforms[61].rules[0].stemNotStartsWith": [
+      [112, 112],
+      [115, 115]
+    ],
     "transforms[61].rules[1].stemCharacters": [
       [65, 90],
       [97, 122],
@@ -3045,6 +3031,9 @@
       [248, 591],
       [64256, 64262]
     ],
+    "transforms[61].rules[1].stemStartsWith": [
+      [112, 112]
+    ],
     "transforms[61].rules[2].stemCharacters": [
       [65, 90],
       [97, 122],
@@ -3052,6 +3041,9 @@
       [216, 246],
       [248, 591],
       [64256, 64262]
+    ],
+    "transforms[61].rules[2].stemStartsWith": [
+      [115, 115]
     ],
     "transforms[61].rules[3].stemCharacters": [
       [65, 90],
@@ -3093,17 +3085,81 @@
       [248, 591],
       [64256, 64262]
     ],
+    "transforms[61].rules[8].stemCharacters": [
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [64256, 64262]
+    ],
+    "transforms[61].rules[8].stemNotStartsWith": [
+      [112, 112],
+      [115, 115]
+    ],
+    "transforms[61].rules[9].stemCharacters": [
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [64256, 64262]
+    ],
+    "transforms[61].rules[9].stemStartsWith": [
+      [112, 112]
+    ],
+    "transforms[61].rules[10].stemCharacters": [
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [64256, 64262]
+    ],
+    "transforms[61].rules[10].stemStartsWith": [
+      [115, 115]
+    ],
+    "transforms[61].rules[11].stemCharacters": [
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [64256, 64262]
+    ],
+    "transforms[61].rules[12].stemCharacters": [
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [64256, 64262]
+    ],
+    "transforms[61].rules[13].stemCharacters": [
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [64256, 64262]
+    ],
+    "transforms[61].rules[14].stemCharacters": [
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [64256, 64262]
+    ],
+    "transforms[61].rules[15].stemCharacters": [
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [64256, 64262]
+    ],
     "transforms[62].rules[0].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[62].rules[1].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[62].rules[2].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
@@ -3113,17 +3169,32 @@
       [33, 55295],
       [57344, 1114111]
     ],
+    "transforms[63].rules[1].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[63].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[64].rules[0].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[64].rules[1].stemCharacters": [
+    "transforms[65].rules[0].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[64].rules[2].stemCharacters": [
+    "transforms[65].rules[1].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[65].rules[2].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
@@ -4403,8 +4474,6 @@
         ["s'en allant", "s'en allant"],
         ["s'en va", "s'en va"],
         ["me tais", "me tais"],
-        ["me lever", "me lever"],
-        ["m'asseoir", "m'asseoir"],
         ["me sentais", "me sentais"],
         ["m'habillerai", "m'habillerai"],
         ["te dépêches", "te dépêches"],
@@ -4676,6 +4745,36 @@
         ["y resta", "y resta"],
         ["y allions", "y allions"],
         ["s'en allait", "s'en allait"],
+        ["me lever", "me lever"],
+        ["m'appeler", "m'appeler"],
+        ["te prendre", "te prendre"],
+        ["il me dit", "il me dit"],
+        ["te lève", "te lève"],
+        ["me lèves", "me lèves"],
+        ["te parle", "te parle"],
+        ["me la prends", "me la prends"],
+        ["fus", "fus"],
+        ["vins", "vins"],
+        ["fis", "fis"],
+        ["pus", "pus"],
+        ["fassions", "fassions"],
+        ["puissions", "puissions"],
+        ["sachions", "sachions"],
+        ["ouït", "ouït"],
+        ["solvant", "solvant"],
+        ["haies", "haies"],
+        ["m'aider", "m'aider"],
+        ["t'appeler", "t'appeler"],
+        ["s'asseoir", "s'asseoir"],
+        ["m'en aller", "m'en aller"],
+        ["t'y prendre", "t'y prendre"],
+        ["me prends", "me prends"],
+        ["te prends", "te prends"],
+        ["te tire", "te tire"],
+        ["m'en être", "m'en être"],
+        ["put", "put"],
+        ["qu'à la", "qu'à la"],
+        ["qu'à moi", "qu'à moi"],
         ["repaitront", "repaitront"],
         ["naisses", "naisses"],
         ["accroisses", "accroisses"],
@@ -4717,6 +4816,8 @@
         ["la parle", "la parle"],
         ["en jette", "en jette"],
         ["je me parle", "je me parle"],
+        ["t'y attends", "t'y attends"],
+        ["s'y prend", "s'y prend"],
         ["homme est là", "homme est là"],
         ["l’homme est là", "l’homme est là"],
         ["l'homme est là", "l'homme est là"],
@@ -4758,6 +4859,14 @@
         ["prendre chez elle", "prendre chez elle"],
         ["le cherchions partout", "le cherchions partout"],
         ["la bouclait", "la bouclait"],
+        ["m'appeler demain", "m'appeler demain"],
+        ["jusqu'à demain", "jusqu'à demain"],
+        ["te prendre à huit heures", "te prendre à huit heures"],
+        ["me prends pour un idiot", "me prends pour un idiot"],
+        ["chevaliers", "chevaliers"],
+        ["homme2", "homme2"],
+        ["l'xyzw", "l'xyzw"],
+        ["qu'à demain", "qu'à demain"],
         ["Elles finissaient leurs devoirs avant le dîner.", "elles finissaient leurs devoirs avant le dîner."],
         ["finissaient", "finissaient"],
         ["finir", "finir"]
@@ -6036,8 +6145,6 @@
         ["s'en allant", "S'en allant"],
         ["s'en va", "S'en va"],
         ["me tais", "Me tais"],
-        ["me lever", "Me lever"],
-        ["m'asseoir", "M'asseoir"],
         ["me sentais", "Me sentais"],
         ["m'habillerai", "M'habillerai"],
         ["te dépêches", "Te dépêches"],
@@ -6309,6 +6416,36 @@
         ["y resta", "Y resta"],
         ["y allions", "Y allions"],
         ["s'en allait", "S'en allait"],
+        ["me lever", "Me lever"],
+        ["m'appeler", "M'appeler"],
+        ["te prendre", "Te prendre"],
+        ["il me dit", "Il me dit"],
+        ["te lève", "Te lève"],
+        ["me lèves", "Me lèves"],
+        ["te parle", "Te parle"],
+        ["me la prends", "Me la prends"],
+        ["fus", "Fus"],
+        ["vins", "Vins"],
+        ["fis", "Fis"],
+        ["pus", "Pus"],
+        ["fassions", "Fassions"],
+        ["puissions", "Puissions"],
+        ["sachions", "Sachions"],
+        ["ouït", "Ouït"],
+        ["solvant", "Solvant"],
+        ["haies", "Haies"],
+        ["m'aider", "M'aider"],
+        ["t'appeler", "T'appeler"],
+        ["s'asseoir", "S'asseoir"],
+        ["m'en aller", "M'en aller"],
+        ["t'y prendre", "T'y prendre"],
+        ["me prends", "Me prends"],
+        ["te prends", "Te prends"],
+        ["te tire", "Te tire"],
+        ["m'en être", "M'en être"],
+        ["put", "Put"],
+        ["qu'à la", "Qu'à la"],
+        ["qu'à moi", "Qu'à moi"],
         ["repaitront", "Repaitront"],
         ["naisses", "Naisses"],
         ["accroisses", "Accroisses"],
@@ -6350,6 +6487,8 @@
         ["la parle", "La parle"],
         ["en jette", "En jette"],
         ["je me parle", "Je me parle"],
+        ["t'y attends", "T'y attends"],
+        ["s'y prend", "S'y prend"],
         ["homme est là", "Homme est là"],
         ["l’homme est là", "L’homme est là"],
         ["l'homme est là", "L'homme est là"],
@@ -6391,6 +6530,14 @@
         ["prendre chez elle", "Prendre chez elle"],
         ["le cherchions partout", "Le cherchions partout"],
         ["la bouclait", "La bouclait"],
+        ["m'appeler demain", "M'appeler demain"],
+        ["jusqu'à demain", "Jusqu'à demain"],
+        ["te prendre à huit heures", "Te prendre à huit heures"],
+        ["me prends pour un idiot", "Me prends pour un idiot"],
+        ["chevaliers", "Chevaliers"],
+        ["homme2", "Homme2"],
+        ["l'xyzw", "L'xyzw"],
+        ["qu'à demain", "Qu'à demain"],
         ["Elles finissaient leurs devoirs avant le dîner.", "Elles finissaient leurs devoirs avant le dîner."],
         ["finissaient", "Finissaient"],
         ["finir", "Finir"]

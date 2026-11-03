@@ -9,7 +9,8 @@
 #   languages/fr/sources/measure.sh final  <cache> <work>   sources/yomitan-provenance.tsv and transforms.json
 #   languages/fr/sources/measure.sh sets   <cache> <work>   the own, Yomitan, union and final packs in <work>/packs
 #   languages/fr/sources/measure.sh eval   <cache> <work>   eval-language for every set, file and option mode
-#   languages/fr/sources/measure.sh lookups <cache> <work> <set>...   frequent words, real text, Tatoeba
+#   languages/fr/sources/measure.sh lookups <cache> <work> <set>...   frequent words, real text, Tatoeba, pronominal verbs
+#   languages/fr/sources/measure.sh displaced <cache> <work>   the first results the kept Yomitan rules change
 #   languages/fr/sources/measure.sh bench  <cache> <work> <set>...   benchmark-lookup on sources/benchmark-sentences.txt
 #
 # <cache> holds the downloads of README.md (Sources and licences):
@@ -115,12 +116,19 @@ EOF
         $LOOKUP $W/packs/$set fr "$D" < $W/tatoeba/hover.txt > $W/results/lookups.jsonl
         python3 $S/judge-hovers.py $W/tatoeba/words.txt $W/results/lookups.jsonl $C/wty-fr-en.zip --index $IDX \
           --out $out-tatoeba --classes $W/tatoeba/classes.txt > $out-tatoeba.json
-        python3 $S/pronominal.py $W/tatoeba/hover.txt $W/results/lookups.jsonl $C/wty-fr-en.zip --index $IDX --out $out-pronominal > $out-pronominal.json
         rm -f $W/results/lookups.jsonl
         python3 $S/traces.py $W/sample.tsv $W/packs/$set "$D" $LOOKUP > $out-traces.json
+        python3 $S/pronominal-subject.py $C/fra_sentences.tsv $LOOKUP $W/packs/$set "$D" --out $out-pronominal > $out-pronominal.json
         echo "$set $dict done"
       done
     done
+    ;;
+  displaced)
+    # The first results the kept Yomitan rules change: the word set looked up
+    # with the own rules and with the final rules, with wty-fr-en and the
+    # lemma-only copy (README.md, Rule provenance).
+    python3 $S/displaced.py $W/packs/own $W/packs/final $LOOKUP $W/wordset.txt --dictionary $C/wty-fr-en --dictionary "$LD" > $W/results/displaced.tsv
+    tail -1 $W/results/displaced.tsv
     ;;
   bench)
     # benchmark-lookup on the texts from each word of four letters or more (or

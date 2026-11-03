@@ -134,14 +134,12 @@ M('the inverted subject gives no fin', edit(base, lambda t, r: (r.__setitem__('c
 M('stemNotStartsWith {vowel} of the reflexive imperative', without(base, 'stemNotStartsWith', '{vowel}', ids=['reflexive-imperative']))
 M('stemStartsWith {elidable} of the reflexive imperative', without(base, 'stemStartsWith', '{elidable}', ids=['reflexive-imperative']))
 M("m', t', s' elided before en", without(base, 'stemNotStartsWithText', 'en ', ids=['elision']))
+M("qu' elided before à", without(base, 'stemNotStartsWithText', 'à ', ids=['elision']))
 M("m', t', s' elided before y", without(base, 'stemNotStartsWithText', 'y ', ids=['elision']))
 M('stemNotStartsWith [l] of faire', without(base, 'stemNotStartsWith', '[l]', ids=VERB))
 # Pronominal verbs.
-M('the pronominal rule takes any person', edit(base, lambda t, r: (r.__setitem__('conditionsIn', ['v']) or 1) if t['id'] == 'pronominal' else 0))
-M('me and te take each other\'s person', edit(base, lambda t, r: (r.__setitem__('conditionsIn', ['p2s' if r['conditionsIn'] == ['p1s'] else 'p1s']) or 1) if t['id'] == 'pronominal' else 0))
 M('stemNotStartsWithText "suiv" of the pronominal rule', without(base, 'stemNotStartsWithText', 'suiv', ids=['pronominal']))
 M('stemCharacters {letter} of the pronominal rule', without(base, 'stemCharacters', '{letter}', ids=['pronominal']))
-M('the verb rules give no person', edit(base, lambda t, r: (r.__setitem__('conditionsOut', ['v']) or 1) if any(c in r['conditionsOut'] for c in ('p1s', 'p2s')) else 0))
 # One-word stems and joined pronouns.
 M('stemCharacters {notSpace} of every verb ending', without(base, 'stemCharacters', '{notSpace}', ids=VERB))
 def no_space_check_on_stem_change(t, r):
@@ -151,13 +149,36 @@ def no_space_check_on_stem_change(t, r):
     return 0
 M('stemCharacters {notSpace} of the è stem change', edit(base, no_space_check_on_stem_change))
 M('stemCharacters {notSpace} of the -asser endings', without(base, 'stemCharacters', '{notSpace}', ids=VERB, deinflected='asser'))
-M('stemCharacters [^+] of the elision', without(base, 'stemCharacters', '[^+]', ids=['elision']))
-def no_joined_pronominal(t, r):
-    if t['id'] == 'pronominal' and len(r.get('prefixes', [])) > 1:
-        r['prefixes'] = r['prefixes'][:1]
+def unmarked_pronominal(t, r):
+    if t['id'] == 'pronominal' and r.get('prefixes') and '*' in r['prefixes'][0][0]:
+        r['prefixes'] = [[p[0].replace('*', ' ') if not p[0].endswith("'*") else p[0][:-1], p[1]] for p in r['prefixes']]
         return 1
     return 0
-M('the pronominal rule takes no joined pronoun', edit(base, no_joined_pronominal))
+M('the pronominal rule reads unmarked pronouns', edit(base, unmarked_pronominal))
+def no_person_marks(t, r):
+    if 'then' in r and any('*' in v for step in r['then'] for v in step.get('map', {}).values()):
+        del r['then']
+        return 1
+    return 0
+M('the verb rules mark no person', edit(base, no_person_marks))
+def marks_without_join(t, r):
+    hit = 0
+    for step in r.get('then', []):
+        m = step.get('map', {})
+        for k in [k for k in m if k.endswith('+')]:
+            del m[k]
+            hit = 1
+    return hit
+M('the verb rules mark only unjoined pronouns', edit(base, marks_without_join))
+def first_person_marks_te(t, r):
+    hit = 0
+    for step in r.get('then', []):
+        m = step.get('map', {})
+        if 'me+' in m and 'te+' not in m:
+            m['te+'] = 'te*'
+            hit = 1
+    return hit
+M('a first person rule also marks te', edit(base, first_person_marks_te))
 def unjoined_reflexive_imperative(t, r):
     if t['id'] == 'reflexive-imperative' and r.get('deinflectedPrefix', '').endswith('+'):
         r['deinflectedPrefix'] = r['deinflectedPrefix'][:-1] + ' '
@@ -173,6 +194,30 @@ M('no maligne, bénigne', drop_rules(base, lambda t, r: t['id'] == 'feminine' an
 M('no gentiment, brièvement, impunément', drop_rules(base, lambda t, r: t['id'] == 'adverb' and r['type'] == 'wholeWord'))
 M('no elided forms (l -> le, la)', drop_rules(base, lambda t, r: t['id'] == 'elided-form'))
 M('no kept Yomitan rules', drop_rules(base, lambda t, r: r.get('source', t.get('source')) == 'yomitan'))
+# Every transform, one at a time, and each Yomitan transform's kept rules.
+for tr in base['transforms']:
+    M(f"no transform {tr['id']}", drop_rules(base, lambda t, r, i=tr['id']: t['id'] == i))
+# The person-marking and the scanning settings.
+def drop_join_key(key):
+    def edit(lang):
+        for p in lang['lookup']['preprocessors']:
+            if p['id'] == 'joinPronoun':
+                del p['variants'][0][0]['map'][key]
+        return lang
+    return edit
+for key in ['me ', 'te ', 'se ', "m'en ", "t'en ", "s'en ", "m'y ", "t'y ", "s'y "]:
+    M(f'joinPronoun without {key.strip()!r}', (base, 1), drop_join_key(key))
+def set_text(field, value):
+    def edit(lang):
+        if field == 'searchResolution':
+            lang['lookup']['searchResolution'] = value
+        else:
+            lang['text'][field] = value
+        return lang
+    return edit
+M('searchResolution character', (base, 1), set_text('searchResolution', 'character'))
+M('apostrophes inside words', (base, 1), set_text('wordInternal', "['’]"))
+M('digits not word characters', (base, 1), set_text('wordCharacters', '[{letter}\\u0300-\\u036F]'))
 
 os.makedirs(a.scratch, exist_ok=True)
 cli = os.path.join(a.repo, 'build', 'language-conformance-test')
