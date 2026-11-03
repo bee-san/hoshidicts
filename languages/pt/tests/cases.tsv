@@ -538,3 +538,48 @@ negatives	0	segui	seguuir	*	*
 negatives	0	chama-se	chama	n	*
 negatives	0	deixa-me	deixa	n	*
 negatives	0	casas	cas	*	*
+negatives	0	a vê-la	a ver	*	*
+negatives	0	que fazê-lo	que fazer	*	*
+negatives	0	conte	conter	*	*
+negatives	0	contem	conter	*	*
+negatives	0	prove	prover	*	*
+negatives	0	prove	provir	*	*
+negatives	0	rele	reler	*	*
+negatives	0	serve	server	*	*
+negatives	0	fale	falir	*	*
+negatives	0	queria	quer	*	*
+negatives	0	querem	quer	*	*
+negatives	0	queres-me	quer	*	*
+negatives	0	afaste	afar	*	*
+negatives	0	convida	convir	*	*
+negatives	0	intervia	intervir	*	*
+negatives	0	provida	provir	*	*
+negatives	0	avia	avir	*	*
+negatives	0	sobrevia	sobrevir	*	*
+negatives	0	compre	cumprir	*	*
+negatives	0	corte	curtir	*	*
+negatives	0	aluga	aluguer	*	*
+negatives	0	alugue	aluguer	*	*
+exclusions keep	1	serve	servir	v	present-ele
+exclusions keep	1	servem	servir	v	present-eles
+exclusions keep	1	contorce	contorcer	v	present-ele
+exclusions keep	1	falimos	falir	v	present-nos
+exclusions keep	1	usaste	usar	v	preterite-tu
+exclusions keep	1	afastaste	afastar	v	preterite-tu
+exclusions keep	1	queria	querer	v	imperfect-eu-ele
+exclusions keep	1	quererá	querer	v	future-ele
+exclusions keep	1	provido	prover	v	participle
+exclusions keep	1	convidou	convidar	v	preterite-ele
+exclusions keep	1	ergue	erguer	v	present-ele
+exclusions keep	1	erga	erguer	v	subjunctive-eu-ele
+exclusions keep	1	acode	acudir	v	present-ele
+exclusions keep	1	sacode	sacudir	v	present-ele
+exclusions keep	1	cospe	cuspir	v	present-ele
+exclusions keep	1	entope	entupir	v	present-ele
+exclusions keep	1	bole	bulir	v	present-ele
+exclusions keep	1	somem	sumir	v	present-eles
+exclusions keep	1	foges	fugir	v	present-tu
+exclusions keep	1	sobem	subir	v	present-eles
+exclusions keep	1	erguemos	erguer	v	present-nos
+exclusions keep	1	erguem	erguer	v	present-eles
+exclusions keep	1	distingue	distinguir	v	present-ele

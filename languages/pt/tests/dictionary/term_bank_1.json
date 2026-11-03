@@ -43,5 +43,20 @@
   ["português", "", "adj", "", 0, ["Portuguese"], 42, ""],
   ["minha", "", "non-lemma", "", 0, [["meu", ["singular feminine"]]], 43, ""],
   ["pode", "", "non-lemma", "", 0, [["poder", ["third-person singular present indicative"]], ["podar", ["first/third-person singular present subjunctive"]]], 44, ""],
-  ["tá", "", "non-lemma", "", 0, [["estar", ["third-person singular present indicative"]]], 45, ""]
+  ["tá", "", "non-lemma", "", 0, [["estar", ["third-person singular present indicative"]]], 45, ""],
+  ["contar", "", "v", "", 0, ["to count; to tell"], 46, ""],
+  ["conter", "", "v", "", 0, ["to contain"], 47, ""],
+  ["servir", "", "v", "", 0, ["to serve"], 48, ""],
+  ["server", "", "n masc", "", 0, ["server (computer)"], 49, ""],
+  ["querer", "", "v", "", 0, ["to want"], 50, ""],
+  ["quer", "", "conj", "", 0, ["whether … or"], 51, ""],
+  ["afastar", "", "v", "", 0, ["to move away"], 52, ""],
+  ["afar", "", "n masc", "", 0, ["Afar (a people)"], 53, ""],
+  ["convidar", "", "v", "", 0, ["to invite"], 54, ""],
+  ["convir", "", "v", "", 0, ["to suit"], 55, ""],
+  ["alugar", "", "v", "", 0, ["to rent"], 56, ""],
+  ["aluguer", "", "n masc", "", 0, ["rent"], 57, ""],
+  ["comprar", "", "v", "", 0, ["to buy"], 58, ""],
+  ["cumprir", "", "v", "", 0, ["to fulfil"], 59, ""],
+  ["falir", "", "v", "", 0, ["to go bankrupt"], 60, ""]
 ]

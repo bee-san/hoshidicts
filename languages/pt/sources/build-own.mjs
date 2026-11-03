@@ -254,7 +254,11 @@ for (const conj of ['ar', 'er', 'ir']) {
                 verb(slot, ending, conj, {stemNotEndsWith: '[cg]'});
                 if (conj === 'er') { verb(slot, `ç${ending}`, 'cer'); }
                 verb(slot, `j${ending}`, `g${conj}`, {stemMinLength: 1});   // aja, ajo (agir), protejo
-                verb(slot, `g${ending}`, `gu${conj}`);
+                // erguer (erga) is the only common -guer verb: aluga is alugar, not the noun aluguer.
+                verb(slot, `g${ending}`, `gu${conj}`, conj === 'er' ? {stemEndsWith: '[r]'} : {});
+            } else if (conj === 'er' && ['present-tu', 'present-ele', 'present-eles'].includes(slot)) {
+                // Not after u: ergue is reached by the gu rule below, and alugue is alugar, not the noun aluguer.
+                verb(slot, ending, conj, {stemNotEndsWith: '[u]'});
             } else {
                 verb(slot, ending, conj);
             }
@@ -267,7 +271,7 @@ for (const conj of ['ar', 'er', 'ir']) {
 // seguir, conseguir and perseguir before segar.
 for (const slot of ['present-tu', 'present-ele', 'present-eles']) {
     verb(slot, `gu${ENDINGS.ir[slot]}`, 'guir');
-    verb(slot, `gu${ENDINGS.er[slot]}`, 'guer');
+    verb(slot, `gu${ENDINGS.er[slot]}`, 'guer', {stemEndsWith: '[r]'});
 }
 
 // -ir verbs whose stem vowel changes: e → i and o → u before a and o
@@ -281,8 +285,15 @@ for (const slot of IR_BEFORE_AO) {
     // seguir and its compounds: sigo, consiga, persigam, prossigamos.
     verb(slot, `ig${ending}`, 'eguir', {stemMinLength: 1});
 }
+// The u → o verbs are a closed list (subir, sumir, consumir, fugir, acudir,
+// sacudir, cuspir, entupir, bulir, escapulir), so they are written by their
+// endings: a general rule would read compre and corte (comprar, cortar) as
+// cumprir and curtir.
 for (const slot of ['present-tu', 'present-ele', 'present-eles']) {
-    verb(slot, ENDINGS.ir[slot], 'ir', {stemChange: {from: ['o'], to: 'u', occurrence: 'last', between: '{consonant}'}});
+    const ending = ENDINGS.ir[slot];
+    for (const [form, infinitive] of [['ob', 'ubir'], ['om', 'umir'], ['og', 'ugir'], ['od', 'udir'], ['osp', 'uspir'], ['op', 'upir'], ['ol', 'ulir']]) {
+        verb(slot, `${form}${ending}`, infinitive, {stemMinLength: form === 'om' ? 0 : 1});
+    }
 }
 // agredir, progredir, regredir, transgredir and prevenir change e to i in
 // every stressed form: agrido, progride, transgridam, previne.
@@ -726,8 +737,11 @@ flushWords();
 // (diz-se-lhe). o, a, os and as are written lo, la, los, las after a form
 // whose final r, s or z they drop (fazê-lo, fá-lo, fazemo-lo, di-lo), and no,
 // na, nos, nas after a nasal (fazem-no, dão-na, põe-nos).
+// The stem of a pronoun rule is the verb alone, without a space, so a word
+// before the verb is never read as part of it (a vê-la is not a form of the
+// phrase a ver).
 function clitic(p, inflected, deinflected, conditionsOut, extra = {}) {
-    add(`clitic-${p}`, {type: 'suffix', inflected, deinflected, conditionsIn: ['vf'], conditionsOut, stemMinLength: 1, ...extra});
+    add(`clitic-${p}`, {type: 'suffix', inflected, deinflected, conditionsIn: ['vf'], conditionsOut, stemMinLength: 1, stemCharacters: '{lowerStem}', ...extra});
 }
 const O_FORMS = {o: ['lo', 'no'], a: ['la', 'na'], os: ['los', 'nos'], as: ['las', 'nas']};
 const OTHER = PRONOUNS.map(([p]) => p).filter((p) => !(p in O_FORMS));
@@ -902,6 +916,57 @@ for (const [inflected, deinflected] of [['avelmente', 'ável'], ['ivelmente', '�
 }
 
 // --- Exclusions ---------------------------------------------------------------------------
+// A literal stem constraint takes one string, so a rule that must leave out
+// several exact stems is split by their first letters: one copy for stems
+// that start with none of them, and for each stem X two copies, one for
+// stems that start with its letter but not with X, one for stems that start
+// with X and are longer. The copies make the same deinflections as the rule,
+// except those whose stem is exactly X.
+function withoutStems(rule, stems) {
+    const byLetter = new Map();
+    for (const stem of stems) {
+        const letter = [...stem][0];
+        if (byLetter.has(letter)) { throw new Error(`two excluded stems start with ${letter}: ${byLetter.get(letter)}, ${stem}`); }
+        byLetter.set(letter, stem);
+    }
+    const letters = [...byLetter.keys()].join('');
+    const out = [{...rule, stemNotStartsWith: `[${letters}]`}];
+    for (const [letter, stem] of byLetter) {
+        out.push({...rule, stemStartsWith: `[${letter}]`, stemNotStartsWithText: stem});
+        out.push({...rule, stemStartsWithText: stem, stemMinLength: Math.max(rule.stemMinLength ?? 0, [...stem].length + 1)});
+    }
+    return out;
+}
+// Stems whose regular-looking forms belong to another verb. Without a
+// dictionary part of speech (wty-pt-en has none) these readings tie with the
+// right one after an attached pronoun, where no form-of row confirms it
+// (Conte-me, Serve-me, Queria-lhe, Afaste-se, convida-os):
+// - conter, prover and provir, reler and the defective falir have no regular
+//   present (contém, provê, provém, relê), and server is an English noun, so
+//   conte, prove, rele, fale and serve are contar, provar, relar, falar and
+//   servir;
+// - quer is the conjunction, not an infinitive: queria, queres and querem
+//   are querer;
+// - afar is a noun: afaste is afastar;
+// - the vir compounds have irregular imperfects and participles (convinha,
+//   convindo): convida and avia are convidar and aviar.
+// The pronoun before the verb's forms (Me conte) and the bare forms have rows
+// that confirm their lemma, so these exclusions only change the readings
+// that no row confirms.
+const EXACT_STEM_EXCLUSIONS = [
+    [(rule) => rule.deinflected === 'er' && ['es', 'e', 'em'].includes(rule.inflected) && rule.stemChange === undefined, ['cont', 'prov', 'rel', 'serv']],
+    [(rule) => rule.deinflected === 'ir' && ['es', 'e', 'em'].includes(rule.inflected) && rule.stemChange === undefined, ['prov', 'fal']],
+    [(rule) => rule.deinflected === 'er' && /^er/u.test(rule.inflected) && rule.stemChange === undefined, ['qu']],
+    [(rule) => rule.deinflected === 'ar' && ['aste', 'astes'].includes(rule.inflected) && rule.stemChange === undefined, ['af']],
+    [(rule) => rule.deinflected === 'ir' && /^(ido|ida|idos|idas|ia|ias|iam|íamos|íeis)$/u.test(rule.inflected) && rule.stemChange === undefined,
+        ['conv', 'interv', 'prov', 'av', 'sobrev']],
+];
+for (const t of transforms) {
+    t.rules = t.rules.flatMap((rule) => {
+        const exclusion = rule.type === 'suffix' ? EXACT_STEM_EXCLUSIONS.find(([applies]) => applies(rule)) : undefined;
+        return exclusion ? withoutStems(rule, exclusion[1]) : [rule];
+    });
+}
 // esta, estas, este and estes are demonstratives, not forms of estar (whose
 // forms are está, estás, esteja): the regular -ar endings a, as, e and es
 // leave out the stem est itself and keep longer ones (estuda, estime).

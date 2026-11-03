@@ -11,7 +11,9 @@ says: Lookup::lookup with 16 results, scan length 16 and no options, as a
 host's hover. A result is visible unless all its glossaries are form-of rows
 (non-lemma). The judge uses the dictionary's own form-of rows:
 
-- L1(w): the lemmas w's form-of rows name; L2(w): L1(w) and the lemmas the
+- L1(w): the lemmas w's form-of rows name (for a verb with an attached
+  pronoun and no row of its own, those of the verb form before the hyphen, or
+  the infinitive itself: fazê-lo → fazer); L2(w): L1(w) and the lemmas the
   rows of those name (one more hop, for spellings: tá → está → estar).
 - The first visible result is "own" when it is the matched text's own entry
   (no trace), "right" when its trace is not empty and it is in L2 of the
@@ -75,6 +77,21 @@ class Judge:
         out = set()
         for t in {text, norm(text), text[:1].upper() + text[1:]}:
             out |= self.refs.get(t, set())
+        # A verb with an attached pronoun (deixa-me, fá-lo, dir-te-ei) that has
+        # no row of its own: the rows of the verb form before the hyphen, or of
+        # the infinitive it was cut from (fazê- → fazer).
+        if not out and '-' in text:
+            parts = norm(text).split('-')
+            verb, pronoun = parts[0], parts[1]
+            candidates = {verb}
+            plain = verb.translate(str.maketrans('áâêéíóôú', 'aaeeiooo'))
+            if pronoun in ('lo', 'la', 'los', 'las'):
+                # The r, s or z the pronoun dropped: fazê-lo, fá-lo (faz), fi-lo (fiz), pô-lo (pôs), fazemo-lo.
+                candidates |= {verb + 's', verb + 'z', verb + 'r', plain + 'z', plain + 's', plain + 'r'}
+            if pronoun == 'nos' and verb.endswith('mo'):
+                candidates.add(verb + 's')                 # sentamo-nos
+            for t in candidates:
+                out |= self.refs.get(t, set()) | ({t} if t in self.lemmas else set())
         return out
 
     def l2(self, text):

@@ -38,9 +38,11 @@
       "description": "Present indicative, first person singular (eu): falo, como, parto.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["o", "ar"], ["ço", "cer"], ["go", "guer"], ["go", "guir"], ["eio", "ear"], ["ceio", "ciar"], ["meio", "miar"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["o", "ar"], ["ço", "cer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["o", "er"], ["o", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[cg]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["jo", "ger"], ["jo", "gir"], ["igo", "eguir"], ["grido", "gredir"], ["evino", "evenir"], ["deio", "diar"], ["nseio", "nsiar"], ["aio", "air"], ["oo", "oer"], ["irjo", "ergir"], ["ôo", "oar"], ["ôo", "oer"], ["óio", "oiar"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "go", "deinflected": "guer", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "[r]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["go", "guir"], ["eio", "ear"], ["ceio", "ciar"], ["meio", "miar"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "o", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[cg]", "stemChange": {"from": ["i"], "to": "e", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "o", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[cg]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "o", "deinflected": "ar", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemChange": {"from": ["í"], "to": "i", "occurrence": "last", "between": "{consonant}"}},
@@ -75,9 +77,24 @@
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "as", "deinflected": "ar", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWithText": "est"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["es", "er"], ["es", "ir"], ["gues", "guir"], ["gues", "guer"], ["eias", "ear"], ["ceias", "ciar"], ["meias", "miar"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
-        {"type": "suffix", "inflected": "es", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemChange": {"from": ["o"], "to": "u", "occurrence": "last", "between": "{consonant}"}},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["grides", "gredir"], ["evines", "evenir"], ["deias", "diar"], ["nseias", "nsiar"], ["ais", "air"], ["tróis", "truir"], ["óis", "oer"], ["óias", "oiar"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "es", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[u]", "stemNotStartsWith": "[cprs]"},
+        {"type": "suffix", "inflected": "es", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[u]", "stemStartsWith": "[c]", "stemNotStartsWithText": "cont"},
+        {"type": "suffix", "inflected": "es", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 5, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[u]", "stemStartsWithText": "cont"},
+        {"type": "suffix", "inflected": "es", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[u]", "stemStartsWith": "[p]", "stemNotStartsWithText": "prov"},
+        {"type": "suffix", "inflected": "es", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 5, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[u]", "stemStartsWithText": "prov"},
+        {"type": "suffix", "inflected": "es", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[u]", "stemStartsWith": "[r]", "stemNotStartsWithText": "rel"},
+        {"type": "suffix", "inflected": "es", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 4, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[u]", "stemStartsWithText": "rel"},
+        {"type": "suffix", "inflected": "es", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[u]", "stemStartsWith": "[s]", "stemNotStartsWithText": "serv"},
+        {"type": "suffix", "inflected": "es", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 5, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[u]", "stemStartsWithText": "serv"},
+        {"type": "suffix", "inflected": "es", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[pf]"},
+        {"type": "suffix", "inflected": "es", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[p]", "stemNotStartsWithText": "prov"},
+        {"type": "suffix", "inflected": "es", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 5, "stemCharacters": "{lowerStem}", "stemStartsWithText": "prov"},
+        {"type": "suffix", "inflected": "es", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[f]", "stemNotStartsWithText": "fal"},
+        {"type": "suffix", "inflected": "es", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 4, "stemCharacters": "{lowerStem}", "stemStartsWithText": "fal"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["gues", "guir"], ["eias", "ear"], ["ceias", "ciar"], ["meias", "miar"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "gues", "deinflected": "guer", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "[r]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["obes", "ubir"], ["oges", "ugir"], ["odes", "udir"], ["ospes", "uspir"], ["opes", "upir"], ["oles", "ulir"], ["grides", "gredir"], ["evines", "evenir"], ["deias", "diar"], ["nseias", "nsiar"], ["ais", "air"], ["tróis", "truir"], ["óis", "oer"], ["óias", "oiar"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "omes", "deinflected": "umir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 0, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["as", "ar"], ["es", "er"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemChange": {"from": ["í"], "to": "i", "occurrence": "last", "between": "{consonant}"}},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["as", "ar"], ["es", "er"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemChange": {"from": ["ú"], "to": "u", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "es", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemChange": {"from": ["í"], "to": "i", "occurrence": "last", "between": "{consonant}"}},
@@ -104,9 +121,24 @@
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "a", "deinflected": "ar", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWithText": "est"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["e", "er"], ["e", "ir"], ["gue", "guir"], ["gue", "guer"], ["eia", "ear"], ["ceia", "ciar"], ["meia", "miar"], ["uz", "uzir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
-        {"type": "suffix", "inflected": "e", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemChange": {"from": ["o"], "to": "u", "occurrence": "last", "between": "{consonant}"}},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["gride", "gredir"], ["evine", "evenir"], ["deia", "diar"], ["nseia", "nsiar"], ["ai", "air"], ["trói", "truir"], ["ói", "oer"], ["óia", "oiar"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "e", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[u]", "stemNotStartsWith": "[cprs]"},
+        {"type": "suffix", "inflected": "e", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[u]", "stemStartsWith": "[c]", "stemNotStartsWithText": "cont"},
+        {"type": "suffix", "inflected": "e", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 5, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[u]", "stemStartsWithText": "cont"},
+        {"type": "suffix", "inflected": "e", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[u]", "stemStartsWith": "[p]", "stemNotStartsWithText": "prov"},
+        {"type": "suffix", "inflected": "e", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 5, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[u]", "stemStartsWithText": "prov"},
+        {"type": "suffix", "inflected": "e", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[u]", "stemStartsWith": "[r]", "stemNotStartsWithText": "rel"},
+        {"type": "suffix", "inflected": "e", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 4, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[u]", "stemStartsWithText": "rel"},
+        {"type": "suffix", "inflected": "e", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[u]", "stemStartsWith": "[s]", "stemNotStartsWithText": "serv"},
+        {"type": "suffix", "inflected": "e", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 5, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[u]", "stemStartsWithText": "serv"},
+        {"type": "suffix", "inflected": "e", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[pf]"},
+        {"type": "suffix", "inflected": "e", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[p]", "stemNotStartsWithText": "prov"},
+        {"type": "suffix", "inflected": "e", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 5, "stemCharacters": "{lowerStem}", "stemStartsWithText": "prov"},
+        {"type": "suffix", "inflected": "e", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[f]", "stemNotStartsWithText": "fal"},
+        {"type": "suffix", "inflected": "e", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 4, "stemCharacters": "{lowerStem}", "stemStartsWithText": "fal"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["gue", "guir"], ["eia", "ear"], ["ceia", "ciar"], ["meia", "miar"], ["uz", "uzir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "gue", "deinflected": "guer", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "[r]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["obe", "ubir"], ["oge", "ugir"], ["ode", "udir"], ["ospe", "uspir"], ["ope", "upir"], ["ole", "ulir"], ["gride", "gredir"], ["evine", "evenir"], ["deia", "diar"], ["nseia", "nsiar"], ["ai", "air"], ["trói", "truir"], ["ói", "oer"], ["óia", "oiar"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "ome", "deinflected": "umir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 0, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["a", "ar"], ["e", "er"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemChange": {"from": ["í"], "to": "i", "occurrence": "last", "between": "{consonant}"}},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["a", "ar"], ["e", "er"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemChange": {"from": ["ú"], "to": "u", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "e", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemChange": {"from": ["í"], "to": "i", "occurrence": "last", "between": "{consonant}"}},
@@ -177,9 +209,24 @@
       "description": "Present indicative, third person plural (eles, elas, vocês): falam, comem, partem.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["am", "ar"], ["em", "er"], ["em", "ir"], ["guem", "guir"], ["guem", "guer"], ["eiam", "ear"], ["ceiam", "ciar"], ["meiam", "miar"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
-        {"type": "suffix", "inflected": "em", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemChange": {"from": ["o"], "to": "u", "occurrence": "last", "between": "{consonant}"}},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["gridem", "gredir"], ["evinem", "evenir"], ["deiam", "diar"], ["nseiam", "nsiar"], ["aem", "air"], ["troem", "truir"], ["óiam", "oiar"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["am", "ar"], ["guem", "guir"], ["eiam", "ear"], ["ceiam", "ciar"], ["meiam", "miar"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "em", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[u]", "stemNotStartsWith": "[cprs]"},
+        {"type": "suffix", "inflected": "em", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[u]", "stemStartsWith": "[c]", "stemNotStartsWithText": "cont"},
+        {"type": "suffix", "inflected": "em", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 5, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[u]", "stemStartsWithText": "cont"},
+        {"type": "suffix", "inflected": "em", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[u]", "stemStartsWith": "[p]", "stemNotStartsWithText": "prov"},
+        {"type": "suffix", "inflected": "em", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 5, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[u]", "stemStartsWithText": "prov"},
+        {"type": "suffix", "inflected": "em", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[u]", "stemStartsWith": "[r]", "stemNotStartsWithText": "rel"},
+        {"type": "suffix", "inflected": "em", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 4, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[u]", "stemStartsWithText": "rel"},
+        {"type": "suffix", "inflected": "em", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[u]", "stemStartsWith": "[s]", "stemNotStartsWithText": "serv"},
+        {"type": "suffix", "inflected": "em", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 5, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[u]", "stemStartsWithText": "serv"},
+        {"type": "suffix", "inflected": "em", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[pf]"},
+        {"type": "suffix", "inflected": "em", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[p]", "stemNotStartsWithText": "prov"},
+        {"type": "suffix", "inflected": "em", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 5, "stemCharacters": "{lowerStem}", "stemStartsWithText": "prov"},
+        {"type": "suffix", "inflected": "em", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[f]", "stemNotStartsWithText": "fal"},
+        {"type": "suffix", "inflected": "em", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 4, "stemCharacters": "{lowerStem}", "stemStartsWithText": "fal"},
+        {"type": "suffix", "inflected": "guem", "deinflected": "guer", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "[r]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["obem", "ubir"], ["ogem", "ugir"], ["odem", "udir"], ["ospem", "uspir"], ["opem", "upir"], ["olem", "ulir"], ["gridem", "gredir"], ["evinem", "evenir"], ["deiam", "diar"], ["nseiam", "nsiar"], ["aem", "air"], ["troem", "truir"], ["óiam", "oiar"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "omem", "deinflected": "umir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 0, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["am", "ar"], ["em", "er"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemChange": {"from": ["í"], "to": "i", "occurrence": "last", "between": "{consonant}"}},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["am", "ar"], ["em", "er"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemChange": {"from": ["ú"], "to": "u", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "em", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemChange": {"from": ["í"], "to": "i", "occurrence": "last", "between": "{consonant}"}},
@@ -229,7 +276,10 @@
       "description": "Preterite (pretérito perfeito), second person singular (tu): falaste, comeste, partiste.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aste", "ar"], ["este", "er"], ["iste", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "aste", "deinflected": "ar", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[a]"},
+        {"type": "suffix", "inflected": "aste", "deinflected": "ar", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[a]", "stemNotStartsWithText": "af"},
+        {"type": "suffix", "inflected": "aste", "deinflected": "ar", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWithText": "af"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["este", "er"], ["iste", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "uíste", "deinflected": "uir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[gq]"},
         {"type": "suffix", "inflected": "aíste", "deinflected": "air", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["man", "man"], ["con", "con"], ["ob", "ob"], ["de", "de"], ["re", "re"], ["entre", "entre"], ["a", "a"], ["abs", "abs"], ["sus", "sus"]], "suffixes": [["tiveste", "ter"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -298,7 +348,10 @@
       "description": "Preterite (pretérito perfeito), second person plural (vós): falastes, comestes, partistes.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["astes", "ar"], ["estes", "er"], ["istes", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "astes", "deinflected": "ar", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[a]"},
+        {"type": "suffix", "inflected": "astes", "deinflected": "ar", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[a]", "stemNotStartsWithText": "af"},
+        {"type": "suffix", "inflected": "astes", "deinflected": "ar", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWithText": "af"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["estes", "er"], ["istes", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "uístes", "deinflected": "uir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[gq]"},
         {"type": "suffix", "inflected": "aístes", "deinflected": "air", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["man", "man"], ["con", "con"], ["ob", "ob"], ["de", "de"], ["re", "re"], ["entre", "entre"], ["a", "a"], ["abs", "abs"], ["sus", "sus"]], "suffixes": [["tivestes", "ter"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -321,7 +374,10 @@
       "description": "Preterite (pretérito perfeito), third person plural (eles, elas, vocês): falaram, comeram, partiram.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aram", "ar"], ["eram", "er"], ["iram", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aram", "ar"], ["iram", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "eram", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[q]"},
+        {"type": "suffix", "inflected": "eram", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[q]", "stemNotStartsWithText": "qu"},
+        {"type": "suffix", "inflected": "eram", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWithText": "qu"},
         {"type": "suffix", "inflected": "uíram", "deinflected": "uir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[gq]"},
         {"type": "suffix", "inflected": "aíram", "deinflected": "air", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["man", "man"], ["con", "con"], ["ob", "ob"], ["de", "de"], ["re", "re"], ["entre", "entre"], ["a", "a"], ["abs", "abs"], ["sus", "sus"]], "suffixes": [["tiveram", "ter"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -344,7 +400,18 @@
       "description": "Imperfect indicative (pretérito imperfeito), first and third person singular (eu, ele, ela, você): falava, comia, partia.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ava", "ar"], ["ia", "er"], ["ia", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ava", "ar"], ["ia", "er"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "ia", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[cipas]"},
+        {"type": "suffix", "inflected": "ia", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[c]", "stemNotStartsWithText": "conv"},
+        {"type": "suffix", "inflected": "ia", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 5, "stemCharacters": "{lowerStem}", "stemStartsWithText": "conv"},
+        {"type": "suffix", "inflected": "ia", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[i]", "stemNotStartsWithText": "interv"},
+        {"type": "suffix", "inflected": "ia", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 7, "stemCharacters": "{lowerStem}", "stemStartsWithText": "interv"},
+        {"type": "suffix", "inflected": "ia", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[p]", "stemNotStartsWithText": "prov"},
+        {"type": "suffix", "inflected": "ia", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 5, "stemCharacters": "{lowerStem}", "stemStartsWithText": "prov"},
+        {"type": "suffix", "inflected": "ia", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[a]", "stemNotStartsWithText": "av"},
+        {"type": "suffix", "inflected": "ia", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWithText": "av"},
+        {"type": "suffix", "inflected": "ia", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[s]", "stemNotStartsWithText": "sobrev"},
+        {"type": "suffix", "inflected": "ia", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 7, "stemCharacters": "{lowerStem}", "stemStartsWithText": "sobrev"},
         {"type": "suffix", "inflected": "uía", "deinflected": "uir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[gq]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aía", "air"], ["oía", "oer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["man", "man"], ["con", "con"], ["ob", "ob"], ["de", "de"], ["re", "re"], ["entre", "entre"], ["a", "a"], ["abs", "abs"], ["sus", "sus"]], "suffixes": [["tinha", "ter"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -359,7 +426,18 @@
       "description": "Imperfect indicative (pretérito imperfeito), second person singular (tu): falavas, comias, partias.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["avas", "ar"], ["ias", "er"], ["ias", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["avas", "ar"], ["ias", "er"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "ias", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[cipas]"},
+        {"type": "suffix", "inflected": "ias", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[c]", "stemNotStartsWithText": "conv"},
+        {"type": "suffix", "inflected": "ias", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 5, "stemCharacters": "{lowerStem}", "stemStartsWithText": "conv"},
+        {"type": "suffix", "inflected": "ias", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[i]", "stemNotStartsWithText": "interv"},
+        {"type": "suffix", "inflected": "ias", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 7, "stemCharacters": "{lowerStem}", "stemStartsWithText": "interv"},
+        {"type": "suffix", "inflected": "ias", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[p]", "stemNotStartsWithText": "prov"},
+        {"type": "suffix", "inflected": "ias", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 5, "stemCharacters": "{lowerStem}", "stemStartsWithText": "prov"},
+        {"type": "suffix", "inflected": "ias", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[a]", "stemNotStartsWithText": "av"},
+        {"type": "suffix", "inflected": "ias", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWithText": "av"},
+        {"type": "suffix", "inflected": "ias", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[s]", "stemNotStartsWithText": "sobrev"},
+        {"type": "suffix", "inflected": "ias", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 7, "stemCharacters": "{lowerStem}", "stemStartsWithText": "sobrev"},
         {"type": "suffix", "inflected": "uías", "deinflected": "uir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[gq]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aías", "air"], ["oías", "oer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["man", "man"], ["con", "con"], ["ob", "ob"], ["de", "de"], ["re", "re"], ["entre", "entre"], ["a", "a"], ["abs", "abs"], ["sus", "sus"]], "suffixes": [["tinhas", "ter"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -374,7 +452,18 @@
       "description": "Imperfect indicative (pretérito imperfeito), first person plural (nós): falávamos, comíamos, partíamos.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ávamos", "ar"], ["íamos", "er"], ["íamos", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ávamos", "ar"], ["íamos", "er"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "íamos", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[cipas]"},
+        {"type": "suffix", "inflected": "íamos", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[c]", "stemNotStartsWithText": "conv"},
+        {"type": "suffix", "inflected": "íamos", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 5, "stemCharacters": "{lowerStem}", "stemStartsWithText": "conv"},
+        {"type": "suffix", "inflected": "íamos", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[i]", "stemNotStartsWithText": "interv"},
+        {"type": "suffix", "inflected": "íamos", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 7, "stemCharacters": "{lowerStem}", "stemStartsWithText": "interv"},
+        {"type": "suffix", "inflected": "íamos", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[p]", "stemNotStartsWithText": "prov"},
+        {"type": "suffix", "inflected": "íamos", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 5, "stemCharacters": "{lowerStem}", "stemStartsWithText": "prov"},
+        {"type": "suffix", "inflected": "íamos", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[a]", "stemNotStartsWithText": "av"},
+        {"type": "suffix", "inflected": "íamos", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWithText": "av"},
+        {"type": "suffix", "inflected": "íamos", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[s]", "stemNotStartsWithText": "sobrev"},
+        {"type": "suffix", "inflected": "íamos", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 7, "stemCharacters": "{lowerStem}", "stemStartsWithText": "sobrev"},
         {"type": "suffix", "inflected": "uíamos", "deinflected": "uir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[gq]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aíamos", "air"], ["oíamos", "oer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["man", "man"], ["con", "con"], ["ob", "ob"], ["de", "de"], ["re", "re"], ["entre", "entre"], ["a", "a"], ["abs", "abs"], ["sus", "sus"]], "suffixes": [["tínhamos", "ter"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -389,7 +478,18 @@
       "description": "Imperfect indicative (pretérito imperfeito), second person plural (vós): faláveis, comíeis, partíeis.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["áveis", "ar"], ["íeis", "er"], ["íeis", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["áveis", "ar"], ["íeis", "er"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "íeis", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[cipas]"},
+        {"type": "suffix", "inflected": "íeis", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[c]", "stemNotStartsWithText": "conv"},
+        {"type": "suffix", "inflected": "íeis", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 5, "stemCharacters": "{lowerStem}", "stemStartsWithText": "conv"},
+        {"type": "suffix", "inflected": "íeis", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[i]", "stemNotStartsWithText": "interv"},
+        {"type": "suffix", "inflected": "íeis", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 7, "stemCharacters": "{lowerStem}", "stemStartsWithText": "interv"},
+        {"type": "suffix", "inflected": "íeis", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[p]", "stemNotStartsWithText": "prov"},
+        {"type": "suffix", "inflected": "íeis", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 5, "stemCharacters": "{lowerStem}", "stemStartsWithText": "prov"},
+        {"type": "suffix", "inflected": "íeis", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[a]", "stemNotStartsWithText": "av"},
+        {"type": "suffix", "inflected": "íeis", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWithText": "av"},
+        {"type": "suffix", "inflected": "íeis", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[s]", "stemNotStartsWithText": "sobrev"},
+        {"type": "suffix", "inflected": "íeis", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 7, "stemCharacters": "{lowerStem}", "stemStartsWithText": "sobrev"},
         {"type": "suffix", "inflected": "uíeis", "deinflected": "uir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[gq]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aíeis", "air"], ["oíeis", "oer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["man", "man"], ["con", "con"], ["ob", "ob"], ["de", "de"], ["re", "re"], ["entre", "entre"], ["a", "a"], ["abs", "abs"], ["sus", "sus"]], "suffixes": [["tínheis", "ter"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -404,7 +504,18 @@
       "description": "Imperfect indicative (pretérito imperfeito), third person plural (eles, elas, vocês): falavam, comiam, partiam.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["avam", "ar"], ["iam", "er"], ["iam", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["avam", "ar"], ["iam", "er"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "iam", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[cipas]"},
+        {"type": "suffix", "inflected": "iam", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[c]", "stemNotStartsWithText": "conv"},
+        {"type": "suffix", "inflected": "iam", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 5, "stemCharacters": "{lowerStem}", "stemStartsWithText": "conv"},
+        {"type": "suffix", "inflected": "iam", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[i]", "stemNotStartsWithText": "interv"},
+        {"type": "suffix", "inflected": "iam", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 7, "stemCharacters": "{lowerStem}", "stemStartsWithText": "interv"},
+        {"type": "suffix", "inflected": "iam", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[p]", "stemNotStartsWithText": "prov"},
+        {"type": "suffix", "inflected": "iam", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 5, "stemCharacters": "{lowerStem}", "stemStartsWithText": "prov"},
+        {"type": "suffix", "inflected": "iam", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[a]", "stemNotStartsWithText": "av"},
+        {"type": "suffix", "inflected": "iam", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWithText": "av"},
+        {"type": "suffix", "inflected": "iam", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[s]", "stemNotStartsWithText": "sobrev"},
+        {"type": "suffix", "inflected": "iam", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 7, "stemCharacters": "{lowerStem}", "stemStartsWithText": "sobrev"},
         {"type": "suffix", "inflected": "uíam", "deinflected": "uir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[gq]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aíam", "air"], ["oíam", "oer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["man", "man"], ["con", "con"], ["ob", "ob"], ["de", "de"], ["re", "re"], ["entre", "entre"], ["a", "a"], ["abs", "abs"], ["sus", "sus"]], "suffixes": [["tinham", "ter"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -419,7 +530,10 @@
       "description": "Simple pluperfect (pretérito mais-que-perfeito), first and third person singular (eu, ele, ela, você): falara, comera, partira.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ara", "ar"], ["era", "er"], ["ira", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ara", "ar"], ["ira", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "era", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[q]"},
+        {"type": "suffix", "inflected": "era", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[q]", "stemNotStartsWithText": "qu"},
+        {"type": "suffix", "inflected": "era", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWithText": "qu"},
         {"type": "suffix", "inflected": "uíra", "deinflected": "uir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[gq]"},
         {"type": "suffix", "inflected": "aíra", "deinflected": "air", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["man", "man"], ["con", "con"], ["ob", "ob"], ["de", "de"], ["re", "re"], ["entre", "entre"], ["a", "a"], ["abs", "abs"], ["sus", "sus"]], "suffixes": [["tivera", "ter"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -441,7 +555,10 @@
       "description": "Simple pluperfect (pretérito mais-que-perfeito), second person singular (tu): falaras, comeras, partiras.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aras", "ar"], ["eras", "er"], ["iras", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aras", "ar"], ["iras", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "eras", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[q]"},
+        {"type": "suffix", "inflected": "eras", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[q]", "stemNotStartsWithText": "qu"},
+        {"type": "suffix", "inflected": "eras", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWithText": "qu"},
         {"type": "suffix", "inflected": "uíras", "deinflected": "uir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[gq]"},
         {"type": "suffix", "inflected": "aíras", "deinflected": "air", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["man", "man"], ["con", "con"], ["ob", "ob"], ["de", "de"], ["re", "re"], ["entre", "entre"], ["a", "a"], ["abs", "abs"], ["sus", "sus"]], "suffixes": [["tiveras", "ter"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -507,7 +624,10 @@
       "description": "Simple pluperfect (pretérito mais-que-perfeito), third person plural (eles, elas, vocês): falaram, comeram, partiram.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aram", "ar"], ["eram", "er"], ["iram", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aram", "ar"], ["iram", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "eram", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[q]"},
+        {"type": "suffix", "inflected": "eram", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[q]", "stemNotStartsWithText": "qu"},
+        {"type": "suffix", "inflected": "eram", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWithText": "qu"},
         {"type": "suffix", "inflected": "uíram", "deinflected": "uir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[gq]"},
         {"type": "suffix", "inflected": "aíram", "deinflected": "air", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["man", "man"], ["con", "con"], ["ob", "ob"], ["de", "de"], ["re", "re"], ["entre", "entre"], ["a", "a"], ["abs", "abs"], ["sus", "sus"]], "suffixes": [["tiveram", "ter"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -529,7 +649,10 @@
       "description": "Future indicative (futuro do presente), first person singular (eu): falarei, comerei, partirei.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["arei", "ar"], ["erei", "er"], ["irei", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["arei", "ar"], ["irei", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "erei", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[q]"},
+        {"type": "suffix", "inflected": "erei", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[q]", "stemNotStartsWithText": "qu"},
+        {"type": "suffix", "inflected": "erei", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWithText": "qu"},
         {"type": "circumfix", "prefixes": [["re", "re"], ["des", "des"], ["satis", "satis"], ["contra", "contra"], ["per", "per"], ["a", "a"], ["lique", "lique"], ["putre", "putre"], ["rare", "rare"], ["tume", "tume"], ["mal", "mal"], ["ben", "ben"]], "suffixes": [["farei", "fazer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["pre", "pre"], ["contra", "contra"], ["des", "des"], ["ben", "ben"], ["mal", "mal"], ["con", "con"], ["inter", "inter"]], "suffixes": [["direi", "dizer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["com", "com"], ["decom", "decom"], ["descom", "descom"], ["recom", "recom"], ["de", "de"], ["dis", "dis"], ["indis", "indis"], ["predis", "predis"], ["ex", "ex"], ["reex", "reex"], ["im", "im"], ["reim", "reim"], ["o", "o"], ["pro", "pro"], ["re", "re"], ["su", "su"], ["pressu", "pressu"], ["trans", "trans"], ["ante", "ante"], ["contra", "contra"], ["entre", "entre"], ["inter", "inter"], ["justa", "justa"], ["sobre", "sobre"], ["super", "super"], ["a", "a"], ["pos", "pos"], ["pre", "pre"]], "suffixes": [["porei", "por"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -542,7 +665,10 @@
       "description": "Future indicative (futuro do presente), second person singular (tu): falarás, comerás, partirás.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["arás", "ar"], ["erás", "er"], ["irás", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["arás", "ar"], ["irás", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "erás", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[q]"},
+        {"type": "suffix", "inflected": "erás", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[q]", "stemNotStartsWithText": "qu"},
+        {"type": "suffix", "inflected": "erás", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWithText": "qu"},
         {"type": "circumfix", "prefixes": [["re", "re"], ["des", "des"], ["satis", "satis"], ["contra", "contra"], ["per", "per"], ["a", "a"], ["lique", "lique"], ["putre", "putre"], ["rare", "rare"], ["tume", "tume"], ["mal", "mal"], ["ben", "ben"]], "suffixes": [["farás", "fazer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["pre", "pre"], ["contra", "contra"], ["des", "des"], ["ben", "ben"], ["mal", "mal"], ["con", "con"], ["inter", "inter"]], "suffixes": [["dirás", "dizer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["com", "com"], ["decom", "decom"], ["descom", "descom"], ["recom", "recom"], ["de", "de"], ["dis", "dis"], ["indis", "indis"], ["predis", "predis"], ["ex", "ex"], ["reex", "reex"], ["im", "im"], ["reim", "reim"], ["o", "o"], ["pro", "pro"], ["re", "re"], ["su", "su"], ["pressu", "pressu"], ["trans", "trans"], ["ante", "ante"], ["contra", "contra"], ["entre", "entre"], ["inter", "inter"], ["justa", "justa"], ["sobre", "sobre"], ["super", "super"], ["a", "a"], ["pos", "pos"], ["pre", "pre"]], "suffixes": [["porás", "por"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -555,7 +681,10 @@
       "description": "Future indicative (futuro do presente), third person singular (ele, ela, você): falará, comerá, partirá.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ará", "ar"], ["erá", "er"], ["irá", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ará", "ar"], ["irá", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "erá", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[q]"},
+        {"type": "suffix", "inflected": "erá", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[q]", "stemNotStartsWithText": "qu"},
+        {"type": "suffix", "inflected": "erá", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWithText": "qu"},
         {"type": "circumfix", "prefixes": [["re", "re"], ["des", "des"], ["satis", "satis"], ["contra", "contra"], ["per", "per"], ["a", "a"], ["lique", "lique"], ["putre", "putre"], ["rare", "rare"], ["tume", "tume"], ["mal", "mal"], ["ben", "ben"]], "suffixes": [["fará", "fazer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["pre", "pre"], ["contra", "contra"], ["des", "des"], ["ben", "ben"], ["mal", "mal"], ["con", "con"], ["inter", "inter"]], "suffixes": [["dirá", "dizer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["com", "com"], ["decom", "decom"], ["descom", "descom"], ["recom", "recom"], ["de", "de"], ["dis", "dis"], ["indis", "indis"], ["predis", "predis"], ["ex", "ex"], ["reex", "reex"], ["im", "im"], ["reim", "reim"], ["o", "o"], ["pro", "pro"], ["re", "re"], ["su", "su"], ["pressu", "pressu"], ["trans", "trans"], ["ante", "ante"], ["contra", "contra"], ["entre", "entre"], ["inter", "inter"], ["justa", "justa"], ["sobre", "sobre"], ["super", "super"], ["a", "a"], ["pos", "pos"], ["pre", "pre"]], "suffixes": [["porá", "por"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -568,7 +697,10 @@
       "description": "Future indicative (futuro do presente), first person plural (nós): falaremos, comeremos, partiremos.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aremos", "ar"], ["eremos", "er"], ["iremos", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aremos", "ar"], ["iremos", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "eremos", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[q]"},
+        {"type": "suffix", "inflected": "eremos", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[q]", "stemNotStartsWithText": "qu"},
+        {"type": "suffix", "inflected": "eremos", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWithText": "qu"},
         {"type": "circumfix", "prefixes": [["re", "re"], ["des", "des"], ["satis", "satis"], ["contra", "contra"], ["per", "per"], ["a", "a"], ["lique", "lique"], ["putre", "putre"], ["rare", "rare"], ["tume", "tume"], ["mal", "mal"], ["ben", "ben"]], "suffixes": [["faremos", "fazer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["pre", "pre"], ["contra", "contra"], ["des", "des"], ["ben", "ben"], ["mal", "mal"], ["con", "con"], ["inter", "inter"]], "suffixes": [["diremos", "dizer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["com", "com"], ["decom", "decom"], ["descom", "descom"], ["recom", "recom"], ["de", "de"], ["dis", "dis"], ["indis", "indis"], ["predis", "predis"], ["ex", "ex"], ["reex", "reex"], ["im", "im"], ["reim", "reim"], ["o", "o"], ["pro", "pro"], ["re", "re"], ["su", "su"], ["pressu", "pressu"], ["trans", "trans"], ["ante", "ante"], ["contra", "contra"], ["entre", "entre"], ["inter", "inter"], ["justa", "justa"], ["sobre", "sobre"], ["super", "super"], ["a", "a"], ["pos", "pos"], ["pre", "pre"]], "suffixes": [["poremos", "por"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -581,7 +713,10 @@
       "description": "Future indicative (futuro do presente), second person plural (vós): falareis, comereis, partireis.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["areis", "ar"], ["ereis", "er"], ["ireis", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["areis", "ar"], ["ireis", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "ereis", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[q]"},
+        {"type": "suffix", "inflected": "ereis", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[q]", "stemNotStartsWithText": "qu"},
+        {"type": "suffix", "inflected": "ereis", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWithText": "qu"},
         {"type": "circumfix", "prefixes": [["re", "re"], ["des", "des"], ["satis", "satis"], ["contra", "contra"], ["per", "per"], ["a", "a"], ["lique", "lique"], ["putre", "putre"], ["rare", "rare"], ["tume", "tume"], ["mal", "mal"], ["ben", "ben"]], "suffixes": [["fareis", "fazer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["pre", "pre"], ["contra", "contra"], ["des", "des"], ["ben", "ben"], ["mal", "mal"], ["con", "con"], ["inter", "inter"]], "suffixes": [["direis", "dizer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["com", "com"], ["decom", "decom"], ["descom", "descom"], ["recom", "recom"], ["de", "de"], ["dis", "dis"], ["indis", "indis"], ["predis", "predis"], ["ex", "ex"], ["reex", "reex"], ["im", "im"], ["reim", "reim"], ["o", "o"], ["pro", "pro"], ["re", "re"], ["su", "su"], ["pressu", "pressu"], ["trans", "trans"], ["ante", "ante"], ["contra", "contra"], ["entre", "entre"], ["inter", "inter"], ["justa", "justa"], ["sobre", "sobre"], ["super", "super"], ["a", "a"], ["pos", "pos"], ["pre", "pre"]], "suffixes": [["poreis", "por"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -594,7 +729,10 @@
       "description": "Future indicative (futuro do presente), third person plural (eles, elas, vocês): falarão, comerão, partirão.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["arão", "ar"], ["erão", "er"], ["irão", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["arão", "ar"], ["irão", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "erão", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[q]"},
+        {"type": "suffix", "inflected": "erão", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[q]", "stemNotStartsWithText": "qu"},
+        {"type": "suffix", "inflected": "erão", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWithText": "qu"},
         {"type": "circumfix", "prefixes": [["re", "re"], ["des", "des"], ["satis", "satis"], ["contra", "contra"], ["per", "per"], ["a", "a"], ["lique", "lique"], ["putre", "putre"], ["rare", "rare"], ["tume", "tume"], ["mal", "mal"], ["ben", "ben"]], "suffixes": [["farão", "fazer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["pre", "pre"], ["contra", "contra"], ["des", "des"], ["ben", "ben"], ["mal", "mal"], ["con", "con"], ["inter", "inter"]], "suffixes": [["dirão", "dizer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["com", "com"], ["decom", "decom"], ["descom", "descom"], ["recom", "recom"], ["de", "de"], ["dis", "dis"], ["indis", "indis"], ["predis", "predis"], ["ex", "ex"], ["reex", "reex"], ["im", "im"], ["reim", "reim"], ["o", "o"], ["pro", "pro"], ["re", "re"], ["su", "su"], ["pressu", "pressu"], ["trans", "trans"], ["ante", "ante"], ["contra", "contra"], ["entre", "entre"], ["inter", "inter"], ["justa", "justa"], ["sobre", "sobre"], ["super", "super"], ["a", "a"], ["pos", "pos"], ["pre", "pre"]], "suffixes": [["porão", "por"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -607,7 +745,10 @@
       "description": "Conditional (futuro do pretérito), first and third person singular (eu, ele, ela, você): falaria, comeria, partiria.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aria", "ar"], ["eria", "er"], ["iria", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aria", "ar"], ["iria", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "eria", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[q]"},
+        {"type": "suffix", "inflected": "eria", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[q]", "stemNotStartsWithText": "qu"},
+        {"type": "suffix", "inflected": "eria", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWithText": "qu"},
         {"type": "circumfix", "prefixes": [["re", "re"], ["des", "des"], ["satis", "satis"], ["contra", "contra"], ["per", "per"], ["a", "a"], ["lique", "lique"], ["putre", "putre"], ["rare", "rare"], ["tume", "tume"], ["mal", "mal"], ["ben", "ben"]], "suffixes": [["faria", "fazer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["pre", "pre"], ["contra", "contra"], ["des", "des"], ["ben", "ben"], ["mal", "mal"], ["con", "con"], ["inter", "inter"]], "suffixes": [["diria", "dizer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["com", "com"], ["decom", "decom"], ["descom", "descom"], ["recom", "recom"], ["de", "de"], ["dis", "dis"], ["indis", "indis"], ["predis", "predis"], ["ex", "ex"], ["reex", "reex"], ["im", "im"], ["reim", "reim"], ["o", "o"], ["pro", "pro"], ["re", "re"], ["su", "su"], ["pressu", "pressu"], ["trans", "trans"], ["ante", "ante"], ["contra", "contra"], ["entre", "entre"], ["inter", "inter"], ["justa", "justa"], ["sobre", "sobre"], ["super", "super"], ["a", "a"], ["pos", "pos"], ["pre", "pre"]], "suffixes": [["poria", "por"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -620,7 +761,10 @@
       "description": "Conditional (futuro do pretérito), second person singular (tu): falarias, comerias, partirias.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["arias", "ar"], ["erias", "er"], ["irias", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["arias", "ar"], ["irias", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "erias", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[q]"},
+        {"type": "suffix", "inflected": "erias", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[q]", "stemNotStartsWithText": "qu"},
+        {"type": "suffix", "inflected": "erias", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWithText": "qu"},
         {"type": "circumfix", "prefixes": [["re", "re"], ["des", "des"], ["satis", "satis"], ["contra", "contra"], ["per", "per"], ["a", "a"], ["lique", "lique"], ["putre", "putre"], ["rare", "rare"], ["tume", "tume"], ["mal", "mal"], ["ben", "ben"]], "suffixes": [["farias", "fazer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["pre", "pre"], ["contra", "contra"], ["des", "des"], ["ben", "ben"], ["mal", "mal"], ["con", "con"], ["inter", "inter"]], "suffixes": [["dirias", "dizer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["com", "com"], ["decom", "decom"], ["descom", "descom"], ["recom", "recom"], ["de", "de"], ["dis", "dis"], ["indis", "indis"], ["predis", "predis"], ["ex", "ex"], ["reex", "reex"], ["im", "im"], ["reim", "reim"], ["o", "o"], ["pro", "pro"], ["re", "re"], ["su", "su"], ["pressu", "pressu"], ["trans", "trans"], ["ante", "ante"], ["contra", "contra"], ["entre", "entre"], ["inter", "inter"], ["justa", "justa"], ["sobre", "sobre"], ["super", "super"], ["a", "a"], ["pos", "pos"], ["pre", "pre"]], "suffixes": [["porias", "por"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -633,7 +777,10 @@
       "description": "Conditional (futuro do pretérito), first person plural (nós): falaríamos, comeríamos, partiríamos.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aríamos", "ar"], ["eríamos", "er"], ["iríamos", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aríamos", "ar"], ["iríamos", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "eríamos", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[q]"},
+        {"type": "suffix", "inflected": "eríamos", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[q]", "stemNotStartsWithText": "qu"},
+        {"type": "suffix", "inflected": "eríamos", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWithText": "qu"},
         {"type": "circumfix", "prefixes": [["re", "re"], ["des", "des"], ["satis", "satis"], ["contra", "contra"], ["per", "per"], ["a", "a"], ["lique", "lique"], ["putre", "putre"], ["rare", "rare"], ["tume", "tume"], ["mal", "mal"], ["ben", "ben"]], "suffixes": [["faríamos", "fazer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["pre", "pre"], ["contra", "contra"], ["des", "des"], ["ben", "ben"], ["mal", "mal"], ["con", "con"], ["inter", "inter"]], "suffixes": [["diríamos", "dizer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["com", "com"], ["decom", "decom"], ["descom", "descom"], ["recom", "recom"], ["de", "de"], ["dis", "dis"], ["indis", "indis"], ["predis", "predis"], ["ex", "ex"], ["reex", "reex"], ["im", "im"], ["reim", "reim"], ["o", "o"], ["pro", "pro"], ["re", "re"], ["su", "su"], ["pressu", "pressu"], ["trans", "trans"], ["ante", "ante"], ["contra", "contra"], ["entre", "entre"], ["inter", "inter"], ["justa", "justa"], ["sobre", "sobre"], ["super", "super"], ["a", "a"], ["pos", "pos"], ["pre", "pre"]], "suffixes": [["poríamos", "por"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -646,7 +793,10 @@
       "description": "Conditional (futuro do pretérito), second person plural (vós): falaríeis, comeríeis, partiríeis.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aríeis", "ar"], ["eríeis", "er"], ["iríeis", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aríeis", "ar"], ["iríeis", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "eríeis", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[q]"},
+        {"type": "suffix", "inflected": "eríeis", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[q]", "stemNotStartsWithText": "qu"},
+        {"type": "suffix", "inflected": "eríeis", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWithText": "qu"},
         {"type": "circumfix", "prefixes": [["re", "re"], ["des", "des"], ["satis", "satis"], ["contra", "contra"], ["per", "per"], ["a", "a"], ["lique", "lique"], ["putre", "putre"], ["rare", "rare"], ["tume", "tume"], ["mal", "mal"], ["ben", "ben"]], "suffixes": [["faríeis", "fazer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["pre", "pre"], ["contra", "contra"], ["des", "des"], ["ben", "ben"], ["mal", "mal"], ["con", "con"], ["inter", "inter"]], "suffixes": [["diríeis", "dizer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["com", "com"], ["decom", "decom"], ["descom", "descom"], ["recom", "recom"], ["de", "de"], ["dis", "dis"], ["indis", "indis"], ["predis", "predis"], ["ex", "ex"], ["reex", "reex"], ["im", "im"], ["reim", "reim"], ["o", "o"], ["pro", "pro"], ["re", "re"], ["su", "su"], ["pressu", "pressu"], ["trans", "trans"], ["ante", "ante"], ["contra", "contra"], ["entre", "entre"], ["inter", "inter"], ["justa", "justa"], ["sobre", "sobre"], ["super", "super"], ["a", "a"], ["pos", "pos"], ["pre", "pre"]], "suffixes": [["poríeis", "por"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -659,7 +809,10 @@
       "description": "Conditional (futuro do pretérito), third person plural (eles, elas, vocês): falariam, comeriam, partiriam.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ariam", "ar"], ["eriam", "er"], ["iriam", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ariam", "ar"], ["iriam", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "eriam", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[q]"},
+        {"type": "suffix", "inflected": "eriam", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[q]", "stemNotStartsWithText": "qu"},
+        {"type": "suffix", "inflected": "eriam", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWithText": "qu"},
         {"type": "circumfix", "prefixes": [["re", "re"], ["des", "des"], ["satis", "satis"], ["contra", "contra"], ["per", "per"], ["a", "a"], ["lique", "lique"], ["putre", "putre"], ["rare", "rare"], ["tume", "tume"], ["mal", "mal"], ["ben", "ben"]], "suffixes": [["fariam", "fazer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["pre", "pre"], ["contra", "contra"], ["des", "des"], ["ben", "ben"], ["mal", "mal"], ["con", "con"], ["inter", "inter"]], "suffixes": [["diriam", "dizer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["com", "com"], ["decom", "decom"], ["descom", "descom"], ["recom", "recom"], ["de", "de"], ["dis", "dis"], ["indis", "indis"], ["predis", "predis"], ["ex", "ex"], ["reex", "reex"], ["im", "im"], ["reim", "reim"], ["o", "o"], ["pro", "pro"], ["re", "re"], ["su", "su"], ["pressu", "pressu"], ["trans", "trans"], ["ante", "ante"], ["contra", "contra"], ["entre", "entre"], ["inter", "inter"], ["justa", "justa"], ["sobre", "sobre"], ["super", "super"], ["a", "a"], ["pos", "pos"], ["pre", "pre"]], "suffixes": [["poriam", "por"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -673,9 +826,11 @@
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "e", "deinflected": "ar", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[cg]", "stemNotStartsWithText": "est"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["que", "car"], ["gue", "gar"], ["ce", "çar"], ["ça", "cer"], ["ga", "guer"], ["ga", "guir"], ["eie", "ear"], ["ceie", "ciar"], ["meie", "miar"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["que", "car"], ["gue", "gar"], ["ce", "çar"], ["ça", "cer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["a", "er"], ["a", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[cg]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ja", "ger"], ["ja", "gir"], ["iga", "eguir"], ["grida", "gredir"], ["evina", "evenir"], ["deie", "diar"], ["nseie", "nsiar"], ["aia", "air"], ["irja", "ergir"], ["óie", "oiar"], ["gúe", "guar"], ["qúe", "quar"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "ga", "deinflected": "guer", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "[r]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ga", "guir"], ["eie", "ear"], ["ceie", "ciar"], ["meie", "miar"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "a", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[cg]", "stemChange": {"from": ["i"], "to": "e", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "a", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[cg]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "{consonant}"}},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["e", "ar"], ["a", "er"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[cg]", "stemChange": {"from": ["í"], "to": "i", "occurrence": "last", "between": "{consonant}"}},
@@ -709,9 +864,11 @@
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "es", "deinflected": "ar", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[cg]", "stemNotStartsWithText": "est"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ques", "car"], ["gues", "gar"], ["ces", "çar"], ["ças", "cer"], ["gas", "guer"], ["gas", "guir"], ["eies", "ear"], ["ceies", "ciar"], ["meies", "miar"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ques", "car"], ["gues", "gar"], ["ces", "çar"], ["ças", "cer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["as", "er"], ["as", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[cg]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["jas", "ger"], ["jas", "gir"], ["igas", "eguir"], ["gridas", "gredir"], ["evinas", "evenir"], ["deies", "diar"], ["nseies", "nsiar"], ["aias", "air"], ["irjas", "ergir"], ["óies", "oiar"], ["gúes", "guar"], ["qúes", "quar"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "gas", "deinflected": "guer", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "[r]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["gas", "guir"], ["eies", "ear"], ["ceies", "ciar"], ["meies", "miar"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "as", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[cg]", "stemChange": {"from": ["i"], "to": "e", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "as", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[cg]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "{consonant}"}},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["es", "ar"], ["as", "er"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[cg]", "stemChange": {"from": ["í"], "to": "i", "occurrence": "last", "between": "{consonant}"}},
@@ -745,8 +902,10 @@
       "source": "own",
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["emos", "ar"], ["amos", "er"], ["amos", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[cg]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["quemos", "car"], ["guemos", "gar"], ["cemos", "çar"], ["çamos", "cer"], ["gamos", "guer"], ["gamos", "guir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["quemos", "car"], ["guemos", "gar"], ["cemos", "çar"], ["çamos", "cer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["jamos", "ger"], ["jamos", "gir"], ["igamos", "eguir"], ["gridamos", "gredir"], ["evinamos", "evenir"], ["aiamos", "air"], ["irjamos", "ergir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "gamos", "deinflected": "guer", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "gamos", "deinflected": "guir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "amos", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[cg]", "stemChange": {"from": ["i"], "to": "e", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "amos", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[cg]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "{consonant}"}},
         {"type": "circumfix", "prefixes": [["man", "man"], ["con", "con"], ["ob", "ob"], ["de", "de"], ["re", "re"], ["entre", "entre"], ["a", "a"], ["abs", "abs"], ["sus", "sus"]], "suffixes": [["tenhamos", "ter"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -774,8 +933,10 @@
       "source": "own",
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["eis", "ar"], ["ais", "er"], ["ais", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[cg]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["queis", "car"], ["gueis", "gar"], ["ceis", "çar"], ["çais", "cer"], ["gais", "guer"], ["gais", "guir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["queis", "car"], ["gueis", "gar"], ["ceis", "çar"], ["çais", "cer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["jais", "ger"], ["jais", "gir"], ["igais", "eguir"], ["gridais", "gredir"], ["evinais", "evenir"], ["aiais", "air"], ["irjais", "ergir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "gais", "deinflected": "guer", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "gais", "deinflected": "guir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "ais", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[cg]", "stemChange": {"from": ["i"], "to": "e", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "ais", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[cg]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "{consonant}"}},
         {"type": "circumfix", "prefixes": [["man", "man"], ["con", "con"], ["ob", "ob"], ["de", "de"], ["re", "re"], ["entre", "entre"], ["a", "a"], ["abs", "abs"], ["sus", "sus"]], "suffixes": [["tenhais", "ter"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -803,8 +964,10 @@
       "source": "own",
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["em", "ar"], ["am", "er"], ["am", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[cg]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["quem", "car"], ["guem", "gar"], ["cem", "çar"], ["çam", "cer"], ["gam", "guer"], ["gam", "guir"], ["eiem", "ear"], ["ceiem", "ciar"], ["meiem", "miar"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["quem", "car"], ["guem", "gar"], ["cem", "çar"], ["çam", "cer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["jam", "ger"], ["jam", "gir"], ["igam", "eguir"], ["gridam", "gredir"], ["evinam", "evenir"], ["deiem", "diar"], ["nseiem", "nsiar"], ["aiam", "air"], ["irjam", "ergir"], ["óiem", "oiar"], ["gúem", "guar"], ["qúem", "quar"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "gam", "deinflected": "guer", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "[r]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["gam", "guir"], ["eiem", "ear"], ["ceiem", "ciar"], ["meiem", "miar"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "am", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[cg]", "stemChange": {"from": ["i"], "to": "e", "occurrence": "last", "between": "{consonant}"}},
         {"type": "suffix", "inflected": "am", "deinflected": "ir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[cg]", "stemChange": {"from": ["u"], "to": "o", "occurrence": "last", "between": "{consonant}"}},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["em", "ar"], ["am", "er"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[cg]", "stemChange": {"from": ["í"], "to": "i", "occurrence": "last", "between": "{consonant}"}},
@@ -1036,7 +1199,10 @@
       "description": "Personal infinitive, which is also the future subjunctive of a regular verb, second person singular (tu): falares, comeres, partires.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ares", "ar"], ["eres", "er"], ["ires", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ares", "ar"], ["ires", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "eres", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[q]"},
+        {"type": "suffix", "inflected": "eres", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[q]", "stemNotStartsWithText": "qu"},
+        {"type": "suffix", "inflected": "eres", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWithText": "qu"},
         {"type": "suffix", "inflected": "uíres", "deinflected": "uir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[gq]"},
         {"type": "suffix", "inflected": "aíres", "deinflected": "air", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["com", "com"], ["decom", "decom"], ["descom", "descom"], ["recom", "recom"], ["de", "de"], ["dis", "dis"], ["indis", "indis"], ["predis", "predis"], ["ex", "ex"], ["reex", "reex"], ["im", "im"], ["reim", "reim"], ["o", "o"], ["pro", "pro"], ["re", "re"], ["su", "su"], ["pressu", "pressu"], ["trans", "trans"], ["ante", "ante"], ["contra", "contra"], ["entre", "entre"], ["inter", "inter"], ["justa", "justa"], ["sobre", "sobre"], ["super", "super"], ["a", "a"], ["pos", "pos"], ["pre", "pre"]], "suffixes": [["pores", "por"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -1049,7 +1215,10 @@
       "description": "Personal infinitive, which is also the future subjunctive of a regular verb, first person plural (nós): falarmos, comermos, partirmos.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["armos", "ar"], ["ermos", "er"], ["irmos", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["armos", "ar"], ["irmos", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "ermos", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[q]"},
+        {"type": "suffix", "inflected": "ermos", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[q]", "stemNotStartsWithText": "qu"},
+        {"type": "suffix", "inflected": "ermos", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWithText": "qu"},
         {"type": "circumfix", "prefixes": [["com", "com"], ["decom", "decom"], ["descom", "descom"], ["recom", "recom"], ["de", "de"], ["dis", "dis"], ["indis", "indis"], ["predis", "predis"], ["ex", "ex"], ["reex", "reex"], ["im", "im"], ["reim", "reim"], ["o", "o"], ["pro", "pro"], ["re", "re"], ["su", "su"], ["pressu", "pressu"], ["trans", "trans"], ["ante", "ante"], ["contra", "contra"], ["entre", "entre"], ["inter", "inter"], ["justa", "justa"], ["sobre", "sobre"], ["super", "super"], ["a", "a"], ["pos", "pos"], ["pre", "pre"]], "suffixes": [["pormos", "por"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["sermos", "ser"], ["irmos", "ir"], ["termos", "ter"], ["virmos", "vir"], ["vermos", "ver"], ["darmos", "dar"], ["pormos", "pôr"], ["lermos", "ler"], ["rirmos", "rir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"}
       ]
@@ -1060,7 +1229,10 @@
       "description": "Personal infinitive, which is also the future subjunctive of a regular verb, second person plural (vós): falardes, comerdes, partirdes.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ardes", "ar"], ["erdes", "er"], ["irdes", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ardes", "ar"], ["irdes", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "erdes", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[q]"},
+        {"type": "suffix", "inflected": "erdes", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[q]", "stemNotStartsWithText": "qu"},
+        {"type": "suffix", "inflected": "erdes", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWithText": "qu"},
         {"type": "circumfix", "prefixes": [["com", "com"], ["decom", "decom"], ["descom", "descom"], ["recom", "recom"], ["de", "de"], ["dis", "dis"], ["indis", "indis"], ["predis", "predis"], ["ex", "ex"], ["reex", "reex"], ["im", "im"], ["reim", "reim"], ["o", "o"], ["pro", "pro"], ["re", "re"], ["su", "su"], ["pressu", "pressu"], ["trans", "trans"], ["ante", "ante"], ["contra", "contra"], ["entre", "entre"], ["inter", "inter"], ["justa", "justa"], ["sobre", "sobre"], ["super", "super"], ["a", "a"], ["pos", "pos"], ["pre", "pre"]], "suffixes": [["pordes", "por"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["serdes", "ser"], ["irdes", "ir"], ["terdes", "ter"], ["virdes", "vir"], ["verdes", "ver"], ["dardes", "dar"], ["pordes", "pôr"], ["lerdes", "ler"], ["rirdes", "rir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"}
       ]
@@ -1071,7 +1243,10 @@
       "description": "Personal infinitive, which is also the future subjunctive of a regular verb, third person plural (eles, elas, vocês): falarem, comerem, partirem.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["arem", "ar"], ["erem", "er"], ["irem", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["arem", "ar"], ["irem", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "erem", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[q]"},
+        {"type": "suffix", "inflected": "erem", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[q]", "stemNotStartsWithText": "qu"},
+        {"type": "suffix", "inflected": "erem", "deinflected": "er", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWithText": "qu"},
         {"type": "suffix", "inflected": "uírem", "deinflected": "uir", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[gq]"},
         {"type": "suffix", "inflected": "aírem", "deinflected": "air", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["com", "com"], ["decom", "decom"], ["descom", "descom"], ["recom", "recom"], ["de", "de"], ["dis", "dis"], ["indis", "indis"], ["predis", "predis"], ["ex", "ex"], ["reex", "reex"], ["im", "im"], ["reim", "reim"], ["o", "o"], ["pro", "pro"], ["re", "re"], ["su", "su"], ["pressu", "pressu"], ["trans", "trans"], ["ante", "ante"], ["contra", "contra"], ["entre", "entre"], ["inter", "inter"], ["justa", "justa"], ["sobre", "sobre"], ["super", "super"], ["a", "a"], ["pos", "pos"], ["pre", "pre"]], "suffixes": [["porem", "por"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -1128,7 +1303,18 @@
       "description": "Past participle, masculine or feminine, singular or plural: falado, comida, partidos, feitas.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ado", "ar"], ["ada", "ar"], ["ados", "ar"], ["adas", "ar"], ["ido", "er"], ["ida", "er"], ["idos", "er"], ["idas", "er"], ["ido", "ir"], ["ida", "ir"], ["idos", "ir"], ["idas", "ir"], ["crito", "crever"], ["crita", "crever"], ["critos", "crever"], ["critas", "crever"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ado", "ar"], ["ada", "ar"], ["ados", "ar"], ["adas", "ar"], ["ido", "er"], ["ida", "er"], ["idos", "er"], ["idas", "er"], ["crito", "crever"], ["crita", "crever"], ["critos", "crever"], ["critas", "crever"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ido", "ir"], ["ida", "ir"], ["idos", "ir"], ["idas", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWith": "[cipas]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ido", "ir"], ["ida", "ir"], ["idos", "ir"], ["idas", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[c]", "stemNotStartsWithText": "conv"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ido", "ir"], ["ida", "ir"], ["idos", "ir"], ["idas", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 5, "stemCharacters": "{lowerStem}", "stemStartsWithText": "conv"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ido", "ir"], ["ida", "ir"], ["idos", "ir"], ["idas", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[i]", "stemNotStartsWithText": "interv"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ido", "ir"], ["ida", "ir"], ["idos", "ir"], ["idas", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 7, "stemCharacters": "{lowerStem}", "stemStartsWithText": "interv"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ido", "ir"], ["ida", "ir"], ["idos", "ir"], ["idas", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[p]", "stemNotStartsWithText": "prov"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ido", "ir"], ["ida", "ir"], ["idos", "ir"], ["idas", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 5, "stemCharacters": "{lowerStem}", "stemStartsWithText": "prov"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ido", "ir"], ["ida", "ir"], ["idos", "ir"], ["idas", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[a]", "stemNotStartsWithText": "av"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ido", "ir"], ["ida", "ir"], ["idos", "ir"], ["idas", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 3, "stemCharacters": "{lowerStem}", "stemStartsWithText": "av"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ido", "ir"], ["ida", "ir"], ["idos", "ir"], ["idas", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemStartsWith": "[s]", "stemNotStartsWithText": "sobrev"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ido", "ir"], ["ida", "ir"], ["idos", "ir"], ["idas", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 7, "stemCharacters": "{lowerStem}", "stemStartsWithText": "sobrev"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["uído", "uir"], ["uída", "uir"], ["uídos", "uir"], ["uídas", "uir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[gq]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["aído", "air"], ["aída", "air"], ["aídos", "air"], ["aídas", "air"], ["oído", "oer"], ["oída", "oer"], ["oídos", "oer"], ["oídas", "oer"], ["cluso", "cluir"], ["clusa", "cluir"], ["clusos", "cluir"], ["clusas", "cluir"], ["merso", "mergir"], ["mersa", "mergir"], ["mersos", "mergir"], ["mersas", "mergir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["con", "con"], ["inter", "inter"], ["pro", "pro"], ["ad", "ad"], ["sobre", "sobre"], ["a", "a"], ["desa", "desa"], ["de", "de"], ["descon", "descon"]], "suffixes": [["vindo", "vir"], ["vinda", "vir"], ["vindos", "vir"], ["vindas", "vir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -1333,9 +1519,9 @@
       "description": "The pronoun me attached to a verb, after it or inside its future or conditional.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "-me", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemNotEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "r-me", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["r-me-ei", "rei"], ["r-me-ás", "rás"], ["r-me-á", "rá"], ["r-me-emos", "remos"], ["r-me-eis", "reis"], ["r-me-ão", "rão"], ["r-me-ia", "ria"], ["r-me-ias", "rias"], ["r-me-íamos", "ríamos"], ["r-me-íeis", "ríeis"], ["r-me-iam", "riam"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "-me", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "r-me", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["r-me-ei", "rei"], ["r-me-ás", "rás"], ["r-me-á", "rá"], ["r-me-emos", "remos"], ["r-me-eis", "reis"], ["r-me-ão", "rão"], ["r-me-ia", "ria"], ["r-me-ias", "rias"], ["r-me-íamos", "ríamos"], ["r-me-íeis", "ríeis"], ["r-me-iam", "riam"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "wholeWord", "inflected": "eis-me", "deinflected": "eis", "conditionsIn": [], "conditionsOut": []}
       ]
     },
@@ -1345,9 +1531,9 @@
       "description": "The pronoun te attached to a verb, after it or inside its future or conditional.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "-te", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemNotEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "r-te", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["r-te-ei", "rei"], ["r-te-ás", "rás"], ["r-te-á", "rá"], ["r-te-emos", "remos"], ["r-te-eis", "reis"], ["r-te-ão", "rão"], ["r-te-ia", "ria"], ["r-te-ias", "rias"], ["r-te-íamos", "ríamos"], ["r-te-íeis", "ríeis"], ["r-te-iam", "riam"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "-te", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "r-te", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["r-te-ei", "rei"], ["r-te-ás", "rás"], ["r-te-á", "rá"], ["r-te-emos", "remos"], ["r-te-eis", "reis"], ["r-te-ão", "rão"], ["r-te-ia", "ria"], ["r-te-ias", "rias"], ["r-te-íamos", "ríamos"], ["r-te-íeis", "ríeis"], ["r-te-iam", "riam"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "wholeWord", "inflected": "eis-te", "deinflected": "eis", "conditionsIn": [], "conditionsOut": []}
       ]
     },
@@ -1357,9 +1543,9 @@
       "description": "The pronoun se attached to a verb, after it or inside its future or conditional.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "-se", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemNotEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "r-se", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["r-se-ei", "rei"], ["r-se-ás", "rás"], ["r-se-á", "rá"], ["r-se-emos", "remos"], ["r-se-eis", "reis"], ["r-se-ão", "rão"], ["r-se-ia", "ria"], ["r-se-ias", "rias"], ["r-se-íamos", "ríamos"], ["r-se-íeis", "ríeis"], ["r-se-iam", "riam"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1}
+        {"type": "suffix", "inflected": "-se", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "r-se", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["r-se-ei", "rei"], ["r-se-ás", "rás"], ["r-se-á", "rá"], ["r-se-emos", "remos"], ["r-se-eis", "reis"], ["r-se-ão", "rão"], ["r-se-ia", "ria"], ["r-se-ias", "rias"], ["r-se-íamos", "ríamos"], ["r-se-íeis", "ríeis"], ["r-se-iam", "riam"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
       ]
     },
     {
@@ -1368,9 +1554,9 @@
       "description": "The pronoun lhe attached to a verb, after it or inside its future or conditional.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "-lhe", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemNotEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "r-lhe", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["r-lhe-ei", "rei"], ["r-lhe-ás", "rás"], ["r-lhe-á", "rá"], ["r-lhe-emos", "remos"], ["r-lhe-eis", "reis"], ["r-lhe-ão", "rão"], ["r-lhe-ia", "ria"], ["r-lhe-ias", "rias"], ["r-lhe-íamos", "ríamos"], ["r-lhe-íeis", "ríeis"], ["r-lhe-iam", "riam"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1}
+        {"type": "suffix", "inflected": "-lhe", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "r-lhe", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["r-lhe-ei", "rei"], ["r-lhe-ás", "rás"], ["r-lhe-á", "rá"], ["r-lhe-emos", "remos"], ["r-lhe-eis", "reis"], ["r-lhe-ão", "rão"], ["r-lhe-ia", "ria"], ["r-lhe-ias", "rias"], ["r-lhe-íamos", "ríamos"], ["r-lhe-íeis", "ríeis"], ["r-lhe-iam", "riam"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
       ]
     },
     {
@@ -1379,9 +1565,9 @@
       "description": "The pronoun lhes attached to a verb, after it or inside its future or conditional.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "-lhes", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemNotEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "r-lhes", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["r-lhes-ei", "rei"], ["r-lhes-ás", "rás"], ["r-lhes-á", "rá"], ["r-lhes-emos", "remos"], ["r-lhes-eis", "reis"], ["r-lhes-ão", "rão"], ["r-lhes-ia", "ria"], ["r-lhes-ias", "rias"], ["r-lhes-íamos", "ríamos"], ["r-lhes-íeis", "ríeis"], ["r-lhes-iam", "riam"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1}
+        {"type": "suffix", "inflected": "-lhes", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "r-lhes", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["r-lhes-ei", "rei"], ["r-lhes-ás", "rás"], ["r-lhes-á", "rá"], ["r-lhes-emos", "remos"], ["r-lhes-eis", "reis"], ["r-lhes-ão", "rão"], ["r-lhes-ia", "ria"], ["r-lhes-ias", "rias"], ["r-lhes-íamos", "ríamos"], ["r-lhes-íeis", "ríeis"], ["r-lhes-iam", "riam"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
       ]
     },
     {
@@ -1390,9 +1576,9 @@
       "description": "The pronoun nos attached to a verb, after it or inside its future or conditional.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "-nos", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemNotEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "r-nos", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["r-nos-ei", "rei"], ["r-nos-ás", "rás"], ["r-nos-á", "rá"], ["r-nos-emos", "remos"], ["r-nos-eis", "reis"], ["r-nos-ão", "rão"], ["r-nos-ia", "ria"], ["r-nos-ias", "rias"], ["r-nos-íamos", "ríamos"], ["r-nos-íeis", "ríeis"], ["r-nos-iam", "riam"], ["mo-nos", "mos"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "-nos", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "r-nos", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["r-nos-ei", "rei"], ["r-nos-ás", "rás"], ["r-nos-á", "rá"], ["r-nos-emos", "remos"], ["r-nos-eis", "reis"], ["r-nos-ão", "rão"], ["r-nos-ia", "ria"], ["r-nos-ias", "rias"], ["r-nos-íamos", "ríamos"], ["r-nos-íeis", "ríeis"], ["r-nos-iam", "riam"], ["mo-nos", "mos"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "wholeWord", "inflected": "eis-nos", "deinflected": "eis", "conditionsIn": [], "conditionsOut": []}
       ]
     },
@@ -1402,9 +1588,9 @@
       "description": "The pronoun vos attached to a verb, after it or inside its future or conditional.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "-vos", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemNotEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "r-vos", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["r-vos-ei", "rei"], ["r-vos-ás", "rás"], ["r-vos-á", "rá"], ["r-vos-emos", "remos"], ["r-vos-eis", "reis"], ["r-vos-ão", "rão"], ["r-vos-ia", "ria"], ["r-vos-ias", "rias"], ["r-vos-íamos", "ríamos"], ["r-vos-íeis", "ríeis"], ["r-vos-iam", "riam"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "-vos", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "r-vos", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["r-vos-ei", "rei"], ["r-vos-ás", "rás"], ["r-vos-á", "rá"], ["r-vos-emos", "remos"], ["r-vos-eis", "reis"], ["r-vos-ão", "rão"], ["r-vos-ia", "ria"], ["r-vos-ias", "rias"], ["r-vos-íamos", "ríamos"], ["r-vos-íeis", "ríeis"], ["r-vos-iam", "riam"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "wholeWord", "inflected": "eis-vos", "deinflected": "eis", "conditionsIn": [], "conditionsOut": []}
       ]
     },
@@ -1414,9 +1600,9 @@
       "description": "The pronoun o (lo, no) attached to a verb, after it or inside its future or conditional.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "-o", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemNotEndsWith": "[rszm]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["á-lo", "ar"], ["ê-lo", "er"], ["i-lo", "ir"], ["ô-lo", "or"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["á-lo-ei", "arei"], ["á-lo-ás", "arás"], ["á-lo-á", "ará"], ["á-lo-emos", "aremos"], ["á-lo-eis", "areis"], ["á-lo-ão", "arão"], ["á-lo-ia", "aria"], ["á-lo-ias", "arias"], ["á-lo-íamos", "aríamos"], ["á-lo-íeis", "aríeis"], ["á-lo-iam", "ariam"], ["ê-lo-ei", "erei"], ["ê-lo-ás", "erás"], ["ê-lo-á", "erá"], ["ê-lo-emos", "eremos"], ["ê-lo-eis", "ereis"], ["ê-lo-ão", "erão"], ["ê-lo-ia", "eria"], ["ê-lo-ias", "erias"], ["ê-lo-íamos", "eríamos"], ["ê-lo-íeis", "eríeis"], ["ê-lo-iam", "eriam"], ["i-lo-ei", "irei"], ["i-lo-ás", "irás"], ["i-lo-á", "irá"], ["i-lo-emos", "iremos"], ["i-lo-eis", "ireis"], ["i-lo-ão", "irão"], ["i-lo-ia", "iria"], ["i-lo-ias", "irias"], ["i-lo-íamos", "iríamos"], ["i-lo-íeis", "iríeis"], ["i-lo-iam", "iriam"], ["ô-lo-ei", "orei"], ["ô-lo-ás", "orás"], ["ô-lo-á", "orá"], ["ô-lo-emos", "oremos"], ["ô-lo-eis", "oreis"], ["ô-lo-ão", "orão"], ["ô-lo-ia", "oria"], ["ô-lo-ias", "orias"], ["ô-lo-íamos", "oríamos"], ["ô-lo-íeis", "oríeis"], ["ô-lo-iam", "oriam"], ["á-lo", "az"], ["á-lo", "ás"], ["ê-lo", "ez"], ["ê-lo", "ês"], ["i-lo", "iz"], ["i-lo", "is"], ["u-lo", "uz"], ["u-lo", "us"], ["ô-lo", "ôs"], ["a-lo", "as"], ["e-lo", "es"], ["mo-lo", "mos"], ["m-no", "m"], ["ão-no", "ão"], ["õe-no", "õe"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "-o", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[rszm]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["á-lo", "ar"], ["ê-lo", "er"], ["i-lo", "ir"], ["ô-lo", "or"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["á-lo-ei", "arei"], ["á-lo-ás", "arás"], ["á-lo-á", "ará"], ["á-lo-emos", "aremos"], ["á-lo-eis", "areis"], ["á-lo-ão", "arão"], ["á-lo-ia", "aria"], ["á-lo-ias", "arias"], ["á-lo-íamos", "aríamos"], ["á-lo-íeis", "aríeis"], ["á-lo-iam", "ariam"], ["ê-lo-ei", "erei"], ["ê-lo-ás", "erás"], ["ê-lo-á", "erá"], ["ê-lo-emos", "eremos"], ["ê-lo-eis", "ereis"], ["ê-lo-ão", "erão"], ["ê-lo-ia", "eria"], ["ê-lo-ias", "erias"], ["ê-lo-íamos", "eríamos"], ["ê-lo-íeis", "eríeis"], ["ê-lo-iam", "eriam"], ["i-lo-ei", "irei"], ["i-lo-ás", "irás"], ["i-lo-á", "irá"], ["i-lo-emos", "iremos"], ["i-lo-eis", "ireis"], ["i-lo-ão", "irão"], ["i-lo-ia", "iria"], ["i-lo-ias", "irias"], ["i-lo-íamos", "iríamos"], ["i-lo-íeis", "iríeis"], ["i-lo-iam", "iriam"], ["ô-lo-ei", "orei"], ["ô-lo-ás", "orás"], ["ô-lo-á", "orá"], ["ô-lo-emos", "oremos"], ["ô-lo-eis", "oreis"], ["ô-lo-ão", "orão"], ["ô-lo-ia", "oria"], ["ô-lo-ias", "orias"], ["ô-lo-íamos", "oríamos"], ["ô-lo-íeis", "oríeis"], ["ô-lo-iam", "oriam"], ["á-lo", "az"], ["á-lo", "ás"], ["ê-lo", "ez"], ["ê-lo", "ês"], ["i-lo", "iz"], ["i-lo", "is"], ["u-lo", "uz"], ["u-lo", "us"], ["ô-lo", "ôs"], ["a-lo", "as"], ["e-lo", "es"], ["mo-lo", "mos"], ["m-no", "m"], ["ão-no", "ão"], ["õe-no", "õe"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "wholeWord", "inflected": "pô-lo", "deinflected": "pôr", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "ei-lo", "deinflected": "eis", "conditionsIn": [], "conditionsOut": []}
       ]
@@ -1427,9 +1613,9 @@
       "description": "The pronoun a (la, na) attached to a verb, after it or inside its future or conditional.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "-a", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemNotEndsWith": "[rszm]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["á-la", "ar"], ["ê-la", "er"], ["i-la", "ir"], ["ô-la", "or"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["á-la-ei", "arei"], ["á-la-ás", "arás"], ["á-la-á", "ará"], ["á-la-emos", "aremos"], ["á-la-eis", "areis"], ["á-la-ão", "arão"], ["á-la-ia", "aria"], ["á-la-ias", "arias"], ["á-la-íamos", "aríamos"], ["á-la-íeis", "aríeis"], ["á-la-iam", "ariam"], ["ê-la-ei", "erei"], ["ê-la-ás", "erás"], ["ê-la-á", "erá"], ["ê-la-emos", "eremos"], ["ê-la-eis", "ereis"], ["ê-la-ão", "erão"], ["ê-la-ia", "eria"], ["ê-la-ias", "erias"], ["ê-la-íamos", "eríamos"], ["ê-la-íeis", "eríeis"], ["ê-la-iam", "eriam"], ["i-la-ei", "irei"], ["i-la-ás", "irás"], ["i-la-á", "irá"], ["i-la-emos", "iremos"], ["i-la-eis", "ireis"], ["i-la-ão", "irão"], ["i-la-ia", "iria"], ["i-la-ias", "irias"], ["i-la-íamos", "iríamos"], ["i-la-íeis", "iríeis"], ["i-la-iam", "iriam"], ["ô-la-ei", "orei"], ["ô-la-ás", "orás"], ["ô-la-á", "orá"], ["ô-la-emos", "oremos"], ["ô-la-eis", "oreis"], ["ô-la-ão", "orão"], ["ô-la-ia", "oria"], ["ô-la-ias", "orias"], ["ô-la-íamos", "oríamos"], ["ô-la-íeis", "oríeis"], ["ô-la-iam", "oriam"], ["á-la", "az"], ["á-la", "ás"], ["ê-la", "ez"], ["ê-la", "ês"], ["i-la", "iz"], ["i-la", "is"], ["u-la", "uz"], ["u-la", "us"], ["ô-la", "ôs"], ["a-la", "as"], ["e-la", "es"], ["mo-la", "mos"], ["m-na", "m"], ["ão-na", "ão"], ["õe-na", "õe"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "-a", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[rszm]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["á-la", "ar"], ["ê-la", "er"], ["i-la", "ir"], ["ô-la", "or"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["á-la-ei", "arei"], ["á-la-ás", "arás"], ["á-la-á", "ará"], ["á-la-emos", "aremos"], ["á-la-eis", "areis"], ["á-la-ão", "arão"], ["á-la-ia", "aria"], ["á-la-ias", "arias"], ["á-la-íamos", "aríamos"], ["á-la-íeis", "aríeis"], ["á-la-iam", "ariam"], ["ê-la-ei", "erei"], ["ê-la-ás", "erás"], ["ê-la-á", "erá"], ["ê-la-emos", "eremos"], ["ê-la-eis", "ereis"], ["ê-la-ão", "erão"], ["ê-la-ia", "eria"], ["ê-la-ias", "erias"], ["ê-la-íamos", "eríamos"], ["ê-la-íeis", "eríeis"], ["ê-la-iam", "eriam"], ["i-la-ei", "irei"], ["i-la-ás", "irás"], ["i-la-á", "irá"], ["i-la-emos", "iremos"], ["i-la-eis", "ireis"], ["i-la-ão", "irão"], ["i-la-ia", "iria"], ["i-la-ias", "irias"], ["i-la-íamos", "iríamos"], ["i-la-íeis", "iríeis"], ["i-la-iam", "iriam"], ["ô-la-ei", "orei"], ["ô-la-ás", "orás"], ["ô-la-á", "orá"], ["ô-la-emos", "oremos"], ["ô-la-eis", "oreis"], ["ô-la-ão", "orão"], ["ô-la-ia", "oria"], ["ô-la-ias", "orias"], ["ô-la-íamos", "oríamos"], ["ô-la-íeis", "oríeis"], ["ô-la-iam", "oriam"], ["á-la", "az"], ["á-la", "ás"], ["ê-la", "ez"], ["ê-la", "ês"], ["i-la", "iz"], ["i-la", "is"], ["u-la", "uz"], ["u-la", "us"], ["ô-la", "ôs"], ["a-la", "as"], ["e-la", "es"], ["mo-la", "mos"], ["m-na", "m"], ["ão-na", "ão"], ["õe-na", "õe"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "wholeWord", "inflected": "pô-la", "deinflected": "pôr", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "ei-la", "deinflected": "eis", "conditionsIn": [], "conditionsOut": []}
       ]
@@ -1440,9 +1626,9 @@
       "description": "The pronoun os (los, nos) attached to a verb, after it or inside its future or conditional.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "-os", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemNotEndsWith": "[rszm]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["á-los", "ar"], ["ê-los", "er"], ["i-los", "ir"], ["ô-los", "or"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["á-los-ei", "arei"], ["á-los-ás", "arás"], ["á-los-á", "ará"], ["á-los-emos", "aremos"], ["á-los-eis", "areis"], ["á-los-ão", "arão"], ["á-los-ia", "aria"], ["á-los-ias", "arias"], ["á-los-íamos", "aríamos"], ["á-los-íeis", "aríeis"], ["á-los-iam", "ariam"], ["ê-los-ei", "erei"], ["ê-los-ás", "erás"], ["ê-los-á", "erá"], ["ê-los-emos", "eremos"], ["ê-los-eis", "ereis"], ["ê-los-ão", "erão"], ["ê-los-ia", "eria"], ["ê-los-ias", "erias"], ["ê-los-íamos", "eríamos"], ["ê-los-íeis", "eríeis"], ["ê-los-iam", "eriam"], ["i-los-ei", "irei"], ["i-los-ás", "irás"], ["i-los-á", "irá"], ["i-los-emos", "iremos"], ["i-los-eis", "ireis"], ["i-los-ão", "irão"], ["i-los-ia", "iria"], ["i-los-ias", "irias"], ["i-los-íamos", "iríamos"], ["i-los-íeis", "iríeis"], ["i-los-iam", "iriam"], ["ô-los-ei", "orei"], ["ô-los-ás", "orás"], ["ô-los-á", "orá"], ["ô-los-emos", "oremos"], ["ô-los-eis", "oreis"], ["ô-los-ão", "orão"], ["ô-los-ia", "oria"], ["ô-los-ias", "orias"], ["ô-los-íamos", "oríamos"], ["ô-los-íeis", "oríeis"], ["ô-los-iam", "oriam"], ["á-los", "az"], ["á-los", "ás"], ["ê-los", "ez"], ["ê-los", "ês"], ["i-los", "iz"], ["i-los", "is"], ["u-los", "uz"], ["u-los", "us"], ["ô-los", "ôs"], ["a-los", "as"], ["e-los", "es"], ["mo-los", "mos"], ["m-nos", "m"], ["ão-nos", "ão"], ["õe-nos", "õe"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "-os", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[rszm]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["á-los", "ar"], ["ê-los", "er"], ["i-los", "ir"], ["ô-los", "or"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["á-los-ei", "arei"], ["á-los-ás", "arás"], ["á-los-á", "ará"], ["á-los-emos", "aremos"], ["á-los-eis", "areis"], ["á-los-ão", "arão"], ["á-los-ia", "aria"], ["á-los-ias", "arias"], ["á-los-íamos", "aríamos"], ["á-los-íeis", "aríeis"], ["á-los-iam", "ariam"], ["ê-los-ei", "erei"], ["ê-los-ás", "erás"], ["ê-los-á", "erá"], ["ê-los-emos", "eremos"], ["ê-los-eis", "ereis"], ["ê-los-ão", "erão"], ["ê-los-ia", "eria"], ["ê-los-ias", "erias"], ["ê-los-íamos", "eríamos"], ["ê-los-íeis", "eríeis"], ["ê-los-iam", "eriam"], ["i-los-ei", "irei"], ["i-los-ás", "irás"], ["i-los-á", "irá"], ["i-los-emos", "iremos"], ["i-los-eis", "ireis"], ["i-los-ão", "irão"], ["i-los-ia", "iria"], ["i-los-ias", "irias"], ["i-los-íamos", "iríamos"], ["i-los-íeis", "iríeis"], ["i-los-iam", "iriam"], ["ô-los-ei", "orei"], ["ô-los-ás", "orás"], ["ô-los-á", "orá"], ["ô-los-emos", "oremos"], ["ô-los-eis", "oreis"], ["ô-los-ão", "orão"], ["ô-los-ia", "oria"], ["ô-los-ias", "orias"], ["ô-los-íamos", "oríamos"], ["ô-los-íeis", "oríeis"], ["ô-los-iam", "oriam"], ["á-los", "az"], ["á-los", "ás"], ["ê-los", "ez"], ["ê-los", "ês"], ["i-los", "iz"], ["i-los", "is"], ["u-los", "uz"], ["u-los", "us"], ["ô-los", "ôs"], ["a-los", "as"], ["e-los", "es"], ["mo-los", "mos"], ["m-nos", "m"], ["ão-nos", "ão"], ["õe-nos", "õe"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "wholeWord", "inflected": "pô-los", "deinflected": "pôr", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "ei-los", "deinflected": "eis", "conditionsIn": [], "conditionsOut": []}
       ]
@@ -1453,9 +1639,9 @@
       "description": "The pronoun as (las, nas) attached to a verb, after it or inside its future or conditional.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "-as", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemNotEndsWith": "[rszm]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["á-las", "ar"], ["ê-las", "er"], ["i-las", "ir"], ["ô-las", "or"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["á-las-ei", "arei"], ["á-las-ás", "arás"], ["á-las-á", "ará"], ["á-las-emos", "aremos"], ["á-las-eis", "areis"], ["á-las-ão", "arão"], ["á-las-ia", "aria"], ["á-las-ias", "arias"], ["á-las-íamos", "aríamos"], ["á-las-íeis", "aríeis"], ["á-las-iam", "ariam"], ["ê-las-ei", "erei"], ["ê-las-ás", "erás"], ["ê-las-á", "erá"], ["ê-las-emos", "eremos"], ["ê-las-eis", "ereis"], ["ê-las-ão", "erão"], ["ê-las-ia", "eria"], ["ê-las-ias", "erias"], ["ê-las-íamos", "eríamos"], ["ê-las-íeis", "eríeis"], ["ê-las-iam", "eriam"], ["i-las-ei", "irei"], ["i-las-ás", "irás"], ["i-las-á", "irá"], ["i-las-emos", "iremos"], ["i-las-eis", "ireis"], ["i-las-ão", "irão"], ["i-las-ia", "iria"], ["i-las-ias", "irias"], ["i-las-íamos", "iríamos"], ["i-las-íeis", "iríeis"], ["i-las-iam", "iriam"], ["ô-las-ei", "orei"], ["ô-las-ás", "orás"], ["ô-las-á", "orá"], ["ô-las-emos", "oremos"], ["ô-las-eis", "oreis"], ["ô-las-ão", "orão"], ["ô-las-ia", "oria"], ["ô-las-ias", "orias"], ["ô-las-íamos", "oríamos"], ["ô-las-íeis", "oríeis"], ["ô-las-iam", "oriam"], ["á-las", "az"], ["á-las", "ás"], ["ê-las", "ez"], ["ê-las", "ês"], ["i-las", "iz"], ["i-las", "is"], ["u-las", "uz"], ["u-las", "us"], ["ô-las", "ôs"], ["a-las", "as"], ["e-las", "es"], ["mo-las", "mos"], ["m-nas", "m"], ["ão-nas", "ão"], ["õe-nas", "õe"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1},
+        {"type": "suffix", "inflected": "-as", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[rszm]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["á-las", "ar"], ["ê-las", "er"], ["i-las", "ir"], ["ô-las", "or"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["á-las-ei", "arei"], ["á-las-ás", "arás"], ["á-las-á", "ará"], ["á-las-emos", "aremos"], ["á-las-eis", "areis"], ["á-las-ão", "arão"], ["á-las-ia", "aria"], ["á-las-ias", "arias"], ["á-las-íamos", "aríamos"], ["á-las-íeis", "aríeis"], ["á-las-iam", "ariam"], ["ê-las-ei", "erei"], ["ê-las-ás", "erás"], ["ê-las-á", "erá"], ["ê-las-emos", "eremos"], ["ê-las-eis", "ereis"], ["ê-las-ão", "erão"], ["ê-las-ia", "eria"], ["ê-las-ias", "erias"], ["ê-las-íamos", "eríamos"], ["ê-las-íeis", "eríeis"], ["ê-las-iam", "eriam"], ["i-las-ei", "irei"], ["i-las-ás", "irás"], ["i-las-á", "irá"], ["i-las-emos", "iremos"], ["i-las-eis", "ireis"], ["i-las-ão", "irão"], ["i-las-ia", "iria"], ["i-las-ias", "irias"], ["i-las-íamos", "iríamos"], ["i-las-íeis", "iríeis"], ["i-las-iam", "iriam"], ["ô-las-ei", "orei"], ["ô-las-ás", "orás"], ["ô-las-á", "orá"], ["ô-las-emos", "oremos"], ["ô-las-eis", "oreis"], ["ô-las-ão", "orão"], ["ô-las-ia", "oria"], ["ô-las-ias", "orias"], ["ô-las-íamos", "oríamos"], ["ô-las-íeis", "oríeis"], ["ô-las-iam", "oriam"], ["á-las", "az"], ["á-las", "ás"], ["ê-las", "ez"], ["ê-las", "ês"], ["i-las", "iz"], ["i-las", "is"], ["u-las", "uz"], ["u-las", "us"], ["ô-las", "ôs"], ["a-las", "as"], ["e-las", "es"], ["mo-las", "mos"], ["m-nas", "m"], ["ão-nas", "ão"], ["õe-nas", "õe"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "wholeWord", "inflected": "pô-las", "deinflected": "pôr", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "ei-las", "deinflected": "eis", "conditionsIn": [], "conditionsOut": []}
       ]
@@ -1466,8 +1652,8 @@
       "description": "The pronoun mo (me + o) attached to a verb, after it or inside its future or conditional.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "-mo", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemNotEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "r-mo", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1}
+        {"type": "suffix", "inflected": "-mo", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "r-mo", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
       ]
     },
     {
@@ -1476,8 +1662,8 @@
       "description": "The pronoun ma (me + a) attached to a verb, after it or inside its future or conditional.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "-ma", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemNotEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "r-ma", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1}
+        {"type": "suffix", "inflected": "-ma", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "r-ma", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
       ]
     },
     {
@@ -1486,8 +1672,8 @@
       "description": "The pronoun mos (me + os) attached to a verb, after it or inside its future or conditional.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "-mos", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemNotEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "r-mos", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1}
+        {"type": "suffix", "inflected": "-mos", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "r-mos", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
       ]
     },
     {
@@ -1496,8 +1682,8 @@
       "description": "The pronoun mas (me + as) attached to a verb, after it or inside its future or conditional.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "-mas", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemNotEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "r-mas", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1}
+        {"type": "suffix", "inflected": "-mas", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "r-mas", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
       ]
     },
     {
@@ -1506,8 +1692,8 @@
       "description": "The pronoun to (te + o) attached to a verb, after it or inside its future or conditional.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "-to", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemNotEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "r-to", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1}
+        {"type": "suffix", "inflected": "-to", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "r-to", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
       ]
     },
     {
@@ -1516,8 +1702,8 @@
       "description": "The pronoun ta (te + a) attached to a verb, after it or inside its future or conditional.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "-ta", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemNotEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "r-ta", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1}
+        {"type": "suffix", "inflected": "-ta", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "r-ta", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
       ]
     },
     {
@@ -1526,8 +1712,8 @@
       "description": "The pronoun tos (te + os) attached to a verb, after it or inside its future or conditional.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "-tos", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemNotEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "r-tos", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1}
+        {"type": "suffix", "inflected": "-tos", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "r-tos", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
       ]
     },
     {
@@ -1536,8 +1722,8 @@
       "description": "The pronoun tas (te + as) attached to a verb, after it or inside its future or conditional.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "-tas", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemNotEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "r-tas", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1}
+        {"type": "suffix", "inflected": "-tas", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "r-tas", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
       ]
     },
     {
@@ -1546,8 +1732,8 @@
       "description": "The pronoun lho (lhe + o) attached to a verb, after it or inside its future or conditional.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "-lho", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemNotEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "r-lho", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1}
+        {"type": "suffix", "inflected": "-lho", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "r-lho", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
       ]
     },
     {
@@ -1556,8 +1742,8 @@
       "description": "The pronoun lha (lhe + a) attached to a verb, after it or inside its future or conditional.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "-lha", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemNotEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "r-lha", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1}
+        {"type": "suffix", "inflected": "-lha", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "r-lha", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
       ]
     },
     {
@@ -1566,8 +1752,8 @@
       "description": "The pronoun lhos (lhe + os) attached to a verb, after it or inside its future or conditional.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "-lhos", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemNotEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "r-lhos", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1}
+        {"type": "suffix", "inflected": "-lhos", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "r-lhos", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
       ]
     },
     {
@@ -1576,8 +1762,8 @@
       "description": "The pronoun lhas (lhe + as) attached to a verb, after it or inside its future or conditional.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "-lhas", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemNotEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "r-lhas", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1}
+        {"type": "suffix", "inflected": "-lhas", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[r]"},
+        {"type": "suffix", "inflected": "r-lhas", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"}
       ]
     },
     {
