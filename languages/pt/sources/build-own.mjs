@@ -928,7 +928,10 @@ for (const [inflected, deinflected] of [['avelmente', 'ável'], ['ivelmente', '�
 // that start with none of them, and for each stem X two copies, one for
 // stems that start with its letter but not with X, one for stems that start
 // with X and are longer. The copies make the same deinflections as the rule,
-// except those whose stem is exactly X.
+// except those whose stem is exactly X. A stem written X! has no copy for
+// longer stems: wty-pt-en has no verb of that conjugation whose stem starts
+// with X and is longer (no -er verb in prov-, rel- or serv- but prover, reler
+// and servir's server; no -ir verb in prov-, fal-, interv-, av- or sobrev-).
 function withoutStems(rule, stems) {
     const byLetter = new Map();
     for (const stem of stems) {
@@ -938,9 +941,12 @@ function withoutStems(rule, stems) {
     }
     const letters = [...byLetter.keys()].join('');
     const out = [{...rule, stemNotStartsWith: `[${letters}]`}];
-    for (const [letter, stem] of byLetter) {
+    for (const [letter, written] of byLetter) {
+        const stem = written.replace(/!$/u, '');
         out.push({...rule, stemStartsWith: `[${letter}]`, stemNotStartsWithText: stem});
-        out.push({...rule, stemStartsWithText: stem, stemMinLength: Math.max(rule.stemMinLength ?? 0, [...stem].length + 1)});
+        if (!written.endsWith('!')) {
+            out.push({...rule, stemStartsWithText: stem, stemMinLength: Math.max(rule.stemMinLength ?? 0, [...stem].length + 1)});
+        }
     }
     return out;
 }
@@ -961,12 +967,12 @@ function withoutStems(rule, stems) {
 // that confirm their lemma, so these exclusions only change the readings
 // that no row confirms.
 const EXACT_STEM_EXCLUSIONS = [
-    [(rule) => rule.deinflected === 'er' && ['es', 'e', 'em'].includes(rule.inflected) && rule.stemChange === undefined, ['cont', 'prov', 'rel', 'serv']],
-    [(rule) => rule.deinflected === 'ir' && ['es', 'e', 'em'].includes(rule.inflected) && rule.stemChange === undefined, ['prov', 'fal']],
+    [(rule) => rule.deinflected === 'er' && ['es', 'e', 'em'].includes(rule.inflected) && rule.stemChange === undefined, ['cont', 'prov!', 'rel!', 'serv!']],
+    [(rule) => rule.deinflected === 'ir' && ['es', 'e', 'em'].includes(rule.inflected) && rule.stemChange === undefined, ['prov!', 'fal!']],
     [(rule) => rule.deinflected === 'er' && /^er/u.test(rule.inflected) && rule.stemChange === undefined, ['qu']],
     [(rule) => rule.deinflected === 'ar' && ['aste', 'astes'].includes(rule.inflected) && rule.stemChange === undefined, ['af']],
     [(rule) => rule.deinflected === 'ir' && /^(ido|ida|idos|idas|ia|ias|iam|íamos|íeis)$/u.test(rule.inflected) && rule.stemChange === undefined,
-        ['conv', 'interv', 'prov', 'av', 'sobrev']],
+        ['conv', 'interv!', 'prov!', 'av!', 'sobrev!']],
 ];
 for (const t of transforms) {
     t.rules = t.rules.flatMap((rule) => {

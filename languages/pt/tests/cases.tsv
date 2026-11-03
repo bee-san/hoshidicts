@@ -588,3 +588,10 @@ names	1	Pedrinho	Pedro	n	diminutive
 names	1	Mariazinha	Maria	n	diminutive
 negatives	0	Marinha	Mara	*	*
 names	1	Joãozinho	João	n	diminutive
+exclusions keep	1	convergia	convergir	v	imperfect-eu-ele
+exclusions keep	1	estuda	estudar	v	present-ele
+exclusions keep	1	estimas	estimar	v	present-tu
+exclusions keep	1	estime	estimar	v	subjunctive-eu-ele
+exclusions keep	1	estimes	estimar	v	subjunctive-tu
+negatives	0	duas	duo	*	*
+negatives	0	gatinho	gat	*	*
