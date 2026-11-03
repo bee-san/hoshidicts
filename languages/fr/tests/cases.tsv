@@ -762,3 +762,14 @@ negatives	0	la faisait	la faire	*	*
 negatives	0	le fait	le faire	*	*
 negatives	0	bière	bier	n	*
 negatives	0	vienne	vien	n	*
+yomitan rules	1	circoncis	circoncire	v	*
+yomitan rules	1	circoncirai	circoncire	v	future
+yomitan rules	1	ouïrai	ouïr	v	future
+yomitan rules	1	oyez	ouïr	v	*
+yomitan rules	1	gisait	gésir	v	imperfect indicative
+yomitan rules	1	gisent	gésir	v	present indicative
+yomitan rules	1	brairont	braire	v	future
+yomitan rules	1	attrairait	attraire	v	Conditional
+yomitan rules	1	connoissait	connoître	v	imperfect indicative
+yomitan rules	1	connoîtrai	connoître	v	future
+yomitan rules	1	occis	occire	v	*

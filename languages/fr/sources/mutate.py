@@ -113,8 +113,7 @@ M('stemNotStartsWith [e] of vouloir', without(base, 'stemNotStartsWith', '[e]', 
 M('stemNotStartsWith [y] of avoir', without(base, 'stemNotStartsWith', '[y]', ids=VERB))
 M('stemNotStartsWithText "en " of the present participle', without(base, 'stemNotStartsWithText', 'en ', ids=['present-participle']))
 M('stemMinLength of the -asser endings', without(base, 'stemMinLength', ids=VERB, deinflected='asser'))
-M('the è stem change accepts any letter after the è', edit(base, lambda t, r: (r['stemChange'].update(between='{letter}') or 1) if 'stemChange' in r else 0))
-M('the è stem change needs only consonants after the è', edit(base, lambda t, r: (r['stemChange'].update(between='{consonant}') or 1) if 'stemChange' in r else 0))
+M('no è stem change', drop_rules(base, lambda t, r: 'stemChange' in r))
 def no_min_on_stem_change(t, r):
     if 'stemChange' in r and 'stemMinLength' in r:
         del r['stemMinLength']
