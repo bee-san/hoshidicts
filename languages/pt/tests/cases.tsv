@@ -600,3 +600,5 @@ negatives	0	distingui	distinguir	*	present-ele
 negatives	0	seguia	segueir	*	*
 negatives	0	claramente	clara	*	*
 negatives	0	rapidamente	rapida	*	*
+negatives	0	esto	estar	*	*
+exclusions keep	1	estudo	estudar	v	present-eu

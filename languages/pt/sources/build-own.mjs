@@ -981,12 +981,13 @@ for (const t of transforms) {
     });
 }
 // esta, estas, este and estes are demonstratives, not forms of estar (whose
-// forms are está, estás, esteja): the regular -ar endings a, as, e and es
-// leave out the stem est itself and keep longer ones (estuda, estime).
+// forms are está, estás, esteja), and esto is no Portuguese word (estou): the
+// regular -ar endings a, as, e, es and o leave out the stem est itself and
+// keep longer ones (estuda, estime, estudo).
 for (const t of transforms) {
     const twins = [];
     for (const rule of t.rules) {
-        if (rule.type === 'suffix' && rule.deinflected === 'ar' && ['a', 'as', 'e', 'es'].includes(rule.inflected) && rule.stemChange === undefined) {
+        if (rule.type === 'suffix' && rule.deinflected === 'ar' && ['a', 'as', 'e', 'es', 'o'].includes(rule.inflected) && rule.stemChange === undefined) {
             rule.stemNotStartsWithText = 'est';
             const {stemNotStartsWithText: _drop, ...rest} = rule;
             twins.push({...rest, stemStartsWithText: 'est', stemMinLength: 4});

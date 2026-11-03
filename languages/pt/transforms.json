@@ -38,8 +38,9 @@
       "description": "Present indicative, first person singular (eu): falo, como, parto.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["o", "ar"], ["ço", "cer"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
+        {"type": "suffix", "inflected": "o", "deinflected": "ar", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotStartsWithText": "est"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["o", "er"], ["o", "ir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[cg]"},
+        {"type": "suffix", "inflected": "ço", "deinflected": "cer", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["jo", "ger"], ["jo", "gir"], ["igo", "eguir"], ["grido", "gredir"], ["evino", "evenir"], ["deio", "diar"], ["nseio", "nsiar"], ["aio", "air"], ["oo", "oer"], ["irjo", "ergir"], ["ôo", "oar"], ["ôo", "oer"], ["óio", "oiar"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "suffix", "inflected": "go", "deinflected": "guer", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}", "stemEndsWith": "[r]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["go", "guir"], ["eio", "ear"], ["ceio", "ciar"], ["meio", "miar"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 2, "stemCharacters": "{lowerStem}"},
@@ -67,7 +68,8 @@
         {"type": "circumfix", "prefixes": [["entre", "entre"]], "suffixes": [["ouço", "ouvir"], ["oiço", "ouvir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["des", "des"], ["im", "im"], ["ex", "ex"], ["desim", "desim"], ["es", "es"]], "suffixes": [["peço", "pedir"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["des", "des"]], "suffixes": [["provejo", "prover"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["sou", "ser"], ["vou", "ir"], ["estou", "estar"], ["tô", "estar"], ["tou", "estar"], ["tenho", "ter"], ["hei", "haver"], ["venho", "vir"], ["vejo", "ver"], ["dou", "dar"], ["faço", "fazer"], ["digo", "dizer"], ["trago", "trazer"], ["posso", "poder"], ["quero", "querer"], ["requeiro", "requerer"], ["sei", "saber"], ["caibo", "caber"], ["ponho", "pôr"], ["leio", "ler"], ["creio", "crer"], ["rio", "rir"], ["pairo", "parir"], ["perco", "perder"], ["valho", "valer"], ["ouço", "ouvir"], ["oiço", "ouvir"], ["peço", "pedir"], ["meço", "medir"], ["provejo", "prover"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["sou", "ser"], ["vou", "ir"], ["estou", "estar"], ["tô", "estar"], ["tou", "estar"], ["tenho", "ter"], ["hei", "haver"], ["venho", "vir"], ["vejo", "ver"], ["dou", "dar"], ["faço", "fazer"], ["digo", "dizer"], ["trago", "trazer"], ["posso", "poder"], ["quero", "querer"], ["requeiro", "requerer"], ["sei", "saber"], ["caibo", "caber"], ["ponho", "pôr"], ["leio", "ler"], ["creio", "crer"], ["rio", "rir"], ["pairo", "parir"], ["perco", "perder"], ["valho", "valer"], ["ouço", "ouvir"], ["oiço", "ouvir"], ["peço", "pedir"], ["meço", "medir"], ["provejo", "prover"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemCharacters": "[]"},
+        {"type": "suffix", "inflected": "o", "deinflected": "ar", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 4, "stemCharacters": "{lowerStem}", "stemStartsWithText": "est"}
       ]
     },
     {
