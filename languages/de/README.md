@@ -108,10 +108,10 @@ gehören, not Yomitan's participle reading hören; `lookup.tsv`).
   - The 66 zu-infinitive prefix rules (`anzu` → `an`). The own zu-infinitive
     rule makes all their deinflections. Because they need no ending, they also
     read `dazu ist` as `da ist` and `einzu…` as `ein…`: added to the final
-    rules, they change the first result at 5 positions of the Tatoeba
-    sample and *Der Prozess* (`dazu ist` → da sein, `einzuhängen` and
-    `einzurammen` → einen), all wrong, and give no reading the final rules
-    lack.
+    rules (`sources/variants.mjs`, `measure.mjs diff`), they change the first
+    result at 5 positions of the Tatoeba sample and *Der Prozess* (`dazu ist`
+    and `dazu war` → da sein, `einzuhängen`, `einzubohren` and `einzurammen`
+    → einen), all wrong, and give no reading the final rules lack.
 - **Yomitan rules kept**: 12, in five transforms the own rules lack.
   `nominalization` (-ung → -en), `-bar`, `negative` (un-) and `-heit`
   (-heit, -keit) read derived words whole, and `past participle` (`ge…t` →
@@ -182,15 +182,16 @@ gehören, not Yomitan's participle reading hören; `lookup.tsv`).
     keeps its own reading in small letters first, because a lookup ranks
     fewer processor steps first: `Sagen Sie …` is sagen, not the plural of
     Sage, and `Alles` is alles, not the genitive of All (`lookup.tsv`). The
-    first version read capitalized words, and its noun readings were the
-    first result for 513 of the 10,000 frequent words written with a capital
-    letter as at the start of a sentence (3.30% of the list's tokens); now 19
-    (0.02%), all English names of the subtitle list (Eddie → Eddi).
+    With noun rules that read capitalized words, as the first version's did,
+    a noun reading was the first result for 513 of the 5,954 frequent words
+    written in small letters when they start a sentence (3.30% of the list's
+    tokens; `measure.mjs start`); now 19 (0.02%), all English names of the
+    subtitle list (Eddie → Eddi).
   - `capitalizeWord`, a processor of this pack, reads a word written in
     capitals as a noun at one step (`FRAU` → Frau, `KÜNDIGUNG` → Kündigung).
     On the 224 words in capitals of the four texts it changes the first
-    result at 15: 10 better (Verhaftung, Untersuchung, Maler, Ende), 2 worse
-    (`DES` → the note Des), 3 neither.
+    result at 15 (`measure.mjs capitals`): 10 better (Verhaftung,
+    Untersuchung, Maler, Ende), 2 worse (`DES` → the note Des), 3 neither.
 - **Stem constraints**: every ending needs a stem of letters, digits and
   hyphens, never a space, so it does not fire on the last word of a longer
   text (`das macht` is not `das machen`), and every regular verb and
@@ -469,7 +470,9 @@ option on and with the defaults; a copy of `cases.tsv` with the line
       build/external/utf8proc/libutf8proc.a build/liblzokay.a build/libgumbo.a
     node languages/de/sources/measure.mjs frequent|start|after <inputs> <unimorph deu> <wty-de-en> <set>...
     node languages/de/sources/measure.mjs text <inputs> <unimorph deu> <wty-de-en> <text> <set>... [--dump <file>]
-    node languages/de/sources/measure.mjs diff <inputs> <unimorph deu> <wty-de-en> <text> own.json final.json
+    node languages/de/sources/variants.mjs <dir>   # own.json, final.json, final-plus-* and final-minus-* rule sets
+    node languages/de/sources/measure.mjs diff <inputs> <unimorph deu> <wty-de-en> <text> <dir>/own.json <dir>/final.json
+    node languages/de/sources/measure.mjs capitals|separated <inputs> <unimorph deu> <wty-de-en> [<set>]
     python3 languages/de/sources/hand-sample.py <dump dir>
     node languages/de/sources/trace-quality.mjs <set>...
     node languages/de/sources/mutations.mjs <scratch dir>
@@ -513,10 +516,16 @@ option on and with the defaults; a copy of `cases.tsv` with the line
 - **Separated particles beyond the scan**: the particle is joined only within
   the scan length a host passes (16 code points by default, as in Yomitan).
   Of the clauses in the four texts that end with the particle of a separated
-  form the dictionary lists, 1,304 of 5,679 (23%) fit in 16 code points.
+  form the dictionary lists, 1,304 of 5,679 (23%) fit in 16 code points
+  (`measure.mjs separated`).
   With a scan length of 40, the right several-word readings of *Der Prozess*
   rise from 1,654 to 1,917, the particle verbs of the dictionary's rows fall
   from 381 to 355, and the rule's wrong readings rise from 0 to 2.
+- **Homographs of a verb form and a participle**: `gehört` is gehören's
+  present and hören's participle, and both rules reach it with one step; the
+  present comes first, because its transform comes first. In Tatoeba 124 of
+  its 236 occurrences follow an auxiliary, where it is hören's. The same holds
+  for `gehorcht` (gehorchen, horchen) and `zugehört` (zugehören, zuhören).
 - **Noun readings of words in small letters**: the noun rules read every word
   in small letters, so a lowercase adjective, numeral or adverb can tie with
   a noun of the same spelling, and the rule's reading comes first: `zehnten`

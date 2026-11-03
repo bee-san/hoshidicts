@@ -11,6 +11,8 @@
 //   node languages/de/sources/measure.mjs after <inputs dir> <unimorph deu> <dictionary> <transforms.json>... [--batch <lookup-batch>] [--dump <file>]
 //   node languages/de/sources/measure.mjs start <inputs dir> <unimorph deu> <dictionary> <transforms.json>... [--batch <lookup-batch>] [--show N]
 //   node languages/de/sources/measure.mjs diff <inputs dir> <unimorph deu> <dictionary> <name> <a.json> <b.json> [--batch <lookup-batch>] [--show N]
+//   node languages/de/sources/measure.mjs capitals <inputs dir> <unimorph deu> <dictionary> <transforms.json> [--batch <lookup-batch>]
+//   node languages/de/sources/measure.mjs separated <inputs dir> <unimorph deu> <dictionary>
 //
 // <inputs dir> is what sources/measure-inputs.py writes and <dictionary> the
 // same dictionary imported by hoshidicts-cli import. A word's lemmas are the
@@ -62,6 +64,14 @@
 //   result with a definition for the whole word is wrong when it is not one
 //   of the word's lemmas and its trace has a rule of the pack (Alles -> All,
 //   the universe); counted with the share of the list's tokens.
+// capitals: the hovers of the four texts whose word is written in capitals
+//   (two or more letters), looked up with the pack and with a copy of the
+//   pack without the capitalizeWord processor; prints the first results
+//   with a definition that differ.
+// separated: the dictionary's form-of rows of a verb form and a separable
+//   particle that name a verb starting with that particle (ging zu ->
+//   zugehen), and, in the four texts, the clauses that start with such a
+//   verb form and end with its particle: how many fit in 16 code points.
 // diff: the hovers of hovers-<name>.txt whose first result with a
 //   definition differs between two rule sets, grouped by word and the two
 //   results, most frequent first: what adding or removing rules changes.
@@ -91,11 +101,16 @@ const lower = (s) => s.toLowerCase().replaceAll('\u2019', "'");
 const lines = (file) => readFileSync(file, 'utf8').split('\n').filter(Boolean).map((l) => l.split('\t'));
 
 /** Runs lookup-batch for one rule set and calls onAnswer(index, results) per input line. */
-async function lookups(transformsFile, input, onAnswer) {
+async function lookups(transformsFile, input, onAnswer, {dropProcessor = null} = {}) {
     const temp = mkdtempSync(join(tmpdir(), 'de-measure-'));
     try {
         cpSync(PACK, join(temp, 'de'), {recursive: true});
         writeFileSync(join(temp, 'de', 'transforms.json'), readFileSync(transformsFile));
+        if (dropProcessor !== null) {
+            const language = JSON.parse(readFileSync(join(PACK, 'language.json'), 'utf8'));
+            language.lookup.preprocessors = language.lookup.preprocessors.filter((p) => p.id !== dropProcessor);
+            writeFileSync(join(temp, 'de', 'language.json'), JSON.stringify(language));
+        }
         const child = spawn(batch, [temp, 'de', dictionary, '16', scan], {stdio: ['pipe', 'pipe', 'inherit']});
         input.pipe(child.stdin);
         let index = 0;
@@ -208,6 +223,66 @@ if (mode === 'frequent') {
         for (const example of examples) { console.log(`   rule: ${example}`); }
         for (const example of dictionaryExamples) { console.log(`   dictionary: ${example}`); }
     }
+} else if (mode === 'capitals') {
+    const [file] = rest;
+    const hovers = [];
+    const words = [];
+    for (const name of ['tatoeba', 'pg69327', 'pg22367', 'pg5323']) {
+        const h = readFileSync(join(inputs, `hovers-${name}.txt`), 'utf8').split('\n');
+        const w = readFileSync(join(inputs, `words-${name}.txt`), 'utf8').split('\n');
+        w.forEach((word, i) => {
+            if (/^[A-ZÄÖÜẞ]{2,}$/u.test(word)) {
+                hovers.push(h[i]);
+                words.push(word);
+            }
+        });
+    }
+    const describe = (results) => {
+        const r = results.find((x) => !x.formOf);
+        return r === undefined ? '(none)' : `${r.expression} (${r.matched})`;
+    };
+    const withIt = [];
+    await lookups(file, Readable.from([`${hovers.join('\n')}\n`]), (i, results) => { withIt[i] = describe(results); });
+    const changes = new Map();
+    let changed = 0;
+    await lookups(file, Readable.from([`${hovers.join('\n')}\n`]), (i, results) => {
+        const without = describe(results);
+        if (without === withIt[i]) { return; }
+        ++changed;
+        const key = `${words[i]}: without ${without} -> with ${withIt[i]}`;
+        changes.set(key, (changes.get(key) ?? 0) + 1);
+    }, {dropProcessor: 'capitalizeWord'});
+    console.log(`${hovers.length} hovers of a word in capitals in the four texts; capitalizeWord changes the first result with a definition at ${changed}`);
+    for (const [key, n] of [...changes].sort((a, b) => b[1] - a[1])) { console.log(`   ${n}\t${key}`); }
+} else if (mode === 'separated') {
+    const separatedRows = new Map();  // "form particle" -> lemma
+    for (const [form, lemma, rules = ''] of lines(join(inputs, 'redirects.tsv'))) {
+        const parts = form.split(' ');
+        if (parts.length === 2 && PARTICLES.has(parts[1]) && rules.split(' ').includes('v') && lemma.startsWith(parts[1])) {
+            separatedRows.set(form, lemma);
+        }
+    }
+    console.log(`${separatedRows.size} form-of rows of a verb form and a separable particle that name a verb starting with the particle`);
+    const end = /[.!?,;:…]/u;
+    let total = 0, fit = 0;
+    for (const name of ['tatoeba', 'pg69327', 'pg22367', 'pg5323']) {
+        let n = 0, short = 0;
+        for (const hover of readFileSync(join(inputs, `hovers-${name}.txt`), 'utf8').split('\n')) {
+            const at = hover.search(end);
+            const clause = at < 0 ? hover : hover.slice(0, at + 1);
+            const clauseWords = clause.replace(/[.!?,;:…]$/u, '').split(' ');
+            if (clauseWords.length < 2) { continue; }
+            const verb = clauseWords[0].toLowerCase().replace(/^[„“"»«]+/u, '');
+            const particle = clauseWords[clauseWords.length - 1].toLowerCase();
+            if (!separatedRows.has(`${verb} ${particle}`)) { continue; }
+            ++n;
+            if ([...clause].length <= 16) { ++short; }
+        }
+        console.log(`${name}: ${n} clauses from such a verb form to its particle, ${short} of them within 16 code points`);
+        total += n;
+        fit += short;
+    }
+    console.log(`all four: ${total} clauses, ${fit} (${(100 * fit / Math.max(total, 1)).toFixed(1)}%) within 16 code points`);
 } else if (mode === 'diff') {
     const [name, a, b] = rest;
     const hovers = readFileSync(join(inputs, `hovers-${name}.txt`), 'utf8').split('\n');
