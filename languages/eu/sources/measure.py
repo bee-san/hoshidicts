@@ -2,12 +2,13 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """The README's real-text measurements (Measurements 2-4).
 
-    python3 languages/eu/sources/measure.py freq <cache> <imported dictionary> [--languages <dir>] [--top N]
+    python3 languages/eu/sources/measure.py freq <cache> <imported dictionary> [--languages <dir>] [--top N] [--capitalized]
     python3 languages/eu/sources/measure.py text <cache> <imported dictionary> [--languages <dir>] [--corpus garoa|wikipedia|tatoeba]
     python3 languages/eu/sources/measure.py sample <cache> <imported dictionary> [--languages <dir>] [--corpus ...] [--n 60]
     python3 languages/eu/sources/measure.py yomitan <cache> <imported dictionary> [--languages <dir>] [--union <file>]
     python3 languages/eu/sources/measure.py contexts <cache> <imported dictionary> [--languages <dir>] [--corpus tatoeba]
     python3 languages/eu/sources/measure.py unimorph <cache> - [--languages <dir>]
+    python3 languages/eu/sources/measure.py capitals <cache> <imported dictionary> [--languages <dir>] [--top N]
 
 <cache> holds the downloads the README names (MANIFEST in hachi-lang-cache/eu):
 wty-eu-en-json/ (the dictionary's banks, unzipped), eu_50k-2018.txt,
@@ -19,8 +20,9 @@ with 16 results, scan length 16 and no options, as a host's hover does.
 
 freq: of the N (10,000) most frequent words of the subtitle list, the words
 whose lemma a rule reaches, where the word's form-of rows in the dictionary
-or UniMorph eus name the lemma; for each, whether the first result is right:
-the word's own headword (a row of it with definitions) or a lemma they name.
+or UniMorph eus name the lemma; for each, whether the first result is the
+word's own lemma (judge below): for a word whose rows name one lemma, by
+script; for a homograph, by the hand-judged table sources/judged-frequent.tsv.
 
 yomitan: for each of Yomitan's rules (sources/yomitan.json), forms built
 from the ten most frequent lemmas (subtitle list) of the parts of speech the
@@ -28,6 +30,11 @@ rule writes whose spelling ends with its deinflected text, with its inflected
 ending put in place; how many of them are attested (in the subtitle list or
 in kaikki's tables for that lemma), and how many attested ones the pack's
 transforms.json and the rule itself reach.
+
+capitals: of the N most frequent words, those whose first result written
+with a capital (as at the start of a sentence) is a capitalized entry other
+than the word's first result in small letters (Lurrean: Lurra, the Earth,
+before lur), with their share of the list's tokens.
 
 unimorph: recall over every distinct (form, lemma) of UniMorph eus (ukan read
 as edun), and the same weighted by each form's count in the subtitle list.
@@ -38,10 +45,10 @@ in front of a form of the auxiliaries (ikusi dut, nahi dut): where a lookup
 from the word could read the phrase.
 
 text: every word of the corpus looked up with the rest of its sentence. The
-first result is judged by script where the word has form-of rows (right: a
-lemma they name, or the word's own headword); a first result that is the
-word's own headword is right; the rest are counted as unjudged and `sample`
-draws a random sample of them (seed 1) for judging by hand.
+first result is judged by script where the word's rows name one lemma (or the
+word is that lemma's own entry and its rows name nothing else); the rest,
+homographs included, are counted as unjudged, and `sample` draws a random
+sample of them (seed 1) for judging by hand, in context.
 """
 
 import collections
@@ -62,11 +69,14 @@ WORD = re.compile(r"[A-Za-zÀ-ÖØ-öø-ɏ0-9]+")
 
 
 def args_of(argv):
-    opts = {'--languages': os.path.join(ROOT, 'languages'), '--top': '10000', '--corpus': 'garoa', '--n': '60'}
+    opts = {'--languages': os.path.join(ROOT, 'languages'), '--top': '10000', '--corpus': 'garoa', '--n': '60', '--capitalized': None}
     pos = []
     i = 0
     while i < len(argv):
-        if argv[i] in opts:
+        if argv[i] == '--capitalized':
+            opts['--capitalized'] = True
+            i += 1
+        elif argv[i] in opts:
             opts[argv[i]] = argv[i + 1]
             i += 2
         else:
@@ -123,33 +133,69 @@ def deinflections(languages, words):
     return {d['input']: d['results'] for d in map(json.loads, result.stdout.splitlines())}
 
 
-def named_lemmas(word, rows):
-    """The lemmas the word's form-of rows name, and the lemmas those name in
-    turn (one more hop): wty-eu-en names ikuste for ikustera and ikusi for
-    ikuste, handien for handiena and handi for handien."""
-    named = set()
-    for w in {word, word.lower(), word[:1].upper() + word[1:]}:
-        if w in rows:
-            named |= set(rows[w]['formOf'])
-    for lemma in list(named):
-        if lemma in rows:
-            named |= set(rows[lemma]['formOf'])
-    return named
+AUXILIARIES = {'izan', 'edun', 'ezan', 'edin'}
 
 
-def judge(word, first, rows):
-    """'right', 'wrong' or None (no form-of rows name a lemma, and the first
-    result is not the word's own headword)."""
+def lemma_class(lemma):
+    """izan and *edun and their roots are one lemma for judging: wty-eu-en
+    files the auxiliaries' forms under izan, UniMorph under edun and ezan."""
+    return 'AUX' if lemma in AUXILIARIES else lemma
+
+
+def candidates(word, rows):
+    """The lemmas a learner may need for the word, as classes: the word's own
+    entry, the lemmas its form-of rows name (one more hop where a named lemma
+    has only references itself: ikustera names ikuste, whose row names
+    ikusi), for the word as written, in small letters and with a capital."""
+    out = set()
+    for w in {word, word.lower(), word[:1].upper() + word[1:].lower()}:
+        if w not in rows:
+            continue
+        if rows[w]['lemma']:
+            out.add(w)
+        for lemma in rows[w]['formOf']:
+            target = rows.get(lemma)
+            if target is not None and not target['lemma'] and target['formOf'] and lemma not in AUXILIARIES:
+                out |= set(target['formOf'])
+            else:
+                out.add(lemma)
+    return {lemma_class(lemma) for lemma in out}
+
+
+def read_judged(path):
+    """sources/judged-frequent.tsv: the hand-judged lemmas of ambiguous words."""
+    out = {}
+    with open(path, encoding='utf-8') as f:
+        for line in f:
+            if line.startswith('#') or not line.strip():
+                continue
+            word, accepted = line.rstrip('\n').split('\t')
+            out[word] = set(accepted.split(','))
+    return out
+
+
+def judge(word, first, rows, judged=None):
+    """'right', 'wrong', 'none' (nothing found) or None (the script cannot
+    judge it). Only the word's own lemma counts as right (section 14 step 5):
+    a word whose candidates are one lemma is judged by script; a word with
+    several (homographs such as zuen: izan and zuek) only by the hand-judged
+    table, or not at all."""
     if first is None:
         return 'none'
-    named = named_lemmas(word, rows)
-    if first['expression'] in (word, word.lower(), word[:1].upper() + word[1:]) and first['matched'].lower() == word.lower():
-        return 'right'
     if first['matched'].lower() != word.lower():
         # A match longer than the word (a multiword entry) or shorter.
         return None
-    if named:
-        return 'right' if first['expression'] in named else 'wrong'
+    found = candidates(word, rows)
+    if not found:
+        return None
+    if len(found) == 1:
+        # The lemma, or a spelling the lemma's own rows send to (dario names
+        # jario, whose verb row is an alternative of jariatu).
+        (lemma,) = found
+        accepted = found | {lemma_class(l) for l in rows.get(lemma, {'formOf': {}})['formOf']}
+        return 'right' if lemma_class(first['expression']) in accepted else 'wrong'
+    if judged is not None and word in judged:
+        return 'right' if lemma_class(first['expression']) in judged[word] else 'wrong'
     return None
 
 
@@ -164,24 +210,33 @@ def freq(cache, dictionary, opts):
             if len(words) == top:
                 break
     total_tokens = sum(c for _, c in words)
+    judged = read_judged(os.path.join(HERE, 'judged-frequent.tsv'))
     dein = deinflections(opts['--languages'], [w for w, _ in words])
     reached = []
     for w, c in words:
-        named = named_lemmas(w, rows)
-        texts = {r['text'] for r in dein[w] if r['trace']}
-        if named & texts:
-            reached.append((w, c, named))
-    looked = lookups(opts['--languages'], dictionary, [w for w, _, _ in reached])
+        found = candidates(w, rows)
+        texts = {lemma_class(r['text']) for r in dein[w] if r['trace']}
+        if found & texts:
+            reached.append((w, c, found))
+    # --capitalized: the words as a sentence starts them (Etxean), judged
+    # against the same lemmas.
+    written = [w[:1].upper() + w[1:] if opts['--capitalized'] else w for w, _, _ in reached]
+    looked = lookups(opts['--languages'], dictionary, written)
     wrong = []
-    for (w, c, named), d in zip(reached, looked):
+    unjudged = []
+    ambiguous = 0
+    for (w, c, found), d in zip(reached, looked):
         first = d['results'][0] if d['results'] else None
-        own = rows[w]['lemma'] and first is not None and first['expression'] == w
-        if first is None or not (own or first['expression'] in named):
-            wrong.append((w, c, first['expression'] if first else None, first['trace'] if first else None, sorted(named)))
+        ambiguous += len(found) > 1
+        verdict = judge(w, first, rows, judged)
+        if verdict is None and len(found) > 1 and first is not None and first['matched'].lower() == w.lower():
+            unjudged.append(w)
+        elif verdict in ('wrong', 'none'):
+            wrong.append((w, c, first['expression'] if first else None, first['trace'] if first else None, sorted(found)))
     reached_tokens = sum(c for _, c, _ in reached)
     wrong_tokens = sum(c for _, c, *_ in wrong)
     print(json.dumps({'words': len(words), 'tokens': total_tokens, 'reached': len(reached), 'reachedTokens': reached_tokens,
-                      'wrongFirst': len(wrong), 'wrongTokens': wrong_tokens,
+                      'ambiguous': ambiguous, 'notInJudgedTable': unjudged, 'wrongFirst': len(wrong), 'wrongTokens': wrong_tokens,
                       'wrongShareOfReachedTokens': round(wrong_tokens / max(reached_tokens, 1), 5),
                       'wrongShareOfListTokens': round(wrong_tokens / total_tokens, 5)}, ensure_ascii=False))
     for item in sorted(wrong, key=lambda x: -x[1]):
@@ -380,6 +435,30 @@ def unimorph(cache, opts):
                       'subtitleTokens': tokens, 'reachedTokens': hit, 'tokenRecall': round(hit / max(tokens, 1), 4)}))
 
 
+def capitals(cache, dictionary, opts):
+    top = int(opts['--top'])
+    words = []
+    with open(os.path.join(cache, 'eu_50k-2018.txt'), encoding='utf-8') as f:
+        for line in f:
+            w, c = line.split()
+            words.append((w, int(c)))
+            if len(words) == top:
+                break
+    total = sum(c for _, c in words)
+    lower = lookups(opts['--languages'], dictionary, [w for w, _ in words])
+    upper = lookups(opts['--languages'], dictionary, [w[:1].upper() + w[1:] for w, _ in words])
+    changed = []
+    for (w, c), a, b in zip(words, lower, upper):
+        fa = a['results'][0]['expression'] if a['results'] else None
+        fb = b['results'][0]['expression'] if b['results'] else None
+        if fb is not None and fb != fa and fb[:1].isupper():
+            changed.append((w, c, fa, fb))
+    print(json.dumps({'words': len(words), 'changed': len(changed), 'tokens': sum(c for _, _, _, _ in changed) if False else sum(x[1] for x in changed),
+                      'shareOfListTokens': round(sum(x[1] for x in changed) / total, 5)}))
+    for item in sorted(changed, key=lambda x: -x[1]):
+        print(json.dumps(item, ensure_ascii=False))
+
+
 def main(argv):
     pos, opts = args_of(argv)
     if len(pos) != 3:
@@ -397,6 +476,8 @@ def main(argv):
         contexts(cache, dictionary, opts)
     elif command == 'unimorph':
         unimorph(cache, opts)
+    elif command == 'capitals':
+        capitals(cache, dictionary, opts)
     else:
         raise SystemExit(__doc__)
 

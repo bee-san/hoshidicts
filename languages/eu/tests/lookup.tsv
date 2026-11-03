@@ -34,3 +34,22 @@ words	1	euskal hiztegia	euskal	euskal
 negatives	0	euskalki	euskal	euskalki
 negatives	0	bezala	edun	bezala
 negatives	0	zuk esan duzu	edun	zuk
+homograph	1	dio eta	izan	dio
+homograph	1	zuen eta	izan	zuen
+homograph	1	zuten eta	izan	zuten
+homograph	1	zion eta	izan	zion
+homograph	1	baten izena	bat	baten
+homograph	1	minez dago	min	minez
+homograph	1	hatza	hatz	hatza
+homograph	1	beren etxea	bera	beren
+homograph	1	zuan eta	edun	zuan
+homograph	1	ustez	uste izan	ustez
+negatives	0	betiko	be	betiko
+negatives	0	hainbat	hain	hain
+negatives	0	ikusi2	ikusi	ikusi
+negatives	0	ikusí	ikusi	ikusi
+negatives	0	Bilboko	Bilbo	Bilboko
+homograph	1	aterako dut	atera	aterako
+homograph	1	hartzeko	hartu	hartzeko
+homograph	1	saia zaitez	saiatu	saia
+homograph	1	dioenez	esan	dioenez
