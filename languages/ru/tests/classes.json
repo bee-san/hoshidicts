@@ -4631,54 +4631,54 @@
       [1093, 1093],
       [1095, 1097]
     ],
-    "transforms[35].rules[28].stemCharacters": [
+    "transforms[35].rules[30].stemCharacters": [
       [45, 45],
       [1024, 1279]
     ],
-    "transforms[35].rules[28].stemEndsWith": [
+    "transforms[35].rules[30].stemEndsWith": [
       [1073, 1076],
       [1078, 1079],
       [1082, 1085],
       [1087, 1090],
       [1092, 1097]
     ],
-    "transforms[35].rules[29].stemCharacters": [
-      [45, 45],
-      [1024, 1279]
-    ],
-    "transforms[35].rules[30].stemCharacters": [
-      [45, 45],
-      [1024, 1279]
-    ],
-    "transforms[35].rules[30].stemEndsWith": [
-      [1083, 1083]
-    ],
     "transforms[35].rules[31].stemCharacters": [
       [45, 45],
       [1024, 1279]
-    ],
-    "transforms[35].rules[31].stemEndsWith": [
-      [1088, 1088]
     ],
     "transforms[35].rules[32].stemCharacters": [
       [45, 45],
       [1024, 1279]
     ],
     "transforms[35].rules[32].stemEndsWith": [
-      [1090, 1090]
+      [1083, 1083]
     ],
     "transforms[35].rules[33].stemCharacters": [
       [45, 45],
       [1024, 1279]
     ],
     "transforms[35].rules[33].stemEndsWith": [
-      [1079, 1079]
+      [1088, 1088]
     ],
     "transforms[35].rules[34].stemCharacters": [
       [45, 45],
       [1024, 1279]
     ],
     "transforms[35].rules[34].stemEndsWith": [
+      [1090, 1090]
+    ],
+    "transforms[35].rules[35].stemCharacters": [
+      [45, 45],
+      [1024, 1279]
+    ],
+    "transforms[35].rules[35].stemEndsWith": [
+      [1079, 1079]
+    ],
+    "transforms[35].rules[36].stemCharacters": [
+      [45, 45],
+      [1024, 1279]
+    ],
+    "transforms[35].rules[36].stemEndsWith": [
       [1072, 1072],
       [1077, 1077],
       [1086, 1086],
@@ -7679,6 +7679,9 @@
         ["клянусь", "клянусь"],
         ["поклянётся", "поклянётся"],
         ["помни", "помни"],
+        ["прав", "прав"],
+        ["сер", "сер"],
+        ["большая", "большая"],
         ["Толстого", "толстого"],
         ["коньку", "коньку"],
         ["телогических", "телогических"],
@@ -9408,6 +9411,9 @@
         ["клянусь", "Клянусь"],
         ["поклянётся", "Поклянётся"],
         ["помни", "Помни"],
+        ["прав", "Прав"],
+        ["сер", "Сер"],
+        ["большая", "Большая"],
         ["Толстого", "Толстого"],
         ["коньку", "Коньку"],
         ["телогических", "Телогических"],

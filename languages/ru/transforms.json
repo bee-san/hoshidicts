@@ -819,6 +819,8 @@
         {"type": "wholeWord", "inflected": "наг", "deinflected": "нагой", "conditionsIn": [], "conditionsOut": ["adj"]},
         {"type": "wholeWord", "inflected": "строг", "deinflected": "строгой", "conditionsIn": [], "conditionsOut": ["adj"]},
         {"type": "suffix", "inflected": "", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[гкхжшщч]"},
+        {"type": "wholeWord", "inflected": "прав", "deinflected": "правый", "conditionsIn": [], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "сер", "deinflected": "серый", "conditionsIn": [], "conditionsOut": ["adj"]},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ен", "ный"], ["ён", "ный"], ["ок", "кий"], ["ёк", "кий"], ["ек", "кий"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "{consonant}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["лен", "льный"], ["лён", "льный"], ["лен", "льной"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "{stem}", "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["он", "ный"], ["ог", "гий"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "{stem}", "stemMinLength": 1, "stemEndsWith": "[л]"},

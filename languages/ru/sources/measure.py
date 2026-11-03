@@ -197,6 +197,10 @@ def own_lemma_ok(word, first, refs, lemmas, proxy, labels, ratio=10):
     if not named:
         return True
     best = max(named, key=lambda l: proxy.get(l, 0))
+    # A lemma the dominant one names in turn (a participle's verb:
+    # зарегистрировано → зарегистрированный → зарегистрировать) is that reading.
+    if first in refs.get(best, set()):
+        return True
     return not (best != first and proxy.get(best, 0) >= ratio * max(proxy.get(first, 0), 1) and proxy.get(best, 0) >= 50)
 
 

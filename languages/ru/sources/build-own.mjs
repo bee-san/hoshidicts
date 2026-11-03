@@ -570,6 +570,11 @@ for (const lemma of ['дорогой', 'другой', 'сухой', 'плохо
     }
 }
 suffix('adj', ['short.m'], '', 'ий', [], ADJ, {stemMinLength: 2, stemEndsWith: '[гкхжшщч]'}, ['тих', 'тихий']);
+// прав and сер are short forms of правый and серый far more often than the
+// genitive plurals of права, право and сера, which the zero ending reads first.
+for (const [word, lemma] of [['прав', 'правый'], ['сер', 'серый']]) {
+    wholeWord('adj', ['short.m'], word, lemma, [], ADJ, word === 'прав' ? ['прав', 'правый'] : null);
+}
 // With a fleeting vowel (интересен, болен, умён, полон, короток, светел, зол, горек).
 for (const [inflected, lemma, stemEnd, ex] of [
     ['ен', 'ный', CONSONANT, ['интересен', 'интересный']], ['ён', 'ный', CONSONANT, ['умён', 'умный']],
