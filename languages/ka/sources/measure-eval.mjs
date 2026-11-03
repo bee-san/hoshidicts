@@ -33,7 +33,7 @@ for (const [label, file] of [...files]) {
 }
 
 const union = join(scratch, 'union.json');
-execFileSync('node', [join(repo, 'tools/merge-transforms.mjs'), 'ka', '--out', union], {stdio: 'pipe'});
+execFileSync('node', [join(repo, 'tools/merge-transforms.mjs'), 'ka', '--out', union, '--force'], {stdio: 'pipe'});
 const sets = [['own', join(pack, 'sources/own.json')], ['Yomitan', join(pack, 'sources/yomitan.json')], ['union', union], ['final', join(pack, 'transforms.json')]];
 
 const filterDir = join(scratch, 'filter');
