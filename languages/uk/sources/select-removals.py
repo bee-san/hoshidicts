@@ -94,7 +94,7 @@ def main():
                     e = stats[(t['id'], i)]
                     if e['breaks'] > 0 or (e['falseCandidates'] > 0 and e['recovers'] == 0) or (e['falseCandidates'] >= 5 and e['falseCandidates'] > 3 * e['recovers']):
                         why = 'breaks' if e['breaks'] > 0 else 'fc only' if e['recovers'] == 0 else 'fc'
-                        removed.append((t['id'], *key(rule), detail(rule), e['recovers'], e['falseCandidates'], e['breaks'], f'{why}, round {round_ + 1}'))
+                        removed.append((t['id'], *key(rule), detail(rule), e['recovers'], e['falseCandidates'], e['breaks'], why if round_ == 0 else f'{why}, round {round_ + 1}'))
                         n += 1
                     else:
                         keep.append(rule)
@@ -104,7 +104,7 @@ def main():
                 break
     with open(os.path.join(HERE, 'yomitan-removed.tsv'), 'w', encoding='utf-8') as f:
         f.write('# Yomitan rules transforms.json leaves out, written by sources/select-removals.py.\n')
-        f.write('# reason: breaks (a negative), fc (more than three false candidates per row recovered), fc only (false candidates, nothing recovered).\n')
+        f.write('# reason: breaks (a negative), fc (more than three false candidates per row recovered), fc only (false candidates, nothing recovered); round N: left out in round N, once the rules of the earlier rounds were.\n')
         f.write('# transform\tinflected\tdeinflected\trule\trecovers\tfalseCandidates\tbreaks\treason\n')
         for row in sorted(removed):
             f.write('\t'.join(map(str, row)) + '\n')

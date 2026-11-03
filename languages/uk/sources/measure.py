@@ -15,26 +15,18 @@
 # phrases: every word of the sentences that follows a preposition, a
 #   particle, a conjunction, a pronoun or a form of бути, looked up from
 #   that word with the rest of the sentence; reported together and by kind.
-# A lookup's first result is judged against the lemma the hovered word
-# means. A word labelled in sources/homographs.tsv (frequent words whose
-# rows name two or more lemmas) means the lemmas its label lists. Otherwise
-# the candidates are the word itself when it is a headword with definitions,
-# each lemma one of the word's form-of rows names, and the lemma the rows of
-# that lemma name in turn (вмію → вміти → уміти, секундочку → секундочка →
-# секунда: the named form is itself only a reference). When the rows name
-# two or more lemmas, only the one most frequent in the frequency list
-# counts (--frequencies; in words mode the list itself), a verb's doublets
-# in -Xнути and -Xти counting as one, besides the word itself: a frequency
-# proxy for the lemma the word means (README: a hand-judged sample). Right
-# when the result is a lemma the word means; wrong when the word has rows
-# and the result is not; unknown when the dictionary has no row for the
-# word. The summary line counts the judged lookups by what judged them
-# (byLabel, byProxy, byRows) and the wrong ones the same way. A comparative
-# in -ше is also the adverb's comparative (міцніше: міцно), which wty-uk-en
-# lists only as the adjective's neuter (міцніший), so the adverb is right
-# when its adjective is (міцн-о, міцн-ий). A first result that matches more
-# than the hovered word (сила-силенна, з-під, див.) is counted apart as
-# 'phrase', not judged.
+# A lookup's first result is right only when it is a lemma the hovered word
+# means (README, Measure notes): its label in sources/homographs.tsv; else,
+# when its rows name two or more lemmas, the one most frequent in the
+# frequency list (--frequencies; in words mode the list itself), a verb's
+# doublets in -Xнути and -Xти counting as one; else the word itself (a
+# headword with definitions) or a lemma its rows name, with the lemmas that
+# lemma's rows name as another spelling or aspect (вмію → вміти → уміти).
+# Wrong when the word has rows and the result is none of these; unknown when
+# it has none; a result that matches more than the hovered word
+# (сила-силенна, з-під) is 'phrase', not judged. A comparative in -ше is
+# also the adverb's (міцніше: міцно). The summary counts judged lookups by
+# what judged them (byLabel, byProxy, byRows).
 # --verdicts <file> writes one line per lookup (of the whole list, text or
 # sentence set, not again for its subsets): word, verdict, first result, the
 # rules behind it, its weight and what judged it. rightByRules and
@@ -106,6 +98,15 @@ def keys(word):
     return [w] if w == w.lower() else [w, w.lower()]
 
 
+# Links a lemma's rows may name that keep the lemma: other spellings and the
+# other aspect. A link that makes the named lemma an inflected form or a
+# derivative of another (мило, the neuter past of мити; копа, the genitive of
+# коп) is another lemma, which a word naming it does not mean.
+SAME_LEMMA = re.compile(r'^(?:alternative|alt-of|rare alternative|alternative dialectal|alternative abbreviation|misspelling|nonstandard|'
+                        r'dated|archaic|obsolete|proscribed|lowercase|uppercase|(?:im)?perfective(?: rare| semelfactive)?)$')
+LINKS = collections.defaultdict(set)
+
+
 def load_rows(json_dir):
     lemmas, targets = set(), collections.defaultdict(set)
     for path in sorted(glob.glob(os.path.join(json_dir, 'term_bank_*.json'))):
@@ -118,8 +119,18 @@ def load_rows(json_dir):
             for ref in refs:
                 # wiktionary-to-yomitan writes some targets with their aspect
                 # (знайти́ pf); the lemma is the word before it.
-                targets[term].add(re.sub(r' (?:pf|impf)(?: (?:pf|impf))?$', '', norm(ref[0])))
+                target = re.sub(r' (?:pf|impf)(?: (?:pf|impf))?$', '', norm(ref[0]))
+                targets[term].add(target)
+                LINKS[(term, target)] |= set(ref[1])
     return lemmas, targets
+
+
+def same_lemma(name, target, lemmas):
+    """Whether a reader who means the lemma `name` also means `target`, which
+    `name`'s rows name: always when `name` is only a reference, else when
+    every link is another spelling or the other aspect."""
+    links = LINKS.get((name, target), set())
+    return name not in lemmas or (bool(links) and all(SAME_LEMMA.match(l) for l in links))
 
 
 def lookups(texts, languages, dictionary):
@@ -141,8 +152,8 @@ def meant(word, lemmas, targets):
             right |= PRONOUN_LEMMAS[w]
             continue
         # One group per lemma a row names, with the lemmas that lemma's own
-        # rows name (вміти → уміти).
-        groups = [{n} | set(targets.get(n, ())) for n in sorted(targets.get(w, ()))]
+        # rows name as the same lemma (вміти → уміти, вдавати → вдати).
+        groups = [{n} | {t for t in targets.get(n, ()) if same_lemma(n, t, lemmas)} for n in sorted(targets.get(w, ()))]
         groups = [g for g in groups if g & lemmas] or groups
         # Doublets of one verb (досягти, досягнути; вдягти, вдягнути) are
         # one lemma.
