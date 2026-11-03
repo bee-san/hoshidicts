@@ -16,9 +16,16 @@ host's hover. A result is visible unless all its glossaries are form-of rows
   the infinitive itself: fazê-lo → fazer); L2(w): L1(w) and the lemmas the
   rows of those name (one more hop, for spellings: tá → está → estar).
 - The first visible result is "own" when it is the matched text's own entry
-  (no trace), "right" when its trace is not empty and it is in L2 of the
-  matched text, "wrong" when it is not but the matched text has form-of rows,
-  and "unjudged" when the matched text has none (sampled for a hand check).
+  (no trace; for some words that headword is another word, such as era
+  "age" for the verb form era), "right" when its trace is not empty and it is
+  in L2 of the matched text, "wrong" when it is not but the matched text has
+  form-of rows, and "unjudged" when the matched text has none (sampled for a
+  hand check).
+- A right result is "rare" instead (a wrong lemma first, counted with the
+  wrong ones) when a rule made it, the matched text's rows name another lemma
+  the lookup also lists, and the first lemma's citation form is at least ten
+  times rarer in the frequency lists (--freq) than that other lemma's: `sua`
+  shown as suar (to sweat) before seu. The frequent mode uses its own list.
 
 frequent: the list's first <top> words; a word counts as reached when a
 deinflection of it (hoshidicts-cli deinflect, next to lookup-batch) is in its
@@ -80,9 +87,21 @@ def norm(text):
     return unicodedata.normalize('NFKC', text).lower()
 
 
+def read_freq(paths):
+    """Word counts of FrequencyWords lists, summed over the lists."""
+    freq = Counter()
+    for path in paths:
+        for line in open(path, encoding='utf-8'):
+            word, count = line.split()
+            freq[word] += int(count)
+    return freq
+
+
 class Judge:
-    def __init__(self, refs, lemmas):
+    def __init__(self, refs, lemmas, transform_ids=(), freq=None):
         self.refs, self.lemmas = refs, lemmas
+        self.transform_ids = set(transform_ids)
+        self.freq = freq or {}
 
     def l1(self, text):
         out = set()
@@ -112,15 +131,28 @@ class Judge:
             out |= self.refs.get(lemma, set())
         return out
 
-    def verdict(self, result):
-        """own / right / wrong / unjudged for a visible result."""
+    def verdict(self, result, answer=None):
+        """own / right / rare / wrong / unjudged for a visible result."""
         if not result['trace']:
             return 'own'
         matched = result['matched']
         names = self.l2(matched)
         if result['expression'] in names or norm(result['expression']) in {norm(n) for n in names}:
+            if answer is not None and self.rare_first(result, answer):
+                return 'rare'
             return 'right'
         return 'wrong' if self.l1(matched) else 'unjudged'
+
+    def rare_first(self, result, answer):
+        """A rule-made first lemma at least ten times rarer than another lemma the matched text's rows name."""
+        if not self.freq or not any(t in self.transform_ids for t in result['trace']):
+            return False
+        named = self.l1(result['matched'])
+        others = {r['expression'] for r in answer['results'] if not r['formOf'] and r['expression'] != result['expression'] and r['expression'] in named}
+        if not others:
+            return False
+        first = self.freq.get(norm(result['expression']), 0)
+        return max(self.freq.get(norm(e), 0) for e in others) >= 10 * max(first, 1)
 
 
 def lookups(batch, languages, imported, texts):
@@ -166,29 +198,29 @@ def frequent(args, judge):
     every_examples = {'wrong': [], 'unjudged': []}
     for w, n, answer in zip(words, counts, answers):
         first = first_visible(answer)
-        verdict = judge.verdict(first) if first else 'nothing'
+        verdict = judge.verdict(first, answer) if first else 'nothing'
         every[verdict] += 1
-        if verdict in every_examples:
-            every_examples[verdict].append((n, w, first['expression'], rule_of(first)))
+        if verdict in every_examples or verdict == 'rare':
+            every_examples['wrong' if verdict == 'rare' else verdict].append((n, w, first['expression'], rule_of(first), verdict))
         lemmas = judge.l1(w)
         if not lemmas or not (reached_by_rule.get(w, set()) & lemmas):
             continue
         stats['reached'] += 1
         tokens['reached'] += n
         first = first_visible(answer)
-        verdict = judge.verdict(first) if first else 'nothing'
+        verdict = judge.verdict(first, answer) if first else 'nothing'
         stats[verdict] += 1
         tokens[verdict] += n
-        if verdict == 'wrong':
-            wrong.append((n, w, first['expression'], rule_of(first)))
+        if verdict in ('wrong', 'rare'):
+            wrong.append((n, w, first['expression'], rule_of(first), verdict))
         # A wrong lemma reached by deinflection listed above the first right one.
         for r in answer['results']:
             if r['formOf']:
                 continue
-            v = judge.verdict(r)
+            v = judge.verdict(r, answer)
             if v == 'right' or v == 'own':
                 break
-            if v == 'wrong':
+            if v in ('wrong', 'rare'):
                 above.append((n, w, r['expression'], rule_of(r)))
                 tokens['above'] += n
                 stats['above'] += 1
@@ -196,8 +228,8 @@ def frequent(args, judge):
     report = {
         'list': Path(args.inputs[0]).name, 'top': len(words), 'tokens': total_tokens,
         'reached': stats['reached'], 'reachedTokenShare': round(tokens['reached'] / total_tokens, 4),
-        'firstVisible': {k: stats[k] for k in ('own', 'right', 'wrong', 'unjudged', 'nothing')},
-        'wrongFirst': stats['wrong'], 'wrongFirstTokenShare': round(tokens['wrong'] / total_tokens, 5),
+        'firstVisible': {k: stats[k] for k in ('own', 'right', 'rare', 'wrong', 'unjudged', 'nothing')},
+        'wrongFirst': stats['wrong'] + stats['rare'], 'wrongFirstTokenShare': round((tokens['wrong'] + tokens['rare']) / total_tokens, 5),
         'wrongAboveRight': stats['above'], 'wrongAboveRightTokenShare': round(tokens['above'] / total_tokens, 5),
         'wrongExamples': sorted(wrong, reverse=True)[:60], 'aboveExamples': sorted(above, reverse=True)[:60],
         # The first visible result of every one of the words, reached or not.
@@ -234,9 +266,9 @@ def judge_hovers(args, judge, items, label):
     unjudged = []
     for (word, hover), answer in zip(items, answers):
         first = first_visible(answer)
-        verdict = judge.verdict(first) if first else 'nothing'
+        verdict = judge.verdict(first, answer) if first else 'nothing'
         stats[verdict] += 1
-        if verdict == 'wrong':
+        if verdict in ('wrong', 'rare'):
             key = rule_of(first)
             wrong_rules[key] += 1
             if len(wrong_examples[key]) < 8:
@@ -247,7 +279,7 @@ def judge_hovers(args, judge, items, label):
     sample = rng.sample(unjudged, min(args.sample, len(unjudged)))
     return {
         'label': label, 'lookups': len(items), 'firstVisible': dict(stats),
-        'wrongRate': round(stats['wrong'] / max(1, len(items)), 5),
+        'wrongRate': round((stats['wrong'] + stats['rare']) / max(1, len(items)), 5),
         'wrongByTrace': [(k, n, wrong_examples[k]) for k, n in wrong_rules.most_common(30)],
         'unjudgedSample': sample,
     }
@@ -291,9 +323,12 @@ def main():
     parser.add_argument('--top', type=int, default=10000)
     parser.add_argument('--sample', type=int, default=60)
     parser.add_argument('--cli')
+    parser.add_argument('--freq', nargs='*', default=[], help='frequency lists for the rare-reading judgement (text, phrases)')
     parser.add_argument('--out')
     args = parser.parse_args()
-    judge = Judge(*load_dictionary(args.wty))
+    transform_ids = [t['id'] for t in json.loads((Path(args.languages) / 'pt' / 'transforms.json').read_text(encoding='utf-8'))['transforms']]
+    freq_files = [args.inputs[0]] if args.command == 'frequent' else args.freq
+    judge = Judge(*load_dictionary(args.wty), transform_ids, read_freq(freq_files))
     report = {'frequent': frequent, 'text': text, 'phrases': phrases}[args.command](args, judge)
     out = json.dumps(report, ensure_ascii=False, indent=1)
     if args.out:
