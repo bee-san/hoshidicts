@@ -1,0 +1,75 @@
+# Written for this pack (GPL-3.0-or-later): what the text processors of language.json make of an input. The rows of category
+# "yomitan" are the cases of Yomitan's test/language/viet-text-preprocessors.test.js at d3c54c1 (GPL-3.0-or-later, Copyright (C) 2024-2026 Yomitan Authors).
+# category	valid	input	variant (valid = 1: among the variants; 0: not among them)
+unicode	1	Việt Nam	Việt Nam
+unicode	1	đỏ	đỏ
+unicode	1	tiếng Việt	tiếng Việt
+eth	1	Ðà Nẵng	Đà Nẵng
+eth	1	ðẹp	đẹp
+hyphens	1	Hồng-bàng	Hồng bàng
+hyphens	1	Hồng-bàng	Hồng Bàng
+hyphens	1	thế-kỷ	thế kỷ
+hyphens	1	ra-đi-ô	ra đi ô
+case	1	Tôi	tôi
+case	1	VIỆT NAM	việt nam
+case	0	VIỆT NAM	Việt Nam
+case	1	Châu Á	châu Á
+case	0	hà nội	Hà Nội
+case	1	việt nam	Việt nam
+case	0	Trung quốc	Trung Quốc
+case	0	Mặt trăng	Mặt Trăng
+case	0	cao bằng	Cao Bằng
+case	1	Tiếng Việt	tiếng Việt
+case	1	HỒNG-BÀNG	Hồng Bàng
+case	0	tôi	TÔI
+case	0	Tôi	TÔI
+tone marks	1	hoà	hòa
+tone marks	1	hòa	hoà
+tone marks	1	thuỷ	thủy
+tone marks	1	thủy	thuỷ
+tone marks	1	khoẻ	khỏe
+tone marks	1	khỏe	khoẻ
+tone marks	1	Uỷ ban	Ủy ban
+tone marks	1	Ủy ban	Uỷ ban
+tone marks	1	ngừơi	người
+tone marks	1	hoà bình	hòa bình
+tone marks	0	quý	qúy
+tone marks	0	quà	qùa
+tone marks	0	hoàng	hòang
+tone marks	0	thuyền	thùyên
+i and y	1	kĩ thuật	kỹ thuật
+i and y	1	kỹ thuật	kĩ thuật
+i and y	1	lý do	lí do
+i and y	1	Mĩ	Mỹ
+i and y	1	nước Mỹ	nước Mĩ
+i and y	1	công ti	công ty
+i and y	1	hi vọng	hy vọng
+i and y	1	tỉ lệ	tỷ lệ
+i and y	1	bác sĩ	bác sỹ
+i and y	1	nghĩ kĩ	nghĩ kỹ
+i and y	1	quí	quý
+i and y	1	quy định	qui định
+i and y	1	cuống quít	cuống quýt
+i and y	1	kì lạ quá	kỳ lạ quá
+i and y	0	khi	khy
+i and y	0	thi	thy
+i and y	0	chị	chỵ
+i and y	0	nghĩ	nghỹ
+i and y	0	tay	tai
+i and y	0	tuy	tui
+i and y	0	y tá	i tá
+i and y	0	lính	lýnh
+yomitan	1	hoạ	họa
+yomitan	1	choàng	choàng
+yomitan	1	thuỷ	thủy
+yomitan	1	oà	òa
+yomitan	1	toà	tòa
+yomitan	1	toàn	toàn
+yomitan	1	tòan	toàn
+yomitan	1	ngòăng	ngoằng
+yomitan	1	họa	hoạ
+yomitan	1	chòang	choàng
+yomitan	1	giừơng	giường
+yomitan	1	baỷ	bảy
+yomitan	1	cuả	của
+yomitan	1	òa	oà

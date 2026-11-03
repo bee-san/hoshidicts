@@ -14,6 +14,7 @@
 //            toneMarks (decapitalize and capitalizeFirstLetter are in both),
 //            and the own rules;
 //   final    the set this pack ships (the default).
+// --drop <id,...> leaves processors out of a scratch copy.
 // Without --out the pack itself (languages/vi) is written; with --out a copy
 // of the pack (language.json, transforms.json, README.md, tests/) is written
 // to <dir>/vi, for `hoshidicts-cli --languages <dir>`.
@@ -68,9 +69,12 @@ const option = (name, fallback) => {
 };
 const set = option('--set', 'final');
 const outDir = option('--out', null);
+// --drop id,id: leave these processors out of the set (measurements only).
+const drop = new Set((option('--drop', '') ?? '').split(',').filter(Boolean));
+if (drop.size > 0 && outDir === null) throw new Error('--drop is for scratch copies; give --out');
 
 const language = JSON.parse(readFileSync(join(pack, 'language.json'), 'utf8'));
-language.lookup.preprocessors = processorSet(set);
+language.lookup.preprocessors = processorSet(set).filter((p) => !drop.has(p.id));
 
 if (outDir === null) {
   if (set !== 'final') throw new Error('only --set final writes the pack itself; give --out for the others');

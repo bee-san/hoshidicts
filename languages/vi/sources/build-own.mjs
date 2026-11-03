@@ -39,23 +39,6 @@ export const TONED = {
 };
 const NGANG = 0, HUYEN = 1, SAC = 2, HOI = 3, NGA = 4, NANG = 5;
 
-// What can follow the tone-bearing vowel letter in a syllable: nothing, a
-// glide or second vowel letter (ai, ao, ia, ưa, and the old-style òa, ỏe,
-// ủy), or a final consonant. Stops (p, t, c, ch) take only sắc and nặng.
-const RESTS = {
-  a: ['', 'i', 'o', 'u', 'y', 'm', 'n', 'ng', 'nh', 'p', 't', 'c', 'ch'],
-  ă: ['m', 'n', 'ng', 'p', 't', 'c'],
-  â: ['u', 'y', 'm', 'n', 'ng', 'p', 't', 'c'],
-  e: ['', 'o', 'm', 'n', 'ng', 'p', 't', 'c'],
-  ê: ['', 'u', 'm', 'n', 'ng', 'nh', 'p', 't', 'c', 'ch'],
-  i: ['', 'a', 'u', 'm', 'n', 'nh', 'p', 't', 'ch'],
-  o: ['', 'a', 'e', 'i', 'm', 'n', 'ng', 'p', 't', 'c'],
-  ô: ['', 'i', 'm', 'n', 'ng', 'p', 't', 'c'],
-  ơ: ['', 'i', 'u', 'm', 'n', 'ng', 'p', 't', 'c'],
-  u: ['', 'a', 'i', 'y', 'm', 'n', 'ng', 'p', 't', 'c'],
-  ư: ['', 'a', 'i', 'u', 'm', 'n', 'ng', 't', 'c'],
-  y: ['', 'u', 'nh', 'p', 't', 'ch'],
-};
 // A reduplicated syllable with a level tone cannot end in a stop: the stop
 // becomes the nasal made at the same place (mát → man mát, sạch → sành sạch).
 const NASAL = {p: 'm', t: 'n', c: 'ng', ch: 'nh'};
@@ -67,52 +50,71 @@ const LAST_LETTERS = [
   'c', 'h', 'm', 'n', 'g', 'p', 't',
 ];
 
-// Leading words a reduplicated pair may follow (đỏ chon chót → đỏ chót).
-const LEAD = '((?:[^ ]+ )*)';
-
-function fullReduplication() {
-  return LAST_LETTERS.map((last) => ({
-    type: 'pattern', pattern: '(^| )([^ ]+) \\2$', replacement: '$1$2', anchorSuffix: last,
-    conditionsIn: [], conditionsOut: [],
-  }));
-}
-
-function aabbReduplication() {
-  return LAST_LETTERS.map((last) => ({
-    type: 'pattern', pattern: `^${LEAD}([^ ]+) \\2 ([^ ]+) \\3$`, replacement: '$1$2 $3', anchorSuffix: last,
-    conditionsIn: [], conditionsOut: [],
-  }));
-}
-
-// lôi thôi → lôi tha lôi thôi: the first syllable, the second's onset with a
-// (ngang or huyền), then both syllables.
+// One pattern per last letter reads the three shapes in which a whole word
+// or expression is said twice (the anchor only lets the engine try it on
+// texts that end in that letter):
+//   X X         → X      xanh xanh → xanh, đi đi → đi
+//   A A B B     → A B    đi đi lại lại → đi lại
+//   A Ca A CB   → A CB   lôi tha lôi thôi → lôi thôi, lề mà lề mề → lề mề
+//                        (C the onset of the second word, then a or à)
+// The whole text must have that shape: a word repeated after another word
+// (máy bay bay, the plane flies) is not read as one.
 const ONSET_LETTERS = '[bcdđghklmnpqrstvx]';
-function thaReduplication() {
+function wholeReduplication() {
+  const pattern = `^([^ ]+) (?:\\1|\\1( [^ ]+)\\2|(${ONSET_LETTERS}*)[aà] \\1( \\3[^ ]+))$`;
   return LAST_LETTERS.map((last) => ({
-    type: 'pattern', pattern: `^${LEAD}([^ ]+) (${ONSET_LETTERS}*)[aà] \\2 (\\3[^ ]+)$`, replacement: '$1$2 $4',
-    anchorSuffix: last, conditionsIn: [], conditionsOut: [],
+    type: 'pattern', pattern, replacement: '$1$2$4', anchorSuffix: last, conditionsIn: [], conditionsOut: [],
   }));
 }
 
-// The reduplicant (first syllable) is the base (second) with its tone made
-// level: sắc and hỏi become ngang, nặng becomes huyền, and ngã either (khe
-// khẽ, dề dễ); a final stop becomes a nasal. The onset, glide and every
-// letter before the toned vowel are repeated as they are (khoe khoẻ).
+// Adjectives (and a few verbs and adverbs) whose diminutive or augmentative
+// reduplication levels the tone: the first syllable is the word with sắc and
+// hỏi made ngang, nặng made huyền and ngã either, and a final p, t, c, ch
+// made m, n, ng, nh (đo đỏ, nhè nhẹ, man mát, sành sạch). The words are
+// listed because the same shape is common between two words that are not a
+// reduplication: cho chó (feed the dog), cùng cũng, tôi tối (I ... tonight).
+// Not listed for that reason: tối (tôi tối), lạ (là lạ, which dictionaries
+// list), đủ (đu đủ is papaya).
+export const PARTIAL_BASES = [
+  // colours and light
+  'đỏ', 'trắng', 'tím', 'xám', 'đục', 'nhạt', 'bạc', 'đậm', 'sẫm', 'lợt', 'sáng',
+  // size and shape
+  'nhỏ', 'bé', 'lớn', 'mỏng', 'thấp', 'ngắn', 'hẹp', 'méo', 'nhọn', 'dẹt', 'bẹt', 'béo', 'mập',
+  // taste and smell
+  'ngọt', 'mặn', 'đắng', 'chát', 'khét', 'thối', 'ngái', 'khắm',
+  // temperature and touch
+  'mát', 'lạnh', 'ấm', 'nóng', 'rét', 'cứng', 'ướt', 'ẩm', 'nhẹ', 'nặng', 'lỏng', 'dẻo', 'nhám', 'ráp',
+  'nhớt', 'dính', 'nhẵn',
+  // manner, speed and sound
+  'chậm', 'khẽ', 'sẽ', 'lẹ', 'vút', 'vụt', 'cuộn', 'thẳm', 'biệt', 'hổi', 'rượi', 'vợi', 'thoải',
+  // quality, likeness and feeling
+  'đẹp', 'xấu', 'sạch', 'khá', 'tạm', 'khác', 'giống', 'dở', 'dại', 'ngộ', 'mệt', 'sợ', 'vắng', 'trẻ',
+  'thích', 'nhớ', 'tức', 'ngượng',
+];
+
+// The levelled forms of a syllable, or [] when it has no tone to level.
+export function levelled(syllable) {
+  for (const forms of Object.values(TONED)) {
+    for (const tone of [SAC, HOI, NGA, NANG]) {
+      const at = syllable.indexOf(forms[tone]);
+      if (at < 0) continue;
+      const head = syllable.slice(0, at);
+      const tail = syllable.slice(at + 1);
+      const rest = Object.hasOwn(NASAL, tail) ? NASAL[tail] : tail;
+      const vowels = tone === NANG ? [forms[HUYEN]] : tone === NGA ? [forms[NGANG], forms[HUYEN]] : [forms[NGANG]];
+      return vowels.map((v) => head + v + rest);
+    }
+  }
+  return [];
+}
+
 function partialReduplication() {
   const rules = [];
-  for (const [vowel, forms] of Object.entries(TONED)) {
-    for (const rest of RESTS[vowel]) {
-      const stop = Object.hasOwn(NASAL, rest);
-      for (const tone of stop ? [SAC, NANG] : [SAC, HOI, NGA, NANG]) {
-        const base = forms[tone] + rest;
-        const levelled = tone === NANG ? [forms[HUYEN]] : tone === NGA ? [forms[NGANG], forms[HUYEN]] : [forms[NGANG]];
-        const restOut = stop ? NASAL[rest] : rest;
-        const reduplicant = levelled.length === 1 ? `${levelled[0]}${restOut}` : `(?:${levelled.map((v) => v + restOut).join('|')})`;
-        rules.push({
-          type: 'pattern', pattern: `^${LEAD}([^ ]*)${reduplicant} \\2${base}$`, replacement: `$1$2${base}`,
-          anchorSuffix: base, conditionsIn: [], conditionsOut: [],
-        });
-      }
+  for (const base of PARTIAL_BASES) {
+    const forms = levelled(base);
+    if (forms.length === 0) throw new Error(`${base} has no tone to level`);
+    for (const form of forms) {
+      rules.push({type: 'wholeWord', inflected: `${form} ${base}`, deinflected: base, conditionsIn: [], conditionsOut: []});
     }
   }
   return rules;
@@ -125,23 +127,13 @@ export function ownRules() {
     transforms: [
       {
         id: 'reduplication', name: 'reduplication',
-        description: 'Full reduplication: the word said twice (xanh xanh → xanh, người người → người). It softens an adjective (bluish), repeats a verb or makes a noun mean "every". Also the last word of a phrase (trắng phau phau → trắng phau).',
-        source: 'own', rules: fullReduplication(),
+        description: 'A word or two-word expression said twice: xanh xanh → xanh (bluish), người người → người (everyone), đi đi lại lại → đi lại (back and forth again and again), lôi tha lôi thôi → lôi thôi. It softens an adjective, repeats or prolongs an action, or makes a noun mean "every".',
+        source: 'own', rules: wholeReduplication(),
       },
       {
         id: 'partialReduplication', name: 'partial reduplication',
-        description: 'The word said twice, the first time with a level tone (sắc and hỏi lose their mark, nặng becomes huyền, ngã either) and a final p, t, c or ch made m, n, ng or nh: đo đỏ → đỏ, nhè nhẹ → nhẹ, man mát → mát, sành sạch → sạch. It usually softens an adjective (reddish, a little light); some forms intensify it (vun vút → vút). Also after a word (đỏ chon chót → đỏ chót).',
+        description: 'An adjective said twice, the first time with a level tone (sắc and hỏi lose their mark, nặng becomes huyền) and a final p, t, c or ch made m, n, ng or nh: đo đỏ → đỏ (reddish), nhè nhẹ → nhẹ (gently), man mát → mát (coolish), sành sạch → sạch. It usually softens the adjective; some forms intensify it (vun vút → vút).',
         source: 'own', rules: partialReduplication(),
-      },
-      {
-        id: 'aabbReduplication', name: 'AABB reduplication',
-        description: 'Each word of a two-word expression said twice: đi đi lại lại → đi lại (going back and forth again and again), vội vội vàng vàng → vội vàng.',
-        source: 'own', rules: aabbReduplication(),
-      },
-      {
-        id: 'thaReduplication', name: 'four-syllable reduplication',
-        description: 'A two-word expression with its first word repeated after a syllable in -a: lôi tha lôi thôi → lôi thôi, lẩm bà lẩm bẩm → lẩm bẩm. It stresses how long or how often something goes on.',
-        source: 'own', rules: thaReduplication(),
       },
     ],
   };
@@ -165,16 +157,10 @@ function toneMarkPairs() {
   return pairs;
 }
 
-// A tone mark typed on the first letter of iê, yê, uô or ươ belongs on the
-// second; such spellings (ngừơi, múôn, tíêng) are never right.
-function misplacedTonePairs() {
-  const pairs = [];  // [wrong, right]
-  for (const [first, second] of [['i', 'ê'], ['y', 'ê'], ['u', 'ô'], ['ư', 'ơ']]) {
-    for (let tone = HUYEN; tone <= NANG; ++tone) {
-      pairs.push([TONED[first][tone] + second, first + TONED[second][tone]]);
-    }
-  }
-  return pairs;
+// A syllable and its capitalised form (Ủy ban, nước Mỹ, Hoa Kỳ).
+const capitalised = (text) => text.charAt(0).toUpperCase() + text.slice(1);
+function withCapitals(pairs) {
+  return pairs.flatMap(([from, to]) => [[from, to], [capitalised(from), capitalised(to)]]);
 }
 
 // Map steps that change a syllable only where it ends: before a space and at
@@ -194,15 +180,11 @@ function syllableEndSteps(pairs, keep) {
 }
 
 function toneMarkProcessor() {
-  const pairs = toneMarkPairs();
-  const keep = pairs.filter(([, n]) => n.startsWith('u')).flatMap(([o, n]) => ['q' + o, 'q' + n]);
-  const typos = Object.fromEntries(misplacedTonePairs());
+  const pairs = withCapitals(toneMarkPairs());
+  const keep = toneMarkPairs().filter(([, n]) => n.startsWith('u')).flatMap(([o, n]) => ['q' + o, 'q' + n, 'Q' + o, 'Q' + n]);
   return {
     id: 'toneMarks', name: 'Move tone marks (old and new style)',
-    variants: [
-      [{map: typos}, ...syllableEndSteps(pairs, keep)],
-      [{map: typos}, ...syllableEndSteps(pairs.map(([o, n]) => [n, o]), keep)],
-    ],
+    variants: [syllableEndSteps(pairs, keep), syllableEndSteps(pairs.map(([o, n]) => [n, o]), keep)],
   };
 }
 
@@ -215,20 +197,24 @@ const IY_ONSETS = ['h', 'k', 'l', 'm', 's', 't', 'qu'];
 const H_CLUSTERS = ['ch', 'gh', 'kh', 'nh', 'ph', 'th'];
 function iyProcessor() {
   const variant = (from, to) => {
+    const pairs = [];
+    for (const onset of IY_ONSETS) {
+      for (let tone = NGANG; tone <= NANG; ++tone) pairs.push([onset + TONED[from][tone], onset + TONED[to][tone]]);
+    }
+    // quýt and quỵt are also written quít and quịt.
+    for (const tone of [SAC, NANG]) pairs.push(['qu' + TONED[from][tone] + 't', 'qu' + TONED[to][tone] + 't']);
     const all = {};
     const start = {};
     const end = {};
     for (const cluster of H_CLUSTERS) {
-      for (const f of TONED[from]) end[cluster + f] = cluster + f;
-    }
-    for (const onset of IY_ONSETS) {
-      for (let tone = NGANG; tone <= NANG; ++tone) {
-        const a = onset + TONED[from][tone];
-        const b = onset + TONED[to][tone];
-        all[' ' + a + ' '] = ' ' + b + ' ';
-        start[a + ' '] = b + ' ';
-        end[a] = b;
+      for (const f of TONED[from]) {
+        for (const keep of [cluster + f, capitalised(cluster + f)]) end[keep] = keep;
       }
+    }
+    for (const [a, b] of withCapitals(pairs)) {
+      all[' ' + a + ' '] = ' ' + b + ' ';
+      start[a + ' '] = b + ' ';
+      end[a] = b;
     }
     return [{map: all}, {map: start, at: 'start'}, {map: end, at: 'end'}];
   };
@@ -243,17 +229,23 @@ function wordInitials() {
 }
 
 export function ownProcessors() {
-  const titleMap = {};
-  for (const letter of wordInitials()) titleMap[' ' + letter] = ' ' + letter.toUpperCase();
+  // Older texts join the words of a compound with hyphens and capitalise only
+  // the first word of a name (Hồng-bàng, Hải-dương, Đại-Việt sử-ký): a
+  // second variant capitalises each word after a hyphen.
+  const afterHyphen = {};
+  for (const letter of wordInitials()) afterHyphen['-' + letter] = ' ' + letter.toUpperCase();
   return [
     {id: 'normalizeUnicode', name: 'Compose letters and tone marks (NFC)', variants: [[{normalize: 'NFC'}]]},
     {id: 'replaceEth', name: 'Replace Ð with Đ', variants: [[{map: {'\u00D0': '\u0110', '\u00F0': '\u0111'}}]]},
-    {id: 'hyphensToSpaces', name: 'Hyphens to spaces (Hồng-bàng → Hồng bàng)', variants: [[{map: {'-': ' '}}]]},
     {id: 'decapitalize', name: 'Decapitalize text', variants: [[{case: 'lower'}]]},
+    {id: 'decapitalizeFirstLetter', name: 'Decapitalize first letter (Tiếng Việt → tiếng Việt)', variants: [[{case: 'lowerFirst'}]]},
+    {
+      id: 'hyphensToSpaces', name: 'Hyphens to spaces (Hồng-bàng → Hồng bàng, Hồng Bàng)',
+      variants: [[{map: {'-': ' '}}], [{map: afterHyphen}, {map: {'-': ' '}}]],
+    },
     toneMarkProcessor(),
     iyProcessor(),
     {id: 'capitalizeFirstLetter', name: 'Capitalize first letter', variants: [[{case: 'upperFirst'}]]},
-    {id: 'capitalizeWords', name: 'Capitalize every word (Hà Nội)', variants: [[{case: 'lower'}, {case: 'upperFirst'}, {map: titleMap}]]},
   ];
 }
 

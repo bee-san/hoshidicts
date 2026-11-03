@@ -1,0 +1,369 @@
+# Known gaps: run by the conformance test and counted, not enforced.
+# Source: kaikki.org's extract of English Wiktionary, Vietnamese entries
+# (https://kaikki.org/dictionary/Vietnamese/kaikki.org-dictionary-Vietnamese.jsonl, sha256 186cd0a6…d945,
+# downloaded 2026-11-03), CC BY-SA 4.0 and GFDL, by the Wiktionary contributors.
+# 1000 rows written by sources/build-corpus.py (every reduplication pair, a sample of spelling pairs with seed 1);
+# the rows the pack's rules and processors reach are in corpus.tsv (638), the others in gaps.tsv (362).
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+reduplication	1	ang áng	áng	*	*
+reduplication	1	anh ách	ách	*	*
+reduplication	1	anh ánh	ánh	*	*
+reduplication	1	bong bóng	bóng	*	*
+reduplication	1	bô lô ba la	bô bô	*	*
+reduplication	1	bôm bốp	bốp	*	*
+reduplication	1	bơ vơ	bơ	*	*
+reduplication	1	bươm bướm	bướm	*	*
+reduplication	1	bạn bè	bạn	*	*
+reduplication	1	bồng bềnh	bềnh	*	*
+reduplication	1	chiu chíu	chíu	*	*
+reduplication	1	chiền chiện	chiện	*	*
+reduplication	1	chon chót	chót	*	*
+reduplication	1	chong chóng	chóng	*	*
+reduplication	1	chuếnh choáng	choáng	*	*
+reduplication	1	chòng chọc	chọc	*	*
+reduplication	1	chói lói	chói	*	*
+reduplication	1	chôm chỉa	chôm	*	*
+reduplication	1	chăm chút	chăm	*	*
+reduplication	1	chếnh choáng	choáng	*	*
+reduplication	1	chờn chợn	chợn	*	*
+reduplication	1	cun cút	cút	*	*
+reduplication	1	côi cút	côi	*	*
+reduplication	1	côm cốp	cốp	*	*
+reduplication	1	cũ kĩ	cũ	*	*
+reduplication	1	cằn nhằn cử nhử	cằn nhằn	*	*
+reduplication	1	cỏn con	con	*	*
+reduplication	1	cồm cộm	cộm	*	*
+reduplication	1	cồng kềnh	kềnh	*	*
+reduplication	1	dắt díu	dắt	*	*
+reduplication	1	dễ dầu	dễ	*	*
+reduplication	1	dữ dằn	dữ	*	*
+reduplication	1	eng éc	éc	*	*
+reduplication	1	giặt gỵa	giặt	*	*
+reduplication	1	gắt gao	gắt	*	*
+reduplication	1	gắt gỏng	gắt	*	*
+reduplication	1	hoen hoét	hoét	*	*
+reduplication	1	hon hỏn	hỏn	*	*
+reduplication	1	háo hức	háo	*	*
+reduplication	1	hì hợm	hợm	*	*
+reduplication	1	hí hoáy	hoáy	*	*
+reduplication	1	hẩm hút	hẩm	*	*
+reduplication	1	hớt hải	hớt	*	*
+reduplication	1	khắt khe	khắt	*	*
+reduplication	1	kịch cỡm	kịch	*	*
+reduplication	1	leo lẻo	lẻo	*	*
+reduplication	1	luông luốc	luốc	*	*
+reduplication	1	là lạ	lạ	*	*
+reduplication	1	lúc lắc	lắc	*	*
+reduplication	1	lơ là	lơ	*	*
+reduplication	1	lơ lớ	lơ	*	*
+reduplication	1	lượn lờ	lượn	*	*
+reduplication	1	lật đật	lật	*	*
+reduplication	1	lồng lộng	lộng	*	*
+reduplication	1	lừa lọc	lừa	*	*
+reduplication	1	lử khử lừ khừ	lử khử	*	*
+reduplication	1	mon men	men	*	*
+reduplication	1	muồm muỗm	muỗm	*	*
+reduplication	1	móm mém	móm	*	*
+reduplication	1	mơn man	mơn	*	*
+reduplication	1	mắc mỏ	mắc	*	*
+reduplication	1	mồn một	một	*	*
+reduplication	1	nghí ngoáy	ngoáy	*	*
+reduplication	1	ngoan ngoãn	ngoan	*	*
+reduplication	1	ngày nảy ngày nay	ngày nay	*	*
+reduplication	1	ngày xửa ngày xưa	ngày xưa	*	*
+reduplication	1	ngúc ngắc	ngúc	*	*
+reduplication	1	ngúc ngắc	ngắc	*	*
+reduplication	1	ngất ngư	ngất	*	*
+reduplication	1	ngắc ngứ	ngắc	*	*
+reduplication	1	ngờ ngợ	ngờ	*	*
+reduplication	1	ngủng nghỉnh	nghỉnh	*	*
+reduplication	1	nhan nhản	nhản	*	*
+reduplication	1	nhem nhẻm	nhẻm	*	*
+reduplication	1	nhẹ nhõm	nhẹ	*	*
+reduplication	1	nhền nhện	nhện	*	*
+reduplication	1	nhễu nhụa	nhễu	*	*
+reduplication	1	nâng niu	nâng	*	*
+reduplication	1	nô nức	nô	*	*
+reduplication	1	nơm nớp	nớp	*	*
+reduplication	1	nằng nặc	nặc	*	*
+reduplication	1	oằn oại	oằn	*	*
+reduplication	1	phanh phui	phanh	*	*
+reduplication	1	phành phạch	phạch	*	*
+reduplication	1	phẳng phiu	phẳng	*	*
+reduplication	1	quanh quất	quanh	*	*
+reduplication	1	quành quạch	quạch	*	*
+reduplication	1	quần quật	quật	*	*
+reduplication	1	rin rít	rít	*	*
+reduplication	1	ru rú	rú	*	*
+reduplication	1	rung rinh	rung	*	*
+reduplication	1	rành rọt	rành	*	*
+reduplication	1	rón rén	rén	*	*
+reduplication	1	rõ rệt	rõ	*	*
+reduplication	1	rộng rãi	rộng	*	*
+reduplication	1	rờ rệt	rờ	*	*
+reduplication	1	rủ rỉ rù rì	rủ rỉ	*	*
+reduplication	1	san sát	sát	*	*
+reduplication	1	se sẻ	sẻ	*	*
+reduplication	1	sát sao	sát	*	*
+reduplication	1	sát sạt	sát	*	*
+reduplication	1	sình sịch	sịch	*	*
+reduplication	1	sùm soà	sùm	*	*
+reduplication	1	sường sượng	sượng	*	*
+reduplication	1	sắc sảo	sắc	*	*
+reduplication	1	sặc sụa	sặc	*	*
+reduplication	1	sợ sệt	sợ	*	*
+reduplication	1	sừng sững	sững	*	*
+reduplication	1	sững sờ	sững	*	*
+reduplication	1	the thé	thé	*	*
+reduplication	1	thin thít	thít	*	*
+reduplication	1	thiu thỉu	thỉu	*	*
+reduplication	1	thiêm thiếp	thiếp	*	*
+reduplication	1	thoăn thoắt	thoắt	*	*
+reduplication	1	thui thủi	thủi	*	*
+reduplication	1	thòm thèm	thèm	*	*
+reduplication	1	thông thốc	thốc	*	*
+reduplication	1	thấm thía	thấm	*	*
+reduplication	1	thắc thỏm	thắc	*	*
+reduplication	1	ti tỉ	tỉ	*	*
+reduplication	1	tròn trịa	tròn	*	*
+reduplication	1	trùi trụi	trụi	*	*
+reduplication	1	trơn tru	trơn	*	*
+reduplication	1	trằn trọc	trằn	*	*
+reduplication	1	tuốt luốt	tuốt	*	*
+reduplication	1	tồm tộp	tộp	*	*
+reduplication	1	vân vê	vê	*	*
+reduplication	1	vằng vặc	vặc	*	*
+reduplication	1	xa lắc xa lơ	xa lắc	*	*
+reduplication	1	xa xôi	xa	*	*
+reduplication	1	xa xăm	xa	*	*
+reduplication	1	xao xác	xao	*	*
+reduplication	1	xình xịch	xịch	*	*
+reduplication	1	ý kiến ý cò	ý kiến	*	*
+reduplication	1	đau đớn	đau	*	*
+reduplication	1	đom đóm	đóm	*	*
+reduplication	1	đòng đọc	đọc	*	*
+reduplication	1	đôm đốp	đốp	*	*
+reduplication	1	đỏng đảnh	đỏng	*	*
+reduplication	1	đồm độp	độp	*	*
+reduplication	1	ơn ớn	ớn	*	*
+spelling	1	người Tầu	người Tàu	*	*
+spelling	1	cốc	cóc	*	*
+spelling	1	hổn hà hổn hển	hổn ha hổn hển	*	*
+spelling	1	gầy	gây	*	*
+spelling	1	sọi	sõi	*	*
+spelling	1	chấp nhặt	chấp nhất	*	*
+spelling	1	thánh giá	Thánh Giá	*	*
+spelling	1	Ê Đê	Ê-đê	*	*
+spelling	1	phéc mơ tuya	phéc-mơ-tuya	*	*
+spelling	1	ắc quy	ắc-quy	*	*
+spelling	1	cò lẹ	có lẽ	*	*
+spelling	1	Hồi quốc	Hồi Quốc	*	*
+spelling	1	Nẫu	Nẩu	*	*
+spelling	1	A-rập	Ả Rập	*	*
+spelling	1	tào khang	tao khang	*	*
+spelling	1	Giô-ên	Giô-en	*	*
+spelling	1	lờ	lơ	*	*
+spelling	1	xu chiêng	xu-chiêng	*	*
+spelling	1	mầu	màu	*	*
+spelling	1	giầu	giàu	*	*
+spelling	1	hản	hẳn	*	*
+spelling	1	quày	quay	*	*
+spelling	1	uýt ki	uýt-ki	*	*
+spelling	1	mân	mần	*	*
+spelling	1	Đại Hàn Dân quốc	Đại Hàn Dân Quốc	*	*
+spelling	1	bi đông	bi-đông	*	*
+spelling	1	giầy	giày	*	*
+spelling	1	bợp	bớp	*	*
+spelling	1	dồ	dô	*	*
+spelling	1	nghiền	nghiện	*	*
+spelling	1	tiếp vỹ ngữ	tiếp vĩ ngữ	*	*
+spelling	1	vi ta min	vi-ta-min	*	*
+spelling	1	ôxy	oxi	*	*
+spelling	1	cấy	cái	*	*
+spelling	1	cầy	cày	*	*
+spelling	1	Tân Đê-li	Tân Đề-li	*	*
+spelling	1	tần tiện	tằn tiện	*	*
+spelling	1	Ky Tô	Ki-tô	*	*
+spelling	1	Luận ngữ	Luận Ngữ	*	*
+spelling	1	sảy	sẩy	*	*
+spelling	1	Nê-an-đec-tan	Nê-an-đéc-tan	*	*
+spelling	1	thiên chủ	Thiên Chủ	*	*
+spelling	1	bậu	bâu	*	*
+spelling	1	cạy cục	cậy cục	*	*
+spelling	1	đỏng đà đỏng đảnh	đỏng đa đỏng đảnh	*	*
+spelling	1	Gáp-ri-ên	Gáp-ri-en	*	*
+spelling	1	Đa-ni-ên	Đa-ni-en	*	*
+spelling	1	Ê-va	E-và	*	*
+spelling	1	đụng	đũng	*	*
+spelling	1	tổ hợp quân sự công nghiệp	tổ hợp quân sự-công nghiệp	*	*
+spelling	1	xì gà	xì-gà	*	*
+spelling	1	bạt thiệp	bặt thiệp	*	*
+spelling	1	Quán Thế Âm	Quan Thế Âm	*	*
+spelling	1	ỳ	ì	*	*
+spelling	1	-yếc	-iếc	*	*
+spelling	1	lủng là lủng lẳng	lủng la lủng lẳng	*	*
+spelling	1	coca	côca	*	*
+spelling	1	ý	í	*	*
+spelling	1	chỉa	chĩa	*	*
+spelling	1	glucôzơ	glucozơ	*	*
+spelling	1	xi măng	xi-măng	*	*
+spelling	1	chặp	chập	*	*
+spelling	1	hoả lò	Hoả Lò	*	*
+spelling	1	bẩy	bảy	*	*
+spelling	1	Huình	Huỳnh	*	*
+spelling	1	hăm bơ gơ	hăm-bơ-gơ	*	*
+spelling	1	ca vát	cà vạt	*	*
+spelling	1	lắp	lấp	*	*
+spelling	1	nhao nhác	nháo nhác	*	*
+spelling	1	le	lè	*	*
+spelling	1	Thừa Thiên - Huế	Thừa Thiên Huế	*	*
+spelling	1	lưu chiểu	lưu chiếu	*	*
+spelling	1	Mạnh Thường Quân	Mạnh Thường quân	*	*
+spelling	1	đằm	đầm	*	*
+spelling	1	Trung Hoa Dân quốc	Trung Hoa Dân Quốc	*	*
+spelling	1	đàng	đằng	*	*
+spelling	1	Hải Vương Tinh	Hải Vương tinh	*	*
+spelling	1	bóng bảy	bóng bẩy	*	*
+spelling	1	Đông dương	Đông Dương	*	*
+spelling	1	Diêm Vương Tinh	Diêm Vương tinh	*	*
+spelling	1	ngặc ngừ	ngắc ngứ	*	*
+spelling	1	dầy	dày	*	*
+spelling	1	bôn sê vích	Bôn-sê-vích	*	*
+spelling	1	bi a	bi-a	*	*
+spelling	1	cảm ơn	cám ơn	*	*
+spelling	1	thiên địa hội	Thiên Địa hội	*	*
+spelling	1	cụi	cũi	*	*
+spelling	1	nhắc	nhấc	*	*
+spelling	1	trái đất	Trái Đất	*	*
+spelling	1	đủ đủ	đu đủ	*	*
+spelling	1	bỏm bẻm	bõm bẽm	*	*
+spelling	1	mài	mày	*	*
+spelling	1	chắn song	chấn song	*	*
+spelling	1	Sa-mu-ên	Sa-mu-en	*	*
+spelling	1	Sýp	Síp	*	*
+spelling	1	nầy	này	*	*
+spelling	1	trảu	trẩu	*	*
+spelling	1	đon	đón	*	*
+spelling	1	giá như	giả như	*	*
+spelling	1	ô liu	ô-liu	*	*
+spelling	1	Cộng hoà xã hội chủ nghĩa Việt Nam	Cộng hoà Xã hội chủ nghĩa Việt Nam	*	*
+spelling	1	thấm thoắt	thấm thoát	*	*
+spelling	1	giặt gịa	giặt gỵa	*	*
+spelling	1	trầm mình	trẫm mình	*	*
+spelling	1	trấy	trái	*	*
+spelling	1	õng a õng ẹo	õng à õng ẹo	*	*
+spelling	1	địa cầu	Địa Cầu	*	*
+spelling	1	Tết âm lịch	Tết Âm lịch	*	*
+spelling	1	ngò om	ngò ôm	*	*
+spelling	1	chủ nghĩa Phục quốc Do Thái	chủ nghĩa phục quốc Do Thái	*	*
+spelling	1	Cộng hòa xã hội chủ nghĩa Việt Nam	Cộng hoà Xã hội chủ nghĩa Việt Nam	*	*
+spelling	1	nhẩy dựng	nhảy dựng	*	*
+spelling	1	chận	chặn	*	*
+spelling	1	Ba-bên	Ba-ben	*	*
+spelling	1	ỳ ạch	ì ạch	*	*
+spelling	1	Cộng hòa Xã hội Chủ nghĩa Việt Nam	Cộng hoà Xã hội chủ nghĩa Việt Nam	*	*
+spelling	1	nhỏm	nhổm	*	*
+spelling	1	Giê Su	Giê-su	*	*
+spelling	1	rõi	rọi	*	*
+spelling	1	Gô-li-át	Go-li-át	*	*
+spelling	1	magiê	magie	*	*
+spelling	1	Tết dương lịch	Tết Dương lịch	*	*
+spelling	1	yếc	-iếc	*	*
+spelling	1	âm ỷ	âm ỉ	*	*
+spelling	1	ti	tí	*	*
+spelling	1	thái dương	Thái Dương	*	*
+spelling	1	mần	mẩn	*	*
+spelling	1	Gia-cốp	Gia-cóp	*	*
+spelling	1	vịnh México	vịnh Mexico	*	*
+spelling	1	boọc-đô	boóc-đô	*	*
+spelling	1	Thy	Thi	*	*
+spelling	1	phức hợp quân sự công nghiệp	phức hợp quân sự-công nghiệp	*	*
+spelling	1	Tề Thiên đại thánh	Tề Thiên Đại Thánh	*	*
+spelling	1	chửa	chưa	*	*
+spelling	1	chết chưa	chết chửa	*	*
+spelling	1	Quán Âm	Quan Âm	*	*
+spelling	1	dữu dân	dửu dân	*	*
+spelling	1	dẫy	dãy	*	*
+spelling	1	Ả Rập Xê Út	A-rập Xê-út	*	*
+spelling	1	Ba-by-lôn	Ba-bi-lon	*	*
+spelling	1	Á rập	Ả Rập	*	*
+spelling	1	Pháp Hoa	Pháp-Hoa	*	*
+spelling	1	chõi	chọi	*	*
+spelling	1	chói lói	chói lọi	*	*
+spelling	1	mặt trời	Mặt Trời	*	*
+spelling	1	tiêu tán	tiêu tan	*	*
+spelling	1	ỳ à ỳ ạch	ì à ì ạch	*	*
+spelling	1	Giê Hô Va	Giê-hô-va	*	*
+spelling	1	nhàn	nhạn	*	*
+spelling	1	cờ lê	cờ-lê	*	*
+spelling	1	chiu chít	chíu chít	*	*
+spelling	1	xì-líp	xi-líp	*	*
+spelling	1	gầu sòng	gàu sòng	*	*
+spelling	1	Mân Đàn	Man Đần	*	*
+spelling	1	cặm	cắm	*	*
+spelling	1	gầu	gàu	*	*
+spelling	1	gấy	gái	*	*
+spelling	1	sơn trà	sơn tra	*	*
+spelling	1	nhấn	nhận	*	*
+spelling	1	a lê hấp	a-lê-hấp	*	*
+spelling	1	ba rê	ba-rê	*	*
+spelling	1	me tây	me Tây	*	*
+spelling	1	trẩy	trảy	*	*
+spelling	1	va li	va-li	*	*
+spelling	1	độp	đốp	*	*
+spelling	1	đẩy lui	đẩy lùi	*	*
+spelling	1	ca ra	ca-ra	*	*
+spelling	1	gần gụi	gần gũi	*	*
+spelling	1	giăm bông	giăm-bông	*	*
+spelling	1	xì tin	xì-tin	*	*
+spelling	1	bông vụ	bong vụ	*	*
+spelling	1	Nụy khấu	Nụy Khấu	*	*
+spelling	1	Anh quốc	Anh Quốc	*	*
+spelling	1	nao	nào	*	*
+spelling	1	dầu	dẫu	*	*
+spelling	1	Giê Su Ky Tô	Giê-su Ki-tô	*	*
+spelling	1	củng	cụng	*	*
+spelling	1	Héc-quin	Héc-quyn	*	*
+spelling	1	ghẹ	ghệ	*	*
+spelling	1	ngoẻo	ngoẹo	*	*
+spelling	1	rầy	rày	*	*
+spelling	1	lập lại	lặp lại	*	*
+spelling	1	chiu	chịu	*	*
+spelling	1	chi dụng	chi dùng	*	*
+spelling	1	lùi lụi	lùi lũi	*	*
+spelling	1	Việt cộng	Việt Cộng	*	*
+spelling	1	kilômet	kilômét	*	*
+spelling	1	nạm	nắm	*	*
+spelling	1	đồng bằng sông Hồng	đồng bằng Sông Hồng	*	*
+spelling	1	chợp	chớp	*	*
+spelling	1	chử	chữ	*	*
+spelling	1	bê tông	bê-tông	*	*
+spelling	1	gẫy	gãy	*	*
+spelling	1	dầy đặc	dày đặc	*	*
+spelling	1	rảy	rẩy	*	*
+spelling	1	soọc	soóc	*	*
+spelling	1	Vi	Vy	*	*
+spelling	1	a lô	a-lô	*	*
+spelling	1	cậy	cạy	*	*
+spelling	1	đễ	để	*	*
+spelling	1	Bôn sê vích	Bôn-sê-vích	*	*
+spelling	1	Mi-ca-ên	Mi-ca-en	*	*
+spelling	1	ẳm	ẵm	*	*
+spelling	1	bá láp	ba láp	*	*
+spelling	1	ngắc ngư	ngắc ngứ	*	*
+spelling	1	quẩy	quẫy	*	*
+spelling	1	chát	chat	*	*
+spelling	1	giầy dép	giày dép	*	*
+spelling	1	oxy	oxi	*	*
+spelling	1	mãi dâm	mại dâm	*	*
+spelling	1	A La Hán	A-la-hán	*	*
+spelling	1	nẫu	nẩu	*	*
+spelling	1	sô vanh	sô-vanh	*	*
+spelling	1	hiđrô	hiđro	*	*
+spelling	1	vi rút	vi-rút	*	*
+spelling	1	mãn tính	mạn tính	*	*
+spelling	1	anđehit	anđêhit	*	*
+spelling	1	rưởi	rưỡi	*	*
+spelling	1	Cơ đốc giáo	Cơ Đốc giáo	*	*
+spelling	1	hăng gô	hăng-gô	*	*
+spelling	1	Vĩnh Ngươn	Vĩnh Nguơn	*	*
