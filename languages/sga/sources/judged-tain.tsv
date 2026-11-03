@@ -1,330 +1,330 @@
 # Readings judged by hand (README.md, Measurements 4 and Rule provenance), listed by sources/measure.py judge and counted by sources/measure.py tally; Táin Bó Cúailnge, Recension I, ed. Strachan and O'Keeffe (1912), public domain.
 # set: replaced = every first result a final-set rule puts in place of the dictionary's own first result; top = the 70 most frequent first results the final rules reach where the dictionary alone has nothing; sample = 100 lookups drawn (seed 20261103, by position) from the rest of that class; lenited = every first result the union reaches through Yomitan's lenited.
-# form-of tie (replaced only): yes when a form-of row of the text also names the rules' first result, so that the two terms are both named by the dictionary and their order is discovery order.
-# set	n	lookups	matched	first result	trace	dictionary alone	form-of tie	verdict	reason	context
-replaced	1	108	ba	is	copula	fa	yes	right	copula, preterite	ba fross do nēmannaib bói inna bélaib 
-replaced	2	52	Atā	attá	substantive	is	no	right	substantive verb	Atā menma int slōig and anocht,” ol Cūchulaind fria athair
-replaced	3	29	bāi	attá	substantive	bó	no	right	preterite of attá	bāi i comair Conchulaind i ndormainecht) dim glindiu fodein dochōid fr
-replaced	4	26	lim	la	prepositionalPronoun	lem	yes	right	la + 1sg "with me"	lim iss ē dobobsaig;Cūchulaind mac Sūaldaim
-replaced	5	12	ar chend	ar chenn	nd for nn	ar	no	right	ar chenn "to meet"	ar chend éte Murthemne:
-replaced	6	11	aili	aile	nom-pl	ail	yes	right	plural of aile "other"	aili
-replaced	7	10	dūnd	dúnn	nd for nn	don	no	right	do + 1pl "to us"	dūnd dano ⁊ abbair a ḟír frind
-replaced	8	9	dāil	dál	depalatalization	dáilid	yes	right	dál "meeting"	dāil Feidelmæ Nōichridi (
-replaced	9	8	atá	attá	substantive	is	no	right	substantive verb	atá Conchobor ina chess i nEmain ⁊ hUlaid imbi co neoch a a nócc, ⁊ rá
-replaced	10	8	ātha	áth	nom-pl	áith	yes	right	áth "ford"	ātha
-replaced	11	6	Bá	is	copula	fa	yes	right	copula	Bá dethbir sōn ém ce robái do mét in chotulta bói do mét na hascísi
-replaced	12	6	bái	attá	substantive	bó	no	right	preterite of attá	bái trā carti dóib la Coinculaind iartain
-replaced	13	6	mbōi	attá	nasalization|substantive	mboi	no	right	co mbói "so that he was"	mbōi fo adurt imdai Chonchobair
-replaced	14	5	bī	attá	substantive	benaid	yes	right	attá	bī nōendin linni iarum,” for Fergus, “for mnāib ⁊ for maccaib, nāch fo
-replaced	15	5	rig	rí	irregularNoun	téit	yes	unsure	no context	rig
-replaced	16	4	bīas	attá	substantive	benaid	yes	right	future relative of attá	bīas ōn,” or Medb; “silsimni in fid didiu amal sin
-replaced	17	4	claidib	claide	dat-pl	claideb	yes	wrong	claideb "sword"	claidib úad frisin slóg, ⁊ rambía leth na mbó fil sunda
-replaced	18	4	duib	do	prepositionalPronoun	dub	yes	unsure	duib dáin: unclear	duib dáin, co mbentais foscod i medōn a dā grūaide
-replaced	19	4	dīnd	di	nd for nn|prepositionalPronoun	dind	no	unsure		dīnd ind ēiginsea, a Ḟeargus,” ol Medb
-replaced	20	4	mbói	attá	nasalization|substantive	mboi	no	right	co mbói	mbói in Ard Róich
-replaced	21	3	bia	attá	substantive	benaid	yes	right	future of attá	bia mo fechtsa
-replaced	22	3	bā	is	copula	fa	yes	right	copula	bā gaisced ⁊ asbert: “cēin mair tūaith ⁊ cenēl dianaid rī in fer asa h
-replaced	23	3	bīa	attá	substantive	benaid	yes	right	future of attá	bīa fond animsin co rosecha brāth bendachtachtain fort
-replaced	24	3	cāine	cáin	nom-pl	caín	no	wrong	caín "fair"	cāine bar slūag,” or Cūchulaind
-replaced	25	3	Cēin	Cían	depalatalization	céin	no	wrong	céin "while"	Cēin anindain ar int sligi,” or Cūchulaind
-replaced	26	3	Dáil	dál	depalatalization	dáilid	yes	unsure	place name Dáil Scena	Dáil Scena
-replaced	27	3	māile	mál	nom-pl|depalatalization	máel	no	unsure		māile foraib, muinchorach nargaid im chechtar nāi
-replaced	28	3	āine	aigid	nom-pl|depalatalization|verbal noun	aín	no	right	áin, verbal noun of aigid "driving"	āine līathrōidi i maig in cluithi fri hEmain annair
-replaced	29	2	broit	brot	depalatalization	brat	yes	wrong	brat "cloak"	broit dubglasa impuside ⁊ lénti co ndercintliud co horcnib sís, ⁊ moṅg
-replaced	30	2	bīd	attá	substantive	is	no	right	attá	bīd inar tīr ⁊ nā gelat ind eich and nī as mōo,” ol in lōech
-replaced	31	2	cocuir	cocur	depalatalization	corcur	yes	unsure		cocuir, cocuir Delend, mōra echgracha, echracha Alais no Asail, mōra t
-replaced	32	2	díaid	dead	irregularNoun	dé	no	right	i ndíaid "after"	díaid
-replaced	33	2	dīaid	dead	irregularNoun	dé	no	right	i ndíaid "after"	dīaid
-replaced	34	2	neich	nech	depalatalization	ní	yes	right	nech "someone", genitive	neich dodīsad co nairchetul nō do chomroc fri fer, co mbad andsin cond
-replaced	35	2	ánd	aigid	nd for nn|doubled consonant|verbal noun	and	no	wrong	and "there"	ánd
-replaced	36	2	āin	aigid	depalatalization|verbal noun	aingid	no	right	áin "driving"	āin līathrōidi frisna trī cōectu macc, adbert a rōena foru
-replaced	37	1	airbir	airber	depalatalization	arbeir	yes	unsure		airbir dīb fria ais
-replaced	38	1	Berba	Berbae	nom-pl	berbaid	no	right	the river Berbae	Berba, trī Muredaich Marga, trī Lōegairi Leici Dergi, trī Suibne Sūire
-replaced	39	1	bía	attá	substantive	benaid	yes	right	future of attá	bía bréc de
-replaced	40	1	bías	attá	substantive	benaid	yes	right	future relative of attá	bías a nós nách a allud nāch a irdarcus, acht is fortso
-replaced	41	1	bíd	attá	substantive	is	no	right	attá	bíd fair ba háthithir delc sciach, ⁊ banna fola for cach finnu
-replaced	42	1	bīu	attá	substantive	benaid	no	right	1sg of attá	bīu
-replaced	43	1	Būain	búan	depalatalization	bongaid	yes	unsure		Būain ind rig,” orsi
-replaced	44	1	Chūil	cúl	lenition|depalatalization	cuil	no	wrong	place name Cúil	Chūil Airthir
-replaced	45	1	Chūile	cúl	lenition|nom-pl|depalatalization	cuile	no	unsure		Chūile
-replaced	46	1	cāinem	cáin	superlative	caín	no	wrong	superlative of caín	cāinem do rīgaib a delb i nairinach na buidne, folt findbuidi fair oss
-replaced	47	1	Cēine	Cían	nom-pl|depalatalization	céine	no	wrong	céine "while"	Cēine doluid Cūchulaind iarum dia būalad asna huscibsin, lotar an slūa
-replaced	48	1	cōicait	cóiced	pres-3pl|dative/accusative singular feminine	coíca	no	wrong	cóicait "fifty"	cōicait mac rīg do Ultaib im Follamain mac Conchobair, ⁊ dosberat teór
-replaced	49	1	Dénaid	dogní	depalatalization|third-person singular imperative active	denaid	no	right	imperative 2pl of do·gní	Dénaid comarli," for Ailill; "gudid Coinculaind imó for lēcud asind in
-replaced	50	1	eocho	ech	gen-sg|dative singular	Eochaid	no	unsure		eocho bo deas
-replaced	51	1	gin	gen	depalatalization	giun	yes	wrong	giun "mouth" (gin claidib)	gin claidib
-replaced	52	1	hūa	úa	hProthesis	ó	yes	wrong	ó "from"	hūa hi Rāith Impail do foccair dochom in tslūaig co tōetsad a dīgail l
-replaced	53	1	lochta	locht	nom-pl	lucht	yes	unsure		lochta ⁊ fulachta sund indiu, a Fergais,” arsī
-replaced	54	1	loga	lóg	nom-pl|spelling|genitive dual	Lug	no	unsure		loga, is dīfulaing a bara fri hecraidi
-replaced	55	1	lugu	lugae	dat-sg-io	bec	yes	wrong	lugu "less" (bec)	lugu,
-replaced	56	1	lēig	líag	depalatalization	líach	yes	wrong	léic, imperative of léicid	lēig Fergus acht a techt leth bud mellach lais
-replaced	57	1	mbíd	attá	nasalization|substantive	mbid	no	right	attá	mbíd
-replaced	58	1	muil	mul	depalatalization	mol	yes	unsure		muil a orcan fora lurgnib, ⁊ indala súil ina chend ⁊ araili fria chend
-replaced	59	1	mēide	míad	nom-pl|depalatalization	med	no	unsure		mēide annūas co imlind
-replaced	60	1	níath	íath	nasalizationNoHyphen	nia	no	unsure		níath, cona nglés aursolcdi, cona thairngib gáithe bitís ar fertsib ⁊ 
-replaced	61	1	nīt	is	copula	net	no	right	negative copula	nīt cerb cāime nūachair, 
-replaced	62	1	occo	oc	prepositionalPronoun	oca	yes	right	oc + 3pl "at them"	occo, dā ōclǣch dāna di Ultaib dollotar do imbert a cumaiṅg frisin slō
-replaced	63	1	ruisc	rosc	depalatalization	rúsc	yes	right	rosc "eye"	ruisc cechtar a dā rīgrosc
-replaced	64	1	sāire	sár	nom-pl|depalatalization	sáer	no	wrong	sáire "freedom"	sāire do chloindi
-replaced	65	1	sāiri	sár	nom-pl|depalatalization	saíre	no	wrong	sáire "freedom"	sāiri do chlaindi ⁊ do cheniūil dogrēs can chāin cen chobach; mo duile
-replaced	66	1	tar cend	tar cenn	nd for nn	tar	no	right	tar cenn "for, instead of"	tar cend machairi maigṡlēbe
-replaced	67	1	áillib	áill	dat-pl	aille	no	unsure		áillib a ḟén
-replaced	68	1	áine	aigid	nom-pl|depalatalization|verbal noun	aín	no	right	áin "driving"	áine, ⁊ gaibig immān līathrōide riam darin nārmaig
-replaced	69	1	āillib	áill	dat-pl	aille	no	unsure		āillib aen
-replaced	70	1	Ēirgid	atreig	depalatalization|third-person singular imperative active	téit	no	wrong	eirgid, imperative 2pl of téit	Ēirgid,” ar Medb, “⁊ berid gad itir cach ṅdīs ūaib
-replaced	71	1	ōccaib	óc	dat-pl|doubled consonant	occaib	no	unsure		ōccaib; mani thibreat, nīcon dīastar foraib co brāth
-replaced	72	1	ḟēili	féile	lenition|nom-pl	féil	yes	unsure		ḟēili sin
-replaced	73	1	ṅdō	dó	nasalization	ndó	no	right	do + 3sg "to him"	ṅdō buith arnaib ōcaib, cēin dogēni calma
-replaced	74	1	ṅglas	glas	nasalization	nglas	no	right	glas	ṅglas lainderda inna chind, brat odarda fochlaidi imbi, bretnas bānair
-top	1	70	chend	cenn	nd for nn|lenition			right	cenn "head"	chend éte Murthemne:
-top	2	43	fil	attá	substantive			right	fil "there is"	fil imbass forosna lat
-top	3	36	inn	in	doubled consonant			right	interrogative in	inn ē Celtchair mac Cuithidir
-top	4	35	Cend	cenn	nd for nn			right	cenn	Cend Ferna
-top	5	33	Intan	in tan	fused			right	in tan "when"	Intan didiu dosói int ara forsin carpat ⁊ lotair do thecht ass, co nac
-top	6	32	chind	cenn	nd for nn|lenition|depalatalization			right	cenn	chind lǣch bas ansum, nā rind bis āithighiu, nā fīach bus feōilchairiu
-top	7	27	charpait	carpat	lenition|depalatalization			right	carpat "chariot"	charpait Conaill Chernaich
-top	8	26	Macha	Machae	nom-pl			right	Emain Macha	Macha; isin seachtmad blīadain luid do foglaim gaiscid ⁊ cleas la Scāt
-top	9	20	cind	cenn	nd for nn|depalatalization			right	cenn	cind dīb ⁊ focheird for ceitheora benna in chraind
-top	10	20	isinn	isin	doubled consonant			right	isin "in the"	isinn ith
-top	11	18	Ann	and	spelling			right	and "there"	Ann ē sin as ansam fil la hUltu
-top	12	17	frim	fri	prepositionalPronoun			right	fri + 1sg "to me"	frim
-top	13	17	Maigi	mag	irregularNoun			right	genitive of mag "plain"	Maigi Muirthemne di Maig Aii, ⁊ carpat bus dech beis i nAiu, ⁊ timthac
-top	14	15	focheird	foceird	lenitionInCompound			right	fo·ceird "puts"	focheird i nūachtar in choirthi
-top	15	15	leis	la	prepositionalPronoun			right	la + 3sg "with him"	leis mīli cendnī cheil in banḟāith Fedelm
-top	16	15	nUlad	Ulaid	nasalizationNoHyphen|imperative			right	Ulaid	nUlad aneachtair, nāch for Conchulaind, ⁊ fora athair
-top	17	13	annīsin	intísin	doubled consonant|nominative/accusative neuter			unsure	aní sin "that"	annīsin
-top	18	13	ceithri	cethair	nom-pl|genitive plural masculine/neuter			right	"four"	ceithri forsinn āth addochummsa i rricht soide glase
-top	19	13	charput	carpat	lenition|dative singular			right	carpat	charput
-top	20	13	cētna	cétnae	nom-pl			right	cétnae "first"	cētna lorg, broitt brecca i forcipul co filliud impu
-top	21	13	liaig	líaig	unmarkedLength			right	líaig "physician"	liaig damsa,” ol Cethern fri Coinchulaind
-top	22	12	bus	is	copula			right	copula	bus feōilchairiu nā bas bus athluime, nā lāth bus luindiu, nā comlond 
-top	23	12	Fīacha	fíach	nom-pl			wrong	the name Fíacha	Fīacha mac Fir Febe fora láimside, macc ingine Conchobair; Medb ingen 
-top	24	12	hūasa	úas	hProthesis|nom-pl			right	úas "above"	hūasa ceandaib
-top	25	12	nāi	noí	functionWord			right	noí "nine"	nāi ēm,” ol Fergos
-top	26	12	ossē	os	functionWord			right	os é "and he"	ossē cona lic fora thairr
-top	27	11	dona	don	nom-pl			right	do + na "to the"	dona slōgaib:
-top	28	11	hAilill	Ailill	hProthesis			right	Ailill	hAilill ⁊ la Meidb ⁊ hetha húaidib cossna trī chóiced aili
-top	29	11	hUltu	Ulaid	hProthesis|accusative/vocative plural			right	Ulaid	hUltu, a bean, trāa tīr tarndotuidisa
-top	30	10	Biait	biat	depalatalization			right	"they will be"	Biait colnai de ine dedianubtī in rīastairthi
-top	31	10	hĒrenn	Ériu	hProthesis|genitive singular			right	Ériu	hĒrenn dúnad ⁊ lonngport isin Breslig Móir i mMaig Murthemne, ⁊ roláis
-top	32	10	mbāi	attá	nasalization|substantive			right	co mbái "so that he was"	mbāi oc Āth Gabla
-top	33	10	naile	aile	nasalizationNoHyphen			right	aile "other"	naile tūaith
-top	34	10	robo	is	copula			right	copula	robo sāmam dōib lasin snechta, ⁊ nī airgēnsad bīada dōib ind adaigsin
-top	35	10	slūaig	slóg	depalatalization|alt-of			right	slóg "host"	slūaig
-top	36	9	chuindchid	condieig	lenition|singular active noun-from-verb			right	cuindchid, verbal noun of con·dieig	chuindchid gasgid cusin macraid do Emain Macha; isin seachtmad blīadai
-top	37	9	hĒrend	Ériu	nd for nn|hProthesis|genitive singular			right	Ériu	hĒrend co mbātar hi Crúachnaib Áii
-top	38	9	naidchi	adaig	nasalizationNoHyphen|accusative/dative singular			right	adaig "night"	naidchi do seilc fáir, dūs in tairsimmis a bǣgul
-top	39	9	ūad	ó	prepositionalPronoun			right	ó + 3sg "from him"	ūad a līathrōit ⁊ a lloirc ⁊ frisinle in coin cona dib lāmaib 
-top	40	8	chucu	co	lenition|prepositionalPronoun			right	co + 3pl "to them"	chucu ⁊ asber: “In gaisced gebis in gilla
-top	41	8	corcra	corcur	nom-pl|genitive singular			right	corcur "purple"	corcra imbi
-top	42	8	Cumma	cummae	nom-pl			right	cummae "equal"	Cumma lem,” ol Medb, “acht nā robat isin chāir chomraic itaat
-top	43	8	Nocho	nícon	functionWord			right	nícon "not"	Nocho tānic Fer Diad risna techtaib hīsin
-top	44	8	remi	ré	prepositionalPronoun			right	ré + 3sg "before him"	remi Fergus
-top	45	7	chena	cene	lenition|functionWord			right	cenae "besides"	chena connágébat forsint slóg
-top	46	7	chēle	céile	lenition|alt-of			right	céile "companion"	chēle
-top	47	7	forsinn	forsin	doubled consonant			right	forsin "on the"	forsinn inchind, ⁊ corthrascair co rigid in coirthe
-top	48	7	heocho	ech	hProthesis|gen-sg|dative singular			unsure		heocho condadichim secho
-top	49	7	imbirt	immbeir	depalatalization|singular imperative active noun-from-verb			right	imbirt, verbal noun of imm·beir	imbirt ḟichtilli, a trian anaill oc ōl corma conidgaib codlad de
-top	50	7	leigi	líach	nom-pl|genitive singular			wrong	léici, of léicid "let"	leigi bīth comardæ fora mbuidin, ⁊ toinged animchoimēt frim, ⁊ tomiced
-top	51	7	leiss	la	prepositionalPronoun			right	la + 3sg "with him"	leiss cen meter imbi oc escaid a lēne
-top	52	7	mbātar	attá	nasalization|substantive			right	co mbátar "so that they were"	mbātar hi Crūachnaib Ái
-top	53	7	ndīaid	dead	nasalization|irregularNoun			right	i ndíaid "after"	ndīaid
-top	54	7	nāth	áth	nasalizationNoHyphen			right	áth "ford"	nāth
-top	55	7	Nīth	is	copula			unsure	níth "conflict" or the copula	Nīth la Conailliu
-top	56	7	secha	sech	nom-pl			right	sech + 3pl "past them"	secha co nētar fer rolaa id samlaid cona ēnlāim ⁊ ōenslat diatā, ⁊ fri
-top	57	7	sunn	sund	spelling			right	sund "here"	sunn
-top	58	7	tairis	tar	prepositionalPronoun			right	tar + 3sg "over him"	tairis
-top	59	7	thall	tall	lenition			right	tall "yonder"	thall
-top	60	7	triana	tri	prepositionalPronoun			right	tre + possessive "through his"	triana chodlad
-top	61	6	Aililla	Ailill	nom-pl			right	Ailill, genitive	Aililla ⁊ Medba
-top	62	6	anair	anaid	pass-pres			wrong	anair "from the east"	anair airm i narrastair a numa don chletīne
-top	63	6	chomraic	comrac	lenition|depalatalization			right	comrac "meeting, combat"	chomraic itaat
-top	64	6	chridi	cride	lenition|nom-pl			right	cride "heart"	chridi inn eōin eitig
-top	65	6	dornn	dorn	doubled consonant			right	dorn "fist"	dornn caurad ⁊ robad rig rūanada
-top	66	6	Dothǣt	dotét	lenitionInCompound|tet			right	do·tét "comes"	Dothǣt buiden hūadib do dēscin ind ātha
-top	67	6	forro	for	gen-sg|doubled consonant			right	for + 3pl "on them"	forro" for Lugaid," 
-top	68	6	fuirri	for	nom-pl|depalatalization|doubled consonant			right	for + 3sg fem "on her"	fuirri 
-top	69	6	fēne	fén	nom-pl			unsure		fēne, nī brēg,” or Cūchulaind, “is ē dorinchoisc dia ḟelmaccaib hifuar
-top	70	6	hĒrind	Ériu	nd for nn|hProthesis|dative/accusative singular			right	Ériu	hĒrind co brāth
-sample	1	2	Mand	mann	nd for nn			wrong	the name Mand Muresci	Mand Muresci mac Dāiri do Domnandchaib do chomrac fri Coinculaind
-sample	2	2	nuile	uile	nasalizationNoHyphen			right	uile "all"	nuile, conid mesc fria rīm 
-sample	3	2	Ērind	Ériu	nd for nn|dative/accusative singular			right	Ériu	Ērind uili nach a nīarthar domain ōthā Greciæ ⁊ Sceithiæ sīar co hinds
-sample	4	1	alltai	allaid	suffixed-pronoun			right	allaid "wild", plural	alltai ⁊ sindach ⁊ dotningēba anndiu ar gail gaiscid fiad ḟeraib hĒren
-sample	5	1	altu	ailid	nom-pl|singular passive preterite conjunct			unsure	rhetoric	altu tairbirt fommām Eterchomol hūallaig dimren esblāthaib fīalum umfo
-sample	6	1	andse	anse	spelling|alternative			right	annse "difficult"	andse
-sample	7	1	anma	anim	nom-pl|genitive			unsure	ainm "name" or anim "soul"	anma don chursa
-sample	8	1	Ansait	anaid	pret-abs			right	preterite 3pl of anaid "stays"	Ansait trī laa ⁊ trī haidche andsin co cechlatar a nūir remib, Bernas 
-sample	9	1	atū	addaí	pres-1sg|plural imperative active			wrong	attú, 1sg of attá	atū ar trāthaib mōraibm’ ōenarān ar illtūathaib
-sample	10	1	beis	attá	pret-abs|third-person plural present subjunctive			right	attá, subjunctive	beis i nAiu, ⁊ timthacht dā ḟer ndēacc
-sample	11	1	berait	beirid	pres-3pl|abs-palatal			right	beirid "carries"	berait toilc isin chath sair
-sample	12	1	binni	bind	nom-pl|spelling			unsure		binni clis hi cechtar a dō dhōit
-sample	13	1	bīait	biat	depalatalization			right	biat "they will be"	bīait for mnā sǣra for brōintib, ⁊ beimmi cen mblicht, ma ructhar ar m
-sample	14	1	Cengait	cingid	pres-3pl|abs-palatal			right	cingid "steps"	Cengait celga úargossa
-sample	15	1	chennsa	censae	lenition|nom-pl|doubled consonant			right	co cennsa "gently"	chennsa inocht dom acallaim
-sample	16	1	chlaindi	cland	lenition|nom-pl|depalatalization			right	cland "offspring"	chlaindi ⁊ do cheniūil dogrēs can chāin cen chobach; mo duileanddealc 
-sample	17	1	chlīu	clé	lenition|accusative/vocative plural masculine			unsure	no context	chlīu
-sample	18	1	chnis	cnes	lenition|depalatalization			right	cnes "skin"	chnis chathchalma
-sample	19	1	chrotha	cruth	lenition|genitive dual			right	cruth "form"	chrotha ālgin ālaind do mnāib ⁊ bandtrochtaib ⁊ andrib ⁊ ingenaib ⁊ fi
-sample	20	1	chucund	co	nd for nn|lenition|prepositionalPronoun			right	co + 1pl "to us"	chucund,” ol Lōeg
-sample	21	1	chōicid	cóiced	lenition|depalatalization			right	cóiced "province"	chōicid, ⁊ ō rofich cath fri Findmōir mnāi Celtchair maic Cuitheochair
-sample	22	1	Cinnas	cindas	spelling			right	cindas "how"	Cinnas atūsa innosi ocont slōg
-sample	23	1	claindi	cland	nom-pl|depalatalization			right	cland	claindi ⁊ ceiniūil ⁊ imofārgaibthea mairbi lib
-sample	24	1	cnuic	cnocc	depalatalization|spelling			right	cnocc "hill"	cnuic sin
-sample	25	1	colluid	coillid	depalatalization|first-person singular past active subjunctive noun-from-verb			wrong	co luid "so that it went"	colluid trīt co talmain
-sample	26	1	Conchobuir	Conchobar	depalatalization|dative singular			right	genitive of Conchobar	Conchobuir co tīsad do choimchisin Conculaind ⁊ Cethirn
-sample	27	1	conici	conicc	nom-pl|spelling			unsure	conice "as far as" or con·icc	conici
-sample	28	1	Connachtu	Connacht	nom-pl			right	the Connachta	Connachtu 
-sample	29	1	cumachta	cumachtae	nom-pl			right	cumachtae "power"	cumachta ⁊ a chrūas ⁊ a cleas ⁊ a gaisced ⁊ a bēim ⁊ a bruth ⁊ a baran
-sample	30	1	dergi	derg	nom-pl			right	derg "red"	dergi
-sample	31	1	dīrim	deired	pres-1sg|abs-palatal|genitive singular			wrong	dírim "countless"	dīrim asuidiu
-sample	32	1	fersib	fers	dat-pl			unsure		fersib crēdumaib co lungetaib findruine cona chreit crœ̄stana crōetirí
-sample	33	1	fogníth	fogní	spelling|plural imperative active			unsure		fogníth inṅd ōclāig fǽborchless dī, is cumma imthescad dá scíath ⁊ dá 
-sample	34	1	fonno	fonn	gen-sg			unsure		fonno īarnæ in charbait ara fǣbraidi ⁊ nī dichthim dino sech in dam, a
-sample	35	1	formna	for	mn-stem|first-person singular			wrong	formna "shoulder"	formna secht ndamseched ndartada, congabad dó ō thana a tháib co tiug 
-sample	36	1	Frōeich	fróech	depalatalization			unsure	the name Fróech	Frōeich is ed ainm inn āthasin co brāth
-sample	37	1	gairi	gairid	pres-2sg			unsure		gairi la hūa hi Rāith Impail do foccair dochom in tslūaig co tōetsad a
-sample	38	1	gairit	gairid	pres-3pl			wrong	gairit "short"	gairit mo lorc lat,” olse
-sample	39	1	glind	glenn	nd for nn|depalatalization			right	glenn "valley"	glind hi cois Conchulaind, co tūargaib oca glūn sūas a chend
-sample	40	1	Guidter	guidid	pass-pres			right	passive of guidid "asks"	Guidter dino Caur mac Dalāth dōib im dula ar chend Conculaind
-sample	41	1	gēbasa	gaibid	nom-pl|third-person singular future relative			right	future of gaibid	gēbasa dīt ēm,” ol Ailill
-sample	42	1	hainm	ainmm	hProthesis|alt-of			right	ainm "name"	hainm, do thobairt uisci, ⁊ bantrocht mōr impe
-sample	43	1	har	ar	hProthesis			right	ar "for"	har amlesaib int slūaigtīagu cech fordul a hūair
-sample	44	1	haraid	arae	hProthesis|dative/accusative singular			right	arae "charioteer"	haraid a llaa documlásat: “cach óen scaras sund tra indiu,” olsi, “fri
-sample	45	1	heich	ech	hProthesis|depalatalization			right	ech	heich, am cǣmsa dino,” ol Cūchulaind, “am maccam
-sample	46	1	heth	téit	hProthesis|singular passive preterite conjunct			unsure		heth nomāidedsom, a cleas dorigniusa fīada nīpu anḟēiliu dó,” or Cūchu
-sample	47	1	hinsib	inis	hProthesis|dative dual			right	inis "island"	hinsib Faichi
-sample	48	1	hisa	isa	hProthesis			unsure		hisa,” ol in drāi, “a bās ind ḟir rogresi ind rīg
-sample	49	1	huu	aue	hProthesis|accusative/vocative plural			unsure	no context	huu
-sample	50	1	hócu	óc	hProthesis|comparative			right	óc "young warrior"	hócu chena connágébat forsint slóg
-sample	51	1	hāu	áu	hProthesis			right	áu "ear"	hāu
-sample	52	1	hūand	ó	nd for nn|first-person plural			right	ó + 1pl "from us"	hūand ferfaid for Gāirig dia macaib mōrlōech mad la fir neinech nād ba
-sample	53	1	indile	indell	nom-pl|depalatalization|alternative			unsure		indile, ⁊ imgēntar lais imbi
-sample	54	1	innell	indell	spelling			right	indell "arrangement"	innell ⁊ inn atá a threlom
-sample	55	1	lasa	la	prepositionalPronoun			right	la + possessive "with his"	lasa comērgi conērracht
-sample	56	1	lena	léine	nom-pl|spelling|alternative			unsure		lena in mag, rodbīaso cadan co leith araile
-sample	57	1	lissiu	less	comparative|depalatalization			unsure		lissiu,biait fuind fri airise
-sample	58	1	llāim	lám	nasalization|depalatalization			right	lám "hand"	llāim cach fir
-sample	59	1	luigi	lugae	nom-pl|alt-of			wrong	luige "oath"	luigi luigis mo thūath, coro boigithir fri boigsibind for lār aba cach
-sample	60	1	lēimim	lingid	mn-stem|first-person singular active noun-from-verb			right	léim, verbal noun of lingid	lēimim inna cairpthib
-sample	61	1	mair	mór	depalatalization|alt-of			wrong	mair, of maraid (céin mair "long live")	mair tūaith ⁊ cenēl dianaid rī in fer asa harm so
-sample	62	1	marad	maraid	imperative			right	maraid "remains"	marad a slicht and co brāth a(r) ṡár for Ultu
-sample	63	1	mbendachta	bendacht	nasalization|nom-pl			right	bendacht "blessing"	mbendachta cusna maccu
-sample	64	1	mblīadna	blíadain	nasalization|syncope			right	blíadain "year"	mblīadna dēcc
-sample	65	1	mbátár	batar	nasalization			unsure	co mbátar "so that they were"	mbátár hi Cúil Sibrinne, asbert Medb fria haraid ara nindled a nōi car
-sample	66	1	mbūaib	bó	nasalization|irregularNoun			right	bó "cow", dative plural	mbūaib cīa barslig slogaib imbūaib di:::g ceob̆a di far mōr dībelgib b
-sample	67	1	mesi	messe	functionWord			right	messe "I"	mesi thēis dia thabaird,” orse, “conclithfe in dam allaid fortso
-sample	68	1	mēra	mér	nom-pl			right	mér "finger"	mēra, mēra fer la ningne, fer la forclethi, forclethi fer la medōn, mo
-sample	69	1	nacallaim	acaldam	nasalizationNoHyphen|alternative			right	acaldam "conversation"	nacallaim sund,” or Medb
-sample	70	1	nadarcaib	adarc	nasalizationNoHyphen|dat-pl			right	adarc "horn"	nadarcaib
-sample	71	1	nais	ais	nasalizationNoHyphen			unsure	no context	nais
-sample	72	1	narrad	arrad	nasalizationNoHyphen			right	i n-arrad "beside"	narrad
-sample	73	1	ndechus	téit	nasalization|rel-3sg|third-person singular perfect prototonic			right	co ndechus "that I went"	ndechus morīsi, co ndernar comruc fri Coinculaind
-sample	74	1	ndroṅg	drong	nasalization			right	drong "troop"	ndroṅg ndeichenbair fa thairrlethar in scēith fil foro thairr sceō tha
-sample	75	1	neuit	ét	nasalizationNoHyphen|genitive/vocative singular			unsure		neuit eitig arbūaib sceō ḟoicherthar dignūisi fir glanfidir Fergus
-sample	76	1	nindasa	indas	nasalizationNoHyphen|nom-pl			unsure	no context	nindasa
-sample	77	1	nāir	ár	nasalizationNoHyphen|depalatalization			unsure		nāir ⁊ gāi bolga ⁊ bai braise ⁊ rothchleas ochtarchleas ⁊ cleas for an
-sample	78	1	Rand	rann	nd for nn			unsure	Rand ⁊ Fodail, names	Rand ⁊ Fodail
-sample	79	1	rāidhi	ráid	nom-pl|lenited (Middle Irish)			unsure		rāidhi,
-sample	80	1	Serthe	sirid	pres-2pl|abs-palatal			wrong	a place name in a list	Serthe, co Oblān, co Cuilēn, co Cuirther, co Liana, co hEith benne, co
-sample	81	1	Snigfid	snigid	fut-abs			right	future of snigid	Snigfid crú a cnesaib curaddo láim lāich bid lānpudar:
-sample	82	1	sochaidi	sochuide	nom-pl|alt-of			right	sochaide "multitude"	sochaidi mōr olchena
-sample	83	1	Sūire	sirid	nom-pl|depalatalization|noun-from-verb			wrong	the name Sūire (Suibne Sūire)	Sūire, trī Echtaig Āne, trī Dōil Eirrig, trī Damaich Derg ::rc, trī Br
-sample	84	1	thairr	tair	lenition|doubled consonant			wrong	tarr "belly"	thairr
-sample	85	1	thēis	téit	lenition|second-person singular present subjunctive conjunct			right	subjunctive of téit	thēis dia thabaird,” orse, “conclithfe in dam allaid fortso
-sample	86	1	tīagait	téit	depalatalization|third-person plural imperative active			right	téit	tīagait ar teiched uili acht Cūchulaind a ōenur
-sample	87	1	uscib	uisce	dat-pl|alternative			right	uisce "water"	uscib Conailli
-sample	88	1	úad	ó	prepositionalPronoun			right	ó + 3sg "from him"	úad
-sample	89	1	úand	úan	nd for nn|doubled consonant			wrong	ó + 1pl "from us"	úand for Coinculaind," or Ailill
-sample	90	1	āithighiu	aithech	comparative|lenited (Middle Irish)|genitive/vocative singular			wrong	comparative of áith "sharp"	āithighiu, nā fīach bus feōilchairiu nā bas bus athluime, nā lāth bus 
-sample	91	1	āllib	all	dat-pl			right	all "cliff"	āllib a ḟēn
-sample	92	1	ēcin	éicen	depalatalization|alt-of			unsure	écin "some" or éicen "necessity"	ēcin,” ol Cathbath
-sample	93	1	ēcōru	écóir	dat-sg-io|genitive masculine			unsure		ēcōru mo beithse and anās cach deglǣch
-sample	94	1	Īadais	íadaid	pret-abs			right	preterite of íadaid	Īadais indala sūil connārbo lethiu andās crō snāithaidi
-sample	95	1	īarnæ	íarn	nom-pl			right	íarn "iron"	īarnæ in charbait ara fǣbraidi ⁊ nī dichthim dino sech in dam, ar rolī
-sample	96	1	ṅde	de	nasalization			unsure		ṅde, ⁊ nīforbai imo chnes
-sample	97	1	ṅgaile	gaile	nasalization			unsure		ṅgaile oc dechrad dochum in chatha la mmēit inna feirgi ⁊ ind lūthbasa
-lenited	1	4	ndechaid	doéccai	[IM] nasalized|lenited|plural imperative active			wrong	(n)dechaid, perfect of téit	ndechaid iarsuidiu, fosngertsaige co mbo cuimse dō a theas ⁊ a fūacht
-lenited	2	4	Rōich	roicc	lenited|spelling			wrong	Fergus mac Róich: genitive of the name Róech	Rōich didiu for lāim Ailello isin phupull
-lenited	3	3	Bāithi	is	lenited|nom-pl|depalatalization|third-person plural imperative			wrong	báeth "foolish"	Bāithi do gail ⁊ gaisced ōm,” ol Fergus; “bāithi di drūis ⁊ tairpthigi
-lenited	4	3	cōich	cóic	lenited			wrong	cóich whose, not cóic five	cōich a muineóil, combá métithir cend maic mís cach mulchnoc dímór dír
-lenited	5	3	Lacha	lac	lenited|nom-pl			wrong	place name	Lacha hi Cūailngiu
-lenited	6	3	rēith	rét	lenited|depalatalization			wrong	a form of rethid "runs"	rēith, conriachtais afrithsie
-lenited	7	2	Biaith	biat	lenited|depalatalization			unsure		Biaith tarteisc sund indiu," or Gabrān
-lenited	8	2	brath	brat	lenited			wrong	brath judgment, not brat cloak	brath,
-lenited	9	2	cairpthib	carpat	lenited|dative dual			right	dative plural of carpat	cairpthib
-lenited	10	2	ceth	cet	lenited			wrong	ceth (each/which side), not cét	ceth leth atā Emain
-lenited	11	2	Doeth	ithid	lenited|imperative|third-person singular perfect prototonic			wrong	do·eth, of téit	Doeth Cuchulaind afrithisi, ⁊ asbreth fris dolēicfithi dō a
-lenited	12	2	dōich	doicc	lenited|spelling			wrong	dóich likely	dōich lim iss ē dobobsaig;Cūchulaind mac Sūaldaim
-lenited	13	2	hAirich	airec	[IM] aspirated|lenited|depalatalization			wrong	name in a list of names	hAirich Cluichiur, trī Laiten Luiged, trī Conchobair Collsen, trī Elai
-lenited	14	2	Lōthar	téit	lenited|third-person plural preterite absolute			wrong	the name Lóthar	Lōthar dōib, būachaill do Meidb
-lenited	15	2	Mēithi	méit	lenited|nom-pl			wrong	name (Méithi Tog)	Mēithi Tog
-lenited	16	2	Mēithiu	méit	lenited|comparative			wrong	name (Méithe)	Mēithiu, port iarsin i naiciged Ailill nō Medb, focichred cloich asa t
-lenited	17	2	nechlaim	ecal	nasalizationNoHyphen|lenited|depalatalization|superlative			wrong	echlaim, a whip	nechlaim i custul cota ṅglūn, scīath bēimnech co fǣbar condūala fair, 
-lenited	18	2	nītha	níta	lenited			unsure		nītha tānic sin,” or Fergus
-lenited	19	1	adchī	adcí	lenited			right	ad·cí, sees	adchī Coinculaind
-lenited	20	1	agathar	adágathar	lenited|third-person plural imperative active			right	ad·ágathar, fears	agathar, fir gonaiter
-lenited	21	1	aichdi	aicde	lenited|nom-pl			unsure		aichdi rofidir orm
-lenited	22	1	anfaith	anaid	lenited|fut-abs			wrong	anfaid, a storm	anfaith ina lāim
-lenited	23	1	athaich	adteich	lenited|singular imperative active			unsure		athaich 
-lenited	24	1	berthai	beirid	lenited|nom-pl|spelling|third-person plural present indicative/subjunctive relative			unsure		berthai slechtai co gūaille, ⁊ cromscéith co fǣbraib condúala ímpu ⁊ t
-lenited	25	1	berthair	bertar	lenited|depalatalization			wrong		berthair lagilla namulach dothoet imarddai friri buiretar fortoing gla
-lenited	26	1	berthar	bertar	lenited			wrong		berthar cichis ar cendaib rīg oconicim adberad būaid arāu scindaireach
-lenited	27	1	brisfithir	brisid	lenited|fut-abs			right	future passive of brisid	brisfithir in cath foraib
-lenited	28	1	buchæ	boc	lenited|nom-pl|dative singular			wrong		buchæ fuile fuirtbe gainne 
-lenited	29	1	bērthair	bertar	lenited|depalatalization			wrong	future passive of beirid, not the headword bertar	bērthair dōermaicni dōib iarum, ⁊ imbērad a mblichtach do ḟeōlaib hi n
-lenited	30	1	bǣth	baid	lenited|imperative			wrong	báeth foolish	bǣth do ḟeachtisin maigin i tā do ḟert
-lenited	31	1	Cheithiu	cet	[IM] lenited|lenited|comparative|depalatalization			wrong		Cheithiu
-lenited	32	1	Chethiu	cet	[IM] lenited|lenited|comparative			wrong		Chethiu, anasbert fria araid: “robāgus,” olse, “fīad Ḟergais comroc fr
-lenited	33	1	chreichi	creicc	[IM] lenited|lenited|nom-pl|spelling			unsure		chreichi, cū chatha,
-lenited	34	1	commaith	conoí	doubled consonant|lenited|pres-3pl|plural imperative active			wrong	commaith equally good	commaith hi nglennaib ⁊ hi tuaigebr˘aib na hairend
-lenited	35	1	crūithib	cruitt	lenited|dat-pl|spelling			unsure		crūithib a ech
-lenited	36	1	Cuithidir	cuit	lenited|equative			wrong		Cuithidir
-lenited	37	1	cōectha	coíca	lenited|accusative/vocative plural			right	fifty (cóecait)	cōectha bunnsach fair, ⁊ arsisetar isin scíath slisen huile leisseom
-lenited	38	1	Dauich	dauic	lenited			wrong	name in a list of names	Dauich Leamna, trī Cellchair hUmuill, trī Coscraich Clothra, trī Bairr
-lenited	39	1	dechaid	doéccai	lenited|plural imperative active			wrong	perfect of téit	dechaid Conall Cernach sech in maigin sin iarsuidiu
-lenited	40	1	deuth	daimid	lenited|uInfection|singular passive preterite conjunct			wrong	deud "end" (deuth lái "the end of the day")	deuth lāi acht imrobrethsom a chumaṅg forsin slōg
-lenited	41	1	Drucht	drúcht	lenited|alternative			unsure	a name in a list of names, drúcht dew	Drucht ⁊ Delt 7 Dathen, Téa ⁊ Tascur ⁊ Tualang, Taur ⁊ Glese
-lenited	42	1	díth	di	lenited|prepositionalPronoun			wrong	díth destruction	díth erred anglondach
-lenited	43	1	dīth	di	lenited|prepositionalPronoun			wrong	díth	dīth
-lenited	44	1	epertha	epert	lenited|nom-pl			wrong	passive of as·beir, not the verbal noun	epertha co mbadad ferr do lœ̄ch annā Cūchulaind
-lenited	45	1	errathaib	airet	doubled consonant|lenited|dat-pl|alternative			wrong		errathaib la dīuscud Gāirigi far fotaib fesar la maten forderg
-lenited	46	1	fechtha	fecht	lenited|nom-pl			wrong		fechtha Ulaid in cath indosa,” “Is ferda,” ol int ara
-lenited	47	1	Ferchū	ferg	lenited|nom-pl|alternative			wrong	the name Fer Chú	Ferchū loṅgsech bōi for longus re nAilill
-lenited	48	1	fethe	fet	lenited|nom-pl			wrong		fethe dees miomain im chēt crōeb di thailc traigead tricha cetharrīad 
-lenited	49	1	fith	fet	lenited|depalatalization			wrong	fid wood, written with th	fith resna cairpthib
-lenited	50	1	fotha	fota	lenited			unsure		fotha nō mar leōmain ic techta fó mathgamnaib
-lenited	51	1	fothā	fota	lenited			unsure		fothā a rūin
-lenited	52	1	frīth	frit	lenited			unsure		frīth fri Coinculaina cosmail Conculaind conben mian Macha mochtrād ma
-lenited	53	1	frīthi	frit	lenited|nom-pl			unsure		frīthi fonnuarsa
-lenited	54	1	fóithib	foídid	lenited|dat-pl|first-person singular imperative active noun-from-verb			unsure		fóithib iarom ⁊ marbthus iat a cethri firu déac
-lenited	55	1	Gaisched	gaisced	lenited			right	gaisced weapons, written with ch	Gaisched lasin íngin ⁊ dá ech duba foa cárput
-lenited	56	1	imbērtha	immbeir	lenited|nom-pl|singular imperative active noun-from-verb			unsure		imbērtha fortso
-lenited	57	1	lathe	lat	lenited|nom-pl			wrong	lá day	lathe gemreta
-lenited	58	1	lathi	lat	lenited|nom-pl			wrong	laithi, days (lá)	lathi ōndiu fris," for Lōch
-lenited	59	1	lathib	lat	lenited|dat-pl			wrong	dative plural of lá	lathib rīgnaib forbrondaib dithuathaib dēni diameasaib blasaib diafǣbr
-lenited	60	1	lāthaib	lat	lenited|dat-pl			wrong	láthaib gaile, warriors	lāthaib gaile roachtadar grafaind isin nōenach
-lenited	61	1	Lōthair	téit	lenited|depalatalization|third-person plural preterite absolute			wrong	the name Lóthar	Lōthair ar Tāna andsin ⁊ fagbāil in tairb iarsin slichtsin; nī he lenf
-lenited	62	1	macha	macc	lenited|nom-pl|spelling			wrong		macha mind mosdīsem calca de gaileonchaib gāir maniped būaid mnā misrā
-lenited	63	1	Maichi	macc	lenited|nom-pl|genitive/vocative singular			wrong		Maichi nitsreṅgat tar drong fri humed mnā muidme dar muig deiriuch fri
-lenited	64	1	meith	méit	lenited|alt-of			unsure	no context	meith
-lenited	65	1	melleth	millid	lenited|imperative|abs-palatal			wrong		melleth fri himthecht diēis roslūagaib
-lenited	66	1	mǣth	maidid	lenited|imperative|third-person singular present indicative conjunct			wrong	máeth soft	mǣth
-lenited	67	1	Nachis	acis	nasalizationNoHyphen|lenited			wrong		Nachis olc ar mblāth
-lenited	68	1	ndechais	doéccai	[IM] nasalized|lenited|pret-abs|plural imperative active			wrong		ndechais dia hacallaim
-lenited	69	1	ndīth	di	[IM] nasalized|lenited|prepositionalPronoun			wrong	díth	ndīth Con na cerda,
-lenited	70	1	nerrath	airet	nasalizationNoHyphen|doubled consonant|lenited|alternative			wrong		nerrath ⁊ cor ndeleth ⁊ lēim tar neib ⁊ filled eirrid nāir ⁊ gāi bolga
-lenited	71	1	nīchon	nícon	lenited			right	nícon, negative particle, written with ch	nīchon dergeni nach maithō ggegain in ingenr(
-lenited	72	1	Ochuind	oc	nd for nn|lenited|depalatalization|first-person plural			wrong	place name	Ochuind fadess
-lenited	73	1	oith	os	lenited|depalatalization|third-person plural			wrong		oith
-lenited	74	1	Ortha	orcaid	lenited|nom-pl|first-person singular past imperative active participle			unsure		Ortha hūann co rrobad do Ultaib
-lenited	75	1	rogǣth	guidid	lenited|imperative|third-person singular perfect deuterotonic			wrong	ro·gáeth, perfect passive of gonaid	rogǣth nī rogand,
-lenited	76	1	Róich	roicc	lenited|spelling			wrong	genitive of the name Róech	Róich
-lenited	77	1	Senchath	senchaid	lenited|imperative			wrong	name	Senchath, co hAraid, co Senchaid, co Senchairthe, co Briccir, co Brici
-lenited	78	1	sāeth	sáidid	lenited|imperative|second-person singular imperative active			wrong	sáeth trouble	sāeth la Fergus do Coinculaind anīsin
-lenited	79	1	sǣth	sét	ǽ/æ for é|lenited			wrong	sáeth trouble	sǣth lais a ndogēni Cūchulaind
-lenited	80	1	tara chend	tar cenn	nd for nn|lenited|accusative third-person plural	tara		right	tar cenn, over his head	tara chend i cimbidecht
-lenited	81	1	thath	táid	lenited|imperative|lenition mutation			wrong		thath ēm,” or Fergus, “nī rogēnair in Ērind cose slūag argara Ulad dog
-lenited	82	1	thothim	tothaimm	[IM] lenited|lenited|alternative			right	tothaimm fall, verbal noun of do·tuit	thothim itir slūag ⁊ bruth ⁊ chruth ⁊ errad, eter ēcosc ⁊ erfūad ⁊ bāi
-lenited	83	1	tuith	dotuit	lenited|singular imperative active			unsure		tuith fair, brat donn i filliud imbi, delg nargait nand, ruc fuil mbic
-lenited	84	1	uilche	olc	lenited|genitive singular feminine			wrong	a form of ulcha "beard" (uilche smertha "a smeared beard")	uilche smertha damsa lat
-lenited	85	1	uilchi	olc	lenited|nom-pl|depalatalization			wrong	a form of ulcha "beard"	uilchi
+# dictionary alone: the first result of the same lookup with no rules; its verdict and the form-of tie are given for replaced only. form-of tie: yes when a form-of row of the text also names the rules' first result, so that the dictionary names both terms and their order is discovery order.
+# set	n	lookups	matched	first result	trace	verdict	reason	dictionary alone	dictionary alone verdict	form-of tie	context
+replaced	1	108	ba	is	copula	right	copula, preterite	fa	wrong	yes	ba fross do nēmannaib bói inna bélaib 
+replaced	2	52	Atā	attá	substantive	right	substantive verb	is	wrong	no	Atā menma int slōig and anocht,” ol Cūchulaind fria athair
+replaced	3	29	bāi	attá	substantive	right	preterite of attá	bó	wrong	no	bāi i comair Conchulaind i ndormainecht) dim glindiu fodein dochōid fr
+replaced	4	26	lim	la	prepositionalPronoun	right	la + 1sg "with me"	lem	wrong	yes	lim iss ē dobobsaig;Cūchulaind mac Sūaldaim
+replaced	5	12	ar chend	ar chenn	nd for nn	right	ar chenn "to meet"	ar	right	no	ar chend éte Murthemne:
+replaced	6	11	aili	aile	nom-pl	right	plural of aile "other"	ail	wrong	yes	aili
+replaced	7	10	dūnd	dúnn	nd for nn	right	do + 1pl "to us"	don	wrong	no	dūnd dano ⁊ abbair a ḟír frind
+replaced	8	9	dāil	dál	depalatalization	right	dál "meeting"	dáilid	wrong	yes	dāil Feidelmæ Nōichridi (
+replaced	9	8	atá	attá	substantive	right	substantive verb	is	wrong	no	atá Conchobor ina chess i nEmain ⁊ hUlaid imbi co neoch a a nócc, ⁊ rá
+replaced	10	8	ātha	áth	nom-pl	right	áth "ford"	áith	wrong	yes	ātha
+replaced	11	6	Bá	is	copula	right	copula	fa	wrong	yes	Bá dethbir sōn ém ce robái do mét in chotulta bói do mét na hascísi
+replaced	12	6	bái	attá	substantive	right	preterite of attá	bó	wrong	no	bái trā carti dóib la Coinculaind iartain
+replaced	13	6	mbōi	attá	nasalization|substantive	right	co mbói "so that he was"	mboi	right	no	mbōi fo adurt imdai Chonchobair
+replaced	14	5	bī	attá	substantive	right	attá	benaid	wrong	yes	bī nōendin linni iarum,” for Fergus, “for mnāib ⁊ for maccaib, nāch fo
+replaced	15	5	rig	rí	irregularNoun	unsure	no context	téit	unsure	yes	rig
+replaced	16	4	bīas	attá	substantive	right	future relative of attá	benaid	wrong	yes	bīas ōn,” or Medb; “silsimni in fid didiu amal sin
+replaced	17	4	claidib	claide	dat-pl	wrong	claideb "sword"	claideb	right	yes	claidib úad frisin slóg, ⁊ rambía leth na mbó fil sunda
+replaced	18	4	duib	do	prepositionalPronoun	unsure	duib dáin: unclear	dub	unsure	yes	duib dáin, co mbentais foscod i medōn a dā grūaide
+replaced	19	4	dīnd	di	nd for nn|prepositionalPronoun	unsure		dind	unsure	no	dīnd ind ēiginsea, a Ḟeargus,” ol Medb
+replaced	20	4	mbói	attá	nasalization|substantive	right	co mbói	mboi	right	no	mbói in Ard Róich
+replaced	21	3	bia	attá	substantive	right	future of attá	benaid	wrong	yes	bia mo fechtsa
+replaced	22	3	bā	is	copula	right	copula	fa	wrong	yes	bā gaisced ⁊ asbert: “cēin mair tūaith ⁊ cenēl dianaid rī in fer asa h
+replaced	23	3	bīa	attá	substantive	right	future of attá	benaid	wrong	yes	bīa fond animsin co rosecha brāth bendachtachtain fort
+replaced	24	3	cāine	cáin	nom-pl	wrong	caín "fair"	caín	right	no	cāine bar slūag,” or Cūchulaind
+replaced	25	3	Cēin	Cían	depalatalization	wrong	céin "while"	céin	right	no	Cēin anindain ar int sligi,” or Cūchulaind
+replaced	26	3	Dáil	dál	depalatalization	unsure	place name Dáil Scena	dáilid	unsure	yes	Dáil Scena
+replaced	27	3	māile	mál	nom-pl|depalatalization	unsure		máel	unsure	no	māile foraib, muinchorach nargaid im chechtar nāi
+replaced	28	3	āine	aigid	nom-pl|depalatalization|verbal noun	right	áin, verbal noun of aigid "driving"	aín	wrong	no	āine līathrōidi i maig in cluithi fri hEmain annair
+replaced	29	2	broit	brot	depalatalization	wrong	brat "cloak"	brat	right	yes	broit dubglasa impuside ⁊ lénti co ndercintliud co horcnib sís, ⁊ moṅg
+replaced	30	2	bīd	attá	substantive	right	attá	is	wrong	no	bīd inar tīr ⁊ nā gelat ind eich and nī as mōo,” ol in lōech
+replaced	31	2	cocuir	cocur	depalatalization	unsure		corcur	unsure	yes	cocuir, cocuir Delend, mōra echgracha, echracha Alais no Asail, mōra t
+replaced	32	2	díaid	dead	irregularNoun	right	i ndíaid "after"	dé	wrong	no	díaid
+replaced	33	2	dīaid	dead	irregularNoun	right	i ndíaid "after"	dé	wrong	no	dīaid
+replaced	34	2	neich	nech	depalatalization	right	nech "someone", genitive	ní	unsure	yes	neich dodīsad co nairchetul nō do chomroc fri fer, co mbad andsin cond
+replaced	35	2	ánd	aigid	nd for nn|doubled consonant|verbal noun	wrong	and "there"	and	right	no	ánd
+replaced	36	2	āin	aigid	depalatalization|verbal noun	right	áin "driving"	aingid	wrong	no	āin līathrōidi frisna trī cōectu macc, adbert a rōena foru
+replaced	37	1	airbir	airber	depalatalization	unsure		arbeir	unsure	yes	airbir dīb fria ais
+replaced	38	1	Berba	Berbae	nom-pl	right	the river Berbae	berbaid	wrong	no	Berba, trī Muredaich Marga, trī Lōegairi Leici Dergi, trī Suibne Sūire
+replaced	39	1	bía	attá	substantive	right	future of attá	benaid	wrong	yes	bía bréc de
+replaced	40	1	bías	attá	substantive	right	future relative of attá	benaid	wrong	yes	bías a nós nách a allud nāch a irdarcus, acht is fortso
+replaced	41	1	bíd	attá	substantive	right	attá	is	wrong	no	bíd fair ba háthithir delc sciach, ⁊ banna fola for cach finnu
+replaced	42	1	bīu	attá	substantive	right	1sg of attá	benaid	wrong	no	bīu
+replaced	43	1	Būain	búan	depalatalization	unsure		bongaid	unsure	yes	Būain ind rig,” orsi
+replaced	44	1	Chūil	cúl	lenition|depalatalization	wrong	place name Cúil	cuil	wrong	no	Chūil Airthir
+replaced	45	1	Chūile	cúl	lenition|nom-pl|depalatalization	unsure		cuile	unsure	no	Chūile
+replaced	46	1	cāinem	cáin	superlative	wrong	superlative of caín	caín	right	no	cāinem do rīgaib a delb i nairinach na buidne, folt findbuidi fair oss
+replaced	47	1	Cēine	Cían	nom-pl|depalatalization	wrong	céine "while"	céine	right	no	Cēine doluid Cūchulaind iarum dia būalad asna huscibsin, lotar an slūa
+replaced	48	1	cōicait	cóiced	pres-3pl|dative/accusative singular feminine	wrong	cóicait "fifty"	coíca	right	no	cōicait mac rīg do Ultaib im Follamain mac Conchobair, ⁊ dosberat teór
+replaced	49	1	Dénaid	dogní	depalatalization|third-person singular imperative active	right	imperative 2pl of do·gní	denaid	wrong	no	Dénaid comarli," for Ailill; "gudid Coinculaind imó for lēcud asind in
+replaced	50	1	eocho	ech	gen-sg|dative singular	unsure		Eochaid	unsure	no	eocho bo deas
+replaced	51	1	gin	gen	depalatalization	wrong	giun "mouth" (gin claidib)	giun	right	yes	gin claidib
+replaced	52	1	hūa	úa	hProthesis	wrong	ó "from"	ó	right	yes	hūa hi Rāith Impail do foccair dochom in tslūaig co tōetsad a dīgail l
+replaced	53	1	lochta	locht	nom-pl	unsure		lucht	unsure	yes	lochta ⁊ fulachta sund indiu, a Fergais,” arsī
+replaced	54	1	loga	lóg	nom-pl|spelling|genitive dual	unsure		Lug	unsure	no	loga, is dīfulaing a bara fri hecraidi
+replaced	55	1	lugu	lugae	dat-sg-io	wrong	lugu "less" (bec)	bec	right	yes	lugu,
+replaced	56	1	lēig	líag	depalatalization	wrong	léic, imperative of léicid	líach	wrong	yes	lēig Fergus acht a techt leth bud mellach lais
+replaced	57	1	mbíd	attá	nasalization|substantive	right	attá	mbid	right	no	mbíd
+replaced	58	1	muil	mul	depalatalization	unsure		mol	unsure	yes	muil a orcan fora lurgnib, ⁊ indala súil ina chend ⁊ araili fria chend
+replaced	59	1	mēide	míad	nom-pl|depalatalization	unsure		med	unsure	no	mēide annūas co imlind
+replaced	60	1	níath	íath	nasalizationNoHyphen	unsure		nia	unsure	no	níath, cona nglés aursolcdi, cona thairngib gáithe bitís ar fertsib ⁊ 
+replaced	61	1	nīt	is	copula	right	negative copula	net	wrong	no	nīt cerb cāime nūachair, 
+replaced	62	1	occo	oc	prepositionalPronoun	right	oc + 3pl "at them"	oca	wrong	yes	occo, dā ōclǣch dāna di Ultaib dollotar do imbert a cumaiṅg frisin slō
+replaced	63	1	ruisc	rosc	depalatalization	right	rosc "eye"	rúsc	wrong	yes	ruisc cechtar a dā rīgrosc
+replaced	64	1	sāire	sár	nom-pl|depalatalization	wrong	sáire "freedom"	sáer	unsure	no	sāire do chloindi
+replaced	65	1	sāiri	sár	nom-pl|depalatalization	wrong	sáire "freedom"	saíre	right	no	sāiri do chlaindi ⁊ do cheniūil dogrēs can chāin cen chobach; mo duile
+replaced	66	1	tar cend	tar cenn	nd for nn	right	tar cenn "for, instead of"	tar	right	no	tar cend machairi maigṡlēbe
+replaced	67	1	áillib	áill	dat-pl	unsure		aille	unsure	no	áillib a ḟén
+replaced	68	1	áine	aigid	nom-pl|depalatalization|verbal noun	right	áin "driving"	aín	wrong	no	áine, ⁊ gaibig immān līathrōide riam darin nārmaig
+replaced	69	1	āillib	áill	dat-pl	unsure		aille	unsure	no	āillib aen
+replaced	70	1	Ēirgid	atreig	depalatalization|third-person singular imperative active	wrong	eirgid, imperative 2pl of téit	téit	right	no	Ēirgid,” ar Medb, “⁊ berid gad itir cach ṅdīs ūaib
+replaced	71	1	ōccaib	óc	dat-pl|doubled consonant	unsure		occaib	unsure	no	ōccaib; mani thibreat, nīcon dīastar foraib co brāth
+replaced	72	1	ḟēili	féile	lenition|nom-pl	unsure		féil	unsure	yes	ḟēili sin
+replaced	73	1	ṅdō	dó	nasalization	right	do + 3sg "to him"	ndó	right	no	ṅdō buith arnaib ōcaib, cēin dogēni calma
+replaced	74	1	ṅglas	glas	nasalization	right	glas	nglas	right	no	ṅglas lainderda inna chind, brat odarda fochlaidi imbi, bretnas bānair
+top	1	70	chend	cenn	nd for nn|lenition	right	cenn "head"				chend éte Murthemne:
+top	2	43	fil	attá	substantive	right	fil "there is"				fil imbass forosna lat
+top	3	36	inn	in	doubled consonant	right	interrogative in				inn ē Celtchair mac Cuithidir
+top	4	35	Cend	cenn	nd for nn	right	cenn				Cend Ferna
+top	5	33	Intan	in tan	fused	right	in tan "when"				Intan didiu dosói int ara forsin carpat ⁊ lotair do thecht ass, co nac
+top	6	32	chind	cenn	nd for nn|lenition|depalatalization	right	cenn				chind lǣch bas ansum, nā rind bis āithighiu, nā fīach bus feōilchairiu
+top	7	27	charpait	carpat	lenition|depalatalization	right	carpat "chariot"				charpait Conaill Chernaich
+top	8	26	Macha	Machae	nom-pl	right	Emain Macha				Macha; isin seachtmad blīadain luid do foglaim gaiscid ⁊ cleas la Scāt
+top	9	20	cind	cenn	nd for nn|depalatalization	right	cenn				cind dīb ⁊ focheird for ceitheora benna in chraind
+top	10	20	isinn	isin	doubled consonant	right	isin "in the"				isinn ith
+top	11	18	Ann	and	spelling	right	and "there"				Ann ē sin as ansam fil la hUltu
+top	12	17	frim	fri	prepositionalPronoun	right	fri + 1sg "to me"				frim
+top	13	17	Maigi	mag	irregularNoun	right	genitive of mag "plain"				Maigi Muirthemne di Maig Aii, ⁊ carpat bus dech beis i nAiu, ⁊ timthac
+top	14	15	focheird	foceird	lenitionInCompound	right	fo·ceird "puts"				focheird i nūachtar in choirthi
+top	15	15	leis	la	prepositionalPronoun	right	la + 3sg "with him"				leis mīli cendnī cheil in banḟāith Fedelm
+top	16	15	nUlad	Ulaid	nasalizationNoHyphen|imperative	right	Ulaid				nUlad aneachtair, nāch for Conchulaind, ⁊ fora athair
+top	17	13	annīsin	intísin	doubled consonant|nominative/accusative neuter	unsure	aní sin "that"				annīsin
+top	18	13	ceithri	cethair	nom-pl|genitive plural masculine/neuter	right	"four"				ceithri forsinn āth addochummsa i rricht soide glase
+top	19	13	charput	carpat	lenition|dative singular	right	carpat				charput
+top	20	13	cētna	cétnae	nom-pl	right	cétnae "first"				cētna lorg, broitt brecca i forcipul co filliud impu
+top	21	13	liaig	líaig	unmarkedLength	right	líaig "physician"				liaig damsa,” ol Cethern fri Coinchulaind
+top	22	12	bus	is	copula	right	copula				bus feōilchairiu nā bas bus athluime, nā lāth bus luindiu, nā comlond 
+top	23	12	Fīacha	fíach	nom-pl	wrong	the name Fíacha				Fīacha mac Fir Febe fora láimside, macc ingine Conchobair; Medb ingen 
+top	24	12	hūasa	úas	hProthesis|nom-pl	right	úas "above"				hūasa ceandaib
+top	25	12	nāi	noí	functionWord	right	noí "nine"				nāi ēm,” ol Fergos
+top	26	12	ossē	os	functionWord	right	os é "and he"				ossē cona lic fora thairr
+top	27	11	dona	don	nom-pl	right	do + na "to the"				dona slōgaib:
+top	28	11	hAilill	Ailill	hProthesis	right	Ailill				hAilill ⁊ la Meidb ⁊ hetha húaidib cossna trī chóiced aili
+top	29	11	hUltu	Ulaid	hProthesis|accusative/vocative plural	right	Ulaid				hUltu, a bean, trāa tīr tarndotuidisa
+top	30	10	Biait	biat	depalatalization	right	"they will be"				Biait colnai de ine dedianubtī in rīastairthi
+top	31	10	hĒrenn	Ériu	hProthesis|genitive singular	right	Ériu				hĒrenn dúnad ⁊ lonngport isin Breslig Móir i mMaig Murthemne, ⁊ roláis
+top	32	10	mbāi	attá	nasalization|substantive	right	co mbái "so that he was"				mbāi oc Āth Gabla
+top	33	10	naile	aile	nasalizationNoHyphen	right	aile "other"				naile tūaith
+top	34	10	robo	is	copula	right	copula				robo sāmam dōib lasin snechta, ⁊ nī airgēnsad bīada dōib ind adaigsin
+top	35	10	slūaig	slóg	depalatalization|alt-of	right	slóg "host"				slūaig
+top	36	9	chuindchid	condieig	lenition|singular active noun-from-verb	right	cuindchid, verbal noun of con·dieig				chuindchid gasgid cusin macraid do Emain Macha; isin seachtmad blīadai
+top	37	9	hĒrend	Ériu	nd for nn|hProthesis|genitive singular	right	Ériu				hĒrend co mbātar hi Crúachnaib Áii
+top	38	9	naidchi	adaig	nasalizationNoHyphen|accusative/dative singular	right	adaig "night"				naidchi do seilc fáir, dūs in tairsimmis a bǣgul
+top	39	9	ūad	ó	prepositionalPronoun	right	ó + 3sg "from him"				ūad a līathrōit ⁊ a lloirc ⁊ frisinle in coin cona dib lāmaib 
+top	40	8	chucu	co	lenition|prepositionalPronoun	right	co + 3pl "to them"				chucu ⁊ asber: “In gaisced gebis in gilla
+top	41	8	corcra	corcur	nom-pl|genitive singular	right	corcur "purple"				corcra imbi
+top	42	8	Cumma	cummae	nom-pl	right	cummae "equal"				Cumma lem,” ol Medb, “acht nā robat isin chāir chomraic itaat
+top	43	8	Nocho	nícon	functionWord	right	nícon "not"				Nocho tānic Fer Diad risna techtaib hīsin
+top	44	8	remi	ré	prepositionalPronoun	right	ré + 3sg "before him"				remi Fergus
+top	45	7	chena	cene	lenition|functionWord	right	cenae "besides"				chena connágébat forsint slóg
+top	46	7	chēle	céile	lenition|alt-of	right	céile "companion"				chēle
+top	47	7	forsinn	forsin	doubled consonant	right	forsin "on the"				forsinn inchind, ⁊ corthrascair co rigid in coirthe
+top	48	7	heocho	ech	hProthesis|gen-sg|dative singular	unsure					heocho condadichim secho
+top	49	7	imbirt	immbeir	depalatalization|singular imperative active noun-from-verb	right	imbirt, verbal noun of imm·beir				imbirt ḟichtilli, a trian anaill oc ōl corma conidgaib codlad de
+top	50	7	leigi	líach	nom-pl|genitive singular	wrong	léici, of léicid "let"				leigi bīth comardæ fora mbuidin, ⁊ toinged animchoimēt frim, ⁊ tomiced
+top	51	7	leiss	la	prepositionalPronoun	right	la + 3sg "with him"				leiss cen meter imbi oc escaid a lēne
+top	52	7	mbātar	attá	nasalization|substantive	right	co mbátar "so that they were"				mbātar hi Crūachnaib Ái
+top	53	7	ndīaid	dead	nasalization|irregularNoun	right	i ndíaid "after"				ndīaid
+top	54	7	nāth	áth	nasalizationNoHyphen	right	áth "ford"				nāth
+top	55	7	Nīth	is	copula	unsure	níth "conflict" or the copula				Nīth la Conailliu
+top	56	7	secha	sech	nom-pl	right	sech + 3pl "past them"				secha co nētar fer rolaa id samlaid cona ēnlāim ⁊ ōenslat diatā, ⁊ fri
+top	57	7	sunn	sund	spelling	right	sund "here"				sunn
+top	58	7	tairis	tar	prepositionalPronoun	right	tar + 3sg "over him"				tairis
+top	59	7	thall	tall	lenition	right	tall "yonder"				thall
+top	60	7	triana	tri	prepositionalPronoun	right	tre + possessive "through his"				triana chodlad
+top	61	6	Aililla	Ailill	nom-pl	right	Ailill, genitive				Aililla ⁊ Medba
+top	62	6	anair	anaid	pass-pres	wrong	anair "from the east"				anair airm i narrastair a numa don chletīne
+top	63	6	chomraic	comrac	lenition|depalatalization	right	comrac "meeting, combat"				chomraic itaat
+top	64	6	chridi	cride	lenition|nom-pl	right	cride "heart"				chridi inn eōin eitig
+top	65	6	dornn	dorn	doubled consonant	right	dorn "fist"				dornn caurad ⁊ robad rig rūanada
+top	66	6	Dothǣt	dotét	lenitionInCompound|tet	right	do·tét "comes"				Dothǣt buiden hūadib do dēscin ind ātha
+top	67	6	forro	for	gen-sg|doubled consonant	right	for + 3pl "on them"				forro" for Lugaid," 
+top	68	6	fuirri	for	nom-pl|depalatalization|doubled consonant	right	for + 3sg fem "on her"				fuirri 
+top	69	6	fēne	fén	nom-pl	unsure					fēne, nī brēg,” or Cūchulaind, “is ē dorinchoisc dia ḟelmaccaib hifuar
+top	70	6	hĒrind	Ériu	nd for nn|hProthesis|dative/accusative singular	right	Ériu				hĒrind co brāth
+sample	1	2	Mand	mann	nd for nn	wrong	the name Mand Muresci				Mand Muresci mac Dāiri do Domnandchaib do chomrac fri Coinculaind
+sample	2	2	nuile	uile	nasalizationNoHyphen	right	uile "all"				nuile, conid mesc fria rīm 
+sample	3	2	Ērind	Ériu	nd for nn|dative/accusative singular	right	Ériu				Ērind uili nach a nīarthar domain ōthā Greciæ ⁊ Sceithiæ sīar co hinds
+sample	4	1	alltai	allaid	suffixed-pronoun	right	allaid "wild", plural				alltai ⁊ sindach ⁊ dotningēba anndiu ar gail gaiscid fiad ḟeraib hĒren
+sample	5	1	altu	ailid	nom-pl|singular passive preterite conjunct	unsure	rhetoric				altu tairbirt fommām Eterchomol hūallaig dimren esblāthaib fīalum umfo
+sample	6	1	andse	anse	spelling|alternative	right	annse "difficult"				andse
+sample	7	1	anma	anim	nom-pl|genitive	unsure	ainm "name" or anim "soul"				anma don chursa
+sample	8	1	Ansait	anaid	pret-abs	right	preterite 3pl of anaid "stays"				Ansait trī laa ⁊ trī haidche andsin co cechlatar a nūir remib, Bernas 
+sample	9	1	atū	addaí	pres-1sg|plural imperative active	wrong	attú, 1sg of attá				atū ar trāthaib mōraibm’ ōenarān ar illtūathaib
+sample	10	1	beis	attá	pret-abs|third-person plural present subjunctive	right	attá, subjunctive				beis i nAiu, ⁊ timthacht dā ḟer ndēacc
+sample	11	1	berait	beirid	pres-3pl|abs-palatal	right	beirid "carries"				berait toilc isin chath sair
+sample	12	1	binni	bind	nom-pl|spelling	unsure					binni clis hi cechtar a dō dhōit
+sample	13	1	bīait	biat	depalatalization	right	biat "they will be"				bīait for mnā sǣra for brōintib, ⁊ beimmi cen mblicht, ma ructhar ar m
+sample	14	1	Cengait	cingid	pres-3pl|abs-palatal	right	cingid "steps"				Cengait celga úargossa
+sample	15	1	chennsa	censae	lenition|nom-pl|doubled consonant	right	co cennsa "gently"				chennsa inocht dom acallaim
+sample	16	1	chlaindi	cland	lenition|nom-pl|depalatalization	right	cland "offspring"				chlaindi ⁊ do cheniūil dogrēs can chāin cen chobach; mo duileanddealc 
+sample	17	1	chlīu	clé	lenition|accusative/vocative plural masculine	unsure	no context				chlīu
+sample	18	1	chnis	cnes	lenition|depalatalization	right	cnes "skin"				chnis chathchalma
+sample	19	1	chrotha	cruth	lenition|genitive dual	right	cruth "form"				chrotha ālgin ālaind do mnāib ⁊ bandtrochtaib ⁊ andrib ⁊ ingenaib ⁊ fi
+sample	20	1	chucund	co	nd for nn|lenition|prepositionalPronoun	right	co + 1pl "to us"				chucund,” ol Lōeg
+sample	21	1	chōicid	cóiced	lenition|depalatalization	right	cóiced "province"				chōicid, ⁊ ō rofich cath fri Findmōir mnāi Celtchair maic Cuitheochair
+sample	22	1	Cinnas	cindas	spelling	right	cindas "how"				Cinnas atūsa innosi ocont slōg
+sample	23	1	claindi	cland	nom-pl|depalatalization	right	cland				claindi ⁊ ceiniūil ⁊ imofārgaibthea mairbi lib
+sample	24	1	cnuic	cnocc	depalatalization|spelling	right	cnocc "hill"				cnuic sin
+sample	25	1	colluid	coillid	depalatalization|first-person singular past active subjunctive noun-from-verb	wrong	co luid "so that it went"				colluid trīt co talmain
+sample	26	1	Conchobuir	Conchobar	depalatalization|dative singular	right	genitive of Conchobar				Conchobuir co tīsad do choimchisin Conculaind ⁊ Cethirn
+sample	27	1	conici	conicc	nom-pl|spelling	unsure	conice "as far as" or con·icc				conici
+sample	28	1	Connachtu	Connacht	nom-pl	right	the Connachta				Connachtu 
+sample	29	1	cumachta	cumachtae	nom-pl	right	cumachtae "power"				cumachta ⁊ a chrūas ⁊ a cleas ⁊ a gaisced ⁊ a bēim ⁊ a bruth ⁊ a baran
+sample	30	1	dergi	derg	nom-pl	right	derg "red"				dergi
+sample	31	1	dīrim	deired	pres-1sg|abs-palatal|genitive singular	wrong	dírim "countless"				dīrim asuidiu
+sample	32	1	fersib	fers	dat-pl	unsure					fersib crēdumaib co lungetaib findruine cona chreit crœ̄stana crōetirí
+sample	33	1	fogníth	fogní	spelling|plural imperative active	unsure					fogníth inṅd ōclāig fǽborchless dī, is cumma imthescad dá scíath ⁊ dá 
+sample	34	1	fonno	fonn	gen-sg	unsure					fonno īarnæ in charbait ara fǣbraidi ⁊ nī dichthim dino sech in dam, a
+sample	35	1	formna	for	mn-stem|first-person singular	wrong	formna "shoulder"				formna secht ndamseched ndartada, congabad dó ō thana a tháib co tiug 
+sample	36	1	Frōeich	fróech	depalatalization	unsure	the name Fróech				Frōeich is ed ainm inn āthasin co brāth
+sample	37	1	gairi	gairid	pres-2sg	unsure					gairi la hūa hi Rāith Impail do foccair dochom in tslūaig co tōetsad a
+sample	38	1	gairit	gairid	pres-3pl	wrong	gairit "short"				gairit mo lorc lat,” olse
+sample	39	1	glind	glenn	nd for nn|depalatalization	right	glenn "valley"				glind hi cois Conchulaind, co tūargaib oca glūn sūas a chend
+sample	40	1	Guidter	guidid	pass-pres	right	passive of guidid "asks"				Guidter dino Caur mac Dalāth dōib im dula ar chend Conculaind
+sample	41	1	gēbasa	gaibid	nom-pl|third-person singular future relative	right	future of gaibid				gēbasa dīt ēm,” ol Ailill
+sample	42	1	hainm	ainmm	hProthesis|alt-of	right	ainm "name"				hainm, do thobairt uisci, ⁊ bantrocht mōr impe
+sample	43	1	har	ar	hProthesis	right	ar "for"				har amlesaib int slūaigtīagu cech fordul a hūair
+sample	44	1	haraid	arae	hProthesis|dative/accusative singular	right	arae "charioteer"				haraid a llaa documlásat: “cach óen scaras sund tra indiu,” olsi, “fri
+sample	45	1	heich	ech	hProthesis|depalatalization	right	ech				heich, am cǣmsa dino,” ol Cūchulaind, “am maccam
+sample	46	1	heth	téit	hProthesis|singular passive preterite conjunct	unsure					heth nomāidedsom, a cleas dorigniusa fīada nīpu anḟēiliu dó,” or Cūchu
+sample	47	1	hinsib	inis	hProthesis|dative dual	right	inis "island"				hinsib Faichi
+sample	48	1	hisa	isa	hProthesis	unsure					hisa,” ol in drāi, “a bās ind ḟir rogresi ind rīg
+sample	49	1	huu	aue	hProthesis|accusative/vocative plural	unsure	no context				huu
+sample	50	1	hócu	óc	hProthesis|comparative	right	óc "young warrior"				hócu chena connágébat forsint slóg
+sample	51	1	hāu	áu	hProthesis	right	áu "ear"				hāu
+sample	52	1	hūand	ó	nd for nn|first-person plural	right	ó + 1pl "from us"				hūand ferfaid for Gāirig dia macaib mōrlōech mad la fir neinech nād ba
+sample	53	1	indile	indell	nom-pl|depalatalization|alternative	unsure					indile, ⁊ imgēntar lais imbi
+sample	54	1	innell	indell	spelling	right	indell "arrangement"				innell ⁊ inn atá a threlom
+sample	55	1	lasa	la	prepositionalPronoun	right	la + possessive "with his"				lasa comērgi conērracht
+sample	56	1	lena	léine	nom-pl|spelling|alternative	unsure					lena in mag, rodbīaso cadan co leith araile
+sample	57	1	lissiu	less	comparative|depalatalization	unsure					lissiu,biait fuind fri airise
+sample	58	1	llāim	lám	nasalization|depalatalization	right	lám "hand"				llāim cach fir
+sample	59	1	luigi	lugae	nom-pl|alt-of	wrong	luige "oath"				luigi luigis mo thūath, coro boigithir fri boigsibind for lār aba cach
+sample	60	1	lēimim	lingid	mn-stem|first-person singular active noun-from-verb	right	léim, verbal noun of lingid				lēimim inna cairpthib
+sample	61	1	mair	mór	depalatalization|alt-of	wrong	mair, of maraid (céin mair "long live")				mair tūaith ⁊ cenēl dianaid rī in fer asa harm so
+sample	62	1	marad	maraid	imperative	right	maraid "remains"				marad a slicht and co brāth a(r) ṡár for Ultu
+sample	63	1	mbendachta	bendacht	nasalization|nom-pl	right	bendacht "blessing"				mbendachta cusna maccu
+sample	64	1	mblīadna	blíadain	nasalization|syncope	right	blíadain "year"				mblīadna dēcc
+sample	65	1	mbátár	batar	nasalization	unsure	co mbátar "so that they were"				mbátár hi Cúil Sibrinne, asbert Medb fria haraid ara nindled a nōi car
+sample	66	1	mbūaib	bó	nasalization|irregularNoun	right	bó "cow", dative plural				mbūaib cīa barslig slogaib imbūaib di:::g ceob̆a di far mōr dībelgib b
+sample	67	1	mesi	messe	functionWord	right	messe "I"				mesi thēis dia thabaird,” orse, “conclithfe in dam allaid fortso
+sample	68	1	mēra	mér	nom-pl	right	mér "finger"				mēra, mēra fer la ningne, fer la forclethi, forclethi fer la medōn, mo
+sample	69	1	nacallaim	acaldam	nasalizationNoHyphen|alternative	right	acaldam "conversation"				nacallaim sund,” or Medb
+sample	70	1	nadarcaib	adarc	nasalizationNoHyphen|dat-pl	right	adarc "horn"				nadarcaib
+sample	71	1	nais	ais	nasalizationNoHyphen	unsure	no context				nais
+sample	72	1	narrad	arrad	nasalizationNoHyphen	right	i n-arrad "beside"				narrad
+sample	73	1	ndechus	téit	nasalization|rel-3sg|third-person singular perfect prototonic	right	co ndechus "that I went"				ndechus morīsi, co ndernar comruc fri Coinculaind
+sample	74	1	ndroṅg	drong	nasalization	right	drong "troop"				ndroṅg ndeichenbair fa thairrlethar in scēith fil foro thairr sceō tha
+sample	75	1	neuit	ét	nasalizationNoHyphen|genitive/vocative singular	unsure					neuit eitig arbūaib sceō ḟoicherthar dignūisi fir glanfidir Fergus
+sample	76	1	nindasa	indas	nasalizationNoHyphen|nom-pl	unsure	no context				nindasa
+sample	77	1	nāir	ár	nasalizationNoHyphen|depalatalization	unsure					nāir ⁊ gāi bolga ⁊ bai braise ⁊ rothchleas ochtarchleas ⁊ cleas for an
+sample	78	1	Rand	rann	nd for nn	unsure	Rand ⁊ Fodail, names				Rand ⁊ Fodail
+sample	79	1	rāidhi	ráid	nom-pl|lenited (Middle Irish)	unsure					rāidhi,
+sample	80	1	Serthe	sirid	pres-2pl|abs-palatal	wrong	a place name in a list				Serthe, co Oblān, co Cuilēn, co Cuirther, co Liana, co hEith benne, co
+sample	81	1	Snigfid	snigid	fut-abs	right	future of snigid				Snigfid crú a cnesaib curaddo láim lāich bid lānpudar:
+sample	82	1	sochaidi	sochuide	nom-pl|alt-of	right	sochaide "multitude"				sochaidi mōr olchena
+sample	83	1	Sūire	sirid	nom-pl|depalatalization|noun-from-verb	wrong	the name Sūire (Suibne Sūire)				Sūire, trī Echtaig Āne, trī Dōil Eirrig, trī Damaich Derg ::rc, trī Br
+sample	84	1	thairr	tair	lenition|doubled consonant	wrong	tarr "belly"				thairr
+sample	85	1	thēis	téit	lenition|second-person singular present subjunctive conjunct	right	subjunctive of téit				thēis dia thabaird,” orse, “conclithfe in dam allaid fortso
+sample	86	1	tīagait	téit	depalatalization|third-person plural imperative active	right	téit				tīagait ar teiched uili acht Cūchulaind a ōenur
+sample	87	1	uscib	uisce	dat-pl|alternative	right	uisce "water"				uscib Conailli
+sample	88	1	úad	ó	prepositionalPronoun	right	ó + 3sg "from him"				úad
+sample	89	1	úand	úan	nd for nn|doubled consonant	wrong	ó + 1pl "from us"				úand for Coinculaind," or Ailill
+sample	90	1	āithighiu	aithech	comparative|lenited (Middle Irish)|genitive/vocative singular	wrong	comparative of áith "sharp"				āithighiu, nā fīach bus feōilchairiu nā bas bus athluime, nā lāth bus 
+sample	91	1	āllib	all	dat-pl	right	all "cliff"				āllib a ḟēn
+sample	92	1	ēcin	éicen	depalatalization|alt-of	unsure	écin "some" or éicen "necessity"				ēcin,” ol Cathbath
+sample	93	1	ēcōru	écóir	dat-sg-io|genitive masculine	unsure					ēcōru mo beithse and anās cach deglǣch
+sample	94	1	Īadais	íadaid	pret-abs	right	preterite of íadaid				Īadais indala sūil connārbo lethiu andās crō snāithaidi
+sample	95	1	īarnæ	íarn	nom-pl	right	íarn "iron"				īarnæ in charbait ara fǣbraidi ⁊ nī dichthim dino sech in dam, ar rolī
+sample	96	1	ṅde	de	nasalization	unsure					ṅde, ⁊ nīforbai imo chnes
+sample	97	1	ṅgaile	gaile	nasalization	unsure					ṅgaile oc dechrad dochum in chatha la mmēit inna feirgi ⁊ ind lūthbasa
+lenited	1	4	ndechaid	doéccai	[IM] nasalized|lenited|plural imperative active	wrong	(n)dechaid, perfect of téit				ndechaid iarsuidiu, fosngertsaige co mbo cuimse dō a theas ⁊ a fūacht
+lenited	2	4	Rōich	roicc	lenited|spelling	wrong	Fergus mac Róich: genitive of the name Róech				Rōich didiu for lāim Ailello isin phupull
+lenited	3	3	Bāithi	is	lenited|nom-pl|depalatalization|third-person plural imperative	wrong	báeth "foolish"				Bāithi do gail ⁊ gaisced ōm,” ol Fergus; “bāithi di drūis ⁊ tairpthigi
+lenited	4	3	cōich	cóic	lenited	wrong	cóich whose, not cóic five				cōich a muineóil, combá métithir cend maic mís cach mulchnoc dímór dír
+lenited	5	3	Lacha	lac	lenited|nom-pl	wrong	place name				Lacha hi Cūailngiu
+lenited	6	3	rēith	rét	lenited|depalatalization	wrong	a form of rethid "runs"				rēith, conriachtais afrithsie
+lenited	7	2	Biaith	biat	lenited|depalatalization	unsure					Biaith tarteisc sund indiu," or Gabrān
+lenited	8	2	brath	brat	lenited	wrong	brath judgment, not brat cloak				brath,
+lenited	9	2	cairpthib	carpat	lenited|dative dual	right	dative plural of carpat				cairpthib
+lenited	10	2	ceth	cet	lenited	wrong	ceth (each/which side), not cét				ceth leth atā Emain
+lenited	11	2	Doeth	ithid	lenited|imperative|third-person singular perfect prototonic	wrong	do·eth, of téit				Doeth Cuchulaind afrithisi, ⁊ asbreth fris dolēicfithi dō a
+lenited	12	2	dōich	doicc	lenited|spelling	wrong	dóich likely				dōich lim iss ē dobobsaig;Cūchulaind mac Sūaldaim
+lenited	13	2	hAirich	airec	[IM] aspirated|lenited|depalatalization	wrong	name in a list of names				hAirich Cluichiur, trī Laiten Luiged, trī Conchobair Collsen, trī Elai
+lenited	14	2	Lōthar	téit	lenited|third-person plural preterite absolute	wrong	the name Lóthar				Lōthar dōib, būachaill do Meidb
+lenited	15	2	Mēithi	méit	lenited|nom-pl	wrong	name (Méithi Tog)				Mēithi Tog
+lenited	16	2	Mēithiu	méit	lenited|comparative	wrong	name (Méithe)				Mēithiu, port iarsin i naiciged Ailill nō Medb, focichred cloich asa t
+lenited	17	2	nechlaim	ecal	nasalizationNoHyphen|lenited|depalatalization|superlative	wrong	echlaim, a whip				nechlaim i custul cota ṅglūn, scīath bēimnech co fǣbar condūala fair, 
+lenited	18	2	nītha	níta	lenited	unsure					nītha tānic sin,” or Fergus
+lenited	19	1	adchī	adcí	lenited	right	ad·cí, sees				adchī Coinculaind
+lenited	20	1	agathar	adágathar	lenited|third-person plural imperative active	right	ad·ágathar, fears				agathar, fir gonaiter
+lenited	21	1	aichdi	aicde	lenited|nom-pl	unsure					aichdi rofidir orm
+lenited	22	1	anfaith	anaid	lenited|fut-abs	wrong	anfaid, a storm				anfaith ina lāim
+lenited	23	1	athaich	adteich	lenited|singular imperative active	unsure					athaich 
+lenited	24	1	berthai	beirid	lenited|nom-pl|spelling|third-person plural present indicative/subjunctive relative	unsure					berthai slechtai co gūaille, ⁊ cromscéith co fǣbraib condúala ímpu ⁊ t
+lenited	25	1	berthair	bertar	lenited|depalatalization	wrong					berthair lagilla namulach dothoet imarddai friri buiretar fortoing gla
+lenited	26	1	berthar	bertar	lenited	wrong					berthar cichis ar cendaib rīg oconicim adberad būaid arāu scindaireach
+lenited	27	1	brisfithir	brisid	lenited|fut-abs	right	future passive of brisid				brisfithir in cath foraib
+lenited	28	1	buchæ	boc	lenited|nom-pl|dative singular	wrong					buchæ fuile fuirtbe gainne 
+lenited	29	1	bērthair	bertar	lenited|depalatalization	wrong	future passive of beirid, not the headword bertar				bērthair dōermaicni dōib iarum, ⁊ imbērad a mblichtach do ḟeōlaib hi n
+lenited	30	1	bǣth	baid	lenited|imperative	wrong	báeth foolish				bǣth do ḟeachtisin maigin i tā do ḟert
+lenited	31	1	Cheithiu	cet	[IM] lenited|lenited|comparative|depalatalization	wrong					Cheithiu
+lenited	32	1	Chethiu	cet	[IM] lenited|lenited|comparative	wrong					Chethiu, anasbert fria araid: “robāgus,” olse, “fīad Ḟergais comroc fr
+lenited	33	1	chreichi	creicc	[IM] lenited|lenited|nom-pl|spelling	unsure					chreichi, cū chatha,
+lenited	34	1	commaith	conoí	doubled consonant|lenited|pres-3pl|plural imperative active	wrong	commaith equally good				commaith hi nglennaib ⁊ hi tuaigebr˘aib na hairend
+lenited	35	1	crūithib	cruitt	lenited|dat-pl|spelling	unsure					crūithib a ech
+lenited	36	1	Cuithidir	cuit	lenited|equative	wrong					Cuithidir
+lenited	37	1	cōectha	coíca	lenited|accusative/vocative plural	right	fifty (cóecait)				cōectha bunnsach fair, ⁊ arsisetar isin scíath slisen huile leisseom
+lenited	38	1	Dauich	dauic	lenited	wrong	name in a list of names				Dauich Leamna, trī Cellchair hUmuill, trī Coscraich Clothra, trī Bairr
+lenited	39	1	dechaid	doéccai	lenited|plural imperative active	wrong	perfect of téit				dechaid Conall Cernach sech in maigin sin iarsuidiu
+lenited	40	1	deuth	daimid	lenited|uInfection|singular passive preterite conjunct	wrong	deud "end" (deuth lái "the end of the day")				deuth lāi acht imrobrethsom a chumaṅg forsin slōg
+lenited	41	1	Drucht	drúcht	lenited|alternative	unsure	a name in a list of names, drúcht dew				Drucht ⁊ Delt 7 Dathen, Téa ⁊ Tascur ⁊ Tualang, Taur ⁊ Glese
+lenited	42	1	díth	di	lenited|prepositionalPronoun	wrong	díth destruction				díth erred anglondach
+lenited	43	1	dīth	di	lenited|prepositionalPronoun	wrong	díth				dīth
+lenited	44	1	epertha	epert	lenited|nom-pl	wrong	passive of as·beir, not the verbal noun				epertha co mbadad ferr do lœ̄ch annā Cūchulaind
+lenited	45	1	errathaib	airet	doubled consonant|lenited|dat-pl|alternative	wrong					errathaib la dīuscud Gāirigi far fotaib fesar la maten forderg
+lenited	46	1	fechtha	fecht	lenited|nom-pl	wrong					fechtha Ulaid in cath indosa,” “Is ferda,” ol int ara
+lenited	47	1	Ferchū	ferg	lenited|nom-pl|alternative	wrong	the name Fer Chú				Ferchū loṅgsech bōi for longus re nAilill
+lenited	48	1	fethe	fet	lenited|nom-pl	wrong					fethe dees miomain im chēt crōeb di thailc traigead tricha cetharrīad 
+lenited	49	1	fith	fet	lenited|depalatalization	wrong	fid wood, written with th				fith resna cairpthib
+lenited	50	1	fotha	fota	lenited	unsure					fotha nō mar leōmain ic techta fó mathgamnaib
+lenited	51	1	fothā	fota	lenited	unsure					fothā a rūin
+lenited	52	1	frīth	frit	lenited	unsure					frīth fri Coinculaina cosmail Conculaind conben mian Macha mochtrād ma
+lenited	53	1	frīthi	frit	lenited|nom-pl	unsure					frīthi fonnuarsa
+lenited	54	1	fóithib	foídid	lenited|dat-pl|first-person singular imperative active noun-from-verb	unsure					fóithib iarom ⁊ marbthus iat a cethri firu déac
+lenited	55	1	Gaisched	gaisced	lenited	right	gaisced weapons, written with ch				Gaisched lasin íngin ⁊ dá ech duba foa cárput
+lenited	56	1	imbērtha	immbeir	lenited|nom-pl|singular imperative active noun-from-verb	unsure					imbērtha fortso
+lenited	57	1	lathe	lat	lenited|nom-pl	wrong	lá day				lathe gemreta
+lenited	58	1	lathi	lat	lenited|nom-pl	wrong	laithi, days (lá)				lathi ōndiu fris," for Lōch
+lenited	59	1	lathib	lat	lenited|dat-pl	wrong	dative plural of lá				lathib rīgnaib forbrondaib dithuathaib dēni diameasaib blasaib diafǣbr
+lenited	60	1	lāthaib	lat	lenited|dat-pl	wrong	láthaib gaile, warriors				lāthaib gaile roachtadar grafaind isin nōenach
+lenited	61	1	Lōthair	téit	lenited|depalatalization|third-person plural preterite absolute	wrong	the name Lóthar				Lōthair ar Tāna andsin ⁊ fagbāil in tairb iarsin slichtsin; nī he lenf
+lenited	62	1	macha	macc	lenited|nom-pl|spelling	wrong					macha mind mosdīsem calca de gaileonchaib gāir maniped būaid mnā misrā
+lenited	63	1	Maichi	macc	lenited|nom-pl|genitive/vocative singular	wrong					Maichi nitsreṅgat tar drong fri humed mnā muidme dar muig deiriuch fri
+lenited	64	1	meith	méit	lenited|alt-of	unsure	no context				meith
+lenited	65	1	melleth	millid	lenited|imperative|abs-palatal	wrong					melleth fri himthecht diēis roslūagaib
+lenited	66	1	mǣth	maidid	lenited|imperative|third-person singular present indicative conjunct	wrong	máeth soft				mǣth
+lenited	67	1	Nachis	acis	nasalizationNoHyphen|lenited	wrong					Nachis olc ar mblāth
+lenited	68	1	ndechais	doéccai	[IM] nasalized|lenited|pret-abs|plural imperative active	wrong					ndechais dia hacallaim
+lenited	69	1	ndīth	di	[IM] nasalized|lenited|prepositionalPronoun	wrong	díth				ndīth Con na cerda,
+lenited	70	1	nerrath	airet	nasalizationNoHyphen|doubled consonant|lenited|alternative	wrong					nerrath ⁊ cor ndeleth ⁊ lēim tar neib ⁊ filled eirrid nāir ⁊ gāi bolga
+lenited	71	1	nīchon	nícon	lenited	right	nícon, negative particle, written with ch				nīchon dergeni nach maithō ggegain in ingenr(
+lenited	72	1	Ochuind	oc	nd for nn|lenited|depalatalization|first-person plural	wrong	place name				Ochuind fadess
+lenited	73	1	oith	os	lenited|depalatalization|third-person plural	wrong					oith
+lenited	74	1	Ortha	orcaid	lenited|nom-pl|first-person singular past imperative active participle	unsure					Ortha hūann co rrobad do Ultaib
+lenited	75	1	rogǣth	guidid	lenited|imperative|third-person singular perfect deuterotonic	wrong	ro·gáeth, perfect passive of gonaid				rogǣth nī rogand,
+lenited	76	1	Róich	roicc	lenited|spelling	wrong	genitive of the name Róech				Róich
+lenited	77	1	Senchath	senchaid	lenited|imperative	wrong	name				Senchath, co hAraid, co Senchaid, co Senchairthe, co Briccir, co Brici
+lenited	78	1	sāeth	sáidid	lenited|imperative|second-person singular imperative active	wrong	sáeth trouble				sāeth la Fergus do Coinculaind anīsin
+lenited	79	1	sǣth	sét	ǽ/æ for é|lenited	wrong	sáeth trouble				sǣth lais a ndogēni Cūchulaind
+lenited	80	1	tara chend	tar cenn	nd for nn|lenited|accusative third-person plural	right	tar cenn, over his head	tara			tara chend i cimbidecht
+lenited	81	1	thath	táid	lenited|imperative|lenition mutation	wrong					thath ēm,” or Fergus, “nī rogēnair in Ērind cose slūag argara Ulad dog
+lenited	82	1	thothim	tothaimm	[IM] lenited|lenited|alternative	right	tothaimm fall, verbal noun of do·tuit				thothim itir slūag ⁊ bruth ⁊ chruth ⁊ errad, eter ēcosc ⁊ erfūad ⁊ bāi
+lenited	83	1	tuith	dotuit	lenited|singular imperative active	unsure					tuith fair, brat donn i filliud imbi, delg nargait nand, ruc fuil mbic
+lenited	84	1	uilche	olc	lenited|genitive singular feminine	wrong	a form of ulcha "beard" (uilche smertha "a smeared beard")				uilche smertha damsa lat
+lenited	85	1	uilchi	olc	lenited|nom-pl|depalatalization	wrong	a form of ulcha "beard"				uilchi

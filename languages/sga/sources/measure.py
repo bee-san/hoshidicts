@@ -550,20 +550,24 @@ def judge(args):
 
 def tally(args):
     """Counts of sources/judged-tain.tsv: per set, readings and lookups by
-    verdict; for `replaced`, also by form-of tie."""
+    verdict; for `replaced`, also by form-of tie and against the verdict of
+    the dictionary's own first result."""
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'judged-tain.tsv')
     readings, lookups = collections.Counter(), collections.Counter()
     with open(path, encoding='utf-8') as f:
         for line in f:
             if line.startswith('#'):
                 continue
-            kind, _i, n, _w, _first, _trace, _alone, tie, verdict = line.rstrip('\n').split('\t')[:9]
-            for key in [(kind, verdict)] + ([(kind + ' tie ' + tie, verdict)] if tie else []):
+            kind, _i, n, _w, _first, _trace, verdict, _reason, _alone, alone_verdict, tie = line.rstrip('\n').split('\t')[:11]
+            keys = [(kind, verdict)]
+            if kind == 'replaced':
+                keys += [(f'{kind}, form-of tie {tie}', verdict), (f'{kind}, dictionary alone {alone_verdict}', verdict)]
+            for key in keys:
                 readings[key] += 1
                 lookups[key] += int(n)
     for kind in sorted({k for k, _ in readings}):
         out = {v: [readings[(kind, v)], lookups[(kind, v)]] for v in ('right', 'wrong', 'unsure')}
-        print(kind, json.dumps({'readings': sum(r for r, _ in out.values()), 'lookups': sum(l for _, l in out.values()),
+        print(kind, json.dumps({'readings': sum(r for r, _ in out.values()), 'lookups': sum(x for _, x in out.values()),
                                 '[readings, lookups] by verdict': out}, ensure_ascii=False))
 
 
