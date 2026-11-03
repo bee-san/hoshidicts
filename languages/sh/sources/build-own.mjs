@@ -1105,7 +1105,8 @@ for (const spec of specs) {
 // FrequencyWords hr_50k and sr_50k whose first result was another lemma
 // the word's form-of rows name, judged by the pack author (the dominant
 // reading in ordinary text; words whose readings are both common are left
-// out). [word, lemma, ...more lemmas]
+// out), and a few found in the judged samples of the real texts (teče,
+// stupi, jezeru). [word, lemma, ...more lemmas]
 const PREFER = [
     // verb forms read as nouns or adjectives
     ['nema', 'nemati'], ['izgleda', 'izgledati'], ['čeka', 'čekati'], ['pada', 'padati'], ['hoda', 'hodati'],
@@ -1136,7 +1137,8 @@ const PREFER = [
     ['obrati', 'obratiti'], ['žali', 'žaliti'], ['rodi', 'roditi'], ['uda', 'udati'], ['jure', 'juriti'], ['ostave', 'ostaviti'],
     ['zahvali', 'zahvaliti'], ['stave', 'staviti'], ['ispravi', 'ispraviti'], ['obavesti', 'obavestiti'], ['napiše', 'napisati'],
     ['dobiću', 'dobiti'], ['kiše', 'kiša'], ['kiši', 'kiša'], ['duši', 'duša'], ['liste', 'lista'], ['bravu', 'brava'],
-    ['pade', 'pasti'], ['puše', 'puhati', 'pušiti'],
+    ['pade', 'pasti'], ['puše', 'puhati', 'pušiti'], ['teče', 'teći'], ['stupi', 'stupiti'],
+    ['jezeru', 'jezero'], ['jezerom', 'jezero'], ['jezerima', 'jezero'],
     // adjectives and pronouns: nouns come first (GROUP_ORDER), so the
     // frequent adjectives whose forms are also forms of a rare noun are
     // written out (drugi, svaki, nov; the nouns drug, svak, nova).

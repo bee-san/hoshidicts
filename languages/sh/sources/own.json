@@ -1195,7 +1195,8 @@
         {"type": "wholeWord", "inflected": "peću", "deinflected": "peć", "conditionsIn": [], "conditionsOut": ["n"]},
         {"type": "suffix", "inflected": "em", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{softNeuter}"},
         {"type": "wholeWord", "inflected": "vodom", "deinflected": "voda", "conditionsIn": [], "conditionsOut": ["n"]},
-        {"type": "wholeWord", "inflected": "tatom", "deinflected": "tata", "conditionsIn": [], "conditionsOut": ["n"]}
+        {"type": "wholeWord", "inflected": "tatom", "deinflected": "tata", "conditionsIn": [], "conditionsOut": ["n"]},
+        {"type": "wholeWord", "inflected": "jezerom", "deinflected": "jezero", "conditionsIn": [], "conditionsOut": ["n"]}
       ]
     },
     {
@@ -1233,7 +1234,8 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["cima", "ac"], ["cima", "ak"], ["mima", "am"], ["movima", "am"], ["tima", "at"], ["rima", "ar"], ["rovima", "ar"], ["ama", "a"], ["ama", "e"], ["ima", "o"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "cima", "deinflected": "tak", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{stemVowel}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["nima", "an"], ["novima", "an"], ["njima", "anj"], ["sima", "as"], ["lima", "ao"], ["lovima", "ao"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
-        {"type": "suffix", "inflected": "ima", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{softNeuter}"}
+        {"type": "suffix", "inflected": "ima", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{softNeuter}"},
+        {"type": "wholeWord", "inflected": "jezerima", "deinflected": "jezero", "conditionsIn": [], "conditionsOut": ["n"]}
       ]
     },
     {
@@ -1315,7 +1317,8 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["nu", "an"], ["nju", "anj"], ["su", "as"], ["lu", "ao"], ["elu", "eo"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ocu", "lac"], ["pcu", "bac"], ["sku", "zak"], ["tku", "dak"], ["ci", "ka"], ["zi", "ga"], ["si", "ha"], ["etu", "e"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}"},
         {"type": "suffix", "inflected": "u", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{softNeuter}"},
-        {"type": "suffix", "inflected": "enu", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}"}
+        {"type": "suffix", "inflected": "enu", "deinflected": "e", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}"},
+        {"type": "wholeWord", "inflected": "jezeru", "deinflected": "jezero", "conditionsIn": [], "conditionsOut": ["n"]}
       ]
     },
     {
@@ -1846,7 +1849,8 @@
         {"type": "wholeWord", "inflected": "pjeva", "deinflected": "pjevati", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "peva", "deinflected": "pevati", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "vara", "deinflected": "varati", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "uda", "deinflected": "udati", "conditionsIn": [], "conditionsOut": ["v"]}
+        {"type": "wholeWord", "inflected": "uda", "deinflected": "udati", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "teče", "deinflected": "teći", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
@@ -1971,7 +1975,8 @@
         {"type": "wholeWord", "inflected": "rodi", "deinflected": "roditi", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "zahvali", "deinflected": "zahvaliti", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "ispravi", "deinflected": "ispraviti", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "obavesti", "deinflected": "obavestiti", "conditionsIn": [], "conditionsOut": ["v"]}
+        {"type": "wholeWord", "inflected": "obavesti", "deinflected": "obavestiti", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "stupi", "deinflected": "stupiti", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {
