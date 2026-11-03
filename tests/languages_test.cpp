@@ -697,7 +697,7 @@ void test_rules() {
               "," +
               transform("interposed", R"({"type":"interposedObject","particles":"particles","guardWords":"guard",)" + verb_guards +
                                           R"("conditionsIn":[],"conditionsOut":["v_phr"]})"),
-          R"({"particles":["up","on","out"],"guard":["the","to"],
+          R"({"particles":["up","on","out"],"guard":["the","to"],"none":[],
               "auxiliaries":["am","is","are","was","were","be","been","being","have","has","had","having","do","does","did","done","doing"]})");
     };
     const auto plain = load(rules(""), &error);
@@ -738,6 +738,89 @@ void test_rules() {
       // a guard word only when guardWords lists it.
       check(has(deinflect(*guarded, "turned had out"), "turned out:v_phr:interposed"),
             "verbGuardWords checks the first word only");
+      // An empty list guards no verb: the rule reads as without the field.
+      const auto empty = load(rules(R"("verbGuardWords":"none",)"), &error);
+      check(empty != nullptr, "interposed pack with an empty verbGuardWords list loads: " + error);
+      if (empty) {
+        for (const char* text :
+             {"had pointed out", "have turned out", "did his coat up", "pointed it out", "put Mary's coat on"}) {
+          check(deinflect(*empty, text) == deinflect(*plain, text),
+                std::string("an empty verbGuardWords list changes nothing: ") + text);
+        }
+      }
+      // The list is compared with the text the rule receives, not with its
+      // output after `then`: Had is not listed, so Had it out gives Had out,
+      // which `then` lowers to had out.
+      const auto lowered = load(rules(R"("verbGuardWords":"auxiliaries","then":[{"case":"lower"}],)"), &error);
+      check(lowered != nullptr, "interposed pack with verbGuardWords and then loads: " + error);
+      if (lowered) {
+        r = deinflect(*lowered, "Had it out");
+        check(r == List{"Had it out::", "had out:v_phr:interposed", "have out:v_phr:interposed>past"},
+              "verbGuardWords compares the rule's input, not its output after then: " + join(r));
+        r = deinflect(*lowered, "had it out");
+        check(r == List{"had it out::"}, "verbGuardWords with then: had it out is still guarded: " + join(r));
+      }
+    }
+  }
+  {
+    // Two interposedObject rules: verbGuardWords guards only the rule that
+    // names it, in either order (7.3).
+    const auto two = [](bool guarded_first) {
+      const std::string guarded = transform(
+          "guarded", R"({"type":"interposedObject","particles":"particles","guardWords":"guard","verbGuardWords":"auxiliaries","conditionsIn":[],"conditionsOut":["v_phr"]})");
+      const std::string unguarded = transform(
+          "unguarded", R"({"type":"interposedObject","particles":"particles","guardWords":"guard","conditionsIn":[],"conditionsOut":["v_phr"]})");
+      return transforms_json(guarded_first ? guarded + "," + unguarded : unguarded + "," + guarded,
+                             R"({"particles":["out"],"guard":["the"],"auxiliaries":["had","have"]})");
+    };
+    for (const bool guarded_first : {true, false}) {
+      using List = std::vector<std::string>;
+      const std::string order = guarded_first ? "guarded rule first" : "guarded rule second";
+      const auto pack = load(two(guarded_first), &error);
+      check(pack != nullptr, "two interposed rules load (" + order + "): " + error);
+      if (!pack) continue;
+      auto r = deinflect(*pack, "had pointed out");
+      check(r == List{"had pointed out::", "had out:v_phr:unguarded"},
+            "the rule without verbGuardWords still reads had pointed out (" + order + "): " + join(r));
+      r = deinflect(*pack, "pointed it out");
+      check(r == (guarded_first ? List{"pointed it out::", "pointed out:v_phr:guarded", "pointed out:v_phr:unguarded"}
+                                : List{"pointed it out::", "pointed out:v_phr:unguarded", "pointed out:v_phr:guarded"}),
+            "both rules read an unlisted verb (" + order + "): " + join(r));
+    }
+  }
+  {
+    // verbGuardWords looks at the first word of the text the rule receives,
+    // after earlier rules (7.3). English reaches the interposed rule through
+    // its past prefix `had ` -> `have ` (conditions `x` here stand for its
+    // v_fw), which keeps a listed verb listed: had pointed out gives no have
+    // out. The prefix `x` makes an unlisted first word listed (xhad it out ->
+    // had it out, which gives no had out), and the replacement `had` -> `hid`
+    // makes a listed word unlisted (had it out -> hid it out -> hid out), as
+    // English's `-s` rule turns was into wa.
+    const auto pack = load(
+        transforms_json(
+            transform("past", R"({"type":"prefix","inflected":"had ","deinflected":"have ","conditionsIn":[],"conditionsOut":["x"]})") + "," +
+                transform("x", R"({"type":"prefix","inflected":"x","deinflected":"","conditionsIn":[],"conditionsOut":[]})") + "," +
+                transform("hid", R"({"type":"replace","inflected":"had","deinflected":"hid","conditionsIn":[],"conditionsOut":[]})") + "," +
+                transform("interposed",
+                          R"({"type":"interposedObject","particles":"particles","guardWords":"guard","verbGuardWords":"auxiliaries","conditionsIn":["x"],"conditionsOut":["v_phr"]})"),
+            R"({"particles":["out"],"guard":["the"],"auxiliaries":["had","have"]})"),
+        &error);
+    check(pack != nullptr, "earlier-rule pack loads: " + error);
+    if (pack) {
+      using List = std::vector<std::string>;
+      auto r = deinflect(*pack, "had pointed out");
+      check(r == List{"had pointed out::", "have pointed out:x:past", "hid pointed out::hid",
+                      "hid out:v_phr:hid>interposed"},
+            "verbGuardWords after an earlier rule: had pointed out -> have pointed out gives no have out: " + join(r));
+      r = deinflect(*pack, "xhad it out");
+      check(!has(r, "had out:v_phr:x>interposed") && !has(r, "have out:v_phr:x>past>interposed"),
+            "verbGuardWords after an earlier rule: xhad it out -> had it out gives no had out: " + join(r));
+      check(has(r, "xhad out:v_phr:interposed") && has(r, "hid out:v_phr:x>hid>interposed"),
+            "verbGuardWords after an earlier rule: the unlisted verbs of xhad it out are read: " + join(r));
+      r = deinflect(*pack, "had it out");
+      check(r == List{"had it out::", "have it out:x:past", "hid it out::hid", "hid out:v_phr:hid>interposed"},
+            "verbGuardWords after an earlier rule: had it out -> hid it out gives hid out: " + join(r));
     }
   }
   {

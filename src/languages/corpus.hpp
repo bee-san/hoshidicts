@@ -40,11 +40,24 @@ struct LookupRow {
   std::string matched;
 };
 
+// The options a test file runs with (section 12.2): every optional
+// processor, transform and variant pass, or none of them, the pack's
+// defaults, when the file's first line is `# options: default`.
+enum class TestOptions { All, Default };
+inline constexpr std::string_view default_options_line = "# options: default";
+
 // Readers for the three formats; false with `error` (file:line: reason) on a
-// malformed file. Lines starting with # are comments.
-bool read_corpus(const std::string& path, std::vector<CorpusRow>& rows, std::string* error);
-bool read_text_tsv(const std::string& path, std::vector<TextRow>& rows, std::string* error);
-bool read_lookup_tsv(const std::string& path, std::vector<LookupRow>& rows, std::string* error);
+// malformed file. Lines starting with # are comments. With `options`, the
+// first line is also read as the file's options: `options` receives
+// TestOptions::Default for `# options: default`, and any other comment whose
+// first word is `option` or `options`, in any case, is an error, so the usual
+// misspellings never leave a file in the wrong mode.
+bool read_corpus(const std::string& path, std::vector<CorpusRow>& rows, std::string* error,
+                 TestOptions* options = nullptr);
+bool read_text_tsv(const std::string& path, std::vector<TextRow>& rows, std::string* error,
+                   TestOptions* options = nullptr);
+bool read_lookup_tsv(const std::string& path, std::vector<LookupRow>& rows, std::string* error,
+                     TestOptions* options = nullptr);
 
 // One deinflection of a corpus source: its text (postprocessed), conditions,
 // the rules on its path (indices into TransformSet::rules) and its trace ids
@@ -58,10 +71,12 @@ struct SourceDeinflection {
 
 // Every deinflection of `source` as a corpus row sees it: through the
 // preprocessors, the deinflector, every variant pass and the postprocessors,
-// with every optional processor, transform and pass enabled, the whole
-// source only (never shorter prefixes). `limit_reached` is set when a
-// processor reached the variant limit.
-std::vector<SourceDeinflection> deinflect_source(const PackData& pack, std::string_view source, bool* limit_reached);
+// with every optional processor, transform and pass enabled (with
+// TestOptions::Default, none of them), the whole source only (never shorter
+// prefixes). `limit_reached` is set when a processor reached the variant
+// limit.
+std::vector<SourceDeinflection> deinflect_source(const PackData& pack, std::string_view source, bool* limit_reached,
+                                                 TestOptions options = TestOptions::All);
 
 // Whether a corpus row passes (section 12.2). `matching`, when given,
 // receives the deinflections that match the row's term, rule and reasons.

@@ -1,0 +1,5 @@
+# options: default
+# Hand-written for the test: whole lookups in tests/dictionary/ with the pack's defaults.
+# category	valid	text	expression	matched
+present	1	estan	estar	estan
+archaic	0	walketh	walk	walketh

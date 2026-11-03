@@ -67,6 +67,15 @@ describe('check-classes', () => {
         assert.ok(apostrophe.cases.every(([input, output]) => output === input));
     });
 
+    test('the inputs include tests/cases.tsv and tests/defaults.tsv, in the order of section 12.1', () => {
+        const dir = copyFixture();
+        const header = '# category\tvalid\tsource\tterm\trule\treasons\n';
+        writeFileSync(join(dir, 'xx', 'tests', 'cases.tsv'), `${header}nouns\t1\tZqcases\tzqcase\tns\tplural\n`);
+        writeFileSync(join(dir, 'xx', 'tests', 'defaults.tsv'), `# options: default\n${header}nouns\t1\tZqdefaults\tzqdefault\tns\tplural\n`);
+        const inputs = computeExpectations(loadPack('xx', {languagesDir: dir})).steps[0].cases.map(([input]) => input);
+        assert.deepEqual(inputs.slice(6, 9), ['bus', 'Zqcases', 'Zqdefaults']);
+    });
+
     test('stepLists and classFields walk every step list', () => {
         const pack = loadPack('xx', {languagesDir: fixtures});
         assert.deepEqual(stepLists(pack.language, null).map((s) => s.name), ['decapitalize', 'capitalizeFirstLetter', 'removeMarks', 'firstA', 'dropApostrophe', 'presentation.displayTransforms.stripMarks', 'presentation.displayTransforms.shout']);

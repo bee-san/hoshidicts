@@ -109,6 +109,7 @@ languages/
       yomitan.tsv         Yomitan's own test cases for the language, converted (optional)
       corpus.tsv          inflected form -> lemma pairs from a licensed source (required with transforms)
       cases.tsv           hand-written tricky cases and negatives (optional)
+      defaults.tsv        hand-written cases run with the pack's defaults; its first line is `# options: default` (optional)
       gaps.tsv            known failures: reported, not enforced (optional)
       text.tsv            text-processor expectations (optional)
       lookup.tsv          whole-pipeline cases against tests/dictionary/ (optional)
@@ -643,6 +644,11 @@ uptown* → *look uptown*); the pack does not, and lists that as a Yomitan defec
 `verbGuardWords` keeps `interposedObject` from reading an auxiliary as the
 verb: the rule does not apply when its first word is in the list. The verb is
 one word, so it is compared whole, as `guardWords` compares a piece's parts.
+It is the first word of the text the rule receives, after the preprocessors
+and any earlier rule: English's past rule `had ` → `have ` turns *had
+pointed out* into *have pointed out*, whose verb is still listed, while its
+3rd-person rule turns *was a night out* into *wa a night out*, whose verb is
+not listed, so the rule gives *wa out*.
 `guardWords` cannot stop these readings, because the word after an auxiliary
 is usually a participle, an open class (*had pointed out*, *had picked up*),
 and such a reading matches more of the text than the word itself, so it comes
@@ -1269,7 +1275,8 @@ Like a lookup without `language_options`, `deinflect` and `preprocess` turn
 on no optional transform, processor or variant pass. `--options <id,...>`
 turns on the ones named (for `deinflect` transforms and variant passes, for
 `preprocess` preprocessors; an id the pack does not have is an error), and
-`--all-options` every one, as the test files and `eval-language` run. The
+`--all-options` every one, as the test files and `eval-language` run unless
+a file's first line asks for the pack's defaults (section 12.2). The
 results of an enabled variant pass follow the ordinary ones, with the pass
 id last in their trace. An input that is not valid UTF-8 is not copied into
 the output: its line is
@@ -1317,11 +1324,17 @@ counts rows every matching path of which uses the rule, `falseCandidates`
 the false-candidate texts every passing path to which uses it, `breaks` the
 negatives every matching path of which uses it.
 
+A corpus whose first line is `# options: default` (section 12.2) is read
+with the pack's defaults instead, for its deinflections and for `firstRank`'s
+lookups alike, and the JSON then starts with `"options":"default"`. Any other
+comment whose first word is `option` or `options` is an error, as in the
+conformance test.
+
 `benchmark-lookup` takes `--languages <dir>` and `--language <code>`
 (default `ja`), so every pack's pull request can time its own lookups.
 
 Language pull requests report these numbers for their own rules, Yomitan's
-rules and the final set.
+rules, their union and the final set (section 14).
 
 ### 10.4 WebAssembly (Hachidori)
 
@@ -1493,13 +1506,15 @@ For every pack it checks:
    engine and requires equality.
 3. Every `pattern` is in the dialect of section 7.6 and compiles; no `todo`
    rules remain.
-4. Every TSV in `tests/` except `gaps.tsv` passes; `gaps.tsv` is run and its
-   pass count printed. A TSV the contract does not name fails the check, so a
-   misspelt file never goes unrun. A pack with transforms needs
-   `tests/corpus.tsv`, from a licensed source; only the Japanese pack's corpus
-   is `tests/yomitan.tsv`, Yomitan's complete conjugation corpus, and every
-   other pack is refused without `corpus.tsv`. No corpus input reaches the
-   4,096-variant limit.
+4. Every TSV in `tests/` except `gaps.tsv` passes, each with the options its
+   first line gives it (section 12.2); `gaps.tsv` is run and its pass count
+   printed. A TSV the contract does not name fails the check, so a misspelt
+   file never goes unrun, and so do a `defaults.tsv` without the options line
+   and any other comment whose first word is `option` or `options`. A pack
+   with transforms needs `tests/corpus.tsv`, from a licensed source; only the
+   Japanese pack's corpus is `tests/yomitan.tsv`, Yomitan's complete
+   conjugation corpus, and every other pack is refused without `corpus.tsv`.
+   No corpus input reaches the 4,096-variant limit.
 5. Coverage: every `own` and `both` transform has at least one passing
    `valid = 1` row, and the rules no row exercises are printed.
 6. `README.md` exists and has the sections of the template.
@@ -1529,7 +1544,8 @@ negatives	0	bus	bu	*	*
 - The source text goes through the pack's preprocessors first, as in a lookup.
 - Every test file runs with every optional processor, transform and variant
   pass on (the Japanese cat-speech rows need `nekoSpeech`), as
-  `eval-language` does.
+  `eval-language` does, unless its first line asks for the pack's defaults
+  (below).
 
 `text.tsv` checks processors: `category valid input variant` (the variant is,
 or is not, among the processed variants). `lookup.tsv` checks the whole
@@ -1537,6 +1553,44 @@ pipeline against `tests/dictionary/`: `category valid text expression matched`
 (the first result has this expression and matched text), each text looked up
 whole (scan length max(16, its length), 16 results). The test writes the tiny dictionary
 into a stored ZIP and imports it at run time.
+
+**The options line.** A test file whose first line is exactly
+`# options: default` runs with the pack's defaults, as a lookup without
+`language_options` does: no optional processor, transform or variant pass,
+whatever the pack's settings default to. This holds for every test file of
+this section, and `eval-language` reads any corpus the same way (section
+10.3). Use it for rows that an optional feature would pass whatever their
+rule does. Spanish's optional `addMissingAccents` reads *estan* as *están*,
+so with every option on, *estan* → *estar* passes through the rule for
+*están* even when the rule for *estan* is wrong; three broken Spanish rules
+passed the conformance test this way, and their rows fail with the defaults.
+
+A file has one mode, so hand-written deinflection rows go in two files:
+`cases.tsv`, with every option on, holds the rows that need an optional
+processor, transform or pass (an optional `own` or `both` transform needs one
+there for the coverage check, 12.1 step 5), and `defaults.tsv`, whose first
+line must be the options line, holds the rows an optional feature would
+otherwise pass. Any other file takes the line when all its rows suit the
+defaults: `text.tsv` when it checks that optional processors are off,
+`lookup.tsv` for lookups as a host makes them by default.
+`tests/fixtures/conformance/od` is laid out this way.
+
+A `defaults.tsv`:
+
+```text
+# options: default
+# Hand-written: the optional accent processor and archaic transform are off here.
+# category<TAB>valid<TAB>source<TAB>term<TAB>rule<TAB>reasons
+present	1	estan	estar	v	present
+negatives	0	walketh	walk	*	*
+```
+
+Any other comment whose first word is `option` or `options`, in any case,
+is an error, on the first line or below it, so the usual misspellings
+(`# option: default`, `#Options: default`, `# options default`) never leave a
+file with every option on. The conformance test prints "with the pack's
+defaults" after the pass count of each file that runs with them; check that
+your file has it.
 
 ### 12.3 Hachidori's checks
 
@@ -1576,6 +1630,10 @@ in review.
 
 ## 14. Adding a language
 
+Steps 2, 4, 5 and 7 include checks the conformance test cannot make. Each
+names the pilot pack whose audit needed it: English (#49), Spanish (#50) or
+Korean (#51).
+
 1. **Start from the template and build the tools.**
    `cp -r languages/_template languages/<code>` with Yomitan's code for the
    language. Fill in identity, `classes`, `text` and `capabilities` in
@@ -1591,7 +1649,52 @@ in review.
    and UniMorph, write the transforms a learner needs to reach a dictionary
    headword: conjugations, declensions, plurals, comparatives, clitics,
    mutations, orthographic alternations. Use the types in section 7.3. Save
-   them as `sources/own.json` and commit that alone.
+   them as `sources/own.json` and commit that alone. As you write them:
+
+   - **Give conditions to rules that make phrasal verbs.** A `phrasal` or
+     `interposedObject` rule can turn the start of any phrase into a verb, so
+     give it the verb's `conditionsOut`, as Yomitan's `v_phr`: the
+     part-of-speech filter (section 9.4) then drops readings that are not
+     verbs. The rules it chains with then need a `conditionsIn` that accepts
+     its output, and it needs one that accepts theirs, or the chain stops:
+     English's interposed rule takes the `v_fw` its past rules give, and they
+     take its `v_io`. English's first `interposedObject` rule had empty
+     conditions and read any first word as the verb: in 20 novels, 144 first
+     results started at a word with no verb entry (*all came out* → *all
+     out*) and 833 at an auxiliary (*had gone out* → *have out*). Conditions
+     and guard words left 5 and 291, and `verbGuardWords` took the
+     auxiliaries to 0.
+     A `replace` rule whose output can be any kind of word, such as English's
+     placeholders (*his* → *one's*) and Old Irish's spellings, keeps an empty
+     `conditionsOut`, which every part of speech passes: with `v` there, 12
+     of 14 English adverbial and prepositional idioms, such as *on his own*,
+     no longer showed the idiom first.
+   - **Test every word list.** A list that stops a rule (`guardWords`,
+     `verbGuardWords`) needs negative rows that fail without it, and a list
+     a rule needs (`particles`, `followedBy`) positive rows. English's 111
+     guard words could be replaced by one with conformance still passing,
+     which raised the interposed-object first results in *Treasure Island*
+     from 231 to 342.
+   - **Count the space in stem constraints.** A lookup tries prefixes of
+     the scanned text (section 9.2), and a suffix rule applies to the whole
+     prefix, so its stem includes any space and the words before it. A
+     short ending then fires on a word followed by a short word: English's
+     plural `a` → `on` read *found a* as *found on*, and `-s` read *long as*
+     as *long a* and *had its* as *had it*, 563 wrong first results in 20
+     novels. Give such rules `stemNotEndsWith: "[ ]"` or `stemCharacters:
+     "[^ ]"`, or split them per vowel with a minimum, and measure what that
+     costs. English's constraints took all its last-word readings in the
+     novels from 1,107 to 102, and its rules no longer reach 3,741 of the
+     dictionary's forms inflected on their last word, such as *dry cleaned*
+     → *dry clean*.
+   - **Count the words in front, too.** A pronoun or clitic before a short
+     form passes `stemMinLength`: Spanish *me va bien* gave *verse* first,
+     because the stem of `a` → `er` in *me va* is *me v*, four code points
+     (115 places in Tatoeba). Make the minimum count the verb alone: keep the
+     space out of the ending's stem (`stemCharacters: "[^ ]"`) and remove the
+     pronoun with a rule of its own first, or write out the forms of verbs
+     whose stem is shorter than the minimum, as Spanish writes out *ir*,
+     *dar*, *ver*, *ser* and *oír*, with conditions its pronoun rules take.
 3. **Port Yomitan's rules.** Run `tools/port-yomitan-transforms.mjs` and map
    every `todo` (section 8.3) in `sources/yomitan.json`. Port Yomitan's
    processors into `lookup.preprocessors` and `postprocessors`. Run
@@ -1601,7 +1704,21 @@ in review.
 4. **Build a corpus.** Take 300-2,000 inflected form → lemma pairs from a
    licensed source (UniMorph, Wiktionary through kaikki.org), add hand-written
    tricky cases and negatives, and record source, licence and attribution in
-   the README.
+   the README. In the cases:
+
+   - **Test phrases, not only words.** Add the frequent forms behind each
+     clitic, pronoun, article and auxiliary the language puts before them:
+     positive rows where the phrase has a reading, negative rows where a fix
+     for the bare word must hold. A collision fixed for the word comes back
+     behind a pronoun: after Spanish stopped *puedo* → *podar*, *Me puede
+     ayudar* still showed *podarse* first, and *podarse* or *morarse* came
+     first at 554 places in Tatoeba.
+   - **Keep optional features from passing a row.** When an optional
+     processor or transform also maps a row's source to its lemma, put the
+     row in `tests/defaults.tsv`, whose first line is `# options: default`
+     (section 12.2), and keep the rows that need the feature in `cases.tsv`.
+     Spanish's optional accent processor hid three broken rules from the
+     conformance test.
 5. **Measure and choose.** `node tools/merge-transforms.mjs <code>` writes the
    union of `sources/own.json` and `sources/yomitan.json` to
    `transforms.json`, with each rule's `source`: `own`, `yomitan`, or `both`
@@ -1609,10 +1726,54 @@ in review.
    `hoshidicts-cli eval-language --per-rule` for your rules
    (`--transforms sources/own.json`), Yomitan's
    (`--transforms sources/yomitan.json`) and their union, with a real
-   dictionary imported by `hoshidicts-cli import`. Remove from
+   dictionary imported by `hoshidicts-cli import`; where Yomitan has no rules
+   for the language, your rules are also the union. Remove from
    `transforms.json` the rules that only add false candidates or break
    negatives (the tool then keeps your `transforms.json` unless `--force` is
-   given), and write the numbers to the README.
+   given), and write the numbers to the README. Then:
+
+   - **Measure with the whole dictionary.** Use the recommended dictionary
+     as its release publishes it, form-of rows included, for every number:
+     those rows change what a user's lookup returns. kty-ko-en has 336,337
+     form-of rows beside 36,031 entries, and one was the first result at
+     25.2% of the Korean Tatoeba positions that found anything. A number
+     from a modified copy may follow, labelled.
+   - **Check the frequent forms.** Take a frequency list whose source and
+     licence you record. For each of its 10,000 most frequent words whose
+     lemma a rule reaches (a form-of row of the word or the corpus names the
+     lemma), look the word up as a host does and check that the first result
+     with a definition is that lemma. Count a result as right only when it
+     is the word's own lemma: a Spanish script that also accepted another
+     form of the same lemma (*ello* for *ellos*, both forms of *él*) missed
+     the most frequent wrong card. Report the count and its share of the
+     list's tokens, and fix collisions with stem constraints such as
+     `stemNotStartsWithText`. `languages/en/sources/lookup-batch.cpp` looks
+     a word list up as a host does. Spanish *puedo* (806,048 occurrences)
+     listed *podar* above *poder*; 48 of the 10,000 words had a wrong lemma
+     above the right one, 14 after the fix.
+   - **Look up real text.** Look up every word of a public-domain text,
+     such as a Project Gutenberg book of 50,000 words or more, as a host
+     does: the text from the word to the end of its sentence.
+     `languages/en/sources/make-hovers.py` writes these for Latin script
+     (change its word pattern for another), and `lookup-batch` looks them up;
+     it marks a result as a form-of row when all its glossaries have the
+     `non-lemma` tag, as kaikki dictionaries tag them. Judge the first
+     results with a definition, by script where the dictionary's form-of
+     rows name the lemma and by hand for a random sample of at least 50 of
+     the rest, and report the rate of wrong ones and the rules behind the
+     largest groups. *Treasure Island* (68,817 lookups) found English's
+     interposed-object readings, and five Spanish texts found *ellos* →
+     *ello* at 95 of their 274 wrong first results.
+   - **Remove a rule only for measured harm.** Never remove one only because
+     no corpus row needs it: corpora miss whole classes of forms. Build forms
+     from every ending the rule feeds with about ten common lemmas, put them
+     in a corpus file and run `eval-language --transforms` on the rules with
+     and without it; look real text up both ways too. Remove or constrain the
+     rule only for false candidates, broken negatives or wrong first results.
+     Korean removed eight of Yomitan's past-tense rules that no row needed:
+     2,450 of 2,990 constructed past forms (먹었으나, 하였으나) lost their
+     reading, and so did 30 tokens of five Wikipedia articles. Check first
+     ranks too: removing one `-(으)세요` rule put 마다 above 말다 for 마세요.
 6. **Fill in the host data.** `presentation`, `settings` (only if the language
    needs one), `host.recommendedDictionaries`, `host.sample`.
 7. **Run the checks.** Rebuild, write `tests/classes.json`, the expectations
@@ -1627,16 +1788,75 @@ in review.
    node tools/check-classes.mjs <code> && node tools/check-yomitan.mjs <yomitan checkout> <code>
    ```
 
-8. **Open a pull request** that changes only `languages/<code>/`, with the
-   rule provenance, the corpus source and licence, own / Yomitan / final
-   recall and false candidates, the dictionary you measured with, the
-   performance numbers of section 13 and the known gaps.
+   Then, in a scratch copy, delete each stem constraint and exclusion you
+   added, empty each word list and remove each group of its entries that has
+   a purpose of its own (the auxiliaries of a guard list, its pronouns),
+   write `tests/classes.json` again and run `language-conformance-test` on
+   the copy; add a row where no test fails. A short script that edits a copy
+   of `transforms.json` does this. 18 of 60 such edits to the English pack
+   changed results with every test still passing.
+8. **Open a pull request** that changes only `languages/<code>/`. Its body
+   gives what the README gives (below), in the same order, with the commands
+   that produced each number.
 
-Checklist for reviewers: only the pack directory changes; conformance and the
-differential check pass; no `todo` rules; every corpus file has a source and
-licence; recall and false candidates are reported for all three rule sets; no
-rule produces a wrong lemma on the negatives; the performance numbers are
-within budget.
+**What to measure and report.** The README's four sections, which the
+template names, and the pull request body hold:
+
+- **Sources and licences**: the source, revision, licence and attribution of
+  every file in `tests/` and every rule set, and of each input you measured
+  with and did not commit: the dictionary (with its sha256), the frequency
+  list, sentence corpora and texts.
+- **Rule provenance**: how many transforms and rules are `own`, `yomitan` and
+  `both`, and each Yomitan rule left out, with the numbers that justify it
+  (step 5).
+- **Measurements**, all with the recommended dictionary as published:
+  1. `eval-language --dictionary` on `corpus.tsv` with `gaps.tsv`, on
+     `cases.tsv`, `defaults.tsv` and `yomitan.tsv`, for your rules, Yomitan's,
+     their union and the final set (your rules alone where Yomitan has
+     none): recall, negatives passed, false candidates and first rank, with
+     every option on and with the defaults (each file as it is and a copy
+     with its options line added, or removed; the numbers are the same when
+     the pack has no optional feature);
+  2. the frequent forms: how many of the 10,000 words a rule reaches, and
+     how many of those, and what share of the list's tokens, show a wrong
+     lemma first;
+  3. the same for those forms behind each clitic, pronoun, article and
+     auxiliary, in a sentence corpus such as Tatoeba;
+  4. real text: the lookups, the wrong first results (count, rate, how they
+     were judged) and the rules behind the largest groups;
+  5. the performance numbers of section 13;
+  6. the commands, and the scripts committed in `sources/`, that produce
+     every number above.
+- **Known gaps**: the forms the rules do not reach and the wrong first
+  results that remain, each with its count.
+
+Checklist for reviewers:
+
+- Only the pack directory changes; conformance and the differential check
+  pass; there are no `todo` rules.
+- Every corpus file, dictionary, frequency list and text has a source and a
+  licence, and nothing from the dictionaries, lists or texts is committed.
+- Every measurement uses the recommended dictionary as published and
+  reproduces with the committed scripts.
+- Recall, false candidates and first rank are reported for your rules,
+  Yomitan's, their union and the final set, with every option on and with
+  the defaults.
+- `phrasal` and `interposedObject` rules have the verb's `conditionsOut`, and
+  the rules they chain with accept it; a `replace` rule has a `conditionsOut`
+  only when its output is always that kind of word. Every word list, stem
+  constraint and exclusion has a row that fails without it.
+- Short endings do not fire on a word followed by a short word, and
+  negative rows show it.
+- The cases have phrases with clitics, pronouns, articles and auxiliaries
+  before the frequent forms.
+- Rows that an optional feature would pass anyway are in `defaults.tsv`,
+  and the rows that need one are in `cases.tsv`.
+- The wrong first results of the frequent forms and of real text are
+  counted, and those that remain are in Known gaps.
+- No rule was removed only because no corpus row needs it; each removal has
+  its constructed-form and real-text numbers.
+- No rule produces a wrong lemma on the negatives, and the performance
+  numbers are within budget.
 
 ### 14.1 Starting points
 

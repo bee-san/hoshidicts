@@ -36,6 +36,30 @@ describe('the stub CLI prints the format of section 10.3', () => {
         assert.deepEqual(variants.variants.slice(0, 2), [{text: 'WALKED', steps: 1}, {text: 'Walked', steps: 0}]);
         assert.throws(() => runCli(stub, ['--languages', languages, 'deinflect', 'zz', '--stdin'], ['a']), /no pack zz/);
     });
+
+    test('eval-language reads a corpus whose first line is # options: default with the pack\'s defaults (12.2)', () => {
+        // The od conformance fixture: an optional accent processor (estan ->
+        // están) and an optional transform (walketh -> walk).
+        const conformance = fileURLToPath(new URL('../../tests/fixtures/conformance/', import.meta.url));
+        const corpus = '# category\tvalid\tsource\tterm\trule\treasons\npresent\t1\testan\testar\tv\tpresent\naccents\t1\testan\testán\t*\t*\narchaic\t1\twalketh\twalk\tv\tarchaic\n';
+        const dir = mkdtempSync(join(temp, 'options-'));
+        const write = (name, text) => {
+            writeFileSync(join(dir, name), text);
+            return join(dir, name);
+        };
+        const evalLanguage = (file) => spawnSync(process.execPath, [stub, '--languages', conformance, 'eval-language', 'od', file], {encoding: 'utf8'});
+        assert.deepEqual(JSON.parse(evalLanguage(write('all.tsv', corpus)).stdout), {rows: 3, recall: 1, negativesPassed: null});
+        assert.deepEqual(JSON.parse(evalLanguage(write('default.tsv', `# options: default\n${corpus}`)).stdout), {options: 'default', rows: 3, recall: 1 / 3, negativesPassed: null});
+        const misspelt = ['# Options: default', '#\toptions: default', '# options : default', '# options: default ', '# option: default', '# options default'];
+        const files = [['misplaced.tsv', `${corpus}# options: default\n`, 5], ...misspelt.map((line, i) => [`misspelt-${i}.tsv`, `${line}\n${corpus}`, 1])];
+        for (const [name, text, line] of files) {
+            const result = evalLanguage(write(name, text));
+            assert.equal(result.status, 1, name);
+            assert.ok(result.stderr.includes(`${name}:${line}: an options line is "# options: default", and only on the first line`), result.stderr);
+        }
+        // A comment whose first word is not option or options stays a comment.
+        assert.deepEqual(JSON.parse(evalLanguage(write('comment.tsv', `# Optional features: none here; options: default is not this line.\n${corpus}`)).stdout), {rows: 3, recall: 1, negativesPassed: null});
+    });
 });
 
 describe('check-yomitan', () => {
@@ -156,5 +180,17 @@ describe('inputs', () => {
         assert.ok(has('tallér'), 'corpus words');
         assert.equal(new Set(inputs).size, inputs.length);
         assert.ok(inputs.every((t) => t !== '' && !t.includes('\n')));
+    });
+
+    test('the corpus words include tests/defaults.tsv (12.2)', async () => {
+        const count = async (dir) => {
+            const {ok, lines} = await checkYomitan(yomitan, 'xx', {cli: stub, languagesDir: dir});
+            assert.ok(ok, lines.join('\n'));
+            return Number(/rules: (\d+) inputs/.exec(lines[0])[1]);
+        };
+        const dir = copyFixture();
+        const before = await count(dir);
+        writeFileSync(join(dir, 'xx', 'tests', 'defaults.tsv'), '# options: default\n# category\tvalid\tsource\tterm\trule\treasons\nverbs\t1\tjumped\tjump\tv\tpast\n');
+        assert.equal(await count(dir), before + 2);
     });
 });

@@ -148,6 +148,11 @@ describe('rule types', () => {
         for (const text of ['pointed it out', 'put mary’s coat on', 'put it on the table', 'put the coat on', 'haddock it out', 'turned had out']) {
             assert.deepEqual(texts(guarded, text), texts(plain, text), text);
         }
+        // The verb is compared exactly, as the engine compares it: Had is not
+        // in the list (word characters with capitals here).
+        const cased = model([{id: 'io', rule: {type: 'interposedObject', particles: 'particles', guardWords: 'guards', verbGuardWords: 'auxiliaries', conditionsIn: [], conditionsOut: ['v_phr']}}], {wordCharacters: '[A-Za-z]'}, lists);
+        assert.deepEqual(texts(cased, 'Had pointed out'), ['Had out:v_phr:io']);
+        assert.deepEqual(texts(cased, 'had pointed out'), []);
         assert.throws(() => io({verbGuardWords: 'nope'}), /no word list nope/);
     });
 

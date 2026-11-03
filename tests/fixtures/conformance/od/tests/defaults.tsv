@@ -1,0 +1,7 @@
+# options: default
+# Hand-written for the test: the rows that must pass without the optional features, which the first line turns off.
+# category	valid	source	term	rule	reasons
+present	1	estan	estar	v	present
+present	1	Trabajan	trabajar	v	present
+negatives	0	estan	están	*	*
+negatives	0	walketh	walk	*	*

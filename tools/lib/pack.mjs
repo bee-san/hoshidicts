@@ -14,7 +14,7 @@ export const REPO_ROOT = fileURLToPath(new URL('../../', import.meta.url));
 export const DEFAULT_LANGUAGES_DIR = join(REPO_ROOT, 'languages');
 
 /** The deinflection TSVs of a pack's tests/ directory (section 12.2). */
-export const DEINFLECTION_TSVS = ['yomitan.tsv', 'corpus.tsv', 'cases.tsv', 'gaps.tsv'];
+export const DEINFLECTION_TSVS = ['yomitan.tsv', 'corpus.tsv', 'cases.tsv', 'defaults.tsv', 'gaps.tsv'];
 
 /**
  * Pack codes in a languages directory: subdirectories with a language.json
@@ -128,6 +128,28 @@ export function readTextTsv(file) {
  */
 export function readLookupTsv(file) {
     return readTsv(file, 5).rows.map(({line, cells: [category, valid, text, expression, matched]}) => ({line, category, valid: valid === '1', text, expression, matched}));
+}
+
+/** The first line of a test file that runs with the pack's defaults (section 12.2). */
+export const DEFAULT_OPTIONS_LINE = '# options: default';
+
+/**
+ * The options a test file of section 12.2 runs with: 'default' (no optional
+ * processor, transform or variant pass) when its first line is
+ * `# options: default`, otherwise 'all'. Any other comment whose first word is
+ * `option` or `options`, in any case, is an error, as in the engine's readers.
+ * @param {string} file
+ * @returns {'all' | 'default'}
+ */
+export function testFileOptions(file) {
+    const lines = readFileSync(file, 'utf8').split('\n');
+    lines.forEach((line, index) => {
+        if (index === 0 && line === DEFAULT_OPTIONS_LINE) { return; }
+        if (/^#[ \t]*options?(?![A-Za-z])/i.test(line)) {
+            throw new Error(`${file}:${index + 1}: an options line is "${DEFAULT_OPTIONS_LINE}", and only on the first line`);
+        }
+    });
+    return lines[0] === DEFAULT_OPTIONS_LINE ? 'default' : 'all';
 }
 
 /**

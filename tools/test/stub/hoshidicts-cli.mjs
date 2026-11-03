@@ -10,12 +10,14 @@
 //   stub-cli [--languages <dir>] eval-language <code> <file.tsv> [--transforms <file>]
 //
 // eval-language here reports only `recall` and `negativesPassed`, without a
-// dictionary. Set HOSHIDICTS_STUB_BREAK=<text> to make deinflect drop the
-// last result for that input (the tests use it to see a difference caught).
+// dictionary, and reads a corpus whose first line is `# options: default`
+// with the pack's defaults, as the engine does (section 12.2). Set
+// HOSHIDICTS_STUB_BREAK=<text> to make deinflect drop the last result for
+// that input (the tests use it to see a difference caught).
 
 import {readFileSync} from 'node:fs';
 import {resolve} from 'node:path';
-import {DEFAULT_LANGUAGES_DIR, loadPack, readDeinflectionTsv} from '../../lib/pack.mjs';
+import {DEFAULT_LANGUAGES_DIR, loadPack, readDeinflectionTsv, testFileOptions} from '../../lib/pack.mjs';
 import {processText} from '../../lib/steps.mjs';
 import {ModelDeinflector} from './model.mjs';
 
@@ -93,8 +95,16 @@ function main() {
         }
     } else if (command === 'eval-language') {
         if (rest.length !== 1) { fail('eval-language needs a corpus file'); }
-        // Every optional processor and transform, as the engine's eval-language.
-        const model = deinflector(pack, (pack.transforms?.transforms ?? []).map((t) => t.id));
+        // Every optional processor and transform, as the engine's eval-language,
+        // or none for a file whose first line is `# options: default`.
+        let mode;
+        try {
+            mode = testFileOptions(rest[0]);
+        } catch (error) {
+            fail(error.message);
+        }
+        const all = mode === 'all';
+        const model = deinflector(pack, all ? (pack.transforms?.transforms ?? []).map((t) => t.id) : []);
         const {rows} = readDeinflectionTsv(rest[0]);
         let positives = 0;
         let found = 0;
@@ -104,7 +114,7 @@ function main() {
             const wanted = row.rule === null ? 0 : model.conditionsOf(row.rule);
             let has = false;
             const preprocessors = pack.language.lookup?.preprocessors ?? [];
-            for (const {text} of processText(preprocessors, row.source, pack.classes, {enabled: preprocessors.map((p) => p.id)})) {
+            for (const {text} of processText(preprocessors, row.source, pack.classes, {enabled: all ? preprocessors.map((p) => p.id) : []})) {
                 for (const result of model.deinflect(text)) {
                     if (result.text !== row.term) { continue; }
                     if (row.rule !== null && result.conditions !== 0 && (result.conditions & wanted) === 0) { continue; }
@@ -120,7 +130,7 @@ function main() {
                 if (!has) { ++passed; }
             }
         }
-        out.push(JSON.stringify({rows: rows.length, recall: positives === 0 ? null : found / positives, negativesPassed: negatives === 0 ? null : passed / negatives}));
+        out.push(JSON.stringify({...(all ? {} : {options: 'default'}), rows: rows.length, recall: positives === 0 ? null : found / positives, negativesPassed: negatives === 0 ? null : passed / negatives}));
     } else {
         fail(`unknown command ${command}`);
     }
