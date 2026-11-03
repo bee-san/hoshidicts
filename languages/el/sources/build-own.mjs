@@ -315,7 +315,7 @@ personTransforms('passive-dependent', 'passive dependent', 'Mediopassive perfect
 transform('passive-imperative-2sg', 'passive imperative (2nd sg)', 'Mediopassive imperative, second person singular: ντύσου, σκέψου, θυμήσου.');
 transform('passive-participle', 'passive participle', 'Perfect passive participle, as an adjective in -μένος: γραμμένος, αγορασμένος, αγαπημένος.');
 transform('old-augment', 'augment ε- (older spelling)', 'The augment ε- written before a stressed stem, as older and formal texts do: εφώναξε (φώναξε), εψιθύρισε, εκάθισε.');
-transform('movable-n', '-ν (movable nu)', 'The final ν that older texts add to the third person singular of the past: είπεν (είπε), είχεν, έλεγεν, εφώναξεν.');
+transform('movable-n', '-ν (movable nu)', 'The final ν that older texts add to the third person singular of the past: είπεν (είπε), είχεν, έλεγεν, εφώναξεν; also πάλιν (πάλι).');
 transform('internal-augment', 'internal augment', 'Past form of a compound verb with the augment ε inside it: επέστρεψα (επιστρέφω), κατέστρεψα, παρέδωσα, συνέλαβα.');
 transform('ξανα-', 'ξανα-', 'The prefix ξανα- (again): ξαναγράφω, ξανάγραψα → γράφω.');
 
@@ -509,6 +509,8 @@ for (const [l, e] of PASSIVE_LEMMAS) {
     suffix('passive-imperfect-3pl', 'ονταν', l, {...VERB, stemContains: ACCENTED});
     suffix('passive-imperfect-3pl', 'οντανε', l, {...VERB, stemContains: ACCENTED});
 }
+// Older demotic -ουνταν: βρίσκουνταν, γίνουνταν, φαίνουνταν (βρίσκονταν).
+suffix('passive-imperfect-3pl', 'ουνταν', 'ομαι', {...VERB, stemContains: ACCENTED});
 
 // Passive perfective stems: [end of the stem before -ηκα/-ώ, end of the present stem].
 // γράφτηκα (γράφ-τ-), δουλεύτηκα, δέχτηκα (δέχ-τ-, δέχομαι); αγοράστηκα, κλείστηκα,
@@ -650,6 +652,7 @@ for (const [inf, def] of INTERNAL_AUGMENTS) {
 prefix('old-augment', 'ε', '', {out: ['aug'], min: 3, stemContains: ACCENTED});
 // είπεν → είπε; the accent is in the stem, so μηδέν and ουδέν are not read.
 suffix('movable-n', 'εν', 'ε', {min: 2, stemContains: ACCENTED});
+whole('movable-n', 'πάλιν', 'πάλι');
 prefix('ξανα-', 'ξανα', '', {min: 2});
 prefix('ξανα-', 'ξανά', '', {min: 2});
 // A monosyllable loses its accent without the prefix: ξαναπώ → πω, ξαναδεί → δει.
@@ -661,9 +664,11 @@ const IRREGULAR = [
     // [transform id, form, lemma]
     ...[['present-1sg', 'είμαι'], ['present-2sg', 'είσαι'], ['present-3sg', 'είναι'], ['present-3sg', 'είνε'], ['present-1pl', 'είμαστε'], ['present-2pl', 'είστε'], ['present-2pl', 'είσαστε'],
         ['imperfect-1sg', 'ήμουν'], ['imperfect-1sg', 'ήμουνα'], ['imperfect-2sg', 'ήσουν'], ['imperfect-2sg', 'ήσουνα'], ['imperfect-3sg', 'ήταν'], ['imperfect-3sg', 'ήτανε'],
+        // Older spellings: είμουν, είσουν, είταν (Eftaliotis, Delta).
+        ['imperfect-1sg', 'είμουν'], ['imperfect-1sg', 'είμουνα'], ['imperfect-2sg', 'είσουν'], ['imperfect-2sg', 'είσουνα'], ['imperfect-3sg', 'είταν'], ['imperfect-3sg', 'είτανε'],
         ['imperfect-1pl', 'ήμασταν'], ['imperfect-1pl', 'ήμαστε'], ['imperfect-2pl', 'ήσασταν'], ['imperfect-2pl', 'ήσαστε'], ['imperfect-3pl', 'ήσαν'], ['imperfect-3pl', 'ήσανε'],
         ['gerund', 'όντας']].map(([t, f]) => [t, f, 'είμαι']),
-    ...[['imperfect-1sg', 'είχα'], ['imperfect-2sg', 'είχες'], ['imperfect-3sg', 'είχε'], ['imperfect-1pl', 'είχαμε'], ['imperfect-2pl', 'είχατε'], ['imperfect-3pl', 'είχαν'], ['imperfect-3pl', 'είχανε']]
+    ...[['imperfect-1sg', 'είχα'], ['imperfect-2sg', 'είχες'], ['imperfect-3sg', 'είχε'], ['imperfect-1pl', 'είχαμε'], ['imperfect-2pl', 'είχατε'], ['imperfect-3pl', 'είχαν'], ['imperfect-3pl', 'είχανε'], ['imperfect-3pl', 'είχον']]
         .map(([t, f]) => [t, f, 'έχω']),
     ...[['present-2sg', 'λες'], ['present-3sg', 'λέει'], ['present-1pl', 'λέμε'], ['present-2pl', 'λέτε'], ['present-3pl', 'λένε'], ['present-3pl', 'λεν'],
         ['aorist-1sg', 'είπα'], ['aorist-2sg', 'είπες'], ['aorist-3sg', 'είπε'], ['aorist-1pl', 'είπαμε'], ['aorist-2pl', 'είπατε'], ['aorist-3pl', 'είπαν'], ['aorist-3pl', 'είπανε'],
@@ -817,20 +822,25 @@ shared('perfective-imperative-2sg', [['βα', 'βαινω']], stemLast('ω'), {.
 // (όμορφος, όμορφου, όμορφων).
 
 transform('gen-sg', 'genitive singular', 'Genitive singular: δρόμου, ανθρώπου, βουνού, σπιτιού, ονόματος, ώρας, τέχνης, πόλης, πόλεως, έθνους (also the accusative plural in -ους).');
-transform('acc-sg', 'accusative singular', 'Accusative singular of masculine and feminine nouns and adjectives in -ος (δρόμο, καλό), also the neuter singular of adjectives (καλό, όμορφο).');
+transform('acc-sg', 'accusative singular', 'Accusative singular of masculine and feminine nouns and adjectives in -ος (δρόμο, καλό), also the neuter singular of adjectives (καλό, όμορφο). In older texts (katharevousa) with a final ν, also of feminine nouns: τον δρόμον, το καλόν, την ζωήν, την ημέραν, την θέσιν (θέση).');
+transform('older-ending', 'older ending', 'The older (katharevousa) ending of a noun whose modern form ends in -η or -ο, in the same case: η φύσις (φύση), η πόλις (πόλη), η λέξις (λέξη), το όπλον (όπλο), το πρόσωπον (πρόσωπο).');
 transform('voc-sg', 'vocative singular', 'Vocative singular of nouns and adjectives in -ος: φίλε, δρόμε, καλέ.');
 transform('obl-sg', 'genitive/accusative/vocative singular', 'Genitive, accusative and vocative singular of masculine nouns in -ας, -ης, -ές, -ούς: πατέρα, ναύτη, μαθητή, καφέ, παππού.');
 transform('nom-pl', 'nominative plural', 'Nominative and vocative plural of nouns and adjectives in -ος: δρόμοι, άνθρωποι, καλοί.');
 transform('acc-pl', 'accusative plural', 'Accusative plural of nouns and adjectives: καλούς, βαθιούς, παππούδες.');
 transform('acc-pl-gen-sg', 'accusative plural or genitive singular', 'The ending -ους: accusative plural of nouns and adjectives in -ος (δρόμους, ανθρώπους, καλούς) and genitive singular of neuters in -ος (έθνους, μέρους, λάθους).');
 transform('gen-pl', 'genitive plural', 'Genitive plural: δρόμων, ανθρώπων, ωρών, θαλασσών, τεχνών, πόλεων, ονομάτων, παιδιών.');
+// The feminine comes before the noun plural, and the other adjective forms
+// after it. Where a dictionary does not tell nouns from adjectives, the first
+// of two equal readings gives the trace and the first card. -η is far more
+// often a feminine adjective (μεγάλη, όμορφη) than a neuter plural (μέρη,
+// λάθη): on 444,884 positions of four texts, 2,652 first cards are traced
+// `feminine` rightly this way and 503 noun plurals wrongly, against the
+// reverse. -α and -ες are more often noun plurals (λεπτά → λεπτό, φίλες →
+// φίλη): with the other adjective forms first, 24 fewer first cards are
+// right and 1 more.
+transform('feminine', 'feminine', 'Feminine singular of an adjective, nominative, accusative and vocative: καλή, όμορφη, ωραία, γλυκιά, βαθιά; in older texts also the accusative in -ν: την καλήν, την ωραίαν, την μικράν.');
 transform('plural', 'plural', 'Nominative, accusative and vocative plural: πατέρες, ώρες, πόλεις, βουνά, σπίτια, ονόματα, έθνη, καφέδες, γιαγιάδες.');
-// The noun plural comes before the adjective forms: where a dictionary does
-// not tell nouns from adjectives, the first of two equal readings is shown,
-// and a neuter or feminine plural noun is the commoner reading of -α and -ες
-// (λεπτά → λεπτό, φίλες → φίλη; measured on 444,884 positions of four
-// texts, 24 more right first cards this way and 1 fewer).
-transform('feminine', 'feminine', 'Feminine singular of an adjective, nominative, accusative and vocative: καλή, όμορφη, ωραία, γλυκιά, βαθιά.');
 transform('feminine-gen-sg', 'feminine genitive singular', 'Feminine genitive singular of an adjective: καλής, όμορφης, ωραίας, βαθιάς.');
 transform('feminine-pl', 'feminine plural', 'Feminine plural of an adjective, nominative, accusative and vocative: καλές, όμορφες, ωραίες, βαθιές.');
 transform('neuter-pl', 'neuter plural', 'Neuter plural of an adjective, nominative, accusative and vocative (and the adverb in -α): καλά, όμορφα, ωραία, βαθιά.');
@@ -860,6 +870,22 @@ suffix('gen-pl', 'ών', 'ός', NA);
 suffix('acc-pl-gen-sg', 'ους', 'ος', NA);
 shared('acc-pl-gen-sg', [['ους', 'ος']], LEFT, {...N, ...KEEPS});
 suffix('acc-pl', 'ούς', 'ός', NA);
+// Older texts (katharevousa) write the accusative singular with a final ν:
+// τον δρόμον, τον καιρόν, το μικρόν (μικρός), την κεφαλήν, την ημέραν,
+// την θέσιν (θέσις, θέση), and the nominative of nouns in -ις and of neuters
+// in -ον: η φύσις (φύση), το όπλον (όπλο). πάλιν is the adverb πάλι
+// (movable-n), not πάλη.
+const OLD_3RD = {stemEndsWith: '[σξψλμτχ]', stemNotStartsWithText: 'πάλ'};
+suffix('acc-sg', 'ον', 'ος', NA);
+suffix('acc-sg', 'όν', 'ός', NA);
+suffix('acc-sg', 'ην', 'η', N);
+suffix('acc-sg', 'ήν', 'ή', N);
+suffix('acc-sg', 'αν', 'α', N);
+suffix('acc-sg', 'άν', 'ά', N);
+suffix('acc-sg', 'ιν', 'η', {...N, ...OLD_3RD});
+suffix('older-ending', 'ις', 'η', {...N, ...OLD_3RD});
+suffix('older-ending', 'ον', 'ο', N);
+suffix('older-ending', 'όν', 'ό', N);
 
 // Neuter -ο: βιβλίο, βουνό, πρόσωπο.
 suffix('gen-sg', 'ου', 'ο', N);
@@ -1004,6 +1030,11 @@ suffix('feminine', 'α', 'ος', {...A, stemEndsWith: AFTER_VOWEL});
 // αυτιά is the plural of αυτί, not a form of the pronoun αυτός.
 suffix('feminine', 'ιά', 'ός', {...A, stemNotStartsWithText: 'αυτ'});
 suffix('feminine', 'ιά', 'ύς', A);
+// Older texts: την μεγάλην, την πρώτην, την ωραίαν, την μικράν.
+suffix('feminine', 'ην', 'ος', A);
+suffix('feminine', 'ήν', 'ός', A);
+suffix('feminine', 'αν', 'ος', {...A, stemEndsWith: AFTER_VOWEL});
+suffix('feminine', 'άν', 'ός', {...A, stemEndsWith: '[ρ]'});
 suffix('feminine-gen-sg', 'ης', 'ος', A);
 suffix('feminine-gen-sg', 'ής', 'ός', A);
 suffix('feminine-gen-sg', 'ας', 'ος', {...A, stemEndsWith: AFTER_VOWEL});

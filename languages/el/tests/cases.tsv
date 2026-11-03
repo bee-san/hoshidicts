@@ -345,6 +345,21 @@ article	1	τις	ο	*	feminine-pl
 closing quote	1	καλά'	καλά	*	closing-quote
 closing quote	1	δρόμο’	δρόμο	*	closing-quote
 elision	1	σ'	σου	*	elision
+older	1	θυμόν	θυμός	n	acc-sg
+older	1	δρόμον	δρόμος	n	acc-sg
+older	1	κεφαλήν	κεφαλή	n	acc-sg
+older	1	ημέραν	ημέρα	n	acc-sg
+older	1	θέσιν	θέση	n	acc-sg
+older	1	πόλιν	πόλη	n	acc-sg
+older	1	φύσις	φύση	n	older-ending
+older	1	όπλον	όπλο	n	older-ending
+older	1	μεγάλην	μεγάλος	adj	feminine
+older	1	ωραίαν	ωραίος	adj	feminine
+older	1	μικράν	μικρός	adj	feminine
+older	1	πάλιν	πάλι	*	movable-n
+older	1	είταν	είμαι	v	imperfect-3sg
+older	1	είχον	έχω	v	imperfect-3pl
+older	1	βρίσκουνταν	βρίσκομαι	v	passive-imperfect-3pl
 negatives	0	για	γιος	*	*
 negatives	0	στα	στο	*	*
 negatives	0	στα	στης	*	*
@@ -403,3 +418,7 @@ negatives	0	ντεν	ντε	*	*
 negatives	0	μ'	Μάι	*	*
 negatives	0	κ'	κα	*	*
 negatives	0	μ'	μα	*	*
+negatives	0	εξ'	Εξάς	*	*
+negatives	0	πάλιν	πάλη	*	*
+negatives	0	ύστερις	ύστερη	*	*
+negatives	0	καλάν	καλός	*	*

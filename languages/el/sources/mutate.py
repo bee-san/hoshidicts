@@ -89,7 +89,7 @@ def mutations():
         ('short pronouns removed (μένα → τα first)', drop_rule(lambda tid, rule: tid == 'short-pronoun')),
         ('elision after a vowel allowed (καλά\' → καλάι)', drop_key('stemEndsWith', '{consonant}', {'elision'})),
         ('closing quote removed (καλά\')', drop_rule(lambda tid, rule: tid == 'closing-quote')),
-        ('elision stems take capitals (μ\' → Μάι)', set_key('stemCharacters', '{greek}', '{greekAll}', {'elision'})),
+        ('elision stems take capitals (εξ\' → Εξάς)', set_key('stemCharacters', '{greek}', '{greekAll}', {'elision'})),
         ('elision minimum 2 → 1 (κ\' → κα)', set_key('stemMinLength', 2, 1, {'elision'})),
         ('movable-n without stemContains (ντεν → ντε)', drop_key('stemContains', None, {'movable-n'})),
         ('v_acc accent rules: any letters between (κορώνα → κορώνω)', lambda tid, rule: ({**rule, 'stemChange': {**rule['stemChange'], 'between': '{greekAll}'}}
@@ -97,6 +97,9 @@ def mutations():
         ('n_ante/adj_ante minimum 2 → 1 (μαιών → Μάιος)', lambda tid, rule: ({**rule, 'stemChange': {**rule['stemChange'], 'betweenMinLength': 1}}
                                                                   if tid == 'accent' and rule.get('conditionsIn', [''])[0].endswith('_ante') and rule.get('stemChange', {}).get('betweenMinLength') == 2 and rule.get('stemCharacters') == '{unaccentedAll}' else rule)),
         ('gen-pl without stemContains (στων → στο)', drop_key('stemContains', None, {'gen-pl'})),
+        ('stemNotStartsWithText πάλ removed from the older -ιν (πάλιν → πάλη)', drop_key('stemNotStartsWithText', 'πάλ')),
+        ('stemEndsWith [σξψλμτχ] removed from the older -ιν and -ις (ύστερις → ύστερη)', drop_key('stemEndsWith', '[σξψλμτχ]')),
+        ('stemEndsWith [ρ] removed from the older feminine -άν (καλάν → καλός)', drop_key('stemEndsWith', '[ρ]')),
         ('stemNotStartsWithText αυτ removed from the colour adjectives (αυτιά → αυτής)', drop_key('stemNotStartsWithText', 'αυτ', {'acc-sg', 'feminine', 'feminine-gen-sg', 'feminine-pl', 'nom-pl', 'gen-sg', 'gen-pl', 'acc-pl'})),
     ]
 
