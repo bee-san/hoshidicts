@@ -1225,8 +1225,9 @@ for (const [plural, singular] of [
     whole('plural', plural, singular, [], ['n']);
 }
 // bello and quello before a noun: begli, bei, quegli, quei (begli occhi, quei
-// giorni).
-for (const [plural, singular] of [['begli', 'bello'], ['bei', 'bello'], ['quegli', 'quello'], ['quei', 'quello']]) {
+// giorni). The article i, il's plural: wty-it-en has no entry for it, only
+// form-of rows, the first of which it follows names the letter I.
+for (const [plural, singular] of [['begli', 'bello'], ['bei', 'bello'], ['quegli', 'quello'], ['quei', 'quello'], ['i', 'il']]) {
     whole('plural', plural, singular, [], ['adj']);
 }
 // Feminine adjectives in -a; nouns for people in -trice, -essa, -ona, -iera

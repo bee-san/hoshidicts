@@ -130,6 +130,7 @@ MUTATIONS = [
     ("no-acute-che", LANG, '"variants": [[{"map": {"ch\\u00E8": "ch\\u00E9"}, "at": "end"}]]', '"variants": [[{"map": {"ch\\u00E8": "ch\\u00E8"}, "at": "end"}]]'),
     ("apostrophe-unnormalized", LANG, '"variants": [[{"map": {"\\u2019": "\'", "\\u02BC": "\'"}}]]', '"variants": [[{"map": {"\\u02BC": "\'"}}]]'),
     ("nfkc-to-nfc", LANG, '"variants": [[{"normalize": "NFKC"}]]', '"variants": [[{"normalize": "NFC"}]]'),
+    ("capitalize-article-i", LANG, '[[{"case": "upperFirst"}, {"map": {"I": "i"}, "at": "end"}]]', '[[{"case": "upperFirst"}]]'),
     ("form-of-as-term", LANG, '"formOf": "follow"', '"formOf": "asTerm"'),
     ("untagged-filter", LANG, '"untaggedTerms": "pass"', '"untaggedTerms": "filter"'),
 ]

@@ -49,10 +49,11 @@ do not depend on the order they are named in.
 
 Where a word's rows name several lemmas (figli: figlio and figliare), any of
 them is "right" by the rows, so freq and, with --freq, text also count the
-first results that are a named lemma whose citation form is at least 10 times
-rarer in the frequency list than another named lemma (figliare for figlio):
-the frequency proxy hachi-lang-it's first audit used for the dominant
-reading. With --against DIR, freq also looks the words up with the pack in
+first results over the hovered word alone that are a lemma its own form-of
+rows name, other than the word itself, whose citation form is at least 10
+times rarer in the frequency list than another lemma they name (figliare for
+figlio): the frequency proxy hachi-lang-it's first audit used for the
+dominant reading. With --against DIR, freq also looks the words up with the pack in
 DIR (such as a copy with untaggedTerms "filter") and counts the first results
 that differ, those whose lemma's citation form is at least 10 times rarer
 than the other pack's first lemma, and those 10 times more frequent: the
@@ -218,13 +219,25 @@ def load_frequencies(path):
         FREQ_FILE = path
 
 
-def rarer_named(expression, named, word):
-    """The named lemma a first result hides: another lemma the word's rows name whose citation form is at
-    least 10 times more frequent in the frequency list (the auditor's proxy for the dominant reading:
-    figli shows figliare where figlio is 18 times more frequent), or None. A first result that is the
-    word's own entry is never flagged, and the word itself is not one of the lemmas compared."""
-    words = {word, word.lower()}
-    if expression in words or expression.lower() in words:
+def referenced(text, rows):
+    """The lemmas the form-of rows of the text itself name (figli: figlio, figliare), through the
+    judge's variants of the text (case, elision, accents); not the lemmas of glosses or of a lemma."""
+    out = set()
+    for v in judge_variants(text):
+        entry = rows.get(v)
+        if entry is not None:
+            out |= entry["refs"]
+    return out
+
+
+def rarer_named(expression, word, rows):
+    """The lemma a first result hides: when the first result is one of the lemmas the hovered word's
+    own form-of rows name, another of them whose citation form is at least 10 times more frequent in
+    the frequency list (the first audit's proxy for the dominant reading: figli shows figliare where
+    figlio is 18 times more frequent), or None. The word itself is not one of the lemmas compared."""
+    named = referenced(word, rows)
+    words = judge_variants(word)
+    if expression not in named or expression in words:
         return None
     mine = FREQ.get(expression, 0)
     best = max(((FREQ.get(lemma, 0), lemma) for lemma in named if lemma != expression and lemma not in words), default=(0, None))
@@ -276,11 +289,9 @@ def cmd_freq(args):
         f = first(res)
         if f is None:
             continue
-        named = acceptable(w, rows)
-        if f["expression"] in named:
-            hidden = rarer_named(f["expression"], named, w)
-            if hidden is not None:
-                rarer.append((w, f, hidden))
+        hidden = rarer_named(f["expression"], w, rows) if f["matched"] == w else None
+        if hidden is not None:
+            rarer.append((w, f, hidden))
     rarer_tokens = sum(counts[w] for w, _, _ in rarer)
     lines = [f"top {top} words ({total_tokens} tokens); a rule reaches a lemma their form-of rows name: {len(eligible)} words, "
              f"{eligible_tokens / total_tokens:.2%} of the tokens",
@@ -393,8 +404,8 @@ def judge_lookups(hovers, words, nexts, rows, dictionary, languages):
             continue
         verdict = classify(word, nxt, f, rows)
         tally[verdict] += 1
-        if verdict == "right" and FREQ:
-            hidden = rarer_named(f["expression"], acceptable_any(word, rows) | acceptable_any(f["matched"], rows), word)
+        if verdict == "right" and FREQ and f["matched"] == word:
+            hidden = rarer_named(f["expression"], word, rows)
             if hidden is not None:
                 tally["rarer named lemma"] += 1
                 rarer[(word.lower(), f["expression"], hidden)] += 1

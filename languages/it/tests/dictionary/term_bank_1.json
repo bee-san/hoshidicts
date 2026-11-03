@@ -62,5 +62,9 @@
   ["cane", "", "n masc", "", 0, ["dog"], 61, ""],
   ["cano", "", "adj", "", 0, ["hoary"], 62, ""],
   ["cani", "", "non-lemma", "", 0, [["cane", ["plural"]]], 63, ""],
-  ["cani", "", "non-lemma", "", 0, [["cano", ["masculine plural"]]], 64, ""]
+  ["cani", "", "non-lemma", "", 0, [["cano", ["masculine plural"]]], 64, ""],
+  ["il", "", "artic", "", 0, ["the"], 65, ""],
+  ["I", "", "char", "", 0, ["the letter I"], 66, ""],
+  ["i", "", "non-lemma", "", 0, [["I", ["lowercase"]]], 67, ""],
+  ["i", "", "non-lemma", "", 0, [["il", ["plural masculine"]]], 68, ""]
 ]

@@ -75,7 +75,7 @@
       {
         "id": "capitalizeFirstLetter",
         "name": "Capitalize first letter",
-        "variants": [[{"case": "upperFirst"}]]
+        "variants": [[{"case": "upperFirst"}, {"map": {"I": "i"}, "at": "end"}]]
       },
       {
         "id": "removeAlphabeticDiacritics",
