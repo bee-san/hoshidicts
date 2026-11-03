@@ -47,9 +47,14 @@
         "variants": [[{"case": "upperFirst"}]]
       },
       {
-        "id": "straightApostrophe",
-        "name": "Typographic apostrophe to straight apostrophe",
-        "variants": [[{"map": {"’": "'", "ʼ": "'", "‘": "'"}}]]
+        "id": "otherApostrophes",
+        "name": "Modifier letter apostrophe and left quotation mark to apostrophe",
+        "variants": [[{"map": {"ʼ": "'", "‘": "'"}}]]
+      },
+      {
+        "id": "apostropheVariants",
+        "name": "Search for apostrophe variants",
+        "variants": [[{"map": {"'": "’"}}], [{"map": {"’": "'"}}]]
       },
       {
         "id": "oeLigature",

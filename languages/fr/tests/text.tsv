@@ -29,7 +29,9 @@ ligature	1	manoeuvre	manœuvre
 ligature	1	coefficient	coefficient
 negatives	0	parle	PARLE
 negatives	0	Parle	pARLE
-negatives	0	l'homme	l’homme
+apostrophe	1	l'homme	l’homme
+negatives	0	l'homme	l‘homme
+negatives	0	l’homme	lʼhomme
 negatives	0	cœur	coeur
 negatives	0	école	ecole
 negatives	0	homme	l'homme
