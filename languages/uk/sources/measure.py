@@ -35,12 +35,13 @@
 # when its adjective is (міцн-о, міцн-ий). A first result that matches more
 # than the hovered word (сила-силенна, з-під, див.) is counted apart as
 # 'phrase', not judged.
-# --verdicts <file> writes one line per lookup: word, verdict, first result,
-# the rules behind it, its weight and what judged it. rightByRules and wrongByRules count the judged first
-# results whose trace has a step of the pack's rules (the others come from
-# the word's own form-of rows alone). The personal
-# pronouns' rows in wty-uk-en name every personal pronoun (мене → я, ми,
-# він, ...), so for them the lemma is taken from PRONOUNS below.
+# --verdicts <file> writes one line per lookup (of the whole list, text or
+# sentence set, not again for its subsets): word, verdict, first result, the
+# rules behind it, its weight and what judged it. rightByRules and
+# wrongByRules count the judged first results whose trace has a step of the
+# pack's rules (the others come from the word's own form-of rows alone). The
+# personal pronouns' rows in wty-uk-en name every personal pronoun (мене →
+# я, ми, він, ...), so for them the lemma is taken from PRONOUNS below.
 # --languages runs another copy of the pack (a rule set to compare).
 # --frequencies <file> gives the frequency list for the proxy in text and
 # phrases mode.
@@ -139,9 +140,9 @@ def meant(word, lemmas, targets):
         if PRONOUN_LEMMAS.get(w):
             right |= PRONOUN_LEMMAS[w]
             continue
-        # One group per lemma a row names, with the lemmas a reference-only
-        # form leads to (вміти → уміти).
-        groups = [{n} | ({t for t in targets.get(n, ())} if n not in lemmas else set()) for n in sorted(targets.get(w, ()))]
+        # One group per lemma a row names, with the lemmas that lemma's own
+        # rows name (вміти → уміти).
+        groups = [{n} | set(targets.get(n, ())) for n in sorted(targets.get(w, ()))]
         groups = [g for g in groups if g & lemmas] or groups
         # Doublets of one verb (досягти, досягнути; вдягти, вдягнути) are
         # one lemma.
@@ -158,7 +159,7 @@ def meant(word, lemmas, targets):
                 groups = [g for g in groups if score(g) == best]
                 how = 'proxy'
         for g in groups:
-            right |= g | {t for n in g for t in targets.get(n, ())}
+            right |= g
     return right, how
 
 
@@ -212,7 +213,7 @@ def blame(first):
 VERDICTS = None
 
 
-def report(name, items, lemmas, targets, weights=None, show=25):
+def report(name, items, lemmas, targets, weights=None, show=25, record=True):
     verdicts = collections.Counter()
     weighted = collections.Counter()
     wrong = collections.Counter()
@@ -221,7 +222,7 @@ def report(name, items, lemmas, targets, weights=None, show=25):
     for i, (word, answer) in enumerate(items):
         verdict, first, how = judge(word, answer, lemmas, targets)
         weight = weights[i] if weights else 1
-        if VERDICTS is not None:
+        if VERDICTS is not None and record:
             VERDICTS.write(f"{word}\t{verdict}\t{first['expression'] if first else ''}\t{blame(first) if first else ''}\t{weight}\t{how or ''}\n")
         verdicts[verdict] += 1
         weighted[verdict] += weight
@@ -300,7 +301,7 @@ def main():
         report('frequent words', list(zip(words, answers)), lemmas, targets, weights=counts)
         hit = reached(words, languages, lemmas, targets)
         items = [(w, a) for w, a, h in zip(words, answers, hit) if h]
-        report('frequent words a rule reaches', items, lemmas, targets, weights=[c for c, h in zip(counts, hit) if h])
+        report('frequent words a rule reaches', items, lemmas, targets, weights=[c for c, h in zip(counts, hit) if h], record=False)
         print(json.dumps({'reachedWords': len(items), 'reachedTokenShare': sum(c for c, h in zip(counts, hit) if h) / sum(counts)}))
     elif mode == 'text':
         for path in files:
@@ -326,7 +327,7 @@ def main():
         answers = lookups([h for _, _, h in items], languages, dictionary)
         report('words after a function word', [(w, a) for (_, w, _), a in zip(items, answers)], lemmas, targets)
         for group in FUNCTION_GROUPS:
-            report(f'words after a {group}', [(w, a) for (g, w, _), a in zip(items, answers) if g == group], lemmas, targets, show=5)
+            report(f'words after a {group}', [(w, a) for (g, w, _), a in zip(items, answers) if g == group], lemmas, targets, show=5, record=False)
     else:
         sys.exit(f'unknown mode {mode}')
 
