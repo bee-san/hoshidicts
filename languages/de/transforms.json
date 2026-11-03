@@ -107,6 +107,7 @@
         {"type": "suffix", "inflected": "ele", "deinflected": "eln", "conditionsIn": ["sep"], "conditionsOut": ["v"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{lower}"},
         {"type": "suffix", "inflected": "re", "deinflected": "ern", "conditionsIn": ["sep"], "conditionsOut": ["v"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{lower}"},
         {"type": "suffix", "inflected": "ere", "deinflected": "ern", "conditionsIn": ["sep"], "conditionsOut": ["v"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{lower}"},
+        {"type": "suffix", "inflected": "te", "deinflected": "ten", "conditionsIn": ["sep"], "conditionsOut": ["v"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{lower}"},
         {"type": "wholeWord", "inflected": "bin", "deinflected": "sein", "conditionsIn": ["sep"], "conditionsOut": ["v"]},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["bereite", "bereiten"], ["heiße", "heißen"], ["lasse", "lassen"], ["leide", "leiden"], ["liebe", "lieben"], ["schicke", "schicken"], ["wette", "wetten"], ["tue", "tun"]], "conditionsIn": ["sep"], "conditionsOut": ["v"], "stemNotEndsWith": "[c]"}
       ]
@@ -171,7 +172,8 @@
       "description": "Imperative, second person singular, without -e (mach!, komm!, gib!, nimm!, sieh!, lies!, sei!).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "", "deinflected": "en", "conditionsIn": ["sep"], "conditionsOut": ["v"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{lower}", "stemEndsWith": "[bcfghjklmnpqrsvwxzßu]", "stemNotStartsWithText": "schloß"},
+        {"type": "suffix", "inflected": "", "deinflected": "en", "conditionsIn": ["sep"], "conditionsOut": ["v"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{lower}", "stemEndsWith": "[bcfghjklmpqrsvwxzßu]", "stemNotStartsWithText": "schloß"},
+        {"type": "suffix", "inflected": "", "deinflected": "en", "conditionsIn": ["sep"], "conditionsOut": ["v"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{lower}", "stemEndsWith": "[n]", "stemNotStartsWithText": "sehn"},
         {"type": "suffix", "inflected": "el", "deinflected": "eln", "conditionsIn": ["sep"], "conditionsOut": ["v"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{lower}"},
         {"type": "suffix", "inflected": "er", "deinflected": "ern", "conditionsIn": ["sep"], "conditionsOut": ["v"], "stemCharacters": "{stemChar}", "stemMinLength": 2, "stemStartsWith": "{lower}"},
         {"type": "wholeWord", "inflected": "sei", "deinflected": "sein", "conditionsIn": ["sep"], "conditionsOut": ["v"]},

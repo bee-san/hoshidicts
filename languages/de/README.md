@@ -3,9 +3,9 @@
 Deinflection rules, text processors and scanning settings for German.
 Lookups start at the hovered character and try every prefix of the scanned
 text (`cursor` / `character` / `spaces`, docs/languages.md 14.1), so the
-parts of a compound are found (Hausaufgaben → Haus) and a separable verb is
-found with a particle at the end of its clause (`kommt morgen an.` →
-ankommen).
+parts of a compound are found after the compound (`Hausaufgaben` gives
+Hausaufgaben and Hausaufgabe, then Haus) and a separable verb is found with a particle at the
+end of its clause (`kommt morgen an.` → ankommen).
 
 ## Sources and licences
 
@@ -50,9 +50,13 @@ ankommen).
   rules reach are in `corpus.tsv` (1,764), the others in `gaps.tsv` (36).
 - `tests/cases.tsv`, `tests/text.tsv`, `tests/lookup.tsv`,
   `tests/dictionary/`, `sources/benchmark-words.txt`,
-  `sources/hand-judged.tsv` and the rest of `language.json`: written for this
-  pack (GPL-3.0-or-later). `sources/lookup-batch.cpp` is adapted from
-  `languages/en/sources/lookup-batch.cpp`.
+  `sources/hand-judged.tsv`, `sources/frequent-judged.tsv` and the rest of
+  `language.json`: written for this pack (GPL-3.0-or-later). Four rows of
+  `lookup.tsv` quote fragments of two or three words of Kafka's *Der Prozess*
+  (`FRAU GRUBACH`, `KÜNDIGUNG DES ADVOKATEN`, `höhern Beamten`, `der Hand
+  hin.`; Project Gutenberg #69327, public domain), and `hand-judged.tsv` holds
+  short contexts of the measured texts. `sources/lookup-batch.cpp` is adapted
+  from `languages/en/sources/lookup-batch.cpp`.
 - Not committed, used for the measurements below:
   - the dictionary [wty-de-en](https://huggingface.co/datasets/daxida/wty-release/resolve/de7ed9cd558acce3423ccf6e17dc690f8a839bf2/latest/dict/de/en/wty-de-en.zip)
     from [wiktionary-to-yomitan](https://github.com/yomidevs/wiktionary-to-yomitan),
@@ -76,8 +80,8 @@ ankommen).
 
 ## Rule provenance
 
-`transforms.json` has 34 transforms and 226 rules, 4,836 with cross products
-expanded: 28 transforms and 209 rules (4,538 expanded) `own`, one transform
+`transforms.json` has 34 transforms and 230 rules, 4,920 with cross products
+expanded: 28 transforms and 213 rules (4,622 expanded) `own`, one transform
 and 5 rules (156) `both`, and 5 transforms and 12 rules (142) `yomitan`.
 `sources/build-final.mjs` writes it: `sources/own.json` followed by five of
 Yomitan's seven transforms. Yomitan's transforms come after the own ones, so
@@ -192,18 +196,28 @@ gehören, not Yomitan's participle reading hören; `lookup.tsv`).
     On the 224 words in capitals of the four texts it changes the first
     result at 15 (`measure.mjs capitals`): 10 better (Verhaftung,
     Untersuchung, Maler, Ende), 2 worse (`DES` → the note Des), 3 neither.
-- **Stem constraints**: every ending needs a stem of letters, digits and
-  hyphens, never a space, so it does not fire on the last word of a longer
-  text (`das macht` is not `das machen`), and every regular verb and
-  adjective ending a stem of two letters (`je` is not jen). Others, each with
-  a row of `cases.tsv` or `lookup.tsv` that fails without it
+- **Stem constraints**: every regular ending needs a stem of letters, digits
+  and hyphens, never a space, so it does not fire on the last word of a
+  longer text (`das macht` is not `das machen`), and every regular verb and
+  adjective ending a stem of two letters (`je` is not jen). The listed forms
+  of the verb table have no such constraint: they also read the verb of a
+  multi-word dictionary entry (`zu Abend gegessen` → zu Abend essen, `recht
+  hat` → Recht haben, `in Anspruch genommen` → in Anspruch nehmen), and on a
+  phrase that is no entry they give nothing a lookup shows (`er ging` → `er
+  gehen`). Such idiom readings are a first result at about 320 of the
+  616,124 lookups of the Measurements, mostly right; a few are wrong (`Auto
+  fuhr gegen …` → Auto fahren, Known gaps). Other constraints, each with a
+  row of `cases.tsv` or `lookup.tsv` that fails without it
   (`sources/mutations.mjs`):
   - du -st and the superlative -st not after s, ß, x or z (`weisst` is not
     weisen); -est and -et only after d, t, m or n, where the e belongs to the
     present (`machest` and `machet` are the subjunctive I); the genitive and
     plural -s not after s, ß, x or z (`ass` is not As);
   - the bare imperative not after a vowel, d or t (`frei` is not freien), nor
-    for `schloß`, the spelling before 1996 of schloss;
+    for `schloß`, the spelling before 1996 of schloss; the present (ich) -e
+    not for the stem mein (`meine` is the possessive mein, which the
+    dictionary reaches through its form-of row, not meinen; the row still
+    names meinen);
   - the listed verb forms not after c, since no prefix ends in c (`schießt`
     is not sc + hießt → scheißen, `schiebt` not schauen); no short
     subjunctive II form that is the present of another verb (`führt` is not
@@ -221,11 +235,46 @@ gehören, not Yomitan's participle reading hören; `lookup.tsv`).
   - the separated particle never reads an article as the verb (`der Hand
     hin.` is not hindern), and needs a punctuation mark or und or oder after
     it (`wartet auf den Bus` is not aufwarten).
-- **Order**: the adjective transforms come before the noun transforms, and
-  an adjective in -e writes its ending with that e (`zehnten` → zehnte, as
-  long as the plural's -en), so that a word in small letters read both ways
-  at the same cost is the adjective first (`gute Laune` → gut, `letzten
-  Sommer` → letzte; `lookup.tsv`).
+- **Homographs**: a word that is a form of two headwords at the same cost
+  (matched length, processor steps, trace length) shows first the one the
+  lookup finds first (docs/languages.md 9.6): the longest matched ending
+  first, and at one ending the earlier transform. wty-de-en usually names
+  both readings in the word's own form-of row, so both are
+  dictionary-confirmed and the order decides. The pack orders them so that
+  the reading a word nearly always has comes first, each choice with a row
+  of `lookup.tsv` that fails without it:
+  - the adjective transforms come first, before the verb and noun
+    transforms: `schöne` is schön, not schönen; `weiße`, `gleiche`,
+    `dunkle`, `einige` (einig) likewise. Of 21 frequent words that are an
+    adjective form and a 1sg present, `sources/context-counts.py` finds the
+    adjective use more often for 14 (`schöne` 125 to 8) and the verb for 7
+    (`liebe` 125 to 113, `lasse`, `heiße`, `wette`, `schicke`, `leide`,
+    `bereite`): the present (ich) of those 7 is listed, a longer ending, so
+    it is found first (`liebe dich` → lieben);
+  - endings that keep the stem's last letters, so that the adjective reading
+    matches as many letters as the verb's: -ten → -te (`letzten` is letzte,
+    not the obsolete letzen + -ten), -ere → -er (`bessere`, `sichere`: not
+    bessern, sichern), and an adjective in -e writes its ending with that e
+    (`bösen` is böse, not the plural of Böse, `leisen` leise);
+  - adjectives in -t whose declined forms are spelled like the past of a
+    rare verb are listed: bekannt, berühmt, bestimmt, bewaffnet, doppelt,
+    kompliziert, recht, verdammt, verehrt, verfickt, verflucht, vereinigt,
+    verrückt (`verrückte` is verrückt, not verrücken + -te). For participles
+    of common verbs the past is the more frequent use (12 such words,
+    `erklärte`, `versteckte`, `passierte` …: 121 verb uses against 17
+    adjective uses, `context-counts.py`), and the verb comes first;
+  - the present (er, ihr) of a verb whose stem ends in t is written with the
+    t (`kostet`: kosten + -et, not kosen + -tet), and schalten's present is
+    listed before schelten's past (`schaltet`);
+  - participles that are spelled like the present of a verb in ge- are
+    listed (`gewartet` is warten, not the archaic gewarten; `gelobt`,
+    `geleitet`, `angehört`, `zugehört`), and schalten's imperative `schalt`
+    before schelten's past;
+  - the plural -n of a noun in -e is written with the e (`Stunden` is
+    Stunde, not Stund; `Katzen`, `Reisen`, `Akten`, `Kohlen`, `Tabletten`
+    likewise).
+
+  The ties the pack cannot order are in Known gaps.
 - **History**: the first commit of this pack, `de: own rules` (8aec8ab), has
   the own rules as written before Yomitan's file was read (29 transforms, 231
   rules, 4,444 with cross products expanded). Later commits changed them:
@@ -233,18 +282,21 @@ gehören, not Yomitan's participle reading hören; `lookup.tsv`).
     given Yomitan's definitions (`v` with the subconditions `vw` and `vst`,
     `n` without subconditions, which the merge tool requires; the own `ns`
     was dropped and `np` is no longer a dictionary form), and the own ß
-    processors (one of them optional, with a
-    setting for Swiss spelling) gave way to Yomitan's `eszettPreprocessor`,
-    which reads ß as ss and ss as ß;
+    processors (one of them optional, with a setting for Swiss spelling)
+    gave way to Yomitan's `eszettPreprocessor`, which reads ß as ss and ss
+    as ß;
   - after the measurements below: the noun rules read words in small letters
-    and write the capital letter back, the adjective transforms come before
-    the noun transforms, the separated-prefix rule gives only finite verbs,
-    and the constraints above, each where a measurement found a wrong first
-    result; the -er, -el and -en umlaut plurals no longer change äu, which no
-    noun does; the old spellings of the listed verb forms, haben's
-    participle, the -ien verbs (knien), the -ern and -erm adjective endings,
-    more particles (abhanden, beiseite, schwarz, stehen …), and `Busse`,
-    `Säle` and `Neubauten`.
+    and write the capital letter back, the separated-prefix rule gives only
+    finite verbs, and the constraints above, each where a measurement found
+    a wrong first result; the -er, -el and -en umlaut plurals no longer
+    change äu, which no noun does; the old spellings of the listed verb
+    forms, haben's participle, the -ien verbs (knien), the -ern and -erm
+    adjective endings, more particles (abhanden, beiseite, schwarz, stehen
+    …), and `Busse`, `Säle` and `Neubauten`;
+  - after the first audit (audit-hachi-lang-de, MAJOR 1): the order of
+    homographs above (the adjective transforms had come after the verb
+    transforms and before the nouns), `meine`, and the rule `nisse` → `nis`,
+    which `isse` → `is` covers, removed.
 
 ## Measurements
 

@@ -88,5 +88,8 @@
   ["Reise", "", "n", "n", 0, ["journey"], 87, ""],
   ["Reis", "", "n", "n", 0, ["rice"], 88, ""],
   ["böse", "", "adj", "adj", 0, ["evil, angry"], 89, ""],
-  ["Böse", "", "n", "n", 0, ["evil one"], 90, ""]
+  ["Böse", "", "n", "n", 0, ["evil one"], 90, ""],
+  ["sehnen", "", "v", "v", 0, ["to long for"], 91, ""],
+  ["sehen", "", "v", "v", 0, ["to see"], 92, ""],
+  ["sehn", "", "non-lemma", "v", 0, [["sehen", ["colloquial"]], ["sehnen", ["second-person singular imperative"]]], 93, ""]
 ]

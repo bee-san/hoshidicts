@@ -108,9 +108,10 @@ const MUTATIONS = {
     'declined ere -> er': (t) => { const x = byId(t, 'declined'); x.rules = x.rules.filter((r) => !(r.type === 'suffix' && r.inflected === 'ere' && r.deinflected === 'er')); },
     'listed -t adjectives': (t) => { for (const r of rules(t, 'declined', (x) => x.type === 'circumfix')) { r.suffixes = r.suffixes.filter(([inflected]) => !/^(bekannt|berühmt|bestimmt|doppelt|kompliziert|recht|verdammt|verfickt|verrückt)/u.test(inflected)); } },
     'listed present (ich) of frequent verbs': (t) => { for (const r of rules(t, 'present-ich', (x) => x.type === 'circumfix')) { r.suffixes = r.suffixes.filter(([inflected]) => !['bereite', 'heiße', 'lasse', 'leide', 'liebe', 'schicke', 'wette'].includes(inflected)); } },
-    'present of t stems (tet, test)': (t) => {
-        for (const id of ['present-er', 'present-du']) { const x = byId(t, id); x.rules = x.rules.filter((r) => !(r.type === 'suffix' && ['tet', 'test'].includes(r.inflected) && r.deinflected === 'ten')); }
+    'present of t stems (te, tet, test)': (t) => {
+        for (const id of ['present-ich', 'present-er', 'present-du']) { const x = byId(t, id); x.rules = x.rules.filter((r) => !(r.type === 'suffix' && ['te', 'tet', 'test'].includes(r.inflected) && r.deinflected === 'ten')); }
     },
+    'imperative: not sehn': (t) => { for (const r of byId(t, 'imperative').rules) { if (r.stemNotStartsWithText === 'sehn') { delete r.stemNotStartsWithText; } } },
     'present (ich): not mein': (t) => { for (const r of byId(t, 'present-ich').rules) { if (r.stemNotStartsWithText === 'mein') { delete r.stemNotStartsWithText; } } },
     'listed participles of verbs with a ge- homograph': (t) => { for (const r of rules(t, 'past-participle', (x) => x.type === 'circumfix')) { r.suffixes = r.suffixes.filter(([inflected]) => !['gewartet', 'gelobt', 'geleitet', 'angehört', 'zugehört'].includes(inflected)); } },
     'listed imperative schalt': (t) => { for (const r of rules(t, 'imperative', (x) => x.type === 'circumfix')) { r.suffixes = r.suffixes.filter(([inflected]) => inflected !== 'schalt'); } },

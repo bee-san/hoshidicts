@@ -425,10 +425,12 @@ suffix('present-du', 'elst', 'eln', FINITE_IN, VERB_OUT, MIN2);
 suffix('present-du', 'erst', 'ern', FINITE_IN, VERB_OUT, MIN2);
 suffix('present-er', 't', 'en', FINITE_IN, VERB_OUT, MIN2);
 suffix('present-er', 'et', 'en', FINITE_IN, VERB_OUT, DTMN);
-// The present of a verb whose stem ends in t (du kostest, er kostet) is spelled
-// like the past of a verb without the t (kosen: du kostest, ihr kostet). These
+// The present of a verb whose stem ends in t (ich koste, du kostest, er
+// kostet) is spelled like the past of a verb without the t (kosen: ich koste,
+// du kostest, ihr kostet). These
 // rules match those letters too, so the present, whose transforms come first,
 // is found first.
+suffix('present-ich', 'te', 'ten', FINITE_IN, VERB_OUT, MIN2);  // koste, not kosen + -te
 suffix('present-du', 'test', 'ten', FINITE_IN, VERB_OUT, MIN2);
 suffix('present-er', 'tet', 'ten', FINITE_IN, VERB_OUT, MIN2);
 suffix('present-er', 'elt', 'eln', FINITE_IN, VERB_OUT, MIN2);
@@ -436,8 +438,11 @@ suffix('present-er', 'ert', 'ern', FINITE_IN, VERB_OUT, MIN2);
 // imperative without -e: not after d or t (warte!, arbeite! keep the -e,
 // which present-ich reads), and only after a consonant or u (freu dich!).
 // schloß is the spelling before 1996 of schloss (schließen), not the
-// imperative of the rare schloßen (to hail), which came first for it.
-suffix('imperative', '', 'en', FINITE_IN, VERB_OUT, {stemMinLength: 2, stemStartsWith: LOWER, stemEndsWith: '[bcfghjklmnpqrsvwxzßu]', stemNotStartsWithText: 'schloß'});
+// imperative of the rare schloßen (to hail), which came first for it; sehn is
+// the short sehen, not the imperative of sehnen. A rule takes one exclusion,
+// so the stems in n have a rule of their own.
+suffix('imperative', '', 'en', FINITE_IN, VERB_OUT, {stemMinLength: 2, stemStartsWith: LOWER, stemEndsWith: '[bcfghjklmpqrsvwxzßu]', stemNotStartsWithText: 'schloß'});
+suffix('imperative', '', 'en', FINITE_IN, VERB_OUT, {stemMinLength: 2, stemStartsWith: LOWER, stemEndsWith: '[n]', stemNotStartsWithText: 'sehn'});
 suffix('imperative', 'el', 'eln', FINITE_IN, VERB_OUT, MIN2);  // wandel!, sammel!
 suffix('imperative', 'er', 'ern', FINITE_IN, VERB_OUT, MIN2);  // steiger!, bedauer!
 // past participle: the last ge- of the stem is removed (gemacht, eingekauft,

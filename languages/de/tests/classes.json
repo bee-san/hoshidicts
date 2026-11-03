@@ -732,7 +732,24 @@
       [223, 246],
       [248, 255]
     ],
-    "transforms[4].rules[6].stemNotEndsWith": [
+    "transforms[4].rules[5].stemCharacters": [
+      [45, 45],
+      [48, 57],
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [768, 879],
+      [7838, 7838],
+      [64256, 64262]
+    ],
+    "transforms[4].rules[5].stemStartsWith": [
+      [97, 122],
+      [223, 246],
+      [248, 255]
+    ],
+    "transforms[4].rules[7].stemNotEndsWith": [
       [99, 99]
     ],
     "transforms[5].rules[0].stemCharacters": [
@@ -984,7 +1001,7 @@
     "transforms[9].rules[0].stemEndsWith": [
       [98, 99],
       [102, 104],
-      [106, 110],
+      [106, 109],
       [112, 115],
       [117, 120],
       [122, 122],
@@ -1007,6 +1024,9 @@
       [223, 246],
       [248, 255]
     ],
+    "transforms[9].rules[1].stemEndsWith": [
+      [110, 110]
+    ],
     "transforms[9].rules[2].stemCharacters": [
       [45, 45],
       [48, 57],
@@ -1024,7 +1044,24 @@
       [223, 246],
       [248, 255]
     ],
-    "transforms[9].rules[4].stemNotEndsWith": [
+    "transforms[9].rules[3].stemCharacters": [
+      [45, 45],
+      [48, 57],
+      [65, 90],
+      [97, 122],
+      [192, 214],
+      [216, 246],
+      [248, 591],
+      [768, 879],
+      [7838, 7838],
+      [64256, 64262]
+    ],
+    "transforms[9].rules[3].stemStartsWith": [
+      [97, 122],
+      [223, 246],
+      [248, 255]
+    ],
+    "transforms[9].rules[5].stemNotEndsWith": [
       [99, 99]
     ],
     "transforms[10].rules[0].stemCharacters": [
@@ -5185,6 +5222,8 @@
         ["Stunden später", "stunden später"],
         ["Reisen bilden.", "reisen bilden."],
         ["bösen Wolf", "bösen wolf"],
+        ["koste, was es wolle.", "koste, was es wolle."],
+        ["sehn wir uns?", "sehn wir uns?"],
         ["Sie ist heute früh aufgestanden und hat ihre Freunde angerufen.", "sie ist heute früh aufgestanden und hat ihre freunde angerufen."],
         ["aufstehen", "aufstehen"]
       ]
@@ -7368,6 +7407,8 @@
         ["Stunden später", "Stunden später"],
         ["Reisen bilden.", "Reisen bilden."],
         ["bösen Wolf", "Bösen Wolf"],
+        ["koste, was es wolle.", "Koste, was es wolle."],
+        ["sehn wir uns?", "Sehn wir uns?"],
         ["Sie ist heute früh aufgestanden und hat ihre Freunde angerufen.", "Sie ist heute früh aufgestanden und hat ihre Freunde angerufen."],
         ["aufstehen", "Aufstehen"]
       ]
@@ -9551,6 +9592,8 @@
         ["Stunden später", "stunden später"],
         ["Reisen bilden.", "reisen bilden."],
         ["bösen Wolf", "bösen wolf"],
+        ["koste, was es wolle.", "koste, was es wolle."],
+        ["sehn wir uns?", "sehn wir uns?"],
         ["Sie ist heute früh aufgestanden und hat ihre Freunde angerufen.", "sie ist heute früh aufgestanden und hat ihre freunde angerufen."],
         ["aufstehen", "aufstehen"]
       ]
@@ -11734,6 +11777,8 @@
         ["Stunden später", "Stunden später"],
         ["Reisen bilden.", "Reisen bilden."],
         ["bösen Wolf", "Bösen Wolf"],
+        ["koste, was es wolle.", "Koste, was es wolle."],
+        ["sehn wir uns?", "Sehn wir uns?"],
         ["Sie ist heute früh aufgestanden und hat ihre Freunde angerufen.", "Sie ist heute früh aufgestanden und hat ihre Freunde angerufen."],
         ["aufstehen", "Aufstehen"]
       ]
