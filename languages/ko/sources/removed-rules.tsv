@@ -278,7 +278,7 @@
 -아/어다	ㅓㄷㅏ	ㄷㅏ		v,adj	2	
 -아/어다	ㅇㅏㄷㅏ	ㄷㅏ		v,adj	1	
 -아/어다	ㅕㄷㅏ	ㅣㄷㅏ		v,adj	1	
--아/어다	ㅎㅐㄷㅏ	ㅎㅏㄷㅏ		v,adj	2	
+-아/어다	ㅎㅐㄷㅏ	ㅎㅏㄷㅏ		v,adj	1	
 -아/어다	ㅇㅗㅏㄷㅏ	ㅂㄷㅏ		v,adj	1	
 -아/어다	ㅇㅏㄷㅏ	ㅅㄷㅏ		v,adj	1	
 -아/어다	ㅇㅓㄷㅏ	ㅅㄷㅏ		v,adj	1	
@@ -385,7 +385,4 @@
 -아/어다	ㅏㄷㅏ	ㅡㄷㅏ		v,adj	0	breaks 나라다 -> 나르다 with other paths
 -아/어다	ㅓㄷㅏ	ㅡㄷㅏ		v,adj	0	breaks 이러다 -> 이르다 with other paths
 -(으)셔요	ㅅㅕㅇㅛ	ㄷㅏ		v,adj,ida	0	ties a false candidate with the lemma on 8 paths, as in 시장하셔요 -> 시장하시다
--(으)시어요	ㅅㅣㅇㅓㅇㅛ	ㄷㅏ		v,adj,ida	0	ties a false candidate with the lemma on 4 paths, as in 쑤시어요 -> 쑤시다
--(으)십시다	ㅅㅣㅂㅅㅣㄷㅏ	ㄷㅏ		v	0	ties a false candidate with the lemma on 3 paths, as in 쑤십시다 -> 쑤시다
--(으)시어요	ㅅㅣㅇㅓㅇㅛ	ㄹㄷㅏ		v,adj	0	ties a false candidate with the lemma on 4 paths, as in 모시어요 -> 모시다
--((느)ㄴ)다니	ㄴㄷㅏㄴㅣ	ㄹㄷㅏ		v	0	ties a false candidate with the lemma on 1 paths, as in 연다니 -> 연달다
+-(으)셔요	ㅅㅕㅇㅛ	ㄹㄷㅏ		v,adj	0	ties a false candidate with the lemma on 7 paths, as in 자셔요 -> 자시다

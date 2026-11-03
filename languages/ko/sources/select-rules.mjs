@@ -26,8 +26,8 @@
 //     endings a learner meets instead;
 //   - the Tatoeba words with one lemma (false candidates only), and the same
 //     once per occurrence (tokens.tsv, first rank only).
-// The dictionary is kty-ko-en as published (its form-of rows are terms
-// without a part of speech, as hoshidicts imports them today).
+// The dictionary is kty-ko-en as published; the pack follows its form-of
+// references (lookup.formOf "follow", docs/languages.md 9.10).
 //
 // The phases, in order:
 //   1. copies: every Yomitan rule that equals an own rule (type, affixes,
@@ -44,7 +44,7 @@
 //   4. ties: a Yomitan rule on a path to a false candidate as short as the
 //      lemma's, where the own rules alone have no such tie, goes only if the
 //      number of valid rows whose lemma a lookup ranks first goes up and no
-//      recall drops (counted without form-of rows, over UniMorph, the cases,
+//      recall drops (counted over UniMorph, the cases,
 //      Yomitan's test, the chain set and tokens.tsv).
 // Own rules are never removed.
 
@@ -121,7 +121,7 @@ function isFormOf(row) {
  * directory and the tags of each headword that has a row other than a
  * form-of row (a form-of row is never a lemma).
  */
-function publishedDictionary(termsDir, work, cli, {entriesOnly = false} = {}) {
+function publishedDictionary(termsDir, work, cli) {
     const files = [];
     const tags = new Map();
     for (const name of readdirSync(termsDir).sort()) {
@@ -134,16 +134,12 @@ function publishedDictionary(termsDir, work, cli, {entriesOnly = false} = {}) {
                 for (const t of (r[3] || '').split(' ').filter(Boolean)) { set.add(t); }
                 tags.set(r[0], set);
             }
-            files.push([name, entriesOnly ? Buffer.from(JSON.stringify(rows.filter((r) => !isFormOf(r)))) : data]);
-        } else if (name === 'index.json' && entriesOnly) {
-            const index = JSON.parse(data.toString('utf8'));
-            index.title = `${index.title} entries`;
-            files.push([name, Buffer.from(JSON.stringify(index))]);
+            files.push([name, data]);
         } else {
             files.push([name, data]);
         }
     }
-    const zip = join(work, entriesOnly ? 'entries.zip' : 'dictionary.zip');
+    const zip = join(work, 'dictionary.zip');
     writeFileSync(zip, storedZip(files));
     const run = spawnSync(cli, ['import', zip], {encoding: 'utf8'});
     if (run.status !== 0) { throw new Error(`import failed: ${run.stderr}`); }
@@ -589,8 +585,8 @@ function rankingBlame(options, work, files, tags, current) {
 }
 
 
-/** The number of valid rows whose lemma a lookup ranks first, with the entries-only dictionary. */
-function rankScore(options, work, files, entries, removed) {
+/** The number of valid rows whose lemma a lookup ranks first. */
+function rankScore(options, work, files, dictionary, removed) {
     const own = JSON.parse(readFileSync(join(here, 'own.json'), 'utf8'));
     const yomitan = removeRules(JSON.parse(readFileSync(join(here, 'yomitan.json'), 'utf8')), removed);
     const file = join(work, 'candidate-rank.json');
@@ -598,7 +594,7 @@ function rankScore(options, work, files, entries, removed) {
     let score = 0;
     const recall = {};
     for (const name of ['unimorph', 'cases', 'yomitan', 'chains', 'tokens']) {
-        const run = spawnSync(options.cli, ['eval-language', 'ko', files[name], '--transforms', file, '--dictionary', entries], {encoding: 'utf8', maxBuffer: 1 << 30});
+        const run = spawnSync(options.cli, ['eval-language', 'ko', files[name], '--transforms', file, '--dictionary', dictionary], {encoding: 'utf8', maxBuffer: 1 << 30});
         if (run.status !== 0) { throw new Error(`eval-language failed on ${files[name]}: ${run.stderr}`); }
         const result = JSON.parse(run.stdout);
         score += Math.round(result.firstRank * result.positives);
@@ -714,16 +710,15 @@ function main() {
         console.log(`negatives: removed ${accepted.length} Yomitan rules on the paths of broken negatives (${removed.length} in all)`);
         // Ranking: rules that tie a false candidate with the lemma, removed one
         // at a time while the first-rank count goes up and no recall drops.
-        const entries = publishedDictionary(resolve(options.terms), work, options.cli, {entriesOnly: true}).dir;
-        console.log(`first-rank count of the union: ${rankScore(options, work, files, entries, []).score}`);
-        let rank = rankScore(options, work, files, entries, removed);
+        console.log(`first-rank count of the union: ${rankScore(options, work, files, dictionary, []).score}`);
+        let rank = rankScore(options, work, files, dictionary, removed);
         console.log(`first-rank count before the ranking phase: ${rank.score}`);
         for (let round = 1; round <= 3; ++round) {
             current = measure(options, work, files, dictionary, removed);
             const blamed = rankingBlame(options, work, files, tags, current);
             const taken = [];
             for (const c of blamed) {
-                const trial = rankScore(options, work, files, entries, [...removed, ...taken, c]);
+                const trial = rankScore(options, work, files, dictionary, [...removed, ...taken, c]);
                 const lost = Object.keys(trial.recall).filter((name) => name !== 'tokens' && trial.recall[name] < rank.recall[name]);
                 if (lost.length === 0 && trial.score > rank.score) {
                     taken.push(c);
@@ -758,4 +753,4 @@ function main() {
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) { main(); }
-export {chainRows, plainRows, ruleKey};
+export {assemble, chainRows, isFormOf, jamo, plainRows, ruleKey};

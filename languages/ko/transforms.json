@@ -1308,6 +1308,7 @@
       "rules": [
         {"type": "suffix", "inflected": "ㄴㄷㅏㄴㅣ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ㄴㅡㄴㄷㅏㄴㅣ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "suffix", "inflected": "ㄴㄷㅏㄴㅣ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ㄴㄷㅏㄴㅣ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["eusi"]},
         {"type": "suffix", "inflected": "ㄷㅏㄴㅣ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj"]}
       ]
@@ -3611,7 +3612,6 @@
       "source": "yomitan",
       "rules": [
         {"type": "suffix", "inflected": "ㅇㅜㅅㅕㅇㅛ", "deinflected": "ㅂㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj"]},
-        {"type": "suffix", "inflected": "ㅅㅕㅇㅛ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj"]},
         {"type": "suffix", "inflected": "ㄹㅇㅡㅅㅕㅇㅛ", "deinflected": "ㄷㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj"]}
       ]
     },
@@ -3813,10 +3813,12 @@
       "name": "-(으)시어요",
       "source": "yomitan",
       "rules": [
+        {"type": "suffix", "inflected": "ㅅㅣㅇㅓㅇㅛ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj", "ida"]},
         {"type": "suffix", "inflected": "ㅇㅡㅅㅣㅇㅓㅇㅛ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj"]},
         {"type": "suffix", "inflected": "ㅇㅜㅅㅣㅇㅓㅇㅛ", "deinflected": "ㅂㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj"]},
         {"type": "suffix", "inflected": "ㅇㅡㅅㅣㅇㅓㅇㅛ", "deinflected": "ㅅㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj"]},
         {"type": "suffix", "inflected": "ㅅㅣㅇㅓㅇㅛ", "deinflected": "ㅎㄷㅏ", "conditionsIn": [], "conditionsOut": ["adj"]},
+        {"type": "suffix", "inflected": "ㅅㅣㅇㅓㅇㅛ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj"]},
         {"type": "suffix", "inflected": "ㄹㅇㅡㅅㅣㅇㅓㅇㅛ", "deinflected": "ㄷㄷㅏ", "conditionsIn": [], "conditionsOut": ["v", "adj"]}
       ]
     },
@@ -3838,6 +3840,7 @@
       "name": "-(으)십시다",
       "source": "yomitan",
       "rules": [
+        {"type": "suffix", "inflected": "ㅅㅣㅂㅅㅣㄷㅏ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ㅅㅣㅂㅅㅣㄷㅏ", "deinflected": "ㄹㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ㅇㅡㅅㅣㅂㅅㅣㄷㅏ", "deinflected": "ㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "ㅇㅜㅅㅣㅂㅅㅣㄷㅏ", "deinflected": "ㅂㄷㅏ", "conditionsIn": [], "conditionsOut": ["v"]},
