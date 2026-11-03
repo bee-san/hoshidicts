@@ -405,9 +405,9 @@ pronouns attached to verbs	1	foi-se	ser	v	preterite-ele|clitic-se
 pronouns attached to verbs	1	trata-se	tratar	v	present-ele|clitic-se
 pronouns attached to verbs	1	pode-se	poder	v	present-ele|clitic-se
 pronouns attached to verbs	1	deve-se	dever	v	present-ele|clitic-se
-pronouns attached to verbs	1	ei-lo	eis	*	clitic-o
-pronouns attached to verbs	1	ei-las	eis	*	clitic-as
-pronouns attached to verbs	1	eis-me	eis	*	clitic-me
+pronouns attached to verbs	1	ei-lo	eis	adv	clitic-o
+pronouns attached to verbs	1	ei-las	eis	adv	clitic-as
+pronouns attached to verbs	1	eis-me	eis	adv	clitic-me
 pronouns attached to verbs	1	dá-ma	dar	v	present-ele|clitic-ma
 pronouns attached to verbs	1	deu-mos	dar	v	preterite-ele|clitic-mos
 pronouns attached to verbs	1	trouxe-mas	trazer	v	preterite-ele|clitic-mas
@@ -607,3 +607,4 @@ negatives	0	pass	pas	*	*
 negatives	0	mass	mas	*	*
 stem changes	1	ceias	cear	v	present-tu
 stem changes	1	geie	gear	v	subjunctive-eu-ele
+negatives	0	ei-lo	ei	*	*

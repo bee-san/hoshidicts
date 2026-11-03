@@ -12,8 +12,9 @@
 // spelling of the Acordo Ortográfico de 1990; Wiktionary's Portuguese
 // conjugation tables). No text or table is copied from them.
 //
-// Conditions. v, n and adj are dictionary forms: a verb rule writes an
-// infinitive (v), a plural rule a singular noun or adjective (n, adj). vf is
+// Conditions. v, n, adj and adv are dictionary forms: a verb rule writes an
+// infinitive (v), a plural rule a singular noun or adjective (n, adj), the
+// pronoun rules of eis write eis (adv), which no rule takes. vf is
 // an intermediate state, a verb form whose attached pronoun was removed
 // (deixa-me → deixa, fazê-lo → fazer is written at once); only the verb
 // rules take it, and no dictionary term carries it. Yomitan has no
@@ -30,6 +31,8 @@ const conditions = {
     v: {name: 'Verb', isDictionaryForm: true},
     n: {name: 'Noun', isDictionaryForm: true},
     adj: {name: 'Adjective', isDictionaryForm: true},
+    // eis (here is), whose pronoun forms are ei-lo and eis-me; no rule takes it.
+    adv: {name: 'Adverb', isDictionaryForm: true},
     vf: {name: 'Verb form whose attached pronoun was removed', isDictionaryForm: false},
 };
 
@@ -786,10 +789,10 @@ for (const [p, [l, n]] of Object.entries(O_FORMS)) {
         clitic(p, `${nasal}-${n}`, nasal, ['vf']);
     }
     // eis (here is): ei-lo, ei-las.
-    add(`clitic-${p}`, {type: 'wholeWord', inflected: `ei-${l}`, deinflected: 'eis', conditionsIn: [], conditionsOut: []});
+    add(`clitic-${p}`, {type: 'wholeWord', inflected: `ei-${l}`, deinflected: 'eis', conditionsIn: [], conditionsOut: ['adv']});
 }
 for (const p of ['me', 'te', 'nos', 'vos']) {
-    add(`clitic-${p}`, {type: 'wholeWord', inflected: `eis-${p}`, deinflected: 'eis', conditionsIn: [], conditionsOut: []});
+    add(`clitic-${p}`, {type: 'wholeWord', inflected: `eis-${p}`, deinflected: 'eis', conditionsIn: [], conditionsOut: ['adv']});
 }
 for (const form of ['hei', 'hás', 'há', 'havemos', 'hemos', 'haveis', 'heis', 'hão']) {
     add('haver-de', {type: 'wholeWord', inflected: `${form}-de`, deinflected: 'haver', conditionsIn: [], conditionsOut: ['v']});

@@ -13,6 +13,10 @@
       "name": "Adjective",
       "isDictionaryForm": true
     },
+    "adv": {
+      "name": "Adverb",
+      "isDictionaryForm": true
+    },
     "vf": {
       "name": "Verb form whose attached pronoun was removed",
       "isDictionaryForm": false
@@ -1486,7 +1490,7 @@
         {"type": "suffix", "inflected": "-me", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[r]"},
         {"type": "suffix", "inflected": "r-me", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["r-me-ei", "rei"], ["r-me-ás", "rás"], ["r-me-á", "rá"], ["r-me-emos", "remos"], ["r-me-eis", "reis"], ["r-me-ão", "rão"], ["r-me-ia", "ria"], ["r-me-ias", "rias"], ["r-me-íamos", "ríamos"], ["r-me-íeis", "ríeis"], ["r-me-iam", "riam"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
-        {"type": "wholeWord", "inflected": "eis-me", "deinflected": "eis", "conditionsIn": [], "conditionsOut": []}
+        {"type": "wholeWord", "inflected": "eis-me", "deinflected": "eis", "conditionsIn": [], "conditionsOut": ["adv"]}
       ]
     },
     {
@@ -1498,7 +1502,7 @@
         {"type": "suffix", "inflected": "-te", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[r]"},
         {"type": "suffix", "inflected": "r-te", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["r-te-ei", "rei"], ["r-te-ás", "rás"], ["r-te-á", "rá"], ["r-te-emos", "remos"], ["r-te-eis", "reis"], ["r-te-ão", "rão"], ["r-te-ia", "ria"], ["r-te-ias", "rias"], ["r-te-íamos", "ríamos"], ["r-te-íeis", "ríeis"], ["r-te-iam", "riam"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
-        {"type": "wholeWord", "inflected": "eis-te", "deinflected": "eis", "conditionsIn": [], "conditionsOut": []}
+        {"type": "wholeWord", "inflected": "eis-te", "deinflected": "eis", "conditionsIn": [], "conditionsOut": ["adv"]}
       ]
     },
     {
@@ -1543,7 +1547,7 @@
         {"type": "suffix", "inflected": "-nos", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[r]"},
         {"type": "suffix", "inflected": "r-nos", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["r-nos-ei", "rei"], ["r-nos-ás", "rás"], ["r-nos-á", "rá"], ["r-nos-emos", "remos"], ["r-nos-eis", "reis"], ["r-nos-ão", "rão"], ["r-nos-ia", "ria"], ["r-nos-ias", "rias"], ["r-nos-íamos", "ríamos"], ["r-nos-íeis", "ríeis"], ["r-nos-iam", "riam"], ["mo-nos", "mos"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
-        {"type": "wholeWord", "inflected": "eis-nos", "deinflected": "eis", "conditionsIn": [], "conditionsOut": []}
+        {"type": "wholeWord", "inflected": "eis-nos", "deinflected": "eis", "conditionsIn": [], "conditionsOut": ["adv"]}
       ]
     },
     {
@@ -1555,7 +1559,7 @@
         {"type": "suffix", "inflected": "-vos", "deinflected": "", "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}", "stemNotEndsWith": "[r]"},
         {"type": "suffix", "inflected": "r-vos", "deinflected": "r", "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["r-vos-ei", "rei"], ["r-vos-ás", "rás"], ["r-vos-á", "rá"], ["r-vos-emos", "remos"], ["r-vos-eis", "reis"], ["r-vos-ão", "rão"], ["r-vos-ia", "ria"], ["r-vos-ias", "rias"], ["r-vos-íamos", "ríamos"], ["r-vos-íeis", "ríeis"], ["r-vos-iam", "riam"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
-        {"type": "wholeWord", "inflected": "eis-vos", "deinflected": "eis", "conditionsIn": [], "conditionsOut": []}
+        {"type": "wholeWord", "inflected": "eis-vos", "deinflected": "eis", "conditionsIn": [], "conditionsOut": ["adv"]}
       ]
     },
     {
@@ -1568,7 +1572,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["á-lo", "ar"], ["ê-lo", "er"], ["i-lo", "ir"], ["ô-lo", "or"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["á-lo-ei", "arei"], ["á-lo-ás", "arás"], ["á-lo-á", "ará"], ["á-lo-emos", "aremos"], ["á-lo-eis", "areis"], ["á-lo-ão", "arão"], ["á-lo-ia", "aria"], ["á-lo-ias", "arias"], ["á-lo-íamos", "aríamos"], ["á-lo-íeis", "aríeis"], ["á-lo-iam", "ariam"], ["ê-lo-ei", "erei"], ["ê-lo-ás", "erás"], ["ê-lo-á", "erá"], ["ê-lo-emos", "eremos"], ["ê-lo-eis", "ereis"], ["ê-lo-ão", "erão"], ["ê-lo-ia", "eria"], ["ê-lo-ias", "erias"], ["ê-lo-íamos", "eríamos"], ["ê-lo-íeis", "eríeis"], ["ê-lo-iam", "eriam"], ["i-lo-ei", "irei"], ["i-lo-ás", "irás"], ["i-lo-á", "irá"], ["i-lo-emos", "iremos"], ["i-lo-eis", "ireis"], ["i-lo-ão", "irão"], ["i-lo-ia", "iria"], ["i-lo-ias", "irias"], ["i-lo-íamos", "iríamos"], ["i-lo-íeis", "iríeis"], ["i-lo-iam", "iriam"], ["ô-lo-ei", "orei"], ["ô-lo-ás", "orás"], ["ô-lo-á", "orá"], ["ô-lo-emos", "oremos"], ["ô-lo-eis", "oreis"], ["ô-lo-ão", "orão"], ["ô-lo-ia", "oria"], ["ô-lo-ias", "orias"], ["ô-lo-íamos", "oríamos"], ["ô-lo-íeis", "oríeis"], ["ô-lo-iam", "oriam"], ["á-lo", "az"], ["á-lo", "ás"], ["ê-lo", "ez"], ["ê-lo", "ês"], ["i-lo", "iz"], ["i-lo", "is"], ["u-lo", "uz"], ["u-lo", "us"], ["ô-lo", "ôs"], ["a-lo", "as"], ["e-lo", "es"], ["mo-lo", "mos"], ["m-no", "m"], ["ão-no", "ão"], ["õe-no", "õe"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "wholeWord", "inflected": "pô-lo", "deinflected": "pôr", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "ei-lo", "deinflected": "eis", "conditionsIn": [], "conditionsOut": []}
+        {"type": "wholeWord", "inflected": "ei-lo", "deinflected": "eis", "conditionsIn": [], "conditionsOut": ["adv"]}
       ]
     },
     {
@@ -1581,7 +1585,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["á-la", "ar"], ["ê-la", "er"], ["i-la", "ir"], ["ô-la", "or"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["á-la-ei", "arei"], ["á-la-ás", "arás"], ["á-la-á", "ará"], ["á-la-emos", "aremos"], ["á-la-eis", "areis"], ["á-la-ão", "arão"], ["á-la-ia", "aria"], ["á-la-ias", "arias"], ["á-la-íamos", "aríamos"], ["á-la-íeis", "aríeis"], ["á-la-iam", "ariam"], ["ê-la-ei", "erei"], ["ê-la-ás", "erás"], ["ê-la-á", "erá"], ["ê-la-emos", "eremos"], ["ê-la-eis", "ereis"], ["ê-la-ão", "erão"], ["ê-la-ia", "eria"], ["ê-la-ias", "erias"], ["ê-la-íamos", "eríamos"], ["ê-la-íeis", "eríeis"], ["ê-la-iam", "eriam"], ["i-la-ei", "irei"], ["i-la-ás", "irás"], ["i-la-á", "irá"], ["i-la-emos", "iremos"], ["i-la-eis", "ireis"], ["i-la-ão", "irão"], ["i-la-ia", "iria"], ["i-la-ias", "irias"], ["i-la-íamos", "iríamos"], ["i-la-íeis", "iríeis"], ["i-la-iam", "iriam"], ["ô-la-ei", "orei"], ["ô-la-ás", "orás"], ["ô-la-á", "orá"], ["ô-la-emos", "oremos"], ["ô-la-eis", "oreis"], ["ô-la-ão", "orão"], ["ô-la-ia", "oria"], ["ô-la-ias", "orias"], ["ô-la-íamos", "oríamos"], ["ô-la-íeis", "oríeis"], ["ô-la-iam", "oriam"], ["á-la", "az"], ["á-la", "ás"], ["ê-la", "ez"], ["ê-la", "ês"], ["i-la", "iz"], ["i-la", "is"], ["u-la", "uz"], ["u-la", "us"], ["ô-la", "ôs"], ["a-la", "as"], ["e-la", "es"], ["mo-la", "mos"], ["m-na", "m"], ["ão-na", "ão"], ["õe-na", "õe"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "wholeWord", "inflected": "pô-la", "deinflected": "pôr", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "ei-la", "deinflected": "eis", "conditionsIn": [], "conditionsOut": []}
+        {"type": "wholeWord", "inflected": "ei-la", "deinflected": "eis", "conditionsIn": [], "conditionsOut": ["adv"]}
       ]
     },
     {
@@ -1594,7 +1598,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["á-los", "ar"], ["ê-los", "er"], ["i-los", "ir"], ["ô-los", "or"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["á-los-ei", "arei"], ["á-los-ás", "arás"], ["á-los-á", "ará"], ["á-los-emos", "aremos"], ["á-los-eis", "areis"], ["á-los-ão", "arão"], ["á-los-ia", "aria"], ["á-los-ias", "arias"], ["á-los-íamos", "aríamos"], ["á-los-íeis", "aríeis"], ["á-los-iam", "ariam"], ["ê-los-ei", "erei"], ["ê-los-ás", "erás"], ["ê-los-á", "erá"], ["ê-los-emos", "eremos"], ["ê-los-eis", "ereis"], ["ê-los-ão", "erão"], ["ê-los-ia", "eria"], ["ê-los-ias", "erias"], ["ê-los-íamos", "eríamos"], ["ê-los-íeis", "eríeis"], ["ê-los-iam", "eriam"], ["i-los-ei", "irei"], ["i-los-ás", "irás"], ["i-los-á", "irá"], ["i-los-emos", "iremos"], ["i-los-eis", "ireis"], ["i-los-ão", "irão"], ["i-los-ia", "iria"], ["i-los-ias", "irias"], ["i-los-íamos", "iríamos"], ["i-los-íeis", "iríeis"], ["i-los-iam", "iriam"], ["ô-los-ei", "orei"], ["ô-los-ás", "orás"], ["ô-los-á", "orá"], ["ô-los-emos", "oremos"], ["ô-los-eis", "oreis"], ["ô-los-ão", "orão"], ["ô-los-ia", "oria"], ["ô-los-ias", "orias"], ["ô-los-íamos", "oríamos"], ["ô-los-íeis", "oríeis"], ["ô-los-iam", "oriam"], ["á-los", "az"], ["á-los", "ás"], ["ê-los", "ez"], ["ê-los", "ês"], ["i-los", "iz"], ["i-los", "is"], ["u-los", "uz"], ["u-los", "us"], ["ô-los", "ôs"], ["a-los", "as"], ["e-los", "es"], ["mo-los", "mos"], ["m-nos", "m"], ["ão-nos", "ão"], ["õe-nos", "õe"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "wholeWord", "inflected": "pô-los", "deinflected": "pôr", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "ei-los", "deinflected": "eis", "conditionsIn": [], "conditionsOut": []}
+        {"type": "wholeWord", "inflected": "ei-los", "deinflected": "eis", "conditionsIn": [], "conditionsOut": ["adv"]}
       ]
     },
     {
@@ -1607,7 +1611,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["á-las", "ar"], ["ê-las", "er"], ["i-las", "ir"], ["ô-las", "or"]], "conditionsIn": ["vf"], "conditionsOut": ["v"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["á-las-ei", "arei"], ["á-las-ás", "arás"], ["á-las-á", "ará"], ["á-las-emos", "aremos"], ["á-las-eis", "areis"], ["á-las-ão", "arão"], ["á-las-ia", "aria"], ["á-las-ias", "arias"], ["á-las-íamos", "aríamos"], ["á-las-íeis", "aríeis"], ["á-las-iam", "ariam"], ["ê-las-ei", "erei"], ["ê-las-ás", "erás"], ["ê-las-á", "erá"], ["ê-las-emos", "eremos"], ["ê-las-eis", "ereis"], ["ê-las-ão", "erão"], ["ê-las-ia", "eria"], ["ê-las-ias", "erias"], ["ê-las-íamos", "eríamos"], ["ê-las-íeis", "eríeis"], ["ê-las-iam", "eriam"], ["i-las-ei", "irei"], ["i-las-ás", "irás"], ["i-las-á", "irá"], ["i-las-emos", "iremos"], ["i-las-eis", "ireis"], ["i-las-ão", "irão"], ["i-las-ia", "iria"], ["i-las-ias", "irias"], ["i-las-íamos", "iríamos"], ["i-las-íeis", "iríeis"], ["i-las-iam", "iriam"], ["ô-las-ei", "orei"], ["ô-las-ás", "orás"], ["ô-las-á", "orá"], ["ô-las-emos", "oremos"], ["ô-las-eis", "oreis"], ["ô-las-ão", "orão"], ["ô-las-ia", "oria"], ["ô-las-ias", "orias"], ["ô-las-íamos", "oríamos"], ["ô-las-íeis", "oríeis"], ["ô-las-iam", "oriam"], ["á-las", "az"], ["á-las", "ás"], ["ê-las", "ez"], ["ê-las", "ês"], ["i-las", "iz"], ["i-las", "is"], ["u-las", "uz"], ["u-las", "us"], ["ô-las", "ôs"], ["a-las", "as"], ["e-las", "es"], ["mo-las", "mos"], ["m-nas", "m"], ["ão-nas", "ão"], ["õe-nas", "õe"]], "conditionsIn": ["vf"], "conditionsOut": ["vf"], "stemMinLength": 1, "stemCharacters": "{lowerStem}"},
         {"type": "wholeWord", "inflected": "pô-las", "deinflected": "pôr", "conditionsIn": ["vf"], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "ei-las", "deinflected": "eis", "conditionsIn": [], "conditionsOut": []}
+        {"type": "wholeWord", "inflected": "ei-las", "deinflected": "eis", "conditionsIn": [], "conditionsOut": ["adv"]}
       ]
     },
     {
