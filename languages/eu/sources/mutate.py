@@ -94,6 +94,8 @@ MUTATIONS = [
     ('no hartu verbal-noun readings', "for (const form of ['hartzeko', 'hartzean', 'hartzera', 'hartzeak']) {", "for (const form of []) {"),
     ('berekin not bera', "com: 'berarekin beraiekin berekin',", "com: 'berarekin beraiekin',"),
     ('ezak not izan first', "        imp: {'3s': '2f:ezak'},\n", ''),
+    ('duela + -ko or -rik as a case', "if (g.stemEndsWith === VOWEL && (g.inflected === 'ko' || g.inflected === 'rik')) { rule.stemNotStartsWithText = 'duela'; }", ''),
+    ('duelako as duela\'s future', ",\n        stemNotStartsWithText: 'duela'});", "});"),
     ('formOf asTerm', '"formOf": "follow"', '"formOf": "asTerm"', 'language.json'),
     ('untaggedTerms pass', '"formOf": "follow",', '"formOf": "follow",\n    "untaggedTerms": "pass",', 'language.json'),
     ('searchResolution character', '"searchResolution": "word"', '"searchResolution": "character"', 'language.json'),

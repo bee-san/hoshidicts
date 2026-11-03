@@ -188,6 +188,19 @@
       ]
     },
     {
+      "id": "future",
+      "name": "future participle",
+      "description": "Future (prospective) participle, -ko, or -go after -n (-en after -n and -l in the east: eginen): ikusiko (will see), etorriko, egingo, joango. With an auxiliary it makes the future (ikusiko dut, I will see it).",
+      "source": "own",
+      "rules": [
+        {"type": "suffix", "inflected": "ko", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemEndsWith": "[aeioulü]", "stemNotStartsWithText": "duela"},
+        {"type": "suffix", "inflected": "go", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemEndsWith": "[n]"},
+        {"type": "suffix", "inflected": "en", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemEndsWith": "[nl]"},
+        {"type": "wholeWord", "inflected": "aterako", "deinflected": "atera", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "beharko", "deinflected": "behar", "conditionsIn": [], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
       "id": "abs-sg",
       "name": "absolutive singular",
       "description": "Absolutive singular of a noun or adjective: -a.",
@@ -640,7 +653,7 @@
       "rules": [
         {"type": "suffix", "inflected": "eko", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "sg"], "stemMinLength": 2, "stemEndsWith": "[bcdfghjklmnpqrstvwxz\\u00F1]"},
         {"type": "suffix", "inflected": "reko", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "sg"], "stemMinLength": 2, "stemEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "ko", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "adv", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"}
+        {"type": "suffix", "inflected": "ko", "deinflected": "", "conditionsIn": ["sg", "pl"], "conditionsOut": ["n", "adj", "adv", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]", "stemNotStartsWithText": "duela"}
       ]
     },
     {
@@ -1123,7 +1136,7 @@
       "rules": [
         {"type": "suffix", "inflected": "ik", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v", "sg"], "stemMinLength": 2, "stemEndsWith": "[bcdfghjklmnpqrstvwxz\\u00F1]"},
         {"type": "suffix", "inflected": "rik", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v", "sg"], "stemMinLength": 2, "stemEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "rik", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]"}
+        {"type": "suffix", "inflected": "rik", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "adj", "v", "sg"], "stemMinLength": 2, "stemEndsWith": "[aeiou]", "stemNotStartsWithText": "duela"}
       ]
     },
     {
@@ -1334,19 +1347,6 @@
         {"type": "wholeWord", "inflected": "gai", "deinflected": "gai izan", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "opa", "deinflected": "opa izan", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "presa", "deinflected": "presa izan", "conditionsIn": [], "conditionsOut": ["v"]}
-      ]
-    },
-    {
-      "id": "future",
-      "name": "future participle",
-      "description": "Future (prospective) participle, -ko, or -go after -n (-en after -n and -l in the east: eginen): ikusiko (will see), etorriko, egingo, joango. With an auxiliary it makes the future (ikusiko dut, I will see it).",
-      "source": "own",
-      "rules": [
-        {"type": "suffix", "inflected": "ko", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemEndsWith": "[aeioulü]"},
-        {"type": "suffix", "inflected": "go", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemEndsWith": "[n]"},
-        {"type": "suffix", "inflected": "en", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v"], "stemMinLength": 2, "stemEndsWith": "[nl]"},
-        {"type": "wholeWord", "inflected": "aterako", "deinflected": "atera", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "beharko", "deinflected": "behar", "conditionsIn": [], "conditionsOut": ["n", "adj"]}
       ]
     },
     {

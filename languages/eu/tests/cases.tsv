@@ -400,6 +400,8 @@ nonfinite	1	bizitzen	bizi izan	v	imperfective
 nonfinite	1	saia	saiatu	v	radical
 nonfinite	1	hartzeko	hartu	v	verbal-noun
 closed	1	berekin	bera	*	closed-com
+negatives	0	duelako	duela	*	*
+negatives	0	duelarik	duela	*	*
 # UniMorph rows (categories with ";"): 550 rows from UniMorph eus (https://github.com/unimorph/eus/blob/256a35d915d4689e96e79cc9725e0518b8152db0/eus, sha256 b80f2538), CC BY-SA 3.0, by the UniMorph contributors,
 # one for each finite-verb transform no row of corpus.tsv exercises, written by sources/build-corpus.py; the reason is that transform.
 V;PRES;IND	1	naun	edun	v	allo-a1s

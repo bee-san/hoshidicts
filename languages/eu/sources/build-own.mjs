@@ -260,8 +260,27 @@ function declension() {
         const minimum = readings.some(([c]) => c.id === 'ablko') ? 3 : 2;
         const rule = {type: 'suffix', inflected: g.inflected, deinflected: g.deinflected, conditionsIn: g.conditionsIn, conditionsOut,
             stemMinLength: minimum, stemEndsWith: g.stemEndsWith};
+        // duela (ago) is du + -ela made a word of its own: duelako and
+        // duelarik are du + -elako and -elarik, never duela + -ko or -rik.
+        if (g.stemEndsWith === VOWEL && (g.inflected === 'ko' || g.inflected === 'rik')) { rule.stemNotStartsWithText = 'duela'; }
         add(id, rule);
     }
+}
+
+// The future participle, written before the declension: rules that match at
+// one node of the suffix trie apply in file order, and a verb that is also a
+// noun (etorri, the arrival) then shows etorriko as the future (will come),
+// not as etorri + the locative genitive -ko. A noun takes no future (the
+// rules give v only), so etxeko keeps its case.
+function futureParticiple() {
+    transform('future', 'future participle', 'Future (prospective) participle, -ko, or -go after -n (-en after -n and -l in the east: eginen): ikusiko (will see), etorriko, egingo, joango. With an auxiliary it makes the future (ikusiko dut, I will see it).');
+    // ü is Souletin (batüko).
+    // duelako is du + -elako (because he has), not the future of duela (ago).
+    add('future', {type: 'suffix', inflected: 'ko', deinflected: '', conditionsIn: [], conditionsOut: ['v'], stemMinLength: 2, stemEndsWith: '[aeioulü]',
+        stemNotStartsWithText: 'duela'});
+    add('future', {type: 'suffix', inflected: 'go', deinflected: '', conditionsIn: [], conditionsOut: ['v'], stemMinLength: 2, stemEndsWith: '[n]'});
+    // Navarrese and Lapurdian, and Batua beside -go: -en after -n and -l (eginen, hilen).
+    add('future', {type: 'suffix', inflected: 'en', deinflected: '', conditionsIn: [], conditionsOut: ['v'], stemMinLength: 2, stemEndsWith: '[nl]'});
 }
 
 // The animate local cases attach to the genitive: gizonarengan (in the man),
@@ -408,12 +427,6 @@ function nonFinite() {
     for (const w of COMPOUND_VERBS) {
         add('compound', {type: 'wholeWord', inflected: w, deinflected: `${w} izan`, conditionsIn: w === 'uste' ? ['sg', 'pl'] : [], conditionsOut: ['v']});
     }
-    transform('future', 'future participle', 'Future (prospective) participle, -ko, or -go after -n (-en after -n and -l in the east: eginen): ikusiko (will see), etorriko, egingo, joango. With an auxiliary it makes the future (ikusiko dut, I will see it).');
-    // ü is Souletin (batüko).
-    add('future', {type: 'suffix', inflected: 'ko', deinflected: '', conditionsIn: [], conditionsOut: ['v'], stemMinLength: 2, stemEndsWith: '[aeioulü]'});
-    add('future', {type: 'suffix', inflected: 'go', deinflected: '', conditionsIn: [], conditionsOut: ['v'], stemMinLength: 2, stemEndsWith: '[n]'});
-    // Navarrese and Lapurdian, and Batua beside -go: -en after -n and -l (eginen, hilen).
-    add('future', {type: 'suffix', inflected: 'en', deinflected: '', conditionsIn: [], conditionsOut: ['v'], stemMinLength: 2, stemEndsWith: '[nl]'});
     // Forms whose verb reading is the common one but that a case rule at a
     // longer ending reads first: aterako (will take out; atera's future, not
     // ate + -rako), bizitzen (living; bizi izan's imperfective, not bizitza
@@ -1353,6 +1366,7 @@ function prefixes() {
 subordination();
 prefixes();
 degree();
+futureParticiple();
 declension();
 animate();
 adverbs();

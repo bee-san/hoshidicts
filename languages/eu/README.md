@@ -46,14 +46,18 @@ names each step: `etxekoak` → etxe with *absolutive plural, locative genitive
 
   Rows the final rules reach are in `corpus.tsv` (764), the others in
   `gaps.tsv` (236).
-- `tests/cases.tsv`: 352 hand-written rows (GPL-3.0-or-later), and 654
+- `tests/cases.tsv`: 401 hand-written rows (GPL-3.0-or-later), and 550
   UniMorph rows (licence and attribution as above), one for each finite-verb
   transform no corpus row exercises, written by `build-corpus.py` with that
   transform as the expected trace.
 - `tests/text.tsv`, `tests/lookup.tsv`, `tests/dictionary/` (a tiny
-  dictionary written for the pack), `sources/benchmark-words.txt` (80 texts
-  from the Tatoeba sentences below), the scripts in `sources/` and the rest of
+  dictionary written for the pack, 64 rows; its 12 form-of rows copy the
+  shape of wiktionary-to-yomitan's), `sources/judged-frequent.tsv` (hand
+  judgements, Measurements 2), the scripts in `sources/` and the rest of
   `language.json`: written for this pack (GPL-3.0-or-later).
+- `sources/benchmark-words.txt`: 80 sentence tails from the Tatoeba
+  sentences below (CC BY 2.0 FR, by the Tatoeba contributors,
+  https://tatoeba.org).
 - Not committed, used for the measurements below (shared cache
   `hachi-lang-cache/eu`, `MANIFEST.md`):
   - the dictionary
@@ -81,7 +85,7 @@ names each step: `etxekoak` → etxe with *absolutive plural, locative genitive
 
 ## Rule provenance
 
-`transforms.json` has 1,067 transforms and 2,675 rules: 2,593 `own`, 82
+`transforms.json` has 919 transforms and 2,724 rules: 2,642 `own`, 82
 `both` and no `yomitan` rule. `sources/build-final.mjs` writes it: the union
 of `sources/own.json` and `sources/yomitan.json` (`tools/merge-transforms.mjs`)
 with every Yomitan rule left out, and each own rule that makes a Yomitan
@@ -95,23 +99,27 @@ article after the verbal noun `-tze`).
 - **Yomitan rules left out: all 75.** Each strips an ending with no stem
   constraint and chains with the others (`n`/`adj` in and out). Measured:
   - on the sample, the union reaches no row the own rules miss, and adds
-    false candidates (0.320 → 0.336 per row); on `cases.tsv` it breaks 5 of
-    27 negatives: `da` → `d`, `zaharrago` → `zaharr`, `lanka` → `lan`,
-    `euskalki` → `euskal` and `politika` → `politi`;
+    false candidates (0.321 → 0.337 per row); on `cases.tsv` the union
+    fails 11 of the 50 negatives the own rules pass, each through a Yomitan
+    rule: `da` → `d`, `zaharrago` → `zaharr`, `lanka` → `lan`, `euskalki`
+    → `euskal`, `politika` → `politi`, `ek` → `e`, `ak` → `a`, `ua` → `u`,
+    `neki` → `ne`, and `duelako` and `duelarik` → `duela`. The one real
+    reading it adds that the audit found is `askozaz` → asko (Gipuzkoan for
+    askoz, 13 lines of *Garoa*), through Yomitan's instrumental `-az`;
   - constructed forms (`sources/measure.py yomitan`): for each Yomitan rule,
     ten common lemmas with its ending, 744 forms, of which 466 are attested
     in the subtitle list or kaikki's tables. The own rules reach 455 of the
     466; the 11 others are misspellings in the subtitles (`etaa`, `ezk`,
     `ezra`, `ongigo`, `emanko`, `hilgo`) and the colloquial `gertaten` and
     `eskaten` (for `gertatzen`, `eskatzen`);
-  - real text: the union's first result is wrong (judged by script) at 5,
-    27 and 3 positions of *Garoa*, Wikipedia and Tatoeba, the final set's at
-    5, 7 and 1 (Measurements 4); among the 10,000 frequent words the union
-    shows a wrong lemma first for 3 words, the final set for 1;
+  - real text: the union's first result is wrong (judged by script) at 4,
+    27 and 2 positions of *Garoa*, Wikipedia and Tatoeba, the final set's at
+    4, 7 and 0 (Measurements 4); among the 10,000 frequent words the union
+    shows a wrong lemma first for 12 words, the final set for 11;
   - Yomitan's rules alone reach no finite verb form (0 of UniMorph's 10,434
     pairs) and after the negation `ez` show 24 wrong first results in
     Tatoeba (`nago` → esan, `zegoen` → ze), the final set none.
-- **Own rules**, 1,067 transforms:
+- **Own rules**, 919 transforms and 2,724 rules:
   - declension of nouns and adjectives: 17 cases in the indefinite, the
     singular, the plural and the proximal plural (`-ok`), for stems in a
     vowel, in `-a` (which drops before `e-` and `o-`: `alabek`), in a
@@ -135,10 +143,12 @@ article after the verbal noun `-tze`).
     corrected (esan's `diotsot`, ekarri's `ekardazu`). A
     transform is one tense and set of persons, named by the persons'
     pronouns in the case of their role: `present (hura, zuri, nik)` = I …
-    it to you. The four rarest tense families with a dative (`balitzaio`,
-    `liezaioke`, `ziezaiokeen`, `niokeen`: about 220 of the subtitle list's
-    3.9 million tokens) have one transform each, named after the tense, so
-    the tests stay within 1 MB;
+    it to you. Six rarer tense groups have one transform each, named after
+    the tense and not the persons: the past subjunctive (`zezan`), past
+    potential (`zezakeen`), past conditional (`zukean`) and familiar past
+    (`zituan`), and the hypothetical and hypothetical potential with a
+    dative (`balitzaio`, `liezaioke`). Each transform needs a passing test
+    row, and one per person would take the tests over 1 MB;
   - what attaches to a finite form: the relative and subjunctive `-(e)n`,
     the complementizer `-(e)la` (and `-lako`, `-larik`), case endings after
     a past form (`zenean`), the prefixes `ba-` and `bait-`, `ez` written
@@ -147,7 +157,22 @@ article after the verbal noun `-tze`).
     western `zan`, `zuan`, `zegoan`);
   - compound verbs cited with izan (`uste dut` → uste izan, `nahi nuke` →
     nahi izan, `maite zaitut` → maite izan) from the present, past and
-    conditional auxiliary, and the bare first word (`uste` → uste izan);
+    conditional auxiliary, and the bare first word (`uste` → uste izan;
+    `ustez`, supposedly, too);
+  - **the order a lookup shows.** Where a word's own rows name two lemmas
+    and both tie on every key of section 9.6, the one the rules find first
+    comes first. The pack makes the common reading the one found first:
+    the auxiliary forms that are also another word's (`dio`, `diot` …
+    esan's; `zioten`; `zuen` zuek's genitive; `zuten`; `zion`, `zien`;
+    `ezak`) are read as izan, the lemma wty-eu-en files the auxiliaries
+    under, in transforms before the other word's; `bat`'s indefinite forms
+    (`baten`, `batek`, `batekin`) before bata's; consonant-stem readings
+    before -a stem readings (`minez`: min before mina); `dioen` (that he
+    says) as esan, the auxiliary's relative being `dion`; and whole-word
+    readings for `aterako` (atera's future, not ate + -rako), `bizitzen`,
+    `saia`, `hartzeko` … and `berekin`. The future participle's rules come
+    before the case rules, so a verb that is also a noun shows `etorriko`
+    as the future, not as etorri + the locative genitive;
   - pronouns, demonstratives and interrogatives with irregular oblique stems
     (`nik`, `honek`, `horretan`, `zertan`, `nirea`), and determiners and
     numerals, which dictionaries leave untagged (`bestea`, `hiruretan`).
@@ -162,38 +187,70 @@ article after the verbal noun `-tze`).
   imperatives are never subordinated (`bezala` is not beza + `-la`),
   hypothetical forms take only a prefix (`nintzen` is not nintza + `-en`),
   subjunctive forms only `-n` or `-la`, and finite forms not in `-n` no case
-  ending (`dakitak`); closed classes take a case output only from the
-  endings declined again (`zerion` is not zeri + `-on`); `den` takes only a
-  singular ending (`denak`, all, is not izan); familiar `-k` only after a
-  first-person or hypothetical form (`zabiltzak` is not the second person);
-  `gauza da` is not the compound gauza izan; the radical `-u` after t needs
-  five letters (`zait`).
+  ending (`dakitak`); `-la` takes only `-ko` and `-rik` (`zelan`, how, is
+  not zela + `-n`); `-en` and `-ela` never follow a `-t` form (`duten` is
+  dute + `-n`, not dut + `-en`); closed classes take a case output only
+  from the endings declined again (`zerion` is not zeri + `-on`); `den`
+  takes only a singular ending (`denak`, all, is not izan); familiar `-k`
+  only after a first-person or hypothetical form of three letters or more
+  (`zabiltzak` is not the second person, `lak` not la + `-k`); `bait-`
+  drops its t only before z (`baitu` is not bait + u); `ba-` only before
+  the first letters of finite forms (`barre` is not ba + rre); `-an` for
+  `-en` only after those letters (`joan` is not joen); the ablative + `-ko`
+  needs three letters (`betiko` is beti + `-ko`); `duela` (ago) takes no
+  `-ko` or `-rik` (`duelako` is du + `-elako`); `gauza da` is not the
+  compound gauza izan, and a compound's first word has two letters (`a da`);
+  the radical minima (`ba`, `lo`, `su` are not batu, lotu, sutu; `zait` is
+  not zaitu) and its `-i` only after l, s, x, z (`har` is not hari); `-ki`
+  needs three letters (`neki`).
 - **Forms left out** because a common word is spelled the same, each with a
   negative row: `hau` (this) as a familiar form of *edun, `nik` (I), `zain`
-  (waiting), `hitza` (the word), `begi` (eye), `beroa` (the heat); the
-  feminine familiar forms `zion`, `zidan`, `zaion` … that are also common
-  past and relative forms.
+  (waiting), `hitza` (the word), `begi` (eye), `beroa` (the heat), `hatza`
+  (the finger) as etzan's familiar form; the feminine familiar forms
+  `zion`, `zidan`, `zaion` … that are also common past and relative forms;
+  `zuen` as zuek's genitive (the dictionary's row gives that reading).
 - **History**: the first commit of this pack, `eu: own rules`, has the own
   rules as written before Yomitan's file was read (1,100 transforms, 2,551
-  rules). Later commits changed them after measuring: forms corrected or
-  added from the UniMorph check (esan's `diotsot`, iritzi's `deritzat`,
-  ekarri's `ekardazu`, familiar forms), compound verbs, `-zko`, `-ka`,
-  familiar and western `-an`, finite forms read only from what takes them,
-  verb readings of case endings limited to the participle's cases, and the
-  constraints above, each after a real-text sample showed a wrong reading.
+  rules). Later commits changed them after measuring:
+  - transforms added: the radical (`ikus`, `har`), `auxiliary-root` (edin
+    to izan, ezan to *edun), `animate-ganako`, `closed-dir`, the distributive
+    `-ka`, `-zko`, compound verbs, familiar `-k` and `-an`, 31 familiar
+    (allocutive) transforms (`allo-*`) and 12 of the familiar past
+    (`allopast-*`), these 12 later merged into one;
+  - forms corrected or added from the UniMorph check (esan's `diotsot`,
+    iritzi's `deritzat`, ekarri's `ekardazu`, familiar forms) and Gipuzkoan
+    forms (`zan`, `det`, `dezu`);
+  - the conditions `sub`, `pfx` and `dep`, so that each finite form is read
+    only from what takes it, and verb readings of case endings limited to
+    the participle's cases; `erg-indef` split from a combined transform;
+  - the rarest tense families merged into one transform each (the past
+    subjunctive, past potential, past conditional and familiar past; the
+    hypothetical and hypothetical potential with a dative), to keep the
+    tests within 1 MB;
+  - the constraints above, each after a real-text sample showed a wrong
+    reading;
+  - after audit-hachi-lang-eu (two MAJOR findings): the lookup order of
+    the auxiliary homographs, `bat`, `zuen`, `minez` and the other words
+    above, `dioen`, `zelan`, the `-t` relatives and complementizers, `zuan`
+    (edun first), `hatza`, `duelako` (edun, not duela, ago), the future
+    participle before the case rules (`etorriko`); a judge that counts only
+    a word's own lemma; and tests for each constraint and left-out form the
+    audit's mutations removed.
 
 ## Measurements
 
 Every number with wty-eu-en as published (form-of rows included), imported by
-`hoshidicts-cli import`, at hoshidicts main 0a73e5e (GCC 14.3, Release). The
+`hoshidicts-cli import`, at hoshidicts main 39cebbe (GCC 14.3, Release); main
+5ac86a3, this branch's base, changes only other packs. The
 pack has no optional processor, transform or variant pass, so every option on
 and the pack's defaults give the same numbers (`sources/eval-sets.py` runs
 both, with a copy of each file whose first line is `# options: default`, and
-they are equal in every cell). It keeps `lookup.untaggedTerms` at `filter`:
-with `pass`, false candidates rise (0.320 → 0.334 per sample row, 1.318 →
-1.362 per case) and first rank does not (0.677 → 0.677; 0.533 → 0.532),
-because the untagged rows are names, pronouns and numerals, which the
-closed-class rules already reach.
+they are equal in every cell). It keeps `lookup.untaggedTerms` at its
+default, `filter` (the key is left out: Hachidori's runtimes at 803f7b6e
+refuse it). With `pass`, false candidates rise (0.321 → 0.335 per sample
+row, 1.356 → 1.413 per case) and first rank does not (0.676 → 0.676; 0.568 →
+0.567). Most of wty-eu-en's 986 untagged lemma rows are names (537),
+numerals (105), suffixes (83), letters (62) and pronouns (58).
 
 1. **eval-language** (`sources/eval-sets.py`). The sample is `corpus.tsv` and
    `gaps.tsv` together (1,000 rows). `cases.tsv` pins this pack's transform
@@ -201,125 +258,200 @@ closed-class rules already reach.
 
    | Rule set | Sample recall | Sample false candidates | Sample first rank | Cases recall (ids / any trace) | Cases negatives (ids / any trace) | Cases false candidates |
    | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-   | Own (`sources/own.json`) | 76.4% | 0.320 | 67.7% | 100% / 100% | 27/27 / 24/27 | 1.318 |
-   | Yomitan (`sources/yomitan.json`) | 28.7% | 0.193 | 58.7% | 0% / 10.7% | 22/27 / 22/27 | 0.581 |
-   | Union (merge tool) | 76.4% | 0.336 | 67.7% | 100% / 100% | 22/27 / 19/27 | 1.381 |
-   | Final (`transforms.json`) | 76.4% | 0.320 | 67.7% | 100% / 100% | 27/27 / 24/27 | 1.318 |
+   | Own (`sources/own.json`) | 76.4% | 0.321 | 67.6% | 100% / 100% | 50/50 / 44/50 | 1.356 |
+   | Yomitan (`sources/yomitan.json`) | 28.7% | 0.193 | 58.7% | 0% / 12.0% | 39/50 / 38/50 | 0.579 |
+   | Union (merge tool) | 76.4% | 0.337 | 67.6% | 100% / 100% | 39/50 / 33/50 | 1.425 |
+   | Final (`transforms.json`) | 76.4% | 0.321 | 67.6% | 100% / 100% | 50/50 / 44/50 | 1.356 |
 
-   The final set is the own set with provenance marks. Three negatives pin a
-   trace and pass by definition once any trace counts. Recall by stratum:
-   nouns 250/250, adjectives 100/100, non-finite verbs 149/150, finite verbs
-   in the subtitle list 221/250 (88.4%), finite verbs from all of UniMorph
-   44/250 (17.6%). Over all of UniMorph eus (`measure.py unimorph`), the
-   final rules reach 2,106 of 10,434 distinct pairs (20.2%) and 94.8% of
-   those pairs' 652,814 subtitle tokens. First rank is below recall mostly
-   by the dictionary's lemma choices: wty-eu-en's form-of rows name izan for
-   *edun and *ezan forms (`dut`, `dezake`), so izan comes first where
-   UniMorph says edun or ezan, and jakin comes before the rare *edin reading
-   of `dakizu`.
-2. **Frequent forms** (`measure.py freq`): of the 10,000 most frequent words
-   of the subtitle list, 3,230 (43.4% of the list's 3,447,038 tokens) are
-   words whose lemma a rule reaches and whose form-of rows (or UniMorph) name
-   that lemma. The first result is wrong for one: `aldia` (404 tokens, 0.012%
-   of the list's tokens), whose row names `aldi`, which has no entry, so the
-   lookup shows nothing. Union: 3 words (`zerria`, `zerriak` → zer), Yomitan:
-   3 of the 2,309 it reaches.
+   The final set is the own set with provenance marks. Six negatives pin a
+   trace (the reading is forbidden, not the lemma) and fail by definition
+   once any trace counts. Recall by stratum: nouns 250/250, adjectives
+   100/100, non-finite verbs 149/150, finite verbs in the subtitle list
+   221/250 (88.4%), finite verbs from all of UniMorph 44/250 (17.6%). Over
+   all of UniMorph eus (`measure.py unimorph`), the final rules reach 2,106
+   of 10,434 distinct pairs (20.2%) and 94.8% of those pairs' 652,814
+   subtitle tokens.
+2. **Frequent forms** (`measure.py freq`, the 10,000 most frequent subtitle
+   words). The judge counts only the word's own lemma (section 14 step 5),
+   with izan, *edun and their roots as one lemma. 3,262 words (44.5% of the
+   list's 3,447,038 tokens) have a lemma a rule reaches that their rows (or
+   UniMorph) name. For the 326 homographs among them, whose rows name more
+   than one lemma (`zuen`: izan and zuek; `gara`: the word's own entry and
+   izan), `sources/judged-frequent.tsv` gives the lemma a learner needs in
+   most uses, judged by hand. 11 words do not show their lemma first
+   (12,608 tokens, 0.37% of the list's tokens). All 11 are the dictionary's
+   order: a copy of the pack with no transforms shows the same first result.
+   - the word's own entry comes first (depth 0, which no rule can beat):
+     `gara` (top; the text means we are, 7,875 tokens), `zuri` (white; to
+     you, 2,021), `har` (worm; hartu's radical, 748), `mina` (mine; the
+     pain, 655), `hari` (thread; to him, 284), `has` (267);
+   - a reference the word's rows name comes first: `zihoan` → ziho (149),
+     `emaitzak` → eman (89), `nabari` → naba (63), `aldez` → alda (53);
+   - `aldia` (404) shows nothing: its row names `aldi`, which has no entry.
+
+   The script also counts as right a word whose only row names the wrong
+   lemma. Of the 331 script-right words whose lookup also offers another
+   lemma, I judged 11 wrong by hand (2,246 tokens), all through their rows,
+   which the copy with no transforms shows first as well: `arren` → ar
+   (799; the conjunction), `handik` → handi (419; from there, han),
+   `garen` → gara (377; that we are), `antzera` → antzeratu (195; like,
+   antz), `dakien`, `dakizun`, `dakizula`, `dakiela` and `dakigun` → izan
+   (336; jakin's forms), `gaztetan` → gazta (62; in youth, gazte) and
+   `orok` → or (58; everyone, oro). With them, 22 words (14,854 tokens,
+   0.43% of the list's tokens) do not show their lemma first.
+
+   Union: 12 words; Yomitan's rules: 36 of the 2,291 words they reach.
+   Written with a capital, as at the start of a sentence
+   (`measure.py capitals`), 59 of the 10,000 words (23,932 tokens, 0.69%)
+   show a capitalized entry first: `Gizon` and `Maite` (names), `Lehen`,
+   `Jainkoa`, `Lurra`.
 3. **After pronouns, `ez` and before an auxiliary** (`measure.py contexts`,
-   Tatoeba): 1,446 words after a personal pronoun or demonstrative, 977 after
-   `ez` and 4,472 before an auxiliary. The script finds no wrong first result
-   (one `errezagoa` → erraz, which is right: wty-eu-en lists errez as an
-   alternative of erraz); 102, 104 and 520 are unjudged by script, most of
-   them compound-verb readings over two words (`nahi dut` → nahi izan).
-   Yomitan's rules: 24 wrong after `ez`.
+   Tatoeba): 1,446, 977 and 4,472 positions. The script, which judges only
+   words with one lemma, finds no wrong first result (955, 745 and 2,941
+   right; 218, 208 and 924 homographs left to the hand samples of item 4).
+   Yomitan's rules give 24 wrong after `ez` (`nago` → esan, `zegoen` → ze).
 4. **Real text** (`measure.py text` and `sample`): every word looked up with
    the rest of its sentence, as a host does. The script judges a first
-   result where the word's form-of rows name lemmas (right: one of them, or
-   the word's own entry); the rest are judged by hand, 60 random positions
-   per text (`sample`, seed 1).
+   result where the word's rows name one lemma; the others, homographs
+   included, are judged by hand in context: 100 random positions per text
+   (`sample --n 100`, seed 1), and a check of 60 script-right positions per
+   text (seed 7411).
 
-   | Text | Lookups | Nothing found | Right by script | Wrong by script (by hand) | Unjudged | Wrong in the hand sample |
-   | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-   | *Garoa* | 48,617 | 18,466 | 24,877 | 5 (2) | 5,269 | 11/60 |
-   | Wikipedia | 156,744 | 52,970 | 89,945 | 7 (5) | 13,822 | 4/60 |
-   | Tatoeba | 32,216 | 5,330 | 23,840 | 1 (0) | 3,045 | 4/60 |
+   | Text | Lookups | Nothing found | Right (script) | Wrong (script) | Unjudged | Wrong in the hand sample | Wrong among script-right | Estimated wrong first results |
+   | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+   | *Garoa* | 48,617 | 18,440 | 20,117 | 4 | 10,056 | 5/100 | 1/60 | 2.8% |
+   | Wikipedia | 156,744 | 52,965 | 73,724 | 7 | 30,048 | 3/100 | 1/60 | 2.1% |
+   | Tatoeba | 32,216 | 5,339 | 19,749 | 0 | 7,128 | 6/100 | 1/60 | 2.8% |
 
-   Of the script's wrong results, `joanez`/`joanaz` → joan, `zetzan` → etzan,
-   `itxasoz` → itsaso and `errezagoa` → erraz are right (the judge read the
-   name Joan's rows, a broken reference and alternative spellings); `ziona` →
-   edun (7) is wrong. The hand-judged wrong results are listed in Known gaps:
-   in *Garoa*, old spellings and Gipuzkoan forms the pack does not normalise
-   (`orren` → or for horren, `Ara` → ar for hara, `zuala` → izan for zuela)
-   and names; in Wikipedia and Tatoeba, words missing from the dictionary
-   read as a related verb or noun (`nabarmenak` → nabarmendu, `astekari` →
-   aste) and names (`Bostonera` → bost). That puts the wrong first results at
-   about 0.9% (Wikipedia), 0.8% (Tatoeba) and 3.2% (*Garoa*) of the lookups
-   that find something. Most lookups that find nothing are words wty-eu-en
-   lacks (`hainbat`, `bertan`, `geratu`, `sistema`) and, in *Garoa*, old
-   spellings (`bear`, `nai`, `emen`, `gañean`).
+   The estimate is a share of the lookups that find something: the
+   script's wrong results that are wrong, plus each hand sample's wrong
+   share applied to its pool (the unjudged lookups; the script-right ones).
+   Of the script's wrong results, `ziona` → izan (7; Gipuzkoan zioena, what
+   he said) is wrong, and `joanez`, `joanaz`, `itxasoz` and `zetzan` are
+   right: the judge read the rows of the names Joane, Joana and Itxaso, and
+   zetzan's broken reference to datza. The wrong ones found by hand, by
+   kind:
+   - the dictionary's own entries and capitalized entries first: `gara`,
+     `Hari`, `har`, `Lehen`, `Zabal` (Tatoeba and Wikipedia);
+   - pre-1968 and Gipuzkoan spellings the pack does not normalise:
+     `arrek` → ar (harrek), `onetan` → on (honetan), `guria`, `zaite`
+     (zaitez), `Ura` → ur (hura), and `zion` where Garoa writes it for
+     zioen (said), whose esan reading is not offered;
+   - the dictionary's references: `nabari` → naba, `Bere buruaz` → elkar,
+     `orok` → or, `arren` → ar.
+
+   Most lookups that find nothing are words wty-eu-en lacks (`hainbat`,
+   `bertan`, `sistema`) and, in *Garoa*, old spellings (`bear`, `nai`,
+   `emen`, `gañean`). Hand verdicts: `hachi-lang-eu-work/judged/` (not
+   committed: the samples quote the texts).
 5. **Performance** (section 13):
    - native `benchmark-lookup --languages languages --language eu`,
      wty-eu-en mapped, the 80 texts of `sources/benchmark-words.txt` in 6
-     passes with the first dropped, three runs at machine load about 50:
-     final p50 13.1-13.8 µs, p95 58.5-59.5 µs; union 17.1-17.4 / 58.2-59.4
-     µs; Yomitan's rules 7.6-7.8 / 15.7-15.8 µs. The budget is 1 ms p50;
+     passes, the first dropped, percentiles over the other 400 timings,
+     three runs each at machine load 30-32: final p50 12.6-13.2 µs, p95
+     38.2-38.7 µs; union 16.8-17.3 / 43.2-43.6 µs; Yomitan's rules
+     7.4-7.6 / 15.0-15.5 µs. The budget is 1 ms p50;
    - WebAssembly (Hachidori feat/multi-language 803f7b6e's prebuilt engines,
      Node 22, `benchmark/node-lookup.mjs` with `HACHIDORI_LOOKUP_LANGUAGE=eu`
-     on 263 words of 40 Tatoeba sentences, 6 passes): `hdw_lookup` p50 39.9
-     µs and p95 296 µs threaded, 38.6 and 298 µs single-thread;
+     on 263 words of 40 Tatoeba sentences, 6 passes, machine load about
+     36): `hdw_lookup` p50 38.6 µs and p95 260 µs threaded, 35.8 and 259 µs
+     single-thread;
    - `hdw_language_load` of this pack, 10 fresh engines, two runs: median
-     15.5-16.1 ms single-thread and 17.6-18.9 ms threaded (Spanish's on the
-     same machine: 12.2 and 14.8 ms); live heap +844,960 bytes after the load
-     (mallinfo, `hdw_memory_stats`). The budgets are 50 ms and 20 MB. The
-     pack has no `pattern` rule.
+     14.3-14.4 ms single-thread and 15.3-15.6 ms threaded; live heap
+     +787,512 bytes after the load single-thread, +787,800 threaded
+     (mallinfo, `hdw_memory_stats`). The
+     budgets are 50 ms and 20 MB. The pack has no `pattern` rule.
 6. **Commands and checks.**
    - The numbers above: `sources/eval-sets.py <dictionary>` (1);
-     `sources/measure.py freq|contexts|text|sample|unimorph|yomitan <cache>
-     <dictionary> [--languages <dir>]` (2-4, and the Yomitan rows), with
-     `build/eu-lookup-batch` built from `sources/lookup-batch.cpp`; union
-     and Yomitan figures use a copy of the pack whose `transforms.json` is
-     the merge tool's output or `sources/yomitan.json`; `benchmark-lookup`
-     and Hachidori's `benchmark/node-lookup.mjs` (5).
+     `sources/measure.py freq|capitals|contexts|text|sample|unimorph|yomitan
+     <cache> <dictionary> [--languages <dir>]` (2-4, and the Yomitan rows),
+     with `build/eu-lookup-batch` built from `sources/lookup-batch.cpp`;
+     union and Yomitan figures use a copy of the pack whose
+     `transforms.json` is the merge tool's output or `sources/yomitan.json`;
+     the dictionary's own order uses a copy whose `transforms.json` has no
+     transforms; `benchmark-lookup` and Hachidori's
+     `benchmark/node-lookup.mjs` (5).
    - Generated files: `node languages/eu/sources/build-own.mjs`, then
-     `build-final.mjs`, then `python3 languages/eu/sources/build-corpus.py
+     `build-final.mjs`, then `python3 -B languages/eu/sources/build-corpus.py
      <cache>`, then `node tools/check-classes.mjs eu --write`; each
      regenerates its files byte for byte.
    - Conformance (`language-conformance-test`): corpus.tsv 764/764,
-     cases.tsv 1,006/1,006, text.tsv 8/8, lookup.tsv 34/34; gaps.tsv 0/236
-     (reported); classes.json agrees (2 classes, 247 fields, 3,980 outputs);
-     1,301 of 2,675 rules are exercised by a passing row. `tests/` and
-     `sources/` hold 994,728 bytes.
+     cases.tsv 951/951, text.tsv 8/8, lookup.tsv 53/53; gaps.tsv 0/236
+     (reported); classes.json agrees (2 classes, 245 fields, 3,888
+     outputs); 1,222 of 2,724 rules are exercised by a passing row. The
+     committed files of `tests/` and `sources/` hold 980,854 bytes.
    - Differential check (`tools/check-yomitan.mjs` with `build/hoshidicts-cli`):
-     2,730 inputs, 7,113 Yomitan results, 0 differences; both processors agree
-     with Yomitan's on 2,022 inputs.
-   - Mutations (`sources/mutate.py`): 26 edits of the generator, each
-     removing one constraint, exclusion or left-out form; every one fails the
-     conformance test (the identity control passes).
+     2,683 inputs, 6,994 Yomitan results, 0 differences; both processors agree
+     with Yomitan's on 1,976 inputs.
+   - Mutations (`sources/mutate.py`): 66 edits of the generator and the
+     descriptor, each removing one constraint, exclusion, left-out form,
+     ordering or lookup setting (`formOf`, `untaggedTerms`,
+     `searchResolution`, the word characters, a processor); every one fails
+     the conformance test (the identity control passes).
+     `traceSelection` cannot be observed: `lookup.tsv` checks a result's
+     expression and matched text, not its trace.
    - Hachidori (feat/multi-language 803f7b6e, `third_party/hoshidicts` at
      this branch, `test/chrome-language-pack.mjs`, Chrome 152, wty-eu-en):
-     16/16 checks pass. Settings adds Basque beside Japanese and imports the
-     dictionary (213,986 terms, 0.6 s); 12 hovered words find their lemma
-     first with their traces (`Uste` → uste izan over `Uste dut`, `Badakit` →
-     jakin with *ba-* and *present (hura, nik)*, `zirenean` → izan,
-     `Nirea` → ni); the Anki note and the switch to Japanese and back work.
+     21/21 checks pass. Settings adds Basque beside Japanese and imports the
+     dictionary (213,986 terms, 0.8 s); 17 hovered words find their lemma
+     first with their traces (`Uste` → uste izan over `Uste dut`, `Badakit`
+     → jakin with *ba-* and *present (hura, nik)*, `zirenean` → izan,
+     `Nirea` → ni, and the audit's `zuen`, `dio`, `baten`, `zuten` and
+     `hartzeko`); the Anki note and the switch to Japanese and back work.
 
 ## Known gaps
 
 - **Rare finite forms.** The rules reach 20.2% of UniMorph eus's distinct
-  forms but 94.8% of their tokens in the subtitle list. Missing are most of
-  the dative, hypothetical, potential and third-person imperative forms of
-  the synthetic verbs (`dakarkiot` is reached, `bekarkio` and `nekarke` are
-  not), the literary verbs ezagutu, atxiki, jarraiki, eroan and erakutsi, and
-  most familiar (hika) forms with a dative: 206 of the 250 rows sampled from
-  all of UniMorph and 29 of the 250 attested ones (`gaps.tsv`). Of the
-  652,814 subtitle tokens of UniMorph forms, 33,666 are missed, 32,290 of
-  them the six homographs left out above.
+  forms but 94.8% of their tokens in the subtitle list. `gaps.tsv` holds
+  the 206 of the 250 rows sampled from all of UniMorph and 29 of the 250
+  attested ones that no rule reaches (and one non-finite form): 79
+  hypothetical, 42 present, 38 past and 25 imperative forms, and 51
+  familiar (hika) forms, mostly of eraman (31 rows), ekarri (25), the
+  *edun and *ezan (30) and egin, esan and etorri (13 each). `dakarkiot` is
+  reached; `bekarzkio`, `darakuski` and `leroakete` are not. Of the 652,814
+  subtitle tokens of UniMorph forms, 33,666 are missed, 32,290 of them the
+  six homographs left out above (`hau` 18,611, `nik` 10,673, `zain` 1,812).
+- **The dictionary's order.** Where the dictionary decides the order, the
+  pack cannot change it. The lead accepted these ties as a framework issue
+  (section 9.6) for hachi-lang-engine-l (answer of 14:13:47Z in the
+  questions file). Each word below shows the same first result in a copy
+  of the pack with no transforms.
+  - The word's own entry comes first. It needs no rule, so it ranks first
+    by trace length, and no framework change on the table alters that:
+    `gara` (7,875 tokens of the frequent words), `zuri` (2,021), `har`
+    (748), `mina` (655), `hari` (284), `has` (267).
+  - Only the word's rows name the lemma shown, and they name the wrong one
+    or the rarer one: `arren` → ar (799), `handik` → handi (419), `garen`
+    → gara (377), `antzera` → antzeratu (195), `zihoan` → ziho (149),
+    `emaitzak` → eman (89), `nabari` → naba (63), `gaztetan` → gazta
+    (62), `orok` → or (58), `aldez` → alda (53), and `dakien`, `dakizun`,
+    `dakizula`, `dakiela`, `dakigun` → izan (336), which are jakin's. A
+    rule result for the right lemma loses to them, by trace length or, on
+    a tie, because a term the dictionary names ranks first (section 9.10).
+    engine-l's whole-word tie rule would let the pack fix these with
+    whole-word rules.
+    In *Garoa*, `zan` → zain (274 positions; Gipuzkoan zen) is the same
+    kind of tie.
+
+  With `aldia`, which shows nothing, these are 22 of the 10,000 frequent
+  words (14,854 tokens, 0.43% of the list's tokens).
+- **Capitals at the start of a sentence.** A capitalized entry (a name, or
+  the Earth and God written with a capital) comes first for 59 of the
+  10,000 frequent words written with a capital (0.69% of the tokens):
+  `Gizon`, `Maite`, `Lehen`, `Lurrean` → Lurra, `Jainkoak` → Jainkoa.
+  `decapitalize` costs a processor step and the entry needs none; only a
+  host knows where a sentence starts (the lead's answer of 09:45:10Z for
+  German, a Hachidori follow-up).
 - **Spelling before 1968.** *Garoa* and other older texts write words
-  without `h` (`bear`, `nai`, `orren`, `ara`), with `ñ` and `ll` (`baño`,
-  `gañean`, `mutilla`) and with Gipuzkoan verb forms. The pack reads the
-  common Gipuzkoan verb forms (`zan`, `zuan`, `dan`, `det`, `dezu`, `zegoan`)
-  but no other spelling; 38% of *Garoa*'s lookups find nothing, and old
-  spellings make most of its 11 hand-judged wrong first results.
-- **Dictionary coverage.** wty-eu-en has 5,485 entries: 35% of the Wikipedia
+  without `h` (`bear`, `nai`, `orren`, `arrek`, `onetan`, `ura`), with `ñ`
+  and `ll` (`baño`, `gañean`, `mutilla`) and with Gipuzkoan verb forms. The
+  pack reads the common Gipuzkoan verb forms (`zan`, `zuan`, `dan`, `det`,
+  `dezu`, `zegoan`) but no other spelling; 38% of *Garoa*'s lookups find
+  nothing, and old spellings make most of its hand-judged wrong first
+  results. Garoa's `zion` for zioen (he said) reads as the auxiliary, and
+  the double instrumental `askozaz` (askoz, 13 lines) is not reached
+  (Yomitan's rules reach it).
+- **Dictionary coverage.** wty-eu-en has 5,485 entries: 34% of the Wikipedia
   lookups and 17% of the Tatoeba ones find nothing (`hainbat`, `bertan`,
   `aldiz`, `geratu`, `osatu`). A word it lacks whose stem is a verb's radical
   shows that verb (`babesa`, `nabarmenak`, `egokiak`, `zatiak` → babestu,
@@ -328,22 +460,27 @@ closed-class rules already reach.
 - **Names.** wty-eu-en leaves names untagged and the case rules give nouns
   and adjectives, so a declined name the dictionary does not list is not
   reached, and a name can be read as a common noun (`Otsoko` → otso,
-  `Zabaletako` → zabal, `Bostonera` → bost, `Pako` → pa).
+  `Zabaletako` → zabal, `Bostonera` → bost).
 - **Readings the rules cannot rule out**:
-  - `dena` (all) and `danak` are read as izan (den + the article, which is
-    what `dena` is made of);
+  - `dena` (6,720 tokens in the frequent list) and `danak` show izan:
+    den + the article, which is what they are made of. In 10 of the 18
+    Tatoeba lines with `dena` it means all, everything, and wty-eu-en has
+    no entry for that word;
   - `ziona` (Gipuzkoan for zioena, what he said) is read as zion + the
-    article and shows edun (7 positions);
-  - `zuan` and `zituan` show izan (the familiar form of zen and ziren, which
-    wty-eu-en names) before edun (their western reading); this is a tie of
-    section 9.6 the pack cannot break (the lead's framework work on
-    whole-word rules against references, hachi-lang-engine-l);
-  - after a lemma that is the word itself, the radical rules add verbs
-    (`zuri` → zuritu, `bihar` → bihardu) and the `-a` stem rule reaches
-    form-of rows (`zurekin` → zura → zur), as later results.
-- **Traces.** The four rarest dative tense families name the tense, not the
-  persons. `traceSelection` and the trace a lookup shows are not observable
-  in `lookup.tsv`, which checks the expression and the matched text.
+    article and shows izan (7 positions);
+  - the auxiliary homographs show izan first also where the text means the
+    other word: `Zer diozu?` (what are you saying, esan) and Garoa's
+    genitive `zuen` (your): esan and zuek come second;
+  - after the right lemma, rules add later results through other words'
+    rows: `bihar` (tomorrow) also shows jardun, `zurekin` (with you) also
+    zur (wood) and egin.
+- **Traces.** Where two readings reach the same lemma in as many steps,
+  the trace shown is the one found first, and `lookup.tsv` cannot check
+  it (`traceSelection` cannot be observed). The six merged tense groups
+  name the tense, not the persons. Known wrong traces with the right
+  lemma: `zituan` (61 *Garoa* positions) shows the familiar past where
+  *Garoa* means the plain past; `katolikoen` (of the Catholics) shows the
+  superlative; `erdiko` (88 tokens; of the middle) shows erdi's future.
 - **The negation before the auxiliary** (`ez dut uste`) is not a compound
   verb reading: the lookup from `uste` gives uste izan through the bare word,
   the one from `ez` gives ez.
