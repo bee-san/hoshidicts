@@ -44,6 +44,11 @@
         "variants": [[{"map": {"j": "i", "J": "I"}}]]
       },
       {
+        "id": "vToU",
+        "name": "Read capital V as U",
+        "variants": [[{"map": {"V": "U"}}]]
+      },
+      {
         "id": "uToV",
         "name": "Read u as v",
         "variants": [[{"alternatives": {"u": ["v"], "U": ["V"]}, "limit": 64}]]
@@ -128,7 +133,13 @@
         "neut": "Neuter",
         "vt": "Transitive verb",
         "vi": "Intransitive verb",
-        "impers": "Impersonal verb"
+        "impers": "Impersonal verb",
+        "char": "Character",
+        "prov": "Proverb",
+        "prep-phrase": "Prepositional phrase",
+        "vr": "Reflexive verb",
+        "artic": "Article",
+        "vdt": "Ditransitive verb"
       }
     },
     "frequencySamples": null,

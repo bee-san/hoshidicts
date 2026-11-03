@@ -486,7 +486,6 @@ verb, irregular	1	taedebat	taedet	v	*
 verb, irregular	1	libuit	libet	v	*
 verb, irregular	1	miserebat	miseret	v	*
 verb, irregular	1	piguit	piget	v	*
-verb, irregular	1	dedecet	dedecet	v	*
 verb, irregular	1	dedecebat	dedecet	v	*
 verb, irregular	1	lubebat	lubet	v	*
 verb, irregular	1	poenituit	poenitet	v	*
@@ -529,7 +528,6 @@ noun	1	homines	homo	n	*
 noun	1	Apollinis	Apollo	n	*
 noun	1	fratribus	frater	n	*
 noun	1	equitum	eques	n	*
-noun	1	pecten	pecten	n	*
 noun	1	nubis	nubes	n	*
 noun	1	manui	manus	n	*
 noun	1	manu	manus	n	*
@@ -1047,3 +1045,46 @@ negative	0	legi	ligo	*	*
 negative	0	ferunt	fi	*	*
 negative	0	sui	sus	*	*
 negative	0	tui	tus	*	*
+noun	1	pectinis	pecten	n	*
+verb, present system	1	regeris	rego	v	*
+verb, present system	1	sequeris	sequor	v	*
+verb, present system	1	amer	amo	v	*
+verb, present system	1	horter	hortor	v	*
+verb, present system	1	amabat	amo	v	impf-3s
+verb, perfect system	1	duxit	duco	v	perf-stem|perf-3s
+verb, perfect system	1	statuisti	statuo	v	*
+noun	1	domini	dominus	n	n-gen-sg+n-nom-pl
+noun	1	regis	rex	n	n-gen-sg
+noun	1	humi	humus	n	n-loc
+noun	1	cornua	cornu	n	*
+noun	1	genibus	genu	n	*
+noun	1	cornuum	cornu	n	*
+noun	1	genūs	genu	n	*
+adjective	1	fortior	fortis	adj	comparative
+verb, with esse	1	amatas esse	amo	v	*
+negative	0	Amat	Amo	*	*
+negative	0	piam	pio	*	*
+negative	0	coit	coo	*	*
+negative	0	is est	is	*	*
+negative	0	ita est	itus	*	*
+negative	0	cura est	curus	*	*
+negative	0	mala est	malus	*	*
+negative	0	rosa est	rodo	*	*
+negative	0	mensa est	metior	*	*
+negative	0	altus est	alo	*	*
+negative	0	falsum est	fallo	*	*
+negative	0	obesa est	obedo	*	*
+negative	0	veritas est	vereor	*	*
+left to the dictionary	0	advocatus	advoco	*	*
+left to the dictionary	0	advocatus	advocor	*	*
+left to the dictionary	0	invitus	invio	*	*
+left to the dictionary	0	invitus	invior	*	*
+left to the dictionary	0	peritus	pereo	*	*
+left to the dictionary	0	peritus	pereor	*	*
+left to the dictionary	0	argento	argentus	*	*
+left to the dictionary	0	patriam	patrius	*	*
+left to the dictionary	0	patriae	patrius	*	*
+left to the dictionary	0	supplicia	supplex	*	*
+left to the dictionary	0	bella	bellus	*	*
+left to the dictionary	0	canere	caneo	*	*
+verb, present system	1	amaretis	amo	v	*

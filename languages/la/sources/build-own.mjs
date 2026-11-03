@@ -80,6 +80,8 @@ const conditions = {
     // A participle or gerundive followed by a form of esse (amātus est,
     // amātūrus esse, delenda est), whose esse was removed.
     aux: {name: 'Participle or gerundive before a form of esse', isDictionaryForm: false},
+    auxi: {name: 'Participle or gerundive before esse, fuisse, fore or īrī', isDictionaryForm: false},
+    ptcx: {name: 'Participle or gerundive before esse, masculine nominative singular', isDictionaryForm: false},
 };
 
 // --- Rule collection ----------------------------------------------------------
@@ -307,7 +309,7 @@ for (const [id, name, text, table, voice] of NONFINITE) {
 // Participles and the gerundive are adjectives with entries of their own
 // (amāns, amandus, amātus); these rules take such a word, as written or as an
 // adjective rule made it from a declined form (amantium → amāns), to its verb.
-const PARTICIPLE_IN = ['ptc', 'aux'];
+const PARTICIPLE_IN = ['ptc', 'aux', 'ptcx'];
 slot('ptc-pres', 'present participle', 'Present active participle (declined as a third-declension adjective): amāns, monēns, regēns, capiēns, audiēns; of deponent verbs hortāns, verēns, sequēns, patiēns, largiēns.');
 slot('gerundive', 'gerundive', 'Gerundive (future passive participle): amandus, monendus, regendus, capiendus (capiundus), audiendus; of deponent verbs hortandus, verendus, sequendus.');
 for (const c of CONJ) {
@@ -410,9 +412,9 @@ slot('ptc-fut', 'future participle', 'Future active participle: amātūrus, moni
 slot('supine', 'supine', 'Supine in -um (purpose after verbs of motion): amātum, monitum, audītum, rēctum.');
 slot('supine-abl', 'supine in -ū', 'Supine in -ū (after adjectives): amātū, dictū, factū, vīsū.');
 
-function participles(stem, lemma, extra, {perfect = true, future = true, all = true} = {}) {
+function participles(stem, lemma, extra, {perfect = true, future = true, all = true, conditionsIn = PARTICIPLE_IN, perfectExtra = {}} = {}) {
     if (perfect) {
-        sfx('ptc-perf', `${stem}us`, lemma, PARTICIPLE_IN, VB, extra);
+        sfx('ptc-perf', `${stem}us`, lemma, conditionsIn, VB, {...extra, ...perfectExtra});
         if (all) {
             sfx('supine', `${stem}um`, lemma, [], VB, extra);
             sfx('supine-abl', `${stem}u`, lemma, [], VB, extra);
@@ -429,9 +431,14 @@ sfx('supine-abl', 'u', 'us', [], ['ptc'], {stemMinLength: 3});
 // Regular: -ātus (1st), -ītus (4th), -itus and -ētus (2nd), -ūtus (statuō,
 // and solvō, volvō after l). The order decides ties: furātus is furor's
 // before furō's, audītus audiō's before audeō's.
-for (const [stem, lemma, extra] of [['at', 'or', MIN], ['at', 'o', MIN], ['it', 'io', MIN], ['it', 'ior', MIN], ['it', 'eo', MIN], ['it', 'eor', MIN],
-                                    ['et', 'eo', MIN], ['ut', 'uo', MIN], ['ut', 'vo', {...MIN, stemEndsWith: '[l]'}]]) {
-    participles(stem, lemma, extra);
+// The perfect participle of three of them leaves out the stem of a frequent
+// adjective or noun that is not that participle: advocātus (a lawyer, not
+// advocō's in advocātus esse optat), perītus (skilled, not pereō's) and
+// invītus (unwilling, not inviō's), in the active and the deponent rule.
+for (const [stem, lemma, extra, not] of [['at', 'or', MIN, 'advoc'], ['at', 'o', MIN, 'advoc'], ['it', 'io', MIN, 'inv'], ['it', 'ior', MIN, 'inv'],
+                                         ['it', 'eo', MIN, 'per'], ['it', 'eor', MIN, 'per'], ['et', 'eo', MIN], ['ut', 'uo', MIN],
+                                         ['ut', 'vo', {...MIN, stemEndsWith: '[l]'}]]) {
+    participles(stem, lemma, extra, {perfectExtra: not === undefined ? {} : {stemNotStartsWithText: not}});
 }
 
 // The stems that are not regular: dictionary form, perfect (first person
@@ -504,7 +511,7 @@ ago egi actus
 +igo egi actus
 +ago egi actus
 cogo coegi coactus
-alo - altus
+alo - altus noesse
 cado cecidi - fap:casurus
 +cido cidi casus
 caedo cecidi caesus
@@ -529,8 +536,8 @@ dico dixi dictus
 disco didici -
 divido divisi divisus
 duco duxi ductus
-edo edi esus
-+edo edi esus|estus
+edo edi esus noesse
++edo edi esus|estus noesse
 +mordeo mordi morsus
 emo emi emptus
 +imo emi emptus
@@ -538,7 +545,7 @@ como compsi comptus
 demo dempsi demptus
 promo prompsi promptus
 sumo sumpsi sumptus
-fallo fefelli falsus
+fallo fefelli falsus noesse
 fingo finxi fictus
 figo fixi fixus
 findo fidi fissus
@@ -631,7 +638,7 @@ verto verti versus
 vinco vici victus
 vivo vixi - fap:victurus
 fugio fugi - fap:fugiturus
-fodio fodi fossus
+fodio fodi fossus noesse
 facio feci factus
 +ficio feci fectus
 quatio - quassus
@@ -644,7 +651,7 @@ uro ussi ustus not:abcdefghijklmnopqrstuvwxyz perf:whole
 comburo combussi combustus
 contemno contempsi contemptus
 ico ici ictus
-lino levi|livi litus
+lino levi|livi litus noesse
 meto messui messus
 mingo minxi mictus
 nubo nupsi nuptus
@@ -656,7 +663,7 @@ plaudo plausi plausus
 prehendo prehendi prehensus|prensus
 prendo prendi prensus
 rado rasi rasus
-rodo rosi rosus
+rodo rosi rosus noesse
 sugo suxi suctus
 tingo tinxi tinctus
 trudo trusi trusus
@@ -705,10 +712,10 @@ amicio amicui amictus
 sequor - secutus|sequutus
 loquor - locutus|loquutus
 queror - questus
-fruor - fructus|fruitus fap:fruiturus
+fruor - fructus|fruitus fap:fruiturus noesse
 fungor - functus
 labor - lapsus
-nitor - nisus|nixus
+nitor - nisus|nixus noesse
 utor - usus not:acdefghijklmnopqrstuvwxyz
 patior - passus
 +petior - pessus
@@ -727,7 +734,7 @@ comminiscor - commentus
 expergiscor - experrectus
 ordior - orsus
 orior - ortus fap:oriturus not:hmpst
-metior - mensus
+metior - mensus noesse
 experior - expertus
 opperior - oppertus
 +plector - plexus
@@ -751,6 +758,9 @@ for (const line of PRINCIPAL_PARTS.trim().split('\n')) {
     // (hortus is not h + ortus, custōs and iūstus not c and i + ūstus).
     const not = rest.find((r) => r.startsWith('not:'))?.slice(4);
     const participleExtra = not === undefined ? extra : {...extra, stemNotEndsWith: `[${not}]`};
+    // noesse: the participle is mostly a noun or an adjective (altus, mēnsa,
+    // falsum, rosa), so it is not read as this verb before a form of esse.
+    const participleIn = rest.includes('noesse') ? ['ptc'] : PARTICIPLE_IN;
     // perf:whole: the perfect is a whole word (ussī is ūrō's, but iussī is
     // iubeō's).
     for (const perfect of perfects === '-' ? [] : alts(perfects)) {
@@ -763,7 +773,7 @@ for (const line of PRINCIPAL_PARTS.trim().split('\n')) {
     const future = rest.find((r) => r.startsWith('fap:'))?.slice(4);
     for (const supine of supines === '-' ? [] : alts(supines)) {
         if (!supine.endsWith('us')) { throw new Error(`${line}: a perfect participle ends in -us`); }
-        participles(supine.slice(0, -2), lemma, participleExtra, {all: false});
+        participles(supine.slice(0, -2), lemma, participleExtra, {all: false, conditionsIn: participleIn});
     }
     if (future !== undefined) { sfx('ptc-fut', future, lemma, PARTICIPLE_IN, VB, extra); }
 }
@@ -1465,16 +1475,23 @@ const ESSE = ['sum', 'es', 'est', 'sumus', 'estis', 'sunt', 'eram', 'eras', 'era
               'fueramus', 'fueratis', 'fuerant', 'fuero', 'fueris', 'fuerit', 'fuerimus', 'fueritis', 'fuerint', 'fuerim', 'fuissem', 'fuisses',
               'fuisset', 'fuissemus', 'fuissetis', 'fuissent', 'fuisse', 'iri'];
 slot('esse', '+ esse', 'A participle or gerundive with a form of esse: amātus est, hortātī sunt, amātūrus esse, dēlenda est, laudandum erat; and the supine with īrī, the future passive infinitive (amātum īrī).');
-for (const form of ESSE) { sfx('esse', ` ${form}`, '', [], ['aux'], {stemMinLength: 3}); }
+// The infinitives also say auxi: an accusative participle (-ōs, -ās) forms a
+// periphrastic only with them (amātās esse), so vēritās est is not read as
+// vereor's.
+const ESSE_INFINITIVE = new Set(['esse', 'fore', 'fuisse', 'iri']);
+for (const form of ESSE) { sfx('esse', ` ${form}`, '', [], ESSE_INFINITIVE.has(form) ? ['aux', 'auxi'] : ['aux'], {stemMinLength: 3}); }
 // The participle before esse ends its stem in t, s or x (amāt-a, vīs-um,
 // fix-ī) or nd (dēlend-a); the future participle's in r (futūr-um esse,
 // factūr-ī sunt), only in the masculine and neuter, since -ūra and -ūrae are
 // mostly nouns (nātūrae sunt, cūra est). The stem has no capital: Mūsa sum
 // is not a participle.
+// The participle they give says ptcx, which the participles of the noesse
+// lines of the stem table do not take.
 for (const [ending, slotId] of [['a', 'adj-a'], ['um', 'adj-um'], ['i', 'adj-i'], ['ae', 'adj-ae'], ['os', 'adj-os'], ['as', 'adj-as']]) {
-    sfx(slotId, ending, 'us', ['aux'], ['ptc'], {stemMinLength: 3, stemCharacters: '[^ A-Z]', stemEndsWith: '[dstx]'});
+    const conditionsIn = ['os', 'as'].includes(ending) ? ['auxi'] : ['aux'];
+    sfx(slotId, ending, 'us', conditionsIn, ['ptcx'], {stemMinLength: 3, stemCharacters: '[^ A-Z]', stemEndsWith: '[dstx]'});
     if (['um', 'i', 'os'].includes(ending)) {
-        sfx(slotId, ending, 'us', ['aux'], ['ptc'], {stemMinLength: 3, stemCharacters: '[^ A-Z]', stemEndsWith: '[r]'});
+        sfx(slotId, ending, 'us', conditionsIn, ['ptcx'], {stemMinLength: 3, stemCharacters: '[^ A-Z]', stemEndsWith: '[r]'});
     }
 }
 
@@ -1504,11 +1521,53 @@ function buildTransforms() {
     // -e (sōle is sōl, not sōlus), then verbs. Measured on the 101,097
     // positions of the two test books: nouns first gave 106 wrong first
     // results and about 550 weaker readings of ties.
+    // Names come before adjectives, which only matters for a capitalised word
+    // (Galliam is Gallia's before Gallius'). Among nouns the dative and
+    // ablative plural come late (maris is mare's before marum's, generis
+    // genus' before gener's) and the vocative last (mēnse is mēnsis, not
+    // mēnsus); among verbs the perfect comes before the present (dedit is dō's
+    // before dēdō's, tulit ferō's before tulō's).
     const all = [...groups.values()];
     const rank = (t) => (t.id === 'adj-e+adverb' || t.id === 'adverb' ? 2
+        : /^name-/u.test(t.id) ? -1
         : /^(adj|comparative|superlative|adverb)/u.test(t.id) ? 0
-        : /^(n-|name-|pron-)/u.test(t.id) ? 1 : 3);
-    return all.map((t, i) => [rank(t), i, t]).sort((a, b) => a[0] - b[0] || a[1] - b[1]).map(([, , t]) => t);
+        : /^(n-|pron-)/u.test(t.id) ? 1 : 3);
+    const within = (t) => (/^(perf|plupf|futpf|inf-perf)/u.test(t.id) ? 0 : t.id === 'n-dat-pl' ? 2 : t.id === 'n-voc-sg' ? 3 : 1);
+    return all.map((t, i) => [rank(t), within(t), i, t]).sort((a, b) => a[0] - b[0] || a[1] - b[1] || a[2] - b[2]).map(([, , , t]) => t);
+}
+
+// --- Rare readings of frequent forms left to the dictionary ----------------------------
+// A rule that reaches a rare lemma of a frequent form ties with the common
+// lemma that the form's own form-of rows also name, and the rule's reading
+// is found first (section 9.6): nāvī read as nāvus before nāvis. These rules
+// leave such a stem out (stemNotStartsWithText); the dictionary's form-of
+// rows still give the rare reading, after the common one.
+for (const [slotId, inflected, deinflected, conditionsOut, stem] of [
+    ['adj-i', 'i', 'us', ['adj12', 'ptc', 'v'], 'nav'],        // nāvī: nāvis, not nāvus
+    ['adj-o', 'o', 'us', ['adj12', 'ptc', 'v'], 'argent'],     // argentō: argentum, not argentus
+    ['adj-am', 'am', 'us', ['adj12', 'ptc', 'v'], 'patri'],    // patriam: patria, not patrius
+    ['adj-ae', 'ae', 'us', ['adj12', 'ptc', 'v'], 'patri'],    // patriae
+    ['adj-a', 'a', 'us', ['adj12', 'ptc', 'v'], 'bell'],       // bella: bellum, not bellus
+    ['adj-as', 'as', 'us', ['adj12', 'ptc', 'v'], 'mens'],     // mēnsās: mēnsa, not mēnsus
+    ['inf', 'ere', 'eo', ['v'], 'can'],                        // canere: canō, not caneō
+    ['n-gen-pl', 'etum', 'es', ['n3s'], 'imp'],                // impetum: impetus, not impes
+    ['adj3-ia', 'icia', 'ex', ['adj3'], 'suppl'],              // supplicia: supplicium, not supplex
+    ['subj-2s', 'ias', 'io', ['v'], 'cop'],                    // cōpiās: cōpia, not cōpiō
+    ['imp-fut-2s', 'eto', 'eo', ['v'], 'ac'],                  // acētō: acētum, not aceō
+    ['n-gen-pl', 'cum', 'x', ['n3s'], 'la'],                   // lacum: lacus, not lāx
+    ['n-gen-pl', 'orum', 'us', ['n2s'], 'arm'],                // armōrum: arma, not armus
+    ['n-gen-pl', 'orum', 'us', ['n3s'], 'arm'],
+    ['n-dat-sg', 'o', 'us', ['n2s'], 'argent'],                // argentō
+    ['n-nom-pl', 'rtes', 'rs', ['n3s'], 'fo'],                 // fortēs: fortis, not fors
+    ['n-acc-sg', 'rtem', 'rs', ['n3s'], 'fo'],
+    ['n-dat-sg', 'rti', 'rs', ['n3s'], 'fo'],
+    ['n-gen-pl', 'rtium', 'rs', ['n3s'], 'fo'],
+    ['n-dat-pl', 'rtibus', 'rs', ['n3s'], 'fo'],
+]) {
+    const matches = [...RULES.values()].filter(({rule, slots}) => slots.includes(slotId) && rule.inflected === inflected
+        && rule.deinflected === deinflected && rule.conditionsIn.length === 0 && JSON.stringify(rule.conditionsOut) === JSON.stringify(conditionsOut));
+    if (matches.length !== 1) { throw new Error(`${slotId} ${inflected} → ${deinflected}: ${matches.length} rules`); }
+    matches[0].rule.stemNotStartsWithText = stem;
 }
 
 const transforms = buildTransforms();

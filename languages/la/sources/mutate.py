@@ -49,6 +49,43 @@ def drop_processor(pid):
     return f
 
 
+def move(pred, last=True):
+    def f(t, l):
+        moved = [tr for tr in t['transforms'] if pred(tr['id'])]
+        rest = [tr for tr in t['transforms'] if not pred(tr['id'])]
+        t['transforms'] = rest + moved if last else moved + rest
+        return len(moved)
+    return f
+
+
+def set_in(old, new, pred=lambda tr, r: True):
+    def f(t, l):
+        n = 0
+        for tr, r in rules(t):
+            if r['conditionsIn'] == old and pred(tr, r):
+                r['conditionsIn'] = new
+                n += 1
+        return n
+    return f
+
+
+def enclitics_at_all(t, l):
+    for p in l['lookup']['preprocessors']:
+        if p['id'] == 'enclitics':
+            for v in p['variants']:
+                v[0]['at'] = 'all'
+    return 1
+
+
+def no_verb_condition(t, l):
+    n = 0
+    for tr, r in rules(t):
+        if r['conditionsOut'] == ['v']:
+            r['conditionsOut'] = []
+            n += 1
+    return n
+
+
 MUTANTS = {
     'verb root min 2 -> 0': drop_key('stemMinLength', 2, lambda tr, r: 'v' in r['conditionsOut'] and r['type'] == 'suffix'),
     '3rd conj root not after a e i o': drop_key('stemNotEndsWith', '[aeio]'),
@@ -79,7 +116,22 @@ MUTANTS = {
     'processor enclitics': drop_processor('enclitics'),
     'processor removeAlphabeticDiacritics': drop_processor('removeAlphabeticDiacritics'),
     'processor processDiphtongs': drop_processor('processDiphtongs'),
+    'processor vToU': drop_processor('vToU'),
+    'enclitics anywhere': enclitics_at_all,
+    'verbs without v': no_verb_condition,
+    'noesse participles before esse': set_in(['ptc'], ['ptc', 'aux', 'ptcx'], lambda tr, r: tr['id'] == 'ptc-perf'),
+    '-os/-as before finite esse': set_in(['auxi'], ['aux']),
+    'participle stems advoc/inv/per': drop_key('stemNotStartsWithText', None, lambda tr, r: tr['id'] == 'ptc-perf'),
+    'esse min 3': drop_key('stemMinLength', 3, lambda tr, r: tr['id'] == 'esse'),
+    'participle before esse min 3': drop_key('stemMinLength', 3, lambda tr, r: r['conditionsIn'] in (['aux'], ['auxi'])),
+    '4th decl neuter -u': drop_rules(lambda tr, r: r.get('deinflected') == 'u' and tr['id'].startswith('n-')),
+    'perfect after present': move(lambda i: i.startswith(('perf', 'plupf', 'futpf', 'inf-perf'))),
+    'dative plural first': move(lambda i: i == 'n-dat-pl', last=False),
+    'vocative first': move(lambda i: i == 'n-voc-sg', last=False),
+    'names after adjectives': move(lambda i: i.startswith('name-')),
 }
+for stem in ('nav', 'argent', 'patri', 'mens', 'bell', 'suppl', 'cop', 'ac', 'la', 'arm', 'fo', 'can', 'imp'):
+    MUTANTS[f'{stem}- left to the dictionary'] = drop_key('stemNotStartsWithText', stem)
 
 results = []
 for name, mutate in MUTANTS.items():

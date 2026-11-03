@@ -35,18 +35,18 @@ const SEED = 1;
 
 // Strata; within each, rows are drawn uniformly.
 const UNIMORPH_STRATA = [
-    ['noun', 230, (t) => t[0] === 'N'],
-    ['proper noun', 50, (t) => t[0] === 'PROPN'],
-    ['adjective', 110, (t) => t[0] === 'ADJ'],
-    ['participle', 90, (t) => t[0] === 'V.PTCP'],
-    ['verb, active', 150, (t) => t[0] === 'V' && t.includes('ACT') && !t.includes('NFIN') && !t.includes('V.MSDR') && !t.includes('V.PTCP')],
-    ['verb, passive', 70, (t) => t[0] === 'V' && t.includes('PASS') && !t.includes('NFIN') && !t.includes('V.PTCP')],
-    ['verb, infinitive, gerund, supine or participle', 40, (t) => t[0] === 'V' && (t.includes('NFIN') || t.includes('V.MSDR') || t.includes('V.PTCP'))],
+    ['noun', 165, (t) => t[0] === 'N'],
+    ['proper noun', 35, (t) => t[0] === 'PROPN'],
+    ['adjective', 80, (t) => t[0] === 'ADJ'],
+    ['participle', 65, (t) => t[0] === 'V.PTCP'],
+    ['verb, active', 110, (t) => t[0] === 'V' && t.includes('ACT') && !t.includes('NFIN') && !t.includes('V.MSDR') && !t.includes('V.PTCP')],
+    ['verb, passive', 55, (t) => t[0] === 'V' && t.includes('PASS') && !t.includes('NFIN') && !t.includes('V.PTCP')],
+    ['verb, infinitive, gerund, supine or participle', 30, (t) => t[0] === 'V' && (t.includes('NFIN') || t.includes('V.MSDR') || t.includes('V.PTCP'))],
 ];
 const KAIKKI_STRATA = [
-    ['verb, perfect system', 160, (pos, tags) => pos === 'verb' && tags.includes('active') && (tags.includes('perfect') || tags.includes('pluperfect'))],
-    ['adjective, comparison', 25, (pos, tags) => pos === 'adj' && (tags.includes('comparative') || tags.includes('superlative'))],
-    ['pronoun or determiner', 25, (pos, tags) => (pos === 'pron' || pos === 'det') && ['genitive', 'dative', 'accusative', 'ablative', 'nominative'].some((c) => tags.includes(c))],
+    ['verb, perfect system', 120, (pos, tags) => pos === 'verb' && tags.includes('active') && (tags.includes('perfect') || tags.includes('pluperfect'))],
+    ['adjective, comparison', 20, (pos, tags) => pos === 'adj' && (tags.includes('comparative') || tags.includes('superlative'))],
+    ['pronoun or determiner', 20, (pos, tags) => (pos === 'pron' || pos === 'det') && ['genitive', 'dative', 'accusative', 'ablative', 'nominative'].some((c) => tags.includes(c))],
 ];
 const UNIMORPH_POS = {N: 'n', PROPN: '*', ADJ: 'adj', V: 'v', 'V.PTCP': 'v'};
 // kaikki's tags, written as UniMorph writes features, to keep the files short.
