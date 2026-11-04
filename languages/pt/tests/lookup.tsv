@@ -100,6 +100,20 @@ ranking	1	distraída demais	distraído	distraída
 ranking	0	distraída demais	distrair	distraída
 ranking	1	podes ir	poder	podes
 ranking	0	podes ir	podar	podes
+ranking	1	dados do censo	dado	dados
+ranking	0	dados do censo	dar	dados
+ranking	1	segura de si	seguro	segura
+ranking	0	segura de si	segurar	segura
+ranking	1	baterias novas	bateria	baterias
+ranking	0	baterias novas	bater	baterias
+ranking	1	caminha devagar	caminhar	caminha
+ranking	0	caminha devagar	cama	caminha
+ranking	1	crias da loba	cria	crias
+ranking	0	crias da loba	criar	crias
+ranking	1	comas isso	comer	comas
+ranking	0	comas isso	coma	comas
+ranking	1	moída na hora	moído	moída
+ranking	0	moída na hora	moer	moída
 pronouns	1	chama-se João	chamar	chama-se
 pronouns	0	chama-se João	chama	chama
 pronouns	1	deixa-me ir	deixar	deixa-me
