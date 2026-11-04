@@ -1,0 +1,792 @@
+# Source: Wiktionary's Old Irish inflection and mutation tables as extracted by kaikki.org (https://kaikki.org/dictionary/Old%20Irish/, extracted 2026-10-30 from the English Wiktionary dump of 2026-10-01, sha256 36236d1c6bf278e4), CC BY-SA 4.0 and GFDL, by the Wiktionary contributors; and UniMorph sga (https://github.com/unimorph/sga/blob/de9858d9966879b78d44fcded5287858146a6e16/sga, sha256 2234deeed0f585fe), CC BY-SA 3.0, by the UniMorph contributors.
+# 1500 rows sampled with seed 1 by sources/build-corpus.mjs from the lemmas the rules were not written on (odd MD5) (450 kaikki noun, 200 kaikki adjective, 450 kaikki verb, 250 kaikki mutation, 150 unimorph verb); the rows the pack's rules reach are in corpus.tsv, the others in gaps.tsv.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+kaikki n dative dual	1	cercaib	cerc	n	*
+kaikki n nominative plural	1	imramae	imram	n	*
+kaikki n genitive singular	1	sacerdotalachtae	sacerdotalacht	n	*
+kaikki n genitive	1	erigme	erigem	n	*
+kaikki n dual nominative	1	peinn	penn	n	*
+kaikki n dative dual	1	carachtraib	carachtar	n	*
+kaikki n dual nominative	1	irnigdi	irnigde	n	*
+kaikki n dual nominative	1	saigit	saiget	n	*
+kaikki n dual nominative	1	cairi	caire	n	*
+kaikki n genitive	1	banscáil	banscál	n	*
+kaikki n genitive singular	1	tarto	tart	n	*
+kaikki n dual nominative	1	feib	feb	n	*
+kaikki n dative dual	1	úachtaraib	úachtar	n	*
+kaikki n dative dual	1	cennaigib	cennaige	n	*
+kaikki n dative dual	1	clethaib	cleth	n	*
+kaikki n genitive	1	imme	imb	n	*
+kaikki n genitive	1	saile	sal	n	*
+kaikki n dative singular	1	liur	ler	n	*
+kaikki n genitive singular	1	díupartae	díupart	n	*
+kaikki n dual nominative	1	caili	caile	n	*
+kaikki n genitive singular	1	laithi	laithe	n	*
+kaikki n nominative plural	1	togla	togal	n	*
+kaikki n dative dual	1	fénaib	fén	n	*
+kaikki n genitive singular	1	datho	dath	n	*
+kaikki n nominative singular	1	derbḟine	derbfine	n	*
+kaikki n nominative plural	1	dercae	derc	n	*
+kaikki n plural vocative	1	caladu	calad	n	*
+kaikki n nominative plural	1	arda	ard	n	*
+kaikki n nominative singular	1	imneth	imned	n	*
+kaikki n nominative plural	1	cenéla	cenél	n	*
+kaikki n dative dual	1	escongaib	escong	n	*
+kaikki n dative dual	1	úaimmenaib	úaimm	n	*
+kaikki n dual nominative	1	feirn	fern	n	*
+kaikki n genitive	1	imbid	imbed	n	*
+kaikki n dative dual	1	óenachaib	óenach	n	*
+kaikki n dative dual	1	sornaib	sorn	n	*
+kaikki n nominative plural	1	béimmen	béim	n	*
+kaikki n dative dual	1	imbib	imbe	n	*
+kaikki n dative singular	1	laithiu	laithe	n	*
+kaikki n genitive	1	tarta	tart	n	*
+kaikki n dative dual	1	cétaínib	cétaín	n	*
+kaikki n nominative singular	1	sinserṡiur	sinsersiur	n	*
+kaikki n dative dual	1	comṡuidigthib	comsuidigthe	n	*
+kaikki n dative singular	1	rígiu	ríge	n	*
+kaikki n genitive singular	1	téige	tíag	n	*
+kaikki n plural vocative	1	aiccentu	aiccent	n	*
+kaikki n genitive	1	dílguda	dílgud	n	*
+kaikki n genitive plural	1	brúite	brúit	n	*
+kaikki n dative singular	1	tólu	tólae	n	*
+kaikki n dative dual	1	trógaib	trógae	n	*
+kaikki n nominative plural	1	úaimmen	úaimm	n	*
+kaikki n nominative plural	1	esconga	escong	n	*
+kaikki n dative singular	1	indriud	indred	n	*
+kaikki n plural vocative	1	océnu	océn	n	*
+kaikki n dative dual	1	caindlib	caindel	n	*
+kaikki n nominative plural	1	íasachtae	íasacht	n	*
+kaikki n genitive	1	leith	leth	n	*
+kaikki n dual nominative	1	circ	cerc	n	*
+kaikki n plural vocative	1	metaru	metar	n	*
+kaikki n genitive singular	1	preceptae	precept	n	*
+kaikki n dual nominative	1	moídim	moídem	n	*
+kaikki n dative singular	1	airchur	airchor	n	*
+kaikki n plural vocative	1	marcachu	marcach	n	*
+kaikki n nominative plural	1	giugrainn	giugrann	n	*
+kaikki n nominative plural	1	sinsir	sinser	n	*
+kaikki n accusative singular	1	buith	both	n	*
+kaikki n nominative plural	1	domae	dom	n	*
+kaikki n genitive	1	desimrechta	desimrecht	n	*
+kaikki n dative dual	1	rigib	rige	n	*
+kaikki n dative dual	1	crossaib	cros	n	*
+kaikki n genitive	1	dílgind	dílgend	n	*
+kaikki n accusative singular	1	enncai	enncae	n	*
+kaikki n nominative plural	1	búachailli	búachaill	n	*
+kaikki n nominative plural	1	scola	scol	n	*
+kaikki n dative dual	1	trummaib	trummae	n	*
+kaikki n genitive singular	1	sainrid	sainred	n	*
+kaikki n dative dual	1	margadaib	margad	n	*
+kaikki n genitive singular	1	ceirne	cern	n	*
+kaikki n nominative plural	1	dairti	dairt	n	*
+kaikki n nominative plural	1	tíaga	tíag	n	*
+kaikki n genitive singular	1	fodla	fodail	n	*
+kaikki n dative dual	1	toglaib	togal	n	*
+kaikki n genitive singular	1	aslaig	aslach	n	*
+kaikki n dative dual	1	láib	lá	n	*
+kaikki n dative dual	1	tarbaib	tarb	n	*
+kaikki n genitive plural	1	desimrechte	desimrecht	n	*
+kaikki n accusative singular	1	arsidetaid	arsidetu	n	*
+kaikki n genitive	1	dúine	dún	n	*
+kaikki n genitive	1	tóne	tón	n	*
+kaikki n dative singular	1	tegit	teget	n	*
+kaikki n dative dual	1	crosaib	cros	n	*
+kaikki n plural vocative	1	comarbbu	comarbbae	n	*
+kaikki n genitive	1	flechuid	flechud	n	*
+kaikki n nominative plural	1	apstail	apstal	n	*
+kaikki n plural vocative	1	uisciu	uisce	n	*
+kaikki n dative dual	1	cathaírib	cathaír	n	*
+kaikki n dative singular	1	maig	mag	n	*
+kaikki n genitive	1	ingine	ingen	n	*
+kaikki n genitive	1	demuin	demon	n	*
+kaikki n genitive	1	dartada	dartaid	n	*
+kaikki n dative dual	1	utlachaib	utlach	n	*
+kaikki n plural vocative	1	giugrannu	giugrann	n	*
+kaikki n accusative singular	1	cretim	cretem	n	*
+kaikki n genitive	1	imnid	imned	n	*
+kaikki n genitive singular	1	cerdae	cerd	n	*
+kaikki n nominative plural	1	fedba	fedb	n	*
+kaikki n genitive	1	úaille	úall	n	*
+kaikki n nominative plural	1	daltusae	daltus	n	*
+kaikki n dative dual	1	sílaib	síl	n	*
+kaikki n genitive	1	ilair	ilar	n	*
+kaikki n accusative singular	1	óin	ón	n	*
+kaikki n genitive singular	1	maisse	mass	n	*
+kaikki n dual nominative	1	ceird	cerd	n	*
+kaikki n dative dual	1	dindaib	dind	n	*
+kaikki n genitive	1	clúime	clúm	n	*
+kaikki n genitive singular	1	fátho	fáth	n	*
+kaikki n genitive singular	1	claime	clam	n	*
+kaikki n nominative plural	1	áesa	áes	n	*
+kaikki n nominative plural	1	slucaiti	slucait	n	*
+kaikki n genitive singular	1	foluid	folud	n	*
+kaikki n dual nominative	1	glaídemain	glaídem	n	*
+kaikki n plural vocative	1	glasu	glas	n	*
+kaikki n genitive	1	cumaile	cumal	n	*
+kaikki n dual nominative	1	tain	tan	n	*
+kaikki n genitive	1	sreing	sreng	n	*
+kaikki n dual nominative	1	rainn	rann	n	*
+kaikki n dative singular	1	beuch	bech	n	*
+kaikki n dative singular	1	sinsiur	sinser	n	*
+kaikki n nominative plural	1	glais	glas	n	*
+kaikki n nominative plural	1	duinn	donn	n	*
+kaikki n dual nominative	1	áirgi	áirge	n	*
+kaikki n dative dual	1	lochtaib	locht	n	*
+kaikki n dative dual	1	gríbaib	gríb	n	*
+kaikki n nominative plural	1	fessa	fess	n	*
+kaikki n genitive	1	drúchta	drúcht	n	*
+kaikki n genitive	1	cuir	cor	n	*
+kaikki n genitive singular	1	díno	dín	n	*
+kaikki n plural vocative	1	folachu	folach	n	*
+kaikki n plural vocative	1	sénu	sén	n	*
+kaikki n nominative plural	1	cathacha	cathach	n	*
+kaikki n genitive	1	frithtuidechtae	frithtuidecht	n	*
+kaikki n genitive singular	1	abstanite	abstanit	n	*
+kaikki n dative dual	1	orbbaib	orbbae	n	*
+kaikki n dative dual	1	caladaib	calad	n	*
+kaikki n nominative plural	1	laíchesa	laíches	n	*
+kaikki n dual nominative	1	gili	gile	n	*
+kaikki n genitive singular	1	dáile	dál	n	*
+kaikki n nominative plural	1	noídin	noídiu	n	*
+kaikki n dative dual	1	scolaib	scol	n	*
+kaikki n dative dual	1	múraib	múr	n	*
+kaikki n dative dual	1	díupartaib	díupart	n	*
+kaikki n dual nominative	1	caindil	caindel	n	*
+kaikki n nominative plural	1	dúnaid	dúnad	n	*
+kaikki n nominative plural	1	comaltai	comaltae	n	*
+kaikki n genitive	1	truimm	tromm	n	*
+kaikki n plural vocative	1	daltu	daltae	n	*
+kaikki n nominative plural	1	imchomarca	imchomarc	n	*
+kaikki n nominative plural	1	gríanáin	gríanán	n	*
+kaikki n genitive plural	1	aitrebthide	aitrebthid	n	*
+kaikki n dative dual	1	lenamnaib	lenamain	n	*
+kaikki n eclipsis	1	mboicht	boicht	n	*
+kaikki n dual nominative	1	cainninn	cainnenn	n	*
+kaikki n nominative plural	1	bláthae	bláth	n	*
+kaikki n dative dual	1	cúanaib	cúan	n	*
+kaikki n dative singular	1	giun	gen	n	*
+kaikki n dative dual	1	condalbaib	condalbae	n	*
+kaikki n accusative singular	1	cuimni	cuimne	n	*
+kaikki n genitive	1	luigi	luige	n	*
+kaikki n dative dual	1	finib	fine	n	*
+kaikki n genitive	1	bili	bile	n	*
+kaikki n genitive	1	cuäich	cuach	n	*
+kaikki n dative dual	1	aslachaib	aslach	n	*
+kaikki n nominative plural	1	datha	dath	n	*
+kaikki n nominative plural	1	círa	cír	n	*
+kaikki n genitive	1	altrama	altram	n	*
+kaikki n nominative plural	1	margaid	margad	n	*
+kaikki n nominative plural	1	adbara	adbar	n	*
+kaikki n genitive plural	1	daire	dair	n	*
+kaikki n genitive singular	1	tessa	tess	n	*
+kaikki n dative dual	1	bilib	bile	n	*
+kaikki n dative dual	1	sinib	sine	n	*
+kaikki n genitive	1	nemid	nemed	n	*
+kaikki n plural vocative	1	bailiu	baile	n	*
+kaikki n genitive singular	1	geine	gein	n	*
+kaikki n dative singular	1	impuidiu	impuide	n	*
+kaikki n nominative plural	1	aimsera	aimser	n	*
+kaikki n dative dual	1	cullachaib	cullach	n	*
+kaikki n genitive singular	1	daggnímo	daggním	n	*
+kaikki n nominative plural	1	ranna	rann	n	*
+kaikki n dative singular	1	milg	melg	n	*
+kaikki n genitive plural	1	graige	graig	n	*
+kaikki n dual nominative	1	scréich	scréch	n	*
+kaikki n dative dual	1	drúchtaib	drúcht	n	*
+kaikki n dative dual	1	bolgaib	bolg	n	*
+kaikki n dative dual	1	grádaib	grád	n	*
+kaikki n genitive	1	muil	mul	n	*
+kaikki n accusative singular	1	fírinni	fírinne	n	*
+kaikki n dative dual	1	bailib	baile	n	*
+kaikki n dative dual	1	éigmib	éigem	n	*
+kaikki n dative dual	1	frémaib	frém	n	*
+kaikki n genitive	1	cluith	cloth	n	*
+kaikki n dative dual	1	altramaib	altram	n	*
+kaikki n dative dual	1	fínaib	fín	n	*
+kaikki n genitive singular	1	úachtair	úachtar	n	*
+kaikki n genitive singular	1	arsidetad	arsidetu	n	*
+kaikki n genitive	1	coscair	coscar	n	*
+kaikki n plural vocative	1	trommu	tromm	n	*
+kaikki n dual nominative	1	ceirn	cern	n	*
+kaikki n genitive	1	folaig	folach	n	*
+kaikki n dative dual	1	núallaib	núall	n	*
+kaikki n dative dual	1	giugrannaib	giugrann	n	*
+kaikki n genitive	1	techtae	techt	n	*
+kaikki n genitive singular	1	taine	tan	n	*
+kaikki n nominative plural	1	admait	admat	n	*
+kaikki n dative dual	1	tórandaib	tórand	n	*
+kaikki n dative dual	1	acraib	acrae	n	*
+kaikki n dative singular	1	ingnu	ingnae	n	*
+kaikki n plural vocative	1	apstalu	apstal	n	*
+kaikki n genitive	1	eich	ech	n	*
+kaikki n genitive	1	éicne	éicen	n	*
+kaikki n plural vocative	1	féliriu	félire	n	*
+kaikki n dative singular	1	subu	subae	n	*
+kaikki n dative dual	1	salaib	sal	n	*
+kaikki n genitive singular	1	átha	áth	n	*
+kaikki n dative dual	1	fessaib	fess	n	*
+kaikki n nominative plural	1	séola	séol	n	*
+kaikki n genitive singular	1	orbbai	orbbae	n	*
+kaikki n nominative plural	1	crosa	cros	n	*
+kaikki n genitive singular	1	cláir	clár	n	*
+kaikki n nominative plural	1	cranna	crann	n	*
+kaikki n dative dual	1	admataib	admat	n	*
+kaikki n dative dual	1	brúitib	brúit	n	*
+kaikki n genitive singular	1	lergae	lerg	n	*
+kaikki n dual nominative	1	uilin	uilen	n	*
+kaikki n dative dual	1	ordaib	ord	n	*
+kaikki n genitive singular	1	gin	gen	n	*
+kaikki n accusative singular	1	úaill	úall	n	*
+kaikki n dual nominative	1	frithorcuin	frithorcun	n	*
+kaikki n accusative singular	1	úaisli	úaisle	n	*
+kaikki n dative dual	1	cairib	caire	n	*
+kaikki n genitive singular	1	túso	tús	n	*
+kaikki n nominative plural	1	guidi	guide	n	*
+kaikki n genitive singular	1	blátha	bláth	n	*
+kaikki n dative dual	1	aiccib	aicce	n	*
+kaikki n nominative plural	1	roith	roth	n	*
+kaikki n dative dual	1	locaib	loc	n	*
+kaikki n genitive	1	brithemon	brithem	n	*
+kaikki n nominative plural	1	bannáin	bannán	n	*
+kaikki n plural vocative	1	lésu	lés	n	*
+kaikki n nominative plural	1	imgabála	imgabáil	n	*
+kaikki n dative dual	1	beithib	beithe	n	*
+kaikki n plural vocative	1	liru	ler	n	*
+kaikki n dative dual	1	cluichib	cluiche	n	*
+kaikki n genitive	1	foiss	foss	n	*
+kaikki n genitive singular	1	lemnachto	lemnacht	n	*
+kaikki n dative dual	1	gécaib	géc	n	*
+kaikki n genitive singular	1	torbatad	torbatu	n	*
+kaikki n genitive	1	loirge	lorg	n	*
+kaikki n nominative plural	1	cuirti	cuirt	n	*
+kaikki n genitive	1	leithe	leth	n	*
+kaikki n dative singular	1	éirgiu	éirge	n	*
+kaikki n accusative singular	1	amairis	amaires	n	*
+kaikki n dative dual	1	artaib	art	n	*
+kaikki n dative dual	1	sanasaib	sanas	n	*
+kaikki n plural vocative	1	drúchtu	drúcht	n	*
+kaikki n genitive	1	baili	baile	n	*
+kaikki n dative dual	1	sílnib	sílne	n	*
+kaikki n dative dual	1	béimmenaib	béim	n	*
+kaikki n accusative singular	1	aicsin	aicsiu	n	*
+kaikki n dative dual	1	tuilib	tuile	n	*
+kaikki n nominative plural	1	gulbain	gulban	n	*
+kaikki n dative dual	1	slataib	slat	n	*
+kaikki n genitive singular	1	dílgudo	dílgud	n	*
+kaikki n dative dual	1	cenntaraib	cenntar	n	*
+kaikki n dative dual	1	gébendaib	gébend	n	*
+kaikki n dative dual	1	scréchaib	scréch	n	*
+kaikki n dative dual	1	trommaib	tromm	n	*
+kaikki n plural vocative	1	rónu	rón	n	*
+kaikki n genitive singular	1	gébinde	gébend	n	*
+kaikki n nominative plural	1	lotha	loth	n	*
+kaikki n dual nominative	1	lassair	lassar	n	*
+kaikki n dative dual	1	líachaib	líach	n	*
+kaikki n dative dual	1	suidib	suide	n	*
+kaikki n plural vocative	1	dúnadu	dúnad	n	*
+kaikki n dative dual	1	sligib	slige	n	*
+kaikki adj feminine neuter nominative singular	1	inmedónacha	inmedónach	adj	*
+kaikki adj comparative	1	tanu	tanae	adj	*
+kaikki adj masculine singular vocative	1	beraig	berach	adj	*
+kaikki adj masculine singular vocative	1	seisc	sesc	adj	*
+kaikki adj masculine plural vocative	1	trisu	tris	adj	*
+kaikki adj feminine genitive singular	1	coíle	coíl	adj	*
+kaikki adj feminine genitive singular	1	nómaide	nómad	adj	*
+kaikki adj masculine singular vocative	1	meisc	mesc	adj	*
+kaikki adj dative	1	bánaib	bán	adj	*
+kaikki adj feminine genitive singular	1	clannmaire	clannmar	adj	*
+kaikki adj masculine plural vocative	1	cathachu	cathach	adj	*
+kaikki adj masculine nominative plural	1	crúaidi	crúaid	adj	*
+kaikki adj dative	1	líachaib	líach	adj	*
+kaikki adj dative	1	inducbaidib	inducbaide	adj	*
+kaikki adj masculine plural vocative	1	móru	mór	adj	*
+kaikki adj masculine singular vocative	1	cóicid	cóiced	adj	*
+kaikki adj dative	1	fíriénaib	fírién	adj	*
+kaikki adj masculine plural vocative	1	brécachu	brécach	adj	*
+kaikki adj comparative	1	áithiu	áith	adj	*
+kaikki adj masculine plural vocative	1	torrachu	torrach	adj	*
+kaikki adj masculine nominative plural	1	domnai	domain	adj	*
+kaikki adj dative	1	sáeraib	sáer	adj	*
+kaikki adj masculine plural vocative	1	fíríanu	fírían	adj	*
+kaikki adj masculine singular vocative	1	assai	asse	adj	*
+kaikki adj dative masculine singular	1	aichiur	aicher	adj	*
+kaikki adj masculine nominative plural	1	mlichti	mlicht	adj	*
+kaikki adj masculine nominative plural	1	athramlai	athramail	adj	*
+kaikki adj dative masculine singular	1	madu	madae	adj	*
+kaikki adj feminine neuter nominative singular	1	donna	donn	adj	*
+kaikki adj masculine singular vocative	1	toirsig	toirsech	adj	*
+kaikki adj dative	1	lochaib	loch	adj	*
+kaikki adj dative	1	nómadaib	nómad	adj	*
+kaikki adj dative	1	aichrib	aicher	adj	*
+kaikki adj dative	1	ansib	anse	adj	*
+kaikki adj masculine singular vocative	1	cirt	cert	adj	*
+kaikki adj feminine neuter nominative singular	1	soinmecha	soinmech	adj	*
+kaikki adj masculine nominative plural	1	sócamlai	socamail	adj	*
+kaikki adj feminine genitive singular	1	daingne	daingen	adj	*
+kaikki adj masculine singular vocative	1	bic	bec	adj	*
+kaikki adj masculine singular vocative	1	fortchidi	fortchide	adj	*
+kaikki adj feminine genitive singular	1	étruimme	étrum	adj	*
+kaikki adj masculine singular vocative	1	nómaid	nómad	adj	*
+kaikki adj masculine singular vocative	1	amrai	amrae	adj	*
+kaikki adj masculine plural vocative	1	rúadu	rúad	adj	*
+kaikki adj feminine neuter nominative singular	1	sesca	sesc	adj	*
+kaikki adj dative	1	cruindib	cruind	adj	*
+kaikki adj feminine genitive singular	1	rúaide	rúad	adj	*
+kaikki adj feminine genitive singular	1	mlichte	mlicht	adj	*
+kaikki adj feminine neuter nominative singular	1	bréna	brén	adj	*
+kaikki adj dative masculine singular	1	dánu	dánae	adj	*
+kaikki adj masculine singular vocative	1	dédenaig	dédenach	adj	*
+kaikki adj dative masculine singular	1	fortgidiu	fortgide	adj	*
+kaikki adj dative	1	foirmtechaib	foirmtech	adj	*
+kaikki adj dative masculine singular	1	cóiciud	cóiced	adj	*
+kaikki adj feminine genitive singular	1	deithbire	deithbir	adj	*
+kaikki adj dative	1	trisaib	tris	adj	*
+kaikki adj dative	1	amlabraib	amlabar	adj	*
+kaikki adj dative	1	noíbaib	noíb	adj	*
+kaikki adj feminine neuter nominative singular	1	toirsecha	toirsech	adj	*
+kaikki adj masculine singular vocative	1	díummusaig	díummusach	adj	*
+kaikki adj masculine singular vocative	1	grécdai	grécdae	adj	*
+kaikki adj feminine neuter nominative singular	1	fíriéna	fírién	adj	*
+kaikki adj feminine neuter nominative singular	1	fíríana	fírían	adj	*
+kaikki adj masculine singular vocative	1	inmedónaig	inmedónach	adj	*
+kaikki adj masculine singular vocative	1	dánai	dánae	adj	*
+kaikki adj feminine neuter nominative singular	1	locha	loch	adj	*
+kaikki adj dative	1	cotarsnaib	cotarsnae	adj	*
+kaikki adj feminine genitive singular	1	duinne	donn	adj	*
+kaikki adj dative	1	engachaib	engach	adj	*
+kaikki adj feminine genitive singular	1	boladmaire	boladmar	adj	*
+kaikki adj masculine plural vocative	1	dallu	dall	adj	*
+kaikki adj dative	1	oacaib	oac	adj	*
+kaikki adj dative	1	dánaib	dánae	adj	*
+kaikki adj feminine genitive singular	1	séissilbige	séissilbech	adj	*
+kaikki adj feminine genitive singular	1	sulbaire	sulbair	adj	*
+kaikki adj dative masculine singular	1	cétniu	cétnae	adj	*
+kaikki adj feminine genitive singular	1	bélmaire	bélmar	adj	*
+kaikki adj feminine neuter nominative singular	1	torracha	torrach	adj	*
+kaikki adj feminine neuter nominative singular	1	bélmara	bélmar	adj	*
+kaikki adj accusative feminine singular	1	soluis	solus	adj	*
+kaikki adj feminine genitive singular	1	áithe	áith	adj	*
+kaikki adj feminine genitive singular	1	úaire	úar	adj	*
+kaikki adj dative masculine singular	1	séissilbiuch	séissilbech	adj	*
+kaikki adj masculine plural vocative	1	díummusachu	díummusach	adj	*
+kaikki adj dative	1	assaib	asse	adj	*
+kaikki adj dative	1	cóicedaib	cóiced	adj	*
+kaikki adj feminine genitive singular	1	ingnaide	ingnad	adj	*
+kaikki adj dative	1	boladmaraib	boladmar	adj	*
+kaikki adj masculine plural vocative	1	massu	mass	adj	*
+kaikki adj feminine neuter nominative singular	1	mesca	mesc	adj	*
+kaikki adj masculine plural vocative	1	ógu	óg	adj	*
+kaikki adj dative	1	immaircidib	immaircide	adj	*
+kaikki adj feminine neuter nominative singular	1	certa	cert	adj	*
+kaikki adj feminine genitive singular	1	lescae	lesc	adj	*
+kaikki adj dative	1	frecndaircib	frecndairc	adj	*
+kaikki adj feminine neuter nominative singular	1	sáera	sáer	adj	*
+kaikki adj feminine neuter nominative singular	1	príma	prím	adj	*
+kaikki adj feminine neuter nominative singular	1	derga	derg	adj	*
+kaikki adj dative	1	brécachaib	brécach	adj	*
+kaikki adj masculine nominative plural	1	ainbi	ainb	adj	*
+kaikki adj masculine singular vocative	1	séissilbig	séissilbech	adj	*
+kaikki adj masculine singular vocative	1	soinmig	soinmech	adj	*
+kaikki adj masculine plural vocative	1	tromu	trom	adj	*
+kaikki adj dative	1	borbaib	borb	adj	*
+kaikki adj feminine genitive singular	1	athramlae	athramail	adj	*
+kaikki adj masculine nominative plural	1	sulbairi	sulbair	adj	*
+kaikki adj dative	1	mlichtib	mlicht	adj	*
+kaikki adj masculine singular vocative	1	huissi	huisse	adj	*
+kaikki adj dative masculine singular	1	immaircidiu	immaircide	adj	*
+kaikki adj feminine genitive singular	1	cnoccaige	cnoccach	adj	*
+kaikki adj masculine singular vocative	1	tanai	tanae	adj	*
+kaikki adj dative	1	madaib	madae	adj	*
+kaikki adj masculine plural vocative	1	líathu	líath	adj	*
+kaikki adj masculine singular vocative	1	óig	óg	adj	*
+kaikki adj dative	1	rúadaib	rúad	adj	*
+kaikki adj masculine plural vocative	1	glasu	glas	adj	*
+kaikki adj masculine singular vocative	1	inducbaidi	inducbaide	adj	*
+kaikki adj feminine genitive singular	1	brónaige	brónach	adj	*
+kaikki adj feminine neuter nominative singular	1	nechta	necht	adj	*
+kaikki adj feminine genitive singular	1	ardae	ard	adj	*
+kaikki adj superlative	1	dilem	dil	adj	*
+kaikki adj feminine neuter nominative singular	1	líatha	líath	adj	*
+kaikki adj masculine singular vocative	1	oaic	oac	adj	*
+kaikki adj dative masculine singular	1	buidiu	buide	adj	*
+kaikki adj masculine plural vocative	1	toirsechu	toirsech	adj	*
+kaikki adj superlative	1	sinem	sen	adj	*
+kaikki adj dative	1	cathachaib	cathach	adj	*
+kaikki adj feminine genitive singular	1	lúaithe	lúath	adj	*
+kaikki adj dative masculine singular	1	cétnu	cétnae	adj	*
+kaikki adj masculine plural vocative	1	ócu	óc	adj	*
+kaikki adj dative	1	huissib	huisse	adj	*
+kaikki adj feminine genitive singular	1	bruthmaire	bruthmar	adj	*
+kaikki adj feminine neuter nominative singular	1	baccacha	baccach	adj	*
+kaikki adj masculine singular vocative	1	domundai	domundae	adj	*
+kaikki adj dative masculine singular	1	airdbidiu	airdbide	adj	*
+kaikki adj feminine neuter nominative singular	1	móra	mór	adj	*
+kaikki adj dative	1	athramlaib	athramail	adj	*
+kaikki adj feminine genitive singular	1	díabuile	díabul	adj	*
+kaikki adj dative masculine singular	1	aicnetu	aicnetae	adj	*
+kaikki adj feminine genitive singular	1	boichte	bocht	adj	*
+kaikki adj dative	1	seissedaib	seissed	adj	*
+kaikki adj masculine singular vocative	1	truim	trom	adj	*
+kaikki adj dative	1	díummusachaib	díummusach	adj	*
+kaikki adj masculine singular vocative	1	deiss	dess	adj	*
+kaikki adj masculine plural vocative	1	líachu	líach	adj	*
+kaikki adj dative	1	brénaib	brén	adj	*
+kaikki adj feminine genitive singular	1	bréine	brén	adj	*
+kaikki adj masculine plural vocative	1	dergu	derg	adj	*
+kaikki adj masculine plural vocative	1	berachu	berach	adj	*
+kaikki adj dative	1	tanaib	tanae	adj	*
+kaikki adj feminine neuter nominative singular	1	oaca	oac	adj	*
+kaikki adj dative	1	berachaib	berach	adj	*
+kaikki adj masculine plural vocative	1	engachu	engach	adj	*
+kaikki v active present singular subjunctive third-person	1	do·inscanna	doinscanna	v	*
+kaikki v passive plural preterite	1	con·oscaigter	conoscaigi	v	*
+kaikki v active indicative present singular third-person	1	im·imgaib	immimgaib	v	*
+kaikki v indicative passive present singular	1	fo·cerdar	foceird	v	*
+kaikki v active future singular third-person	1	ad·orfa	adora	v	*
+kaikki v active indicative plural present second-person	1	·slánaigid	slánaigidir	v	*
+kaikki v indicative passive plural present	1	·cartar	caraid	v	*
+kaikki v active indicative plural present third-person	1	fo·sisetar	fosisedar	v	*
+kaikki v active indicative plural present	1	ad·gainemmar	adgainethar	v	*
+kaikki v active indicative plural present third-person	1	·fedat	feidid	v	*
+kaikki v active first-person indicative plural present	1	·scríbam	scríbaid	v	*
+kaikki v active indicative present singular third-person	1	·foí	foid	v	*
+kaikki v active preterite singular third-person	1	·sáid	sáidid	v	*
+kaikki v active indicative present singular	1	do·gníu	dogní	v	*
+kaikki v active preterite singular third-person	1	·fúach	fúachaid	v	*
+kaikki v indicative passive present singular	1	·scrútar	scrútaid	v	*
+kaikki v active indicative present singular third-person	1	do·fúarat	dofúarat	v	*
+kaikki v future passive singular	1	·bérthar	beirid	v	*
+kaikki v active indicative present singular third-person	1	saiges	saigid	v	*
+kaikki v active indicative plural present second-person	1	·guidid	guidid	v	*
+kaikki v active perfect singular third-person	1	ro·mill	millid	v	*
+kaikki v active preterite second-person singular	1	·crothais	crothaid	v	*
+kaikki v active indicative present singular	1	ro·iccu	roicc	v	*
+kaikki v indicative passive present singular	1	con·gairther	congair	v	*
+kaikki v active indicative present singular third-person	1	for·tét	fortét	v	*
+kaikki v active plural third-person	1	ar·mbertis	arbeir	v	*
+kaikki v active future second-person singular	1	·dáilfe	dáilid	v	*
+kaikki v passive perfect singular	1	ro·dáiled	dáilid	v	*
+kaikki v active plural present subjunctive	1	du·áircem	doáirci	v	*
+kaikki v active past plural subjunctive third-person	1	do·bidctis	dobidci	v	*
+kaikki v active plural preterite third-person	1	con·ocabsat	conocaib	v	*
+kaikki v active indicative present singular third-person	1	imm·dích	immdích	v	*
+kaikki v active singular third-person	1	·mescad	mescaid	v	*
+kaikki v active indicative present singular third-person	1	loingis	loingid	v	*
+kaikki v indicative passive plural present	1	fo·cerdatar	foceird	v	*
+kaikki v active plural third-person	1	·bendachtais	bennachaid	v	*
+kaikki v active indicative present singular third-person	1	cota·mmidethar	conmidethar	v	*
+kaikki v first-person plural	1	·tó	attá	v	*
+kaikki v active preterite second-person singular	1	·scríbais	scríbaid	v	*
+kaikki v active perfect plural third-person	1	ro·bennachsat	bennachaid	v	*
+kaikki v active indicative plural present third-person	1	at·ndaimet	addaim	v	*
+kaikki v active indicative plural present third-person	1	léicte	léicid	v	*
+kaikki v active present singular subjunctive third-person	1	ar·cessea	arcessi	v	*
+kaikki v active indicative present singular third-person	1	do·cing	docing	v	*
+kaikki v active indicative present singular third-person	1	ad·gainethar	adgainethar	v	*
+kaikki v active imperative singular	1	dum·em	doeim	v	*
+kaikki v active preterite singular third-person	1	do·mais	domaisi	v	*
+kaikki v active preterite singular third-person	1	do·léic	doléici	v	*
+kaikki v masculine negative preterite singular third-person	1	nís·mboí	attá	v	*
+kaikki v active first-person past singular subjunctive	1	·berainn	beirid	v	*
+kaikki v active singular third-person	1	·dordad	dordaid	v	*
+kaikki v active preterite singular third-person	1	coilles	coillid	v	*
+kaikki v future plural third-person	1	bieid	attá	v	*
+kaikki v active first-person indicative plural present	1	gairmi	gairid	v	*
+kaikki v active singular third-person	1	·berrad	berraid	v	*
+kaikki v active conditional singular third-person	1	·creitfed	creitid	v	*
+kaikki v active indicative present singular third-person	1	at·reig	atreig	v	*
+kaikki v indicative passive present singular	1	renair	renaid	v	*
+kaikki v active first-person preterite singular	1	·scríbus	scríbaid	v	*
+kaikki v active future plural third-person	1	·creitfet	creitid	v	*
+kaikki v active preterite singular third-person	1	do·lléic	doléici	v	*
+kaikki v active preterite singular third-person	1	crochais	crochaid	v	*
+kaikki v active preterite second-person singular	1	léicsi	léicid	v	*
+kaikki v indicative passive present singular	1	·gelar	gelid	v	*
+kaikki v active perfect plural third-person	1	do·rochoínset	dorochoíni	v	*
+kaikki v active indicative present singular third-person	1	do·seinn	doseinn	v	*
+kaikki v active indicative present singular third-person	1	do·áirci	doáirci	v	*
+kaikki v active perfect singular third-person	1	ro·dáil	dáilid	v	*
+kaikki v conjunct	1	·gní	gníid	v	*
+kaikki v indicative passive present singular	1	do·gairther	dogair	v	*
+kaikki v active indicative plural present third-person	1	trebait	trebaid	v	*
+kaikki v active indicative present singular third-person	1	claides	claidid	v	*
+kaikki v active plural second-person	1	·léicthe	léicid	v	*
+kaikki v conjunct	1	·claid	claidid	v	*
+kaikki v active indicative present singular third-person	1	do·tét	dotét	v	*
+kaikki v active indicative plural present third-person	1	imme·ruimdetar	immruimdethar	v	*
+kaikki v active first-person plural present subjunctive	1	·rannam	rannaid	v	*
+kaikki v active perfect singular third-person	1	ro·glúais	glúaisid	v	*
+kaikki v active indicative plural present third-person	1	denait	denaid	v	*
+kaikki v active indicative present singular third-person	1	pridchas	pridchaid	v	*
+kaikki v active first-person singular	1	·trebaind	trebaid	v	*
+kaikki v active perfect plural second-person	1	ro·creitsid	creitid	v	*
+kaikki v active indicative present singular third-person	1	ar·beir	arbeir	v	*
+kaikki v active indicative present singular third-person	1	im·beir	immbeir	v	*
+kaikki v active future plural third-person	1	·léicfet	léicid	v	*
+kaikki v dative masculine singular	1	cetiu	cete	v	*
+kaikki v active present singular subjunctive	1	im·folngae	imfolngai	v	*
+kaikki v active indicative present singular	1	ad·cí	adcí	v	*
+kaikki v active indicative present singular	1	ad·gair	adgair	v	*
+kaikki v active indicative present singular third-person	1	ass·indet	asindet	v	*
+kaikki v indicative passive present singular	1	·scríbthar	scríbaid	v	*
+kaikki v plural present subjunctive third-person	1	·bet	attá	v	*
+kaikki v active perfect singular third-person	1	ro·berr	berraid	v	*
+kaikki v active singular third-person	1	·scrútad	scrútaid	v	*
+kaikki v active first-person past singular subjunctive	1	buidigthi	buidigid	v	*
+kaikki v indicative passive present singular	1	do·emar	doeim	v	*
+kaikki v indicative passive present singular	1	agair	aigid	v	*
+kaikki v active indicative present singular third-person	1	do·guid	doguid	v	*
+kaikki v active indicative present singular third-person	1	du·adbat	doadbat	v	*
+kaikki v active indicative present singular third-person	1	fris·gair	frisgair	v	*
+kaikki v active first-person indicative present singular	1	·guidiu	guidid	v	*
+kaikki v active preterite singular third-person	1	·mill	millid	v	*
+kaikki v indicative passive present singular	1	·carthar	caraid	v	*
+kaikki v indicative passive plural present	1	as·indetar	asindet	v	*
+kaikki v active indicative plural present second-person	1	·mescaid	mescaid	v	*
+kaikki v active indicative plural present second-person	1	gairthe	gairid	v	*
+kaikki v active indicative present relative singular third-person	1	imme·chomairc	immcomairc	v	*
+kaikki v active indicative present singular third-person	1	loscas	loscaid	v	*
+kaikki v active singular third-person	1	·milled	millid	v	*
+kaikki v active first-person indicative plural present	1	fedme	feidid	v	*
+kaikki v active first-person indicative present singular	1	saillim	saillid	v	*
+kaikki v active first-person singular	1	·scarinn	scaraid	v	*
+kaikki n mutation	1	ngairr	gairr	n	*
+kaikki n lenition mutation	1	ḟíadnisse	fíadnisse	n	*
+kaikki v lenition mutation	1	ro·ḟoilsigthea	rofoilsigthea	v	*
+kaikki v mutation	1	n-eiplet	eiplet	v	*
+kaikki v mutation	1	ngláedid	gláedid	v	*
+kaikki v mutation	1	mbéra	béra	v	*
+kaikki v lenition mutation	1	ṡoírad	soírad	v	*
+kaikki n mutation	1	mbúaidre	búaidre	n	*
+kaikki n lenition mutation	1	ḟannall	fannall	n	*
+kaikki v mutation mutation-radical	1	con·nessa	connessa	v	*
+kaikki v mutation	1	do·n-aurchain	doaurchain	v	*
+kaikki v mutation	1	con·n-oathar	conoathar	v	*
+kaikki n mutation	1	n-accuiss	accuiss	n	*
+kaikki n mutation	1	ngagar	gagar	n	*
+kaikki v lenition mutation	1	ad·chiam	adciam	v	*
+kaikki v mutation mutation-radical	1	ro·gab	rogab	v	*
+kaikki v mutation mutation-radical	1	do·lá	dolá	v	*
+kaikki n lenition mutation	1	ṡlébe	slébe	n	*
+kaikki v mutation	1	mbrissed	brissed	v	*
+kaikki v mutation mutation-radical	1	as·berat	asberat	v	*
+kaikki n lenition mutation	1	ḟoigde	foigde	n	*
+kaikki n mutation	1	n-aisil	aisil	n	*
+kaikki n lenition mutation	1	ḟíadu	fíadu	n	*
+kaikki v mutation	1	do·n-aidlea	doaidlea	v	*
+kaikki n lenition mutation	1	chía	cía	n	*
+kaikki n mutation	1	ndú	dú	n	*
+kaikki n lenition mutation	1	chlaidbiu	claidbiu	n	*
+kaikki n mutation	1	n-ernigde	ernigde	n	*
+kaikki n mutation	1	n-aurrae	aurrae	n	*
+kaikki n lenition mutation	1	ṡaith	saith	n	*
+kaikki n mutation	1	n-orcun	orcun	n	*
+kaikki n lenition mutation	1	chlúas	clúas	n	*
+kaikki n mutation	1	n-ech	ech	n	*
+kaikki n mutation	1	ndílgend	dílgend	n	*
+kaikki n mutation	1	ndath	dath	n	*
+kaikki v mutation	1	do·n-áirci	doáirci	v	*
+kaikki n mutation	1	n-indarbu	indarbu	n	*
+kaikki v lenition mutation	1	ṡeichem	seichem	v	*
+kaikki v lenition mutation	1	ṡnig	snig	v	*
+kaikki n mutation	1	ndamdabchaib	damdabchaib	n	*
+kaikki adj lenition mutation	1	ṡír	sír	adj	*
+kaikki v lenition mutation	1	for·chain	forcain	v	*
+kaikki v mutation	1	as·mbeirinn	asbeirinn	v	*
+kaikki n lenition mutation	1	chathach	cathach	n	*
+kaikki adj lenition mutation	1	ṡulbair	sulbair	adj	*
+kaikki n lenition mutation	1	ḟuine	fuine	n	*
+kaikki n mutation	1	mbréthre	bréthre	n	*
+kaikki v mutation	1	ndét	dét	v	*
+kaikki adj lenition mutation	1	chnoccach	cnoccach	adj	*
+kaikki n mutation	1	ndíllat	díllat	n	*
+kaikki n mutation	1	n-anmman	anmman	n	*
+kaikki v mutation mutation-radical	1	do·béra	dobéra	v	*
+kaikki v lenition mutation	1	thabarthi	tabarthi	v	*
+kaikki v mutation mutation-radical	1	do·gníat	dogníat	v	*
+kaikki v mutation	1	do·n-adbat	doadbat	v	*
+kaikki adj lenition mutation	1	chuimbre	cuimbre	adj	*
+kaikki n lenition mutation	1	chríth	críth	n	*
+kaikki n lenition mutation	1	ṡochaide	sochaide	n	*
+kaikki n mutation	1	n-aín	aín	n	*
+kaikki v mutation mutation-radical	1	do·rat	dorat	v	*
+kaikki adj lenition mutation	1	thrúag	trúag	adj	*
+kaikki n lenition mutation	1	thlacht	tlacht	n	*
+kaikki v lenition mutation	1	chreitfess	creitfess	v	*
+kaikki n lenition mutation	1	phrecept	precept	n	*
+kaikki n mutation	1	n-arrad	arrad	n	*
+kaikki n lenition mutation	1	chorcur	corcur	n	*
+kaikki n lenition mutation	1	chin	cin	n	*
+kaikki n lenition mutation	1	ṡenod	senod	n	*
+kaikki n mutation	1	n-orbbae	orbbae	n	*
+kaikki n mutation	1	ndeorudán	deorudán	n	*
+kaikki n lenition mutation	1	thothaimm	tothaimm	n	*
+kaikki n mutation	1	n-úall	úall	n	*
+kaikki n mutation	1	n-imram	imram	n	*
+kaikki v mutation	1	ngébtit	gébtit	v	*
+kaikki n lenition mutation	1	thúailnge	túailnge	n	*
+kaikki n mutation	1	nditin	ditin	n	*
+kaikki n lenition mutation	1	chuimrech	cuimrech	n	*
+kaikki n lenition mutation	1	thuistiu	tuistiu	n	*
+kaikki n mutation	1	ndaltus	daltus	n	*
+kaikki v lenition mutation	1	ad·chotad	adcotad	v	*
+kaikki v lenition mutation	1	thuilid	tuilid	v	*
+kaikki n mutation	1	mbeothu	beothu	n	*
+kaikki n mutation	1	n-océn	océn	n	*
+kaikki v mutation	1	nguidid	guidid	v	*
+kaikki adj mutation	1	ngáetha	gáetha	adj	*
+kaikki adj mutation	1	n-aicher	aicher	adj	*
+kaikki n mutation	1	n-áigthiu	áigthiu	n	*
+kaikki v mutation mutation-radical	1	do·ecmaic	doecmaic	v	*
+kaikki v lenition mutation	1	chreitim	creitim	v	*
+kaikki adj lenition mutation	1	chotarsnaib	cotarsnaib	adj	*
+kaikki n lenition mutation	1	ṡíde	síde	n	*
+kaikki n mutation	1	n-intinn	intinn	n	*
+kaikki v mutation	1	ro·ngénair	rogénair	v	*
+kaikki n mutation	1	ndig	dig	n	*
+kaikki v mutation	1	ngeiss	geiss	v	*
+kaikki n lenition mutation	1	ṡáer	sáer	n	*
+kaikki n mutation	1	n-epaid	epaid	n	*
+kaikki n mutation	1	n-ága	ága	n	*
+kaikki n lenition mutation	1	chuir	cuir	n	*
+kaikki n lenition mutation	1	ṡlóig	slóig	n	*
+kaikki v lenition mutation	1	thectid	tectid	v	*
+kaikki n mutation	1	n-imbed	imbed	n	*
+kaikki v lenition mutation	1	ṡaidid	saidid	v	*
+kaikki n mutation	1	n-accubur	accubur	n	*
+kaikki v mutation mutation-radical	1	do·rata	dorata	v	*
+kaikki v mutation	1	do·n-imthiret	doimthiret	v	*
+kaikki n lenition mutation	1	thengae	tengae	n	*
+kaikki n lenition mutation	1	phén	pén	n	*
+kaikki n lenition mutation	1	ṡlondad	slondad	n	*
+kaikki n mutation	1	n-umae	umae	n	*
+kaikki v mutation	1	do·n-airngir	doairngir	v	*
+kaikki n lenition mutation	1	theöir	teoir	n	*
+kaikki n mutation	1	n-aille	aille	n	*
+kaikki v mutation mutation-radical	1	ro·cúala	rocúala	v	*
+kaikki n mutation	1	n-ón	ón	n	*
+kaikki v mutation mutation-radical	1	ar·osailci	arosailci	v	*
+kaikki v mutation	1	mbeithe	beithe	v	*
+kaikki v mutation	1	fo·n-ammámaigedar	foammámaigedar	v	*
+kaikki n mutation	1	n-impuide	impuide	n	*
+kaikki v lenition mutation	1	ad·chosnat	adcosnat	v	*
+kaikki v mutation	1	for·mben	forben	v	*
+kaikki adj mutation	1	n-apaig	apaig	adj	*
+kaikki n lenition mutation	1	thúarasndal	túarasndal	n	*
+kaikki v lenition mutation	1	thuit	tuit	v	*
+kaikki v mutation mutation-radical	1	ar·tróetha	artróetha	v	*
+kaikki n mutation	1	mbríg	bríg	n	*
+kaikki v lenition mutation	1	chluichigedar	cluichigedar	v	*
+kaikki n lenition mutation	1	thóeb	tóeb	n	*
+kaikki n lenition mutation	1	thrógai	trógai	n	*
+kaikki n lenition mutation	1	chlaidiub	claidiub	n	*
+kaikki n lenition mutation	1	chrott	crott	n	*
+kaikki adj lenition mutation	1	ṡúaignid	súaignid	adj	*
+kaikki n lenition mutation	1	ḟoísitiu	foísitiu	n	*
+kaikki n mutation	1	nduálaig	duálaig	n	*
+kaikki v mutation mutation-radical	1	ad·áigther	adáigther	v	*
+kaikki v mutation	1	n-agair	agair	v	*
+kaikki adj mutation	1	n-ítmar	ítmar	adj	*
+kaikki v lenition mutation	1	ro·phridchissem	ropridchissem	v	*
+kaikki n lenition	1	bhoicht	boicht	n	*
+kaikki n lenition mutation	1	ḟeb	feb	n	*
+kaikki v mutation	1	con·mboing	conboing	v	*
+kaikki n mutation	1	n-áth	áth	n	*
+kaikki n mutation	1	n-aiccend	aiccend	n	*
+kaikki n mutation	1	n-indarbae	indarbae	n	*
+kaikki n mutation	1	n-anál	anál	n	*
+kaikki v mutation mutation-radical	1	fo·muinethar	fomuinethar	v	*
+kaikki v lenition mutation	1	ṡluindid	sluindid	v	*
+kaikki v mutation mutation-radical	1	ro·noíbad	ronoíbad	v	*
+kaikki n mutation	1	n-enech	enech	n	*
+kaikki v mutation	1	n-uilemarbaid	uilemarbaid	v	*
+kaikki v mutation	1	imm·n-airicc	immairicc	v	*
+kaikki adj mutation	1	ndaille	daille	adj	*
+kaikki v mutation	1	do·n-aidbir	doaidbir	v	*
+kaikki n mutation	1	mbreth	breth	n	*
+kaikki adj mutation	1	ndéniu	déniu	adj	*
+kaikki n lenition mutation	1	chír	cír	n	*
+kaikki n mutation	1	n-epscop	epscop	n	*
+kaikki adj mutation	1	n-ísle	ísle	adj	*
+kaikki n lenition mutation	1	ḟercæ	fercæ	n	*
+kaikki n mutation	1	ndairt	dairt	n	*
+kaikki n lenition mutation	1	phecthu	pecthu	n	*
+kaikki n mutation	1	n-anmin	anmin	n	*
+kaikki n lenition mutation	1	ḟritecht	fritecht	n	*
+kaikki v lenition mutation	1	phridcha	pridcha	v	*
+kaikki adj mutation	1	nglé	glé	adj	*
+kaikki v mutation	1	ad·n-ágain	adágain	v	*
+kaikki v mutation mutation-radical	1	ad·tluchedar	adtluchedar	v	*
+kaikki n lenition mutation	1	ṡaír	saír	n	*
+kaikki n lenition mutation	1	ṡrath	srath	n	*
+kaikki v lenition mutation	1	ṡáidid	sáidid	v	*
+kaikki v lenition mutation	1	charae	carae	v	*
+kaikki v mutation	1	ndéne	déne	v	*
+kaikki v mutation	1	mbeoigidir	beoigidir	v	*
+kaikki n mutation	1	ndíummus	díummus	n	*
+kaikki v mutation mutation-radical	1	con·ocaib	conocaib	v	*
+kaikki n mutation	1	ndorus	dorus	n	*
+kaikki n mutation	1	n-adchumtuch	adchumtuch	n	*
+kaikki n mutation	1	n-estósc	estósc	n	*
+kaikki n lenition mutation	1	ṡaille	saille	n	*
+kaikki adj lenition mutation	1	choitchen	coitchen	adj	*
+kaikki v mutation mutation-radical	1	in·snaid	insnaid	v	*
+kaikki n mutation	1	ngébend	gébend	n	*
+kaikki adj mutation	1	n-airdairc	airdairc	adj	*
+kaikki n mutation	1	ndardaín	dardaín	n	*
+kaikki v lenition mutation	1	imm·chomairc	immcomairc	v	*
+kaikki n mutation	1	n-és	és	n	*
+kaikki n lenition mutation	1	chlaideb	claideb	n	*
+kaikki n mutation	1	n-indmat	indmat	n	*
+kaikki n mutation	1	ndaltae	daltae	n	*
+kaikki n mutation	1	n-ilar	ilar	n	*
+kaikki v mutation	1	do·mbidci	dobidci	v	*
+kaikki v mutation mutation-radical	1	ad·cobraim	adcobraim	v	*
+kaikki v mutation mutation-radical	1	ro·lil	rolil	v	*
+kaikki v mutation mutation-radical	1	imm·tét	immtét	v	*
+kaikki v mutation	1	do·n-ecmaic	doecmaic	v	*
+kaikki n mutation	1	ndílgud	dílgud	n	*
+kaikki v lenition mutation	1	chéste	céste	v	*
+kaikki v lenition mutation	1	chomtacht	comtacht	v	*
+kaikki n mutation	1	n-escarae	escarae	n	*
+kaikki v mutation	1	mbeu	beu	v	*
+kaikki v mutation	1	ad·ngair	adgair	v	*
+kaikki n mutation	1	mbeuch	beuch	n	*
+kaikki adj mutation	1	ndallu	dallu	adj	*
+kaikki v lenition mutation	1	fo·chicher	focicher	v	*
+kaikki v mutation mutation-radical	1	do·berthar	doberthar	v	*
+kaikki v lenition mutation	1	ad·chosnainn	adcosnainn	v	*
+kaikki n mutation	1	n-amairis	amairis	n	*
+kaikki n mutation	1	mbiáil	biáil	n	*
+kaikki n mutation	1	n-articol	articol	n	*
+kaikki n lenition mutation	1	chomaltae	comaltae	n	*
+kaikki v mutation mutation-radical	1	im·folngi	imfolngi	v	*
+kaikki adj lenition mutation	1	chétnae	cétnae	adj	*
+kaikki v mutation	1	mbie	bie	v	*
+kaikki v mutation	1	mbeirthe	beirthe	v	*
+kaikki n mutation	1	n-áirge	áirge	n	*
+kaikki n lenition mutation	1	chotlud	cotlud	n	*
+kaikki n mutation	1	n-adastor	adastor	n	*
+kaikki v mutation	1	do·mbéra	dobéra	v	*
+kaikki n lenition mutation	1	ḟogamar	fogamar	n	*
+kaikki adj lenition mutation	1	ḟliuchaide	fliuchaide	adj	*
+kaikki v mutation mutation-radical	1	do·etarrat	doetarrat	v	*
+kaikki n lenition mutation	1	charcair	carcair	n	*
+kaikki adj mutation	1	ndiafana	diafana	adj	*
+kaikki v lenition mutation	1	do·ḟoirndea	dofoirndea	v	*
+kaikki n lenition mutation	1	ṡaíthir	saíthir	n	*
+unimorph V;FIN;SBJV;PST;3;PL	1	betis	is	v	*
+unimorph V;FIN;IND;PRS;CONJ;1;PL	1	guidem	guidid	v	*
+unimorph V;FIN;SBJV;PST;3;SG	1	bad	is	v	*
+unimorph V;FIN;SBJV;PST;3;SG;REL	1	bed	is	v	*
+unimorph V;FIN;IND;PRS;3;PL	1	it	is	v	*
+unimorph V;FIN;SBJV;PST;3;SG	1	bith	is	v	*
+unimorph V;FIN;SBJV;PRS;3;SG	1	bas	is	v	*
+unimorph V;FIN;IND;PST;PFV;CONJ;PASS;SG	1	pridchad	pridchaid	v	*
+unimorph V;FIN;SBJV;PST;3;SG	1	bid	is	v	*
+unimorph V;FIN;FUT;3;PL	1	bit	is	v	*
+unimorph V;FIN;IND;PRS;CONJ;2;SG	1	daimi	daimid	v	*
+unimorph V;FIN;IND;PRS;CONJ;1;SG	1	daimim	daimid	v	*
+unimorph V;FIN;IND;PRS;CONJ;1;PL	1	daimem	daimid	v	*
+unimorph V;FIN;IND;PRS;3;PL;REL	1	ata	is	v	*

@@ -1,0 +1,72 @@
+# Every rule of Yomitan's Old Irish transforms (sources/yomitan.json, from ext/js/language/sga/old-irish-transforms.js at d3c54c1) and what the final transforms.json does with it; written by sources/build-final.mjs.
+# transform	rule	type	inflected	deinflected	in the final set
+nd for nn	0	suffix	nd	nn	kept
+cg for c	0	replace	cg	c	kept
+td for t	0	replace	td	t	kept
+pb for p	0	replace	pb	p	kept
+ǽ/æ for é	0	replace	ǽ	é	left out (measured harm)
+ǽ/æ for é	1	replace	æ	é	left out (measured harm)
+doubled vowel	0	replace	aa	á	kept
+doubled vowel	1	replace	ee	é	kept
+doubled vowel	2	replace	ii	í	kept
+doubled vowel	3	replace	oo	ó	kept
+doubled vowel	4	replace	uu	ú	kept
+doubled consonant	0	replace	cc	c	kept
+doubled consonant	1	replace	pp	p	kept
+doubled consonant	2	replace	tt	t	kept
+doubled consonant	3	replace	gg	g	kept
+doubled consonant	4	replace	bb	b	kept
+doubled consonant	5	replace	dd	d	kept
+doubled consonant	6	replace	rr	r	kept
+doubled consonant	7	replace	ll	l	kept
+doubled consonant	8	replace	nn	n	kept
+doubled consonant	9	replace	mm	m	kept
+doubled consonant	10	replace	ss	s	kept
+lenited	0	replace	ch	c	left out (measured harm)
+lenited	1	replace	ph	p	left out (measured harm)
+lenited	2	replace	th	t	left out (measured harm)
+lenited (Middle Irish)	0	replace	gh	g	kept
+lenited (Middle Irish)	1	replace	bh	b	kept
+lenited (Middle Irish)	2	replace	dh	d	kept
+[IM] nasalized	0	prefix	ng	g	made by own nasalization[6]
+[IM] nasalized	1	prefix	mb	b	made by own nasalization[2]
+[IM] nasalized	2	prefix	nd	d	made by own nasalization[5]
+[IM] nasalized	3	prefix	n-		made by own nasalization[0]
+[IM] nasalized	4	prefix	m-		kept
+[IM] nasalized (Middle Irish)	0	prefix	gc	c	kept
+[IM] nasalized (Middle Irish)	1	prefix	bp	p	kept
+[IM] nasalized (Middle Irish)	2	prefix	dt	d	left out: dt → d reads eclipsed t as d (dtech → dech, a headword "best"); eclipsed t is t
+[IM] lenited	0	prefix	ch	c	made by own lenition[0]
+[IM] lenited	1	prefix	ph	p	made by own lenition[2]
+[IM] lenited	2	prefix	th	t	made by own lenition[1]
+[IM] lenited (Middle Irish)	0	prefix	gh	g	kept
+[IM] lenited (Middle Irish)	1	prefix	bh	b	kept
+[IM] lenited (Middle Irish)	2	prefix	dh	d	kept
+[IM] aspirated	0	prefix	ha	a	made by own hProthesis[1]
+[IM] aspirated	1	prefix	he	e	made by own hProthesis[1]
+[IM] aspirated	2	prefix	hi	i	made by own hProthesis[1]
+[IM] aspirated	3	prefix	ho	o	made by own hProthesis[1]
+[IM] aspirated	4	prefix	hu	u	made by own hProthesis[1]
+[IM] aspirated	5	prefix	h-		made by own hProthesis[0]
+[IM] geminated	0	prefix	cc	c	kept
+[IM] geminated	1	prefix	pp	p	kept
+[IM] geminated	2	prefix	tt	t	kept
+[IM] geminated	3	prefix	gg	g	kept
+[IM] geminated	4	prefix	bb	b	kept
+[IM] geminated	5	prefix	dd	d	kept
+[IM] geminated	6	prefix	rr	r	made by own nasalization[10]
+[IM] geminated	7	prefix	ll	l	made by own nasalization[7]
+[IM] geminated	8	prefix	nn	n	made by own nasalization[9]
+[IM] geminated	9	prefix	mm	m	made by own nasalization[8]
+[IM] geminated	10	prefix	ss	s	kept
+[IM] geminated	11	prefix	c-c	c	kept
+[IM] geminated	12	prefix	p-p	p	kept
+[IM] geminated	13	prefix	t-t	t	kept
+[IM] geminated	14	prefix	g-g	g	kept
+[IM] geminated	15	prefix	b-b	b	kept
+[IM] geminated	16	prefix	d-d	d	kept
+[IM] geminated	17	prefix	r-r	r	kept
+[IM] geminated	18	prefix	l-l	l	kept
+[IM] geminated	19	prefix	n-n	n	kept
+[IM] geminated	20	prefix	m-m	m	kept
+[IM] geminated	21	prefix	s-s	s	kept
