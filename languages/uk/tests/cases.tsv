@@ -537,143 +537,143 @@ negatives	0	ґ	ґо	*	*
 negatives	0	ґр	ґра	*	*
 negatives	0	см	сма	*	*
 # Negatives that fail when a stem constraint of the own rules is deleted (sources/mutate.py, docs/languages.md 14 step 7).
-constraint	0	та	то	*	*
-constraint	0	пса	псе	*	*
-constraint	0	ні	на	*	*
-constraint	0	не руці	не рука	*	*
-constraint	0	хаті	ха	*	*
-constraint	0	ну	на	*	*
-constraint	0	жнем	ждень	*	*
-constraint	0	не шею	не ша	*	*
-constraint	0	нею	на	*	*
-constraint	0	не	н	*	*
-constraint	0	две	два	*	*
-constraint	0	їж	їжжя	*	*
-constraint	0	грам	гор	*	*
-constraint	0	не рукам	не рука	*	*
-constraint	0	вам	ве	*	*
-constraint	0	ями	я	*	*
-constraint	0	на бетами	на бет	*	*
-constraint	0	нами	не	*	*
-constraint	0	злах	зел	*	*
-constraint	0	не бегах	не бег	*	*
-constraint	0	дах	де	*	*
-constraint	0	лі	ля	*	*
-constraint	0	не сні	не снь	*	*
-constraint	0	цю	ця	*	*
-constraint	0	ям	я	*	*
-constraint	0	на шалям	на шаля	*	*
-constraint	0	та	т	*	*
-constraint	0	чия	чи	*	*
-constraint	0	ну	н	*	*
-constraint	0	ні	н	*	*
-constraint	0	рі	р	*	*
-constraint	0	не сні	не сень	*	*
-constraint	0	чи	чо	*	*
-constraint	0	зои	зо	*	*
-constraint	0	єю	єй	*	*
-constraint	0	не шею	не шей	*	*
-constraint	0	бою	бо	*	*
-constraint	0	мені	м'я	*	*
-constraint	0	на утробою	на утробій	*	*
-constraint	0	ну	но	*	*
-constraint	0	цю	це	*	*
-constraint	0	не нашу	не наше	*	*
-constraint	0	всю	все	*	*
-constraint	0	че	чий	*	*
-constraint	0	ві	вий	*	*
-constraint	0	не сні	не сний	*	*
-constraint	0	не спокої	не спокий	*	*
-constraint	0	на всякому	на всякий	*	*
-constraint	0	не бій	не бий	*	*
-constraint	0	не им	не ий	*	*
-constraint	0	ку	кий	*	*
-constraint	0	палю	палій	*	*
-constraint	0	на ліґою	на ліґий	*	*
-constraint	0	не крім	не крий	*	*
-constraint	0	не якими	не який	*	*
-constraint	0	на амбітнім	на амбітній	*	*
-constraint	0	боюсь	битися	*	*
-constraint	0	на вчусь	на вчийсь	*	*
-constraint	0	повім	пів	*	*
-constraint	0	не слову	не слів	*	*
-constraint	0	на дряхліший	на дряхлий	*	*
-constraint	0	найбагатіший	багатій	*	*
-constraint	0	не лорен	не лорений	*	*
-constraint	0	яти	ять	*	*
-constraint	0	не дозволяти	не дозволять	*	*
-constraint	0	вужчу	вужчати	*	*
-constraint	0	на п'єш	на пити	*	*
-constraint	0	живеш	живати	*	*
-constraint	0	ніде	ніти	*	*
-constraint	0	живе	живати	*	*
-constraint	0	не им	не ити	*	*
-constraint	0	живем	живати	*	*
-constraint	0	щите	щати	*	*
-constraint	0	не спите	не спати	*	*
-constraint	0	живете	живати	*	*
-constraint	0	чуть	тати	*	*
-constraint	0	не чуть	не кати	*	*
-constraint	0	живуть	живати	*	*
-constraint	0	на хтітиму	на хтіти	*	*
-constraint	0	на житимеш	на жити	*	*
-constraint	0	на їбтиме	на їбти	*	*
-constraint	0	на ритимемо	на рити	*	*
-constraint	0	на акатимете	на акати	*	*
-constraint	0	на включатимуть	на включати	*	*
-constraint	0	г	гнути	*	*
-constraint	0	зв	зти	*	*
-constraint	0	на кула	на кусти	*	*
-constraint	0	намокла	намікти	*	*
-constraint	0	гнулося	гтися	*	*
-constraint	0	не скло	не скнути	*	*
-constraint	0	тяглось	тягстися	*	*
-constraint	0	злись	знутися	*	*
-constraint	0	злись	зстися	*	*
-constraint	0	діди	діти	*	*
-constraint	0	брь	брити	*	*
-constraint	0	дім	діти	*	*
-constraint	0	слідімо	сліти	*	*
-constraint	0	живім	живати	*	*
-constraint	0	важчім	важчати	*	*
-constraint	0	на корте	на корити	*	*
-constraint	0	живіте	живати	*	*
-constraint	0	на кишачи	на кишити	*	*
-constraint	0	маючи	мавати	*	*
-constraint	0	на каравши	на карасти	*	*
-constraint	0	жену	жити	*	*
-constraint	0	не язнений	не язнити	*	*
-constraint	0	стену	ссти	*	*
-constraint	0	не злий	не знути	*	*
-constraint	0	милі	минути	*	*
-constraint	0	не вбито	не вбити	*	*
-constraint	0	суждено	сужсти	*	*
-constraint	0	не сеть	не сети	*	*
-constraint	0	месть	мести	*	*
+stem	0	та	то	*	*
+stem	0	пса	псе	*	*
+stem	0	ні	на	*	*
+stem	0	не руці	не рука	*	*
+stem	0	хаті	ха	*	*
+stem	0	ну	на	*	*
+stem	0	жнем	ждень	*	*
+stem	0	не шею	не ша	*	*
+stem	0	нею	на	*	*
+stem	0	не	н	*	*
+stem	0	две	два	*	*
+stem	0	їж	їжжя	*	*
+stem	0	грам	гор	*	*
+stem	0	не рукам	не рука	*	*
+stem	0	вам	ве	*	*
+stem	0	ями	я	*	*
+stem	0	на бетами	на бет	*	*
+stem	0	нами	не	*	*
+stem	0	злах	зел	*	*
+stem	0	не бегах	не бег	*	*
+stem	0	дах	де	*	*
+stem	0	лі	ля	*	*
+stem	0	не сні	не снь	*	*
+stem	0	цю	ця	*	*
+stem	0	ям	я	*	*
+stem	0	на шалям	на шаля	*	*
+stem	0	та	т	*	*
+stem	0	чия	чи	*	*
+stem	0	ну	н	*	*
+stem	0	ні	н	*	*
+stem	0	рі	р	*	*
+stem	0	не сні	не сень	*	*
+stem	0	чи	чо	*	*
+stem	0	зои	зо	*	*
+stem	0	єю	єй	*	*
+stem	0	не шею	не шей	*	*
+stem	0	бою	бо	*	*
+stem	0	мені	м'я	*	*
+stem	0	на утробою	на утробій	*	*
+stem	0	ну	но	*	*
+stem	0	цю	це	*	*
+stem	0	не нашу	не наше	*	*
+stem	0	всю	все	*	*
+stem	0	че	чий	*	*
+stem	0	ві	вий	*	*
+stem	0	не сні	не сний	*	*
+stem	0	не спокої	не спокий	*	*
+stem	0	на всякому	на всякий	*	*
+stem	0	не бій	не бий	*	*
+stem	0	не им	не ий	*	*
+stem	0	ку	кий	*	*
+stem	0	палю	палій	*	*
+stem	0	на ліґою	на ліґий	*	*
+stem	0	не крім	не крий	*	*
+stem	0	не якими	не який	*	*
+stem	0	на амбітнім	на амбітній	*	*
+stem	0	боюсь	битися	*	*
+stem	0	на вчусь	на вчийсь	*	*
+stem	0	повім	пів	*	*
+stem	0	не слову	не слів	*	*
+stem	0	на дряхліший	на дряхлий	*	*
+stem	0	найбагатіший	багатій	*	*
+stem	0	не лорен	не лорений	*	*
+stem	0	яти	ять	*	*
+stem	0	не дозволяти	не дозволять	*	*
+stem	0	вужчу	вужчати	*	*
+stem	0	на п'єш	на пити	*	*
+stem	0	живеш	живати	*	*
+stem	0	ніде	ніти	*	*
+stem	0	живе	живати	*	*
+stem	0	не им	не ити	*	*
+stem	0	живем	живати	*	*
+stem	0	щите	щати	*	*
+stem	0	не спите	не спати	*	*
+stem	0	живете	живати	*	*
+stem	0	чуть	тати	*	*
+stem	0	не чуть	не кати	*	*
+stem	0	живуть	живати	*	*
+stem	0	на хтітиму	на хтіти	*	*
+stem	0	на житимеш	на жити	*	*
+stem	0	на їбтиме	на їбти	*	*
+stem	0	на ритимемо	на рити	*	*
+stem	0	на акатимете	на акати	*	*
+stem	0	на включатимуть	на включати	*	*
+stem	0	г	гнути	*	*
+stem	0	зв	зти	*	*
+stem	0	на кула	на кусти	*	*
+stem	0	намокла	намікти	*	*
+stem	0	гнулося	гтися	*	*
+stem	0	не скло	не скнути	*	*
+stem	0	тяглось	тягстися	*	*
+stem	0	злись	знутися	*	*
+stem	0	злись	зстися	*	*
+stem	0	діди	діти	*	*
+stem	0	брь	брити	*	*
+stem	0	дім	діти	*	*
+stem	0	слідімо	сліти	*	*
+stem	0	живім	живати	*	*
+stem	0	важчім	важчати	*	*
+stem	0	на корте	на корити	*	*
+stem	0	живіте	живати	*	*
+stem	0	на кишачи	на кишити	*	*
+stem	0	маючи	мавати	*	*
+stem	0	на каравши	на карасти	*	*
+stem	0	жену	жити	*	*
+stem	0	не язнений	не язнити	*	*
+stem	0	стену	ссти	*	*
+stem	0	не злий	не знути	*	*
+stem	0	милі	минути	*	*
+stem	0	не вбито	не вбити	*	*
+stem	0	суждено	сужсти	*	*
+stem	0	не сеть	не сети	*	*
+stem	0	месть	мести	*	*
 # Mixed-script words (a Latin letter among Cyrillic ones) and Russian spellings: no rule reads them.
-constraint	0	oни	oна	*	*
-constraint	0	йoму	йoма	*	*
-constraint	0	tак	tака	*	*
-constraint	0	знaю	знaя	*	*
-constraint	0	мeня	мeнь	*	*
-constraint	0	oни	oн	*	*
-constraint	0	йoму	йoмо	*	*
-constraint	0	мeня	мeній	*	*
-constraint	0	мoже	мoжий	*	*
-constraint	0	нiчого	нiчий	*	*
-constraint	0	йoму	йoмий	*	*
-constraint	0	не этих	не этий	*	*
-constraint	0	еще	естий	*	*
-constraint	0	кpаще	кpасоко	*	*
-constraint	0	iз	iзнути	*	*
-constraint	0	кoли	кoти	*	*
-constraint	0	які	як	*	*
-constraint	0	член	члений	*	*
-constraint	0	найменше	мено	*	*
-constraint	0	живу	живати	*	*
-constraint	0	лиш	літи	*	*
-constraint	0	рено	рити	*	*
-constraint	0	лише	лио	*	*
+stem	0	oни	oна	*	*
+stem	0	йoму	йoма	*	*
+stem	0	tак	tака	*	*
+stem	0	знaю	знaя	*	*
+stem	0	мeня	мeнь	*	*
+stem	0	oни	oн	*	*
+stem	0	йoму	йoмо	*	*
+stem	0	мeня	мeній	*	*
+stem	0	мoже	мoжий	*	*
+stem	0	нiчого	нiчий	*	*
+stem	0	йoму	йoмий	*	*
+stem	0	не этих	не этий	*	*
+stem	0	еще	естий	*	*
+stem	0	кpаще	кpасоко	*	*
+stem	0	iз	iзнути	*	*
+stem	0	кoли	кoти	*	*
+stem	0	які	як	*	*
+stem	0	член	члений	*	*
+stem	0	найменше	мено	*	*
+stem	0	живу	живати	*	*
+stem	0	лиш	літи	*	*
+stem	0	рено	рити	*	*
+stem	0	лише	лио	*	*
 # Rows for the constraints a deletion left untested (sources/mutate.py --suggest): readings a deletion removes, and readings it adds.
 alternation	1	ковшеві	ківш	n	*
 alternation	1	льодові	лід	n	*
@@ -683,31 +683,31 @@ alternation	1	льодами	лід	n	*
 alternation	1	льодах	лід	n	*
 alternation	1	вертольота	вертоліт	n	*
 alternation	1	кольорові	колір	n	*
-constraint	0	пся	псій	n	*
-constraint	0	ллє	ллій	n	*
-constraint	0	всього	всій	n	*
-constraint	0	яої	яий	n	*
-constraint	0	більої	білій	n	*
-constraint	0	чому	чий	n	*
-constraint	0	усьому	усій	n	*
-constraint	0	вій	вий	n	*
-constraint	0	чим	чий	n	*
-constraint	0	бою	бий	n	*
-constraint	0	кім	кий	n	*
-constraint	0	них	ний	n	*
-constraint	0	всіх	всій	n	*
-constraint	0	ними	ний	n	*
-constraint	0	псіми	псій	n	*
-constraint	0	тім	тій	n	*
-constraint	0	крім	крій	n	*
-constraint	0	найще	сокий	*	*
-constraint	0	найна бший	на бгий	*	*
-constraint	0	найбше	бо	*	*
-constraint	0	найна бше	на бго	*	*
-constraint	0	глась	гнутися	*	*
-constraint	0	бте	бити	*	*
-constraint	0	дячи	діти	*	*
-constraint	0	гши	гнути	*	*
+stem	0	пся	псій	n	*
+stem	0	ллє	ллій	n	*
+stem	0	всього	всій	n	*
+stem	0	яої	яий	n	*
+stem	0	більої	білій	n	*
+stem	0	чому	чий	n	*
+stem	0	усьому	усій	n	*
+stem	0	вій	вий	n	*
+stem	0	чим	чий	n	*
+stem	0	бою	бий	n	*
+stem	0	кім	кий	n	*
+stem	0	них	ний	n	*
+stem	0	всіх	всій	n	*
+stem	0	ними	ний	n	*
+stem	0	псіми	псій	n	*
+stem	0	тім	тій	n	*
+stem	0	крім	крій	n	*
+stem	0	найще	сокий	*	*
+stem	0	найна бший	на бгий	*	*
+stem	0	найбше	бо	*	*
+stem	0	найна бше	на бго	*	*
+stem	0	глась	гнутися	*	*
+stem	0	бте	бити	*	*
+stem	0	дячи	діти	*	*
+stem	0	гши	гнути	*	*
 # Rows whose reasons name an own transform: they pass only while that own rule reaches the form, where a Yomitan rule
 # also reaches it (docs/languages.md 12.2), so deleting the own rule's stem change or constraint fails them.
 alternation	1	коте	кіт	n	noun.voc.sg
@@ -722,14 +722,14 @@ transform ids	1	нові	новий	adj	adj.pl
 transform ids	1	білі	біль	n	genitive
 soft consonants	1	місяцями	місяць	n	*
 soft consonants	1	мудрецям	мудрець	n	*
-constraint	0	шоу	шоа	*	noun.acc.sg
-constraint	0	шоу	шо	*	noun.gen.sg+dat.sg+loc.sg+voc.sg
-constraint	0	шоу	шоо	*	noun.dat.sg+loc.sg+voc.sg
-constraint	0	куцьою	куцій	*	adj.ins.f
-constraint	0	бвши	бти	*	v.advPst
-constraint	0	тиму	ти	*	v.fut1sg
-constraint	0	тимеш	ти	*	v.fut2sg
-constraint	0	тиме	ти	*	v.fut3sg
-constraint	0	тимемо	ти	*	v.fut1pl
-constraint	0	тимете	ти	*	v.fut2pl
-constraint	0	тимуть	ти	*	v.fut3pl
+stem	0	шоу	шоа	*	noun.acc.sg
+stem	0	шоу	шо	*	noun.gen.sg+dat.sg+loc.sg+voc.sg
+stem	0	шоу	шоо	*	noun.dat.sg+loc.sg+voc.sg
+stem	0	куцьою	куцій	*	adj.ins.f
+stem	0	бвши	бти	*	v.advPst
+stem	0	тиму	ти	*	v.fut1sg
+stem	0	тимеш	ти	*	v.fut2sg
+stem	0	тиме	ти	*	v.fut3sg
+stem	0	тимемо	ти	*	v.fut1pl
+stem	0	тимете	ти	*	v.fut2pl
+stem	0	тимуть	ти	*	v.fut3pl

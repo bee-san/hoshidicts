@@ -1,6 +1,6 @@
 # Hand labels for sources/measure.py, written for this pack (GPL-3.0-or-later): the lemma or lemmas a reader most likely
 # means by a word whose wty-uk-en rows name two or more lemmas, several only when each reading is common in context.
-# Labelled were 483 words: the 366 such words among the 10,000 most frequent words of uk_50k.txt and the words used 15
+# Labelled were 486 words: the 366 such words among the 10,000 most frequent words of uk_50k.txt and the words used 15
 # times or more in the two Wikisource texts, the words of the whole-word rules of build-own.mjs, and words of the
 # measurements' wrong lists and of the reviews, judged in their contexts. Kept here are the labels that change a verdict
 # of measure.py on a first result of the five measured rule sets; for the others its frequency proxy gives the same
@@ -27,7 +27,8 @@
 душу	душа
 душі	душа
 дівчат	дівчата,дівчина
-зміни	змінити,зміна
+зміни	зміна
+уяви	уява
 миль	миля
 раді	радий
 купи	купити,купа
@@ -41,6 +42,7 @@
 ролі	роль
 гості	гостя,гість
 дзвони	дзвонити,дзвін
+золота	золотий
 всіма	весь,всі
 цілі	цілий,ціль
 двома	два,двоє
@@ -90,7 +92,6 @@
 роти	рот,рота
 золоті	золотий
 певне	певний
-грудях	груди,грудь
 твори	творити,твір
 голі	голий
 сині	синій

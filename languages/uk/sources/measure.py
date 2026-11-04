@@ -74,6 +74,7 @@ for line in open(os.path.join(HERE, 'homographs.tsv'), encoding='utf-8'):
         word, label = line.rstrip('\n').split('\t')
         LABELS[word] = set(label.split(','))
 FREQUENCIES = {}
+KNOWN = set()  # the spellings that have rows (filled by main)
 
 
 def load_frequencies(path):
@@ -90,12 +91,16 @@ def norm(text):
     return unicodedata.normalize('NFC', text).translate(APOSTROPHES)
 
 
-def keys(word):
-    """The rows that describe a hovered word: its own spelling, and the
-    lowercase spelling when it is capitalised (a sentence-initial word). A
-    lowercase word is not a name, so capitalised rows never judge it."""
+def keys(word, initial=False, rows=None):
+    """The spellings whose rows judge a hovered word: its own and, when
+    capitalised, the lowercase one; at a sentence start only the lowercase
+    one when it has rows (Мені: мені, not the town Мена)."""
     w = norm(word)
-    return [w] if w == w.lower() else [w, w.lower()]
+    if w == w.lower():
+        return [w]
+    if initial and rows is not None and w.lower() in rows:
+        return [w.lower()]
+    return [w, w.lower()]
 
 
 # Links a lemma's rows may name that keep the lemma: other spellings and the
@@ -139,13 +144,14 @@ def lookups(texts, languages, dictionary):
     return [json.loads(line) for line in proc.stdout.splitlines()]
 
 
-def meant(word, lemmas, targets):
+def meant(word, lemmas, targets, initial=False):
     """(the lemmas the hovered word means, what decided them)."""
-    for w in keys(word):
+    known = KNOWN if KNOWN else None
+    for w in keys(word, initial, known):
         if w.lower() in LABELS:
             return LABELS[w.lower()], 'label'
     right, how = set(), 'rows'
-    for w in keys(word):
+    for w in keys(word, initial, known):
         if w in lemmas:
             right.add(w)
         if PRONOUN_LEMMAS.get(w):
@@ -174,7 +180,7 @@ def meant(word, lemmas, targets):
     return right, how
 
 
-def judge(word, answer, lemmas, targets):
+def judge(word, answer, lemmas, targets, initial=False):
     """(verdict, first result, what judged it) for one hovered word."""
     results = answer['results']
     if not results:
@@ -182,7 +188,9 @@ def judge(word, answer, lemmas, targets):
     first = results[0]
     if len(norm(first['matched'])) > len(norm(word)):
         return 'phrase', first, None
-    right, how = meant(word, lemmas, targets)
+    # A capitalised entry of the same spelling (Сонце) is judged as before.
+    same = norm(first['expression']).lower() == norm(word).lower()
+    right, how = meant(word, lemmas, targets, initial and not same)
     if not right:
         return 'unknown', first, None
     expression = norm(first['expression'])
@@ -224,14 +232,14 @@ def blame(first):
 VERDICTS = None
 
 
-def report(name, items, lemmas, targets, weights=None, show=25, record=True):
+def report(name, items, lemmas, targets, weights=None, show=25, record=True, initials=None):
     verdicts = collections.Counter()
     weighted = collections.Counter()
     wrong = collections.Counter()
     phrases = collections.Counter()
     examples = collections.defaultdict(list)
     for i, (word, answer) in enumerate(items):
-        verdict, first, how = judge(word, answer, lemmas, targets)
+        verdict, first, how = judge(word, answer, lemmas, targets, bool(initials and initials[i]))
         weight = weights[i] if weights else 1
         if VERDICTS is not None and record:
             VERDICTS.write(f"{word}\t{verdict}\t{first['expression'] if first else ''}\t{blame(first) if first else ''}\t{weight}\t{how or ''}\n")
@@ -270,13 +278,20 @@ def report(name, items, lemmas, targets, weights=None, show=25, record=True):
         print(f"  {n}\t{key}\t{' '.join(examples[key])}")
 
 
-def hovers(text):
-    """Each word of the text with the rest of its sentence, as a host passes it."""
+def hovers(text, initials=None):
+    """Each word of the text with the rest of its sentence, as a host passes it.
+    With a list, also records whether each word starts a sentence (nothing
+    but spaces, quotes, dashes and brackets since the last sentence end)."""
     out = []
+    last = 0
     for m in WORD.finditer(text):
         end = SENTENCE_END.search(text, m.end())
         stop = end.end() if end else len(text)
         out.append((m.group(0), re.sub(r'\s+', ' ', text[m.start():min(stop, m.start() + 64)]).strip()))
+        if initials is not None:
+            gap = text[last:m.start()]
+            initials.append(last == 0 or bool(re.fullmatch(r'.*(?:[.!?…]|\n\s*\n)[\s«»„“”"\'(\[—–-]*', gap, re.S)))
+        last = m.end()
     return out
 
 
@@ -298,6 +313,8 @@ def main():
         del args[i:i + 2]
     mode, json_dir, dictionary, *files = args
     lemmas, targets = load_rows(json_dir)
+    KNOWN.update(lemmas)
+    KNOWN.update(targets)
     if mode == 'words':
         load_frequencies(files[0])
         words, counts = [], []
@@ -322,9 +339,10 @@ def main():
             sections = re.split(r'^### (.*)$', text, flags=re.M)
             if len(sections) > 1:
                 text = '\n'.join(body for title, body in zip(sections[1::2], sections[2::2]) if not title.split(' (revid')[0].endswith('Примітки'))
-            items = hovers(text)
+            initials = []
+            items = hovers(text, initials)
             answers = lookups([h for _, h in items], languages, dictionary)
-            report(os.path.basename(path), [(w, a) for (w, _), a in zip(items, answers)], lemmas, targets)
+            report(os.path.basename(path), [(w, a) for (w, _), a in zip(items, answers)], lemmas, targets, initials=initials)
     elif mode == 'phrases':
         items = []
         for line in open(files[0], encoding='utf-8'):

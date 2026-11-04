@@ -175,7 +175,7 @@ const isSampled = (category) => /^(n|v|adj|num|det):/u.test(category);
 const handRows = existsSync(gapsFile)
     ? readFileSync(gapsFile, 'utf8').split('\n').filter((line) => line !== '' && !line.startsWith('#') && !isSampled(line.split('\t')[0]))
     : [];
-const gapsHeader = ['# Known gaps: run by the conformance test and counted, not enforced.', '# Hand-written rows (categories without a part of speech and ":"): written for this pack, no third-party data.', ...header];
+const gapsHeader = ['# Known gaps: run by the conformance test and counted, not enforced.', '# Hand-written rows (categories without a part of speech and ":"): written for this pack, no third-party data.', header[0], header[1], '# The sampled rows the rules do not reach (the sample: corpus.tsv).'];
 writeFileSync(gapsFile, [...gapsHeader, columns, ...handRows, ...fail.map((r) => r.join('\t'))].join('\n') + '\n');
 const byStratum = (rows) => Object.fromEntries(STRATA.map(([name], s) => [name, rows.filter((r) => pools[s].includes(r)).length]));
 console.log(JSON.stringify({sampled: sample.length, pools: Object.fromEntries(STRATA.map(([name], s) => [name, pools[s].length])), corpus: pass.length, gaps: fail.length,
