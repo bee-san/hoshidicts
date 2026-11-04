@@ -196,18 +196,20 @@ its union of the two files has 224 transforms and 3,224 rules (3,216 `own`,
   - the enclitics -cum (`mēcum` → ego), -met and -nam; -que, -ne and -ve are a
     processor (`enclitics`), so every reading of the word before them stays;
   - noun forms that are also forms of a participle or adjective headword
-    (`n-first`, three circumfix rules: *creātūram* → creātūra, *tēcta* →
-    tēctum, *pluviae* → pluvia), and ordinals before the nouns of the same
-    form (`ord`: *decimam* → decimus, *tertia* → tertius), and whole-word
-    rules for seven frequent words main's engine read through a rare lemma
-    (*loca* → locus, *viris* → vir, *exercitum* → exercitus, *oportēre* →
-    oportet, *dīcam* → dīcō, *nāvem* → nāvis, *que* → quī).
+    (`n-first`, three circumfix rules: *creātūram* → creātūra, *tēcta* → tēctum,
+    *pluviae* → pluvia), and ordinals before the nouns of the same form (`ord`:
+    *decimam* → decimus, *tertia* → tertius), and whole-word rules, in the
+    transform of their case, for frequent words main's engine read through a
+    rare lemma or a same-spelled headword (*loca* → locus, *animālia* → animal,
+    *exercitum* and *exercitū* → exercitus, *nate* → nātus, *nāvem* → nāvis,
+    *que* → quī, *sōlis* → sōl, *manum* → manus "hand", the forms of parēns and
+    of latus "side", *proxime* → prope, *oportēre* → oportet, *dīcam* → dīcō).
 - **Constraints**. Each stem constraint, exclusion, order and processor, and the
   `untaggedTerms` setting, has a row that fails without it: `sources/mutate.py`
-  makes 84 edits in a scratch copy (removes each constraint, exclusion,
+  makes 94 edits in a scratch copy (removes each constraint, exclusion,
   processor or `n-first` rule, moves transforms or rules, loosens conditions,
   sets `untaggedTerms` to `pass`), writes `tests/classes.json` and runs the
-  conformance test, and all 84 fail it. The stems of `n-first` are tested as a
+  conformance test, and all 94 fail it. The stems of `n-first` are tested as a
   group, by two rows (below). The -ūram esse choice (Known gaps) is the absence
   of a rule and has no row.
   - Noun and verb endings of three letters or fewer need a stem of two
@@ -245,9 +247,10 @@ its union of the two files has 224 transforms and 3,224 rules (3,216 `own`,
     not iūrō), *CURTIUS* (Curtius, not the comparative of curtus), *coelīs*
     (caelum, not caelēs), *jūra* (iūs, not iūrō), *generum* and *generī* (genus,
     not gener), *putet* (putō, not puteō), *scrībam* (scrībō, not scrība),
-    *canēbat* (canō, not caneō), *pene* (paene, not penus) and *manibus* (manus,
-    not Mānēs). Those from *loca* on, except *putet* and *canēbat*, leave out
-    the stem and every longer one. Each other rule leaves out a stem with
+    *canēbat* (canō, not caneō), *pene* (paene, not penus; on main's engine
+    *pene* shows penis, a dictionary tie) and *manibus* (manus, not Mānēs).
+    Those from *loca* on, except *putet* and *canēbat*, leave out the stem and
+    every longer one. Each other rule leaves out a stem with
     `stemNotStartsWithText`, and a copy of it takes the longer stems that start
     the same way (`stemStartsWithText` and a longer minimum), so *perterritus*
     is still perterreō's and *bellica* bellicus'. Where one rule leaves out
@@ -260,32 +263,42 @@ its union of the two files has 224 transforms and 3,224 rules (3,216 `own`,
     ordered with the names, reads the -tūra and -sūra nouns (*creātūram*,
     *Scrīptūrīs*, *mēnsūrae*; stems of three letters or more, not fac-, so
     *futūrīs*, *saturae* and *factūram* keep futūrus, satur and factūrus) and
-    thirteen second-declension nouns first: tēctum, dictum, peccātum, fātum,
-    arvum, vōtum, bellum, mandātum, prōmissum, praeceptum, pūnctum, īnstitūtum
-    and iaculum. The participle comes second. Each of these stems was a noun in
-    nearly every one of 10 to 14 sentences sampled from the frequency-list
-    texts; *scrīpta*, *data*, *vīsa* and *prōposita* were mixed and keep their
-    order (Known gaps). A third rule does the same for eight first-declension
-    nouns whose adjective wty-la-en tags (the sixth audit found the noun needed
-    in 36 of 40 sampled positions): pluvia, mūsica, iniūria, aquila, penna,
-    vīnea, vespera and mathēmatica (*pluviae* is pluvia's, not pluvius'). `ord`
-    reads decimam, sextam and proximam and their -ae, -ās and -ārum as the
-    ordinal (or proximus) with no conditions, since wty-la-en tags no ordinal:
-    before it, the noun rules made decima "tithe", sexta "noon" and proxima
-    "wife" first. `lookup.tsv` rows *tēcta* → tēctum and *creātūram* → creātūra
-    fail without the transform, *pluviae*, *mūsicam*, *mēnsūrae* and *decimam*
-    fail without the -a rule, its -am ending, the -sūra endings and `ord`, the
-    whole-word rows (*loca*, *animālia*, *exercitum*, *oportēre*, *dīcam*,
-    *nate*, *que*) fail without those rules, *manibus* without the man-
-    exclusion, and negative rows hold its whole stems (*bellica* is not bellicum
-    through it; *argentī*, *rutam* and *rosae* are argentum, ruta and rosa
-    through it), its minimum stem (*saturae*) and fac- (*factūram*). Other rows
-    hold *līneae* (a negative: not līneus), *Iam* (a negative: not the name Ias,
-    since the name rules need a stem of two letters), *media* → medius (a
-    `lookup.tsv` row: adjectives before the neuter plural nouns), *armīs* → arma
-    (the -īs → -a rule of `n-dat-pl` before -īs → -us) and *jura* → ius (a
-    j-spelling row of the test dictionary, as wty-la-en has, would otherwise
-    come first).
+    fifteen second-declension nouns first: tēctum, dictum, peccātum, fātum,
+    arvum, vōtum, bellum, mandātum, prōmissum, praeceptum, pūnctum,
+    īnstitūtum, iaculum, argentum and pactum. The participle comes second.
+    Each of these stems was a noun in nearly every one of 10 to 14 sentences
+    sampled from the frequency-list texts; *scrīpta*, *data*, *vīsa* and
+    *prōposita* were mixed and keep their order (Known gaps). A third rule does
+    the same for eleven first-declension nouns whose adjective wty-la-en tags:
+    pluvia, mūsica, iniūria, aquila, penna, vīnea, vespera, mathēmatica, rosa,
+    ruta and forma (*pluviae* is pluvia's, not pluvius'). `ord` reads decimam,
+    sextam, proximam and tertia and their other feminine forms as the ordinal
+    (or proximus) with no conditions, since wty-la-en tags no ordinal.
+  - Same-spelled headwords need whole-word rules. When two headwords share a
+    spelling (manus "hand" and mānus "good", parēns "parent" and pārēns
+    "obeying", latus "side" and lātus "borne"), the dictionary query returns
+    both in bank order, so the transform order cannot put one first; a term a
+    whole-word rule reaches ranks first by its standing (9.6). The whole-word
+    rules for *manum*, the forms of parēns and the forms of latus therefore
+    have the noun's condition, which the participle does not match.
+  - Rows: `lookup.tsv` rows *tēcta* → tēctum and *creātūram* → creātūra fail
+    without `n-first`, *pluviae*, *mūsicam*, *mēnsūrae* and *decimam* without
+    the -a rule, its -am ending, the -sūra endings and `ord`, and each
+    whole-word row (*loca*, *animālia*, *exercitum*, *exercitū*, *oportēre*,
+    *dīcam*, *nate*, *que*, *sōlis*, *proxime*) without its rule; the test
+    dictionary has the competing rows (*loca* names locus and locō, as
+    wty-la-en does). *manibus* fails without the man- exclusion. Negative rows
+    hold `n-first`'s whole stems (*bellica* is not bellicum through it), its
+    minimum stem (*saturae*) and fac- (*factūram*). Other rows hold *līneae*
+    (a negative: not līneus), *Iam* (a negative: not the name Ias, since the
+    name rules need a stem of two letters), *media* → medius (adjectives
+    before the neuter plural nouns), *armīs* → arma (the -īs → -a rule of
+    `n-dat-pl` before -īs → -us) and *jura* → ius (a j-spelling row of the test
+    dictionary, as wty-la-en has). The single stems of `n-first` and `ord` are
+    tested as a group. Three kinds of fix have no row, because `lookup.tsv`
+    compares the first result's expression and the two headwords share it:
+    *manum*, the forms of parēns and the forms of latus; *nāvem*, whose
+    competing reading the test dictionary cannot reproduce, has none either.
   - Transform order decides other ties: names come before adjectives (*Galliam*
     is Gallia's before Gallius'), adjectives before nouns (*summō* is summus
     before summum; nouns first gives 418 wrong first results in the books
@@ -303,38 +316,42 @@ its union of the two files has 224 transforms and 3,224 rules (3,216 `own`,
     (reported to the framework).
 - **How the rules changed**, with the wrong first results as the measurement
   of the time counted them:
-  - e99c2fca: the own rules, written before Yomitan's file was ported.
-  - 52d552ea: the port; the own conditions became Yomitan's (`v` without
+  - cddf5061: the own rules, written before Yomitan's file was ported.
+  - 661c43d2: the port; the own conditions became Yomitan's (`v` without
     parts, `n` and `adj` with declension and number parts), which the merge
     tool needs.
-  - 3a40b263: fixes the corpus showed: Greek nouns and names, -en stems,
+  - 064b1c83: fixes the corpus showed: Greek nouns and names, -en stems,
     inchoative and -ssīvī perfects, contracted -ārit and -īrunt, reor and for,
     ea and id as headwords; constraints for sine, salvē, dominī, potuī, meam,
     labōrō and cētera; condition-free name rules after the *Rōmam* loop;
     families of compounds as circumfixes.
-  - c60a91bc: name rules restricted, 271 → 106 wrong in the books;
-  - 27a8235e: adjective transforms before noun transforms on ties, 106 → 96;
-  - 0b90cdc6: capital guards, constraints on participles before esse,
+  - d8354d7e: name rules restricted, 271 → 106 wrong in the books;
+  - 638633c3: adjective transforms before noun transforms on ties, 106 → 96;
+  - 2df37f78: capital guards, constraints on participles before esse,
     exclusions, 388 → 198 in Tatoeba;
-  - ea814112: the enclitics as a processor, plural names removed: 8 of the
+  - f49f64c6: the enclitics as a processor, plural names removed: 8 of the
     10,000 frequent words, 70 in the books and 152 in Tatoeba.
-  - 7a7336dc and 059f877a, after the first audit: the esse constraints, the rare
+  - d57ed8ed and 2d20b595, after the first audit: the esse constraints, the rare
     readings left to the dictionary and the transform order above, and a
-    stricter judge. 266ada0f and 0e7d469d, after the second: exclusions of the
+    stricter judge. 4111d3a6 and ba35bb6d, after the second: exclusions of the
     exact stem, the split rules, the -ligō order and the judge's esse fix.
-    bfa1cefb, after the third: the eight exclusions of whole stem families
+    9203cc3d, after the third: the eight exclusions of whole stem families
     (*loca* to *coelīs*) and rows for *mēnsae*, *amātās fuisse* and
-    `untaggedTerms` (*sinis*). 82ec853b, after the fourth: `n-first`, six more
+    `untaggedTerms` (*sinis*). ac31cc7f, after the fourth: `n-first`, six more
     exclusions (*jūra* to *pene*), the `noesse` lines of sinō and regō, -am
-    before esse, and rows for *līneae*, *Iam* and *media*. c44921fe, after the
+    before esse, and rows for *līneae*, *Iam* and *media*. 97d52e90, after the
     fifth: own entries counted apart by the judge, the -tūra rule narrowed, and
-    rows for *jura*, *bellica*, *saturae*, *factūram* and *armīs*. e4415439,
+    rows for *jura*, *bellica*, *saturae*, *factūram* and *armīs*. 6abcb610,
     after the sixth: the -a nouns and iaculum in `n-first`, `ord`, the -sīdī
     perfect removed, and the judge's sample of the ambiguous positions the rules
-    change. 42e58adf and 95305d04, after the seventh, for main's engine
-    (487a6fc): whole-word rules for seven frequent words, rosa, ruta, argentum
+    change. 3db656c2 and 898c1a12, after the seventh, for main's engine
+    (487a6fc): whole-word rules for nine frequent words, rosa, ruta, argentum
     and tertius before the adjectives, man- left to the dictionary, and
-    `homographs.tsv` needs manus for *manibus*.
+    `homographs.tsv` needs manus for *manibus*. 33385783, after the eighth:
+    whole-word rules for *sōlis*, *manum*, the forms of parēns and of latus and
+    *proxime*, the other whole-word rules moved into the transforms of their
+    case, forma and pactum in `n-first`, and *viris* no longer an accusative of
+    vīs.
   - With the final judge, the head the first audit saw (29cb6f1; the audited
     heads are PR heads from before the rebases) shows a wrong first result for
     50 of the 10,000 words (7,673 tokens), at 978 book and 4,044 Tatoeba
@@ -354,37 +371,39 @@ its union of the two files has 224 transforms and 3,224 rules (3,216 `own`,
 
 ## Measurements
 
-The rules at 95305d04 (this branch on 4328429b, main with 487a6fc's engine
-changes), GCC 14.3, Release; wty-la-en imported by `hoshidicts-cli import`, as
-published. The sample is the 700 rows of `corpus.tsv` and `gaps.tsv` together.
-Section 6 gives the commands.
+The rules at 33385783 (this branch on 073a3c58, main with 487a6fc's engine), GCC
+14.3, Release; wty-la-en imported by `hoshidicts-cli import`, as published. The
+sample is the 700 rows of `corpus.tsv` and `gaps.tsv` together. Section 6 gives
+the commands.
 
-**How first results are judged** (`sources/measure.py judge`, Measurements
-2-4). A word's own lemmas are the headwords its keys are (the word as written,
+**How first results are judged** (`sources/measure.py judge`, Measurements 2-4).
+A word's own lemmas are the headwords its keys are (the word as written,
 lowercased, without macrons, with j as i, without an enclitic) and the lemmas
 the keys' form-of rows name. A first result is right when it is an own lemma,
-another spelling of one, the verb of an own participle or the positive of an
-own comparative, and the own lemmas are one word (lemmas joined by such a
-reference count as one). It is wrong when it is none of those. When the own
-lemmas are several words (*dedit*: dō and dēdō), the first result is judged
-against `sources/homographs.tsv`, the lemmas a reader needs for the 253 most
-frequent such words. Otherwise, a first result that is one of the word's
-keys and a headword, its *own entry* (*modo* the adverb, also the ablative
-of modus), is counted right but apart, because wty-la-en files some
-unrelated words under the spelling of a common form (*esse* "state,
-condition", *se* "without"). Most own entries have no rule step; 59 book and
-376 Tatoeba ones do (*maius* → Maius "of May" through an "alternative"
-reference, at 17 of them). The rest is counted as ambiguous. A random sample
-of 60 own-entry and 60 ambiguous positions per text (seed 1) is judged by
-hand, and so is a sample of 60 of the ambiguous positions where the rules
-change the first result against a copy of the pack with no rules
-(`--same-as`, `--sample-of changed`): both first results are judged, the
-rules' and the copy's. A participle read
-with esse (*laudāta est*, *eundum est*) is right for a verb the first word's
-rows name, directly or through its participle, but ambiguous when that word
-is also a noun or adjective (*nātus est*). Words with no
-row in the dictionary cannot be judged by script; a sample of 60 of them is
-judged by hand too.
+another spelling of one, the verb of an own participle or the positive of an own
+comparative, and the own lemmas are one word (lemmas joined by such a reference
+count as one). It is wrong when it is none of those. When the own lemmas are
+several words (*dedit*: dō and dēdō), the first result is judged against
+`sources/homographs.tsv`, the lemmas a reader needs for the 253 most frequent
+such words. Otherwise, a first result that is one of the word's keys and a
+headword, its *own entry* (*modo* the adverb, also the ablative of modus), is
+counted right but apart, because wty-la-en files some unrelated words under the
+spelling of a common form (*esse* "state, condition", *se* "without"). Most own
+entries have no rule step; 59 book and 376 Tatoeba ones do (*maius* → Maius "of
+May" through an "alternative" reference, at 17 of them). The rest is counted as
+ambiguous. A random sample of 60 own-entry and 60 ambiguous positions per text
+(seed 1) is judged by hand, and so is a sample of 60 of the ambiguous positions
+where the rules change the first result against a copy of the pack with no rules
+(`--same-as`, `--sample-of changed`): both first results are judged, the rules'
+and the copy's. A participle read with esse (*laudāta est*, *eundum est*) is
+right for a verb the first word's rows name, directly or through its participle,
+but ambiguous when that word is also a noun or adjective (*nātus est*). Words
+with no row in the dictionary cannot be judged by script; a sample of 60 of them
+is judged by hand too. The judge compares spellings, not readings, so it cannot
+tell same-spelled headwords apart (dīcō "to say" and dicō "to dedicate"); the
+positions whose first result has a same-spelled twin are counted apart with a
+lookup driver that also prints each result's reading, and a sample of 60 of
+those it judges right is judged by hand (Measurements 4).
 
 1. **`eval-language --dictionary`**. The pack has no optional processor,
    transform or variant pass, so each file with `# options: default` added
@@ -433,28 +452,32 @@ judged by hand too.
 2. **Frequent forms**. Of the list's 10,000 most frequent words, a rule reaches
    the lemma of 7,848 (432,147 tokens): a form-of row of the word or a row of
    `corpus.tsv` or `cases.tsv` names a lemma among the deinflections of the
-   word. - The first result with a definition is a wrong lemma for 15 of them,
-   2,703 tokens: 0.36% of the 10,000 words' 743,438 tokens, 0.26% of the list's
-   1,020,914. 9 of the 15 tie with a right lemma. They include *facis* → fax,
-   *Ubi* → Ubus, *Diē* → Zeus and *licēbat* → liceō (Known gaps). - 6,401 are
-   right, 1,275 of them (133,284 tokens) as own entries, and 3 find nothing;
-   `sources/homographs.tsv` decides 330 of these words. The other 1,429 (44,610
-   tokens) remain ambiguous. In a hand sample of 60 of the 1,443 ambiguous words
-   of the whole list, 11 are wrong (*dēlicta* → dēlictus, *Diī* → Zeus,
-   *animālium* → animālis, *mandātīs* → mandō, *cōnsequī* → cōnsequus), which
-   puts about 260 more words wrong. - The union reaches 7,850 words, 22 wrong
-   (3,365 tokens). Yomitan's rules reach 1,942, 22 wrong (3,559 tokens). - Over
-   all 10,000 words: 8,023 right, 17 wrong (2,961 tokens), 1,443 ambiguous, 478
-   find nothing (26,905 tokens: the books' apparatus *EV*, *Sidenote*, *Mss*,
-   *cf*, Roman numerals and English), 37 cannot be judged. 1,443 of the 8,023
-   right (152,065 tokens) are own entries. In a hand sample of 60 of them, 14
-   are wrong and 4 borderline (*sē* → se "without", *posse* → "power", *beātum*
-   → "happiness", *vallō* → "to fortify"); with the previous round's sample (10
-   of 60), about 290 words. A sample of words gives no share of tokens; the 16
-   own-entry words of Known gaps alone hold 11,622 tokens, 1.6% of the 10,000
-   words' 743,438, and most of their uses need the other lemma, so wrong own
-   entries hold about that share, against the 0.40% (2,961 tokens) the script
-   counts wrong.
+   word.
+   - The first result with a definition is a wrong lemma for 15 of them, 2,703
+     tokens: 0.36% of the 10,000 words' 743,438 tokens, 0.26% of the list's
+     1,020,914. 9 of the 15 tie with a right lemma. They include *facis* →
+     fax, *Ubi* → Ubus, *Diē* → Zeus and *licēbat* → liceō (Known gaps).
+   - 6,401 are right, 1,275 of them (133,284 tokens) as own entries, and 3 find
+     nothing; `sources/homographs.tsv` decides 330 of these words. The other
+     1,429 (44,610 tokens) remain ambiguous. In a hand sample of 60 of the
+     1,429, 11 are wrong (*dēlicta* → dēlictus, *Diī* → Zeus, *animālium* →
+     animālis, *mandātīs* → mandō, *cōnsequī* → cōnsequus), which puts about
+     260 more words wrong.
+   - The union reaches 7,850 words, 22 wrong (3,365 tokens). Yomitan's rules
+     reach 1,942, 22 wrong (3,559 tokens).
+   - Over all 10,000 words: 8,023 right, 17 wrong (2,961 tokens), 1,443
+     ambiguous, 478 find nothing (26,905 tokens: the books' apparatus *EV*,
+     *Sidenote*, *Mss*, *cf*, Roman numerals and English), 37 cannot be judged.
+     1,443 of the 8,023 right (152,065 tokens) are own entries. In a hand sample
+     of 60 of them, 14 are wrong and 4 borderline (*sē* → se "without", *posse*
+     → "power", *beātum* → "happiness", *vallō* → "to fortify"); with the
+     previous round's sample (10 of 60), about 290 words. A sample of words
+     gives no share of tokens; the 16 own-entry words of Known gaps alone hold
+     11,622 tokens, 1.6% of the 10,000 words' 743,438, and most of their uses
+     need the other lemma, so wrong own entries hold about that share, against
+     the 0.40% (2,961 tokens) the script counts wrong. The same-spelled words of
+     Known gaps (*dīxit*, the forms of liber "book", *ossa*) hold about 1,100
+     tokens more, most of them shown with the other headword.
 3. **Enclitics, pronouns and the auxiliary** in Tatoeba (Latin has no
    articles). Positions by kind:
 
@@ -489,36 +512,45 @@ judged by hand too.
      nothing and 588 cannot be judged; in a hand sample of 60 of those, 11
      are wrong, all of them English, names, abbreviations or misprints (*the*,
      *Attium*, *MARCVS*, *lobore*).
-   - The own entries are the same words as on the old engine, but this
-     sample drew more of the wrong ones (19 against 7 of 60); the four
-     own-entry samples of the books so far (this, the previous round's and
-     the fifth audit's 120) have 51 wrong of 240, about 4,100 positions.
-     That puts about 6,200 wrong first results among the 101,097 lookups
+   - The own entries are the same words as on the old engine; the four
+     own-entry samples of the books so far (two of this pack's and the fifth
+     audit's 120) have 51 wrong of 240, about 4,100 positions. 3,879 of the
+     positions the script counts right show a headword with a same-spelled
+     twin (*dē*, *ā*, *hic*, *manus*, *dīcō*); in a hand sample of 60 of them, 1
+     is wrong (*mālī* "masts" shown as malus "bad") and 5 borderline, about 65
+     positions.
+   - That puts about 6,300 wrong first results among the 101,097 lookups
      (6.2%): 332 by script, about 4,100 among the own entries, about 1,700
-     among the ambiguous and about 110 among those the script cannot judge.
-     The standard errors are about 500 positions for the own entries (240
-     rows) and 350 for the ambiguous ones (60).
+     among the ambiguous, about 110 among those the script cannot judge and
+     about 65 among the same-spelled. The standard errors are about 500
+     positions for the own entries (240 rows) and 350 for the ambiguous ones
+     (60).
    - The groups (first step of the trace): the word as written 62 (the
      letter *i* 52, *Prīma*, *Tertia*), the dictionary's "genitive singular"
      rows 38 (*Herus* → Hero, *Ubi* → Ubus), `supine-abl` 35 (*equitātū* →
      equitō), `impf-3s` 28 (*licēbat* → liceō), the dictionary's accusative
      rows 19 (*Horum* → Horus, *Canem* → Canis).
    - Tatoeba, 307,656 lookups: 280,401 right, 61,096 of them own entries (15
-     wrong in a hand sample of 60: *esse* → esse "state" twice, *vīs* →
-     "force" twice, *sē* → "without", *re* → the adverb, *Piscis* → the
-     constellation, *annō* → "to live through a year"), 2,035 wrong (1,025
-     tied with a right lemma), 16,751 ambiguous (14 wrong in a hand sample of
-     60: *dubiō* → dubius, *Disce* → discus, *Lūdī* → lūdō, *Mare* → Marus,
-     *dīcās* → dica, *crēvit* → cernō), 4,948 find nothing, 2,858 phrase
-     entries and 663 cannot be judged (22 wrong and 3 borderline in a sample
-     of 60: Toki Pona's *Pona*, names, New Latin, misspellings). With the
-     four own-entry samples of Tatoeba (59 of 240 wrong, about 15,000), that
-     is about 21,200 wrong (6.9%), give or take about 1,700 for the own
-     entries and 900 for the ambiguous. Groups (first step of the trace): the
-     dictionary's "genitive singular" rows 1,001 (*Ubi* → the tribe's Ubus
-     902), its "genitive/vocative singular" rows 240 (*Venī* → Venius, *Herī*
-     → Herius), its alternative spellings 238 (*Scīsne* → scin), its
-     accusative rows 99 (*Canem* → Canis), `n-gen-sg` 77 (*facis* → fax).
+     wrong in a hand sample of 60: *esse* → esse "state" twice, *vīs* → "force"
+     twice, *sē* → "without", *re* → the adverb, *Piscis* → the constellation,
+     *annō* → "to live through a year"), 2,035 wrong (1,025 tied with a right
+     lemma), 16,751 ambiguous (14 wrong in a hand sample of 60: *dubiō* →
+     dubius, *Disce* → discus, *Lūdī* → lūdō, *Mare* → Marus, *dīcās* → dica,
+     *crēvit* → cernō), 4,948 find nothing, 2,858 phrase entries and 663 cannot
+     be judged (22 wrong and 3 borderline in a sample of 60: Toki Pona's *Pona*,
+     names, New Latin, misspellings). 12,795 of the positions it counts right
+     show a headword with a same-spelled twin (*dē*, *hic*, *dīcō*, *liber*); in
+     a hand sample of 60, 8 are wrong (*dīxit* → dicō "to dedicate" three times,
+     *Librum* → līber "free", *Hic* "here" twice as the pronoun, *fretus*
+     "relying" as fretum "strait", *furor* as fūror "to steal") and 2
+     borderline, about 1,700. With the four own-entry samples of Tatoeba (59 of
+     240 wrong, about 15,000), that is about 22,900 wrong (7.4%), give or take
+     about 1,700 for the own entries, 900 for the ambiguous and 600 for the
+     same-spelled. Groups (first step of the trace): the dictionary's "genitive
+     singular" rows 1,001 (*Ubi* → the tribe's Ubus 902), its "genitive/vocative
+     singular" rows 240 (*Venī* → Venius, *Herī* → Herius), its alternative
+     spellings 238 (*Scīsne* → scin), its accusative rows 99 (*Canem* → Canis),
+     `n-gen-sg` 77 (*facis* → fax).
    - Union: 499 wrong in the books and 2,399 in Tatoeba. Yomitan's rules:
      1,378 and 4,398 wrong, and 4,611 and 6,490 positions find nothing (3,545
      and 4,948 for the final set).
@@ -541,54 +573,49 @@ judged by hand too.
      *quod*, *quam* and *quō* as quī, *iterum* as iter, *mihi* and *tē* as
      ego and tū, and *bene* as bonus).
    - The samples come from `measure.py judge --sample 60 --seed 1` (with
-     `--sample-of ambiguous`, `own` or `changed`); the hand judgements are
-     listed in the pull request.
+     `--sample-of ambiguous`, `own` or `changed`) and, for the same-spelled
+     class, from the lookups of a driver that prints readings (Measurements 6);
+     the hand judgements are listed in the pull request.
 5. **Performance** (section 13; budgets 1 ms p50, 50 ms load, 20 MB heap; the
    pack has no `pattern` rule).
    - Native `benchmark-lookup` (wty-la-en mapped, the 80 texts of
      `sources/benchmark-words.txt`, 6 passes with the first dropped, three
-     runs at machine load 46 to 56). p50 and p95 are nearest-rank
+     runs at machine load 53 to 82). p50 and p95 are nearest-rank
      percentiles of the 400 times of passes 2-6 (the 200th and 380th
      smallest). The 20 slowest times are the four slowest texts' five passes,
      so the 381st is already one of the four slowest texts' times.
 
      | Rule set | p50 | p95 |
      | --- | ---: | ---: |
-     | Final | 69-77 µs | 270-323 µs |
-     | Union | 75-78 µs | 264-316 µs |
-     | Yomitan's rules | 37-41 µs | 103-117 µs |
+     | Final | 69-80 µs | 281-443 µs |
+     | Union | 77-88 µs | 321-476 µs |
+     | Yomitan's rules | 37-45 µs | 143-246 µs |
 
    - WebAssembly (`sources/wasm-measure.mjs`, Hachidori feat/multi-language
      6ea8bf5e prebuilt engines, built at 487a6fc, Node 22.23.1, the same texts,
-     wty-la-en mapped from MEMFS, two runs at load 45, nearest-rank
+     wty-la-en mapped from MEMFS, two runs at load 65 to 71, nearest-rank
      percentiles):
-     - `hdw_lookup`: p50 0.171-0.175 ms and p95 0.771-0.808 ms single-thread;
-       p50 0.154-0.194 ms and p95 0.751-0.951 ms threaded.
-     - `hdw_language_load`: median 14.6-15.6 ms single-thread and 15.2-16.2 ms
-       threaded over 10 fresh engines, at most 21.9 ms.
-     - Live heap after the load: +1,364,496 bytes single-thread, +1,365,664
-       threaded (`hdw_memory_stats`). - Hachidori
-       (`test/chrome-language-pack.mjs`, feat/multi-language 6ea8bf5e, whose
-       engines are built at 487a6fc, with this branch's 8af73035 (95305d04 after
-       the rebase onto 4328429b) in `third_party/hoshidicts`, Chrome
-       152.0.7977.75): 64 of 64 checks pass. Settings adds Latin beside Japanese
-       and imports wty-la-en (1,977,517 terms, 4.0 s); 60 hovered words find
-       their lemma first with their trace (*virumque* → vir, *dūxit* → duco,
-       *laudātus est* → laudo, and the audits' *Rosa est* → rosa, *Mensa est* →
-       mensa, *altus est* → altus, *Veritas est* → veritas, *peritus est* →
-       peritus, *dedit* → do, *Galliam* → Gallia, *patriam* → patria, *electus
-       est* → eligo, *nāvī* → navis, *cōpiās* → copia, *Fortēs* → fortis, *loca*
-       → locus, *Itali* → italus, *jure* → iure, *existit* → exsisto, *coelīs* →
-       caelum, *tēcta* → tectum, *creātūram* → creatura, *Scrīptūrīs* →
-       scriptura, *dicta* → dictum, *putet* → puto, *scrībam* → scribo, *captam
-       esse* → capio, *sita est* → situs, *peccātōrum* → peccatum, *Iūra* → ius,
-       *Vōta* → votum, *praecepta* → praeceptum, *factūram esse* → facturus,
-       *futūrīs* → futurus, *pluviae* → pluvia, *mūsicam* → musica, *dēsīderat*
-       → desidero, *cōnsīderat* → considero, *decimam* → decimus, *proximam* →
-       proximus, and the seventh audit's *manibus* → manus, *tertia* → tertius,
-       *exercitum* → exercitus, *rosas* → rosa, *oportere* → oportet, *viris* →
-       vir, *Animālia* → animal and *dīcam* → dico); the Anki note and the
-       switch to Japanese and back work.
+     - `hdw_lookup`: p50 0.182-0.192 ms and p95 0.830-0.872 ms single-thread;
+       p50 0.192 ms and p95 0.841-0.926 ms threaded.
+     - `hdw_language_load`: median 13.7-15.6 ms single-thread and 17.1-18.2 ms
+       threaded over 10 fresh engines, at most 29.6 ms. An earlier pair of
+       runs at load 83 to 92 had one threaded run with a median of 26.3 ms
+       and a slowest engine of 55.4 ms.
+     - Live heap after the load: +1,368,368 bytes single-thread, +1,369,504
+       threaded (`hdw_memory_stats`).
+   - Hachidori (`test/chrome-language-pack.mjs`, feat/multi-language 6ea8bf5e,
+     whose engines are built at 487a6fc, with this branch at 33385783 in
+     `third_party/hoshidicts`, Chrome 152.0.7977.75): 70 of 70 checks pass.
+     Settings adds Latin beside Japanese and imports wty-la-en (1,977,517
+     terms); 66 hovered words find their lemma first with their trace: the
+     first checks' *virumque* → vir, *dūxit* → duco and *laudātus est* →
+     laudo, and the audits' cases from *Rosa est* → rosa to the eighth
+     audit's *solis* → sol, *manum* → manus "hand", *Parentes* → parens
+     "parent", *latere* → latus "side", *Fōrmam* → forma and *proxime* →
+     prope. The check compares headwords, not readings, so it passes a
+     same-spelled headword whatever its reading; the glosses of the last
+     four cases were checked by hand in the run's summary. The Anki note and
+     the switch to Japanese and back work.
 6. **Commands**. From the repository root, with `D` the imported dictionary, `G`
    the Gutenberg texts and `W` a scratch directory:
 
@@ -631,6 +658,11 @@ judged by hand too.
    python3 $M judge $W/headwords.pickle $W/books.txt $W/books.jsonl --transforms languages/la/transforms.json \
      --homographs $H --kinds 1 --show 25 [--same-as $W/books.empty.jsonl]             # and tatoeba
    #    hand samples: add --sample 60 --seed 1 --sample-out <file> [--sample-of ambiguous|own|changed]
+   #    ownEntry comparison: judge the afterReferences lookups with --same-as <default lookups>
+   #      --sample-of changed --sample 60 --seed 1
+   #    same-spelled headwords: lookups with a copy of lookup-batch.cpp that also prints each
+   #      result's term.reading; a first result whose expression has two headword readings in the
+   #      dictionary's term banks, and that the judge counts right, is in the class
 
    # 5. Speed
    build/benchmark-lookup languages/la/sources/benchmark-words.txt 6 --languages languages --language la --term $D --json
@@ -646,23 +678,23 @@ judged by hand too.
 
    - **Conformance** (`language-conformance-test`): `corpus.tsv` 658 / 658,
      `cases.tsv` 1,114 / 1,114, `yomitan.tsv` 7 / 7, `text.tsv` 40 / 40,
-     `lookup.tsv` 90 / 90; `gaps.tsv` 0 / 42 (reported). `classes.json` agrees
-     with the engine (3 classes, 815 fields, 2 steps). 1,271 of the 5,358
+     `lookup.tsv` 93 / 93; `gaps.tsv` 0 / 42 (reported). `classes.json` agrees
+     with the engine (3 classes, 815 fields, 2 steps). 1,271 of the 5,379
      rules are exercised by a passing row. `tests/` and `sources/` hold
-     999,245 bytes.
+     999,510 bytes.
    - **Differential check** (`tools/check-yomitan.mjs`): 2,862 inputs and 4,272
      Yomitan results with no difference; the four processors agree with
-     Yomitan's on 1,912 to 2,699 inputs each.
+     Yomitan's on 1,915 to 2,702 inputs each.
    - **Tests and traces.** Rows of `cases.tsv` give traces for the perfect
      (`perf-stem|perf-3s`), esse (`ptc-perf|esse`), the genitive, the locative,
-     the imperfect, the comparative and `n-first`, so renaming one of those ten
-     transform ids fails the test; other ids are not traced. `lookup.tsv` has
-     rows for each transform order (*summō*, *media*, *dedit*, *maris*, *mēnse*,
-     *Galliam*, *tēcta*, *armīs*) and rows that need form-of following, word
-     resolution and the part-of-speech filter, so `mutate.py` catches the
-     orders, `formOf: "asTerm"`, `searchResolution: "character"`, verb rules
-     without `v` and `untaggedTerms: "pass"` (*sinis*). No test format checks a
-     transform's display name or description.
+     the imperfect, the comparative, `n-first` and `ord`, so renaming one of
+     those eleven transform ids fails the test; other ids are not traced.
+     `lookup.tsv` has rows for each transform order (*summō*, *media*, *dedit*,
+     *maris*, *mēnse*, *Galliam*, *tēcta*, *armīs*) and rows that need form-of
+     following, word resolution and the part-of-speech filter, so `mutate.py`
+     catches the orders, `formOf: "asTerm"`, `searchResolution: "character"`,
+     verb rules without `v` and `untaggedTerms: "pass"` (*sinis*). No test
+     format checks a transform's display name or description.
 
 ## Known gaps
 
@@ -670,21 +702,23 @@ Ties that the pack cannot break are a framework issue (section 9.6). Main's
 engine (487a6fc) applies the "written form equals reading" key only to packs
 whose readings are `required`, so it no longer decides Latin ties, and adds
 `lookup.confirmedOrder` and `lookup.ownEntry`, which this pack measured and
-leaves at their defaults (Measurements 4). Of the wrong first results counted
-in Measurements 2-4, the copy of the pack with no rules (`"transforms": []`)
-shows the same first result for 11 of the 17 frequent words (2,738 of 2,961
-tokens), 236 of the 332 book and 1,846 of the 2,035 Tatoeba positions: those
-are dictionary ties. The rules make the other 6 words (223 tokens), 96 book and
-189 Tatoeba positions (`measure.py judge --same-as`). These counts cover only
-the results the script judges wrong. Among the positions it counts ambiguous,
-the rules change the first result against that copy at 1,745 book and 5,426
-Tatoeba positions; in hand samples of 60 of them, the rules' result is worse
-at 15 and 17, better at 34 and 38 and equal at 11 and 5. So the rules make
-about 440 book and 1,540 Tatoeba first results wrong (give or take about 100
-and 320) and about 990 and 3,440 right. The lead's answer of 2026-11-04
-13:40Z makes the remaining words of that class, each under about 60 tokens
-and outside the frequency list's top 1,000, MINOR; they are listed below with
-counts. The own entries are dictionary ties, and the largest group.
+leaves at their defaults (Measurements 4). Of the wrong first results counted in
+Measurements 2-4, the copy of the pack with no rules (`"transforms": []`) shows
+the same first result for 11 of the 17 frequent words (2,738 of 2,961 tokens),
+236 of the 332 book and 1,846 of the 2,035 Tatoeba positions: those are
+dictionary ties. The rules make the other 6 words (223 tokens), 96 book and 189
+Tatoeba positions (`measure.py judge --same-as`). These counts cover only the
+results the script judges wrong. Among the positions it counts ambiguous, the
+rules change the first result against that copy at 1,732 book and 5,408 Tatoeba
+positions; in hand samples of 60 of them, the rules' result is worse at 21 and
+17, better at 29 and 39 and equal at 10 and 4. So the rules make about 610 book
+and 1,530 Tatoeba first results wrong (give or take about 110 and 310) and about
+840 and 3,520 right. The judge cannot see a wrong headword spelled like the
+right one; those are counted under same-spelled headwords below. The lead's
+answer of 2026-11-04 13:40Z makes the remaining words of that class, each under
+about 60 tokens and outside the frequency list's top 1,000, MINOR; they are
+listed below with counts. The own entries are dictionary ties, and the largest
+group.
 
 - **The word's own entry** (`lookup.ownEntry: "afterReferences"`, on main;
   the pack keeps the default `first`, Measurements 4). When the word as
@@ -724,15 +758,42 @@ counts. The own entries are dictionary ties, and the largest group.
   "somewhat"). *es* counts the word alone; *Esne* and other forms with an
   enclitic add more. `ownEntry: "afterReferences"` fixes *esse*, *posse* and
   *sē* but breaks *quod*, *quam*, *iterum*, *mihi* and *bene* (Measurements 4).
-- **The reading key** no longer decides on main's engine. On the engine
-  before 487a6fc it put *sibus*, *reus*, *milium*, *solum*, *dica*, *treuga*
-  and *Marius* first for *sibi*, *rei*, *mīlia*, *sōlīs*, *dīcam*, *tria* and
-  *Mariam*; all now show suī, rēs, mīlle, sōl or sōlus, dīcō (a whole-word
-  rule), trēs and Maria. Counted as the first audit counts its 59 frequent
-  homographs, 13 of the 10,000 words (592 tokens), 21 book and 133 Tatoeba
-  positions are still wrong (57, 601 and 1,187 at 29cb6f1; 32, 345 and 602 on
-  the old engine at e4415439), 10 of them dictionary ties (*facis* → fax, 36
-  tokens and 72 Tatoeba positions, is the largest).
+- **The reading key** no longer decides on main's engine, and that cuts both
+  ways. On the engine before 487a6fc it put *sibus*, *reus*, *milium*,
+  *solum*, *dica*, *treuga* and *Marius* first for *sibi*, *rei*, *mīlia*,
+  *sōlīs*, *dīcam*, *tria* and *Mariam*; all now show suī, rēs, mīlle, sōl,
+  dīcō (a whole-word rule), trēs and Maria. But it also ordered same-spelled
+  headwords, which now fall to the dictionary's bank order (next item).
+  Counted as the first audit counts its 59 frequent homographs, 10 of the
+  10,000 words (457 tokens), 10 book and 118 Tatoeba positions are still
+  wrong (57, 601 and 1,187 at 29cb6f1; 32, 345 and 602 on the old engine at
+  6abcb610), all of them dictionary ties: *facis* → fax (36 tokens; 72 Tatoeba
+  positions), *umbrās*, *umbrīs*, *umbram*, *umbrae* → umber "Umbrian" (230
+  tokens; 3 book and 22 Tatoeba), *aurī* → auris (74 tokens; 2 and 11),
+  *inque* → inquam (57 tokens), *populārēs* → populō (27 tokens), *cape*,
+  *capī* → capus (33 tokens).
+- **Same-spelled headwords** (a framework question in the questions file). A
+  form-of row names a spelling, so it reaches every headword with that spelling,
+  and on main's engine their order is the bank's. The judge compares spellings
+  and counts these right; a driver that prints readings finds 4,629 book and
+  15,499 Tatoeba positions whose first result has a same-spelled twin, 3,879 and
+  12,795 of them counted right and not own entries. Most are right (*dē*, *ā*,
+  *hic*, *ē*). Hand samples of 60 find 1 and 8 wrong (Measurements 4). The pack
+  fixed what a condition separates (*manum*, parēns, latus); where both
+  headwords carry the same part of speech, no rule can. The largest, with their
+  tokens in the frequency list and the book and Tatoeba positions that show the
+  wrong headword:
+  - *dīxit*, *dīxitque* → dicō "to dedicate" for dīcō "to say" (182 tokens;
+    8 of 8 and 705 of 705);
+  - *librī*, *librīs*, *librōs*, *librum*, *liber* → līber "free" for liber
+    "book" (792 tokens; 15 of 25 and 791 of 920, a few of them right);
+  - *ossa*, *ossibus* → ōs "mouth" for os "bone" (146 tokens; 7 of 7 and 15 of
+    16); *pīla* "pillar" for pila "ball" (39 tokens; 1 and 60 of 61);
+    *furor* → fūror "to steal" for furor "rage" (61 tokens; 2 and 12);
+  - *lectus*, *lectō*, *lectī* → lēctus "chosen" for lectus "bed" (92
+    tokens; 1 of 5 and 17 of 78), *mālī* and *mālus* "mast" shown as malus
+    "bad" (in the books), *fretus* "relying" shown as the noun fretus "strait", and
+    *Hīc* "here" at the start of a sentence shown as the pronoun hic.
 - **Other dictionary ties**: *Scīsne* → scin (154 Tatoeba positions),
   *Vidēsne* → viden (76), *putās* → putus (20 tokens, 4 book and 74 Tatoeba),
   *equitātū* → equitō (35 book), *Herus* → Hero (27 book), *morī* → mōs (46
@@ -780,18 +841,31 @@ counts. The own entries are dictionary ties, and the largest group.
   with no rules shows the needed lemma unless stated):
   - deponents read as their active twins, *arbitrantur*, *arbitrābar*,
     *arbitrārētur* → arbitrō (89 tokens; 14 book and 5 Tatoeba positions),
-    *tuērī*, *tuērētur* → tueō (65 tokens; 9 and 3), and *imitārī* → imitō
-    and *versārī* → versō, where the copy with no rules shows the same;
-  - impersonals read as personal verbs: *licēbat*, *licēret*, *licēbit* →
-    liceō (125 tokens; 52 book and 3 Tatoeba positions), *oportēbat*,
-    *oportēret* → oporteō (61 tokens; 9 and 4);
-  - supines before fourth-declension nouns: *statū*, *statum* → stō (49
-    tokens; 29 and 8, the same with no rules), *adventum* → adveniō (23
-    tokens; 8 and 2), *aditum* → adeō (17 tokens; 7 and 4), *exitum* → exeō
-    (30 tokens; 4 and 6);
+    *tuērī*, *tuērētur* → tueō (65 tokens; 9 and 3), and *imitārī* → imitō and
+    *versārī* → versō, where the copy with no rules shows the same; -
+    impersonals read as personal verbs: *licēbat*, *licēret*, *licēbit* → liceō
+    (125 tokens; 52 book and 3 Tatoeba positions; the same with no rules, so a
+    dictionary tie), *oportēbat*, *oportēret*, *oporteat* → oporteō (120 tokens;
+    9 and 5);
+  - supines before fourth-declension nouns: *statū*, *statum* → stō (49 tokens;
+    29 and 8, the same with no rules), *adventum* → adveniō (23 tokens; 8 and 2)
+    and *exitum* → exeō (30 tokens; 4 and 6), both the same with no rules, and
+    *aditum* → adeō (17 tokens; 7 and 4);
   - *passus est* and its forms → pandō for patior (2 book and 12 Tatoeba),
-    *saturae*, *saturam* → saturus (6 positions), and *morī* → mōs (38
-    Tatoeba; the copy with no rules shows mōs too).
+    *saturae*, *saturam* → saturus (6 positions), *morī* → mōs (38 Tatoeba; the
+    copy with no rules shows mōs too), and adjectives before nouns their samples
+    show: *animālibus* → animālis, *reptilia* → reptilis, *medicīnam* →
+    medicīnus, *vincam* → vinca, *Honōrā* → honōrus (a few Tatoeba positions
+    each).
+- **Smaller dictionary ties**: *celeris* → celō "to hide" (7 tokens; 5
+  Tatoeba positions), *aeris* → aes "bronze" (109 tokens; mixed: the measured
+  texts need āēr at 2 of 3 positions), and *ei*, *eī*, *earum* → ea and
+  *eōrum* → id, wty-la-en's sub-entries "nominative feminine (neuter)
+  singular of is", whose gloss leads to is but whose label is the wrong
+  gender or number for most uses.
+- **Traces of `n-first`**: its circumfix rules trace as "noun", which names
+  the part of speech but no case or number (*tēcta*, *creātūram*,
+  *pluviae*); the whole-word rules trace as their case.
 - **Sampled forms the rules do not reach** (`gaps.tsv`, 42 of 700):
   - proper nouns, 14 of 35: names declined like common nouns (*Cemenelī* →
     Cemenelium, *Bagdadō* → Bagdadum). The name rules are kept narrow (Rule
