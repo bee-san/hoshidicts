@@ -267,7 +267,10 @@ yomitan, 0 both"). No Yomitan rule is left out, because there is none.
     meu; nossa and vossa are the regular feminine of nosso and vosso), beside
     those for `boa` and `esta`, and 295 preferred readings. Each is in the
     transform of the rule that also makes that reading, so the trace is the
-    same, and the other reading follows it. The 295 are 160 feminines
+    same, and the other readings follow it, not always directly: for 9 of
+    the 44 feminine plurals a tu verb form that the word's rows name comes
+    between (`baixas` → baixo, baixar, baixa), and `marinhas` shows mar's
+    diminutive before marinha. The 295 are 160 feminines
     (`amiga`, `humana`, `inteira`, `vasta`, `complexa`, `digna`, `segura`,
     `suja`; `perfeita` → perfeito, not the participle of perfazer; the
     adjectives of the participle class; the 44 feminine plurals above), 45
@@ -369,7 +372,7 @@ yomitan, 0 both"). No Yomitan rule is left out, because there is none.
     follow g or q (`segui` is the preterite of seguir, not a present of
     "seguuir"); the -ir e → i change only applies between consonants (`seguia`
     is not "segueir").
-- **History.** The first commit of this pack, `pt: own rules` (dd999069), has
+- **History.** The first commit of this pack, `pt: own rules` (25813549), has
   the own rules as written before any measurement: 88 transforms and 2,745
   rule rows (5,223 rules expanded). Later commits changed them after
   measuring:
@@ -381,7 +384,7 @@ yomitan, 0 both"). No Yomitan rule is left out, because there is none.
     the same deinflections twice under two names;
   - rows were written as cross products (the same deinflections on the
     459,646 words above, in the same order), which keeps `own.json` at
-    373 kB although the rules grew (479 kB at dd999069);
+    373 kB although the rules grew (479 kB at 25813549);
   - the stems without spaces or capitals, the pronoun stems without spaces,
     the exact-stem exclusions (`alguem`, `sida` among them), -guer, u → o, the
     names, -azinho, `esto` and `sao` came from the real-text, Tatoeba and
@@ -409,7 +412,9 @@ yomitan, 0 both"). No Yomitan rule is left out, because there is none.
     before the -a noun for 44 feminine plurals (`todas`, `novas`,
     `físicas`), `vimos` → ver, one plural row for 154 nouns and adjectives in
     -r instead of the 35 readings, and `lookup.formOfIgnore` for wty-pt-en's
-    negative-imperative references.
+    negative-imperative references;
+  - after the eighth (MERGE_OK at c596b1e), rebased on main 4328429: notes in
+    Known gaps and in Ties between two lemmas only.
 
 ## Measurements
 
@@ -584,7 +589,7 @@ given, it is labelled "without the field".
      examinando) and 7 wrong: the poetic adjective `fero` (fierce) read as
      ferir twice, `mofa` (mockery) as mofo, `condoas` (condoer) as condão,
      the prefix `intra-` and the names `Emi` and `Prue`.
-   - `lookup.formOfIgnore` (the opening section): of Tatoeba's 80,200 hovers
+   - `lookup.formOfIgnore` (the opening section): of Tatoeba's 80,159 hovers
      on `não`, 7,711 change their first result, all from a phrase row of
      wty-pt-en's negative imperative (podar 1,921, ir 475, ser 405, fossar
      111), 7,624 to não and 87 to the phrase *não me diga*, which has a
@@ -838,7 +843,11 @@ Checks:
   none of the lists, Tatoeba or the texts, is traced as the personal
   infinitive. A feminine plural given its adjective by a whole-word reading
   is traced "feminine", where wty-pt-en's row says "plural feminine"
-  (`todas`, `ótimas`, `privadas`). The lemma is right.
+  (`todas`, `ótimas`, `privadas`). And `-nos` after a verb form in -m,
+  -ão or -õe (`disseram-nos`, `dão-nos`, `põe-nos`) is traced "+os" (them):
+  the rule for o and os after a nasal has the longer suffix, both paths take
+  two steps, and the lookup keeps the one it found first. In Tatoeba, 19 of
+  25 such hovers the eighth audit judged mean nos (us). The lemma is right.
 - **Capitalised words at the start of a sentence** show a capitalised
   headword of wty-pt-en before the word itself when there is one, because
   the text as written needs no processor step and its decapitalised variant
@@ -899,7 +908,9 @@ Checks:
   - the 35 forms of two verbs of one stem that show the rarer first
     (`unamos` → unar, `contemos` → conter, `surte` → surtir); feminine
     plurals of an adjective whose feminine is also a noun, beyond the 44
-    readings: `fundas` → funda (a sling) before fundo, `estéticas`,
+    readings: `fundas` → funda (a sling) before fundo; `baratas` and
+    `técnicas`, which mean the adjective in about half their uses (*roupas
+    baratas*, *escolas técnicas*), show the noun; `estéticas`,
     `narrativas` and `ruivas` show the noun where the sentences mean the
     adjective, and `claras` as egg whites, *as derivadas* and *saber as
     novas* the adjective where they mean the noun (5 of the 100 of the hand
