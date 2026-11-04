@@ -159,10 +159,10 @@ conjugate verbs of every root type. So وسيكتبونها gives كتب, بال
 
   | File | First rank, filter → pass | False candidates, filter → pass |
   | --- | --- | --- |
-  | corpus.tsv + gaps.tsv | 80.41% → 80.35% | 1.725 → 2.077 |
-  | cases.tsv | 79.73% → 78.40% | 3.441 → 4.082 |
-  | defaults.tsv | 85.71% → 85.71% | 2.571 → 3.000 |
-  | yomitan.tsv | 89.66% → 81.61% | 2.782 → 4.084 |
+  | corpus.tsv + gaps.tsv | 80.08% → 80.01% | 1.725 → 2.077 |
+  | cases.tsv | 80.35% → 79.03% | 3.446 → 4.088 |
+  | defaults.tsv | 71.43% → 71.43% | 2.571 → 3.000 |
+  | yomitan.tsv | 89.27% → 81.23% | 2.793 → 4.096 |
 
   The untagged adjectives, names and particles are still found through the
   proclitic and pronoun rules, which give no conditions (Rule provenance).
@@ -470,39 +470,39 @@ in `sources/`, run from the repository root.
      Counting the ambiguous and unjudged positions at their sample's rate,
      about 13.5%, 14.2% and 12.8% of the positions with a result show a wrong
      first card.
-5. **Performance** (host load 45-52 on 64 cores, so these are upper bounds).
+5. **Performance** (host load 40-48 on 64 cores, so these are upper bounds).
    - Native `benchmark-lookup --languages languages --language ar --term
      <imported wty-ar-en>` on the 135 texts of `sources/benchmark-words.txt`
      (each word of 20 sentences written for the pack, with the rest of its
-     sentence), 6 passes, the first dropped, three runs: p50 86.3-87.7 µs, p95
-     248.4-256.9 µs. The budget is 1 ms p50.
+     sentence), 6 passes, the first dropped, three runs: p50 83.3-85.4 µs, p95
+     235.0-248.3 µs. The budget is 1 ms p50.
    - Native pack load (`sources/pack-load.cpp`): `LanguageRegistry::add`
-     median 7.38-7.71 ms over 50 runs, three runs; the registry holds
-     6,507,232 bytes of heap. The 14,262 rules are mostly cross products,
+     median 4.68-4.75 ms over 50 runs, three runs; the registry holds
+     6,962,272 bytes of heap. The 14,492 rules are mostly cross products,
      indexed by their endings.
    - WebAssembly, Hachidori feat/multi-language 803f7b6 engines (built from
      hoshidicts b145feb), Node 22:
      - `sources/wasm-load.mjs`, 10 fresh engines each: `hdw_language_load`
-       median 12.34 ms single-thread and 13.77 ms threaded; live heap
-       +3,234,896 bytes. The budgets are 50 ms and 20 MB.
+       median 13.02 ms single-thread and 14.26 ms threaded; live heap
+       +3,448,808 bytes. The budgets are 50 ms and 20 MB.
      - `benchmark/node-lookup.mjs` with `HACHIDORI_LOOKUP_LANGUAGE=ar` on the
-       same 20 sentences (135 hovers, 6 passes): `hdw_lookup` p50 206 µs and
-       p95 530 µs single-thread, p50 221 µs and p95 544 µs threaded.
+       same 20 sentences (135 hovers, 6 passes): `hdw_lookup` p50 202 µs and
+       p95 514 µs single-thread, p50 216 µs and p95 547 µs threaded.
    - The pack has no `pattern` rule, so no pattern heap.
 6. **Hachidori** (feat/multi-language 803f7b6 with this branch in
    `third_party/hoshidicts` and `node scripts/sync-languages.mjs`;
    `test/chrome-language-pack.mjs`, Chrome 152, wty-ar-en):
    - with the pack's 13 cases, 17 / 17 checks pass. Settings adds Arabic
-     beside Japanese and imports the dictionary (1,019,773 terms, 1.3 s);
-     the hovered words find their headword first with their traces
-     (واستعرتُ → استعار, سيكتبون → كتب, بالقلم → قلم, مفاتيحنا → مفتاح,
-     تساعديني → ساعد, رأيتهم → رأى, كِتَابَهُ → كتاب); the Anki note and the
-     switch to Japanese and back work;
-   - with the audit's 30 cases, 31 / 34 checks pass. The three that fail are
-     the dictionary's ties of Known gaps: لم يقل → قلا, أنه → نهى and ابني →
-     بنى. The audit's other wrong cards now show the right lemma: تلك → ذلك,
-     يمكنك → أمكن, يجب → وجب, يجد → وجد, لذا → لهذا, نسيت → نسي, صوته → صوت
-     and أعطني → أعطى;
+     beside Japanese and imports the dictionary (1,019,773 terms); the
+     hovered words find their headword first with their traces (واستعرتُ →
+     استعار, سيكتبون → كتب, بالقلم → قلم, مفاتيحنا → مفتاح, تساعديني → ساعد,
+     رأيتهم → رأى, كِتَابَهُ → كتاب); the Anki note and the switch to
+     Japanese and back work;
+   - with the first audit's 30 cases, 31 / 34 checks pass; the three that
+     fail are the dictionary's cards of Known gaps (لم يقل → قلا, أنه → نهى,
+     ابني → بنى). With the second audit's 33 cases (its 13 wrong cards among
+     them: يجدون, قولا, يبيع, يسبب, سنين, اثنين, صوتا, يغير, جوعا, هذين, دورا,
+     بيتي, تغلق), 37 / 37 checks pass;
    - `test/node-smoke-languages.mjs`: the pack loads and deinflects its
      warm-up sample; 36 of its 40 checks pass, and the 4 that fail are the
      aii, el, tl and zh packs, whose `lookup.untaggedTerms` the vendored
@@ -513,7 +513,7 @@ in `sources/`, run from the repository root.
      304, text.tsv 42 / 42, lookup.tsv 57 / 57; gaps.tsv 0 / 116 (reported).
    - `tests/classes.json` agrees with the engine (4 classes, 571 fields, 2
      steps).
-   - `tools/check-yomitan.mjs`: 10,262 inputs, 155,496 Yomitan results, 0
+   - `tools/check-yomitan.mjs`: 10,270 inputs, 155,534 Yomitan results, 0
      unexplained. The processors `normalizeUnicode`,
      `removeArabicScriptDiacritics`, `removeTatweel` and
      `convertAlifMaqsuraToYaa` agree; `addHamzaTop` and `addHamzaBottom` are
