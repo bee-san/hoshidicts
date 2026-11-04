@@ -518,6 +518,46 @@ ordinal	1	e pesta	pesë	*	ord|art
 negatives	0	më 2	2	*	*
 definite adjective	1	të varfërve	varfër	adj	adj-def-pl|art
 definite adjective	1	të huajve	huaj	adj	adj-def-pl|art
+negatives (per-rule constraint: n-def-sg-m u stemMinLength)	0	iu	i	ns	*
+negatives (per-rule constraint: n-def-sg-m u stemEndsWith)	0	shtu	sht	ns	*
+negatives (per-rule constraint: n-def-sg-m ni stemEndsWith)	0	hyjni	hyj	*	*
+negatives (per-rule constraint: n-def-acc-m rin stemMinLength)	0	mirin	mi	*	*
+negatives (per-rule constraint: n-def-acc-m min stemEndsWith)	0	vetmin	vetëm	*	*
+negatives (per-rule constraint: n-def-acc-m nin stemEndsWith)	0	matnin	mat	ns	*
+negatives (per-rule constraint: n-def-obl-m ut stemEndsWith)	0	helmut	helm	*	*
+negatives (per-rule constraint: n-def-obl-m rit stemEndsWith)	0	arrit	ar	*	*
+negatives (per-rule constraint: n-def-obl-m rit stemMinLength)	0	mirit	mi	*	*
+negatives (per-rule constraint: n-def-obl-m rit stemEndsWith)	0	urdhërit	urdhë	*	*
+negatives (per-rule constraint: n-def-obl-m mit stemEndsWith)	0	vetmit	vetëm	*	*
+negatives (per-rule constraint: n-def-obl-m nit stemEndsWith)	0	fizikanit	fizika	*	*
+negatives (per-rule constraint: n-def-nom-f ja stemEndsWith)	0	troja	troe	*	*
+negatives (per-rule constraint: n-def-obl-f së stemEndsWith)	0	fshatarësë	fshatarë	*	*
+negatives (per-rule constraint: n-indef-obl-f e stemMinLength)	0	ie	i	*	*
+negatives (per-rule constraint: n-def-pl t stemEndsWith)	0	frëngjisht	frëngjish	*	*
+negatives (per-rule constraint: n-pl aj stemMinLength)	0	haj	hall	*	*
+negatives (per-rule constraint: pres-2sg et stemEndsWith)	0	piet	pies	*	*
+negatives (per-rule constraint: impf-2pl nit stemEndsWith)	0	vënit	vë	*	*
+negatives (per-rule constraint: aor-3sg u stemEndsWith)	0	thuaju	thuaj	*	*
+negatives (per-rule constraint: sbjv-3sg jë stemEndsWith)	0	rrinjë	rrinj	v	*
+negatives (per-rule constraint: opt-3sg të stemEndsWith)	0	privatë	priva	v	*
+negatives (per-rule constraint: opt-2pl shit stemEndsWith)	0	uroshit	uro	*	*
+negatives (per-rule constraint: ptcp ur stemEndsWith)	0	leur	le	*	*
+negatives (per-rule constraint: np-pres-3sg et stemEndsWith)	0	fleet	fle	*	*
+negatives (per-rule constraint: np-pres-3pl en stemEndsWith)	0	lejen	lej	v	*
+negatives (per-rule constraint: np-impf-3pl eshin stemEndsWith)	0	largoeshin	largo	*	*
+negatives (per-rule constraint: np-imp-2sg u stemEndsWith)	0	thuaju	thuaj	*	*
+negatives (per-rule constraint: adm-pres kan stemEndsWith)	0	tirkan	tirr	*	*
+negatives (per-rule constraint: cl-e eni stemEndsWith)	0	përzieni	përzë	*	*
+negatives (per-rule constraint: cl-i ini stemEndsWith)	0	faini	faj	*	*
+negatives (per-rule constraint: adj-pl-f a stemMinLength)	0	ma	m	*	*
+negatives (per-rule constraint: adj-def-m u stemEndsWith)	0	fu	f	*	*
+negatives (per-rule constraint: adj-def-m un stemEndsWith)	0	mun	m	*	*
+negatives (per-rule constraint: adj-def-m ut stemEndsWith)	0	helmut	helm	*	*
+negatives (per-rule constraint: adj-def-f a stemMinLength)	0	ma	m	*	*
+negatives (per-rule constraint: adj-def-f s stemMinLength)	0	ës	ë	*	*
+negatives (per-rule constraint: adj-def-pl të stemEndsWith)	0	mëdhatë	madh	*	*
+negatives (per-rule constraint: adj-def-pl ve stemMinLength)	0	ëve	ë	*	*
+negatives (per-rule constraint: np-imp-2sg u circumfix stemMinLength)	0	u ke	kehem	*	*
 negatives (constructed: n-def-sg-m stemCharacters)	0	e doti	e dot	*	*
 negatives (constructed: n-def-sg-m stemMinLength)	0	bi	b	*	*
 negatives (constructed: n-def-sg-m stemEndsWith)	0	doei	doe	*	*
