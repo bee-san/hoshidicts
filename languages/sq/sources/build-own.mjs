@@ -395,8 +395,11 @@ whole('n-pl', 'male', 'mal', NPL, N);
 whole('n-pl', 'varre', 'varr', NPL, N);
 // vjetë (years) only as a whole word: no compound ends in it.
 whole('n-pl', 'vjetë', 'vit', NPL, N);
-// mijëra (thousands) is the plural of the untagged mijë: no conditions out.
-whole('n-pl', 'mijëra', 'mijë', NPL, []);
+// mijëra (thousands), qindra (hundreds), dhjetëra (tens) are the plurals of
+// the untagged numerals: no conditions out.
+for (const [plural, numeral] of [['mijëra', 'mijë'], ['qindra', 'qind'], ['dhjetëra', 'dhjetë']]) {
+    whole('n-pl', plural, numeral, NPL, []);
+}
 whole('n-def-pl', 'ligjet', 'ligj', [], N);
 // Plurals that change the stem.
 for (const [plural, singular] of [
@@ -435,7 +438,8 @@ suffix('vn', 'im', 'ej', ['ns'], ['v'], {stemMinLength: 3});
 // the output has no conditions; conditionsIn adj lets the rule follow the
 // article. katërt alone read as the plural kat (floor) before.
 transform('ord', 'ordinal', 'An ordinal number: i katërt, e katërta → katër (four); i pestë, e pesta → pesë (five).');
-for (const [form, cardinal] of [['katërt', 'katër'], ['katërta', 'katër'], ['pestë', 'pesë'], ['pesta', 'pesë']]) {
+for (const [form, cardinal] of [['katërt', 'katër'], ['katërta', 'katër'], ['katërtit', 'katër'], ['katërtin', 'katër'],
+    ['katërtës', 'katër'], ['katërtën', 'katër'], ['pestë', 'pesë'], ['pesta', 'pesë']]) {
     whole('ord', form, cardinal, ['adj'], []);
 }
 
@@ -505,6 +509,9 @@ for (const [end, after] of [['i', ['adj_m']], ['in', ['adj_m', 'adj_pl']], ['it'
     suffix('adj-def-m', end, 'ë', after, A, {stemMinLength: 2, stemEndsWith: CONSONANT});
     suffix('adj-def-m', `r${end}`, 'ër', after, A, {stemMinLength: 1, stemEndsWith: CONSONANT});
     suffix('adj-def-m', `l${end}`, 'ël', after, A, {stemMinLength: 1, stemEndsWith: CONSONANT});
+    // Adjectives in -ëm lose the ë: i vetmi, të vetmin, të vetmit → vetëm;
+    // i sotmi → sotëm; i ndershmi → ndershëm.
+    suffix('adj-def-m', `m${end}`, 'ëm', after, A, {stemMinLength: 2, stemEndsWith: CONSONANT});
 }
 for (const end of ['u', 'un', 'ut']) {
     suffix('adj-def-m', end, '', ['adj_m', 'adj_pl'], A, {stemMinLength: 1, stemEndsWith: '[ikgh]'});
@@ -530,6 +537,8 @@ whole('adj-def-f', 'reja', 'ri', ['adj_f'], A);
 transform('adj-def-pl', 'definite plural', 'Plural definite adjective (të mirët, të mirat, të mirëve, të mirave → mirë; të mëdhenjtë → madh).');
 suffix('adj-def-pl', 't', '', ['adj_pl'], ['adj', 'adj_pl'], {stemMinLength: 2, stemEndsWith: '[aëe]'});
 suffix('adj-def-pl', 'të', '', ['adj_pl'], ['adj', 'adj_pl'], {stemMinLength: 2, stemEndsWith: CONSONANT});
+// të mëdhatë (the big ones, fem.): -të after the stressed -a of mëdha.
+whole('adj-def-pl', 'mëdhatë', 'madh', ['adj_pl'], A);
 // -it is the definite plural of adjectives in -r (të bukurit, të varfërit,
 // të vdekurit); after other consonants të ...-it is a genitive noun (të lumit).
 suffix('adj-def-pl', 'it', '', ['adj_pl'], ['adj', 'adj_pl'], {stemMinLength: 2, stemEndsWith: '[r]'});
@@ -750,6 +759,9 @@ whole('aor-3sg', 'ftoi', 'ftoj', AO, V);
 // ndjeva (I felt) is ndiej, not ndjej (to forgive), and thithe (you sucked)
 // thith, not the oblique of thithë (nipple): ties the rows leave open.
 whole('aor-1sg', 'ndjeva', 'ndiej', AO, V);
+whole('aor-1pl', 'ndjemë', 'ndiej', AO, V);
+whole('aor-2pl', 'ndjetë', 'ndiej', AO, V);
+whole('aor-3pl', 'ndjenë', 'ndiej', AO, V);
 whole('aor-2sg', 'thithe', 'thith', AO, V);
 // hidhu (jump!) and vishu (get dressed!), the non-active imperatives of hedh
 // and vesh (hidhem and vishem are not headwords), before hithër (nettle) and
@@ -757,6 +769,7 @@ whole('aor-2sg', 'thithe', 'thith', AO, V);
 // preka (you, I touched) before the admirative of pres.
 whole('np-imp-2sg', 'hidhu', 'hedh', IMP, V);
 whole('np-imp-2sg', 'vishu', 'vesh', IMP, V);
+whole('np-imp-2pl', 'vishuni', 'vesh', IMP, V);
 whole('pres-2sg', 'kërcen', 'kërcej', SB, V);
 whole('aor-1sg', 'preka', 'prek', AO, V);
 whole('aor-2sg', 'preke', 'prek', AO, V);

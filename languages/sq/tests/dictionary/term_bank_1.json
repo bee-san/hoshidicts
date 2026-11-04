@@ -206,5 +206,10 @@
   ["cili", "", "pron", "", 0, ["which, who"], 205, ""],
   ["cila", "", "pron", "", 0, ["which, who (feminine)"], 206, ""],
   ["cilat", "", "pron", "", 0, [["cili", ["nominative/accusative plural feminine"]]], 207, ""],
-  ["cilat", "", "pron", "", 0, [["cila", ["plural"]]], 208, ""]
+  ["cilat", "", "pron", "", 0, [["cila", ["plural"]]], 208, ""],
+  ["qind", "", "num", "", 0, ["hundred"], 209, ""],
+  ["dhjetë", "", "num", "", 0, ["ten"], 210, ""],
+  ["vetëm", "", "adj", "adj", 0, ["only, alone"], 211, ""],
+  ["sotëm", "", "adj", "adj", 0, ["today's"], 212, ""],
+  ["vish", "", "v", "v", 0, [["vij", ["second-person singular present subjunctive"]]], 214, ""]
 ]

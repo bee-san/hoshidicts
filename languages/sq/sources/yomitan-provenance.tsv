@@ -64,21 +64,21 @@ aorist third-person singular indicative	3	i		aor-3sg[11] i →
 aorist third-person singular indicative	4	ye	ej	(none)
 aorist first-person plural indicative	0	uam	oj	aor-1pl[0] uam → oj
 aorist first-person plural indicative	1	uam	uaj	aor-1pl[1] uam → uaj
-aorist first-person plural indicative	2	më	j	aor-1pl[6] emë → ej; aor-1pl[7] imë → ij; aor-1pl[8] ymë → yj; aor-1pl[9] amë → aj; aor-1pl[32] bëmë → bëj
-aorist first-person plural indicative	3	ëm		aor-1pl[10] ëm → 
+aorist first-person plural indicative	2	më	j	aor-1pl[6] emë → ej; aor-1pl[7] imë → ij; aor-1pl[8] ymë → yj; aor-1pl[9] amë → aj; aor-1pl[33] bëmë → bëj
+aorist first-person plural indicative	3	ëm		aor-1pl[11] ëm → 
 aorist second-person plural indicative	0	uat	oj	aor-2pl[0] uat → oj
 aorist second-person plural indicative	1	uat	uaj	aor-2pl[1] uat → uaj
-aorist second-person plural indicative	2	të	j	aor-2pl[6] etë → ej; aor-2pl[7] itë → ij; aor-2pl[8] ytë → yj; aor-2pl[9] atë → aj; aor-2pl[31] bëtë → bëj
-aorist second-person plural indicative	3	ët		aor-2pl[10] ët → 
+aorist second-person plural indicative	2	të	j	aor-2pl[6] etë → ej; aor-2pl[7] itë → ij; aor-2pl[8] ytë → yj; aor-2pl[9] atë → aj; aor-2pl[32] bëtë → bëj
+aorist second-person plural indicative	3	ët		aor-2pl[11] ët → 
 aorist third-person plural indicative	0	uan	oj	aor-3pl[0] uan → oj
 aorist third-person plural indicative	1	uan	uaj	aor-3pl[1] uan → uaj
-aorist third-person plural indicative	2	në	j	aor-3pl[6] enë → ej; aor-3pl[7] inë → ij; aor-3pl[8] ynë → yj; aor-3pl[9] anë → aj; aor-3pl[31] bënë → bëj
-aorist third-person plural indicative	3	ën		aor-3pl[10] ën → 
+aorist third-person plural indicative	2	në	j	aor-3pl[6] enë → ej; aor-3pl[7] inë → ij; aor-3pl[8] ynë → yj; aor-3pl[9] anë → aj; aor-3pl[32] bënë → bëj
+aorist third-person plural indicative	3	ën		aor-3pl[11] ën → 
 imperative second-person singular present	0	o	oj	imp-2sg[0]  → j
 imperative second-person singular present	1	hu	hem	np-imp-2sg[5] u → em; np-imp-2sg[14] ngrihu → ngrihem
 imperative second-person plural present	0	ni	j	pres-2pl[0] ni → j
 imperative second-person plural present	1	ni		pres-2pl[1] ni → 
-imperative second-person plural present	2	huni	hem	np-imp-2pl[2] uni → em; np-imp-2pl[9] ngrihuni → ngrihem
+imperative second-person plural present	2	huni	hem	np-imp-2pl[3] uni → em; np-imp-2pl[10] ngrihuni → ngrihem
 participle	0	uar	oj	ptcp[0] uar → oj
 participle	1	ur		ptcp[12] ur → 
 participle	2	rë	j	ptcp[7] erë → ej; ptcp[8] irë → ij; ptcp[9] yrë → yj; ptcp[10] arë → aj; ptcp[11] ërë → ëj; ptcp[51] blerë → blej

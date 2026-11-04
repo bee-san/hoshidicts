@@ -408,7 +408,6 @@ negatives (constraint)	0	min	më	n	*
 negatives (constraint)	0	marrin	mar	n	*
 negatives (constraint)	0	e mërkurit	e mërkurë	n	*
 negatives (constraint)	0	mit	më	n	*
-negatives (constraint)	0	vetmit	vetëm	adj	*
 negatives (constraint)	0	ma	më	n	*
 negatives (constraint)	0	nga	nge	n	*
 negatives (constraint)	0	marrin	marri	n	*
@@ -522,13 +521,11 @@ negatives (per-rule constraint: n-def-sg-m u stemMinLength)	0	iu	i	ns	*
 negatives (per-rule constraint: n-def-sg-m u stemEndsWith)	0	shtu	sht	ns	*
 negatives (per-rule constraint: n-def-sg-m ni stemEndsWith)	0	hyjni	hyj	*	*
 negatives (per-rule constraint: n-def-acc-m rin stemMinLength)	0	mirin	mi	*	*
-negatives (per-rule constraint: n-def-acc-m min stemEndsWith)	0	vetmin	vetëm	*	*
 negatives (per-rule constraint: n-def-acc-m nin stemEndsWith)	0	matnin	mat	ns	*
 negatives (per-rule constraint: n-def-obl-m ut stemEndsWith)	0	helmut	helm	*	*
 negatives (per-rule constraint: n-def-obl-m rit stemEndsWith)	0	arrit	ar	*	*
 negatives (per-rule constraint: n-def-obl-m rit stemMinLength)	0	mirit	mi	*	*
 negatives (per-rule constraint: n-def-obl-m rit stemEndsWith)	0	urdhërit	urdhë	*	*
-negatives (per-rule constraint: n-def-obl-m mit stemEndsWith)	0	vetmit	vetëm	*	*
 negatives (per-rule constraint: n-def-obl-m nit stemEndsWith)	0	fizikanit	fizika	*	*
 negatives (per-rule constraint: n-def-nom-f ja stemEndsWith)	0	troja	troe	*	*
 negatives (per-rule constraint: n-def-obl-f së stemEndsWith)	0	fshatarësë	fshatarë	*	*
@@ -555,13 +552,19 @@ negatives (per-rule constraint: adj-def-m un stemEndsWith)	0	mun	m	*	*
 negatives (per-rule constraint: adj-def-m ut stemEndsWith)	0	helmut	helm	*	*
 negatives (per-rule constraint: adj-def-f a stemMinLength)	0	ma	m	*	*
 negatives (per-rule constraint: adj-def-f s stemMinLength)	0	ës	ë	*	*
-negatives (per-rule constraint: adj-def-pl të stemEndsWith)	0	mëdhatë	madh	*	*
 negatives (per-rule constraint: adj-def-pl ve stemMinLength)	0	ëve	ë	*	*
 negatives (per-rule constraint: np-imp-2sg u circumfix stemMinLength)	0	u ke	kehem	*	*
 non-active	1	vritem	vras	v	np-pres-1sg
 definite adjective	1	i riu	ri	adj	adj-def-m|art
 negatives	0	e riu	ri	adj	*
 negatives	0	dyvjetë	dyvit	*	*
+definite adjective	1	i vetmi	vetëm	adj	adj-def-m|art
+definite adjective	1	të vetmin	vetëm	adj	adj-def-m|art
+definite adjective	1	i sotmi	sotëm	adj	adj-def-m|art
+definite adjective	1	të mëdhatë	madh	adj	adj-def-pl|art
+negatives (per-rule constraint: n-def-acc-m min stemEndsWith)	0	vetmin	vetëm	ns	*
+negatives (per-rule constraint: n-def-obl-m mit stemEndsWith)	0	vetmit	vetëm	ns	*
+negatives (per-rule constraint: adj-def-pl ve stemMinLength)	0	të mbve	mb	*	*
 negatives (constructed: n-def-sg-m stemCharacters)	0	e doti	e dot	*	*
 negatives (constructed: n-def-sg-m stemMinLength)	0	bi	b	*	*
 negatives (constructed: n-def-sg-m stemEndsWith)	0	doei	doe	*	*

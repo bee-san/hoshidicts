@@ -1472,22 +1472,17 @@
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[12].rules[37].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[12].rules[38].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
-    ],
     "transforms[12].rules[39].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
     ],
     "transforms[12].rules[40].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[12].rules[41].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
@@ -1502,7 +1497,7 @@
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[12].rules[45].stemCharacters": [
+    "transforms[12].rules[46].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
@@ -1512,17 +1507,12 @@
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[12].rules[48].stemCharacters": [
+    "transforms[12].rules[49].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
     ],
     "transforms[12].rules[50].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[12].rules[51].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
@@ -1533,6 +1523,16 @@
       [57344, 1114111]
     ],
     "transforms[12].rules[53].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[12].rules[54].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[12].rules[55].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
@@ -2191,12 +2191,12 @@
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[109].rules[10].stemCharacters": [
+    "transforms[109].rules[11].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[109].rules[10].stemEndsWith": [
+    "transforms[109].rules[11].stemEndsWith": [
       [98, 100],
       [102, 104],
       [107, 110],
@@ -2256,12 +2256,12 @@
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[110].rules[10].stemCharacters": [
+    "transforms[110].rules[11].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[110].rules[10].stemEndsWith": [
+    "transforms[110].rules[11].stemEndsWith": [
       [98, 100],
       [102, 104],
       [107, 110],
@@ -2321,12 +2321,12 @@
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[111].rules[10].stemCharacters": [
+    "transforms[111].rules[11].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[111].rules[10].stemEndsWith": [
+    "transforms[111].rules[11].stemEndsWith": [
       [98, 100],
       [102, 104],
       [107, 110],
@@ -3818,19 +3818,6 @@
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[135].rules[0].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[135].rules[0].stemEndsWith": [
-      [97, 97],
-      [101, 101],
-      [105, 105],
-      [111, 111],
-      [121, 121],
-      [235, 235]
-    ],
     "transforms[135].rules[1].stemCharacters": [
       [0, 31],
       [33, 55295],
@@ -3850,6 +3837,19 @@
       [57344, 1114111]
     ],
     "transforms[135].rules[2].stemEndsWith": [
+      [97, 97],
+      [101, 101],
+      [105, 105],
+      [111, 111],
+      [121, 121],
+      [235, 235]
+    ],
+    "transforms[135].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[135].rules[3].stemEndsWith": [
       [98, 100],
       [102, 104],
       [107, 110],
@@ -3858,11 +3858,6 @@
       [120, 120],
       [122, 122],
       [231, 231]
-    ],
-    "transforms[135].rules[3].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
     ],
     "transforms[135].rules[4].stemCharacters": [
       [0, 31],
@@ -3874,7 +3869,12 @@
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[135].rules[5].stemEndsWith": [
+    "transforms[135].rules[6].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[135].rules[6].stemEndsWith": [
       [98, 100],
       [102, 104],
       [107, 110],
@@ -3884,12 +3884,12 @@
       [122, 122],
       [231, 231]
     ],
-    "transforms[135].rules[6].stemCharacters": [
+    "transforms[135].rules[7].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[135].rules[7].stemCharacters": [
+    "transforms[135].rules[8].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
@@ -5092,8 +5092,14 @@
       [57344, 1114111]
     ],
     "transforms[148].rules[12].stemEndsWith": [
-      [103, 105],
-      [107, 107]
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 116],
+      [118, 118],
+      [120, 120],
+      [122, 122],
+      [231, 231]
     ],
     "transforms[148].rules[13].stemCharacters": [
       [0, 31],
@@ -5101,8 +5107,14 @@
       [57344, 1114111]
     ],
     "transforms[148].rules[13].stemEndsWith": [
-      [103, 105],
-      [107, 107]
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 116],
+      [118, 118],
+      [120, 120],
+      [122, 122],
+      [231, 231]
     ],
     "transforms[148].rules[14].stemCharacters": [
       [0, 31],
@@ -5110,6 +5122,39 @@
       [57344, 1114111]
     ],
     "transforms[148].rules[14].stemEndsWith": [
+      [98, 100],
+      [102, 104],
+      [106, 110],
+      [112, 116],
+      [118, 118],
+      [120, 120],
+      [122, 122],
+      [231, 231]
+    ],
+    "transforms[148].rules[15].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[148].rules[15].stemEndsWith": [
+      [103, 105],
+      [107, 107]
+    ],
+    "transforms[148].rules[16].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[148].rules[16].stemEndsWith": [
+      [103, 105],
+      [107, 107]
+    ],
+    "transforms[148].rules[17].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[148].rules[17].stemEndsWith": [
       [103, 105],
       [107, 107]
     ],
@@ -5291,22 +5336,13 @@
       [122, 122],
       [231, 231]
     ],
-    "transforms[150].rules[2].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[150].rules[2].stemEndsWith": [
-      [114, 114]
-    ],
     "transforms[150].rules[3].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
     ],
     "transforms[150].rules[3].stemEndsWith": [
-      [97, 97],
-      [235, 235]
+      [114, 114]
     ],
     "transforms[150].rules[4].stemCharacters": [
       [0, 31],
@@ -5314,6 +5350,15 @@
       [57344, 1114111]
     ],
     "transforms[150].rules[4].stemEndsWith": [
+      [97, 97],
+      [235, 235]
+    ],
+    "transforms[150].rules[5].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[150].rules[5].stemEndsWith": [
       [98, 100],
       [102, 104],
       [106, 110],
@@ -6802,7 +6847,6 @@
         ["marrin", "marrin"],
         ["e mërkurit", "e mërkurit"],
         ["mit", "mit"],
-        ["vetmit", "vetmit"],
         ["ma", "ma"],
         ["nga", "nga"],
         ["e hënës", "e hënës"],
@@ -6908,7 +6952,6 @@
         ["iu", "iu"],
         ["shtu", "shtu"],
         ["mirin", "mirin"],
-        ["vetmin", "vetmin"],
         ["matnin", "matnin"],
         ["helmut", "helmut"],
         ["mirit", "mirit"],
@@ -6934,12 +6977,18 @@
         ["faini", "faini"],
         ["fu", "fu"],
         ["ës", "ës"],
-        ["mëdhatë", "mëdhatë"],
         ["ëve", "ëve"],
         ["u ke", "u ke"],
         ["vritem", "vritem"],
         ["e riu", "e riu"],
         ["dyvjetë", "dyvjetë"],
+        ["i vetmi", "i vetmi"],
+        ["të vetmin", "të vetmin"],
+        ["i sotmi", "i sotmi"],
+        ["të mëdhatë", "të mëdhatë"],
+        ["vetmin", "vetmin"],
+        ["vetmit", "vetmit"],
+        ["të mbve", "të mbve"],
         ["e doti", "e doti"],
         ["bi", "bi"],
         ["doei", "doei"],
@@ -7268,6 +7317,13 @@
         ["mijëra njerëz", "mijëra njerëz"],
         ["cilat janë", "cilat janë"],
         ["shtëpia", "shtëpia"],
+        ["qindra kilometra", "qindra kilometra"],
+        ["dhjetëra vjet", "dhjetëra vjet"],
+        ["ndjenë frikë", "ndjenë frikë"],
+        ["vishuni shpejt", "vishuni shpejt"],
+        ["të katërtit", "të katërtit"],
+        ["i vetmi njeri", "i vetmi njeri"],
+        ["të mëdhatë janë", "të mëdhatë janë"],
         ["Fëmijët lexonin libra në bibliotekën e qytetit.", "fëmijët lexonin libra në bibliotekën e qytetit."],
         ["lexoj", "lexoj"]
       ]
@@ -8749,7 +8805,6 @@
         ["marrin", "Marrin"],
         ["e mërkurit", "E mërkurit"],
         ["mit", "Mit"],
-        ["vetmit", "Vetmit"],
         ["ma", "Ma"],
         ["nga", "Nga"],
         ["e hënës", "E hënës"],
@@ -8855,7 +8910,6 @@
         ["iu", "Iu"],
         ["shtu", "Shtu"],
         ["mirin", "Mirin"],
-        ["vetmin", "Vetmin"],
         ["matnin", "Matnin"],
         ["helmut", "Helmut"],
         ["mirit", "Mirit"],
@@ -8881,12 +8935,18 @@
         ["faini", "Faini"],
         ["fu", "Fu"],
         ["ës", "Ës"],
-        ["mëdhatë", "Mëdhatë"],
         ["ëve", "Ëve"],
         ["u ke", "U ke"],
         ["vritem", "Vritem"],
         ["e riu", "E riu"],
         ["dyvjetë", "Dyvjetë"],
+        ["i vetmi", "I vetmi"],
+        ["të vetmin", "Të vetmin"],
+        ["i sotmi", "I sotmi"],
+        ["të mëdhatë", "Të mëdhatë"],
+        ["vetmin", "Vetmin"],
+        ["vetmit", "Vetmit"],
+        ["të mbve", "Të mbve"],
         ["e doti", "E doti"],
         ["bi", "Bi"],
         ["doei", "Doei"],
@@ -9215,6 +9275,13 @@
         ["mijëra njerëz", "Mijëra njerëz"],
         ["cilat janë", "Cilat janë"],
         ["shtëpia", "Shtëpia"],
+        ["qindra kilometra", "Qindra kilometra"],
+        ["dhjetëra vjet", "Dhjetëra vjet"],
+        ["ndjenë frikë", "Ndjenë frikë"],
+        ["vishuni shpejt", "Vishuni shpejt"],
+        ["të katërtit", "Të katërtit"],
+        ["i vetmi njeri", "I vetmi njeri"],
+        ["të mëdhatë janë", "Të mëdhatë janë"],
         ["Fëmijët lexonin libra në bibliotekën e qytetit.", "Fëmijët lexonin libra në bibliotekën e qytetit."],
         ["lexoj", "Lexoj"]
       ]
