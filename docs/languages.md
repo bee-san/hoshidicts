@@ -1586,9 +1586,10 @@ alphanumerics; kanji variants; iteration marks; kanji numbers; middle dots.
 Today's code is kept, unmodified apart from being placed in
 `namespace hoshidicts_legacy`, as a reference in `tests/reference/`:
 `legacy_deinflector.cpp`, `legacy_text_processor.cpp` (with the kanji-variant
-table), `legacy_query.cpp` and `legacy_lookup.cpp` (the `Lookup` of 35e2dab),
-with copies of the internal headers they use (`query_internal.hpp`,
-`text_processor.hpp`, `query.hpp`, `lookup.hpp`, `deinflector.hpp`).
+table), `legacy_query.cpp` and `legacy_lookup.cpp` (the `Lookup` of 35e2dab,
+with `a95758b` below), with copies of the internal headers they use
+(`query_internal.hpp`, `text_processor.hpp`, `query.hpp`, `lookup.hpp`,
+`deinflector.hpp`).
 One change to the Japanese pipeline has been made since, in `src/` and in the
 oracle alike: `a95758b` (bee-san/hachidori#658, the commit Hachidori pins)
 returns, with `metadata_only_terms`, every reading that only frequency and

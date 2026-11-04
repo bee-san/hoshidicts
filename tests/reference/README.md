@@ -1,10 +1,11 @@
-# The oracle: hoshidicts at 35e2dab
+# The oracle: hoshidicts at 35e2dab, with a95758b
 
 These files are today's Japanese pipeline at
-[35e2dab](https://github.com/bee-san/hoshidicts/commit/35e2dab), kept as a
-reference for the language framework (`docs/languages.md`, section 11.3). The
-parity tests (`ja-deinflect-parity`, `ja-process-parity`, `ja-lookup-parity`)
-compare the new engine with them and require identical output.
+[35e2dab](https://github.com/bee-san/hoshidicts/commit/35e2dab), with the one
+change below applied, kept as a reference for the language framework
+(`docs/languages.md`, section 11.3). The parity tests (`ja-deinflect-parity`,
+`ja-process-parity`, `ja-lookup-parity`) compare the new engine with them and
+require identical output.
 
 | File | Copied from |
 | --- | --- |
