@@ -389,6 +389,13 @@ for (const [inflected, deinflected, extra] of [
 // mal more often than the oblique of malë.
 whole('n-pl', 'zotërinj', 'zotëri', NPL, N);
 whole('n-pl', 'male', 'mal', NPL, N);
+// Ties wty-sq-en's rows leave open, which the rule order decided the other
+// way: varre (graves) before the oblique of varrë (wound), ligjet (the laws)
+// before ligje (dirge).
+whole('n-pl', 'varre', 'varr', NPL, N);
+// mijëra (thousands) is the plural of the untagged mijë: no conditions out.
+whole('n-pl', 'mijëra', 'mijë', NPL, []);
+whole('n-def-pl', 'ligjet', 'ligj', [], N);
 // Plurals that change the stem.
 for (const [plural, singular] of [
     ['djem', 'djalë'], ['kuaj', 'kalë'], ['duar', 'dorë'], ['dyer', 'derë'], ['net', 'natë'], ['netë', 'natë'],
@@ -421,8 +428,19 @@ suffix('vn', 'im', 'ej', ['ns'], ['v'], {stemMinLength: 3});
 // accusative), të (plural, and singular oblique cases), së (feminine oblique
 // after a definite noun). The comparative and superlative put më before the
 // article (më i mirë, më i miri).
+// Ordinals whose form differs from the cardinal, alone or after the article
+// (i katërt, e katërta, i pestë). The cardinals are untagged in wty-sq-en, so
+// the output has no conditions; conditionsIn adj lets the rule follow the
+// article. katërt alone read as the plural kat (floor) before.
+transform('ord', 'ordinal', 'An ordinal number: i katërt, e katërta → katër (four); i pestë, e pesta → pesë (five).');
+for (const [form, cardinal] of [['katërt', 'katër'], ['katërta', 'katër'], ['pestë', 'pesë'], ['pesta', 'pesë']]) {
+    whole('ord', form, cardinal, ['adj'], []);
+}
+
 transform('cmp', 'comparative (më)', 'The comparative or superlative më before an adjective or a gradable adverb: më i mirë → mirë, më shpejt → shpejt, më vonë → vonë.');
-prefix('cmp', 'më ', '', [], ['adj', 'adj_cmp'], {stemMinLength: 1});
+// Not before a digit: më 2 shkurt is on 2 February (wty-sq-en has a row 2 →
+// horizontal).
+prefix('cmp', 'më ', '', [], ['adj', 'adj_cmp'], {stemMinLength: 1, stemNotStartsWith: '[0-9]'});
 // Adverbs only from a list of gradable ones and those in -isht: më is also
 // a preposition (deri më sot, deri më tani: until today, until now), which
 // an open rule read as the comparative of sot and tani.
@@ -514,6 +532,8 @@ suffix('adj-def-pl', 'të', '', ['adj_pl'], ['adj', 'adj_pl'], {stemMinLength: 2
 // të vdekurit); after other consonants të ...-it is a genitive noun (të lumit).
 suffix('adj-def-pl', 'it', '', ['adj_pl'], ['adj', 'adj_pl'], {stemMinLength: 2, stemEndsWith: '[r]'});
 suffix('adj-def-pl', 've', '', ['adj_pl'], ['adj', 'adj_pl'], {stemMinLength: 2, stemEndsWith: '[aë]'});
+// and after a consonant: të varfërve, të rinjve, të huajve, të vdekurve.
+suffix('adj-def-pl', 've', '', ['adj_pl'], ['adj', 'adj_pl'], {stemMinLength: 3, stemEndsWith: CONSONANT});
 
 // ================================================================================
 // Verbs: analytic forms
@@ -725,6 +745,19 @@ for (const rules of Object.values(aorist)) {
 // ftoi (invited) before the noun ftua (quince, definite ftoi), whose
 // rule comes first at the ending oi.
 whole('aor-3sg', 'ftoi', 'ftoj', AO, V);
+// ndjeva (I felt) is ndiej, not ndjej (to forgive), and thithe (you sucked)
+// thith, not the oblique of thithë (nipple): ties the rows leave open.
+whole('aor-1sg', 'ndjeva', 'ndiej', AO, V);
+whole('aor-2sg', 'thithe', 'thith', AO, V);
+// hidhu (jump!) and vishu (get dressed!), the non-active imperatives of hedh
+// and vesh (hidhem and vishem are not headwords), before hithër (nettle) and
+// vij; kërcen (he jumps) before the accusative of kërce (cartilage); preke,
+// preka (you, I touched) before the admirative of pres.
+whole('np-imp-2sg', 'hidhu', 'hedh', IMP, V);
+whole('np-imp-2sg', 'vishu', 'vesh', IMP, V);
+whole('pres-2sg', 'kërcen', 'kërcej', SB, V);
+whole('aor-1sg', 'preka', 'prek', AO, V);
+whole('aor-2sg', 'preke', 'prek', AO, V);
 // Consonant stems: hapa, hape, hapi (preku after k, g, h), hapëm, hapët, hapën.
 for (const [p, end, extra] of [['1sg', 'a', {}], ['2sg', 'e', {}], ['3sg', 'i', {}], ['3sg', 'u', {stemEndsWith: '[kgh]'}], ['1pl', 'ëm', {}], ['2pl', 'ët', {}], ['3pl', 'ën', {}]]) {
     suffix(`aor-${p}`, end, '', AO, V, {stemMinLength: 2, stemEndsWith: VC, ...extra});

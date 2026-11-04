@@ -510,6 +510,14 @@ negatives	0	arrit	arrë	n	*
 negatives (minimum stem)	0	ta	të	*	*
 negatives (minimum stem)	0	ka	kë	*	*
 negatives (minimum stem)	0	ke	kë	*	*
+ordinal	1	katërt	katër	*	ord
+ordinal	1	i katërt	katër	*	ord|art
+ordinal	1	e katërta	katër	*	ord|art
+ordinal	1	i pestë	pesë	*	ord|art
+ordinal	1	e pesta	pesë	*	ord|art
+negatives	0	më 2	2	*	*
+definite adjective	1	të varfërve	varfër	adj	adj-def-pl|art
+definite adjective	1	të huajve	huaj	adj	adj-def-pl|art
 negatives (constructed: n-def-sg-m stemCharacters)	0	e doti	e dot	*	*
 negatives (constructed: n-def-sg-m stemMinLength)	0	bi	b	*	*
 negatives (constructed: n-def-sg-m stemEndsWith)	0	doei	doe	*	*

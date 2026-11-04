@@ -17,7 +17,12 @@ repository root with a built hoshidicts-cli:
       first result is right when the word's form-of rows name it, or it is
       the word itself, which has definitions of its own. When the rows name
       two lemmas or more (a homograph: dita, day or I knew), either passes,
-      so those words are listed apart for judging by hand.
+      so those words are listed apart for judging by hand, and so are the
+      words whose first result is the word itself while their rows name
+      another lemma (ka: the preposition, or has). Two more classes are
+      listed for judging by hand: words whose rows name a lemma no rule
+      reaches (mostly function words), and words without rows whose first
+      result comes through a rule and then a dictionary row.
 
   python3 languages/sq/sources/measure.py real <wty-sq-en.zip> <imported dir> <unimorph sqi> <out dir> <text>...
       Every word of the texts (runs of letters; an apostrophe or hyphen ends a
@@ -28,7 +33,9 @@ repository root with a built hoshidicts-cli:
       matched text has rows that name other lemmas and the result comes from
       the rules; a homograph when the rows name it and another lemma, so the
       script cannot tell (<out dir>/homographs.tsv, grouped by word and first
-      result, judged by hand); the rest are written to <out dir>/unjudged.tsv,
+      result, judged by hand); the matched text itself, a headword of its own,
+      while its rows name another lemma (<out dir>/itself.tsv, grouped, judged
+      by hand: ka, the preposition, or has); the rest are written to <out dir>/unjudged.tsv,
       from which a random sample is judged by hand. Apart from those counts,
       <out dir>/capitalized.tsv lists the capitalized words whose first result
       is a capitalized headword (a name: no processor step reaches it before
@@ -253,6 +260,7 @@ def cmd_frequent(dictionary, imported, freq, unimorph, n='10000'):
     results = lookup_batch([w for w, _, _ in reached], imported)
     wrong = []
     homographs = []
+    itself = []
     for (w, c, named), res in zip(reached, results):
         first = res['results'][0] if res['results'] else None
         if first is None:
@@ -262,7 +270,10 @@ def cmd_frequent(dictionary, imported, freq, unimorph, n='10000'):
         if e in named and len(named) >= 2 and e != w:
             homographs.append((w, c, e, first['trace'], sorted(named - {e})))
             continue
-        if e in named or (e == w and w in lemmas):
+        if e in named:
+            continue
+        if e == w and w in lemmas:
+            itself.append((w, c, sorted(named)))
             continue
         wrong.append((w, c, e, first['trace']))
     tokens_reached = sum(c for _, c, _ in reached)
@@ -275,6 +286,20 @@ def cmd_frequent(dictionary, imported, freq, unimorph, n='10000'):
           'the first result is one of those lemmas, judged by hand:')
     for w, c, e, trace, others in homographs:
         print(f'  {w} ({c}) -> {e} {trace}  [also: {", ".join(others)}]')
+    print(f'{len(itself)} of them show the word itself, a headword of its own, while their rows name another lemma '
+          f'({sum(x[1] for x in itself)} tokens), judged by hand:')
+    for w, c, named in itself:
+        print(f'  {w} ({c}) -> {w}  [rows name: {", ".join(named)}]')
+    # Words whose rows name a lemma that no rule reaches: the lookup follows
+    # the rows (or shows the word itself).
+    reached_set = {x[0] for x in reached}
+    unreached = [(w, c) for w, c in words if w not in reached_set and (forms.get(w) or w in um)]
+    res = lookup_batch([w for w, _ in unreached], imported)
+    print(f'{len(unreached)} words have rows that name a lemma no rule reaches ({sum(c for _, c in unreached)} tokens), judged by hand:')
+    for (w, c), r in zip(unreached, res):
+        f = r['results'][0] if r['results'] else None
+        named = sorted({l for l, _ in forms.get(w, [])} | um.get(w, set()))
+        print(f'  {w} ({c}) -> {f["expression"] if f else None} {f["trace"] if f else ""}  [rows name: {", ".join(named)}]')
     # Words no form-of row or UniMorph row names a lemma for, whose first result
     # comes from the pack's rules (a trace of transform ids): judged by hand.
     ids = {t['id'] for t in json.load(open(os.path.join(PACK, 'transforms.json'), encoding='utf-8'))['transforms']}
@@ -282,8 +307,13 @@ def cmd_frequent(dictionary, imported, freq, unimorph, n='10000'):
     rest = [(w, c) for w, c in words if w not in reached_words and not forms.get(w) and w not in um]
     res = lookup_batch([w for w, _ in rest], imported)
     by_rule = [(w, c, r['results'][0]) for (w, c), r in zip(rest, res) if r['results'] and r['results'][0]['trace'] and set(r['results'][0]['trace']) <= ids]
+    mixed = [(w, c, r['results'][0]) for (w, c), r in zip(rest, res) if r['results'] and set(r['results'][0]['trace']) & ids
+             and not set(r['results'][0]['trace']) <= ids]
     print(f'{len(rest)} words have no form-of or UniMorph row; for {len(by_rule)} the first result comes through the rules ({sum(c for _, c, _ in by_rule)} tokens):')
     for w, c, first in by_rule:
+        print(f'  {w} ({c}) -> {first["expression"]} {first["trace"]}')
+    print(f'for {len(mixed)} of them the first result comes through a rule and then a dictionary row ({sum(c for _, c, _ in mixed)} tokens), judged by hand:')
+    for w, c, first in mixed:
         print(f'  {w} ({c}) -> {first["expression"]} {first["trace"]}')
 
 
@@ -316,6 +346,8 @@ def cmd_real(dictionary, imported, unimorph, out_dir, *texts):
     unjudged = []
     homographs = collections.Counter()
     homograph_text = {}
+    itself = collections.Counter()
+    itself_text = {}
     for (word, text), res in zip(hovers, results):
         if not res['results']:
             counts['nothing'] += 1
@@ -330,6 +362,11 @@ def cmd_real(dictionary, imported, unimorph, out_dir, *texts):
             key = (matched, e, ', '.join(sorted(named - {e})))
             homographs[key] += 1
             homograph_text.setdefault(key, text[:80])
+        elif e not in named and named and e.lower() == matched and (e in lemmas or e.lower() in lemmas):
+            counts['itself'] += 1
+            key = (matched, e, ', '.join(sorted(named)))
+            itself[key] += 1
+            itself_text.setdefault(key, text[:80])
         elif e in named or (e.lower() == matched and (e in lemmas or e.lower() in lemmas)):
             counts['right'] += 1
         elif named and own_trace:
@@ -344,6 +381,10 @@ def cmd_real(dictionary, imported, unimorph, out_dir, *texts):
         f.write('# word\tmatched\tfirst result\ttrace\ttext\n' + ''.join('\t'.join(u) + '\n' for u in unjudged))
     with open(os.path.join(out_dir, 'wrong.tsv'), 'w', encoding='utf-8') as f:
         f.write('# word\tmatched\tfirst result\ttrace\n' + ''.join('\t'.join(w) + '\n' for w in wrong))
+    with open(os.path.join(out_dir, 'itself.tsv'), 'w', encoding='utf-8') as f:
+        f.write('# lookups\tmatched\tfirst result (the matched text itself)\tlemmas its rows name\ttext\n')
+        for key, n in itself.most_common():
+            f.write(f'{n}\t' + '\t'.join(key) + f'\t{itself_text[key]}\n')
     with open(os.path.join(out_dir, 'homographs.tsv'), 'w', encoding='utf-8') as f:
         f.write('# lookups\tmatched\tfirst result\tother lemmas the rows name\ttext\n')
         for key, n in homographs.most_common():
@@ -362,8 +403,18 @@ def cmd_real(dictionary, imported, unimorph, out_dir, *texts):
             f.write(f'{n}\t' + '\t'.join(key) + '\n')
     total = len(hovers)
     print(f'capitalized words shown as written while the lower-case word reads as another lemma: {sum(groups.values())} lookups ({len(groups)} groups)')
+    # Participle adjectives in -ura, -uara traced as an aorist of the pack and
+    # then a participle row (e bashkuara: aorist (1sg) + participle).
+    aor_ptcp = collections.Counter()
+    for res in results:
+        t = res['results'][0]['trace'] if res['results'] else []
+        if t and t[0].startswith('aor-') and any('participle' in x for x in t[1:]):
+            aor_ptcp[res['results'][0]['matched'].lower()] += 1
+    print(f'first results traced as an aorist and then a participle row: {sum(aor_ptcp.values())} lookups ({len(aor_ptcp)} words; '
+          + ', '.join(f'{w} {n}' for w, n in aor_ptcp.most_common(5)) + ')')
     print(f'{total} lookups: {counts["right"]} right by script, {counts["wrong"]} wrong by script, {counts["homograph"]} homographs '
-          f'({len(homographs)} groups) and {counts["unjudged"]} others to judge, {counts["nothing"]} with no result')
+          f'({len(homographs)} groups), {counts["itself"]} the matched text itself while its rows name another lemma '
+          f'({len(itself)} groups) and {counts["unjudged"]} others to judge, {counts["nothing"]} with no result')
     for trace, n in wrong_rules.most_common(15):
         print(f'  wrong via {trace}: {n}')
 

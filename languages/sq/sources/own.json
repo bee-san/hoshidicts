@@ -288,7 +288,8 @@
         {"type": "suffix", "inflected": "t", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[eaëjou]"},
         {"type": "suffix", "inflected": "t", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[^ ]", "stemMinLength": 4, "stemEndsWith": "[r]"},
         {"type": "suffix", "inflected": "të", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[^ ]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "it", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[szr]"}
+        {"type": "suffix", "inflected": "it", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[szr]"},
+        {"type": "wholeWord", "inflected": "ligjet", "deinflected": "ligj", "conditionsIn": [], "conditionsOut": ["ns"]}
       ]
     },
     {
@@ -351,6 +352,8 @@
         {"type": "suffix", "inflected": "ezër", "deinflected": "a", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "[^ ]", "stemMinLength": 2},
         {"type": "wholeWord", "inflected": "zotërinj", "deinflected": "zotëri", "conditionsIn": ["np"], "conditionsOut": ["ns"]},
         {"type": "wholeWord", "inflected": "male", "deinflected": "mal", "conditionsIn": ["np"], "conditionsOut": ["ns"]},
+        {"type": "wholeWord", "inflected": "varre", "deinflected": "varr", "conditionsIn": ["np"], "conditionsOut": ["ns"]},
+        {"type": "wholeWord", "inflected": "mijëra", "deinflected": "mijë", "conditionsIn": ["np"], "conditionsOut": []},
         {"type": "suffix", "inflected": "djem", "deinflected": "djalë", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "kuaj", "deinflected": "kalë", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "[^ ]"},
         {"type": "suffix", "inflected": "duar", "deinflected": "dorë", "conditionsIn": ["np"], "conditionsOut": ["ns"], "stemCharacters": "[^ ]"},
@@ -379,6 +382,18 @@
       "rules": [
         {"type": "suffix", "inflected": "im", "deinflected": "oj", "conditionsIn": ["ns"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 3},
         {"type": "suffix", "inflected": "im", "deinflected": "ej", "conditionsIn": ["ns"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 3}
+      ]
+    },
+    {
+      "id": "ord",
+      "name": "ordinal",
+      "description": "An ordinal number: i katërt, e katërta → katër (four); i pestë, e pesta → pesë (five).",
+      "source": "own",
+      "rules": [
+        {"type": "wholeWord", "inflected": "katërt", "deinflected": "katër", "conditionsIn": ["adj"], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "katërta", "deinflected": "katër", "conditionsIn": ["adj"], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "pestë", "deinflected": "pesë", "conditionsIn": ["adj"], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "pesta", "deinflected": "pesë", "conditionsIn": ["adj"], "conditionsOut": []}
       ]
     },
     {
@@ -1148,6 +1163,7 @@
         {"type": "suffix", "inflected": "uan", "deinflected": "uaj", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "et", "deinflected": "es", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
         {"type": "suffix", "inflected": "et", "deinflected": "as", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
+        {"type": "wholeWord", "inflected": "kërcen", "deinflected": "kërcej", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "je", "deinflected": "jam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "është", "deinflected": "jam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "ke", "deinflected": "kam", "conditionsIn": ["v_sbjv"], "conditionsOut": ["v"]},
@@ -1746,6 +1762,8 @@
         {"type": "suffix", "inflected": "yva", "deinflected": "yj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "yra", "deinflected": "yj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ava", "deinflected": "aj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "wholeWord", "inflected": "ndjeva", "deinflected": "ndiej", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "preka", "deinflected": "prek", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "a", "deinflected": "", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
         {"type": "wholeWord", "inflected": "qeshë", "deinflected": "jam", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "pata", "deinflected": "kam", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
@@ -1822,6 +1840,8 @@
         {"type": "suffix", "inflected": "yve", "deinflected": "yj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "yre", "deinflected": "yj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ave", "deinflected": "aj", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
+        {"type": "wholeWord", "inflected": "thithe", "deinflected": "thith", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "preke", "deinflected": "prek", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "e", "deinflected": "", "conditionsIn": ["v_aor"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{verbConsonant}"},
         {"type": "wholeWord", "inflected": "pate", "deinflected": "kam", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "the", "deinflected": "them", "conditionsIn": ["v_aor"], "conditionsOut": ["v"]},
@@ -3129,6 +3149,8 @@
       "description": "Non-active imperative, second person singular (largohu, lahu, ulu).",
       "source": "own",
       "rules": [
+        {"type": "wholeWord", "inflected": "hidhu", "deinflected": "hedh", "conditionsIn": ["v_imp"], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "vishu", "deinflected": "vesh", "conditionsIn": ["v_imp"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "hu", "deinflected": "hem", "conditionsIn": ["v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]"},
         {"type": "suffix", "inflected": "hu", "deinflected": "j", "conditionsIn": ["v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1, "stemEndsWith": "[aeioyë]"},
         {"type": "suffix", "inflected": "uhu", "deinflected": "uaj", "conditionsIn": ["v_imp"], "conditionsOut": ["v"], "stemCharacters": "[^ ]", "stemMinLength": 1},
@@ -3364,7 +3386,7 @@
       "description": "The comparative or superlative më before an adjective or a gradable adverb: më i mirë → mirë, më shpejt → shpejt, më vonë → vonë.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "më ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj", "adj_cmp"]},
+        {"type": "prefix", "inflected": "më ", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj", "adj_cmp"], "stemNotStartsWith": "[0-9]"},
         {"type": "wholeWord", "inflected": "më vonë", "deinflected": "vonë", "conditionsIn": [], "conditionsOut": ["adv"]},
         {"type": "wholeWord", "inflected": "më herët", "deinflected": "herët", "conditionsIn": [], "conditionsOut": ["adv"]},
         {"type": "wholeWord", "inflected": "më shpejt", "deinflected": "shpejt", "conditionsIn": [], "conditionsOut": ["adv"]},
@@ -3518,7 +3540,8 @@
         {"type": "suffix", "inflected": "t", "deinflected": "", "conditionsIn": ["adj_pl"], "conditionsOut": ["adj", "adj_pl"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[aëe]"},
         {"type": "suffix", "inflected": "të", "deinflected": "", "conditionsIn": ["adj_pl"], "conditionsOut": ["adj", "adj_pl"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "it", "deinflected": "", "conditionsIn": ["adj_pl"], "conditionsOut": ["adj", "adj_pl"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[r]"},
-        {"type": "suffix", "inflected": "ve", "deinflected": "", "conditionsIn": ["adj_pl"], "conditionsOut": ["adj", "adj_pl"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[aë]"}
+        {"type": "suffix", "inflected": "ve", "deinflected": "", "conditionsIn": ["adj_pl"], "conditionsOut": ["adj", "adj_pl"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[aë]"},
+        {"type": "suffix", "inflected": "ve", "deinflected": "", "conditionsIn": ["adj_pl"], "conditionsOut": ["adj", "adj_pl"], "stemCharacters": "[^ ]", "stemMinLength": 3, "stemEndsWith": "{consonant}"}
       ]
     }
   ]
