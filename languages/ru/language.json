@@ -111,7 +111,7 @@
     "anki": {
       "noteTypeFamilies": [],
       "fieldAliases": {
-        "pronunciation": ["IPA"]
+        "phonetic-transcriptions": ["IPA"]
       },
       "partOfSpeechLabels": {
         "n": "Noun",

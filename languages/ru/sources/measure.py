@@ -28,11 +28,9 @@ Words written with е whose only headword is their ё spelling (вперед: в
 have no rows of their own; both subcommands judge them against that headword
 (frequent lists them apart as yoHeadword*).
 
-Capital entries (MAJOR-3 of audit-hachi-lang-ru-b): at the start of a sentence
-the text as written matches the capital's own headword (the letter Я, the river
-По) with no processor step, before the small-letter word. `text` counts these
-positions (CAPITAL_ENTRY below) and the own-lemma rate with them counted wrong;
-`frequent --capitalised` looks each word up with a capital first letter.
+Capital entries (the letter Я, the river По) come first at the start of a
+sentence; `text` counts them (capital_entry) and the rate with them counted
+wrong, and `frequent --capitalised` looks the words up capitalised.
 
 --exempt runs lookup-batch-ru with the dictionary exempt from the part-of-speech
 filter (LookupOptions::pos_filter_exempt), which stands in for the pack field
@@ -252,9 +250,7 @@ def all_counts(path):
 
 
 def capitalised(a, refs, lemmas, words, counts):
-    """Each word looked up with a capital first letter, as at the start of a
-    sentence: the words whose first result is a capitalised term while the
-    small-letter lookup shows a small-letter one, split by how it was reached."""
+    """Words whose capitalised lookup shows a capitalised term first where the small-letter one does not."""
     words = [w for w in words if w[:1].islower()]
     caps = [w[0].upper() + w[1:] for w in words]
     small = lookups(a.batch, a.languages, a.dict, words, a.exempt)

@@ -1,6 +1,6 @@
 # Source: written for this pack (GPL-3.0-or-later), no third-party data. Expected traces are this pack's transform ids, newest first (* means any trace).
 # The pack has no optional processor, transform or variant pass, so every option on and the defaults run the same rules (there is no defaults.tsv).
-# Rows of category guard are negatives that fail without one stem constraint each (sources/mutate.py, README.md Measurements).
+# guard rows fail without one stem constraint each; given-up rows are rare words' readings a constraint gives up (README.md, Measurements 7).
 # category	valid	source	term	rule	reasons (forward order, | separated; * means any)
 fleeting	1	отца	отец	n	noun-fleeting|noun-gen.sg+nom.pl
 fleeting	1	отцом	отец	n	*
@@ -750,3 +750,9 @@ adjectival noun	1	гостиной	гостиная	n	adj-gen.f+dat.f+ins.f+prp.
 adjectival noun	1	шампанского	шампанское	n	adj-gen.n
 adjectival noun	1	наличными	наличные	n	adj-ins.pl
 adjectival noun	1	данным	данные	n	adj-dat.pl
+adjectival noun	1	гостиную	гостиная	n	adj-acc.f
+adjectival noun	1	млекопитающих	млекопитающее	n	adj-gen.pl+acc.pl+prp.pl
+present	1	заплачу	заплатить	v	verb-pres.1sg
+noun	1	свечу	свеча	n	noun-acc.sg
+noun	1	воротам	ворота	n	noun-dat.pl
+adjective	1	полового	половой	adj	adj-gen.m+acc.m+gen.n

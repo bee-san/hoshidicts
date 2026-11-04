@@ -1153,8 +1153,37 @@ for (const [word, lemma, forms] of [
     ['шампанского', 'шампанское', ['gen.n']], ['мороженого', 'мороженое', ['gen.n']], ['гостиной', 'гостиная', ['gen.f', 'dat.f', 'ins.f', 'prp.f']],
     ['ванной', 'ванная', ['gen.f', 'dat.f', 'ins.f', 'prp.f']], ['ванную', 'ванная', ['acc.f']],
     ['данных', 'данные', ['gen.pl', 'prp.pl', 'acc.pl']], ['данным', 'данные', ['dat.pl']], ['столовой', 'столовая', ['gen.f', 'dat.f', 'ins.f', 'prp.f']],
+    // After the third audit (audit-hachi-lang-ru-c m-a): the other forms of these nouns, and three more.
+    ['животного', 'животное', ['gen.n']], ['животному', 'животное', ['dat.n']], ['животным', 'животное', ['ins.m', 'ins.n', 'dat.pl']],
+    ['животными', 'животное', ['ins.pl']], ['животном', 'животное', ['prp.n']], ['данными', 'данные', ['ins.pl']],
+    ['шампанским', 'шампанское', ['ins.m', 'ins.n', 'dat.pl']], ['шампанском', 'шампанское', ['prp.n']],
+    ['мороженому', 'мороженое', ['dat.n']], ['мороженым', 'мороженое', ['ins.m', 'ins.n', 'dat.pl']], ['мороженом', 'мороженое', ['prp.n']],
+    ['гостиную', 'гостиная', ['acc.f']], ['гостиною', 'гостиная', ['ins.f']], ['столовую', 'столовая', ['acc.f']],
+    ['набережной', 'набережная', ['gen.f', 'dat.f', 'ins.f', 'prp.f']], ['набережную', 'набережная', ['acc.f']], ['набережною', 'набережная', ['ins.f']],
+    // млекопитающее after a hushing consonant (-его, -им), существительное hard (-ого, -ым).
+    ...[['млекопитающее', 'е', 'и'], ['существительное', 'о', 'ы']].flatMap(([lemma, o, y]) => {
+        const stem = lemma.slice(0, -2);
+        return [[`${stem}${o}го`, lemma, ['gen.n']], [`${stem}${o}му`, lemma, ['dat.n']], [`${stem}${y}м`, lemma, ['ins.m', 'ins.n', 'dat.pl']], [`${stem}${o}м`, lemma, ['prp.n']],
+            [`${stem}${y}е`, lemma, ['nom.pl', 'acc.pl']], [`${stem}${y}х`, lemma, ['gen.pl', 'acc.pl', 'prp.pl']], [`${stem}${y}ми`, lemma, ['ins.pl']]];
+    }),
 ]) {
     put('adj', forms, {type: 'wholeWord', inflected: word, deinflected: lemma, conditionsIn: [], conditionsOut: NOUN});
+}
+// Frequent words whose rarer reading an earlier ending reached first (third audit,
+// m-a and m-b; README.md, History): заплачу (pay), тайной, свечу, the -ика
+// accusatives (технику, not к технику), половой (not the archaic половый).
+put('verb', ['pres.1sg'], {type: 'wholeWord', inflected: 'заплачу', deinflected: 'заплатить', conditionsIn: [], conditionsOut: VERB});
+for (const [word, lemma, forms] of [
+    ['тайной', 'тайна', ['ins.sg']], ['свечу', 'свеча', ['acc.sg']], ['солью', 'соль', ['ins.sg']], ['полем', 'поле', ['ins.sg']],
+    ['турки', 'турок', ['nom.pl']], ['поляне', 'поляна', ['dat.sg', 'prp.sg']], ['ржи', 'рожь', ['gen.sg', 'dat.sg', 'prp.sg']],
+    ['воротам', 'ворота', ['dat.pl']], ['воротами', 'ворота', ['ins.pl']], ['воротах', 'ворота', ['prp.pl']],
+    ...['техник', 'физик', 'критик', 'практик', 'логик', 'математик', 'механик'].map((stem) => [`${stem}у`, `${stem}а`, ['acc.sg']]),
+]) {
+    wholeWord('noun', forms, word, lemma, [], NOUN);
+}
+for (const [ending, forms] of [['ого', ['gen.m', 'acc.m', 'gen.n']], ['ому', ['dat.m', 'dat.n']], ['ым', ['ins.m', 'ins.n', 'dat.pl']], ['ом', ['prp.m', 'prp.n']],
+    ['ую', ['acc.f']], ['ые', ['nom.pl', 'acc.pl']], ['ых', ['gen.pl', 'acc.pl', 'prp.pl']], ['ыми', ['ins.pl']]]) {
+    wholeWord('adj', forms, `полов${ending}`, 'половой', [], ADJ);
 }
 // The adverb определённо; only its е spelling needs the row (with ё no rule reaches определить).
 put('adj', ['short.n'], {type: 'wholeWord', inflected: 'определенно', deinflected: 'определённо', conditionsIn: [], conditionsOut: ADJ});
