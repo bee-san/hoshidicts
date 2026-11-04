@@ -210,9 +210,9 @@ Yomitan rules `sources/yomitan-removed.tsv` lists left out.
     of these rules) changes the first result of 25 labelled words: 12
     become wrong (другу → другий, дорогу → дорогий, тепла → теплий) and
     none becomes right.
-- **History**: the first commit of this pack, `uk: own rules` (9e25e55), has
+- **History**: the first commit of this pack, `uk: own rules` (70219e9), has
   the own rules as written before Yomitan's file was read (75 transforms,
-  4,255 rules); the next, `uk: Yomitan's rules and processors` (e93a045),
+  4,255 rules); the next, `uk: Yomitan's rules and processors` (75f556d),
   the port. Later commits changed the own rules after measuring: adjective
   declension also reaching verbs (participles) and nouns; the forms the
   table measurement missed (-ок after й and ь, -ов, -ин, plural-only nouns,
@@ -238,8 +238,8 @@ Every number is with wty-uk-en as published (form-of rows included), imported
 by `hoshidicts-cli import`, at hoshidicts 1fed676 with this pack (GCC 14.3,
 Release; the dictionary was imported at 23cd5a3, and #54 changes how its
 files are read, not what they hold). Main has since added only other
-language packs (zh, aii and fr, up to 39cebbe), on which the checks of
-item 6 were run again. The pack has no optional processor,
+language packs (zh, aii, fr, el, eo, tl and vi's fixes, up to 5ac86a3), on
+which the checks of item 6 were run again. The pack has no optional processor,
 transform or variant pass, so each file gives the same numbers with every
 option on and with the pack's defaults (`corpus.tsv` + `gaps.tsv` and
 `cases.tsv` were also run with a `# options: default` line added:
@@ -425,7 +425,7 @@ identical).
      голові, погані, банку, говори, готові, добра, шию, од or видимо. The
      other homograph rules have no row each; the measurements show them (0
      wrong frequent words).
-   - Hachidori (feat/multi-language d7e82b0c with this branch at 20b3045 in
+   - Hachidori (feat/multi-language d7e82b0c with this branch at 58d5266 in
      `third_party/hoshidicts`, `node scripts/sync-languages.mjs`,
      `test/chrome-language-pack.mjs`, Chrome 152, wty-uk-en): 14 of 14 checks
      pass. Settings adds Ukrainian beside Japanese and imports the dictionary
