@@ -22,7 +22,7 @@ const rows = list.map(({form, term}) => `exc\t1\t${form}\t${term}\t*\texc`);
 const cli = process.argv[2] ?? 'build/hoshidicts-cli';
 const languages = join(here, '..', '..');
 const run = (args, input) => execFileSync(cli, ['--languages', languages, ...args], {input, encoding: 'utf8', maxBuffer: 1 << 30});
-const probes = list.filter(({form}) => !ACCENTLESS || ACCENTLESS.has(form))
+const probes = list.filter(({form}) => !ACCENTLESS || ACCENTLESS.has(form) || ACCENTLESS.has(NFC(NFD(form).replace(/\u0300/gu, '\u0301'))))
   .map(({form, term}) => ({text: 'ζά' + stripAccents(NFC(NFD(form).replace(/\u0300/gu, '\u0301'))), term: 'ζά' + term}));
 const variants = run(['preprocess', 'grc', '--stdin', '--all-options'], probes.map((p) => p.text).join('\n') + '\n').trim().split('\n')
   .map((l) => JSON.parse(l).variants.map((v) => v.text));

@@ -46,6 +46,14 @@
   ["ανεμων", "ἀνεμῶν", "non-lemma", "n", 0, [["ἀνέμη", ["genitive plural"]]], 45, ""],
   ["μηχανάομαι", "", "v", "v", 0, ["to contrive"], 46, ""],
   ["μηχανάω", "", "v", "v", 0, ["to contrive (active)"], 47, ""],
-  ["ὁρμάω", "", "v", "v", 0, ["to set in motion"], 48, ""],
-  ["ὁρμέω", "", "v", "v", 0, ["to lie at anchor"], 49, ""]
+  ["ὁρμάω", "", "v", "v", 0, ["to drive forward"], 48, ""],
+  ["ὁρμέω", "", "v", "v", 0, ["to stay in harbour"], 49, ""],
+  ["θεός", "", "n", "n", 0, ["god"], 50, ""],
+  ["θεάομαι", "", "v", "v", 1, ["to behold"], 51, ""],
+  ["θεῷ", "", "non-lemma", "", 0, [["θεός", ["dative singular"]], ["θεάομαι", ["third-person singular active optative"]]], 52, ""],
+  ["εἷς", "", "", "", 0, ["one"], 53, ""],
+  ["ἵημι", "", "v", "v", 0, ["to send"], 54, ""],
+  ["ναῦς", "", "n", "n", 0, ["ship"], 55, ""],
+  ["νέος", "", "adj", "adj", 0, ["young"], 56, ""],
+  ["νεῶν", "", "non-lemma", "", 0, [["νέος", ["genitive plural feminine"]], ["ναῦς", ["genitive plural"]]], 57, ""]
 ]

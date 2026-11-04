@@ -57,8 +57,8 @@ const CATEGORY = {
 // tests/yomitan.tsv become: negatives, or positives that another rule of the final set reads.
 const LEFT_OUT = {
   'nominalization ος→εω': {reason: 'a derivation: reads -ος nouns and adjectives as -έω verbs (φίλος → φιλέω, καλός → καλέω, οἶκος → οἰκέω)', rows: 'negative'},
-  'dative singular ω→ον': {reason: 'recovers no row of any test file; in real text it makes 15 first results wrong (μόρῳ → μόρον, ἴτω → ἴτον, κεφαλαίῳ → κεφάλαιον) and 1 right (μαντηίῳ → μαντεῖον); its row of tests/yomitan.tsv is the own dual', rows: 'positive'},
-  'dative singular ω→ος': {reason: 'recovers no row of any test file; in real text it makes 1 first result wrong (μάθω → μάθος), changes 1 wrong one (σθένω) and makes none right; its row of tests/yomitan.tsv is the own dual', rows: 'positive'},
+  'dative singular ω→ον': {reason: 'recovers no row of any test file; in real text it makes 15 first results wrong (μόρῳ → μόρον, κεφαλαίῳ → κεφάλαιον, δημοσίῳ → δημόσιον) and 2 right (μαντηίῳ → μαντεῖον, φαρμάκῳ → φάρμακον); its row of tests/yomitan.tsv is the own dual', rows: 'positive'},
+  'dative singular ω→ος': {reason: 'recovers no row of any test file; in real text it makes 2 first results wrong (μάθω → μάθος, ἥλω → ἧλος), changes 1 wrong one (σθένω) and makes none right; its row of tests/yomitan.tsv is the own dual', rows: 'positive'},
   'dative singular α→ας': {reason: 'recovers no row of any test file and adds a false candidate on tests/cases.tsv; its row of tests/yomitan.tsv is the own vocative', rows: 'positive'},
 };
 // Yomitan rules kept although an own rule makes the same deinflection, for a measured gain: the own rule's stem

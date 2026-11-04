@@ -6,6 +6,7 @@
     rules <hover.tsv | agdt dir> [--forms N] [--changed N] [--lemmas N]   the pack against the same pack without rules
     exceptions <agdt dir> --exclude <files> [--min 10]   writes sources/exceptions.tsv
     accentless <agdt dir>      the exceptions whose spelling without accents they or other treebank forms need
+    wholeword x                the exceptions whose term is first only as a wholeWord rule
     compare <hover.tsv> --other <languages dir> [--trace <id>] | benchmark <hover.tsv>
 
 hover.tsv is what make-hovers-agdt.py writes. Options: --batch build/lookup-batch, --cli build/hoshidicts-cli,
@@ -17,7 +18,7 @@ from pathlib import Path
 import xml.etree.ElementTree as ET
 
 ap = argparse.ArgumentParser()
-ap.add_argument('command', choices=['text', 'behind', 'frequent', 'rules', 'compare', 'benchmark', 'traces', 'exceptions', 'accentless'])
+ap.add_argument('command', choices=['text', 'behind', 'frequent', 'rules', 'compare', 'benchmark', 'traces', 'exceptions', 'accentless', 'wholeword'])
 ap.add_argument('input')
 ap.add_argument('--batch', default='build/lookup-batch')
 ap.add_argument('--cli', default='build/hoshidicts-cli')
@@ -265,26 +266,34 @@ elif a.command == 'rules':
             print(f'the {a.changed} forms the rules {name} ({sum(c.values())} tokens in {len(c)} forms):')
             for w, n in c.most_common(a.changed):
                 print(f'  {n:6d} {w} → {changed_ex[w]}; treebank {"/".join(g for g, _ in changed_gold[w].most_common())}')
-elif a.command == 'accentless':
+elif a.command in ('accentless', 'wholeword'):
     tmp = no_rules_pack('\0')
     pack = json.loads((tmp / 'grc' / 'transforms.json').read_text(encoding='utf-8'))
     exc = next(t for t in pack['transforms'] if t['id'] == 'exc')
     plain = lambda w: NFC(ACCENTS.sub('', unicodedata.normalize('NFD', w)))
     pairs = [p for r in exc['rules'] for p in r.get('suffixes', [[r.get('inflected'), r.get('deinflected')]])]
-    keep = lambda p: all(plain(v) != p[0] or v == p[0] for v, _ in pairs)
-    exc['rules'] = [{**{k: v for k, v in r.items() if k not in ('inflected', 'deinflected')}, 'type': 'circumfix', 'prefixes': [['', '']],
-                     'suffixes': [p for p in r.get('suffixes', [[r.get('inflected'), r.get('deinflected')]]) if keep(p)]} for r in exc['rules']]
-    exc['rules'] = [r for r in exc['rules'] if r['suffixes']]
+    twin = lambda w: any(plain(v) == w != v for v, _ in pairs)
+    written = [(w, t) for w, t in pairs if not twin(w)]
+    if a.command == 'accentless':
+        rules = []
+        for r in exc['rules']:
+            if 'suffixes' in r:
+                r = {**r, 'suffixes': [p for p in r['suffixes'] if not twin(p[0])]}
+            if r.get('suffixes', True) and not twin(r.get('inflected', '')):
+                rules.append(r)
+    else:
+        rules = [{**r, 'type': 'suffix', 'stemCharacters': '[]'} if r['type'] == 'wholeWord' else r for r in exc['rules']]
+    exc['rules'] = rules
     (tmp / 'grc' / 'transforms.json').write_text(json.dumps(pack, ensure_ascii=False), encoding='utf-8')
-    written = [(w, t) for w, t in pairs if plain(w) != w]
     need = [w for (w, t), r in zip(written, lookup([w for w, _ in written], str(tmp))) if not r or NFC(r[0]['expression']) != NFC(t)]
-    _, count, golds = frequent_forms(a.input)
-    by_plain = {plain(w): w for w, _ in written}
-    others = [f for f in count if plain(f) in by_plain and f not in dict(written)]
-    first = lambda r: NFC(r[0]['expression']) if r else ''
-    for f, x, y in zip(others, lookup(others), lookup(others, str(tmp))):
-        if golds[f][first(x)] > golds[f][first(y)]:
-            need.append(by_plain[plain(f)])
+    if a.command == 'accentless':
+        _, count, golds = frequent_forms(a.input)
+        by_plain = {plain(w): w for w, _ in written}
+        others = [f for f in count if plain(f) in by_plain and f not in dict(written)]
+        first = lambda r: NFC(r[0]['expression']) if r else ''
+        for f, x, y in zip(others, lookup(others), lookup(others, str(tmp))):
+            if golds[f][first(x)] > golds[f][first(y)]:
+                need.append(by_plain[plain(f)])
     print('\n'.join(dict.fromkeys(need)))
     shutil.rmtree(tmp)
 elif a.command == 'exceptions':

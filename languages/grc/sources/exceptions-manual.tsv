@@ -1,7 +1,5 @@
-# Exceptions chosen by hand (README.md, "Rule provenance"), written for this pack (GPL-3.0-or-later): forms that other rules
-# read first as a rarer word and that measure.py exceptions does not choose (the treebank's lemma is another headword, the
-# form is under its threshold, or it has an iota adscript). Chosen from reports/audit-hachi-lang-grc-c.md and measure.py
-# rules --forms and --changed on the whole treebank, so in-sample for README.md Measurements 4; at least 2 treebank tokens.
+# Exceptions chosen by hand (README.md, "Rule provenance"; GPL-3.0-or-later): forms other rules read first as a rarer
+# word that measure.py exceptions does not choose, from the audits and measure.py rules on the whole treebank (in-sample).
 # form	term	part of speech
 # the other form of the ἔλεγε collision, which the list leaves out
 ἔλεγον	λέγω	v
@@ -14,14 +12,6 @@
 χίλια	χίλιοι	
 κοτε	ποτέ	
 σώσας	σῴζω	v
-# the dictionary alone shows the participle παρών; other rules read πείρω
-παρόντων	πάρειμι	v
-παρούσης	πάρειμι	v
-παρούσῃ	πάρειμι	v
-παρουσῶν	πάρειμι	v
-παρούσας	πάρειμι	v
-# the dictionary alone shows κήλη
-καλῇ	καλός	adj
 # the treebank writes the lemma ὄις
 οἰῶν	οἶς	n
 # the dictionary alone shows the Ionic μήν
@@ -30,25 +20,21 @@
 μηνῶν	μείς	n
 # iota adscript
 Ἅιδου	ᾍδης	
-Ἅιδης	ᾍδης	
 Ἅιδην	ᾍδης	
 Ἅιδα	ᾍδης	
 Ἅιδαν	ᾍδης	
-Ἅιδας	ᾍδης	
 ἐπύθετο	πυνθάνομαι	v
-ἐπύθοντο	πυνθάνομαι	v
 πύθωμαι	πυνθάνομαι	v
 πύθῃ	πυνθάνομαι	v
 πύθηται	πυνθάνομαι	v
 πύθησθε	πυνθάνομαι	v
 πυθοίμην	πυνθάνομαι	v
 πύθοιτο	πυνθάνομαι	v
-πυθέσθαι	πυνθάνομαι	v
 πυθόμενος	πυνθάνομαι	v
 πυθόμενον	πυνθάνομαι	v
 πυθόμενοι	πυνθάνομαι	v
 πυθομένη	πυνθάνομαι	v
-# the largest wrong first results of measure.py rules --forms that are not ambiguous: other rules read a rarer word or put it first (ἰχθυάω, βαρεῖα "grave accent", τύκος, νέμος, ἕλκος, τίω, πάθος, κτάομαι, ὄρνυμι, φανή, τυραννέω, δικαιόω, ἀξιόω, ὁρμέω, δήω, ἔτης, ἄω, λύζω, δύη, Λυκίων, ἶρις, ἴστε, ἵκω, τροπαῖος)
+# the largest unambiguous wrong first results of measure.py rules --forms
 ἰχθύων	ἰχθύς	n
 βαρεῖαν	βαρύς	adj
 βαρείας	βαρύς	adj
@@ -65,10 +51,6 @@
 τυράννων	τύραννος	n
 δικαίῳ	δίκαιος	adj
 ἀξίους	ἄξιος	
-ὥρμησεν	ὁρμάω	v
-ὥρμησε	ὁρμάω	v
-ὁρμῆσαι	ὁρμάω	v
-ὁρμήσας	ὁρμάω	v
 δήσας	δέω	v
 ἐτέων	ἔτος	n
 ἔασε	ἐάω	v
@@ -108,20 +90,6 @@
 ἐπυθόμεθα	πυνθάνομαι	v
 πυθομένους	πυνθάνομαι	v
 # the fifth audit: lemmas whose forms other rules read as an unrelated word (τάσσω as τήκω, ἔρδω as ἔργω, δαμάζω as δέμω, Epic μέσσος as μέδω)
-τεταγμένοι	τάσσω	v
-τεταγμένους	τάσσω	v
-τεταγμένων	τάσσω	v
-τεταγμένοις	τάσσω	v
-τεταγμένοισι	τάσσω	v
-τεταγμένα	τάσσω	v
-τεταγμένας	τάσσω	v
-τεταγμένην	τάσσω	v
-τεταγμένης	τάσσω	v
-τεταγμένῳ	τάσσω	v
-ταχθέντες	τάσσω	v
-ταχθέντος	τάσσω	v
-ταχθέντας	τάσσω	v
-ταξάμενοι	τάσσω	v
 ἔταξαν	τάσσω	v
 ἔρξον	ἔρδω	v
 ἔρξω	ἔρδω	v
@@ -130,17 +98,12 @@
 δαμέντες	δαμάζω	v
 δαμέντα	δαμάζω	v
 δαμέντας	δαμάζω	v
-δεδμημένοι	δαμάζω	v
 μέσσῃ	μέσος	adj
 μέσσην	μέσος	adj
 μέσσῃσιν	μέσος	adj
 μέσσαν	μέσος	adj
 μέσσας	μέσος	adj
 μέσαι	μέσος	adj
-χρώμενοι	χράομαι	v
-χρωμένους	χράομαι	v
-χρωμένων	χράομαι	v
-χρωμένῳ	χράομαι	v
 συμφορήν	συμφορά	n
 συμφορῆς	συμφορά	n
 συμφορέων	συμφορά	n
@@ -177,3 +140,35 @@
 Πάρον	Πάρος	
 Κρέοντα	Κρέων	
 Κρέοντι	Κρέων	
+# main's tie-breaks (#83): forms whose exception lost the reading tie-break before, or that the rules now read as another word
+νεῶν	ναῦς	n
+δοῖεν	δίδωμι	v
+πλέον	πλείων	adj
+ὀχέων	ὄχεα	
+ἆσαι	ἄω	v
+σταθμῷ	σταθμός	n
+ἴδῃ	ὁράω	v
+ἴδῃς	ὁράω	v
+Κύρου	Κῦρος	
+θεῖναι	τίθημι	v
+πείσεις	πείθω	v
+πείσει	πείθω	v
+ἔπεισαν	πείθω	v
+πεῖσαι	πείθω	v
+ἤρχετο	ἄρχω	v
+βάτην	βαίνω	v
+εὐρέι	εὐρύς	adj
+ὀπί	ὄψ	n
+βουλῇσι	βουλή	n
+νίψασθαι	νίζω	v
+νεώμεθα	νέομαι	v
+ξίφεσίν	ξίφος	n
+ῥῖνάς	ῥίς	n
+διαί	διά	
+τεύχων	τεύχω	v
+λέξεις	λέγω	v
+καθέξει	κατέχω	v
+ἀτάσθαλα	ἀτάσθαλος	adj
+# cards the dictionary itself orders: the adverbial reference οὕτω → οὗτος, Epic νηός → νεώς "temple"
+οὕτω	οὕτως	
+νηός	ναῦς	n

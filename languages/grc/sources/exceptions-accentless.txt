@@ -1,13 +1,13 @@
-# The exceptions that keep their spelling without accents: GRC_ALL_ACCENTLESS=1 node own-rules.mjs, build-final.mjs, then
-# measure.py accentless <agdt> (README.md, Measurements 6): the forms that, or whose treebank homographs, need it.
-ἐμοῦ
-ἕνα
-Δελφοῖς
-Δελφῶν
+# Exceptions that keep their spelling without accents: measure.py accentless (README.md, Measurements 6).
+ἔχει
+ἧκε
 ἄγων
+ἔχεις
+ὄντων
 ἄγει
 ποιῶν
 δοκῶν
+ἕξει
 τελεῖται
 ἔλεγε
 τελεῖν
@@ -19,6 +19,19 @@
 ἔρξῃς
 τελεῖ
 τελῶ
+δοῖεν
+ἆσαι
+ἴδῃ
+ἴδῃς
+θεῖναι
+πεῖσαι
+ἤρχετο
+νεώμεθα
+τεύχων
+ἐμοῦ
+ἕνα
+Δελφοῖς
+Δελφῶν
 πλεῖον
 βοῶν
 ἔτη
@@ -29,6 +42,8 @@
 μηνῶν
 τροπαῖον
 πλοῦν
+νεῶν
+οὕτω
 μένων
 # by hand: corpus.tsv's εἴπας → εἶπον is read through this spelling
 εἶπας
