@@ -81,21 +81,24 @@ text as written are followed.
     editions (*elle*, *aquella*, *theatro*): Machado de Assis, *Dom Casmurro*
     (#55752, sha256 `0fc3dbf3…d0c7`) and *Memorias Posthumas de Braz Cubas*
     (#54829, sha256 `edfe4370…303a`); Eça de Queirós, *A Cidade e as Serras*
-    (#18220, sha256 `b7cd088e…b33c`); and, added by the audit of #72, José de
-    Alencar, *O Guarany*, volume 1 (#67724, sha256 `22713b6e…72ab`);
+    (#18220, sha256 `b7cd088e…b33c`); and, added by the audits of #72, José de
+    Alencar, *O Guarany*, volume 1 (#67724, sha256 `22713b6e…72ab`), and
+    Machado de Assis, *Quincas Borba* (#55682, sha256 `d23baeb1…69b9`);
   - Portuguese Wikipedia articles, plain-text extracts, CC BY-SA 4.0: "Língua
     portuguesa" (revision 73290156, sha256 `20fac7c0…e230`), "Brasil"
     (73348120, `0b5e28d6…f242`) and "Portugal" (73348067, `6ebb9aef…98fa`);
-    and, added by the audit, "Futebol" (73327182, `2d53d68f…22d4`), "São
-    Paulo" (73341997, `d1eed403…a881`) and "Inteligência artificial"
-    (73275430, `02043918…492c`).
+    and, added by the audits, "Futebol" (73327182, `2d53d68f…22d4`), "São
+    Paulo" (73341997, `d1eed403…a881`), "Inteligência artificial"
+    (73275430, `02043918…492c`), "Rio de Janeiro" (73337311,
+    `b46d92cf…9ae9`), "Lisboa" (73329450, `feac87ac…7e7b`) and "Telenovela"
+    (73234821, `4f3d99aa…fd04`).
 
 ## Rule provenance
 
-`transforms.json` has 85 transforms and 1,251 rule rows (6,556 rules with
+`transforms.json` has 85 transforms and 1,326 rule rows (6,630 rules with
 cross products expanded), every one `own`. Yomitan has no Portuguese rules, so
 the own rules are also the union and the final set: `transforms.json` is
-`sources/own.json` as `tools/merge-transforms.mjs pt` writes it ("1251 own, 0
+`sources/own.json` as `tools/merge-transforms.mjs pt` writes it ("1326 own, 0
 yomitan, 0 both"). No Yomitan rule is left out, because there is none.
 
 - **What the rules cover.** Tenses and persons are separate transforms, so a
@@ -160,49 +163,69 @@ yomitan, 0 both"). No Yomitan rule is left out, because there is none.
   are confirmed by the word's rows, so they tie (docs/languages.md 9.6). A
   lookup then lists them in the order the rules find them: the longest
   matched ending first, then file order (7.4). At 04c95c7 that order put a
-  rare homograph first for frequent words (audit of #72: `sua` → suar, `pare`
-  → parir, `amiga` → amigar, `achas` → acha). The rules now decide these ties
-  as follows:
+  rare homograph first for frequent words (first audit of #72: `sua` → suar,
+  `pare` → parir, `amiga` → amigar, `achas` → acha). The rules now decide
+  these ties as follows:
   - the transforms are declared in this order: plural, the verb forms (the
     present before the subjunctive), feminine, participle, then the rest.
     So `casas` → casa comes before casar, `pode` and `podem` → poder before
     podar, and `precisa` → precisar before preciso;
   - plurals are also written at the longer endings of verb forms, which would
-    otherwise match first: -ados, -adas, -idos, -idas (`soldados`, `piadas`),
-    -eias and -iras (`ideias`, `mentiras`), -ques, -gues, -guas, -ças and
-    -ces (`ataques`, `águas`, `alces`), -áveis and -íveis (`saudáveis`),
-    -arias (`secretarias`, not the conditional of secretar), -ises (`crises`,
-    not cris), and the irregular participles of the compounds of pôr, fazer,
-    ver and dizer (`impostos`, `apostas`, `perfeitos`, `revistas`,
-    `malditos`). A participle's plural is an adjective or a passive, because
-    the compound tenses take the masculine singular (tinha falado);
-  - the feminine is written at the participle's endings -ada, -ida and -ída,
-    so a feminine participle shows its adjective first (`cansada` → cansado,
-    then cansar; `querida` → querido). Irregular participles keep the verb
-    first (`limpa` and `gasta` are also the present of limpar and gastar);
-  - whole-word rules give the common reading of a word first: 10 for the
-    possessives (`sua`, `suas`, `tua`, `nossa`, `vossa`, `minha` → seu, teu,
-    nosso, vosso, meu), beside those for `boa` and `esta`, and 137 preferred
-    readings. Each is in the transform of the rule that also makes that
-    reading, so the trace is the same, and the other reading follows it. The
-    137 are 83 feminines (`amiga`, `humana`, `inteira`, `vasta`, `complexa`,
-    `digna`; `perfeita` → perfeito, not the participle of perfazer), 50 verb
-    forms (`pare` → parar, not parir;
-    `atende` → atender, not ater; the European `achas`, `percebes`, `andas`,
-    `deixas` → achar, perceber, andar, deixar, not the nouns acha, percebe,
-    anda, deixa; `una`, `vivam`, `prendam` → unir, viver, prender, not unar,
-    vivar, prendar; `criam` → criar, not crer) and 4 plurals (`peças`,
-    `verdes`, `ceias`, `tais`).
+    otherwise match first: -ados, -adas, -idos, -idas (`soldados`, `piadas`,
+    `bebidas`), -eias and -iras (`ideias`, `mentiras`), -ques, -gues and
+    -guas (`ataques`, `águas`), -ces (`alces`, not the subjunctive of
+    alçar), -áveis (`saudáveis`, not the imperfect of saudar), -arias
+    (`secretarias`, not the conditional of secretar), -ises (`crises`, not
+    cris), and the irregular participles of the compounds of pôr, fazer, ver
+    and dizer (`impostos`, `apostas`, `perfeitos`, `revistas`, `malditos`);
+  - the feminine is written at the participle's endings -ada, -ida, -aída and
+    -oída, so a feminine participle shows its adjective first (`cansada` →
+    cansado, then cansar; `conhecida`, `distraída`). Irregular participles
+    keep the verb first (`limpa` and `gasta` are also the present of limpar
+    and gastar);
+  - the plural and feminine at those endings put a noun first wherever
+    wty-pt-en's -o or -a headword is a noun, which is right for `resultados`,
+    `bebidas`, `estados` and `convidados` but not where that noun has another
+    meaning and the text means the participle (second audit, MAJOR-3:
+    `criada` as criado, a servant; `chamados`, `Forças Armadas`, `escolas
+    privadas` as toilets). For the words of that class in the Tatoeba
+    sentences and the texts of Measurements whose contexts point to the
+    participle (ser, estar, ficar or an adverb before it, against a
+    determiner or a preposition before the noun) or that the audit's verdicts
+    in context found wrong, a whole-word rule gives the participle first, or
+    the adjective where wty-pt-en has one (`privadas` → privado, `armadas` →
+    armado, `quebradas` → quebrado);
+  - whole-word rules give the common reading of a word first: 6 for the
+    possessives (`sua`, `suas`, `tua`, `tuas`, `minha`, `minhas` → seu, teu,
+    meu; nossa and vossa are the regular feminine of nosso and vosso), beside
+    those for `boa` and `esta`, and 217 preferred readings. Each is in the
+    transform of the rule that also makes that reading, so the trace is the
+    same, and the other reading follows it. The 217 are 101 feminines
+    (`amiga`, `humana`, `inteira`, `vasta`, `complexa`, `digna`; `perfeita` →
+    perfeito, not the participle of perfazer; the adjectives of the
+    participle class), 45 participles (`criada`, `chamados`, `ouvida`,
+    `tomadas`), 67 verb forms (`pare` → parar, not parir; `atende` →
+    atender, not ater; the European `achas`, `falas`, `esperas`, `levas`,
+    `procuras`, `chegas` → achar, falar, esperar, levar, procurar, chegar,
+    not the nouns acha, fala, espera, leva, procura, chega; `una`, `vivam`,
+    `prendam` → unir, viver, prender, not unar, vivar, prendar; `criam` →
+    criar, not crer; `revolta` → revoltar, not the short participle of
+    revolver) and 4 plurals (`peças`, `verdes`, `ceias`, `tais`).
 
-  The words come from four sources, and each was read by hand: the audit's 55
-  words; the words that the `rare` judgement (Measurements 2) flags among the
-  10,000 most frequent of either list; two scans of wty-pt-en, which
-  `sources/measure.py homographs` prints with a frequency proxy; and the
-  wrong first results in the texts and Tatoeba sentences of Measurements 3
-  and 4. The scans cover the two patterns behind most of the audit's words:
+  The words come from five sources, and each was read by hand: the first
+  audit's 55 words; the words that the `rare` judgement (Measurements 2)
+  flags among the 10,000 most frequent of either list; two scans of
+  wty-pt-en, which `sources/measure.py homographs` prints with a frequency
+  proxy; the participle class and the European tu forms, by their contexts
+  in the Tatoeba sentences and the texts (the tu form after tu, não, a
+  pronoun or que, or at the start of a sentence; the noun after a determiner
+  or a preposition); and the wrong first results that the measurements and
+  the second audit found. The scans cover the two patterns behind most of
+  the first audit's words:
   - the 274 words in -a whose rows name an -o adjective or noun and the
-    present of an -ar verb: 77 now show the adjective first, 128 their own
-    entry, and 69 keep the verb, which is as common or more (`precisa`,
+    present of an -ar verb: 77 now show the adjective first, 113 their own
+    entry, 13 another lemma (`seria` → ser, `traga` → trazer, `judia` →
+    judeu), and 71 the verb, which is as common or more (`precisa`,
     `segura`, `completa`, `dura`, `ativa`), is also an irregular participle
     (`limpa`, `aceita`), or is not in the lists;
   - the 349 forms whose rows name two verbs of one stem: 35 still show the
@@ -270,7 +293,7 @@ yomitan, 0 both"). No Yomitan rule is left out, because there is none.
     follow g or q (`segui` is the preterite of seguir, not a present of
     "seguuir"); the -ir e → i change only applies between consonants (`seguia`
     is not "segueir").
-- **History.** The first commit of this pack, `pt: own rules` (3ccd20e), has
+- **History.** The first commit of this pack, `pt: own rules` (0b68dfa), has
   the own rules as written before any measurement: 88 transforms and 2,745
   rule rows (5,223 rules expanded). Later commits changed them after
   measuring:
@@ -282,7 +305,7 @@ yomitan, 0 both"). No Yomitan rule is left out, because there is none.
     the same deinflections twice under two names;
   - rows were written as cross products (the same deinflections on the
     459,646 words above, in the same order), which keeps `own.json` at
-    346 kB although the rules grew (479 kB at 3ccd20e);
+    346 kB although the rules grew (479 kB at 0b68dfa);
   - the stems without spaces or capitals, the pronoun stems without spaces,
     the exact-stem exclusions (`alguem`, `sida` among them), -guer, u → o, the
     names, -azinho, `esto` and `sao` came from the real-text, Tatoeba and
@@ -290,9 +313,14 @@ yomitan, 0 both"). No Yomitan rule is left out, because there is none.
   - cear and gear, whose one-letter stems the -ear rules leave out;
   - the condition `adv`, for eis: the rules for `ei-lo` and `eis-me` had an
     empty `conditionsOut` before;
-  - after the audit of #72 (at 04c95c7): the feminine before the
-    participle, the plurals and feminines at the longer endings, the 137
-    whole-word readings, `tais`, the learned superlatives and `comumente`
+  - after the first audit of #72 (at 04c95c7): the feminine before the
+    participle, the plurals and feminines at the longer endings, the first
+    137 whole-word readings, `tais`, the learned superlatives and
+    `comumente`;
+  - after the second (at e923f6f): the participle before a noun of another
+    meaning, the European tu forms, `revolta` and `expressa` (80 more
+    readings), the feminine at -aída/-oída for -ída, and -ças, -íveis, nossa,
+    vossa and comummente dropped, on which no reading or order depended
     (Ties between two lemmas, above).
 
 ## Measurements
@@ -315,14 +343,14 @@ given, it is labelled "without the field".
    | `corpus.tsv` | 1,461 (1,461 / 0) | 100% | | 0.174 / 0.059 | 1,366 / 1,341 |
    | `gaps.tsv` | 37 (37 / 0) | 0% | | 0.405 / 0.297 | 9 / 9 |
    | sample (corpus + gaps) | 1,498 | 97.53% | | 0.180 / 0.065 | 1,375 / 1,350 |
-   | `cases.tsv` | 669 (605 / 64) | 100% | 100% | 0.405 / 0.233 | 475 / 410 |
+   | `cases.tsv` | 672 (608 / 64) | 100% | 100% | 0.408 / 0.234 | 479 / 412 |
 
    - Section 14 step 5's census of the `rules` column: wty-pt-en leaves it
      empty on all 572,340 rows (by first definition tag: `non-lemma`
      491,273, `n` 39,501, `adj` 13,675, `v` 12,817, `name` 9,782, `adv`
      2,499, …), wty-pt-pt on all 504,951. The rules' outputs are verbs, nouns
      and adjectives, which the dictionary never tags, so the pack takes
-     `"pass"`; with it the test files rank 1,850 lemmas first against 1,760.
+     `"pass"`; with it the test files rank 1,854 lemmas first against 1,762.
    - Recall and negatives do not depend on the dictionary. With `"filter"`,
      a rule's output finds no term of wty-pt-en, so the lookups rank first
      only what the dictionary's own form-of rows for the text as written name;
@@ -338,7 +366,7 @@ given, it is labelled "without the field".
    - First rank of `cases.tsv` is lower than of the corpus because many of its
      sources are headwords themselves (`fala`, `falo`, `como`, `visto`), whose
      own entry ranks first.
-   - `--per-rule` on the sample and `cases.tsv`: 331 of the 1,251 rule rows
+   - `--per-rule` on the sample and `cases.tsv`: 333 of the 1,326 rule rows
      recover a row no other rule reaches, no rule breaks a negative, and 5 add
      one false candidate each without recovering a row: copies of general
      rules (the -ir tu present for stems in f-, the tu imperfects of the
@@ -355,31 +383,48 @@ given, it is labelled "without the field".
    frequent words of each list, a word counts as reached when one of its
    deinflections is a lemma its form-of rows name; it is looked up as a host
    does (16 results, scan length 16, no options), and the first result with a
-   definition is judged. It is right when it is a lemma the word's rows name,
-   unless a rule made it and another lemma those rows name, which the lookup
-   also lists, is at least ten times as frequent in the list: then it is
-   "rare", and counted as wrong (contract 14 step 5: the word's own lemma).
-   An adjective that the dictionary also gives as the other lemma's past
-   participle is not counted against it (`falada` → falado, then falar).
+   definition is judged:
+   - right when it is a lemma the word's rows name, unless a rule made it and
+     another lemma those rows name, which the lookup also lists, is at least
+     ten times as frequent in the list: then it is "rare", and counted as
+     wrong (contract 14 step 5: the word's own lemma). An adjective (a
+     headword with an `adj` entry) that the dictionary also gives as the
+     other lemma's past participle is not counted against it (`falada` →
+     falado, then falar);
+   - "participle or noun" when a word in -ado/-ada/-ido/-ida or their plurals
+     shows a noun-only headword through the plural or the feminine while the
+     participle's verb is also listed (`estados` → estado, then estar), and
+     "tu form or noun" when a word in -as/-es shows a noun's plural while a
+     tu form is also listed (`coisas` → coisa, then coisar). Only the context
+     tells these apart, so they are counted apart and checked by hand (3
+     and 4).
 
-   | List | Reached | Their share of the list's tokens | First visible: own entry / lemma | Wrong or rare lemma first | Wrong or rare lemma above the right one |
+   | List | Reached | Their share of the list's tokens | First visible: own entry / lemma | Participle or noun / tu form or noun | Wrong or rare lemma first |
    | --- | ---: | ---: | ---: | ---: | ---: |
-   | Brazilian (`pt_br_50k`) | 5,174 | 35.69% | 1,486 / 3,680 | 8 (0.008% of the tokens) | 8 |
-   | European (`pt_50k`) | 5,419 | 35.42% | 1,394 / 4,008 | 17 (0.020%) | 17 |
+   | Brazilian (`pt_br_50k`) | 5,174 | 35.69% | 1,486 / 3,517 | 18 / 144 | 9 (0.009% of the tokens) |
+   | European (`pt_50k`) | 5,419 | 35.42% | 1,394 / 3,837 | 17 / 153 | 18 (0.021%) |
 
-   - At 04c95c7 the same judgement flags 76 Brazilian words (0.638% of the
+   - At 04c95c7 the rare judgement flags 76 Brazilian words (0.638% of the
      tokens) and 85 European (0.387%).
    - The flagged words now: the names `moscou` and `helena`; `ultima`
      (última without its accent) and `dana`; `surpresas` (surpreender before
-     surpresa) and `claras` (clara before claro), which the audit left out as
-     ambiguous; and right readings whose other lemma's citation form is also a
-     frequent other word: `verdes` → verde (ver), `veias` → veia (veio),
-     `nozes` → noz, `libras` → libra, `pô-lo` and `pô-la` → pôr (por),
-     `desculpa-me`, `juro-te`, `porta-te` and `baixa-te` → their verbs (the
-     nouns desculpa, juro, porta, baixa), `passes` → passe and `pequenina` →
-     pequenino.
-   - The audit's 55 hand-judged words, each looked up alone, all show the
-     lemma the audit judged right first; at 04c95c7 none did.
+     surpresa) and `claras` (clara before claro), which the first audit left
+     out as ambiguous; and right readings whose other lemma's citation form
+     is also a frequent other word: `verdes` → verde (ver), `veias` → veia
+     (veio), `nozes` → noz, `libras` → libra, `pegadas` → pegada (pegar),
+     `pô-lo` and `pô-la` → pôr (por), `desculpa-me`, `juro-te`, `porta-te`
+     and `baixa-te` → their verbs (the nouns desculpa, juro, porta, baixa),
+     `passes` → passe and `pequenina` → pequenino.
+   - Of the 153 European "tu form or noun" words, the 35 most frequent are
+     nouns, or for `aqueles` a demonstrative, in nearly all their Tatoeba
+     contexts (`coisas`, `armas`, `perguntas`, `provas`, `vidas`; `voltas`
+     follows tu, não or a pronoun in 7 of its 26); the tu forms whose
+     contexts point to the verb now show it (Rule provenance).
+   - The first audit's 55 hand-judged words, each looked up alone, all show
+     the lemma the audit judged right first; at 04c95c7 none did. The second
+     audit's eight participle words (`criada`, `criados`, `chamados`,
+     `chamadas`, `armadas`, `quebradas`, `tomadas`, `passadas`) show the
+     participle or its adjective first; at e923f6f all showed the noun.
 
    "Own entry" is the word's own headword, which a lookup shows first because
    it needs no rule (9.6). For most words it is the word itself (`como`), but
@@ -390,14 +435,15 @@ given, it is labelled "without the field".
 
    Every one of the 10,000 words, reached or not: in the Brazilian list the
    first result with a definition is the word's own entry for 5,133, a lemma
-   its rows name for 3,771, rare for 8, wrong for 1 (`anna` → anno, the old
-   spelling of ano, for the name Anna), not judged for 15 (no form-of row:
-   names and English words such as `adam` → adar, `rita` → rito, `have` →
-   haver, `toni` → toner), and nothing for 1,072. In the European list:
-   4,907, 4,103, 17, 2 wrong (`anna`, and `deviamos`, devíamos without its
-   accent, read as devir), 12 and 959. Without the field, 5 (Brazilian) and 29
+   its rows name for 3,608, participle or noun for 18, tu form or noun for
+   144, rare for 9, wrong for 1 (`anna` → anno, the old spelling of ano, for
+   the name Anna), not judged for 15 (no form-of row: names and English
+   words such as `adam` → adar, `rita` → rito, `have` → haver, `toni` →
+   toner), and nothing for 1,072. In the European list: 4,907, 3,932, 17,
+   153, 18, 2 wrong (`anna`, and `deviamos`, devíamos without its accent,
+   read as devir), 12 and 959. Without the field, 5 (Brazilian) and 29
    (European) of the reached words find nothing, mostly hyphenated forms of
-   the European list (`deixa-me`, `fazê-lo`), and 6 and 8 are rare.
+   the European list (`deixa-me`, `fazê-lo`), and 7 and 9 are rare.
 3. **Pronouns, articles and auxiliaries** (`sources/measure.py phrases`):
    Tatoeba's 445,567 Portuguese sentences, every place where one of these
    words is followed by another, looked up from the word and from the one
@@ -406,105 +452,121 @@ given, it is labelled "without the field".
    text, as in 2 (with the two lists' counts); "unjudged" means the text has
    none.
 
-   | Word before | Lookups | Own entry | Lemma | Wrong or rare lemma | Unjudged | Nothing |
-   | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-   | me, te, se, lhe, lhes, nos, vos | 120,714 | 84,216 | 36,334 | 2 | 6 | 156 |
-   | o, a, os, as | 517,828 | 449,210 | 62,848 | 46 | 81 | 5,643 |
-   | um, uma, uns, umas | 152,856 | 116,459 | 35,828 | 6 | 87 | 476 |
-   | ir, ter, estar, ser, haver, poder, querer, dever (30 forms) | 445,380 | 279,657 | 164,925 | 15 | 85 | 698 |
-   | verb forms with an attached pronoun | 21,546 | 386 | 20,987 | 90 | 17 | 66 |
+   | Word before | Lookups | Own entry | Lemma | Participle or noun / tu form or noun | Wrong or rare lemma | Unjudged | Nothing |
+   | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+   | me, te, se, lhe, lhes, nos, vos | 120,714 | 84,216 | 36,240 | 19 / 75 | 2 | 6 | 156 |
+   | o, a, os, as | 517,828 | 449,210 | 57,985 | 427 / 4,423 | 59 | 81 | 5,643 |
+   | um, uma, uns, umas | 152,856 | 116,459 | 35,756 | 13 / 59 | 6 | 87 | 476 |
+   | ir, ter, estar, ser, haver, poder, querer, dever (30 forms) | 445,380 | 279,657 | 164,380 | 65 / 469 | 26 | 85 | 698 |
+   | verb forms with an attached pronoun | 21,546 | 386 | 20,987 | 0 / 0 | 90 | 17 | 66 |
 
-   - Each of the 159 flagged results was read (the counts are of lookups):
-     140 are right readings whose other lemma is a frequent other word (`falta-lhe`
-     and `falta-me` → faltar, not the noun falta; `nozes` → noz; `verdes` →
-     verde; `forma-se` → formar; `pô-lo` → pôr); 9 are ambiguous (`claras`,
-     `surpresas`, `vozinha`, a little voice or a granny); 7 show an
-     adjectival participle's verb (`isenta` → isentar, `manuscritos` →
-     manuscrever), which the audit counts as right; 1 is `ultima` (última);
-     and 2 are wrong: `encarga` shows the noun encargo, because its row names
-     encargar, which wty-pt-en only refers to encarregar, and `fofinha` shows
-     the noun fofa, because its row names fofinho, whose lemma fofo is a
-     second hop away (docs/languages.md 16).
-   - A hand check of 60 unjudged results drawn at random from them (seed 11):
-     49 right, 4 related words (`coaxos` → coaxar, `aprestos` → aprestar,
-     through the nouns' rows) and 7 wrong: the poetic adjective `fero`
-     (fierce) read as ferir three times, `youtube` → youtuber, `viamos`
-     (víamos without its accent) → vir, `FIDE` and the typo `deses`.
+   - Each of the 183 flagged results was read (the counts are of lookups):
+     159 are right readings whose other lemma is a frequent other word
+     (`falta-lhe` and `falta-me` → faltar, not the noun falta; `pegadas` →
+     pegada; `nozes` → noz; `verdes` → verde; `forma-se` → formar; `pô-lo` →
+     pôr); 9 are ambiguous (`claras`, `surpresas`, `vozinha`, a little voice
+     or a granny); 12 show an adjectival participle's verb (`isenta` →
+     isentar, `manuscritos` → manuscrever), which the first audit counted as
+     right; 1 is `ultima` (última); and 2 are wrong: `encarga` shows the noun
+     encargo, because its row names encargar, which wty-pt-en only refers to
+     encarregar, and `fofinha` shows the noun fofa, because its row names
+     fofinho, whose lemma fofo is a second hop away (docs/languages.md 16).
+   - A hand check of 60 unjudged results drawn at random from them (seed 13):
+     52 right, 1 related (`examinandos` → examinar, through the noun
+     examinando) and 7 wrong: the poetic adjective `fero` (fierce) read as
+     ferir twice, `mofa` (mockery) as mofo, `condoas` (condoer) as condão,
+     the prefix `intra-` and the names `Emi` and `Prue`.
    - Without the field, 2,873 of the 21,546 verb forms with a pronoun find
      nothing, and 7,244 show the entry of the word before the hyphen
      (`chama-se` → the noun chama, `deixa-me` → the noun deixa).
-4. **Real text** (`sources/measure.py text`): every word of four Project
-   Gutenberg novels and six Wikipedia articles, each looked up with the rest
+4. **Real text** (`sources/measure.py text`): every word of five Project
+   Gutenberg novels and nine Wikipedia articles, each looked up with the rest
    of its sentence, judged as in 2.
 
-   | Text | Lookups | Wrong or rare lemma first | Unjudged |
-   | --- | ---: | ---: | ---: |
-   | *Dom Casmurro* | 65,714 | 92 (0.140%) | 309 |
-   | *Memorias Posthumas de Braz Cubas* | 61,579 | 102 (0.166%) | 253 |
-   | *A Cidade e as Serras* | 68,331 | 90 (0.132%) | 549 |
-   | *O Guarany* | 56,945 | 116 (0.204%) | 212 |
-   | "Língua portuguesa" (Wikipedia) | 4,863 | 0 | 3 |
-   | "Brasil" | 12,359 | 6 (0.049%) | 2 |
-   | "Portugal" | 13,702 | 5 (0.036%) | 23 |
-   | "Futebol" | 11,658 | 1 (0.009%) | 11 |
-   | "São Paulo" | 15,517 | 3 (0.019%) | 9 |
-   | "Inteligência artificial" | 5,370 | 3 (0.056%) | 6 |
+   | Text | Lookups | Wrong or rare lemma first | Participle or noun / tu form or noun | Unjudged |
+   | --- | ---: | ---: | ---: | ---: |
+   | *Dom Casmurro* | 65,714 | 93 (0.142%) | 23 / 315 | 309 |
+   | *Memorias Posthumas de Braz Cubas* | 61,579 | 103 (0.167%) | 23 / 354 | 253 |
+   | *A Cidade e as Serras* | 68,331 | 95 (0.139%) | 40 / 523 | 549 |
+   | *O Guarany* | 56,945 | 121 (0.212%) | 9 / 258 | 212 |
+   | *Quincas Borba* | 76,378 | 137 (0.179%) | 37 / 332 | 324 |
+   | "Língua portuguesa" (Wikipedia) | 4,863 | 0 | 6 / 27 | 3 |
+   | "Brasil" | 12,359 | 8 (0.065%) | 37 / 84 | 2 |
+   | "Portugal" | 13,702 | 6 (0.044%) | 8 / 109 | 23 |
+   | "Futebol" | 11,658 | 1 (0.009%) | 28 / 125 | 11 |
+   | "São Paulo" | 15,517 | 3 (0.019%) | 11 / 102 | 9 |
+   | "Inteligência artificial" | 5,370 | 3 (0.056%) | 7 / 26 | 6 |
+   | "Rio de Janeiro" | 10,725 | 4 (0.037%) | 12 / 63 | 12 |
+   | "Lisboa" | 8,719 | 8 (0.092%) | 10 / 93 | 7 |
+   | "Telenovela" | 4,228 | 5 (0.118%) | 1 / 38 | 5 |
 
-   - Each of the 418 flagged results was read: 292 are spellings of the
-     editions, of which 247 read as another word (`contrario` (contrário) →
-     contrariar 55 times, `ultima` → ultimar 49, `noticia` → noticiar 31,
-     `azas` (asas) → azar 28, `delicia` → deliciar 22, `substancia` 13) and
-     45 show the lemma in its old spelling, which wty-pt-en has (`mettido` →
-     metter, `hespanhola` → hespanhol); 102 are right readings the proxy
-     flags (`verdes` → verde 20, `continha` → conter 11, `falta-me` →
-     faltar); 7 are ambiguous (`claras`); 4 show an adjectival participle's
-     verb (`isenta` → isentar); and 13 are wrong: `fundas` → funda (a sling,
-     for fundo) 5, `parola` → parolar 2, `unamos` → unar, `contemos` →
-     conter, `assentes` → assentir, `molestes` → moleste, `carita` → carito
-     and the place name `Ribeirinha` → Ribeira. At 04c95c7 the audit counted
-     0.23% to 0.93% of these lookups with one of its 55 words wrong first
-     (`sua` → suar most of them); none of those words is wrong first now.
-   - A hand check of 60 unjudged results drawn at random from the ten texts
-     (seed 11): 43 right, 3 related words (`regaladamente` → regalar,
-     `açodadamente` → açodar, `arremessos` → arremessar) and 14 wrong. Of the
-     wrong, 9 are spellings without the accents of the 1911 and 1945 reforms
-     (`oleo` → olear twice, `politicos` → politicar twice, `ruidos` → ruir,
-     `idea` → idear, `visinhos`, `timido` → timer, `cosinha`), 2 Latin words
-     (`quia`, `qua` → quer), 2 names (`Manduca`, the `Invalidos` of Rio) and
-     `figa!` → figo.
+   - Each of the 587 flagged results was read: 390 are spellings of the
+     editions, of which 334 read as another word (`contrario` (contrário) →
+     contrariar 79 times, `ultima` → ultimar 65, `noticia` → noticiar 62,
+     `azas` (asas) → azar 35, `delicia` → deliciar 25, `substancia` 16) and
+     56 show the lemma in its old spelling, which wty-pt-en has (`mettido` →
+     metter, `hespanhola` → hespanhol); 159 are right readings the proxy
+     flags (`verdes` → verde 25, `convivas` → conviva 14, `continha` →
+     conter 11); 17 are ambiguous (`claras`, `pisadas`); 5 show an
+     adjectival participle's verb (`isenta` → isentar); and 16 are wrong:
+     `fundas` → funda (a sling, for fundo) 5, `parola` → parolar 2,
+     `assentes` → assentir 2, `unamos` → unar, `contemos` → conter,
+     `tremam` → tremar, `molestes` → moleste, `carita` → carito, `altinha`
+     → alta and the place name `Ribeirinha` → Ribeira.
+   - The two "context" columns were checked by hand on 100 lookups each,
+     drawn at random from these texts and the Tatoeba lookups of 3 together
+     (seed 13; 776 and 7,475 lookups): of the participle-or-noun ones, 97
+     mean the noun, 1 the participle (`arados` after an auxiliary) and 2 are
+     unclear (`ouvidos?`); of the tu-or-noun ones, 98 mean the noun, 1 the
+     verb (*Se escutas, podes aprender*) and 1 is the name Braz Cubas.
+   - On the second audit's verdicts in context for this class (its
+     `nop-texts-judged.tsv`, 309 lookups of the ten texts it judged at
+     e923f6f, 114 of them wrong there), 20 are wrong now: 11 that still show
+     the noun where the participle is meant (`pisadas`, `jogadas`,
+     `ouvidos`) and 9 that now show the participle where the noun is meant
+     (`criados` as servants, `passadas` as strides, `quebradas` as ravines).
+     On its four new texts, 18 of 111 are wrong now (35 at e923f6f), 12 of
+     them `criada` and `criados`, which mean the maid and the servants in
+     *Quincas Borba*.
+   - A hand check of 60 unjudged results drawn at random from the fourteen
+     texts (seed 13): 49 right, 1 related word (`regaladamente` → regalar)
+     and 10 wrong: 5 spellings without the accents of the 1911 and 1945
+     reforms (`oraculo` → oracular, `politicos` → politicar, `crepusculo`,
+     `pendulo`, `habitos`), 2 Roman numerals (`VII` → vir), the place
+     `Invalidos`, the acronym `EMI` and the French plural `divans`.
    - A hand check of 80 results the script judges right, drawn the same way:
-     78 right, 1 related (`disputas` → disputar: wty-pt-en has no noun
-     disputa) and 1 wrong (`circulo`, círculo without its accent, →
-     circular). The audit's 80 at 04c95c7 had 4 wrong: `perfeita` →
-     perfazer, `sua` → suar, `Revistas` → rever and `contrario` →
-     contrariar; the first three are right now.
-   - Without the field the novels show 25, 36, 12 and 17 flagged results,
+     74 right and 6 wrong: 4 old spellings (`publico`, `negocio`, `paginas`
+     and `pagina` → paginar), `larga varanda` (largo, shown as largar) and a
+     sentence-initial `As`, which shows wty-pt-en's `As` (the plural of the
+     letter A) before the article (Known gaps). The first audit's 80 at
+     04c95c7 had 4 wrong (`perfeita`, `sua`, `Revistas`, `contrario`).
+   - Without the field the novels show 27, 37, 12, 20 and 28 flagged results,
      all plurals but one (`paes`, `caracteres`, `fundas`), and 4,199, 4,552,
-     6,795 and 4,882 lookups find nothing (3,747, 4,110, 6,082 and 4,475 with
-     it).
+     6,795, 4,882 and 5,395 lookups find nothing (3,747, 4,110, 6,082, 4,475
+     and 4,817 with it).
 5. **Performance.**
    - Native `benchmark-lookup --languages languages --language pt` with
      wty-pt-en mapped, on the 74 texts of `sources/benchmark-words.txt` (each
      the rest of a sentence from an inflected word), 6 passes with the first
-     dropped, three runs at machine load 45-54: p50 22.3-23.5 µs, p95
-     34.8-37.0 µs (without the field: 19.7-21.6 µs and 31.4-36.5 µs). The
-     budget is 1 ms p50.
+     dropped, three runs at machine load 34-41: p50 21.3-21.6 µs, p95
+     32.4-32.7 µs (without the field: 19.8-19.9 µs and 31.9 µs). The budget
+     is 1 ms p50.
    - WebAssembly (`sources/wasm-measure.mjs`, Node 22, the same 74 texts,
      wty-pt-en imported and paged). Hachidori's prebuilt runtimes on
      feat/multi-language 803f7b6e are built from hoshidicts b145feb, which
      refuses `untaggedTerms`, so the three runtimes were rebuilt with
      Emscripten 6.0.9 from that checkout's `wasm/` and this branch (main with
      #58 and this pack), as `wasm/build.sh` does at `--parallel 8`:
-     - `hdw_language_load`: median 13.7 ms single-thread and 15.3 ms
-       threaded over 10 fresh engines; live heap +2,024,248 and +2,024,192
-       bytes (+1,898,504 and +1,898,744 at 04c95c7: the 181 rule rows
+     - `hdw_language_load`: median 12.8 ms single-thread and 14.7 ms
+       threaded over 10 fresh engines; live heap +2,074,936 and +2,074,656
+       bytes (+1,898,504 and +1,898,744 at 04c95c7: the 256 rule rows
        added since). The budgets are 50 ms and 20 MB;
-     - `hdw_lookup`: p50 0.094 ms and p95 0.195 ms single-thread, p50 0.105
-       ms and p95 0.208 ms threaded; 123 results in a pass, as natively.
+     - `hdw_lookup`: p50 0.092 ms and p95 0.196 ms single-thread, p50 0.099
+       ms and p95 0.194 ms threaded; 123 results in a pass, as natively.
      - Without the field, this pack's copy on the prebuilt b145feb runtimes
        (taken with `git show HEAD:extension/vendor/…` from that checkout):
-       load 14.3 and 13.8 ms, heap +2,024,168 and +2,023,800 bytes,
-       `hdw_lookup` p50 0.105 and 0.096 ms, p95 0.223 and 0.181 ms, 103
+       load 13.0 and 13.3 ms, heap +2,074,728 and +2,074,712 bytes,
+       `hdw_lookup` p50 0.090 and 0.094 ms, p95 0.175 and 0.174 ms, 103
        results. They refuse the committed pack: "pt: language.json:
        lookup.untaggedTerms: unknown key".
    - The pack has no `pattern` rule.
@@ -524,47 +586,60 @@ given, it is labelled "without the field".
 Checks:
 
 - `language-conformance-test languages/pt`: corpus.tsv 1,461 / 1,461,
-  cases.tsv 669 / 669, text.tsv 26 / 26, lookup.tsv 104 / 104, gaps.tsv 0 / 37
-  (reported); classes.json agrees (4 classes, 1,374 fields, 2 steps, 4,446
-  outputs); 767 of the 6,556 rules are exercised by a passing row. `tests/`
-  and `sources/` hold 907,633 bytes. `lookup.tsv` pins the ties of
-  22 homographs with rows of its test dictionary written as wty-pt-en's
+  cases.tsv 672 / 672, text.tsv 26 / 26, lookup.tsv 146 / 146, gaps.tsv 0 / 37
+  (reported); classes.json agrees (4 classes, 1,374 fields, 2 steps, 4,494
+  outputs); 770 of the 6,630 rules are exercised by a passing row. `tests/`
+  and `sources/` hold 937,685 bytes. `lookup.tsv` pins the ties of 43
+  homographs, one or more for each group of preferred readings and each
+  longer ending, with rows of its test dictionary written as wty-pt-en's
   (`Sua casa` → seu, `podem` → poder, `precisa` → precisar, `cansada` →
-  cansado, `deixa-o` → deixar).
+  cansado, `criada em 1990` → criar, `Falas inglês?` → falar, `deixa-o` →
+  deixar).
 - `tools/check-yomitan.mjs`: no `sources/yomitan.json`, so no rules to
   compare; `decapitalize` and `capitalizeFirstLetter` agree with Yomitan's on
-  2,255 inputs each, with no listed difference.
+  2,279 inputs each, with no listed difference.
 - Mutation checks (section 14 step 7, `sources/mutations.py <build dir>
-  <scratch dir>`): 87 edits of a scratch copy, each removing or loosening one
-  stem constraint, exclusion, word-list part, processor or scanning setting
-  (every one of the Rule provenance list, the NFKC, diaeresis and case
-  processors, the hyphen, `searchResolution`), moving one transform before
-  another (the four orders of Ties between two lemmas), or removing a group
-  of the longer-ending plurals and feminines or of the preferred readings,
-  and the audit's surviving mutations (`clitic-o` read as a noun, the
-  compounds antever, equivaler and sorrir, prover, -gredir, the pluperfect
-  of ser and ir, -ísseis, -erdes, NFKD, Latin-1 capitals in stems). Each is
-  regenerated with its own `tests/classes.json` and run through the
-  conformance test: all 87 fail it.
+  <scratch dir>`): 112 edits of a scratch copy, each removing or loosening
+  one stem constraint, exclusion, word-list part, processor or scanning
+  setting (every one of the Rule provenance list, the NFKC, diaeresis and
+  case processors, the hyphen, `searchResolution`), moving one transform
+  before another (the orders of Ties between two lemmas, and the tu present
+  before the tu subjunctive), removing one longer-ending plural or feminine,
+  one reading of each group of preferred readings, or the verbs' condition
+  `vf` on them, and the first audit's surviving mutations (`clitic-o` read as
+  a noun, the compounds antever, equivaler and sorrir, prover, -gredir, the
+  pluperfect of ser and ir, -ísseis, -erdes, NFKD, Latin-1 capitals in
+  stems). Each is regenerated with its own `tests/classes.json` and run
+  through the conformance test: all 112 fail it. Some edits cannot change a
+  result, so no row can fail: the imperfect before the present or the
+  superlative before the plural (their rules never share an ending), and
+  -ada with a one-letter stem (the -a feminine gives the same words).
 - Hachidori (`test/chrome-language-pack.mjs` in Chrome 152, feat/multi-language
   803f7b6e with this branch's rules in `third_party/hoshidicts` and the
-  runtimes rebuilt from it, wty-pt-en): 27 / 27 checks pass. Settings adds
-  Portuguese beside Japanese and imports the dictionary (572,340 terms,
-  1.0 s); 23 hovered words, twelve written for the pack and the audit's
-  eleven, find their lemma first, traced by the pack's transforms (`falava`
-  → falar `imperfect (eu/ele)`, `pôs` → pôr `preterite (ele)`, `soldados` →
-  soldado `plural`, `Sua` → seu `feminine`, `Pare` → parar `present
-  subjunctive (eu/ele) or imperative (você)`, `Achas` → achar `present
-  (tu)`, `chama-se` → chamar); the Anki note and the switch to Japanese and
-  back work. Six of the audit's cases failed at 04c95c7. With the prebuilt
-  b145feb runtimes and an earlier head of this branch without the field, the
-  first 16 checks passed, the traces coming from wty-pt-en's form-of rows.
+  runtimes rebuilt from it, wty-pt-en), with 29 hovered words: twelve
+  written for the pack, the first audit's eleven and the second audit's six.
+  31 of the 33 checks pass. Settings adds Portuguese beside Japanese and
+  imports the dictionary (572,340 terms, 1.0 s); 27 words show the expected
+  headword first, traced by the pack's transforms (`falava` → falar
+  `imperfect (eu/ele)`, `pôs` → pôr `preterite (ele)`, `soldados` → soldado
+  `plural`, `Sua` → seu `feminine`, `Pare` → parar `present subjunctive
+  (eu/ele) or imperative (você)`, `criada` → criar `past participle`,
+  `chama-se` → chamar); the Anki note and the switch to Japanese and back
+  work. The other two show a right reading that is not the case's headword:
+  *Falas português muito bem* shows wty-pt-en's phrase *falas português*,
+  which matches more of the text (the second audit counts it as right), and
+  *As janelas estão quebradas* shows the adjective quebrado (broken), which
+  the case lists as quebrar (Ties between two lemmas). Six of the first
+  audit's cases failed at 04c95c7, and three of the second audit's at
+  e923f6f. With the prebuilt b145feb runtimes and an earlier head of this
+  branch without the field, the first 16 checks passed, the traces coming
+  from wty-pt-en's form-of rows.
 
 ## Known gaps
 
 - **Spellings older than the 1911 and 1945 reforms** cause most wrong first
-  results in real text: 247 of the 418 flagged in the ten texts, and 9 of the
-  14 wrong in the hand-checked sample. Without a written accent
+  results in real text: 334 of the 587 flagged in the fourteen texts, and 5
+  of the 10 wrong in the hand-checked sample. Without a written accent
   the rules cannot tell which vowel carried it (`politicos` reads as a
   present of politicar, `sitios` of sitiar, `bôa` of "bôer"), and wty-pt-en
   writes many old spellings as references to a reference (`azas` → aza →
@@ -577,6 +652,13 @@ Checks:
 - **Modern forms written without their accent** (`viamos` for víamos,
   `saida` for saída, `ultima` for última) read as other words; the pack has
   no processor that adds accents.
+- **Capitalised words at the start of a sentence** show a capitalised
+  headword of wty-pt-en before the word itself when there is one, because
+  the text as written needs no processor step and its decapitalised variant
+  needs one (9.6): `As` shows the plural of the letter A before the article
+  as, `O`, `A` and `E` the letters, `Como` the lake and `Este` the east,
+  before the article, the conjunction or the demonstrative. The word itself
+  comes second. In Tatoeba this is `As` at 4,617 places and `O` at 36,329.
 - **Own headwords of other words.** A word's own headword needs no rule, so
   it comes first (9.6), and for some frequent verb forms wty-pt-en's headword
   is another word: `era` shows the noun era (an age) before ser, `tinha`
@@ -588,19 +670,31 @@ Checks:
   derived word can reach a verb through a form it shares a spelling with:
   `solicitamente` gives solicito (solícito without its accent, which
   wty-pt-en lacks), whose row names solicitar; `beatificamente` →
-  beatificar, `magnificos` → magnificar. In the ten texts 38 first results
-  take the adverb's path, most of them related words (`regaladamente` →
-  regalar).
+  beatificar, `magnificos` → magnificar. In the fourteen texts 45 first
+  results take the adverb's path, most of them related words
+  (`regaladamente` → regalar).
 - **Homographs the preferred readings do not cover** keep the order of Ties
-  between two lemmas: the 35 forms of two verbs of one stem that show the
-  rarer first (`unamos` → unar, `contemos` → conter, `surte` → surtir); the
-  feminine plural of an adjective whose feminine is also a noun (`fundas` →
-  funda, a sling, before fundo; `claras` → clara before claro); the 69
-  feminines in -a that keep their verb; irregular participles shown as their
-  verb (`isenta` → isentar), which the audit counts as right; and `vira` and
-  `viras`, which show ver's pluperfect before virar. A host with a frequency
-  dictionary ranks these ties by the chosen frequency before the order the
-  rules found them in (9.6).
+  between two lemmas, which is right for most of them but not for all:
+  - a participle whose -o or -a form is a noun of another meaning, where the
+    participle is meant (`pisadas`, `jogadas`, `ouvidos` in *sermos
+    ouvidos*), and the reverse for the words now given the participle
+    (`criada` and `criados`, the maid and the servants of nineteenth-century
+    novels; `passadas`, strides; `quebradas`, ravines): 20 of the second
+    audit's 309 verdicts in the ten texts and 18 of its 111 in four more;
+  - European tu forms whose noun is the more common reading in the Tatoeba
+    sentences (`voltas`, `passas`, `tocas`, `escutas`, `matas`), which show
+    the noun;
+  - the 35 forms of two verbs of one stem that show the rarer first
+    (`unamos` → unar, `contemos` → conter, `surte` → surtir); the feminine
+    plural of an adjective whose feminine is also a noun (`fundas` → funda,
+    a sling, before fundo; `claras` → clara before claro); the 71 feminines
+    in -a that keep their verb (`larga` → largar, also for *larga varanda*);
+    irregular participles shown as their verb (`isenta` → isentar), which the
+    first audit counts as right; and `vira` and `viras`, which show ver's
+    pluperfect before virar.
+
+  A host with a frequency dictionary ranks these ties by the chosen frequency
+  before the order the rules found them in (9.6).
 - **Names, foreign words and Roman numerals** are read as Portuguese words
   when they look like one: `Toni` → toner, `Elma` → elmo, `VII` → vir, the
   French `DES` → de, the Latin `quia` → quer, `Roqueirinha` → roqueira. A
