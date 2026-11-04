@@ -1117,19 +1117,26 @@ for (const [slot, form, lemma] of [
     // and the reverse: caminha is caminhar, not cama's diminutive.
     ['present-ele', 'caminha', 'caminhar'],
     // A feminine plural whose -a form is also a noun of another meaning
-    // (toda, nova, pequena, velha, alta): the plural's one step reaches that
-    // noun during the scan, before the reference the word's rows give for the
-    // -o adjective or determiner, so todas showed toda. Where the sentences
-    // mean the adjective (the seventh audit's verdicts, 159 of 160, and
-    // samples read for traseiras, feias, curtas, secas and grávidas), the
-    // adjective comes first; nouns such as filhas, meninas, tortas and vagas
-    // keep the noun.
+    // (toda, nova, pequena, velha, alta; física, química): the plural's one
+    // step reaches that noun during the scan, before the reference the word's
+    // rows give for the -o adjective or determiner, so todas showed toda.
+    // Where the sentences mean the adjective (the seventh audit's verdicts,
+    // 159 of 160, and the Tatoeba and text contexts of the others, the word
+    // after a plural noun against after a determiner or a preposition), the
+    // adjective comes first; nouns such as filhas, meninas, tortas, vagas,
+    // técnicas and políticas keep the noun.
     ['feminine', 'todas', 'todo'], ['feminine', 'novas', 'novo'], ['feminine', 'últimas', 'último'], ['feminine', 'pequenas', 'pequeno'],
     ['feminine', 'lindas', 'lindo'], ['feminine', 'falsas', 'falso'], ['feminine', 'altas', 'alto'], ['feminine', 'brancas', 'branco'],
     ['feminine', 'baixas', 'baixo'], ['feminine', 'vivas', 'vivo'], ['feminine', 'cheias', 'cheio'], ['feminine', 'negras', 'negro'],
     ['feminine', 'longas', 'longo'], ['feminine', 'vazias', 'vazio'], ['feminine', 'claras', 'claro'], ['feminine', 'velhas', 'velho'],
     ['feminine', 'traseiras', 'traseiro'], ['feminine', 'feias', 'feio'], ['feminine', 'curtas', 'curto'], ['feminine', 'secas', 'seco'],
-    ['feminine', 'grávidas', 'grávido'],
+    ['feminine', 'grávidas', 'grávido'], ['feminine', 'físicas', 'físico'], ['feminine', 'químicas', 'químico'], ['feminine', 'diárias', 'diário'],
+    ['feminine', 'britânicas', 'britânico'], ['feminine', 'primárias', 'primário'], ['feminine', 'marinhas', 'marinho'],
+    ['feminine', 'domésticas', 'doméstico'], ['feminine', 'genéticas', 'genético'], ['feminine', 'plásticas', 'plástico'],
+    ['feminine', 'primitivas', 'primitivo'], ['feminine', 'secundárias', 'secundário'], ['feminine', 'matemáticas', 'matemático'],
+    ['feminine', 'térmicas', 'térmico'], ['feminine', 'ofensivas', 'ofensivo'], ['feminine', 'latinas', 'latino'], ['feminine', 'lógicas', 'lógico'],
+    ['feminine', 'executivas', 'executivo'], ['feminine', 'negativas', 'negativo'], ['feminine', 'solitárias', 'solitário'],
+    ['feminine', 'justas', 'justo'], ['feminine', 'calmas', 'calmo'], ['feminine', 'santas', 'santo'], ['feminine', 'médias', 'médio'],
     // ótimo and péssimo, the superlatives of bom and mau, are adjectives of
     // their own: their feminine and plural give them, as their rows do,
     // before the superlative's whole-word rule gives bom and mau.

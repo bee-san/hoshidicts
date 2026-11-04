@@ -445,7 +445,7 @@ def homographs(args, judge):
             feminine[form] = stem
         by_stem = defaultdict(set)
         for lemma, _ in rows:
-            if len(lemma) >= 3 and lemma[-2:] in ('ar', 'er', 'ir'):
+            if len(lemma) >= 3 and lemma[0].isalpha() and lemma[-2:] in ('ar', 'er', 'ir'):
                 by_stem[lemma[:-2]].add(lemma)
         pair = next((sorted(v) for v in by_stem.values() if len(v) >= 2), None)
         if pair:
