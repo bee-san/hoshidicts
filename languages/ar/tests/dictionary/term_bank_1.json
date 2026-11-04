@@ -75,7 +75,6 @@
   ["ارتدى", "اِرْتَدَى", "v", "v", 0, ["to wear"], 74, ""],
   ["ارتد", "اِرْتَدَّ", "v", "v", 0, ["to turn back"], 75, ""],
   ["صوت", "صَوْت", "n", "n", 0, ["voice"], 76, ""],
-  ["صوة", "صُوَّة", "n", "n", 0, ["waymark"], 77, ""],
   ["يدى", "يَدَى", "v", "v", 0, ["to injure the hand"], 78, ""],
   ["ناك", "نَاكَ", "v", "v", 0, ["to have sex"], 79, ""],
   ["أول", "أَوَّل", "", "", 0, ["first"], 80, ""],
@@ -86,5 +85,17 @@
   ["تعن", "", "non-lemma", "v", 0, [["عن", ["second-person singular masculine jussive"]]], 85, ""],
   ["تعني", "", "non-lemma", "v", 0, [["عن", ["second-person singular feminine subjunctive"]], ["عنى", ["third-person singular feminine non-past"]]], 86, ""],
   ["عط", "عَطَّ", "v", "v", 0, ["to tear"], 87, ""],
-  ["صوة", "", "non-lemma", "n", 0, [["صُوَّة", ["alternative form"]]], 88, ""]
+  ["صوة", "صُوَّة", "n", "n", 0, ["an elevation of terrain"], 88, ""],
+  ["طويل", "طَوِيل", "", "", 0, ["long"], 89, ""],
+  ["طويلة", "طَوِيلَة", "n", "n", 0, ["a long rope for grazing"], 90, ""],
+  ["الطويلة", "الطَّوِيلَة", "non-lemma", "", 0, [["طويل", ["singular definite feminine"]]], 91, ""],
+  ["الطويلة", "الطَّوِيلَة", "non-lemma", "n", 0, [["طويلة", ["singular definite"]]], 92, ""],
+  ["دع", "دَعَّ", "v", "v", 0, ["to rebuff"], 93, ""],
+  ["دعت", "دَعَتْ", "non-lemma", "v", 0, [["دعا", ["third-person singular feminine past"]]], 94, ""],
+  ["صات", "صَاتَ", "v", "v", 0, ["to quarrel"], 95, ""],
+  ["وقت", "وَقْت", "n", "n", 0, ["time"], 96, ""],
+  ["وقى", "وَقَى", "v", "v", 0, ["to guard"], 97, ""],
+  ["وجد", "وَجَدَ", "v", "v", 0, ["to find"], 98, ""],
+  ["جاد", "جَادَ", "v", "v", 0, ["to be good"], 99, ""],
+  ["دعت", "دَعَّتْ", "non-lemma", "v", 0, [["دع", ["third-person singular feminine past"]]], 100, ""]
 ]

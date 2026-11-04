@@ -49,7 +49,9 @@ def load_dictionary(path):
             for row in json.loads(archive.read(name)):
                 refs = [d for d in row[5] if isinstance(d, list) and len(d) == 2 and isinstance(d[0], str)]
                 for ref in refs:
-                    targets[row[0]].add(strip(ref[0]))
+                    # A target written with its vowels names one entry of
+                    # that spelling (كَافٍ "enough", not كَاف the letter).
+                    targets[row[0]].add(strip(ref[0]) + ('=' + ref[0] if strip(ref[0]) != ref[0] else ''))
                 if len(refs) < len(row[5]):
                     lemma.add(row[0])
     return targets, lemma
@@ -70,11 +72,7 @@ def load_parts_of_speech(path):
 
 
 def load_homographs(path):
-    """sources/homographs.tsv: word, then the comma-separated lemmas a reader
-    of ordinary prose needs for it, decided by hand. A lemma may name its
-    reading (لم=لَمْ: the particle, not لَمَّ "to gather"), which the first
-    card's reading must then be; `-` means no entry of wty-ar-en is right
-    (a name it lacks)."""
+    """sources/homographs.tsv: word, then the comma-separated lemmas a reader of ordinary prose needs for it, decided by hand. (README.md, Measurements.)"""
     out = {}
     for line in open(path, encoding='utf-8'):
         if line.startswith('#') or not line.strip():
@@ -97,13 +95,17 @@ def own_lemmas(word, targets, lemma):
     can show for it."""
     out = set()
     for target in targets.get(word, ()):
-        if target in lemma:
+        expression = target.split('=')[0]
+        if expression in lemma:
             out.add(target)
         else:
-            out |= {t for t in targets.get(target, ()) if t in lemma}
+            out |= {t for t in targets.get(expression, ()) if t.split('=')[0] in lemma}
     if word in lemma:
         out.add(word)
-    return out
+    # Where a row names an entry by its reading, the bare spelling no longer
+    # counts every entry as right.
+    specific = {t.split('=')[0] for t in out if '=' in t}
+    return {t for t in out if '=' in t or t not in specific}
 
 
 def lookup(texts, imported, languages):
@@ -138,7 +140,7 @@ def frequent(args):
     top_tokens = sum(int(c) for _, c in top)
     words = [(w, int(c)) for w, c in top if LETTERS.match(w)]
     reached_by_rule = deinflections([w for w, _ in words if targets.get(w)], languages)
-    measured = [(w, c) for w, c in words if own_lemmas(w, targets, lemma) & reached_by_rule.get(w, set()) - {w}]
+    measured = [(w, c) for w, c in words if {t.split('=')[0] for t in own_lemmas(w, targets, lemma)} & reached_by_rule.get(w, set()) - {w}]
     results = lookup([w for w, _ in measured], imported, languages)
     variants = variants_of([w for w, _ in measured], languages)
     wrong = []
@@ -192,14 +194,11 @@ PRONOUNS = ['', 'ي', 'ني', 'نا', 'ك', 'كما', 'كم', 'كن', 'ه', 'ه�
 
 
 def bases(stem, pronoun, lemma=(), targets=None, pos=None):
-    """The spellings a word may have without its pronoun: ة written ت (قوته,
-    أمته; where both are words, homographs.tsv decides: صوته is صوت, not
-    صوة), ى written ا or ي (معناه, عليه) or merged with the pronoun ي (إليّ),
-    and a verb's ـوا without its alif (كتبوه)."""
+    """The spellings a word may have without its pronoun: ة written ت (قوته, أمته; where both are words, homographs.tsv decides: صوته is صوت, not صوة), ى written ا or ي (معناه, عليه) or merged with the pronoun ي (إليّ), and a verb's ـوا without its alif (كتبوه). (README.md, Measurements.)"""
     out = [stem]
     if pronoun:
         # Not after a verb in ـت (كسرته is كسرت + ـه, not كسرة).
-        if stem.endswith('ت') and not (pos is not None and stem in targets and all(pos.get(x) == {'v'} for x in own_lemmas(stem, targets, lemma))):
+        if stem.endswith('ت') and not (pos is not None and stem in targets and all(pos.get(x.split('=')[0]) == {'v'} for x in own_lemmas(stem, targets, lemma))):
             out.append(stem[:-1] + 'ة')
         if stem.endswith('ا') or stem.endswith('ي'):
             out.append(stem[:-1] + 'ى')
@@ -221,10 +220,7 @@ def variants_of(words, languages):
 
 
 def fits(lemma_pos, prefix, pronoun):
-    """Whether a lemma with these parts of speech can take the proclitics and
-    the pronoun: الـ, بـ and كـ do not go before a verb, سـ goes only before
-    one, a verb does not take ـي (my) and a noun does not take ـني (me). An
-    untagged lemma (adjectives, names, particles) fits anything."""
+    """Whether a lemma with these parts of speech can take the proclitics and the pronoun: الـ, بـ and كـ do not go before a verb, سـ goes only before one, a verb does not take ـي (my) and a noun does not take ـني (me). (README.md, Measurements.)"""
     if not lemma_pos or '' in lemma_pos:
         return True
     clitic = prefix.lstrip('وف')
@@ -255,18 +251,12 @@ def split_lemmas(word, targets, lemma, pos, homographs):
                     candidates.append(base[2:] if base.startswith('ال') else base)
                 for b in candidates:
                     right = homographs.get(b) or own_lemmas(b, targets, lemma)
-                    found |= {x for x in right if fits(pos.get(x), prefix, pronoun)}
+                    found |= {x for x in right if fits(pos.get(x.split('=')[0]), prefix, pronoun)}
     return found
 
 
 def judge(word, targets, lemma, variants=None, pos=None, homographs=None):
-    """The lemmas that count as right for a word, and how they were found:
-    'homograph' (decided by hand in homographs.tsv), 'listed' (the word's own
-    lemmas, or those of its spellings after the default preprocessors, الى ->
-    إلى), or 'clitic' (a word wty-ar-en does not list, by the lemmas of every
-    way of writing it as proclitics + a listed word + a pronoun that fit the
-    lemma's part of speech, a hand decision for that word counting instead of
-    its own lemmas). (None, None) when nothing is found."""
+    """The lemmas that count as right for a word, and how they were found: 'homograph' (decided by hand in homographs.tsv), 'listed' (the word's own lemmas, or those of its spellings after the default preprocessors, الى -> إلى), or 'clitic' (a word wty-ar-en does not list, by the lemmas of every way of writing it as proclitics + a listed word + a pronoun that fit the lemma's part of speech, a hand decision for that word counting instead of its own lemmas). (README.md, Measurements.)"""
     homographs = homographs or {}
     pos = pos or {}
     if word in homographs:
@@ -532,11 +522,7 @@ def untagged(args):
 
 
 def changes(args):
-    """Every frequent word (as `frequent` measures them) and every position of
-    the texts looked up with the pack and with a copy that has no rules; the
-    groups whose first card (expression and reading) differs, with how the
-    judge rates each card (right, wrong, or - when it cannot judge):
-        measure.py changes <wty-ar-en.zip> <imported> <ar_50k.txt> <text>... --out <tsv> [--homographs tsv]"""
+    """Every frequent word (as `frequent` measures them) and every position of the texts looked up with the pack and with a copy that has no rules; the groups whose first card (expression and reading) differs, with how the judge rates each card (right, wrong, or - when it cannot judge): measure.py changes <wty-ar-en.zip> <imported> <ar_50k.txt> <text>... (README.md, Measurements.)"""
     zip_path, imported, freq_path = args[:3]
     texts = [a for a in args[3:] if not a.startswith('--') and a != option(args, '--out', '') and a != option(args, '--homographs', '')]
     languages = option(args, '--languages', 'languages')
@@ -554,7 +540,7 @@ def changes(args):
     entries = [line.split() for line in open(freq_path, encoding='utf-8') if line.strip()][:10000]
     words = [(w, int(c)) for w, c in entries if LETTERS.match(w)]
     reached = deinflections([w for w, _ in words if targets.get(w)], languages)
-    measured = [(w, c) for w, c in words if own_lemmas(w, targets, lemma) & reached.get(w, set()) - {w}]
+    measured = [(w, c) for w, c in words if {t.split('=')[0] for t in own_lemmas(w, targets, lemma)} & reached.get(w, set()) - {w}]
     sources = [('frequent', [(w, w, c) for w, c in measured])]
     for t in texts:
         sources.append((t.split('/')[-1], [(w, h, 1) for w, h in positions(open(t, encoding='utf-8').read())]))

@@ -6,24 +6,11 @@
 //   node languages/ar/sources/build-final.mjs
 //
 // The final set is sources/own.json, in its order, with each own rule that
-// makes the same deinflection as a Yomitan rule marked `source: "both"`. No
-// Yomitan rule is kept: on the measurements of README.md the Yomitan rules,
-// added to the own ones, recover no row of the corpus, the dev pool, the
-// hand-written cases or Yomitan's own test (any trace) and add false
-// candidates.
-//
-// A Yomitan rule and an own rule make the same deinflection when, applied to
-// the same probe word, they give the same text: every Yomitan rule is
-// applied to the forms it names (its affixes on ten common stems: كتب, علم, درس, فتح, ذهب, جلس, شرب, عمل, سمع, خرج) and
-// each own rule that turns the same input into the same output is marked.
-//
-// It also sets the reasons column of tests/yomitan.tsv (Yomitan's Arabic test,
-// as tools/port-yomitan-tests.mjs writes it) to `*` for the valid rows: the
-// final rules reach those lemmas through own transforms, whose ids are not
-// Yomitan's. Yomitan's negatives keep their reasons, so they check that the
-// own rules do not make that chain under Yomitan's names (none can) and are
-// listed instead, as own negatives with reasons `*`, in tests/cases.tsv where
-// the own rules pass them.
+// makes the same deinflection as a Yomitan rule (the same output from the
+// same input, on its affixes over ten common stems) marked `source: "both"`.
+// No Yomitan rule is kept (README.md, Rule provenance). tests/yomitan.tsv, as
+// tools/port-yomitan-tests.mjs writes it, takes reasons `*`, and its negatives
+// the final rules reach move to sources/yomitan-tests-not-kept.tsv.
 
 import {execFileSync} from 'node:child_process';
 import {readFileSync, writeFileSync} from 'node:fs';
