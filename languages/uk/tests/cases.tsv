@@ -1,0 +1,738 @@
+# Hand-written for this pack (GPL-3.0-or-later): tricky forms, phrases and negatives (words that must not reach a wrong lemma).
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+alternation	1	стола	стіл	n	noun.gen.sg
+alternation	1	кота	кіт	n	*
+alternation	1	ножем	ніж	n	*
+alternation	1	вечора	вечір	n	*
+alternation	1	коня	кінь	n	*
+alternation	1	коней	кінь	n	*
+alternation	1	льоду	лід	n	*
+alternation	1	ночі	ніч	n	*
+alternation	1	печі	піч	n	*
+alternation	1	солі	сіль	n	noun.gen.sg+dat.sg+loc.sg+nom.pl
+alternation	1	осені	осінь	n	*
+alternation	1	радості	радість	n	*
+alternation	1	ніг	нога	n	*
+alternation	1	шкіл	школа	n	*
+alternation	1	осіб	особа	n	*
+alternation	1	слів	слово	n	*
+alternation	1	сіл	село	n	*
+alternation	1	сліз	сльоза	n	*
+alternation	1	бою	бій	n	*
+alternation	1	покою	покій	n	*
+alternation	1	році	рік	n	*
+mutation	1	нозі	нога	n	noun.dat.sg+loc.sg
+mutation	1	руці	рука	n	*
+mutation	1	книзі	книга	n	*
+mutation	1	мусі	муха	n	*
+mutation	1	подрузі	подруга	n	*
+mutation	1	березі	берег	n	*
+mutation	1	дусі	дух	n	*
+mutation	1	вусі	вухо	n	*
+mutation	1	яблуці	яблуко	n	*
+mutation	1	друже	друг	n	*
+mutation	1	козаче	козак	n	*
+mutation	1	чоловіче	чоловік	n	*
+fleeting vowel	1	будинку	будинок	n	*
+fleeting vowel	1	хлопця	хлопець	n	*
+fleeting vowel	1	хлопче	хлопець	n	*
+fleeting vowel	1	учня	учень	n	*
+fleeting vowel	1	дня	день	n	*
+fleeting vowel	1	тижнів	тиждень	n	*
+fleeting vowel	1	вітру	вітер	n	*
+fleeting vowel	1	сну	сон	n	*
+fleeting vowel	1	пса	пес	n	*
+fleeting vowel	1	вогню	вогонь	n	*
+fleeting vowel	1	орла	орел	n	*
+fleeting vowel	1	книжок	книжка	n	*
+fleeting vowel	1	сестер	сестра	n	*
+fleeting vowel	1	пісень	пісня	n	*
+fleeting vowel	1	вікон	вікно	n	*
+fleeting vowel	1	європейця	європеєць	n	*
+fleeting vowel	1	китайцем	китаєць	n	*
+third declension	1	ніччю	ніч	n	*
+third declension	1	сіллю	сіль	n	*
+third declension	1	тінню	тінь	n	*
+third declension	1	радістю	радість	n	*
+third declension	1	любов'ю	любов	n	*
+third declension	1	кров’ю	кров	n	*
+third declension	1	подорожжю	подорож	n	*
+third declension	1	пам'яттю	пам'ять	n	*
+third declension	1	ночей	ніч	n	*
+third declension	1	радости	радість	n	*
+fourth declension	1	кошеняти	кошеня	n	*
+fourth declension	1	кошенята	кошеня	n	*
+fourth declension	1	курчат	курча	n	*
+fourth declension	1	імені	ім'я	n	*
+fourth declension	1	імена	ім'я	n	*
+neuter in -я	1	питань	питання	n	*
+neuter in -я	1	знанням	знання	n	*
+neuter in -я	1	обличчю	обличчя	n	*
+neuter in -е	1	полів	поле	n	*
+neuter in -е	1	полю	поле	n	*
+neuter in -е	1	морю	море	n	*
+neuter in -е	1	прізвищу	прізвище	n	*
+neuter in -о	1	вікну	вікно	n	*
+neuter in -о	1	місту	місто	n	*
+neuter in -е	1	морем	море	n	*
+neuter in -е	1	місць	місце	n	*
+neuter in -е	1	плечима	плече	n	*
+soft nouns	1	учителеві	учитель	n	*
+soft nouns	1	лікарем	лікар	n	*
+soft nouns	1	героєві	герой	n	*
+soft nouns	1	музеї	музей	n	*
+soft nouns	1	землею	земля	n	*
+soft nouns	1	лінії	лінія	n	*
+soft nouns	1	ліній	лінія	n	*
+soft nouns	1	сім'ї	сім'я	n	*
+soft nouns	1	надією	надія	n	*
+soft nouns	1	вулиць	вулиця	n	*
+irregular nouns	1	люди	людина	n	*
+irregular nouns	1	людей	людина	n	*
+irregular nouns	1	дітьми	дитина	n	*
+irregular nouns	1	очима	око	n	*
+irregular nouns	1	друзі	друг	n	*
+irregular nouns	1	матері	мати	n	*
+irregular nouns	1	матір'ю	мати	n	*
+irregular nouns	1	дверима	двері	n	*
+irregular nouns	1	грошей	гроші	n	*
+irregular nouns	1	громадяни	громадянин	n	*
+irregular nouns	1	небеса	небо	n	*
+adjectives	1	нового	новий	adj	*
+adjectives	1	новою	новий	adj	*
+adjectives	1	нових	новий	adj	*
+adjectives	1	синього	синій	adj	*
+adjectives	1	синю	синій	adj	*
+adjectives	1	третього	третій	adj	*
+adjectives	1	будь-якого	будь-який	adj	*
+comparison	1	новіший	новий	adj	*
+comparison	1	новішого	новий	adj	*
+comparison	1	найкращого	добрий	adj	*
+comparison	1	найближча	близький	adj	*
+comparison	1	найменшим	малий	adj	*
+comparison	1	найдорожче	дорого	adv	*
+comparison	1	кращий	добрий	adj	*
+comparison	1	вищий	високий	adj	*
+comparison	1	нижчий	низький	adj	*
+comparison	1	дорожчий	дорогий	adj	*
+comparison	1	легший	легкий	adj	*
+comparison	1	товщий	товстий	adj	*
+comparison	1	найшвидше	швидко	adv	*
+comparison	1	якнайкраще	добре	adv	*
+comparison	1	частіше	часто	adv	*
+comparison	1	легче	легко	adv	*
+comparison	1	дешевше	дешево	adv	*
+comparison	1	слабше	слабо	adv	*
+comparison	1	важче	важко	adv	*
+short adjectives	1	повен	повний	adj	*
+short adjectives	1	зелен	зелений	adj	*
+short adjectives	1	рад	радий	adj	*
+pronouns	1	мене	я	pron	*
+pronouns	1	тобі	ти	pron	*
+pronouns	1	йому	він	pron	*
+pronouns	1	нього	він	pron	*
+pronouns	1	ньому	він	pron	*
+pronouns	1	кім	хто	pron	*
+pronouns	1	неї	вона	pron	*
+pronouns	1	нею	вона	pron	*
+pronouns	1	нами	ми	pron	*
+pronouns	1	вам	ви	pron	*
+pronouns	1	них	вони	pron	*
+pronouns	1	собою	себе	pron	*
+pronouns	1	кого	хто	pron	*
+pronouns	1	чому	що	pron	*
+pronouns	1	нічого	ніщо	pron	*
+pronouns	1	моєї	мій	pron	*
+pronouns	1	твоїм	твій	pron	*
+pronouns	1	своєю	свій	pron	*
+pronouns	1	нашого	наш	pron	*
+pronouns	1	вашій	ваш	pron	*
+pronouns	1	цього	цей	*	*
+pronouns	1	цієї	цей	*	*
+pronouns	1	тієї	той	*	*
+pronouns	1	всіх	весь	pron	*
+pronouns	1	усьому	весь	pron	*
+pronouns	1	самого	сам	pron	*
+pronouns	1	їхнього	їхній	pron	*
+pronouns	1	якогось	якийсь	*	*
+pronouns	1	якимось	якийсь	*	*
+pronouns	1	якого-небудь	який-небудь	*	*
+numerals	1	двох	два	num	*
+numerals	1	трьома	три	num	*
+numerals	1	чотирма	чотири	num	*
+numerals	1	п'яти	п'ять	num	*
+numerals	1	п'ятьох	п'ять	num	*
+numerals	1	десятьма	десять	num	*
+numerals	1	двадцяти	двадцять	num	*
+numerals	1	п'ятдесяти	п'ятдесят	num	*
+numerals	1	сорока	сорок	num	*
+numerals	1	семи	сім	num	*
+numerals	1	восьми	вісім	num	*
+numerals	1	одного	один	num	*
+numerals	1	однієї	один	num	*
+first conjugation	1	читаю	читати	v	v.prs1sg
+first conjugation	1	читаєш	читати	v	v.prs2sg
+first conjugation	1	читає	читати	v	v.prs3sg
+first conjugation	1	читаємо	читати	v	v.prs1pl
+first conjugation	1	читаєм	читати	v	v.prs1pl
+first conjugation	1	читаєте	читати	v	v.prs2pl
+first conjugation	1	читають	читати	v	v.prs3pl
+first conjugation	1	гуляли	гуляти	v	v.pstPl
+first conjugation	1	розумієш	розуміти	v	*
+first conjugation	1	мрію	мріяти	v	*
+first conjugation	1	малюєш	малювати	v	*
+first conjugation	1	дякую	дякувати	v	*
+first conjugation	1	даю	давати	v	*
+first conjugation	1	встаєш	вставати	v	*
+first conjugation	1	продає	продавати	v	*
+first conjugation	1	знає	знати	v	*
+first conjugation	1	крикне	крикнути	v	*
+first conjugation	1	поверну	повернути	v	*
+first conjugation	1	чую	чути	v	*
+first conjugation	1	п'ю	пити	v	*
+first conjugation	1	б'ють	бити	v	*
+first conjugation	1	розіб'ю	розбити	v	*
+first conjugation	1	ллє	лити	v	*
+first conjugation	1	живуть	жити	v	*
+first conjugation	1	мию	мити	v	*
+mutation in the present	1	пишу	писати	v	*
+mutation in the present	1	пишеш	писати	v	*
+mutation in the present	1	кажуть	казати	v	*
+mutation in the present	1	скажи	сказати	v	*
+mutation in the present	1	плаче	плакати	v	*
+mutation in the present	1	шепчу	шептати	v	*
+mutation in the present	1	брешеш	брехати	v	*
+mutation in the present	1	сиплю	сипати	v	*
+consonant stems	1	несу	нести	v	*
+consonant stems	1	ніс	нести	v	*
+consonant stems	1	несла	нести	v	*
+consonant stems	1	веде	вести	v	*
+consonant stems	1	вів	вести	v	*
+consonant stems	1	вела	вести	v	*
+consonant stems	1	везу	везти	v	*
+consonant stems	1	віз	везти	v	*
+consonant stems	1	росте	рости	v	*
+consonant stems	1	ріс	рости	v	*
+consonant stems	1	кладу	класти	v	*
+consonant stems	1	клав	класти	v	*
+consonant stems	1	впав	впасти	v	*
+consonant stems	1	печуть	пекти	v	*
+consonant stems	1	пік	пекти	v	*
+consonant stems	1	втік	втекти	v	*
+consonant stems	1	можу	могти	v	*
+consonant stems	1	може	могти	v	*
+consonant stems	1	міг	могти	v	*
+consonant stems	1	допоможіть	допомогти	v	*
+consonant stems	1	ліг	лягти	v	*
+consonant stems	1	ляжу	лягти	v	*
+consonant stems	1	ляж	лягти	v	*
+consonant stems	1	біжить	бігти	v	*
+consonant stems	1	помру	померти	v	*
+consonant stems	1	помер	померти	v	*
+consonant stems	1	зник	зникнути	v	*
+consonant stems	1	зникла	зникнути	v	*
+consonant stems	1	звик	звикнути	v	*
+irregular verbs	1	беру	брати	v	*
+irregular verbs	1	зберу	зібрати	v	*
+irregular verbs	1	розберемо	розібрати	v	*
+irregular verbs	1	назву	назвати	v	*
+irregular verbs	1	стану	стати	v	*
+irregular verbs	1	перестань	перестати	v	*
+irregular verbs	1	почну	почати	v	*
+irregular verbs	1	зніму	зняти	v	*
+irregular verbs	1	прийму	прийняти	v	*
+irregular verbs	1	візьму	взяти	v	*
+irregular verbs	1	візьми	взяти	v	*
+irregular verbs	1	надішлю	надіслати	v	*
+irregular verbs	1	надішліть	надіслати	v	*
+irregular verbs	1	жену	гнати	v	*
+irregular verbs	1	відпочинь	відпочити	v	*
+irregular verbs	1	сяду	сісти	v	*
+irregular verbs	1	сів	сісти	v	*
+irregular verbs	1	сядьте	сісти	v	*
+irregular verbs	1	їм	їсти	v	*
+irregular verbs	1	їсть	їсти	v	*
+irregular verbs	1	їдять	їсти	v	*
+irregular verbs	1	з'їв	з'їсти	v	*
+irregular verbs	1	їж	їсти	v	*
+irregular verbs	1	дам	дати	v	*
+irregular verbs	1	дасть	дати	v	*
+irregular verbs	1	дадуть	дати	v	*
+irregular verbs	1	продасте	продати	v	*
+irregular verbs	1	дай	дати	v	*
+irregular verbs	1	відповім	відповісти	v	*
+irregular verbs	1	розповідять	розповісти	v	*
+irregular verbs	1	відповів	відповісти	v	*
+irregular verbs	1	буду	бути	v	*
+irregular verbs	1	будемо	бути	v	*
+irregular verbs	1	забуду	забути	v	*
+irregular verbs	1	був	бути	v	*
+irregular verbs	1	була	бути	v	*
+irregular verbs	1	є	бути	v	*
+irregular verbs	1	будь	бути	v	*
+irregular verbs	1	будьте	бути	v	*
+irregular verbs	1	будучи	бути	v	*
+irregular verbs	1	їду	їхати	v	*
+irregular verbs	1	поїдемо	поїхати	v	*
+irregular verbs	1	йду	йти	v	*
+irregular verbs	1	іде	іти	v	*
+irregular verbs	1	піду	піти	v	*
+irregular verbs	1	прийшов	прийти	v	*
+irregular verbs	1	пішла	піти	v	*
+irregular verbs	1	знайдуть	знайти	v	*
+irregular verbs	1	знайшли	знайти	v	*
+irregular verbs	1	хочу	хотіти	v	*
+irregular verbs	1	хочуть	хотіти	v	*
+irregular verbs	1	сплю	спати	v	*
+irregular verbs	1	спить	спати	v	*
+irregular verbs	1	стою	стояти	v	*
+irregular verbs	1	стоїть	стояти	v	*
+irregular verbs	1	стій	стояти	v	*
+irregular verbs	1	боїшся	боятися	v	*
+irregular verbs	1	бійся	боятися	v	*
+irregular verbs	1	борешся	боротися	v	*
+second conjugation	1	говорю	говорити	v	v.prs1sg
+second conjugation	1	говориш	говорити	v	v.prs2sg
+second conjugation	1	говорить	говорити	v	v.prs3sg
+second conjugation	1	говоримо	говорити	v	v.prs1pl
+second conjugation	1	говорите	говорити	v	v.prs2pl
+second conjugation	1	говорять	говорити	v	v.prs3pl
+second conjugation	1	ходжу	ходити	v	*
+second conjugation	1	сиджу	сидіти	v	*
+second conjugation	1	вожу	возити	v	*
+second conjugation	1	ношу	носити	v	*
+second conjugation	1	прошу	просити	v	*
+second conjugation	1	плачу	платити	v	*
+second conjugation	1	плачу	плакати	v	*
+second conjugation	1	лечу	летіти	v	*
+second conjugation	1	пущу	пустити	v	*
+second conjugation	1	захищу	захистити	v	*
+second conjugation	1	їжджу	їздити	v	*
+second conjugation	1	люблю	любити	v	*
+second conjugation	1	люблять	любити	v	*
+second conjugation	1	роблю	робити	v	*
+second conjugation	1	куплять	купити	v	*
+second conjugation	1	ловлю	ловити	v	*
+second conjugation	1	ставлять	ставити	v	*
+second conjugation	1	ломлю	ломити	v	*
+second conjugation	1	бачу	бачити	v	*
+second conjugation	1	бачать	бачити	v	*
+second conjugation	1	лежу	лежати	v	*
+second conjugation	1	кричать	кричати	v	*
+second conjugation	1	горить	горіти	v	*
+second conjugation	1	терплю	терпіти	v	*
+second conjugation	1	клею	клеїти	v	*
+second conjugation	1	таю	таїти	v	*
+second conjugation	1	затаїть	затаїти	v	*
+future	1	читатиму	читати	v	v.fut1sg
+future	1	читатимеш	читати	v	v.fut2sg
+future	1	читатиме	читати	v	v.fut3sg
+future	1	читатимемо	читати	v	v.fut1pl
+future	1	читатимете	читати	v	v.fut2pl
+future	1	читатимуть	читати	v	v.fut3pl
+future	1	нестиму	нести	v	*
+reflexive	1	сміюся	сміятися	v	*
+reflexive	1	сміюсь	сміятися	v	*
+reflexive	1	смієшся	сміятися	v	*
+reflexive	1	сміється	сміятися	v	v.prs3sg
+reflexive	1	сміємося	сміятися	v	*
+reflexive	1	смієтесь	сміятися	v	*
+reflexive	1	сміються	сміятися	v	*
+reflexive	1	сміявся	сміятися	v	v.pstM
+reflexive	1	сміялася	сміятися	v	*
+reflexive	1	сміялись	сміятися	v	*
+reflexive	1	смійся	сміятися	v	*
+reflexive	1	смійтеся	сміятися	v	*
+reflexive	1	сміючись	сміятися	v	*
+reflexive	1	пишеться	писатися	v	*
+reflexive	1	вчиться	вчитися	v	*
+reflexive	1	дивишся	дивитися	v	*
+reflexive	1	дивлюся	дивитися	v	*
+reflexive	1	дивляться	дивитися	v	*
+reflexive	1	дивись	дивитися	v	*
+reflexive	1	дивіться	дивитися	v	*
+reflexive	1	зупинись	зупинитися	v	*
+reflexive	1	повернулися	повернутися	v	*
+reflexive	1	усміхнувшись	усміхнутися	v	*
+reflexive	1	знайомтеся	знайомитися	v	*
+reflexive	1	сміятиметься	сміятися	v	*
+reflexive	1	котивсь	котитися	v	*
+imperative	1	читай	читати	v	v.imp2sg
+imperative	1	читаймо	читати	v	v.imp1pl
+imperative	1	читайте	читати	v	v.imp2pl
+imperative	1	пиши	писати	v	*
+imperative	1	пишіть	писати	v	*
+imperative	1	говоріть	говорити	v	*
+imperative	1	ходімо	ходити	v	*
+imperative	1	ходім	ходити	v	*
+imperative	1	неси	нести	v	*
+imperative	1	бери	брати	v	*
+imperative	1	вибач	вибачити	v	*
+imperative	1	вибачте	вибачити	v	*
+imperative	1	пробачте	пробачити	v	*
+imperative	1	дозвольте	дозволити	v	*
+imperative	1	перевірте	перевірити	v	*
+imperative	1	повір	повірити	v	*
+imperative	1	залиш	залишити	v	*
+imperative	1	постав	поставити	v	*
+imperative	1	кинь	кинути	v	*
+imperative	1	гляньте	глянути	v	*
+imperative	1	встаньте	встати	v	*
+imperative	1	відкрий	відкрити	v	*
+imperative	1	налий	налити	v	*
+imperative	1	випий	випити	v	*
+imperative	1	ріж	різати	v	*
+imperative	1	плач	плакати	v	*
+participles	1	прочитаний	прочитати	v	*
+participles	1	прочитаної	прочитати	v	*
+participles	1	написаний	написати	v	*
+participles	1	побудований	побудувати	v	*
+participles	1	намальованих	намалювати	v	*
+participles	1	зроблений	зробити	v	*
+participles	1	посаджений	посадити	v	*
+participles	1	заплачений	заплатити	v	*
+participles	1	запрошений	запросити	v	*
+participles	1	захищений	захистити	v	*
+participles	1	куплений	купити	v	*
+participles	1	поставленого	поставити	v	*
+participles	1	втомлений	втомити	v	*
+participles	1	зачинений	зачинити	v	*
+participles	1	відкритий	відкрити	v	*
+participles	1	забутий	забути	v	*
+participles	1	взятий	взяти	v	*
+participles	1	зайнятий	зайняти	v	*
+participles	1	розпочатий	розпочати	v	*
+participles	1	кинутий	кинути	v	*
+participles	1	принесений	принести	v	*
+participles	1	переведений	перевести	v	*
+participles	1	привезений	привезти	v	*
+participles	1	спечений	спекти	v	*
+participles	1	збережений	зберегти	v	*
+participles	1	знайдений	знайти	v	*
+participles	1	стертий	стерти	v	*
+participles	1	працюючий	працювати	v	*
+participles	1	лежачий	лежати	v	*
+participles	1	зниклий	зникнути	v	*
+participles	1	почервонілий	почервоніти	v	*
+participles	1	минулого	минути	v	*
+impersonal	1	зроблено	зробити	v	*
+impersonal	1	написано	написати	v	*
+impersonal	1	відкрито	відкрити	v	*
+impersonal	1	взято	взяти	v	*
+adverbial participles	1	читаючи	читати	v	*
+adverbial participles	1	пишучи	писати	v	*
+adverbial participles	1	сидячи	сидіти	v	*
+adverbial participles	1	лежачи	лежати	v	*
+adverbial participles	1	стоячи	стояти	v	*
+adverbial participles	1	ідучи	іти	v	*
+adverbial participles	1	прочитавши	прочитати	v	*
+adverbial participles	1	принісши	принести	v	*
+adverbial participles	1	зникши	зникнути	v	*
+infinitive variants	1	читать	читати	v	*
+infinitive variants	1	сміятись	сміятися	v	*
+apostrophes	1	б’ють	бити	v	*
+apostrophes	1	пʼяти	п'ять	num	*
+apostrophes	1	з`їв	з'їсти	v	*
+stress marks	1	чита́ю	читати	v	*
+stress marks	1	кни́ги	книга	n	*
+stress marks	1	ві́кна	вікно	n	*
+capitals	1	Читаю	читати	v	*
+capitals	1	НОВОГО	новий	adj	*
+genitive plural	1	чайок	чайка	n	*
+genitive plural	1	кальок	калька	n	*
+genitive plural	1	сонечок	сонечко	n	*
+genitive plural	1	колготок	колготки	n	*
+genitive plural	1	молитов	молитва	n	*
+genitive plural	1	церков	церква	n	*
+genitive plural	1	відносин	відносини	n	*
+genitive plural	1	суддів	суддя	n	*
+plural-only nouns	1	джунглів	джунглі	n	*
+plural-only nouns	1	грошам	гроші	n	*
+plural-only nouns	1	грошах	гроші	n	*
+plural-only nouns	1	ножицями	ножиці	n	*
+fleeting vowel	1	пальця	палець	n	*
+fleeting vowel	1	стільцем	стілець	n	*
+fleeting vowel	1	рубля	рубель	n	*
+fleeting vowel	1	кашлю	кашель	n	*
+fleeting vowel	1	вітре	вітер	n	*
+nouns in -ц	1	палацом	палац	n	*
+nouns in -ц	1	принци	принц	n	*
+nouns in -ц	1	палаці	палац	n	*
+irregular nouns	1	овець	вівця	n	*
+irregular nouns	1	четверга	четвер	n	*
+possessive adjectives	1	батькового	батьків	adj	*
+possessive adjectives	1	батьковій	батьків	adj	*
+possessive adjectives	1	сестриною	сестрин	adj	*
+possessive adjectives	1	маминої	мамин	adj	*
+indefinite pronouns	1	кого-небудь	хто-небудь	pron	*
+indefinite pronouns	1	когось	хтось	pron	*
+indefinite pronouns	1	кимсь	хтось	pron	*
+indefinite pronouns	1	чимось	щось	pron	*
+indefinite pronouns	1	будь-чого	будь-що	pron	*
+indefinite pronouns	1	абикого	абихто	pron	*
+indefinite pronouns	1	кожен	кожний	adj	*
+indefinite pronouns	1	жоден	жодний	pron	*
+indefinite pronouns	1	сього	сей	*	*
+indefinite pronouns	1	оцієї	оцей	*	*
+collective numerals	1	двома	двоє	num	*
+collective numerals	1	трьох	троє	num	*
+collective numerals	1	обох	обоє	num	*
+collective numerals	1	кількох	кілька	num	*
+collective numerals	1	багатьма	багато	num	*
+verbs	1	знайтись	знайтися	v	*
+verbs	1	тягне	тягти	v	*
+verbs	1	досягну	досягти	v	*
+verbs	1	тягніть	тягти	v	*
+verbs	1	гребу	гребти	v	*
+verbs	1	скубе	скубти	v	*
+verbs	1	ори	орати	v	*
+verbs	1	оре	орати	v	*
+verbs	1	полю	полоти	v	*
+verbs	1	поле	полоти	v	*
+verbs	1	узятий	узяти	v	*
+verbs	1	схудла	схуднути	v	*
+verbs	1	посталий	постати	v	*
+verbs	1	вимерлий	вимерти	v	*
+verbs	1	вирослий	вирости	v	*
+verbs	1	бийсь	битися	v	*
+verbs	1	відкрийсь	відкритися	v	*
+participles	1	литого	литий	v	*
+participles	1	прочитаною	прочитаний	v	*
+phrases	0	не знаю	не знати	*	*
+phrases	0	у місті	у місто	*	*
+phrases	0	я читаю	я читати	*	*
+phrases	0	на столі	на стіл	*	*
+phrases	0	він же	він ж	*	*
+negatives	0	мить	мити	*	*
+negatives	0	наш	нашити	*	*
+negatives	0	коли	колоти	*	*
+negatives	0	водою	водій	*	*
+negatives	0	ним	нити	*	*
+negatives	0	білий	білити	*	*
+negatives	0	малий	мати	*	*
+negatives	0	милий	мити	*	*
+negatives	0	новий	новити	*	*
+negatives	0	любий	любити	*	*
+negatives	0	старий	старити	*	*
+negatives	0	та	тий	*	*
+negatives	0	того	тий	*	*
+negatives	0	його	йий	*	*
+negatives	0	хороший	хорокий	*	*
+negatives	0	ну	нути	*	*
+negatives	0	не	нути	*	*
+negatives	0	же	гти	*	*
+negatives	0	чи	чати	*	*
+negatives	0	де	сти	*	*
+negatives	0	ти	сти	*	*
+negatives	0	ще	соко	*	*
+negatives	0	світова	світів	adj	*
+negatives	0	світових	світів	adj	*
+negatives	0	учителів	учителя	*	*
+negatives	0	любов	любва	*	*
+negatives	0	дідуся	дітися	*	*
+negatives	0	дорожчим	дорожчати	*	*
+negatives	0	сильнішу	сильнішати	*	*
+negatives	0	найближча	ближчий	*	*
+negatives	0	ґ	ґо	*	*
+negatives	0	ґр	ґра	*	*
+negatives	0	см	сма	*	*
+# Negatives that fail when a stem constraint of the own rules is deleted (sources/mutate.py, docs/languages.md 14 step 7).
+stem	0	та	то	*	*
+stem	0	пса	псе	*	*
+stem	0	ні	на	*	*
+stem	0	не руці	не рука	*	*
+stem	0	на хлопці	на хлопець	*	*
+stem	0	хаті	ха	*	*
+stem	0	ну	на	*	*
+stem	0	жнем	ждень	*	*
+stem	0	не шею	не ша	*	*
+stem	0	нею	на	*	*
+stem	0	не	н	*	*
+stem	0	две	два	*	*
+stem	0	їж	їжжя	*	*
+stem	0	грам	гор	*	*
+stem	0	не рукам	не рука	*	*
+stem	0	вам	ве	*	*
+stem	0	ями	я	*	*
+stem	0	на бетами	на бет	*	*
+stem	0	нами	не	*	*
+stem	0	злах	зел	*	*
+stem	0	не бегах	не бег	*	*
+stem	0	дах	де	*	*
+stem	0	лі	ля	*	*
+stem	0	не сні	не снь	*	*
+stem	0	цю	ця	*	*
+stem	0	ям	я	*	*
+stem	0	на шалям	на шаля	*	*
+stem	0	та	т	*	*
+stem	0	чия	чи	*	*
+stem	0	ну	н	*	*
+stem	0	ні	н	*	*
+stem	0	рі	р	*	*
+stem	0	не сні	не сень	*	*
+stem	0	чи	чо	*	*
+stem	0	зои	зо	*	*
+stem	0	єю	єй	*	*
+stem	0	не шею	не шей	*	*
+stem	0	бою	бо	*	*
+stem	0	мені	м'я	*	*
+stem	0	на утробою	на утробій	*	*
+stem	0	ну	но	*	*
+stem	0	цю	це	*	*
+stem	0	не нашу	не наше	*	*
+stem	0	всю	все	*	*
+stem	0	че	чий	*	*
+stem	0	ві	вий	*	*
+stem	0	не сні	не сний	*	*
+stem	0	не спокої	не спокий	*	*
+stem	0	на всякому	на всякий	*	*
+stem	0	не бій	не бий	*	*
+stem	0	не им	не ий	*	*
+stem	0	ку	кий	*	*
+stem	0	палю	палій	*	*
+stem	0	на ліґою	на ліґий	*	*
+stem	0	не крім	не крий	*	*
+stem	0	не якими	не який	*	*
+stem	0	на амбітнім	на амбітній	*	*
+stem	0	боюсь	битися	*	*
+stem	0	на вчусь	на вчийсь	*	*
+stem	0	повім	пів	*	*
+stem	0	не слову	не слів	*	*
+stem	0	на дряхліший	на дряхлий	*	*
+stem	0	найбагатіший	багатій	*	*
+stem	0	не лорен	не лорений	*	*
+stem	0	яти	ять	*	*
+stem	0	не дозволяти	не дозволять	*	*
+stem	0	вужчу	вужчати	*	*
+stem	0	на п'єш	на пити	*	*
+stem	0	живеш	живати	*	*
+stem	0	ніде	ніти	*	*
+stem	0	живе	живати	*	*
+stem	0	не им	не ити	*	*
+stem	0	живем	живати	*	*
+stem	0	щите	щати	*	*
+stem	0	не спите	не спати	*	*
+stem	0	живете	живати	*	*
+stem	0	чуть	тати	*	*
+stem	0	не чуть	не кати	*	*
+stem	0	живуть	живати	*	*
+stem	0	на хтітиму	на хтіти	*	*
+stem	0	на житимеш	на жити	*	*
+stem	0	на їбтиме	на їбти	*	*
+stem	0	на ритимемо	на рити	*	*
+stem	0	на акатимете	на акати	*	*
+stem	0	на включатимуть	на включати	*	*
+stem	0	г	гнути	*	*
+stem	0	зв	зти	*	*
+stem	0	на кула	на кусти	*	*
+stem	0	намокла	намікти	*	*
+stem	0	гнулося	гтися	*	*
+stem	0	не скло	не скнути	*	*
+stem	0	тяглось	тягстися	*	*
+stem	0	злись	знутися	*	*
+stem	0	злись	зстися	*	*
+stem	0	діди	діти	*	*
+stem	0	брь	брити	*	*
+stem	0	дім	діти	*	*
+stem	0	слідімо	сліти	*	*
+stem	0	живім	живати	*	*
+stem	0	важчім	важчати	*	*
+stem	0	на корте	на корити	*	*
+stem	0	живіте	живати	*	*
+stem	0	на кишачи	на кишити	*	*
+stem	0	маючи	мавати	*	*
+stem	0	на каравши	на карасти	*	*
+stem	0	жену	жити	*	*
+stem	0	не язнений	не язнити	*	*
+stem	0	стену	ссти	*	*
+stem	0	не злий	не знути	*	*
+stem	0	милі	минути	*	*
+stem	0	не вбито	не вбити	*	*
+stem	0	суждено	сужсти	*	*
+stem	0	не сеть	не сети	*	*
+stem	0	месть	мести	*	*
+# Mixed-script words (a Latin letter among Cyrillic ones) and Russian spellings: no rule reads them.
+stem	0	oни	oна	*	*
+stem	0	йoму	йoма	*	*
+stem	0	tак	tака	*	*
+stem	0	знaю	знaя	*	*
+stem	0	мeня	мeнь	*	*
+stem	0	oни	oн	*	*
+stem	0	йoму	йoмо	*	*
+stem	0	мeня	мeній	*	*
+stem	0	мoже	мoжий	*	*
+stem	0	нiчого	нiчий	*	*
+stem	0	йoму	йoмий	*	*
+stem	0	не этих	не этий	*	*
+stem	0	еще	естий	*	*
+stem	0	кpаще	кpасоко	*	*
+stem	0	iз	iзнути	*	*
+stem	0	кoли	кoти	*	*
+stem	0	які	як	*	*
+stem	0	член	члений	*	*
+stem	0	найменше	мено	*	*
+stem	0	живу	живати	*	*
+stem	0	лиш	літи	*	*
+stem	0	рено	рити	*	*
+stem	0	лише	лио	*	*
+# More rows for constraints a deletion left untested: readings a deletion removes, and readings it adds.
+alternation	1	ковшеві	ківш	n	*
+alternation	1	льодові	лід	n	*
+alternation	1	столам	стіл	n	*
+alternation	1	котам	кіт	n	*
+alternation	1	льодами	лід	n	*
+alternation	1	льодах	лід	n	*
+alternation	1	вертольота	вертоліт	n	*
+alternation	1	кольорові	колір	n	*
+stem	0	пся	псій	n	*
+stem	0	ллє	ллій	n	*
+stem	0	всього	всій	n	*
+stem	0	яої	яий	n	*
+stem	0	більої	білій	n	*
+stem	0	чому	чий	n	*
+stem	0	усьому	усій	n	*
+stem	0	вій	вий	n	*
+stem	0	чим	чий	n	*
+stem	0	бою	бий	n	*
+stem	0	кім	кий	n	*
+stem	0	них	ний	n	*
+stem	0	всіх	всій	n	*
+stem	0	ними	ний	n	*
+stem	0	псіми	псій	n	*
+stem	0	тім	тій	n	*
+stem	0	крім	крій	n	*
+stem	0	найще	сокий	*	*
+stem	0	найна бший	на бгий	*	*
+stem	0	найбше	бо	*	*
+stem	0	найна бше	на бго	*	*
+stem	0	глась	гнутися	*	*
+stem	0	бте	бити	*	*
+stem	0	дячи	діти	*	*
+stem	0	гши	гнути	*	*
+# Rows whose reasons name an own transform that a Yomitan rule duplicates (docs/languages.md 12.2).
+alternation	1	коте	кіт	n	noun.voc.sg
+alternation	1	двору	двір	n	noun.gen.sg+dat.sg+loc.sg+voc.sg
+alternation	1	вечорі	вечір	n	noun.loc.sg+nom.pl
+alternation	1	болю	біль	n	noun.gen.sg+dat.sg+voc.sg
+vowel class	1	клеїв	клеїти	v	v.pstM
+second conjugation	1	бряжчить	бряжчати	v	v.prs3sg
+homographs	1	од	від	*	alt.od
+homographs	1	видимо	видимий	adj	adv.pos
+transform ids	1	нові	новий	adj	adj.pl
+transform ids	1	білі	біль	n	genitive
+soft consonants	1	місяцями	місяць	n	*
+soft consonants	1	мудрецям	мудрець	n	*
+plural-only nouns	1	штанях	штани	n	*
+plural-only nouns	1	санях	сани	n	*
+plural-only nouns	1	штанах	штани	n	noun.loc.pl
+stem	0	шоу	шоа	*	noun.acc.sg
+stem	0	шоу	шо	*	noun.gen.sg+dat.sg+loc.sg+voc.sg
+stem	0	шоу	шоо	*	noun.dat.sg+loc.sg+voc.sg
+stem	0	куцьою	куцій	*	adj.ins.f
+stem	0	бвши	бти	*	v.advPst
+stem	0	тиму	ти	*	v.fut1sg
+stem	0	тимеш	ти	*	v.fut2sg
+stem	0	тиме	ти	*	v.fut3sg
+stem	0	тимемо	ти	*	v.fut1pl
+stem	0	тимете	ти	*	v.fut2pl
+stem	0	тимуть	ти	*	v.fut3pl

@@ -1,0 +1,20 @@
+# Known gaps: run by the conformance test and counted, not enforced.
+# Hand-written rows (categories without a part of speech and ":"): written for this pack, no third-party data.
+# Source: English Wiktionary's Ukrainian declension and conjugation tables, extracted by kaikki.org (wiktextract;
+# https://kaikki.org/dictionary/Ukrainian/, dump of 2026-10-01, sha256 2b8074025c192314), CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/), by the Wiktionary contributors. Stress marks removed.
+# The sampled rows the rules do not reach (the sample: corpus.tsv).
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+valid readings blocked	1	бряжчу	бряжчати	v	*
+valid readings blocked	1	єрі	єрь	n	*
+v:imp,2,sg	1	клепли	клепати	v	*
+v:pass,pst	1	забито	впісятись	v	*
+n:dat,sg	1	мерцеві	мрець	n	*
+n:fut,sg,3	1	асфальтує	асфальтувати	n	*
+n:dat,sg	1	балу-маскарадові	бал-маскарад	n	*
+n:dat,pl	1	убогим	убога	n	*
+n:1,imp,pl	1	скрипім	скрипіти	n	*
+n:dat,pl	1	краваткам-метеликам	краватка-метелик	n	*
+n:ins,pl	1	нежуйними	нежуйні	n	*
+adj:loc,m,n,poss,sg	1	няньовім	нянів	adj	*
+num:ins,pl	1	штирма	штири	num	*
+num:f,nom,sg	1	їдна	їден	num	*

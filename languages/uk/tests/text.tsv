@@ -1,0 +1,28 @@
+# Hand-written for this pack (GPL-3.0-or-later): text-processor expectations.
+# category	valid	input	variant
+stress marks	1	чита́ю	читаю
+stress marks	1	ві́кна	вікна
+stress marks	1	мо̀ва	мова
+stress marks	0	й	и
+stress marks	0	ї	і
+apostrophe	1	м’ясо	м'ясо
+apostrophe	1	мʼясо	м'ясо
+apostrophe	1	м`ясо	м'ясо
+apostrophe	1	м´ясо	м'ясо
+apostrophe	1	м'ясо	м’ясо
+apostrophe	1	м'ясо	мʼясо
+apostrophe	0	мясо	м'ясо
+case	1	Київ	київ
+case	1	київ	Київ
+case	1	ЧИТАЮ	читаю
+case	1	ЇЖАК	їжак
+initial у and в	1	учитель	вчитель
+initial у and в	1	вчора	учора
+initial у and в	1	Учора	вчора
+initial у and в	1	уже	вже
+initial у and в	0	уява	вява
+initial у and в	0	вона	уона
+initial у and в	0	вівця	уівця
+initial у and в	0	дуб	двб
+initial у and в	1	Вкраїні	Україні
+initial у and в	1	Учитель	Вчитель
