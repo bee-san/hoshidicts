@@ -17,9 +17,8 @@ it. With `"filter"`, the default and Yomitan's behaviour, a deinflection with
 conditions matches no term of such a dictionary, and only the text as
 written, its processor variants and the dictionary's own form-of rows find
 terms. Every measurement below uses wty-it-en as published with the pack as
-committed, except in Hachidori, whose engines predate the setting
-(Measurements 5); `eval-language`, the frequent forms and the real text are
-also given for a copy of the pack set to `"filter"`.
+committed; `eval-language`, the frequent forms and the real text are also
+given for a copy of the pack set to `"filter"`.
 
 ## Sources and licences
 
@@ -92,7 +91,7 @@ also given for a copy of the pack set to `"filter"`.
 
 ## Rule provenance
 
-`transforms.json` has 96 transforms and 6,885 rules as the engine counts them
+`transforms.json` has 96 transforms and 6,886 rules as the engine counts them
 (`language-conformance-test`), in 974 rule objects: `sources/build-own.mjs`
 writes the suffix rules of a transform that share their conditions and
 constraints as one circumfix in cross-product form (docs/languages.md 7.3).
@@ -219,7 +218,7 @@ Every transform and rule is `own`; there is no `yomitan` or `both` rule.
   (lucio, not luce) and `coniugi`.
 
   For the words these orders still get wrong, `PREFERRED` in
-  `sources/build-own.mjs` has 119 whole-word rules. A whole-word rule is
+  `sources/build-own.mjs` has 120 whole-word rules. A whole-word rule is
   found before any ending, so it reaches the reading the bare word nearly
   always has and leaves the other second. They are the 47 verbs of the first
   list (`serve`, `credi`, `continua`, `ami`, `pare`, `torni`, and the
@@ -241,11 +240,11 @@ Every transform and rule is `own`; there is no `yomitan` or `both` rule.
   `ritorni`, `cammini`, `ritrovi`, `resti` and `tiri` (the verb, not
   ritorno, cammino, ritrovo, resto, tiro), `importi` (importare), `scritte`
   (scritto, not scritta "inscription") and `letti` (letto, not leggere's
-  participle). Each was chosen by hand from these lists, so the top 10,000
-  is in-sample for them; ranks 10,001-50,000 are held out (Measurements
-  2). A frequency
-  dictionary would order such ties too, since the lookup compares
-  frequencies before the order of discovery.
+  participle); and `sbagli` (sbagliare, the verb in 14 of 15 Tatoeba
+  sentences), which the fifth audit found. Each was chosen by hand from
+  these lists, so the top 10,000 is in-sample for them; ranks 10,001-50,000
+  are held out (Measurements 2). Whether a frequency dictionary would order
+  such ties instead is in Known gaps.
 - **Stem constraints and exclusions.** Each is there for a measured wrong
   reading, and each has a test that fails without it (`sources/mutate.py`,
   Measurements 7):
@@ -301,24 +300,25 @@ Every transform and rule is `own`; there is no `yomitan` or `both` rule.
   and exact-stem exclusions; the negative imperative; clitic climbing; the
   participle mark; the narrowed `removeAlphabeticDiacritics`; and
   `addElisionApostrophe` for lower-case words only (initials such as `V.` are
-  not v'). Four audits (reports/audit-hachi-lang-it.md, NOT_OK at 3b40ab0;
+  not v'). Five audits (reports/audit-hachi-lang-it.md, NOT_OK at 3b40ab0;
   audit-hachi-lang-it-b.md, NOT_OK at 7a1ed92; audit-hachi-lang-it-c.md,
-  NOT_OK at d613275; audit-hachi-lang-it-d.md, NOT_OK at a4ce359; on the
-  measuring machine) led to the commits after the first README:
+  NOT_OK at d613275; audit-hachi-lang-it-d.md, NOT_OK at a4ce359;
+  audit-hachi-lang-it-e.md, NOT_OK at 710e624; on the measuring machine)
+  led to the commits after the first README:
   `untaggedTerms` `"pass"` once bee-san/hoshidicts#58 merged; the
   noun-first order, the -ati rule and the preferred readings; the subjunctive agreement; the `ce la`, `ci siamo`,
   `stessi`, dire and trarre changes; the article `i`; lookup rows for each
   group of preferred readings, test rows for the strong verbs and the
   minimum stems, an untagged tiny dictionary with form-of rows; and a 700-row
-  sample, so that `tests/` and `sources/` stay under 1 MB (998,545 bytes).
+  sample, so that `tests/` and `sources/` stay under 1 MB (999,535 bytes).
 
 ## Measurements
 
-All numbers were measured with the pack at commit 2b7cc5e, "it: fixes after
-the fourth audit", on hoshidicts main aa3fe65 (GCC 14.3, Release), with
-wty-it-en as published and the commands of item 7. This pull request's head
-differs from 2b7cc5e in `languages/it/` only in this README and in one
-mutation anchor of `sources/mutate.py`.
+All numbers were measured with the pack at commit 6ea6bc8, "it: the
+own-entry class counted in measure.py", on hoshidicts main 328447c (GCC
+14.3, Release), with wty-it-en as published and the commands of item 7. This
+pull request's head differs from 6ea6bc8 in `languages/it/` only in this
+README.
 Yomitan has no Italian rules, so its column is the pack with an empty rule
 set (processors only), and the union and the final set are the own set.
 "The audited pack" is the first audit's head, 3b40ab0's `languages/it/`,
@@ -381,12 +381,13 @@ on the measuring machine.
      readings were chosen on these words, so these numbers are in-sample.
      - By the rows: 4,900 words have a form-of row naming a lemma a rule
        reaches (32.26% of the tokens), and all 4,900 show a lemma their rows
-       name. With `"filter"`, 69 of them (0.131% of the tokens) find
+       name or their own entry (but see the own-entry class below, which
+       this judge counts as right). With `"filter"`, 69 of them (0.131% of the tokens) find
        nothing, because wty-it-en's row for them names a form that is itself
        only a reference (`andati` → andato, `bellissima` → bellissimo), and
        one hop reaches nothing (section 16).
      - Frequency proxy: 20 words (128,699 tokens, 0.057%); the audited pack
-       223 (1.283%). Against `"filter"`: 186 first results differ; this
+       223 (1.283%). Against `"filter"`: 187 first results differ; this
        pack's lemma is 10 times rarer in 9 words (0.014%) and 10 times more
        frequent in 34 (0.428%: `stai` → stare, not staio; `vado` → andare,
        not guado). The audited pack: 205 (1.211%) and 28 (0.407%).
@@ -401,17 +402,35 @@ on the measuring machine.
        the five Gutenberg texts. The automatic judges and the order lists
        cannot see a tie between two lemmas of similar frequency; the third
        and fourth audits found 13 such words (`risorse`, `indica`, `ritorni`,
-       `scritte`), and the context scan 5 more (`resti`, `tiri`, `ritrovi`,
-       `importi`, `letti`); all are preferred readings now.
-     - What is still wrong: among the words the rules decide, `odi` →
-       udire, `starò` → starare and `salite` → salita (11,942 tokens,
-       0.005%; `salite` cannot be fixed by the pack: salita is
-       dictionary-confirmed and salire through the rules is not). Among
-       text without accents, which no rule reads, 32 of the 174 unaccented
-       spellings of accented words show another word first (1,262,137
-       tokens, 0.556%: `perche` → perca, `cosi` → coso, `gia` → giara,
-       `fara` → faro; Known gaps) and 121 find nothing. Counted together,
-       0.56% of the list's tokens.
+       `scritte`), the context scan 5 more (`resti`, `tiri`, `ritrovi`,
+       `importi`, `letti`) and the fifth audit `sbagli`; all are preferred
+       readings now.
+     - **The own-entry class.** For 1,783 words (31.57% of the tokens) the
+       first result is the word's own entry, matched as written, while its
+       own form-of rows name a lemma the lookup lists later. Most are right
+       (articles, pronouns, `volta`, `parte`, `lavoro`), and the rows' judge
+       counts them all as right, so the lists above did not judge them. The
+       fifth audit judged them (all words of at least 20,000 tokens, the
+       smaller ones spaCy flags, and a random 50 of the rest; I re-checked
+       its 52 wrong words of at least 20,000 tokens and kept all): 149 words
+       of the top 10,000 are wrong (7,231,369 tokens, 3.19%), among them
+       `sei` "six" for essere, `era` "age, epoch" for essere, `so` "under"
+       (archaic) for sapere, `stato` "state", `credo` "creed", `visto`
+       "visa", `suoi` "his parents" for suo, `mani` "the manes" for mano,
+       `chiama` "roll call", `nuova` "news", `stia` "hutch"; with its
+       sampled estimate for the rest, about 3.4%. 8 of the 149 are confirmed
+       nouns before a verb only the rules reach (`stata`, `stati`, `visti`,
+       `uccisa`), the case of `salite`. No rule can change this class
+       (Known gaps): the own entry has no trace step.
+     - What is still wrong, in all: the own-entry class (3.19%, about 3.4%
+       with the estimate); text without accents, which no rule reads (45 of
+       the 174 unaccented spellings of accented words show another word,
+       1,531,417 tokens, 0.675%: `perche` → perca, `cosi` → coso, `gia` →
+       giara, and own entries such as `papa` "pope" for papà, `faro`
+       "lighthouse" for farò, `citta` for città; 121 find nothing); and
+       among the words the rules decide, `odi` → udire, `starò` → starare
+       and `salite` → salita (11,942 tokens, 0.005%). Together about 3.9%
+       of the list's tokens (about 4.1% with the estimate).
      - The tie classes of Known gaps (`tie_class` in `measure.py`): 42
        words where a feminine noun comes before the -o adjective (wrong:
        `salite`; `robbie` and `more` are neither), 14 where an -e noun comes
@@ -434,6 +453,9 @@ on the measuring machine.
      - Against `"filter"`: 564 first results differ; this pack's lemma is 10
        times rarer in 105 words (0.224%) and 10 times more frequent in 65
        (0.189%). The audited pack: 494 (1.440%) and 90 (0.244%).
+     - The own-entry class: 2,789 words (8.60% of the range's tokens); 4 of
+       a random 40 are wrong (`desiderata`, `fermano` "from Fermo" for
+       fermare, `tetra`, `assicurata`), about 280 words.
      - Tie classes, judged by hand: 165 words where a feminine noun comes
        before the -o adjective (0.463% of the tokens); 22 of a random 40 are
        wrong (`finanziarie`, `mistiche`, `chimiche`, `italiane`), about 90
@@ -528,45 +550,52 @@ on the measuring machine.
      picco, for picchiare; `fischi` → fisco; `mucchi` → mucco); a capital
      letter at a sentence start, 1,191 (1,191), of which E, A, I and O are
      1,120, all wrong; the other 71 are initials and Roman numerals.
+   - **The own-entry class**, which the rows count as right: 66,384 lookups
+     (28.47%) show the word's own entry first while its rows name a lemma
+     listed later. 5,003 of them are of the 149 words judged wrong in
+     Measurements 2 (`era` 1,479, `suoi` 232, `fu` 223, `mani` 223, `sei`
+     205, `stato` 168); a random 40 of these are all wrong (`il ciuchino
+     era sott'acqua`, `fu preso`, `in quei giorni`, `non so più`). Of the
+     other 60,254 (single capital letters left out), 4 of 178 sampled are
+     wrong (`tenercisi stretta` → stretta "grip", `era spuntato` →
+     spuntato "blunt", `se lo avessero sorpreso`), the rest articles,
+     pronouns and nouns. So about 6,350 wrong lookups, 2.8% of the 228,508
+     with a result (roughly 2.2% to 3.7%); the fifth audit's stratified
+     estimate is 2.58% (lower bound 1.71%), and 2.82% on a new text (Emilio
+     De Marchi, *Col fuoco non si scherza*, PG 19059).
    - **All together**: the 35 known wrong, and from the samples about 345 of
      the -rsi readings, 75 of the rarer-lemma ones, 120 of the words without
-     a row and 185 in the tie classes: about 760 wrong first results of the
-     228,508 lookups with a result, 0.33% (roughly 0.2% to 0.5%, given
-     samples of 20 and 60; the classes overlap a little). The 1,120
-     sentence-initial E, A, I and O add 0.49%: a word as written needs no
-     processor step, so a capital letter's own entry outranks the
-     decapitalised word, in any pack; hachi-lang-lead's answer of
-     2026-11-03T09:45Z to hachi-lang-de makes it a host follow-up. With
-     them, about 1,880 (0.82%). With this method, the third audit found
-     about 0.51% plus 0.37% capitals on a sixth text (Matilde Serao, *La
-     conquista di Roma*, PG 42316; the feminine-noun class larger there,
-     241 lookups, 15 of 20 wrong), and the fourth audit 0.33% plus 0.69% on
-     a seventh (Gabriele D'Annunzio, *L'Innocente*, PG 22642).
+     a row and 185 in the tie classes, about 760 (0.33%), plus about 6,350
+     in the own-entry class: about 7,100 wrong first results of the 228,508
+     lookups with a result, 3.1% (roughly 2.5% to 4%, given samples of 20
+     to 178; the classes overlap a little). The 1,120 sentence-initial E,
+     A, I and O add 0.49%: a word as written needs no processor step, so a
+     capital letter's own entry outranks the decapitalised word, in any
+     pack; hachi-lang-lead's answer of 2026-11-03T09:45Z to hachi-lang-de
+     makes it a host follow-up. With them, about 8,230 (3.6%). Without the
+     own-entry class, the third audit found about 0.51% plus 0.37%
+     capitals on a sixth text (Matilde Serao, *La conquista di Roma*, PG
+     42316) and the fourth audit 0.33% plus 0.69% on a seventh (Gabriele
+     D'Annunzio, *L'Innocente*, PG 22642).
    - With `"filter"`: 226,268 can be judged, 225,950 are right, 289 a
      phrase's own entry, 29 (0.013%) not confirmed; 6,613 lookups find
      nothing.
-5. **Hachidori** (feat/multi-language 803f7b6, its prebuilt WebAssembly, with
-   this branch in `third_party/hoshidicts` and `node scripts/sync-languages.mjs`;
+5. **Hachidori** (feat/multi-language 5346a05, whose engines are built from
+   hoshidicts main a68d56b and read `untaggedTerms`; this branch in
+   `third_party/hoshidicts` and `node scripts/sync-languages.mjs`;
    `test/chrome-language-pack.mjs`, Chrome 152, sixteen cases written for the
-   pack). Hachidori's engines are built from hoshidicts b145feb, before #58,
-   and refuse the pack (`lookup.untaggedTerms: unknown key`). So the check
-   ran with the pack minus that key and wty-it-en tagged `v n adj adv` on its
-   untagged rows, which the first audit showed gives the same lookups as
-   `"pass"` with the published dictionary (751,552 lookups byte for byte; the
-   second audit, 867,861). Settings adds Italian beside Japanese and imports
-   the dictionary (1,224,665 terms in 1.3-2.0 s), and the Anki note and the
-   switch to Japanese and back work.
-   - Tagged dictionary: 20 / 20 checks pass. The first result of each case
-     is the expected lemma, with its trace: `parlavamo` → parlare (imperfect
-     (noi)), `andati` → andare, `Mi lavo` → lavarsi (pronoun before the verb,
-     present (io), -rsi verb), `Se ne va` → andarsene, `Ce la faccio` and `Ce
-     la faremo` → farcela, `ti preoccupare` → preoccuparsi, `Raccontamelo` →
-     raccontare, `Alzati` → alzarsi, `bellissime` → bello, `ti piaccia` →
-     ti, `figli` → figlio, `stessi` → stesso.
-   - Published dictionary with the default `"filter"`: 11 / 20; the nine
-     cases that need a rule fail (`andati`, `Raccontamelo` and `bellissime`
-     find nothing; `Mi`, `Se`, `Ce` ×2 and `ti` find the pronoun; `Alzati`
-     finds alzato).
+   pack), with the committed pack and wty-it-en as published. Settings adds
+   Italian beside Japanese and imports the dictionary (1,224,665 terms in
+   1.4 s), and the Anki note and the switch to Japanese and back work. 20 / 20
+   checks pass. The first result of each case is the expected lemma, with its
+   trace: `parlavamo` → parlare (imperfect (noi)), `andati` → andare, `Mi
+   lavo` → lavarsi (pronoun before the verb, present (io), -rsi verb), `Se ne
+   va` → andarsene, `Ce la faccio` and `Ce la faremo` → farcela, `ti
+   preoccupare` → preoccuparsi, `Raccontamelo` → raccontare, `Alzati` →
+   alzarsi, `bellissime` → bello, `ti piaccia` → ti, `figli` → figlio,
+   `stessi` → stesso. The fifth audit's eight own-entry cases (`Ho visto un
+   bel film` → visto "visa", `sei`, `era`, `So`, `Credo`, `stia`, `chiama`,
+   `nuova`) show the own entry first in Hachidori too (Known gaps).
 6. **Performance** (section 13; machine load around 45 on 64 cores).
    - Native `benchmark-lookup --languages <pack> --language it` on the 64 texts
      of `sources/benchmark-words.txt` (each the rest of a sentence from an
@@ -574,34 +603,34 @@ on the measuring machine.
 
      | Rules | `untaggedTerms` | p50 | p95 |
      | --- | --- | ---: | ---: |
-     | Final | `"pass"` (the pack) | 64.8-68.5 µs | 110-116 µs |
-     | Final | `"filter"` | 62.7-65.2 µs | 106-113 µs |
-     | none (Yomitan) | either | 53.1-54.6 µs | 86-97 µs |
+     | Final | `"pass"` (the pack) | 64.3-65.2 µs | 105-109 µs |
+     | Final | `"filter"` | 62.6-63.3 µs | 102-111 µs |
+     | none (Yomitan) | either | 53.0-54.2 µs | 87-92 µs |
 
      The budget is 1 ms p50.
    - WebAssembly (Hachidori's prebuilt engines, Node 22,
      `benchmark/node-lookup.mjs` with `HACHIDORI_LOOKUP_LANGUAGE=it` on the
-     same texts, 342 hovers, 6 passes, the tagged dictionary of item 5
-     imported into MEMFS): `hdw_lookup` p50 223 µs and p95 393 µs
-     single-thread, p50 286 µs and p95 499 µs threaded.
-   - `hdw_language_load` of the pack minus the key (`sources/wasm-load.mjs`,
-     10 fresh engines): median 13.1 ms single-thread and 14.0 ms threaded;
-     live heap +1,942,680 bytes. The budgets are 50 ms and 20 MB. The pack has
+     same texts, 342 hovers, 6 passes, wty-it-en as published imported into
+     MEMFS): `hdw_lookup` p50 227 µs and p95 389 µs single-thread, p50 264
+     µs and p95 440 µs threaded.
+   - `hdw_language_load` of the committed pack (`sources/wasm-load.mjs`, 10
+     fresh engines): median 12.5 ms single-thread and 14.3 ms threaded; live
+     heap +1,943,608 bytes. The budgets are 50 ms and 20 MB. The pack has
      no `pattern` rules; three processors use a `pattern` step
      (`removeAlphabeticDiacritics`, `removeApostrophedWords`,
      `addElisionApostrophe`).
 7. **Checks and commands.**
    - `language-conformance-test languages/it`: conforms. corpus.tsv 689 / 689,
      defaults.tsv 781 / 781 and text.tsv 46 / 46 with the pack's defaults,
-     cases.tsv 15 / 15, lookup.tsv 58 / 58 (against the untagged tiny
+     cases.tsv 15 / 15, lookup.tsv 59 / 59 (against the untagged tiny
      dictionary, as `"pass"` reads wty-it-en); gaps.tsv 0 / 11 (reported);
-     classes.json agrees (3 classes, 1,309 fields, 5 steps, 7,760
-     outputs). Full `ctest` 56 / 56; `node tools/check-classes.mjs --all`;
+     classes.json agrees (3 classes, 1,309 fields, 5 steps, 7,765
+     outputs). Full `ctest` 60 / 60; `node tools/check-classes.mjs --all`;
      `node --test tools/test/` 101 pass, 5 skipped.
    - `node tools/check-yomitan.mjs <yomitan> --all --cli build/hoshidicts-cli`:
-     no Italian rules to compare; the four processors on 1,582
-     (`decapitalize`), 1,589 (`capitalizeFirstLetter`), 2,400
-     (`removeAlphabeticDiacritics`) and 1,625 (`removeApostrophedWords`)
+     no Italian rules to compare; the four processors on 1,583
+     (`decapitalize`), 1,590 (`capitalizeFirstLetter`), 2,401
+     (`removeAlphabeticDiacritics`) and 1,626 (`removeApostrophedWords`)
      inputs, 250 listed differences (the two narrowed processors),
      0 unexplained.
    - Mutations (`python3 sources/mutate.py <scratch dir>`): 100 changes to a
@@ -618,7 +647,10 @@ on the measuring machine.
      forms with the same trace (p + rendere, so + spendere). The preferred
      readings are tested per group (one `lookup.tsv` row each); most single
      readings can be removed without a failing row, since a row each would
-     take `tests/` and `sources/` over 1 MB.
+     take `tests/` and `sources/` over 1 MB. A row pins `notai` to notare,
+     so the dropped -ai ending fails a test if it comes back. The judged
+     list `judged-ownentry.tsv` is in the evidence directory, not in the
+     pack, for the same reason.
    - Commands (from the repository root, with `build/` configured as CI does
      and `build/lookup-batch-it` built as `sources/lookup-batch.cpp` says):
 
@@ -626,10 +658,10 @@ on the measuring machine.
      node languages/it/sources/build-own.mjs && node tools/merge-transforms.mjs it --force
      node languages/it/sources/build-corpus.mjs <unimorph ita/ita> <kaikki.org-dictionary-Italian.jsonl.gz>
      python3 languages/it/sources/measure.py eval <imported wty-it-en> --per-rule per-rule.json
-     python3 languages/it/sources/measure.py freq wty-it-en.zip <imported wty-it-en> it_50k.txt --against <copy set to "filter">
-     python3 languages/it/sources/measure.py freq wty-it-en.zip <imported wty-it-en> it_50k.txt --from 10000 --top 50000 --against <copy set to "filter">
+     python3 languages/it/sources/measure.py freq wty-it-en.zip <imported wty-it-en> it_50k.txt --against <copy set to "filter"> --judged <judged-ownentry.tsv>
+     python3 languages/it/sources/measure.py freq wty-it-en.zip <imported wty-it-en> it_50k.txt --from 10000 --top 50000 --against <copy set to "filter"> --judged <judged-ownentry.tsv>
      python3 languages/it/sources/measure.py pronouns wty-it-en.zip <imported wty-it-en> ita_sentences.tsv.bz2
-     python3 languages/it/sources/measure.py text wty-it-en.zip <imported wty-it-en> pg52484.txt pg43226.txt pg56775.txt pg22504.txt pg22020.txt --freq it_50k.txt
+     python3 languages/it/sources/measure.py text wty-it-en.zip <imported wty-it-en> pg52484.txt pg43226.txt pg56775.txt pg22504.txt pg22020.txt --freq it_50k.txt --judged <judged-ownentry.tsv>
      python3 languages/it/sources/measure.py traces
      python3 languages/it/sources/measure.py bench <imported wty-it-en>
      node languages/it/sources/wasm-load.mjs <hachidori checkout> <pack dir>
@@ -681,7 +713,9 @@ on the measuring machine.
   dictionary for the sort and measured that it fixes 42 of the 61 wrong
   held-out feminine plurals and 15 of the 21 verb-before-noun words, but
   breaks 10 right feminine plurals (`quinte` → quinto) and reverses 30 of
-  the pack's 108 preferred readings of that head (`belle` → bella, `credi` →
+  the pack's 108 preferred readings of that head (the fifth audit's rerun at
+  710e624: 34 of 119, and 127 first results of the top 10,000 change;
+  `belle` → bella, `credi` →
   credo, `alzati` → alzato). `lookup.confirmedOrder: "references"`, queued
   for the framework (hachi-lang-lead's answer of 2026-11-03T18:46Z to
   hachi-lang-ru), would let the dictionary's bank order decide instead; for
@@ -704,7 +738,36 @@ on the measuring machine.
     its participle is meant (54 of 58 Tatoeba sentences): its rows name
     salita and salito, salito's row is only a reference to salire, and
     salire through the rules is not confirmed. A preferred reading to salire
-    or salito changes nothing (the fourth audit measured both).
+    or salito changes nothing (the fourth audit measured both). So do the
+    eight confirmed nouns the fifth audit found (336,096 tokens, 0.15% of
+    the top 10,000's): `stata`, `stati` (stato "state" for essere's
+    participle; `è stata` shows "state"), `visti` (visto "visa"), `uccisa`
+    (ucciso "victim"), `successa`, `mandati`, `creata`, `trattata`.
+- **A word's own entry comes before the lemma its own form-of rows name.**
+  Where a frequent inflected form is also a headword with another meaning,
+  the lookup shows that headword first: the own entry is matched as written
+  with no trace step, and the lemma the word's own rows name needs one
+  reference step, so the trace-length key of section 9.6 puts the own entry
+  first, before dictionary confirmation and before any rule reading. Yomitan
+  orders them the same way, and so does the pack with `"filter"`. Of the
+  top 10,000, 149 words are wrong this way (3.19% of the tokens, about 3.4%
+  with the fifth audit's sampled estimate): `sei` "six" for essere, `era`
+  "age, epoch", `so` "under" (archaic) for sapere, `stato` "state",
+  `credo` "creed", `visto` "visa", `questi` "the aforementioned person",
+  `suoi` "his parents", `mani` "the manes", `chiama` "roll call",
+  `piccola` "a small beer", `stia` "hutch", `nuova` "news", `fu` "late,
+  deceased"; in the five texts about 6,350 lookups (2.8%), and about 280
+  words of ranks 10,001-50,000. Hachidori shows the same (`Ho visto un bel
+  film` → visto "visa"). No pack rule or preferred reading can change it
+  (the fifth audit measured whole-word readings for `sei` and `chiama`: the
+  own entry stays first), and a frequency dictionary does not reach it
+  either (none of the fifth audit's 149 words changes with it_50k as the
+  sort dictionary). The framework change hachi-lang-lead accepted on
+  2026-11-03 (21:50Z answer to hachi-lang-yi), `lookup.ownEntry:
+  "afterReferences"` (Addendum 4 of hachi-lang-engine-l, not on main yet),
+  ranks the terms the matched text's own form-of rows name before the
+  matched text's own entry; the pack sets it in a follow-up once it is on
+  main.
 - **Ties decided by a processor variant.** The variants of a word are looked
   up in code point order, and a candidate keeps the place it was first found
   in: `starò` shows starare (found first through `staro`, starare's
