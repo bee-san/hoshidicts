@@ -69,6 +69,9 @@
       [223, 55295],
       [57344, 1114111]
     ],
+    "transforms[0].rules[1].stemNotStartsWith": [
+      [113, 113]
+    ],
     "transforms[0].rules[2].stemCharacters": [
       [0, 31],
       [33, 64],
@@ -77,7 +80,34 @@
       [223, 55295],
       [57344, 1114111]
     ],
-    "transforms[0].rules[2].stemEndsWith": [
+    "transforms[0].rules[2].stemStartsWith": [
+      [113, 113]
+    ],
+    "transforms[0].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 191],
+      [215, 215],
+      [223, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[0].rules[4].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 191],
+      [215, 215],
+      [223, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[0].rules[5].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 191],
+      [215, 215],
+      [223, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[0].rules[5].stemEndsWith": [
       [98, 100],
       [102, 103],
       [107, 108],
@@ -88,7 +118,7 @@
       [119, 119],
       [121, 121]
     ],
-    "transforms[0].rules[3].stemCharacters": [
+    "transforms[0].rules[6].stemCharacters": [
       [65, 90]
     ],
     "transforms[1].rules[0].stemCharacters": [
@@ -8707,6 +8737,7 @@
         ["toques nas minhas coisas", "toques nas minhas coisas"],
         ["expressa bem", "expressa bem"],
         ["blogues pessoais", "blogues pessoais"],
+        ["postos de saúde", "postos de saúde"],
         ["chama-se João", "chama-se joão"],
         ["deixa-me ir", "deixa-me ir"],
         ["fazê-lo agora", "fazê-lo agora"],
@@ -10970,6 +11001,7 @@
         ["toques nas minhas coisas", "Toques nas minhas coisas"],
         ["expressa bem", "Expressa bem"],
         ["blogues pessoais", "Blogues pessoais"],
+        ["postos de saúde", "Postos de saúde"],
         ["chama-se João", "Chama-se João"],
         ["deixa-me ir", "Deixa-me ir"],
         ["fazê-lo agora", "Fazê-lo agora"],

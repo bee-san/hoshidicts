@@ -829,7 +829,10 @@ const NA = ['n', 'adj'];
 // singular: tinha falado). The irregular participles of the compounds of
 // pôr, fazer, ver and dizer are written whole (impostos as impor), so their
 // plurals are written at the same endings: impostos, apostas, perfeitos,
-// revistas, malditos.
+// revistas, malditos. At -ares, -eres and -ires the lemma is the same
+// either way (mulheres is mulher as a plural and as a personal infinitive
+// that no verb has), but a lookup keeps the trace of the reading it finds
+// first, so the plural is written there too and the trace says plural.
 for (const [inflected, deinflected] of [
     ['ados', 'ado'], ['adas', 'ada'], ['idos', 'ido'], ['idas', 'ida'],      // soldados, piadas, sentidos, bebidas
     ['eias', 'eia'], ['iras', 'ira'],                                         // ideias, mentiras
@@ -840,6 +843,7 @@ for (const [inflected, deinflected] of [
     ['arias', 'aria'],                                                        // secretarias (the -ar conditional's -arias)
     ['ises', 'ise'],                                                          // crises (not cris + es)
     ['ces', 'ce'],                                                            // alces, alicerces (the -çar subjunctive's -ces)
+    ['ares', 'ar'], ['eres', 'er'], ['ires', 'ir'],                           // lugares, mulheres (the personal infinitive's -ares, -eres, -ires)
 ]) {
     nominal('plural', inflected, deinflected, [], NA, {stemMinLength: 1});
 }
@@ -1060,7 +1064,7 @@ for (const [slot, form, lemma] of [
     // Tatoeba sentences and the texts mean the noun or adjective (the audit's
     // verdicts on every sentence of these words, and samples read for larga,
     // checa, fixa and oculta).
-    ['plural', 'dados', 'dado'], ['plural', 'termos', 'termo'], ['plural', 'surpresas', 'surpresa'], ['plural', 'saias', 'saia'],
+    ['plural', 'dados', 'dado'], ['plural', 'postos', 'posto'], ['plural', 'termos', 'termo'], ['plural', 'surpresas', 'surpresa'], ['plural', 'saias', 'saia'],
     ['plural', 'vinhas', 'vinha'], ['plural', 'crias', 'cria'], ['plural', 'vias', 'via'], ['plural', 'gastos', 'gasto'],
     ['plural', 'descobertas', 'descoberta'], ['plural', 'baterias', 'bateria'], ['plural', 'garantias', 'garantia'], ['plural', 'rotas', 'rota'],
     ['plural', 'ruídos', 'ruído'], ['plural', 'ganhos', 'ganho'],

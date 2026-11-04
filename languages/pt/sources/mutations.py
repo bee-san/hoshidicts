@@ -125,6 +125,7 @@ MUTATIONS = [
     ('preferred: revolta removed', 'build-own.mjs', "['present-ele', 'revolta', 'revoltar'], ", ""),
     ('preferred: tu subjunctives comas, metas removed', 'build-own.mjs', "['subjunctive-tu', 'comas', 'comer'], ['subjunctive-tu', 'metas', 'meter'], ", ""),
     ('preferred: dados removed', 'build-own.mjs', "['plural', 'dados', 'dado'], ", ""),
+    ('preferred: postos removed', 'build-own.mjs', "['plural', 'postos', 'posto'], ", ""),
     ('preferred: crias removed', 'build-own.mjs', "['plural', 'crias', 'cria'], ", ""),
     ('preferred: baterias removed', 'build-own.mjs', "['plural', 'baterias', 'bateria'], ", ""),
     ('preferred: segura removed', 'build-own.mjs', "['feminine', 'segura', 'seguro'], ", ""),

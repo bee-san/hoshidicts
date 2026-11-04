@@ -276,5 +276,8 @@
   ["blogue", "", "n masc", "", 0, ["blog"], 275, ""],
   ["blogar", "", "v", "", 0, ["to blog"], 276, ""],
   ["blogues", "", "non-lemma", "", 0, [["blogar", ["second-person singular present subjunctive"]]], 277, ""],
-  ["blogues", "", "non-lemma", "", 0, [["blogue", ["plural"]]], 278, ""]
+  ["blogues", "", "non-lemma", "", 0, [["blogue", ["plural"]]], 278, ""],
+  ["posto", "", "n masc", "", 0, ["post, station, job"], 279, ""],
+  ["postos", "", "non-lemma", "", 0, [["posto", ["plural"]]], 280, ""],
+  ["postos", "", "non-lemma", "", 0, [["pôr", ["plural masculine past participle"]]], 281, ""]
 ]
