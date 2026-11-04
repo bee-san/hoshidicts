@@ -79,6 +79,9 @@ and with the pack's defaults.
     of IlyaSemenov/wikipedia-word-frequency at b49c2ea (sha256
     `5bf9a836…d784`), MIT: a written-language list beside the subtitles,
     for Measurements 2 and as the frequency proxy's second list;
+  - Ukrainian Wikipedia's search API (`list=search`, exact-phrase queries,
+    read on 2026-11-04; snippets CC BY-SA 4.0): up to 12 contexts per word,
+    read by hand for the counts of Known gaps; none is committed;
   - Tatoeba's Ukrainian sentences,
     [`ukr_sentences.tsv.bz2`](https://downloads.tatoeba.org/exports/per_language/ukr/ukr_sentences.tsv.bz2),
     downloaded 2026-11-03 (sha256 `ac8b6bd1…d2c6`, 188,919 sentences), CC BY
@@ -234,9 +237,9 @@ Yomitan rules `sources/yomitan-removed.tsv` lists left out.
     of these rules) changes the first result of 25 labelled words: 12
     become wrong (другу → другий, дорогу → дорогий, тепла → теплий) and
     none becomes right.
-- **History**: the first commit of this pack, `uk: own rules` (5856209), has
+- **History**: the first commit of this pack, `uk: own rules` (22ff527), has
   the own rules as written before Yomitan's file was read (75 transforms,
-  4,255 rules); the next, `uk: Yomitan's rules and processors` (78b98b7),
+  4,255 rules); the next, `uk: Yomitan's rules and processors` (c7717d2),
   the port. Later commits changed the own rules after measuring: adjective
   declension also reaching verbs (participles) and nouns; the forms the
   table measurement missed (-ок after й and ь, -ов, -ин, plural-only nouns,
@@ -262,7 +265,8 @@ Yomitan rules `sources/yomitan-removed.tsv` lists left out.
   танк, перекладу, дій, образи, карі and the frequent spellings of
   1928-1933, labels with two lemmas kept only for one word under two
   headwords or with a hand count in Known gaps, the old spellings judged
-  as another lemma, and rows for українці, статей, тлі and Львові.
+  as another lemma, rows for українці, статей, тлі and Львові, and, after
+  main's #83, `lookup.formOfNormalizer`.
 
 ## Measurements
 
@@ -271,8 +275,9 @@ by `hoshidicts-cli import`, at hoshidicts aa3fe65 with this pack (GCC 14.3,
 Release; the dictionary was imported at 23cd5a3, and #54 changes how its
 files are read, not what they hold). At 1fed676, before main's #80 and
 its other language packs, every number was the same; main has since added
-only packs and #81's documentation fix, up to 6879a0b, where the checks of
-item 6 were run again. The pack has no optional processor,
+packs, #81's documentation fix and #83's lookup fields, up to 487a6fc, where
+every measurement was run again: the same, file for file, until the pack
+set `formOfNormalizer` (Measurements 1). The pack has no optional processor,
 transform or variant pass, so each file gives the same numbers with every
 option on and with the pack's defaults (`corpus.tsv` + `gaps.tsv` and
 `cases.tsv` were also run with a `# options: default` line added:
@@ -288,10 +293,10 @@ identical).
 
    | Rule set | Sample recall | False candidates per row | First rank | `cases.tsv` (521 positives, 211 negatives) | Yomitan's test, its traces / any trace (506 positives) | All forms: recall, negatives passed, false candidates |
    | --- | ---: | ---: | ---: | --- | --- | --- |
-   | Own (`sources/own.json`) | 98.80% (988) | 0.511 | 93.80% | 520, 211 | 0 / 490 (96.84%) | 98.63%, 274 of 277, 0.503 |
-   | Yomitan (`sources/yomitan.json`) | 92.40% (924) | 0.459 | 93.50% | 402, 119 | 506 / 506 | 93.96%, 185 of 277, 0.440 |
-   | Union (merge tool) | 98.80% (988) | 0.521 | 93.40% | 521, 118 | 506 / 506 | 98.86%, 181 of 277, 0.521 |
-   | Final (`transforms.json`) | 98.80% (988) | 0.511 | 93.70% | 521, 211 | 454 / 504 (99.60%) | 98.79%, 274 of 277, 0.505 |
+   | Own (`sources/own.json`) | 98.80% (988) | 0.534 | 93.80% | 520, 211 | 0 / 490 (96.84%) | 98.63%, 274 of 277, 0.534 |
+   | Yomitan (`sources/yomitan.json`) | 92.40% (924) | 0.479 | 93.50% | 402, 119 | 506 / 506 | 93.96%, 185 of 277, 0.468 |
+   | Union (merge tool) | 98.80% (988) | 0.544 | 93.40% | 521, 118 | 506 / 506 | 98.86%, 181 of 277, 0.551 |
+   | Final (`transforms.json`) | 98.80% (988) | 0.534 | 93.70% | 521, 211 | 454 / 504 (99.60%) | 98.79%, 274 of 277, 0.535 |
 
    The own rules miss one row of `cases.tsv`: білі → біль through Yomitan's
    `genitive`, a row that names that transform.
@@ -322,10 +327,44 @@ identical).
    rules produce are tagged (`n` 14,062 rows, `v` 6,318, `adj` 5,625). With
    `pass`, the final set ranks as many lemmas first on `corpus.tsv` (929 of
    988), `gaps.tsv` (9 of 14) and `cases.tsv` (454 of 521) and one fewer on
-   the measurement set (293,926 against 293,927 of 312,325); recall and
-   negatives are the same, and false candidates per row rise from 0.513 to
-   0.529 on `corpus.tsv`, from 1.163 to 1.246 on `cases.tsv` and from 0.505
-   to 0.534 on the measurement set.
+   the measurement set (293,927 against 293,928 of 312,325); recall and
+   negatives are the same, and false candidates per row rise from 0.536 to
+   0.553 on `corpus.tsv`, from 1.165 to 1.248 on `cases.tsv` and from 0.535
+   to 0.565 on the measurement set.
+
+   The lookup fields that read the dictionary's references (docs/languages.md
+   9.6, 9.10), each measured on its own against the final set (Measurements
+   2 to 4 give the full counts):
+
+   | Field | Frequent words wrong (uk_50k, Wikipedia) | Texts wrong (Kotsiubynsky, Franko) | After function words, wrong | First rank, measurement set | False candidates per form |
+   | --- | ---: | ---: | ---: | ---: | ---: |
+   | Defaults | 1, 1 | 1,815, 479 | 51 | 293,927 | 0.505 |
+   | `formOfNormalizer` (set) | 1, 1 | 1,816, 479 | 46 | 293,928 | 0.535 |
+   | `ownEntry: "afterReferences"` | 21, 28 | 3,531, 1,119 | 2,537 | 294,767 | 0.505 |
+   | `confirmedOrder: "references"` | 83, 100 | 4,849, 1,864 | 14,510 | 293,860 | 0.505 |
+
+   - `formOfNormalizer` (`[{"strip": "[\\u0300\\u0301]"}, {"map": {" impf":
+     "", " pf": ""}}]`): 30,902 of wty-uk-en's 464,595 references name a text
+     no row has, and for 29,914 the text without its stress marks and
+     aspect tag is a headword (`татусь` → `[["та́то", ["endearing form"]]]`,
+     `взяття` → `взя́ти pf`). With the steps, вдає shows удавати, not удати (5
+     Tatoeba places), 23 lookups that found nothing find their lemma
+     (горобчик → горобець, татусь → тато, взяття → взяти), and Радів at a
+     sentence start shows Рада; the other aspect of a reflexive verb joins
+     the list (зачиняєтеся: зачиняти after зачинятися), which raises the
+     false candidates. `lookup.tsv`'s татусь and взяття rows fail without
+     each step.
+   - `ownEntry: "afterReferences"` puts the forms a headword's rows name
+     before it: він → віна (1,436 text lookups), більше → багато, мов →
+     мовити, се → сей; the letters' entries still come first (Я, А). It
+     changes no wrong first result to a right one.
+   - `confirmedOrder: "references"` follows the bank order of a word's rows,
+     which for the personal pronouns is я first (нього → я 451, тебе → я
+     2,341); 80 text lookups turn right (цвіте → цвіт, бочки → бочка).
+   - `formOfIgnore`: no rule name of the 990 that wty-uk-en's references
+     carry causes a wrong first result in the measurements (the wrong
+     references are other spellings, учительський → вчительський, which
+     the pack must follow), so the list stays empty.
 2. **Frequent words** (`sources/measure.py words`): the 10,000 most frequent
    words of a frequency list, each looked up alone as a host does (16
    results, scan length 16) and judged by the lemma the word means (Measure
@@ -335,9 +374,9 @@ identical).
      list is lowercase, and the subtitles' Бобе is the vocative of the name
      Боб, which a lookup with its capital finds first, while the label
      follows Kotsiubynsky's бобе, the Yiddish "grandma", which wty-uk-en
-     lacks. Of the 10,000, 6,346 show the right first result, 381 have no row in the dictionary (not judged here;
-     the texts' hand-judged sample below covers such words), and 3,272 find
-     nothing: most are Russian words of the subtitles (решили, хватит,
+     lacks. Of the 10,000, 6,348 show the right first result, 382 have no
+     row in the dictionary (not judged here; the texts' hand-judged sample
+     below covers such words), and 3,269 find nothing: most are Russian words of the subtitles (решили, хватит,
      получил) and names.
    - Yomitan's rules: 4,097 reached, 62 wrong first, 0.85% of the reached
      words' tokens (пане → паня, роботу → робот, року → рок, говори →
@@ -350,8 +389,8 @@ identical).
    - Wikipedia's 10,000 most frequent words, final set: 6,486 have a lemma
      a rule reaches (51.1% of the list's tokens); 1 shows a wrong lemma
      first, пер → перти (пер. is an abbreviation in Wikipedia, which the
-     dictionary does not have). Of the 10,000, 8,720 are right, 631 have no
-     row and 648 find nothing. Among the reached words, Yomitan's rules have
+     dictionary does not have). Of the 10,000, 8,723 are right, 631 have no
+     row and 645 find nothing. Among the reached words, Yomitan's rules have
      80 wrong, 4.26% of their tokens (року → рок, складу → скласти, селі →
      сель, даними → даний, міністром → міністер); the union 18, 0.28%
      (роботу → робот, посаду → посад, кар'єру → кар'єр); the own rules 10,
@@ -367,22 +406,21 @@ identical).
 
    | Rule set | After a preposition (62,614) | particle (45,934) | conjunction (33,092) | pronoun (149,467) | бути (10,397) | All: wrong first results |
    | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-   | Own | 95 | 18 | 11 | 37 | 3 | 164 |
-   | Yomitan | 530 | 135 | 49 | 390 | 65 | 1,169 |
-   | Union | 318 | 11 | 16 | 117 | 6 | 468 |
-   | Final | 24 | 3 | 6 | 16 | 2 | 51 |
+   | Own | 94 | 18 | 10 | 34 | 3 | 159 |
+   | Yomitan | 529 | 135 | 48 | 387 | 65 | 1,164 |
+   | Union | 317 | 11 | 15 | 114 | 6 | 463 |
+   | Final | 23 | 3 | 5 | 13 | 2 | 46 |
 
-   The final set's 51 are вдає → удати (5, the other aspect; Known gaps),
-   оніміла → німіти, ties of rarer words, at most 3 lookups each (молі →
-   моль, сутінках → сутінок), and 9 spellings of 1928-1933 (екстазі →
-   екстаза 3, туберкульозу → туберкульоза 2, балі → баль, светром →
-   светер), which the judge now counts as wrong (Measure notes; 42 without
-   them). 20 more lookups are ties no frequency list decides, counted apart
+   The final set's 46 are оніміла → німіти, ties of rarer words, at most 2
+   lookups each (молі → моль, сутінках → сутінок), and 9 spellings of
+   1928-1933 (екстазі → екстаза 3, туберкульозу → туберкульоза 2, балі →
+   баль, светром → светер), which the judge counts as wrong (Measure notes;
+   37 without them). 20 more lookups are ties no frequency list decides, counted apart
    (Measure notes); by hand 10 are wrong (Мені → Мена and Атен → Атена, the
    goddess, for Атени, Athens, 5 each) and 10 right (Афін → Афіни). The
-   union's 468 are mostly роботу → робот (233), адресу → адрес (29) and
+   union's 463 are mostly роботу → робот (233), адресу → адрес (29) and
    підлогу → підлог (20), where Yomitan's genitive comes before the own
-   accusative; Yomitan's 1,169 also have добра → добро (120), готові → гот
+   accusative; Yomitan's 1,164 also have добра → добро (120), готові → гот
    (84) and голові → гол (41). їм is labelled with both of its common
    readings (вони, їсти), so these tables count neither: of its 253 lookups
    after a function word, 142 mean вони, which the final set gives first,
@@ -392,14 +430,15 @@ identical).
 
    | Text | Lookups | Right | Wrong (by script) | Tie (apart) | Not in the dictionary | Longer match | Nothing found |
    | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-   | Kotsiubynsky, vol. 2 | 127,968 | 110,040 | 1,815 | 55 | 2,223 | 389 | 13,446 |
-   | Franko, *Захар Беркут* | 50,957 | 43,686 | 479 | 43 | 984 | 153 | 5,612 |
+   | Kotsiubynsky, vol. 2 | 127,968 | 110,051 | 1,816 | 55 | 2,223 | 389 | 13,434 |
+   | Franko, *Захар Беркут* | 50,957 | 43,689 | 479 | 43 | 984 | 153 | 5,609 |
 
-   - The 2,294 wrong first results are 2,032 sentence-initial one-letter
+   - The 2,295 wrong first results are 2,032 sentence-initial one-letter
      words that show the letter's own entry (А 606, І 490, Я 426, В 208,
-     З 146, У 83, О 32), 114 other sentence-initial capitals that show a
+     З 146, У 83, О 32), 115 other sentence-initial capitals that show a
      proper noun (Мені → Мена 39, Або → Аба 18, Мене → Мен 16, Дім → Діма
-     6, бобе, the Yiddish "grandma", → Боб 2), both in Known gaps, 140 ties
+     6, бобе, the Yiddish "grandma", → Боб 2, Радів → Рада), both in Known
+     gaps, 140 ties
      the homograph rules leave, by the frequency proxy, at most 3 lookups
      each (цвіте → цвісти, сліпу → сліпа, бочки → бочок), among them 6
      spellings of 1928-1933 the judge now counts as wrong (оркестри →
@@ -433,20 +472,20 @@ identical).
      the first result is the nearest headword the rules reach; for вечера
      (supper, an older spelling of вечеря) the right lemma is second, after
      вечір. Together that estimates about 2.1% wrong first results among the
-     159,867 lookups that find something (the 2,294, 55 among the ties,
+     159,882 lookups that find something (the 2,295, 55 among the ties,
      about 230 more among the proxy's ties and about 855 among the words
      without rows; 2.3% with the other draw's 560); without the letter
      entries at sentence starts, which the engine's order decides (Known
      gaps), about 0.9%.
-   - Besides the 2,146 sentence-initial letters and proper nouns that every
+   - Besides the 2,147 sentence-initial letters and proper nouns that every
      rule set shows, the final set has 116 and 32 wrong; Yomitan's rules
-     1,202 and 301 (од → ода 417, білі → біль 63, роботу → робот 36, зелені
+     1,200 and 301 (од → ода 417, білі → біль 63, роботу → робот 36, зелені
      → зелень 34); the union 245 and 81 (роботу → робот 36, морі → мор 32,
      пане → паня 25); the own rules 225 and 76 (яка → як 58, яку → як 26,
      брів → брести 9).
    - Removing the Yomitan rules: the final set against the same union
-     without the removals (own transforms first, one-word limit): 1,815 and
-     479 wrong against 1,818 and 480 in the texts, 51 against 56 after
+     without the removals (own transforms first, one-word limit): 1,816 and
+     479 wrong against 1,819 and 480 in the texts, 46 against 51 after
      function words, the same among the frequent words of both lists; 3 more
      right first results in Kotsiubynsky and 1 in Franko.
 5. **Performance** (section 13).
@@ -475,15 +514,15 @@ identical).
    - Differential check (`tools/check-yomitan.mjs <yomitan d3c54c1> uk --cli
      build/hoshidicts-cli`): rules 12,304 inputs, 86,933 Yomitan results, 0
      differences; processors `decapitalize`, `capitalizeFirstLetter`,
-     `removeUkrainianDiacritics` and `ukrainianApostropheVariants` on 1,770 to
-     1,794 inputs each, 7 differences, all from the one row of
+     `removeUkrainianDiacritics` and `ukrainianApostropheVariants` on 1,776 to
+     1,800 inputs each, 7 differences, all from the one row of
      `sources/yomitan-differences.tsv`: the pack's `removeUkrainianDiacritics`
      also removes the grave accent (мо̀ва), which Yomitan's keeps.
    - Conformance (`language-conformance-test languages/uk`): corpus.tsv
-     988/988, cases.tsv 732/732, text.tsv 26/26, lookup.tsv 46/46, gaps.tsv
-     0/14 (reported); classes.json agrees (11 classes, 1,084 fields, 2
-     steps, 3,524 outputs); 1,220 of the 8,552 rules are exercised by a
-     passing row; `tests/` and `sources/` hold 998,568 bytes.
+     988/988, cases.tsv 732/732, text.tsv 26/26, lookup.tsv 48/48, gaps.tsv
+     0/14 (reported); classes.json agrees (11 classes, 1,085 fields, 2
+     steps, 3,528 outputs); 1,220 of the 8,552 rules are exercised by a
+     passing row; `tests/` and `sources/` hold 999,190 bytes.
    - Stem constraints (`sources/mutate.py`, docs/languages.md 14 step 7):
      206 deletions, one per own transform and constraint (`stemMinLength`
      lowered by one, the others removed from every rule of the transform
@@ -504,7 +543,8 @@ identical).
      -ах → -и and -ях → -и rules of plural-only nouns (штанах, штанях,
      санях), the one-word limit of the -ці plurals (на хлопці), and the -ці
      plurals themselves (українці → українець: deleting the -xці → -xець
-     pairs, only -нці, or going back to one ці → ець rule).
+     pairs, only -нці, or going back to one ці → ець rule), and
+     `formOfNormalizer` or its aspect step (татусь → тато, взяття → взяти).
      The other homograph rules have no row each; the frequent-word and text
      measurements show them.
    - Hachidori (feat/multi-language d7e82b0c with this branch at d5f1d4f in
@@ -597,11 +637,11 @@ identical).
   (section 9.6): on hand-judged samples one in eleven to one in fifteen
   lookups of an unlabelled ambiguous word gets the other reading first (на
   лови → ловити, тепла, материна турбота → тепло, шовкові вилоги → шовк, злі
-  духи → зло; Measurements 4). вдає gives
-  удати before удавати (5 places in Tatoeba): both are reached by a rule
-  and a form-of reference (вдати → удати, вдавати → удавати), and the
-  homographs and doublets of Measurements 1 tie the same way (йогам → йога
-  before йог). Choosing between them by frequency would need the engine.
+  духи → зло; Measurements 4). The homographs and doublets of
+  Measurements 1 tie the same way (йогам → йога before йог); choosing
+  between them by frequency would need the engine. (вдає, which showed
+  удати before удавати, now shows удавати: `formOfNormalizer` lets the
+  reference удава́ти reach its row.)
 - Names whose forms tie are left in the engine's order: Мирослави,
   Мирославу and Мирославі show Мирослав first for the heroine Мирослава of
   *Захар Беркут* (43 lookups), Іванові the possessive Іванів for the dative
@@ -678,9 +718,9 @@ identical).
     Tatoeba's 188,919 sentence starts (Я 35,570, У 6,136, В 742, З 409, А
     324, О 207, Є 134, І 131) and at 2,032 lookups in the texts (А 606, І
     490, Я 426, В 208, З 146, У 83). The capital rows name the small letter
-    (`uppercase`), so the queued framework option `lookup.ownEntry:
-    "afterReferences"` (hachi-lang-engine-l, Addendum 4) would put я and а
-    first.
+    (`uppercase`), but `lookup.ownEntry: "afterReferences"`, now in the
+    engine, still shows Я and А first, and it turns 2,356 text lookups
+    wrong (Measurements 1).
   - Proper nouns of another spelling: Мені → Мена (a town) at 3,816 Tatoeba
     sentence starts, Мене → Мен (Maine) at 472, Ані → Аня at 31; in the
     texts 114 lookups (Мені 39, Або → Аба 18, Мене 16, Дім → Діма 6). By the
@@ -697,8 +737,9 @@ identical).
   460), померла (the deceased; померти, 279), батьків (father's; батько,
   207), рота (company; рот, 198), жила (vein; жити, 151), мов (the
   conjunction "as if"; мова, 142), плач (crying; плакати, 126). The words'
-  own rows name the meant lemma, so
-  `lookup.ownEntry: "afterReferences"` would put it first.
+  own rows name the meant lemma, which `lookup.ownEntry: "afterReferences"`
+  puts first (тату → тато, рада → радий), at the cost of він → віна and
+  the other words of Measurements 1.
 - The у/в alternation (`alternateInitialUV`) decides the first result of
   168 lookups in the texts whose word has no row of its own: усякі →
   всякий, уважай → вважати, втіху → утіха, урятував → врятувати. For 15 it
@@ -707,10 +748,9 @@ identical).
   вправити, вряд → уряд, уходило → входити, вбивча and вбивчі → убити,
   вчуваю → учути, умився → вмиватися; and встою → вуста.
 - One hop (section 16): оріхів names оріх, whose rows only refer to горіх, so
-  the name Оріхів comes first (3 places in Kotsiubynsky); 389 form-of terms
-  name their lemma only with a stress mark or an aspect tag (бачено →
-  ба́чити, люблено → люби́ти impf), which a reference cannot reach; the rules
-  reach some of them (бачено → бачити).
+  the name Оріхів comes first (3 places in Kotsiubynsky). Of the 30,902
+  references whose text no row has, `formOfNormalizer` reaches 29,914; the
+  other 988 name a text that is no headword even without its marks.
 - Perfective and imperfective forms often reach the other aspect first,
   through the dictionary's rows (приснилось → снитися, закидає → закинути),
   as wiktionary-to-yomitan names the pair.
