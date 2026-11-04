@@ -4,7 +4,8 @@
 
     python3 languages/sga/sources/mutate.py [--work <dir>] [--only <substring>]
 
-Each mutation edits a copy of languages/sga in <work> (default /tmp/sga-mutate):
+Each mutation edits a copy of languages/sga in <work> (default sga-mutate in the
+system temp directory, $TMPDIR or /tmp):
 it removes one kind of stem constraint (or notAtStart, or a stem change's
 `between`) from every rule of one transform, removes one transform, or changes
 one setting or processor of language.json. The copy's tests/classes.json is
@@ -20,6 +21,7 @@ import os
 import shutil
 import subprocess
 import sys
+import tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PACK = os.path.dirname(HERE)
@@ -115,7 +117,7 @@ def run(work, name, kind, edit, transforms, language):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('--work', default='/tmp/sga-mutate')
+    parser.add_argument('--work', default=os.path.join(tempfile.gettempdir(), 'sga-mutate'))
     parser.add_argument('--only', default=None)
     args = parser.parse_args()
     transforms = load(os.path.join(PACK, 'transforms.json'))

@@ -81,6 +81,9 @@ const VOWEL_CLASS = `[${VOWEL}AEIOUÁÉÍÓÚÆǼ]`;
 const LOWER_VOWEL_CLASS = `[${VOWEL}]`;
 const CONSONANT = 'bcdfghlmnprstḃċḋḟġṁṅṗṡṫ';
 const CONSONANT_CLASS = `[${CONSONANT}]`;
+// The stem of an absolute first singular or third plural: a consonant, or the
+// í of a hiatus verb (gníu, gníit → gníid; líit → líid).
+const HIATUS_OR_CONSONANT = `[${CONSONANT}í]`;
 // A stem of letters only: no dot, hyphen, apostrophe or space, so an ending
 // rule never reads the words before a space (docs/languages.md 14 step 2) or
 // the pretonic part of a verbal complex.
@@ -145,9 +148,11 @@ add('nasalization', 'nasalization',
 
 // n written against a vowel without a hyphen (nech for n-ech, nanmae for
 // n-anmae): kept apart because a word may itself begin with n and a vowel.
+// níth "conflict" (and the river Níth), which the dictionary does not list,
+// is no nasalised ith "corn" (9 lookups of the Táin, none ith).
 add('nasalizationNoHyphen', 'nasalization',
     'Nasalised initial vowel written with n and no hyphen (nanmae → anmae, nech → ech).',
-    [pfx('n', '', [], [], {stemStartsWith: VOWEL_CLASS, stemMinLength: 2})]);
+    [pfx('n', '', [], [], {stemStartsWith: VOWEL_CLASS, stemMinLength: 2, stemNotStartsWithText: 'ith'})]);
 
 add('hProthesis', 'h-prothesis',
     'Prothetic h before a vowel (a hÉrinn → Érinn, hí → í, h-uile → uile).',
@@ -410,19 +415,21 @@ add('absolute', 'absolute',
 const plain = (extra = {}) => ({stemCharacters: LETTERS, stemMinLength: 2, ...extra});
 const absolute = {
     // The stem of a weak or strong verb ends in a consonant before the
-    // ending (car-aim, léic-iu, bir-u); `druim` "ridge" is not dru- + -im.
+    // ending (car-aim, léic-iu, bir-u), that of a hiatus verb in í (gní-u);
+    // `druim` "ridge" is not dru- + -im.
     'pres-1sg': ['1st singular present', 'First singular present indicative or subjunctive (caraim → caraid, léiciu → léicid, biru → beirid).',
-        [['aim', 'aid'], ['aimm', 'aid'], ['u', 'aid'], ['im', 'id'], ['imm', 'id'], ['iu', 'id'], ['u', 'id']], {stemEndsWith: CONSONANT_CLASS}],
+        [['aim', 'aid'], ['aimm', 'aid'], ['u', 'aid'], ['im', 'id'], ['imm', 'id'], ['iu', 'id'], ['u', 'id']], {stemEndsWith: HIATUS_OR_CONSONANT}],
     'pres-2sg': ['2nd singular present', 'Second singular present indicative (carai → caraid, biri → beirid).',
         [['ai', 'aid'], ['i', 'id']], {stemMinLength: 3, stemEndsWith: CONSONANT_CLASS}],
     'pres-1pl': ['1st plural present', 'First plural present indicative (carmai → caraid, léicmi → léicid, bermai → beirid).',
         [['mai', 'aid'], ['mmai', 'aid'], ['ammai', 'aid'], ['mi', 'id'], ['mmi', 'id'], ['mai', 'id']]],
     'pres-2pl': ['2nd plural present', 'Second plural present indicative (carthae → caraid, léicthe → léicid, beirthe → beirid).',
         [['thae', 'aid'], ['the', 'id']]],
-    // As in the first singular, the stem ends in a consonant: `dóit`
-    // (plural of doe "upper arm") and `táit` are no verbs in -id.
+    // As in the first singular, the stem ends in a consonant or the í of a
+    // hiatus verb: `dóit` (plural of doe "upper arm") and `táit` are no verbs
+    // in -id.
     'pres-3pl': ['3rd plural present', 'Third plural present indicative or subjunctive (carait → caraid, léicit → léicid, berait → beirid).',
-        [['ait', 'aid'], ['it', 'id'], ['ait', 'id']], {stemEndsWith: CONSONANT_CLASS}],
+        [['ait', 'aid'], ['it', 'id'], ['ait', 'id']], {stemEndsWith: HIATUS_OR_CONSONANT}],
     'rel-3sg': ['relative', 'Third singular relative (caras → caraid, léices → léicid, beres → beirid, gnís → gníid).',
         [['as', 'aid'], ['es', 'id'], ['s', 'id']]],
     'rel-pl': ['relative', 'First and third plural relative (carmae, cartae → caraid; léicme, léicte → léicid).',
@@ -472,7 +479,7 @@ const copula = [
     // present
     'am', 'at', 'it', 'ammi', 'adib', 'as', 'ata', 'iss',
     // negative and dependent forms
-    'nít', 'níth', 'nítat', 'nidat', 'nídat', 'níta', 'nípu', 'nípo', 'níbu', 'níbo', 'níba', 'nípa', 'níptar', 'níbtar', 'nibtar', 'níbad', 'nípad', 'níbat', 'nípat',
+    'nít', 'nítat', 'nidat', 'nídat', 'níta', 'nípu', 'nípo', 'níbu', 'níbo', 'níba', 'nípa', 'níptar', 'níbtar', 'nibtar', 'níbad', 'nípad', 'níbat', 'nípat',
     // subjunctive, past subjunctive, preterite, future
     'ba', 'bá', 'bat', 'bad', 'bed', 'bid', 'bith', 'bit', 'bes', 'bas', 'bus', 'betis', 'batar', 'robo', 'ropo', 'robu', 'ropu', 'rop', 'rob', 'robtar', 'roptar', 'ropad', 'robad',
 ];
@@ -484,7 +491,7 @@ const substantive = [
     'tá', '·tá', 'táa', '·táa', 'taat', '·taat', 'atáa', 'tó', '·tó', 'taam', '·taam', 'taíd', '·taíd',
     'fil', '·fil', 'file', 'filet', '·filet', 'filus', 'filis',
     'bíu', 'bíuu', 'biuu', 'bí', 'bíid', 'biid', 'bíit', 'bíd', 'bíth', 'bíthir', 'bís', 'bimmi', 'bímmi',
-    'boí', 'boi', '·boí', 'bói', 'bái', '·bái', 'bátar', '·bátar', 'batar', 'bammar', 'bámmar', 'robátar', 'roboí', 'robói',
+    'boí', 'boi', '·boí', 'bói', 'bái', 'bátar', '·bátar', 'batar', 'bammar', 'bámmar', 'robátar', 'roboí', 'robói',
     'bia', 'bieid', 'bias', 'bieit', 'bethir', '·bia', '·biat', 'bïat',
     'beith', 'beit', 'beid', 'bed', 'beth', 'betis', '·beth', '·betis', '·bet', 'roib', '·roib', 'robae', '·robae',
 ];
@@ -537,7 +544,7 @@ for (const [id, [name, description, list, extra = {}]] of Object.entries(endings
         // only before u (firu, which acc-pl-raised reads), so `gilla` is
         // not gell + -a.
         if (deinflected === '' && /^[ei]/u.test(inflected) && inflected !== 'ib') {
-            rules.push(sfx(inflected, '', [], ['nom_pal'], nom(extra)));
+            rules.push(sfx(inflected, '', [], ['nom_pal'], nom({...extra, ...exclusion})));
         }
         return rules;
     }));
@@ -623,7 +630,7 @@ const irregularNouns = {
     'ben': ['mná', 'mnaí', 'mnai', 'ban', 'mnáib', 'mnaib', 'bein', 'mnaa'],
     // Not bai: unmarked, the Táin's bái "was" (attá) is far more frequent.
     'bó': ['bóu', 'bou', 'baí', 'bú', 'buaib', 'boin', 'bóib', 'báo'],
-    'duine': ['dóini', 'doíni', 'dóine', 'doíne', 'dóinib', 'doínib', 'duini', 'dóenib'],
+    'duine': ['dóini', 'doíni', 'dóine', 'doíne', 'dóinib', 'doínib', 'duini', 'dóenib', 'dune'],
     'cú': ['coin', 'conaib', 'cona', 'conu'],
     'rí': ['ríg', 'ríga', 'rígu', 'rígaib', 'rig', 'riga'],
     'tech': ['taige', 'tige', 'tig', 'taig', 'tigi', 'tigib', 'tegdais'],
@@ -636,6 +643,10 @@ const irregularNouns = {
     'mag': ['maigi'],
     // dead "end": the dative díaid of i ndíaid "after".
     'dead': ['díaid', 'diaid'],
+    // The Táin's plural of líaig "physician" (7 lookups); the dictionary lists legi.
+    'líaig': ['leigi'],
+    // The cases of caur "hero" (curaid, curad, curadaib), not the verb cúraid.
+    'caur': ['curaid', 'curad', 'curadaib', 'curadu'],
 };
 add('irregularNoun', 'irregular noun',
     'A case form of an irregular noun (Dé → día, mná → ben, bóu → bó, dóini → duine, coin → cú, ríg → rí, taige → tech, laithe → lá).',
@@ -679,15 +690,25 @@ add('prepositionalPronoun', 'conjugated preposition',
 // Other function words in the spellings the texts have and the
 // dictionary does not key.
 add('functionWord', 'function word',
-    'A function word in a spelling the dictionary does not list: Middle Irish nocho for nícon "not", cena for cenae "besides", os é "and he", dond "to the", mesi for messe "I", nói and nái for noí "nine".',
+    'A function word in a spelling the dictionary does not list: Middle Irish nocho for nícon "not", cena for cenae "besides", os é "and he", dond "to the", naib for the article, mesi, misi and mise for messe "I", nír for ní with ro, nói for noí "nine", nái for n-aí "of them" (cach nái "each one") or noí.',
     [
         whole('nocho', 'nícon', [], ['fw']), whole('nochon', 'nícon', [], ['fw']),
         whole('cena', 'cene', [], ['fw']),
         whole('ossé', 'os', [], ['fw']), whole('osse', 'os', [], ['fw']), whole('ossí', 'os', [], ['fw']),
-        whole('dond', 'in', [], ['fw']),
+        whole('dond', 'in', [], ['fw']), whole('naib', 'in', [], ['fw']),
         whole('mesi', 'messe', [], ['fw']), whole('messi', 'messe', [], ['fw']),
-        whole('nói', 'noí', [], ['fw']), whole('nái', 'noí', [], ['fw']),
+        whole('misi', 'messe', [], ['fw']), whole('mise', 'messe', [], ['fw']),
+        whole('nír', 'ní', [], ['fw']),
+        // The Táin writes nine nōi (6 of 6) and the pronoun n-aí nāi (7 of
+        // its 12 nāi; the other 5 are nine).
+        whole('nói', 'noí', [], ['fw']), whole('nái', 'aí', [], ['fw']), whole('nái', 'noí', [], ['fw']),
     ]);
+
+// The verbal noun and the passive of do·gní "does", which the dictionary does
+// not list (do dēnam "to do" read as denaid "sucks", 10 lookups of the Táin).
+add('irregularVerb', 'irregular verb',
+    'A form of do·gní "does" the dictionary does not list: the verbal noun dénum, dénam and the passive déntar, dénaiter (dénam → dogní).',
+    ['dénum', 'dénam', 'dénom', 'déntar', 'dénaiter'].map((w) => whole(w, 'dogní', [], ['v_dict'])));
 
 // A noun written without the length mark of its headword.
 add('unmarkedLength', 'spelling',

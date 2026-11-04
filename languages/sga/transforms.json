@@ -242,7 +242,7 @@
       "description": "Nasalised initial vowel written with n and no hyphen (nanmae → anmae, nech → ech).",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "n", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "[aeiouáéíóúæǽAEIOUÁÉÍÓÚÆǼ]", "stemMinLength": 2}
+        {"type": "prefix", "inflected": "n", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemStartsWith": "[aeiouáéíóúæǽAEIOUÁÉÍÓÚÆǼ]", "stemMinLength": 2, "stemNotStartsWithText": "ith"}
       ]
     },
     {
@@ -914,13 +914,13 @@
       "description": "First singular present indicative or subjunctive (caraim → caraid, léiciu → léicid, biru → beirid).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "aim", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "aimm", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "u", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "im", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "imm", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "iu", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "u", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}
+        {"type": "suffix", "inflected": "aim", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫí]"},
+        {"type": "suffix", "inflected": "aimm", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫí]"},
+        {"type": "suffix", "inflected": "u", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫí]"},
+        {"type": "suffix", "inflected": "im", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫí]"},
+        {"type": "suffix", "inflected": "imm", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫí]"},
+        {"type": "suffix", "inflected": "iu", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫí]"},
+        {"type": "suffix", "inflected": "u", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫí]"}
       ]
     },
     {
@@ -963,9 +963,9 @@
       "description": "Third plural present indicative or subjunctive (carait → caraid, léicit → léicid, berait → beirid).",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ait", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "it", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"},
-        {"type": "suffix", "inflected": "ait", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫ]"}
+        {"type": "suffix", "inflected": "ait", "deinflected": "aid", "conditionsIn": [], "conditionsOut": ["v_dict"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫí]"},
+        {"type": "suffix", "inflected": "it", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫí]"},
+        {"type": "suffix", "inflected": "ait", "deinflected": "id", "conditionsIn": [], "conditionsOut": ["v_dict", "v_absu"], "stemCharacters": "[{letter}\\u0300-\\u036F]", "stemMinLength": 2, "stemEndsWith": "[bcdfghlmnprstḃċḋḟġṁṅṗṡṫí]"}
       ]
     },
     {
@@ -1145,7 +1145,6 @@
         {"type": "wholeWord", "inflected": "ata", "deinflected": "is", "conditionsIn": [], "conditionsOut": ["v_dict"]},
         {"type": "wholeWord", "inflected": "iss", "deinflected": "is", "conditionsIn": [], "conditionsOut": ["v_dict"]},
         {"type": "wholeWord", "inflected": "nít", "deinflected": "is", "conditionsIn": [], "conditionsOut": ["v_dict"]},
-        {"type": "wholeWord", "inflected": "níth", "deinflected": "is", "conditionsIn": [], "conditionsOut": ["v_dict"]},
         {"type": "wholeWord", "inflected": "nítat", "deinflected": "is", "conditionsIn": [], "conditionsOut": ["v_dict"]},
         {"type": "wholeWord", "inflected": "nidat", "deinflected": "is", "conditionsIn": [], "conditionsOut": ["v_dict"]},
         {"type": "wholeWord", "inflected": "nídat", "deinflected": "is", "conditionsIn": [], "conditionsOut": ["v_dict"]},
@@ -1239,7 +1238,6 @@
         {"type": "wholeWord", "inflected": "·boí", "deinflected": "attá", "conditionsIn": ["v_conj"], "conditionsOut": ["v_dict"]},
         {"type": "wholeWord", "inflected": "bói", "deinflected": "attá", "conditionsIn": ["v_conj"], "conditionsOut": ["v_dict"]},
         {"type": "wholeWord", "inflected": "bái", "deinflected": "attá", "conditionsIn": ["v_conj"], "conditionsOut": ["v_dict"]},
-        {"type": "wholeWord", "inflected": "·bái", "deinflected": "attá", "conditionsIn": ["v_conj"], "conditionsOut": ["v_dict"]},
         {"type": "wholeWord", "inflected": "bátar", "deinflected": "attá", "conditionsIn": ["v_conj"], "conditionsOut": ["v_dict"]},
         {"type": "wholeWord", "inflected": "·bátar", "deinflected": "attá", "conditionsIn": ["v_conj"], "conditionsOut": ["v_dict"]},
         {"type": "wholeWord", "inflected": "batar", "deinflected": "attá", "conditionsIn": ["v_conj"], "conditionsOut": ["v_dict"]},
@@ -1657,6 +1655,7 @@
         {"type": "wholeWord", "inflected": "doínib", "deinflected": "duine", "conditionsIn": [], "conditionsOut": ["n_dict"]},
         {"type": "wholeWord", "inflected": "duini", "deinflected": "duine", "conditionsIn": [], "conditionsOut": ["n_dict"]},
         {"type": "wholeWord", "inflected": "dóenib", "deinflected": "duine", "conditionsIn": [], "conditionsOut": ["n_dict"]},
+        {"type": "wholeWord", "inflected": "dune", "deinflected": "duine", "conditionsIn": [], "conditionsOut": ["n_dict"]},
         {"type": "wholeWord", "inflected": "coin", "deinflected": "cú", "conditionsIn": [], "conditionsOut": ["n_dict"]},
         {"type": "wholeWord", "inflected": "conaib", "deinflected": "cú", "conditionsIn": [], "conditionsOut": ["n_dict"]},
         {"type": "wholeWord", "inflected": "cona", "deinflected": "cú", "conditionsIn": [], "conditionsOut": ["n_dict"]},
@@ -1698,7 +1697,12 @@
         {"type": "wholeWord", "inflected": "tenid", "deinflected": "tene", "conditionsIn": [], "conditionsOut": ["n_dict"]},
         {"type": "wholeWord", "inflected": "maigi", "deinflected": "mag", "conditionsIn": [], "conditionsOut": ["n_dict"]},
         {"type": "wholeWord", "inflected": "díaid", "deinflected": "dead", "conditionsIn": [], "conditionsOut": ["n_dict"]},
-        {"type": "wholeWord", "inflected": "diaid", "deinflected": "dead", "conditionsIn": [], "conditionsOut": ["n_dict"]}
+        {"type": "wholeWord", "inflected": "diaid", "deinflected": "dead", "conditionsIn": [], "conditionsOut": ["n_dict"]},
+        {"type": "wholeWord", "inflected": "leigi", "deinflected": "líaig", "conditionsIn": [], "conditionsOut": ["n_dict"]},
+        {"type": "wholeWord", "inflected": "curaid", "deinflected": "caur", "conditionsIn": [], "conditionsOut": ["n_dict"]},
+        {"type": "wholeWord", "inflected": "curad", "deinflected": "caur", "conditionsIn": [], "conditionsOut": ["n_dict"]},
+        {"type": "wholeWord", "inflected": "curadaib", "deinflected": "caur", "conditionsIn": [], "conditionsOut": ["n_dict"]},
+        {"type": "wholeWord", "inflected": "curadu", "deinflected": "caur", "conditionsIn": [], "conditionsOut": ["n_dict"]}
       ]
     },
     {
@@ -1867,7 +1871,7 @@
     {
       "id": "functionWord",
       "name": "function word",
-      "description": "A function word in a spelling the dictionary does not list: Middle Irish nocho for nícon \"not\", cena for cenae \"besides\", os é \"and he\", dond \"to the\", mesi for messe \"I\", nói and nái for noí \"nine\".",
+      "description": "A function word in a spelling the dictionary does not list: Middle Irish nocho for nícon \"not\", cena for cenae \"besides\", os é \"and he\", dond \"to the\", naib for the article, mesi, misi and mise for messe \"I\", nír for ní with ro, nói for noí \"nine\", nái for n-aí \"of them\" (cach nái \"each one\") or noí.",
       "source": "own",
       "rules": [
         {"type": "wholeWord", "inflected": "nocho", "deinflected": "nícon", "conditionsIn": [], "conditionsOut": ["fw"]},
@@ -1877,10 +1881,28 @@
         {"type": "wholeWord", "inflected": "osse", "deinflected": "os", "conditionsIn": [], "conditionsOut": ["fw"]},
         {"type": "wholeWord", "inflected": "ossí", "deinflected": "os", "conditionsIn": [], "conditionsOut": ["fw"]},
         {"type": "wholeWord", "inflected": "dond", "deinflected": "in", "conditionsIn": [], "conditionsOut": ["fw"]},
+        {"type": "wholeWord", "inflected": "naib", "deinflected": "in", "conditionsIn": [], "conditionsOut": ["fw"]},
         {"type": "wholeWord", "inflected": "mesi", "deinflected": "messe", "conditionsIn": [], "conditionsOut": ["fw"]},
         {"type": "wholeWord", "inflected": "messi", "deinflected": "messe", "conditionsIn": [], "conditionsOut": ["fw"]},
+        {"type": "wholeWord", "inflected": "misi", "deinflected": "messe", "conditionsIn": [], "conditionsOut": ["fw"]},
+        {"type": "wholeWord", "inflected": "mise", "deinflected": "messe", "conditionsIn": [], "conditionsOut": ["fw"]},
+        {"type": "wholeWord", "inflected": "nír", "deinflected": "ní", "conditionsIn": [], "conditionsOut": ["fw"]},
         {"type": "wholeWord", "inflected": "nói", "deinflected": "noí", "conditionsIn": [], "conditionsOut": ["fw"]},
+        {"type": "wholeWord", "inflected": "nái", "deinflected": "aí", "conditionsIn": [], "conditionsOut": ["fw"]},
         {"type": "wholeWord", "inflected": "nái", "deinflected": "noí", "conditionsIn": [], "conditionsOut": ["fw"]}
+      ]
+    },
+    {
+      "id": "irregularVerb",
+      "name": "irregular verb",
+      "description": "A form of do·gní \"does\" the dictionary does not list: the verbal noun dénum, dénam and the passive déntar, dénaiter (dénam → dogní).",
+      "source": "own",
+      "rules": [
+        {"type": "wholeWord", "inflected": "dénum", "deinflected": "dogní", "conditionsIn": [], "conditionsOut": ["v_dict"]},
+        {"type": "wholeWord", "inflected": "dénam", "deinflected": "dogní", "conditionsIn": [], "conditionsOut": ["v_dict"]},
+        {"type": "wholeWord", "inflected": "dénom", "deinflected": "dogní", "conditionsIn": [], "conditionsOut": ["v_dict"]},
+        {"type": "wholeWord", "inflected": "déntar", "deinflected": "dogní", "conditionsIn": [], "conditionsOut": ["v_dict"]},
+        {"type": "wholeWord", "inflected": "dénaiter", "deinflected": "dogní", "conditionsIn": [], "conditionsOut": ["v_dict"]}
       ]
     },
     {

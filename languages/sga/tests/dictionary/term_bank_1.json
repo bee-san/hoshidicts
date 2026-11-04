@@ -36,5 +36,8 @@
   ["ní", "", "ptcl", "", 0, ["not (negative particle)"], 35, ""],
   ["dech", "", "adj", "adj", 0, ["best"], 36, ""],
   ["⁊", "", "conj", "", 0, ["and (abbreviation of ocus)"], 37, ""],
-  ["and", "", "adv", "", 0, ["there"], 38, ""]
+  ["and", "", "adv", "", 0, ["there"], 38, ""],
+  ["mag", "", "n neut", "n", 0, ["plain"], 39, ""],
+  ["aub", "", "n fem", "", 0, ["river"], 40, ""],
+  ["ab", "", "non-lemma", "", 0, [["aub", ["alternative"]]], 41, ""]
 ]

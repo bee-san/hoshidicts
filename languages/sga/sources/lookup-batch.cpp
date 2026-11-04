@@ -12,9 +12,12 @@
 // Each input line is looked up with Lookup::lookup (default 16 results, scan
 // length 16, no language options unless --options names some: what a host's
 // hover does) and answered with one JSON line: {"text", "results":
-// [{"expression", "matched", "trace": [ids], "steps"}]}. --exempt puts the
-// dictionary in LookupOptions::pos_filter_exempt, which is how a lookup sees
-// a dictionary without part-of-speech tags once the pack's
+// [{"expression", "matched", "trace": [ids], "rules": [ids], "steps"}]}, where
+// "rules" lists the trace steps a rule made, not a form-of row of the
+// dictionary (TransformGroup::from_dictionary): a form-of row's step is named
+// by its rule text, which can equal a transform id (lenition, comparative).
+// --exempt puts the dictionary in LookupOptions::pos_filter_exempt, which is
+// how a lookup sees a dictionary without part-of-speech tags once the pack's
 // lookup.untaggedTerms is "pass".
 
 #include <iostream>
@@ -98,6 +101,14 @@ int main(int argc, char** argv) {
       for (size_t j = 0; j < r.trace.size(); ++j) {
         if (j) out += ",";
         out += quote(r.trace[j].id);
+      }
+      out += "],\"rules\":[";
+      bool first_rule = true;
+      for (const auto& step : r.trace) {
+        if (step.from_dictionary) continue;
+        if (!first_rule) out += ",";
+        first_rule = false;
+        out += quote(step.id);
       }
       out += "]}";
     }

@@ -146,7 +146,7 @@ spelling	1	caraith	caraid	*	spelling
 spelling	1	cóiceth	cóiced	*	spelling
 constraint spelling	0	tūaith	túaid	*	*
 constraint spelling	0	sceith	sceid	*	*
-constraint spelling	0	Dauith	Dauid	*	*
+constraint spelling	0	rēith	réid	*	*
 spelling	1	dorche	dorchae	*	spelling
 spelling	1	cendaib	cenn	*	*
 emphatic	1	labrad-sa	labrad	*	emphatic
@@ -176,7 +176,6 @@ negatives	0	dochí	docí	*	*
 negatives	0	focheird in	foceird in	*	*
 verbal complex	1	dothǽt	dotét	v	tet|lenitionInCompound
 verbal complex	1	Dothéit	dotét	v	tet|lenitionInCompound
-copula	1	níth	is	v	copula
 conjunct	1	do·ṅgníat	dogní	v	*
 conjunct	1	ad·cíam	adcí	v	*
 conjunct	1	aras·celatais	arcela	v	*
@@ -379,7 +378,6 @@ constraint comparative	0	n-ardu	n-ard	*	*
 constraint comparative	0	du	d	*	*
 negatives	0	gilla	gill	*	*
 function word	1	osse	os	*	functionWord
-negatives	0	mbāi	bó	*	*
 preposition	1	lasa	la	*	prepositionalPronoun
 function word	1	mesi	messe	*	functionWord
 negatives	0	dōit	dóid	*	*
@@ -389,3 +387,19 @@ constraint spelling	0	mman	mban	*	*
 constraint spelling	0	ic	icc	*	*
 constraint doubled consonant	0	nnemain	nem	*	*
 preposition	1	ūain	ó	*	prepositionalPronoun
+constraint nasalizationNoHyphen	0	nīth	ith	*	*
+function word	1	naib	in	*	functionWord
+function word	1	nāi	aí	*	functionWord
+verb	1	gníit	gníid	v	pres-3pl
+verb	1	gníu	gníid	v	pres-1sg
+preposition	1	lim	la	*	prepositionalPronoun
+constraint spelt	0	ass	is	*	*
+constraint functionWord	0	nōi	oí	*	*
+constraint conj-pres	0	rom·bet	baid	*	*
+noun	1	leigi	líaig	n	irregularNoun
+function word	1	misi	messe	*	functionWord
+function word	1	nīr	ní	*	functionWord
+noun	1	dune	duine	n	irregularNoun
+noun	1	curadaib	caur	n	irregularNoun
+verb	1	dēnam	dogní	v	irregularVerb
+verb	1	dēntar	dogní	v	irregularVerb
