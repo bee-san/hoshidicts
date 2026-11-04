@@ -1204,9 +1204,12 @@ const ONE_WORD = {stemCharacters: '{lower}'};
 // enclitic -ti, so that the participle or adjective is found before the
 // reflexive imperative where a word's rows name both (condannati: condannato,
 // not condannarsi; informati, destinati); the frequent imperatives of
-// it_50k's top 10,000 are preferred readings below (alzati, fermati).
+// it_50k's top 10,000 are preferred readings below (alzati, fidati).
+// -ai is also read as the plural of -aio through an ending as long as the
+// past historic's -ai, and the plural comes first: operai is operaio, not
+// operare's past historic (macellai, ghiacciai).
 for (const [inflected, deinflected, out] of [
-    ['ati', 'ato', NOMINAL], ['i', 'e', NOMINAL], ['i', 'o', NOMINAL], ['e', 'a', NOMINAL], ['i', 'a', NOMINAL],
+    ['ati', 'ato', NOMINAL], ['ai', 'aio', NOMINAL], ['i', 'e', NOMINAL], ['i', 'o', NOMINAL], ['e', 'a', NOMINAL], ['i', 'a', NOMINAL],
     ['chi', 'co', NOMINAL], ['ghi', 'go', NOMINAL], ['che', 'ca', NOMINAL], ['ghe', 'ga', NOMINAL],
     ['chi', 'ca', ['n']], ['ghi', 'ga', ['n']], ['ci', 'co', NOMINAL], ['gi', 'go', NOMINAL],
     ['ce', 'cia', NOMINAL], ['ge', 'gia', NOMINAL], ['i', 'io', NOMINAL],
@@ -1263,10 +1266,11 @@ for (const [inflected, deinflected, out, min] of [
 // found before any ending, reaches the reading they nearly always have
 // first; the other stays second (soli: solo, then sole). The words were
 // judged by hand among those of the top 10,000 whose first lemma's citation
-// form is at least 10 times rarer than another lemma their rows name, the
-// 316 whose first result changes when the verb slots come first, and the 52
-// that change when the feminine plural comes before the plural (README,
-// Measurements 2): the verbs below are the ones whose bare form is nearly
+// form is at least 10 (and 3) times rarer than another lemma their rows
+// name, the 337 whose first result changes when the verb slots come first,
+// the 55 that change when the feminine plural comes before the plural, the
+// 21 that change when -i is -o before -e, and the 184 whose first result
+// differs from the dictionary's own order (README, Measurements 2): the verbs below are the ones whose bare form is nearly
 // always the verb (serve, credi, continua, ami); a word used both ways keeps
 // the noun (ricordi, aspetti, scherzi). The feminine plurals are adjectives
 // whose feminine singular is also a rarer noun (nuove: nuovo, not nuova
@@ -1278,6 +1282,8 @@ const PREFERRED = [
         ['rischi', 'rischio'], ['omicidi', 'omicidio'], ['sacrifici', 'sacrificio'], ['decenni', 'decennio'],
         ['stronzate', 'stronzata'], ['cazzate', 'cazzata'], ['discorsi', 'discorso'],
         ['vari', 'vario'], ['saluti', 'saluto'], ['temi', 'tema'], ['morti', 'morto'], ['lenti', 'lento'], ['corti', 'corto'],
+        ['puntate', 'puntata'], ['coordinate', 'coordinata'], ['spese', 'spesa'], ['risorse', 'risorsa'],
+        ['benefici', 'beneficio'], ['prodotti', 'prodotto'],
     ]],
     ['feminine-plural', ['adj'], [
         ['vere', 'vero'], ['private', 'privato'], ['armate', 'armato'], ['complicate', 'complicato'], ['sbagliate', 'sbagliato'],
@@ -1291,7 +1297,7 @@ const PREFERRED = [
     // after the participle (Alzati! Fidati! Figurati!).
     ['imperative-tu', ['v'], [
         ['alzati', 'alzarsi'], ['fidati', 'fidarsi'], ['svegliati', 'svegliarsi'], ['figurati', 'figurarsi'],
-        ['spostati', 'spostarsi'], ['riposati', 'riposarsi'],
+        ['spostati', 'spostarsi'], ['riposati', 'riposarsi'], ['girati', 'girarsi'],
     ]],
     ['present-tu', ['v'], [
         ['torni', 'tornare'], ['spegni', 'spegnere'], ['credi', 'credere'], ['ami', 'amare'], ['ascolti', 'ascoltare'],
@@ -1299,13 +1305,19 @@ const PREFERRED = [
         ['paghi', 'pagare'], ['perdoni', 'perdonare'], ['tocchi', 'toccare'], ['dimentichi', 'dimenticare'], ['osi', 'osare'],
         ['accetti', 'accettare'], ['compri', 'comprare'], ['accompagni', 'accompagnare'], ['vendi', 'vendere'],
         ['puzzi', 'puzzare'], ['figuri', 'figurare'], ['presti', 'prestare'], ['fumi', 'fumare'], ['sali', 'salire'],
+        ['vinci', 'vincere'],
     ]],
     ['present-lui', ['v'], [
         ['pare', 'parere'], ['accade', 'accadere'], ['indovina', 'indovinare'], ['supera', 'superare'], ['vende', 'vendere'],
         ['serve', 'servire'], ['continua', 'continuare'], ['vive', 'vivere'], ['usa', 'usare'], ['merita', 'meritare'],
         ['dimentica', 'dimenticare'], ['compra', 'comprare'], ['riporta', 'riportare'], ['incontra', 'incontrare'],
         ['teme', 'temere'], ['osa', 'osare'], ['bacia', 'baciare'], ['cola', 'colare'], ['accosta', 'accostare'],
+        ['regge', 'reggere'],
+        // indica and indicano are indicare's, not indire's subjunctive
+        // (in + dica), which dire's compound table finds first.
+        ['indica', 'indicare'],
     ]],
+    ['present-loro', ['v'], [['indicano', 'indicare']]],
     ['subjunctive-sg', ['v'], [['accada', 'accadere'], ['riposi', 'riposare']]],
     // comperò and comperai, the past historic of comperare, an older
     // spelling of comprare that wty-it-en gives only as a form-of row: read

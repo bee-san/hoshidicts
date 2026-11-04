@@ -254,7 +254,8 @@ def rarer_named(expression, word, rows):
 
 
 TIE_CLASSES = ("feminine noun before the adjective", "-e noun before the -o adjective",
-               "-rsi imperative before the participle", "capital letter at a sentence start")
+               "-rsi imperative before the participle", "verb before the -a noun", "-co adjective before the -io noun",
+               "capital letter at a sentence start")
 
 
 def tie_class(word, f, rows):
@@ -263,12 +264,14 @@ def tie_class(word, f, rows):
     (nuove: nuova, not nuovo); an -e noun for an -i plural whose rows also name the -o adjective (morti:
     morte, not morto); an -rsi verb through a one-step trace (the dictionary's imperative row) for a word
     in -ati, -iti, -uti (condannati: condannarsi, not condannato); a capital letter's own entry for that
-    letter (E, A, I, O starting a sentence)."""
+    letter (E, A, I, O starting a sentence); a verb for a word in -e whose rows also name the -a noun (cascate:
+    cascare, not cascata); an -co adjective for an -ci or -chi plural whose rows also name the -io noun (marchi:
+    marco, not marchio)."""
     if f is None or f["matched"] != word:
         return None
     w, e = word.lower(), f["expression"]
     if len(word) == 1 and word.isupper() and e == word:
-        return TIE_CLASSES[3]
+        return TIE_CLASSES[5]
     named = referenced(word, rows)
     if w.endswith("e") and f["trace"] == ["plural"]:
         stem = w[:-2] if w.endswith(("che", "ghe")) else w[:-1]
@@ -278,6 +281,10 @@ def tie_class(word, f, rows):
         return TIE_CLASSES[1]
     if re.search(r"[aiu]ti$", w) and e.endswith("rsi") and len(f["trace"]) == 1:
         return TIE_CLASSES[2]
+    if w.endswith("e") and f["trace"] != ["plural"] and re.search(r"r(e|si)$", e) and w[:-1] + "a" in named:
+        return TIE_CLASSES[3]
+    if re.search(r"[cg]h?i$", w) and f["trace"] == ["plural"] and e == re.sub(r"h?i$", "o", w) and w[:-1] + "io" in named:
+        return TIE_CLASSES[4]
     return None
 
 
@@ -371,7 +378,7 @@ def cmd_freq(args):
         c = tie_class(w, first(res), rows)
         if c is not None:
             ties[c].append(w)
-    for c in TIE_CLASSES[:3]:
+    for c in TIE_CLASSES[:-1]:
         ws = sorted(ties.get(c, []), key=lambda x: -counts[x])
         lines.append(f"tie class {c}: {len(ws)} words, {sum(counts[w] for w in ws) / total_tokens:.3%} of the tokens: "
                      + ", ".join(f"{w} ({counts[w]})" for w in ws))

@@ -95,5 +95,19 @@
   ["tempi", "", "non-lemma", "", 0, [["tempio", ["plural"]]], 94, ""],
   ["alzato", "", "adj", "", 0, ["raised"], 95, ""],
   ["alzati", "", "non-lemma", "", 0, [["alzarsi", ["second-person singular imperative"]]], 96, ""],
-  ["alzati", "", "non-lemma", "", 0, [["alzato", ["plural masculine"]]], 97, ""]
+  ["alzati", "", "non-lemma", "", 0, [["alzato", ["plural masculine"]]], 97, ""],
+  ["risorsa", "", "n fem", "", 0, ["resource"], 98, ""],
+  ["risorgere", "", "v", "", 0, ["to rise again"], 99, ""],
+  ["risorse", "", "non-lemma", "", 0, [["risorgere", ["third-person singular past historic"]]], 100, ""],
+  ["risorse", "", "non-lemma", "", 0, [["risorsa", ["plural"]]], 101, ""],
+  ["indicare", "", "v", "", 0, ["to indicate"], 102, ""],
+  ["indire", "", "v", "", 0, ["to call (an election)"], 103, ""],
+  ["indica", "", "non-lemma", "", 0, [["indire", ["third-person singular present subjunctive"]]], 104, ""],
+  ["indica", "", "non-lemma", "", 0, [["indicare", ["third-person singular present indicative"]]], 105, ""],
+  ["indicano", "", "non-lemma", "", 0, [["indire", ["third-person plural present subjunctive"]]], 106, ""],
+  ["indicano", "", "non-lemma", "", 0, [["indicare", ["third-person plural present indicative"]]], 107, ""],
+  ["operaio", "", "n masc", "", 0, ["worker"], 108, ""],
+  ["operare", "", "v", "", 0, ["to operate"], 109, ""],
+  ["operai", "", "non-lemma", "", 0, [["operare", ["first-person singular past historic"]]], 110, ""],
+  ["operai", "", "non-lemma", "", 0, [["operaio", ["plural"]]], 111, ""]
 ]
