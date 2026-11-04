@@ -279,5 +279,8 @@
   ["blogues", "", "non-lemma", "", 0, [["blogue", ["plural"]]], 278, ""],
   ["posto", "", "n masc", "", 0, ["post, station, job"], 279, ""],
   ["postos", "", "non-lemma", "", 0, [["posto", ["plural"]]], 280, ""],
-  ["postos", "", "non-lemma", "", 0, [["pôr", ["plural masculine past participle"]]], 281, ""]
+  ["postos", "", "non-lemma", "", 0, [["pôr", ["plural masculine past participle"]]], 281, ""],
+  ["ótimo", "", "adj", "", 0, ["excellent"], 282, ""],
+  ["bom", "", "adj", "", 0, ["good"], 283, ""],
+  ["ótima", "", "non-lemma", "", 0, [["ótimo", ["singular feminine"]]], 284, ""]
 ]

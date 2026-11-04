@@ -126,6 +126,8 @@ MUTATIONS = [
     ('preferred: tu subjunctives comas, metas removed', 'build-own.mjs', "['subjunctive-tu', 'comas', 'comer'], ['subjunctive-tu', 'metas', 'meter'], ", ""),
     ('preferred: dados removed', 'build-own.mjs', "['plural', 'dados', 'dado'], ", ""),
     ('preferred: postos removed', 'build-own.mjs', "['plural', 'postos', 'posto'], ", ""),
+    ('preferred: ótimo and péssimo removed', 'build-own.mjs', "    ['feminine', 'ótima', 'ótimo'], ['feminine', 'ótimas', 'ótimo'], ['plural', 'ótimos', 'ótimo'],\n", ""),
+    ('exclusion server (imperfect, preterite, participle) removed', 'build-own.mjs', "/^(i|ia|ias|íamos|íeis|iam|ido|ida|idos|idas)$/u.test(rule.inflected), ['serv!']]", "/^(i|ia|ias|íamos|íeis|iam|ido|ida|idos|idas)$/u.test(rule.inflected), ['zzqq!']]"),
     ('preferred: crias removed', 'build-own.mjs', "['plural', 'crias', 'cria'], ", ""),
     ('preferred: baterias removed', 'build-own.mjs', "['plural', 'baterias', 'bateria'], ", ""),
     ('preferred: segura removed', 'build-own.mjs', "['feminine', 'segura', 'seguro'], ", ""),

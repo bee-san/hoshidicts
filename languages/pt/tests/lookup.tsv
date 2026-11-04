@@ -122,6 +122,8 @@ ranking	1	blogues pessoais	blogue	blogues
 ranking	0	blogues pessoais	blogar	blogues
 ranking	1	postos de saúde	posto	postos
 ranking	0	postos de saúde	pôr	postos
+ranking	1	ótima ideia	ótimo	ótima
+ranking	0	ótima ideia	bom	ótima
 pronouns	1	chama-se João	chamar	chama-se
 pronouns	0	chama-se João	chama	chama
 pronouns	1	deixa-me ir	deixar	deixa-me
@@ -155,6 +157,8 @@ pronouns	1	Compre-me pão	comprar	Compre-me
 pronouns	1	Fale-me de ti	falar	Fale-me
 pronouns	1	deixa-o ir	deixar	deixa-o
 pronouns	0	deixa-o ir	deixa	deixa-o
+pronouns	1	servia-o bem	servir	servia-o
+pronouns	0	servia-o bem	server	servia-o
 names	1	Bentinho chegou	Bento	Bentinho
 names	1	Marinha de guerra	marinha	Marinha
 names	0	Marinha de guerra	Mara	Marinha

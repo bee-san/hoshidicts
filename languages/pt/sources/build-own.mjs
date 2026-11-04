@@ -829,10 +829,7 @@ const NA = ['n', 'adj'];
 // singular: tinha falado). The irregular participles of the compounds of
 // pôr, fazer, ver and dizer are written whole (impostos as impor), so their
 // plurals are written at the same endings: impostos, apostas, perfeitos,
-// revistas, malditos. At -ares, -eres and -ires the lemma is the same
-// either way (mulheres is mulher as a plural and as a personal infinitive
-// that no verb has), but a lookup keeps the trace of the reading it finds
-// first, so the plural is written there too and the trace says plural.
+// revistas, malditos.
 for (const [inflected, deinflected] of [
     ['ados', 'ado'], ['adas', 'ada'], ['idos', 'ido'], ['idas', 'ida'],      // soldados, piadas, sentidos, bebidas
     ['eias', 'eia'], ['iras', 'ira'],                                         // ideias, mentiras
@@ -843,7 +840,6 @@ for (const [inflected, deinflected] of [
     ['arias', 'aria'],                                                        // secretarias (the -ar conditional's -arias)
     ['ises', 'ise'],                                                          // crises (not cris + es)
     ['ces', 'ce'],                                                            // alces, alicerces (the -çar subjunctive's -ces)
-    ['ares', 'ar'], ['eres', 'er'], ['ires', 'ir'],                           // lugares, mulheres (the personal infinitive's -ares, -eres, -ires)
 ]) {
     nominal('plural', inflected, deinflected, [], NA, {stemMinLength: 1});
 }
@@ -1075,6 +1071,28 @@ for (const [slot, form, lemma] of [
     ['feminine', 'ultima', 'ultimo'],
     // and the reverse: caminha is caminhar, not cama's diminutive.
     ['present-ele', 'caminha', 'caminhar'],
+    // ótimo and péssimo, the superlatives of bom and mau, are adjectives of
+    // their own: their feminine and plural give them, as their rows do,
+    // before the superlative's whole-word rule gives bom and mau.
+    ['feminine', 'ótima', 'ótimo'], ['feminine', 'ótimas', 'ótimo'], ['plural', 'ótimos', 'ótimo'],
+    ['feminine', 'péssima', 'péssimo'], ['feminine', 'péssimas', 'péssimo'], ['plural', 'péssimos', 'péssimo'],
+    // A noun or adjective in -r whose plural the tu personal infinitive's
+    // -ares, -eres, -ires matches first: the lemma is the same, but a lookup
+    // keeps the trace of the reading it finds first, so mulheres was traced
+    // as a personal infinitive (fifth and sixth audits, m11 and m13). The
+    // words of the two lists' 20,000 whose rows give the plural and whose
+    // plural is the noun's in use; verbs only (precisares, falares) keep the
+    // verb's trace.
+    ['plural', 'mulheres', 'mulher'], ['plural', 'dólares', 'dólar'], ['plural', 'lugares', 'lugar'], ['plural', 'milhares', 'milhar'],
+    ['plural', 'poderes', 'poder'], ['plural', 'seres', 'ser'], ['plural', 'militares', 'militar'], ['plural', 'líderes', 'líder'],
+    ['plural', 'familiares', 'familiar'], ['plural', 'cadáveres', 'cadáver'], ['plural', 'andares', 'andar'], ['plural', 'nucleares', 'nuclear'],
+    ['plural', 'deveres', 'dever'], ['plural', 'celulares', 'celular'], ['plural', 'olhares', 'olhar'], ['plural', 'repórteres', 'repórter'],
+    ['plural', 'hambúrgueres', 'hambúrguer'], ['plural', 'prazeres', 'prazer'], ['plural', 'populares', 'popular'],
+    ['plural', 'particulares', 'particular'], ['plural', 'jantares', 'jantar'], ['plural', 'similares', 'similar'], ['plural', 'solares', 'solar'],
+    ['plural', 'colheres', 'colher'], ['plural', 'regulares', 'regular'], ['plural', 'saberes', 'saber'], ['plural', 'escolares', 'escolar'],
+    ['plural', 'pilares', 'pilar'], ['plural', 'polegares', 'polegar'], ['plural', 'talheres', 'talher'],
+    ['plural', 'espectaculares', 'espectacular'], ['plural', 'calcanhares', 'calcanhar'], ['plural', 'alimentares', 'alimentar'],
+    ['plural', 'oculares', 'ocular'], ['plural', 'vulgares', 'vulgar'],
     // A plural read as an irregular verb form (pedir's peças, ver's verdes,
     // cear's ceias), and tais, whose -ais needs a longer stem (mais is not a
     // plural of mal).
@@ -1190,6 +1208,10 @@ const EXACT_STEM_EXCLUSIONS = [
     [(rule) => rule.deinflected === 'gar' && /^gu/u.test(rule.inflected) && rule.stemChange === undefined, ['al']],
     // sida (AIDS) is not a feminine of sido, ser's invariable participle.
     [(rule) => rule.inflected === 'a' && rule.deinflected === 'o' && rule.conditionsIn.includes('adj'), ['sid']],
+    // and server, the English noun, is no -er verb in the forms the -er and
+    // -ir verbs share either: servia, serviam, servido and servia-o are
+    // servir (sixth audit, m15).
+    [(rule) => rule.deinflected === 'er' && rule.stemChange === undefined && /^(i|ia|ias|íamos|íeis|iam|ido|ida|idos|idas)$/u.test(rule.inflected), ['serv!']],
 ];
 for (const t of transforms) {
     t.rules = t.rules.flatMap((rule) => {
