@@ -162,6 +162,11 @@ transform('hamzaOmitted', 'written without hamza', 'Frequent words written witho
 transform('listedPlural', 'listed plural', 'أيدي (hands) is the plural of يد, before the verbs أيد and يدى that the dictionary also names. With a pronoun: أيديهم.', [
     whole('أيدي', 'يد', {out: ['n', 'nd'], into: []}),
 ]);
+transform('listedNoun', 'listed noun', 'Frequent nouns and numbers whose ordinary reading the rules would put after a rarer one: بيتي (my house), not the imperative of بات; سيدي (sir), not سـ + يدى; the tens in ـين (اثنين, عشرين), not verbs.', [
+    ...[['بيتي', 'بيت'], ['سيدى', 'سيد'], ['سيدتى', 'سيدة'], ['اثنين', 'اثنان'], ['عشرين', 'عشرون'], ['ثلاثين', 'ثلاثون'],
+        ['أربعين', 'أربعون'], ['خمسين', 'خمسون'], ['ستين', 'ستون'], ['سبعين', 'سبعون'], ['ثمانين', 'ثمانون'], ['تسعين', 'تسعون'],
+        ['الصور', 'صورة']].map(([i, d]) => whole(i, d)),
+]);
 transform('definiteAdjective', 'الـ + adjective', 'A definite adjective whose spelling is also a rarer noun, read as the adjective: الكبيرة (the big, not "the great sin"), الأولى (the first), الكلاب (the dogs). wiktionary-to-yomitan leaves adjectives untagged, so the rule gives no part of speech.', [
     ...[['الكبيرة', 'كبير'], ['الصغيرة', 'صغير'], ['الأولى', 'أول'], ['السابقة', 'سابق'], ['التالية', 'تال'], ['السوداء', 'أسود'], ['الكلاب', 'كلب']].map(([i, d]) => whole(i, d)),
 ]);

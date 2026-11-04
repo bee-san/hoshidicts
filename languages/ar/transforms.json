@@ -163,6 +163,27 @@
       ]
     },
     {
+      "id": "listedNoun",
+      "name": "listed noun",
+      "description": "Frequent nouns and numbers whose ordinary reading the rules would put after a rarer one: بيتي (my house), not the imperative of بات; سيدي (sir), not سـ + يدى; the tens in ـين (اثنين, عشرين), not verbs.",
+      "source": "own",
+      "rules": [
+        {"type": "wholeWord", "inflected": "بيتي", "deinflected": "بيت", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "سيدى", "deinflected": "سيد", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "سيدتى", "deinflected": "سيدة", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "اثنين", "deinflected": "اثنان", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "عشرين", "deinflected": "عشرون", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "ثلاثين", "deinflected": "ثلاثون", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "أربعين", "deinflected": "أربعون", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "خمسين", "deinflected": "خمسون", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "ستين", "deinflected": "ستون", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "سبعين", "deinflected": "سبعون", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "ثمانين", "deinflected": "ثمانون", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "تسعين", "deinflected": "تسعون", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "الصور", "deinflected": "صورة", "conditionsIn": [], "conditionsOut": []}
+      ]
+    },
+    {
       "id": "definiteAdjective",
       "name": "الـ + adjective",
       "description": "A definite adjective whose spelling is also a rarer noun, read as the adjective: الكبيرة (the big, not \"the great sin\"), الأولى (the first), الكلاب (the dogs). wiktionary-to-yomitan leaves adjectives untagged, so the rule gives no part of speech.",
