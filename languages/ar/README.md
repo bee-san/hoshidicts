@@ -186,7 +186,7 @@ marked `both` when one of its affix pairs (prefix and suffix, inflected and
 deinflected, a cross product expanded) is also a Yomitan rule's, with a
 compatible part of speech.
 
-- `sources/yomitan-provenance.tsv` lists each of Yomitan's 668 JSON rules
+- `sources/yomitan-provenance.tsv`, which `build-final.mjs` writes (not committed, to keep `sources/` under 1 MB), lists each of Yomitan's 668 JSON rules
   with the own transforms that make one of its deinflections in one step,
   applied to its affixes on ten common stems (281 rules have one), and the
   share of its outputs the own rules reach in any number of steps. For 666

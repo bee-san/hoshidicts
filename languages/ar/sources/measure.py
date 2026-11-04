@@ -82,9 +82,15 @@ def load_homographs(path):
     return out
 
 
-def is_right(first, right):
+DEFINITE = re.compile('^(?:[وف]?[بكل]?ال|[وف]?لل)')
+
+
+def is_right(first, right, word=None):
     """Whether a first card (its expression and reading) is one of the right
     lemmas, which are expressions or expression=reading."""
+    # No verb follows الـ: a definite word shown as a verb entry is wrong.
+    if word is not None and DEFINITE.match(word) and first.get('rules', '') == 'v':
+        return False
     return first['expression'] in right or first['expression'] + '=' + first.get('reading', '') in right
 
 
@@ -144,7 +150,7 @@ def frequent(args):
     measured = [(w, c) for w, c in words if {t.split('=')[0] for t in own_lemmas(w, targets, lemma)} & reached_by_rule.get(w, set()) - {w}]
     results = lookup([w for w, _ in measured], imported, languages)
     variants = variants_of([w for w, _ in measured], languages)
-    wrong = []
+    wrong, ambiguous_words = [], []
     counts = collections.Counter()
     for (w, c), res in zip(measured, results):
         first = res['results'][0] if res['results'] else None
@@ -152,8 +158,9 @@ def frequent(args):
         kind = kind_of(right, kind)
         counts[kind] += 1
         if kind == 'ambiguous':
+            ambiguous_words.append((w, c, first))
             continue
-        if first is None or not is_right(first, right):
+        if first is None or not is_right(first, right, w):
             counts[kind + ' wrong'] += 1
             wrong.append((w, c, first, right))
     measured_tokens = sum(c for _, c in measured)
@@ -173,6 +180,15 @@ def frequent(args):
         print('wrong: %d words (%.2f%% of tokens) made by the rules, %d (%.2f%%) by the dictionary' % (
             len(r), 100 * sum(c for _, c, _, _ in r) / all_tokens, len(wrong) - len(r),
             100 * (wrong_tokens - sum(c for _, c, _, _ in r)) / all_tokens))
+    if '--sample-out' in args:
+        import hashlib
+        seed = int(option(args, '--seed', '1'))
+        n = int(option(args, '--sample', '50'))
+        pick = sorted(ambiguous_words, key=lambda x: hashlib.sha256(('%d:%s' % (seed, x[0])).encode()).hexdigest())[:n]
+        with open(option(args, '--sample-out', ''), 'w', encoding='utf-8') as out:
+            out.write('# %d of the %d ambiguous frequent words, drawn by a hash of seed %d and the word (measure.py frequent --sample-out).\n# word\ttokens\tfirst card\thand\n' % (len(pick), len(ambiguous_words), seed))
+            for w, c, first in pick:
+                out.write('%s\t%d\t%s\t\n' % (w, c, '-' if first is None else first['expression'] + '=' + first.get('reading', '')))
     for w, c, first, right in sorted(wrong, key=lambda x: -x[1])[:int(option(args, "--show", "80"))]:
         got = '-' if first is None else '%s {%s}' % (first['expression'], '>'.join(reversed(first['trace'])))
         tag = ' [%s]' % made[w] if made else ''
@@ -321,7 +337,7 @@ def causes(items, imported, languages):
             steps = [t for t in first['trace'] if t not in CLITIC_IDS]
             out.append('rules' if steps and all(step in ids for step in steps) else 'dictionary')
         else:
-            out.append('rules' if r['results'] and is_right(r['results'][0], right) else 'dictionary')
+            out.append('rules' if r['results'] and is_right(r['results'][0], right, strip(r['results'][0]['matched'])) else 'dictionary')
     return out
 
 
@@ -359,7 +375,7 @@ def text_measure(args):
             ambiguous.append((word, hover, first, None, index))
             continue
         counts[kind] += 1
-        ok = is_right(first, right)
+        ok = is_right(first, right, word)
         judged.append((word, hover, first, ok, index))
         judged_right.append((right, kind))
         if not ok:
@@ -390,13 +406,14 @@ def text_measure(args):
             if made[(word, got, trace)] == 'rules':
                 print('  %4d  %s -> %s {%s}' % (n, word, got, trace))
     if '--sample-out' in args:
-        # --sample-sizes j,a,u: how many judged, ambiguous and unjudged positions.
-        sizes = [int(x) for x in option(args, '--sample-sizes', ','.join([str(sample_size)] * 3)).split(',')]
+        # --sample-sizes n,j,a,u: how many positions of all those with a result
+        # (uniform), and of the judged, ambiguous and unjudged ones.
+        sizes = [int(x) for x in option(args, '--sample-sizes', ','.join([str(sample_size)] * 4)).split(',')]
         # Each position is drawn by a hash of the seed and its index in the
         # text, so a change elsewhere does not change which positions are drawn.
         import hashlib
         key = lambda item: hashlib.sha256(('%d:%d' % (seed, item[4])).encode()).hexdigest()  # noqa: E731
-        groups = (('judged', judged), ('ambiguous', ambiguous), ('unjudged', unjudged))
+        groups = (('uniform', judged + ambiguous + unjudged), ('judged', judged), ('ambiguous', ambiguous), ('unjudged', unjudged))
         with open(option(args, '--sample-out', ''), 'w', encoding='utf-8') as out:
             out.write('# %s: %s positions, drawn by a hash of seed %d and the position (measure.py text --sample-out).\n' % (
                 text_path.split('/')[-1], ', '.join('%d %s' % (min(n, len(g)), label) for n, (label, g) in zip(sizes, groups)), seed))
@@ -540,7 +557,7 @@ def changes(args):
         right, kind = judge(word, targets, lemma, variants, pos_, homographs)
         if right is None or first is None or strip(first['matched']) != word or kind_of(right, kind) == 'ambiguous':
             return '-'
-        return 'right' if is_right(first, right) else 'wrong'
+        return 'right' if is_right(first, right, word) else 'wrong'
     entries = [line.split() for line in open(freq_path, encoding='utf-8') if line.strip()][:10000]
     words = [(w, int(c)) for w, c in entries if LETTERS.match(w)]
     reached = deinflections([w for w, _ in words if targets.get(w)], languages)
