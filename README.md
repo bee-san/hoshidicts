@@ -1,5 +1,7 @@
 # hoshidicts
 
+[![Discord](https://img.shields.io/discord/754001738184392704?logo=discord&label=Discord)](https://discord.skerritt.blog)
+
 This library implements a dictionary backend that works similarly to [Yomitan](https://github.com/yomidevs/yomitan). This was made for [Hoshi Reader](https://github.com/Manhhao/Hoshi-Reader). Each language is a data-only **language pack** in `languages/<code>/` (descriptor, deinflection rules, tests); Japanese is built in, and other packs load at run time. [`docs/languages.md`](docs/languages.md) is the contract for packs and the language API.
 
 A MIT version of the library is available on the [main-mit](https://github.com/Manhhao/hoshidicts/tree/main-mit) branch.
