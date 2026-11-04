@@ -1,0 +1,31 @@
+[
+  {
+    "id": "decapitalize",
+    "name": "Decapitalize text",
+    "variants": [
+      [{"case": "lower"}]
+    ]
+  },
+  {
+    "id": "capitalizeFirstLetter",
+    "name": "Capitalize first letter",
+    "variants": [
+      [{"case": "upperFirst"}]
+    ]
+  },
+  {
+    "id": "removeSerboCroatianAccentMarks",
+    "name": "Remove vowel accents",
+    "variants": [
+      [{"normalize": "NFD"}, {"pattern": "([aeiourAEIOUR])[\\u0300-\\u036F]", "replace": "$1", "global": true}]
+    ]
+  },
+  {
+    "id": "addSerboCroatianDiacritics",
+    "name": "Add diacritics",
+    "keepInput": false,
+    "variants": [
+      [{"alternatives": {"c": ["č", "ć"], "C": ["Č", "Ć"], "s": ["š"], "S": ["Š"], "z": ["ž"], "Z": ["Ž"], "dj": ["đ"], "dJ": ["đ"], "Dj": ["Đ"], "DJ": ["Đ"]}, "limit": 4096}]
+    ]
+  }
+]

@@ -1,0 +1,51 @@
+# Hand-written for this pack (no third-party data): processor variants (category, valid, input, variant).
+# category	valid	input	variant
+cyrillic	1	кућа	kuća
+cyrillic	1	љубав	ljubav
+cyrillic	1	њега	njega
+cyrillic	1	џеп	džep
+cyrillic	1	Љубав	Ljubav
+cyrillic	1	ЂАК	ĐAK
+cyrillic	1	Београд	Beograd
+cyrillic	1	ћуп	ćup
+cyrillic	0	ћуп	cup
+cyrillic	0	жена	zena
+cyrillic	0	Жена	Zena
+cyrillic	0	чај	caj
+cyrillic	0	Чај	Caj
+cyrillic	0	шума	suma
+cyrillic	0	Шума	Suma
+cyrillic	0	ђак	djak
+cyrillic	0	Ђак	Djak
+cyrillic	1	Њемачка	Njemačka
+cyrillic	1	кућа	кућа
+cyrillic	0	kuća	кућа
+cyrillic	1	зе̏бра	zebra
+cyrillic	1	сѐло	selo
+nfkc	1	ﬁlm	film
+nfkc	1	kuća	kuća
+case	1	KUĆA	kuća
+case	1	kuća	Kuća
+case	1	ČOVJEK	čovjek
+case	1	DŽEP	džep
+accent marks	1	kȕća	kuća
+accent marks	1	gràd	grad
+accent marks	1	vȉdio	vidio
+accent marks	1	ȑđa	rđa
+accent marks	1	pȁstūše	pastuše
+accent marks	0	kȕća	kuca
+diacritics	1	kuca	kuća
+diacritics	1	kuca	kuča
+diacritics	1	kuca	kuca
+diacritics	1	sesir	šešir
+diacritics	1	zena	žena
+diacritics	1	djak	đak
+diacritics	1	Djak	Đak
+diacritics	1	DJAK	ĐAK
+diacritics	1	cvijece	cvijeće
+diacritics	0	djak	đjak
+diacritics	0	dan	đan
+diacritics	0	tata	tača
+diacritics	0	kuća	kuca
+cyrillic	1	Џеп	Džep
+cyrillic	1	ЏЕП	DžEP

@@ -1,0 +1,10 @@
+{
+  "title": "sh pack test dictionary",
+  "format": 3,
+  "revision": "1",
+  "sequenced": true,
+  "author": "hoshidicts",
+  "description": "A tiny Serbo-Croatian dictionary written for the sh pack's lookup tests (no third-party data). Like wty-sh-en, it leaves the rules column empty. term_bank_2.json, written by sources/prefer-tests.py, has the two readings of each PREFER word of sources/build-own.mjs, with the gloss (test entry).",
+  "sourceLanguage": "sh",
+  "targetLanguage": "en"
+}
