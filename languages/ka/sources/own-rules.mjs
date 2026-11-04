@@ -309,10 +309,10 @@ const PRONOUN_FORMS = {
     // wty-ka-en's rows for these forms name ის and იგი but not ისინი.
     'იგი': ['იგინი'],
     'მათი': ['იმათი'],
-    'ის': ['მათით', 'იმათით', 'იმათად', 'მას', 'მან', 'მის', 'მით', 'მისთვის', 'მასზე', 'მასთან', 'მისგან', 'მასში', 'მისკენ', 'მასავით', 'იმას', 'იმან', 'იმის', 'იმისი', 'იმისა', 'იმით', 'იმად', 'იმ', 'იმისთვის', 'იმაზე', 'იმასთან', 'იმისგან', 'იმაში', 'იმისკენ', 'იმასავით', 'იმათ'],
+    'ის': ['მათით', 'იმათით', 'იმათად', 'იმასა', 'მას', 'მან', 'მის', 'მით', 'მისთვის', 'მასზე', 'მასთან', 'მისგან', 'მასში', 'მისკენ', 'მასავით', 'იმას', 'იმან', 'იმის', 'იმისი', 'იმისა', 'იმით', 'იმად', 'იმ', 'იმისთვის', 'იმაზე', 'იმასთან', 'იმისგან', 'იმაში', 'იმისკენ', 'იმასავით', 'იმათ'],
     'ისინი': ['მათ', 'მათთვის', 'მათზე', 'მათთან', 'მათგან', 'მათში', 'მათკენ', 'მათსავით'],
-    'ეს': ['ამას', 'ამან', 'ამის', 'ამისი', 'ამისა', 'ამით', 'ამად', 'ამ', 'ამისთვის', 'ამაზე', 'ამასთან', 'ამისგან', 'ამაში', 'ამისკენ', 'ამასავით', 'ამათ', 'ესენი'],
-    'ეგ': ['მაგას', 'მაგან', 'მაგის', 'მაგისი', 'მაგით', 'მაგ', 'მაგისთვის', 'მაგაზე', 'მაგასთან', 'მაგაში', 'მაგათ', 'ეგენი'],
+    'ეს': ['ამასა', 'ამას', 'ამან', 'ამის', 'ამისი', 'ამისა', 'ამით', 'ამად', 'ამ', 'ამისთვის', 'ამაზე', 'ამასთან', 'ამისგან', 'ამაში', 'ამისკენ', 'ამასავით', 'ამათ', 'ესენი'],
+    'ეგ': ['მაგასა', 'მაგას', 'მაგან', 'მაგის', 'მაგისი', 'მაგით', 'მაგ', 'მაგისთვის', 'მაგაზე', 'მაგასთან', 'მაგაში', 'მაგათ', 'ეგენი'],
     'არავინ': ['არავის'],
     'ვინ': ['ვის', 'ვისთვის', 'ვისზე', 'ვისთან', 'ვისგან', 'ვისკენ'],
     'რა': ['რას', 'რამ', 'რის', 'რით', 'რად', 'რისთვის', 'რაზე', 'რასთან', 'რისგან', 'რაში', 'რისკენ'],
@@ -346,6 +346,33 @@ transform('word', 'word form', 'A frequent form whose lemma no regular rule reac
         ['თავის', 'თავისი']]
         .map(([w, l]) => wholeWord(w, l, [], NOM)),
     ...[['დგომა', 'დგას'], ['დგომას', 'დგას'], ['ჭამ', 'ჭამს']].map(([w, l]) => wholeWord(w, l, [], ['v'])),
+    // აღწერით "by the census": its first row names the adjective აღწერითი
+    // "descriptive"; a whole-word rule wins that tie (docs/languages.md 9.6).
+    // გაუგია "has heard", მოუგია "has won": the rules reach აგებს "to lose" first.
+    wholeWord('აღწერით', 'აღწერს', [], ['v']),
+    ...['გაუგია', 'მოუგია'].map((w) => wholeWord(w, 'იგებს', [], ['v'])),
+    // Frequent words that are not headwords and that the rules read as
+    // another word: the attributives სამხრეთ "south" and ჩრდილო "north"
+    // (სამხრეთ ოსეთი, not სამხრე "badge"; ჩრდილო კავკასია, not ჩრდილი
+    // "shadow"), and the suffix and postposition after a numeral and a
+    // hyphen (80-იანი, 800-მდე), which a hover reads from the suffix.
+    ...[['სამხრეთ', 'სამხრეთი'], ['ჩრდილო', 'ჩრდილოეთი']].map(([w, l]) => wholeWord(w, l, [], NOM)),
+    ...[['იანი', '-იანი'], ['მდე', '-მდე']].map(([w, l]) => wholeWord(w, l, [], [])),
+    // Nouns in -ა whose case forms are also those of a rarer noun in -ი
+    // (ფენა "layer", ფენი "hairdryer"; ბაზა "base", ბაზი "bumblebee"; ფილა
+    // "slab", ფილი "Phil"): the rows name both, and the rules reach the -ი
+    // noun first. The forms in the 10,000 most frequent words with at least
+    // 20 tokens are whole words of the -ა noun.
+    ...[['ფენ', 'ფენა', ['ები', 'ების', 'ებში', 'ით', 'ებს', 'ად', 'იდან', 'ებად', 'ისგან', 'ებიდან', 'ებით', 'ებზე', 'ისთვის', 'ისა']],
+        ['ბაზ', 'ბაზა', ['ები', 'ების', 'ად', 'იდან', 'ებზე', 'ებს', 'ებში', 'ით', 'ებთან', 'ისა']],
+        ['ფილ', 'ფილა', ['ების', 'ები', 'ის', 'ით', 'ებს', 'ებზე']],
+        ['კერ', 'კერა', ['ები', 'ად', 'ების', 'ებში', 'ებს', 'იდან']],
+        ['ფლორ', 'ფლორა', ['ის', 'ისა', 'ითა', 'ით']],
+        ['დინებ', 'დინება', ['ები', 'ების', 'ებს']],
+        ['დინამიკ', 'დინამიკა', ['ის', 'ით', 'ისა']],
+        ['სატირ', 'სატირა', ['ის', 'ისა']],
+        ['ჭ', 'ჭა', ['ები']], ['ჭალ', 'ჭალა', ['ები']], ['მალ', 'მალა', ['ები', 'ების']], ['ტონ', 'ტონა', ['ამდე']]]
+        .flatMap(([stem, l, endings]) => endings.map((e) => wholeWord(stem + e, l, [], NOM))),
 ]);
 
 // --- Verbs --------------------------------------------------------------------
@@ -374,7 +401,9 @@ transform('pres-2', '2nd person', 'Second person singular of the present or futu
     suffix('ი', 'ა', VIN, VOUT, {stemMinLength: 2, stemEndsWith: '[ბვ]'}),
 ]);
 transform('pres-1', 'person prefix, bare stem', 'A first-person subject (ვ-) or a first- or second-person object (მ-, გ-, გვ-) on the bare stem of a verb whose stem ends in its root, made third person (ვწერ → წერს, დავწერ → დაწერს, მიჭერ → იჭერს); and the second person of such a verb with the version vowel ი- (იჭერ → იჭერს).', [
-    circumfix(PV.flatMap((p) => ['ვ', 'მ', 'გ', 'გვ'].map((m) => [p + m, p])), [['', 'ს']], [], VOUT, {stemMinLength: 2, stemEndsWith: CONS}),
+    circumfix(PV.flatMap((p) => ['ვ', 'მ', 'გ', 'გვ'].filter((m) => p !== '' || m !== 'გ').map((m) => [p + m, p])), [['', 'ს']], [], VOUT, {stemMinLength: 2, stemEndsWith: CONS}),
+    // As in obj-2, a bare გ- before ა- is the preverb გა- (გამოსულ is not ამოსულს).
+    circumfix([['გ', '']], [['', 'ს']], [], VOUT, {stemMinLength: 2, stemEndsWith: CONS, stemNotStartsWith: '[ა]'}),
     circumfix(PV.flatMap((p) => ['ვ', 'მ', 'გ', 'გვ'].map((m) => [p + m, p + 'ს'])), [['', 'ს']], [], VOUT, {stemMinLength: 2, stemEndsWith: CONS, stemStartsWith: '[დთტძცწჭჩჯზ]'}),
     circumfix(PV.flatMap((p) => ['ვ', 'მ', 'გ', 'გვ'].map((m) => [p + m, p + 'ჰ'])), [['', 'ს']], [], VOUT, {stemMinLength: 2, stemEndsWith: CONS, stemStartsWith: '[გკქყპფ]'}),
     circumfix(PV.map((p) => [p + 'ი', p + 'ი']), [['', 'ს']], [], VOUT, {stemMinLength: 2, stemEndsWith: '[რლნ]'}),
@@ -470,20 +499,25 @@ transform('inv-person', 'perfect, 1st/2nd person', 'A first- or second-person su
     circumfix(PV.flatMap((p) => ['მი', 'გი', 'გვი', 'ვუ'].map((m) => [p + m, p + 'უ'])), [['ია', 'ია'], ['ავს', 'ავს'], ['ამს', 'ამს']], VPERF, VPERF, {stemMinLength: 1}),
     circumfix(PV.flatMap((p) => ['მე', 'გე', 'გვე'].map((m) => [p + m, p + 'ე'])), [['ა', 'ა'], ['ო', 'ო'], ['ს', 'ს']], VPERF, VPERF, {stemMinLength: 1}),
 ]);
-transform('perf', 'perfect', 'Perfect (evidential past), third person singular -უ-...-ია, and -უ-...-ავს, -ამს of -ავ and -ამ verbs, made into the future (დაუწერია → დაწერს, გაუკეთებია → გააკეთებს, უთამაშია → ითამაშებს, დაუხატავს → დახატავს).', [
+transform('perf', 'perfect', 'Perfect (evidential past), third person singular -უ-...-ია, and -უ-...-ავს, -ამს of -ავ and -ამ verbs, made into the future (დაუწერია → დაწერს, გაუკეთებია → გააკეთებს, უთამაშია → ითამაშებს, მოუტანია → მოიტანს, დაუხატავს → დახატავს).', [
     circumfix(PV.map((p) => [p + 'უ', p]), ['ს', 'ავს', 'ამს', 'ის', 'ებს'].map((t) => ['ია', t]), VPERF, VOUT, {stemEndsWith: CONS}),
-    circumfix(PREVERBS.map((p) => [p + 'უ', p]), [['ავს', 'ავს'], ['ამს', 'ამს']], VPERF, VOUT, {stemMinLength: 2, stemEndsWith: CONS}),
+    // Without a preverb too (უნახავს → ნახავს); a present with the version vowel უ- (უხატავს) gives the same verb.
+    circumfix(PV.map((p) => [p + 'უ', p]), [['ავს', 'ავს'], ['ამს', 'ამს']], VPERF, VOUT, {stemMinLength: 2, stemEndsWith: CONS}),
     // A verb whose future has the version vowel ი- (შეინახავს) has it as უ- in the perfect (შეუნახავს).
     circumfix(PREVERBS.map((p) => [p + 'უ', p + 'ი']), [['ავს', 'ავს'], ['ამს', 'ამს']], VPERF, VOUT, {stemMinLength: 2, stemEndsWith: CONS}),
     circumfix(PV.map((p) => [p + 'უ', p + 'ა']), [['ია', 'ს'], ['ია', 'ობს'], ['ია', 'ებს']], VPERF, VOUT, {stemEndsWith: CONS}),
     circumfix(PV.map((p) => [p + 'უ', p + 'უ']), [['ია', 'ს'], ['ია', 'ებს'], ['ია', 'ავს']], VPERF, VOUT, {stemEndsWith: CONS}),
     circumfix(PV.map((p) => [p + 'უ', p + 'ი']), [['ია', 'ებს']], VPERF, VOUT, {stemEndsWith: CONS}),
+    // Root verbs with ი- in the future (მოუტანია → მოიტანს); an -ებ- stem is the -ებს verb of the rule above.
+    circumfix(PV.map((p) => [p + 'უ', p + 'ი']), [['ია', 'ს']], VPERF, VOUT, {stemEndsWith: CONS, stemNotEndsWith: '[ბ]'}),
 ]);
 transform('pluperf', 'pluperfect', 'Pluperfect, third person singular -ე-...-ა (-ინა, -ო), made into the future (დაეწერა → დაწერს, გაეკეთებინა → გააკეთებს, გაეთბო → გაათბობს, ეთამაშა → ითამაშებს).', [
+    // The medial future with ი- first: ემუშავათ → იმუშავებს → მუშაობს, not
+    // მუშავს → უშავს; დაელაპარაკა → ილაპარაკებს, not the noun ლაპარაკი.
+    circumfix(PV.map((p) => [p + 'ე', p + 'ი']), [['ა', 'ებს']], VPERF, VOUT, {stemEndsWith: CONS}),
     circumfix(PV.map((p) => [p + 'ე', p]), [...['ს', 'ავს', 'ამს', 'ის'].map((t) => ['ა', t]), ['ო', 'ებს'], ['ინა', 'ს']], VPERF, VOUT, {stemEndsWith: CONS}),
     circumfix(PV.map((p) => [p + 'ე', p + 'ა']), [['ინა', 'ს'], ['ო', 'ობს']], VPERF, VOUT, {stemEndsWith: CONS}),
     circumfix(PV.map((p) => [p + 'ე', p + 'უ']), [['ა', 'ებს'], ['ა', 'ს']], VPERF, VOUT, {stemEndsWith: CONS}),
-    circumfix(PV.map((p) => [p + 'ე', p + 'ი']), [['ა', 'ებს']], VPERF, VOUT, {stemEndsWith: CONS}),
 ]);
 transform('perf-subj', 'perfect subjunctive', 'Perfect subjunctive, third person singular -ე-...-ოს (-ინოს, -ას), made into the future (დაეწეროს → დაწერს, გაეკეთებინოს → გააკეთებს).', [
     circumfix(PV.map((p) => [p + 'ე', p]), [...['ს', 'ავს', 'ამს', 'ებს'].map((t) => ['ოს', t]), ['ას', 'ის'], ['ინოს', 'ს']], VPERF, VOUT, {stemEndsWith: CONS}),

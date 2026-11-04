@@ -12,7 +12,7 @@
     "mtavruli": "[\\u1C90-\\u1CBA\\u1CBD-\\u1CBF]",
     "khutsuri": "[\\u10A0-\\u10C5\\u10C7\\u10CD\\u2D00-\\u2D25\\u2D27\\u2D2D]",
     "letter": "[{mkhedruli}{mtavruli}{khutsuri}]",
-    "word": "[{letter}\\p{M}\\p{Nd}]"
+    "word": "[{letter}\\u0300-\\u036F0-9]"
   },
   "text": {
     "pattern": "{letter}",

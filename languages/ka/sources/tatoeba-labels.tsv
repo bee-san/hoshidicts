@@ -1,0 +1,22 @@
+# Labels for Tatoeba only (measure-lookups.mjs --labels multi-lemma-labels.tsv --labels tatoeba-labels.tsv): Tatoeba's
+# sentences use the name Tom (ტომი), which wty-ka-en lacks; its ტომი is "tribe; volume" and ტო an interjection. Written for the pack.
+# word<TAB>first result<TAB>label<TAB>note
+ტომი	ტომი	W	the name Tom
+ტომს	ტომი	W	the name Tom
+ტომმა	ტომი	W	the name Tom
+ტომის	ტომი	W	the name Tom
+ტომთან	ტომი	W	the name Tom
+ტომ	ტო	W	the name Tom
+ტომზე	ტომი	W	the name Tom
+ტომიც	ტომი	W	the name Tom
+ტომა	ტომი	W	the name Tom
+ტომისაა	ტომი	W	the name Tom
+ტომას	ტომი	W	the name Tom
+ტომისთვის	ტომი	W	the name Tom
+ტომისგან	ტომი	W	the name Tom
+ტომით	ტომი	W	the name Tom
+ტომია	ტომი	W	the name Tom
+ტომში	ტომი	W	the name Tom
+ტომსაც	ტომი	W	the name Tom
+ტომსა	ტომი	W	the name Tom
+ტომო	ტომი	W	the name Tom
