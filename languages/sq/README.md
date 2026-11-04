@@ -284,7 +284,7 @@ deinflection marked `both`.
 ## Measurements
 
 Every number below is reproduced by `sources/measure-all.sh` (it lists the
-commands) at hoshidicts 84528cb (GCC 14.3, Release), with wty-sq-en as
+commands) at hoshidicts 44abbec (GCC 14.3, Release), with wty-sq-en as
 published, imported by `hoshidicts-cli import`, form-of rows included, and
 `lookup.formOf` `follow`. The sample is the 1,000 UniMorph rows of
 `corpus.tsv` and `gaps.tsv` together. The pack's one optional feature is the
@@ -298,21 +298,21 @@ file is measured with every option on and with the defaults.
    hand-written files are measured with their reasons replaced by `*`
    (any trace), since Yomitan's rules have other transform ids; as written,
    the own and final rules pass every row of `defaults.tsv` with the
-   defaults (386 / 386 negatives) and 381 / 386 with every option on.
+   defaults (388 / 388 negatives) and 383 / 388 with every option on.
 
    | Rule set | Sample recall | False candidates | First rank | defaults.tsv positives | defaults.tsv negatives | cases.tsv | yomitan.tsv |
    | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-   | Own (`sources/own.json`) | 99.4% (994) / 99.4% | 0.275 / 0.263 | 98.0% / 98.0% | 405 / 405 of 405 | 379 / 384 of 386 | 9 / 0 of 9 | 98 / 98 |
-   | Yomitan (`sources/yomitan.json`) | 37.0% (370) / 35.9% | 0.132 / 0.121 | 93.2% / 93.2% | 64 / 62 | 199 / 205 | 3 / 0 | 98 / 98 |
-   | Union (merge tool) | 99.6% (996) / 99.6% | 0.284 / 0.270 | 98.1% / 98.1% | 405 / 405 | 199 / 204 | 9 / 0 | 98 / 98 |
-   | Final (`transforms.json`) | 99.4% (994) / 99.4% | 0.275 / 0.263 | 98.0% / 98.0% | 405 / 405 | 379 / 384 | 9 / 0 | 98 / 98 |
+   | Own (`sources/own.json`) | 99.4% (994) / 99.4% | 0.275 / 0.263 | 98.0% / 98.0% | 407 / 407 of 407 | 381 / 386 of 388 | 9 / 0 of 9 | 98 / 98 |
+   | Yomitan (`sources/yomitan.json`) | 37.0% (370) / 35.9% | 0.132 / 0.121 | 93.2% / 93.2% | 64 / 62 | 201 / 207 | 3 / 0 | 98 / 98 |
+   | Union (merge tool) | 99.6% (996) / 99.6% | 0.284 / 0.270 | 98.1% / 98.1% | 407 / 407 | 201 / 206 | 9 / 0 | 98 / 98 |
+   | Final (`transforms.json`) | 99.4% (994) / 99.4% | 0.275 / 0.263 | 98.0% / 98.0% | 407 / 407 | 381 / 386 | 9 / 0 | 98 / 98 |
 
    - The final set is the own set with provenance marks, so its numbers are
      the own set's.
    - The union reaches two more sample rows than the final set, `ikinim`
      and `ikiët`: UniMorph errors that give iki a vowel stem, which
      Yomitan's `nim` → `` and `ët` → `` reach because they have no stem
-     class. It breaks 180 of the 386 negatives.
+     class. It breaks 180 of the 388 negatives.
    - `cases.tsv` holds text without ë and ç, which only the optional
      processor reads, so with the defaults no rule set reaches it.
    - With every option on, the processor writes ë for e, so 5 negatives
@@ -328,7 +328,7 @@ file is measured with every option on and with the defaults.
      at d7e82b0 predate it and reject the key). With `pass`, every test file
      ranks the same lemmas first and has more false candidates: the sample
      0.300 against 0.275 (0.285 / 0.263 with the defaults), cases.tsv 0.556
-     / 0.222, defaults.tsv 0.810 / 0.686, yomitan.tsv 0.102 / 0.092;
+     / 0.222, defaults.tsv 0.806 / 0.683, yomitan.tsv 0.102 / 0.092;
      recall and negatives are the same.
 2. **Frequent forms** (`sources/measure.py frequent`): of the 10,000 most
    frequent words of the subtitle list, the rules reach the lemma that the
@@ -491,23 +491,23 @@ file is measured with every option on and with the defaults.
    and 18 more feminine nouns, and the masculine `ajra` → `ajër`).
 6. **Lookup speed** (`benchmark-lookup --languages languages --language sq`,
    wty-sq-en mapped): the 70 texts of `sources/benchmark-words.txt` in 6
-   passes, the first dropped, three runs at machine load about 38. The
+   passes, the first dropped, three runs at machine load about 34. The
    budget is 1 ms p50.
 
    | Rule set | p50 | p95 |
    | --- | ---: | ---: |
-   | Final | 17.5-17.7 µs | 30.1-31.8 µs |
-   | Union | 22.5-22.8 µs | 37.6-38.0 µs |
-   | Yomitan's rules | 14.1-14.3 µs | 22.6-22.9 µs |
+   | Final | 17.5-17.8 µs | 30.6-31.6 µs |
+   | Union | 22.7-23.7 µs | 40.1-42.7 µs |
+   | Yomitan's rules | 14.0-14.2 µs | 21.8-22.4 µs |
 7. **WebAssembly** (`sources/wasm-bench.mjs`, Hachidori feat/multi-language
    d7e82b0 prebuilt engines, Node 22, the same texts, dictionary paged).
    The budgets are 50 ms and 20 MB, and the pack has no `pattern` rule.
-   - `hdw_language_load` of this pack: median 9.2 ms single-thread and 9.6
-     ms threaded, over 10 fresh engines (8.4-15.0 ms).
-   - Live heap: +969,960 bytes after the load single-thread, +969,456
+   - `hdw_language_load` of this pack: median 9.2 ms single-thread and 9.7
+     ms threaded, over 10 fresh engines (8.2-16.2 ms).
+   - Live heap: +969,200 bytes after the load single-thread, +969,824
      threaded (mallinfo, `hdw_memory_stats`).
-   - `hdw_lookup`: p50 0.054 ms and p95 0.149 ms single-thread; p50 0.063
-     ms and p95 0.156 ms threaded.
+   - `hdw_lookup`: p50 0.054 ms and p95 0.141 ms single-thread; p50 0.066
+     ms and p95 0.171 ms threaded.
 8. **Hachidori in Chrome** (feat/multi-language d7e82b0 with this branch in
    `third_party/hoshidicts`, `test/chrome-language-pack.mjs`, Chrome 152,
    wty-sq-en): 71 / 71 checks pass. Settings adds Albanian beside Japanese
@@ -531,8 +531,8 @@ file is measured with every option on and with the defaults.
    Yomitan's on 1,969 inputs each (the inputs include the test files'
    strings, so these counts move with the tests).
 10. **Conformance** (`language-conformance-test`): corpus.tsv 994 / 994,
-    defaults.tsv 791 / 791 with the defaults, cases.tsv 9 / 9,
-    yomitan.tsv 98 / 98, text.tsv 25 / 25, lookup.tsv 113 / 113; gaps.tsv
+    defaults.tsv 795 / 795 with the defaults, cases.tsv 9 / 9,
+    yomitan.tsv 98 / 98, text.tsv 25 / 25, lookup.tsv 114 / 114; gaps.tsv
     0 / 6 (reported); `tests/` and `sources/` hold under 1 MB.
 11. **Mutations** (`sources/mutations.py`): deleting any one stem
     constraint of any transform (239 mutations), or making the one-syllable
@@ -574,7 +574,15 @@ file is measured with every option on and with the defaults.
     them, a word from the audit's examples that the mutated rule reads and
     the pack does not (`iu` ↛ `i`, `hyjni` ↛ `hyj`, `lejen` ↛ `lej`, `u ke`
     ↛ `kehem`); the 41st, `ve` after a or ë in `adj-def-pl`, now has a
-    consonant-stem twin beside it. A `lookup.tsv` row pins
+    consonant-stem twin beside it. Of the same audit's mutations of the
+    rules added after the fourth (`mutate-e.py`), those that still pass
+    change no deinflection a row can see: another rule makes the same one
+    (`uni` → `un` with a one-letter stem, `ëra` → `ër` after a vowel, and
+    `riu` → `ri` without its condition, which the general `u` → `` after i
+    also gives), the trie order already decides (`mije`
+    moved within its transform), or no Albanian letter is affected
+    (apostrophes before NFKC, combining marks outside the word class,
+    letters beyond Latin-1). A `lookup.tsv` row pins
     `lookup.untaggedTerms` `filter`: `cilat` shows `cili` with it and `cila`
     with `pass`.
 
