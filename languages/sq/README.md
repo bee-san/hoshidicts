@@ -202,9 +202,9 @@ deinflection marked `both`.
     not `mi` (`-ri` after i needs three letters before it, `-ja` comes after
     a vowel other than i, so `hija` is `hije`), `urdhërin` is not `urdhë`,
     `VI` is not `vij`, `vetmi` is not the noun `vetëm` (it is the definite
-    adjective, `i vetmi`), `hyjni` is not `hyj` (a verb stem before a consonant ending
-    does not end in j; the non-active endings have twin rules for the
-    digraphs gj and nj, so `përgjigjet` → `përgjigjem`);
+    adjective, `i vetmi`), `hyjni` is not `hyj` (a verb stem before a
+    consonant ending does not end in j; the non-active endings have twin
+    rules for the digraphs gj and nj, so `përgjigjet` → `përgjigjem`);
   - the one-syllable verbs (jam, kam, ha, pi, di, rri, fle, lë, vë, zë,
     nxë, bie, dua, vete) have whole-word forms, so `dalësh` is not da- +
     `lësh`;
@@ -389,8 +389,9 @@ file is measured with every option on and with the defaults.
      `idenë`, `ideja` and `idetë` → `hide`; `kamera` and `kamerat` → `kamë`,
      dagger; `vetura`, `veturë` and `veturën` (car) → `ves`, vice; `patate` →
      `patë`, goose; `dhëna`, `dhënat`, `dhënave` (data) → `dhen`; `pritje`
-     (waiting, a noun wty-sq-en lacks) → the verb `pres`; and 15 more. In this class and the one before, the dictionary's rows lead to
-     the wrong term, so no rule can change them either.
+     (waiting, a noun wty-sq-en lacks) → the verb `pres`; and 15 more. In
+     this class and the one before, the dictionary's rows lead to the
+     wrong term, so no rule can change them either.
 
    Leaving out the article `i` and `re`, which Known gaps lists already,
    95 of the 10,000 words show a wrong first result in these classes, with
@@ -464,11 +465,12 @@ file is measured with every option on and with the defaults.
    `stërvitje` → `stërvis`. 31,909 are the matched text itself, a headword
    of its own, while its rows name another lemma (`real/itself.tsv`, 447
    groups), which the script cannot tell either; I read every group in its
-   contexts. 34 groups with 635 lookups show the wrong word: `ka` (has) →
+   contexts. 34 groups with 632 lookups show the wrong word: `ka` (has) →
    the preposition and "ox" (210), `diellore` (solar) → "sunshade" (94),
-   `vjet` (years, after a numeral at all 67) → "last year" (67), `jetë`
-   (`të jetë`, that it be, at 37 of 40) → "life" (37), `koha` (the time) →
-   "age" (17 of 21),
+   `vjet` (years, after a number or `disa`, some, at all 67) → "last year"
+   (67), `jetë` (`të jetë` or `mos jetë`, that it be, at 33 of 40; the
+   other 7 are life) → "life" (33), `koha` (the time, or the tense) → "age"
+   (18 of 21; 2 are ages, `koha e bronzit`, and 1 is unclear),
    bare `re` after `e`, `së` and `të` → "cloud" (59 of 83, Known gaps),
    `ish` (former) → a call to chickens (32), `nisi` (began) → "island" (13),
    `vendore` (local) → "locative case" (13), `ndodhi` (happened) → "event"
@@ -479,8 +481,9 @@ file is measured with every option on and with the defaults.
    17 smaller ones. `shqipe` (168: "eagle" first, the Albanian language
    second), `parë` (218: first, or seen) and `krye` (28) are unclear; the
    capitalized names among them are counted under Known gaps. The other
-   12,107 lookups are judged by hand. A random sample of 60 of them, drawn before the audit (11,687
-   then), had 56 right and 4 wrong; at this commit `dalin` (they go out)
+   12,107 lookups are judged by hand. A random sample of 60 of them,
+   drawn before the audit (11,687 then), had 56 right and 4 wrong; at
+   this commit `dalin` (they go out)
    gives `dal`, not the adjective `dalë`, so 57 are right. The other wrong
    ones are `vat` → `va`, `t’i dhënë` → the headword `dhënë`, and `huaja` →
    `hua` (the foreign, `huaj`). That is about 5% of these 12,107 lookups
@@ -685,8 +688,8 @@ file is measured with every option on and with the defaults.
   word's occurrences in the subtitle list, in brackets its hovers in the
   20 articles where there are any): `ka` (has) shows the preposition
   "from" and "ox" (82,929 [210]), `jetë` (`të jetë`, that it be, about
-  three uses of four) "life" (16,723 [37]), `koha` (the time) "age"
-  (4,215 [17]), `vjet` (years, after numerals) "last year" (3,498 [67]),
+  three uses of four) "life" (16,723 [33]), `koha` (the time) "age"
+  (4,215 [18]), `vjet` (years, after numbers) "last year" (3,498 [67]),
   `fati` (the fate) "the Fates" (647 [3]), `ari` (the gold) "bear" (579
   [4]), `ujit` (of the water) "to irrigate" (449 [4]), `ujore` (aquatic)
   "watering site" [2], `thua` (you say) "nail" (5,263),
