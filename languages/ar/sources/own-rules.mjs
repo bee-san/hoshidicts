@@ -783,8 +783,15 @@ const LISTED = {
 const LISTED_NOUNS = [['السنين', 'سنة'], ['سنين', 'سنة'], ['الملفات', 'ملف'], ['ملفات', 'ملف'], ['النيران', 'نار'], ['الجدران', 'جدار'],
     ['الرفاق', 'رفيق'], ['الأخر', 'آخر'], ['الخضراء', 'أخضر'], ['الفرسان', 'فارس'], ['هذين', 'هذا'], ['كلتا', 'كلا'], ['قرون', 'قرن'],
     ['موتي', 'موت'], ['فتي', 'فتى'], ['كيسي', 'كيس'], ['سيئا', 'سيئ']];
+// And on the texts: بطريقة (52 in Tatoeba) and بطلاقة (17) are بـ + a noun
+// in ة, not a feminine of بطريق and طلاق; والتي is و + التي; سآتي is سـ +
+// آتي (I will come).
+LISTED.bi = [['بطريقة', 'طريقة'], ['بطلاقة', 'طلاقة']];
+LISTED.wa = [['والتي', 'الذي']];
+LISTED.sa = [['سآتي', 'أتى']];
 for (const [id, words] of Object.entries(LISTED)) {
-    transforms.find((t) => t.id === id).rules.push(...words.map(([i, d]) => whole(i, d, {into: V_IN, out: V_OUT})));
+    const verb = !['bi', 'wa'].includes(id);
+    transforms.find((t) => t.id === id).rules.push(...words.map(([i, d]) => (verb ? whole(i, d, {into: V_IN, out: V_OUT}) : whole(i, d))));
 }
 transforms.find((t) => t.id === 'listedNoun').rules.push(...LISTED_NOUNS.map(([i, d]) => whole(i, d)));
 

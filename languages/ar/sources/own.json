@@ -38,7 +38,8 @@
       "description": "The conjunction وَ (wa, \"and\") written together with the next word: وكتب is و + كتب, والكتاب is و + الكتاب.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "و", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemStartsWith": "{base}"}
+        {"type": "prefix", "inflected": "و", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemStartsWith": "{base}"},
+        {"type": "wholeWord", "inflected": "والتي", "deinflected": "الذي", "conditionsIn": [], "conditionsOut": []}
       ]
     },
     {
@@ -57,7 +58,9 @@
       "source": "own",
       "rules": [
         {"type": "prefix", "inflected": "ب", "deinflected": "", "conditionsIn": [], "conditionsOut": [], "stemMinLength": 2, "stemStartsWith": "{base}"},
-        {"type": "wholeWord", "inflected": "بحكم", "deinflected": "حكم", "conditionsIn": [], "conditionsOut": []}
+        {"type": "wholeWord", "inflected": "بحكم", "deinflected": "حكم", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "بطريقة", "deinflected": "طريقة", "conditionsIn": [], "conditionsOut": []},
+        {"type": "wholeWord", "inflected": "بطلاقة", "deinflected": "طلاقة", "conditionsIn": [], "conditionsOut": []}
       ]
     },
     {
@@ -221,7 +224,8 @@
       "description": "The future prefix سَ (sa-, \"will\") before a present-tense verb: سيكتب is سـ + يكتب, سأذهب is سـ + أذهب.",
       "source": "own",
       "rules": [
-        {"type": "prefix", "inflected": "س", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v", "vf"], "stemMinLength": 3, "stemStartsWith": "[يتنأآ]"}
+        {"type": "prefix", "inflected": "س", "deinflected": "", "conditionsIn": [], "conditionsOut": ["v", "vf"], "stemMinLength": 3, "stemStartsWith": "[يتنأآ]"},
+        {"type": "wholeWord", "inflected": "سآتي", "deinflected": "أتى", "conditionsIn": ["vf"], "conditionsOut": ["v"]}
       ]
     },
     {
