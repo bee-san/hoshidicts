@@ -2006,7 +2006,9 @@
         {"type": "wholeWord", "inflected": "виде", "deinflected": "видјети", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "значе", "deinflected": "значити", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "пуше", "deinflected": "пушити", "conditionsIn": [], "conditionsOut": ["v"]},
-        {"type": "wholeWord", "inflected": "зову", "deinflected": "звати", "conditionsIn": [], "conditionsOut": ["v"]}
+        {"type": "wholeWord", "inflected": "зову", "deinflected": "звати", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "изазову", "deinflected": "изазвати", "conditionsIn": [], "conditionsOut": ["v"]},
+        {"type": "wholeWord", "inflected": "стаје", "deinflected": "стајати", "conditionsIn": [], "conditionsOut": ["v"]}
       ]
     },
     {

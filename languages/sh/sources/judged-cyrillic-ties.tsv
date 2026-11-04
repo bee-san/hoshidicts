@@ -21,3 +21,10 @@ raju	raj	раја "rayah"
 živu	živ|živeti|živjeti	жива "mercury"
 operi	oprati	опера "opera"
 ručku	ručak	ручка "handle"
+# Judged by this pack's author (written for this pack, GPL-3.0-or-later) from the Cyrillic-against-Latin sample of the
+# Gutenberg texts (README, Measurements 4), as audit-hachi-lang-sh-d pointed out: words outside the top 10,000 whose
+# Cyrillic first result is wrong while the Latin one is right, and whose Cyrillic rows name the right lemma. праве is
+# left out: its sample position wants прав ("праве и криве линије"), but 7 of Tatoeba's 8 sentences with the word use
+# правити, its Cyrillic first result.
+izazovu	izazvati	изазов "challenge" (dat./loc. sg.)
+staje	stajati	стаја "stable" (gen. sg.)
