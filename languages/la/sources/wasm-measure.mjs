@@ -19,7 +19,7 @@ const [root, pack, dictDir, textsFile, engines = '10', passes = '6'] = process.a
 const files = ['language.json', 'transforms.json'].map((name) => readFileSync(join(pack, name), 'utf8'));
 const code = JSON.parse(files[0]).code;
 const texts = readFileSync(textsFile, 'utf8').split('\n').filter(Boolean);
-const at = (sorted, p) => sorted[Math.min(sorted.length - 1, Math.floor(p * sorted.length))];
+const at = (sorted, p) => sorted[Math.max(0, Math.ceil(p * sorted.length) - 1)];  // nearest rank
 const sort = (xs) => [...xs].sort((a, b) => a - b);
 for (const variant of ['hoshidicts', 'hoshidicts-threaded']) {
     const {default: create} = await import(join(root, 'extension', 'vendor', `${variant}.mjs`));
