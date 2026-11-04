@@ -4,7 +4,7 @@
 # (sources/lookup-batch.cpp):
 #
 #   python3 languages/uk/sources/measure.py words|text|phrases <wty-uk-en json dir> <imported wty-uk-en> <file>...
-#       [--frequencies <list>]... [--languages <dir>] [--verdicts <file>]
+#       [--frequencies <list>]... [--languages <dir>] [--verdicts <file>] [--ranks <first> <last>]
 #
 # --verdicts: one line per lookup (word, verdict, first result, its rules,
 # weight, what judged it).
@@ -77,10 +77,7 @@ def keys(word, initial=False, rows=None):
     return [w, w.lower()]
 
 
-# Links a lemma's rows may name that keep the lemma: other spellings and the
-# other aspect. A link that makes the named lemma an inflected form or a
-# derivative of another (мило, the neuter past of мити; копа, the genitive of
-# коп) is another lemma, which a word naming it does not mean.
+# Links that keep the lemma: other spellings and the other aspect.
 SAME_LEMMA = re.compile(r'^(?:alternative|alt-of|rare alternative|alternative dialectal|alternative abbreviation|misspelling|nonstandard|'
                         r'dated|archaic|obsolete|proscribed|lowercase|uppercase|(?:im)?perfective(?: rare| semelfactive)?)$')
 LINKS = collections.defaultdict(set)
@@ -101,8 +98,7 @@ def load_rows(json_dir):
                 if 'char' in (row[2] or '').split() and term != term.lower():
                     CHARS.add(term)
             for ref in refs:
-                # wiktionary-to-yomitan writes some targets with their aspect
-                # (знайти́ pf); the lemma is the word before it.
+                # A target with its aspect (знайти́ pf).
                 target = re.sub(r' (?:pf|impf)(?: (?:pf|impf))?$', '', norm(ref[0]))
                 targets[term].add(target)
                 LINKS[(term, target)] |= set(ref[1])
@@ -138,8 +134,7 @@ def meant(word, lemmas, targets, initial=False):
         if PRONOUN_LEMMAS.get(w):
             right |= PRONOUN_LEMMAS[w]
             continue
-        # One group per lemma a row names, with the lemmas that lemma's own
-        # rows name as the same lemma (вміти → уміти, вдавати → вдати).
+        # One group per lemma a row names, with its other spellings.
         groups = [{n} | {t for t in targets.get(n, ()) if same_lemma(n, t, lemmas)} for n in sorted(targets.get(w, ()))]
         groups = [g for g in groups if g & lemmas] or groups
         # Doublets of one verb (досягти, досягнути; вдягти, вдягнути) are
@@ -172,9 +167,7 @@ def judge(word, answer, lemmas, targets, initial=False):
     first = results[0]
     if len(norm(first['matched'])) > len(norm(word)):
         return 'phrase', first, None
-    # At a sentence start a letter's own entry (Я, А) is wrong when the
-    # lowercase word has rows; another capitalised entry of the same
-    # spelling (Сонце, Ви) is judged as before.
+    # At a sentence start a letter's own entry (Я) is wrong.
     expression = norm(first['expression'])
     if initial and expression in CHARS and expression != norm(word).lower() and norm(word).lower() in KNOWN:
         return 'wrong', first, 'rows'
@@ -300,6 +293,11 @@ def main():
         i = args.index('--verdicts')
         VERDICTS = open(args[i + 1], 'w', encoding='utf-8')
         del args[i:i + 2]
+    ranks = [1, 10000]
+    if '--ranks' in args:
+        i = args.index('--ranks')
+        ranks = [int(x) for x in args[i + 1:i + 3]]
+        del args[i:i + 3]
     extra = []
     while '--frequencies' in args:
         i = args.index('--frequencies')
@@ -320,8 +318,9 @@ def main():
             if len(parts) == 2 and WORD.fullmatch(parts[0]):
                 words.append(parts[0])
                 counts.append(int(parts[1]))
-            if len(words) == 10000:
+            if len(words) == ranks[1]:
                 break
+        words, counts = words[ranks[0] - 1:], counts[ranks[0] - 1:]
         answers = lookups(words, languages, dictionary)
         report('frequent words', list(zip(words, answers)), lemmas, targets, weights=counts)
         hit = reached(words, languages, lemmas, targets)

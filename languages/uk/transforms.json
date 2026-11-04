@@ -60,7 +60,7 @@
         {"type": "suffix", "inflected": "еві", "deinflected": "ь", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "{softable}", "stemChange": {"from": ["о", "е"], "to": "і", "occurrence": "last", "between": "{consonant}"}, "source": "both"},
         {"type": "suffix", "inflected": "еві", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[р]"},
         {"type": "suffix", "inflected": "аті", "deinflected": "а", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[жчш]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["четвергу", "четвер"], ["четвергові", "четвер"], ["танкові", "танк"], ["марці", "марка"], ["голові", "голова"]], "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[]"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["четвергу", "четвер"], ["четвергові", "четвер"], ["марці", "марка"], ["голові", "голова"]], "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[]"}
       ]
     },
     {

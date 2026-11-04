@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-// The WebAssembly numbers of README.md (Measurements 5), with Hachidori's
-// prebuilt engines (extension/vendor/hoshidicts{,-threaded}.mjs) in Node 22:
+// The WebAssembly numbers of README.md (Measurements 5), with the engines of
+// a Hachidori checkout (extension/vendor/hoshidicts{,-threaded}.mjs), Node 22:
 //
 //   node languages/uk/sources/wasm-measure.mjs <hachidori checkout> <dictionary.zip> [instances]
 //
