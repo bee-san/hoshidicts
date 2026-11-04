@@ -16,7 +16,7 @@ import {formatTransforms} from '../../../tools/lib/json.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 
-// --- Conditions ---------------------------------------------------------------
+// --- Conditions
 // v, n, name, adj, pron and num are dictionary forms: the infinitive, the
 // nominative singular (or plural of a plural-only noun) and the masculine
 // nominative singular. The others are steps no dictionary term carries:
@@ -39,7 +39,7 @@ const ADJ = ['adj'];
 const VERB = ['v'];
 const STEM = '{stem}';
 
-// --- Form labels ----------------------------------------------------------------
+// --- Form labels
 // Cases and numbers or genders of nouns, adjectives and pronouns; verb forms.
 const CASES = ['nom', 'gen', 'dat', 'acc', 'ins', 'prp', 'loc'];
 const CASE_NAME = {nom: 'nominative', gen: 'genitive', dat: 'dative', acc: 'accusative', ins: 'instrumental', prp: 'prepositional', loc: 'locative'};
@@ -105,7 +105,7 @@ function formsName(forms) {
     return parts.join(', ');
 }
 
-// --- Rules ------------------------------------------------------------------------
+// --- Rules
 // Every rule is collected with the forms it stands for and the part of speech
 // of its transform (noun, adj, verb, pron), then grouped into transforms.
 const collected = new Map();  // key -> {pos, rule, forms:Set, examples:[]}
@@ -146,7 +146,8 @@ function wholeWord(pos, forms, inflected, deinflected, conditionsIn, conditionsO
     const make = (i, d) => ({type: 'wholeWord', inflected: i, deinflected: d, conditionsIn, conditionsOut});
     put(pos, forms, make(inflected, deinflected), example);
     if (inflected.includes('ё')) { put(pos, forms, make(e(inflected), e(deinflected)), example); }
-    if (!inflected.includes('ё') && deinflected.includes('ё')) { put(pos, forms, make(inflected, e(deinflected)), example); }
+    // The lemma's е spelling, unless it is the word itself (черт → черт would change nothing).
+    if (!inflected.includes('ё') && deinflected.includes('ё') && e(deinflected) !== inflected) { put(pos, forms, make(inflected, e(deinflected)), example); }
 }
 
 function prefixRule(pos, forms, inflected, deinflected, conditionsIn, conditionsOut, extra = {}, example = null) {
@@ -175,7 +176,7 @@ function verb(forms, inflected, deinflected, extra = {}, example = null, {refl =
     }
 }
 
-// --- Nouns --------------------------------------------------------------------------
+// --- Nouns
 // noun(lemma ending, class of the stem's last letter, {form: [endings]}, options):
 // one rule per ending, from the inflected ending to the lemma's. The stem has
 // at least `min` letters (default 2), so a short word is not read as an ending
@@ -447,7 +448,7 @@ for (const [lemma, forms] of [
     }
 }
 
-// --- Adjectives and participles ---------------------------------------------------
+// --- Adjectives and participles
 // adjective(lemma ending, class of the stem's last letter, {ending: [forms]}).
 // The forms of an ending are the cases and genders it has in that class.
 // Long forms also reach nouns and names declined as adjectives (учёного →
@@ -626,7 +627,7 @@ for (const [inflected, lemma, stemEnd, ex] of [
     suffix('adj', ['sup'], inflected, lemma, ADJ, ADJ, extra, ex);
 }
 
-// --- Verbs ------------------------------------------------------------------------------
+// --- Verbs
 // Forms made from the infinitive stem: past, past active participle, past
 // adverbial participle (читать: читал, читала, читало, читали, читавший, читав).
 for (const vowel of ['а', 'я', 'е', 'и', 'у', 'ы', 'о']) {
@@ -834,7 +835,8 @@ for (const [inflected, inf, ex] of [
     ['женный', 'дить', ['обиженный', 'обидеть']], ['жённый', 'дить', null], ['женный', 'зить', ['выраженный', 'выразить']], ['жённый', 'зить', ['поражённый', 'поразить']], ['женный', 'деть', ['обиженный', 'обидеть']],
     ['шенный', 'сить', ['брошенный', 'бросить']], ['шённый', 'сить', ['приглашённый', 'пригласить']],
     ['ченный', 'тить', ['оплаченный', 'оплатить']], ['чённый', 'тить', null],
-    ['щенный', 'тить', null], ['щённый', 'тить', ['возвращённый', 'возвратить']], ['щенный', 'стить', ['очищенный', 'очистить']], ['щённый', 'стить', ['прощённый', 'простить']],
+    // ст before т: помещена is поместить's (пометить takes ч: помечена).
+    ['щенный', 'стить', ['очищенный', 'очистить']], ['щённый', 'стить', ['прощённый', 'простить']], ['щенный', 'тить', null], ['щённый', 'тить', ['возвращённый', 'возвратить']],
     ['бленный', 'бить', ['погубленный', 'погубить']], ['блённый', 'бить', ['употреблённый', 'употребить']],
     ['пленный', 'пить', ['купленный', 'купить']], ['плённый', 'пить', null],
     ['вленный', 'вить', ['поставленный', 'поставить']], ['влённый', 'вить', ['удивлённый', 'удивить']],
@@ -1045,7 +1047,7 @@ for (const [form, ending] of Object.entries({'pres.1sg': 'стигну', 'pres.2
     verb([form], ending, 'стичь', {stemMinLength: 2}, form === 'pres.3sg' ? ['достигнет', 'достичь'] : form === 'past.m' ? ['постиг', 'постичь'] : null, {refl: form !== 'ger.past'});
 }
 
-// --- Pronouns and numerals, as whole words ---------------------------------------------
+// --- Pronouns and numerals, as whole words
 const PRON = ['pron'];
 const NUM = ['num'];
 function closed(pos, cond, lemma, table) {
@@ -1120,7 +1122,7 @@ for (const lemma of ['сколько', 'столько', 'несколько']) 
     closed('num', NUM, lemma, {[`${stem}их`]: ['gen.pl', 'prp.pl', 'acc.pl'], [`${stem}им`]: ['dat.pl'], [`${stem}ими`]: ['ins.pl']});
 }
 
-// --- Frequent words a regular ending reads as a rarer headword (README.md, History) ---
+// --- Frequent words a regular ending reads as a rarer headword (README.md, History)
 for (const [word, lemma, forms] of [
     ['любого', 'любой', ['gen.m', 'gen.n', 'acc.m']], ['любому', 'любой', ['dat.m', 'dat.n']], ['любым', 'любой', ['ins.m', 'ins.n', 'dat.pl']],
     ['любом', 'любой', ['prp.m', 'prp.n']], ['любое', 'любой', ['nom.n', 'acc.n']], ['любая', 'любой', ['nom.f']], ['любую', 'любой', ['acc.f']],
@@ -1190,7 +1192,7 @@ for (const [word, lemma, forms] of [['дела', 'дело', ['gen.sg', 'nom.pl'
     ['буре', 'буря', ['dat.sg', 'prp.sg']], ['цвету', 'цвет', ['dat.sg', 'loc.sg']], ['курсе', 'курс', ['prp.sg']], ['душу', 'душа', ['acc.sg']],
     ['парке', 'парк', ['prp.sg']], ['чая', 'чай', ['gen.sg']], ['чаю', 'чай', ['dat.sg']], ['мая', 'май', ['gen.sg']],
     ['черт', 'чёрт', ['nom.sg']], ['полет', 'полёт', ['nom.sg']], ['копы', 'коп', ['nom.pl']], ['вину', 'вина', ['acc.sg']],
-    ['чаем', 'чай', ['ins.sg']], ['парки', 'парк', ['nom.pl']], ['споры', 'спор', ['nom.pl']], ['споре', 'спор', ['prp.sg']], ['тоне', 'тон', ['prp.sg']],
+    ['чаем', 'чай', ['ins.sg']], ['парки', 'парк', ['nom.pl']], ['банке', 'банк', ['prp.sg']], ['зале', 'зал', ['prp.sg']], ['сыром', 'сыр', ['ins.sg']], ['лады', 'лад', ['nom.pl']], ['споры', 'спор', ['nom.pl']], ['споре', 'спор', ['prp.sg']], ['тоне', 'тон', ['prp.sg']],
     ['веку', 'век', ['dat.sg', 'loc.sg']]]) {
     wholeWord('noun', forms, word, lemma, [], NOUN);
 }
@@ -1217,7 +1219,7 @@ const EXCLUDE = [
     ['noun-fleeting', 'к', 'суч'], ['noun-fleeting', 'йц', 'уби'], ['verb-pres.1sg', 'олю', 'сп'],
 ];
 
-// --- Transforms ----------------------------------------------------------------------------
+// --- Transforms
 const POS_ORDER = ['noun', 'adj', 'pron', 'num', 'verb'];
 const POS_WORD = {noun: 'a noun', adj: 'an adjective or participle', pron: 'a pronoun or determiner', num: 'a numeral', verb: 'a verb'};
 const groups = new Map();

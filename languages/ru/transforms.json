@@ -464,9 +464,7 @@
       "source": "own",
       "rules": [
         {"type": "wholeWord", "inflected": "черт", "deinflected": "чёрт", "conditionsIn": [], "conditionsOut": ["n", "name"]},
-        {"type": "wholeWord", "inflected": "черт", "deinflected": "черт", "conditionsIn": [], "conditionsOut": ["n", "name"]},
-        {"type": "wholeWord", "inflected": "полет", "deinflected": "полёт", "conditionsIn": [], "conditionsOut": ["n", "name"]},
-        {"type": "wholeWord", "inflected": "полет", "deinflected": "полет", "conditionsIn": [], "conditionsOut": ["n", "name"]}
+        {"type": "wholeWord", "inflected": "полет", "deinflected": "полёт", "conditionsIn": [], "conditionsOut": ["n", "name"]}
       ]
     },
     {
@@ -640,7 +638,8 @@
         {"type": "wholeWord", "inflected": "полем", "deinflected": "поле", "conditionsIn": [], "conditionsOut": ["n", "name"]},
         {"type": "wholeWord", "inflected": "бельем", "deinflected": "бельё", "conditionsIn": [], "conditionsOut": ["n", "name"]},
         {"type": "wholeWord", "inflected": "бельем", "deinflected": "белье", "conditionsIn": [], "conditionsOut": ["n", "name"]},
-        {"type": "wholeWord", "inflected": "чаем", "deinflected": "чай", "conditionsIn": [], "conditionsOut": ["n", "name"]}
+        {"type": "wholeWord", "inflected": "чаем", "deinflected": "чай", "conditionsIn": [], "conditionsOut": ["n", "name"]},
+        {"type": "wholeWord", "inflected": "сыром", "deinflected": "сыр", "conditionsIn": [], "conditionsOut": ["n", "name"]}
       ]
     },
     {
@@ -673,6 +672,8 @@
         {"type": "wholeWord", "inflected": "запрете", "deinflected": "запрет", "conditionsIn": [], "conditionsOut": ["n", "name"]},
         {"type": "wholeWord", "inflected": "курсе", "deinflected": "курс", "conditionsIn": [], "conditionsOut": ["n", "name"]},
         {"type": "wholeWord", "inflected": "парке", "deinflected": "парк", "conditionsIn": [], "conditionsOut": ["n", "name"]},
+        {"type": "wholeWord", "inflected": "банке", "deinflected": "банк", "conditionsIn": [], "conditionsOut": ["n", "name"]},
+        {"type": "wholeWord", "inflected": "зале", "deinflected": "зал", "conditionsIn": [], "conditionsOut": ["n", "name"]},
         {"type": "wholeWord", "inflected": "споре", "deinflected": "спор", "conditionsIn": [], "conditionsOut": ["n", "name"]},
         {"type": "wholeWord", "inflected": "тоне", "deinflected": "тон", "conditionsIn": [], "conditionsOut": ["n", "name"]}
       ]
@@ -724,6 +725,7 @@
         {"type": "wholeWord", "inflected": "коды", "deinflected": "код", "conditionsIn": [], "conditionsOut": ["n", "name"]},
         {"type": "wholeWord", "inflected": "копы", "deinflected": "коп", "conditionsIn": [], "conditionsOut": ["n", "name"]},
         {"type": "wholeWord", "inflected": "парки", "deinflected": "парк", "conditionsIn": [], "conditionsOut": ["n", "name"]},
+        {"type": "wholeWord", "inflected": "лады", "deinflected": "лад", "conditionsIn": [], "conditionsOut": ["n", "name"]},
         {"type": "wholeWord", "inflected": "споры", "deinflected": "спор", "conditionsIn": [], "conditionsOut": ["n", "name"]}
       ]
     },
@@ -2461,7 +2463,7 @@
       "description": "Past passive participle of a verb: сделанный → сделать, потерянный → потерять, увиденный → увидеть.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["анный", "ать"], ["янный", "ять"], ["ытый", "ыть"], ["итый", "ить"], ["утый", "уть"], ["ертый", "ереть"], ["ёртый", "ереть"], ["енный", "ить"], ["ённый", "ить"], ["жденный", "дить"], ["ждённый", "дить"], ["женный", "дить"], ["жённый", "дить"], ["женный", "зить"], ["жённый", "зить"], ["женный", "деть"], ["шенный", "сить"], ["шённый", "сить"], ["ченный", "тить"], ["чённый", "тить"], ["щенный", "тить"], ["щённый", "тить"], ["щенный", "стить"], ["щённый", "стить"], ["бленный", "бить"], ["блённый", "бить"], ["пленный", "пить"], ["плённый", "пить"], ["вленный", "вить"], ["влённый", "вить"], ["мленный", "мить"], ["млённый", "мить"], ["ёсенный", "ести"], ["есенный", "ести"], ["есённый", "ести"], ["едённый", "ести"], ["еденный", "ести"], ["етённый", "ести"], ["етенный", "ести"], ["езённый", "езти"], ["езенный", "езти"], ["чённый", "чь"], ["ченный", "чь"], ["жённый", "чь"], ["женный", "чь"], ["йденный", "йти"], ["йдённый", "йти"], ["чтённый", "честь"], ["чтенный", "честь"]], "conditionsIn": ["adj"], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemMinLength": 1},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["анный", "ать"], ["янный", "ять"], ["ытый", "ыть"], ["итый", "ить"], ["утый", "уть"], ["ертый", "ереть"], ["ёртый", "ереть"], ["енный", "ить"], ["ённый", "ить"], ["жденный", "дить"], ["ждённый", "дить"], ["женный", "дить"], ["жённый", "дить"], ["женный", "зить"], ["жённый", "зить"], ["женный", "деть"], ["шенный", "сить"], ["шённый", "сить"], ["ченный", "тить"], ["чённый", "тить"], ["щенный", "стить"], ["щённый", "стить"], ["щенный", "тить"], ["щённый", "тить"], ["бленный", "бить"], ["блённый", "бить"], ["пленный", "пить"], ["плённый", "пить"], ["вленный", "вить"], ["влённый", "вить"], ["мленный", "мить"], ["млённый", "мить"], ["ёсенный", "ести"], ["есенный", "ести"], ["есённый", "ести"], ["едённый", "ести"], ["еденный", "ести"], ["етённый", "ести"], ["етенный", "ести"], ["езённый", "езти"], ["езенный", "езти"], ["чённый", "чь"], ["ченный", "чь"], ["жённый", "чь"], ["женный", "чь"], ["йденный", "йти"], ["йдённый", "йти"], ["чтённый", "честь"], ["чтенный", "честь"]], "conditionsIn": ["adj"], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemMinLength": 1},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["енный", "еть"], ["ятый", "ять"], ["атый", "ать"], ["отый", "оть"]], "conditionsIn": ["adj"], "conditionsOut": ["v"], "stemCharacters": "{stem}", "stemMinLength": 2},
         {"type": "wholeWord", "inflected": "потрясён", "deinflected": "потрясти", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "wholeWord", "inflected": "потрясен", "deinflected": "потрясти", "conditionsIn": [], "conditionsOut": ["v"]}

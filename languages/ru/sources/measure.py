@@ -346,7 +346,7 @@ def frequent(a):
         bare = lookups(a.batch, a.no_rules, a.dict, [w for w, *_ in strict_wrong], a.exempt)
         for (w, c, got, trace), o in zip(strict_wrong, bare):
             f = first_with_definition(o['results'])
-            cause[w] = 'rules' if f is not None and own_lemma_ok(w, f['expression'], refs, lemmas, proxy, labels) else 'dictionary'
+            cause[w] = 'rules' if f is None or f['matched'].lower() != w.lower() or own_lemma_ok(w, f['expression'], refs, lemmas, proxy, labels) else 'dictionary'
         split = collections.Counter(); split_tokens = collections.Counter()
         for w, c, *_ in strict_wrong:
             split[cause[w]] += 1; split_tokens[cause[w]] += c
@@ -360,7 +360,7 @@ def frequent(a):
         bare = lookups(a.batch, a.no_rules, a.dict, [w for w, *_ in yo_wrong], a.exempt)
         for (w, *_), o in zip(yo_wrong, bare):
             f = first_with_definition(o['results'])
-            yo_cause[w] = 'rules' if f is not None and own_lemma_ok(w, f['expression'], refs, lemmas, proxy, labels) else 'dictionary'
+            yo_cause[w] = 'rules' if f is None or f['matched'].lower() != w.lower() or own_lemma_ok(w, f['expression'], refs, lemmas, proxy, labels) else 'dictionary'
     for w, c, got, trace in sorted(yo_wrong, key=lambda x: -x[1])[: a.show]:
         print(f'  {w}\t{c}\tfirst={got}\ttrace={trace}' + (f'\t{yo_cause[w]}' if w in yo_cause else ''))
 
@@ -454,7 +454,7 @@ def text(a):
             f = first_with_definition(o['results'])
             hover = positions[i][1]
             cands = candidates(word)
-            if f is not None and f['matched'].lower() == word.lower() and cands and not own_wrong(word, hover, f, cands):
+            if f is None or f['matched'].lower() != word.lower() or not own_wrong(word, hover, f, cands):
                 cause['rules'] += 1; rule_groups[(word.lower(), expr)] += 1
             else:
                 cause['dictionary'] += 1; dict_groups[(word.lower(), expr)] += 1
