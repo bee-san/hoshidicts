@@ -1,0 +1,10 @@
+{
+  "title": "hoshidicts yi test dictionary",
+  "format": 3,
+  "revision": "1",
+  "sequenced": false,
+  "author": "hoshidicts",
+  "description": "A tiny Yiddish dictionary for languages/yi/tests/lookup.tsv, written for the pack (GPL-3.0-or-later). Headwords in YIVO spelling, as wty-yi-en writes them; געשריבן is a form-of row.",
+  "sourceLanguage": "yi",
+  "targetLanguage": "en"
+}

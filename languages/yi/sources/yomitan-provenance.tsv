@@ -1,0 +1,84 @@
+# Yomitan rule (sources/yomitan.json) <TAB> ending <TAB> vowel change <TAB> own rules that read the same ending (marked both), or why none does
+plural[0]	ס		plural
+plural[1]	ן		plural
+plural[2]	ים		plural
+plural[3]	ער		plural
+plural[4]	עך		diminutivePlural
+plural[5]	ען		plural
+plural[6]	עס		plural
+plural[7]	ות		plural
+plural[8]	נס		reads -נס as the ending (צייכנס → צייכ); the own rules remove -ס after ן (צייכנס → צייכן)
+plural[9]	ערען		no such standard plural; the own rules read -ען after -ער (קאַמערן → קאַמער)
+plural[10]	ענעס		no such standard plural
+plural[11]	ענס		no such standard plural
+plural[12]	ערס		no such standard plural ending; the own rules read -ס after -ער (לערערס → לערער)
+plural[13]	סער		no such plural ending
+umlaut_plural[0]	ער	ע>אַ	plural
+umlaut_plural[1]	ער	ע>אָ	plural
+umlaut_plural[2]	ער	ע>א	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[3]	ער	וי>ע	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[4]	ער	יי>וי	plural
+umlaut_plural[5]	ער	י>ו	plural
+umlaut_plural[6]	עס	ע>אַ	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[7]	עס	ע>אָ	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[8]	עס	ע>א	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[9]	עס	וי>ע	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[10]	עס	יי>וי	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[11]	עס	י>ו	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[12]	ים	ע>אַ	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[13]	ים	ע>אָ	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[14]	ים	ע>א	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[15]	ים	וי>ע	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[16]	ים	יי>וי	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[17]	ים	י>ו	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[18]	ען	ע>אַ	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[19]	ען	ע>אָ	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[20]	ען	ע>א	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[21]	ען	וי>ע	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[22]	ען	יי>וי	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[23]	ען	י>ו	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[24]	ן	ע>אַ	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[25]	ן	ע>אָ	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[26]	ן	ע>א	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[27]	ן	וי>ע	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[28]	ן	יי>וי	plural
+umlaut_plural[29]	ן	י>ו	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[30]	ס	ע>אַ	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[31]	ס	ע>אָ	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[32]	ס	ע>א	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[33]	ס	וי>ע	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[34]	ס	יי>וי	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[35]	ס	י>ו	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[36]	עך	ע>אַ	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[37]	עך	ע>אָ	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[38]	עך	ע>א	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[39]	עך	וי>ע	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[40]	עך	יי>וי	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[41]	עך	י>ו	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[42]	ערס	ע>אַ	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[43]	ערס	ע>אָ	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[44]	ערס	ע>א	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[45]	ערס	וי>ע	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[46]	ערס	יי>וי	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+umlaut_plural[47]	ערס	י>ו	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+diminutive[0]	טשיק		diminutive
+diminutive[1]	קע		diminutive
+diminutive[2]	ל		diminutive
+diminutive[3]	עלע		diminutive
+diminutive_and_umlaut[0]	ל	ע>אַ	diminutive
+diminutive_and_umlaut[1]	ל	ע>אָ	diminutive
+diminutive_and_umlaut[2]	ל	ע>א	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+diminutive_and_umlaut[3]	ל	וי>ע	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+diminutive_and_umlaut[4]	ל	יי>וי	diminutive
+diminutive_and_umlaut[5]	ל	י>ו	diminutive
+diminutive_and_umlaut[6]	עלע	ע>אַ	diminutive
+diminutive_and_umlaut[7]	עלע	ע>אָ	diminutive
+diminutive_and_umlaut[8]	עלע	ע>א	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+diminutive_and_umlaut[9]	עלע	וי>ע	none: the own rules read this ending without this vowel change (a changed vowel goes with -ער, -ל, -עלע or no ending)
+diminutive_and_umlaut[10]	עלע	יי>וי	diminutive
+diminutive_and_umlaut[11]	עלע	י>ו	diminutive
+verb_present_singular_to_first_person[0]	סט		2sg, 3sg
+verb_present_singular_to_first_person[1]	ט		2sg, 3sg
+verb_present_singular_to_first_person[2]	נדיק		presentParticiple
+verb_present_plural_to_first_person[0]	טס		dialect second person plural (-טס); reads וועלטס (the world's) as וועלן
+verb_present_plural_to_first_person[1]	ט		3sg

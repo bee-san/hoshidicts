@@ -1,0 +1,37 @@
+# GPL-3.0-or-later; Copyright (C) 2023-2026 Yomitan Authors; 2020-2022 Yomichan Authors
+# https://github.com/yomidevs/yomitan/blob/d3c54c10264673eca0d66b970ef74cd5c8b048e3/test/language/yiddish-transforms.test.js
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+nouns	1	גרופּעס	גרופּע	ns	plural
+nouns	1	טישן	טיש	ns	plural
+nouns	1	פּויערים	פּויער	ns	plural
+nouns	1	קינדער	קינד	ns	plural
+nouns	1	בענקלעך	בענקל	ns	plural
+nouns	1	באַנען	באַנ	ns	plural
+nouns	1	נודניקעס	נודניק	ns	plural
+nouns	1	חלומות	חלומ	ns	plural
+nouns	1	עטיקעטקע	עטיקעט	n	diminutive
+nouns	1	קליענטעלטשיק	קליענטעל	n	diminutive
+nouns	1	קינדערלעך	קינדער	ns	diminutive|plural
+nouns	1	ליפענעס	ליפ	ns	plural
+nouns	1	אײערען	אײ	ns	plural
+nouns	1	זאָקענס	זאָק	ns	plural
+nouns	1	בוךערס	בוך	ns	plural
+nouns	1	קוכןסער	קוכן	ns	plural
+nouns	1	קעניגנס	קעניג	ns	plural
+umlaut_nouns	1	מענער	מאנ	ns	umlaut_plural
+umlaut_nouns	1	טשוועקעס	טשוואק	ns	umlaut_plural
+umlaut_nouns	1	מײדלעך	מױד	ns	diminutive_and_umlaut|plural
+umlaut_nouns	1	דאָקטױרים	דאָקטער	ns	umlaut_plural
+umlaut_nouns	1	בלימען	בלומ	ns	umlaut_plural
+umlaut_nouns	1	אומשטענדן	אומשטאנד	ns	umlaut_plural
+umlaut_nouns	1	קעצעלע	קאצ	n	diminutive_and_umlaut
+umlaut_nouns	1	קעצל	קאצ	n	diminutive_and_umlaut
+umlaut_nouns	1	בערגן	באַרג	ns	umlaut_plural
+umlaut_nouns	1	בײמערס	בױמ	ns	umlaut_plural
+umlaut_nouns	1	קעפּער	קאפּ	ns	umlaut_plural
+umlaut_nouns	1	קעפּער	קאפּ	ns	umlaut_plural
+verbs	1	קויפֿסט	קויפֿ	v	verb_present_singular_to_first_person
+verbs	1	קויפֿט	קויפֿ	vpresent	verb_present_singular_to_first_person
+verbs	1	קויפֿט	קויפֿנ	vpresent	verb_present_plural_to_first_person
+verbs	1	קויפֿטס	קויפֿנ	vpresent	verb_present_plural_to_first_person
+verbs	1	קויפֿטס	קויפֿנ	vpresent	verb_present_plural_to_first_person
