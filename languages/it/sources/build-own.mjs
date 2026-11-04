@@ -1307,7 +1307,7 @@ const PREFERRED = [
         ['accetti', 'accettare'], ['compri', 'comprare'], ['accompagni', 'accompagnare'], ['vendi', 'vendere'],
         ['puzzi', 'puzzare'], ['figuri', 'figurare'], ['presti', 'prestare'], ['fumi', 'fumare'], ['sali', 'salire'],
         ['vinci', 'vincere'], ['ritorni', 'ritornare'], ['cammini', 'camminare'], ['ritrovi', 'ritrovare'],
-        ['resti', 'restare'], ['tiri', 'tirare'],
+        ['resti', 'restare'], ['tiri', 'tirare'], ['sbagli', 'sbagliare'],
     ]],
     ['present-lui', ['v'], [
         ['pare', 'parere'], ['accade', 'accadere'], ['indovina', 'indovinare'], ['supera', 'superare'], ['vende', 'vendere'],

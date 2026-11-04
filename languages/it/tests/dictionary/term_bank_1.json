@@ -113,5 +113,9 @@
   ["ritornare", "", "v", "", 0, ["to return"], 112, ""],
   ["ritorno", "", "n masc", "", 0, ["return"], 113, ""],
   ["ritorni", "", "non-lemma", "", 0, [["ritornare", ["second-person singular present indicative"]]], 114, ""],
-  ["ritorni", "", "non-lemma", "", 0, [["ritorno", ["plural"]]], 115, ""]
+  ["ritorni", "", "non-lemma", "", 0, [["ritorno", ["plural"]]], 115, ""],
+  ["notare", "", "v", "", 0, ["to notice"], 116, ""],
+  ["notaio", "", "n masc", "", 0, ["notary"], 117, ""],
+  ["notai", "", "non-lemma", "", 0, [["notare", ["first-person singular past historic"]]], 118, ""],
+  ["notai", "", "non-lemma", "", 0, [["notaio", ["plural"]]], 119, ""]
 ]

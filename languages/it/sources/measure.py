@@ -1,76 +1,43 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""The real-use measurements of README.md (Measurements 2-4). Not run by any test.
+"""The real-use measurements of README.md (Measurements 1-4, 6). Not run by any test.
 
-    python3 measure.py freq     <wty zip> <imported dict> <it_50k.txt> [--top N] [--from N] [--languages DIR] [--against DIR] [--out FILE]
-    python3 measure.py text     <wty zip> <imported dict> <pg*.txt>... [--languages DIR] [--out FILE] [--sample N] [--freq it_50k.txt]
-    python3 measure.py pronouns <wty zip> <imported dict> <ita_sentences.tsv(.bz2)> [--languages DIR] [--out FILE]
-    python3 measure.py eval     <imported dict> [--languages DIR] [--per-rule FILE]
-    python3 measure.py bench    <imported dict> [--languages DIR] [--runs N] [--passes N]
-    python3 measure.py traces   [--languages DIR]
+    measure.py freq     <wty zip> <dict> <it_50k.txt> [--top N] [--from N] [--languages D] [--against D] [--judged F] [--out F]
+    measure.py text     <wty zip> <dict> <pg*.txt>... [--languages D] [--out F] [--sample N] [--freq it_50k.txt] [--judged F]
+    measure.py pronouns <wty zip> <dict> <ita_sentences.tsv(.bz2)> [--languages D] [--out F]
+    measure.py eval     <dict> [--languages D] [--per-rule F]
+    measure.py bench    <dict> [--languages D] [--runs N] [--passes N]
+    measure.py traces   [--languages D]
 
-traces: for the UniMorph verb rows of tests/corpus.tsv and tests/gaps.tsv,
-the trace a lookup keeps (traceSelection "shortest": fewest steps, first on a
-tie) among the deinflections that reach the row's lemma, and whether its
-tense or mood transform is the one the row's UniMorph features name, and its
-person too (the Lei and Loro imperatives are the present subjunctive).
+Lookups run through build/lookup-batch-it with the pack's defaults, as a
+host's hover does. The judge reads the published zip: a first result is right
+when it is the word's own entry, a lemma the word's form-of rows name, or a
+lemma that such a lemma's rows name (andati: andato, andare).
 
-bench: build/benchmark-lookup on sources/benchmark-words.txt (64 texts, each
-the rest of a sentence from an inflected word, written for the pack) with the
-pack, --passes passes per run (default 6) with the first dropped, --runs runs
-(default 3); prints p50 and p95 per run in microseconds.
+freq: the words of the list's ranks --from+1 to --top whose form-of rows name
+a lemma the rules reach, looked up alone; wrong when the first result is
+neither. It also counts the first results that are a lemma the word's rows
+name whose citation form is 10 times rarer in the list than another they
+name (figliare for figli), and with --against D the first results that
+differ from the pack in D (a copy set to "filter"), 10 times rarer or more
+frequent.
 
-eval: hoshidicts-cli eval-language for the own rules (sources/own.json),
-Yomitan's (none for Italian: the pack's conditions with no transform), their
-union (tools/merge-transforms.mjs --out) and the final set (transforms.json),
-on tests/corpus.tsv with tests/gaps.tsv, tests/cases.tsv and
-tests/defaults.tsv, each with the pack's defaults (first line
-`# options: default`) and with every option on (the same rows without it).
-With --per-rule, the final set's --per-rule JSON on corpus + gaps + cases +
-defaults is written to FILE.
+text: every word of the texts (read in file-name order, so the samples are
+stable), looked up with the rest of its sentence; words without rows are
+counted apart, with random samples to judge by hand.
 
-Lookups run through build/lookup-batch-it (sources/lookup-batch.cpp) with the
-pack's defaults, as a host's hover does. The judge reads the published
-dictionary zip: a first result is right when it is the hovered word's own
-entry (a row with definitions), a lemma that one of the word's own form-of
-rows names (wiktionary-to-yomitan writes `parlavo` → [parlare, ...]), or a
-lemma that the rows of such a lemma name (`andati` → andato → andare).
-Another form of the same lemma does not count.
+Both count the tie classes of Known gaps (tie_class) and the own-entry class
+(own_entry_later: the word's own entry first while its form-of rows name a
+lemma listed later, sei: "six", then essere), which the rows' judge counts as
+right; --judged F lists the words judged wrong (first column).
 
-freq: of the N most frequent words of the list, those with a form-of row
-naming a lemma that the pack's rules also reach (hoshidicts-cli deinflect,
-defaults), looked up alone; wrong when the first result is neither.
-
-text: every word of the texts, looked up with the rest of its sentence;
-judged where the hovered word has rows in the dictionary, and the rest
-counted as unjudged (a random sample of them is written for judging by hand).
-The texts are read in the order of their file names, so the random samples
-do not depend on the order they are named in.
-
-Where a word's rows name several lemmas (figli: figlio and figliare), any of
-them is "right" by the rows, so freq and, with --freq, text also count the
-first results over the hovered word alone that are a lemma its own form-of
-rows name, other than the word itself, whose citation form is at least 10
-times rarer in the frequency list than another lemma they name (figliare for
-figlio): the frequency proxy hachi-lang-it's first audit used for the
-dominant reading. With --against DIR, freq also looks the words up with the pack in
-DIR (such as a copy with untaggedTerms "filter") and counts the first results
-that differ, those whose lemma's citation form is at least 10 times rarer
-than the other pack's first lemma, and those 10 times more frequent: the
-audit's own comparison, with citation forms counted in the whole list.
-With --from N, freq reads the words of ranks N+1 to --top only (a range the
-preferred readings were not chosen on: --from 10000 --top 50000).
-
-freq and text also count the first results over the word alone in four
-classes of ties that README.md's Known gaps lists (tie_class below), and text
-writes a random sample of 20 of each, with the words before the hovered one,
-for judging by hand.
-
-pronouns: the places in Tatoeba's sentences where a clitic or reflexive
-pronoun (mi, ti, si, ci, vi, me, te, se, ce, ve, lo, la, li, le, gli, ne, and
-the elided m', t', s', c', v') is followed by a word, looked up from the
-pronoun; counts first results whose match covers the pronoun and the verb,
-and judges them by the form-of rows of the whole phrase or of the verb.
+pronouns: the Tatoeba places where a clitic or reflexive pronoun is followed
+by a word, looked up from the pronoun, judged by the rows of the phrase or
+the verb. traces: whether the kept trace of each UniMorph row of the corpus
+names its tense and person. bench: benchmark-lookup on
+sources/benchmark-words.txt, p50 and p95 per run. eval: eval-language for
+the own, Yomitan (none), union and final sets on corpus + gaps, cases and
+defaults, with the defaults and every option on.
 """
 import bz2
 import collections
@@ -78,6 +45,7 @@ import json
 import os
 import random
 import re
+import shutil
 import unicodedata
 import subprocess
 import sys
@@ -159,13 +127,8 @@ def deinflect(words, languages):
 
 
 def acceptable(word, rows):
-    """The first results that are right for a hovered word, by the dictionary's own rows.
-
-    The word's own entry, a lemma its form-of rows name, and a lemma the rows
-    of that lemma name in turn (andati names andato, whose row names andare;
-    bellissima names bellissimo, which names bello). Never a sibling: a form
-    that names the same lemma (ello for ellos) is not the word's lemma.
-    """
+    """The first results the dictionary's rows accept for a word: its own entry, a lemma its form-of
+    rows name, and that lemma's own named lemmas (andati: andato, andare); never a sibling form."""
     good = set()
     for w in {word, word.lower()}:
         entry = rows.get(w)
@@ -238,10 +201,8 @@ def referenced(text, rows):
 
 
 def rarer_named(expression, word, rows):
-    """The lemma a first result hides: when the first result is one of the lemmas the hovered word's
-    own form-of rows name, another of them whose citation form is at least 10 times more frequent in
-    the frequency list (the first audit's proxy for the dominant reading: figli shows figliare where
-    figlio is 18 times more frequent), or None. The word itself is not one of the lemmas compared."""
+    """For a first result that is a lemma the word's own form-of rows name, another of them whose
+    citation form is 10 times more frequent in the list (figli: figliare, not figlio), or None."""
     named = referenced(word, rows)
     words = judge_variants(word)
     if expression not in named or expression in words:
@@ -260,14 +221,9 @@ TIE_CLASSES = ("feminine noun before the adjective", "-e noun before the -o adje
 
 
 def tie_class(word, f, rows):
-    """The class of a first result over the hovered word alone, among the ties README.md's Known gaps
-    counts, or None: a feminine noun shown for a feminine plural whose rows also name the -o adjective
-    (nuove: nuova, not nuovo); an -e noun for an -i plural whose rows also name the -o adjective (morti:
-    morte, not morto); an -rsi verb through a one-step trace (the dictionary's imperative row) for a word
-    in -ati, -iti, -uti (condannati: condannarsi, not condannato); a capital letter's own entry for that
-    letter (E, A, I, O starting a sentence); a verb for a word in -e whose rows also name the -a noun (cascate:
-    cascare, not cascata); an -co adjective for an -ci or -chi plural whose rows also name the -io noun (marchi:
-    marco, not marchio)."""
+    """The Known gaps tie class of a first result over the word alone, or None (see TIE_CLASSES):
+    nuove: nuova, not nuovo; morti: morte, not morto; condannati: condannarsi, not condannato; cascate:
+    cascare, not cascata; marchi: marco, not marchio; E, A, I, O: the letter."""
     if f is None or f["matched"] != word:
         return None
     w, e = word.lower(), f["expression"]
@@ -290,6 +246,27 @@ def tie_class(word, f, rows):
     return None
 
 
+def own_entry_later(word, res, rows):
+    """The lemma a first result hides when it is the hovered word's own entry, matched as written with no
+    trace, while the word's own form-of rows name another lemma that the lookup lists later; else None."""
+    r = res["results"]
+    if not r or r[0]["matched"] != word or r[0]["trace"] or r[0]["expression"].lower() != word.lower():
+        return None
+    named = set()
+    for v in {word, word.lower()}:
+        if v in rows:
+            named |= rows[v]["refs"]
+    named -= {word, word.lower()}
+    return next((x["expression"] for x in r[1:] if x["expression"] in named), None)
+
+
+def load_judged(path):
+    """The words of a judged list (first column), lines starting with # and a header line "word" skipped."""
+    if not path:
+        return set()
+    return {l.split("\t")[0] for l in open(path, encoding="utf-8") if l.strip() and not l.startswith(("#", "word\t"))}
+
+
 def first(result):
     return result["results"][0] if result["results"] else None
 
@@ -303,6 +280,7 @@ def cmd_freq(args):
     start = int(option(args, "--from", "0"))
     languages = option(args, "--languages", os.path.join(REPO, "languages"))
     against = option(args, "--against", None)
+    judged = load_judged(option(args, "--judged", None))
     out_file = option(args, "--out", None)
     wty, dictionary, freq_file = args
     freq_file_full = freq_file
@@ -375,6 +353,13 @@ def cmd_freq(args):
     for w, f in sorted(wrong, key=lambda x: -counts[x[0]]):
         lines.append(f"  {w}\t{counts[w]}\t{describe(f) if f else 'no result'}\tright: {', '.join(sorted(acceptable(w, rows)))}")
     lines += compared
+    own = [(w, own_entry_later(w, res, rows)) for w, res in zip(words, every)]
+    own = [(w, l) for w, l in own if l is not None]
+    tok = lambda ws: sum(counts[w] for w in ws) / total_tokens
+    lines.append(f"own entry first, a lemma the word's rows name later: {len(own)} words, {tok([w for w, _ in own]):.3%} of the tokens"
+                 + (f"; judged wrong (--judged): {len([w for w, _ in own if w in judged])} words, "
+                    f"{tok([w for w, _ in own if w in judged]):.3%}; judged wrong in all: {len([w for w in words if w in judged])} words, "
+                    f"{tok([w for w in words if w in judged]):.3%}" if judged else ""))
     ties = collections.defaultdict(list)
     for w, res in zip(words, every):
         c = tie_class(w, first(res), rows)
@@ -389,6 +374,8 @@ def cmd_freq(args):
             lines.append(f"  of which {os.path.basename(os.path.normpath(against))} shows another lemma first: {len(other)} words, "
                          f"{sum(counts[w] for w in other) / total_tokens:.3%} of the tokens: "
                          + ", ".join(f"{w} -> {their_first[w]['expression']}" for w in other))
+    lines.append("own entry first, a lemma the word's rows name later (word, tokens, the later lemma, judged wrong):")
+    lines += [f"  own\t{w}\t{counts[w]}\t{l}\t{'W' if w in judged else ''}" for w, l in sorted(own, key=lambda x: -counts[x[0]])]
     write(lines, out_file)
 
 
@@ -451,6 +438,7 @@ def classify(word, nxt, f, rows):
 
 
 TIES = []  # (class, hover index, word, first result) of the last judge_lookups
+OWN = []  # (hover index, word, first result, later lemma): the own-entry class of the last judge_lookups
 
 
 def judge_lookups(hovers, words, nexts, rows, dictionary, languages):
@@ -465,6 +453,7 @@ def judge_lookups(hovers, words, nexts, rows, dictionary, languages):
     rarer_items = []
     examples = collections.defaultdict(list)
     TIES.clear()
+    OWN.clear()
     for i, (hover, word, nxt, res) in enumerate(zip(hovers, words, nexts, results)):
         f = first(res)
         if f is None:
@@ -473,6 +462,9 @@ def judge_lookups(hovers, words, nexts, rows, dictionary, languages):
         c = tie_class(word, f, rows)
         if c is not None:
             TIES.append((c, i, word, f))
+        later = own_entry_later(word, res, rows)
+        if later is not None:
+            OWN.append((i, word, f, later))
         known = acceptable_any(word, rows) or (nxt is not None and (acceptable_any(nxt, rows) or acceptable(word + "'", rows)))
         if not known and f["matched"] == word:
             tally["unjudged"] += 1
@@ -504,6 +496,7 @@ def cmd_text(args):
     out_file = option(args, "--out", None)
     sample = int(option(args, "--sample", "60"))
     load_frequencies(option(args, "--freq", None))
+    judged_wrong = load_judged(option(args, "--judged", None))
     wty, dictionary, *paths = args
     rows = read_dictionary(wty)
     # Sorted, so the random samples do not depend on the order the texts are named in.
@@ -549,6 +542,18 @@ def cmd_text(args):
         lines.append(f"random sample of {min(20, len(items))} of the class {c} (judge by hand):")
         for _, i, word, f in random.sample(items, min(20, len(items))):
             lines.append(f"  {word}\t{describe(f)}\t…{LEFTS[i]}[{hovers[i][:50]}]")
+    inj = [o for o in OWN if o[1].lower() in judged_wrong or o[1] in judged_wrong]
+    rest = [o for o in OWN if not (o[1].lower() in judged_wrong or o[1] in judged_wrong)]
+    per_word = collections.Counter(o[1].lower() for o in OWN)
+    lines.append(f"own entry first, a lemma the word's rows name later: {len(OWN)} lookups ({len(OWN) / len(hovers):.3%}), "
+                 f"{len(per_word)} words; of the words judged wrong (--judged): {len(inj)} lookups ({len(inj) / len(hovers):.3%}): "
+                 + ", ".join(f"{w} {n}" for w, n in collections.Counter(o[1].lower() for o in inj).most_common(20)))
+    for label, items in (("of the words judged wrong", inj), ("of the other words", rest)):
+        random.seed(20261104)
+        k = min(40 if items is inj else 60, len(items))
+        lines.append(f"random sample of {k} own-entry lookups {label} (judge by hand):")
+        for i, word, f, later in random.sample(items, k):
+            lines.append(f"  {word}\t{f['expression']} before {later}\t…{LEFTS[i]}[{hovers[i][:50]}]")
     write(lines, out_file)
 
 
@@ -642,6 +647,13 @@ def cmd_eval(args):
     pack = os.path.join(languages, "it")
     tests = os.path.join(pack, "tests")
     work = tempfile.mkdtemp(prefix="it-eval-")
+    try:
+        eval_files(languages, pack, tests, work, per_rule_file, dictionary)
+    finally:
+        shutil.rmtree(work, ignore_errors=True)
+
+
+def eval_files(languages, pack, tests, work, per_rule_file, dictionary):
     final = os.path.join(pack, "transforms.json")
     own = os.path.join(pack, "sources", "own.json")
     yomitan = os.path.join(work, "yomitan-none.json")
