@@ -1,11 +1,14 @@
-# Labels for sources/measure-lookups.mjs --labels: first results that are one of several lemmas the word's own wty-ka-en rows name.
+# Labels for sources/measure-lookups.mjs --labels: first results that are one of several lemmas the word's own wty-ka-en rows name,
+# or the word's own entry while its rows name another lemma (the pair word<TAB>word).
 # word<TAB>first result<TAB>label (W: wrong in the usual reading; A: ambiguous, context decides; R: right)<TAB>note
 # Judged by hand: every W and A label (the note says why) and the R labels noted "usual reading", with audit-hachi-lang-ka's labels
-# (reports/audit-hachi-lang-ka-evidence/inputs/tie-labels.tsv) as the base. Made by a rule and spot-checked: R noted "aspect" (every
-# lemma the rows name is a verb, and the first result is one of them or the verb its verbal noun names: aspect or version partners,
-# such as გააკეთე → გააკეთებს or აკეთებს) and R noted "one lemma" (the rows reach a single lemma).
-# The file covers every such pair in the books, Tatoeba, the 10,000 most frequent words and audit-hachi-lang-ka's two texts for the
-# pack as committed.
+# (reports/audit-hachi-lang-ka-evidence/inputs/tie-labels.tsv) and audit-hachi-lang-ka-b's (reports/audit-hachi-lang-ka-b-evidence/inputs/
+# ownentry-labels.tsv, my-labels-mytexts.tsv) as the base. R noted "own": the word's own entry is the word the text has (pronouns,
+# adverbs, postpositional entries, verbal nouns, verb forms), read in the list and spot-checked in context. Made by a rule and
+# spot-checked: R noted "aspect" (every lemma the rows name is a verb, and the first result is one of them or the verb its verbal
+# noun names: aspect or version partners, such as გააკეთე → გააკეთებს or აკეთებს) and R noted "one lemma" (the rows reach a single
+# lemma). The file covers every such pair in the books, Tatoeba, the 10,000 most frequent words and the two auditors' four texts for
+# the pack as committed.
 აღწერით	აღწერითი	W	"by the census/description" shown as "descriptive"
 ბაზის	ბაზი	W	"of the base" shown as "bumblebee"
 ბუნებით	ბუნი	W	"by nature" shown as "shaft, handle"
@@ -13,12 +16,16 @@
 ბუნებისგან	ბუნი	W	"from nature" shown as "shaft, handle"
 გახდა	იხდის	W	"became" shown as "to take off (clothing)": the word's own rows name only იხდის and გაიხდის
 დავით	დავი	W	the name David shown as "dispute"
+დანიშვნა	ნიშნავს	W	"appointment" shown as "to mean", as დანიშვნის
 დანიშვნის	ნიშნავს	W	"of the appointment" shown as "to mean"; the row names დანიშნავს too
+დაწვა	წვავს	W	in 6 of its 7 measured positions the aorist of "to lie down" (წვება), which wty-ka-en lacks
 დგომა	აღდგომა	W	"standing" shown as "Easter"
 დგომას	აღდგომა	W	as დგომა
 დინების	დინები	W	"of the current" shown as "dynes"
 თქვე	მე	W	vocative თქვენ shown as "I, me"
 თქვენა	მე	W	emphatic თქვენ shown as "I, me"
+თქვენით	მე	W	instrumental of თქვენ shown as "I, me" (audit-hachi-lang-ka-b)
+იგინი	მე	W	archaic "they" (= ისინი) shown as "I, me" (audit-hachi-lang-ka-b)
 იყო	იყი	W	"was" (aorist of არის) shown as "vodka, fermented drink" (obs.)
 კერის	კერი	W	"of the hearth" shown as "curry"
 კვლას	კვლავ	W	dative of კვლა "killing" (კლავს) shown as კვლავ "again", whose old form კვლა has no dative
@@ -37,7 +44,36 @@
 შემოქმედების	შემოქმედი	W	"of the (creative) work" shown as "creator"
 შენა	მე	W	emphatic შენ shown as "I, me"
 ჩვენად	მე	W	adverbial of ჩვენ "we" shown as "I, me"
+ჩვენით	მე	W	instrumental of ჩვენ "we" shown as "I, me" (audit-hachi-lang-ka-b)
 ჭამ	ჭა	W	"you eat" (2nd person of ჭამს) shown as the ergative of ჭა "well"
+ამება	ამება	W	"pleasing, pleasure" (აამებს), shown as "amoeba" (audit-hachi-lang-ka-b)
+არაფერს	არაფერს	W	dative of არაფერი "nothing" (არაფერს ვამბობ), shown as "you're welcome"
+არაფრის	არაფრის	W	genitive of არაფერი "nothing" (არაფრის გამო, არაფრის მაქნისი), shown as "you're welcome"
+ბანს	ბანს	W	dative of ბანი "bass (part)", shown as "to wash" (audit-hachi-lang-ka-b)
+ბატონები	ბატონები	W	"masters, lords" (ბატონი), shown as "contagious diseases like measles" (audit-hachi-lang-ka-b)
+გაგება	გაგება	W	"understanding" (გაიგებს), shown as "a tool for fishing" (audit-hachi-lang-ka-b)
+გავა	გავა	W	"will go out" (გადის), shown as "breech, croup" (audit-hachi-lang-ka-b)
+გვერდზე	გვერდზე	W	"on (one's) side" (გვერდი with -ზე), shown as "by, past"
+დის	დის	W	"of the sister" (და), shown as "to flow" (audit-hachi-lang-ka-b)
+ზრდის	ზრდის	W	"of growth" (ზრდა; 10 of 10 sampled Wikipedia contexts), shown as the verb "to raise" (audit-hachi-lang-ka-b)
+თავით	თავით	W	instrumental of თავი "head, beginning" (თავით-ფეხებამდე, თავით ბოლომდე), shown as "head-on"
+თევზები	თევზები	W	"fish" (plural of თევზი), shown as "Pisces" (audit-hachi-lang-ka-b)
+კარმა	კარმა	W	ergative of კარი "door", shown as "karma" (audit-hachi-lang-ka-b)
+კვერცხები	კვერცხები	W	"eggs" (კვერცხი), shown as "balls" (audit-hachi-lang-ka-b)
+კიდე	კიდე	W	dialect კიდევ "again, also" in all 4 contexts, shown as "edge" (audit-hachi-lang-ka-b)
+მაშა	მაშა	W	the particle მაშა "well then" (მაშ) and the name Masha, shown as "pliers, tongs" (audit-hachi-lang-ka-b)
+მთაში	მთაში	W	"in the mountains" (მთა with -ში), shown as "uphill"
+მისაღებად	მისაღებად	W	"in order to receive" (adverbial of მისაღები), shown as "acceptably"
+ტირი	ტირი	W	"you cry" (ტირის), shown as "shooting range" (audit-hachi-lang-ka-b)
+ღიმი	ღიმი	W	"smile" (ღიმილი), shown as "turnip-root chervil"
+შიშით	შიშით	W	"with fear" (instrumental of შიში), shown as "shyly"
+ჩადი	ჩადი	W	"go down!" (ჩადის), shown as "Chad" (audit-hachi-lang-ka-b)
+ცეცხლში	ცეცხლში	W	"into the fire" (ცეცხლი with -ში), shown as "ablaze"
+წელს	წელს	W	"in (the year)", the dative of წელი, in 9,136 of 9,508 occurrences in the first 60 MB of the Wikipedia dump (after a year number) and in all 18 Tatoeba sentences (გასულ, მომავალ, იმავე წელს), shown as "this year" (audit-hachi-lang-ka-b)
+წონის	წონის	W	"of weight" (წონა; 10 of 10 sampled Wikipedia contexts), shown as "to weigh" (audit-hachi-lang-ka-b)
+წყლები	წყლები	W	"waters" (წყალი), shown as "amniotic fluid" (audit-hachi-lang-ka-b)
+ხარო	ხარო	W	ხარ "you are" with the quotative -ო, shown as "deep pit" (audit-hachi-lang-ka-b)
+ჯანმრთელად	ჯანმრთელად	W	"healthy, in good health" (ჯანმრთელი), shown as "strongly"
 ალის	ალი	A	genitive of ალი "flame" or of ალა
 ალისა	ალი	A	as ალის
 არყით	არაყი	A	"with vodka" (არაყი) or "with birch" (არყი)
@@ -51,7 +87,10 @@
 თავის	თავი	A	mostly the possessive "his own" (თავისი); the genitive of თავი "head" in other contexts
 თავის	თავისი	A	the possessive "his own" (7 of 8 contexts audit-hachi-lang-ka sampled) or the genitive of თავი "head"
 თემები	თემი	A	"communities" (თემი) or "themes" (თემა)
+თვლებზე	თვალი	A	"on wheels"; თვალი has no wheel sense in wty-ka-en (audit-hachi-lang-ka-b)
+თვლებით	თვალი	A	as თვლებზე (audit-hachi-lang-ka-b)
 თვლების	თვალი	A	genitive plural of თვალი "eye, gem" or of თვლა "counting"
+თვლისა	თვალი	A	"of counting" (თვლა) in its context, shown as "eye" (audit-hachi-lang-ka-b)
 კუბის	კუბი	A	Cuba or cube
 მალის	მალი	A	genitive of მალი "vertebra" or of მალა
 მანქანებით	მანქანები	A	"with cars" (მანქანა) or "with machinery" (მანქანები)
@@ -63,7 +102,10 @@
 მოთხოვნით	თხოვნა	A	"by demand" (მოთხოვნა) shown as "request" (თხოვნა), the form-of target of მოთხოვნა
 მოთხოვნის	თხოვნა	A	as მოთხოვნით
 მომზადება	მზადება	A	"preparation" (perfective) shown as the imperfective verbal noun
+მოცდა	ცდა	A	"waiting"; ცდა's second sense is waiting (audit-hachi-lang-ka-b)
 მოძღვრებად	მოძღვრები	A	"as doctrine" (მოძღვრება) or "as preachers" (მოძღვარი)
+მოძღვრებით	მოძღვრები	A	as მოძღვრების (audit-hachi-lang-ka-b)
+მოძღვრების	მოძღვრები	A	"of the doctrine": wty-ka-en has no მოძღვრება (audit-hachi-lang-ka-b)
 პაპები	პაპი	A	as პაპის
 პაპების	პაპი	A	as პაპის
 პაპის	პაპი	A	"of the pope" (პაპი) or "of grandpa" (პაპა)
@@ -75,6 +117,10 @@
 შეთქმულების	შეთქმულები	A	"of the conspiracy" or "of the conspirators"
 შენით	შენი	A	"by yourself" (შენ) or "with yours" (შენი)
 ცავ	ცა	A	vocative of ცა "sky" or the dialect word ციცავ
+წერით	წერა	A	fragments of hyphenated words; წერა is shown as "fate" (audit-hachi-lang-ka-b)
+წიწილები	წიწილი	A	chicks (წიწილა) or snakelets, both in the text (audit-hachi-lang-ka-b)
+წიწილებით	წიწილი	A	as წიწილები (audit-hachi-lang-ka-b)
+წიწილებს	წიწილი	A	as წიწილები (audit-hachi-lang-ka-b)
 ხანების	ხანი	A	as ხანის
 ხანებში	ხანი	A	as ხანის
 ხანიდან	ხანი	A	as ხანის
@@ -82,25 +128,82 @@
 ხანის	ხანი	A	genitive of ხანი "khan, time" or of ხანა "age, period"
 ხატების	ხატები	A	"of the icons" (ხატი) or ხატები "pictures"
 ხევის	ხევი	A	genitive of ხევი "gorge" or of ხევა
+ბოლოს	ბოლოს	A	"finally" or "at the end of" (ბოლო) (audit-hachi-lang-ka-b)
+დე	დე	A	"let" (დაე) or a hyphen fragment (audit-hachi-lang-ka-b)
+დებს	დებს	A	"puts" or "to the sisters" (audit-hachi-lang-ka-b)
+დღეს	დღეს	A	"today" or "on the day" (დღე) (audit-hachi-lang-ka-b)
+ველი	ველი	A	"field" or "I expect" (ელის) (audit-hachi-lang-ka-b)
+თქმით	თქმით	A	"according to" (instrumental of თქმა) or "tellingly" (audit-hachi-lang-ka-b)
+კილო	კილო	A	"kilo" or "tone, manner" (not in wty-ka-en) (audit-hachi-lang-ka-b)
+მოდი	მოდი	A	the particle "come on, let's" or the imperative "come!" (მოდის)
+სიტყვაზე	სიტყვაზე	A	"for example" or "on the word" (audit-hachi-lang-ka-b)
+ქალა	ქალა	A	"skull" or part of the name ქალა-შავა (audit-hachi-lang-ka-b)
+წერა	წერა	A	"writing" (Wikipedia, Tatoeba) or "fate" (the books) (audit-hachi-lang-ka-b)
+წვერები	წვერები	A	"beards" or "tips, peaks" (წვერი) (audit-hachi-lang-ka-b)
 ადგილზე	ადგილი	R	usual reading
 ათენის	ათენი	R	usual reading
+ალით	ალი	R	usual reading
+ამოიღე	ამოიღებს	R	usual reading
+ანგელოზის	ანგელოზი	R	usual reading
 ბაზის	ბაზა	R	usual reading
 ბერად	ბერი	R	usual reading
+ბერადა	ბერი	R	usual reading
 ბერის	ბერი	R	usual reading
+ბეჭდვა	ბეჭდავს	R	usual reading
 ბრძანებით	ბრძანება	R	usual reading
 ბუნებით	ბუნება	R	usual reading
 ბუნების	ბუნება	R	usual reading
+ბუნებისა	ბუნება	R	usual reading
 ბუნებისგან	ბუნება	R	usual reading
+გაგზავნეთ	გაგზავნის	R	usual reading
+გავიხადოთ	გაიხდის	R	usual reading
+გავრცელება	ავრცელებს	R	usual reading
+გაიღვიძე	გაიღვიძებს	R	usual reading
+გაიხადე	გაიხდის	R	usual reading
+გამოაცხადე	გამოაცხადებს	R	usual reading
+განხორციელება	ახორციელებს	R	usual reading
 გარემოების	გარემოება	R	usual reading
+გასინჯეთ	გასინჯავს	R	usual reading
+გაუგზავნეთ	გაუგზავნის	R	usual reading
+გაყიდვა	გაყიდის	R	usual reading
+გაჩერდებოდა	გაჩერდება	R	usual reading
+გაჩერდეს	გაჩერდება	R	usual reading
+გახსენი	გახსნის	R	usual reading
+გდებას	აგდებს	R	usual reading
 გეგმავ	გეგმავს	R	usual reading
+გლეჯას	გლეჯს	R	usual reading
+გლეჯის	გლეჯს	R	usual reading
+გოგონავ	გოგო	R	usual reading
+გოგონამ	გოგო	R	usual reading
+გორისკენ	გორი	R	usual reading
 გუნდებად	გუნდი	R	usual reading
 გუნდები	გუნდი	R	usual reading
 გუნდების	გუნდი	R	usual reading
 გუნდიდან	გუნდი	R	usual reading
 გუნდის	გუნდი	R	usual reading
+დაამთავრეთ	დაამთავრებს	R	usual reading
+დაარსება	დააარსებს	R	usual reading
+დააყარეთ	დააყრის	R	usual reading
+დაბრუნებამ	დაბრუნდება	R	usual reading
+დაბრუნებისა	დაბრუნდება	R	usual reading
+დადება	დადებს	R	usual reading
+დავაყაროთ	დააყრის	R	usual reading
 დავით	დავითი	R	usual reading
 დავის	დავი	R	usual reading
+დავისა	დავი	R	usual reading
+დავიწყებას	დაავიწყდება	R	usual reading
+დავწეროთ	დაწერს	R	usual reading
 დათმობა	დათმობს	R	usual reading
+დათრგუნვად	თრგუნავს	R	usual reading
+დაიცავით	დაიცავს	R	usual reading
+დაიძინე	დაიძინებს	R	usual reading
+დაკეტე	დაკეტავს	R	usual reading
+დანიშვნა	დანიშნავს	R	usual reading
+დანიშვნის	დანიშნავს	R	usual reading
+დასაფლავება	დაასაფლავებს	R	usual reading
+დაძინების	დაიძინებს	R	usual reading
+დახარჯვა	ხარჯავს	R	usual reading
+დაჯდებოდე	დაჯდება	R	usual reading
 დგომა	დგას	R	usual reading
 დედოფლები	დედოფალი	R	usual reading
 დენის	დენი	R	usual reading
@@ -111,19 +214,37 @@
 ერის	ერი	R	usual reading
 ერისა	ერი	R	usual reading
 ერისთავები	ერისთავი	R	usual reading
+ერისთვის	ერი	R	usual reading
 ესეები	ესე	R	usual reading
+ვნებით	ვნება	R	usual reading
 თავისად	თავისი	R	usual reading
+თვის	თვე	R	genitive of თვე; the 7 book positions are halves of words hyphenated at a line end (დღის-/თვის)
+თლათ	თლის	R	usual reading
 თქვე	თქვენ	R	usual reading
 თქვენა	თქვენ	R	usual reading
+თქმაზე	ამბობს	R	usual reading
+თქმას	ამბობს	R	usual reading
+თქმასა	ამბობს	R	usual reading
+თქმის	ამბობს	R	usual reading
 იმად	ის	R	usual reading
 იმათ	ის	R	usual reading
 იმან	ის	R	usual reading
 იმას	ის	R	usual reading
 იმის	ის	R	usual reading
+იპოვნე	პოულობს	R	usual reading
+იპოვნი	იპოვის	R	usual reading
+იყიდო	იყიდის	R	usual reading
 იყო	არის	R	usual reading
 იძულებით	იძულება	R	usual reading
+კალათები	კალათი	R	usual reading
+კალათებით	კალათი	R	usual reading
+კალათიდან	კალათი	R	usual reading
+კალათით	კალათი	R	usual reading
 კახელები	კახელი	R	usual reading
+კბენა	კბენს	R	usual reading
+კეთებას	აკეთებს	R	usual reading
 კერის	კერა	R	usual reading
+კვლას	კლავს	R	usual reading
 კვლევით	კვლევა	R	usual reading
 კითხვით	კითხვა	R	usual reading
 კოჭები	კოჭი	R	usual reading
@@ -131,31 +252,48 @@
 მათმა	მათი	R	usual reading
 მაისურით	მაისური	R	usual reading
 მან	ის	R	usual reading
+მარნები	მარანი	R	usual reading
+მარნიდან	მარანი	R	usual reading
 მერის	მერი	R	"of the mayor" or "of Mary": both are მერი; მერე "then" has no genitive
 მერისგან	მერი	R	usual reading
 მერისთვის	მერი	R	usual reading
+მიდიოდე	მიდის	R	usual reading
+მიდიოდეს	მიდის	R	usual reading
 მით	ის	R	usual reading
 მის	ის	R	usual reading
 მოიცა	მოიცდის	R	usual reading ("wait": მოიცადე → მოიცდის)
 მონაწილეობით	მონაწილეობა	R	usual reading
 მოქმედებით	მოქმედება	R	usual reading
+მოჭრა	მოჭრის	R	usual reading
+მოხმარება	მოიხმარს	R	usual reading
 მტკიცებით	მტკიცება	R	usual reading
 მუდმივ	მუდმივი	R	usual reading
+მურტალ	მურდალი	R	usual reading
+ნახვის	ხედავს	R	usual reading
 ნებით	ნება	R	usual reading
+ნებითა	ნება	R	usual reading
 ნების	ნება	R	usual reading
 ნებისა	ნება	R	usual reading
+ნიდაყვამდე	იდაყვი	R	usual reading
+ნიდაყვზე	იდაყვი	R	usual reading
 ნიშნის	ნიშანი	R	usual reading
+პანღურით	პანჩური	R	usual reading
+პარვით	პარავს	R	usual reading
 პირად	პირადი	R	usual reading
 პირობით	პირობა	R	usual reading
+რეკვა	რეკავს	R	usual reading
 საზღვრები	საზღვარი	R	usual reading
 საზღვრების	საზღვარი	R	usual reading
 საზღვრებს	საზღვარი	R	usual reading
 საზღვრებში	საზღვარი	R	usual reading
 საზღვრის	საზღვარი	R	usual reading
+სალათები	სალათა	R	usual reading
 სამების	სამება	R	usual reading
 სასოებით	სასოება	R	usual reading
 სასოების	სასოება	R	usual reading
 სირბილით	სირბილი	R	usual reading
+სმა	სვამს	R	usual reading
+სმას	სვამს	R	usual reading
 სჯა	სჯის	R	usual reading
 ტანის	ტანი	R	usual reading
 ტანისა	ტანი	R	usual reading
@@ -164,6 +302,7 @@
 ფენის	ფენა	R	usual reading
 ფილებით	ფილა	R	usual reading
 ფრანგები	ფრანგი	R	usual reading
+ქადაგებით	ქადაგება	R	usual reading
 ქალად	ქალი	R	usual reading
 ქალებზე	ქალი	R	usual reading
 ქალებთან	ქალი	R	usual reading
@@ -173,23 +312,48 @@
 ქალებისთვის	ქალი	R	usual reading
 ქალებმა	ქალი	R	usual reading
 ქალებს	ქალი	R	usual reading
+ქალებსა	ქალი	R	usual reading
 ქალის	ქალი	R	usual reading
 ქალისა	ქალი	R	usual reading
 ქალისკენ	ქალი	R	usual reading
+ყიდულობდე	ყიდულობს	R	usual reading
 ყურიდან	ყური	R	usual reading
 ყურით	ყური	R	usual reading
 ყურის	ყური	R	usual reading
+შავარდენმა	შევარდენი	R	usual reading
+შეადარე	შეადარებს	R	usual reading
+შევინახოთ	შეინახავს	R	usual reading
 შემოქმედებით	შემოქმედება	R	usual reading
 შემოქმედების	შემოქმედება	R	usual reading
+შემოქმედებისა	შემოქმედება	R	usual reading
+შემოქმედებისთვის	შემოქმედება	R	usual reading
 შენა	შენ	R	usual reading
 შენით	შენ	R	usual reading
+შერიგება	შერიგდება	R	usual reading
+შერიგების	შერიგდება	R	usual reading
 შეფასებით	შეფასება	R	usual reading
+ჩავიდეთ	ჩადის	R	usual reading
 ჩემ	მე	R	usual reading
 ჩემით	მე	R	usual reading
+ჩერდებოდა	ჩერდება	R	usual reading
 ჩვენად	ჩვენ	R	usual reading
 ცემა	ცემს	R	usual reading
+ცხელება	გააცხელებს	R	usual reading
+წავიდოდე	წავა	R	usual reading
+წავიდოდეთ	წავა	R	usual reading
+წავიდოდი	წავა	R	usual reading
+წარმართებს	წარმართები	R	usual reading
+წახვალთ	წავა	R	usual reading
+წახვიდოდე	წავა	R	usual reading
+წევას	ეწევა	R	usual reading
+წელიწადს	წელი	R	usual reading
 წოდებით	წოდება	R	usual reading
 ჭამ	ჭამს	R	usual reading
+ჭერის	ჭერი	R	usual reading
+ხვედრათ	ხვდება	R	usual reading
+ხსენებაზე	გაიხსენებს	R	usual reading
+ჯდებოდა	ჯდება	R	usual reading
+ჰავას	ჰავა	R	usual reading
 ადამიანების	ადამიანი	R	one lemma
 ავაშენოთ	ააშენებს	R	aspect
 აირჩია	აირჩევს	R	aspect
@@ -351,7 +515,6 @@
 დამარცხება	დაამარცხებს	R	aspect
 დამსხდარიყვნენ	დასხდება	R	aspect
 დამჯდარიყო	ჯდება	R	aspect
-დანიშვნა	ნიშნავს	R	aspect
 დაპატიჟე	დაპატიჟებს	R	aspect
 დაპატიჟება	დაპატიჟებს	R	aspect
 დაპყრობას	დაიპყრობს	R	aspect
@@ -369,7 +532,6 @@
 დაწერა	დაწერს	R	aspect
 დაწერე	დაწერს	R	aspect
 დაწერეთ	დაწერს	R	aspect
-დაწვა	წვავს	R	aspect
 დახარჯე	დახარჯავს	R	aspect
 დახურვა	ხურავს	R	aspect
 დაჯდა	დაჯდება	R	aspect
@@ -389,7 +551,6 @@
 ვყიდულობ	ყიდულობს	R	aspect
 ვწერ	წერს	R	aspect
 თარგმნა	თარგმნის	R	aspect
-თვის	თვე	R	one lemma
 თვლა	თვლის	R	aspect
 თიბვაში	თიბავს	R	aspect
 თლა	თლის	R	aspect
@@ -546,3 +707,525 @@
 ხსნას	ხსნის	R	aspect
 ჯდომა	ჯდება	R	aspect
 ჰკითხე	ჰკითხავს	R	aspect
+ავადმყოფობა	ავადმყოფობა	R	own
+ავტობუსში	ავტობუსში	R	own
+ავტომატურად	ავტომატურად	R	own
+აივანზე	აივანზე	R	own
+ალა	ალა	R	own
+ალო	ალო	R	own
+ამერიკაში	ამერიკაში	R	own
+ამით	ამით	R	own
+ამჯერად	ამჯერად	R	own
+არა	არა	R	own
+არანაირად	არანაირად	R	own
+არასოდეს	არასოდეს	R	own
+არი	არი	R	own
+არის	არის	R	own
+არსად	არსად	R	own
+არსება	არსება	R	own
+არსებობა	არსებობა	R	own
+აფხაზეთში	აფხაზეთში	R	own
+აქ	აქ	R	own
+აღება	აღება	R	own
+აღმოსავლეთისკენ	აღმოსავლეთისკენ	R	own
+აღტაცებით	აღტაცებით	R	own
+აჩრდილი	აჩრდილი	R	own
+აწმყოში	აწმყოში	R	own
+ახსნა	ახსნა	R	own
+აჯანყება	აჯანყება	R	own
+ბაზართან	ბაზართან	R	own
+ბედნიერება	ბედნიერება	R	own
+ბიბლიოთეკაში	ბიბლიოთეკაში	R	own
+ბინაში	ბინაში	R	own
+ბიძია	ბიძია	R	own
+გადასახადი	გადასახადი	R	own
+გადაცემა	გადაცემა	R	own
+გადახდა	გადახდა	R	own
+გაერთიანება	გაერთიანება	R	own
+გაველურება	გაველურება	R	own
+გათხოვება	გათხოვება	R	own
+გათხოვილი	გათხოვილი	R	own
+გაკვეთილი	გაკვეთილი	R	own
+გამარჯვება	გამარჯვება	R	own
+გამგზავრება	გამგზავრება	R	own
+გამოთქმა	გამოთქმა	R	own
+გამოკითხვა	გამოკითხვა	R	own
+გამოკლება	გამოკლება	R	own
+გამოჩენილი	გამოჩენილი	R	own
+გამოცდა	გამოცდა	R	own
+გამოცემა	გამოცემა	R	own
+გამოცვლა	გამოცვლა	R	own
+გამოცვლის	გამოცვლის	R	own
+გამოცხადება	გამოცხადება	R	own
+გამოძიება	გამოძიება	R	own
+განათლება	განათლება	R	own
+განათლებული	განათლებული	R	own
+განვითარება	განვითარება	R	own
+განთავისუფლება	განთავისუფლება	R	own
+განკარგულებაში	განკარგულებაში	R	own
+განმარტება	განმარტება	R	own
+განსხვავებით	განსხვავებით	R	own
+განცხადება	განცხადება	R	own
+გარდაქმნა	გარდაქმნა	R	own
+გატაცება	გატაცება	R	own
+გაუქმება	გაუქმება	R	own
+გაფრთხილება	გაფრთხილება	R	own
+გაფუჭებული	გაფუჭებული	R	own
+გაღება	გაღება	R	own
+გაღვიძება	გაღვიძება	R	own
+გაჩერდება	გაჩერდება	R	own
+გაჩერება	გაჩერება	R	own
+გემო	გემო	R	own
+გემოვნებით	გემოვნებით	R	own
+გვერდით	გვერდით	R	own
+გვიან	გვიან	R	own
+გზად	გზად	R	own
+გზაზე	გზაზე	R	own
+გთხოვთ	გთხოვთ	R	own
+გილოცავთ	გილოცავთ	R	own
+გინება	გინება	R	own
+გიყვარვარ	გიყვარვარ	R	own
+გმადლობ	გმადლობ	R	own
+გმადლობთ	გმადლობთ	R	own
+გოგი	გოგი	R	own
+გოგო	გოგო	R	own
+გონება	გონება	R	own
+გონებით	გონებით	R	own
+გრძნობა	გრძნობა	R	own
+დაბადება	დაბადება	R	own
+დაბნელება	დაბნელება	R	own
+დაგვიანება	დაგვიანება	R	own
+დადასტურება	დადასტურება	R	own
+დავალება	დავალება	R	own
+დაკავებული	დაკავებული	R	own
+დაკარგული	დაკარგული	R	own
+დაკეტილი	დაკეტილი	R	own
+დალაგება	დალაგება	R	own
+დალოდება	დალოდება	R	own
+დამარცხებული	დამარცხებული	R	own
+დამატება	დამატება	R	own
+დამატებით	დამატებით	R	own
+დამოუკიდებლობისთვის	დამოუკიდებლობისთვის	R	own
+დამსახურება	დამსახურება	R	own
+დანახვა	დანახვა	R	own
+დანებდება	დანებდება	R	own
+დაპირება	დაპირება	R	own
+დარაჯი	დარაჯი	R	own
+დარღვევა	დარღვევა	R	own
+დარჩენა	დარჩენა	R	own
+დარწმუნებული	დარწმუნებული	R	own
+დასავლეთიდან	დასავლეთიდან	R	own
+დასავლეთით	დასავლეთით	R	own
+დასვენება	დასვენება	R	own
+დასრულებული	დასრულებული	R	own
+დატოვება	დატოვება	R	own
+დაფასება	დაფასება	R	own
+დაფიქრებული	დაფიქრებული	R	own
+დაქირავება	დაქირავება	R	own
+დაქორწინება	დაქორწინება	R	own
+დაცვა	დაცვა	R	own
+დაწერილი	დაწერილი	R	own
+დაწყება	დაწყება	R	own
+დახმარება	დახმარება	R	own
+დაჯდება	დაჯდება	R	own
+დედი	დედი	R	own
+დედიკო	დედიკო	R	own
+დედილო	დედილო	R	own
+დევნა	დევნა	R	own
+დევს	დევს	R	own
+დენა	დენა	R	own
+დიეტაზე	დიეტაზე	R	own
+დილას	დილას	R	own
+დილით	დილით	R	own
+დროებით	დროებით	R	own
+დროზე	დროზე	R	own
+დღემდე	დღემდე	R	own
+ეგენი	ეგენი	R	own
+ეზოში	ეზოში	R	own
+ელვა	ელვა	R	own
+ერთად	ერთად	R	own
+ერთგულად	ერთგულად	R	own
+ერი	ერი	R	own
+ესენი	ესენი	R	own
+ექიმთან	ექიმთან	R	own
+ეჭვი	ეჭვი	R	own
+ვარაუდით	ვარაუდით	R	own
+ვერ	ვერ	R	own
+ვერა	ვერა	R	own
+ვითარება	ვითარება	R	own
+ვის	ვის	R	own
+ვიცი	ვიცი	R	own
+ვლაპარაკობ	ვლაპარაკობ	R	own
+ვნახოთ	ვნახოთ	R	own
+ვსვამ	ვსვამ	R	own
+ზიდვა	ზიდვა	R	own
+ზიზღით	ზიზღით	R	own
+ზრდა	ზრდა	R	own
+ზურაბ	ზურაბ	R	own
+თავიდან	თავიდან	R	own
+თავისთვის	თავისთვის	R	own
+თავისუფლება	თავისუფლება	R	own
+თამაში	თამაში	R	own
+თანაგრძნობით	თანაგრძნობით	R	own
+თარგმანები	თარგმანები	R	own
+თბილისში	თბილისში	R	own
+თეატრში	თეატრში	R	own
+თვით	თვით	R	own
+თვლის	თვლის	R	own
+თითო	თითო	R	own
+თინა	თინა	R	own
+თოლი	თოლი	R	own
+თქვენ	თქვენ	R	own
+თხოვნა	თხოვნა	R	own
+თხრა	თხრა	R	own
+თხრობა	თხრობა	R	own
+იბადება	იბადება	R	own
+იგი	იგი	R	own
+იზრდება	იზრდება	R	own
+იმით	იმით	R	own
+ინგლისში	ინგლისში	R	own
+ინდოეთში	ინდოეთში	R	own
+ინებეთ	ინებეთ	R	own
+ის	ის	R	own
+ისინი	ისინი	R	own
+იტალიაში	იტალიაში	R	own
+იყიდის	იყიდის	R	own
+იყოს	იყოს	R	own
+იწერება	იწერება	R	own
+კაი	კაი	R	own
+კაკუნი	კაკუნი	R	own
+კარგ	კარგ	R	own
+კარგი	კარგი	R	own
+კარები	კარები	R	own
+კაცებთან	კაცებთან	R	own
+კაცისთვის	კაცისთვის	R	own
+კერძო	კერძო	R	own
+კვამლი	კვამლი	R	own
+კვება	კვება	R	own
+კვირას	კვირას	R	own
+კვლავ	კვლავ	R	own
+კიბესთან	კიბესთან	R	own
+კიბიდან	კიბიდან	R	own
+კიდევ	კიდევ	R	own
+კითხვა	კითხვა	R	own
+კლუბში	კლუბში	R	own
+კმაყოფილება	კმაყოფილება	R	own
+კოსმოსში	კოსმოსში	R	own
+კოცნა	კოცნა	R	own
+კოცნის	კოცნის	R	own
+კრება	კრება	R	own
+კუბო	კუბო	R	own
+კუდა	კუდა	R	own
+კურსდამთავრებულები	კურსდამთავრებულები	R	own
+ლამაზად	ლამაზად	R	own
+ლამის	ლამის	R	own
+ლაპარაკი	ლაპარაკი	R	own
+ლოგინში	ლოგინში	R	own
+ლოდინი	ლოდინი	R	own
+ლონდონში	ლონდონში	R	own
+ლოცვა	ლოცვა	R	own
+მა	მა	R	own
+მაგალითად	მაგალითად	R	own
+მათებურად	მათებურად	R	own
+მათი	მათი	R	own
+მაია	მაია	R	own
+მამი	მამი	R	own
+მანამდე	მანამდე	R	own
+მანქანები	მანქანები	R	own
+მართვა	მართვა	R	own
+მარიამ	მარიამ	R	own
+მას	მას	R	own
+მგზავრობა	მგზავრობა	R	own
+მგონი	მგონი	R	own
+მდინარე	მდინარე	R	own
+მე	მე	R	own
+მეგობართან	მეგობართან	R	own
+მეგობრებთან	მეგობრებთან	R	own
+მეგობრისგან	მეგობრისგან	R	own
+მეგობრისთვის	მეგობრისთვის	R	own
+მეგობრობა	მეგობრობა	R	own
+მეომარი	მეომარი	R	own
+მეჩეთში	მეჩეთში	R	own
+მზადება	მზადება	R	own
+მზერა	მზერა	R	own
+მთაზე	მთაზე	R	own
+მიახლოებით	მიახლოებით	R	own
+მიდის	მიდის	R	own
+მივდივარ	მივდივარ	R	own
+მივდივართ	მივდივართ	R	own
+მივდიოდი	მივდიოდი	R	own
+მინდვრად	მინდვრად	R	own
+მიხედვით	მიხედვით	R	own
+მოგება	მოგება	R	own
+მოგრძო	მოგრძო	R	own
+მოდით	მოდით	R	own
+მოდის	მოდის	R	own
+მოთეთრო	მოთეთრო	R	own
+მოთმინებით	მოთმინებით	R	own
+მოლაპარაკება	მოლაპარაკება	R	own
+მომავალ	მომავალ	R	own
+მომავალში	მომავალში	R	own
+მომაღლო	მომაღლო	R	own
+მონაცემები	მონაცემები	R	own
+მონაწილეობა	მონაწილეობა	R	own
+მოსმენა	მოსმენა	R	own
+მოტანა	მოტანა	R	own
+მოქმედება	მოქმედება	R	own
+მოქცევა	მოქცევა	R	own
+მოყვარე	მოყვარე	R	own
+მოყვითალო	მოყვითალო	R	own
+მოცურავე	მოცურავე	R	own
+მოძღვრები	მოძღვრები	R	own
+მოწითალო	მოწითალო	R	own
+მოწიწებით	მოწიწებით	R	own
+მოწოდება	მოწოდება	R	own
+მოხუცებული	მოხუცებული	R	own
+მოხუცი	მოხუცი	R	own
+მუდმივად	მუდმივად	R	own
+მუშაობა	მუშაობა	R	own
+მქონდა	მქონდა	R	own
+მღერა	მღერა	R	own
+მღერის	მღერის	R	own
+მყოფი	მყოფი	R	own
+მშვიდობით	მშვიდობით	R	own
+მცნება	მცნება	R	own
+მწკრივად	მწკრივად	R	own
+ნაკლებად	ნაკლებად	R	own
+ნაკლები	ნაკლები	R	own
+ნამდვილად	ნამდვილად	R	own
+ნამეტანი	ნამეტანი	R	own
+ნაპირზე	ნაპირზე	R	own
+ნატო	ნატო	R	own
+ნაძირალა	ნაძირალა	R	own
+ნაწილობრივ	ნაწილობრივ	R	own
+ნაჭერ	ნაჭერ	R	own
+ნაჭერი	ნაჭერი	R	own
+ნახევარზე	ნახევარზე	R	own
+ნახევრად	ნახევრად	R	own
+ნდობა	ნდობა	R	own
+ნება	ნება	R	own
+ნებაყოფლობით	ნებაყოფლობით	R	own
+ორშაბათს	ორშაბათს	R	own
+ოცნება	ოცნება	R	own
+ოჯახში	ოჯახში	R	own
+პატივისცემით	პატივისცემით	R	own
+პირდაპირ	პირდაპირ	R	own
+პირველად	პირველად	R	own
+პლატოზე	პლატოზე	R	own
+პოვნა	პოვნა	R	own
+პროექტში	პროექტში	R	own
+რად	რად	R	own
+რადგანაც	რადგანაც	R	own
+რაიონში	რაიონში	R	own
+რამ	რამ	R	own
+რას	რას	R	own
+რატო	რატო	R	own
+რთმევა	რთმევა	R	own
+რო	რო	R	own
+რუსი	რუსი	R	own
+რჩევა	რჩევა	R	own
+საათამდე	საათამდე	R	own
+საათზე	საათზე	R	own
+სადილისთვის	სადილისთვის	R	own
+სალოცავი	სალოცავი	R	own
+სამსახურში	სამსახურში	R	own
+სამშაბათს	სამშაბათს	R	own
+სამხრეთით	სამხრეთით	R	own
+სარეცხი	სარეცხი	R	own
+სართულზე	სართულზე	R	own
+სასმელი	სასმელი	R	own
+სასურველი	სასურველი	R	own
+საუბარში	საუბარში	R	own
+საუკეთესო	საუკეთესო	R	own
+საფლავი	საფლავი	R	own
+საღამოზე	საღამოზე	R	own
+საღამომდე	საღამომდე	R	own
+საღამოს	საღამოს	R	own
+საყვედურით	საყვედურით	R	own
+საწყენი	საწყენი	R	own
+სახელო	სახელო	R	own
+სახლიდან	სახლიდან	R	own
+სახლისთვის	სახლისთვის	R	own
+სახლში	სახლში	R	own
+სახურავი	სახურავი	R	own
+სერგო	სერგო	R	own
+სთხოვს	სთხოვს	R	own
+სიამოვნებით	სიამოვნებით	R	own
+სიარული	სიარული	R	own
+სიბრალულით	სიბრალულით	R	own
+სინამდვილეში	სინამდვილეში	R	own
+სირმა	სირმა	R	own
+სიყვარული	სიყვარული	R	own
+სიყვარულით	სიყვარულით	R	own
+სიცილი	სიცილი	R	own
+სიცილით	სიცილით	R	own
+სიძულვილი	სიძულვილი	R	own
+სიხარული	სიხარული	R	own
+სკოლაში	სკოლაში	R	own
+სოფელში	სოფელში	R	own
+სრულდება	სრულდება	R	own
+სწავლა	სწავლა	R	own
+სხდომა	სხდომა	R	own
+სჯის	სჯის	R	own
+ტარება	ტარება	R	own
+ტაფაზე	ტაფაზე	R	own
+ტილო	ტილო	R	own
+ტირილი	ტირილი	R	own
+ტირის	ტირის	R	own
+ტრაბახით	ტრაბახით	R	own
+ტყუილად	ტყუილად	R	own
+უარესი	უარესი	R	own
+უდიდესი	უდიდესი	R	own
+უკეთესი	უკეთესი	R	own
+ულამაზესი	ულამაზესი	R	own
+უმაღლესი	უმაღლესი	R	own
+უფასოდ	უფასოდ	R	own
+უძველესი	უძველესი	R	own
+უწესრიგობაში	უწესრიგობაში	R	own
+ფანჯრიდან	ფანჯრიდან	R	own
+ფართე	ფართე	R	own
+ფერმა	ფერმა	R	own
+ფეხით	ფეხით	R	own
+ფირმა	ფირმა	R	own
+ფიქრი	ფიქრი	R	own
+ფოსტაში	ფოსტაში	R	own
+ფრენა	ფრენა	R	own
+ფრინველი	ფრინველი	R	own
+ქალებისადმი	ქალებისადმი	R	own
+ქალისთვის	ქალისთვის	R	own
+ქართულ	ქართულ	R	own
+ქმედება	ქმედება	R	own
+ქმნის	ქმნის	R	own
+ქურდობა	ქურდობა	R	own
+ქუჩაში	ქუჩაში	R	own
+ქცევა	ქცევა	R	own
+ღამეს	ღამეს	R	own
+ღვიძება	ღვიძება	R	own
+ღირს	ღირს	R	own
+ღრიალი	ღრიალი	R	own
+ყიდვა	ყიდვა	R	own
+ყიდის	ყიდის	R	own
+ყიდულობს	ყიდულობს	R	own
+ყინვა	ყინვა	R	own
+ყიყინებს	ყიყინებს	R	own
+ყიყინი	ყიყინი	R	own
+ყოფილი	ყოფილი	R	own
+ყურადღებით	ყურადღებით	R	own
+შაბათს	შაბათს	R	own
+შე	შე	R	own
+შედარება	შედარება	R	own
+შედარებით	შედარებით	R	own
+შედეგად	შედეგად	R	own
+შეიარაღება	შეიარაღება	R	own
+შეიარაღებული	შეიარაღებული	R	own
+შეკითხვა	შეკითხვა	R	own
+შემდგომ	შემდგომ	R	own
+შემდეგ	შემდეგ	R	own
+შემთხვევა	შემთხვევა	R	own
+შემთხვევაში	შემთხვევაში	R	own
+შემთხვევით	შემთხვევით	R	own
+შემოდგომა	შემოდგომა	R	own
+შემოსვლა	შემოსვლა	R	own
+შემცირება	შემცირება	R	own
+შემწვარი	შემწვარი	R	own
+შენ	შენ	R	own
+შენახვა	შენახვა	R	own
+შენგან	შენგან	R	own
+შენებურად	შენებურად	R	own
+შენთან	შენთან	R	own
+შენთვის	შენთვის	R	own
+შენიშვნა	შენიშვნა	R	own
+შენს	შენს	R	own
+შესრულება	შესრულება	R	own
+შეტყობინება	შეტყობინება	R	own
+შეურაცხყოფა	შეურაცხყოფა	R	own
+შექმნის	შექმნის	R	own
+შეყვარებული	შეყვარებული	R	own
+შეცდომა	შეცდომა	R	own
+შეცდომით	შეცდომით	R	own
+შეცვლა	შეცვლა	R	own
+შეძვრა	შეძვრა	R	own
+შეწუხება	შეწუხება	R	own
+შეწუხებული	შეწუხებული	R	own
+შეწყვეტა	შეწყვეტა	R	own
+შეხედვა	შეხედვა	R	own
+შეხვედრა	შეხვედრა	R	own
+შვება	შვება	R	own
+შობა	შობა	R	own
+შორეულ	შორეულ	R	own
+შორის	შორის	R	own
+შორს	შორს	R	own
+შტატში	შტატში	R	own
+შუაგულში	შუაგულში	R	own
+შუადღეს	შუადღეს	R	own
+შუაღამემდე	შუაღამემდე	R	own
+ჩანს	ჩანს	R	own
+ჩაცმა	ჩაცმა	R	own
+ჩემებურად	ჩემებურად	R	own
+ჩვევა	ჩვევა	R	own
+ჩვენ	ჩვენ	R	own
+ჩვენება	ჩვენება	R	own
+ჩვენი	ჩვენი	R	own
+ჩვეულებრივ	ჩვეულებრივ	R	own
+ჩიკაგოდან	ჩიკაგოდან	R	own
+ჩრდილოეთით	ჩრდილოეთით	R	own
+ჩრდილოეთისკენ	ჩრდილოეთისკენ	R	own
+ჩუმად	ჩუმად	R	own
+ცა	ცა	R	own
+ცახცახით	ცახცახით	R	own
+ცდა	ცდა	R	own
+ცეკვა	ცეკვა	R	own
+ცენტრში	ცენტრში	R	own
+ცვლის	ცვლის	R	own
+ცივა	ცივა	R	own
+ცნობა	ცნობა	R	own
+ცოდნა	ცოდნა	R	own
+ცოტას	ცოტას	R	own
+ცხელა	ცხელა	R	own
+ცხენზე	ცხენზე	R	own
+ცხოვრება	ცხოვრება	R	own
+ძაან	ძაან	R	own
+ძალით	ძალით	R	own
+ძამია	ძამია	R	own
+ძე	ძე	R	own
+ძიება	ძიება	R	own
+ძირს	ძირს	R	own
+ძლიერ	ძლიერ	R	own
+ძლიერად	ძლიერად	R	own
+ძმა	ძმა	R	own
+ძმასთან	ძმასთან	R	own
+ძნელად	ძნელად	R	own
+წაგება	წაგება	R	own
+წავა	წავა	R	own
+წავალ	წავალ	R	own
+წავედი	წავედი	R	own
+წავიდეს	წავიდეს	R	own
+წარმავალი	წარმავალი	R	own
+წარმართები	წარმართები	R	own
+წარმატებით	წარმატებით	R	own
+წარმოდგენა	წარმოდგენა	R	own
+წარმოთქმა	წარმოთქმა	R	own
+წარმოსახვა	წარმოსახვა	R	own
+წარმოქმნა	წარმოქმნა	R	own
+წერილი	წერილი	R	own
+წერს	წერს	R	own
+წვიმა	წვიმა	R	own
+წინასწარ	წინასწარ	R	own
+წოლა	წოლა	R	own
+წონა	წონა	R	own
+წუთში	წუთში	R	own
+წყალში	წყალში	R	own
+წყენით	წყენით	R	own
+ჭექა	ჭექა	R	own
+ჭრიალით	ჭრიალით	R	own
+ხარხარი	ხარხარი	R	own
+ხატები	ხატები	R	own
+ხედვა	ხედვა	R	own
+ხილვა	ხილვა	R	own
+ხუმრობა	ხუმრობა	R	own
+ხუმრობით	ხუმრობით	R	own
+ჯინსი	ჯინსი	R	own
+ჰქვია	ჰქვია	R	own
+იგინი	იგი	R	usual reading
+თქვენით	თქვენ	R	usual reading
+ჩვენით	ჩვენ	R	usual reading

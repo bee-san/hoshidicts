@@ -70,5 +70,7 @@
   ["რაობა", "", "n", "", 0, ["essence"], 56, ""],
   ["ყური", "", "n", "", 0, ["ear"], 57, ""],
   ["ყურე", "", "n", "", 0, ["bight"], 58, ""],
-  ["ყურით", "", "non-lemma", "", 0, [["ყურე", ["instrumental singular"]], ["ყური", ["instrumental singular"]]], 0, ""]
+  ["ყურით", "", "non-lemma", "", 0, [["ყურე", ["instrumental singular"]], ["ყური", ["instrumental singular"]]], 0, ""],
+  ["სული", "", "n", "", 0, ["soul"], 59, ""],
+  ["სულებს", "", "non-lemma", "", 0, [["სული", ["dative plural"]]], 0, ""]
 ]

@@ -302,11 +302,14 @@ transform('quot-2', 'quotative -თქო', 'The quotative clitic -თქო "sa
 // (მე: ჩემ-; ის: მა-, მი-; ეს: ამ-; ის: იმ-; ეგ: მაგ-), which the case rules
 // cannot reach.
 const PRONOUN_FORMS = {
-    'მე': ['ჩემთვის', 'ჩემზე', 'ჩემთან', 'ჩემგან', 'ჩემში', 'ჩემკენ', 'ჩემსავით', 'ჩემამდე'],
+    'მე': ['ჩემით', 'ჩემად', 'ჩემთვის', 'ჩემზე', 'ჩემთან', 'ჩემგან', 'ჩემში', 'ჩემკენ', 'ჩემსავით', 'ჩემამდე'],
     'შენ': ['შენა', 'შენად', 'შენთვის', 'შენზე', 'შენთან', 'შენგან', 'შენში', 'შენკენ', 'შენსავით', 'შენამდე'],
-    'ჩვენ': ['ჩვენად', 'ჩვენთვის', 'ჩვენზე', 'ჩვენთან', 'ჩვენგან', 'ჩვენში', 'ჩვენკენ', 'ჩვენსავით', 'ჩვენამდე'],
-    'თქვენ': ['თქვენა', 'თქვე', 'თქვენად', 'თქვენთვის', 'თქვენზე', 'თქვენთან', 'თქვენგან', 'თქვენში', 'თქვენკენ', 'თქვენსავით', 'თქვენამდე'],
-    'ის': ['მას', 'მან', 'მის', 'მით', 'მისთვის', 'მასზე', 'მასთან', 'მისგან', 'მასში', 'მისკენ', 'მასავით', 'იმას', 'იმან', 'იმის', 'იმისი', 'იმისა', 'იმით', 'იმად', 'იმ', 'იმისთვის', 'იმაზე', 'იმასთან', 'იმისგან', 'იმაში', 'იმისკენ', 'იმასავით', 'იმათ'],
+    'ჩვენ': ['ჩვენად', 'ჩვენით', 'ჩვენთვის', 'ჩვენზე', 'ჩვენთან', 'ჩვენგან', 'ჩვენში', 'ჩვენკენ', 'ჩვენსავით', 'ჩვენამდე'],
+    'თქვენ': ['თქვენა', 'თქვე', 'თქვენად', 'თქვენით', 'თქვენთვის', 'თქვენზე', 'თქვენთან', 'თქვენგან', 'თქვენში', 'თქვენკენ', 'თქვენსავით', 'თქვენამდე'],
+    // wty-ka-en's rows for these forms name ის and იგი but not ისინი.
+    'იგი': ['იგინი'],
+    'მათი': ['იმათი'],
+    'ის': ['მათით', 'იმათით', 'იმათად', 'მას', 'მან', 'მის', 'მით', 'მისთვის', 'მასზე', 'მასთან', 'მისგან', 'მასში', 'მისკენ', 'მასავით', 'იმას', 'იმან', 'იმის', 'იმისი', 'იმისა', 'იმით', 'იმად', 'იმ', 'იმისთვის', 'იმაზე', 'იმასთან', 'იმისგან', 'იმაში', 'იმისკენ', 'იმასავით', 'იმათ'],
     'ისინი': ['მათ', 'მათთვის', 'მათზე', 'მათთან', 'მათგან', 'მათში', 'მათკენ', 'მათსავით'],
     'ეს': ['ამას', 'ამან', 'ამის', 'ამისი', 'ამისა', 'ამით', 'ამად', 'ამ', 'ამისთვის', 'ამაზე', 'ამასთან', 'ამისგან', 'ამაში', 'ამისკენ', 'ამასავით', 'ამათ', 'ესენი'],
     'ეგ': ['მაგას', 'მაგან', 'მაგის', 'მაგისი', 'მაგით', 'მაგ', 'მაგისთვის', 'მაგაზე', 'მაგასთან', 'მაგაში', 'მაგათ', 'ეგენი'],
@@ -327,6 +330,10 @@ transform('word', 'word form', 'A frequent form whose lemma no regular rule reac
     wholeWord('გახდა', 'ხდება', [], ['v']),
     ...['დაუწყო', 'დაუწყეს'].map((w) => wholeWord(w, 'დაიწყებს', [], ['v'])),
     wholeWord('მოიცა', 'მოიცდის', [], ['v']),
+    // Verbal nouns whose rows name the verb only through a form without a
+    // definition, so the rules reach a wrong verb first.
+    ...['დანიშვნა', 'დანიშვნის'].map((w) => wholeWord(w, 'დანიშნავს', [], ['v'])),
+    wholeWord('კვლას', 'კლავს', [], ['v']),
     ...['თქვი', 'თქვით', 'თქვეს'].map((w) => wholeWord(w, 'ამბობს', [], ['v'])),
     ...['უთხარი', 'უთხარით', 'მითხარი', 'მითხარით', 'მითხარ', 'გვითხარი', 'გვითხარით', 'უთხრეს'].map((w) => wholeWord(w, 'ეუბნება', [], ['v'])),
     wholeWord('აღარა', 'აღარ', [], []),
@@ -466,6 +473,8 @@ transform('inv-person', 'perfect, 1st/2nd person', 'A first- or second-person su
 transform('perf', 'perfect', 'Perfect (evidential past), third person singular -უ-...-ია, and -უ-...-ავს, -ამს of -ავ and -ამ verbs, made into the future (დაუწერია → დაწერს, გაუკეთებია → გააკეთებს, უთამაშია → ითამაშებს, დაუხატავს → დახატავს).', [
     circumfix(PV.map((p) => [p + 'უ', p]), ['ს', 'ავს', 'ამს', 'ის', 'ებს'].map((t) => ['ია', t]), VPERF, VOUT, {stemEndsWith: CONS}),
     circumfix(PREVERBS.map((p) => [p + 'უ', p]), [['ავს', 'ავს'], ['ამს', 'ამს']], VPERF, VOUT, {stemMinLength: 2, stemEndsWith: CONS}),
+    // A verb whose future has the version vowel ი- (შეინახავს) has it as უ- in the perfect (შეუნახავს).
+    circumfix(PREVERBS.map((p) => [p + 'უ', p + 'ი']), [['ავს', 'ავს'], ['ამს', 'ამს']], VPERF, VOUT, {stemMinLength: 2, stemEndsWith: CONS}),
     circumfix(PV.map((p) => [p + 'უ', p + 'ა']), [['ია', 'ს'], ['ია', 'ობს'], ['ია', 'ებს']], VPERF, VOUT, {stemEndsWith: CONS}),
     circumfix(PV.map((p) => [p + 'უ', p + 'უ']), [['ია', 'ს'], ['ია', 'ებს'], ['ია', 'ავს']], VPERF, VOUT, {stemEndsWith: CONS}),
     circumfix(PV.map((p) => [p + 'უ', p + 'ი']), [['ია', 'ებს']], VPERF, VOUT, {stemEndsWith: CONS}),
@@ -551,12 +560,18 @@ transform('pv', 'future → present', 'A preverb removed: the future made into t
 // --- Ending rules in two states ------------------------------------------------
 // Each rule of an ending transform reads the text as written and gives vs, or
 // reads vp (after a person prefix) and gives vq (see the conditions above).
+// The subjunctive and optative rules have only the first copy: read after a
+// person prefix, they reached no UniMorph row the first copy does not, and in
+// the measured texts they gave only wrong first results (გათავებული →
+// თავდები, გახურებული → ხურდა, გეტყოდა → ეტყობა).
 const ENDING_TRANSFORMS = new Set(['pres-2', 'pres-pl', 'pres-3pl', 'theme-12', 'impf', 'subj', 'aor', 'opt']);
+const FIRST_COPY_ONLY = new Set(['subj', 'opt']);
 for (const t of transforms) {
     if (!ENDING_TRANSFORMS.has(t.id)) { continue; }
     t.rules = t.rules.flatMap((rule) => {
         if (rule.conditionsIn.join() !== 'vp') { throw new Error(`${t.id}: an ending rule must read vp`); }
-        return [{...rule, conditionsIn: [], conditionsOut: ['v', 'vs']}, {...rule, conditionsIn: ['vp'], conditionsOut: ['v', 'vq']}];
+        const first = {...rule, conditionsIn: [], conditionsOut: ['v', 'vs']};
+        return FIRST_COPY_ONLY.has(t.id) ? [first] : [first, {...rule, conditionsIn: ['vp'], conditionsOut: ['v', 'vq']}];
     });
 }
 

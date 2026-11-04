@@ -16,7 +16,11 @@
 // არის) is right only when the first result is its own lemma, as section 14
 // step 5 asks: --labels gives, for each such (word, first result) pair, W
 // (wrong), A (ambiguous: context decides; reported apart) or R (right), and
-// a pair with no label is reported as unlabelled. Hovers whose word the
+// a pair with no label is reported as unlabelled. The same holds when the
+// first result is the word's own entry while the word's own rows name
+// another lemma (წელს "this year" first, where the text needs the dative of
+// წელი "year"): the label of the pair (word, word) decides, and these
+// results are also counted as a class of their own ("ownEntry"). Hovers whose word the
 // dictionary does not know are counted, and
 // --sample N prints N of them (seeded) for judging by hand. --counts weighs
 // each word by its count in a frequency list (word<TAB>count) for the share
@@ -71,6 +75,7 @@ const results = readFileSync(resultsFile, 'utf8').split('\n').filter(Boolean).ma
 const words = readFileSync(wordsFile, 'utf8').split('\n').slice(0, results.length);
 let found = 0, entry = 0, judged = 0, wrong = 0, unknown = 0, wrongTokens = 0, judgedTokens = 0, allTokens = 0;
 let ambiguous = 0, ambiguousTokens = 0;
+let ownEntryWrong = 0, ownEntryWrongTokens = 0, ownEntryAmbiguous = 0;
 const unlabelled = new Map();
 const byRule = new Map();
 const wrongList = [];
@@ -98,10 +103,11 @@ for (let i = 0; i < results.length; i++) {
     judged++;
     judgedTokens += weight;
     if (!first) { continue; }
+    const ownEntry = first.expression === word && (targets.get(word)?.size ?? 0) > 0;
     if (right.has(first.expression)) {
-        if (right.size < 2 || first.expression === word) { continue; }
+        if (right.size < 2 || (first.expression === word && !ownEntry)) { continue; }
         const label = labels.get(`${word}\t${first.expression}`);
-        if (label === 'A') { ambiguous++; ambiguousTokens += weight; continue; }
+        if (label === 'A') { ambiguous++; ambiguousTokens += weight; if (ownEntry) { ownEntryAmbiguous++; } continue; }
         if (label !== 'W') {
             if (label === undefined) { const k = `${word}\t${first.expression}`; unlabelled.set(k, (unlabelled.get(k) ?? 0) + 1); }
             continue;
@@ -111,15 +117,16 @@ for (let i = 0; i < results.length; i++) {
     if ([...first.matched].length > [...words[i]].length) { continue; }
     wrong++;
     wrongTokens += weight;
+    if (ownEntry) { ownEntryWrong++; ownEntryWrongTokens += weight; }
     const key = first.trace.join('>') || '(as written)';
     byRule.set(key, (byRule.get(key) ?? 0) + 1);
     wrongList.push(`${word} → ${first.expression} [${first.trace.join(' > ')}] (right: ${[...right].slice(0, 3).join(', ')})`);
 }
 console.log(JSON.stringify({lookups: results.length, found, firstEntry: entry, judged, wrong, wrongRate: wrong / judged, ambiguous, unknownWord: unknown,
-    unlabelledPairs: unlabelled.size,
-    ...(countsFile ? {tokens: allTokens, judgedTokens, wrongTokens, wrongTokenShare: wrongTokens / allTokens, ambiguousTokens} : {})}));
+    unlabelledPairs: unlabelled.size, ownEntryWrong, ownEntryAmbiguous,
+    ...(countsFile ? {tokens: allTokens, judgedTokens, wrongTokens, wrongTokenShare: wrongTokens / allTokens, ambiguousTokens, ownEntryWrongTokens} : {})}));
 if (unlabelled.size) {
-    console.log('unlabelled (word, first result) pairs whose word names several lemmas:', [...unlabelled].sort((a, b) => b[1] - a[1]).map(([k, n]) => `${k.replace('\t', ' → ')} (${n})`).join('; '));
+    console.log('unlabelled (word, first result) pairs whose word names several lemmas or whose first result is its own entry:', [...unlabelled].sort((a, b) => b[1] - a[1]).map(([k, n]) => `${k.replace('\t', ' → ')} (${n})`).join('; '));
 }
 console.log('wrong first results by trace:', [...byRule].sort((a, b) => b[1] - a[1]).slice(0, 15).map(([k, v]) => `${k}: ${v}`).join('; '));
 const freq = new Map();

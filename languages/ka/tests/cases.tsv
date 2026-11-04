@@ -570,3 +570,49 @@ word	1	მითხარ	ეუბნება	v	word
 word	1	უთხარი	ეუბნება	v	word
 word	1	ვეღარა	ვეღარ	*	word
 pronoun	1	თქვენა	თქვენ	*	pron
+negative	0	გაღმა	აღებს	*	*
+negative	0	გაღმა	აღება	*	*
+negative	0	მოსული	სულებს	*	*
+negative	0	შესული	სულებს	*	*
+negative	0	დაწერილი	დაწერებს	*	*
+word	1	თქვი	ამბობს	v	word
+word	1	თქვით	ამბობს	v	word
+word	1	უთხარით	ეუბნება	v	word
+word	1	მითხარით	ეუბნება	v	word
+word	1	გვითხარი	ეუბნება	v	word
+word	1	გვითხარით	ეუბნება	v	word
+word	1	უთხრეს	ეუბნება	v	word
+two orders	1	ვაკეთებდი	აკეთებს	v	subj-1|impf
+two orders	1	ვაკეთებდი	აკეთებს	v	impf|subj-1
+two orders	1	ვხატავდით	ხატავს	v	subj-1|impf
+two orders	1	ვხატავდით	ხატავს	v	impf|subj-1
+two orders	1	გიყვარდა	უყვარს	v	obj-2|impf
+two orders	1	გიყვარდა	უყვარს	v	impf|obj-2
+two orders	1	დავწერე	დაწერს	v	subj-1|aor
+two orders	1	დავწერე	დაწერს	v	aor|subj-1
+two orders	1	გავაკეთეთ	გააკეთებს	v	subj-1|aor
+two orders	1	გავაკეთეთ	გააკეთებს	v	aor|subj-1
+two orders	1	დამიძახა	დაუძახებს	v	obj-1|aor
+two orders	1	დამიძახა	დაუძახებს	v	aor|obj-1
+one order	1	ვაკეთებდე	აკეთებს	v	subj-1|subj
+one order	1	დავწერო	დაწერს	v	subj-1|opt
+negative	0	გათავებული	თავდების	*	*
+negative	0	გეტყოდა	ეტყობა	*	*
+negative	0	მომაწოდე	აწობს	*	*
+perfect	1	შეუნახავს	შეინახავს	v	perf
+perfect	1	დაუნახავს	დაინახავს	v	perf
+pronoun	1	ჩემით	მე	*	pron
+pronoun	1	ჩემად	მე	*	pron
+pronoun	1	ჩვენით	ჩვენ	*	pron
+pronoun	1	თქვენით	თქვენ	*	pron
+pronoun	1	იგინი	იგი	*	pron
+pronoun	1	მათით	ის	*	pron
+pronoun	1	იმათით	ის	*	pron
+pronoun	1	იმათად	ის	*	pron
+word	1	დანიშვნა	დანიშნავს	v	word
+word	1	დანიშვნის	დანიშნავს	v	word
+word	1	კვლას	კლავს	v	word
+constraint	0	ამოდი	მოდის	*	*
+negative	0	იყო	არი	*	*
+negative	0	დაუწყო	დაიწყები	*	*
+pronoun	1	იმათი	მათი	*	pron
