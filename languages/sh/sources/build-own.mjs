@@ -1157,6 +1157,9 @@ const PREFER = [
     ['sjede', 'sjediti'], ['sedim', 'sedeti'], ['telu', 'telo'], ['telom', 'telo'], ['ume', 'umeti'], ['vili', 'vila'],
     ['vere', 'vera'], ['veru', 'vera'], ['smete', 'smeti:v'], ['smela', 'smeti'], ['supu', 'supa'], ['odela', 'odelo'],
     ['odelu', 'odelo'], ['trku', 'trka'], ['tetke', 'tetka'], ['sede', 'sedeti'],
+    // Ties in audit-hachi-lang-sh-d's judged samples of fresh text (a verb
+    // form read as the noun brana, prolaz, izlaz or vuk).
+    ['brani', 'braniti'], ['prolaze', 'prolaziti'], ['izlaze', 'izlaziti'], ['vuče', 'vući'],
     // adjectives and pronouns: nouns come first (GROUP_ORDER), so the
     // frequent adjectives whose forms are also forms of a rare noun are
     // written out (drugi, svaki, nov; the nouns drug, svak, nova).

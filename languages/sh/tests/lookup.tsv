@@ -244,6 +244,10 @@ prefer	1	odelu	odelo	odelu
 prefer	1	trku	trka	trku
 prefer	1	tetke	tetka	tetke
 prefer	1	sede	sedeti	sede
+prefer	1	brani	braniti	brani
+prefer	1	prolaze	prolaziti	prolaze
+prefer	1	izlaze	izlaziti	izlaze
+prefer	1	vuče	vući	vuče
 prefer	1	sretni	sretan	sretni
 prefer	1	nekima	neki	nekima
 prefer	1	druga	drugi	druga
@@ -350,6 +354,10 @@ prefer	1	горива	гориво	горива
 prefer	1	уме	умети	уме
 prefer	1	смете	смети	смете
 prefer	1	седе	седети	седе
+prefer	1	брани	бранити	брани
+prefer	1	пролазе	пролазити	пролазе
+prefer	1	излазе	излазити	излазе
+prefer	1	вуче	вући	вуче
 prefer	1	некима	неки	некима
 prefer	1	друга	други	друга
 prefer	1	свака	сваки	свака
