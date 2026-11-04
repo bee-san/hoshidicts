@@ -1160,10 +1160,26 @@ const PREFER = [
     // Ties in audit-hachi-lang-sh-d's judged samples of fresh text (a verb
     // form read as the noun brana, prolaz, izlaz or vuk).
     ['brani', 'braniti'], ['prolaze', 'prolaziti'], ['izlaze', 'izlaziti'], ['vuče', 'vući'],
+    // Ties of the 10,000 most frequent words below the depth the audits
+    // judged (2,000 to 31,000 occurrences in hr_50k or sr_50k), judged by
+    // this pack's author by the dominant reading, with Tatoeba's sentences
+    // and the texts where it was close (boli: 61 of Tatoeba's 66 and 7 of the
+    // 10 in Zlatarevo zlato are the verb; puste is left out: it is the
+    // adjective pust at its 3 places in Zlatarevo zlato).
+    ['boli', 'boljeti', 'boleti'], ['bole', 'boljeti', 'boleti'], ['pomažeš', 'pomagati'], ['pomažu', 'pomagati'],
+    ['trudi', 'truditi'], ['prilazi', 'prilaziti'], ['isplati', 'isplatiti'], ['lovi', 'loviti'],
+    ['donose', 'donositi'], ['otvore', 'otvoriti'], ['zapali', 'zapaliti'], ['viče', 'vikati'], ['bojite', 'bojati'],
+    ['blagoslovi', 'blagosloviti'], ['poštedi', 'poštedjeti', 'poštedeti'], ['lete', 'letjeti', 'leteti'],
+    ['mačku', 'mačka'], ['traku', 'traka'], ['trake', 'traka'], ['buku', 'buka'], ['buke', 'buka'], ['trupe', 'trupa'],
+    ['uloge', 'uloga'], ['kosom', 'kosa'], ['zoru', 'zora'], ['zore', 'zora'], ['braće', 'braća'], ['braću', 'braća'],
+    ['robe', 'roba'], ['zvona', 'zvono'], ['salu', 'sala'], ['vreću', 'vreća'], ['supruge', 'supruga'], ['luku', 'luka'],
+    ['luci', 'luka'], ['šalu', 'šala'], ['pozornici', 'pozornica'], ['zadaću', 'zadaća'], ['metala', 'metal'],
+    ['kinu', 'kino'], ['novinama', 'novine'], ['poznate', 'poznat:adj'], ['potvrdi', 'potvrditi'],
+    ['laži', 'laž'], ['svetlu', 'svetlo'],
     // adjectives and pronouns: nouns come first (GROUP_ORDER), so the
     // frequent adjectives whose forms are also forms of a rare noun are
     // written out (drugi, svaki, nov; the nouns drug, svak, nova).
-    ['sretni', 'sretan'], ['nekima', 'neki'],
+    ['sretni', 'sretan'], ['sretne', 'sretan:adj'], ['nekima', 'neki'],
     // (svako is a headword of its own, which comes first anyway.)
     ...['a', 'e', 'o', 'u', 'og', 'oga', 'om', 'ome', 'omu', 'oj', 'im', 'ima', 'ih'].flatMap((e) => (e === 'o' ? [[`drug${e}`, 'drugi']] : [[`drug${e}`, 'drugi'], [`svak${e}`, 'svaki']])),
     // A lemma written lemma:adj is read by the adjective rules, where a noun

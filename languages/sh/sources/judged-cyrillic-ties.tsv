@@ -28,3 +28,18 @@ ručku	ručak	ручка "handle"
 # правити, its Cyrillic first result.
 izazovu	izazvati	изазов "challenge" (dat./loc. sg.)
 staje	stajati	стаја "stable" (gen. sg.)
+# Judged by this pack's author (written for this pack, GPL-3.0-or-later) from a Latin-against-Cyrillic scan of the
+# 10,000 most frequent words of hr_50k and sr_50k at the head after the twins above (audit-hachi-lang-sh-d's
+# cyr-breakable.py): the words still wrong in Cyrillic, right in Latin, whose Cyrillic rows name the right lemma and
+# whose dominant reading is clear. lemma:adj names the adjective rules (dobrom is also a noun rule's dobar).
+# одаје is left out: its noun одаја "chamber" is 5 of the 7 uses in the two measured texts, the verb in subtitles.
+teži	težak:adj	тежа "gravitation"
+bave	baviti	бар "bar, pub"
+posade	posada	посадити "to plant"
+dobrom	dobar:adj	добро "property, well-being"
+osećaju	osećati	осећај "feeling"
+osjećaju	osjećati	осјећај "feeling"
+testa	test	тесто "dough"
+tone	tonuti	тон "tone" (voc. sg.)
+predaje	predavati	предаја "surrender" (gen. sg.)
+upute	uputa	упутити "to direct" (3pl)

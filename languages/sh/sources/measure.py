@@ -254,8 +254,10 @@ def cmd_judged(args, d):
     """First results for hand-judged words (sources/judged-ties-hr.tsv: word, the lemmas of its
     dominant reading separated by |, its count), and with --prefer-list for the PREFER words too
     (build-own.mjs --prefer-list): wrong when the first result is none of them. --cyrillic looks the
-    words up in Serbian Cyrillic and compares the first result in Latin letters."""
+    words up in Serbian Cyrillic and compares the first result in Latin letters. A lemma written
+    lemma:adj (sources/judged-cyrillic-ties.tsv) is compared as lemma."""
     rows = [line.rstrip('\n').split('\t')[:2] for line in open(args.judged, encoding='utf-8') if line.strip() and not line.startswith('#')]
+    rows = [[w, '|'.join(x.split(':')[0] for x in lemmas.split('|'))] for w, lemmas in rows]
     if args.prefer_list:
         seen = {w for w, _ in rows}
         rows += [r for r in (line.rstrip('\n').split('\t')[:2] for line in open(args.prefer_list, encoding='utf-8') if line.strip()) if r[0] not in seen]
