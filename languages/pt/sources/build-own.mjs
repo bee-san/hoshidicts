@@ -833,8 +833,8 @@ const NA = ['n', 'adj'];
 for (const [inflected, deinflected] of [
     ['ados', 'ado'], ['adas', 'ada'], ['idos', 'ido'], ['idas', 'ida'],      // soldados, piadas, sentidos, bebidas
     ['eias', 'eia'], ['iras', 'ira'],                                         // ideias, mentiras
-    ['ques', 'que'], ['gues', 'gue'], ['guas', 'gua'], ['ças', 'ça'],         // ataques, águas, peças
-    ['áveis', 'ável'], ['íveis', 'ível'],                                     // saudáveis, possíveis
+    ['ques', 'que'], ['gues', 'gue'], ['guas', 'gua'],                        // ataques, truques, águas
+    ['áveis', 'ável'],                                                        // saudáveis (not saudar's -áveis)
     ['postos', 'posto'], ['postas', 'posta'], ['feitos', 'feito'],            // impostos, apostas, perfeitos
     ['vistos', 'visto'], ['vistas', 'vista'], ['ditos', 'dito'],              // imprevistos, revistas, malditos
     ['arias', 'aria'],                                                        // secretarias (the -ar conditional's -arias)
@@ -879,14 +879,15 @@ for (const [inflected, deinflected, stemMinLength] of [
     // A participle's feminine is an adjective or a passive, like its plural:
     // at the participle's endings, and before it, the adjective comes first
     // (cansada: cansado, then cansar).
-    ['ada', 'ado', 2], ['ida', 'ido', 2], ['ída', 'ído', 2],  // cansada, conhecida, distraída
+    ['ada', 'ado', 2], ['ida', 'ido', 2],                     // cansada, conhecida
+    ['aída', 'aído', 1], ['oída', 'oído', 1],                 // distraída, moída (the -air and -oer participles' endings)
 ]) {
     nominal('feminine', inflected, deinflected, ['adj'], NA, {stemMinLength});
 }
 // The possessives, which an -ar verb's present would otherwise read first
 // (sua as suar, to sweat).
-for (const [form, base] of [['sua', 'seu'], ['suas', 'seu'], ['tua', 'teu'], ['tuas', 'teu'], ['nossa', 'nosso'], ['nossas', 'nosso'],
-    ['vossa', 'vosso'], ['vossas', 'vosso'], ['minha', 'meu'], ['minhas', 'meu']]) {
+// nossa and vossa are the regular feminine of nosso and vosso, which no verb shares.
+for (const [form, base] of [['sua', 'seu'], ['suas', 'seu'], ['tua', 'teu'], ['tuas', 'teu'], ['minha', 'meu'], ['minhas', 'meu']]) {
     add('feminine', {type: 'wholeWord', inflected: form, deinflected: base, conditionsIn: ['adj'], conditionsOut: NA});
 }
 for (const [form, base] of [['boa', 'bom'], ['boas', 'bom'], ['má', 'mau'], ['más', 'mau'], ['judia', 'judeu'], ['judias', 'judeu'],
@@ -970,9 +971,9 @@ for (const [inflected, deinflected] of [['avelmente', 'ável'], ['ivelmente', '�
     ['istamente', 'ista'], ['ãmente', 'ão'], ['esmente', 'ês']]) {
     nominal('adverb', inflected, deinflected, [], ['adj'], {stemMinLength: 1});
 }
-// comum + mente, written with u since the 1990 agreement (comummente in Portugal).
+// comum + mente, written comumente since the 1990 agreement in Brazil (the
+// European comummente is the regular comum + mente).
 add('adverb', {type: 'wholeWord', inflected: 'comumente', deinflected: 'comum', conditionsIn: [], conditionsOut: ['adj']});
-add('adverb', {type: 'wholeWord', inflected: 'comummente', deinflected: 'comum', conditionsIn: [], conditionsOut: ['adj']});
 
 // --- Preferred readings -------------------------------------------------------------------
 // wty-pt-en's rows name both lemmas of a homograph (sua: seu and suar), and
@@ -1023,6 +1024,33 @@ for (const [slot, form, lemma] of [
     ['feminine', 'perfeita', 'perfeito'], ['feminine', 'perfeitas', 'perfeito'], ['feminine', 'maldita', 'maldito'], ['feminine', 'malditas', 'maldito'],
     // and as fartar's short participle (farta, fed up).
     ['feminine', 'farta', 'farto'], ['feminine', 'fartas', 'farto'],
+    // A participle whose feminine or plural is also a noun of another
+    // meaning (criada: a servant; ouvida: an ear; privadas: toilets), where
+    // the participle is the reading the Tatoeba sentences and the texts of
+    // Measurements use more often, by the word before it (a determiner or a
+    // preposition before the noun; ser, estar, ficar or an adverb before the
+    // participle) and by the audit's verdicts in context: the adjective
+    // where wty-pt-en has one (privado), the participle otherwise.
+    ['feminine', 'sentadas', 'sentado'], ['feminine', 'casadas', 'casado'], ['feminine', 'pintadas', 'pintado'],
+    ['feminine', 'organizadas', 'organizado'], ['feminine', 'molhadas', 'molhado'], ['feminine', 'geladas', 'gelado'],
+    ['feminine', 'queimadas', 'queimado'], ['feminine', 'privadas', 'privado'], ['feminine', 'passadas', 'passado'],
+    ['feminine', 'quebradas', 'quebrado'], ['feminine', 'viradas', 'virado'], ['feminine', 'peladas', 'pelado'], ['feminine', 'cruzadas', 'cruzado'],
+    ['feminine', 'furadas', 'furado'], ['feminine', 'derivadas', 'derivado'], ['feminine', 'douradas', 'dourado'], ['feminine', 'armadas', 'armado'],
+    ['feminine', 'desgarradas', 'desgarrado'],
+    ['participle', 'chamados', 'chamar'], ['participle', 'chamadas', 'chamar'], ['participle', 'criada', 'criar'],
+    ['participle', 'criados', 'criar'], ['participle', 'convidada', 'convidar'], ['participle', 'tomadas', 'tomar'],
+    ['participle', 'lavadas', 'lavar'], ['participle', 'ouvida', 'ouvir'], ['participle', 'trocados', 'trocar'], ['participle', 'trocada', 'trocar'],
+    ['participle', 'reformada', 'reformar'], ['participle', 'reformados', 'reformar'], ['participle', 'retomadas', 'retomar'],
+    ['participle', 'mandados', 'mandar'], ['participle', 'mandada', 'mandar'], ['participle', 'ensopados', 'ensopar'],
+    ['participle', 'ensopada', 'ensopar'], ['participle', 'banhados', 'banhar'], ['participle', 'banhada', 'banhar'],
+    ['participle', 'arrombada', 'arrombar'], ['participle', 'encostada', 'encostar'], ['participle', 'encostados', 'encostar'],
+    ['participle', 'destilada', 'destilar'], ['participle', 'cantadas', 'cantar'], ['participle', 'tornada', 'tornar'],
+    ['participle', 'puladas', 'pular'], ['participle', 'pousadas', 'pousar'], ['participle', 'legada', 'legar'], ['participle', 'giradas', 'girar'],
+    ['participle', 'trepadas', 'trepar'], ['participle', 'tapada', 'tapar'], ['participle', 'tapados', 'tapar'], ['participle', 'achadas', 'achar'],
+    ['participle', 'detonada', 'detonar'], ['participle', 'guiadas', 'guiar'], ['participle', 'simulada', 'simular'],
+    ['participle', 'atestada', 'atestar'], ['participle', 'alisada', 'alisar'], ['participle', 'rebolada', 'rebolar'],
+    ['participle', 'guisados', 'guisar'], ['participle', 'lambidas', 'lamber'], ['participle', 'ocorrida', 'ocorrer'],
+    ['participle', 'baldadas', 'baldar'], ['participle', 'buriladas', 'burilar'], ['participle', 'baralhadas', 'baralhar'],
     // A plural read as an irregular verb form (pedir's peças, ver's verdes,
     // cear's ceias), and tais, whose -ais needs a longer stem (mais is not a
     // plural of mal).
@@ -1054,6 +1082,10 @@ for (const [slot, form, lemma] of [
     ['present-ele', 'delira', 'delirar'], ['present-tu', 'deliras', 'delirar'],
     ['subjunctive-eu-ele', 'renda', 'render'], ['subjunctive-eu-ele', 'assente', 'assentar'],
     ['subjunctive-eu-ele', 'viva', 'viver'], ['imperative-vos', 'rendei', 'render'], ['imperative-vos', 'atendei', 'atender'],
+    // and the short participles revolta (revolver; the noun, a revolt, is
+    // revoltar's) and expressa (exprimir; mostly expressar's present).
+    ['present-ele', 'revolta', 'revoltar'], ['present-tu', 'revoltas', 'revoltar'],
+    ['present-ele', 'expressa', 'expressar'], ['present-tu', 'expressas', 'expressar'],
     // atender read as ater (atende as the imperative of vós, atendo as the
     // gerund) or as the rare atendar (atendam as its present).
     ['present-eu', 'atendo', 'atender'], ['present-tu', 'atendes', 'atender'], ['present-ele', 'atende', 'atender'],
@@ -1062,11 +1094,18 @@ for (const [slot, form, lemma] of [
     // agradar read as the participle of agrar, and validar as the feminine
     // of valido (a favourite; the feminine's -ida rule is longer).
     ['present-ele', 'agrada', 'agradar'], ['present-tu', 'agradas', 'agradar'], ['present-ele', 'valida', 'validar'],
-    // European tu forms read as the plural of a rare noun (achas as acha, a billet).
+    // European tu forms read as the plural of a noun (achas as acha, a billet;
+    // falas as the speeches), where the verb is the reading the Tatoeba
+    // sentences use more often (after tu, não, a pronoun or que, or at the
+    // start of a sentence, against after a determiner or a preposition).
     ['present-tu', 'achas', 'achar'], ['present-tu', 'percebes', 'perceber'], ['present-tu', 'andas', 'andar'],
     ['present-tu', 'deixas', 'deixar'], ['present-tu', 'amas', 'amar'], ['subjunctive-tu', 'cases', 'casar'],
+    ['present-tu', 'falas', 'falar'], ['present-tu', 'esperas', 'esperar'], ['present-tu', 'levas', 'levar'], ['present-tu', 'procuras', 'procurar'],
+    ['present-tu', 'chegas', 'chegar'], ['present-tu', 'ajudas', 'ajudar'], ['present-tu', 'olhas', 'olhar'], ['present-tu', 'moras', 'morar'],
+    ['present-tu', 'corres', 'correr'], ['subjunctive-tu', 'batas', 'bater'], ['subjunctive-tu', 'cantes', 'cantar'],
+    ['subjunctive-tu', 'comas', 'comer'], ['subjunctive-tu', 'metas', 'meter'],
 ]) {
-    const verbSlot = !['feminine', 'plural'].includes(slot);
+    const verbSlot = !['feminine', 'plural'].includes(slot);   // the participle takes vf and gives v, as the verbs
     add(slot, {type: 'wholeWord', inflected: form, deinflected: lemma,
         conditionsIn: verbSlot ? ['vf'] : slot === 'feminine' ? ['adj'] : [], conditionsOut: verbSlot ? ['v'] : NA});
 }
