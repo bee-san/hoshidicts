@@ -90,6 +90,7 @@ def keys(word, initial=False, rows=None):
 SAME_LEMMA = re.compile(r'^(?:alternative|alt-of|rare alternative|alternative dialectal|alternative abbreviation|misspelling|nonstandard|'
                         r'dated|archaic|obsolete|proscribed|lowercase|uppercase|(?:im)?perfective(?: rare| semelfactive)?)$')
 LINKS = collections.defaultdict(set)
+OLD = set()  # entries glossed as 1928-1933 spellings, whose card is not the modern word's
 
 
 def load_rows(json_dir):
@@ -101,6 +102,8 @@ def load_rows(json_dir):
             others = [g for g in row[5] if not isinstance(g, list)]
             if others:
                 lemmas.add(term)
+                if '1928–1933 spelling of' in json.dumps(others, ensure_ascii=False):
+                    OLD.add(term)
                 if 'char' in (row[2] or '').split() and term != term.lower():
                     CHARS.add(term)
             for ref in refs:
@@ -117,6 +120,8 @@ def same_lemma(name, target, lemmas):
     `name`'s rows name: always when `name` is only a reference, else when
     every link is another spelling or the other aspect."""
     links = LINKS.get((name, target), set())
+    if name in OLD:
+        return False
     return name not in lemmas or (bool(links) and all(SAME_LEMMA.match(l) for l in links))
 
 

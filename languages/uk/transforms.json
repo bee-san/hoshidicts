@@ -60,7 +60,7 @@
         {"type": "suffix", "inflected": "еві", "deinflected": "ь", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "{softable}", "stemChange": {"from": ["о", "е"], "to": "і", "occurrence": "last", "between": "{consonant}"}, "source": "both"},
         {"type": "suffix", "inflected": "еві", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[р]"},
         {"type": "suffix", "inflected": "аті", "deinflected": "а", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[жчш]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["четвергу", "четвер"], ["четвергові", "четвер"], ["марці", "марка"], ["голові", "голова"]], "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[]"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["четвергу", "четвер"], ["четвергові", "четвер"], ["танкові", "танк"], ["марці", "марка"], ["голові", "голова"]], "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[]"}
       ]
     },
     {
@@ -96,7 +96,7 @@
         {"type": "suffix", "inflected": "ем", "deinflected": "ь", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "{softable}", "stemChange": {"from": ["о", "е"], "to": "і", "occurrence": "last", "between": "{consonant}"}, "source": "both"},
         {"type": "suffix", "inflected": "ем", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[р]", "source": "both"},
         {"type": "suffix", "inflected": "ам", "deinflected": "а", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[жчш]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["четвергом", "четвер"], ["приводом", "привід"], ["плачем", "плач"], ["краєм", "край"], ["гаєм", "гай"], ["чаєм", "чай"], ["літом", "літо"], ["роком", "рік"]], "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[]"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["четвергом", "четвер"], ["танком", "танк"], ["міністром", "міністр"], ["приводом", "привід"], ["плачем", "плач"], ["краєм", "край"], ["гаєм", "гай"], ["чаєм", "чай"], ["літом", "літо"], ["роком", "рік"]], "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[]"}
       ]
     },
     {
@@ -152,7 +152,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ч", "ччя"], ["ж", "жжя"], ["ш", "шшя"], ["ан", "анин"], ["ян", "янин"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}"},
         {"type": "suffix", "inflected": "ей", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "{hushing}", "stemChange": {"from": ["о", "е"], "to": "і", "occurrence": "last", "between": "{consonant}"}, "source": "both"},
         {"type": "suffix", "inflected": "ат", "deinflected": "а", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[жчш]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["людей", "людина"], ["людей", "люди"], ["дітей", "дитина"], ["дітей", "діти"], ["очей", "око"], ["друзів", "друг"], ["небес", "небо"], ["чудес", "чудо"], ["сердець", "серце"], ["овець", "вівця"], ["четвергів", "четвер"], ["шахів", "шахи"], ["злиднів", "злидні"], ["відомостей", "відомості"], ["статей", "стаття"], ["вистав", "вистава"], ["умов", "умова"], ["мрій", "мрія"], ["полів", "поле"], ["сіл", "село"], ["прав", "право"], ["миль", "миля"], ["ліків", "ліки"]], "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[]"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["людей", "людина"], ["людей", "люди"], ["дітей", "дитина"], ["дітей", "діти"], ["очей", "око"], ["друзів", "друг"], ["небес", "небо"], ["чудес", "чудо"], ["сердець", "серце"], ["овець", "вівця"], ["четвергів", "четвер"], ["держав", "держава"], ["танків", "танк"], ["дій", "дія"], ["міністрів", "міністр"], ["шахів", "шахи"], ["злиднів", "злидні"], ["відомостей", "відомості"], ["статей", "стаття"], ["вистав", "вистава"], ["умов", "умова"], ["мрій", "мрія"], ["полів", "поле"], ["сіл", "село"], ["прав", "право"], ["миль", "миля"], ["ліків", "ліки"]], "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[]"}
       ]
     },
     {
@@ -174,7 +174,7 @@
         {"type": "suffix", "inflected": "ям", "deinflected": "е", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[лрц]", "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ам", "е"], ["ам", "і"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "{hushing}"},
         {"type": "suffix", "inflected": "атам", "deinflected": "а", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[жчш]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["людям", "людина"], ["людям", "люди"], ["дітям", "дитина"], ["дітям", "діти"], ["очам", "око"], ["друзям", "друг"], ["небесам", "небо"], ["чудесам", "чудо"], ["четвергам", "четвер"], ["колам", "коло"], ["грошам", "гроші"], ["трупам", "труп"], ["волам", "віл"], ["копам", "коп"]], "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["людям", "людина"], ["людям", "люди"], ["дітям", "дитина"], ["дітям", "діти"], ["очам", "око"], ["друзям", "друг"], ["небесам", "небо"], ["чудесам", "чудо"], ["четвергам", "четвер"], ["танкам", "танк"], ["колам", "коло"], ["грошам", "гроші"], ["трупам", "труп"], ["волам", "віл"], ["копам", "коп"]], "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["анам", "анин"], ["янам", "янин"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}"}
       ]
     },
@@ -197,7 +197,7 @@
         {"type": "suffix", "inflected": "ями", "deinflected": "е", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[лрц]", "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ами", "е"], ["има", "е"], ["ами", "і"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "{hushing}"},
         {"type": "suffix", "inflected": "атами", "deinflected": "а", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[жчш]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["людьми", "людина"], ["людьми", "люди"], ["дітьми", "дитина"], ["дітьми", "діти"], ["очима", "око"], ["друзями", "друг"], ["небесами", "небо"], ["чудесами", "чудо"], ["четвергами", "четвер"], ["методами", "метод"], ["відомостями", "відомості"], ["колами", "коло"], ["кодами", "код"], ["мисами", "мис"], ["даними", "дані"], ["образами", "образ"], ["рабами", "раб"], ["трупами", "труп"], ["ліками", "ліки"], ["волами", "віл"]], "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["людьми", "людина"], ["людьми", "люди"], ["дітьми", "дитина"], ["дітьми", "діти"], ["очима", "око"], ["друзями", "друг"], ["небесами", "небо"], ["чудесами", "чудо"], ["четвергами", "четвер"], ["танками", "танк"], ["медалями", "медаль"], ["методами", "метод"], ["відомостями", "відомості"], ["колами", "коло"], ["кодами", "код"], ["мисами", "мис"], ["даними", "дані"], ["образами", "образ"], ["рабами", "раб"], ["трупами", "труп"], ["ліками", "ліки"], ["волами", "віл"]], "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["анами", "анин"], ["янами", "янин"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}"}
       ]
     },
@@ -220,7 +220,7 @@
         {"type": "suffix", "inflected": "ях", "deinflected": "е", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[лрц]", "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ах", "е"], ["ах", "і"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "{hushing}"},
         {"type": "suffix", "inflected": "атах", "deinflected": "а", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[жчш]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["людях", "людина"], ["людях", "люди"], ["дітях", "дитина"], ["дітях", "діти"], ["очах", "око"], ["друзях", "друг"], ["небесах", "небо"], ["чудесах", "чудо"], ["четвергах", "четвер"], ["шахах", "шахи"], ["колах", "коло"], ["кодах", "код"], ["мисах", "мис"], ["грошах", "гроші"], ["трупах", "труп"], ["ролях", "роль"]], "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["людях", "людина"], ["людях", "люди"], ["дітях", "дитина"], ["дітях", "діти"], ["очах", "око"], ["друзях", "друг"], ["небесах", "небо"], ["чудесах", "чудо"], ["четвергах", "четвер"], ["танках", "танк"], ["шахах", "шахи"], ["колах", "коло"], ["кодах", "код"], ["мисах", "мис"], ["грошах", "гроші"], ["трупах", "труп"], ["ролях", "роль"]], "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["анах", "анин"], ["янах", "янин"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}"}
       ]
     },
@@ -280,7 +280,7 @@
         {"type": "suffix", "inflected": "я", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "[р]", "source": "both"},
         {"type": "suffix", "inflected": "я", "deinflected": "й", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{vowel}", "source": "both"},
         {"type": "suffix", "inflected": "ати", "deinflected": "а", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[жчш]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["четверга", "четвер"], ["вола", "віл"], ["діда", "дід"]], "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[]"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["четверга", "четвер"], ["танка", "танк"], ["міністра", "міністр"], ["вола", "віл"], ["діда", "дід"]], "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[]"}
       ]
     },
     {
@@ -295,7 +295,7 @@
         {"type": "suffix", "inflected": "ку", "deinflected": "ок", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}", "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["тру", "тер"], ["бру", "бер"], ["кру", "кор"], ["гру", "гор"], ["рлу", "рел"], ["слу", "сел"], ["злу", "зел"], ["тлу", "тел"], ["слу", "сол"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["сну", "сон"], ["псу", "пес"]], "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "{stem}"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["методу", "метод"], ["цвіту", "цвіт"], ["закладу", "заклад"], ["коду", "код"], ["мису", "мис"], ["запасу", "запас"], ["рису", "рис"], ["банку", "банк"], ["складу", "склад"], ["зросту", "зріст"], ["року", "рік"], ["приводу", "привід"], ["нападу", "напад"], ["туалету", "туалет"], ["пилу", "пил"], ["сміху", "сміх"]], "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[]"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["танку", "танк"], ["перекладу", "переклад"], ["аналізу", "аналіз"], ["оркестру", "оркестр"], ["синтезу", "синтез"], ["резерву", "резерв"], ["візиту", "візит"], ["методу", "метод"], ["цвіту", "цвіт"], ["закладу", "заклад"], ["коду", "код"], ["мису", "мис"], ["запасу", "запас"], ["рису", "рис"], ["банку", "банк"], ["складу", "склад"], ["зросту", "зріст"], ["року", "рік"], ["приводу", "привід"], ["нападу", "напад"], ["туалету", "туалет"], ["пилу", "пил"], ["сміху", "сміх"]], "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[]"}
       ]
     },
     {
@@ -350,7 +350,7 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["сни", "сон"], ["пси", "пес"]], "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "{stem}"},
         {"type": "suffix", "inflected": "и", "deinflected": "о", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "{consonant}"},
         {"type": "suffix", "inflected": "ата", "deinflected": "а", "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 1, "stemCharacters": "{stem}", "stemEndsWith": "[жчш]", "source": "both"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["люди", "людина"], ["діти", "дитина"], ["очі", "око"], ["друзі", "друг"], ["небеса", "небо"], ["чудеса", "чудо"], ["четверги", "четвер"], ["методи", "метод"], ["онуки", "онук"], ["запаси", "запас"], ["миси", "мис"], ["заклади", "заклад"], ["потопи", "потоп"], ["банки", "банк"], ["копи", "коп"], ["приводи", "привід"], ["туалети", "туалет"], ["вози", "віз"], ["вічі", "око"], ["напади", "напад"], ["трупи", "труп"]], "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[]"},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["люди", "людина"], ["діти", "дитина"], ["очі", "око"], ["друзі", "друг"], ["небеса", "небо"], ["чудеса", "чудо"], ["четверги", "четвер"], ["танки", "танк"], ["образи", "образ"], ["методи", "метод"], ["онуки", "онук"], ["запаси", "запас"], ["миси", "мис"], ["заклади", "заклад"], ["потопи", "потоп"], ["банки", "банк"], ["копи", "коп"], ["приводи", "привід"], ["туалети", "туалет"], ["вози", "віз"], ["вічі", "око"], ["напади", "напад"], ["трупи", "труп"]], "conditionsIn": [], "conditionsOut": ["n"], "stemCharacters": "[]"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ани", "анин"], ["яни", "янин"]], "conditionsIn": [], "conditionsOut": ["n"], "stemMinLength": 2, "stemCharacters": "{stem}"}
       ]
     },
@@ -438,7 +438,7 @@
         {"type": "suffix", "inflected": "і", "deinflected": "ій", "conditionsIn": [], "conditionsOut": ["adj", "n", "pron", "v"], "stemMinLength": 2, "stemCharacters": "{stem}", "stemEndsWith": "[нт]", "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["мої", "мій"], ["твої", "твій"], ["свої", "свій"], ["наші", "наш"], ["ваші", "ваш"], ["всі", "весь"], ["усі", "весь"], ["самі", "сам"], ["чиї", "чий"], ["їхні", "їхній"]], "conditionsIn": [], "conditionsOut": ["pron"], "stemCharacters": "[]", "source": "both"},
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ці", "цей"], ["ті", "той"], ["оті", "отой"]], "conditionsIn": [], "conditionsOut": [], "stemCharacters": "[]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["головні", "головний"], ["торгові", "торговий"], ["святі", "святий"], ["милі", "милий"], ["політичні", "політичний"], ["гнилі", "гнилий"], ["складні", "складний"], ["ситі", "ситий"], ["босі", "босий"], ["лісові", "лісовий"], ["люті", "лютий"], ["рідні", "рідний"], ["ранні", "ранній"], ["готові", "готовий"], ["погані", "поганий"], ["різні", "різний"], ["раді", "радий"], ["добрі", "добрий"], ["чудові", "чудовий"], ["праві", "правий"], ["білі", "білий"], ["військові", "військовий"], ["божевільні", "божевільний"], ["дорослі", "дорослий"], ["хворі", "хворий"], ["золоті", "золотий"], ["зелені", "зелений"], ["повні", "повний"], ["сірі", "сірий"], ["голі", "голий"], ["сині", "синій"], ["теплі", "теплий"], ["грубі", "грубий"], ["здорові", "здоровий"]], "conditionsIn": [], "conditionsOut": ["adj", "n", "pron", "v"], "stemCharacters": "[]"}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["карі", "карий"], ["головні", "головний"], ["торгові", "торговий"], ["святі", "святий"], ["милі", "милий"], ["політичні", "політичний"], ["гнилі", "гнилий"], ["складні", "складний"], ["ситі", "ситий"], ["босі", "босий"], ["лісові", "лісовий"], ["люті", "лютий"], ["рідні", "рідний"], ["ранні", "ранній"], ["готові", "готовий"], ["погані", "поганий"], ["різні", "різний"], ["раді", "радий"], ["добрі", "добрий"], ["чудові", "чудовий"], ["праві", "правий"], ["білі", "білий"], ["військові", "військовий"], ["божевільні", "божевільний"], ["дорослі", "дорослий"], ["хворі", "хворий"], ["золоті", "золотий"], ["зелені", "зелений"], ["повні", "повний"], ["сірі", "сірий"], ["голі", "голий"], ["сині", "синій"], ["теплі", "теплий"], ["грубі", "грубий"], ["здорові", "здоровий"]], "conditionsIn": [], "conditionsOut": ["adj", "n", "pron", "v"], "stemCharacters": "[]"}
       ]
     },
     {
