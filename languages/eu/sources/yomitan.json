@@ -1,0 +1,623 @@
+{
+  "schema": 1,
+  "conditions": {
+    "n": {
+      "name": "Noun",
+      "isDictionaryForm": true
+    },
+    "adj": {
+      "name": "Adjective",
+      "isDictionaryForm": true
+    },
+    "adv": {
+      "name": "Adverb",
+      "isDictionaryForm": true
+    },
+    "v": {
+      "name": "Verb",
+      "isDictionaryForm": true
+    }
+  },
+  "transforms": [
+    {
+      "id": "Absolutive Singular",
+      "name": "Absolutive Singular",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "a", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Absolutive Plural",
+      "name": "Absolutive Plural",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ak", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Ergative Singular",
+      "name": "Ergative Singular",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ak", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Ergative Plural",
+      "name": "Ergative Plural",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ek", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Ergative Indefinite",
+      "name": "Ergative Indefinite",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "k", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Dative Singular",
+      "name": "Dative Singular",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ari", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Dative Plural",
+      "name": "Dative Plural",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ei", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Dative Indefinite",
+      "name": "Dative Indefinite",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ri", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Genitive Singular",
+      "name": "Genitive Singular",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "aren", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Genitive Plural",
+      "name": "Genitive Plural",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "en", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Genitive Indefinite",
+      "name": "Genitive Indefinite",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ren", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Comitative Singular",
+      "name": "Comitative Singular",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "arekin", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Comitative Plural",
+      "name": "Comitative Plural",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ekin", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Comitative Indefinite",
+      "name": "Comitative Indefinite",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "rekin", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Benefactive Singular",
+      "name": "Benefactive Singular",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "arentzat", "deinflected": "", "conditionsIn": ["n", "adj", "adv"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Benefactive Plural",
+      "name": "Benefactive Plural",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "entzat", "deinflected": "", "conditionsIn": ["n", "adj", "adv"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Benefactive Indefinite",
+      "name": "Benefactive Indefinite",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "rentzat", "deinflected": "", "conditionsIn": ["n", "adj", "adv"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Instrumental Singular",
+      "name": "Instrumental Singular",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "az", "deinflected": "", "conditionsIn": ["n", "adj", "adv"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Instrumental Plural",
+      "name": "Instrumental Plural",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ez", "deinflected": "", "conditionsIn": ["n", "adj", "adv"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Instrumental Indefinite",
+      "name": "Instrumental Indefinite",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "z", "deinflected": "", "conditionsIn": ["n", "adj", "adv"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Inessive Singular",
+      "name": "Inessive Singular",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "an", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Inessive Plural",
+      "name": "Inessive Plural",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "etan", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Inessive Indefinite",
+      "name": "Inessive Indefinite",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "tan", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Allative Singular",
+      "name": "Allative Singular",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ra", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Allative Plural",
+      "name": "Allative Plural",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "etara", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Allative Indefinite",
+      "name": "Allative Indefinite",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "tara", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Ablative Singular",
+      "name": "Ablative Singular",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "tik", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Ablative Plural",
+      "name": "Ablative Plural",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "etatik", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Ablative Indefinite",
+      "name": "Ablative Indefinite",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "tatik", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Locative Genitive Singular",
+      "name": "Locative Genitive Singular",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ko", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Locative Genitive Singular (Voiced)",
+      "name": "Locative Genitive Singular (Voiced)",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "go", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Locative Genitive Plural",
+      "name": "Locative Genitive Plural",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "etako", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Locative Genitive Indefinite",
+      "name": "Locative Genitive Indefinite",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "tako", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Directional Allative Singular",
+      "name": "Directional Allative Singular",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "rantz", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Directional Allative Plural",
+      "name": "Directional Allative Plural",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "etarantz", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Directional Allative Indefinite",
+      "name": "Directional Allative Indefinite",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "tarantz", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Terminative Allative Singular",
+      "name": "Terminative Allative Singular",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "raino", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Terminative Allative Plural",
+      "name": "Terminative Allative Plural",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "etaraino", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Terminative Allative Indefinite",
+      "name": "Terminative Allative Indefinite",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "taraino", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Inessive Animate Singular",
+      "name": "Inessive Animate Singular",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "arengan", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Inessive Animate Plural",
+      "name": "Inessive Animate Plural",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "engan", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Inessive Animate Indefinite",
+      "name": "Inessive Animate Indefinite",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "rengan", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Allative Animate Singular",
+      "name": "Allative Animate Singular",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "arengana", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Allative Animate Plural",
+      "name": "Allative Animate Plural",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "engana", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Allative Animate Indefinite",
+      "name": "Allative Animate Indefinite",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "rengana", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Ablative Animate Singular",
+      "name": "Ablative Animate Singular",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "arengandik", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Ablative Animate Plural",
+      "name": "Ablative Animate Plural",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "engandik", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Ablative Animate Indefinite",
+      "name": "Ablative Animate Indefinite",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "rengandik", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Directional Allative Animate Singular",
+      "name": "Directional Allative Animate Singular",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "arenganantz", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Directional Allative Animate Plural",
+      "name": "Directional Allative Animate Plural",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "enganantz", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Directional Allative Animate Indefinite",
+      "name": "Directional Allative Animate Indefinite",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "renganantz", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Terminative Allative Animate Singular",
+      "name": "Terminative Allative Animate Singular",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "arenganaino", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Terminative Allative Animate Plural",
+      "name": "Terminative Allative Animate Plural",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "enganaino", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Terminative Allative Animate Indefinite",
+      "name": "Terminative Allative Animate Indefinite",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "renganaino", "deinflected": "", "conditionsIn": ["n", "adj"], "conditionsOut": ["n", "adj"]}
+      ]
+    },
+    {
+      "id": "Future Participle",
+      "name": "Future Participle",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ko", "deinflected": "", "conditionsIn": ["v"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "Future Participle (Voiced)",
+      "name": "Future Participle (Voiced)",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "go", "deinflected": "", "conditionsIn": ["v"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "Habitual to -tu",
+      "name": "Habitual to -tu",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "tzen", "deinflected": "tu", "conditionsIn": ["v"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "Habitual to -tu (Soft)",
+      "name": "Habitual to -tu (Soft)",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ten", "deinflected": "tu", "conditionsIn": ["v"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "Habitual to -i",
+      "name": "Habitual to -i",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "tzen", "deinflected": "i", "conditionsIn": ["v"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "Habitual to -n",
+      "name": "Habitual to -n",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ten", "deinflected": "n", "conditionsIn": ["v"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "Habitual to -si",
+      "name": "Habitual to -si",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "sten", "deinflected": "si", "conditionsIn": ["v"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "Habitual to -tzi",
+      "name": "Habitual to -tzi",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "zten", "deinflected": "tzi", "conditionsIn": ["v"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "Habitual to -tsi",
+      "name": "Habitual to -tsi",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "sten", "deinflected": "tsi", "conditionsIn": ["v"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "Verbal Noun to -tu",
+      "name": "Verbal Noun to -tu",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "tzea", "deinflected": "tu", "conditionsIn": ["n"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "Verbal Noun to -tu (Soft)",
+      "name": "Verbal Noun to -tu (Soft)",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "tea", "deinflected": "tu", "conditionsIn": ["n"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "Verbal Noun to -i",
+      "name": "Verbal Noun to -i",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "tzea", "deinflected": "i", "conditionsIn": ["n"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "Verbal Noun to -n",
+      "name": "Verbal Noun to -n",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "tea", "deinflected": "n", "conditionsIn": ["n"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "Verbal Noun to -si",
+      "name": "Verbal Noun to -si",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "stea", "deinflected": "si", "conditionsIn": ["n"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "Verbal Noun to -tzi",
+      "name": "Verbal Noun to -tzi",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ztea", "deinflected": "tzi", "conditionsIn": ["n"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "Adverbial Participle to -tu",
+      "name": "Adverbial Participle to -tu",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ta", "deinflected": "", "conditionsIn": ["adv"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "Adverbial Participle after n",
+      "name": "Adverbial Participle after n",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "da", "deinflected": "", "conditionsIn": ["adv"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "Adverbial Participle to -i",
+      "name": "Adverbial Participle to -i",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ita", "deinflected": "i", "conditionsIn": ["adv"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "Negative/Adverbial Participle 1",
+      "name": "Negative/Adverbial Participle",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ik", "deinflected": "", "conditionsIn": ["adv"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "Negative/Adverbial Participle 2",
+      "name": "Negative/Adverbial Participle 2",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "rik", "deinflected": "", "conditionsIn": ["adv"], "conditionsOut": ["v"]}
+      ]
+    },
+    {
+      "id": "Adverbializer -ki",
+      "name": "Adverbializer -ki",
+      "source": "yomitan",
+      "rules": [
+        {"type": "suffix", "inflected": "ki", "deinflected": "", "conditionsIn": ["adv"], "conditionsOut": ["n", "adj"]}
+      ]
+    }
+  ]
+}

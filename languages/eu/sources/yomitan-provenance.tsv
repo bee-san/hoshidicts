@@ -1,0 +1,76 @@
+# Yomitan rule (ext/js/language/eu/basque-transforms.js at d3c54c1)<TAB>rule<TAB>inflected<TAB>deinflected<TAB>conditionsOut<TAB>own transforms that make its deinflection (- if none)
+Absolutive Singular	0	a		n,adj	abs-sg
+Absolutive Plural	0	ak		n,adj	abs-pl+erg-sg
+Ergative Singular	0	ak		n,adj	abs-pl+erg-sg
+Ergative Plural	0	ek		n,adj	erg-pl+erg-indef,erg-pl
+Ergative Indefinite	0	k		n,adj	abs-pl+erg-sg,erg-indef
+Dative Singular	0	ari		n,adj	dat-sg
+Dative Plural	0	ei		n,adj	dat-pl
+Dative Indefinite	0	ri		n,adj	dat-indef,dat-sg+dat-indef
+Genitive Singular	0	aren		n,adj	gen-sg
+Genitive Plural	0	en		n,adj	superlative,gen-pl+gen-indef,gen-pl
+Genitive Indefinite	0	ren		n,adj	superlative,gen-pl+gen-indef,gen-sg+gen-indef
+Comitative Singular	0	arekin		n,adj	com-sg
+Comitative Plural	0	ekin		n,adj	com-pl+com-indef,com-pl
+Comitative Indefinite	0	rekin		n,adj	com-pl+com-indef,com-sg+com-indef
+Benefactive Singular	0	arentzat		n,adj	ben-sg
+Benefactive Plural	0	entzat		n,adj	ben-pl+ben-indef,ben-pl
+Benefactive Indefinite	0	rentzat		n,adj	ben-pl+ben-indef,ben-sg+ben-indef
+Instrumental Singular	0	az		n,adj	ins-sg
+Instrumental Plural	0	ez		n,adj	ins-pl+ins-indef,ins-pl
+Instrumental Indefinite	0	z		n,adj	ins-sg+ins-indef
+Inessive Singular	0	an		n,adj	ine-sg
+Inessive Plural	0	etan		n,adj	ine-pl+ine-indef,ine-pl
+Inessive Indefinite	0	tan		n,adj	ine-indef
+Allative Singular	0	ra		n,adj	abs-sg,all-sg
+Allative Plural	0	etara		n,adj	all-pl+all-indef,all-pl
+Allative Indefinite	0	tara		n,adj	all-indef
+Ablative Singular	0	tik		n,adj	abl-sg
+Ablative Plural	0	etatik		n,adj	abl-pl+abl-indef,abl-pl
+Ablative Indefinite	0	tatik		n,adj	abl-indef
+Locative Genitive Singular	0	ko		n,adj	loc-sg
+Locative Genitive Singular (Voiced)	0	go		n,adj	adverb-ko
+Locative Genitive Plural	0	etako		n,adj	loc-pl+loc-indef,loc-pl
+Locative Genitive Indefinite	0	tako		n,adj	loc-indef
+Directional Allative Singular	0	rantz		n,adj	dir-sg
+Directional Allative Plural	0	etarantz		n,adj	dir-pl+dir-indef,dir-pl
+Directional Allative Indefinite	0	tarantz		n,adj	dir-indef
+Terminative Allative Singular	0	raino		n,adj	ter-sg
+Terminative Allative Plural	0	etaraino		n,adj	ter-pl+ter-indef,ter-pl
+Terminative Allative Indefinite	0	taraino		n,adj	ter-indef
+Inessive Animate Singular	0	arengan		n,adj	animate-gan>gen-sg
+Inessive Animate Plural	0	engan		n,adj	animate-gan>superlative,animate-gan>gen-pl+gen-indef,animate-gan>gen-pl
+Inessive Animate Indefinite	0	rengan		n,adj	animate-gan>superlative,animate-gan>gen-pl+gen-indef,animate-gan>gen-sg+gen-indef
+Allative Animate Singular	0	arengana		n,adj	animate-gana>gen-sg
+Allative Animate Plural	0	engana		n,adj	animate-gana>superlative,animate-gana>gen-pl+gen-indef,animate-gana>gen-pl
+Allative Animate Indefinite	0	rengana		n,adj	animate-gana>superlative,animate-gana>gen-pl+gen-indef,animate-gana>gen-sg+gen-indef
+Ablative Animate Singular	0	arengandik		n,adj	animate-gandik>gen-sg
+Ablative Animate Plural	0	engandik		n,adj	animate-gandik>superlative,animate-gandik>gen-pl+gen-indef,animate-gandik>gen-pl
+Ablative Animate Indefinite	0	rengandik		n,adj	animate-gandik>superlative,animate-gandik>gen-pl+gen-indef,animate-gandik>gen-sg+gen-indef
+Directional Allative Animate Singular	0	arenganantz		n,adj	animate-ganantz>gen-sg
+Directional Allative Animate Plural	0	enganantz		n,adj	animate-ganantz>superlative,animate-ganantz>gen-pl+gen-indef,animate-ganantz>gen-pl
+Directional Allative Animate Indefinite	0	renganantz		n,adj	animate-ganantz>superlative,animate-ganantz>gen-pl+gen-indef,animate-ganantz>gen-sg+gen-indef
+Terminative Allative Animate Singular	0	arenganaino		n,adj	animate-ganaino>gen-sg
+Terminative Allative Animate Plural	0	enganaino		n,adj	animate-ganaino>superlative,animate-ganaino>gen-pl+gen-indef,animate-ganaino>gen-pl
+Terminative Allative Animate Indefinite	0	renganaino		n,adj	animate-ganaino>superlative,animate-ganaino>gen-pl+gen-indef,animate-ganaino>gen-sg+gen-indef
+Future Participle	0	ko		v	future
+Future Participle (Voiced)	0	go		v	future
+Habitual to -tu	0	tzen	tu	v	imperfective
+Habitual to -tu (Soft)	0	ten	tu	v	imperfective
+Habitual to -i	0	tzen	i	v	imperfective
+Habitual to -n	0	ten	n	v	imperfective
+Habitual to -si	0	sten	si	v	imperfective
+Habitual to -tzi	0	zten	tzi	v	imperfective
+Habitual to -tsi	0	sten	tsi	v	imperfective
+Verbal Noun to -tu	0	tzea	tu	v	abs-sg>verbal-noun
+Verbal Noun to -tu (Soft)	0	tea	tu	v	abs-sg>verbal-noun
+Verbal Noun to -i	0	tzea	i	v	abs-sg>verbal-noun
+Verbal Noun to -n	0	tea	n	v	abs-sg>verbal-noun
+Verbal Noun to -si	0	stea	si	v	abs-sg>verbal-noun
+Verbal Noun to -tzi	0	ztea	tzi	v	abs-sg>verbal-noun
+Adverbial Participle to -tu	0	ta		v	resultative
+Adverbial Participle after n	0	da		v	resultative
+Adverbial Participle to -i	0	ita	i	v	resultative
+Negative/Adverbial Participle 1	0	ik		v	par-indef
+Negative/Adverbial Participle 2	0	rik		v	par-indef
+Adverbializer -ki	0	ki		n,adj	adverb-ki

@@ -1,0 +1,10 @@
+{
+  "title": "hoshidicts eu test dictionary",
+  "format": 3,
+  "revision": "1",
+  "sequenced": false,
+  "author": "hoshidicts",
+  "description": "A tiny Basque dictionary for languages/eu/tests/lookup.tsv, written for the pack. Pronouns, determiners and names have no part of speech, as in wiktionary-to-yomitan's wty-eu-en.",
+  "sourceLanguage": "eu",
+  "targetLanguage": "en"
+}
