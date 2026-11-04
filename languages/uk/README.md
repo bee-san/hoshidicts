@@ -289,10 +289,10 @@ identical).
    prefixes, 100 prepositions and 82 phrases, while the parts of speech the
    rules produce are tagged (`n` 14,062 rows, `v` 6,318, `adj` 5,625). With
    `pass`, the final set ranks as many lemmas first on `corpus.tsv` (930 of
-   988), `gaps.tsv` (9 of 14) and `cases.tsv` (449 of 518) and one fewer on
-   the measurement set (293,919 against 293,920 of 312,322); recall and
+   988), `gaps.tsv` (9 of 14) and `cases.tsv` (453 of 520) and one fewer on
+   the measurement set (293,923 against 293,924 of 312,324); recall and
    negatives are the same, and false candidates per row rise from 0.513 to
-   0.529 on `corpus.tsv`, from 1.168 to 1.249 on `cases.tsv` and from 0.505
+   0.529 on `corpus.tsv`, from 1.163 to 1.246 on `cases.tsv` and from 0.505
    to 0.534 on the measurement set.
 2. **Frequent words** (`sources/measure.py words`): the 10,000 most frequent
    words of `uk_50k.txt`, each looked up alone as a host does (16 results,
@@ -385,22 +385,22 @@ identical).
      --term <wty-uk-en> --languages <copy> --language uk --json`: the 80 texts
      of `sources/benchmark-words.txt` (each the rest of a sentence from an
      inflected word), 6 passes with the first dropped, three runs, machine
-     load about 37 (of 64 cores). Budget 1 ms p50.
+     load about 33 (of 64 cores). Budget 1 ms p50.
 
      | Rule set | p50 | p95 |
      | --- | ---: | ---: |
-     | Final | 39-43 µs | 61-68 µs |
-     | Own | 30-31 µs | 45-48 µs |
-     | Union | 61-70 µs | 93-113 µs |
-     | Yomitan's rules | 43-45 µs | 66-67 µs |
+     | Final | 40-42 µs | 63-66 µs |
+     | Own | 29-31 µs | 46-49 µs |
+     | Union | 54-55 µs | 82-85 µs |
+     | Yomitan's rules | 42-46 µs | 62-70 µs |
    - WebAssembly (`node languages/uk/sources/wasm-measure.mjs <hachidori>
      <wty-uk-en.zip>`, Hachidori feat/multi-language d7e82b0c's prebuilt
      engines in Node 22, 10 fresh engines): `hdw_language_load` of this pack
-     takes 16.0 ms (median; 14.8-28.7) single-thread and 17.2 ms (15.4-22.9)
-     threaded, and adds 2,606,656 and 2,607,168 bytes of live heap
+     takes 15.1 ms (median; 14.3-21.3) single-thread and 15.8 ms (15.0-23.3)
+     threaded, and adds 2,607,200 and 2,607,328 bytes of live heap
      (`hdw_memory_stats`). With wty-uk-en imported into the engine and added
-     paged, `hdw_lookup` of the 80 texts takes 0.101 ms p50 and 0.188 ms p95
-     single-thread, 0.110 ms and 0.201 ms threaded. Budgets 50 ms and 20 MB.
+     paged, `hdw_lookup` of the 80 texts takes 0.104 ms p50 and 0.198 ms p95
+     single-thread, 0.109 ms and 0.200 ms threaded. Budgets 50 ms and 20 MB.
      The pack has no `pattern` rule.
 6. **Other checks.**
    - Differential check (`tools/check-yomitan.mjs <yomitan d3c54c1> uk --cli
