@@ -1,0 +1,9 @@
+# Source: UniMorph sqi (https://github.com/unimorph/sqi) at 63fed8fdd510d14a75d2d2dacb1c5ab1475617e7, file sqi, CC BY-SA 3.0, by the UniMorph contributors (data from English Wiktionary).
+# 1,000 rows sampled with seed 1 by sources/build-corpus.mjs: 450 single-word verb forms, 150 analytic verb forms, 400 noun forms; corpus.tsv has the rows the rules reach, gaps.tsv the others.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+V;1;PL;IND;IPFV	1	ikinim	iki	v	*
+V;2;PL;ADM;PRS	1	ikikeni	iki	v	*
+V;2;PL;IND;PST	1	ikiët	iki	v	*
+V;2;SG;ADM;PRF;PST	1	qenkëshe arratisuar	arratisem	v	*
+N;ABL;SG;DEF	1	thithëës	thithë	n	*
+N;ABL;PL;DEF	1	mendjve	mendje	n	*
