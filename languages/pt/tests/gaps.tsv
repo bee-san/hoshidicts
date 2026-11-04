@@ -1,0 +1,43 @@
+# Known gaps: run by the conformance test and counted, not enforced.
+# Rows whose category starts with "hand:" are written for this pack (GPL-3.0-or-later), no third-party data.
+# Sources: UniMorph por (https://github.com/unimorph/por/blob/fc2778e08e2da476d9d2f27f15f218b1cbb25ad5/por, sha256 af71c94afbb857b3), CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/), by the UniMorph contributors, from English Wiktionary (categories with ";");
+# and wty-pt-en 2026.10.22 (wiktionary-to-yomitan, sha256 90c8e8fe98818163), CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/), by the Wiktionary contributors through kaikki.org (categories "wty ...").
+# 1498 rows sampled with seed 1 by sources/build-corpus.py (14 per UniMorph tag set; 250 wty plural, 150 wty feminine, 80 wty diminutive, 60 wty superlative, 120 wty verb with pronouns); the rows the pack's rules reach are in corpus.tsv, the others in gaps.tsv.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+V;1;PL;IMP;NEG	1	respigemos	respigar	v	*
+V;1;PL;SBJV;FUT	1	requisermos	requerer	v	*
+V;1;PL;SBJV;PRS	1	reúnamos	reunir	v	*
+V;1;SG;NFIN	1	aguentar	agüentar	v	*
+V;1;SG;SBJV;FUT	1	oppuser	oppôr	v	*
+V;1;SG;SBJV;FUT	1	requiser	requerer	v	*
+V;2;PL;SBJV;PRS	1	reúnais	reunir	v	*
+V;2;SG;SBJV;FUT	1	decompuseres	decompôr	v	*
+V;2;SG;SBJV;FUT	1	requiseres	requerer	v	*
+V;2;SG;SBJV;PRS	1	mobílies	mobiliar	v	*
+V;3;PL;IND;PST;PRF	1	soubéram	saber	v	*
+V;3;PL;SBJV;FUT	1	presupuserem	presupor	v	*
+V;3;SG;IND;PRS	1	luz	luzir	v	*
+V;3;SG;IND;PRS	1	mobília	mobiliar	v	*
+V;3;SG;IND;PRS	1	valeval	valer	v	*
+wty plural	1	padrastos	nadraste	n	*
+wty plural	1	senhoras	senhor@	n	*
+wty feminine	1	cafetina	cafetão	n	*
+wty feminine	1	otome	otaku	n	*
+wty feminine	1	sobrinha	sobrinhe	n	*
+wty diminutive	1	meinha	meia	n	*
+wty diminutive	1	bauzinho	baú	n	*
+wty diminutive	1	tortilha	torta	n	*
+wty diminutive	1	ossículo	osso	n	*
+wty diminutive	1	barquito	barco	n	*
+wty diminutive	1	diabrete	diabo	n	*
+wty diminutive	1	bosquete	bosque	n	*
+wty diminutive	1	ladrãozeco	ladrão	n	*
+wty diminutive	1	fixolas	fixe	n	*
+wty diminutive	1	roseta	rosa	n	*
+wty diminutive	1	saidinha	saída	n	*
+wty diminutive	1	caracolito	caracol	n	*
+wty diminutive	1	kitizinho	kit	n	*
+wty diminutive	1	historinha	história	n	*
+wty superlative	1	mijoníssimo	mijão	adj	*
+wty superlative	1	péssimo	ruim	adj	*
+wty superlative	1	acérrimo	acre	adj	*

@@ -1,0 +1,180 @@
+# Source: written for this pack (GPL-3.0-or-later), against tests/dictionary/. The pack has no optional processor.
+# category	valid	text	expression	matched
+inflection	1	falou com ele	falar	falou
+inflection	1	Falamos amanhã	falar	Falamos
+inflection	1	casas bonitas	casa	casas
+inflection	1	flores bonitas	flor	flores
+inflection	1	pãezinhos quentes	pão	pãezinhos
+inflection	1	cafezinho quente	café	cafezinho
+inflection	1	rapidamente demais	rápido	rapidamente
+inflection	1	rapidíssimo hoje	rápido	rapidíssimo
+inflection	1	bonitas casas	bonito	bonitas
+inflection	1	portuguesas e brasileiras	português	portuguesas
+ranking	1	pode ser	poder	pode
+ranking	0	pode ser	podar	pode
+ranking	1	segue em frente	seguir	segue
+ranking	0	segue em frente	segar	segue
+ranking	1	casas grandes	casa	casas
+ranking	0	casas grandes	casar	casas
+ranking	1	Sua casa é bonita	seu	Sua
+ranking	0	Sua casa é bonita	suar	Sua
+ranking	1	soldados marchavam	soldado	soldados
+ranking	0	soldados marchavam	soldar	soldados
+ranking	1	ideias novas	ideia	ideias
+ranking	0	ideias novas	idear	ideias
+ranking	1	ataques aéreos	ataque	ataques
+ranking	0	ataques aéreos	atacar	ataques
+ranking	1	impostos altos	imposto	impostos
+ranking	0	impostos altos	impor	impostos
+ranking	1	Pare com isso	parar	Pare
+ranking	0	Pare com isso	parir	Pare
+ranking	1	achas que sim	achar	achas
+ranking	0	achas que sim	acha	achas
+ranking	1	podem ir	poder	podem
+ranking	0	podem ir	podar	podem
+ranking	1	amiga dela	amigo	amiga
+ranking	0	amiga dela	amigar	amiga
+ranking	1	perfeita para mim	perfeito	perfeita
+ranking	0	perfeita para mim	perfazer	perfeita
+ranking	1	cansada demais	cansado	cansada
+ranking	0	cansada demais	cansar	cansada
+ranking	1	precisa de ajuda	precisar	precisa
+ranking	0	precisa de ajuda	preciso	precisa
+ranking	1	atende o telefone	atender	atende
+ranking	0	atende o telefone	ater	atende
+ranking	1	verdes e azuis	verde	verdes
+ranking	0	verdes e azuis	ver	verdes
+ranking	1	saudáveis demais	saudável	saudáveis
+ranking	0	saudáveis demais	saudar	saudáveis
+ranking	1	revistas antigas	revista	revistas
+ranking	0	revistas antigas	rever	revistas
+ranking	1	malditos sejam	maldito	malditos
+ranking	0	malditos sejam	maldizer	malditos
+ranking	1	vasta planície	vasto	vasta
+ranking	0	vasta planície	vastar	vasta
+ranking	1	vivam bem	viver	vivam
+ranking	0	vivam bem	vivar	vivam
+ranking	1	crises econômicas	crise	crises
+ranking	0	crises econômicas	cris	crises
+ranking	1	secretarias municipais	secretaria	secretarias
+ranking	0	secretarias municipais	secretar	secretarias
+ranking	1	Falas inglês?	falar	Falas
+ranking	0	Falas inglês?	fala	Falas
+ranking	1	criam um mundo	criar	criam
+ranking	0	criam um mundo	crer	criam
+ranking	1	desvia o olhar	desviar	desvia
+ranking	0	desvia o olhar	desver	desvia
+ranking	1	agrada-me muito	agradar	agrada-me
+ranking	0	agrada-me muito	agrar	agrada-me
+ranking	1	valida o bilhete	validar	valida
+ranking	0	valida o bilhete	valido	valida
+ranking	1	delira de febre	delirar	delira
+ranking	0	delira de febre	delir	delira
+ranking	1	renda-se agora	render	renda-se
+ranking	0	renda-se agora	rendar	renda-se
+ranking	1	assente-se aqui	assentar	assente-se
+ranking	0	assente-se aqui	assentir	assente-se
+ranking	1	atendam o telefone	atender	atendam
+ranking	0	atendam o telefone	atendar	atendam
+ranking	1	criada em 1990	criar	criada
+ranking	0	criada em 1990	criado	criada
+ranking	1	chamados de heróis	chamar	chamados
+ranking	0	chamados de heróis	chamado	chamados
+ranking	1	quebradas pelo vento	quebrado	quebradas
+ranking	0	quebradas pelo vento	quebrada	quebradas
+ranking	1	revolta popular	revoltar	revolta
+ranking	0	revolta popular	revolver	revolta
+ranking	1	bebidas geladas	bebida	bebidas
+ranking	0	bebidas geladas	beber	bebidas
+ranking	1	mentiras demais	mentira	mentiras
+ranking	0	mentiras demais	mentir	mentiras
+ranking	1	águas claras	água	águas
+ranking	0	águas claras	aguar	águas
+ranking	1	alces selvagens	alce	alces
+ranking	0	alces selvagens	alçar	alces
+ranking	1	perfeitos demais	perfeito	perfeitos
+ranking	0	perfeitos demais	perfazer	perfeitos
+ranking	1	conhecida por todos	conhecido	conhecida
+ranking	0	conhecida por todos	conhecer	conhecida
+ranking	1	distraída demais	distraído	distraída
+ranking	0	distraída demais	distrair	distraída
+ranking	1	podes ir	poder	podes
+ranking	0	podes ir	podar	podes
+ranking	1	dados do censo	dado	dados
+ranking	0	dados do censo	dar	dados
+ranking	1	segura de si	seguro	segura
+ranking	0	segura de si	segurar	segura
+ranking	1	baterias novas	bateria	baterias
+ranking	0	baterias novas	bater	baterias
+ranking	1	caminha devagar	caminhar	caminha
+ranking	0	caminha devagar	cama	caminha
+ranking	1	crias da loba	cria	crias
+ranking	0	crias da loba	criar	crias
+ranking	1	comas isso	comer	comas
+ranking	0	comas isso	coma	comas
+ranking	1	moída na hora	moído	moída
+ranking	0	moída na hora	moer	moída
+ranking	1	toques nas minhas coisas	tocar	toques
+ranking	0	toques nas minhas coisas	toque	toques
+ranking	1	expressa bem	expressar	expressa
+ranking	0	expressa bem	exprimir	expressa
+ranking	1	blogues pessoais	blogue	blogues
+ranking	0	blogues pessoais	blogar	blogues
+ranking	1	postos de saúde	posto	postos
+ranking	0	postos de saúde	pôr	postos
+ranking	1	ótima ideia	ótimo	ótima
+ranking	0	ótima ideia	bom	ótima
+ranking	1	todas as casas	todo	todas
+ranking	0	todas as casas	toda	todas
+ranking	1	vimos o filme	ver	vimos
+ranking	0	vimos o filme	vir	vimos
+phrases	1	não pode vir	não	não
+phrases	0	não pode vir	podar	não pode
+pronouns	1	chama-se João	chamar	chama-se
+pronouns	0	chama-se João	chama	chama
+pronouns	1	deixa-me ir	deixar	deixa-me
+pronouns	1	fazê-lo agora	fazer	fazê-lo
+pronouns	1	dir-te-ei amanhã	dizer	dir-te-ei
+pronouns	1	dá-me isso	dar	dá-me
+pronouns	1	lembrou-se tarde	lembrar	lembrou-se
+pronouns	1	sentamo-nos aqui	sentar	sentamo-nos
+pronouns	1	pô-lo na mesa	pôr	pô-lo
+pronouns	1	te amo muito	te	te
+capitals	1	Minha casa	meu	Minha
+capitals	0	Minha casa	Minho	Minha
+capitals	1	Esta casa	este	Esta
+capitals	0	Esta casa	Ester	Esta
+capitals	1	Porta aberta	porta	Porta
+demonstratives	1	esta casa	este	esta
+demonstratives	0	esta casa	estar	esta
+colloquial	1	tá bom	estar	tá
+word resolution	1	guarda-chuvas abertos	guarda-chuva	guarda-chuvas
+word resolution	1	caixa-d'água cheia	caixa-d'água	caixa-d'água
+word resolution	1	desafortunadamente choveu	desafortunado	desafortunadamente
+word resolution	1	Ontem falamos	ontem	Ontem
+pronouns	1	Conte-me tudo	contar	Conte-me
+pronouns	0	Conte-me tudo	conter	Conte-me
+pronouns	1	Serve-me bem	servir	Serve-me
+pronouns	1	Queria-lhe dizer	querer	Queria-lhe
+pronouns	1	Afaste-se daqui	afastar	Afaste-se
+pronouns	1	convida-os para jantar	convidar	convida-os
+pronouns	1	Aluga-se casa	alugar	Aluga-se
+pronouns	1	Compre-me pão	comprar	Compre-me
+pronouns	1	Fale-me de ti	falar	Fale-me
+pronouns	1	deixa-o ir	deixar	deixa-o
+pronouns	0	deixa-o ir	deixa	deixa-o
+pronouns	1	servia-o bem	servir	servia-o
+pronouns	0	servia-o bem	server	servia-o
+names	1	Bentinho chegou	Bento	Bentinho
+names	1	Marinha de guerra	marinha	Marinha
+names	0	Marinha de guerra	Mara	Marinha
+diminutive	1	rapazinhos da rua	rapaz	rapazinhos
+diminutive	0	rapazinhos da rua	rapa	rapazinhos
+word resolution	1	franco-brasileira	franco	franco
+word resolution	0	casacos azuis	casa	casa
+word resolution	1	casacos azuis	casaco	casacos
+word resolution	0	casebre velho	casar	case
+phrases	1	o que fazer agora	o que	o que
+phrases	1	a gente vai sair	a gente	a gente
+phrases	1	me chama de Ana	me	me
+phrases	1	valeu a pena esperar	valer a pena	valeu a pena

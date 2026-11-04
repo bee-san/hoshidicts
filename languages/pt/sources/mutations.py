@@ -1,0 +1,234 @@
+#!/usr/bin/env python3
+# SPDX-License-Identifier: GPL-3.0-or-later
+"""Mutation checks of README.md (docs/languages.md 14 step 7). Not run by any test.
+
+    python3 languages/pt/sources/mutations.py <build dir> <scratch dir> [name filter...]
+
+<build dir> has language-conformance-test (a build configured with
+HOSHIDICTS_LANGUAGE_TESTS). For each mutation the pack is copied into
+<scratch dir>/languages/pt (tools/ linked beside it), one text replacement is
+made in sources/build-own.mjs or language.json (or, for an 'order' mutation,
+one transform is moved before another in the written transforms.json),
+own.json, transforms.json and tests/classes.json are written again for the
+copy, and the conformance test runs on it. A mutation is killed when a test row fails (not only the
+classes.json comparison, which is rewritten). Prints one line per mutation and
+writes <scratch dir>/mutations.json.
+"""
+import json
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+REPO = HERE.parents[2]
+
+MUTATIONS = [
+    # name, file, text to replace, replacement (None: remove that processor)
+    ('stems: spaces and capitals allowed (no lowerStem)', 'build-own.mjs', "const letters = () => ({stemCharacters: '{lowerStem}'});", "const letters = () => ({});"),
+    ('stems: capitals allowed', 'language.json', '"lowerStem": "[^ A-Z\\\\u00C0-\\\\u00D6\\\\u00D8-\\\\u00DE]"', '"lowerStem": "[^ ]"'),
+    ('stems: spaces allowed', 'language.json', '"lowerStem": "[^ A-Z\\\\u00C0-\\\\u00D6\\\\u00D8-\\\\u00DE]"', '"lowerStem": "[^A-Z\\\\u00C0-\\\\u00D6\\\\u00D8-\\\\u00DE]"'),
+    ('pronoun rules: stem may hold a space', 'build-own.mjs', "conditionsOut, stemMinLength: 1, stemCharacters: '{lowerStem}', ...extra});", "conditionsOut, stemMinLength: 1, ...extra});"),
+    ('verbs: stem of one letter', 'build-own.mjs', "conditionsIn: ['vf'], conditionsOut: ['v'], stemMinLength: 2, ...letters(inflected), ...extra});", "conditionsIn: ['vf'], conditionsOut: ['v'], stemMinLength: 1, ...letters(inflected), ...extra});"),
+    ('-ar e-endings after c, g', 'build-own.mjs', "verb(slot, ending, 'ar', {stemNotEndsWith: '[cg]'});", "verb(slot, ending, 'ar');"),
+    ('-er/-ir a/o endings after c, g, a', 'build-own.mjs', "verb(slot, ending, conj, {stemNotEndsWith: '[acg]'});", "verb(slot, ending, conj);"),
+    ('-er/-ir a/o endings after a', 'build-own.mjs', "verb(slot, ending, conj, {stemNotEndsWith: '[acg]'});", "verb(slot, ending, conj, {stemNotEndsWith: '[cg]'});"),
+    ('est exclusion removed', 'build-own.mjs', "            rule.stemNotStartsWithText = 'est';\n", ""),
+    ('est twin removed', 'build-own.mjs', "            twins.push({...rest, stemStartsWithText: 'est', stemMinLength: 4});\n", ""),
+    ('exclusion -er present: cont', 'build-own.mjs', "['cont', 'prov!', 'rel!', 'serv!']", "['prov!', 'rel!', 'serv!']"),
+    ('exclusion -er present: cont twin', 'build-own.mjs', "['cont', 'prov!', 'rel!', 'serv!']", "['cont!', 'prov!', 'rel!', 'serv!']"),
+    ('exclusion -er present: prov', 'build-own.mjs', "['cont', 'prov!', 'rel!', 'serv!']", "['cont', 'rel!', 'serv!']"),
+    ('exclusion -er present: rel', 'build-own.mjs', "['cont', 'prov!', 'rel!', 'serv!']", "['cont', 'prov!', 'serv!']"),
+    ('exclusion -er present: serv', 'build-own.mjs', "['cont', 'prov!', 'rel!', 'serv!']", "['cont', 'prov!', 'rel!']"),
+    ('exclusion -ir present: prov', 'build-own.mjs', "['prov!', 'fal!']]", "['fal!']]"),
+    ('exclusion -ir present: fal', 'build-own.mjs', "['prov!', 'fal!']]", "['prov!']]"),
+    ('exclusion -er future: qu', 'build-own.mjs', "/^er/u.test(rule.inflected) && rule.stemChange === undefined, ['qu']]", "/^er/u.test(rule.inflected) && rule.stemChange === undefined, ['zzqq!']]"),
+    ('exclusion -er future: qu twin', 'build-own.mjs', "/^er/u.test(rule.inflected) && rule.stemChange === undefined, ['qu']]", "/^er/u.test(rule.inflected) && rule.stemChange === undefined, ['qu!']]"),
+    ('exclusion -ar preterite: af', 'build-own.mjs', "rule.stemChange === undefined, ['af']]", "rule.stemChange === undefined, ['zzqq!']]"),
+    ('exclusion -ar preterite: af twin', 'build-own.mjs', "rule.stemChange === undefined, ['af']]", "rule.stemChange === undefined, ['af!']]"),
+    ('exclusion vir compounds: conv', 'build-own.mjs', "['conv', 'interv!', 'prov!', 'av!', 'sobrev!']", "['interv!', 'prov!', 'av!', 'sobrev!']"),
+    ('exclusion vir compounds: conv twin', 'build-own.mjs', "['conv', 'interv!', 'prov!', 'av!', 'sobrev!']", "['conv!', 'interv!', 'prov!', 'av!', 'sobrev!']"),
+    ('exclusion vir compounds: interv', 'build-own.mjs', "['conv', 'interv!', 'prov!', 'av!', 'sobrev!']", "['conv', 'prov!', 'av!', 'sobrev!']"),
+    ('exclusion vir compounds: prov', 'build-own.mjs', "['conv', 'interv!', 'prov!', 'av!', 'sobrev!']", "['conv', 'interv!', 'av!', 'sobrev!']"),
+    ('exclusion vir compounds: av', 'build-own.mjs', "['conv', 'interv!', 'prov!', 'av!', 'sobrev!']", "['conv', 'interv!', 'prov!', 'sobrev!']"),
+    ('exclusion vir compounds: sobrev', 'build-own.mjs', "['conv', 'interv!', 'prov!', 'av!', 'sobrev!']", "['conv', 'interv!', 'prov!', 'av!']"),
+    ('exclusion -gar: al', 'build-own.mjs', "rule.stemChange === undefined, ['al']]", "rule.stemChange === undefined, ['zzqq!']]"),
+    ('exclusion -gar: al twin', 'build-own.mjs', "rule.stemChange === undefined, ['al']]", "rule.stemChange === undefined, ['al!']]"),
+    ('exclusion feminine: sid', 'build-own.mjs', "rule.conditionsIn.includes('adj'), ['sid']]", "rule.conditionsIn.includes('adj'), ['zzqq!']]"),
+    ('exclusion feminine: sid twin', 'build-own.mjs', "rule.conditionsIn.includes('adj'), ['sid']]", "rule.conditionsIn.includes('adj'), ['sid!']]"),
+    ('-guer only after r (gu rule)', 'build-own.mjs', "verb(slot, `gu${ENDINGS.er[slot]}`, 'guer', {stemEndsWith: '[r]'});", "verb(slot, `gu${ENDINGS.er[slot]}`, 'guer');"),
+    ('-guer only after r (g before a, o)', 'build-own.mjs', "conj === 'er' ? {stemEndsWith: '[r]'} : {}", "{}"),
+    ('plain -er present not after u', 'build-own.mjs', "verb(slot, ending, conj, {stemNotEndsWith: '[u]'});", "verb(slot, ending, conj);"),
+    ('u -> o as a general rule', 'build-own.mjs', "for (const [form, infinitive] of [['ob', 'ubir'], ['om', 'umir'], ['og', 'ugir'], ['od', 'udir'], ['osp', 'uspir'], ['op', 'upir'], ['ol', 'ulir']]) {\n        verb(slot, `${form}${ending}`, infinitive, {stemMinLength: form === 'om' ? 0 : 1});\n    }", "verb(slot, ending, 'ir', {stemChange: {from: ['o'], to: 'u', occurrence: 'last', between: '{consonant}'}});"),
+    ('names: stem of three letters', 'build-own.mjs', "{stemMinLength: 4, stemStartsWith: '[A-Z", "{stemMinLength: 3, stemStartsWith: '[A-Z"),
+    ('names: removed', 'build-own.mjs', "    nominal('diminutive', inflected, deinflected, NA, NA, {stemMinLength: 4, stemStartsWith:", "    if (false) nominal('diminutive', inflected, deinflected, NA, NA, {stemMinLength: 4, stemStartsWith:"),
+    ('-azinho after -az removed', 'build-own.mjs', "    nominal('diminutive', `az${ending}`, 'az', NA, NA, {stemMinLength: 2});", ""),
+    ('diminutive after l r s z: any letter', 'build-own.mjs', "nominal('diminutive', ending, '', NA, NA, {stemMinLength: 3, stemEndsWith: '[lrsz]'});", "nominal('diminutive', ending, '', NA, NA, {stemMinLength: 3});"),
+    ('plural of loanwords: after any letter', 'build-own.mjs', "stemEndsWith: '[bcdfgklnprtwy]'", "stemMinLength: 2"),
+    ('plural of acronyms removed', 'build-own.mjs', "nominal('plural', 's', '', [], NA, {stemMinLength: 2, stemCharacters: '[A-Z]'});", ""),
+    ('plural of compounds removed', 'build-own.mjs', "add('plural', {type: 'replace', inflected: 's-', deinflected: '-', occurrence: 'first', conditionsIn: NA, conditionsOut: NA});", ""),
+    ('feminine -a: stem of two letters', 'build-own.mjs', "['a', 'o', 3], ['ora', 'or', 2]", "['a', 'o', 2], ['ora', 'or', 2]"),
+    ('-uir: also after g and q', 'build-own.mjs', "verb(slot, `u${ending}`, 'uir', {stemMinLength: 1, stemNotEndsWith: '[gq]'});", "verb(slot, `u${ending}`, 'uir', {stemMinLength: 1});"),
+    ('-ir e -> i: no consonant condition', 'build-own.mjs', "verb(slot, ending, 'ir', {stemNotEndsWith: '[cg]', stemChange: {from: ['i'], to: 'e', occurrence: 'last', between: '{consonant}'}});", "verb(slot, ending, 'ir', {stemNotEndsWith: '[cg]', stemChange: {from: ['i'], to: 'e', occurrence: 'last'}});"),
+    ('superlative: accent copies removed', 'build-own.mjs', "        if (accents) { withAccents(write); } else { write({}); }\n    }\n    // facílimo", "        write({});\n    }\n    // facílimo"),
+    ('adverb: -mente after -a allowed', 'build-own.mjs', "{stemMinLength: 3, stemNotEndsWith: '[a]', ...extra}", "{stemMinLength: 3, ...extra}"),
+    ('processor: removeDiaeresis removed', 'language.json', '      {\n        "id": "removeDiaeresis",\n        "name": "Remove the diaeresis (ü → u)",\n        "variants": [[{"map": {"ü": "u", "Ü": "U"}}]]\n      }', None),
+    ('processor: NFKC -> NFC', 'language.json', '"normalize": "NFKC"', '"normalize": "NFC"'),
+    ('processor: capitalizeFirstLetter -> lowerFirst', 'language.json', '"case": "upperFirst"', '"case": "lowerFirst"'),
+    ('processor: decapitalize -> upper', 'language.json', '"case": "lower"', '"case": "upper"'),
+    ('hyphen made word-internal', 'language.json', '"wordInternal": null', '"wordInternal": "[\\\\-]"'),
+    ('searchResolution character', 'language.json', '"searchResolution": "word"', '"searchResolution": "character"'),
+    # The order of the transforms decides ties between readings (README, Rule provenance).
+    ('order: subjunctive-eles before present-eles', 'order', 'subjunctive-eles', 'present-eles'),
+    ('order: feminine before the verbs', 'order', 'feminine', 'present-eu'),
+    ('order: participle before plural', 'order', 'participle', 'plural'),
+    ('order: participle before feminine', 'order', 'participle', 'feminine'),
+    # Plurals at the longer endings of verb forms, and the feminine at the participle's.
+    ('plural at -ados, -adas, -idos, -idas removed', 'build-own.mjs', "    ['ados', 'ado'], ['adas', 'ada'], ['idos', 'ido'], ['idas', 'ida'],      // soldados, piadas, sentidos, bebidas\n", ""),
+    ('plural at -eias, -iras removed', 'build-own.mjs', "    ['eias', 'eia'], ['iras', 'ira'],                                         // ideias, mentiras\n", ""),
+    ('plural at -ques removed', 'build-own.mjs', "    ['ques', 'que'], ['gues', 'gue'], ['guas', 'gua'],                        // ataques, truques, águas\n", "    ['gues', 'gue'], ['guas', 'gua'],\n"),
+    ('plural at -gues removed', 'build-own.mjs', "    ['ques', 'que'], ['gues', 'gue'], ['guas', 'gua'],                        // ataques, truques, águas\n", "    ['ques', 'que'], ['guas', 'gua'],\n"),
+    ('plural at -guas removed', 'build-own.mjs', "    ['ques', 'que'], ['gues', 'gue'], ['guas', 'gua'],                        // ataques, truques, águas\n", "    ['ques', 'que'], ['gues', 'gue'],\n"),
+    ('plural at -áveis removed', 'build-own.mjs', "    ['áveis', 'ável'],                                                        // saudáveis (not saudar's -áveis)\n", ""),
+    ('plural at -idos, -idas removed', 'build-own.mjs', "['ados', 'ado'], ['adas', 'ada'], ['idos', 'ido'], ['idas', 'ida'],", "['ados', 'ado'], ['adas', 'ada'],"),
+    ('plural at -iras removed', 'build-own.mjs', "    ['eias', 'eia'], ['iras', 'ira'],                                         // ideias, mentiras\n", "    ['eias', 'eia'],\n"),
+    ('plural at -feitos removed', 'build-own.mjs', "['postas', 'posta'], ['feitos', 'feito'],", "['postas', 'posta'],"),
+    ('plural at -postos, -postas, -feitos removed', 'build-own.mjs', "    ['postos', 'posto'], ['postas', 'posta'], ['feitos', 'feito'],            // impostos, apostas, perfeitos\n", ""),
+    ('plural at -ces removed', 'build-own.mjs', "    ['ces', 'ce'],                                                            // alces, alicerces (the -çar subjunctive's -ces)\n", ""),
+    ('plural at -vistos, -vistas, -ditos removed', 'build-own.mjs', "    ['vistos', 'visto'], ['vistas', 'vista'], ['ditos', 'dito'],              // imprevistos, revistas, malditos\n", ""),
+    ('feminine at -ada, -ida removed', 'build-own.mjs', "    ['ada', 'ado', 2], ['ida', 'ido', 2],                     // cansada, conhecida\n", ""),
+    ('feminine at -ida removed', 'build-own.mjs', "    ['ada', 'ado', 2], ['ida', 'ido', 2],                     // cansada, conhecida\n", "    ['ada', 'ado', 2],\n"),
+    ('feminine at -aída removed', 'build-own.mjs', "    ['aída', 'aído', 1], ['oída', 'oído', 1],", "    ['oída', 'oído', 1],"),
+    ('feminine at -oída removed', 'build-own.mjs', "    ['aída', 'aído', 1], ['oída', 'oído', 1],", "    ['aída', 'aído', 1],"),
+    ('possessives removed', 'build-own.mjs', "['minha', 'meu'], ['minhas', 'meu']]) {\n    add('feminine',", "['minha', 'meu'], ['minhas', 'meu']]) {\n    if (false) add('feminine',"),
+    ('possessive tua removed', 'build-own.mjs', "['tua', 'teu'], ['tuas', 'teu'], ", ""),
+    # Preferred readings.
+    ('preferred readings removed', 'build-own.mjs', "    add(slot, {type: 'wholeWord', inflected: form, deinflected: lemma,", "    if (false) add(slot, {type: 'wholeWord', inflected: form, deinflected: lemma,"),
+    ('preferred: amiga removed', 'build-own.mjs', "['feminine', 'amiga', 'amigo'], ", ""),
+    ('preferred: perfeita removed', 'build-own.mjs', "['feminine', 'perfeita', 'perfeito'], ", ""),
+    ('preferred: verdes removed', 'build-own.mjs', "['plural', 'verdes', 'verde'], ", ""),
+    ('preferred: pare removed', 'build-own.mjs', "['subjunctive-eu-ele', 'pare', 'parar'], ", ""),
+    ('preferred: atende removed', 'build-own.mjs', "['present-ele', 'atende', 'atender'],", ""),
+    ('preferred: achas removed', 'build-own.mjs', "['present-tu', 'achas', 'achar'], ", ""),
+    ('preferred: falas removed', 'build-own.mjs', "['present-tu', 'falas', 'falar'], ", ""),
+    ('preferred: criam removed', 'build-own.mjs', "['present-eles', 'criam', 'criar'],", ""),
+    ('preferred: desvia removed', 'build-own.mjs', "['present-ele', 'desvia', 'desviar'], ", ""),
+    ('preferred: agrada removed', 'build-own.mjs', "['present-ele', 'agrada', 'agradar'], ", ""),
+    ('preferred: valida removed', 'build-own.mjs', "['present-ele', 'valida', 'validar'],", ""),
+    ('preferred: delira removed', 'build-own.mjs', "['present-ele', 'delira', 'delirar'], ", ""),
+    ('preferred: renda removed', 'build-own.mjs', "['subjunctive-eu-ele', 'renda', 'render'], ", ""),
+    ('preferred: assente removed', 'build-own.mjs', "['subjunctive-eu-ele', 'assente', 'assentar'],", ""),
+    ('preferred: atendam removed', 'build-own.mjs', "['subjunctive-eles', 'atendam', 'atender'],", ""),
+    ('preferred: criada removed', 'build-own.mjs', "['participle', 'criada', 'criar'],", ""),
+    ('preferred: chamados removed', 'build-own.mjs', "['participle', 'chamados', 'chamar'], ", ""),
+    ('preferred: quebradas removed', 'build-own.mjs', "['feminine', 'quebradas', 'quebrado'], ", ""),
+    ('preferred: revolta removed', 'build-own.mjs', "['present-ele', 'revolta', 'revoltar'], ", ""),
+    ('preferred: tu subjunctives comas, metas removed', 'build-own.mjs', "['subjunctive-tu', 'comas', 'comer'], ['subjunctive-tu', 'metas', 'meter'], ", ""),
+    ('preferred: dados removed', 'build-own.mjs', "['plural', 'dados', 'dado'], ", ""),
+    ('preferred: postos removed', 'build-own.mjs', "['plural', 'postos', 'posto'], ", ""),
+    ('preferred: todas removed', 'build-own.mjs', "['feminine', 'todas', 'todo'], ", ""),
+    ('preferred: vimos removed', 'build-own.mjs', "    ['preterite-nos', 'vimos', 'ver'],\n", ""),
+    ('lookup.formOfIgnore emptied', 'language.json', "\"formOfIgnore\": [\n      \"first-person plural imperative negative\",\n      \"second-person singular imperative negative\",\n      \"second-person plural imperative negative\",\n      \"third-person singular imperative negative\",\n      \"third-person plural imperative negative\",\n      \"first-person plural imperative negative Brazil\",\n      \"second-person singular imperative negative Brazil\",\n      \"second-person plural imperative negative Brazil\",\n      \"third-person singular imperative negative Brazil\",\n      \"third-person plural imperative negative Brazil\",\n      \"first-person plural imperative negative Portugal\",\n      \"second-person singular imperative negative Portugal\",\n      \"second-person plural imperative negative Portugal\",\n      \"third-person singular imperative negative Portugal\",\n      \"third-person plural imperative negative Portugal\",\n      \"first/second/third-person plural imperative negative\",\n      \"second/third-person singular imperative negative\",\n      \"informal second-person singular imperative negative proscribed\",\n      \"informal third-person singular imperative negative proscribed\",\n      \"informal third-person plural imperative negative proscribed\"\n    ]", '"formOfIgnore": []'),
+    ('preferred: ótimo and péssimo removed', 'build-own.mjs', "    ['feminine', 'ótima', 'ótimo'], ['feminine', 'ótimas', 'ótimo'], ['plural', 'ótimos', 'ótimo'],\n", ""),
+    ('exclusion server (imperfect, preterite, participle) removed', 'build-own.mjs', "/^(i|ia|ias|íamos|íeis|iam|ido|ida|idos|idas)$/u.test(rule.inflected), ['serv!']]", "/^(i|ia|ias|íamos|íeis|iam|ido|ida|idos|idas)$/u.test(rule.inflected), ['zzqq!']]"),
+    ('preferred: crias removed', 'build-own.mjs', "['plural', 'crias', 'cria'], ", ""),
+    ('preferred: baterias removed', 'build-own.mjs', "['plural', 'baterias', 'bateria'], ", ""),
+    ('preferred: segura removed', 'build-own.mjs', "['feminine', 'segura', 'seguro'], ", ""),
+    ('preferred: caminha removed', 'build-own.mjs', "    ['present-ele', 'caminha', 'caminhar'],\n", ""),
+    ('preferred: toques removed', 'build-own.mjs', " ['subjunctive-tu', 'toques', 'tocar'],", ""),
+    ('preferred: expressa removed', 'build-own.mjs', "['present-ele', 'expressa', 'expressar'], ", ""),
+    ('preferred readings: verbs take any condition', 'build-own.mjs', "conditionsIn: verbSlot ? ['vf'] : slot === 'feminine' ? ['adj'] : []", "conditionsIn: verbSlot ? [] : slot === 'feminine' ? ['adj'] : []"),
+    ('learned superlative amicíssimo removed', 'build-own.mjs', "    ['amicíssimo', 'amigo'], ", "    "),
+    ('comumente removed', 'build-own.mjs', "add('adverb', {type: 'wholeWord', inflected: 'comumente',", "if (false) add('adverb', {type: 'wholeWord', inflected: 'comumente',"),
+    ('order: subjunctive-tu before present-tu', 'order', 'subjunctive-tu', 'present-tu'),
+    ('preferred: vasta removed', 'build-own.mjs', "['feminine', 'vasta', 'vasto'], ", ""),
+    ('preferred: vivam removed', 'build-own.mjs', " ['subjunctive-eles', 'vivam', 'viver'],", ""),
+    ('plural at -arias removed', 'build-own.mjs', "    ['arias', 'aria'],                                                        // secretarias (the -ar conditional's -arias)\n", ""),
+    ('plural at -ises removed', 'build-own.mjs', "    ['ises', 'ise'],                                                          // crises (not cris + es)\n", ""),
+    # The audit's surviving mutations (audit of #72, m1).
+    ('clitic -o, -a, -os, -as: also a noun', 'build-own.mjs', "clitic(p, `-${p}`, '', ['vf'], {stemNotEndsWith: '[rszm]'});", "clitic(p, `-${p}`, '', ['vf', 'n'], {stemNotEndsWith: '[rszm]'});"),
+    ('compound prefix removed: ante (antever)', 'build-own.mjs', "prefixes: ['re', 'pre', 'ante', 'entre', 'des']", "prefixes: ['re', 'pre', 'entre', 'des']"),
+    ('compound prefix removed: equi (equivaler)', 'build-own.mjs', "{prefixes: ['equi']}", "{prefixes: []}"),
+    ('compound prefix removed: sor (sorrir)', 'build-own.mjs', "prefixes: ['sor']", "prefixes: []"),
+    ('prover paradigm removed', 'build-own.mjs', "irregular('prover', {", "if (false) irregular('prover', {"),
+    ('-gredir rule removed', 'build-own.mjs', "    verb(slot, `grid${ending}`, 'gredir', {stemMinLength: 1});", ""),
+    ('ser and ir: pluperfect removed', 'build-own.mjs', "    pp: ['fora', 'foras', 'fôramos', 'fôreis', 'foram'],\n", ""),
+    ('vós ending -ísseis wrong', 'build-own.mjs', "'imperfect-subjunctive-nos': 'íssemos', 'imperfect-subjunctive-vos': 'ísseis'", "'imperfect-subjunctive-nos': 'íssemos', 'imperfect-subjunctive-vos': 'isseis'"),
+    ('vós ending -erdes wrong', 'build-own.mjs', "'personal-infinitive-vos': 'erdes'", "'personal-infinitive-vos': 'erdez'"),
+    ('processor: NFKC -> NFKD', 'language.json', '"normalize": "NFKC"', '"normalize": "NFKD"'),
+    ('stems: Latin-1 capitals allowed', 'language.json', '"lowerStem": "[^ A-Z\\\\u00C0-\\\\u00D6\\\\u00D8-\\\\u00DE]"', '"lowerStem": "[^ A-Z]"'),
+]
+
+
+def run(cmd, **kw):
+    return subprocess.run(cmd, capture_output=True, text=True, **kw)
+
+
+def prepare(root, file, old, new):
+    if root.exists():
+        shutil.rmtree(root)
+    (root / 'languages').mkdir(parents=True)
+    shutil.copytree(REPO / 'languages' / 'pt', root / 'languages' / 'pt')
+    (root / 'tools').symlink_to(REPO / 'tools')
+    pack = root / 'languages' / 'pt'
+    if file != 'order':
+        path = pack / ('sources/build-own.mjs' if file == 'build-own.mjs' else 'language.json')
+        text = path.read_text(encoding='utf-8')
+        if old not in text:
+            return f'pattern not found in {file}'
+        if new is None:  # remove a processor object and the comma before it
+            i = text.index(old)
+            j = text.rindex(',', 0, i)
+            text = text[:j] + text[i + len(old):]
+        else:
+            text = text.replace(old, new)
+        path.write_text(text, encoding='utf-8')
+    steps = [['node', str(pack / 'sources' / 'build-own.mjs')],
+             ['node', str(REPO / 'tools' / 'merge-transforms.mjs'), 'pt', '--languages', str(root / 'languages'), '--force'],
+             'order',
+             ['node', str(REPO / 'tools' / 'check-classes.mjs'), 'pt', '--write', '--languages', str(root / 'languages')]]
+    for cmd in steps:
+        if cmd == 'order':
+            if file == 'order':  # move transform `old` before transform `new`
+                path = pack / 'transforms.json'
+                data = json.loads(path.read_text(encoding='utf-8'))
+                ids = [t['id'] for t in data['transforms']]
+                if old not in ids or new not in ids:
+                    return f'no transform {old} or {new}'
+                moved = data['transforms'].pop(ids.index(old))
+                data['transforms'].insert([t['id'] for t in data['transforms']].index(new), moved)
+                path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+            continue
+        r = run(cmd)
+        if r.returncode:
+            return f'{Path(cmd[1]).name} failed: ' + (r.stderr or r.stdout)[-300:]
+    return None
+
+
+def main():
+    if len(sys.argv) < 3:
+        sys.exit(__doc__)
+    build, scratch = Path(sys.argv[1]).resolve(), Path(sys.argv[2]).resolve()
+    only = sys.argv[3:]
+    root = scratch / 'mutation'
+    results = []
+    for name, file, old, new in MUTATIONS:
+        if only and not any(o in name for o in only):
+            continue
+        problem = prepare(root, file, old, new)
+        if problem:
+            results.append({'mutation': name, 'verdict': 'error', 'detail': problem})
+            print(f'ERROR    {name}: {problem}', flush=True)
+            continue
+        r = run([str(build / 'language-conformance-test'), str(root / 'languages' / 'pt'), str(build)], timeout=900)
+        fails = [l for l in (r.stdout + r.stderr).splitlines() if l.startswith('FAIL') and 'README.md is missing' not in l]
+        verdict = 'killed' if fails else 'SURVIVED'
+        results.append({'mutation': name, 'verdict': verdict, 'failing': fails[:5]})
+        print(f'{verdict:8s} {name}: {len(fails)} failing rows; ' + ' | '.join(f[9:110] for f in fails[:2]), flush=True)
+    (scratch / 'mutations.json').write_text(json.dumps(results, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
+    killed = sum(1 for x in results if x['verdict'] == 'killed')
+    print(f'{killed} of {len(results)} mutations killed')
+
+
+if __name__ == '__main__':
+    main()

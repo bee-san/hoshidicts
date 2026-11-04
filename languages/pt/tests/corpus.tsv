@@ -1,0 +1,1465 @@
+# Sources: UniMorph por (https://github.com/unimorph/por/blob/fc2778e08e2da476d9d2f27f15f218b1cbb25ad5/por, sha256 af71c94afbb857b3), CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/), by the UniMorph contributors, from English Wiktionary (categories with ";");
+# and wty-pt-en 2026.10.22 (wiktionary-to-yomitan, sha256 90c8e8fe98818163), CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/), by the Wiktionary contributors through kaikki.org (categories "wty ...").
+# 1498 rows sampled with seed 1 by sources/build-corpus.py (14 per UniMorph tag set; 250 wty plural, 150 wty feminine, 80 wty diminutive, 60 wty superlative, 120 wty verb with pronouns); the rows the pack's rules reach are in corpus.tsv, the others in gaps.tsv.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+V.PTCP;FEM;PL;PST	1	arrotadas	arrotar	v	*
+V.PTCP;FEM;PL;PST	1	grasnadas	grasnar	v	*
+V.PTCP;FEM;PL;PST	1	rodadas	rodar	v	*
+V.PTCP;FEM;PL;PST	1	referenciadas	referenciar	v	*
+V.PTCP;FEM;PL;PST	1	prosseguidas	prosseguir	v	*
+V.PTCP;FEM;PL;PST	1	alcalinizadas	alcalinizar	v	*
+V.PTCP;FEM;PL;PST	1	confraternizadas	confraternizar	v	*
+V.PTCP;FEM;PL;PST	1	apropriadas	apropriar	v	*
+V.PTCP;FEM;PL;PST	1	estilhaçadas	estilhaçar	v	*
+V.PTCP;FEM;PL;PST	1	promulgadas	promulgar	v	*
+V.PTCP;FEM;PL;PST	1	enterradas	enterrar	v	*
+V.PTCP;FEM;PL;PST	1	escrituradas	escriturar	v	*
+V.PTCP;FEM;PL;PST	1	manobradas	manobrar	v	*
+V.PTCP;FEM;PL;PST	1	direccionadas	direccionar	v	*
+V.PTCP;FEM;SG;PST	1	recapitulada	recapitular	v	*
+V.PTCP;FEM;SG;PST	1	centrada	centrar	v	*
+V.PTCP;FEM;SG;PST	1	angustiada	angustiar	v	*
+V.PTCP;FEM;SG;PST	1	esquecida	esquecer	v	*
+V.PTCP;FEM;SG;PST	1	acondicionada	acondicionar	v	*
+V.PTCP;FEM;SG;PST	1	sufixada	sufixar	v	*
+V.PTCP;FEM;SG;PST	1	resultada	resultar	v	*
+V.PTCP;FEM;SG;PST	1	doada	doar	v	*
+V.PTCP;FEM;SG;PST	1	enfatizada	enfatizar	v	*
+V.PTCP;FEM;SG;PST	1	instruída	instruir	v	*
+V.PTCP;FEM;SG;PST	1	prorrogada	prorrogar	v	*
+V.PTCP;FEM;SG;PST	1	pruída	pruir	v	*
+V.PTCP;FEM;SG;PST	1	abanada	abanar	v	*
+V.PTCP;FEM;SG;PST	1	opiniada	opiniar	v	*
+V.PTCP;MASC;PL;PST	1	ensaboados	ensaboar	v	*
+V.PTCP;MASC;PL;PST	1	contidos	conter	v	*
+V.PTCP;MASC;PL;PST	1	perambulados	perambular	v	*
+V.PTCP;MASC;PL;PST	1	reenviados	reenviar	v	*
+V.PTCP;MASC;PL;PST	1	coçados	coçar	v	*
+V.PTCP;MASC;PL;PST	1	imunizados	imunizar	v	*
+V.PTCP;MASC;PL;PST	1	urtigados	urtigar	v	*
+V.PTCP;MASC;PL;PST	1	apanhados	apanhar	v	*
+V.PTCP;MASC;PL;PST	1	surtados	surtar	v	*
+V.PTCP;MASC;PL;PST	1	desabituados	desabituar	v	*
+V.PTCP;MASC;PL;PST	1	açoutados	açoutar	v	*
+V.PTCP;MASC;PL;PST	1	acervados	acervar	v	*
+V.PTCP;MASC;PL;PST	1	aclimatados	aclimatar	v	*
+V.PTCP;MASC;PL;PST	1	mamados	mamar	v	*
+V.PTCP;MASC;SG;PST	1	fluído	fluir	v	*
+V.PTCP;MASC;SG;PST	1	aborrecido	aborrecer	v	*
+V.PTCP;MASC;SG;PST	1	turbado	turbar	v	*
+V.PTCP;MASC;SG;PST	1	solado	solar	v	*
+V.PTCP;MASC;SG;PST	1	discorrido	discorrer	v	*
+V.PTCP;MASC;SG;PST	1	numerado	numerar	v	*
+V.PTCP;MASC;SG;PST	1	chicoteado	chicotear	v	*
+V.PTCP;MASC;SG;PST	1	xeretado	xeretar	v	*
+V.PTCP;MASC;SG;PST	1	encaroçado	encaroçar	v	*
+V.PTCP;MASC;SG;PST	1	perpetrado	perpetrar	v	*
+V.PTCP;MASC;SG;PST	1	acontecido	acontecer	v	*
+V.PTCP;MASC;SG;PST	1	fardado	fardar	v	*
+V.PTCP;MASC;SG;PST	1	cintilado	cintilar	v	*
+V.PTCP;MASC;SG;PST	1	prosseguido	prosseguir	v	*
+V.PTCP;PRS	1	engessando	engessar	v	*
+V.PTCP;PRS	1	tutelando	tutelar	v	*
+V.PTCP;PRS	1	estimulando	estimular	v	*
+V.PTCP;PRS	1	fritando	fritar	v	*
+V.PTCP;PRS	1	colhendo	colher	v	*
+V.PTCP;PRS	1	desfraldando	desfraldar	v	*
+V.PTCP;PRS	1	coincidindo	coincidir	v	*
+V.PTCP;PRS	1	mudando	mudar	v	*
+V.PTCP;PRS	1	chumbando	chumbar	v	*
+V.PTCP;PRS	1	pronunciando	pronunciar	v	*
+V.PTCP;PRS	1	erigindo	erigir	v	*
+V.PTCP;PRS	1	vencendo	vencer	v	*
+V.PTCP;PRS	1	dadivando	dadivar	v	*
+V.PTCP;PRS	1	transmutando	transmutar	v	*
+V;1;PL;COND	1	acerbaríamos	acerbar	v	*
+V;1;PL;COND	1	empreitaríamos	empreitar	v	*
+V;1;PL;COND	1	retarctaríamos	retarctar	v	*
+V;1;PL;COND	1	tiraríamos	tirar	v	*
+V;1;PL;COND	1	furaríamos	furar	v	*
+V;1;PL;COND	1	tractaríamos	tractar	v	*
+V;1;PL;COND	1	locupletaríamos	locupletar	v	*
+V;1;PL;COND	1	antropizaríamos	antropizar	v	*
+V;1;PL;COND	1	brindaríamos	brindar	v	*
+V;1;PL;COND	1	lamentaríamos	lamentar	v	*
+V;1;PL;COND	1	perfilharíamos	perfilhar	v	*
+V;1;PL;COND	1	santificaríamos	santificar	v	*
+V;1;PL;COND	1	decenderíamos	decender	v	*
+V;1;PL;COND	1	aquentaríamos	aquentar	v	*
+V;1;PL;IMP;NEG	1	potencializemos	potencializar	v	*
+V;1;PL;IMP;NEG	1	descomponhamos	descompor	v	*
+V;1;PL;IMP;NEG	1	supervisemos	supervisar	v	*
+V;1;PL;IMP;NEG	1	perdoemos	perdoar	v	*
+V;1;PL;IMP;NEG	1	partilhemos	partilhar	v	*
+V;1;PL;IMP;NEG	1	estreitemos	estreitar	v	*
+V;1;PL;IMP;NEG	1	trovoemos	trovoar	v	*
+V;1;PL;IMP;NEG	1	vulcanizemos	vulcanizar	v	*
+V;1;PL;IMP;NEG	1	encarquilhemos	encarquilhar	v	*
+V;1;PL;IMP;NEG	1	evolemos	evolar	v	*
+V;1;PL;IMP;NEG	1	tencionemos	tencionar	v	*
+V;1;PL;IMP;NEG	1	modelemos	modelar	v	*
+V;1;PL;IMP;NEG	1	cacemos	caçar	v	*
+V;1;PL;IMP;POS	1	trazamos	trazer	v	*
+V;1;PL;IND;FUT	1	cristianizaremos	cristianizar	v	*
+V;1;PL;IND;FUT	1	impetraremos	impetrar	v	*
+V;1;PL;IND;FUT	1	zonaremos	zonar	v	*
+V;1;PL;IND;FUT	1	solicitaremos	solicitar	v	*
+V;1;PL;IND;FUT	1	estragaremos	estragar	v	*
+V;1;PL;IND;FUT	1	rimaremos	rimar	v	*
+V;1;PL;IND;FUT	1	uivaremos	uivar	v	*
+V;1;PL;IND;FUT	1	esvoaçaremos	esvoaçar	v	*
+V;1;PL;IND;FUT	1	dragaremos	dragar	v	*
+V;1;PL;IND;FUT	1	importaremos	importar	v	*
+V;1;PL;IND;FUT	1	ruminaremos	ruminar	v	*
+V;1;PL;IND;FUT	1	adelgaçaremos	adelgaçar	v	*
+V;1;PL;IND;FUT	1	espacearemos	espacear	v	*
+V;1;PL;IND;FUT	1	competiremos	competir	v	*
+V;1;PL;IND;PRS	1	postergamos	postergar	v	*
+V;1;PL;IND;PRS	1	rectificamos	rectificar	v	*
+V;1;PL;IND;PRS	1	embasamos	embasar	v	*
+V;1;PL;IND;PRS	1	empoamos	empoar	v	*
+V;1;PL;IND;PRS	1	miamos	miar	v	*
+V;1;PL;IND;PRS	1	bastamos	bastar	v	*
+V;1;PL;IND;PRS	1	destinamos	destinar	v	*
+V;1;PL;IND;PRS	1	fotografamos	fotografar	v	*
+V;1;PL;IND;PRS	1	solidificamos	solidificar	v	*
+V;1;PL;IND;PRS	1	otimizamos	otimizar	v	*
+V;1;PL;IND;PRS	1	quitamos	quitar	v	*
+V;1;PL;IND;PRS	1	moramos	morar	v	*
+V;1;PL;IND;PRS	1	plantamos	plantar	v	*
+V;1;PL;IND;PRS	1	diagnosticamos	diagnosticar	v	*
+V;1;PL;IND;PST;IPFV	1	amorenávamos	amorenar	v	*
+V;1;PL;IND;PST;IPFV	1	engessávamos	engessar	v	*
+V;1;PL;IND;PST;IPFV	1	metilávamos	metilar	v	*
+V;1;PL;IND;PST;IPFV	1	evoluíamos	evoluir	v	*
+V;1;PL;IND;PST;IPFV	1	apiedávamos	apiedar	v	*
+V;1;PL;IND;PST;IPFV	1	rangíamos	ranger	v	*
+V;1;PL;IND;PST;IPFV	1	avistávamos	avistar	v	*
+V;1;PL;IND;PST;IPFV	1	extasiávamos	extasiar	v	*
+V;1;PL;IND;PST;IPFV	1	retornávamos	retornar	v	*
+V;1;PL;IND;PST;IPFV	1	doutrinávamos	doutrinar	v	*
+V;1;PL;IND;PST;IPFV	1	desvirginávamos	desvirginar	v	*
+V;1;PL;IND;PST;IPFV	1	esquivávamos	esquivar	v	*
+V;1;PL;IND;PST;IPFV	1	pigarreávamos	pigarrear	v	*
+V;1;PL;IND;PST;IPFV	1	acortinávamos	acortinar	v	*
+V;1;PL;IND;PST;PFV	1	fosfatámos	fosfatar	v	*
+V;1;PL;IND;PST;PFV	1	afundámos	afundar	v	*
+V;1;PL;IND;PST;PFV	1	desmistificámos	desmistificar	v	*
+V;1;PL;IND;PST;PFV	1	representámos	representar	v	*
+V;1;PL;IND;PST;PFV	1	patenteámos	patentear	v	*
+V;1;PL;IND;PST;PFV	1	observámos	observar	v	*
+V;1;PL;IND;PST;PFV	1	modulámos	modular	v	*
+V;1;PL;IND;PST;PFV	1	envenenámos	envenenar	v	*
+V;1;PL;IND;PST;PFV	1	pressionámos	pressionar	v	*
+V;1;PL;IND;PST;PFV	1	buzinámos	buzinar	v	*
+V;1;PL;IND;PST;PFV	1	bronzeámos	bronzear	v	*
+V;1;PL;IND;PST;PFV	1	imanámos	imanar	v	*
+V;1;PL;IND;PST;PFV	1	congraçámos	congraçar	v	*
+V;1;PL;IND;PST;PFV	1	acalmámos	acalmar	v	*
+V;1;PL;IND;PST;PRF	1	puníramos	punir	v	*
+V;1;PL;IND;PST;PRF	1	capituláramos	capitular	v	*
+V;1;PL;IND;PST;PRF	1	flabeláramos	flabelar	v	*
+V;1;PL;IND;PST;PRF	1	torneáramos	tornear	v	*
+V;1;PL;IND;PST;PRF	1	santificáramos	santificar	v	*
+V;1;PL;IND;PST;PRF	1	fosforiláramos	fosforilar	v	*
+V;1;PL;IND;PST;PRF	1	coisificáramos	coisificar	v	*
+V;1;PL;IND;PST;PRF	1	embebedáramos	embebedar	v	*
+V;1;PL;IND;PST;PRF	1	exhaláramos	exhalar	v	*
+V;1;PL;IND;PST;PRF	1	deseuropeizáramos	deseuropeizar	v	*
+V;1;PL;IND;PST;PRF	1	vedáramos	vedar	v	*
+V;1;PL;IND;PST;PRF	1	rivalizáramos	rivalizar	v	*
+V;1;PL;IND;PST;PRF	1	hidrogenáramos	hidrogenar	v	*
+V;1;PL;IND;PST;PRF	1	desmancháramos	desmanchar	v	*
+V;1;PL;NFIN	1	enxotarmos	enxotar	v	*
+V;1;PL;NFIN	1	telefonarmos	telefonar	v	*
+V;1;PL;NFIN	1	contraindicarmos	contraindicar	v	*
+V;1;PL;NFIN	1	mecanizarmos	mecanizar	v	*
+V;1;PL;NFIN	1	fosforilarmos	fosforilar	v	*
+V;1;PL;NFIN	1	intensificarmos	intensificar	v	*
+V;1;PL;NFIN	1	versejarmos	versejar	v	*
+V;1;PL;NFIN	1	perturbarmos	perturbar	v	*
+V;1;PL;NFIN	1	abespinharmos	abespinhar	v	*
+V;1;PL;NFIN	1	dispormos	dispor	v	*
+V;1;PL;NFIN	1	realojarmos	realojar	v	*
+V;1;PL;NFIN	1	salivarmos	salivar	v	*
+V;1;PL;NFIN	1	reocorrermos	reocorrer	v	*
+V;1;PL;NFIN	1	veranearmos	veranear	v	*
+V;1;PL;SBJV;FUT	1	transpusermos	transpor	v	*
+V;1;PL;SBJV;FUT	1	conviermos	convir	v	*
+V;1;PL;SBJV;FUT	1	trouxermos	trazer	v	*
+V;1;PL;SBJV;FUT	1	entretivermos	entreter	v	*
+V;1;PL;SBJV;FUT	1	aviermos	avir	v	*
+V;1;PL;SBJV;FUT	1	sobreviermos	sobrevir	v	*
+V;1;PL;SBJV;FUT	1	retivermos	reter	v	*
+V;1;PL;SBJV;FUT	1	detivermos	deter	v	*
+V;1;PL;SBJV;FUT	1	liquefizermos	liquefazer	v	*
+V;1;PL;SBJV;FUT	1	justapusermos	justapor	v	*
+V;1;PL;SBJV;FUT	1	contivermos	conter	v	*
+V;1;PL;SBJV;FUT	1	interpusermos	interpor	v	*
+V;1;PL;SBJV;FUT	1	tumefizermos	tumefazer	v	*
+V;1;PL;SBJV;PST;IPFV	1	relampejássemos	relampejar	v	*
+V;1;PL;SBJV;PST;IPFV	1	desnivelássemos	desnivelar	v	*
+V;1;PL;SBJV;PST;IPFV	1	empoássemos	empoar	v	*
+V;1;PL;SBJV;PST;IPFV	1	desfocássemos	desfocar	v	*
+V;1;PL;SBJV;PST;IPFV	1	abalienássemos	abalienar	v	*
+V;1;PL;SBJV;PST;IPFV	1	fisgássemos	fisgar	v	*
+V;1;PL;SBJV;PST;IPFV	1	flanqueássemos	flanquear	v	*
+V;1;PL;SBJV;PST;IPFV	1	joeirássemos	joeirar	v	*
+V;1;PL;SBJV;PST;IPFV	1	rebatêssemos	rebater	v	*
+V;1;PL;SBJV;PST;IPFV	1	interpelássemos	interpelar	v	*
+V;1;PL;SBJV;PST;IPFV	1	descercássemos	descercar	v	*
+V;1;PL;SBJV;PST;IPFV	1	envolvêssemos	envolver	v	*
+V;1;PL;SBJV;PST;IPFV	1	inferíssemos	inferir	v	*
+V;1;PL;SBJV;PST;IPFV	1	acompridássemos	acompridar	v	*
+V;1;SG;COND	1	reformaria	reformar	v	*
+V;1;SG;COND	1	cochilaria	cochilar	v	*
+V;1;SG;COND	1	leria	ler	v	*
+V;1;SG;COND	1	berraria	berrar	v	*
+V;1;SG;COND	1	franziria	franzir	v	*
+V;1;SG;COND	1	imaginaria	imaginar	v	*
+V;1;SG;COND	1	bocejaria	bocejar	v	*
+V;1;SG;COND	1	satisfaria	satisfazer	v	*
+V;1;SG;COND	1	anatemizaria	anatemizar	v	*
+V;1;SG;COND	1	recusaria	recusar	v	*
+V;1;SG;COND	1	fraquejaria	fraquejar	v	*
+V;1;SG;COND	1	recrudesceria	recrudescer	v	*
+V;1;SG;COND	1	rotularia	rotular	v	*
+V;1;SG;COND	1	remeteria	remeter	v	*
+V;1;SG;IND;FUT	1	treinarei	treinar	v	*
+V;1;SG;IND;FUT	1	confraternizarei	confraternizar	v	*
+V;1;SG;IND;FUT	1	actualizarei	actualizar	v	*
+V;1;SG;IND;FUT	1	reunirei	reunir	v	*
+V;1;SG;IND;FUT	1	unirei	unir	v	*
+V;1;SG;IND;FUT	1	monitorarei	monitorar	v	*
+V;1;SG;IND;FUT	1	alijarei	alijar	v	*
+V;1;SG;IND;FUT	1	ameigarei	ameigar	v	*
+V;1;SG;IND;FUT	1	sepultarei	sepultar	v	*
+V;1;SG;IND;FUT	1	acarretarei	acarretar	v	*
+V;1;SG;IND;FUT	1	entrelaçarei	entrelaçar	v	*
+V;1;SG;IND;FUT	1	acabrunharei	acabrunhar	v	*
+V;1;SG;IND;FUT	1	preterirei	preterir	v	*
+V;1;SG;IND;FUT	1	privarei	privar	v	*
+V;1;SG;IND;PRS	1	credencio	credenciar	v	*
+V;1;SG;IND;PRS	1	concorro	concorrer	v	*
+V;1;SG;IND;PRS	1	contradigo	contradizer	v	*
+V;1;SG;IND;PRS	1	aplaudo	aplaudir	v	*
+V;1;SG;IND;PRS	1	recupero	recuperar	v	*
+V;1;SG;IND;PRS	1	justaponho	justapor	v	*
+V;1;SG;IND;PRS	1	branqueio	branquear	v	*
+V;1;SG;IND;PRS	1	desfaço	desfazer	v	*
+V;1;SG;IND;PRS	1	cuydo	cuydar	v	*
+V;1;SG;IND;PRS	1	alicerço	alicerçar	v	*
+V;1;SG;IND;PRS	1	baixo	baixar	v	*
+V;1;SG;IND;PRS	1	automatizo	automatizar	v	*
+V;1;SG;IND;PRS	1	confraternizo	confraternizar	v	*
+V;1;SG;IND;PRS	1	fantasio	fantasiar	v	*
+V;1;SG;IND;PST;IPFV	1	vazava	vazar	v	*
+V;1;SG;IND;PST;IPFV	1	balanceava	balancear	v	*
+V;1;SG;IND;PST;IPFV	1	massageava	massagear	v	*
+V;1;SG;IND;PST;IPFV	1	convertia	converter	v	*
+V;1;SG;IND;PST;IPFV	1	magoava	magoar	v	*
+V;1;SG;IND;PST;IPFV	1	parecia	parecer	v	*
+V;1;SG;IND;PST;IPFV	1	debruçava	debruçar	v	*
+V;1;SG;IND;PST;IPFV	1	entrincheirava	entrincheirar	v	*
+V;1;SG;IND;PST;IPFV	1	osculava	oscular	v	*
+V;1;SG;IND;PST;IPFV	1	desamarrava	desamarrar	v	*
+V;1;SG;IND;PST;IPFV	1	estilizava	estilizar	v	*
+V;1;SG;IND;PST;IPFV	1	esculachava	esculachar	v	*
+V;1;SG;IND;PST;IPFV	1	apoteosava	apoteosar	v	*
+V;1;SG;IND;PST;IPFV	1	acicatava	acicatar	v	*
+V;1;SG;IND;PST;PFV	1	depenei	depenar	v	*
+V;1;SG;IND;PST;PFV	1	distorci	distorcer	v	*
+V;1;SG;IND;PST;PFV	1	desesperei	desesperar	v	*
+V;1;SG;IND;PST;PFV	1	encaracolei	encaracolar	v	*
+V;1;SG;IND;PST;PFV	1	recortei	recortar	v	*
+V;1;SG;IND;PST;PFV	1	bufei	bufar	v	*
+V;1;SG;IND;PST;PFV	1	connectei	connectar	v	*
+V;1;SG;IND;PST;PFV	1	apitei	apitar	v	*
+V;1;SG;IND;PST;PFV	1	configurei	configurar	v	*
+V;1;SG;IND;PST;PFV	1	supurei	supurar	v	*
+V;1;SG;IND;PST;PFV	1	pesquei	pescar	v	*
+V;1;SG;IND;PST;PFV	1	excedi	exceder	v	*
+V;1;SG;IND;PST;PFV	1	celebrei	celebrar	v	*
+V;1;SG;IND;PST;PFV	1	vivei	vivar	v	*
+V;1;SG;IND;PST;PRF	1	inscrevera	inscrever	v	*
+V;1;SG;IND;PST;PRF	1	enfaixara	enfaixar	v	*
+V;1;SG;IND;PST;PRF	1	remexera	remexer	v	*
+V;1;SG;IND;PST;PRF	1	acendera	acender	v	*
+V;1;SG;IND;PST;PRF	1	classificara	classificar	v	*
+V;1;SG;IND;PST;PRF	1	acatara	acatar	v	*
+V;1;SG;IND;PST;PRF	1	educara	educar	v	*
+V;1;SG;IND;PST;PRF	1	atanazara	atanazar	v	*
+V;1;SG;IND;PST;PRF	1	adestrara	adestrar	v	*
+V;1;SG;IND;PST;PRF	1	peleijara	peleijar	v	*
+V;1;SG;IND;PST;PRF	1	vicejara	vicejar	v	*
+V;1;SG;IND;PST;PRF	1	auxiliara	auxiliar	v	*
+V;1;SG;IND;PST;PRF	1	ensaboara	ensaboar	v	*
+V;1;SG;IND;PST;PRF	1	oxigenara	oxigenar	v	*
+V;1;SG;NFIN	1	puder	poder	v	*
+V;1;SG;NFIN	1	desder	desdar	v	*
+V;1;SG;NFIN	1	der	dar	v	*
+V;1;SG;SBJV;FUT	1	expuser	expor	v	*
+V;1;SG;SBJV;FUT	1	tumefizer	tumefazer	v	*
+V;1;SG;SBJV;FUT	1	antepuser	antepor	v	*
+V;1;SG;SBJV;FUT	1	putrefizer	putrefazer	v	*
+V;1;SG;SBJV;FUT	1	avier	avir	v	*
+V;1;SG;SBJV;FUT	1	previr	prever	v	*
+V;1;SG;SBJV;FUT	1	depuser	depor	v	*
+V;1;SG;SBJV;FUT	1	bendisser	bendizer	v	*
+V;1;SG;SBJV;FUT	1	contradisser	contradizer	v	*
+V;1;SG;SBJV;FUT	1	revir	rever	v	*
+V;1;SG;SBJV;FUT	1	vir	ver	v	*
+V;1;SG;SBJV;FUT	1	sobrevier	sobrevir	v	*
+V;1;SG;SBJV;PRS	1	alimente	alimentar	v	*
+V;1;SG;SBJV;PRS	1	sancione	sancionar	v	*
+V;1;SG;SBJV;PRS	1	aluminize	aluminizar	v	*
+V;1;SG;SBJV;PRS	1	denigra	denigrir	v	*
+V;1;SG;SBJV;PRS	1	tome	tomar	v	*
+V;1;SG;SBJV;PRS	1	tutore	tutorar	v	*
+V;1;SG;SBJV;PRS	1	declare	declarar	v	*
+V;1;SG;SBJV;PRS	1	poupe	poupar	v	*
+V;1;SG;SBJV;PRS	1	aumente	aumentar	v	*
+V;1;SG;SBJV;PRS	1	empreste	emprestar	v	*
+V;1;SG;SBJV;PRS	1	golpeie	golpear	v	*
+V;1;SG;SBJV;PRS	1	conecte	conectar	v	*
+V;1;SG;SBJV;PRS	1	arredonde	arredondar	v	*
+V;1;SG;SBJV;PRS	1	abula	abolir	v	*
+V;1;SG;SBJV;PST;IPFV	1	gaseificasse	gaseificar	v	*
+V;1;SG;SBJV;PST;IPFV	1	sobreviesse	sobrevir	v	*
+V;1;SG;SBJV;PST;IPFV	1	rosnasse	rosnar	v	*
+V;1;SG;SBJV;PST;IPFV	1	admitisse	admitir	v	*
+V;1;SG;SBJV;PST;IPFV	1	improvisasse	improvisar	v	*
+V;1;SG;SBJV;PST;IPFV	1	rendesse	render	v	*
+V;1;SG;SBJV;PST;IPFV	1	chimarreasse	chimarrear	v	*
+V;1;SG;SBJV;PST;IPFV	1	vinificasse	vinificar	v	*
+V;1;SG;SBJV;PST;IPFV	1	surpreendesse	surpreender	v	*
+V;1;SG;SBJV;PST;IPFV	1	grassitasse	grassitar	v	*
+V;1;SG;SBJV;PST;IPFV	1	erigisse	erigir	v	*
+V;1;SG;SBJV;PST;IPFV	1	barateasse	baratear	v	*
+V;1;SG;SBJV;PST;IPFV	1	requisitasse	requisitar	v	*
+V;1;SG;SBJV;PST;IPFV	1	sentisse	sentir	v	*
+V;2;PL;COND	1	sexaríeis	sexar	v	*
+V;2;PL;COND	1	zumbificaríeis	zumbificar	v	*
+V;2;PL;COND	1	rascunharíeis	rascunhar	v	*
+V;2;PL;COND	1	ovularíeis	ovular	v	*
+V;2;PL;COND	1	jejuaríeis	jejuar	v	*
+V;2;PL;COND	1	exageraríeis	exagerar	v	*
+V;2;PL;COND	1	administraríeis	administrar	v	*
+V;2;PL;COND	1	dilapidaríeis	dilapidar	v	*
+V;2;PL;COND	1	capturaríeis	capturar	v	*
+V;2;PL;COND	1	desgalharíeis	desgalhar	v	*
+V;2;PL;COND	1	antitetizaríeis	antitetizar	v	*
+V;2;PL;COND	1	cativaríeis	cativar	v	*
+V;2;PL;COND	1	guglaríeis	guglar	v	*
+V;2;PL;COND	1	montaríeis	montar	v	*
+V;2;PL;IMP;NEG	1	suponhais	supor	v	*
+V;2;PL;IMP;NEG	1	enfeiteis	enfeitar	v	*
+V;2;PL;IMP;NEG	1	inaugureis	inaugurar	v	*
+V;2;PL;IMP;NEG	1	calcineis	calcinar	v	*
+V;2;PL;IMP;NEG	1	estarreçais	estarrecer	v	*
+V;2;PL;IMP;NEG	1	apassamaneis	apassamanar	v	*
+V;2;PL;IMP;NEG	1	tuneis	tunar	v	*
+V;2;PL;IMP;NEG	1	mineralizeis	mineralizar	v	*
+V;2;PL;IMP;NEG	1	documenteis	documentar	v	*
+V;2;PL;IMP;NEG	1	decanteis	decantar	v	*
+V;2;PL;IMP;NEG	1	estupefiqueis	estupeficar	v	*
+V;2;PL;IMP;NEG	1	estranheis	estranhar	v	*
+V;2;PL;IMP;NEG	1	acasaleis	acasalar	v	*
+V;2;PL;IMP;NEG	1	desaseis	desasar	v	*
+V;2;PL;IMP;POS	1	mascai	mascar	v	*
+V;2;PL;IMP;POS	1	tunai	tunar	v	*
+V;2;PL;IMP;POS	1	encriptai	encriptar	v	*
+V;2;PL;IMP;POS	1	vulgarizai	vulgarizar	v	*
+V;2;PL;IMP;POS	1	decendei	decender	v	*
+V;2;PL;IMP;POS	1	acedei	aceder	v	*
+V;2;PL;IMP;POS	1	avisai	avisar	v	*
+V;2;PL;IMP;POS	1	cegai	cegar	v	*
+V;2;PL;IMP;POS	1	tranquilizai	tranquilizar	v	*
+V;2;PL;IMP;POS	1	desfrutai	desfrutar	v	*
+V;2;PL;IMP;POS	1	sinterizai	sinterizar	v	*
+V;2;PL;IMP;POS	1	iniciai	iniciar	v	*
+V;2;PL;IMP;POS	1	revertei	reverter	v	*
+V;2;PL;IMP;POS	1	assai	assar	v	*
+V;2;PL;IND;FUT	1	desembestareis	desembestar	v	*
+V;2;PL;IND;FUT	1	endeusareis	endeusar	v	*
+V;2;PL;IND;FUT	1	chanfrareis	chanfrar	v	*
+V;2;PL;IND;FUT	1	contereis	conter	v	*
+V;2;PL;IND;FUT	1	morareis	morar	v	*
+V;2;PL;IND;FUT	1	anormalizareis	anormalizar	v	*
+V;2;PL;IND;FUT	1	retardareis	retardar	v	*
+V;2;PL;IND;FUT	1	dinamizareis	dinamizar	v	*
+V;2;PL;IND;FUT	1	trepareis	trepar	v	*
+V;2;PL;IND;FUT	1	fosforescereis	fosforescer	v	*
+V;2;PL;IND;FUT	1	deseuropeizareis	deseuropeizar	v	*
+V;2;PL;IND;FUT	1	ticareis	ticar	v	*
+V;2;PL;IND;FUT	1	solicitareis	solicitar	v	*
+V;2;PL;IND;FUT	1	nutrireis	nutrir	v	*
+V;2;PL;IND;PRS	1	festejais	festejar	v	*
+V;2;PL;IND;PRS	1	espezinhais	espezinhar	v	*
+V;2;PL;IND;PRS	1	pruís	pruir	v	*
+V;2;PL;IND;PRS	1	feris	ferir	v	*
+V;2;PL;IND;PRS	1	colocais	colocar	v	*
+V;2;PL;IND;PRS	1	alegais	alegar	v	*
+V;2;PL;IND;PRS	1	permeais	permear	v	*
+V;2;PL;IND;PRS	1	adotais	adotar	v	*
+V;2;PL;IND;PRS	1	amofinais	amofinar	v	*
+V;2;PL;IND;PRS	1	arrepanhais	arrepanhar	v	*
+V;2;PL;IND;PRS	1	balouçais	balouçar	v	*
+V;2;PL;IND;PRS	1	bafejais	bafejar	v	*
+V;2;PL;IND;PRS	1	televisais	televisar	v	*
+V;2;PL;IND;PRS	1	fiscalizais	fiscalizar	v	*
+V;2;PL;IND;PST;IPFV	1	chanfráveis	chanfrar	v	*
+V;2;PL;IND;PST;IPFV	1	contrabalanceáveis	contrabalancear	v	*
+V;2;PL;IND;PST;IPFV	1	prognosticáveis	prognosticar	v	*
+V;2;PL;IND;PST;IPFV	1	descoloráveis	descolorar	v	*
+V;2;PL;IND;PST;IPFV	1	infestáveis	infestar	v	*
+V;2;PL;IND;PST;IPFV	1	europeizáveis	europeizar	v	*
+V;2;PL;IND;PST;IPFV	1	retribuíeis	retribuir	v	*
+V;2;PL;IND;PST;IPFV	1	confraternizáveis	confraternizar	v	*
+V;2;PL;IND;PST;IPFV	1	destratáveis	destratar	v	*
+V;2;PL;IND;PST;IPFV	1	desembarcáveis	desembarcar	v	*
+V;2;PL;IND;PST;IPFV	1	desencaminháveis	desencaminhar	v	*
+V;2;PL;IND;PST;IPFV	1	apostrofáveis	apostrofar	v	*
+V;2;PL;IND;PST;IPFV	1	damnáveis	damnar	v	*
+V;2;PL;IND;PST;IPFV	1	coloráveis	colorar	v	*
+V;2;PL;IND;PST;PFV	1	sentastes	sentar	v	*
+V;2;PL;IND;PST;PFV	1	untastes	untar	v	*
+V;2;PL;IND;PST;PFV	1	injungistes	injungir	v	*
+V;2;PL;IND;PST;PFV	1	raptastes	raptar	v	*
+V;2;PL;IND;PST;PFV	1	vendestes	vender	v	*
+V;2;PL;IND;PST;PFV	1	patinastes	patinar	v	*
+V;2;PL;IND;PST;PFV	1	soterrastes	soterrar	v	*
+V;2;PL;IND;PST;PFV	1	esquentastes	esquentar	v	*
+V;2;PL;IND;PST;PFV	1	arruastes	arruar	v	*
+V;2;PL;IND;PST;PFV	1	hortastes	hortar	v	*
+V;2;PL;IND;PST;PFV	1	fraqueastes	fraquear	v	*
+V;2;PL;IND;PST;PFV	1	pulverizastes	pulverizar	v	*
+V;2;PL;IND;PST;PFV	1	apassamanastes	apassamanar	v	*
+V;2;PL;IND;PST;PFV	1	desagradecestes	desagradecer	v	*
+V;2;PL;IND;PST;PRF	1	adolescêreis	adolescer	v	*
+V;2;PL;IND;PST;PRF	1	embrenháreis	embrenhar	v	*
+V;2;PL;IND;PST;PRF	1	aloiráreis	aloirar	v	*
+V;2;PL;IND;PST;PRF	1	dirigíreis	dirigir	v	*
+V;2;PL;IND;PST;PRF	1	seletáreis	seletar	v	*
+V;2;PL;IND;PST;PRF	1	rebrilháreis	rebrilhar	v	*
+V;2;PL;IND;PST;PRF	1	atarraxáreis	atarraxar	v	*
+V;2;PL;IND;PST;PRF	1	rescindíreis	rescindir	v	*
+V;2;PL;IND;PST;PRF	1	armazenáreis	armazenar	v	*
+V;2;PL;IND;PST;PRF	1	desencorajáreis	desencorajar	v	*
+V;2;PL;IND;PST;PRF	1	apoucáreis	apoucar	v	*
+V;2;PL;IND;PST;PRF	1	intoxicáreis	intoxicar	v	*
+V;2;PL;IND;PST;PRF	1	imperáreis	imperar	v	*
+V;2;PL;IND;PST;PRF	1	rateáreis	ratear	v	*
+V;2;PL;NFIN	1	transformardes	transformar	v	*
+V;2;PL;NFIN	1	dilapidardes	dilapidar	v	*
+V;2;PL;NFIN	1	aluminizardes	aluminizar	v	*
+V;2;PL;NFIN	1	gravitardes	gravitar	v	*
+V;2;PL;NFIN	1	franqueardes	franquear	v	*
+V;2;PL;NFIN	1	cisardes	cisar	v	*
+V;2;PL;NFIN	1	googlardes	googlar	v	*
+V;2;PL;NFIN	1	amaynardes	amaynar	v	*
+V;2;PL;NFIN	1	vedardes	vedar	v	*
+V;2;PL;NFIN	1	contestardes	contestar	v	*
+V;2;PL;NFIN	1	dessalinizardes	dessalinizar	v	*
+V;2;PL;NFIN	1	subornardes	subornar	v	*
+V;2;PL;NFIN	1	debuxardes	debuxar	v	*
+V;2;PL;NFIN	1	gesticulardes	gesticular	v	*
+V;2;PL;SBJV;FUT	1	virdes	ver	v	*
+V;2;PL;SBJV;FUT	1	contrafizerdes	contrafazer	v	*
+V;2;PL;SBJV;FUT	1	satisfizerdes	satisfazer	v	*
+V;2;PL;SBJV;FUT	1	justapuserdes	justapor	v	*
+V;2;PL;SBJV;FUT	1	contradisserdes	contradizer	v	*
+V;2;PL;SBJV;FUT	1	aprouverdes	aprazer	v	*
+V;2;PL;SBJV;FUT	1	maldisserdes	maldizer	v	*
+V;2;PL;SBJV;FUT	1	abstiverdes	abster	v	*
+V;2;PL;SBJV;FUT	1	obtiverdes	obter	v	*
+V;2;PL;SBJV;FUT	1	perfizerdes	perfazer	v	*
+V;2;PL;SBJV;FUT	1	supuserdes	supor	v	*
+V;2;PL;SBJV;FUT	1	tiverdes	ter	v	*
+V;2;PL;SBJV;FUT	1	entretiverdes	entreter	v	*
+V;2;PL;SBJV;FUT	1	avierdes	avir	v	*
+V;2;PL;SBJV;PST;IPFV	1	bruxuleásseis	bruxulear	v	*
+V;2;PL;SBJV;PST;IPFV	1	commandásseis	commandar	v	*
+V;2;PL;SBJV;PST;IPFV	1	reassegurásseis	reassegurar	v	*
+V;2;PL;SBJV;PST;IPFV	1	impactásseis	impactar	v	*
+V;2;PL;SBJV;PST;IPFV	1	encaracolásseis	encaracolar	v	*
+V;2;PL;SBJV;PST;IPFV	1	averbásseis	averbar	v	*
+V;2;PL;SBJV;PST;IPFV	1	apreciásseis	apreciar	v	*
+V;2;PL;SBJV;PST;IPFV	1	entornásseis	entornar	v	*
+V;2;PL;SBJV;PST;IPFV	1	baixásseis	baixar	v	*
+V;2;PL;SBJV;PST;IPFV	1	nadásseis	nadar	v	*
+V;2;PL;SBJV;PST;IPFV	1	compadecêsseis	compadecer	v	*
+V;2;PL;SBJV;PST;IPFV	1	ausentásseis	ausentar	v	*
+V;2;PL;SBJV;PST;IPFV	1	postergásseis	postergar	v	*
+V;2;PL;SBJV;PST;IPFV	1	revolvêsseis	revolver	v	*
+V;2;SG;COND	1	apararias	aparar	v	*
+V;2;SG;COND	1	enfrentarias	enfrentar	v	*
+V;2;SG;COND	1	telharias	telhar	v	*
+V;2;SG;COND	1	vitrificarias	vitrificar	v	*
+V;2;SG;COND	1	diluirias	diluir	v	*
+V;2;SG;COND	1	regarias	regar	v	*
+V;2;SG;COND	1	zangarias	zangar	v	*
+V;2;SG;COND	1	focarias	focar	v	*
+V;2;SG;COND	1	telecomandarias	telecomandar	v	*
+V;2;SG;COND	1	remunerarias	remunerar	v	*
+V;2;SG;COND	1	debocharias	debochar	v	*
+V;2;SG;COND	1	franquiarias	franquiar	v	*
+V;2;SG;COND	1	configurarias	configurar	v	*
+V;2;SG;COND	1	parodiarias	parodiar	v	*
+V;2;SG;IMP;NEG	1	esgotes	esgotar	v	*
+V;2;SG;IMP;NEG	1	derrapes	derrapar	v	*
+V;2;SG;IMP;NEG	1	antropomorfizes	antropomorfizar	v	*
+V;2;SG;IMP;NEG	1	cavouques	cavoucar	v	*
+V;2;SG;IMP;NEG	1	manufatures	manufaturar	v	*
+V;2;SG;IMP;NEG	1	desabitues	desabituar	v	*
+V;2;SG;IMP;NEG	1	adores	adorar	v	*
+V;2;SG;IMP;NEG	1	acometas	acometer	v	*
+V;2;SG;IMP;NEG	1	abrases	abrasar	v	*
+V;2;SG;IMP;NEG	1	reboques	rebocar	v	*
+V;2;SG;IMP;NEG	1	transites	transitar	v	*
+V;2;SG;IMP;NEG	1	debuxes	debuxar	v	*
+V;2;SG;IMP;NEG	1	persigas	perseguir	v	*
+V;2;SG;IMP;NEG	1	independas	independer	v	*
+V;2;SG;IMP;POS	1	desafivela	desafivelar	v	*
+V;2;SG;IMP;POS	1	enterra	enterrar	v	*
+V;2;SG;IMP;POS	1	doma	domar	v	*
+V;2;SG;IMP;POS	1	deprecia	depreciar	v	*
+V;2;SG;IMP;POS	1	ejacula	ejacular	v	*
+V;2;SG;IMP;POS	1	alberga	albergar	v	*
+V;2;SG;IMP;POS	1	alcatroa	alcatroar	v	*
+V;2;SG;IMP;POS	1	tinge	tingir	v	*
+V;2;SG;IMP;POS	1	desaba	desabar	v	*
+V;2;SG;IMP;POS	1	zela	zelar	v	*
+V;2;SG;IMP;POS	1	informa	informar	v	*
+V;2;SG;IMP;POS	1	entusiasma	entusiasmar	v	*
+V;2;SG;IMP;POS	1	aponta	apontar	v	*
+V;2;SG;IMP;POS	1	concretiza	concretizar	v	*
+V;2;SG;IND;FUT	1	chegarás	chegar	v	*
+V;2;SG;IND;FUT	1	reassegurarás	reassegurar	v	*
+V;2;SG;IND;FUT	1	invernarás	invernar	v	*
+V;2;SG;IND;FUT	1	rangerás	ranger	v	*
+V;2;SG;IND;FUT	1	subsistirás	subsistir	v	*
+V;2;SG;IND;FUT	1	focarás	focar	v	*
+V;2;SG;IND;FUT	1	separarás	separar	v	*
+V;2;SG;IND;FUT	1	obrarás	obrar	v	*
+V;2;SG;IND;FUT	1	escarrarás	escarrar	v	*
+V;2;SG;IND;FUT	1	merecerás	merecer	v	*
+V;2;SG;IND;FUT	1	desmontarás	desmontar	v	*
+V;2;SG;IND;FUT	1	consagrarás	consagrar	v	*
+V;2;SG;IND;FUT	1	borrifarás	borrifar	v	*
+V;2;SG;IND;FUT	1	fluirás	fluir	v	*
+V;2;SG;IND;PRS	1	ceias	cear	v	*
+V;2;SG;IND;PRS	1	deliberas	deliberar	v	*
+V;2;SG;IND;PRS	1	capitalizas	capitalizar	v	*
+V;2;SG;IND;PRS	1	compulsas	compulsar	v	*
+V;2;SG;IND;PRS	1	despejas	despejar	v	*
+V;2;SG;IND;PRS	1	amassas	amassar	v	*
+V;2;SG;IND;PRS	1	renomeias	renomear	v	*
+V;2;SG;IND;PRS	1	creces	crecer	v	*
+V;2;SG;IND;PRS	1	anabolizas	anabolizar	v	*
+V;2;SG;IND;PRS	1	presumes	presumir	v	*
+V;2;SG;IND;PRS	1	ensurdeces	ensurdecer	v	*
+V;2;SG;IND;PRS	1	analisas	analisar	v	*
+V;2;SG;IND;PRS	1	manobras	manobrar	v	*
+V;2;SG;IND;PRS	1	habitas	habitar	v	*
+V;2;SG;IND;PST;IPFV	1	loteavas	lotear	v	*
+V;2;SG;IND;PST;IPFV	1	desembestavas	desembestar	v	*
+V;2;SG;IND;PST;IPFV	1	ultimavas	ultimar	v	*
+V;2;SG;IND;PST;IPFV	1	coalhavas	coalhar	v	*
+V;2;SG;IND;PST;IPFV	1	documentavas	documentar	v	*
+V;2;SG;IND;PST;IPFV	1	volatilizavas	volatilizar	v	*
+V;2;SG;IND;PST;IPFV	1	delegavas	delegar	v	*
+V;2;SG;IND;PST;IPFV	1	adsorvias	adsorver	v	*
+V;2;SG;IND;PST;IPFV	1	desbloqueavas	desbloquear	v	*
+V;2;SG;IND;PST;IPFV	1	brochavas	brochar	v	*
+V;2;SG;IND;PST;IPFV	1	desabafavas	desabafar	v	*
+V;2;SG;IND;PST;IPFV	1	recompensavas	recompensar	v	*
+V;2;SG;IND;PST;IPFV	1	riscavas	riscar	v	*
+V;2;SG;IND;PST;IPFV	1	homenageavas	homenagear	v	*
+V;2;SG;IND;PST;PFV	1	sucedeste	suceder	v	*
+V;2;SG;IND;PST;PFV	1	tossiste	tossir	v	*
+V;2;SG;IND;PST;PFV	1	defloraste	deflorar	v	*
+V;2;SG;IND;PST;PFV	1	comprimiste	comprimir	v	*
+V;2;SG;IND;PST;PFV	1	desconsagraste	desconsagrar	v	*
+V;2;SG;IND;PST;PFV	1	anulaste	anular	v	*
+V;2;SG;IND;PST;PFV	1	folheaste	folhear	v	*
+V;2;SG;IND;PST;PFV	1	interligaste	interligar	v	*
+V;2;SG;IND;PST;PFV	1	homogeneizaste	homogeneizar	v	*
+V;2;SG;IND;PST;PFV	1	regeneraste	regenerar	v	*
+V;2;SG;IND;PST;PFV	1	inculcaste	inculcar	v	*
+V;2;SG;IND;PST;PFV	1	ancinhaste	ancinhar	v	*
+V;2;SG;IND;PST;PFV	1	compreendeste	compreender	v	*
+V;2;SG;IND;PST;PFV	1	chutaste	chutar	v	*
+V;2;SG;IND;PST;PRF	1	aceleraras	acelerar	v	*
+V;2;SG;IND;PST;PRF	1	registaras	registar	v	*
+V;2;SG;IND;PST;PRF	1	complicaras	complicar	v	*
+V;2;SG;IND;PST;PRF	1	emaranharas	emaranhar	v	*
+V;2;SG;IND;PST;PRF	1	almoçaras	almoçar	v	*
+V;2;SG;IND;PST;PRF	1	contrabalancearas	contrabalancear	v	*
+V;2;SG;IND;PST;PRF	1	fraquearas	fraquear	v	*
+V;2;SG;IND;PST;PRF	1	sentenciaras	sentenciar	v	*
+V;2;SG;IND;PST;PRF	1	alinharas	alinhar	v	*
+V;2;SG;IND;PST;PRF	1	persuadiras	persuadir	v	*
+V;2;SG;IND;PST;PRF	1	altercaras	altercar	v	*
+V;2;SG;IND;PST;PRF	1	acerbaras	acerbar	v	*
+V;2;SG;IND;PST;PRF	1	lembraras	lembrar	v	*
+V;2;SG;IND;PST;PRF	1	abraçaras	abraçar	v	*
+V;2;SG;NFIN	1	damasquinares	damasquinar	v	*
+V;2;SG;NFIN	1	preparares	preparar	v	*
+V;2;SG;NFIN	1	recomeçares	recomeçar	v	*
+V;2;SG;NFIN	1	desoxidares	desoxidar	v	*
+V;2;SG;NFIN	1	estenderes	estender	v	*
+V;2;SG;NFIN	1	escarrares	escarrar	v	*
+V;2;SG;NFIN	1	sedares	sedar	v	*
+V;2;SG;NFIN	1	salvares	salvar	v	*
+V;2;SG;NFIN	1	atravancares	atravancar	v	*
+V;2;SG;NFIN	1	anulares	anular	v	*
+V;2;SG;NFIN	1	estrelares	estrelar	v	*
+V;2;SG;NFIN	1	randomizares	randomizar	v	*
+V;2;SG;NFIN	1	reconvocares	reconvocar	v	*
+V;2;SG;NFIN	1	descalçares	descalçar	v	*
+V;2;SG;SBJV;FUT	1	couberes	caber	v	*
+V;2;SG;SBJV;FUT	1	supuseres	supor	v	*
+V;2;SG;SBJV;FUT	1	desdisseres	desdizer	v	*
+V;2;SG;SBJV;FUT	1	tumefizeres	tumefazer	v	*
+V;2;SG;SBJV;FUT	1	decompuseres	decompor	v	*
+V;2;SG;SBJV;FUT	1	mantiveres	manter	v	*
+V;2;SG;SBJV;FUT	1	maldisseres	maldizer	v	*
+V;2;SG;SBJV;FUT	1	contiveres	conter	v	*
+V;2;SG;SBJV;FUT	1	justapuseres	justapor	v	*
+V;2;SG;SBJV;FUT	1	bendisseres	bendizer	v	*
+V;2;SG;SBJV;FUT	1	sobrevieres	sobrevir	v	*
+V;2;SG;SBJV;FUT	1	vieres	vir	v	*
+V;2;SG;SBJV;PST;IPFV	1	rarefizesses	rarefazer	v	*
+V;2;SG;SBJV;PST;IPFV	1	derrotasses	derrotar	v	*
+V;2;SG;SBJV;PST;IPFV	1	reordenasses	reordenar	v	*
+V;2;SG;SBJV;PST;IPFV	1	sustasses	sustar	v	*
+V;2;SG;SBJV;PST;IPFV	1	joeirasses	joeirar	v	*
+V;2;SG;SBJV;PST;IPFV	1	refletisses	refletir	v	*
+V;2;SG;SBJV;PST;IPFV	1	modulasses	modular	v	*
+V;2;SG;SBJV;PST;IPFV	1	tardasses	tardar	v	*
+V;2;SG;SBJV;PST;IPFV	1	frequentasses	frequentar	v	*
+V;2;SG;SBJV;PST;IPFV	1	retraísses	retrair	v	*
+V;2;SG;SBJV;PST;IPFV	1	uniformizasses	uniformizar	v	*
+V;2;SG;SBJV;PST;IPFV	1	praticasses	praticar	v	*
+V;2;SG;SBJV;PST;IPFV	1	obstruísses	obstruir	v	*
+V;2;SG;SBJV;PST;IPFV	1	catequizasses	catequizar	v	*
+V;3;PL;COND	1	biotransformariam	biotransformar	v	*
+V;3;PL;COND	1	decorariam	decorar	v	*
+V;3;PL;COND	1	enfatizariam	enfatizar	v	*
+V;3;PL;COND	1	firmariam	firmar	v	*
+V;3;PL;COND	1	auguriariam	auguriar	v	*
+V;3;PL;COND	1	afligiriam	afligir	v	*
+V;3;PL;COND	1	patinariam	patinar	v	*
+V;3;PL;COND	1	secundariam	secundar	v	*
+V;3;PL;COND	1	minutariam	minutar	v	*
+V;3;PL;COND	1	comutariam	comutar	v	*
+V;3;PL;COND	1	confeririam	conferir	v	*
+V;3;PL;COND	1	rangariam	rangar	v	*
+V;3;PL;COND	1	alcoolizariam	alcoolizar	v	*
+V;3;PL;COND	1	navegariam	navegar	v	*
+V;3;PL;IMP;NEG	1	vitimem	vitimar	v	*
+V;3;PL;IMP;NEG	1	ensinem	ensinar	v	*
+V;3;PL;IMP;NEG	1	regressem	regressar	v	*
+V;3;PL;IMP;NEG	1	endureçam	endurecer	v	*
+V;3;PL;IMP;NEG	1	franjem	franjar	v	*
+V;3;PL;IMP;NEG	1	concretizem	concretizar	v	*
+V;3;PL;IMP;NEG	1	fluorem	fluorar	v	*
+V;3;PL;IMP;NEG	1	engulam	engolir	v	*
+V;3;PL;IMP;NEG	1	rubriquem	rubricar	v	*
+V;3;PL;IMP;NEG	1	fissionem	fissionar	v	*
+V;3;PL;IMP;NEG	1	entreolhem	entreolhar	v	*
+V;3;PL;IMP;NEG	1	abrasileirem	abrasileirar	v	*
+V;3;PL;IMP;NEG	1	eclipsem	eclipsar	v	*
+V;3;PL;IMP;NEG	1	retalhem	retalhar	v	*
+V;3;PL;IND;FUT	1	desembarcarão	desembarcar	v	*
+V;3;PL;IND;FUT	1	baratearão	baratear	v	*
+V;3;PL;IND;FUT	1	conjugarão	conjugar	v	*
+V;3;PL;IND;FUT	1	espocarão	espocar	v	*
+V;3;PL;IND;FUT	1	acinzentarão	acinzentar	v	*
+V;3;PL;IND;FUT	1	reconfirmarão	reconfirmar	v	*
+V;3;PL;IND;FUT	1	machucarão	machucar	v	*
+V;3;PL;IND;FUT	1	treslerão	tresler	v	*
+V;3;PL;IND;FUT	1	emprestarão	emprestar	v	*
+V;3;PL;IND;FUT	1	gravitarão	gravitar	v	*
+V;3;PL;IND;FUT	1	accolherão	accolher	v	*
+V;3;PL;IND;FUT	1	alastrarão	alastrar	v	*
+V;3;PL;IND;FUT	1	odiarão	odiar	v	*
+V;3;PL;IND;FUT	1	desmerecerão	desmerecer	v	*
+V;3;PL;IND;PRS	1	hospitalizam	hospitalizar	v	*
+V;3;PL;IND;PRS	1	asfixiam	asfixiar	v	*
+V;3;PL;IND;PRS	1	incisam	incisar	v	*
+V;3;PL;IND;PRS	1	armazenam	armazenar	v	*
+V;3;PL;IND;PRS	1	asilam	asilar	v	*
+V;3;PL;IND;PRS	1	consagram	consagrar	v	*
+V;3;PL;IND;PRS	1	resfriam	resfriar	v	*
+V;3;PL;IND;PRS	1	corrigem	corrigir	v	*
+V;3;PL;IND;PRS	1	efectuam	efectuar	v	*
+V;3;PL;IND;PRS	1	gesticulam	gesticular	v	*
+V;3;PL;IND;PRS	1	emagrecem	emagrecer	v	*
+V;3;PL;IND;PRS	1	barram	barrar	v	*
+V;3;PL;IND;PRS	1	interpõem	interpor	v	*
+V;3;PL;IND;PRS	1	amuram	amurar	v	*
+V;3;PL;IND;PST;IPFV	1	coletavam	coletar	v	*
+V;3;PL;IND;PST;IPFV	1	espocavam	espocar	v	*
+V;3;PL;IND;PST;IPFV	1	abluíam	abluir	v	*
+V;3;PL;IND;PST;IPFV	1	bicavam	bicar	v	*
+V;3;PL;IND;PST;IPFV	1	farejavam	farejar	v	*
+V;3;PL;IND;PST;IPFV	1	desabavam	desabar	v	*
+V;3;PL;IND;PST;IPFV	1	estreavam	estrear	v	*
+V;3;PL;IND;PST;IPFV	1	succediam	succeder	v	*
+V;3;PL;IND;PST;IPFV	1	maiusculizavam	maiusculizar	v	*
+V;3;PL;IND;PST;IPFV	1	tosavam	tosar	v	*
+V;3;PL;IND;PST;IPFV	1	engatinhavam	engatinhar	v	*
+V;3;PL;IND;PST;IPFV	1	travavam	travar	v	*
+V;3;PL;IND;PST;IPFV	1	notificavam	notificar	v	*
+V;3;PL;IND;PST;IPFV	1	limpavam	limpar	v	*
+V;3;PL;IND;PST;PFV	1	photographaram	photographar	v	*
+V;3;PL;IND;PST;PFV	1	clicaram	clicar	v	*
+V;3;PL;IND;PST;PFV	1	cometeram	cometer	v	*
+V;3;PL;IND;PST;PFV	1	deportaram	deportar	v	*
+V;3;PL;IND;PST;PFV	1	esterilizaram	esterilizar	v	*
+V;3;PL;IND;PST;PFV	1	numeraram	numerar	v	*
+V;3;PL;IND;PST;PFV	1	esmagaram	esmagar	v	*
+V;3;PL;IND;PST;PFV	1	vermelharam	vermelhar	v	*
+V;3;PL;IND;PST;PFV	1	clarearam	clarear	v	*
+V;3;PL;IND;PST;PFV	1	partiram	partir	v	*
+V;3;PL;IND;PST;PFV	1	emparedaram	emparedar	v	*
+V;3;PL;IND;PST;PFV	1	desderam	desdar	v	*
+V;3;PL;IND;PST;PFV	1	gargarejaram	gargarejar	v	*
+V;3;PL;IND;PST;PFV	1	interessaram	interessar	v	*
+V;3;PL;NFIN	1	ziguezaguearem	ziguezaguear	v	*
+V;3;PL;NFIN	1	machucarem	machucar	v	*
+V;3;PL;NFIN	1	choverem	chover	v	*
+V;3;PL;NFIN	1	afixarem	afixar	v	*
+V;3;PL;NFIN	1	tostarem	tostar	v	*
+V;3;PL;NFIN	1	aliterarem	aliterar	v	*
+V;3;PL;NFIN	1	proselitarem	proselitar	v	*
+V;3;PL;NFIN	1	exclamarem	exclamar	v	*
+V;3;PL;NFIN	1	luzirem	luzir	v	*
+V;3;PL;NFIN	1	sobresaírem	sobresair	v	*
+V;3;PL;NFIN	1	destroçarem	destroçar	v	*
+V;3;PL;NFIN	1	automatizarem	automatizar	v	*
+V;3;PL;NFIN	1	protuberarem	protuberar	v	*
+V;3;PL;NFIN	1	recomendarem	recomendar	v	*
+V;3;PL;SBJV;FUT	1	dispuserem	dispor	v	*
+V;3;PL;SBJV;FUT	1	maldisserem	maldizer	v	*
+V;3;PL;SBJV;FUT	1	liquefizerem	liquefazer	v	*
+V;3;PL;SBJV;FUT	1	tumefizerem	tumefazer	v	*
+V;3;PL;SBJV;FUT	1	predisserem	predizer	v	*
+V;3;PL;SBJV;FUT	1	descompuserem	descompor	v	*
+V;3;PL;SBJV;FUT	1	revirem	rever	v	*
+V;3;PL;SBJV;FUT	1	compuserem	compor	v	*
+V;3;PL;SBJV;FUT	1	contrafizerem	contrafazer	v	*
+V;3;PL;SBJV;FUT	1	condisserem	condizer	v	*
+V;3;PL;SBJV;FUT	1	couberem	caber	v	*
+V;3;PL;SBJV;FUT	1	contrapuserem	contrapor	v	*
+V;3;PL;SBJV;FUT	1	disserem	dizer	v	*
+V;3;PL;SBJV;PRS	1	apoiem	apoiar	v	*
+V;3;PL;SBJV;PRS	1	boiem	boiar	v	*
+V;3;PL;SBJV;PRS	1	ágüem	aguar	v	*
+V;3;PL;SBJV;PRS	1	enxágüem	enxaguar	v	*
+V;3;PL;SBJV;PST;IPFV	1	narrassem	narrar	v	*
+V;3;PL;SBJV;PST;IPFV	1	dramatizassem	dramatizar	v	*
+V;3;PL;SBJV;PST;IPFV	1	pechinchassem	pechinchar	v	*
+V;3;PL;SBJV;PST;IPFV	1	liberassem	liberar	v	*
+V;3;PL;SBJV;PST;IPFV	1	desidratassem	desidratar	v	*
+V;3;PL;SBJV;PST;IPFV	1	disputassem	disputar	v	*
+V;3;PL;SBJV;PST;IPFV	1	eximissem	eximir	v	*
+V;3;PL;SBJV;PST;IPFV	1	ribombassem	ribombar	v	*
+V;3;PL;SBJV;PST;IPFV	1	azotassem	azotar	v	*
+V;3;PL;SBJV;PST;IPFV	1	folgassem	folgar	v	*
+V;3;PL;SBJV;PST;IPFV	1	pesassem	pesar	v	*
+V;3;PL;SBJV;PST;IPFV	1	adquirissem	adquirir	v	*
+V;3;PL;SBJV;PST;IPFV	1	facilitassem	facilitar	v	*
+V;3;PL;SBJV;PST;IPFV	1	analisassem	analisar	v	*
+V;3;SG;COND	1	nevaria	nevar	v	*
+V;3;SG;COND	1	gearia	gear	v	*
+V;3;SG;IMP;NEG	1	bóie	boiar	v	*
+V;3;SG;IMP;NEG	1	apóie	apoiar	v	*
+V;3;SG;IMP;NEG	1	mobilie	mobiliar	v	*
+V;3;SG;IND;FUT	1	vulcanizará	vulcanizar	v	*
+V;3;SG;IND;FUT	1	quintará	quintar	v	*
+V;3;SG;IND;FUT	1	inutilizará	inutilizar	v	*
+V;3;SG;IND;FUT	1	retrucará	retrucar	v	*
+V;3;SG;IND;FUT	1	vociferará	vociferar	v	*
+V;3;SG;IND;FUT	1	medirá	medir	v	*
+V;3;SG;IND;FUT	1	notificará	notificar	v	*
+V;3;SG;IND;FUT	1	orientará	orientar	v	*
+V;3;SG;IND;FUT	1	ambiguará	ambiguar	v	*
+V;3;SG;IND;FUT	1	enrolará	enrolar	v	*
+V;3;SG;IND;FUT	1	rotacionará	rotacionar	v	*
+V;3;SG;IND;FUT	1	tramará	tramar	v	*
+V;3;SG;IND;FUT	1	compactará	compactar	v	*
+V;3;SG;IND;FUT	1	zanzará	zanzar	v	*
+V;3;SG;IND;PRS	1	tem	ter	v	*
+V;3;SG;IND;PRS	1	liquefaz	liquefazer	v	*
+V;3;SG;IND;PRS	1	satisfaz	satisfazer	v	*
+V;3;SG;IND;PRS	1	tumefaz	tumefazer	v	*
+V;3;SG;IND;PRS	1	contrafaz	contrafazer	v	*
+V;3;SG;IND;PRS	1	faz	fazer	v	*
+V;3;SG;IND;PRS	1	maldiz	maldizer	v	*
+V;3;SG;IND;PRS	1	contradiz	contradizer	v	*
+V;3;SG;IND;PRS	1	prediz	predizer	v	*
+V;3;SG;IND;PRS	1	desdiz	desdizer	v	*
+V;3;SG;IND;PRS	1	condiz	condizer	v	*
+V;3;SG;IND;PST;IPFV	1	nevava	nevar	v	*
+V;3;SG;IND;PST;IPFV	1	geava	gear	v	*
+V;3;SG;IND;PST;PFV	1	mergulhou	mergulhar	v	*
+V;3;SG;IND;PST;PFV	1	decepou	decepar	v	*
+V;3;SG;IND;PST;PFV	1	costurou	costurar	v	*
+V;3;SG;IND;PST;PFV	1	concertou	concertar	v	*
+V;3;SG;IND;PST;PFV	1	dirigiu	dirigir	v	*
+V;3;SG;IND;PST;PFV	1	presenteou	presentear	v	*
+V;3;SG;IND;PST;PFV	1	gatunou	gatunar	v	*
+V;3;SG;IND;PST;PFV	1	abastardou	abastardar	v	*
+V;3;SG;IND;PST;PFV	1	violentou	violentar	v	*
+V;3;SG;IND;PST;PFV	1	cachou	cachar	v	*
+V;3;SG;IND;PST;PFV	1	fatorou	fatorar	v	*
+V;3;SG;IND;PST;PFV	1	engraçou	engraçar	v	*
+V;3;SG;IND;PST;PFV	1	humedeceu	humedecer	v	*
+V;3;SG;IND;PST;PFV	1	acentuou	acentuar	v	*
+V;3;SG;IND;PST;PRF	1	geara	gear	v	*
+V;3;SG;IND;PST;PRF	1	nevara	nevar	v	*
+V;3;SG;SBJV;PRS	1	neve	nevar	v	*
+V;3;SG;SBJV;PRS	1	geie	gear	v	*
+V;3;SG;SBJV;PST;IPFV	1	geasse	gear	v	*
+V;3;SG;SBJV;PST;IPFV	1	nevasse	nevar	v	*
+wty plural	1	assiriologistas	assiriologista	n	*
+wty plural	1	semibreves	semibreve	n	*
+wty plural	1	termosferas	termosfera	n	*
+wty plural	1	autorreferências	autorreferência	n	*
+wty plural	1	habilidosos	habilidoso	adj	*
+wty plural	1	trovadorismos	trovadorismo	n	*
+wty plural	1	criptoanálises	criptoanálise	n	*
+wty plural	1	cromaquis	cromaqui	n	*
+wty plural	1	previstas	previsto	adj	*
+wty plural	1	antifãs	antifã	n	*
+wty plural	1	desencontradas	desencontrado	adj	*
+wty plural	1	celuloides	celuloide	n	*
+wty plural	1	costuras	costura	n	*
+wty plural	1	criptococóticas	criptococótico	adj	*
+wty plural	1	delineadoras	delineador	n	*
+wty plural	1	bivalves	bivalve	n	*
+wty plural	1	vinhas	vinha	n	*
+wty plural	1	tenências	tenência	n	*
+wty plural	1	entrepernas	entreperna	n	*
+wty plural	1	caudalosas	caudaloso	adj	*
+wty plural	1	dominatrixes	dominatrix	n	*
+wty plural	1	eletromagnéticas	eletromagnético	adj	*
+wty plural	1	alfandegárias	alfandegário	n	*
+wty plural	1	offensoras	offensor	n	*
+wty plural	1	cósmicas	cósmico	adj	*
+wty plural	1	endorfinas	endorfina	n	*
+wty plural	1	solitas	solito	adj	*
+wty plural	1	bustrofédicos	bustrofédico	adj	*
+wty plural	1	duodenos	duodeno	n	*
+wty plural	1	antimitos	antimito	n	*
+wty plural	1	etarras	etarra	n	*
+wty plural	1	heteróclitas	heteróclito	adj	*
+wty plural	1	gramscismos	gramscismo	n	*
+wty plural	1	samaritanas	samaritano	n	*
+wty plural	1	impigens	impigem	n	*
+wty plural	1	mancebias	mancebia	n	*
+wty plural	1	miráculos	miráculo	n	*
+wty plural	1	condôminos	condômino	n	*
+wty plural	1	aldrabões	aldrabão	n	*
+wty plural	1	paraguaios	paraguaio	n	*
+wty plural	1	adaptogênicas	adaptogênico	adj	*
+wty plural	1	aloquetes	aloquete	n	*
+wty plural	1	orcos	orco	n	*
+wty plural	1	pêsames	pêsame	n	*
+wty plural	1	burelas	burela	n	*
+wty plural	1	lixeiros	lixeiro	n	*
+wty plural	1	biscas	bisca	n	*
+wty plural	1	pododáctilos	pododáctilo	n	*
+wty plural	1	amethystas	amethysta	n	*
+wty plural	1	boxeadoras	boxeador	n	*
+wty plural	1	vários	vário	adj	*
+wty plural	1	aterragens	aterragem	n	*
+wty plural	1	convidados	convidado	n	*
+wty plural	1	ajustadoras	ajustador	n	*
+wty plural	1	germanofilias	germanofilia	n	*
+wty plural	1	actinostelos	actinostelo	n	*
+wty plural	1	ofertórios	ofertório	n	*
+wty plural	1	bigodudas	bigodudo	adj	*
+wty plural	1	pagadas	pagado	adj	*
+wty plural	1	eritoblastos	eritoblasto	n	*
+wty plural	1	sátrapas	sátrapa	n	*
+wty plural	1	mergulhadoras	mergulhador	n	*
+wty plural	1	tablets	tablet	n	*
+wty plural	1	golpadas	golpada	n	*
+wty plural	1	heptadecavôs	heptadecavô	n	*
+wty plural	1	sudoríficos	sudorífico	n	*
+wty plural	1	uretras	uretra	n	*
+wty plural	1	desoladas	desolado	adj	*
+wty plural	1	bolados	bolado	adj	*
+wty plural	1	communicadas	communicado	n	*
+wty plural	1	arqueobacterianos	arqueobacteriano	adj	*
+wty plural	1	telefilmes	telefilme	n	*
+wty plural	1	feudos	feudo	n	*
+wty plural	1	celebrações	celebração	n	*
+wty plural	1	sandilhos	sandilho	n	*
+wty plural	1	godilhos	godilho	n	*
+wty plural	1	farofas	farofa	n	*
+wty plural	1	antiadrenérgicas	antiadrenérgico	adj	*
+wty plural	1	oligofrenias	oligofrenia	n	*
+wty plural	1	crioscópicos	crioscópico	adj	*
+wty plural	1	cómodos	cómodo	n	*
+wty plural	1	caipifrutas	caipifruta	n	*
+wty plural	1	colônias	colônia	n	*
+wty plural	1	concessões	concessão	n	*
+wty plural	1	propanóicos	propanóico	adj	*
+wty plural	1	subfamílias	subfamília	n	*
+wty plural	1	amortecimentos	amortecimento	n	*
+wty plural	1	corregedorias	corregedoria	n	*
+wty plural	1	bicas	bica	n	*
+wty plural	1	brómicos	brómico	adj	*
+wty plural	1	mirabolantes	mirabolante	adj	*
+wty plural	1	tesoureiros	tesoureiro	n	*
+wty plural	1	satays	satay	n	*
+wty plural	1	bauxites	bauxite	n	*
+wty plural	1	chutes	chute	n	*
+wty plural	1	trocanteres	trocanter	n	*
+wty plural	1	dispositivos	dispositivo	n	*
+wty plural	1	organolépticas	organoléptico	adj	*
+wty plural	1	hipocloritos	hipoclorito	n	*
+wty plural	1	ostagas	ostaga	n	*
+wty plural	1	apelações	apelação	n	*
+wty plural	1	recidivas	recidivo	adj	*
+wty plural	1	antidiarreicos	antidiarreico	adj	*
+wty plural	1	polvorentos	polvorento	adj	*
+wty plural	1	abadessões	abadessão	n	*
+wty plural	1	pinhos	pinho	n	*
+wty plural	1	artefatuais	artefatual	adj	*
+wty plural	1	gibosidades	gibosidade	n	*
+wty plural	1	mabecos	mabeco	n	*
+wty plural	1	quasares	quasar	n	*
+wty plural	1	subdiretórios	subdiretório	n	*
+wty plural	1	saussurianas	saussuriano	n	*
+wty plural	1	faladores	falador	adj	*
+wty plural	1	informantes	informante	n	*
+wty plural	1	bandeirosos	bandeiroso	adj	*
+wty plural	1	giaours	giaour	n	*
+wty plural	1	navios	navio	n	*
+wty plural	1	antipsicológicos	antipsicológico	adj	*
+wty plural	1	caapiás	caapiá	n	*
+wty plural	1	varsovianos	varsoviano	n	*
+wty plural	1	sangùíneas	sangùíneo	adj	*
+wty plural	1	engines	engine	n	*
+wty plural	1	astronômicas	astronômico	adj	*
+wty plural	1	lobismulheres	lobismulher	n	*
+wty plural	1	anatómicos	anatómico	adj	*
+wty plural	1	boquirrotos	boquirroto	n	*
+wty plural	1	androfóbicas	androfóbico	adj	*
+wty plural	1	togas	toga	n	*
+wty plural	1	cinofílicos	cinofílico	n	*
+wty plural	1	estatuetas	estatueta	n	*
+wty plural	1	sinarquias	sinarquia	n	*
+wty plural	1	hidrográficas	hidrográfico	adj	*
+wty plural	1	bolômetros	bolômetro	n	*
+wty plural	1	alitúrgicos	alitúrgico	adj	*
+wty plural	1	recapturas	recaptura	n	*
+wty plural	1	aféreses	aférese	n	*
+wty plural	1	mucosos	mucoso	adj	*
+wty plural	1	pilotagens	pilotagem	n	*
+wty plural	1	muamunas	muamuna	n	*
+wty plural	1	significados	significado	n	*
+wty plural	1	sequelas	sequela	n	*
+wty plural	1	acetogêneses	acetogênese	n	*
+wty plural	1	ditosos	ditoso	adj	*
+wty plural	1	anchos	ancho	adj	*
+wty plural	1	sofisticados	sofisticado	adj	*
+wty plural	1	ralés	ralé	n	*
+wty plural	1	licenciadas	licenciado	n	*
+wty plural	1	alinhados	alinhado	adj	*
+wty plural	1	traboucas	trabouco	adj	*
+wty plural	1	cloacas	cloaca	n	*
+wty plural	1	instigadores	instigador	n	*
+wty plural	1	unitarismos	unitarismo	n	*
+wty plural	1	elches	elche	n	*
+wty plural	1	aviários	aviário	n	*
+wty plural	1	industrializadas	industrializado	adj	*
+wty plural	1	idílicas	idílico	adj	*
+wty plural	1	bocetas	boceta	n	*
+wty plural	1	tabancas	tabanca	n	*
+wty plural	1	ratazanas	ratazana	n	*
+wty plural	1	ucs	uc	n	*
+wty plural	1	virotes	virote	n	*
+wty plural	1	leitões	leitão	n	*
+wty plural	1	descarregamentos	descarregamento	n	*
+wty plural	1	etilómetros	etilómetro	n	*
+wty plural	1	meteorólogos	meteorólogo	n	*
+wty plural	1	ameixeiras	ameixeira	n	*
+wty plural	1	retribuições	retribuição	n	*
+wty plural	1	ofensores	ofensor	n	*
+wty plural	1	orgásmicos	orgásmico	adj	*
+wty plural	1	ultramarinos	ultramarino	adj	*
+wty plural	1	protetores	protetor	n	*
+wty plural	1	defeituosas	defeituoso	adj	*
+wty plural	1	avergonhadas	avergonhado	adj	*
+wty plural	1	ruivacas	ruivaca	n	*
+wty plural	1	vulcanizações	vulcanização	n	*
+wty plural	1	venezianos	veneziano	n	*
+wty plural	1	grafoletos	grafoleto	n	*
+wty plural	1	russas	russo	n	*
+wty plural	1	piolhosas	piolhoso	adj	*
+wty plural	1	copeiros	copeiro	n	*
+wty plural	1	acetosiringonas	acetosiringona	n	*
+wty plural	1	histoquímicos	histoquímico	adj	*
+wty plural	1	bioenergéticas	bioenergético	adj	*
+wty plural	1	britónicas	britónico	adj	*
+wty plural	1	cuidadosos	cuidadoso	adj	*
+wty plural	1	transgéneras	transgénero	n	*
+wty plural	1	antracotérios	antracotério	n	*
+wty plural	1	indumentárias	indumentária	n	*
+wty plural	1	desoxirribonucleicos	desoxirribonucleico	adj	*
+wty plural	1	eletrodeposições	eletrodeposição	n	*
+wty plural	1	camapus	camapu	n	*
+wty plural	1	fleumas	fleuma	n	*
+wty plural	1	aquíferos	aquífero	n	*
+wty plural	1	declamadoras	declamador	adj	*
+wty plural	1	sexos	sexo	n	*
+wty plural	1	barbáricas	barbárico	adj	*
+wty plural	1	comatosas	comatoso	adj	*
+wty plural	1	quimioprotetores	quimioprotetor	n	*
+wty plural	1	silogismos	silogismo	n	*
+wty plural	1	apogiaturas	apogiatura	n	*
+wty plural	1	urbanísticos	urbanístico	adj	*
+wty plural	1	apelos	apelo	n	*
+wty plural	1	paquebotes	paquebote	n	*
+wty plural	1	anglofóbicas	anglofóbico	n	*
+wty plural	1	cotoveladas	cotovelada	n	*
+wty plural	1	organizacionais	organizacional	adj	*
+wty plural	1	enaltecimentos	enaltecimento	n	*
+wty plural	1	homorgânicos	homorgânico	adj	*
+wty plural	1	recheados	recheado	n	*
+wty plural	1	dispensados	dispensado	adj	*
+wty plural	1	boroscópios	boroscópio	n	*
+wty plural	1	parafascismos	parafascismo	n	*
+wty plural	1	sequiosos	sequioso	adj	*
+wty plural	1	monocráticas	monocrático	adj	*
+wty plural	1	decorativos	decorativo	adj	*
+wty plural	1	radiofonias	radiofonia	n	*
+wty plural	1	buchadas	buchada	n	*
+wty plural	1	vulcões	vulcão	n	*
+wty plural	1	glucoses	glucose	n	*
+wty plural	1	acatalécticos	acataléctico	adj	*
+wty plural	1	geriatrias	geriatria	n	*
+wty plural	1	dotadas	dotado	adj	*
+wty plural	1	consanguíneas	consanguíneo	adj	*
+wty plural	1	tornozelos	tornozelo	n	*
+wty plural	1	quádruplos	quádruplo	n	*
+wty plural	1	barbadas	barbado	adj	*
+wty plural	1	pachorrentos	pachorrento	adj	*
+wty plural	1	angiomas	angioma	n	*
+wty plural	1	parapoliciais	parapolicial	adj	*
+wty plural	1	recalques	recalque	n	*
+wty plural	1	feriados	feriado	n	*
+wty plural	1	autopolinizações	autopolinização	n	*
+wty plural	1	quadriculados	quadriculado	n	*
+wty plural	1	transtornos	transtorno	n	*
+wty plural	1	brioches	brioche	n	*
+wty plural	1	êideres	êider	n	*
+wty plural	1	adequadas	adequado	adj	*
+wty plural	1	escarolas	escarola	n	*
+wty plural	1	spreads	spread	n	*
+wty plural	1	queimadas	queimado	adj	*
+wty plural	1	machismos	machismo	n	*
+wty plural	1	exorbitâncias	exorbitância	n	*
+wty plural	1	pagamentos	pagamento	n	*
+wty plural	1	goanas	goano	n	*
+wty plural	1	anuidades	anuidade	n	*
+wty plural	1	frigoríficos	frigorífico	n	*
+wty plural	1	mediúnicas	mediúnico	adj	*
+wty plural	1	ambiciosos	ambicioso	adj	*
+wty feminine	1	melismática	melismático	adj	*
+wty feminine	1	muçulmana	muçulmano	adj	*
+wty feminine	1	antipsicanalítica	antipsicanalítico	adj	*
+wty feminine	1	cabocla	caboclo	adj	*
+wty feminine	1	agorafóbica	agorafóbico	adj	*
+wty feminine	1	fermiónica	fermiónico	adj	*
+wty feminine	1	cachamorreira	cachamorreiro	n	*
+wty feminine	1	fisionômica	fisionômico	adj	*
+wty feminine	1	juíza	juiz	n	*
+wty feminine	1	desconcertada	desconcertado	adj	*
+wty feminine	1	morfinómana	morfinómano	n	*
+wty feminine	1	adoratória	adoratório	adj	*
+wty feminine	1	luminosa	luminoso	adj	*
+wty feminine	1	divisa	diviso	adj	*
+wty feminine	1	criadora	criador	adj	*
+wty feminine	1	radioamadora	radioamador	n	*
+wty feminine	1	mutagénica	mutagénico	adj	*
+wty feminine	1	aberrativa	aberrativo	adj	*
+wty feminine	1	vazia	vazio	adj	*
+wty feminine	1	encarregada	encarregado	adj	*
+wty feminine	1	vinífera	vinífero	adj	*
+wty feminine	1	amazônica	amazônico	adj	*
+wty feminine	1	silenciosa	silencioso	adj	*
+wty feminine	1	esquivosa	esquivoso	adj	*
+wty feminine	1	antieclesiástica	antieclesiástico	adj	*
+wty feminine	1	festeira	festeiro	adj	*
+wty feminine	1	ameaçadora	ameaçador	adj	*
+wty feminine	1	denigrativa	denigrativo	adj	*
+wty feminine	1	sanguinea	sanguineo	adj	*
+wty feminine	1	debruçada	debruçado	adj	*
+wty feminine	1	flecheira	flecheiro	n	*
+wty feminine	1	antimonástica	antimonástico	adj	*
+wty feminine	1	degenerada	degenerado	adj	*
+wty feminine	1	roseira	roseiro	adj	*
+wty feminine	1	censurada	censurado	adj	*
+wty feminine	1	espúria	espúrio	adj	*
+wty feminine	1	caboverdiana	caboverdiano	n	*
+wty feminine	1	oleaginosa	oleaginoso	adj	*
+wty feminine	1	filantrópica	filantrópico	adj	*
+wty feminine	1	radiodiagnóstica	radiodiagnóstico	adj	*
+wty feminine	1	excretora	excretor	adj	*
+wty feminine	1	forrada	forrado	adj	*
+wty feminine	1	amarelenta	amarelento	adj	*
+wty feminine	1	sabélica	sabélico	adj	*
+wty feminine	1	anonácea	anonáceo	adj	*
+wty feminine	1	censora	censor	adj	*
+wty feminine	1	partidária	partidário	adj	*
+wty feminine	1	armadurada	armadurado	adj	*
+wty feminine	1	antidogmática	antidogmático	adj	*
+wty feminine	1	antiestreptocócica	antiestreptocócico	adj	*
+wty feminine	1	lúdica	lúdico	adj	*
+wty feminine	1	cabulosa	cabuloso	adj	*
+wty feminine	1	estupidificada	estupidificado	adj	*
+wty feminine	1	autofóbica	autofóbico	adj	*
+wty feminine	1	hortaliceira	hortaliceiro	n	*
+wty feminine	1	relaxada	relaxado	adj	*
+wty feminine	1	chã	chão	adj	*
+wty feminine	1	pirada	pirado	adj	*
+wty feminine	1	anafásica	anafásico	adj	*
+wty feminine	1	fantasiosa	fantasioso	adj	*
+wty feminine	1	limnológica	limnológico	n	*
+wty feminine	1	teocrática	teocrático	adj	*
+wty feminine	1	macarrônica	macarrônico	adj	*
+wty feminine	1	reprodutiva	reprodutivo	adj	*
+wty feminine	1	despreocupada	despreocupado	adj	*
+wty feminine	1	antifibrótica	antifibrótico	adj	*
+wty feminine	1	veia	veio	n	*
+wty feminine	1	agradecida	agradecido	adj	*
+wty feminine	1	aradora	arador	n	*
+wty feminine	1	francófila	francófilo	adj	*
+wty feminine	1	clínica	clínico	adj	*
+wty feminine	1	pensativa	pensativo	adj	*
+wty feminine	1	arquiduquesa	arquiduque	n	*
+wty feminine	1	reclusa	recluso	adj	*
+wty feminine	1	esterlina	esterlino	adj	*
+wty feminine	1	extremófila	extremófilo	adj	*
+wty feminine	1	argólica	argólico	adj	*
+wty feminine	1	adjuntiva	adjuntivo	adj	*
+wty feminine	1	octingentésima	octingentésimo	adj	*
+wty feminine	1	definida	definido	adj	*
+wty feminine	1	dinástica	dinástico	adj	*
+wty feminine	1	puránica	puránico	adj	*
+wty feminine	1	esofágica	esofágico	adj	*
+wty feminine	1	litúrgica	litúrgico	adj	*
+wty feminine	1	pirenaica	pirenaico	adj	*
+wty feminine	1	admoestadora	admoestador	adj	*
+wty feminine	1	antiácida	antiácido	adj	*
+wty feminine	1	apática	apático	adj	*
+wty feminine	1	ótima	ótimo	adj	*
+wty feminine	1	remeira	remeiro	adj	*
+wty feminine	1	envolta	envolto	adj	*
+wty feminine	1	fulva	fulvo	adj	*
+wty feminine	1	harmônica	harmônico	adj	*
+wty feminine	1	caloira	caloiro	n	*
+wty feminine	1	lesta	lesto	adj	*
+wty feminine	1	maometana	maometano	adj	*
+wty feminine	1	mobiliária	mobiliário	adj	*
+wty feminine	1	concitadora	concitador	n	*
+wty feminine	1	encucada	encucado	adj	*
+wty feminine	1	toxicológica	toxicológico	adj	*
+wty feminine	1	hospedeira	hospedeiro	n	*
+wty feminine	1	encostada	encostado	n	*
+wty feminine	1	einsteiniana	einsteiniano	adj	*
+wty feminine	1	encontradiça	encontradiço	adj	*
+wty feminine	1	oncológica	oncológico	adj	*
+wty feminine	1	mimada	mimado	adj	*
+wty feminine	1	polissêmica	polissêmico	adj	*
+wty feminine	1	analógica	analógico	adj	*
+wty feminine	1	obstétrica	obstétrico	adj	*
+wty feminine	1	microempresária	microempresário	adj	*
+wty feminine	1	alocíclica	alocíclico	adj	*
+wty feminine	1	moratória	moratório	adj	*
+wty feminine	1	nauseabunda	nauseabundo	adj	*
+wty feminine	1	ambígena	ambígeno	adj	*
+wty feminine	1	oblonga	oblongo	adj	*
+wty feminine	1	perniciosa	pernicioso	adj	*
+wty feminine	1	anacolpada	anacolpado	adj	*
+wty feminine	1	vivedoira	vivedoiro	adj	*
+wty feminine	1	espertinha	espertinho	adj	*
+wty feminine	1	aleluiática	aleluiático	adj	*
+wty feminine	1	vitaminada	vitaminado	adj	*
+wty feminine	1	petroquímica	petroquímico	adj	*
+wty feminine	1	comprimida	comprimido	adj	*
+wty feminine	1	ambulatória	ambulatório	adj	*
+wty feminine	1	medidora	medidor	adj	*
+wty feminine	1	moedeira	moedeiro	n	*
+wty feminine	1	luctadora	luctador	adj	*
+wty feminine	1	gemelga	gemelgo	adj	*
+wty feminine	1	justiceira	justiceiro	adj	*
+wty feminine	1	aerostática	aerostático	adj	*
+wty feminine	1	comediógrafa	comediógrafo	n	*
+wty feminine	1	ponderada	ponderado	adj	*
+wty feminine	1	arubana	arubano	adj	*
+wty feminine	1	torneadora	torneador	adj	*
+wty feminine	1	abstémia	abstémio	adj	*
+wty feminine	1	filarmônica	filarmônico	adj	*
+wty feminine	1	hegemônica	hegemônico	adj	*
+wty feminine	1	antinefrítica	antinefrítico	adj	*
+wty feminine	1	sangüina	sangüino	adj	*
+wty feminine	1	ilusória	ilusório	adj	*
+wty feminine	1	encafifada	encafifado	adj	*
+wty feminine	1	peptídica	peptídico	adj	*
+wty feminine	1	exclusiva	exclusivo	adj	*
+wty feminine	1	antidoméstica	antidoméstico	adj	*
+wty feminine	1	arameana	arameano	adj	*
+wty feminine	1	gluónica	gluónico	adj	*
+wty feminine	1	semítica	semítico	adj	*
+wty diminutive	1	acostumadinho	acostumado	adj	*
+wty diminutive	1	droguinha	droga	n	*
+wty diminutive	1	cocotinha	cocota	n	*
+wty diminutive	1	delicadinho	delicado	adj	*
+wty diminutive	1	suminho	sumo	n	*
+wty diminutive	1	engraçadinho	engraçado	adj	*
+wty diminutive	1	peitinho	peito	n	*
+wty diminutive	1	chorinho	choro	n	*
+wty diminutive	1	cachorrinho	cachorro	n	*
+wty diminutive	1	canetinha	caneta	n	*
+wty diminutive	1	sombrazinha	sombra	n	*
+wty diminutive	1	tracinho	traço	n	*
+wty diminutive	1	irmãozinho	irmão	n	*
+wty diminutive	1	ursinho	urso	n	*
+wty diminutive	1	feiinho	feio	n	*
+wty diminutive	1	esturrinho	esturro	n	*
+wty diminutive	1	caldeirinha	caldeira	n	*
+wty diminutive	1	pãozinho	pão	n	*
+wty diminutive	1	chifrinho	chifre	n	*
+wty diminutive	1	chatinhos	chato	n	*
+wty diminutive	1	bichinho	bicho	n	*
+wty diminutive	1	feiinhos	feio	n	*
+wty diminutive	1	patrãozinho	patrão	n	*
+wty diminutive	1	monstrinho	monstro	n	*
+wty diminutive	1	bebidinho	bebido	adj	*
+wty diminutive	1	almofadinha	almofada	n	*
+wty diminutive	1	caderninho	caderno	n	*
+wty diminutive	1	uvinha	uva	n	*
+wty diminutive	1	cercadinho	cercado	n	*
+wty diminutive	1	redinha	rede	n	*
+wty diminutive	1	formiguinha	formiga	n	*
+wty diminutive	1	tartaruguinha	tartaruga	n	*
+wty diminutive	1	sabonetezinho	sabonete	n	*
+wty diminutive	1	baratinho	barato	n	*
+wty diminutive	1	garotinho	garoto	n	*
+wty diminutive	1	inferninho	inferno	n	*
+wty diminutive	1	lutinha	luta	n	*
+wty diminutive	1	modinha	moda	n	*
+wty diminutive	1	mãozinha	mão	n	*
+wty diminutive	1	quartinho	quarto	n	*
+wty diminutive	1	netinha	neta	n	*
+wty diminutive	1	mosquinha	mosca	n	*
+wty diminutive	1	melhorzinho	melhor	adj	*
+wty diminutive	1	coquinho	coque	n	*
+wty diminutive	1	porquinho	porco	n	*
+wty diminutive	1	baixinho	baixo	n	*
+wty diminutive	1	bananinha	banana	n	*
+wty diminutive	1	levinho	leve	adj	*
+wty diminutive	1	mimosinho	mimoso	adj	*
+wty diminutive	1	irrequietinho	irrequieto	adj	*
+wty diminutive	1	traduçãozinha	tradução	n	*
+wty diminutive	1	arquinha	arca	n	*
+wty diminutive	1	direitinho	direito	n	*
+wty diminutive	1	regrinha	regra	n	*
+wty diminutive	1	comidinha	comida	n	*
+wty diminutive	1	patinha	pata	n	*
+wty diminutive	1	chefinho	chefe	n	*
+wty diminutive	1	coelhinho	coelho	n	*
+wty diminutive	1	gostosinhas	gostoso	adj	*
+wty diminutive	1	vivinho	vivo	adj	*
+wty diminutive	1	legalzinho	legal	adj	*
+wty diminutive	1	showzinho	show	n	*
+wty diminutive	1	cursinho	curso	n	*
+wty diminutive	1	gulosinhos	guloso	adj	*
+wty diminutive	1	famosinhas	famoso	n	*
+wty diminutive	1	bolsinha	bolsa	n	*
+wty superlative	1	esquerdíssimo	esquerdo	adj	*
+wty superlative	1	conceituadíssimo	conceituado	adj	*
+wty superlative	1	famosíssimo	famoso	adj	*
+wty superlative	1	assadíssimo	assado	adj	*
+wty superlative	1	cansadíssimo	cansado	adj	*
+wty superlative	1	integérrimo	íntegro	adj	*
+wty superlative	1	nacionalistíssimo	nacionalista	adj	*
+wty superlative	1	italianíssimo	italiano	adj	*
+wty superlative	1	griladíssimo	grilado	adj	*
+wty superlative	1	ceguíssimo	cego	adj	*
+wty superlative	1	olvidabilíssimo	olvidável	adj	*
+wty superlative	1	simpatiquíssimo	simpático	adj	*
+wty superlative	1	asseadíssimo	asseado	adj	*
+wty superlative	1	mimosíssima	mimoso	adj	*
+wty superlative	1	atenciosíssimo	atencioso	adj	*
+wty superlative	1	boladíssimo	bolado	adj	*
+wty superlative	1	limpíssimo	limpo	adj	*
+wty superlative	1	magríssimo	magro	adj	*
+wty superlative	1	perigosíssimos	perigoso	adj	*
+wty superlative	1	conversibilíssimo	conversível	adj	*
+wty superlative	1	tristíssimo	triste	adj	*
+wty superlative	1	educadíssimo	educado	adj	*
+wty superlative	1	incorretíssimo	incorreto	adj	*
+wty superlative	1	amorosíssimo	amoroso	adj	*
+wty superlative	1	mortalíssimo	mortal	adj	*
+wty superlative	1	sonolentíssimo	sonolento	adj	*
+wty superlative	1	bonitíssimos	bonito	adj	*
+wty superlative	1	feiíssimas	feio	adj	*
+wty superlative	1	sujíssimo	sujo	adj	*
+wty superlative	1	imprestabilíssimo	imprestável	adj	*
+wty superlative	1	alinhadíssimo	alinhado	adj	*
+wty superlative	1	gatíssimo	gato	adj	*
+wty superlative	1	zelosíssimo	zeloso	adj	*
+wty superlative	1	mimosíssimos	mimoso	adj	*
+wty superlative	1	sinceríssimo	sincero	adj	*
+wty superlative	1	fedidíssimo	fedido	adj	*
+wty superlative	1	apaixonadíssimo	apaixonado	adj	*
+wty superlative	1	aborrecidíssimo	aborrecido	adj	*
+wty superlative	1	inflamabilíssimo	inflamável	adj	*
+wty superlative	1	negríssimo	negro	adj	*
+wty superlative	1	embaraçosíssimo	embaraçoso	adj	*
+wty superlative	1	magnificentíssimo	magnificente	adj	*
+wty superlative	1	abstratíssimo	abstrato	adj	*
+wty superlative	1	novíssimo	novo	adj	*
+wty superlative	1	definidíssimo	definido	adj	*
+wty superlative	1	lamentabilíssimo	lamentável	adj	*
+wty superlative	1	gostosíssimo	gostoso	adj	*
+wty superlative	1	durabilíssimo	durável	adj	*
+wty superlative	1	difidentíssimo	difidente	adj	*
+wty superlative	1	dulcíssimo	doce	adj	*
+wty superlative	1	brusquíssimo	brusco	adj	*
+wty superlative	1	pirosíssimo	piroso	adj	*
+wty superlative	1	peidorreiríssimo	peidorreiro	adj	*
+wty superlative	1	péssimo	mau	adj	*
+wty superlative	1	certíssimo	certo	adj	*
+wty superlative	1	consagradíssimo	consagrado	adj	*
+wty superlative	1	rapidissimamente	rápido	adj	*
+wty verb with pronouns	1	desonestarmo-nos	desonestar	v	*
+wty verb with pronouns	1	identificámo-nos	identificar	v	*
+wty verb with pronouns	1	escarrancha-se	escarranchar	v	*
+wty verb with pronouns	1	freia-se	frear	v	*
+wty verb with pronouns	1	arranjais-vos	arranjar	v	*
+wty verb with pronouns	1	crinjar-se-á	crinjar	v	*
+wty verb with pronouns	1	identificavam-se	identificar	v	*
+wty verb with pronouns	1	gretais-vos	gretar	v	*
+wty verb with pronouns	1	arrependam-se	arrepender	v	*
+wty verb with pronouns	1	entesar-nos-íamos	entesar	v	*
+wty verb with pronouns	1	aliançam-se	aliançar	v	*
+wty verb with pronouns	1	desusarem-se	desusar	v	*
+wty verb with pronouns	1	penastes-vos	penar	v	*
+wty verb with pronouns	1	desusa-se	desusar	v	*
+wty verb with pronouns	1	aviadais-vos	aviadar	v	*
+wty verb with pronouns	1	gretastes-vos	gretar	v	*
+wty verb with pronouns	1	gangrenámo-nos	gangrenar	v	*
+wty verb with pronouns	1	desbaratam-se	desbaratar	v	*
+wty verb with pronouns	1	afogueáramo-nos	afoguear	v	*
+wty verb with pronouns	1	engravate-se	engravatar	v	*
+wty verb with pronouns	1	antojei-me	antojar	v	*
+wty verb with pronouns	1	perverter-me-ia	perverter	v	*
+wty verb with pronouns	1	grise-se	grisar	v	*
+wty verb with pronouns	1	crinja-te	crinjar	v	*
+wty verb with pronouns	1	confrange-te	confranger	v	*
+wty verb with pronouns	1	gretem-se	gretar	v	*
+wty verb with pronouns	1	irisou-se	irisar	v	*
+wty verb with pronouns	1	arrepender-te-ás	arrepender	v	*
+wty verb with pronouns	1	amiúde-se	amiudar	v	*
+wty verb with pronouns	1	desforrava-me	desforrar	v	*
+wty verb with pronouns	1	escarranchares-te	escarranchar	v	*
+wty verb with pronouns	1	confranger-se-ão	confranger	v	*
+wty verb with pronouns	1	impregnar-vos-íeis	impregnar	v	*
+wty verb with pronouns	1	freara-me	frear	v	*
+wty verb with pronouns	1	desavindes-vos	desavir	v	*
+wty verb with pronouns	1	indignara-me	indignar	v	*
+wty verb with pronouns	1	ancilosei-me	ancilosar	v	*
+wty verb with pronouns	1	impregnar-me-ei	impregnar	v	*
+wty verb with pronouns	1	reabrir-te-ás	reabrir	v	*
+wty verb with pronouns	1	embati-me	embater	v	*
+wty verb with pronouns	1	desassossegaras-te	desassossegar	v	*
+wty verb with pronouns	1	crinjem-se	crinjar	v	*
+wty verb with pronouns	1	gangrenou-se	gangrenar	v	*
+wty verb with pronouns	1	notabilizara-me	notabilizar	v	*
+wty verb with pronouns	1	obstinara-me	obstinar	v	*
+wty verb with pronouns	1	apascentar-te-ias	apascentar	v	*
+wty verb with pronouns	1	antojar-se-iam	antojar	v	*
+wty verb with pronouns	1	espinhava-se	espinhar	v	*
+wty verb with pronouns	1	mata-te	matar	v	*
+wty verb with pronouns	1	desterrar-te-ias	desterrar	v	*
+wty verb with pronouns	1	barricavam-se	barricar	v	*
+wty verb with pronouns	1	antojava-me	antojar	v	*
+wty verb with pronouns	1	abstraio-me	abstrair	v	*
+wty verb with pronouns	1	sentir-se-iam	sentir	v	*
+wty verb with pronouns	1	alarmar-me-ei	alarmar	v	*
+wty verb with pronouns	1	indignem-se	indignar	v	*
+wty verb with pronouns	1	desbaratas-te	desbaratar	v	*
+wty verb with pronouns	1	antojando-se	antojar	v	*
+wty verb with pronouns	1	carunchar-se-iam	carunchar	v	*
+wty verb with pronouns	1	amiudardes-vos	amiudar	v	*
+wty verb with pronouns	1	desassossegaste-te	desassossegar	v	*
+wty verb with pronouns	1	desforrar-nos-íamos	desforrar	v	*
+wty verb with pronouns	1	ancilosar-vos-eis	ancilosar	v	*
+wty verb with pronouns	1	gangrenaste-te	gangrenar	v	*
+wty verb with pronouns	1	desinteressou-se	desinteressar	v	*
+wty verb with pronouns	1	carunchava-me	carunchar	v	*
+wty verb with pronouns	1	avires-te	avir	v	*
+wty verb with pronouns	1	matáveis-vos	matar	v	*
+wty verb with pronouns	1	guaritáreis-vos	guaritar	v	*
+wty verb with pronouns	1	desabrigaras-te	desabrigar	v	*
+wty verb with pronouns	1	perverti-me	perverter	v	*
+wty verb with pronouns	1	desforrar-se-á	desforrar	v	*
+wty verb with pronouns	1	grisou-se	grisar	v	*
+wty verb with pronouns	1	homiziar-me-ei	homiziar	v	*
+wty verb with pronouns	1	desgovernar-se-á	desgovernar	v	*
+wty verb with pronouns	1	pervertias-te	perverter	v	*
+wty verb with pronouns	1	alarmar-nos-emos	alarmar	v	*
+wty verb with pronouns	1	maravilhar-nos-íamos	maravilhar	v	*
+wty verb with pronouns	1	desonestava-me	desonestar	v	*
+wty verb with pronouns	1	amiudar-nos-emos	amiudar	v	*
+wty verb with pronouns	1	desassossegarem-se	desassossegar	v	*
+wty verb with pronouns	1	aviadar-vos-íeis	aviadar	v	*
+wty verb with pronouns	1	baratávamo-nos	baratar	v	*
+wty verb with pronouns	1	engavetáreis-vos	engavetar	v	*
+wty verb with pronouns	1	homizio-me	homiziar	v	*
+wty verb with pronouns	1	carunchávamo-nos	carunchar	v	*
+wty verb with pronouns	1	assoaras-te	assoar	v	*
+wty verb with pronouns	1	suicidar-nos-íamos	suicidar	v	*
+wty verb with pronouns	1	lembrar-se-á	lembrar	v	*
+wty verb with pronouns	1	matar-se-ia	matar	v	*
+wty verb with pronouns	1	grisar-se-iam	grisar	v	*
+wty verb with pronouns	1	amiúda-se	amiudar	v	*
+wty verb with pronouns	1	espinhar-me-ia	espinhar	v	*
+wty verb with pronouns	1	desabrigardes-vos	desabrigar	v	*
+wty verb with pronouns	1	iriso-me	irisar	v	*
+wty verb with pronouns	1	desonesta-te	desonestar	v	*
+wty verb with pronouns	1	abstraiam-se	abstrair	v	*
+wty verb with pronouns	1	notabilizáveis-vos	notabilizar	v	*
+wty verb with pronouns	1	entesaras-te	entesar	v	*
+wty verb with pronouns	1	barrica-te	barricar	v	*
+wty verb with pronouns	1	aliança-se	aliançar	v	*
+wty verb with pronouns	1	engravato-me	engravatar	v	*
+wty verb with pronouns	1	amiudemo-nos	amiudar	v	*
+wty verb with pronouns	1	indignar-nos-emos	indignar	v	*
+wty verb with pronouns	1	desconchavar-se	desconchavar	v	*
+wty verb with pronouns	1	gangrenar-vos-eis	gangrenar	v	*
+wty verb with pronouns	1	notabilizáreis-vos	notabilizar	v	*
+wty verb with pronouns	1	desempregamo-nos	desempregar	v	*
+wty verb with pronouns	1	guaritar-se-iam	guaritar	v	*
+wty verb with pronouns	1	melindrar-nos-emos	melindrar	v	*
+wty verb with pronouns	1	perverter-me-ei	perverter	v	*
+wty verb with pronouns	1	desabrigava-me	desabrigar	v	*
+wty verb with pronouns	1	confranger-nos-íamos	confranger	v	*
+wty verb with pronouns	1	desassossegastes-vos	desassossegar	v	*
+wty verb with pronouns	1	entese-se	entesar	v	*
+wty verb with pronouns	1	desonestar-nos-íamos	desonestar	v	*
+wty verb with pronouns	1	ungi-me	ungir	v	*
+wty verb with pronouns	1	lembrardes-vos	lembrar	v	*
+wty verb with pronouns	1	confranger-vos-eis	confranger	v	*
+wty verb with pronouns	1	suicido-me	suicidar	v	*

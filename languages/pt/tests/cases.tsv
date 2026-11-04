@@ -1,0 +1,675 @@
+# Source: written for this pack (GPL-3.0-or-later), no third-party data. Expected traces are this pack's transform ids, newest first.
+# The pack has no optional processor, transform or pass, so these rows run the same with every option on and with the defaults.
+# category	valid	source	term	rule	reasons (forward order, | separated; * means any)
+regular verbs	1	falo	falar	v	present-eu
+regular verbs	1	falas	falar	v	present-tu
+regular verbs	1	fala	falar	v	present-ele
+regular verbs	1	falamos	falar	v	present-nos
+regular verbs	1	falais	falar	v	present-vos
+regular verbs	1	falam	falar	v	present-eles
+regular verbs	1	falei	falar	v	preterite-eu
+regular verbs	1	falaste	falar	v	preterite-tu
+regular verbs	1	falou	falar	v	preterite-ele
+regular verbs	1	falámos	falar	v	preterite-nos
+regular verbs	1	falamos	falar	v	preterite-nos
+regular verbs	1	falastes	falar	v	preterite-vos
+regular verbs	1	falaram	falar	v	preterite-eles
+regular verbs	1	falava	falar	v	imperfect-eu-ele
+regular verbs	1	falávamos	falar	v	imperfect-nos
+regular verbs	1	falara	falar	v	pluperfect-eu-ele
+regular verbs	1	falarei	falar	v	future-eu
+regular verbs	1	falará	falar	v	future-ele
+regular verbs	1	falarão	falar	v	future-eles
+regular verbs	1	falaria	falar	v	conditional-eu-ele
+regular verbs	1	falaríamos	falar	v	conditional-nos
+regular verbs	1	fale	falar	v	subjunctive-eu-ele
+regular verbs	1	fales	falar	v	subjunctive-tu
+regular verbs	1	falemos	falar	v	subjunctive-nos
+regular verbs	1	falem	falar	v	subjunctive-eles
+regular verbs	1	falasse	falar	v	imperfect-subjunctive-eu-ele
+regular verbs	1	falássemos	falar	v	imperfect-subjunctive-nos
+regular verbs	1	falarmos	falar	v	personal-infinitive-nos
+regular verbs	1	falarem	falar	v	personal-infinitive-eles
+regular verbs	1	falai	falar	v	imperative-vos
+regular verbs	1	falando	falar	v	gerund
+regular verbs	1	falado	falar	v	participle
+regular verbs	1	faladas	falar	v	participle
+regular verbs	1	como	comer	v	present-eu
+regular verbs	1	comes	comer	v	present-tu
+regular verbs	1	come	comer	v	present-ele
+regular verbs	1	comemos	comer	v	present-nos
+regular verbs	1	comi	comer	v	preterite-eu
+regular verbs	1	comeu	comer	v	preterite-ele
+regular verbs	1	comeram	comer	v	preterite-eles
+regular verbs	1	comia	comer	v	imperfect-eu-ele
+regular verbs	1	comíamos	comer	v	imperfect-nos
+regular verbs	1	comêramos	comer	v	pluperfect-nos
+regular verbs	1	comerei	comer	v	future-eu
+regular verbs	1	comeria	comer	v	conditional-eu-ele
+regular verbs	1	coma	comer	v	subjunctive-eu-ele
+regular verbs	1	comamos	comer	v	subjunctive-nos
+regular verbs	1	comesse	comer	v	imperfect-subjunctive-eu-ele
+regular verbs	1	comêssemos	comer	v	imperfect-subjunctive-nos
+regular verbs	1	comermos	comer	v	personal-infinitive-nos
+regular verbs	1	comei	comer	v	imperative-vos
+regular verbs	1	comendo	comer	v	gerund
+regular verbs	1	comida	comer	v	participle
+regular verbs	1	parto	partir	v	present-eu
+regular verbs	1	partimos	partir	v	present-nos
+regular verbs	1	partis	partir	v	present-vos
+regular verbs	1	partiu	partir	v	preterite-ele
+regular verbs	1	partiste	partir	v	preterite-tu
+regular verbs	1	partíramos	partir	v	pluperfect-nos
+regular verbs	1	partirá	partir	v	future-ele
+regular verbs	1	parta	partir	v	subjunctive-eu-ele
+regular verbs	1	partisse	partir	v	imperfect-subjunctive-eu-ele
+regular verbs	1	partires	partir	v	personal-infinitive-tu
+regular verbs	1	parti	partir	v	imperative-vos
+regular verbs	1	partindo	partir	v	gerund
+regular verbs	1	partidos	partir	v	participle
+regular verbs	1	falásseis	falar	v	imperfect-subjunctive-vos
+regular verbs	1	partísseis	partir	v	imperfect-subjunctive-vos
+regular verbs	1	comerdes	comer	v	personal-infinitive-vos
+spelling changes	1	fiquei	ficar	v	preterite-eu
+spelling changes	1	fique	ficar	v	subjunctive-eu-ele
+spelling changes	1	cheguei	chegar	v	preterite-eu
+spelling changes	1	cheguem	chegar	v	subjunctive-eles
+spelling changes	1	comecei	começar	v	preterite-eu
+spelling changes	1	comece	começar	v	subjunctive-eu-ele
+spelling changes	1	conheço	conhecer	v	present-eu
+spelling changes	1	conheça	conhecer	v	subjunctive-eu-ele
+spelling changes	1	protejo	proteger	v	present-eu
+spelling changes	1	dirija	dirigir	v	subjunctive-eu-ele
+spelling changes	1	aja	agir	v	subjunctive-eu-ele
+spelling changes	1	ergo	erguer	v	present-eu
+spelling changes	1	distingo	distinguir	v	present-eu
+spelling changes	1	segue	seguir	v	present-ele
+spelling changes	1	consegue	conseguir	v	present-ele
+spelling changes	1	averigúe	averiguar	v	subjunctive-eu-ele
+spelling changes	1	enxáguo	enxaguar	v	present-eu
+spelling changes	1	deságua	desaguar	v	present-ele
+spelling changes	1	delínquem	delinquir	v	present-eles
+stem changes	1	sinto	sentir	v	present-eu
+stem changes	1	sirva	servir	v	subjunctive-eu-ele
+stem changes	1	prefiro	preferir	v	present-eu
+stem changes	1	visto	vestir	v	present-eu
+stem changes	1	durmo	dormir	v	present-eu
+stem changes	1	cubra	cobrir	v	subjunctive-eu-ele
+stem changes	1	tussa	tossir	v	subjunctive-eu-ele
+stem changes	1	sobe	subir	v	present-ele
+stem changes	1	foge	fugir	v	present-ele
+stem changes	1	consome	consumir	v	present-ele
+stem changes	1	sigo	seguir	v	present-eu
+stem changes	1	consigam	conseguir	v	subjunctive-eles
+stem changes	1	agrido	agredir	v	present-eu
+stem changes	1	previne	prevenir	v	present-ele
+stem changes	1	proíbe	proibir	v	present-ele
+stem changes	1	reúne	reunir	v	present-ele
+stem changes	1	saúda	saudar	v	present-ele
+stem changes	1	passeio	passear	v	present-eu
+stem changes	1	receiam	recear	v	present-eles
+stem changes	1	odeio	odiar	v	present-eu
+stem changes	1	anseia	ansiar	v	present-ele
+stem changes	1	negoceia	negociar	v	present-ele
+stem changes	1	inclui	incluir	v	present-ele
+stem changes	1	incluímos	incluir	v	present-nos
+stem changes	1	incluía	incluir	v	imperfect-eu-ele
+stem changes	1	constrói	construir	v	present-ele
+stem changes	1	sai	sair	v	present-ele
+stem changes	1	saímos	sair	v	preterite-nos
+stem changes	1	caí	cair	v	preterite-eu
+stem changes	1	saio	sair	v	present-eu
+stem changes	1	atraiam	atrair	v	subjunctive-eles
+stem changes	1	dói	doer	v	present-ele
+stem changes	1	moía	moer	v	imperfect-eu-ele
+stem changes	1	roído	roer	v	participle
+stem changes	1	conduz	conduzir	v	present-ele
+stem changes	1	produz	produzir	v	present-ele
+stem changes	1	emirjo	emergir	v	present-eu
+stem changes	1	apoio	apoiar	v	present-eu
+stem changes	1	apóio	apoiar	v	present-eu
+stem changes	1	enjôo	enjoar	v	present-eu
+stem changes	1	môo	moer	v	present-eu
+irregular verbs	1	sou	ser	v	present-eu
+irregular verbs	1	és	ser	v	present-tu
+irregular verbs	1	é	ser	v	present-ele
+irregular verbs	1	somos	ser	v	present-nos
+irregular verbs	1	são	ser	v	present-eles
+irregular verbs	1	fui	ser	v	preterite-eu
+irregular verbs	1	foi	ser	v	preterite-ele
+irregular verbs	1	era	ser	v	imperfect-eu-ele
+irregular verbs	1	éramos	ser	v	imperfect-nos
+irregular verbs	1	seja	ser	v	subjunctive-eu-ele
+irregular verbs	1	fosse	ser	v	imperfect-subjunctive-eu-ele
+irregular verbs	1	for	ser	v	future-subjunctive-eu-ele
+irregular verbs	1	formos	ser	v	future-subjunctive-nos
+irregular verbs	1	serei	ser	v	future-eu
+irregular verbs	1	seria	ser	v	conditional-eu-ele
+irregular verbs	1	sendo	ser	v	gerund
+irregular verbs	1	sido	ser	v	participle
+irregular verbs	1	sê	ser	v	imperative-tu
+irregular verbs	1	vou	ir	v	present-eu
+irregular verbs	1	vai	ir	v	present-ele
+irregular verbs	1	vamos	ir	v	present-nos
+irregular verbs	1	vão	ir	v	present-eles
+irregular verbs	1	fomos	ir	v	preterite-nos
+irregular verbs	1	ia	ir	v	imperfect-eu-ele
+irregular verbs	1	íamos	ir	v	imperfect-nos
+irregular verbs	1	vá	ir	v	subjunctive-eu-ele
+irregular verbs	1	irei	ir	v	future-eu
+irregular verbs	1	indo	ir	v	gerund
+irregular verbs	1	estou	estar	v	present-eu
+irregular verbs	1	está	estar	v	present-ele
+irregular verbs	1	estão	estar	v	present-eles
+irregular verbs	1	esteve	estar	v	preterite-ele
+irregular verbs	1	estivesse	estar	v	imperfect-subjunctive-eu-ele
+irregular verbs	1	esteja	estar	v	subjunctive-eu-ele
+irregular verbs	1	estiver	estar	v	future-subjunctive-eu-ele
+irregular verbs	1	estava	estar	v	imperfect-eu-ele
+irregular verbs	1	estávamos	estar	v	imperfect-nos
+irregular verbs	1	tenho	ter	v	present-eu
+irregular verbs	1	tem	ter	v	present-ele
+irregular verbs	1	têm	ter	v	present-eles
+irregular verbs	1	tinha	ter	v	imperfect-eu-ele
+irregular verbs	1	tive	ter	v	preterite-eu
+irregular verbs	1	teve	ter	v	preterite-ele
+irregular verbs	1	tenha	ter	v	subjunctive-eu-ele
+irregular verbs	1	tivesse	ter	v	imperfect-subjunctive-eu-ele
+irregular verbs	1	tiver	ter	v	future-subjunctive-eu-ele
+irregular verbs	1	terei	ter	v	future-eu
+irregular verbs	1	tendo	ter	v	gerund
+irregular verbs	1	tido	ter	v	participle
+irregular verbs	1	mantém	manter	v	present-ele
+irregular verbs	1	contêm	conter	v	present-eles
+irregular verbs	1	obteve	obter	v	preterite-ele
+irregular verbs	1	detinha	deter	v	imperfect-eu-ele
+irregular verbs	1	há	haver	v	present-ele
+irregular verbs	1	hei	haver	v	present-eu
+irregular verbs	1	houve	haver	v	preterite-ele
+irregular verbs	1	haja	haver	v	subjunctive-eu-ele
+irregular verbs	1	havia	haver	v	imperfect-eu-ele
+irregular verbs	1	venho	vir	v	present-eu
+irregular verbs	1	vem	vir	v	present-ele
+irregular verbs	1	vêm	vir	v	present-eles
+irregular verbs	1	veio	vir	v	preterite-ele
+irregular verbs	1	vieram	vir	v	preterite-eles
+irregular verbs	1	vinha	vir	v	imperfect-eu-ele
+irregular verbs	1	venha	vir	v	subjunctive-eu-ele
+irregular verbs	1	vier	vir	v	future-subjunctive-eu-ele
+irregular verbs	1	vindo	vir	v	participle
+irregular verbs	1	convém	convir	v	present-ele
+irregular verbs	1	intervieram	intervir	v	preterite-eles
+irregular verbs	1	provém	provir	v	present-ele
+irregular verbs	1	vejo	ver	v	present-eu
+irregular verbs	1	vê	ver	v	present-ele
+irregular verbs	1	veem	ver	v	present-eles
+irregular verbs	1	vi	ver	v	preterite-eu
+irregular verbs	1	viu	ver	v	preterite-ele
+irregular verbs	1	veja	ver	v	subjunctive-eu-ele
+irregular verbs	1	visse	ver	v	imperfect-subjunctive-eu-ele
+irregular verbs	1	vir	ver	v	future-subjunctive-eu-ele
+irregular verbs	1	visto	ver	v	participle
+irregular verbs	1	revejo	rever	v	present-eu
+irregular verbs	1	previsto	prever	v	participle
+irregular verbs	1	dou	dar	v	present-eu
+irregular verbs	1	dá	dar	v	present-ele
+irregular verbs	1	dão	dar	v	present-eles
+irregular verbs	1	dei	dar	v	preterite-eu
+irregular verbs	1	deu	dar	v	preterite-ele
+irregular verbs	1	dê	dar	v	subjunctive-eu-ele
+irregular verbs	1	desse	dar	v	imperfect-subjunctive-eu-ele
+irregular verbs	1	der	dar	v	future-subjunctive-eu-ele
+irregular verbs	1	dava	dar	v	imperfect-eu-ele
+irregular verbs	1	darei	dar	v	future-eu
+irregular verbs	1	dado	dar	v	participle
+irregular verbs	1	faço	fazer	v	present-eu
+irregular verbs	1	faz	fazer	v	present-ele
+irregular verbs	1	fiz	fazer	v	preterite-eu
+irregular verbs	1	fez	fazer	v	preterite-ele
+irregular verbs	1	fizeram	fazer	v	preterite-eles
+irregular verbs	1	farei	fazer	v	future-eu
+irregular verbs	1	faria	fazer	v	conditional-eu-ele
+irregular verbs	1	faça	fazer	v	subjunctive-eu-ele
+irregular verbs	1	fizesse	fazer	v	imperfect-subjunctive-eu-ele
+irregular verbs	1	fizer	fazer	v	future-subjunctive-eu-ele
+irregular verbs	1	feito	fazer	v	participle
+irregular verbs	1	feitas	fazer	v	participle
+irregular verbs	1	faze	fazer	v	imperative-tu
+irregular verbs	1	desfez	desfazer	v	preterite-ele
+irregular verbs	1	satisfaz	satisfazer	v	present-ele
+irregular verbs	1	refeito	refazer	v	participle
+irregular verbs	1	digo	dizer	v	present-eu
+irregular verbs	1	diz	dizer	v	present-ele
+irregular verbs	1	disse	dizer	v	preterite-eu
+irregular verbs	1	disse	dizer	v	preterite-ele
+irregular verbs	1	direi	dizer	v	future-eu
+irregular verbs	1	diria	dizer	v	conditional-eu-ele
+irregular verbs	1	diga	dizer	v	subjunctive-eu-ele
+irregular verbs	1	dissesse	dizer	v	imperfect-subjunctive-eu-ele
+irregular verbs	1	dito	dizer	v	participle
+irregular verbs	1	desdisse	desdizer	v	preterite-ele
+irregular verbs	1	predito	predizer	v	participle
+irregular verbs	1	trago	trazer	v	present-eu
+irregular verbs	1	traz	trazer	v	present-ele
+irregular verbs	1	trouxe	trazer	v	preterite-ele
+irregular verbs	1	trarei	trazer	v	future-eu
+irregular verbs	1	traga	trazer	v	subjunctive-eu-ele
+irregular verbs	1	posso	poder	v	present-eu
+irregular verbs	1	pode	poder	v	present-ele
+irregular verbs	1	pôde	poder	v	preterite-ele
+irregular verbs	1	pude	poder	v	preterite-eu
+irregular verbs	1	possa	poder	v	subjunctive-eu-ele
+irregular verbs	1	pudesse	poder	v	imperfect-subjunctive-eu-ele
+irregular verbs	1	puder	poder	v	future-subjunctive-eu-ele
+irregular verbs	1	quero	querer	v	present-eu
+irregular verbs	1	quer	querer	v	present-ele
+irregular verbs	1	quis	querer	v	preterite-eu
+irregular verbs	1	queira	querer	v	subjunctive-eu-ele
+irregular verbs	1	quiser	querer	v	future-subjunctive-eu-ele
+irregular verbs	1	requeiro	requerer	v	present-eu
+irregular verbs	1	sei	saber	v	present-eu
+irregular verbs	1	soube	saber	v	preterite-ele
+irregular verbs	1	saiba	saber	v	subjunctive-eu-ele
+irregular verbs	1	souber	saber	v	future-subjunctive-eu-ele
+irregular verbs	1	caibo	caber	v	present-eu
+irregular verbs	1	coube	caber	v	preterite-ele
+irregular verbs	1	ponho	pôr	v	present-eu
+irregular verbs	1	põe	pôr	v	present-ele
+irregular verbs	1	põem	pôr	v	present-eles
+irregular verbs	1	pus	pôr	v	preterite-eu
+irregular verbs	1	pôs	pôr	v	preterite-ele
+irregular verbs	1	punha	pôr	v	imperfect-eu-ele
+irregular verbs	1	porei	pôr	v	future-eu
+irregular verbs	1	ponha	pôr	v	subjunctive-eu-ele
+irregular verbs	1	pusesse	pôr	v	imperfect-subjunctive-eu-ele
+irregular verbs	1	puser	pôr	v	future-subjunctive-eu-ele
+irregular verbs	1	pondo	pôr	v	gerund
+irregular verbs	1	posto	pôr	v	participle
+irregular verbs	1	compõe	compor	v	present-ele
+irregular verbs	1	compôs	compor	v	preterite-ele
+irregular verbs	1	dispunha	dispor	v	imperfect-eu-ele
+irregular verbs	1	suponho	supor	v	present-eu
+irregular verbs	1	propuseram	propor	v	preterite-eles
+irregular verbs	1	exposto	expor	v	participle
+irregular verbs	1	descompôs	descompor	v	preterite-ele
+irregular verbs	1	leio	ler	v	present-eu
+irregular verbs	1	lê	ler	v	present-ele
+irregular verbs	1	leem	ler	v	present-eles
+irregular verbs	1	li	ler	v	preterite-eu
+irregular verbs	1	lia	ler	v	imperfect-eu-ele
+irregular verbs	1	lido	ler	v	participle
+irregular verbs	1	creio	crer	v	present-eu
+irregular verbs	1	crê	crer	v	present-ele
+irregular verbs	1	rio	rir	v	present-eu
+irregular verbs	1	riem	rir	v	present-eles
+irregular verbs	1	sorriu	sorrir	v	preterite-ele
+irregular verbs	1	perco	perder	v	present-eu
+irregular verbs	1	perca	perder	v	subjunctive-eu-ele
+irregular verbs	1	valho	valer	v	present-eu
+irregular verbs	1	valha	valer	v	subjunctive-eu-ele
+irregular verbs	1	ouço	ouvir	v	present-eu
+irregular verbs	1	oiço	ouvir	v	present-eu
+irregular verbs	1	ouça	ouvir	v	subjunctive-eu-ele
+irregular verbs	1	peço	pedir	v	present-eu
+irregular verbs	1	peça	pedir	v	subjunctive-eu-ele
+irregular verbs	1	impeça	impedir	v	subjunctive-eu-ele
+irregular verbs	1	meço	medir	v	present-eu
+irregular verbs	1	pairo	parir	v	present-eu
+irregular verbs	1	apraz	aprazer	v	present-ele
+irregular verbs	1	aprouve	aprazer	v	preterite-ele
+irregular verbs	1	reouve	reaver	v	preterite-ele
+irregular verbs	1	jaz	jazer	v	present-ele
+irregular verbs	1	escrito	escrever	v	participle
+irregular verbs	1	descrita	descrever	v	participle
+irregular verbs	1	aberto	abrir	v	participle
+irregular verbs	1	descoberto	descobrir	v	participle
+irregular verbs	1	ganho	ganhar	v	participle
+irregular verbs	1	pago	pagar	v	participle
+irregular verbs	1	aceite	aceitar	v	participle
+irregular verbs	1	entregue	entregar	v	participle
+irregular verbs	1	morto	morrer	v	participle
+irregular verbs	1	morto	matar	v	participle
+irregular verbs	1	preso	prender	v	participle
+irregular verbs	1	eleito	eleger	v	participle
+irregular verbs	1	impresso	imprimir	v	participle
+irregular verbs	1	aceso	acender	v	participle
+irregular verbs	1	incluso	incluir	v	participle
+irregular verbs	1	imerso	imergir	v	participle
+irregular verbs	1	surpresa	surpreender	v	participle
+irregular verbs	1	despeço	despedir	v	present-eu
+irregular verbs	1	sorrio	sorrir	v	present-eu
+irregular verbs	1	releio	reler	v	present-eu
+irregular verbs	1	pressuponho	pressupor	v	present-eu
+irregular verbs	1	antevejo	antever	v	present-eu
+irregular verbs	1	advém	advir	v	present-ele
+irregular verbs	1	atém	ater	v	present-ele
+irregular verbs	1	descreio	descrer	v	present-eu
+irregular verbs	1	equivalho	equivaler	v	present-eu
+irregular verbs	1	entreouço	entreouvir	v	present-eu
+irregular verbs	1	malquis	malquerer	v	preterite-eu
+irregular verbs	1	desprovejo	desprover	v	present-eu
+irregular verbs	1	provejo	prover	v	present-eu
+irregular verbs	1	proveja	prover	v	subjunctive-eu-ele
+irregular verbs	1	provês	prover	v	present-tu
+irregular verbs	1	forem	ser	v	future-subjunctive-eles
+irregular verbs	1	fôramos	ser	v	pluperfect-nos
+colloquial	1	tô	estar	v	present-eu
+colloquial	1	tá	estar	v	present-ele
+colloquial	1	tamo	estar	v	present-nos
+colloquial	1	tão	estar	v	present-eles
+colloquial	1	tava	estar	v	imperfect-eu-ele
+colloquial	1	tavam	estar	v	imperfect-eles
+pronouns attached to verbs	1	deixa-me	deixar	v	present-ele|clitic-me
+pronouns attached to verbs	1	dá-me	dar	v	present-ele|clitic-me
+pronouns attached to verbs	1	diz-me	dizer	v	present-ele|clitic-me
+pronouns attached to verbs	1	lembras-te	lembrar	v	present-tu|clitic-te
+pronouns attached to verbs	1	cala-te	calar	v	present-ele|clitic-te
+pronouns attached to verbs	1	vai-te	ir	v	present-ele|clitic-te
+pronouns attached to verbs	1	sinto-me	sentir	v	present-eu|clitic-me
+pronouns attached to verbs	1	chama-se	chamar	v	present-ele|clitic-se
+pronouns attached to verbs	1	chamo-me	chamar	v	present-eu|clitic-me
+pronouns attached to verbs	1	sentou-se	sentar	v	preterite-ele|clitic-se
+pronouns attached to verbs	1	disse-lhe	dizer	v	preterite-ele|clitic-lhe
+pronouns attached to verbs	1	disseram-me	dizer	v	preterite-eles|clitic-me
+pronouns attached to verbs	1	deu-lhes	dar	v	preterite-ele|clitic-lhes
+pronouns attached to verbs	1	dizer-me	dizer	v	clitic-me
+pronouns attached to verbs	1	ver-te	ver	v	clitic-te
+pronouns attached to verbs	1	tornar-se	tornar	v	clitic-se
+pronouns attached to verbs	1	dar-lhe	dar	v	clitic-lhe
+pronouns attached to verbs	1	deixe-me	deixar	v	subjunctive-eu-ele|clitic-me
+pronouns attached to verbs	1	diga-me	dizer	v	subjunctive-eu-ele|clitic-me
+pronouns attached to verbs	1	lembre-se	lembrar	v	subjunctive-eu-ele|clitic-se
+pronouns attached to verbs	1	sente-se	sentar	v	subjunctive-eu-ele|clitic-se
+pronouns attached to verbs	1	sente-se	sentir	v	present-ele|clitic-se
+pronouns attached to verbs	1	vi-o	ver	v	preterite-eu|clitic-o
+pronouns attached to verbs	1	conhece-a	conhecer	v	present-ele|clitic-a
+pronouns attached to verbs	1	deixe-os	deixar	v	subjunctive-eu-ele|clitic-os
+pronouns attached to verbs	1	faça-o	fazer	v	subjunctive-eu-ele|clitic-o
+pronouns attached to verbs	1	encontrei-as	encontrar	v	preterite-eu|clitic-as
+pronouns attached to verbs	1	fazê-lo	fazer	v	clitic-o
+pronouns attached to verbs	1	vê-la	ver	v	clitic-a
+pronouns attached to verbs	1	ajudá-los	ajudar	v	clitic-os
+pronouns attached to verbs	1	parti-las	partir	v	clitic-as
+pronouns attached to verbs	1	compô-lo	compor	v	clitic-o
+pronouns attached to verbs	1	pô-lo	pôr	v	clitic-o
+pronouns attached to verbs	1	fá-lo	fazer	v	present-ele|clitic-o
+pronouns attached to verbs	1	fê-lo	fazer	v	preterite-ele|clitic-o
+pronouns attached to verbs	1	di-lo	dizer	v	present-ele|clitic-o
+pronouns attached to verbs	1	qui-lo	querer	v	preterite-eu|clitic-o
+pronouns attached to verbs	1	pu-la	pôr	v	preterite-eu|clitic-a
+pronouns attached to verbs	1	pô-las	pôr	v	preterite-ele|clitic-as
+pronouns attached to verbs	1	fazemo-lo	fazer	v	present-nos|clitic-o
+pronouns attached to verbs	1	ama-la	amar	v	present-tu|clitic-a
+pronouns attached to verbs	1	fazem-no	fazer	v	present-eles|clitic-o
+pronouns attached to verbs	1	dão-na	dar	v	present-eles|clitic-a
+pronouns attached to verbs	1	põe-nos	pôr	v	present-ele|clitic-os
+pronouns attached to verbs	1	tem-no	ter	v	present-ele|clitic-o
+pronouns attached to verbs	1	sentamo-nos	sentar	v	present-nos|clitic-nos
+pronouns attached to verbs	1	vamo-nos	ir	v	present-nos|clitic-nos
+pronouns attached to verbs	1	deu-mo	dar	v	preterite-ele|clitic-mo
+pronouns attached to verbs	1	disse-lho	dizer	v	preterite-ele|clitic-lho
+pronouns attached to verbs	1	dá-to	dar	v	present-ele|clitic-to
+pronouns attached to verbs	1	dir-te-ei	dizer	v	future-eu|clitic-te
+pronouns attached to verbs	1	far-se-á	fazer	v	future-ele|clitic-se
+pronouns attached to verbs	1	dar-lhe-ia	dar	v	conditional-eu-ele|clitic-lhe
+pronouns attached to verbs	1	lembrar-nos-emos	lembrar	v	future-nos|clitic-nos
+pronouns attached to verbs	1	amá-lo-ei	amar	v	future-eu|clitic-o
+pronouns attached to verbs	1	fá-lo-ia	fazer	v	conditional-eu-ele|clitic-o
+pronouns attached to verbs	1	di-lo-ei	dizer	v	future-eu|clitic-o
+pronouns attached to verbs	1	diz-se-lhe	dizer	v	present-ele|clitic-se|clitic-lhe
+pronouns attached to verbs	1	dá-se-lhe	dar	v	present-ele|clitic-se|clitic-lhe
+pronouns attached to verbs	1	há-de	haver	v	haver-de
+pronouns attached to verbs	1	hão-de	haver	v	haver-de
+pronouns attached to verbs	1	foi-se	ir	v	preterite-ele|clitic-se
+pronouns attached to verbs	1	foi-se	ser	v	preterite-ele|clitic-se
+pronouns attached to verbs	1	trata-se	tratar	v	present-ele|clitic-se
+pronouns attached to verbs	1	pode-se	poder	v	present-ele|clitic-se
+pronouns attached to verbs	1	deve-se	dever	v	present-ele|clitic-se
+pronouns attached to verbs	1	ei-lo	eis	adv	clitic-o
+pronouns attached to verbs	1	ei-las	eis	adv	clitic-as
+pronouns attached to verbs	1	eis-me	eis	adv	clitic-me
+pronouns attached to verbs	1	dá-ma	dar	v	present-ele|clitic-ma
+pronouns attached to verbs	1	deu-mos	dar	v	preterite-ele|clitic-mos
+pronouns attached to verbs	1	trouxe-mas	trazer	v	preterite-ele|clitic-mas
+pronouns attached to verbs	1	dou-ta	dar	v	present-eu|clitic-ta
+pronouns attached to verbs	1	mostro-tos	mostrar	v	present-eu|clitic-tos
+pronouns attached to verbs	1	dei-tas	dar	v	preterite-eu|clitic-tas
+pronouns attached to verbs	1	entreguei-lha	entregar	v	preterite-eu|clitic-lha
+pronouns attached to verbs	1	dá-lhos	dar	v	present-ele|clitic-lhos
+pronouns attached to verbs	1	ofereceu-lhas	oferecer	v	preterite-ele|clitic-lhas
+plural	1	casas	casa	n	plural
+plural	1	livros	livro	n	plural
+plural	1	cafés	café	n	plural
+plural	1	irmãs	irmã	n	plural
+plural	1	flores	flor	n	plural
+plural	1	luzes	luz	n	plural
+plural	1	deuses	deus	n	plural
+plural	1	meses	mês	n	plural
+plural	1	ingleses	inglês	adj	plural
+plural	1	países	país	n	plural
+plural	1	gases	gás	n	plural
+plural	1	leões	leão	n	plural
+plural	1	pães	pão	n	plural
+plural	1	mãos	mão	n	plural
+plural	1	irmãos	irmão	n	plural
+plural	1	homens	homem	n	plural
+plural	1	jardins	jardim	n	plural
+plural	1	armazéns	armazém	n	plural
+plural	1	animais	animal	n	plural
+plural	1	papéis	papel	n	plural
+plural	1	fáceis	fácil	adj	plural
+plural	1	lençóis	lençol	n	plural
+plural	1	azuis	azul	adj	plural
+plural	1	barris	barril	n	plural
+plural	1	hífens	hífen	n	plural
+plural	1	hífenes	hífen	n	plural
+plural	1	tóraxes	tórax	n	plural
+plural	1	sites	site	n	plural
+plural	1	chips	chip	n	plural
+plural	1	suéteres	suéter	n	plural
+plural	1	ONGs	ONG	n	plural
+plural	1	hobbies	hobby	n	plural
+plural	1	segundas-feiras	segunda-feira	n	plural|plural
+plural	1	guarda-chuvas	guarda-chuva	n	plural
+plural	1	obras-primas	obra-prima	n	plural|plural
+plural	1	bem-sucedidos	bem-sucedido	adj	plural
+plural	1	tartarugas-do-mar	tartaruga-do-mar	n	plural
+plural	1	soldados	soldado	n	plural
+plural	1	ideias	ideia	n	plural
+plural	1	mentiras	mentira	n	plural
+plural	1	ataques	ataque	n	plural
+plural	1	águas	água	n	plural
+plural	1	saudáveis	saudável	adj	plural
+plural	1	impostos	imposto	n	plural
+plural	1	apostas	aposta	n	plural
+plural	1	revistas	revista	n	plural
+plural	1	malditos	maldito	adj	plural
+plural	1	peças	peça	n	plural
+plural	1	verdes	verde	adj	plural
+plural	1	tais	tal	adj	plural
+plural	1	erradas	errado	adj	feminine|plural
+plural	1	crises	crise	n	plural
+plural	1	secretarias	secretaria	n	plural
+feminine	1	bonita	bonito	adj	feminine
+feminine	1	trabalhadora	trabalhador	adj	feminine
+feminine	1	portuguesa	português	adj	feminine
+feminine	1	alemã	alemão	adj	feminine
+feminine	1	espanhola	espanhol	adj	feminine
+feminine	1	europeia	europeu	adj	feminine
+feminine	1	crua	cru	adj	feminine
+feminine	1	boa	bom	adj	feminine
+feminine	1	má	mau	adj	feminine
+feminine	1	juíza	juiz	n	feminine
+feminine	1	atriz	ator	n	feminine
+feminine	1	imperatriz	imperador	n	feminine
+feminine	1	avó	avô	n	feminine
+feminine	1	duquesa	duque	n	feminine
+feminine	1	alguma	algum	adj	feminine
+feminine	1	esta	este	*	feminine
+feminine	1	aquela	aquele	*	feminine
+feminine	1	bonitas	bonito	adj	feminine|plural
+feminine	1	portuguesas	português	adj	feminine|plural
+feminine	1	boas	bom	adj	feminine
+feminine	1	estas	este	*	feminine
+feminine	1	sua	seu	*	feminine
+feminine	1	suas	seu	*	feminine
+feminine	1	amiga	amigo	n	feminine
+feminine	1	humana	humano	adj	feminine
+feminine	1	perfeita	perfeito	adj	feminine
+feminine	1	cansada	cansado	adj	feminine
+feminine	1	conhecida	conhecido	adj	feminine
+feminine	1	distraída	distraído	adj	feminine
+feminine	1	farta	farto	adj	feminine
+feminine	1	ladra	ladrão	n	feminine
+feminine	1	vasta	vasto	adj	feminine
+feminine	1	surda	surdo	adj	feminine
+feminine	1	tua	teu	*	feminine
+diminutive	1	gatinho	gato	n	diminutive
+diminutive	1	casinha	casa	n	diminutive
+diminutive	1	cafezinho	café	n	diminutive
+diminutive	1	pãozinho	pão	n	diminutive
+diminutive	1	florzinha	flor	n	diminutive
+diminutive	1	pouquinho	pouco	*	diminutive
+diminutive	1	amiguinho	amigo	n	diminutive
+diminutive	1	pedacinho	pedaço	n	diminutive
+diminutive	1	papelinho	papel	n	diminutive
+diminutive	1	rapazinho	rapaz	n	diminutive
+diminutive	1	pãezinhos	pão	n	diminutive
+diminutive	1	homenzinho	homem	n	diminutive
+diminutive	1	chapeuzinho	chapéu	n	diminutive
+diminutive	1	passarinho	pássaro	n	diminutive
+diminutive	1	cedinho	cedo	*	diminutive
+diminutive	1	gatinhas	gato	n	feminine|diminutive
+diminutive	1	festazinha	festa	n	diminutive
+superlative	1	lindíssimo	lindo	adj	superlative
+superlative	1	rapidíssimo	rápido	adj	superlative
+superlative	1	felicíssimo	feliz	adj	superlative
+superlative	1	riquíssimo	rico	adj	superlative
+superlative	1	facílimo	fácil	adj	superlative
+superlative	1	dificílima	difícil	adj	superlative
+superlative	1	amabilíssimo	amável	adj	superlative
+superlative	1	comuníssimo	comum	adj	superlative
+superlative	1	paupérrimo	pobre	adj	superlative
+superlative	1	ótimo	bom	adj	superlative
+superlative	1	péssimo	mau	adj	superlative
+superlative	1	grandíssimas	grande	adj	superlative
+superlative	1	normalíssimo	normal	adj	superlative
+superlative	1	seríssimo	sério	adj	superlative
+superlative	1	fidelíssimo	fiel	adj	superlative
+superlative	1	antiquíssimo	antigo	adj	superlative
+superlative	1	simplicíssimo	simples	adj	superlative
+superlative	1	nobilíssimo	nobre	adj	superlative
+superlative	1	amicíssimo	amigo	adj	superlative
+-mente adverbs	1	rapidamente	rápido	adj	adverb
+-mente adverbs	1	facilmente	fácil	adj	adverb
+-mente adverbs	1	provavelmente	provável	adj	adverb
+-mente adverbs	1	felizmente	feliz	adj	adverb
+-mente adverbs	1	claramente	claro	adj	adverb
+-mente adverbs	1	cortesmente	cortês	adj	adverb
+-mente adverbs	1	possivelmente	possível	adj	adverb
+-mente adverbs	1	cristãmente	cristão	adj	adverb
+-mente adverbs	1	rapidissimamente	rápido	adj	superlative|adverb
+-mente adverbs	1	comumente	comum	adj	adverb
+-mente adverbs	1	comummente	comum	adj	adverb
+negatives	0	esta	estar	*	*
+negatives	0	estas	estar	*	*
+negatives	0	este	estar	*	*
+negatives	0	estes	estar	*	*
+negatives	0	de	dar	*	*
+negatives	0	se	ser	*	*
+negatives	0	me	mer	*	*
+negatives	0	te ama	te amar	*	*
+negatives	0	o que	o quer	*	*
+negatives	0	Minha	Minho	*	*
+negatives	0	Esta	Ester	*	*
+negatives	0	Estamos	Ester	*	*
+negatives	0	Porta	Porto	*	*
+negatives	0	Duas	Du	*	*
+negatives	0	rege	regar	*	*
+negatives	0	vaga	vagir	*	*
+negatives	0	peca	pecer	*	*
+negatives	0	sinta	sentar	*	*
+negatives	0	durmo	dormar	*	*
+negatives	0	segui	seguuir	*	*
+negatives	0	chama-se	chama	n	*
+negatives	0	deixa-me	deixa	n	*
+negatives	0	casas	cas	*	*
+negatives	0	a vê-la	a ver	*	*
+negatives	0	que fazê-lo	que fazer	*	*
+negatives	0	conte	conter	*	*
+negatives	0	contem	conter	*	*
+negatives	0	prove	prover	*	*
+negatives	0	prove	provir	*	*
+negatives	0	rele	reler	*	*
+negatives	0	serve	server	*	*
+negatives	0	fale	falir	*	*
+negatives	0	queria	quer	*	*
+negatives	0	querem	quer	*	*
+negatives	0	queres-me	quer	*	*
+negatives	0	afaste	afar	*	*
+negatives	0	convida	convir	*	*
+negatives	0	intervia	intervir	*	*
+negatives	0	provida	provir	*	*
+negatives	0	avia	avir	*	*
+negatives	0	sobrevia	sobrevir	*	*
+negatives	0	compre	cumprir	*	*
+negatives	0	corte	curtir	*	*
+negatives	0	aluga	aluguer	*	*
+negatives	0	alugue	aluguer	*	*
+exclusions keep	1	serve	servir	v	present-ele
+exclusions keep	1	servem	servir	v	present-eles
+exclusions keep	1	contorce	contorcer	v	present-ele
+exclusions keep	1	falimos	falir	v	present-nos
+exclusions keep	1	usaste	usar	v	preterite-tu
+exclusions keep	1	afastaste	afastar	v	preterite-tu
+exclusions keep	1	queria	querer	v	imperfect-eu-ele
+exclusions keep	1	quererá	querer	v	future-ele
+exclusions keep	1	provido	prover	v	participle
+exclusions keep	1	convidou	convidar	v	preterite-ele
+exclusions keep	1	ergue	erguer	v	present-ele
+exclusions keep	1	erga	erguer	v	subjunctive-eu-ele
+exclusions keep	1	acode	acudir	v	present-ele
+exclusions keep	1	sacode	sacudir	v	present-ele
+exclusions keep	1	cospe	cuspir	v	present-ele
+exclusions keep	1	entope	entupir	v	present-ele
+exclusions keep	1	bole	bulir	v	present-ele
+exclusions keep	1	somem	sumir	v	present-eles
+exclusions keep	1	foges	fugir	v	present-tu
+exclusions keep	1	sobem	subir	v	present-eles
+exclusions keep	1	erguemos	erguer	v	present-nos
+exclusions keep	1	erguem	erguer	v	present-eles
+exclusions keep	1	distingue	distinguir	v	present-ele
+names	1	Bentinho	Bento	n	diminutive
+names	1	Pedrinho	Pedro	n	diminutive
+names	1	Mariazinha	Maria	n	diminutive
+negatives	0	Marinha	Mara	*	*
+names	1	Joãozinho	João	n	diminutive
+exclusions keep	1	convergia	convergir	v	imperfect-eu-ele
+exclusions keep	1	estuda	estudar	v	present-ele
+exclusions keep	1	estimas	estimar	v	present-tu
+exclusions keep	1	estime	estimar	v	subjunctive-eu-ele
+exclusions keep	1	estimes	estimar	v	subjunctive-tu
+negatives	0	duas	duo	*	*
+negatives	0	gatinho	gat	*	*
+negatives	0	segui	seguir	*	present-ele
+negatives	0	distingui	distinguir	*	present-ele
+negatives	0	seguia	segueir	*	*
+negatives	0	claramente	clara	*	*
+negatives	0	rapidamente	rapida	*	*
+negatives	0	esto	estar	*	*
+exclusions keep	1	estudo	estudar	v	present-eu
+negatives	0	miss	mis	*	*
+negatives	0	pass	pas	*	*
+negatives	0	mass	mas	*	*
+stem changes	1	ceias	cear	v	present-tu
+stem changes	1	geie	gear	v	subjunctive-eu-ele
+stem changes	1	agride	agredir	v	present-ele
+negatives	0	ei-lo	ei	*	*
+negatives	0	alguem	algar	*	*
+negatives	0	sida	sido	*	*
+exclusions keep	1	alegue	alegar	v	subjunctive-eu-ele
+exclusions keep	1	siderúrgica	siderúrgico	adj	feminine
+negatives	0	sao	sair	*	*
+negatives	0	cao	cair	*	*
+negatives	0	Évora	Évoro	*	*
+negatives	0	Ângela	Ângelo	*	*
