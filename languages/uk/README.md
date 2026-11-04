@@ -476,7 +476,7 @@ identical).
      limit of the -ці plurals (на хлопці).
      The other homograph rules have no row each; the frequent-word and text
      measurements show them.
-   - Hachidori (feat/multi-language d7e82b0c with this branch at 97f1e27 in
+   - Hachidori (feat/multi-language d7e82b0c with this branch at d5f1d4f in
      `third_party/hoshidicts`, `node scripts/sync-languages.mjs`,
      `test/chrome-language-pack.mjs`, Chrome 152, wty-uk-en): 14 of 14 checks
      pass. Settings adds Ukrainian beside Japanese and imports the dictionary
