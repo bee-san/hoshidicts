@@ -570,7 +570,7 @@ identical).
      (both lemmas are in the test dictionary).
      The other homograph rules have no row each; the frequent-word and text
      measurements show them.
-   - Hachidori (feat/multi-language d7e82b0c with this branch at 7647386 in
+   - Hachidori (feat/multi-language d7e82b0c with this branch at 8ade69c in
      `third_party/hoshidicts`, `node scripts/sync-languages.mjs`, its engines
      rebuilt from it with `wasm/build.sh`, `test/chrome-language-pack.mjs`,
      Chrome 152, wty-uk-en): 14 of 14 checks pass. Settings adds Ukrainian beside Japanese and imports the dictionary
