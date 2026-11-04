@@ -1111,3 +1111,6 @@ exclusion	0	canebat	caneo	*	*
 exclusion	0	pene	penus	*	n-voc-sg
 esse	0	sita est	sino	*	*
 esse	0	recta est	rego	*	*
+noun	0	bellica	bellicum	*	n-first
+noun	0	facturam	factura	*	n-first
+noun	0	saturae	satura	*	n-first

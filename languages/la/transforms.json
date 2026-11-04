@@ -222,7 +222,7 @@
       "description": "A noun form that is also a form of a participle headword: creātūram → creātūra, tēcta → tēctum.",
       "source": "own",
       "rules": [
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["turam", "tura"], ["suram", "sura"], ["turae", "tura"], ["surae", "sura"], ["turis", "tura"], ["suris", "sura"], ["turas", "tura"], ["suras", "sura"], ["turarum", "tura"], ["surarum", "sura"]], "conditionsIn": [], "conditionsOut": ["n1s"], "stemMinLength": 2},
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["turam", "tura"], ["suram", "sura"], ["turae", "tura"], ["surae", "sura"], ["turis", "tura"], ["suris", "sura"], ["turas", "tura"], ["suras", "sura"], ["turarum", "tura"], ["surarum", "sura"]], "conditionsIn": [], "conditionsOut": ["n1s"], "stemMinLength": 3, "stemNotStartsWithText": "fac"},
         {"type": "circumfix", "prefixes": [["tect", "tect"], ["dict", "dict"], ["peccat", "peccat"], ["fat", "fat"], ["arv", "arv"], ["vot", "vot"], ["bell", "bell"], ["mandat", "mandat"], ["promiss", "promiss"], ["praecept", "praecept"], ["punct", "punct"], ["institut", "institut"]], "suffixes": [["a", "um"], ["i", "um"], ["o", "um"], ["is", "um"], ["orum", "um"]], "conditionsIn": [], "conditionsOut": ["n2s"], "stemCharacters": "[]"}
       ]
     },

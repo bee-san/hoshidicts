@@ -85,6 +85,15 @@ def no_verb_condition(t, l):
     return n
 
 
+def swap(tid, first, second):
+    def f(t, l):
+        rs = next(tr for tr in t['transforms'] if tr['id'] == tid)['rules']
+        i, j = next(k for k, r in enumerate(rs) if first(r)), next(k for k, r in enumerate(rs) if second(r))
+        rs[i], rs[j] = rs[j], rs[i]
+        return 1
+    return f
+
+
 MUTANTS = {
     'verb root min 2 -> 0': drop_key('stemMinLength', 2, lambda tr, r: 'v' in r['conditionsOut'] and r['type'] == 'suffix'),
     '3rd conj root not after a e i o': drop_key('stemNotEndsWith', '[aeio]'),
@@ -133,9 +142,13 @@ MUTANTS = {
     'no noun forms before the adjectives': drop_rules(lambda tr, r: tr['id'] == 'n-first'),
     'name rules min stem 2': drop_key('stemMinLength', 2, lambda tr, r: tr['id'].startswith('name-')),
     '-am participle before esse': drop_rules(lambda tr, r: r.get('inflected') == 'am' and r['conditionsIn'] == ['auxi']),
+    'n-first stems not whole': drop_key('stemCharacters', '[]', lambda tr, r: tr['id'] == 'n-first'),
+    'n-first -tura min stem 3': drop_key('stemMinLength', 3, lambda tr, r: tr['id'] == 'n-first'),
+    'jura alone (imp-2s a)': drop_key('stemNotStartsWithText', 'jur', lambda tr, r: r.get('inflected') == 'a'),
+    '-is -> -us before -is -> -a': swap('n-dat-pl', lambda r: r.get('deinflected') == 'a' and r.get('inflected') == 'is', lambda r: r.get('deinflected') == 'us' and r.get('inflected') == 'is'),
 }
 MUTANTS['longer stems of the exclusions'] = drop_rules(lambda tr, r: 'stemStartsWithText' in r)
-for stem in ('nav', 'argent', 'patri', 'mens', 'bell', 'suppl', 'cop', 'ac', 'la', 'arm', 'fo', 'can', 'imp', 'loc', 'Ital', 'exist', 'jur', 'curt', 'coel', 'line', 'gen', 'put', 'scrib', 'pen'):
+for stem in ('nav', 'argent', 'patri', 'mens', 'bell', 'suppl', 'cop', 'ac', 'la', 'arm', 'fo', 'can', 'imp', 'loc', 'Ital', 'exist', 'jur', 'curt', 'coel', 'line', 'gen', 'put', 'scrib', 'pen', 'fac'):
     MUTANTS[f'{stem}- left to the dictionary'] = drop_key('stemNotStartsWithText', stem)
 
 MUTANTS['untaggedTerms pass'] = lambda t, l: l['lookup'].update(untaggedTerms='pass') or 1

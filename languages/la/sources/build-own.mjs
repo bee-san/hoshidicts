@@ -1593,7 +1593,7 @@ for (const [slotId, inflected, deinflected, conditionsOut, stem] of [
 // are nouns in most sentences (tēcta, dictīs, peccātī, vōta, arva, fātīs).
 slot('n-first', 'noun', 'A noun form that is also a form of a participle headword: creātūram → creātūra, tēcta → tēctum.');
 add('n-first', {type: 'circumfix', prefixes: [['', '']], suffixes: ['am', 'ae', 'is', 'as', 'arum'].flatMap((e) => [['t', 's'].map((c) => [`${c}ur${e}`, `${c}ura`])].flat()),
-    conditionsIn: [], conditionsOut: ['n1s'], stemMinLength: 2});
+    conditionsIn: [], conditionsOut: ['n1s'], stemMinLength: 3, stemNotStartsWithText: 'fac'}); // not futūrīs, saturae, factūram (esse)
 add('n-first', {type: 'circumfix', prefixes: ['tect', 'dict', 'peccat', 'fat', 'arv', 'vot', 'bell', 'mandat', 'promiss', 'praecept', 'punct', 'institut'].map((x) => [x, x]), suffixes: ['a', 'i', 'o', 'is', 'orum'].map((e) => [e, 'um']),
     conditionsIn: [], conditionsOut: ['n2s'], stemCharacters: '[]'});
 

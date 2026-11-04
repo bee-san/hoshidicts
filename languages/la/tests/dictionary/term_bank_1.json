@@ -98,5 +98,6 @@
   ["medius", "medius", "adj", "adj", 0, ["middle"], 97, ""],
   ["medium", "medium", "n", "n", 0, ["middle"], 98, ""],
   ["ius", "iūs", "n", "n", 0, ["right, law"], 99, ""],
-  ["iuro", "iūrō", "v", "v", 0, ["to swear"], 100, ""]
+  ["iuro", "iūrō", "v", "v", 0, ["to swear"], 100, ""],
+  ["juro", "jūrō", "v", "v", 0, ["to swear"], 101, ""]
 ]

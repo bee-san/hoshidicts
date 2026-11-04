@@ -7,7 +7,7 @@
     python3 measure.py hovers <out.txt> (<pg*.txt> | --tatoeba <lat_sentences.tsv>)...
     python3 measure.py judge <headwords.pickle> <hover.txt> <lookups.jsonl> --transforms <transforms.json> [--freq <freq.tsv>] [--top N] [--show N]
         [--homographs <tsv>] [--reach <cli> [--languages <dir>] [--corpus <tsv>,...]] [--kinds 1]
-        [--sample N --sample-out <file> [--sample-of ambiguous] [--seed S]] [--same-as <lookups.jsonl>]
+        [--sample N --sample-out <file> [--sample-of ambiguous|own] [--seed S]] [--same-as <lookups.jsonl>]
     python3 measure.py first <corpus.tsv> <lookups.jsonl>
 
 headwords keeps each term's parts of speech (rows with definitions) and the
@@ -219,7 +219,7 @@ def judge(args):
     wrong_groups = collections.Counter()
     examples = collections.defaultdict(list)
     same = [json.loads(line) for line in open(opts['--same-as'], encoding='utf-8')] if '--same-as' in opts else None
-    unjudged, ambiguous = [], []
+    unjudged, ambiguous, own_entries = [], [], []
     nominal = lambda k: bool(lemma.get(k, set()) - {'v'})
     for index, (text, answer) in enumerate(zip(hover_lines, answers)):
         assert answer['text'] == text, (answer['text'], text)
@@ -280,14 +280,18 @@ def judge(args):
             right = {x for x in right if 'v' in lemma.get(x, ()) or any(t == x and k == 'parent' for y in own for t, k in refs.get(y, ()))}
             count = 2 if any(nominal(x) for x in set(first_keys) | own) else 1
         found = expression in right or plain(expression) in right
-        # The word's own headword, as written, is its own entry whatever else
-        # its rows name (modo the adverb, also the ablative of modus).
-        as_written = ' ' not in matched and expression in keys and expression in lemma
-        verdict = 'wrong' if not found else 'right' if count == 1 or as_written else 'ambiguous'
+        verdict = 'wrong' if not found else 'right' if count == 1 else 'ambiguous'
         key = plain(word.replace('æ', 'ae').replace('Æ', 'Ae').replace('œ', 'oe').replace('Œ', 'Oe')).lower().replace('j', 'i')
         if verdict == 'ambiguous' and key in needed:
             verdict = 'right' if expression in needed[key] or plain(expression) in needed[key] else 'wrong'
             totals['decided by the homograph list'] += 1
+        elif verdict == 'ambiguous' and ' ' not in matched and expression in keys and expression in lemma:
+            # The word's own entry, as written (modo the adverb, also the
+            # ablative of modus): right, but counted and sampled apart.
+            verdict = 'right'
+            totals['own entry'] += 1
+            totals['own entry tokens'] += weight
+            own_entries.append((text, first))
         totals[verdict] += 1
         totals[f'{verdict} tokens'] += weight
         for k in kind:
@@ -312,7 +316,7 @@ def judge(args):
         print(f'{n:6d}  {group}: {"; ".join(examples[group])}')
     if '--sample' in opts:
         random.seed(int(opts.get('--seed', '1')))
-        pool = ambiguous if opts.get('--sample-of') == 'ambiguous' else unjudged
+        pool = {'ambiguous': ambiguous, 'own': own_entries}.get(opts.get('--sample-of'), unjudged)
         sample = random.sample(pool, min(int(opts['--sample']), len(pool)))
         with open(opts['--sample-out'], 'w', encoding='utf-8') as f:
             for text, first in sample:

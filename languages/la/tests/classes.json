@@ -5285,6 +5285,8 @@
         ["pene", "pene"],
         ["sita est", "sita est"],
         ["recta est", "recta est"],
+        ["facturam", "facturam"],
+        ["saturae", "saturae"],
         ["fasciculī arcuātī", "fasciculī arcuātī"],
         ["galaxiārum", "galaxiārum"],
         ["Mārpōrēs", "mārpōrēs"],
@@ -5397,6 +5399,7 @@
         ["tecta", "tecta"],
         ["media", "media"],
         ["jura", "jura"],
+        ["armis", "armis"],
         ["Arma virumque canō, Trōiae quī prīmus ab ōrīs Ītaliam vēnit.", "arma virumque canō, trōiae quī prīmus ab ōrīs ītaliam vēnit."]
       ]
     },
@@ -7156,6 +7159,8 @@
         ["pene", "Pene"],
         ["sita est", "Sita est"],
         ["recta est", "Recta est"],
+        ["facturam", "Facturam"],
+        ["saturae", "Saturae"],
         ["fasciculī arcuātī", "Fasciculī arcuātī"],
         ["galaxiārum", "Galaxiārum"],
         ["Mārpōrēs", "Mārpōrēs"],
@@ -7268,6 +7273,7 @@
         ["tecta", "Tecta"],
         ["media", "Media"],
         ["jura", "Jura"],
+        ["armis", "Armis"],
         ["Arma virumque canō, Trōiae quī prīmus ab ōrīs Ītaliam vēnit.", "Arma virumque canō, Trōiae quī prīmus ab ōrīs Ītaliam vēnit."]
       ]
     }
