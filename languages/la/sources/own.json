@@ -223,7 +223,17 @@
       "source": "own",
       "rules": [
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["turam", "tura"], ["suram", "sura"], ["turae", "tura"], ["surae", "sura"], ["turis", "tura"], ["suris", "sura"], ["turas", "tura"], ["suras", "sura"], ["turarum", "tura"], ["surarum", "sura"]], "conditionsIn": [], "conditionsOut": ["n1s"], "stemMinLength": 3, "stemNotStartsWithText": "fac"},
-        {"type": "circumfix", "prefixes": [["tect", "tect"], ["dict", "dict"], ["peccat", "peccat"], ["fat", "fat"], ["arv", "arv"], ["vot", "vot"], ["bell", "bell"], ["mandat", "mandat"], ["promiss", "promiss"], ["praecept", "praecept"], ["punct", "punct"], ["institut", "institut"]], "suffixes": [["a", "um"], ["i", "um"], ["o", "um"], ["is", "um"], ["orum", "um"]], "conditionsIn": [], "conditionsOut": ["n2s"], "stemCharacters": "[]"}
+        {"type": "circumfix", "prefixes": [["tect", "tect"], ["dict", "dict"], ["peccat", "peccat"], ["fat", "fat"], ["arv", "arv"], ["vot", "vot"], ["bell", "bell"], ["mandat", "mandat"], ["promiss", "promiss"], ["praecept", "praecept"], ["punct", "punct"], ["institut", "institut"], ["iacul", "iacul"]], "suffixes": [["a", "um"], ["i", "um"], ["o", "um"], ["is", "um"], ["orum", "um"]], "conditionsIn": [], "conditionsOut": ["n2s"], "stemCharacters": "[]"},
+        {"type": "circumfix", "prefixes": [["pluvi", "pluvi"], ["music", "music"], ["iniuri", "iniuri"], ["aquil", "aquil"], ["penn", "penn"], ["vine", "vine"], ["vesper", "vesper"], ["mathematic", "mathematic"]], "suffixes": [["ae", "a"], ["am", "a"], ["as", "a"], ["is", "a"], ["arum", "a"]], "conditionsIn": [], "conditionsOut": ["n1s"], "stemCharacters": "[]"}
+      ]
+    },
+    {
+      "id": "ord",
+      "name": "ordinal",
+      "description": "An ordinal before the noun of the same form: decimam → decimus.",
+      "source": "own",
+      "rules": [
+        {"type": "circumfix", "prefixes": [["decim", "decim"], ["sext", "sext"], ["proxim", "proxim"]], "suffixes": [["am", "us"], ["ae", "us"], ["as", "us"], ["arum", "us"]], "conditionsIn": [], "conditionsOut": [], "stemCharacters": "[]"}
       ]
     },
     {
@@ -2889,7 +2899,6 @@
         {"type": "suffix", "inflected": "fersi", "deinflected": "fercio", "conditionsIn": ["vpf"], "conditionsOut": ["v"], "stemMinLength": 2},
         {"type": "suffix", "inflected": "cubui", "deinflected": "cumbo", "conditionsIn": ["vpf"], "conditionsOut": ["v"], "stemMinLength": 2},
         {"type": "suffix", "inflected": "sedi", "deinflected": "sido", "conditionsIn": ["vpf"], "conditionsOut": ["v"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "sidi", "deinflected": "sido", "conditionsIn": ["vpf"], "conditionsOut": ["v"], "stemMinLength": 2},
         {"type": "suffix", "inflected": "scivi", "deinflected": "scisco", "conditionsIn": ["vpf"], "conditionsOut": ["v"], "stemMinLength": 1},
         {"type": "suffix", "inflected": "amicui", "deinflected": "amicio", "conditionsIn": ["vpf"], "conditionsOut": ["v"]},
         {"type": "suffix", "inflected": "tuli", "deinflected": "fero", "conditionsIn": ["vpf"], "conditionsOut": ["v"]},

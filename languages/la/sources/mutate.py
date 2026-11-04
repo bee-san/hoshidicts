@@ -145,6 +145,10 @@ MUTANTS = {
     'n-first stems not whole': drop_key('stemCharacters', '[]', lambda tr, r: tr['id'] == 'n-first'),
     'n-first -tura min stem 3': drop_key('stemMinLength', 3, lambda tr, r: tr['id'] == 'n-first'),
     'jura alone (imp-2s a)': drop_key('stemNotStartsWithText', 'jur', lambda tr, r: r.get('inflected') == 'a'),
+    'no n-first -a nouns': drop_rules(lambda tr, r: tr['id'] == 'n-first' and r.get('prefixes', [[0]])[0][0] == 'pluvi'),
+    'no n-first -sura': lambda t, l: sum(r.update(suffixes=[x for x in r['suffixes'] if 'sur' not in x[0]]) or 1 for tr, r in rules(t) if tr['id'] == 'n-first' and r['prefixes'] == [['', '']]),
+    'no ordinals': drop_rules(lambda tr, r: tr['id'] == 'ord'),
+    '-sidi -> -sido again': lambda t, l: [tr['rules'].append(dict(r, inflected='sidi')) for tr, r in list(rules(t)) if tr['id'] == 'perf-stem' and r.get('inflected') == 'sedi' and r.get('deinflected') == 'sido'][:1] and 1,
     '-is -> -us before -is -> -a': swap('n-dat-pl', lambda r: r.get('deinflected') == 'a' and r.get('inflected') == 'is', lambda r: r.get('deinflected') == 'us' and r.get('inflected') == 'is'),
 }
 MUTANTS['longer stems of the exclusions'] = drop_rules(lambda tr, r: 'stemStartsWithText' in r)

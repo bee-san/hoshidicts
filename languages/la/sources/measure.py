@@ -7,7 +7,7 @@
     python3 measure.py hovers <out.txt> (<pg*.txt> | --tatoeba <lat_sentences.tsv>)...
     python3 measure.py judge <headwords.pickle> <hover.txt> <lookups.jsonl> --transforms <transforms.json> [--freq <freq.tsv>] [--top N] [--show N]
         [--homographs <tsv>] [--reach <cli> [--languages <dir>] [--corpus <tsv>,...]] [--kinds 1]
-        [--sample N --sample-out <file> [--sample-of ambiguous|own] [--seed S]] [--same-as <lookups.jsonl>]
+        [--sample N --sample-out <file> [--sample-of ambiguous|own|changed] [--seed S]] [--same-as <lookups.jsonl>]
     python3 measure.py first <corpus.tsv> <lookups.jsonl>
 
 headwords keeps each term's parts of speech (rows with definitions) and the
@@ -219,7 +219,7 @@ def judge(args):
     wrong_groups = collections.Counter()
     examples = collections.defaultdict(list)
     same = [json.loads(line) for line in open(opts['--same-as'], encoding='utf-8')] if '--same-as' in opts else None
-    unjudged, ambiguous, own_entries = [], [], []
+    unjudged, ambiguous, own_entries, changed = [], [], [], []
     nominal = lambda k: bool(lemma.get(k, set()) - {'v'})
     for index, (text, answer) in enumerate(zip(hover_lines, answers)):
         assert answer['text'] == text, (answer['text'], text)
@@ -298,6 +298,9 @@ def judge(args):
             kinds[f'{k} {verdict}'] += 1
         if verdict == 'ambiguous':
             ambiguous.append((text, first))
+            if same is not None and same[index]['results'][:1] and same[index]['results'][0]['expression'] != expression:
+                changed.append((text, first, same[index]['results'][0]['expression']))
+                totals['ambiguous, the rules change it'] += 1
         if verdict == 'wrong':
             if same is not None and same[index]['results'][:1] and same[index]['results'][0]['expression'] == expression:
                 totals['wrong, the same without rules'] += 1
@@ -316,11 +319,11 @@ def judge(args):
         print(f'{n:6d}  {group}: {"; ".join(examples[group])}')
     if '--sample' in opts:
         random.seed(int(opts.get('--seed', '1')))
-        pool = {'ambiguous': ambiguous, 'own': own_entries}.get(opts.get('--sample-of'), unjudged)
+        pool = {'ambiguous': ambiguous, 'own': own_entries, 'changed': changed}.get(opts.get('--sample-of'), unjudged)
         sample = random.sample(pool, min(int(opts['--sample']), len(pool)))
         with open(opts['--sample-out'], 'w', encoding='utf-8') as f:
-            for text, first in sample:
-                f.write(json.dumps({'text': text[:60], 'expression': first['expression'], 'matched': first['matched'], 'trace': first['trace']}, ensure_ascii=False) + '\n')
+            for text, first, *norules in sample:
+                f.write(json.dumps({'text': text[:60], 'expression': first['expression'], 'matched': first['matched'], 'trace': first['trace'], 'norules': norules[:1]}, ensure_ascii=False) + '\n')
 
 
 def first(corpus, lookups):

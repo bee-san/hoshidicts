@@ -1,19 +1,12 @@
 #!/usr/bin/env node
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Writes languages/la/sources/own.json, the Latin rules written for this pack
-// (docs/languages.md section 14 step 2), from the tables below. Run from the
-// repository root: node languages/la/sources/build-own.mjs
-//
-// The tables follow Allen and Greenough (1903), Gildersleeve and Lodge (1895)
-// and Wiktionary's inflection tables; nothing is copied (README.md, Rule
-// provenance). Words are spelled as dictionaries spell headwords, with no
-// macrons and i and v for consonantal i and u; language.json's processors
-// bring text there. Dictionary forms are tagged v, n, adj and adv: the first
-// person singular present (deponents too) and participles, the nominative
-// singular (plural for plural-only nouns), the masculine nominative singular.
-// Pronouns, determiners, numerals and names have no part of speech, so the
-// rules that make them have an empty conditionsOut (section 7.2); the name
-// rules apply only to a capitalised word.
+// (docs/languages.md section 14 step 2). From the repository root:
+// node languages/la/sources/build-own.mjs. The tables follow Allen and
+// Greenough, Gildersleeve and Lodge and Wiktionary; nothing is copied. Words
+// are spelled without macrons, with i and v for consonantal i and u. Pronouns,
+// numerals and names have no part of speech, so their rules have no
+// conditionsOut (section 7.2).
 
 import {writeFileSync} from 'node:fs';
 import {dirname, join} from 'node:path';
@@ -95,12 +88,9 @@ function add(slotId, rule) {
 // (in eō read as in eus); a longer ending can, which lets the last word of a
 // two-word headword inflect (senātūs cōnsultī → senātūs cōnsultum).
 const WORD = '[^ ]';
-// A word that begins a sentence is capitalised, and a lookup tries it as
-// written before it decapitalises it (one processor step), so a rule that
-// reads the capitalised word reaches a capitalised headword before the
-// lowercase lemma: Mane (in the morning) read as Mānēs, Dīves as a form of
-// Deus. Short noun and verb endings therefore take no capital in their stem
-// either; adjectives keep it for the proper adjectives (Rōmāna → Rōmānus).
+// A capitalised word is tried before it is decapitalised, so a rule reading it
+// reaches a capitalised headword first (Mane read as Mānēs). Short noun and
+// verb endings take no capital in their stem; adjectives keep it (Rōmāna).
 const LOWER_WORD = '[^ A-Z]';
 
 // Leaves out stems exactly: the rule takes no stem that starts with one of
@@ -166,11 +156,9 @@ function whole(slotId, inflected, deinflected, conditionsIn, conditionsOut) {
 const alts = (cell) => cell.split('|');
 
 // --- Verbs: the present system ----------------------------------------------------
-// Conjugations: 1 (amō, amāre), 2 (moneō, monēre), 3 (regō, regere), 3io
-// (capiō, capere), 4 (audiō, audīre). An ending replaces the vowel and ending of
-// the dictionary form after the root (am-, mon-, reg-, cap-, aud-). Passive
-// forms are read both as the passive of an active verb (amātur → amō) and as
-// a deponent verb, whose dictionary form is passive (hortātur → hortor).
+// Conjugations 1, 2, 3, 3io and 4 (amō, moneō, regō, capiō, audiō): an ending
+// replaces what follows the root. Passives are read as active verbs' (amātur
+// → amō) and as deponents (hortātur → hortor).
 const CONJ = ['1', '2', '3', '3io', '4'];
 const LEMMA = {1: 'o', 2: 'eo', 3: 'o', '3io': 'io', 4: 'io'};
 const DEPONENT = {1: 'or', 2: 'eor', 3: 'or', '3io': 'ior', 4: 'ior'};
@@ -322,12 +310,10 @@ for (const c of CONJ) {
 }
 
 // --- Verbs: the perfect system ------------------------------------------------------
-// A perfect form is read in two steps: its ending is replaced by -ī, the first
-// person singular perfect (rēxerat → rēxī), and that form by the verb, through
-// a regular stem (amāvī → amō, monuī → moneō, audīvī → audiō, audiī → audiō)
-// or through the stem table below (rēxī → regō). A first person singular the
-// table lacks still reaches its verb through a dictionary's form-of row for
-// it, which vpf matches (see the conditions above).
+// A perfect is read in two steps: the ending to the first person in -ī
+// (rēxerat → rēxī), then the verb, through a regular stem (amāvī → amō,
+// monuī → moneō, audiī → audiō) or the stem table (rēxī → regō). A form the
+// table lacks reaches its verb through a form-of row, which vpf matches.
 const VPF = ['vpf', 'v'];
 const VPF_IN = ['vpf'];
 const PERFECT = [
@@ -386,14 +372,10 @@ for (const form of ['nosti', 'nostis', 'norunt', 'noram', 'noras', 'norat', 'nor
 
 // The first person singular perfect read as its verb: regular stems.
 slot('perf-stem', 'perfect stem', 'The first person singular perfect (-ī) read as its verb: amāvī → amō, monuī → moneō, dēlēvī → dēleō, audīvī and audiī → audiō, coluī → colō, rapuī → rapiō, statuī → statuō, convaluī → convalēscō, and perfects with the root of the present (dēfendī → dēfendō, vertī → vertō, solvī → solvō); the stems that are not regular come from a table (rēxī → regō, fēcī → faciō, vīdī → videō, fūgī → fugiō, tulī → ferō).');
-// Perfects with the root of the present are read by the cluster that ends
-// the root (dēfendī, vertī, solvī, statuī, verrī, vellī, bibī); a rule for any
-// -ī would read fūgī, sēdī and dedī as fugō, sēdō and dēdō, which are other
-// verbs (fugiō, sedeō and dō are in the table). potuī is possum's, not pōtō's.
-// -uī → -uō comes before -iō and -ō (ties go by discovery): annuī, statuī
-// and expuī are annuō, statuō and expuō. -uī → -ō only after l, m, p, r or x
-// (coluī, gemuī, strepuī, seruī, texuī; potuī is possum's). The -iō verbs
-// with -uī (rapiō, sapiō, aperiō, saliō) are in the table.
+// Perfects with the present's root are read by the root's last cluster
+// (dēfendī, vertī, bibī): any -ī would make fūgī, sēdī, dedī fugō, sēdō,
+// dēdō. -uī → -uō comes first (annuī, statuī); -uī → -ō only after l, m, p, r
+// or x (coluī, texuī; potuī is possum's).
 for (const [ending, lemma, extra] of [['avi', 'o', MIN], ['ivi', 'io', MIN], ['ii', 'io', MIN], ['evi', 'eo', MIN], ['ui', 'eo', MIN],
                                       ['ui', 'uo', {stemMinLength: 1}], ['ui', 'o', {...MIN, stemEndsWith: '[lmprx]'}],
                                       ['ndi', 'ndo', {stemMinLength: 1}], ['rti', 'rto', {stemMinLength: 1}], ['lvi', 'lvo', {stemMinLength: 1}],
@@ -431,27 +413,20 @@ function participles(stem, lemma, extra, {perfect = true, future = true, all = t
 slot('ptc-fut-stem', 'future participle', 'Future active participle, read through the perfect participle it is made from: ductūrus → ductus, factūrus → factus.');
 sfx('ptc-fut-stem', 'urus', 'us', PARTICIPLE_IN, ['ptc'], {stemMinLength: 3});
 sfx('supine-abl', 'u', 'us', [], ['ptc'], {stemMinLength: 3});
-// Regular: -ātus (1st), -ītus (4th), -itus and -ētus (2nd), -ūtus (statuō,
-// and solvō, volvō after l). The order decides ties: furātus is furor's
-// before furō's, audītus audiō's before audeō's.
-// The perfect participle of three of them leaves out the stem of a frequent
-// adjective or noun that is not that participle: advocātus (a lawyer, not
-// advocō's in advocātus esse optat), perītus (skilled, not pereō's) and
-// invītus (unwilling, not inviō's), in the active and the deponent rule.
+// Regular: -ātus, -ītus, -itus and -ētus, -ūtus (and solvō, volvō after l),
+// ordered for ties (furātus is furor's before furō's). Three leave out a stem
+// that is a noun or adjective: advocātus (a lawyer), perītus, invītus.
 for (const [stem, lemma, extra, not] of [['at', 'or', MIN, 'advoc'], ['at', 'o', MIN, 'advoc'], ['it', 'io', MIN, 'inv'], ['it', 'ior', MIN, 'inv'],
                                          ['it', 'eo', MIN, 'per'], ['it', 'eor', MIN, 'per'], ['et', 'eo', MIN], ['ut', 'uo', MIN],
                                          ['ut', 'vo', {...MIN, stemEndsWith: '[l]'}]]) {
     participles(stem, lemma, extra, {except: not});
 }
 
-// The stems that are not regular: dictionary form, perfect (first person
-// singular), perfect participle, with alternatives separated by |, - for none,
-// and fap: for a future participle that does not come from the perfect one.
-// A line that starts with + gives the form of the compounds, whose stems
-// differ from the simple verb's: +ficiō fēcī fectus makes conficiō, cōnfēcī,
-// cōnfectus. Rules are suffix rules, so a compound that keeps the simple verb's
-// stem (addūcō, addūxī, adductus) needs no line; those of a + line need a
-// prefix. Perfect forms of three letters (ēgī, ēmī) are whole words.
+// Stems that are not regular: dictionary form, perfect, perfect participle
+// (alternatives with |, - for none; fap: a future participle of its own). A
+// + line gives the compounds' stems (+ficiō fēcī fectus: cōnficiō, cōnfēcī,
+// cōnfectus), which need a prefix; compounds that keep the simple stem need no
+// line. Perfects of three letters (ēgī, ēmī) are whole words.
 const PRINCIPAL_PARTS = `
 do dedi datus fap:daturus
 +do didi ditus min:1
@@ -707,7 +682,7 @@ salio salui saltus
 sepelio sepelivi sepultus
 +fercio fersi fertus
 +cumbo cubui cubitus
-+sido sedi|sidi sessus
++sido sedi sessus
 +scisco scivi scitus min:1
 reor - ratus
 for - fatus
@@ -1295,14 +1270,10 @@ for (const ending of ['is', 'i', 'em', 'e', 'es', 'ium', 'ibus', 'ia']) { sfx(`a
 sfx('ptc-pres', 'iens', 'eo', ['ptc'], VB);
 
 // --- Proper names -----------------------------------------------------------------------
-// Names have no part of speech, so these rules have no conditions (section
-// 7.2) and apply only to a capitalised word (Rōmam → Rōma). A capital that
-// starts a sentence is tried before it is decapitalised, and second-declension
-// endings read Vidē as Vidus at 137 places of the test books. So these rules
-// keep endings a common word rarely has: -ae, -am, Greek -ān, -ēn and -on,
-// the genitive and accusative of l and r stems, and third-declension stems in
-// -ōn-, -in-, -er-, -rt-, -ant- and -ad-. Other names come through form-of
-// rows (Marcī, Herculis).
+// Names: no conditions, a capitalised stem (Rōmam → Rōma), and only endings a
+// common word rarely has (second-declension ones read Vidē as Vidus): -ae,
+// -am, -ān, -ēn, -on, l and r stems, and -ōn-, -in-, -er-, -rt-, -ant-, -ad-.
+// Other names come through form-of rows (Marcī, Herculis).
 const NAME = {stemMinLength: 2, stemStartsWith: '[A-Z]'};
 for (const [id, name] of CASE_SLOTS) { slot(`name-${id}`, name, `Proper name, ${name}.`); }
 declension('name', 'a', '', {'gen-sg': 'ae', 'dat-sg': 'ae', 'acc-sg': 'am', loc: 'ae'}, [], NAME);
@@ -1463,11 +1434,9 @@ for (const [form, base] of [['quisnam', 'quis'], ['quidnam', 'quid'], ['quaenam'
 }
 
 // --- Periphrastic forms with esse ---------------------------------------------------------
-// A participle or gerundive and a form of esse are one verb form: amātus est
-// (perfect passive), hortātus est (perfect of a deponent), amātūrus esse
-// (future infinitive), dēlenda est (passive periphrastic). The form of esse
-// is removed and the participle read as its verb, through the participle's
-// own ending (amāta, amātī, amātum agree with the subject).
+// A participle or gerundive and a form of esse are one verb form (amātus est,
+// hortātus est, amātūrus esse, dēlenda est): esse is removed and the
+// participle read as its verb through its own ending.
 const ESSE = ['sum', 'es', 'est', 'sumus', 'estis', 'sunt', 'eram', 'eras', 'erat', 'eramus', 'eratis', 'erant', 'ero', 'eris', 'erit', 'erimus',
               'eritis', 'erunt', 'sim', 'sis', 'sit', 'simus', 'sitis', 'sint', 'essem', 'esses', 'esset', 'essemus', 'essetis', 'essent', 'forem',
               'fores', 'foret', 'forent', 'esse', 'fore', 'fui', 'fuisti', 'fuit', 'fuimus', 'fuistis', 'fuerunt', 'fuere', 'fueram', 'fueras', 'fuerat',
@@ -1479,13 +1448,9 @@ slot('esse', '+ esse', 'A participle or gerundive with a form of esse: amātus e
 // est is not read as vereor's.
 const ESSE_INFINITIVE = new Set(['esse', 'fore', 'fuisse', 'iri']);
 for (const form of ESSE) { sfx('esse', ` ${form}`, '', [], ESSE_INFINITIVE.has(form) ? ['aux', 'auxi'] : ['aux'], {stemMinLength: 3}); }
-// The participle before esse ends its stem in t, s or x (amāt-a, vīs-um,
-// fix-ī) or nd (dēlend-a); the future participle's in r (futūr-um esse,
-// factūr-ī sunt), only in the masculine and neuter, since -ūra and -ūrae are
-// mostly nouns (nātūrae sunt, cūra est). The stem has no capital: Mūsa sum
-// is not a participle.
-// The participle they give says ptcx, which the participles of the noesse
-// lines of the stem table do not take.
+// The participle before esse ends its stem in t, s, x or nd (amāt-a, dēlend-a),
+// the future one in r, masculine and neuter only (-ūra est is mostly a noun);
+// no capital (Mūsa sum). It says ptcx, which noesse lines do not take.
 for (const [ending, slotId] of [['a', 'adj-a'], ['um', 'adj-um'], ['i', 'adj-i'], ['ae', 'adj-ae'], ['os', 'adj-os'], ['as', 'adj-as'], ['am', 'adj-am']]) {
     const conditionsIn = ['os', 'as', 'am'].includes(ending) ? ['auxi'] : ['aux'];
     sfx(slotId, ending, 'us', conditionsIn, ['ptcx'], {stemMinLength: 3, stemCharacters: '[^ A-Z]', stemEndsWith: '[dstx]'});
@@ -1512,23 +1477,15 @@ function buildTransforms() {
         }
         transform.rules.push(entry.rule);
     }
-    // Two readings that tie on every other key are ordered by discovery
-    // (section 9.6), which follows this order. Adjectives first: an adjective
-    // and a noun made from it (omnibus: omnis, omnia; summō: summus, summum)
-    // are mostly the adjective, and a participle is read as one (data: datus,
-    // datum). Then nouns, names and pronouns, then the vocative and adverb in
-    // -e (sōle is sōl, not sōlus), then verbs. Measured on the 101,097
-    // positions of the two test books: nouns first gave 106 wrong first
-    // results and about 550 weaker readings of ties.
-    // Names come before adjectives, which only matters for a capitalised word
-    // (Galliam is Gallia's before Gallius'). Among nouns the dative and
-    // ablative plural come late (maris is mare's before marum's, generis
-    // genus' before gener's) and the vocative last (mēnse is mēnsis, not
-    // mēnsus); among verbs the perfect comes before the present (dedit is dō's
-    // before dēdō's, tulit ferō's before tulō's).
+    // Ties go by discovery (section 9.6), so this order decides them: names
+    // (capitalised words: Galliam is Gallia's), n-first and ord; adjectives
+    // (summō: summus before summum; nouns first gave more wrong first results
+    // in the test books); nouns and pronouns, the dative and ablative plural
+    // late (maris is mare's) and the vocative last (mēnse is mēnsis); the
+    // adverb in -e (sōle is sōl); verbs, perfect first (dedit is dō's).
     const all = [...groups.values()];
     const rank = (t) => (t.id === 'adj-e+adverb' || t.id === 'adverb' ? 2
-        : /^(name-|n-first)/u.test(t.id) ? -1
+        : /^(name-|n-first|ord$)/u.test(t.id) ? -1
         : /^(adj|comparative|superlative|adverb)/u.test(t.id) ? 0
         : /^(n-|pron-)/u.test(t.id) ? 1 : 3);
     const within = (t) => (/^(perf|plupf|futpf|inf-perf)/u.test(t.id) ? 0 : t.id === 'n-dat-pl' ? 2 : t.id === 'n-voc-sg' ? 3 : 1);
@@ -1594,8 +1551,15 @@ for (const [slotId, inflected, deinflected, conditionsOut, stem] of [
 slot('n-first', 'noun', 'A noun form that is also a form of a participle headword: creātūram → creātūra, tēcta → tēctum.');
 add('n-first', {type: 'circumfix', prefixes: [['', '']], suffixes: ['am', 'ae', 'is', 'as', 'arum'].flatMap((e) => [['t', 's'].map((c) => [`${c}ur${e}`, `${c}ura`])].flat()),
     conditionsIn: [], conditionsOut: ['n1s'], stemMinLength: 3, stemNotStartsWithText: 'fac'}); // not futūrīs, saturae, factūram (esse)
-add('n-first', {type: 'circumfix', prefixes: ['tect', 'dict', 'peccat', 'fat', 'arv', 'vot', 'bell', 'mandat', 'promiss', 'praecept', 'punct', 'institut'].map((x) => [x, x]), suffixes: ['a', 'i', 'o', 'is', 'orum'].map((e) => [e, 'um']),
+add('n-first', {type: 'circumfix', prefixes: ['tect', 'dict', 'peccat', 'fat', 'arv', 'vot', 'bell', 'mandat', 'promiss', 'praecept', 'punct', 'institut', 'iacul'].map((x) => [x, x]), suffixes: ['a', 'i', 'o', 'is', 'orum'].map((e) => [e, 'um']),
     conditionsIn: [], conditionsOut: ['n2s'], stemCharacters: '[]'});
+add('n-first', {type: 'circumfix', prefixes: ['pluvi', 'music', 'iniuri', 'aquil', 'penn', 'vine', 'vesper', 'mathematic'].map((x) => [x, x]),
+    suffixes: ['ae', 'am', 'as', 'is', 'arum'].map((e) => [e, 'a']), conditionsIn: [], conditionsOut: ['n1s'], stemCharacters: '[]'});
+// wty-la-en tags no ordinal, so only a rule with no conditions reaches one
+// before the noun of the same form (decimam: decimus, not decima "tithe").
+slot('ord', 'ordinal', 'An ordinal before the noun of the same form: decimam → decimus.');
+add('ord', {type: 'circumfix', prefixes: ['decim', 'sext', 'proxim'].map((x) => [x, x]), suffixes: ['am', 'ae', 'as', 'arum'].map((e) => [e, 'us']),
+    conditionsIn: [], conditionsOut: [], stemCharacters: '[]'});
 
 const transforms = buildTransforms();
 const out = {schema: 1, conditions, transforms};

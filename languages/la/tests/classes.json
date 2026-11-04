@@ -189,49 +189,8 @@
       [65, 90]
     ],
     "transforms[6].rules[1].stemCharacters": [],
-    "transforms[7].rules[0].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[7].rules[1].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[7].rules[1].stemEndsWith": [
-      [114, 114]
-    ],
-    "transforms[7].rules[2].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[7].rules[3].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[7].rules[3].stemEndsWith": [
-      [100, 100],
-      [115, 116],
-      [120, 120]
-    ],
-    "transforms[7].rules[4].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[7].rules[4].stemEndsWith": [
-      [114, 114]
-    ],
-    "transforms[7].rules[5].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
-    ],
+    "transforms[6].rules[2].stemCharacters": [],
+    "transforms[7].rules[0].stemCharacters": [],
     "transforms[8].rules[0].stemCharacters": [
       [0, 31],
       [33, 55295],
@@ -252,6 +211,26 @@
     ],
     "transforms[8].rules[3].stemCharacters": [
       [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[8].rules[3].stemEndsWith": [
+      [100, 100],
+      [115, 116],
+      [120, 120]
+    ],
+    "transforms[8].rules[4].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[8].rules[4].stemEndsWith": [
+      [114, 114]
+    ],
+    "transforms[8].rules[5].stemCharacters": [
+      [0, 31],
       [33, 55295],
       [57344, 1114111]
     ],
@@ -268,48 +247,58 @@
     "transforms[9].rules[1].stemEndsWith": [
       [114, 114]
     ],
+    "transforms[9].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[9].rules[3].stemCharacters": [
       [0, 31],
-      [33, 64],
-      [91, 55295],
+      [33, 55295],
       [57344, 1114111]
-    ],
-    "transforms[9].rules[3].stemEndsWith": [
-      [100, 100],
-      [115, 116],
-      [120, 120]
-    ],
-    "transforms[9].rules[4].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[9].rules[4].stemEndsWith": [
-      [114, 114]
     ],
     "transforms[10].rules[0].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[10].rules[0].stemEndsWith": [
-      [114, 114]
-    ],
     "transforms[10].rules[1].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[11].rules[1].stemEndsWith": [
+    "transforms[10].rules[1].stemEndsWith": [
       [114, 114]
     ],
-    "transforms[12].rules[0].stemCharacters": [
+    "transforms[10].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[10].rules[3].stemEndsWith": [
+      [100, 100],
+      [115, 116],
+      [120, 120]
+    ],
+    "transforms[10].rules[4].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[10].rules[4].stemEndsWith": [
+      [114, 114]
+    ],
+    "transforms[11].rules[0].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[12].rules[1].stemCharacters": [
+    "transforms[11].rules[0].stemEndsWith": [
+      [114, 114]
+    ],
+    "transforms[11].rules[1].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
@@ -330,26 +319,6 @@
     "transforms[13].rules[1].stemEndsWith": [
       [114, 114]
     ],
-    "transforms[13].rules[3].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[13].rules[3].stemEndsWith": [
-      [100, 100],
-      [115, 116],
-      [120, 120]
-    ],
-    "transforms[13].rules[4].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[13].rules[4].stemEndsWith": [
-      [114, 114]
-    ],
     "transforms[14].rules[0].stemCharacters": [
       [0, 31],
       [33, 55295],
@@ -362,11 +331,6 @@
     ],
     "transforms[14].rules[1].stemEndsWith": [
       [114, 114]
-    ],
-    "transforms[14].rules[2].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
     ],
     "transforms[14].rules[3].stemCharacters": [
       [0, 31],
@@ -381,17 +345,17 @@
     ],
     "transforms[14].rules[4].stemCharacters": [
       [0, 31],
-      [33, 55295],
+      [33, 64],
+      [91, 55295],
       [57344, 1114111]
+    ],
+    "transforms[14].rules[4].stemEndsWith": [
+      [114, 114]
     ],
     "transforms[15].rules[0].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
-    ],
-    "transforms[15].rules[0].stemNotStartsWith": [
-      [108, 109],
-      [112, 112]
     ],
     "transforms[15].rules[1].stemCharacters": [
       [0, 31],
@@ -400,6 +364,11 @@
     ],
     "transforms[15].rules[1].stemEndsWith": [
       [114, 114]
+    ],
+    "transforms[15].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
     ],
     "transforms[15].rules[3].stemCharacters": [
       [0, 31],
@@ -413,31 +382,6 @@
       [120, 120]
     ],
     "transforms[15].rules[4].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[15].rules[5].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[15].rules[6].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[15].rules[7].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[15].rules[8].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[15].rules[9].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
@@ -500,37 +444,66 @@
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[17].rules[1].stemEndsWith": [
-      [114, 114]
-    ],
-    "transforms[18].rules[0].stemCharacters": [
+    "transforms[17].rules[0].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[18].rules[1].stemCharacters": [
+    "transforms[17].rules[0].stemNotStartsWith": [
+      [108, 109],
+      [112, 112]
+    ],
+    "transforms[17].rules[1].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[17].rules[1].stemEndsWith": [
+      [114, 114]
+    ],
+    "transforms[17].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[17].rules[3].stemEndsWith": [
+      [100, 100],
+      [115, 116],
+      [120, 120]
+    ],
+    "transforms[17].rules[4].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[17].rules[5].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[17].rules[6].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[17].rules[7].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[17].rules[8].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[17].rules[9].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
     ],
     "transforms[18].rules[1].stemEndsWith": [
       [114, 114]
-    ],
-    "transforms[18].rules[3].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[18].rules[3].stemEndsWith": [
-      [100, 100],
-      [115, 116],
-      [120, 120]
-    ],
-    "transforms[18].rules[4].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
     ],
     "transforms[19].rules[0].stemCharacters": [
       [0, 31],
@@ -542,21 +515,31 @@
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[19].rules[2].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[19].rules[2].stemEndsWith": [
-      [108, 108],
+    "transforms[19].rules[1].stemEndsWith": [
       [114, 114]
     ],
     "transforms[19].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[19].rules[3].stemEndsWith": [
+      [100, 100],
+      [115, 116],
+      [120, 120]
+    ],
+    "transforms[19].rules[4].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
     ],
     "transforms[20].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[20].rules[1].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
@@ -570,12 +553,12 @@
       [108, 108],
       [114, 114]
     ],
-    "transforms[21].rules[0].stemCharacters": [
+    "transforms[20].rules[3].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[21].rules[1].stemCharacters": [
+    "transforms[21].rules[0].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
@@ -589,12 +572,12 @@
       [108, 108],
       [114, 114]
     ],
-    "transforms[21].rules[3].stemCharacters": [
+    "transforms[22].rules[0].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[22].rules[0].stemCharacters": [
+    "transforms[22].rules[1].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
@@ -607,6 +590,11 @@
     "transforms[22].rules[2].stemEndsWith": [
       [108, 108],
       [114, 114]
+    ],
+    "transforms[22].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
     ],
     "transforms[23].rules[0].stemCharacters": [
       [0, 31],
@@ -622,6 +610,16 @@
       [108, 108],
       [114, 114]
     ],
+    "transforms[24].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[24].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 55295],
+      [57344, 1114111]
+    ],
     "transforms[24].rules[2].stemEndsWith": [
       [108, 108],
       [114, 114]
@@ -630,28 +628,26 @@
       [108, 108],
       [114, 114]
     ],
-    "transforms[26].rules[1].stemCharacters": [
-      [0, 31],
-      [33, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[26].rules[1].stemEndsWith": [
+    "transforms[26].rules[2].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
-    "transforms[27].rules[0].stemCharacters": [
+    "transforms[27].rules[1].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[30].rules[2].stemEndsWith": [
+    "transforms[27].rules[1].stemEndsWith": [
+      [108, 108],
       [114, 114]
     ],
-    "transforms[32].rules[0].stemCharacters": [
+    "transforms[28].rules[0].stemCharacters": [
       [0, 31],
-      [33, 64],
-      [91, 55295],
+      [33, 55295],
       [57344, 1114111]
+    ],
+    "transforms[31].rules[2].stemEndsWith": [
+      [114, 114]
     ],
     "transforms[33].rules[0].stemCharacters": [
       [0, 31],
@@ -659,170 +655,72 @@
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[33].rules[1].stemCharacters": [
+    "transforms[34].rules[0].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[33].rules[4].stemCharacters": [
+    "transforms[34].rules[1].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[33].rules[4].stemEndsWith": [
+    "transforms[34].rules[4].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[34].rules[4].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
-    "transforms[33].rules[5].stemCharacters": [
+    "transforms[34].rules[5].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[33].rules[5].stemEndsWith": [
+    "transforms[34].rules[5].stemEndsWith": [
       [110, 110]
-    ],
-    "transforms[33].rules[6].stemEndsWith": [
-      [98, 98],
-      [100, 100],
-      [103, 103],
-      [108, 109]
-    ],
-    "transforms[33].rules[16].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[33].rules[17].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[33].rules[19].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[33].rules[21].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[33].rules[29].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[33].rules[30].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[33].rules[33].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[33].rules[34].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[33].rules[35].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[33].rules[36].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[33].rules[37].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[33].rules[38].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[33].rules[39].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[33].rules[40].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[34].rules[6].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
     ],
     "transforms[34].rules[6].stemEndsWith": [
-      [108, 108],
-      [114, 114]
-    ],
-    "transforms[34].rules[7].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[34].rules[7].stemEndsWith": [
-      [108, 108],
-      [114, 114]
-    ],
-    "transforms[34].rules[8].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[34].rules[8].stemEndsWith": [
-      [110, 110]
-    ],
-    "transforms[34].rules[9].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[34].rules[9].stemEndsWith": [
-      [110, 110]
-    ],
-    "transforms[34].rules[10].stemEndsWith": [
       [98, 98],
       [100, 100],
       [103, 103],
       [108, 109]
     ],
-    "transforms[34].rules[11].stemEndsWith": [
-      [98, 98],
-      [100, 100],
-      [103, 103],
-      [108, 109]
+    "transforms[34].rules[16].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[34].rules[17].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[34].rules[19].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[34].rules[21].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[34].rules[29].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
     ],
     "transforms[34].rules[30].stemCharacters": [
       [0, 31],
@@ -830,7 +728,19 @@
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[34].rules[32].stemCharacters": [
+    "transforms[34].rules[33].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[34].rules[34].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[34].rules[35].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
@@ -842,115 +752,177 @@
       [91, 55295],
       [57344, 1114111]
     ],
+    "transforms[34].rules[37].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[34].rules[38].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[34].rules[39].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[34].rules[40].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[34].rules[56].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[34].rules[58].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[34].rules[68].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[34].rules[69].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[34].rules[70].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[34].rules[71].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[34].rules[72].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[34].rules[73].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[34].rules[74].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[34].rules[81].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[34].rules[82].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[34].rules[83].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[34].rules[111].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[35].rules[0].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[35].rules[1].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[35].rules[2].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[35].rules[5].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
     "transforms[35].rules[6].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[35].rules[6].stemEndsWith": [
+      [108, 108],
+      [114, 114]
+    ],
+    "transforms[35].rules[7].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[35].rules[7].stemEndsWith": [
+      [108, 108],
+      [114, 114]
+    ],
+    "transforms[35].rules[8].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[35].rules[8].stemEndsWith": [
+      [110, 110]
+    ],
+    "transforms[35].rules[9].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[35].rules[9].stemEndsWith": [
+      [110, 110]
+    ],
+    "transforms[35].rules[10].stemEndsWith": [
+      [98, 98],
+      [100, 100],
+      [103, 103],
+      [108, 109]
+    ],
+    "transforms[35].rules[11].stemEndsWith": [
+      [98, 98],
+      [100, 100],
+      [103, 103],
+      [108, 109]
+    ],
+    "transforms[35].rules[30].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[35].rules[32].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[35].rules[36].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[35].rules[40].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[35].rules[56].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[35].rules[58].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[35].rules[68].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[35].rules[69].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[35].rules[70].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[35].rules[71].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[35].rules[72].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[35].rules[73].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[35].rules[74].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[35].rules[81].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[35].rules[82].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[35].rules[83].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[35].rules[111].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
@@ -974,13 +946,13 @@
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[36].rules[3].stemCharacters": [
+    "transforms[36].rules[5].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[36].rules[4].stemCharacters": [
+    "transforms[36].rules[6].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
@@ -1016,47 +988,71 @@
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[37].rules[5].stemCharacters": [
+    "transforms[38].rules[0].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[37].rules[5].stemEndsWith": [
+    "transforms[38].rules[1].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[38].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[38].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[38].rules[4].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[38].rules[5].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[38].rules[5].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
-    "transforms[37].rules[6].stemCharacters": [
+    "transforms[38].rules[6].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[37].rules[7].stemCharacters": [
+    "transforms[38].rules[7].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[37].rules[8].stemCharacters": [
+    "transforms[38].rules[8].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[37].rules[9].stemCharacters": [
+    "transforms[38].rules[9].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[37].rules[13].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[38].rules[0].stemCharacters": [
+    "transforms[38].rules[13].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
@@ -1074,103 +1070,6 @@
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[40].rules[1].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[40].rules[2].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[40].rules[2].stemEndsWith": [
-      [108, 108],
-      [114, 114]
-    ],
-    "transforms[40].rules[3].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[40].rules[3].stemEndsWith": [
-      [110, 110]
-    ],
-    "transforms[40].rules[4].stemEndsWith": [
-      [98, 98],
-      [100, 100],
-      [103, 103],
-      [108, 109]
-    ],
-    "transforms[40].rules[14].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[40].rules[15].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[40].rules[17].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[40].rules[19].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[40].rules[27].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[40].rules[28].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[40].rules[35].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[40].rules[36].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[40].rules[37].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[40].rules[38].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[40].rules[39].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
     "transforms[41].rules[0].stemCharacters": [
       [0, 31],
       [33, 64],
@@ -1183,21 +1082,30 @@
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[41].rules[1].stemEndsWith": [
+    "transforms[41].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[41].rules[2].stemEndsWith": [
       [108, 108],
       [114, 114]
     ],
-    "transforms[41].rules[11].stemCharacters": [
+    "transforms[41].rules[3].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[41].rules[12].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
+    "transforms[41].rules[3].stemEndsWith": [
+      [110, 110]
+    ],
+    "transforms[41].rules[4].stemEndsWith": [
+      [98, 98],
+      [100, 100],
+      [103, 103],
+      [108, 109]
     ],
     "transforms[41].rules[14].stemCharacters": [
       [0, 31],
@@ -1205,19 +1113,25 @@
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[41].rules[16].stemCharacters": [
+    "transforms[41].rules[15].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[41].rules[24].stemCharacters": [
+    "transforms[41].rules[17].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[41].rules[25].stemCharacters": [
+    "transforms[41].rules[19].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[41].rules[27].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
@@ -1229,37 +1143,31 @@
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[41].rules[29].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[41].rules[30].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[41].rules[31].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[41].rules[33].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[41].rules[34].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
     "transforms[41].rules[35].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[41].rules[36].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[41].rules[37].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[41].rules[38].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[41].rules[39].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
@@ -1271,10 +1179,6 @@
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[42].rules[0].stemEndsWith": [
-      [108, 108],
-      [114, 114]
-    ],
     "transforms[42].rules[1].stemCharacters": [
       [0, 31],
       [33, 64],
@@ -1282,55 +1186,8 @@
       [57344, 1114111]
     ],
     "transforms[42].rules[1].stemEndsWith": [
-      [110, 110]
-    ],
-    "transforms[42].rules[2].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[42].rules[2].stemEndsWith": [
-      [98, 98],
-      [100, 100],
-      [103, 103],
-      [108, 109]
-    ],
-    "transforms[42].rules[3].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[42].rules[4].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[42].rules[5].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[42].rules[6].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[42].rules[9].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[42].rules[10].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
+      [108, 108],
+      [114, 114]
     ],
     "transforms[42].rules[11].stemCharacters": [
       [0, 31],
@@ -1344,67 +1201,13 @@
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[42].rules[13].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
     "transforms[42].rules[14].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[42].rules[15].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
     "transforms[42].rules[16].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[42].rules[17].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[42].rules[18].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[42].rules[19].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[42].rules[20].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[42].rules[21].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[42].rules[22].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[42].rules[23].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
@@ -1422,13 +1225,7 @@
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[42].rules[26].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[42].rules[27].stemCharacters": [
+    "transforms[42].rules[28].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
@@ -1470,12 +1267,6 @@
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[42].rules[36].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
     "transforms[43].rules[0].stemCharacters": [
       [0, 31],
       [33, 64],
@@ -1495,6 +1286,12 @@
     "transforms[43].rules[1].stemEndsWith": [
       [110, 110]
     ],
+    "transforms[43].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[43].rules[2].stemEndsWith": [
       [98, 98],
       [100, 100],
@@ -1507,6 +1304,180 @@
       [91, 55295],
       [57344, 1114111]
     ],
+    "transforms[43].rules[4].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[5].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[6].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[9].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[10].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[11].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[12].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[13].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[14].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[15].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[16].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[17].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[18].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[19].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[20].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[21].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[22].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[23].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[24].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[25].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[26].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[27].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[29].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[30].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[31].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[33].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[34].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[35].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[43].rules[36].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[44].rules[0].stemCharacters": [
       [0, 31],
       [33, 64],
@@ -1514,7 +1485,8 @@
       [57344, 1114111]
     ],
     "transforms[44].rules[0].stemEndsWith": [
-      [110, 110]
+      [108, 108],
+      [114, 114]
     ],
     "transforms[44].rules[1].stemCharacters": [
       [0, 31],
@@ -1523,180 +1495,15 @@
       [57344, 1114111]
     ],
     "transforms[44].rules[1].stemEndsWith": [
+      [110, 110]
+    ],
+    "transforms[44].rules[2].stemEndsWith": [
       [98, 98],
       [100, 100],
       [103, 103],
       [108, 109]
     ],
-    "transforms[44].rules[2].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
     "transforms[44].rules[3].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[44].rules[4].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[44].rules[5].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[44].rules[8].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[44].rules[9].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[44].rules[10].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[44].rules[11].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[44].rules[12].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[44].rules[13].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[44].rules[14].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[44].rules[15].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[44].rules[16].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[44].rules[17].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[44].rules[18].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[44].rules[19].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[44].rules[20].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[44].rules[21].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[44].rules[22].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[44].rules[23].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[44].rules[24].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[44].rules[25].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[44].rules[26].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[44].rules[28].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[44].rules[29].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[44].rules[30].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[44].rules[32].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[44].rules[33].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[44].rules[58].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
@@ -1708,68 +1515,202 @@
       [91, 55295],
       [57344, 1114111]
     ],
+    "transforms[45].rules[0].stemEndsWith": [
+      [110, 110]
+    ],
+    "transforms[45].rules[1].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[1].stemEndsWith": [
+      [98, 98],
+      [100, 100],
+      [103, 103],
+      [108, 109]
+    ],
+    "transforms[45].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[4].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[5].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[8].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[9].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[10].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[11].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[12].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[13].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[14].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[15].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[16].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[17].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[18].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[19].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[20].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[21].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[22].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[23].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[24].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[25].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[26].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[28].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[29].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[30].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[32].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[33].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[45].rules[58].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[46].rules[0].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[91].rules[0].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[91].rules[2].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[91].rules[3].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[91].rules[4].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[91].rules[7].stemEndsWith": [
-      [108, 108],
-      [114, 114]
-    ],
-    "transforms[91].rules[8].stemEndsWith": [
-      [110, 110]
-    ],
-    "transforms[91].rules[9].stemEndsWith": [
-      [98, 98],
-      [100, 100],
-      [103, 103],
-      [108, 109]
-    ],
-    "transforms[91].rules[47].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[91].rules[48].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[91].rules[49].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[91].rules[50].stemCharacters": [
+    "transforms[47].rules[0].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
@@ -1781,45 +1722,103 @@
       [91, 55295],
       [57344, 1114111]
     ],
+    "transforms[92].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[92].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[92].rules[4].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[92].rules[7].stemEndsWith": [
+      [108, 108],
+      [114, 114]
+    ],
+    "transforms[92].rules[8].stemEndsWith": [
+      [110, 110]
+    ],
+    "transforms[92].rules[9].stemEndsWith": [
+      [98, 98],
+      [100, 100],
+      [103, 103],
+      [108, 109]
+    ],
+    "transforms[92].rules[47].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[92].rules[48].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[92].rules[49].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[92].rules[50].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[93].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[94].rules[0].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[94].rules[1].stemEndsWith": [
+    "transforms[95].rules[1].stemEndsWith": [
       [114, 114]
     ],
-    "transforms[95].rules[3].stemEndsWith": [
+    "transforms[96].rules[3].stemEndsWith": [
       [110, 110]
     ],
-    "transforms[95].rules[4].stemEndsWith": [
+    "transforms[96].rules[4].stemEndsWith": [
       [108, 108]
     ],
-    "transforms[95].rules[6].stemCharacters": [],
-    "transforms[96].rules[0].stemCharacters": [
+    "transforms[96].rules[6].stemCharacters": [],
+    "transforms[97].rules[0].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[96].rules[2].stemCharacters": [],
-    "transforms[98].rules[3].stemEndsWith": [
+    "transforms[97].rules[2].stemCharacters": [],
+    "transforms[99].rules[3].stemEndsWith": [
       [110, 110]
-    ],
-    "transforms[98].rules[4].stemEndsWith": [
-      [108, 108]
-    ],
-    "transforms[98].rules[6].stemCharacters": [],
-    "transforms[99].rules[1].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
     ],
     "transforms[99].rules[4].stemEndsWith": [
-      [110, 110]
+      [108, 108]
     ],
-    "transforms[100].rules[2].stemEndsWith": [
+    "transforms[99].rules[6].stemCharacters": [],
+    "transforms[100].rules[1].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[100].rules[4].stemEndsWith": [
       [110, 110]
     ],
     "transforms[101].rules[2].stemEndsWith": [
@@ -1828,29 +1827,25 @@
     "transforms[102].rules[2].stemEndsWith": [
       [110, 110]
     ],
-    "transforms[102].rules[5].stemCharacters": [],
     "transforms[103].rules[2].stemEndsWith": [
       [110, 110]
     ],
+    "transforms[103].rules[5].stemCharacters": [],
     "transforms[104].rules[2].stemEndsWith": [
       [110, 110]
     ],
     "transforms[105].rules[2].stemEndsWith": [
       [110, 110]
     ],
-    "transforms[106].rules[0].stemCharacters": [
+    "transforms[106].rules[2].stemEndsWith": [
+      [110, 110]
+    ],
+    "transforms[107].rules[0].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[113].rules[3].stemEndsWith": [
-      [110, 110]
-    ],
-    "transforms[113].rules[4].stemEndsWith": [
-      [108, 108]
-    ],
-    "transforms[113].rules[6].stemCharacters": [],
     "transforms[114].rules[3].stemEndsWith": [
       [110, 110]
     ],
@@ -1865,7 +1860,6 @@
       [108, 108]
     ],
     "transforms[115].rules[6].stemCharacters": [],
-    "transforms[115].rules[8].stemCharacters": [],
     "transforms[116].rules[3].stemEndsWith": [
       [110, 110]
     ],
@@ -1873,6 +1867,7 @@
       [108, 108]
     ],
     "transforms[116].rules[6].stemCharacters": [],
+    "transforms[116].rules[8].stemCharacters": [],
     "transforms[117].rules[3].stemEndsWith": [
       [110, 110]
     ],
@@ -1894,190 +1889,165 @@
       [108, 108]
     ],
     "transforms[119].rules[6].stemCharacters": [],
-    "transforms[119].rules[8].stemCharacters": [],
-    "transforms[122].rules[0].stemCharacters": [
+    "transforms[120].rules[3].stemEndsWith": [
+      [110, 110]
+    ],
+    "transforms[120].rules[4].stemEndsWith": [
+      [108, 108]
+    ],
+    "transforms[120].rules[6].stemCharacters": [],
+    "transforms[120].rules[8].stemCharacters": [],
+    "transforms[123].rules[0].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[122].rules[1].stemCharacters": [
+    "transforms[123].rules[1].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[122].rules[2].stemCharacters": [
+    "transforms[123].rules[2].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[122].rules[3].stemCharacters": [
+    "transforms[123].rules[3].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[122].rules[4].stemCharacters": [
+    "transforms[123].rules[4].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[122].rules[5].stemCharacters": [
+    "transforms[123].rules[5].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[122].rules[6].stemCharacters": [
+    "transforms[123].rules[6].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[122].rules[6].stemEndsWith": [
+    "transforms[123].rules[6].stemEndsWith": [
       [108, 109],
       [112, 112],
       [114, 114],
       [120, 120]
     ],
-    "transforms[122].rules[7].stemCharacters": [
+    "transforms[123].rules[7].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[122].rules[8].stemCharacters": [
+    "transforms[123].rules[8].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[122].rules[9].stemCharacters": [
+    "transforms[123].rules[9].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[122].rules[10].stemCharacters": [
+    "transforms[123].rules[10].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[122].rules[11].stemCharacters": [
+    "transforms[123].rules[11].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[122].rules[13].stemCharacters": [
+    "transforms[123].rules[13].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[122].rules[13].stemNotEndsWith": [
+    "transforms[123].rules[13].stemNotEndsWith": [
       [101, 101],
       [105, 105]
     ],
-    "transforms[122].rules[15].stemCharacters": [
+    "transforms[123].rules[15].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[122].rules[16].stemCharacters": [
+    "transforms[123].rules[16].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[122].rules[17].stemCharacters": [
+    "transforms[123].rules[17].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[122].rules[18].stemCharacters": [
+    "transforms[123].rules[18].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[122].rules[19].stemCharacters": [
+    "transforms[123].rules[19].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[122].rules[69].stemCharacters": [
+    "transforms[123].rules[69].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[122].rules[70].stemCharacters": [
+    "transforms[123].rules[70].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[122].rules[94].stemCharacters": [
+    "transforms[123].rules[94].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[122].rules[97].stemCharacters": [
+    "transforms[123].rules[97].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[122].rules[284].stemCharacters": [
+    "transforms[123].rules[283].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[122].rules[290].stemCharacters": [],
-    "transforms[122].rules[291].stemCharacters": [],
-    "transforms[123].rules[0].stemCharacters": [],
-    "transforms[124].rules[0].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[124].rules[1].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[124].rules[2].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[124].rules[2].stemNotEndsWith": [
-      [97, 97],
-      [101, 101],
-      [105, 105],
-      [111, 111]
-    ],
-    "transforms[124].rules[3].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[124].rules[5].stemCharacters": [],
-    "transforms[124].rules[10].stemCharacters": [],
+    "transforms[123].rules[289].stemCharacters": [],
+    "transforms[123].rules[290].stemCharacters": [],
+    "transforms[124].rules[0].stemCharacters": [],
     "transforms[125].rules[0].stemCharacters": [
       [0, 31],
       [33, 64],
@@ -2108,10 +2078,21 @@
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[125].rules[4].stemCharacters": [],
-    "transforms[125].rules[6].stemCharacters": [],
-    "transforms[125].rules[13].stemCharacters": [],
-    "transforms[125].rules[15].stemCharacters": [
+    "transforms[125].rules[5].stemCharacters": [],
+    "transforms[125].rules[10].stemCharacters": [],
+    "transforms[126].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[126].rules[1].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[126].rules[2].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
@@ -2123,9 +2104,21 @@
       [105, 105],
       [111, 111]
     ],
+    "transforms[126].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[126].rules[4].stemCharacters": [],
     "transforms[126].rules[6].stemCharacters": [],
-    "transforms[126].rules[11].stemCharacters": [],
+    "transforms[126].rules[13].stemCharacters": [],
+    "transforms[126].rules[15].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[127].rules[2].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -2134,25 +2127,7 @@
     ],
     "transforms[127].rules[4].stemCharacters": [],
     "transforms[127].rules[6].stemCharacters": [],
-    "transforms[127].rules[12].stemCharacters": [],
-    "transforms[128].rules[0].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[128].rules[1].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[128].rules[2].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
+    "transforms[127].rules[11].stemCharacters": [],
     "transforms[128].rules[2].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -2161,7 +2136,25 @@
     ],
     "transforms[128].rules[4].stemCharacters": [],
     "transforms[128].rules[6].stemCharacters": [],
-    "transforms[128].rules[8].stemCharacters": [],
+    "transforms[128].rules[12].stemCharacters": [],
+    "transforms[129].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[129].rules[1].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[129].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[129].rules[2].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -2189,7 +2182,6 @@
     "transforms[131].rules[4].stemCharacters": [],
     "transforms[131].rules[6].stemCharacters": [],
     "transforms[131].rules[8].stemCharacters": [],
-    "transforms[131].rules[11].stemCharacters": [],
     "transforms[132].rules[2].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -2199,6 +2191,7 @@
     "transforms[132].rules[4].stemCharacters": [],
     "transforms[132].rules[6].stemCharacters": [],
     "transforms[132].rules[8].stemCharacters": [],
+    "transforms[132].rules[11].stemCharacters": [],
     "transforms[133].rules[2].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -2217,32 +2210,20 @@
     "transforms[134].rules[4].stemCharacters": [],
     "transforms[134].rules[6].stemCharacters": [],
     "transforms[134].rules[8].stemCharacters": [],
-    "transforms[135].rules[0].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
+    "transforms[135].rules[2].stemNotEndsWith": [
+      [97, 97],
+      [101, 101],
+      [105, 105],
+      [111, 111]
     ],
-    "transforms[135].rules[1].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[135].rules[2].stemCharacters": [],
     "transforms[135].rules[4].stemCharacters": [],
-    "transforms[135].rules[5].stemCharacters": [],
+    "transforms[135].rules[6].stemCharacters": [],
+    "transforms[135].rules[8].stemCharacters": [],
     "transforms[136].rules[0].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
-    ],
-    "transforms[136].rules[0].stemNotEndsWith": [
-      [97, 97],
-      [101, 101],
-      [105, 105],
-      [111, 111]
     ],
     "transforms[136].rules[1].stemCharacters": [
       [0, 31],
@@ -2250,27 +2231,27 @@
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[137].rules[2].stemCharacters": [
+    "transforms[136].rules[2].stemCharacters": [],
+    "transforms[136].rules[4].stemCharacters": [],
+    "transforms[136].rules[5].stemCharacters": [],
+    "transforms[137].rules[0].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[137].rules[2].stemNotEndsWith": [
+    "transforms[137].rules[0].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
-    "transforms[137].rules[3].stemCharacters": [
+    "transforms[137].rules[1].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[137].rules[4].stemCharacters": [],
-    "transforms[137].rules[6].stemCharacters": [],
-    "transforms[137].rules[8].stemCharacters": [],
     "transforms[138].rules[2].stemCharacters": [
       [0, 31],
       [33, 64],
@@ -2292,16 +2273,28 @@
     "transforms[138].rules[4].stemCharacters": [],
     "transforms[138].rules[6].stemCharacters": [],
     "transforms[138].rules[8].stemCharacters": [],
-    "transforms[138].rules[10].stemCharacters": [],
+    "transforms[139].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[139].rules[2].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
+    "transforms[139].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[139].rules[4].stemCharacters": [],
     "transforms[139].rules[6].stemCharacters": [],
     "transforms[139].rules[8].stemCharacters": [],
+    "transforms[139].rules[10].stemCharacters": [],
     "transforms[140].rules[2].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -2311,12 +2304,6 @@
     "transforms[140].rules[4].stemCharacters": [],
     "transforms[140].rules[6].stemCharacters": [],
     "transforms[140].rules[8].stemCharacters": [],
-    "transforms[141].rules[2].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
     "transforms[141].rules[2].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -2326,22 +2313,21 @@
     "transforms[141].rules[4].stemCharacters": [],
     "transforms[141].rules[6].stemCharacters": [],
     "transforms[141].rules[8].stemCharacters": [],
-    "transforms[142].rules[0].stemCharacters": [
+    "transforms[142].rules[2].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[142].rules[1].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
+    "transforms[142].rules[2].stemNotEndsWith": [
+      [97, 97],
+      [101, 101],
+      [105, 105],
+      [111, 111]
     ],
-    "transforms[142].rules[2].stemCharacters": [],
-    "transforms[142].rules[3].stemCharacters": [],
-    "transforms[142].rules[5].stemCharacters": [],
-    "transforms[142].rules[9].stemCharacters": [],
+    "transforms[142].rules[4].stemCharacters": [],
+    "transforms[142].rules[6].stemCharacters": [],
+    "transforms[142].rules[8].stemCharacters": [],
     "transforms[143].rules[0].stemCharacters": [
       [0, 31],
       [33, 64],
@@ -2354,34 +2340,10 @@
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[143].rules[2].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[143].rules[2].stemNotEndsWith": [
-      [97, 97],
-      [101, 101],
-      [105, 105],
-      [111, 111]
-    ],
-    "transforms[143].rules[3].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[143].rules[4].stemCharacters": [],
+    "transforms[143].rules[2].stemCharacters": [],
+    "transforms[143].rules[3].stemCharacters": [],
     "transforms[143].rules[5].stemCharacters": [],
-    "transforms[143].rules[7].stemCharacters": [],
-    "transforms[143].rules[12].stemCharacters": [],
-    "transforms[143].rules[14].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
+    "transforms[143].rules[9].stemCharacters": [],
     "transforms[144].rules[0].stemCharacters": [
       [0, 31],
       [33, 64],
@@ -2416,16 +2378,47 @@
     "transforms[144].rules[5].stemCharacters": [],
     "transforms[144].rules[7].stemCharacters": [],
     "transforms[144].rules[12].stemCharacters": [],
-    "transforms[144].rules[15].stemCharacters": [],
+    "transforms[144].rules[14].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[145].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[145].rules[1].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[145].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[145].rules[2].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
+    "transforms[145].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[145].rules[4].stemCharacters": [],
-    "transforms[145].rules[6].stemCharacters": [],
-    "transforms[145].rules[11].stemCharacters": [],
+    "transforms[145].rules[5].stemCharacters": [],
+    "transforms[145].rules[7].stemCharacters": [],
+    "transforms[145].rules[12].stemCharacters": [],
+    "transforms[145].rules[15].stemCharacters": [],
     "transforms[146].rules[2].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -2435,18 +2428,6 @@
     "transforms[146].rules[4].stemCharacters": [],
     "transforms[146].rules[6].stemCharacters": [],
     "transforms[146].rules[11].stemCharacters": [],
-    "transforms[147].rules[0].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[147].rules[2].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
     "transforms[147].rules[2].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -2454,19 +2435,30 @@
       [111, 111]
     ],
     "transforms[147].rules[4].stemCharacters": [],
-    "transforms[147].rules[5].stemCharacters": [],
-    "transforms[147].rules[7].stemCharacters": [],
-    "transforms[147].rules[12].stemCharacters": [],
+    "transforms[147].rules[6].stemCharacters": [],
+    "transforms[147].rules[11].stemCharacters": [],
+    "transforms[148].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[148].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[148].rules[2].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
+    "transforms[148].rules[4].stemCharacters": [],
     "transforms[148].rules[5].stemCharacters": [],
-    "transforms[148].rules[6].stemCharacters": [],
-    "transforms[148].rules[8].stemCharacters": [],
-    "transforms[148].rules[14].stemCharacters": [],
+    "transforms[148].rules[7].stemCharacters": [],
+    "transforms[148].rules[12].stemCharacters": [],
     "transforms[149].rules[2].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -2487,7 +2479,6 @@
     "transforms[150].rules[6].stemCharacters": [],
     "transforms[150].rules[8].stemCharacters": [],
     "transforms[150].rules[14].stemCharacters": [],
-    "transforms[150].rules[15].stemCharacters": [],
     "transforms[151].rules[2].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -2498,6 +2489,7 @@
     "transforms[151].rules[6].stemCharacters": [],
     "transforms[151].rules[8].stemCharacters": [],
     "transforms[151].rules[14].stemCharacters": [],
+    "transforms[151].rules[15].stemCharacters": [],
     "transforms[152].rules[2].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -2518,69 +2510,48 @@
     "transforms[153].rules[6].stemCharacters": [],
     "transforms[153].rules[8].stemCharacters": [],
     "transforms[153].rules[14].stemCharacters": [],
-    "transforms[154].rules[0].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[154].rules[1].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[154].rules[2].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
     "transforms[154].rules[2].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
-    "transforms[154].rules[3].stemCharacters": [
+    "transforms[154].rules[5].stemCharacters": [],
+    "transforms[154].rules[6].stemCharacters": [],
+    "transforms[154].rules[8].stemCharacters": [],
+    "transforms[154].rules[14].stemCharacters": [],
+    "transforms[155].rules[0].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[154].rules[4].stemCharacters": [],
-    "transforms[155].rules[9].stemCharacters": [],
-    "transforms[156].rules[0].stemCharacters": [
+    "transforms[155].rules[1].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[156].rules[1].stemCharacters": [
+    "transforms[155].rules[2].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[156].rules[2].stemCharacters": [
+    "transforms[155].rules[2].stemNotEndsWith": [
+      [97, 97],
+      [101, 101],
+      [105, 105],
+      [111, 111]
+    ],
+    "transforms[155].rules[3].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[156].rules[3].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[156].rules[5].stemCharacters": [],
-    "transforms[156].rules[6].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
+    "transforms[155].rules[4].stemCharacters": [],
+    "transforms[156].rules[9].stemCharacters": [],
     "transforms[157].rules[0].stemCharacters": [
       [0, 31],
       [33, 64],
@@ -2605,25 +2576,44 @@
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[158].rules[0].stemNotEndsWith": [
-      [97, 97],
-      [101, 101],
-      [105, 105],
-      [111, 111]
+    "transforms[157].rules[5].stemCharacters": [],
+    "transforms[157].rules[6].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
     ],
-    "transforms[158].rules[1].stemNotEndsWith": [
-      [97, 97],
-      [101, 101],
-      [105, 105],
-      [111, 111]
+    "transforms[158].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
     ],
-    "transforms[159].rules[0].stemCharacters": [
+    "transforms[158].rules[1].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[158].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[158].rules[3].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
     "transforms[159].rules[0].stemNotEndsWith": [
+      [97, 97],
+      [101, 101],
+      [105, 105],
+      [111, 111]
+    ],
+    "transforms[159].rules[1].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
@@ -2641,20 +2631,18 @@
       [105, 105],
       [111, 111]
     ],
-    "transforms[161].rules[4].stemNotEndsWith": [
+    "transforms[161].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[161].rules[0].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
-    "transforms[161].rules[5].stemNotEndsWith": [
-      [97, 97],
-      [101, 101],
-      [105, 105],
-      [111, 111]
-    ],
-    "transforms[161].rules[8].stemCharacters": [],
-    "transforms[161].rules[10].stemCharacters": [],
     "transforms[162].rules[4].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -2668,6 +2656,7 @@
       [111, 111]
     ],
     "transforms[162].rules[8].stemCharacters": [],
+    "transforms[162].rules[10].stemCharacters": [],
     "transforms[163].rules[4].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -2694,7 +2683,6 @@
       [111, 111]
     ],
     "transforms[164].rules[8].stemCharacters": [],
-    "transforms[164].rules[9].stemCharacters": [],
     "transforms[165].rules[4].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -2708,46 +2696,46 @@
       [111, 111]
     ],
     "transforms[165].rules[8].stemCharacters": [],
-    "transforms[166].rules[8].stemNotEndsWith": [
+    "transforms[165].rules[9].stemCharacters": [],
+    "transforms[166].rules[4].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
-    "transforms[166].rules[9].stemNotEndsWith": [
+    "transforms[166].rules[5].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
-    "transforms[166].rules[10].stemNotEndsWith": [
+    "transforms[166].rules[8].stemCharacters": [],
+    "transforms[167].rules[8].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
-    "transforms[166].rules[11].stemNotEndsWith": [
+    "transforms[167].rules[9].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
-    "transforms[166].rules[16].stemCharacters": [],
-    "transforms[166].rules[17].stemCharacters": [],
-    "transforms[167].rules[4].stemNotEndsWith": [
+    "transforms[167].rules[10].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
-    "transforms[167].rules[5].stemNotEndsWith": [
+    "transforms[167].rules[11].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
-    "transforms[167].rules[8].stemCharacters": [],
-    "transforms[167].rules[9].stemCharacters": [],
+    "transforms[167].rules[16].stemCharacters": [],
+    "transforms[167].rules[17].stemCharacters": [],
     "transforms[168].rules[4].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -2761,6 +2749,7 @@
       [111, 111]
     ],
     "transforms[168].rules[8].stemCharacters": [],
+    "transforms[168].rules[9].stemCharacters": [],
     "transforms[169].rules[4].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -2787,60 +2776,59 @@
       [111, 111]
     ],
     "transforms[170].rules[8].stemCharacters": [],
-    "transforms[170].rules[9].stemCharacters": [],
-    "transforms[171].rules[4].stemCharacters": [],
-    "transforms[172].rules[0].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[172].rules[0].stemNotEndsWith": [
+    "transforms[171].rules[4].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
-    "transforms[172].rules[1].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[172].rules[1].stemNotEndsWith": [
+    "transforms[171].rules[5].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
-    "transforms[172].rules[2].stemCharacters": [
+    "transforms[171].rules[8].stemCharacters": [],
+    "transforms[171].rules[9].stemCharacters": [],
+    "transforms[172].rules[4].stemCharacters": [],
+    "transforms[173].rules[0].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[172].rules[3].stemCharacters": [
+    "transforms[173].rules[0].stemNotEndsWith": [
+      [97, 97],
+      [101, 101],
+      [105, 105],
+      [111, 111]
+    ],
+    "transforms[173].rules[1].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[173].rules[12].stemCharacters": [],
-    "transforms[173].rules[13].stemCharacters": [],
-    "transforms[174].rules[4].stemNotEndsWith": [
+    "transforms[173].rules[1].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
-    "transforms[174].rules[5].stemNotEndsWith": [
-      [97, 97],
-      [101, 101],
-      [105, 105],
-      [111, 111]
+    "transforms[173].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
     ],
-    "transforms[174].rules[8].stemCharacters": [],
-    "transforms[174].rules[9].stemCharacters": [],
+    "transforms[173].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[174].rules[12].stemCharacters": [],
+    "transforms[174].rules[13].stemCharacters": [],
     "transforms[175].rules[4].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -2854,6 +2842,7 @@
       [111, 111]
     ],
     "transforms[175].rules[8].stemCharacters": [],
+    "transforms[175].rules[9].stemCharacters": [],
     "transforms[176].rules[4].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -2880,32 +2869,32 @@
       [111, 111]
     ],
     "transforms[177].rules[8].stemCharacters": [],
-    "transforms[177].rules[9].stemCharacters": [],
-    "transforms[178].rules[0].stemCharacters": [
+    "transforms[178].rules[4].stemNotEndsWith": [
+      [97, 97],
+      [101, 101],
+      [105, 105],
+      [111, 111]
+    ],
+    "transforms[178].rules[5].stemNotEndsWith": [
+      [97, 97],
+      [101, 101],
+      [105, 105],
+      [111, 111]
+    ],
+    "transforms[178].rules[8].stemCharacters": [],
+    "transforms[178].rules[9].stemCharacters": [],
+    "transforms[179].rules[0].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[178].rules[1].stemCharacters": [
+    "transforms[179].rules[1].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[178].rules[2].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[178].rules[3].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[178].rules[4].stemCharacters": [],
     "transforms[179].rules[2].stemCharacters": [
       [0, 31],
       [33, 64],
@@ -2918,58 +2907,57 @@
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[179].rules[8].stemNotEndsWith": [
-      [97, 97],
-      [101, 101],
-      [105, 105],
-      [111, 111]
-    ],
-    "transforms[179].rules[9].stemNotEndsWith": [
-      [97, 97],
-      [101, 101],
-      [105, 105],
-      [111, 111]
-    ],
-    "transforms[179].rules[10].stemCharacters": [
+    "transforms[179].rules[4].stemCharacters": [],
+    "transforms[180].rules[2].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[179].rules[10].stemNotEndsWith": [
-      [97, 97],
-      [101, 101],
-      [105, 105],
-      [111, 111]
-    ],
-    "transforms[179].rules[11].stemCharacters": [
+    "transforms[180].rules[3].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[179].rules[11].stemNotEndsWith": [
+    "transforms[180].rules[8].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
-    "transforms[179].rules[16].stemCharacters": [],
-    "transforms[179].rules[17].stemCharacters": [],
-    "transforms[180].rules[4].stemNotEndsWith": [
+    "transforms[180].rules[9].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
-    "transforms[180].rules[5].stemNotEndsWith": [
+    "transforms[180].rules[10].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[180].rules[10].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
-    "transforms[180].rules[8].stemCharacters": [],
-    "transforms[180].rules[9].stemCharacters": [],
+    "transforms[180].rules[11].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[180].rules[11].stemNotEndsWith": [
+      [97, 97],
+      [101, 101],
+      [105, 105],
+      [111, 111]
+    ],
+    "transforms[180].rules[16].stemCharacters": [],
+    "transforms[180].rules[17].stemCharacters": [],
     "transforms[181].rules[4].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -2983,6 +2971,7 @@
       [111, 111]
     ],
     "transforms[181].rules[8].stemCharacters": [],
+    "transforms[181].rules[9].stemCharacters": [],
     "transforms[182].rules[4].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -3009,7 +2998,6 @@
       [111, 111]
     ],
     "transforms[183].rules[8].stemCharacters": [],
-    "transforms[183].rules[9].stemCharacters": [],
     "transforms[184].rules[4].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -3022,47 +3010,47 @@
       [105, 105],
       [111, 111]
     ],
-    "transforms[184].rules[11].stemCharacters": [],
-    "transforms[185].rules[8].stemNotEndsWith": [
+    "transforms[184].rules[8].stemCharacters": [],
+    "transforms[184].rules[9].stemCharacters": [],
+    "transforms[185].rules[4].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
-    "transforms[185].rules[9].stemNotEndsWith": [
+    "transforms[185].rules[5].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
-    "transforms[185].rules[10].stemNotEndsWith": [
+    "transforms[185].rules[11].stemCharacters": [],
+    "transforms[186].rules[8].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
-    "transforms[185].rules[11].stemNotEndsWith": [
+    "transforms[186].rules[9].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
-    "transforms[185].rules[22].stemCharacters": [],
-    "transforms[185].rules[23].stemCharacters": [],
-    "transforms[186].rules[4].stemNotEndsWith": [
+    "transforms[186].rules[10].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
-    "transforms[186].rules[5].stemNotEndsWith": [
+    "transforms[186].rules[11].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
-    "transforms[186].rules[10].stemCharacters": [],
-    "transforms[186].rules[12].stemCharacters": [],
+    "transforms[186].rules[22].stemCharacters": [],
+    "transforms[186].rules[23].stemCharacters": [],
     "transforms[187].rules[4].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -3075,7 +3063,8 @@
       [105, 105],
       [111, 111]
     ],
-    "transforms[187].rules[11].stemCharacters": [],
+    "transforms[187].rules[10].stemCharacters": [],
+    "transforms[187].rules[12].stemCharacters": [],
     "transforms[188].rules[4].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -3101,97 +3090,77 @@
       [105, 105],
       [111, 111]
     ],
-    "transforms[189].rules[10].stemCharacters": [],
-    "transforms[189].rules[12].stemCharacters": [],
-    "transforms[190].rules[0].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[190].rules[1].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[190].rules[2].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[190].rules[2].stemNotEndsWith": [
+    "transforms[189].rules[11].stemCharacters": [],
+    "transforms[190].rules[4].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
-    "transforms[190].rules[3].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
+    "transforms[190].rules[5].stemNotEndsWith": [
+      [97, 97],
+      [101, 101],
+      [105, 105],
+      [111, 111]
     ],
-    "transforms[190].rules[4].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[190].rules[5].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[190].rules[7].stemCharacters": [],
-    "transforms[190].rules[8].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[190].rules[11].stemCharacters": [],
+    "transforms[190].rules[10].stemCharacters": [],
+    "transforms[190].rules[12].stemCharacters": [],
     "transforms[191].rules[0].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
+    "transforms[191].rules[1].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[191].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[191].rules[2].stemNotEndsWith": [
+      [97, 97],
+      [101, 101],
+      [105, 105],
+      [111, 111]
+    ],
+    "transforms[191].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[191].rules[4].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[191].rules[5].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[191].rules[7].stemCharacters": [],
+    "transforms[191].rules[8].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[191].rules[11].stemCharacters": [],
     "transforms[192].rules[0].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[192].rules[1].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[192].rules[2].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[192].rules[2].stemNotEndsWith": [
-      [97, 97],
-      [101, 101],
-      [105, 105],
-      [111, 111]
-    ],
-    "transforms[192].rules[3].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[192].rules[4].stemCharacters": [],
-    "transforms[192].rules[5].stemCharacters": [],
-    "transforms[192].rules[9].stemCharacters": [],
     "transforms[193].rules[0].stemCharacters": [
       [0, 31],
       [33, 64],
@@ -3224,8 +3193,20 @@
     ],
     "transforms[193].rules[4].stemCharacters": [],
     "transforms[193].rules[5].stemCharacters": [],
-    "transforms[193].rules[8].stemCharacters": [],
-    "transforms[193].rules[11].stemCharacters": [
+    "transforms[193].rules[9].stemCharacters": [],
+    "transforms[194].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[194].rules[1].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[194].rules[2].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
@@ -3237,9 +3218,21 @@
       [105, 105],
       [111, 111]
     ],
+    "transforms[194].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[194].rules[4].stemCharacters": [],
     "transforms[194].rules[5].stemCharacters": [],
     "transforms[194].rules[8].stemCharacters": [],
+    "transforms[194].rules[11].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
     "transforms[195].rules[2].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -3248,20 +3241,16 @@
     ],
     "transforms[195].rules[4].stemCharacters": [],
     "transforms[195].rules[5].stemCharacters": [],
-    "transforms[195].rules[7].stemCharacters": [],
-    "transforms[196].rules[4].stemNotEndsWith": [
+    "transforms[195].rules[8].stemCharacters": [],
+    "transforms[196].rules[2].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
-    "transforms[196].rules[5].stemNotEndsWith": [
-      [97, 97],
-      [101, 101],
-      [105, 105],
-      [111, 111]
-    ],
-    "transforms[196].rules[9].stemCharacters": [],
+    "transforms[196].rules[4].stemCharacters": [],
+    "transforms[196].rules[5].stemCharacters": [],
+    "transforms[196].rules[7].stemCharacters": [],
     "transforms[197].rules[4].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -3274,90 +3263,89 @@
       [105, 105],
       [111, 111]
     ],
-    "transforms[197].rules[8].stemCharacters": [],
-    "transforms[198].rules[0].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[198].rules[1].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[198].rules[4].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[198].rules[5].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[198].rules[8].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[198].rules[8].stemNotEndsWith": [
+    "transforms[197].rules[9].stemCharacters": [],
+    "transforms[198].rules[4].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
-    "transforms[198].rules[9].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[198].rules[9].stemNotEndsWith": [
+    "transforms[198].rules[5].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
-    "transforms[198].rules[10].stemCharacters": [
+    "transforms[198].rules[8].stemCharacters": [],
+    "transforms[199].rules[0].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[198].rules[11].stemCharacters": [
+    "transforms[199].rules[1].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[198].rules[12].stemCharacters": [
+    "transforms[199].rules[4].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[198].rules[15].stemCharacters": [],
-    "transforms[198].rules[17].stemCharacters": [],
-    "transforms[198].rules[18].stemCharacters": [],
-    "transforms[199].rules[4].stemNotEndsWith": [
+    "transforms[199].rules[5].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[199].rules[8].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[199].rules[8].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
-    "transforms[199].rules[5].stemNotEndsWith": [
+    "transforms[199].rules[9].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[199].rules[9].stemNotEndsWith": [
       [97, 97],
       [101, 101],
       [105, 105],
       [111, 111]
     ],
-    "transforms[199].rules[10].stemCharacters": [],
-    "transforms[199].rules[11].stemCharacters": [],
+    "transforms[199].rules[10].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[199].rules[11].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[199].rules[12].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[199].rules[15].stemCharacters": [],
+    "transforms[199].rules[17].stemCharacters": [],
+    "transforms[199].rules[18].stemCharacters": [],
     "transforms[200].rules[4].stemNotEndsWith": [
       [97, 97],
       [101, 101],
@@ -3386,147 +3374,161 @@
     ],
     "transforms[201].rules[10].stemCharacters": [],
     "transforms[201].rules[11].stemCharacters": [],
-    "transforms[202].rules[0].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
+    "transforms[202].rules[4].stemNotEndsWith": [
+      [97, 97],
+      [101, 101],
+      [105, 105],
+      [111, 111]
     ],
-    "transforms[202].rules[1].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
+    "transforms[202].rules[5].stemNotEndsWith": [
+      [97, 97],
+      [101, 101],
+      [105, 105],
+      [111, 111]
     ],
-    "transforms[202].rules[2].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[202].rules[3].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[202].rules[4].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[202].rules[5].stemCharacters": [
-      [0, 31],
-      [33, 64],
-      [91, 55295],
-      [57344, 1114111]
-    ],
-    "transforms[202].rules[8].stemCharacters": [],
-    "transforms[202].rules[9].stemCharacters": [],
     "transforms[202].rules[10].stemCharacters": [],
     "transforms[202].rules[11].stemCharacters": [],
-    "transforms[202].rules[12].stemCharacters": [],
-    "transforms[202].rules[13].stemCharacters": [],
-    "transforms[202].rules[14].stemCharacters": [],
-    "transforms[202].rules[15].stemCharacters": [],
-    "transforms[202].rules[16].stemCharacters": [],
-    "transforms[205].rules[0].stemCharacters": [
+    "transforms[203].rules[0].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[203].rules[1].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[203].rules[2].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[203].rules[3].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[203].rules[4].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[203].rules[5].stemCharacters": [
+      [0, 31],
+      [33, 64],
+      [91, 55295],
+      [57344, 1114111]
+    ],
+    "transforms[203].rules[8].stemCharacters": [],
+    "transforms[203].rules[9].stemCharacters": [],
+    "transforms[203].rules[10].stemCharacters": [],
+    "transforms[203].rules[11].stemCharacters": [],
+    "transforms[203].rules[12].stemCharacters": [],
+    "transforms[203].rules[13].stemCharacters": [],
+    "transforms[203].rules[14].stemCharacters": [],
+    "transforms[203].rules[15].stemCharacters": [],
+    "transforms[203].rules[16].stemCharacters": [],
+    "transforms[206].rules[0].stemCharacters": [
       [0, 31],
       [33, 55295],
       [57344, 1114111]
     ],
-    "transforms[205].rules[1].stemCharacters": [
+    "transforms[206].rules[1].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[205].rules[2].stemCharacters": [
+    "transforms[206].rules[2].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[205].rules[3].stemCharacters": [
+    "transforms[206].rules[3].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[205].rules[4].stemCharacters": [
+    "transforms[206].rules[4].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[205].rules[5].stemCharacters": [
+    "transforms[206].rules[5].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[205].rules[6].stemCharacters": [
+    "transforms[206].rules[6].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[205].rules[7].stemCharacters": [
+    "transforms[206].rules[7].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[205].rules[8].stemCharacters": [
+    "transforms[206].rules[8].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[205].rules[9].stemCharacters": [
+    "transforms[206].rules[9].stemCharacters": [
       [0, 31],
       [33, 64],
       [91, 55295],
       [57344, 1114111]
     ],
-    "transforms[205].rules[9].stemEndsWith": [
+    "transforms[206].rules[9].stemEndsWith": [
       [108, 108]
     ],
-    "transforms[206].rules[14].stemEndsWith": [
+    "transforms[207].rules[14].stemEndsWith": [
       [108, 108]
     ],
-    "transforms[206].rules[196].stemNotEndsWith": [
+    "transforms[207].rules[196].stemNotEndsWith": [
       [97, 122]
     ],
-    "transforms[206].rules[197].stemNotEndsWith": [
+    "transforms[207].rules[197].stemNotEndsWith": [
       [97, 99],
       [102, 109],
       [111, 119],
       [121, 122]
     ],
-    "transforms[206].rules[271].stemNotEndsWith": [
+    "transforms[207].rules[271].stemNotEndsWith": [
       [97, 97],
       [99, 122]
     ],
-    "transforms[206].rules[289].stemNotEndsWith": [
+    "transforms[207].rules[289].stemNotEndsWith": [
       [104, 104],
       [109, 109],
       [112, 112],
       [115, 116]
     ],
-    "transforms[207].rules[8].stemEndsWith": [
-      [108, 108]
-    ],
     "transforms[208].rules[8].stemEndsWith": [
       [108, 108]
     ],
-    "transforms[209].rules[0].stemCharacters": [],
+    "transforms[209].rules[8].stemEndsWith": [
+      [108, 108]
+    ],
     "transforms[210].rules[0].stemCharacters": [],
-    "transforms[210].rules[2].stemCharacters": [],
-    "transforms[210].rules[7].stemCharacters": [],
     "transforms[211].rules[0].stemCharacters": [],
-    "transforms[212].rules[0].stemCharacters": []
+    "transforms[211].rules[2].stemCharacters": [],
+    "transforms[211].rules[7].stemCharacters": [],
+    "transforms[212].rules[0].stemCharacters": [],
+    "transforms[213].rules[0].stemCharacters": []
   },
   "steps": [
     {
@@ -5287,6 +5289,7 @@
         ["recta est", "recta est"],
         ["facturam", "facturam"],
         ["saturae", "saturae"],
+        ["decimam", "decimam"],
         ["fasciculī arcuātī", "fasciculī arcuātī"],
         ["galaxiārum", "galaxiārum"],
         ["Mārpōrēs", "mārpōrēs"],
@@ -5400,6 +5403,9 @@
         ["media", "media"],
         ["jura", "jura"],
         ["armis", "armis"],
+        ["pluviae", "pluviae"],
+        ["desiderat", "desiderat"],
+        ["mensurae", "mensurae"],
         ["Arma virumque canō, Trōiae quī prīmus ab ōrīs Ītaliam vēnit.", "arma virumque canō, trōiae quī prīmus ab ōrīs ītaliam vēnit."]
       ]
     },
@@ -7161,6 +7167,7 @@
         ["recta est", "Recta est"],
         ["facturam", "Facturam"],
         ["saturae", "Saturae"],
+        ["decimam", "Decimam"],
         ["fasciculī arcuātī", "Fasciculī arcuātī"],
         ["galaxiārum", "Galaxiārum"],
         ["Mārpōrēs", "Mārpōrēs"],
@@ -7274,6 +7281,9 @@
         ["media", "Media"],
         ["jura", "Jura"],
         ["armis", "Armis"],
+        ["pluviae", "Pluviae"],
+        ["desiderat", "Desiderat"],
+        ["mensurae", "Mensurae"],
         ["Arma virumque canō, Trōiae quī prīmus ab ōrīs Ītaliam vēnit.", "Arma virumque canō, Trōiae quī prīmus ab ōrīs Ītaliam vēnit."]
       ]
     }

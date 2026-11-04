@@ -99,5 +99,14 @@
   ["medium", "medium", "n", "n", 0, ["middle"], 98, ""],
   ["ius", "iūs", "n", "n", 0, ["right, law"], 99, ""],
   ["iuro", "iūrō", "v", "v", 0, ["to swear"], 100, ""],
-  ["juro", "jūrō", "v", "v", 0, ["to swear"], 101, ""]
+  ["juro", "jūrō", "v", "v", 0, ["to swear"], 101, ""],
+  ["pluvia", "pluvia", "n", "n", 0, ["rain"], 102, ""],
+  ["pluvius", "pluvius", "adj", "adj", 0, ["rainy"], 103, ""],
+  ["decimus", "decimus", "num", "", 0, ["tenth"], 104, ""],
+  ["decima", "decima", "n", "n", 0, ["tithe"], 105, ""],
+  ["desidero", "dēsīderō", "v", "v", 0, ["to long for"], 106, ""],
+  ["desido", "dēsīdō", "v", "v", 0, ["to sink"], 107, ""],
+  ["desiderat", "", "non-lemma", "v", 0, [["desidero", ["present"]], ["desido", ["pluperfect"]]], 108, ""],
+  ["mensura", "mēnsūra", "n", "n", 0, ["measure"], 109, ""],
+  ["mensurus", "mēnsūrus", "v", "v", 0, ["about to measure"], 110, ""]
 ]
