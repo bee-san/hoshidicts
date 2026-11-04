@@ -526,9 +526,9 @@ file is measured with every option on and with the defaults.
    `Drita`, `Lumi`, `idenë` and `thirri` fail as Known gaps says, so the
    file leaves them out.
 9. **Differential check** (`tools/check-yomitan.mjs` with
-   `build/hoshidicts-cli`): 2,942 inputs, 9,213 Yomitan results, 0
+   `build/hoshidicts-cli`): 2,946 inputs, 9,221 Yomitan results, 0
    differences; `decapitalize` and `capitalizeFirstLetter` agree with
-   Yomitan's on 1,969 inputs each (the inputs include the test files'
+   Yomitan's on 1,973 inputs each (the inputs include the test files'
    strings, so these counts move with the tests).
 10. **Conformance** (`language-conformance-test`): corpus.tsv 994 / 994,
     defaults.tsv 795 / 795 with the defaults, cases.tsv 9 / 9,
