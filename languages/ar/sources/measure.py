@@ -100,12 +100,13 @@ def own_lemmas(word, targets, lemma):
             out.add(target)
         else:
             out |= {t for t in targets.get(expression, ()) if t.split('=')[0] in lemma}
-    if word in lemma:
-        out.add(word)
     # Where a row names an entry by its reading, the bare spelling no longer
-    # counts every entry as right.
+    # counts every entry as right; the word's own entries do.
     specific = {t.split('=')[0] for t in out if '=' in t}
-    return {t for t in out if '=' in t or t not in specific}
+    out = {t for t in out if '=' in t or t not in specific}
+    if word in lemma:
+        out = {t for t in out if t.split('=')[0] != word} | {word}
+    return out
 
 
 def lookup(texts, imported, languages):
@@ -343,23 +344,23 @@ def text_measure(args):
     counts = collections.Counter()
     wrong = collections.Counter()
     judged, unjudged, judged_right, ambiguous = [], [], [], []
-    for (word, hover), res in zip(pos, results):
+    for index, ((word, hover), res) in enumerate(zip(pos, results)):
         first = res['results'][0] if res['results'] else None
         if first is None:
             counts['no result'] += 1
             continue
         right, kind = judge(word, targets, lemma, variants, pos_, homographs)
         if right is None or strip(first['matched']) != word:
-            unjudged.append((word, hover, first, None))
+            unjudged.append((word, hover, first, None, index))
             continue
         kind = kind_of(right, kind)
         if kind == 'ambiguous':
             counts['ambiguous'] += 1
-            ambiguous.append((word, hover, first, None))
+            ambiguous.append((word, hover, first, None, index))
             continue
         counts[kind] += 1
         ok = is_right(first, right)
-        judged.append((word, hover, first, ok))
+        judged.append((word, hover, first, ok, index))
         judged_right.append((right, kind))
         if not ok:
             counts[kind + ' wrong'] += 1
@@ -372,7 +373,7 @@ def text_measure(args):
         print('  %s: %d, wrong %d (%.2f%%)' % (label, counts[k], counts[k + ' wrong'], 100 * counts[k + ' wrong'] / max(counts[k], 1)))
     made = {}
     if '--split' in args:
-        bad_items = [(word, hover, first, right, kind) for (word, hover, first, ok), (right, kind) in zip(judged, judged_right) if not ok]
+        bad_items = [(word, hover, first, right, kind) for (word, hover, first, ok, _), (right, kind) in zip(judged, judged_right) if not ok]
         cs = causes([(hover, right, kind, first) for _, hover, first, right, kind in bad_items], imported, languages)
         per = collections.Counter()
         for (word, hover, first, right, kind), c in zip(bad_items, cs):
@@ -391,14 +392,17 @@ def text_measure(args):
     if '--sample-out' in args:
         # --sample-sizes j,a,u: how many judged, ambiguous and unjudged positions.
         sizes = [int(x) for x in option(args, '--sample-sizes', ','.join([str(sample_size)] * 3)).split(',')]
-        rng = random.Random(seed)
+        # Each position is drawn by a hash of the seed and its index in the
+        # text, so a change elsewhere does not change which positions are drawn.
+        import hashlib
+        key = lambda item: hashlib.sha256(('%d:%d' % (seed, item[4])).encode()).hexdigest()  # noqa: E731
         groups = (('judged', judged), ('ambiguous', ambiguous), ('unjudged', unjudged))
         with open(option(args, '--sample-out', ''), 'w', encoding='utf-8') as out:
-            out.write('# %s: %s positions drawn with seed %d by measure.py text --sample-out (judged, ambiguous, unjudged), with the first card, the script\'s verdict and mine.\n' % (
+            out.write('# %s: %s positions, drawn by a hash of seed %d and the position (measure.py text --sample-out).\n' % (
                 text_path.split('/')[-1], ', '.join('%d %s' % (min(n, len(g)), label) for n, (label, g) in zip(sizes, groups)), seed))
             out.write('# set\tword\tfirst card (expression=reading)\tscript\thand\n')
             for n, (label, group) in zip(sizes, groups):
-                for word, hover, first, ok in rng.sample(group, min(n, len(group))):
+                for word, hover, first, ok, _ in sorted(group, key=key)[:n]:
                     out.write('\t'.join([label, word, first['expression'] + '=' + first.get('reading', ''),
                                          '-' if ok is None else ('right' if ok else 'wrong'), '']) + '\n')
 

@@ -4,14 +4,14 @@
 1700	ياني	يا	wrong
 518	فيه	في	right
 509	نفسه	نفس	right
-495	إنه	إن	right
+495	إنه	إن	wrong (إِن, if)
 491	بها	ب	wrong
 393	فيها	في	right
 335	فضلك	فضل	right
 335	بحاجة	حاجة	right
 333	وما	ما	right
-323	إنها	إن	right
-319	فإن	إن	right
+323	إنها	إن	wrong (إِن, if)
+319	فإن	إن	wrong (إِن, if)
 310	بذلك	بذل	wrong
 257	منها	من	right
 256	عنه	عن	right
@@ -45,7 +45,7 @@
 141	بإمكان	إمكان	right
 138	وقال	قال	right
 134	بشكل	شكل	right
-127	إنك	إن	right
+127	إنك	إن	wrong (إِن, if)
 126	منهم	من	right
 117	لديها	لدى	right
 115	منزله	منزل	right
@@ -64,7 +64,7 @@
 92	وكيف	كيف	right
 92	بهذه	هذا	right
 92	بالأمازيغية	أمازيغية	right
-91	فإنه	إن	right
+91	فإنه	إن	wrong (إِن, if)
 89	قلبه	قلب	right
 87	زوجته	زوجة	right
 86	وأنا	أنا	right
@@ -92,7 +92,7 @@
 71	القدم	قدم	right
 70	بنفسه	نفس	right
 70	ديما	دام	wrong
-68	إنهم	إن	right
+68	إنهم	إن	wrong (إِن, if)
 68	بأنه	أن	right
 68	للتو	تو	right
 67	فعله	فعل	right
