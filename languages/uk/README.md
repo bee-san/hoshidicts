@@ -434,7 +434,7 @@ identical).
      заклади, золота, од or видимо, and the -ях → -и rule (штанях, санях).
      The other homograph rules have no row each; the frequent-word and text
      measurements show them.
-   - Hachidori (feat/multi-language d7e82b0c with this branch at 58d5266 in
+   - Hachidori (feat/multi-language d7e82b0c with this branch at 97f1e27 in
      `third_party/hoshidicts`, `node scripts/sync-languages.mjs`,
      `test/chrome-language-pack.mjs`, Chrome 152, wty-uk-en): 14 of 14 checks
      pass. Settings adds Ukrainian beside Japanese and imports the dictionary
