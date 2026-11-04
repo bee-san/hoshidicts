@@ -309,7 +309,7 @@ gehören, not Yomitan's participle reading hören; `lookup.tsv`).
     likewise).
 
   The ties the pack cannot order are in Known gaps.
-- **History**: the first commit of this pack, `de: own rules` (cf51d22), has
+- **History**: the first commit of this pack, `de: own rules` (3e77acf), has
   the own rules as written before Yomitan's file was read (29 transforms, 231
   rules, 4,444 with cross products expanded). Later commits changed them:
   - with the port of Yomitan's rules, the conditions both files have were
@@ -561,9 +561,9 @@ with the defaults; copies of the sample and `cases.tsv` with the line
    (0.08%) are wrong and unjudged, besides the 6 wrong single words, the
    rule-changed ones above (about 360) and the 3,711 particle verbs the
    dictionary's rows make (0.60%). An earlier sample of 60 (seed 2, with the
-   rules of d5d36de) found 14 wrong; its rule-made errors that a constraint
+   rules of 8548991) found 14 wrong; its rule-made errors that a constraint
    could stop (`führt` → fahren, `sehr best…` → sehr gut, `Elektrotechniker`
-   → Elektrotechnik) were fixed in cc06097.
+   → Elektrotechnik) were fixed in fd918e6.
 5. **Trace quality** (`sources/trace-quality.mjs`): for the sample rows each
    set reaches, whether the trace a lookup shows (`traceSelection:
    "shortest"`) names the form the UniMorph tag gives (`past (wir, sie)` for
@@ -575,7 +575,7 @@ with the defaults; copies of the sample and `cases.tsv` with the line
 6. **Per rule** (`eval-language --per-rule` on the sample and `cases.tsv`,
    2,130 rows): 166 of the 247 rules recover a row no other rule reaches,
    none breaks a negative, and none adds false candidates without recovering
-   a row. With the rules of d5d36de five did: the äu umlaut before -er (since
+   a row. With the rules of 8548991 five did: the äu umlaut before -er (since
    removed), ä and ö before -er and the Latin -en for -us and -os, which now
    have rows (`Väter`, `Töchter`, `Rhythmen`, `Mythen`).
 7. **Checks**:
@@ -584,14 +584,14 @@ with the defaults; copies of the sample and `cases.tsv` with the line
      96 / 96; gaps.tsv 0 / 37 (reported); `classes.json` agrees with the
      engine (8 classes, 419 fields, 4 steps); 612 of the 4,944 rules (cross
      products expanded) are exercised by a passing row; the committed files
-     of `tests/` and `sources/` hold 943,966 bytes
+     of `tests/` and `sources/` hold 987,740 bytes
      (`git ls-tree -r -l HEAD -- languages/de/tests languages/de/sources`);
    - the differential check (`tools/check-yomitan.mjs` with
-     `build/hoshidicts-cli`): 5,116 inputs, 6,300 Yomitan results, no
+     `build/hoshidicts-cli`): 5,121 inputs, 6,305 Yomitan results, no
      difference, so `sources/yomitan-differences.tsv` is not needed;
-     `decapitalize` and `capitalizeFirstLetter` agree with Yomitan's on 2,211
-     inputs each and `eszettPreprocessor` on 2,203;
-   - `ctest` (52 tests), `tools/check-classes.mjs --all` and `node --test
+     `decapitalize` and `capitalizeFirstLetter` agree with Yomitan's on 2,259
+     inputs each and `eszettPreprocessor` on 2,251;
+   - `ctest` (55 tests), `tools/check-classes.mjs --all` and `node --test
      tools/test/` (115 tests here; CI runs more with the hangul-js bundle)
      pass;
    - mutations (`sources/mutations.mjs`): each of 108 changes to a scratch
@@ -626,46 +626,48 @@ with the defaults; copies of the sample and `cases.tsv` with the line
        3) and comparative and superlative after the verbs
        (`Lichtstümpfe`, `Lichtstreifen` → lichten, 2).
 8. **Lookup speed** (`benchmark-lookup --languages <copy> --language de`,
-   wty-de-en mapped, hoshidicts 1fed676): the 80 texts of
+   wty-de-en mapped, hoshidicts 1fed676's library): the 80 texts of
    `sources/benchmark-words.txt`, each the rest of a sentence from an
    inflected word, in 6 passes with the first dropped, three runs at machine
-   load about 35-40. The budget is 1 ms p50. Character resolution looks up
-   every prefix of the scan, which costs more than the word resolution of
-   the English and Spanish packs.
+   load about 33. The budget is 1 ms p50. Character resolution looks up every
+   prefix of the scan, which costs more than the word resolution of the
+   English and Spanish packs.
 
    | Rule set | p50 | p95 |
    | --- | ---: | ---: |
-   | Final | 111-114 µs | 257-265 µs |
-   | Union | 113-130 µs | 270-311 µs |
-   | Yomitan's rules | 91-98 µs | 203-228 µs |
-   | Own rules | 110-120 µs | 257-264 µs |
+   | Final | 126-131 µs | 278-291 µs |
+   | Union | 134-136 µs | 313-324 µs |
+   | Yomitan's rules | 93-99 µs | 221-226 µs |
+   | Own rules | 121-124 µs | 274-281 µs |
 9. **WebAssembly** (Hachidori feat/multi-language d7e82b0, its prebuilt
    engines in Node 22). The budgets are 50 ms and 20 MB.
    - `hdw_lookup` (`benchmark/node-lookup.mjs` with
      `HACHIDORI_LOOKUP_LANGUAGE=de` on the same texts: 396 hovers, one per
      word, 6 passes, with the scan window Hachidori's content script
-     collects, at machine load about 40): p50 241 µs and p95 497 µs
-     single-thread, p50 258 µs and p95 552 µs threaded.
+     collects, at machine load about 30-50): p50 234 µs and p95 486 µs
+     single-thread, p50 259 µs and p95 551 µs threaded.
    - `hdw_language_load` of this pack (`sources/wasm-load.mjs`, 10 fresh
-     engines): median 10.6 ms single-thread and 12.0 ms threaded; live heap
-     +2,006,768 bytes after the load.
+     engines): median 11.5 ms single-thread and 13.0 ms threaded; live heap
+     +2,101,808 bytes after the load.
    - The pack has 9 `pattern` rules (the separated prefix, one per clause
-     end). Without them the heap grows by 248,984 bytes less, and the load
+     end). Without them the heap grows by 248,296 bytes less, and the load
      time is the same within noise.
 10. **Hachidori** (feat/multi-language d7e82b0 with this branch's pack files
     in `third_party/hoshidicts`, then `node scripts/sync-languages.mjs`;
-    `test/chrome-language-pack.mjs`, Chrome 152, wty-de-en): 20 of 20 checks
+    `test/chrome-language-pack.mjs`, Chrome 152, wty-de-en): 26 of 26 checks
     pass.
     - Settings adds German beside Japanese and imports the dictionary
-      (602,286 terms, 1.0 s).
-    - Sixteen hovered words find their lemma first, with their traces:
+      (602,286 terms, 0.9 s).
+    - Twenty-two hovered words find their lemma first, with their traces:
       `aufgestanden` → aufstehen, `kommt` (in `Er kommt morgen an.`) →
       ankommen [separated prefix, present (er, ihr)], `Hör` (in `Hör endlich
       auf!`) → aufhören, `mußte` → müssen, `Kindern` → Kind, `schönsten` →
       schön, `gingen` → gehen, `älteren` → alt, `angerufen` → anrufen, `las` →
-      lesen, and the first audit's cases `Meine` → mein, `kostet` → kosten,
+      lesen; the first audit's `Meine` → mein, `kostet` → kosten,
       `gewartet` → warten, `schöne` → schön, `letzten` → letzte, `liebe` (in
-      `Ich liebe dich.`) → lieben.
+      `Ich liebe dich.`) → lieben; and the second audit's `Heut` → heute,
+      `draus` → daraus, `gelangt` (in `Er gelangt zum Ziel.`) → gelangen,
+      `drängt` → drängen, `zehnten` → zehnte, `obersten` → oberer.
     - The Anki note and the switch to Japanese and back work.
 11. **Commands**:
 
@@ -680,10 +682,10 @@ with the defaults; copies of the sample and `cases.tsv` with the line
     g++ -O2 -std=c++23 -Iinclude languages/de/sources/lookup-batch.cpp -o build/lookup-batch-de build/libhoshidicts.a \
       build/external/zstd/build/cmake/lib/libzstd.a build/external/libdeflate/libdeflate.a \
       build/external/utf8proc/libutf8proc.a build/liblzokay.a build/libgumbo.a
-    node languages/de/sources/measure.mjs frequent|start|after <inputs> <unimorph deu> <wty-de-en> <set>...
+    node languages/de/sources/measure.mjs frequent|start|after|rare <inputs> <unimorph deu> <wty-de-en> <set>...
     node languages/de/sources/measure.mjs text <inputs> <unimorph deu> <wty-de-en> <text> <set>... [--dump <file>]
     node languages/de/sources/variants.mjs <dir>   # own.json, final.json, final-plus-* and final-minus-* rule sets
-    node languages/de/sources/measure.mjs diff <inputs> <unimorph deu> <wty-de-en> <text> <dir>/own.json <dir>/final.json
+    node languages/de/sources/measure.mjs diff <inputs> <unimorph deu> <wty-de-en> <text> <dir>/none.json|own.json <dir>/final.json [--dump <file>]
     node languages/de/sources/measure.mjs capitals|separated <inputs> <unimorph deu> <wty-de-en> [<set>]
     python3 languages/de/sources/hand-sample.py <dump dir>
     node languages/de/sources/trace-quality.mjs <set>...
