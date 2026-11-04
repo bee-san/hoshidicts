@@ -75,6 +75,7 @@ for line in open(os.path.join(HERE, 'homographs.tsv'), encoding='utf-8'):
         LABELS[word] = set(label.split(','))
 FREQUENCIES = {}
 KNOWN = set()  # the spellings that have rows (filled by main)
+CHARS = set()  # the letters' own entries, tagged char (А: the first letter)
 
 
 def load_frequencies(path):
@@ -121,6 +122,8 @@ def load_rows(json_dir):
             others = [g for g in row[5] if not isinstance(g, list)]
             if others:
                 lemmas.add(term)
+                if 'char' in (row[2] or '').split():
+                    CHARS.add(term)
             for ref in refs:
                 # wiktionary-to-yomitan writes some targets with their aspect
                 # (знайти́ pf); the lemma is the word before it.
@@ -188,8 +191,13 @@ def judge(word, answer, lemmas, targets, initial=False):
     first = results[0]
     if len(norm(first['matched'])) > len(norm(word)):
         return 'phrase', first, None
-    # A capitalised entry of the same spelling (Сонце) is judged as before.
-    same = norm(first['expression']).lower() == norm(word).lower()
+    # At a sentence start a letter's own entry (Я, А) is wrong when the
+    # lowercase word has rows; another capitalised entry of the same
+    # spelling (Сонце, Ви) is judged as before.
+    expression = norm(first['expression'])
+    if initial and expression in CHARS and expression != norm(word).lower() and norm(word).lower() in KNOWN:
+        return 'wrong', first, 'rows'
+    same = expression.lower() == norm(word).lower()
     right, how = meant(word, lemmas, targets, initial and not same)
     if not right:
         return 'unknown', first, None
