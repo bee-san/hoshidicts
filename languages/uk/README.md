@@ -543,7 +543,7 @@ identical).
      988/988, cases.tsv 732/732, text.tsv 26/26, lookup.tsv 51/51, gaps.tsv
      0/14 (reported); classes.json agrees (11 classes, 1,085 fields, 2
      steps, 3,534 outputs); 1,220 of the 8,564 rules are exercised by a
-     passing row; `tests/` and `sources/` hold 999,532 bytes.
+     passing row; `tests/` and `sources/` hold 999,579 bytes.
    - Stem constraints (`sources/mutate.py`, docs/languages.md 14 step 7):
      206 deletions, one per own transform and constraint (`stemMinLength`
      lowered by one, the others removed from every rule of the transform
