@@ -1,23 +1,13 @@
 #!/usr/bin/env node
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Writes languages/ru/sources/own.json: the Russian deinflection rules written
-// for this pack (docs/languages.md, section 14 step 2), from the paradigm
-// tables below. Run from the repository root:
+// Writes languages/ru/sources/own.json, the Russian rules written for this pack
+// (docs/languages.md 14 step 2), from the paradigm tables below (the Academy
+// grammar, 1980; Zaliznjak's Grammatical dictionary; Wiktionary's tables):
 //
 //   node languages/ru/sources/build-own.mjs
 //
-// The tables follow the standard description of Russian inflection (the
-// Academy grammar, Russkaja grammatika 1980; A. A. Zaliznjak's Grammatical
-// dictionary of Russian; Wiktionary's Russian declension and conjugation
-// tables): noun declensions with their spelling rules and fleeting vowels,
-// adjectives (long, short, comparative, superlative), pronouns and numerals,
-// and verbs (present/future by conjugation class with the consonant
-// alternations of the first person, past, imperative, participles, adverbial
-// participles, the reflexive -ся/-сь), with ё/е spellings of every ending.
-//
-// Each rule records the forms its ending can stand for; rules with the same
-// set of forms make one transform, so a trace names every form an ending can
-// be ("genitive singular, nominative plural" for книги).
+// Rules with the same set of forms make one transform, so a trace names every
+// form an ending can be ("genitive singular, nominative plural" for книги).
 
 import {writeFileSync} from 'node:fs';
 import {dirname, join} from 'node:path';
@@ -1197,7 +1187,11 @@ for (const [word, lemma, forms] of [['дела', 'дело', ['gen.sg', 'nom.pl'
     ['вещей', 'вещь', ['gen.pl']], ['миру', 'мир', ['dat.sg', 'loc.sg']], ['стену', 'стена', ['acc.sg']], ['стенах', 'стена', ['prp.pl']], ['стенами', 'стена', ['ins.pl']],
     ['плату', 'плата', ['acc.sg']], ['стекла', 'стекло', ['gen.sg', 'nom.pl']], ['чеки', 'чек', ['nom.pl']], ['коды', 'код', ['nom.pl']],
     ['меча', 'меч', ['gen.sg']], ['коров', 'корова', ['gen.pl']], ['песнями', 'песня', ['ins.pl']], ['песнях', 'песня', ['prp.pl']],
-    ['буре', 'буря', ['dat.sg', 'prp.sg']], ['цвету', 'цвет', ['dat.sg', 'loc.sg']]]) {
+    ['буре', 'буря', ['dat.sg', 'prp.sg']], ['цвету', 'цвет', ['dat.sg', 'loc.sg']], ['курсе', 'курс', ['prp.sg']], ['душу', 'душа', ['acc.sg']],
+    ['парке', 'парк', ['prp.sg']], ['чая', 'чай', ['gen.sg']], ['чаю', 'чай', ['dat.sg']], ['мая', 'май', ['gen.sg']],
+    ['черт', 'чёрт', ['nom.sg']], ['полет', 'полёт', ['nom.sg']], ['копы', 'коп', ['nom.pl']], ['вину', 'вина', ['acc.sg']],
+    ['чаем', 'чай', ['ins.sg']], ['парки', 'парк', ['nom.pl']], ['споры', 'спор', ['nom.pl']], ['споре', 'спор', ['prp.sg']], ['тоне', 'тон', ['prp.sg']],
+    ['веку', 'век', ['dat.sg', 'loc.sg']]]) {
     wholeWord('noun', forms, word, lemma, [], NOUN);
 }
 for (const [word, lemma, form] of [['выпей', 'выпить', 'imp.2sg'], ['выпью', 'выпить', 'pres.1sg']]) {
@@ -1205,6 +1199,9 @@ for (const [word, lemma, form] of [['выпей', 'выпить', 'imp.2sg'], ['
 }
 wholeWord('adj', ['short.m'], 'готов', 'готовый', [], ADJ);
 wholeWord('adj', ['short.m'], 'весел', 'весёлый', [], ADJ);
+wholeWord('adj', ['short.pl'], 'рады', 'рад', [], ADJ);
+wholeWord('adj', ['short.m'], 'знаком', 'знакомый', [], ADJ);
+wholeWord('adj', ['short.m'], 'одержим', 'одержимый', [], ADJ);
 put('verb', ['ptcp.past.pass'], {type: 'wholeWord', inflected: 'потрясён', deinflected: 'потрясти', conditionsIn: [], conditionsOut: VERB});
 put('verb', ['ptcp.past.pass'], {type: 'wholeWord', inflected: 'потрясен', deinflected: 'потрясти', conditionsIn: [], conditionsOut: VERB});
 // The adverb определённо; only its е spelling needs the row (with ё no rule reaches определить).

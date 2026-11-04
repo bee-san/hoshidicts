@@ -458,6 +458,18 @@
       ]
     },
     {
+      "id": "noun-nom.sg",
+      "name": "nominative singular",
+      "description": "Nominative singular of a noun.",
+      "source": "own",
+      "rules": [
+        {"type": "wholeWord", "inflected": "черт", "deinflected": "чёрт", "conditionsIn": [], "conditionsOut": ["n", "name"]},
+        {"type": "wholeWord", "inflected": "черт", "deinflected": "черт", "conditionsIn": [], "conditionsOut": ["n", "name"]},
+        {"type": "wholeWord", "inflected": "полет", "deinflected": "полёт", "conditionsIn": [], "conditionsOut": ["n", "name"]},
+        {"type": "wholeWord", "inflected": "полет", "deinflected": "полет", "conditionsIn": [], "conditionsOut": ["n", "name"]}
+      ]
+    },
+    {
       "id": "noun-gen.sg",
       "name": "genitive singular",
       "description": "Genitive singular of a noun.",
@@ -466,7 +478,9 @@
         {"type": "suffix", "inflected": "а", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[ц]"},
         {"type": "suffix", "inflected": "я", "deinflected": "й", "conditionsIn": [], "conditionsOut": ["fl"], "stemCharacters": "{stem}", "stemMinLength": 1},
         {"type": "suffix", "inflected": "ия", "deinflected": "ий", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2},
-        {"type": "wholeWord", "inflected": "меча", "deinflected": "меч", "conditionsIn": [], "conditionsOut": ["n", "name"]}
+        {"type": "wholeWord", "inflected": "меча", "deinflected": "меч", "conditionsIn": [], "conditionsOut": ["n", "name"]},
+        {"type": "wholeWord", "inflected": "чая", "deinflected": "чай", "conditionsIn": [], "conditionsOut": ["n", "name"]},
+        {"type": "wholeWord", "inflected": "мая", "deinflected": "май", "conditionsIn": [], "conditionsOut": ["n", "name"]}
       ]
     },
     {
@@ -531,7 +545,8 @@
         {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ью", "ье"], ["ью", "ьё"]], "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 1},
         {"type": "wholeWord", "inflected": "господу", "deinflected": "господь", "conditionsIn": [], "conditionsOut": ["n", "name"]},
         {"type": "wholeWord", "inflected": "утру", "deinflected": "утро", "conditionsIn": [], "conditionsOut": ["n", "name"]},
-        {"type": "wholeWord", "inflected": "западу", "deinflected": "запад", "conditionsIn": [], "conditionsOut": ["n", "name"]}
+        {"type": "wholeWord", "inflected": "западу", "deinflected": "запад", "conditionsIn": [], "conditionsOut": ["n", "name"]},
+        {"type": "wholeWord", "inflected": "чаю", "deinflected": "чай", "conditionsIn": [], "conditionsOut": ["n", "name"]}
       ]
     },
     {
@@ -545,7 +560,8 @@
         {"type": "suffix", "inflected": "у", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n", "name"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "{velar}", "stemNotStartsWithText": "политик"},
         {"type": "wholeWord", "inflected": "берегу", "deinflected": "берег", "conditionsIn": [], "conditionsOut": ["n", "name"]},
         {"type": "wholeWord", "inflected": "миру", "deinflected": "мир", "conditionsIn": [], "conditionsOut": ["n", "name"]},
-        {"type": "wholeWord", "inflected": "цвету", "deinflected": "цвет", "conditionsIn": [], "conditionsOut": ["n", "name"]}
+        {"type": "wholeWord", "inflected": "цвету", "deinflected": "цвет", "conditionsIn": [], "conditionsOut": ["n", "name"]},
+        {"type": "wholeWord", "inflected": "веку", "deinflected": "век", "conditionsIn": [], "conditionsOut": ["n", "name"]}
       ]
     },
     {
@@ -592,7 +608,9 @@
         {"type": "wholeWord", "inflected": "лужу", "deinflected": "лужа", "conditionsIn": [], "conditionsOut": ["n", "name"]},
         {"type": "wholeWord", "inflected": "пару", "deinflected": "пара", "conditionsIn": [], "conditionsOut": ["n", "name"]},
         {"type": "wholeWord", "inflected": "стену", "deinflected": "стена", "conditionsIn": [], "conditionsOut": ["n", "name"]},
-        {"type": "wholeWord", "inflected": "плату", "deinflected": "плата", "conditionsIn": [], "conditionsOut": ["n", "name"]}
+        {"type": "wholeWord", "inflected": "плату", "deinflected": "плата", "conditionsIn": [], "conditionsOut": ["n", "name"]},
+        {"type": "wholeWord", "inflected": "душу", "deinflected": "душа", "conditionsIn": [], "conditionsOut": ["n", "name"]},
+        {"type": "wholeWord", "inflected": "вину", "deinflected": "вина", "conditionsIn": [], "conditionsOut": ["n", "name"]}
       ]
     },
     {
@@ -621,7 +639,8 @@
         {"type": "wholeWord", "inflected": "солью", "deinflected": "соль", "conditionsIn": [], "conditionsOut": ["n", "name"]},
         {"type": "wholeWord", "inflected": "полем", "deinflected": "поле", "conditionsIn": [], "conditionsOut": ["n", "name"]},
         {"type": "wholeWord", "inflected": "бельем", "deinflected": "бельё", "conditionsIn": [], "conditionsOut": ["n", "name"]},
-        {"type": "wholeWord", "inflected": "бельем", "deinflected": "белье", "conditionsIn": [], "conditionsOut": ["n", "name"]}
+        {"type": "wholeWord", "inflected": "бельем", "deinflected": "белье", "conditionsIn": [], "conditionsOut": ["n", "name"]},
+        {"type": "wholeWord", "inflected": "чаем", "deinflected": "чай", "conditionsIn": [], "conditionsOut": ["n", "name"]}
       ]
     },
     {
@@ -651,7 +670,11 @@
         {"type": "wholeWord", "inflected": "господе", "deinflected": "господь", "conditionsIn": [], "conditionsOut": ["n", "name"]},
         {"type": "wholeWord", "inflected": "начале", "deinflected": "начало", "conditionsIn": [], "conditionsOut": ["n", "name"]},
         {"type": "wholeWord", "inflected": "вечере", "deinflected": "вечер", "conditionsIn": [], "conditionsOut": ["n", "name"]},
-        {"type": "wholeWord", "inflected": "запрете", "deinflected": "запрет", "conditionsIn": [], "conditionsOut": ["n", "name"]}
+        {"type": "wholeWord", "inflected": "запрете", "deinflected": "запрет", "conditionsIn": [], "conditionsOut": ["n", "name"]},
+        {"type": "wholeWord", "inflected": "курсе", "deinflected": "курс", "conditionsIn": [], "conditionsOut": ["n", "name"]},
+        {"type": "wholeWord", "inflected": "парке", "deinflected": "парк", "conditionsIn": [], "conditionsOut": ["n", "name"]},
+        {"type": "wholeWord", "inflected": "споре", "deinflected": "спор", "conditionsIn": [], "conditionsOut": ["n", "name"]},
+        {"type": "wholeWord", "inflected": "тоне", "deinflected": "тон", "conditionsIn": [], "conditionsOut": ["n", "name"]}
       ]
     },
     {
@@ -698,7 +721,10 @@
         {"type": "wholeWord", "inflected": "десятки", "deinflected": "десяток", "conditionsIn": [], "conditionsOut": ["n", "name"]},
         {"type": "wholeWord", "inflected": "турки", "deinflected": "турок", "conditionsIn": [], "conditionsOut": ["n", "name"]},
         {"type": "wholeWord", "inflected": "чеки", "deinflected": "чек", "conditionsIn": [], "conditionsOut": ["n", "name"]},
-        {"type": "wholeWord", "inflected": "коды", "deinflected": "код", "conditionsIn": [], "conditionsOut": ["n", "name"]}
+        {"type": "wholeWord", "inflected": "коды", "deinflected": "код", "conditionsIn": [], "conditionsOut": ["n", "name"]},
+        {"type": "wholeWord", "inflected": "копы", "deinflected": "коп", "conditionsIn": [], "conditionsOut": ["n", "name"]},
+        {"type": "wholeWord", "inflected": "парки", "deinflected": "парк", "conditionsIn": [], "conditionsOut": ["n", "name"]},
+        {"type": "wholeWord", "inflected": "споры", "deinflected": "спор", "conditionsIn": [], "conditionsOut": ["n", "name"]}
       ]
     },
     {
@@ -950,7 +976,9 @@
         {"type": "wholeWord", "inflected": "сердит", "deinflected": "сердитый", "conditionsIn": [], "conditionsOut": ["adj"]},
         {"type": "wholeWord", "inflected": "готов", "deinflected": "готовый", "conditionsIn": [], "conditionsOut": ["adj"]},
         {"type": "wholeWord", "inflected": "весел", "deinflected": "весёлый", "conditionsIn": [], "conditionsOut": ["adj"]},
-        {"type": "wholeWord", "inflected": "весел", "deinflected": "веселый", "conditionsIn": [], "conditionsOut": ["adj"]}
+        {"type": "wholeWord", "inflected": "весел", "deinflected": "веселый", "conditionsIn": [], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "знаком", "deinflected": "знакомый", "conditionsIn": [], "conditionsOut": ["adj"]},
+        {"type": "wholeWord", "inflected": "одержим", "deinflected": "одержимый", "conditionsIn": [], "conditionsOut": ["adj"]}
       ]
     },
     {
@@ -1061,7 +1089,8 @@
         {"type": "wholeWord", "inflected": "наги", "deinflected": "нагой", "conditionsIn": [], "conditionsOut": ["adj"]},
         {"type": "wholeWord", "inflected": "строги", "deinflected": "строгой", "conditionsIn": [], "conditionsOut": ["adj"]},
         {"type": "suffix", "inflected": "ны", "deinflected": "нный", "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "{stem}", "stemMinLength": 2, "stemEndsWith": "[аяеёо]"},
-        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ены", "ённый"], ["ены", "енный"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "{stem}", "stemMinLength": 2}
+        {"type": "circumfix", "prefixes": [["", ""]], "suffixes": [["ены", "ённый"], ["ены", "енный"]], "conditionsIn": [], "conditionsOut": ["adj"], "stemCharacters": "{stem}", "stemMinLength": 2},
+        {"type": "wholeWord", "inflected": "рады", "deinflected": "рад", "conditionsIn": [], "conditionsOut": ["adj"]}
       ]
     },
     {

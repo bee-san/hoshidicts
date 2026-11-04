@@ -1,42 +1,22 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""Measurements of README.md (Measurements) that need a real dictionary.
+"""Measurements of README.md (Measurements) that need a real dictionary; the
+commands are in README.md. Not run by any test. Build sources/lookup-batch.cpp
+first (its header has the command); the inputs are not committed.
 
-Not run by any test. Inputs (not committed; README.md, Sources and licences):
-the wty-ru-en zip and its import by `hoshidicts-cli import`, the FrequencyWords
-list ru_50k.txt, Tatoeba's Russian sentences and public-domain texts. Build
-sources/lookup-batch.cpp first (its header has the command).
+frequent: each of the --top most frequent words whose form-of rows name a lemma
+the rules reach is looked up as a host does (16 results, scan length 16) and
+its first result with a definition judged: by any lemma its rows name, and by
+its own lemma (own_lemma_ok: labels, then a frequency proxy). --capitalised
+looks the words up capitalised.
 
-  python3 languages/ru/sources/measure.py frequent --zip wty-ru-en.zip --dict <imported dir>
-      --freq ru_50k.txt --batch build/lookup-batch-ru [--languages languages] [--exempt] [--top 10000]
-  python3 languages/ru/sources/measure.py text --zip wty-ru-en.zip --dict <imported dir>
-      --batch build/lookup-batch-ru --text <file>... [--exempt] [--sample 60]
+text: every word of the texts is looked up from the word to the end of its
+sentence and judged the same way; capital entries (the letter Я, the river
+По) are counted apart. --no-rules splits the wrong results by cause.
 
-frequent: for each of the --top most frequent words whose wty-ru-en form-of rows
-name a lemma that the pack's rules reach from the word, the word is looked up as
-a host does (lookup-batch-ru: 16 results, scan length 16, default options) and
-the first result with a definition (not a form-of row) is compared with the
-lemmas its form-of rows name. A result is right only when it is one of those
-lemmas, or the word itself when it is also a lemma.
-
-text: every word of the texts is looked up as a host does, the text from the
-word to the end of its sentence; the first result with a definition is judged
-by the same rule where the word has form-of rows, and the rest are counted and
-sampled for judging by hand.
-
-Words written with е whose only headword is their ё spelling (вперед: вперёд)
-have no rows of their own; both subcommands judge them against that headword
-(frequent lists them apart as yoHeadword*).
-
-Capital entries (the letter Я, the river По) come first at the start of a
-sentence; `text` counts them (capital_entry) and the rate with them counted
-wrong, and `frequent --capitalised` looks the words up capitalised.
-
---exempt runs lookup-batch-ru with the dictionary exempt from the part-of-speech
-filter (LookupOptions::pos_filter_exempt), which stands in for the pack field
-lookup.untaggedTerms "pass" until it is on main; results whose conditions only
-an intermediate rule state gives are not counted as reached (see --help of
-each subcommand).
+Words written with е whose only headword is their ё spelling (вперед) are
+judged against that headword. --exempt uses pos_filter_exempt instead of the
+pack's untaggedTerms.
 """
 
 import argparse
