@@ -284,7 +284,7 @@ deinflection marked `both`.
 ## Measurements
 
 Every number below is reproduced by `sources/measure-all.sh` (it lists the
-commands) at hoshidicts 44abbec (GCC 14.3, Release), with wty-sq-en as
+commands) at hoshidicts 81880e5 (GCC 14.3, Release), with wty-sq-en as
 published, imported by `hoshidicts-cli import`, form-of rows included, and
 `lookup.formOf` `follow`. The sample is the 1,000 UniMorph rows of
 `corpus.tsv` and `gaps.tsv` together. The pack's one optional feature is the
@@ -491,23 +491,23 @@ file is measured with every option on and with the defaults.
    and 18 more feminine nouns, and the masculine `ajra` → `ajër`).
 6. **Lookup speed** (`benchmark-lookup --languages languages --language sq`,
    wty-sq-en mapped): the 70 texts of `sources/benchmark-words.txt` in 6
-   passes, the first dropped, three runs at machine load about 34. The
+   passes, the first dropped, three runs at machine load about 33. The
    budget is 1 ms p50.
 
    | Rule set | p50 | p95 |
    | --- | ---: | ---: |
-   | Final | 17.5-17.8 µs | 30.6-31.6 µs |
-   | Union | 22.7-23.7 µs | 40.1-42.7 µs |
-   | Yomitan's rules | 14.0-14.2 µs | 21.8-22.4 µs |
+   | Final | 17.6-17.8 µs | 30.6-32.6 µs |
+   | Union | 22.6-22.8 µs | 38.0-40.0 µs |
+   | Yomitan's rules | 14.1-14.4 µs | 21.9-23.0 µs |
 7. **WebAssembly** (`sources/wasm-bench.mjs`, Hachidori feat/multi-language
    d7e82b0 prebuilt engines, Node 22, the same texts, dictionary paged).
    The budgets are 50 ms and 20 MB, and the pack has no `pattern` rule.
-   - `hdw_language_load` of this pack: median 9.2 ms single-thread and 9.7
-     ms threaded, over 10 fresh engines (8.2-16.2 ms).
+   - `hdw_language_load` of this pack: median 9.2 ms single-thread and 9.8
+     ms threaded, over 10 fresh engines (8.3-14.2 ms).
    - Live heap: +969,200 bytes after the load single-thread, +969,824
      threaded (mallinfo, `hdw_memory_stats`).
-   - `hdw_lookup`: p50 0.054 ms and p95 0.141 ms single-thread; p50 0.066
-     ms and p95 0.171 ms threaded.
+   - `hdw_lookup`: p50 0.054 ms and p95 0.140 ms single-thread; p50 0.062
+     ms and p95 0.161 ms threaded.
 8. **Hachidori in Chrome** (feat/multi-language d7e82b0 with this branch in
    `third_party/hoshidicts`, `test/chrome-language-pack.mjs`, Chrome 152,
    wty-sq-en): 71 / 71 checks pass. Settings adds Albanian beside Japanese
