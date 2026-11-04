@@ -422,7 +422,7 @@
       "description": "Third-declension adjective or participle, dative/ablative singular.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "i", "deinflected": "is", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "i", "deinflected": "is", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemNotStartsWithText": "Ital"},
         {"type": "suffix", "inflected": "ri", "deinflected": "er", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "i", "deinflected": "", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2, "stemEndsWith": "[lr]"},
         {"type": "suffix", "inflected": "ci", "deinflected": "x", "conditionsIn": [], "conditionsOut": ["adj3"], "stemCharacters": "[^ ]", "stemMinLength": 2},
@@ -591,7 +591,7 @@
       "description": "Third-declension adjective or participle, nominative/accusative singular neuter.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "ius", "deinflected": "ior", "conditionsIn": [], "conditionsOut": ["cmp", "adj3"], "stemMinLength": 2}
+        {"type": "suffix", "inflected": "ius", "deinflected": "ior", "conditionsIn": [], "conditionsOut": ["cmp", "adj3"], "stemMinLength": 2, "stemNotStartsWithText": "curt"}
       ]
     },
     {
@@ -1028,7 +1028,7 @@
       "description": "Noun, nominative plural. Also: accusative plural.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "a", "deinflected": "um", "conditionsIn": [], "conditionsOut": ["n2s"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "a", "deinflected": "um", "conditionsIn": [], "conditionsOut": ["n2s"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2, "stemNotStartsWithText": "loc"},
         {"type": "suffix", "inflected": "es", "deinflected": "", "conditionsIn": [], "conditionsOut": ["n3s"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2, "stemEndsWith": "[lr]"},
         {"type": "suffix", "inflected": "ates", "deinflected": "as", "conditionsIn": [], "conditionsOut": ["n3s"], "stemMinLength": 2},
         {"type": "suffix", "inflected": "utes", "deinflected": "us", "conditionsIn": [], "conditionsOut": ["n3s"], "stemMinLength": 2},
@@ -1251,7 +1251,7 @@
       "description": "Noun, genitive singular. Also: accusative plural.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "is", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["n3s"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2}
+        {"type": "suffix", "inflected": "is", "deinflected": "es", "conditionsIn": [], "conditionsOut": ["n3s"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2, "stemNotStartsWithText": "coel"}
       ]
     },
     {
@@ -2271,7 +2271,7 @@
       "description": "Perfect indicative active, third person singular: amāvit, rēxit, audīvit.",
       "source": "own",
       "rules": [
-        {"type": "suffix", "inflected": "it", "deinflected": "i", "conditionsIn": [], "conditionsOut": ["vpf", "v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "it", "deinflected": "i", "conditionsIn": [], "conditionsOut": ["vpf", "v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2, "stemNotStartsWithText": "exist"},
         {"type": "wholeWord", "inflected": "iit", "deinflected": "ii", "conditionsIn": [], "conditionsOut": ["vpf", "v"]},
         {"type": "circumfix", "prefixes": [["lic", "lic"], ["oport", "oport"], ["dec", "dec"], ["dedec", "dedec"], ["lib", "lib"], ["lub", "lub"], ["pig", "pig"], ["pud", "pud"], ["taed", "taed"], ["paenit", "paenit"], ["poenit", "poenit"], ["miser", "miser"]], "suffixes": [["uit", "et"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[]"}
       ]
@@ -2309,7 +2309,7 @@
       "source": "own",
       "rules": [
         {"type": "suffix", "inflected": "erunt", "deinflected": "i", "conditionsIn": [], "conditionsOut": ["vpf", "v"], "stemMinLength": 2},
-        {"type": "suffix", "inflected": "ere", "deinflected": "i", "conditionsIn": [], "conditionsOut": ["vpf", "v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
+        {"type": "suffix", "inflected": "ere", "deinflected": "i", "conditionsIn": [], "conditionsOut": ["vpf", "v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2, "stemNotStartsWithText": "exist"},
         {"type": "suffix", "inflected": "arunt", "deinflected": "avi", "conditionsIn": [], "conditionsOut": ["vpf", "v"], "stemMinLength": 2},
         {"type": "suffix", "inflected": "irunt", "deinflected": "ivi", "conditionsIn": [], "conditionsOut": ["vpf", "v"], "stemMinLength": 2},
         {"type": "suffix", "inflected": "orunt", "deinflected": "ovi", "conditionsIn": [], "conditionsOut": ["vpf", "v"], "stemMinLength": 2, "stemEndsWith": "[n]"},
@@ -2922,7 +2922,7 @@
       "rules": [
         {"type": "suffix", "inflected": "as", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "es", "deinflected": "eo", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "is", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2, "stemNotEndsWith": "[aeio]"},
+        {"type": "suffix", "inflected": "is", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2, "stemNotEndsWith": "[aeio]", "stemNotStartsWithText": "jur"},
         {"type": "suffix", "inflected": "is", "deinflected": "io", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
         {"type": "wholeWord", "inflected": "potes", "deinflected": "possum", "conditionsIn": [], "conditionsOut": ["v"]},
         {"type": "circumfix", "prefixes": [["", ""], ["ab", "ab"], ["ad", "ad"], ["ante", "ante"], ["circum", "circum"], ["co", "co"], ["deper", "deper"], ["ex", "ex"], ["in", "in"], ["inter", "inter"], ["intro", "intro"], ["ob", "ob"], ["per", "per"], ["post", "post"], ["prae", "prae"], ["praeter", "praeter"], ["prod", "prod"], ["red", "red"], ["sub", "sub"], ["subter", "subter"], ["trans", "trans"], ["nequ", "nequ"]], "suffixes": [["is", "eo"]], "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[]"},
@@ -4195,7 +4195,7 @@
       "rules": [
         {"type": "suffix", "inflected": "a", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "e", "deinflected": "eo", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
-        {"type": "suffix", "inflected": "e", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2, "stemNotEndsWith": "[aeio]"},
+        {"type": "suffix", "inflected": "e", "deinflected": "o", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2, "stemNotEndsWith": "[aeio]", "stemNotStartsWithText": "jur"},
         {"type": "suffix", "inflected": "e", "deinflected": "io", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]", "stemMinLength": 2},
         {"type": "suffix", "inflected": "dic", "deinflected": "dico", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]"},
         {"type": "suffix", "inflected": "duc", "deinflected": "duco", "conditionsIn": [], "conditionsOut": ["v"], "stemCharacters": "[^ A-Z]"},

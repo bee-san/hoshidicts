@@ -1,37 +1,19 @@
 #!/usr/bin/env node
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Writes languages/la/sources/own.json: the Latin deinflection rules written
-// for this pack (docs/languages.md, section 14 step 2), from the paradigm
-// tables below. Run from the repository root:
+// Writes languages/la/sources/own.json, the Latin rules written for this pack
+// (docs/languages.md section 14 step 2), from the tables below. Run from the
+// repository root: node languages/la/sources/build-own.mjs
 //
-//   node languages/la/sources/build-own.mjs
-//
-// The tables follow the standard description of Latin inflection (Allen and
-// Greenough, New Latin Grammar, 1903; Gildersleeve and Lodge, Latin Grammar,
-// 1895; Wiktionary's Latin declension and conjugation tables): the five
-// declensions, adjectives of the first/second and third declensions with
-// their comparison and adverbs, the four conjugations (with the -iō verbs of
-// the third) in every tense, mood and voice, deponent verbs, the perfect and
-// supine stems of the common verbs whose stems are not regular, the irregular
-// verbs (sum and its compounds, possum, eō and its compounds, ferō, volō,
-// nōlō, mālō, fīō, dō), the pronouns, the periphrastic tenses with esse, and
-// the enclitics -que, -ne, -ve and -cum. No text or table is copied from them.
-//
-// Words are matched as dictionaries spell their headwords: without macrons,
-// with i for consonantal i and v for consonantal u. The pack's text
-// processors bring text to that spelling first (language.json).
-//
-// Dictionary forms (wiktionary-to-yomitan's Latin dictionaries tag them in
-// their `rules` column with v, n, adj and adv):
-// - verbs: the first person singular present indicative (amō, moneō, regō,
-//   capiō, audiō; deponents hortor, vereor, sequor, patior, largior), and
-//   participles, which have entries of their own (amātus, amāns, amandus);
-// - nouns: the nominative singular (or plural, for plural-only nouns);
-// - adjectives: the masculine nominative singular.
-// Pronouns, determiners, numerals and proper names carry no part of speech in
-// those dictionaries. A rule's output can only reach such a headword when it
-// has no conditions (section 7.2), so the rules that make them have an empty
-// conditionsOut; the proper-name rules apply only to a capitalised word.
+// The tables follow Allen and Greenough (1903), Gildersleeve and Lodge (1895)
+// and Wiktionary's inflection tables; nothing is copied (README.md, Rule
+// provenance). Words are spelled as dictionaries spell headwords, with no
+// macrons and i and v for consonantal i and u; language.json's processors
+// bring text there. Dictionary forms are tagged v, n, adj and adv: the first
+// person singular present (deponents too) and participles, the nominative
+// singular (plural for plural-only nouns), the masculine nominative singular.
+// Pronouns, determiners, numerals and names have no part of speech, so the
+// rules that make them have an empty conditionsOut (section 7.2); the name
+// rules apply only to a capitalised word.
 
 import {writeFileSync} from 'node:fs';
 import {dirname, join} from 'node:path';
@@ -41,14 +23,11 @@ import {formatTransforms} from '../../../tools/lib/json.mjs';
 const here = dirname(fileURLToPath(import.meta.url));
 
 // --- Conditions --------------------------------------------------------------
-// v, n, adj and adv are the conditions of Yomitan's Latin rules, with Yomitan's
-// definitions (tools/merge-transforms.mjs requires a condition both rule files
-// have to be defined the same way). The first version of this file made vb,
-// ptc and vpf parts of v; v has no parts in Yomitan's file, so a form that
-// must match a row tagged v carries v itself, besides the marker the next rule
-// takes: a perfect brought to its first person singular is [vpf, v] (rēxērunt
-// → rēxī, which a dictionary's form-of row for rēxī names as regō's), and a
-// participle is [ptc, v] (amātōrum → amātus, which has an entry of its own).
+// v, n, adj and adv are defined as in Yomitan's Latin rules, as
+// tools/merge-transforms.mjs requires. v has no parts there, so a form that
+// must match a row tagged v carries v besides the marker the next rule takes:
+// a perfect brought to its first person is [vpf, v] (rēxērunt → rēxī, which a
+// form-of row names as regō's), a participle [ptc, v] (amātōrum → amātus).
 const conditions = {
     v: {name: 'Verb', isDictionaryForm: true},
     n: {name: 'Noun', isDictionaryForm: true, subConditions: ['ns', 'np']},
@@ -411,12 +390,10 @@ slot('perf-stem', 'perfect stem', 'The first person singular perfect (-ī) read 
 // the root (dēfendī, vertī, solvī, statuī, verrī, vellī, bibī); a rule for any
 // -ī would read fūgī, sēdī and dedī as fugō, sēdō and dēdō, which are other
 // verbs (fugiō, sedeō and dō are in the table). potuī is possum's, not pōtō's.
-// -uī → -uō comes before -iō and -ō: a tie is ordered by discovery, and
-// annuī, statuī and expuī are annuō, statuō and expuō, not annō, statō and
-// expiō. -uī → -ō only after l, m, p, r or x, as in coluī, gemuī, strepuī,
-// seruī and texuī (annuī is not annō; potuī is possum's). The -iō verbs
-// with -uī (rapiō, sapiō, aperiō, saliō) are in the table, so that expuī is
-// not expiō.
+// -uī → -uō comes before -iō and -ō (ties go by discovery): annuī, statuī
+// and expuī are annuō, statuō and expuō. -uī → -ō only after l, m, p, r or x
+// (coluī, gemuī, strepuī, seruī, texuī; potuī is possum's). The -iō verbs
+// with -uī (rapiō, sapiō, aperiō, saliō) are in the table.
 for (const [ending, lemma, extra] of [['avi', 'o', MIN], ['ivi', 'io', MIN], ['ii', 'io', MIN], ['evi', 'eo', MIN], ['ui', 'eo', MIN],
                                       ['ui', 'uo', {stemMinLength: 1}], ['ui', 'o', {...MIN, stemEndsWith: '[lmprx]'}],
                                       ['ndi', 'ndo', {stemMinLength: 1}], ['rti', 'rto', {stemMinLength: 1}], ['lvi', 'lvo', {stemMinLength: 1}],
@@ -1318,18 +1295,14 @@ for (const ending of ['is', 'i', 'em', 'e', 'es', 'ium', 'ibus', 'ia']) { sfx(`a
 sfx('ptc-pres', 'iens', 'eo', ['ptc'], VB);
 
 // --- Proper names -----------------------------------------------------------------------
-// Dictionaries give proper names no part of speech, so these rules have no
-// conditions (section 7.2) and apply only to a capitalised word: Rōmam →
-// Rōma, Caesaris → Caesar, Cicerōnis → Cicerō. A capitalised word that
-// begins a sentence is tried as written before it is decapitalised, so a
-// name rule there comes before the word's own reading: with the second
-// declension's endings, Vidē (see!) was read as a name Vidus, Prīmum and
-// Prīmō as Prīmus, at 137 places of the two test books. These rules keep the
-// endings that a common word at the start of a sentence rarely has: the first
-// declension's -ae and -am, the Greek -ān, -ēn and -on, the genitive and
-// accusative of stems in l and r (Caesaris, Caesarem), and the stems of the
-// third declension in -ōn-, -in-, -er-, -rt-, -ant- and -ad-. Other names are
-// reached through dictionaries' form-of rows (Marcī, Herculis).
+// Names have no part of speech, so these rules have no conditions (section
+// 7.2) and apply only to a capitalised word (Rōmam → Rōma). A capital that
+// starts a sentence is tried before it is decapitalised, and second-declension
+// endings read Vidē as Vidus at 137 places of the test books. So these rules
+// keep endings a common word rarely has: -ae, -am, Greek -ān, -ēn and -on,
+// the genitive and accusative of l and r stems, and third-declension stems in
+// -ōn-, -in-, -er-, -rt-, -ant- and -ad-. Other names come through form-of
+// rows (Marcī, Herculis).
 const NAME = {stemMinLength: 2, stemStartsWith: '[A-Z]'};
 for (const [id, name] of CASE_SLOTS) { slot(`name-${id}`, name, `Proper name, ${name}.`); }
 declension('name', 'a', '', {'gen-sg': 'ae', 'dat-sg': 'ae', 'acc-sg': 'am', loc: 'ae'}, [], NAME);
@@ -1577,6 +1550,14 @@ for (const [slotId, inflected, deinflected, conditionsOut, stem] of [
     ['adj-as', 'as', 'us', ['adj12', 'ptc', 'v'], 'mens'],     // mēnsās: mēnsa, not mēnsus
     ['inf', 'ere', 'eo', ['v'], 'can'],                        // canere: canō, not caneō
     ['n-gen-pl', 'etum', 'es', ['n3s'], 'imp'],                // impetum: impetus, not impes
+    ['n-nom-pl', 'a', 'um', ['n2s'], 'loc*'],                  // loca: locus, not locum (* and longer stems)
+    ['adj3-i', 'i', 'is', ['adj3'], 'Ital*'],                  // Itali: Italus, not Italis
+    ['perf-3p', 'ere', 'i', ['vpf', 'v'], 'exist*'],           // existere: exsistō, not exeō (existī)
+    ['perf-3s', 'it', 'i', ['vpf', 'v'], 'exist*'],            // existit
+    ['adj3-ius', 'ius', 'ior', ['cmp', 'adj3'], 'curt*'],      // CURTIUS: Curtius, not curtus
+    ['n-gen-sg', 'is', 'es', ['n3s'], 'coel*'],                // coelīs: caelum, not caelēs
+    ['imp-2s', 'e', 'o', ['v'], 'jur*'],                       // jūre: iūre, not iūrō
+    ['pres-2s', 'is', 'o', ['v'], 'jur*'],                     // jūris: iūs
     ['adj3-ia', 'icia', 'ex', ['adj3'], 'suppl'],              // supplicia: supplicium, not supplex
     ['subj-2s', 'ias', 'io', ['v'], 'cop'],                    // cōpiās: cōpia, not cōpiō
     ['imp-fut-2s', 'eto', 'eo', ['v'], 'ac'],                  // acētō: acētum, not aceō
@@ -1593,6 +1574,7 @@ for (const [slotId, inflected, deinflected, conditionsOut, stem] of [
     const matches = [...RULES.values()].filter(({rule, slots}) => slots.includes(slotId) && rule.inflected === inflected
         && rule.deinflected === deinflected && rule.conditionsIn.length === 0 && JSON.stringify(rule.conditionsOut) === JSON.stringify(conditionsOut));
     if (matches.length !== 1) { throw new Error(`${slotId} ${inflected} → ${deinflected}: ${matches.length} rules`); }
+    if (stem.endsWith('*')) { matches[0].rule.stemNotStartsWithText = stem.slice(0, -1); continue; }
     exceptStems(matches[0].slots, matches[0].rule, stem.split('|'));
 }
 

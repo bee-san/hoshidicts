@@ -1,19 +1,13 @@
 #!/usr/bin/env node
 // SPDX-License-Identifier: GPL-3.0-or-later
-// Writes languages/la/transforms.json, the final rule set (docs/languages.md
-// section 14 step 5), sources/yomitan-provenance.tsv, and the reasons of
-// tests/yomitan.tsv. Run from the
-// repository root after sources/build-own.mjs:
+// Writes languages/la/transforms.json (the final set: sources/own.json with
+// the own rules that make a Yomitan rule's deinflection marked both),
+// sources/yomitan-provenance.tsv and the reasons of tests/yomitan.tsv.
+// Run from the repository root after sources/build-own.mjs:
 //
 //   node languages/la/sources/build-final.mjs
 //
-// The final set is sources/own.json with Yomitan's eight Latin rules left out
-// (README.md, Rule provenance): six of them make the same deinflection as an
-// own rule, which is marked `both`; the other two (plural -ae → -a and -a →
-// -um of adjectives) make an intermediate form the own rules skip (magnae →
-// magna → magnus is magnae → magnus), recover no row of the corpus, and add
-// false candidates. The table lists each Yomitan rule with the own rule that
-// makes its deinflection.
+// README.md, Rule provenance, says why all eight Yomitan rules are left out.
 
 import {readFileSync, writeFileSync} from 'node:fs';
 import {dirname, join} from 'node:path';

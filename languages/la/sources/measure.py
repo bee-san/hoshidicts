@@ -7,7 +7,7 @@
     python3 measure.py hovers <out.txt> (<pg*.txt> | --tatoeba <lat_sentences.tsv>)...
     python3 measure.py judge <headwords.pickle> <hover.txt> <lookups.jsonl> --transforms <transforms.json> [--freq <freq.tsv>] [--top N] [--show N]
         [--homographs <tsv>] [--reach <cli> [--languages <dir>] [--corpus <tsv>,...]] [--kinds 1]
-        [--sample N --sample-out <file> [--sample-of ambiguous] [--seed S]] [--ambiguous-out <file>]
+        [--sample N --sample-out <file> [--sample-of ambiguous] [--seed S]] [--same-as <lookups.jsonl>]
     python3 measure.py first <corpus.tsv> <lookups.jsonl>
 
 headwords keeps each term's parts of speech (rows with definitions) and the
@@ -18,7 +18,8 @@ ebooks or a Tatoeba export. judge judges the first result of each answer of
 languages/en/sources/lookup-batch.cpp as README.md, Measurements, says;
 --reach keeps the words whose lemma a rule reaches, --kinds counts enclitic,
 esse, pronoun and esse-form positions, --sample draws positions to judge by
-hand, --freq weights by frequency. first breaks first rank down for a corpus.
+hand, --freq weights by frequency, --same-as counts the wrong first results
+other lookups (with no rules) also give. first breaks first rank down.
 """
 import collections
 import json
@@ -217,10 +218,10 @@ def judge(args):
     totals = collections.Counter()
     wrong_groups = collections.Counter()
     examples = collections.defaultdict(list)
-    ambiguous_words = collections.Counter()
+    same = [json.loads(line) for line in open(opts['--same-as'], encoding='utf-8')] if '--same-as' in opts else None
     unjudged, ambiguous = [], []
     nominal = lambda k: bool(lemma.get(k, set()) - {'v'})
-    for text, answer in zip(hover_lines, answers):
+    for index, (text, answer) in enumerate(zip(hover_lines, answers)):
         assert answer['text'] == text, (answer['text'], text)
         m = WORD.match(text)
         if m is None:
@@ -293,8 +294,10 @@ def judge(args):
             kinds[f'{k} {verdict}'] += 1
         if verdict == 'ambiguous':
             ambiguous.append((text, first))
-            ambiguous_words[key] += weight
         if verdict == 'wrong':
+            if same is not None and same[index]['results'][:1] and same[index]['results'][0]['expression'] == expression:
+                totals['wrong, the same without rules'] += 1
+                totals['wrong tokens, the same without rules'] += weight
             if any((r['expression'] in right or plain(r['expression']) in right) and r['matched'] == matched
                    and len(r['trace']) == len(first['trace']) for r in results[1:]):
                 totals['wrong, a right lemma tied'] += 1
@@ -307,10 +310,6 @@ def judge(args):
         print(json.dumps(kinds, sort_keys=True))
     for group, n in wrong_groups.most_common(show or 15):
         print(f'{n:6d}  {group}: {"; ".join(examples[group])}')
-    if '--ambiguous-out' in opts:
-        with open(opts['--ambiguous-out'], 'w', encoding='utf-8') as f:
-            for word, n in ambiguous_words.most_common():
-                f.write(f'{word}\t{n}\n')
     if '--sample' in opts:
         random.seed(int(opts.get('--seed', '1')))
         pool = ambiguous if opts.get('--sample-of') == 'ambiguous' else unjudged

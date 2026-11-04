@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
-"""Mutation check of docs/languages.md section 14 step 7, on scratch copies only.
-Each mutant removes one group of constraints or exclusions from transforms.json
-(or one processor), rewrites tests/classes.json and runs the conformance test.
-Usage: python3 languages/la/sources/mutate.py <repo> <scratch dir>  (needs a build with the conformance test)"""
+"""docs/languages.md section 14 step 7: each mutant edits a scratch copy of the
+pack, rewrites tests/classes.json and runs the conformance test.
+Usage: python3 languages/la/sources/mutate.py <repo> <scratch dir>"""
 import json, os, shutil, subprocess, sys
 
 repo, work = sys.argv[1], sys.argv[2]
@@ -132,8 +131,10 @@ MUTANTS = {
     'nouns before adjectives': move(lambda i: i.startswith(('n-', 'pron-')), last=False),
 }
 MUTANTS['longer stems of the exclusions'] = drop_rules(lambda tr, r: 'stemStartsWithText' in r)
-for stem in ('nav', 'argent', 'patri', 'mens', 'bell', 'suppl', 'cop', 'ac', 'la', 'arm', 'fo', 'can', 'imp'):
+for stem in ('nav', 'argent', 'patri', 'mens', 'bell', 'suppl', 'cop', 'ac', 'la', 'arm', 'fo', 'can', 'imp', 'loc', 'Ital', 'exist', 'jur', 'curt', 'coel'):
     MUTANTS[f'{stem}- left to the dictionary'] = drop_key('stemNotStartsWithText', stem)
+
+MUTANTS['untaggedTerms pass'] = lambda t, l: l['lookup'].update(untaggedTerms='pass') or 1
 
 results = []
 for name, mutate in MUTANTS.items():
